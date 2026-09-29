@@ -1,0 +1,44 @@
+<!-- barras-h · ranking con valor a la derecha (brief 4c · imagen «El diésel más caro se paga en México»). Contrato: referencias/diseno/graficos.md -->
+<script>
+// CIFRAS DE EJEMPLO (imagen 3 del brief: diésel 2026) · verificar antes de publicar
+const DATA = {
+  kicker: "DIÉSEL · PROMEDIO DEL AÑO EN US$ POR GALÓN",
+  titular: ["El diésel más caro", "se paga en México"],
+  nota: "Guatemala sale bajo porque el promedio incluye los meses de subsidio.",
+  fuente: "EIA, CNE México, MEM Guatemala, DGEHM El Salvador",
+  handle: "@DerekUrizar",
+  formato: { prefijo: "", sufijo: "", decimales: 2, miles: true, escala: 1 },
+  items: [
+    { nombre: "México", valor: 5.90 },
+    { nombre: "Guatemala", valor: 4.85 },
+    { nombre: "Estados Unidos", valor: 4.84 },
+    { nombre: "El Salvador", valor: 4.20 }
+  ],
+  destacar: 0,          // índice del item clave (tras ordenar)
+  orden: "desc"         // "desc" ordena de mayor a menor · "dado" respeta el orden
+};
+
+function render(D) {
+  H.assert(Array.isArray(D.items) && D.items.length >= 2 && D.items.length <= 8, "barras-h admite de 2 a 8 items");
+  D.items.forEach((it) => H.assert(it && typeof it.nombre === "string" && typeof it.valor === "number", "cada item necesita nombre y valor numérico"));
+  const items = D.orden === "dado" ? D.items.slice() : D.items.slice().sort((a, b) => b.valor - a.valor);
+  const n = items.length, hi = ((D.destacar || 0) % n + n) % n;
+
+  const W = 920, alto = H.espacio(Math.min(560, 40 + n * 96), n * 52);
+  const svg = H.lienzo(W, alto);
+  const filaH = alto / n;
+  const barH = Math.max(16, Math.min(30, Math.round(filaH * 0.34)));
+  const labPx = n > 6 ? 21 : 23, hiPx = n > 6 ? 24 : 26;
+  const max = Math.max(...items.map((it) => Math.abs(it.valor))) || 1;
+  const ink = H.color.ink;
+
+  items.forEach((it, i) => {
+    const esHi = i === hi;
+    const y = i * filaH + (filaH - (hiPx + 12 + barH)) / 2 + hiPx;
+    H.texto(svg, 0, y, it.nombre, { style: "font:" + (esHi ? "800 " + hiPx : "600 " + labPx) + "px Archivo,sans-serif;fill:" + ink });
+    H.texto(svg, W, y, it.valor_texto || H.num(it.valor, D.formato), { class: "t-val", "text-anchor": "end", style: esHi ? "font-size:24px" : "" });
+    const w = Math.max(4, (Math.abs(it.valor) / max) * W);
+    H.svgEl("rect", { x: 0, y: y + 12, width: w, height: barH, fill: esHi ? H.color.a1 : ink }, svg);
+  });
+}
+</script>

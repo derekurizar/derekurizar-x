@@ -1,0 +1,66 @@
+<!-- dona · reparto del todo en 2–5 partes (brief 4b). Contrato: referencias/diseno/graficos.md -->
+<style>
+.dona-grid { display: grid; grid-template-columns: 380px 1fr; column-gap: 64px; align-items: center; height: 100%; }
+.dona-aro { width: 380px; height: 380px; border-radius: 50%; position: relative; }
+.dona-aro::after { content: ""; position: absolute; inset: 86px; border-radius: 50%; background: var(--bg); }
+.dona-centro { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1; text-align: center; }
+.dona-centro .v { font: 400 92px/.9 'Instrument Serif', Georgia, serif; letter-spacing: -.02em; }
+.dona-centro .t { font: 600 19px/1.2 Archivo, sans-serif; margin-top: 10px; max-width: 180px; }
+.dona-lista { display: flex; flex-direction: column; gap: 22px; }
+.dona-item { display: flex; align-items: center; gap: 16px; }
+.dona-item .sw { width: 22px; height: 22px; flex: none; }
+.dona-item .n { font: 600 24px/1.15 Archivo, sans-serif; flex: 1; }
+.dona-item .p { font: 700 36px/1 'JetBrains Mono', monospace; }
+</style>
+<script>
+// CIFRAS DE EJEMPLO · verificar antes de publicar
+const DATA = {
+  kicker: "EXPORTACIONES · % DEL VALOR TOTAL 2025",
+  titular: ["Cuatro productos", "hacen un tercio"],
+  nota: "Porcentajes redondeados al entero.",
+  fuente: "Banguat · comercio exterior",
+  handle: "@DerekUrizar",
+  formato: { prefijo: "", sufijo: "", decimales: 0, miles: true, escala: 1 },
+  partes: [
+    { nombre: "Prendas de vestir", valor: 12 },
+    { nombre: "Banano", valor: 9 },
+    { nombre: "Café", valor: 8 },
+    { nombre: "Azúcar", valor: 6 },
+    { nombre: "Todo lo demás", valor: 65 }
+  ],
+  destacar: 0,                          // índice de la parte clave
+  centro: { valor: 35, texto: "en cuatro productos" }   // opcional; si falta, usa la parte destacada
+};
+
+function render(D) {
+  H.assert(Array.isArray(D.partes) && D.partes.length >= 2 && D.partes.length <= 5, "dona admite de 2 a 5 partes");
+  D.partes.forEach((p) => H.assert(p && p.nombre && typeof p.valor === "number" && p.valor >= 0, "cada parte necesita nombre y valor ≥ 0"));
+  const total = D.partes.reduce((s, p) => s + p.valor, 0);
+  H.assert(total > 0, "la suma de las partes es 0");
+  const hi = ((D.destacar || 0) % D.partes.length + D.partes.length) % D.partes.length;
+  const ink = H.color.ink;
+  const ROL = [ink, H.color.a2, H.color.a3, H.color.inkA(.45)];
+
+  const alto = H.espacio(420, 380);
+  const g = document.getElementById("grafico");
+  g.style.height = alto + "px";
+  const grid = H.el("div", "dona-grid", g);
+  const aro = H.el("div", "dona-aro", grid);
+  let acc = 0, k = 0, stops = [];
+  const colores = D.partes.map((p, i) => (i === hi ? H.color.a1 : ROL[Math.min(k++, ROL.length - 1)]));
+  D.partes.forEach((p, i) => { const a = acc, b = acc + (p.valor / total) * 100; stops.push(colores[i] + " " + a.toFixed(2) + "% " + b.toFixed(2) + "%"); acc = b; });
+  aro.style.background = "conic-gradient(" + stops.join(",") + ")";
+  const centro = H.el("div", "dona-centro", aro);
+  const c = D.centro || { valor: Math.round((D.partes[hi].valor / total) * 100), texto: D.partes[hi].nombre };
+  H.el("div", "v", centro, H.esc(typeof c.valor === "number" ? H.pct(c.valor) : String(c.valor)));
+  H.el("div", "t", centro, H.esc(c.texto || ""));
+
+  const lista = H.el("div", "dona-lista", grid);
+  D.partes.forEach((p, i) => {
+    const it = H.el("div", "dona-item", lista);
+    const sw = H.el("span", "sw", it); sw.style.background = colores[i];
+    H.el("span", "n", it, H.esc(p.nombre));
+    H.el("span", "p", it, H.esc(H.pct((p.valor / total) * 100, D.formato.decimales || 0)));
+  });
+}
+</script>

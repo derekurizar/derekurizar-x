@@ -1,0 +1,54 @@
+<!-- PRUEBA DE ESTRÉS · pendiente: 6 items convergentes (anti-solape) -->
+<script>
+const DATA = {
+  kicker: "PRUEBA · SEIS CATEGORÍAS CONVERGENTES",
+  titular: ["Seis líneas que", "terminan casi juntas"],
+  nota: "",
+  fuente: "Prueba de estrés · datos ficticios",
+  handle: "@DerekUrizar",
+  formato: { prefijo: "", sufijo: "%", decimales: 1, miles: true, escala: 1 },
+  fechas: ["2010", "2025"],
+  items: [
+    { nombre: "Alfa", a: 61.0, b: 40.2 }, { nombre: "Beta", a: 58.5, b: 40.0 }, { nombre: "Gamma", a: 40.1, b: 39.5 },
+    { nombre: "Delta", a: 39.0, b: 38.9 }, { nombre: "Épsilon", a: 22.0, b: 38.0 }, { nombre: "Zeta", a: 20.5, b: 37.7 }
+  ],
+  destacar: 4
+};
+function render(D) {
+  H.assert(Array.isArray(D.fechas) && D.fechas.length === 2, "fechas debe tener exactamente 2 valores");
+  H.assert(Array.isArray(D.items) && D.items.length >= 2 && D.items.length <= 6, "pendiente admite de 2 a 6 items");
+  D.items.forEach((it) => H.assert(it && it.nombre && typeof it.a === "number" && typeof it.b === "number", "cada item necesita nombre, a y b numéricos"));
+  const n = D.items.length, hi = ((D.destacar || 0) % n + n) % n;
+  const ink = H.color.ink;
+
+  const W = 920, alto = H.espacio(470, 320);
+  const svg = H.lienzo(W, alto);
+  const colIzq = 230, colDer = 110;
+  const x0 = colIzq, x1 = W - colDer, y0 = 36, y1 = alto - 44;
+  const todos = D.items.flatMap((it) => [it.a, it.b]);
+  let min = Math.min(...todos), max = Math.max(...todos);
+  const pad = (max - min || 1) * 0.08; min -= pad; max += pad;
+  const sy = H.escala([min, max], [y1, y0]);
+  const f = (v) => H.num(v, D.formato);
+
+  H.svgEl("line", { x1: x0, x2: x0, y1: y0, y2: y1, stroke: H.color.inkA(.35), "stroke-width": 2 }, svg);
+  H.svgEl("line", { x1: x1, x2: x1, y1: y0, y2: y1, stroke: H.color.inkA(.35), "stroke-width": 2 }, svg);
+  H.texto(svg, x0, alto - 6, D.fechas[0], { "text-anchor": "middle", style: "font:700 22px 'JetBrains Mono',monospace;fill:" + ink });
+  H.texto(svg, x1, alto - 6, D.fechas[1], { "text-anchor": "middle", style: "font:700 22px 'JetBrains Mono',monospace;fill:" + ink });
+
+  const izq = D.items.map((it, i) => ({ i, y: sy(it.a) })), der = D.items.map((it, i) => ({ i, y: sy(it.b) }));
+  H.antiSolape(izq, { minGap: 58, min: y0 + 26, max: y1 - 6 });
+  H.antiSolape(der, { minGap: 30, min: y0 + 10, max: y1 - 4 });
+  const orden = D.items.map((_, i) => i).sort((a, b) => (a === hi) - (b === hi));
+  for (const i of orden) {
+    const it = D.items[i], esHi = i === hi, c = esHi ? H.color.a1 : ink;
+    H.svgEl("line", { x1: x0, y1: sy(it.a), x2: x1, y2: sy(it.b), stroke: c, "stroke-width": esHi ? 8 : 5, "stroke-linecap": "round" }, svg);
+    H.svgEl("circle", { cx: x0, cy: sy(it.a), r: esHi ? 10 : 8, fill: c }, svg);
+    H.svgEl("circle", { cx: x1, cy: sy(it.b), r: esHi ? 10 : 8, fill: c }, svg);
+    const li = izq.find((p) => p.i === i), ld = der.find((p) => p.i === i);
+    H.texto(svg, x0 - 22, li.y - 10, it.nombre, { "text-anchor": "end", style: "font:700 22px Archivo,sans-serif;fill:" + c });
+    H.texto(svg, x0 - 22, li.y + 20, f(it.a), { "text-anchor": "end", style: "font:700 26px 'JetBrains Mono',monospace;fill:" + c });
+    H.texto(svg, x1 + 22, ld.y + 9, f(it.b), { style: "font:700 26px 'JetBrains Mono',monospace;fill:" + c });
+  }
+}
+</script>

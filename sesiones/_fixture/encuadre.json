@@ -1,0 +1,17 @@
+{
+  "slug": "combustibles-2026-fixture",
+  "tema": "Precios de combustibles en Guatemala 2026 (sesión de prueba con cifras del brief)",
+  "fecha": "2026-09-28",
+  "pregunta": "¿Cuánto encareció el cierre de Ormuz el combustible que paga Guatemala?",
+  "tesis_provisional": "El diésel en Guatemala subió 77% entre enero y septiembre de 2026, más que el crudo.",
+  "angulo": "Del crudo global al tanque local: el zigzag del subsidio explica la diferencia.",
+  "paleta": "cielo",
+  "necesita_serie": true,
+  "repetido": false,
+  "ejes": [
+    { "id": "precios", "brief": "Series de precios 2026: Brent mensual (EIA) y diésel/gasolina en Guatemala (MEM-DGH), México (CNE), El Salvador (DGEHM) y EE. UU. (EIA).", "preguntas": ["¿Cuánto subió el Brent y cuándo?", "¿Cuánto subió el diésel local y qué pasó con el subsidio?"], "series_esperadas": ["Brent spot mensual 2026", "MEM precio de referencia diésel semanal 2026"] }
+  ],
+  "sesion_dir": "sesiones/_fixture",
+  "smoke": true,
+  "_nota": "FIXTURE: sesión de prueba escrita a mano para probar scripts/materializar.py y scripts/ensamblar.py sin agentes. Las cifras vienen de las tarjetas del brief y NO están verificadas contra fuentes reales."
+}

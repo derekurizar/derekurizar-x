@@ -1,0 +1,105 @@
+<!-- calor · mapa de calor filas × columnas, p. ej. años × meses (brief 6d). Contrato: referencias/diseno/graficos.md -->
+<script>
+// CIFRAS DE EJEMPLO (inflación interanual mensual, INE) · verificar antes de publicar
+const DATA = {
+  kicker: "INFLACIÓN · VARIACIÓN INTERANUAL DEL IPC EN %",
+  titular: ["La inflación vuelve", "a subir en 2026"],
+  nota: "Octubre a diciembre de 2026 aún sin publicar.",
+  fuente: "INE · Índice de Precios al Consumidor · 2023–2026",
+  handle: "@DerekUrizar",
+  formato: { prefijo: "", sufijo: "", decimales: 1, miles: true, escala: 1 },
+  filas: ["2023", "2024", "2025", "2026"],
+  columnas: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+  valores: [                                                       // una fila por `filas`, null = sin dato
+    [9.0, 8.7, 8.7, 7.9, 6.3, 4.9, 4.3, 4.6, 4.5, 4.2, 4.4, 4.2],
+    [3.9, 3.5, 3.3, 3.0, 3.5, 3.4, 3.0, 2.9, 2.6, 2.4, 2.3, 1.7],
+    [1.7, 1.6, 1.8, 1.6, 1.9, 1.7, 1.6, 1.5, 1.5, 1.7, 1.7, 1.8],
+    [2.0, 2.4, 2.9, 3.6, 4.3, 4.7, 5.1, 5.4, 5.6, null, null, null]
+  ],
+  clases: 5,                     // escalones de la rampa (3–7)
+  destacar: { fila: 3, col: 8 }  // celda con contorno en a1 · null = ninguna
+};
+
+function render(D) {
+  H.assert(Array.isArray(D.filas) && D.filas.length >= 1 && D.filas.length <= 12, "filas: de 1 a 12");
+  H.assert(Array.isArray(D.columnas) && D.columnas.length >= 2 && D.columnas.length <= 12, "columnas: de 2 a 12");
+  const nf = D.filas.length, ncol = D.columnas.length;
+  H.assert(Array.isArray(D.valores) && D.valores.length === nf, "valores necesita " + nf + " filas");
+  D.valores.forEach((fila, i) => {
+    H.assert(Array.isArray(fila) && fila.length === ncol, "valores[" + i + "] necesita " + ncol + " valores (null = sin dato)");
+    fila.forEach((v) => H.assert(v === null || (typeof v === "number" && isFinite(v)), "valores: número o null"));
+  });
+  const planos = D.valores.flat().filter((v) => v !== null);
+  H.assert(planos.length >= 2, "calor necesita al menos 2 valores");
+  const nc = Math.max(3, Math.min(7, Math.round(D.clases || 5)));
+  const hiC = D.destacar && typeof D.destacar === "object" ? D.destacar : null;
+  if (hiC) H.assert(Number.isInteger(hiC.fila) && Number.isInteger(hiC.col) && hiC.fila >= 0 && hiC.fila < nf && hiC.col >= 0 && hiC.col < ncol, "destacar: {fila, col} fuera de rango");
+  const ink = H.color.ink, bg = H.color.bg, a1 = H.color.a1;
+  const f = (v) => H.num(v, D.formato);
+  const min = Math.min(...planos), max = Math.max(...planos);
+  const colores = H.rampa(nc);
+  const colorDe = (v) => H.rampaColor(v, [min, max], nc);
+
+  // Texto dentro de la celda: el que más contraste con su fondo (tinta, acento o fondo de tarjeta).
+  const lum = (hex) => { const h = hex.replace("#", ""), s = h.length === 3 ? h.split("").map((c) => c + c).join("") : h;
+    const [r, g, b] = [0, 2, 4].map((i) => { let v = parseInt(s.slice(i, i + 2), 16) / 255; return v <= .04045 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); });
+    return .2126 * r + .7152 * g + .0722 * b; };
+  const contraste = (c1, c2) => { const x = lum(c1), y = lum(c2); return (Math.max(x, y) + .05) / (Math.min(x, y) + .05); };
+  const textoSobre = (fondo) => [ink, a1, bg].map((c) => [contraste(c, fondo), c]).sort((p, q) => q[0] - p[0])[0][1];
+
+  const W = 920, gap = 6, cabH = 30, leyH = 58, maxCelda = nf <= 2 ? 130 : 96;  // con 1–2 filas la celda crece (R6: ≥ 200 px)
+  const fontFila = "600 21px Archivo,sans-serif";
+  const labW = Math.max(60, ...D.filas.map((s) => H.medir(String(s), fontFila))) + 18;
+  const celdaW = (W - labW - gap * (ncol - 1)) / ncol;
+  const alto = H.espacio(Math.min(560, cabH + nf * (maxCelda + gap) + leyH), cabH + nf * 34 + leyH);
+  const celdaH = Math.min(maxCelda, (alto - cabH - leyH - gap * (nf - 1)) / nf);
+  const svg = H.lienzo(W, alto);
+  const x0 = labW, y0 = cabH;
+  const mostrarValor = nf <= 6;
+  const fontCelda = "700 17px 'JetBrains Mono',monospace";
+
+  // Cabecera de columnas (mono 19 px; 17 si son muchas o no caben)
+  const pxCol = D.columnas.every((c) => H.medir(String(c), "500 19px 'JetBrains Mono'") <= celdaW - 4) && ncol <= 8 ? 19 : 17;
+  D.columnas.forEach((c, j) => {
+    H.assert(H.medir(String(c), "500 17px 'JetBrains Mono'") <= celdaW - 2, "la etiqueta de columna «" + c + "» no cabe: abrevia");
+    H.texto(svg, x0 + j * (celdaW + gap) + celdaW / 2, 20, String(c), { "text-anchor": "middle", style: "font:500 " + pxCol + "px 'JetBrains Mono',monospace;fill:" + ink });
+  });
+
+  D.filas.forEach((nombre, i) => {
+    const y = y0 + i * (celdaH + gap);
+    H.texto(svg, x0 - 16, y + celdaH / 2 + 7, String(nombre), { "text-anchor": "end", style: "font:" + fontFila + ";fill:" + ink });
+    D.valores[i].forEach((v, j) => {
+      const x = x0 + j * (celdaW + gap);
+      if (v === null) {
+        H.svgEl("rect", { x, y, width: celdaW, height: celdaH, rx: 3, fill: H.color.inkA(.08) }, svg);
+        if (mostrarValor && celdaH >= 26) H.texto(svg, x + celdaW / 2, y + celdaH / 2 + 6, "—", { "text-anchor": "middle", style: "font:" + fontCelda + ";fill:" + H.color.inkA(.45) });
+        return;
+      }
+      const c = colorDe(v);
+      H.svgEl("rect", { x, y, width: celdaW, height: celdaH, rx: 3, fill: c }, svg);
+      if (mostrarValor && celdaH >= 26) {
+        const s = f(v);
+        if (H.medir(s, fontCelda) <= celdaW - 8) H.texto(svg, x + celdaW / 2, y + celdaH / 2 + 6, s, { "text-anchor": "middle", style: "font:" + fontCelda + ";fill:" + textoSobre(c) });
+      }
+    });
+  });
+  if (hiC) {  // contorno del destacado: halo en bg + a1 de 3 px, por dentro de la celda
+    const x = x0 + hiC.col * (celdaW + gap), y = y0 + hiC.fila * (celdaH + gap);
+    H.svgEl("rect", { x: x + 2.5, y: y + 2.5, width: celdaW - 5, height: celdaH - 5, rx: 2, fill: "none", stroke: bg, "stroke-width": 7 }, svg);
+    H.svgEl("rect", { x: x + 2.5, y: y + 2.5, width: celdaW - 5, height: celdaH - 5, rx: 2, fill: "none", stroke: a1, "stroke-width": 3 }, svg);
+  }
+
+  // Leyenda: mín · rampa · máx (y «sin dato» si hay nulos)
+  const ly = alto - 22, swW = 56, swH = 18;
+  const fontLey = "500 19px 'JetBrains Mono',monospace";
+  const tMin = f(min), tMax = f(max);
+  let lx = x0 + H.medir(tMin, fontLey) + 14;
+  H.texto(svg, lx - 14, ly + 6, tMin, { "text-anchor": "end", style: "font:" + fontLey + ";fill:" + ink });
+  colores.forEach((c, k) => H.svgEl("rect", { x: lx + k * swW, y: ly - swH / 2, width: swW - 2, height: swH, fill: c }, svg));
+  H.texto(svg, lx + nc * swW + 12, ly + 6, tMax, { style: "font:" + fontLey + ";fill:" + ink });
+  if (planos.length < nf * ncol) {
+    H.texto(svg, W, ly + 6, "sin dato", { "text-anchor": "end", style: "font:" + fontLey + ";fill:" + ink });
+    H.svgEl("rect", { x: W - H.medir("sin dato", fontLey) - 12 - 26, y: ly - swH / 2, width: 26, height: swH, rx: 3, fill: H.color.inkA(.08) }, svg);
+  }
+}
+</script>

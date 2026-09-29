@@ -1,0 +1,136 @@
+{
+  "slug": "sequia-guatemala-2026",
+  "fecha": "2026-09-29",
+  "tema": "sequia en guatemala 2026",
+  "tesis": "La sequía de 2026 se sostiene como extrema en el clima (El Niño a 1.8 °C en jun-ago, más que en 1997 o 2015, y lluvias mínimas de registro en 23 de 39 estaciones), pero no en el hambre medida: la CIF proyecta 3,177,461 personas en Fase 3+, por debajo del pico de 4,600,986 en 2022.",
+  "paleta": "maiz",
+  "hook_tipo": "giro_inversion",
+  "pregunta": "¿Qué tan grave es la sequía de 2026 frente a las de la última década y a cuántos guatemaltecos empuja a la crisis alimentaria?",
+  "n_tuits": 7,
+  "estado": "listo",
+  "tuits": [
+    {
+      "n": 1,
+      "beat": "gancho",
+      "texto": "El Niño llegó a mitad de año más caliente que en los grandes episodios anteriores.\n\nA Guatemala le faltó lluvia y se perdió maíz.\n\nPero en hambre aguda, 2026 no es el peor año desde 2019. Del cielo al plato, en datos:",
+      "caracteres": 217,
+      "alt_text": "Gráfico de barras verticales del Índice Oceánico El Niño (ONI) en el trimestre junio-agosto de los años de El Niño fuerte. 1982: 0.78 °C; 1987: 1.30 °C; 1997: 1.48 °C; 2015: 1.44 °C; 2023: 1.00 °C; 2026: 1.80 °C, la barra destacada, por encima de todas las demás. Nota: es la fase de desarrollo; los picos llegan a fin de año, como los 2.59 °C de 2015-16. Fuente: NOAA CPC, ONI v5.",
+      "imagen": "tuit_1.png",
+      "plantilla": "barras-v",
+      "fuente": "NOAA CPC · Índice Oceánico El Niño (ONI v5) · 2026",
+      "cifra_ids": [
+        "llu-c05",
+        "llu-c06"
+      ]
+    },
+    {
+      "n": 2,
+      "beat": "contexto",
+      "texto": "Y eso fue antes de la canícula: según el INSIVUMEH, en los Valles de Oriente 3 de cada 4 días de canícula analizados pasaron sin lluvia.",
+      "caracteres": 136,
+      "alt_text": "Gráfico de barras horizontales con el déficit de lluvia acumulada de enero a junio de 2026 frente al promedio 1991-2020, por región climática: Valles de Oriente 30 %, Pacífico 29 %, Altiplano Central 24 %, Occidente 17 %. Fuente: INSIVUMEH.",
+      "imagen": "tuit_2.png",
+      "plantilla": "barras-h",
+      "fuente": "INSIVUMEH · déficit de lluvia por región · 2026",
+      "cifra_ids": [
+        "llu-c01"
+      ]
+    },
+    {
+      "n": 3,
+      "beat": "contexto",
+      "texto": "",
+      "caracteres": 0,
+      "alt_text": "Gráfico de pesas que compara la lluvia acumulada de mayo a agosto de 2026 con el mínimo previo de cada estación, en milímetros. Suiza Contenta (Sacatepéquez): 141.6 frente a 331.3. El Capitán (Sololá): 194.5 frente a 346.5. Alameda ICTA (Chimaltenango): 211.3 frente a 365.5. Insivumeh (Guatemala): 271.7 frente a 461.9. Tecún Umán (San Marcos): 372.0 frente a 642.2. Son cinco de las 23 estaciones, de 39 analizadas, donde 2026 quedó por debajo de todo su registro anterior. Fuente: análisis USAC con datos del INSIVUMEH.",
+      "imagen": "tuit_3.png",
+      "plantilla": "pesas",
+      "fuente": "USAC · análisis con datos del INSIVUMEH · 2026",
+      "cifra_ids": [
+        "llu-c03",
+        "llu-c02"
+      ]
+    },
+    {
+      "n": 4,
+      "beat": "contexto",
+      "texto": "El MAGA ya registra 577 mil familias afectadas y calcula pérdidas preliminares de Q1,087 millones por la sequía agrícola.",
+      "caracteres": 121,
+      "alt_text": "Gráfico de waffle de 10 por 10 casillas: 80.73 % de los hogares con pérdidas de maíz en comunidades del Corredor Seco de Guatemala perdieron entre 75 % y 100 % de su cosecha de primera 2026. Evaluación de Oxfam y socias, no representativa de todo el país. Fuente: Oxfam Centroamérica y socias.",
+      "imagen": "tuit_4.png",
+      "plantilla": "waffle",
+      "fuente": "Oxfam · evaluación Corredor Seco con socias · 2026",
+      "cifra_ids": [
+        "cos-c11"
+      ]
+    },
+    {
+      "n": 5,
+      "beat": "giro",
+      "texto": "Ojo: el dato de este año es una proyección. No encontramos una actualización de la CIF publicada que mida el efecto de la canícula.",
+      "caracteres": 131,
+      "alt_text": "Gráfico de barras verticales con el pico anual de personas en Fase 3 o superior (crisis o peor) según los análisis CIF de Guatemala. 2019: 3.06 millones; 2020: 3.73 M; 2021: 3.46 M; 2022: 4.60 M, pico de la serie; 2023: 4.27 M; 2024: 2.99 M; 2025: 3.44 M; 2026: 3.18 M, barra destacada, proyección para julio-septiembre. Fuente: CIF (IPC) vía HDX.",
+      "imagen": "tuit_5.png",
+      "plantilla": "barras-v",
+      "fuente": "CIF · análisis de inseguridad alimentaria aguda · 2019-2026",
+      "cifra_ids": [
+        "ham-c04"
+      ]
+    },
+    {
+      "n": 6,
+      "beat": "impacto",
+      "texto": "En todo el país, la proyección suma 3,177,461 personas con hambre aguda: más de la sexta parte de la población.",
+      "caracteres": 111,
+      "alt_text": "Mapa de Guatemala por departamento con el porcentaje de la población en Fase 3 o superior de la CIF, proyección julio-septiembre 2026. Mayor: Alta Verapaz 28 %, Huehuetenango 23 %, Jalapa 23 %. Menor: Chiquimula 7 %, Guatemala 10 %, Sacatepéquez 10 %. Alta Verapaz está destacada. Fuente: SESAN, CIF 2026-2027.",
+      "imagen": "tuit_6.png",
+      "plantilla": "mapa",
+      "fuente": "SESAN · CIF 2026-2027 · proyección jul-sep",
+      "cifra_ids": [
+        "ham-c02"
+      ]
+    },
+    {
+      "n": 7,
+      "beat": "cierre",
+      "texto": "En resumen: el clima de 2026 sí rompe marcas; el hambre aguda proyectada aún no supera la de 2022. La próxima medición de la CIF dirá cuánto pesó la sequía.\n\nFuentes: NOAA CPC, INSIVUMEH, USAC, Oxfam, MAGA, CIF y SESAN.",
+      "caracteres": 219,
+      "alt_text": "Tuit de cierre sin imagen: resume el hilo y lista las fuentes NOAA CPC, INSIVUMEH, USAC, Oxfam, MAGA, CIF y SESAN.",
+      "imagen": null,
+      "plantilla": null,
+      "fuente": null,
+      "cifra_ids": []
+    }
+  ],
+  "no_afirma": [
+    "No afirma que 2026 sea la peor sequía de la década en hectáreas: no hay serie anual comparable verificada.",
+    "No afirma que la sequía explique por sí sola el hambre aguda: la CIF también refleja precios, empleo y otros factores.",
+    "No afirma que el hambre aguda vaya a superar a 2022: el dato 2026 es una proyección y no hay actualización publicada localizada.",
+    "No afirma que el 80.73 % de hogares con pérdidas severas de maíz represente a todo el país: es una evaluación de Oxfam en el Corredor Seco.",
+    "No afirma que El Niño 2026 vaya a ser el más fuerte registrado: 1.8 °C es el valor de jun-ago; el pico de 2015-16 fue 2.59 °C."
+  ],
+  "incertidumbre": [
+    "La proyección CIF 2026 pudo elaborarse antes de conocer el efecto completo de la canícula; la actualización de septiembre recomendada por SESAN no se localizó.",
+    "Las cifras del MAGA (familias, pérdidas) llegan vía prensa que cita su presentación al Congreso y tienen cortes distintos (20-ago, 27-ago, fin de septiembre).",
+    "El déficit de Valles de Oriente fue ajustado a 30 % y el del Altiplano Central tiene discrepancia entre fuentes (24 % vs 29 %).",
+    "«3 de cada 4 días» traduce el 75 % de los 54 días de canícula analizados por el INSIVUMEH (cifra ajustada)."
+  ],
+  "fuentes": [
+    "NOAA CPC · Índice Oceánico El Niño (ONI v5) · 2026",
+    "INSIVUMEH · déficit de lluvia por región · 2026",
+    "USAC · análisis con datos del INSIVUMEH · 2026",
+    "Oxfam · evaluación Corredor Seco con socias · 2026",
+    "CIF · análisis de inseguridad alimentaria aguda · 2019-2026",
+    "SESAN · CIF 2026-2027 · proyección jul-sep"
+  ],
+  "fuentes_cifras": [
+    "Análisis USAC (Castañón, Gómez, Bardales) con datos INSIVUMEH, vía Prensa Libre 26-sep-2026",
+    "Análisis de C. Castañón, V. Gómez y W. Bardales (Facultad de Ingeniería, USAC) con datos INSIVUMEH, vía Prensa Libre 26-sep-2026",
+    "INSIVUMEH (director Edwin Rojas ante la Comisión de Agricultura del Congreso), vía Infobae",
+    "IPC/CIF vía HDX (ipc_gtm_national_long.csv 2021-2026; all-countries-2017-2023.xlsx 2019-2020) + SESAN CIF 2026",
+    "NOAA Climate Prediction Center — ONI v5",
+    "Oxfam Centroamérica y socias, Evaluación Rápida El Niño 2026 (grupos focales jul-ago 2026)",
+    "SESAN / CIF 2026-2027, tabla de población 1.ª situación proyectada"
+  ],
+  "gate_mecanico": "ok",
+  "contacto": "contacto.png"
+}

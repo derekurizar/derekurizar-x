@@ -1,0 +1,64 @@
+<!-- antes-despues · dos cifras grandes + flecha + píldora ×N o +% calculada (brief 5d · imagen «Llenar el tanque cuesta 77% más»). Contrato: referencias/diseno/graficos.md -->
+<style>
+.ad-grid { display: grid; grid-template-columns: 1fr 120px 1fr; align-items: end; column-gap: 20px; }
+.ad-col .lab { font: 700 18px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; }
+.ad-col .num { font: 400 120px/.88 'Instrument Serif', Georgia, serif; letter-spacing: -.02em; margin-top: 22px; white-space: nowrap; }
+.ad-col.despues .num { color: var(--a1); }
+.ad-col .sub { font: 600 22px/1.2 Archivo, sans-serif; margin-top: 16px; }
+.ad-col .barra { height: 22px; margin-top: 26px; background: var(--ink); }
+.ad-col.despues .barra { background: var(--a1); }
+.ad-flecha { align-self: center; height: 6px; background: var(--ink); position: relative; margin-bottom: 96px; }
+.ad-flecha::after { content: ""; position: absolute; right: -2px; top: -11px; width: 20px; height: 20px; border-top: 6px solid var(--ink); border-right: 6px solid var(--ink); transform: rotate(45deg); box-sizing: border-box; }
+.ad-pildora { display: inline-flex; align-self: flex-start; margin-top: 44px; padding: 12px 22px; background: var(--ink); color: var(--x-fg); font: 700 28px/1 Archivo, sans-serif; }
+.ad-bloque { display: flex; flex-direction: column; justify-content: flex-end; height: 100%; }
+</style>
+<script>
+// CIFRAS DE EJEMPLO (imagen 4 del brief: diésel en Guatemala 2026) · verificar antes de publicar
+const DATA = {
+  kicker: "DIÉSEL EN GUATEMALA · QUETZALES POR GALÓN",
+  titular: ["Llenar el tanque", "cuesta 77% más", "que en enero"],
+  nota: "El Congreso aprobó un techo de Q39 por galón hasta diciembre.",
+  fuente: "MEM · Dirección General de Hidrocarburos",
+  handle: "@DerekUrizar",
+  formato: { prefijo: "", sufijo: "", decimales: 2, miles: true, escala: 1 },
+  antes:   { etiqueta: "Enero",      valor: 26.00, sub: "quetzales por galón" },
+  despues: { etiqueta: "Septiembre", valor: 46.10, sub: "quetzales por galón" },
+  pildora: "factor",          // "factor" (×1.77) | "pct" (+77%) | "ninguna" — SIEMPRE calculada aquí
+  decimales_pildora: 2
+};
+
+function render(D) {
+  for (const k of ["antes", "despues"]) {
+    H.assert(D[k] && typeof D[k].valor === "number" && D[k].etiqueta, k + " necesita etiqueta y valor numérico");
+  }
+  const alto = H.espacio(460, 300);
+  const g = document.getElementById("grafico");
+  g.style.height = alto + "px";
+  const bloque = H.el("div", "ad-bloque", g);
+  const grid = H.el("div", "ad-grid", bloque);
+  const max = Math.max(Math.abs(D.antes.valor), Math.abs(D.despues.valor)) || 1;
+  const col = (cls, d) => {
+    const c = H.el("div", "ad-col " + cls, grid);
+    H.el("div", "lab", c, H.esc(d.etiqueta));
+    const num = H.el("div", "num", c, H.esc(H.num(d.valor, D.formato)));
+    for (let px = 120; px >= 72; px -= 8) { num.style.fontSize = px + "px"; if (num.scrollWidth <= 400) break; }
+    if (d.sub) H.el("div", "sub", c, H.esc(d.sub));
+    const b = H.el("div", "barra", c);
+    b.style.width = Math.max(3, Math.round((Math.abs(d.valor) / max) * 100)) + "%";
+  };
+  col("antes", D.antes);
+  H.el("div", "ad-flecha", grid);
+  col("despues", D.despues);
+
+  const modo = D.pildora || "factor";
+  if (modo !== "ninguna") {
+    H.assert(D.antes.valor !== 0, "la píldora no se puede calcular con antes.valor = 0");
+    const dec = D.decimales_pildora == null ? 2 : D.decimales_pildora;
+    const factor = D.despues.valor / D.antes.valor;
+    let txt;
+    if (modo === "factor") txt = "×" + factor.toFixed(dec);
+    else { const p = (factor - 1) * 100; txt = (p < 0 ? H.MENOS : "+") + Math.abs(p).toFixed(dec > 1 ? 0 : dec) + "%"; }
+    H.el("div", "ad-pildora", bloque, H.esc(txt));
+  }
+}
+</script>

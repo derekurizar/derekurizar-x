@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "_comentario": "Registro de hilos producidos. Lo escribe SOLO el productor al cerrar; el editor lo lee para no repetir tema. estado: borrador | listo | publicado | incompleto.",
+  "hilos": [
+    {
+      "id": "2026-09-29-sequia-guatemala-2026",
+      "fecha": "2026-09-29",
+      "slug": "sequia-guatemala-2026",
+      "tema": "sequia en guatemala 2026",
+      "tesis": "La sequía de 2026 se sostiene como extrema en el clima (El Niño a 1.8 °C en jun-ago, más que en 1997 o 2015, y lluvias mínimas de registro en 23 de 39 estaciones), pero no en el hambre medida: la CIF proyecta 3,177,461 personas en Fase 3+, por debajo del pico de 4,600,986 en 2022.",
+      "paleta": "maiz",
+      "n_tuits": 7,
+      "ruta": "hilos/2026-09-29-sequia-guatemala-2026",
+      "estado": "listo",
+      "hook_tipo": "giro_inversion"
+    }
+  ]
+}

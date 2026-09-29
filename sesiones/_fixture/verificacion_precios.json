@@ -1,0 +1,11 @@
+{
+  "eje": "precios",
+  "_nota": "FIXTURE: veredictos ficticios para probar el gate (pre-c05 queda no_confirmada a propósito).",
+  "items": [
+    { "id": "pre-c01", "veredicto": "verificada", "valor_final": 102, "fuente_2": "Banco Mundial · Pink Sheet (promedio mensual Brent)", "nota": "Extremos y punto intermedio coinciden." },
+    { "id": "pre-c02", "veredicto": "verificada", "valor_final": 26.0, "fuente_2": "AGN · nota semanal de precios de referencia", "nota": "" },
+    { "id": "pre-c03", "veredicto": "verificada", "valor_final": 46.1, "fuente_2": "AGN · nota semanal de precios de referencia", "nota": "" },
+    { "id": "pre-c04", "veredicto": "ajustada", "valor_final": 5.9, "fuente_2": "CNE México · promedio nacional", "nota": "México recalculado con tipo de cambio FIX promedio del año." },
+    { "id": "pre-c05", "veredicto": "no_confirmada", "nota": "Solo una nota de prensa; sin fuente primaria." }
+  ]
+}

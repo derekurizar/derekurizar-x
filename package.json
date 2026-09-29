@@ -1,0 +1,13 @@
+{
+  "name": "derekurizar-x",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Framework «Hilos»: hilos de X con datos de Guatemala para @DerekUrizar (investigación multi-agente → tarjetas HTML → PNG)",
+  "scripts": {
+    "render": "node scripts/render.js",
+    "catalogo": "make catalogo"
+  },
+  "dependencies": {
+    "playwright": "1.59.1"
+  }
+}

@@ -1,0 +1,10 @@
+node_modules/
+.DS_Store
+templates/.galeria/
+sesiones/*
+!sesiones/_fixture/
+sesiones/_fixture/salida/
+*.log
+sesiones/_descargas/
+.playwright-mcp/
+__pycache__/

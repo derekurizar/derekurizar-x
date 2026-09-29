@@ -1,0 +1,19 @@
+{
+  "eje": "precios",
+  "n_busquedas": 0,
+  "_nota": "FIXTURE: cifras de ejemplo del brief, no verificadas.",
+  "cifras": [
+    { "id": "pre-c01", "concepto": "Brent, promedio mensual 2026", "valor": 102, "unidad": "US$ por barril", "anio": "2026", "fuente": "EIA · U.S. Energy Information Administration", "url": "https://www.eia.gov/dnav/pet/hist/RBRTEM.htm", "tipo": "serie", "n_puntos": 9, "periodo": "ene-2026..sep-2026", "candidata_ancla": true,
+      "serie": [ { "p": "Ene", "v": 67 }, { "p": "Feb", "v": 71 }, { "p": "Mar", "v": 103 }, { "p": "Abr", "v": 117 }, { "p": "May", "v": 107 }, { "p": "Jun", "v": 85 }, { "p": "Jul", "v": 84 }, { "p": "Ago", "v": 91 }, { "p": "Sep", "v": 102 } ] },
+    { "id": "pre-c02", "concepto": "Diésel en Guatemala, precio de referencia de enero 2026", "valor": 26.0, "unidad": "Q por galón", "anio": "2026", "fuente": "MEM · Dirección General de Hidrocarburos", "url": "https://mem.gob.gt/precios-de-combustibles/", "tipo": "puntual" },
+    { "id": "pre-c03", "concepto": "Diésel en Guatemala, precio de referencia de septiembre 2026", "valor": 46.1, "unidad": "Q por galón", "anio": "2026", "fuente": "MEM · Dirección General de Hidrocarburos", "url": "https://mem.gob.gt/precios-de-combustibles/", "tipo": "puntual", "candidata_ancla": true },
+    { "id": "pre-c04", "concepto": "Diésel, promedio del año 2026 por país", "valor": 5.9, "unidad": "US$ por galón", "anio": "2026", "fuente": "EIA, CNE México, MEM Guatemala, DGEHM El Salvador", "url": "", "tipo": "desglose", "n_puntos": 4,
+      "partes": [ { "nombre": "México", "valor": 5.9 }, { "nombre": "Guatemala", "valor": 4.85 }, { "nombre": "Estados Unidos", "valor": 4.84 }, { "nombre": "El Salvador", "valor": 4.2 } ] },
+    { "id": "pre-c05", "concepto": "Gasolina regular en Guatemala, septiembre 2026 (cifra de prensa sin segunda fuente)", "valor": 5.35, "unidad": "US$ por galón", "anio": "2026", "fuente": "Prensa (nota sin fuente primaria)", "url": "", "tipo": "puntual" }
+  ],
+  "fuentes": [
+    { "nombre": "EIA · U.S. Energy Information Administration", "url": "https://www.eia.gov/dnav/pet/", "nivel": "primaria" },
+    { "nombre": "MEM · Dirección General de Hidrocarburos", "url": "https://mem.gob.gt/precios-de-combustibles/", "nivel": "primaria" }
+  ],
+  "vacios": ["No hay serie diaria del diésel local: solo precio de referencia semanal."]
+}

@@ -1,0 +1,101 @@
+<!-- PRUEBA DE ESTRÉS · linea: titular de 3 líneas + 4 series convergentes + nota de 150 + eje no desde cero -->
+<script>
+const DATA = {
+  kicker: "PRUEBA · CUATRO SERIES CONVERGENTES · ÍNDICE",
+  titular: ["Tres líneas largas", "de titular que casi", "tocan el límite útil"],
+  nota: "Nota de ciento cincuenta caracteres exactos para comprobar que el bloque de nota envuelve en dos líneas sin pisar el pie ni el gráfico. Fin.",
+  fuente: "Prueba de estrés · datos ficticios",
+  handle: "@DerekUrizar",
+  formato: { prefijo: "", sufijo: "", decimales: 1, miles: true, escala: 1 },
+  etiquetasX: ["2015","2016","2017","2018","2019","2020","2021","2022","2023","2024","2025"],
+  series: [
+    { nombre: "Serie A", valores: [100,101,103,104,106,105,107,108,109,110,110.4], destacar: true },
+    { nombre: "Serie B", valores: [100,100.5,101,102,103,104,105,106,107,108,110.2] },
+    { nombre: "Serie C", valores: [100,99,98,99,101,102,103,105,107,109,110.0] },
+    { nombre: "Serie D", valores: [100,102,104,103,102,101,103,104,106,108,109.8] }
+  ],
+  yDesdeCero: false, ejeY: true, valoresBajoEje: null, rotularFin: true, hitos: [{ i: 5, texto: "pandemia" }]
+};
+function renderLinea(D) {
+  H.assert(Array.isArray(D.etiquetasX) && D.etiquetasX.length >= 3, "etiquetasX necesita ≥3 puntos");
+  H.assert(Array.isArray(D.series) && D.series.length >= 1 && D.series.length <= 4, "linea admite de 1 a 4 series");
+  const n = D.etiquetasX.length;
+  D.series.forEach((s) => {
+    H.assert(s.nombre && Array.isArray(s.valores) && s.valores.length === n, "cada serie necesita nombre y " + n + " valores (null = hueco)");
+    s.valores.forEach((v) => H.assert(v === null || typeof v === "number", "valores: número o null"));
+    H.assert(s.valores.filter((v) => v !== null).length >= 2, "la serie «" + s.nombre + "» tiene menos de 2 valores");
+  });
+  H.assert(!D.hitos || D.hitos.length <= 1, "como máximo un hito");
+  const ink = H.color.ink;
+  const ROL = [H.color.a1, ink, H.color.a2, H.color.a3];
+  // Colores: la destacada en a1; el resto en ink, a2, a3 por orden.
+  let k = 1;
+  const colorDe = D.series.map((s) => (s.destacar ? ROL[0] : ROL[Math.min(k++, 3)]));
+  if (!D.series.some((s) => s.destacar)) { colorDe[0] = ROL[0]; }
+  if (D.series.length > 1) H.leyenda(D.series.map((s, i) => ({ nombre: s.nombre, color: colorDe[i] })));
+
+  const valoresBajo = D.valoresBajoEje == null ? (D.series.length === 1 && n <= 12) : !!D.valoresBajoEje;
+  const rotFin = D.rotularFin == null ? D.series.length > 1 : !!D.rotularFin;
+  const W = 920, alto = H.espacio(470, 300);
+  const svg = H.lienzo(W, alto);
+  const izq = D.ejeY === false ? 8 : 64, der = rotFin ? 96 : 12;
+  const arriba = 30, abajo = valoresBajo ? 76 : 40;
+  const x0 = izq, x1 = W - der, y0 = arriba, y1 = alto - abajo;
+  const todos = D.series.flatMap((s) => s.valores.filter((v) => v !== null));
+  const dom = H.dominio(todos, D.yDesdeCero !== false);
+  const sx = H.escala([0, n - 1], [x0, x1]);
+  const sy = H.escala(dom, [y1, y0]);
+  const f = (v) => H.num(v, D.formato);
+
+  if (D.ejeY !== false) {
+    const tk = H.ticks(dom[0], dom[1], 4);
+    const fEje = Object.assign({}, D.formato, { decimales: H.decimalesDe(tk.map((t) => t / (D.formato.escala || 1)), D.formato.decimales || 0) });
+    for (const t of tk) {
+      const y = sy(t);
+      H.svgEl("line", { x1: x0, x2: x1, y1: y, y2: y, stroke: H.color.inkA(Math.abs(y - y1) < 1 ? .6 : .22), "stroke-width": Math.abs(y - y1) < 1 ? 2 : 1 }, svg);
+      H.texto(svg, x0 - 14, y + 6, H.num(t, fEje), { class: "t-eje", "text-anchor": "end" });
+    }
+    if (D.yDesdeCero === false) H.texto(svg, x0 + 10, y0 - 10, "eje desde " + H.num(dom[0], fEje) + " (no desde cero)", { class: "t-eje" });
+  } else {
+    H.svgEl("line", { x1: x0, x2: x1, y1: y1, y2: y1, stroke: H.color.inkA(.6), "stroke-width": 2, "stroke-dasharray": "6 8" }, svg);
+  }
+
+  if (D.hitos && D.hitos.length) {
+    const h = D.hitos[0];
+    H.assert(h.i >= 0 && h.i < n, "hito.i fuera de rango");
+    const x = sx(h.i);
+    H.svgEl("line", { x1: x, x2: x, y1: y0 - 6, y2: y1, stroke: H.color.inkA(.5), "stroke-width": 2, "stroke-dasharray": "4 6" }, svg);
+    H.texto(svg, x + 10, y0 + 6, h.texto, { class: "t-eje" });
+  }
+
+  // Etiquetas X (mono 19px); si hay muchas, se rotula una de cada `paso`.
+  const paso = n > 14 ? Math.ceil(n / 12) : 1;
+  D.etiquetasX.forEach((lab, i) => {
+    if (i % paso !== 0 && i !== n - 1) return;
+    H.texto(svg, sx(i), y1 + 30, lab, { "text-anchor": "middle", style: "font:" + (i === n - 1 ? "700" : "500") + " 19px 'JetBrains Mono',monospace;fill:" + ink });
+    if (valoresBajo && D.series[0].valores[i] !== null)
+      H.texto(svg, sx(i), y1 + 62, f(D.series[0].valores[i]), { "text-anchor": "middle", style: "font:700 20px 'JetBrains Mono',monospace;fill:" + ink });
+  });
+
+  // Series: primero las no destacadas, la destacada encima.
+  const orden = D.series.map((s, i) => i).sort((a, b) => (D.series[a].destacar ? 1 : 0) - (D.series[b].destacar ? 1 : 0));
+  const fines = [];
+  for (const i of orden) {
+    const s = D.series[i], c = colorDe[i], hi = !!s.destacar || (D.series.length === 1);
+    let d = "", abierto = false;
+    s.valores.forEach((v, j) => {
+      if (v === null) { abierto = false; return; }
+      d += (abierto ? " L" : " M") + sx(j).toFixed(1) + " " + sy(v).toFixed(1); abierto = true;
+    });
+    H.svgEl("path", { d: d.trim(), fill: "none", stroke: c, "stroke-width": hi ? 6 : 5, "stroke-linejoin": "round", "stroke-linecap": "round" }, svg);
+    let ult = n - 1; while (ult >= 0 && s.valores[ult] === null) ult--;
+    H.svgEl("circle", { cx: sx(ult), cy: sy(s.valores[ult]), r: hi ? 10 : 8, fill: c }, svg);
+    fines.push({ i, y: sy(s.valores[ult]), x: sx(ult), v: s.valores[ult], c });
+  }
+  if (rotFin) {
+    H.antiSolape(fines, { minGap: 26, min: y0 + 8, max: y1 - 4 });
+    for (const p of fines) H.texto(svg, x1 + 18, p.y + 8, f(p.v), { class: "t-val", fill: p.c });
+  }
+}
+function render(D) { return renderLinea(D); }
+</script>

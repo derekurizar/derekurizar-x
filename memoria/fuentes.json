@@ -1,0 +1,1037 @@
+{
+  "version": 1,
+  "_comentario": "Catálogo de fuentes confiables (sembrado desde guate-en-un-dato el 2026-09-28) y de SERIES conocidas con su ruta de acceso. El editor lo entrega a los investigadores; el productor añade series nuevas al cerrar un hilo. rating 1-10: 10 = fuente primaria oficial.",
+  "fuentes": [
+    {
+      "nombre": "Banco de Guatemala",
+      "url": "banguat.gob.gt",
+      "categoria": "economia",
+      "rating": 10,
+      "alias": [
+        "Banguat",
+        "BANGUAT"
+      ],
+      "temas": [
+        "remesas",
+        "tipo de cambio",
+        "PIB",
+        "inflación",
+        "exportaciones",
+        "importaciones",
+        "balanza comercial",
+        "reservas",
+        "crédito",
+        "tasa líder",
+        "cuentas nacionales",
+        "economía"
+      ]
+    },
+    {
+      "nombre": "INE Guatemala",
+      "url": "ine.gob.gt",
+      "categoria": "estadisticas",
+      "rating": 10,
+      "alias": [
+        "INE"
+      ],
+      "temas": [
+        "población",
+        "censo",
+        "IPC",
+        "inflación",
+        "canasta básica",
+        "ENCOVI",
+        "pobreza",
+        "empleo",
+        "ENEI",
+        "hogares",
+        "nacimientos",
+        "defunciones",
+        "estadísticas"
+      ],
+      "nota": "[2026-09-29] CBA del INE de julio y agosto 2026: no localicé los PDF (la página del INE carga con JS); el Q950 de agosto solo aparece en prensa. La CBA 2026 es per cápita y con metodología nueva, así que no se com"
+    },
+    {
+      "nombre": "INSIVUMEH",
+      "url": "insivumeh.gob.gt",
+      "categoria": "clima_vulcanologia",
+      "rating": 10,
+      "alias": [
+        "INSIVUMEH"
+      ],
+      "temas": [
+        "lluvia",
+        "clima",
+        "sismos",
+        "volcanes",
+        "temperatura",
+        "huracán"
+      ],
+      "nota": "[2026-09-29] Serie mensual 2026 de lluvia acumulada vs normal 1991-2020 por región: no se localizaron boletines climáticos PDF de INSIVUMEH 2026 (el sitio no enlaza PDFs desde /climatologia/); solo cifras ene-jun · [2026-09-29] Déficit regional ene-ago/sep 2026: no encontrado; solo dato de septiembre (50-60 % de lo normal del mes, Prensa Libre citando INSIVUMEH) sin desglose regional. · [2026-09-29] Déficit Altiplano Central: discrepancia 24 % (Infobae) vs 29 % agrupado con Pacífico (nota INSIVUMEH); requiere verificación."
+    },
+    {
+      "nombre": "CONAP",
+      "url": "conap.gob.gt",
+      "categoria": "medio_ambiente",
+      "rating": 9,
+      "alias": [
+        "CONAP"
+      ],
+      "temas": [
+        "bosques",
+        "áreas protegidas",
+        "biodiversidad",
+        "ambiente"
+      ]
+    },
+    {
+      "nombre": "NASA FIRMS",
+      "url": "firms.modaps.eosdis.nasa.gov",
+      "categoria": "incendios",
+      "rating": 10
+    },
+    {
+      "nombre": "Banco Mundial Guatemala",
+      "url": "datos.bancomundial.org/pais/guatemala",
+      "categoria": "economia",
+      "rating": 10,
+      "alias": [
+        "WDI",
+        "World Bank"
+      ],
+      "temas": [
+        "PIB per cápita",
+        "pobreza",
+        "comparación regional",
+        "indicadores",
+        "desarrollo",
+        "remesas % del PIB"
+      ]
+    },
+    {
+      "nombre": "SAT Guatemala — Estadísticas Tributarias",
+      "url": "portal.sat.gob.gt/portal/estadisticas-tributarias-sat/",
+      "categoria": "economia",
+      "rating": 10,
+      "alias": [
+        "SAT"
+      ],
+      "temas": [
+        "recaudación",
+        "impuestos",
+        "IVA",
+        "ISR",
+        "tributario",
+        "aduanas"
+      ]
+    },
+    {
+      "nombre": "CONADI — Estadísticas de Discapacidad",
+      "url": "datosestadisticos.conadi.gob.gt/revista2/",
+      "categoria": "sociedad",
+      "rating": 9
+    },
+    {
+      "nombre": "FADEP — Datos Socioeconómicos",
+      "url": "fadep.org/datos/",
+      "categoria": "economia",
+      "rating": 8
+    },
+    {
+      "nombre": "MINEDUC — Anuario Estadístico",
+      "url": "estadistica.mineduc.gob.gt/anuario/home.html#",
+      "categoria": "educacion",
+      "rating": 10,
+      "alias": [
+        "MINEDUC"
+      ],
+      "temas": [
+        "educación",
+        "matrícula",
+        "escuelas",
+        "docentes",
+        "deserción"
+      ]
+    },
+    {
+      "nombre": "INACIF — Estadísticas Forenses",
+      "url": "inacif.gob.gt/estadisticasweb/",
+      "categoria": "seguridad",
+      "rating": 10,
+      "alias": [
+        "INACIF"
+      ],
+      "temas": [
+        "homicidios",
+        "muertes violentas",
+        "necropsias",
+        "violencia",
+        "seguridad"
+      ]
+    },
+    {
+      "nombre": "Statista Guatemala",
+      "url": "statista.com/topics/4573/guatemala",
+      "categoria": "datos_agregados",
+      "rating": 8
+    },
+    {
+      "nombre": "IGM — Instituto Guatemalteco de Migración",
+      "url": "igm.gob.gt",
+      "categoria": "migracion",
+      "rating": 9
+    },
+    {
+      "nombre": "IGM — Informes Estadísticos (base de datos anual de retornados)",
+      "url": "igm.gob.gt/informes-estadisticos/",
+      "categoria": "migracion",
+      "rating": 10,
+      "nota": "Publica la base de datos ANUAL de retornados en Excel con microdatos (MES, SEXO, EDAD, MUNICIPIO, DEPARTAMENTO, PAÍS/VÍA): permite cualquier corte propio. Acceso: el sitio devuelve 403 a WebFetch; listar los archivos con `python3 scripts/fetch_tabla.py --enlaces '\\.xlsx$' https://igm.gob.gt/informes-estadisticos/` y descargarlos con `make tabla URL=` (UA de navegador, cacheado en sesiones/_descargas/). Agregar con `python3 scripts/tabla.py <csv> --agrupar DEPARTAMENTO --contar`. Sin Playwright MCP.",
+      "alias": [
+        "IGM"
+      ],
+      "temas": [
+        "migración",
+        "retornados",
+        "deportados",
+        "deportaciones",
+        "migrantes"
+      ]
+    },
+    {
+      "nombre": "INE Guatemala — Perfiles Estadísticos Departamentales",
+      "url": "ine.gob.gt/perfil_estadistico/",
+      "categoria": "estadisticas_departamentales",
+      "rating": 10,
+      "alias": [
+        "INE"
+      ],
+      "temas": [
+        "población",
+        "censo",
+        "IPC",
+        "inflación",
+        "canasta básica",
+        "ENCOVI",
+        "pobreza",
+        "empleo",
+        "ENEI",
+        "hogares",
+        "nacimientos",
+        "defunciones",
+        "estadísticas"
+      ]
+    },
+    {
+      "nombre": "CID Gallup",
+      "url": "cidgallup.com",
+      "categoria": "opinion_publica",
+      "rating": 8
+    },
+    {
+      "nombre": "OPS/PAHO — Situation Reports de sarampion en las Americas",
+      "url": "https://www.paho.org/en/measles-multi-country-outbreak-2026",
+      "categoria": "salud",
+      "rating": 10,
+      "nota": "Reportes de situacion periodicos (~cada 2 semanas) con casos confirmados POR PAIS bajo una definicion de caso ARMONIZADA => es la unica serie valida para comparar paises entre si. OJO: no coincide con los totales nacionales del MSPAS, que incluyen casos por criterio clinico (definicion mas amplia). Nunca mezclar ambas series en un mismo calculo. Los SitRep se publican en /en/documents/situation-report-N-measles-americas-region-FECHA y son legibles con WebFetch. No publica tasas per capita: hay que calcularlas."
+    },
+    {
+      "nombre": "MSPAS Guatemala — alertas y datos epidemiologicos",
+      "url": "https://mspas.gob.gt/",
+      "categoria": "salud",
+      "rating": 9,
+      "nota": "Fuente oficial de salud. Sus totales de brote incluyen confirmacion por laboratorio + nexo epidemiologico + criterio clinico, por lo que son mayores que los de OPS. Los boletines llegan mejor via Prensa Libre/Infobae, que reproducen el desglose. El micrositio saludjuntos.gt concentra la campana de sarampion.",
+      "alias": [
+        "MSPAS"
+      ],
+      "temas": [
+        "salud",
+        "epidemia",
+        "sarampión",
+        "dengue",
+        "mortalidad",
+        "vacunación"
+      ]
+    },
+    {
+      "nombre": "MINEDUC/Digeduca — Evaluaciones educativas (Graduandos, primaria, TER)",
+      "url": "https://edu.mineduc.gob.gt/digeduca/",
+      "categoria": "educacion",
+      "rating": 10,
+      "nota": "Direccion General de Evaluacion e Investigacion Educativa. Publica los resultados de Graduandos (ultimo ano de diversificado) con serie nacional 2015-2025 y desglose por departamento, sector, genero y autoidentificacion etnica. PDFs clave: Resultados_GRAD<anio>.pdf (infografia del anio) y documents/resultados/Resultados_generales.pdf (serie historica de TODAS las evaluaciones). Se leen con `make pdf URL=...`; WebFetch no extrae sus tablas. Ojo: la prensa a veces redondea el logro de Matematicas 2025 a '20%'/'2 de cada 10'; el dato primario es 16.2%. Los niveles de desempeno vienen redondeados a entero."
+    },
+    {
+      "nombre": "U.S. Energy Information Administration (EIA)",
+      "url": "eia.gov/dnav/pet/",
+      "categoria": "energia",
+      "rating": 10,
+      "nota": "Series spot diarias descargables por HTML (LeafHandler.ashx?n=PET&s=<serie>&f=D): RBRTE (Brent), RWTC (WTI), EER_EPD2DXL0_PF4_RGC_DPG (diesel ULSD Costa del Golfo), EER_EPMRU_PF4_RGC_DPG (gasolina). El .xls legado NO se convierte con stdlib; usar el HTML.",
+      "alias": [
+        "EIA"
+      ],
+      "temas": [
+        "petróleo",
+        "crudo",
+        "Brent",
+        "WTI",
+        "gasolina",
+        "diésel",
+        "barril",
+        "energía",
+        "Estados Unidos"
+      ]
+    },
+    {
+      "nombre": "Agencia Guatemalteca de Noticias (AGN)",
+      "url": "agn.gt",
+      "categoria": "gobierno",
+      "rating": 8,
+      "nota": "Agencia estatal; publica los precios de referencia semanales del MEM con desglose por cabecera departamental."
+    },
+    {
+      "nombre": "Ministerio de Energía y Minas (MEM)",
+      "url": "mem.gob.gt",
+      "categoria": "energia",
+      "rating": 10,
+      "nota": "mem.gob.gt devuelve HTTP 403 a curl/WebFetch (WAF): los PDF de precios de combustibles se consiguen via el mirror de Prensa Libre (prensalibre.com/wp-content/uploads/...) o via notas de AGN. Los PDF también se listan con `fetch_tabla.py --enlaces '\\.pdf$' <url>`.",
+      "alias": [
+        "MEM",
+        "DGH"
+      ],
+      "temas": [
+        "combustibles",
+        "gasolina",
+        "diésel",
+        "GLP",
+        "precios de referencia",
+        "hidrocarburos",
+        "electricidad",
+        "cobertura eléctrica",
+        "minería",
+        "energía"
+      ]
+    },
+    {
+      "nombre": "Ojo con mi Pisto (Ocote) - datos municipales",
+      "url": "ojoconmipisto.com",
+      "categoria": "fiscal",
+      "rating": 7
+    },
+    {
+      "nombre": "ICEFI - Instituto Centroamericano de Estudios Fiscales",
+      "url": "icefi.org",
+      "categoria": "fiscal",
+      "rating": 9
+    },
+    {
+      "nombre": "Lincoln Institute of Land Policy",
+      "url": "lincolninst.edu",
+      "categoria": "fiscal",
+      "rating": 7
+    },
+    {
+      "nombre": "MSPAS — Dirección de Epidemiología y Gestión del Riesgo (salas situacionales)",
+      "url": "https://epidemiologia.mspas.gob.gt/informacion/vigilancia-epidemiologica/salas-situacionales/5-arbovirosis",
+      "categoria": "salud",
+      "rating": 10,
+      "nota": "Publica boletines PDF de sala situacional (arbovirosis, respiratorias, etc.) con CUADRO DE CASOS E INCIDENCIA POR DDRISS (29 areas de salud), no por departamento: para un mapa hay que agregar Guatemala (4 areas), Peten (3) y Quiche (3). Ojo: cada boletin trae dos totales para el mismo corte (cuadro por DDRISS vs serie historica del Sistema Nacional de Vigilancia) y una serie integrada con IGSS cuya asignacion territorial sigue el registro del afiliado (distorsiona Sacatepequez). Los PDF se bajan bien con `make pdf URL=...`; la pagina lista solo el ultimo boletin del ano."
+    },
+    {
+      "nombre": "Departamento de Transito de la PNC / ONSET (Observatorio Nacional de Seguridad del Transito)",
+      "url": "transito.gob.gt",
+      "categoria": "seguridad_vial",
+      "rating": 10,
+      "nota": "Publica boletines estadisticos PDF (transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-N-AAAA.pdf) con la SERIE HISTORICA nacional desde 2011 de hechos, fallecidos y lesionados, mas desglose departamental. Los graficos vienen como imagen, pero `make pdf URL=...` extrae las etiquetas: el orden de los valores en el texto sigue la altura de la barra, NO el orden del eje X — reconstruir el mapeo anio->valor y validarlo contra el total acumulado que el propio boletin declara (asi se verificaron las series 2011-2024). El observatorio (onset.transito.gob.gt) publica los consolidados del anio en curso; los medios (La Hora, Infobae, Publinews) reproducen los cortes parciales."
+    },
+    {
+      "nombre": "CIEN — Centro de Investigaciones Economicas Nacionales (seguridad y seguridad vial)",
+      "url": "cien.org.gt",
+      "categoria": "seguridad",
+      "rating": 9,
+      "nota": "Boletines PDF cortos y legibles con `make pdf`. Calcula tasas por 100 mil habitantes con datos del ONSET (seguridad vial) y de la PNC (Indice de Denuncias de Delitos, homicidios y extorsiones): ambas series salen de la misma metodologia, por lo que SI son comparables entre si. Ojo: sus totales de muertes por transito de 'los ultimos cinco anios' usan un universo mas amplio que el registro in situ del DT-PNC; no mezclar."
+    },
+    {
+      "nombre": "DGAC Guatemala — Direccion General de Aeronautica Civil",
+      "url": "dgac.gob.gt",
+      "categoria": "transporte_aereo",
+      "rating": 9
+    },
+    {
+      "nombre": "CEPA El Salvador — Comision Ejecutiva Portuaria Autonoma",
+      "url": "cepa.gob.sv",
+      "categoria": "transporte_aereo",
+      "rating": 9
+    },
+    {
+      "nombre": "AERIS — Aeropuerto Internacional Juan Santamaria (Costa Rica)",
+      "url": "sjoairport.com",
+      "categoria": "transporte_aereo",
+      "rating": 9
+    },
+    {
+      "nombre": "Tocumen S.A. — Aeropuerto Internacional de Tocumen (Panama)",
+      "url": "tocumenpanama.aero",
+      "categoria": "transporte_aereo",
+      "rating": 9
+    },
+    {
+      "nombre": "RENAP — Registro Nacional de las Personas",
+      "url": "renap.gob.gt",
+      "categoria": "demografia",
+      "rating": 10,
+      "nota": "Inscripciones de nacimientos, defunciones y matrimonios POR FECHA DE TRAMITE. No comparable con la serie de estadisticas vitales del INE, que cuenta por anio de ocurrencia.",
+      "alias": [
+        "RENAP"
+      ],
+      "temas": [
+        "nacimientos",
+        "defunciones",
+        "matrimonios",
+        "población",
+        "demografía"
+      ]
+    },
+    {
+      "nombre": "AMSCLAE — Autoridad para el Manejo Sustentable de la Cuenca del Lago de Atitlán",
+      "url": "amsclae.gob.gt/estudios1/",
+      "categoria": "medio_ambiente",
+      "rating": 9,
+      "nota": "Autoridad estatal que mide el lago de Atitlán: nivel (escala limnimétrica de Panajachel, diaria desde may 2014), monitoreo limnológico, caudales y calidad del agua. Informes anuales en PDF; los de años anteriores a 2025 están escaneados (sin capa de texto). Único emisor de la serie de nivel del lago."
+    },
+    {
+      "nombre": "Banco Mundial — Global Findex",
+      "url": "api.worldbank.org/v2/... (source=28)",
+      "categoria": "inclusion_financiera",
+      "rating": 10,
+      "nota": "Base de inclusion financiera y conectividad del Banco Mundial. Consultable por API (source=28); indicadores clave: g20.any (pago digital), account.t.d (cuenta), con1 (celular), con9a (smartphone), fin3 (pago con tarjeta o celular). Agregado 'LAC' = America Latina y el Caribe SIN economias de ingreso alto."
+    },
+    {
+      "nombre": "V-Dem Institute (Universidad de Gotemburgo)",
+      "url": "v-dem.net",
+      "categoria": "gobernanza",
+      "rating": 9
+    },
+    {
+      "nombre": "USDA Foreign Agricultural Service — informes GAIN de Guatemala",
+      "url": "fas.usda.gov/data/gain",
+      "categoria": "agricultura_comercio_exterior",
+      "rating": 9,
+      "nota": "Grain and Feed Annual, Exporter Guide y biotecnologia. Tablas PSD (produccion/consumo/comercio) y matrices de comercio con datos aduaneros de Trade Data Monitor. Un informe por ano, en abril. Los PDF se bajan con `make pdf`."
+    },
+    {
+      "nombre": "INGUAT — Instituto Guatemalteco de Turismo",
+      "url": "inguat.gob.gt",
+      "categoria": "turismo",
+      "rating": 9,
+      "nota": "Fuente primaria de llegadas, divisas y del estudio de turismo interno. El sitio bloquea WebFetch (403): las cifras se leen via buscador o replicas de medios.",
+      "alias": [
+        "INGUAT"
+      ],
+      "temas": [
+        "turismo",
+        "visitantes",
+        "divisas por turismo"
+      ]
+    },
+    {
+      "nombre": "Perspectiva",
+      "url": "perspectiva.gt",
+      "categoria": "medios_economia",
+      "rating": 7,
+      "nota": "Medio economico guatemalteco; cita textualmente comunicados oficiales. Util para verificacion cruzada de cifras del INGUAT y Banguat."
+    },
+    {
+      "nombre": "Smithsonian Global Volcanism Program",
+      "url": "volcano.si.edu",
+      "categoria": "medio_ambiente",
+      "rating": 10
+    },
+    {
+      "nombre": "Guate en Datos (tableros de cobertura educativa, INE/MINEDUC)",
+      "url": "guateendatos.org.gt",
+      "categoria": "educacion",
+      "rating": 8
+    },
+    {
+      "nombre": "Organizacion Internacional del Trabajo (OIT) — notas tecnicas e ILOSTAT",
+      "url": "ilo.org",
+      "categoria": "mercado_laboral",
+      "rating": 10
+    },
+    {
+      "nombre": "Foreign Relations of the United States (FRUS)",
+      "url": "history.state.gov",
+      "categoria": "archivo_historico",
+      "rating": 10
+    },
+    {
+      "nombre": "CIA FOIA / CREST Reading Room",
+      "url": "cia.gov/readingroom",
+      "categoria": "archivo_historico",
+      "rating": 9
+    },
+    {
+      "nombre": "National Security Archive (GWU)",
+      "url": "nsarchive.gwu.edu",
+      "categoria": "archivo_historico",
+      "rating": 9
+    },
+    {
+      "nombre": "National Archives (NARA)",
+      "url": "archives.gov",
+      "categoria": "archivo_historico",
+      "rating": 10
+    },
+    {
+      "nombre": "Diccionario panhispanico del espanol juridico (DPEJ-RAE) — fichas ELI de legislacion guatemalteca",
+      "url": "dpej.rae.es",
+      "categoria": "archivo_historico",
+      "rating": 9
+    },
+    {
+      "nombre": "Corte Interamericana de Derechos Humanos (CorteIDH) — biblioteca y documentos",
+      "url": "corteidh.or.cr",
+      "categoria": "gobernanza",
+      "rating": 9
+    },
+    {
+      "nombre": "Resoluciones del Consejo de Seguridad de la ONU",
+      "url": "unscr.com",
+      "categoria": "archivo_historico",
+      "rating": 9
+    },
+    {
+      "nombre": "Dialnet — repositorio academico (articulos revisados por pares)",
+      "url": "dialnet.unirioja.es",
+      "categoria": "archivo_historico",
+      "rating": 8
+    },
+    {
+      "nombre": "Consejo Economico y Social de Guatemala (CES)",
+      "url": "ces.gob.gt",
+      "categoria": "mercado_laboral",
+      "rating": 8
+    },
+    {
+      "nombre": "Public.Resource.Org — reporteros de jurisprudencia federal de EE. UU.",
+      "url": "law.resource.org",
+      "categoria": "archivo_historico",
+      "rating": 9
+    },
+    {
+      "nombre": "Wikisource — transcripciones de textos legales (solo como via al texto; verificar contra fuente oficial)",
+      "url": "es.wikisource.org",
+      "categoria": "archivo_historico",
+      "rating": 6
+    },
+    {
+      "nombre": "AFEHC — Asociacion para el Fomento de los Estudios Historicos en Centroamerica (transcripciones primarias de textos legales)",
+      "url": "afehc-historia-centroamericana.org",
+      "categoria": "archivo_historico",
+      "rating": 8
+    },
+    {
+      "nombre": "El Trimestre Economico (FCE) — reproduccion integra de textos legales de epoca",
+      "url": "eltrimestreeconomico.com",
+      "categoria": "archivo_historico",
+      "rating": 8
+    },
+    {
+      "nombre": "Instituto Interamericano de Derechos Humanos / Corte IDH — informes historicos",
+      "url": "iidh.ed.cr",
+      "categoria": "archivo_historico",
+      "rating": 8
+    },
+    {
+      "nombre": "The Washington Post — cobertura contemporanea de desclasificaciones",
+      "url": "washingtonpost.com",
+      "categoria": "medios_internacionales",
+      "rating": 7
+    },
+    {
+      "nombre": "CEH — «Guatemala: Memoria del Silencio» (1999), informe de la Comision para el Esclarecimiento Historico",
+      "url": "centrodememoriahistorica.gov.co/guatemala-memoria-del-silencio",
+      "categoria": "archivo_historico",
+      "rating": 9
+    },
+    {
+      "nombre": "Historiografia academica del episodio United Fruit / Decreto 900 (Handy 1988 y 1994, Gleijeses 1991, Dosal 1993, Cullather 1999, Immerman 1982, Schlesinger y Kinzer 1982)",
+      "url": "read.dukeupress.edu/hahr",
+      "categoria": "archivo_historico",
+      "rating": 8
+    },
+    {
+      "nombre": "Kepner y Soothill, «The Banana Empire» (1935) — series fiscales de exportacion de la epoca",
+      "url": "ufdcimages.uflib.ufl.edu",
+      "categoria": "archivo_historico",
+      "rating": 8
+    },
+    {
+      "nombre": "Alfonso Bauer Paiz, «La frutera ante la ley» (1949) — reproduce verbatim documentos primarios del conflicto laboral de 1948",
+      "url": "diariodelgallo.wordpress.com",
+      "categoria": "archivo_historico",
+      "rating": 7
+    },
+    {
+      "nombre": "INSIVUMEH — Seccion de Sismologia (reportes anuales)",
+      "url": "geo.insivumeh.gob.gt/REPORTES_SECCION_SISMOLOGIA/",
+      "categoria": "medio_ambiente",
+      "rating": 10,
+      "nota": "PDF anual con el total de sismos localizados, los sensibles, la tabla mensual, la clasificacion por fuente sismica y EL NUMERO DE SENSORES de la red (imprescindible para comparar anios). Patron de URL: /REPORTES_ANUALES/{anio}/reporte_anual_{anio}.pdf — bajar con `make pdf`.",
+      "alias": [
+        "INSIVUMEH"
+      ],
+      "temas": [
+        "lluvia",
+        "clima",
+        "sismos",
+        "volcanes",
+        "temperatura",
+        "huracán"
+      ]
+    },
+    {
+      "nombre": "INE Guatemala — Portal de datos abiertos (microdatos CKAN: Estadisticas Vitales, DINESE, encuestas)",
+      "url": "datos.ine.gob.gt",
+      "categoria": "demografia",
+      "rating": 10,
+      "nota": "API CKAN: /api/3/action/package_show?id=<dataset> lista los recursos XLSX descargables. Permite tabular la cifra uno mismo en vez de citar prensa; los totales de cada archivo deben cuadrar con la cifra oficial publicada antes de usarse.",
+      "alias": [
+        "INE"
+      ],
+      "temas": [
+        "población",
+        "censo",
+        "IPC",
+        "inflación",
+        "canasta básica",
+        "ENCOVI",
+        "pobreza",
+        "empleo",
+        "ENEI",
+        "hogares",
+        "nacimientos",
+        "defunciones",
+        "estadísticas"
+      ]
+    },
+    {
+      "nombre": "UNODC — Oficina de la ONU contra la Droga y el Delito (estadisticas de homicidio, ICCS)",
+      "url": "dataunodc.un.org",
+      "categoria": "seguridad",
+      "rating": 10,
+      "nota": "Fuente supranacional armonizada de homicidios. Ultimo anio con dato de Guatemala Y El Salvador a la vez: 2022. Guatemala tiene 2023 (23.37). Se consulta comodamente via el indicador VC.IHR.PSRC.P5 de la API del Banco Mundial, que reproduce la serie."
+    },
+    {
+      "nombre": "Gallup — The Global Safety Report / Indice de Ley y Orden",
+      "url": "gallup.com",
+      "categoria": "seguridad",
+      "rating": 9,
+      "nota": "Encuesta mundial armonizada: confianza en la policia, seguridad al caminar de noche y victimizacion por robo y agresion en 12 meses. Es la salida legitima cuando un indicador dependeria de la propension a denunciar. Entrega 2025 con datos de 2024."
+    },
+    {
+      "nombre": "World Justice Project — Rule of Law Index",
+      "url": "worldjusticeproject.org",
+      "categoria": "gobernanza",
+      "rating": 9,
+      "nota": "143 paises con la misma metodologia (215,000 encuestas de hogares + 4,100 de expertos). Los comunicados de pais en PDF (patron /sites/default/files/documents/<Pais>_N.pdf) traen la tabla de puestos por factor; los puntajes 0-1 por factor no salen en HTML estatico."
+    },
+    {
+      "nombre": "GI-TOC — Global Organized Crime Index (ocindex)",
+      "url": "ocindex.net",
+      "categoria": "seguridad",
+      "rating": 9,
+      "nota": "193 paises, dos ejes: criminalidad (15 mercados criminales + 5 tipos de actor) y resiliencia. Perfiles de pais descargables en /assets/downloads/<anio>/english/ocindex_profile_<pais>_<anio>.pdf. Util para mercados como la extorsion, que por denuncias no serian comparables."
+    },
+    {
+      "nombre": "Institute for Economics & Peace — Global Peace Index",
+      "url": "economicsandpeace.org",
+      "categoria": "seguridad",
+      "rating": 9,
+      "nota": "163 paises. OJO: menor puntaje = mas pacifico y un cambio positivo es un DETERIORO. NO sirve como indicador comparativo puntuable de seguridad porque incorpora gasto militar, encarcelamiento y numero de policias, cuya direccion deseable es discutible; si sirve como contexto. Apendice C trae los puntajes por dominio."
+    },
+    {
+      "nombre": "OMS — Global Health Observatory (API ghoapi.azureedge.net)",
+      "url": "ghoapi.azureedge.net",
+      "categoria": "salud",
+      "rating": 9,
+      "nota": "API abierta por codigo de indicador (p. ej. RS_198 = tasa de muertes por transito por 100,000). ADVERTENCIA verificada: la serie de Global Health Estimates de homicidio NO recoge la caida de El Salvador (94.3 en 2021 frente a 17.3 de UNODC); no usarla para comparaciones de homicidio."
+    },
+    {
+      "nombre": "MEM — Dirección General de Hidrocarburos (DGH) · precios de referencia de combustibles",
+      "url": "mem.gob.gt/precios-de-combustibles/",
+      "categoria": "energia",
+      "rating": 10,
+      "nota": "Precio de referencia SEMANAL (superior, regular, diésel) en Q/galón por cabecera departamental; y precio promedio nacional. mem.gob.gt responde 403 a WebFetch/curl (WAF): usar las notas de AGN (agn.gt) o el mirror de Prensa Libre para los PDF, o `make pdf URL=` con UA de navegador. Distinguir precio de REFERENCIA (MEM) del precio de BOMBA observado por prensa.",
+      "alias": [
+        "MEM-DGH",
+        "DGH"
+      ],
+      "temas": [
+        "combustibles",
+        "gasolina",
+        "diésel",
+        "superior",
+        "regular",
+        "precio de referencia",
+        "galón"
+      ]
+    },
+    {
+      "nombre": "CNE México (antes CRE) · precios de gasolinas y diésel",
+      "url": "datos.gob.mx/busca/dataset/precios-de-gasolinas-y-diesel",
+      "categoria": "energia",
+      "rating": 9,
+      "nota": "Precios diarios por estación (csv grande) y promedio nacional. Convertir litros→galones (×3.78541) y MXN→US$ con el tipo de cambio Banxico del mismo periodo; declarar la conversión en datos.json. La Comisión Nacional de Energía sustituyó a la CRE en 2025."
+    },
+    {
+      "nombre": "DGEHM El Salvador · precios de referencia de combustibles",
+      "url": "energia.gob.sv/precios-de-referencia/",
+      "categoria": "energia",
+      "rating": 9,
+      "nota": "Dirección General de Energía, Hidrocarburos y Minas: precios de referencia quincenales por zona (central, occidental, oriental) en US$/galón. Se publican como PDF/imagen; leerlos con `make pdf URL=`."
+    },
+    {
+      "nombre": "CNEE · Comisión Nacional de Energía Eléctrica (tarifas)",
+      "url": "cnee.gob.gt",
+      "categoria": "energia",
+      "rating": 10,
+      "nota": "Pliegos tarifarios TRIMESTRALES por distribuidora (EEGSA, Energuate/DEOCSA-DEORSA) en Q/kWh, tarifa social y no social. PDF por trimestre; serie histórica reconstruible desde los pliegos.",
+      "alias": [
+        "CNEE"
+      ],
+      "temas": [
+        "tarifa eléctrica",
+        "electricidad",
+        "kWh",
+        "tarifa social",
+        "energía"
+      ]
+    },
+    {
+      "nombre": "AMM · Administrador del Mercado Mayorista",
+      "url": "amm.org.gt",
+      "categoria": "energia",
+      "rating": 10,
+      "nota": "Generación por tecnología (hidro, carbón, bunker, solar, eólica, geotermia, biomasa), demanda máxima y precio spot de oportunidad. Informes estadísticos anuales y datos mensuales en xlsx/html: `make tabla URL=`.",
+      "alias": [
+        "AMM"
+      ],
+      "temas": [
+        "generación eléctrica",
+        "demanda eléctrica",
+        "precio spot",
+        "energía",
+        "electricidad",
+        "renovables"
+      ]
+    },
+    {
+      "nombre": "Banxico · tipo de cambio FIX",
+      "url": "banxico.org.mx/SieAPIRest/service/v1/",
+      "categoria": "economia",
+      "rating": 10,
+      "nota": "Para convertir precios mexicanos a US$. Serie SF43718 (FIX). API con token gratuito; también descarga csv desde el SIE."
+    },
+    {
+      "nombre": "OLADE · Sistema de Información Energética de Latinoamérica (sieLAC)",
+      "url": "sielac.olade.org",
+      "categoria": "energia",
+      "rating": 8,
+      "nota": "Balances energéticos comparables entre países de la región (oferta, consumo por sector, precios). Útil para contexto regional; para cifras ancla preferir la fuente nacional."
+    },
+    {
+      "nombre": "OIM · Guatemala (Organización Internacional para las Migraciones)",
+      "url": "guatemala.iom.int",
+      "categoria": "migracion",
+      "rating": 9,
+      "alias": [
+        "OIM",
+        "IOM"
+      ],
+      "temas": [
+        "remesas",
+        "hogares receptores",
+        "migración",
+        "encuesta de remesas",
+        "migrantes en EE. UU."
+      ],
+      "nota": "Encuesta sobre Migración y Remesas Guatemala 2022: hogares receptores, beneficiarios, dependencia y uso de las remesas. PDF: `make pdf URL=`."
+    },
+    {
+      "nombre": "SESAN/SIINSAN - Análisis CIF de Inseguridad Alimentaria Aguda Guatemala abr 2026-feb 2027",
+      "url": "portal.siinsan.gob.gt",
+      "categoria": "auto",
+      "rating": 8,
+      "alias": [],
+      "temas": [
+        "guatemala",
+        "hambre",
+        "sequia"
+      ],
+      "nota": "hallada en 2026-09-29-sequia-guatemala-2026: https://portal.siinsan.gob.gt/wp-content/uploads/20260812-CIF-2026-2027.pdf"
+    },
+    {
+      "nombre": "IPC/CIF - ipc_gtm_national_long.csv (HDX, act. 6-ago-2026)",
+      "url": "data.humdata.org",
+      "categoria": "auto",
+      "rating": 8,
+      "alias": [],
+      "temas": [
+        "guatemala",
+        "hambre",
+        "sequia"
+      ],
+      "nota": "hallada en 2026-09-29-sequia-guatemala-2026: https://data.humdata.org/dataset/34c2fa3d-2eed-45bb-8e45-9b1a1801f351/resource/85754675-3e77-468d-b649-14a3a7f07614/download/ipc_gtm_national_long.csv"
+    },
+    {
+      "nombre": "NOAA CPC — ONI v5 (oni.ascii.txt)",
+      "url": "cpc.ncep.noaa.gov",
+      "categoria": "auto",
+      "rating": 8,
+      "alias": [],
+      "temas": [
+        "guatemala",
+        "lluvia",
+        "sequia"
+      ],
+      "nota": "hallada en 2026-09-29-sequia-guatemala-2026: https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt"
+    }
+  ],
+  "series": [
+    {
+      "nombre": "Remesas familiares mensuales",
+      "fuente": "Banguat",
+      "url": "https://www.banguat.gob.gt/es/page/ingreso-de-divisas-por-remesas-familiares-0",
+      "formato": "xlsx",
+      "unidad": "millones de US$",
+      "desde": "2002",
+      "frecuencia": "mensual",
+      "nota": "Ingreso de divisas por remesas familiares (xlsx remfam2002_2026). La URL de la página cambia; si da 404, buscar «remesas familiares» en banguat.gob.gt o listar con fetch_tabla.py --enlaces remfam. Sumar meses para el anual."
+    },
+    {
+      "nombre": "Tipo de cambio de referencia",
+      "fuente": "Banguat",
+      "url": "banguat.gob.gt/tipo_cambio/",
+      "formato": "html",
+      "unidad": "Q por US$",
+      "desde": "1994",
+      "frecuencia": "diaria",
+      "nota": "Servicio web SOAP (TipoCambio) y consulta html por rango de fechas."
+    },
+    {
+      "nombre": "PIB anual y variación real",
+      "fuente": "Banguat",
+      "url": "banguat.gob.gt/es/page/cuentas-nacionales",
+      "formato": "xlsx",
+      "unidad": "millones de Q · % variación",
+      "desde": "2001",
+      "frecuencia": "anual",
+      "nota": "Base 2013. El PIB nominal en US$ requiere el tipo de cambio promedio del año."
+    },
+    {
+      "nombre": "Índice de Precios al Consumidor e inflación",
+      "fuente": "INE",
+      "url": "ine.gob.gt/ipc/",
+      "formato": "pdf",
+      "unidad": "índice · % interanual",
+      "desde": "2011",
+      "frecuencia": "mensual",
+      "nota": "Boletín mensual con inflación total, subyacente y por división de gasto."
+    },
+    {
+      "nombre": "Precios de referencia de combustibles (superior, regular, diésel)",
+      "fuente": "MEM-DGH",
+      "url": "mem.gob.gt/precios-de-combustibles/",
+      "formato": "pdf",
+      "unidad": "Q por galón",
+      "desde": "2015",
+      "frecuencia": "semanal",
+      "nota": "Sitio con WAF (403): usar AGN o Prensa Libre. Promedio nacional y por cabecera."
+    },
+    {
+      "nombre": "Brent spot (RBRTE)",
+      "fuente": "EIA",
+      "url": "eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=RBRTE&f=M",
+      "formato": "html",
+      "unidad": "US$ por barril",
+      "desde": "1987",
+      "frecuencia": "mensual",
+      "nota": "f=D diario, f=W semanal, f=M mensual. Leer con `make tabla URL=`."
+    },
+    {
+      "nombre": "WTI spot (RWTC)",
+      "fuente": "EIA",
+      "url": "eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=RWTC&f=M",
+      "formato": "html",
+      "unidad": "US$ por barril",
+      "desde": "1986",
+      "frecuencia": "mensual",
+      "nota": "Mismo handler que el Brent."
+    },
+    {
+      "nombre": "Gasolina regular EE. UU., precio al consumidor",
+      "fuente": "EIA",
+      "url": "eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=EMM_EPMR_PTE_NUS_DPG&f=M",
+      "formato": "html",
+      "unidad": "US$ por galón",
+      "desde": "1990",
+      "frecuencia": "mensual",
+      "nota": "Promedio nacional EE. UU., todas las formulaciones."
+    },
+    {
+      "nombre": "Diésel EE. UU., precio al consumidor",
+      "fuente": "EIA",
+      "url": "eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=EMD_EPD2D_PTE_NUS_DPG&f=M",
+      "formato": "html",
+      "unidad": "US$ por galón",
+      "desde": "1994",
+      "frecuencia": "mensual",
+      "nota": "Diésel No. 2, promedio nacional."
+    },
+    {
+      "nombre": "Pliegos tarifarios de electricidad por distribuidora",
+      "fuente": "CNEE",
+      "url": "cnee.gob.gt/pliegos-tarifarios/",
+      "formato": "pdf",
+      "unidad": "Q por kWh",
+      "desde": "2008",
+      "frecuencia": "trimestral",
+      "nota": "Tarifa social (≤ 88 kWh) y no social; EEGSA, DEOCSA, DEORSA."
+    },
+    {
+      "nombre": "Generación eléctrica por tecnología y demanda",
+      "fuente": "AMM",
+      "url": "amm.org.gt/portal/?page_id=145",
+      "formato": "xlsx",
+      "unidad": "GWh · MW",
+      "desde": "2010",
+      "frecuencia": "mensual",
+      "nota": "Informe estadístico; también precio spot promedio (US$/MWh)."
+    },
+    {
+      "nombre": "Población: censo 2018 y proyecciones",
+      "fuente": "INE",
+      "url": "ine.gob.gt/proyecciones/",
+      "formato": "xlsx",
+      "unidad": "personas",
+      "desde": "2018",
+      "frecuencia": "anual",
+      "nota": "Proyecciones 2018-2050 por departamento, sexo y edad. Denominador estándar para per cápita."
+    },
+    {
+      "nombre": "Muertes violentas y necropsias",
+      "fuente": "INACIF",
+      "url": "inacif.gob.gt/estadisticasweb/",
+      "formato": "html",
+      "unidad": "casos",
+      "desde": "2008",
+      "frecuencia": "mensual",
+      "nota": "Por departamento y causa. No es la serie de homicidios de PNC: definiciones distintas, no mezclar."
+    },
+    {
+      "nombre": "Indicadores WDI para Guatemala (API)",
+      "fuente": "Banco Mundial",
+      "url": "api.worldbank.org/v2/country/GTM/indicator/NY.GDP.PCAP.CD?format=json&per_page=100",
+      "formato": "json",
+      "unidad": "según indicador",
+      "desde": "1960",
+      "frecuencia": "anual",
+      "nota": "Cambiar el código del indicador (p. ej. VC.IHR.PSRC.P5 homicidios, SP.POP.TOTL población). Útil para comparar con vecinos: country=GTM;SLV;HND;NIC;CRI;PAN;MEX."
+    },
+    {
+      "nombre": "Recaudación tributaria mensual",
+      "fuente": "SAT",
+      "url": "portal.sat.gob.gt/portal/estadisticas-tributarias-sat/",
+      "formato": "xlsx",
+      "unidad": "millones de Q",
+      "desde": "2005",
+      "frecuencia": "mensual",
+      "nota": "Recaudación por impuesto; comparar contra meta del presupuesto."
+    },
+    {
+      "nombre": "Población total y por departamento (proyecciones 2018–2050)",
+      "fuente": "INE",
+      "url": "https://www.ine.gob.gt/proyecciones/",
+      "formato": "xlsx",
+      "unidad": "personas",
+      "desde": "2018",
+      "frecuencia": "anual",
+      "nota": "Denominador estándar para per cápita y para el beat de impacto (escala humana). Por departamento, sexo y edad."
+    },
+    {
+      "nombre": "Hogares y personas por hogar (ENCOVI 2023)",
+      "fuente": "INE",
+      "url": "https://www.ine.gob.gt/encovi/",
+      "formato": "pdf",
+      "unidad": "hogares · personas por hogar",
+      "desde": "2023",
+      "frecuencia": "puntual",
+      "nota": "Total de hogares (~3.9 M en 2023) y tamaño medio; sirve para «N de cada M hogares». Ver también Censo 2018: 3,275,931 hogares."
+    },
+    {
+      "nombre": "Hogares receptores de remesas y dependencia (Encuesta sobre Migración y Remesas 2022)",
+      "fuente": "OIM",
+      "url": "https://guatemala.iom.int/es",
+      "formato": "pdf",
+      "unidad": "hogares · % de hogares",
+      "desde": "2022",
+      "frecuencia": "puntual",
+      "nota": "Hogares receptores (~1.75 M), beneficiarios (~6.6 M) y % de hogares que dependen al 100 % de las remesas. Base para escala humana en hilos de remesas."
+    },
+    {
+      "nombre": "Canasta básica alimentaria y ampliada",
+      "fuente": "INE",
+      "url": "https://www.ine.gob.gt/canasta-basica/",
+      "formato": "pdf",
+      "unidad": "Q por mes",
+      "desde": "2019",
+      "frecuencia": "mensual",
+      "nota": "Para traducir precios a «cuántas canastas»; boletín mensual con CBA y CBV para una familia de 4.8 miembros."
+    },
+    {
+      "nombre": "Pico anual de personas en Fase 3+ según los análisis CIF de Guatemala, 2019-2026",
+      "fuente": "IPC/CIF vía HDX (ipc_gtm_national_long.csv 2021-2026; all-countries-2017-2023.xlsx 2019-2020) + SESAN CIF 2026",
+      "url": "https://data.humdata.org/dataset/34c2fa3d-2eed-45bb-8e45-9b1a1801f351/resource/85754675-3e77-468d-b649-14a3a7f07614/download/ipc_gtm_national_long.csv",
+      "formato": "csv",
+      "unidad": "personas",
+      "desde": "2019",
+      "hasta": "2026",
+      "frecuencia": "anual",
+      "nota": "registrada desde hilo 2026-09-29-sequia-guatemala-2026"
+    },
+    {
+      "nombre": "Precio mayorista del maíz blanco, mercado La Terminal (Ciudad de Guatemala), mensual 2023-2026",
+      "fuente": "WFP VAM (datos de precios MAGA) vía HDX HAPI - Food Prices & Market Monitor for Guatemala (act. 29-sep-2026)",
+      "url": "https://data.humdata.org/dataset/fd39432d-e0c7-49f8-b729-682229d01bb8/resource/711addf1-6843-464a-9c2d-3a53da6512a9/download/hdx_hapi_food_price_gtm.csv",
+      "formato": "csv",
+      "unidad": "Q por quintal (100 libras)",
+      "desde": "2023-01",
+      "hasta": "2026-07",
+      "frecuencia": "mensual",
+      "nota": "registrada desde hilo 2026-09-29-sequia-guatemala-2026"
+    },
+    {
+      "nombre": "Precio mayorista del frijol negro, mercado La Terminal, mensual 2024-2026",
+      "fuente": "WFP VAM (datos MAGA) vía HDX HAPI",
+      "url": "https://data.humdata.org/dataset/fd39432d-e0c7-49f8-b729-682229d01bb8/resource/711addf1-6843-464a-9c2d-3a53da6512a9/download/hdx_hapi_food_price_gtm.csv",
+      "formato": "csv",
+      "unidad": "Q por quintal (100 libras)",
+      "desde": "2024-01",
+      "hasta": "2026-08",
+      "frecuencia": "mensual",
+      "nota": "registrada desde hilo 2026-09-29-sequia-guatemala-2026"
+    },
+    {
+      "nombre": "Índice Oceánico El Niño (ONI, anomalía trimestral móvil Niño 3.4), JJA 2025 a JJA 2026",
+      "fuente": "NOAA Climate Prediction Center — ONI v5",
+      "url": "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/ensostuff/ONI_v5.php",
+      "formato": "html",
+      "unidad": "°C (anomalía)",
+      "desde": "JJA 2025",
+      "hasta": "JJA 2026",
+      "frecuencia": "otra",
+      "nota": "registrada desde hilo 2026-09-29-sequia-guatemala-2026"
+    }
+  ]
+}

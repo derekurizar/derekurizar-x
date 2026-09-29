@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node scripts/*)",
+      "Bash(python3 scripts/*)",
+      "Bash(make *)",
+      "Bash(date *)",
+      "Bash(ls*)",
+      "Bash(wc*)",
+      "Bash(mkdir -p*)",
+      "Bash(test *)",
+      "Bash(grep *)"
+    ]
+  }
+}

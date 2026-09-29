@@ -1,0 +1,97 @@
+<!-- pesas · dos fechas por categoría, puntos unidos (dumbbell, brief 6e). Contrato: referencias/diseno/graficos.md -->
+<script>
+// CIFRAS DE EJEMPLO (cobertura eléctrica por departamento, MEM) · verificar antes de publicar
+const DATA = {
+  kicker: "COBERTURA ELÉCTRICA · % DE HOGARES",
+  titular: ["Alta Verapaz sigue", "lejos del resto"],
+  nota: "",
+  fuente: "MEM · índice de cobertura eléctrica 2000 y 2023",
+  handle: "@DerekUrizar",
+  formato: { prefijo: "", sufijo: "%", decimales: 1, miles: true, escala: 1 },
+  fechas: ["2000", "2023"],
+  items: [
+    { nombre: "Guatemala",      a: 95.8, b: 99.4 },
+    { nombre: "Sacatepéquez",   a: 94.0, b: 99.1 },
+    { nombre: "Quetzaltenango", a: 85.0, b: 97.3 },
+    { nombre: "Huehuetenango",  a: 60.4, b: 88.0 },
+    { nombre: "Quiché",         a: 52.7, b: 84.9 },
+    { nombre: "Petén",          a: 44.1, b: 79.6 },
+    { nombre: "Alta Verapaz",   a: 21.5, b: 53.8 }
+  ],
+  destacar: 6,          // índice del item clave (tras ordenar): puntos más grandes, nombre en negrita
+  orden: "dado",        // "dado" respeta el orden · "desc" ordena por b de mayor a menor
+  desdeCero: true       // false solo con justificación en `nota` (la plantilla escribe «eje desde N»)
+};
+
+function render(D) {
+  H.assert(Array.isArray(D.fechas) && D.fechas.length === 2, "fechas debe tener exactamente 2 valores");
+  H.assert(Array.isArray(D.items) && D.items.length >= 2 && D.items.length <= 8, "pesas admite de 2 a 8 items");
+  D.items.forEach((it) => H.assert(it && typeof it.nombre === "string" && typeof it.a === "number" && typeof it.b === "number", "cada item necesita nombre, a y b numéricos"));
+  const items = D.orden === "desc" ? D.items.slice().sort((x, y) => y.b - x.b) : D.items.slice();
+  const n = items.length, hi = ((D.destacar || 0) % n + n) % n;
+  const ink = H.color.ink, a1 = H.color.a1;
+  H.leyenda([{ nombre: String(D.fechas[0]), color: ink, forma: "punto" }, { nombre: String(D.fechas[1]), color: a1, forma: "punto" }]);
+
+  const W = 920, colIzq = 230, x0 = colIzq, x1 = W - 16, ejeH = 44;
+  const todos = items.flatMap((it) => [it.a, it.b]);
+  const dom = H.dominio(todos, D.desdeCero !== false);
+  const sx = H.escala(dom, [x0, x1]);
+  const f = (v) => H.num(v, D.formato);
+  const fontV = "700 22px 'JetBrains Mono',monospace";
+
+  // Dónde va cada valor: encima de su punto. Si los puntos están juntos, cada valor pasa
+  // a su lado exterior del par (si cabe entre la columna de nombres y el borde); el que
+  // no quepa se queda arriba, y solo si ninguno cabe `b` va abajo (fila más alta).
+  const plan = items.map((it) => {
+    const xa = sx(it.a), xb = sx(it.b), la = f(it.a), lb = f(it.b), wa = H.medir(la, fontV), wb = H.medir(lb, fontV);
+    const p = { xa, xb, la, lb, pa: "arriba", pb: "arriba" };
+    if (Math.abs(xa - xb) >= (wa + wb) / 2 + 14) return p;
+    const ladoA = xa <= xb ? "izq" : "der", ladoB = ladoA === "izq" ? "der" : "izq";
+    const cabe = (x, w, lado) => (lado === "izq" ? x - 22 - w >= x0 - 12 : x + 22 + w <= W);
+    const cA = cabe(xa, wa, ladoA), cB = cabe(xb, wb, ladoB);
+    if (cA && cB) { p.pa = ladoA; p.pb = ladoB; }
+    else if (cB) p.pb = ladoB;
+    else if (cA) p.pa = ladoA;
+    else p.pb = "abajo";
+    return p;
+  });
+  const filaMin = plan.some((p) => p.pb === "abajo") ? 78 : 58;
+  const minH = ejeH + n * filaMin, maxH = Math.max(Math.min(560, ejeH + n * 84), minH);
+  const alto = H.espacio(maxH, minH);
+  const svg = H.lienzo(W, alto);
+  const filaH = (alto - ejeH) / n, y1 = alto - ejeH;
+
+  // Eje inferior: ticks redondos, rejilla vertical tenue
+  const tk = H.ticks(dom[0], dom[1], 5);
+  const fEje = Object.assign({}, D.formato, { decimales: H.decimalesDe(tk.map((t) => t / (D.formato.escala || 1)), D.formato.decimales || 0) });
+  for (const t of tk) {
+    const x = sx(t);
+    H.svgEl("line", { x1: x, x2: x, y1: 0, y2: y1, stroke: H.color.inkA(.16), "stroke-width": 1 }, svg);
+    H.texto(svg, x, y1 + 30, H.num(t, fEje), { class: "t-eje", "text-anchor": "middle" });
+  }
+  H.svgEl("line", { x1: x0, x2: x1, y1: y1, y2: y1, stroke: H.color.inkA(.6), "stroke-width": 2 }, svg);
+  if (D.desdeCero === false) H.texto(svg, 0, y1 + 30, "eje desde " + H.num(dom[0], fEje), { class: "t-eje" });
+
+  items.forEach((it, i) => {
+    const esHi = i === hi, p = plan[i], r = esHi ? 12 : 10;
+    const cy = i * filaH + filaH / 2 + (p.pb === "abajo" ? 0 : 6);
+    const fontN = ["800 25px", "600 23px", "600 21px", "600 19px"].map((s) => s + " Archivo,sans-serif");
+    const fn = esHi ? fontN[0] : fontN[1];
+    const fnCabe = H.medir(it.nombre, fn) <= colIzq - 16 ? fn : (fontN.slice(2).find((s) => H.medir(it.nombre, s) <= colIzq - 16) || fontN[3]);
+    H.texto(svg, 0, cy + 8, it.nombre, { style: "font:" + fnCabe + ";fill:" + ink });
+    H.svgEl("line", { x1: x0, x2: x1, y1: cy, y2: cy, stroke: H.color.inkA(.14), "stroke-width": 2 }, svg);
+    H.svgEl("line", { x1: p.xa, x2: p.xb, y1: cy, y2: cy, stroke: a1, "stroke-width": 8, "stroke-linecap": "round" }, svg);
+    H.svgEl("circle", { cx: p.xa, cy, r, fill: ink }, svg);
+    H.svgEl("circle", { cx: p.xb, cy, r, fill: a1 }, svg);
+    const estilo = "font:" + fontV + ";fill:" + ink;
+    const poner = (x, s, pos) => {
+      if (pos === "arriba") H.texto(svg, x, cy - r - 10, s, { "text-anchor": "middle", style: estilo });
+      else if (pos === "abajo") H.texto(svg, x, cy + r + 26, s, { "text-anchor": "middle", style: estilo });
+      else if (pos === "izq") H.texto(svg, x - 22, cy + 8, s, { "text-anchor": "end", style: estilo });
+      else H.texto(svg, x + 22, cy + 8, s, { style: estilo });
+    };
+    poner(p.xa, p.la, p.pa);
+    poner(p.xb, p.lb, p.pb);
+  });
+}
+</script>

@@ -1,0 +1,56 @@
+<!-- waffle · proporción de 100 (brief 4d). Contrato: referencias/diseno/graficos.md -->
+<style>
+.wf-grid { display: grid; grid-template-columns: auto 1fr; column-gap: 56px; align-items: end; height: 100%; }
+.wf-celdas { display: grid; gap: 8px; }
+.wf-celdas span { display: block; background: var(--ink); opacity: .32; }
+.wf-celdas span.on { background: var(--a1); opacity: 1; }
+.wf-texto .num { font: 400 132px/.86 'Instrument Serif', Georgia, serif; letter-spacing: -.02em; color: var(--a1); white-space: nowrap; }
+.wf-texto .t { font: 600 26px/1.25 Archivo, sans-serif; margin-top: 16px; }
+.wf-ley { display: flex; flex-direction: column; gap: 12px; margin-top: 36px; }
+.wf-ley .it { display: flex; align-items: center; gap: 12px; font: 600 20px/1 Archivo, sans-serif; }
+.wf-ley .sw { width: 20px; height: 20px; background: var(--ink); opacity: .32; flex: none; }
+.wf-ley .sw.on { background: var(--a1); opacity: 1; }
+</style>
+<script>
+// CIFRAS DE EJEMPLO (brief 4d) · verificar antes de publicar
+const DATA = {
+  kicker: "REMESAS · % DEL PIB 2025",
+  titular: ["Uno de cada cinco", "quetzales viene de fuera"],
+  nota: "",
+  fuente: "Banguat · remesas / PIB nominal 2025",
+  handle: "@DerekUrizar",
+  formato: { prefijo: "", sufijo: "%", decimales: 0, miles: true, escala: 1 },
+  porcentaje: 20,                       // 0 < porcentaje ≤ 100; se redondea a entero para las celdas
+  etiqueta_dentro: "remesas",
+  etiqueta_resto: "resto de la economía",
+  cifra: { valor: 20, texto: "del PIB son remesas familiares" }
+};
+
+function render(D) {
+  H.assert(typeof D.porcentaje === "number" && D.porcentaje > 0 && D.porcentaje <= 100, "porcentaje debe estar en (0, 100]");
+  H.assert(D.cifra && typeof D.cifra.valor === "number" && D.cifra.texto, "cifra necesita valor y texto");
+  const llenas = Math.round(D.porcentaje);
+  const alto = H.espacio(520, 340);
+  const celda = Math.max(26, Math.min(44, Math.floor((alto - 9 * 8) / 10)));
+  const g = document.getElementById("grafico");
+  g.style.height = alto + "px";
+  const grid = H.el("div", "wf-grid", g);
+  const celdas = H.el("div", "wf-celdas", grid);
+  celdas.style.gridTemplateColumns = "repeat(10, " + celda + "px)";
+  for (let i = 0; i < 100; i++) {
+    const s = H.el("span", i < llenas ? "on" : "", celdas);
+    s.style.width = celda + "px"; s.style.height = celda + "px";
+  }
+  const t = H.el("div", "wf-texto", grid);
+  H.el("div", "num", t, H.esc(H.num(D.cifra.valor, D.formato)));
+  H.el("div", "t", t, H.esc(D.cifra.texto));
+  const ley = H.el("div", "wf-ley", t);
+  const it1 = H.el("div", "it", ley); H.el("span", "sw on", it1); H.el("span", null, it1, H.esc(D.etiqueta_dentro || ""));
+  const it2 = H.el("div", "it", ley); H.el("span", "sw", it2); H.el("span", null, it2, H.esc(D.etiqueta_resto || ""));
+  if (llenas !== D.porcentaje && !(D.nota || "").length) {
+    const nota = document.getElementById("nota");
+    nota.textContent = "Celdas redondeadas al entero: " + H.num(D.porcentaje, { decimales: 1 }) + "% → " + llenas + " de 100.";
+    nota.hidden = false;
+  }
+}
+</script>

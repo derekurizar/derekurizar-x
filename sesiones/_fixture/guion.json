@@ -1,0 +1,166 @@
+{
+  "slug": "combustibles-2026-fixture",
+  "fecha": "2026-09-28",
+  "paleta": "cielo",
+  "smoke": true,
+  "handle": "@DerekUrizar",
+  "sintesis": {
+    "pregunta": "¿Cuánto encareció el cierre de Ormuz el combustible que paga Guatemala?",
+    "tesis": "Llenar el tanque de diésel en Guatemala cuesta 77% más que en enero de 2026, más que lo que subió el crudo (54%).",
+    "ancla_id": "pre-c03",
+    "arco": [
+      "gancho",
+      "giro",
+      "cierre"
+    ],
+    "no_afirma": [
+      "No afirma que el subsidio haya causado el zigzag: coincide en el tiempo, la fuente no lo atribuye."
+    ],
+    "incertidumbre": [
+      "El promedio anual por país mezcla meses con y sin subsidio en Guatemala."
+    ],
+    "descartadas": [
+      {
+        "id": "pre-c05",
+        "por": "no_confirmada"
+      }
+    ]
+  },
+  "tuits": [
+    {
+      "n": 1,
+      "beat": "gancho",
+      "texto": "El crudo subió 54% en 2026. Llenar el tanque en Guatemala cuesta 77% más.\n\n¿Cómo llegó el cierre de Ormuz hasta la bomba de tu colonia? Hilo 🧵",
+      "alt_text": "Tarjeta azul con la cifra US$102 por barril de Brent en septiembre de 2026, 54% más que los US$67 de enero.",
+      "visual": {
+        "plantilla": "cifra",
+        "kicker": "PETRÓLEO CRUDO · BRENT · US$ POR BARRIL",
+        "titular": [
+          "El crudo cerró",
+          "septiembre en US$102"
+        ],
+        "nota": "Promedio mensual. El Brent tocó 128 el 2 de abril.",
+        "fuente": "EIA · U.S. Energy Information Administration · 2026",
+        "cifra_ids": [
+          "pre-c01"
+        ],
+        "datos": {
+          "formato": {
+            "prefijo": "US$",
+            "sufijo": "",
+            "decimales": 0,
+            "miles": true,
+            "escala": 1
+          },
+          "cifra": {
+            "valor": 102,
+            "texto": "por barril, promedio de septiembre"
+          },
+          "contexto": "54% más que en enero",
+          "tendencia": "sube",
+          "comparacion": {
+            "etiqueta": "enero",
+            "valor": 67
+          }
+        },
+        "archivo_html": "sesiones/_fixture/visuales/tuit_1.html",
+        "archivo_png": "sesiones/_fixture/visuales/tuit_1.png"
+      }
+    },
+    {
+      "n": 2,
+      "beat": "giro",
+      "texto": "",
+      "alt_text": "Tarjeta azul: el diésel en Guatemala pasó de 26.00 quetzales por galón en enero a 46.10 en septiembre, 1.77 veces más.",
+      "visual": {
+        "plantilla": "antes-despues",
+        "kicker": "DIÉSEL EN GUATEMALA · QUETZALES POR GALÓN",
+        "titular": [
+          "Llenar el tanque",
+          "cuesta 77% más",
+          "que en enero"
+        ],
+        "nota": "El Congreso aprobó un techo de Q39 por galón hasta diciembre.",
+        "fuente": "MEM · Dirección General de Hidrocarburos",
+        "cifra_ids": [
+          "pre-c02",
+          "pre-c03"
+        ],
+        "datos": {
+          "formato": {
+            "prefijo": "",
+            "sufijo": "",
+            "decimales": 2,
+            "miles": true,
+            "escala": 1
+          },
+          "antes": {
+            "etiqueta": "Enero",
+            "valor": 26.0,
+            "sub": "quetzales por galón"
+          },
+          "despues": {
+            "etiqueta": "Septiembre",
+            "valor": 46.1,
+            "sub": "quetzales por galón"
+          },
+          "pildora": "factor",
+          "decimales_pildora": 2
+        },
+        "archivo_html": "sesiones/_fixture/visuales/tuit_2.html",
+        "archivo_png": "sesiones/_fixture/visuales/tuit_2.png"
+      }
+    },
+    {
+      "n": 3,
+      "beat": "cierre",
+      "texto": "Aun así, ningún vecino paga tanto por el diésel como México. Guatemala sale bajo en el promedio del año porque incluye los meses de subsidio.\n\nFuentes: EIA, MEM-DGH, CNE México, DGEHM El Salvador.",
+      "alt_text": "Ranking del precio promedio del diésel en 2026: México 5.90, Guatemala 4.85, Estados Unidos 4.84 y El Salvador 4.20 dólares por galón.",
+      "visual": {
+        "plantilla": "barras-h",
+        "kicker": "DIÉSEL · PROMEDIO DEL AÑO EN US$ POR GALÓN",
+        "titular": [
+          "El diésel más caro",
+          "se paga en México"
+        ],
+        "nota": "Guatemala sale bajo porque el promedio incluye los meses de subsidio.",
+        "fuente": "EIA, CNE México, MEM Guatemala, DGEHM El Salvador",
+        "cifra_ids": [
+          "pre-c04"
+        ],
+        "datos": {
+          "formato": {
+            "prefijo": "",
+            "sufijo": "",
+            "decimales": 2,
+            "miles": true,
+            "escala": 1
+          },
+          "items": [
+            {
+              "nombre": "México",
+              "valor": 5.9
+            },
+            {
+              "nombre": "Guatemala",
+              "valor": 4.85
+            },
+            {
+              "nombre": "Estados Unidos",
+              "valor": 4.84
+            },
+            {
+              "nombre": "El Salvador",
+              "valor": 4.2
+            }
+          ],
+          "destacar": 0,
+          "orden": "desc"
+        },
+        "archivo_html": "sesiones/_fixture/visuales/tuit_3.html",
+        "archivo_png": "sesiones/_fixture/visuales/tuit_3.png"
+      }
+    }
+  ],
+  "hook_tipo": "pregunta_directa"
+}

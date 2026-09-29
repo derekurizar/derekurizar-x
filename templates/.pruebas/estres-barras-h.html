@@ -1,0 +1,41 @@
+<!-- PRUEBA DE ESTRÉS · barras-h: 8 items con nombres largos + titular 3 líneas -->
+<script>
+const DATA = {
+  kicker: "PRUEBA · OCHO ITEMS · NOMBRES LARGOS",
+  titular: ["Ocho departamentos", "con nombres largos", "en una sola tarjeta"],
+  nota: "Prueba de densidad máxima del ranking.",
+  fuente: "Prueba de estrés · datos ficticios",
+  handle: "@DerekUrizar",
+  formato: { prefijo: "Q", sufijo: "", decimales: 2, miles: true, escala: 1 },
+  items: [
+    { nombre: "Quetzaltenango (Xela)", valor: 1234.56 }, { nombre: "Huehuetenango", valor: 1100.1 },
+    { nombre: "Sacatepéquez", valor: 998.4 }, { nombre: "Chimaltenango", valor: 950.0 },
+    { nombre: "Suchitepéquez", valor: 870.25 }, { nombre: "Alta Verapaz", valor: 640.9 },
+    { nombre: "Baja Verapaz", valor: 512.3 }, { nombre: "Totonicapán", valor: 233.7 }
+  ],
+  destacar: 0, orden: "desc"
+};
+function render(D) {
+  H.assert(Array.isArray(D.items) && D.items.length >= 2 && D.items.length <= 8, "barras-h admite de 2 a 8 items");
+  D.items.forEach((it) => H.assert(it && typeof it.nombre === "string" && typeof it.valor === "number", "cada item necesita nombre y valor numérico"));
+  const items = D.orden === "dado" ? D.items.slice() : D.items.slice().sort((a, b) => b.valor - a.valor);
+  const n = items.length, hi = ((D.destacar || 0) % n + n) % n;
+
+  const W = 920, alto = H.espacio(Math.min(560, 40 + n * 96), n * 52);
+  const svg = H.lienzo(W, alto);
+  const filaH = alto / n;
+  const barH = Math.max(16, Math.min(30, Math.round(filaH * 0.34)));
+  const labPx = n > 6 ? 21 : 23, hiPx = n > 6 ? 24 : 26;
+  const max = Math.max(...items.map((it) => Math.abs(it.valor))) || 1;
+  const ink = H.color.ink;
+
+  items.forEach((it, i) => {
+    const esHi = i === hi;
+    const y = i * filaH + (filaH - (hiPx + 12 + barH)) / 2 + hiPx;
+    H.texto(svg, 0, y, it.nombre, { style: "font:" + (esHi ? "800 " + hiPx : "600 " + labPx) + "px Archivo,sans-serif;fill:" + ink });
+    H.texto(svg, W, y, it.valor_texto || H.num(it.valor, D.formato), { class: "t-val", "text-anchor": "end", style: esHi ? "font-size:24px" : "" });
+    const w = Math.max(4, (Math.abs(it.valor) / max) * W);
+    H.svgEl("rect", { x: 0, y: y + 12, width: w, height: barH, fill: esHi ? H.color.a1 : ink }, svg);
+  });
+}
+</script>

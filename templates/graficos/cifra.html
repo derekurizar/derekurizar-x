@@ -1,0 +1,67 @@
+<!-- cifra · número héroe sin gráfico (ancla del T1 o cierre). Contrato: referencias/diseno/graficos.md -->
+<style>
+.cifra-bloque { display: flex; flex-direction: column; justify-content: flex-end; height: 100%; }
+.cifra-bloque.centrado { justify-content: center; }
+.cifra-ctx { display: flex; align-items: center; gap: 14px; font: 500 22px/1 'JetBrains Mono', monospace; }
+.cifra-ctx .flecha { font: 400 26px/1 Archivo, sans-serif; }
+.cifra-num { font: 400 220px/.88 'Instrument Serif', Georgia, serif; letter-spacing: -.02em; color: var(--a1); margin-top: 22px; white-space: nowrap; }
+.cifra-txt { font: 600 28px/1.25 Archivo, sans-serif; margin-top: 18px; max-width: 900px; }
+.cifra-comp { margin-top: 44px; display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+.cifra-comp .col .lab { font: 700 18px/1 'JetBrains Mono', monospace; letter-spacing: .12em; text-transform: uppercase; }
+.cifra-comp .col .val { font: 700 26px/1 'JetBrains Mono', monospace; margin-top: 12px; }
+.cifra-comp .col .barra { height: 22px; margin-top: 14px; background: var(--ink); }
+.cifra-comp .col.hero .barra { background: var(--a1); }
+</style>
+<script>
+// CIFRAS DE EJEMPLO (brief, imagen 2: crudo Brent 2026) · verificar antes de publicar
+const DATA = {
+  kicker: "PETRÓLEO CRUDO · BRENT · US$ POR BARRIL",
+  titular: ["El crudo cerró", "septiembre en US$102"],
+  nota: "Promedio mensual. El Brent tocó 128 el 2 de abril.",
+  fuente: "EIA · U.S. Energy Information Administration · 2026",
+  handle: "@DerekUrizar",
+  formato: { prefijo: "US$", sufijo: "", decimales: 0, miles: true, escala: 1 },
+  cifra: { valor: 102, texto: "por barril, promedio de septiembre" },
+  contexto: "54% más que en enero",     // ≤60 caracteres; "" para omitir
+  tendencia: "sube",                     // "sube" | "baja" | null
+  comparacion: { etiqueta: "enero", valor: 67, etiqueta_hero: "septiembre" }   // opcional: segunda barra proporcional; etiqueta_hero rotula la barra de la cifra (default "ahora")
+};
+
+function render(D) {
+  H.assert(D.cifra && typeof D.cifra.valor === "number", "cifra.valor debe ser un número");
+  H.assert(typeof D.cifra.texto === "string" && D.cifra.texto.trim(), "cifra.texto vacío");
+  H.assert(!D.contexto || D.contexto.length <= 60, "contexto > 60 caracteres");
+  const alto = H.espacio(560, 320);
+  const g = document.getElementById("grafico");
+  g.style.height = alto + "px";
+  const b = H.el("div", "cifra-bloque" + (D.comparacion ? "" : " centrado"), g);
+
+  if (D.contexto || D.tendencia) {
+    const ctx = H.el("div", "cifra-ctx", b);
+    if (D.tendencia) H.el("span", "flecha", ctx, D.tendencia === "baja" ? "&#9660;" : "&#9650;");
+    if (D.contexto) H.el("span", null, ctx, H.esc(D.contexto));
+  }
+  const num = H.el("div", "cifra-num", b, H.esc(H.num(D.cifra.valor, D.formato)));
+  // Auto-ajuste: baja el cuerpo hasta que la cifra quepa en los 920 px útiles.
+  for (let px = 220; px >= 120; px -= 10) {
+    num.style.fontSize = px + "px";
+    if (num.scrollWidth <= 920) break;
+  }
+  H.el("div", "cifra-txt", b, H.esc(D.cifra.texto));
+
+  if (D.comparacion) {
+    H.assert(typeof D.comparacion.valor === "number" && D.comparacion.etiqueta, "comparacion necesita etiqueta y valor");
+    const max = Math.max(Math.abs(D.cifra.valor), Math.abs(D.comparacion.valor)) || 1;
+    const comp = H.el("div", "cifra-comp", b);
+    const mk = (cls, lab, val) => {
+      const c = H.el("div", "col " + cls, comp);
+      H.el("div", "lab", c, H.esc(lab));
+      H.el("div", "val", c, H.esc(H.num(val, D.formato)));
+      const bar = H.el("div", "barra", c);
+      bar.style.width = Math.max(3, Math.round((Math.abs(val) / max) * 100)) + "%";
+    };
+    mk("", D.comparacion.etiqueta, D.comparacion.valor);
+    mk("hero", D.comparacion.etiqueta_hero || "ahora", D.cifra.valor);
+  }
+}
+</script>

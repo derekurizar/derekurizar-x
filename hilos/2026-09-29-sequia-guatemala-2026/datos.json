@@ -1,0 +1,1581 @@
+{
+  "slug": "sequia-guatemala-2026",
+  "fecha": "2026-09-29",
+  "tesis": "La sequía de 2026 se sostiene como extrema en el clima (El Niño a 1.8 °C en jun-ago, más que en 1997 o 2015, y lluvias mínimas de registro en 23 de 39 estaciones), pero no en el hambre medida: la CIF proyecta 3,177,461 personas en Fase 3+, por debajo del pico de 4,600,986 en 2022.",
+  "ancla_id": "llu-c05",
+  "paleta": "maiz",
+  "hook_tipo": "giro_inversion",
+  "cifras": [
+    {
+      "id": "cos-c01",
+      "concepto": "Hectáreas agrícolas afectadas por sequía en Guatemala (acumulado al 27-ago-2026)",
+      "unidad": "hectáreas",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "MAGA (DIGEGR, presentación en el Congreso) vía Infobae 17-sep-2026",
+      "url": "https://www.infobae.com/guatemala/2026/09/17/la-sequia-agricola-afecta-22677397-hectareas-en-guatemala-y-supera-el-registro-de-la-ultima-decada/",
+      "periodo": "corte 27-ago-2026",
+      "n_puntos": 1,
+      "valor": 226773.97,
+      "veredicto": "verificada",
+      "fuente_2": "Diario de Centro América (titular: 226 mil 773 hectáreas)",
+      "evidencia": {
+        "url": "https://www.infobae.com/guatemala/2026/09/17/la-sequia-agricola-afecta-22677397-hectareas-en-guatemala-y-supera-el-registro-de-la-ultima-decada/",
+        "cita": "Guatemala registró 226.773,97 hectáreas afectadas por sequía agrícola al 27 de agosto de 2026, una extensión superior a la documentada en los últimos 10 años",
+        "archivo_local": "sesiones/_descargas/infobae_20260917_sequia_226773ha.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "cos-c06",
+      "concepto": "Familias productoras afectadas por sequía 2026 (corte 27-ago-2026)",
+      "unidad": "familias",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "MAGA (DIGEGR, presentación en el Congreso) vía Infobae 17-sep-2026",
+      "url": "https://www.infobae.com/guatemala/2026/09/17/la-sequia-agricola-afecta-22677397-hectareas-en-guatemala-y-supera-el-registro-de-la-ultima-decada/",
+      "periodo": "corte 27-ago-2026",
+      "n_puntos": 1,
+      "valor": 486727,
+      "veredicto": "verificada",
+      "fuente_2": "Diario de Centro América (titular: 486 mil 727 familias)",
+      "evidencia": {
+        "url": "https://www.infobae.com/guatemala/2026/09/17/la-sequia-agricola-afecta-22677397-hectareas-en-guatemala-y-supera-el-registro-de-la-ultima-decada/",
+        "cita": "La situación alcanza a 486,727 familias de 194 municipios",
+        "archivo_local": "sesiones/_descargas/infobae_20260917_sequia_226773ha.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "cos-c07",
+      "concepto": "Pérdida económica preliminar por sequía agrícola (MAGA, al 20-ago-2026)",
+      "unidad": "millones de quetzales",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "MAGA, Plan Institucional de Atención ante el Evento Agroclimático Sequía Prolongada 2026-2027, vía Prensa Libre 12-sep-2026",
+      "url": "https://www.prensalibre.com/guatemala/comunitario/sequia-agricola-deja-perdidas-por-q1087-millones-segun-el-maga/",
+      "periodo": "corte 20-ago-2026",
+      "n_puntos": 1,
+      "valor": 1087,
+      "veredicto": "verificada",
+      "fuente_2": "Prensa Libre + Noticiero El Vigilante (misma cifra); MAGA hasta 20-ago",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/guatemala/comunitario/sequia-agricola-deja-perdidas-por-q1087-millones-segun-el-maga/",
+        "cita": "La pérdida económica por la sequía agrícola en Guatemala asciende a Q1,087 millones, según datos del Ministerio de Agricultura, Ganadería y Alimentación (Maga) hasta el 20 de agosto.",
+        "archivo_local": "sesiones/_descargas/prensalibre_sequia_q1087m.txt"
+      },
+      "usada": false,
+      "aparece_en": [
+        "T4"
+      ]
+    },
+    {
+      "id": "cos-c08",
+      "concepto": "Hectáreas de maíz afectadas por sequía (corte 20-ago-2026) dentro de 171,001.43 ha totales",
+      "unidad": "hectáreas",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "MAGA, presentación al Congreso, vía Soy502 (7-sep-2026)",
+      "url": "https://www.soy502.com/articulo/maiz-registra-perdidas-masivas-sequia-precio-quintal-aum-101962",
+      "periodo": "corte 20-ago-2026",
+      "n_puntos": 1,
+      "valor": 157787,
+      "veredicto": "verificada",
+      "fuente_2": "Búsqueda: 157,787 ha maíz y 332,329 familias reportadas en cobertura de Prensa Libre del mismo corte",
+      "evidencia": {
+        "url": "https://www.soy502.com/articulo/maiz-registra-perdidas-masivas-sequia-precio-quintal-aum-101962",
+        "cita": "157,787 hectáreas del cultivo de maíz resultaron afectadas que corresponde a 332,329 familias [...] 171,001.43 hectáreas afectadas por sequía agrícola, correspondientes a 357,205 familias"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "cos-c10",
+      "concepto": "Familias afectadas registradas actualmente por el MAGA (fines de septiembre 2026)",
+      "unidad": "familias",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "MAGA vía Prensa Libre 28-sep-2026",
+      "url": "https://www.prensalibre.com/guatemala/sequia-y-anomalias-climaticas-podrian-afectar-a-mas-de-1-2-millones-de-familias-en-guatemala-segun-el-maga-breakig/",
+      "periodo": "aprox. 28-sep-2026",
+      "n_puntos": 1,
+      "valor": 577000,
+      "veredicto": "verificada",
+      "fuente_2": "Infobae 29-sep-2026 y Soy502 (577 mil familias)",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/guatemala/sequia-y-anomalias-climaticas-podrian-afectar-a-mas-de-1-2-millones-de-familias-en-guatemala-segun-el-maga-breakig/",
+        "cita": "Actualmente, el MAGA registra 577 mil familias afectadas y se prepara para atender el período de mayor demanda",
+        "archivo_local": "sesiones/_descargas/prensalibre_sequia_12m_familias.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "cos-c11",
+      "concepto": "% de hogares con pérdida de maíz que perdieron entre 75 % y 100 % de la cosecha, Guatemala (Corredor Seco, ciclo de primera 2026), y por departamento evaluado",
+      "unidad": "% de hogares con pérdidas de maíz",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Oxfam Centroamérica y socias, Evaluación Rápida El Niño 2026 (grupos focales jul-ago 2026)",
+      "url": "https://lac.oxfam.org/wp-content/uploads/2026/08/Informe-CA-Fenomeno-de-El-Nino.pdf",
+      "periodo": "julio-agosto 2026",
+      "n_puntos": 6,
+      "valor": 80.73,
+      "veredicto": "verificada",
+      "fuente_2": "Prensa Libre (estudio Oxfam: ~8 de cada 10 hogares perdieron 75-100 % del maíz)",
+      "evidencia": {
+        "url": "https://lac.oxfam.org/wp-content/uploads/2026/08/Informe-CA-Fenomeno-de-El-Nino.pdf",
+        "cita": "Pérdidas en el rango de 75% -100% de maiz y frijol por país [...] Guatemala 41.46% [frijol] 80.73% [maíz]; Jalapa 14,364 99.96%; Chiquimula 11,792 97.55%",
+        "archivo_local": "sesiones/_descargas/Informe-CA-Fenomeno-de-El-Nino.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Jalapa",
+          "valor": 99.96
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 97.55
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 86.83
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 53.52
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 40.85
+        },
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 38.95
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_4.png"
+      ]
+    },
+    {
+      "id": "ham-c01",
+      "concepto": "Personas en Fase 3+ de la CIF (Crisis + Emergencia), 1.ª situación proyectada jul-sep 2026",
+      "unidad": "personas",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "SESAN / CIF - Análisis de Inseguridad Alimentaria Aguda Guatemala abr 2026-feb 2027 (publicado 12-ago-2026)",
+      "url": "https://portal.siinsan.gob.gt/wp-content/uploads/20260812-CIF-2026-2027.pdf",
+      "periodo": "jul-sep 2026",
+      "n_puntos": 2,
+      "valor": 3177461,
+      "veredicto": "verificada",
+      "fuente_2": "SESAN, comunicado de prensa 7-ago-2026 (pronóstico 2026-2027) y cobertura Infobae/Centroamérica360",
+      "evidencia": {
+        "url": "https://portal.siinsan.gob.gt/wp-content/uploads/20260812-CIF-2026-2027.pdf",
+        "cita": "Se estima que 197 000 personas (1 % de la población) se encontrarían en Fase 4 (Emergencia) y alrededor de 2 981 000 personas (16 %) en Fase 3 (Crisis). En total 3,2 millones",
+        "archivo_local": "sesiones/_descargas/20260812-CIF-2026-2027.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Fase 3 (Crisis)",
+          "valor": 2980802
+        },
+        {
+          "nombre": "Fase 4 (Emergencia)",
+          "valor": 196659
+        }
+      ],
+      "usada": false,
+      "aparece_en": [
+        "T6"
+      ]
+    },
+    {
+      "id": "ham-c02",
+      "concepto": "% de población en Fase 3+ por departamento, jul-sep 2026 (22 departamentos)",
+      "unidad": "% de la población del departamento",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "SESAN / CIF 2026-2027, tabla de población 1.ª situación proyectada",
+      "url": "https://portal.siinsan.gob.gt/wp-content/uploads/20260812-CIF-2026-2027.pdf",
+      "periodo": "jul-sep 2026",
+      "n_puntos": 22,
+      "valor": 28,
+      "veredicto": "verificada",
+      "fuente_2": "SESAN, comunicado de prensa 7-ago-2026 (pronóstico 2026-2027) y cobertura Infobae/Centroamérica360",
+      "evidencia": {
+        "url": "https://portal.siinsan.gob.gt/wp-content/uploads/20260812-CIF-2026-2027.pdf",
+        "cita": "Alta Verapaz 1 482 083 ... 414 983 28 | Huehuetenango 1 533 735 ... 352 759 23 | Jalapa 432 547 ... 99 486 23 | Gran Total 18 312 373 ... 3 177 461 17",
+        "archivo_local": "sesiones/_descargas/20260812-CIF-2026-2027.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 28
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 15
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 20
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 7
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 15
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 14
+        },
+        {
+          "nombre": "Guatemala",
+          "valor": 10
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 23
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 15
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 23
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 20
+        },
+        {
+          "nombre": "Petén",
+          "valor": 15
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 17
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 21
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 20
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 10
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 19
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 17
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 16
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 22
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 20
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 22
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_6.png"
+      ]
+    },
+    {
+      "id": "ham-c03",
+      "concepto": "Personas en Fase 3+ por departamento, jul-sep 2026 (22 departamentos)",
+      "unidad": "personas",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "SESAN / CIF 2026-2027, tabla de población 1.ª situación proyectada",
+      "url": "https://portal.siinsan.gob.gt/wp-content/uploads/20260812-CIF-2026-2027.pdf",
+      "periodo": "jul-sep 2026",
+      "n_puntos": 22,
+      "valor": 414983,
+      "veredicto": "verificada",
+      "fuente_2": "SESAN, comunicado de prensa 7-ago-2026 (pronóstico 2026-2027) y cobertura Infobae/Centroamérica360",
+      "evidencia": {
+        "url": "https://portal.siinsan.gob.gt/wp-content/uploads/20260812-CIF-2026-2027.pdf",
+        "cita": "Alta Verapaz 1 482 083 ... 414 983 28 | Guatemala 3 755 757 ... 375 576 10 | Huehuetenango 1 533 735 ... 352 759 23",
+        "archivo_local": "sesiones/_descargas/20260812-CIF-2026-2027.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 414983
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 54104
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 161734
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 33345
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 30065
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 119576
+        },
+        {
+          "nombre": "Guatemala",
+          "valor": 375576
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 352759
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 71220
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 99486
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 116138
+        },
+        {
+          "nombre": "Petén",
+          "valor": 99939
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 165708
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 246470
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 80323
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 42632
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 241675
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 80210
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 81222
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 142249
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 105613
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 62433
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ham-c04",
+      "concepto": "Pico anual de personas en Fase 3+ según los análisis CIF de Guatemala, 2019-2026",
+      "unidad": "personas",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "IPC/CIF vía HDX (ipc_gtm_national_long.csv 2021-2026; all-countries-2017-2023.xlsx 2019-2020) + SESAN CIF 2026",
+      "url": "https://data.humdata.org/dataset/34c2fa3d-2eed-45bb-8e45-9b1a1801f351/resource/85754675-3e77-468d-b649-14a3a7f07614/download/ipc_gtm_national_long.csv",
+      "periodo": "2019-2026",
+      "n_puntos": 8,
+      "valor": 3177461,
+      "veredicto": "verificada",
+      "fuente_2": "IPC/CIF vía HDX (ipc_gtm_national_long.csv), archivo local",
+      "evidencia": {
+        "url": "https://data.humdata.org/dataset/34c2fa3d-2eed-45bb-8e45-9b1a1801f351/resource/85754675-3e77-468d-b649-14a3a7f07614/download/ipc_gtm_national_long.csv",
+        "cita": "Apr 2022,GTM,...,first projection,2022-06-01,2022-09-30,3+,4600986,0.26 | May 2026,...,first projection,2026-07-01,2026-09-30,3+,3177461,0.17",
+        "archivo_local": "sesiones/_descargas/ipc_gtm_national_long.csv"
+      },
+      "serie": [
+        {
+          "p": "2019",
+          "v": 3060873
+        },
+        {
+          "p": "2020",
+          "v": 3727600
+        },
+        {
+          "p": "2021",
+          "v": 3458652
+        },
+        {
+          "p": "2022",
+          "v": 4600986
+        },
+        {
+          "p": "2023",
+          "v": 4273098
+        },
+        {
+          "p": "2024",
+          "v": 2994471
+        },
+        {
+          "p": "2025",
+          "v": 3437133
+        },
+        {
+          "p": "2026",
+          "v": 3177461
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_5.png",
+        "T6"
+      ]
+    },
+    {
+      "id": "ham-c05",
+      "concepto": "Personas en Fase 3+ en los tres periodos del análisis CIF 2026",
+      "unidad": "personas",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "SESAN / CIF 2026-2027",
+      "url": "https://portal.siinsan.gob.gt/wp-content/uploads/20260812-CIF-2026-2027.pdf",
+      "periodo": "abr-2026 a feb-2027",
+      "n_puntos": 3,
+      "valor": 2587314,
+      "veredicto": "verificada",
+      "fuente_2": "SESAN, comunicado de prensa 7-ago-2026 (pronóstico 2026-2027) y cobertura Infobae/Centroamérica360",
+      "evidencia": {
+        "url": "https://portal.siinsan.gob.gt/wp-content/uploads/20260812-CIF-2026-2027.pdf",
+        "cita": "Gran Total 18 312 373 ... 2 453 907 14 | Gran Total ... 3 177 461 17 | Gran Total ... 2 587 314 14",
+        "archivo_local": "sesiones/_descargas/20260812-CIF-2026-2027.txt"
+      },
+      "serie": [
+        {
+          "p": "abr-jun 2026",
+          "v": 2453907
+        },
+        {
+          "p": "jul-sep 2026",
+          "v": 3177461
+        },
+        {
+          "p": "oct 2026-feb 2027",
+          "v": 2587314
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ham-c06",
+      "concepto": "Precio mayorista del maíz blanco, mercado La Terminal (Ciudad de Guatemala), mensual 2023-2026",
+      "unidad": "Q por quintal (100 libras)",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "WFP VAM (datos de precios MAGA) vía HDX HAPI - Food Prices & Market Monitor for Guatemala (act. 29-sep-2026)",
+      "url": "https://data.humdata.org/dataset/fd39432d-e0c7-49f8-b729-682229d01bb8/resource/711addf1-6843-464a-9c2d-3a53da6512a9/download/hdx_hapi_food_price_gtm.csv",
+      "periodo": "ene-2023 a jul-2026",
+      "n_puntos": 41,
+      "valor": 199.83,
+      "veredicto": "verificada",
+      "fuente_2": "Ninguna segunda fuente independiente accesible; verificado contra CSV local WFP VAM/HAPI (primaria, datos MAGA)",
+      "evidencia": {
+        "url": "https://data.humdata.org/dataset/fd39432d-e0c7-49f8-b729-682229d01bb8/resource/711addf1-6843-464a-9c2d-3a53da6512a9/download/hdx_hapi_food_price_gtm.csv",
+        "cita": "La Terminal,...,Maize (white),100 Pounds,actual,Wholesale,GTQ,199.83,2026-07-15,2026-08-14",
+        "archivo_local": "sesiones/_descargas/hdx_hapi_food_price_gtm.csv"
+      },
+      "serie": [
+        {
+          "p": "2023-01",
+          "v": 220.0
+        },
+        {
+          "p": "2023-02",
+          "v": 223.98
+        },
+        {
+          "p": "2023-03",
+          "v": 238.72
+        },
+        {
+          "p": "2023-04",
+          "v": 225.94
+        },
+        {
+          "p": "2023-05",
+          "v": 213.69
+        },
+        {
+          "p": "2023-06",
+          "v": 222.62
+        },
+        {
+          "p": "2023-07",
+          "v": 234.38
+        },
+        {
+          "p": "2023-08",
+          "v": 226.26
+        },
+        {
+          "p": "2023-09",
+          "v": 225.63
+        },
+        {
+          "p": "2023-10",
+          "v": 237.5
+        },
+        {
+          "p": "2023-11",
+          "v": 222.26
+        },
+        {
+          "p": "2023-12",
+          "v": 203.44
+        },
+        {
+          "p": "2024-01",
+          "v": 204.64
+        },
+        {
+          "p": "2024-02",
+          "v": 203.33
+        },
+        {
+          "p": "2024-03",
+          "v": 203.38
+        },
+        {
+          "p": "2024-04",
+          "v": 211.14
+        },
+        {
+          "p": "2024-05",
+          "v": 205.36
+        },
+        {
+          "p": "2024-06",
+          "v": 206.75
+        },
+        {
+          "p": "2024-07",
+          "v": 219.89
+        },
+        {
+          "p": "2024-09",
+          "v": 215.88
+        },
+        {
+          "p": "2024-10",
+          "v": 205.11
+        },
+        {
+          "p": "2024-11",
+          "v": 175.0
+        },
+        {
+          "p": "2024-12",
+          "v": 173.13
+        },
+        {
+          "p": "2025-01",
+          "v": 170.45
+        },
+        {
+          "p": "2025-02",
+          "v": 173.0
+        },
+        {
+          "p": "2025-03",
+          "v": 178.29
+        },
+        {
+          "p": "2025-04",
+          "v": 174.21
+        },
+        {
+          "p": "2025-05",
+          "v": 172.5
+        },
+        {
+          "p": "2025-06",
+          "v": 184.5
+        },
+        {
+          "p": "2025-07",
+          "v": 206.3
+        },
+        {
+          "p": "2025-09",
+          "v": 212.62
+        },
+        {
+          "p": "2025-10",
+          "v": 206.31
+        },
+        {
+          "p": "2025-11",
+          "v": 189.25
+        },
+        {
+          "p": "2025-12",
+          "v": 183.33
+        },
+        {
+          "p": "2026-01",
+          "v": 180.24
+        },
+        {
+          "p": "2026-02",
+          "v": 180.0
+        },
+        {
+          "p": "2026-03",
+          "v": 200.0
+        },
+        {
+          "p": "2026-04",
+          "v": 200.0
+        },
+        {
+          "p": "2026-05",
+          "v": 190.0
+        },
+        {
+          "p": "2026-06",
+          "v": 192.0
+        },
+        {
+          "p": "2026-07",
+          "v": 199.83
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ham-c07",
+      "concepto": "Precio mayorista del frijol negro, mercado La Terminal, mensual 2024-2026",
+      "unidad": "Q por quintal (100 libras)",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "WFP VAM (datos MAGA) vía HDX HAPI",
+      "url": "https://data.humdata.org/dataset/fd39432d-e0c7-49f8-b729-682229d01bb8/resource/711addf1-6843-464a-9c2d-3a53da6512a9/download/hdx_hapi_food_price_gtm.csv",
+      "periodo": "ene-2024 a ago-2026",
+      "n_puntos": 32,
+      "valor": 525,
+      "veredicto": "verificada",
+      "fuente_2": "Ninguna segunda fuente independiente accesible; verificado contra CSV local WFP VAM/HAPI (primaria, datos MAGA)",
+      "evidencia": {
+        "url": "https://data.humdata.org/dataset/fd39432d-e0c7-49f8-b729-682229d01bb8/resource/711addf1-6843-464a-9c2d-3a53da6512a9/download/hdx_hapi_food_price_gtm.csv",
+        "cita": "La Terminal,...,Beans (black),100 Pounds,actual,Wholesale,GTQ,525,2026-08-15,2026-09-14",
+        "archivo_local": "sesiones/_descargas/hdx_hapi_food_price_gtm.csv"
+      },
+      "serie": [
+        {
+          "p": "2024-01",
+          "v": 663.45
+        },
+        {
+          "p": "2024-02",
+          "v": 654.52
+        },
+        {
+          "p": "2024-03",
+          "v": 674.26
+        },
+        {
+          "p": "2024-04",
+          "v": 687.38
+        },
+        {
+          "p": "2024-05",
+          "v": 696.67
+        },
+        {
+          "p": "2024-06",
+          "v": 708.75
+        },
+        {
+          "p": "2024-07",
+          "v": 798.64
+        },
+        {
+          "p": "2024-08",
+          "v": 818.0
+        },
+        {
+          "p": "2024-09",
+          "v": 771.25
+        },
+        {
+          "p": "2024-10",
+          "v": 744.55
+        },
+        {
+          "p": "2024-11",
+          "v": 724.38
+        },
+        {
+          "p": "2024-12",
+          "v": 688.75
+        },
+        {
+          "p": "2025-01",
+          "v": 652.27
+        },
+        {
+          "p": "2025-02",
+          "v": 650.0
+        },
+        {
+          "p": "2025-03",
+          "v": 650.0
+        },
+        {
+          "p": "2025-04",
+          "v": 650.0
+        },
+        {
+          "p": "2025-05",
+          "v": 650.0
+        },
+        {
+          "p": "2025-06",
+          "v": 650.0
+        },
+        {
+          "p": "2025-07",
+          "v": 650.0
+        },
+        {
+          "p": "2025-08",
+          "v": 646.25
+        },
+        {
+          "p": "2025-09",
+          "v": 625.0
+        },
+        {
+          "p": "2025-10",
+          "v": 625.0
+        },
+        {
+          "p": "2025-11",
+          "v": 574.0
+        },
+        {
+          "p": "2025-12",
+          "v": 555.0
+        },
+        {
+          "p": "2026-01",
+          "v": 527.38
+        },
+        {
+          "p": "2026-02",
+          "v": 525.0
+        },
+        {
+          "p": "2026-03",
+          "v": 550.0
+        },
+        {
+          "p": "2026-04",
+          "v": 550.0
+        },
+        {
+          "p": "2026-05",
+          "v": 525.0
+        },
+        {
+          "p": "2026-06",
+          "v": 525.0
+        },
+        {
+          "p": "2026-07",
+          "v": 525.0
+        },
+        {
+          "p": "2026-08",
+          "v": 525.0
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ham-c08",
+      "concepto": "Costo de la Canasta Básica Alimentaria Urbana (CBAU) per cápita mensual, junio 2026",
+      "unidad": "Q por persona al mes",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "INE Guatemala - Canasta Básica Alimentaria -CBA- Junio 2026 (publicado 7-jul-2026)",
+      "url": "https://www.ine.gob.gt/sistema/uploads/2026/07/07/20260707110852iZwkJLBrcyCmachhwmugKt4pf6cK8kRg.pdf",
+      "periodo": "junio 2026",
+      "n_puntos": 1,
+      "valor": 943.14,
+      "veredicto": "verificada",
+      "fuente_2": "INE Guatemala, noticias de prensa (La Hora / El Vigilante) sobre CBA junio 2026",
+      "evidencia": {
+        "url": "https://www.ine.gob.gt/sistema/uploads/2026/07/07/20260707110852iZwkJLBrcyCmachhwmugKt4pf6cK8kRg.pdf",
+        "cita": "El costo de adquisición de la CBAU per cápita mensual a junio del 2026 fue de Q.943.14 y de la CBAR fue de Q.727.14.",
+        "archivo_local": "sesiones/_descargas/20260707110852iZwkJLBrcyCmachhwmugKt4pf6cK8kRg.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ham-c09",
+      "concepto": "Kilocalorías diarias por persona que aporta el maíz en la Canasta Básica Alimentaria Rural (tortillas, maíz blanco, harina de maíz)",
+      "unidad": "kcal por persona al día",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "INE Guatemala - CBA Junio 2026, cuadro de costo por producto Rural",
+      "url": "https://www.ine.gob.gt/sistema/uploads/2026/07/07/20260707110852iZwkJLBrcyCmachhwmugKt4pf6cK8kRg.pdf",
+      "periodo": "junio 2026",
+      "n_puntos": 4,
+      "valor": 978.36,
+      "veredicto": "verificada",
+      "fuente_2": "Cálculo sobre cuadro 4 INE CBA rural junio 2026 (fuente primaria; sin segunda fuente independiente)",
+      "evidencia": {
+        "url": "https://www.ine.gob.gt/sistema/uploads/2026/07/07/20260707110852iZwkJLBrcyCmachhwmugKt4pf6cK8kRg.pdf",
+        "cita": "3 Maíz blanco 288.00 2,367.09 11.73 11.73 | 4 Harina de maíz 44.92 373.28 5.35 5.37 | 9 Tortillas frescas 645.44 9,176.80 98.15 98.68",
+        "archivo_local": "sesiones/_descargas/20260707110852iZwkJLBrcyCmachhwmugKt4pf6cK8kRg.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Tortillas frescas",
+          "valor": 645.44
+        },
+        {
+          "nombre": "Maíz blanco (grano)",
+          "valor": 288.0
+        },
+        {
+          "nombre": "Harina de maíz",
+          "valor": 44.92
+        },
+        {
+          "nombre": "Resto de la canasta rural",
+          "valor": 1193.63
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ham-c10",
+      "concepto": "Población total analizada por la CIF 2026 (denominador: proyección oficial INE)",
+      "unidad": "personas",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "SESAN / CIF 2026-2027 (estimaciones y proyecciones de población INE 2010-2050, revisión 2019-2020)",
+      "url": "https://portal.siinsan.gob.gt/wp-content/uploads/20260812-CIF-2026-2027.pdf",
+      "periodo": "2026",
+      "n_puntos": 1,
+      "valor": 18312373,
+      "veredicto": "verificada",
+      "fuente_2": "SESAN, comunicado de prensa 7-ago-2026 (pronóstico 2026-2027) y cobertura Infobae/Centroamérica360",
+      "evidencia": {
+        "url": "https://portal.siinsan.gob.gt/wp-content/uploads/20260812-CIF-2026-2027.pdf",
+        "cita": "territorio guatemalteco, con una población total de 18,3 millones de habitantes, según las estimaciones y proyecciones oficiales de población",
+        "archivo_local": "sesiones/_descargas/20260812-CIF-2026-2027.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ham-c11",
+      "concepto": "Hogares con reservas de maíz que les alcanzarán tres semanas o menos (evaluación Oxfam / Acción contra el Hambre, Corredor Seco)",
+      "unidad": "% de los hogares que aún conservan reservas",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Oxfam y Acción contra el Hambre, evaluación 'La sequía, los cultivos y el corredor seco centroamericano' (ago-2026), citada por Infobae/EFE",
+      "url": "https://www.infobae.com/guatemala/2026/09/16/por-que-31-millones-de-guatemaltecos-enfrentaran-inseguridad-alimentaria-en-septiembre-en-el-corredor-seco/",
+      "periodo": "agosto 2026",
+      "n_puntos": 1,
+      "valor": 64.2,
+      "veredicto": "verificada",
+      "fuente_2": "Swissinfo/EFE (cita textual: El 64,2 % de los hogares que aún conservan reservas de maíz estima que alcanzarán para tres semanas o menos); Oxfam vía Infobae, Prensa Libre y otros",
+      "evidencia": {
+        "url": "https://www.infobae.com/guatemala/2026/09/16/por-que-31-millones-de-guatemaltecos-enfrentaran-inseguridad-alimentaria-en-septiembre-en-el-corredor-seco/",
+        "cita": "Las reservas de maíz que aún conservan algunos hogares alcanzarán, en 64.2% de los casos, para tres semanas o menos"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ham-c12",
+      "concepto": "Departamentos clasificados en Fase 3 (Crisis) de la CIF: abr-jun 2026 vs jul-sep 2026",
+      "unidad": "departamentos",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "SESAN / CIF 2026-2027",
+      "url": "https://portal.siinsan.gob.gt/wp-content/uploads/20260812-CIF-2026-2027.pdf",
+      "periodo": "abr-sep 2026",
+      "n_puntos": 2,
+      "valor": 10,
+      "veredicto": "verificada",
+      "fuente_2": "SESAN, comunicado de prensa 7-ago-2026 (pronóstico 2026-2027) y cobertura Infobae/Centroamérica360",
+      "evidencia": {
+        "url": "https://portal.siinsan.gob.gt/wp-content/uploads/20260812-CIF-2026-2027.pdf",
+        "cita": "nueve departamentos, que pasarían en este período de Fase 2 (Acentuada) a Fase 3 (Crisis): Chimaltenango, Huehuetenango, Jalapa, Jutiapa, Quiché, Retalhuleu,",
+        "archivo_local": "sesiones/_descargas/20260812-CIF-2026-2027.txt"
+      },
+      "partes": [
+        {
+          "nombre": "abr-jun 2026",
+          "valor": 1
+        },
+        {
+          "nombre": "jul-sep 2026",
+          "valor": 10
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "llu-c01",
+      "concepto": "Déficit de lluvia acumulada enero-junio 2026 frente al promedio 1991-2020, por región climática",
+      "unidad": "% de déficit vs normal 1991-2020",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "INSIVUMEH (director Edwin Rojas ante la Comisión de Agricultura del Congreso), vía Infobae",
+      "url": "https://www.infobae.com/guatemala/2026/08/27/guatemala-enfrenta-un-deficit-hidrico-de-hasta-un-tercio-mientras-el-fenomeno-el-nino-se-consolida-como-el-mas-fuerte-en-76-anos/",
+      "periodo": "enero-junio 2026",
+      "n_puntos": 4,
+      "valor": 30,
+      "veredicto": "ajustada",
+      "fuente_2": "Prensa Libre / Infobae (misma exposición de Rojas ante el Congreso)",
+      "evidencia": {
+        "url": "https://www.infobae.com/guatemala/2026/08/27/guatemala-enfrenta-un-deficit-hidrico-de-hasta-un-tercio-mientras-el-fenomeno-el-nino-se-consolida-como-el-mas-fuerte-en-76-anos/",
+        "cita": "Pacífico: 29% frente al promedio histórico 1991-2020 ... Altiplano Central 24% ... Occidente 17% ... Valles de Oriente más de 30%",
+        "archivo_local": "sesiones/_descargas/insivumeh_congreso_2026-08-26.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Valles de Oriente",
+          "valor": 30
+        },
+        {
+          "nombre": "Pacífico",
+          "valor": 29
+        },
+        {
+          "nombre": "Altiplano Central",
+          "valor": 24
+        },
+        {
+          "nombre": "Occidente",
+          "valor": 17
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_2.png"
+      ]
+    },
+    {
+      "id": "llu-c02",
+      "concepto": "Estaciones meteorológicas cuyo acumulado mayo-agosto 2026 fue el menor de toda su serie histórica",
+      "unidad": "estaciones (de 39 analizadas)",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Análisis de C. Castañón, V. Gómez y W. Bardales (Facultad de Ingeniería, USAC) con datos INSIVUMEH, vía Prensa Libre 26-sep-2026",
+      "url": "https://www.prensalibre.com/guatemala/comunitario/guatemala-tiene-inundaciones-despues-de-meses-de-sequia-por-que-la-lluvia-no-ha-borrado-el-deficit/",
+      "periodo": "mayo-agosto 2026",
+      "n_puntos": 1,
+      "valor": 23,
+      "veredicto": "verificada",
+      "fuente_2": "Prensa Libre (2.º artículo) sobre análisis USAC/AguaConsulta (Bardales, Castañón)",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/guatemala/comunitario/guatemala-tiene-inundaciones-despues-de-meses-de-sequia-por-que-la-lluvia-no-ha-borrado-el-deficit/",
+        "cita": "23 estaciones (59%): el acumulado del 2026 fue el menor registrado en su respectiva serie; 36 estaciones (92%) presentaron condiciones secas o más severas"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_3.png"
+      ]
+    },
+    {
+      "id": "llu-c03",
+      "concepto": "Lluvia acumulada mayo-agosto 2026 vs mínimo histórico previo en cinco estaciones",
+      "unidad": "mm",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Análisis USAC (Castañón, Gómez, Bardales) con datos INSIVUMEH, vía Prensa Libre 26-sep-2026",
+      "url": "https://www.prensalibre.com/guatemala/comunitario/guatemala-tiene-inundaciones-despues-de-meses-de-sequia-por-que-la-lluvia-no-ha-borrado-el-deficit/",
+      "periodo": "mayo-agosto 2026",
+      "n_puntos": 10,
+      "valor": 141.6,
+      "veredicto": "verificada",
+      "fuente_2": "Prensa Libre (2.º artículo) sobre análisis USAC/AguaConsulta",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/guatemala/comunitario/guatemala-tiene-inundaciones-despues-de-meses-de-sequia-por-que-la-lluvia-no-ha-borrado-el-deficit/",
+        "cita": "Suiza Contenta, Sacatepéquez 141.6 (mínimo anterior 331.3); El Capitán, Sololá 194.5 (346.5); Alameda ICTA 211.3 (365.5); Insivumeh 271.7 (461.9); Tecún Umán 372 (642.2)"
+      },
+      "partes": [
+        {
+          "nombre": "Suiza Contenta (Sacatepéquez) 2026",
+          "valor": 141.6
+        },
+        {
+          "nombre": "Suiza Contenta (Sacatepéquez) mínimo previo",
+          "valor": 331.3
+        },
+        {
+          "nombre": "El Capitán (Sololá) 2026",
+          "valor": 194.5
+        },
+        {
+          "nombre": "El Capitán (Sololá) mínimo previo",
+          "valor": 346.5
+        },
+        {
+          "nombre": "Alameda ICTA (Chimaltenango) 2026",
+          "valor": 211.3
+        },
+        {
+          "nombre": "Alameda ICTA (Chimaltenango) mínimo previo",
+          "valor": 365.5
+        },
+        {
+          "nombre": "Insivumeh (Guatemala) 2026",
+          "valor": 271.7
+        },
+        {
+          "nombre": "Insivumeh (Guatemala) mínimo previo",
+          "valor": 461.9
+        },
+        {
+          "nombre": "Tecún Umán (San Marcos) 2026",
+          "valor": 372
+        },
+        {
+          "nombre": "Tecún Umán (San Marcos) mínimo previo",
+          "valor": 642.2
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_3.png"
+      ]
+    },
+    {
+      "id": "llu-c04",
+      "concepto": "Índice Oceánico El Niño (ONI, anomalía trimestral móvil Niño 3.4), JJA 2025 a JJA 2026",
+      "unidad": "°C (anomalía)",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "NOAA Climate Prediction Center — ONI v5",
+      "url": "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/ensostuff/ONI_v5.php",
+      "periodo": "JJA 2025 - JJA 2026 (trimestres móviles)",
+      "n_puntos": 13,
+      "valor": 1.8,
+      "veredicto": "verificada",
+      "fuente_2": "NOAA CPC ONI v5 (archivo local oni.ascii.txt)",
+      "evidencia": {
+        "url": "https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt",
+        "cita": "JJA 2026  29.09   1.80 (MJJ 2026 1.39; AMJ 2026 0.95; MAM 2026 0.46)",
+        "archivo_local": "sesiones/_descargas/oni.ascii.txt"
+      },
+      "serie": [
+        {
+          "p": "JJA 2025",
+          "v": -0.11
+        },
+        {
+          "p": "JAS 2025",
+          "v": -0.26
+        },
+        {
+          "p": "ASO 2025",
+          "v": -0.43
+        },
+        {
+          "p": "SON 2025",
+          "v": -0.57
+        },
+        {
+          "p": "OND 2025",
+          "v": -0.61
+        },
+        {
+          "p": "NDJ 2025",
+          "v": -0.6
+        },
+        {
+          "p": "DJF 2026",
+          "v": -0.39
+        },
+        {
+          "p": "JFM 2026",
+          "v": -0.21
+        },
+        {
+          "p": "FMA 2026",
+          "v": 0.11
+        },
+        {
+          "p": "MAM 2026",
+          "v": 0.46
+        },
+        {
+          "p": "AMJ 2026",
+          "v": 0.95
+        },
+        {
+          "p": "MJJ 2026",
+          "v": 1.39
+        },
+        {
+          "p": "JJA 2026",
+          "v": 1.8
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "llu-c05",
+      "concepto": "ONI del trimestre junio-agosto (JJA) en los años El Niño fuertes desde 1982",
+      "unidad": "°C (anomalía)",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "NOAA Climate Prediction Center — ONI v5",
+      "url": "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/ensostuff/ONI_v5.php",
+      "periodo": "JJA 1982, 1987, 1997, 2015, 2023, 2026",
+      "n_puntos": 6,
+      "valor": 1.8,
+      "veredicto": "verificada",
+      "fuente_2": "NOAA CPC ONI v5 (archivo local; cálculo del máximo JJA)",
+      "evidencia": {
+        "url": "https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt",
+        "cita": "JJA 1982 0.78; JJA 1987 1.30; JJA 1997 1.48; JJA 2015 1.44; JJA 2023 1.00; JJA 2026 1.80",
+        "archivo_local": "sesiones/_descargas/oni.ascii.txt"
+      },
+      "partes": [
+        {
+          "nombre": "1982",
+          "valor": 0.78
+        },
+        {
+          "nombre": "1987",
+          "valor": 1.3
+        },
+        {
+          "nombre": "1997",
+          "valor": 1.48
+        },
+        {
+          "nombre": "2015",
+          "valor": 1.44
+        },
+        {
+          "nombre": "2023",
+          "valor": 1.0
+        },
+        {
+          "nombre": "2026",
+          "valor": 1.8
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_1.png"
+      ]
+    },
+    {
+      "id": "llu-c06",
+      "concepto": "Pico del ONI en los grandes El Niño históricos frente al valor 2026 a la fecha",
+      "unidad": "°C (anomalía)",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "NOAA Climate Prediction Center — ONI v5",
+      "url": "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/ensostuff/ONI_v5.php",
+      "periodo": "1982-83, 1997-98, 2015-16, 2023-24, 2026 (a JJA)",
+      "n_puntos": 5,
+      "valor": 2.59,
+      "veredicto": "verificada",
+      "fuente_2": "NOAA CPC ONI v5 (archivo local)",
+      "evidencia": {
+        "url": "https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt",
+        "cita": "DJF 1983 2.14; NDJ 1997 2.37; NDJ 2015 2.59; NDJ 2023 1.99; JJA 2026 1.80",
+        "archivo_local": "sesiones/_descargas/oni.ascii.txt"
+      },
+      "partes": [
+        {
+          "nombre": "1982-83",
+          "valor": 2.14
+        },
+        {
+          "nombre": "1997-98",
+          "valor": 2.37
+        },
+        {
+          "nombre": "2015-16",
+          "valor": 2.59
+        },
+        {
+          "nombre": "2023-24",
+          "valor": 1.99
+        },
+        {
+          "nombre": "2026 (a jun-ago)",
+          "valor": 1.8
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_1.png"
+      ]
+    },
+    {
+      "id": "llu-c07",
+      "concepto": "Anomalía mensual de la temperatura superficial del mar en la región Niño 3.4, agosto 2026",
+      "unidad": "°C",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "NOAA CPC — ENSO Diagnostic Discussion, 10-sep-2026",
+      "url": "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso_advisory/ensodisc.shtml",
+      "periodo": "agosto 2026",
+      "n_puntos": 1,
+      "valor": 1.8,
+      "veredicto": "verificada",
+      "fuente_2": "NOAA CPC ENSO Diagnostic Discussion (sep 2026); INSIVUMEH/Prensa Libre citan Niño 3.4 semanal ~2 °C",
+      "evidencia": {
+        "url": "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso_advisory/ensodisc.shtml",
+        "cita": "reaching +1.8°C in Niño-3.4, +2.5°C in Niño-3, and +3.4°C in Niño-1+2",
+        "archivo_local": "sesiones/_descargas/noaa_ensodisc_2026-09.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "llu-c08",
+      "concepto": "Probabilidad de que El Niño 2026-27 sea un evento histórico (ONI/RONI ≥ +2.5 °C, mayor que cualquiera desde 1950) en oct-dic 2026",
+      "unidad": "% de probabilidad",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "NOAA CPC — ENSO Diagnostic Discussion, 10-sep-2026",
+      "url": "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso_advisory/ensodisc.shtml",
+      "periodo": "OND 2026 (pronóstico)",
+      "n_puntos": 1,
+      "valor": 75,
+      "veredicto": "verificada",
+      "fuente_2": "NOAA CPC ENSO Diagnostic Discussion (texto local)",
+      "evidencia": {
+        "url": "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso_advisory/ensodisc.shtml",
+        "cita": "During the October-December 2026 season, there is a 75% chance of a historic event that would exceed the strength of previous El Niño events dating back to 1950 (+2.5°C or more",
+        "archivo_local": "sesiones/_descargas/noaa_ensodisc_2026-09.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "llu-c09",
+      "concepto": "Probabilidad de condiciones El Niño entre agosto 2026 y marzo 2027 según INSIVUMEH",
+      "unidad": "% de probabilidad (piso del rango 95-100)",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "INSIVUMEH — nota institucional 26-ago-2026",
+      "url": "https://insivumeh.gob.gt/insivumeh-informa-al-congreso-sobre-perspectivas-climaticas-y-condiciones-hidrologicas-del-pais/",
+      "periodo": "ago-2026 a mar-2027",
+      "n_puntos": 1,
+      "valor": 95,
+      "veredicto": "verificada",
+      "fuente_2": "Prensa Libre / Infobae (rango 95-100 % citado del director)",
+      "evidencia": {
+        "url": "https://insivumeh.gob.gt/insivumeh-informa-al-congreso-sobre-perspectivas-climaticas-y-condiciones-hidrologicas-del-pais/",
+        "cita": "para el período de agosto de 2026 a marzo de 2027 se prevé una probabilidad de entre 95 % y 100 % de condiciones de El Niño",
+        "archivo_local": "sesiones/_descargas/insivumeh_congreso_2026-08-26.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "llu-c10",
+      "concepto": "Porcentaje de los 54 días de canícula analizados que transcurrieron sin lluvia en los Valles de Oriente (Corredor Seco)",
+      "unidad": "% de días",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "INSIVUMEH (director Edwin Rojas), vía Infobae 27-ago-2026",
+      "url": "https://www.infobae.com/guatemala/2026/08/27/guatemala-enfrenta-un-deficit-hidrico-de-hasta-un-tercio-mientras-el-fenomeno-el-nino-se-consolida-como-el-mas-fuerte-en-76-anos/",
+      "periodo": "canícula julio-agosto 2026 (54 días analizados)",
+      "n_puntos": 1,
+      "valor": 75,
+      "veredicto": "ajustada",
+      "fuente_2": "Infobae; Prensa Libre/buscador (Valles de Oriente 40 días sin lluvia entre 1-jul y 23-ago)",
+      "evidencia": {
+        "url": "https://www.infobae.com/guatemala/2026/08/27/guatemala-enfrenta-un-deficit-hidrico-de-hasta-un-tercio-mientras-el-fenomeno-el-nino-se-consolida-como-el-mas-fuerte-en-76-anos/",
+        "cita": "75% de los 54 días analizados durante la canícula transcurrió sin lluvia",
+        "archivo_local": "sesiones/_descargas/insivumeh_congreso_2026-08-26.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "llu-c11",
+      "concepto": "Pronóstico de reducción de lluvia en agosto 2026 respecto a lo habitual en Bocacosta, Valles de Oriente, Altiplano Central y Occidente",
+      "unidad": "% menos lluvia que lo habitual (techo del rango 25-50)",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "SESAN/SIINSAN — Boletín de Alerta Temprana SAN 008-2026 (con pronóstico INSIVUMEH)",
+      "url": "https://portal.siinsan.gob.gt/wp-content/uploads/20260908-01-Boletin-Alerta-Temprana-SAN-008_2026.pdf",
+      "periodo": "agosto 2026 (pronóstico)",
+      "n_puntos": 1,
+      "valor": 50,
+      "veredicto": "verificada",
+      "fuente_2": "SESAN/SIINSAN Boletín 008-2026 (dos pasajes coinciden); pronóstico INSIVUMEH",
+      "evidencia": {
+        "url": "https://portal.siinsan.gob.gt/wp-content/uploads/20260908-01-Boletin-Alerta-Temprana-SAN-008_2026.pdf",
+        "cita": "En estas zonas lloverá entre un 25% y un 50% menos de lo habitual para este mes, lo que representa una reducción entre 60 y 200",
+        "archivo_local": "sesiones/_descargas/20260908-01-Boletin-Alerta-Temprana-SAN-008_2026.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "llu-c12",
+      "concepto": "Comunidades del Corredor Seco (Guatemala, Honduras, El Salvador) según número de períodos de déficit de lluvia en el ciclo de primera 2026",
+      "unidad": "comunidades",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Oxfam Centroamérica y socias — Evaluación Rápida El Niño 2026",
+      "url": "https://lac.oxfam.org/wp-content/uploads/2026/08/Informe-CA-Fenomeno-de-El-Nino.pdf",
+      "periodo": "mayo-agosto 2026",
+      "n_puntos": 4,
+      "valor": 147,
+      "veredicto": "verificada",
+      "fuente_2": "Infobae / Oxfam (mismo informe, resumen)",
+      "evidencia": {
+        "url": "https://lac.oxfam.org/wp-content/uploads/2026/08/Informe-CA-Fenomeno-de-El-Nino.pdf",
+        "cita": "Total (354 comunidades) 3 65 147 139 ... el 80.8% de las 354 comunidades reportó dos o más períodos de déficit de lluvia ... y el 39.3% reportó tres períodos",
+        "archivo_local": "sesiones/_descargas/Informe-CA-Fenomeno-de-El-Nino.txt"
+      },
+      "partes": [
+        {
+          "nombre": "0 períodos",
+          "valor": 3
+        },
+        {
+          "nombre": "1 período",
+          "valor": 65
+        },
+        {
+          "nombre": "2 períodos",
+          "valor": 147
+        },
+        {
+          "nombre": "3 períodos",
+          "valor": 139
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    }
+  ],
+  "fuentes": [
+    {
+      "nombre": "Infobae Guatemala 17-sep-2026 (reproduce presentación MAGA/DIGEGR en el Congreso)",
+      "url": "https://www.infobae.com/guatemala/2026/09/17/la-sequia-agricola-afecta-22677397-hectareas-en-guatemala-y-supera-el-registro-de-la-ultima-decada/",
+      "nivel": "prensa-con-origen-oficial"
+    },
+    {
+      "nombre": "Prensa Libre 12-sep-2026 (MAGA, Plan Institucional Sequía Prolongada 2026-2027)",
+      "url": "https://www.prensalibre.com/guatemala/comunitario/sequia-agricola-deja-perdidas-por-q1087-millones-segun-el-maga/",
+      "nivel": "prensa-con-origen-oficial"
+    },
+    {
+      "nombre": "Prensa Libre 28-sep-2026 (ministra MAGA)",
+      "url": "https://www.prensalibre.com/guatemala/sequia-y-anomalias-climaticas-podrian-afectar-a-mas-de-1-2-millones-de-familias-en-guatemala-segun-el-maga-breakig/",
+      "nivel": "prensa-con-origen-oficial"
+    },
+    {
+      "nombre": "Soy502 7-sep-2026 (MAGA en el Congreso)",
+      "url": "https://www.soy502.com/articulo/maiz-registra-perdidas-masivas-sequia-precio-quintal-aum-101962",
+      "nivel": "prensa-con-origen-oficial"
+    },
+    {
+      "nombre": "Oxfam Centroamérica, Evaluación Rápida El Niño 2026 (PDF)",
+      "url": "https://lac.oxfam.org/wp-content/uploads/2026/08/Informe-CA-Fenomeno-de-El-Nino.pdf",
+      "nivel": "primaria-ong"
+    },
+    {
+      "nombre": "Infobae Guatemala 27-sep-2026",
+      "url": "https://www.infobae.com/guatemala/2026/09/27/la-sequia-afecta-los-cultivos-de-12-millones-de-familias-en-guatemala-tras-62-dias-sin-lluvias/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "La Hora 16-sep-2026",
+      "url": "https://lahora.gt/nacionales/jmaldonado/2026/09/16/maiz-frijol-y-cafe-los-productos-agricolas-mas-afectados-por-la-sequia-now/",
+      "nivel": "prensa-con-origen-oficial"
+    },
+    {
+      "nombre": "Diario de Centro América (oficial) 'MAGA reporta 226 mil 773 hectáreas...' (403 al descargar)",
+      "url": "https://dca.gob.gt/noticias-guatemala-diario-centro-america/maga-reporta-226-mil-773-hectareas-de-cultivos-danadas-y-486-mil-727-familias-afectadas-por-la-sequia/",
+      "nivel": "oficial-no-descargado"
+    },
+    {
+      "nombre": "SESAN/SIINSAN - Análisis CIF de Inseguridad Alimentaria Aguda Guatemala abr 2026-feb 2027",
+      "url": "https://portal.siinsan.gob.gt/wp-content/uploads/20260812-CIF-2026-2027.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "IPC/CIF - ipc_gtm_national_long.csv (HDX, act. 6-ago-2026)",
+      "url": "https://data.humdata.org/dataset/34c2fa3d-2eed-45bb-8e45-9b1a1801f351/resource/85754675-3e77-468d-b649-14a3a7f07614/download/ipc_gtm_national_long.csv",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "IPC - All Countries 2017-2023 (HDX)",
+      "url": "https://data.humdata.org/dataset/1237f795-64fe-4acf-9706-a212abde80e8/resource/3f1a4518-4d4c-42bb-b61c-dc3813843041/download/all-countries-2017-2023.xlsx",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "WFP VAM / MAGA - precios mayoristas vía HDX HAPI",
+      "url": "https://data.humdata.org/dataset/fd39432d-e0c7-49f8-b729-682229d01bb8/resource/711addf1-6843-464a-9c2d-3a53da6512a9/download/hdx_hapi_food_price_gtm.csv",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "INE - Canasta Básica Alimentaria junio 2026",
+      "url": "https://www.ine.gob.gt/sistema/uploads/2026/07/07/20260707110852iZwkJLBrcyCmachhwmugKt4pf6cK8kRg.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "INE - Canasta Básica Alimentaria enero 2026",
+      "url": "https://www.ine.gob.gt/sistema/uploads/2026/02/09/20260209101636Iw3ErxxCx80vmUFYWFOVS8jdNftjERyc.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Infobae Guatemala 16-sep-2026 (reproduce Oxfam/ACF)",
+      "url": "https://www.infobae.com/guatemala/2026/09/16/por-que-31-millones-de-guatemaltecos-enfrentaran-inseguridad-alimentaria-en-septiembre-en-el-corredor-seco/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "NOAA CPC — ONI v5 (oni.ascii.txt)",
+      "url": "https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "NOAA CPC — ENSO Diagnostic Discussion 10-sep-2026",
+      "url": "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso_advisory/ensodisc.shtml",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "INSIVUMEH — informe al Congreso 26-ago-2026",
+      "url": "https://insivumeh.gob.gt/insivumeh-informa-al-congreso-sobre-perspectivas-climaticas-y-condiciones-hidrologicas-del-pais/",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "SESAN/SIINSAN — Boletín Alerta Temprana SAN 008-2026",
+      "url": "https://portal.siinsan.gob.gt/wp-content/uploads/20260908-01-Boletin-Alerta-Temprana-SAN-008_2026.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Oxfam Centroamérica — Evaluación Rápida El Niño 2026",
+      "url": "https://lac.oxfam.org/wp-content/uploads/2026/08/Informe-CA-Fenomeno-de-El-Nino.pdf",
+      "nivel": "secundaria (ONG, datos propios)"
+    },
+    {
+      "nombre": "Infobae Guatemala 27-ago-2026 (cita a INSIVUMEH)",
+      "url": "https://www.infobae.com/guatemala/2026/08/27/guatemala-enfrenta-un-deficit-hidrico-de-hasta-un-tercio-mientras-el-fenomeno-el-nino-se-consolida-como-el-mas-fuerte-en-76-anos/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Prensa Libre 26-sep-2026 (análisis USAC)",
+      "url": "https://www.prensalibre.com/guatemala/comunitario/guatemala-tiene-inundaciones-despues-de-meses-de-sequia-por-que-la-lluvia-no-ha-borrado-el-deficit/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "INSIVUMEH — perspectiva climática agosto 2026",
+      "url": "https://insivumeh.gob.gt/conoce-la-perspectiva-climatica-para-el-mes-de-agosto-de-2026/",
+      "nivel": "primaria"
+    }
+  ],
+  "no_afirma": [
+    "No afirma que 2026 sea la peor sequía de la década en hectáreas: no hay serie anual comparable verificada.",
+    "No afirma que la sequía explique por sí sola el hambre aguda: la CIF también refleja precios, empleo y otros factores.",
+    "No afirma que el hambre aguda vaya a superar a 2022: el dato 2026 es una proyección y no hay actualización publicada localizada.",
+    "No afirma que el 80.73 % de hogares con pérdidas severas de maíz represente a todo el país: es una evaluación de Oxfam en el Corredor Seco.",
+    "No afirma que El Niño 2026 vaya a ser el más fuerte registrado: 1.8 °C es el valor de jun-ago; el pico de 2015-16 fue 2.59 °C."
+  ],
+  "incertidumbre": [
+    "La proyección CIF 2026 pudo elaborarse antes de conocer el efecto completo de la canícula; la actualización de septiembre recomendada por SESAN no se localizó.",
+    "Las cifras del MAGA (familias, pérdidas) llegan vía prensa que cita su presentación al Congreso y tienen cortes distintos (20-ago, 27-ago, fin de septiembre).",
+    "El déficit de Valles de Oriente fue ajustado a 30 % y el del Altiplano Central tiene discrepancia entre fuentes (24 % vs 29 %).",
+    "«3 de cada 4 días» traduce el 75 % de los 54 días de canícula analizados por el INSIVUMEH (cifra ajustada)."
+  ],
+  "descartadas": [
+    {
+      "id": "cos-c02",
+      "por": "no_confirmada"
+    },
+    {
+      "id": "cos-c03",
+      "por": "no_confirmada"
+    },
+    {
+      "id": "cos-c04",
+      "por": "no_confirmada"
+    },
+    {
+      "id": "cos-c05",
+      "por": "no_confirmada"
+    },
+    {
+      "id": "cos-c09",
+      "por": "no_confirmada"
+    },
+    {
+      "id": "cos-c12",
+      "por": "no_confirmada"
+    }
+  ]
+}
