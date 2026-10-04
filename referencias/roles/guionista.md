@@ -14,7 +14,7 @@ para `datos`, usa `python3 scripts/digesto.py <sesion> --serie <id>`.
    el guion si no); si T1 va sin visual, la ancla va en su texto. Si la evidencia
    refutó la tesis, dilo: también es un gran hilo. `no_afirma` (≤ 5, solo sobre
    lo que un lector inferiría), `incertidumbre`, `descartadas`.
-2. **Arco y ganchos**: `referencias/narrativa.md`. 4–8 tuits (smoke 3–4); T1
+2. **Arco y ganchos**: `referencias/narrativa.md`. 4–21 tuits, o el mínimo que diga tu directiva (smoke 3–4); T1
    `gancho` con `hook_tipo` ≠ `hook_evitar`; exactamente un `giro`; en modo
    normal con ≥ 5 tuits un `impacto` (escala humana); el último es `cierre`.
 3. **Tuits**: `texto`, `alt_text` (≤ 1000) y `visual` (o `null` solo en T1 y en
@@ -29,7 +29,12 @@ para `datos`, usa `python3 scripts/digesto.py <sesion> --serie <id>`.
    `antes-despues` no lleva el ×N (lo calcula la plantilla). Límites: `linea`
    ≥ 5 puntos y ≤ 4 series; `dona` 2–5 partes; `barras-h` ≤ 8; `barras-v` ≤ 12;
    `pendiente` 2 fechas y 2–6 items; `mapa` ≥ 12 departamentos; `pesas` 2–8;
-   `calor` filas × columnas ≤ 12.
+   `calor` filas × columnas ≤ 12; `bullet` 1–6 con meta; `embudo` 2–6 etapas
+   que no crecen y `misma_cohorte` true|false (no escribas el «de cada 100»:
+   lo calcula la plantilla); `divergente` 2–10; `apilada` 2–8 filas × 2–5
+   partes; `piramide` 4–12 grupos; `treemap` 3–12; `dispersion` 8–22 puntos
+   con `ejeX`/`ejeY` y ≤ 4 rotulados (sin afirmar causa). `periodos` (≤ 4,
+   índices) sombrea gobiernos en `linea`/`barras-v`.
 5. Escribe `<sesion>/guion.json` COMPLETO (`slug, fecha, paleta, smoke, handle,
    hook_tipo, sintesis, tuits`). Retorno: `archivo, tesis, ancla_id, paleta,
    hook_tipo, no_afirma, tuits[]` con `visual` completo (el workflow gatea sobre

@@ -1,0 +1,205 @@
+{
+  "slug": "desnutricion-aguda-2026",
+  "fecha": "2026-10-03",
+  "tema": "desnutrición aguda 2026 semana a semana",
+  "tesis": "A la semana 36, 2026 acumula 15,454 casos de desnutrición aguda en menores de 5 años, 7.58% menos que 2025 a la misma semana; pero los casos severos casi no bajaron (2,678 frente a 2,684) y las muertes confirmadas son las mismas (34), con 43 aún en análisis.",
+  "paleta": "terracota",
+  "hook_tipo": "mito_vs_dato",
+  "pregunta": "¿Va 2026 peor o mejor que los años anteriores en desnutrición aguda en menores de 5 años, semana a semana, y en qué departamentos se concentran los casos y las muertes?",
+  "n_tuits": 12,
+  "estado": "listo",
+  "tuits": [
+    {
+      "n": 1,
+      "beat": "gancho",
+      "texto": "Con la sequía, podría pensarse que 2026 va peor en desnutrición aguda infantil.\n\nLos datos del MSPAS dicen otra cosa: hay menos niños diagnosticados que hace un año.\n\nPero lo más grave casi no se movió. Semana a semana, en un hilo:",
+      "caracteres": 231,
+      "alt_text": "Gráfico de barras verticales con los casos acumulados de desnutrición aguda en menores de 5 años de la semana 1 a la 36 de cada año: 2021, 16,583; 2022, 14,370; 2023, 18,743; 2024, 21,636; 2025, 16,721; 2026, 15,454 (destacado). 2026 va 7.58% por debajo de 2025 a la misma semana. Fuente: MSPAS/DEGR, situación epidemiológica de la semana 36 de 2026.",
+      "imagen": "tuit_1.png",
+      "plantilla": "barras-v",
+      "fuente": "MSPAS/DEGR · situación epidemiológica SE36 2026",
+      "cifra_ids": [
+        "sem-c04",
+        "sem-c03"
+      ]
+    },
+    {
+      "n": 2,
+      "beat": "contexto",
+      "texto": "Es el registro de vigilancia del Ministerio de Salud: niños menores de 5 años diagnosticados en sus servicios. El último informe publicado cubre la semana del 6 al 12 de septiembre.",
+      "caracteres": 181,
+      "alt_text": "Gráfico de línea con los casos acumulados de desnutrición aguda en menores de 5 años en 2026 por semana epidemiológica: 2,398 en la semana 4; 5,767 en la 14; 8,198 en la 19; 9,640 en la 22; 11,241 en la 25; 12,366 en la 28; 13,969 en la 32; 15,038 en la 35 y 15,454 en la 36. Promedio: 429.3 casos por semana. Fuente: SIINSAN/SESAN con datos del MSPAS, 2026.",
+      "imagen": "tuit_2.png",
+      "plantilla": "linea",
+      "fuente": "SIINSAN/SESAN con datos MSPAS · 2026 · SE4 a SE36",
+      "cifra_ids": [
+        "sem-c01",
+        "sem-c10"
+      ]
+    },
+    {
+      "n": 3,
+      "beat": "contexto",
+      "texto": "Por municipio, Mazatenango encabeza la lista; le siguen Masagua y Cuyotenango. Los tres están en la costa sur.",
+      "caracteres": 110,
+      "alt_text": "Mapa de Guatemala por departamento con la tasa acumulada de desnutrición aguda por cada 10,000 menores de 5 años en 2026, a la semana 36. Suchitepéquez tiene la tasa más alta, 219.69, seguido de Escuintla con 152.42 y Zacapa con 140.31. Las más bajas: Sololá 33.95, Huehuetenango 42.8 y Baja Verapaz 48.3. La tasa nacional es 85.84. Fuente: MSPAS/DEGR, situación epidemiológica de la semana 36 de 2026.",
+      "imagen": "tuit_3.png",
+      "plantilla": "mapa",
+      "fuente": "MSPAS/DEGR · situación epidemiológica SE36 2026",
+      "cifra_ids": [
+        "dep-c02",
+        "dep-c11"
+      ]
+    },
+    {
+      "n": 4,
+      "beat": "contexto",
+      "texto": "La baja no es pareja. Huehuetenango, que sube, aparecerá más adelante entre las áreas con más muertes confirmadas.",
+      "caracteres": 114,
+      "alt_text": "Gráfico de barras divergentes con la variación porcentual de casos acumulados de desnutrición aguda en menores de 5 años, 2026 frente a 2025 a la semana 36, por departamento. Suben: El Progreso +20.3%, Huehuetenango +17.49%, Jalapa +10.41%, Chiquimula +3.7% y Quetzaltenango +1.84%. Los que más bajan: Izabal -18.45%, Sacatepéquez -20.53%, Escuintla -28.66%, Sololá -31.51% y Baja Verapaz -33.33%. Fuente: MSPAS/DEGR, situación epidemiológica de la semana 36 de 2026.",
+      "imagen": "tuit_4.png",
+      "plantilla": "divergente",
+      "fuente": "MSPAS/DEGR · situación epidemiológica SE36 2026",
+      "cifra_ids": [
+        "dep-c04"
+      ]
+    },
+    {
+      "n": 5,
+      "beat": "giro",
+      "texto": "Casi toda la reducción de 2026 está en los casos moderados. En los severos, la diferencia con 2025 es mínima.",
+      "caracteres": 109,
+      "alt_text": "Gráfico de pesas que compara los casos acumulados de desnutrición aguda en menores de 5 años a la semana 36 de 2025 y 2026, por gravedad. Moderada: 14,037 en 2025 y 12,776 en 2026. Severa (antropométrica y clínica): 2,684 en 2025 y 2,678 en 2026. Fuente: MSPAS/DEGR, sala situacional de desnutrición, semana 36 de 2026.",
+      "imagen": "tuit_5.png",
+      "plantilla": "pesas",
+      "fuente": "MSPAS/DEGR · sala situacional SE36 2026",
+      "cifra_ids": [
+        "gra-c02",
+        "gra-c01"
+      ]
+    },
+    {
+      "n": 6,
+      "beat": "impacto",
+      "texto": "Son niños, no tasas. Y el conteo de este año todavía puede crecer: decenas de muertes siguen en análisis.",
+      "caracteres": 105,
+      "alt_text": "Gráfico de barras apiladas con el estado de las muertes sospechosas por desnutrición aguda en menores de 5 años a la semana 36. 2025: 34 confirmadas, 62 en investigación y 95 descartadas, 191 notificadas. 2026: 34 confirmadas, 43 en investigación y 122 descartadas, 199 notificadas. 2025 cerró el año con 75 muertes confirmadas. Fuente: MSPAS/DEGR, mesa técnica de análisis de mortalidad, 2026.",
+      "imagen": "tuit_6.png",
+      "plantilla": "apilada",
+      "fuente": "MSPAS/DEGR · mesa de análisis de mortalidad · 2026",
+      "cifra_ids": [
+        "gra-c03",
+        "gra-c04",
+        "gra-c06"
+      ]
+    },
+    {
+      "n": 7,
+      "beat": "impacto",
+      "texto": "Por eso las muertes confirmadas van con retraso: las de junio a agosto todavía se revisan.",
+      "caracteres": 90,
+      "alt_text": "Gráfico de barras verticales con las muertes sospechosas por desnutrición aguda de 2026 que siguen pendientes de análisis, por mes de ocurrencia: enero a abril, 0; mayo, 4; junio, 10; julio, 13; agosto, 16. Suman 43. Fuente: MSPAS/DEGR, mesa técnica de análisis de mortalidad, 2026.",
+      "imagen": "tuit_7.png",
+      "plantilla": "barras-v",
+      "fuente": "MSPAS/DEGR · mesa de análisis de mortalidad · 2026",
+      "cifra_ids": [
+        "gra-c07"
+      ]
+    },
+    {
+      "n": 8,
+      "beat": "impacto",
+      "texto": "",
+      "caracteres": 0,
+      "alt_text": "Gráfico de barras horizontales con las muertes confirmadas por desnutrición aguda en 2026 por grupo de edad: menores de 6 meses, 8; de 6 a menos de 12 meses, 7; de 12 a menos de 24 meses, 14 (destacado); de 24 a menos de 36 meses, 1; de 36 a 48 meses, 2; más de 48 meses, 2. Fuente: MSPAS/DEGR, mesa técnica de análisis de mortalidad, 2026.",
+      "imagen": "tuit_8.png",
+      "plantilla": "barras-h",
+      "fuente": "MSPAS/DEGR · mesa de análisis de mortalidad · 2026",
+      "cifra_ids": [
+        "gra-c08"
+      ]
+    },
+    {
+      "n": 9,
+      "beat": "impacto",
+      "texto": "Ninguna de las tres está entre las cinco de mayor tasa de casos del mapa. Donde la tasa es más alta no es donde más niños mueren.",
+      "caracteres": 129,
+      "alt_text": "Gráfico de barras horizontales con las muertes confirmadas por desnutrición aguda en 2026 por área de salud: Alta Verapaz, 9; Huehuetenango, 7; San Marcos, 7; Escuintla, 3. Otras 8 áreas registran 1 muerte cada una. Fuente: MSPAS/DEGR, mesa técnica de análisis de mortalidad, 2026.",
+      "imagen": "tuit_9.png",
+      "plantilla": "barras-h",
+      "fuente": "MSPAS/DEGR · mesa de análisis de mortalidad · 2026",
+      "cifra_ids": [
+        "gra-c05",
+        "gra-c03"
+      ]
+    },
+    {
+      "n": 10,
+      "beat": "impacto",
+      "texto": "Y son solo los que llegan a un servicio de salud y quedan en el registro.",
+      "caracteres": 73,
+      "alt_text": "Cifra destacada: 61.3 niños menores de 5 años diagnosticados con desnutrición aguda por día, en promedio, en 2026 hasta la semana 36. Promedio derivado de los casos acumulados. Fuente: MSPAS/DEGR, sala situacional de desnutrición, semana 36 de 2026.",
+      "imagen": "tuit_10.png",
+      "plantilla": "cifra",
+      "fuente": "MSPAS/DEGR · sala situacional SE36 2026",
+      "cifra_ids": [
+        "gra-c11"
+      ]
+    },
+    {
+      "n": 11,
+      "beat": "impacto",
+      "texto": "",
+      "caracteres": 0,
+      "alt_text": "Gráfico de waffle de 100 cuadros: 56.3% de los niños con desnutrición aguda en seguimiento se había recuperado, media nacional de enero a agosto de 2026. Fuente: SIINSAN/SESAN con datos del MSPAS, 2026.",
+      "imagen": "tuit_11.png",
+      "plantilla": "waffle",
+      "fuente": "SIINSAN/SESAN con datos MSPAS · 2026",
+      "cifra_ids": [
+        "gra-c09"
+      ]
+    },
+    {
+      "n": 12,
+      "beat": "cierre",
+      "texto": "2026 registra menos casos que 2025 a la misma semana, pero los severos casi no cambiaron y las muertes confirmadas son las mismas, con decenas aún en análisis. Menos registros no prueba menos desnutrición.\n\nFuentes: MSPAS/DEGR y SIINSAN/SESAN con datos MSPAS.",
+      "caracteres": 259,
+      "alt_text": "Tuit de cierre sin imagen: resumen del hilo y fuentes (MSPAS/DEGR y SIINSAN/SESAN).",
+      "imagen": null,
+      "plantilla": null,
+      "fuente": null,
+      "cifra_ids": []
+    }
+  ],
+  "no_afirma": [
+    "No afirma que la sequía haya o no influido en los casos: el registro no lo atribuye.",
+    "No afirma que haya menos desnutrición: mide niños diagnosticados en servicios de salud, no la prevalencia.",
+    "No afirma que las muertes de 2026 vayan a cerrar igual que 2025: 43 siguen en análisis.",
+    "No compara la tasa de recuperación con 2025: no hay dato al mismo corte."
+  ],
+  "incertidumbre": [
+    "Los puntos SE19, SE25 y SE35 de la curva 2026 provienen de prensa que cita MSPAS/SIINSAN.",
+    "Muertes por área de salud (DDRISS) y casos por departamento de residencia no son la misma unidad territorial.",
+    "No hay informe posterior a la SE36 publicado al 3 de octubre de 2026.",
+    "Promedios por día (61.3) y por semana (429.3) son cálculos sobre el acumulado oficial."
+  ],
+  "fuentes": [
+    "MSPAS/DEGR · situación epidemiológica SE36 2026",
+    "SIINSAN/SESAN con datos MSPAS · 2026 · SE4 a SE36",
+    "MSPAS/DEGR · sala situacional SE36 2026",
+    "MSPAS/DEGR · mesa de análisis de mortalidad · 2026",
+    "SIINSAN/SESAN con datos MSPAS · 2026"
+  ],
+  "fuentes_cifras": [
+    "Cálculo propio sobre DEGR/MSPAS SE36 2026 (15,454 / 36 semanas)",
+    "DEGR/MSPAS, informe SE36 2026",
+    "DEGR/MSPAS, informe SE36 2026, gráfica 'Casos y tasas de desnutrición aguda en menores de 5 años por año de registro, Guatemala 2021-2026'",
+    "MSPAS/DEGR, Mesa Técnica de Análisis de Mortalidad por Desnutrición Aguda",
+    "MSPAS/DEGR, Sala situacional de desnutrición aguda (SIGSA 18)",
+    "MSPAS/DEGR, Situación epidemiológica de la desnutrición aguda en menores de 5 años, SE36 2026 (SIGSA 18, datos al 16-sep-2026)",
+    "SESAN/SIINSAN con datos DEGR/MSPAS (SIGSA 18); puntos SE19, SE25 y SE35 vía prensa que reproduce MSPAS",
+    "SESAN/SIINSAN con datos de MSPAS (seguimiento antropométrico DDRISS)"
+  ],
+  "gate_mecanico": "ok",
+  "contacto": "contacto.png"
+}

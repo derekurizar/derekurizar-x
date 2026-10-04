@@ -14,6 +14,9 @@
   · fuentes[] ← fuentes con nivel "primaria" de hallazgos_*.json que no existan aún
     (dedup por dominio y por nombre/alias): categoria "auto", rating 8, temas del eje y
     del tema, nota "hallada en <id>: <url>".
+  · ideas     ← si encuadre.json trae idea_id, el registro lo guarda y la idea de
+    ideas/banco.json pasa a «hecha» (estado listo) o «en_curso» (incompleto) vía
+    scripts/ideas.py. En sesiones smoke/fixture la idea no se toca.
   · nota      ← cada vacío de hallazgos_*.json que mencione el alias de una fuente
     conocida se anexa a su nota como "· [<fecha>] <vacío>" (sin duplicar).
   Rechaza rutas absolutas (exit 2). --dry-run imprime sin escribir.
@@ -32,6 +35,7 @@ import sys
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(RAIZ, "scripts"))
 import fuentes as _fuentes  # noqa: E402
+import ideas as _ideas  # noqa: E402  (único escritor de ideas/banco.json)
 from ensamblar import HOOKS  # noqa: E402  (los ocho nombres de gancho: una sola lista)
 
 HILOS = os.path.join(RAIZ, "memoria", "hilos.json")
@@ -184,7 +188,11 @@ def registrar(a):
         "paleta": guion.get("paleta"), "n_tuits": len(guion.get("tuits", [])),
         "ruta": os.path.normpath(a.ruta), "estado": a.estado, "hook_tipo": hook,
     }
-    if guion.get("smoke") or encuadre.get("smoke"):
+    smoke = bool(guion.get("smoke") or encuadre.get("smoke") or encuadre.get("fixture"))
+    idea_id = encuadre.get("idea_id")
+    if idea_id:
+        hilo["idea_id"] = idea_id
+    if smoke:
         print("AVISO: la sesión es smoke; en smoke el productor NO escribe memoria/ (usa --dry-run o confirma que quieres registrarla).", file=sys.stderr)
 
     mh = leer(HILOS)
@@ -227,13 +235,20 @@ def registrar(a):
         print("  ~ nota en %s: %s" % (nombre, cuerpo[:120]))
     if primarias and not fuentes_nuevas:
         print("  (las %d fuentes primarias de los hallazgos ya estaban en memoria/fuentes.json)" % len(primarias))
+    if idea_id and smoke:
+        print("  (idea %s: sesión smoke/fixture, el banco de ideas no se toca)" % idea_id)
     if a.dry_run:
+        if idea_id and not smoke:
+            print("  idea %s → %s (hilo %s)" % (idea_id, "hecha" if a.estado == "listo" else "en_curso", hid))
         print("[dry-run] no se escribió nada")
         return 0
     escribir(HILOS, mh)
     escribir(FUENTES, mf)
     print("escrito memoria/hilos.json (%d hilos) y memoria/fuentes.json (%d series, %d nuevas; %d fuentes nuevas, %d notas)" % (
         len(hilos), len(series), len(nuevas), len(fuentes_nuevas), len(notas)))
+    if idea_id and not smoke:
+        msg, rc = _ideas.marcar_idea(idea_id, "hecha" if a.estado == "listo" else "en_curso", hid, fecha)
+        print(("AVISO: " if rc else "  ") + msg, file=sys.stderr if rc else sys.stdout)
     return 0
 
 

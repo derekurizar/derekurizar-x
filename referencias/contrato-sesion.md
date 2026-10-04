@@ -7,7 +7,7 @@ resultado de herramienta.
 
 | Archivo | Lo escribe | Contenido |
 |---|---|---|
-| `encuadre.json` | editor | `slug, tema, fecha, pregunta, tesis_provisional, angulo, paleta, necesita_serie, repetido, hook_evitar, ejes[2–4]{id, prefijo (3 letras únicas), brief, preguntas[], fuentes_sugeridas[], series_sugeridas[]}, sesion_dir, smoke, fixture` |
+| `encuadre.json` | editor | `slug, tema, fecha, pregunta, tesis_provisional, angulo, paleta, necesita_serie, repetido, hook_evitar, idea_id (id del banco de ideas o null), ejes[2–4]{id, prefijo (3 letras únicas), brief, preguntas[], fuentes_sugeridas[], series_sugeridas[]}, sesion_dir, smoke, fixture` |
 | `hallazgos_<eje>.json` | investigador | `eje, n_busquedas, n_fetch, cifras[≤12]{id "<prefijo>-cNN", concepto, valor:number, unidad, anio, fuente, url, tipo: puntual\|serie\|desglose, n_puntos, periodo, candidata_ancla, evidencia{url, cita ≤200, archivo_local?}, serie:[{p, v}], partes:[{nombre, valor}], nota}, fuentes[]{nombre, url, nivel}, vacios[]` |
 | `verificacion_<eje>.json` | verificador | `eje, items[]{id, veredicto: verificada\|ajustada\|no_confirmada, valor_final, fuente_2, url_2, nota}` |
 | `guion.json` | guionista | `slug, fecha, paleta, smoke, handle, hook_tipo, sintesis{pregunta, tesis, ancla_id, arco[], no_afirma[≤5], incertidumbre[], descartadas[]}, tuits[]{n, beat, texto, alt_text ≤1000, visual\|null}` con `visual = {plantilla, kicker, titular[], leyenda[], nota, fuente, cifra_ids[], datos{}}` |

@@ -6,7 +6,7 @@ GALERIA := templates/.galeria
 PALETAS ?= cielo
 PALETA ?= cielo
 
-.PHONY: help nuevo render visual catalogo validate tabla pdf ensamblar limpiar test doctor costo contacto digesto fuentes
+.PHONY: help nuevo render visual catalogo validate tabla pdf ensamblar limpiar test doctor costo contacto digesto fuentes ideas
 
 help:
 	@echo "make nuevo T=<plantilla> OUT=<ruta.html> [PALETA=cielo]  ensambla una tarjeta (base + plantilla)"
@@ -23,6 +23,7 @@ help:
 	@echo "make contacto DIR=<carpeta con tuit_N.png>               hoja de contacto contacto.png"
 	@echo "make digesto SESION=sesiones/<slug> [PARA=guionista]     resumen compacto de la sesión para agentes"
 	@echo "make fuentes TEMA=\"texto\"                                 catálogo de fuentes y series filtrado por tema"
+	@echo "make ideas                                               banco de ideas (ideas/banco.json) y temas ya producidos"
 	@echo "make limpiar [SESION=sesiones/<slug>]                    borra $(GALERIA)/, salidas de _fixture y .playwright-mcp/ (o una sesión)"
 
 nuevo:
@@ -84,3 +85,6 @@ digesto:
 fuentes:
 	@test -n "$(TEMA)" || { echo "Uso: make fuentes TEMA=\"texto\""; exit 2; }
 	python3 scripts/fuentes.py --tema "$(TEMA)" --series
+
+ideas:
+	python3 scripts/ideas.py --resumen

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hilo · vista previa</title>
+<!-- Vista previa del hilo: la abre el usuario en su navegador. La rellena scripts/ensamblar.py (HILO_JSON). -->
+<style>
+  :root { --papel:#F6F2E8; --tinta:#0C1520; --gris:#5c6470; --linea:rgba(12,21,32,.14); --acento:#4B92DB; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--papel); color: var(--tinta); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 40px 20px 80px; }
+  header h1 { font: 700 30px/1.15 Georgia, "Times New Roman", serif; margin: 0 0 8px; }
+  header .meta { color: var(--gris); font-size: 14px; display: flex; flex-wrap: wrap; gap: 10px 18px; }
+  .chip { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; background: var(--tinta); color: var(--papel); }
+  .tesis { margin: 18px 0 0; padding: 14px 18px; border-left: 4px solid var(--acento); background: rgba(75,146,219,.08); font-size: 17px; }
+  .contacto { margin-top: 18px; }
+  .contacto a { display: inline-block; margin-bottom: 8px; font-size: 14px; font-weight: 600; color: var(--acento); }
+  .contacto img { width: 100%; max-width: 760px; display: block; border-radius: 12px; box-shadow: 0 2px 14px rgba(0,0,0,.12); }
+  .tuit { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--linea); }
+  .tuit .cab { display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--gris); }
+  .tuit .cab .n { font-weight: 800; font-size: 15px; color: var(--tinta); }
+  .texto { position: relative; margin-top: 12px; padding: 14px 16px; background: #fff; border: 1px solid var(--linea); border-radius: 10px; white-space: pre-wrap; font-size: 17px; }
+  .texto.vacio { color: var(--gris); font-style: italic; }
+  .fila { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; font-size: 13px; color: var(--gris); }
+  .fila .cnt.alerta { color: #B23A26; font-weight: 700; }
+  button { font: 600 13px/1 system-ui, sans-serif; padding: 7px 12px; border-radius: 8px; border: 1px solid var(--linea); background: #fff; color: var(--tinta); cursor: pointer; }
+  button:hover { background: var(--tinta); color: var(--papel); }
+  .img { margin-top: 14px; }
+  .img img { width: 100%; max-width: 560px; display: block; border-radius: 12px; box-shadow: 0 2px 14px rgba(0,0,0,.12); }
+  .alt { margin-top: 10px; font-size: 14px; color: var(--gris); }
+  .alt b { color: var(--tinta); }
+  .fuente { margin-top: 6px; font-size: 13px; color: var(--gris); }
+  section.extra { margin-top: 44px; padding-top: 24px; border-top: 2px solid var(--tinta); }
+  section.extra h2 { font: 700 18px/1.2 system-ui, sans-serif; margin: 22px 0 8px; }
+  section.extra ul { margin: 0; padding-left: 20px; }
+  .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--tinta); color: var(--papel); padding: 10px 16px; border-radius: 8px; font-size: 14px; opacity: 0; transition: opacity .2s; pointer-events: none; }
+  .toast.on { opacity: 1; }
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<div class="toast" id="toast">Copiado</div>
+<script id="hilo-json" type="application/json">{"slug": "desnutricion-aguda-2026", "fecha": "2026-10-03", "tema": "desnutrición aguda 2026 semana a semana", "tesis": "A la semana 36, 2026 acumula 15,454 casos de desnutrición aguda en menores de 5 años, 7.58% menos que 2025 a la misma semana; pero los casos severos casi no bajaron (2,678 frente a 2,684) y las muertes confirmadas son las mismas (34), con 43 aún en análisis.", "paleta": "terracota", "hook_tipo": "mito_vs_dato", "pregunta": "¿Va 2026 peor o mejor que los años anteriores en desnutrición aguda en menores de 5 años, semana a semana, y en qué departamentos se concentran los casos y las muertes?", "n_tuits": 12, "estado": "listo", "tuits": [{"n": 1, "beat": "gancho", "texto": "Con la sequía, podría pensarse que 2026 va peor en desnutrición aguda infantil.\n\nLos datos del MSPAS dicen otra cosa: hay menos niños diagnosticados que hace un año.\n\nPero lo más grave casi no se movió. Semana a semana, en un hilo:", "caracteres": 231, "alt_text": "Gráfico de barras verticales con los casos acumulados de desnutrición aguda en menores de 5 años de la semana 1 a la 36 de cada año: 2021, 16,583; 2022, 14,370; 2023, 18,743; 2024, 21,636; 2025, 16,721; 2026, 15,454 (destacado). 2026 va 7.58% por debajo de 2025 a la misma semana. Fuente: MSPAS/DEGR, situación epidemiológica de la semana 36 de 2026.", "imagen": "tuit_1.png", "plantilla": "barras-v", "fuente": "MSPAS/DEGR · situación epidemiológica SE36 2026", "cifra_ids": ["sem-c04", "sem-c03"]}, {"n": 2, "beat": "contexto", "texto": "Es el registro de vigilancia del Ministerio de Salud: niños menores de 5 años diagnosticados en sus servicios. El último informe publicado cubre la semana del 6 al 12 de septiembre.", "caracteres": 181, "alt_text": "Gráfico de línea con los casos acumulados de desnutrición aguda en menores de 5 años en 2026 por semana epidemiológica: 2,398 en la semana 4; 5,767 en la 14; 8,198 en la 19; 9,640 en la 22; 11,241 en la 25; 12,366 en la 28; 13,969 en la 32; 15,038 en la 35 y 15,454 en la 36. Promedio: 429.3 casos por semana. Fuente: SIINSAN/SESAN con datos del MSPAS, 2026.", "imagen": "tuit_2.png", "plantilla": "linea", "fuente": "SIINSAN/SESAN con datos MSPAS · 2026 · SE4 a SE36", "cifra_ids": ["sem-c01", "sem-c10"]}, {"n": 3, "beat": "contexto", "texto": "Por municipio, Mazatenango encabeza la lista; le siguen Masagua y Cuyotenango. Los tres están en la costa sur.", "caracteres": 110, "alt_text": "Mapa de Guatemala por departamento con la tasa acumulada de desnutrición aguda por cada 10,000 menores de 5 años en 2026, a la semana 36. Suchitepéquez tiene la tasa más alta, 219.69, seguido de Escuintla con 152.42 y Zacapa con 140.31. Las más bajas: Sololá 33.95, Huehuetenango 42.8 y Baja Verapaz 48.3. La tasa nacional es 85.84. Fuente: MSPAS/DEGR, situación epidemiológica de la semana 36 de 2026.", "imagen": "tuit_3.png", "plantilla": "mapa", "fuente": "MSPAS/DEGR · situación epidemiológica SE36 2026", "cifra_ids": ["dep-c02", "dep-c11"]}, {"n": 4, "beat": "contexto", "texto": "La baja no es pareja. Huehuetenango, que sube, aparecerá más adelante entre las áreas con más muertes confirmadas.", "caracteres": 114, "alt_text": "Gráfico de barras divergentes con la variación porcentual de casos acumulados de desnutrición aguda en menores de 5 años, 2026 frente a 2025 a la semana 36, por departamento. Suben: El Progreso +20.3%, Huehuetenango +17.49%, Jalapa +10.41%, Chiquimula +3.7% y Quetzaltenango +1.84%. Los que más bajan: Izabal -18.45%, Sacatepéquez -20.53%, Escuintla -28.66%, Sololá -31.51% y Baja Verapaz -33.33%. Fuente: MSPAS/DEGR, situación epidemiológica de la semana 36 de 2026.", "imagen": "tuit_4.png", "plantilla": "divergente", "fuente": "MSPAS/DEGR · situación epidemiológica SE36 2026", "cifra_ids": ["dep-c04"]}, {"n": 5, "beat": "giro", "texto": "Casi toda la reducción de 2026 está en los casos moderados. En los severos, la diferencia con 2025 es mínima.", "caracteres": 109, "alt_text": "Gráfico de pesas que compara los casos acumulados de desnutrición aguda en menores de 5 años a la semana 36 de 2025 y 2026, por gravedad. Moderada: 14,037 en 2025 y 12,776 en 2026. Severa (antropométrica y clínica): 2,684 en 2025 y 2,678 en 2026. Fuente: MSPAS/DEGR, sala situacional de desnutrición, semana 36 de 2026.", "imagen": "tuit_5.png", "plantilla": "pesas", "fuente": "MSPAS/DEGR · sala situacional SE36 2026", "cifra_ids": ["gra-c02", "gra-c01"]}, {"n": 6, "beat": "impacto", "texto": "Son niños, no tasas. Y el conteo de este año todavía puede crecer: decenas de muertes siguen en análisis.", "caracteres": 105, "alt_text": "Gráfico de barras apiladas con el estado de las muertes sospechosas por desnutrición aguda en menores de 5 años a la semana 36. 2025: 34 confirmadas, 62 en investigación y 95 descartadas, 191 notificadas. 2026: 34 confirmadas, 43 en investigación y 122 descartadas, 199 notificadas. 2025 cerró el año con 75 muertes confirmadas. Fuente: MSPAS/DEGR, mesa técnica de análisis de mortalidad, 2026.", "imagen": "tuit_6.png", "plantilla": "apilada", "fuente": "MSPAS/DEGR · mesa de análisis de mortalidad · 2026", "cifra_ids": ["gra-c03", "gra-c04", "gra-c06"]}, {"n": 7, "beat": "impacto", "texto": "Por eso las muertes confirmadas van con retraso: las de junio a agosto todavía se revisan.", "caracteres": 90, "alt_text": "Gráfico de barras verticales con las muertes sospechosas por desnutrición aguda de 2026 que siguen pendientes de análisis, por mes de ocurrencia: enero a abril, 0; mayo, 4; junio, 10; julio, 13; agosto, 16. Suman 43. Fuente: MSPAS/DEGR, mesa técnica de análisis de mortalidad, 2026.", "imagen": "tuit_7.png", "plantilla": "barras-v", "fuente": "MSPAS/DEGR · mesa de análisis de mortalidad · 2026", "cifra_ids": ["gra-c07"]}, {"n": 8, "beat": "impacto", "texto": "", "caracteres": 0, "alt_text": "Gráfico de barras horizontales con las muertes confirmadas por desnutrición aguda en 2026 por grupo de edad: menores de 6 meses, 8; de 6 a menos de 12 meses, 7; de 12 a menos de 24 meses, 14 (destacado); de 24 a menos de 36 meses, 1; de 36 a 48 meses, 2; más de 48 meses, 2. Fuente: MSPAS/DEGR, mesa técnica de análisis de mortalidad, 2026.", "imagen": "tuit_8.png", "plantilla": "barras-h", "fuente": "MSPAS/DEGR · mesa de análisis de mortalidad · 2026", "cifra_ids": ["gra-c08"]}, {"n": 9, "beat": "impacto", "texto": "Ninguna de las tres está entre las cinco de mayor tasa de casos del mapa. Donde la tasa es más alta no es donde más niños mueren.", "caracteres": 129, "alt_text": "Gráfico de barras horizontales con las muertes confirmadas por desnutrición aguda en 2026 por área de salud: Alta Verapaz, 9; Huehuetenango, 7; San Marcos, 7; Escuintla, 3. Otras 8 áreas registran 1 muerte cada una. Fuente: MSPAS/DEGR, mesa técnica de análisis de mortalidad, 2026.", "imagen": "tuit_9.png", "plantilla": "barras-h", "fuente": "MSPAS/DEGR · mesa de análisis de mortalidad · 2026", "cifra_ids": ["gra-c05", "gra-c03"]}, {"n": 10, "beat": "impacto", "texto": "Y son solo los que llegan a un servicio de salud y quedan en el registro.", "caracteres": 73, "alt_text": "Cifra destacada: 61.3 niños menores de 5 años diagnosticados con desnutrición aguda por día, en promedio, en 2026 hasta la semana 36. Promedio derivado de los casos acumulados. Fuente: MSPAS/DEGR, sala situacional de desnutrición, semana 36 de 2026.", "imagen": "tuit_10.png", "plantilla": "cifra", "fuente": "MSPAS/DEGR · sala situacional SE36 2026", "cifra_ids": ["gra-c11"]}, {"n": 11, "beat": "impacto", "texto": "", "caracteres": 0, "alt_text": "Gráfico de waffle de 100 cuadros: 56.3% de los niños con desnutrición aguda en seguimiento se había recuperado, media nacional de enero a agosto de 2026. Fuente: SIINSAN/SESAN con datos del MSPAS, 2026.", "imagen": "tuit_11.png", "plantilla": "waffle", "fuente": "SIINSAN/SESAN con datos MSPAS · 2026", "cifra_ids": ["gra-c09"]}, {"n": 12, "beat": "cierre", "texto": "2026 registra menos casos que 2025 a la misma semana, pero los severos casi no cambiaron y las muertes confirmadas son las mismas, con decenas aún en análisis. Menos registros no prueba menos desnutrición.\n\nFuentes: MSPAS/DEGR y SIINSAN/SESAN con datos MSPAS.", "caracteres": 259, "alt_text": "Tuit de cierre sin imagen: resumen del hilo y fuentes (MSPAS/DEGR y SIINSAN/SESAN).", "imagen": null, "plantilla": null, "fuente": null, "cifra_ids": []}], "no_afirma": ["No afirma que la sequía haya o no influido en los casos: el registro no lo atribuye.", "No afirma que haya menos desnutrición: mide niños diagnosticados en servicios de salud, no la prevalencia.", "No afirma que las muertes de 2026 vayan a cerrar igual que 2025: 43 siguen en análisis.", "No compara la tasa de recuperación con 2025: no hay dato al mismo corte."], "incertidumbre": ["Los puntos SE19, SE25 y SE35 de la curva 2026 provienen de prensa que cita MSPAS/SIINSAN.", "Muertes por área de salud (DDRISS) y casos por departamento de residencia no son la misma unidad territorial.", "No hay informe posterior a la SE36 publicado al 3 de octubre de 2026.", "Promedios por día (61.3) y por semana (429.3) son cálculos sobre el acumulado oficial."], "fuentes": ["MSPAS/DEGR · situación epidemiológica SE36 2026", "SIINSAN/SESAN con datos MSPAS · 2026 · SE4 a SE36", "MSPAS/DEGR · sala situacional SE36 2026", "MSPAS/DEGR · mesa de análisis de mortalidad · 2026", "SIINSAN/SESAN con datos MSPAS · 2026"], "fuentes_cifras": ["Cálculo propio sobre DEGR/MSPAS SE36 2026 (15,454 / 36 semanas)", "DEGR/MSPAS, informe SE36 2026", "DEGR/MSPAS, informe SE36 2026, gráfica 'Casos y tasas de desnutrición aguda en menores de 5 años por año de registro, Guatemala 2021-2026'", "MSPAS/DEGR, Mesa Técnica de Análisis de Mortalidad por Desnutrición Aguda", "MSPAS/DEGR, Sala situacional de desnutrición aguda (SIGSA 18)", "MSPAS/DEGR, Situación epidemiológica de la desnutrición aguda en menores de 5 años, SE36 2026 (SIGSA 18, datos al 16-sep-2026)", "SESAN/SIINSAN con datos DEGR/MSPAS (SIGSA 18); puntos SE19, SE25 y SE35 vía prensa que reproduce MSPAS", "SESAN/SIINSAN con datos de MSPAS (seguimiento antropométrico DDRISS)"], "gate_mecanico": "ok", "contacto": "contacto.png"}</script>
+<script>
+/* Peso según X: copia literal de scripts/contar_x.js (pesoX). No editar aquí; regenerar desde el script. */
+function pesoX(texto) {
+  // Reglas: NFC; cada URL pesa 23; puntos de código en 0–4351, 8192–8205,
+  // 8208–8223 y 8242–8247 pesan 1; el resto 2; los emoji compuestos
+  // (FE0F, ZWJ+siguiente, tono 1F3FB–1F3FF, keycap 20E3, par regional) son uno y pesan 2.
+  var t = String(texto == null ? "" : texto).normalize("NFC");
+  var reUrl = /https?:\/\/\S+|www\.\S+|(?<![\p{L}\p{N}\p{M}_])[a-z0-9-]+(\.[a-z0-9-]+)*\.(com|gt|org|net|io|edu|gov|mx|sv|hn|es|info|co)(\/\S*)?/giu;
+  var rangos1 = [[0, 4351], [8192, 8205], [8208, 8223], [8242, 8247]];
+  var pesoCp = function (cp) {
+    for (var k = 0; k < rangos1.length; k++) if (cp >= rangos1[k][0] && cp <= rangos1[k][1]) return 1;
+    return 2;
+  };
+  var esTono = function (cp) { return cp >= 0x1f3fb && cp <= 0x1f3ff; };
+  var esRegional = function (cp) { return cp >= 0x1f1e6 && cp <= 0x1f1ff; };
+  var pesoPlano = function (s) {
+    var cps = Array.from(s, function (c) { return c.codePointAt(0); });
+    var i = 0, n = cps.length, total = 0;
+    while (i < n) {
+      var j = i + 1;
+      if (esRegional(cps[i]) && j < n && esRegional(cps[j])) j += 1; // bandera
+      while (j < n) {
+        if (cps[j] === 0xfe0f || cps[j] === 0x20e3 || esTono(cps[j])) j += 1;
+        else if (cps[j] === 0x200d && j + 1 < n) j += 2; // ZWJ + siguiente
+        else break;
+      }
+      total += j - i > 1 ? 2 : pesoCp(cps[i]);
+      i = j;
+    }
+    return total;
+  };
+  var total = 0, pos = 0, m;
+  while ((m = reUrl.exec(t)) !== null) {
+    total += pesoPlano(t.slice(pos, m.index)) + 23;
+    pos = m.index + m[0].length;
+    if (m[0].length === 0) reUrl.lastIndex++;
+  }
+  return total + pesoPlano(t.slice(pos));
+}
+</script>
+<script>
+(() => {
+  const H = JSON.parse(document.getElementById("hilo-json").textContent);
+  const app = document.getElementById("app");
+  const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const toast = (m) => { const t = document.getElementById("toast"); t.textContent = m; t.classList.add("on"); setTimeout(() => t.classList.remove("on"), 1400); };
+  const copiar = async (txt) => {
+    try { await navigator.clipboard.writeText(txt); toast("Copiado"); return; } catch (e) { /* fallback */ }
+    const ta = document.createElement("textarea"); ta.value = txt; document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); toast("Copiado"); } catch (e) { toast("No se pudo copiar"); }
+    ta.remove();
+  };
+  if (!H) { app.innerHTML = "<p>Sin datos: este archivo lo genera scripts/ensamblar.py.</p>"; return; }
+
+  let html = `<header>
+    <h1>${esc(H.tema)}</h1>
+    <div class="meta"><span class="chip">${esc(H.paleta)}</span><span>${esc(H.fecha)}</span><span>${H.n_tuits} tuits · ${H.tuits.filter((t) => t.imagen).length} imágenes</span><span>gate mecánico: ${esc(H.gate_mecanico)}</span></div>
+    ${H.tesis ? `<p class="tesis"><b>Tesis:</b> ${esc(H.tesis)}</p>` : ""}
+  </header>
+  <div class="contacto" id="contacto" hidden>
+    <a href="contacto.png" target="_blank" rel="noopener">Ver hoja de contacto</a>
+    <img src="contacto.png" alt="Hoja de contacto: todas las tarjetas del hilo" onload="this.parentNode.hidden=false" onerror="this.parentNode.remove()">
+  </div>`;
+  for (const t of H.tuits) {
+    const vacio = !t.texto.trim();
+    const peso = pesoX(t.texto);
+    html += `<article class="tuit" id="t${t.n}">
+      <div class="cab"><span class="n">Tuit ${t.n}/${H.n_tuits}</span><span class="chip" style="background:#e9e3d6;color:#0C1520">${esc(t.beat || "")}</span>${t.plantilla ? `<span>tarjeta: ${esc(t.plantilla)}</span>` : "<span>sin imagen</span>"}</div>
+      <div class="texto${vacio ? " vacio" : ""}">${vacio ? "(sin texto: la imagen lo dice)" : esc(t.texto)}</div>
+      <div class="fila"><span class="cnt${peso > 280 ? " alerta" : ""}">${peso}/280 (peso X${peso !== t.caracteres ? `, ${t.caracteres} caracteres` : ""})</span>${vacio ? "" : `<button data-copy="${esc(t.texto)}">Copiar texto</button>`}</div>
+      ${t.imagen ? `<div class="img"><img src="${esc(t.imagen)}" alt="${esc(t.alt_text)}"></div>
+      <div class="alt"><b>Alt:</b> ${esc(t.alt_text)} <button data-copy="${esc(t.alt_text)}">Copiar alt</button></div>
+      <div class="fuente">Fuente en el pie: ${esc(t.fuente || "")} · cifras: ${esc((t.cifra_ids || []).join(", "))}</div>` : ""}
+    </article>`;
+  }
+  html += `<section class="extra">
+    <h2>Lo que este hilo NO afirma</h2><ul>${(H.no_afirma || []).map((x) => `<li>${esc(x)}</li>`).join("") || "<li>(nada declarado)</li>"}</ul>
+    <h2>Incertidumbre declarada</h2><ul>${(H.incertidumbre || []).map((x) => `<li>${esc(x)}</li>`).join("") || "<li>(nada declarado)</li>"}</ul>
+    <h2>Fuentes</h2><ul>${(H.fuentes || []).map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
+    <p style="color:var(--gris);font-size:13px">Detalle de cifras y veredictos en <code>datos.json</code>; texto listo para pegar en <code>post.md</code>.</p>
+  </section>`;
+  app.innerHTML = html;
+  app.addEventListener("click", (e) => { const b = e.target.closest("button[data-copy]"); if (b) copiar(b.getAttribute("data-copy")); });
+})();
+</script>
+</body>
+</html>

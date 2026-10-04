@@ -1,0 +1,71 @@
+<!-- PRUEBA DE ESTRÉS · apilada: 8 filas con etiquetas largas, 5 partes, absolutos apilados con total -->
+<script>
+const DATA = {
+  kicker: "PRUEBA · OCHO FILAS · CINCO PARTES",
+  titular: ["Ocho filas y cinco", "partes en absolutos"],
+  nota: "",
+  fuente: "Prueba de estrés · datos ficticios",
+  handle: "@DerekUrizar",
+  formato: { prefijo: "", sufijo: "", decimales: 0, miles: true, escala: 1 },
+  etiquetas: ["Huehuetenango", "Alta Verapaz", "Quiché", "San Marcos", "Guatemala", "Petén", "Escuintla", "Izabal"],
+  partes: [
+    { nombre: "Primaria", valores: [120000, 110000, 98000, 90000, 80000, 60000, 50000, 40000] },
+    { nombre: "Básicos", valores: [40000, 30000, 28000, 35000, 70000, 20000, 25000, 15000] },
+    { nombre: "Diversificado", valores: [20000, 12000, 10000, 18000, 65000, 9000, 15000, 8000] },
+    { nombre: "Superior", valores: [5000, 2000, 1500, 4000, 60000, 1500, 4000, 1000] },
+    { nombre: "Ninguno", valores: [60000, 70000, 65000, 30000, 15000, 25000, 12000, 14000] }
+  ],
+  normalizar: false, destacar: 4, rotular: "todas"
+};
+function render(D) {
+  H.assert(Array.isArray(D.etiquetas) && D.etiquetas.length >= 2 && D.etiquetas.length <= 8, "apilada admite de 2 a 8 filas (etiquetas)");
+  H.assert(Array.isArray(D.partes) && D.partes.length >= 2 && D.partes.length <= 5, "apilada admite de 2 a 5 partes");
+  const n = D.etiquetas.length, m = D.partes.length;
+  D.partes.forEach((p) => {
+    H.assert(p && typeof p.nombre === "string" && Array.isArray(p.valores) && p.valores.length === n, "cada parte necesita nombre y " + n + " valores");
+    p.valores.forEach((v) => H.assert(typeof v === "number" && v >= 0, "valores: números ≥ 0"));
+  });
+  const norm = D.normalizar !== false;
+  const hi = D.destacar == null ? 0 : ((D.destacar % m) + m) % m;
+  const totales = D.etiquetas.map((_, r) => D.partes.reduce((s, p) => s + p.valores[r], 0));
+  totales.forEach((t, r) => H.assert(t > 0, "la fila «" + D.etiquetas[r] + "» suma 0"));
+
+  // Colores sólidos: la destacada en a1, el resto en tonos de la tinta sobre el fondo.
+  const bg = H.color.bg, ink = H.color.ink, a1 = H.color.a1;
+  const tonos = [1, 0.66, 0.42, 0.24];
+  let k = 0;
+  const colorDe = D.partes.map((_, j) => (j === hi ? a1 : H.mezcla(bg, ink, tonos[Math.min(k++, 3)])));
+  H.leyenda(D.partes.map((p, j) => ({ nombre: p.nombre, color: colorDe[j], forma: "cuadro" })));
+
+  const pct = (r, j) => (D.partes[j].valores[r] / totales[r]) * 100;
+  if (norm && D.etiquetas.some((_, r) => D.partes.reduce((s, _p, j) => s + Math.round(pct(r, j)), 0) !== 100))
+    H.anotar("Porcentajes redondeados: pueden no sumar 100.");
+
+  const W = 920, alto = H.espacio(Math.max(240, Math.min(520, n * 92)), Math.max(220, n * 54));
+  const svg = H.lienzo(W, alto);
+  const filaH = alto / n, barH = Math.max(28, Math.min(64, Math.round(filaH * 0.62)));
+  const fontE = "700 21px Archivo";
+  const colIzq = Math.min(240, Math.max(...D.etiquetas.map((e) => H.medir(String(e), fontE))) + 24);
+  const fontV = "700 20px 'JetBrains Mono'";
+  const totW = norm ? 0 : Math.max(...totales.map((t) => H.medir(H.num(t, D.formato), "700 22px 'JetBrains Mono'"))) + 16;
+  const maxT = Math.max(...totales), anchoUtil = W - colIzq - totW;
+
+  D.etiquetas.forEach((e, r) => {
+    const cy = r * filaH + filaH / 2, y = cy - barH / 2;
+    H.texto(svg, 0, cy + 8, String(e), { style: "font:" + fontE + ",sans-serif;fill:" + ink });
+    const largo = norm ? anchoUtil : (totales[r] / maxT) * anchoUtil;
+    let x = colIzq;
+    D.partes.forEach((p, j) => {
+      const w = (p.valores[r] / totales[r]) * largo, ult = j === m - 1;
+      const wDib = Math.max(0, w - (ult ? 0 : 3));   // filo de 3 px en el color del fondo
+      if (wDib > 0) H.svgEl("rect", { x, y, width: wDib, height: barH, fill: colorDe[j] }, svg);
+      if (D.rotular !== "destacada" || j === hi) {
+        const t = norm ? H.pct(pct(r, j)) : H.num(p.valores[r], D.formato);
+        if (wDib >= Math.max(64, H.medir(t, fontV) + 16)) H.texto(svg, x + wDib / 2, cy + 7, t, { "text-anchor": "middle", style: "font:" + fontV + ";fill:" + H.textoSobre(colorDe[j]) });
+      }
+      x += w;
+    });
+    if (!norm) H.texto(svg, x + 12, cy + 8, H.num(totales[r], D.formato), { class: "t-val" });
+  });
+}
+</script>

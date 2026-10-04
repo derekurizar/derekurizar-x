@@ -13,6 +13,10 @@ Comprueba:
   H3 el estado de hilo.json coincide con el registro: error si la entrega dice
      `borrador` o difieren en `incompleto` (ensamblar.py --solo-estado lo arregla);
      aviso en cualquier otra diferencia (`publicado` se anota a mano en memoria)
+  M4 ideas/banco.json (si existe): cada idea válida (campos, área, hook, paleta, ≥1 dato
+     con url y evidencia, puntajes 1–5), ids únicos, estado ∈ enum, `hecha` ⇒ hilo_id
+     registrado en memoria/hilos.json; aviso si un hilo con idea_id apunta a una idea
+     que no existe o que no está hecha/en curso (ideas.py --conciliar lo arregla)
 
 Uso: python3 scripts/validate.py [--quiet]   · salida 0 ok · 1 error
 """
@@ -25,6 +29,7 @@ import sys
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(RAIZ, "scripts"))
 from ensamblar import HOOKS  # noqa: E402  (una sola lista de ganchos para todo el framework)
+import ideas as _ideas  # noqa: E402
 ERRORES, AVISOS = [], []
 
 
@@ -164,11 +169,41 @@ def validar_hilos(paletas):
             err("%s: paleta %r desconocida" % (rel, h.get("paleta")))
 
 
+def validar_ideas(paletas):
+    if not os.path.exists(_ideas.BANCO):
+        return
+    d = cargar(os.path.relpath(_ideas.BANCO, RAIZ))
+    if not d:
+        return
+    hilos = (cargar("memoria/hilos.json") or {}).get("hilos", [])
+    hids = {h.get("id") for h in hilos}
+    ids = set()
+    for i, idea in enumerate(d.get("ideas", [])):
+        iid = idea.get("id") or "ideas[%d]" % i
+        if not re.fullmatch(r"[a-z0-9-]+", str(idea.get("id") or "")):
+            err("ideas[%d] id %r no es un slug" % (i, idea.get("id")))
+        if iid in ids:
+            err("ideas: id repetido %s" % iid)
+        ids.add(iid)
+        for p in _ideas.validar_idea(idea, paletas):
+            err("ideas %s: %s" % (iid, p))
+        if idea.get("estado") not in _ideas.ESTADOS:
+            err("ideas %s: estado %r no está en %s" % (iid, idea.get("estado"), _ideas.ESTADOS))
+        if idea.get("estado") == "hecha" and idea.get("hilo_id") not in hids:
+            err("ideas %s: hecha con hilo_id %r que no está en memoria/hilos.json" % (iid, idea.get("hilo_id")))
+    estado = {idea.get("id"): idea.get("estado") for idea in d.get("ideas", [])}
+    for h in hilos:
+        if h.get("idea_id") and estado.get(h["idea_id"]) not in ("hecha", "en_curso"):
+            warn("hilo %s apunta a la idea %s (%s): corre python3 scripts/ideas.py --conciliar" % (
+                h.get("id"), h["idea_id"], estado.get(h["idea_id"], "no existe")))
+
+
 def main():
     quiet = "--quiet" in sys.argv
     paletas = validar_tokens()
     validar_fuentes()
     validar_hilos(paletas)
+    validar_ideas(paletas)
     for a in AVISOS:
         print("AVISO  " + a)
     for e in ERRORES:

@@ -5,7 +5,7 @@
 #      RAPIDO=1 bash scripts/test.sh # salta el catálogo
 # Pasos: validate · catálogo · contar_x (py + js) · fixture (materializar + ensamblar --check)
 #        · negativos del gate G1–G6 sobre copias del fixture · negativos de render.js
-#        · node --check de hilo.js. Resumen «N pruebas · M fallos»; exit 1 si hay fallos.
+#        · banco de ideas (ideas.py sobre un banco temporal) · node --check de hilo.js e ideas.js. Resumen «N pruebas · M fallos»; exit 1 si hay fallos.
 set -u
 RAIZ="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$RAIZ"
@@ -126,13 +126,73 @@ EOF
   return 0
 }
 paso "render.js rechaza texto de 12px con R1" render_neg_r1
-
-echo "== sintaxis del workflow"
-check_hilo_js() {
-  { echo "(async function(){"; sed 's/^export //' .claude/workflows/hilo.js; echo "})"; } > "$TMP/hilo_check.js"
-  node --check "$TMP/hilo_check.js"
+# render_neg_datos <plantilla> <js que rompe DATA>: el render() de la plantilla debe rechazarlo (exit 1, «DATA:»).
+render_neg_datos() {
+  local f="$TMP/neg_$1.html"
+  python3 scripts/nuevo_visual.py "$1" "$f" >/dev/null || return 1
+  python3 - "$f" "$2" <<'EOF' || return 1
+import sys
+p, js = sys.argv[1], sys.argv[2]; s = open(p, encoding="utf-8").read()
+assert "\nfunction render(D)" in s, "sin function render(D)"
+open(p, "w", encoding="utf-8").write(s.replace("\nfunction render(D)", "\n" + js + "\nfunction render(D)", 1))
+EOF
+  if node scripts/render.js "$f" --check >"$TMP/r.log" 2>&1; then echo "render.js aceptó: $2"; return 1; fi
+  grep -q "DATA:" "$TMP/r.log" || { echo "exit 1 pero sin «DATA:»:"; tail -5 "$TMP/r.log"; return 1; }
 }
-paso "node --check hilo.js (envuelto en async function)" check_hilo_js
+paso "bullet rechaza 8 items"                 render_neg_datos bullet 'DATA.items = DATA.items.concat(DATA.items);'
+paso "embudo rechaza etapas que crecen"       render_neg_datos embudo 'DATA.etapas.reverse();'
+paso "embudo exige misma_cohorte"             render_neg_datos embudo 'delete DATA.misma_cohorte;'
+paso "divergente rechaza 16 items"            render_neg_datos divergente 'DATA.items = DATA.items.concat(DATA.items);'
+paso "apilada rechaza valores desparejos"     render_neg_datos apilada 'DATA.partes[0].valores.pop();'
+paso "piramide rechaza 3 grupos"              render_neg_datos piramide 'DATA.grupos = DATA.grupos.slice(0, 3);'
+paso "treemap rechaza 2 partes"               render_neg_datos treemap 'DATA.partes = DATA.partes.slice(0, 2);'
+paso "dispersion rechaza 5 puntos"            render_neg_datos dispersion 'DATA.puntos = DATA.puntos.slice(0, 5);'
+paso "barras-v rechaza periodo invertido"     render_neg_datos barras-v 'DATA.periodos = [{ desde: 3, hasta: 1, nombre: "x" }];'
+
+echo "== banco de ideas (banco y hilos temporales; no toca ideas/ ni memoria/)"
+IB="$TMP/ideas"; mkdir -p "$IB/in"
+cat > "$IB/hilos.json" <<'JSON'
+{"version": 1, "hilos": [{"id": "2026-01-01-canasta", "tema": "canasta basica", "tesis": "", "estado": "listo", "idea_id": "canasta-basica-vs-salario"}]}
+JSON
+cat > "$IB/in/ideas_prueba.json" <<'JSON'
+{"grupo": "prueba", "ideas": [
+ {"id": "canasta-basica-vs-salario", "titulo": "Canasta básica frente al salario mínimo", "area": "economia", "pregunta": "¿Cuántas horas de salario mínimo cuesta la canasta básica alimentaria?", "por_que_ahora": "INE publicó septiembre", "hook_sugerido": "escala_humana", "paleta_sugerida": "maiz", "datos": [{"fuente": "INE", "indicador": "CBA", "url": "https://www.ine.gob.gt/x", "formato": "pdf", "periodo": "2016–2026", "evidencia": "Costo de la CBA a septiembre"}], "puntaje": {"interes": 5, "datos": 4, "actualidad": 4}},
+ {"id": "salario-minimo-canasta-basica", "titulo": "Salario mínimo y canasta básica", "area": "economia", "pregunta": "¿El salario mínimo alcanza para la canasta básica alimentaria?", "por_que_ahora": "x", "hook_sugerido": "escala_humana", "paleta_sugerida": "maiz", "datos": [{"fuente": "INE", "indicador": "CBA", "url": "https://a.gt", "evidencia": "cita de prueba"}], "puntaje": {"interes": 3, "datos": 3, "actualidad": 3}},
+ {"id": "electricidad-tarifa", "titulo": "Tarifa eléctrica social", "area": "energia", "pregunta": "¿Cuánto pagan los hogares por kWh desde el subsidio?", "por_que_ahora": "ajuste trimestral de la CNEE", "hook_sugerido": "antes_despues", "paleta_sugerida": "cielo", "datos": [{"fuente": "CNEE", "indicador": "pliego tarifario", "url": "https://www.cnee.gob.gt/x", "formato": "pdf", "periodo": "2016–2026", "evidencia": "Pliego tarifario trimestral"}], "puntaje": {"interes": 4, "datos": 4, "actualidad": 3}},
+ {"id": "sin-evidencia", "titulo": "Idea sin datos", "area": "economia", "pregunta": "x", "por_que_ahora": "y", "datos": [], "puntaje": {"interes": 3, "datos": 3, "actualidad": 3}}
+]}
+JSON
+ideas_cmd() { python3 scripts/ideas.py --banco "$IB/banco.json" --hilos "$IB/hilos.json" "$@"; }
+ideas_importar() {
+  ideas_cmd --importar "$IB/in" --fecha 2026-01-01 >"$IB/imp.log" || return 1
+  grep -q "2 nuevas · 1 repetidas · 1 inválidas" "$IB/imp.log" || { cat "$IB/imp.log"; return 1; }
+  [[ -s "$IB/README.md" ]] || { echo "no se generó README.md"; return 1; }
+}
+paso "ideas.py --importar (2 nuevas, 1 repetida por palabras clave, 1 sin evidencia)" ideas_importar
+ideas_siguiente() { ideas_cmd --siguiente | grep -q '"id": "canasta-basica-vs-salario"'; }
+paso "ideas.py --siguiente devuelve la de mayor puntaje" ideas_siguiente
+ideas_hecha_sin_hilo() { ideas_cmd --marcar electricidad-tarifa --estado hecha >/dev/null 2>&1; [[ $? -eq 2 ]]; }
+paso "ideas.py --marcar hecha sin --hilo (exit 2)" ideas_hecha_sin_hilo
+ideas_conciliar() {
+  ideas_cmd --conciliar >/dev/null || return 1
+  ideas_cmd --ver canasta-basica-vs-salario | grep -q '"estado": "hecha"' || { echo "la idea enlazada no quedó hecha"; return 1; }
+  grep -q "2026-01-01-canasta" "$IB/README.md" || { echo "README.md sin el hilo de la idea hecha"; return 1; }
+}
+paso "ideas.py --conciliar marca hecha la idea enlazada desde hilos.json" ideas_conciliar
+memoria_idea_smoke() {
+  local S; S="$(mktemp -d "$TMP/idea.XXXXXX")"; cp -R sesiones/_fixture/. "$S/"
+  python3 -c 'import json,sys; p=sys.argv[1]; e=json.load(open(p)); e["idea_id"]="x-y"; json.dump(e, open(p,"w"))' "$S/encuadre.json"
+  python3 scripts/memoria.py --registrar "$S" --ruta sesiones/_fixture/salida --dry-run 2>/dev/null | grep -q "banco de ideas no se toca"
+}
+paso "memoria.py no marca ideas en sesiones smoke/fixture" memoria_idea_smoke
+
+echo "== sintaxis de los workflows"
+check_js() {
+  { echo "(async function(){"; sed 's/^export //' ".claude/workflows/$1"; echo "})"; } > "$TMP/check_$1"
+  node --check "$TMP/check_$1"
+}
+paso "node --check hilo.js (envuelto en async function)" check_js hilo.js
+paso "node --check ideas.js (envuelto en async function)" check_js ideas.js
 
 echo
 echo "[test] $N pruebas · $FALLOS fallos"

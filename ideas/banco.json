@@ -1,0 +1,107 @@
+{
+  "version": 1,
+  "_comentario": "Banco de ideas para hilos. Lo escribe SOLO scripts/ideas.py (exploradores vía --importar, memoria.py al registrar un hilo con idea_id). estado: pendiente | en_curso | hecha | descartada.",
+  "ideas": [
+    {
+      "id": "desnutricion-aguda-2026-semana-a-semana",
+      "creada": "2026-10-03",
+      "area": "salud",
+      "titulo": "Desnutrición aguda 2026: casos acumulados semana a semana frente al histórico",
+      "pregunta": "¿Va 2026 peor o mejor que años anteriores en desnutrición aguda infantil, y qué departamentos concentran los casos?",
+      "por_que_ahora": "SIINSAN publicó el informe de la SE36 (6-12 sep 2026); prensa reporta 32 muertes en 2026 y alertas locales (Quetzaltenango, 632 niños).",
+      "angulo": "Serie semanal del sistema de vigilancia (casos acumulados vs. comportamiento histórico) y mapa departamental; no es el análisis CIF de la sequía sino la medición clínica en niños menores de 5 años.",
+      "hook_sugerido": "escala_humana",
+      "paleta_sugerida": "terracota",
+      "datos": [
+        {
+          "fuente": "SESAN/SIINSAN - Desnutrición Aguda",
+          "indicador": "Casos acumulados de desnutrición aguda en menores de 5 años por semana epidemiológica y departamento",
+          "url": "https://portal.siinsan.gob.gt/desnutricion-aguda/",
+          "formato": "pdf",
+          "periodo": "2023–2026",
+          "evidencia": "Página SIINSAN: «Semana Epidemiológica 36 … (SE36) del 2026 (período del 06 al 12 de septiembre de 2026)»"
+        }
+      ],
+      "puntaje": {
+        "interes": 5,
+        "datos": 3,
+        "actualidad": 5,
+        "total": 13
+      },
+      "estado": "hecha",
+      "hilo_id": "2026-10-03-desnutricion-aguda-2026",
+      "actualizada": "2026-10-03",
+      "nota": "Evitar solapar con el hilo de sequía/CIF; centrarse en casos clínicos y muertes. Informes en PDF semanales; faltan algunas semanas."
+    },
+    {
+      "id": "evaluacion-graduandos-mitad-sin-competencias",
+      "creada": "2026-10-03",
+      "area": "educacion",
+      "titulo": "Evaluación de Graduandos: la mitad sale del diversificado sin lo mínimo en lectura y mate",
+      "pregunta": "¿Qué porcentaje de graduandos alcanza el nivel de logro en lectura y matemática y cómo ha cambiado en los últimos años?",
+      "por_que_ahora": "La evaluación 2026 se aplicó entre junio y agosto; La Hora (3 jul) habla de «desplome y retroceso» y de la estrategia del Mineduc para revertirlo.",
+      "angulo": "Serie de resultados DIGEDUCA por año, sector y departamento: contrasta con el mito de más matrícula = mejor educación.",
+      "hook_sugerido": "mito_vs_dato",
+      "paleta_sugerida": "maiz",
+      "datos": [
+        {
+          "fuente": "MINEDUC DIGEDUCA - Tableros de resultados",
+          "indicador": "% de graduandos en nivel de logro en Lectura y Matemática por año, sector y departamento",
+          "url": "https://tablerosdigeduca.mineduc.gob.gt/",
+          "formato": "html",
+          "periodo": "2014–2026",
+          "evidencia": "Sitio responde HTTP 200 (tableros DIGEDUCA); La Hora: «Más de 50% de estudiantes de diversificado carece de las habilidades mínimas de Matemática y Lectura»"
+        }
+      ],
+      "puntaje": {
+        "interes": 4,
+        "datos": 3,
+        "actualidad": 4,
+        "total": 11
+      },
+      "estado": "pendiente",
+      "hilo_id": null,
+      "actualizada": "2026-10-03",
+      "nota": "Tablero interactivo: confirmar si hay descarga; si no, usar informes PDF de DIGEDUCA y Anuario MINEDUC como respaldo."
+    },
+    {
+      "id": "tarifa-electrica-estable-por-region",
+      "creada": "2026-10-03",
+      "area": "energia",
+      "titulo": "Q1.51 en la capital, Q2.12 en Occidente: por qué el kWh cuesta distinto según dónde vive",
+      "pregunta": "¿Por qué la tarifa eléctrica se mantiene estable pese a que el precio de generación sube, y cuánto más paga el oriente y occidente que la capital?",
+      "por_que_ahora": "Pliego CNEE vigente 1 ago-31 oct 2026 se mantiene estable; el siguiente trimestre se anuncia a fines de octubre. La Hora (4 sep): la electricidad sube 60% pero la factura no.",
+      "angulo": "Brecha territorial EEGSA vs. DEOCSA/DEORSA y tarifa social vs. no social en serie trimestral, con contratos de largo plazo como explicación.",
+      "hook_sugerido": "brecha_territorial",
+      "paleta_sugerida": "cielo",
+      "datos": [
+        {
+          "fuente": "CNEE - Pliegos tarifarios",
+          "indicador": "Tarifa Q/kWh social y no social por distribuidora (EEGSA, DEOCSA, DEORSA), trimestral",
+          "url": "https://www.cnee.gob.gt/pliegos-tarifarios/",
+          "formato": "pdf",
+          "periodo": "2016–2026",
+          "evidencia": "Página CNEE «Pliegos tarifarios» accesible; prensa: EEGSA Q1.42 social/Q1.51 no social; DEOCSA Q2.03/Q2.12 (ago-oct 2026)"
+        },
+        {
+          "fuente": "AMM",
+          "indicador": "Precio spot de oportunidad US$/MWh mensual",
+          "url": "https://www.amm.org.gt/portal/?page_id=145",
+          "formato": "xlsx",
+          "periodo": "2010–2026",
+          "evidencia": "Catálogo fuentes: informe estadístico AMM con precio spot promedio mensual"
+        }
+      ],
+      "puntaje": {
+        "interes": 4,
+        "datos": 4,
+        "actualidad": 4,
+        "total": 12
+      },
+      "estado": "pendiente",
+      "hilo_id": null,
+      "actualizada": "2026-10-03",
+      "nota": "Cifras de tarifa vienen de prensa; el investigador debe confirmarlas en el PDF CNEE."
+    }
+  ]
+}

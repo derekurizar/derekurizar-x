@@ -7,7 +7,7 @@ Salida:   hilos/<fecha>-<slug>/ (o --salida DIR; en smoke/fixture <sesion>/salid
           hilo.json · datos.json · post.md · hilo.html · contacto.png · tuit_N.html · tuit_N.png
 
 --check aplica el GATE MECÁNICO antes de escribir (si falla, no escribe y sale 1):
-  G1 estructura: 3–8 tuits numerados 1..n; T1 gancho, Tn cierre, un solo giro;
+  G1 estructura: 3–21 tuits numerados 1..n; T1 gancho, Tn cierre, un solo giro;
      en modo normal con ≥5 tuits, un beat impacto
   G2 textos (peso X: URL=23, emoji=2): T1 40–280, primera línea ≤ 90, sin enlace;
      todos ≤ 280; T2..T(n−1) con imagen ≤ 200; sin engagement bait; alt_text 20–1000;
@@ -67,8 +67,16 @@ CLAVES_DATO = {
     "cifra": lambda d: [d.get("cifra", {}).get("valor")] + ([d["comparacion"]["valor"]] if d.get("comparacion") else []),
     "mapa": lambda d: [v for v in (d.get("valores") or {}).values() if v is not None],
     "calor": lambda d: [v for fila in (d.get("valores") or []) for v in fila if v is not None],
+    # bullet: una meta de 100 (el total, p. ej. 100 % del presupuesto) es definición, no cifra; las demás se cotejan.
+    "bullet": lambda d: [it.get("valor") for it in d.get("items", [])] + [m for m in [it.get("meta") for it in d.get("items", [])] + [d.get("meta")] if isinstance(m, (int, float)) and m != 100],
+    "embudo": lambda d: [e.get("valor") for e in d.get("etapas", [])],
+    "divergente": lambda d: [it.get("valor") for it in d.get("items", [])],
+    "apilada": lambda d: [v for p in d.get("partes", []) for v in p.get("valores", [])],
+    "piramide": lambda d: list((d.get("izquierda") or {}).get("valores", [])) + list((d.get("derecha") or {}).get("valores", [])),
+    "treemap": lambda d: [p.get("valor") for p in d.get("partes", [])],
+    "dispersion": lambda d: [v for p in d.get("puntos", []) for v in (p.get("x"), p.get("y"))] + [(d.get("guias") or {}).get(k) for k in ("x", "y")],
 }
-CLAVES_PRESENTACION = {"decimales", "escala", "destacar", "clases", "decimales_pildora", "i", "fila", "col", "miles", "cortes"}
+CLAVES_PRESENTACION = {"decimales", "escala", "destacar", "clases", "decimales_pildora", "i", "fila", "col", "miles", "cortes", "maximo", "minimo_rotulo", "desde", "hasta"}
 
 
 def leer(ruta, obligatorio=False):
@@ -162,6 +170,9 @@ def fuente_corta(fuente):
     return re.split(r"\s+[·—–]\s+|,|\s+/\s+|\(", fuente or "", maxsplit=1)[0].strip()
 
 
+MAX_TUITS = 21  # igual que hilo.js
+
+
 def gate(guion, encuadre, cifras, veredictos, sesion, plantillas, paletas):
     F, W = [], []
     tuits = guion.get("tuits", [])
@@ -169,8 +180,8 @@ def gate(guion, encuadre, cifras, veredictos, sesion, plantillas, paletas):
     smoke = bool(guion.get("smoke") or (encuadre or {}).get("smoke") or (encuadre or {}).get("fixture"))
     ok_ids = {i for i, v in veredictos.items() if v.get("veredicto") in ("verificada", "ajustada")}
     # G1
-    if not (3 if smoke else 4) <= n <= 8:
-        F.append("G1 el hilo tiene %d tuits (deben ser %s–8)" % (n, 3 if smoke else 4))
+    if not (3 if smoke else 4) <= n <= MAX_TUITS:
+        F.append("G1 el hilo tiene %d tuits (deben ser %s–%d)" % (n, 3 if smoke else 4, MAX_TUITS))
     if [t.get("n") for t in tuits] != list(range(1, n + 1)):
         F.append("G1 los tuits no están numerados 1..%d" % n)
     if n and tuits[0].get("beat") != "gancho":

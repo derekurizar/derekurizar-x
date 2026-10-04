@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Hilos · tarjeta 1080×1080</title>
+<!--
+  BASE DE TARJETA (@DerekUrizar · sistema «Hilos»)
+  =================================================
+  No se edita a mano en los visuales: scripts/nuevo_visual.py ensambla
+  base.html + templates/graficos/<plantilla>.html → visual autocontenido.
+  Anatomía y tipografía vienen del brief (referencias/diseno/brief/, opción 2b);
+  las paletas de la opción 6a (design/tokens.json).
+
+  Las fuentes se referencian como url(fonts/x.woff2): scripts/render.js las sirve
+  desde design/fonts/ con cabeceras CORS, así funciona desde cualquier carpeta y
+  sin peticiones externas.
+-->
+<style>
+@font-face { font-family: 'Instrument Serif'; font-style: normal; font-weight: 400; src: url(fonts/instrument-serif-400.woff2) format('woff2'); }
+@font-face { font-family: 'Instrument Serif'; font-style: italic; font-weight: 400; src: url(fonts/instrument-serif-400i.woff2) format('woff2'); }
+@font-face { font-family: 'Archivo'; font-style: normal; font-weight: 100 900; src: url(fonts/archivo-var.woff2) format('woff2'); }
+@font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 100 800; src: url(fonts/jetbrains-mono-var.woff2) format('woff2'); }
+
+/* ---- Paletas (design/tokens.json · brief 6a). Una por hilo. ---- */
+body[data-paleta="cielo"]     { --bg:#4B92DB; --ink:#0C1520; --a1:#F6F2E8; --a2:#2B4A66; --a3:#8FB8E6; --ink-rgb:12,21,32;    --x-fg:#F6F2E8; }
+body[data-paleta="jade"]      { --bg:#1E6B5C; --ink:#F6F2E8; --a1:#9FD4BF; --a2:#0E3B32; --a3:#5FA38C; --ink-rgb:246,242,232; --x-fg:#1E6B5C; }
+body[data-paleta="maiz"]      { --bg:#E0A33C; --ink:#1A1208; --a1:#F3D08A; --a2:#B97A1C; --a3:#6E440B; --ink-rgb:26,18,8;     --x-fg:#E0A33C; }
+body[data-paleta="terracota"] { --bg:#B23A26; --ink:#F6F2E8; --a1:#3A0F08; --a2:#E8836F; --a3:#F2C2B6; --ink-rgb:246,242,232; --x-fg:#B23A26; }
+body[data-paleta="cacao"]     { --bg:#4A2F22; --ink:#F6F2E8; --a1:#D9A66B; --a2:#A8744A; --a3:#7A5038; --ink-rgb:246,242,232; --x-fg:#4A2F22; }
+body[data-paleta="jacaranda"] { --bg:#6B4E96; --ink:#F6F2E8; --a1:#1F1530; --a2:#B9A3DB; --a3:#8E73B8; --ink-rgb:246,242,232; --x-fg:#6B4E96; }
+body[data-paleta="atitlan"]   { --bg:#3FA3A0; --ink:#0C1520; --a1:#F6F2E8; --a2:#7CC3C0; --a3:#1D5E5C; --ink-rgb:12,21,32;    --x-fg:#3FA3A0; }
+body[data-paleta="obsidiana"] { --bg:#16181D; --ink:#F6F2E8; --a1:#F08A4B; --a2:#8C8F96; --a3:#3A3D44; --ink-rgb:246,242,232; --x-fg:#16181D; }
+
+/* ---- Anatomía de la tarjeta (brief 2b) ---- */
+html, body { margin: 0; padding: 0; }
+body {
+  width: 1080px; height: 1080px; overflow: hidden;
+  background: var(--bg); color: var(--ink);
+  font-family: Archivo, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased; text-rendering: geometricPrecision;
+}
+.tarjeta { width: 1080px; height: 1080px; padding: 76px 80px; box-sizing: border-box; display: flex; flex-direction: column; }
+.kicker { font: 500 20px/1 'JetBrains Mono', monospace; letter-spacing: .16em; text-transform: uppercase; white-space: nowrap; }
+body[data-paleta="obsidiana"] .kicker { color: var(--a1); }
+h1.titular { font: 400 88px/.98 'Instrument Serif', Georgia, serif; margin: 18px 0 0; letter-spacing: -.015em; }
+.leyenda { display: flex; flex-wrap: wrap; gap: 14px 36px; margin-top: 28px; }
+.leyenda .item { display: flex; align-items: center; gap: 12px; font: 600 24px/1 Archivo, sans-serif; white-space: nowrap; }
+.leyenda .sw { width: 36px; height: 6px; background: var(--ink); flex: none; }
+.leyenda .sw.cuadro { width: 22px; height: 22px; }
+.leyenda .sw.punto { width: 22px; height: 22px; border-radius: 50%; }
+#grafico { margin-top: auto; position: relative; }
+#grafico svg { display: block; overflow: visible; }
+.nota { font: 500 18px/1.4 'JetBrains Mono', monospace; margin: 18px 0 0; max-width: 920px; }
+.pie { display: flex; align-items: center; justify-content: space-between; margin-top: 34px; padding-top: 24px; border-top: 1.5px solid rgba(var(--ink-rgb), .3); }
+.pie .fuente { font: 400 18px/1.3 'JetBrains Mono', monospace; }
+.pie .autor { display: flex; align-items: center; gap: 12px; flex: none; }
+.pie .x { width: 34px; height: 34px; border-radius: 8px; background: var(--ink); color: var(--x-fg); display: flex; align-items: center; justify-content: center; font: 800 19px/1 Archivo, sans-serif; }
+.pie .handle { font: 600 21px/1 Archivo, sans-serif; }
+[hidden] { display: none !important; }
+
+/* Textos de gráfico (compartidos por las plantillas) */
+.t-eje  { font: 500 17px/1 'JetBrains Mono', monospace; fill: var(--ink); }
+.t-val  { font: 700 22px/1 'JetBrains Mono', monospace; fill: var(--ink); }
+.t-cat  { font: 600 23px/1 Archivo, sans-serif; fill: var(--ink); }
+.t-rot  { font: 700 20px/1 Archivo, sans-serif; fill: var(--ink); }
+/* T:CSS */
+</style>
+</head>
+<body data-paleta="terracota">
+<div class="tarjeta">
+  <div class="kicker" id="kicker"></div>
+  <h1 class="titular" id="titular"></h1>
+  <div class="leyenda" id="leyenda" hidden></div>
+  <div id="grafico"></div>
+  <p class="nota" id="nota" hidden></p>
+  <div class="pie">
+    <span class="fuente" id="fuente"></span>
+    <div class="autor"><div class="x">X</div><span class="handle" id="handle"></span></div>
+  </div>
+</div>
+<script>
+// =====================================================================
+// H · helpers compartidos. Las plantillas solo llaman a H.*; nada externo.
+// =====================================================================
+const H = (() => {
+  const MENOS = "−";
+  const assert = (cond, msg) => { if (!cond) throw new Error("DATA: " + msg); };
+
+  // Formato es-GT sin toLocaleString (la locale del headless no es fiable):
+  // miles con coma, decimal con punto, menos tipográfico, prefijo/sufijo pegados.
+  const num = (v, f = {}) => {
+    assert(typeof v === "number" && isFinite(v), "valor no numérico: " + JSON.stringify(v));
+    const esc = f.escala || 1, d = f.decimales == null ? 0 : f.decimales;
+    const n = v / esc, neg = n < 0;
+    const [ent, dec] = Math.abs(n).toFixed(d).split(".");
+    const con = f.miles === false ? ent : ent.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return (neg ? MENOS : "") + (f.prefijo || "") + con + (dec ? "." + dec : "") + (f.sufijo || "");
+  };
+  const pct = (v, d = 0) => (v < 0 ? MENOS : "") + Math.abs(v).toFixed(d) + "%";
+  // Decimales que de verdad necesita una lista de valores (para ticks de eje):
+  // 0 si todos son enteros, si no los del formato.
+  const decimalesDe = (vals, max = 2) => {
+    for (let d = 0; d <= max; d++) if (vals.every((v) => Math.abs(v * Math.pow(10, d) - Math.round(v * Math.pow(10, d))) < 1e-9)) return d;
+    return max;
+  };
+
+  const css = (k) => getComputedStyle(document.body).getPropertyValue("--" + k).trim();
+  const color = { get bg() { return css("bg"); }, get ink() { return css("ink"); },
+                  get a1() { return css("a1"); }, get a2() { return css("a2"); }, get a3() { return css("a3"); },
+                  inkA(a) { return "rgba(" + css("ink-rgb") + "," + a + ")"; } };
+
+  const NS = "http://www.w3.org/2000/svg";
+  const svgEl = (tag, attrs = {}, padre = null) => {
+    const e = document.createElementNS(NS, tag);
+    for (const [k, v] of Object.entries(attrs)) if (v !== null && v !== undefined) e.setAttribute(k, v);
+    if (padre) padre.appendChild(e);
+    return e;
+  };
+  // EL único <svg> de la tarjeta, dentro de #grafico, viewBox 1:1 con px CSS.
+  const lienzo = (w, h) => {
+    const g = document.getElementById("grafico");
+    g.innerHTML = ""; g.style.width = w + "px"; g.style.height = h + "px";
+    return svgEl("svg", { viewBox: "0 0 " + w + " " + h, width: w, height: h }, g);
+  };
+  // <text> SVG. `fill` va como style: una clase .t-* con fill ganaría al atributo.
+  const texto = (svg, x, y, str, attrs = {}) => {
+    const a = Object.assign({ x, y }, attrs);
+    if (a.fill) { a.style = (a.style ? a.style + ";" : "") + "fill:" + a.fill; delete a.fill; }
+    const t = svgEl("text", a, svg);
+    t.textContent = str; return t;
+  };
+  // Leyenda construida desde render() (cuando los colores salen de las series).
+  const leyenda = (items) => {
+    const ley = document.getElementById("leyenda"); ley.innerHTML = "";
+    for (const it of items) {
+      const item = el("div", "item", ley);
+      const sw = el("span", "sw" + (it.forma ? " " + it.forma : ""), item);
+      sw.style.background = it.color || color.ink;
+      el("span", null, item, esc(it.nombre));
+    }
+    ley.hidden = !items.length;
+  };
+  const el = (tag, cls, padre, html) => {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls; if (html != null) e.innerHTML = html;
+    if (padre) padre.appendChild(e); return e;
+  };
+
+  const escala = (dom, rango) => {
+    const k = dom[1] - dom[0] === 0 ? 0 : (rango[1] - rango[0]) / (dom[1] - dom[0]);
+    return (v) => rango[0] + (v - dom[0]) * k;
+  };
+  // Cortes redondos: 1, 2, 2.5, 5 × 10^n.
+  const ticks = (min, max, n = 4) => {
+    if (max === min) return [min];
+    const bruto = (max - min) / Math.max(1, n);
+    const mag = Math.pow(10, Math.floor(Math.log10(bruto)));
+    const paso = [1, 2, 2.5, 5, 10].map((m) => m * mag).find((s) => s >= bruto) || 10 * mag;
+    const out = [];
+    for (let v = Math.ceil(min / paso) * paso; v <= max + paso * 1e-9; v += paso) out.push(Math.round(v / paso) * paso);
+    return out;
+  };
+  // Dominio "bonito" que contiene [min,max] (y el 0 si se pide).
+  const dominio = (vals, desdeCero = true) => {
+    let min = Math.min(...vals), max = Math.max(...vals);
+    if (desdeCero) { min = Math.min(0, min); max = Math.max(0, max); }
+    if (max === min) max = min + 1;
+    const t = ticks(min, max, 4);
+    const paso = t.length > 1 ? t[1] - t[0] : (max - min);
+    return [Math.min(min, t[0]), Math.max(max, t[t.length - 1] + (t[t.length - 1] < max ? paso : 0))];
+  };
+  // Empuje 1-D de rótulos para que no se solapen (muta y devuelve el array).
+  const antiSolape = (items, o = {}) => {
+    const gap = o.minGap || 26, lim0 = o.min ?? -Infinity, lim1 = o.max ?? Infinity;
+    const orden = items.slice().sort((a, b) => a.y - b.y);
+    for (let k = 1; k < orden.length; k++) if (orden[k].y - orden[k - 1].y < gap) orden[k].y = orden[k - 1].y + gap;
+    const ult = orden[orden.length - 1];
+    if (ult && ult.y > lim1) { ult.y = lim1; for (let k = orden.length - 2; k >= 0; k--) if (orden[k + 1].y - orden[k].y < gap) orden[k].y = orden[k + 1].y - gap; }
+    if (orden.length && orden[0].y < lim0) orden[0].y = lim0;
+    return items;
+  };
+  // Ancho de un texto con una fuente dada (para decidir rótulos).
+  const medir = (str, font) => {
+    const c = medir._c || (medir._c = document.createElement("canvas").getContext("2d"));
+    c.font = font; return c.measureText(str).width;
+  };
+  // Alto disponible para #grafico entre la cabecera y el pie (margin-top:auto
+  // absorbe el hueco). Devuelve min(max, libre) y falla si no hay sitio.
+  const espacio = (max = 520, min = 240) => {
+    const g = document.getElementById("grafico");
+    g.innerHTML = ""; g.style.height = "0px";
+    let prev = g.previousElementSibling;
+    while (prev && prev.hidden) prev = prev.previousElementSibling;
+    const top = g.getBoundingClientRect().top, prevB = prev ? prev.getBoundingClientRect().bottom : 76;
+    const libre = Math.floor(top - prevB - 28);
+    assert(libre >= min, "no queda espacio para el gráfico (" + libre + "px): acorta el titular, la nota o la leyenda");
+    return Math.min(max, libre);
+  };
+
+  // ---- Rampa secuencial (mapa, calor) ----
+  // H.rampa(n) → n colores hex de la clase MÁS BAJA a la MÁS ALTA. La rampa va del
+  // fondo hacia la tinta (no hacia a1: en maíz a1 apenas contrasta con el fondo, y
+  // a1 se reserva para el destacado, que así siempre se ve encima de la rampa):
+  //   · se interpola en RGB lineal (sRGB linealizado con gamma 2.4 y vuelta) para
+  //     que la luminancia avance sin grises sucios ni bandas;
+  //   · los escalones se reparten uniformes en L* (CIELAB), no en luminancia: con
+  //     tinta oscura (cielo, maíz, atitlán) los pasos en luminancia lineal se
+  //     apelotonan en lo oscuro y solo el último salta;
+  //   · el escalón más bajo se aleja del fondo hasta 1.5:1 (WCAG) para que lea
+  //     como zona pintada y no como fondo; el más alto es la tinta.
+  // Resultado: monótona en luminancia en las 8 paletas (hacia oscuro con tinta
+  // oscura, hacia claro con tinta clara) y cada color contrasta ≥ 1.5:1 con --bg.
+  const RAMPA_MIN_CONTRASTE = 1.5;
+  const rgbDe = (hex) => { const h = String(hex).trim().replace("#", ""); const s = h.length === 3 ? h.split("").map((c) => c + c).join("") : h; return [0, 2, 4].map((i) => parseInt(s.slice(i, i + 2), 16)); };
+  const linealizar = (c) => c.map((v) => { v /= 255; return v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
+  const hexDe = (c) => "#" + c.map((v) => { v = Math.max(0, Math.min(1, v)); v = v <= 0.0031308 ? v * 12.92 : 1.055 * Math.pow(v, 1 / 2.4) - 0.055; return Math.round(v * 255).toString(16).padStart(2, "0"); }).join("");
+  const luminancia = (lin) => 0.2126 * lin[0] + 0.7152 * lin[1] + 0.0722 * lin[2];
+  const Lstar = (y) => y <= 216 / 24389 ? y * 24389 / 27 : 116 * Math.cbrt(y) - 16;
+  const Yde = (L) => L <= 8 ? L * 27 / 24389 : Math.pow((L + 16) / 116, 3);
+  const rampa = (n = 5) => {
+    n = Math.max(2, Math.min(9, Math.round(n)));
+    const lb = linealizar(rgbDe(color.bg)), li = linealizar(rgbDe(color.ink));
+    const yb = luminancia(lb), yi = luminancia(li), haciaClaro = yi > yb;
+    let y0 = haciaClaro ? RAMPA_MIN_CONTRASTE * (yb + 0.05) - 0.05 : (yb + 0.05) / RAMPA_MIN_CONTRASTE - 0.05;
+    y0 = haciaClaro ? Math.min(y0, yi) : Math.max(y0, yi);
+    const L0 = Lstar(y0), L1 = Lstar(yi), out = [];
+    for (let k = 0; k < n; k++) {
+      const y = Yde(L0 + (L1 - L0) * k / (n - 1));
+      const t = yi === yb ? 1 : Math.max(0, Math.min(1, (y - yb) / (yi - yb)));
+      out.push(hexDe(lb.map((v, i) => v + (li[i] - v) * t)));
+    }
+    return out;
+  };
+  // Color de clase de un valor: [min,max] partido en n intervalos iguales (el máximo cae en la última clase).
+  const rampaColor = (v, dom, n = 5) => {
+    assert(typeof v === "number" && isFinite(v), "rampaColor: valor no numérico: " + JSON.stringify(v));
+    const cs = rampa(n), [a, b] = dom;
+    if (!(b > a)) return cs[cs.length - 1];
+    return cs[Math.min(cs.length - 1, Math.max(0, Math.floor((v - a) / (b - a) * cs.length)))];
+  };
+
+  // ---- Cabecera común: kicker, titular, leyenda, nota, pie ----
+  const cabecera = (D) => {
+    assert(typeof D.kicker === "string" && D.kicker.trim(), "kicker vacío");
+    assert(Array.isArray(D.titular) && D.titular.length >= 1 && D.titular.length <= 3, "titular debe ser un array de 1 a 3 líneas");
+    assert(typeof D.fuente === "string" && D.fuente.trim(), "fuente vacía (el pie es obligatorio)");
+    assert(!/^fuente:/i.test(D.fuente.trim()), "fuente: no antepongas 'Fuente:', lo pone la plantilla");
+    assert(!/https?:\/\//i.test(JSON.stringify(D)), "no van URLs dentro de la tarjeta");
+    document.getElementById("kicker").textContent = D.kicker;
+    document.getElementById("titular").innerHTML = D.titular.map(esc).join("<br>");
+    const nota = document.getElementById("nota");
+    if (D.nota && D.nota.trim()) { nota.textContent = D.nota; nota.hidden = false; } else nota.hidden = true;
+    document.getElementById("fuente").textContent = "Fuente: " + D.fuente;
+    document.getElementById("handle").textContent = D.handle || "@DerekUrizar";
+    const ley = document.getElementById("leyenda"); ley.innerHTML = "";
+    if (Array.isArray(D.leyenda) && D.leyenda.length) {
+      for (const it of D.leyenda) {
+        const item = el("div", "item", ley);
+        const sw = el("span", "sw" + (it.forma ? " " + it.forma : ""), item);
+        sw.style.background = it.color || color.ink;
+        el("span", null, item, esc(it.nombre));
+      }
+      ley.hidden = false;
+    } else ley.hidden = true;
+  };
+  const esc = (s) => String(s).replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+
+  // ---- Verificación final: lo que ningún check de píxeles ve a tiempo ----
+  const verificar = (D) => {
+    const util = 920;
+    for (const linea of D.titular) {
+      const w = medir(linea, "400 88px 'Instrument Serif'") * 0.985; // letter-spacing -.015em
+      assert(w <= util, "titular no cabe en una línea (" + Math.round(w) + "px > " + util + "): «" + linea + "»");
+    }
+    assert(medir(D.kicker.toUpperCase(), "500 20px 'JetBrains Mono'") * 1.16 <= util, "kicker demasiado largo");
+    const g = document.getElementById("grafico");
+    const r = g.getBoundingClientRect();
+    assert(r.height >= 200, "#grafico mide " + Math.round(r.height) + "px de alto (< 200): el gráfico no se maquetó");
+    assert(g.children.length > 0, "#grafico está vacío");
+    const tarjeta = document.querySelector(".tarjeta").getBoundingClientRect();
+    const pie = document.querySelector(".pie").getBoundingClientRect();
+    assert(pie.bottom <= 1080 + 0.5, "el contenido desborda la tarjeta (pie en y=" + Math.round(pie.bottom) + ")");
+    void tarjeta;
+  };
+
+  const fuentesListas = () => Promise.all([
+    document.fonts.load("400 88px 'Instrument Serif'"),
+    document.fonts.load("500 20px 'JetBrains Mono'"),
+    document.fonts.load("700 22px 'JetBrains Mono'"),
+    document.fonts.load("600 24px Archivo"),
+    document.fonts.load("800 19px Archivo"),
+  ]);
+
+  return { assert, num, pct, decimalesDe, color, svgEl, lienzo, texto, leyenda, el, escala, ticks, dominio, antiSolape, medir, espacio, rampa, rampaColor, cabecera, verificar, fuentesListas, esc, MENOS };
+})();
+
+// =====================================================================
+// Arranque: fuentes → cabecera → render(DATA) → verificar → data-listo.
+// render.js espera body[data-listo]; cualquier excepción = PNG rechazado.
+// =====================================================================
+window.addEventListener("load", async () => {
+  try {
+    if (typeof DATA === "undefined" || typeof render !== "function") throw new Error("falta DATA o render(): esta base se ensambla con scripts/nuevo_visual.py");
+    await H.fuentesListas();
+    H.cabecera(DATA);
+    render(DATA);
+    await document.fonts.ready;
+    H.verificar(DATA);
+    document.body.dataset.listo = "1";
+  } catch (e) {
+    document.body.dataset.error = e.message;
+    throw e;
+  }
+});
+</script>
+<!-- plantilla: pendiente · paleta: terracota · ensamblado por scripts/nuevo_visual.py -->
+<!-- pendiente · cambio entre dos fechas para 2–6 categorías (slope, brief 6g). Contrato: referencias/diseno/graficos.md -->
+<script>
+// CIFRAS DE EJEMPLO (brief 6g) · verificar antes de publicar
+const DATA = {
+  "kicker": "VIOLENCIA · CASOS POR AÑO",
+  "titular": [
+    "Menos homicidios,",
+    "más extorsión"
+  ],
+  "nota": "Homicidios: PNC vía Diálogos. Extorsión: PNC vía CIEN (2016) y Mingob-Pladeic (2025). Son denuncias y registros, no encuestas.",
+  "fuente": "Diálogos, CIEN y Mingob-Pladeic, con datos PNC · 2016–2025",
+  "leyenda": [],
+  "handle": "@DerekUrizar",
+  "formato": {
+    "prefijo": "",
+    "sufijo": "",
+    "decimales": 0,
+    "miles": true,
+    "escala": 1
+  },
+  "fechas": [
+    "2016",
+    "2025"
+  ],
+  "items": [
+    {
+      "nombre": "Denuncias por extorsión",
+      "a": 7127,
+      "b": 25306
+    },
+    {
+      "nombre": "Homicidios",
+      "a": 4520,
+      "b": 3139
+    }
+  ],
+  "destacar": 0
+};
+
+function render(D) {
+  H.assert(Array.isArray(D.fechas) && D.fechas.length === 2, "fechas debe tener exactamente 2 valores");
+  H.assert(Array.isArray(D.items) && D.items.length >= 2 && D.items.length <= 6, "pendiente admite de 2 a 6 items");
+  D.items.forEach((it) => H.assert(it && it.nombre && typeof it.a === "number" && typeof it.b === "number", "cada item necesita nombre, a y b numéricos"));
+  const n = D.items.length, hi = ((D.destacar || 0) % n + n) % n;
+  const ink = H.color.ink;
+
+  const W = 920, alto = H.espacio(470, 320);
+  const svg = H.lienzo(W, alto);
+  const colIzq = 230, colDer = 110;
+  const x0 = colIzq, x1 = W - colDer, y0 = 36, y1 = alto - 44;
+  const todos = D.items.flatMap((it) => [it.a, it.b]);
+  let min = Math.min(...todos), max = Math.max(...todos);
+  const pad = (max - min || 1) * 0.08; min -= pad; max += pad;
+  const sy = H.escala([min, max], [y1, y0]);
+  const f = (v) => H.num(v, D.formato);
+
+  H.svgEl("line", { x1: x0, x2: x0, y1: y0, y2: y1, stroke: H.color.inkA(.35), "stroke-width": 2 }, svg);
+  H.svgEl("line", { x1: x1, x2: x1, y1: y0, y2: y1, stroke: H.color.inkA(.35), "stroke-width": 2 }, svg);
+  H.texto(svg, x0, alto - 6, D.fechas[0], { "text-anchor": "middle", style: "font:700 22px 'JetBrains Mono',monospace;fill:" + ink });
+  H.texto(svg, x1, alto - 6, D.fechas[1], { "text-anchor": "middle", style: "font:700 22px 'JetBrains Mono',monospace;fill:" + ink });
+
+  const izq = D.items.map((it, i) => ({ i, y: sy(it.a) })), der = D.items.map((it, i) => ({ i, y: sy(it.b) }));
+  H.antiSolape(izq, { minGap: 58, min: y0 + 26, max: y1 - 6 });
+  H.antiSolape(der, { minGap: 30, min: y0 + 10, max: y1 - 4 });
+  const orden = D.items.map((_, i) => i).sort((a, b) => (a === hi) - (b === hi));
+  for (const i of orden) {
+    const it = D.items[i], esHi = i === hi, c = esHi ? H.color.a1 : ink;
+    H.svgEl("line", { x1: x0, y1: sy(it.a), x2: x1, y2: sy(it.b), stroke: c, "stroke-width": esHi ? 8 : 5, "stroke-linecap": "round" }, svg);
+    H.svgEl("circle", { cx: x0, cy: sy(it.a), r: esHi ? 10 : 8, fill: c }, svg);
+    H.svgEl("circle", { cx: x1, cy: sy(it.b), r: esHi ? 10 : 8, fill: c }, svg);
+    const li = izq.find((p) => p.i === i), ld = der.find((p) => p.i === i);
+    H.texto(svg, x0 - 22, li.y - 10, it.nombre, { "text-anchor": "end", style: "font:700 22px Archivo,sans-serif;fill:" + c });
+    H.texto(svg, x0 - 22, li.y + 20, f(it.a), { "text-anchor": "end", style: "font:700 26px 'JetBrains Mono',monospace;fill:" + c });
+    H.texto(svg, x1 + 22, ld.y + 9, f(it.b), { style: "font:700 26px 'JetBrains Mono',monospace;fill:" + c });
+  }
+}
+</script>
+
+</body>
+</html>

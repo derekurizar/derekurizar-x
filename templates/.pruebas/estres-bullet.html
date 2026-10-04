@@ -1,0 +1,76 @@
+<!-- PRUEBA DE ESTRÉS · bullet: 6 items con metas propias y valores que exceden la meta (hacinamiento) -->
+<script>
+const DATA = {
+  kicker: "PRUEBA · PRESOS Y CAPACIDAD",
+  titular: ["Cárceles al triple", "de su capacidad"],
+  nota: "",
+  fuente: "Prueba de estrés · datos ficticios",
+  handle: "@DerekUrizar",
+  formato: { prefijo: "", sufijo: "", decimales: 0, miles: true, escala: 1 },
+  items: [
+    { nombre: "Pavoncito", valor: 3400, meta: 1100 }, { nombre: "Preventivo zona 18", valor: 4900, meta: 1300 },
+    { nombre: "Canadá (Escuintla)", valor: 2600, meta: 1000 }, { nombre: "Fraijanes II", valor: 900, meta: 1000 },
+    { nombre: "Mujeres Santa Teresa", valor: 1200, meta: 800 }, { nombre: "Cantel", valor: 1500, meta: 700 }
+  ],
+  meta: null, texto_meta: "capacidad", maximo: null, destacar: 1
+};
+function render(D) {
+  H.assert(Array.isArray(D.items) && D.items.length >= 1 && D.items.length <= 6, "bullet admite de 1 a 6 items");
+  const items = D.items.map((it) => {
+    H.assert(it && typeof it.nombre === "string" && typeof it.valor === "number" && it.valor >= 0, "cada item necesita nombre y valor numérico ≥ 0");
+    const meta = typeof it.meta === "number" ? it.meta : D.meta;
+    H.assert(typeof meta === "number" && meta > 0, "«" + it.nombre + "» no tiene meta: usa `meta` común o `meta` por item");
+    return { nombre: it.nombre, valor: it.valor, meta };
+  });
+  const n = items.length, hi = D.destacar == null ? -1 : ((D.destacar % n) + n) % n;
+  const maxDato = Math.max(...items.flatMap((it) => [it.valor, it.meta]));
+  const max = D.maximo == null ? maxDato : D.maximo;
+  H.assert(max >= maxDato, "maximo (" + max + ") es menor que algún valor o meta (" + maxDato + ")");
+  const metaComun = items.every((it) => it.meta === items[0].meta);
+  const txtMeta = (D.texto_meta || "meta").trim();
+  const ink = H.color.ink, a1 = H.color.a1;
+  const f = (v) => H.num(v, D.formato);
+
+  // Fila: nombre + [meta propia] + valor (28) · 12 · pista · aire. Meta común: un rótulo al pie.
+  const pieMeta = metaComun ? 40 : 0;
+  const minFila = 28 + 12 + 20 + 18;
+  const pistaMax = n === 1 ? 120 : n === 2 ? 84 : 56;   // con pocos items la pista engorda en vez de dejar hueco
+  const alto = H.espacio(Math.max(220, Math.min(560, pieMeta + n * (28 + 12 + pistaMax + 34))), Math.max(220, pieMeta + n * minFila));
+  const W = 920, svg = H.lienzo(W, alto);
+  const filaH = (alto - pieMeta) / n;
+  const pistaH = Math.max(20, Math.min(pistaMax, filaH - 28 - 12 - 22));
+  let yPie = 0;   // borde inferior de la última pista: ahí va el rótulo de la meta común
+  const sx = H.escala([0, max], [0, W]);
+
+  // Rayado para el tramo que excede la meta (hacinamiento, sobregiro).
+  const defs = H.svgEl("defs", {}, svg);
+  const pat = H.svgEl("pattern", { id: "bl-exceso", width: 12, height: 12, patternUnits: "userSpaceOnUse", patternTransform: "rotate(45)" }, defs);
+  H.svgEl("rect", { width: 12, height: 12, fill: H.color.inkA(.25) }, pat);
+  H.svgEl("rect", { width: 6, height: 12, fill: ink }, pat);
+
+  items.forEach((it, i) => {
+    const esHi = i === hi, top = i * filaH + (filaH - (28 + 12 + pistaH)) / 2;
+    const yTxt = top + 24, yP = top + 28 + 12;
+    H.texto(svg, 0, yTxt, it.nombre, { style: "font:" + (esHi ? "800 25px" : "600 23px") + " Archivo,sans-serif;fill:" + ink });
+    H.texto(svg, W, yTxt, f(it.valor), { class: "t-val", "text-anchor": "end", style: esHi ? "font-size:24px" : "" });
+    if (!metaComun) {
+      const wV = H.medir(f(it.valor), (esHi ? "700 24px" : "700 22px") + " 'JetBrains Mono'"), t = txtMeta + " " + f(it.meta) + " ·";
+      const wN = H.medir(it.nombre, (esHi ? "800 25px" : "600 23px") + " Archivo"), wM = H.medir(t, "500 17px 'JetBrains Mono'");
+      H.assert(wN + 24 + wM + 12 + wV <= W, "«" + it.nombre + "»: nombre, meta y valor no caben en una línea");
+      H.texto(svg, W - wV - 12, yTxt, t, { class: "t-eje", "text-anchor": "end" });
+    }
+    H.svgEl("rect", { x: 0, y: yP, width: W, height: pistaH, fill: H.color.inkA(.16) }, svg);
+    const barH = Math.round(pistaH * 0.56), yB = yP + (pistaH - barH) / 2;
+    const xv = sx(it.valor), xm = sx(it.meta);
+    H.svgEl("rect", { x: 0, y: yB, width: Math.max(4, Math.min(xv, xm)), height: barH, fill: esHi ? a1 : ink }, svg);
+    if (it.valor > it.meta) H.svgEl("rect", { x: xm, y: yB, width: xv - xm, height: barH, fill: "url(#bl-exceso)" }, svg);
+    H.svgEl("rect", { x: Math.min(W - 6, xm - 3), y: yP - 8, width: 6, height: pistaH + 16, fill: ink }, svg);
+    yPie = yP + pistaH + 8;
+  });
+  if (metaComun) {
+    const xm = sx(items[0].meta), t = txtMeta + " · " + f(items[0].meta), w = H.medir(t, "500 17px 'JetBrains Mono'");
+    const anc = xm + w / 2 > W ? "end" : xm - w / 2 < 0 ? "start" : "middle";
+    H.texto(svg, anc === "end" ? W : anc === "start" ? 0 : xm, yPie + 26, t, { class: "t-eje", "text-anchor": anc });
+  }
+}
+</script>

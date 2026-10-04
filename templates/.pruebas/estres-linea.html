@@ -26,6 +26,7 @@ function renderLinea(D) {
     H.assert(s.valores.filter((v) => v !== null).length >= 2, "la serie «" + s.nombre + "» tiene menos de 2 valores");
   });
   H.assert(!D.hitos || D.hitos.length <= 1, "como máximo un hito");
+  const P = H.validarPeriodos(D.periodos, n);
   const ink = H.color.ink;
   const ROL = [H.color.a1, ink, H.color.a2, H.color.a3];
   // Colores: la destacada en a1; el resto en ink, a2, a3 por orden.
@@ -39,13 +40,18 @@ function renderLinea(D) {
   const W = 920, alto = H.espacio(470, 300);
   const svg = H.lienzo(W, alto);
   const izq = D.ejeY === false ? 8 : 64, der = rotFin ? 96 : 12;
-  const arriba = 30, abajo = valoresBajo ? 76 : 40;
+  const arriba = P.length ? 64 : 30, abajo = valoresBajo ? 76 : 40;
   const x0 = izq, x1 = W - der, y0 = arriba, y1 = alto - abajo;
   const todos = D.series.flatMap((s) => s.valores.filter((v) => v !== null));
   const dom = H.dominio(todos, D.yDesdeCero !== false);
   const sx = H.escala([0, n - 1], [x0, x1]);
   const sy = H.escala(dom, [y1, y0]);
   const f = (v) => H.num(v, D.formato);
+
+  if (P.length) {
+    const h = (x1 - x0) / (n - 1) / 2;
+    H.periodos(svg, P, (i) => [Math.max(x0, sx(i) - h), Math.min(x1, sx(i) + h)], 34, y1, 22);
+  }
 
   if (D.ejeY !== false) {
     const tk = H.ticks(dom[0], dom[1], 4);

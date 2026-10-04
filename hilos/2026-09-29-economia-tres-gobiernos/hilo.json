@@ -1,0 +1,323 @@
+{
+  "slug": "economia-tres-gobiernos",
+  "fecha": "2026-09-29",
+  "tema": "Métricas económicas de Guatemala 2016–2026 para comparar el desempeño del gobierno de Arévalo (desde enero 2024) con los de Morales (2016–2019) y Giammattei (2020–2023): PIB, inflación, tipo de cambio, remesas, exportaciones, IED, reservas, deuda, déficit, recaudación, empleo formal IGSS, salario mínimo y calificación crediticia",
+  "tesis": "Con Arévalo el PIB real crece 4% promedio al año (2024–2025), por encima de Morales (3.3%) y Giammattei (3.48%), pero sin la caída de 2020 Giammattei promediaría 5.24%; el cambio más grande de la década son las remesas, que desde 2020 superan a las exportaciones y no las decide ningún gobierno.",
+  "paleta": "cielo",
+  "hook_tipo": "pregunta_directa",
+  "pregunta": "Medida con las mismas series oficiales y por promedios de periodo, ¿le va a la economía guatemalteca mejor con Arévalo (2024–2026) que con Morales (2016–2019) y Giammattei (2020–2023), y cuánto depende de motores externos como las remesas?",
+  "n_tuits": 18,
+  "estado": "listo",
+  "tuits": [
+    {
+      "n": 1,
+      "beat": "gancho",
+      "texto": "¿Con qué gobierno le fue mejor a la economía de Guatemala?\n\nComparé a Morales, Giammattei y Arévalo con las mismas series oficiales. El marcador cambia si quitas un solo año, y el flujo que rebasó a las exportaciones no lo decide ningún presidente. 🧵",
+      "caracteres": 251,
+      "alt_text": "Gráfico de barras verticales del crecimiento real promedio anual del PIB de Guatemala por gobierno: Morales (2016–2019) 3.30%, Giammattei (2020–2023) 3.48% y Arévalo (2024–2025) 4.00%, la barra destacada. Promedio simple de la variación anual. Fuente: Banco de Guatemala, cuentas nacionales base 2013.",
+      "imagen": "tuit_1.png",
+      "plantilla": "barras-v",
+      "fuente": "Banguat · cuentas nacionales, base 2013",
+      "cifra_ids": [
+        "mac-c02"
+      ]
+    },
+    {
+      "n": 2,
+      "beat": "contexto",
+      "texto": "Un promedio de cuatro años se mueve mucho con un solo dato: la caída y el rebote de la pandemia cayeron en el mismo gobierno.",
+      "caracteres": 125,
+      "alt_text": "Gráfico de línea de la variación anual del PIB real de Guatemala, 2016 a 2025: 2.7, 3.1, 3.4, 4.0, -1.8 (2020, marcado como pandemia), 8.0, 4.2, 3.5, 3.7 y 4.3%. Nota: sin 2020, Giammattei promedia 5.24% al año, más que el 4% de Arévalo. Fuente: Banco de Guatemala, cuentas nacionales.",
+      "imagen": "tuit_2.png",
+      "plantilla": "linea",
+      "fuente": "Banguat · cuentas nacionales, base 2013",
+      "cifra_ids": [
+        "mac-c01",
+        "mac-c02"
+      ]
+    },
+    {
+      "n": 3,
+      "beat": "giro",
+      "texto": "Aquí cambia la lectura del marcador. Ningún gobierno decide las remesas: las envían familiares desde fuera. Y crecieron más que lo exportado con los tres presidentes.",
+      "caracteres": 166,
+      "alt_text": "Gráfico de dos líneas, 2016 a 2025, en millones de US$. Remesas familiares (destacada): de 7,160 en 2016 a 25,530.2 en 2025. Exportaciones FOB: de 10,449.3 a 15,592.4. Las remesas superan a las exportaciones desde 2020 (11,340.4 frente a 11,101.2). Fuente: Banco de Guatemala.",
+      "imagen": "tuit_3.png",
+      "plantilla": "linea",
+      "fuente": "Banguat · remesas familiares y comercio exterior",
+      "cifra_ids": [
+        "ext-c01",
+        "ext-c04"
+      ]
+    },
+    {
+      "n": 4,
+      "beat": "contexto",
+      "texto": "El Banco Mundial aún no publica 2025, año en que las remesas volvieron a crecer a doble dígito.",
+      "caracteres": 95,
+      "alt_text": "Gráfico de barras verticales de las remesas personales como porcentaje del PIB de Guatemala: 11.1% en 2016, 13.8% en 2019, 19.2% en 2023 y 19.1% en 2024 (destacada). Fuente: Banco Mundial, WDI.",
+      "imagen": "tuit_4.png",
+      "plantilla": "barras-v",
+      "fuente": "Banco Mundial · WDI, remesas personales % del PIB",
+      "cifra_ids": [
+        "ext-c09"
+      ]
+    },
+    {
+      "n": 5,
+      "beat": "impacto",
+      "texto": "Es la encuesta más reciente de la OIM. Para esas familias, buena parte del marcador económico se juega fuera del país.",
+      "caracteres": 118,
+      "alt_text": "Gráfico de waffle de 100 cuadros: 24.4% de los hogares que reciben remesas en Guatemala dependen por completo de ellas; el resto combina remesas con otros ingresos. Base: 1,748,040 hogares receptores. Fuente: OIM, Encuesta sobre migración internacional y remesas 2022.",
+      "imagen": "tuit_5.png",
+      "plantilla": "waffle",
+      "fuente": "OIM · Encuesta de migración y remesas 2022",
+      "cifra_ids": [
+        "emp-c11",
+        "emp-c10"
+      ]
+    },
+    {
+      "n": 6,
+      "beat": "contexto",
+      "texto": "Ojo: en dólares corrientes se mezclan crecimiento real, inflación y tipo de cambio. No es el ingreso real de los hogares.",
+      "caracteres": 121,
+      "alt_text": "Gráfico de línea del PIB por habitante de Guatemala en US$ corrientes, 2016 a 2025: de 4,172.12 a 6,820.44; solo cae en 2020 (4,609.81 frente a 4,646.81 en 2019). Crecimiento promedio anual en US$: Morales 3.88%, Giammattei 6.34%, Arévalo 7.3%. Fuente: Banco de Guatemala, cuentas nacionales.",
+      "imagen": "tuit_6.png",
+      "plantilla": "linea",
+      "fuente": "Banguat · cuentas nacionales",
+      "cifra_ids": [
+        "mac-c09",
+        "mac-c10"
+      ]
+    },
+    {
+      "n": 7,
+      "beat": "contexto",
+      "texto": "El último dato, agosto de 2026, marca 3.37% interanual: repunta, pero sigue lejos de aquel pico.",
+      "caracteres": 96,
+      "alt_text": "Gráfico de barras verticales de la inflación interanual a diciembre en Guatemala, 2016 a 2025: 4.23, 5.68, 2.31, 3.41, 4.82, 3.07, 9.24 (pico de 2022), 4.18, 1.70 y 1.65% (destacada). Los dos cierres más bajos son 2024 y 2025. Fuente: INE, publicado por Banco de Guatemala.",
+      "imagen": "tuit_7.png",
+      "plantilla": "barras-v",
+      "fuente": "INE · IPC, publicado por Banguat",
+      "cifra_ids": [
+        "mac-c04"
+      ]
+    },
+    {
+      "n": 8,
+      "beat": "contexto",
+      "texto": "Entre enero y agosto de 2026 el promedio sigue en la misma franja.",
+      "caracteres": 66,
+      "alt_text": "Gráfico de línea del tipo de cambio promedio anual en quetzales por US dólar, 2016 a 2025, con eje que no parte de cero: 7.58, 7.33 (mínimo, 2017), 7.52, 7.68, 7.71, 7.71, 7.74, 7.81 (máximo, 2023), 7.73 y 7.66. Fuente: Banco de Guatemala, Mercado Institucional de Divisas.",
+      "imagen": "tuit_8.png",
+      "plantilla": "linea",
+      "fuente": "Banguat · Mercado Institucional de Divisas",
+      "cifra_ids": [
+        "mac-c07"
+      ]
+    },
+    {
+      "n": 9,
+      "beat": "contexto",
+      "texto": "Sin ese año, la inversión extranjera sube de forma gradual. El dato preliminar de 2025 del Banguat queda en un nivel parecido al del año anterior.",
+      "caracteres": 146,
+      "alt_text": "Gráfico de barras verticales de la inversión extranjera directa en Guatemala, entradas netas en millones de US$, 2016 a 2024: 845.8, 998.3, 922.4, 1,170.8, 1,004.4, 3,626.4 (2021, destacada), 1,450.1, 1,650.3 y 1,848. Una sola operación aportó US$2,200 millones en 2021, según el Banguat. Fuentes: Banco Mundial WDI y Banco de Guatemala.",
+      "imagen": "tuit_9.png",
+      "plantilla": "barras-v",
+      "fuente": "Banco Mundial · WDI; Banguat",
+      "cifra_ids": [
+        "ext-c07",
+        "ext-c12"
+      ]
+    },
+    {
+      "n": 10,
+      "beat": "contexto",
+      "texto": "Es el colchón en divisas del país. Crecieron en los tres gobiernos, pero el mayor salto de un año a otro fue el último.",
+      "caracteres": 119,
+      "alt_text": "Gráfico de barras verticales de las reservas monetarias internacionales netas de Guatemala al cierre de cada año, en millones de US$: de 9,160.4 en 2016 a 32,736.8 en 2025 (destacada, el nivel más alto de la serie). A inicios de 2026 cubrían 11 meses de importaciones. Fuente: Banco de Guatemala.",
+      "imagen": "tuit_10.png",
+      "plantilla": "barras-v",
+      "fuente": "Banguat · reservas monetarias internacionales",
+      "cifra_ids": [
+        "ext-c05",
+        "ext-c06"
+      ]
+    },
+    {
+      "n": 11,
+      "beat": "contexto",
+      "texto": "El salto coincide con el déficit de aquel año. Desde entonces la deuda baja como proporción del PIB, aunque el último año repuntó un poco.",
+      "caracteres": 138,
+      "alt_text": "Gráfico de línea de la deuda pública del Gobierno Central como porcentaje del PIB, 2016 a 2025: 25.0, 25.2, 26.5, 26.5, 31.5 (2020, pandemia), 30.6, 29.0, 27.2, 26.3 y 26.8 (preliminar). Déficit fiscal: 4.9% del PIB en 2020 y 1.9% en 2025. Fuente: Banco de Guatemala.",
+      "imagen": "tuit_11.png",
+      "plantilla": "linea",
+      "fuente": "Banguat · resultados macroeconómicos 2025",
+      "cifra_ids": [
+        "fis-c05",
+        "fis-c04"
+      ]
+    },
+    {
+      "n": 12,
+      "beat": "contexto",
+      "texto": "Con Arévalo la recaudación sigue al alza en quetzales, pero como proporción del PIB aún no rebasa ese pico.",
+      "caracteres": 107,
+      "alt_text": "Gráfico de línea de la carga tributaria neta de Guatemala en porcentaje del PIB, 2016 a 2025, con eje que no parte de cero: 10.78, 10.77, 10.67, 10.54, 10.04 (mínimo, 2020), 11.66, 11.95 (máximo, 2022), 11.68, 11.76 y 11.88. En 2025 se recaudaron 112,529.9 millones de quetzales. Fuente: SAT.",
+      "imagen": "tuit_12.png",
+      "plantilla": "linea",
+      "fuente": "SAT · boletín estadístico",
+      "cifra_ids": [
+        "fis-c01",
+        "fis-c02"
+      ]
+    },
+    {
+      "n": 13,
+      "beat": "contexto",
+      "texto": "Por año, Arévalo va a un ritmo parecido al de Giammattei y por encima de Morales: Q15,236.4 M frente a Q16,312.5 M y Q9,675.1 M. Son quetzales corrientes, sin ajustar por inflación.",
+      "caracteres": 181,
+      "alt_text": "Gráfico de barras verticales del aumento neto del saldo de la deuda pública de Guatemala (deuda interna bonificada más externa) en cada gobierno, en millones de quetzales corrientes, de cierre a cierre de año: Morales (2016–2019) Q38,700.4 millones; Giammattei (2020–2023) Q65,249.9 millones; Arévalo (2024–2025, barra destacada) Q30,472.7 millones, casi la mitad que Giammattei en la mitad del tiempo. El saldo pasó de Q118,625.4 millones al cierre de 2015 a Q253,048.4 millones al cierre de 2025; el dato de 2025 es preliminar. Fuente: Banguat, saldo de la deuda pública.",
+      "imagen": "tuit_13.png",
+      "plantilla": "barras-v",
+      "fuente": "Banguat · saldo de la deuda pública",
+      "cifra_ids": [
+        "pre-c02",
+        "pre-c01"
+      ]
+    },
+    {
+      "n": 14,
+      "beat": "contexto",
+      "texto": "Promedio por año: Morales, Q78,922.2 M; Giammattei, Q111,711.6 M; Arévalo, Q143,025.5 M. En quetzales corrientes: parte del aumento es inflación.",
+      "caracteres": 145,
+      "alt_text": "Gráfico de barras verticales del presupuesto vigente de la Administración Central de Guatemala al cierre de cada año (aprobado más modificaciones), en miles de millones de quetzales corrientes: 2016, 71.3; 2017, 77.6; 2018, 78.4; 2019, 88.3; 2020, 107.8; 2021, 107.5; 2022, 112.9; 2023, 118.6; 2024, 131.2; y 2025, 154.8 (barra destacada). El de 2025 es 2.17 veces el de 2016. En 2018, 2020 (con ampliaciones), 2021 y 2026 no entró en vigor un presupuesto nuevo y rigió el del año anterior. Fuente: Guate en Datos con datos de MINFIN (Sicoin).",
+      "imagen": "tuit_14.png",
+      "plantilla": "barras-v",
+      "fuente": "Guate en Datos · datos de MINFIN (Sicoin)",
+      "cifra_ids": [
+        "pre-c04",
+        "pre-c06"
+      ]
+    },
+    {
+      "n": 15,
+      "beat": "impacto",
+      "texto": "En promedio, Morales ejecutó 93.4%; Giammattei, 92.3%; Arévalo, 91.4%. En el último año, más de Q9 de cada Q100 del presupuesto quedaron sin ejecutar.",
+      "caracteres": 150,
+      "alt_text": "Gráfico de barras verticales de la ejecución presupuestaria de la Administración Central de Guatemala, porcentaje devengado sobre el presupuesto vigente al cierre de cada año: 2016, 92.08%; 2017, 91.75%; 2018, 96.03%; 2019, 93.79%; 2020, 89.67%; 2021, 86.50% (barra destacada, el mínimo); 2022, 96.15%; 2023, 96.97% (el máximo); 2024, 92.08%; y 2025, 90.76%. El año más bajo y el más alto de la serie fueron con Giammattei. Fuente: Guate en Datos con datos de MINFIN (Sicoin).",
+      "imagen": "tuit_15.png",
+      "plantilla": "barras-v",
+      "fuente": "Guate en Datos · datos de MINFIN (Sicoin)",
+      "cifra_ids": [
+        "pre-c05"
+      ]
+    },
+    {
+      "n": 16,
+      "beat": "impacto",
+      "texto": "Aun a ese ritmo, la gran mayoría de quienes trabajan sigue sin cotizar al seguro social.",
+      "caracteres": 88,
+      "alt_text": "Gráfico de barras verticales de los cotizantes netos sumados al IGSS por año, promedio por gobierno: Morales (2016–2019) 20,848; Giammattei (2020–2023) 50,960.5; Arévalo (2024–2025) 94,073.5, destacada. Al cierre de 2025 cotizaban 1,742,810 trabajadores; en 2024 el IGSS cubría 21.5% de la población económicamente activa. Fuente: IGSS.",
+      "imagen": "tuit_16.png",
+      "plantilla": "barras-v",
+      "fuente": "IGSS · boletín de afiliación e informe 2024",
+      "cifra_ids": [
+        "emp-c02",
+        "emp-c01",
+        "emp-c05"
+      ]
+    },
+    {
+      "n": 17,
+      "beat": "contexto",
+      "texto": "Con Arévalo, S&P y Fitch subieron un escalón; Moody's mantiene su nota. No pude confirmar con fuente los cambios de 2016 a 2020.",
+      "caracteres": 128,
+      "alt_text": "Tarjeta de cifra: Guatemala está a 1 escalón del grado de inversión en las tres calificadoras. S&P y Fitch la califican BB+ y Moody's Ba1, todas con perspectiva estable; Fitch confirmó BB+ en septiembre de 2026. Fuente: S&P, Fitch y Moody's, recopilado por Banco Mundial.",
+      "imagen": "tuit_17.png",
+      "plantilla": "cifra",
+      "fuente": "S&P, Fitch y Moody's",
+      "cifra_ids": [
+        "fis-c06"
+      ]
+    },
+    {
+      "n": 18,
+      "beat": "cierre",
+      "texto": "Con Arévalo: más crecimiento y empleo formal, menos inflación, pero menor ejecución del gasto. Sin 2020, Giammattei creció más. Las remesas superan lo exportado; no las decide el gobierno.\n\nFuentes: Banguat, INE, SAT, IGSS, OIM, Banco Mundial, S&P, Fitch, Moody's, Guate en Datos.",
+      "caracteres": 280,
+      "alt_text": "",
+      "imagen": null,
+      "plantilla": null,
+      "fuente": null,
+      "cifra_ids": []
+    }
+  ],
+  "no_afirma": [
+    "No afirma que las diferencias entre periodos se deban a las políticas de cada gobierno: compara promedios, no mide causas.",
+    "El promedio de Arévalo cubre solo 2024–2025; no anticipa el cierre de 2026 (Banguat proyecta un rango de 3.27% a 5.27%).",
+    "No afirma que la política pública no influya en las remesas; dice que su monto no lo decide el gobierno.",
+    "No afirma qué gobierno logró cambios de calificación antes de 2021: no se confirmaron con fuente.",
+    "Las cifras en dólares o quetzales corrientes (PIB per cápita, deuda sumada, presupuesto) no están ajustadas por inflación ni miden el ingreso real de los hogares."
+  ],
+  "incertidumbre": [
+    "Tipo de cambio: se usó el promedio anual de compra del Mercado Institucional de Divisas (IMM69), no el de referencia.",
+    "IED: la serie 2016–2024 es del Banco Mundial (WDI); el preliminar de 2025 y la operación de 2021 son del Banguat.",
+    "Deuda 2025: 26.8% (valor ajustado, MINFIN) frente a 26.9% preliminar de Banguat.",
+    "Salario mínimo y canasta básica quedaron fuera: sin serie nominal 2016–2022 y la CBA cambió de metodología en 2024.",
+    "La cobertura del IGSS sobre la PEA es de 2024; los hogares con remesas, de 2022 (OIM).",
+    "Deuda sumada = aumento neto del saldo (interna bonificada + externa) de cierre a cierre, Banguat; no separa colocaciones de amortizaciones y 2025 es preliminar.",
+    "Presupuesto vigente y ejecución vienen de Guate en Datos (agregador con datos de MINFIN/Sicoin); ICEFI confirma el vigente de 2025.",
+    "Los promedios por año de deuda, presupuesto y ejecución son cálculos propios (promedio simple); Arévalo cubre 2024–2025.",
+    "Los años con presupuesto prorrogado 2018 y 2020 se apoyan en prensa y en el texto de la readecuación de 2021."
+  ],
+  "fuentes": [
+    "Banguat · cuentas nacionales, base 2013",
+    "Banguat · remesas familiares y comercio exterior",
+    "Banco Mundial · WDI, remesas personales % del PIB",
+    "OIM · Encuesta de migración y remesas 2022",
+    "Banguat · cuentas nacionales",
+    "INE · IPC, publicado por Banguat",
+    "Banguat · Mercado Institucional de Divisas",
+    "Banco Mundial · WDI; Banguat",
+    "Banguat · reservas monetarias internacionales",
+    "Banguat · resultados macroeconómicos 2025",
+    "SAT · boletín estadístico",
+    "Banguat · saldo de la deuda pública",
+    "Guate en Datos · datos de MINFIN (Sicoin)",
+    "IGSS · boletín de afiliación e informe 2024",
+    "S&P, Fitch y Moody's"
+  ],
+  "fuentes_cifras": [
+    "Banco Mundial WDI BX.KLT.DINV.CD.WD (con datos de balanza de pagos FMI/Banguat)",
+    "Banco Mundial WDI BX.TRF.PWKR.DT.GD.ZS",
+    "Banco Mundial, 'Case Study: Guatemala credit rating TA' (9-dic-2025); Banguat, Resultados 2025 (14-ene-2026); prensa sep-2026 para Fitch",
+    "Banco de Guatemala (Banguat) (cálculo propio sobre el cuadro 1.1)",
+    "Banco de Guatemala (Banguat), Cuentas Nacionales, cuadro 1.1 PIB tasa de variación AR2013",
+    "Banco de Guatemala (Banguat), Cuentas Nacionales, cuadro 5 PIB per cápita (población INE censo 2018)",
+    "Banco de Guatemala (Banguat), cuadro 5 (columna Tasa de Variación US$; cálculo propio)",
+    "Banco de Guatemala (Banguat), cuadro IMM69",
+    "Banco de Guatemala, 'Resultados macroeconómicos 2025 y perspectivas 2026' (14-ene-2026)",
+    "Banco de Guatemala, 'Resultados macroeconómicos 2025 y perspectivas 2026' (14-ene-2026), gráfica 'Deuda Pública (% del PIB)', fuente MINFIN y Banguat",
+    "Banco de Guatemala, 'Resultados macroeconómicos 2025 y perspectivas 2026' (14-ene-2026), gráfica 'Déficit Fiscal (% del PIB)', fuente MINFIN y Banguat; montos en Q: Banguat pim25 (fuente MINFIN)",
+    "Banco de Guatemala, 'Resultados macroeconómicos 2025 y perspectivas 2026' (gráfica Flujo de IED)",
+    "Banco de Guatemala, Cuadro 1 Ingreso de Divisas por Remesas Familiares (remfam2002_2026)",
+    "Banco de Guatemala, Reservas Monetarias Internacionales Netas años 1980-2025 (pim04)",
+    "Banco de Guatemala, Valor (FOB) de las exportaciones por producto y trimestre, comercio general 2002-2025",
+    "Banco de Guatemala, pim17 (deuda pública interna bonificada, Q) + pim16 (saldo deuda pública externa, US$; fuente MINFIN) × pim02 (tipo de cambio de referencia al último día del año); cálculo propio que replica los totales publicados por MINFIN",
+    "Cálculo propio con la serie IGSS (emp-c01)",
+    "Cálculo propio sobre pre-c01 (Banguat pim16/pim17/pim02, fuente MINFIN)",
+    "Guate en Datos con datos de MINFIN (Sicoin), serie 'Total' de gastopublico-ejecucion.csv",
+    "IGSS, Boletín Estadístico de Afiliación 2023 (Tabla 27, 2014–2023); Informe Anual de Labores 2024; nota IGSS 17-ago-2026 (2025)",
+    "IGSS, Informe Anual de Labores 2024 (PEA ENEI del INE)",
+    "IIES-USAC boletín 'Economía al día' No. 1 (ene-2026) para 2026; Congreso de la República / ICEFI para 2021 y 2020; Prensa Libre para 2018",
+    "INE, publicado por Banguat (cuadro SR005)",
+    "OIM, Encuesta sobre migración internacional de población guatemalteca y remesas 2022 (resumen)",
+    "OIM, Encuesta sobre migración y remesas 2022",
+    "SAT, Boletín Estadístico, hoja F1 'Carga tributaria neta, gobierno central' (PIB: Banco de Guatemala, base 2013)",
+    "SAT, Serie histórica de recaudación anual por impuesto (rimpa.xlsx)"
+  ],
+  "gate_mecanico": "ok",
+  "contacto": "contacto.png"
+}

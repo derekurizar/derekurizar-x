@@ -1,0 +1,131 @@
+<!-- PRUEBA DE ESTRÉS · treemap: 12 partes con nombres largos, una dominante y titular de 3 líneas (con nota además no caben: la plantilla falla y pide acortar) -->
+<script>
+const DATA = {
+  kicker: "PRUEBA · DOCE PARTES · MILLONES",
+  titular: ["Una parte se come", "casi la mitad y", "once compiten"],
+  nota: "",
+  fuente: "Prueba de estrés · datos ficticios",
+  handle: "@DerekUrizar",
+  formato: { prefijo: "Q", sufijo: "", decimales: 0, miles: true, escala: 1 },
+  partes: [
+    { nombre: "Obligaciones a cargo del Tesoro", valor: 48000 }, { nombre: "Educación", valor: 12000 },
+    { nombre: "Salud Pública y Asistencia Social", valor: 9000 }, { nombre: "CIV", valor: 7000 },
+    { nombre: "Gobernación", valor: 6500 }, { nombre: "Defensa Nacional", valor: 4200 },
+    { nombre: "Agricultura", valor: 3100 }, { nombre: "Desarrollo Social", valor: 2900 },
+    { nombre: "Trabajo", valor: 2500 }, { nombre: "Economía", valor: 1900 },
+    { nombre: "Cultura y Deportes", valor: 1400 }, { nombre: "Ambiente", valor: 900 }
+  ],
+  destacar: 1, minimo_rotulo: 2
+};
+function render(D) {
+  H.assert(Array.isArray(D.partes) && D.partes.length >= 3 && D.partes.length <= 12, "treemap admite de 3 a 12 partes");
+  D.partes.forEach((p) => H.assert(p && typeof p.nombre === "string" && typeof p.valor === "number" && p.valor > 0, "cada parte necesita nombre y valor > 0"));
+  const total = D.partes.reduce((s, p) => s + p.valor, 0);
+  const minimo = D.minimo_rotulo == null ? 2 : D.minimo_rotulo;
+  const ordenadas = D.partes.slice().sort((a, b) => b.valor - a.valor);
+  const idxHi = (lista) => typeof D.destacar === "string" ? lista.findIndex((p) => p.nombre === D.destacar)
+    : D.destacar == null ? 0 : ((D.destacar % ordenadas.length) + ordenadas.length) % ordenadas.length;
+  const nombreHi = typeof D.destacar === "string" ? D.destacar : ordenadas[idxHi(ordenadas)].nombre;
+  H.assert(ordenadas.some((p) => p.nombre === nombreHi), "destacar: «" + D.destacar + "» no es una de las partes");
+
+  const ink = H.color.ink, a1 = H.color.a1, bg = H.color.bg;
+  const G = 4, fontN = [24, 21, 19, 17], fontP = "700 21px 'JetBrains Mono'";
+  const W = 920;
+
+  // Squarified (Bruls et al.): filas que minimizan la peor proporción de sus rectángulos.
+  const squarify = (partes, alto) => {
+    const area = W * alto, rects = [];
+    let caja = { x: 0, y: 0, w: W, h: alto }, fila = [];
+    const resto = partes.map((p, i) => ({ i, a: (p.valor / total) * area }));
+    const peor = (f, lado) => { const s = f.reduce((t, r) => t + r.a, 0); return Math.max(...f.map((r) => Math.max((lado * lado * r.a) / (s * s), (s * s) / (lado * lado * r.a)))); };
+    const colocar = (f) => {
+      const s = f.reduce((t, r) => t + r.a, 0), horiz = caja.w >= caja.h;
+      const grosor = s / (horiz ? caja.h : caja.w);
+      let off = 0;
+      for (const r of f) {
+        const largo = r.a / grosor;
+        rects.push(horiz ? { i: r.i, x: caja.x, y: caja.y + off, w: grosor, h: largo } : { i: r.i, x: caja.x + off, y: caja.y, w: largo, h: grosor });
+        off += largo;
+      }
+      caja = horiz ? { x: caja.x + grosor, y: caja.y, w: caja.w - grosor, h: caja.h } : { x: caja.x, y: caja.y + grosor, w: caja.w, h: caja.h - grosor };
+    };
+    while (resto.length) {
+      const lado = Math.min(caja.w, caja.h), r = resto[0];
+      if (!fila.length || peor(fila.concat(r), lado) <= peor(fila, lado)) { fila.push(r); resto.shift(); }
+      else { colocar(fila); fila = []; }
+    }
+    if (fila.length) colocar(fila);
+    return rects;
+  };
+  // Rótulo de un rect, de más a menos holgado: nombre en una línea y % debajo · nombre partido
+  // en dos líneas y % debajo · nombre y % en una línea (rect bajo y ancho). null si nada cabe.
+  const PAD = 12;
+  const rotulo = (r, p, esHi) => {
+    const w = r.w - G - 2 * PAD, h = r.h - G, pc = (p.valor / total) * 100, tP = H.pct(pc, pc < 10 ? 1 : 0);
+    const peso = esHi ? 800 : 600, wP = H.medir(tP, fontP), mide = (t, s) => H.medir(t, peso + " " + s + "px Archivo");
+    if (wP > w) return null;
+    const px = fontN.find((s) => mide(p.nombre, s) <= w);
+    if (px && h >= px + 58) return { px, peso, tP, lineas: [p.nombre] };
+    const pal = p.nombre.split(/\s+/);
+    for (const s of fontN) {
+      let mejor = null;
+      for (let k = 1; k < pal.length; k++) {
+        const ls = [pal.slice(0, k).join(" "), pal.slice(k).join(" ")], ancho = Math.max(...ls.map((l) => mide(l, s)));
+        if (ancho <= w && (!mejor || ancho < mejor.ancho)) mejor = { ls, ancho };
+      }
+      if (mejor && h >= Math.round(s * 2.15) + 58) return { px: s, peso, tP, lineas: mejor.ls };
+    }
+    const px1 = fontN.find((s) => mide(p.nombre, s) + 12 + wP <= w);
+    return px1 && h >= px1 + 24 ? { px: px1, peso, tP, lineas: [p.nombre], enLinea: true } : null;
+  };
+  // Agrupa: primero las de menos de `minimo` % (si son 2 o más); luego, una a una, las más
+  // chicas que no caben con nombre. Ningún rect queda sin nombre.
+  let sueltas = ordenadas.slice(), grupo = [];
+  const chicas = sueltas.filter((p) => (p.valor / total) * 100 < minimo && p.nombre !== nombreHi);
+  if (chicas.length >= 2) { grupo = chicas; sueltas = sueltas.filter((p) => !chicas.includes(p)); }
+  // Siempre de mayor a menor (también «Todo lo demás»): squarified lo necesita para no deformar.
+  const armar = () => (grupo.length ? sueltas.concat([{ nombre: "Todo lo demás", valor: grupo.reduce((s, p) => s + p.valor, 0), resto: true }]) : sueltas.slice()).sort((a, b) => b.valor - a.valor);
+  const nota = () => grupo.length ? "«Todo lo demás» agrupa " + (grupo.length <= 4 ? grupo.map((p) => p.nombre).join(", ") : grupo.length + " partes") + "." : "";
+  // La nota cambia el alto disponible: se fija antes de medir y se rehace si el grupo crece.
+  const notaGuion = document.getElementById("nota").hidden ? "" : document.getElementById("nota").textContent;
+  let partes, rects, alto, falla;
+  for (let vuelta = 0; vuelta < 12; vuelta++) {
+    const el = document.getElementById("nota"); el.textContent = notaGuion; el.hidden = !notaGuion;
+    if (grupo.length) H.anotar(nota());
+    alto = H.espacio(520, 300);
+    partes = armar(); rects = squarify(partes, alto);
+    falla = rects.filter((r) => !rotulo(r, partes[r.i], partes[r.i].nombre === nombreHi)).map((r) => partes[r.i]);
+    if (!falla.length) break;
+    // Si la que no cabe es «Todo lo demás», crece con la suelta más chica (si quedan ≥ 3 sueltas).
+    // Solo se agrupan partes chicas (< 5 % o < minimo_rotulo): una mediana sin sitio falla y pide acortar el nombre.
+    const chica = (p) => (p.valor / total) * 100 < Math.max(5, minimo);
+    let movibles = falla.filter((p) => !p.resto && p.nombre !== nombreHi && chica(p));
+    if (!movibles.length && falla.some((p) => p.resto)) movibles = sueltas.length > 3 ? sueltas.filter((p) => p.nombre !== nombreHi && chica(p)) : [];
+    if (!movibles.length) break;
+    const menor = movibles.reduce((a, b) => (b.valor < a.valor ? b : a));
+    grupo.push(menor); sueltas = sueltas.filter((p) => p !== menor);
+  }
+  H.assert(!falla.length, "treemap: no caben con nombre " + falla.map((p) => "«" + p.nombre + "»").join(", ") + ": acorta los nombres o usa barras-h");
+  H.assert(partes.length >= 3, "treemap: tras agrupar quedan " + partes.length + " rectángulos (< 3): usa dona o barras-h");
+
+  const svg = H.lienzo(W, alto);
+  const hi = partes.findIndex((p) => p.nombre === nombreHi);
+  let k = 0;
+  const nO = partes.filter((p, i) => i !== hi && !p.resto).length;
+  const colorDe = partes.map((p, i) => (i === hi ? a1 : p.resto ? H.mezcla(bg, ink, 0.22) : H.mezcla(bg, ink, 0.92 - 0.55 * (k++ / Math.max(1, nO - 1)))));
+  for (const r of rects) {
+    const p = partes[r.i], c = colorDe[r.i], col = H.textoSobre(c), lab = rotulo(r, p, r.i === hi);
+    const x = r.x + G / 2, y = r.y + G / 2;
+    H.svgEl("rect", { x, y, width: Math.max(0, r.w - G), height: Math.max(0, r.h - G), fill: c }, svg);
+    const est = "font:" + lab.peso + " " + lab.px + "px Archivo,sans-serif;fill:" + col;
+    if (lab.enLinea) {
+      const yN = y + Math.min(PAD + lab.px, (r.h - G) / 2 + lab.px * 0.36);
+      H.texto(svg, x + PAD, yN, p.nombre, { style: est });
+      H.texto(svg, x + PAD + H.medir(p.nombre, lab.peso + " " + lab.px + "px Archivo") + 12, yN, lab.tP, { style: "font:" + fontP + ";fill:" + col });
+    } else {
+      lab.lineas.forEach((l, k) => H.texto(svg, x + PAD, y + PAD + lab.px + k * Math.round(lab.px * 1.15), l, { style: est }));
+      H.texto(svg, x + PAD, y + PAD + lab.px + (lab.lineas.length - 1) * Math.round(lab.px * 1.15) + 32, lab.tP, { style: "font:" + fontP + ";fill:" + col });
+    }
+  }
+}
+</script>

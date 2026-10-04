@@ -1,0 +1,71 @@
+<!-- embudo · cadena de atrición: cuántos llegan de una etapa a la siguiente (denuncias → capturas → sentencias). Contrato: referencias/diseno/graficos.md -->
+<script>
+// CIFRAS DE EJEMPLO (cadena penal de extorsión, MP/PNC/OJ) · verificar antes de publicar
+const DATA = {
+  kicker: "EXTORSIÓN · CASOS EN 2025",
+  titular: ["De cada 100 denuncias,", "menos de 2 terminan", "en sentencia"],
+  nota: "",
+  fuente: "MP · PNC · OJ · estadísticas 2025",
+  handle: "@DerekUrizar",
+  formato: { prefijo: "", sufijo: "", decimales: 0, miles: true, escala: 1 },
+  etapas: [
+    { nombre: "Denuncias",           valor: 18250 },
+    { nombre: "Capturas",            valor: 1290 },
+    { nombre: "Acusaciones",         valor: 610 },
+    { nombre: "Sentencias condenatorias", valor: 312 }
+  ],
+  porcentaje: "inicio",    // "inicio" (N de cada 100 del principio) | "anterior" (% de la etapa previa) | "ninguno" — SIEMPRE calculado aquí
+  misma_cohorte: false     // OBLIGATORIO: true solo si las etapas siguen a los mismos casos; false = mismo periodo, casos distintos
+};
+
+function render(D) {
+  H.assert(Array.isArray(D.etapas) && D.etapas.length >= 2 && D.etapas.length <= 6, "embudo admite de 2 a 6 etapas");
+  D.etapas.forEach((e, i) => {
+    H.assert(e && typeof e.nombre === "string" && typeof e.valor === "number" && e.valor >= 0, "cada etapa necesita nombre y valor numérico ≥ 0");
+    if (i) H.assert(e.valor <= D.etapas[i - 1].valor, "embudo: «" + e.nombre + "» supera a la etapa anterior (las etapas no pueden crecer)");
+  });
+  H.assert(D.etapas[0].valor > 0, "la primera etapa debe ser > 0");
+  H.assert(typeof D.misma_cohorte === "boolean", "misma_cohorte debe ser true o false (¿las etapas siguen a los mismos casos?)");
+  const modo = D.porcentaje || "inicio";
+  H.assert(["inicio", "anterior", "ninguno"].includes(modo), "porcentaje: inicio | anterior | ninguno");
+  if (!D.misma_cohorte) H.anotar("Etapas del mismo periodo, no de los mismos casos.");
+
+  const E = D.etapas, n = E.length, base = E[0].valor;
+  const ink = H.color.ink, a1 = H.color.a1, bg = H.color.bg;
+  // «N de cada 100» (o de cada 1,000 si no llega a 1): el guionista nunca lo escribe.
+  // Por debajo de 10 lleva un decimal: redondear 1.7 a «2» contradiría «menos de 2».
+  const corto = (x) => H.num(x, { decimales: x < 10 && Math.abs(x - Math.round(x)) >= 0.05 ? 1 : 0 });
+  const deCada = (v, ref) => {
+    const p = (v / ref) * 100;
+    if (p >= 1 || p === 0) return corto(p) + " de cada 100";
+    if (p >= 0.1) return corto(p * 10) + " de cada 1,000";
+    return "menos de 1 de cada 1,000";
+  };
+  const etiqueta = (i) => {
+    if (!i || modo === "ninguno") return "";
+    if (modo === "inicio") return deCada(E[i].valor, base);
+    const prev = E[i - 1].valor;
+    return prev ? H.pct((E[i].valor / prev) * 100, E[i].valor / prev < 0.1 ? 1 : 0) + " de la anterior" : "";
+  };
+
+  const W = 920, alto = H.espacio(Math.max(260, Math.min(560, n * 112)), Math.max(200, n * 74));
+  const svg = H.lienzo(W, alto);
+  const filaH = alto / n, barH = Math.max(22, Math.min(n <= 3 ? 72 : 44, Math.round(filaH * 0.38)));
+  const fontP = "700 21px 'JetBrains Mono'";
+
+  E.forEach((e, i) => {
+    const ult = i === n - 1;
+    const top = i * filaH + (filaH - (28 + 10 + barH)) / 2;
+    const yTxt = top + 24, yB = top + 28 + 10;
+    H.texto(svg, 0, yTxt, e.nombre, { style: "font:" + (ult ? "800 25px" : "600 23px") + " Archivo,sans-serif;fill:" + ink });
+    H.texto(svg, W, yTxt, H.num(e.valor, D.formato), { class: "t-val", "text-anchor": "end", style: ult ? "font-size:24px" : "" });
+    const w = Math.max(6, (e.valor / base) * W), relleno = ult ? a1 : ink;
+    H.svgEl("rect", { x: 0, y: yB, width: w, height: barH, fill: relleno, opacity: ult ? 1 : (1 - 0.25 * i / (n - 1)).toFixed(2) }, svg);
+    const t = etiqueta(i);
+    if (!t) return;
+    const tw = H.medir(t, fontP), yT = yB + barH / 2 + 7;
+    if (w + 14 + tw <= W) H.texto(svg, w + 14, yT, t, { style: "font:" + fontP + ";fill:" + ink });
+    else H.texto(svg, w - 14, yT, t, { "text-anchor": "end", style: "font:" + fontP + ";fill:" + (ult ? H.textoSobre(a1) : bg) });
+  });
+}
+</script>

@@ -1,0 +1,3143 @@
+{
+  "slug": "violencia-guatemala-decada",
+  "fecha": "2026-10-02",
+  "tesis": "En una década Guatemala pasó de 4,520 a 3,139 homicidios, pero las denuncias por extorsión pasaron de 7,127 a 25,306 en 2025: la violencia cambió de forma con una respuesta penal corta (unas 7 capturas por cada 100 denuncias de extorsión, ~12 sentencias por cada 100 casos de homicidio, cárceles al 342%), y en 2026 la extorsión denunciada cae mientras la tasa de homicidios repunta.",
+  "ancla_id": "cri-c01",
+  "paleta": "terracota",
+  "hook_tipo": "giro_inversion",
+  "cifras": [
+    {
+      "id": "cri-c01",
+      "concepto": "Denuncias por extorsión registradas por la PNC, anual",
+      "unidad": "denuncias",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "CIEN con datos de PNC (2016–2023); Mingob/Pladeic vía La Hora (2024–2025)",
+      "url": "https://cien.org.gt/wp-content/uploads/2024/01/Boletin-El-Desafio-de-las-Extorsiones-en-Guatemala-enero-2024-vf.pdf",
+      "periodo": "2016–2025",
+      "n_puntos": 10,
+      "valor": 25306,
+      "veredicto": "verificada",
+      "fuente_2": "La Hora (búsqueda: 2024=25,151; 2025=25,306) y CIEN 2023=18,096 en gráfica del boletín",
+      "evidencia": {
+        "url": "https://lahora.gt/nacionales/engelberth-blanco/2026/01/01/el-2025-cierra-con-un-aumento-de-denuncias-por-extorsion-y-homicidios-detalla-plataforma-informatica-de-gobernacion/",
+        "cita": "en 2024, la Policía Nacional Civil (PNC) registró 25 mil 151 denuncias por casos de extorsiones, mientras que el año pasado, hubo un aumento y se registraron 25 mil 306",
+        "archivo_local": "sesiones/_descargas/cri_lahora25.txt"
+      },
+      "serie": [
+        {
+          "p": 2016,
+          "v": 7127
+        },
+        {
+          "p": 2017,
+          "v": 7923
+        },
+        {
+          "p": 2018,
+          "v": 8678
+        },
+        {
+          "p": 2019,
+          "v": 14714
+        },
+        {
+          "p": 2020,
+          "v": 13031
+        },
+        {
+          "p": 2021,
+          "v": 13288
+        },
+        {
+          "p": 2022,
+          "v": 14725
+        },
+        {
+          "p": 2023,
+          "v": 18096
+        },
+        {
+          "p": 2024,
+          "v": 25151
+        },
+        {
+          "p": 2025,
+          "v": 25306
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_1.png",
+        "tuit_9.png",
+        "tuit_14.png",
+        "T21"
+      ]
+    },
+    {
+      "id": "cri-c02",
+      "concepto": "Tasa de denuncias por extorsión por cada 100 mil habitantes (PNC)",
+      "unidad": "denuncias por 100 mil hab.",
+      "anio": 2023,
+      "tipo": "serie",
+      "fuente": "CIEN, con datos de la PNC",
+      "url": "https://cien.org.gt/wp-content/uploads/2024/01/Boletin-El-Desafio-de-las-Extorsiones-en-Guatemala-enero-2024-vf.pdf",
+      "periodo": "2016–2023",
+      "n_puntos": 8,
+      "valor": 102.8,
+      "veredicto": "verificada",
+      "fuente_2": "Cálculo de control: 18,096 denuncias 2023 sobre ~17.6 M hab. ≈ 102.8; texto CIEN 'cercana a 103'",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2024/01/Boletin-El-Desafio-de-las-Extorsiones-en-Guatemala-enero-2024-vf.pdf",
+        "cita": "superando en el año 2023 las 18 mil extorsiones y una tasa cercana a 103 extorsiones por cada 100 mil habitantes",
+        "archivo_local": "sesiones/_descargas/Boletin-El-Desafio-de-las-Extorsiones-en-Guatemala-enero-2024-vf.pdf"
+      },
+      "serie": [
+        {
+          "p": 2016,
+          "v": 45.0
+        },
+        {
+          "p": 2017,
+          "v": 49.2
+        },
+        {
+          "p": 2018,
+          "v": 53.1
+        },
+        {
+          "p": 2019,
+          "v": 88.6
+        },
+        {
+          "p": 2020,
+          "v": 77.3
+        },
+        {
+          "p": 2021,
+          "v": 77.7
+        },
+        {
+          "p": 2022,
+          "v": 84.8
+        },
+        {
+          "p": 2023,
+          "v": 102.8
+        }
+      ],
+      "usada": false,
+      "aparece_en": [
+        "T9"
+      ]
+    },
+    {
+      "id": "cri-c03",
+      "concepto": "Denuncias por extorsión, primer semestre 2026 vs 2025",
+      "unidad": "denuncias",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Mingob, Pladeic, vía Diario de Centro América",
+      "url": "https://dca.gob.gt/noticias-guatemala-diario-centro-america/extorsiones-disminuyen-37-8-en-primer-semestre-de-2026/",
+      "periodo": "ene–jun 2026",
+      "n_puntos": 1,
+      "valor": 8769,
+      "veredicto": "verificada",
+      "fuente_2": "CRN Noticias / resultados de búsqueda (8,769 vs 14,108, -37.8%)",
+      "evidencia": {
+        "url": "https://dca.gob.gt/noticias-guatemala-diario-centro-america/extorsiones-disminuyen-37-8-en-primer-semestre-de-2026/",
+        "cita": "En los seis meses del año en curso contabilizan 8 mil 769 casos, frente a los 14 mil 108 reportados en el mismo lapso de 2025 [...] un 37.8 %",
+        "archivo_local": "sesiones/_descargas/cri_dca.txt"
+      },
+      "partes": [
+        {
+          "nombre": "ene–jun 2025",
+          "valor": 14108
+        },
+        {
+          "nombre": "ene–jun 2026",
+          "valor": 8769
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "cri-c04",
+      "concepto": "Denuncias por extorsión, enero–agosto 2026 vs mismo periodo 2025",
+      "unidad": "denuncias",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Mingob, Pladeic, vía Diario de Centro América",
+      "url": "https://dca.gob.gt/noticias-guatemala-diario-centro-america/extorsiones-disminuyen-39-2/",
+      "periodo": "ene–ago 2026",
+      "n_puntos": 1,
+      "valor": 11199,
+      "veredicto": "verificada",
+      "fuente_2": "Infobae 24-sep-2026 (1,121 en agosto; 7,217 menos que 2025 en ene-ago)",
+      "evidencia": {
+        "url": "https://dca.gob.gt/noticias-guatemala-diario-centro-america/extorsiones-disminuyen-39-2/",
+        "cita": "En los primeros ocho meses del año en curso se contabilizaron 11 mil 199 casos, mientras que en el mismo lapso del año pasado fueron 18 mil 434 [...] un 39.2 %",
+        "archivo_local": "sesiones/_descargas/cri_dca_392.txt"
+      },
+      "partes": [
+        {
+          "nombre": "ene–ago 2025",
+          "valor": 18434
+        },
+        {
+          "nombre": "ene–ago 2026",
+          "valor": 11199
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_18.png"
+      ]
+    },
+    {
+      "id": "cri-c05",
+      "concepto": "Denuncias por extorsión por departamento, 2025 (principales)",
+      "unidad": "denuncias",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Mingob, Pladeic, vía La Hora",
+      "url": "https://lahora.gt/nacionales/engelberth-blanco/2026/01/01/el-2025-cierra-con-un-aumento-de-denuncias-por-extorsion-y-homicidios-detalla-plataforma-informatica-de-gobernacion/",
+      "periodo": "2025",
+      "n_puntos": 4,
+      "valor": 11272,
+      "veredicto": "verificada",
+      "fuente_2": "La Hora, búsqueda independiente de extracto (Guatemala 11,272; Escuintla 1,486; Quetzaltenango 1,206)",
+      "evidencia": {
+        "url": "https://lahora.gt/nacionales/engelberth-blanco/2026/01/01/el-2025-cierra-con-un-aumento-de-denuncias-por-extorsion-y-homicidios-detalla-plataforma-informatica-de-gobernacion/",
+        "cita": "Guatemala es el departamento en donde más denuncias por extorsión se presentaron en 2025, ya que en esta región se denunciaron 11 mil 272 acusaciones. Le sigue Escuintla, con 1 mil 486",
+        "archivo_local": "sesiones/_descargas/cri_lahora25.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala",
+          "valor": 11272
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 1486
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 1206
+        },
+        {
+          "nombre": "Resto (19 departamentos)",
+          "valor": 11342
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "cri-c06",
+      "concepto": "Tasa interanual de extorsiones por cada 100 mil habitantes, por departamento, a enero de 2026",
+      "unidad": "extorsiones por 100 mil hab. (últimos 12 meses)",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Diálogos, Observatorio de la Violencia, con datos de Pladeic y proyecciones INE",
+      "url": "https://dialogos.org.gt/wp-content/uploads/2026/03/Informe-Extorsiones-1.pdf",
+      "periodo": "feb 2025–ene 2026",
+      "n_puntos": 22,
+      "valor": 299.0,
+      "veredicto": "verificada",
+      "fuente_2": "Informe Diálogos (archivo local: tabla Guatemala 299,0; nacional 138,3) más consistencia con La Hora 2025",
+      "evidencia": {
+        "url": "https://dialogos.org.gt/wp-content/uploads/2026/03/Informe-Extorsiones-1.pdf",
+        "cita": "La tasa interanual nacional para ambos sexos al mes de enero 2026, fue de 138,3 extorsiones por cada cien mil habitantes. [Tabla: Guatemala 299,0; Sacatepéquez 250,5; ... Huehuetenango 4,0]",
+        "archivo_local": "sesiones/_descargas/Informe-Extorsiones-1.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala",
+          "valor": 299.0
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 250.5
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 245.5
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 219.8
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 189.5
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 181.0
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 177.1
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 164.3
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 156.4
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 149.5
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 136.9
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 126.6
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 126.2
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 84.8
+        },
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 73.8
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 49.1
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 32.5
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 10.6
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 9.3
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 8.7
+        },
+        {
+          "nombre": "Petén",
+          "valor": 4.5
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 4.0
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_12.png"
+      ]
+    },
+    {
+      "id": "cri-c07",
+      "concepto": "Proporción de extorsiones que se denuncian (cifra oculta)",
+      "unidad": "% de extorsiones denunciadas",
+      "anio": 2017,
+      "tipo": "puntual",
+      "fuente": "ENPEVI 2018 (Mingob), citada por CIEN 2020 y Diálogos 2026",
+      "url": "https://cien.org.gt/wp-content/uploads/2021/02/Estudio-Extorsiones-2020.pdf",
+      "periodo": "2017",
+      "n_puntos": 1,
+      "valor": 35,
+      "veredicto": "verificada",
+      "fuente_2": "CIEN 2022: 'solo un tercio de las víctimas' denuncia",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2021/02/Estudio-Extorsiones-2020.pdf",
+        "cita": "según la ENPEVI 2018, en el año 2017 solo se denunció el 35% de los delitos de extorsión (pág. 76), lo cual significa que se registra aproximadamente solo una de cada tres extorsiones",
+        "archivo_local": "sesiones/_descargas/Estudio-Extorsiones-2020.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_19.png"
+      ]
+    },
+    {
+      "id": "cri-c08",
+      "concepto": "Puntaje de criminalidad de Guatemala, Global Organized Crime Index",
+      "unidad": "puntaje 1–10",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "GI-TOC, Global Organized Crime Index, perfil de país",
+      "url": "https://ocindex.net/assets/downloads/2025/english/ocindex_profile_guatemala_2025.pdf",
+      "periodo": "2021, 2023, 2025",
+      "n_puntos": 3,
+      "valor": 6.77,
+      "veredicto": "verificada",
+      "fuente_2": "ocindex.net, búsqueda sobre perfil Guatemala 2025 (6.77, 25.º de 193)",
+      "evidencia": {
+        "url": "https://ocindex.net/assets/downloads/2025/english/ocindex_profile_guatemala_2025.pdf",
+        "cita": "6.77 ↗0.17 CRIMINALITY SCORE 25th of 193 countries ↗1 9th of 35 American countries",
+        "archivo_local": "sesiones/_descargas/ocindex_profile_guatemala_2025.txt"
+      },
+      "serie": [
+        {
+          "p": 2021,
+          "v": 6.48
+        },
+        {
+          "p": 2023,
+          "v": 6.6
+        },
+        {
+          "p": 2025,
+          "v": 6.77
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_17.png"
+      ]
+    },
+    {
+      "id": "cri-c09",
+      "concepto": "Puntaje de resiliencia frente al crimen organizado, Global Organized Crime Index",
+      "unidad": "puntaje 1–10",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "GI-TOC, Global Organized Crime Index, perfil de país",
+      "url": "https://ocindex.net/assets/downloads/2025/english/ocindex_profile_guatemala_2025.pdf",
+      "periodo": "2021, 2023, 2025",
+      "n_puntos": 3,
+      "valor": 4.0,
+      "veredicto": "verificada",
+      "fuente_2": "ocindex.net, búsqueda (resiliencia 4.00, 130.º de 193)",
+      "evidencia": {
+        "url": "https://ocindex.net/assets/downloads/2025/english/ocindex_profile_guatemala_2025.pdf",
+        "cita": "4.00 ↘0.08 RESILIENCE SCORE 130th of 193 countries ↘3 27th of 35 American countries",
+        "archivo_local": "sesiones/_descargas/ocindex_profile_guatemala_2025.txt"
+      },
+      "serie": [
+        {
+          "p": 2021,
+          "v": 4.42
+        },
+        {
+          "p": 2023,
+          "v": 4.08
+        },
+        {
+          "p": 2025,
+          "v": 4.0
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_17.png"
+      ]
+    },
+    {
+      "id": "cri-c10",
+      "concepto": "Puntaje del mercado criminal de extorsión y cobro de protección en Guatemala (GI-TOC)",
+      "unidad": "puntaje 1–10",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "GI-TOC, Global Organized Crime Index 2025",
+      "url": "https://ocindex.net/assets/downloads/2025/english/ocindex_profile_guatemala_2025.pdf",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 8.5,
+      "veredicto": "verificada",
+      "fuente_2": "ocindex.net, búsqueda (extorsión y cobro de protección 8.50)",
+      "evidencia": {
+        "url": "https://ocindex.net/assets/downloads/2025/english/ocindex_profile_guatemala_2025.pdf",
+        "cita": "EXTORTION & PROTECTION RACKETEERING 8.50 ↗0.50",
+        "archivo_local": "sesiones/_descargas/ocindex_profile_guatemala_2025.txt"
+      },
+      "usada": false,
+      "aparece_en": [
+        "T17"
+      ]
+    },
+    {
+      "id": "cri-c11",
+      "concepto": "Personas capturadas por extorsión en 2025",
+      "unidad": "personas capturadas",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "PNC, vía Prensa Libre (video, 24-dic-2025)",
+      "url": "https://www.youtube.com/watch?v=_CzI7p1G6hg",
+      "periodo": "ene–24 dic 2025",
+      "n_puntos": 1,
+      "valor": 1839,
+      "valor_original": 1809,
+      "veredicto": "ajustada",
+      "fuente_2": "AGN (Gobernación), capturas 2025 con corte 29-dic-2025",
+      "evidencia": {
+        "url": "https://www.youtube.com/watch?v=_CzI7p1G6hg",
+        "cita": "La Policía Nacional Civil informó que durante 2025 fueron capturadas 1,809 personas por extorsión y desarticuladas 22 estructuras criminales",
+        "archivo_local": "sesiones/_descargas/cri_youtube_capturas2025.html"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_14.png"
+      ]
+    },
+    {
+      "id": "cri-c12",
+      "concepto": "Denuncias por extorsión según tipo de víctima, 2025",
+      "unidad": "% de las denuncias",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Mingob, Pladeic, vía La Hora",
+      "url": "https://lahora.gt/nacionales/engelberth-blanco/2026/01/01/el-2025-cierra-con-un-aumento-de-denuncias-por-extorsion-y-homicidios-detalla-plataforma-informatica-de-gobernacion/",
+      "periodo": "2025",
+      "n_puntos": 3,
+      "valor": 92.9,
+      "veredicto": "verificada",
+      "fuente_2": "La Hora vía búsqueda (92.9% residencias, 6.5% comercios)",
+      "evidencia": {
+        "url": "https://lahora.gt/nacionales/engelberth-blanco/2026/01/01/el-2025-cierra-con-un-aumento-de-denuncias-por-extorsion-y-homicidios-detalla-plataforma-informatica-de-gobernacion/",
+        "cita": "la mayor parte de las denuncias son por extorsiones a residencias, lo cual representa el 92.9% de las acusaciones, seguido de las extorsiones a comercios, que representan el 6.5%",
+        "archivo_local": "sesiones/_descargas/cri_lahora25.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Residencias",
+          "valor": 92.9
+        },
+        {
+          "nombre": "Comercios",
+          "valor": 6.5
+        },
+        {
+          "nombre": "Otros",
+          "valor": 0.6
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_13.png"
+      ]
+    },
+    {
+      "id": "per-c01",
+      "concepto": "Personas lesionadas por hechos de violencia denunciadas a la PNC, total anual",
+      "unidad": "personas lesionadas (denuncias PNC)",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "CIEN, Índice de Denuncias de Delitos (datos PNC/PLADEIC)",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/01/Boletin-del-IDD-de-diciembre-base-2020.pdf",
+      "periodo": "2016–2025",
+      "n_puntos": 10,
+      "valor": 4015,
+      "veredicto": "verificada",
+      "fuente_2": "CIEN, tablas mensuales anexas del mismo boletín (recomputo)",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2026/01/Boletin-del-IDD-de-diciembre-base-2020.pdf",
+        "cita": "En diciembre de 2025 se registraron 341 personas lesionadas, con un promedio de 11 casos diarios [...] la tasa interanual disminuyó ligeramente a 22.0 por cada 100,000 habitantes.",
+        "archivo_local": "sesiones/_descargas/Boletin-del-IDD-de-diciembre-base-2020.txt"
+      },
+      "serie": [
+        {
+          "p": "2016",
+          "v": 5872
+        },
+        {
+          "p": "2017",
+          "v": 5234
+        },
+        {
+          "p": "2018",
+          "v": 4249
+        },
+        {
+          "p": "2019",
+          "v": 3364
+        },
+        {
+          "p": "2020",
+          "v": 2599
+        },
+        {
+          "p": "2021",
+          "v": 2534
+        },
+        {
+          "p": "2022",
+          "v": 2685
+        },
+        {
+          "p": "2023",
+          "v": 2817
+        },
+        {
+          "p": "2024",
+          "v": 3261
+        },
+        {
+          "p": "2025",
+          "v": 4015
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_7.png"
+      ]
+    },
+    {
+      "id": "per-c02",
+      "concepto": "Tasa interanual de lesionados por cada 100 mil habitantes (diciembre = año completo)",
+      "unidad": "lesionados por 100 mil hab.",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "CIEN, IDD (PNC/PLADEIC, población INE)",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/01/Boletin-del-IDD-de-diciembre-base-2020.pdf",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 22.05,
+      "veredicto": "verificada",
+      "fuente_2": "CIEN, tabla de tasas (dic-25) y texto del boletín (22.0)",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2026/01/Boletin-del-IDD-de-diciembre-base-2020.pdf",
+        "cita": "dic-25  17.25  0.06  0.87  22.05  70.47  18,196,092 (Tasa de Homicidios, Secuestros, Violaciones, Lesiones; Subíndice; Proyección de Población)",
+        "archivo_local": "sesiones/_descargas/Boletin-del-IDD-de-diciembre-base-2020.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "per-c03",
+      "concepto": "Denuncias por violación registradas por la PNC, total anual",
+      "unidad": "denuncias (PNC)",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "CIEN, IDD (datos PNC/PLADEIC)",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/01/Boletin-del-IDD-de-diciembre-base-2020.pdf",
+      "periodo": "2016–2025",
+      "n_puntos": 10,
+      "valor": 159,
+      "veredicto": "verificada",
+      "fuente_2": "CIEN, tablas mensuales anexas del mismo boletín (recomputo)",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2026/01/Boletin-del-IDD-de-diciembre-base-2020.pdf",
+        "cita": "Cantidad y Tasa de violaciones: 14 y 0.87 [...] En diciembre de 2025 se registraron 14 denuncias por violación",
+        "archivo_local": "sesiones/_descargas/Boletin-del-IDD-de-diciembre-base-2020.txt"
+      },
+      "serie": [
+        {
+          "p": "2016",
+          "v": 598
+        },
+        {
+          "p": "2017",
+          "v": 552
+        },
+        {
+          "p": "2018",
+          "v": 408
+        },
+        {
+          "p": "2019",
+          "v": 353
+        },
+        {
+          "p": "2020",
+          "v": 275
+        },
+        {
+          "p": "2021",
+          "v": 295
+        },
+        {
+          "p": "2022",
+          "v": 221
+        },
+        {
+          "p": "2023",
+          "v": 200
+        },
+        {
+          "p": "2024",
+          "v": 178
+        },
+        {
+          "p": "2025",
+          "v": 159
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "per-c04",
+      "concepto": "Denuncias por secuestro registradas por la PNC, total anual",
+      "unidad": "denuncias (PNC)",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "CIEN, IDD (datos PNC/PLADEIC)",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/01/Boletin-del-IDD-de-diciembre-base-2020.pdf",
+      "periodo": "2016–2025",
+      "n_puntos": 10,
+      "valor": 10,
+      "veredicto": "verificada",
+      "fuente_2": "CIEN, tablas mensuales anexas del mismo boletín (recomputo)",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2026/01/Boletin-del-IDD-de-diciembre-base-2020.pdf",
+        "cita": "Cantidad y Tasa de secuestros: 1 y 0.06 [...] se denunció un secuestro, uno más que en diciembre de 2024.",
+        "archivo_local": "sesiones/_descargas/Boletin-del-IDD-de-diciembre-base-2020.txt"
+      },
+      "serie": [
+        {
+          "p": "2016",
+          "v": 36
+        },
+        {
+          "p": "2017",
+          "v": 18
+        },
+        {
+          "p": "2018",
+          "v": 26
+        },
+        {
+          "p": "2019",
+          "v": 17
+        },
+        {
+          "p": "2020",
+          "v": 16
+        },
+        {
+          "p": "2021",
+          "v": 9
+        },
+        {
+          "p": "2022",
+          "v": 11
+        },
+        {
+          "p": "2023",
+          "v": 13
+        },
+        {
+          "p": "2024",
+          "v": 14
+        },
+        {
+          "p": "2025",
+          "v": 10
+        }
+      ],
+      "usada": false,
+      "aparece_en": [
+        "T17"
+      ]
+    },
+    {
+      "id": "per-c05",
+      "concepto": "Femicidios registrados por el Ministerio Público, anual",
+      "unidad": "víctimas de femicidio (MP)",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "CIEN con datos del Ministerio Público",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/02/Boletin-Situacion-del-Femicidio-en-Guatemala-febrero-2026-vf.pdf",
+      "periodo": "2019–2025",
+      "n_puntos": 7,
+      "valor": 206,
+      "veredicto": "verificada",
+      "fuente_2": "Infobae (9-mar-2026) y Agencia Ocote (20-abr-2026), ambos reproducen datos CIEN/MP",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2026/02/Boletin-Situacion-del-Femicidio-en-Guatemala-febrero-2026-vf.pdf",
+        "cita": "La tendencia al alza de los femicidios continuó en 2025, con un aumento del 14.4% respecto al 2024, contabilizando 206 víctimas de femicidio.",
+        "archivo_local": "sesiones/_descargas/Boletin-Situacion-del-Femicidio-en-Guatemala-febrero-2026-vf.txt"
+      },
+      "serie": [
+        {
+          "p": "2019",
+          "v": 166
+        },
+        {
+          "p": "2020",
+          "v": 132
+        },
+        {
+          "p": "2021",
+          "v": 146
+        },
+        {
+          "p": "2022",
+          "v": 145
+        },
+        {
+          "p": "2023",
+          "v": 187
+        },
+        {
+          "p": "2024",
+          "v": 180
+        },
+        {
+          "p": "2025",
+          "v": 206
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_8.png"
+      ]
+    },
+    {
+      "id": "per-c06",
+      "concepto": "Desglose de las muertes violentas de mujeres por figura delictiva (MP), 2025",
+      "unidad": "% del total de muertes violentas de mujeres",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "CIEN con datos del Ministerio Público",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/02/Presentacion-IDD-y-Situacion-del-Femicidio-en-Guatemala-vf.pdf",
+      "periodo": "2025",
+      "n_puntos": 4,
+      "valor": 41,
+      "veredicto": "ajustada",
+      "fuente_2": "Recomputo interno de la gráfica CIEN (leyenda Asesinato/Femicidio/Homicidio/Otros) e Infobae ('aprox. un tercio' son femicidios)",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2026/02/Presentacion-IDD-y-Situacion-del-Femicidio-en-Guatemala-vf.pdf",
+        "cita": "En 2025, cerca de 1 de cada 3 muertes violentas de mujeres fue un femicidio. Los porcentajes de los delitos no han variado en los últimos tres años.",
+        "archivo_local": "sesiones/_descargas/Presentacion-IDD-y-Situacion-del-Femicidio-en-Guatemala-vf.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Homicidio",
+          "valor": 41
+        },
+        {
+          "nombre": "Femicidio",
+          "valor": 32
+        },
+        {
+          "nombre": "Asesinato",
+          "valor": 26
+        },
+        {
+          "nombre": "Otros delitos",
+          "valor": 1
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "per-c07",
+      "concepto": "Muertes violentas de mujeres distintas del femicidio (asesinato, homicidio, otros) registradas por el MP",
+      "unidad": "mujeres fallecidas (MP)",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "CIEN con datos del Ministerio Público",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/02/Presentacion-IDD-y-Situacion-del-Femicidio-en-Guatemala-vf.pdf",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 441,
+      "veredicto": "ajustada",
+      "fuente_2": "Recomputo interno CIEN + Infobae (+6% muertes violentas)",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2026/02/Presentacion-IDD-y-Situacion-del-Femicidio-en-Guatemala-vf.pdf",
+        "cita": "En 2025, los femicidios aumentaron 14.4% y las muertes violentas de mujeres 6% frente a 2024.",
+        "archivo_local": "sesiones/_descargas/Presentacion-IDD-y-Situacion-del-Femicidio-en-Guatemala-vf.txt"
+      },
+      "usada": false,
+      "aparece_en": [
+        "T8"
+      ]
+    },
+    {
+      "id": "imp-c01",
+      "concepto": "Sentencias como porcentaje de los casos concluidos de homicidio simple y calificado (dolosos), por año del hecho",
+      "unidad": "% de casos concluidos",
+      "anio": 2024,
+      "tipo": "serie",
+      "fuente": "CIEN con datos de SICOMP (MP) — Boletín «Respuesta Institucional al Delito de Homicidio», agosto 2025",
+      "url": "https://cien.org.gt/wp-content/uploads/2025/08/Boletin-Respuesta-Institucional-al-Delito-de-Homicidio-vf.pdf",
+      "periodo": "2014–2024",
+      "n_puntos": 11,
+      "valor": 4,
+      "veredicto": "verificada",
+      "fuente_2": "Misma Tabla 3 (render PNG p.4, fila 5 Sentencias 2024 = 4%, 2014 = 13%); cotejo con busqueda web: CIEN reporta 'cerca de 3% y 4% en anos recientes' y 814 -> 113 sentencias",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2025/08/Boletin-Respuesta-Institucional-al-Delito-de-Homicidio-vf.pdf",
+        "cita": "Las sentencias muestran una tendencia decreciente: en 2014 representaban el 13% de los casos, mientras que en 2024 apenas alcanzaron el 4%.",
+        "archivo_local": "sesiones/_descargas/Boletin-Respuesta-Institucional-al-Delito-de-Homicidio-vf.pdf"
+      },
+      "serie": [
+        {
+          "p": 2014,
+          "v": 13
+        },
+        {
+          "p": 2015,
+          "v": 12
+        },
+        {
+          "p": 2016,
+          "v": 12
+        },
+        {
+          "p": 2017,
+          "v": 13
+        },
+        {
+          "p": 2018,
+          "v": 13
+        },
+        {
+          "p": 2019,
+          "v": 11
+        },
+        {
+          "p": 2020,
+          "v": 12
+        },
+        {
+          "p": 2021,
+          "v": 12
+        },
+        {
+          "p": 2022,
+          "v": 9
+        },
+        {
+          "p": 2023,
+          "v": 6
+        },
+        {
+          "p": 2024,
+          "v": 4
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "imp-c02",
+      "concepto": "Casos de homicidio simple y calificado que terminaron en sentencia, por año del hecho",
+      "unidad": "casos con sentencia",
+      "anio": 2024,
+      "tipo": "serie",
+      "fuente": "CIEN con datos de SICOMP (MP) — Boletín «Respuesta Institucional al Delito de Homicidio», agosto 2025",
+      "url": "https://cien.org.gt/wp-content/uploads/2025/08/Boletin-Respuesta-Institucional-al-Delito-de-Homicidio-vf.pdf",
+      "periodo": "2014–2024",
+      "n_puntos": 11,
+      "valor": 113,
+      "veredicto": "verificada",
+      "fuente_2": "Tabla 3 render PNG p.4 (fila 5: 814,702,648,642,560,478,362,400,316,209,113); web confirma 814 en 2014 y 113 en 2024",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2025/08/Boletin-Respuesta-Institucional-al-Delito-de-Homicidio-vf.pdf",
+        "cita": "Tabla 3: Análisis de los Casos Concluidos (Homicidio Simple y Calificado) — 5. Sentencias: 2014 814 · 2016 648 · 2021 400 · 2023 209 · 2024 113",
+        "archivo_local": "sesiones/_descargas/Boletin-Respuesta-Institucional-al-Delito-de-Homicidio-vf.pdf"
+      },
+      "serie": [
+        {
+          "p": 2014,
+          "v": 814
+        },
+        {
+          "p": 2015,
+          "v": 702
+        },
+        {
+          "p": 2016,
+          "v": 648
+        },
+        {
+          "p": 2017,
+          "v": 642
+        },
+        {
+          "p": 2018,
+          "v": 560
+        },
+        {
+          "p": 2019,
+          "v": 478
+        },
+        {
+          "p": 2020,
+          "v": 362
+        },
+        {
+          "p": 2021,
+          "v": 400
+        },
+        {
+          "p": 2022,
+          "v": 316
+        },
+        {
+          "p": 2023,
+          "v": 209
+        },
+        {
+          "p": 2024,
+          "v": 113
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "imp-c03",
+      "concepto": "Casos de homicidio simple y calificado registrados por el MP (denuncias con al menos una persona fallecida), por año del hecho",
+      "unidad": "casos",
+      "anio": 2024,
+      "tipo": "serie",
+      "fuente": "CIEN con datos de SICOMP (MP) — Boletín «Respuesta Institucional al Delito de Homicidio», agosto 2025",
+      "url": "https://cien.org.gt/wp-content/uploads/2025/08/Boletin-Respuesta-Institucional-al-Delito-de-Homicidio-vf.pdf",
+      "periodo": "2014–2024",
+      "n_puntos": 11,
+      "valor": 3653,
+      "veredicto": "verificada",
+      "fuente_2": "Tabla 1 del texto del PDF (6,161 ... 3,653); extremos y total consistentes con Tabla 3 (3,653 con 2,516 concluidos = 68.9%)",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2025/08/Boletin-Respuesta-Institucional-al-Delito-de-Homicidio-vf.pdf",
+        "cita": "2. Homicidio simple y calificado 6,161 5,754 5,630 5,179 4,575 4,271 3,153 3,451 3,609 3,724 3,653",
+        "archivo_local": "sesiones/_descargas/Boletin-Respuesta-Institucional-al-Delito-de-Homicidio-vf.pdf"
+      },
+      "serie": [
+        {
+          "p": 2014,
+          "v": 6161
+        },
+        {
+          "p": 2015,
+          "v": 5754
+        },
+        {
+          "p": 2016,
+          "v": 5630
+        },
+        {
+          "p": 2017,
+          "v": 5179
+        },
+        {
+          "p": 2018,
+          "v": 4575
+        },
+        {
+          "p": 2019,
+          "v": 4271
+        },
+        {
+          "p": 2020,
+          "v": 3153
+        },
+        {
+          "p": 2021,
+          "v": 3451
+        },
+        {
+          "p": 2022,
+          "v": 3609
+        },
+        {
+          "p": 2023,
+          "v": 3724
+        },
+        {
+          "p": 2024,
+          "v": 3653
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "imp-c04",
+      "concepto": "Cómo se cerraron los casos de homicidio simple y calificado ocurridos en 2016 (casos concluidos por tipo de salida)",
+      "unidad": "casos",
+      "anio": 2016,
+      "tipo": "desglose",
+      "fuente": "CIEN con datos de SICOMP (MP) — Boletín «Respuesta Institucional al Delito de Homicidio», agosto 2025",
+      "url": "https://cien.org.gt/wp-content/uploads/2025/08/Boletin-Respuesta-Institucional-al-Delito-de-Homicidio-vf.pdf",
+      "periodo": "hechos de 2016, situación a 2025",
+      "n_puntos": 6,
+      "valor": 4306,
+      "veredicto": "verificada",
+      "fuente_2": "Tabla 3 render PNG (columna 2016: 35, 4,306, 377, 58, 648, 116; total 5,540); suma cuadra: 35+4306+377+58+648+116=5540",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2025/08/Boletin-Respuesta-Institucional-al-Delito-de-Homicidio-vf.pdf",
+        "cita": "Tabla 3, columna 2016: Salidas Alternas 35 · Cierre en Sede Fiscal 4,306 · Cierres Judiciales 377 · Acusaciones 58 · Sentencias 648 · Conexados 116 · Total 5,540",
+        "archivo_local": "sesiones/_descargas/Boletin-Respuesta-Institucional-al-Delito-de-Homicidio-vf.pdf"
+      },
+      "partes": [
+        {
+          "nombre": "Cierre en sede fiscal (archivo/desestimación)",
+          "valor": 4306
+        },
+        {
+          "nombre": "Sentencias",
+          "valor": 648
+        },
+        {
+          "nombre": "Cierres judiciales",
+          "valor": 377
+        },
+        {
+          "nombre": "Conexados",
+          "valor": 116
+        },
+        {
+          "nombre": "Acusaciones",
+          "valor": 58
+        },
+        {
+          "nombre": "Salidas alternas",
+          "valor": 35
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "imp-c05",
+      "concepto": "Cómo se cerraron los casos de homicidio simple y calificado ocurridos en 2024 (casos concluidos por tipo de salida)",
+      "unidad": "casos",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "CIEN con datos de SICOMP (MP) — Boletín «Respuesta Institucional al Delito de Homicidio», agosto 2025",
+      "url": "https://cien.org.gt/wp-content/uploads/2025/08/Boletin-Respuesta-Institucional-al-Delito-de-Homicidio-vf.pdf",
+      "periodo": "hechos de 2024, situación a mediados de 2025",
+      "n_puntos": 6,
+      "valor": 2158,
+      "veredicto": "verificada",
+      "fuente_2": "Tabla 3 render PNG (columna 2024: 73, 2,158, 89, 1, 113, 82; total 2,516); suma cuadra: 73+2158+89+1+113+82=2516",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2025/08/Boletin-Respuesta-Institucional-al-Delito-de-Homicidio-vf.pdf",
+        "cita": "Tabla 3, columna 2024: Salidas Alternas 73 · Cierre en Sede Fiscal 2,158 · Cierres Judiciales 89 · Acusaciones 1 · Sentencias 113 · Conexados 82 · Total 2,516 · Cierre fiscal 86%",
+        "archivo_local": "sesiones/_descargas/Boletin-Respuesta-Institucional-al-Delito-de-Homicidio-vf.pdf"
+      },
+      "partes": [
+        {
+          "nombre": "Cierre en sede fiscal (archivo/desestimación)",
+          "valor": 2158
+        },
+        {
+          "nombre": "Sentencias",
+          "valor": 113
+        },
+        {
+          "nombre": "Cierres judiciales",
+          "valor": 89
+        },
+        {
+          "nombre": "Conexados",
+          "valor": 82
+        },
+        {
+          "nombre": "Salidas alternas",
+          "valor": 73
+        },
+        {
+          "nombre": "Acusaciones",
+          "valor": 1
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "imp-c06",
+      "concepto": "Porcentaje de casos de homicidio simple y calificado ocurridos en 2024 que siguen activos (en investigación o pendientes del OJ)",
+      "unidad": "% de casos",
+      "anio": 2024,
+      "tipo": "puntual",
+      "fuente": "CIEN con datos de SICOMP (MP) — Boletín «Respuesta Institucional al Delito de Homicidio», agosto 2025",
+      "url": "https://cien.org.gt/wp-content/uploads/2025/08/Boletin-Respuesta-Institucional-al-Delito-de-Homicidio-vf.pdf",
+      "periodo": "hechos de 2024, situación a 2025",
+      "n_puntos": 1,
+      "valor": 31.1,
+      "veredicto": "verificada",
+      "fuente_2": "Tabla 2 del .txt (fila Casos activos: ...6.0% 12.4% 31.1%); consistente con 3,653-2,516=1,137 = 31.1%",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2025/08/Boletin-Respuesta-Institucional-al-Delito-de-Homicidio-vf.pdf",
+        "cita": "Casos activos 1.9% 1.4% 1.6% 1.9% 3.4% 2.5% 3.5% 4.2% 6.0% 12.4% 31.1%",
+        "archivo_local": "sesiones/_descargas/Boletin-Respuesta-Institucional-al-Delito-de-Homicidio-vf.pdf"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_15.png"
+      ]
+    },
+    {
+      "id": "imp-c07",
+      "concepto": "Sentencias por cada 100 casos de homicidio simple y calificado registrados, por año del hecho (cálculo propio: Tabla 3 sentencias / Tabla 1 casos)",
+      "unidad": "sentencias por cada 100 casos",
+      "anio": 2024,
+      "tipo": "serie",
+      "fuente": "CIEN con datos de SICOMP (MP) — Boletín «Respuesta Institucional al Delito de Homicidio», agosto 2025 — cálculo propio",
+      "url": "https://cien.org.gt/wp-content/uploads/2025/08/Boletin-Respuesta-Institucional-al-Delito-de-Homicidio-vf.pdf",
+      "periodo": "2014–2024",
+      "n_puntos": 11,
+      "valor": 3.1,
+      "veredicto": "ajustada",
+      "fuente_2": "Recalculo propio sobre Tablas 1 y 3 del mismo boletin: 113/3653=3.09; 648/5630=11.51; 814/6161=13.21",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2025/08/Boletin-Respuesta-Institucional-al-Delito-de-Homicidio-vf.pdf",
+        "cita": "Tabla 1: Homicidio simple y calificado 2016 5,630 · 2024 3,653; Tabla 3: Sentencias 2016 648 · 2024 113",
+        "archivo_local": "sesiones/_descargas/Boletin-Respuesta-Institucional-al-Delito-de-Homicidio-vf.pdf"
+      },
+      "serie": [
+        {
+          "p": 2014,
+          "v": 13.2
+        },
+        {
+          "p": 2015,
+          "v": 12.2
+        },
+        {
+          "p": 2016,
+          "v": 11.5
+        },
+        {
+          "p": 2017,
+          "v": 12.4
+        },
+        {
+          "p": 2018,
+          "v": 12.2
+        },
+        {
+          "p": 2019,
+          "v": 11.2
+        },
+        {
+          "p": 2020,
+          "v": 11.5
+        },
+        {
+          "p": 2021,
+          "v": 11.6
+        },
+        {
+          "p": 2022,
+          "v": 8.8
+        },
+        {
+          "p": 2023,
+          "v": 5.6
+        },
+        {
+          "p": 2024,
+          "v": 3.1
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_15.png"
+      ]
+    },
+    {
+      "id": "imp-c08",
+      "concepto": "Porcentaje de personas sentenciadas que recibieron sentencia condenatoria, homicidio simple y asesinato (promedio 2014–2021)",
+      "unidad": "% de personas sentenciadas",
+      "anio": 2021,
+      "tipo": "desglose",
+      "fuente": "CIEN con datos de SICOMP (MP) — Análisis de la Atención Institucional al Delito de Homicidio, oct. 2022",
+      "url": "https://cien.org.gt/wp-content/uploads/2022/10/Analisis-de-la-Atencion-Institucional-al-Delito-de-Homicidio-vf.pdf",
+      "periodo": "2014–2021 (promedio)",
+      "n_puntos": 2,
+      "valor": 78,
+      "veredicto": "verificada",
+      "fuente_2": "Tabla 6 del mismo estudio 2022 (homicidio simple: 2016 270 condenadas/95 absueltas = 74%; 2021 280/84 = 77%), consistente con promedio 78%",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2022/10/Analisis-de-la-Atencion-Institucional-al-Delito-de-Homicidio-vf.pdf",
+        "cita": "entre 2014 y 2021 en promedio el 78% de las personas que fueron sentenciadas recibieron una sentencia condenatoria por el delito de Homicidio (simple) y el 85% la recibieron por Asesinato",
+        "archivo_local": "sesiones/_descargas/Analisis-de-la-Atencion-Institucional-al-Delito-de-Homicidio-vf.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Homicidio (simple)",
+          "valor": 78
+        },
+        {
+          "nombre": "Asesinato",
+          "valor": 85
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "imp-c09",
+      "concepto": "Cómo se cerraron los casos de extorsión concluidos por el MP en 12 años (aprox. 2012–2023)",
+      "unidad": "% de casos concluidos",
+      "anio": 2023,
+      "tipo": "desglose",
+      "fuente": "CIEN con datos del MP — Boletín «El Desafío de las Extorsiones en Guatemala», enero 2024",
+      "url": "https://cien.org.gt/wp-content/uploads/2024/01/Boletin-El-Desafio-de-las-Extorsiones-en-Guatemala-enero-2024-vf.pdf",
+      "periodo": "últimos 12 años a enero 2024 (aprox. 2012–2023; la fuente no da años exactos)",
+      "n_puntos": 3,
+      "valor": 69,
+      "veredicto": "verificada",
+      "fuente_2": "Busqueda web: texto del boletin CIEN ene-2024 reproducido igual (69% archivados, 24% desestimados, 6% sentencia); consistencia aritmetica 6% de 88,000 = 5,280 ~ 5,200",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2024/01/Boletin-El-Desafio-de-las-Extorsiones-en-Guatemala-enero-2024-vf.pdf",
+        "cita": "De los casos concluidos, el 69% fueron archivados, 24% fueron desestimados y únicamente el 6% habían recibido sentencia (5,200 casos).",
+        "archivo_local": "sesiones/_descargas/Boletin-El-Desafio-de-las-Extorsiones-en-Guatemala-enero-2024-vf.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Archivados",
+          "valor": 69
+        },
+        {
+          "nombre": "Desestimados",
+          "valor": 24
+        },
+        {
+          "nombre": "Con sentencia",
+          "valor": 6
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_15.png"
+      ]
+    },
+    {
+      "id": "imp-c10",
+      "concepto": "Casos de extorsión que llegaron a sentencia frente a denuncias recibidas por el MP en 12 años (aprox. 2012–2023)",
+      "unidad": "casos con sentencia",
+      "anio": 2023,
+      "tipo": "puntual",
+      "fuente": "CIEN con datos del MP — Boletín «El Desafío de las Extorsiones en Guatemala», enero 2024",
+      "url": "https://cien.org.gt/wp-content/uploads/2024/01/Boletin-El-Desafio-de-las-Extorsiones-en-Guatemala-enero-2024-vf.pdf",
+      "periodo": "últimos 12 años a enero 2024",
+      "n_puntos": 1,
+      "valor": 5200,
+      "veredicto": "verificada",
+      "fuente_2": "Cita del boletin en .txt y busqueda web; 5,200/88,000 concluidos = 5.9% ~ 6%",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2024/01/Boletin-El-Desafio-de-las-Extorsiones-en-Guatemala-enero-2024-vf.pdf",
+        "cita": "el Ministerio Público -MP- recibió alrededor de 110 mil denuncias de extorsión ... únicamente el 6% habían recibido sentencia (5,200 casos)",
+        "archivo_local": "sesiones/_descargas/Boletin-El-Desafio-de-las-Extorsiones-en-Guatemala-enero-2024-vf.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "pat-c01",
+      "concepto": "Denuncias por robo de vehículos (PNC), total anual",
+      "unidad": "denuncias",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "CIEN, Índice de Denuncias de Delitos (datos PNC/PLADEIC)",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/01/Boletin-del-IDD-de-diciembre-base-2020.pdf",
+      "periodo": "2016–2025",
+      "n_puntos": 10,
+      "valor": 1548,
+      "veredicto": "verificada",
+      "fuente_2": "CIEN, boletín IDD diciembre 2025 (anexo, PNC/PLADEIC): suma de los 12 meses recomputada desde el archivo local (1,548 en 2025); extremo 2016 = 3,888 recomputado del boletín dic. 2019; cita dic-25 = 116 coincide con anexo.",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2026/01/Boletin-del-IDD-de-diciembre-base-2020.pdf",
+        "cita": "En diciembre de 2025 se registraron 116 denuncias por robo de vehículos [...] situándose en 8.51 por cada 100,000 habitantes.",
+        "archivo_local": "sesiones/_descargas/Boletin-del-IDD-de-diciembre-base-2020.txt"
+      },
+      "serie": [
+        {
+          "p": "2016",
+          "v": 3888
+        },
+        {
+          "p": "2017",
+          "v": 3262
+        },
+        {
+          "p": "2018",
+          "v": 2836
+        },
+        {
+          "p": "2019",
+          "v": 2030
+        },
+        {
+          "p": "2020",
+          "v": 1589
+        },
+        {
+          "p": "2021",
+          "v": 1918
+        },
+        {
+          "p": "2022",
+          "v": 2128
+        },
+        {
+          "p": "2023",
+          "v": 2139
+        },
+        {
+          "p": "2024",
+          "v": 1726
+        },
+        {
+          "p": "2025",
+          "v": 1548
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "pat-c02",
+      "concepto": "Denuncias por robo de motocicletas (PNC), total anual",
+      "unidad": "denuncias",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "CIEN, Índice de Denuncias de Delitos (datos PNC/PLADEIC)",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/01/Boletin-del-IDD-de-diciembre-base-2020.pdf",
+      "periodo": "2016–2025",
+      "n_puntos": 10,
+      "valor": 4492,
+      "veredicto": "verificada",
+      "fuente_2": "CIEN, boletín IDD diciembre 2025 (anexo, PNC/PLADEIC): suma de los 12 meses recomputada desde el archivo local (4,492); 2016 = 5,975 recomputado del boletín dic. 2019; may-25 = 412 corroborado por Guatemala Hoy citando CIEN.",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2026/01/Boletin-del-IDD-de-diciembre-base-2020.pdf",
+        "cita": "En diciembre de 2025 se registraron 311 denuncias por robo de motocicletas, equivalente a un promedio de 10.03 diarias [...] situándose en 24.69 por cada 100,000 habitantes.",
+        "archivo_local": "sesiones/_descargas/Boletin-del-IDD-de-diciembre-base-2020.txt"
+      },
+      "serie": [
+        {
+          "p": "2016",
+          "v": 5975
+        },
+        {
+          "p": "2017",
+          "v": 5312
+        },
+        {
+          "p": "2018",
+          "v": 5051
+        },
+        {
+          "p": "2019",
+          "v": 3623
+        },
+        {
+          "p": "2020",
+          "v": 3138
+        },
+        {
+          "p": "2021",
+          "v": 3797
+        },
+        {
+          "p": "2022",
+          "v": 4743
+        },
+        {
+          "p": "2023",
+          "v": 5049
+        },
+        {
+          "p": "2024",
+          "v": 4940
+        },
+        {
+          "p": "2025",
+          "v": 4492
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "pat-c03",
+      "concepto": "Índice de Denuncias de Delitos (IDD) de CIEN, valor de diciembre de cada año (enero 2020 = 100)",
+      "unidad": "índice (enero 2020 = 100)",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "CIEN, Índice de Denuncias de Delitos (datos PNC/PLADEIC)",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/01/Boletin-del-IDD-de-diciembre-base-2020.pdf",
+      "periodo": "2020–2025",
+      "n_puntos": 6,
+      "valor": 75.25,
+      "veredicto": "verificada",
+      "fuente_2": "CIEN, anexo del boletín dic. 2025 (dic-20 86.24, dic-21 84.38, dic-22 82.65, dic-23 86.90, dic-24 80.38, dic-25 75.25 revisados en tabla)",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2026/01/Boletin-del-IDD-de-diciembre-base-2020.pdf",
+        "cita": "dic-25 [...] 80.36 75.25 (Subíndice de Delitos contra la Propiedad e ÍNDICE DE DENUNCIAS DE DELITOS); 'En diciembre de 2025, el Índice de Denuncias de Delitos (IDD) aumentó 9.13%.'",
+        "archivo_local": "sesiones/_descargas/Boletin-del-IDD-de-diciembre-base-2020.txt"
+      },
+      "serie": [
+        {
+          "p": "2020",
+          "v": 86.24
+        },
+        {
+          "p": "2021",
+          "v": 84.38
+        },
+        {
+          "p": "2022",
+          "v": 82.65
+        },
+        {
+          "p": "2023",
+          "v": 86.9
+        },
+        {
+          "p": "2024",
+          "v": 80.38
+        },
+        {
+          "p": "2025",
+          "v": 75.25
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "pat-c04",
+      "concepto": "Índice de Ley y Orden de Gallup (Law and Order Index), Guatemala",
+      "unidad": "puntos (0–100; más alto = más seguridad percibida)",
+      "anio": 2024,
+      "tipo": "serie",
+      "fuente": "Gallup, Global Safety Report 2025 / Global Law and Order 2018 y 2023 (Gallup World Poll)",
+      "url": "https://khovar.tj/wp-content/uploads/2025/09/Gallup_Global-Safety-Report-2025.pdf",
+      "periodo": "2017, 2022, 2023, 2024",
+      "n_puntos": 4,
+      "valor": 74,
+      "veredicto": "verificada",
+      "fuente_2": "Gallup, ediciones independientes: informe 2018 (Guatemala 71, 2017), informe 2023 (72, 2022), Global Safety Report 2024 (74, 2023); archivos locales",
+      "evidencia": {
+        "url": "https://khovar.tj/wp-content/uploads/2025/09/Gallup_Global-Safety-Report-2025.pdf",
+        "cita": "Law and Order Index Scores, 2024 [...] Guatemala 74",
+        "archivo_local": "sesiones/_descargas/Gallup_Global-Safety-Report-2025.txt"
+      },
+      "serie": [
+        {
+          "p": "2017",
+          "v": 71
+        },
+        {
+          "p": "2022",
+          "v": 72
+        },
+        {
+          "p": "2023",
+          "v": 74
+        },
+        {
+          "p": "2024",
+          "v": 74
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_11.png",
+        "T11"
+      ]
+    },
+    {
+      "id": "pat-c05",
+      "concepto": "Porcentaje de adultos que se sienten seguros caminando solos de noche donde viven, Guatemala y vecinos",
+      "unidad": "% que responde sí",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "Gallup, Global Safety Report 2025 (Gallup World Poll)",
+      "url": "https://khovar.tj/wp-content/uploads/2025/09/Gallup_Global-Safety-Report-2025.pdf",
+      "periodo": "2024",
+      "n_puntos": 5,
+      "valor": 54,
+      "veredicto": "verificada",
+      "fuente_2": "Gallup, tabla 'Safe to Walk Alone at Night' del Global Safety Report 2025: Guatemala 54%, El Salvador 87%, Honduras 58%, Costa Rica 53%, México 51% (releído en archivo local); resumen Gallup confirma promedio LAC 50% y mundo 73%",
+      "evidencia": {
+        "url": "https://khovar.tj/wp-content/uploads/2025/09/Gallup_Global-Safety-Report-2025.pdf",
+        "cita": "Safe to Walk Alone at Night (% Yes), 2024 [...] Guatemala 54%",
+        "archivo_local": "sesiones/_descargas/Gallup_Global-Safety-Report-2025.txt"
+      },
+      "partes": [
+        {
+          "nombre": "El Salvador",
+          "valor": 87
+        },
+        {
+          "nombre": "Honduras",
+          "valor": 58
+        },
+        {
+          "nombre": "Guatemala",
+          "valor": 54
+        },
+        {
+          "nombre": "Costa Rica",
+          "valor": 53
+        },
+        {
+          "nombre": "México",
+          "valor": 51
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_11.png"
+      ]
+    },
+    {
+      "id": "pat-c06",
+      "concepto": "Índice de Ley y Orden de Gallup 2024, Guatemala y vecinos",
+      "unidad": "puntos (0–100)",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "Gallup, Global Safety Report 2025",
+      "url": "https://khovar.tj/wp-content/uploads/2025/09/Gallup_Global-Safety-Report-2025.pdf",
+      "periodo": "2024",
+      "n_puntos": 5,
+      "valor": 74,
+      "veredicto": "verificada",
+      "fuente_2": "Gallup Global Safety Report 2025, tabla Law and Order 2024 (releída en archivo local): El Salvador 90, Costa Rica 76, Guatemala 74, Honduras 71, México 68; mundo 83 confirmado por Gallup",
+      "evidencia": {
+        "url": "https://khovar.tj/wp-content/uploads/2025/09/Gallup_Global-Safety-Report-2025.pdf",
+        "cita": "Law and Order Index Scores, 2024 [...] Guatemala 74 [...] Mexico 68 [...] Honduras 71 [...] El Salvador 90 [...] Costa Rica 76",
+        "archivo_local": "sesiones/_descargas/Gallup_Global-Safety-Report-2025.txt"
+      },
+      "partes": [
+        {
+          "nombre": "El Salvador",
+          "valor": 90
+        },
+        {
+          "nombre": "Costa Rica",
+          "valor": 76
+        },
+        {
+          "nombre": "Guatemala",
+          "valor": 74
+        },
+        {
+          "nombre": "Honduras",
+          "valor": 71
+        },
+        {
+          "nombre": "México",
+          "valor": 68
+        }
+      ],
+      "usada": false,
+      "aparece_en": [
+        "T11"
+      ]
+    },
+    {
+      "id": "pat-c07",
+      "concepto": "Mezcla de denuncias de los 9 delitos del IDD, 2025 (total anual por delito)",
+      "unidad": "denuncias",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "CIEN, Índice de Denuncias de Delitos (datos PNC/PLADEIC)",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/01/Boletin-del-IDD-de-diciembre-base-2020.pdf",
+      "periodo": "2025",
+      "n_puntos": 9,
+      "valor": 25943,
+      "veredicto": "verificada",
+      "fuente_2": "CIEN, boletín IDD diciembre 2025 (anexo, PNC/PLADEIC): suma de los 12 meses recomputada desde el archivo local: extorsiones 25,943; motos 4,492; lesiones 4,015; homicidios 3,136; vehículos 1,548; viviendas 408; violaciones 159; furgones 13; secuestros 10 (total 39,724).",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2026/01/Boletin-del-IDD-de-diciembre-base-2020.pdf",
+        "cita": "Denuncias de delitos, 2024 y 2025 [...] dic-25 260 1 14 341 1,608 116 311 7 37",
+        "archivo_local": "sesiones/_descargas/Boletin-del-IDD-de-diciembre-base-2020.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Extorsiones",
+          "valor": 25943
+        },
+        {
+          "nombre": "Robo de motocicletas",
+          "valor": 4492
+        },
+        {
+          "nombre": "Lesiones",
+          "valor": 4015
+        },
+        {
+          "nombre": "Homicidios",
+          "valor": 3136
+        },
+        {
+          "nombre": "Robo de vehículos",
+          "valor": 1548
+        },
+        {
+          "nombre": "Robo a viviendas",
+          "valor": 408
+        },
+        {
+          "nombre": "Violaciones",
+          "valor": 159
+        },
+        {
+          "nombre": "Robo de furgones con mercadería",
+          "valor": 13
+        },
+        {
+          "nombre": "Secuestros",
+          "valor": 10
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_6.png",
+        "tuit_10.png"
+      ]
+    },
+    {
+      "id": "pat-c08",
+      "concepto": "Mezcla de denuncias de los 9 delitos del IDD, 2016 (total anual por delito)",
+      "unidad": "denuncias",
+      "anio": 2016,
+      "tipo": "desglose",
+      "fuente": "CIEN, Índice de Denuncias de Delitos (datos PNC/PLADEIC)",
+      "url": "https://cien.org.gt/wp-content/uploads/2020/01/Bolet%C3%ADn-estad%C3%ADstico-delitos-diciembre-2019.pdf",
+      "periodo": "2016",
+      "n_puntos": 9,
+      "valor": 7125,
+      "veredicto": "verificada",
+      "fuente_2": "CIEN, boletín dic. 2019 (PNC): suma de 12 meses 2016 recomputada: extorsiones 7,125; motos 5,975; lesiones 5,872; homicidios 4,520; vehículos 3,888; viviendas 969; violaciones 598; furgones 101; secuestros 36.",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2020/01/Bolet%C3%ADn-estad%C3%ADstico-delitos-diciembre-2019.pdf",
+        "cita": "Denuncias de delitos, 2016 y 2017 [...] diciembre 2016 389 0 46 456 676 267 506 10 95",
+        "archivo_local": "sesiones/_descargas/Bolet%C3%ADn-estad%C3%ADstico-delitos-diciembre-2019.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Extorsiones",
+          "valor": 7125
+        },
+        {
+          "nombre": "Robo de motocicletas",
+          "valor": 5975
+        },
+        {
+          "nombre": "Lesiones",
+          "valor": 5872
+        },
+        {
+          "nombre": "Homicidios",
+          "valor": 4520
+        },
+        {
+          "nombre": "Robo de vehículos",
+          "valor": 3888
+        },
+        {
+          "nombre": "Robo a viviendas",
+          "valor": 969
+        },
+        {
+          "nombre": "Violaciones",
+          "valor": 598
+        },
+        {
+          "nombre": "Robo de furgones con mercadería",
+          "valor": 101
+        },
+        {
+          "nombre": "Secuestros",
+          "valor": 36
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_6.png",
+        "tuit_10.png"
+      ]
+    },
+    {
+      "id": "pat-c09",
+      "concepto": "Denuncias por robo a viviendas (PNC), total anual",
+      "unidad": "denuncias",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "CIEN, Índice de Denuncias de Delitos (datos PNC/PLADEIC)",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/01/Boletin-del-IDD-de-diciembre-base-2020.pdf",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 408,
+      "veredicto": "verificada",
+      "fuente_2": "CIEN, boletín IDD diciembre 2025 (anexo, PNC/PLADEIC): suma de los 12 meses recomputada desde el archivo local (408); 2016 = 969; tasa dic-25 2.24 en la tabla de tasas.",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2026/01/Boletin-del-IDD-de-diciembre-base-2020.pdf",
+        "cita": "dic-25 [...] Tasa de Robo a viviendas 2.24 (tasa interanual por 100 mil)",
+        "archivo_local": "sesiones/_descargas/Boletin-del-IDD-de-diciembre-base-2020.txt"
+      },
+      "serie": [
+        {
+          "p": "2016",
+          "v": 969
+        },
+        {
+          "p": "2017",
+          "v": 628
+        },
+        {
+          "p": "2018",
+          "v": 511
+        },
+        {
+          "p": "2019",
+          "v": 422
+        },
+        {
+          "p": "2020",
+          "v": 517
+        },
+        {
+          "p": "2021",
+          "v": 600
+        },
+        {
+          "p": "2022",
+          "v": 556
+        },
+        {
+          "p": "2023",
+          "v": 496
+        },
+        {
+          "p": "2024",
+          "v": 474
+        },
+        {
+          "p": "2025",
+          "v": 408
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "pat-c10",
+      "concepto": "Tasa de denuncias por robo de vehículos por 100 mil habitantes (interanual a diciembre)",
+      "unidad": "por 100 mil hab.",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "CIEN, Índice de Denuncias de Delitos (datos PNC/PLADEIC)",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/01/Boletin-del-IDD-de-diciembre-base-2020.pdf",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 8.51,
+      "veredicto": "verificada",
+      "fuente_2": "CIEN anexo de tasas dic-25: 8.51 (texto: 116 denuncias y 8.51); dic-2016 24.36 según boletín dic. 2019",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2026/01/Boletin-del-IDD-de-diciembre-base-2020.pdf",
+        "cita": "Cantidad y Tasa de robo de vehículos: 116 y 8.51",
+        "archivo_local": "sesiones/_descargas/Boletin-del-IDD-de-diciembre-base-2020.txt"
+      },
+      "usada": false,
+      "aparece_en": [
+        "T17"
+      ]
+    },
+    {
+      "id": "pat-c11",
+      "concepto": "Tasa de denuncias por robo de motocicletas por 100 mil habitantes (interanual a diciembre)",
+      "unidad": "por 100 mil hab.",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "CIEN, Índice de Denuncias de Delitos (datos PNC/PLADEIC)",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/01/Boletin-del-IDD-de-diciembre-base-2020.pdf",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 24.69,
+      "veredicto": "verificada",
+      "fuente_2": "CIEN anexo de tasas dic-25: 24.69 (texto: 311 y 24.69)",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2026/01/Boletin-del-IDD-de-diciembre-base-2020.pdf",
+        "cita": "Cantidad y Tasa de robo de motocicletas: 311 y 24.69",
+        "archivo_local": "sesiones/_descargas/Boletin-del-IDD-de-diciembre-base-2020.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "pat-c12",
+      "concepto": "Tasa interanual de denuncias por extorsión por 100 mil hab. frente a robo de vehículos (contexto del IDD)",
+      "unidad": "por 100 mil hab.",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "CIEN, Índice de Denuncias de Delitos (datos PNC/PLADEIC)",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/01/Boletin-del-IDD-de-diciembre-base-2020.pdf",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 142.67,
+      "veredicto": "verificada",
+      "fuente_2": "CIEN anexo de tasas dic-25: 142.67 (texto redondea 142.7)",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2026/01/Boletin-del-IDD-de-diciembre-base-2020.pdf",
+        "cita": "la tasa interanual de denuncias por extorsión disminuyó, situándose en 142.7 por cada 100,000 habitantes, registrando así el quinto mes consecutivo a la baja.",
+        "archivo_local": "sesiones/_descargas/Boletin-del-IDD-de-diciembre-base-2020.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "pen-c01",
+      "concepto": "Personas privadas de libertad en el Sistema Penitenciario por año, 2014–2025 (2025 a junio)",
+      "unidad": "personas privadas de libertad",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "CIEN, Boletín julio 2025 «¿Hacia dónde va el Sistema Penitenciario?», con datos de la DGSP",
+      "url": "https://cien.org.gt/wp-content/uploads/2025/07/Boletin-julio-2025-Hacia-Donde-va-el-Sistema-Penitenciario-vf.pdf",
+      "periodo": "2014–2025 (jun)",
+      "n_puntos": 12,
+      "valor": 23382,
+      "veredicto": "verificada",
+      "fuente_2": "World Prison Brief / ICCPG (órdenes de magnitud) e Infobae jul-2026 (SP: 'más de 23,000')",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2025/07/Boletin-julio-2025-Hacia-Donde-va-el-Sistema-Penitenciario-vf.pdf",
+        "cita": "En junio de 2025, Guatemala registró 23,382 personas privadas de libertad [...] la población carcelaria aumentó de 18,444 en 2014 a más de 25,400 en 2019",
+        "archivo_local": "sesiones/_descargas/Boletin-julio-2025-Hacia-Donde-va-el-Sistema-Penitenciario-vf.pdf"
+      },
+      "serie": [
+        {
+          "p": "2014",
+          "v": 18444
+        },
+        {
+          "p": "2015",
+          "v": 19962
+        },
+        {
+          "p": "2016",
+          "v": 21203
+        },
+        {
+          "p": "2017",
+          "v": 23140
+        },
+        {
+          "p": "2018",
+          "v": 24422
+        },
+        {
+          "p": "2019",
+          "v": 25447
+        },
+        {
+          "p": "2020",
+          "v": 25335
+        },
+        {
+          "p": "2021",
+          "v": 24673
+        },
+        {
+          "p": "2022",
+          "v": 24188
+        },
+        {
+          "p": "2023",
+          "v": 23206
+        },
+        {
+          "p": "2024",
+          "v": 23017
+        },
+        {
+          "p": "2025 (jun)",
+          "v": 23382
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_16.png"
+      ]
+    },
+    {
+      "id": "pen-c02",
+      "concepto": "Tasa de ocupación penitenciaria (privados de libertad por cada 100 espacios), 2014–2025 (2025 a junio)",
+      "unidad": "% de ocupación",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "CIEN, Boletín julio 2025, con datos de la DGSP",
+      "url": "https://cien.org.gt/wp-content/uploads/2025/07/Boletin-julio-2025-Hacia-Donde-va-el-Sistema-Penitenciario-vf.pdf",
+      "periodo": "2014–2025 (jun)",
+      "n_puntos": 12,
+      "valor": 342,
+      "veredicto": "verificada",
+      "fuente_2": "Infobae (jul-2026, datos SP): ocupación promedio 339% y capacidad ~6,800",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2025/07/Boletin-julio-2025-Hacia-Donde-va-el-Sistema-Penitenciario-vf.pdf",
+        "cita": "las prisiones solo cuentan con capacidad para 6,842; lo que representa una tasa de ocupación del 342% [...] La tasa de ocupación penitenciaria se mantiene por encima del 300% desde hace una década.",
+        "archivo_local": "sesiones/_descargas/Boletin-julio-2025-Hacia-Donde-va-el-Sistema-Penitenciario-vf.pdf"
+      },
+      "serie": [
+        {
+          "p": "2014",
+          "v": 276
+        },
+        {
+          "p": "2015",
+          "v": 299
+        },
+        {
+          "p": "2016",
+          "v": 311
+        },
+        {
+          "p": "2017",
+          "v": 340
+        },
+        {
+          "p": "2018",
+          "v": 359
+        },
+        {
+          "p": "2019",
+          "v": 374
+        },
+        {
+          "p": "2020",
+          "v": 372
+        },
+        {
+          "p": "2021",
+          "v": 361
+        },
+        {
+          "p": "2022",
+          "v": 354
+        },
+        {
+          "p": "2023",
+          "v": 339
+        },
+        {
+          "p": "2024",
+          "v": 336
+        },
+        {
+          "p": "2025 (jun)",
+          "v": 342
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_16.png"
+      ]
+    },
+    {
+      "id": "pen-c03",
+      "concepto": "Capacidad del sistema penitenciario (espacios) a junio 2025, en 22 centros",
+      "unidad": "espacios penitenciarios",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "CIEN, Boletín julio 2025, con datos de la DGSP",
+      "url": "https://cien.org.gt/wp-content/uploads/2025/07/Boletin-julio-2025-Hacia-Donde-va-el-Sistema-Penitenciario-vf.pdf",
+      "periodo": "jun-2025",
+      "n_puntos": 1,
+      "valor": 6842,
+      "veredicto": "verificada",
+      "fuente_2": "Infobae (jul-2026, datos Sistema Penitenciario): capacidad instalada 6,800",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2025/07/Boletin-julio-2025-Hacia-Donde-va-el-Sistema-Penitenciario-vf.pdf",
+        "cita": "las prisiones solo cuentan con capacidad para 6,842 [...] actualmente solo existen 22 centros penitenciarios en funcionamiento.",
+        "archivo_local": "sesiones/_descargas/Boletin-julio-2025-Hacia-Donde-va-el-Sistema-Penitenciario-vf.pdf"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_16.png"
+      ]
+    },
+    {
+      "id": "pen-c04",
+      "concepto": "Personas privadas de libertad al cierre de 2025 (25 instalaciones)",
+      "unidad": "personas privadas de libertad",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "CIEN, Boletín «Retos en Seguridad Ciudadana para el año 2026» (ene-2026), con datos de la DGSP",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/01/Boletin-Retos-en-Seguridad-Ciudadana-2026-vf.pdf",
+      "periodo": "dic-2025",
+      "n_puntos": 1,
+      "valor": 23651,
+      "veredicto": "verificada",
+      "fuente_2": "Infobae (SP, feb-2026: ~24,000 reclusos; jul-2026: más de 23,000)",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2026/01/Boletin-Retos-en-Seguridad-Ciudadana-2026-vf.pdf",
+        "cita": "Las 23,651 personas privadas de libertad deben compartir 7,922 espacios penitenciarios",
+        "archivo_local": "sesiones/_descargas/Boletin-Retos-en-Seguridad-Ciudadana-2026-vf.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "pen-c07",
+      "concepto": "Presos en prisión preventiva como % de la población reclusa (World Prison Brief), 2001–2023",
+      "unidad": "% de la población reclusa",
+      "anio": 2023,
+      "tipo": "serie",
+      "fuente": "World Prison Brief (ICPR, Birkbeck) — Guatemala, con datos de la administración penitenciaria nacional",
+      "url": "https://www.prisonstudies.org/country/guatemala",
+      "periodo": "2001–2023",
+      "n_puntos": 6,
+      "valor": 47.2,
+      "veredicto": "verificada",
+      "fuente_2": "ICCPG indicador 49 (48% de presos sin condena en 2020; WPB 2020: 47.7%)",
+      "evidencia": {
+        "url": "https://www.prisonstudies.org/country/guatemala",
+        "cita": "Pre-trial detainees / remand prisoners (percentage of prison population) 47.2% (27.11.2023)",
+        "archivo_local": "sesiones/_descargas/guatemala_wpb.txt"
+      },
+      "serie": [
+        {
+          "p": "2001",
+          "v": 58.7
+        },
+        {
+          "p": "2005",
+          "v": 43.9
+        },
+        {
+          "p": "2010",
+          "v": 54.4
+        },
+        {
+          "p": "2015",
+          "v": 48.6
+        },
+        {
+          "p": "2020",
+          "v": 47.7
+        },
+        {
+          "p": "2023",
+          "v": 47.2
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "pen-c08",
+      "concepto": "Tasa de población reclusa por 100,000 habitantes (World Prison Brief), 2014–2023",
+      "unidad": "reclusos por 100,000 hab.",
+      "anio": 2023,
+      "tipo": "serie",
+      "fuente": "World Prison Brief — Guatemala",
+      "url": "https://www.prisonstudies.org/country/guatemala",
+      "periodo": "2014–2023",
+      "n_puntos": 5,
+      "valor": 123,
+      "veredicto": "verificada",
+      "fuente_2": "CIEN ene-2026 (130 por 100 mil, la más baja de América Latina) y cálculo 23,361/19.04 M=122.7",
+      "evidencia": {
+        "url": "https://www.prisonstudies.org/country/guatemala",
+        "cita": "Prison population rate (per 100,000 of national population) 123 based on an estimated national population of 19.04 million at end of November 2023",
+        "archivo_local": "sesiones/_descargas/guatemala_wpb.txt"
+      },
+      "serie": [
+        {
+          "p": "2014",
+          "v": 115
+        },
+        {
+          "p": "2016",
+          "v": 125
+        },
+        {
+          "p": "2018",
+          "v": 140
+        },
+        {
+          "p": "2020",
+          "v": 142
+        },
+        {
+          "p": "2023",
+          "v": 123
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "pen-c09",
+      "concepto": "Fuga de reos del Barrio 18 de Fraijanes II (11–12 oct 2025): fugados y situación al 31 de marzo de 2026",
+      "unidad": "reos fugados",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Agencia Guatemalteca de Noticias (AGN, agencia estatal) con información del Sistema Penitenciario/Mingob; coincide La Hora (15-mar-2026)",
+      "url": "https://agn.gt/quienes-son-los-reos-fugados-de-fraijanes-ii-que-ya-han-sido-recapturados/",
+      "periodo": "oct-2025 a 31-mar-2026",
+      "n_puntos": 3,
+      "valor": 20,
+      "veredicto": "verificada",
+      "fuente_2": "La Hora (15-mar-2026) y AGN (31-mar-2026)",
+      "evidencia": {
+        "url": "https://agn.gt/quienes-son-los-reos-fugados-de-fraijanes-ii-que-ya-han-sido-recapturados/",
+        "cita": "El Sistema Penitenciario (SP) informó en octubre del 2025 sobre la fuga de 20 reclusos pertenecientes al Barrio 18 [...] nueve de los fugados ya fueron hallados.",
+        "archivo_local": "sesiones/_descargas/agn_fraijanes_recapturados.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Recapturados",
+          "valor": 8
+        },
+        {
+          "nombre": "Fallecido",
+          "valor": 1
+        },
+        {
+          "nombre": "Siguen prófugos",
+          "valor": 11
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_16.png",
+        "T16"
+      ]
+    },
+    {
+      "id": "pen-c10",
+      "concepto": "Guardias tomados como rehenes en motines simultáneos en tres cárceles (17 ene 2026)",
+      "unidad": "guardias rehenes",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Agencia Ocote (18-ene-2026), con declaraciones del director del Sistema Penitenciario y del ministro de Gobernación",
+      "url": "https://www.agenciaocote.com/blog/2026/01/18/no-negociamos-con-terroristas-gobernacion-rechaza-exigencias-de-pandilleros/",
+      "periodo": "17-ene-2026",
+      "n_puntos": 1,
+      "valor": 46,
+      "veredicto": "ajustada",
+      "fuente_2": "Infobae/EFE, TV Azteca, France 24 (46 rehenes; guardias y un psicólogo)",
+      "evidencia": {
+        "url": "https://www.agenciaocote.com/blog/2026/01/18/no-negociamos-con-terroristas-gobernacion-rechaza-exigencias-de-pandilleros/",
+        "cita": "Hasta la noche del 17 de enero mantenían 46 guardias como rehenes y exigían privilegios para sus líderes.",
+        "archivo_local": "sesiones/_descargas/ocote_motines_2026-01-18.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_16.png",
+        "T16"
+      ]
+    },
+    {
+      "id": "pen-c12",
+      "concepto": "Agentes penitenciarios al 31 de diciembre de 2025",
+      "unidad": "agentes penitenciarios",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "CIEN, Boletín Retos en Seguridad Ciudadana 2026, con datos de la DGSP",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/01/Boletin-Retos-en-Seguridad-Ciudadana-2026-vf.pdf",
+      "periodo": "dic-2025",
+      "n_puntos": 1,
+      "valor": 3134,
+      "valor_original": 3997,
+      "veredicto": "ajustada",
+      "fuente_2": "Infobae/Mingob (7-may-2026): 3,134 guardias activos a mediados de 2025, turnos 8x8",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2026/01/Boletin-Retos-en-Seguridad-Ciudadana-2026-vf.pdf",
+        "cita": "Al 31 de diciembre 2025, el Sistema Penitenciario contaba con 3,997 agentes penitenciarios. [...] Relación de un guardia por 12 privados de libertad (cálculo general).",
+        "archivo_local": "sesiones/_descargas/Boletin-Retos-en-Seguridad-Ciudadana-2026-vf.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "hom-c01",
+      "concepto": "Homicidios registrados por la PNC por año (ambos sexos), 2016–2025",
+      "unidad": "homicidios",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Observatorio de la Violencia, Diálogos, con datos de PNC (Informe sobre la violencia homicida, diciembre 2025)",
+      "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/InformeHomicidios.pdf",
+      "periodo": "2016–2025",
+      "n_puntos": 10,
+      "valor": 3139,
+      "valor_original": 3138,
+      "veredicto": "ajustada",
+      "fuente_2": "Prensa Libre y CIEN (Retos en Seguridad 2026)",
+      "evidencia": {
+        "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/InformeHomicidios.pdf",
+        "cita": "En lo que va del año, se ha registrado un total de 3138 homicidios para ambos sexos (389 mujeres y 2749 hombres). [gráfico 2015-2025: hombres 2016 3947, mujeres 573]",
+        "archivo_local": "sesiones/_descargas/InformeHomicidios.txt"
+      },
+      "serie": [
+        {
+          "p": "2016",
+          "v": 4520
+        },
+        {
+          "p": "2017",
+          "v": 4428
+        },
+        {
+          "p": "2018",
+          "v": 3885
+        },
+        {
+          "p": "2019",
+          "v": 3561
+        },
+        {
+          "p": "2020",
+          "v": 2572
+        },
+        {
+          "p": "2021",
+          "v": 2830
+        },
+        {
+          "p": "2022",
+          "v": 2983
+        },
+        {
+          "p": "2023",
+          "v": 2942
+        },
+        {
+          "p": "2024",
+          "v": 2862
+        },
+        {
+          "p": "2025",
+          "v": 3138
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_1.png",
+        "tuit_2.png",
+        "T21"
+      ]
+    },
+    {
+      "id": "hom-c02",
+      "concepto": "Tasa de homicidios por 100 mil habitantes (tasa interanual a diciembre), 2020–2025",
+      "unidad": "homicidios por 100 mil hab.",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "CIEN, Índice de Denuncias de Delitos, boletín agosto 2026 (datos PNC/PLADEIC y proyecciones INE)",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/09/Boletin-del-IDD-de-agosto-base-2020.pdf",
+      "periodo": "2020–2025",
+      "n_puntos": 6,
+      "valor": 17.25,
+      "veredicto": "verificada",
+      "fuente_2": "Prensa Libre (Mapa de violencia 2025) y CIEN",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2026/09/Boletin-del-IDD-de-agosto-base-2020.pdf",
+        "cita": "dic-24 15.97 ... dic-25 17.25 (Tasa de Homicidios, Delitos contra las Personas)",
+        "archivo_local": "sesiones/_descargas/Boletin-del-IDD-de-agosto-base-2020.txt"
+      },
+      "serie": [
+        {
+          "p": "2020",
+          "v": 15.17
+        },
+        {
+          "p": "2021",
+          "v": 16.5
+        },
+        {
+          "p": "2022",
+          "v": 17.19
+        },
+        {
+          "p": "2023",
+          "v": 16.61
+        },
+        {
+          "p": "2024",
+          "v": 15.97
+        },
+        {
+          "p": "2025",
+          "v": 17.25
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "hom-c03",
+      "concepto": "Homicidios 2025 vs 2024 (cierre anual PLADEIC)",
+      "unidad": "homicidios",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "Diálogos, Balance de la violencia homicida en Guatemala 2025",
+      "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/Balance-anual.pdf",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 3139,
+      "veredicto": "verificada",
+      "fuente_2": "CIEN, Boletín Retos en Seguridad Ciudadana 2026",
+      "evidencia": {
+        "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/Balance-anual.pdf",
+        "cita": "se registraron 3,139 homicidios, frente a los 2,869 contabilizados en 2024. Esta diferencia representa 270 homicidios adicionales, lo que equivale a un aumento del 9.4%",
+        "archivo_local": "sesiones/_descargas/Balance-anual.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_3.png",
+        "T21"
+      ]
+    },
+    {
+      "id": "hom-c04",
+      "concepto": "Homicidios acumulados enero–agosto 2026 vs mismo periodo 2025",
+      "unidad": "homicidios",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "CIEN, IDD boletín agosto 2026 (PNC/PLADEIC)",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/09/Boletin-del-IDD-de-agosto-base-2020.pdf",
+      "periodo": "ene–ago 2026",
+      "n_puntos": 1,
+      "valor": 2069,
+      "veredicto": "verificada",
+      "fuente_2": "Infobae / Prensa Libre sobre IDD agosto 2026",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2026/09/Boletin-del-IDD-de-agosto-base-2020.pdf",
+        "cita": "ene-26 204 / feb-26 174 / mar-26 238 / abr-26 259 / may-26 298 / jun-26 266 / jul-26 312 / ago-26 318",
+        "archivo_local": "sesiones/_descargas/Boletin-del-IDD-de-agosto-base-2020.txt"
+      },
+      "usada": false,
+      "aparece_en": [
+        "T20"
+      ]
+    },
+    {
+      "id": "hom-c05",
+      "concepto": "Tasa interanual de homicidios por 100 mil, mensual 2026 (rebote desde mayo)",
+      "unidad": "homicidios por 100 mil hab.",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "CIEN, IDD boletín agosto 2026",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/09/Boletin-del-IDD-de-agosto-base-2020.pdf",
+      "periodo": "ene–ago 2026",
+      "n_puntos": 8,
+      "valor": 16.65,
+      "veredicto": "verificada",
+      "fuente_2": "Infobae (CIEN IDD agosto 2026)",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2026/09/Boletin-del-IDD-de-agosto-base-2020.pdf",
+        "cita": "en agosto de 2026 se registraron 318 homicidios, equivalentes a un promedio de 10.26 diarios [...] La tasa aumentó por tercer mes consecutivo.",
+        "archivo_local": "sesiones/_descargas/Boletin-del-IDD-de-agosto-base-2020.txt"
+      },
+      "serie": [
+        {
+          "p": "ene-26",
+          "v": 16.97
+        },
+        {
+          "p": "feb-26",
+          "v": 16.52
+        },
+        {
+          "p": "mar-26",
+          "v": 16.3
+        },
+        {
+          "p": "abr-26",
+          "v": 16.27
+        },
+        {
+          "p": "may-26",
+          "v": 16.22
+        },
+        {
+          "p": "jun-26",
+          "v": 16.26
+        },
+        {
+          "p": "jul-26",
+          "v": 16.46
+        },
+        {
+          "p": "ago-26",
+          "v": 16.65
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_20.png"
+      ]
+    },
+    {
+      "id": "hom-c06",
+      "concepto": "Homicidios por día en 2025",
+      "unidad": "homicidios por día",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "Cálculo sobre Diálogos, Balance 2025 (3,139 homicidios)",
+      "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/Balance-anual.pdf",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 8.6,
+      "veredicto": "verificada",
+      "fuente_2": "Cálculo sobre Prensa Libre / CIEN (3,139 homicidios)",
+      "evidencia": {
+        "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/Balance-anual.pdf",
+        "cita": "En total, se registraron 3,139 homicidios, frente a los 2,869 contabilizados en 2024.",
+        "archivo_local": "sesiones/_descargas/Balance-anual.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_3.png"
+      ]
+    },
+    {
+      "id": "hom-c07",
+      "concepto": "Porcentaje de homicidios cometidos con arma de fuego, 2025",
+      "unidad": "%",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "Diálogos, Balance de la violencia homicida 2025 (datos PLADEIC)",
+      "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/Balance-anual.pdf",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 85,
+      "veredicto": "verificada",
+      "fuente_2": "La Hora: PNC, más del 80% de homicidios con arma de fuego (jun-2026); PNC 84% nacional",
+      "evidencia": {
+        "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/Balance-anual.pdf",
+        "cita": "En 2025, el 85% de los homicidios se cometieron con arma de fuego, lo que confirma la centralidad de este medio en la violencia letal.",
+        "archivo_local": "sesiones/_descargas/Balance-anual.txt"
+      },
+      "usada": false,
+      "aparece_en": [
+        "T3"
+      ]
+    },
+    {
+      "id": "hom-c08",
+      "concepto": "Tasa de homicidios por 100 mil por departamento, 2025 (tasa interanual a diciembre)",
+      "unidad": "homicidios por 100 mil hab.",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Diálogos, Informe sobre la violencia homicida, diciembre 2025 (PNC + proyecciones INE)",
+      "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/InformeHomicidios.pdf",
+      "periodo": "2025",
+      "n_puntos": 22,
+      "valor": 39.3,
+      "veredicto": "verificada",
+      "fuente_2": "Prensa Libre (Escuintla 336 homicidios en 2025)",
+      "evidencia": {
+        "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/InformeHomicidios.pdf",
+        "cita": "indicadores de homicidios por departamento en diciembre de 2025 [...] Escuintla 32 3,8 39,3 / Guatemala 84 2,2 38,9 / Zacapa 8 2,8 31,7",
+        "archivo_local": "sesiones/_descargas/InformeHomicidios.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Escuintla",
+          "valor": 39.3
+        },
+        {
+          "nombre": "Guatemala",
+          "valor": 38.9
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 31.7
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 27.7
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 27.2
+        },
+        {
+          "nombre": "Petén",
+          "valor": 25.7
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 25.2
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 21.5
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 16.2
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 16.0
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 13.6
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 10.5
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 9.6
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 7.7
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 5.9
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 5.0
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 4.5
+        },
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 3.4
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 2.0
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 1.8
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 1.1
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 0.9
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_4.png"
+      ]
+    },
+    {
+      "id": "hom-c09",
+      "concepto": "Homicidios por departamento en 2025 (concentración)",
+      "unidad": "homicidios",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Diálogos, Informe sobre la violencia homicida, diciembre 2025 (PNC)",
+      "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/InformeHomicidios.pdf",
+      "periodo": "2025",
+      "n_puntos": 22,
+      "valor": 1460,
+      "veredicto": "verificada",
+      "fuente_2": "Prensa Libre (Mapa de violencia 2025)",
+      "evidencia": {
+        "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/InformeHomicidios.pdf",
+        "cita": "en el departamento de Guatemala [...] En lo que va del año, se ha registrado un total de 1460 homicidios para ambos sexos (170 mujeres y 1290 hombres).",
+        "archivo_local": "sesiones/_descargas/InformeHomicidios.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala",
+          "valor": 1460
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 335
+        },
+        {
+          "nombre": "Petén",
+          "valor": 171
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 132
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 129
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 119
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 93
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 90
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 79
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 75
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 75
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 68
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 65
+        },
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 51
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 41
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 40
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 32
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 30
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 23
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 21
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 5
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 4
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "hom-c10",
+      "concepto": "Homicidios intencionales por 100 mil habitantes, Guatemala vs. vecinos, 2022 (último año común)",
+      "unidad": "homicidios por 100 mil hab.",
+      "anio": 2022,
+      "tipo": "desglose",
+      "fuente": "Banco Mundial WDI, VC.IHR.PSRC.P5 (fuente UNODC)",
+      "url": "https://api.worldbank.org/v2/country/GTM;SLV;HND;CRI;MEX/indicator/VC.IHR.PSRC.P5?format=json&per_page=200&date=2014:2025",
+      "periodo": "2022",
+      "n_puntos": 5,
+      "valor": 22.0474401521257,
+      "veredicto": "verificada",
+      "fuente_2": "Macrotrends / The Global Economy (UNODC-Banco Mundial)",
+      "evidencia": {
+        "url": "https://api.worldbank.org/v2/country/GTM;SLV;HND;CRI;MEX/indicator/VC.IHR.PSRC.P5?format=json&per_page=200&date=2014:2025",
+        "cita": "GTM 2022 value 22.0474401521257; SLV 2022 value 7.89768799960639; HND 2022 value 34.9679353875888 (VC.IHR.PSRC.P5, lastupdated 2026-07-13)",
+        "archivo_local": "sesiones/_descargas/api/ca05dc2bf211728bdb2e9d3bdec09757a491293e.json"
+      },
+      "partes": [
+        {
+          "nombre": "Honduras",
+          "valor": 34.9679353875888
+        },
+        {
+          "nombre": "México",
+          "valor": 25.8814968854168
+        },
+        {
+          "nombre": "Guatemala",
+          "valor": 22.0474401521257
+        },
+        {
+          "nombre": "Costa Rica",
+          "valor": 12.908902016219
+        },
+        {
+          "nombre": "El Salvador",
+          "valor": 7.89768799960639
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_5.png"
+      ]
+    },
+    {
+      "id": "hom-c11",
+      "concepto": "Muertes por herida de arma de fuego registradas por INACIF, 2025",
+      "unidad": "muertes (necropsias)",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "INACIF vía Prensa Libre (ene-2026)",
+      "url": "https://www.prensalibre.com/ahora/guatemala/justicia/suben-un-3-8-las-muertes-con-armas-de-fuego-en-guatemala-segun-el-inacif/",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 3020,
+      "veredicto": "verificada",
+      "fuente_2": "Emisoras Unidas / Infobae-EFE (INACIF)",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/ahora/guatemala/justicia/suben-un-3-8-las-muertes-con-armas-de-fuego-en-guatemala-segun-el-inacif/",
+        "cita": "en 2025 se registraron 3,020 muertes por herida de bala [...] 110 casos más que en 2024"
+      },
+      "usada": false,
+      "aparece_en": [
+        "T3"
+      ]
+    }
+  ],
+  "fuentes": [
+    {
+      "nombre": "CIEN — El Desafío de las Extorsiones en Guatemala (boletín ene-2024)",
+      "url": "https://cien.org.gt/wp-content/uploads/2024/01/Boletin-El-Desafio-de-las-Extorsiones-en-Guatemala-enero-2024-vf.pdf",
+      "nivel": "primaria-procesada (datos PNC)"
+    },
+    {
+      "nombre": "CIEN — Estudio de extorsiones 2020",
+      "url": "https://cien.org.gt/wp-content/uploads/2021/02/Estudio-Extorsiones-2020.pdf",
+      "nivel": "primaria-procesada (datos PNC/MP, ENPEVI)"
+    },
+    {
+      "nombre": "La Hora — cierre 2025 con datos de Pladeic/Mingob",
+      "url": "https://lahora.gt/nacionales/engelberth-blanco/2026/01/01/el-2025-cierra-con-un-aumento-de-denuncias-por-extorsion-y-homicidios-detalla-plataforma-informatica-de-gobernacion/",
+      "nivel": "prensa que reproduce dato oficial"
+    },
+    {
+      "nombre": "Diario de Centro América — Pladeic 1er semestre 2026",
+      "url": "https://dca.gob.gt/noticias-guatemala-diario-centro-america/extorsiones-disminuyen-37-8-en-primer-semestre-de-2026/",
+      "nivel": "medio oficial"
+    },
+    {
+      "nombre": "Diario de Centro América — Pladeic ene–ago 2026",
+      "url": "https://dca.gob.gt/noticias-guatemala-diario-centro-america/extorsiones-disminuyen-39-2/",
+      "nivel": "medio oficial"
+    },
+    {
+      "nombre": "Diálogos — Informe sobre extorsiones, enero 2026",
+      "url": "https://dialogos.org.gt/wp-content/uploads/2026/03/Informe-Extorsiones-1.pdf",
+      "nivel": "primaria-procesada (Pladeic + INE)"
+    },
+    {
+      "nombre": "GI-TOC — Global Organized Crime Index, perfiles Guatemala 2021/2023/2025",
+      "url": "https://ocindex.net",
+      "nivel": "índice internacional"
+    },
+    {
+      "nombre": "Prensa Libre (YouTube) — capturas por extorsión 2025",
+      "url": "https://www.youtube.com/watch?v=_CzI7p1G6hg",
+      "nivel": "prensa que reproduce dato oficial"
+    },
+    {
+      "nombre": "CIEN — Boletín del IDD diciembre 2025 (base 2020), anexo mensual 2020–2025",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/01/Boletin-del-IDD-de-diciembre-base-2020.pdf",
+      "nivel": "primaria (datos PNC/PLADEIC)"
+    },
+    {
+      "nombre": "CIEN — Boletín estadístico de delitos diciembre 2020, anexo mensual 2016–2020",
+      "url": "https://cien.org.gt/wp-content/uploads/2021/01/Boletin-estadistico-delitos-2020-diciembre.pdf",
+      "nivel": "primaria (datos PNC)"
+    },
+    {
+      "nombre": "CIEN — Boletín Situación del Femicidio en Guatemala, febrero 2026",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/02/Boletin-Situacion-del-Femicidio-en-Guatemala-febrero-2026-vf.pdf",
+      "nivel": "primaria (datos MP)"
+    },
+    {
+      "nombre": "CIEN — Presentación IDD y Situación del Femicidio, febrero 2026",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/02/Presentacion-IDD-y-Situacion-del-Femicidio-en-Guatemala-vf.pdf",
+      "nivel": "primaria (datos MP)"
+    },
+    {
+      "nombre": "Agencia Ocote — Femicidios en Guatemala 2025 (cita MP/Observatorio de las Mujeres y Diálogos)",
+      "url": "https://www.agenciaocote.com/blog/2026/04/20/denuncias-violencia-contra-la-mujer/",
+      "nivel": "prensa que reproduce dato oficial"
+    },
+    {
+      "nombre": "Prensa Libre — Denuncias por violencia contra la mujer aumentaron 15% en 2024",
+      "url": "https://www.prensalibre.com/guatemala/justicia/denuncias-por-violencia-contra-la-mujer-aumentaron-15-en-el-2024/",
+      "nivel": "prensa que reproduce dato oficial (MP)"
+    },
+    {
+      "nombre": "WordPress media API de CIEN (listado de boletines)",
+      "url": "https://cien.org.gt/wp-json/wp/v2/media?search=Boletin&per_page=30",
+      "nivel": "índice de descargas"
+    },
+    {
+      "nombre": "CIEN — Boletín «Respuesta Institucional al Delito de Homicidio» (IDD agosto 2025), datos SICOMP-MP",
+      "url": "https://cien.org.gt/wp-content/uploads/2025/08/Boletin-Respuesta-Institucional-al-Delito-de-Homicidio-vf.pdf",
+      "nivel": "primaria-procesada (datos SICOMP del MP)"
+    },
+    {
+      "nombre": "CIEN — Análisis de la Atención Institucional al Delito de Homicidio (oct. 2022)",
+      "url": "https://cien.org.gt/wp-content/uploads/2022/10/Analisis-de-la-Atencion-Institucional-al-Delito-de-Homicidio-vf.pdf",
+      "nivel": "primaria-procesada (datos SICOMP del MP)"
+    },
+    {
+      "nombre": "CIEN — Boletín «El Desafío de las Extorsiones en Guatemala» (ene. 2024)",
+      "url": "https://cien.org.gt/wp-content/uploads/2024/01/Boletin-El-Desafio-de-las-Extorsiones-en-Guatemala-enero-2024-vf.pdf",
+      "nivel": "primaria-procesada (datos MP y PNC)"
+    },
+    {
+      "nombre": "CIEN — Estudio de extorsiones 2020 (sentencias OJ/CIDEJ 2010–2020)",
+      "url": "https://cien.org.gt/wp-content/uploads/2021/02/Estudio-Extorsiones-2020.pdf",
+      "nivel": "primaria-procesada (datos CIDEJ-OJ y MP)"
+    },
+    {
+      "nombre": "Emisoras Unidas — informe anual de labores MP 2025-2026",
+      "url": "https://emisorasunidas.com/nacional/2026/05/15/fiscal-general-consuelo-porras-ministerio-publico-informe-anual-labores-2026/",
+      "nivel": "prensa (reproduce dato oficial MP)"
+    },
+    {
+      "nombre": "Infobae — balance cuatro meses MP (García Luna)",
+      "url": "https://www.infobae.com/guatemala/2026/09/27/ministerio-publico-de-guatemala-reporta-avances-contra-extorsion-narcoactividad-y-crimen-organizado-en-su-primer-cuatrimestre/",
+      "nivel": "prensa (reproduce dato oficial MP)"
+    },
+    {
+      "nombre": "CIEN — Boletín IDD diciembre 2025 (base 2020), datos PNC/PLADEIC",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/01/Boletin-del-IDD-de-diciembre-base-2020.pdf",
+      "nivel": "primaria (tabulación de registros PNC)"
+    },
+    {
+      "nombre": "CIEN — Boletín estadístico de delitos diciembre 2019, anexo 2012–2019",
+      "url": "https://cien.org.gt/wp-content/uploads/2020/01/Bolet%C3%ADn-estad%C3%ADstico-delitos-diciembre-2019.pdf",
+      "nivel": "primaria (tabulación de registros PNC)"
+    },
+    {
+      "nombre": "CIEN — Boletín IDD agosto 2026 (avance 2026)",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/09/Boletin-del-IDD-de-agosto-base-2020.pdf",
+      "nivel": "primaria (tabulación de registros PNC)"
+    },
+    {
+      "nombre": "Gallup — Global Safety Report 2025 (datos 2024)",
+      "url": "https://khovar.tj/wp-content/uploads/2025/09/Gallup_Global-Safety-Report-2025.pdf",
+      "nivel": "primaria (encuesta Gallup World Poll; PDF espejo)"
+    },
+    {
+      "nombre": "Gallup — Global Safety Report 2024 (datos 2023)",
+      "url": "https://insightcrime.org/wp-content/uploads/2024/10/Gallup_Global-Safety-Report-2024.pdf",
+      "nivel": "primaria (PDF espejo en InSight Crime)"
+    },
+    {
+      "nombre": "Gallup — Global Law and Order 2023 (datos 2022)",
+      "url": "https://insightcrime.org/wp-content/uploads/2023/08/2023_Global_Law_and_Order_Report.pdf",
+      "nivel": "primaria (PDF espejo en InSight Crime)"
+    },
+    {
+      "nombre": "Gallup — Global Law and Order 2018 (datos 2017)",
+      "url": "https://insightcrime.org/wp-content/uploads/2018/06/Gallup_Global_Law_And_Order_Report_2018.pdf",
+      "nivel": "primaria (PDF espejo en InSight Crime)"
+    },
+    {
+      "nombre": "CIEN — Boletín julio 2025 «¿Hacia dónde va el Sistema Penitenciario?» (datos DGSP)",
+      "url": "https://cien.org.gt/wp-content/uploads/2025/07/Boletin-julio-2025-Hacia-Donde-va-el-Sistema-Penitenciario-vf.pdf",
+      "nivel": "secundaria-especializada (datos DGSP)"
+    },
+    {
+      "nombre": "CIEN — Boletín Retos en Seguridad Ciudadana 2026 (datos DGSP)",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/01/Boletin-Retos-en-Seguridad-Ciudadana-2026-vf.pdf",
+      "nivel": "secundaria-especializada (datos DGSP)"
+    },
+    {
+      "nombre": "World Prison Brief — Guatemala",
+      "url": "https://www.prisonstudies.org/country/guatemala",
+      "nivel": "secundaria-internacional (datos administración penitenciaria)"
+    },
+    {
+      "nombre": "AGN — Quiénes son los reos fugados de Fraijanes II recapturados (31-mar-2026)",
+      "url": "https://agn.gt/quienes-son-los-reos-fugados-de-fraijanes-ii-que-ya-han-sido-recapturados/",
+      "nivel": "oficial (agencia estatal)"
+    },
+    {
+      "nombre": "La Hora — A casi seis meses de la fuga en Fraijanes II (15-mar-2026)",
+      "url": "https://lahora.gt/nacionales/ralvarado/2026/03/15/a-casi-seis-meses-de-la-fuga-masiva-en-fraijanes-ii-once-integrantes-del-barrio-18-continuan-profugos/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Agencia Ocote — Motines en cárceles (18-ene-2026)",
+      "url": "https://www.agenciaocote.com/blog/2026/01/18/no-negociamos-con-terroristas-gobernacion-rechaza-exigencias-de-pandilleros/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "CNN en Español — Motines, policías asesinados y estado de sitio (19-ene-2026)",
+      "url": "https://cnnespanol.cnn.com/2026/01/19/latinoamerica/guatemala-motines-policias-asesinados-que-esta-pasando-orix",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Infobae — PNC ante el Congreso: pandilleros presos (04-sep-2026)",
+      "url": "https://www.infobae.com/guatemala/2026/09/05/en-guatemala-mas-de-tres-mil-pandilleros-presos-siguen-dirigiendo-homicidios-extorsiones-y-reclutamiento-de-menores/",
+      "nivel": "prensa (declaración oficial)"
+    },
+    {
+      "nombre": "ICCPG — Indicador 47, población penitenciaria",
+      "url": "https://iccpg.org.gt/indicadores/indicador-47/",
+      "nivel": "secundaria-especializada"
+    },
+    {
+      "nombre": "Diálogos — Observatorio de la Violencia, Informe violencia homicida dic-2025",
+      "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/InformeHomicidios.pdf",
+      "nivel": "secundaria-especializada (datos PNC)"
+    },
+    {
+      "nombre": "Diálogos — Balance de la violencia homicida 2025",
+      "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/Balance-anual.pdf",
+      "nivel": "secundaria-especializada (datos PLADEIC)"
+    },
+    {
+      "nombre": "Diálogos — Situación violencia homicida T3-2025",
+      "url": "https://dialogos.org.gt/wp-content/uploads/2025/11/Informe-3er-trimestre-Observatorio-Violencia-1.pdf",
+      "nivel": "secundaria-especializada"
+    },
+    {
+      "nombre": "Diálogos — Informe violencia homicida feb-2025",
+      "url": "https://dialogos.org.gt/wp-content/uploads/2025/03/InformeHomicidios-Febrero-2025.pdf",
+      "nivel": "secundaria-especializada"
+    },
+    {
+      "nombre": "CIEN — IDD boletín agosto 2026",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/09/Boletin-del-IDD-de-agosto-base-2020.pdf",
+      "nivel": "secundaria-especializada (datos PNC/PLADEIC)"
+    },
+    {
+      "nombre": "CIEN — IDD boletín julio 2026",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/08/Boletin-del-IDD-de-julio-base-2020.pdf",
+      "nivel": "secundaria-especializada"
+    },
+    {
+      "nombre": "CIEN — IDD boletín enero 2026",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/02/Boletin-del-IDD-de-enero-base-2020.pdf",
+      "nivel": "secundaria-especializada"
+    },
+    {
+      "nombre": "Banco Mundial WDI VC.IHR.PSRC.P5 (UNODC)",
+      "url": "https://api.worldbank.org/v2/country/GTM;SLV;HND;CRI;MEX/indicator/VC.IHR.PSRC.P5?format=json&per_page=200&date=2014:2025",
+      "nivel": "primaria-internacional"
+    },
+    {
+      "nombre": "Prensa Libre (INACIF)",
+      "url": "https://www.prensalibre.com/ahora/guatemala/justicia/suben-un-3-8-las-muertes-con-armas-de-fuego-en-guatemala-segun-el-inacif/",
+      "nivel": "prensa que reproduce dato oficial"
+    }
+  ],
+  "no_afirma": [
+    "No afirma que la baja de homicidios, el alza de la extorsión o el hacinamiento carcelario se deban a un gobierno o política concreta, ni que la sobrepoblación de las cárceles explique por sí sola la extorsión.",
+    "No afirma que la caída de denuncias por extorsión en 2026 signifique menos extorsiones reales: las denuncias son un piso (la cifra oculta era de 65% en 2017).",
+    "No afirma que la proporción de sentencias por homicidio cayera en 2022–2024: esos años no son comparables porque muchos casos siguen abiertos (31.1% de los de 2024); además, «sentencia» incluye absoluciones.",
+    "No afirma que la tasa del Banco Mundial (2022) sea comparable con la tasa PNC/CIEN, ni que capturas (personas) y denuncias (casos) sean la misma unidad.",
+    "No afirma que la baja en violaciones denunciadas implique menos violencia sexual."
+  ],
+  "incertidumbre": [
+    "La tasa de homicidios ~27 por 100 mil en 2016 de la tesis provisional no se documentó: la serie CIEN de tasas empieza en 2020; la comparación de la década se hace con casos.",
+    "Extorsión 2016–2023 viene de CIEN y 2024–2025 de Mingob-Pladeic vía prensa; CIEN da 25,943 para 2025 frente a 25,306 de Mingob (corte distinto).",
+    "Homicidios 2025: 3,139 (cierre Pladeic, valor_final) frente a 3,138 en el informe de Diálogos y 3,136 en el IDD de CIEN.",
+    "Los totales anuales de robos y lesiones son suma de meses publicada por CIEN.",
+    "La cifra oculta de extorsión (35% denunciado) es de 2017; no hay encuesta de victimización posterior.",
+    "Capturas por extorsión 2025: 1,839 según Gobernación vía AGN (corte 1 de enero a 29 de diciembre); un video de la PNC informó 1,809 con corte al 24 de diciembre.",
+    "Sentencias por cada 100 casos de homicidio (imp-c07) es cálculo propio sobre tablas de CIEN/SICOMP; casos del MP por año del hecho, no víctimas PNC. 2022–2024 incompletos por casos activos.",
+    "Extorsión: 6% de casos concluidos con sentencia es un agregado de unos 12 años (aprox. 2012–2023) de fuente única (CIEN).",
+    "Gallup mide percepción (2024; índice de Ley y Orden con huecos 2018–2021): no es comparable con las denuncias.",
+    "Fuga de Fraijanes II: situación a marzo de 2026; los 46 rehenes de enero de 2026 vienen de Agencia Ocote con declaraciones oficiales."
+  ],
+  "descartadas": [
+    {
+      "id": "per-c08",
+      "por": "no_confirmada"
+    },
+    {
+      "id": "per-c09",
+      "por": "no_confirmada"
+    },
+    {
+      "id": "per-c10",
+      "por": "no_confirmada"
+    },
+    {
+      "id": "per-c11",
+      "por": "no_confirmada"
+    },
+    {
+      "id": "per-c12",
+      "por": "no_confirmada"
+    },
+    {
+      "id": "per-c02",
+      "por": "sin espacio; tasa puntual sin serie"
+    },
+    {
+      "id": "cri-c03",
+      "por": "redundante con cri-c04 (periodo más largo)"
+    },
+    {
+      "id": "cri-c05",
+      "por": "cubierto por tasas departamentales cri-c06"
+    },
+    {
+      "id": "pat-c03",
+      "por": "índice base 2020 de lectura poco intuitiva"
+    },
+    {
+      "id": "pen-c05",
+      "por": "no_confirmada"
+    },
+    {
+      "id": "pen-c06",
+      "por": "no_confirmada"
+    },
+    {
+      "id": "pen-c11",
+      "por": "no_confirmada"
+    },
+    {
+      "id": "imp-c11",
+      "por": "no_confirmada"
+    },
+    {
+      "id": "imp-c12",
+      "por": "no_confirmada"
+    },
+    {
+      "id": "pen-c07",
+      "por": "prisión preventiva 47.2% (nov-2023, WPB) choca con la estimación ~30% de CIEN para 2025; sin espacio para resolverlo"
+    },
+    {
+      "id": "imp-c01",
+      "por": "redundante con imp-c07 (por cada 100 casos registrados, más legible)"
+    },
+    {
+      "id": "pat-c06",
+      "por": "redundante con pat-c05 y pat-c04"
+    },
+    {
+      "id": "pen-c08",
+      "por": "serie WPB de 5 puntos; la ocupación cuenta mejor el hacinamiento"
+    },
+    {
+      "id": "pen-c12",
+      "por": "sin espacio"
+    }
+  ]
+}

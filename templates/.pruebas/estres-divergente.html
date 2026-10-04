@@ -1,0 +1,52 @@
+<!-- PRUEBA DE ESTRÉS · divergente: 10 items todos negativos con decimales y nombres largos -->
+<script>
+const DATA = {
+  kicker: "PRUEBA · DIEZ CAÍDAS · %",
+  titular: ["Diez departamentos", "y todos bajaron"],
+  nota: "Nota de prueba: todos los valores son negativos.",
+  fuente: "Prueba de estrés · datos ficticios",
+  handle: "@DerekUrizar",
+  formato: { prefijo: "", sufijo: "%", decimales: 1, miles: true, escala: 1 },
+  items: [
+    { nombre: "Huehuetenango", valor: -0.4 }, { nombre: "Quetzaltenango", valor: -1.2 }, { nombre: "Chimaltenango", valor: -2.8 },
+    { nombre: "Suchitepéquez", valor: -3.1 }, { nombre: "Sacatepéquez", valor: -4.4 }, { nombre: "Baja Verapaz", valor: -5.0 },
+    { nombre: "Alta Verapaz", valor: -7.7 }, { nombre: "Totonicapán", valor: -9.9 }, { nombre: "El Progreso", valor: -12.5 },
+    { nombre: "Retalhuleu", valor: -15.0 }
+  ],
+  orden: "desc", destacar: 9
+};
+function render(D) {
+  H.assert(Array.isArray(D.items) && D.items.length >= 2 && D.items.length <= 10, "divergente admite de 2 a 10 items");
+  D.items.forEach((it) => H.assert(it && typeof it.nombre === "string" && typeof it.valor === "number", "cada item necesita nombre y valor numérico"));
+  const items = D.orden === "dado" ? D.items.slice() : D.items.slice().sort((a, b) => b.valor - a.valor);
+  const n = items.length, hi = D.destacar == null ? -1 : ((D.destacar % n) + n) % n;
+  const fmt = Object.assign({ signo: true }, D.formato);
+  const f = (v) => H.num(v, fmt);
+  const ink = H.color.ink, a1 = H.color.a1;
+
+  const W = 920, alto = H.espacio(Math.max(240, Math.min(560, 20 + n * 72)), Math.max(220, 20 + n * 44));
+  const svg = H.lienzo(W, alto);
+  const filaH = (alto - 20) / n;
+  const px = n > 7 ? 21 : 23, hiPx = px + 2;
+  const fontV = "700 22px 'JetBrains Mono'";
+  const colIzq = Math.min(280, Math.max(...items.map((it, i) => H.medir(it.nombre, (i === hi ? "800 " + hiPx : "600 " + px) + "px Archivo"))) + 28);
+  const labW = Math.max(...items.map((it) => H.medir(f(it.valor), fontV))) + 14;
+  const hayNeg = items.some((it) => it.valor < 0), hayPos = items.some((it) => it.valor > 0);
+  const xL = colIzq + (hayNeg ? labW : 0), xR = W - (hayPos ? labW : 0);
+  const dom = [Math.min(0, ...items.map((it) => it.valor)), Math.max(0, ...items.map((it) => it.valor))];
+  if (dom[0] === dom[1]) dom[1] = 1;
+  const sx = H.escala(dom, [xL, xR]), x0 = sx(0);
+  const barH = Math.max(18, Math.min(40, Math.round(filaH * 0.56)));
+
+  items.forEach((it, i) => {
+    const esHi = i === hi, cy = 10 + i * filaH + filaH / 2;
+    H.svgEl("line", { x1: colIzq, x2: W, y1: cy, y2: cy, stroke: H.color.inkA(.1), "stroke-width": 1 }, svg);
+    H.texto(svg, 0, cy + 8, it.nombre, { style: "font:" + (esHi ? "800 " + hiPx : "600 " + px) + "px Archivo,sans-serif;fill:" + ink });
+    const xv = sx(it.valor), neg = it.valor < 0;
+    const relleno = esHi ? a1 : neg ? H.color.inkA(.55) : ink;
+    H.svgEl("rect", { x: Math.min(x0, xv), y: cy - barH / 2, width: Math.max(3, Math.abs(xv - x0)), height: barH, fill: relleno }, svg);
+    H.texto(svg, neg ? xv - 10 : Math.max(xv, x0 + 3) + 10, cy + 8, f(it.valor), { "text-anchor": neg ? "end" : "start", style: "font:" + fontV + ";fill:" + ink + (esHi ? ";font-size:24px" : "") });
+  });
+  H.svgEl("line", { x1: x0, x2: x0, y1: 0, y2: alto, stroke: ink, "stroke-width": 3 }, svg);
+}
+</script>

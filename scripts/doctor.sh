@@ -62,9 +62,12 @@ NAG="$(ls .claude/agents/hilo-*.md 2>/dev/null | wc -l | tr -d ' ')"
 if [[ "$NAG" -eq 6 ]]; then ok ".claude/agents/: 6 archivos hilo-*.md"; else error ".claude/agents/: hay $NAG hilo-*.md (deben ser 6: editor, investigador, verificador, guionista, visualista, productor)"; fi
 if [[ -s .claude/workflows/hilo.js ]]; then ok ".claude/workflows/hilo.js presente"; else error "falta .claude/workflows/hilo.js"; fi
 if [[ -f .claude/commands/hilo.md ]]; then ok ".claude/commands/hilo.md presente"; else aviso "falta .claude/commands/hilo.md (/hilo no estará disponible)"; fi
+for f in .claude/agents/ideas-explorador.md .claude/workflows/ideas.js .claude/commands/ideas.md; do
+  if [[ -s "$f" ]]; then ok "$f presente"; else aviso "falta $f (/ideas no estará disponible)"; fi
+done
 
 # memoria y tokens
-for f in memoria/fuentes.json memoria/hilos.json design/tokens.json; do
+for f in memoria/fuentes.json memoria/hilos.json design/tokens.json ideas/banco.json; do
   if python3 -c "import json,sys; json.load(open('$f', encoding='utf-8'))" 2>/dev/null; then ok "$f es JSON válido"; else error "$f falta o no es JSON válido"; fi
 done
 

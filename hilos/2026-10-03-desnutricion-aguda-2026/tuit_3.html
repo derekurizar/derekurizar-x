@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Hilos · tarjeta 1080×1080</title>
+<!--
+  BASE DE TARJETA (@DerekUrizar · sistema «Hilos»)
+  =================================================
+  No se edita a mano en los visuales: scripts/nuevo_visual.py ensambla
+  base.html + templates/graficos/<plantilla>.html → visual autocontenido.
+  Anatomía y tipografía vienen del brief (referencias/diseno/brief/, opción 2b);
+  las paletas de la opción 6a (design/tokens.json).
+
+  Las fuentes se referencian como url(fonts/x.woff2): scripts/render.js las sirve
+  desde design/fonts/ con cabeceras CORS, así funciona desde cualquier carpeta y
+  sin peticiones externas.
+-->
+<style>
+@font-face { font-family: 'Instrument Serif'; font-style: normal; font-weight: 400; src: url(fonts/instrument-serif-400.woff2) format('woff2'); }
+@font-face { font-family: 'Instrument Serif'; font-style: italic; font-weight: 400; src: url(fonts/instrument-serif-400i.woff2) format('woff2'); }
+@font-face { font-family: 'Archivo'; font-style: normal; font-weight: 100 900; src: url(fonts/archivo-var.woff2) format('woff2'); }
+@font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 100 800; src: url(fonts/jetbrains-mono-var.woff2) format('woff2'); }
+
+/* ---- Paletas (design/tokens.json · brief 6a). Una por hilo. ---- */
+body[data-paleta="cielo"]     { --bg:#4B92DB; --ink:#0C1520; --a1:#F6F2E8; --a2:#2B4A66; --a3:#8FB8E6; --ink-rgb:12,21,32;    --x-fg:#F6F2E8; }
+body[data-paleta="jade"]      { --bg:#1E6B5C; --ink:#F6F2E8; --a1:#9FD4BF; --a2:#0E3B32; --a3:#5FA38C; --ink-rgb:246,242,232; --x-fg:#1E6B5C; }
+body[data-paleta="maiz"]      { --bg:#E0A33C; --ink:#1A1208; --a1:#F3D08A; --a2:#B97A1C; --a3:#6E440B; --ink-rgb:26,18,8;     --x-fg:#E0A33C; }
+body[data-paleta="terracota"] { --bg:#B23A26; --ink:#F6F2E8; --a1:#3A0F08; --a2:#E8836F; --a3:#F2C2B6; --ink-rgb:246,242,232; --x-fg:#B23A26; }
+body[data-paleta="cacao"]     { --bg:#4A2F22; --ink:#F6F2E8; --a1:#D9A66B; --a2:#A8744A; --a3:#7A5038; --ink-rgb:246,242,232; --x-fg:#4A2F22; }
+body[data-paleta="jacaranda"] { --bg:#6B4E96; --ink:#F6F2E8; --a1:#1F1530; --a2:#B9A3DB; --a3:#8E73B8; --ink-rgb:246,242,232; --x-fg:#6B4E96; }
+body[data-paleta="atitlan"]   { --bg:#3FA3A0; --ink:#0C1520; --a1:#F6F2E8; --a2:#7CC3C0; --a3:#1D5E5C; --ink-rgb:12,21,32;    --x-fg:#3FA3A0; }
+body[data-paleta="obsidiana"] { --bg:#16181D; --ink:#F6F2E8; --a1:#F08A4B; --a2:#8C8F96; --a3:#3A3D44; --ink-rgb:246,242,232; --x-fg:#16181D; }
+
+/* ---- Anatomía de la tarjeta (brief 2b) ---- */
+html, body { margin: 0; padding: 0; }
+body {
+  width: 1080px; height: 1080px; overflow: hidden;
+  background: var(--bg); color: var(--ink);
+  font-family: Archivo, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased; text-rendering: geometricPrecision;
+}
+.tarjeta { width: 1080px; height: 1080px; padding: 76px 80px; box-sizing: border-box; display: flex; flex-direction: column; }
+.kicker { font: 500 20px/1 'JetBrains Mono', monospace; letter-spacing: .16em; text-transform: uppercase; white-space: nowrap; }
+body[data-paleta="obsidiana"] .kicker { color: var(--a1); }
+h1.titular { font: 400 88px/.98 'Instrument Serif', Georgia, serif; margin: 18px 0 0; letter-spacing: -.015em; }
+.leyenda { display: flex; flex-wrap: wrap; gap: 14px 36px; margin-top: 28px; }
+.leyenda .item { display: flex; align-items: center; gap: 12px; font: 600 24px/1 Archivo, sans-serif; white-space: nowrap; }
+.leyenda .sw { width: 36px; height: 6px; background: var(--ink); flex: none; }
+.leyenda .sw.cuadro { width: 22px; height: 22px; }
+.leyenda .sw.punto { width: 22px; height: 22px; border-radius: 50%; }
+#grafico { margin-top: auto; position: relative; }
+#grafico svg { display: block; overflow: visible; }
+.nota { font: 500 18px/1.4 'JetBrains Mono', monospace; margin: 18px 0 0; max-width: 920px; }
+.pie { display: flex; align-items: center; justify-content: space-between; margin-top: 34px; padding-top: 24px; border-top: 1.5px solid rgba(var(--ink-rgb), .3); }
+.pie .fuente { font: 400 18px/1.3 'JetBrains Mono', monospace; }
+.pie .autor { display: flex; align-items: center; gap: 12px; flex: none; }
+.pie .x { width: 34px; height: 34px; border-radius: 8px; background: var(--ink); color: var(--x-fg); display: flex; align-items: center; justify-content: center; font: 800 19px/1 Archivo, sans-serif; }
+.pie .handle { font: 600 21px/1 Archivo, sans-serif; }
+[hidden] { display: none !important; }
+
+/* Textos de gráfico (compartidos por las plantillas) */
+.t-eje  { font: 500 17px/1 'JetBrains Mono', monospace; fill: var(--ink); }
+.t-val  { font: 700 22px/1 'JetBrains Mono', monospace; fill: var(--ink); }
+.t-cat  { font: 600 23px/1 Archivo, sans-serif; fill: var(--ink); }
+.t-rot  { font: 700 20px/1 Archivo, sans-serif; fill: var(--ink); }
+/* T:CSS */
+</style>
+</head>
+<body data-paleta="terracota">
+<div class="tarjeta">
+  <div class="kicker" id="kicker"></div>
+  <h1 class="titular" id="titular"></h1>
+  <div class="leyenda" id="leyenda" hidden></div>
+  <div id="grafico"></div>
+  <p class="nota" id="nota" hidden></p>
+  <div class="pie">
+    <span class="fuente" id="fuente"></span>
+    <div class="autor"><div class="x">X</div><span class="handle" id="handle"></span></div>
+  </div>
+</div>
+<script>
+// =====================================================================
+// H · helpers compartidos. Las plantillas solo llaman a H.*; nada externo.
+// =====================================================================
+const H = (() => {
+  const MENOS = "−";
+  const assert = (cond, msg) => { if (!cond) throw new Error("DATA: " + msg); };
+
+  // Formato es-GT sin toLocaleString (la locale del headless no es fiable):
+  // miles con coma, decimal con punto, menos tipográfico, prefijo/sufijo pegados.
+  const num = (v, f = {}) => {
+    assert(typeof v === "number" && isFinite(v), "valor no numérico: " + JSON.stringify(v));
+    const esc = f.escala || 1, d = f.decimales == null ? 0 : f.decimales;
+    const n = v / esc, neg = n < 0;
+    const [ent, dec] = Math.abs(n).toFixed(d).split(".");
+    const con = f.miles === false ? ent : ent.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    // f.signo: «+» delante de los positivos (cambios con signo); el cero no lleva signo.
+    const mas = f.signo && !neg && Number(ent + "." + (dec || "0")) > 0 ? "+" : "";
+    return (neg ? MENOS : mas) + (f.prefijo || "") + con + (dec ? "." + dec : "") + (f.sufijo || "");
+  };
+  const pct = (v, d = 0) => (v < 0 ? MENOS : "") + Math.abs(v).toFixed(d) + "%";
+  // Decimales que de verdad necesita una lista de valores (para ticks de eje):
+  // 0 si todos son enteros, si no los del formato.
+  const decimalesDe = (vals, max = 2) => {
+    for (let d = 0; d <= max; d++) if (vals.every((v) => Math.abs(v * Math.pow(10, d) - Math.round(v * Math.pow(10, d))) < 1e-9)) return d;
+    return max;
+  };
+
+  const css = (k) => getComputedStyle(document.body).getPropertyValue("--" + k).trim();
+  const color = { get bg() { return css("bg"); }, get ink() { return css("ink"); },
+                  get a1() { return css("a1"); }, get a2() { return css("a2"); }, get a3() { return css("a3"); },
+                  inkA(a) { return "rgba(" + css("ink-rgb") + "," + a + ")"; } };
+
+  const NS = "http://www.w3.org/2000/svg";
+  const svgEl = (tag, attrs = {}, padre = null) => {
+    const e = document.createElementNS(NS, tag);
+    for (const [k, v] of Object.entries(attrs)) if (v !== null && v !== undefined) e.setAttribute(k, v);
+    if (padre) padre.appendChild(e);
+    return e;
+  };
+  // EL único <svg> de la tarjeta, dentro de #grafico, viewBox 1:1 con px CSS.
+  const lienzo = (w, h) => {
+    const g = document.getElementById("grafico");
+    g.innerHTML = ""; g.style.width = w + "px"; g.style.height = h + "px";
+    return svgEl("svg", { viewBox: "0 0 " + w + " " + h, width: w, height: h }, g);
+  };
+  // <text> SVG. `fill` va como style: una clase .t-* con fill ganaría al atributo.
+  const texto = (svg, x, y, str, attrs = {}) => {
+    const a = Object.assign({ x, y }, attrs);
+    if (a.fill) { a.style = (a.style ? a.style + ";" : "") + "fill:" + a.fill; delete a.fill; }
+    const t = svgEl("text", a, svg);
+    t.textContent = str; return t;
+  };
+  // Leyenda construida desde render() (cuando los colores salen de las series).
+  const leyenda = (items) => {
+    const ley = document.getElementById("leyenda"); ley.innerHTML = "";
+    for (const it of items) {
+      const item = el("div", "item", ley);
+      const sw = el("span", "sw" + (it.forma ? " " + it.forma : ""), item);
+      sw.style.background = it.color || color.ink;
+      el("span", null, item, esc(it.nombre));
+    }
+    ley.hidden = !items.length;
+  };
+  const el = (tag, cls, padre, html) => {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls; if (html != null) e.innerHTML = html;
+    if (padre) padre.appendChild(e); return e;
+  };
+
+  const escala = (dom, rango) => {
+    const k = dom[1] - dom[0] === 0 ? 0 : (rango[1] - rango[0]) / (dom[1] - dom[0]);
+    return (v) => rango[0] + (v - dom[0]) * k;
+  };
+  // Cortes redondos: 1, 2, 2.5, 5 × 10^n.
+  const ticks = (min, max, n = 4) => {
+    if (max === min) return [min];
+    const bruto = (max - min) / Math.max(1, n);
+    const mag = Math.pow(10, Math.floor(Math.log10(bruto)));
+    const paso = [1, 2, 2.5, 5, 10].map((m) => m * mag).find((s) => s >= bruto) || 10 * mag;
+    const out = [];
+    for (let v = Math.ceil(min / paso) * paso; v <= max + paso * 1e-9; v += paso) out.push(Math.round(v / paso) * paso);
+    return out;
+  };
+  // Dominio "bonito" que contiene [min,max] (y el 0 si se pide).
+  const dominio = (vals, desdeCero = true) => {
+    let min = Math.min(...vals), max = Math.max(...vals);
+    if (desdeCero) { min = Math.min(0, min); max = Math.max(0, max); }
+    if (max === min) max = min + 1;
+    const t = ticks(min, max, 4);
+    const paso = t.length > 1 ? t[1] - t[0] : (max - min);
+    return [Math.min(min, t[0]), Math.max(max, t[t.length - 1] + (t[t.length - 1] < max ? paso : 0))];
+  };
+  // Empuje 1-D de rótulos para que no se solapen (muta y devuelve el array).
+  const antiSolape = (items, o = {}) => {
+    const gap = o.minGap || 26, lim0 = o.min ?? -Infinity, lim1 = o.max ?? Infinity;
+    const orden = items.slice().sort((a, b) => a.y - b.y);
+    for (let k = 1; k < orden.length; k++) if (orden[k].y - orden[k - 1].y < gap) orden[k].y = orden[k - 1].y + gap;
+    const ult = orden[orden.length - 1];
+    if (ult && ult.y > lim1) { ult.y = lim1; for (let k = orden.length - 2; k >= 0; k--) if (orden[k + 1].y - orden[k].y < gap) orden[k].y = orden[k + 1].y - gap; }
+    if (orden.length && orden[0].y < lim0) orden[0].y = lim0;
+    return items;
+  };
+  // Ancho de un texto con una fuente dada (para decidir rótulos).
+  const medir = (str, font) => {
+    const c = medir._c || (medir._c = document.createElement("canvas").getContext("2d"));
+    c.font = font; return c.measureText(str).width;
+  };
+  // Alto disponible para #grafico entre la cabecera y el pie (margin-top:auto
+  // absorbe el hueco). Devuelve min(max, libre) y falla si no hay sitio.
+  const espacio = (max = 520, min = 240) => {
+    const g = document.getElementById("grafico");
+    g.innerHTML = ""; g.style.height = "0px";
+    let prev = g.previousElementSibling;
+    while (prev && prev.hidden) prev = prev.previousElementSibling;
+    const top = g.getBoundingClientRect().top, prevB = prev ? prev.getBoundingClientRect().bottom : 76;
+    const libre = Math.floor(top - prevB - 28);
+    assert(libre >= min, "no queda espacio para el gráfico (" + libre + "px): acorta el titular, la nota o la leyenda");
+    return Math.min(max, libre);
+  };
+
+  // ---- Rampa secuencial (mapa, calor) ----
+  // H.rampa(n) → n colores hex de la clase MÁS BAJA a la MÁS ALTA. La rampa va del
+  // fondo hacia la tinta (no hacia a1: en maíz a1 apenas contrasta con el fondo, y
+  // a1 se reserva para el destacado, que así siempre se ve encima de la rampa):
+  //   · se interpola en RGB lineal (sRGB linealizado con gamma 2.4 y vuelta) para
+  //     que la luminancia avance sin grises sucios ni bandas;
+  //   · los escalones se reparten uniformes en L* (CIELAB), no en luminancia: con
+  //     tinta oscura (cielo, maíz, atitlán) los pasos en luminancia lineal se
+  //     apelotonan en lo oscuro y solo el último salta;
+  //   · el escalón más bajo se aleja del fondo hasta 1.5:1 (WCAG) para que lea
+  //     como zona pintada y no como fondo; el más alto es la tinta.
+  // Resultado: monótona en luminancia en las 8 paletas (hacia oscuro con tinta
+  // oscura, hacia claro con tinta clara) y cada color contrasta ≥ 1.5:1 con --bg.
+  const RAMPA_MIN_CONTRASTE = 1.5;
+  const rgbDe = (hex) => { const h = String(hex).trim().replace("#", ""); const s = h.length === 3 ? h.split("").map((c) => c + c).join("") : h; return [0, 2, 4].map((i) => parseInt(s.slice(i, i + 2), 16)); };
+  const linealizar = (c) => c.map((v) => { v /= 255; return v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
+  const hexDe = (c) => "#" + c.map((v) => { v = Math.max(0, Math.min(1, v)); v = v <= 0.0031308 ? v * 12.92 : 1.055 * Math.pow(v, 1 / 2.4) - 0.055; return Math.round(v * 255).toString(16).padStart(2, "0"); }).join("");
+  const luminancia = (lin) => 0.2126 * lin[0] + 0.7152 * lin[1] + 0.0722 * lin[2];
+  const Lstar = (y) => y <= 216 / 24389 ? y * 24389 / 27 : 116 * Math.cbrt(y) - 16;
+  const Yde = (L) => L <= 8 ? L * 27 / 24389 : Math.pow((L + 16) / 116, 3);
+  const rampa = (n = 5) => {
+    n = Math.max(2, Math.min(9, Math.round(n)));
+    const lb = linealizar(rgbDe(color.bg)), li = linealizar(rgbDe(color.ink));
+    const yb = luminancia(lb), yi = luminancia(li), haciaClaro = yi > yb;
+    let y0 = haciaClaro ? RAMPA_MIN_CONTRASTE * (yb + 0.05) - 0.05 : (yb + 0.05) / RAMPA_MIN_CONTRASTE - 0.05;
+    y0 = haciaClaro ? Math.min(y0, yi) : Math.max(y0, yi);
+    const L0 = Lstar(y0), L1 = Lstar(yi), out = [];
+    for (let k = 0; k < n; k++) {
+      const y = Yde(L0 + (L1 - L0) * k / (n - 1));
+      const t = yi === yb ? 1 : Math.max(0, Math.min(1, (y - yb) / (yi - yb)));
+      out.push(hexDe(lb.map((v, i) => v + (li[i] - v) * t)));
+    }
+    return out;
+  };
+  // Color de clase de un valor: [min,max] partido en n intervalos iguales (el máximo cae en la última clase).
+  const rampaColor = (v, dom, n = 5) => {
+    assert(typeof v === "number" && isFinite(v), "rampaColor: valor no numérico: " + JSON.stringify(v));
+    const cs = rampa(n), [a, b] = dom;
+    if (!(b > a)) return cs[cs.length - 1];
+    return cs[Math.min(cs.length - 1, Math.max(0, Math.floor((v - a) / (b - a) * cs.length)))];
+  };
+
+  // ---- Mezclas de color (apilada, treemap, pirámide) ----
+  // H.mezcla(a, b, t) → hex en RGB lineal: t=0 es `a`, t=1 es `b`. Sirve para dar
+  // tonos sólidos de la tinta sobre el fondo (mismo color en el SVG y en la leyenda).
+  const mezcla = (a, b, t) => { const la = linealizar(rgbDe(a)), lb = linealizar(rgbDe(b)); return hexDe(la.map((v, i) => v + (lb[i] - v) * t)); };
+  const contraste = (a, b) => { const ya = luminancia(linealizar(rgbDe(a))), yb = luminancia(linealizar(rgbDe(b))); return (Math.max(ya, yb) + 0.05) / (Math.min(ya, yb) + 0.05); };
+  // Color de texto legible sobre un relleno: el que más contraste entre la tinta, el fondo
+  // y los dos neutros del sistema (papel y noche, presentes en todas las paletas).
+  const textoSobre = (relleno) => [color.ink, color.bg, "#F6F2E8", "#0C1520"].reduce((m, c) => (contraste(relleno, c) > contraste(relleno, m) ? c : m));
+
+  // ---- Periodos (linea, barras-v): bandas alternas con nombre arriba ----
+  // P = [{desde, hasta, nombre}] (índices sobre las etiquetas, en orden y sin solaparse, ≤ 4);
+  // bordes(i) → [xIzq, xDer] del hueco que ocupa la marca i. Dibuja en `svg` entre yTop e yBot
+  // y escribe el nombre centrado en yNombre. Llamar ANTES de dibujar las marcas.
+  const validarPeriodos = (P, n) => {
+    if (P == null) return [];
+    assert(Array.isArray(P) && P.length <= 4, "periodos: como máximo 4");
+    let prev = -1;
+    for (const p of P) {
+      assert(p && typeof p.nombre === "string" && p.nombre.trim(), "cada periodo necesita nombre");
+      assert(Number.isInteger(p.desde) && Number.isInteger(p.hasta) && p.desde >= 0 && p.hasta < n && p.desde <= p.hasta, "periodo «" + p.nombre + "»: desde/hasta deben ser índices 0.." + (n - 1) + " con desde ≤ hasta");
+      assert(p.desde > prev, "periodos en orden y sin solaparse («" + p.nombre + "»)");
+      prev = p.hasta;
+    }
+    return P;
+  };
+  const periodos = (svg, P, bordes, yTop, yBot, yNombre) => {
+    P.forEach((p, k) => {
+      const xa = bordes(p.desde)[0], xb = bordes(p.hasta)[1];
+      if (k % 2 === 0) svgEl("rect", { x: xa, y: yTop, width: xb - xa, height: yBot - yTop, fill: color.inkA(.09) }, svg);
+      else svgEl("line", { x1: xa, x2: xa, y1: yTop, y2: yBot, stroke: color.inkA(.25), "stroke-width": 1.5, "stroke-dasharray": "4 6" }, svg);
+      const w = medir(p.nombre, "500 17px 'JetBrains Mono'");
+      assert(w <= xb - xa - 8, "periodo «" + p.nombre + "» no cabe en su banda (" + Math.round(w) + "px > " + Math.round(xb - xa - 8) + "): acórtalo");
+      texto(svg, (xa + xb) / 2, yNombre, p.nombre, { class: "t-eje", "text-anchor": "middle" });
+    });
+  };
+
+  // ---- Cabecera común: kicker, titular, leyenda, nota, pie ----
+  const cabecera = (D) => {
+    assert(typeof D.kicker === "string" && D.kicker.trim(), "kicker vacío");
+    assert(Array.isArray(D.titular) && D.titular.length >= 1 && D.titular.length <= 3, "titular debe ser un array de 1 a 3 líneas");
+    assert(typeof D.fuente === "string" && D.fuente.trim(), "fuente vacía (el pie es obligatorio)");
+    assert(!/^fuente:/i.test(D.fuente.trim()), "fuente: no antepongas 'Fuente:', lo pone la plantilla");
+    assert(!/https?:\/\//i.test(JSON.stringify(D)), "no van URLs dentro de la tarjeta");
+    document.getElementById("kicker").textContent = D.kicker;
+    document.getElementById("titular").innerHTML = D.titular.map(esc).join("<br>");
+    const nota = document.getElementById("nota");
+    if (D.nota && D.nota.trim()) { nota.textContent = D.nota; nota.hidden = false; } else nota.hidden = true;
+    document.getElementById("fuente").textContent = "Fuente: " + D.fuente;
+    document.getElementById("handle").textContent = D.handle || "@DerekUrizar";
+    const ley = document.getElementById("leyenda"); ley.innerHTML = "";
+    if (Array.isArray(D.leyenda) && D.leyenda.length) {
+      for (const it of D.leyenda) {
+        const item = el("div", "item", ley);
+        const sw = el("span", "sw" + (it.forma ? " " + it.forma : ""), item);
+        sw.style.background = it.color || color.ink;
+        el("span", null, item, esc(it.nombre));
+      }
+      ley.hidden = false;
+    } else ley.hidden = true;
+  };
+  // Nota automática de la plantilla (redondeo, agrupación): se suma a la del guion.
+  // Llamar ANTES de H.espacio, que mide el hueco con la nota ya puesta.
+  const anotar = (t) => {
+    const nota = document.getElementById("nota");
+    const prev = nota.hidden ? "" : nota.textContent.trim();
+    nota.textContent = prev ? prev + " " + t : t; nota.hidden = false;
+  };
+  const esc = (s) => String(s).replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+
+  // ---- Verificación final: lo que ningún check de píxeles ve a tiempo ----
+  const verificar = (D) => {
+    const util = 920;
+    for (const linea of D.titular) {
+      const w = medir(linea, "400 88px 'Instrument Serif'") * 0.985; // letter-spacing -.015em
+      assert(w <= util, "titular no cabe en una línea (" + Math.round(w) + "px > " + util + "): «" + linea + "»");
+    }
+    assert(medir(D.kicker.toUpperCase(), "500 20px 'JetBrains Mono'") * 1.16 <= util, "kicker demasiado largo");
+    const g = document.getElementById("grafico");
+    const r = g.getBoundingClientRect();
+    assert(r.height >= 200, "#grafico mide " + Math.round(r.height) + "px de alto (< 200): el gráfico no se maquetó");
+    assert(g.children.length > 0, "#grafico está vacío");
+    const tarjeta = document.querySelector(".tarjeta").getBoundingClientRect();
+    const pie = document.querySelector(".pie").getBoundingClientRect();
+    assert(pie.bottom <= 1080 + 0.5, "el contenido desborda la tarjeta (pie en y=" + Math.round(pie.bottom) + ")");
+    void tarjeta;
+  };
+
+  const fuentesListas = () => Promise.all([
+    document.fonts.load("400 88px 'Instrument Serif'"),
+    document.fonts.load("500 20px 'JetBrains Mono'"),
+    document.fonts.load("700 22px 'JetBrains Mono'"),
+    document.fonts.load("600 24px Archivo"),
+    document.fonts.load("800 19px Archivo"),
+  ]);
+
+  return { assert, num, pct, decimalesDe, color, svgEl, lienzo, texto, leyenda, el, escala, ticks, dominio, antiSolape, medir, espacio, rampa, rampaColor, mezcla, contraste, textoSobre, validarPeriodos, periodos, anotar, cabecera, verificar, fuentesListas, esc, MENOS };
+})();
+
+// =====================================================================
+// Arranque: fuentes → cabecera → render(DATA) → verificar → data-listo.
+// render.js espera body[data-listo]; cualquier excepción = PNG rechazado.
+// =====================================================================
+window.addEventListener("load", async () => {
+  try {
+    if (typeof DATA === "undefined" || typeof render !== "function") throw new Error("falta DATA o render(): esta base se ensambla con scripts/nuevo_visual.py");
+    await H.fuentesListas();
+    H.cabecera(DATA);
+    render(DATA);
+    await document.fonts.ready;
+    H.verificar(DATA);
+    document.body.dataset.listo = "1";
+  } catch (e) {
+    document.body.dataset.error = e.message;
+    throw e;
+  }
+});
+</script>
+<!-- plantilla: mapa · paleta: terracota · ensamblado por scripts/nuevo_visual.py -->
+<!-- mapa · coroplético de los 22 departamentos (brief 6f). Contrato: referencias/diseno/graficos.md · geometría inyectada por scripts/build_mapa.py -->
+<script>
+// CIFRAS DE EJEMPLO (pobreza total por departamento, ENCOVI 2023) · verificar antes de publicar
+const DATA = {
+  "kicker": "CASOS POR 10,000 MENORES DE 5 AÑOS · 2026",
+  "titular": [
+    "Suchitepéquez, más del",
+    "doble de la tasa nacional"
+  ],
+  "nota": "Tasa acumulada a la semana 36 por departamento de residencia. Tasa nacional: 85.84.",
+  "fuente": "MSPAS/DEGR · situación epidemiológica SE36 2026",
+  "leyenda": [],
+  "handle": "@DerekUrizar",
+  "formato": {
+    "prefijo": "",
+    "sufijo": "",
+    "decimales": 2,
+    "miles": true,
+    "escala": 1
+  },
+  "valores": {
+    "Guatemala": 80.38,
+    "El Progreso": 127.52,
+    "Sacatepéquez": 125.45,
+    "Chimaltenango": 76.43,
+    "Escuintla": 152.42,
+    "Santa Rosa": 101.49,
+    "Sololá": 33.95,
+    "Totonicapán": 77.85,
+    "Quetzaltenango": 70.0,
+    "Suchitepéquez": 219.69,
+    "Retalhuleu": 128.87,
+    "San Marcos": 86.88,
+    "Huehuetenango": 42.8,
+    "Quiché": 56.06,
+    "Baja Verapaz": 48.3,
+    "Alta Verapaz": 92.62,
+    "Petén": 68.48,
+    "Izabal": 93.73,
+    "Zacapa": 140.31,
+    "Chiquimula": 123.73,
+    "Jalapa": 56.62,
+    "Jutiapa": 79.24
+  },
+  "cortes": null,
+  "clases": 5,
+  "metodo": "cuantiles",
+  "redondear": true,
+  "destacar": "GT10",
+  "rotular": "extremos"
+};
+
+// Nombres oficiales (INE). scripts/build_mapa.py --check los coteja con los `name` del svg.
+const NOMBRES = {
+  GT01: "Guatemala", GT02: "El Progreso", GT03: "Sacatepéquez", GT04: "Chimaltenango",
+  GT05: "Escuintla", GT06: "Santa Rosa", GT07: "Sololá", GT08: "Totonicapán",
+  GT09: "Quetzaltenango", GT10: "Suchitepéquez", GT11: "Retalhuleu", GT12: "San Marcos",
+  GT13: "Huehuetenango", GT14: "Quiché", GT15: "Baja Verapaz", GT16: "Alta Verapaz",
+  GT17: "Petén", GT18: "Izabal", GT19: "Zacapa", GT20: "Chiquimula",
+  GT21: "Jalapa", GT22: "Jutiapa"
+};
+
+function render(D) {
+  const ids = Object.keys(NOMBRES);
+  const norm = (s) => String(s).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z]/g, "");
+  const porNombre = {};
+  ids.forEach((id) => { porNombre[norm(NOMBRES[id])] = id; });
+  const idDe = (k) => {
+    const s = String(k).trim().toUpperCase();
+    if (NOMBRES[s]) return s;
+    const id = porNombre[norm(k)];
+    H.assert(id, "«" + k + "» no es un departamento: usa GT01–GT22 o el nombre oficial");
+    return id;
+  };
+  H.assert(D.valores && typeof D.valores === "object" && !Array.isArray(D.valores), "valores debe ser un objeto { GT01: 12.3, … }");
+  const val = {};
+  for (const [k, v] of Object.entries(D.valores)) {
+    if (v === null || v === undefined) continue;
+    const id = idDe(k);
+    H.assert(typeof v === "number" && isFinite(v), "valores: «" + k + "» no es numérico");
+    H.assert(!(id in val), "valores: «" + k + "» está repetido");
+    val[id] = v;
+  }
+  const con = ids.filter((id) => id in val), sin = ids.filter((id) => !(id in val));
+  H.assert(con.length >= 12, "mapa necesita al menos 12 departamentos con valor (hay " + con.length + ")");
+  const hi = D.destacar ? idDe(D.destacar) : null;
+  if (hi) H.assert(hi in val, "destacar: «" + D.destacar + "» no tiene valor");
+  const rotular = D.rotular === "ninguno" ? "ninguno" : "extremos";
+  const f = (v) => H.num(v, D.formato);
+  const ink = H.color.ink, bg = H.color.bg, a1 = H.color.a1;
+
+  // ---- Clases: cortes dados, o cuantiles (`metodo: "iguales"` = intervalos iguales) ----
+  const vals = con.map((id) => val[id]).sort((a, b) => a - b);
+  const min = vals[0], max = vals[vals.length - 1];
+  let cortes;
+  if (Array.isArray(D.cortes) && D.cortes.length) {
+    cortes = D.cortes.slice().sort((a, b) => a - b);
+    H.assert(cortes.length >= 2 && cortes.length <= 5 && cortes.every((c) => typeof c === "number" && isFinite(c)), "cortes: de 2 a 5 límites numéricos");
+  } else {
+    const k = Math.max(3, Math.min(6, Math.round(D.clases || 5)));
+    cortes = [];
+    for (let i = 1; i < k; i++) {
+      if (D.metodo === "iguales") { cortes.push(min + (max - min) * i / k); continue; }
+      const p = (vals.length - 1) * i / k, lo = Math.floor(p), t = p - lo;
+      cortes.push(vals[lo] + (vals[Math.min(lo + 1, vals.length - 1)] - vals[lo]) * t);
+    }
+    if (D.redondear !== false && max > min) {
+      // Cortes legibles (evita leyendas como 22–28 · 20–22 · 16–20 · 15–16 · 7–15 sin aplanar un mapa de densidad):
+      // 1) cuantiles redondeados al paso «bonito» (1·2·5·10 × 10ⁿ) más grueso que conserve ≥ k−2 cortes distintos;
+      // 2) si se apelotonan (pocos valores distintos), intervalos iguales al mismo paso, salvo que una clase acapare > 50 %;
+      // 3) datos sesgados: cada cuantil se redondea al paso del hueco mínimo entre cortes. Al final, sin clases vacías.
+      const enRango = (cs) => cs.filter((c, i) => c > min && c < max && (i === 0 || c > cs[i - 1]));
+      const redondea = (cs, paso) => enRango(cs.map((c) => +(Math.round(c / paso) * paso).toFixed(10)));
+      const conteo = (cs) => { const n = new Array(cs.length + 1).fill(0); vals.forEach((v) => { let j = 0; while (j < cs.length && v >= cs[j]) j++; n[j]++; }); return n; };
+      const nice = (x, ms) => { const e = Math.pow(10, Math.floor(Math.log10(x))); return ms.map((m) => m * e); };
+      const iguales = Array.from({ length: k - 1 }, (_, i) => min + (max - min) * (i + 1) / k);
+      let mejor = null;
+      for (const paso of nice((max - min) / k, [10, 5, 2, 1])) {
+        const q = redondea(cortes, paso), g = redondea(iguales, paso);
+        if (q.length >= k - 2) { mejor = q; break; }
+        if (g.length >= k - 1 && Math.max(...conteo(g)) / vals.length <= 0.5) { mejor = g; break; }
+      }
+      if (!mejor) {
+        const huecos = cortes.slice(1).map((c, i) => c - cortes[i]).filter((h) => h > 0);
+        if (huecos.length) { const h = Math.min(...huecos); mejor = redondea(cortes, nice(h, [5, 2, 1]).find((p) => p <= h)); }
+      }
+      if (mejor && mejor.length >= 2) { const n = conteo(mejor); cortes = mejor.filter((c, i) => n[i + 1] > 0); }
+    }
+    cortes = cortes.filter((c, i) => c > min && c < max && (i === 0 || c > cortes[i - 1]));  // empates → menos clases
+  }
+  const nc = cortes.length + 1;
+  const claseDe = (v) => { let k = 0; while (k < cortes.length && v >= cortes[k]) k++; return k; };
+  const colores = H.rampa(nc);
+
+  // ---- Lienzo: mapa a la izquierda (540 px), columna derecha (320 px) ----
+  const W = 920, alto = H.espacio(560, 380);
+  const svg = H.lienzo(W, alto);
+  const mapaW = 540, colX = 600;
+  const pieH = sin.length ? 30 : 0, mapaH = alto - pieH;
+  const defs = H.svgEl("defs", {}, svg);
+  const pat = H.svgEl("pattern", { id: "sinDato", width: 12, height: 12, patternUnits: "userSpaceOnUse", patternTransform: "rotate(45)" }, defs);
+  H.svgEl("rect", { width: 12, height: 12, fill: H.color.inkA(.10) }, pat);
+  H.svgEl("line", { x1: 0, y1: 0, x2: 0, y2: 12, stroke: H.color.inkA(.35), "stroke-width": 2 }, pat);
+
+  const g = H.svgEl("g", {}, svg);
+  for (const id of ids) {
+    const geo = GEOMETRIA.deptos[id];
+    H.assert(geo && geo.d, "GEOMETRIA sin " + id + ": corre python3 scripts/build_mapa.py");
+    H.svgEl("path", { d: geo.d, fill: id in val ? colores[claseDe(val[id])] : "url(#sinDato)", stroke: bg, "stroke-width": 2,
+                      "stroke-linejoin": "round", "vector-effect": "non-scaling-stroke" }, g);
+  }
+  if (hi) {  // contorno del destacado: halo en bg (separa de los vecinos) + a1 encima
+    H.svgEl("path", { d: GEOMETRIA.deptos[hi].d, fill: "none", stroke: bg, "stroke-width": 9, "stroke-linejoin": "round", "vector-effect": "non-scaling-stroke" }, g);
+    H.svgEl("path", { d: GEOMETRIA.deptos[hi].d, fill: "none", stroke: a1, "stroke-width": 4.5, "stroke-linejoin": "round", "vector-effect": "non-scaling-stroke" }, g);
+  }
+  const bb = g.getBBox();
+  const esc = Math.min(mapaW / bb.width, mapaH / bb.height);
+  const tx = (mapaW - bb.width * esc) / 2 - bb.x * esc, ty = (mapaH - bb.height * esc) / 2 - bb.y * esc;
+  g.setAttribute("transform", "translate(" + tx.toFixed(2) + " " + ty.toFixed(2) + ") scale(" + esc.toFixed(4) + ")");
+  if (sin.length) H.texto(svg, 0, alto - 6, sin.length + (sin.length === 1 ? " departamento sin dato" : " departamentos sin dato"), { style: "font:500 17px 'JetBrains Mono',monospace;fill:" + H.color.inkA(.8) });
+
+  // ---- Columna derecha: leyenda (clase alta arriba), sin dato, destacado, Mayor/Menor ----
+  const sec = { ley: 34, dest: 40, cab: 26, fila: 30, hueco: 24 };
+  const necesita = () => nc * sec.ley + (sin.length ? sec.ley : 0) + (hi ? sec.hueco + sec.dest : 0) + (rotular === "extremos" ? 2 * (sec.hueco + sec.cab + 3 * sec.fila) : 0);
+  while (necesita() > alto && sec.fila > 26) { sec.ley = Math.max(28, sec.ley - 1); sec.fila -= 1; sec.hueco = Math.max(12, sec.hueco - 2); sec.dest = Math.max(30, sec.dest - 1); }
+  const fontLey = "500 19px 'JetBrains Mono',monospace";
+  const fuenteQueCabe = (s, pesos, ancho) => pesos.find((p) => H.medir(s, p) <= ancho) || pesos[pesos.length - 1];
+  let y = 0;
+  for (let i = nc - 1; i >= 0; i--) {
+    const lo = i === 0 ? min : cortes[i - 1], hiV = i === nc - 1 ? max : cortes[i];
+    H.svgEl("rect", { x: colX, y: y + (sec.ley - 26) / 2, width: 26, height: 26, fill: colores[i] }, svg);
+    H.texto(svg, colX + 40, y + sec.ley / 2 + 7, f(lo) + " – " + f(hiV), { style: "font:" + fontLey + ";fill:" + ink });
+    y += sec.ley;
+  }
+  if (sin.length) {
+    H.svgEl("rect", { x: colX, y: y + (sec.ley - 26) / 2, width: 26, height: 26, fill: "url(#sinDato)" }, svg);
+    H.texto(svg, colX + 40, y + sec.ley / 2 + 7, "Sin dato", { style: "font:" + fontLey + ";fill:" + ink });
+    y += sec.ley;
+  }
+  const filaNombreValor = (id, yBase, pesoNombre, pxValor) => {
+    const valorTxt = f(val[id]), fontVal = "700 " + pxValor + "px 'JetBrains Mono',monospace";
+    const anchoNombre = W - colX - 40 - H.medir(valorTxt, fontVal) - 14;
+    const fontNombre = fuenteQueCabe(NOMBRES[id], [pesoNombre + " 22px Archivo,sans-serif", pesoNombre + " 20px Archivo,sans-serif", pesoNombre + " 18px Archivo,sans-serif"], anchoNombre);
+    H.texto(svg, colX + 40, yBase, NOMBRES[id], { style: "font:" + fontNombre + ";fill:" + ink });
+    H.texto(svg, W, yBase, valorTxt, { "text-anchor": "end", style: "font:" + fontVal + ";fill:" + ink });
+  };
+  if (hi) {
+    y += sec.hueco;
+    H.svgEl("rect", { x: colX + 2, y: y + (sec.dest - 26) / 2, width: 24, height: 24, fill: colores[claseDe(val[hi])], stroke: a1, "stroke-width": 4 }, svg);
+    filaNombreValor(hi, y + sec.dest / 2 + 8, "800", 22);
+    y += sec.dest;
+  }
+  if (rotular === "extremos") {
+    const orden = con.slice().sort((a, b) => val[b] - val[a] || a.localeCompare(b));
+    const lista = (titulo, arr) => {
+      y += sec.hueco;
+      H.texto(svg, colX, y + 17, titulo, { style: "font:500 17px 'JetBrains Mono',monospace;letter-spacing:.12em;fill:" + H.color.inkA(.75) });
+      y += sec.cab;
+      for (const id of arr) {
+        const yBase = y + sec.fila / 2 + 7;
+        if (id === hi) H.svgEl("rect", { x: colX + 6, y: yBase - 14, width: 14, height: 14, fill: colores[claseDe(val[id])], stroke: a1, "stroke-width": 3 }, svg);
+        else H.svgEl("rect", { x: colX + 8, y: yBase - 12, width: 10, height: 10, fill: colores[claseDe(val[id])] }, svg);
+        filaNombreValor(id, yBase, id === hi ? "800" : "600", 21);
+        y += sec.fila;
+      }
+    };
+    lista("MAYOR", orden.slice(0, 3));
+    lista("MENOR", orden.slice(-3).reverse());
+  }
+}
+
+// MAPA:GEOMETRIA:INICIO · generado por scripts/build_mapa.py desde design/mapa_geometria.svg · NO EDITAR A MANO
+const GEOMETRIA = {
+  viewBox: "40 40 860 900",
+  deptos: {
+    GT01: { n: "Guatemala", d: "M429.1 838.7l-1.4-4.8-2.6-6-0.6-2.7 0.1-7.3-1.4-11.3-0.9-3-0.5-0.2-0.6-0.1-2.8 0.1-1.8-0.6-3.1-2.8-2.8-8.2 1.9-8.3 1.5-17.8 1.1-2.7 1.8-2-0.4-2.6 1.2-4.1-0.1-1.6-0.3-0.5-2.1-2.4-2.9-3.3-1.9-6.4-6.4-8.3-2.2-2-0.6-0.2-0.7 0-2.6 0.5-2-0.1-2-0.5-2.9-1.6-4.9-4.6 3.9-6 2-6.6 1.2-2.2 0.9-0.8 0.9-0.6 0.5-0.3 0.6-0.1 0.6 0.1 0.5 0.2 0.9-0.1 1.1-0.4 3.2-2.6 1-0.6 2.4-0.8 1-0.7 0.7-0.6 0.4-0.6 0.3-0.6 0.2-0.6 0.1-0.6 0.6-3.4 7.6 2.8 3.2-0.6 1.7 1.8 1.1 0.5 0.9-0.2 1-0.6 1.3 0 3.3 0.5 5.3-1.1 5.5-1.9 3.4-2 1.6 0 1.1 2 1.6 1 2 0.2 2.5-0.2 2.8-0.8 0.9-1.1 0.5-1.2 1.8-1.3 3.5-0.7 1.6 1.4 1 2.6-2.7 4.7-0.5 0.6-0.6 0.9 0 0.9 0.2 1.2 0.3 0.8 0.4 0.5 0.4 0.3 0.5 0.3 0.5 0.2 1.3 0.2 1.4-0.1 3-0.9 4.9-0.4 1.5 0.6 0.4 0.5 1 2 1.9 5.5 0.8 5.5-0.3 1.8-0.3 0.3-0.3 0.3-0.8 1.2-0.9 1.6-0.3 1 0.1 1 0.2 0.5 1 1.8 4.5 4.8 2 1.6 12.4 4.5 2.9 1.5 1.3 1.1 2.4 2.7 2.2 0.8-1.9 4.9-1 1.6-0.4 0.3-1.8 1.2-7 5.9-1.2 5.2-0.1 3.5-0.6 1.8-0.5 1-0.9 0.7-0.3 1.3-0.2 1.1-0.4 6.9-2.5 1.2-1.9 0-1.7 0.6-1.2 1.3-4.1 3.8-1.4 0.8-1 0.3-0.4-0.4-0.2-0.5-0.2-0.6-0.3-2.7-0.4-0.6-0.6-0.6-1.6-0.5-0.9 0.1-3.6 1.7-8.8 13.9-4 10.1 1.2 10.4-0.3 2.7-1.1 1.3-0.4 0.3-0.4 0.3-0.5 0.3-0.6 0.2-0.6 0.4-0.7 0.6-1.8 2.1-0.4 0.3-0.5 0.2-1.3 0.3-1.7 0.6-4.1 2-4.1 3.8-1.6 1.1-6.1 2.2z" },
+    GT02: { n: "El Progreso", d: "M555.8 639.4l10.5 1.2 3.6-0.3 6.2-1.6 8 11.4 9.5 14.4 0.2 3-10.4 0.2-1 0.2-0.8 0.3 0.2 0.9 0.5 1 9.5 13.1 1.7 2.4 2.6 1.4 2.7 0.4 1.1 0.6 0.5 0.7-0.4 4.4-0.4 1.1-0.9 0.3-1 0.2-4.6 0.2-2.7 1.2-4.8 5.4-3.4-0.3-2.7 0.2-1.3 0.2-1.2 0.5-2.9 2.6-7.5 9.5-6.2 3.4-6.5 2.4-7.2 0.8-4.9 1.5-6.7 12.5-0.8 0.8-1 0.5-1.7-0.5-2.6-1.3-3.3-0.4-7.2 2.4-5.6 2.2-0.9 0.5-0.4 0.7-0.2 1.4-0.8 2.4-3.5 2-1.5 0.6-0.4 0.2-2.2-0.8-2.4-2.7-1.3-1.1-2.9-1.5-12.4-4.5-2-1.6-4.5-4.8-1-1.8-0.2-0.5-0.1-1 0.3-1 0.9-1.6 0.8-1.2 0.3-0.3 0.3-0.3 0.3-1.8-0.8-5.5-1.9-5.5-1-2-0.4-0.5-1.5-0.6-4.9 0.4-3 0.9-1.4 0.1-1.3-0.2-0.5-0.2-0.5-0.3-0.4-0.3-0.4-0.5-0.3-0.8-0.2-1.2 0-0.9 0.6-0.9 0.5-0.6 2.7-4.7 2.7 2.6 7.1 1.3 10.9-1.8 1-3.6 3.4-10.8 34-23.7 18.3-12.3 8.2-5.6 5.8-3.2z" },
+    GT03: { n: "Sacatepéquez", d: "M410.7 791.8l-13.7 5.4-2.4-5.1-0.3-0.5-0.8-0.6-1.5 0.4-1 1.7-1.3 0.7-3.1 0-1.8 1.1-0.4 0.3-0.5 0.4-1 1.3-1.1 2-0.3 0.4-1.5 1.7-5.6 4.9-1-0.7-1.4-1.6-2.7-4.4-1.6-3.5-0.1-0.6-0.2-0.6-1.8-1.8-6.3-5.5 0-0.2-0.2-1.3 1.2-6.1 4.6-9 9.7-10.7 5.4-4 2.8-6.2 1.3-1.6 0.6-1.1 0.1-1 0-1.3-0.7-4-0.7-2.1-1.2-6.4 0.6-2.7 3.4-6.2 4.9 4.6 2.9 1.6 2 0.5 2 0.1 2.6-0.5 0.7 0 0.6 0.2 2.2 2 6.4 8.3 1.9 6.4 2.9 3.3 2.1 2.4 0.3 0.5 0.1 1.6-1.2 4.1 0.4 2.6-1.8 2-1.1 2.7-1.5 17.8-1.9 8.3z" },
+    GT04: { n: "Chimal.", d: "M317.2 712.6l5.7-2.8 1.5-1.3 4.9-13.7 1.3-2.2 0.5-0.4 0.4-0.2 2-1.1 3.7-1 3.6-2.2 3.9 0.8 13.9-0.4 2.5-0.5 3-0.5 3.3-0.1 10.2 3 11.1 0 3.6 0.5 6.3 2.2 7.7 1.6 2.9 1.1-0.6 3.4-0.1 0.6-0.2 0.6-0.3 0.6-0.4 0.6-0.7 0.6-1 0.7-2.4 0.8-1 0.6-3.2 2.6-1.1 0.4-0.9 0.1-0.5-0.2-0.6-0.1-0.6 0.1-0.5 0.3-0.9 0.6-0.9 0.8-1.2 2.2-2 6.6-3.9 6-3.4 6.2-0.6 2.7 1.2 6.4 0.7 2.1 0.7 4 0 1.3-0.1 1-0.6 1.1-1.3 1.6-2.8 6.2-5.4 4-9.7 10.7-4.6 9-1.2 6.1 0.2 1.3 0 0.2-5.7 4.6-4.5 4.2-1.4 1.9-0.3 0.6-1.3 3.2-4.1 8.3-1.5 0.7-0.6-0.6-0.3-0.6-0.2-0.7 0-1.8-0.4-3.6-0.6-0.8-0.5-0.4-0.6 0.1-0.8 0.7-1.1 1.2-0.6 0.4-0.8 0.3-1.5 0.1-1.2-0.5-1.3-0.9-2.1-1.9-1.1-0.7-0.9-0.3-0.7 0.1-0.6 0.1-0.5 0.2-2.9 1.7-0.7 0.3-1 0.3-2 0.2-0.9-0.2-1-0.5-0.6-0.5-3-2.2 3.1-8.2 0-2.9 0.4-5-0.4-2.1-0.8-1-1.4-1.5-1.5-1.4 1.8-17.6 0.1-5 0.6-2 1.7-2.4 4.4-10.6-0.4-4.8 0.1-0.7 1.5-4.3-3.5-16.6-0.5-1.5z" },
+    GT05: { n: "Escuintla", d: "M217.7 882.7l5 1.9-0.2-1.8-0.7-3.4 0.2-1 0.4-1.2 10.4-15.4 1.8-3.9 1-1.6 1.1-1.2 1.3-1.7 0.3-3.6-0.5-8.9-0.8-5.2-0.1-1.8 0.1-2.7 0.4-1.5 0.4-0.7 2.2-1.4 1.7 1.2 0.7 1.1 0.6 1.7 0.2 0.4 0.6 0.2 0.9-0.2 1.5-0.9 0.7-0.6 0.5-0.7-0.1-0.6-0.2-0.5-1-1.9-0.4-1.1-0.4-2-0.1-1.4 0-1.3 0.5-1.9 0.4-1 0.3-0.5 0.8-0.8 6.1-4.5 1-0.5 1.7-0.6 0.9 0.3 0.9 0.8 1.4 2.1 0.4 1.1 0 0.9-1.6 2.3-0.2 0.5-0.1 0.6 0 0.6 0.2 0.5 0.3 0.6 1 1.4 0.2 0.7 0.1 0.7-0.5 1.9 0 0.6 0 0.6 0.2 0.7 0.5 0.7 0.9 0.9 1.1 0.6 0.8 0.4 1.4 0.2 2.1-0.1 1.8-1 3.9-4.4 2.3 2.3-1.1 5.3 1.4 0.4 25 1.8 1.3-0.8 1.9-3.8 1-1.4 0.3-0.9 0.2-1.2 0.6-10.6 1.4-3.8 6-12.5 3 2.2 0.6 0.5 1 0.5 0.9 0.2 2-0.2 1-0.3 0.7-0.3 2.9-1.7 0.5-0.2 0.6-0.1 0.7-0.1 0.9 0.3 1.1 0.7 2.1 1.9 1.3 0.9 1.2 0.5 1.5-0.1 0.8-0.3 0.6-0.4 1.1-1.2 0.8-0.7 0.6-0.1 0.5 0.4 0.6 0.8 0.4 3.6 0 1.8 0.2 0.7 0.3 0.6 0.6 0.6 1.5-0.7 4.1-8.3 1.3-3.2 0.3-0.6 1.4-1.9 4.5-4.2 5.7-4.6 6.3 5.5 1.8 1.8 0.2 0.6 0.1 0.6 1.6 3.5 2.7 4.4 1.4 1.6 1 0.7 5.6-4.9 1.5-1.7 0.3-0.4 1.1-2 1-1.3 0.5-0.4 0.4-0.3 1.8-1.1 3.1 0 1.3-0.7 1-1.7 1.5-0.4 0.8 0.6 0.3 0.5 2.4 5.1 13.7-5.4 2.8 8.2 3.1 2.8 1.8 0.6 2.8-0.1 0.6 0.1 0.5 0.2 0.9 3 1.4 11.3-0.1 7.3 0.6 2.7 2.6 6 1.4 4.8-3.2 3.1-1.3 2.5-0.7 2.4 0.1 1 0.3 0.7 0.5 0.2 0.9 0.3 2.9 0.6 1.3 0.1 1.4-0.1 0.7-0.1 3.3-1.2 0.8-0.1 1 0.2 1.8 0.9 0.6 0.7 0.1 0.7-2.7 3.4-3.4 3.3-1.4 0.9-0.6 0.2-3.9 0.6-1.5 0.7 0.1 3.1 0.7 1.4 0.4 0.5 3.1 2.9 0.4 0.9 0.1 0.7-0.2 0.5-0.7 0.9-0.8 0.7-2.8 1.6-1.1 1.1-1.6 3.1-0.7 2.2-0.5 0.3-0.6 0.3-2.4 0.4-2.4 0.6-0.9 1-0.5 1.1 0 27.4 0 2.4-2.3-0.4-14.8-1.4-16.6 1.6-2.5 0.8-24.4 1.5-28.6-0.5-26.1-2.9-32.3-6.4-50.4-22.4z" },
+    GT06: { n: "Santa Rosa", d: "M538.9 799.5l-3.9 12.2-3 0.4 0.7 4.2-0.2 0.6-0.5 0.3-1.1-0.4-1-0.5-2.4-0.2-7.5 1.5-0.4 0.4-2.9 2.5-7.6 19 3.1 2.2 9.9 2.8 1.3 0.5 0.8 0.7 1.5 1.5 6.6 5.5 5.2 5.1 1.1 2.2-0.3 4.9 0.9 8.7 0 0.7-0.2 1.3-0.6 1.9-1.2 2.4-3.7 5.4-1.2 1.3-0.5 0.2-2.9 0.6-2.4 0.7-1.3 0.7-0.7 0.5-1.3 2.5-3.4 6.3-3.3 2.3-0.7 0.2-0.9 0-2.2-0.8-8.4-2.1-1.1-0.4-4.1-3.5-6-3.5-3.9 1.1-1.3 1-0.3 0.8-0.3 1.2 0.1 1.2 0.1 0.8 0.7 1.6 0.7 0.9 1.1 1.1 0.4 0.9 1.5 9.1 0.3 0.5 0.3 0.4 0.5 0.3 1 0.6 0.7 1 0.7 1.8 2.1 7.7 2.7 5 0.4 1.1 0.1 1.1 0 3.9-1.4 5.5-0.8 3-1.1-0.4-33.3-15-21.2-8-17.2-4.1-10-1.6 0-2.4 0-27.4 0.5-1.1 0.9-1 2.4-0.6 2.4-0.4 0.6-0.3 0.5-0.3 0.7-2.2 1.6-3.1 1.1-1.1 2.8-1.6 0.8-0.7 0.7-0.9 0.2-0.5-0.1-0.7-0.4-0.9-3.1-2.9-0.4-0.5-0.7-1.4-0.1-3.1 1.5-0.7 3.9-0.6 0.6-0.2 1.4-0.9 3.4-3.3 2.7-3.4-0.1-0.7-0.6-0.7-1.8-0.9-1-0.2-0.8 0.1-3.3 1.2-0.7 0.1-1.4 0.1-1.3-0.1-2.9-0.6-0.9-0.3-0.5-0.2-0.3-0.7-0.1-1 0.7-2.4 1.3-2.5 3.2-3.1 6.1-2.2 1.6-1.1 4.1-3.8 4.1-2 1.7-0.6 1.3-0.3 0.5-0.2 0.4-0.3 1.8-2.1 0.7-0.6 0.6-0.4 0.6-0.2 0.5-0.3 0.4-0.3 0.4-0.3 1.1-1.3 0.3-2.7-1.2-10.4 4-10.1 8.8-13.9 3.6-1.7 0.9-0.1 1.6 0.5 0.6 0.6 0.4 0.6 0.3 2.7 0.2 0.6 0.2 0.5 0.4 0.4 1-0.3 1.4-0.8 4.1-3.8 1.2-1.3 1.7-0.6 1.9 0 2.5-1.2 2.7 2.8 0.5 0.6 0.8 0.6 0.5 0.3 2.9-0.4 2.8-0.5 23.5-4.5 1.1 5.2 1.9 3.1 7.7 6.3 5.6 4.3z" },
+    GT07: { n: "Sololá", d: "M296.7 693.9l2.6 1.3 1.1 2.9 2 3.7 1.4 0.9 0.6 0.2 0.6 0 0.9 0.1 1.1 0.3 2.5 1 1 0.7 0.4 0.7-0.1 0.6-0.6 1-0.6 1-1.8 1.9-0.3 0.5-0.2 0.9 0 1.2 0.4 2.4 0.4 1 0.6 0.6 0.6 0.1 0.7-0.1 0.5-0.2 0.4-0.3 0.4-0.4 0.3-0.4 0.2-0.5 0.8-3 1-0.6 3.6 1.2 0.5 1.5 3.5 16.6-1.5 4.3-0.1 0.7 0.4 4.8-4.4 10.6-1.7 2.4-0.6 2-0.1 5-1.8 17.6-8.3-6.4-2.8-1.8-2.1-0.8-1.3-0.2-2.2-0.1-1.9 0.3-5.9 3.1-4.8 0.7-0.6-0.3-0.7-0.5-0.1-0.6 0-0.7 0.5-2.5 0.1-0.6-0.1-2.1-0.3-1.8-0.4-0.9-1-1.2-6.2-5.5-2.2-2.4-0.6-0.2-0.8-0.2-2.5 0.6-4.8 0.4-0.1-0.1-2.5-2.9-3.2-1.5-1.6-0.2-1.3 0.4-0.8 0.5-1 0.7-0.6 0.6-0.3 0.6-0.2 0.6-0.1 0.7 0.2 2.7-0.2 1.7-1.1 3.1-2.9-0.8-9.7-1.4-3.2-3 5.1-9.8 1-3.1 0-0.7-0.3-1.2-2.6-7.2-0.6-1-1.1-1.3 6.3-8.6 2.6-8.7 0.8-0.7 9.8-8.4 1.9-0.6 2.5-0.4 4.9 0.8 2 0.5 1.2 0.6 1.6 0.2 4.4-1.9 2.9 0 1.5 0.2 3.4 1.2 0.7 0.1 1.4 0 1.2-0.2 2.3-0.8 3-2.9 2.8-4.1 4.2-4.2z" },
+    GT08: { n: "Totonicapán", d: "M224.8 639.5l7.2-0.4 0.8-0.3 0.9-0.6 0.2-0.6 0.4-5.6 0.2-0.6 1.3-2.5 2.8-4.2 0.8-0.8 1-0.5 2.2-0.6 9.2-2.2 3.4-2.4 5.1-2.4 2.5-0.4 5.6 0.4-1 6.2-0.1 4 1.1 3.4 2.9 1.5 0.7 1.5 5.9 6.1 1.5 0.7 1.1 4.3 2 3 0.3 3.1 1.5 0.5 1.4 2.5 0 1.1-0.2 2.3-0.5 0.8-0.6 0.5-2.3 0-0.9 0.3-1.1 0.4-1.7 1.4-0.7 1-0.5 1.5-0.2 1.7 0 0.7 0.1 0.7 0.3 0.5 0.4 0.4 2.2 1.5 3.9 2.9 0.4 0.6 0.6 1.1 1 4 1.5 2.4 3.5 2.5 0.6 1.2 0.1 1.4-1.2 3.7-0.5 1.4 6.8 5.3-4.2 4.2-2.8 4.1-3 2.9-2.3 0.8-1.2 0.2-1.4 0-0.7-0.1-3.4-1.2-1.5-0.2-2.9 0-4.4 1.9-1.6-0.2-1.2-0.6-2-0.5-4.9-0.8-2.5 0.4-1.9 0.6-9.8 8.4-0.8 0.7-4.2-7.4-2.4-2.1-0.6-6.6-1.9-4.4-4.5 0.2-4.1 0.5-1.5-0.5-0.3-0.4-0.3-0.5-3.4-4-0.4-1.5 0-1.4 0.5-1.2 0-2.6-3.6-3.2-1.6-2.2-0.8-3.2-5.3-20.1-1.1-6.4 0.5-1.9 0.4-0.3 0.5-0.2 10.9-4.3 3.8-1.3z" },
+    GT09: { n: "Quezaltenango", d: "M118.2 778l-5.1-15.1-2-3.8-0.5-0.3-1.8-0.4-12.7-1.3-1.1-0.3-1.9-0.7-0.6-0.7-0.3-0.6 0.8-1.4 7.4-8.5 5.8-4.7 2.5-1.3 4.6-0.9 18.8-5.4 13.5 1.4 6 0.4 2.1-0.2 1.9-0.8 2.1-1.3 2.8-5.1 0.5-0.8 1-1.1 2.8-2.1 0.8-0.8 0.5-0.8 0.2-0.7 5.8-12.3 0.3-0.5 1.7-2.9 1.4-8.3 1.9-2.7 0.4-2.1-0.2-1.6 0.3-0.9 0.3-0.6 1.7-1 1.6-0.8 6.3-6.1 1.8-2.4 0.8-2.2 1.3-9.5-0.9-3.6-4-3.4-2.6-6.2 2-6.6 4.1-6 3.9-4.2 7.4-6.1 1.4-1.4 1-4.2 14.4 3.8 1.6 1.3-0.1 2.2 0.7 2 4.2 5.1-3.8 1.3-10.9 4.3-0.5 0.2-0.4 0.3-0.5 1.9 1.1 6.4 5.3 20.1 0.8 3.2 1.6 2.2 3.6 3.2 0 2.6-0.5 1.2 0 1.4 0.4 1.5 3.4 4 0.3 0.5 0.3 0.4 1.5 0.5 4.1-0.5 4.5-0.2 1.9 4.4 0.6 6.6 2.4 2.1 4.2 7.4-2.6 8.7-6.3 8.6-8.7 5.9-3.4-1.4-2.6-0.2-1.3 0.4-4.4 2.9-1.3 0.7-1 0.3-0.7 0-1.2-0.3-1.2-0.5-2.3-0.6-0.8 0.1-0.6 0.2-0.7 0.8-1.2 1.9-0.2 0.5-1.1 1.5-1.6 1.8-0.8 0.3-0.6 0-1.3-0.8-1.2-0.4-0.7 0.4-0.5 0.3-0.6 1.5-2 1.9-1.7-0.1-1.2-0.4-2.7-0.5-1.1-0.5-0.5-0.6 0.6-3.9 3-7.3 0.3-2.7-0.2-0.5-0.4-0.5-0.5-0.3-0.8 0-0.9 0.1-0.6 0.3-0.6 0.3-0.9 0.6-1.6 1.4-2.9 3.2-7.7 3.8-1.4 2.2-1.9 6.1-0.9 2.1-3.9 5.8-0.9 2-0.8 2-0.7 3.2-0.5 1.4-0.5 1-2.1 2.4-6.7 10.1-8.9 2-6.2 0.5-2.5-0.3-12.5-5.5-0.9-0.2-0.6 0.1-1.1 0.5-1.7 1.2z" },
+    GT10: { n: "Suchitepéquez", d: "M194.9 869.4l-0.2-1.8-1.3-8.8 6.2-9.1 0.2-0.5 0.2-1.4 0.5-7.3 1-6.5 2.6-8.2 2.5-3.6 0.2-1 0.1-1.5-0.2-2.9 1-14.4-0.1-1.6-2.7-4.9-0.5-1.1-0.3-1.1-0.2-1.4 1.7-12.9 0-0.7-0.1-0.7 0.1-1.4 8.5-17.3-0.1-2.2-0.2-2.8 0.1-2.5 0.2-0.6 0.6-1.4 0.6-0.9 4.8-5.5 6.5-5.7 8.7-5.9 1.1 1.3 0.6 1 2.6 7.2 0.3 1.2 0 0.7-1 3.1-5.1 9.8 3.2 3 9.7 1.4 2.9 0.8 1.1-3.1 0.2-1.7-0.2-2.7 0.1-0.7 0.2-0.6 0.3-0.6 0.6-0.6 1-0.7 0.8-0.5 1.3-0.4 1.6 0.2 3.2 1.5 2.5 2.9 0.1 0.1 4.8-0.4 2.5-0.6 0.8 0.2 0.6 0.2 2.2 2.4 6.2 5.5 1 1.2 0.4 0.9 0.3 1.8 0.1 2.1-0.1 0.6-0.5 2.5 0 0.7 0.1 0.6 0.7 0.5 0.6 0.3 4.8-0.7 5.9-3.1 1.9-0.3 2.2 0.1 1.3 0.2 2.1 0.8 2.8 1.8 8.3 6.4 1.5 1.4 1.4 1.5 0.8 1 0.4 2.1-0.4 5 0 2.9-3.1 8.2-6 12.5-1.4 3.8-0.6 10.6-0.2 1.2-0.3 0.9-1 1.4-1.9 3.8-1.3 0.8-25-1.8-1.4-0.4 1.1-5.3-2.3-2.3-3.9 4.4-1.8 1-2.1 0.1-1.4-0.2-0.8-0.4-1.1-0.6-0.9-0.9-0.5-0.7-0.2-0.7 0-0.6 0-0.6 0.5-1.9-0.1-0.7-0.2-0.7-1-1.4-0.3-0.6-0.2-0.5 0-0.6 0.1-0.6 0.2-0.5 1.6-2.3 0-0.9-0.4-1.1-1.4-2.1-0.9-0.8-0.9-0.3-1.7 0.6-1 0.5-6.1 4.5-0.8 0.8-0.3 0.5-0.4 1-0.5 1.9 0 1.3 0.1 1.4 0.4 2 0.4 1.1 1 1.9 0.2 0.5 0.1 0.6-0.5 0.7-0.7 0.6-1.5 0.9-0.9 0.2-0.6-0.2-0.2-0.4-0.6-1.7-0.7-1.1-1.7-1.2-2.2 1.4-0.4 0.7-0.4 1.5-0.1 2.7 0.1 1.8 0.8 5.2 0.5 8.9-0.3 3.6-1.3 1.7-1.1 1.2-1 1.6-1.8 3.9-10.4 15.4-0.4 1.2-0.2 1 0.7 3.4 0.2 1.8-5-1.9-18.2-10.4-4.6-2.9z" },
+    GT11: { n: "Retalhuleu", d: "M87 787.6l0.3-0.6 0.6-0.2 0.9-0.1 2.2 0.5 1.1-0.1 1.1-0.5 1.9-1.3 1.9-1.8 0.7-0.3 1-0.2 2.2 0.2 2 0.4 1.1 0.4 0.7 0.1 0.6 0 0.6 0 0.8-0.4 0.9-0.6 2.3-2.6 1.9-0.9 6.4-1.6 1.7-1.2 1.1-0.5 0.6-0.1 0.9 0.2 12.5 5.5 2.5 0.3 6.2-0.5 8.9-2 6.7-10.1 2.1-2.4 0.5-1 0.5-1.4 0.7-3.2 0.8-2 0.9-2 3.9-5.8 0.9-2.1 1.9-6.1 1.4-2.2 7.7-3.8 2.9-3.2 1.6-1.4 0.9-0.6 0.6-0.3 0.6-0.3 0.9-0.1 0.8 0 0.5 0.3 0.4 0.5 0.2 0.5-0.3 2.7-3 7.3-0.6 3.9 0.5 0.6 1.1 0.5 2.7 0.5 1.2 0.4 1.7 0.1 2-1.9 0.6-1.5 0.5-0.3 0.7-0.4 1.2 0.4 1.3 0.8 0.6 0 0.8-0.3 1.6-1.8 1.1-1.5 0.2-0.5 1.2-1.9 0.7-0.8 0.6-0.2 0.8-0.1 2.3 0.6 1.2 0.5 1.2 0.3 0.7 0 1-0.3 1.3-0.7 4.4-2.9 1.3-0.4 2.6 0.2 3.4 1.4-6.5 5.7-4.8 5.5-0.6 0.9-0.6 1.4-0.2 0.6-0.1 2.5 0.2 2.8 0.1 2.2-8.5 17.3-0.1 1.4 0.1 0.7 0 0.7-1.7 12.9 0.2 1.4 0.3 1.1 0.5 1.1 2.7 4.9 0.1 1.6-1 14.4 0.2 2.9-0.1 1.5-0.2 1-2.5 3.6-2.6 8.2-1 6.5-0.5 7.3-0.2 1.4-0.2 0.5-6.2 9.1 1.3 8.8 0.2 1.8-22.3-13.9-31.2-22.9-30.3-27.4-24.1-17.6z" },
+    GT12: { n: "San Marcos", d: "M99.1 573.3l1.3 4.6 3.7 4.7 3.2 1.2 0.5 3.3 2.1 23 2.4 1.9 11 0.5 0.5-0.7 7.3-8.4 2.9-1.9 7-0.6 6.5-4 3.6-2.3 1.4-0.5 1.5-0.1 1.8 0.9 7.3 4.6 4.6 0.3 11.6-3.3 3.3-0.1 0.2 0.9 1 3 3.1 5.5 3.5 4.9 4 4.3 4.2 3.6 2.1 1.5 2.2 2.1 1.1 2.9-1 4.2-1.4 1.4-7.4 6.1-3.9 4.2-4.1 6-2 6.6 2.6 6.2 4 3.4 0.9 3.6-1.3 9.5-0.8 2.2-1.8 2.4-6.3 6.1-1.6 0.8-1.7 1-0.3 0.6-0.3 0.9 0.2 1.6-0.4 2.1-1.9 2.7-1.4 8.3-1.7 2.9-0.3 0.5-5.8 12.3-0.2 0.7-0.5 0.8-0.8 0.8-2.8 2.1-1 1.1-0.5 0.8-2.8 5.1-2.1 1.3-1.9 0.8-2.1 0.2-6-0.4-13.5-1.4-18.8 5.4-4.6 0.9-2.5 1.3-5.8 4.7-7.4 8.5-0.8 1.4 0.3 0.6 0.6 0.7 1.9 0.7 1.1 0.3 12.7 1.3 1.8 0.4 0.5 0.3 2 3.8 5.1 15.1-6.4 1.6-1.9 0.9-2.3 2.6-0.9 0.6-0.8 0.4-0.6 0-0.6 0-0.7-0.1-1.1-0.4-2-0.4-2.2-0.2-1 0.2-0.7 0.3-1.9 1.8-1.9 1.3-1.1 0.5-1.1 0.1-2.2-0.5-0.9 0.1-0.6 0.2-0.3 0.6-18-13 4.3-0.7 3.9-4.7 4.7-13 4.6-8.6 0.8-3.4-0.2-4.1-3.8-10.9-0.1-1.6 0.3-3.3-0.2-1.7-1.9-5.5-0.5-1.8-0.2-4.7 1.1-2.6 4.4-5.2 2.4-6.7-0.6-13.8 0.7-7.3 2.6-2.5 2.6-0.8 2.8-0.3 2.8-1.2 2.2-2.6 4.3-9.8-27.8-36.3-1.6-3.6-0.1-4.1 1.4-3.9 4-6.9 10.4-18 6.8-11.7z" },
+    GT13: { n: "Huehuetenango", d: "M99.1 573.3l8-13.9 16.9-29.4 16.9-29.3 14.8-25.6 10.4-18.2 4-6.9 4.8-8.4 2.6-3.3 3.4-1.7 9.7 0 29.6-0.1 29.5 0 29.5-0.1 29.5 0 28.3-0.1-26.3 52.5-2 4.1-14 28.5-0.5 0.7-4 3.9 0.3 1.5 0.2 0.3 0.2 0.6-0.4 0.4-0.8 0.3-1.8 0.1-0.9 0.2-0.9 1.3-5.8 4.1-0.7 0.1-1.3 0-0.7 0.1-0.6 0.2-0.5 0.2-2.6 2.3-0.9 0.3-0.8 0.1-0.7 0-0.6 0.4-0.5 0.9-0.3 2.7-0.5 2.1-1.3 2.5-0.7 1-0.5 1.3-0.2 0.8-0.3 5.2-1.2 2-0.4 1-0.2 0.6 0 0.7 0 0.7 0.1 1.4 0.1 0.6 0.2 0.6 0.5 1 0.3 0.5 0.2 0.5 0.7 0.9 4.3 5.2 0.3 0.7 0.2 0.7 0 2.8 0.3 1.3 0.9 2.1 1.2 1.9 1.3 1.5 4.1 3.8 0.8 0.2 1.2 0 6.3-0.7 2.7 0.5 5.9 2.8 0.5 4-1.9 8 0.3 1.2 1.2 3.3 1 4.5-3.3 0.8-1.8 0.2-5.3-1-1.9 0.1-4.9 1.6-9.3 1.7-1.7 1.2-0.9 1.9-5.6-0.4-2.5 0.4-5.1 2.4-3.4 2.4-9.2 2.2-2.2 0.6-1 0.5-0.8 0.8-2.8 4.2-1.3 2.5-0.2 0.6-0.4 5.6-0.2 0.6-0.9 0.6-0.8 0.3-7.2 0.4-4.2-5.1-0.7-2 0.1-2.2-1.6-1.3-14.4-3.8-1.1-2.9-2.2-2.1-2.1-1.5-4.2-3.6-4-4.3-3.5-4.9-3.1-5.5-1-3-0.2-0.9-3.3 0.1-11.6 3.3-4.6-0.3-7.3-4.6-1.8-0.9-1.5 0.1-1.4 0.5-3.6 2.3-6.5 4-7 0.6-2.9 1.9-7.3 8.4-0.5 0.7-11-0.5-2.4-1.9-2.1-23-0.5-3.3-3.2-1.2-3.7-4.7-1.3-4.6z" },
+    GT14: { n: "Quiché", d: "M337 436.3l1.2 0 29.6 0 29.5-0.1 29.5 0 19.2 0 4.2-0.5 3.8-1.4 2.6 1.3 1 1.7-0.4 2.1-1.8 2.5 1.3 2.4-1 2.1-2.1 0.9-2.6-1-0.4 1.2-0.8 0.9-0.3 1.1-1.3 0-2.5-1.6-4.2 2.6-2.2-1-1.5 0-0.8 1.4-0.7 0.1-1.5-1.5-0.5 0.8-0.3 0.7-0.2-0.1-0.4-1.4-0.8 1-1.4 1.2-0.7 0.7-2.8-1.5-1.9-1.8-2.2-1.3-3.6 0.2 0-1.7 1.1-0.3 1-0.6 1-0.4 0-1.7-1.5-0.9-1.2-0.1-1 0.9-0.7 1.8-1.5 0-3-3.2-5.5 1.2-9.1 5 1.5 3-1.9 1.3 0.1 1 0.4 1.1-0.8 1.9-1.5 0.9-1-0.9-0.7-1.5-0.5-0.7-2.4 1.1-3.4 2.8-2.9 0.7 0 1.6 0.9 0.8 1.9 2.1 1.5-1.5 0.4 0.7-0.1 0.4 0.2 0.2 1.1 0.2 0 1.5-2.1 1.6-1.7 3.2-2.1 7.4 5.4 0.6 1.3 3.8-2.3 4.3-5.2 2.1-0.9 1.3-2.8 7.8-5.8 7.4-1.4 3.2 2.8-0.3 2.5 0.3 2.1 1.1 1.4 2-1.1 0.4-0.9 0.9-1.1 0.3 0 1.4 3.2 2.4 1.2 0.8-2.9 2-0.8 2.6 1.7 2.1 7.9 1.4 9.1 2.6 2.6 1.4 1.7-1 2-0.4 2 0.4 1.7 1-0.7 0.2-0.7 0-0.3 0.3 0.1 1 4.1 2.7 2.1 2.8 0.2 3.2-1.9 3.6 3.3 2.3 2.1 4.6 1.5 4.6 1.1 2 1.4 1.3-1.5 2.6-2.3 2.4-1.2 0.6-6 5.4 0 1.5 1.8 2.4-2.6 1.4-8.6 0.8-2.9 1.5-0.9 3.5 0.5 4 1.1 3.1 4.4 4.3 6.7 2.7 33.6 5.2 3.4 1.9-0.1 4.5-2 5.1-2.1 3.7-1.4 2-8 11-7.1 0.6-25.1-1.1-35.5-8.4-1.7-0.9-1.4 24 16 20.7 19.3 12.2-0.1 1-1 4.8 3.9 4.1 1.4 1.2 1.4 1 1.6 1.4 1 2.1 2.4 5.7-2.9-1.1-7.7-1.6-6.3-2.2-3.6-0.5-11.1 0-10.2-3-3.3 0.1-3 0.5-2.5 0.5-13.9 0.4-3.9-0.8-3.6 2.2-3.7 1-2 1.1-0.4 0.2-0.5 0.4-1.3 2.2-4.9 13.7-1.5 1.3-5.7 2.8-3.6-1.2-1 0.6-0.8 3-0.2 0.5-0.3 0.4-0.4 0.4-0.4 0.3-0.5 0.2-0.7 0.1-0.6-0.1-0.6-0.6-0.4-1-0.4-2.4 0-1.2 0.2-0.9 0.3-0.5 1.8-1.9 0.6-1 0.6-1 0.1-0.6-0.4-0.7-1-0.7-2.5-1-1.1-0.3-0.9-0.1-0.6 0-0.6-0.2-1.4-0.9-2-3.7-1.1-2.9-2.6-1.3-6.8-5.3 0.5-1.4 1.2-3.7-0.1-1.4-0.6-1.2-3.5-2.5-1.5-2.4-1-4-0.6-1.1-0.4-0.6-3.9-2.9-2.2-1.5-0.4-0.4-0.3-0.5-0.1-0.7 0-0.7 0.2-1.7 0.5-1.5 0.7-1 1.7-1.4 1.1-0.4 0.9-0.3 2.3 0 0.6-0.5 0.5-0.8 0.2-2.3 0-1.1-1.4-2.5-1.5-0.5-0.3-3.1-2-3-1.1-4.3-1.5-0.7-5.9-6.1-0.7-1.5-2.9-1.5-1.1-3.4 0.1-4 1-6.2 0.9-1.9 1.7-1.2 9.3-1.7 4.9-1.6 1.9-0.1 5.3 1 1.8-0.2 3.3-0.8-1-4.5-1.2-3.3-0.3-1.2 1.9-8-0.5-4-5.9-2.8-2.7-0.5-6.3 0.7-1.2 0-0.8-0.2-4.1-3.8-1.3-1.5-1.2-1.9-0.9-2.1-0.3-1.3 0-2.8-0.2-0.7-0.3-0.7-4.3-5.2-0.7-0.9-0.2-0.5-0.3-0.5-0.5-1-0.2-0.6-0.1-0.6-0.1-1.4 0-0.7 0-0.7 0.2-0.6 0.4-1 1.2-2 0.3-5.2 0.2-0.8 0.5-1.3 0.7-1 1.3-2.5 0.5-2.1 0.3-2.7 0.5-0.9 0.6-0.4 0.7 0 0.8-0.1 0.9-0.3 2.6-2.3 0.5-0.2 0.6-0.2 0.7-0.1 1.3 0 0.7-0.1 5.8-4.1 0.9-1.3 0.9-0.2 1.8-0.1 0.8-0.3 0.4-0.4-0.2-0.6-0.2-0.3-0.3-1.5 4-3.9 0.5-0.7 14-28.5 2-4.1 26.3-52.5z" },
+    GT15: { n: "Baja Verapaz", d: "M409.2 695.4l-2.4-5.7-1-2.1-1.6-1.4-1.4-1-1.4-1.2-3.9-4.1 1-4.8 0.1-1-19.3-12.2-16-20.7 1.4-24 1.7 0.9 35.5 8.4 25.1 1.1 7.1-0.6 8-11 5 0.2 4.9 0 7.2 0.2 5.1-0.2 4.6 1.5 11.8 8.1 2.3 2.2 0.6 0.2 0.8-0.1 2.2-1.2 0.8-0.9 2.6-3.3 1.1-0.8 1.4-2.1 1.7-6.9 0.2-1.4 0.2-0.5 0.5-1 0.4-0.4 0.3-0.4 0.9-0.7 2.9 0.2 10.3 2.5 23.4 3.3 8.4-0.3 7-2.8 2-0.5 9.6-0.8 0.7 0.2 0.8 0.2 1.6 1 2.4 2.2 1 1.3 0.5 1 0.4 1.1-0.2 2.2-2.2 6.5-9.5 13.6-5.8 3.2-8.2 5.6-18.3 12.3-34 23.7-3.4 10.8-1 3.6-10.9 1.8-7.1-1.3-2.7-2.6-1-2.6-1.6-1.4-3.5 0.7-1.8 1.3-0.5 1.2-0.9 1.1-2.8 0.8-2.5 0.2-2-0.2-1.6-1-1.1-2-1.6 0-3.4 2-5.5 1.9-5.3 1.1-3.3-0.5-1.3 0-1 0.6-0.9 0.2-1.1-0.5-1.7-1.8-3.2 0.6-7.6-2.8z" },
+    GT16: { n: "Alta Verapaz", d: "M454.1 434.2l5.8-0.6 43.7 6.7 36.4 11.7 1.4 0.2 0.4-0.3 0.1-0.3 0.2-0.5 0.5-0.5 1-0.6 2.3-0.3 1 0.2 0.5 0.6 0.2 0.8 0.6 0.7 0.8 0.2 1.2-0.3 0.6 0 0.3 0.1 0.8 1 0.5 0.1 0.7-0.1 0.6-0.3 1.7-0.4 0.4-0.2 0.1-0.1 0-0.1 0-0.3 0-0.4-0.5-1.7 0.1-0.7 0.3-0.1 0.5 0.1 1.6 0.7 0.4 0.3 0.3 0.4 0.1 0.6-0.2 0.5-0.1 0.4-0.1 0.1 0 0.1 0.3 0.6 0.6 0.4 0.4 0.3 0.1 0.5-0.6 1.5 3.7 2.8 2.4 0.5 0.5-0.2 1-1 3.7 2.6 2 0.2 1.2-0.2 0.6 0.3 0.6 0.9 0.7 1.4 2.8 3.8 0.6 1.3 0.3 1.1 1 2 0.8 0.7 0.7 0.2 0.6-0.1 0.8-0.1 0.9 0 3.3 0.5 7.2-0.4 1.2-0.3 0.4-0.2 0.2-0.2 0.3-0.3 0.9-1.3 0.3-0.4 0.4-0.3 0.6-0.2 0.6 0 1.9 0.1 0.6-0.1 1.2-0.6 0.8-0.6 0.6 0 0.6 0.2 5.1 2.4 0.6 0.3 3.4 2.9 4.4 3.1 1.2 0.6 1 0.3 2.9 0.2 1.2-0.3 0.5-0.2 0.5-0.3 2.5-2.1 1.5 0 13.3 1.7 0.8 0 0.6-0.1 0.6-0.2 0.5-0.3 0.4-0.3 0.9-0.4 1.3-0.2 3-0.2 1.4 0.1 0.9 0.4 0.2 0.6 0.5 11.5 0.1 0.3 0.3-0.1 5.7-2.6 4.5-0.9 3.7 2 1.7 0.1 2.5-1.2 6.5-1.6-5.9 7.9-2.2 1.7-4.1 0.5-0.8 0.4-0.5 0.4-1.1 2-0.2 0.6-2.6 4.8-0.8 1.1-0.8 0.6-2.2 1-3.6 2.5-1.1 0.6-2.2 0.7-0.7 0.4-0.4 0.6-0.5 1.1-13.5 19.1-12 17.1-1.6 3.7 0.6 0.2 1 0.6 0.4 0.3 0.4 0.5 0.3 0.4 0.8 1.3 4.8 5.2 1.7 2.5 1.8 2.1 2.8 2.6 0.8 1.2 0.3 0.8-1.7 2.9-0.3 0.5-0.4 1.1-0.6 2.5-0.5 1-0.3 0.5-0.4 0.4-0.4 0.4-0.4 0.3-4.1 2-1.3 1-0.3 0.4-1.9 26 0 3.3 0.2 0.8 0.9 2.1 0.5 1 1.4 2 1.2 2.1 0.2 0.9 0 1.2-0.7 3.6-0.1 1.2 0.1 1 0.4 1.1 1 2.1 3.8 5.5-14.8 3.5-6.9-0.5-13.6 2.1-2.5-0.5-7.5-2.9-4.9-0.2-2.3 0.3-5.9 2.7-6.2 1.6-3.6 0.3-10.5-1.2 9.5-13.6 2.2-6.5 0.2-2.2-0.4-1.1-0.5-1-1-1.3-2.4-2.2-1.6-1-0.8-0.2-0.7-0.2-9.6 0.8-2 0.5-7 2.8-8.4 0.3-23.4-3.3-10.3-2.5-2.9-0.2-0.9 0.7-0.3 0.4-0.4 0.4-0.5 1-0.2 0.5-0.2 1.4-1.7 6.9-1.4 2.1-1.1 0.8-2.6 3.3-0.8 0.9-2.2 1.2-0.8 0.1-0.6-0.2-2.3-2.2-11.8-8.1-4.6-1.5-5.1 0.2-7.2-0.2-4.9 0-5-0.2 1.4-2 2.1-3.7 2-5.1 0.1-4.5-3.4-1.9-33.6-5.2-6.7-2.7-4.4-4.3-1.1-3.1-0.5-4 0.9-3.5 2.9-1.5 8.6-0.8 2.6-1.4-1.8-2.4 0-1.5 6-5.4 1.2-0.6 2.3-2.4 1.5-2.6-1.4-1.3-1.1-2-1.5-4.6-2.1-4.6-3.3-2.3 1.9-3.6-0.2-3.2-2.1-2.8-4.1-2.7-0.1-1 0.3-0.3 0.7 0 0.7-0.2-1.7-1-2-0.4-2 0.4-1.7 1-2.6-1.4-9.1-2.6-7.9-1.4-1.7-2.1 0.8-2.6 2.9-2-1.2-0.8-3.2-2.4 0-1.4 1.1-0.3 0.9-0.9 1.1-0.4-1.4-2-2.1-1.1-2.5-0.3-2.8 0.3 1.4-3.2 5.8-7.4 2.8-7.8 0.9-1.3 5.2-2.1 2.3-4.3-1.3-3.8-5.4-0.6 2.1-7.4 1.7-3.2 2.1-1.6 0-1.5-1.1-0.2-0.2-0.2 0.1-0.4-0.4-0.7-1.5 1.5-1.9-2.1-0.9-0.8 0-1.6 2.9-0.7 3.4-2.8 2.4-1.1 0.5 0.7 0.7 1.5 1 0.9 1.5-0.9 0.8-1.9-0.4-1.1-0.1-1 1.9-1.3-1.5-3 9.1-5 5.5-1.2 3 3.2 1.5 0 0.7-1.8 1-0.9 1.2 0.1 1.5 0.9 0 1.7-1 0.4-1 0.6-1.1 0.3 0 1.7 3.6-0.2 2.2 1.3 1.9 1.8 2.8 1.5 0.7-0.7 1.4-1.2 0.8-1 0.4 1.4 0.2 0.1 0.3-0.7 0.5-0.8 1.5 1.5 0.7-0.1 0.8-1.4 1.5 0 2.2 1 4.2-2.6 2.5 1.6 1.3 0 0.3-1.1 0.8-0.9 0.4-1.2 2.6 1 2.1-0.9 1-2.1-1.3-2.4 1.8-2.5 0.4-2.1-1-1.7-2.6-1.3 0.1-0.1z" },
+    GT17: { n: "Petén", d: "M713.6 472.7l-0.1-0.1-0.2-0.1-1.1-0.9-5-0.7-19.7 0.4-2.5 2.5-1.3 3.7-0.4 1.5-0.3 0.7-0.4 0.8-0.8 0.8-2.5 1.5-6.5 1.6-2.5 1.2-1.7-0.1-3.7-2-4.5 0.9-5.7 2.6-0.3 0.1-0.1-0.3-0.5-11.5-0.2-0.6-0.9-0.4-1.4-0.1-3 0.2-1.3 0.2-0.9 0.4-0.4 0.3-0.5 0.3-0.6 0.2-0.6 0.1-0.8 0-13.3-1.7-1.5 0-2.5 2.1-0.5 0.3-0.5 0.2-1.2 0.3-2.9-0.2-1-0.3-1.2-0.6-4.4-3.1-3.4-2.9-0.6-0.3-5.1-2.4-0.6-0.2-0.6 0-0.8 0.6-1.2 0.6-0.6 0.1-1.9-0.1-0.6 0-0.6 0.2-0.4 0.3-0.3 0.4-0.9 1.3-0.3 0.3-0.2 0.2-0.4 0.2-1.2 0.3-7.2 0.4-3.3-0.5-0.9 0-0.8 0.1-0.6 0.1-0.7-0.2-0.8-0.7-1-2-0.3-1.1-0.6-1.3-2.8-3.8-0.7-1.4-0.6-0.9-0.6-0.3-1.2 0.2-2-0.2-3.7-2.6-1 1-0.5 0.2-2.4-0.5-3.7-2.8 0.6-1.5-0.1-0.5-0.4-0.3-0.6-0.4-0.3-0.6 0-0.1 0.1-0.1 0.1-0.4 0.2-0.5-0.1-0.6-0.3-0.4-0.4-0.3-1.6-0.7-0.5-0.1-0.3 0.1-0.1 0.7 0.5 1.7 0 0.4 0 0.3 0 0.1-0.1 0.1-0.4 0.2-1.7 0.4-0.6 0.3-0.7 0.1-0.5-0.1-0.8-1-0.3-0.1-0.6 0-1.2 0.3-0.8-0.2-0.6-0.7-0.2-0.8-0.5-0.6-1-0.2-2.3 0.3-1 0.6-0.5 0.5-0.2 0.5-0.1 0.3-0.4 0.3-1.4-0.2-36.4-11.7-43.7-6.7-5.8 0.6 0.8-1.2 1.5-3.1 0.6-1.9-1.2 0.5-0.6 0.2-0.4 0.2-0.7 0.8-1.6 0-0.9-3.8 5.2-4.4-2.7-2.6 0-1.4 4.7-1.9-1.4-2.3-6.3-3.5-0.8-4.3 1.5-3 2.7-2 2.5-1.3-2.9-1.1-2.1-1.7-0.4-2.2 2.5-2.7 0.9 0.9 0.7 0.4 2.7 0.3-0.8-1.1-1.3-2.5-0.8-1.2 1 0.1 0.3-0.3 0-0.6 0.2-0.6 1.3 0.9 1.7 0.5 1.4-0.6 0-2.3-1.4 0.5-3.1-1.1-2.1-1.6 1.5-0.9 3.9-1.2 3.2-3.1 1.2-3.6-1.8-2.9-1.4 0 0 1.7-1.5 0 0.6-3.2 2-1.1 2.9 0.2 3.3 0.9-2.5-4.2-0.3-1.2 0-3-0.4-3.2-1.3-0.3-1.9 0.9-2.4 0.3-1.2-0.5-1.6-1.1-2.2-1-6.8-0.8-0.5-1.3 0.3-1.9-1.2-2.5-1.2-1.2-2.1-1.5-2.4-0.7-5.1 2.5-1.3-2-1-4.7-2.1 0-5.5 1.6-1.2 0.6-1.2-0.7-3.1-0.6-3.4-0.2-2.6 0.8 1.1-2.1 1.9-1.6 1.5-1.7-0.2-2.4-2.4-1.5-3.3-0.2-1.9-0.8 1.8-3.4-0.8-3.6 1.4-3.8 0.7-3.2-2.9-1.8-0.6 1.5-0.7 0.8-1.2 0.3-1.7 0.4 0-1.4 2.8-5.3-3-8-14.4-21-3.1-2.5-7.7-3.9-3.2-2.6 0.8-2.7 0-1.5-3-1.7-2 1.7-2.5 0-14.7-4.6-4-2.3-6.2-6.3-4.4-2.2 3.4-3.7-0.5-1.8-2.9-0.5-3.8 0-0.3 1 0.8 2 0.2 2.1-2.1 0.9-1.2-0.6-2.6-3-1.3-1-8.2-2.9-2.5-2.3-1-4.6-1.2-2.4-7.5-9.2-0.9-2-1.1-4.2-1.1-1.4-2.3-0.5-5.1 0.6-2.2-0.9-7.6-8.4-2-3.1-0.9-2.2-1.1-4-0.9-1.6-1.9-1.1-4.4-1.2-0.9-1.4-0.4-3.5-1.2-4-1.9-3.6-2.3-2-5.9-0.3-5.7 0.9-4.3-0.7-1.8-5.4-3.3-1.8-6.6-1.3-5-2.3 0.9-3.6 1.1-0.2 0.5-0.1 94 0.7 0.1-61.7 0.1-61.8 1.8-1.9 4.4-1.2 9.2 0 47.1 0 47.1 0 47 0.1 47.1 0.1 47.1 0 47 0 47.1 0.1 47.1 0 0.9 48.6 1.2 62.2 0.3 63.9-3.6 58-3.9 62.8-1.9 23.1-3.3 46-5.5 51.5-0.4 10.8z" },
+    GT18: { n: "Izabal", d: "M679.3 482.8l2.5-1.5 0.8-0.8 0.4-0.8 0.3-0.7 0.4-1.5 1.3-3.7 2.5-2.5 19.7-0.4 5 0.7 1.1 0.9 0.2 0.1 0.1 0.1-0.1 2.8 1.8 2.9 0.5-0.7 2-1 2.5-0.8 1.9-0.1 4-1.7 16.3 0.8 6.2-1.1 6.8 0 19 4.9 8.1-3.2 3 1.4 7.2 6.1 7.4-1.8 9.5 2.1 7.3 4.3 0.8 4.7 4.9 0.8 21.5 13.6-2.6 10 0.4 1.5 5.8 0 2.4-0.9 0.6-1.9-0.2-1.6-0.5-0.3-0.1-0.9-0.7-0.8-0.7-1 0-1.7 1.1-0.3 2 0.2 1.9-0.3 0.9-2 0.8-3.6 1.9-2.4 2-1.9 1.2-2 0.3-3.4-1.6-5.3-0.2-3.4 1.5 0 0 2.3 0 0.7 1.4 0 2.5-1.7 6.3 1.2 3-1.2-4.9-4.6-2.8-2.1-4-1.8-1.6-2.2-1.4-2.6-1.5-1.9-9.2-5.2-2.6-3.3 3-3.6 3.3 1.9 6.1 2.7 2.4 1.5 6.3 6.5 4.5 2.6 11.2 9.5 22 10.4 7.3 6.6 2.3 1 9.4 8.3 7.4 3.2 0.2 0.1-2.5 0.9-0.7 2 0.2 2.4-1.4 3-1.4-1.7-3.7 1.6-3.1 1.8-3.4 1.2-4.5 0.1-1.2 1.7-6.5 11.2-10 9.8-14.6 11.5-7 5.6-18.7 14.5-18.6 14.5-18.6 14.5-18.4 14.3-27.1 21.1-7.4 3.5-21.8 7.3-6.5 3.4-1.4 1.1-0.1-0.1-0.6-0.4-1.6-0.7-0.9-0.7-4.2-5-0.4-1.3-1.3-6.2-0.3-3.5 0.2-2.1-0.1-1.4-1.7-7.1 0-1.4 0.2-0.9 2.7-1.1 0.9-0.6 0.4-0.4 0.3-0.4 0.6-1 0.1-0.5 0.3-1.5 0.5-5.5-0.1-1.4-0.2-0.7-0.3-0.6-0.5-0.8-1.1-1.2-0.7-0.6-0.6-0.4-5-2.7-2.1-0.5-6.6-0.7-5 1.1-3.1 1.6-5.5 4.2-25.1 10.1-25.4 8.6-3.2 0.7-8.7 1-3.8-5.5-1-2.1-0.4-1.1-0.1-1 0.1-1.2 0.7-3.6 0-1.2-0.2-0.9-1.2-2.1-1.4-2-0.5-1-0.9-2.1-0.2-0.8 0-3.3 1.9-26 0.3-0.4 1.3-1 4.1-2 0.4-0.3 0.4-0.4 0.4-0.4 0.3-0.5 0.5-1 0.6-2.5 0.4-1.1 0.3-0.5 1.7-2.9-0.3-0.8-0.8-1.2-2.8-2.6-1.8-2.1-1.7-2.5-4.8-5.2-0.8-1.3-0.3-0.4-0.4-0.5-0.4-0.3-1-0.6-0.6-0.2 1.6-3.7 12-17.1 13.5-19.1 0.5-1.1 0.4-0.6 0.7-0.4 2.2-0.7 1.1-0.6 3.6-2.5 2.2-1 0.8-0.6 0.8-1.1 2.6-4.8 0.2-0.6 1.1-2 0.5-0.4 0.8-0.4 4.1-0.5 2.2-1.7 5.9-7.9z" },
+    GT19: { n: "Zacapa", d: "M723.6 693.4l0-0.2-0.7-1.5-0.3-0.5-0.2-0.5-0.3-0.5-0.6-1.6-0.9-1.5-0.3-0.5-0.3-0.4-0.4-0.3-0.4-0.3-0.6-0.2-1.1 0.1-1.6 0.5-4.8 2.4-1.4 1-0.9 0.9-1.1 1.6-1 1.2-1.3 1.1-2.5 0.8-1.6 0.1-1.4-1-0.9-1.1-3.3-1.1-10.6 3.6-3.5 0-2.9-2-4.7-1.4-1.8-0.1-4.1 1.2-13 10.5-3.2 0.7-11.5-0.2-3.1-0.7-6.9-3.4-7.3-3.7-2.5-0.3-3.7 2.8-4.9 4.6-0.2 1.2 0.6 5.4-0.9 3.6-5 9.2-2.5-0.7-3.4-0.5-5.7 0-0.7-0.1-1.2-1.4-1.8-2.6-3.4-6.5-2-2.8-1.3-2.3-0.6-0.8 1.7-3.7 4.8-5.4 2.7-1.2 4.6-0.2 1-0.2 0.9-0.3 0.4-1.1 0.4-4.4-0.5-0.7-1.1-0.6-2.7-0.4-2.6-1.4-1.7-2.4-9.5-13.1-0.5-1-0.2-0.9 0.8-0.3 1-0.2 10.4-0.2-0.2-3-9.5-14.4-8-11.4 5.9-2.7 2.3-0.3 4.9 0.2 7.5 2.9 2.5 0.5 13.6-2.1 6.9 0.5 14.8-3.5 8.7-1 3.2-0.7 25.4-8.6 25.1-10.1 5.5-4.2 3.1-1.6 5-1.1 6.6 0.7 2.1 0.5 5 2.7 0.6 0.4 0.7 0.6 1.1 1.2 0.5 0.8 0.3 0.6 0.2 0.7 0.1 1.4-0.5 5.5-0.3 1.5-0.1 0.5-0.6 1-0.3 0.4-0.4 0.4-0.9 0.6-2.7 1.1-0.2 0.9 0 1.4 1.7 7.1 0.1 1.4-0.2 2.1 0.3 3.5 1.3 6.2 0.4 1.3 4.2 5 0.9 0.7 1.6 0.7 0.6 0.4 0.1 0.1-3 2.5-2.5 4-3.4 10.2 4.1 3.9 0 5.9-2.6 6.2-1.7 2.4z" },
+    GT20: { n: "Chiquimula", d: "M657.9 801.9l-0.1-0.1-2.8-3.3-0.2-0.5-0.2-0.3 0-0.8 0.1-1.2 0.6-2.5 0.6-2.2 0.7-1.4 1-3 0.2-1.2 0.1-1-0.6-1.5-3-3.3-1.4-0.5-16.1 0.7-0.7-0.3-0.8-0.5-2.4-3.6-1.1-2-1.2-1.8-1.5-1.6-0.4-0.4-2.7-1-8.6-0.9-2.3 0.1-0.8-0.1 0.8-4.8 7.7-21.4-0.9-2.6-0.7-1.8-0.3-1.2 0.1-1.4 0.1-0.6 0.2-0.6 0.4-2.7 0.1-0.7-0.5-2.6-0.8-2.3-1.1-1.8-2.8-0.8-10.1 0.5 5-9.2 0.9-3.6-0.6-5.4 0.2-1.2 4.9-4.6 3.7-2.8 2.5 0.3 7.3 3.7 6.9 3.4 3.1 0.7 11.5 0.2 3.2-0.7 13-10.5 4.1-1.2 1.8 0.1 4.7 1.4 2.9 2 3.5 0 10.6-3.6 3.3 1.1 0.9 1.1 1.4 1 1.6-0.1 2.5-0.8 1.3-1.1 1-1.2 1.1-1.6 0.9-0.9 1.4-1 4.8-2.4 1.6-0.5 1.1-0.1 0.6 0.2 0.4 0.3 0.4 0.3 0.3 0.4 0.3 0.5 0.9 1.5 0.6 1.6 0.3 0.5 0.2 0.5 0.3 0.5 0.7 1.5 0 0.2-2 2.9-5.3 4.6-1.7 2.6-0.2 4.2 1 3.1 1.9 2.8 4.3 5.3 2 3.3 4 9.8 2.4 3 1.9 1.8 0.9 1.4 0.4 0.5 0.4 3.8-0.5 1.7-2.3 2.5-0.8 1.4 0.9 11.2-0.1 3.9-1 3.7-2.5 2.4-2.5 0.2-5.4-1.9-2.6-0.5-3.6 0.5-1.7 1.1-1 1.7-1.9 2.4-6.7 5.8-3 3.3-2.2 3.8-1.7 1.9-4.8 1.2-2.2 1.5-1.4 2.9-0.3 3.5 0.4 6.8-6.2-4.5-0.2 0.5-1.1 1.7-0.3-4.3-2.2 0.9-4.9 5-3.3 0.7-2.4-0.9-2.5-1.3-3.4-0.4-2.3 1z" },
+    GT21: { n: "Jalapa", d: "M617.4 767.7l1.6 4.9 0 2.2-0.1 0.7-4.6 2.7-13.4 6.5-0.4-0.2-2.4-1.8-1.4-1.5-0.7-0.9-0.8-0.6-1.5-0.3-4.2 1.1-3.5 2.4-4.1 2.7-4.4 3-1.8 2.7-1.1 7.6-9.6-7.6-0.6-0.3-0.6-0.2-0.6-0.1-0.9-0.1-0.9 0.1-1.5 0.3-0.8 0.3-0.7 0.3-0.8 1-5.1 6.8-13.6 0.1-5.6-4.3-7.7-6.3-1.9-3.1-1.1-5.2-23.5 4.5-2.8 0.5-2.9 0.4-0.5-0.3-0.8-0.6-0.5-0.6-2.7-2.8 0.4-6.9 0.2-1.1 0.3-1.3 0.9-0.7 0.5-1 0.6-1.8 0.1-3.5 1.2-5.2 7-5.9 1.8-1.2 0.4-0.3 1-1.6 1.9-4.9 0.4-0.2 1.5-0.6 3.5-2 0.8-2.4 0.2-1.4 0.4-0.7 0.9-0.5 5.6-2.2 7.2-2.4 3.3 0.4 2.6 1.3 1.7 0.5 1-0.5 0.8-0.8 6.7-12.5 4.9-1.5 7.2-0.8 6.5-2.4 6.2-3.4 7.5-9.5 2.9-2.6 1.2-0.5 1.3-0.2 2.7-0.2 3.4 0.3-1.7 3.7 0.6 0.8 1.3 2.3 2 2.8 3.4 6.5 1.8 2.6 1.2 1.4 0.7 0.1 5.7 0 3.4 0.5 2.5 0.7 10.1-0.5 2.8 0.8 1.1 1.8 0.8 2.3 0.5 2.6-0.1 0.7-0.4 2.7-0.2 0.6-0.1 0.6-0.1 1.4 0.3 1.2 0.7 1.8 0.9 2.6-7.7 21.4-0.8 4.8 0.8 0.1 2.3-0.1z" },
+    GT22: { n: "Jutiapa", d: "M498.5 941.9l0.8-3 1.4-5.5 0-3.9-0.1-1.1-0.4-1.1-2.7-5-2.1-7.7-0.7-1.8-0.7-1-1-0.6-0.5-0.3-0.3-0.4-0.3-0.5-1.5-9.1-0.4-0.9-1.1-1.1-0.7-0.9-0.7-1.6-0.1-0.8-0.1-1.2 0.3-1.2 0.3-0.8 1.3-1 3.9-1.1 6 3.5 4.1 3.5 1.1 0.4 8.4 2.1 2.2 0.8 0.9 0 0.7-0.2 3.3-2.3 3.4-6.3 1.3-2.5 0.7-0.5 1.3-0.7 2.4-0.7 2.9-0.6 0.5-0.2 1.2-1.3 3.7-5.4 1.2-2.4 0.6-1.9 0.2-1.3 0-0.7-0.9-8.7 0.3-4.9-1.1-2.2-5.2-5.1-6.6-5.5-1.5-1.5-0.8-0.7-1.3-0.5-9.9-2.8-3.1-2.2 7.6-19 2.9-2.5 0.4-0.4 7.5-1.5 2.4 0.2 1 0.5 1.1 0.4 0.5-0.3 0.2-0.6-0.7-4.2 3-0.4 3.9-12.2 13.6-0.1 5.1-6.8 0.8-1 0.7-0.3 0.8-0.3 1.5-0.3 0.9-0.1 0.9 0.1 0.6 0.1 0.6 0.2 0.6 0.3 9.6 7.6 1.1-7.6 1.8-2.7 4.4-3 4.1-2.7 3.5-2.4 4.2-1.1 1.5 0.3 0.8 0.6 0.7 0.9 1.4 1.5 2.4 1.8 0.4 0.2 13.4-6.5 4.6-2.7 0.1-0.7 0-2.2-1.6-4.9 8.6 0.9 2.7 1 0.4 0.4 1.5 1.6 1.2 1.8 1.1 2 2.4 3.6 0.8 0.5 0.7 0.3 16.1-0.7 1.4 0.5 3 3.3 0.6 1.5-0.1 1-0.2 1.2-1 3-0.7 1.4-0.6 2.2-0.6 2.5-0.1 1.2 0 0.8 0.2 0.3 0.2 0.5 2.8 3.3 0.1 0.1-1.5 0.6-5.3 6.4-2.9 2.1-0.6-4.1-2.3-2.3-3.2-0.3-3 2.3-1.4 3.5 0.9 2.4 1.6 2.2 0.6 2.6-1.4 2.2-2.1 1.5-1.3 1.9 1.3 3.1 4.5 0.6 1.5 0.7 1.2 1.1 0.7 0.9 1.2 2.3 0.3 1.1 0.4 3.4 0.4 1.4 0.9 0.9 2.7 1.4 0.7 0.9 0 3.4-1.3 1.4-23 5.5-5.7 2.6-5.4 4.2-4.3 4.7-9.1 16.2-0.6 1.8 0.2 1.7 1.4 3.2 0.1 0.4 0 1.2-3.2 1.7-3.1-1.3-5.6-4.3-3.9-1.1-3.1 0.3-9.5 3.6-2.3 1.5-4.6 4.6-20.5 14.4-3.2 2.8-1.8 3.1-1.4 3.2-2 3.1-2.7 2.1-5.8 3.2-2.6 2.6-1.7 3.2-1.1 3.5-0.6 3.6 0.1 3.4 3.5 14.3-30.5-12.6z" }
+  }
+};
+// MAPA:GEOMETRIA:FIN
+</script>
+
+</body>
+</html>

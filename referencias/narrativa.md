@@ -2,7 +2,7 @@
 
 ## Arco
 
-`gancho → contexto → giro → impacto → cierre` en 4–8 tuits. Exactamente un
+`gancho → contexto → giro → impacto → cierre` en 4–21 tuits (en hilos largos, varios `contexto` e `impacto`, un solo `giro`). Exactamente un
 `giro` (el hecho que cambia la lectura); el `impacto` traduce a escala humana
 (N de cada M hogares, per cápita, «lo que cuesta llenar el tanque»); el cierre
 aterriza la tesis, reconoce lo que NO se afirma y lista las fuentes. **La

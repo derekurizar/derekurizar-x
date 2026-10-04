@@ -1,0 +1,1713 @@
+{
+  "slug": "desnutricion-aguda-2026",
+  "fecha": "2026-10-03",
+  "tesis": "A la semana 36, 2026 acumula 15,454 casos de desnutrición aguda en menores de 5 años, 7.58% menos que 2025 a la misma semana; pero los casos severos casi no bajaron (2,678 frente a 2,684) y las muertes confirmadas son las mismas (34), con 43 aún en análisis.",
+  "ancla_id": "sem-c04",
+  "paleta": "terracota",
+  "hook_tipo": "mito_vs_dato",
+  "cifras": [
+    {
+      "id": "dep-c01",
+      "concepto": "Casos acumulados de desnutrición aguda en menores de 5 años por departamento de residencia, 2026 (22 departamentos)",
+      "unidad": "casos",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "MSPAS/DEGR, Situación epidemiológica de la desnutrición aguda en menores de 5 años, SE36 2026 (SIGSA 18, datos al 16-sep-2026)",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+      "periodo": "SE1–SE36 2026 (hasta 12-sep-2026; datos al 16-sep-2026)",
+      "n_puntos": 22,
+      "valor": 15439,
+      "veredicto": "verificada",
+      "fuente_2": "SESAN/SIINSAN (mismo SIGSA 18, otra institución) y cuadro por DDRISS del PDF",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+        "cita": "Suchitepéquez 16 1431 224.77 38 1384 219.69 ... Guatemala 42 2633 83.57 55 2506 80.38 ... Total País 216 16703 91.81 335 15439 85.76",
+        "archivo_local": "sesiones/_descargas/morbilidad-por-desnutricion-aguda-semana-36-2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala",
+          "valor": 2506
+        },
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 1508
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 1384
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 1211
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 1150
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 777
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 759
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 665
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 617
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 569
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 498
+        },
+        {
+          "nombre": "Petén",
+          "valor": 493
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 470
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 442
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 397
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 391
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 389
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 387
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 244
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 237
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 182
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 163
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dep-c02",
+      "concepto": "Tasa acumulada de desnutrición aguda por 10,000 menores de 5 años por departamento de residencia, 2026 (22 departamentos)",
+      "unidad": "casos por 10,000 menores de 5 años",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "MSPAS/DEGR, Situación epidemiológica de la desnutrición aguda en menores de 5 años, SE36 2026 (SIGSA 18, datos al 16-sep-2026)",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+      "periodo": "SE1–SE36 2026 (hasta 12-sep-2026; datos al 16-sep-2026)",
+      "n_puntos": 22,
+      "valor": 219.69,
+      "veredicto": "verificada",
+      "fuente_2": "Contraste aritmético entre cuadros 2025/2026 del PDF + conclusión textual MSPAS",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+        "cita": "Suchitepéquez 16 1431 224.77 38 1384 219.69 -3.28 ... Total País 15439 85.76. El riesgo más alto se presenta en Suchitepequez, Escuintla y Zacapa.",
+        "archivo_local": "sesiones/_descargas/morbilidad-por-desnutricion-aguda-semana-36-2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 219.69
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 152.42
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 140.31
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 128.87
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 127.52
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 125.45
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 123.73
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 101.49
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 93.73
+        },
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 92.62
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 86.88
+        },
+        {
+          "nombre": "Guatemala",
+          "valor": 80.38
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 79.24
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 77.85
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 76.43
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 70.0
+        },
+        {
+          "nombre": "Petén",
+          "valor": 68.48
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 56.62
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 56.06
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 48.3
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 42.8
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 33.95
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_3.png"
+      ]
+    },
+    {
+      "id": "dep-c03",
+      "concepto": "Porcentaje de los casos 2026 (a SE36) que concentran los 5 departamentos con más casos (Guatemala, Alta Verapaz, Suchitepéquez, San Marcos, Escuintla)",
+      "unidad": "% de casos",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "MSPAS/DEGR, Situación epidemiológica de la desnutrición aguda en menores de 5 años, SE36 2026 (SIGSA 18, datos al 16-sep-2026)",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+      "periodo": "SE1–SE36 2026 (hasta 12-sep-2026; datos al 16-sep-2026)",
+      "n_puntos": 1,
+      "valor": 50.3,
+      "veredicto": "verificada",
+      "fuente_2": "Cálculo propio verificado: (2506+1508+1384+1211+1150)/15439",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+        "cita": "Guatemala 2633 83.57 55 2506 80.38 | Alta Verapaz 1587 96.46 17 1508 | Suchitepéquez 1431 224.77 38 1384 | San Marcos 1262 89.58 11 1211 | Escuintla 1612 211.43 22 1150 | Total País 15439",
+        "archivo_local": "sesiones/_descargas/morbilidad-por-desnutricion-aguda-semana-36-2026.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dep-c04",
+      "concepto": "Variación % de casos acumulados 2026 vs 2025 a la SE36 por departamento de residencia (22 departamentos)",
+      "unidad": "% de variación de casos acumulados",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "MSPAS/DEGR, Situación epidemiológica de la desnutrición aguda en menores de 5 años, SE36 2026 (SIGSA 18, datos al 16-sep-2026)",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+      "periodo": "SE1–SE36 2026 (hasta 12-sep-2026; datos al 16-sep-2026)",
+      "n_puntos": 22,
+      "valor": 20.3,
+      "veredicto": "verificada",
+      "fuente_2": "Recálculo desde casos acumulados 2025 (197) y 2026 (237) del mismo cuadro",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+        "cita": "05 departamentos presentan incremento de casos acumulados con respecto al mismo periodo del año anterior, hasta el momento el mayor incremento se registra con 20.30% en El Progreso",
+        "archivo_local": "sesiones/_descargas/morbilidad-por-desnutricion-aguda-semana-36-2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "El Progreso",
+          "valor": 20.3
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 17.49
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 10.41
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 3.7
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 1.84
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 0.0
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": -1.98
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": -3.28
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": -4.04
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": -4.44
+        },
+        {
+          "nombre": "Guatemala",
+          "valor": -4.82
+        },
+        {
+          "nombre": "Alta Verapaz",
+          "valor": -4.98
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": -6.37
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": -8.47
+        },
+        {
+          "nombre": "Petén",
+          "valor": -8.87
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": -12.94
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": -18.01
+        },
+        {
+          "nombre": "Izabal",
+          "valor": -18.45
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": -20.53
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": -28.66
+        },
+        {
+          "nombre": "Sololá",
+          "valor": -31.51
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": -33.33
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_4.png"
+      ]
+    },
+    {
+      "id": "dep-c05",
+      "concepto": "Escala humana: tasa de desnutrición aguda en Suchitepéquez, departamento más afectado (casos por 10,000 menores de 5 años), 2026 a SE36",
+      "unidad": "casos por 10,000 menores de 5 años",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "MSPAS/DEGR, Situación epidemiológica de la desnutrición aguda en menores de 5 años, SE36 2026 (SIGSA 18, datos al 16-sep-2026)",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+      "periodo": "SE1–SE36 2026 (hasta 12-sep-2026; datos al 16-sep-2026)",
+      "n_puntos": 1,
+      "valor": 219.69,
+      "veredicto": "verificada",
+      "fuente_2": "Mismo dato que dep-c02; conclusión textual MSPAS",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+        "cita": "El comportamiento territorial evidencia mayor riesgo de desnutrición aguda en Suchitepéquez, Retalhuleu y Escuintla | Suchitepéquez ... 1384 219.69",
+        "archivo_local": "sesiones/_descargas/morbilidad-por-desnutricion-aguda-semana-36-2026.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dep-c06",
+      "concepto": "Municipios de 'muy alta carga' de casos acumulados de desnutrición aguda a SE36 2026 (casos)",
+      "unidad": "casos",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "SESAN/SIINSAN con datos DEGR/MSPAS, SE36 2026",
+      "url": "https://portal.siinsan.gob.gt/desnutricion-aguda/",
+      "periodo": "SE1–SE36 2026 (hasta 12-sep-2026; datos al 16-sep-2026)",
+      "n_puntos": 4,
+      "valor": 608,
+      "veredicto": "verificada",
+      "fuente_2": "MSPAS cuadro municipal (Guatemala 608, Villa Nueva 400, San Juan Sacatepéquez 351, Mazatenango 327)",
+      "evidencia": {
+        "url": "https://portal.siinsan.gob.gt/desnutricion-aguda/",
+        "cita": "La categoría de muy alta carga contiene 4 municipios, con media de 421.5 ± 128.0, mínimo de 327 y máximo de 608 casos acumulados.",
+        "archivo_local": "sesiones/_descargas/siinsan-desnutricion-aguda-se36-2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala (municipio)",
+          "valor": 608
+        },
+        {
+          "nombre": "Villa Nueva",
+          "valor": 400
+        },
+        {
+          "nombre": "San Juan Sacatepéquez",
+          "valor": 351
+        },
+        {
+          "nombre": "Mazatenango",
+          "valor": 327
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dep-c07",
+      "concepto": "Porcentaje de la carga nacional de casos que acumulan los 28 municipios de alta y muy alta carga, 2026 a SE36",
+      "unidad": "% de casos",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "SESAN/SIINSAN con datos DEGR/MSPAS, SE36 2026",
+      "url": "https://portal.siinsan.gob.gt/desnutricion-aguda/",
+      "periodo": "SE1–SE36 2026 (hasta 12-sep-2026; datos al 16-sep-2026)",
+      "n_puntos": 1,
+      "valor": 36.3,
+      "veredicto": "verificada",
+      "fuente_2": "SESAN/SIINSAN es la fuente; contraste con cuadro municipal MSPAS",
+      "evidencia": {
+        "url": "https://portal.siinsan.gob.gt/desnutricion-aguda/",
+        "cita": "la lista de los 28 municipios que ... clasifican en las dos categorías de mayor carga acumulada de casos (alta y muy alta) y han acumulado el 36.3% de toda la carga del país.",
+        "archivo_local": "sesiones/_descargas/siinsan-desnutricion-aguda-se36-2026.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dep-c08",
+      "concepto": "Municipios con mayor tasa acumulada de desnutrición aguda por 10,000 menores de 5 años, 2026 a SE36",
+      "unidad": "casos por 10,000 menores de 5 años",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "MSPAS/DEGR, Situación epidemiológica de la desnutrición aguda en menores de 5 años, SE36 2026 (SIGSA 18, datos al 16-sep-2026)",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+      "periodo": "SE1–SE36 2026 (hasta 12-sep-2026; datos al 16-sep-2026)",
+      "n_puntos": 9,
+      "valor": 456.7,
+      "veredicto": "verificada",
+      "fuente_2": "Cuadro municipal MSPAS (Mazatenango 327 casos, 456.70) y SIINSAN (Mazatenango en muy alta carga)",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+        "cita": "las tasas de incidencia acumulada identifican mayor riesgo en Mazatenango, Masagua, Cuyotenango, San Lorenzo, Guanagazapa, Río Bravo, Ocós, Santa Ana Huista y Champerico con tasas entre 5 y 3 veces la",
+        "archivo_local": "sesiones/_descargas/morbilidad-por-desnutricion-aguda-semana-36-2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Mazatenango (Suchitepéquez)",
+          "valor": 456.7
+        },
+        {
+          "nombre": "Masagua (Escuintla)",
+          "valor": 381.32
+        },
+        {
+          "nombre": "Cuyotenango (Suchitepéquez)",
+          "valor": 377.79
+        },
+        {
+          "nombre": "San Lorenzo (Suchitepéquez)",
+          "valor": 334.06
+        },
+        {
+          "nombre": "Guanagazapa (Escuintla)",
+          "valor": 324.57
+        },
+        {
+          "nombre": "Río Bravo (Suchitepéquez)",
+          "valor": 290.13
+        },
+        {
+          "nombre": "Ocós (San Marcos)",
+          "valor": 289.32
+        },
+        {
+          "nombre": "Santa Ana Huista (Huehuetenango)",
+          "valor": 287.0
+        },
+        {
+          "nombre": "Champerico (Retalhuleu)",
+          "valor": 265.91
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dep-c09",
+      "concepto": "Municipios con tasa acumulada de desnutrición aguda por encima del promedio nacional, 2026 a SE36",
+      "unidad": "municipios",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "MSPAS/DEGR, Situación epidemiológica de la desnutrición aguda en menores de 5 años, SE36 2026 (SIGSA 18, datos al 16-sep-2026)",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+      "periodo": "SE1–SE36 2026 (hasta 12-sep-2026; datos al 16-sep-2026)",
+      "n_puntos": 1,
+      "valor": 152,
+      "veredicto": "verificada",
+      "fuente_2": "Frase textual del PDF y conteo propio sobre cuadro municipal",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+        "cita": "con tasas entre 5 y 3 veces la tasa a nivel nacional; quedando 152 municipios arriba del promedio nacional.",
+        "archivo_local": "sesiones/_descargas/morbilidad-por-desnutricion-aguda-semana-36-2026.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dep-c10",
+      "concepto": "Tasa acumulada por 10,000 menores de 5 años por DDRISS (29 áreas de salud, lugar de detección), 2026 a SE36",
+      "unidad": "casos por 10,000 menores de 5 años",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "MSPAS/DEGR, Situación epidemiológica de la desnutrición aguda en menores de 5 años, SE36 2026 (SIGSA 18, datos al 16-sep-2026)",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+      "periodo": "SE1–SE36 2026 (hasta 12-sep-2026; datos al 16-sep-2026)",
+      "n_puntos": 29,
+      "valor": 218.73,
+      "veredicto": "verificada",
+      "fuente_2": "Cuadro por DDRISS (lugar de detección) vs cuadro por residencia del mismo PDF",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+        "cita": "Suchitepéquez 1420 223.04 1378 218.73 ... Total País 16721 91.90 15454 85.84 ... las que poseen mayor riesgo ... son: Suchitepéquez, Sacatepéquez y Escuintla",
+        "archivo_local": "sesiones/_descargas/morbilidad-por-desnutricion-aguda-semana-36-2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 218.73,
+          "casos": 1378
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 150.16,
+          "casos": 468
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 148.98,
+          "casos": 1124
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 141.03,
+          "casos": 391
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 129.13,
+          "casos": 499
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 125.14,
+          "casos": 624
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 124.83,
+          "casos": 232
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 104.64,
+          "casos": 399
+        },
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 93.24,
+          "casos": 1518
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 93.09,
+          "casos": 439
+        },
+        {
+          "nombre": "Guatemala Sur",
+          "valor": 88.05,
+          "casos": 766
+        },
+        {
+          "nombre": "Guatemala Nor Occidente",
+          "valor": 84.94,
+          "casos": 730
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 84.87,
+          "casos": 1183
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 77.85,
+          "casos": 470
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 77.84,
+          "casos": 390
+        },
+        {
+          "nombre": "Petén Norte",
+          "valor": 77.67,
+          "casos": 149
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 77.11,
+          "casos": 574
+        },
+        {
+          "nombre": "Ixil",
+          "valor": 75.08,
+          "casos": 155
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 73.47,
+          "casos": 698
+        },
+        {
+          "nombre": "Guatemala Nor Oriente",
+          "valor": 73.17,
+          "casos": 363
+        },
+        {
+          "nombre": "Guatemala Central",
+          "valor": 67.26,
+          "casos": 600
+        },
+        {
+          "nombre": "Petén Sur Occidental",
+          "valor": 67.21,
+          "casos": 191
+        },
+        {
+          "nombre": "Petén Sur Oriental",
+          "valor": 63.96,
+          "casos": 156
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 55.46,
+          "casos": 239
+        },
+        {
+          "nombre": "El Quiché",
+          "valor": 53.39,
+          "casos": 545
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 48.3,
+          "casos": 182
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 42.85,
+          "casos": 760
+        },
+        {
+          "nombre": "Ixcán",
+          "valor": 42.17,
+          "casos": 67
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 34.16,
+          "casos": 164
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dep-c11",
+      "concepto": "Tasa nacional acumulada de desnutrición aguda por 10,000 menores de 5 años, 2026 a SE36 (referencia para el mapa)",
+      "unidad": "casos por 10,000 menores de 5 años",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "MSPAS/DEGR, Situación epidemiológica de la desnutrición aguda en menores de 5 años, SE36 2026 (SIGSA 18, datos al 16-sep-2026)",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+      "periodo": "SE1–SE36 2026 (hasta 12-sep-2026; datos al 16-sep-2026)",
+      "n_puntos": 1,
+      "valor": 85.84,
+      "veredicto": "verificada",
+      "fuente_2": "SESAN/SIINSAN: 15,454 casos acumulados a SE36",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+        "cita": "A la semana epidemiológica 36 del 2026, SIGSA web registra 15,454 casos acumulados de desnutrición aguda en menores de 5 años (tasa 85.84 por 10,000 menores de 5 años)",
+        "archivo_local": "sesiones/_descargas/morbilidad-por-desnutricion-aguda-semana-36-2026.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_3.png"
+      ]
+    },
+    {
+      "id": "gra-c01",
+      "concepto": "Casos de desnutrición aguda en menores de 5 años 2026 a la SE36, por gravedad (moderada vs severa)",
+      "unidad": "casos acumulados",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "MSPAS/DEGR, Sala situacional de desnutrición aguda (SIGSA 18)",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+      "periodo": "SE1–SE36 2026 (hasta 12-sep-2026; datos al 16-sep-2026)",
+      "n_puntos": 2,
+      "valor": 15454,
+      "veredicto": "verificada",
+      "fuente_2": "MSPAS/DEGR morbilidad SE36 2026 (tabla: total 15,454; moderada 12,776; severa 2,678)",
+      "evidencia": {
+        "url": "https://portal.siinsan.gob.gt/desnutricion-aguda/",
+        "cita": "se ha acumulado el registro administrativo de 15,454 casos de desnutrición aguda en menores de cinco años en todo el país, de los cuales 2,678 (17.3%) han sido clasificados como graves",
+        "archivo_local": "sesiones/_descargas/siinsan-desnutricion-aguda-se36-2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Moderada",
+          "valor": 12776
+        },
+        {
+          "nombre": "Severa (antropométrica y clínica)",
+          "valor": 2678
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_5.png"
+      ]
+    },
+    {
+      "id": "gra-c02",
+      "concepto": "Casos severos frente a moderados, 2026 vs 2025 a la misma semana (SE36)",
+      "unidad": "casos acumulados severos",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "MSPAS/DEGR, Sala situacional de desnutrición aguda (SIGSA 18)",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+      "periodo": "SE1–SE36, 2025 y 2026",
+      "n_puntos": 4,
+      "valor": 2678,
+      "veredicto": "verificada",
+      "fuente_2": "SIINSAN sala situacional SE36 (2,678 = 17.3% graves)",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+        "cita": "Desnutrición aguda severa total (antropométrica y clínica) 42 2684 14.75 88 2678 14.87 46 -6 -0.22",
+        "archivo_local": "sesiones/_descargas/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf"
+      },
+      "partes": [
+        {
+          "nombre": "Severa 2025 (SE36)",
+          "valor": 2684
+        },
+        {
+          "nombre": "Severa 2026 (SE36)",
+          "valor": 2678
+        },
+        {
+          "nombre": "Moderada 2025 (SE36)",
+          "valor": 14037
+        },
+        {
+          "nombre": "Moderada 2026 (SE36)",
+          "valor": 12776
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_5.png"
+      ]
+    },
+    {
+      "id": "gra-c03",
+      "concepto": "Muertes confirmadas por desnutrición aguda (causa básica) en menores de 5 años, 2026 a SE36, frente a 2025 a la misma semana",
+      "unidad": "niños fallecidos (confirmados)",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "MSPAS/DEGR, Mesa Técnica de Análisis de Mortalidad por Desnutrición Aguda",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/mortalidad-por-desnutricion-aguda-semana-36-2026.pdf",
+      "periodo": "2026 hasta SE36 (datos al 16-sep-2026)",
+      "n_puntos": 4,
+      "valor": 34,
+      "veredicto": "verificada",
+      "fuente_2": "SIINSAN SE36 (34 confirmadas de 199; 156 analizadas, 78.4%) + Prensa Libre (32 al 5-sep)",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/mortalidad-por-desnutricion-aguda-semana-36-2026.pdf",
+        "cita": "Casos confirmados 34 34 · Casos en investigación 62 43 · Total, casos sospechosos 191 199 (columnas: semana 36-2025, semana 36-2026*)",
+        "archivo_local": "sesiones/_descargas/mortalidad-por-desnutricion-aguda-semana-36-2026.pdf"
+      },
+      "partes": [
+        {
+          "nombre": "Confirmadas",
+          "valor": 34
+        },
+        {
+          "nombre": "En investigación",
+          "valor": 43
+        },
+        {
+          "nombre": "Descartadas",
+          "valor": 122
+        },
+        {
+          "nombre": "Total sospechosas notificadas",
+          "valor": 199
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_6.png",
+        "tuit_9.png"
+      ]
+    },
+    {
+      "id": "gra-c04",
+      "concepto": "Estado del análisis de muertes sospechosas a la SE36 de 2025 (comparador)",
+      "unidad": "niños fallecidos (confirmados)",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "MSPAS/DEGR, Mesa Técnica de Análisis de Mortalidad por Desnutrición Aguda",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/mortalidad-por-desnutricion-aguda-semana-36-2026.pdf",
+      "periodo": "2025 hasta SE36",
+      "n_puntos": 4,
+      "valor": 34,
+      "veredicto": "verificada",
+      "fuente_2": "SIINSAN SE36 (34 confirmadas entre 191 analizados en 2025; rendimiento 67.5%)",
+      "evidencia": {
+        "url": "https://portal.siinsan.gob.gt/desnutricion-aguda/",
+        "cita": "Si bien a esta misma semana del año anterior, también se habían confirmado 34 casos entre 191 sometidos a análisis, el rendimiento analítico ese año era, como dicho anteriormente, de 67.5%",
+        "archivo_local": "sesiones/_descargas/siinsan-desnutricion-aguda-se36-2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Confirmadas",
+          "valor": 34
+        },
+        {
+          "nombre": "En investigación",
+          "valor": 62
+        },
+        {
+          "nombre": "Descartadas",
+          "valor": 95
+        },
+        {
+          "nombre": "Total sospechosas notificadas",
+          "valor": 191
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_6.png"
+      ]
+    },
+    {
+      "id": "gra-c05",
+      "concepto": "Muertes confirmadas por desnutrición aguda 2026 por DDRISS (jurisdicción sanitaria)",
+      "unidad": "niños fallecidos (confirmados)",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "MSPAS/DEGR, Mesa Técnica de Análisis de Mortalidad por Desnutrición Aguda",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/mortalidad-por-desnutricion-aguda-semana-36-2026.pdf",
+      "periodo": "2026 hasta SE36",
+      "n_puntos": 12,
+      "valor": 9,
+      "veredicto": "verificada",
+      "fuente_2": "SIINSAN SE36 tabla por DDRISS/mes (Alta Verapaz 9, Huehuetenango 7, San Marcos 7, Escuintla 3; total 34)",
+      "evidencia": {
+        "url": "https://portal.siinsan.gob.gt/desnutricion-aguda/",
+        "cita": "ALTA VERAPAZ 5 0 1 0 1 1 1 0 9 HUEHUETENANGO 1 0 1 0 1 4 0 0 7 SAN MARCOS 1 2 1 0 1 2 0 0 7 ESCUINTLA 0 1 1 0 1 0 0 0 3 ... Total por mes 10 4 4 2 4 8 1 1 34",
+        "archivo_local": "sesiones/_descargas/siinsan-desnutricion-aguda-se36-2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 9
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 7
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 7
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 3
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 1
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 1
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 1
+        },
+        {
+          "nombre": "Petén Sur Occidente",
+          "valor": 1
+        },
+        {
+          "nombre": "Petén Sur Oriente",
+          "valor": 1
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 1
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 1
+        },
+        {
+          "nombre": "Migrante (Honduras)",
+          "valor": 1
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_9.png"
+      ]
+    },
+    {
+      "id": "gra-c06",
+      "concepto": "Muertes confirmadas por desnutrición aguda en menores de 5 años al cierre de cada año",
+      "unidad": "niños fallecidos (confirmados, cierre de año)",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "MSPAS/DEGR, Mesa Técnica de Análisis de Mortalidad por Desnutrición Aguda",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2025/mortalidad-desnutricion-aguda-semana-53-2025.pdf",
+      "periodo": "2020–2025",
+      "n_puntos": 6,
+      "valor": 75,
+      "veredicto": "verificada",
+      "fuente_2": "PDFs MSPAS de cierre 2021, 2023 y SE53-2025 (85, 106, 93, 107, 126, 75)",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2025/mortalidad-desnutricion-aguda-semana-53-2025.pdf",
+        "cita": "Casos a la semana 52-2024 / 53-2025 · Total, casos sospechosos 428 323 · Casos descartados 302 248 · Casos confirmados 126 75 · Casos en investigación 0 0",
+        "archivo_local": "sesiones/_descargas/mortalidad-desnutricion-aguda-semana-53-2025.pdf"
+      },
+      "serie": [
+        {
+          "p": "2020",
+          "v": 85
+        },
+        {
+          "p": "2021",
+          "v": 106
+        },
+        {
+          "p": "2022",
+          "v": 93
+        },
+        {
+          "p": "2023",
+          "v": 107
+        },
+        {
+          "p": "2024",
+          "v": 126
+        },
+        {
+          "p": "2025",
+          "v": 75
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_6.png"
+      ]
+    },
+    {
+      "id": "gra-c07",
+      "concepto": "Muertes sospechosas 2026 aún pendientes de análisis, por mes de ocurrencia",
+      "unidad": "defunciones pendientes de análisis",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "MSPAS/DEGR, Mesa Técnica de Análisis de Mortalidad por Desnutrición Aguda",
+      "url": "https://portal.siinsan.gob.gt/desnutricion-aguda/",
+      "periodo": "enero–agosto 2026 (corte SE36)",
+      "n_puntos": 8,
+      "valor": 16,
+      "veredicto": "verificada",
+      "fuente_2": "PDF MSPAS SE36 (en investigación 43) + tabla SIINSAN por mes (0,0,0,0,4,10,13,16 = 43)",
+      "evidencia": {
+        "url": "https://portal.siinsan.gob.gt/desnutricion-aguda/",
+        "cita": "Confirmadas 10 4 4 2 4 8 1 1 34 Descartadas 23 17 11 23 26 14 6 2 122 Pendientes de análisis 0 0 0 0 4 10 13 16 43",
+        "archivo_local": "sesiones/_descargas/siinsan-desnutricion-aguda-se36-2026.txt"
+      },
+      "serie": [
+        {
+          "p": "ene",
+          "v": 0
+        },
+        {
+          "p": "feb",
+          "v": 0
+        },
+        {
+          "p": "mar",
+          "v": 0
+        },
+        {
+          "p": "abr",
+          "v": 0
+        },
+        {
+          "p": "may",
+          "v": 4
+        },
+        {
+          "p": "jun",
+          "v": 10
+        },
+        {
+          "p": "jul",
+          "v": 13
+        },
+        {
+          "p": "ago",
+          "v": 16
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_7.png"
+      ]
+    },
+    {
+      "id": "gra-c08",
+      "concepto": "Muertes confirmadas por desnutrición aguda 2026 por grupo de edad",
+      "unidad": "niños fallecidos (confirmados)",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "MSPAS/DEGR, Mesa Técnica de Análisis de Mortalidad por Desnutrición Aguda",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/mortalidad-por-desnutricion-aguda-semana-36-2026.pdf",
+      "periodo": "2026 hasta SE36",
+      "n_puntos": 6,
+      "valor": 14,
+      "veredicto": "verificada",
+      "fuente_2": "PDF MSPAS SE36 (gráfico por edad: 8, 7, 14, 1, 2, 2 = 34)",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/mortalidad-por-desnutricion-aguda-semana-36-2026.pdf",
+        "cita": "Casos confirmados de mortalidad por desnutrición aguda por edad y sexo, Guatemala, 2026* ... F: 20 = 58.8% M: 14 = 41.2% ... Tasa de Letalidad: (0,22% (34/15,454) n = 34",
+        "archivo_local": "sesiones/_descargas/mortalidad-por-desnutricion-aguda-semana-36-2026.pdf"
+      },
+      "partes": [
+        {
+          "nombre": "<6 meses",
+          "valor": 8
+        },
+        {
+          "nombre": "6 a <12 meses",
+          "valor": 7
+        },
+        {
+          "nombre": "12 a <24 meses",
+          "valor": 14
+        },
+        {
+          "nombre": "24 a <36 meses",
+          "valor": 1
+        },
+        {
+          "nombre": "36 a 48 meses",
+          "valor": 2
+        },
+        {
+          "nombre": ">48 meses",
+          "valor": 2
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_8.png"
+      ]
+    },
+    {
+      "id": "gra-c09",
+      "concepto": "Tasa nacional de recuperación de niños con desnutrición aguda en seguimiento, enero–agosto 2026",
+      "unidad": "% de niños en seguimiento recuperados",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "SESAN/SIINSAN con datos de MSPAS (seguimiento antropométrico DDRISS)",
+      "url": "https://portal.siinsan.gob.gt/desnutricion-aguda/",
+      "periodo": "enero–agosto 2026 (datos al 04-sep-2026)",
+      "n_puntos": 1,
+      "valor": 56.3,
+      "veredicto": "verificada",
+      "fuente_2": "Instantáneas archivadas de SIINSAN (media 53.5% ene-jun; 55.4% a fin de julio; 56.3% ene-ago) y PDF SESAN",
+      "evidencia": {
+        "url": "https://portal.siinsan.gob.gt/desnutricion-aguda/",
+        "cita": "La media nacional de recuperación en el período observado es de 56.3% (línea roja horizontal punteada); al final del mes de julio de 2026, la tasa de recuperación era de 55.4%",
+        "archivo_local": "sesiones/_descargas/siinsan-desnutricion-aguda-se36-2026.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_11.png"
+      ]
+    },
+    {
+      "id": "gra-c10",
+      "concepto": "Tasa de letalidad por desnutrición aguda (muertes confirmadas / casos)",
+      "unidad": "%",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "MSPAS/DEGR, Mesa Técnica de Análisis de Mortalidad por Desnutrición Aguda",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/mortalidad-por-desnutricion-aguda-semana-36-2026.pdf",
+      "periodo": "2024 cierre, 2025 cierre, 2026 a SE36",
+      "n_puntos": 3,
+      "valor": 0.22,
+      "veredicto": "verificada",
+      "fuente_2": "SIINSAN/MSPAS: 34/15,454 = 0.2200% (recálculo)",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/mortalidad-por-desnutricion-aguda-semana-36-2026.pdf",
+        "cita": "Tasa de Letalidad: (0,22% (34/15,454)",
+        "archivo_local": "sesiones/_descargas/mortalidad-por-desnutricion-aguda-semana-36-2026.pdf"
+      },
+      "partes": [
+        {
+          "nombre": "2024 (126/28,415)",
+          "valor": 0.443
+        },
+        {
+          "nombre": "2025 (75/21,943)",
+          "valor": 0.34
+        },
+        {
+          "nombre": "2026 a SE36 (34/15,454)",
+          "valor": 0.22
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "gra-c11",
+      "concepto": "Niños diagnosticados con desnutrición aguda por día en 2026 (promedio, escala humana)",
+      "unidad": "casos por día (derivado)",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "MSPAS/DEGR, Sala situacional de desnutrición aguda (SIGSA 18)",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+      "periodo": "SE1–SE36 2026 (4-ene a 12-sep-2026, 252 días)",
+      "n_puntos": 1,
+      "valor": 61.3,
+      "veredicto": "verificada",
+      "fuente_2": "Recálculo: 15,454 / 252 días (4-ene a 12-sep-2026)",
+      "evidencia": {
+        "url": "https://portal.siinsan.gob.gt/desnutricion-aguda/",
+        "cita": "Año 2026 Semana Epidemiológica 36 -Del 06 al 12 de septiembre de 2026 15,454 34 Casos de desnutrición aguda Fallecidos",
+        "archivo_local": "sesiones/_descargas/siinsan-desnutricion-aguda-se36-2026.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_10.png"
+      ]
+    },
+    {
+      "id": "gra-c12",
+      "concepto": "Proporción de casos severos (graves) sobre el total de desnutrición aguda",
+      "unidad": "% de casos",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "SESAN/SIINSAN con datos de MSPAS/DEGR",
+      "url": "https://portal.siinsan.gob.gt/desnutricion-aguda/",
+      "periodo": "2024 cierre (SE52), 2025 cierre (SE53), 2026 a SE36",
+      "n_puntos": 3,
+      "valor": 17.3,
+      "veredicto": "verificada",
+      "fuente_2": "Tabla MSPAS SE36: 2,678/15,454 = 17.33%",
+      "evidencia": {
+        "url": "https://portal.siinsan.gob.gt/desnutricion-aguda/",
+        "cita": "acumulado de 22,138 casos de desnutrición aguda en menores de cinco años en todo el país, de los cuales 3,853 (17.4%) han sido clasificados como graves",
+        "archivo_local": "sesiones/_descargas/siinsan-desnutricion-aguda-se36-2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "2024 (cierre)",
+          "valor": 20.4
+        },
+        {
+          "nombre": "2025 (cierre)",
+          "valor": 17.4
+        },
+        {
+          "nombre": "2026 (a SE36)",
+          "valor": 17.3
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "sem-c01",
+      "concepto": "Casos acumulados de desnutrición aguda (moderada+severa) en menores de 5 años, 2026, por semana epidemiológica (cifra publicada en cada corte)",
+      "unidad": "casos acumulados",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "SESAN/SIINSAN con datos DEGR/MSPAS (SIGSA 18); puntos SE19, SE25 y SE35 vía prensa que reproduce MSPAS",
+      "url": "https://portal.siinsan.gob.gt/desnutricion-aguda/",
+      "periodo": "SE04–SE36 2026",
+      "n_puntos": 9,
+      "valor": 15454,
+      "veredicto": "verificada",
+      "fuente_2": "SIINSAN (SESAN) portal y capturas Wayback; Emisoras Unidas 29-may-2026 (SE19); Infobae 10-jul-2026 (SE25); Prensa Libre (SE35)",
+      "evidencia": {
+        "url": "https://portal.siinsan.gob.gt/desnutricion-aguda/",
+        "cita": "Año 2026 Semana Epidemiológica 36 -Del 06 al 12 de septiembre de 2026 15,454 34 Casos de desnutrición aguda Fallecidos",
+        "archivo_local": "sesiones/_descargas/siinsan-desnutricion-aguda-20261003.html"
+      },
+      "serie": [
+        {
+          "p": "SE04",
+          "v": 2398
+        },
+        {
+          "p": "SE14",
+          "v": 5767
+        },
+        {
+          "p": "SE19",
+          "v": 8198
+        },
+        {
+          "p": "SE22",
+          "v": 9640
+        },
+        {
+          "p": "SE25",
+          "v": 11241
+        },
+        {
+          "p": "SE28",
+          "v": 12366
+        },
+        {
+          "p": "SE32",
+          "v": 13969
+        },
+        {
+          "p": "SE35",
+          "v": 15038
+        },
+        {
+          "p": "SE36",
+          "v": 15454
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_2.png"
+      ]
+    },
+    {
+      "id": "sem-c02",
+      "concepto": "Casos acumulados de desnutrición aguda en menores de 5 años a la SE36 2026 y tasa por 10,000 menores de 5 años",
+      "unidad": "casos",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "DEGR/MSPAS, Situación epidemiológica de la desnutrición aguda SE36 2026 (SIGSA web)",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+      "periodo": "1-ene a 12-sep-2026 (SE1–SE36), datos al 16-sep-2026",
+      "n_puntos": 1,
+      "valor": 15454,
+      "veredicto": "verificada",
+      "fuente_2": "SIINSAN, portal (SE36, 6-12 sep 2026)",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+        "cita": "A la semana epidemiológica 36 del 2026, SIGSA web registra 15,454 casos acumulados de desnutrición aguda en menores de 5 años (tasa 85.84 por 10,000 menores de 5 años)",
+        "archivo_local": "sesiones/_descargas/morbilidad-por-desnutricion-aguda-semana-36-2026.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "sem-c03",
+      "concepto": "Variación de casos acumulados 2026 vs 2025 a la misma semana (SE36)",
+      "unidad": "%",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "DEGR/MSPAS, informe SE36 2026",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+      "periodo": "SE1–SE36",
+      "n_puntos": 2,
+      "valor": -7.58,
+      "veredicto": "verificada",
+      "fuente_2": "Calculo propio: 15,454/16,721-1 = -7.577%; SIINSAN confirma 15,454",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+        "cita": "Desnutrición aguda total 216 16721 91.90 335 15454 85.84 119 -1267 -7.58",
+        "archivo_local": "sesiones/_descargas/morbilidad-por-desnutricion-aguda-semana-36-2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "2025 a SE36",
+          "valor": 16721
+        },
+        {
+          "nombre": "2026 a SE36",
+          "valor": 15454
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_1.png"
+      ]
+    },
+    {
+      "id": "sem-c04",
+      "concepto": "Casos acumulados de desnutrición aguda en menores de 5 años a la misma semana (SE36) por año, 2021–2026",
+      "unidad": "casos",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "DEGR/MSPAS, informe SE36 2026, gráfica 'Casos y tasas de desnutrición aguda en menores de 5 años por año de registro, Guatemala 2021-2026'",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+      "periodo": "2021–2026, acumulado a SE36 de cada año",
+      "n_puntos": 6,
+      "valor": 15454,
+      "veredicto": "verificada",
+      "fuente_2": "SESAN/SIINSAN SE32 comparativo (2024 a SE32=20,005) y SIINSAN (2024 a SE36=21,636)",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+        "cita": "Casos y tasas de desnutrición aguda en menores de 5 años por año de registro, Guatemala 2021-2026 ... 21,636 18,743 16,583 16,721 15,454 14,370",
+        "archivo_local": "sesiones/_descargas/morbilidad-por-desnutricion-aguda-semana-36-2026.txt"
+      },
+      "serie": [
+        {
+          "p": "2021",
+          "v": 16583
+        },
+        {
+          "p": "2022",
+          "v": 14370
+        },
+        {
+          "p": "2023",
+          "v": 18743
+        },
+        {
+          "p": "2024",
+          "v": 21636
+        },
+        {
+          "p": "2025",
+          "v": 16721
+        },
+        {
+          "p": "2026",
+          "v": 15454
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_1.png"
+      ]
+    },
+    {
+      "id": "sem-c06",
+      "concepto": "Casos mensuales de desnutrición aguda en menores de 5 años, 2026 (enero a septiembre parcial)",
+      "unidad": "casos por mes",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "DEGR/MSPAS, informe SE36 2026, gráfica 'Casos mensuales ... vs promedio histórico (2021-2025)'",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+      "periodo": "ene–sep 2026 (sep solo hasta el 12)",
+      "n_puntos": 9,
+      "valor": 607,
+      "veredicto": "verificada",
+      "fuente_2": "Suma de la serie = 15,454 (acumulado SE36 de SIINSAN)",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+        "cita": "Casos mensuales de Desnutrición Aguda en menores de 5 años vs promedio histórico (2021-2025) ... 2,356 1,399 1,499 1,777 2,108 1,821 2,080 1,807 607",
+        "archivo_local": "sesiones/_descargas/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf"
+      },
+      "serie": [
+        {
+          "p": "ene",
+          "v": 2356
+        },
+        {
+          "p": "feb",
+          "v": 1399
+        },
+        {
+          "p": "mar",
+          "v": 1499
+        },
+        {
+          "p": "abr",
+          "v": 1777
+        },
+        {
+          "p": "may",
+          "v": 2108
+        },
+        {
+          "p": "jun",
+          "v": 1821
+        },
+        {
+          "p": "jul",
+          "v": 2080
+        },
+        {
+          "p": "ago",
+          "v": 1807
+        },
+        {
+          "p": "sep*",
+          "v": 607
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "sem-c07",
+      "concepto": "Casos nuevos de desnutrición aguda reportados en la semana epidemiológica 36: 2026 vs 2025",
+      "unidad": "casos en la semana",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "DEGR/MSPAS, informe SE36 2026",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+      "periodo": "SE36 (6–12 sep)",
+      "n_puntos": 2,
+      "valor": 335,
+      "veredicto": "verificada",
+      "fuente_2": "Tabla del mismo informe MSPAS SE36 (casos acum. y dif.)",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+        "cita": "Desnutrición aguda total 216 16721 91.90 335 15454 85.84 119 -1267 -7.58",
+        "archivo_local": "sesiones/_descargas/morbilidad-por-desnutricion-aguda-semana-36-2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "SE36 2025",
+          "valor": 216
+        },
+        {
+          "nombre": "SE36 2026",
+          "valor": 335
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "sem-c08",
+      "concepto": "Casos acumulados a la SE32: 2024 vs 2026 (reducción nacional)",
+      "unidad": "%",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "SESAN/SIINSAN, Comparación de la carga epidemiológica de casos de desnutrición aguda SE32 (datos DEGR/MSPAS al 17-ago-2026)",
+      "url": "https://portal.siinsan.gob.gt/wp-content/uploads/Comparacion-de-la-carga-epidemiologica-de-casos-de-desnutricion-aguda_SE32.pdf",
+      "periodo": "SE1–SE32 de 2024 y 2026",
+      "n_puntos": 2,
+      "valor": -30.2,
+      "valor_original": -30.1,
+      "veredicto": "ajustada",
+      "fuente_2": "Calculo propio con cifras publicadas: (20,005-13,969)/20,005 = 30.17%",
+      "evidencia": {
+        "url": "https://portal.siinsan.gob.gt/wp-content/uploads/Comparacion-de-la-carga-epidemiologica-de-casos-de-desnutricion-aguda_SE32.pdf",
+        "cita": "a la semana 32 del año 2024 era de 20,005 casos (suma de las columnas azules) y en 2026, esa carga total es de 13,969 (suma de las columnas grises), lo que representa una reducción de 30.1%",
+        "archivo_local": "sesiones/_descargas/Comparacion-de-la-carga-epidemiologica-de-casos-de-desnutricion-aguda_SE32.txt"
+      },
+      "partes": [
+        {
+          "nombre": "2024 a SE32",
+          "valor": 20005
+        },
+        {
+          "nombre": "2026 a SE32",
+          "valor": 13969
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "sem-c09",
+      "concepto": "Casos acumulados a la SE14 por año: 2024, 2025, 2026",
+      "unidad": "casos",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "SESAN/SIINSAN, Comparación de la carga epidemiológica SE14 (datos DEGR/MSPAS al 13-abr-2026)",
+      "url": "https://portal.siinsan.gob.gt/wp-content/uploads/Comparacion-de-la-carga-epidemiologica-de-casos-de-desnutricion-aguda_SE14.pdf",
+      "periodo": "SE1–SE14",
+      "n_puntos": 3,
+      "valor": 5765,
+      "veredicto": "verificada",
+      "fuente_2": "SIINSAN Wayback 25-abr-2026 (SE14): registro administrativo 5,767",
+      "evidencia": {
+        "url": "https://portal.siinsan.gob.gt/wp-content/uploads/Comparacion-de-la-carga-epidemiologica-de-casos-de-desnutricion-aguda_SE14.pdf",
+        "cita": "a la semana 14 del año 2024 era de 6,373 casos (suma de las dos columnas azules) y en 2026, esa carga total es de 5,765 (suma de las dos columnas grises), lo que representa una reducción de 9.5%",
+        "archivo_local": "sesiones/_descargas/Comparacion-de-la-carga-epidemiologica-de-casos-de-desnutricion-aguda_SE14.txt"
+      },
+      "partes": [
+        {
+          "nombre": "2024 a SE14",
+          "valor": 6373
+        },
+        {
+          "nombre": "2025 a SE14",
+          "valor": 6363
+        },
+        {
+          "nombre": "2026 a SE14",
+          "valor": 5765
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "sem-c10",
+      "concepto": "Promedio de casos de desnutrición aguda diagnosticados por semana en 2026 (SE1–SE36)",
+      "unidad": "casos por semana",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Cálculo propio sobre DEGR/MSPAS SE36 2026 (15,454 / 36 semanas)",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+      "periodo": "SE1–SE36 2026",
+      "n_puntos": 1,
+      "valor": 429.3,
+      "veredicto": "verificada",
+      "fuente_2": "Calculo propio sobre 15,454 (MSPAS y SIINSAN)",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+        "cita": "A la semana epidemiológica 36 del 2026, SIGSA web registra 15,454 casos acumulados de desnutrición aguda en menores de 5 años",
+        "archivo_local": "sesiones/_descargas/morbilidad-por-desnutricion-aguda-semana-36-2026.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_2.png"
+      ]
+    },
+    {
+      "id": "sem-c11",
+      "concepto": "Casos acumulados de desnutrición aguda en menores de 5 años al cierre de 2025 (SE53)",
+      "unidad": "casos",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "DEGR/MSPAS, Situación epidemiológica de la desnutrición aguda SE53 2025",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2025/morbilidad-desnutricion-aguda-semana-53-2025.pdf",
+      "periodo": "SE1–SE53 2025",
+      "n_puntos": 1,
+      "valor": 22138,
+      "veredicto": "verificada",
+      "fuente_2": "Prensa Libre / AGN (cierre 2025) y busqueda: MSPAS SE53 2025",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2025/morbilidad-desnutricion-aguda-semana-53-2025.pdf",
+        "cita": "semana epidemiológica 53 de 2025 ... 22,138 casos acumulados de desnutrición aguda en menores de 5 años ... 3,853 (17.4%) severos",
+        "archivo_local": ""
+      },
+      "usada": false,
+      "aparece_en": []
+    }
+  ],
+  "fuentes": [
+    {
+      "nombre": "MSPAS/DEGR — Situación epidemiológica de la desnutrición aguda (moderada y severa) en menores de 5 años, SE36 2026",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "SESAN/SIINSAN — Desnutrición Aguda (texto de análisis SE36 2026: carga municipal Jenks)",
+      "url": "https://portal.siinsan.gob.gt/desnutricion-aguda/",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "MSPAS/DEGR — Salas situacionales: Desnutrición (índice; SE36 2026 es el último informe publicado al 3-oct-2026)",
+      "url": "https://epidemiologia.mspas.gob.gt/informacion/vigilancia-epidemiologica/salas-situacionales/3-desnutricion",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Infobae 25-sep-2026, Quetzaltenango 632 niños (contexto; cifra de CODESAN no coincide con MSPAS)",
+      "url": "https://www.infobae.com/guatemala/2026/09/25/guatemala-632-ninos-con-desnutricion-aguda-alertan-a-las-autoridades-de-quetzaltenango/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "SESAN/SIINSAN — Desnutrición aguda (SE36 2026, cierres 2025 y 2024, comparación de carga)",
+      "url": "https://portal.siinsan.gob.gt/desnutricion-aguda/",
+      "nivel": "oficial (secundaria sobre datos MSPAS)"
+    },
+    {
+      "nombre": "MSPAS/DEGR — Análisis de mortalidad por desnutrición aguda SE36 2026",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/mortalidad-por-desnutricion-aguda-semana-36-2026.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "MSPAS/DEGR — Morbilidad por desnutrición aguda SE36 2026",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "MSPAS/DEGR — Mortalidad por desnutrición aguda SE53 2025 (act. 15-abr-2026)",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2025/mortalidad-desnutricion-aguda-semana-53-2025.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "MSPAS/DEGR — Mortalidad DA SE52 2021, 2022, 2023",
+      "url": "https://epidemiologia.mspas.gob.gt/informacion/vigilancia-epidemiologica/salas-situacionales/3-desnutricion",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Prensa Libre 15-sep-2026 — 32 niños han muerto en 2026",
+      "url": "https://www.prensalibre.com/guatemala/comunitario/desnutricion-aguda-32-ninos-han-muerto-en-guatemala-en-2026-y-hay-riesgo-de-que-la-cifra-aumente-por-la-sequia/",
+      "nivel": "prensa (reproduce MSPAS)"
+    },
+    {
+      "nombre": "SESAN/SIINSAN — Desnutrición Aguda (informe semanal SE36 2026)",
+      "url": "https://portal.siinsan.gob.gt/desnutricion-aguda/",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "SIINSAN vía Wayback Machine (snapshots 11-feb, 25-abr, 13-jun, 29-jul-2026: SE04, SE14, SE22, SE28)",
+      "url": "https://web.archive.org/web/20260729182324/https://portal.siinsan.gob.gt/desnutricion-aguda/",
+      "nivel": "primaria (archivo)"
+    },
+    {
+      "nombre": "DEGR/MSPAS — Situación epidemiológica de la desnutrición aguda SE36 2026",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2026/morbilidad-por-desnutricion-aguda-semana-36-2026.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "SESAN — Comparación de la carga epidemiológica SE32",
+      "url": "https://portal.siinsan.gob.gt/wp-content/uploads/Comparacion-de-la-carga-epidemiologica-de-casos-de-desnutricion-aguda_SE32.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "SESAN — Comparación de la carga epidemiológica SE14",
+      "url": "https://portal.siinsan.gob.gt/wp-content/uploads/Comparacion-de-la-carga-epidemiologica-de-casos-de-desnutricion-aguda_SE14.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "DEGR/MSPAS — Morbilidad desnutrición aguda SE53 2025",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/desnutricion/2025/morbilidad-desnutricion-aguda-semana-53-2025.pdf",
+      "nivel": "primaria (no descargada)"
+    },
+    {
+      "nombre": "Prensa Libre — 32 niños han muerto en 2026 (15,038 casos al 5-sep)",
+      "url": "https://www.prensalibre.com/guatemala/comunitario/desnutricion-aguda-32-ninos-han-muerto-en-guatemala-en-2026-y-hay-riesgo-de-que-la-cifra-aumente-por-la-sequia/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Infobae 10-jul-2026 (SE25: 11,241 casos)",
+      "url": "https://www.infobae.com/guatemala/2026/07/10/la-desnutricion-infantil-en-guatemala-deja-11241-casos-agudos-y-16-muertes-en-2026/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Emisoras Unidas 29-may-2026 (SE19: 8,198 casos)",
+      "url": "https://emisorasunidas.com/nacional/2026/05/29/salud-casos-desnutricion-guatemala-mayo-2026/",
+      "nivel": "prensa"
+    }
+  ],
+  "no_afirma": [
+    "No afirma que la sequía haya o no influido en los casos: el registro no lo atribuye.",
+    "No afirma que haya menos desnutrición: mide niños diagnosticados en servicios de salud, no la prevalencia.",
+    "No afirma que las muertes de 2026 vayan a cerrar igual que 2025: 43 siguen en análisis.",
+    "No compara la tasa de recuperación con 2025: no hay dato al mismo corte."
+  ],
+  "incertidumbre": [
+    "Los puntos SE19, SE25 y SE35 de la curva 2026 provienen de prensa que cita MSPAS/SIINSAN.",
+    "Muertes por área de salud (DDRISS) y casos por departamento de residencia no son la misma unidad territorial.",
+    "No hay informe posterior a la SE36 publicado al 3 de octubre de 2026.",
+    "Promedios por día (61.3) y por semana (429.3) son cálculos sobre el acumulado oficial."
+  ],
+  "descartadas": [
+    {
+      "id": "sem-c05",
+      "por": "no_confirmada"
+    },
+    {
+      "id": "gra-c10",
+      "por": "compara letalidad a la SE36 de 2026 con cierres de año: engañosa"
+    },
+    {
+      "id": "sem-c07",
+      "por": "una sola semana de notificación, sensible a rezagos"
+    },
+    {
+      "id": "gra-c12",
+      "por": "compara 2026 a SE36 con cierres de 2024 y 2025"
+    }
+  ]
+}

@@ -13,6 +13,43 @@
       "ruta": "hilos/2026-09-29-sequia-guatemala-2026",
       "estado": "listo",
       "hook_tipo": "giro_inversion"
+    },
+    {
+      "id": "2026-09-29-economia-tres-gobiernos",
+      "fecha": "2026-09-29",
+      "slug": "economia-tres-gobiernos",
+      "tema": "Métricas económicas de Guatemala 2016–2026 para comparar el desempeño del gobierno de Arévalo (desde enero 2024) con los de Morales (2016–2019) y Giammattei (2020–2023): PIB, inflación, tipo de cambio, remesas, exportaciones, IED, reservas, deuda, déficit, recaudación, empleo formal IGSS, salario mínimo y calificación crediticia",
+      "tesis": "Con Arévalo el PIB real crece 4% promedio al año (2024–2025), por encima de Morales (3.3%) y Giammattei (3.48%), pero sin la caída de 2020 Giammattei promediaría 5.24%; el cambio más grande de la década son las remesas, que desde 2020 superan a las exportaciones y no las decide ningún gobierno.",
+      "paleta": "cielo",
+      "n_tuits": 18,
+      "ruta": "hilos/2026-09-29-economia-tres-gobiernos",
+      "estado": "listo",
+      "hook_tipo": "pregunta_directa"
+    },
+    {
+      "id": "2026-10-02-violencia-guatemala-decada",
+      "fecha": "2026-10-02",
+      "slug": "violencia-guatemala-decada",
+      "tema": "Métricas de violencia en Guatemala en los últimos 10 años (2016–2025, con avance 2026): violencia letal (homicidios), delitos contra las personas, crimen organizado y extorsión, delitos contra el patrimonio",
+      "tesis": "En una década Guatemala pasó de 4,520 a 3,139 homicidios, pero las denuncias por extorsión pasaron de 7,127 a 25,306 en 2025: la violencia cambió de forma con una respuesta penal corta (unas 7 capturas por cada 100 denuncias de extorsión, ~12 sentencias por cada 100 casos de homicidio, cárceles al 342%), y en 2026 la extorsión denunciada cae mientras la tasa de homicidios repunta.",
+      "paleta": "terracota",
+      "n_tuits": 21,
+      "ruta": "hilos/2026-10-02-violencia-guatemala-decada",
+      "estado": "listo",
+      "hook_tipo": "giro_inversion"
+    },
+    {
+      "id": "2026-10-03-desnutricion-aguda-2026",
+      "fecha": "2026-10-03",
+      "slug": "desnutricion-aguda-2026",
+      "tema": "desnutrición aguda 2026 semana a semana",
+      "tesis": "A la semana 36, 2026 acumula 15,454 casos de desnutrición aguda en menores de 5 años, 7.58% menos que 2025 a la misma semana; pero los casos severos casi no bajaron (2,678 frente a 2,684) y las muertes confirmadas son las mismas (34), con 43 aún en análisis.",
+      "paleta": "terracota",
+      "n_tuits": 12,
+      "ruta": "hilos/2026-10-03-desnutricion-aguda-2026",
+      "estado": "listo",
+      "hook_tipo": "mito_vs_dato",
+      "idea_id": "desnutricion-aguda-2026-semana-a-semana"
     }
   ]
 }

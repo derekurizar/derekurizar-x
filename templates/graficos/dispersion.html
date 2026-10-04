@@ -1,0 +1,142 @@
+<!-- dispersion · dos variables por unidad (departamentos): ¿van juntas? (brief 7b). Contrato: referencias/diseno/graficos.md -->
+<script>
+// CIFRAS DE EJEMPLO (pobreza y desnutrición crónica por departamento, INE/MSPAS) · verificar antes de publicar
+const DATA = {
+  kicker: "POBREZA Y DESNUTRICIÓN · % POR DEPARTAMENTO",
+  titular: ["Donde hay más pobreza", "hay más niños con", "desnutrición crónica"],
+  nota: "",
+  fuente: "INE · ENCOVI 2023 · MSPAS · ENSMI 2022",
+  handle: "@DerekUrizar",
+  formato: { prefijo: "", sufijo: "%", decimales: 0, miles: true, escala: 1 },
+  formatoX: null,          // formato del eje X (null = `formato`)
+  formatoY: null,          // formato del eje Y (null = `formato`)
+  ejeX: "Pobreza (% de personas)",
+  ejeY: "Desnutrición crónica (% de niños <5)",
+  puntos: [
+    { nombre: "Guatemala", x: 33, y: 25 }, { nombre: "Alta Verapaz", x: 83, y: 50 }, { nombre: "Sololá", x: 81, y: 66 },
+    { nombre: "Totonicapán", x: 77, y: 68 }, { nombre: "Huehuetenango", x: 74, y: 60 }, { nombre: "Quiché", x: 74, y: 63 },
+    { nombre: "Chiquimula", x: 71, y: 52 }, { nombre: "Baja Verapaz", x: 67, y: 42 }, { nombre: "San Marcos", x: 60, y: 49 },
+    { nombre: "Petén", x: 61, y: 33 }, { nombre: "Izabal", x: 55, y: 30 }, { nombre: "Jalapa", x: 67, y: 46 },
+    { nombre: "Zacapa", x: 55, y: 33 }, { nombre: "Escuintla", x: 52, y: 26 }, { nombre: "Sacatepéquez", x: 41, y: 43 },
+    { nombre: "Quetzaltenango", x: 56, y: 45 }, { nombre: "El Progreso", x: 53, y: 28 }, { nombre: "Santa Rosa", x: 55, y: 33 },
+    { nombre: "Jutiapa", x: 62, y: 30 }, { nombre: "Retalhuleu", x: 56, y: 30 }, { nombre: "Suchitepéquez", x: 63, y: 37 },
+    { nombre: "Chimaltenango", x: 66, y: 55 }
+  ],
+  rotular: ["Guatemala", "Alta Verapaz", "Totonicapán"],   // ≤ 4 nombres con rótulo
+  destacar: "Totonicapán",   // nombre del punto clave (en a1) o null
+  guias: { x: 56, y: 47, texto: "promedio nacional" },      // líneas de referencia (son dato) o null
+  desdeCero: false           // true = ambos ejes desde cero
+};
+
+function render(D) {
+  H.assert(Array.isArray(D.puntos) && D.puntos.length >= 8 && D.puntos.length <= 22, "dispersion admite de 8 a 22 puntos");
+  D.puntos.forEach((p) => H.assert(p && typeof p.nombre === "string" && typeof p.x === "number" && typeof p.y === "number", "cada punto necesita nombre, x e y numéricos"));
+  H.assert(typeof D.ejeX === "string" && D.ejeX.trim() && D.ejeX.length <= 40, "ejeX: título del eje horizontal (≤ 40)");
+  H.assert(typeof D.ejeY === "string" && D.ejeY.trim() && D.ejeY.length <= 40, "ejeY: título del eje vertical (≤ 40)");
+  const rot = (D.rotular || []).slice();
+  H.assert(rot.length <= 4, "rotular: como máximo 4 nombres");
+  if (D.destacar && !rot.includes(D.destacar)) rot.push(D.destacar);
+  for (const r of rot) H.assert(D.puntos.some((p) => p.nombre === r), "rotular/destacar: «" + r + "» no está en puntos");
+  const g = D.guias || null;
+  if (g) H.assert(typeof g.x === "number" || typeof g.y === "number", "guias necesita x y/o y numéricos");
+  const fX = D.formatoX || D.formato, fY = D.formatoY || D.formato;
+  const ink = H.color.ink, a1 = H.color.a1;
+
+  const W = 920, alto = H.espacio(560, 380);
+  const svg = H.lienzo(W, alto);
+  const xsVal = D.puntos.map((p) => p.x).concat(g && typeof g.x === "number" ? [g.x] : []);
+  const ysVal = D.puntos.map((p) => p.y).concat(g && typeof g.y === "number" ? [g.y] : []);
+  // Dominio con 4 % de aire a cada lado: ningún punto queda montado en un eje.
+  const aire = (vals) => { const a = Math.min(...vals), b = Math.max(...vals), d = (b - a || Math.abs(a) || 1) * 0.04; return D.desdeCero ? vals.concat([b + d]) : vals.concat([a - d, b + d]); };
+  const domX = H.dominio(aire(xsVal), !!D.desdeCero), domY = H.dominio(aire(ysVal), !!D.desdeCero);
+  const tkX = H.ticks(domX[0], domX[1], 5), tkY = H.ticks(domY[0], domY[1], 4);
+  const ejeFmt = (f, tk) => Object.assign({}, f, { decimales: H.decimalesDe(tk.map((t) => t / (f.escala || 1)), f.decimales || 0) });
+  const fEX = ejeFmt(fX, tkX), fEY = ejeFmt(fY, tkY);
+  const izq = Math.max(...tkY.map((t) => H.medir(H.num(t, fEY), "500 17px 'JetBrains Mono'"))) + 20;
+  const x0 = izq, x1 = W - 10, y0 = 40, y1 = alto - 64;
+  const sx = H.escala(domX, [x0, x1]), sy = H.escala(domY, [y1, y0]);
+
+  // Rejilla, ticks y títulos de eje (Y arriba a la izquierda, X abajo a la derecha).
+  for (const t of tkY) {
+    H.svgEl("line", { x1: x0, x2: x1, y1: sy(t), y2: sy(t), stroke: H.color.inkA(.16), "stroke-width": 1 }, svg);
+    H.texto(svg, x0 - 12, sy(t) + 6, H.num(t, fEY), { class: "t-eje", "text-anchor": "end" });
+  }
+  for (const t of tkX) {
+    H.svgEl("line", { x1: sx(t), x2: sx(t), y1: y0, y2: y1, stroke: H.color.inkA(.16), "stroke-width": 1 }, svg);
+    H.texto(svg, sx(t), y1 + 28, H.num(t, fEX), { class: "t-eje", "text-anchor": "middle" });
+  }
+  H.svgEl("line", { x1: x0, x2: x1, y1: y1, y2: y1, stroke: H.color.inkA(.6), "stroke-width": 2 }, svg);
+  H.svgEl("line", { x1: x0, x2: x0, y1: y0, y2: y1, stroke: H.color.inkA(.6), "stroke-width": 2 }, svg);
+  H.texto(svg, x0, 18, D.ejeY, { style: "font:700 19px Archivo,sans-serif;fill:" + ink });
+  H.texto(svg, x1, alto - 4, D.ejeX, { "text-anchor": "end", style: "font:700 19px Archivo,sans-serif;fill:" + ink });
+  if (!D.desdeCero) H.texto(svg, 0, alto - 4, "ejes sin cero", { class: "t-eje" });
+
+  const capaGuias = H.svgEl("g", {}, svg);   // las guías van debajo de los puntos
+  // Puntos: los comunes primero; rotulados y destacado encima.
+  const orden = D.puntos.slice().sort((a, b) => (rot.includes(a.nombre) ? 1 : 0) - (rot.includes(b.nombre) ? 1 : 0) || (a.nombre === D.destacar ? 1 : 0) - (b.nombre === D.destacar ? 1 : 0));
+  const etiquetas = [];
+  for (const p of orden) {
+    const esHi = p.nombre === D.destacar, conRot = rot.includes(p.nombre);
+    const cx = sx(p.x), cy = sy(p.y);
+    if (!conRot) H.svgEl("circle", { cx, cy, r: 9, fill: ink, "fill-opacity": .45 }, svg);   // los rotulados, al final
+    if (conRot) etiquetas.push({ p, t: p.nombre, font: (esHi ? "800 " : "700 ") + "21px Archivo", cx, cy, r: esHi ? 14 : 11, hi: esHi });
+  }
+  // Colocación voraz: el destacado primero; cada rótulo prueba 14 posiciones (derecha/izquierda ×
+  // 7 alturas) y se queda con la que menos pisa puntos y rótulos ya puestos, con poco desplazamiento.
+  const solape = (a, b) => Math.max(0, Math.min(a[2], b[2]) - Math.max(a[0], b[0])) * Math.max(0, Math.min(a[3], b[3]) - Math.max(a[1], b[1]));
+  const circulos = D.puntos.map((q) => ({ q, c: [sx(q.x) - 13, sy(q.y) - 13, sx(q.x) + 13, sy(q.y) + 13] }));
+  const puestas = [];
+  etiquetas.sort((a, b) => (b.hi ? 1 : 0) - (a.hi ? 1 : 0));
+  for (const e of etiquetas) {
+    const w = H.medir(e.t, e.font);
+    let mejor = null;
+    for (const dy of [0, -30, 30, -60, 60, -90, 90]) for (const sgn of [1, -1]) {
+      const x = e.cx + sgn * (e.r + 9), y = e.cy + 7 + dy;
+      const caja = sgn > 0 ? [x, y - 19, x + w, y + 5] : [x - w, y - 19, x, y + 5];
+      let costo = Math.abs(dy) * 4 + (sgn < 0 ? 15 : 0);
+      if (caja[0] < x0 + 4 || caja[2] > x1 || caja[1] < y0 || caja[3] > y1 - 4) costo += 1e6;
+      for (const k of circulos) if (k.q !== e.p) costo += solape(caja, k.c) * (rot.includes(k.q.nombre) ? 30 : 2);
+      for (const o of puestas) costo += solape(caja, o) * 20;
+      if (!mejor || costo < mejor.costo) mejor = { costo, x, y, anc: sgn > 0 ? "start" : "end", caja, dy };
+    }
+    Object.assign(e, mejor); puestas.push(mejor.caja);
+  }
+
+  // Guías (líneas punteadas): su rótulo va al extremo con menos puntos y rótulos encima.
+  if (g) {
+    const est = { stroke: H.color.inkA(.55), "stroke-width": 2, "stroke-dasharray": "6 6" };
+    const txt = (g.texto || "promedio").trim(), wT = H.medir(txt, "500 17px 'JetBrains Mono'");
+    const cajas = D.puntos.map((p) => [sx(p.x) - 14, sy(p.y) - 14, sx(p.x) + 14, sy(p.y) + 14])
+      .concat(etiquetas.map((e) => { const w = H.medir(e.t, e.font); return e.anc === "start" ? [e.x, e.y - 20, e.x + w, e.y + 4] : [e.x - w, e.y - 20, e.x, e.y + 4]; }));
+    const choques = (c) => cajas.filter((b) => b[0] < c[2] && b[2] > c[0] && b[1] < c[3] && b[3] > c[1]).length;
+    const mejor = (ops) => ops.reduce((a, b) => (choques(b.caja) < choques(a.caja) ? b : a));
+    const pone = (o) => H.texto(svg, o.x, o.y, txt, { class: "t-eje", "text-anchor": o.anc });
+    if (typeof g.x === "number") H.svgEl("line", Object.assign({ x1: sx(g.x), x2: sx(g.x), y1: y0, y2: y1 }, est), capaGuias);
+    if (typeof g.y === "number") {
+      H.svgEl("line", Object.assign({ x1: x0, x2: x1, y1: sy(g.y), y2: sy(g.y) }, est), capaGuias);
+      const yg = sy(g.y);
+      pone(mejor([
+        { x: x1, y: yg - 10, anc: "end", caja: [x1 - wT, yg - 26, x1, yg - 6] },
+        { x: x0 + 8, y: yg - 10, anc: "start", caja: [x0 + 8, yg - 26, x0 + 8 + wT, yg - 6] },
+        { x: x1, y: yg + 24, anc: "end", caja: [x1 - wT, yg + 8, x1, yg + 28] },
+        { x: x0 + 8, y: yg + 24, anc: "start", caja: [x0 + 8, yg + 8, x0 + 8 + wT, yg + 28] },
+      ]));
+    } else {
+      const xg = sx(g.x), lado = xg + 8 + wT <= x1;
+      const xx = lado ? xg + 8 : xg - 8, anc = lado ? "start" : "end", c = (y) => (lado ? [xg + 8, y - 16, xg + 8 + wT, y + 4] : [xg - 8 - wT, y - 16, xg - 8, y + 4]);
+      pone(mejor([{ x: xx, y: y0 + 18, anc, caja: c(y0 + 18) }, { x: xx, y: y1 - 10, anc, caja: c(y1 - 10) }]));
+    }
+  }
+  // Rótulo desplazado: línea guía desde el borde del punto. Halo del color del fondo para leer sobre los puntos.
+  for (const e of etiquetas) {
+    if (e.dy) {
+      const sgn = e.anc === "start" ? 1 : -1;
+      H.svgEl("line", { x1: e.cx + sgn * e.r * 0.7, y1: e.cy + Math.sign(e.dy) * e.r * 0.7, x2: e.x - sgn * 2, y2: e.y - 7, stroke: ink, "stroke-width": 2 }, svg);
+    }
+    H.texto(svg, e.x, e.y, e.t, { "text-anchor": e.anc, style: "font:" + e.font + ",sans-serif;fill:" + ink + ";paint-order:stroke;stroke:" + H.color.bg + ";stroke-width:6px;stroke-linejoin:round" });
+  }
+  // Puntos rotulados encima de todo (ningún halo los tapa); el destacado al final.
+  for (const e of etiquetas.slice().reverse())
+    H.svgEl("circle", { cx: e.cx, cy: e.cy, r: e.r, fill: e.hi ? a1 : ink, stroke: H.color.bg, "stroke-width": e.hi ? 3 : 2 }, svg);
+}
+</script>

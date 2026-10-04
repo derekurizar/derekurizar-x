@@ -19,7 +19,15 @@ exploratorias), no redacta, no visualiza.
    pregunta de escala humana («¿cuántos hogares / per cápita / N de cada M?»)
    para que exista el beat `impacto`. `necesita_serie: true` si el arco pide
    evolución en el tiempo.
-6. Crea `sesiones/<slug>/` (slug: minúsculas, sin tildes, guiones, sin fecha) y
+6. **Idea del banco**: si la directiva trae una idea, corre
+   `python3 scripts/ideas.py --ver <id>` (no abras `ideas/banco.json`) y úsala
+   como punto de partida: su `pregunta` y `angulo` orientan los tuyos, su
+   `hook_sugerido` y `paleta_sugerida` son sugerencias (manda `hook_evitar` y el
+   tema), y sus `datos[]` (fuente, indicador, url, evidencia de acceso) entran en
+   las `fuentes_sugeridas` de los ejes. Escribe `idea_id: "<id>"` en
+   `encuadre.json` y en el retorno (sin idea: `idea_id: null`). Con ese campo
+   `memoria.py` marca la idea como hecha al registrar el hilo.
+7. Crea `sesiones/<slug>/` (slug: minúsculas, sin tildes, guiones, sin fecha) y
    escribe `encuadre.json` con todos los campos del contrato
    (`referencias/contrato-sesion.md`), incluida la `fecha` de la directiva.
 

@@ -1,12 +1,12 @@
 export const meta = {
   name: 'hilo',
   description: 'Hilo de X con datos de Guatemala: encuadre → investigación ⇢ verificación por eje → guion → visuales → ensamblado',
-  whenToUse: 'Invocado por /hilo [tema] [smoke|fixture]. args: {tema, smoke, fixture, fecha, permitir_fallback} (fecha YYYY-MM-DD obligatoria, la pone el comando con `date +%F`). smoke = corrida corta sin tocar memoria/; fixture = sin web, copia sesiones/_fixture.',
+  whenToUse: 'Invocado por /hilo [tema] [smoke|fixture]. args: {tema, smoke, fixture, fecha, min_tuits, idea, permitir_fallback} (fecha YYYY-MM-DD obligatoria, la pone el comando con `date +%F`). smoke = corrida corta sin tocar memoria/; fixture = sin web, copia sesiones/_fixture. idea = id de ideas/banco.json (el editor parte de ella; memoria.py la marca hecha al registrar).',
   phases: [
     { title: 'Encuadre', detail: 'editor: pregunta, tesis provisional, paleta, ejes con prefijo y fuentes sugeridas' },
     { title: 'Investigación', detail: 'un investigador por eje (SIFT, con presupuesto): cifras con evidencia' },
     { title: 'Verificación', detail: 'un verificador por eje: parte de la evidencia, una segunda fuente, veredicto' },
-    { title: 'Guion', detail: 'guionista: tesis final + 4–8 tuits con gancho (hook_tipo), visual y alt-text' },
+    { title: 'Guion', detail: 'guionista: tesis final + 4–21 tuits (min_tuits opcional) con gancho (hook_tipo), visual y alt-text' },
     { title: 'Visuales', detail: 'visualistas en lotes de 3: materializar → gate R1–R6 → QA' },
     { title: 'Ensamblado', detail: 'productor: consolidar → ensamblar.py --check → C1–C8 → memoria.py → make validate' },
   ],
@@ -18,18 +18,21 @@ export const meta = {
 // sandbox del workflow no lee disco ni tiene Date).
 
 const PALETAS = ['cielo', 'jade', 'maiz', 'terracota', 'cacao', 'jacaranda', 'atitlan', 'obsidiana']
-const PLANTILLAS = ['linea', 'barras-v', 'barras-h', 'antes-despues', 'dona', 'pendiente', 'waffle', 'cifra', 'mapa', 'pesas', 'calor']
+const PLANTILLAS = ['linea', 'barras-v', 'barras-h', 'antes-despues', 'dona', 'pendiente', 'waffle', 'cifra', 'mapa', 'pesas', 'calor', 'bullet', 'embudo', 'divergente', 'apilada', 'piramide', 'treemap', 'dispersion']
 const BEATS = ['gancho', 'contexto', 'giro', 'impacto', 'cierre']
 const HOOKS = ['giro_inversion', 'escala_humana', 'brecha_territorial', 'pregunta_directa', 'curiosity_gap', 'mito_vs_dato', 'antes_despues', 'titular_clasico']
 const REQ = {
   linea: ['etiquetasX', 'series'], 'barras-v': ['etiquetas', 'valores'], 'barras-h': ['items'],
   'antes-despues': ['antes', 'despues'], dona: ['partes'], pendiente: ['fechas', 'items'],
   waffle: ['porcentaje', 'cifra'], cifra: ['cifra'], mapa: ['valores'], pesas: ['fechas', 'items'], calor: ['filas', 'columnas', 'valores'],
+  bullet: ['items'], embudo: ['etapas', 'misma_cohorte'], divergente: ['items'], apilada: ['etiquetas', 'partes'],
+  piramide: ['grupos', 'izquierda', 'derecha'], treemap: ['partes'], dispersion: ['puntos', 'ejeX', 'ejeY'],
 }
 const RE_LINK = /https?:\/\/|www\.|\.com\b|\.gt\b/i
 const RE_BAIT = /(dale|da|dame|dejen?)\s+(rt|like|me gusta)|s[ií]gue(me|nos)|retuitea|comparte si|like si|guarda este|no te lo pierdas/i
 const RE_SUPER = /r[ée]cord|hist[óo]ric[oa]|m[áa]s alt[oa] de la historia|nunca antes/i
 const LOTE = 3
+const MAX_TUITS = 21
 const TOPES = { normal: { busquedas: 10, fetch: 12, cifras: 12 }, smoke: { busquedas: 5, fetch: 6, cifras: 6 } }
 
 // Peso de un texto según X (copia de scripts/contar_x.js: el sandbox no importa).
@@ -66,6 +69,7 @@ const S = {
       paleta: { type: 'string', enum: PALETAS },
       necesita_serie: { type: 'boolean' }, repetido: { type: 'boolean' },
       hook_evitar: { type: ['string', 'null'] },
+      idea_id: { type: ['string', 'null'] },
       ejes: {
         type: 'array', minItems: 1, maxItems: 4,
         items: {
@@ -116,7 +120,7 @@ const S = {
       paleta: { type: 'string', enum: PALETAS }, hook_tipo: { type: 'string', enum: HOOKS },
       no_afirma: { type: 'array', items: { type: 'string' } },
       tuits: {
-        type: 'array', minItems: 3, maxItems: 8,
+        type: 'array', minItems: 3, maxItems: MAX_TUITS,
         items: {
           type: 'object', required: ['n', 'beat', 'texto', 'alt_text', 'visual'],
           properties: {
@@ -186,7 +190,7 @@ const LIMITES =
   'el texto no repite el titular de su tarjeta ni ≥2 de sus números; sin engagement bait; alt_text 20–1000 por visual; ' +
   `plantilla ∈ ${PLANTILLAS.join('|')}; kicker ≤45; titular 1–3 líneas de ≤26; nota ≤150; fuente 1–70 sin «Fuente:»; sin URLs en la tarjeta; ` +
   'cifra_ids ⊆ verificadas; datos con números crudos de esas cifras y formato; linea ≥5 puntos y ≤4 series; dona 2–5; barras-h ≤8; barras-v ≤12; ' +
-  'pendiente 2 fechas y 2–6; mapa ≥12 departamentos; pesas 2–8; calor filas×columnas ≤12; «récord/histórico» solo con serie ≥10 puntos cuyo máximo sea el valor.'
+  'pendiente 2 fechas y 2–6; mapa ≥12 departamentos; pesas 2–8; calor filas×columnas ≤12; bullet 1–6 con meta; embudo 2–6 etapas no crecientes y misma_cohorte true|false; divergente 2–10; apilada 2–8 filas y 2–5 partes; piramide 4–12 grupos; treemap 3–12; dispersion 8–22 puntos con ejeX/ejeY; periodos (linea, barras-v) ≤4 por índices; «récord/histórico» solo con serie ≥10 puntos cuyo máximo sea el valor.'
 
 // ── Argumentos ─────────────────────────────────────────────────────────────
 const A = typeof args === 'string' ? { tema: args } : (args || {})
@@ -197,7 +201,11 @@ const tema = temaBruto.replace(/\b(smoke|fixture)\b/gi, '').trim()
 const fecha = String(A.fecha || '')
 if (!/^\d{4}-\d{2}-\d{2}$/.test(fecha)) throw new Error('args.fecha (YYYY-MM-DD) es obligatoria: /hilo la obtiene con `date +%F` y la pasa en args.')
 const modo = smoke ? 'smoke' : 'normal'
+// Mínimo de tuits en modo normal (4 por defecto; el usuario puede pedir un hilo largo).
+const minT = Math.min(MAX_TUITS, Math.max(4, parseInt(A.min_tuits, 10) || 4))
 const T = TOPES[modo]
+// Idea del banco (ideas/banco.json): la resuelve /hilo en el preflight y llega como id.
+const idea = /^[a-z0-9-]+$/.test(String(A.idea || '')) ? String(A.idea) : null
 const fail = (msg) => { throw new Error(msg) }
 
 // Los roles viven en .claude/agents/hilo-*.md y se registran al arrancar la
@@ -237,7 +245,8 @@ const enc = await agentRol(
       `edita el encuadre.json copiado poniendo fixture:true, smoke:true, fecha "${fecha}", sesion_dir "sesiones/fixture-${fecha.replace(/-/g, '')}", y devuélvelo tal cual.`
     : `Eres el editor del flujo /hilo (lee referencias/roles/editor.md y referencias/contrato-sesion.md). ` +
       `Tema: ${tema ? `"${tema}"` : '(no dado: elige uno de actualidad con datos duros)'}. Fecha: ${fecha}. ` +
-      `${smoke ? 'MODO SMOKE: exactamente 1 eje, smoke:true; sin tema usa «remesas familiares 2025». ' : 'Modo normal: 2–4 ejes, smoke:false; un eje incluye la pregunta de escala humana (beat impacto). '}` +
+      (idea ? `IDEA DEL BANCO: corre python3 scripts/ideas.py --ver ${idea} (no abras ideas/banco.json) y parte de su pregunta, ángulo, hook_sugerido, paleta_sugerida y datos (fuentes con evidencia de acceso); pon idea_id: "${idea}" en encuadre.json y en tu retorno. ` : 'idea_id: null. ') +
+      `${smoke ? 'MODO SMOKE: exactamente 1 eje, smoke:true; sin tema usa «remesas familiares 2025». ' : `Modo normal: ${minT >= 10 ? '3–4 ejes (hilo largo: ≥' + minT + ' tuits, hacen falta series comparables para muchas tarjetas)' : '2–4 ejes'}, smoke:false; un eje incluye la pregunta de escala humana (beat impacto). `}` +
       `Usa python3 scripts/fuentes.py --tema "…" --series para las fuentes_sugeridas de cada eje (no abras memoria/fuentes.json). Cada eje lleva un prefijo de 3 letras único. ` +
       `Lee memoria/hilos.json solo para repetido y hook_evitar. Crea sesiones/<slug>/ y escribe encuadre.json completo con fecha "${fecha}".`,
   { agentType: 'hilo-editor', schema: S.encuadre, label: 'editor' }
@@ -251,8 +260,9 @@ const prefijoDe = (e) => String(e.prefijo || e.id.slice(0, 3)).toLowerCase()
   const pref = enc.ejes.map(prefijoDe)
   if (new Set(pref).size !== pref.length) fail(`Prefijos de eje repetidos (${pref.join(', ')}): cada eje necesita un prefijo de 3 letras único.`)
 }
+if (idea && enc.idea_id !== idea) { log(`AVISO: el editor no devolvió idea_id "${idea}"; memoria.py no podrá marcar la idea (corrígelo en encuadre.json antes del registro).`) }
 if (enc.repetido) log('AVISO: tema ya cubierto en memoria/hilos.json; el editor declara ángulo nuevo en encuadre.json.')
-log(`Pregunta: ${enc.pregunta} · paleta ${enc.paleta} · ${enc.ejes.length} eje(s) · sesión ${enc.sesion_dir}${fixture ? ' · FIXTURE' : ''}`)
+log(`Pregunta: ${enc.pregunta} · paleta ${enc.paleta} · ${enc.ejes.length} eje(s) · sesión ${enc.sesion_dir}${idea ? ' · idea ' + idea : ''}${fixture ? ' · FIXTURE' : ''}`)
 
 // ── FASE 2: INVESTIGACIÓN ⇢ VERIFICACIÓN (pipeline por eje, sin barrera) ────
 const CIF = new Map()
@@ -312,7 +322,7 @@ phase('Guion')
 const validarGuion = (g) => {
   const Tt = g.tuits, n = Tt.length
   const F = []
-  if (smoke ? !(n >= 3 && n <= 4) : !(n >= 4 && n <= 8)) F.push(`el hilo tiene ${n} tuits (${smoke ? '3–4 en smoke' : '4–8'})`)
+  if (smoke ? !(n >= 3 && n <= 4) : !(n >= minT && n <= MAX_TUITS)) F.push(`el hilo tiene ${n} tuits (${smoke ? '3–4 en smoke' : `${minT}–${MAX_TUITS}`})`)
   if (Tt.some((t, i) => t.n !== i + 1)) F.push('los tuits no están numerados 1..n')
   if (g.paleta !== enc.paleta) F.push(`paleta del guion (${g.paleta}) ≠ encuadre (${enc.paleta})`)
   if (Tt[0].beat !== 'gancho') F.push('T1 debe ser gancho')
@@ -329,7 +339,7 @@ const validarGuion = (g) => {
   if (Tt[0].visual && !Tt[0].visual.cifra_ids.includes(g.ancla_id)) F.push('el visual de T1 no usa la cifra ancla')
   const numerosDe = (d) => {
     const out = []
-    const rec = (x) => { if (typeof x === 'number') out.push(x); else if (Array.isArray(x)) x.forEach(rec); else if (x && typeof x === 'object') Object.entries(x).forEach(([k, v]) => { if (!['decimales', 'escala', 'destacar', 'clases', 'decimales_pildora', 'i', 'fila', 'col', 'miles', 'cortes'].includes(k)) rec(v) }) }
+    const rec = (x) => { if (typeof x === 'number') out.push(x); else if (Array.isArray(x)) x.forEach(rec); else if (x && typeof x === 'object') Object.entries(x).forEach(([k, v]) => { if (!['decimales', 'escala', 'destacar', 'clases', 'decimales_pildora', 'i', 'fila', 'col', 'miles', 'cortes', 'maximo', 'minimo_rotulo', 'desde', 'hasta'].includes(k)) rec(v) }) }
     rec(d); return out
   }
   const formatos = (v) => { const a = Math.abs(v); const s = new Set([String(v), String(a), a.toFixed(1), a.toFixed(2), a.toLocaleString('en-US'), a.toLocaleString('en-US', { maximumFractionDigits: 2 })]); return [...s].filter((x) => x && x !== '0') }
@@ -362,6 +372,25 @@ const validarGuion = (g) => {
     if (v.plantilla === 'waffle' && !(d.porcentaje > 0 && d.porcentaje <= 100)) F.push(`T${t.n} waffle: porcentaje en (0,100]`)
     if (v.plantilla === 'mapa' && Object.keys(d.valores || {}).length < 12) F.push(`T${t.n} mapa: ≥12 departamentos con valor`)
     if (v.plantilla === 'calor' && ((d.filas || []).length * (d.columnas || []).length > 144 || (d.columnas || []).length > 12)) F.push(`T${t.n} calor: ≤12 columnas y ≤12 filas`)
+    const largo = (x) => (Array.isArray(x) ? x.length : 0)
+    if (['linea', 'barras-v'].includes(v.plantilla) && d.periodos != null) {
+      const nP = largo(v.plantilla === 'linea' ? d.etiquetasX : d.etiquetas)
+      const P = Array.isArray(d.periodos) ? d.periodos : null
+      let prev = -1
+      const malo = !P || P.length > 4 || P.some((p) => { const ok = p && p.nombre && Number.isInteger(p.desde) && Number.isInteger(p.hasta) && p.desde > prev && p.desde <= p.hasta && p.hasta < nP; prev = p ? p.hasta : prev; return !ok })
+      if (malo) F.push(`T${t.n} ${v.plantilla}: periodos ≤4 con nombre y desde/hasta índices en orden, sin solaparse`)
+    }
+    if (v.plantilla === 'bullet' && (largo(d.items) < 1 || largo(d.items) > 6 || d.items.some((it) => typeof (it || {}).meta !== 'number' && typeof d.meta !== 'number'))) F.push(`T${t.n} bullet: 1–6 items, cada uno con meta (propia o común)`)
+    if (v.plantilla === 'embudo') {
+      const E = Array.isArray(d.etapas) ? d.etapas : []
+      if (E.length < 2 || E.length > 6 || E.some((e, i) => i && (e || {}).valor > (E[i - 1] || {}).valor)) F.push(`T${t.n} embudo: 2–6 etapas que no crecen`)
+      if (typeof d.misma_cohorte !== 'boolean') F.push(`T${t.n} embudo: misma_cohorte debe ser true o false`)
+    }
+    if (v.plantilla === 'divergente' && (largo(d.items) < 2 || largo(d.items) > 10)) F.push(`T${t.n} divergente: 2–10 items`)
+    if (v.plantilla === 'apilada' && (largo(d.etiquetas) < 2 || largo(d.etiquetas) > 8 || largo(d.partes) < 2 || largo(d.partes) > 5 || d.partes.some((p) => largo((p || {}).valores) !== largo(d.etiquetas)))) F.push(`T${t.n} apilada: 2–8 filas, 2–5 partes y un valor por fila`)
+    if (v.plantilla === 'piramide' && (largo(d.grupos) < 4 || largo(d.grupos) > 12 || largo((d.izquierda || {}).valores) !== largo(d.grupos) || largo((d.derecha || {}).valores) !== largo(d.grupos))) F.push(`T${t.n} piramide: 4–12 grupos y un valor por grupo en cada lado`)
+    if (v.plantilla === 'treemap' && (largo(d.partes) < 3 || largo(d.partes) > 12)) F.push(`T${t.n} treemap: 3–12 partes`)
+    if (v.plantilla === 'dispersion' && (largo(d.puntos) < 8 || largo(d.puntos) > 22 || largo(d.rotular) > 4)) F.push(`T${t.n} dispersion: 8–22 puntos y ≤4 rotulados`)
     if (v.titular.some((l) => !l.trim() || l.length > 26)) F.push(`T${t.n} titular: líneas de ≤26 caracteres`)
     if (!v.kicker.trim() || v.kicker.length > 45) F.push(`T${t.n} kicker vacío o >45`)
     if ((v.nota || '').length > 150) F.push(`T${t.n} nota >150`)
@@ -393,7 +422,7 @@ const g = await conReparacion(
         `Paleta: ${enc.paleta}. Fecha: ${fecha}. hook_evitar: ${enc.hook_evitar || 'ninguno'}. ` +
         `ancla_id debe ser una cifra del visual de T1 (T1.visual.cifra_ids la incluye); si T1 va sin visual, la ancla va en su texto. ` +
         (okIds ? `Solo cifras verificada|ajustada con su valor_final: ${[...okIds].join(', ')}. ` : 'MODO FIXTURE: usa las cifras verificadas de la sesión copiada. ') +
-        `${smoke ? 'MODO SMOKE: 3–4 tuits, smoke:true. ' : '4–8 tuits con un beat impacto, smoke:false. '}` +
+        `${smoke ? 'MODO SMOKE: 3–4 tuits, smoke:true. ' : `${minT}–${MAX_TUITS} tuits con un beat impacto, smoke:false. `}` +
         LIMITES + ' ' +
         (fallos.length ? `TU GUION ANTERIOR FUE RECHAZADO; corrige SOLO esto y vuelve a escribir guion.json completo:\n - ${fallos.join('\n - ')}\n` : '') +
         `Escribe ${enc.sesion_dir}/guion.json completo y devuelve el mismo contenido compacto (con visual.datos en números crudos).`,
@@ -475,7 +504,7 @@ const prod = await conReparacion(
         `(3b) con el veredicto de C1–C8: python3 scripts/ensamblar.py ${enc.sesion_dir} --solo-estado --estado listo|incompleto (deja el estado final en hilo.json, hilo.html y post.md); ` +
         (smoke
           ? `(4) MODO ${fixture ? 'FIXTURE' : 'SMOKE'}: la salida queda en ${enc.sesion_dir}/salida/, NO toques memoria/, registro_id = "${fixture ? 'fixture' : 'smoke'}"; (5) make validate (exit 0). `
-          : `(4) python3 scripts/memoria.py --registrar ${enc.sesion_dir} --ruta <ruta relativa> --estado listo|incompleto (el hook lo toma de guion.json; también guarda series y fuentes primarias); (5) make validate (exit 0). `) +
+          : `(4) python3 scripts/memoria.py --registrar ${enc.sesion_dir} --ruta <ruta relativa> --estado listo|incompleto (el hook lo toma de guion.json; también guarda series y fuentes primarias${idea ? ` y marca la idea ${idea} del banco con el idea_id de encuadre.json` : ''}); (5) make validate (exit 0). `) +
         LIMITES + ' Devuelve la ruta RELATIVA a la raíz del repo y los gates EXACTAMENTE como "ok" | "falla" | "incompleto" (los detalles van en avisos).' +
         (fallos.length ? `\nTU RETORNO ANTERIOR FUE RECHAZADO; corrige:\n - ${fallos.join('\n - ')}` : ''),
       { agentType: 'hilo-productor', schema: S.produccion, label: fallos.length ? 'productor-reparacion' : 'productor' }
@@ -501,6 +530,7 @@ return {
   visuales_dudosos: dudosos,
   avisos: prod.avisos || [],
   sesion_dir: enc.sesion_dir,
+  idea_id: enc.idea_id || null,
   smoke,
   fixture,
 }

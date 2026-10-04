@@ -1,0 +1,2386 @@
+{
+  "slug": "economia-tres-gobiernos",
+  "fecha": "2026-09-29",
+  "tesis": "Con Arévalo el PIB real crece 4% promedio al año (2024–2025), por encima de Morales (3.3%) y Giammattei (3.48%), pero sin la caída de 2020 Giammattei promediaría 5.24%; el cambio más grande de la década son las remesas, que desde 2020 superan a las exportaciones y no las decide ningún gobierno.",
+  "ancla_id": "mac-c02",
+  "paleta": "cielo",
+  "hook_tipo": "pregunta_directa",
+  "cifras": [
+    {
+      "id": "emp-c01",
+      "concepto": "Trabajadores afiliados cotizantes al IGSS por año",
+      "unidad": "trabajadores",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "IGSS, Boletín Estadístico de Afiliación 2023 (Tabla 27, 2014–2023); Informe Anual de Labores 2024; nota IGSS 17-ago-2026 (2025)",
+      "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.pdf",
+      "periodo": "2016–2025",
+      "n_puntos": 10,
+      "valor": 1742810,
+      "veredicto": "verificada",
+      "fuente_2": "Infobae Guatemala (18-ago-2026); serie 2016-2023 reverificada en Tabla 27 local y 2020-2024 en Informe Anual 2024 local",
+      "evidencia": {
+        "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.pdf",
+        "cita": "TABLA 27 IGSS: distribución absoluta anual de trabajadores afiliados cotizantes... 2016 1,300,001 ... 2019 1,350,821 2020 1,289,882 ... 2023 1,554,663",
+        "archivo_local": "sesiones/_descargas/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.txt"
+      },
+      "serie": [
+        {
+          "p": "2016",
+          "v": 1300001
+        },
+        {
+          "p": "2017",
+          "v": 1313017
+        },
+        {
+          "p": "2018",
+          "v": 1325537
+        },
+        {
+          "p": "2019",
+          "v": 1350821
+        },
+        {
+          "p": "2020",
+          "v": 1289882
+        },
+        {
+          "p": "2021",
+          "v": 1388248
+        },
+        {
+          "p": "2022",
+          "v": 1479603
+        },
+        {
+          "p": "2023",
+          "v": 1554663
+        },
+        {
+          "p": "2024",
+          "v": 1659137
+        },
+        {
+          "p": "2025",
+          "v": 1742810
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_16.png"
+      ]
+    },
+    {
+      "id": "emp-c02",
+      "concepto": "Empleos formales netos (cotizantes IGSS) sumados en promedio por año, por gobierno",
+      "unidad": "trabajadores cotizantes por año (promedio)",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Cálculo propio con la serie IGSS (emp-c01)",
+      "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.pdf",
+      "periodo": "2016–2025",
+      "n_puntos": 3,
+      "valor": 94073.5,
+      "veredicto": "verificada",
+      "fuente_2": "Recalculo aritmetico con Tabla 27 del Boletin IGSS 2023 y nota IGSS 2025",
+      "evidencia": {
+        "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.pdf",
+        "cita": "2015 1,267,429 ... 2019 1,350,821 ... 2023 1,554,663 (Tabla 27); 2025: 1 millón 742 mil 810 (nota IGSS 17-ago-2026)",
+        "archivo_local": "sesiones/_descargas/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Morales (2016–2019)",
+          "valor": 20848
+        },
+        {
+          "nombre": "Giammattei (2020–2023)",
+          "valor": 50960.5
+        },
+        {
+          "nombre": "Arévalo (2024–2025)",
+          "valor": 94073.5
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_16.png"
+      ]
+    },
+    {
+      "id": "emp-c03",
+      "concepto": "Variación neta anual de cotizantes al IGSS",
+      "unidad": "trabajadores (diferencia interanual)",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Cálculo propio con la serie IGSS (emp-c01)",
+      "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.pdf",
+      "periodo": "2016–2025",
+      "n_puntos": 10,
+      "valor": 83673,
+      "veredicto": "verificada",
+      "fuente_2": "Recalculo con serie IGSS; 2020 y 2024 cotejados con nota IGSS 17-ago-2026",
+      "evidencia": {
+        "url": "https://www.igssgt.org/noticias/2026/08/17/la-masa-cotizante-del-igss-crecio-un-29-en-los-ultimos-seis-anos/",
+        "cita": "la pandemia en 2020 causó la pérdida de más de 60 mil plazas formales (una caída del 4.51 %)... tras sumar más de 104 mil nuevos afiliados en un año (6.72 % más)",
+        "archivo_local": "sesiones/_descargas/igss_masa_cotizante_2026-08-17.html"
+      },
+      "serie": [
+        {
+          "p": "2016",
+          "v": 32572
+        },
+        {
+          "p": "2017",
+          "v": 13016
+        },
+        {
+          "p": "2018",
+          "v": 12520
+        },
+        {
+          "p": "2019",
+          "v": 25284
+        },
+        {
+          "p": "2020",
+          "v": -60939
+        },
+        {
+          "p": "2021",
+          "v": 98366
+        },
+        {
+          "p": "2022",
+          "v": 91355
+        },
+        {
+          "p": "2023",
+          "v": 75060
+        },
+        {
+          "p": "2024",
+          "v": 104474
+        },
+        {
+          "p": "2025",
+          "v": 83673
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "emp-c04",
+      "concepto": "Alza acumulada de cotizantes IGSS 2019–2025",
+      "unidad": "%",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "IGSS, nota 17-ago-2026 (Departamento Actuarial y Estadístico)",
+      "url": "https://www.igssgt.org/noticias/2026/08/17/la-masa-cotizante-del-igss-crecio-un-29-en-los-ultimos-seis-anos/",
+      "periodo": "2019–2025",
+      "n_puntos": 1,
+      "valor": 29.02,
+      "veredicto": "verificada",
+      "fuente_2": "Infobae Guatemala (18-ago-2026) y recalculo (1,742,810/1,350,821-1=29.02 %)",
+      "evidencia": {
+        "url": "https://www.igssgt.org/noticias/2026/08/17/la-masa-cotizante-del-igss-crecio-un-29-en-los-ultimos-seis-anos/",
+        "cita": "la masa de afiliados cotizantes activos pasó de 1.35 millones en 2019 a 1.74 millones al cierre de 2025, lo que representa un alza acumulada del 29.02 por ciento",
+        "archivo_local": "sesiones/_descargas/igss_masa_cotizante_2026-08-17.html"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "emp-c05",
+      "concepto": "Cobertura del IGSS sobre la Población Económicamente Activa (cotizantes / PEA)",
+      "unidad": "% de la PEA",
+      "anio": 2024,
+      "tipo": "puntual",
+      "fuente": "IGSS, Informe Anual de Labores 2024 (PEA ENEI del INE)",
+      "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Informe-Anual-de-Labores-2024-IGSS.pdf",
+      "periodo": "2024",
+      "n_puntos": 1,
+      "valor": 21.5,
+      "veredicto": "ajustada",
+      "fuente_2": "IGSS Informe Anual 2024 (cita local) + noticias IGSS 2024",
+      "evidencia": {
+        "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Informe-Anual-de-Labores-2024-IGSS.pdf",
+        "cita": "La PEA para el año 2024 se estimó en 7,728,124, por lo que el Instituto cubrió 21.5% de la misma.",
+        "archivo_local": "sesiones/_descargas/Informe-Anual-de-Labores-2024-IGSS.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_16.png"
+      ]
+    },
+    {
+      "id": "emp-c06",
+      "concepto": "PEA en el sector formal (grupo objetivo del IGSS)",
+      "unidad": "personas",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "IGSS, Informe Anual de Labores 2024 (ENEI, INE)",
+      "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Informe-Anual-de-Labores-2024-IGSS.pdf",
+      "periodo": "2024",
+      "n_puntos": 3,
+      "valor": 2218635,
+      "veredicto": "verificada",
+      "fuente_2": "Recalculo interno y ENCOVI 2023 (INE, via Republica) 29.7 % formal",
+      "evidencia": {
+        "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Informe-Anual-de-Labores-2024-IGSS.pdf",
+        "cita": "La PEA para el sector formal, con base a las Encuestas Nacionales de Empleo e Ingresos (ENEI) del INE, en el 2024 fue de 2,218,635",
+        "archivo_local": "sesiones/_descargas/Informe-Anual-de-Labores-2024-IGSS.txt"
+      },
+      "partes": [
+        {
+          "nombre": "PEA total",
+          "valor": 7728124
+        },
+        {
+          "nombre": "PEA sector formal",
+          "valor": 2218635
+        },
+        {
+          "nombre": "Cotizantes IGSS",
+          "valor": 1659137
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "emp-c07",
+      "concepto": "Salario mínimo mensual 2026, actividades no agrícolas, circunscripción económica 1 (sin bonificación incentivo)",
+      "unidad": "Q por mes",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Acuerdo Gubernativo 256-2025 (MINTRAB), vía AGN",
+      "url": "https://agn.gt/asi-quedan-los-montos-del-salario-minimo-para-el-2026/",
+      "periodo": "2026",
+      "n_puntos": 1,
+      "valor": 4002.28,
+      "veredicto": "verificada",
+      "fuente_2": "Prensa Libre/Agencia Ocote/guatemala.com (Acuerdo Gubernativo 256-2025)",
+      "evidencia": {
+        "url": "https://agn.gt/asi-quedan-los-montos-del-salario-minimo-para-el-2026/",
+        "cita": "Para las actividades no agrícolas en la circunscripción económica C1, el salario será de 131.58 quetzales diarios. La suma mensual será de 4 mil 2.28 quetzales."
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "emp-c08",
+      "concepto": "Aumento decretado al salario mínimo no agrícola (CE1 cuando hay circunscripciones), por año de vigencia",
+      "unidad": "% de aumento anual",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Prensa Libre (2023, 2024), ASIES/Prensa Libre 22-dic-2024 (2025), AGN (2026)",
+      "url": "https://www.prensalibre.com/economia/evolucion-del-salario-minimo-en-guatemala-una-decada-de-desafios-y-ajustes/",
+      "periodo": "2023–2026",
+      "n_puntos": 4,
+      "valor": 10,
+      "veredicto": "verificada",
+      "fuente_2": "Guatemala.com (2025), Prensa Libre (2023) y Republica/EY (2024: acuerdo 307-2023), AGN (2026)",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/economia/evolucion-del-salario-minimo-en-guatemala-una-decada-de-desafios-y-ajustes/",
+        "cita": "El ajuste salarial para 2023 reflejó diferencias geográficas, con un aumento del 7% para los trabajadores en la CE1 y un 4% para la CE2"
+      },
+      "partes": [
+        {
+          "nombre": "2023 (Giammattei, CE1)",
+          "valor": 7
+        },
+        {
+          "nombre": "2024 (Giammattei, CE1)",
+          "valor": 6.6
+        },
+        {
+          "nombre": "2025 (Arévalo)",
+          "valor": 10
+        },
+        {
+          "nombre": "2026 (Arévalo, no agrícola)",
+          "valor": 7.5
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "emp-c09",
+      "concepto": "Costo mensual per cápita de la Canasta Básica Alimentaria Urbana (CBAU), junio 2026",
+      "unidad": "Q por persona al mes",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "INE, Canasta Básica Alimentaria junio 2026 (metodología 2024)",
+      "url": "https://www.ine.gob.gt/sistema/uploads/2026/07/07/20260707110852iZwkJLBrcyCmachhwmugKt4pf6cK8kRg.pdf",
+      "periodo": "jun-2026",
+      "n_puntos": 1,
+      "valor": 943.14,
+      "veredicto": "verificada",
+      "fuente_2": "Publinews/La Hora reportando INE CBA junio 2026; INE (mismo doc)",
+      "evidencia": {
+        "url": "https://www.ine.gob.gt/sistema/uploads/2026/07/07/20260707110852iZwkJLBrcyCmachhwmugKt4pf6cK8kRg.pdf",
+        "cita": "El costo de adquisición de la CBAU per cápita mensual a junio del 2026 fue de Q.943.14 y de la CBAR fue de Q.727.14.",
+        "archivo_local": "sesiones/_descargas/20260707110852iZwkJLBrcyCmachhwmugKt4pf6cK8kRg.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "emp-c10",
+      "concepto": "Hogares receptores de remesas en Guatemala",
+      "unidad": "hogares (= receptores)",
+      "anio": 2022,
+      "tipo": "puntual",
+      "fuente": "OIM, Encuesta sobre migración internacional de población guatemalteca y remesas 2022 (resumen)",
+      "url": "https://infounitnca.iom.int/uploads/RemesasGT2022/Resumen_EncuestaRemesas2022_gt.pdf",
+      "periodo": "2022",
+      "n_puntos": 1,
+      "valor": 1748040,
+      "veredicto": "verificada",
+      "fuente_2": "Republica (resumen encuesta OIM 2022) y cita local OIM",
+      "evidencia": {
+        "url": "https://infounitnca.iom.int/uploads/RemesasGT2022/Resumen_EncuestaRemesas2022_gt.pdf",
+        "cita": "en Guatemala hay 1,748,040 receptores de remesas, monto equivalente a igual número de hogares receptores en los que viven, aproximadamente, 6,555,944 personas beneficiarias",
+        "archivo_local": "sesiones/_descargas/Resumen_EncuestaRemesas2022_gt.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_5.png"
+      ]
+    },
+    {
+      "id": "emp-c11",
+      "concepto": "Hogares receptores que dependen al 100 % de las remesas",
+      "unidad": "% de hogares receptores",
+      "anio": 2022,
+      "tipo": "puntual",
+      "fuente": "OIM, Encuesta sobre migración y remesas 2022",
+      "url": "https://infounitnca.iom.int/uploads/RemesasGT2022/Resumen_EncuestaRemesas2022_gt.pdf",
+      "periodo": "2022",
+      "n_puntos": 1,
+      "valor": 24.4,
+      "veredicto": "verificada",
+      "fuente_2": "Republica (resumen encuesta OIM 2022) y cita local OIM",
+      "evidencia": {
+        "url": "https://infounitnca.iom.int/uploads/RemesasGT2022/Resumen_EncuestaRemesas2022_gt.pdf",
+        "cita": "el 24.4 % de los hogares dependen el 100.0 % de las remesas; el 26.7 % de los hogares depende en un 50.0 %.",
+        "archivo_local": "sesiones/_descargas/Resumen_EncuestaRemesas2022_gt.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_5.png"
+      ]
+    },
+    {
+      "id": "ext-c01",
+      "concepto": "Ingreso de divisas por remesas familiares, total anual",
+      "unidad": "millones de US$",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Banco de Guatemala, Cuadro 1 Ingreso de Divisas por Remesas Familiares (remfam2002_2026)",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/remesas/remfam2002_2026.xlsx",
+      "periodo": "2016-2025",
+      "n_puntos": 10,
+      "valor": 25530.2,
+      "veredicto": "verificada",
+      "fuente_2": "Prensa Libre / La Hora citando a Banguat (presidente): 2025 = US$25,530.2 M, +18.7 %; 2024 = 21,510 M (SELA/Banguat)",
+      "evidencia": {
+        "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/remesas/remfam2002_2026.xlsx",
+        "cita": "Cuadro 1, En millones de US dólares, fila Total: 2016 = 7159.9675620800008 ... 2019 = 10508.30741109 ... 2023 = 19804.002051890002 ... 2025 = 25530.23224162",
+        "archivo_local": "sesiones/_descargas/remfam2002_2026_hoja1.csv"
+      },
+      "serie": [
+        {
+          "p": "2016",
+          "v": 7160.0
+        },
+        {
+          "p": "2017",
+          "v": 8192.2
+        },
+        {
+          "p": "2018",
+          "v": 9287.8
+        },
+        {
+          "p": "2019",
+          "v": 10508.3
+        },
+        {
+          "p": "2020",
+          "v": 11340.4
+        },
+        {
+          "p": "2021",
+          "v": 15295.7
+        },
+        {
+          "p": "2022",
+          "v": 18040.3
+        },
+        {
+          "p": "2023",
+          "v": 19804.0
+        },
+        {
+          "p": "2024",
+          "v": 21510.2
+        },
+        {
+          "p": "2025",
+          "v": 25530.2
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_3.png"
+      ]
+    },
+    {
+      "id": "ext-c02",
+      "concepto": "Remesas familiares acumuladas enero-agosto 2026",
+      "unidad": "millones de US$",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Banco de Guatemala, remfam2002_2026 (Cuadros 1 y 2)",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/remesas/remfam2002_2026.xlsx",
+      "periodo": "ene-ago 2026",
+      "n_puntos": 1,
+      "valor": 17774.9,
+      "veredicto": "verificada",
+      "fuente_2": "Prensa Libre y soymigrante: ene-ago 2026 = US$17,774.9 M (+5.42 % vs 16,861.7 M)",
+      "evidencia": {
+        "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/remesas/remfam2002_2026.xlsx",
+        "cita": "Cuadro 1 Total 2026 = 17774.857831249999 (ene-ago); Cuadro 2 Variaciones porcentuales acumuladas, Agosto 2026 = 5.4155480381993186",
+        "archivo_local": "sesiones/_descargas/remfam2002_2026_hoja1.csv"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ext-c03",
+      "concepto": "Crecimiento acumulado de remesas vs exportaciones por gobierno (del último año del gobierno previo al último año del periodo)",
+      "unidad": "% acumulado",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Cálculo sobre Banguat: remfam2002_2026 y X_PROD_TRIM_2002_2025",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/remesas/remfam2002_2026.xlsx",
+      "periodo": "2015-2025",
+      "n_puntos": 6,
+      "valor": 88.5,
+      "veredicto": "verificada",
+      "fuente_2": "Recalculo local con totales verificados (ext-c01) y exportaciones del xlsx anual de Banguat",
+      "evidencia": {
+        "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/comercio/sercom/4_POR_PRODUCTO_TRIMESTRE/X_PROD_TRIM_2002_2025.xlsx",
+        "cita": "Remesas Total 2015 6284.98, 2019 10508.31, 2023 19804.00, 2025 25530.23; Exportaciones FOB TOTAL (suma trimestral) 2015 10674779867, 2019 11170336173, 2023 14185553967, 2025p 15592400739",
+        "archivo_local": "sesiones/_descargas/X_PROD_TRIM_2002_2025_hoja1.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Morales remesas 2015-2019",
+          "valor": 67.2
+        },
+        {
+          "nombre": "Morales exportaciones 2015-2019",
+          "valor": 4.6
+        },
+        {
+          "nombre": "Giammattei remesas 2019-2023",
+          "valor": 88.5
+        },
+        {
+          "nombre": "Giammattei exportaciones 2019-2023",
+          "valor": 27.0
+        },
+        {
+          "nombre": "Arévalo remesas 2023-2025",
+          "valor": 28.9
+        },
+        {
+          "nombre": "Arévalo exportaciones 2023-2025",
+          "valor": 9.9
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ext-c04",
+      "concepto": "Exportaciones FOB (comercio general), total anual",
+      "unidad": "millones de US$",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Banco de Guatemala, Valor (FOB) de las exportaciones por producto y trimestre, comercio general 2002-2025",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/comercio/sercom/4_POR_PRODUCTO_TRIMESTRE/X_PROD_TRIM_2002_2025.xlsx",
+      "periodo": "2016-2025",
+      "n_puntos": 10,
+      "valor": 15592.4,
+      "veredicto": "verificada",
+      "fuente_2": "Banguat, X_PROD_1994_2025.xlsx (archivo independiente del trimestral): TOTAL 2025 = 15,592,400,739 US$; 2023 = 14,185,553,967; 2024 = 14,556,344,936",
+      "evidencia": {
+        "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/comercio/sercom/4_POR_PRODUCTO_TRIMESTRE/X_PROD_TRIM_2002_2025.xlsx",
+        "cita": "GUATEMALA: VALOR (FOB) ... COMERCIO GENERAL, - En US dólares -, TOTAL 2025 p/: I TRIM 4019.8 M, II 4187.9 M, III 3671.1 M, IV 3713.6 M (suma 15592400739)",
+        "archivo_local": "sesiones/_descargas/X_PROD_TRIM_2002_2025_hoja1.csv"
+      },
+      "serie": [
+        {
+          "p": "2016",
+          "v": 10449.3
+        },
+        {
+          "p": "2017",
+          "v": 10982.4
+        },
+        {
+          "p": "2018",
+          "v": 10969.7
+        },
+        {
+          "p": "2019",
+          "v": 11170.3
+        },
+        {
+          "p": "2020",
+          "v": 11101.2
+        },
+        {
+          "p": "2021",
+          "v": 13619.8
+        },
+        {
+          "p": "2022",
+          "v": 15654.2
+        },
+        {
+          "p": "2023",
+          "v": 14185.6
+        },
+        {
+          "p": "2024",
+          "v": 14556.3
+        },
+        {
+          "p": "2025",
+          "v": 15592.4
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_3.png"
+      ]
+    },
+    {
+      "id": "ext-c05",
+      "concepto": "Reservas monetarias internacionales netas al cierre de año",
+      "unidad": "millones de US$",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Banco de Guatemala, Reservas Monetarias Internacionales Netas años 1980-2025 (pim04)",
+      "url": "https://www.banguat.gob.gt/sites/default/files/banguat/pim/pim04.htm",
+      "periodo": "2016-2025",
+      "n_puntos": 10,
+      "valor": 32736.8,
+      "veredicto": "verificada",
+      "fuente_2": "Banco Mundial FI.RES.TOTL.CD Guatemala: 2025 = 32,753.6 M (incluye oro); 2024 = 24,412.4; 2016 = 9,152.6 (archivo local de API)",
+      "evidencia": {
+        "url": "https://www.banguat.gob.gt/sites/default/files/banguat/pim/pim04.htm",
+        "cita": "RESERVAS MONETARIAS INTERNACIONALES NETAS, AÑOS 1980 - 2025, - Millones de US dólares -: 2016 9,160.4 ... 2019 14,789.0 ... 2023 21,319.4; 2024 24,421.6; 2025 32,736.8",
+        "archivo_local": "sesiones/_descargas/pim04_tabla1.csv"
+      },
+      "serie": [
+        {
+          "p": "2016",
+          "v": 9160.4
+        },
+        {
+          "p": "2017",
+          "v": 11769.5
+        },
+        {
+          "p": "2018",
+          "v": 12755.6
+        },
+        {
+          "p": "2019",
+          "v": 14789.0
+        },
+        {
+          "p": "2020",
+          "v": 18468.2
+        },
+        {
+          "p": "2021",
+          "v": 20939.6
+        },
+        {
+          "p": "2022",
+          "v": 20019.8
+        },
+        {
+          "p": "2023",
+          "v": 21319.4
+        },
+        {
+          "p": "2024",
+          "v": 24421.6
+        },
+        {
+          "p": "2025",
+          "v": 32736.8
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_10.png"
+      ]
+    },
+    {
+      "id": "ext-c06",
+      "concepto": "Cobertura de las reservas internacionales en meses de importación de bienes",
+      "unidad": "meses de importación",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Banco de Guatemala, 'Resultados macroeconómicos 2025 y perspectivas 2026' (14-ene-2026)",
+      "url": "https://www.fundesa.org.gt/content/files/publicaciones/BANGUAT_2026_Resultados_macroeconmicos_2025_y_Perspectivas.pdf",
+      "periodo": "al 8 de enero de 2026",
+      "n_puntos": 1,
+      "valor": 11,
+      "veredicto": "verificada",
+      "fuente_2": "Prensa Libre / Banguat: reservas equivalen a aprox. 11 meses de importacion de bienes (8-ene-2026)",
+      "evidencia": {
+        "url": "https://www.fundesa.org.gt/content/files/publicaciones/BANGUAT_2026_Resultados_macroeconmicos_2025_y_Perspectivas.pdf",
+        "cita": "El nivel de reservas internacionales demuestra la fortaleza externa del país. Al 8 de enero de 2026 equivale a alrededor de 11 meses de importación de bienes.",
+        "archivo_local": "sesiones/_descargas/banguat_resultados_2025_perspectivas_2026.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_10.png"
+      ]
+    },
+    {
+      "id": "ext-c07",
+      "concepto": "Inversión extranjera directa, entradas netas (balanza de pagos)",
+      "unidad": "millones de US$",
+      "anio": 2024,
+      "tipo": "serie",
+      "fuente": "Banco Mundial WDI BX.KLT.DINV.CD.WD (con datos de balanza de pagos FMI/Banguat)",
+      "url": "https://api.worldbank.org/v2/country/GTM/indicator/BX.KLT.DINV.CD.WD;FI.RES.TOTL.CD;NY.GDP.MKTP.CD;BX.GSR.MRCH.CD;BX.TRF.PWKR.CD.DT?source=2&format=json&date=2015:2025&per_page=500",
+      "periodo": "2016-2024",
+      "n_puntos": 9,
+      "valor": 1848.0,
+      "veredicto": "verificada",
+      "fuente_2": "Banco Mundial WDI BX.KLT.DINV.CD.WD (JSON local: 2024 = 1,848,004,120; 2021 = 3,626,364,530; 2016 = 845,786,560); Banguat reporta otra serie (2024 = 1,729.4)",
+      "evidencia": {
+        "url": "https://api.worldbank.org/v2/country/GTM/indicator/BX.KLT.DINV.CD.WD;FI.RES.TOTL.CD;NY.GDP.MKTP.CD;BX.GSR.MRCH.CD;BX.TRF.PWKR.CD.DT?source=2&format=json&date=2015:2025&per_page=500",
+        "cita": "BX.KLT.DINV.CD.WD Guatemala: 2016 845786560; 2019 1170758860; 2021 3626364530; 2023 1650310370; 2024 1848004120; 2025 null",
+        "archivo_local": "sesiones/_descargas/api/9ca90dbf4f76abaaeb4fc831982f2ad388459bae.json"
+      },
+      "serie": [
+        {
+          "p": "2016",
+          "v": 845.8
+        },
+        {
+          "p": "2017",
+          "v": 998.3
+        },
+        {
+          "p": "2018",
+          "v": 922.4
+        },
+        {
+          "p": "2019",
+          "v": 1170.8
+        },
+        {
+          "p": "2020",
+          "v": 1004.4
+        },
+        {
+          "p": "2021",
+          "v": 3626.4
+        },
+        {
+          "p": "2022",
+          "v": 1450.1
+        },
+        {
+          "p": "2023",
+          "v": 1650.3
+        },
+        {
+          "p": "2024",
+          "v": 1848.0
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_9.png"
+      ]
+    },
+    {
+      "id": "ext-c08",
+      "concepto": "Flujo de inversión extranjera directa 2025 por actividad económica (CIIU 4)",
+      "unidad": "millones de US$",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Banco de Guatemala, Inversión Extranjera Directa en Guatemala por CIIU 4 y país de origen, 2025p",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/Publica/vi_man_bpagos/flujo_IED_2025.xlsx",
+      "periodo": "2025",
+      "n_puntos": 6,
+      "valor": 1881.749,
+      "veredicto": "verificada",
+      "fuente_2": "Banguat IED_2025.pdf via resumen: IED 2025 = US$1,881.7 M (+8.8 %); financieras 45.4 %, comercio 19.1 %, manufactura 10.8 %",
+      "evidencia": {
+        "url": "https://banguat.gob.gt/sites/default/files/banguat/Publica/vi_man_bpagos/flujo_IED_2025.xlsx",
+        "cita": "2025p/ Cifras en millones de US Dólares ... Total: Actividades financieras y de seguros 855.18270000000007 ... Total 1881.749",
+        "archivo_local": "sesiones/_descargas/flujo_IED_2025_hoja1.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Actividades financieras y de seguros",
+          "valor": 855.2
+        },
+        {
+          "nombre": "Comercio y reparación de vehículos",
+          "valor": 358.6
+        },
+        {
+          "nombre": "Industrias manufactureras",
+          "valor": 203.5
+        },
+        {
+          "nombre": "Información y comunicaciones",
+          "valor": 187.0
+        },
+        {
+          "nombre": "Electricidad, agua y saneamiento",
+          "valor": 138.4
+        },
+        {
+          "nombre": "Resto de actividades",
+          "valor": 139.0
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ext-c09",
+      "concepto": "Remesas personales recibidas como % del PIB",
+      "unidad": "% del PIB",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "Banco Mundial WDI BX.TRF.PWKR.DT.GD.ZS",
+      "url": "https://api.worldbank.org/v2/country/GTM/indicator/BX.TRF.PWKR.DT.GD.ZS?format=json&per_page=200",
+      "periodo": "2016, 2019, 2023, 2024",
+      "n_puntos": 4,
+      "valor": 19.1,
+      "veredicto": "verificada",
+      "fuente_2": "JSON local WDI: 2024 = 19.118 %, 2023 = 19.158 %, 2019 = 13.808 %; Banguat/SELA calcula 19.6 % con su PIB; prensa 20.7 % para 2025",
+      "evidencia": {
+        "url": "https://api.worldbank.org/v2/country/GTM/indicator/BX.TRF.PWKR.DT.GD.ZS?format=json&per_page=200",
+        "cita": "BX.TRF.PWKR.DT.GD.ZS Guatemala: 2016 11.1465467414657; 2019 13.8075410269222; 2023 19.1575563867358; 2024 19.1179716140238; 2025 None",
+        "archivo_local": "sesiones/_descargas/wdi_remesas_pib.json"
+      },
+      "partes": [
+        {
+          "nombre": "2016",
+          "valor": 11.1
+        },
+        {
+          "nombre": "2019",
+          "valor": 13.8
+        },
+        {
+          "nombre": "2023",
+          "valor": 19.2
+        },
+        {
+          "nombre": "2024",
+          "valor": 19.1
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_4.png"
+      ]
+    },
+    {
+      "id": "ext-c10",
+      "concepto": "Promedio anual de remesas por gobierno",
+      "unidad": "millones de US$",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Cálculo sobre Banguat remfam2002_2026 (serie ext-c01)",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/remesas/remfam2002_2026.xlsx",
+      "periodo": "2016-2025",
+      "n_puntos": 3,
+      "valor": 23520.2,
+      "veredicto": "verificada",
+      "fuente_2": "Recalculo con totales anuales verificados (ext-c01) y 2024 = 21,510 M (SELA/Banguat)",
+      "evidencia": {
+        "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/remesas/remfam2002_2026.xlsx",
+        "cita": "Cuadro 1 Total: 2016 7159.97, 2017 8192.21, 2018 9287.77, 2019 10508.31, 2020 11340.42, 2021 15295.69, 2022 18040.32, 2023 19804.00, 2024 21510.19, 2025 25530.23",
+        "archivo_local": "sesiones/_descargas/remfam2002_2026_hoja1.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Morales 2016-2019",
+          "valor": 8787.1
+        },
+        {
+          "nombre": "Giammattei 2020-2023",
+          "valor": 16120.1
+        },
+        {
+          "nombre": "Arévalo 2024-2025",
+          "valor": 23520.2
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ext-c11",
+      "concepto": "Variación anual de las remesas familiares a diciembre",
+      "unidad": "% anual",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Banco de Guatemala, remfam2002_2026, Cuadro 2 Variaciones porcentuales acumuladas",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/remesas/remfam2002_2026.xlsx",
+      "periodo": "2016-2025",
+      "n_puntos": 10,
+      "valor": 18.689033,
+      "veredicto": "verificada",
+      "fuente_2": "Prensa Libre, La Hora, eP Investiga: remesas 2025 crecieron 18.7 % (US$25,530.2 M)",
+      "evidencia": {
+        "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/remesas/remfam2002_2026.xlsx",
+        "cita": "Cuadro 2, Diciembre: 2016 13.921922568064744; 2020 7.9185748087444523; 2021 34.877642629462855; 2024 8.6153510158678728; 2025 18.689033342193142",
+        "archivo_local": "sesiones/_descargas/remfam2002_2026_hoja1.csv"
+      },
+      "partes": [
+        {
+          "nombre": "2016",
+          "valor": 13.9
+        },
+        {
+          "nombre": "2017",
+          "valor": 14.4
+        },
+        {
+          "nombre": "2018",
+          "valor": 13.4
+        },
+        {
+          "nombre": "2019",
+          "valor": 13.1
+        },
+        {
+          "nombre": "2020",
+          "valor": 7.9
+        },
+        {
+          "nombre": "2021",
+          "valor": 34.9
+        },
+        {
+          "nombre": "2022",
+          "valor": 17.9
+        },
+        {
+          "nombre": "2023",
+          "valor": 9.8
+        },
+        {
+          "nombre": "2024",
+          "valor": 8.6
+        },
+        {
+          "nombre": "2025",
+          "valor": 18.7
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ext-c12",
+      "concepto": "Inversión extranjera directa 2021 atribuida a una sola operación (Millicom)",
+      "unidad": "millones de US$",
+      "anio": 2021,
+      "tipo": "puntual",
+      "fuente": "Banco de Guatemala, 'Resultados macroeconómicos 2025 y perspectivas 2026' (gráfica Flujo de IED)",
+      "url": "https://www.fundesa.org.gt/content/files/publicaciones/BANGUAT_2026_Resultados_macroeconmicos_2025_y_Perspectivas.pdf",
+      "periodo": "2021",
+      "n_puntos": 1,
+      "valor": 2200,
+      "veredicto": "verificada",
+      "fuente_2": "Millicom (via El Mundo/Prensa Libre): compra del 45 % de Tigo Guatemala por US$2,200 M en 2021",
+      "evidencia": {
+        "url": "https://www.fundesa.org.gt/content/files/publicaciones/BANGUAT_2026_Resultados_macroeconmicos_2025_y_Perspectivas.pdf",
+        "cita": "Flujo de Inversión Extranjera Directa (Millones de US$) 3,461.8 Incluyendo Millicom por US$2,200.0",
+        "archivo_local": "sesiones/_descargas/banguat_resultados_2025_perspectivas_2026.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_9.png"
+      ]
+    },
+    {
+      "id": "fis-c01",
+      "concepto": "Carga tributaria neta del Gobierno Central (ingresos tributarios netos / PIB nominal), anual 2016–2025",
+      "unidad": "% del PIB",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "SAT, Boletín Estadístico, hoja F1 'Carga tributaria neta, gobierno central' (PIB: Banco de Guatemala, base 2013)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+      "periodo": "2016–2025",
+      "n_puntos": 10,
+      "valor": 11.88,
+      "veredicto": "verificada",
+      "fuente_2": "Gobierno de Guatemala / SAT: cierre 2025, carga tributaria 11.9% del PIB",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+        "cita": "Guatemala: Carga tributaria neta ... 2025,947005.52963213599,...,112529.859761071,0.118827035576849 | 2022,...,0.11954492799999999",
+        "archivo_local": "sesiones/_descargas/sat_boletinestadistico_hoja27.csv"
+      },
+      "serie": [
+        {
+          "p": "2016",
+          "v": 10.78
+        },
+        {
+          "p": "2017",
+          "v": 10.77
+        },
+        {
+          "p": "2018",
+          "v": 10.67
+        },
+        {
+          "p": "2019",
+          "v": 10.54
+        },
+        {
+          "p": "2020",
+          "v": 10.04
+        },
+        {
+          "p": "2021",
+          "v": 11.66
+        },
+        {
+          "p": "2022",
+          "v": 11.95
+        },
+        {
+          "p": "2023",
+          "v": 11.68
+        },
+        {
+          "p": "2024",
+          "v": 11.76
+        },
+        {
+          "p": "2025",
+          "v": 11.88
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_12.png"
+      ]
+    },
+    {
+      "id": "fis-c02",
+      "concepto": "Ingresos tributarios netos del Gobierno Central (recaudación SAT + otras instituciones − provisión devolución crédito fiscal), anual",
+      "unidad": "millones de quetzales corrientes",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "SAT, Serie histórica de recaudación anual por impuesto (rimpa.xlsx)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/5151/rimpa.xlsx",
+      "periodo": "2016–2025",
+      "n_puntos": 10,
+      "valor": 112529.9,
+      "veredicto": "verificada",
+      "fuente_2": "Gobierno de Guatemala / SAT: recaudó Q111,981.5 M en 2025 (meta Q108,737.5 M)",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/5151/rimpa.xlsx",
+        "cita": "INGRESOS TRIBUTARIOS NETOS ... 2016: 54109.456394310007 ... 2019: 62593.557858350003 ... 2023: 95547.79242350001 ... 2025: 112529.859761071",
+        "archivo_local": "sesiones/_descargas/sat_rimpa_hoja1.csv"
+      },
+      "serie": [
+        {
+          "p": "2016",
+          "v": 54109.5
+        },
+        {
+          "p": "2017",
+          "v": 56684.1
+        },
+        {
+          "p": "2018",
+          "v": 58835.6
+        },
+        {
+          "p": "2019",
+          "v": 62593.6
+        },
+        {
+          "p": "2020",
+          "v": 60279.4
+        },
+        {
+          "p": "2021",
+          "v": 78019.1
+        },
+        {
+          "p": "2022",
+          "v": 88579.0
+        },
+        {
+          "p": "2023",
+          "v": 95547.8
+        },
+        {
+          "p": "2024",
+          "v": 103314.9
+        },
+        {
+          "p": "2025",
+          "v": 112529.9
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_12.png"
+      ]
+    },
+    {
+      "id": "fis-c04",
+      "concepto": "Déficit fiscal del Gobierno Central (resultado presupuestario), % del PIB, anual",
+      "unidad": "% del PIB (déficit, signo positivo)",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Banco de Guatemala, 'Resultados macroeconómicos 2025 y perspectivas 2026' (14-ene-2026), gráfica 'Déficit Fiscal (% del PIB)', fuente MINFIN y Banguat; montos en Q: Banguat pim25 (fuente MINFIN)",
+      "url": "https://www.fundesa.org.gt/content/files/publicaciones/BANGUAT_2026_Resultados_macroeconmicos_2025_y_Perspectivas.pdf",
+      "periodo": "2016–2025",
+      "n_puntos": 10,
+      "valor": 1.9,
+      "veredicto": "verificada",
+      "fuente_2": "Minfin (vía búsqueda): déficit cerró 2025 en Q18,183.6 M = 1.9% del PIB",
+      "evidencia": {
+        "url": "https://www.fundesa.org.gt/content/files/publicaciones/BANGUAT_2026_Resultados_macroeconmicos_2025_y_Perspectivas.pdf",
+        "cita": "Déficit Fiscal (% del PIB) ... 4.9 ... 1.9 ... Nota: Para 2025, cierre preliminar según Ministerio de Finanzas. Para 2026, cifras proyectadas según Acuerdo Gubernativo 1-2026. Fuente: MINFIN y Banguat",
+        "archivo_local": "sesiones/_descargas/BANGUAT_2026_Resultados_macroeconmicos_2025_y_Perspectivas.txt"
+      },
+      "serie": [
+        {
+          "p": "2016",
+          "v": 1.1
+        },
+        {
+          "p": "2017",
+          "v": 1.4
+        },
+        {
+          "p": "2018",
+          "v": 1.9
+        },
+        {
+          "p": "2019",
+          "v": 2.2
+        },
+        {
+          "p": "2020",
+          "v": 4.9
+        },
+        {
+          "p": "2021",
+          "v": 1.2
+        },
+        {
+          "p": "2022",
+          "v": 1.7
+        },
+        {
+          "p": "2023",
+          "v": 1.3
+        },
+        {
+          "p": "2024",
+          "v": 1.0
+        },
+        {
+          "p": "2025",
+          "v": 1.9
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_11.png"
+      ]
+    },
+    {
+      "id": "fis-c05",
+      "concepto": "Saldo de la deuda pública del Gobierno Central, % del PIB, al cierre de cada año",
+      "unidad": "% del PIB",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Banco de Guatemala, 'Resultados macroeconómicos 2025 y perspectivas 2026' (14-ene-2026), gráfica 'Deuda Pública (% del PIB)', fuente MINFIN y Banguat",
+      "url": "https://www.fundesa.org.gt/content/files/publicaciones/BANGUAT_2026_Resultados_macroeconmicos_2025_y_Perspectivas.pdf",
+      "periodo": "2016–2025",
+      "n_puntos": 10,
+      "valor": 26.8,
+      "valor_original": 26.9,
+      "veredicto": "ajustada",
+      "fuente_2": "Minfin: saldo Q253,048 M = 26.8% del PIB a dic 2025 (Prensa Libre, Prensa Latina)",
+      "evidencia": {
+        "url": "https://www.fundesa.org.gt/content/files/publicaciones/BANGUAT_2026_Resultados_macroeconmicos_2025_y_Perspectivas.pdf",
+        "cita": "La deuda pública permanece en niveles bajos ... Deuda Pública (% del PIB) ... Valor crítico: 40% ... 31.5 ... 26.9 ... Nota: Para 2025, cierre preliminar.",
+        "archivo_local": "sesiones/_descargas/BANGUAT_2026_Resultados_macroeconmicos_2025_y_Perspectivas.txt"
+      },
+      "serie": [
+        {
+          "p": "2016",
+          "v": 25.0
+        },
+        {
+          "p": "2017",
+          "v": 25.2
+        },
+        {
+          "p": "2018",
+          "v": 26.5
+        },
+        {
+          "p": "2019",
+          "v": 26.5
+        },
+        {
+          "p": "2020",
+          "v": 31.5
+        },
+        {
+          "p": "2021",
+          "v": 30.6
+        },
+        {
+          "p": "2022",
+          "v": 29.0
+        },
+        {
+          "p": "2023",
+          "v": 27.2
+        },
+        {
+          "p": "2024",
+          "v": 26.3
+        },
+        {
+          "p": "2025",
+          "v": 26.9
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_11.png"
+      ]
+    },
+    {
+      "id": "fis-c06",
+      "concepto": "Calificación soberana de largo plazo por agencia y escalones por debajo del grado de inversión (BBB-/Baa3)",
+      "unidad": "escalones debajo del grado de inversión",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Banco Mundial, 'Case Study: Guatemala credit rating TA' (9-dic-2025); Banguat, Resultados 2025 (14-ene-2026); prensa sep-2026 para Fitch",
+      "url": "https://thedocs.worldbank.org/en/doc/a5b3ae9e2ca5241ef9145228655fb4a3-0340012025/original/Case-Study-Guatemala-credit-rating-TA.pdf",
+      "periodo": "2021–sep 2026",
+      "n_puntos": 3,
+      "valor": 1,
+      "veredicto": "verificada",
+      "fuente_2": "S&P Global Ratings: 'BB+' afirmada (mayo 2025); Moody's Ba1 estable",
+      "evidencia": {
+        "url": "https://thedocs.worldbank.org/en/doc/a5b3ae9e2ca5241ef9145228655fb4a3-0340012025/original/Case-Study-Guatemala-credit-rating-TA.pdf",
+        "cita": "In June 2025, S&P Global upgraded Guatemala to 'BB+' from 'bb' ... In October 2025, Fitch Ratings upgraded Guatemala's long-term foreign currency rating to 'BB+' from 'BB'",
+        "archivo_local": "sesiones/_descargas/Case-Study-Guatemala-credit-rating-TA.txt"
+      },
+      "partes": [
+        {
+          "nombre": "S&P: BB+ estable (sube desde BB en 2025; BB- con perspectiva positiva en 2021–2022)",
+          "valor": 1
+        },
+        {
+          "nombre": "Fitch: BB+ estable (sube desde BB en oct-2025; confirmada 11-sep-2026)",
+          "valor": 1
+        },
+        {
+          "nombre": "Moody's: Ba1 estable (sin cambio 2021–2026; ratificada abr/may-2026)",
+          "valor": 1
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_17.png"
+      ]
+    },
+    {
+      "id": "fis-c07",
+      "concepto": "Ejecución de los aportes a los Consejos Departamentales de Desarrollo (Codede) al 3-nov-2025, % del presupuesto vigente",
+      "unidad": "% ejecutado",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "ICEFI, 'Guatemala: Análisis y recomendaciones para el proyecto de presupuesto para 2026' (12-nov-2025), Tabla 1, con base en SICOIN/MINFIN",
+      "url": "https://icefi.org/sites/default/files/guatemala_analisis_del_presupuesto_aprobado_para_2026_-_12_nov_2025.pdf",
+      "periodo": "al 3-nov-2025",
+      "n_puntos": 4,
+      "valor": 41.1,
+      "veredicto": "verificada",
+      "fuente_2": "Fundesa, Inversión a cargo de los CODEDES 2024-2025 (ejecución ~43% en noviembre)",
+      "evidencia": {
+        "url": "https://icefi.org/sites/default/files/guatemala_analisis_del_presupuesto_aprobado_para_2026_-_12_nov_2025.pdf",
+        "cita": "Al 3 de noviembre de 2025, la ejecución de las trasferencias de la Administración Central a los Codede era de solamente 41.1%. ... asignación extraordinaria ... únicamente el 23.5%",
+        "archivo_local": "sesiones/_descargas/guatemala_analisis_del_presupuesto_aprobado_para_2026_-_12_nov_2025.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Aporte ordinario 2025",
+          "valor": 41.3
+        },
+        {
+          "nombre": "Aporte extraordinario 2025",
+          "valor": 23.5
+        },
+        {
+          "nombre": "Saldo ordinario 2024 (Decreto 27-2024)",
+          "valor": 72.0
+        },
+        {
+          "nombre": "Saldo extraordinario 2024 (art. 12 Decreto 17-2024)",
+          "valor": 77.3
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "mac-c01",
+      "concepto": "Crecimiento del PIB real (variación anual %), año de referencia 2013",
+      "unidad": "% variación anual real",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Banco de Guatemala (Banguat), Cuentas Nacionales, cuadro 1.1 PIB tasa de variación AR2013",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/cuentasnac/PIB2013/resumidos/1.1_PIB_Tasa_de_Variacion_AR2013.xlsx",
+      "periodo": "2016-2025",
+      "n_puntos": 10,
+      "valor": 4.3,
+      "veredicto": "verificada",
+      "fuente_2": "Banco Mundial WDI NY.GDP.MKTP.KD.ZG",
+      "evidencia": {
+        "url": "https://banguat.gob.gt/sites/default/files/banguat/cuentasnac/PIB2013/resumidos/1.1_PIB_Tasa_de_Variacion_AR2013.xlsx",
+        "cita": "2019: 4.0178979271654214 · 2020: -1.785551946381986 · 2021: 8.0417038434240027 · 2024 p/: 3.715586342209491 · 2025 p/: 4.2800298819041416 (PIB Real, Var. %)",
+        "archivo_local": "sesiones/_descargas/1.1_PIB_Tasa_de_Variacion_AR2013_hoja1.csv"
+      },
+      "serie": [
+        {
+          "p": "2016",
+          "v": 2.7
+        },
+        {
+          "p": "2017",
+          "v": 3.1
+        },
+        {
+          "p": "2018",
+          "v": 3.4
+        },
+        {
+          "p": "2019",
+          "v": 4.0
+        },
+        {
+          "p": "2020",
+          "v": -1.8
+        },
+        {
+          "p": "2021",
+          "v": 8.0
+        },
+        {
+          "p": "2022",
+          "v": 4.2
+        },
+        {
+          "p": "2023",
+          "v": 3.5
+        },
+        {
+          "p": "2024",
+          "v": 3.7
+        },
+        {
+          "p": "2025",
+          "v": 4.3
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_2.png"
+      ]
+    },
+    {
+      "id": "mac-c02",
+      "concepto": "Crecimiento real promedio anual del PIB por gobierno (promedio simple de las variaciones anuales Banguat)",
+      "unidad": "% promedio anual",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Banco de Guatemala (Banguat) (cálculo propio sobre el cuadro 1.1)",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/cuentasnac/PIB2013/resumidos/1.1_PIB_Tasa_de_Variacion_AR2013.xlsx",
+      "periodo": "2016-2025",
+      "n_puntos": 4,
+      "valor": 4.0,
+      "veredicto": "verificada",
+      "fuente_2": "Banco Mundial WDI NY.GDP.MKTP.KD.ZG (recalculo propio)",
+      "evidencia": {
+        "url": "https://banguat.gob.gt/sites/default/files/banguat/cuentasnac/PIB2013/resumidos/1.1_PIB_Tasa_de_Variacion_AR2013.xlsx",
+        "cita": "2016: 2.6778 · 2017: 3.0799 · 2018: 3.4069 · 2019: 4.0179 · 2020: -1.7856 · 2021: 8.0417 · 2022: 4.1549 · 2023 p/: 3.5243 · 2024 p/: 3.7156 · 2025 p/: 4.2800",
+        "archivo_local": "sesiones/_descargas/1.1_PIB_Tasa_de_Variacion_AR2013_hoja1.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Morales 2016-2019",
+          "valor": 3.3
+        },
+        {
+          "nombre": "Giammattei 2020-2023",
+          "valor": 3.48
+        },
+        {
+          "nombre": "Giammattei sin 2020 (2021-2023)",
+          "valor": 5.24
+        },
+        {
+          "nombre": "Arévalo 2024-2025",
+          "valor": 4.0
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_1.png",
+        "tuit_2.png"
+      ]
+    },
+    {
+      "id": "mac-c03",
+      "concepto": "Proyección oficial de crecimiento real del PIB 2026 (rango bajo-alto)",
+      "unidad": "% variación anual real (proyección)",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Banco de Guatemala (Banguat), cuadro 1.1 (2026 py/)",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/cuentasnac/PIB2013/resumidos/1.1_PIB_Tasa_de_Variacion_AR2013.xlsx",
+      "periodo": "2026 (proyección)",
+      "n_puntos": 2,
+      "valor": 5.27,
+      "veredicto": "verificada",
+      "fuente_2": "Prensa Libre / Banguat (rango 3.3-5.3 %, central 4.3 %)",
+      "evidencia": {
+        "url": "https://banguat.gob.gt/sites/default/files/banguat/cuentasnac/PIB2013/resumidos/1.1_PIB_Tasa_de_Variacion_AR2013.xlsx",
+        "cita": "2026 py/ (bajo): 3.271524282468846 · 2026 py/ (alto): 5.271524282468846 · py/ Cifras proyectadas",
+        "archivo_local": "sesiones/_descargas/1.1_PIB_Tasa_de_Variacion_AR2013_hoja1.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Escenario bajo",
+          "valor": 3.27
+        },
+        {
+          "nombre": "Escenario alto",
+          "valor": 5.27
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "mac-c04",
+      "concepto": "Inflación interanual a diciembre (IPC nivel república, empalmado a base 2024=100)",
+      "unidad": "% interanual a diciembre",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "INE, publicado por Banguat (cuadro SR005)",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/SR/sr005.htm",
+      "periodo": "2016-2025",
+      "n_puntos": 10,
+      "valor": 1.65,
+      "veredicto": "verificada",
+      "fuente_2": "EFE via Infobae/Swissinfo (INE)",
+      "evidencia": {
+        "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/SR/sr005.htm",
+        "cita": "Diciembre 2017: 5.68 · Diciembre 2022: 9.24 · Diciembre 2024: 1.70 · Diciembre 2025: 1.65 (VARIACIÓN INTERANUAL, Base 2024=100, Fuente: INE)",
+        "archivo_local": "sesiones/_descargas/sr005_tabla1.csv"
+      },
+      "serie": [
+        {
+          "p": "2016",
+          "v": 4.23
+        },
+        {
+          "p": "2017",
+          "v": 5.68
+        },
+        {
+          "p": "2018",
+          "v": 2.31
+        },
+        {
+          "p": "2019",
+          "v": 3.41
+        },
+        {
+          "p": "2020",
+          "v": 4.82
+        },
+        {
+          "p": "2021",
+          "v": 3.07
+        },
+        {
+          "p": "2022",
+          "v": 9.24
+        },
+        {
+          "p": "2023",
+          "v": 4.18
+        },
+        {
+          "p": "2024",
+          "v": 1.7
+        },
+        {
+          "p": "2025",
+          "v": 1.65
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_7.png"
+      ]
+    },
+    {
+      "id": "mac-c05",
+      "concepto": "Inflación interanual a agosto 2026 (último dato)",
+      "unidad": "% interanual",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "INE, publicado por Banguat (cuadro SR005)",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/SR/sr005.htm",
+      "periodo": "agosto 2026",
+      "n_puntos": 1,
+      "valor": 3.37,
+      "veredicto": "verificada",
+      "fuente_2": "Prensa Libre / Emisoras Unidas (INE, agosto 2026)",
+      "evidencia": {
+        "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/SR/sr005.htm",
+        "cita": "2026 Agosto, 105.19, 0.60, 3.37, 2.95, 2.43 (índice, var. intermensual, interanual, acumulada, promedio)",
+        "archivo_local": "sesiones/_descargas/sr005_tabla1.csv"
+      },
+      "usada": false,
+      "aparece_en": [
+        "T7"
+      ]
+    },
+    {
+      "id": "mac-c06",
+      "concepto": "Inflación de cierre (diciembre) promedio por gobierno",
+      "unidad": "% interanual promedio",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "INE, publicado por Banguat (cuadro SR005) (cálculo propio)",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/SR/sr005.htm",
+      "periodo": "2016-2025",
+      "n_puntos": 3,
+      "valor": 5.3275,
+      "veredicto": "verificada",
+      "fuente_2": "Recalculo sobre cierres diciembre confirmados (EFE/INE 1.65 y 9.24; serie SR005)",
+      "evidencia": {
+        "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/SR/sr005.htm",
+        "cita": "Diciembre: 2016 4.23 · 2017 5.68 · 2018 2.31 · 2019 3.41 · 2020 4.82 · 2021 3.07 · 2022 9.24 · 2023 4.18 · 2024 1.70 · 2025 1.65",
+        "archivo_local": "sesiones/_descargas/sr005_tabla1.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Morales 2016-2019",
+          "valor": 3.9075
+        },
+        {
+          "nombre": "Giammattei 2020-2023",
+          "valor": 5.3275
+        },
+        {
+          "nombre": "Arévalo 2024-2025",
+          "valor": 1.675
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "mac-c07",
+      "concepto": "Tipo de cambio compra promedio ponderado del Mercado Institucional de Divisas, promedio anual",
+      "unidad": "quetzales por US dólar",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Banco de Guatemala (Banguat), cuadro IMM69",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/imm/imm69.htm",
+      "periodo": "2016-2025",
+      "n_puntos": 10,
+      "valor": 7.66138,
+      "veredicto": "verificada",
+      "fuente_2": "Banco Mundial WDI PA.NUS.FCRF (tipo oficial, promedio anual)",
+      "evidencia": {
+        "url": "https://banguat.gob.gt/sites/default/files/banguat/imm/imm69.htm",
+        "cita": "PROMEDIO: 2016 7.58456 · 2017 7.32825 · 2019 7.68191 · 2023 7.81204 · 2024 7.73096 · 2025 7.66138 (Quetzales por US dólares)",
+        "archivo_local": "sesiones/_descargas/imm69_tabla1.csv"
+      },
+      "serie": [
+        {
+          "p": "2016",
+          "v": 7.58456
+        },
+        {
+          "p": "2017",
+          "v": 7.32825
+        },
+        {
+          "p": "2018",
+          "v": 7.51659
+        },
+        {
+          "p": "2019",
+          "v": 7.68191
+        },
+        {
+          "p": "2020",
+          "v": 7.70833
+        },
+        {
+          "p": "2021",
+          "v": 7.70945
+        },
+        {
+          "p": "2022",
+          "v": 7.73528
+        },
+        {
+          "p": "2023",
+          "v": 7.81204
+        },
+        {
+          "p": "2024",
+          "v": 7.73096
+        },
+        {
+          "p": "2025",
+          "v": 7.66138
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_8.png"
+      ]
+    },
+    {
+      "id": "mac-c08",
+      "concepto": "Tipo de cambio compra promedio ponderado, promedio enero-agosto 2026",
+      "unidad": "quetzales por US dólar",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Banco de Guatemala (Banguat), cuadro IMM69",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/imm/imm69.htm",
+      "periodo": "enero-agosto 2026",
+      "n_puntos": 1,
+      "valor": 7.61786,
+      "veredicto": "verificada",
+      "fuente_2": "Banco Mundial WDI PA.NUS.FCRF (contexto 2025 = 7.68)",
+      "evidencia": {
+        "url": "https://banguat.gob.gt/sites/default/files/banguat/imm/imm69.htm",
+        "cita": "PROMEDIO 2026: 7.61786; AGOSTO 2026: 7.60615; ENERO 2026: 7.64844 (Quetzales por US dólares, último día del mes)",
+        "archivo_local": "sesiones/_descargas/imm69_tabla1.csv"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "mac-c09",
+      "concepto": "PIB per cápita en US dólares corrientes",
+      "unidad": "US$ por habitante",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Banco de Guatemala (Banguat), Cuentas Nacionales, cuadro 5 PIB per cápita (población INE censo 2018)",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/cuentasnac/PIB2013/resumidos/5._PIB_per_capita.xlsx",
+      "periodo": "2016-2025",
+      "n_puntos": 10,
+      "valor": 6820.44,
+      "veredicto": "ajustada",
+      "fuente_2": "Banco Mundial WDI NY.GDP.PCAP.CD",
+      "evidencia": {
+        "url": "https://banguat.gob.gt/sites/default/files/banguat/cuentasnac/PIB2013/resumidos/5._PIB_per_capita.xlsx",
+        "cita": "2016: 4172.1158850384609 · 2019: 4646.8101613663621 · 2023 p/: 5923.926242248649 · 2025 p/: 6820.4449101767514 (PIB per cápita en US dólares)",
+        "archivo_local": "sesiones/_descargas/5._PIB_per_capita_hoja1.csv"
+      },
+      "serie": [
+        {
+          "p": "2016",
+          "v": 4172.12
+        },
+        {
+          "p": "2017",
+          "v": 4452.25
+        },
+        {
+          "p": "2018",
+          "v": 4485.8
+        },
+        {
+          "p": "2019",
+          "v": 4646.81
+        },
+        {
+          "p": "2020",
+          "v": 4609.81
+        },
+        {
+          "p": "2021",
+          "v": 5052.1
+        },
+        {
+          "p": "2022",
+          "v": 5507.72
+        },
+        {
+          "p": "2023",
+          "v": 5923.93
+        },
+        {
+          "p": "2024",
+          "v": 6344.18
+        },
+        {
+          "p": "2025",
+          "v": 6820.44
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_6.png"
+      ]
+    },
+    {
+      "id": "mac-c10",
+      "concepto": "Crecimiento promedio anual del PIB per cápita en US$ por gobierno",
+      "unidad": "% promedio anual",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Banco de Guatemala (Banguat), cuadro 5 (columna Tasa de Variación US$; cálculo propio)",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/cuentasnac/PIB2013/resumidos/5._PIB_per_capita.xlsx",
+      "periodo": "2016-2025",
+      "n_puntos": 3,
+      "valor": 7.3,
+      "veredicto": "verificada",
+      "fuente_2": "Recalculo sobre cuadro 5 Banguat; WB NY.GDP.PCAP.CD como contraste de tendencia",
+      "evidencia": {
+        "url": "https://banguat.gob.gt/sites/default/files/banguat/cuentasnac/PIB2013/resumidos/5._PIB_per_capita.xlsx",
+        "cita": "Tasa de variación US$: 2016 4.454 · 2017 6.715 · 2018 0.754 · 2019 3.589 · 2020 -0.796 · 2021 9.594 · 2022 9.018 · 2023 7.557 · 2024 7.094 · 2025 7.507",
+        "archivo_local": "sesiones/_descargas/5._PIB_per_capita_hoja1.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Morales 2016-2019",
+          "valor": 3.88
+        },
+        {
+          "nombre": "Giammattei 2020-2023",
+          "valor": 6.34
+        },
+        {
+          "nombre": "Arévalo 2024-2025",
+          "valor": 7.3
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_6.png"
+      ]
+    },
+    {
+      "id": "mac-c11",
+      "concepto": "PIB nominal 2025 (preliminar)",
+      "unidad": "millones de quetzales corrientes",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "Banco de Guatemala (Banguat), cuadro 1.1 (PIB nominal)",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/cuentasnac/PIB2013/resumidos/1.1_PIB_Tasa_de_Variacion_AR2013.xlsx",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 947005.54,
+      "veredicto": "verificada",
+      "fuente_2": "Banco Mundial WDI NY.GDP.MKTP.CN",
+      "evidencia": {
+        "url": "https://banguat.gob.gt/sites/default/files/banguat/cuentasnac/PIB2013/resumidos/1.1_PIB_Tasa_de_Variacion_AR2013.xlsx",
+        "cita": "2025 p/ ... Nominal 2/ Valores 947005.53900844918, Var. % 7.8118356182684323 (Millones de quetzales de cada año)",
+        "archivo_local": "sesiones/_descargas/1.1_PIB_Tasa_de_Variacion_AR2013_hoja1.csv"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "pre-c01",
+      "concepto": "Saldo de la deuda pública (interna bonificada + externa) al cierre de cada año, millones de quetzales, 2015–2025",
+      "unidad": "millones de Q",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Banco de Guatemala, pim17 (deuda pública interna bonificada, Q) + pim16 (saldo deuda pública externa, US$; fuente MINFIN) × pim02 (tipo de cambio de referencia al último día del año); cálculo propio que replica los totales publicados por MINFIN",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/pim/pim17.htm",
+      "periodo": "2015–2025",
+      "n_puntos": 11,
+      "valor": 253048.4,
+      "veredicto": "verificada",
+      "fuente_2": "Prensa Libre citando MINFIN: saldo 2025 Q253,048 M (interna Q138,299 M + externa Q114,749 M); 2015 Q118,625 M",
+      "evidencia": {
+        "url": "https://banguat.gob.gt/sites/default/files/banguat/pim/pim17.htm",
+        "cita": "DEUDA PUBLICA INTERNA BONIFICADA ... -Millones de Quetzales- ... 2015,\"61,459.7\" ... 2019,\"87,221.7\" ... 2023,\"125,162.2\" ... 2025,\"138,299.2\"",
+        "archivo_local": "sesiones/_descargas/pim17_tabla1.csv"
+      },
+      "serie": [
+        {
+          "p": "2015",
+          "v": 118625.4
+        },
+        {
+          "p": "2016",
+          "v": 125676.0
+        },
+        {
+          "p": "2017",
+          "v": 132449.3
+        },
+        {
+          "p": "2018",
+          "v": 146020.2
+        },
+        {
+          "p": "2019",
+          "v": 157325.8
+        },
+        {
+          "p": "2020",
+          "v": 189187.8
+        },
+        {
+          "p": "2021",
+          "v": 204666.3
+        },
+        {
+          "p": "2022",
+          "v": 214755.7
+        },
+        {
+          "p": "2023",
+          "v": 222575.7
+        },
+        {
+          "p": "2024",
+          "v": 231323.9
+        },
+        {
+          "p": "2025",
+          "v": 253048.4
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_13.png"
+      ]
+    },
+    {
+      "id": "pre-c02",
+      "concepto": "Aumento del saldo de la deuda pública (deuda adquirida neta) por gobierno, millones de quetzales: Morales (cierre 2015→2019), Giammattei (2019→2023), Arévalo (2023→2025)",
+      "unidad": "millones de Q",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Cálculo propio sobre pre-c01 (Banguat pim16/pim17/pim02, fuente MINFIN)",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/pim/pim17.htm",
+      "periodo": "2015–2025",
+      "n_puntos": 3,
+      "valor": 65249.9,
+      "veredicto": "verificada",
+      "fuente_2": "Prensa Libre/Prensa Latina citando MINFIN: aumento 2015-2025 de Q134,423 M (118,625 -> 253,048)",
+      "evidencia": {
+        "url": "https://www.prensa-latina.cu/2026/03/02/deuda-publica-de-guatemala-llego-al-268-por-ciento-del-pib-en-2025/",
+        "cita": "al comparar con el monto de 2015 se aprecia un aumento del 113 por ciento en una década, es decir, 134 mil 423 millones más",
+        "archivo_local": "sesiones/_descargas/prensalatina_20260302_deuda_268.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Morales (2016–2019)",
+          "valor": 38700.4
+        },
+        {
+          "nombre": "Giammattei (2020–2023)",
+          "valor": 65249.9
+        },
+        {
+          "nombre": "Arévalo (2024–2025)",
+          "valor": 30472.7
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_13.png"
+      ]
+    },
+    {
+      "id": "pre-c03",
+      "concepto": "Saldo de la deuda pública externa del Gobierno Central al cierre de año, millones de US$, 2015–2025",
+      "unidad": "millones de US$",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Banco de Guatemala, pim16 'Saldo de la deuda pública externa' (Fuente: Ministerio de Finanzas Públicas), columna GOBIERNO CENTRAL subtotal",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/pim/pim16.htm",
+      "periodo": "2015–2025",
+      "n_puntos": 11,
+      "valor": 14964.4,
+      "veredicto": "verificada",
+      "fuente_2": "Consistencia con MINFIN via prensa: externa total Q114,749 M / TCR 7.66451 = US$14,971.5 M (total sector publico); menos US$7.1 M resto del sector publico = 14,964.4 Gobierno Central",
+      "evidencia": {
+        "url": "https://banguat.gob.gt/sites/default/files/banguat/pim/pim16.htm",
+        "cita": "SALDO DE LA DEUDA PÚBLICA EXTERNA ... - Millones de US dólares - ... 2025*,\"14,971.5\",0.0,\"14,971.5\",\"14,964.4\",\"4,369.4\",\"10,595.0\",7.1 ... Fuente: Ministerio de Finanzas Públicas",
+        "archivo_local": "sesiones/_descargas/pim16_tabla1.csv"
+      },
+      "serie": [
+        {
+          "p": "2015",
+          "v": 7417.1
+        },
+        {
+          "p": "2016",
+          "v": 7951.4
+        },
+        {
+          "p": "2017",
+          "v": 8126.0
+        },
+        {
+          "p": "2018",
+          "v": 8175.1
+        },
+        {
+          "p": "2019",
+          "v": 9063.4
+        },
+        {
+          "p": "2020",
+          "v": 10413.9
+        },
+        {
+          "p": "2021",
+          "v": 11069.2
+        },
+        {
+          "p": "2022",
+          "v": 11069.3
+        },
+        {
+          "p": "2023",
+          "v": 12429.2
+        },
+        {
+          "p": "2024",
+          "v": 13527.1
+        },
+        {
+          "p": "2025",
+          "v": 14964.4
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "pre-c04",
+      "concepto": "Presupuesto vigente de la Administración Central (aprobado + modificaciones del año) al cierre, millones de quetzales, 2016–2025",
+      "unidad": "millones de Q",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Guate en Datos con datos de MINFIN (Sicoin), serie 'Total' de gastopublico-ejecucion.csv",
+      "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+      "periodo": "2016–2025",
+      "n_puntos": 10,
+      "valor": 154836.61,
+      "veredicto": "verificada",
+      "fuente_2": "MINFIN (comunicado, via Prensa Libre y guatemala.gob.gt): presupuesto vigente 2025 Q154,836.6 M; ICEFI tabla 4 igual",
+      "evidencia": {
+        "url": "https://guateendatos.org.gt/politica-economica/gasto-publico/",
+        "cita": "En 2025 el presupuesto vigente fue de Q154,837 millones y la ejecución de Q140,525 millones , el 90.76 %. Quedaron sin ejecutar Q14,311 millones.",
+        "archivo_local": "sesiones/_descargas/guateendatos_gastopublico-ejecucion.csv"
+      },
+      "serie": [
+        {
+          "p": "2016",
+          "v": 71347.03
+        },
+        {
+          "p": "2017",
+          "v": 77622.57
+        },
+        {
+          "p": "2018",
+          "v": 78391.49
+        },
+        {
+          "p": "2019",
+          "v": 88327.55
+        },
+        {
+          "p": "2020",
+          "v": 107760.72
+        },
+        {
+          "p": "2021",
+          "v": 107521.46
+        },
+        {
+          "p": "2022",
+          "v": 112939.84
+        },
+        {
+          "p": "2023",
+          "v": 118624.31
+        },
+        {
+          "p": "2024",
+          "v": 131214.45
+        },
+        {
+          "p": "2025",
+          "v": 154836.61
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_14.png"
+      ]
+    },
+    {
+      "id": "pre-c05",
+      "concepto": "Ejecución presupuestaria de la Administración Central (% devengado sobre vigente) al cierre de cada año, 2016–2025",
+      "unidad": "% del presupuesto vigente",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Guate en Datos con datos de MINFIN (Sicoin), serie 'Total' de gastopublico-ejecucion.csv",
+      "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+      "periodo": "2016–2025",
+      "n_puntos": 10,
+      "valor": 90.76,
+      "veredicto": "verificada",
+      "fuente_2": "CIEN (analisis de la ejecucion presupuestaria 2025): ejecucion Q140,525.5 M de Q154,836.6 M = 90.8 %",
+      "evidencia": {
+        "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+        "cita": "\"Total\",\"Total\",2025,154836.61,140525.47,90.76 | \"Total\",\"Total\",2021,107521.46,93005.7,86.5 | \"Total\",\"Total\",2018,78391.49,75277.02,96.03",
+        "archivo_local": "sesiones/_descargas/guateendatos_gastopublico-ejecucion.csv"
+      },
+      "serie": [
+        {
+          "p": "2016",
+          "v": 92.08
+        },
+        {
+          "p": "2017",
+          "v": 91.75
+        },
+        {
+          "p": "2018",
+          "v": 96.03
+        },
+        {
+          "p": "2019",
+          "v": 93.79
+        },
+        {
+          "p": "2020",
+          "v": 89.67
+        },
+        {
+          "p": "2021",
+          "v": 86.5
+        },
+        {
+          "p": "2022",
+          "v": 96.15
+        },
+        {
+          "p": "2023",
+          "v": 96.97
+        },
+        {
+          "p": "2024",
+          "v": 92.08
+        },
+        {
+          "p": "2025",
+          "v": 90.76
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_15.png"
+      ]
+    },
+    {
+      "id": "pre-c06",
+      "concepto": "Años en que el Congreso no aprobó presupuesto (o quedó sin efecto) y rigió el del año anterior, 2016–2026",
+      "unidad": "años",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "IIES-USAC boletín 'Economía al día' No. 1 (ene-2026) para 2026; Congreso de la República / ICEFI para 2021 y 2020; Prensa Libre para 2018",
+      "url": "https://iies.usac.edu.gt/wp-content/uploads/2026/02/Boletin-Economia-al-dia-No.-1-enero-2026.pdf",
+      "periodo": "2016–2026",
+      "n_puntos": 4,
+      "valor": 4,
+      "veredicto": "verificada",
+      "fuente_2": "Prensa Libre 'Presupuesto 2018 fracasa y seguira vigente el de 2017'; MINECO (Decreto 25-2018 aplicado en 2020); Congreso (2021 sin efecto)",
+      "evidencia": {
+        "url": "https://iies.usac.edu.gt/wp-content/uploads/2026/02/Boletin-Economia-al-dia-No.-1-enero-2026.pdf",
+        "cita": "La Corte suspendió provisionalmente el Presupuesto General para el ejercicio fiscal 2026 ... el país deberá operar con el presupuesto del año 2025 (Q 148,526 millones)",
+        "archivo_local": "sesiones/_descargas/Boletin-Economia-al-dia-No.-1-enero-2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "2018 (Morales): rigió el de 2017",
+          "valor": 78391.49
+        },
+        {
+          "nombre": "2020 (Giammattei): rigió el de 2019 (Decreto 25-2018) + ampliaciones Covid",
+          "valor": 107760.72
+        },
+        {
+          "nombre": "2021 (Giammattei): Decreto 33-2020 quedó sin efecto, rigió el vigente de 2020",
+          "valor": 107521.46
+        },
+        {
+          "nombre": "2026 (Arévalo): CC suspendió Decreto 27-2025, rigió el de 2025 + Decreto 3-2026",
+          "valor": 164163.3
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_14.png"
+      ]
+    },
+    {
+      "id": "pre-c07",
+      "concepto": "Presupuesto 2026: aprobado por el Congreso (Decreto 27-2025, suspendido por la CC) y vigente tras la ampliación del Decreto 3-2026, millones de quetzales",
+      "unidad": "millones de Q",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "IIES-USAC, boletín 'Economía al día' No. 1, enero 2026",
+      "url": "https://iies.usac.edu.gt/wp-content/uploads/2026/02/Boletin-Economia-al-dia-No.-1-enero-2026.pdf",
+      "periodo": "2026",
+      "n_puntos": 1,
+      "valor": 164163.3,
+      "veredicto": "verificada",
+      "fuente_2": "Congreso/Diario de Centro America/Perspectiva: Decreto 3-2026 amplia Q9,326.7 M, total Q164,163.32 M",
+      "evidencia": {
+        "url": "https://iies.usac.edu.gt/wp-content/uploads/2026/02/Boletin-Economia-al-dia-No.-1-enero-2026.pdf",
+        "cita": "dar vía legal a una ampliación de Q 9,326.7 millones, lo que elevó el presupuesto total a Q 164,163.3 millones",
+        "archivo_local": "sesiones/_descargas/Boletin-Economia-al-dia-No.-1-enero-2026.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "pre-c08",
+      "concepto": "Presupuesto 2025: aprobado (al 1 de enero) frente a vigente (al 31 de agosto), millones de quetzales, y bonos del tesoro autorizados como fuente de financiamiento",
+      "unidad": "millones de Q",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "ICEFI, 'Guatemala: análisis y recomendaciones para el proyecto de presupuesto 2026' (12-nov-2025), tabla 4 (fuente: Minfin)",
+      "url": "https://icefi.org/sites/default/files/guatemala_analisis_del_presupuesto_aprobado_para_2026_-_12_nov_2025.pdf",
+      "periodo": "2025–2026",
+      "n_puntos": 3,
+      "valor": 148526.0,
+      "veredicto": "verificada",
+      "fuente_2": "IIES-USAC boletin Economia al dia No. 1 (techo 2025 Q148,526 M) y MINFIN/Prensa Libre (vigente Q154,836.6 M)",
+      "evidencia": {
+        "url": "https://icefi.org/sites/default/files/guatemala_analisis_del_presupuesto_aprobado_para_2026_-_12_nov_2025.pdf",
+        "cita": "Bonos del Tesoro 25,104.2 16.9% 23,176.7 13.6% 27,598.9 16.9% ... Techo global 148,526.0 100.0% 154,836.6 100.0% 163,783.4 100.0%",
+        "archivo_local": "sesiones/_descargas/guatemala_analisis_del_presupuesto_aprobado_para_2026_-_12_nov_2025.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Aprobado 2025 (1-ene)",
+          "valor": 148526.0
+        },
+        {
+          "nombre": "Vigente 2025 (31-ago)",
+          "valor": 154836.6
+        },
+        {
+          "nombre": "Proyecto 2026 (iniciativa 6625)",
+          "valor": 163783.4
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    }
+  ],
+  "fuentes": [
+    {
+      "nombre": "IGSS — Boletín Estadístico de Afiliación 2023",
+      "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "IGSS — Informe Anual de Labores 2024",
+      "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Informe-Anual-de-Labores-2024-IGSS.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "IGSS — Noticias (17-ago-2026)",
+      "url": "https://www.igssgt.org/noticias/2026/08/17/la-masa-cotizante-del-igss-crecio-un-29-en-los-ultimos-seis-anos/",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "IGSS — listado de boletines de afiliación 2008–2023",
+      "url": "https://www.igssgt.org/informes-y-estadisticas/boletin-de-afiliacion/",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "INE — Canasta Básica Alimentaria junio 2026",
+      "url": "https://www.ine.gob.gt/sistema/uploads/2026/07/07/20260707110852iZwkJLBrcyCmachhwmugKt4pf6cK8kRg.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "OIM — Encuesta migración y remesas 2022 (resumen)",
+      "url": "https://infounitnca.iom.int/uploads/RemesasGT2022/Resumen_EncuestaRemesas2022_gt.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "AGN — salario mínimo 2026 (AG 256-2025)",
+      "url": "https://agn.gt/asi-quedan-los-montos-del-salario-minimo-para-el-2026/",
+      "nivel": "oficial (agencia de gobierno)"
+    },
+    {
+      "nombre": "Prensa Libre — evolución del salario mínimo",
+      "url": "https://www.prensalibre.com/economia/evolucion-del-salario-minimo-en-guatemala-una-decada-de-desafios-y-ajustes/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "MINTRAB — acuerdos gubernativos (sitio carga con JS; xls histórico da 404)",
+      "url": "https://mintrabajo.gob.gt/acuerdos-gubernativos/",
+      "nivel": "primaria (no accesible)"
+    },
+    {
+      "nombre": "Banco de Guatemala · Remesas familiares (remfam2002_2026.xlsx)",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/remesas/remfam2002_2026.xlsx",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Banco de Guatemala · Exportaciones FOB por producto y trimestre 2002-2025",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/comercio/sercom/4_POR_PRODUCTO_TRIMESTRE/X_PROD_TRIM_2002_2025.xlsx",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Banco de Guatemala · RIN 1980-2025 (pim04)",
+      "url": "https://www.banguat.gob.gt/sites/default/files/banguat/pim/pim04.htm",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Banco de Guatemala · Flujo de IED 2025p y 2024p por CIIU 4 y país",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/Publica/vi_man_bpagos/flujo_IED_2025.xlsx",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Banco de Guatemala · Resultados macroeconómicos 2025 y perspectivas 2026 (PDF vía FUNDESA)",
+      "url": "https://www.fundesa.org.gt/content/files/publicaciones/BANGUAT_2026_Resultados_macroeconmicos_2025_y_Perspectivas.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Banco Mundial · WDI API (IED, reservas, PIB US$, remesas % PIB)",
+      "url": "https://api.worldbank.org/v2/country/GTM/indicator/BX.KLT.DINV.CD.WD;FI.RES.TOTL.CD;NY.GDP.MKTP.CD;BX.GSR.MRCH.CD;BX.TRF.PWKR.CD.DT?source=2&format=json&date=2015:2025&per_page=500",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "Prensa Latina · exportaciones 2025 = 15,587.4 M (cita a Banguat, contraste)",
+      "url": "https://www.prensa-latina.cu/2026/02/27/exportaciones-de-guatemala-crecieron-71-por-ciento-durante-2025/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "SAT — Estadísticas tributarias (rimpa.xlsx, boletinestadisticosat.xlsx, rppib-2.xlsx)",
+      "url": "https://portal.sat.gob.gt/portal/estadisticas-tributarias-sat/",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Banco de Guatemala — Sector fiscal, resultado presupuestal anual (pim25, fuente MINFIN)",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/pim/pim25.htm",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Banco de Guatemala — Resultados macroeconómicos 2025 y perspectivas 2026 (14-ene-2026)",
+      "url": "https://www.fundesa.org.gt/content/files/publicaciones/BANGUAT_2026_Resultados_macroeconmicos_2025_y_Perspectivas.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "ICEFI — Análisis del presupuesto aprobado para 2026 (12-nov-2025)",
+      "url": "https://icefi.org/sites/default/files/guatemala_analisis_del_presupuesto_aprobado_para_2026_-_12_nov_2025.pdf",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "Banco Mundial — Case Study Guatemala credit rating TA (9-dic-2025)",
+      "url": "https://thedocs.worldbank.org/en/doc/a5b3ae9e2ca5241ef9145228655fb4a3-0340012025/original/Case-Study-Guatemala-credit-rating-TA.pdf",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "Banco Mundial WDI API — GC.NLD.TOTL.GD.ZS, NY.GDP.MKTP.CN (contraste)",
+      "url": "https://api.worldbank.org/v2/country/GTM/indicator/GC.NLD.TOTL.GD.ZS?format=json&per_page=100&date=2014:2025",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "MINFIN — Informe de desempeño de la política fiscal 2025 (403, no descargado)",
+      "url": "https://www.minfin.gob.gt/wp-content/uploads/2026/05/Informe_Anual_-_2026__Revision_Final.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Banguat · PIB tasa de variación AR2013 (xlsx, cuadros resumidos)",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/cuentasnac/PIB2013/resumidos/1.1_PIB_Tasa_de_Variacion_AR2013.xlsx",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Banguat · PIB per cápita 2013-2025 (xlsx)",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/cuentasnac/PIB2013/resumidos/5._PIB_per_capita.xlsx",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Banguat · IMM69 tipo de cambio compra promedio ponderado MID 1995-2026",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/imm/imm69.htm",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Banguat/INE · SR005 IPC nivel república base 2024=100, 2010-2026",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/SR/sr005.htm",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Banguat · Resultados macroeconómicos 2025 y perspectivas 2026 (14-ene-2026, vía Fundesa)",
+      "url": "https://www.fundesa.org.gt/content/files/publicaciones/BANGUAT_2026_Resultados_macroeconmicos_2025_y_Perspectivas.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Banguat · PIB trimestral 4T-2025 (abril 2026), archivo local 4T_2025_JM_AR2013.txt",
+      "url": "https://banguat.gob.gt/page/cuadros-estadisticos-resumidos",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Prensa Libre · inflación agosto 2026 3.37 %",
+      "url": "https://www.prensalibre.com/economia/inflacion-se-acelera-en-guatemala-combustibles-presionan-los-precios-e-indicador-llega-a-3-37/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Banco de Guatemala — pim16 Saldo de la deuda pública externa (fuente MINFIN)",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/pim/pim16.htm",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Banco de Guatemala — pim17 Deuda pública interna bonificada",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/pim/pim17.htm",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Banco de Guatemala — pim02 Tipo de cambio (TCR último día del año)",
+      "url": "https://www.banguat.gob.gt/sites/default/files/banguat/pim/pim02.htm",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Guate en Datos — Gasto público (datos MINFIN/Sicoin, CSV descargables)",
+      "url": "https://guateendatos.org.gt/politica-economica/gasto-publico/",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "ICEFI — Análisis del proyecto de presupuesto 2026 (12-nov-2025)",
+      "url": "https://icefi.org/sites/default/files/guatemala_analisis_del_presupuesto_aprobado_para_2026_-_12_nov_2025.pdf",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "IIES-USAC — Boletín 'Economía al día' No. 1, enero 2026 (Presupuesto 2026)",
+      "url": "https://iies.usac.edu.gt/wp-content/uploads/2026/02/Boletin-Economia-al-dia-No.-1-enero-2026.pdf",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "Prensa Latina 2-mar-2026 (reproduce MINFIN vía Prensa Libre)",
+      "url": "https://www.prensa-latina.cu/2026/03/02/deuda-publica-de-guatemala-llego-al-268-por-ciento-del-pib-en-2025/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Congreso de la República — 'Pleno del Congreso deja sin efecto presupuesto 2021'",
+      "url": "https://www.congreso.gob.gt/noticias_congreso/5397/2020/4",
+      "nivel": "primaria"
+    }
+  ],
+  "no_afirma": [
+    "No afirma que las diferencias entre periodos se deban a las políticas de cada gobierno: compara promedios, no mide causas.",
+    "El promedio de Arévalo cubre solo 2024–2025; no anticipa el cierre de 2026 (Banguat proyecta un rango de 3.27% a 5.27%).",
+    "No afirma que la política pública no influya en las remesas; dice que su monto no lo decide el gobierno.",
+    "No afirma qué gobierno logró cambios de calificación antes de 2021: no se confirmaron con fuente.",
+    "Las cifras en dólares o quetzales corrientes (PIB per cápita, deuda sumada, presupuesto) no están ajustadas por inflación ni miden el ingreso real de los hogares."
+  ],
+  "incertidumbre": [
+    "Tipo de cambio: se usó el promedio anual de compra del Mercado Institucional de Divisas (IMM69), no el de referencia.",
+    "IED: la serie 2016–2024 es del Banco Mundial (WDI); el preliminar de 2025 y la operación de 2021 son del Banguat.",
+    "Deuda 2025: 26.8% (valor ajustado, MINFIN) frente a 26.9% preliminar de Banguat.",
+    "Salario mínimo y canasta básica quedaron fuera: sin serie nominal 2016–2022 y la CBA cambió de metodología en 2024.",
+    "La cobertura del IGSS sobre la PEA es de 2024; los hogares con remesas, de 2022 (OIM).",
+    "Deuda sumada = aumento neto del saldo (interna bonificada + externa) de cierre a cierre, Banguat; no separa colocaciones de amortizaciones y 2025 es preliminar.",
+    "Presupuesto vigente y ejecución vienen de Guate en Datos (agregador con datos de MINFIN/Sicoin); ICEFI confirma el vigente de 2025.",
+    "Los promedios por año de deuda, presupuesto y ejecución son cálculos propios (promedio simple); Arévalo cubre 2024–2025.",
+    "Los años con presupuesto prorrogado 2018 y 2020 se apoyan en prensa y en el texto de la readecuación de 2021."
+  ],
+  "descartadas": [
+    {
+      "id": "fis-c03",
+      "por": "no_confirmada"
+    },
+    {
+      "id": "emp-c07",
+      "por": "sin comparable: la CBA per cápita no se puede contrastar con el salario de años previos"
+    },
+    {
+      "id": "emp-c09",
+      "por": "CBA con metodología nueva desde 2024, sin serie comparable"
+    },
+    {
+      "id": "emp-c08",
+      "por": "solo cubre 2023–2026, no permite comparar los tres gobiernos"
+    },
+    {
+      "id": "fis-c07",
+      "por": "ejecución de Codede, no comparable con otros años"
+    },
+    {
+      "id": "pre-c03",
+      "por": "saldo externo en US$, redundante con el saldo total en quetzales"
+    },
+    {
+      "id": "pre-c07",
+      "por": "presupuesto 2026 sin cierre; no comparable con años cerrados"
+    },
+    {
+      "id": "pre-c08",
+      "por": "aprobado frente a vigente solo para 2025, sin serie comparable"
+    }
+  ]
+}

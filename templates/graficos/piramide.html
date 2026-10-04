@@ -1,0 +1,57 @@
+<!-- piramide · distribución en dos lados con la misma escala: edades por sexo, grupos por zona (brief 6c). Contrato: referencias/diseno/graficos.md -->
+<script>
+// CIFRAS DE EJEMPLO (población por edad y sexo, INE · Censo 2018) · verificar antes de publicar
+const DATA = {
+  kicker: "POBLACIÓN POR EDAD Y SEXO · %",
+  titular: ["Un país joven:", "uno de cada cinco", "tiene menos de diez"],
+  nota: "",
+  fuente: "INE · XII Censo de Población 2018",
+  handle: "@DerekUrizar",
+  formato: { prefijo: "", sufijo: "%", decimales: 1, miles: true, escala: 1 },
+  grupos: ["70+", "60–69", "50–59", "40–49", "30–39", "20–29", "10–19", "0–9"],   // de arriba abajo
+  izquierda: { nombre: "Hombres", valores: [1.3, 1.8, 2.8, 4.2, 6.2, 9.0, 10.6, 11.2] },
+  derecha:   { nombre: "Mujeres", valores: [1.6, 2.1, 3.3, 4.9, 7.0, 9.6, 10.6, 10.9] },
+  destacar: 7,          // índice del grupo clave (ambos lados en a1); null = ninguno
+  rotular: null         // null = automático (todos si ≤ 8 grupos; si no, solo el destacado) · "todos" | "destacado"
+};
+
+function render(D) {
+  H.assert(Array.isArray(D.grupos) && D.grupos.length >= 4 && D.grupos.length <= 12, "piramide admite de 4 a 12 grupos");
+  const n = D.grupos.length;
+  for (const lado of ["izquierda", "derecha"]) {
+    const L = D[lado];
+    H.assert(L && typeof L.nombre === "string" && Array.isArray(L.valores) && L.valores.length === n, lado + " necesita nombre y " + n + " valores");
+    L.valores.forEach((v) => H.assert(typeof v === "number" && v >= 0, lado + ": valores numéricos ≥ 0"));
+  }
+  const hi = D.destacar == null ? -1 : ((D.destacar % n) + n) % n;
+  const rotTodos = D.rotular ? D.rotular === "todos" : n <= 8;
+  const ink = H.color.ink, a1 = H.color.a1, der = H.mezcla(H.color.bg, ink, 0.55);
+  H.leyenda([{ nombre: D.izquierda.nombre, color: ink, forma: "cuadro" }, { nombre: D.derecha.nombre, color: der, forma: "cuadro" }]);
+
+  const W = 920, alto = H.espacio(Math.max(260, Math.min(540, n * 60)), Math.max(220, n * 34));
+  const svg = H.lienzo(W, alto);
+  const fontG = "600 20px 'JetBrains Mono'", fontV = "700 20px 'JetBrains Mono'";
+  const colC = Math.min(150, Math.max(...D.grupos.map((g) => H.medir(String(g), "800 20px 'JetBrains Mono'"))) + 32);
+  const f = (v) => H.num(v, D.formato);
+  const todos = D.izquierda.valores.concat(D.derecha.valores);
+  const labW = Math.max(...todos.map((v) => H.medir(f(v), fontV))) + 12;
+  const lado = (W - colC) / 2, util = lado - labW;
+  const max = Math.max(...todos) || 1;
+  const xc0 = lado, xc1 = lado + colC;   // bordes de la columna central
+  const filaH = alto / n, barH = Math.max(14, Math.round(filaH * 0.74));
+
+  D.grupos.forEach((g, i) => {
+    const esHi = i === hi, cy = i * filaH + filaH / 2, y = cy - barH / 2;
+    H.texto(svg, (xc0 + xc1) / 2, cy + 7, String(g), { "text-anchor": "middle", style: "font:" + (esHi ? "800 20px 'JetBrains Mono'" : fontG) + ";fill:" + ink });
+    const vi = D.izquierda.valores[i], vd = D.derecha.valores[i];
+    const wi = (vi / max) * util, wd = (vd / max) * util;
+    H.svgEl("rect", { x: xc0 - 8 - wi, y, width: wi, height: barH, fill: esHi ? a1 : ink }, svg);
+    H.svgEl("rect", { x: xc1 + 8, y, width: wd, height: barH, fill: esHi ? a1 : der }, svg);
+    if (rotTodos || esHi) {
+      const est = "font:" + fontV + ";fill:" + ink + (esHi ? ";font-weight:800" : "");
+      H.texto(svg, xc0 - 8 - wi - 10, cy + 7, f(vi), { "text-anchor": "end", style: est });
+      H.texto(svg, xc1 + 8 + wd + 10, cy + 7, f(vd), { style: est });
+    }
+  });
+}
+</script>
