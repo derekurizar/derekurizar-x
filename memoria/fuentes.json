@@ -50,7 +50,7 @@
         "defunciones",
         "estadísticas"
       ],
-      "nota": "[2026-09-29] CBA del INE de julio y agosto 2026: no localicé los PDF (la página del INE carga con JS); el Q950 de agosto solo aparece en prensa. La CBA 2026 es per cápita y con metodología nueva, así que no se com"
+      "nota": "[2026-09-29] CBA del INE de julio y agosto 2026: no localicé los PDF (la página del INE carga con JS); el Q950 de agosto solo aparece en prensa. La CBA 2026 es per cápita y con metodología nueva, así que no se com · [2026-10-05] Retornados por 100,000 habitantes por departamento (falta población INE 2026 por depto; el mapa va en absolutos)."
     },
     {
       "nombre": "INSIVUMEH",
@@ -189,7 +189,7 @@
       "url": "igm.gob.gt/informes-estadisticos/",
       "categoria": "migracion",
       "rating": 10,
-      "nota": "Publica la base de datos ANUAL de retornados en Excel con microdatos (MES, SEXO, EDAD, MUNICIPIO, DEPARTAMENTO, PAÍS/VÍA): permite cualquier corte propio. Acceso: el sitio devuelve 403 a WebFetch; listar los archivos con `python3 scripts/fetch_tabla.py --enlaces '\\.xlsx$' https://igm.gob.gt/informes-estadisticos/` y descargarlos con `make tabla URL=` (UA de navegador, cacheado en sesiones/_descargas/). Agregar con `python3 scripts/tabla.py <csv> --agrupar DEPARTAMENTO --contar`. Sin Playwright MCP.",
+      "nota": "Publica la base de datos ANUAL de retornados en Excel con microdatos (MES, SEXO, EDAD, MUNICIPIO, DEPARTAMENTO, PAÍS/VÍA): permite cualquier corte propio. Acceso: el sitio devuelve 403 a WebFetch; listar los archivos con `python3 scripts/fetch_tabla.py --enlaces '\\.xlsx$' https://igm.gob.gt/informes-estadisticos/` y descargarlos con `make tabla URL=` (UA de navegador, cacheado en sesiones/_descargas/). Agregar con `python3 scripts/tabla.py <csv> --agrupar DEPARTAMENTO --contar`. Sin Playwright MCP. · [2026-10-05] Datos de EE.UU. (ICE/DHS removals de guatemaltecos FY2026) para contrastar con el registro del IGM.",
       "alias": [
         "IGM"
       ],
@@ -1701,6 +1701,17 @@
       "hasta": "sep*",
       "frecuencia": "otra",
       "nota": "registrada desde hilo 2026-10-03-desnutricion-aguda-2026"
+    },
+    {
+      "nombre": "Retornados por mes, enero 2024 - septiembre 2026",
+      "fuente": "IGM, bases anuales de retornados 2024, 2025 y ene-sep 2026",
+      "url": "https://igm.gob.gt/index.php?view=article&id=6:estadisticas&catid=9",
+      "formato": "html",
+      "unidad": "personas por mes",
+      "desde": "2024-01",
+      "hasta": "2026-09",
+      "frecuencia": "mensual",
+      "nota": "registrada desde dato 2026-10-05-retornados-guatemala-2026"
     }
   ]
 }

@@ -1,0 +1,19 @@
+{
+  "eje": "dato",
+  "n_busquedas": 0,
+  "n_fetch": 0,
+  "_nota": "FIXTURE de /dato: cifras de ejemplo del brief, no verificadas. dat-c02 existe para probar que una cifra no_confirmada no pasa el gate.",
+  "cifras": [
+    { "id": "dat-c01", "concepto": "Brent, promedio mensual 2026", "valor": 102, "unidad": "US$ por barril", "anio": "2026", "fuente": "EIA · U.S. Energy Information Administration", "url": "https://www.eia.gov/dnav/pet/hist/RBRTEM.htm", "tipo": "serie", "n_puntos": 9, "periodo": "ene-2026..sep-2026", "candidata_ancla": true,
+      "impacto": "Medio año de Ormuz cerrado: el barril que importa Guatemala cuesta la mitad más que en enero.",
+      "evidencia": { "url": "https://www.eia.gov/dnav/pet/hist/RBRTEM.htm", "cita": "Sep 2026: 102.0 (Europe Brent Spot Price FOB, Dollars per Barrel, monthly)", "archivo_local": "" },
+      "serie": [ { "p": "Ene", "v": 67 }, { "p": "Feb", "v": 71 }, { "p": "Mar", "v": 103 }, { "p": "Abr", "v": 117 }, { "p": "May", "v": 107 }, { "p": "Jun", "v": 85 }, { "p": "Jul", "v": 84 }, { "p": "Ago", "v": 91 }, { "p": "Sep", "v": 102 } ] },
+    { "id": "dat-c02", "concepto": "Gasolina regular en Guatemala, septiembre 2026 (cifra de prensa sin segunda fuente)", "valor": 5.35, "unidad": "US$ por galón", "anio": "2026", "fuente": "Prensa (nota sin fuente primaria)", "url": "", "tipo": "puntual",
+      "impacto": "Sería el galón más caro de Centroamérica, pero solo lo dice una nota de prensa.",
+      "evidencia": { "url": "", "cita": "la gasolina regular se vende a 5.35 dólares el galón", "archivo_local": "" } }
+  ],
+  "fuentes": [
+    { "nombre": "EIA · U.S. Energy Information Administration", "url": "https://www.eia.gov/dnav/pet/", "nivel": "primaria" }
+  ],
+  "vacios": ["No hay serie diaria del Brent en la descarga mensual: el pico de 128 del 2 de abril sale de la serie diaria."]
+}

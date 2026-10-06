@@ -1,0 +1,553 @@
+{
+  "slug": "retornados-guatemala-2026",
+  "fecha": "2026-10-05",
+  "tesis": "De enero a septiembre de 2026 volvieron 53,373 guatemaltecos deportados, 45% más que los 36,800 del mismo periodo de 2025, pero menos que en 2024 (61,892), 2023 (58,735) y 2022 (74,980).",
+  "ancla_id": "dat-c04",
+  "paleta": "cielo",
+  "hook_tipo": "mito_vs_dato",
+  "cifras": [
+    {
+      "id": "dat-c01",
+      "concepto": "Guatemaltecos retornados (deportados) desde EE.UU. y México, enero-septiembre 2026, frente al mismo periodo de 2025",
+      "unidad": "personas",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Instituto Guatemalteco de Migración (IGM), base de datos de personas guatemaltecas migrantes retornadas, 01 de enero al 30 de septiembre de 2026",
+      "url": "https://igm.gob.gt/files/BASE-DATOS-PERSONAS-GUATEMALTECAS-MIGRANTES-RETORNADAS-01-DE-%20ENERO-30-SEPTIEMBRE-%202026.xlsb",
+      "periodo": "ene-sep 2026 vs ene-sep 2025",
+      "n_puntos": 2,
+      "valor": 53373,
+      "veredicto": "verificada",
+      "fuente_2": "Emisoras Unidas (corte IGM ene-ago 2026) + coherencia con hoja mensual IGM",
+      "evidencia": {
+        "url": "https://igm.gob.gt/files/BASE-DATOS-PERSONAS-GUATEMALTECAS-MIGRANTES-RETORNADAS-01-DE-%20ENERO-30-SEPTIEMBRE-%202026.xlsb",
+        "cita": "DATOS POR DEPARTAMENTO, DEL 01 DE ENERO AL 30 DE SEPTIEMBRE DEL 2026 … Total general … 1279 … 53373",
+        "archivo_local": "sesiones/_descargas/RETORNADAS-01-ENERO-30-SEPTIEMBRE-2026.xlsb"
+      },
+      "partes": [
+        {
+          "nombre": "ene-sep 2025",
+          "valor": 36800
+        },
+        {
+          "nombre": "ene-sep 2026",
+          "valor": 53373
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "dato.png"
+      ]
+    },
+    {
+      "id": "dat-c02",
+      "concepto": "Retornados en todo 2025 frente a los primeros nueve meses de 2026 (y totales anuales 2020-2025)",
+      "unidad": "personas",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "IGM, base de datos de guatemaltecos retornados enero-31 diciembre 2025 (y bases anuales 2020-2024)",
+      "url": "https://igm.gob.gt/files/BASE-DE-DATOS-DE-GUATEMALTECOS-RETORNADOS-DE-ENERO-AL-31-DICIEMBRE-2025.xlsx",
+      "periodo": "2025 completo vs ene-sep 2026",
+      "n_puntos": 2,
+      "valor": 55276,
+      "veredicto": "verificada",
+      "fuente_2": "Prensa (busqueda web) reporta IGM: 55,276 retornados en 2025; 76,768 en 2024",
+      "evidencia": {
+        "url": "https://igm.gob.gt/files/BASE-DE-DATOS-DE-GUATEMALTECOS-RETORNADOS-DE-ENERO-AL-31-DICIEMBRE-2025.xlsx",
+        "cita": "TOTAL RETORNADOS ANUAL,,47248,6124,53372,695,567,1262,485,157,642,1904,55276",
+        "archivo_local": "sesiones/_descargas/BASE-DE-DATOS-DE-GUATEMALTECOS-RETORNADOS-DE-ENERO-AL-31-DICIEMBRE-2025.xlsx"
+      },
+      "partes": [
+        {
+          "nombre": "2020",
+          "valor": 45572
+        },
+        {
+          "nombre": "2021",
+          "valor": 63520
+        },
+        {
+          "nombre": "2022",
+          "valor": 94216
+        },
+        {
+          "nombre": "2023",
+          "valor": 79697
+        },
+        {
+          "nombre": "2024",
+          "valor": 76768
+        },
+        {
+          "nombre": "2025",
+          "valor": 55276
+        },
+        {
+          "nombre": "2026 (ene-sep)",
+          "valor": 53373
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c03",
+      "concepto": "Retornados por mes, enero 2024 - septiembre 2026",
+      "unidad": "personas por mes",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "IGM, bases anuales de retornados 2024, 2025 y ene-sep 2026",
+      "url": "https://igm.gob.gt/index.php?view=article&id=6:estadisticas&catid=9",
+      "periodo": "2024-01 a 2026-09",
+      "n_puntos": 33,
+      "valor": 7179,
+      "veredicto": "verificada",
+      "fuente_2": "Emisoras Unidas (IGM ene-ago 2026: julio 7,463, agosto 6,951)",
+      "evidencia": {
+        "url": "https://igm.gob.gt/files/BASE-DATOS-PERSONAS-GUATEMALTECAS-MIGRANTES-RETORNADAS-01-DE-%20ENERO-30-SEPTIEMBRE-%202026.xlsb",
+        "cita": "CONSOLIDADO POR MES … JULIO … 7463 … AGOSTO … 6951 … SEPTIEMBRE … 7179 … TOTALES … 53373",
+        "archivo_local": "sesiones/_descargas/RETORNADAS-01-ENERO-30-SEPTIEMBRE-2026_hoja3.csv"
+      },
+      "serie": [
+        {
+          "p": "2024-01",
+          "v": 9201
+        },
+        {
+          "p": "2024-02",
+          "v": 9383
+        },
+        {
+          "p": "2024-03",
+          "v": 7410
+        },
+        {
+          "p": "2024-04",
+          "v": 6207
+        },
+        {
+          "p": "2024-05",
+          "v": 7122
+        },
+        {
+          "p": "2024-06",
+          "v": 6500
+        },
+        {
+          "p": "2024-07",
+          "v": 6538
+        },
+        {
+          "p": "2024-08",
+          "v": 5346
+        },
+        {
+          "p": "2024-09",
+          "v": 4185
+        },
+        {
+          "p": "2024-10",
+          "v": 5392
+        },
+        {
+          "p": "2024-11",
+          "v": 4696
+        },
+        {
+          "p": "2024-12",
+          "v": 4788
+        },
+        {
+          "p": "2025-01",
+          "v": 4012
+        },
+        {
+          "p": "2025-02",
+          "v": 3078
+        },
+        {
+          "p": "2025-03",
+          "v": 2912
+        },
+        {
+          "p": "2025-04",
+          "v": 2839
+        },
+        {
+          "p": "2025-05",
+          "v": 4045
+        },
+        {
+          "p": "2025-06",
+          "v": 4725
+        },
+        {
+          "p": "2025-07",
+          "v": 4851
+        },
+        {
+          "p": "2025-08",
+          "v": 4847
+        },
+        {
+          "p": "2025-09",
+          "v": 5491
+        },
+        {
+          "p": "2025-10",
+          "v": 6189
+        },
+        {
+          "p": "2025-11",
+          "v": 6170
+        },
+        {
+          "p": "2025-12",
+          "v": 6117
+        },
+        {
+          "p": "2026-01",
+          "v": 5094
+        },
+        {
+          "p": "2026-02",
+          "v": 5432
+        },
+        {
+          "p": "2026-03",
+          "v": 5595
+        },
+        {
+          "p": "2026-04",
+          "v": 5151
+        },
+        {
+          "p": "2026-05",
+          "v": 5590
+        },
+        {
+          "p": "2026-06",
+          "v": 4918
+        },
+        {
+          "p": "2026-07",
+          "v": 7463
+        },
+        {
+          "p": "2026-08",
+          "v": 6951
+        },
+        {
+          "p": "2026-09",
+          "v": 7179
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c04",
+      "concepto": "Retornados enero-septiembre de cada año, 2020-2026 (periodos comparables)",
+      "unidad": "personas",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "IGM, bases anuales de microdatos de retornados 2020-2025 y ene-sep 2026",
+      "url": "https://igm.gob.gt/index.php?view=article&id=6:estadisticas&catid=9",
+      "periodo": "ene-sep 2020 a ene-sep 2026",
+      "n_puntos": 7,
+      "valor": 53373,
+      "veredicto": "verificada",
+      "fuente_2": "Emisoras Unidas oct-2024 (Guatemala ene-ago 2024 casi 58 mil) + prensa 2026",
+      "evidencia": {
+        "url": "https://igm.gob.gt/index.php?view=article&id=6:estadisticas&catid=9",
+        "cita": "Bases de datos de guatemaltecos retornados 2020-2025 y 01 de enero-30 de septiembre 2026 (microdatos con MES, SEXO, CATEGORÍA, DEPARTAMENTO, TOTAL, PAÍS DE RETORNO)",
+        "archivo_local": "sesiones/_descargas/RETORNADAS-01-ENERO-30-SEPTIEMBRE-2026_hoja4.csv"
+      },
+      "partes": [
+        {
+          "nombre": "2020",
+          "valor": 33054
+        },
+        {
+          "nombre": "2021",
+          "valor": 39205
+        },
+        {
+          "nombre": "2022",
+          "valor": 74980
+        },
+        {
+          "nombre": "2023",
+          "valor": 58735
+        },
+        {
+          "nombre": "2024",
+          "valor": 61892
+        },
+        {
+          "nombre": "2025",
+          "valor": 36800
+        },
+        {
+          "nombre": "2026",
+          "valor": 53373
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "dato.png"
+      ]
+    },
+    {
+      "id": "dat-c05",
+      "concepto": "Retornados desde Estados Unidos, enero-septiembre: 2024 vs 2025 vs 2026",
+      "unidad": "personas",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "IGM, bases de microdatos (columna PAÍS DE RETORNO = EE.UU.)",
+      "url": "https://igm.gob.gt/files/BASE-DATOS-PERSONAS-GUATEMALTECAS-MIGRANTES-RETORNADAS-01-DE-%20ENERO-30-SEPTIEMBRE-%202026.xlsb",
+      "periodo": "ene-sep 2024, 2025 y 2026",
+      "n_puntos": 3,
+      "valor": 48905,
+      "veredicto": "verificada",
+      "fuente_2": "Emisoras Unidas / Prensa Latina (IGM 2024: 59,504 desde EE.UU. en todo 2024) y agregado ene-ago 2026",
+      "evidencia": {
+        "url": "https://igm.gob.gt/files/BASE-DATOS-PERSONAS-GUATEMALTECAS-MIGRANTES-RETORNADAS-01-DE-%20ENERO-30-SEPTIEMBRE-%202026.xlsb",
+        "cita": "BASE CONSOLIDADA … PAÍS DE RETORNO: EE.UU. / MÉXICO (suma propia ene-sep 2026: EE.UU. 48905; México 4468)",
+        "archivo_local": "sesiones/_descargas/RETORNADAS-01-ENERO-30-SEPTIEMBRE-2026_hoja4.csv"
+      },
+      "partes": [
+        {
+          "nombre": "ene-sep 2024",
+          "valor": 49142
+        },
+        {
+          "nombre": "ene-sep 2025",
+          "valor": 31835
+        },
+        {
+          "nombre": "ene-sep 2026",
+          "valor": 48905
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c06",
+      "concepto": "Retornados por departamento de residencia, enero-septiembre 2026 (22 departamentos)",
+      "unidad": "personas",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "IGM, hoja DEPARTAMENTO de la base ene-sep 2026",
+      "url": "https://igm.gob.gt/files/BASE-DATOS-PERSONAS-GUATEMALTECAS-MIGRANTES-RETORNADAS-01-DE-%20ENERO-30-SEPTIEMBRE-%202026.xlsb",
+      "periodo": "ene-sep 2026",
+      "n_puntos": 22,
+      "valor": 10292,
+      "veredicto": "verificada",
+      "fuente_2": "Emisoras Unidas (IGM ene-ago 2026: Huehuetenango 8,996; San Marcos 6,630)",
+      "evidencia": {
+        "url": "https://igm.gob.gt/files/BASE-DATOS-PERSONAS-GUATEMALTECAS-MIGRANTES-RETORNADAS-01-DE-%20ENERO-30-SEPTIEMBRE-%202026.xlsb",
+        "cita": "Huehuetenango … 316 … 10292 / San Marcos … 176 … 7596 / Total general … 53373",
+        "archivo_local": "sesiones/_descargas/RETORNADAS-01-ENERO-30-SEPTIEMBRE-2026_hoja1.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Huehuetenango",
+          "valor": 10292
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 7596
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 5666
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 3762
+        },
+        {
+          "nombre": "Guatemala",
+          "valor": 2992
+        },
+        {
+          "nombre": "Petén",
+          "valor": 2820
+        },
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 2697
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 1748
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 1667
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 1603
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 1516
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 1496
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 1432
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 1357
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 1320
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 1188
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 1174
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 948
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 933
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 517
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 420
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 229
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c07",
+      "concepto": "Niñas, niños y adolescentes retornados, enero-septiembre: 2022 vs 2024 vs 2026",
+      "unidad": "personas menores de 18",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "IGM, bases de microdatos (CATEGORÍA = niños, niñas y adolescentes)",
+      "url": "https://igm.gob.gt/files/BASE-DATOS-PERSONAS-GUATEMALTECAS-MIGRANTES-RETORNADAS-01-DE-%20ENERO-30-SEPTIEMBRE-%202026.xlsb",
+      "periodo": "ene-sep 2022, 2024, 2025, 2026",
+      "n_puntos": 4,
+      "valor": 1279,
+      "veredicto": "verificada",
+      "fuente_2": "Emisoras Unidas (IGM ene-ago 2026: 1,122 menores) + agregado de prensa 2022",
+      "evidencia": {
+        "url": "https://igm.gob.gt/files/BASE-DATOS-PERSONAS-GUATEMALTECAS-MIGRANTES-RETORNADAS-01-DE-%20ENERO-30-SEPTIEMBRE-%202026.xlsb",
+        "cita": "RANGO DE EDAD … Total general,47259.0,4835.0,52094.0,436.0,361.0,797.0,368.0,114.0,482.0,1279.0,53373.0",
+        "archivo_local": "sesiones/_descargas/RETORNADAS-01-ENERO-30-SEPTIEMBRE-2026_hoja2.csv"
+      },
+      "partes": [
+        {
+          "nombre": "ene-sep 2022",
+          "valor": 13914
+        },
+        {
+          "nombre": "ene-sep 2024",
+          "valor": 6484
+        },
+        {
+          "nombre": "ene-sep 2025",
+          "valor": 1433
+        },
+        {
+          "nombre": "ene-sep 2026",
+          "valor": 1279
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c08",
+      "concepto": "Hondureños retornados enero-junio 2026 vs 2025 (comparación regional) frente a Guatemala en el mismo semestre",
+      "unidad": "personas",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "OIM con datos del Observatorio Consular y Migratorio de Honduras (Conmigho), vía El Heraldo (22-jul-2026)",
+      "url": "https://www.elheraldo.hn/honduras/honduras-recibio-casi-24-mil-migrantes-deportados-seis-meses-40-mas-que-2025-GO31485883",
+      "periodo": "ene-jun 2025 y ene-jun 2026",
+      "n_puntos": 4,
+      "valor": 23952,
+      "veredicto": "ajustada",
+      "fuente_2": "OIM/Conmigho via La Prensa HN, El Mundo SV, Swissinfo (misma fuente primaria)",
+      "evidencia": {
+        "url": "https://www.elheraldo.hn/honduras/honduras-recibio-casi-24-mil-migrantes-deportados-seis-meses-40-mas-que-2025-GO31485883",
+        "cita": "Honduras recibió 23.952 migrantes deportados entre enero y junio de 2026, un 40 % más que en el mismo período de 2025"
+      },
+      "partes": [
+        {
+          "nombre": "Honduras ene-jun 2025",
+          "valor": 17102
+        },
+        {
+          "nombre": "Honduras ene-jun 2026",
+          "valor": 23952
+        },
+        {
+          "nombre": "Guatemala ene-jun 2025",
+          "valor": 21611
+        },
+        {
+          "nombre": "Guatemala ene-jun 2026",
+          "valor": 31780
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    }
+  ],
+  "fuentes": [
+    {
+      "nombre": "Instituto Guatemalteco de Migración (IGM) — Estadísticas: bases de datos de retornados",
+      "url": "https://igm.gob.gt/index.php?view=article&id=6:estadisticas&catid=9",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "EFE vía Revista E&N — Deportaciones a Guatemala suben 47,5% a agosto (2-sep-2026)",
+      "url": "https://www.revistaeyn.com/centroamericaymundo/deportaciones-a-guatemala-desde-ee-uu-y-mexico-suben-un-475-a-agosto-EL31900141",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "El Heraldo (Honduras) — OIM/Conmigho, retornados ene-jun 2026",
+      "url": "https://www.elheraldo.hn/honduras/honduras-recibio-casi-24-mil-migrantes-deportados-seis-meses-40-mas-que-2025-GO31485883",
+      "nivel": "prensa"
+    }
+  ],
+  "no_afirma": [
+    "No atribuye el repunte a una política concreta de EE.UU. o de México: el IGM solo registra los retornos.",
+    "No compara años completos: 2026 llega hasta el 30 de septiembre y todos los años se cortan en el mismo periodo.",
+    "No mide cuántos guatemaltecos migran, solo cuántos son retornados."
+  ],
+  "incertidumbre": [
+    "El total ene-sep de 2025 es suma propia de microdatos: la base 2025 no trae hoja mensual oficial.",
+    "Incluye retornos desde EE.UU. y México por todas las vías que registra el IGM."
+  ],
+  "descartadas": [],
+  "tipo": "dato"
+}

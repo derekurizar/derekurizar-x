@@ -1,0 +1,18 @@
+{
+  "slug": "combustibles-dato-fixture",
+  "tema": "Precio del crudo Brent en 2026 (sesión de prueba de /dato con cifras del brief)",
+  "pista": null,
+  "fecha": "2026-09-28",
+  "tipo": "dato",
+  "pregunta": "¿Cuánto subió el crudo que paga Guatemala en 2026?",
+  "paleta": "cielo",
+  "hook_evitar": null,
+  "repetido": false,
+  "ejes": [
+    { "id": "dato", "prefijo": "dat", "brief": "Brent promedio mensual 2026 (EIA): último mes publicado frente a enero.", "preguntas": ["¿Cuánto subió el Brent y cuándo?"], "fuentes_sugeridas": ["EIA · Brent spot mensual (https://www.eia.gov/dnav/pet/hist/RBRTEM.htm)"] }
+  ],
+  "sesion_dir": "sesiones/_fixture_dato",
+  "smoke": true,
+  "fixture": true,
+  "_nota": "FIXTURE de /dato: una sola tarjeta, escrita a mano para probar scripts/ensamblar.py en modo dato sin agentes. Las cifras vienen del brief y NO están verificadas contra fuentes reales."
+}

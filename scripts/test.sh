@@ -4,8 +4,10 @@
 # Uso: bash scripts/test.sh          # completa (incluye make catalogo)
 #      RAPIDO=1 bash scripts/test.sh # salta el catálogo
 # Pasos: validate · catálogo · contar_x (py + js) · fixture (materializar + ensamblar --check)
-#        · negativos del gate G1–G6 sobre copias del fixture · negativos de render.js
-#        · banco de ideas (ideas.py sobre un banco temporal) · node --check de hilo.js e ideas.js. Resumen «N pruebas · M fallos»; exit 1 si hay fallos.
+#        · fixture dato (una tarjeta, modo dato de ensamblar) · negativos del gate G1–G8 sobre copias
+#        de los fixtures (siempre con --salida: una copia nunca escribe en hilos/ ni datos/)
+#        · negativos de render.js · banco de ideas (ideas.py sobre un banco temporal)
+#        · node --check de hilo.js, ideas.js y dato.js. Resumen «N pruebas · M fallos»; exit 1 si hay fallos.
 set -u
 RAIZ="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$RAIZ"
@@ -13,6 +15,7 @@ cd "$RAIZ"
 RAPIDO="${RAPIDO:-0}"
 TMP="$(mktemp -d)"; trap 'rm -rf "$TMP"' EXIT
 N=0; FALLOS=0
+FIX=sesiones/_fixture   # fixture que copian los negativos (se cambia a _fixture_dato más abajo)
 
 paso() {  # paso "nombre" comando...
   N=$((N+1)); local nombre="$1"; shift
@@ -28,12 +31,13 @@ paso() {  # paso "nombre" comando...
 negativo() {
   N=$((N+1)); local nombre="$1" gate="$2" mut="$3" extra="${4:-}"
   local S; S="$(mktemp -d "$TMP/neg.XXXXXX")"
-  cp -R sesiones/_fixture/. "$S/"; rm -rf "$S/salida"
+  cp -R "$FIX/." "$S/"; rm -rf "$S/salida"
   if [[ -n "$mut" ]] && ! python3 -c "$mut" "$S/guion.json" 2>"$TMP/mut.log"; then
     FALLOS=$((FALLOS+1)); printf 'FALLO  %s: la mutación falló\n' "$nombre"; sed 's/^/       /' "$TMP/mut.log"; return
   fi
   [[ -n "$extra" ]] && eval "$extra"
-  python3 scripts/ensamblar.py "$S" --check >"$TMP/neg.out" 2>"$TMP/neg.err"; local rc=$?
+  # Siempre con --salida: una copia con smoke:false escribiría en hilos/ o datos/ (el entregable real).
+  python3 scripts/ensamblar.py "$S" --check --salida "$S/salida" >"$TMP/neg.out" 2>"$TMP/neg.err"; local rc=$?
   if [[ $rc -eq 1 ]] && grep -q "$gate" "$TMP/neg.err"; then
     printf 'OK     %s → %s\n' "$nombre" "$gate"
   else
@@ -63,6 +67,8 @@ comprobar_salida() {
   [[ "$(ls "$d"/tuit_*.png | wc -l | tr -d ' ')" -eq 3 ]] || { echo "se esperaban 3 PNG en $d"; return 1; }
 }
 paso "salida del fixture (hilo.html, post.md, datos.json, hilo.json, 3 PNG)" comprobar_salida
+paso "post.md marca la 2ª fuente no independiente (pre-c04)" bash -c 'grep -q "ajustada · 2ª fuente no indep." sesiones/_fixture/salida/post.md'
+paso "digesto.py marca (2ª no indep.) en pre-c04" bash -c 'python3 scripts/digesto.py sesiones/_fixture --para guionista | grep "pre-c04" | grep -q "2ª no indep"'
 
 echo "== estado final y memoria.py (sobre el fixture, sin escribir memoria/)"
 solo_estado() {
@@ -80,6 +86,49 @@ memoria_dry() {
   python3 scripts/memoria.py --registrar sesiones/_fixture --ruta sesiones/_fixture/salida --hook giro_inversion --dry-run 2>/dev/null | grep -q "hook giro_inversion"
 }
 paso "memoria.py --dry-run acepta --hook giro_inversion" memoria_dry
+
+echo "== fixture dato (una tarjeta: modo dato de ensamblar.py)"
+paso "materializar.py sesiones/_fixture_dato" python3 scripts/materializar.py sesiones/_fixture_dato
+paso "ensamblar.py sesiones/_fixture_dato --check" python3 scripts/ensamblar.py sesiones/_fixture_dato --check
+comprobar_salida_dato() {
+  local d=sesiones/_fixture_dato/salida f
+  for f in dato.png tarjeta.html dato.html post.md datos.json dato.json; do [[ -s "$d/$f" ]] || { echo "falta $d/$f"; return 1; }; done
+  [[ "$(ls "$d"/*.png | wc -l | tr -d ' ')" -eq 1 ]] || { echo "se esperaba exactamente 1 PNG en $d"; return 1; }
+  [[ ! -e "$d/contacto.png" && ! -e "$d/hilo.json" && ! -e "$d/hilo.html" ]] || { echo "un dato no lleva contacto.png ni hilo.*"; return 1; }
+  python3 -c 'import json,sys; d=json.load(open(sys.argv[1])); assert d["tipo"]=="dato" and "tuits" not in d and d["tuit"]["imagen"]=="dato.png" and d["dato"] and d["candidatas"]' "$d/dato.json"
+}
+paso "salida del dato (6 archivos, 1 PNG, sin contacto.png ni hilo.json)" comprobar_salida_dato
+solo_estado_dato() {
+  local d=sesiones/_fixture_dato/salida
+  python3 scripts/ensamblar.py sesiones/_fixture_dato --solo-estado --estado incompleto >/dev/null || return 1
+  python3 -c 'import json,sys; sys.exit(0 if json.load(open(sys.argv[1]))["estado"]=="incompleto" else 1)' "$d/dato.json" || { echo "dato.json no dice incompleto"; return 1; }
+  grep -q '^- \*\*Estado:\*\* incompleto' "$d/post.md" || { echo "post.md no dice incompleto"; return 1; }
+  grep -q '"estado": *"incompleto"' "$d/dato.html" || { echo "dato.html no dice incompleto"; return 1; }
+  python3 scripts/ensamblar.py sesiones/_fixture_dato --solo-estado --estado borrador >/dev/null
+}
+paso "ensamblar.py --solo-estado sobre un dato (dato.json, dato.html, post.md)" solo_estado_dato
+paso "ensamblar.py rechaza --salida hilos/ para un dato (exit 2, no crea nada)" bash -c 'python3 scripts/ensamblar.py sesiones/_fixture_dato --salida hilos/_prueba_dato >/dev/null 2>&1; rc=$?; [[ ! -e hilos/_prueba_dato ]] || { rm -rf hilos/_prueba_dato; exit 1; }; [[ $rc -eq 2 ]]'
+paso "ensamblar.py rechaza --salida datos/ para un hilo (exit 2, no crea nada)" bash -c 'python3 scripts/ensamblar.py sesiones/_fixture --salida datos/_prueba_hilo >/dev/null 2>&1; rc=$?; [[ ! -e datos/_prueba_hilo ]] || { rm -rf datos/_prueba_hilo; exit 1; }; [[ $rc -eq 2 ]]'
+memoria_dato_dry() {
+  python3 scripts/memoria.py --registrar sesiones/_fixture_dato --ruta sesiones/_fixture_dato/salida --dry-run 2>/dev/null | grep -q "memoria/datos.json" || { echo "el dry-run no apunta a memoria/datos.json"; return 1; }
+  python3 scripts/memoria.py --datos "crudo brent" >/dev/null
+}
+paso "memoria.py --registrar --dry-run de un dato → memoria/datos.json (y --datos)" memoria_dato_dry
+paso "digesto.py --para productor con 1 tuit" bash -c 'python3 scripts/digesto.py sesiones/_fixture_dato --para productor | grep -q "tuits: 1"'
+
+echo "== negativos del gate en modo dato (copias de _fixture_dato)"
+FIX=sesiones/_fixture_dato
+negativo "dato con 2 tuits"                    G1 "$(mut 'T.append(dict(T[0], n=2, beat="cierre"))')"
+negativo "dato con beat giro"                  G1 "$(mut 'T[0]["beat"]="giro"')"
+negativo "dato sin hook_tipo"                  G1 "$(mut 'g.pop("hook_tipo", None)')"
+negativo "dato sin visual en T1"               G3 "$(mut 'T[0]["visual"]=None')"
+negativo "dato: cifra no_confirmada dat-c02"   G3 "$(mut 'T[0]["visual"]["cifra_ids"]=["dat-c02"]')"
+negativo "dato: número sin respaldo"           G4 "$(mut 'T[0]["visual"]["datos"]["cifra"]["valor"]=999')"
+negativo "dato: texto repite el titular"       G2 "$(mut 'T[0]["texto"]="El crudo cerró septiembre en US$102. ¿Y ahora qué pasa con el diésel? El dato, en una tarjeta."')"
+negativo "dato: texto repite 2 números"        G2 "$(mut 'T[0]["texto"]="Brent a US$102 tras US$67 en enero: ¿qué pasó con el diésel en Guatemala? El dato, en una tarjeta."')"
+negativo "dato: texto de 20 caracteres"        G2 "$(mut 'T[0]["texto"]="Dato corto sin peso."')"
+negativo "dato: falta visuales/tuit_1.png"     G5 "" 'rm -f "$S/visuales/tuit_1.png"'
+FIX=sesiones/_fixture
 
 echo "== negativos del gate mecánico (copias del fixture)"
 negativo "titular de 30 caracteres"         G3 "$(mut 'T[1]["visual"]["titular"]=["x"*30]')"
@@ -193,6 +242,7 @@ check_js() {
 }
 paso "node --check hilo.js (envuelto en async function)" check_js hilo.js
 paso "node --check ideas.js (envuelto en async function)" check_js ideas.js
+paso "node --check dato.js (envuelto en async function)" check_js dato.js
 
 echo
 echo "[test] $N pruebas · $FALLOS fallos"

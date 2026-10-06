@@ -105,6 +105,8 @@ def fila(c, v, wc, wcita, marcar_no_usar=False):
     if v:
         vfin = v.get("valor_final")
         vered = "%s → %s" % (v.get("veredicto"), fmt_num(vfin) if vfin is not None else "—")
+        if v.get("independencia") == "baja":
+            vered += " (2ª no indep.)"
     else:
         vered = "sin veredicto"
     cita = ((c.get("evidencia") or {}).get("cita") or "") if isinstance(c.get("evidencia"), dict) else ""

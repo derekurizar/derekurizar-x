@@ -1,0 +1,8 @@
+{
+  "eje": "dato",
+  "_nota": "FIXTURE de /dato: veredictos ficticios para probar el gate (dat-c02 queda no_confirmada a propósito).",
+  "items": [
+    { "id": "dat-c01", "veredicto": "verificada", "valor_final": 102, "fuente_2": "Banco Mundial · Pink Sheet (promedio mensual Brent)", "independencia": "alta", "url_2": "https://www.worldbank.org/en/research/commodity-markets", "nota": "Extremos y punto intermedio coinciden." },
+    { "id": "dat-c02", "veredicto": "no_confirmada", "nota": "Solo una nota de prensa; sin fuente primaria." }
+  ]
+}

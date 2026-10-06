@@ -9,7 +9,7 @@ resultado de herramienta.
 |---|---|---|
 | `encuadre.json` | editor | `slug, tema, fecha, pregunta, tesis_provisional, angulo, paleta, necesita_serie, repetido, hook_evitar, idea_id (id del banco de ideas o null), ejes[2–4]{id, prefijo (3 letras únicas), brief, preguntas[], fuentes_sugeridas[], series_sugeridas[]}, sesion_dir, smoke, fixture` |
 | `hallazgos_<eje>.json` | investigador | `eje, n_busquedas, n_fetch, cifras[≤12]{id "<prefijo>-cNN", concepto, valor:number, unidad, anio, fuente, url, tipo: puntual\|serie\|desglose, n_puntos, periodo, candidata_ancla, evidencia{url, cita ≤200, archivo_local?}, serie:[{p, v}], partes:[{nombre, valor}], nota}, fuentes[]{nombre, url, nivel}, vacios[]` |
-| `verificacion_<eje>.json` | verificador | `eje, items[]{id, veredicto: verificada\|ajustada\|no_confirmada, valor_final, fuente_2, url_2, nota}` |
+| `verificacion_<eje>.json` | verificador | `eje, items[]{id, veredicto: verificada\|ajustada\|no_confirmada, valor_final, fuente_2, url_2, independencia: alta\|baja (baja = la 2ª fuente reproduce la primaria o es recálculo de sus microdatos), nota}` |
 | `guion.json` | guionista | `slug, fecha, paleta, smoke, handle, hook_tipo, sintesis{pregunta, tesis, ancla_id, arco[], no_afirma[≤5], incertidumbre[], descartadas[]}, tuits[]{n, beat, texto, alt_text ≤1000, visual\|null}` con `visual = {plantilla, kicker, titular[], leyenda[], nota, fuente, cifra_ids[], datos{}}` |
 | `visuales/tuit_N.html/.png` | visualista (vía `materializar.py`) | tarjeta ensamblada y su PNG |
 | `visuales/tuit_N.ajuste.json` | visualista | cambios parciales al `visual` de ese tuit; los consolida el productor |
@@ -34,3 +34,28 @@ Reglas del contrato:
 - Modo `smoke`: 1 eje, ≤ 6 cifras, ≤ 5 búsquedas, 3 tuits, salida en
   `<sesion>/salida/`, sin tocar `memoria/`. Modo `fixture`: se copia
   `sesiones/_fixture` y se saltan investigación y verificación.
+
+## Sesión dato (`/dato`)
+
+Mismo contrato con un solo eje `dato` (prefijo `dat`) y sin editor ni
+visualistas. Los digestos funcionan igual (`--eje dato`).
+
+| Archivo | Lo escribe | Contenido |
+|---|---|---|
+| `encuadre.json` | investigador (encuadre ligero) | `slug, pista (literal del usuario o null), tema (tema final elegido por el investigador), fecha, tipo: "dato", paleta, pregunta, hook_evitar, repetido, sesion_dir, smoke, fixture, ejes: [{id: "dato", prefijo: "dat", brief, preguntas[], fuentes_sugeridas[]}]` |
+| `hallazgos_dato.json` | investigador | como `hallazgos_<eje>.json` (`eje: "dato"`, ≤ 8 cifras `dat-cNN`) y en cada cifra `impacto` (≤ 160) |
+| `verificacion_dato.json` | verificador | `eje: "dato", items[]{id, veredicto, valor_final, fuente_2, url_2, independencia, nota}` |
+| `guion.json` | guionista | `slug, fecha, tipo: "dato", paleta, smoke, handle, hook_tipo, dato{cifra_id, titular, por_que_impacta}, candidatas[]{id, puntaje, criterios{sorpresa, magnitud, comparacion, actualidad, solidez}, elegida, motivo}, sintesis{pregunta, tesis, ancla_id, no_afirma, incertidumbre, descartadas}, tuits[EXACTAMENTE 1]{n: 1, beat: "gancho", texto, alt_text, visual}` |
+| `visuales/tuit_1.html/.png` · `tuit_1.ajuste.json` | productor (vía `materializar.py`) | la tarjeta y sus ajustes de QA; el propio productor consolida |
+| `salida/` | productor (solo smoke/fixture) | carpeta de entrega cuando no se toca `datos/` |
+
+Entregable: `datos/YYYY-MM-DD-<slug>/` con `dato.png`, `tarjeta.html`,
+`dato.html` (vista previa), `post.md`, `datos.json`, `dato.json`. Registro en
+`memoria/datos.json` (solo `memoria.py --registrar`, que detecta
+`guion.tipo`); series y fuentes halladas a `memoria/fuentes.json` como hoy.
+`ensamblar.py` nunca escribe un dato en `hilos/` ni un hilo en `datos/`.
+Modo `smoke`: ≤ 4 búsquedas, ≤ 4 fetch, ≤ 4 cifras, 1 serie, 1 iteración de QA
+visual, salida en `<sesion>/salida/`, sin tocar `memoria/` (sin pista usa
+«remesas familiares 2025»). Modo `fixture`: el productor copia
+`sesiones/_fixture_dato` a `sesiones/fixture-dato-<YYYYMMDD>` y se saltan
+investigación, verificación y guion.

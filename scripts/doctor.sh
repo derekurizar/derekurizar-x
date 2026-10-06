@@ -65,11 +65,20 @@ if [[ -f .claude/commands/hilo.md ]]; then ok ".claude/commands/hilo.md presente
 for f in .claude/agents/ideas-explorador.md .claude/workflows/ideas.js .claude/commands/ideas.md; do
   if [[ -s "$f" ]]; then ok "$f presente"; else aviso "falta $f (/ideas no estará disponible)"; fi
 done
+# /dato reutiliza los seis agentes hilo-*: solo necesita su workflow, su comando, la vista previa y el fixture.
+for f in .claude/workflows/dato.js .claude/commands/dato.md templates/dato.html sesiones/_fixture_dato/guion.json; do
+  if [[ -s "$f" ]]; then ok "$f presente"; else aviso "falta $f (/dato no estará disponible)"; fi
+done
 
 # memoria y tokens
 for f in memoria/fuentes.json memoria/hilos.json design/tokens.json ideas/banco.json; do
   if python3 -c "import json,sys; json.load(open('$f', encoding='utf-8'))" 2>/dev/null; then ok "$f es JSON válido"; else error "$f falta o no es JSON válido"; fi
 done
+if [[ -e memoria/datos.json ]]; then
+  if python3 -c "import json; json.load(open('memoria/datos.json', encoding='utf-8'))" 2>/dev/null; then ok "memoria/datos.json es JSON válido"; else error "memoria/datos.json no es JSON válido"; fi
+else
+  ok "memoria/datos.json ausente (memoria.py lo crea al registrar el primer dato)"
+fi
 
 # residuos
 if [[ -d .playwright-mcp ]]; then aviso ".playwright-mcp/ presente (capturas del MCP de Playwright): bórralo, no forma parte del repo"; fi

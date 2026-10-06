@@ -4,6 +4,8 @@ templates/.galeria/
 sesiones/*
 !sesiones/_fixture/
 sesiones/_fixture/salida/
+!sesiones/_fixture_dato/
+sesiones/_fixture_dato/salida/
 *.log
 sesiones/_descargas/
 .playwright-mcp/

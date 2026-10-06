@@ -1,0 +1,77 @@
+{
+  "slug": "combustibles-dato-fixture",
+  "fecha": "2026-09-28",
+  "tipo": "dato",
+  "paleta": "cielo",
+  "smoke": true,
+  "handle": "@DerekUrizar",
+  "hook_tipo": "antes_despues",
+  "dato": {
+    "cifra_id": "dat-c01",
+    "titular": "El crudo cerró septiembre en US$102, 52% más que en enero",
+    "por_que_impacta": "Es el precio del barril que Guatemala importa: medio año de Ormuz cerrado se traduce en un crudo que cuesta la mitad más que en enero, y eso llega a la bomba."
+  },
+  "candidatas": [
+    {
+      "id": "dat-c01",
+      "puntaje": 20,
+      "criterios": { "sorpresa": 3, "magnitud": 4, "comparacion": 5, "actualidad": 4, "solidez": 4 },
+      "elegida": true,
+      "motivo": "Comparación antes/después limpia, fuente primaria con segunda fuente independiente y serie completa."
+    }
+  ],
+  "sintesis": {
+    "pregunta": "¿Cuánto subió el crudo que paga Guatemala en 2026?",
+    "tesis": "El Brent cerró septiembre de 2026 en US$102 por barril, 52% más que los US$67 de enero.",
+    "ancla_id": "dat-c01",
+    "no_afirma": [
+      "No afirma que el alza llegue íntegra a la bomba: el subsidio la amortiguó parte del año."
+    ],
+    "incertidumbre": [
+      "Promedio mensual; el pico diario fue mayor (128 el 2 de abril)."
+    ],
+    "descartadas": [
+      { "id": "dat-c02", "por": "no_confirmada" }
+    ]
+  },
+  "tuits": [
+    {
+      "n": 1,
+      "beat": "gancho",
+      "texto": "El crudo que paga Guatemala subió más de la mitad desde enero.\n\nEl cierre de Ormuz ya se siente en la bomba de tu colonia. El dato, en una tarjeta.",
+      "alt_text": "Tarjeta azul con la cifra US$102 por barril de Brent en septiembre de 2026, 52% más que los US$67 de enero. Fuente: EIA.",
+      "visual": {
+        "plantilla": "cifra",
+        "kicker": "PETRÓLEO CRUDO · BRENT · US$ POR BARRIL",
+        "titular": [
+          "El crudo cerró",
+          "septiembre en US$102"
+        ],
+        "nota": "Promedio mensual. El Brent tocó 128 el 2 de abril.",
+        "fuente": "EIA · U.S. Energy Information Administration · 2026",
+        "cifra_ids": [
+          "dat-c01"
+        ],
+        "datos": {
+          "formato": {
+            "prefijo": "US$",
+            "sufijo": "",
+            "decimales": 0,
+            "miles": true,
+            "escala": 1
+          },
+          "cifra": {
+            "valor": 102,
+            "texto": "por barril, promedio de septiembre"
+          },
+          "contexto": "52% más que en enero",
+          "tendencia": "sube",
+          "comparacion": {
+            "etiqueta": "enero",
+            "valor": 67
+          }
+        }
+      }
+    }
+  ]
+}

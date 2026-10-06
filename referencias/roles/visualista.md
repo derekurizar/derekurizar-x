@@ -20,3 +20,6 @@ tarjeta; la fuente del pie debe ser real.
 
 Retorno: `producidos[]{n, plantilla_final, archivo_html, archivo_png, gate,
 fuente_en_pie, iteraciones, dudoso, nota}` y `omitidos[]`.
+
+En `/dato` no hay visualistas: este mismo flujo lo ejecuta el productor sobre
+`tuit_1` (ver `referencias/roles/productor.md`, «Modo dato»).

@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "_comentario": "Registro de datos sueltos (una tarjeta) producidos por /dato. Lo escribe SOLO scripts/memoria.py desde el productor; el investigador consulta con `python3 scripts/memoria.py --datos \"tema\"` para no repetir un dato ni el último gancho. estado: borrador | listo | publicado | incompleto.",
+  "datos": [
+    {
+      "id": "2026-10-05-retornados-guatemala-2026",
+      "fecha": "2026-10-05",
+      "slug": "retornados-guatemala-2026",
+      "tema": "Guatemaltecos retornados (deportados) desde EE.UU. y México en 2026: enero-septiembre frente a 2025 y 2024",
+      "pista": null,
+      "dato": "Las deportaciones suben 45% en 2026, pero siguen por debajo de 2022, 2023 y 2024",
+      "cifra_id": "dat-c04",
+      "valor_final": 53373,
+      "unidad": "personas",
+      "fuente": "IGM · bases de guatemaltecos retornados 2020-2026",
+      "plantilla": "barras-v",
+      "paleta": "cielo",
+      "hook_tipo": "mito_vs_dato",
+      "ruta": "datos/2026-10-05-retornados-guatemala-2026",
+      "estado": "listo"
+    }
+  ]
+}

@@ -52,9 +52,12 @@ ejercita guion → visuales → productor. La guía vive en `referencias/flujo-h
    algún agente quedó `failed` o superó 150 K de contexto.
 5. Muestra al usuario: la tesis, el gancho (`hook_tipo`) y la paleta; cada tuit
    con su texto (o «sin texto: la imagen lo dice»), el marcador `[📸 tuit_N.png]`
-   y el alt-text; `no_afirma`; los avisos del productor; y las rutas de
-   `hilo.html` (para abrir en el navegador), `contacto.png` y `post.md`. Si el
-   estado quedó `incompleto`, dilo primero y explica qué gate falló.
+   y el alt-text; `no_afirma`; los avisos del productor; los avisos del propio
+   workflow (`avisos_workflow`: reparaciones, presupuestos excedidos, ejes
+   caídos) y las cifras con segunda fuente no independiente
+   (`independencia_baja`); y las rutas de `hilo.html` (para abrir en el
+   navegador), `contacto.png` y `post.md`. Si el estado quedó `incompleto`,
+   dilo primero y explica qué gate falló.
 
 Reglas: las cifras `no_confirmada` nunca aparecen como hechos; ninguna tarjeta
 lleva URLs ni emoji; el hilo no se marca `listo` si el gate de coherencia falla;

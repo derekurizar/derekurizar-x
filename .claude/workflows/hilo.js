@@ -108,7 +108,7 @@ const S = {
     required: ['eje', 'archivo', 'ok', 'no_confirmadas'],
     properties: {
       eje: { type: 'string' }, archivo: { type: 'string' },
-      ok: { type: 'array', items: { type: 'object', required: ['id'], properties: { id: { type: 'string' }, valor_final: { type: 'number' } } } },
+      ok: { type: 'array', items: { type: 'object', required: ['id'], properties: { id: { type: 'string' }, valor_final: { type: 'number' }, independencia: { type: 'string', enum: ['alta', 'baja'] } } } },
       no_confirmadas: { type: 'array', items: { type: 'string' } },
     },
   },
@@ -207,6 +207,9 @@ const T = TOPES[modo]
 // Idea del banco (ideas/banco.json): la resuelve /hilo en el preflight y llega como id.
 const idea = /^[a-z0-9-]+$/.test(String(A.idea || '')) ? String(A.idea) : null
 const fail = (msg) => { throw new Error(msg) }
+// Los avisos del workflow viajan también en el retorno (el journal no conserva los log()).
+const AVISOS_WF = []
+const avisar = (m) => { AVISOS_WF.push(String(m)); log(m) }
 
 // Los roles viven en .claude/agents/hilo-*.md y se registran al arrancar la
 // sesión. Si no existen todavía se falla con instrucciones claras: correr todo
@@ -218,7 +221,7 @@ const agentRol = async (prompt, opts) => {
   } catch (e) {
     if (!opts || !opts.agentType || !/agent type .* not found/i.test(String(e && e.message))) throw e
     if (!A.permitir_fallback) fail(`El agente ${opts.agentType} no está registrado en esta sesión (los .claude/agents/ se cargan al arrancar). Reinicia Claude Code y vuelve a lanzar /hilo, o pasa args.permitir_fallback: true para correr con general-purpose.`)
-    log(`AVISO: ${opts.agentType} no registrado; se usa general-purpose (permitir_fallback).`)
+    avisar(`AVISO: ${opts.agentType} no registrado; se usa general-purpose (permitir_fallback).`)
     const { agentType, ...resto } = opts
     return agent(`Asume el rol definido en .claude/agents/${agentType}.md: léelo primero y sigue sus instrucciones y sus límites. ` + prompt, { ...resto, agentType: 'general-purpose' })
   }
@@ -232,7 +235,7 @@ async function conReparacion(etiqueta, invocar, validar, max = 2) {
     if (!r) fail(`${etiqueta}: el agente no terminó.`)
     fallos = validar(r)
     if (!fallos.length) return r
-    log(`${etiqueta}: ${fallos.length} fallo(s)${intento < max ? ` → reparación ${intento + 1}/${max}` : ''}:\n - ${fallos.join('\n - ')}`)
+    avisar(`${etiqueta}: ${fallos.length} fallo(s)${intento < max ? ` → reparación ${intento + 1}/${max}` : ''}:\n - ${fallos.join('\n - ')}`)
   }
   fail(`${etiqueta} rechazado tras ${max} reparaciones:\n - ${fallos.join('\n - ')}`)
 }
@@ -260,15 +263,16 @@ const prefijoDe = (e) => String(e.prefijo || e.id.slice(0, 3)).toLowerCase()
   const pref = enc.ejes.map(prefijoDe)
   if (new Set(pref).size !== pref.length) fail(`Prefijos de eje repetidos (${pref.join(', ')}): cada eje necesita un prefijo de 3 letras único.`)
 }
-if (idea && enc.idea_id !== idea) { log(`AVISO: el editor no devolvió idea_id "${idea}"; memoria.py no podrá marcar la idea (corrígelo en encuadre.json antes del registro).`) }
-if (enc.repetido) log('AVISO: tema ya cubierto en memoria/hilos.json; el editor declara ángulo nuevo en encuadre.json.')
-log(`Pregunta: ${enc.pregunta} · paleta ${enc.paleta} · ${enc.ejes.length} eje(s) · sesión ${enc.sesion_dir}${idea ? ' · idea ' + idea : ''}${fixture ? ' · FIXTURE' : ''}`)
+if (idea && enc.idea_id !== idea) { avisar(`AVISO: el editor no devolvió idea_id "${idea}"; memoria.py no podrá marcar la idea (corrígelo en encuadre.json antes del registro).`) }
+if (enc.repetido) avisar('AVISO: tema ya cubierto en memoria/hilos.json; el editor declara ángulo nuevo en encuadre.json.')
+avisar(`Pregunta: ${enc.pregunta} · paleta ${enc.paleta} · ${enc.ejes.length} eje(s) · sesión ${enc.sesion_dir}${idea ? ' · idea ' + idea : ''}${fixture ? ' · FIXTURE' : ''}`)
 
 // ── FASE 2: INVESTIGACIÓN ⇢ VERIFICACIÓN (pipeline por eje, sin barrera) ────
 const CIF = new Map()
 const VER = new Map()
 let okIds = null // null = fixture (los gates de ids los aplica ensamblar.py sobre el disco)
 let noConf = 0
+let bajas = [] // cifras cuya segunda fuente reproduce la primaria (independencia baja)
 const ejesCaidos = []
 if (!fixture) {
   const investigar = (eje) =>
@@ -281,7 +285,7 @@ if (!fixture) {
     )
   const verificar = async (h, eje) => {
     if (!h) { ejesCaidos.push(eje.id); return null }
-    if (h.n_busquedas > T.busquedas || (h.n_fetch || 0) > T.fetch || h.cifras.length > T.cifras) log(`AVISO: ${eje.id} excedió el presupuesto (${h.n_busquedas} búsquedas, ${h.n_fetch || '?'} fetch, ${h.cifras.length} cifras).`)
+    if (h.n_busquedas > T.busquedas || (h.n_fetch || 0) > T.fetch || h.cifras.length > T.cifras) avisar(`AVISO: ${eje.id} excedió el presupuesto (${h.n_busquedas} búsquedas, ${h.n_fetch || '?'} fetch, ${h.cifras.length} cifras).`)
     const prompt =
       `Eres el verificador del eje "${eje.id}" (lee referencias/roles/verificador.md). Sesión: ${enc.sesion_dir}. ` +
       `Corre python3 scripts/digesto.py ${enc.sesion_dir} --eje ${eje.id} --para verificador (no leas ${h.archivo} entero). ` +
@@ -290,12 +294,12 @@ if (!fixture) {
       `Escribe ${enc.sesion_dir}/verificacion_${eje.id}.json completo con EXACTAMENTE esta forma: {"eje": "${eje.id}", "items": [{"id", "veredicto": "verificada|ajustada|no_confirmada", "valor_final", "fuente_2", "url_2", "nota"}]} (la clave es items, no cifras) y devuelve ok[] (id, valor_final) y no_confirmadas[].`
     const opts = { agentType: 'hilo-verificador', schema: S.verificacion, phase: 'Verificación', label: `verificar-${eje.id}` }
     let v = await agentRol(prompt, opts)
-    if (!v) { log(`AVISO: el verificador de ${eje.id} no terminó; se reintenta una vez.`); v = await agentRol(prompt, { ...opts, label: `verificar-${eje.id}-2` }) }
+    if (!v) { avisar(`AVISO: el verificador de ${eje.id} no terminó; se reintenta una vez.`); v = await agentRol(prompt, { ...opts, label: `verificar-${eje.id}-2` }) }
     if (!v) { ejesCaidos.push(eje.id); return null }
     return { eje: eje.id, hallazgos: h, verificacion: v }
   }
   const porEje = (await pipeline(enc.ejes, investigar, verificar)).filter(Boolean)
-  if (ejesCaidos.length) log(`AVISO: ejes sin verificación (no se usan): ${ejesCaidos.join(', ')}`)
+  if (ejesCaidos.length) avisar(`AVISO: ejes sin verificación (no se usan): ${ejesCaidos.join(', ')}`)
   if (porEje.length < (smoke ? 1 : 2)) fail(`Investigación/verificación incompleta: solo ${porEje.length} eje(s) terminaron.`)
   for (const r of porEje) {
     for (const c of r.hallazgos.cifras) {
@@ -306,15 +310,17 @@ if (!fixture) {
     noConf += (r.verificacion.no_confirmadas || []).length
   }
   okIds = new Set(VER.keys())
+  bajas = [...VER.values()].filter((it) => it.independencia === 'baja').map((it) => it.id)
+  if (bajas.length) avisar(`AVISO: segunda fuente NO independiente (reproduce la primaria) en ${bajas.length} cifra(s): ${bajas.join(', ')}`)
   if (okIds.size < (smoke ? 3 : 6)) fail(`Solo ${okIds.size} cifras verificadas/ajustadas: no hay material para el hilo (mínimo ${smoke ? 3 : 6}).`)
   const seriesOk = [...okIds].filter((id) => CIF.get(id) && CIF.get(id).tipo === 'serie' && (CIF.get(id).n_puntos || 0) >= 5)
   if (enc.necesita_serie && !seriesOk.length) {
-    if (smoke) log('AVISO smoke: el encuadre pedía una serie y no hay ninguna verificada con ≥5 puntos.')
+    if (smoke) avisar('AVISO smoke: el encuadre pedía una serie y no hay ninguna verificada con ≥5 puntos.')
     else fail('El encuadre pedía evolución en el tiempo y no hay ninguna serie verificada con ≥5 puntos.')
   }
   const total = okIds.size + noConf
-  if (total && noConf / total >= 0.5) log(`AVISO: ${noConf} de ${total} cifras no se confirmaron (calidad de fuentes baja).`)
-  log(`Verificación: ${okIds.size} cifras utilizables (${noConf} descartadas) · ${seriesOk.length} series con ≥5 puntos`)
+  if (total && noConf / total >= 0.5) avisar(`AVISO: ${noConf} de ${total} cifras no se confirmaron (calidad de fuentes baja).`)
+  avisar(`Verificación: ${okIds.size} cifras utilizables (${noConf} descartadas) · ${seriesOk.length} series con ≥5 puntos`)
 }
 
 // ── FASE 3: GUION (síntesis + tuits, con reparación) ────────────────────────
@@ -329,7 +335,7 @@ const validarGuion = (g) => {
   if (Tt[n - 1].beat !== 'cierre') F.push(`T${n} debe ser cierre`)
   if (Tt.filter((t) => t.beat === 'giro').length !== 1) F.push('debe haber exactamente un giro')
   if (!smoke && n >= 5 && !Tt.some((t) => t.beat === 'impacto')) F.push('en modo normal con ≥5 tuits debe haber un beat impacto (escala humana)')
-  if (!smoke && n === 4 && !Tt.some((t) => t.beat === 'impacto')) log('AVISO: hilo de 4 tuits sin beat impacto.')
+  if (!smoke && n === 4 && !Tt.some((t) => t.beat === 'impacto')) avisar('AVISO: hilo de 4 tuits sin beat impacto.')
   if (enc.hook_evitar && g.hook_tipo === enc.hook_evitar) F.push(`hook_tipo ${g.hook_tipo} es el del último hilo (hook_evitar); elige otro`)
   if (okIds && !okIds.has(g.ancla_id)) F.push(`ancla_id ${g.ancla_id} no está verificada`)
   const t1 = Tt[0].texto || '', p1 = pesoX(t1)
@@ -347,7 +353,7 @@ const validarGuion = (g) => {
     const tx = t.texto || '', p = pesoX(tx)
     if (i > 0 && p > 280) F.push(`T${t.n} pesa ${p} en X (>280)`)
     if (i > 0 && i < n - 1 && t.visual && p > 200) F.push(`T${t.n} con imagen pesa ${p} (>200): que la tarjeta hable`)
-    if (i > 0 && p > 140 && p <= 200) log(`AVISO: T${t.n} pesa ${p} (ideal ≤140 con imagen).`)
+    if (i > 0 && p > 140 && p <= 200) avisar(`AVISO: T${t.n} pesa ${p} (ideal ≤140 con imagen).`)
     if (RE_BAIT.test(tx)) F.push(`T${t.n} contiene engagement bait`)
     const v = t.visual
     if (!v) { if (i > 0 && i < n - 1) F.push(`T${t.n} sin visual (obligatorio en T2..T${n - 1})`); return }
@@ -401,7 +407,7 @@ const validarGuion = (g) => {
       const linea = v.titular.find((l) => l.trim().length >= 8 && tx.toLowerCase().includes(l.trim().toLowerCase()))
       if (linea) F.push(`T${t.n} el texto repite una línea del titular: «${linea}»`)
       const repetidos = numerosDe(d).filter((num) => formatos(num).some((f) => new RegExp('(?<![\\d.,])' + f.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?!\\d|[.,]\\d)').test(tx)))
-      if (new Set(repetidos).size >= 2) { const msg = `T${t.n} el texto repite ${new Set(repetidos).size} números de su tarjeta (dato héroe)`; if (i === 0) F.push(msg); else log('AVISO: ' + msg) }
+      if (new Set(repetidos).size >= 2) { const msg = `T${t.n} el texto repite ${new Set(repetidos).size} números de su tarjeta (dato héroe)`; if (i === 0) F.push(msg); else avisar('AVISO: ' + msg) }
     }
     if (RE_SUPER.test(tx) || RE_SUPER.test(v.titular.join(' '))) {
       const largas = v.cifra_ids.filter((c) => CIF.get(c) && CIF.get(c).tipo === 'serie' && (CIF.get(c).n_puntos || 0) >= 10)
@@ -410,7 +416,7 @@ const validarGuion = (g) => {
   })
   const visuales = Tt.filter((t) => t.visual)
   if (visuales.length < n - 2) F.push(`hay ${visuales.length} visuales; mínimo ${n - 2}`)
-  if (n >= 5 && new Set(visuales.map((t) => t.visual.plantilla)).size === 1) log('AVISO: todas las tarjetas usan la misma plantilla.')
+  if (n >= 5 && new Set(visuales.map((t) => t.visual.plantilla)).size === 1) avisar('AVISO: todas las tarjetas usan la misma plantilla.')
   return F
 }
 const g = await conReparacion(
@@ -422,6 +428,7 @@ const g = await conReparacion(
         `Paleta: ${enc.paleta}. Fecha: ${fecha}. hook_evitar: ${enc.hook_evitar || 'ninguno'}. ` +
         `ancla_id debe ser una cifra del visual de T1 (T1.visual.cifra_ids la incluye); si T1 va sin visual, la ancla va en su texto. ` +
         (okIds ? `Solo cifras verificada|ajustada con su valor_final: ${[...okIds].join(', ')}. ` : 'MODO FIXTURE: usa las cifras verificadas de la sesión copiada. ') +
+        (bajas.length ? `Cifras con segunda fuente NO independiente (reproduce la primaria): ${bajas.join(', ')}: no sostengas la ancla solo en ellas si hay alternativa; si las usas, decláralo en sintesis.incertidumbre. ` : '') +
         `${smoke ? 'MODO SMOKE: 3–4 tuits, smoke:true. ' : `${minT}–${MAX_TUITS} tuits con un beat impacto, smoke:false. `}` +
         LIMITES + ' ' +
         (fallos.length ? `TU GUION ANTERIOR FUE RECHAZADO; corrige SOLO esto y vuelve a escribir guion.json completo:\n - ${fallos.join('\n - ')}\n` : '') +
@@ -431,7 +438,7 @@ const g = await conReparacion(
   validarGuion,
   2
 )
-log(`Tesis: ${g.tesis} · gancho ${g.hook_tipo} · ${g.tuits.length} tuits (${g.tuits.map((t) => t.beat[0].toUpperCase()).join('')}) · ${g.tuits.filter((t) => t.visual).length} visuales`)
+avisar(`Tesis: ${g.tesis} · gancho ${g.hook_tipo} · ${g.tuits.length} tuits (${g.tuits.map((t) => t.beat[0].toUpperCase()).join('')}) · ${g.tuits.filter((t) => t.visual).length} visuales`)
 
 // ── FASE 4: VISUALES (lotes de 3 en paralelo, con reparación por tuit) ──────
 phase('Visuales')
@@ -461,20 +468,20 @@ for (let intento = 0; intento <= 2 && pendientes.length; intento++) {
       if (!new RegExp(`tuit_${t.n}\\.png$`).test(p.archivo_png || '')) {
         // Ruta mal reportada pero gate ok y HTML correcto: es un typo del retorno, no del disco
         // (G5 de ensamblar.py comprueba el PNG real después). No gastar una reparación en eso.
-        if (p.gate === 'ok' && new RegExp(`tuit_${t.n}\\.html$`).test(p.archivo_html || '')) log(`AVISO: T${t.n} reportó mal la ruta del PNG (${p.archivo_png}); se asume visuales/tuit_${t.n}.png`)
+        if (p.gate === 'ok' && new RegExp(`tuit_${t.n}\\.html$`).test(p.archivo_html || '')) avisar(`AVISO: T${t.n} reportó mal la ruta del PNG (${p.archivo_png}); se asume visuales/tuit_${t.n}.png`)
         else problemas.push(`el PNG no se llama tuit_${t.n}.png (${p.archivo_png})`)
       }
       if (p.fuente_en_pie === false) problemas.push('sin fuente en el pie')
-      if (p.plantilla_final && p.plantilla_final !== t.visual.plantilla) log(`AVISO: T${t.n} cambió de ${t.visual.plantilla} a ${p.plantilla_final}: ${p.nota || ''}`)
+      if (p.plantilla_final && p.plantilla_final !== t.visual.plantilla) avisar(`AVISO: T${t.n} cambió de ${t.visual.plantilla} a ${p.plantilla_final}: ${p.nota || ''}`)
     }
     if (problemas.length) { fallidos.push(t); producidos.set(t.n, { ...(p || { n: t.n }), nota: problemas.join('; ') }) }
   }
   pendientes = fallidos
-  if (pendientes.length) log(`Visuales con fallos${intento < 2 ? ` → reparación ${intento + 1}/2` : ''}: ${pendientes.map((t) => `T${t.n} (${producidos.get(t.n).nota})`).join(' | ')}`)
+  if (pendientes.length) avisar(`Visuales con fallos${intento < 2 ? ` → reparación ${intento + 1}/2` : ''}: ${pendientes.map((t) => `T${t.n} (${producidos.get(t.n).nota})`).join(' | ')}`)
 }
 if (pendientes.length) fail(`Visuales rechazados tras 2 reparaciones: ${pendientes.map((t) => `T${t.n}: ${producidos.get(t.n).nota}`).join(' | ')}`)
 const dudosos = [...producidos.values()].filter((p) => p.dudoso).map((p) => `T${p.n}: ${p.nota || 'dudoso'}`)
-log(`Visuales: ${conVisual.length}/${conVisual.length} ok · ${dudosos.length} dudosos`)
+avisar(`Visuales: ${conVisual.length}/${conVisual.length} ok · ${dudosos.length} dudosos`)
 
 // ── FASE 5: ENSAMBLADO (con una reparación) ─────────────────────────────────
 phase('Ensamblado')
@@ -512,7 +519,7 @@ const prod = await conReparacion(
   validarProd,
   1
 )
-if (prod.estado === 'incompleto') log(`AVISO: el hilo queda INCOMPLETO (coherencia ${prod.gates.coherencia}); revisa post.md antes de publicar.`)
+if (prod.estado === 'incompleto') avisar(`AVISO: el hilo queda INCOMPLETO (coherencia ${prod.gates.coherencia}); revisa post.md antes de publicar.`)
 
 return {
   tesis: g.tesis,
@@ -526,7 +533,9 @@ return {
   no_afirma: g.no_afirma,
   cifras_utilizables: okIds ? okIds.size : null,
   cifras_descartadas: noConf,
+  independencia_baja: bajas,
   ejes_caidos: ejesCaidos,
+  avisos_workflow: AVISOS_WF,
   visuales_dudosos: dudosos,
   avisos: prod.avisos || [],
   sesion_dir: enc.sesion_dir,

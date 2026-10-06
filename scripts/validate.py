@@ -17,6 +17,14 @@ Comprueba:
      con url y evidencia, puntajes 1–5), ids únicos, estado ∈ enum, `hecha` ⇒ hilo_id
      registrado en memoria/hilos.json; aviso si un hilo con idea_id apunta a una idea
      que no existe o que no está hecha/en curso (ideas.py --conciliar lo arregla)
+  M5 memoria/datos.json (si existe; registro de /dato): schema de cada dato (id, fecha,
+     slug, tema, dato, cifra_id, valor_final, unidad, fuente, plantilla, paleta, ruta,
+     estado) · ids únicos · paleta y hook_tipo conocidos · ruta relativa y existente
+  D1 cada datos/*/ tiene dato.json, dato.html, post.md, datos.json, dato.png y
+     tarjeta.html; y está registrado en memoria/datos.json (aviso si no)
+  D2 en dato.json: tipo "dato", sin tuits[], tuit{} con texto de 40–280 de peso X y sin
+     enlace, imagen existente, alt_text 20–1000, paleta conocida
+  D3 el estado de dato.json coincide con el registro (misma regla que H3)
 
 Uso: python3 scripts/validate.py [--quiet]   · salida 0 ok · 1 error
 """
@@ -28,7 +36,8 @@ import sys
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(RAIZ, "scripts"))
-from ensamblar import HOOKS  # noqa: E402  (una sola lista de ganchos para todo el framework)
+from ensamblar import HOOKS, RE_LINK  # noqa: E402  (una sola lista de ganchos para todo el framework)
+from contar_x import peso_x  # noqa: E402
 import ideas as _ideas  # noqa: E402
 ERRORES, AVISOS = [], []
 
@@ -169,6 +178,83 @@ def validar_hilos(paletas):
             err("%s: paleta %r desconocida" % (rel, h.get("paleta")))
 
 
+def validar_datos(paletas):
+    """M5 + D1–D3: registro memoria/datos.json y carpetas datos/*/ (entregables de /dato)."""
+    registrados = {}
+    rel_mem = "memoria/datos.json"
+    if os.path.exists(os.path.join(RAIZ, rel_mem)):  # ausente = ok: memoria.py lo crea al registrar el primer dato
+        d = cargar(rel_mem)
+        if d:
+            ids = set()
+            estados = {"borrador", "listo", "publicado", "incompleto"}
+            for i, h in enumerate(d.get("datos", [])):
+                for campo in ("id", "fecha", "slug", "tema", "dato", "cifra_id", "valor_final", "unidad", "fuente", "plantilla", "paleta", "ruta", "estado"):
+                    if campo not in h:
+                        err("datos[%d] sin %s" % (i, campo))
+                if h.get("id") in ids:
+                    err("datos: id repetido %s" % h.get("id"))
+                ids.add(h.get("id"))
+                if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(h.get("fecha", ""))):
+                    err("datos[%d] fecha no es YYYY-MM-DD" % i)
+                if paletas and h.get("paleta") not in paletas:
+                    err("datos[%d] paleta %r desconocida" % (i, h.get("paleta")))
+                if h.get("estado") not in estados:
+                    err("datos[%d] estado %r no está en %s" % (i, h.get("estado"), sorted(estados)))
+                if h.get("hook_tipo") and h["hook_tipo"] not in HOOKS:
+                    err("datos[%d] hook_tipo %r desconocido" % (i, h.get("hook_tipo")))
+                ruta = str(h.get("ruta", ""))
+                if os.path.isabs(ruta):
+                    err("datos[%d] ruta debe ser relativa a la raíz del repo (%s)" % (i, ruta))
+                elif not os.path.isdir(os.path.join(RAIZ, ruta)):
+                    err("datos[%d] ruta %s no existe" % (i, ruta))
+                registrados[os.path.normpath(ruta)] = h
+
+    for carpeta in sorted(glob.glob(os.path.join(RAIZ, "datos", "*"))):
+        if not os.path.isdir(carpeta):
+            continue
+        rel = os.path.relpath(carpeta, RAIZ)
+        for archivo in ("dato.json", "dato.html", "post.md", "datos.json", "dato.png", "tarjeta.html"):
+            if not os.path.exists(os.path.join(carpeta, archivo)):
+                err("%s: falta %s" % (rel, archivo))
+        if rel not in registrados:
+            warn("%s no está registrado en memoria/datos.json" % rel)
+        dj = os.path.join(carpeta, "dato.json")
+        if not os.path.exists(dj):
+            continue
+        try:
+            dd = json.load(open(dj, encoding="utf-8"))
+        except json.JSONDecodeError as e:
+            err("%s/dato.json inválido: %s" % (rel, e)); continue
+        reg = registrados.get(rel)
+        if reg and reg.get("estado") != dd.get("estado"):
+            e_reg, e_d = reg.get("estado"), dd.get("estado")
+            if e_d == "borrador" or "incompleto" in (e_reg, e_d):
+                err("%s: dato.json dice estado %r y memoria/datos.json %r (corre ensamblar.py <sesion> --solo-estado --estado %s)" % (rel, e_d, e_reg, e_reg))
+            else:
+                warn("%s: dato.json dice estado %r y memoria/datos.json %r" % (rel, e_d, e_reg))
+        if dd.get("tipo") != "dato":
+            err("%s: dato.json debe llevar tipo \"dato\"" % rel)
+        if "tuits" in dd:
+            err("%s: dato.json no lleva tuits[] (es un dato, no un hilo)" % rel)
+        t = dd.get("tuit")
+        if not isinstance(t, dict):
+            err("%s: dato.json sin tuit{}" % rel); continue
+        texto = t.get("texto") or ""
+        peso = peso_x(texto)
+        if not 40 <= peso <= 280:
+            err("%s: el texto pesa %d en X (debe ser 40–280)" % (rel, peso))
+        if RE_LINK.search(texto):
+            err("%s: el texto lleva enlace o dominio" % rel)
+        img = t.get("imagen") or "dato.png"
+        if not os.path.exists(os.path.join(carpeta, img)):
+            err("%s: falta la imagen %s" % (rel, img))
+        alt = (t.get("alt_text") or "").strip()
+        if not 20 <= len(alt) <= 1000:
+            err("%s: alt_text debe tener 20–1000 caracteres (%d)" % (rel, len(alt)))
+        if paletas and dd.get("paleta") not in paletas:
+            err("%s: paleta %r desconocida" % (rel, dd.get("paleta")))
+
+
 def validar_ideas(paletas):
     if not os.path.exists(_ideas.BANCO):
         return
@@ -203,6 +289,7 @@ def main():
     paletas = validar_tokens()
     validar_fuentes()
     validar_hilos(paletas)
+    validar_datos(paletas)
     validar_ideas(paletas)
     for a in AVISOS:
         print("AVISO  " + a)

@@ -1,0 +1,189 @@
+{
+  "slug": "retornados-guatemala-2026",
+  "fecha": "2026-10-05",
+  "tema": "Guatemaltecos retornados (deportados) desde EE.UU. y México en 2026: enero-septiembre frente a 2025 y 2024",
+  "pista": null,
+  "tipo": "dato",
+  "dato": "Las deportaciones suben 45% en 2026, pero siguen por debajo de 2022, 2023 y 2024",
+  "por_que_impacta": "Contradice la idea de un año récord de deportaciones: el salto es real, pero se mide contra 2025, el año más bajo desde 2020; en periodos iguales, 2026 queda por debajo de los tres años anteriores a 2025.",
+  "paleta": "cielo",
+  "hook_tipo": "mito_vs_dato",
+  "pregunta": "¿Cuántos guatemaltecos han sido deportados en 2026 y qué tan grande es el salto frente a 2025 y a 2024?",
+  "tesis": "De enero a septiembre de 2026 volvieron 53,373 guatemaltecos deportados, 45% más que los 36,800 del mismo periodo de 2025, pero menos que en 2024 (61,892), 2023 (58,735) y 2022 (74,980).",
+  "estado": "listo",
+  "tuit": {
+    "texto": "Con tanto titular sobre deportaciones, parecería que este es el año con más retornos.\n\nNo lo es. El salto se mide contra el año pasado, el más bajo desde la pandemia. A estas alturas de hace cuatro años ya habían vuelto 21,607 personas más que hoy.",
+    "caracteres": 248,
+    "alt_text": "Gráfico de barras verticales con los guatemaltecos retornados (deportados desde EE.UU. y México) de enero a septiembre de cada año: 2020, 33,054; 2021, 39,205; 2022, 74,980; 2023, 58,735; 2024, 61,892; 2025, 36,800; y 2026, 53,373 personas, barra destacada. 2026 sube 45% frente a 2025, pero queda por debajo de 2022, 2023 y 2024. Fuente: Instituto Guatemalteco de Migración (IGM), bases de retornados 2020-2026.",
+    "imagen": "dato.png",
+    "tarjeta": "tarjeta.html",
+    "plantilla": "barras-v",
+    "kicker": "DEPORTADOS A GUATEMALA · ENERO-SEPTIEMBRE",
+    "titular": [
+      "2026 sube 45%, pero",
+      "sigue por debajo de",
+      "2022, 2023 y 2024"
+    ],
+    "nota": "Personas retornadas de enero a septiembre de cada año, desde EE.UU. y México. 2026, al 30 de septiembre.",
+    "fuente": "IGM · bases de guatemaltecos retornados 2020-2026",
+    "cifra_ids": [
+      "dat-c04",
+      "dat-c01"
+    ]
+  },
+  "cifras": [
+    {
+      "id": "dat-c01",
+      "concepto": "Guatemaltecos retornados (deportados) desde EE.UU. y México, enero-septiembre 2026, frente al mismo periodo de 2025",
+      "valor": 53373,
+      "unidad": "personas",
+      "anio": 2026,
+      "veredicto": "verificada",
+      "fuente": "Instituto Guatemalteco de Migración (IGM), base de datos de personas guatemaltecas migrantes retornadas, 01 de enero al 30 de septiembre de 2026",
+      "fuente_2": "Emisoras Unidas (corte IGM ene-ago 2026) + coherencia con hoja mensual IGM",
+      "url": "https://igm.gob.gt/files/BASE-DATOS-PERSONAS-GUATEMALTECAS-MIGRANTES-RETORNADAS-01-DE-%20ENERO-30-SEPTIEMBRE-%202026.xlsb"
+    },
+    {
+      "id": "dat-c04",
+      "concepto": "Retornados enero-septiembre de cada año, 2020-2026 (periodos comparables)",
+      "valor": 53373,
+      "unidad": "personas",
+      "anio": 2026,
+      "veredicto": "verificada",
+      "fuente": "IGM, bases anuales de microdatos de retornados 2020-2025 y ene-sep 2026",
+      "fuente_2": "Emisoras Unidas oct-2024 (Guatemala ene-ago 2024 casi 58 mil) + prensa 2026",
+      "url": "https://igm.gob.gt/index.php?view=article&id=6:estadisticas&catid=9"
+    }
+  ],
+  "candidatas": [
+    {
+      "id": "dat-c04",
+      "puntaje": 23,
+      "criterios": {
+        "sorpresa": 5,
+        "magnitud": 3,
+        "comparacion": 5,
+        "actualidad": 5,
+        "solidez": 5
+      },
+      "elegida": true,
+      "motivo": "Contiene el +45% y además lo desmiente como récord: siete años en periodos iguales (ene-sep), fuente primaria IGM verificada.",
+      "dato": "Retornados enero-septiembre de cada año, 2020-2026 (periodos comparables)"
+    },
+    {
+      "id": "dat-c01",
+      "puntaje": 22,
+      "criterios": {
+        "sorpresa": 3,
+        "magnitud": 4,
+        "comparacion": 5,
+        "actualidad": 5,
+        "solidez": 5
+      },
+      "elegida": false,
+      "motivo": "El +45% es lo que ya dicen los medios; sin la serie larga invita a leer un récord que no hay. dat-c04 lo incluye y añade la sorpresa.",
+      "dato": "Guatemaltecos retornados (deportados) desde EE.UU. y México, enero-septiembre 2026, frente al mismo periodo de 2025"
+    },
+    {
+      "id": "dat-c07",
+      "puntaje": 22,
+      "criterios": {
+        "sorpresa": 4,
+        "magnitud": 4,
+        "comparacion": 5,
+        "actualidad": 5,
+        "solidez": 4
+      },
+      "elegida": false,
+      "motivo": "Muy buen giro de perfil, pero responde otra pregunta (quién vuelve, no cuántos) y lo de «hombres adultos solos» no está medido por sexo.",
+      "dato": "Niñas, niños y adolescentes retornados, enero-septiembre: 2022 vs 2024 vs 2026"
+    },
+    {
+      "id": "dat-c05",
+      "puntaje": 21,
+      "criterios": {
+        "sorpresa": 5,
+        "magnitud": 2,
+        "comparacion": 5,
+        "actualidad": 5,
+        "solidez": 4
+      },
+      "elegida": false,
+      "motivo": "Solo EE.UU. y suma propia por país; el ángulo «con otro gobierno» empuja una lectura política que la fuente no sostiene.",
+      "dato": "Retornados desde Estados Unidos, enero-septiembre: 2024 vs 2025 vs 2026"
+    },
+    {
+      "id": "dat-c06",
+      "puntaje": 21,
+      "criterios": {
+        "sorpresa": 2,
+        "magnitud": 5,
+        "comparacion": 4,
+        "actualidad": 5,
+        "solidez": 5
+      },
+      "elegida": false,
+      "motivo": "Escala humana clara, pero la concentración en Huehuetenango y San Marcos es esperable y no responde al salto de 2026.",
+      "dato": "Retornados por departamento de residencia, enero-septiembre 2026 (22 departamentos)"
+    },
+    {
+      "id": "dat-c02",
+      "puntaje": 19,
+      "criterios": {
+        "sorpresa": 3,
+        "magnitud": 3,
+        "comparacion": 4,
+        "actualidad": 5,
+        "solidez": 4
+      },
+      "elegida": false,
+      "motivo": "Compara un año completo con nueve meses: misma historia que dat-c04 con una comparación menos limpia.",
+      "dato": "Retornados en todo 2025 frente a los primeros nueve meses de 2026 (y totales anuales 2020-2025)"
+    },
+    {
+      "id": "dat-c03",
+      "puntaje": 18,
+      "criterios": {
+        "sorpresa": 3,
+        "magnitud": 2,
+        "comparacion": 4,
+        "actualidad": 5,
+        "solidez": 4
+      },
+      "elegida": false,
+      "motivo": "Serie mensual de 33 puntos difícil de leer en un segundo; los meses de 2025 salen de microdatos sin hoja oficial.",
+      "dato": "Retornados por mes, enero 2024 - septiembre 2026"
+    },
+    {
+      "id": "dat-c08",
+      "puntaje": 15,
+      "criterios": {
+        "sorpresa": 3,
+        "magnitud": 2,
+        "comparacion": 5,
+        "actualidad": 3,
+        "solidez": 2
+      },
+      "elegida": false,
+      "motivo": "Ajustada y vía prensa (OIM); solo primer semestre, más viejo que el corte de septiembre.",
+      "dato": "Hondureños retornados enero-junio 2026 vs 2025 (comparación regional) frente a Guatemala en el mismo semestre"
+    }
+  ],
+  "no_afirma": [
+    "No atribuye el repunte a una política concreta de EE.UU. o de México: el IGM solo registra los retornos.",
+    "No compara años completos: 2026 llega hasta el 30 de septiembre y todos los años se cortan en el mismo periodo.",
+    "No mide cuántos guatemaltecos migran, solo cuántos son retornados."
+  ],
+  "incertidumbre": [
+    "El total ene-sep de 2025 es suma propia de microdatos: la base 2025 no trae hoja mensual oficial.",
+    "Incluye retornos desde EE.UU. y México por todas las vías que registra el IGM."
+  ],
+  "fuentes": [
+    "IGM · bases de guatemaltecos retornados 2020-2026"
+  ],
+  "fuentes_cifras": [
+    "IGM, bases anuales de microdatos de retornados 2020-2025 y ene-sep 2026",
+    "Instituto Guatemalteco de Migración (IGM), base de datos de personas guatemaltecas migrantes retornadas, 01 de enero al 30 de septiembre de 2026"
+  ],
+  "gate_mecanico": "ok"
+}

@@ -13,18 +13,18 @@ help:
 	@echo "make render FILE=<ruta.html> [OUT=<ruta.png>]            HTML -> PNG 1080x1080 @2x, sin checks"
 	@echo "make visual FILE=<ruta.html> [OUT=<ruta.png>]            GATE: render + checks R1-R6 (exit 0 = pasa)"
 	@echo "make catalogo [PALETAS=cielo|todas|a,b]                  ensambla y renderiza TODAS las plantillas en $(GALERIA)/"
-	@echo "make ensamblar SESION=sesiones/<slug> [OUT=dir] [CHECK=1] sesion -> carpeta de hilo (hilo.html, post.md, datos.json)"
-	@echo "make validate                                            valida memoria/*.json y la integridad de hilos/"
+	@echo "make ensamblar SESION=sesiones/<slug> [OUT=dir] [CHECK=1] sesion -> carpeta de hilo (hilos/) o de dato (datos/) segun guion.tipo"
+	@echo "make validate                                            valida memoria/*.json y la integridad de hilos/ y datos/"
 	@echo "make tabla URL=<xlsx|html|csv> [OUT=ruta]                descarga y convierte a CSV (sesiones/_descargas/)"
 	@echo "make pdf URL=<pdf> [OUT=ruta.pdf]                         descarga y extrae texto (pdftotext -layout)"
-	@echo "make test [RAPIDO=1]                                     pruebas: validate, catalogo, fixture, negativos, contar_x, sintaxis de hilo.js"
+	@echo "make test [RAPIDO=1]                                     pruebas: validate, catalogo, fixture, fixture dato, negativos, contar_x, sintaxis de los workflows"
 	@echo "make doctor                                              comprueba node/playwright/python/fuentes/agentes"
 	@echo "make costo [RUN=wf_xxx]                                  tokens, herramientas y tiempo por agente de una corrida (default: la última)"
 	@echo "make contacto DIR=<carpeta con tuit_N.png>               hoja de contacto contacto.png"
 	@echo "make digesto SESION=sesiones/<slug> [PARA=guionista]     resumen compacto de la sesión para agentes"
 	@echo "make fuentes TEMA=\"texto\"                                 catálogo de fuentes y series filtrado por tema"
 	@echo "make ideas                                               banco de ideas (ideas/banco.json) y temas ya producidos"
-	@echo "make limpiar [SESION=sesiones/<slug>]                    borra $(GALERIA)/, salidas de _fixture y .playwright-mcp/ (o una sesión)"
+	@echo "make limpiar [SESION=sesiones/<slug>]                    borra $(GALERIA)/, salidas de _fixture y _fixture_dato y .playwright-mcp/ (o una sesión)"
 
 nuevo:
 	@test -n "$(T)" -a -n "$(OUT)" || { echo "Uso: make nuevo T=<plantilla> OUT=<ruta.html> [PALETA=cielo]"; exit 2; }
@@ -62,7 +62,7 @@ limpiar:
 ifdef SESION
 	@case "$(SESION)" in sesiones/_fixture*|sesiones/_descargas*|sesiones/|sesiones) echo "no se borra $(SESION)"; exit 2;; sesiones/*) rm -rf "$(SESION)" && echo "borrada $(SESION)";; *) echo "SESION debe empezar por sesiones/"; exit 2;; esac
 else
-	rm -rf $(GALERIA) sesiones/_fixture/salida .playwright-mcp
+	rm -rf $(GALERIA) sesiones/_fixture/salida sesiones/_fixture_dato/salida .playwright-mcp
 endif
 
 test:

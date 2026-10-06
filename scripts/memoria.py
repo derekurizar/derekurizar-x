@@ -21,7 +21,17 @@
     conocida se anexa a su nota como "· [<fecha>] <vacío>" (sin duplicar).
   Rechaza rutas absolutas (exit 2). --dry-run imprime sin escribir.
 
+  Modo DATO (guion.tipo == "dato", lo produce /dato): el registro va a memoria/datos.json → datos[]
+    {id: "<fecha>-<slug>", fecha, slug, tema, pista, dato, cifra_id, valor_final, unidad, fuente,
+     plantilla, paleta, hook_tipo, ruta, estado}
+    (dato = titular en una línea; cifra_id = la cifra de la tarjeta; fuente = la del pie), leídos de
+    <ruta>/dato.json y <ruta>/datos.json. Series y fuentes van a memoria/fuentes.json igual que en un
+    hilo. El banco de ideas NO se toca (/dato no usa ideas).
+
 --series "tema"   mismo filtro que scripts/fuentes.py --series
+--datos ["tema"]  lista los datos registrados en memoria/datos.json, del más reciente al más antiguo
+                  (con tema, filtrados por palabras clave); lo consulta el investigador de /dato para
+                  no repetir un dato y para hook_evitar (el hook_tipo del primero de la lista).
 
 Salida: 0 ok · 1 error · 2 uso incorrecto
 """
@@ -39,7 +49,13 @@ import ideas as _ideas  # noqa: E402  (único escritor de ideas/banco.json)
 from ensamblar import HOOKS  # noqa: E402  (los ocho nombres de gancho: una sola lista)
 
 HILOS = os.path.join(RAIZ, "memoria", "hilos.json")
+DATOS = os.path.join(RAIZ, "memoria", "datos.json")
 FUENTES = os.path.join(RAIZ, "memoria", "fuentes.json")
+VACIO_DATOS = {
+    "version": 1,
+    "_comentario": "Registro de datos sueltos (una tarjeta) producidos por /dato. Lo escribe SOLO scripts/memoria.py desde el productor; el investigador consulta con `python3 scripts/memoria.py --datos \"tema\"` para no repetir un dato ni el último gancho. estado: borrador | listo | publicado | incompleto.",
+    "datos": [],
+}
 MESES = "ene|feb|mar|abr|may|jun|jul|ago|sep|set|oct|nov|dic|jan|apr|aug|dec"
 RE_MES = re.compile(r"^(\d{4}-\d{2}(-\d{2})?|(%s)[a-z]*\.?[\s/-]*\d{2,4}|\d{1,2}/\d{4}|(%s)[a-z]*)$" % (MESES, MESES), re.I)
 RE_ANIO = re.compile(r"^\d{4}$")
@@ -83,7 +99,7 @@ def formato_de(url):
     return "html"
 
 
-def series_de(datos, hilo_id):
+def series_de(datos, hilo_id, origen="hilo"):
     out = []
     for c in datos.get("cifras", []):
         if c.get("tipo") != "serie":
@@ -96,7 +112,7 @@ def series_de(datos, hilo_id):
             "nombre": c.get("concepto"), "fuente": c.get("fuente"), "url": c.get("url") or "",
             "formato": formato_de(c.get("url")), "unidad": c.get("unidad") or "",
             "desde": str(serie[0].get("p")), "hasta": str(serie[-1].get("p")),
-            "frecuencia": frecuencia_de(serie), "nota": "registrada desde hilo %s" % hilo_id,
+            "frecuencia": frecuencia_de(serie), "nota": "registrada desde %s %s" % (origen, hilo_id),
         })
     return out
 
@@ -162,9 +178,36 @@ def fusionar_fuentes(mf, primarias, vacios, tema, hid, fecha):
     return nuevas, notas
 
 
+def registro_dato(a, ruta_abs, guion, encuadre, datos, hid, fecha, slug, hook):
+    """Registro para memoria/datos.json a partir de <ruta>/dato.json y <ruta>/datos.json (None si algo falta)."""
+    n = len(guion.get("tuits", []))
+    if n != 1:
+        print("ERROR: un dato tiene exactamente 1 tuit (el guion trae %d)" % n, file=sys.stderr)
+        return None
+    dj = leer(os.path.join(ruta_abs, "dato.json"))
+    tu = dj.get("tuit") or {}
+    cid = (tu.get("cifra_ids") or [None])[0]
+    cf = next((c for c in datos.get("cifras", []) if c.get("id") == cid), None)
+    if not cid or cf is None:
+        print("ERROR: dato.json no trae cifra_ids o la cifra %r no está en datos.json" % cid, file=sys.stderr)
+        return None
+    visual = guion["tuits"][0].get("visual") or {}
+    return {
+        "id": hid, "fecha": fecha, "slug": slug,
+        "tema": encuadre.get("tema") or guion.get("tema") or dj.get("tema") or slug,
+        "pista": encuadre.get("pista") or dj.get("pista") or None,
+        "dato": dj.get("dato") or " ".join(l.strip() for l in (visual.get("titular") or [])),
+        "cifra_id": cid, "valor_final": cf.get("valor"), "unidad": cf.get("unidad") or "",
+        "fuente": tu.get("fuente") or cf.get("fuente") or "",
+        "plantilla": tu.get("plantilla") or visual.get("plantilla_final") or visual.get("plantilla"),
+        "paleta": guion.get("paleta"), "hook_tipo": hook,
+        "ruta": os.path.normpath(a.ruta), "estado": a.estado,
+    }
+
+
 def registrar(a):
     if os.path.isabs(a.ruta):
-        print("ERROR: --ruta debe ser relativa a la raíz del repo (p. ej. hilos/2026-09-28-remesas)", file=sys.stderr)
+        print("ERROR: --ruta debe ser relativa a la raíz del repo (p. ej. hilos/2026-09-28-remesas o datos/2026-09-28-remesas)", file=sys.stderr)
         return 2
     sesion = os.path.abspath(a.registrar)
     ruta_abs = os.path.join(RAIZ, a.ruta)
@@ -181,48 +224,66 @@ def registrar(a):
         print("ERROR: hook_tipo %r del guion no está en %s" % (hook, ", ".join(HOOKS)), file=sys.stderr)
         return 1
     hid = "%s-%s" % (fecha, slug)
-    hilo = {
-        "id": hid, "fecha": fecha, "slug": slug,
-        "tema": encuadre.get("tema") or guion.get("tema") or datos.get("tema") or slug,
-        "tesis": (guion.get("sintesis") or {}).get("tesis") or guion.get("tesis") or "",
-        "paleta": guion.get("paleta"), "n_tuits": len(guion.get("tuits", [])),
-        "ruta": os.path.normpath(a.ruta), "estado": a.estado, "hook_tipo": hook,
-    }
+    modo_dato = (guion.get("tipo") or encuadre.get("tipo")) == "dato"
     smoke = bool(guion.get("smoke") or encuadre.get("smoke") or encuadre.get("fixture"))
     idea_id = encuadre.get("idea_id")
-    if idea_id:
-        hilo["idea_id"] = idea_id
+    if modo_dato:
+        reg = registro_dato(a, ruta_abs, guion, encuadre, datos, hid, fecha, slug, hook)
+        if reg is None:
+            return 1
+        archivo, clave, etiqueta = DATOS, "datos", "dato"
+        mh = leer(archivo, obligatorio=False) or json.loads(json.dumps(VACIO_DATOS))
+    else:
+        reg = {
+            "id": hid, "fecha": fecha, "slug": slug,
+            "tema": encuadre.get("tema") or guion.get("tema") or datos.get("tema") or slug,
+            "tesis": (guion.get("sintesis") or {}).get("tesis") or guion.get("tesis") or "",
+            "paleta": guion.get("paleta"), "n_tuits": len(guion.get("tuits", [])),
+            "ruta": os.path.normpath(a.ruta), "estado": a.estado, "hook_tipo": hook,
+        }
+        if idea_id:
+            reg["idea_id"] = idea_id
+        archivo, clave, etiqueta = HILOS, "hilos", "hilo"
+        mh = leer(archivo)
     if smoke:
         print("AVISO: la sesión es smoke; en smoke el productor NO escribe memoria/ (usa --dry-run o confirma que quieres registrarla).", file=sys.stderr)
 
-    mh = leer(HILOS)
-    hilos = mh.setdefault("hilos", [])
-    idx = next((i for i, h in enumerate(hilos) if h.get("id") == hid), None)
+    items = mh.setdefault(clave, [])
+    idx = next((i for i, h in enumerate(items) if h.get("id") == hid), None)
     accion = "actualizado" if idx is not None else "añadido"
     if idx is not None:
-        hilos[idx].update(hilo)
+        items[idx].update(reg)
     else:
-        hilos.append(hilo)
+        items.append(reg)
 
     mf = leer(FUENTES)
     series = mf.setdefault("series", [])
     # Dedup por url + nombre normalizado: un mismo xlsx (Banguat) trae varias series distintas.
-    clave = lambda s: (str(s.get("url") or "").strip().lower(), _fuentes.normalizar(s.get("nombre")))
-    vistas = {clave(s) for s in series}
+    clave_serie = lambda s: (str(s.get("url") or "").strip().lower(), _fuentes.normalizar(s.get("nombre")))
+    vistas = {clave_serie(s) for s in series}
     nuevas, repetidas = [], []
-    for s in series_de(datos, hid):
-        if clave(s) in vistas:
+    for s in series_de(datos, hid, etiqueta):
+        if clave_serie(s) in vistas:
             repetidas.append(s["nombre"])
             continue
-        vistas.add(clave(s))
+        vistas.add(clave_serie(s))
         series.append(s); nuevas.append(s)
     primarias, vacios = hallazgos_de(sesion)
-    fuentes_nuevas, notas = fusionar_fuentes(mf, primarias, vacios, hilo["tema"], hid, fecha)
+    fuentes_nuevas, notas = fusionar_fuentes(mf, primarias, vacios, reg["tema"], hid, fecha)
 
-    print("%s hilo %s → memoria/hilos.json (%s, %d tuits, paleta %s, estado %s%s)" % (
-        "[dry-run] " if a.dry_run else "", hid, accion, hilo["n_tuits"], hilo["paleta"], hilo["estado"], (", hook " + hook) if hook else ""))
-    print("  tema: %s" % hilo["tema"])
-    print("  tesis: %s" % hilo["tesis"][:160])
+    if modo_dato:
+        print("%sdato %s → memoria/datos.json (%s, cifra %s = %s %s · %s, plantilla %s, paleta %s, estado %s%s)" % (
+            "[dry-run] " if a.dry_run else "", hid, accion, reg["cifra_id"], reg["valor_final"], reg["unidad"], (reg["fuente"] or "")[:40],
+            reg["plantilla"], reg["paleta"], reg["estado"], (", hook " + hook) if hook else ""))
+        print("  tema: %s" % reg["tema"])
+        if reg.get("pista"):
+            print("  pista: %s" % reg["pista"])
+        print("  dato: %s" % reg["dato"])
+    else:
+        print("%s hilo %s → memoria/hilos.json (%s, %d tuits, paleta %s, estado %s%s)" % (
+            "[dry-run] " if a.dry_run else "", hid, accion, reg["n_tuits"], reg["paleta"], reg["estado"], (", hook " + hook) if hook else ""))
+        print("  tema: %s" % reg["tema"])
+        print("  tesis: %s" % reg["tesis"][:160])
     for s in nuevas:
         print("  + serie: %s · %s · %s · %s · %s–%s · %s" % (s["nombre"], s["fuente"][:40], s["formato"], s["unidad"], s["desde"], s["hasta"], s["frecuencia"]))
     for n in repetidas:
@@ -235,34 +296,58 @@ def registrar(a):
         print("  ~ nota en %s: %s" % (nombre, cuerpo[:120]))
     if primarias and not fuentes_nuevas:
         print("  (las %d fuentes primarias de los hallazgos ya estaban en memoria/fuentes.json)" % len(primarias))
-    if idea_id and smoke:
+    if idea_id and modo_dato:
+        print("  (idea %s ignorada: /dato no usa el banco de ideas)" % idea_id)
+    elif idea_id and smoke:
         print("  (idea %s: sesión smoke/fixture, el banco de ideas no se toca)" % idea_id)
+    marcar_idea = bool(idea_id) and not smoke and not modo_dato
     if a.dry_run:
-        if idea_id and not smoke:
+        if marcar_idea:
             print("  idea %s → %s (hilo %s)" % (idea_id, "hecha" if a.estado == "listo" else "en_curso", hid))
         print("[dry-run] no se escribió nada")
         return 0
-    escribir(HILOS, mh)
+    escribir(archivo, mh)
     escribir(FUENTES, mf)
-    print("escrito memoria/hilos.json (%d hilos) y memoria/fuentes.json (%d series, %d nuevas; %d fuentes nuevas, %d notas)" % (
-        len(hilos), len(series), len(nuevas), len(fuentes_nuevas), len(notas)))
-    if idea_id and not smoke:
+    print("escrito memoria/%s.json (%d %s) y memoria/fuentes.json (%d series, %d nuevas; %d fuentes nuevas, %d notas)" % (
+        clave, len(items), clave, len(series), len(nuevas), len(fuentes_nuevas), len(notas)))
+    if marcar_idea:
         msg, rc = _ideas.marcar_idea(idea_id, "hecha" if a.estado == "listo" else "en_curso", hid, fecha)
         print(("AVISO: " if rc else "  ") + msg, file=sys.stderr if rc else sys.stdout)
+    return 0
+
+
+def listar_datos(tema, maximo):
+    """--datos [TEMA]: una línea por dato registrado, del más reciente al más antiguo (con tema, filtrados por palabras clave)."""
+    items = list((leer(DATOS, obligatorio=False) or VACIO_DATOS).get("datos", []))
+    items.sort(key=lambda d: str(d.get("fecha") or ""), reverse=True)
+    claves = _fuentes.palabras_clave(tema) if tema else []
+    if claves:
+        pts = [(_fuentes.puntuar(claves, [(d.get("tema"), 3), (d.get("dato"), 3), (d.get("slug"), 2), (d.get("pista"), 1), (d.get("fuente"), 1)]), d) for d in items]
+        items = [d for p, d in sorted(pts, key=lambda x: -x[0]) if p]  # estable: a igual puntaje, el más reciente primero
+    print("datos registrados: %d%s" % (len(items), (" · tema: %s · claves: %s" % (tema, ", ".join(claves))) if claves else ""))
+    for d in items[:maximo]:
+        print("  %s · %s · %s %s · %s · hook %s · %s · %s" % (
+            d.get("id"), d.get("dato"), d.get("valor_final"), d.get("unidad") or "", (d.get("fuente") or "")[:40],
+            d.get("hook_tipo") or "—", d.get("estado"), d.get("ruta")))
+    if not items:
+        print("  (ninguno)")
     return 0
 
 
 def main():
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     g = p.add_mutually_exclusive_group(required=True)
-    g.add_argument("--registrar", metavar="SESION", help="carpeta sesiones/<slug>")
+    g.add_argument("--registrar", metavar="SESION", help="carpeta sesiones/<slug> (hilo o dato según guion.tipo)")
     g.add_argument("--series", metavar="TEMA", help="busca series conocidas para un tema")
-    p.add_argument("--ruta", help="carpeta de entrega, relativa a la raíz (hilos/<fecha>-<slug>)")
+    g.add_argument("--datos", nargs="?", const="", metavar="TEMA", help="lista los datos registrados en memoria/datos.json (/dato), del más reciente al más antiguo; con TEMA filtra por palabras clave")
+    p.add_argument("--ruta", help="carpeta de entrega, relativa a la raíz (hilos/<fecha>-<slug> o datos/<fecha>-<slug>)")
     p.add_argument("--estado", choices=["listo", "incompleto"], default="listo")
     p.add_argument("--hook", choices=HOOKS, metavar="<hook_tipo>", help="nombre del gancho (por defecto, guion.hook_tipo): " + "|".join(HOOKS))
     p.add_argument("--dry-run", action="store_true")
     p.add_argument("--max", type=int, default=12)
     a = p.parse_args()
+    if a.datos is not None:
+        return listar_datos(a.datos, a.max)
     if a.series:
         claves = _fuentes.palabras_clave(a.series)
         if not claves:

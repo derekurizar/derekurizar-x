@@ -41,6 +41,37 @@ que la imagen no puede: la pregunta, la comparación humana, la salvedad, la
 transición al siguiente tuit. Si la tarjeta ya lo dice todo, el texto vacío pesa
 más. Con imagen, T2..T(n−1) llevan ≤ 200 (ideal ≤ 140).
 
+## Dato único (`/dato`)
+
+Un dato solo, sin hilo, compite con todo el timeline en un segundo. Lo que lo
+hace impactante no son los adjetivos sino: (1) **sorpresa** (contradice lo que
+el lector creía), (2) **escala humana** (N de cada M, per cápita, «cuesta
+tanto como…»), (3) una **comparación** que se lee de un vistazo (antes/después,
+Guatemala vs vecinos, un departamento vs el país), (4) **actualidad** y (5)
+una **fuente que no admite discusión**. El guionista puntúa cada candidata en
+esos cinco criterios y elige una; las demás quedan en `candidatas` con motivo.
+
+Reparto del trabajo entre tarjeta y texto (el dato héroe, llevado al límite):
+- **La tarjeta** lleva la cifra (grande), el hallazgo en palabras (titular),
+  el contexto mínimo (`contexto`, `comparacion`, `nota` con la salvedad) y la
+  fuente en el pie. Es autosuficiente: quien solo vea la imagen entiende el
+  dato y sabe de dónde sale. **El titular nombra el sujeto** («Las
+  deportaciones suben 45%…»), no «2026 sube 45%»: el kicker precisa, no
+  explica.
+- **El texto** es el tuit entero (40–280, primera línea ≤ 90, sin enlaces) y
+  añade lo que la imagen no puede: el «y qué», la pregunta, la comparación
+  humana, la salvedad, el «podría pensarse X». **No repite ninguna línea del
+  titular ni dos números de la tarjeta**; un número puede reaparecer si el
+  gancho lo necesita. No hay cierre: la fuente ya va en el pie.
+- **Alt-text** como siempre: tipo de gráfico, cifra con unidad y periodo,
+  fuente.
+
+Ganchos: los ocho `hook_tipo` valen, con dos ajustes. `curiosity_gap` y
+`pregunta_directa` no «se pagan en T2–T3» sino **en la tarjeta**: el titular
+es la respuesta y el texto no promete nada que la imagen no muestre.
+`titular_clasico` solo para récords literales con serie ≥ 10 puntos. Se evita
+el `hook_tipo` del último dato publicado (`memoria.py --datos`).
+
 ## Honestidad = credibilidad
 
 - Lo que la evidencia no permite afirmar va en `no_afirma` (≤ 5 ítems, solo
@@ -50,7 +81,12 @@ más. Con imagen, T2..T(n−1) llevan ≤ 200 (ideal ≤ 140).
 - Conectores causales («por», «debido a», «impulsado por») solo con fuente que
   lo afirme; si no, «coincide con», «en paralelo a».
 - «Récord», «histórico», «el más alto» exigen una serie ≥ 10 puntos en las
-  cifras del tuit cuyo máximo sea ese valor.
+  cifras del tuit cuyo máximo sea ese valor. «El más bajo/alto desde X» exige
+  una serie o desglose ≥ 5 puntos que cubra desde X **inclusive**; si X es
+  ambiguo («desde la pandemia»), se nombra el año o el número de años.
+- La segunda fuente de una cifra puede ser `independencia: "baja"` (reproduce
+  la primaria). Vale como verificación del número, no como respaldo
+  independiente: si sostiene la ancla, `incertidumbre` lo dice.
 - El cierre lista todas las fuentes de las cifras usadas (nombre corto de cada
   `visual.fuente`).
 

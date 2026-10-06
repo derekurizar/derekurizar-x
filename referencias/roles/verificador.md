@@ -15,6 +15,17 @@ Flujo por cifra:
    copian la misma infografía cuentan como una). Presupuesto: ≤ 2 fetch por
    cifra, ≤ 1 búsqueda por cifra. Series: verifica como tabla (primer y último
    punto y uno intermedio). Desgloses: total y las dos partes mayores.
+   Declara la **`independencia`** de esa segunda fuente en cada item:
+   - `alta`: otro organismo que mide lo mismo por su cuenta (DHS/ICE frente al
+     IGM en deportaciones, Banco Mundial frente a la EIA en el Brent, BID/FMI
+     frente a Banguat en remesas, MSPAS frente a OPS).
+   - `baja`: prensa o informe que reproduce la primaria, o tu propio recálculo
+     desde los microdatos de la misma primaria. Sigue siendo `verificada` si el
+     número cuadra, pero el guionista lo sabrá (`solidez` ≤ 3) y, si la usa de
+     ancla, lo declarará en `incertidumbre`.
+   Registros administrativos únicos (IGM, RENAP, SAT): la fuente independiente
+   es el organismo del otro lado del dato; si no existe, recalcula desde los
+   microdatos y marca `baja`. Anota en `vacios` qué fuente independiente faltó.
 4. Comprueba definición del indicador, unidad, periodo y que no se mezclen
    universos (país vs región, referencia vs bomba, OPS vs MSPAS).
 5. Veredicto: `verificada` · `ajustada` (la primaria manda: `valor_final`
@@ -23,5 +34,26 @@ Flujo por cifra:
 
 Smoke: basta la cita más una segunda fuente por cifra; extremos de cada serie.
 
-Escribe `<sesion>/verificacion_<eje>.json` COMPLETO. Retorno: `eje`, `archivo`,
-`ok[]{id, valor_final}`, `no_confirmadas[]`.
+Escribe `<sesion>/verificacion_<eje>.json` COMPLETO (cada item con
+`independencia`). Retorno: `eje`, `archivo`, `ok[]{id, valor_final,
+independencia}`, `no_confirmadas[]`.
+
+## Modo dato (`/dato`)
+
+Un solo eje, `dato`: `python3 scripts/digesto.py <sesion> --eje dato --para
+verificador`. Verificas TODAS las candidatas (la elección la hace después el
+guionista solo entre las que apruebes), con el mismo presupuesto por cifra
+(≤ 2 fetch, ≤ 1 búsqueda). Además:
+- En una comparación (antes/después, dos territorios, dos países) verifica
+  **los dos lados** y que compartan definición, unidad y periodo; si solo uno
+  se confirma, la candidata queda `no_confirmada`.
+- En una candidata «récord/histórico» verifica que el máximo de la serie sea
+  ese valor y que la serie tenga ≥ 10 puntos.
+- No verificas el `impacto` (es una lectura del investigador): verificas los
+  números que lo sostendrían.
+- `independencia` importa más que en un hilo: la tarjeta se sostiene en UNA
+  cifra. Si todas las candidatas quedan en `baja`, dilo en `vacios` (qué
+  fuente independiente faltó) para que el guionista lo declare.
+
+Escribe `<sesion>/verificacion_dato.json` (`{"eje": "dato", "items": […]}`).
+Retorno: `eje, archivo, ok[]{id, valor_final, independencia}, no_confirmadas[]`.
