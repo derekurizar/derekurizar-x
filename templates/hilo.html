@@ -98,7 +98,7 @@ function pesoX(texto) {
 
   let html = `<header>
     <h1>${esc(H.tema)}</h1>
-    <div class="meta"><span class="chip">${esc(H.paleta)}</span><span>${esc(H.fecha)}</span><span>${H.n_tuits} tuits · ${H.tuits.filter((t) => t.imagen).length} imágenes</span><span>gate mecánico: ${esc(H.gate_mecanico)}</span></div>
+    <div class="meta"><span class="chip">${esc(H.paleta)}</span><span>${esc(H.fecha)}</span>${H.modo && H.modo !== "hilo" ? `<span class="chip" style="background:#e9e3d6;color:#0C1520">modo: ${esc(H.modo)}</span>` : ""}<span>${H.n_tuits} tuits · ${H.tuits.filter((t) => t.imagen).length} imágenes</span><span>gate mecánico: ${esc(H.gate_mecanico)}</span></div>
     ${H.tesis ? `<p class="tesis"><b>Tesis:</b> ${esc(H.tesis)}</p>` : ""}
   </header>
   <div class="contacto" id="contacto" hidden>

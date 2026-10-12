@@ -19,7 +19,7 @@ export const meta = {
 
 const PALETAS = ['cielo', 'jade', 'maiz', 'terracota', 'cacao', 'jacaranda', 'atitlan', 'obsidiana']
 const PLANTILLAS = ['linea', 'barras-v', 'barras-h', 'antes-despues', 'dona', 'pendiente', 'waffle', 'cifra', 'mapa', 'pesas', 'calor', 'bullet', 'embudo', 'divergente', 'apilada', 'piramide', 'treemap', 'dispersion']
-const BEATS = ['gancho', 'contexto', 'giro', 'impacto', 'cierre']
+const BEATS = ['gancho', 'contexto', 'giro', 'impacto', 'cierre', 'paso', 'dimension'] // paso: modo explica · dimension: modo perfil
 const HOOKS = ['giro_inversion', 'escala_humana', 'brecha_territorial', 'pregunta_directa', 'curiosity_gap', 'mito_vs_dato', 'antes_despues', 'titular_clasico']
 const REQ = {
   linea: ['etiquetasX', 'series'], 'barras-v': ['etiquetas', 'valores'], 'barras-h': ['items'],

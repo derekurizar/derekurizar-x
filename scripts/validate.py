@@ -5,11 +5,11 @@ Comprueba:
   M1 memoria/fuentes.json: schema de `fuentes` (nombre, url, categoria, rating 1-10)
      y de `series` (nombre, fuente, url, formato, unidad, frecuencia)
   M2 memoria/hilos.json: schema de cada hilo (id, fecha, slug, tema, tesis, paleta,
-     n_tuits, ruta, estado) · ids únicos · paleta ∈ design/tokens.json
+     n_tuits, ruta, estado) · ids únicos · paleta ∈ design/tokens.json · modo (opcional) ∈ ensamblar.MODOS["hilo"]
   M3 design/tokens.json: contraste WCAG ink/bg ≥ 4.5 (error) y a1/bg ≥ 3 (aviso)
   H1 cada hilos/*/ tiene hilo.json, post.md, datos.json, hilo.html y los PNG que
      hilo.json declara; y está registrado en memoria/hilos.json (aviso si no)
-  H2 en hilo.json: T1 con texto ≤ 280 y sin enlace, ningún texto > 280, paleta única
+  H2 en hilo.json: T1 con texto ≤ 280 y sin enlace, ningún texto > 280, paleta única, modo conocido
   H3 el estado de hilo.json coincide con el registro: error si la entrega dice
      `borrador` o difieren en `incompleto` (ensamblar.py --solo-estado lo arregla);
      aviso en cualquier otra diferencia (`publicado` se anota a mano en memoria)
@@ -19,11 +19,11 @@ Comprueba:
      que no existe o que no está hecha/en curso (ideas.py --conciliar lo arregla)
   M5 memoria/datos.json (si existe; registro de /dato): schema de cada dato (id, fecha,
      slug, tema, dato, cifra_id, valor_final, unidad, fuente, plantilla, paleta, ruta,
-     estado) · ids únicos · paleta y hook_tipo conocidos · ruta relativa y existente
+     estado) · ids únicos · paleta, hook_tipo y modo (opcional, ∈ MODOS["dato"]) conocidos · ruta relativa y existente
   D1 cada datos/*/ tiene dato.json, dato.html, post.md, datos.json, dato.png y
      tarjeta.html; y está registrado en memoria/datos.json (aviso si no)
   D2 en dato.json: tipo "dato", sin tuits[], tuit{} con texto de 40–280 de peso X y sin
-     enlace, imagen existente, alt_text 20–1000, paleta conocida
+     enlace, imagen existente, alt_text 20–1000, paleta y modo conocidos
   D3 el estado de dato.json coincide con el registro (misma regla que H3)
 
 Uso: python3 scripts/validate.py [--quiet]   · salida 0 ok · 1 error
@@ -36,7 +36,7 @@ import sys
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(RAIZ, "scripts"))
-from ensamblar import HOOKS, RE_LINK  # noqa: E402  (una sola lista de ganchos para todo el framework)
+from ensamblar import HOOKS, MODOS, RE_LINK  # noqa: E402  (una sola lista de ganchos y de modos para todo el framework)
 from contar_x import peso_x  # noqa: E402
 import ideas as _ideas  # noqa: E402
 ERRORES, AVISOS = [], []
@@ -133,6 +133,8 @@ def validar_hilos(paletas):
                 err("hilos[%d] estado %r no está en %s" % (i, h.get("estado"), sorted(estados)))
             if h.get("hook_tipo") and h["hook_tipo"] not in hooks:
                 err("hilos[%d] hook_tipo %r desconocido" % (i, h.get("hook_tipo")))
+            if h.get("modo") and h["modo"] not in MODOS["hilo"]:
+                err("hilos[%d] modo %r no está en %s" % (i, h.get("modo"), MODOS["hilo"]))
             if os.path.isabs(str(h.get("ruta", ""))):
                 err("hilos[%d] ruta debe ser relativa a la raíz del repo (%s)" % (i, h.get("ruta")))
             registrados[os.path.normpath(str(h.get("ruta", "")))] = h
@@ -176,6 +178,8 @@ def validar_hilos(paletas):
                 err("%s: falta la imagen %s de T%s" % (rel, img, t.get("n")))
         if paletas and h.get("paleta") not in paletas:
             err("%s: paleta %r desconocida" % (rel, h.get("paleta")))
+        if h.get("modo") and h["modo"] not in MODOS["hilo"]:
+            err("%s: hilo.json modo %r no está en %s" % (rel, h.get("modo"), MODOS["hilo"]))
 
 
 def validar_datos(paletas):
@@ -202,6 +206,8 @@ def validar_datos(paletas):
                     err("datos[%d] estado %r no está en %s" % (i, h.get("estado"), sorted(estados)))
                 if h.get("hook_tipo") and h["hook_tipo"] not in HOOKS:
                     err("datos[%d] hook_tipo %r desconocido" % (i, h.get("hook_tipo")))
+                if h.get("modo") and h["modo"] not in MODOS["dato"]:
+                    err("datos[%d] modo %r no está en %s" % (i, h.get("modo"), MODOS["dato"]))
                 ruta = str(h.get("ruta", ""))
                 if os.path.isabs(ruta):
                     err("datos[%d] ruta debe ser relativa a la raíz del repo (%s)" % (i, ruta))
@@ -253,6 +259,8 @@ def validar_datos(paletas):
             err("%s: alt_text debe tener 20–1000 caracteres (%d)" % (rel, len(alt)))
         if paletas and dd.get("paleta") not in paletas:
             err("%s: paleta %r desconocida" % (rel, dd.get("paleta")))
+        if dd.get("modo") and dd["modo"] not in MODOS["dato"]:
+            err("%s: dato.json modo %r no está en %s" % (rel, dd.get("modo"), MODOS["dato"]))
 
 
 def validar_ideas(paletas):

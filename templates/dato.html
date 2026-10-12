@@ -106,7 +106,7 @@ function pesoX(texto) {
   const fuentes = [...(D.fuentes || []), ...(D.fuentes_cifras || [])].filter((x, i, a) => x && a.findIndex((y) => corta(y) === corta(x)) === i);
   let html = `<header>
     <h1>${esc(D.tema)}</h1>
-    <div class="meta"><span class="chip">${esc(D.paleta)}</span><span>${esc(D.fecha)}</span><span class="chip suave">${esc(D.hook_tipo || "sin gancho")}</span><span>tarjeta: ${esc(t.plantilla || "")}</span><span>gate mecánico: ${esc(D.gate_mecanico)}</span><span>estado: ${esc(D.estado)}</span></div>
+    <div class="meta"><span class="chip">${esc(D.paleta)}</span><span>${esc(D.fecha)}</span><span class="chip suave">${esc(D.hook_tipo || "sin gancho")}</span>${D.modo && D.modo !== "dato" ? `<span class="chip">modo: ${esc(D.modo)}</span>` : ""}<span>tarjeta: ${esc(t.plantilla || "")}</span><span>gate mecánico: ${esc(D.gate_mecanico)}</span><span>estado: ${esc(D.estado)}</span></div>
     ${D.pista ? `<div class="meta" style="margin-top:6px"><span>pista: «${esc(D.pista)}»</span></div>` : ""}
     <p class="dato"><b>Dato:</b> ${esc(D.dato)}</p>
     ${D.por_que_impacta ? `<p class="porque"><b>Por qué impacta:</b> ${esc(D.por_que_impacta)}</p>` : ""}

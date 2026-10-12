@@ -31,6 +31,11 @@ Modo DATO (guion.tipo == "dato" o encuadre.tipo == "dato"; lo produce /dato): un
         G8 no aplica (la fuente va en el pie de la tarjeta); G2, G4–G7 iguales.
   Un dato nunca se escribe en hilos/ ni un hilo en datos/ (exit 2).
 
+Modo del post (guion.modo, lo fija el workflow con args.modo; encuadre.modo de respaldo):
+  hilo: hilo | explica | perfil · dato: dato | vs | mapa | antes. Sin modo = el tipo.
+  G1 rechaza un tipo o un modo desconocido (antes un tipo desconocido pasaba por hilo). El modo se
+  copia a hilo.json/dato.json («modo») y a post.md («- **Modo:** …» cuando no es el de defecto).
+
 --estado borrador|listo|incompleto  estado que se escribe en hilo.json (dato.json), su vista previa y post.md (default borrador).
 --solo-estado  no ensambla ni renderiza: solo reescribe el estado (exige --estado) en la
                carpeta de entrega ya existente. Lo corre el productor tras el gate C1–C8.
@@ -56,8 +61,11 @@ except Exception:  # pragma: no cover - antes de que exista contar_x.py
     def peso_x(t):
         return len(t or "")
 
-BEATS = ["gancho", "contexto", "giro", "impacto", "cierre"]
+BEATS = ["gancho", "contexto", "giro", "impacto", "cierre", "paso", "dimension"]  # paso: /hilo explica · dimension: /hilo perfil
 HOOKS = ["giro_inversion", "escala_humana", "brecha_territorial", "pregunta_directa", "curiosity_gap", "mito_vs_dato", "antes_despues", "titular_clasico"]
+# Tipos de entregable y modos por tipo. El modo viaja en guion.modo (lo fija el workflow con args.modo).
+TIPOS = ["hilo", "dato"]
+MODOS = {"hilo": ["hilo", "explica", "perfil"], "dato": ["dato", "vs", "mapa", "antes"]}
 RE_LINK = re.compile(r"https?://|www\.|\.com\b|\.gt\b", re.I)
 RE_BAIT = re.compile(r"(dale|da|dame|dejen?)\s+(rt|like|me gusta)|s[ií]gue(me|nos)|retuitea|comparte si|like si|guarda este|no te lo pierdas", re.I)
 RE_SUPER = re.compile(r"r[ée]cord|hist[óo]ric[oa]|m[áa]s alt[oa] de la historia|nunca antes", re.I)
@@ -184,6 +192,16 @@ def es_dato(guion, encuadre):
     return (guion.get("tipo") or (encuadre or {}).get("tipo")) == "dato"
 
 
+def tipo_de(guion, encuadre):
+    """Tipo declarado (guion.tipo; encuadre.tipo de respaldo); sin tipo = hilo. Puede ser desconocido: G1 lo rechaza."""
+    return guion.get("tipo") or (encuadre or {}).get("tipo") or "hilo"
+
+
+def modo_de(guion, encuadre):
+    """Modo del post (guion.modo; encuadre.modo de respaldo); sin modo = el tipo (hilo | dato)."""
+    return guion.get("modo") or (encuadre or {}).get("modo") or tipo_de(guion, encuadre)
+
+
 MAX_TUITS = 21  # igual que hilo.js
 
 
@@ -197,6 +215,15 @@ def gate(guion, encuadre, cifras, veredictos, sesion, plantillas, paletas, modo_
     tipo_g, tipo_e = guion.get("tipo"), (encuadre or {}).get("tipo")
     if tipo_g and tipo_e and tipo_g != tipo_e:
         F.append("G1 tipo del guion (%s) ≠ encuadre (%s)" % (tipo_g, tipo_e))
+    tipo = tipo_de(guion, encuadre)
+    if tipo not in TIPOS:
+        F.append("G1 tipo %r desconocido (%s)" % (tipo, "|".join(TIPOS)))
+    modo_g, modo_e = guion.get("modo"), (encuadre or {}).get("modo")
+    if modo_g and modo_e and modo_g != modo_e:
+        F.append("G1 modo del guion (%s) ≠ encuadre (%s)" % (modo_g, modo_e))
+    modo = modo_de(guion, encuadre)
+    if tipo in MODOS and modo not in MODOS[tipo]:
+        F.append("G1 modo %r no vale para un %s (%s)" % (modo, tipo, "|".join(MODOS[tipo])))
     if modo_dato:
         if n != 1:
             F.append("G1 un dato tiene exactamente 1 tuit (hay %d)" % n)
@@ -411,12 +438,17 @@ def aparece_en(tuits, cifras, veredictos, png_de):
 def manifiesto_datos(guion, cifras, veredictos, fuentes, ok_ids, usadas, aparece, slug, fecha, tesis):
     """El dict de datos.json: cifras verificadas con valor final, evidencia, uso y descartadas (igual para hilo y dato)."""
     sin = guion.get("sintesis", {})
+    # «descartadas» son cifras que NO pasaron la verificación. Si el guionista lista ahí candidatas
+    # verificadas que simplemente no eligió (pasa en /dato), no van bajo «Cifras no confirmadas».
+    descartadas = [d for d in (sin.get("descartadas") or []) if d.get("id") not in ok_ids]
+    if not descartadas:
+        descartadas = [{"id": i, "por": v.get("veredicto"), "nota": v.get("nota", "")} for i, v in veredictos.items() if v.get("veredicto") == "no_confirmada"]
     datos = {
         "slug": slug, "fecha": fecha, "tesis": tesis, "ancla_id": sin.get("ancla_id"), "paleta": guion.get("paleta"),
         "hook_tipo": guion.get("hook_tipo"),
         "cifras": [], "fuentes": list(fuentes.values()),
         "no_afirma": sin.get("no_afirma", []), "incertidumbre": sin.get("incertidumbre", []),
-        "descartadas": sin.get("descartadas", []) or [{"id": i, "por": v.get("veredicto"), "nota": v.get("nota", "")} for i, v in veredictos.items() if v.get("veredicto") == "no_confirmada"],
+        "descartadas": descartadas,
     }
     for c, cf in cifras.items():
         if c not in ok_ids:
@@ -483,6 +515,7 @@ def escribir(guion, encuadre, cifras, veredictos, fuentes, sesion, salida, fallo
     tesis = sin.get("tesis") or guion.get("tesis") or ""
     ok_ids = {i for i, v in veredictos.items() if v.get("veredicto") in ("verificada", "ajustada")}
     usadas = {c for t in tuits if t.get("visual") for c in t["visual"].get("cifra_ids", [])}
+    modo = modo_de(guion, encuadre)
 
     for t in tuits:
         if t.get("visual"):
@@ -501,7 +534,7 @@ def escribir(guion, encuadre, cifras, veredictos, fuentes, sesion, salida, fallo
 
     hilo = {
         "slug": slug, "fecha": fecha, "tema": tema, "tesis": tesis, "paleta": guion.get("paleta"),
-        "hook_tipo": guion.get("hook_tipo"), "pregunta": sin.get("pregunta", ""), "n_tuits": n,
+        "hook_tipo": guion.get("hook_tipo"), "modo": modo, "pregunta": sin.get("pregunta", ""), "n_tuits": n,
         "estado": estado,
         "tuits": [{
             "n": t["n"], "beat": t.get("beat"), "texto": t.get("texto") or "", "caracteres": peso_x(t.get("texto") or ""),
@@ -518,7 +551,10 @@ def escribir(guion, encuadre, cifras, veredictos, fuentes, sesion, salida, fallo
     datos = manifiesto_datos(guion, cifras, veredictos, fuentes, ok_ids, usadas, aparece, slug, fecha, tesis)
 
     # post.md
-    L = ["# %s" % tema, "", "- **Fecha:** %s" % fecha, "- **Slug:** %s" % slug, "- **Paleta:** %s" % guion.get("paleta"),
+    L = ["# %s" % tema, "", "- **Fecha:** %s" % fecha, "- **Slug:** %s" % slug]
+    if modo != "hilo":
+        L.append("- **Modo:** %s" % modo)
+    L += ["- **Paleta:** %s" % guion.get("paleta"),
          "- **Gancho:** %s" % (guion.get("hook_tipo") or "—"), "- **Tesis:** %s" % tesis,
          "- **Tuits:** %d · **Imágenes:** %d" % (n, sum(1 for t in tuits if t.get("visual"))),
          "- **Gate mecánico:** %s" % hilo["gate_mecanico"], "- **Estado:** %s (la publicación en X es manual)" % hilo["estado"], ""]
@@ -564,6 +600,7 @@ def escribir_dato(guion, encuadre, cifras, veredictos, fuentes, sesion, salida, 
     tesis = sin.get("tesis") or guion.get("tesis") or ""
     ok_ids = {i for i, vv in veredictos.items() if vv.get("veredicto") in ("verificada", "ajustada")}
     usadas = set(v.get("cifra_ids", []))
+    modo = modo_de(guion, encuadre)
 
     for ext, destino in (("html", "tarjeta.html"), ("png", "dato.png")):
         src = os.path.join(sesion, "visuales", "tuit_%d.%s" % (t.get("n", 1), ext))
@@ -580,6 +617,16 @@ def escribir_dato(guion, encuadre, cifras, veredictos, fuentes, sesion, salida, 
     titular = v.get("titular") or []
     fuentes_usadas = sorted({(cifras[c].get("fuente") or "") for c in usadas if c in cifras} - {""})
     info = guion.get("dato") or {}
+    # Cifra del registro: la que declara el guion; en cifra/waffle manda la cifra héroe (datos.cifra.valor)
+    # si dato.cifra_id apuntaba a otra (p. ej. la de comparación).
+    cifra_id = info.get("cifra_id") or (v.get("cifra_ids") or [None])[0]
+    heroe = ((v.get("datos") or {}).get("cifra") or {}).get("valor")
+    if isinstance(heroe, (int, float)) and not isinstance(heroe, bool) and (v.get("plantilla_final") or v.get("plantilla")) in ("cifra", "waffle"):
+        for c in v.get("cifra_ids", []):
+            vf = (veredictos.get(c) or {}).get("valor_final", (cifras.get(c) or {}).get("valor"))
+            if c in ok_ids and isinstance(vf, (int, float)) and abs(float(vf) - float(heroe)) < 1e-6:
+                cifra_id = c
+                break
     compacta = lambda c: {k: c.get(k) for k in ("id", "concepto", "valor", "unidad", "anio", "veredicto", "fuente", "fuente_2", "url") if c.get(k) is not None}
     candidatas = []
     for c in guion.get("candidatas") or []:
@@ -588,8 +635,9 @@ def escribir_dato(guion, encuadre, cifras, veredictos, fuentes, sesion, salida, 
         candidatas.append(cc)
 
     dato = {
-        "slug": slug, "fecha": fecha, "tema": tema, "pista": pista, "tipo": "dato",
+        "slug": slug, "fecha": fecha, "tema": tema, "pista": pista, "tipo": "dato", "modo": modo,
         "dato": info.get("titular") or " ".join(l.strip() for l in titular),
+        "cifra_id": cifra_id,
         "por_que_impacta": info.get("por_que_impacta") or "",
         "paleta": guion.get("paleta"), "hook_tipo": guion.get("hook_tipo"),
         "pregunta": sin.get("pregunta", ""), "tesis": tesis, "estado": estado,
@@ -609,6 +657,8 @@ def escribir_dato(guion, encuadre, cifras, veredictos, fuentes, sesion, salida, 
 
     # post.md
     L = ["# %s" % tema, "", "- **Fecha:** %s" % fecha, "- **Slug:** %s" % slug, "- **Tipo:** dato (una tarjeta)"]
+    if modo != "dato":
+        L.append("- **Modo:** %s" % modo)
     if pista:
         L.append("- **Pista:** %s" % pista)
     L += ["- **Paleta:** %s" % guion.get("paleta"), "- **Gancho:** %s" % (guion.get("hook_tipo") or "—"),

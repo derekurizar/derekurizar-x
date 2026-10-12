@@ -7,7 +7,8 @@
 #        · fixture dato (una tarjeta, modo dato de ensamblar) · negativos del gate G1–G8 sobre copias
 #        de los fixtures (siempre con --salida: una copia nunca escribe en hilos/ ni datos/)
 #        · negativos de render.js · banco de ideas (ideas.py sobre un banco temporal)
-#        · node --check de hilo.js, ideas.js y dato.js. Resumen «N pruebas · M fallos»; exit 1 si hay fallos.
+#        · node --check de hilo.js, ideas.js y dato.js · check_workflows.py (constantes comunes y modos).
+#        Resumen «N pruebas · M fallos»; exit 1 si hay fallos.
 set -u
 RAIZ="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$RAIZ"
@@ -65,6 +66,7 @@ comprobar_salida() {
     [[ -s "$d/$f" ]] || { echo "falta $d/$f"; return 1; }
   done
   [[ "$(ls "$d"/tuit_*.png | wc -l | tr -d ' ')" -eq 3 ]] || { echo "se esperaban 3 PNG en $d"; return 1; }
+  python3 -c 'import json,sys; h=json.load(open(sys.argv[1])); assert h.get("modo")=="hilo", h.get("modo")' "$d/hilo.json" || { echo "hilo.json sin modo hilo"; return 1; }
 }
 paso "salida del fixture (hilo.html, post.md, datos.json, hilo.json, 3 PNG)" comprobar_salida
 paso "post.md marca la 2ª fuente no independiente (pre-c04)" bash -c 'grep -q "ajustada · 2ª fuente no indep." sesiones/_fixture/salida/post.md'
@@ -95,7 +97,7 @@ comprobar_salida_dato() {
   for f in dato.png tarjeta.html dato.html post.md datos.json dato.json; do [[ -s "$d/$f" ]] || { echo "falta $d/$f"; return 1; }; done
   [[ "$(ls "$d"/*.png | wc -l | tr -d ' ')" -eq 1 ]] || { echo "se esperaba exactamente 1 PNG en $d"; return 1; }
   [[ ! -e "$d/contacto.png" && ! -e "$d/hilo.json" && ! -e "$d/hilo.html" ]] || { echo "un dato no lleva contacto.png ni hilo.*"; return 1; }
-  python3 -c 'import json,sys; d=json.load(open(sys.argv[1])); assert d["tipo"]=="dato" and "tuits" not in d and d["tuit"]["imagen"]=="dato.png" and d["dato"] and d["candidatas"]' "$d/dato.json"
+  python3 -c 'import json,sys; d=json.load(open(sys.argv[1])); assert d["tipo"]=="dato" and d.get("modo")=="dato" and "tuits" not in d and d["tuit"]["imagen"]=="dato.png" and d["dato"] and d["candidatas"]' "$d/dato.json"
 }
 paso "salida del dato (6 archivos, 1 PNG, sin contacto.png ni hilo.json)" comprobar_salida_dato
 solo_estado_dato() {
@@ -128,6 +130,9 @@ negativo "dato: texto repite el titular"       G2 "$(mut 'T[0]["texto"]="El crud
 negativo "dato: texto repite 2 números"        G2 "$(mut 'T[0]["texto"]="Brent a US$102 tras US$67 en enero: ¿qué pasó con el diésel en Guatemala? El dato, en una tarjeta."')"
 negativo "dato: texto de 20 caracteres"        G2 "$(mut 'T[0]["texto"]="Dato corto sin peso."')"
 negativo "dato: falta visuales/tuit_1.png"     G5 "" 'rm -f "$S/visuales/tuit_1.png"'
+negativo "dato: modo desconocido zzz"          "G1 modo" "$(mut 'g["modo"]="zzz"')"
+negativo "dato: modo de hilo (explica)"        "G1 modo" "$(mut 'g["modo"]="explica"')"
+negativo "tipo desconocido zzz"                "G1 tipo" "$(mut 'g["tipo"]="zzz"')" 'python3 -c "import json,sys; p=sys.argv[1]; e=json.load(open(p)); e[\"tipo\"]=\"zzz\"; json.dump(e, open(p,\"w\"), ensure_ascii=False, indent=2)" "$S/encuadre.json"'
 FIX=sesiones/_fixture
 
 echo "== negativos del gate mecánico (copias del fixture)"
@@ -146,6 +151,8 @@ negativo "T1 repite 2 números de su tarjeta" G2 "$(mut 'T[0]["texto"]="Brent a 
 negativo "tarjeta dice récord sin serie"     G7 "$(mut 'T[1]["visual"]["titular"]=["Llenar el tanque","récord de 2026"]')"
 negativo "cierre sin nombrar las fuentes"    G8 "$(mut 'T[2]["texto"]="Eso es todo por hoy. Gracias por leer hasta aquí."')"
 negativo "hook_tipo desconocido"             G1 "$(mut 'g["hook_tipo"]="clickbait"')"
+negativo "modo desconocido zzz"              "G1 modo" "$(mut 'g["modo"]="zzz"')"
+negativo "modo de dato (mapa) en un hilo"    "G1 modo" "$(mut 'g["modo"]="mapa"')"
 negativo "modo normal con 3 tuits"           G1 "$(mut 'g["smoke"]=False')" 'python3 -c "import json,sys; p=sys.argv[1]; e=json.load(open(p)); e[\"smoke\"]=False; e[\"fixture\"]=False; json.dump(e, open(p,\"w\"), ensure_ascii=False, indent=2)" "$S/encuadre.json"'
 
 echo "== negativos de render.js"
@@ -243,6 +250,7 @@ check_js() {
 paso "node --check hilo.js (envuelto en async function)" check_js hilo.js
 paso "node --check ideas.js (envuelto en async function)" check_js ideas.js
 paso "node --check dato.js (envuelto en async function)" check_js dato.js
+paso "check_workflows.py (PALETAS, PLANTILLAS, HOOKS, BEATS, REQ, pesoX y MODOS alineados)" python3 scripts/check_workflows.py
 
 echo
 echo "[test] $N pruebas · $FALLOS fallos"

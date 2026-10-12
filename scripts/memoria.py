@@ -5,9 +5,9 @@
   Lee <sesion>/guion.json (slug, fecha, paleta, hook_tipo, sintesis.tesis, tuits),
   encuadre.json (tema), <ruta>/datos.json y <sesion>/hallazgos_*.json.
   Añade o actualiza en memoria/hilos.json → hilos[]
-    {id: "<fecha>-<slug>", fecha, slug, tema, tesis, paleta, n_tuits, ruta, estado, hook_tipo}
+    {id: "<fecha>-<slug>", fecha, slug, tema, tesis, paleta, n_tuits, ruta, estado, hook_tipo, modo}
   (hook_tipo: el nombre del gancho de guion.json; --hook lo sobrescribe y debe ser uno
-  de los ocho nombres de ensamblar.HOOKS). En memoria/fuentes.json:
+  de los ocho nombres de ensamblar.HOOKS; modo: guion.modo, hilo | explica | perfil). En memoria/fuentes.json:
   · series[]  ← cifras de datos.json con tipo "serie" y n_puntos ≥ 5 (dedup por url +
     nombre): nombre=concepto, fuente, url, formato (por la extensión de la url; "html" si
     no se sabe), unidad, desde, hasta, frecuencia inferida, nota.
@@ -23,7 +23,7 @@
 
   Modo DATO (guion.tipo == "dato", lo produce /dato): el registro va a memoria/datos.json → datos[]
     {id: "<fecha>-<slug>", fecha, slug, tema, pista, dato, cifra_id, valor_final, unidad, fuente,
-     plantilla, paleta, hook_tipo, ruta, estado}
+     plantilla, paleta, hook_tipo, modo (dato | vs | mapa | antes), ruta, estado}
     (dato = titular en una línea; cifra_id = la cifra de la tarjeta; fuente = la del pie), leídos de
     <ruta>/dato.json y <ruta>/datos.json. Series y fuentes van a memoria/fuentes.json igual que en un
     hilo. El banco de ideas NO se toca (/dato no usa ideas).
@@ -77,8 +77,16 @@ def escribir(ruta, datos):
         fh.write("\n")
 
 
+def punto_p(pt):
+    """Etiqueta temporal de un punto de serie: el contrato es {p, v}, pero se tolera {periodo|anio|fecha, valor}."""
+    for k in ("p", "periodo", "anio", "fecha"):
+        if pt.get(k) is not None:
+            return pt[k]
+    return None
+
+
 def frecuencia_de(serie):
-    ps = [str(p.get("p", "")).strip() for p in serie]
+    ps = [str(punto_p(p) or "").strip() for p in serie]
     if not ps:
         return "otra"
     if all(RE_ANIO.match(p) for p in ps):
@@ -111,7 +119,7 @@ def series_de(datos, hilo_id, origen="hilo"):
         out.append({
             "nombre": c.get("concepto"), "fuente": c.get("fuente"), "url": c.get("url") or "",
             "formato": formato_de(c.get("url")), "unidad": c.get("unidad") or "",
-            "desde": str(serie[0].get("p")), "hasta": str(serie[-1].get("p")),
+            "desde": str(punto_p(serie[0])), "hasta": str(punto_p(serie[-1])),
             "frecuencia": frecuencia_de(serie), "nota": "registrada desde %s %s" % (origen, hilo_id),
         })
     return out
@@ -186,7 +194,7 @@ def registro_dato(a, ruta_abs, guion, encuadre, datos, hid, fecha, slug, hook):
         return None
     dj = leer(os.path.join(ruta_abs, "dato.json"))
     tu = dj.get("tuit") or {}
-    cid = (tu.get("cifra_ids") or [None])[0]
+    cid = dj.get("cifra_id") or (tu.get("cifra_ids") or [None])[0]  # la cifra héroe (ensamblar la resuelve)
     cf = next((c for c in datos.get("cifras", []) if c.get("id") == cid), None)
     if not cid or cf is None:
         print("ERROR: dato.json no trae cifra_ids o la cifra %r no está en datos.json" % cid, file=sys.stderr)
@@ -201,6 +209,7 @@ def registro_dato(a, ruta_abs, guion, encuadre, datos, hid, fecha, slug, hook):
         "fuente": tu.get("fuente") or cf.get("fuente") or "",
         "plantilla": tu.get("plantilla") or visual.get("plantilla_final") or visual.get("plantilla"),
         "paleta": guion.get("paleta"), "hook_tipo": hook,
+        "modo": guion.get("modo") or encuadre.get("modo") or dj.get("modo") or "dato",
         "ruta": os.path.normpath(a.ruta), "estado": a.estado,
     }
 
@@ -240,6 +249,7 @@ def registrar(a):
             "tesis": (guion.get("sintesis") or {}).get("tesis") or guion.get("tesis") or "",
             "paleta": guion.get("paleta"), "n_tuits": len(guion.get("tuits", [])),
             "ruta": os.path.normpath(a.ruta), "estado": a.estado, "hook_tipo": hook,
+            "modo": guion.get("modo") or encuadre.get("modo") or "hilo",
         }
         if idea_id:
             reg["idea_id"] = idea_id
@@ -272,16 +282,16 @@ def registrar(a):
     fuentes_nuevas, notas = fusionar_fuentes(mf, primarias, vacios, reg["tema"], hid, fecha)
 
     if modo_dato:
-        print("%sdato %s → memoria/datos.json (%s, cifra %s = %s %s · %s, plantilla %s, paleta %s, estado %s%s)" % (
+        print("%sdato %s → memoria/datos.json (%s, cifra %s = %s %s · %s, plantilla %s, paleta %s, estado %s%s%s)" % (
             "[dry-run] " if a.dry_run else "", hid, accion, reg["cifra_id"], reg["valor_final"], reg["unidad"], (reg["fuente"] or "")[:40],
-            reg["plantilla"], reg["paleta"], reg["estado"], (", hook " + hook) if hook else ""))
+            reg["plantilla"], reg["paleta"], reg["estado"], (", hook " + hook) if hook else "", (", modo " + reg["modo"]) if reg["modo"] != "dato" else ""))
         print("  tema: %s" % reg["tema"])
         if reg.get("pista"):
             print("  pista: %s" % reg["pista"])
         print("  dato: %s" % reg["dato"])
     else:
-        print("%s hilo %s → memoria/hilos.json (%s, %d tuits, paleta %s, estado %s%s)" % (
-            "[dry-run] " if a.dry_run else "", hid, accion, reg["n_tuits"], reg["paleta"], reg["estado"], (", hook " + hook) if hook else ""))
+        print("%s hilo %s → memoria/hilos.json (%s, %d tuits, paleta %s, estado %s%s%s)" % (
+            "[dry-run] " if a.dry_run else "", hid, accion, reg["n_tuits"], reg["paleta"], reg["estado"], (", hook " + hook) if hook else "", (", modo " + reg["modo"]) if reg["modo"] != "hilo" else ""))
         print("  tema: %s" % reg["tema"])
         print("  tesis: %s" % reg["tesis"][:160])
     for s in nuevas:
@@ -319,15 +329,16 @@ def registrar(a):
 def listar_datos(tema, maximo):
     """--datos [TEMA]: una línea por dato registrado, del más reciente al más antiguo (con tema, filtrados por palabras clave)."""
     items = list((leer(DATOS, obligatorio=False) or VACIO_DATOS).get("datos", []))
-    items.sort(key=lambda d: str(d.get("fecha") or ""), reverse=True)
+    # Del más reciente al más antiguo: por fecha y, a igual fecha, el registrado más tarde primero (el último del archivo).
+    items = [d for _, d in sorted(enumerate(items), key=lambda x: (str(x[1].get("fecha") or ""), x[0]), reverse=True)]
     claves = _fuentes.palabras_clave(tema) if tema else []
     if claves:
-        pts = [(_fuentes.puntuar(claves, [(d.get("tema"), 3), (d.get("dato"), 3), (d.get("slug"), 2), (d.get("pista"), 1), (d.get("fuente"), 1)]), d) for d in items]
+        pts = [(_fuentes.puntuar(claves, [(d.get("tema"), 3), (d.get("dato"), 3), (d.get("slug"), 2), (d.get("pista"), 1), (d.get("fuente"), 1), (d.get("modo"), 1)]), d) for d in items]
         items = [d for p, d in sorted(pts, key=lambda x: -x[0]) if p]  # estable: a igual puntaje, el más reciente primero
     print("datos registrados: %d%s" % (len(items), (" · tema: %s · claves: %s" % (tema, ", ".join(claves))) if claves else ""))
     for d in items[:maximo]:
-        print("  %s · %s · %s %s · %s · hook %s · %s · %s" % (
-            d.get("id"), d.get("dato"), d.get("valor_final"), d.get("unidad") or "", (d.get("fuente") or "")[:40],
+        print("  %s · %s%s · %s %s · %s · hook %s · %s · %s" % (
+            d.get("id"), ("[%s] " % d["modo"]) if d.get("modo") and d["modo"] != "dato" else "", d.get("dato"), d.get("valor_final"), d.get("unidad") or "", (d.get("fuente") or "")[:40],
             d.get("hook_tipo") or "—", d.get("estado"), d.get("ruta")))
     if not items:
         print("  (ninguno)")
