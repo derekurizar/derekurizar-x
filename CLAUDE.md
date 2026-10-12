@@ -13,10 +13,14 @@ ideas), entregado en `datos/YYYY-MM-DD-<slug>/` y registrado en `memoria/datos.j
 `/dato` tiene **modos** (`/dato vs|mapa|antes [pista]`, con alias `/vs`, `/mapa`, `/antes`):
 mismos agentes y entregable, distinto género (Guatemala frente a otros países · brecha por
 departamento · hace N años frente a hoy); el modo viaja en `guion.modo` y `tipo` sigue siendo `dato`.
+`/hilo` tiene los suyos (`/hilo explica|perfil`, alias `/explica`, `/perfil`): el tema explicado con
+sus números sin giro, y el retrato de un departamento o grupo frente al país. `/fecha` produce la
+pieza que toca según el calendario editorial (`ideas/calendario.json`).
 
 ## Mapa del proyecto
 
-- `.claude/commands/hilo.md` — `/hilo [tema|idea:<id>] [smoke|fixture]`: preflight (`make doctor`, idea del banco; sin tema → `ideas.py --siguiente`) → Workflow `hilo` → post-checks (`make validate`, `make costo`)
+- `.claude/commands/hilo.md` — `/hilo [explica|perfil] [tema|idea:<id>] [smoke|fixture]`: preflight (`make doctor`, idea del banco; sin tema → `ideas.py --siguiente`) → Workflow `hilo` → post-checks (`make validate`, `make costo`); tabla `MODOS` en `hilo.js` (explica: 3–6 tuits sin giro con beat `paso`; perfil: 5–8 sin giro con beat `dimension` y comparación con el país) y espejo en `ensamblar.py`
+- `.claude/commands/explica.md` · `perfil.md` — alias de `/hilo` con el modo fijado (delegan en `hilo.md`; no consultan el banco de ideas)
 - `.claude/commands/ideas.md` · `.claude/workflows/ideas.js` · `.claude/agents/ideas-explorador.md` (sonnet) — `/ideas [n] [enfoque]`: exploradores en paralelo → `ideas.py --importar`; guía `referencias/roles/explorador.md`
 - `.claude/commands/dato.md` · `.claude/workflows/dato.js` — `/dato [vs|mapa|antes] [pista] [smoke|fixture]`: un dato impactante en UNA tarjeta; reutiliza 4 agentes `hilo-*` (investigador con encuadre ligero → verificador → guionista que puntúa candidatas → productor con QA visual); tabla `MODOS` (gancho, plantillas y gates por modo) con espejo mínimo en `ensamblar.py`; guía `referencias/flujo-dato.md`
 - `.claude/commands/vs.md` · `mapa.md` · `antes.md` — alias de `/dato` con el modo fijado (8 líneas cada uno; delegan en `dato.md`)
@@ -47,7 +51,9 @@ departamento · hace N años frente a hoy); el modo viaja en `guion.modo` y `tip
 
 | Comando | Qué hace |
 |---|---|
-| `/hilo [tema] [smoke\|fixture]` | Produce un hilo completo (Workflow multi-agente). `smoke` = corta con web; `fixture` = sin web, solo guion → visuales → productor |
+| `/hilo [explica\|perfil] [tema] [smoke\|fixture]` | Produce un hilo completo (Workflow multi-agente). `smoke` = corta con web; `fixture` = sin web, solo guion → visuales → productor (hilo con giro) |
+| `/explica <tema>` | El tema explicado con sus números en 3–6 tarjetas, sin giro ni tesis; cada tuit intermedio es un paso con cifra y texto (= `/hilo explica`) |
+| `/perfil <departamento o grupo>` | Retrato del sujeto frente al país en 5–8 tarjetas sin giro; cada dimensión compara sujeto y país en la misma fuente y año (= `/hilo perfil`) |
 | `/ideas [n] [enfoque]` | Busca temas con datos descargables y los añade a `ideas/banco.json` (1–3 exploradores sonnet, ~5–10 min) |
 | `/dato [vs\|mapa\|antes] [pista] [smoke\|fixture]` | Un dato impactante en UNA tarjeta 1080×1080 con texto y alt-text (4 agentes `hilo-*`, ~8–15 min). La pista (tema, ángulo, fuente o corazonada) es opcional: sin ella el investigador elige un dato de actualidad. `smoke` = corta con web; `fixture` = sin web, solo productor sobre `sesiones/_fixture_dato` (dato simple) |
 | `/vs [pista]` | Guatemala frente a otros países en una tarjeta: todos de la misma fuente, edición y periodo; Guatemala destacada; sin «ganamos/perdemos» (= `/dato vs`) |

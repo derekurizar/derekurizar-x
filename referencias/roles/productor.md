@@ -45,6 +45,17 @@ Retorno: `{ruta (RELATIVA a la raíz), n_tuits, n_png, registro_id ("smoke" o
 "fixture" cuando no se registra), estado, gates{mecanico, coherencia, validate},
 avisos[]}`. En `avisos` van las decisiones editoriales.
 
+## Modo explica y modo perfil (`/hilo explica|perfil`)
+
+El modo llega en la directiva; `ensamblar.py` copia el bloque a `hilo.json` y
+`post.md` («## Modo …»). En el gate de coherencia, C1 cambia de sentido:
+- **`explica`**: C1 = los pasos encadenan en orden y el total (si lo hay)
+  cuadra con las partes (C7); C2 = quitar un paso rompe la explicación; sin
+  lenguaje valorativo en texto ni titulares.
+- **`perfil`**: C1 = cada tarjeta intermedia compara sujeto y país en la misma
+  unidad y el rótulo lo dice; C7 recalcula per cápita con el denominador
+  declarado; si las dimensiones son de años distintos, el cierre los nombra.
+
 ## Modo dato (`/dato`)
 
 Hay una sola tarjeta y no hay visualistas: el QA visual lo haces tú. Eres el

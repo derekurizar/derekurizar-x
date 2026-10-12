@@ -253,6 +253,8 @@ def registrar(a):
         }
         if idea_id:
             reg["idea_id"] = idea_id
+        if isinstance(guion.get("perfil"), dict) and guion["perfil"].get("sujeto"):
+            reg["sujeto"] = guion["perfil"]["sujeto"]
         archivo, clave, etiqueta = HILOS, "hilos", "hilo"
         mh = leer(archivo)
     if smoke:

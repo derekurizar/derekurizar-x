@@ -39,6 +39,9 @@ Modo del post (guion.modo, lo fija el workflow con args.modo; encuadre.modo de r
   su bloque guion.<modo>; mapa → plantilla mapa; antes → hook_tipo antes_despues; vs → vs.paises con
   ≥2 países y Guatemala, vs.fuente_comun, y sin «ganamos/perdemos» en texto ni titular. El bloque
   se copia a dato.json (clave del modo) y a post.md («## Modo <modo>»).
+  Modos de hilo (espejo mínimo de hilo.js): explica → 3–6 tuits, sin giro, intermedios beat paso,
+  bloque guion.explica{pregunta, pasos[]}; perfil → 5–8 tuits, sin giro, intermedios beat dimension,
+  bloque guion.perfil{sujeto, tipo, dimensiones[]}. El bloque va a hilo.json y a post.md.
 
 --estado borrador|listo|incompleto  estado que se escribe en hilo.json (dato.json), su vista previa y post.md (default borrador).
 --solo-estado  no ensambla ni renderiza: solo reescribe el estado (exige --estado) en la
@@ -260,8 +263,13 @@ def gate(guion, encuadre, cifras, veredictos, sesion, plantillas, paletas, modo_
             if RE_NACIONALISTA.search(textos):
                 F.append("G1 modo vs: «ganamos/perdemos/somos los peores» no va en el texto ni en el titular")
     else:
-        if not (3 if smoke else 4) <= n <= MAX_TUITS:
-            F.append("G1 el hilo tiene %d tuits (deben ser %s–%d)" % (n, 3 if smoke else 4, MAX_TUITS))
+        modo_h = modo_de(guion, encuadre)
+        # Modos de hilo: explica (3–6, sin giro, intermedios paso) · perfil (5–8, sin giro, intermedios dimension).
+        rango = {"explica": (3, 6), "perfil": (5, 8)}.get(modo_h, (4, MAX_TUITS))
+        lo, hi = (3, MAX_TUITS) if smoke else rango
+        beat_medio = {"explica": "paso", "perfil": "dimension"}.get(modo_h)
+        if not lo <= n <= hi:
+            F.append("G1 el hilo tiene %d tuits (deben ser %d–%d)" % (n, lo, hi) if modo_h == "hilo" else "G1 modo %s: %d tuits (deben ser %d–%d)" % (modo_h, n, lo, hi))
         if [t.get("n") for t in tuits] != list(range(1, n + 1)):
             F.append("G1 los tuits no están numerados 1..%d" % n)
         if n and tuits[0].get("beat") != "gancho":
@@ -269,10 +277,19 @@ def gate(guion, encuadre, cifras, veredictos, sesion, plantillas, paletas, modo_
         if n and tuits[-1].get("beat") != "cierre":
             F.append("G1 T%d debe ser beat 'cierre'" % n)
         giros = [t for t in tuits if t.get("beat") == "giro"]
-        if len(giros) != 1:
-            F.append("G1 debe haber exactamente un beat 'giro' (hay %d)" % len(giros))
-        if not smoke and n >= 5 and not any(t.get("beat") == "impacto" for t in tuits):
-            F.append("G1 en modo normal con ≥5 tuits debe haber un beat 'impacto' (escala humana)")
+        if beat_medio:
+            if giros:
+                F.append("G1 modo %s: no lleva giro (hay %d)" % (modo_h, len(giros)))
+            malos = ["T%s (%s)" % (t.get("n"), t.get("beat")) for t in tuits[1:-1] if t.get("beat") != beat_medio]
+            if malos:
+                F.append("G1 modo %s: los tuits intermedios deben ser beat '%s': %s" % (modo_h, beat_medio, ", ".join(malos)))
+            if not isinstance(guion.get(modo_h), dict):
+                F.append("G1 modo %s exige el bloque guion.%s" % (modo_h, modo_h))
+        else:
+            if len(giros) != 1:
+                F.append("G1 debe haber exactamente un beat 'giro' (hay %d)" % len(giros))
+            if not smoke and n >= 5 and not any(t.get("beat") == "impacto" for t in tuits):
+                F.append("G1 en modo normal con ≥5 tuits debe haber un beat 'impacto' (escala humana)")
     for t in tuits:
         if t.get("beat") not in BEATS:
             F.append("G1 T%s beat %r no está en %s" % (t.get("n"), t.get("beat"), BEATS))
@@ -573,6 +590,9 @@ def escribir(guion, encuadre, cifras, veredictos, fuentes, sesion, salida, fallo
         "gate_mecanico": "ok" if not fallos_gate else "falla",
         "contacto": None,
     }
+    bloque = guion.get(modo) if modo != "hilo" else None  # explica | perfil: el bloque del modo viaja a la entrega
+    if isinstance(bloque, dict):
+        hilo[modo] = bloque
 
     datos = manifiesto_datos(guion, cifras, veredictos, fuentes, ok_ids, usadas, aparece, slug, fecha, tesis)
 
@@ -584,6 +604,15 @@ def escribir(guion, encuadre, cifras, veredictos, fuentes, sesion, salida, fallo
          "- **Gancho:** %s" % (guion.get("hook_tipo") or "—"), "- **Tesis:** %s" % tesis,
          "- **Tuits:** %d · **Imágenes:** %d" % (n, sum(1 for t in tuits if t.get("visual"))),
          "- **Gate mecánico:** %s" % hilo["gate_mecanico"], "- **Estado:** %s (la publicación en X es manual)" % hilo["estado"], ""]
+    if isinstance(bloque, dict):
+        L += ["## Modo %s" % modo, ""]
+        for k, val in bloque.items():
+            if isinstance(val, list) and val and all(isinstance(x, dict) for x in val):
+                L.append("- **%s:**" % k)
+                L += ["  - " + " · ".join("%s: %s" % (kk, vv) for kk, vv in x.items()) for x in val]
+            else:
+                L.append("- **%s:** %s" % (k, ", ".join(str(x) for x in val) if isinstance(val, list) else val))
+        L.append("")
     for t in tuits:
         texto = t.get("texto") or ""
         L.append("## Tuit %d/%d — %s (%d de peso X)" % (t["n"], n, t.get("beat", ""), peso_x(texto)))

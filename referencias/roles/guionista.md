@@ -40,6 +40,25 @@ para `datos`, usa `python3 scripts/digesto.py <sesion> --serie <id>`.
    hook_tipo, no_afirma, tuits[]` con `visual` completo (el workflow gatea sobre
    el retorno; si te devuelve una lista de fallos, corrige solo eso).
 
+## Modo explica y modo perfil (`/hilo explica|perfil`)
+
+La directiva trae `MODO DEL POST`; escribe `modo` en `guion.json` y el bloque
+del modo. En ambos **no hay giro ni impacto** (eso manda sobre «un solo giro»
+de los límites). Guía: `referencias/narrativa.md`, «Explicador» y «Perfil».
+- **`explica`**: 3–6 tuits (smoke 3–4). T1 `gancho` plantea la pregunta
+  (`pregunta_directa` o `curiosity_gap`; T2 empieza a pagarla); T2..T(n−1) con
+  beat `paso`, cada uno una tarjeta con la cifra del paso y un **texto que lo
+  explica** (nunca vacío, ≤ 200 con imagen); el último, `cierre` («en
+  resumen…» + fuentes). Bloque `explica{pregunta, pasos[]{n, titulo ≤ 40}}` con
+  un paso por tuit intermedio. Cero adjetivos valorativos.
+- **`perfil`**: 5–8 tuits (smoke 3–4). El sujeto aparece en el kicker o el
+  titular de T1. T2..T(n−1) con beat `dimension`: cada tarjeta compara sujeto y
+  país (un item o serie rotulado «Guatemala», «nacional» o «país»; la
+  `comparacion` de `cifra`; o un `mapa` con el sujeto destacado). Bloque
+  `perfil{sujeto, tipo: departamento|grupo, dimensiones[]{n, nombre, anio}}`.
+  Si los años difieren, el cierre los nombra; el cierre dice qué hace distinto
+  al sujeto y nombra las fuentes.
+
 ## Modo dato (`/dato`)
 
 No hay arco: eliges UN dato y escribes UN tuit cuya tarjeta es el entregable.

@@ -33,3 +33,20 @@ exploratorias), no redacta, no visualiza.
 
 Modo `fixture`: copia `sesiones/_fixture` a `sesiones/<slug>` (`cp -R`), pon
 `fixture: true` en el `encuadre.json` copiado y devuelve ese encuadre.
+
+## Modo explica y modo perfil
+
+La directiva trae `MODO DEL POST`; escribe `modo` en `encuadre.json`. No hay
+tesis que probar en ninguno de los dos.
+- **`explica`**: la `pregunta` es «¿cómo funciona / cómo se calcula / a dónde
+  va X?»; `tesis_provisional` = «Explicador: <pregunta>». 2–3 ejes = bloques de
+  pasos del mecanismo; cada paso necesita una cifra oficial que lo cuantifique
+  (componentes, tasas, montos, totales). Sin pregunta de escala humana
+  obligatoria. El banco de ideas no se consulta.
+- **`perfil`**: el tema es el **sujeto** (un departamento con nombre oficial
+  del INE, o un grupo: jóvenes, mujeres rurales, retornados, maestros).
+  `tesis_provisional` = «Perfil: <sujeto> en N datos». Elige 5–6 dimensiones
+  estándar (población y crecimiento, pobreza o ingreso, salud o desnutrición,
+  educación, seguridad o migración, economía local) repartidas en 2–3 ejes;
+  cada brief exige el valor del sujeto **y** el nacional de la misma fuente y
+  año (per cápita con proyecciones INE) y anota el año de cada dimensión.

@@ -11,6 +11,8 @@ También produce **datos sueltos** (una tarjeta) en varios géneros.
 /vs carga tributaria               # Guatemala frente a otros países
 /mapa retornados por cada mil      # brecha por departamento
 /antes tipo de cambio hace 20 años # hace N años frente a hoy
+/explica cómo se calcula la luz    # el tema explicado con sus números (3–6 tarjetas)
+/perfil Alta Verapaz               # retrato frente al país (5–8 tarjetas)
 /fecha                             # qué ocasiones con dato vienen en 30 días
 /ideas                             # banco de ideas para hilos
 ```
@@ -42,6 +44,7 @@ se registran al arrancar) y:
 /hilo <tema>                   # corrida completa (~25–40 min)
 /dato fixture                  # ~3 min, sin web: solo el productor
 /dato [vs|mapa|antes] <pista>  # un dato (~8–15 min); con modo cambia el género
+/hilo [explica|perfil] <tema>  # hilo sin giro: explicador o perfil
 ```
 
 Abre `hilo.html`, revisa `contacto.png`, y publica a mano: PNG + texto + alt-text.

@@ -1,12 +1,23 @@
 ---
-description: Hilo de X con datos de Guatemala sobre UN tema — investigación multi-agente, tarjetas 1080×1080 y vista previa hilo.html (uso — /hilo [tema|idea:<id>] [smoke|fixture]; sin tema toma la mejor idea pendiente de ideas/banco.json)
+description: Hilo de X con datos de Guatemala sobre UN tema — investigación multi-agente, tarjetas 1080×1080 y vista previa hilo.html (uso — /hilo [explica|perfil] [tema|idea:<id>] [smoke|fixture]; sin tema toma la mejor idea pendiente de ideas/banco.json; el modo opcional cambia el género — explica: el tema explicado con sus números sin giro, perfil: retrato de un departamento o grupo frente al país — y tiene alias /explica y /perfil)
 ---
 
 Eres el coordinador del flujo **/hilo** de @DerekUrizar. El usuario quiere un
-hilo de X que cuente una historia con datos sobre: "$ARGUMENTS" (puede venir
-vacío). Si contiene `smoke` es una corrida corta con web (1 eje, 3 tuits); si
-contiene `fixture` es una prueba SIN web que copia `sesiones/_fixture` y solo
-ejercita guion → visuales → productor. La guía vive en `referencias/flujo-hilo.md`.
+hilo de X con datos: "$ARGUMENTS" (puede venir vacío). Si la **primera
+palabra** es `explica` o `perfil`, es el **modo** del post y se quita del tema
+(los alias `/explica` y `/perfil` llegan con el modo ya fijado; sin modo es un
+hilo con historia y giro, `modo = "hilo"`). En `perfil` el resto es el
+**sujeto** (un departamento o un grupo: «Alta Verapaz», «los jóvenes»). Si
+contiene `smoke` es una corrida corta con web (1 eje, 3 tuits); si contiene
+`fixture` es una prueba SIN web que copia `sesiones/_fixture` y solo ejercita
+guion → visuales → productor (el fixture es un hilo con giro: los modos solo se
+prueban en smoke o normal). La guía vive en `referencias/flujo-hilo.md`.
+
+Modos (misma investigación y verificación; cambian el arco y los gates):
+- `explica`: el tema explicado con sus números en 3–6 tuits sin giro ni tesis;
+  cada tuit intermedio es un `paso` con su cifra y un texto que lo explica.
+- `perfil`: retrato del sujeto en 5–8 tuits sin giro; cada tuit intermedio es
+  una `dimension` que compara sujeto y país en la misma fuente y año.
 
 1. PREFLIGHT: corre `make doctor` (node, Playwright, fuentes, agentes; exit 0).
    Salvo en `fixture`, haz una búsqueda de prueba con WebSearch; si falla →
@@ -14,7 +25,9 @@ ejercita guion → visuales → productor. La guía vive en `referencias/flujo-h
    si ya hay un hilo con tema parecido, díselo al usuario (el editor tendrá que
    declarar un ángulo nuevo; no abortes).
    **Banco de ideas** (`ideas/banco.json`; nunca lo edites: solo `scripts/ideas.py`).
-   Salvo en `fixture`, resuelve `idea` así:
+   En los modos `explica` y `perfil` no se consulta el banco (son piezas
+   evergreen, no de actualidad): `idea = null` salvo `idea:<id>` explícito.
+   Salvo en `fixture` (y en esos modos), resuelve `idea` así:
    - Si los argumentos traen `idea:<id>` → `python3 scripts/ideas.py --ver <id>`
      (exit 1 = no existe: DETENTE y dilo); `idea = <id>` y `tema = titulo` de la idea.
    - Sin tema (y sin smoke) → `python3 scripts/ideas.py --siguiente`: si devuelve una idea, díselo
@@ -26,7 +39,7 @@ ejercita guion → visuales → productor. La guía vive en `referencias/flujo-h
 2. Avisa al usuario: una corrida normal tarda ~25–40 minutos con 8–12 agentes;
    smoke ~10–15 minutos; fixture ~5 minutos. La publicación en X es manual.
 3. Invoca la herramienta **Workflow** con `name: "hilo"` y `args` como OBJETO:
-   `{ "tema": "<tema sin smoke/fixture>", "smoke": <bool>, "fixture": <bool>, "fecha": "<YYYY-MM-DD>", "idea": "<id>"|null }`.
+   `{ "tema": "<tema o sujeto, sin modo ni smoke/fixture>", "modo": "hilo"|"explica"|"perfil", "smoke": <bool>, "fixture": <bool>, "fecha": "<YYYY-MM-DD>", "idea": "<id>"|null }`.
    - Si `.claude/workflows/hilo.js` se editó en ESTA sesión, `name` resuelve una
      copia en caché: usa `scriptPath: ".claude/workflows/hilo.js"`.
    - Si el workflow falla con «no está registrado en esta sesión», los agentes
@@ -50,7 +63,9 @@ ejercita guion → visuales → productor. La guía vive en `referencias/flujo-h
    `python3 scripts/ideas.py --conciliar` y dilo. Corre `make validate` (exit 0) y `make costo` (tokens, herramientas
    y tiempo por agente de esta corrida) y resume su tabla al usuario; señala si
    algún agente quedó `failed` o superó 150 K de contexto.
-5. Muestra al usuario: la tesis, el gancho (`hook_tipo`) y la paleta; cada tuit
+5. Muestra al usuario: el modo (`modo`) y, si no es `hilo`, su bloque
+   (`bloque_modo`: en explica la pregunta y los pasos; en perfil el sujeto, el
+   tipo y las dimensiones con su año); la tesis, el gancho (`hook_tipo`) y la paleta; cada tuit
    con su texto (o «sin texto: la imagen lo dice»), el marcador `[📸 tuit_N.png]`
    y el alt-text; `no_afirma`; los avisos del productor; los avisos del propio
    workflow (`avisos_workflow`: reparaciones, presupuestos excedidos, ejes

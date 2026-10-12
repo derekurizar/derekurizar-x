@@ -7,10 +7,10 @@ resultado de herramienta.
 
 | Archivo | Lo escribe | Contenido |
 |---|---|---|
-| `encuadre.json` | editor | `slug, tema, fecha, pregunta, tesis_provisional, angulo, paleta, necesita_serie, repetido, hook_evitar, idea_id (id del banco de ideas o null), ejes[2–4]{id, prefijo (3 letras únicas), brief, preguntas[], fuentes_sugeridas[], series_sugeridas[]}, sesion_dir, smoke, fixture` |
+| `encuadre.json` | editor | `slug, tema, fecha, modo: "hilo"\|"explica"\|"perfil", pregunta, tesis_provisional, angulo, paleta, necesita_serie, repetido, hook_evitar, idea_id (id del banco de ideas o null), ejes[2–4]{id, prefijo (3 letras únicas), brief, preguntas[], fuentes_sugeridas[], series_sugeridas[]}, sesion_dir, smoke, fixture` |
 | `hallazgos_<eje>.json` | investigador | `eje, n_busquedas, n_fetch, cifras[≤12]{id "<prefijo>-cNN", concepto, valor:number, unidad, anio, fuente, url, tipo: puntual\|serie\|desglose, n_puntos, periodo, candidata_ancla, evidencia{url, cita ≤200, archivo_local?}, serie:[{p, v}], partes:[{nombre, valor}], nota}, fuentes[]{nombre, url, nivel}, vacios[]` |
 | `verificacion_<eje>.json` | verificador | `eje, items[]{id, veredicto: verificada\|ajustada\|no_confirmada, valor_final, fuente_2, url_2, independencia: alta\|baja (baja = la 2ª fuente reproduce la primaria o es recálculo de sus microdatos), nota}` |
-| `guion.json` | guionista | `slug, fecha, paleta, smoke, handle, hook_tipo, sintesis{pregunta, tesis, ancla_id, arco[], no_afirma[≤5], incertidumbre[], descartadas[]}, tuits[]{n, beat, texto, alt_text ≤1000, visual\|null}` con `visual = {plantilla, kicker, titular[], leyenda[], nota, fuente, cifra_ids[], datos{}}` |
+| `guion.json` | guionista | `slug, fecha, modo, paleta, smoke, handle, hook_tipo, sintesis{pregunta, tesis, ancla_id, arco[], no_afirma[≤5], incertidumbre[], descartadas[]}, tuits[]{n, beat, texto, alt_text ≤1000, visual\|null}` con `visual = {plantilla, kicker, titular[], leyenda[], nota, fuente, cifra_ids[], datos{}}`; en modo `explica` el bloque `explica{pregunta, pasos[]{n, titulo}}` y en `perfil` el bloque `perfil{sujeto, tipo: departamento\|grupo, dimensiones[]{n, nombre, anio}}` |
 | `visuales/tuit_N.html/.png` | visualista (vía `materializar.py`) | tarjeta ensamblada y su PNG |
 | `visuales/tuit_N.ajuste.json` | visualista | cambios parciales al `visual` de ese tuit; los consolida el productor |
 | `salida/` | productor (solo smoke/fixture) | carpeta de entrega cuando no se toca `hilos/` |
@@ -34,6 +34,14 @@ Reglas del contrato:
 - Modo `smoke`: 1 eje, ≤ 6 cifras, ≤ 5 búsquedas, 3 tuits, salida en
   `<sesion>/salida/`, sin tocar `memoria/`. Modo `fixture`: se copia
   `sesiones/_fixture` y se saltan investigación y verificación.
+
+**Modos de hilo** (`/hilo explica|perfil`, alias `/explica`, `/perfil`): el
+workflow pasa `args.modo`; `tipo` sigue siendo `hilo`. `explica`: 3–6 tuits,
+sin giro ni impacto, intermedios con beat `paso` (uno por paso del bloque) y
+texto no vacío. `perfil`: 5–8 tuits, sin giro ni impacto, intermedios con beat
+`dimension` (una por dimensión del bloque), cada tarjeta compara sujeto y país
+y el sujeto aparece en T1. El bloque viaja a `hilo.json`, `post.md` («## Modo
+…») y `memoria/hilos.json` (`modo`, y `sujeto` en perfil).
 
 ## Sesión dato (`/dato`)
 

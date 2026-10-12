@@ -34,6 +34,13 @@ Escribe `<sesion>/hallazgos_<eje>.json` COMPLETO. Retorno: `eje`, `archivo`,
 `n_busquedas`, `n_fetch`, `cifras[]{id, tipo, n_puntos, candidata_ancla}`,
 `vacios[]` (el detalle queda en disco).
 
+Modos de hilo (la directiva lo dice): en **`explica`** cada cifra cuantifica un
+paso del mecanismo (componentes, tasas, montos) y los desgloses (`partes[]`)
+deben sumar al total, que también se captura; en **`perfil`** cada dimensión
+necesita el valor del sujeto **y** el nacional de la MISMA fuente y año (como
+desglose con `partes [sujeto, nacional]` o como dos cifras) y, para tasas, la
+población INE del sujeto y del país.
+
 ## Modo dato (`/dato`)
 
 Hay un solo eje (`dato`, prefijo `dat`) y no hay editor: tú haces el

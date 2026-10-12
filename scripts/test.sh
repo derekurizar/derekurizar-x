@@ -168,6 +168,39 @@ negativo "cierre sin nombrar las fuentes"    G8 "$(mut 'T[2]["texto"]="Eso es to
 negativo "hook_tipo desconocido"             G1 "$(mut 'g["hook_tipo"]="clickbait"')"
 negativo "modo desconocido zzz"              "G1 modo" "$(mut 'g["modo"]="zzz"')"
 negativo "modo de dato (mapa) en un hilo"    "G1 modo" "$(mut 'g["modo"]="mapa"')"
+negativo "modo explica dejando el giro"      "G1 modo explica" "$(mut 'g["modo"]="explica"; g["explica"]={"pregunta": "¿Cómo cerró el crudo?", "pasos": [{"n": 2, "titulo": "De enero a septiembre"}]}')"
+negativo "modo explica sin bloque explica"   "G1 modo explica" "$(mut 'g["modo"]="explica"; T[1]["beat"]="paso"')"
+negativo "modo perfil con 3 tuits"           "G1 modo perfil" "$(mut 'g["modo"]="perfil"; g["smoke"]=False; T[1]["beat"]="dimension"; g["perfil"]={"sujeto": "El crudo", "tipo": "grupo", "dimensiones": [{"n": 2, "nombre": "precio", "anio": 2026}]}')" 'python3 -c "import json,sys; p=sys.argv[1]; e=json.load(open(p)); e[\"smoke\"]=False; e[\"fixture\"]=False; json.dump(e, open(p,\"w\"), ensure_ascii=False, indent=2)" "$S/encuadre.json"'
+positivo_hilo_explica() {
+  local S; S="$(mktemp -d "$TMP/pos.XXXXXX")"; cp -R sesiones/_fixture/. "$S/"; rm -rf "$S/salida"
+  python3 -c "$(mut 'g["modo"]="explica"; T[1]["beat"]="paso"; g["explica"]={"pregunta": "¿Cómo cerró el crudo?", "pasos": [{"n": 2, "titulo": "De enero a septiembre"}]}')" "$S/guion.json" || return 1
+  python3 scripts/ensamblar.py "$S" --check --salida "$S/salida" --sin-contacto >/dev/null || return 1
+  python3 -c 'import json,sys; h=json.load(open(sys.argv[1])); assert h["modo"]=="explica" and h["explica"]["pasos"][0]["n"]==2, h.get("modo")' "$S/salida/hilo.json" || { echo "hilo.json sin modo explica o sin su bloque"; return 1; }
+  grep -q '^## Modo explica' "$S/salida/post.md" || { echo "post.md sin la sección del modo"; return 1; }
+  grep -q '"modo": *"explica"' "$S/salida/hilo.html"
+}
+paso "modo explica válido (3 tuits, sin giro, beat paso): hilo.json, post.md y hilo.html llevan el modo" positivo_hilo_explica
+positivo_hilo_perfil() {
+  local S; S="$(mktemp -d "$TMP/pos.XXXXXX")"; cp -R sesiones/_fixture/. "$S/"; rm -rf "$S/salida"
+  # 5 tuits: T1 gancho · T2–T4 dimension (copias de la tarjeta de T2, rotuladas «Guatemala») · T5 cierre (la antigua T3).
+  cp "$S/visuales/tuit_3.html" "$S/visuales/tuit_5.html"; cp "$S/visuales/tuit_3.png" "$S/visuales/tuit_5.png"
+  cp "$S/visuales/tuit_2.html" "$S/visuales/tuit_3.html"; cp "$S/visuales/tuit_2.png" "$S/visuales/tuit_3.png"
+  cp "$S/visuales/tuit_2.html" "$S/visuales/tuit_4.html"; cp "$S/visuales/tuit_2.png" "$S/visuales/tuit_4.png"
+  python3 - "$S/guion.json" <<'EOF' || return 1
+import copy, json, sys
+p = sys.argv[1]; g = json.load(open(p, encoding="utf-8")); T = g["tuits"]
+dim = T[1]; dim["beat"] = "dimension"; dim["visual"]["datos"]["antes"]["sub"] = "promedio nacional de Guatemala"
+cierre = T[2]; cierre["n"] = 5
+g["tuits"] = [T[0], dim, dict(copy.deepcopy(dim), n=3), dict(copy.deepcopy(dim), n=4), cierre]
+g["modo"] = "perfil"
+g["perfil"] = {"sujeto": "El crudo", "tipo": "grupo", "dimensiones": [{"n": 2, "nombre": "enero", "anio": 2026}, {"n": 3, "nombre": "abril", "anio": 2026}, {"n": 4, "nombre": "septiembre", "anio": 2026}]}
+json.dump(g, open(p, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+EOF
+  python3 scripts/ensamblar.py "$S" --check --salida "$S/salida" --sin-contacto >"$TMP/perfil.log" 2>&1 || { tail -5 "$TMP/perfil.log"; return 1; }
+  python3 -c 'import json,sys; h=json.load(open(sys.argv[1])); assert h["modo"]=="perfil" and h["n_tuits"]==5 and len(h["perfil"]["dimensiones"])==3' "$S/salida/hilo.json" || { echo "hilo.json sin modo perfil, 5 tuits y 3 dimensiones"; return 1; }
+  python3 scripts/memoria.py --registrar "$S" --ruta sesiones/_fixture/salida --dry-run 2>/dev/null | grep -q "modo perfil"
+}
+paso "modo perfil válido (5 tuits, beat dimension, bloque perfil): ensambla y memoria.py --dry-run dice modo perfil" positivo_hilo_perfil
 negativo "modo normal con 3 tuits"           G1 "$(mut 'g["smoke"]=False')" 'python3 -c "import json,sys; p=sys.argv[1]; e=json.load(open(p)); e[\"smoke\"]=False; e[\"fixture\"]=False; json.dump(e, open(p,\"w\"), ensure_ascii=False, indent=2)" "$S/encuadre.json"'
 
 echo "== negativos de render.js"

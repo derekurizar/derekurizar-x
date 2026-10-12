@@ -100,6 +100,7 @@ function pesoX(texto) {
     <h1>${esc(H.tema)}</h1>
     <div class="meta"><span class="chip">${esc(H.paleta)}</span><span>${esc(H.fecha)}</span>${H.modo && H.modo !== "hilo" ? `<span class="chip" style="background:#e9e3d6;color:#0C1520">modo: ${esc(H.modo)}</span>` : ""}<span>${H.n_tuits} tuits · ${H.tuits.filter((t) => t.imagen).length} imágenes</span><span>gate mecánico: ${esc(H.gate_mecanico)}</span></div>
     ${H.tesis ? `<p class="tesis"><b>Tesis:</b> ${esc(H.tesis)}</p>` : ""}
+    ${H.modo && H.modo !== "hilo" && H[H.modo] ? `<div class="meta" style="margin-top:8px;display:block"><b>modo ${esc(H.modo)}:</b> ${Object.entries(H[H.modo]).map(([k, v]) => Array.isArray(v) && v.length && typeof v[0] === "object" ? `<div>${esc(k)}: ${v.map((x) => Object.values(x).map(esc).join(" · ")).join(" | ")}</div>` : `<span style="margin-right:14px">${esc(k)}: ${esc(Array.isArray(v) ? v.join(", ") : v)}</span>`).join("")}</div>` : ""}
   </header>
   <div class="contacto" id="contacto" hidden>
     <a href="contacto.png" target="_blank" rel="noopener">Ver hoja de contacto</a>

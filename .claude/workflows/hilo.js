@@ -1,7 +1,7 @@
 export const meta = {
   name: 'hilo',
   description: 'Hilo de X con datos de Guatemala: encuadre → investigación ⇢ verificación por eje → guion → visuales → ensamblado',
-  whenToUse: 'Invocado por /hilo [tema] [smoke|fixture]. args: {tema, smoke, fixture, fecha, min_tuits, idea, permitir_fallback} (fecha YYYY-MM-DD obligatoria, la pone el comando con `date +%F`). smoke = corrida corta sin tocar memoria/; fixture = sin web, copia sesiones/_fixture. idea = id de ideas/banco.json (el editor parte de ella; memoria.py la marca hecha al registrar).',
+  whenToUse: 'Invocado por /hilo [modo] [tema] [smoke|fixture] (y por los alias /explica y /perfil). args: {tema, modo, smoke, fixture, fecha, min_tuits, idea, permitir_fallback} (fecha YYYY-MM-DD obligatoria, la pone el comando con `date +%F`). modo = hilo (defecto, historia con giro) | explica (el tema explicado con sus números en 3–6 tarjetas, sin giro) | perfil (retrato de un departamento o grupo frente al país en 5–8 tarjetas; tema = el sujeto). smoke = corrida corta sin tocar memoria/; fixture = sin web, copia sesiones/_fixture. idea = id de ideas/banco.json (el editor parte de ella; memoria.py la marca hecha al registrar).',
   phases: [
     { title: 'Encuadre', detail: 'editor: pregunta, tesis provisional, paleta, ejes con prefijo y fuentes sugeridas' },
     { title: 'Investigación', detail: 'un investigador por eje (SIFT, con presupuesto): cifras con evidencia' },
@@ -34,6 +34,31 @@ const RE_SUPER = /r[ée]cord|hist[óo]ric[oa]|m[áa]s alt[oa] de la historia|nun
 const LOTE = 3
 const MAX_TUITS = 21
 const TOPES = { normal: { busquedas: 10, fetch: 12, cifras: 12 }, smoke: { busquedas: 5, fetch: 6, cifras: 6 } }
+// Modos de /hilo (args.modo): cambian el arco y los gates; guion.tipo sigue siendo "hilo".
+// Las claves coinciden con ensamblar.MODOS["hilo"] (lo comprueba scripts/check_workflows.py). min null = min_tuits.
+const MODOS = {
+  hilo:    { beatMedio: null,        min: null, max: MAX_TUITS, giro: 1, impacto: true,  minCifras: 6 },
+  explica: { beatMedio: 'paso',      min: 3,    max: 6,         giro: 0, impacto: false, minCifras: 3 },
+  perfil:  { beatMedio: 'dimension', min: 5,    max: 8,         giro: 0, impacto: false, minCifras: 5 },
+}
+const RE_PAIS = /guatemala|nacional|pa[ií]s/i
+const TEMA_SMOKE = { hilo: 'remesas familiares 2025', explica: 'cómo se calcula la tarifa de electricidad en Guatemala', perfil: 'Alta Verapaz' }
+// Instrucciones por modo que viajan en los prompts (el detalle vive en referencias/roles/*.md «Modo explica» y «Modo perfil»).
+const INSTR = {
+  hilo: { editor: '', investigador: '', guionista: '', productor: '' },
+  explica: {
+    editor: 'MODO EXPLICA (el tema explicado con sus números): no hay tesis que probar; la pregunta es «¿cómo funciona / cómo se calcula / a dónde va X?»; tesis_provisional = "Explicador: <pregunta>"; 2–3 ejes = bloques de pasos del mecanismo, cada paso con una cifra oficial que lo cuantifique (componentes, tasas, montos, totales); sin pregunta de escala humana obligatoria. ',
+    investigador: 'MODO EXPLICA: cada cifra cuantifica un paso del mecanismo (componentes, tasas, montos); captura desgloses (partes[]) que sumen al total y la cifra del total. ',
+    guionista: 'MODO EXPLICA: escribe modo: "explica" y el bloque explica {pregunta, pasos[]{n, titulo ≤40}} con un paso por tuit intermedio (T2..T(n−1)); los tuits intermedios llevan beat "paso" y NO hay giro ni impacto (esto manda sobre «un solo giro» de los límites); cada paso es una tarjeta con la cifra del paso y un texto que lo explica en lenguaje llano (≤200 con imagen; nunca vacío); T1 gancho plantea la pregunta (pregunta_directa o curiosity_gap: T2 empieza a pagarla); el cierre resume («en resumen…») y nombra las fuentes. Cero adjetivos valorativos. ',
+    productor: 'MODO EXPLICA: C1 = los pasos encadenan en orden y el total (si lo hay) cuadra con las partes (C7); C2 = quitar un paso rompe la explicación; sin lenguaje valorativo. ',
+  },
+  perfil: {
+    editor: 'MODO PERFIL (retrato de un departamento o grupo frente al país): el tema es el SUJETO; sin tesis que probar (tesis_provisional = "Perfil: <sujeto> en N datos"); elige 5–6 dimensiones estándar (población y crecimiento, pobreza o ingreso, salud o desnutrición, educación, seguridad o migración, economía local) repartidas en 2–3 ejes; cada dimensión necesita el valor del sujeto Y el nacional de la misma fuente y año (per cápita con proyecciones INE); anota en cada brief el año de cada dimensión. ',
+    investigador: 'MODO PERFIL: para cada dimensión captura el valor del sujeto Y el nacional de la MISMA fuente y año (como desglose con partes [sujeto, nacional] o como dos cifras) y, si hace falta, la población INE del sujeto y del país para la tasa. ',
+    guionista: 'MODO PERFIL: escribe modo: "perfil" y el bloque perfil {sujeto, tipo: departamento|grupo, dimensiones[]{n, nombre, anio}} con una dimensión por tuit intermedio; los tuits intermedios llevan beat "dimension" y NO hay giro ni impacto (esto manda sobre «un solo giro» de los límites); cada tarjeta intermedia compara sujeto y país (un item o serie rotulado «Guatemala», «nacional» o «país», la comparacion de cifra, o un mapa con el sujeto destacado); el sujeto aparece en el kicker o el titular de T1; el cierre dice qué hace distinto al sujeto, nombra los años si difieren y las fuentes. ',
+    productor: 'MODO PERFIL: C1 = cada tarjeta intermedia compara sujeto y país en la misma unidad y el rótulo lo dice; C7 recalcula per cápita con el denominador declarado; los años de las dimensiones aparecen en el cierre si difieren. ',
+  },
+}
 
 // Peso de un texto según X (copia de scripts/contar_x.js: el sandbox no importa).
 const RE_URL = /https?:\/\/\S+|www\.\S+|\b[a-z0-9-]+(\.[a-z0-9-]+)*\.(com|gt|org|net|io|edu|gov|mx|sv|hn|es|info|co)(\/\S*)?/gi
@@ -70,6 +95,7 @@ const S = {
       necesita_serie: { type: 'boolean' }, repetido: { type: 'boolean' },
       hook_evitar: { type: ['string', 'null'] },
       idea_id: { type: ['string', 'null'] },
+      modo: { type: 'string', enum: Object.keys(MODOS) },
       ejes: {
         type: 'array', minItems: 1, maxItems: 4,
         items: {
@@ -119,6 +145,16 @@ const S = {
       archivo: { type: 'string' }, tesis: { type: 'string' }, ancla_id: { type: 'string' },
       paleta: { type: 'string', enum: PALETAS }, hook_tipo: { type: 'string', enum: HOOKS },
       no_afirma: { type: 'array', items: { type: 'string' } },
+      modo: { type: 'string', enum: Object.keys(MODOS) },
+      // Bloques por modo (el workflow exige el del modo pedido).
+      explica: {
+        type: 'object', required: ['pregunta', 'pasos'],
+        properties: { pregunta: { type: 'string' }, pasos: { type: 'array', items: { type: 'object', required: ['n', 'titulo'], properties: { n: { type: 'integer' }, titulo: { type: 'string' } } } } },
+      },
+      perfil: {
+        type: 'object', required: ['sujeto', 'tipo', 'dimensiones'],
+        properties: { sujeto: { type: 'string' }, tipo: { type: 'string', enum: ['departamento', 'grupo'] }, dimensiones: { type: 'array', items: { type: 'object', required: ['n', 'nombre', 'anio'], properties: { n: { type: 'integer' }, nombre: { type: 'string' }, anio: { type: 'integer' } } } } },
+      },
       tuits: {
         type: 'array', minItems: 3, maxItems: MAX_TUITS,
         items: {
@@ -203,6 +239,13 @@ if (!/^\d{4}-\d{2}-\d{2}$/.test(fecha)) throw new Error('args.fecha (YYYY-MM-DD)
 const modo = smoke ? 'smoke' : 'normal'
 // Mínimo de tuits en modo normal (4 por defecto; el usuario puede pedir un hilo largo).
 const minT = Math.min(MAX_TUITS, Math.max(4, parseInt(A.min_tuits, 10) || 4))
+// Modo del post (hilo | explica | perfil): lo fija el comando; desconocido = error, no silencio.
+const modoPost = A.modo ? String(A.modo).toLowerCase() : 'hilo'
+if (!MODOS[modoPost]) throw new Error(`args.modo "${A.modo}" desconocido (${Object.keys(MODOS).join('|')}).`)
+const MP = MODOS[modoPost]
+const IM = INSTR[modoPost]
+const minN = smoke ? 3 : (MP.min || minT)
+const maxN = smoke ? 4 : MP.max
 const T = TOPES[modo]
 // Idea del banco (ideas/banco.json): la resuelve /hilo en el preflight y llega como id.
 const idea = /^[a-z0-9-]+$/.test(String(A.idea || '')) ? String(A.idea) : null
@@ -247,11 +290,12 @@ const enc = await agentRol(
     ? `Eres el editor del flujo /hilo (lee referencias/roles/editor.md, «Modo fixture»). MODO FIXTURE: copia sesiones/_fixture a sesiones/fixture-${fecha.replace(/-/g, '')} con cp -R, ` +
       `edita el encuadre.json copiado poniendo fixture:true, smoke:true, fecha "${fecha}", sesion_dir "sesiones/fixture-${fecha.replace(/-/g, '')}", y devuélvelo tal cual.`
     : `Eres el editor del flujo /hilo (lee referencias/roles/editor.md y referencias/contrato-sesion.md). ` +
-      `Tema: ${tema ? `"${tema}"` : '(no dado: elige uno de actualidad con datos duros)'}. Fecha: ${fecha}. ` +
+      `${modoPost === 'perfil' ? 'Sujeto del perfil' : 'Tema'}: ${tema ? `"${tema}"` : (modoPost === 'hilo' ? '(no dado: elige uno de actualidad con datos duros)' : `(no dado: usa «${TEMA_SMOKE[modoPost]}»)`)}. Fecha: ${fecha}. ` +
+      `MODO DEL POST: ${modoPost}. ` + IM.editor +
       (idea ? `IDEA DEL BANCO: corre python3 scripts/ideas.py --ver ${idea} (no abras ideas/banco.json) y parte de su pregunta, ángulo, hook_sugerido, paleta_sugerida y datos (fuentes con evidencia de acceso); pon idea_id: "${idea}" en encuadre.json y en tu retorno. ` : 'idea_id: null. ') +
-      `${smoke ? 'MODO SMOKE: exactamente 1 eje, smoke:true; sin tema usa «remesas familiares 2025». ' : `Modo normal: ${minT >= 10 ? '3–4 ejes (hilo largo: ≥' + minT + ' tuits, hacen falta series comparables para muchas tarjetas)' : '2–4 ejes'}, smoke:false; un eje incluye la pregunta de escala humana (beat impacto). `}` +
+      `${smoke ? `MODO SMOKE: exactamente 1 eje, smoke:true; sin tema usa «${TEMA_SMOKE[modoPost]}». ` : `Modo normal: ${minT >= 10 ? '3–4 ejes (hilo largo: ≥' + minT + ' tuits, hacen falta series comparables para muchas tarjetas)' : '2–4 ejes'}, smoke:false${MP.impacto ? '; un eje incluye la pregunta de escala humana (beat impacto)' : ''}. `}` +
       `Usa python3 scripts/fuentes.py --tema "…" --series para las fuentes_sugeridas de cada eje (no abras memoria/fuentes.json). Cada eje lleva un prefijo de 3 letras único. ` +
-      `Lee memoria/hilos.json solo para repetido y hook_evitar. Crea sesiones/<slug>/ y escribe encuadre.json completo con fecha "${fecha}".`,
+      `Lee memoria/hilos.json solo para repetido y hook_evitar. Crea sesiones/<slug>/ y escribe encuadre.json completo con fecha "${fecha}" y modo: "${modoPost}" (devuélvelo también).`,
   { agentType: 'hilo-editor', schema: S.encuadre, label: 'editor' }
 )
 if (!enc) fail('Encuadre sin resultado: el editor no terminó.')
@@ -264,8 +308,10 @@ const prefijoDe = (e) => String(e.prefijo || e.id.slice(0, 3)).toLowerCase()
   if (new Set(pref).size !== pref.length) fail(`Prefijos de eje repetidos (${pref.join(', ')}): cada eje necesita un prefijo de 3 letras único.`)
 }
 if (idea && enc.idea_id !== idea) { avisar(`AVISO: el editor no devolvió idea_id "${idea}"; memoria.py no podrá marcar la idea (corrígelo en encuadre.json antes del registro).`) }
+if (!fixture && enc.modo && enc.modo !== modoPost) avisar(`AVISO: el editor devolvió modo ${enc.modo}; la directiva pedía ${modoPost} (encuadre.json debe decir modo: "${modoPost}").`)
+if (fixture && modoPost !== 'hilo') avisar(`AVISO: el fixture es un hilo con giro; el modo ${modoPost} solo se ejercita en smoke o normal.`)
 if (enc.repetido) avisar('AVISO: tema ya cubierto en memoria/hilos.json; el editor declara ángulo nuevo en encuadre.json.')
-avisar(`Pregunta: ${enc.pregunta} · paleta ${enc.paleta} · ${enc.ejes.length} eje(s) · sesión ${enc.sesion_dir}${idea ? ' · idea ' + idea : ''}${fixture ? ' · FIXTURE' : ''}`)
+avisar(`Pregunta: ${enc.pregunta}${modoPost !== 'hilo' ? ' · modo ' + modoPost : ''} · paleta ${enc.paleta} · ${enc.ejes.length} eje(s) · sesión ${enc.sesion_dir}${idea ? ' · idea ' + idea : ''}${fixture ? ' · FIXTURE' : ''}`)
 
 // ── FASE 2: INVESTIGACIÓN ⇢ VERIFICACIÓN (pipeline por eje, sin barrera) ────
 const CIF = new Map()
@@ -278,7 +324,7 @@ if (!fixture) {
   const investigar = (eje) =>
     agentRol(
       `Eres el investigador del eje "${eje.id}" (lee referencias/roles/investigador.md y referencias/contrato-sesion.md). Sesión: ${enc.sesion_dir} ` +
-        `(lee encuadre.json: tu brief, preguntas y fuentes_sugeridas). Prefijo de ids: "${prefijoDe(eje)}-cNN". ` +
+        `(lee encuadre.json: tu brief, preguntas y fuentes_sugeridas). Prefijo de ids: "${prefijoDe(eje)}-cNN". ` + IM.investigador +
         `PRESUPUESTO: ≤${T.busquedas} búsquedas, ≤${T.fetch} fetch, ≤${T.cifras} cifras, ≤${smoke ? 2 : 4} series; cada cifra con evidencia {url, cita, archivo_local}. ` +
         `Sin Playwright MCP. Escribe ${enc.sesion_dir}/hallazgos_${eje.id}.json completo y devuelve solo el resumen (ids, tipo, n_puntos).`,
       { agentType: 'hilo-investigador', schema: S.hallazgos, phase: 'Investigación', label: `investigar-${eje.id}` }
@@ -312,7 +358,7 @@ if (!fixture) {
   okIds = new Set(VER.keys())
   bajas = [...VER.values()].filter((it) => it.independencia === 'baja').map((it) => it.id)
   if (bajas.length) avisar(`AVISO: segunda fuente NO independiente (reproduce la primaria) en ${bajas.length} cifra(s): ${bajas.join(', ')}`)
-  if (okIds.size < (smoke ? 3 : 6)) fail(`Solo ${okIds.size} cifras verificadas/ajustadas: no hay material para el hilo (mínimo ${smoke ? 3 : 6}).`)
+  if (okIds.size < (smoke ? 3 : MP.minCifras)) fail(`Solo ${okIds.size} cifras verificadas/ajustadas: no hay material para el ${modoPost} (mínimo ${smoke ? 3 : MP.minCifras}).`)
   const seriesOk = [...okIds].filter((id) => CIF.get(id) && CIF.get(id).tipo === 'serie' && (CIF.get(id).n_puntos || 0) >= 5)
   if (enc.necesita_serie && !seriesOk.length) {
     if (smoke) avisar('AVISO smoke: el encuadre pedía una serie y no hay ninguna verificada con ≥5 puntos.')
@@ -328,14 +374,62 @@ phase('Guion')
 const validarGuion = (g) => {
   const Tt = g.tuits, n = Tt.length
   const F = []
-  if (smoke ? !(n >= 3 && n <= 4) : !(n >= minT && n <= MAX_TUITS)) F.push(`el hilo tiene ${n} tuits (${smoke ? '3–4 en smoke' : `${minT}–${MAX_TUITS}`})`)
+  if (n < minN || n > maxN) F.push(`el ${modoPost} tiene ${n} tuits (${smoke ? '3–4 en smoke' : `${minN}–${maxN}`}${modoPost !== 'hilo' ? ' en modo ' + modoPost : ''})`)
   if (Tt.some((t, i) => t.n !== i + 1)) F.push('los tuits no están numerados 1..n')
   if (g.paleta !== enc.paleta) F.push(`paleta del guion (${g.paleta}) ≠ encuadre (${enc.paleta})`)
   if (Tt[0].beat !== 'gancho') F.push('T1 debe ser gancho')
   if (Tt[n - 1].beat !== 'cierre') F.push(`T${n} debe ser cierre`)
-  if (Tt.filter((t) => t.beat === 'giro').length !== 1) F.push('debe haber exactamente un giro')
-  if (!smoke && n >= 5 && !Tt.some((t) => t.beat === 'impacto')) F.push('en modo normal con ≥5 tuits debe haber un beat impacto (escala humana)')
-  if (!smoke && n === 4 && !Tt.some((t) => t.beat === 'impacto')) avisar('AVISO: hilo de 4 tuits sin beat impacto.')
+  const giros = Tt.filter((t) => t.beat === 'giro').length
+  if (giros !== MP.giro) F.push(MP.giro ? 'debe haber exactamente un giro' : `modo ${modoPost}: no lleva giro (hay ${giros})`)
+  if (MP.impacto && !smoke && n >= 5 && !Tt.some((t) => t.beat === 'impacto')) F.push('en modo normal con ≥5 tuits debe haber un beat impacto (escala humana)')
+  if (MP.impacto && !smoke && n === 4 && !Tt.some((t) => t.beat === 'impacto')) avisar('AVISO: hilo de 4 tuits sin beat impacto.')
+  if (MP.beatMedio) {
+    const malos = Tt.slice(1, n - 1).filter((t) => t.beat !== MP.beatMedio).map((t) => `T${t.n} (${t.beat})`)
+    if (malos.length) F.push(`modo ${modoPost}: los tuits intermedios deben ser beat ${MP.beatMedio}: ${malos.join(', ')}`)
+  }
+  const modoG = g.modo || 'hilo'
+  if (modoG !== modoPost) F.push(`modo del guion (${modoG}) ≠ modo pedido (${modoPost}): escribe modo: "${modoPost}" en guion.json`)
+  const medios = Tt.slice(1, n - 1)
+  const esperados = medios.map((t) => t.n)
+  if (modoPost === 'explica') {
+    const X = g.explica
+    if (!X) F.push('modo explica: falta el bloque explica {pregunta, pasos[]{n, titulo}}')
+    else {
+      if (!String(X.pregunta || '').trim()) F.push('modo explica: pregunta vacía')
+      const P = Array.isArray(X.pasos) ? X.pasos : []
+      if (JSON.stringify(P.map((q) => q && q.n)) !== JSON.stringify(esperados)) F.push(`modo explica: pasos[].n debe ser exactamente ${esperados.map((k) => 'T' + k).join(', ')} (llegó ${P.map((q) => q && q.n).join(', ') || 'nada'})`)
+      for (const q of P) if (!String((q || {}).titulo || '').trim() || String(q.titulo).length > 40) F.push(`modo explica: paso ${q && q.n}: titulo de 1–40 caracteres`)
+      for (const t of medios) if (!String(t.texto || '').trim()) F.push(`modo explica: T${t.n} sin texto (la explicación del paso va en el texto)`)
+    }
+  }
+  if (modoPost === 'perfil') {
+    const Pf = g.perfil
+    if (!Pf) F.push('modo perfil: falta el bloque perfil {sujeto, tipo, dimensiones[]{n, nombre, anio}}')
+    else {
+      const suj = String(Pf.sujeto || '').trim()
+      if (!suj) F.push('modo perfil: sujeto vacío')
+      if (!['departamento', 'grupo'].includes(Pf.tipo)) F.push('modo perfil: tipo debe ser departamento|grupo')
+      const v1 = Tt[0].visual
+      const cab = [(v1 && v1.kicker) || '', ...((v1 && v1.titular) || []), Tt[0].texto || ''].join(' ').toLowerCase()
+      if (suj && !cab.includes(suj.toLowerCase())) F.push(`modo perfil: el sujeto «${suj}» debe aparecer en el kicker, el titular o el texto de T1`)
+      const Dm = Array.isArray(Pf.dimensiones) ? Pf.dimensiones : []
+      if (JSON.stringify(Dm.map((q) => q && q.n)) !== JSON.stringify(esperados)) F.push(`modo perfil: dimensiones[].n debe ser exactamente ${esperados.map((k) => 'T' + k).join(', ')} (llegó ${Dm.map((q) => q && q.n).join(', ') || 'nada'})`)
+      for (const q of Dm) {
+        if (!String((q || {}).nombre || '').trim()) F.push(`modo perfil: dimensión ${q && q.n} sin nombre`)
+        if (!Number.isInteger(q && q.anio)) F.push(`modo perfil: dimensión ${q && q.n} sin anio`)
+      }
+      for (const t of medios) {
+        if (!t.visual || t.visual.plantilla === 'mapa') continue
+        const rotulos = JSON.stringify(t.visual.datos || {}) + ' ' + (t.visual.kicker || '') + ' ' + (t.visual.titular || []).join(' ')
+        if (!RE_PAIS.test(rotulos)) F.push(`modo perfil: T${t.n} no compara con el país (ningún rótulo «Guatemala», «nacional» o «país» en la tarjeta)`)
+      }
+      const anios = [...new Set(Dm.map((q) => q && q.anio).filter(Number.isInteger))]
+      if (anios.length > 1) {
+        const faltan = anios.filter((a) => !String(Tt[n - 1].texto || '').includes(String(a)))
+        if (faltan.length) F.push(`modo perfil: las dimensiones son de varios años (${anios.join(', ')}) y el cierre no nombra ${faltan.join(', ')}`)
+      }
+    }
+  }
   if (enc.hook_evitar && g.hook_tipo === enc.hook_evitar) F.push(`hook_tipo ${g.hook_tipo} es el del último hilo (hook_evitar); elige otro`)
   if (okIds && !okIds.has(g.ancla_id)) F.push(`ancla_id ${g.ancla_id} no está verificada`)
   const t1 = Tt[0].texto || '', p1 = pesoX(t1)
@@ -425,20 +519,20 @@ const g = await conReparacion(
     agentRol(
       `Eres el guionista (lee referencias/roles/guionista.md, referencias/narrativa.md y referencias/diseno/graficos.md). Sesión: ${enc.sesion_dir}. ` +
         `Lee encuadre.json y corre python3 scripts/digesto.py ${enc.sesion_dir} --para guionista (no leas los hallazgos_*.json ni verificacion_*.json enteros; para copiar puntos de una serie usa --serie <id>). ` +
-        `Paleta: ${enc.paleta}. Fecha: ${fecha}. hook_evitar: ${enc.hook_evitar || 'ninguno'}. ` +
+        `Paleta: ${enc.paleta}. Fecha: ${fecha}. hook_evitar: ${enc.hook_evitar || 'ninguno'}. MODO DEL POST: ${modoPost}. ` + IM.guionista +
         `ancla_id debe ser una cifra del visual de T1 (T1.visual.cifra_ids la incluye); si T1 va sin visual, la ancla va en su texto. ` +
         (okIds ? `Solo cifras verificada|ajustada con su valor_final: ${[...okIds].join(', ')}. ` : 'MODO FIXTURE: usa las cifras verificadas de la sesión copiada. ') +
         (bajas.length ? `Cifras con segunda fuente NO independiente (reproduce la primaria): ${bajas.join(', ')}: no sostengas la ancla solo en ellas si hay alternativa; si las usas, decláralo en sintesis.incertidumbre. ` : '') +
-        `${smoke ? 'MODO SMOKE: 3–4 tuits, smoke:true. ' : `${minT}–${MAX_TUITS} tuits con un beat impacto, smoke:false. `}` +
+        `${smoke ? 'MODO SMOKE: 3–4 tuits, smoke:true. ' : `${minN}–${maxN} tuits${MP.impacto ? ' con un beat impacto' : ''}, smoke:false. `}` +
         LIMITES + ' ' +
         (fallos.length ? `TU GUION ANTERIOR FUE RECHAZADO; corrige SOLO esto y vuelve a escribir guion.json completo:\n - ${fallos.join('\n - ')}\n` : '') +
-        `Escribe ${enc.sesion_dir}/guion.json completo y devuelve el mismo contenido compacto (con visual.datos en números crudos).`,
+        `Escribe ${enc.sesion_dir}/guion.json completo (con modo: "${modoPost}"${modoPost !== 'hilo' ? ` y el bloque ${modoPost}` : ''}) y devuelve el mismo contenido compacto (con modo, visual.datos en números crudos${modoPost !== 'hilo' ? ' y el bloque ' + modoPost : ''}).`,
       { agentType: 'hilo-guionista', schema: S.guion, label: fallos.length ? 'guionista-reparacion' : 'guionista' }
     ),
   validarGuion,
   2
 )
-avisar(`Tesis: ${g.tesis} · gancho ${g.hook_tipo} · ${g.tuits.length} tuits (${g.tuits.map((t) => t.beat[0].toUpperCase()).join('')}) · ${g.tuits.filter((t) => t.visual).length} visuales`)
+avisar(`Tesis: ${g.tesis} · gancho ${g.hook_tipo}${modoPost !== 'hilo' ? ' · modo ' + modoPost : ''} · ${g.tuits.length} tuits (${g.tuits.map((t) => t.beat[0].toUpperCase()).join('')}) · ${g.tuits.filter((t) => t.visual).length} visuales`)
 
 // ── FASE 4: VISUALES (lotes de 3 en paralelo, con reparación por tuit) ──────
 phase('Visuales')
@@ -492,7 +586,7 @@ const validarProd = (p) => {
   if (/^\//.test(p.ruta || '')) F.push(`la ruta debe ser RELATIVA a la raíz del repo (llegó absoluta: ${p.ruta})`)
   if (!reRuta.test(p.ruta || '')) F.push(smoke ? `en smoke/fixture la salida debe estar en ${enc.sesion_dir}/salida/ (ruta: ${p.ruta})` : `la ruta debe ser hilos/${fecha}-<slug>/ (ruta: ${p.ruta})`)
   if (smoke && !['smoke', 'fixture'].includes(p.registro_id)) F.push('en smoke/fixture registro_id debe ser "smoke" o "fixture"')
-  if (p.n_tuits > g.tuits.length || p.n_tuits < (smoke ? 3 : 4)) F.push(`n_tuits ${p.n_tuits} fuera de rango (guion ${g.tuits.length}, mínimo ${smoke ? 3 : 4})`)
+  if (p.n_tuits > g.tuits.length || p.n_tuits < minN) F.push(`n_tuits ${p.n_tuits} fuera de rango (guion ${g.tuits.length}, mínimo ${minN})`)
   if (p.n_png > conVisual.length) F.push(`n_png ${p.n_png} > ${conVisual.length}`)
   if (p.gates.mecanico !== 'ok') F.push(`gate mecánico: ${p.gates.mecanico}`)
   if (!['ok', 'incompleto'].includes(p.gates.coherencia)) F.push(`gate coherencia: ${p.gates.coherencia}`)
@@ -504,7 +598,7 @@ const prod = await conReparacion(
   'Ensamblado',
   (fallos) =>
     agentRol(
-      `Eres el productor (lee referencias/roles/productor.md y referencias/narrativa.md). Sesión: ${enc.sesion_dir}. Fecha: ${fecha}. Gancho: ${g.hook_tipo}. ` +
+      `Eres el productor (lee referencias/roles/productor.md y referencias/narrativa.md). Sesión: ${enc.sesion_dir}. Fecha: ${fecha}. Gancho: ${g.hook_tipo}. Modo del post: ${modoPost}. ` + IM.productor +
         `Tuits dudosos según los visualistas: ${dudosos.length ? dudosos.join(' | ') : 'ninguno'}. ` +
         `Ejecuta: (1) python3 scripts/materializar.py ${enc.sesion_dir} --consolidar; (2) python3 scripts/ensamblar.py ${enc.sesion_dir} --check ` +
         `(si falla, corrige guion.json, re-materializa el tuit y repite; máx. 3 vueltas); (3) gate de coherencia C1–C8 con UN Read de contacto.png y tarjetas sueltas solo si son dudosas; ` +
@@ -540,6 +634,8 @@ return {
   avisos: prod.avisos || [],
   sesion_dir: enc.sesion_dir,
   idea_id: enc.idea_id || null,
+  modo: modoPost,
+  bloque_modo: modoPost !== 'hilo' ? (g[modoPost] || null) : null,
   smoke,
   fixture,
 }
