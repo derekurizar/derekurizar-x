@@ -133,6 +133,21 @@ negativo "dato: falta visuales/tuit_1.png"     G5 "" 'rm -f "$S/visuales/tuit_1.
 negativo "dato: modo desconocido zzz"          "G1 modo" "$(mut 'g["modo"]="zzz"')"
 negativo "dato: modo de hilo (explica)"        "G1 modo" "$(mut 'g["modo"]="explica"')"
 negativo "tipo desconocido zzz"                "G1 tipo" "$(mut 'g["tipo"]="zzz"')" 'python3 -c "import json,sys; p=sys.argv[1]; e=json.load(open(p)); e[\"tipo\"]=\"zzz\"; json.dump(e, open(p,\"w\"), ensure_ascii=False, indent=2)" "$S/encuadre.json"'
+negativo "modo mapa con plantilla cifra"        "G1 modo mapa" "$(mut 'g["modo"]="mapa"; g["mapa"]={"per_capita": True, "denominador": "poblacion INE 2026"}')"
+negativo "modo antes con gancho giro_inversion"  "G1 modo antes" "$(mut 'g["modo"]="antes"; g["hook_tipo"]="giro_inversion"; g["antes"]={"anio_antes": 2016, "anio_despues": 2026, "nominal": False}')"
+negativo "modo antes sin bloque antes"           "G1 modo antes" "$(mut 'g["modo"]="antes"')"
+negativo "modo vs sin Guatemala en paises"       "G1 modo vs" "$(mut 'g["modo"]="vs"; g["vs"]={"paises": ["Honduras", "El Salvador"], "fuente_comun": "WDI", "periodo": "2024", "per_capita": True}')"
+negativo "modo vs con «ganamos» en el texto"     "G1 modo vs" "$(mut 'g["modo"]="vs"; g["vs"]={"paises": ["Guatemala", "Honduras"], "fuente_comun": "WDI", "periodo": "2024", "per_capita": True}; T[0]["texto"]="Le ganamos a Honduras otra vez con el precio del crudo. El dato, en una tarjeta."')"
+positivo_dato_antes() {
+  local S; S="$(mktemp -d "$TMP/pos.XXXXXX")"; cp -R sesiones/_fixture_dato/. "$S/"; rm -rf "$S/salida"
+  python3 -c "$(mut 'g["modo"]="antes"; g["antes"]={"anio_antes": 2016, "anio_despues": 2026, "nominal": False}')" "$S/guion.json" || return 1
+  python3 scripts/ensamblar.py "$S" --check --salida "$S/salida" >/dev/null || return 1
+  python3 -c 'import json,sys; d=json.load(open(sys.argv[1])); assert d["modo"]=="antes" and d["antes"]["anio_antes"]==2016, d.get("modo")' "$S/salida/dato.json" || { echo "dato.json sin modo antes o sin su bloque"; return 1; }
+  grep -q '^- \*\*Modo:\*\* antes' "$S/salida/post.md" || { echo "post.md sin la línea de modo"; return 1; }
+  grep -q '^## Modo antes' "$S/salida/post.md" || { echo "post.md sin la sección del modo"; return 1; }
+  grep -q '"modo": *"antes"' "$S/salida/dato.html" || { echo "dato.html sin el modo en su JSON"; return 1; }
+}
+paso "modo antes válido: dato.json, post.md y dato.html llevan el modo y su bloque" positivo_dato_antes
 FIX=sesiones/_fixture
 
 echo "== negativos del gate mecánico (copias del fixture)"
@@ -241,6 +256,51 @@ memoria_idea_smoke() {
   python3 scripts/memoria.py --registrar "$S" --ruta sesiones/_fixture/salida --dry-run 2>/dev/null | grep -q "banco de ideas no se toca"
 }
 paso "memoria.py no marca ideas en sesiones smoke/fixture" memoria_idea_smoke
+
+echo "== calendario editorial (calendario temporal; no toca ideas/)"
+CAL="$TMP/cal"; mkdir -p "$CAL/in"
+cat > "$CAL/calendario.json" <<'JSON'
+{"version": 1, "entradas": [
+ {"id": "dia-de-la-nina", "fecha": "10-11", "tipo": "dia_internacional", "titulo": "Día de la Niña", "pista": "niñas madres", "formato": "dato", "modo": null, "estado": "pendiente"},
+ {"id": "remesas-mensual", "fecha": "07", "tipo": "publicacion", "titulo": "Banguat publica remesas", "pista": "remesas del mes", "formato": "dato", "modo": null, "estado": "pendiente"},
+ {"id": "terremoto-1976", "fecha": "02-04", "tipo": "efemeride", "titulo": "Terremoto de 1976", "pista": "hace N años", "formato": "dato", "modo": "antes", "anio_origen": 1976, "estado": "hecha", "ultimo_uso": "2026-02-04"},
+ {"id": "elecciones-2027", "fecha": "2027-06-20", "tipo": "evento", "titulo": "Elecciones 2027", "pista": "padrón", "formato": "hilo", "modo": null, "estado": "pendiente"},
+ {"id": "pliegos-cnee", "fecha": ["01-31", "10-31"], "tipo": "publicacion", "titulo": "Pliegos CNEE", "pista": "tarifa del trimestre", "formato": "dato", "modo": null, "estado": "pendiente"}
+]}
+JSON
+cat > "$CAL/in/calendario_prueba.json" <<'JSON'
+{"entradas": [
+ {"id": "dia-de-la-nina", "fecha": "10-11", "tipo": "dia_internacional", "titulo": "Día de la Niña", "pista": "x", "formato": "dato"},
+ {"id": "dia-mundial-agua", "fecha": "03-22", "tipo": "dia_internacional", "titulo": "Día Mundial del Agua", "pista": "cobertura de agua por departamento", "formato": "dato", "modo": "mapa"},
+ {"id": "mal-modo", "fecha": "03-23", "tipo": "evento", "titulo": "Entrada con modo de hilo en un dato", "pista": "x", "formato": "dato", "modo": "explica"}
+]}
+JSON
+cal_cmd() { python3 scripts/calendario.py --calendario "$CAL/calendario.json" "$@"; }
+cal_proximas() {
+  cal_cmd --proximas 30 --fecha 2026-10-11 >"$CAL/p.log" || return 1
+  grep -q "2026-10-11 (hoy) · dia-de-la-nina" "$CAL/p.log" || { cat "$CAL/p.log"; return 1; }
+  grep -q "2026-11-07 (en 27 días) · remesas-mensual" "$CAL/p.log" || { cat "$CAL/p.log"; return 1; }
+  grep -q "2026-10-31 (en 20 días) · pliegos-cnee" "$CAL/p.log" || { cat "$CAL/p.log"; return 1; }
+  ! grep -q "terremoto-1976\|elecciones-2027" "$CAL/p.log" || { echo "salió una entrada fuera de ventana"; cat "$CAL/p.log"; return 1; }
+  cal_cmd --proximas 200 --fecha 2026-10-11 | grep -q "2027-02-04 (en 116 días) · terremoto-1976 .* hace 51 años" || { echo "la efeméride hecha en 2026 no vuelve en 2027"; return 1; }
+}
+paso "calendario.py --proximas (hoy, mensual, lista de fechas, hecha vuelve al año siguiente)" cal_proximas
+paso "calendario.py --dia 10-11 encuentra el Día de la Niña" bash -c 'python3 scripts/calendario.py --calendario "'"$CAL"'/calendario.json" --dia 10-11 --fecha 2026-10-11 | grep -q dia-de-la-nina'
+paso "calendario.py --dia 2027-06-20 encuentra la puntual" bash -c 'python3 scripts/calendario.py --calendario "'"$CAL"'/calendario.json" --dia 2027-06-20 | grep -q elecciones-2027'
+paso "calendario.py --buscar \"remesas\" (FUERTE)" bash -c 'python3 scripts/calendario.py --calendario "'"$CAL"'/calendario.json" --buscar "remesas del mes" | grep -q "FUERTE.*remesas-mensual"'
+cal_importar() {
+  cal_cmd --importar "$CAL/in" --fecha 2026-10-11 >"$CAL/imp.log" || return 1
+  grep -q "1 nuevas · 1 repetidas · 1 inválidas" "$CAL/imp.log" || { cat "$CAL/imp.log"; return 1; }
+  cal_cmd --ver dia-mundial-agua | grep -q '"modo": "mapa"'
+}
+paso "calendario.py --importar (1 nueva, 1 repetida por id, 1 inválida por modo)" cal_importar
+cal_marcar() {
+  cal_cmd --marcar dia-mundial-agua --estado hecha --pieza datos/2026-03-22-agua --fecha 2026-03-22 >/dev/null || return 1
+  cal_cmd --ver dia-mundial-agua | grep -q '"ultimo_uso": "2026-03-22"' || return 1
+  cal_cmd --marcar no-existe --estado hecha >/dev/null 2>&1; [[ $? -eq 1 ]]
+}
+paso "calendario.py --marcar hecha anota ultimo_uso y pieza; id inexistente → exit 1" cal_marcar
+paso "calendario.py --proximas sobre la semilla real" python3 scripts/calendario.py --proximas 30
 
 echo "== sintaxis de los workflows"
 check_js() {

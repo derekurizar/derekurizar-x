@@ -108,6 +108,7 @@ function pesoX(texto) {
     <h1>${esc(D.tema)}</h1>
     <div class="meta"><span class="chip">${esc(D.paleta)}</span><span>${esc(D.fecha)}</span><span class="chip suave">${esc(D.hook_tipo || "sin gancho")}</span>${D.modo && D.modo !== "dato" ? `<span class="chip">modo: ${esc(D.modo)}</span>` : ""}<span>tarjeta: ${esc(t.plantilla || "")}</span><span>gate mecánico: ${esc(D.gate_mecanico)}</span><span>estado: ${esc(D.estado)}</span></div>
     ${D.pista ? `<div class="meta" style="margin-top:6px"><span>pista: «${esc(D.pista)}»</span></div>` : ""}
+    ${D.modo && D.modo !== "dato" && D[D.modo] ? `<div class="meta" style="margin-top:6px"><span><b>modo ${esc(D.modo)}:</b></span>${Object.entries(D[D.modo]).map(([k, v]) => `<span>${esc(k)}: ${esc(Array.isArray(v) ? v.join(", ") : v)}</span>`).join("")}</div>` : ""}
     <p class="dato"><b>Dato:</b> ${esc(D.dato)}</p>
     ${D.por_que_impacta ? `<p class="porque"><b>Por qué impacta:</b> ${esc(D.por_que_impacta)}</p>` : ""}
   </header>

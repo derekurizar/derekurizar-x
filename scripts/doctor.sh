@@ -70,6 +70,14 @@ for f in .claude/workflows/dato.js .claude/commands/dato.md templates/dato.html 
   if [[ -s "$f" ]]; then ok "$f presente"; else aviso "falta $f (/dato no estará disponible)"; fi
 done
 
+# /fecha: calendario editorial, su script y su comando
+for f in scripts/calendario.py .claude/commands/fecha.md ideas/calendario.json; do
+  if [[ -s "$f" ]]; then ok "$f presente"; else aviso "falta $f (/fecha no estará disponible)"; fi
+done
+for f in .claude/commands/vs.md .claude/commands/mapa.md .claude/commands/antes.md; do
+  [[ -s "$f" ]] || aviso "falta $f (alias de /dato)"
+done
+
 # memoria y tokens
 for f in memoria/fuentes.json memoria/hilos.json design/tokens.json ideas/banco.json; do
   if python3 -c "import json,sys; json.load(open('$f', encoding='utf-8'))" 2>/dev/null; then ok "$f es JSON válido"; else error "$f falta o no es JSON válido"; fi

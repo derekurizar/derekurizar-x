@@ -15,13 +15,27 @@ Investigación (investigador: pista → tema final, encuadre ligero, candidatas 
   → C1/C5/C7/alt → --solo-estado → memoria.py → make validate)
 ```
 
-Orquesta `.claude/workflows/dato.js` (invocado por `/dato [pista] [smoke|fixture]`)
+Orquesta `.claude/workflows/dato.js` (invocado por `/dato [modo] [pista] [smoke|fixture]`)
 con los cuatro agentes `hilo-investigador`, `hilo-verificador`, `hilo-guionista`
 y `hilo-productor` reutilizados (sin editor ni visualistas). La pista es
 opcional: un tema, un ángulo, una fuente o una corazonada; sin pista, el
 investigador elige un dato de actualidad. No usa `ideas/`. Los gates viven en
 el JS y en `scripts/ensamblar.py --check` (modo dato por `guion.tipo`); lo que
 se gatea viaja en los retornos. Ninguna cifra `no_confirmada` llega a la tarjeta.
+
+**Modos** (`args.modo`, tabla `MODOS` en `dato.js`; espejo mínimo en
+`ensamblar.py`; alias `/vs`, `/mapa`, `/antes`): mismos cuatro agentes y mismo
+entregable; cambian el gancho, las plantillas y los gates, y el guion lleva un
+bloque del modo.
+
+| modo | qué publica | gancho | plantillas | gate propio |
+|---|---|---|---|---|
+| `vs` | Guatemala frente a otros países | libre | `barras-h`, `pesas`, `pendiente`, `dispersion`, `cifra`+comparación | todos de la misma fuente, edición y periodo; cifra elegida `desglose` por país con Guatemala; Guatemala destacada; nota con fuente común y año; sin «ganamos/perdemos» |
+| `mapa` | brecha por departamento | `brecha_territorial` | `mapa` | desglose ≥ 12 departamentos (ideal 22, nombres INE); tasa per cápita con denominador INE (absoluto solo con motivo); nota con unidad y año |
+| `antes` | hace N años frente a hoy | `antes_despues` | `antes-despues`, `pendiente`, `pesas`, `linea` | misma serie y fuente, ≥ 5 años de distancia; etiquetas con los años; dinero corriente declarado en la nota |
+
+Guía por rol: apartado «Modos vs · mapa · antes» de cada «Modo dato»; reglas
+editoriales en `referencias/narrativa.md`, «Modos de un dato».
 
 - Contrato de archivos: `referencias/contrato-sesion.md`, «Sesión dato»
 - Guía por rol: sección «Modo dato» de `referencias/roles/{investigador,verificador,guionista,productor}.md`

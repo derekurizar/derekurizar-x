@@ -1,7 +1,7 @@
 export const meta = {
   name: 'dato',
   description: 'Un dato impactante de Guatemala en UNA tarjeta 1080×1080: candidatas con evidencia → verificación → elección y tuit → producción con QA visual',
-  whenToUse: 'Invocado por /dato [pista] [smoke|fixture]. args: {pista, smoke, fixture, fecha, permitir_fallback} (fecha YYYY-MM-DD obligatoria, la pone el comando con `date +%F`). pista = orientación opcional (tema, ángulo, fuente o corazonada); sin pista el investigador elige por su cuenta un dato impactante de actualidad. smoke = corrida corta con web sin tocar memoria/ (sin pista usa «remesas familiares 2025»); fixture = sin web, copia sesiones/_fixture_dato y corre solo el productor. No lee ni toca ideas/.',
+  whenToUse: 'Invocado por /dato [modo] [pista] [smoke|fixture] (y por los alias /vs, /mapa, /antes, /fecha). args: {pista, modo, smoke, fixture, fecha, permitir_fallback} (fecha YYYY-MM-DD obligatoria, la pone el comando con `date +%F`). pista = orientación opcional (tema, ángulo, fuente o corazonada); sin pista el investigador elige por su cuenta un dato impactante de actualidad. modo = dato (defecto) | vs (Guatemala frente a otros países, misma fuente y periodo) | mapa (brecha por departamento, per cápita) | antes (hace N años vs hoy). smoke = corrida corta con web sin tocar memoria/ (sin pista usa una fija por modo); fixture = sin web, copia sesiones/_fixture_dato y corre solo el productor. No lee ni toca ideas/.',
   phases: [
     { title: 'Investigación', detail: 'investigador: pista → tema final, encuadre ligero (sesión, paleta, hook_evitar) y candidatas a dato impactante con evidencia e impacto' },
     { title: 'Verificación', detail: 'verificador: segunda fuente independiente por candidata, veredicto y valor_final' },
@@ -37,7 +37,39 @@ const RE_ID = /^dat-c\d{2}$/
 const RE_SLUG = /^[a-z0-9]+(-[a-z0-9]+)*$/
 const TOPES = { normal: { busquedas: 8, fetch: 8, cifras: 8, series: 2 }, smoke: { busquedas: 4, fetch: 4, cifras: 4, series: 1 } }
 const ITER_VISUAL = { normal: 3, smoke: 1 }
-const PISTA_SMOKE = 'remesas familiares 2025'
+const PISTA_SMOKE = { dato: 'remesas familiares 2025', vs: 'remesas por habitante en Centroamérica 2025', mapa: 'muertes violentas por departamento 2025 (INACIF)', antes: 'tipo de cambio quetzal por dólar hace 20 años' }
+// Modos de /dato (args.modo): fuerzan gancho y plantillas y añaden gates; guion.tipo sigue siendo "dato".
+// Las claves coinciden con ensamblar.MODOS["dato"] (lo comprueba scripts/check_workflows.py).
+const MODOS = {
+  dato:  { hook: null, plantillas: null },
+  vs:    { hook: null, plantillas: ['barras-h', 'pesas', 'dispersion', 'pendiente', 'cifra'] },
+  mapa:  { hook: 'brecha_territorial', plantillas: ['mapa'] },
+  antes: { hook: 'antes_despues', plantillas: ['antes-despues', 'pendiente', 'linea', 'pesas'] },
+}
+// Marcador nacionalista: en vs el titular dice la brecha, no quién «gana».
+const RE_NACIONALISTA = /\b(ganamos|perdemos|nos ganan|le ganamos|somos los (peores|mejores))\b/i
+// Instrucciones por modo que viajan en los prompts (una frase por rol; el detalle está en referencias/roles/*.md «Modos vs · mapa · antes»).
+const INSTR = {
+  dato: { investigador: '', verificador: '', guionista: '', productor: '' },
+  vs: {
+    investigador: 'MODO VS (Guatemala frente a otros países): busca el indicador en UNA fuente internacional que cubra a todos los países (CEPAL, Banco Mundial/WDI, OPS, UN Comtrade, OLADE, FMI, SIECA), misma edición, mismo periodo y misma unidad, y captúralo como UNA cifra tipo desglose con partes[] = un valor por país (Guatemala incluida; ≥2 países: Centroamérica o la región que el indicador pida). Si las poblaciones difieren mucho, trae también la versión per cápita como otra cifra desglose. Nunca mezcles prensa para un país y organismo para otro. ',
+    verificador: 'MODO VS: en cada desglose por país comprueba que TODAS las partes salgan de la misma fuente, edición y periodo (misma definición y unidad); si un país viene de otra fuente o de otro año, la candidata queda no_confirmada. ',
+    guionista: 'MODO VS: escribe modo: "vs" y el bloque vs {paises[] (los nombres tal como van en partes y en el visual, Guatemala incluida), fuente_comun, periodo, per_capita (true|false; false exige motivo ≥20 caracteres si las poblaciones difieren mucho)}. Plantillas: barras-h (orden desc y destacar = índice de Guatemala tras ordenar), pesas, pendiente o dispersion con los países como items/puntos, o cifra con comparacion (el otro país). La nota declara la fuente común y el año. Prohibido «ganamos/perdemos/somos los peores»: el titular dice la brecha. ',
+    productor: 'MODO VS: C7 recalcula la brecha entre países desde los valores crudos; comprueba que la nota nombre la fuente común y el año y que Guatemala esté destacada en el PNG. ',
+  },
+  mapa: {
+    investigador: 'MODO MAPA (brecha por departamento): busca un desglose por departamento del indicador (≥12 departamentos, ideal los 22, con los nombres oficiales del INE: Guatemala, El Progreso, Sacatepéquez, Chimaltenango, Escuintla, Santa Rosa, Sololá, Totonicapán, Quetzaltenango, Suchitepéquez, Retalhuleu, San Marcos, Huehuetenango, Quiché, Baja Verapaz, Alta Verapaz, Petén, Izabal, Zacapa, Chiquimula, Jalapa, Jutiapa) y el denominador de población del INE del mismo año (proyecciones por departamento); escribe la TASA (por 1,000 o 100,000 habitantes, o %) como cifra propia tipo desglose «cálculo propio» con evidencia del numerador y del denominador, además del absoluto. ',
+    verificador: 'MODO MAPA: verifica el total y los extremos del desglose (los 3 mayores y los 3 menores) y, en la tasa, recalcula al menos dos departamentos desde numerador y denominador. ',
+    guionista: 'MODO MAPA: escribe modo: "mapa" y el bloque mapa {per_capita (true|false), denominador («población INE 2026» o null), motivo (≥20 caracteres si per_capita es false: por qué el absoluto)}. Plantilla mapa con la tasa (valores por departamento, rotula extremos o destacar), hook_tipo brecha_territorial («En [A], X. En [B], Y. Mismo país»), titular que nombra la brecha (razón o diferencia entre extremos) y nota con unidad y año. ',
+    productor: 'MODO MAPA: comprueba en el PNG que los extremos estén rotulados y que el titular nombre la brecha; C7 recalcula la razón máximo/mínimo y una tasa desde numerador y denominador. ',
+  },
+  antes: {
+    investigador: 'MODO ANTES (hace N años frente a hoy): trae dos puntos de la MISMA serie y la MISMA fuente separados ≥5 años (o la serie completa ≥5 puntos) con la definición y unidad sin cambios; si la serie cambió de base o de metodología, dilo en nota. Si es dinero, captura si está en quetzales/dólares corrientes y, si existe, la versión real o el deflactor. ',
+    verificador: 'MODO ANTES: verifica los dos extremos (el punto de hace N años y el actual) en la misma fuente y que la definición no cambió entre ambos; en dinero, confirma si es nominal. ',
+    guionista: 'MODO ANTES: escribe modo: "antes", hook_tipo antes_despues y el bloque antes {anio_antes, anio_despues (≥5 años de distancia), nominal (true si es dinero corriente, false si es real o no es dinero, null si no aplica)}. Plantillas: antes-despues (etiquetas con los años; la píldora la calcula la plantilla), pendiente o pesas (fechas con los años) o linea con la serie. Si nominal es true, la nota dice «quetzales corrientes» (o «dólares corrientes»). El texto lee el cambio o lo que no cambió, sin «récord» salvo serie ≥10. ',
+    productor: 'MODO ANTES: C7 recalcula el factor o el porcentaje entre los dos años desde los valores crudos; si es dinero corriente, la nota lo declara. ',
+  },
+}
 
 // Peso de un texto según X (copia de scripts/contar_x.js: el sandbox no importa).
 const RE_URL = /https?:\/\/\S+|www\.\S+|\b[a-z0-9-]+(\.[a-z0-9-]+)*\.(com|gt|org|net|io|edu|gov|mx|sv|hn|es|info|co)(\/\S*)?/gi
@@ -82,6 +114,7 @@ const S = {
     properties: {
       slug: { type: 'string' }, sesion_dir: { type: 'string' },
       pista: { type: ['string', 'null'] }, tema: { type: 'string', maxLength: 80 }, pregunta: { type: 'string' },
+      modo: { type: 'string', enum: Object.keys(MODOS) },
       paleta: { type: 'string', enum: PALETAS }, hook_evitar: { type: ['string', 'null'] }, repetido: { type: 'boolean' },
       archivo: { type: 'string', pattern: 'hallazgos_dato\\.json$' }, n_busquedas: { type: 'number' }, n_fetch: { type: 'number' },
       cifras: {
@@ -112,6 +145,20 @@ const S = {
     properties: {
       archivo: { type: 'string' }, tipo: { type: 'string', enum: ['dato'] }, tesis: { type: 'string' }, ancla_id: { type: 'string' },
       paleta: { type: 'string', enum: PALETAS }, hook_tipo: { type: 'string', enum: HOOKS },
+      modo: { type: 'string', enum: Object.keys(MODOS) },
+      // Bloques por modo (el workflow exige el del modo pedido).
+      vs: {
+        type: 'object', required: ['paises', 'fuente_comun', 'periodo', 'per_capita'],
+        properties: { paises: { type: 'array', minItems: 2, items: { type: 'string' } }, fuente_comun: { type: 'string' }, periodo: { type: 'string' }, per_capita: { type: 'boolean' }, motivo: { type: 'string' } },
+      },
+      mapa: {
+        type: 'object', required: ['per_capita'],
+        properties: { per_capita: { type: 'boolean' }, denominador: { type: ['string', 'null'] }, motivo: { type: 'string' } },
+      },
+      antes: {
+        type: 'object', required: ['anio_antes', 'anio_despues', 'nominal'],
+        properties: { anio_antes: { type: 'integer' }, anio_despues: { type: 'integer' }, nominal: { type: ['boolean', 'null'] } },
+      },
       dato: {
         type: 'object', required: ['cifra_id', 'titular', 'por_que_impacta'],
         properties: { cifra_id: { type: 'string' }, titular: { type: 'string', maxLength: 120 }, por_que_impacta: { type: 'string', maxLength: 300 } },
@@ -182,7 +229,12 @@ const fixture = !!A.fixture || /\bfixture\b/i.test(pistaBruta)
 const smoke = fixture || !!A.smoke || /\bsmoke\b/i.test(pistaBruta)
 // Pista literal del usuario (o null). En smoke sin pista, una fija (como hilo con «remesas familiares 2025»).
 const pistaUsuario = pistaBruta.replace(/\b(smoke|fixture)\b/gi, '').trim() || null
-const pista = pistaUsuario || (smoke && !fixture ? PISTA_SMOKE : null)
+// Modo del post (dato | vs | mapa | antes): lo fija el comando; desconocido = error, no silencio.
+const modoPost = A.modo ? String(A.modo).toLowerCase() : 'dato'
+if (!MODOS[modoPost]) throw new Error(`args.modo "${A.modo}" desconocido (${Object.keys(MODOS).join('|')}).`)
+const MP = MODOS[modoPost]
+const IM = INSTR[modoPost]
+const pista = pistaUsuario || (smoke && !fixture ? PISTA_SMOKE[modoPost] : null)
 const fecha = String(A.fecha || '')
 if (!/^\d{4}-\d{2}-\d{2}$/.test(fecha)) throw new Error('args.fecha (YYYY-MM-DD) es obligatoria: /dato la obtiene con `date +%F` y la pasa en args.')
 const modo = smoke ? 'smoke' : 'normal'
@@ -232,23 +284,25 @@ let bajas = []      // cifras cuya segunda fuente reproduce la primaria (indepen
 let g = null        // guion (null en fixture)
 
 if (fixture) {
-  enc = { slug: sesionFixture.replace(/^sesiones\//, ''), sesion_dir: sesionFixture, tema: 'fixture dato', pista: null, paleta: null, hook_evitar: null }
+  enc = { slug: sesionFixture.replace(/^sesiones\//, ''), sesion_dir: sesionFixture, tema: 'fixture dato', pista: null, paleta: null, hook_evitar: null, modo: 'dato' }
+  if (modoPost !== 'dato') avisar(`AVISO: el fixture es un dato simple; el modo ${modoPost} solo se ejercita en smoke o normal.`)
   avisar(`FIXTURE: el productor copiará sesiones/_fixture_dato a ${sesionFixture} y correrá solo la producción.`)
 } else {
   phase('Investigación')
   const hal = await agentRol(
-    `Eres el investigador del flujo /dato (lee referencias/roles/investigador.md, sección «Modo dato», y referencias/contrato-sesion.md, «Sesión dato»). Fecha: ${fecha}. ${smoke ? 'MODO SMOKE: presupuesto corto. ' : 'Modo normal. '}` +
+    `Eres el investigador del flujo /dato (lee referencias/roles/investigador.md, sección «Modo dato»${modoPost !== 'dato' ? ' y su apartado «Modos vs · mapa · antes»' : ''}, y referencias/contrato-sesion.md, «Sesión dato»). Fecha: ${fecha}. ${smoke ? 'MODO SMOKE: presupuesto corto. ' : 'Modo normal. '}` +
+      `MODO DEL POST: ${modoPost}. ` + IM.investigador +
       (pista
         ? `PISTA del usuario: «${pista}». Es una orientación, no un encargo cerrado: puede ser un tema, un ángulo, una fuente o una corazonada. Úsala para empezar y desvíate si en su vecindad (misma área o misma fuente) encuentras un dato más fuerte; el tema final lo decides tú. `
         : 'SIN PISTA: elige por tu cuenta UN dato impactante de actualidad sobre Guatemala: empieza por publicaciones recientes de fuentes oficiales (boletines, tableros, informes de las últimas semanas) y por python3 scripts/fuentes.py --tema "…" --series en distintas áreas; quédate con el área donde hay un dato duro que sorprenda. ') +
       `ENCUADRE LIGERO (no hay editor, lo haces tú): (1) corre python3 scripts/memoria.py --datos "<tema>" (y sin tema) para no repetir un dato ya publicado y para hook_evitar = hook de la primera línea de la lista sin tema (el dato más reciente; null si no hay); lee memoria/hilos.json SOLO para marcar repetido si el tema ya tuvo hilo. ` +
       `(2) Elige la paleta por tema (design/tokens.json → paletas.*.temas). (3) Crea sesiones/<slug>/ (slug del tema final: minúsculas, sin tildes, guiones, sin fecha; si la carpeta existe, sufijo -2) y escribe encuadre.json ` +
-      `{slug, pista: ${pista ? JSON.stringify(pista) : 'null'}, tema (el tema final que elegiste: ≤80 caracteres, sin dos puntos; el detalle va en pregunta y brief), fecha: "${fecha}", tipo: "dato", paleta, pregunta, hook_evitar, repetido, sesion_dir: "sesiones/<slug>", smoke: ${smoke}, fixture: false, ejes: [{id: "dato", prefijo: "dat", brief, preguntas[], fuentes_sugeridas[]}]} ` +
+      `{slug, pista: ${pista ? JSON.stringify(pista) : 'null'}, tema (el tema final que elegiste: ≤80 caracteres, sin dos puntos; el detalle va en pregunta y brief), fecha: "${fecha}", tipo: "dato", modo: "${modoPost}", paleta, pregunta, hook_evitar, repetido, sesion_dir: "sesiones/<slug>", smoke: ${smoke}, fixture: false, ejes: [{id: "dato", prefijo: "dat", brief, preguntas[], fuentes_sugeridas[]}]} ` +
       `con la salida de python3 scripts/fuentes.py --tema "<tema final>" --series (no abras memoria/fuentes.json). ` +
       `INVESTIGACIÓN: busca CANDIDATAS a dato impactante (no una historia): cifras que sorprendan, contradigan la intuición o tengan escala humana, con comparación clara (antes/después, Guatemala vs región, per cápita, departamento vs país). ` +
       `Ids "dat-cNN". PRESUPUESTO: ≤${T.busquedas} búsquedas, ≤${T.fetch} fetch, ≤${T.cifras} cifras, ≤${T.series} series. Cada cifra con evidencia {url, cita, archivo_local} y un campo impacto (una línea ≤160: por qué sorprende o a qué escala humana se traduce). ` +
       `Si una candidata vive de una comparación, captura los dos lados (en partes[] o como cifra aparte); «récord/histórico» solo con la serie completa (≥10 puntos). Sin Playwright MCP. ` +
-      `Escribe sesiones/<slug>/hallazgos_dato.json COMPLETO (eje: "dato") y devuelve solo el resumen: slug, sesion_dir, pista, tema, pregunta, paleta, hook_evitar, repetido, archivo, n_busquedas, n_fetch, cifras[]{id, tipo, n_puntos, impacto}, vacios[].`,
+      `Escribe sesiones/<slug>/hallazgos_dato.json COMPLETO (eje: "dato") y devuelve solo el resumen: slug, sesion_dir, pista, tema, modo, pregunta, paleta, hook_evitar, repetido, archivo, n_busquedas, n_fetch, cifras[]{id, tipo, n_puntos, impacto}, vacios[].`,
     { agentType: 'hilo-investigador', schema: S.hallazgos_dato, label: 'investigador' }
   )
   if (!hal) fail('Investigación sin resultado: el investigador no terminó.')
@@ -261,10 +315,14 @@ if (fixture) {
   if (hal.cifras.length < 3) avisar(`AVISO: solo ${hal.cifras.length} candidata(s); el guionista tendrá poco donde elegir.`)
   if (hal.repetido) avisar('AVISO: tema ya cubierto en memoria/; el investigador declara ángulo o periodo nuevo en encuadre.json.')
   if ((hal.pista || null) !== pista) avisar(`AVISO: el investigador devolvió pista ${JSON.stringify(hal.pista || null)}; la directiva traía ${JSON.stringify(pista)} (corrígelo en encuadre.json si importa para el registro).`)
+  if (hal.modo && hal.modo !== modoPost) avisar(`AVISO: el investigador devolvió modo ${hal.modo}; la directiva pedía ${modoPost} (encuadre.json debe decir modo: "${modoPost}").`)
+  if (MP.hook && hal.hook_evitar === MP.hook) avisar(`AVISO: el modo ${modoPost} fuerza el gancho ${MP.hook}, que es también el del último dato (hook_evitar); se permite igual.`)
+  if (modoPost === 'mapa') { const desg = hal.cifras.filter((c) => c.tipo === 'desglose' && (c.n_puntos || 0) >= 12); if (!desg.length) avisar('AVISO: modo mapa sin ningún desglose de ≥12 departamentos entre las candidatas; el guion fallará si no hay uno verificado.') }
+  if (modoPost === 'vs') { const desg = hal.cifras.filter((c) => c.tipo === 'desglose' && (c.n_puntos || 0) >= 2); if (!desg.length) avisar('AVISO: modo vs sin ningún desglose por país entre las candidatas; el guion fallará si no hay uno verificado.') }
   if (pista && hal.tema && hal.tema.toLowerCase() !== pista.toLowerCase()) avisar(`Pista «${pista}» → tema final «${hal.tema}».`)
   for (const c of hal.cifras) CIF.set(c.id, c)
   enc = hal
-  avisar(`Tema: ${enc.tema}${pista ? ` (pista: «${pista}»)` : ' (sin pista)'} · pregunta: ${enc.pregunta} · paleta ${enc.paleta} · ${hal.cifras.length} candidatas · sesión ${enc.sesion_dir}${enc.hook_evitar ? ' · hook_evitar ' + enc.hook_evitar : ''}`)
+  avisar(`Tema: ${enc.tema}${pista ? ` (pista: «${pista}»)` : ' (sin pista)'}${modoPost !== 'dato' ? ` · modo ${modoPost}` : ''} · pregunta: ${enc.pregunta} · paleta ${enc.paleta} · ${hal.cifras.length} candidatas · sesión ${enc.sesion_dir}${enc.hook_evitar ? ' · hook_evitar ' + enc.hook_evitar : ''}`)
 
   // ── FASE 2: VERIFICACIÓN ──────────────────────────────────────────────────
   phase('Verificación')
@@ -273,6 +331,7 @@ if (fixture) {
     `Corre python3 scripts/digesto.py ${enc.sesion_dir} --eje dato --para verificador (no leas hallazgos_dato.json entero). ` +
     `Verifica TODAS las candidatas: ${hal.cifras.map((c) => c.id).join(', ')}. Parte de la cita y del archivo local; una segunda fuente genuinamente independiente por cifra; ≤2 fetch y ≤1 búsqueda por cifra. ` +
     `En una comparación verifica los dos lados (misma definición, unidad y periodo); en una candidata «récord» verifica que el máximo de la serie sea ese valor. ${smoke ? 'MODO SMOKE: cita + una segunda fuente; extremos de cada serie. ' : ''}` +
+    (modoPost !== 'dato' ? `MODO DEL POST: ${modoPost} (apartado «Modos vs · mapa · antes» de tu guía). ` + IM.verificador : '') +
     `Escribe ${enc.sesion_dir}/verificacion_dato.json COMPLETO con EXACTAMENTE esta forma: {"eje": "dato", "items": [{"id", "veredicto": "verificada|ajustada|no_confirmada", "valor_final", "fuente_2", "url_2", "nota"}]} (la clave es items, no cifras) y devuelve ok[] (id, valor_final) y no_confirmadas[].`
   const optsV = { agentType: 'hilo-verificador', schema: S.verificacion, label: 'verificador' }
   let ver = await agentRol(promptV, optsV)
@@ -304,7 +363,8 @@ if (fixture) {
     if (t.n !== 1) F.push('el tuit debe ser n: 1')
     if (t.beat !== 'gancho') F.push('el tuit debe ser beat gancho')
     if (gg.paleta !== enc.paleta) F.push(`paleta del guion (${gg.paleta}) ≠ encuadre (${enc.paleta})`)
-    if (enc.hook_evitar && gg.hook_tipo === enc.hook_evitar) F.push(`hook_tipo ${gg.hook_tipo} es el del último dato publicado (hook_evitar); elige otro`)
+    if (MP.hook) { if (gg.hook_tipo !== MP.hook) F.push(`modo ${modoPost}: hook_tipo debe ser ${MP.hook} (es ${gg.hook_tipo})`) }
+    else if (enc.hook_evitar && gg.hook_tipo === enc.hook_evitar) F.push(`hook_tipo ${gg.hook_tipo} es el del último dato publicado (hook_evitar); elige otro`)
     // Dato elegido
     const D = gg.dato || {}
     const cid = D.cifra_id
@@ -339,6 +399,10 @@ if (fixture) {
     const d = v.datos || {}
     for (const k of REQ[v.plantilla] || []) if (!(k in d)) F.push(`(${v.plantilla}) falta datos.${k}`)
     const pl = v.plantilla
+    // En cifra/waffle la cifra héroe es datos.cifra.valor: dato.cifra_id debe ser ESA cifra, no la de comparación.
+    if (['cifra', 'waffle'].includes(pl) && d.cifra && typeof d.cifra.valor === 'number' && VER.get(cid) && typeof VER.get(cid).valor_final === 'number' && Math.abs(VER.get(cid).valor_final - d.cifra.valor) > 1e-6) {
+      F.push(`dato.cifra_id ${cid} (valor_final ${VER.get(cid).valor_final}) no es la cifra héroe de la tarjeta (datos.cifra.valor ${d.cifra.valor}): apunta a la cifra que muestra el número grande`)
+    }
     if (pl === 'cifra') {
       if (!(d.cifra && typeof d.cifra.valor === 'number')) F.push('cifra: datos.cifra.valor debe ser un número crudo')
       if (!(d.cifra && String(d.cifra.texto || '').trim())) F.push('cifra: datos.cifra.texto vacío (qué es la cifra y de cuándo)')
@@ -398,6 +462,75 @@ if (fixture) {
       if (!base.length) F.push('usa «más alto/bajo desde…» sin una serie o desglose ≥5 puntos en cifra_ids')
       else avisar('AVISO: superlativo relativo («más alto/bajo desde…») en el guion; el productor lo comprueba contra la serie con el año de partida inclusive (C7).')
     }
+    // ── Modo del post (vs · mapa · antes): bloque, plantilla y reglas propias ──
+    const modoG = gg.modo || 'dato'
+    if (modoG !== modoPost) F.push(`modo del guion (${modoG}) ≠ modo pedido (${modoPost}): escribe modo: "${modoPost}" en guion.json`)
+    if (MP.plantillas && !MP.plantillas.includes(pl)) F.push(`modo ${modoPost}: plantilla ${pl} no vale (${MP.plantillas.join('|')})`)
+    const C0 = CIF.get(cid) || {}
+    const esGT = (s) => /guatemala/i.test(String(s || ''))
+    const nombresVisual = () => {
+      if (['barras-h', 'pesas', 'pendiente'].includes(pl)) return (d.items || []).map((it) => String((it || {}).nombre || ''))
+      if (pl === 'dispersion') return (d.puntos || []).map((q) => String((q || {}).nombre || ''))
+      if (pl === 'linea') return (d.series || []).map((sr) => String((sr || {}).nombre || ''))
+      return []
+    }
+    const textosClave = [tx, v.titular.join(' '), D.titular || '']
+    if (modoPost === 'vs') {
+      const V = gg.vs
+      if (!V) F.push('modo vs: falta el bloque vs {paises, fuente_comun, periodo, per_capita}')
+      else {
+        const P = Array.isArray(V.paises) ? V.paises.map((x) => String(x)) : []
+        if (P.length < 2) F.push('modo vs: paises debe listar ≥2 países')
+        if (!P.some(esGT)) F.push('modo vs: paises debe incluir Guatemala')
+        if (!String(V.fuente_comun || '').trim()) F.push('modo vs: fuente_comun vacía (la misma fuente para todos los países)')
+        if (!String(V.periodo || '').trim()) F.push('modo vs: periodo vacío (el mismo para todos los países)')
+        if (V.per_capita === false && String(V.motivo || '').trim().length < 20) F.push('modo vs: per_capita false exige motivo (≥20 caracteres)')
+        if (C0.tipo !== 'desglose' || (C0.n_puntos || 0) < 2) F.push(`modo vs: la cifra elegida ${cid} debe ser un desglose por país (tipo desglose con ≥2 partes)`)
+        const nombres = nombresVisual()
+        if (pl === 'cifra') { if (!d.comparacion) F.push('modo vs: en plantilla cifra la comparacion (el otro país) es obligatoria') }
+        else {
+          if (!nombres.some(esGT)) F.push('modo vs: el visual no tiene un item/punto/serie llamado Guatemala')
+          const fuera = nombres.filter((nm) => nm && !P.some((pp) => pp.toLowerCase() === nm.toLowerCase()))
+          if (fuera.length) F.push(`modo vs: nombres del visual fuera de vs.paises: ${fuera.join(', ')}`)
+        }
+        if (pl === 'barras-h') {
+          const items = d.orden === 'dado' ? (d.items || []).slice() : (d.items || []).slice().sort((a, b) => ((b || {}).valor || 0) - ((a || {}).valor || 0))
+          const iGT = items.findIndex((it) => esGT((it || {}).nombre))
+          const nI = items.length, hi = nI ? (((d.destacar || 0) % nI) + nI) % nI : -1
+          if (iGT >= 0 && hi !== iGT) F.push(`modo vs: barras-h destacar debe apuntar a Guatemala (índice ${iGT} tras ordenar ${d.orden === 'dado' ? 'dado' : 'desc'}; destacar vale ${d.destacar || 0})`)
+        }
+        if (textosClave.some((t0) => RE_NACIONALISTA.test(t0))) F.push('modo vs: «ganamos/perdemos/somos los peores» no va: el titular dice la brecha, no el marcador')
+        if (!String(v.nota || '').trim()) F.push('modo vs: la nota declara la fuente común y el año')
+      }
+    }
+    if (modoPost === 'mapa') {
+      const Mb = gg.mapa
+      if (!Mb) F.push('modo mapa: falta el bloque mapa {per_capita, denominador, motivo}')
+      else {
+        if (C0.tipo !== 'desglose' || (C0.n_puntos || 0) < 12) F.push(`modo mapa: la cifra elegida ${cid} debe ser un desglose por departamento con ≥12 partes (tipo desglose, n_puntos ≥12)`)
+        if (Mb.per_capita === false && String(Mb.motivo || '').trim().length < 20) F.push('modo mapa: per_capita false exige motivo (≥20 caracteres: por qué el absoluto y no la tasa)')
+        if (Mb.per_capita === false) avisar('AVISO: modo mapa sin per cápita (absolutos); el motivo va en guion.mapa.motivo y la nota de la tarjeta lo dice.')
+        if (Mb.per_capita === true && !String(Mb.denominador || '').trim()) F.push('modo mapa: per_capita true exige denominador (p. ej. «población INE 2026»)')
+        if (!String(v.nota || '').trim()) F.push('modo mapa: la nota declara la unidad (tasa o absoluto) y el año')
+      }
+    }
+    if (modoPost === 'antes') {
+      const Ab = gg.antes
+      if (!Ab) F.push('modo antes: falta el bloque antes {anio_antes, anio_despues, nominal}')
+      else {
+        const a0 = parseInt(Ab.anio_antes, 10), a1 = parseInt(Ab.anio_despues, 10)
+        if (!(a1 - a0 >= 5)) F.push(`modo antes: anio_despues − anio_antes debe ser ≥5 (${Ab.anio_antes} → ${Ab.anio_despues})`)
+        if (pl === 'antes-despues') {
+          if (!String((d.antes || {}).etiqueta || '').includes(String(a0))) F.push(`modo antes: datos.antes.etiqueta debe contener el año ${a0}`)
+          if (!String((d.despues || {}).etiqueta || '').includes(String(a1))) F.push(`modo antes: datos.despues.etiqueta debe contener el año ${a1}`)
+        }
+        if (['pendiente', 'pesas'].includes(pl)) {
+          const fe = (d.fechas || []).map((x) => String(x))
+          if (!(fe[0] || '').includes(String(a0)) || !(fe[1] || '').includes(String(a1))) F.push(`modo antes: datos.fechas deben ser los años ${a0} y ${a1}`)
+        }
+        if (Ab.nominal === true && !/corriente|nominal/i.test(String(v.nota || ''))) F.push('modo antes: nominal true exige una nota con «quetzales corrientes» (o «dólares corrientes»/«nominal»)')
+      }
+    }
     return F
   }
   const impactos = [...okIds].map((id) => `${id} · ${(CIF.get(id) || {}).impacto || '(sin impacto declarado)'}${bajas.includes(id) ? ' (2ª fuente NO independiente: solidez ≤3)' : ''}`).join('; ')
@@ -409,19 +542,20 @@ if (fixture) {
           `Lee encuadre.json y corre python3 scripts/digesto.py ${enc.sesion_dir} --para guionista (no leas hallazgos_dato.json ni verificacion_dato.json enteros; para los puntos de una serie usa --serie <id>). ` +
           `Paleta: ${enc.paleta}. Fecha: ${fecha}. hook_evitar: ${enc.hook_evitar || 'ninguno'}. ${smoke ? 'MODO SMOKE (smoke: true). ' : 'smoke: false. '}` +
           `CANDIDATAS VERIFICADAS (id · impacto según el investigador): ${impactos}. ` +
+          `MODO DEL POST: ${modoPost}${modoPost !== 'dato' ? ' (apartado «Modos vs · mapa · antes» de tu guía). ' : '. '}` + IM.guionista +
           `Puntúa CADA candidata de 1 a 5 en sorpresa, magnitud (escala humana), comparacion, actualidad y solidez (puntaje = suma, 5–25); elige UNA (dato.cifra_id = ancla_id) y escribe candidatas[] con todas: {id, puntaje, criterios, elegida, motivo} (las descartadas dicen por qué pierden). ` +
           `Escribe dato: {cifra_id, titular (una línea ≤90: el hallazgo en palabras), por_que_impacta}. ` +
           `Escribe EXACTAMENTE UN tuit {n: 1, beat: "gancho", texto, alt_text, visual}: plantilla cifra por defecto (antes-despues, waffle, dona, bullet, mapa, linea si el dato lo pide); visual.titular es el hallazgo, el pie lleva la fuente. ` +
           LIMITES + ' ' +
           (fallos.length ? `TU GUION ANTERIOR FUE RECHAZADO; corrige SOLO esto y vuelve a escribir guion.json completo:\n - ${fallos.join('\n - ')}\n` : '') +
-          `Escribe ${enc.sesion_dir}/guion.json COMPLETO {slug, fecha, tipo: "dato", paleta, smoke, handle, hook_tipo, dato, candidatas, sintesis{pregunta, tesis, ancla_id, no_afirma, incertidumbre, descartadas}, tuits} y devuelve el mismo contenido compacto (archivo, tipo, tesis, ancla_id, paleta, hook_tipo, dato, candidatas, no_afirma, tuits con visual.datos en números crudos).`,
+          `Escribe ${enc.sesion_dir}/guion.json COMPLETO {slug, fecha, tipo: "dato", modo: "${modoPost}", paleta, smoke, handle, hook_tipo, dato, candidatas, sintesis{pregunta, tesis, ancla_id, no_afirma, incertidumbre, descartadas}, tuits${modoPost !== 'dato' ? `, ${modoPost}{…}` : ''}} y devuelve el mismo contenido compacto (archivo, tipo, modo, tesis, ancla_id, paleta, hook_tipo, dato, candidatas, no_afirma, tuits con visual.datos en números crudos${modoPost !== 'dato' ? ', y el bloque ' + modoPost : ''}).`,
         { agentType: 'hilo-guionista', schema: S.guion_dato, label: fallos.length ? 'guionista-reparacion' : 'guionista' }
       ),
     validarGuion,
     2
   )
   const vf = VER.get(g.dato.cifra_id)
-  avisar(`Dato: ${g.dato.titular} · ${g.dato.cifra_id} = ${vf ? vf.valor_final : '?'} · gancho ${g.hook_tipo} · ${g.tuits[0].visual.plantilla} · texto ${pesoX(g.tuits[0].texto)} de peso X`)
+  avisar(`Dato: ${g.dato.titular} · ${g.dato.cifra_id} = ${vf ? vf.valor_final : '?'} · gancho ${g.hook_tipo} · ${g.tuits[0].visual.plantilla}${modoPost !== 'dato' ? ' · modo ' + modoPost : ''} · texto ${pesoX(g.tuits[0].texto)} de peso X`)
 }
 
 // ── FASE 4: PRODUCCIÓN (QA visual + ensamblado + coherencia, una reparación) ─
@@ -449,7 +583,7 @@ const prod = await conReparacion(
       `Eres el productor del flujo /dato (lee referencias/roles/productor.md «Modo dato», referencias/roles/visualista.md y la «Checklist de QA visual» de referencias/diseno/graficos.md). Sesión: ${enc.sesion_dir}. Fecha: ${fecha}. ` +
         (fixture
           ? `MODO FIXTURE: primero mkdir -p ${enc.sesion_dir} && cp -R sesiones/_fixture_dato/. ${enc.sesion_dir}/ (con el punto final: así no anida si ya existe); en encuadre.json y guion.json copiados pon fixture: true, smoke: true, fecha "${fecha}" y sesion_dir "${enc.sesion_dir}". `
-          : `Gancho: ${g.hook_tipo}. Dato elegido: ${g.dato.cifra_id} (${g.dato.titular}). ${smoke ? 'MODO SMOKE. ' : ''}` +
+          : `Gancho: ${g.hook_tipo}. Dato elegido: ${g.dato.cifra_id} (${g.dato.titular}). Modo del post: ${modoPost}. ${IM.productor}${smoke ? 'MODO SMOKE. ' : ''}` +
             (bajas.includes(g.dato.cifra_id) ? 'La cifra elegida tiene segunda fuente NO independiente (reproduce la primaria): comprueba que sintesis.incertidumbre lo declare; si no, añádelo en guion.json y re-ensambla. ' : '')) +
         `Ejecuta: (1) QA VISUAL tú mismo (no hay visualistas): python3 scripts/materializar.py ${enc.sesion_dir} --tuit 1 (exit 0 = pasa R1–R6), UN Read de ${enc.sesion_dir}/visuales/tuit_1.png por iteración, checklist; correcciones SOLO en ${enc.sesion_dir}/visuales/tuit_1.ajuste.json y re-materializar; máximo ${maxIter} iteración(es); si queda dudoso, dudoso: true con nota en avisos. ` +
         `(2) python3 scripts/materializar.py ${enc.sesion_dir} --consolidar. (3) python3 scripts/ensamblar.py ${enc.sesion_dir} --check (modo dato automático por guion.tipo; si falla, corrige guion.json, re-materializa y repite; máx. 3 vueltas). ` +
@@ -500,6 +634,8 @@ return {
   pista,
   pista_usuario: pistaUsuario,
   tema: enc.tema || null,
+  modo: modoPost,
+  bloque_modo: g && modoPost !== 'dato' ? (g[modoPost] || null) : null,
   smoke,
   fixture,
 }

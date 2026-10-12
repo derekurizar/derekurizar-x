@@ -6,7 +6,7 @@ GALERIA := templates/.galeria
 PALETAS ?= cielo
 PALETA ?= cielo
 
-.PHONY: help nuevo render visual catalogo validate tabla pdf ensamblar limpiar test doctor costo contacto digesto fuentes ideas
+.PHONY: help nuevo render visual catalogo validate tabla pdf ensamblar limpiar test doctor costo contacto digesto fuentes ideas calendario
 
 help:
 	@echo "make nuevo T=<plantilla> OUT=<ruta.html> [PALETA=cielo]  ensambla una tarjeta (base + plantilla)"
@@ -24,6 +24,7 @@ help:
 	@echo "make digesto SESION=sesiones/<slug> [PARA=guionista]     resumen compacto de la sesión para agentes"
 	@echo "make fuentes TEMA=\"texto\"                                 catálogo de fuentes y series filtrado por tema"
 	@echo "make ideas                                               banco de ideas (ideas/banco.json) y temas ya producidos"
+	@echo "make calendario [DIAS=30]                                calendario editorial (ideas/calendario.json): próximas ocasiones para /fecha"
 	@echo "make limpiar [SESION=sesiones/<slug>]                    borra $(GALERIA)/, salidas de _fixture y _fixture_dato y .playwright-mcp/ (o una sesión)"
 
 nuevo:
@@ -88,3 +89,6 @@ fuentes:
 
 ideas:
 	python3 scripts/ideas.py --resumen
+
+calendario:
+	python3 scripts/calendario.py --proximas $(if $(DIAS),$(DIAS),30)

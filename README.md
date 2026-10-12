@@ -3,9 +3,16 @@
 Framework de Claude Code para producir **hilos de X con datos de Guatemala**
 que cuentan una historia: a partir de un tema, agentes orquestados investigan,
 verifican cifras, escriben el guion y generan una tarjeta 1080×1080 por tuit.
+También produce **datos sueltos** (una tarjeta) en varios géneros.
 
 ```
 /hilo precios de combustibles en Guatemala 2026
+/dato remesas                      # un dato impactante en una tarjeta
+/vs carga tributaria               # Guatemala frente a otros países
+/mapa retornados por cada mil      # brecha por departamento
+/antes tipo de cambio hace 20 años # hace N años frente a hoy
+/fecha                             # qué ocasiones con dato vienen en 30 días
+/ideas                             # banco de ideas para hilos
 ```
 
 Deja en `hilos/2026-09-28-<slug>/`:
@@ -33,6 +40,8 @@ se registran al arrancar) y:
 /hilo fixture                  # ~5 min, sin web: prueba guion → tarjetas → entrega
 /hilo smoke remesas 2025       # ~10–15 min con web, 1 eje, 3 tuits
 /hilo <tema>                   # corrida completa (~25–40 min)
+/dato fixture                  # ~3 min, sin web: solo el productor
+/dato [vs|mapa|antes] <pista>  # un dato (~8–15 min); con modo cambia el género
 ```
 
 Abre `hilo.html`, revisa `contacto.png`, y publica a mano: PNG + texto + alt-text.
@@ -49,9 +58,10 @@ Abre `hilo.html`, revisa `contacto.png`, y publica a mano: PNG + texto + alt-tex
 
 Las tarjetas siguen el brief visual (`referencias/diseno/brief/`): una paleta
 por tema, titular en Instrument Serif, kicker y cifras en JetBrains Mono, pie
-con fuente y handle. Once plantillas: cifra, línea, barras verticales y
-horizontales, antes/después, dona, pendiente, pesas, waffle, mapa de calor y
-mapa por departamento.
+con fuente y handle. Dieciocho plantillas (`templates/graficos/`): cifra, línea,
+barras verticales y horizontales, antes/después, dona, pendiente, pesas, waffle,
+mapa de calor, mapa por departamento, bullet, embudo, divergente, apilada,
+pirámide, treemap y dispersión.
 
 ## Cuando algo falla
 

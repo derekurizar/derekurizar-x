@@ -1,0 +1,835 @@
+{
+  "version": 1,
+  "_comentario": "Calendario editorial para /fecha: efemérides, días internacionales y publicaciones de fuentes con un dato de Guatemala detrás. Lo escribe SOLO scripts/calendario.py (importar, marcar). fecha: MM-DD anual · DD mensual · YYYY-MM-DD puntual (o lista). estado: pendiente | hecha | descartada. Las fechas marcadas «estimada» en nota se confirman antes de producir la pieza.",
+  "entradas": [
+    {
+      "id": "terremoto-1976",
+      "fecha": "02-04",
+      "tipo": "efemeride",
+      "titulo": "Terremoto del 4 de febrero de 1976",
+      "pista": "50 años del terremoto de 1976: muertos, heridos y viviendas destruidas entonces frente a la sismicidad y la vulnerabilidad de hoy (INSIVUMEH, CONRED, censo)",
+      "formato": "dato",
+      "modo": "antes",
+      "fuentes_sugeridas": [
+        "INSIVUMEH",
+        "CONRED",
+        "INE censo"
+      ],
+      "anio_origen": 1976,
+      "nota": "",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "acuerdos-de-paz-1996",
+      "fecha": "12-29",
+      "tipo": "efemeride",
+      "titulo": "Firma de los Acuerdos de Paz (1996)",
+      "pista": "N años de la paz: homicidios, pobreza o escolaridad en 1996 frente a hoy en la misma serie (INACIF/PNC, INE, Mineduc)",
+      "formato": "dato",
+      "modo": "antes",
+      "fuentes_sugeridas": [
+        "INACIF",
+        "PNC",
+        "INE",
+        "Mineduc"
+      ],
+      "anio_origen": 1996,
+      "nota": "",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "huracan-mitch-1998",
+      "fecha": "10-31",
+      "tipo": "efemeride",
+      "titulo": "Huracán Mitch (octubre-noviembre de 1998)",
+      "pista": "Mitch en cifras entonces (muertos, damnificados, pérdidas CEPAL) frente a la última tormenta grande; qué cambió en CONRED",
+      "formato": "dato",
+      "modo": "antes",
+      "fuentes_sugeridas": [
+        "CONRED",
+        "CEPAL",
+        "INSIVUMEH"
+      ],
+      "anio_origen": 1998,
+      "nota": "fecha estimada: afectó a Guatemala del 26 de octubre al 4 de noviembre de 1998",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "tormenta-stan-2005",
+      "fecha": "10-05",
+      "tipo": "efemeride",
+      "titulo": "Tormenta Stan y el deslave de Panabaj (2005)",
+      "pista": "Stan en cifras (CONRED, CEPAL) y la exposición actual a deslaves: población en zonas de riesgo hoy",
+      "formato": "dato",
+      "modo": "antes",
+      "fuentes_sugeridas": [
+        "CONRED",
+        "CEPAL"
+      ],
+      "anio_origen": 2005,
+      "nota": "",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "tormenta-agatha-2010",
+      "fecha": "05-29",
+      "tipo": "efemeride",
+      "titulo": "Tormenta Agatha y erupción del Pacaya (mayo de 2010)",
+      "pista": "Agatha y Pacaya en cifras frente a la temporada de lluvias actual: daños, evacuados, lluvia acumulada (CONRED, INSIVUMEH)",
+      "formato": "dato",
+      "modo": null,
+      "fuentes_sugeridas": [
+        "CONRED",
+        "INSIVUMEH"
+      ],
+      "anio_origen": 2010,
+      "nota": "",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "erupcion-fuego-2018",
+      "fecha": "06-03",
+      "tipo": "efemeride",
+      "titulo": "Erupción del Volcán de Fuego (3 de junio de 2018)",
+      "pista": "N años de la erupción: víctimas y evacuados entonces; población que hoy vive en el radio de riesgo del Fuego y actividad reciente (CONRED, INSIVUMEH, INE)",
+      "formato": "dato",
+      "modo": null,
+      "fuentes_sugeridas": [
+        "CONRED",
+        "INSIVUMEH",
+        "INE"
+      ],
+      "anio_origen": 2018,
+      "nota": "",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "revolucion-1944",
+      "fecha": "10-20",
+      "tipo": "efemeride",
+      "titulo": "Revolución de Octubre (1944)",
+      "pista": "Lo que cambió desde 1944 en una serie larga: alfabetismo, esperanza de vida o población (INE, Banco Mundial)",
+      "formato": "dato",
+      "modo": "antes",
+      "fuentes_sugeridas": [
+        "INE",
+        "Banco Mundial WDI"
+      ],
+      "anio_origen": 1944,
+      "nota": "",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "independencia-15-septiembre",
+      "fecha": "09-15",
+      "tipo": "efemeride",
+      "titulo": "Independencia (15 de septiembre)",
+      "pista": "Guatemala frente a los otros cuatro países que se independizaron el mismo día: un indicador comparable de la misma fuente (CEPAL, Banco Mundial)",
+      "formato": "dato",
+      "modo": "vs",
+      "fuentes_sugeridas": [
+        "CEPAL",
+        "Banco Mundial WDI"
+      ],
+      "anio_origen": 1821,
+      "nota": "",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "censo-2018",
+      "fecha": "07-23",
+      "tipo": "efemeride",
+      "titulo": "Censo de Población 2018",
+      "pista": "N años del censo: qué departamento creció más según las proyecciones INE frente al conteo de 2018",
+      "formato": "dato",
+      "modo": "mapa",
+      "fuentes_sugeridas": [
+        "INE censo 2018",
+        "INE proyecciones 2018-2050"
+      ],
+      "anio_origen": 2018,
+      "nota": "fecha estimada: el censo se levantó en julio de 2018",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "dia-de-la-madre-guatemala",
+      "fecha": "05-10",
+      "tipo": "evento",
+      "titulo": "Día de la Madre en Guatemala",
+      "pista": "Remesas de mayo frente al resto del año (Banguat) o edad de las madres al primer hijo (INE vitales): el dato del día",
+      "formato": "dato",
+      "modo": null,
+      "fuentes_sugeridas": [
+        "Banguat remesas",
+        "INE estadísticas vitales"
+      ],
+      "anio_origen": null,
+      "nota": "",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "dia-del-maestro-guatemala",
+      "fecha": "06-25",
+      "tipo": "evento",
+      "titulo": "Día del Maestro en Guatemala",
+      "pista": "Cuántos docentes hay, cuánto ganan y alumnos por maestro (Mineduc anuario, Minfin); o una brecha por departamento",
+      "formato": "dato",
+      "modo": null,
+      "fuentes_sugeridas": [
+        "Mineduc anuario",
+        "Minfin"
+      ],
+      "anio_origen": null,
+      "nota": "",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "inicio-ciclo-escolar",
+      "fecha": "01-15",
+      "tipo": "evento",
+      "titulo": "Inicio del ciclo escolar",
+      "pista": "Matrícula inicial del año anterior y deserción por nivel (Mineduc): quiénes vuelven a clase",
+      "formato": "dato",
+      "modo": null,
+      "fuentes_sugeridas": [
+        "Mineduc"
+      ],
+      "anio_origen": null,
+      "nota": "fecha estimada: el ciclo arranca a mediados de enero",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "salario-minimo-diciembre",
+      "fecha": "12-20",
+      "tipo": "publicacion",
+      "titulo": "Acuerdo del salario mínimo para el año siguiente",
+      "pista": "Salario mínimo frente a canasta básica (INE CBA) y frente al de hace 10 años en quetzales corrientes",
+      "formato": "dato",
+      "modo": "antes",
+      "fuentes_sugeridas": [
+        "Mintrab acuerdo gubernativo",
+        "INE CBA"
+      ],
+      "anio_origen": null,
+      "nota": "fecha estimada: el acuerdo suele publicarse en la segunda quincena de diciembre",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "dia-mujer-8-marzo",
+      "fecha": "03-08",
+      "tipo": "dia_internacional",
+      "titulo": "Día Internacional de la Mujer",
+      "pista": "Una brecha medible: participación laboral, salario, escolaridad o violencia contra la mujer (INE ENEI, MP, INACIF)",
+      "formato": "dato",
+      "modo": null,
+      "fuentes_sugeridas": [
+        "INE ENEI",
+        "MP",
+        "INACIF"
+      ],
+      "anio_origen": null,
+      "nota": "",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "dia-mundial-agua",
+      "fecha": "03-22",
+      "tipo": "dia_internacional",
+      "titulo": "Día Mundial del Agua",
+      "pista": "Cobertura de agua entubada por departamento (INE censo/ENCOVI) o el nivel del lago de Atitlán (AMSCLAE)",
+      "formato": "dato",
+      "modo": "mapa",
+      "fuentes_sugeridas": [
+        "INE censo 2018",
+        "INE ENCOVI",
+        "AMSCLAE"
+      ],
+      "anio_origen": null,
+      "nota": "",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "dia-mundial-salud",
+      "fecha": "04-07",
+      "tipo": "dia_internacional",
+      "titulo": "Día Mundial de la Salud",
+      "pista": "Guatemala frente a Centroamérica en gasto en salud o médicos por habitante, misma fuente (OPS, Banco Mundial)",
+      "formato": "dato",
+      "modo": "vs",
+      "fuentes_sugeridas": [
+        "OPS",
+        "Banco Mundial WDI"
+      ],
+      "anio_origen": null,
+      "nota": "",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "dia-del-trabajo",
+      "fecha": "05-01",
+      "tipo": "dia_internacional",
+      "titulo": "Día del Trabajo",
+      "pista": "Afiliados al IGSS frente a la población ocupada (IGSS, INE ENEI): cuántos trabajan con seguro",
+      "formato": "dato",
+      "modo": null,
+      "fuentes_sugeridas": [
+        "IGSS",
+        "INE ENEI"
+      ],
+      "anio_origen": null,
+      "nota": "",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "dia-medio-ambiente",
+      "fecha": "06-05",
+      "tipo": "dia_internacional",
+      "titulo": "Día Mundial del Medio Ambiente",
+      "pista": "Pérdida de bosque por departamento o Guatemala frente a Centroamérica (Global Forest Watch, INAB)",
+      "formato": "dato",
+      "modo": "mapa",
+      "fuentes_sugeridas": [
+        "Global Forest Watch",
+        "INAB"
+      ],
+      "anio_origen": null,
+      "nota": "",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "dia-refugiado",
+      "fecha": "06-20",
+      "tipo": "dia_internacional",
+      "titulo": "Día Mundial del Refugiado",
+      "pista": "Guatemaltecos con solicitudes de asilo o refugio en EE.UU. y México (ACNUR, COMAR, DHS)",
+      "formato": "dato",
+      "modo": null,
+      "fuentes_sugeridas": [
+        "ACNUR",
+        "COMAR",
+        "DHS"
+      ],
+      "anio_origen": null,
+      "nota": "",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "dia-mundial-poblacion",
+      "fecha": "07-11",
+      "tipo": "dia_internacional",
+      "titulo": "Día Mundial de la Población",
+      "pista": "Pirámide de población de Guatemala hoy frente a hace 20 años (INE proyecciones): el bono demográfico",
+      "formato": "dato",
+      "modo": "antes",
+      "fuentes_sugeridas": [
+        "INE proyecciones 2018-2050",
+        "Banco Mundial WDI"
+      ],
+      "anio_origen": null,
+      "nota": "",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "dia-pueblos-indigenas",
+      "fecha": "08-09",
+      "tipo": "dia_internacional",
+      "titulo": "Día Internacional de los Pueblos Indígenas",
+      "pista": "Una brecha medible entre población indígena y no indígena: pobreza, escolaridad o desnutrición (INE ENCOVI, ENSMI)",
+      "formato": "dato",
+      "modo": null,
+      "fuentes_sugeridas": [
+        "INE ENCOVI",
+        "ENSMI"
+      ],
+      "anio_origen": null,
+      "nota": "",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "dia-juventud",
+      "fecha": "08-12",
+      "tipo": "dia_internacional",
+      "titulo": "Día Internacional de la Juventud",
+      "pista": "Jóvenes que ni estudian ni trabajan o tasa de desempleo juvenil (INE ENEI); o Guatemala frente a la región (CEPAL)",
+      "formato": "dato",
+      "modo": null,
+      "fuentes_sugeridas": [
+        "INE ENEI",
+        "CEPAL"
+      ],
+      "anio_origen": null,
+      "nota": "",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "dia-alfabetizacion",
+      "fecha": "09-08",
+      "tipo": "dia_internacional",
+      "titulo": "Día Internacional de la Alfabetización",
+      "pista": "Analfabetismo por departamento (CONALFA, INE) o frente a Centroamérica (UNESCO UIS)",
+      "formato": "dato",
+      "modo": "mapa",
+      "fuentes_sugeridas": [
+        "CONALFA",
+        "INE",
+        "UNESCO UIS"
+      ],
+      "anio_origen": null,
+      "nota": "",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "dia-turismo",
+      "fecha": "09-27",
+      "tipo": "dia_internacional",
+      "titulo": "Día Mundial del Turismo",
+      "pista": "Divisas por turismo y llegadas (INGUAT, Banguat): Guatemala frente a Costa Rica y Panamá con la misma fuente",
+      "formato": "dato",
+      "modo": "vs",
+      "fuentes_sugeridas": [
+        "INGUAT",
+        "Banguat",
+        "OMT"
+      ],
+      "anio_origen": null,
+      "nota": "",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "dia-de-la-nina",
+      "fecha": "10-11",
+      "tipo": "dia_internacional",
+      "titulo": "Día Internacional de la Niña",
+      "pista": "Niñas de 10 a 14 años que fueron madres en el último año o matrícula de niñas en básico (INE vitales, RENAP, Mineduc)",
+      "formato": "dato",
+      "modo": null,
+      "fuentes_sugeridas": [
+        "INE estadísticas vitales",
+        "RENAP",
+        "Mineduc"
+      ],
+      "anio_origen": null,
+      "nota": "",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "dia-alimentacion",
+      "fecha": "10-16",
+      "tipo": "dia_internacional",
+      "titulo": "Día Mundial de la Alimentación",
+      "pista": "Desnutrición crónica o aguda por departamento (SIINSAN, ENSMI) o el costo de la canasta básica frente al salario (INE)",
+      "formato": "dato",
+      "modo": "mapa",
+      "fuentes_sugeridas": [
+        "SIINSAN",
+        "ENSMI",
+        "INE CBA"
+      ],
+      "anio_origen": null,
+      "nota": "",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "dia-erradicacion-pobreza",
+      "fecha": "10-17",
+      "tipo": "dia_internacional",
+      "titulo": "Día Internacional para la Erradicación de la Pobreza",
+      "pista": "Pobreza por departamento (INE ENCOVI) o Guatemala frente a Centroamérica (CEPAL, Banco Mundial)",
+      "formato": "dato",
+      "modo": "mapa",
+      "fuentes_sugeridas": [
+        "INE ENCOVI",
+        "CEPAL"
+      ],
+      "anio_origen": null,
+      "nota": "",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "dia-del-nino",
+      "fecha": "11-20",
+      "tipo": "dia_internacional",
+      "titulo": "Día Universal del Niño",
+      "pista": "Niños que terminan primaria o vacunación MCV1 (Mineduc, MSPAS/OPS): el dato de la niñez",
+      "formato": "dato",
+      "modo": null,
+      "fuentes_sugeridas": [
+        "Mineduc",
+        "MSPAS",
+        "OPS"
+      ],
+      "anio_origen": null,
+      "nota": "",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "dia-no-violencia-mujer",
+      "fecha": "11-25",
+      "tipo": "dia_internacional",
+      "titulo": "Día de la Eliminación de la Violencia contra la Mujer",
+      "pista": "Muertes violentas de mujeres y denuncias por violencia contra la mujer (INACIF, MP): tendencia y brecha por departamento",
+      "formato": "dato",
+      "modo": null,
+      "fuentes_sugeridas": [
+        "INACIF",
+        "MP"
+      ],
+      "anio_origen": null,
+      "nota": "",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "dia-sida",
+      "fecha": "12-01",
+      "tipo": "dia_internacional",
+      "titulo": "Día Mundial del Sida",
+      "pista": "Casos nuevos de VIH y cobertura de tratamiento (MSPAS, ONUSIDA): Guatemala frente a la región",
+      "formato": "dato",
+      "modo": "vs",
+      "fuentes_sugeridas": [
+        "MSPAS",
+        "ONUSIDA"
+      ],
+      "anio_origen": null,
+      "nota": "",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "dia-personas-discapacidad",
+      "fecha": "12-03",
+      "tipo": "dia_internacional",
+      "titulo": "Día Internacional de las Personas con Discapacidad",
+      "pista": "Personas con discapacidad según el censo 2018 y su acceso a educación o empleo (INE, CONADI)",
+      "formato": "dato",
+      "modo": null,
+      "fuentes_sugeridas": [
+        "INE censo 2018",
+        "CONADI"
+      ],
+      "anio_origen": null,
+      "nota": "",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "dia-del-migrante",
+      "fecha": "12-18",
+      "tipo": "dia_internacional",
+      "titulo": "Día Internacional del Migrante",
+      "pista": "Retornados del año (IGM) o remesas por habitante frente a Centroamérica (Banguat, BCH, BCR, misma fuente FMI/BM)",
+      "formato": "dato",
+      "modo": "vs",
+      "fuentes_sugeridas": [
+        "IGM",
+        "Banguat",
+        "Banco Mundial"
+      ],
+      "anio_origen": null,
+      "nota": "",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "remesas-banguat-mensual",
+      "fecha": "07",
+      "tipo": "publicacion",
+      "titulo": "Banguat publica las remesas del mes anterior",
+      "pista": "Remesas del mes: frente al mismo mes del año pasado y al promedio de 12 meses; si es récord, en dólares corrientes",
+      "formato": "dato",
+      "modo": null,
+      "fuentes_sugeridas": [
+        "Banguat remesas"
+      ],
+      "anio_origen": null,
+      "nota": "fecha estimada: días 3 a 8 de cada mes",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "ipc-ine-mensual",
+      "fecha": "08",
+      "tipo": "publicacion",
+      "titulo": "INE publica el IPC y la inflación del mes anterior",
+      "pista": "Inflación interanual del mes y qué división sube más; o canasta básica frente a salario mínimo",
+      "formato": "dato",
+      "modo": null,
+      "fuentes_sugeridas": [
+        "INE IPC",
+        "INE CBA"
+      ],
+      "anio_origen": null,
+      "nota": "fecha estimada: días 7 a 10 de cada mes",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "recaudacion-sat-mensual",
+      "fecha": "12",
+      "tipo": "publicacion",
+      "titulo": "SAT publica la recaudación del mes anterior",
+      "pista": "Recaudación acumulada frente a la meta y al mismo periodo del año anterior",
+      "formato": "dato",
+      "modo": null,
+      "fuentes_sugeridas": [
+        "SAT recaudación",
+        "Minfin Sicoin"
+      ],
+      "anio_origen": null,
+      "nota": "fecha estimada: días 10 a 15 de cada mes",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "amm-generacion-mensual",
+      "fecha": "18",
+      "tipo": "publicacion",
+      "titulo": "AMM publica la generación del mes anterior",
+      "pista": "Cuánta electricidad salió de combustibles fósiles, hidro y solar ese mes frente al mismo mes del año pasado",
+      "formato": "dato",
+      "modo": null,
+      "fuentes_sugeridas": [
+        "AMM"
+      ],
+      "anio_origen": null,
+      "nota": "fecha estimada: hacia el día 18 de cada mes",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "cnee-pliegos-trimestrales",
+      "fecha": [
+        "01-31",
+        "04-30",
+        "07-31",
+        "10-31"
+      ],
+      "tipo": "publicacion",
+      "titulo": "CNEE publica los pliegos tarifarios del trimestre",
+      "pista": "Tarifa por distribuidora para el trimestre que empieza: brecha DEOCSA/DEORSA frente a EEGSA y cambio frente al pliego anterior",
+      "formato": "dato",
+      "modo": null,
+      "fuentes_sugeridas": [
+        "CNEE pliegos tarifarios"
+      ],
+      "anio_origen": null,
+      "nota": "fecha estimada: última semana del mes previo a cada trimestre (feb-abr, may-jul, ago-oct, nov-ene)",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "graduandos-digeduca",
+      "fecha": "03-15",
+      "tipo": "publicacion",
+      "titulo": "Digeduca publica la Evaluación de Graduandos del año anterior",
+      "pista": "Logro en Matemáticas y Lectura: tendencia desde 2013 y brecha por departamento",
+      "formato": "dato",
+      "modo": null,
+      "fuentes_sugeridas": [
+        "Mineduc Digeduca"
+      ],
+      "anio_origen": null,
+      "nota": "fecha estimada: marzo",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "gfw-perdida-bosque",
+      "fecha": "04-15",
+      "tipo": "publicacion",
+      "titulo": "Global Forest Watch publica la pérdida de bosque del año anterior",
+      "pista": "Hectáreas perdidas en Guatemala frente a Centroamérica (misma fuente) o por departamento",
+      "formato": "dato",
+      "modo": "vs",
+      "fuentes_sugeridas": [
+        "Global Forest Watch",
+        "INAB"
+      ],
+      "anio_origen": null,
+      "nota": "fecha estimada: abril",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "insivumeh-sismos-anual",
+      "fecha": "01-31",
+      "tipo": "publicacion",
+      "titulo": "INSIVUMEH cierra el conteo sismológico del año",
+      "pista": "Sismos registrados en el año frente al anterior y a la serie; dónde se concentraron",
+      "formato": "dato",
+      "modo": null,
+      "fuentes_sugeridas": [
+        "INSIVUMEH"
+      ],
+      "anio_origen": null,
+      "nota": "fecha estimada: enero o febrero",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "presupuesto-proyecto-septiembre",
+      "fecha": "09-02",
+      "tipo": "evento",
+      "titulo": "El Ejecutivo presenta el proyecto de presupuesto",
+      "pista": "Qué ministerios crecen más y con qué déficit se financia: el proyecto frente al presupuesto vigente",
+      "formato": "hilo",
+      "modo": null,
+      "fuentes_sugeridas": [
+        "Minfin",
+        "Congreso"
+      ],
+      "anio_origen": null,
+      "nota": "plazo constitucional: a más tardar 120 días antes del inicio del ejercicio fiscal",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "presupuesto-aprobacion-noviembre",
+      "fecha": "11-30",
+      "tipo": "evento",
+      "titulo": "Plazo del Congreso para aprobar el presupuesto",
+      "pista": "Lo aprobado frente al proyecto; si no se aprueba, rige el vigente: qué cambia",
+      "formato": "dato",
+      "modo": null,
+      "fuentes_sugeridas": [
+        "Congreso",
+        "Minfin"
+      ],
+      "anio_origen": null,
+      "nota": "plazo constitucional: 30 de noviembre",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    },
+    {
+      "id": "elecciones-generales-2027",
+      "fecha": "2027-06-20",
+      "tipo": "evento",
+      "titulo": "Elecciones generales 2027",
+      "pista": "Empadronados, voto en el extranjero y participación histórica por departamento (TSE)",
+      "formato": "hilo",
+      "modo": null,
+      "fuentes_sugeridas": [
+        "TSE"
+      ],
+      "anio_origen": null,
+      "nota": "fecha estimada: la fija el TSE (en 2023 fue el 25 de junio)",
+      "estado": "pendiente",
+      "ultimo_uso": null,
+      "pieza": null,
+      "creada": "2026-10-11"
+    }
+  ]
+}

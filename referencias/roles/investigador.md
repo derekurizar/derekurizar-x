@@ -80,6 +80,28 @@ habilita la plantilla `mapa`.
 Presupuesto (normal / smoke): ≤ 8 / 4 búsquedas, ≤ 8 / 4 fetch, ≤ 8 / 4
 cifras, ≤ 2 / 1 series. En smoke sin pista la directiva trae una fija. Ids
 `dat-cNN`. Escribe `<sesion>/hallazgos_dato.json` COMPLETO (`eje: "dato"`).
-Retorno: `slug, sesion_dir, pista, tema, pregunta, paleta, hook_evitar,
+Retorno: `slug, sesion_dir, pista, tema, modo, pregunta, paleta, hook_evitar,
 repetido, archivo, n_busquedas, n_fetch, cifras[]{id, tipo, n_puntos,
 impacto}, vacios[]`.
+
+### Modos vs · mapa · antes
+
+La directiva trae `MODO DEL POST` (`dato` por defecto). Escribe `modo` en
+`encuadre.json` y busca lo que el modo exige; si no lo encuentras, dilo en
+`vacios` (el guion fallará sin eso).
+- **`vs`**: el indicador en UNA fuente internacional que cubra a todos los
+  países (CEPAL, Banco Mundial/WDI, OPS, UN Comtrade, OLADE, FMI, SIECA), misma
+  edición, periodo y unidad; captúralo como UNA cifra `tipo: "desglose"` con
+  `partes[]` = un valor por país (Guatemala incluida; ≥ 2 países: Centroamérica
+  o la región que pida el indicador). Si las poblaciones difieren mucho, la
+  versión per cápita como otra cifra desglose. Nunca prensa para un país y
+  organismo para otro.
+- **`mapa`**: un desglose por departamento (≥ 12, ideal 22) con los nombres
+  oficiales del INE y el denominador de población del INE del mismo año
+  (proyecciones por departamento). La TASA va como cifra propia `desglose`
+  «cálculo propio» con evidencia del numerador y del denominador, además del
+  absoluto.
+- **`antes`**: dos puntos de la MISMA serie y fuente separados ≥ 5 años (o la
+  serie completa ≥ 5 puntos) con definición y unidad sin cambios; si cambió la
+  base o la metodología, en `nota`. Si es dinero, anota si es corriente y, si
+  existe, la versión real o el deflactor.

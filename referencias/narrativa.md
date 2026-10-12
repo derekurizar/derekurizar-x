@@ -72,6 +72,33 @@ es la respuesta y el texto no promete nada que la imagen no muestre.
 `titular_clasico` solo para récords literales con serie ≥ 10 puntos. Se evita
 el `hook_tipo` del último dato publicado (`memoria.py --datos`).
 
+## Modos de un dato (`/vs`, `/mapa`, `/antes`)
+
+Tres géneros que salen con la maquinaria de `/dato`; cada uno añade una regla
+que el gate comprueba.
+
+- **`vs` — Guatemala frente a…** Una comparación solo vale si todos los lados
+  salen de la misma fuente, edición, periodo y unidad (CEPAL, Banco Mundial,
+  OPS, UN Comtrade, OLADE, FMI). Nunca prensa para un país y organismo para
+  otro. Si las poblaciones difieren mucho, per cápita. Guatemala va destacada;
+  el titular dice la brecha («Guatemala recauda la mitad que Costa Rica»), no
+  el marcador: nada de «ganamos», «perdemos», «somos los peores». La `nota`
+  nombra la fuente común y el año. El texto da la salvedad (definiciones,
+  informalidad, tipo de cambio) o la escala humana.
+- **`mapa` — brecha territorial.** Siempre tasa (por 1,000 o 100,000 habitantes,
+  o %) con el denominador del INE del mismo año; el absoluto solo con motivo
+  declarado (el departamento de Guatemala siempre «gana» en absolutos). Gancho
+  `brecha_territorial`: «En [A], X. En [B], Y. Mismo país». El titular nombra la
+  brecha (razón o diferencia entre extremos), no «el mapa de…». Mínimo 12
+  departamentos con valor, ideal los 22 con nombres oficiales; los extremos
+  rotulados. La `nota` lleva unidad y año.
+- **`antes` — hace N años frente a hoy.** Dos puntos de la misma serie y fuente
+  separados al menos cinco años, con la definición sin cambios (si cambió la
+  base o la metodología, se dice). Dinero en quetzales o dólares corrientes se
+  declara en la `nota» («quetzales corrientes»); si se deflacta, también. El
+  gancho es `antes_despues` («En 2006, X. Hoy, Y.»); el texto lee el cambio o
+  lo que no cambió. «Récord» solo con serie ≥ 10 puntos, como siempre.
+
 ## Honestidad = credibilidad
 
 - Lo que la evidencia no permite afirmar va en `no_afirma` (≤ 5 ítems, solo

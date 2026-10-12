@@ -25,6 +25,9 @@ Comprueba:
   D2 en dato.json: tipo "dato", sin tuits[], tuit{} con texto de 40–280 de peso X y sin
      enlace, imagen existente, alt_text 20–1000, paleta y modo conocidos
   D3 el estado de dato.json coincide con el registro (misma regla que H3)
+  M6 ideas/calendario.json (si existe): cada entrada válida (id slug, fecha MM-DD|DD|YYYY-MM-DD,
+     tipo, titulo, pista, formato, modo compatible, estado), ids únicos; aviso si una entrada
+     `hecha` apunta a una pieza que no existe
 
 Uso: python3 scripts/validate.py [--quiet]   · salida 0 ok · 1 error
 """
@@ -39,6 +42,7 @@ sys.path.insert(0, os.path.join(RAIZ, "scripts"))
 from ensamblar import HOOKS, MODOS, RE_LINK  # noqa: E402  (una sola lista de ganchos y de modos para todo el framework)
 from contar_x import peso_x  # noqa: E402
 import ideas as _ideas  # noqa: E402
+import calendario as _cal  # noqa: E402
 ERRORES, AVISOS = [], []
 
 
@@ -292,6 +296,24 @@ def validar_ideas(paletas):
                 h.get("id"), h["idea_id"], estado.get(h["idea_id"], "no existe")))
 
 
+def validar_calendario():
+    if not os.path.exists(_cal.CALENDARIO):
+        return
+    d = cargar(os.path.relpath(_cal.CALENDARIO, RAIZ))
+    if not d:
+        return
+    ids = set()
+    for i, e in enumerate(d.get("entradas", [])):
+        eid = e.get("id") or "entradas[%d]" % i
+        if eid in ids:
+            err("calendario: id repetido %s" % eid)
+        ids.add(eid)
+        for p in _cal.validar_entrada(e):
+            err("calendario %s: %s" % (eid, p))
+        if e.get("estado") == "hecha" and e.get("pieza") and not os.path.isdir(os.path.join(RAIZ, str(e["pieza"]))):
+            warn("calendario %s: hecha con pieza %s que no existe" % (eid, e["pieza"]))
+
+
 def main():
     quiet = "--quiet" in sys.argv
     paletas = validar_tokens()
@@ -299,6 +321,7 @@ def main():
     validar_hilos(paletas)
     validar_datos(paletas)
     validar_ideas(paletas)
+    validar_calendario()
     for a in AVISOS:
         print("AVISO  " + a)
     for e in ERRORES:

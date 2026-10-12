@@ -42,12 +42,21 @@ visualistas. Los digestos funcionan igual (`--eje dato`).
 
 | Archivo | Lo escribe | Contenido |
 |---|---|---|
-| `encuadre.json` | investigador (encuadre ligero) | `slug, pista (literal del usuario o null), tema (tema final elegido por el investigador), fecha, tipo: "dato", paleta, pregunta, hook_evitar, repetido, sesion_dir, smoke, fixture, ejes: [{id: "dato", prefijo: "dat", brief, preguntas[], fuentes_sugeridas[]}]` |
+| `encuadre.json` | investigador (encuadre ligero) | `slug, pista (literal del usuario o null), tema (tema final elegido por el investigador), fecha, tipo: "dato", modo: "dato"\|"vs"\|"mapa"\|"antes", paleta, pregunta, hook_evitar, repetido, sesion_dir, smoke, fixture, ejes: [{id: "dato", prefijo: "dat", brief, preguntas[], fuentes_sugeridas[]}]` |
 | `hallazgos_dato.json` | investigador | como `hallazgos_<eje>.json` (`eje: "dato"`, ≤ 8 cifras `dat-cNN`) y en cada cifra `impacto` (≤ 160) |
 | `verificacion_dato.json` | verificador | `eje: "dato", items[]{id, veredicto, valor_final, fuente_2, url_2, independencia, nota}` |
-| `guion.json` | guionista | `slug, fecha, tipo: "dato", paleta, smoke, handle, hook_tipo, dato{cifra_id, titular, por_que_impacta}, candidatas[]{id, puntaje, criterios{sorpresa, magnitud, comparacion, actualidad, solidez}, elegida, motivo}, sintesis{pregunta, tesis, ancla_id, no_afirma, incertidumbre, descartadas}, tuits[EXACTAMENTE 1]{n: 1, beat: "gancho", texto, alt_text, visual}` |
+| `guion.json` | guionista | `slug, fecha, tipo: "dato", modo, paleta, smoke, handle, hook_tipo, dato{cifra_id, titular, por_que_impacta}, candidatas[]{id, puntaje, criterios{sorpresa, magnitud, comparacion, actualidad, solidez}, elegida, motivo}, sintesis{pregunta, tesis, ancla_id, no_afirma, incertidumbre, descartadas}, tuits[EXACTAMENTE 1]{n: 1, beat: "gancho", texto, alt_text, visual}` y, si el modo no es `dato`, su bloque: `vs{paises[], fuente_comun, periodo, per_capita, motivo?}` · `mapa{per_capita, denominador, motivo?}` · `antes{anio_antes, anio_despues, nominal}` |
 | `visuales/tuit_1.html/.png` · `tuit_1.ajuste.json` | productor (vía `materializar.py`) | la tarjeta y sus ajustes de QA; el propio productor consolida |
 | `salida/` | productor (solo smoke/fixture) | carpeta de entrega cuando no se toca `datos/` |
+
+**Modos** (`/dato vs|mapa|antes`, alias `/vs`, `/mapa`, `/antes`): el workflow
+pasa `args.modo`; el investigador lo escribe en `encuadre.json` y el guionista
+en `guion.json` con el bloque del modo. `tipo` sigue siendo `"dato"`; el gate
+fuerza gancho y plantillas por modo (`vs`: cifra elegida tipo `desglose` por
+país con Guatemala, misma fuente y periodo; `mapa`: desglose por departamento
+≥ 12 y tasa; `antes`: dos años a ≥ 5 de distancia, nominal declarado). El bloque
+viaja a `dato.json` (clave del modo), `post.md` («## Modo …») y `memoria/datos.json`
+(`modo`).
 
 Entregable: `datos/YYYY-MM-DD-<slug>/` con `dato.png`, `tarjeta.html`,
 `dato.html` (vista previa), `post.md`, `datos.json`, `dato.json`. Registro en

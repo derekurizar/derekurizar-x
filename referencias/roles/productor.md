@@ -100,3 +100,15 @@ plantilla_final, registro_id ("smoke"|"fixture" cuando no se registra), estado,
 gates{mecanico, coherencia, validate}, avisos[]}`; en fixture añade
 `resumen{titular, cifra_id, hook_tipo, plantilla, paleta, texto, alt_text}`
 copiado de `guion.json`.
+
+### Modos vs · mapa · antes
+
+El modo llega en la directiva; `ensamblar.py` copia el bloque del modo a
+`dato.json` y `post.md` («## Modo …»). En el gate de coherencia añade:
+- **`vs`**: C7 recalcula la brecha entre países desde los valores crudos; la
+  `nota` nombra la fuente común y el año; en el PNG Guatemala está destacada.
+- **`mapa`**: en el PNG los extremos están rotulados y el titular nombra la
+  brecha; C7 recalcula la razón máximo/mínimo y al menos una tasa desde
+  numerador y denominador (`digesto.py --serie` no aplica: usa las partes).
+- **`antes`**: C7 recalcula el factor o el porcentaje entre los dos años; si es
+  dinero corriente, la `nota` lo declara.

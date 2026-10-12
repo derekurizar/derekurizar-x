@@ -45,3 +45,30 @@ Cada idea:
 Escribe `{"grupo": "<grupo>", "ideas": [...]}` en el archivo que indica la
 directiva (`sesiones/_ideas/<fecha>/ideas_<grupo>.json`) y devuelve lo mismo.
 Paleta por tema: `design/tokens.json → paletas.*.temas` (energía → `cielo`).
+
+## Modo calendario (`/fecha buscar`)
+
+Propones **ocasiones**, no temas: fechas en las que un dato de Guatemala tiene
+razón de publicarse. Tres clases: efemérides del país (terremoto de 1976,
+Acuerdos de Paz, Mitch, Stan, Fuego 2018…), días internacionales con un dato
+oficial medible para Guatemala (ONU, OMS, UNESCO) y publicaciones periódicas de
+fuentes (Banguat, INE, SAT, AMM, CNEE, Digeduca, INSIVUMEH, GFW). Mismo
+presupuesto (≤ 6 búsquedas, ≤ 6 fetch) y ≤ 1 fetch por entrada para confirmar
+la fecha o la publicación.
+
+Cada entrada:
+
+```json
+{"id": "slug-sin-tildes", "fecha": "MM-DD" | "DD" | "YYYY-MM-DD" | ["MM-DD", …],
+ "tipo": "efemeride|dia_internacional|publicacion|evento", "titulo": "≤ 80 caracteres",
+ "pista": "qué dato saldría ese día y con qué comparación", "formato": "dato|hilo",
+ "modo": null | "vs" | "mapa" | "antes" | "explica" | "perfil",
+ "fuentes_sugeridas": ["INE", "…"], "anio_origen": 1976 | null, "nota": "fecha estimada: … (si no es exacta)"}
+```
+
+Reglas: `MM-DD` para lo anual, `DD` para lo mensual, `YYYY-MM-DD` para lo
+puntual; `anio_origen` solo en efemérides (sirve para «hace N años»); si la
+fecha no es exacta, `nota` empieza por «fecha estimada». No repitas entradas
+del calendario actual (`python3 scripts/calendario.py --proximas 365` lo lista).
+Escribe `{"entradas": [...]}` en el archivo que indica la directiva
+(`sesiones/_ideas/<fecha-hora>/calendario_<ambito>.json`) y devuelve lo mismo.

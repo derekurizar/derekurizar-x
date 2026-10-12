@@ -100,3 +100,26 @@ llega en tu directiva. Guía narrativa: `referencias/narrativa.md`, «Dato únic
    `archivo, tipo, tesis, ancla_id, paleta, hook_tipo, dato, candidatas,
    no_afirma, tuits[]` con `visual` completo. Si el workflow devuelve fallos,
    corrige solo eso.
+
+### Modos vs · mapa · antes
+
+La directiva trae `MODO DEL POST`. Escribe `modo` en `guion.json` y el bloque
+del modo; el gate exige gancho y plantillas por modo
+(`referencias/narrativa.md`, «Modos de un dato»).
+- **`vs`**: `vs{paises[] (como aparecen en partes y en el visual, Guatemala
+  incluida), fuente_comun, periodo, per_capita (false exige motivo ≥ 20)}`.
+  Cifra elegida: el desglose por país. Plantillas: `barras-h` (`orden: "desc"`
+  y `destacar` = índice de Guatemala tras ordenar), `pesas`, `pendiente` o
+  `dispersion` con los países como items/puntos, o `cifra` con `comparacion`
+  (el otro país). `nota` con fuente común y año. Sin «ganamos/perdemos».
+- **`mapa`**: `mapa{per_capita, denominador («población INE 2026» o null),
+  motivo (≥ 20 si per_capita es false)}`. Cifra elegida: el desglose
+  departamental (≥ 12). Plantilla `mapa` con la tasa, extremos rotulados o
+  `destacar`; `hook_tipo: "brecha_territorial"`; titular con la brecha (razón
+  o diferencia entre extremos); `nota` con unidad y año.
+- **`antes`**: `antes{anio_antes, anio_despues (≥ 5 años), nominal (true si es
+  dinero corriente, false si es real o no es dinero, null si no aplica)}`.
+  `hook_tipo: "antes_despues"`. Plantillas: `antes-despues` (etiquetas con los
+  años; la píldora la calcula la plantilla), `pendiente` o `pesas` (`fechas` =
+  los dos años) o `linea`. Si `nominal` es true, la `nota` dice «quetzales
+  corrientes» (o «dólares corrientes»).

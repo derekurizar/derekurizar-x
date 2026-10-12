@@ -10,21 +10,26 @@ del que `/hilo` toma temas; al entregar un hilo, su idea queda `hecha`. Un
 tercer flujo, `/dato [pista]`, produce **un solo dato impactante** en una
 tarjeta 1080×1080 con el texto del tuit y su alt-text (sin hilo, sin banco de
 ideas), entregado en `datos/YYYY-MM-DD-<slug>/` y registrado en `memoria/datos.json`.
+`/dato` tiene **modos** (`/dato vs|mapa|antes [pista]`, con alias `/vs`, `/mapa`, `/antes`):
+mismos agentes y entregable, distinto género (Guatemala frente a otros países · brecha por
+departamento · hace N años frente a hoy); el modo viaja en `guion.modo` y `tipo` sigue siendo `dato`.
 
 ## Mapa del proyecto
 
 - `.claude/commands/hilo.md` — `/hilo [tema|idea:<id>] [smoke|fixture]`: preflight (`make doctor`, idea del banco; sin tema → `ideas.py --siguiente`) → Workflow `hilo` → post-checks (`make validate`, `make costo`)
 - `.claude/commands/ideas.md` · `.claude/workflows/ideas.js` · `.claude/agents/ideas-explorador.md` (sonnet) — `/ideas [n] [enfoque]`: exploradores en paralelo → `ideas.py --importar`; guía `referencias/roles/explorador.md`
-- `.claude/commands/dato.md` · `.claude/workflows/dato.js` — `/dato [pista] [smoke|fixture]`: un dato impactante en UNA tarjeta; reutiliza 4 agentes `hilo-*` (investigador con encuadre ligero → verificador → guionista que puntúa candidatas → productor con QA visual); guía `referencias/flujo-dato.md`
+- `.claude/commands/dato.md` · `.claude/workflows/dato.js` — `/dato [vs|mapa|antes] [pista] [smoke|fixture]`: un dato impactante en UNA tarjeta; reutiliza 4 agentes `hilo-*` (investigador con encuadre ligero → verificador → guionista que puntúa candidatas → productor con QA visual); tabla `MODOS` (gancho, plantillas y gates por modo) con espejo mínimo en `ensamblar.py`; guía `referencias/flujo-dato.md`
+- `.claude/commands/vs.md` · `mapa.md` · `antes.md` — alias de `/dato` con el modo fijado (8 líneas cada uno; delegan en `dato.md`)
+- `.claude/commands/fecha.md` · `scripts/calendario.py` · `ideas/calendario.json` — `/fecha [hoy|fecha|id|texto] [smoke|fixture]`: calendario editorial (efemérides, días internacionales, publicaciones de fuentes; fechas `MM-DD` anuales, `DD` mensuales, `YYYY-MM-DD` puntuales) que despacha a `/dato` (con su modo) o `/hilo` y marca la entrada `hecha`; `/fecha buscar [mes]` lanza un `ideas-explorador` («Modo calendario» en `referencias/roles/explorador.md`) y `calendario.py --importar`
 - `.claude/workflows/hilo.js` — orquestación con schemas, presupuestos y gates en código; bucles de reparación; fail-fast si los agentes no están registrados
 - `.claude/agents/hilo-*.md` — los seis roles (opus: editor, investigador, guionista, productor; sonnet: verificador, visualista); cada uno apunta solo a su guía
 - `referencias/flujo-hilo.md` (índice) · `flujo-dato.md` (índice de /dato) · `contrato-sesion.md` (incluye «Sesión dato») · `narrativa.md` (arco, ganchos `hook_tipo`, dato héroe, dato único) · `roles/<rol>.md` (con sección «Modo dato» en investigador, verificador, guionista y productor)
 - `referencias/diseno/sistema.md` (anatomía, paletas, checks R1–R6) · `diseno/graficos.md` (pregunta→gráfico, contrato `DATA`, flujo del visualista, checklist QA) · `diseno/brief/` (brief original)
 - `design/tokens.json` (paletas) · `design/fonts/` (woff2 locales) · `design/mapa_geometria.svg` (22 departamentos)
 - `templates/base.html` (anatomía + helpers `H.*`) · `templates/graficos/*.html` (18 plantillas con `DATA` de ejemplo) · `templates/.pruebas/` · `templates/hilo.html` · `templates/dato.html` (vista previa de un dato)
-- `scripts/` — `render.js` (HTML→PNG + checks), `nuevo_visual.py`, `materializar.py` (guion → tarjetas), `ensamblar.py` (sesión → carpeta + gate G1–G8; modo dato por `guion.tipo`, nunca escribe un dato en `hilos/`), `digesto.py` (resumen de sesión para agentes), `fuentes.py` (catálogo filtrado), `contar_x.py/.js` (peso X), `contacto.js` (hoja de contacto), `tabla.py` (agregar CSV), `fetch_tabla.py` / `fetch_pdf.sh` / `fetch_api.py` (descargas con caché), `memoria.py` (registro: hilos o datos según `guion.tipo`, series y fuentes halladas; marca la idea `hecha`; `--datos` lista los datos publicados), `ideas.py` (banco de ideas: importar, siguiente, ver, buscar, marcar, conciliar), `costo.py` (tokens por corrida), `test.sh`, `doctor.sh`, `validate.py`, `build_mapa.py`
+- `scripts/` — `render.js` (HTML→PNG + checks), `nuevo_visual.py`, `materializar.py` (guion → tarjetas), `ensamblar.py` (sesión → carpeta + gate G1–G8; modo dato por `guion.tipo`, nunca escribe un dato en `hilos/`), `digesto.py` (resumen de sesión para agentes), `fuentes.py` (catálogo filtrado), `contar_x.py/.js` (peso X), `contacto.js` (hoja de contacto), `tabla.py` (agregar CSV), `fetch_tabla.py` / `fetch_pdf.sh` / `fetch_api.py` (descargas con caché), `memoria.py` (registro: hilos o datos según `guion.tipo`, series y fuentes halladas; marca la idea `hecha`; `--datos` lista los datos publicados), `ideas.py` (banco de ideas: importar, siguiente, ver, buscar, marcar, conciliar), `costo.py` (tokens por corrida), `calendario.py` (calendario editorial: próximas, día, buscar, importar, marcar), `check_workflows.py` (constantes y modos alineados entre `hilo.js`, `dato.js`, `ideas.js`, tokens, plantillas y `ensamblar.py`), `test.sh`, `doctor.sh`, `validate.py`, `build_mapa.py`
 - `memoria/fuentes.json` (fuentes con notas de acceso + `series[]`) · `memoria/hilos.json` (registro de hilos) · `memoria/datos.json` (registro de datos de /dato); ambos registros los escribe `memoria.py`
-- `ideas/banco.json` (banco de ideas; lo escribe `ideas.py`) · `ideas/README.md` (índice generado)
+- `ideas/banco.json` (banco de ideas; lo escribe `ideas.py`) · `ideas/README.md` (índice generado) · `ideas/calendario.json` (calendario editorial; lo escribe solo `calendario.py`)
 - `sesiones/<slug>/` (memoria de trabajo; `_ideas/` propuestas de los exploradores; `_fixture/` sesión de prueba de hilo; `_fixture_dato/` sesión de prueba de /dato; `_descargas/` caché con `indice.json`) · `hilos/` (entregables de /hilo) · `datos/` (entregables de /dato)
 
 ## Reglas de oro
@@ -33,9 +38,9 @@ ideas), entregado en `datos/YYYY-MM-DD-<slug>/` y registrado en `memoria/datos.j
 2. **Los agentes no leen JSON de sesión enteros ni código**: usan `scripts/digesto.py`, `scripts/fuentes.py` y los límites que llegan en su directiva. Presupuestos por rol (búsquedas, fetch, cifras, lecturas de PNG) en `referencias/roles/`.
 3. **`guion.json` es la fuente de verdad de las tarjetas.** Los visuales se regeneran con `scripts/materializar.py`; nadie edita `tuit_N.html` a mano. Los visualistas escriben solo `tuit_N.ajuste.json`; consolida el productor, único escritor de `guion.json` desde entonces.
 4. **Cero dependencias externas en las tarjetas** (ni `https://` ni emoji). Fuentes tipográficas desde `design/fonts/`. El pie lleva siempre «Fuente: …» y el handle. **Sin Playwright MCP** (descargas con `make tabla`/`make pdf`/`fetch_api.py`, cacheadas).
-5. **Una paleta por hilo** (o por dato), elegida por tema en el encuadre. T1 siempre con texto (40–280 de peso X, sin enlaces, gancho `hook_tipo`); los demás pueden ir sin texto; con imagen ≤ 200; el texto nunca repite la tarjeta (dato héroe).
+5. **Una paleta por hilo** (o por dato), elegida por tema en el encuadre. T1 siempre con texto (40–280 de peso X, sin enlaces, gancho `hook_tipo`); los demás pueden ir sin texto; con imagen ≤ 200; el texto nunca repite la tarjeta (dato héroe). Los **modos** no crean tipos nuevos: `guion.tipo` es `hilo` o `dato` y `guion.modo` (`MODOS` en `ensamblar.py`, tabla `MODOS` en cada workflow) fuerza gancho, plantillas y gates; G1 rechaza tipos y modos desconocidos y `scripts/check_workflows.py` mantiene las constantes alineadas.
 6. Los gates viven en código (`hilo.js`, `ensamblar.py --check` G1–G8, `render.js --check` R1–R6). Un hilo que no pasa C1–C8 se entrega marcado `incompleto`, nunca como `listo`.
-7. El agente nunca publica en X. `memoria/` la escribe solo `scripts/memoria.py` desde el productor (`hilos.json` en /hilo, `datos.json` en /dato, según `guion.tipo`; nunca en smoke/fixture); `ideas/` la escribe solo `scripts/ideas.py` (también vía `memoria.py`, que marca `hecha` la idea del `idea_id` del encuadre; `/dato` no toca `ideas/`).
+7. El agente nunca publica en X. `memoria/` la escribe solo `scripts/memoria.py` desde el productor (`hilos.json` en /hilo, `datos.json` en /dato, según `guion.tipo`; nunca en smoke/fixture); `ideas/banco.json` lo escribe solo `scripts/ideas.py` (también vía `memoria.py`, que marca `hecha` la idea del `idea_id` del encuadre; `/dato` no toca el banco) e `ideas/calendario.json` solo `scripts/calendario.py` (`/fecha` lo marca al cerrar).
 8. Al terminar cualquier corrida: `make validate` sale 0; `make costo` mide la corrida.
 
 ## Comandos
@@ -44,8 +49,12 @@ ideas), entregado en `datos/YYYY-MM-DD-<slug>/` y registrado en `memoria/datos.j
 |---|---|
 | `/hilo [tema] [smoke\|fixture]` | Produce un hilo completo (Workflow multi-agente). `smoke` = corta con web; `fixture` = sin web, solo guion → visuales → productor |
 | `/ideas [n] [enfoque]` | Busca temas con datos descargables y los añade a `ideas/banco.json` (1–3 exploradores sonnet, ~5–10 min) |
-| `/dato [pista] [smoke\|fixture]` | Un dato impactante en UNA tarjeta 1080×1080 con texto y alt-text (4 agentes `hilo-*`, ~8–15 min). La pista (tema, ángulo, fuente o corazonada) es opcional: sin ella el investigador elige un dato de actualidad. `smoke` = corta con web; `fixture` = sin web, solo productor sobre `sesiones/_fixture_dato` |
-| `make test [RAPIDO=1]` | Pruebas: validate, catálogo, fixture, negativos de gate, vectores de peso X, sintaxis de `hilo.js` |
+| `/dato [vs\|mapa\|antes] [pista] [smoke\|fixture]` | Un dato impactante en UNA tarjeta 1080×1080 con texto y alt-text (4 agentes `hilo-*`, ~8–15 min). La pista (tema, ángulo, fuente o corazonada) es opcional: sin ella el investigador elige un dato de actualidad. `smoke` = corta con web; `fixture` = sin web, solo productor sobre `sesiones/_fixture_dato` (dato simple) |
+| `/vs [pista]` | Guatemala frente a otros países en una tarjeta: todos de la misma fuente, edición y periodo; Guatemala destacada; sin «ganamos/perdemos» (= `/dato vs`) |
+| `/mapa [pista]` | Brecha por departamento: mapa de los 22 con extremos, tasa per cápita con denominador INE, gancho `brecha_territorial` (= `/dato mapa`) |
+| `/antes [pista]` | Hace N años frente a hoy: misma serie y fuente a ≥5 años, gancho `antes_despues`, dinero corriente declarado (= `/dato antes`) |
+| `/fecha [hoy\|fecha\|id\|texto]` | Pieza atada a una fecha del calendario editorial; sin argumento lista los próximos 30 días; `buscar [mes]` propone entradas nuevas con un explorador. Despacha a `/dato` o `/hilo` y marca la entrada `hecha` |
+| `make test [RAPIDO=1]` | Pruebas: validate, catálogo, fixture, negativos de gate (incluidos tipo y modo), vectores de peso X, sintaxis de los workflows, `check_workflows.py` |
 | `make doctor` | Comprueba node, Playwright, python, fuentes, agentes y workflow |
 | `make costo [RUN=wf_xxx]` | Tokens, herramientas y tiempo por agente de una corrida |
 | `make catalogo [PALETAS=todas]` | Ensambla y renderiza todas las plantillas + pruebas de estrés |
@@ -53,6 +62,7 @@ ideas), entregado en `datos/YYYY-MM-DD-<slug>/` y registrado en `memoria/datos.j
 | `python3 scripts/ensamblar.py sesiones/<slug> --check` | Sesión → carpeta de entrega + gate G1–G8 + `contacto.png` |
 | `make digesto SESION= [PARA=]` · `make fuentes TEMA=` | Insumos compactos para agentes |
 | `make ideas` · `python3 scripts/ideas.py --siguiente\|--ver ID\|--marcar ID --estado E [--hilo H]\|--conciliar` | Banco de ideas |
+| `make calendario [DIAS=30]` · `python3 scripts/calendario.py --proximas\|--dia F\|--ver ID\|--buscar T\|--importar DIR\|--marcar ID --estado E [--pieza R]` | Calendario editorial de `/fecha` |
 | `python3 scripts/memoria.py --datos ["tema"]` | Datos ya publicados por /dato (el más reciente primero; con tema, filtrados) |
 | `make validate` · `make limpiar [SESION=]` · `make contacto DIR=` | Utilidades |
 | `make tabla URL=` · `make pdf URL=` · `python3 scripts/tabla.py` | Descargas oficiales cacheadas y agregación de CSV |

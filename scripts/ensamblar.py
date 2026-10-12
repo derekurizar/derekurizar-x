@@ -35,6 +35,10 @@ Modo del post (guion.modo, lo fija el workflow con args.modo; encuadre.modo de r
   hilo: hilo | explica | perfil · dato: dato | vs | mapa | antes. Sin modo = el tipo.
   G1 rechaza un tipo o un modo desconocido (antes un tipo desconocido pasaba por hilo). El modo se
   copia a hilo.json/dato.json («modo») y a post.md («- **Modo:** …» cuando no es el de defecto).
+  Modos de dato (espejo mínimo de los gates de dato.js; el detalle vive allí): todo modo ≠ dato exige
+  su bloque guion.<modo>; mapa → plantilla mapa; antes → hook_tipo antes_despues; vs → vs.paises con
+  ≥2 países y Guatemala, vs.fuente_comun, y sin «ganamos/perdemos» en texto ni titular. El bloque
+  se copia a dato.json (clave del modo) y a post.md («## Modo <modo>»).
 
 --estado borrador|listo|incompleto  estado que se escribe en hilo.json (dato.json), su vista previa y post.md (default borrador).
 --solo-estado  no ensambla ni renderiza: solo reescribe el estado (exige --estado) en la
@@ -71,6 +75,8 @@ RE_BAIT = re.compile(r"(dale|da|dame|dejen?)\s+(rt|like|me gusta)|s[ií]gue(me|n
 RE_SUPER = re.compile(r"r[ée]cord|hist[óo]ric[oa]|m[áa]s alt[oa] de la historia|nunca antes", re.I)
 # Superlativos relativos («el más bajo desde 2020», «el más alto en los últimos 5 años»): aviso si no hay serie o desglose ≥5 puntos.
 RE_RELATIVO = re.compile(r"m[áa]s (alt|baj|grand|car|barat)\w*\s+(desde|en los [úu]ltimos|de los [úu]ltimos|en \d+ a[ñn]os)", re.I)
+# Marcador nacionalista (modo vs): el titular dice la brecha, no quién «gana».
+RE_NACIONALISTA = re.compile(r"\b(ganamos|perdemos|nos ganan|le ganamos|somos los (peores|mejores))\b", re.I)
 # Claves de visual.datos que son DATOS (se cotejan contra las cifras); el resto es presentación.
 CLAVES_DATO = {
     "linea": lambda d: [v for s in d.get("series", []) for v in s.get("valores", []) if v is not None],
@@ -233,6 +239,26 @@ def gate(guion, encuadre, cifras, veredictos, sesion, plantillas, paletas, modo_
             F.append("G1 T1 debe ser beat 'gancho' (un dato no lleva giro ni cierre)")
         if not guion.get("hook_tipo"):
             F.append("G1 un dato exige hook_tipo (%s)" % "|".join(HOOKS))
+        # Modos de dato (vs · mapa · antes): espejo mínimo de los gates de dato.js.
+        modo_d = modo_de(guion, encuadre)
+        v1 = (tuits[0].get("visual") or {}) if n else {}
+        pl1 = v1.get("plantilla_final") or v1.get("plantilla")
+        if modo_d in MODOS["dato"] and modo_d != "dato" and not isinstance(guion.get(modo_d), dict):
+            F.append("G1 modo %s exige el bloque guion.%s" % (modo_d, modo_d))
+        if modo_d == "mapa" and n and pl1 != "mapa":
+            F.append("G1 modo mapa exige la plantilla mapa (es %r)" % pl1)
+        if modo_d == "antes" and guion.get("hook_tipo") != "antes_despues":
+            F.append("G1 modo antes exige hook_tipo antes_despues (es %r)" % guion.get("hook_tipo"))
+        if modo_d == "vs":
+            vs = guion.get("vs") if isinstance(guion.get("vs"), dict) else {}
+            paises = [str(x) for x in (vs.get("paises") or [])]
+            if len(paises) < 2 or not any("guatemala" in x.lower() for x in paises):
+                F.append("G1 modo vs exige vs.paises con ≥2 países y Guatemala entre ellos")
+            if not str(vs.get("fuente_comun") or "").strip():
+                F.append("G1 modo vs exige vs.fuente_comun (la misma fuente para todos los países)")
+            textos = " ".join([tuits[0].get("texto") or ""] + list(v1.get("titular") or []) + [(guion.get("dato") or {}).get("titular") or ""]) if n else ""
+            if RE_NACIONALISTA.search(textos):
+                F.append("G1 modo vs: «ganamos/perdemos/somos los peores» no va en el texto ni en el titular")
     else:
         if not (3 if smoke else 4) <= n <= MAX_TUITS:
             F.append("G1 el hilo tiene %d tuits (deben ser %s–%d)" % (n, 3 if smoke else 4, MAX_TUITS))
@@ -654,6 +680,9 @@ def escribir_dato(guion, encuadre, cifras, veredictos, fuentes, sesion, salida, 
         "fuentes": [fuente_pie] if fuente_pie else [], "fuentes_cifras": fuentes_usadas,
         "gate_mecanico": "ok" if not fallos_gate else "falla",
     }
+    bloque = guion.get(modo) if modo != "dato" else None  # vs | mapa | antes: el bloque del modo viaja a la entrega
+    if isinstance(bloque, dict):
+        dato[modo] = bloque
 
     # post.md
     L = ["# %s" % tema, "", "- **Fecha:** %s" % fecha, "- **Slug:** %s" % slug, "- **Tipo:** dato (una tarjeta)"]
@@ -668,6 +697,8 @@ def escribir_dato(guion, encuadre, cifras, veredictos, fuentes, sesion, salida, 
     L += ["## Alt-text", "", alt, ""]
     if dato["por_que_impacta"]:
         L += ["## Por qué impacta", "", dato["por_que_impacta"], ""]
+    if isinstance(bloque, dict):
+        L += ["## Modo %s" % modo, ""] + ["- **%s:** %s" % (k, ", ".join(str(x) for x in val) if isinstance(val, list) else val) for k, val in bloque.items()] + [""]
     if candidatas:
         L += ["## Candidatas consideradas", ""]
         for c in candidatas:
