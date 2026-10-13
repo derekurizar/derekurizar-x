@@ -100,7 +100,7 @@ Límites prácticos (deja ≥ 40 px de aire):
 | capítulo `destacado` | título ≤ 2 líneas de 22; lead ≤ 250; `antes.valor` + `despues.valor` ≤ 7 caracteres; etiquetas ≤ 30 |
 | capítulo `dividida` | título ≤ 2 líneas de 15; lead ≤ 240; 2–4 secciones ≤ 42 |
 | `apaisada` | lateral: titulo ≤ 40, ≤ 2 párrafos ≤ 500, ≤ 2 notas ≤ 70; figura `panel` alto 300–380 (titular 1 línea ≤ 46) o `papel` ≤ 420; ≤ 16 etiquetas de 4 caracteres |
-| `portada` | título ≤ 55; lead ≤ 250; `cifra.valor` ≤ 5; `etiqueta` ≤ 30; `texto` ≤ 70; `titulo_corto` ≤ 18 si C ≥ 4 |
+| `portada` | título ≤ 55; lead ≤ 250; `cifra.valor` ≤ 5; `etiqueta` ≤ 30 (junto a la cifra caben ~20 por línea: con «·» parte en dos tras el punto); `texto` ≤ 70; `titulo_corto` ≤ 18 si C ≥ 4 |
 | `indice` | descripción ≤ 60; capítulos de 79 px (1 línea) o 115 (2); figuras + tablas ≤ 12 a una columna (C = 3) o ≤ 22 a dos (C ≤ 4); con C = 5 y > 14 figuras, descripciones de una línea |
 | `resumen` | tesis ≤ 350 (6 líneas); `no_afirma` 3 de una línea (4 si la tesis ≤ 5 líneas) |
 | `tablero` | contexto ≤ 2 líneas de 32; chispa ≤ 30 puntos; cuadros `total` ≤ 60; comparacion 2–3 ítems con nombre ≤ 12 |

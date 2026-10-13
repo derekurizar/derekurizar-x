@@ -2646,7 +2646,7 @@ PAGINAS.portada = (P, X) => {
     '<h1 class="t-portada">' + X.md(P.titulo) + "</h1>" +
     (P.lead ? '<p class="lead">' + X.md(P.lead) + "</p>" : "") +
     (P.cifra ? '<div style="margin-top:auto;display:flex;align-items:flex-end;gap:32px"><div class="cifra-heroe">' + X.esc(P.cifra.valor) + '</div>' +
-      '<div style="display:flex;flex-direction:column;gap:10px;padding-bottom:14px;max-width:260px"><span class="k">' + X.esc(P.cifra.etiqueta) + '</span><span style="font:400 16px/1.4 Archivo,sans-serif">' + X.md(P.cifra.texto || "") + "</span></div></div>" : '<div style="margin-top:auto"></div>') +
+      '<div style="display:flex;flex-direction:column;gap:10px;padding-bottom:14px;max-width:320px"><span class="k" style="text-wrap:balance">' + X.esc(P.cifra.etiqueta).replace(/ · /g, "&nbsp;· ") + '</span><span style="font:400 16px/1.4 Archivo,sans-serif">' + X.md(P.cifra.texto || "") + "</span></div></div>" : '<div style="margin-top:auto"></div>') +
     (caps ? '<div style="display:flex;gap:24px;margin-top:44px;font:500 12px/1.4 \'JetBrains Mono\',monospace">' + caps + "</div>" : "") +
     '<div class="pie-pag sobre-color" style="margin-top:40px"><span class="mono">Fuentes: ' + X.esc(P.fuentes) + "</span>" + X.marca() + "</div></section>";
 };

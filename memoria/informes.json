@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "_comentario": "Registro de informes de investigación (PDF) producidos por /investigacion. Lo escribe SOLO scripts/memoria.py (--registrar … --informe) desde el productor; `python3 scripts/memoria.py --informes` lista y da el siguiente N.º. estado: borrador | listo | publicado | incompleto · modo: investigacion (flujo completo) | desde (informe sobre un hilo previo).",
+  "informes": [
+    {
+      "id": "2026-10-13-dengue-2026-caida-serotipos",
+      "fecha": "2026-10-13",
+      "slug": "dengue-2026-caida-serotipos",
+      "tema": "Dengue 2026: 43% menos casos que en 2025, pero ¿por qué y por cuánto tiempo?",
+      "tesis": "A la semana 35, Guatemala acumula 12,699 casos sospechosos de dengue en la red del MSPAS, 40% menos que en 2025 pero más que en 2020, 2021 y 2022; la caída es regional y coincide con dos años de DENV-3 dominante, mientras el DENV-1 sube de 3% a 19% de las muestras: un valle del ciclo, no el fin del riesgo.",
+      "paleta": "terracota",
+      "numero": "01",
+      "n_paginas": 27,
+      "n_figuras": 15,
+      "ruta_informe": "investigacion/2026-10-13-dengue-2026-caida-serotipos",
+      "ruta_hilo": "hilos/2026-10-06-dengue-2026-caida-serotipos",
+      "hilo_id": "2026-10-06-dengue-2026-caida-serotipos",
+      "estado": "listo",
+      "modo": "desde"
+    }
+  ]
+}
