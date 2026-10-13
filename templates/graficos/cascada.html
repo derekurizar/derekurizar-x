@@ -1,0 +1,85 @@
+<!-- cascada · del inicio al fin sumando y restando (waterfall horizontal: ingresos → gasto → déficit). Contrato: referencias/diseno/graficos.md -->
+<script>
+// CIFRAS DE EJEMPLO (presupuesto 2025, Minfin) · verificar antes de publicar
+const DATA = {
+  kicker: "PRESUPUESTO 2025 · MILLONES DE QUETZALES",
+  titular: ["Cada quetzal que entra", "ya está comprometido"],
+  nota: "",
+  fuente: "Minfin · presupuesto aprobado 2025",
+  handle: "@DerekUrizar",
+  formato: { prefijo: "Q", sufijo: "", decimales: 0, miles: true, escala: 1 },
+  inicio: { nombre: "Ingresos", valor: 108500 },        // null si la cascada empieza en cero
+  pasos: [                                               // 2–8; valor ≥ 0 y efecto suma|resta (nunca un número con signo)
+    { nombre: "Funcionamiento", valor: 71900, efecto: "resta" },
+    { nombre: "Inversión", valor: 23600, efecto: "resta" },
+    { nombre: "Intereses de la deuda", valor: 18200, efecto: "resta" }
+  ],
+  fin: { nombre: "Déficit", valor: 5200 },               // valor opcional: la cifra oficial; la plantilla coteja la magnitud con lo calculado
+  destacar: "fin"                                        // "inicio" | "fin" | índice de paso | null (defecto: fin)
+};
+
+function render(D) {
+  H.assert(Array.isArray(D.pasos) && D.pasos.length >= 2 && D.pasos.length <= 8, "cascada admite de 2 a 8 pasos");
+  D.pasos.forEach((p) => {
+    H.assert(p && typeof p.nombre === "string" && p.nombre.trim(), "cada paso necesita nombre");
+    H.assert(typeof p.valor === "number" && isFinite(p.valor) && p.valor >= 0, "paso «" + p.nombre + "»: valor numérico ≥ 0 (el signo va en efecto)");
+    H.assert(p.efecto === "suma" || p.efecto === "resta", "paso «" + p.nombre + "»: efecto debe ser suma o resta");
+  });
+  const ini = D.inicio || null, fin = D.fin || null;
+  H.assert(ini || fin, "cascada necesita inicio y/o fin");
+  if (ini) H.assert(typeof ini.nombre === "string" && ini.nombre.trim() && typeof ini.valor === "number" && isFinite(ini.valor), "inicio necesita nombre y valor numérico");
+  if (fin) H.assert(typeof fin.nombre === "string" && fin.nombre.trim() && (fin.valor == null || (typeof fin.valor === "number" && isFinite(fin.valor))), "fin necesita nombre (y valor numérico si va)");
+  const f = (v, extra) => H.num(v, Object.assign({}, D.formato, extra || {}));
+
+  // Acumulados: los calcula H.cascada (compartido con el informe); fin.valor, si va, solo se coteja (magnitud) contra lo calculado.
+  const { filas, calculado } = H.cascada(ini, D.pasos, fin, D.formato);
+  if (calculado) H.anotar(fin.nombre + " calculado desde los pasos.");
+  const n = filas.length;
+  H.assert(n <= 10, "cascada: como máximo 10 filas (inicio + pasos + fin)");
+  const dft = fin ? "fin" : D.pasos.length - 1;
+  const des = D.destacar == null ? dft : D.destacar;
+  const esHi = (r) => (des === "inicio" && r.tipo === "inicio") || (des === "fin" && r.tipo === "fin") || (Number.isInteger(des) && r.tipo === "paso" && r.i === ((des % D.pasos.length) + D.pasos.length) % D.pasos.length);
+  H.assert(filas.some(esHi), "destacar debe ser \"inicio\", \"fin\" o el índice de un paso");
+
+  const ink = H.color.ink, a1 = H.color.a1, W = 920;
+  const fontN = ["600 21px Archivo,sans-serif", "600 19px Archivo,sans-serif", "600 17px Archivo,sans-serif"];
+  const fontNH = ["800 23px Archivo,sans-serif", "800 21px Archivo,sans-serif", "800 19px Archivo,sans-serif"];
+  const fontV = "700 20px 'JetBrains Mono',monospace", fontVH = "700 22px 'JetBrains Mono',monospace";
+  const colIzq = Math.min(280, Math.max(...filas.map((r) => H.medir(r.nombre, esHi(r) ? fontNH[0] : fontN[0]))) + 24);
+  filas.forEach((r) => { r.fn = H.encajar(r.nombre, esHi(r) ? fontNH : fontN, colIzq - 16); H.assert(r.fn, "«" + r.nombre + "» no cabe en la columna de nombres: acórtalo"); });
+  const labW = Math.max(...filas.map((r) => H.medir(r.rotulo, esHi(r) ? fontVH : fontV))) + 14;
+  // El rótulo va fuera del extremo móvil: a la derecha si la fila crece, a la izquierda si baja.
+  filas.forEach((r) => { r.lado = r.hasta >= r.desde ? "der" : "izq"; });
+  const resIzq = filas.some((r) => r.lado === "izq") ? labW : 0, resDer = filas.some((r) => r.lado === "der") ? labW : 0;
+  const todos = filas.flatMap((r) => [r.desde, r.hasta]);
+  const dom = [Math.min(0, ...todos), Math.max(0, ...todos)];
+  if (dom[1] === dom[0]) dom[1] = dom[0] + 1;
+  const alto = H.espacio(Math.min(560, 10 + n * 64), 10 + n * 44);
+  const svg = H.lienzo(W, alto);
+  const x0 = colIzq + resIzq, x1 = W - resDer;
+  const sx = H.escala(dom, [x0, x1]);
+  const filaH = alto / n, barH = Math.max(16, Math.min(34, Math.round(filaH * 0.56)));
+  const xz = sx(0);
+
+  H.svgEl("line", { x1: xz, x2: xz, y1: 0, y2: alto, stroke: ink, "stroke-width": 2 }, svg);
+  filas.forEach((r, k) => {
+    const cy = k * filaH + filaH / 2, hi = esHi(r);
+    H.texto(svg, 0, cy + 8, r.nombre, { style: "font:" + r.fn + ";fill:" + ink });
+    const xa = sx(r.desde), xb = sx(r.hasta), x = Math.min(xa, xb), w = Math.max(3, Math.abs(xb - xa));
+    const fill = hi ? a1 : r.tipo !== "paso" ? ink : r.hasta >= r.desde ? ink : H.color.inkA(.45);
+    H.svgEl("rect", { x, y: cy - barH / 2, width: w, height: barH, fill, opacity: hi || r.tipo !== "paso" || r.hasta < r.desde ? 1 : .85 }, svg);
+    const estilo = "font:" + (hi ? fontVH : fontV) + ";fill:" + ink + ";" + H.halo();
+    // El rótulo nunca cruza el eje cero: si lo pisa, pasa al otro extremo de la barra (si cabe).
+    const wl = H.medir(r.rotulo, hi ? fontVH : fontV), cruza = (a, b) => a < xz + 4 && b > xz - 4;
+    let lado = r.lado;
+    if (lado === "izq" && cruza(x - 10 - wl, x - 10) && x + w + 10 + wl <= W) lado = "der";
+    else if (lado === "der" && cruza(x + w + 10, x + w + 10 + wl) && x - 10 - wl >= colIzq) lado = "izq";
+    if (lado === "der") H.texto(svg, x + w + 10, cy + 7, r.rotulo, { style: estilo });
+    else H.texto(svg, x - 10, cy + 7, r.rotulo, { "text-anchor": "end", style: estilo });
+    if (k < n - 1) {
+      const xc = sx(r.hasta);
+      H.svgEl("line", { x1: xc, x2: xc, y1: cy + barH / 2, y2: cy + filaH - barH / 2, stroke: H.color.inkA(.45), "stroke-width": 2, "stroke-dasharray": "4 5" }, svg);
+    }
+  });
+}
+</script>

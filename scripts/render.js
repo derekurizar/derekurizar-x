@@ -27,12 +27,10 @@
 const path = require("path");
 const fs = require("fs");
 const { chromium } = require("playwright");
+const { rutaFuentes } = require("./fuentes_ruta");
 
 const RAIZ = path.dirname(__dirname);
 const TOKENS = JSON.parse(fs.readFileSync(path.join(RAIZ, "design", "tokens.json"), "utf8"));
-const FONTS_DIR = path.join(RAIZ, "design", "fonts");
-const PROTOCOLOS_LOCALES = /^(file|data|blob|about):/;
-const RE_FUENTE = /\/fonts\/([^/?#]+\.woff2)(\?.*)?$/;
 const FAMILIAS = ["400 88px 'Instrument Serif'", "500 20px 'JetBrains Mono'", "600 24px Archivo"];
 
 function parseArgs(argv) {
@@ -129,22 +127,11 @@ async function main() {
       const out = opts.out ? path.resolve(opts.out) : abs.replace(/\.html?$/i, ".png");
       if (!fs.existsSync(abs)) { console.error(`ERROR: no existe ${input}`); huboFallos = true; continue; }
       const page = await browser.newPage({ viewport: { width, height }, deviceScaleFactor: opts.dsf });
-      const errores = [], externas = [], fuentesFaltantes = [];
+      const errores = [];
       page.on("pageerror", (e) => errores.push(e.message));
       page.on("console", (m) => { if (m.type() === "error") errores.push("console.error: " + m.text()); });
 
-      await page.route("**", (route) => {
-        const url = route.request().url();
-        const mf = url.match(RE_FUENTE);
-        if (mf) {
-          const archivo = path.join(FONTS_DIR, mf[1]);
-          if (!fs.existsSync(archivo)) { fuentesFaltantes.push(mf[1]); return route.abort(); }
-          return route.fulfill({ status: 200, contentType: "font/woff2", body: fs.readFileSync(archivo), headers: { "Access-Control-Allow-Origin": "*", "Cache-Control": "no-store" } });
-        }
-        if (PROTOCOLOS_LOCALES.test(url)) return route.continue();
-        externas.push(url);
-        return route.abort();
-      });
+      const { externas, fuentesFaltantes } = await rutaFuentes(page);
 
       await page.goto("file://" + abs, { waitUntil: "load", timeout: 15000 });
       let listo = true;

@@ -1,0 +1,97 @@
+<!-- PRUEBA DE ESTRÉS · linea-tiempo: 8 hitos proporcionales al tiempo, círculos, valor_texto y nombres y subtítulos largos -->
+<script>
+const DATA = {
+  kicker: "PRUEBA · DESASTRES CON MAGNITUD",
+  titular: ["Ocho golpes en", "poco más de un siglo"],
+  nota: "",
+  fuente: "Prueba de estrés · datos ficticios",
+  handle: "@DerekUrizar",
+  formato: { prefijo: "", sufijo: "", decimales: 0, miles: true, escala: 1 },
+  eventos: [
+    { fecha: "1902-10", nombre: "Erupción del Santa María", valor: 6000, sub: "columna de 28 km, ceniza", valor_texto: "6,000 muertes" },
+    { fecha: "1917-12", nombre: "Terremotos de la capital", valor: 250,  sub: "serie de sismos, dos meses", valor_texto: "250 muertes" },
+    { fecha: "1931-09", nombre: "Huracán del Caribe norte", valor: 1500, sub: "categoría 4 en Belice", valor_texto: "1,500 muertes" },
+    { fecha: "1945-06", nombre: "Inundaciones del Motagua", valor: 120,  sub: "crecida de temporada", valor_texto: "120 muertes" },
+    { fecha: "1960-11", nombre: "Erupción del Pacaya", valor: 30, sub: "reactivación tras siglos", valor_texto: "30 muertes" },
+    { fecha: "1976-02", nombre: "Terremoto del Motagua", valor: 23000, sub: "M 7.5 · 4 de febrero", valor_texto: "23,000 muertes" },
+    { fecha: "1991-01", nombre: "Sequía del corredor seco", valor: 800, sub: "pérdida de cosechas", valor_texto: "800 muertes" },
+    { fecha: "2012-11", nombre: "Terremoto de San Marcos", valor: 44, sub: "M 7.4 · 7 de noviembre", valor_texto: "44 muertes" }
+  ],
+  proporcional: true, forma: "circulo", destacar: 5
+};
+
+function render(D) {
+  const E = D.eventos;
+  H.assert(Array.isArray(E) && E.length >= 3 && E.length <= 8, "linea-tiempo admite de 3 a 8 eventos");
+  E.forEach((e) => {
+    H.assert(e && typeof e.fecha === "string" && /^\d{4}/.test(e.fecha.trim()), "cada evento necesita fecha (texto que empieza por el año AAAA)");
+    H.assert(typeof e.nombre === "string" && e.nombre.trim() && e.nombre.length <= 40, "cada evento necesita nombre de 1 a 40 caracteres");
+    H.assert(typeof e.valor === "number" && isFinite(e.valor) && e.valor >= 0, "cada evento necesita valor numérico ≥ 0 («" + e.nombre + "»)");
+    H.assert(e.sub == null || (typeof e.sub === "string" && e.sub.length <= 40), "sub de «" + e.nombre + "»: texto de ≤ 40 caracteres");
+  });
+  const forma = D.forma == null ? "barra" : D.forma;
+  H.assert(["barra", "circulo", "ninguna"].includes(forma), "forma debe ser barra, circulo o ninguna");
+  const prop = D.proporcional === true;
+  const n = E.length, hi = D.destacar == null ? -1 : ((D.destacar % n) + n) % n;
+  const ink = H.color.ink, a1 = H.color.a1;
+  H.anotar(prop ? "Intervalos proporcionales al tiempo." : "Intervalos no proporcionales al tiempo.");
+
+  const W = 920;
+  const alto = H.espacio(Math.min(560, n * 80), n * 52 + 8);
+  const svg = H.lienzo(W, alto);
+
+  // Centros de fila: equidistantes, o según la fecha (año y mes) si proporcional.
+  let cys;
+  if (prop) {
+    const t = E.map((e) => { const m = /^(\d{4})(?:-(\d{2}))?/.exec(e.fecha.trim()); return +m[1] + (m[2] ? (+m[2] - 1) / 12 : 0); });
+    for (let i = 1; i < n; i++) H.assert(t[i] >= t[i - 1], "con proporcional:true los eventos van en orden cronológico («" + E[i].fecha + "»)");
+    const sy = H.escala([t[0], t[n - 1]], [30, alto - 30]);
+    cys = t.map(sy);
+    for (let i = 1; i < n; i++) H.assert(cys[i] - cys[i - 1] >= 52, E[i - 1].fecha + " y " + E[i].fecha + " quedan a " + Math.round(cys[i] - cys[i - 1]) + " px: usa proporcional:false");
+  } else {
+    const rowH = alto / n;
+    cys = E.map((_, i) => i * rowH + rowH / 2);
+  }
+
+  // Columnas: fecha · espina · nombre (+sub) · magnitud · valor
+  const fontF = "700 20px 'JetBrains Mono',monospace";
+  const fechaW = Math.min(150, Math.max(...E.map((e) => H.medir(e.fecha, fontF))) + 20);
+  const xSpine = fechaW + 14, xName = xSpine + 26, nameMax = 360;
+  const fontN = (px, esHi) => (esHi ? "800 " : "600 ") + px + "px Archivo,sans-serif";
+  const talla = [[23, 25], [21, 23], [19, 21]].find(([p, ph]) => E.every((e, i) => H.medir(e.nombre, fontN(i === hi ? ph : p, i === hi)) <= nameMax));
+  H.assert(talla, "algún nombre no cabe en " + nameMax + " px ni a 19 px: acórtalo");
+  const fontS = "500 17px 'JetBrains Mono',monospace";
+  E.forEach((e) => { if (e.sub) H.assert(H.medir(e.sub, fontS) <= nameMax, "sub «" + e.sub + "» no cabe en " + nameMax + " px: acórtalo"); });
+  const nameW = Math.max(...E.map((e, i) => Math.max(H.medir(e.nombre, fontN(i === hi ? talla[1] : talla[0], i === hi)), e.sub ? H.medir(e.sub, fontS) : 0)));
+  const x0m = xName + nameW + 16;
+  const fontV = (esHi) => "700 " + (esHi ? 22 : 20) + "px 'JetBrains Mono',monospace";
+  const etiq = E.map((e) => (e.valor_texto != null ? String(e.valor_texto) : H.num(e.valor, D.formato)));
+  const labW = Math.max(...etiq.map((s, i) => H.medir(s, fontV(i === hi)))) + 14;
+  const x1m = W - labW;
+  if (forma !== "ninguna") H.assert(x1m - x0m >= 160, "no queda sitio para la magnitud (" + Math.round(x1m - x0m) + " px): acorta los nombres");
+  const max = Math.max(...E.map((e) => e.valor)) || 1;
+
+  H.svgEl("line", { x1: xSpine, x2: xSpine, y1: cys[0], y2: cys[n - 1], stroke: H.color.inkA(.35), "stroke-width": 3 }, svg);
+  E.forEach((e, i) => {
+    const esHi = i === hi, cy = cys[i], fill = esHi ? a1 : ink;
+    H.texto(svg, fechaW - 10, cy + 7, e.fecha, { "text-anchor": "end", style: "font:" + fontF + ";fill:" + ink });
+    H.svgEl("circle", { cx: xSpine, cy, r: esHi ? 11 : 9, fill }, svg);
+    const conSub = !!(e.sub && e.sub.trim());
+    H.texto(svg, xName, conSub ? cy - 2 : cy + 8, e.nombre, { style: "font:" + fontN(esHi ? talla[1] : talla[0], esHi) + ";fill:" + ink });
+    if (conSub) H.texto(svg, xName, cy + 20, e.sub, { style: "font:" + fontS + ";fill:" + H.color.inkA(.75) });
+    let xLab = x0m;
+    if (forma === "barra") {
+      const h = esHi ? 24 : 20, w = Math.max(3, (e.valor / max) * (x1m - x0m));
+      H.svgEl("rect", { x: x0m, y: cy - h / 2, width: w, height: h, fill, opacity: esHi ? 1 : .85 }, svg);
+      xLab = x0m + w + 10;
+    } else if (forma === "circulo") {
+      const paso = prop ? Math.min(...cys.slice(1).map((y, k) => y - cys[k])) : alto / n;
+      const rMax = Math.max(8, Math.min(30, paso / 2 - 6));
+      const r = Math.max(2, rMax * Math.sqrt(e.valor / max));
+      H.svgEl("circle", { cx: x0m + rMax, cy, r, fill, opacity: esHi ? 1 : .85 }, svg);
+      xLab = x0m + 2 * rMax + 12;
+    }
+    H.texto(svg, xLab, cy + 7, etiq[i], { style: "font:" + fontV(esHi) + ";fill:" + ink });
+  });
+}
+</script>

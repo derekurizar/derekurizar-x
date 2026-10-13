@@ -34,7 +34,15 @@ para `datos`, usa `python3 scripts/digesto.py <sesion> --serie <id>`.
    lo calcula la plantilla); `divergente` 2–10; `apilada` 2–8 filas × 2–5
    partes; `piramide` 4–12 grupos; `treemap` 3–12; `dispersion` 8–22 puntos
    con `ejeX`/`ejeY` y ≤ 4 rotulados (sin afirmar causa). `periodos` (≤ 4,
-   índices) sombrea gobiernos en `linea`/`barras-v`.
+   índices) sombrea gobiernos en `linea`/`barras-v`. `hemiciclo` 10–300
+   curules en 2–8 bloques que suman `total` (`mayoria` es `simple|calificada`,
+   nunca un número); `multiples` 4–9 paneles con ≥ 4 puntos; `combinado` 3–12
+   periodos con `barras` y `linea` de igual longitud (sin afirmar causa);
+   `linea-tiempo` 3–8 eventos con `proporcional`; `agrupadas` 2–6 categorías ×
+   2–3 series; `pictograma` `total` 2–200 y `destacado` ≤ total (enteros);
+   `area-apilada` 5–30 puntos × 2–5 partes; `cascada` 2–8 pasos con `efecto`
+   suma|resta más `inicio` y/o `fin` (no escribas acumulados; `fin.valor` solo
+   si es una cifra verificada).
 5. Escribe `<sesion>/guion.json` COMPLETO (`slug, fecha, paleta, smoke, handle,
    hook_tipo, sintesis, tuits`). Retorno: `archivo, tesis, ancla_id, paleta,
    hook_tipo, no_afirma, tuits[]` con `visual` completo (el workflow gatea sobre
@@ -54,7 +62,8 @@ de los límites). Guía: `referencias/narrativa.md`, «Explicador» y «Perfil»
 - **`perfil`**: 5–8 tuits (smoke 3–4). El sujeto aparece en el kicker o el
   titular de T1. T2..T(n−1) con beat `dimension`: cada tarjeta compara sujeto y
   país (un item o serie rotulado «Guatemala», «nacional» o «país»; la
-  `comparacion` de `cifra`; o un `mapa` con el sujeto destacado). Bloque
+  `comparacion` de `cifra`; `agrupadas` con series [sujeto, país] para varias
+  dimensiones en una tarjeta; o un `mapa` con el sujeto destacado). Bloque
   `perfil{sujeto, tipo: departamento|grupo, dimensiones[]{n, nombre, anio}}`.
   Si los años difieren, el cierre los nombra; el cierre dice qué hace distinto
   al sujeto y nombra las fuentes.
@@ -111,7 +120,10 @@ llega en tu directiva. Guía narrativa: `referencias/narrativa.md`, «Dato únic
      `comparacion.valor`, `tendencia`, `comparacion` opcional). Cambia de
      plantilla cuando el dato lo pide: `antes-despues` (dos momentos), `waffle`
      (N de cada 100), `dona` (reparto), `bullet` (contra meta), `mapa` (brecha
-     territorial), `linea` (récord con serie). `visual.cifra_ids` incluye
+     territorial), `linea` (récord con serie), `pictograma` (K de N unidades
+     contables), `cascada` (de un total a otro sumando y restando),
+     `linea-tiempo` (hitos con fecha y magnitud), `hemiciclo` (curules por
+     bloque). `visual.cifra_ids` incluye
      `dato.cifra_id`; la fuente va en el pie; no hay cierre que nombre fuentes.
    - `alt_text` 20–1000: tipo de gráfico, cifra con unidad y periodo, fuente.
 5. Escribe `<sesion>/guion.json` COMPLETO: `slug, fecha, tipo: "dato", paleta,
@@ -140,5 +152,5 @@ del modo; el gate exige gancho y plantillas por modo
   dinero corriente, false si es real o no es dinero, null si no aplica)}`.
   `hook_tipo: "antes_despues"`. Plantillas: `antes-despues` (etiquetas con los
   años; la píldora la calcula la plantilla), `pendiente` o `pesas` (`fechas` =
-  los dos años) o `linea`. Si `nominal` es true, la `nota` dice «quetzales
+  los dos años), `agrupadas` (las dos series se llaman como los años) o `linea`. Si `nominal` es true, la `nota` dice «quetzales
   corrientes» (o «dólares corrientes»).

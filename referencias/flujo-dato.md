@@ -32,7 +32,7 @@ bloque del modo.
 |---|---|---|---|---|
 | `vs` | Guatemala frente a otros países | libre | `barras-h`, `pesas`, `pendiente`, `dispersion`, `cifra`+comparación | todos de la misma fuente, edición y periodo; cifra elegida `desglose` por país con Guatemala; Guatemala destacada; nota con fuente común y año; sin «ganamos/perdemos» |
 | `mapa` | brecha por departamento | `brecha_territorial` | `mapa` | desglose ≥ 12 departamentos (ideal 22, nombres INE); tasa per cápita con denominador INE (absoluto solo con motivo); nota con unidad y año |
-| `antes` | hace N años frente a hoy | `antes_despues` | `antes-despues`, `pendiente`, `pesas`, `linea` | misma serie y fuente, ≥ 5 años de distancia; etiquetas con los años; dinero corriente declarado en la nota |
+| `antes` | hace N años frente a hoy | `antes_despues` | `antes-despues`, `pendiente`, `pesas`, `linea`, `agrupadas` (series = los dos años) | misma serie y fuente, ≥ 5 años de distancia; etiquetas con los años; dinero corriente declarado en la nota |
 
 Guía por rol: apartado «Modos vs · mapa · antes» de cada «Modo dato»; reglas
 editoriales en `referencias/narrativa.md`, «Modos de un dato».

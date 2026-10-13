@@ -50,15 +50,7 @@ function render(D) {
   H.el("div", "ad-flecha", grid);
   col("despues", D.despues);
 
-  const modo = D.pildora || "factor";
-  if (modo !== "ninguna") {
-    H.assert(D.antes.valor !== 0, "la píldora no se puede calcular con antes.valor = 0");
-    const dec = D.decimales_pildora == null ? 2 : D.decimales_pildora;
-    const factor = D.despues.valor / D.antes.valor;
-    let txt;
-    if (modo === "factor") txt = "×" + factor.toFixed(dec);
-    else { const p = (factor - 1) * 100; txt = (p < 0 ? H.MENOS : "+") + Math.abs(p).toFixed(dec > 1 ? 0 : dec) + "%"; }
-    H.el("div", "ad-pildora", bloque, H.esc(txt));
-  }
+  const txt = H.pildora(D.antes.valor, D.despues.valor, D.pildora || "factor", D.decimales_pildora);  // ×N o ±%: la calcula H (compartido con el informe)
+  if (txt) H.el("div", "ad-pildora", bloque, H.esc(txt));
 }
 </script>

@@ -82,6 +82,7 @@ h1.titular { font: 400 88px/.98 'Instrument Serif', Georgia, serif; margin: 18px
 // =====================================================================
 // H · helpers compartidos. Las plantillas solo llaman a H.*; nada externo.
 // =====================================================================
+// H:INICIO · scripts/informe.py extrae este bloque para los informes de investigacion/
 const H = (() => {
   const MENOS = "−";
   const assert = (cond, msg) => { if (!cond) throw new Error("DATA: " + msg); };
@@ -310,6 +311,14 @@ const H = (() => {
   };
   const esc = (s) => String(s).replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
 
+  // ---- Utilidades de rotulado compartidas ----
+  // Formato de eje: los decimales que de verdad necesitan los ticks (0 si todos son enteros).
+  const formatoEje = (f, tk) => Object.assign({}, f || {}, { decimales: decimalesDe(tk.map((t) => t / ((f && f.escala) || 1)), (f && f.decimales) || 0) });
+  // Primera fuente de la lista en la que `str` cabe en maxW (null si ninguna): para encoger nombres 23→21→19→17.
+  const encajar = (str, fuentes, maxW) => fuentes.find((fn) => medir(str, fn) <= maxW) || null;
+  // Halo del color del fondo para texto que pisa barras o líneas (paint-order).
+  const halo = () => "paint-order:stroke;stroke:" + color.bg + ";stroke-width:6px;stroke-linejoin:round";
+
   // ---- Verificación final: lo que ningún check de píxeles ve a tiempo ----
   const verificar = (D) => {
     const util = 920;
@@ -336,8 +345,173 @@ const H = (() => {
     document.fonts.load("800 19px Archivo"),
   ]);
 
-  return { assert, num, pct, decimalesDe, color, svgEl, lienzo, texto, leyenda, el, escala, ticks, dominio, antiSolape, medir, espacio, rampa, rampaColor, mezcla, contraste, textoSobre, validarPeriodos, periodos, anotar, cabecera, verificar, fuentesListas, esc, MENOS };
+
+  // ---- Aritmética compartida con el informe (investigacion/graficos/): la tarjeta y el documento
+  // calculan EL MISMO número y el guionista nunca lo escribe (píldora, «N de cada 100», acumulados,
+  // mayoría, cortes del mapa, squarified, asientos del hemiciclo). Son funciones puras: nada del DOM. ----
+  // Departamentos: nombres oficiales (INE). scripts/build_mapa.py --check los coteja con el svg.
+  const NOMBRES = {
+    GT01: "Guatemala", GT02: "El Progreso", GT03: "Sacatepéquez", GT04: "Chimaltenango",
+    GT05: "Escuintla", GT06: "Santa Rosa", GT07: "Sololá", GT08: "Totonicapán",
+    GT09: "Quetzaltenango", GT10: "Suchitepéquez", GT11: "Retalhuleu", GT12: "San Marcos",
+    GT13: "Huehuetenango", GT14: "Quiché", GT15: "Baja Verapaz", GT16: "Alta Verapaz",
+    GT17: "Petén", GT18: "Izabal", GT19: "Zacapa", GT20: "Chiquimula",
+    GT21: "Jalapa", GT22: "Jutiapa"
+  };
+  const normDepto = (s) => String(s).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z]/g, "");
+  const DEPTO_POR_NOMBRE = {};
+  Object.keys(NOMBRES).forEach((id) => { DEPTO_POR_NOMBRE[normDepto(NOMBRES[id])] = id; });
+  // H.idDepto("Petén") → "GT17"; acepta el id o el nombre oficial; falla si no es un departamento.
+  const idDepto = (k) => {
+    const s = String(k).trim().toUpperCase();
+    if (NOMBRES[s]) return s;
+    const id = DEPTO_POR_NOMBRE[normDepto(k)];
+    assert(id, "«" + k + "» no es un departamento: usa GT01–GT22 o el nombre oficial");
+    return id;
+  };
+  // H.cortes(valores, {cortes, clases, metodo, redondear}) → límites internos de las clases (mapa, calor):
+  // cortes dados (2–5), o cuantiles con `clases` (`metodo: "iguales"` = intervalos iguales). Con `redondear`
+  // (por defecto) los cortes se llevan a pasos «bonitos» (1·2·5·10 × 10ⁿ) sin dejar clases vacías:
+  //   1) cuantiles redondeados al paso más grueso que conserve ≥ k−2 cortes distintos;
+  //   2) si se apelotonan, intervalos iguales al mismo paso, salvo que una clase acapare > 50 %;
+  //   3) datos sesgados: cada cuantil al paso del hueco mínimo entre cortes.
+  const cortes = (valores, o = {}) => {
+    const v = valores.slice().sort((a, b) => a - b), min = v[0], max = v[v.length - 1];
+    let cs;
+    if (Array.isArray(o.cortes) && o.cortes.length) {
+      cs = o.cortes.slice().sort((a, b) => a - b);
+      assert(cs.length >= 2 && cs.length <= 5 && cs.every((c) => typeof c === "number" && isFinite(c)), "cortes: de 2 a 5 límites numéricos");
+    } else {
+      const k = Math.max(3, Math.min(6, Math.round(o.clases || 5)));
+      cs = [];
+      for (let i = 1; i < k; i++) {
+        if (o.metodo === "iguales") { cs.push(min + (max - min) * i / k); continue; }
+        const p = (v.length - 1) * i / k, lo = Math.floor(p), t = p - lo;
+        cs.push(v[lo] + (v[Math.min(lo + 1, v.length - 1)] - v[lo]) * t);
+      }
+      if (o.redondear !== false && max > min) {
+        const enRango = (a) => a.filter((c, i) => c > min && c < max && (i === 0 || c > a[i - 1]));
+        const redondea = (a, paso) => enRango(a.map((c) => +(Math.round(c / paso) * paso).toFixed(10)));
+        const conteo = (a) => { const n = new Array(a.length + 1).fill(0); v.forEach((x) => { let j = 0; while (j < a.length && x >= a[j]) j++; n[j]++; }); return n; };
+        const nice = (x, ms) => { const e = Math.pow(10, Math.floor(Math.log10(x))); return ms.map((m) => m * e); };
+        const iguales = Array.from({ length: k - 1 }, (_, i) => min + (max - min) * (i + 1) / k);
+        let mejor = null;
+        for (const paso of nice((max - min) / k, [10, 5, 2, 1])) {
+          const q = redondea(cs, paso), g = redondea(iguales, paso);
+          if (q.length >= k - 2) { mejor = q; break; }
+          if (g.length >= k - 1 && Math.max(...conteo(g)) / v.length <= 0.5) { mejor = g; break; }
+        }
+        if (!mejor) {
+          const huecos = cs.slice(1).map((c, i) => c - cs[i]).filter((h) => h > 0);
+          if (huecos.length) { const h = Math.min(...huecos); mejor = redondea(cs, nice(h, [5, 2, 1]).find((p) => p <= h)); }
+        }
+        if (mejor && mejor.length >= 2) { const n = conteo(mejor); cs = mejor.filter((c, i) => n[i + 1] > 0); }
+      }
+      cs = cs.filter((c, i) => c > min && c < max && (i === 0 || c > cs[i - 1]));  // empates → menos clases
+    }
+    return cs;
+  };
+  // Índice de clase de un valor según los cortes (0 = la más baja).
+  const claseDe = (v, cs) => { let k = 0; while (k < cs.length && v >= cs[k]) k++; return k; };
+  // H.pildora(antes, despues, "factor"|"porcentaje"|"ninguna", decimales) → "×1.77" | "+77%" | null.
+  const pildora = (antes, despues, modo = "factor", dec) => {
+    if (modo === "ninguna") return null;
+    assert(antes !== 0, "la píldora no se puede calcular con antes.valor = 0");
+    const d = dec == null ? 2 : dec, factor = despues / antes;
+    if (modo === "factor") return "×" + factor.toFixed(d);
+    const p = (factor - 1) * 100;
+    return (p < 0 ? MENOS : "+") + Math.abs(p).toFixed(d > 1 ? 0 : d) + "%";
+  };
+  // «N de cada 100» (o de cada 1,000 si no llega a 1). Por debajo de 10 lleva un decimal:
+  // redondear 1.7 a «2» contradiría «menos de 2».
+  const deCada = (v, ref) => {
+    const corto = (x) => num(x, { decimales: x < 10 && Math.abs(x - Math.round(x)) >= 0.05 ? 1 : 0 });
+    const p = (v / ref) * 100;
+    if (p >= 1 || p === 0) return corto(p) + " de cada 100";
+    if (p >= 0.1) return corto(p * 10) + " de cada 1,000";
+    return "menos de 1 de cada 1,000";
+  };
+  // Etiqueta de la etapa i de un embudo según `porcentaje`: inicio | anterior | ninguno.
+  const etiquetaEmbudo = (E, i, modo = "inicio") => {
+    if (!i || modo === "ninguno") return "";
+    if (modo === "inicio") return deCada(E[i].valor, E[0].valor);
+    const prev = E[i - 1].valor;
+    return prev ? pct((E[i].valor / prev) * 100, E[i].valor / prev < 0.1 ? 1 : 0) + " de la anterior" : "";
+  };
+  // Curules para la mayoría: simple ⌊t/2⌋+1 · calificada ⌈2t/3⌉.
+  const mayoria = (total, modo) => (modo === "simple" ? Math.floor(total / 2) + 1 : Math.ceil(2 * total / 3));
+  // Filas de una cascada: acumulados calculados; fin.valor, si va, solo se coteja (magnitud) contra lo
+  // calculado. Devuelve { filas[{tipo, i, nombre, desde, hasta, rotulo}], acc, calculado } (calculado =
+  // fin sin valor: el gráfico lo anota).
+  const cascada = (ini, pasos, fin, formato) => {
+    const f = (v, extra) => num(v, Object.assign({}, formato || {}, extra || {}));
+    let acc = ini ? ini.valor : 0;
+    const filas = [];
+    if (ini) filas.push({ tipo: "inicio", nombre: ini.nombre, desde: 0, hasta: ini.valor, rotulo: f(ini.valor) });
+    pasos.forEach((p, i) => {
+      const delta = p.efecto === "suma" ? p.valor : -p.valor, desde = acc;
+      acc += delta;
+      filas.push({ tipo: "paso", i, nombre: p.nombre, desde, hasta: acc, rotulo: f(delta, { signo: true }) });
+    });
+    let calculado = false;
+    if (fin) {
+      if (typeof fin.valor === "number") {
+        const tol = Math.max(0.5 * Math.pow(10, -((formato && formato.decimales) || 0)), Math.abs(fin.valor) * 0.001);
+        assert(Math.abs(Math.abs(acc) - Math.abs(fin.valor)) <= tol, "los pasos no cuadran con fin.valor (" + f(fin.valor) + "): calculado " + f(acc));
+      } else calculado = true;
+      filas.push({ tipo: "fin", nombre: fin.nombre, desde: 0, hasta: acc, rotulo: f(acc) });
+    }
+    return { filas, acc, calculado };
+  };
+  // Squarified (Bruls et al.): rects [{i, x, y, w, h}] de `partes` (ordenadas de mayor a menor) en W×alto.
+  const squarify = (partes, total, W, alto) => {
+    const area = W * alto, rects = [];
+    let caja = { x: 0, y: 0, w: W, h: alto }, fila = [];
+    const resto = partes.map((p, i) => ({ i, a: (p.valor / total) * area }));
+    const peor = (f, lado) => { const s = f.reduce((t, r) => t + r.a, 0); return Math.max(...f.map((r) => Math.max((lado * lado * r.a) / (s * s), (s * s) / (lado * lado * r.a)))); };
+    const colocar = (f) => {
+      const s = f.reduce((t, r) => t + r.a, 0), horiz = caja.w >= caja.h;
+      const grosor = s / (horiz ? caja.h : caja.w);
+      let off = 0;
+      for (const r of f) {
+        const largo = r.a / grosor;
+        rects.push(horiz ? { i: r.i, x: caja.x, y: caja.y + off, w: grosor, h: largo } : { i: r.i, x: caja.x + off, y: caja.y, w: largo, h: grosor });
+        off += largo;
+      }
+      caja = horiz ? { x: caja.x + grosor, y: caja.y, w: caja.w - grosor, h: caja.h } : { x: caja.x, y: caja.y + grosor, w: caja.w, h: caja.h - grosor };
+    };
+    while (resto.length) {
+      const lado = Math.min(caja.w, caja.h), r = resto[0];
+      if (!fila.length || peor(fila.concat(r), lado) <= peor(fila, lado)) { fila.push(r); resto.shift(); }
+      else { colocar(fila); fila = []; }
+    }
+    if (fila.length) colocar(fila);
+    return rects;
+  };
+  // Asientos de un hemiciclo: filas concéntricas entre R y r0 con paso s (de sMax a sMin) hasta que
+  // quepa `total`; reparto por fila proporcional a la capacidad (restos mayores); asientos ordenados
+  // de izquierda a derecha (ángulo π → 0). null si no caben.
+  const asientos = (total, R, r0, cx, cy, sMax = 40, sMin = 18) => {
+    let s = sMax, filas = [];
+    const capacidad = (paso) => { const out = []; const k = Math.floor((R - r0) / paso) + 1; for (let i = 0; i < k; i++) { const r = R - i * paso; out.push({ r, cap: Math.floor(Math.PI * r / paso) }); } return out; };
+    for (; s >= sMin; s--) { filas = capacidad(s); if (filas.reduce((t, x) => t + x.cap, 0) >= total) break; }
+    const capTotal = filas.reduce((t, x) => t + x.cap, 0);
+    if (capTotal < total) return null;
+    const cuota = filas.map((x) => total * x.cap / capTotal);
+    const porFila = cuota.map((q) => Math.floor(q));
+    let resto = total - porFila.reduce((t, x) => t + x, 0);
+    cuota.map((q, i) => ({ i, fr: q - Math.floor(q) })).sort((a, b) => b.fr - a.fr).forEach((o) => { if (resto > 0 && porFila[o.i] < filas[o.i].cap) { porFila[o.i]++; resto--; } });
+    for (let i = 0; resto > 0 && i < filas.length; i++) { const d = Math.min(resto, filas[i].cap - porFila[i]); porFila[i] += d; resto -= d; }
+    const pts = [];
+    filas.forEach((x, i) => { for (let j = 0; j < porFila[i]; j++) { const th = Math.PI - Math.PI * (j + 0.5) / porFila[i]; pts.push({ th, x: cx + x.r * Math.cos(th), y: cy - x.r * Math.sin(th) }); } });
+    pts.sort((a, b) => b.th - a.th);
+    return { s, asientos: pts, capTotal };
+  };
+
+  return { assert, num, pct, decimalesDe, color, svgEl, lienzo, texto, leyenda, el, escala, ticks, dominio, antiSolape, medir, espacio, rampa, rampaColor, mezcla, contraste, textoSobre, validarPeriodos, periodos, anotar, cabecera, verificar, fuentesListas, esc, formatoEje, encajar, halo, MENOS,
+           NOMBRES, idDepto, cortes, claseDe, pildora, deCada, etiquetaEmbudo, mayoria, cascada, squarify, asientos };
 })();
+// H:FIN
 
 // =====================================================================
 // Arranque: fuentes → cabecera → render(DATA) → verificar → data-listo.

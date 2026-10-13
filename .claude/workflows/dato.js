@@ -19,7 +19,7 @@ export const meta = {
 // investigador y la fecha llega en args).
 
 const PALETAS = ['cielo', 'jade', 'maiz', 'terracota', 'cacao', 'jacaranda', 'atitlan', 'obsidiana']
-const PLANTILLAS = ['linea', 'barras-v', 'barras-h', 'antes-despues', 'dona', 'pendiente', 'waffle', 'cifra', 'mapa', 'pesas', 'calor', 'bullet', 'embudo', 'divergente', 'apilada', 'piramide', 'treemap', 'dispersion']
+const PLANTILLAS = ['linea', 'barras-v', 'barras-h', 'antes-despues', 'dona', 'pendiente', 'waffle', 'cifra', 'mapa', 'pesas', 'calor', 'bullet', 'embudo', 'divergente', 'apilada', 'piramide', 'treemap', 'dispersion', 'hemiciclo', 'multiples', 'combinado', 'linea-tiempo', 'agrupadas', 'pictograma', 'area-apilada', 'cascada']
 const HOOKS = ['giro_inversion', 'escala_humana', 'brecha_territorial', 'pregunta_directa', 'curiosity_gap', 'mito_vs_dato', 'antes_despues', 'titular_clasico']
 const REQ = {
   linea: ['etiquetasX', 'series'], 'barras-v': ['etiquetas', 'valores'], 'barras-h': ['items'],
@@ -27,6 +27,8 @@ const REQ = {
   waffle: ['porcentaje', 'cifra'], cifra: ['cifra'], mapa: ['valores'], pesas: ['fechas', 'items'], calor: ['filas', 'columnas', 'valores'],
   bullet: ['items'], embudo: ['etapas', 'misma_cohorte'], divergente: ['items'], apilada: ['etiquetas', 'partes'],
   piramide: ['grupos', 'izquierda', 'derecha'], treemap: ['partes'], dispersion: ['puntos', 'ejeX', 'ejeY'],
+  hemiciclo: ['total', 'bloques'], multiples: ['etiquetasX', 'paneles'], combinado: ['etiquetas', 'barras', 'linea'], 'linea-tiempo': ['eventos'],
+  agrupadas: ['etiquetas', 'series'], pictograma: ['total', 'destacado', 'texto'], 'area-apilada': ['etiquetasX', 'partes'], cascada: ['pasos'],
 }
 const RE_LINK = /https?:\/\/|www\.|\.com\b|\.gt\b/i
 const RE_BAIT = /(dale|da|dame|dejen?)\s+(rt|like|me gusta)|s[ií]gue(me|nos)|retuitea|comparte si|like si|guarda este|no te lo pierdas/i
@@ -44,7 +46,7 @@ const MODOS = {
   dato:  { hook: null, plantillas: null },
   vs:    { hook: null, plantillas: ['barras-h', 'pesas', 'dispersion', 'pendiente', 'cifra'] },
   mapa:  { hook: 'brecha_territorial', plantillas: ['mapa'] },
-  antes: { hook: 'antes_despues', plantillas: ['antes-despues', 'pendiente', 'linea', 'pesas'] },
+  antes: { hook: 'antes_despues', plantillas: ['antes-despues', 'pendiente', 'linea', 'pesas', 'agrupadas'] },
 }
 // Marcador nacionalista: en vs el titular dice la brecha, no quién «gana».
 const RE_NACIONALISTA = /\b(ganamos|perdemos|nos ganan|le ganamos|somos los (peores|mejores))\b/i
@@ -220,6 +222,8 @@ const LIMITES =
   'cifra_ids ⊆ verificadas e incluye dato.cifra_id; datos con números crudos de esas cifras y formato (en cifra: cifra.valor y comparacion.valor se cotejan; contexto ≤60 y su aritmética sale de esos dos valores); ' +
   'linea ≥5 puntos y ≤4 series; dona 2–5; barras-h ≤8; barras-v ≤12; pendiente 2 fechas y 2–6; mapa ≥12 departamentos; pesas 2–8; calor filas×columnas ≤12; bullet 1–6 con meta; ' +
   'embudo 2–6 etapas no crecientes y misma_cohorte true|false; divergente 2–10; apilada 2–8 filas y 2–5 partes; piramide 4–12 grupos; treemap 3–12; dispersion 8–22 puntos con ejeX/ejeY; periodos (linea, barras-v) ≤4 por índices; ' +
+  'hemiciclo 10–300 curules en 2–8 bloques que suman total (mayoria simple|calificada la calcula la plantilla); multiples 4–9 paneles con ≥4 puntos en la misma escala; combinado 3–12 periodos con barras y linea de igual longitud (dos ejes declarados; el titular no afirma causa); linea-tiempo 3–8 eventos {fecha, nombre, valor} y proporcional true|false; ' +
+  'agrupadas 2–6 categorías × 2–3 series; pictograma total 2–200 unidades y destacado ≤ total (enteros; «K de N» lo compone la plantilla); area-apilada 5–30 puntos × 2–5 partes; cascada 2–8 pasos con efecto suma|resta más inicio y/o fin (acumulados y fin los calcula la plantilla; fin.valor, si va, se coteja); ' +
   '«récord/histórico» solo con serie ≥10 puntos cuyo máximo sea el valor; candidatas[] cubre TODAS las cifras verificadas (una elegida:true = dato.cifra_id, el resto con motivo).'
 
 // ── Argumentos ─────────────────────────────────────────────────────────────
@@ -350,7 +354,7 @@ if (fixture) {
   phase('Guion')
   const numerosDe = (d) => {
     const out = []
-    const rec = (x) => { if (typeof x === 'number') out.push(x); else if (Array.isArray(x)) x.forEach(rec); else if (x && typeof x === 'object') Object.entries(x).forEach(([k, v]) => { if (!['decimales', 'escala', 'destacar', 'clases', 'decimales_pildora', 'i', 'fila', 'col', 'miles', 'cortes', 'maximo', 'minimo_rotulo', 'desde', 'hasta'].includes(k)) rec(v) }) }
+    const rec = (x) => { if (typeof x === 'number') out.push(x); else if (Array.isArray(x)) x.forEach(rec); else if (x && typeof x === 'object') Object.entries(x).forEach(([k, v]) => { if (!['decimales', 'escala', 'destacar', 'clases', 'decimales_pildora', 'i', 'fila', 'col', 'miles', 'cortes', 'maximo', 'minimo_rotulo', 'desde', 'hasta', 'por_fila'].includes(k)) rec(v) }) }
     rec(d); return out
   }
   const formatos = (v) => { const a = Math.abs(v); const s = new Set([String(v), String(a), a.toFixed(1), a.toFixed(2), a.toLocaleString('en-US'), a.toLocaleString('en-US', { maximumFractionDigits: 2 })]); return [...s].filter((x) => x && x !== '0') }
@@ -441,6 +445,14 @@ if (fixture) {
     if (pl === 'piramide' && (largo(d.grupos) < 4 || largo(d.grupos) > 12 || largo((d.izquierda || {}).valores) !== largo(d.grupos) || largo((d.derecha || {}).valores) !== largo(d.grupos))) F.push('piramide: 4–12 grupos y un valor por grupo en cada lado')
     if (pl === 'treemap' && (largo(d.partes) < 3 || largo(d.partes) > 12)) F.push('treemap: 3–12 partes')
     if (pl === 'dispersion' && (largo(d.puntos) < 8 || largo(d.puntos) > 22 || largo(d.rotular) > 4)) F.push('dispersion: 8–22 puntos y ≤4 rotulados')
+    if (pl === 'hemiciclo' && (largo(d.bloques) < 2 || largo(d.bloques) > 8 || !Number.isInteger(d.total) || d.bloques.reduce((s, bb) => s + ((bb || {}).curules || 0), 0) !== d.total)) F.push('hemiciclo: 2–8 bloques cuyas curules suman total')
+    if (pl === 'multiples' && (largo(d.etiquetasX) < 4 || largo(d.paneles) < 4 || largo(d.paneles) > 9 || d.paneles.some((pp) => largo((pp || {}).valores) !== largo(d.etiquetasX)))) F.push('multiples: ≥4 puntos, 4–9 paneles y un valor por punto')
+    if (pl === 'combinado' && (largo(d.etiquetas) < 3 || largo(d.etiquetas) > 12 || largo((d.barras || {}).valores) !== largo(d.etiquetas) || largo((d.linea || {}).valores) !== largo(d.etiquetas))) F.push('combinado: 3–12 periodos y un valor de barras y de linea por periodo')
+    if (pl === 'linea-tiempo' && (largo(d.eventos) < 3 || largo(d.eventos) > 8 || d.eventos.some((ee) => !(ee || {}).fecha || !(ee || {}).nombre || typeof (ee || {}).valor !== 'number'))) F.push('linea-tiempo: 3–8 eventos con fecha, nombre y valor')
+    if (pl === 'agrupadas' && (largo(d.etiquetas) < 2 || largo(d.etiquetas) > 6 || largo(d.series) < 2 || largo(d.series) > 3 || d.series.some((ss) => largo((ss || {}).valores) !== largo(d.etiquetas)))) F.push('agrupadas: 2–6 categorías, 2–3 series y un valor por categoría')
+    if (pl === 'pictograma' && !(Number.isInteger(d.total) && d.total >= 2 && d.total <= 200 && Number.isInteger(d.destacado) && d.destacado >= 0 && d.destacado <= d.total)) F.push('pictograma: total 2–200 y destacado 0–total, enteros')
+    if (pl === 'area-apilada' && (largo(d.etiquetasX) < 5 || largo(d.etiquetasX) > 30 || largo(d.partes) < 2 || largo(d.partes) > 5 || d.partes.some((pp) => largo((pp || {}).valores) !== largo(d.etiquetasX)))) F.push('area-apilada: 5–30 puntos, 2–5 partes y un valor por punto')
+    if (pl === 'cascada' && (largo(d.pasos) < 2 || largo(d.pasos) > 8 || (!d.inicio && !d.fin) || d.pasos.some((pp) => typeof (pp || {}).valor !== 'number' || (pp || {}).valor < 0 || !['suma', 'resta'].includes((pp || {}).efecto)))) F.push('cascada: 2–8 pasos {nombre, valor ≥ 0, efecto suma|resta} e inicio o fin')
     if (v.titular.some((l) => !l.trim() || l.length > 26)) F.push('titular: líneas de ≤26 caracteres')
     if (!v.kicker.trim() || v.kicker.length > 45) F.push('kicker vacío o >45')
     if ((v.nota || '').length > 150) F.push('nota >150')
@@ -528,6 +540,10 @@ if (fixture) {
           const fe = (d.fechas || []).map((x) => String(x))
           if (!(fe[0] || '').includes(String(a0)) || !(fe[1] || '').includes(String(a1))) F.push(`modo antes: datos.fechas deben ser los años ${a0} y ${a1}`)
         }
+        if (pl === 'agrupadas') {
+          const nm = (d.series || []).map((ss) => String((ss || {}).nombre || ''))
+          if (!nm.some((x) => x.includes(String(a0))) || !nm.some((x) => x.includes(String(a1)))) F.push(`modo antes: en agrupadas los nombres de las series deben ser los años ${a0} y ${a1}`)
+        }
         if (Ab.nominal === true && !/corriente|nominal/i.test(String(v.nota || ''))) F.push('modo antes: nominal true exige una nota con «quetzales corrientes» (o «dólares corrientes»/«nominal»)')
       }
     }
@@ -545,7 +561,7 @@ if (fixture) {
           `MODO DEL POST: ${modoPost}${modoPost !== 'dato' ? ' (apartado «Modos vs · mapa · antes» de tu guía). ' : '. '}` + IM.guionista +
           `Puntúa CADA candidata de 1 a 5 en sorpresa, magnitud (escala humana), comparacion, actualidad y solidez (puntaje = suma, 5–25); elige UNA (dato.cifra_id = ancla_id) y escribe candidatas[] con todas: {id, puntaje, criterios, elegida, motivo} (las descartadas dicen por qué pierden). ` +
           `Escribe dato: {cifra_id, titular (una línea ≤90: el hallazgo en palabras), por_que_impacta}. ` +
-          `Escribe EXACTAMENTE UN tuit {n: 1, beat: "gancho", texto, alt_text, visual}: plantilla cifra por defecto (antes-despues, waffle, dona, bullet, mapa, linea si el dato lo pide); visual.titular es el hallazgo, el pie lleva la fuente. ` +
+          `Escribe EXACTAMENTE UN tuit {n: 1, beat: "gancho", texto, alt_text, visual}: plantilla cifra por defecto (antes-despues, waffle, pictograma, dona, bullet, mapa, linea, cascada o linea-tiempo si el dato lo pide); visual.titular es el hallazgo, el pie lleva la fuente. ` +
           LIMITES + ' ' +
           (fallos.length ? `TU GUION ANTERIOR FUE RECHAZADO; corrige SOLO esto y vuelve a escribir guion.json completo:\n - ${fallos.join('\n - ')}\n` : '') +
           `Escribe ${enc.sesion_dir}/guion.json COMPLETO {slug, fecha, tipo: "dato", modo: "${modoPost}", paleta, smoke, handle, hook_tipo, dato, candidatas, sintesis{pregunta, tesis, ancla_id, no_afirma, incertidumbre, descartadas}, tuits${modoPost !== 'dato' ? `, ${modoPost}{…}` : ''}} y devuelve el mismo contenido compacto (archivo, tipo, modo, tesis, ancla_id, paleta, hook_tipo, dato, candidatas, no_afirma, tuits con visual.datos en números crudos${modoPost !== 'dato' ? ', y el bloque ' + modoPost : ''}).`,

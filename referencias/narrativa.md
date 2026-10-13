@@ -109,8 +109,10 @@ claridad, no la sorpresa; es lo que la gente guarda.
 - Arco: `gancho → paso → paso … → cierre`, 3–6 tuits, **sin giro ni impacto**.
   T1 plantea la pregunta (`pregunta_directa` o `curiosity_gap`; T2 empieza a
   pagarla). Cada `paso` es una tarjeta con la cifra de ese paso (componentes
-  en `dona`/`apilada`/`treemap`, tasas en `cifra`, metas en `bullet`, flujos en
-  `embudo`) y un **texto que explica el paso en lenguaje llano** (nunca vacío,
+  en `dona`/`apilada`/`treemap`, sumas y restas hasta un total en `cascada`,
+  repartos que cambian en `area-apilada`, tasas en `cifra`, metas en `bullet`,
+  flujos en `embudo`, unidades contables en `pictograma`) y un **texto que
+  explica el paso en lenguaje llano** (nunca vacío,
   ≤ 200 con imagen). El cierre resume («en resumen…») y nombra las fuentes.
 - Cada paso lleva una cifra verificada; si un paso no se puede cuantificar,
   no es un paso: va en la nota o se omite.
@@ -128,7 +130,8 @@ completo y comparable.
   estándar: población y crecimiento, pobreza o ingreso, salud o desnutrición,
   educación, seguridad o migración, economía local.
 - **Cada tarjeta compara sujeto y país** en la misma fuente, unidad y año: un
-  item rotulado «Guatemala», «nacional» o «país», la `comparacion` de `cifra`, o
+  item rotulado «Guatemala», «nacional» o «país», la `comparacion` de `cifra`,
+  `agrupadas` con series [sujeto, país] (varias dimensiones en una tarjeta), o
   un `mapa` con el sujeto destacado. Per cápita con proyecciones INE.
 - Si los datos son de años distintos, el cierre los nombra. El cierre dice qué
   hace distinto al sujeto y nombra las fuentes. Sin ranking moral: la brecha se

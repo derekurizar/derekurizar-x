@@ -1,0 +1,1613 @@
+{
+ "meta": {
+  "titulo": "Catálogo de gráficos del informe",
+  "corrido": "Catálogo · gráficos del informe",
+  "corto": "Catálogo",
+  "pie": "Catálogo · generado por scripts/catalogo_informe.py",
+  "numero_largo": "Catálogo de gráficos",
+  "fecha": "generado",
+  "handle": "@DerekUrizar",
+  "paleta": "cielo",
+  "datos": [
+   "investigacion/ejemplos/catalogo/datos.json"
+  ],
+  "fuentes": [
+   "Cifras de ejemplo de templates/graficos/*.html (no son datos reales)."
+  ]
+ },
+ "paginas": [
+  {
+   "tipo": "portada",
+   "kicker_izq": "Catálogo · gráficos del informe",
+   "kicker_der": "5 tipos",
+   "titulo": "Los gráficos del informe",
+   "lead": "Cada tipo G.* del documento con las cifras de ejemplo de su plantilla de tarjeta: en papel a toda columna, en panel y a media página. Mismos campos que graficos.md.",
+   "fuentes": "cifras de ejemplo de las plantillas"
+  },
+  {
+   "tipo": "cuerpo",
+   "id": "cat-barras-h",
+   "seccion": "barras-h",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "barras-h · papel"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "Campos: items, destacar, orden. Formato: {\"prefijo\": \"\", \"sufijo\": \"\", \"decimales\": 2, \"miles\": true, \"escala\": 1}."
+     ]
+    },
+    {
+     "b": "figura",
+     "id": "barras-h-papel",
+     "tipo": "papel",
+     "kicker": "DIÉSEL · PROMEDIO DEL AÑO EN US$ POR GALÓN",
+     "titular": [
+      "El diésel más caro",
+      "se paga en México"
+     ],
+     "cifra_ids": [
+      "cat-barras-h"
+     ],
+     "fuente": "Catálogo · cifras de ejemplo de la plantilla barras-h",
+     "pie": "barras-h en papel.",
+     "indice": "barras-h · papel",
+     "nota": "Guatemala sale bajo porque el promedio incluye los meses de subsidio.",
+     "grafico": {
+      "tipo": "barras_h",
+      "formato": {
+       "prefijo": "",
+       "sufijo": "",
+       "decimales": 2,
+       "miles": true,
+       "escala": 1
+      },
+      "items": [
+       {
+        "nombre": "México",
+        "valor": 5.9
+       },
+       {
+        "nombre": "Guatemala",
+        "valor": 4.85
+       },
+       {
+        "nombre": "Estados Unidos",
+        "valor": 4.84
+       },
+       {
+        "nombre": "El Salvador",
+        "valor": 4.2
+       }
+      ],
+      "destacar": 0,
+      "orden": "desc"
+     }
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "barras-h",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "barras-h · media página"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "El mismo gráfico a media página: 324 px en papel y 284 en panel compacto (lo que ve un bloque `figuras` o el tablero)."
+     ]
+    },
+    {
+     "b": "figuras",
+     "items": [
+      {
+       "id": "barras-h-medio-papel",
+       "tipo": "papel",
+       "kicker": "DIÉSEL · PROMEDIO DEL AÑO EN US$ POR GALÓN",
+       "titular": [
+        "El diésel más caro",
+        "se paga en México"
+       ],
+       "cifra_ids": [
+        "cat-barras-h"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla barras-h",
+       "pie": "barras-h en papel.",
+       "indice": "barras-h · papel",
+       "nota": "Guatemala sale bajo porque el promedio incluye los meses de subsidio.",
+       "grafico": {
+        "tipo": "barras_h",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "",
+         "decimales": 2,
+         "miles": true,
+         "escala": 1
+        },
+        "items": [
+         {
+          "nombre": "México",
+          "valor": 5.9
+         },
+         {
+          "nombre": "Guatemala",
+          "valor": 4.85
+         },
+         {
+          "nombre": "Estados Unidos",
+          "valor": 4.84
+         },
+         {
+          "nombre": "El Salvador",
+          "valor": 4.2
+         }
+        ],
+        "destacar": 0,
+        "orden": "desc"
+       },
+       "alto": 220
+      },
+      {
+       "id": "barras-h-medio-panel",
+       "tipo": "panel",
+       "kicker": "DIÉSEL · PROMEDIO DEL AÑO EN US$ POR GALÓN",
+       "titular": [
+        "El diésel más caro",
+        "se paga en México"
+       ],
+       "cifra_ids": [
+        "cat-barras-h"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla barras-h",
+       "pie": "barras-h en panel.",
+       "indice": "barras-h · panel",
+       "nota": "Guatemala sale bajo porque el promedio incluye los meses de subsidio.",
+       "grafico": {
+        "tipo": "barras_h",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "",
+         "decimales": 2,
+         "miles": true,
+         "escala": 1
+        },
+        "items": [
+         {
+          "nombre": "México",
+          "valor": 5.9
+         },
+         {
+          "nombre": "Guatemala",
+          "valor": 4.85
+         },
+         {
+          "nombre": "Estados Unidos",
+          "valor": 4.84
+         },
+         {
+          "nombre": "El Salvador",
+          "valor": 4.2
+         }
+        ],
+        "destacar": 0,
+        "orden": "desc"
+       },
+       "alto": 220
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "id": "cat-barras-v",
+   "seccion": "barras-v",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "barras-v · papel"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "Campos: etiquetas, valores, destacar, rotular, referencia, periodos. Formato: {\"prefijo\": \"\", \"sufijo\": \"\", \"decimales\": 0, \"miles\": true, \"escala\": 1}."
+     ]
+    },
+    {
+     "b": "figura",
+     "id": "barras-v-papel",
+     "tipo": "papel",
+     "kicker": "REMESAS FAMILIARES · MILLONES DE US$",
+     "titular": [
+      "Cada año llega",
+      "más dinero de fuera"
+     ],
+     "cifra_ids": [
+      "cat-barras-v"
+     ],
+     "fuente": "Catálogo · cifras de ejemplo de la plantilla barras-v",
+     "pie": "barras-v en papel.",
+     "indice": "barras-v · papel",
+     "grafico": {
+      "tipo": "barras_v",
+      "formato": {
+       "prefijo": "",
+       "sufijo": "",
+       "decimales": 0,
+       "miles": true,
+       "escala": 1
+      },
+      "etiquetas": [
+       "2020",
+       "2021",
+       "2022",
+       "2023",
+       "2024",
+       "2025"
+      ],
+      "valores": [
+       11340,
+       15296,
+       18040,
+       19804,
+       21510,
+       25530
+      ],
+      "destacar": -1,
+      "rotular": "todas",
+      "referencia": null,
+      "periodos": null
+     }
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "barras-v",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "barras-v · media página"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "El mismo gráfico a media página: 324 px en papel y 284 en panel compacto (lo que ve un bloque `figuras` o el tablero)."
+     ]
+    },
+    {
+     "b": "figuras",
+     "items": [
+      {
+       "id": "barras-v-medio-papel",
+       "tipo": "papel",
+       "kicker": "REMESAS FAMILIARES · MILLONES DE US$",
+       "titular": [
+        "Cada año llega",
+        "más dinero de fuera"
+       ],
+       "cifra_ids": [
+        "cat-barras-v"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla barras-v",
+       "pie": "barras-v en papel.",
+       "indice": "barras-v · papel",
+       "grafico": {
+        "tipo": "barras_v",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "etiquetas": [
+         "2020",
+         "2021",
+         "2022",
+         "2023",
+         "2024",
+         "2025"
+        ],
+        "valores": [
+         11340,
+         15296,
+         18040,
+         19804,
+         21510,
+         25530
+        ],
+        "destacar": -1,
+        "rotular": "todas",
+        "referencia": null,
+        "periodos": null
+       },
+       "alto": 220
+      },
+      {
+       "id": "barras-v-medio-panel",
+       "tipo": "panel",
+       "kicker": "REMESAS FAMILIARES · MILLONES DE US$",
+       "titular": [
+        "Cada año llega",
+        "más dinero de fuera"
+       ],
+       "cifra_ids": [
+        "cat-barras-v"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla barras-v",
+       "pie": "barras-v en panel.",
+       "indice": "barras-v · panel",
+       "grafico": {
+        "tipo": "barras_v",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "etiquetas": [
+         "2020",
+         "2021",
+         "2022",
+         "2023",
+         "2024",
+         "2025"
+        ],
+        "valores": [
+         11340,
+         15296,
+         18040,
+         19804,
+         21510,
+         25530
+        ],
+        "destacar": -1,
+        "rotular": "todas",
+        "referencia": null,
+        "periodos": null
+       },
+       "alto": 220
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "barras-v",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "barras-v · panel a toda columna"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "La tarjeta hecha página: fondo de paleta y 612 px de ancho para el gráfico."
+     ]
+    },
+    {
+     "b": "figura",
+     "id": "barras-v-panel",
+     "tipo": "panel",
+     "kicker": "REMESAS FAMILIARES · MILLONES DE US$",
+     "titular": [
+      "Cada año llega",
+      "más dinero de fuera"
+     ],
+     "cifra_ids": [
+      "cat-barras-v"
+     ],
+     "fuente": "Catálogo · cifras de ejemplo de la plantilla barras-v",
+     "pie": "barras-v en panel.",
+     "indice": "barras-v · panel",
+     "grafico": {
+      "tipo": "barras_v",
+      "formato": {
+       "prefijo": "",
+       "sufijo": "",
+       "decimales": 0,
+       "miles": true,
+       "escala": 1
+      },
+      "etiquetas": [
+       "2020",
+       "2021",
+       "2022",
+       "2023",
+       "2024",
+       "2025"
+      ],
+      "valores": [
+       11340,
+       15296,
+       18040,
+       19804,
+       21510,
+       25530
+      ],
+      "destacar": -1,
+      "rotular": "todas",
+      "referencia": null,
+      "periodos": null
+     },
+     "alto": 300
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "barras-v",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "barras-v · tarjeta frente a papel"
+    },
+    {
+     "b": "figuras",
+     "items": [
+      {
+       "id": "barras-v-tarjeta",
+       "tipo": "tarjeta",
+       "kicker": "REMESAS FAMILIARES · MILLONES DE US$",
+       "titular": [
+        "Cada año llega",
+        "más dinero de fuera"
+       ],
+       "cifra_ids": [
+        "cat-barras-v"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla barras-v",
+       "pie": "barras-v en tarjeta.",
+       "indice": "barras-v · tarjeta",
+       "plantilla": "barras-v",
+       "datos": {
+        "formato": {
+         "prefijo": "",
+         "sufijo": "",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "etiquetas": [
+         "2020",
+         "2021",
+         "2022",
+         "2023",
+         "2024",
+         "2025"
+        ],
+        "valores": [
+         11340,
+         15296,
+         18040,
+         19804,
+         21510,
+         25530
+        ],
+        "destacar": -1,
+        "rotular": "todas",
+        "referencia": null,
+        "periodos": null
+       },
+       "alt": "Tarjeta barras-v de ejemplo."
+      },
+      {
+       "id": "barras-v-vs-papel",
+       "tipo": "papel",
+       "kicker": "REMESAS FAMILIARES · MILLONES DE US$",
+       "titular": [
+        "Cada año llega",
+        "más dinero de fuera"
+       ],
+       "cifra_ids": [
+        "cat-barras-v"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla barras-v",
+       "pie": "barras-v en papel.",
+       "indice": "barras-v · papel",
+       "grafico": {
+        "tipo": "barras_v",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "etiquetas": [
+         "2020",
+         "2021",
+         "2022",
+         "2023",
+         "2024",
+         "2025"
+        ],
+        "valores": [
+         11340,
+         15296,
+         18040,
+         19804,
+         21510,
+         25530
+        ],
+        "destacar": -1,
+        "rotular": "todas",
+        "referencia": null,
+        "periodos": null
+       },
+       "alto": 260
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "id": "cat-divergente",
+   "seccion": "divergente",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "divergente · papel"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "Campos: items, orden, destacar. Formato: {\"prefijo\": \"\", \"sufijo\": \"%\", \"decimales\": 0, \"miles\": true, \"escala\": 1}."
+     ]
+    },
+    {
+     "b": "figura",
+     "id": "divergente-papel",
+     "tipo": "papel",
+     "kicker": "HOMICIDIOS · VARIACIÓN 2024–2025 · %",
+     "titular": [
+      "Bajan en la capital,",
+      "suben en el norte"
+     ],
+     "cifra_ids": [
+      "cat-divergente"
+     ],
+     "fuente": "Catálogo · cifras de ejemplo de la plantilla divergente",
+     "pie": "divergente en papel.",
+     "indice": "divergente · papel",
+     "grafico": {
+      "tipo": "divergente",
+      "formato": {
+       "prefijo": "",
+       "sufijo": "%",
+       "decimales": 0,
+       "miles": true,
+       "escala": 1
+      },
+      "items": [
+       {
+        "nombre": "Guatemala",
+        "valor": -34
+       },
+       {
+        "nombre": "Escuintla",
+        "valor": -28
+       },
+       {
+        "nombre": "Chiquimula",
+        "valor": -22
+       },
+       {
+        "nombre": "Izabal",
+        "valor": -18
+       },
+       {
+        "nombre": "Zacapa",
+        "valor": -12
+       },
+       {
+        "nombre": "Jutiapa",
+        "valor": -9
+       },
+       {
+        "nombre": "Petén",
+        "valor": 6
+       },
+       {
+        "nombre": "Alta Verapaz",
+        "valor": 14
+       }
+      ],
+      "orden": "desc",
+      "destacar": 0
+     }
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "divergente",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "divergente · media página"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "El mismo gráfico a media página: 324 px en papel y 284 en panel compacto (lo que ve un bloque `figuras` o el tablero)."
+     ]
+    },
+    {
+     "b": "figuras",
+     "items": [
+      {
+       "id": "divergente-medio-papel",
+       "tipo": "papel",
+       "kicker": "HOMICIDIOS · VARIACIÓN 2024–2025 · %",
+       "titular": [
+        "Bajan en la capital,",
+        "suben en el norte"
+       ],
+       "cifra_ids": [
+        "cat-divergente"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla divergente",
+       "pie": "divergente en papel.",
+       "indice": "divergente · papel",
+       "grafico": {
+        "tipo": "divergente",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "%",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "items": [
+         {
+          "nombre": "Guatemala",
+          "valor": -34
+         },
+         {
+          "nombre": "Escuintla",
+          "valor": -28
+         },
+         {
+          "nombre": "Chiquimula",
+          "valor": -22
+         },
+         {
+          "nombre": "Izabal",
+          "valor": -18
+         },
+         {
+          "nombre": "Zacapa",
+          "valor": -12
+         },
+         {
+          "nombre": "Jutiapa",
+          "valor": -9
+         },
+         {
+          "nombre": "Petén",
+          "valor": 6
+         },
+         {
+          "nombre": "Alta Verapaz",
+          "valor": 14
+         }
+        ],
+        "orden": "desc",
+        "destacar": 0
+       },
+       "alto": 220
+      },
+      {
+       "id": "divergente-medio-panel",
+       "tipo": "panel",
+       "kicker": "HOMICIDIOS · VARIACIÓN 2024–2025 · %",
+       "titular": [
+        "Bajan en la capital,",
+        "suben en el norte"
+       ],
+       "cifra_ids": [
+        "cat-divergente"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla divergente",
+       "pie": "divergente en panel.",
+       "indice": "divergente · panel",
+       "grafico": {
+        "tipo": "divergente",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "%",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "items": [
+         {
+          "nombre": "Guatemala",
+          "valor": -34
+         },
+         {
+          "nombre": "Escuintla",
+          "valor": -28
+         },
+         {
+          "nombre": "Chiquimula",
+          "valor": -22
+         },
+         {
+          "nombre": "Izabal",
+          "valor": -18
+         },
+         {
+          "nombre": "Zacapa",
+          "valor": -12
+         },
+         {
+          "nombre": "Jutiapa",
+          "valor": -9
+         },
+         {
+          "nombre": "Petén",
+          "valor": 6
+         },
+         {
+          "nombre": "Alta Verapaz",
+          "valor": 14
+         }
+        ],
+        "orden": "desc",
+        "destacar": 0
+       },
+       "alto": 220
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "id": "cat-linea",
+   "seccion": "linea",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "linea · papel"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "Campos: etiquetasX, series, yDesdeCero, ejeY, valoresBajoEje, rotularFin, hitos, periodos. Formato: {\"prefijo\": \"\", \"sufijo\": \"\", \"decimales\": 2, \"miles\": true, \"escala\": 1}."
+     ]
+    },
+    {
+     "b": "figura",
+     "id": "linea-papel",
+     "tipo": "papel",
+     "kicker": "GASOLINA REGULAR · DÓLARES POR GALÓN",
+     "titular": [
+      "Guatemala alcanzó",
+      "a México en el precio"
+     ],
+     "cifra_ids": [
+      "cat-linea"
+     ],
+     "fuente": "Catálogo · cifras de ejemplo de la plantilla linea",
+     "pie": "linea en papel.",
+     "indice": "linea · papel",
+     "nota": "El zigzag de Guatemala es el subsidio de abril y su retiro en julio.",
+     "grafico": {
+      "tipo": "linea",
+      "formato": {
+       "prefijo": "",
+       "sufijo": "",
+       "decimales": 2,
+       "miles": true,
+       "escala": 1
+      },
+      "etiquetasX": [
+       "Ene",
+       "Feb",
+       "Mar",
+       "Abr",
+       "May",
+       "Jun",
+       "Jul",
+       "Ago",
+       "Sep"
+      ],
+      "series": [
+       {
+        "nombre": "Guatemala",
+        "valores": [
+         3.6,
+         3.65,
+         3.8,
+         5.2,
+         4.9,
+         4.1,
+         5.3,
+         5.25,
+         5.35
+        ],
+        "destacar": true
+       },
+       {
+        "nombre": "México",
+        "valores": [
+         5.3,
+         5.3,
+         5.31,
+         5.32,
+         5.33,
+         5.34,
+         5.34,
+         5.35,
+         5.35
+        ]
+       },
+       {
+        "nombre": "El Salvador",
+        "valores": [
+         3.62,
+         3.62,
+         3.75,
+         4.2,
+         4.4,
+         4.55,
+         4.6,
+         4.8,
+         4.85
+        ]
+       },
+       {
+        "nombre": "EE. UU.",
+        "valores": [
+         3.02,
+         3.1,
+         3.6,
+         4.1,
+         4.5,
+         4.2,
+         4.1,
+         4.25,
+         4.3
+        ]
+       }
+      ],
+      "yDesdeCero": true,
+      "ejeY": true,
+      "valoresBajoEje": null,
+      "rotularFin": null,
+      "hitos": [],
+      "periodos": null
+     }
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "linea",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "linea · media página"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "El mismo gráfico a media página: 324 px en papel y 284 en panel compacto (lo que ve un bloque `figuras` o el tablero)."
+     ]
+    },
+    {
+     "b": "figuras",
+     "items": [
+      {
+       "id": "linea-medio-papel",
+       "tipo": "papel",
+       "kicker": "GASOLINA REGULAR · DÓLARES POR GALÓN",
+       "titular": [
+        "Guatemala alcanzó",
+        "a México en el precio"
+       ],
+       "cifra_ids": [
+        "cat-linea"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla linea",
+       "pie": "linea en papel.",
+       "indice": "linea · papel",
+       "nota": "El zigzag de Guatemala es el subsidio de abril y su retiro en julio.",
+       "grafico": {
+        "tipo": "linea",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "",
+         "decimales": 2,
+         "miles": true,
+         "escala": 1
+        },
+        "etiquetasX": [
+         "Ene",
+         "Feb",
+         "Mar",
+         "Abr",
+         "May",
+         "Jun",
+         "Jul",
+         "Ago",
+         "Sep"
+        ],
+        "series": [
+         {
+          "nombre": "Guatemala",
+          "valores": [
+           3.6,
+           3.65,
+           3.8,
+           5.2,
+           4.9,
+           4.1,
+           5.3,
+           5.25,
+           5.35
+          ],
+          "destacar": true
+         },
+         {
+          "nombre": "México",
+          "valores": [
+           5.3,
+           5.3,
+           5.31,
+           5.32,
+           5.33,
+           5.34,
+           5.34,
+           5.35,
+           5.35
+          ]
+         },
+         {
+          "nombre": "El Salvador",
+          "valores": [
+           3.62,
+           3.62,
+           3.75,
+           4.2,
+           4.4,
+           4.55,
+           4.6,
+           4.8,
+           4.85
+          ]
+         },
+         {
+          "nombre": "EE. UU.",
+          "valores": [
+           3.02,
+           3.1,
+           3.6,
+           4.1,
+           4.5,
+           4.2,
+           4.1,
+           4.25,
+           4.3
+          ]
+         }
+        ],
+        "yDesdeCero": true,
+        "ejeY": true,
+        "valoresBajoEje": null,
+        "rotularFin": null,
+        "hitos": [],
+        "periodos": null
+       },
+       "alto": 220
+      },
+      {
+       "id": "linea-medio-panel",
+       "tipo": "panel",
+       "kicker": "GASOLINA REGULAR · DÓLARES POR GALÓN",
+       "titular": [
+        "Guatemala alcanzó",
+        "a México en el precio"
+       ],
+       "cifra_ids": [
+        "cat-linea"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla linea",
+       "pie": "linea en panel.",
+       "indice": "linea · panel",
+       "nota": "El zigzag de Guatemala es el subsidio de abril y su retiro en julio.",
+       "grafico": {
+        "tipo": "linea",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "",
+         "decimales": 2,
+         "miles": true,
+         "escala": 1
+        },
+        "etiquetasX": [
+         "Ene",
+         "Feb",
+         "Mar",
+         "Abr",
+         "May",
+         "Jun",
+         "Jul",
+         "Ago",
+         "Sep"
+        ],
+        "series": [
+         {
+          "nombre": "Guatemala",
+          "valores": [
+           3.6,
+           3.65,
+           3.8,
+           5.2,
+           4.9,
+           4.1,
+           5.3,
+           5.25,
+           5.35
+          ],
+          "destacar": true
+         },
+         {
+          "nombre": "México",
+          "valores": [
+           5.3,
+           5.3,
+           5.31,
+           5.32,
+           5.33,
+           5.34,
+           5.34,
+           5.35,
+           5.35
+          ]
+         },
+         {
+          "nombre": "El Salvador",
+          "valores": [
+           3.62,
+           3.62,
+           3.75,
+           4.2,
+           4.4,
+           4.55,
+           4.6,
+           4.8,
+           4.85
+          ]
+         },
+         {
+          "nombre": "EE. UU.",
+          "valores": [
+           3.02,
+           3.1,
+           3.6,
+           4.1,
+           4.5,
+           4.2,
+           4.1,
+           4.25,
+           4.3
+          ]
+         }
+        ],
+        "yDesdeCero": true,
+        "ejeY": true,
+        "valoresBajoEje": null,
+        "rotularFin": null,
+        "hitos": [],
+        "periodos": null
+       },
+       "alto": 220
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "id": "cat-mapa",
+   "seccion": "mapa",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "mapa · papel"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "Campos: valores, cortes, clases, redondear, destacar, rotular. Formato: {\"prefijo\": \"\", \"sufijo\": \"%\", \"decimales\": 0, \"miles\": true, \"escala\": 1}."
+     ]
+    },
+    {
+     "b": "figura",
+     "id": "mapa-papel",
+     "tipo": "papel",
+     "kicker": "POBREZA TOTAL 2023 · % DE LA POBLACIÓN",
+     "titular": [
+      "El norte y el altiplano",
+      "concentran la pobreza"
+     ],
+     "cifra_ids": [
+      "cat-mapa"
+     ],
+     "fuente": "Catálogo · cifras de ejemplo de la plantilla mapa",
+     "pie": "mapa en papel.",
+     "indice": "mapa · papel",
+     "grafico": {
+      "tipo": "mapa",
+      "formato": {
+       "prefijo": "",
+       "sufijo": "%",
+       "decimales": 0,
+       "miles": true,
+       "escala": 1
+      },
+      "valores": {
+       "GT01": 30,
+       "GT02": 48,
+       "GT03": 38,
+       "GT04": 60,
+       "GT05": 45,
+       "GT06": 53,
+       "GT07": 78,
+       "GT08": 74,
+       "GT09": 50,
+       "GT10": 59,
+       "GT11": 55,
+       "GT12": 65,
+       "GT13": 74,
+       "GT14": 75,
+       "GT15": 66,
+       "GT16": 83,
+       "GT17": 60,
+       "GT18": 58,
+       "GT19": 55,
+       "GT20": 70,
+       "GT21": 64,
+       "GT22": 56
+      },
+      "cortes": null,
+      "clases": 5,
+      "redondear": true,
+      "destacar": "GT16",
+      "rotular": "extremos",
+      "ancho": 300
+     }
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "mapa",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "mapa · media página"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "El mismo gráfico a media página: 324 px en papel y 284 en panel compacto (lo que ve un bloque `figuras` o el tablero)."
+     ]
+    },
+    {
+     "b": "figuras",
+     "items": [
+      {
+       "id": "mapa-medio-papel",
+       "tipo": "papel",
+       "kicker": "POBREZA TOTAL 2023 · % DE LA POBLACIÓN",
+       "titular": [
+        "El norte y el altiplano",
+        "concentran la pobreza"
+       ],
+       "cifra_ids": [
+        "cat-mapa"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla mapa",
+       "pie": "mapa en papel.",
+       "indice": "mapa · papel",
+       "grafico": {
+        "tipo": "mapa",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "%",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "valores": {
+         "GT01": 30,
+         "GT02": 48,
+         "GT03": 38,
+         "GT04": 60,
+         "GT05": 45,
+         "GT06": 53,
+         "GT07": 78,
+         "GT08": 74,
+         "GT09": 50,
+         "GT10": 59,
+         "GT11": 55,
+         "GT12": 65,
+         "GT13": 74,
+         "GT14": 75,
+         "GT15": 66,
+         "GT16": 83,
+         "GT17": 60,
+         "GT18": 58,
+         "GT19": 55,
+         "GT20": 70,
+         "GT21": 64,
+         "GT22": 56
+        },
+        "cortes": null,
+        "clases": 5,
+        "redondear": true,
+        "destacar": "GT16",
+        "rotular": "extremos",
+        "ancho": 200
+       },
+       "alto": 220
+      },
+      {
+       "id": "mapa-medio-panel",
+       "tipo": "panel",
+       "kicker": "POBREZA TOTAL 2023 · % DE LA POBLACIÓN",
+       "titular": [
+        "El norte y el altiplano",
+        "concentran la pobreza"
+       ],
+       "cifra_ids": [
+        "cat-mapa"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla mapa",
+       "pie": "mapa en panel.",
+       "indice": "mapa · panel",
+       "grafico": {
+        "tipo": "mapa",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "%",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "valores": {
+         "GT01": 30,
+         "GT02": 48,
+         "GT03": 38,
+         "GT04": 60,
+         "GT05": 45,
+         "GT06": 53,
+         "GT07": 78,
+         "GT08": 74,
+         "GT09": 50,
+         "GT10": 59,
+         "GT11": 55,
+         "GT12": 65,
+         "GT13": 74,
+         "GT14": 75,
+         "GT15": 66,
+         "GT16": 83,
+         "GT17": 60,
+         "GT18": 58,
+         "GT19": 55,
+         "GT20": 70,
+         "GT21": 64,
+         "GT22": 56
+        },
+        "cortes": null,
+        "clases": 5,
+        "redondear": true,
+        "destacar": "GT16",
+        "rotular": "extremos",
+        "ancho": 300
+       },
+       "alto": 220
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "mapa",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "mapa · panel a toda columna"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "La tarjeta hecha página: fondo de paleta y 612 px de ancho para el gráfico."
+     ]
+    },
+    {
+     "b": "figura",
+     "id": "mapa-panel",
+     "tipo": "panel",
+     "kicker": "POBREZA TOTAL 2023 · % DE LA POBLACIÓN",
+     "titular": [
+      "El norte y el altiplano",
+      "concentran la pobreza"
+     ],
+     "cifra_ids": [
+      "cat-mapa"
+     ],
+     "fuente": "Catálogo · cifras de ejemplo de la plantilla mapa",
+     "pie": "mapa en panel.",
+     "indice": "mapa · panel",
+     "grafico": {
+      "tipo": "mapa",
+      "formato": {
+       "prefijo": "",
+       "sufijo": "%",
+       "decimales": 0,
+       "miles": true,
+       "escala": 1
+      },
+      "valores": {
+       "GT01": 30,
+       "GT02": 48,
+       "GT03": 38,
+       "GT04": 60,
+       "GT05": 45,
+       "GT06": 53,
+       "GT07": 78,
+       "GT08": 74,
+       "GT09": 50,
+       "GT10": 59,
+       "GT11": 55,
+       "GT12": 65,
+       "GT13": 74,
+       "GT14": 75,
+       "GT15": 66,
+       "GT16": 83,
+       "GT17": 60,
+       "GT18": 58,
+       "GT19": 55,
+       "GT20": 70,
+       "GT21": 64,
+       "GT22": 56
+      },
+      "cortes": null,
+      "clases": 5,
+      "redondear": true,
+      "destacar": "GT16",
+      "rotular": "extremos",
+      "ancho": 300
+     },
+     "alto": 300
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "mapa",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "mapa · tarjeta frente a papel"
+    },
+    {
+     "b": "figuras",
+     "items": [
+      {
+       "id": "mapa-tarjeta",
+       "tipo": "tarjeta",
+       "kicker": "POBREZA TOTAL 2023 · % DE LA POBLACIÓN",
+       "titular": [
+        "El norte y el altiplano",
+        "concentran la pobreza"
+       ],
+       "cifra_ids": [
+        "cat-mapa"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla mapa",
+       "pie": "mapa en tarjeta.",
+       "indice": "mapa · tarjeta",
+       "plantilla": "mapa",
+       "datos": {
+        "formato": {
+         "prefijo": "",
+         "sufijo": "%",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "valores": {
+         "GT01": 30,
+         "GT02": 48,
+         "GT03": 38,
+         "GT04": 60,
+         "GT05": 45,
+         "GT06": 53,
+         "GT07": 78,
+         "GT08": 74,
+         "GT09": 50,
+         "GT10": 59,
+         "GT11": 55,
+         "GT12": 65,
+         "GT13": 74,
+         "GT14": 75,
+         "GT15": 66,
+         "GT16": 83,
+         "GT17": 60,
+         "GT18": 58,
+         "GT19": 55,
+         "GT20": 70,
+         "GT21": 64,
+         "GT22": 56
+        },
+        "cortes": null,
+        "clases": 5,
+        "redondear": true,
+        "destacar": "GT16",
+        "rotular": "extremos"
+       },
+       "alt": "Tarjeta mapa de ejemplo."
+      },
+      {
+       "id": "mapa-vs-papel",
+       "tipo": "papel",
+       "kicker": "POBREZA TOTAL 2023 · % DE LA POBLACIÓN",
+       "titular": [
+        "El norte y el altiplano",
+        "concentran la pobreza"
+       ],
+       "cifra_ids": [
+        "cat-mapa"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla mapa",
+       "pie": "mapa en papel.",
+       "indice": "mapa · papel",
+       "grafico": {
+        "tipo": "mapa",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "%",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "valores": {
+         "GT01": 30,
+         "GT02": 48,
+         "GT03": 38,
+         "GT04": 60,
+         "GT05": 45,
+         "GT06": 53,
+         "GT07": 78,
+         "GT08": 74,
+         "GT09": 50,
+         "GT10": 59,
+         "GT11": 55,
+         "GT12": 65,
+         "GT13": 74,
+         "GT14": 75,
+         "GT15": 66,
+         "GT16": 83,
+         "GT17": 60,
+         "GT18": 58,
+         "GT19": 55,
+         "GT20": 70,
+         "GT21": 64,
+         "GT22": 56
+        },
+        "cortes": null,
+        "clases": 5,
+        "redondear": true,
+        "destacar": "GT16",
+        "rotular": "extremos",
+        "ancho": 200
+       },
+       "alto": 260
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "tablero",
+   "titulo": "Tablero",
+   "subtitulo": "chispa, cuadros y comparacion son solo del tablero; el resto, si cabe a 324 px.",
+   "cifras": [
+    {
+     "kicker": "Serie · chispa",
+     "valor": "12,699",
+     "contexto": "en 2026",
+     "grafico": {
+      "tipo": "chispa",
+      "etiquetas": [
+       "2018",
+       "2019",
+       "2020",
+       "2021",
+       "2022",
+       "2023",
+       "2024",
+       "2025",
+       "2026"
+      ],
+      "valores": [
+       3826,
+       28810,
+       5213,
+       1885,
+       5364,
+       19754,
+       91767,
+       21252,
+       12699
+      ]
+     },
+     "fuente": "catálogo · ejemplo"
+    },
+    {
+     "kicker": "N de M · cuadros",
+     "valor": "10",
+     "contexto": "de 29 áreas",
+     "grafico": {
+      "tipo": "cuadros",
+      "total": 29,
+      "marcados": 10,
+      "texto": "Un cuadro por área de salud"
+     },
+     "fuente": "catálogo · ejemplo"
+    },
+    {
+     "kicker": "Dos periodos · comparacion",
+     "valor": "45",
+     "contexto": "casos en 2026; 133 en todo 2025",
+     "grafico": {
+      "tipo": "comparacion",
+      "items": [
+       {
+        "nombre": "2026 · SE 35",
+        "valor": 45,
+        "destacar": true
+       },
+       {
+        "nombre": "2025 · año",
+        "valor": 133
+       }
+      ]
+     },
+     "fuente": "catálogo · ejemplo"
+    }
+   ]
+  },
+  {
+   "tipo": "contraportada",
+   "lema": "Un contrato, dos tamaños.",
+   "ficha": [
+    [
+     "Tipos",
+     "5"
+    ],
+    [
+     "Paleta",
+     "{paleta}"
+    ]
+   ]
+  }
+ ]
+}

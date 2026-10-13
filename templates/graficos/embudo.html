@@ -32,21 +32,8 @@ function render(D) {
 
   const E = D.etapas, n = E.length, base = E[0].valor;
   const ink = H.color.ink, a1 = H.color.a1, bg = H.color.bg;
-  // «N de cada 100» (o de cada 1,000 si no llega a 1): el guionista nunca lo escribe.
-  // Por debajo de 10 lleva un decimal: redondear 1.7 a «2» contradiría «menos de 2».
-  const corto = (x) => H.num(x, { decimales: x < 10 && Math.abs(x - Math.round(x)) >= 0.05 ? 1 : 0 });
-  const deCada = (v, ref) => {
-    const p = (v / ref) * 100;
-    if (p >= 1 || p === 0) return corto(p) + " de cada 100";
-    if (p >= 0.1) return corto(p * 10) + " de cada 1,000";
-    return "menos de 1 de cada 1,000";
-  };
-  const etiqueta = (i) => {
-    if (!i || modo === "ninguno") return "";
-    if (modo === "inicio") return deCada(E[i].valor, base);
-    const prev = E[i - 1].valor;
-    return prev ? H.pct((E[i].valor / prev) * 100, E[i].valor / prev < 0.1 ? 1 : 0) + " de la anterior" : "";
-  };
+  // «N de cada 100» (o de cada 1,000 si no llega a 1): lo calcula H.etiquetaEmbudo (compartido con el informe); el guionista nunca lo escribe.
+  const etiqueta = (i) => H.etiquetaEmbudo(E, i, modo);
 
   const W = 920, alto = H.espacio(Math.max(260, Math.min(560, n * 112)), Math.max(200, n * 74));
   const svg = H.lienzo(W, alto);

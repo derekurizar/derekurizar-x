@@ -18,7 +18,7 @@ export const meta = {
 // sandbox del workflow no lee disco ni tiene Date).
 
 const PALETAS = ['cielo', 'jade', 'maiz', 'terracota', 'cacao', 'jacaranda', 'atitlan', 'obsidiana']
-const PLANTILLAS = ['linea', 'barras-v', 'barras-h', 'antes-despues', 'dona', 'pendiente', 'waffle', 'cifra', 'mapa', 'pesas', 'calor', 'bullet', 'embudo', 'divergente', 'apilada', 'piramide', 'treemap', 'dispersion']
+const PLANTILLAS = ['linea', 'barras-v', 'barras-h', 'antes-despues', 'dona', 'pendiente', 'waffle', 'cifra', 'mapa', 'pesas', 'calor', 'bullet', 'embudo', 'divergente', 'apilada', 'piramide', 'treemap', 'dispersion', 'hemiciclo', 'multiples', 'combinado', 'linea-tiempo', 'agrupadas', 'pictograma', 'area-apilada', 'cascada']
 const BEATS = ['gancho', 'contexto', 'giro', 'impacto', 'cierre', 'paso', 'dimension'] // paso: modo explica · dimension: modo perfil
 const HOOKS = ['giro_inversion', 'escala_humana', 'brecha_territorial', 'pregunta_directa', 'curiosity_gap', 'mito_vs_dato', 'antes_despues', 'titular_clasico']
 const REQ = {
@@ -27,6 +27,8 @@ const REQ = {
   waffle: ['porcentaje', 'cifra'], cifra: ['cifra'], mapa: ['valores'], pesas: ['fechas', 'items'], calor: ['filas', 'columnas', 'valores'],
   bullet: ['items'], embudo: ['etapas', 'misma_cohorte'], divergente: ['items'], apilada: ['etiquetas', 'partes'],
   piramide: ['grupos', 'izquierda', 'derecha'], treemap: ['partes'], dispersion: ['puntos', 'ejeX', 'ejeY'],
+  hemiciclo: ['total', 'bloques'], multiples: ['etiquetasX', 'paneles'], combinado: ['etiquetas', 'barras', 'linea'], 'linea-tiempo': ['eventos'],
+  agrupadas: ['etiquetas', 'series'], pictograma: ['total', 'destacado', 'texto'], 'area-apilada': ['etiquetasX', 'partes'], cascada: ['pasos'],
 }
 const RE_LINK = /https?:\/\/|www\.|\.com\b|\.gt\b/i
 const RE_BAIT = /(dale|da|dame|dejen?)\s+(rt|like|me gusta)|s[ií]gue(me|nos)|retuitea|comparte si|like si|guarda este|no te lo pierdas/i
@@ -55,7 +57,7 @@ const INSTR = {
   perfil: {
     editor: 'MODO PERFIL (retrato de un departamento o grupo frente al país): el tema es el SUJETO; sin tesis que probar (tesis_provisional = "Perfil: <sujeto> en N datos"); elige 5–6 dimensiones estándar (población y crecimiento, pobreza o ingreso, salud o desnutrición, educación, seguridad o migración, economía local) repartidas en 2–3 ejes; cada dimensión necesita el valor del sujeto Y el nacional de la misma fuente y año (per cápita con proyecciones INE); anota en cada brief el año de cada dimensión. ',
     investigador: 'MODO PERFIL: para cada dimensión captura el valor del sujeto Y el nacional de la MISMA fuente y año (como desglose con partes [sujeto, nacional] o como dos cifras) y, si hace falta, la población INE del sujeto y del país para la tasa. ',
-    guionista: 'MODO PERFIL: escribe modo: "perfil" y el bloque perfil {sujeto, tipo: departamento|grupo, dimensiones[]{n, nombre, anio}} con una dimensión por tuit intermedio; los tuits intermedios llevan beat "dimension" y NO hay giro ni impacto (esto manda sobre «un solo giro» de los límites); cada tarjeta intermedia compara sujeto y país (un item o serie rotulado «Guatemala», «nacional» o «país», la comparacion de cifra, o un mapa con el sujeto destacado); el sujeto aparece en el kicker o el titular de T1; el cierre dice qué hace distinto al sujeto, nombra los años si difieren y las fuentes. ',
+    guionista: 'MODO PERFIL: escribe modo: "perfil" y el bloque perfil {sujeto, tipo: departamento|grupo, dimensiones[]{n, nombre, anio}} con una dimensión por tuit intermedio; los tuits intermedios llevan beat "dimension" y NO hay giro ni impacto (esto manda sobre «un solo giro» de los límites); cada tarjeta intermedia compara sujeto y país (un item o serie rotulado «Guatemala», «nacional» o «país», la comparacion de cifra, agrupadas con series [sujeto, país], o un mapa con el sujeto destacado); el sujeto aparece en el kicker o el titular de T1; el cierre dice qué hace distinto al sujeto, nombra los años si difieren y las fuentes. ',
     productor: 'MODO PERFIL: C1 = cada tarjeta intermedia compara sujeto y país en la misma unidad y el rótulo lo dice; C7 recalcula per cápita con el denominador declarado; los años de las dimensiones aparecen en el cierre si difieren. ',
   },
 }
@@ -226,7 +228,9 @@ const LIMITES =
   'el texto no repite el titular de su tarjeta ni ≥2 de sus números; sin engagement bait; alt_text 20–1000 por visual; ' +
   `plantilla ∈ ${PLANTILLAS.join('|')}; kicker ≤45; titular 1–3 líneas de ≤26; nota ≤150; fuente 1–70 sin «Fuente:»; sin URLs en la tarjeta; ` +
   'cifra_ids ⊆ verificadas; datos con números crudos de esas cifras y formato; linea ≥5 puntos y ≤4 series; dona 2–5; barras-h ≤8; barras-v ≤12; ' +
-  'pendiente 2 fechas y 2–6; mapa ≥12 departamentos; pesas 2–8; calor filas×columnas ≤12; bullet 1–6 con meta; embudo 2–6 etapas no crecientes y misma_cohorte true|false; divergente 2–10; apilada 2–8 filas y 2–5 partes; piramide 4–12 grupos; treemap 3–12; dispersion 8–22 puntos con ejeX/ejeY; periodos (linea, barras-v) ≤4 por índices; «récord/histórico» solo con serie ≥10 puntos cuyo máximo sea el valor.'
+  'pendiente 2 fechas y 2–6; mapa ≥12 departamentos; pesas 2–8; calor filas×columnas ≤12; bullet 1–6 con meta; embudo 2–6 etapas no crecientes y misma_cohorte true|false; divergente 2–10; apilada 2–8 filas y 2–5 partes; piramide 4–12 grupos; treemap 3–12; dispersion 8–22 puntos con ejeX/ejeY; periodos (linea, barras-v) ≤4 por índices; ' +
+  'hemiciclo 10–300 curules en 2–8 bloques que suman total (mayoria simple|calificada la calcula la plantilla); multiples 4–9 paneles con ≥4 puntos en la misma escala; combinado 3–12 periodos con barras y linea de igual longitud (dos ejes declarados; el titular no afirma causa); linea-tiempo 3–8 eventos {fecha, nombre, valor} y proporcional true|false; ' +
+  'agrupadas 2–6 categorías × 2–3 series; pictograma total 2–200 unidades y destacado ≤ total (enteros; «K de N» lo compone la plantilla); area-apilada 5–30 puntos × 2–5 partes; cascada 2–8 pasos con efecto suma|resta más inicio y/o fin (acumulados y fin los calcula la plantilla; fin.valor, si va, se coteja); «récord/histórico» solo con serie ≥10 puntos cuyo máximo sea el valor.'
 
 // ── Argumentos ─────────────────────────────────────────────────────────────
 const A = typeof args === 'string' ? { tema: args } : (args || {})
@@ -439,7 +443,7 @@ const validarGuion = (g) => {
   if (Tt[0].visual && !Tt[0].visual.cifra_ids.includes(g.ancla_id)) F.push('el visual de T1 no usa la cifra ancla')
   const numerosDe = (d) => {
     const out = []
-    const rec = (x) => { if (typeof x === 'number') out.push(x); else if (Array.isArray(x)) x.forEach(rec); else if (x && typeof x === 'object') Object.entries(x).forEach(([k, v]) => { if (!['decimales', 'escala', 'destacar', 'clases', 'decimales_pildora', 'i', 'fila', 'col', 'miles', 'cortes', 'maximo', 'minimo_rotulo', 'desde', 'hasta'].includes(k)) rec(v) }) }
+    const rec = (x) => { if (typeof x === 'number') out.push(x); else if (Array.isArray(x)) x.forEach(rec); else if (x && typeof x === 'object') Object.entries(x).forEach(([k, v]) => { if (!['decimales', 'escala', 'destacar', 'clases', 'decimales_pildora', 'i', 'fila', 'col', 'miles', 'cortes', 'maximo', 'minimo_rotulo', 'desde', 'hasta', 'por_fila'].includes(k)) rec(v) }) }
     rec(d); return out
   }
   const formatos = (v) => { const a = Math.abs(v); const s = new Set([String(v), String(a), a.toFixed(1), a.toFixed(2), a.toLocaleString('en-US'), a.toLocaleString('en-US', { maximumFractionDigits: 2 })]); return [...s].filter((x) => x && x !== '0') }
@@ -491,6 +495,14 @@ const validarGuion = (g) => {
     if (v.plantilla === 'piramide' && (largo(d.grupos) < 4 || largo(d.grupos) > 12 || largo((d.izquierda || {}).valores) !== largo(d.grupos) || largo((d.derecha || {}).valores) !== largo(d.grupos))) F.push(`T${t.n} piramide: 4–12 grupos y un valor por grupo en cada lado`)
     if (v.plantilla === 'treemap' && (largo(d.partes) < 3 || largo(d.partes) > 12)) F.push(`T${t.n} treemap: 3–12 partes`)
     if (v.plantilla === 'dispersion' && (largo(d.puntos) < 8 || largo(d.puntos) > 22 || largo(d.rotular) > 4)) F.push(`T${t.n} dispersion: 8–22 puntos y ≤4 rotulados`)
+    if (v.plantilla === 'hemiciclo' && (largo(d.bloques) < 2 || largo(d.bloques) > 8 || !Number.isInteger(d.total) || d.bloques.reduce((s, b) => s + ((b || {}).curules || 0), 0) !== d.total)) F.push(`T${t.n} hemiciclo: 2–8 bloques cuyas curules suman total`)
+    if (v.plantilla === 'multiples' && (largo(d.etiquetasX) < 4 || largo(d.paneles) < 4 || largo(d.paneles) > 9 || d.paneles.some((p) => largo((p || {}).valores) !== largo(d.etiquetasX)))) F.push(`T${t.n} multiples: ≥4 puntos, 4–9 paneles y un valor por punto`)
+    if (v.plantilla === 'combinado' && (largo(d.etiquetas) < 3 || largo(d.etiquetas) > 12 || largo((d.barras || {}).valores) !== largo(d.etiquetas) || largo((d.linea || {}).valores) !== largo(d.etiquetas))) F.push(`T${t.n} combinado: 3–12 periodos y un valor de barras y de linea por periodo`)
+    if (v.plantilla === 'linea-tiempo' && (largo(d.eventos) < 3 || largo(d.eventos) > 8 || d.eventos.some((e) => !(e || {}).fecha || !(e || {}).nombre || typeof (e || {}).valor !== 'number'))) F.push(`T${t.n} linea-tiempo: 3–8 eventos con fecha, nombre y valor`)
+    if (v.plantilla === 'agrupadas' && (largo(d.etiquetas) < 2 || largo(d.etiquetas) > 6 || largo(d.series) < 2 || largo(d.series) > 3 || d.series.some((s) => largo((s || {}).valores) !== largo(d.etiquetas)))) F.push(`T${t.n} agrupadas: 2–6 categorías, 2–3 series y un valor por categoría`)
+    if (v.plantilla === 'pictograma' && !(Number.isInteger(d.total) && d.total >= 2 && d.total <= 200 && Number.isInteger(d.destacado) && d.destacado >= 0 && d.destacado <= d.total)) F.push(`T${t.n} pictograma: total 2–200 y destacado 0–total, enteros`)
+    if (v.plantilla === 'area-apilada' && (largo(d.etiquetasX) < 5 || largo(d.etiquetasX) > 30 || largo(d.partes) < 2 || largo(d.partes) > 5 || d.partes.some((p) => largo((p || {}).valores) !== largo(d.etiquetasX)))) F.push(`T${t.n} area-apilada: 5–30 puntos, 2–5 partes y un valor por punto`)
+    if (v.plantilla === 'cascada' && (largo(d.pasos) < 2 || largo(d.pasos) > 8 || (!d.inicio && !d.fin) || d.pasos.some((p) => typeof (p || {}).valor !== 'number' || (p || {}).valor < 0 || !['suma', 'resta'].includes((p || {}).efecto)))) F.push(`T${t.n} cascada: 2–8 pasos {nombre, valor ≥ 0, efecto suma|resta} e inicio o fin`)
     if (v.titular.some((l) => !l.trim() || l.length > 26)) F.push(`T${t.n} titular: líneas de ≤26 caracteres`)
     if (!v.kicker.trim() || v.kicker.length > 45) F.push(`T${t.n} kicker vacío o >45`)
     if ((v.nota || '').length > 150) F.push(`T${t.n} nota >150`)

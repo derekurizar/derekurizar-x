@@ -1,0 +1,83 @@
+<!-- agrupadas · 2–3 series por categoría en barras horizontales desde cero (brief 5f). Contrato: referencias/diseno/graficos.md -->
+<script>
+// CIFRAS DE EJEMPLO (Alta Verapaz frente al país, INE/MSPAS) · verificar antes de publicar
+const DATA = {
+  kicker: "ALTA VERAPAZ FRENTE AL PAÍS · % DE PERSONAS",
+  titular: ["Alta Verapaz, lejos", "del promedio nacional"],
+  nota: "",
+  fuente: "INE · ENCOVI 2023 · MSPAS · ENSMI 2022",
+  handle: "@DerekUrizar",
+  formato: { prefijo: "", sufijo: "%", decimales: 0, miles: true, escala: 1 },
+  etiquetas: ["Pobreza", "Pobreza extrema", "Desnutrición crónica", "Sin electricidad"],
+  series: [
+    { nombre: "Alta Verapaz", valores: [83, 54, 50, 45], destacar: true },
+    { nombre: "Guatemala",    valores: [56, 16, 47, 10] }
+  ],
+  rotular: "todas",     // "todas" | "destacada" (solo los valores de la serie en a1)
+  referencia: null      // { valor: 50, texto: "meta" } → línea vertical punteada con rótulo
+};
+
+function render(D) {
+  H.assert(Array.isArray(D.etiquetas) && D.etiquetas.length >= 2 && D.etiquetas.length <= 6, "agrupadas admite de 2 a 6 categorías");
+  H.assert(Array.isArray(D.series) && D.series.length >= 2 && D.series.length <= 3, "agrupadas admite de 2 a 3 series");
+  const n = D.etiquetas.length, m = D.series.length;
+  D.series.forEach((s) => {
+    H.assert(s && typeof s.nombre === "string" && s.nombre.trim() && Array.isArray(s.valores) && s.valores.length === n, "cada serie necesita nombre y " + n + " valores");
+    s.valores.forEach((v) => H.assert(typeof v === "number" && isFinite(v) && v >= 0, "valores de «" + s.nombre + "»: números ≥ 0"));
+  });
+  H.assert(D.series.filter((s) => s.destacar).length <= 1, "solo una serie puede llevar destacar: true");
+  let hi = D.series.findIndex((s) => s.destacar); if (hi < 0) hi = m - 1;
+  const R = D.referencia;
+  if (R) H.assert(typeof R.valor === "number" && isFinite(R.valor) && typeof R.texto === "string" && R.texto.trim(), "referencia necesita valor numérico y texto");
+  const ink = H.color.ink, a1 = H.color.a1, bg = H.color.bg;
+  // Colores: la destacada en a1; las demás en tinta y en un tono medio de la tinta sobre el fondo.
+  let k = 0;
+  const colorDe = D.series.map((_, j) => (j === hi ? a1 : [ink, H.mezcla(bg, ink, .5)][Math.min(k++, 1)]));
+  H.leyenda(D.series.map((s, j) => ({ nombre: s.nombre, color: colorDe[j], forma: "cuadro" })));
+
+  const W = 920, ejeH = 30, arriba = R ? 26 : 0;
+  const alto = H.espacio(Math.min(560, arriba + ejeH + n * (m * 32 + 24)), arriba + ejeH + n * (m * 22 + 14));
+  const svg = H.lienzo(W, alto);
+  const f = (v) => H.num(v, D.formato);
+
+  // Columna de nombres (encoge 21→19→17 hasta caber en 276 px) y ancho reservado a los valores.
+  const fontE = ["600 21px Archivo", "600 19px Archivo", "600 17px Archivo"].find((fn) => D.etiquetas.every((e) => H.medir(String(e), fn) <= 276));
+  H.assert(fontE, "alguna categoría no cabe en 276 px ni a 17 px: acórtala");
+  const colIzq = Math.max(...D.etiquetas.map((e) => H.medir(String(e), fontE))) + 24;
+  const fontV = (j) => "700 " + (j === hi ? 21 : 19) + "px 'JetBrains Mono',monospace";
+  const labW = Math.max(...D.series.flatMap((s, j) => s.valores.map((v) => H.medir(f(v), fontV(j))))) + 14;
+  const x0 = colIzq, x1 = W - labW;
+  const dom = H.dominio(D.series.flatMap((s) => s.valores).concat(R ? [R.valor] : []), true);
+  const sx = H.escala(dom, [x0, x1]);
+  const yTop = arriba, yBot = alto - ejeH;
+
+  // Rejilla vertical tenue con rótulos abajo; la base siempre es cero.
+  const tk = H.ticks(dom[0], dom[1], 4), fEje = H.formatoEje(D.formato, tk);
+  for (const t of tk) {
+    const x = sx(t);
+    H.svgEl("line", { x1: x, x2: x, y1: yTop, y2: yBot, stroke: H.color.inkA(t === 0 ? .6 : .18), "stroke-width": t === 0 ? 2 : 1 }, svg);
+    H.texto(svg, x, alto - 6, H.num(t, fEje), { class: "t-eje", "text-anchor": "middle" });
+  }
+
+  const rowH = (yBot - yTop) / n;
+  const barH = Math.max(18, Math.min(26, (rowH - 14) / m - 4));
+  const grupoH = m * barH + (m - 1) * 4;
+  D.etiquetas.forEach((e, i) => {
+    const top = yTop + i * rowH + (rowH - grupoH) / 2, cy = top + grupoH / 2;
+    H.texto(svg, 0, cy + 7, String(e), { style: "font:" + fontE + ",sans-serif;fill:" + ink });
+    D.series.forEach((s, j) => {
+      const y = top + j * (barH + 4), v = s.valores[i], w = Math.max(3, sx(v) - x0);
+      H.svgEl("rect", { x: x0, y, width: w, height: barH, fill: colorDe[j] }, svg);
+      if (D.rotular !== "destacada" || j === hi)
+        H.texto(svg, x0 + w + 10, y + barH / 2 + 7, f(v), { style: "font:" + fontV(j) + ";fill:" + ink + ";" + H.halo() });
+    });
+  });
+
+  if (R) {
+    const x = sx(R.valor), t = R.texto.trim() + " · " + f(R.valor), wT = H.medir(t, "500 17px 'JetBrains Mono'");
+    H.svgEl("line", { x1: x, x2: x, y1: yTop - 4, y2: yBot, stroke: ink, "stroke-width": 2, "stroke-dasharray": "6 6" }, svg);
+    const lado = x + 8 + wT <= W;
+    H.texto(svg, lado ? x + 8 : x - 8, 16, t, { class: "t-eje", "text-anchor": lado ? "start" : "end" });
+  }
+}
+</script>

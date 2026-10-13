@@ -91,6 +91,18 @@ def validar_tokens():
                 a1_bajas.append("%s %.2f" % (k, c1))
         except (KeyError, ValueError):
             pass
+    papel = (tk.get("documento") or {}).get("papel")
+    if papel:  # informes (investigacion/): la tinta del acento va en texto sobre papel
+        for k, p in tk.get("paletas", {}).items():
+            for campo in ("papel_tinta", "papel_barra"):
+                if not re.fullmatch(r"#[0-9A-Fa-f]{6}", p.get(campo, "")):
+                    err("tokens: paleta %s sin %s válido (documento)" % (k, campo))
+            try:
+                c = contraste(papel, p["papel_tinta"])
+                if c < 4.5:
+                    err("tokens: paleta %s papel_tinta/papel %.2f:1 < 4.5" % (k, c))
+            except (KeyError, ValueError):
+                pass
     if a1_bajas:  # esperado y documentado en referencias/diseno/sistema.md: a1 nunca va en texto pequeño
         warn("tokens: a1/bg < 3:1 en %d paleta(s) (%s): a1 solo en cifras grandes y marcas (sistema.md)" % (len(a1_bajas), ", ".join(a1_bajas)))
     return set(tk.get("paletas", {}))

@@ -27,7 +27,8 @@ Modos (misma investigación y verificación; cambian gancho, plantillas y gates)
 - `mapa`: brecha por departamento (≥12, ideal 22) en tasa per cápita con
   denominador INE; gancho `brecha_territorial`; plantilla `mapa`.
 - `antes`: hace N años (≥5) frente a hoy en la misma serie y fuente; gancho
-  `antes_despues`; si es dinero corriente, la nota lo dice.
+  `antes_despues`; si es dinero corriente, la nota lo dice. Plantillas
+  `antes-despues`, `pendiente`, `pesas`, `linea` o `agrupadas`.
 
 1. PREFLIGHT: corre `make doctor` (exit 0). Salvo en `fixture`, haz una
    búsqueda de prueba con WebSearch; si falla → DETENTE y repórtalo. Obtén la

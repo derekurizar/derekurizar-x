@@ -8,6 +8,12 @@ El sandbox del Workflow no importa módulos, así que hilo.js, dato.js e ideas.j
   W3 HOOKS difiere entre workflows o de ensamblar.HOOKS; BEATS (hilo.js) difiere de ensamblar.BEATS
   W4 REQ, RE_LINK, RE_BAIT, RE_SUPER o pesoX difieren entre hilo.js y dato.js
   W5 las claves de MODOS de hilo.js y dato.js no coinciden con ensamblar.MODOS (aviso si aún no existen)
+  W7 gráficos del informe: todo G.<tipo> de investigacion/graficos/*.js tiene plantilla de tarjeta (o está en
+     informe.SOLO_DOCUMENTO), campos en informe.CAMPOS_GRAFICO y extractor en ensamblar.CLAVES_DATO; ningún
+     G.<tipo> se define dos veces; las plantillas sin G.* se avisan (informe.plantillas_sin_g)
+  W8 ningún gráfico del informe (salvo el adaptador _comun.js) usa helpers de la tarjeta que leen su DOM o sus variables CSS
+     (H.color, H.rampa, H.rampaColor, H.halo, H.periodos, H.textoSobre, H.espacio, H.lienzo, H.leyenda,
+     H.anotar, H.cabecera, H.verificar, document.getElementById)
 
 Uso: python3 scripts/check_workflows.py [--quiet]   · salida 0 ok · 1 diferencias
 """
@@ -19,7 +25,10 @@ import sys
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(RAIZ, "scripts"))
-from ensamblar import BEATS, HOOKS, MODOS  # noqa: E402
+from ensamblar import BEATS, HOOKS, MODOS, CLAVES_DATO  # noqa: E402
+import informe  # noqa: E402  (TIPOS_GRAFICO, CAMPOS_GRAFICO, SOLO_DOCUMENTO, plantillas_sin_g, snake)
+
+RE_PROHIBIDO = re.compile(r"\bH\.(color|rampa|rampaColor|halo|periodos|textoSobre|espacio|lienzo|leyenda|anotar|cabecera|verificar)\b|document\.getElementById\(")
 
 WF = os.path.join(RAIZ, ".claude", "workflows")
 ERRORES, AVISOS = [], []
@@ -129,7 +138,38 @@ def main():
             warn("W5 %s: aún no tiene `const MODOS = {…}` (modos de ensamblar.MODOS[%r]: %s)" % (nombre, tipo, MODOS[tipo]))
         elif sorted(k) != sorted(MODOS[tipo]):
             err("W5 %s MODOS %s ≠ ensamblar.MODOS[%r] %s" % (nombre, k, tipo, MODOS[tipo]))
+    graficos_informe(catalogo)
     return fin(quiet)
+
+
+def graficos_informe(catalogo):
+    """W7 y W8: el motor de gráficos del informe frente al catálogo de tarjetas."""
+    tipos, cat = informe.TIPOS_GRAFICO, {informe.snake(c) for c in catalogo}
+    sobran = sorted(tipos - cat - informe.SOLO_DOCUMENTO)
+    if sobran:
+        err("W7 G.* sin plantilla de tarjeta ni en informe.SOLO_DOCUMENTO: %s" % ", ".join(sobran))
+    faltan = sorted(informe.plantillas_sin_g())
+    if faltan:
+        warn("W7 plantillas de tarjeta sin G.* en investigacion/graficos/ (solo valen como figura tarjeta): %s" % ", ".join(faltan))
+    sin_campos = sorted(tipos - set(informe.CAMPOS_GRAFICO))
+    if sin_campos:
+        err("W7 G.* sin entrada en informe.CAMPOS_GRAFICO: %s" % ", ".join(sin_campos))
+    sin_claves = sorted(t for t in tipos - informe.SOLO_DOCUMENTO if informe.kebab(t) not in CLAVES_DATO)
+    if sin_claves:
+        err("W7 G.* sin extractor en ensamblar.CLAVES_DATO: %s" % ", ".join(sin_claves))
+    vistos = {}
+    for ruta in sorted(glob.glob(os.path.join(RAIZ, "investigacion", "graficos", "*.js"))):
+        src = open(ruta, encoding="utf-8").read()
+        for t in informe.RE_G.findall(src):
+            if t in vistos:
+                err("W7 G.%s definido dos veces: %s y %s" % (t, vistos[t], os.path.basename(ruta)))
+            vistos[t] = os.path.basename(ruta)
+        if os.path.basename(ruta) == "_comun.js":
+            continue  # GX es el adaptador: envuelve H.rampa (solo en panel) y H.* puros; los G.* solo usan GX.*
+        for k, linea_src in enumerate(src.split("\n"), 1):
+            m = RE_PROHIBIDO.search(linea_src)
+            if m and not linea_src.lstrip().startswith("//"):
+                err("W8 %s:%d usa %s (helper de la tarjeta; en el informe se pinta con col.* y GX.*)" % (os.path.relpath(ruta, RAIZ), k, m.group(0)))
 
 
 def fin(quiet):

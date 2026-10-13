@@ -1,0 +1,353 @@
+{
+ "slug": "catalogo",
+ "cifras": [
+  {
+   "id": "cat-barras-h",
+   "concepto": "Cifras de ejemplo de la plantilla barras-h",
+   "valor": 5.9,
+   "unidad": "",
+   "anio": "",
+   "tipo": "desglose",
+   "fuente": "catálogo",
+   "url": "",
+   "veredicto": "verificada",
+   "independencia": "alta",
+   "evidencia": {
+    "url": "",
+    "cita": "DATA de ejemplo de templates/graficos/barras-h.html",
+    "archivo_local": ""
+   },
+   "partes": [
+    {
+     "nombre": "v1",
+     "valor": 5.9
+    },
+    {
+     "nombre": "v2",
+     "valor": 4.85
+    },
+    {
+     "nombre": "v3",
+     "valor": 4.84
+    },
+    {
+     "nombre": "v4",
+     "valor": 4.2
+    }
+   ]
+  },
+  {
+   "id": "cat-barras-v",
+   "concepto": "Cifras de ejemplo de la plantilla barras-v",
+   "valor": 11340,
+   "unidad": "",
+   "anio": "",
+   "tipo": "desglose",
+   "fuente": "catálogo",
+   "url": "",
+   "veredicto": "verificada",
+   "independencia": "alta",
+   "evidencia": {
+    "url": "",
+    "cita": "DATA de ejemplo de templates/graficos/barras-v.html",
+    "archivo_local": ""
+   },
+   "partes": [
+    {
+     "nombre": "v1",
+     "valor": 11340
+    },
+    {
+     "nombre": "v2",
+     "valor": 15296
+    },
+    {
+     "nombre": "v3",
+     "valor": 18040
+    },
+    {
+     "nombre": "v4",
+     "valor": 19804
+    },
+    {
+     "nombre": "v5",
+     "valor": 21510
+    },
+    {
+     "nombre": "v6",
+     "valor": 25530
+    }
+   ]
+  },
+  {
+   "id": "cat-divergente",
+   "concepto": "Cifras de ejemplo de la plantilla divergente",
+   "valor": -34,
+   "unidad": "",
+   "anio": "",
+   "tipo": "desglose",
+   "fuente": "catálogo",
+   "url": "",
+   "veredicto": "verificada",
+   "independencia": "alta",
+   "evidencia": {
+    "url": "",
+    "cita": "DATA de ejemplo de templates/graficos/divergente.html",
+    "archivo_local": ""
+   },
+   "partes": [
+    {
+     "nombre": "v1",
+     "valor": -34
+    },
+    {
+     "nombre": "v2",
+     "valor": -28
+    },
+    {
+     "nombre": "v3",
+     "valor": -22
+    },
+    {
+     "nombre": "v4",
+     "valor": -18
+    },
+    {
+     "nombre": "v5",
+     "valor": -12
+    },
+    {
+     "nombre": "v6",
+     "valor": -9
+    },
+    {
+     "nombre": "v7",
+     "valor": 6
+    },
+    {
+     "nombre": "v8",
+     "valor": 14
+    }
+   ]
+  },
+  {
+   "id": "cat-linea",
+   "concepto": "Cifras de ejemplo de la plantilla linea",
+   "valor": 3.6,
+   "unidad": "",
+   "anio": "",
+   "tipo": "desglose",
+   "fuente": "catálogo",
+   "url": "",
+   "veredicto": "verificada",
+   "independencia": "alta",
+   "evidencia": {
+    "url": "",
+    "cita": "DATA de ejemplo de templates/graficos/linea.html",
+    "archivo_local": ""
+   },
+   "partes": [
+    {
+     "nombre": "v1",
+     "valor": 3.6
+    },
+    {
+     "nombre": "v2",
+     "valor": 3.65
+    },
+    {
+     "nombre": "v3",
+     "valor": 3.8
+    },
+    {
+     "nombre": "v4",
+     "valor": 5.2
+    },
+    {
+     "nombre": "v5",
+     "valor": 4.9
+    },
+    {
+     "nombre": "v6",
+     "valor": 4.1
+    },
+    {
+     "nombre": "v7",
+     "valor": 5.3
+    },
+    {
+     "nombre": "v8",
+     "valor": 5.25
+    },
+    {
+     "nombre": "v9",
+     "valor": 5.35
+    },
+    {
+     "nombre": "v10",
+     "valor": 5.31
+    },
+    {
+     "nombre": "v11",
+     "valor": 5.32
+    },
+    {
+     "nombre": "v12",
+     "valor": 5.33
+    },
+    {
+     "nombre": "v13",
+     "valor": 5.34
+    },
+    {
+     "nombre": "v14",
+     "valor": 3.62
+    },
+    {
+     "nombre": "v15",
+     "valor": 3.75
+    },
+    {
+     "nombre": "v16",
+     "valor": 4.2
+    },
+    {
+     "nombre": "v17",
+     "valor": 4.4
+    },
+    {
+     "nombre": "v18",
+     "valor": 4.55
+    },
+    {
+     "nombre": "v19",
+     "valor": 4.6
+    },
+    {
+     "nombre": "v20",
+     "valor": 4.8
+    },
+    {
+     "nombre": "v21",
+     "valor": 4.85
+    },
+    {
+     "nombre": "v22",
+     "valor": 3.02
+    },
+    {
+     "nombre": "v23",
+     "valor": 3.1
+    },
+    {
+     "nombre": "v24",
+     "valor": 4.5
+    },
+    {
+     "nombre": "v25",
+     "valor": 4.25
+    },
+    {
+     "nombre": "v26",
+     "valor": 4.3
+    }
+   ]
+  },
+  {
+   "id": "cat-mapa",
+   "concepto": "Cifras de ejemplo de la plantilla mapa",
+   "valor": 30,
+   "unidad": "",
+   "anio": "",
+   "tipo": "desglose",
+   "fuente": "catálogo",
+   "url": "",
+   "veredicto": "verificada",
+   "independencia": "alta",
+   "evidencia": {
+    "url": "",
+    "cita": "DATA de ejemplo de templates/graficos/mapa.html",
+    "archivo_local": ""
+   },
+   "partes": [
+    {
+     "nombre": "v1",
+     "valor": 30
+    },
+    {
+     "nombre": "v2",
+     "valor": 48
+    },
+    {
+     "nombre": "v3",
+     "valor": 38
+    },
+    {
+     "nombre": "v4",
+     "valor": 60
+    },
+    {
+     "nombre": "v5",
+     "valor": 45
+    },
+    {
+     "nombre": "v6",
+     "valor": 53
+    },
+    {
+     "nombre": "v7",
+     "valor": 78
+    },
+    {
+     "nombre": "v8",
+     "valor": 74
+    },
+    {
+     "nombre": "v9",
+     "valor": 50
+    },
+    {
+     "nombre": "v10",
+     "valor": 59
+    },
+    {
+     "nombre": "v11",
+     "valor": 55
+    },
+    {
+     "nombre": "v12",
+     "valor": 65
+    },
+    {
+     "nombre": "v13",
+     "valor": 75
+    },
+    {
+     "nombre": "v14",
+     "valor": 66
+    },
+    {
+     "nombre": "v15",
+     "valor": 83
+    },
+    {
+     "nombre": "v16",
+     "valor": 58
+    },
+    {
+     "nombre": "v17",
+     "valor": 70
+    },
+    {
+     "nombre": "v18",
+     "valor": 64
+    },
+    {
+     "nombre": "v19",
+     "valor": 56
+    }
+   ]
+  }
+ ],
+ "fuentes": []
+}

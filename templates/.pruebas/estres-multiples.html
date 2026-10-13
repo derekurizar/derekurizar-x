@@ -1,0 +1,89 @@
+<!-- PRUEBA DE ESTRÉS · multiples: 9 paneles (3×3), 24 puntos con huecos, nombres largos, nota de 150 y titular de 2 líneas -->
+<script>
+const DATA = {
+  kicker: "PRUEBA · NUEVE SERIES EN LA MISMA ESCALA",
+  titular: ["Nueve paneles", "en una tarjeta"],
+  nota: "Nota de prueba de ciento cincuenta caracteres exactos para forzar el hueco del gráfico y comprobar que los nueve paneles siguen cabiendo bien.",
+  fuente: "Prueba de estrés · datos ficticios",
+  handle: "@DerekUrizar",
+  formato: { prefijo: "", sufijo: "", decimales: 0, miles: true, escala: 1 },
+  etiquetasX: ["ene 24", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic", "ene 25", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic 25"],
+  paneles: [
+    { nombre: "Departamento uno", valores: [1200, 1250, 1300, 1280, 1350, 1400, 1420, 1500, 1480, 1550, 1600, 1650, 1700, 1720, 1750, 1800, 1850, 1900, 1950, 2000, 2050, 2100, 2150, 2200] },
+    { nombre: "Departamento dos", valores: [900, 920, null, 950, 980, 1000, 1020, 1050, 1080, 1100, 1120, 1150, 1180, 1200, 1220, 1250, 1280, 1300, 1320, 1350, 1380, 1400, 1420, 1450] },
+    { nombre: "Nombre de dieciocho", valores: [2000, 1950, 1900, 1850, 1800, 1750, 1700, 1650, 1600, 1550, 1500, 1450, 1400, 1350, 1300, 1250, 1200, 1150, 1100, 1050, 1000, 950, 900, 850] },
+    { nombre: "Cuatro", valores: [500, 520, 540, 560, 580, 600, 620, 640, 660, 680, 700, 720, 740, 760, 780, 800, 820, 840, 860, 880, 900, 920, 940, 960] },
+    { nombre: "Cinco", valores: [1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500] },
+    { nombre: "Seis", valores: [null, null, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250, 1300, 1350, 1400, 1450, 1500, 1550, 1600, 1650, 1700, 1750, 1800, 1850] },
+    { nombre: "Siete", valores: [2400, 2350, 2300, 2250, 2200, 2150, 2100, 2050, 2000, 1950, 1900, 1850, 1800, 1750, 1700, 1650, 1600, 1550, 1500, 1450, 1400, 1350, 1300, 1250] },
+    { nombre: "Ocho", valores: [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 2100, 2200, 2300, 2400] },
+    { nombre: "Nueve y último", valores: [1000, 1100, 1000, 1100, 1000, 1100, 1000, 1100, 1000, 1100, 1000, 1100, 1000, 1100, 1000, 1100, 1000, 1100, 1000, 1100, 1000, 1100, 1000, null] }
+  ],
+  destacar: 7,
+  referencia: { valor: 1500, texto: "promedio del periodo" },
+  yDesdeCero: true
+};
+function render(D) {
+  H.assert(Array.isArray(D.etiquetasX) && D.etiquetasX.length >= 4 && D.etiquetasX.length <= 30, "etiquetasX necesita de 4 a 30 puntos");
+  H.assert(Array.isArray(D.paneles) && D.paneles.length >= 4 && D.paneles.length <= 9, "multiples admite de 4 a 9 paneles");
+  const n = D.etiquetasX.length, m = D.paneles.length;
+  D.paneles.forEach((p) => {
+    H.assert(p && typeof p.nombre === "string" && p.nombre.trim() && Array.isArray(p.valores) && p.valores.length === n, "cada panel necesita nombre y " + n + " valores (null = hueco)");
+    p.valores.forEach((v) => H.assert(v === null || typeof v === "number", "valores: número o null"));
+    H.assert(p.valores.filter((v) => v !== null).length >= 2, "el panel «" + p.nombre + "» tiene menos de 2 valores");
+  });
+  H.assert(D.referencia == null || (typeof D.referencia.valor === "number" && typeof D.referencia.texto === "string"), "referencia: {valor, texto} o null");
+  const hi = D.destacar == null ? -1 : ((D.destacar % m) + m) % m;
+  const ink = H.color.ink, a1 = H.color.a1;
+  const f = (v) => H.num(v, D.formato);
+
+  const todos = D.paneles.flatMap((p) => p.valores.filter((v) => v !== null)).concat(D.referencia ? [D.referencia.valor] : []);
+  const dom = H.dominio(todos, D.yDesdeCero !== false);
+  let tk = H.ticks(dom[0], dom[1], 3);
+  if (tk.length > 5) tk = H.ticks(dom[0], dom[1], 2);
+  const fEje = H.formatoEje(D.formato, tk);
+  H.anotar((D.referencia ? "Línea punteada: " + D.referencia.texto + ". " : "") + "Misma escala en todos los paneles." + (D.yDesdeCero === false ? " Eje desde " + H.num(dom[0], fEje) + ", no desde cero." : ""));
+
+  const cols = m <= 4 ? 2 : 3, filas = Math.ceil(m / cols), gap = 24, franjaX = 26;
+  const W = 920, alto = H.espacio(Math.min(560, filas * 200 + (filas - 1) * gap + franjaX), filas * 120 + (filas - 1) * gap + franjaX);
+  const svg = H.lienzo(W, alto);
+  const izq = Math.max(...tk.map((t) => H.medir(H.num(t, fEje), "500 17px 'JetBrains Mono'"))) + 12;
+  const pw = (W - izq - (cols - 1) * gap) / cols, ph = (alto - franjaX - (filas - 1) * gap) / filas;
+  const cabH = 36, padX = 8;
+  const fontV = "700 20px 'JetBrains Mono'", fontVHi = "700 22px 'JetBrains Mono'";
+  const fontsN = ["600 21px Archivo", "600 19px Archivo", "600 17px Archivo"], fontsHi = ["800 23px Archivo", "800 21px Archivo", "800 19px Archivo", "800 17px Archivo"];
+  const ultimoDeColumna = (c) => { let u = -1; for (let i = 0; i < m; i++) if (i % cols === c) u = i; return u; };
+
+  D.paneles.forEach((p, i) => {
+    const c = i % cols, r = Math.floor(i / cols), esHi = i === hi;
+    const x = izq + c * (pw + gap), y = r * (ph + gap);
+    const px0 = x + padX, px1 = x + pw - padX, py0 = y + cabH, py1 = y + ph - 10;
+    const sx = H.escala([0, n - 1], [px0, px1]), sy = H.escala(dom, [py1, py0]);
+    H.svgEl("rect", { x, y, width: pw, height: ph, fill: H.color.inkA(.06) }, svg);
+    // Cabecera: nombre y último valor
+    let ult = n - 1; while (ult >= 0 && p.valores[ult] === null) ult--;
+    const val = f(p.valores[ult]), fv = esHi ? fontVHi : fontV, wV = H.medir(val, fv);
+    const fn = H.encajar(p.nombre, esHi ? fontsHi : fontsN, pw - 2 * padX - wV - 10);
+    H.assert(fn, "el nombre «" + p.nombre + "» no cabe en su panel: acórtalo");
+    H.texto(svg, px0, y + 24, p.nombre, { style: "font:" + fn + ",sans-serif;fill:" + ink });
+    H.texto(svg, px1, y + 24, val, { "text-anchor": "end", style: "font:" + fv + ",monospace;fill:" + ink });
+    // Rejilla compartida; rótulos solo en la primera columna
+    for (const t of tk) {
+      const yt = sy(t);
+      H.svgEl("line", { x1: px0, x2: px1, y1: yt, y2: yt, stroke: H.color.inkA(Math.abs(t) < 1e-9 ? .5 : .2), "stroke-width": 1 }, svg);
+      if (c === 0) H.texto(svg, x - 8, yt + 6, H.num(t, fEje), { class: "t-eje", "text-anchor": "end" });
+    }
+    if (D.referencia) { const yr = sy(D.referencia.valor); H.svgEl("line", { x1: px0, x2: px1, y1: yr, y2: yr, stroke: H.color.inkA(.6), "stroke-width": 2, "stroke-dasharray": "5 6" }, svg); }
+    // Línea y punto final
+    let d = "", abierto = false;
+    p.valores.forEach((v, j) => { if (v === null) { abierto = false; return; } d += (abierto ? " L" : " M") + sx(j).toFixed(1) + " " + sy(v).toFixed(1); abierto = true; });
+    H.svgEl("path", { d: d.trim(), fill: "none", stroke: esHi ? a1 : ink, "stroke-width": esHi ? 5 : 4, "stroke-linejoin": "round", "stroke-linecap": "round" }, svg);
+    H.svgEl("circle", { cx: sx(ult), cy: sy(p.valores[ult]), r: esHi ? 8 : 6, fill: esHi ? a1 : ink }, svg);
+    // Etiquetas X: primera y última, solo bajo el último panel de cada columna
+    if (i === ultimoDeColumna(c)) {
+      H.texto(svg, px0, alto - 4, String(D.etiquetasX[0]), { class: "t-eje" });
+      H.texto(svg, px1, alto - 4, String(D.etiquetasX[n - 1]), { class: "t-eje", "text-anchor": "end" });
+    }
+  });
+}
+</script>

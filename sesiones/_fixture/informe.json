@@ -1,0 +1,161 @@
+{
+  "_nota": "FIXTURE: informe de prueba de 8 páginas sobre las cifras del fixture de hilo (sesiones/_fixture). Lo usan `make informe-fixture`, `make test` (sin agentes) y el redactor como ejemplo mínimo. Necesita sesiones/_fixture/salida/ (materializar + ensamblar del fixture). Las cifras NO están verificadas contra fuentes reales.",
+  "meta": {
+    "titulo": "Combustibles 2026: del crudo al tanque",
+    "corrido": "Combustibles 2026 · Informe de datos",
+    "corto": "Combustibles 2026",
+    "pie": "Informe N.º 00 · Fixture",
+    "numero_largo": "Informe de datos · N.º 00",
+    "fecha": "Septiembre 2026",
+    "numero": "00",
+    "handle": "@DerekUrizar",
+    "paleta": "cielo",
+    "datos": ["sesiones/_fixture/salida/datos.json"],
+    "fuentes": [
+      "EIA · U.S. Energy Information Administration. Brent spot, promedio mensual 2026.",
+      "MEM · Dirección General de Hidrocarburos. Precios de referencia semanales del diésel, 2026.",
+      "CNE México y DGEHM El Salvador. Promedios anuales del diésel, 2026 (segunda fuente no independiente para México)."
+    ]
+  },
+  "paginas": [
+    {
+      "tipo": "portada",
+      "kicker_izq": "Informe de datos · Energía",
+      "kicker_der": "N.º 00 · Fixture",
+      "titulo": "Combustibles 2026: del crudo al tanque",
+      "lead": "El Brent cerró septiembre en 102 dólares por barril tras tocar 117 en abril. En Guatemala, el diésel de referencia pasó de 26.0 a 46.1 quetzales por galón entre enero y septiembre: subió más que el crudo.",
+      "cifra": { "id": "pre-c03", "valor": "46.1", "etiqueta": "Diésel · Q por galón · septiembre", "texto": "precio de referencia del MEM; 26.0 en enero" },
+      "fuentes": "EIA, MEM-DGH"
+    },
+    {
+      "tipo": "resumen",
+      "id": "resumen",
+      "indice": { "titulo": "Resumen" },
+      "tesis": "Llenar el tanque de diésel en Guatemala cuesta 77% más que en enero de 2026, más que lo que subió el crudo (54%). El zigzag del subsidio de abril y su retiro en julio explica parte de la diferencia: *el precio local no sigue al barril, lo persigue.*",
+      "cifras": [
+        { "id": "pre-c01", "kicker": "Brent · US$ por barril", "valor": "102", "texto": "promedio de septiembre de 2026; 67 en enero", "fuente": "EIA" },
+        { "id": "pre-c03", "kicker": "Diésel · Q por galón", "valor": "46.1", "texto": "precio de referencia de septiembre en Guatemala", "fuente": "MEM-DGH" },
+        { "id": "pre-c02", "kicker": "Diésel · enero", "valor": "26.0", "texto": "precio de referencia con el que arrancó el año", "fuente": "MEM-DGH" },
+        { "id": "pre-c04", "kicker": "Diésel · promedio anual", "valor": "5.90", "texto": "dólares por galón en México, el más caro de la región", "fuente": "EIA, CNE, MEM, DGEHM (ajustada)" }
+      ],
+      "no_afirma": [
+        "Que el subsidio haya causado el zigzag: coincide en el tiempo, la fuente no lo atribuye.",
+        "Cuánto paga el consumidor final: el precio de referencia no es el de surtidor.",
+        "Qué pasará con el precio en el último trimestre: no hay proyección oficial."
+      ]
+    },
+    {
+      "tipo": "capitulo",
+      "id": "cap1",
+      "variante": "banda",
+      "numero": "01",
+      "kicker": "Capítulo 01 · Precios",
+      "titulo": "Del crudo al tanque",
+      "descripcion": "El Brent mes a mes, el diésel de referencia en Guatemala y el promedio anual por país.",
+      "lead": "El crudo subió 54% entre enero y septiembre; el diésel local, 77%. La diferencia la pone el camino del barril al surtidor.",
+      "bloques": [
+        { "b": "texto", "capitular": true,
+          "parrafos": [
+            "En enero de 2026 el Brent promedió 67 dólares por barril. En abril tocó 117, bajó a 84 en julio y cerró septiembre en 102: un 54% por encima del arranque del año, según la EIA.",
+            "El diésel de referencia del MEM siguió otro camino: 26.0 quetzales por galón en enero y 46.1 en septiembre, un 77% más. Entre abril y julio el subsidio aplanó el precio local; al retirarse, el precio volvió a correr detrás del barril."
+          ],
+          "margen": [
+            { "termino": "54%", "texto": "102 ÷ 67 − 1, cálculo propio sobre los promedios mensuales de la EIA." },
+            { "termino": "77%", "texto": "46.1 ÷ 26.0 − 1, cálculo propio sobre los precios de referencia del MEM." }
+          ] }
+      ]
+    },
+    {
+      "tipo": "cuerpo",
+      "id": "brent",
+      "seccion": "01 · Precios",
+      "bloques": [
+        { "b": "titulo", "texto": "El Brent tocó 117 en abril" },
+        { "b": "texto", "parrafos": ["Nueve promedios mensuales: el pico de abril y el cierre de septiembre, en la unidad de la fuente."] },
+        { "b": "figura", "id": "fig-brent", "tipo": "papel",
+          "kicker": "Brent · US$ por barril · promedio mensual 2026",
+          "titular": "De 67 a 102 en nueve meses",
+          "indice": "Brent mensual, 2026",
+          "grafico": { "tipo": "linea", "etiquetas": ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep"],
+            "series": [{ "nombre": "Brent", "id": "pre-c01", "destacar": true, "valores": [67, 71, 103, 117, 107, 85, 84, 91, 102] }],
+            "anotaciones": [{ "serie": 0, "i": 3, "texto": "117" }, { "serie": 0, "i": 0, "texto": "67" }],
+            "aria": "Línea: promedio mensual del Brent de enero a septiembre de 2026; pico de 117 en abril y cierre de 102." },
+          "alto": 220,
+          "fuente": "EIA · U.S. Energy Information Administration",
+          "pie": "Brent spot, promedio mensual en dólares por barril, enero a septiembre de 2026." },
+        { "b": "tabla", "id": "tabla-brent", "numero": "A1",
+          "indice": "Brent mensual, tabla",
+          "columnas": [{ "t": "Mes", "ancho": 120 }, { "t": "US$ por barril", "num": true }],
+          "filas": [
+            { "c": ["Enero", "67"] }, { "c": ["Febrero", "71"] }, { "c": ["Marzo", "103"] }, { "c": ["Abril", "117"], "dest": true },
+            { "c": ["Mayo", "107"] }, { "c": ["Junio", "85"] }, { "c": ["Julio", "84"] }, { "c": ["Agosto", "91"] }, { "c": ["Septiembre", "102"], "b": [0, 1] }
+          ],
+          "fuente": "EIA",
+          "pie": "Promedio mensual del Brent, 2026. En negrita, el último mes publicado; destacado, el máximo." }
+      ]
+    },
+    {
+      "tipo": "cuerpo",
+      "id": "tarjetas-hilo",
+      "seccion": "01 · Precios",
+      "bloques": [
+        { "b": "titulo", "texto": "Lo que publicó el hilo" },
+        { "b": "texto", "parrafos": ["Las dos tarjetas del hilo sobre el diésel: el salto de enero a septiembre en Guatemala y el promedio anual por país."] },
+        { "b": "figuras", "items": [
+          { "id": "fig-diesel", "tipo": "tarjeta", "desde": "sesiones/_fixture/salida/tuit_2.png",
+            "indice": "Diésel, enero y septiembre",
+            "alt": "Tarjeta antes y después: diésel de referencia en Guatemala, 26.0 quetzales por galón en enero y 46.1 en septiembre de 2026.",
+            "fuente": "MEM · Dirección General de Hidrocarburos",
+            "pie": "Precio de referencia del diésel en Guatemala, enero y septiembre de 2026." },
+          { "id": "fig-paises", "tipo": "tarjeta", "desde": "sesiones/_fixture/salida/tuit_3.png",
+            "indice": "Diésel, promedio anual por país",
+            "alt": "Tarjeta de barras horizontales: diésel promedio del año en dólares por galón; México 5.90, Guatemala 4.85, Estados Unidos 4.84, El Salvador 4.20.",
+            "fuente": "EIA, CNE México, MEM Guatemala, DGEHM El Salvador",
+            "pie": "Promedio del año por país. La cifra de México es ajustada y su segunda fuente no es independiente de la primaria." }
+        ] },
+        { "b": "cita", "etiqueta": "En una frase", "texto": "El diésel subió más que el crudo." }
+      ]
+    },
+    {
+      "tipo": "conclusiones",
+      "id": "conclusiones",
+      "indice": { "titulo": "En suma", "clase": "anexo" },
+      "titulo": "En suma",
+      "hallazgos": [
+        { "titulo": "El crudo subió 54%.", "texto": "De 67 a 102 dólares por barril entre enero y septiembre, con un pico de 117 en abril.", "ref": "{fign:fig-brent} · {Tabla:tabla-brent}" },
+        { "titulo": "El diésel local subió más: 77%.", "texto": "De 26.0 a 46.1 quetzales por galón en el precio de referencia del MEM.", "ref": "{fign:fig-diesel}" },
+        { "titulo": "Guatemala no es el más caro de la región.", "texto": "En el promedio anual, México paga 5.90 dólares por galón; Guatemala, 4.85.", "ref": "{fign:fig-paises}" }
+      ],
+      "cierre": "El precio local no sigue al barril: lo persigue, con el subsidio de por medio.",
+      "no_afirma": [
+        "Que el subsidio haya causado el zigzag del precio local.",
+        "Cuánto pagó el consumidor en el surtidor."
+      ],
+      "limites": [
+        "El promedio anual por país mezcla meses con y sin subsidio en Guatemala.",
+        "No hay serie diaria del diésel local: solo el precio de referencia semanal."
+      ]
+    },
+    {
+      "tipo": "metodo",
+      "id": "metodo",
+      "indice": { "titulo": "Método y fuentes", "clase": "anexo" },
+      "cifras": [
+        { "id": "pre-c01", "concepto": "Brent, promedio de septiembre 2026", "valor": "102", "aparece": "{fign:fig-brent} · Resumen" },
+        { "id": "pre-c02", "concepto": "Diésel de referencia, enero 2026", "valor": "26.0", "aparece": "Portada · Cap. 01" },
+        { "id": "pre-c03", "concepto": "Diésel de referencia, septiembre 2026", "valor": "46.1", "aparece": "Portada · Resumen" },
+        { "id": "pre-c04", "concepto": "Diésel, promedio anual por país (México)", "valor": "5.9", "aparece": "{fign:fig-paises}" }
+      ],
+      "nota": "pre-c04 es ajustada y su segunda fuente reproduce la primaria (independencia baja); el informe lo declara en la figura."
+    },
+    {
+      "tipo": "tarjetas",
+      "id": "tarjetas",
+      "indice": { "titulo": "Anexo B · Tarjetas del hilo", "clase": "anexo" },
+      "seccion": "Anexo B",
+      "titulo": "Las tarjetas del hilo",
+      "lead": "El informe y el hilo comparten datos y diseño. Estas son las tres tarjetas del hilo de prueba, en orden.",
+      "desde_hilo": "sesiones/_fixture/salida"
+    }
+  ]
+}

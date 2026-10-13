@@ -1,0 +1,489 @@
+{
+  "meta": {
+    "titulo": "Dengue 2026: el valle de un ciclo",
+    "corrido": "Dengue 2026 · Informe de datos",
+    "corto": "Dengue 2026",
+    "pie": "Informe N.º 01 · Octubre 2026",
+    "numero_largo": "Informe de datos · N.º 01",
+    "fecha": "Octubre 2026",
+    "handle": "@DerekUrizar",
+    "paleta": "terracota",
+    "numero": "01",
+    "datos": ["hilos/2026-10-06-dengue-2026-caida-serotipos/datos.json"],
+    "fuentes": [
+      "MSPAS/DEGR. Situación epidemiológica de las arbovirosis en Guatemala 2026, hasta la SE 35.",
+      "MSPAS/DEGR. Boletines de arbovirosis SE 53-2025 y SE 35-2026, con datos del Laboratorio Nacional de Salud.",
+      "MSPAS/DEGR. Boletines de arbovirosis 2023 (SE 52) y 2024 (SE 52).",
+      "OPS/OMS. Informe de situación del dengue en las Américas, SE 35 de 2026 (PLISA).",
+      "Secretaría de Salud de Honduras (Sesal), vía La Prensa (Honduras)."
+    ]
+  },
+  "paginas": [
+    {
+      "tipo": "portada",
+      "kicker_izq": "Informe de datos · Salud",
+      "kicker_der": "N.º 01 · Octubre 2026",
+      "titulo": "Dengue 2026: el valle de un ciclo",
+      "lead": "A la semana 35, Guatemala acumula 12,699 casos sospechosos de dengue: menos que en 2025, pero más que en 2020, 2021 y 2022. La caída es regional y otro serotipo vuelve a ganar terreno.",
+      "cifra": { "id": "cau-c05", "valor": "−40%", "etiqueta": "Casos sospechosos · SE 1–35", "texto": "frente al mismo periodo de 2025, en la red del MSPAS" },
+      "fuentes": "MSPAS/DEGR, OPS/OMS, Sesal Honduras"
+    },
+    {
+      "tipo": "indice",
+      "titulo": "Contenido",
+      "leer": [
+        "Las cifras van en la unidad de la fuente, sin redondeos que la fuente no hace. Cada figura lleva su fuente al pie.",
+        "Los términos técnicos están en el glosario, página {pag:glosario}."
+      ]
+    },
+    {
+      "tipo": "resumen",
+      "id": "resumen",
+      "indice": { "titulo": "Resumen" },
+      "tesis": "A la semana 35, Guatemala acumula 12,699 casos sospechosos de dengue en la red del MSPAS, 40% menos que en 2025 pero más que en 2020, 2021 y 2022. La caída es regional y coincide con dos años de DENV-3 dominante, mientras el DENV-1 sube de 3% a 19% de las muestras: *un valle del ciclo, no el fin del riesgo.*",
+      "cifras": [
+        { "id": "ser-c01", "kicker": "Casos · SE 1–35", "valor": "12,699", "texto": "casos sospechosos de dengue notificados por el MSPAS en 2026", "fuente": "MSPAS/DEGR" },
+        { "id": "cau-c05", "kicker": "Variación anual", "valor": "−40%", "texto": "frente a 2025; Centroamérica y México bajan lo mismo", "fuente": "MSPAS/DEGR, OPS/OMS" },
+        { "id": "cau-c02", "kicker": "DENV-1 · % de muestras", "valor": "3% → 19%", "texto": "entre las muestras serotipificadas, de 2025 a 2026", "fuente": "MSPAS/DEGR (LNS)" },
+        { "id": "ter-c01", "kicker": "Incidencia máxima", "valor": "649.5", "texto": "casos por 100,000 habitantes en Sacatepéquez", "fuente": "MSPAS/DEGR, datos MSPAS + IGSS" }
+      ],
+      "no_afirma": [
+        "Que la baja se deba al DENV-3: ni OPS ni MSPAS la atribuyen a eso.",
+        "Cuántas muertes hubo en 2026: el MSPAS no las ha publicado.",
+        "Qué pasará el próximo año: no hay una proyección oficial."
+      ]
+    },
+    {
+      "tipo": "tablero",
+      "id": "cifras",
+      "indice": { "titulo": "Cifras clave" },
+      "titulo": "Cifras clave",
+      "subtitulo": "Cada cifra, con su serie. La barra en color es el dato más reciente.",
+      "cifras": [
+        { "kicker": "Casos sospechosos · SE 1–35", "valor": "12,699", "contexto": "en 2026", "fuente": "MSPAS/DEGR",
+          "grafico": { "tipo": "chispa", "id": "ser-c01", "etiquetas": ["2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026"], "valores": [3826, 28810, 5213, 1885, 5364, 19754, 91767, 21252, 12699], "aria": "Casos a la semana 35, 2018 a 2026; 2026 destacado." } },
+        { "kicker": "Casos sospechosos · año completo", "valor": "28,473", "contexto": "en 2025", "fuente": "MSPAS/DEGR, hasta la SE 52/53",
+          "grafico": { "tipo": "chispa", "id": "ser-c04", "etiquetas": ["2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025"], "valores": [7592, 50886, 6075, 2959, 8553, 73302, 141747, 28473], "aria": "Casos del año completo, 2018 a 2025; 2025 destacado." } },
+        { "kicker": "Fallecidos confirmados", "valor": "232", "contexto": "en 2024, el último año publicado", "fuente": "MSPAS/DEGR, boletines de arbovirosis",
+          "grafico": { "tipo": "chispa", "id": "ser-c08", "etiquetas": ["2018", "2019", "2020", "2021", "2022", "2023", "2024"], "valores": [23, 77, 10, 6, 17, 118, 232], "aria": "Fallecidos confirmados, 2018 a 2024; 2024 destacado." } },
+        { "kicker": "DENV-1 · % de muestras", "valor": "19%", "contexto": "en 2026, desde 3% en 2025", "fuente": "MSPAS/DEGR (LNS)",
+          "grafico": { "tipo": "chispa", "id": "cau-c02", "etiquetas": ["2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026"], "valores": [28.0, 44.2, 14.2, 6.1, 8.3, 11.1, 22.5, 31.3, 32.5, 12.8, 4.4, 3, 19], "aria": "Porcentaje de DENV-1, 2014 a 2026; 2026 destacado." } },
+        { "kicker": "Áreas en zona de alerta", "valor": "10", "contexto": "de 29 a la SE 34; 8 al cierre de 2025", "fuente": "MSPAS/DEGR, corredor endémico",
+          "grafico": { "tipo": "cuadros", "total": 29, "marcados": 10, "texto": "Un cuadro por área de salud (DDRISS)", "aria": "29 cuadros, uno por área de salud; 10 en color están en zona de alerta." } },
+        { "kicker": "Dengue grave · SE 1–35", "valor": "45", "contexto": "casos en 2026; 133 en todo 2025", "fuente": "MSPAS/DEGR, datos MSPAS + IGSS · periodos distintos",
+          "grafico": { "tipo": "comparacion", "items": [{ "nombre": "2026 · SE 35", "valor": 45, "destacar": true }, { "nombre": "2025 · año", "valor": 133 }] } }
+      ]
+    },
+    {
+      "tipo": "capitulo",
+      "id": "cap1",
+      "variante": "banda",
+      "numero": "01",
+      "kicker": "Capítulo 01 · Casos",
+      "titulo": "Qué tan baja es la baja",
+      "descripcion": "Casos a la semana 35 y en el año completo, muertes confirmadas y la comparación con el resto de América.",
+      "lead": "2026 queda lejos del pico de 2024, pero por encima de 2018, 2020, 2021 y 2022. Y casi toda América baja al mismo ritmo.",
+      "bloques": [
+        { "b": "texto", "capitular": true,
+          "parrafos": [
+            "En 2024, el año más alto de la serie que arranca en 2018, el MSPAS y el IGSS sumaron 188,585 casos de dengue y se confirmaron 232 fallecidos. Ese pico es la vara contra la que cualquier año siguiente parece pequeño.",
+            "A la semana epidemiológica 35 de 2026, la red del MSPAS acumula 12,699 casos sospechosos: 40% menos que en el mismo periodo de 2025 (21,252) y cerca de una séptima parte de 2024 (91,767). Pero el año no es bajo en todo: supera a 2020 (5,213), 2021 (1,885) y 2022 (5,364).",
+            "La baja tampoco es solo local. Según OPS/OMS, Centroamérica y México bajan 40% en el mismo periodo, y las Américas en conjunto, 57%."
+          ],
+          "margen": [
+            { "termino": "SE", "texto": "semana epidemiológica. Se compara el acumulado de las semanas 1 a 35 de cada año." },
+            { "termino": "Sospechoso", "texto": "caso notificado a la red del MSPAS; no todos se confirman por laboratorio." }
+          ] }
+      ]
+    },
+    {
+      "tipo": "cuerpo",
+      "seccion": "01 · Casos",
+      "bloques": [
+        { "b": "titulo", "texto": "Un año intermedio, no un año tranquilo" },
+        { "b": "texto", "parrafos": ["Frente a su propia historia, 2026 queda muy por debajo de 2019 y 2024, por debajo de 2023 y 2025, y por encima de 2018, 2020, 2021 y 2022. Que baje 40% frente a 2025 no lo convierte en un año tranquilo: el punto de comparación es uno de los años altos."] },
+        { "b": "figura", "id": "casos-se35", "tipo": "panel",
+          "kicker": "Dengue · casos sospechosos a la SE 35",
+          "titular": ["2026 baja, pero supera", "a cuatro años de la serie"],
+          "indice": "Casos a la SE 35, 2018–2026",
+          "grafico": { "tipo": "barras_v", "id": "ser-c01", "etiquetas": ["2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026"], "valores": [3826, 28810, 5213, 1885, 5364, 19754, 91767, 21252, 12699], "destacar": -1, "nivel": 8, "aria": "Barras verticales: casos sospechosos de dengue acumulados a la semana 35, 2018 a 2026; 2026 destacado." },
+          "alto": 252,
+          "nota": "Acumulado de las semanas 1 a 35 de cada año. La línea punteada marca el nivel de 2026.",
+          "fuente": "MSPAS/DEGR, sala situacional de arbovirosis",
+          "pie": "Casos sospechosos de dengue notificados por el MSPAS, acumulado a la SE 35, 2018–2026." }
+      ]
+    },
+    {
+      "tipo": "cuerpo",
+      "seccion": "01 · Casos",
+      "bloques": [
+        { "b": "titulo", "texto": "El mismo pico, la misma caída" },
+        { "b": "texto", "parrafos": ["Los fallecidos confirmados repiten el pico de los casos: 232 en 2024, casi el doble que en 2023. Y la baja de 2026 tiene compañía: Guatemala cae al mismo ritmo que su subregión, y casi toda América baja con ella."] },
+        { "b": "figuras", "items": [
+          { "id": "fallecidos", "tipo": "tarjeta", "plantilla": "barras-v",
+            "kicker": "DENGUE · FALLECIDOS CONFIRMADOS POR AÑO",
+            "titular": ["La epidemia de 2024", "dejó 232 muertes, el", "máximo desde 2018"],
+            "indice": "Fallecidos confirmados, 2018–2024",
+            "nota": "Año completo. El boletín de la semana 35 de 2026 no publica muertes; tampoco hay cifra oficial de cierre de 2025.",
+            "fuente": "MSPAS/DEGR · boletines de arbovirosis 2018–2024",
+            "datos": { "formato": { "prefijo": "", "sufijo": "", "decimales": 0, "miles": true, "escala": 1 }, "etiquetas": ["2018", "2019", "2020", "2021", "2022", "2023", "2024"], "valores": [23, 77, 10, 6, 17, 118, 232], "destacar": -1, "rotular": "todas", "referencia": null, "periodos": null },
+            "alt": "Tarjeta de barras verticales con los fallecidos confirmados por dengue de 2018 a 2024; 2024, con 232, es el máximo.",
+            "pie": "Fallecidos por dengue confirmados por año, 2018–2024." },
+          { "id": "regional", "tipo": "tarjeta", "plantilla": "divergente",
+            "kicker": "DENGUE · CAMBIO % VS MISMO PERIODO 2025",
+            "titular": ["La caída no es solo", "de Guatemala: casi", "todo el continente baja"],
+            "indice": "Variación por región de América",
+            "nota": "Casos sospechosos a la semana 35 de 2026; subregiones según OPS. Honduras: -44% a la semana 12 según la Secretaría de Salud.",
+            "fuente": "MSPAS/DEGR · OPS SE-35 2026 · Sesal",
+            "datos": { "formato": { "prefijo": "", "sufijo": "%", "decimales": 0, "miles": true, "escala": 1, "signo": true }, "items": [{ "nombre": "Andina", "valor": -3 }, { "nombre": "Guatemala", "valor": -40 }, { "nombre": "Centroamérica y México", "valor": -40 }, { "nombre": "Las Américas", "valor": -57 }, { "nombre": "Caribe", "valor": -59 }, { "nombre": "Cono Sur", "valor": -62 }], "orden": "dado", "destacar": 1 },
+            "alt": "Tarjeta de barras divergentes con la variación de casos a la semana 35 de 2026 frente a 2025 por región; Guatemala, −40%, destacada.",
+            "pie": "Variación de casos sospechosos por región, SE 35 de 2026 frente a 2025." }
+        ] },
+        { "b": "cita", "etiqueta": "En una frase", "texto": "La caída de 2026 no es solo un fenómeno local." }
+      ]
+    },
+    {
+      "tipo": "apaisada",
+      "seccion": "01 · Casos",
+      "lateral": [
+        { "b": "titulo", "texto": "La semana 35 no es el año" },
+        { "b": "texto", "parrafos": [
+          "Hasta la semana 35 se acumula una parte del año, no todo. En 2024, 91,767 de los 141,747 casos sospechosos del MSPAS; en 2025, 21,252 de 28,473.",
+          "El dato completo de 2026 se conocerá con el boletín de cierre del año."
+        ] },
+        { "b": "notas", "items": [
+          { "termino": "Año completo", "texto": "hasta la SE 52 o 53, según el año." },
+          { "termino": "Lectura", "texto": "la barra clara es el año; la oscura, lo acumulado a la SE 35." }
+        ] }
+      ],
+      "figura": {
+        "id": "ano-completo", "tipo": "panel",
+        "kicker": "Dengue · casos sospechosos por año",
+        "titular": "Cuánto del año va a la semana 35",
+        "indice": "Año completo y SE 35, 2018–2026",
+        "leyenda": [{ "texto": "Año completo", "estilo": "base" }, { "texto": "Hasta la SE 35", "estilo": "fuerte" }, { "texto": "2026, en curso", "estilo": "dest" }],
+        "grafico": { "tipo": "columnas",
+          "etiquetas": ["2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026"],
+          "series": [
+            { "nombre": "Año completo", "id": "ser-c04", "valores": [7592, 50886, 6075, 2959, 8553, 73302, 141747, 28473, null] },
+            { "nombre": "Hasta la SE 35", "id": "ser-c01", "estilo": "fuerte", "valores": [3826, 28810, 5213, 1885, 5364, 19754, 91767, 21252, 12699] }
+          ],
+          "destacar": { "serie": 1, "i": 8 },
+          "rotular": [[0, 1], [0, 5], [0, 6], [1, 6], [0, 7]],
+          "aria": "Barras agrupadas: casos sospechosos del año completo y hasta la semana 35, 2018 a 2026." },
+        "alto": 326,
+        "fuente": "MSPAS/DEGR, salas situacionales de arbovirosis",
+        "pie": "Casos sospechosos notificados por el MSPAS, año completo y acumulado a la SE 35, 2018–2026."
+      }
+    },
+    {
+      "tipo": "capitulo",
+      "id": "cap2",
+      "variante": "destacado",
+      "numero": "02",
+      "kicker": "Capítulo 02 · Serotipos",
+      "titulo": "El cambio de serotipo",
+      "descripcion": "Dos años de DENV-3 dominante, un DENV-1 que vuelve a subir y la cronología de las alertas.",
+      "lead": "El DENV-3 dominó 2024 y 2025 con más de 85% de las muestras. En 2026 baja a 74%, y otro serotipo, el DENV-1, vuelve a crecer. Según OPS, un serotipo deja inmunidad duradera solo contra sí mismo.",
+      "dato": { "kicker": "DENV-1 · % de muestras serotipificadas", "antes": { "valor": "3%", "etiqueta": "2025 · año completo" }, "despues": { "valor": "19%", "etiqueta": "2026 · hasta la SE 35" } },
+      "fuente": "MSPAS/DEGR, boletines de arbovirosis (LNS)"
+    },
+    {
+      "tipo": "cuerpo",
+      "seccion": "02 · Serotipos",
+      "bloques": [
+        { "b": "titulo", "texto": "El DENV-3 dominó; el DENV-1 vuelve" },
+        { "b": "texto", "parrafos": ["Entre 2015 y 2022, el DENV-3 nunca pasó de 14.1% de las muestras serotipificadas. En 2023 subió a 54.5% y en 2024 y 2025 rondó 86%. La baja de este año coincide con esos dos años de DENV-3 masivo; ni OPS ni MSPAS la atribuyen a eso."] },
+        { "b": "figura", "id": "serotipos", "tipo": "papel",
+          "kicker": "Serotipos · % de muestras serotipificadas",
+          "titular": "El DENV-1 pasa de 3% a 19% en un año",
+          "indice": "Serotipos DENV-3 y DENV-1, 2014–2026",
+          "leyenda": [{ "texto": "DENV-1", "estilo": "dest", "forma": "linea" }, { "texto": "DENV-3", "estilo": "base", "forma": "linea" }],
+          "grafico": { "tipo": "linea", "max": 100, "sufijo": "%",
+            "etiquetas": ["2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026"],
+            "series": [
+              { "nombre": "DENV-3", "id": "cau-c01", "valores": [26.0, 6.3, 3.0, 0.6, 14.1, 6.7, 4.3, 4.3, 2.8, 54.5, 85.8, 86, 74] },
+              { "nombre": "DENV-1", "id": "cau-c02", "destacar": true, "valores": [28.0, 44.2, 14.2, 6.1, 8.3, 11.1, 22.5, 31.3, 32.5, 12.8, 4.4, 3, 19] }
+            ],
+            "anotaciones": [{ "serie": 1, "i": 11, "texto": "3%" }, { "serie": 0, "i": 9, "texto": "54.5%", "lado": "izq" }, { "serie": 1, "i": 1, "texto": "44.2%" }],
+            "aria": "Líneas: porcentaje de muestras serotipificadas por serotipo, 2014 a 2026; DENV-1 destacado." },
+          "alto": 330,
+          "fuente": "MSPAS/DEGR, boletines de arbovirosis, con datos del LNS",
+          "pie": "Porcentaje de muestras de dengue serotipificadas por serotipo, 2014–2026 (2026 hasta la SE 35)." },
+        { "b": "texto", "parrafos": ["El DENV-1, que llegó a 44.2% en 2015, cayó a 4.4% en 2024 y a 3% en 2025. En 2026 sube a 19%. Según OPS, la llegada de un serotipo distinto puede causar brotes aun después de una epidemia."],
+          "margen": [{ "termino": "N = 216", "texto": "muestras serotipificadas en 2026, hasta la SE 35." }] }
+      ]
+    },
+    {
+      "tipo": "cronologia",
+      "id": "cronologia",
+      "seccion": "02 · Serotipos",
+      "titulo": "Cronología de un ciclo",
+      "lead": "Del DENV-3 casi ausente al año récord, y de ahí al último corte publicado.",
+      "eventos": [
+        { "fecha": "2015–22", "sub": "ocho años", "texto": "El DENV-3 se mueve entre 0.6% y 14.1% de las muestras serotipificadas." },
+        { "fecha": "2023", "sub": "año completo", "texto": "El DENV-3 salta a 54.5% de las muestras. El MSPAS notifica 73,302 casos sospechosos." },
+        { "fecha": "2024", "sub": "el año récord", "destacar": true, "texto": "141,747 casos en la red del MSPAS; 188,585 sumando el IGSS. 232 fallecidos confirmados.", "detalle": "El DENV-3 llega a 85.8% de las muestras." },
+        { "fecha": "10 feb 2025", "sub": "OPS", "texto": "La OPS emite una alerta por DENV-3 que incluye a Guatemala." },
+        { "fecha": "2025", "sub": "año completo", "texto": "28,473 casos sospechosos. El DENV-3 sigue en 86%; el DENV-1 cae a 3%." },
+        { "fecha": "18 feb 2026", "sub": "OPS/OMS", "texto": "Actualización epidemiológica de dengue para las Américas." },
+        { "fecha": "SE 35, 2026", "sub": "último corte", "destacar": true, "texto": "12,699 casos, 40% menos que en 2025.", "detalle": "El DENV-3 baja a 74% y el DENV-1 sube a 19%." },
+        { "fecha": "[FECHA]", "sub": "próximo boletín", "pendiente": true, "texto": "Las semanas 36 a 38 aún no están publicadas." }
+      ],
+      "fuente": "MSPAS/DEGR, OPS/OMS"
+    },
+    {
+      "tipo": "capitulo",
+      "id": "cap3",
+      "variante": "dividida",
+      "numero": "03",
+      "kicker": "Capítulo 03",
+      "kicker2": "Territorio y edad",
+      "titulo": "Dónde y a quién",
+      "descripcion": "El mapa, la incidencia por área de salud, el corredor endémico y los casos por grupo de edad.",
+      "lead": "La baja nacional esconde un mapa desigual: un área de salud del altiplano central encabeza la incidencia, y los menores de 15 años suman cerca de 4 de cada 10 casos.",
+      "secciones": [
+        { "texto": "El mapa de las áreas con más incidencia", "pag": "{pag:mapa}" },
+        { "texto": "Incidencia por área y corredor endémico", "pag": "{pag:incidencia}" },
+        { "texto": "Casos por grupo de edad", "pag": "{pag:edades}" }
+      ]
+    },
+    {
+      "tipo": "cuerpo",
+      "id": "mapa",
+      "seccion": "03 · Dónde y a quién",
+      "bloques": [
+        { "b": "titulo", "texto": "Las ocho áreas con más incidencia, en el mapa" },
+        { "b": "texto", "parrafos": ["Las ocho áreas de salud caen en siete departamentos: Petén aporta dos. El mapa ubica; la comparación precisa está en la {fig:incidencia}."] },
+        { "b": "figura", "id": "mapa-incidencia", "tipo": "papel",
+          "kicker": "Incidencia · casos por 100,000 hab. · SE 1–35",
+          "indice": "Mapa de las áreas con más incidencia",
+          "grafico": { "tipo": "mapa", "ancho": 400,
+            "marcados": ["GT03", "GT17", "GT11", "GT05", "GT22", "GT09", "GT20"],
+            "marcadores": [
+              { "id": "GT03", "n": "1" }, { "id": "GT17", "n": "2·3" }, { "id": "GT11", "n": "4" },
+              { "id": "GT05", "n": "5" }, { "id": "GT22", "n": "6" }, { "id": "GT09", "n": "7" }, { "id": "GT20", "n": "8" }
+            ],
+            "aria": "Mapa de Guatemala por departamento: sombreados los siete que contienen alguna de las ocho áreas de salud con mayor incidencia." },
+          "lista": [
+            { "n": "1", "nombre": "Sacatepéquez", "valor": "649.5", "destacar": true },
+            { "n": "2", "nombre": "Petén Norte", "valor": "471.1" },
+            { "n": "3", "nombre": "Petén Sur Occidental", "valor": "415.5" },
+            { "n": "4", "nombre": "Retalhuleu", "valor": "369.8" },
+            { "n": "5", "nombre": "Escuintla", "valor": "309.8" },
+            { "n": "6", "nombre": "Jutiapa", "valor": "218.7" },
+            { "n": "7", "nombre": "Quetzaltenango", "valor": "212.4" },
+            { "n": "8", "nombre": "Chiquimula", "valor": "175.7" }
+          ],
+          "leyenda": [{ "texto": "Contiene una de las ocho áreas", "estilo": "dest" }, { "texto": "Resto del país", "estilo": "base" }],
+          "fuente": "MSPAS/DEGR, sala situacional de arbovirosis, SE 35",
+          "pie": "El sombreado es del departamento; la cifra, del área de salud (DDRISS) de residencia, datos MSPAS + IGSS." }
+      ]
+    },
+    {
+      "tipo": "cuerpo",
+      "id": "incidencia",
+      "seccion": "03 · Dónde y a quién",
+      "bloques": [
+        { "b": "titulo", "texto": "Sacatepéquez, primero en incidencia" },
+        { "b": "texto", "parrafos": ["En Sacatepéquez, la incidencia equivale a cerca de 1 de cada 154 habitantes con dengue notificado en ocho meses. Le siguen las dos áreas de Petén."] },
+        { "b": "figura", "id": "incidencia", "tipo": "papel",
+          "kicker": "Incidencia · casos por 100,000 hab. · SE 1–35",
+          "titular": "Las 8 de 29 áreas de salud con mayor incidencia",
+          "indice": "Incidencia por área de salud",
+          "derivado": true,
+          "grafico": { "tipo": "barras_h", "id": "ter-c01", "destacar": 0,
+            "items": [{ "nombre": "Sacatepéquez", "valor": 649.5 }, { "nombre": "Petén Norte", "valor": 471.1 }, { "nombre": "Petén Sur Occidental", "valor": 415.5 }, { "nombre": "Retalhuleu", "valor": 369.8 }, { "nombre": "Escuintla", "valor": 309.8 }, { "nombre": "Jutiapa", "valor": 218.7 }, { "nombre": "Quetzaltenango", "valor": 212.4 }, { "nombre": "Chiquimula", "valor": 175.7 }],
+            "aria": "Barras horizontales: incidencia de dengue por 100,000 habitantes en 2026 a la semana 35; Sacatepéquez destacado." },
+          "fuente": "MSPAS/DEGR, sala situacional de arbovirosis, SE 35",
+          "pie": "Incidencia acumulada por área de salud de residencia, datos MSPAS + IGSS. «1 de cada 154» es 100,000 ÷ 649.5." },
+        { "b": "texto", "parrafos": ["Menos casos no significa calma: la zona de alerta del corredor endémico tiene hoy dos áreas de salud más que al cierre de 2025."] },
+        { "b": "tabla", "id": "corredor",
+          "titulo": "",
+          "indice": "Corredor endémico, 2025 y 2026",
+          "columnas": [{ "t": "Zona del corredor" }, { "t": "Cierre 2025 · SE 53", "num": true }, { "t": "2026 · SE 34", "num": true }, { "t": "Cambio", "num": true }],
+          "filas": [
+            { "c": ["Brote", "5", "2", "−3"] },
+            { "c": ["Alerta", "8", "10", "+2"], "dest": true },
+            { "c": ["Seguridad", "11", "13", "+2"] },
+            { "c": ["Éxito", "0", "2", "+2"] },
+            { "c": ["Sin notificación", "5", "2", "−3"] },
+            { "c": ["Total de áreas", "29", "29", ""], "total": true }
+          ],
+          "fuente": "MSPAS/DEGR",
+          "pie": "Áreas de salud (DDRISS) según su zona en el corredor endémico de dengue." }
+      ]
+    },
+    {
+      "tipo": "cuerpo",
+      "id": "edades",
+      "seccion": "03 · Dónde y a quién",
+      "bloques": [
+        { "b": "titulo", "texto": "Por año de edad, los escolares suman más" },
+        { "b": "texto", "parrafos": ["El grupo con más casos es el de 25 a 39 años, pero abarca 15 años de edad. Los menores de 15 suman 5,217 de los 12,699 casos de la red del MSPAS: cerca de 4 de cada 10."] },
+        { "b": "figura", "id": "edades", "tipo": "papel",
+          "kicker": "Casos por grupo de edad · SE 1–35 de 2026",
+          "titular": "Cuatro de cada diez casos, menores de 15 años",
+          "indice": "Casos por grupo de edad",
+          "derivado": true,
+          "grafico": { "tipo": "barras_v", "id": "ter-c12",
+            "etiquetas": ["<1", "1–4", "5–9", "10–14", "15–19", "20–24", "25–39", "40–49", "50–59", "60–64", "65–69", "70+"],
+            "claves": ["Menores de 1 año", "1 a 4 años", "5 a 9 años", "10 a 14 años", "15 a 19 años", "20 a 24 años", "25 a 39 años", "40 a 49 años", "50 a 59 años", "60 a 64 años", "65 a 69 años", "70 años y más"],
+            "valores": [367, 1128, 1930, 1792, 1444, 1191, 2830, 895, 548, 172, 150, 252],
+            "destacar": 2,
+            "banda": { "desde": 0, "hasta": 3, "texto": "Menores de 15 · 5,217" },
+            "marcadores": [{ "i": 2, "n": 1 }, { "i": 6, "n": 2, "lado": "derecha" }],
+            "aria": "Barras verticales: casos de dengue por grupo de edad, red del MSPAS, 2026 a la semana 35; 5 a 9 años destacado y banda sobre los menores de 15." },
+          "alto": 296,
+          "fuente": "MSPAS/DEGR, sala situacional de arbovirosis",
+          "pie": "Casos de dengue por grupo de edad, red del MSPAS, 2026 hasta la SE 35." },
+        { "b": "lectura", "titulo": "Cómo leer esta figura",
+          "items": [
+            { "n": 1, "texto": "De 5 a 9 años: 1,930 casos en un grupo de cinco años de edad, cerca de 386 por año." },
+            { "n": 2, "texto": "De 25 a 39 años: la barra más alta, pero reparte 2,830 casos en quince años, cerca de 189 por año." }
+          ],
+          "nota": "Casos por año de edad: cálculo propio, casos del grupo ÷ años que abarca." }
+      ]
+    },
+    {
+      "tipo": "conclusiones",
+      "id": "conclusiones",
+      "indice": { "titulo": "En suma", "clase": "anexo" },
+      "titulo": "En suma",
+      "hallazgos": [
+        { "titulo": "El dengue bajó.", "texto": "A la semana 35 hay 40% menos casos sospechosos que en 2025.", "ref": "{fign:casos-se35}" },
+        { "titulo": "No es un año tranquilo.", "texto": "Supera a 2018, 2020, 2021 y 2022, y la zona de alerta tiene dos áreas de salud más que al cierre de 2025.", "ref": "{fign:casos-se35} · {Tabla:corredor}" },
+        { "titulo": "La caída es regional.", "texto": "Centroamérica y México bajan lo mismo que Guatemala; las Américas, 57%.", "ref": "{fign:regional}" },
+        { "titulo": "Otro serotipo gana terreno.", "texto": "El DENV-1 pasa de 3% a 19% de las muestras serotipificadas.", "ref": "{fign:serotipos}" }
+      ],
+      "cierre": "Sin muertes de 2026 ni curva semanal publicadas, no se puede decir que el riesgo pasó.",
+      "no_afirma": [
+        "Que la caída se deba a la inmunidad que dejó el DENV-3: es una coincidencia temporal.",
+        "Que 2027 vaya a traer un repunte: no hay proyección oficial.",
+        "Cuántas muertes lleva 2026: el MSPAS no las ha publicado.",
+        "Que las acciones locales no hayan tenido efecto: la comparación regional no lo mide."
+      ],
+      "limites": [
+        "El último corte publicado es la semana 35; no hay cortes posteriores.",
+        "El corredor compara el cierre de 2025 (SE 53) con la semana 34 de 2026.",
+        "Honduras se reporta a la semana 12 y vía prensa; el resto, a la 35.",
+        "Casos y edades son solo MSPAS; la incidencia por área integra MSPAS e IGSS."
+      ]
+    },
+    {
+      "tipo": "metodo",
+      "id": "metodo",
+      "indice": { "titulo": "Método y fuentes", "clase": "anexo" },
+      "cifras": [
+        { "id": "ser-c01", "concepto": "Casos sospechosos a la SE 35, 2026", "valor": "12,699", "aparece": "{fign:casos-se35} · Resumen" },
+        { "id": "cau-c05", "concepto": "Variación frente a la SE 35 de 2025", "valor": "−40%", "aparece": "Portada · Cap. 01" },
+        { "id": "cau-c07", "concepto": "Variación en las Américas, SE 35", "valor": "−57%", "aparece": "Cap. 01" },
+        { "id": "ser-c08", "concepto": "Fallecidos confirmados, 2024", "valor": "232", "aparece": "{fign:fallecidos} · Tablero" },
+        { "id": "cau-c02", "concepto": "DENV-1, % de muestras serotipificadas, 2026", "valor": "19%", "aparece": "{fign:serotipos} · Resumen" },
+        { "id": "ter-c01", "concepto": "Incidencia en Sacatepéquez, por 100,000 hab.", "valor": "649.5", "aparece": "{fign:incidencia} · Resumen" }
+      ],
+      "nota": "En las seis cifras, la segunda fuente no es independiente de la primera; el informe lo declara."
+    },
+    {
+      "tipo": "glosario",
+      "id": "glosario",
+      "indice": { "titulo": "Glosario", "clase": "anexo" },
+      "corte": 7,
+      "terminos": [
+        { "t": "Caso sospechoso", "d": "Caso notificado a la red de salud por síntomas compatibles con dengue. No todos se confirman por laboratorio." },
+        { "t": "Corredor endémico", "d": "Compara los casos de cada semana con lo esperado según años anteriores. Clasifica cada área en éxito, seguridad, alerta o brote, de menos a más casos." },
+        { "t": "DDRISS", "d": "Dirección Departamental de Redes Integradas de Servicios de Salud: el área de salud del MSPAS. El informe usa 29." },
+        { "t": "Dengue grave", "d": "Forma de la enfermedad con complicaciones, según la clasificación clínica de los casos." },
+        { "t": "Incidencia acumulada", "d": "Casos por cada 100,000 habitantes desde la semana 1 hasta el corte. Permite comparar áreas de distinto tamaño." },
+        { "t": "Muestra serotipificada", "d": "Muestra positiva en la que el laboratorio identificó el serotipo. Los porcentajes de serotipo se calculan sobre ellas." },
+        { "t": "Semana epidemiológica", "d": "SE. Unidad de tiempo de la vigilancia. Un año tiene 52 o 53; se comparan acumulados a la misma semana." },
+        { "t": "Serotipo", "d": "Cada una de las cuatro variantes del virus del dengue, DENV-1 a DENV-4. Según OPS, la infección deja inmunidad duradera solo contra el mismo serotipo." },
+        { "t": "Veredicto", "d": "Resultado de verificar una cifra con una segunda fuente: verificada, ajustada o no confirmada. Solo las dos primeras aparecen aquí." }
+      ],
+      "siglas": [
+        { "s": "IGSS", "d": "Instituto Guatemalteco de Seguridad Social" },
+        { "s": "LNS", "d": "Laboratorio Nacional de Salud" },
+        { "s": "MSPAS", "d": "Ministerio de Salud Pública y Asistencia Social" },
+        { "s": "OPS/OMS", "d": "Organización Panamericana de la Salud / Organización Mundial de la Salud" },
+        { "s": "PLISA", "d": "Plataforma de Información en Salud para las Américas, de la OPS" },
+        { "s": "Sesal", "d": "Secretaría de Salud de Honduras" }
+      ]
+    },
+    {
+      "tipo": "anexo",
+      "id": "anexo-a",
+      "indice": { "titulo": "Anexo A · Serie completa", "clase": "anexo" },
+      "seccion": "Anexo A",
+      "titulo": "Serie completa",
+      "lead": "Todas las cifras anuales del informe en una tabla, en la unidad de la fuente.",
+      "bloques": [
+        { "b": "tabla", "id": "serie", "numero": "A1",
+          "indice": "Serie anual completa, 2018–2026",
+          "columnas": [{ "t": "Año", "ancho": 52 }, { "t": "Casos\nSE 35", "num": true }, { "t": "Incid.\nSE 35", "num": true }, { "t": "Casos\naño", "num": true }, { "t": "Falle-\ncidos", "num": true }, { "t": "DENV-3\n%", "num": true }, { "t": "DENV-1\n%", "num": true }],
+          "filas": [
+            { "c": ["2018", "3,826", "22.1", "7,592", "23", "14.1", "8.3"], "b": [0] },
+            { "c": ["2019", "28,810", "163.1", "50,886", "77", "6.7", "11.1"], "b": [0] },
+            { "c": ["2020", "5,213", "30.9", "6,075", "10", "4.3", "22.5"], "b": [0] },
+            { "c": ["2021", "1,885", "11.0", "2,959", "6", "4.3", "31.3"], "b": [0] },
+            { "c": ["2022", "5,364", "30.9", "8,553", "17", "2.8", "32.5"], "b": [0, 6] },
+            { "c": ["2023", "19,754", "112.2", "73,302", "118", "54.5", "12.8"], "b": [0] },
+            { "c": ["2024", "91,767", "514.3", "141,747", "232", "85.8", "4.4"], "b": [0, 1, 2, 3, 4] },
+            { "c": ["2025", "21,252", "117.5", "28,473", "— a", "86", "3"], "b": [0, 5] },
+            { "c": ["2026", "12,699", "69.3", "— b", "— a", "74", "19"], "dest": true }
+          ],
+          "fuente": "MSPAS/DEGR, boletines y salas situacionales de arbovirosis",
+          "pie": "Dengue en la red del MSPAS, 2018–2026. En negrita, el máximo de cada columna. Incidencia: casos por 100,000 habitantes.",
+          "notas": [
+            { "m": "a", "texto": "La serie de fallecidos confirmados llega a 2024; 2026 no se ha publicado." },
+            { "m": "b", "texto": "2026 está en curso; el año completo se conocerá con el boletín de cierre." },
+            { "m": "c", "texto": "Serotipos: % de las muestras serotipificadas por el LNS; 2026 hasta la SE 35 (N = 216)." }
+          ] },
+        { "b": "tabla", "id": "variacion", "numero": "A2",
+          "titulo": "Variación a la SE 35, 2026 frente a 2025",
+          "indice": "Variación por territorio",
+          "columnas": [{ "t": "Territorio" }, { "t": "Variación", "num": true }, { "t": "Fuente" }],
+          "filas": [
+            { "c": ["Guatemala", "−40%", "MSPAS/DEGR"], "dest": true },
+            { "c": ["Centroamérica y México", "−40%", "OPS/OMS"] },
+            { "c": ["Las Américas", "−57%", "OPS/OMS"] },
+            { "c": ["Honduras, a la SE 12", "−44%", "Sesal, vía La Prensa"] },
+            { "c": ["Cono Sur", "−62%", "OPS/OMS"] }
+          ],
+          "fuente": "MSPAS/DEGR, OPS/OMS, Sesal",
+          "pie": "Casos sospechosos acumulados frente al mismo periodo de 2025." }
+      ]
+    },
+    {
+      "tipo": "tarjetas",
+      "id": "tarjetas",
+      "indice": { "titulo": "Anexo B · Tarjetas del hilo", "clase": "anexo" },
+      "seccion": "Anexo B",
+      "titulo": "Las tarjetas del hilo",
+      "lead": "El informe y el hilo comparten datos y diseño. Estas son las ocho imágenes publicadas en X, en orden; el tuit 9 cierra sin imagen.",
+      "items": [
+        { "desde": "hilos/2026-10-06-dengue-2026-caida-serotipos/tuit_1.png", "n": "1/9", "beat": "gancho", "titulo": "Casos a la SE 35, 2018–2026" },
+        { "desde": "hilos/2026-10-06-dengue-2026-caida-serotipos/tuit_2.png", "n": "2/9", "beat": "contexto", "titulo": "Fallecidos confirmados por año" },
+        { "desde": "hilos/2026-10-06-dengue-2026-caida-serotipos/tuit_3.png", "n": "3/9", "beat": "contexto", "titulo": "DENV-3 entre las muestras" },
+        { "desde": "hilos/2026-10-06-dengue-2026-caida-serotipos/tuit_4.png", "n": "4/9", "beat": "contexto", "titulo": "Variación por región" },
+        { "desde": "hilos/2026-10-06-dengue-2026-caida-serotipos/tuit_5.png", "n": "5/9", "beat": "contexto", "titulo": "Corredor endémico por zona" },
+        { "desde": "hilos/2026-10-06-dengue-2026-caida-serotipos/tuit_6.png", "n": "6/9", "beat": "giro", "titulo": "Serotipos, 2014–2026" },
+        { "desde": "hilos/2026-10-06-dengue-2026-caida-serotipos/tuit_7.png", "n": "7/9", "beat": "impacto", "titulo": "Incidencia por área de salud" },
+        { "desde": "hilos/2026-10-06-dengue-2026-caida-serotipos/tuit_8.png", "n": "8/9", "beat": "impacto", "titulo": "Casos por grupo de edad" }
+      ],
+      "tuit": {
+        "gancho": "Podría pensarse que el dengue ya quedó atrás en Guatemala.",
+        "texto": "Este año va 40% abajo del pasado a la misma semana epidemiológica. Los datos dicen otra cosa: se parece más al valle de un ciclo que a un final.",
+        "publicado": "Publicado en X por @DerekUrizar · [FECHA Y ENLACE]"
+      }
+    },
+    {
+      "tipo": "contraportada",
+      "lema": "Datos de Guatemala, con la fuente a la vista.",
+      "ficha": [
+        ["Tema", "Dengue 2026"], ["Corte de datos", "SE 35 de 2026"],
+        ["Fuentes", "MSPAS/DEGR, OPS/OMS, Sesal"], ["Paleta", "{paleta}"],
+        ["Cifras", "Solo verificadas o ajustadas"], ["Hilo en X", "[ENLACE AL HILO]"]
+      ]
+    }
+  ]
+}

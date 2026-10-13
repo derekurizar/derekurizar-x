@@ -10,3 +10,6 @@ sesiones/_fixture_dato/salida/
 sesiones/_descargas/
 .playwright-mcp/
 __pycache__/
+investigacion/ejemplos/*/salida/fonts/
+investigacion/ejemplos/*/salida/figuras/*.html
+investigacion/ejemplos/catalogo/salida/

@@ -40,31 +40,8 @@ function render(D) {
   const G = 4, fontN = [24, 21, 19, 17], fontP = "700 21px 'JetBrains Mono'";
   const W = 920;
 
-  // Squarified (Bruls et al.): filas que minimizan la peor proporción de sus rectángulos.
-  const squarify = (partes, alto) => {
-    const area = W * alto, rects = [];
-    let caja = { x: 0, y: 0, w: W, h: alto }, fila = [];
-    const resto = partes.map((p, i) => ({ i, a: (p.valor / total) * area }));
-    const peor = (f, lado) => { const s = f.reduce((t, r) => t + r.a, 0); return Math.max(...f.map((r) => Math.max((lado * lado * r.a) / (s * s), (s * s) / (lado * lado * r.a)))); };
-    const colocar = (f) => {
-      const s = f.reduce((t, r) => t + r.a, 0), horiz = caja.w >= caja.h;
-      const grosor = s / (horiz ? caja.h : caja.w);
-      let off = 0;
-      for (const r of f) {
-        const largo = r.a / grosor;
-        rects.push(horiz ? { i: r.i, x: caja.x, y: caja.y + off, w: grosor, h: largo } : { i: r.i, x: caja.x + off, y: caja.y, w: largo, h: grosor });
-        off += largo;
-      }
-      caja = horiz ? { x: caja.x + grosor, y: caja.y, w: caja.w - grosor, h: caja.h } : { x: caja.x, y: caja.y + grosor, w: caja.w, h: caja.h - grosor };
-    };
-    while (resto.length) {
-      const lado = Math.min(caja.w, caja.h), r = resto[0];
-      if (!fila.length || peor(fila.concat(r), lado) <= peor(fila, lado)) { fila.push(r); resto.shift(); }
-      else { colocar(fila); fila = []; }
-    }
-    if (fila.length) colocar(fila);
-    return rects;
-  };
+  // Squarified (Bruls et al.): H.squarify, compartido con el informe.
+  const squarify = (partes, alto) => H.squarify(partes, total, W, alto);
   // Rótulo de un rect, de más a menos holgado: nombre en una línea y % debajo · nombre partido
   // en dos líneas y % debajo · nombre y % en una línea (rect bajo y ancho). null si nada cabe.
   const PAD = 12;

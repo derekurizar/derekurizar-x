@@ -61,10 +61,27 @@ Abre `hilo.html`, revisa `contacto.png`, y publica a mano: PNG + texto + alt-tex
 
 Las tarjetas siguen el brief visual (`referencias/diseno/brief/`): una paleta
 por tema, titular en Instrument Serif, kicker y cifras en JetBrains Mono, pie
-con fuente y handle. Dieciocho plantillas (`templates/graficos/`): cifra, línea,
+con fuente y handle. Veintiséis plantillas (`templates/graficos/`): cifra, línea,
 barras verticales y horizontales, antes/después, dona, pendiente, pesas, waffle,
 mapa de calor, mapa por departamento, bullet, embudo, divergente, apilada,
-pirámide, treemap y dispersión.
+pirámide, treemap, dispersión, hemiciclo, pequeños múltiplos, barras + línea,
+línea de tiempo, barras agrupadas, pictograma, área apilada y cascada.
+
+## Informes de investigación
+
+Además de tarjetas, el mismo sistema visual arma **documentos largos** (Letter, PDF)
+desde un `informe.json`: portada, índice automático, resumen, tablero de cifras,
+aperturas de capítulo, páginas de cuerpo con figuras (la tarjeta del hilo embebida
+o el gráfico redibujado sobre papel), mapa, cronología, tablas, conclusiones,
+método, glosario, anexos y contraportada. Las cifras con `id` se cruzan con
+`datos.json` (solo verificadas o ajustadas) antes de escribir nada.
+
+```bash
+make informe-ejemplo                         # investigacion/ejemplos/dengue-2026 → salida/informe.pdf
+make informe DIR=<carpeta con informe.json>  # cualquier informe; PAL=<paleta> para probar otra
+```
+
+Plantillas en `investigacion/` (ver su `README.md`); contrato en `referencias/diseno/informe.md`.
 
 ## Cuando algo falla
 

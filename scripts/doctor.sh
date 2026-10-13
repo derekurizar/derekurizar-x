@@ -78,6 +78,12 @@ for f in .claude/commands/vs.md .claude/commands/mapa.md .claude/commands/antes.
   [[ -s "$f" ]] || aviso "falta $f (alias de /dato)"
 done
 
+# informes de investigación: base, renderers, ejemplo y marcadores del bloque H en la base de tarjetas
+for f in investigacion/base.html investigacion/paginas/_comun.js investigacion/graficos/_comun.js investigacion/ejemplos/dengue-2026/informe.json scripts/informe.py scripts/render_informe.js scripts/fuentes_ruta.js; do
+  if [[ -s "$f" ]]; then ok "$f presente"; else aviso "falta $f (los informes de investigacion/ no estarán disponibles)"; fi
+done
+if grep -q "// H:INICIO" templates/base.html && grep -q "// H:FIN" templates/base.html; then ok "templates/base.html marca el bloque H (H:INICIO/H:FIN) para los informes"; else error "templates/base.html sin // H:INICIO … // H:FIN: scripts/informe.py no puede extraer los helpers"; fi
+
 # memoria y tokens
 for f in memoria/fuentes.json memoria/hilos.json design/tokens.json ideas/banco.json; do
   if python3 -c "import json,sys; json.load(open('$f', encoding='utf-8'))" 2>/dev/null; then ok "$f es JSON válido"; else error "$f falta o no es JSON válido"; fi

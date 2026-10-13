@@ -1,0 +1,85 @@
+<!-- pictograma · K de N unidades contables, una forma por unidad (brief 5e). Contrato: referencias/diseno/graficos.md -->
+<style>
+.pg-grid { display: grid; grid-template-columns: auto 1fr; column-gap: 56px; align-items: end; height: 100%; }
+.pg-celdas { display: grid; }
+.pg-f span { display: block; position: relative; background: var(--ink); opacity: .32; }
+.pg-f span.on { background: var(--a1); opacity: 1; }
+.pg-f.punto span { border-radius: 50%; }
+.pg-f.cuadro span { border-radius: 3px; }
+.pg-f.persona span { background: none; opacity: 1; }
+.pg-f.persona span::before { content: ""; position: absolute; left: 29%; top: 0; width: 42%; height: 29%; border-radius: 50%; background: var(--ink); opacity: .32; }
+.pg-f.persona span::after { content: ""; position: absolute; left: 0; bottom: 0; width: 100%; height: 64%; border-radius: 50% 50% 4px 4px / 38% 38% 4px 4px; background: var(--ink); opacity: .32; }
+.pg-f.persona span.on::before, .pg-f.persona span.on::after { background: var(--a1); opacity: 1; }
+.pg-texto .num { font: 400 132px/.86 'Instrument Serif', Georgia, serif; letter-spacing: -.02em; color: var(--a1); white-space: nowrap; }
+.pg-texto .t { font: 600 26px/1.25 Archivo, sans-serif; margin-top: 16px; }
+.pg-ley { display: flex; flex-direction: column; gap: 12px; margin-top: 36px; }
+.pg-ley .it { display: flex; align-items: center; gap: 12px; font: 600 20px/1 Archivo, sans-serif; }
+.pg-ley .sw { display: block; flex: none; }
+</style>
+<script>
+// CIFRAS DE EJEMPLO (volcanes con actividad, Insivumeh) · verificar antes de publicar
+const DATA = {
+  kicker: "VOLCANES · ACTIVIDAD REGISTRADA",
+  titular: ["37 volcanes,", "solo 3 despiertos"],
+  nota: "Pacaya, Fuego y Santiaguito mantienen actividad constante.",
+  fuente: "Insivumeh · catálogo de volcanes 2025",
+  handle: "@DerekUrizar",
+  formato: { prefijo: "", sufijo: "", decimales: 0, miles: true, escala: 1 },
+  total: 37,                 // unidades reales (entero 2–200); una forma por unidad
+  destacado: 3,              // cuántas van en a1 (entero 0–total); «K de N» lo compone la plantilla
+  texto: "volcanes tienen actividad constante",   // ≤60; completa «K de N …»
+  etiqueta_destacado: "activo",
+  etiqueta_resto: "inactivo",
+  forma: "punto",            // "punto" | "cuadro" | "persona"
+  por_fila: null             // null = automático (prefiere filas completas y múltiplos de 5)
+};
+
+function render(D) {
+  H.assert(Number.isInteger(D.total) && D.total >= 2 && D.total <= 200, "total debe ser un entero de 2 a 200 (para proporciones usa waffle)");
+  H.assert(Number.isInteger(D.destacado) && D.destacado >= 0 && D.destacado <= D.total, "destacado debe ser un entero entre 0 y total");
+  H.assert(typeof D.texto === "string" && D.texto.trim() && D.texto.length <= 60, "texto: 1–60 caracteres (completa «K de N …»)");
+  const forma = D.forma || "punto";
+  H.assert(["punto", "cuadro", "persona"].includes(forma), "forma debe ser punto, cuadro o persona");
+  H.assert(D.por_fila == null || (Number.isInteger(D.por_fila) && D.por_fila >= 2 && D.por_fila <= 25), "por_fila: null o entero de 2 a 25");
+  const ratio = forma === "persona" ? 1.45 : 1, G = 8, gridMax = 564, celdaMax = 44;
+  const alto = H.espacio(520, 300);
+
+  // Columnas: con por_fila fijo, esa; si no, la que da la celda más grande; en empate, fila completa,
+  // luego múltiplo de 5, luego más columnas (bloques anchos y fáciles de contar).
+  const cands = D.por_fila ? [D.por_fila] : Array.from({ length: 24 }, (_, i) => i + 2);
+  const mejorQue = (a, b) => { for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) return a[i] > b[i]; return false; };
+  let mejor = null;
+  for (const c of cands) {
+    const filas = Math.ceil(D.total / c);
+    const celda = Math.floor(Math.min((gridMax - G * (c - 1)) / c, (alto - G * (filas - 1)) / filas / ratio, celdaMax));
+    const puntos = [celda, D.total % c === 0 ? 1 : 0, c % 5 === 0 ? 1 : 0, c];
+    if (!mejor || mejorQue(puntos, mejor.puntos)) mejor = { c, filas, celda, puntos };
+  }
+  const { c, filas, celda } = mejor;
+  H.assert(celda >= 18, "demasiadas unidades para " + filas + " filas (celda de " + celda + " px): usa waffle o acorta el titular");
+
+  const g = document.getElementById("grafico");
+  g.style.height = alto + "px";
+  const grid = H.el("div", "pg-grid", g);
+  const celdas = H.el("div", "pg-celdas pg-f " + forma, grid);
+  celdas.style.gridTemplateColumns = "repeat(" + c + ", " + celda + "px)";
+  celdas.style.gap = G + "px";
+  celdas.style.width = (c * celda + (c - 1) * G) + "px";
+  for (let i = 0; i < D.total; i++) {
+    const s = H.el("span", i < D.destacado ? "on" : "", celdas);
+    s.style.width = celda + "px"; s.style.height = Math.round(celda * ratio) + "px";
+  }
+  const colW = 920 - 56 - (c * celda + (c - 1) * G);
+  const t = H.el("div", "pg-texto", grid);
+  const num = H.el("div", "num", t, H.esc(H.num(D.destacado, D.formato)));
+  for (let px = 132; px >= 72; px -= 8) { num.style.fontSize = px + "px"; if (num.scrollWidth <= colW) break; }
+  H.el("div", "t", t, H.esc("de " + H.num(D.total, D.formato) + " " + D.texto.trim()));
+  const ley = H.el("div", "pg-ley", t);
+  const sw = (on) => {
+    const w = H.el("span", "sw pg-f " + forma), s = H.el("span", on ? "on" : "", w);
+    s.style.width = "20px"; s.style.height = Math.round(20 * ratio) + "px"; return w;
+  };
+  const it1 = H.el("div", "it", ley); it1.appendChild(sw(true)); H.el("span", null, it1, H.esc(D.etiqueta_destacado || ""));
+  const it2 = H.el("div", "it", ley); it2.appendChild(sw(false)); H.el("span", null, it2, H.esc(D.etiqueta_resto || ""));
+}
+</script>

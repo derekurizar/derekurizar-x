@@ -1,0 +1,106 @@
+<!-- combinado · barras (eje izquierdo, desde cero) + línea (eje derecho) para dos magnitudes en el tiempo (brief 7f). Contrato: referencias/diseno/graficos.md -->
+<script>
+// CIFRAS DE EJEMPLO (turismo internacional, INGUAT) · verificar antes de publicar
+const DATA = {
+  kicker: "TURISMO INTERNACIONAL · 2019–2025",
+  titular: ["Llegan más visitantes", "y gastan más"],
+  nota: "",
+  fuente: "INGUAT · boletín estadístico 2025",
+  handle: "@DerekUrizar",
+  formato: { prefijo: "", sufijo: " M", decimales: 1, miles: true, escala: 1000000 },   // formato de las barras si barras.formato es null
+  etiquetas: ["2019", "2020", "2021", "2022", "2023", "2024", "2025"],
+  barras: { nombre: "Visitantes · millones", valores: [2560000, 1070000, 1440000, 2070000, 2600000, 3080000, 3300000], formato: null },
+  linea:  { nombre: "Gasto por visita · US$", valores: [620, 540, 700, 780, 820, 860, 900], formato: { prefijo: "$", sufijo: "", decimales: 0, miles: true, escala: 1 }, desdeCero: false },
+  destacar: -1,          // índice del periodo clave (barra a plena tinta, punto mayor); -1 = el último
+  rotular: null          // null = todas si ≤ 8 periodos, si no destacada + primero + último · "todas" | "destacada"
+};
+
+function render(D) {
+  H.assert(Array.isArray(D.etiquetas) && D.etiquetas.length >= 3 && D.etiquetas.length <= 12, "combinado admite de 3 a 12 periodos");
+  const n = D.etiquetas.length;
+  for (const k of ["barras", "linea"]) {
+    const s = D[k];
+    H.assert(s && typeof s.nombre === "string" && s.nombre.trim() && s.nombre.length <= 30, k + ".nombre: 1–30 caracteres (serie y unidad)");
+    H.assert(Array.isArray(s.valores) && s.valores.length === n, k + ".valores necesita " + n + " valores");
+    s.valores.forEach((v) => H.assert(typeof v === "number" && isFinite(v), k + ".valores: números"));
+  }
+  D.barras.valores.forEach((v) => H.assert(v >= 0, "barras.valores: ≥ 0 (las barras parten de cero)"));
+  const idx = D.destacar == null ? -1 : D.destacar, hi = ((idx % n) + n) % n;
+  const ink = H.color.ink, a1 = H.color.a1, bg = H.color.bg;
+  const fB = D.barras.formato || D.formato, fL = D.linea.formato || D.formato;
+  const desdeCero = D.linea.desdeCero !== false;
+  const domB = H.dominio(D.barras.valores, true), domL = H.dominio(D.linea.valores, desdeCero);
+  const tkB = H.ticks(domB[0], domB[1], 4), tkL = H.ticks(domL[0], domL[1], 4);
+  const fEjeB = H.formatoEje(fB, tkB), fEjeL = H.formatoEje(fL, tkL);
+
+  // Títulos de eje dentro del SVG; si no caben en una línea, van a la leyenda.
+  const fontT = "700 19px Archivo";
+  const wTL = H.medir(D.barras.nombre, fontT), wTR = H.medir(D.linea.nombre, fontT);
+  const titulosDentro = 26 + wTL + 24 + 36 + 10 + wTR <= 920;
+  if (!titulosDentro) H.leyenda([{ nombre: D.barras.nombre, color: H.color.inkA(.55), forma: "cuadro" }, { nombre: D.linea.nombre, color: a1 }]);
+  H.anotar("Dos escalas: barras (izq.) desde cero; línea (der.) desde " + (desdeCero ? "cero" : H.num(domL[0], fEjeL)) + ".");
+
+  const W = 920, alto = H.espacio(500, 320);
+  const svg = H.lienzo(W, alto);
+  const izq = Math.max(...tkB.map((t) => H.medir(H.num(t, fEjeB), "500 17px 'JetBrains Mono'"))) + 16;
+  const der = Math.max(...tkL.map((t) => H.medir(H.num(t, fEjeL), "500 17px 'JetBrains Mono'"))) + 20;
+  const y0 = (titulosDentro ? 48 : 24) + 26, y1 = alto - 44, x0 = izq, x1 = W - der;   // +26: sitio para el rótulo sobre el punto más alto
+  const syB = H.escala(domB, [y1, y0]), syL = H.escala(domL, [y1, y0]);
+  if (titulosDentro) {
+    H.svgEl("rect", { x: 0, y: 6, width: 18, height: 18, fill: H.color.inkA(.55) }, svg);
+    H.texto(svg, 26, 21, D.barras.nombre, { style: "font:" + fontT + ",sans-serif;fill:" + ink });
+    H.svgEl("rect", { x: W - wTR - 10 - 36, y: 12, width: 36, height: 6, fill: a1 }, svg);
+    H.texto(svg, W, 21, D.linea.nombre, { "text-anchor": "end", style: "font:" + fontT + ",sans-serif;fill:" + ink });
+  }
+  // Eje izquierdo (barras): rejilla y rótulos. Eje derecho (línea): marcas cortas y rótulos.
+  for (const t of tkB) {
+    const y = syB(t);
+    H.svgEl("line", { x1: x0, x2: x1, y1: y, y2: y, stroke: H.color.inkA(Math.abs(t) < 1e-9 ? .6 : .2), "stroke-width": Math.abs(t) < 1e-9 ? 2 : 1 }, svg);
+    H.texto(svg, x0 - 12, y + 6, H.num(t, fEjeB), { class: "t-eje", "text-anchor": "end" });
+  }
+  for (const t of tkL) {
+    const y = syL(t);
+    H.svgEl("line", { x1: x1 + 2, x2: x1 + 10, y1: y, y2: y, stroke: a1, "stroke-width": 2 }, svg);
+    H.texto(svg, x1 + 16, y + 6, H.num(t, fEjeL), { class: "t-eje" });
+  }
+  // Barras
+  const gap = n > 8 ? 10 : 18, bw = (x1 - x0 - gap * (n - 1)) / n;
+  const xc = (i) => x0 + i * (bw + gap) + bw / 2;
+  const rotulada = (i) => D.rotular === "todas" ? true : D.rotular === "destacada" ? i === hi : (n <= 8 || i === hi || i === 0 || i === n - 1);
+  const fontB = "700 18px 'JetBrains Mono'", fontL = "700 19px 'JetBrains Mono'";
+  D.barras.valores.forEach((v, i) => {
+    const x = x0 + i * (bw + gap), yv = syB(v), esHi = i === hi;
+    H.svgEl("rect", { x, y: yv, width: bw, height: Math.max(0, y1 - yv), fill: ink, opacity: esHi ? 1 : .55 }, svg);
+    H.texto(svg, xc(i), alto - 10, String(D.etiquetas[i]), { "text-anchor": "middle", style: "font:" + (esHi ? "800" : "600") + " " + (n > 8 ? 18 : 20) + "px Archivo,sans-serif;fill:" + ink });
+  });
+  // Línea en a1 con puntos
+  const d = D.linea.valores.map((v, i) => (i ? "L" : "M") + xc(i).toFixed(1) + " " + syL(v).toFixed(1)).join(" ");
+  H.svgEl("path", { d, fill: "none", stroke: a1, "stroke-width": 5, "stroke-linejoin": "round", "stroke-linecap": "round" }, svg);
+  D.linea.valores.forEach((v, i) => H.svgEl("circle", { cx: xc(i), cy: syL(v), r: i === hi ? 9 : 7, fill: a1, stroke: bg, "stroke-width": 2 }, svg));
+  // Rótulos por columna: barra (dentro o encima) y línea (encima del punto; si choca, debajo; si pisa la barra, cae el rótulo de la barra)
+  const solapan = (a, b) => a[0] < b[1] && b[0] < a[1];
+  D.barras.valores.forEach((v, i) => {
+    if (!rotulada(i)) return;
+    const esHi = i === hi, vb = D.linea.valores[i], yb = syB(v), yl = syL(vb);
+    const dentro = y1 - yb >= 34;
+    let yB = dentro ? yb + 24 : yb - 10;                 // línea base del rótulo de la barra
+    if (dentro && Math.abs(yl - (yB - 7)) < 24 && y1 - (yB + 26) >= 12) yB += 26;   // el punto de la línea pisa el rótulo: bájalo dentro de la barra
+    let cajaB = [yB - 18, yB + 4];
+    let yTxtL = yl - 16, cajaL = [yTxtL - 19, yTxtL + 2];
+    // Rótulos más anchos que la columna solo en la barra clave, la primera y la última (evita solapes horizontales).
+    const anchoCol = bw + gap - 6, clave = esHi || i === 0 || i === n - 1;
+    let pintarB = clave || H.medir(H.num(v, fB), fontB) <= anchoCol;
+    const pintarL = clave || H.medir(H.num(vb, fL), fontL) <= anchoCol;
+    if (pintarB && solapan(cajaB, cajaL)) {
+      const abajo = yl + 32, cajaAbajo = [abajo - 19, abajo + 2];
+      if (abajo + 2 <= y1 + 4 && !solapan(cajaB, cajaAbajo)) { yTxtL = abajo; cajaL = cajaAbajo; }
+      else pintarB = false;   // la línea gana (lleva el acento): cae el rótulo de la barra
+    }
+    // Un rótulo más ancho que la barra se pega al borde interior en la primera y la última columna (no invade los ejes).
+    const ancla = (w) => (w <= bw ? ["middle", xc(i)] : i === 0 ? ["start", x0 + i * (bw + gap)] : i === n - 1 ? ["end", x0 + i * (bw + gap) + bw] : ["middle", xc(i)]);
+    const [aB, xB] = ancla(H.medir(H.num(v, fB), fontB)), [aL, xL] = ancla(H.medir(H.num(vb, fL), fontL));
+    if (pintarB) H.texto(svg, xB, yB, H.num(v, fB), { "text-anchor": aB, style: "font:" + fontB + ",monospace;fill:" + (dentro ? H.textoSobre(esHi ? ink : H.mezcla(bg, ink, .55)) : ink) });
+    if (pintarL) H.texto(svg, xL, yTxtL, H.num(vb, fL), { "text-anchor": aL, style: "font:" + fontL + ",monospace;fill:" + ink + ";" + H.halo() });
+  });
+}
+</script>

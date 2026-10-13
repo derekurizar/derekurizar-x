@@ -1,0 +1,87 @@
+<!-- hemiciclo · curules por bloque en semicírculo, con la línea de mayoría (brief 7a). Contrato: referencias/diseno/graficos.md -->
+<script>
+// CIFRAS DE EJEMPLO (Congreso 2024–2028, TSE) · verificar antes de publicar
+const DATA = {
+  kicker: "CONGRESO 2024–2028 · CURULES POR BLOQUE",
+  titular: ["160 curules y", "ninguna mayoría"],
+  nota: "",
+  fuente: "TSE · adjudicación de diputados 2023",
+  handle: "@DerekUrizar",
+  formato: { prefijo: "", sufijo: "", decimales: 0, miles: true, escala: 1 },
+  total: 160,                      // curules del hemiciclo (10–300)
+  bloques: [                       // 2–8, de izquierda a derecha; suman `total` (vacantes = un bloque «Vacantes»)
+    { nombre: "Vamos",   curules: 39 },
+    { nombre: "UNE",     curules: 28 },
+    { nombre: "Semilla", curules: 23 },
+    { nombre: "Cabal",   curules: 18 },
+    { nombre: "Viva",    curules: 11 },
+    { nombre: "Valor",   curules: 7 },
+    { nombre: "Todos",   curules: 6 },
+    { nombre: "Otros",   curules: 28 }
+  ],
+  mayoria: "simple",               // "simple" (⌊total/2⌋+1) | "calificada" (⌈2·total/3⌉) | null: la plantilla calcula el número
+  destacar: 2                      // índice del bloque clave: curules en a1
+};
+
+function render(D) {
+  H.assert(Number.isInteger(D.total) && D.total >= 10 && D.total <= 300, "total debe ser un entero entre 10 y 300");
+  H.assert(Array.isArray(D.bloques) && D.bloques.length >= 2 && D.bloques.length <= 8, "hemiciclo admite de 2 a 8 bloques");
+  D.bloques.forEach((b) => H.assert(b && typeof b.nombre === "string" && b.nombre.trim() && Number.isInteger(b.curules) && b.curules >= 0, "cada bloque necesita nombre y curules entero ≥ 0"));
+  const suma = D.bloques.reduce((s, b) => s + b.curules, 0);
+  H.assert(suma === D.total, "los bloques suman " + suma + ", no total (" + D.total + "): añade un bloque «Vacantes» o corrige las cifras");
+  H.assert(D.mayoria == null || D.mayoria === "simple" || D.mayoria === "calificada", "mayoria debe ser \"simple\", \"calificada\" o null");
+  const n = D.bloques.length, hi = D.destacar == null ? -1 : ((D.destacar % n) + n) % n;
+  const ink = H.color.ink, a1 = H.color.a1;
+  const f = (v) => H.num(v, D.formato);
+
+  const W = 920, alto = H.espacio(520, 300);
+  const svg = H.lienzo(W, alto);
+
+  // ---- Geometría del arco (H.asientos, compartido con el informe): filas concéntricas cuya capacidad cubra `total` ----
+  const cx = 310, cy = alto - 8, R = Math.min(296, alto - 30), r0 = 0.42 * R;
+  const arco = H.asientos(D.total, R, r0, cx, cy);
+  H.assert(arco, "no caben " + D.total + " curules en el arco: acorta el titular o la nota");
+  const s = arco.s, asientos = arco.asientos, rPunto = 0.36 * s;
+
+  // Colores: destacado en a1; el resto en la rampa fondo→tinta, de más a menos contraste.
+  const otros = D.bloques.filter((_, i) => i !== hi).length;
+  const rampa = H.rampa(Math.max(2, otros)).reverse();
+  let k = 0;
+  const colorDe = D.bloques.map((_, i) => (i === hi ? a1 : rampa[Math.min(k++, rampa.length - 1)]));
+  let pos = 0;
+  D.bloques.forEach((b, i) => { for (let j = 0; j < b.curules; j++) { const a = asientos[pos++]; H.svgEl("circle", { cx: a.x.toFixed(1), cy: a.y.toFixed(1), r: rPunto.toFixed(2), fill: colorDe[i] }, svg); } });
+
+  // ---- Mayoría: marcador radial entre el asiento m−1 y m, y el número en el hueco ----
+  if (D.mayoria) {
+    const m = H.mayoria(D.total, D.mayoria);
+    const th = m < asientos.length ? (asientos[m - 1].th + asientos[m].th) / 2 : asientos[asientos.length - 1].th;
+    const ra = r0 - s / 2, rb = R + 0.8 * s;
+    H.svgEl("line", { x1: (cx + ra * Math.cos(th)).toFixed(1), y1: (cy - ra * Math.sin(th)).toFixed(1), x2: (cx + rb * Math.cos(th)).toFixed(1), y2: (cy - rb * Math.sin(th)).toFixed(1), stroke: H.color.inkA(.7), "stroke-width": 2.5, "stroke-dasharray": "6 6" }, svg);
+    const rIn = r0 - 1.2 * rPunto;                       // radio libre del hueco central
+    const etiqueta = "mayoría " + D.mayoria, fontE = "600 19px Archivo";
+    let px = Math.min(76, Math.floor(rIn * 0.66)), yNum = cy - Math.round(rIn * 0.36);
+    const cabe = () => { const w = H.medir(String(m), "400 " + px + "px 'Instrument Serif'"), dy = cy - (yNum - 0.72 * px); const semi = dy < rIn ? Math.sqrt(rIn * rIn - dy * dy) : 0; return w / 2 <= semi - 6; };
+    while (px > 40 && !cabe()) px -= 4;
+    H.assert(px >= 40, "el número de la mayoría no cabe en el hueco: acorta el titular");
+    H.texto(svg, cx, yNum, String(m), { "text-anchor": "middle", style: "font:400 " + px + "px 'Instrument Serif',serif;fill:" + ink });
+    H.assert(H.medir(etiqueta, fontE) <= 2 * Math.sqrt(Math.max(0, rIn * rIn - 20 * 20)) - 8, "«" + etiqueta + "» no cabe en el hueco");
+    H.texto(svg, cx, cy - 6, etiqueta, { "text-anchor": "middle", style: "font:" + fontE + ",sans-serif;fill:" + ink });
+  }
+
+  // ---- Columna derecha: total y lista de bloques con swatch ----
+  const xCol = 640, xSw = xCol + 10, xNom = xCol + 30;
+  H.texto(svg, xCol, 24, f(D.total) + " curules", { class: "t-val" });
+  const filaH = Math.min(46, (alto - 40) / n);
+  const fontsN = ["600 21px Archivo", "600 19px Archivo", "600 17px Archivo"], fontsHi = ["800 23px Archivo", "800 21px Archivo", "800 19px Archivo", "800 17px Archivo"];
+  D.bloques.forEach((b, i) => {
+    const esHi = i === hi, cyF = 40 + filaH * i + filaH / 2;
+    const val = f(b.curules), fontV = esHi ? "700 24px 'JetBrains Mono'" : "700 22px 'JetBrains Mono'";
+    const wV = H.medir(val, fontV);
+    const fn = H.encajar(b.nombre, esHi ? fontsHi : fontsN, W - xNom - wV - 12);
+    H.assert(fn, "el nombre «" + b.nombre + "» no cabe en la columna: acórtalo");
+    H.svgEl("circle", { cx: xSw, cy: cyF, r: 9, fill: colorDe[i] }, svg);
+    H.texto(svg, xNom, cyF + 7, b.nombre, { style: "font:" + fn + ",sans-serif;fill:" + ink });
+    H.texto(svg, W, cyF + 8, val, { "text-anchor": "end", style: "font:" + fontV + ",monospace;fill:" + ink });
+  });
+}
+</script>

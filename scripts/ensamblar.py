@@ -101,8 +101,18 @@ CLAVES_DATO = {
     "piramide": lambda d: list((d.get("izquierda") or {}).get("valores", [])) + list((d.get("derecha") or {}).get("valores", [])),
     "treemap": lambda d: [p.get("valor") for p in d.get("partes", [])],
     "dispersion": lambda d: [v for p in d.get("puntos", []) for v in (p.get("x"), p.get("y"))] + [(d.get("guias") or {}).get(k) for k in ("x", "y")],
+    "hemiciclo": lambda d: [d.get("total")] + [b.get("curules") for b in d.get("bloques", [])],
+    # multiples: una referencia de 100 (índice base) es definición, no cifra; las demás se cotejan.
+    "multiples": lambda d: [v for p in d.get("paneles", []) for v in p.get("valores", []) if v is not None] + [r for r in [(d.get("referencia") or {}).get("valor")] if isinstance(r, (int, float)) and r != 100],
+    "combinado": lambda d: list((d.get("barras") or {}).get("valores", [])) + list((d.get("linea") or {}).get("valores", [])),
+    "linea-tiempo": lambda d: [e.get("valor") for e in d.get("eventos", [])],
+    "agrupadas": lambda d: [v for s in d.get("series", []) for v in s.get("valores", [])] + [r for r in [(d.get("referencia") or {}).get("valor")] if isinstance(r, (int, float))],
+    "pictograma": lambda d: [d.get("total"), d.get("destacado")],
+    "area-apilada": lambda d: [v for p in d.get("partes", []) for v in p.get("valores", [])],
+    # cascada: inicio, pasos (sin signo: el signo va en efecto) y fin.valor si va (la plantilla lo coteja con lo calculado).
+    "cascada": lambda d: [r for r in [(d.get("inicio") or {}).get("valor")] if isinstance(r, (int, float))] + [p.get("valor") for p in d.get("pasos", [])] + [r for r in [(d.get("fin") or {}).get("valor")] if isinstance(r, (int, float))],
 }
-CLAVES_PRESENTACION = {"decimales", "escala", "destacar", "clases", "decimales_pildora", "i", "fila", "col", "miles", "cortes", "maximo", "minimo_rotulo", "desde", "hasta"}
+CLAVES_PRESENTACION = {"decimales", "escala", "destacar", "clases", "decimales_pildora", "i", "fila", "col", "miles", "cortes", "maximo", "minimo_rotulo", "desde", "hasta", "por_fila"}
 
 
 def leer(ruta, obligatorio=False):

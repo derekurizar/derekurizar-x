@@ -7,7 +7,9 @@
 #        · fixture dato (una tarjeta, modo dato de ensamblar) · negativos del gate G1–G8 sobre copias
 #        de los fixtures (siempre con --salida: una copia nunca escribe en hilos/ ni datos/)
 #        · negativos de render.js · banco de ideas (ideas.py sobre un banco temporal)
-#        · node --check de hilo.js, ideas.js y dato.js · check_workflows.py (constantes comunes y modos).
+#        · informe de investigación (ejemplo → PDF en un temporal, negativos I1–I6, P1, P2; catálogo de
+#          gráficos del informe: todos los G.* en papel, panel y media página con --check)
+#        · node --check de hilo.js, ideas.js y dato.js · check_workflows.py (constantes, modos, gráficos W7–W8).
 #        Resumen «N pruebas · M fallos»; exit 1 si hay fallos.
 set -u
 RAIZ="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -252,6 +254,15 @@ paso "piramide rechaza 3 grupos"              render_neg_datos piramide 'DATA.gr
 paso "treemap rechaza 2 partes"               render_neg_datos treemap 'DATA.partes = DATA.partes.slice(0, 2);'
 paso "dispersion rechaza 5 puntos"            render_neg_datos dispersion 'DATA.puntos = DATA.puntos.slice(0, 5);'
 paso "barras-v rechaza periodo invertido"     render_neg_datos barras-v 'DATA.periodos = [{ desde: 3, hasta: 1, nombre: "x" }];'
+paso "hemiciclo rechaza bloques que no suman" render_neg_datos hemiciclo 'DATA.bloques[0].curules += 5;'
+paso "multiples rechaza 3 paneles"            render_neg_datos multiples 'DATA.paneles = DATA.paneles.slice(0, 3);'
+paso "combinado rechaza linea desparejada"    render_neg_datos combinado 'DATA.linea.valores.pop();'
+paso "linea-tiempo rechaza 2 eventos"         render_neg_datos linea-tiempo 'DATA.eventos = DATA.eventos.slice(0, 2);'
+paso "agrupadas rechaza más de 3 series"      render_neg_datos agrupadas 'DATA.series = DATA.series.concat(DATA.series);'
+paso "pictograma rechaza destacado > total"   render_neg_datos pictograma 'DATA.destacado = DATA.total + 1;'
+paso "area-apilada rechaza valores desparejos" render_neg_datos area-apilada 'DATA.partes[0].valores.pop();'
+paso "cascada rechaza fin que no cuadra"      render_neg_datos cascada 'DATA.fin.valor += 1000;'
+paso "cascada rechaza efecto desconocido"     render_neg_datos cascada 'DATA.pasos[0].efecto = "quita";'
 
 echo "== banco de ideas (banco y hilos temporales; no toca ideas/ ni memoria/)"
 IB="$TMP/ideas"; mkdir -p "$IB/in"
@@ -335,6 +346,65 @@ cal_marcar() {
 paso "calendario.py --marcar hecha anota ultimo_uso y pieza; id inexistente → exit 1" cal_marcar
 paso "calendario.py --proximas sobre la semilla real" python3 scripts/calendario.py --proximas 30
 
+echo "== informe de investigación (investigacion/; salida en un temporal, no toca el ejemplo)"
+INF=investigacion/ejemplos/dengue-2026
+paso "informe.py $INF --check (gates I1–I6 + render P1–P5 + PDF)" python3 scripts/informe.py "$INF" --salida "$TMP/informe" --check
+pdf_paginas() {  # 21 hojas Letter; la 8 apaisada
+  python3 - "$TMP/informe/informe.pdf" <<'PY'
+import re, sys
+cajas = re.findall(rb"/MediaBox\s*\[\s*0 0 (\d+(?:\.\d+)?) (\d+(?:\.\d+)?)\s*\]", open(sys.argv[1], "rb").read())
+dims = [(round(float(w)), round(float(h))) for w, h in cajas]
+assert len(dims) == 21, "el PDF tiene %d páginas" % len(dims)
+assert dims[7] == (792, 612), "la página 8 no es apaisada: %s" % (dims[7],)
+assert all(d == (612, 792) for i, d in enumerate(dims) if i != 7), "hojas que no son Letter vertical"
+PY
+}
+paso "PDF: 21 hojas Letter, la 8 apaisada" pdf_paginas
+
+# neg_informe "nombre" "GATE" "python que muta R (informe.json) y puede escribir archivos en D (carpeta temporal)" [render]
+neg_informe() {
+  N=$((N+1)); local nombre="$1" gate="$2" mut="$3" render="${4:-}"
+  local D; D="$(mktemp -d "$TMP/inf.XXXXXX")"
+  cp "$INF/informe.json" "$D/"
+  if ! python3 -c 'import json,sys; D=sys.argv[1]; p=D+"/informe.json"; R=json.load(open(p,encoding="utf-8")); P=R["paginas"]
+'"$mut"'
+json.dump(R, open(p,"w",encoding="utf-8"), ensure_ascii=False)' "$D" 2>"$TMP/mut.log"; then
+    FALLOS=$((FALLOS+1)); printf 'FALLO  %s: la mutación falló\n' "$nombre"; sed 's/^/       /' "$TMP/mut.log"; return
+  fi
+  python3 scripts/informe.py "$D" --salida "$D/salida" $([[ -n "$render" ]] && echo --check || echo --sin-pdf) >"$TMP/neg.out" 2>"$TMP/neg.err"; local rc=$?
+  if [[ $rc -eq 1 ]] && grep -q "$gate" "$TMP/neg.err"; then printf 'OK     %s → %s\n' "$nombre" "$gate"
+  else FALLOS=$((FALLOS+1)); printf 'FALLO  %s: esperaba exit 1 con %s (exit %s)\n' "$nombre" "$gate" "$rc"; sed 's/^/       /' "$TMP/neg.err" | head -8; fi
+}
+neg_informe "página de tipo desconocido"         I1 'P[2]["tipo"]="zzz"'
+neg_informe "cifra del resumen con otro valor"    I2 'P[2]["cifras"][0]["valor"]="12,700"'
+neg_informe "serie del tablero con otro valor"    I2 'P[3]["cifras"][0]["grafico"]["valores"][0]=9999'
+neg_informe "cifra no_confirmada en datos.json"   I2 'd=json.load(open(R["meta"]["datos"][0],encoding="utf-8")); [c.update(veredicto="no_confirmada") for c in d["cifras"] if c["id"]=="ser-c01"]; json.dump(d,open(D+"/datos.json","w",encoding="utf-8")); R["meta"]["datos"]=[D+"/datos.json"]'
+neg_informe "URL en la tesis"                     I3 'P[2]["tesis"]+=" https://x.org"'
+neg_informe "figura sin fuente"                   I4 'P[5]["bloques"][2].pop("fuente")'
+neg_informe "referencia {fig:} sin destino"       I5 'P[5]["bloques"][1]["parrafos"][0]+=" Ver {fig:nada}."'
+neg_informe "paleta desconocida"                  I6 'R["meta"]["paleta"]="zzz"'
+neg_informe "página que desborda la hoja"         P2 'P[5]["bloques"][1]["parrafos"]*=12' render
+neg_informe "gráfico con nombre desconocido"       I1 'P[5]["bloques"][2]["grafico"]["tipo"]="barras-x"'
+neg_informe "linea sin cero y sin nota"            I1 'P[9]["bloques"][2]["grafico"]["yDesdeCero"]=False; P[9]["bloques"][2].pop("nota",None)'
+neg_informe "tarjeta con un número sin respaldo"   I2 'f=P[6]["bloques"][2]["items"][0]; f["cifra_ids"]=["ser-c08"]; f["datos"]["valores"][0]=24'
+neg_informe "gráfico con cifra_ids y número ajeno"  I2 'P[5]["bloques"][2]["grafico"]["valores"][2]=5214'
+pos_informe() {  # el nombre de la plantilla (kebab) vale como grafico.tipo; una tarjeta con cifra_ids y datos exactos pasa I2
+  local D; D="$(mktemp -d "$TMP/inf.XXXXXX")"; cp "$INF/informe.json" "$D/"
+  python3 -c 'import json,sys; D=sys.argv[1]; p=D+"/informe.json"; R=json.load(open(p,encoding="utf-8")); P=R["paginas"]
+P[5]["bloques"][2]["grafico"]["tipo"]="barras-v"; f=P[6]["bloques"][2]["items"][0]; f["cifra_ids"]=["ser-c08"]
+json.dump(R, open(p,"w",encoding="utf-8"), ensure_ascii=False)' "$D" || return 1
+  python3 scripts/informe.py "$D" --salida "$D/salida" --sin-pdf >/dev/null 2>"$TMP/pos.err" || { cat "$TMP/pos.err"; return 1; }
+}
+paso "informe.py admite grafico.tipo en kebab y coteja una tarjeta con cifra_ids (I2 por contrato)" pos_informe
+paso "catalogo_informe.py → informe.json + datos.json sintético" python3 scripts/catalogo_informe.py --dir "$TMP/catalogo" --tarjeta ninguna
+paso "informe.py catálogo --check (todos los G.* en papel, panel y media página: I1–I7 + P1–P5)" python3 scripts/informe.py "$TMP/catalogo" --salida "$TMP/catalogo/salida" --check
+neg_texto_pequeno() {  # P1: el render rechaza texto por debajo de 12 px
+  sed 's#</style>#.p { font-size: 10px !important; }</style>#' "$TMP/informe/informe.html" > "$TMP/informe/p1.html"
+  node scripts/render_informe.js "$TMP/informe/p1.html" --check >"$TMP/p1.log" 2>&1 && return 1
+  grep -q "P1 " "$TMP/p1.log"
+}
+paso "render_informe.js rechaza texto de 10 px (P1)" neg_texto_pequeno
+
 echo "== sintaxis de los workflows"
 check_js() {
   { echo "(async function(){"; sed 's/^export //' ".claude/workflows/$1"; echo "})"; } > "$TMP/check_$1"
@@ -343,7 +413,7 @@ check_js() {
 paso "node --check hilo.js (envuelto en async function)" check_js hilo.js
 paso "node --check ideas.js (envuelto en async function)" check_js ideas.js
 paso "node --check dato.js (envuelto en async function)" check_js dato.js
-paso "check_workflows.py (PALETAS, PLANTILLAS, HOOKS, BEATS, REQ, pesoX y MODOS alineados)" python3 scripts/check_workflows.py
+paso "check_workflows.py (PALETAS, PLANTILLAS, HOOKS, BEATS, REQ, pesoX, MODOS y gráficos del informe W7–W8)" python3 scripts/check_workflows.py
 
 echo
 echo "[test] $N pruebas · $FALLOS fallos"

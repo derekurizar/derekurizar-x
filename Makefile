@@ -6,7 +6,7 @@ GALERIA := templates/.galeria
 PALETAS ?= cielo
 PALETA ?= cielo
 
-.PHONY: help nuevo render visual catalogo validate tabla pdf ensamblar limpiar test doctor costo contacto digesto fuentes ideas calendario
+.PHONY: help nuevo render visual catalogo validate tabla pdf ensamblar limpiar test doctor costo contacto digesto fuentes ideas calendario informe informe-ejemplo informe-catalogo
 
 help:
 	@echo "make nuevo T=<plantilla> OUT=<ruta.html> [PALETA=cielo]  ensambla una tarjeta (base + plantilla)"
@@ -25,6 +25,9 @@ help:
 	@echo "make fuentes TEMA=\"texto\"                                 catálogo de fuentes y series filtrado por tema"
 	@echo "make ideas                                               banco de ideas (ideas/banco.json) y temas ya producidos"
 	@echo "make calendario [DIAS=30]                                calendario editorial (ideas/calendario.json): próximas ocasiones para /fecha"
+	@echo "make informe DIR=<carpeta con informe.json> [PAL=x]    informe de investigación: gates I1-I6, PDF Letter y checks P1-P5 (salida en DIR/salida)"
+	@echo "make informe-ejemplo                                     construye investigacion/ejemplos/dengue-2026 (21 páginas)"
+	@echo "make informe-catalogo [PAL=x]                            genera y renderiza investigacion/ejemplos/catalogo (todos los G.* en papel, panel y media página; PNG por página)"
 	@echo "make limpiar [SESION=sesiones/<slug>]                    borra $(GALERIA)/, salidas de _fixture y _fixture_dato y .playwright-mcp/ (o una sesión)"
 
 nuevo:
@@ -92,3 +95,14 @@ ideas:
 
 calendario:
 	python3 scripts/calendario.py --proximas $(if $(DIAS),$(DIAS),30)
+
+informe:
+	@test -n "$(DIR)" || { echo "Uso: make informe DIR=<carpeta con informe.json> [PAL=paleta]"; exit 2; }
+	python3 scripts/informe.py $(DIR) --check $(if $(PAL),--paleta $(PAL),)
+
+informe-ejemplo:
+	python3 scripts/informe.py investigacion/ejemplos/dengue-2026 --check
+
+informe-catalogo:
+	python3 scripts/catalogo_informe.py $(if $(PAL),--paleta $(PAL),)
+	python3 scripts/informe.py investigacion/ejemplos/catalogo --check --png investigacion/ejemplos/catalogo/salida/png

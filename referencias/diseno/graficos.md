@@ -26,6 +26,14 @@ ven todas con `make catalogo` (PNG en `templates/.galeria/`).
 | ¿Cómo se distribuye? | Pirámide | `piramide` | 4–12 grupos (edades) con dos lados en la misma escala (sexo, urbano/rural). No usar dona. |
 | ¿Cómo se reparte el todo? (> 5 partes) | Treemap | `treemap` | 3–12 partes; las chicas o sin sitio para el nombre se agrupan solas en «Todo lo demás». |
 | ¿Van juntas dos cosas? | Dispersión | `dispersion` | 8–22 puntos (departamentos), ≤ 4 rotulados + destacado; el titular **no afirma causa**. |
+| ¿Quién controla el Congreso? | Hemiciclo | `hemiciclo` | 10–300 curules en 2–8 bloques contiguos; «N para mayoría» lo calcula la plantilla. |
+| ¿Cómo cambió cada uno? (muchas series) | Pequeños múltiplos | `multiples` | 4–9 mini-líneas en la MISMA escala; último valor rotulado; referencia opcional. Con 9 paneles, titular ≤ 2 líneas. |
+| ¿Van juntas dos magnitudes en el tiempo? | Barras + línea | `combinado` | 3–12 periodos; barras (izq., desde cero) y línea (der.); ambas rotuladas; el titular **no afirma causa**. |
+| ¿Cuándo pasó y cuánto pesó cada hito? | Línea de tiempo | `linea-tiempo` | 3–8 eventos en filas (fecha · nombre · magnitud desde cero); declara si los intervalos son proporcionales. |
+| ¿Cómo se compara A con B en cada categoría? | Barras agrupadas | `agrupadas` | 2–6 categorías × 2–3 series (sujeto vs país; año vs año), horizontales, desde cero. |
+| ¿Cuántos de los N? (unidades contables) | Pictograma | `pictograma` | 2–200 unidades absolutas, K en `a1`; «K de N» lo compone la plantilla. Proporciones de 100 → `waffle`. |
+| ¿Cómo cambió el reparto a lo largo de una serie? | Área apilada 100 % | `area-apilada` | 5–30 puntos × 2–5 partes; % al inicio y al fin de cada banda. Para ≤ 8 momentos discretos, `apilada`. |
+| ¿Cómo se llega del inicio al fin sumando y restando? | Cascada | `cascada` | inicio → 2–8 pasos (suma \| resta) → fin; ≤ 10 filas; acumulados y fin los calcula la plantilla. |
 
 En `linea` y `barras-v`, `periodos` sombrea tramos (gobiernos, etapas) sobre el
 eje X: `[{desde, hasta, nombre}]`, índices sobre las etiquetas, en orden, sin
@@ -33,10 +41,9 @@ solaparse, ≤ 4. `barras-v` admite negativos (la base es el cero y el rótulo v
 bajo la barra); para cambios con signo por categoría, mejor `divergente`.
 `formato.signo: true` antepone «+» a los positivos (por defecto en `divergente`).
 
-Aún no hay plantilla para: hemiciclo, pequeños múltiplos, combinado barras +
-línea, línea de tiempo con magnitud (brief 7a, 7d, 7f, 6h). Si el material lo
-pide, el guionista elige la más cercana del catálogo y lo anota en
-`incertidumbre`; **no se inventa una plantilla en el HTML**.
+Si el material no encaja en ninguna plantilla, el guionista elige la más cercana
+del catálogo y lo anota en `incertidumbre`; **no se inventa una plantilla en el
+HTML**.
 
 Ejemplos de traducción: hogares receptores / beneficiarios / dependencia →
 `waffle` («24 de cada 100 hogares»), `barras-h` con `orden: "dado"` (tramos) o
@@ -47,6 +54,14 @@ vez de `linea` con 90 puntos; ejecución presupuestaria contra el 100 % →
 o exportaciones por producto con más de 5 partes → `treemap`, no `dona`;
 comparación por gobierno sobre una serie anual → `linea`/`barras-v` con
 `periodos`.
+Sujeto vs país por dimensión (`/perfil`) o año anterior vs actual por categoría
+→ `agrupadas`; ingresos → gasto → déficit, o partes que suman y restan hasta un
+total → `cascada` (en `/explica`); reparto que cambia en ≥ 5 periodos →
+`area-apilada` (≤ 8 momentos discretos → `apilada`); «37 volcanes, 3 activos» o
+«22 departamentos, 5 con…» → `pictograma` (unidades reales; proporciones →
+`waffle`); curules por bloque → `hemiciclo`; más de 4 series comparables →
+`multiples`; dos magnitudes distintas en el tiempo (visitantes y gasto) →
+`combinado`; hitos con fecha y magnitud (sismos, erupciones) → `linea-tiempo`.
 
 ## Cabecera común (todas las plantillas)
 
@@ -94,6 +109,14 @@ comparación por gobierno sobre una serie anual → `linea`/`barras-v` con
 | `piramide` | `grupos[4–12]` (de arriba abajo), `izquierda:{nombre, valores[]}`, `derecha:{nombre, valores[]}`, `destacar` (índice de grupo), `rotular: null\|"todos"\|"destacado"` | Misma escala a ambos lados; grupos en la columna central; grupo destacado en `a1` en los dos lados; valores en todos si hay ≤ 8 grupos. |
 | `treemap` | `partes[3–12]{nombre, valor > 0}`, `destacar` (nombre o índice tras ordenar), `minimo_rotulo` (% · 2) | Squarified. Agrupa en «Todo lo demás» las partes < `minimo_rotulo` (si son ≥ 2) y, una a una, las que no caben con nombre; lo explica en la nota. Cada rect lleva nombre y %. |
 | `dispersion` | `puntos[8–22]{nombre, x, y}`, `ejeX`/`ejeY` (títulos ≤ 40), `formatoX`/`formatoY` (null = `formato`), `rotular[≤4]` (nombres), `destacar` (nombre), `guias:{x?, y?, texto}\|null` (líneas «promedio»; son dato), `desdeCero` (false) | Sin regresión. Rótulos colocados donde menos pisan (con línea guía si se alejan) y con halo; escribe «ejes sin cero» si no parten de cero. |
+| `hemiciclo` | `total` (entero 10–300), `bloques[2–8]{nombre, curules ≥ 0}` (de izquierda a derecha; suman `total`; vacantes = bloque «Vacantes»), `mayoria: "simple"\|"calificada"\|null`, `destacar` (índice) | Arco de asientos por filas con cuñas contiguas; destacado en `a1`, resto en la rampa; marcador y «N para mayoría» **calculados** (⌊total/2⌋+1 o ⌈2·total/3⌉): el guionista nunca escribe el 81; columna derecha con curules por bloque. |
+| `multiples` | `etiquetasX[4–30]`, `paneles[4–9]{nombre, valores[]}` (`null` = hueco, ≥ 2 válidos), `destacar` (índice\|null), `referencia:{valor, texto}\|null`, `yDesdeCero` (true) | Rejilla 2×2 / 2×3 / 3×3 con la **misma escala**; último valor en la cabecera de cada panel; referencia punteada; etiquetas X solo abajo; escribe «Misma escala en todos los paneles.» (y «eje desde N» si aplica). |
+| `combinado` | `etiquetas[3–12]`, `barras{nombre ≤ 30, valores[] ≥ 0, formato\|null}`, `linea{nombre ≤ 30, valores[], formato\|null, desdeCero}`, `destacar` (periodo; −1 = último), `rotular: null\|"todas"\|"destacada"` | Barras en tinta desde cero (eje izq.), línea en `a1` (eje der.); títulos de eje con nombre y unidad; valores rotulados sin solape; escribe «Dos escalas: …» con el origen del eje derecho. |
+| `linea-tiempo` | `eventos[3–8]{fecha (empieza por AAAA), nombre ≤ 40, valor ≥ 0, sub?, valor_texto?}`, `proporcional: false\|true`, `forma: "barra"\|"circulo"\|"ninguna"`, `destacar` | Filas de arriba abajo (fecha · nombre · magnitud desde cero); con `proporcional: true` separa por fecha y falla si dos hitos quedan a < 52 px; escribe «Intervalos (no) proporcionales al tiempo.». `ninguna` para escalas no lineales (Richter en `valor_texto`). |
+| `agrupadas` | `etiquetas[2–6]`, `series[2–3]{nombre, valores[] ≥ 0, destacar?}` (si ninguna, la última), `rotular: "todas"\|"destacada"`, `referencia:{valor, texto}\|null` | Horizontales desde cero; la serie destacada en `a1`, las otras en tinta y tinta al 50 %; valores al final de cada barra; referencia vertical punteada (promedio nacional, meta). |
+| `pictograma` | `total` (entero 2–200), `destacado` (entero 0–total), `texto` (≤ 60), `etiqueta_destacado`, `etiqueta_resto`, `forma: "punto"\|"cuadro"\|"persona"`, `por_fila: null\|2–25` | Una forma por unidad (CSS, sin emoji); K en `a1`; el «K de N …» lo **compone** la plantilla; columnas automáticas (filas completas, múltiplos de 5); falla si la celda baja de 18 px («usa waffle»). |
+| `area-apilada` | `etiquetasX[5–30]`, `partes[2–5]{nombre, valores[] ≥ 0}` (partes[0] abajo), `normalizar` (true), `destacar` (índice de parte) | Bandas 100 % (o absolutos con eje); % al inicio y nombre + % al fin de cada banda con anti-solape y guías; destacada en `a1`; avisa si el redondeo no suma 100. |
+| `cascada` | `inicio:{nombre, valor}\|null`, `pasos[2–8]{nombre, valor ≥ 0, efecto: "suma"\|"resta"}`, `fin:{nombre, valor?}\|null` (al menos uno de inicio/fin), `destacar: "inicio"\|"fin"\|índice\|null` | Filas horizontales con eje cero; **calcula** acumulados y el fin; si `fin.valor` va (la cifra oficial, verificada), coteja su magnitud con lo calculado y falla si no cuadra; sin `fin.valor` escribe «<fin> calculado desde los pasos.»; rótulos con signo fuera del extremo móvil, nunca sobre el eje. |
 
 Ejemplo completo de cada bloque: el `const DATA` de cada archivo en
 `templates/graficos/` (son las tarjetas del brief).
@@ -128,6 +151,10 @@ Ejemplo completo de cada bloque: el `const DATA` de cada archivo en
 9. **Plantillas con trampa**: `embudo` declara si las etapas son los mismos
    casos; `dispersion` no sugiere causa en el titular y, si los rotulados están
    apiñados, rotula menos; `treemap` con «Todo lo demás» enorme pide
-   `barras-h`.
+   `barras-h`; `combinado` no sugiere causa (dos escalas no son una relación)
+   y declara el origen del eje derecho; `linea-tiempo` declara si los
+   intervalos son proporcionales; `cascada` cuadra con `fin.valor`;
+   `multiples` comparte escala (una serie plana se ve plana: es el punto);
+   `pictograma` con más de 100 unidades se vuelve textura (mejor `waffle`).
 10. **Coherencia con el guion**: los números del PNG son los del `visual.datos`
    (el gate mecánico lo comprueba, pero mira que el redondeo no engañe).
