@@ -12,7 +12,7 @@ El sandbox del Workflow no importa módulos, así que hilo.js, dato.js e ideas.j
   W6 investigacion.js: TIPOS_PAGINA igual a informe.TIPOS_PAGINA y MARCADOR_INFORME igual al de ensamblar.py
   W7 gráficos del informe: todo G.<tipo> de investigacion/graficos/*.js tiene plantilla de tarjeta (o está en
      informe.SOLO_DOCUMENTO), campos en informe.CAMPOS_GRAFICO y extractor en ensamblar.CLAVES_DATO; ningún
-     G.<tipo> se define dos veces; las plantillas sin G.* se avisan (informe.plantillas_sin_g)
+     G.<tipo> se define dos veces; toda plantilla de tarjeta tiene su G.* (informe.plantillas_sin_g vacío)
   W8 ningún gráfico del informe (salvo el adaptador _comun.js) usa helpers de la tarjeta que leen su DOM o sus variables CSS
      (H.color, H.rampa, H.rampaColor, H.halo, H.periodos, H.textoSobre, H.espacio, H.lienzo, H.leyenda,
      H.anotar, H.cabecera, H.verificar, document.getElementById)
@@ -184,7 +184,7 @@ def graficos_informe(catalogo):
         err("W7 G.* sin plantilla de tarjeta ni en informe.SOLO_DOCUMENTO: %s" % ", ".join(sobran))
     faltan = sorted(informe.plantillas_sin_g())
     if faltan:
-        warn("W7 plantillas de tarjeta sin G.* en investigacion/graficos/ (solo valen como figura tarjeta): %s" % ", ".join(faltan))
+        err("W7 plantillas de tarjeta sin G.* en investigacion/graficos/ (el informe debe poder dibujar todo el catálogo): %s" % ", ".join(faltan))
     sin_campos = sorted(tipos - set(informe.CAMPOS_GRAFICO))
     if sin_campos:
         err("W7 G.* sin entrada en informe.CAMPOS_GRAFICO: %s" % ", ".join(sin_campos))

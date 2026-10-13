@@ -19,10 +19,987 @@
   {
    "tipo": "portada",
    "kicker_izq": "Catálogo · gráficos del informe",
-   "kicker_der": "5 tipos",
+   "kicker_der": "26 tipos",
    "titulo": "Los gráficos del informe",
    "lead": "Cada tipo G.* del documento con las cifras de ejemplo de su plantilla de tarjeta: en papel a toda columna, en panel y a media página. Mismos campos que graficos.md.",
    "fuentes": "cifras de ejemplo de las plantillas"
+  },
+  {
+   "tipo": "cuerpo",
+   "id": "cat-agrupadas",
+   "seccion": "agrupadas",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "agrupadas · papel"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "Campos: etiquetas, series, rotular, referencia. Formato: {\"prefijo\": \"\", \"sufijo\": \"%\", \"decimales\": 0, \"miles\": true, \"escala\": 1}."
+     ]
+    },
+    {
+     "b": "figura",
+     "id": "agrupadas-papel",
+     "tipo": "papel",
+     "kicker": "ALTA VERAPAZ FRENTE AL PAÍS · % DE PERSONAS",
+     "titular": [
+      "Alta Verapaz, lejos",
+      "del promedio nacional"
+     ],
+     "cifra_ids": [
+      "cat-agrupadas"
+     ],
+     "fuente": "Catálogo · cifras de ejemplo de la plantilla agrupadas",
+     "pie": "agrupadas en papel.",
+     "indice": "agrupadas · papel",
+     "grafico": {
+      "tipo": "agrupadas",
+      "formato": {
+       "prefijo": "",
+       "sufijo": "%",
+       "decimales": 0,
+       "miles": true,
+       "escala": 1
+      },
+      "etiquetas": [
+       "Pobreza",
+       "Pobreza extrema",
+       "Desnutrición crónica",
+       "Sin electricidad"
+      ],
+      "series": [
+       {
+        "nombre": "Alta Verapaz",
+        "valores": [
+         83,
+         54,
+         50,
+         45
+        ],
+        "destacar": true
+       },
+       {
+        "nombre": "Guatemala",
+        "valores": [
+         56,
+         16,
+         47,
+         10
+        ]
+       }
+      ],
+      "rotular": "todas",
+      "referencia": null
+     }
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "agrupadas",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "agrupadas · media página"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "El mismo gráfico a media página: 324 px en papel y 284 en panel compacto (lo que ve un bloque `figuras` o el tablero)."
+     ]
+    },
+    {
+     "b": "figuras",
+     "items": [
+      {
+       "id": "agrupadas-medio-papel",
+       "tipo": "papel",
+       "kicker": "ALTA VERAPAZ FRENTE AL PAÍS · % DE PERSONAS",
+       "titular": [
+        "Alta Verapaz, lejos",
+        "del promedio nacional"
+       ],
+       "cifra_ids": [
+        "cat-agrupadas"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla agrupadas",
+       "pie": "agrupadas en papel.",
+       "indice": "agrupadas · papel",
+       "grafico": {
+        "tipo": "agrupadas",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "%",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "etiquetas": [
+         "Pobreza",
+         "Pobreza extrema",
+         "Desnutrición crónica",
+         "Sin electricidad"
+        ],
+        "series": [
+         {
+          "nombre": "Alta Verapaz",
+          "valores": [
+           83,
+           54,
+           50,
+           45
+          ],
+          "destacar": true
+         },
+         {
+          "nombre": "Guatemala",
+          "valores": [
+           56,
+           16,
+           47,
+           10
+          ]
+         }
+        ],
+        "rotular": "todas",
+        "referencia": null
+       },
+       "alto": 220
+      },
+      {
+       "id": "agrupadas-medio-panel",
+       "tipo": "panel",
+       "kicker": "ALTA VERAPAZ FRENTE AL PAÍS · % DE PERSONAS",
+       "titular": [
+        "Alta Verapaz, lejos",
+        "del promedio nacional"
+       ],
+       "cifra_ids": [
+        "cat-agrupadas"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla agrupadas",
+       "pie": "agrupadas en panel.",
+       "indice": "agrupadas · panel",
+       "grafico": {
+        "tipo": "agrupadas",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "%",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "etiquetas": [
+         "Pobreza",
+         "Pobreza extrema",
+         "Desnutrición crónica",
+         "Sin electricidad"
+        ],
+        "series": [
+         {
+          "nombre": "Alta Verapaz",
+          "valores": [
+           83,
+           54,
+           50,
+           45
+          ],
+          "destacar": true
+         },
+         {
+          "nombre": "Guatemala",
+          "valores": [
+           56,
+           16,
+           47,
+           10
+          ]
+         }
+        ],
+        "rotular": "todas",
+        "referencia": null
+       },
+       "alto": 220
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "id": "cat-antes-despues",
+   "seccion": "antes-despues",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "antes-despues · papel"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "Campos: antes, despues, pildora, decimales_pildora. Formato: {\"prefijo\": \"\", \"sufijo\": \"\", \"decimales\": 2, \"miles\": true, \"escala\": 1}."
+     ]
+    },
+    {
+     "b": "figura",
+     "id": "antes-despues-papel",
+     "tipo": "papel",
+     "kicker": "DIÉSEL EN GUATEMALA · QUETZALES POR GALÓN",
+     "titular": [
+      "Llenar el tanque",
+      "cuesta 77% más",
+      "que en enero"
+     ],
+     "cifra_ids": [
+      "cat-antes-despues"
+     ],
+     "fuente": "Catálogo · cifras de ejemplo de la plantilla antes-despues",
+     "pie": "antes-despues en papel.",
+     "indice": "antes-despues · papel",
+     "nota": "El Congreso aprobó un techo de Q39 por galón hasta diciembre.",
+     "grafico": {
+      "tipo": "antes_despues",
+      "formato": {
+       "prefijo": "",
+       "sufijo": "",
+       "decimales": 2,
+       "miles": true,
+       "escala": 1
+      },
+      "antes": {
+       "etiqueta": "Enero",
+       "valor": 26,
+       "sub": "quetzales por galón"
+      },
+      "despues": {
+       "etiqueta": "Septiembre",
+       "valor": 46.1,
+       "sub": "quetzales por galón"
+      },
+      "pildora": "factor",
+      "decimales_pildora": 2
+     }
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "antes-despues",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "antes-despues · media página"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "El mismo gráfico a media página: 324 px en papel y 284 en panel compacto (lo que ve un bloque `figuras` o el tablero)."
+     ]
+    },
+    {
+     "b": "figuras",
+     "items": [
+      {
+       "id": "antes-despues-medio-papel",
+       "tipo": "papel",
+       "kicker": "DIÉSEL EN GUATEMALA · QUETZALES POR GALÓN",
+       "titular": [
+        "Llenar el tanque",
+        "cuesta 77% más",
+        "que en enero"
+       ],
+       "cifra_ids": [
+        "cat-antes-despues"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla antes-despues",
+       "pie": "antes-despues en papel.",
+       "indice": "antes-despues · papel",
+       "nota": "El Congreso aprobó un techo de Q39 por galón hasta diciembre.",
+       "grafico": {
+        "tipo": "antes_despues",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "",
+         "decimales": 2,
+         "miles": true,
+         "escala": 1
+        },
+        "antes": {
+         "etiqueta": "Enero",
+         "valor": 26,
+         "sub": "quetzales por galón"
+        },
+        "despues": {
+         "etiqueta": "Septiembre",
+         "valor": 46.1,
+         "sub": "quetzales por galón"
+        },
+        "pildora": "factor",
+        "decimales_pildora": 2
+       },
+       "alto": 220
+      },
+      {
+       "id": "antes-despues-medio-panel",
+       "tipo": "panel",
+       "kicker": "DIÉSEL EN GUATEMALA · QUETZALES POR GALÓN",
+       "titular": [
+        "Llenar el tanque",
+        "cuesta 77% más",
+        "que en enero"
+       ],
+       "cifra_ids": [
+        "cat-antes-despues"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla antes-despues",
+       "pie": "antes-despues en panel.",
+       "indice": "antes-despues · panel",
+       "nota": "El Congreso aprobó un techo de Q39 por galón hasta diciembre.",
+       "grafico": {
+        "tipo": "antes_despues",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "",
+         "decimales": 2,
+         "miles": true,
+         "escala": 1
+        },
+        "antes": {
+         "etiqueta": "Enero",
+         "valor": 26,
+         "sub": "quetzales por galón"
+        },
+        "despues": {
+         "etiqueta": "Septiembre",
+         "valor": 46.1,
+         "sub": "quetzales por galón"
+        },
+        "pildora": "factor",
+        "decimales_pildora": 2
+       },
+       "alto": 220
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "id": "cat-apilada",
+   "seccion": "apilada",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "apilada · papel"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "Campos: etiquetas, partes, normalizar, destacar, rotular. Formato: {\"prefijo\": \"\", \"sufijo\": \"\", \"decimales\": 0, \"miles\": true, \"escala\": 1}."
+     ]
+    },
+    {
+     "b": "figura",
+     "id": "apilada-papel",
+     "tipo": "papel",
+     "kicker": "DENUNCIAS POR TIPO · % DEL TOTAL",
+     "titular": [
+      "La extorsión ya es",
+      "casi dos de cada tres"
+     ],
+     "cifra_ids": [
+      "cat-apilada"
+     ],
+     "fuente": "Catálogo · cifras de ejemplo de la plantilla apilada",
+     "pie": "apilada en papel.",
+     "indice": "apilada · papel",
+     "grafico": {
+      "tipo": "apilada",
+      "formato": {
+       "prefijo": "",
+       "sufijo": "",
+       "decimales": 0,
+       "miles": true,
+       "escala": 1
+      },
+      "etiquetas": [
+       "2016",
+       "2019",
+       "2022",
+       "2025"
+      ],
+      "partes": [
+       {
+        "nombre": "Extorsión",
+        "valores": [
+         7600,
+         9800,
+         15800,
+         19400
+        ]
+       },
+       {
+        "nombre": "Robo",
+        "valores": [
+         6900,
+         6100,
+         5200,
+         4700
+        ]
+       },
+       {
+        "nombre": "Lesiones",
+        "valores": [
+         4100,
+         3900,
+         3700,
+         3600
+        ]
+       },
+       {
+        "nombre": "Otros",
+        "valores": [
+         3300,
+         3000,
+         2600,
+         2300
+        ]
+       }
+      ],
+      "normalizar": true,
+      "destacar": 0,
+      "rotular": "todas"
+     }
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "apilada",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "apilada · media página"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "El mismo gráfico a media página: 324 px en papel y 284 en panel compacto (lo que ve un bloque `figuras` o el tablero)."
+     ]
+    },
+    {
+     "b": "figuras",
+     "items": [
+      {
+       "id": "apilada-medio-papel",
+       "tipo": "papel",
+       "kicker": "DENUNCIAS POR TIPO · % DEL TOTAL",
+       "titular": [
+        "La extorsión ya es",
+        "casi dos de cada tres"
+       ],
+       "cifra_ids": [
+        "cat-apilada"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla apilada",
+       "pie": "apilada en papel.",
+       "indice": "apilada · papel",
+       "grafico": {
+        "tipo": "apilada",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "etiquetas": [
+         "2016",
+         "2019",
+         "2022",
+         "2025"
+        ],
+        "partes": [
+         {
+          "nombre": "Extorsión",
+          "valores": [
+           7600,
+           9800,
+           15800,
+           19400
+          ]
+         },
+         {
+          "nombre": "Robo",
+          "valores": [
+           6900,
+           6100,
+           5200,
+           4700
+          ]
+         },
+         {
+          "nombre": "Lesiones",
+          "valores": [
+           4100,
+           3900,
+           3700,
+           3600
+          ]
+         },
+         {
+          "nombre": "Otros",
+          "valores": [
+           3300,
+           3000,
+           2600,
+           2300
+          ]
+         }
+        ],
+        "normalizar": true,
+        "destacar": 0,
+        "rotular": "todas"
+       },
+       "alto": 220
+      },
+      {
+       "id": "apilada-medio-panel",
+       "tipo": "panel",
+       "kicker": "DENUNCIAS POR TIPO · % DEL TOTAL",
+       "titular": [
+        "La extorsión ya es",
+        "casi dos de cada tres"
+       ],
+       "cifra_ids": [
+        "cat-apilada"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla apilada",
+       "pie": "apilada en panel.",
+       "indice": "apilada · panel",
+       "grafico": {
+        "tipo": "apilada",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "etiquetas": [
+         "2016",
+         "2019",
+         "2022",
+         "2025"
+        ],
+        "partes": [
+         {
+          "nombre": "Extorsión",
+          "valores": [
+           7600,
+           9800,
+           15800,
+           19400
+          ]
+         },
+         {
+          "nombre": "Robo",
+          "valores": [
+           6900,
+           6100,
+           5200,
+           4700
+          ]
+         },
+         {
+          "nombre": "Lesiones",
+          "valores": [
+           4100,
+           3900,
+           3700,
+           3600
+          ]
+         },
+         {
+          "nombre": "Otros",
+          "valores": [
+           3300,
+           3000,
+           2600,
+           2300
+          ]
+         }
+        ],
+        "normalizar": true,
+        "destacar": 0,
+        "rotular": "todas"
+       },
+       "alto": 220
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "id": "cat-area-apilada",
+   "seccion": "area-apilada",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "area-apilada · papel"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "Campos: etiquetasX, partes, normalizar, destacar. Formato: {\"prefijo\": \"\", \"sufijo\": \"\", \"decimales\": 0, \"miles\": true, \"escala\": 1}."
+     ]
+    },
+    {
+     "b": "figura",
+     "id": "area-apilada-papel",
+     "tipo": "papel",
+     "kicker": "EXPORTACIONES POR DESTINO · % DEL TOTAL",
+     "titular": [
+      "Vendemos menos a EE. UU.",
+      "y más a los vecinos"
+     ],
+     "cifra_ids": [
+      "cat-area-apilada"
+     ],
+     "fuente": "Catálogo · cifras de ejemplo de la plantilla area-apilada",
+     "pie": "area-apilada en papel.",
+     "indice": "area-apilada · papel",
+     "grafico": {
+      "tipo": "area_apilada",
+      "formato": {
+       "prefijo": "",
+       "sufijo": "",
+       "decimales": 0,
+       "miles": true,
+       "escala": 1
+      },
+      "etiquetasX": [
+       "2015",
+       "2016",
+       "2017",
+       "2018",
+       "2019",
+       "2020",
+       "2021",
+       "2022",
+       "2023",
+       "2024",
+       "2025"
+      ],
+      "partes": [
+       {
+        "nombre": "EE. UU.",
+        "valores": [
+         3700,
+         3800,
+         3900,
+         4000,
+         4100,
+         3900,
+         4300,
+         4600,
+         4700,
+         4800,
+         4900
+        ]
+       },
+       {
+        "nombre": "Centroamérica",
+        "valores": [
+         3200,
+         3400,
+         3600,
+         3800,
+         4000,
+         3700,
+         4300,
+         4700,
+         4900,
+         5000,
+         5100
+        ]
+       },
+       {
+        "nombre": "Europa",
+        "valores": [
+         800,
+         820,
+         850,
+         900,
+         950,
+         880,
+         950,
+         1000,
+         980,
+         1000,
+         1000
+        ]
+       },
+       {
+        "nombre": "Resto del mundo",
+        "valores": [
+         3000,
+         3100,
+         3300,
+         3500,
+         3700,
+         3400,
+         3900,
+         4200,
+         4300,
+         4400,
+         4500
+        ]
+       }
+      ],
+      "normalizar": true,
+      "destacar": 1
+     }
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "area-apilada",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "area-apilada · media página"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "El mismo gráfico a media página: 324 px en papel y 284 en panel compacto (lo que ve un bloque `figuras` o el tablero)."
+     ]
+    },
+    {
+     "b": "figuras",
+     "items": [
+      {
+       "id": "area-apilada-medio-papel",
+       "tipo": "papel",
+       "kicker": "EXPORTACIONES POR DESTINO · % DEL TOTAL",
+       "titular": [
+        "Vendemos menos a EE. UU.",
+        "y más a los vecinos"
+       ],
+       "cifra_ids": [
+        "cat-area-apilada"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla area-apilada",
+       "pie": "area-apilada en papel.",
+       "indice": "area-apilada · papel",
+       "grafico": {
+        "tipo": "area_apilada",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "etiquetasX": [
+         "2015",
+         "2016",
+         "2017",
+         "2018",
+         "2019",
+         "2020",
+         "2021",
+         "2022",
+         "2023",
+         "2024",
+         "2025"
+        ],
+        "partes": [
+         {
+          "nombre": "EE. UU.",
+          "valores": [
+           3700,
+           3800,
+           3900,
+           4000,
+           4100,
+           3900,
+           4300,
+           4600,
+           4700,
+           4800,
+           4900
+          ]
+         },
+         {
+          "nombre": "Centroamérica",
+          "valores": [
+           3200,
+           3400,
+           3600,
+           3800,
+           4000,
+           3700,
+           4300,
+           4700,
+           4900,
+           5000,
+           5100
+          ]
+         },
+         {
+          "nombre": "Europa",
+          "valores": [
+           800,
+           820,
+           850,
+           900,
+           950,
+           880,
+           950,
+           1000,
+           980,
+           1000,
+           1000
+          ]
+         },
+         {
+          "nombre": "Resto del mundo",
+          "valores": [
+           3000,
+           3100,
+           3300,
+           3500,
+           3700,
+           3400,
+           3900,
+           4200,
+           4300,
+           4400,
+           4500
+          ]
+         }
+        ],
+        "normalizar": true,
+        "destacar": 1
+       },
+       "alto": 220
+      },
+      {
+       "id": "area-apilada-medio-panel",
+       "tipo": "panel",
+       "kicker": "EXPORTACIONES POR DESTINO · % DEL TOTAL",
+       "titular": [
+        "Vendemos menos a EE. UU.",
+        "y más a los vecinos"
+       ],
+       "cifra_ids": [
+        "cat-area-apilada"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla area-apilada",
+       "pie": "area-apilada en panel.",
+       "indice": "area-apilada · panel",
+       "grafico": {
+        "tipo": "area_apilada",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "etiquetasX": [
+         "2015",
+         "2016",
+         "2017",
+         "2018",
+         "2019",
+         "2020",
+         "2021",
+         "2022",
+         "2023",
+         "2024",
+         "2025"
+        ],
+        "partes": [
+         {
+          "nombre": "EE. UU.",
+          "valores": [
+           3700,
+           3800,
+           3900,
+           4000,
+           4100,
+           3900,
+           4300,
+           4600,
+           4700,
+           4800,
+           4900
+          ]
+         },
+         {
+          "nombre": "Centroamérica",
+          "valores": [
+           3200,
+           3400,
+           3600,
+           3800,
+           4000,
+           3700,
+           4300,
+           4700,
+           4900,
+           5000,
+           5100
+          ]
+         },
+         {
+          "nombre": "Europa",
+          "valores": [
+           800,
+           820,
+           850,
+           900,
+           950,
+           880,
+           950,
+           1000,
+           980,
+           1000,
+           1000
+          ]
+         },
+         {
+          "nombre": "Resto del mundo",
+          "valores": [
+           3000,
+           3100,
+           3300,
+           3500,
+           3700,
+           3400,
+           3900,
+           4200,
+           4300,
+           4400,
+           4500
+          ]
+         }
+        ],
+        "normalizar": true,
+        "destacar": 1
+       },
+       "alto": 220
+      }
+     ]
+    }
+   ]
   },
   {
    "tipo": "cuerpo",
@@ -551,6 +1528,1841 @@
   },
   {
    "tipo": "cuerpo",
+   "id": "cat-bullet",
+   "seccion": "bullet",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "bullet · papel"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "Campos: items, meta, texto_meta, maximo, destacar. Formato: {\"prefijo\": \"\", \"sufijo\": \"%\", \"decimales\": 1, \"miles\": true, \"escala\": 1}."
+     ]
+    },
+    {
+     "b": "figura",
+     "id": "bullet-papel",
+     "tipo": "papel",
+     "kicker": "EJECUCIÓN PRESUPUESTARIA 2025 · % DEL VIGENTE",
+     "titular": [
+      "Comunicaciones dejó",
+      "sin gastar casi un tercio"
+     ],
+     "cifra_ids": [
+      "cat-bullet"
+     ],
+     "fuente": "Catálogo · cifras de ejemplo de la plantilla bullet",
+     "pie": "bullet en papel.",
+     "indice": "bullet · papel",
+     "grafico": {
+      "tipo": "bullet",
+      "formato": {
+       "prefijo": "",
+       "sufijo": "%",
+       "decimales": 1,
+       "miles": true,
+       "escala": 1
+      },
+      "items": [
+       {
+        "nombre": "Educación",
+        "valor": 95.1
+       },
+       {
+        "nombre": "Gobernación",
+        "valor": 90.3
+       },
+       {
+        "nombre": "Salud",
+        "valor": 88.2
+       },
+       {
+        "nombre": "Comunicaciones",
+        "valor": 71.4
+       }
+      ],
+      "meta": 100,
+      "texto_meta": "meta",
+      "maximo": null,
+      "destacar": 3
+     }
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "bullet",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "bullet · media página"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "El mismo gráfico a media página: 324 px en papel y 284 en panel compacto (lo que ve un bloque `figuras` o el tablero)."
+     ]
+    },
+    {
+     "b": "figuras",
+     "items": [
+      {
+       "id": "bullet-medio-papel",
+       "tipo": "papel",
+       "kicker": "EJECUCIÓN PRESUPUESTARIA 2025 · % DEL VIGENTE",
+       "titular": [
+        "Comunicaciones dejó",
+        "sin gastar casi un tercio"
+       ],
+       "cifra_ids": [
+        "cat-bullet"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla bullet",
+       "pie": "bullet en papel.",
+       "indice": "bullet · papel",
+       "grafico": {
+        "tipo": "bullet",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "%",
+         "decimales": 1,
+         "miles": true,
+         "escala": 1
+        },
+        "items": [
+         {
+          "nombre": "Educación",
+          "valor": 95.1
+         },
+         {
+          "nombre": "Gobernación",
+          "valor": 90.3
+         },
+         {
+          "nombre": "Salud",
+          "valor": 88.2
+         },
+         {
+          "nombre": "Comunicaciones",
+          "valor": 71.4
+         }
+        ],
+        "meta": 100,
+        "texto_meta": "meta",
+        "maximo": null,
+        "destacar": 3
+       },
+       "alto": 220
+      },
+      {
+       "id": "bullet-medio-panel",
+       "tipo": "panel",
+       "kicker": "EJECUCIÓN PRESUPUESTARIA 2025 · % DEL VIGENTE",
+       "titular": [
+        "Comunicaciones dejó",
+        "sin gastar casi un tercio"
+       ],
+       "cifra_ids": [
+        "cat-bullet"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla bullet",
+       "pie": "bullet en panel.",
+       "indice": "bullet · panel",
+       "grafico": {
+        "tipo": "bullet",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "%",
+         "decimales": 1,
+         "miles": true,
+         "escala": 1
+        },
+        "items": [
+         {
+          "nombre": "Educación",
+          "valor": 95.1
+         },
+         {
+          "nombre": "Gobernación",
+          "valor": 90.3
+         },
+         {
+          "nombre": "Salud",
+          "valor": 88.2
+         },
+         {
+          "nombre": "Comunicaciones",
+          "valor": 71.4
+         }
+        ],
+        "meta": 100,
+        "texto_meta": "meta",
+        "maximo": null,
+        "destacar": 3
+       },
+       "alto": 220
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "id": "cat-calor",
+   "seccion": "calor",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "calor · papel"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "Campos: filas, columnas, valores, clases, destacar. Formato: {\"prefijo\": \"\", \"sufijo\": \"\", \"decimales\": 1, \"miles\": true, \"escala\": 1}."
+     ]
+    },
+    {
+     "b": "figura",
+     "id": "calor-papel",
+     "tipo": "papel",
+     "kicker": "INFLACIÓN · VARIACIÓN INTERANUAL DEL IPC EN %",
+     "titular": [
+      "La inflación vuelve",
+      "a subir en 2026"
+     ],
+     "cifra_ids": [
+      "cat-calor"
+     ],
+     "fuente": "Catálogo · cifras de ejemplo de la plantilla calor",
+     "pie": "calor en papel.",
+     "indice": "calor · papel",
+     "nota": "Octubre a diciembre de 2026 aún sin publicar.",
+     "grafico": {
+      "tipo": "calor",
+      "formato": {
+       "prefijo": "",
+       "sufijo": "",
+       "decimales": 1,
+       "miles": true,
+       "escala": 1
+      },
+      "filas": [
+       "2023",
+       "2024",
+       "2025",
+       "2026"
+      ],
+      "columnas": [
+       "Ene",
+       "Feb",
+       "Mar",
+       "Abr",
+       "May",
+       "Jun",
+       "Jul",
+       "Ago",
+       "Sep",
+       "Oct",
+       "Nov",
+       "Dic"
+      ],
+      "valores": [
+       [
+        9,
+        8.7,
+        8.7,
+        7.9,
+        6.3,
+        4.9,
+        4.3,
+        4.6,
+        4.5,
+        4.2,
+        4.4,
+        4.2
+       ],
+       [
+        3.9,
+        3.5,
+        3.3,
+        3,
+        3.5,
+        3.4,
+        3,
+        2.9,
+        2.6,
+        2.4,
+        2.3,
+        1.7
+       ],
+       [
+        1.7,
+        1.6,
+        1.8,
+        1.6,
+        1.9,
+        1.7,
+        1.6,
+        1.5,
+        1.5,
+        1.7,
+        1.7,
+        1.8
+       ],
+       [
+        2,
+        2.4,
+        2.9,
+        3.6,
+        4.3,
+        4.7,
+        5.1,
+        5.4,
+        5.6,
+        null,
+        null,
+        null
+       ]
+      ],
+      "clases": 5,
+      "destacar": {
+       "fila": 3,
+       "col": 8
+      }
+     }
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "calor",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "calor · media página"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "El mismo gráfico a media página: 324 px en papel y 284 en panel compacto (lo que ve un bloque `figuras` o el tablero)."
+     ]
+    },
+    {
+     "b": "figuras",
+     "items": [
+      {
+       "id": "calor-medio-papel",
+       "tipo": "papel",
+       "kicker": "INFLACIÓN · VARIACIÓN INTERANUAL DEL IPC EN %",
+       "titular": [
+        "La inflación vuelve",
+        "a subir en 2026"
+       ],
+       "cifra_ids": [
+        "cat-calor"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla calor",
+       "pie": "calor en papel.",
+       "indice": "calor · papel",
+       "nota": "Octubre a diciembre de 2026 aún sin publicar.",
+       "grafico": {
+        "tipo": "calor",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "",
+         "decimales": 1,
+         "miles": true,
+         "escala": 1
+        },
+        "filas": [
+         "2023",
+         "2024",
+         "2025",
+         "2026"
+        ],
+        "columnas": [
+         "Ene",
+         "Feb",
+         "Mar",
+         "Abr",
+         "May",
+         "Jun",
+         "Jul",
+         "Ago",
+         "Sep",
+         "Oct",
+         "Nov",
+         "Dic"
+        ],
+        "valores": [
+         [
+          9,
+          8.7,
+          8.7,
+          7.9,
+          6.3,
+          4.9,
+          4.3,
+          4.6,
+          4.5,
+          4.2,
+          4.4,
+          4.2
+         ],
+         [
+          3.9,
+          3.5,
+          3.3,
+          3,
+          3.5,
+          3.4,
+          3,
+          2.9,
+          2.6,
+          2.4,
+          2.3,
+          1.7
+         ],
+         [
+          1.7,
+          1.6,
+          1.8,
+          1.6,
+          1.9,
+          1.7,
+          1.6,
+          1.5,
+          1.5,
+          1.7,
+          1.7,
+          1.8
+         ],
+         [
+          2,
+          2.4,
+          2.9,
+          3.6,
+          4.3,
+          4.7,
+          5.1,
+          5.4,
+          5.6,
+          null,
+          null,
+          null
+         ]
+        ],
+        "clases": 5,
+        "destacar": {
+         "fila": 3,
+         "col": 8
+        }
+       },
+       "alto": 220
+      },
+      {
+       "id": "calor-medio-panel",
+       "tipo": "panel",
+       "kicker": "INFLACIÓN · VARIACIÓN INTERANUAL DEL IPC EN %",
+       "titular": [
+        "La inflación vuelve",
+        "a subir en 2026"
+       ],
+       "cifra_ids": [
+        "cat-calor"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla calor",
+       "pie": "calor en panel.",
+       "indice": "calor · panel",
+       "nota": "Octubre a diciembre de 2026 aún sin publicar.",
+       "grafico": {
+        "tipo": "calor",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "",
+         "decimales": 1,
+         "miles": true,
+         "escala": 1
+        },
+        "filas": [
+         "2023",
+         "2024",
+         "2025",
+         "2026"
+        ],
+        "columnas": [
+         "Ene",
+         "Feb",
+         "Mar",
+         "Abr",
+         "May",
+         "Jun",
+         "Jul",
+         "Ago",
+         "Sep",
+         "Oct",
+         "Nov",
+         "Dic"
+        ],
+        "valores": [
+         [
+          9,
+          8.7,
+          8.7,
+          7.9,
+          6.3,
+          4.9,
+          4.3,
+          4.6,
+          4.5,
+          4.2,
+          4.4,
+          4.2
+         ],
+         [
+          3.9,
+          3.5,
+          3.3,
+          3,
+          3.5,
+          3.4,
+          3,
+          2.9,
+          2.6,
+          2.4,
+          2.3,
+          1.7
+         ],
+         [
+          1.7,
+          1.6,
+          1.8,
+          1.6,
+          1.9,
+          1.7,
+          1.6,
+          1.5,
+          1.5,
+          1.7,
+          1.7,
+          1.8
+         ],
+         [
+          2,
+          2.4,
+          2.9,
+          3.6,
+          4.3,
+          4.7,
+          5.1,
+          5.4,
+          5.6,
+          null,
+          null,
+          null
+         ]
+        ],
+        "clases": 5,
+        "destacar": {
+         "fila": 3,
+         "col": 8
+        }
+       },
+       "alto": 220
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "id": "cat-cascada",
+   "seccion": "cascada",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "cascada · papel"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "Campos: inicio, pasos, fin, destacar. Formato: {\"prefijo\": \"Q\", \"sufijo\": \"\", \"decimales\": 0, \"miles\": true, \"escala\": 1}."
+     ]
+    },
+    {
+     "b": "figura",
+     "id": "cascada-papel",
+     "tipo": "papel",
+     "kicker": "PRESUPUESTO 2025 · MILLONES DE QUETZALES",
+     "titular": [
+      "Cada quetzal que entra",
+      "ya está comprometido"
+     ],
+     "cifra_ids": [
+      "cat-cascada"
+     ],
+     "fuente": "Catálogo · cifras de ejemplo de la plantilla cascada",
+     "pie": "cascada en papel.",
+     "indice": "cascada · papel",
+     "grafico": {
+      "tipo": "cascada",
+      "formato": {
+       "prefijo": "Q",
+       "sufijo": "",
+       "decimales": 0,
+       "miles": true,
+       "escala": 1
+      },
+      "inicio": {
+       "nombre": "Ingresos",
+       "valor": 108500
+      },
+      "pasos": [
+       {
+        "nombre": "Funcionamiento",
+        "valor": 71900,
+        "efecto": "resta"
+       },
+       {
+        "nombre": "Inversión",
+        "valor": 23600,
+        "efecto": "resta"
+       },
+       {
+        "nombre": "Intereses de la deuda",
+        "valor": 18200,
+        "efecto": "resta"
+       }
+      ],
+      "fin": {
+       "nombre": "Déficit",
+       "valor": 5200
+      },
+      "destacar": "fin"
+     }
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "cascada",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "cascada · media página"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "El mismo gráfico a media página: 324 px en papel y 284 en panel compacto (lo que ve un bloque `figuras` o el tablero)."
+     ]
+    },
+    {
+     "b": "figuras",
+     "items": [
+      {
+       "id": "cascada-medio-papel",
+       "tipo": "papel",
+       "kicker": "PRESUPUESTO 2025 · MILLONES DE QUETZALES",
+       "titular": [
+        "Cada quetzal que entra",
+        "ya está comprometido"
+       ],
+       "cifra_ids": [
+        "cat-cascada"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla cascada",
+       "pie": "cascada en papel.",
+       "indice": "cascada · papel",
+       "grafico": {
+        "tipo": "cascada",
+        "formato": {
+         "prefijo": "Q",
+         "sufijo": "",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "inicio": {
+         "nombre": "Ingresos",
+         "valor": 108500
+        },
+        "pasos": [
+         {
+          "nombre": "Funcionamiento",
+          "valor": 71900,
+          "efecto": "resta"
+         },
+         {
+          "nombre": "Inversión",
+          "valor": 23600,
+          "efecto": "resta"
+         },
+         {
+          "nombre": "Intereses de la deuda",
+          "valor": 18200,
+          "efecto": "resta"
+         }
+        ],
+        "fin": {
+         "nombre": "Déficit",
+         "valor": 5200
+        },
+        "destacar": "fin"
+       },
+       "alto": 220
+      },
+      {
+       "id": "cascada-medio-panel",
+       "tipo": "panel",
+       "kicker": "PRESUPUESTO 2025 · MILLONES DE QUETZALES",
+       "titular": [
+        "Cada quetzal que entra",
+        "ya está comprometido"
+       ],
+       "cifra_ids": [
+        "cat-cascada"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla cascada",
+       "pie": "cascada en panel.",
+       "indice": "cascada · panel",
+       "grafico": {
+        "tipo": "cascada",
+        "formato": {
+         "prefijo": "Q",
+         "sufijo": "",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "inicio": {
+         "nombre": "Ingresos",
+         "valor": 108500
+        },
+        "pasos": [
+         {
+          "nombre": "Funcionamiento",
+          "valor": 71900,
+          "efecto": "resta"
+         },
+         {
+          "nombre": "Inversión",
+          "valor": 23600,
+          "efecto": "resta"
+         },
+         {
+          "nombre": "Intereses de la deuda",
+          "valor": 18200,
+          "efecto": "resta"
+         }
+        ],
+        "fin": {
+         "nombre": "Déficit",
+         "valor": 5200
+        },
+        "destacar": "fin"
+       },
+       "alto": 220
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "cascada",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "cascada · panel a toda columna"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "La tarjeta hecha página: fondo de paleta y 612 px de ancho para el gráfico."
+     ]
+    },
+    {
+     "b": "figura",
+     "id": "cascada-panel",
+     "tipo": "panel",
+     "kicker": "PRESUPUESTO 2025 · MILLONES DE QUETZALES",
+     "titular": [
+      "Cada quetzal que entra",
+      "ya está comprometido"
+     ],
+     "cifra_ids": [
+      "cat-cascada"
+     ],
+     "fuente": "Catálogo · cifras de ejemplo de la plantilla cascada",
+     "pie": "cascada en panel.",
+     "indice": "cascada · panel",
+     "grafico": {
+      "tipo": "cascada",
+      "formato": {
+       "prefijo": "Q",
+       "sufijo": "",
+       "decimales": 0,
+       "miles": true,
+       "escala": 1
+      },
+      "inicio": {
+       "nombre": "Ingresos",
+       "valor": 108500
+      },
+      "pasos": [
+       {
+        "nombre": "Funcionamiento",
+        "valor": 71900,
+        "efecto": "resta"
+       },
+       {
+        "nombre": "Inversión",
+        "valor": 23600,
+        "efecto": "resta"
+       },
+       {
+        "nombre": "Intereses de la deuda",
+        "valor": 18200,
+        "efecto": "resta"
+       }
+      ],
+      "fin": {
+       "nombre": "Déficit",
+       "valor": 5200
+      },
+      "destacar": "fin"
+     },
+     "alto": 300
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "cascada",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "cascada · tarjeta frente a papel"
+    },
+    {
+     "b": "figuras",
+     "items": [
+      {
+       "id": "cascada-tarjeta",
+       "tipo": "tarjeta",
+       "kicker": "PRESUPUESTO 2025 · MILLONES DE QUETZALES",
+       "titular": [
+        "Cada quetzal que entra",
+        "ya está comprometido"
+       ],
+       "cifra_ids": [
+        "cat-cascada"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla cascada",
+       "pie": "cascada en tarjeta.",
+       "indice": "cascada · tarjeta",
+       "plantilla": "cascada",
+       "datos": {
+        "formato": {
+         "prefijo": "Q",
+         "sufijo": "",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "inicio": {
+         "nombre": "Ingresos",
+         "valor": 108500
+        },
+        "pasos": [
+         {
+          "nombre": "Funcionamiento",
+          "valor": 71900,
+          "efecto": "resta"
+         },
+         {
+          "nombre": "Inversión",
+          "valor": 23600,
+          "efecto": "resta"
+         },
+         {
+          "nombre": "Intereses de la deuda",
+          "valor": 18200,
+          "efecto": "resta"
+         }
+        ],
+        "fin": {
+         "nombre": "Déficit",
+         "valor": 5200
+        },
+        "destacar": "fin"
+       },
+       "alt": "Tarjeta cascada de ejemplo."
+      },
+      {
+       "id": "cascada-vs-papel",
+       "tipo": "papel",
+       "kicker": "PRESUPUESTO 2025 · MILLONES DE QUETZALES",
+       "titular": [
+        "Cada quetzal que entra",
+        "ya está comprometido"
+       ],
+       "cifra_ids": [
+        "cat-cascada"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla cascada",
+       "pie": "cascada en papel.",
+       "indice": "cascada · papel",
+       "grafico": {
+        "tipo": "cascada",
+        "formato": {
+         "prefijo": "Q",
+         "sufijo": "",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "inicio": {
+         "nombre": "Ingresos",
+         "valor": 108500
+        },
+        "pasos": [
+         {
+          "nombre": "Funcionamiento",
+          "valor": 71900,
+          "efecto": "resta"
+         },
+         {
+          "nombre": "Inversión",
+          "valor": 23600,
+          "efecto": "resta"
+         },
+         {
+          "nombre": "Intereses de la deuda",
+          "valor": 18200,
+          "efecto": "resta"
+         }
+        ],
+        "fin": {
+         "nombre": "Déficit",
+         "valor": 5200
+        },
+        "destacar": "fin"
+       },
+       "alto": 260
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "id": "cat-cifra",
+   "seccion": "cifra",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "cifra · papel"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "Campos: cifra, contexto, tendencia, comparacion. Formato: {\"prefijo\": \"US$\", \"sufijo\": \"\", \"decimales\": 0, \"miles\": true, \"escala\": 1}."
+     ]
+    },
+    {
+     "b": "figura",
+     "id": "cifra-papel",
+     "tipo": "papel",
+     "kicker": "PETRÓLEO CRUDO · BRENT · US$ POR BARRIL",
+     "titular": [
+      "El crudo cerró",
+      "septiembre en US$102"
+     ],
+     "cifra_ids": [
+      "cat-cifra"
+     ],
+     "fuente": "Catálogo · cifras de ejemplo de la plantilla cifra",
+     "pie": "cifra en papel.",
+     "indice": "cifra · papel",
+     "nota": "Promedio mensual. El Brent tocó 128 el 2 de abril.",
+     "grafico": {
+      "tipo": "cifra",
+      "formato": {
+       "prefijo": "US$",
+       "sufijo": "",
+       "decimales": 0,
+       "miles": true,
+       "escala": 1
+      },
+      "cifra": {
+       "valor": 102,
+       "texto": "por barril, promedio de septiembre"
+      },
+      "contexto": "54% más que en enero",
+      "tendencia": "sube",
+      "comparacion": {
+       "etiqueta": "enero",
+       "valor": 67,
+       "etiqueta_hero": "septiembre"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "cifra",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "cifra · media página"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "El mismo gráfico a media página: 324 px en papel y 284 en panel compacto (lo que ve un bloque `figuras` o el tablero)."
+     ]
+    },
+    {
+     "b": "figuras",
+     "items": [
+      {
+       "id": "cifra-medio-papel",
+       "tipo": "papel",
+       "kicker": "PETRÓLEO CRUDO · BRENT · US$ POR BARRIL",
+       "titular": [
+        "El crudo cerró",
+        "septiembre en US$102"
+       ],
+       "cifra_ids": [
+        "cat-cifra"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla cifra",
+       "pie": "cifra en papel.",
+       "indice": "cifra · papel",
+       "nota": "Promedio mensual. El Brent tocó 128 el 2 de abril.",
+       "grafico": {
+        "tipo": "cifra",
+        "formato": {
+         "prefijo": "US$",
+         "sufijo": "",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "cifra": {
+         "valor": 102,
+         "texto": "por barril, promedio de septiembre"
+        },
+        "contexto": "54% más que en enero",
+        "tendencia": "sube",
+        "comparacion": {
+         "etiqueta": "enero",
+         "valor": 67,
+         "etiqueta_hero": "septiembre"
+        }
+       },
+       "alto": 220
+      },
+      {
+       "id": "cifra-medio-panel",
+       "tipo": "panel",
+       "kicker": "PETRÓLEO CRUDO · BRENT · US$ POR BARRIL",
+       "titular": [
+        "El crudo cerró",
+        "septiembre en US$102"
+       ],
+       "cifra_ids": [
+        "cat-cifra"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla cifra",
+       "pie": "cifra en panel.",
+       "indice": "cifra · panel",
+       "nota": "Promedio mensual. El Brent tocó 128 el 2 de abril.",
+       "grafico": {
+        "tipo": "cifra",
+        "formato": {
+         "prefijo": "US$",
+         "sufijo": "",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "cifra": {
+         "valor": 102,
+         "texto": "por barril, promedio de septiembre"
+        },
+        "contexto": "54% más que en enero",
+        "tendencia": "sube",
+        "comparacion": {
+         "etiqueta": "enero",
+         "valor": 67,
+         "etiqueta_hero": "septiembre"
+        }
+       },
+       "alto": 220
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "id": "cat-combinado",
+   "seccion": "combinado",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "combinado · papel"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "Campos: etiquetas, barras, linea, destacar, rotular. Formato: {\"prefijo\": \"\", \"sufijo\": \" M\", \"decimales\": 1, \"miles\": true, \"escala\": 1000000}."
+     ]
+    },
+    {
+     "b": "figura",
+     "id": "combinado-papel",
+     "tipo": "papel",
+     "kicker": "TURISMO INTERNACIONAL · 2019–2025",
+     "titular": [
+      "Llegan más visitantes",
+      "y gastan más"
+     ],
+     "cifra_ids": [
+      "cat-combinado"
+     ],
+     "fuente": "Catálogo · cifras de ejemplo de la plantilla combinado",
+     "pie": "combinado en papel.",
+     "indice": "combinado · papel",
+     "grafico": {
+      "tipo": "combinado",
+      "formato": {
+       "prefijo": "",
+       "sufijo": " M",
+       "decimales": 1,
+       "miles": true,
+       "escala": 1000000
+      },
+      "etiquetas": [
+       "2019",
+       "2020",
+       "2021",
+       "2022",
+       "2023",
+       "2024",
+       "2025"
+      ],
+      "barras": {
+       "nombre": "Visitantes · millones",
+       "valores": [
+        2560000,
+        1070000,
+        1440000,
+        2070000,
+        2600000,
+        3080000,
+        3300000
+       ],
+       "formato": null
+      },
+      "linea": {
+       "nombre": "Gasto por visita · US$",
+       "valores": [
+        620,
+        540,
+        700,
+        780,
+        820,
+        860,
+        900
+       ],
+       "formato": {
+        "prefijo": "$",
+        "sufijo": "",
+        "decimales": 0,
+        "miles": true,
+        "escala": 1
+       },
+       "desdeCero": false
+      },
+      "destacar": -1,
+      "rotular": null
+     }
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "combinado",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "combinado · media página"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "El mismo gráfico a media página: 324 px en papel y 284 en panel compacto (lo que ve un bloque `figuras` o el tablero)."
+     ]
+    },
+    {
+     "b": "figuras",
+     "items": [
+      {
+       "id": "combinado-medio-papel",
+       "tipo": "papel",
+       "kicker": "TURISMO INTERNACIONAL · 2019–2025",
+       "titular": [
+        "Llegan más visitantes",
+        "y gastan más"
+       ],
+       "cifra_ids": [
+        "cat-combinado"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla combinado",
+       "pie": "combinado en papel.",
+       "indice": "combinado · papel",
+       "grafico": {
+        "tipo": "combinado",
+        "formato": {
+         "prefijo": "",
+         "sufijo": " M",
+         "decimales": 1,
+         "miles": true,
+         "escala": 1000000
+        },
+        "etiquetas": [
+         "2019",
+         "2020",
+         "2021",
+         "2022",
+         "2023",
+         "2024",
+         "2025"
+        ],
+        "barras": {
+         "nombre": "Visitantes · millones",
+         "valores": [
+          2560000,
+          1070000,
+          1440000,
+          2070000,
+          2600000,
+          3080000,
+          3300000
+         ],
+         "formato": null
+        },
+        "linea": {
+         "nombre": "Gasto por visita · US$",
+         "valores": [
+          620,
+          540,
+          700,
+          780,
+          820,
+          860,
+          900
+         ],
+         "formato": {
+          "prefijo": "$",
+          "sufijo": "",
+          "decimales": 0,
+          "miles": true,
+          "escala": 1
+         },
+         "desdeCero": false
+        },
+        "destacar": -1,
+        "rotular": null
+       },
+       "alto": 220
+      },
+      {
+       "id": "combinado-medio-panel",
+       "tipo": "panel",
+       "kicker": "TURISMO INTERNACIONAL · 2019–2025",
+       "titular": [
+        "Llegan más visitantes",
+        "y gastan más"
+       ],
+       "cifra_ids": [
+        "cat-combinado"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla combinado",
+       "pie": "combinado en panel.",
+       "indice": "combinado · panel",
+       "grafico": {
+        "tipo": "combinado",
+        "formato": {
+         "prefijo": "",
+         "sufijo": " M",
+         "decimales": 1,
+         "miles": true,
+         "escala": 1000000
+        },
+        "etiquetas": [
+         "2019",
+         "2020",
+         "2021",
+         "2022",
+         "2023",
+         "2024",
+         "2025"
+        ],
+        "barras": {
+         "nombre": "Visitantes · millones",
+         "valores": [
+          2560000,
+          1070000,
+          1440000,
+          2070000,
+          2600000,
+          3080000,
+          3300000
+         ],
+         "formato": null
+        },
+        "linea": {
+         "nombre": "Gasto por visita · US$",
+         "valores": [
+          620,
+          540,
+          700,
+          780,
+          820,
+          860,
+          900
+         ],
+         "formato": {
+          "prefijo": "$",
+          "sufijo": "",
+          "decimales": 0,
+          "miles": true,
+          "escala": 1
+         },
+         "desdeCero": false
+        },
+        "destacar": -1,
+        "rotular": null
+       },
+       "alto": 220
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "id": "cat-dispersion",
+   "seccion": "dispersion",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "dispersion · papel"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "Campos: formatoX, formatoY, ejeX, ejeY, puntos, rotular, destacar, guias, desdeCero. Formato: {\"prefijo\": \"\", \"sufijo\": \"%\", \"decimales\": 0, \"miles\": true, \"escala\": 1}."
+     ]
+    },
+    {
+     "b": "figura",
+     "id": "dispersion-papel",
+     "tipo": "papel",
+     "kicker": "POBREZA Y DESNUTRICIÓN · % POR DEPARTAMENTO",
+     "titular": [
+      "Donde hay más pobreza",
+      "hay más niños con",
+      "desnutrición crónica"
+     ],
+     "cifra_ids": [
+      "cat-dispersion"
+     ],
+     "fuente": "Catálogo · cifras de ejemplo de la plantilla dispersion",
+     "pie": "dispersion en papel.",
+     "indice": "dispersion · papel",
+     "grafico": {
+      "tipo": "dispersion",
+      "formato": {
+       "prefijo": "",
+       "sufijo": "%",
+       "decimales": 0,
+       "miles": true,
+       "escala": 1
+      },
+      "formatoX": null,
+      "formatoY": null,
+      "ejeX": "Pobreza (% de personas)",
+      "ejeY": "Desnutrición crónica (% de niños <5)",
+      "puntos": [
+       {
+        "nombre": "Guatemala",
+        "x": 33,
+        "y": 25
+       },
+       {
+        "nombre": "Alta Verapaz",
+        "x": 83,
+        "y": 50
+       },
+       {
+        "nombre": "Sololá",
+        "x": 81,
+        "y": 66
+       },
+       {
+        "nombre": "Totonicapán",
+        "x": 77,
+        "y": 68
+       },
+       {
+        "nombre": "Huehuetenango",
+        "x": 74,
+        "y": 60
+       },
+       {
+        "nombre": "Quiché",
+        "x": 74,
+        "y": 63
+       },
+       {
+        "nombre": "Chiquimula",
+        "x": 71,
+        "y": 52
+       },
+       {
+        "nombre": "Baja Verapaz",
+        "x": 67,
+        "y": 42
+       },
+       {
+        "nombre": "San Marcos",
+        "x": 60,
+        "y": 49
+       },
+       {
+        "nombre": "Petén",
+        "x": 61,
+        "y": 33
+       },
+       {
+        "nombre": "Izabal",
+        "x": 55,
+        "y": 30
+       },
+       {
+        "nombre": "Jalapa",
+        "x": 67,
+        "y": 46
+       },
+       {
+        "nombre": "Zacapa",
+        "x": 55,
+        "y": 33
+       },
+       {
+        "nombre": "Escuintla",
+        "x": 52,
+        "y": 26
+       },
+       {
+        "nombre": "Sacatepéquez",
+        "x": 41,
+        "y": 43
+       },
+       {
+        "nombre": "Quetzaltenango",
+        "x": 56,
+        "y": 45
+       },
+       {
+        "nombre": "El Progreso",
+        "x": 53,
+        "y": 28
+       },
+       {
+        "nombre": "Santa Rosa",
+        "x": 55,
+        "y": 33
+       },
+       {
+        "nombre": "Jutiapa",
+        "x": 62,
+        "y": 30
+       },
+       {
+        "nombre": "Retalhuleu",
+        "x": 56,
+        "y": 30
+       },
+       {
+        "nombre": "Suchitepéquez",
+        "x": 63,
+        "y": 37
+       },
+       {
+        "nombre": "Chimaltenango",
+        "x": 66,
+        "y": 55
+       }
+      ],
+      "rotular": [
+       "Guatemala",
+       "Alta Verapaz",
+       "Totonicapán"
+      ],
+      "destacar": "Totonicapán",
+      "guias": {
+       "x": 56,
+       "y": 47,
+       "texto": "promedio nacional"
+      },
+      "desdeCero": false
+     }
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "dispersion",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "dispersion · media página"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "El mismo gráfico a media página: 324 px en papel y 284 en panel compacto (lo que ve un bloque `figuras` o el tablero)."
+     ]
+    },
+    {
+     "b": "figuras",
+     "items": [
+      {
+       "id": "dispersion-medio-papel",
+       "tipo": "papel",
+       "kicker": "POBREZA Y DESNUTRICIÓN · % POR DEPARTAMENTO",
+       "titular": [
+        "Donde hay más pobreza",
+        "hay más niños con",
+        "desnutrición crónica"
+       ],
+       "cifra_ids": [
+        "cat-dispersion"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla dispersion",
+       "pie": "dispersion en papel.",
+       "indice": "dispersion · papel",
+       "grafico": {
+        "tipo": "dispersion",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "%",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "formatoX": null,
+        "formatoY": null,
+        "ejeX": "Pobreza (% de personas)",
+        "ejeY": "Desnutrición crónica (% de niños <5)",
+        "puntos": [
+         {
+          "nombre": "Guatemala",
+          "x": 33,
+          "y": 25
+         },
+         {
+          "nombre": "Alta Verapaz",
+          "x": 83,
+          "y": 50
+         },
+         {
+          "nombre": "Sololá",
+          "x": 81,
+          "y": 66
+         },
+         {
+          "nombre": "Totonicapán",
+          "x": 77,
+          "y": 68
+         },
+         {
+          "nombre": "Huehuetenango",
+          "x": 74,
+          "y": 60
+         },
+         {
+          "nombre": "Quiché",
+          "x": 74,
+          "y": 63
+         },
+         {
+          "nombre": "Chiquimula",
+          "x": 71,
+          "y": 52
+         },
+         {
+          "nombre": "Baja Verapaz",
+          "x": 67,
+          "y": 42
+         },
+         {
+          "nombre": "San Marcos",
+          "x": 60,
+          "y": 49
+         },
+         {
+          "nombre": "Petén",
+          "x": 61,
+          "y": 33
+         },
+         {
+          "nombre": "Izabal",
+          "x": 55,
+          "y": 30
+         },
+         {
+          "nombre": "Jalapa",
+          "x": 67,
+          "y": 46
+         },
+         {
+          "nombre": "Zacapa",
+          "x": 55,
+          "y": 33
+         },
+         {
+          "nombre": "Escuintla",
+          "x": 52,
+          "y": 26
+         },
+         {
+          "nombre": "Sacatepéquez",
+          "x": 41,
+          "y": 43
+         },
+         {
+          "nombre": "Quetzaltenango",
+          "x": 56,
+          "y": 45
+         },
+         {
+          "nombre": "El Progreso",
+          "x": 53,
+          "y": 28
+         },
+         {
+          "nombre": "Santa Rosa",
+          "x": 55,
+          "y": 33
+         },
+         {
+          "nombre": "Jutiapa",
+          "x": 62,
+          "y": 30
+         },
+         {
+          "nombre": "Retalhuleu",
+          "x": 56,
+          "y": 30
+         },
+         {
+          "nombre": "Suchitepéquez",
+          "x": 63,
+          "y": 37
+         },
+         {
+          "nombre": "Chimaltenango",
+          "x": 66,
+          "y": 55
+         }
+        ],
+        "rotular": [
+         "Guatemala",
+         "Alta Verapaz",
+         "Totonicapán"
+        ],
+        "destacar": "Totonicapán",
+        "guias": {
+         "x": 56,
+         "y": 47,
+         "texto": "promedio nacional"
+        },
+        "desdeCero": false
+       },
+       "alto": 220
+      },
+      {
+       "id": "dispersion-medio-panel",
+       "tipo": "panel",
+       "kicker": "POBREZA Y DESNUTRICIÓN · % POR DEPARTAMENTO",
+       "titular": [
+        "Donde hay más pobreza",
+        "hay más niños con",
+        "desnutrición crónica"
+       ],
+       "cifra_ids": [
+        "cat-dispersion"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla dispersion",
+       "pie": "dispersion en panel.",
+       "indice": "dispersion · panel",
+       "grafico": {
+        "tipo": "dispersion",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "%",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "formatoX": null,
+        "formatoY": null,
+        "ejeX": "Pobreza (% de personas)",
+        "ejeY": "Desnutrición crónica (% de niños <5)",
+        "puntos": [
+         {
+          "nombre": "Guatemala",
+          "x": 33,
+          "y": 25
+         },
+         {
+          "nombre": "Alta Verapaz",
+          "x": 83,
+          "y": 50
+         },
+         {
+          "nombre": "Sololá",
+          "x": 81,
+          "y": 66
+         },
+         {
+          "nombre": "Totonicapán",
+          "x": 77,
+          "y": 68
+         },
+         {
+          "nombre": "Huehuetenango",
+          "x": 74,
+          "y": 60
+         },
+         {
+          "nombre": "Quiché",
+          "x": 74,
+          "y": 63
+         },
+         {
+          "nombre": "Chiquimula",
+          "x": 71,
+          "y": 52
+         },
+         {
+          "nombre": "Baja Verapaz",
+          "x": 67,
+          "y": 42
+         },
+         {
+          "nombre": "San Marcos",
+          "x": 60,
+          "y": 49
+         },
+         {
+          "nombre": "Petén",
+          "x": 61,
+          "y": 33
+         },
+         {
+          "nombre": "Izabal",
+          "x": 55,
+          "y": 30
+         },
+         {
+          "nombre": "Jalapa",
+          "x": 67,
+          "y": 46
+         },
+         {
+          "nombre": "Zacapa",
+          "x": 55,
+          "y": 33
+         },
+         {
+          "nombre": "Escuintla",
+          "x": 52,
+          "y": 26
+         },
+         {
+          "nombre": "Sacatepéquez",
+          "x": 41,
+          "y": 43
+         },
+         {
+          "nombre": "Quetzaltenango",
+          "x": 56,
+          "y": 45
+         },
+         {
+          "nombre": "El Progreso",
+          "x": 53,
+          "y": 28
+         },
+         {
+          "nombre": "Santa Rosa",
+          "x": 55,
+          "y": 33
+         },
+         {
+          "nombre": "Jutiapa",
+          "x": 62,
+          "y": 30
+         },
+         {
+          "nombre": "Retalhuleu",
+          "x": 56,
+          "y": 30
+         },
+         {
+          "nombre": "Suchitepéquez",
+          "x": 63,
+          "y": 37
+         },
+         {
+          "nombre": "Chimaltenango",
+          "x": 66,
+          "y": 55
+         }
+        ],
+        "rotular": [
+         "Guatemala",
+         "Alta Verapaz",
+         "Totonicapán"
+        ],
+        "destacar": "Totonicapán",
+        "guias": {
+         "x": 56,
+         "y": 47,
+         "texto": "promedio nacional"
+        },
+        "desdeCero": false
+       },
+       "alto": 220
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
    "id": "cat-divergente",
    "seccion": "divergente",
    "bloques": [
@@ -766,6 +3578,806 @@
         ],
         "orden": "desc",
         "destacar": 0
+       },
+       "alto": 220
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "id": "cat-dona",
+   "seccion": "dona",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "dona · papel"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "Campos: partes, destacar, centro. Formato: {\"prefijo\": \"\", \"sufijo\": \"\", \"decimales\": 0, \"miles\": true, \"escala\": 1}."
+     ]
+    },
+    {
+     "b": "figura",
+     "id": "dona-papel",
+     "tipo": "papel",
+     "kicker": "EXPORTACIONES · % DEL VALOR TOTAL 2025",
+     "titular": [
+      "Cuatro productos",
+      "hacen un tercio"
+     ],
+     "cifra_ids": [
+      "cat-dona"
+     ],
+     "fuente": "Catálogo · cifras de ejemplo de la plantilla dona",
+     "pie": "dona en papel.",
+     "indice": "dona · papel",
+     "nota": "Porcentajes redondeados al entero.",
+     "grafico": {
+      "tipo": "dona",
+      "formato": {
+       "prefijo": "",
+       "sufijo": "",
+       "decimales": 0,
+       "miles": true,
+       "escala": 1
+      },
+      "partes": [
+       {
+        "nombre": "Prendas de vestir",
+        "valor": 12
+       },
+       {
+        "nombre": "Banano",
+        "valor": 9
+       },
+       {
+        "nombre": "Café",
+        "valor": 8
+       },
+       {
+        "nombre": "Azúcar",
+        "valor": 6
+       },
+       {
+        "nombre": "Todo lo demás",
+        "valor": 65
+       }
+      ],
+      "destacar": 0,
+      "centro": {
+       "valor": 35,
+       "texto": "en cuatro productos"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "dona",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "dona · media página"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "El mismo gráfico a media página: 324 px en papel y 284 en panel compacto (lo que ve un bloque `figuras` o el tablero)."
+     ]
+    },
+    {
+     "b": "figuras",
+     "items": [
+      {
+       "id": "dona-medio-papel",
+       "tipo": "papel",
+       "kicker": "EXPORTACIONES · % DEL VALOR TOTAL 2025",
+       "titular": [
+        "Cuatro productos",
+        "hacen un tercio"
+       ],
+       "cifra_ids": [
+        "cat-dona"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla dona",
+       "pie": "dona en papel.",
+       "indice": "dona · papel",
+       "nota": "Porcentajes redondeados al entero.",
+       "grafico": {
+        "tipo": "dona",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "partes": [
+         {
+          "nombre": "Prendas de vestir",
+          "valor": 12
+         },
+         {
+          "nombre": "Banano",
+          "valor": 9
+         },
+         {
+          "nombre": "Café",
+          "valor": 8
+         },
+         {
+          "nombre": "Azúcar",
+          "valor": 6
+         },
+         {
+          "nombre": "Todo lo demás",
+          "valor": 65
+         }
+        ],
+        "destacar": 0,
+        "centro": {
+         "valor": 35,
+         "texto": "en cuatro productos"
+        }
+       },
+       "alto": 220
+      },
+      {
+       "id": "dona-medio-panel",
+       "tipo": "panel",
+       "kicker": "EXPORTACIONES · % DEL VALOR TOTAL 2025",
+       "titular": [
+        "Cuatro productos",
+        "hacen un tercio"
+       ],
+       "cifra_ids": [
+        "cat-dona"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla dona",
+       "pie": "dona en panel.",
+       "indice": "dona · panel",
+       "nota": "Porcentajes redondeados al entero.",
+       "grafico": {
+        "tipo": "dona",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "partes": [
+         {
+          "nombre": "Prendas de vestir",
+          "valor": 12
+         },
+         {
+          "nombre": "Banano",
+          "valor": 9
+         },
+         {
+          "nombre": "Café",
+          "valor": 8
+         },
+         {
+          "nombre": "Azúcar",
+          "valor": 6
+         },
+         {
+          "nombre": "Todo lo demás",
+          "valor": 65
+         }
+        ],
+        "destacar": 0,
+        "centro": {
+         "valor": 35,
+         "texto": "en cuatro productos"
+        }
+       },
+       "alto": 220
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "dona",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "dona · panel a toda columna"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "La tarjeta hecha página: fondo de paleta y 612 px de ancho para el gráfico."
+     ]
+    },
+    {
+     "b": "figura",
+     "id": "dona-panel",
+     "tipo": "panel",
+     "kicker": "EXPORTACIONES · % DEL VALOR TOTAL 2025",
+     "titular": [
+      "Cuatro productos",
+      "hacen un tercio"
+     ],
+     "cifra_ids": [
+      "cat-dona"
+     ],
+     "fuente": "Catálogo · cifras de ejemplo de la plantilla dona",
+     "pie": "dona en panel.",
+     "indice": "dona · panel",
+     "nota": "Porcentajes redondeados al entero.",
+     "grafico": {
+      "tipo": "dona",
+      "formato": {
+       "prefijo": "",
+       "sufijo": "",
+       "decimales": 0,
+       "miles": true,
+       "escala": 1
+      },
+      "partes": [
+       {
+        "nombre": "Prendas de vestir",
+        "valor": 12
+       },
+       {
+        "nombre": "Banano",
+        "valor": 9
+       },
+       {
+        "nombre": "Café",
+        "valor": 8
+       },
+       {
+        "nombre": "Azúcar",
+        "valor": 6
+       },
+       {
+        "nombre": "Todo lo demás",
+        "valor": 65
+       }
+      ],
+      "destacar": 0,
+      "centro": {
+       "valor": 35,
+       "texto": "en cuatro productos"
+      }
+     },
+     "alto": 300
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "dona",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "dona · tarjeta frente a papel"
+    },
+    {
+     "b": "figuras",
+     "items": [
+      {
+       "id": "dona-tarjeta",
+       "tipo": "tarjeta",
+       "kicker": "EXPORTACIONES · % DEL VALOR TOTAL 2025",
+       "titular": [
+        "Cuatro productos",
+        "hacen un tercio"
+       ],
+       "cifra_ids": [
+        "cat-dona"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla dona",
+       "pie": "dona en tarjeta.",
+       "indice": "dona · tarjeta",
+       "nota": "Porcentajes redondeados al entero.",
+       "plantilla": "dona",
+       "datos": {
+        "formato": {
+         "prefijo": "",
+         "sufijo": "",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "partes": [
+         {
+          "nombre": "Prendas de vestir",
+          "valor": 12
+         },
+         {
+          "nombre": "Banano",
+          "valor": 9
+         },
+         {
+          "nombre": "Café",
+          "valor": 8
+         },
+         {
+          "nombre": "Azúcar",
+          "valor": 6
+         },
+         {
+          "nombre": "Todo lo demás",
+          "valor": 65
+         }
+        ],
+        "destacar": 0,
+        "centro": {
+         "valor": 35,
+         "texto": "en cuatro productos"
+        }
+       },
+       "alt": "Tarjeta dona de ejemplo."
+      },
+      {
+       "id": "dona-vs-papel",
+       "tipo": "papel",
+       "kicker": "EXPORTACIONES · % DEL VALOR TOTAL 2025",
+       "titular": [
+        "Cuatro productos",
+        "hacen un tercio"
+       ],
+       "cifra_ids": [
+        "cat-dona"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla dona",
+       "pie": "dona en papel.",
+       "indice": "dona · papel",
+       "nota": "Porcentajes redondeados al entero.",
+       "grafico": {
+        "tipo": "dona",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "partes": [
+         {
+          "nombre": "Prendas de vestir",
+          "valor": 12
+         },
+         {
+          "nombre": "Banano",
+          "valor": 9
+         },
+         {
+          "nombre": "Café",
+          "valor": 8
+         },
+         {
+          "nombre": "Azúcar",
+          "valor": 6
+         },
+         {
+          "nombre": "Todo lo demás",
+          "valor": 65
+         }
+        ],
+        "destacar": 0,
+        "centro": {
+         "valor": 35,
+         "texto": "en cuatro productos"
+        }
+       },
+       "alto": 260
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "id": "cat-embudo",
+   "seccion": "embudo",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "embudo · papel"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "Campos: etapas, porcentaje, misma_cohorte. Formato: {\"prefijo\": \"\", \"sufijo\": \"\", \"decimales\": 0, \"miles\": true, \"escala\": 1}."
+     ]
+    },
+    {
+     "b": "figura",
+     "id": "embudo-papel",
+     "tipo": "papel",
+     "kicker": "EXTORSIÓN · CASOS EN 2025",
+     "titular": [
+      "De cada 100 denuncias,",
+      "menos de 2 terminan",
+      "en sentencia"
+     ],
+     "cifra_ids": [
+      "cat-embudo"
+     ],
+     "fuente": "Catálogo · cifras de ejemplo de la plantilla embudo",
+     "pie": "embudo en papel.",
+     "indice": "embudo · papel",
+     "grafico": {
+      "tipo": "embudo",
+      "formato": {
+       "prefijo": "",
+       "sufijo": "",
+       "decimales": 0,
+       "miles": true,
+       "escala": 1
+      },
+      "etapas": [
+       {
+        "nombre": "Denuncias",
+        "valor": 18250
+       },
+       {
+        "nombre": "Capturas",
+        "valor": 1290
+       },
+       {
+        "nombre": "Acusaciones",
+        "valor": 610
+       },
+       {
+        "nombre": "Sentencias condenatorias",
+        "valor": 312
+       }
+      ],
+      "porcentaje": "inicio",
+      "misma_cohorte": false
+     }
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "embudo",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "embudo · media página"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "El mismo gráfico a media página: 324 px en papel y 284 en panel compacto (lo que ve un bloque `figuras` o el tablero)."
+     ]
+    },
+    {
+     "b": "figuras",
+     "items": [
+      {
+       "id": "embudo-medio-papel",
+       "tipo": "papel",
+       "kicker": "EXTORSIÓN · CASOS EN 2025",
+       "titular": [
+        "De cada 100 denuncias,",
+        "menos de 2 terminan",
+        "en sentencia"
+       ],
+       "cifra_ids": [
+        "cat-embudo"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla embudo",
+       "pie": "embudo en papel.",
+       "indice": "embudo · papel",
+       "grafico": {
+        "tipo": "embudo",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "etapas": [
+         {
+          "nombre": "Denuncias",
+          "valor": 18250
+         },
+         {
+          "nombre": "Capturas",
+          "valor": 1290
+         },
+         {
+          "nombre": "Acusaciones",
+          "valor": 610
+         },
+         {
+          "nombre": "Sentencias condenatorias",
+          "valor": 312
+         }
+        ],
+        "porcentaje": "inicio",
+        "misma_cohorte": false
+       },
+       "alto": 220
+      },
+      {
+       "id": "embudo-medio-panel",
+       "tipo": "panel",
+       "kicker": "EXTORSIÓN · CASOS EN 2025",
+       "titular": [
+        "De cada 100 denuncias,",
+        "menos de 2 terminan",
+        "en sentencia"
+       ],
+       "cifra_ids": [
+        "cat-embudo"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla embudo",
+       "pie": "embudo en panel.",
+       "indice": "embudo · panel",
+       "grafico": {
+        "tipo": "embudo",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "etapas": [
+         {
+          "nombre": "Denuncias",
+          "valor": 18250
+         },
+         {
+          "nombre": "Capturas",
+          "valor": 1290
+         },
+         {
+          "nombre": "Acusaciones",
+          "valor": 610
+         },
+         {
+          "nombre": "Sentencias condenatorias",
+          "valor": 312
+         }
+        ],
+        "porcentaje": "inicio",
+        "misma_cohorte": false
+       },
+       "alto": 220
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "id": "cat-hemiciclo",
+   "seccion": "hemiciclo",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "hemiciclo · papel"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "Campos: total, bloques, mayoria, destacar. Formato: {\"prefijo\": \"\", \"sufijo\": \"\", \"decimales\": 0, \"miles\": true, \"escala\": 1}."
+     ]
+    },
+    {
+     "b": "figura",
+     "id": "hemiciclo-papel",
+     "tipo": "papel",
+     "kicker": "CONGRESO 2024–2028 · CURULES POR BLOQUE",
+     "titular": [
+      "160 curules y",
+      "ninguna mayoría"
+     ],
+     "cifra_ids": [
+      "cat-hemiciclo"
+     ],
+     "fuente": "Catálogo · cifras de ejemplo de la plantilla hemiciclo",
+     "pie": "hemiciclo en papel.",
+     "indice": "hemiciclo · papel",
+     "grafico": {
+      "tipo": "hemiciclo",
+      "formato": {
+       "prefijo": "",
+       "sufijo": "",
+       "decimales": 0,
+       "miles": true,
+       "escala": 1
+      },
+      "total": 160,
+      "bloques": [
+       {
+        "nombre": "Vamos",
+        "curules": 39
+       },
+       {
+        "nombre": "UNE",
+        "curules": 28
+       },
+       {
+        "nombre": "Semilla",
+        "curules": 23
+       },
+       {
+        "nombre": "Cabal",
+        "curules": 18
+       },
+       {
+        "nombre": "Viva",
+        "curules": 11
+       },
+       {
+        "nombre": "Valor",
+        "curules": 7
+       },
+       {
+        "nombre": "Todos",
+        "curules": 6
+       },
+       {
+        "nombre": "Otros",
+        "curules": 28
+       }
+      ],
+      "mayoria": "simple",
+      "destacar": 2
+     }
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "hemiciclo",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "hemiciclo · media página"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "El mismo gráfico a media página: 324 px en papel y 284 en panel compacto (lo que ve un bloque `figuras` o el tablero)."
+     ]
+    },
+    {
+     "b": "figuras",
+     "items": [
+      {
+       "id": "hemiciclo-medio-papel",
+       "tipo": "papel",
+       "kicker": "CONGRESO 2024–2028 · CURULES POR BLOQUE",
+       "titular": [
+        "160 curules y",
+        "ninguna mayoría"
+       ],
+       "cifra_ids": [
+        "cat-hemiciclo"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla hemiciclo",
+       "pie": "hemiciclo en papel.",
+       "indice": "hemiciclo · papel",
+       "grafico": {
+        "tipo": "hemiciclo",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "total": 160,
+        "bloques": [
+         {
+          "nombre": "Vamos",
+          "curules": 39
+         },
+         {
+          "nombre": "UNE",
+          "curules": 28
+         },
+         {
+          "nombre": "Semilla",
+          "curules": 23
+         },
+         {
+          "nombre": "Cabal",
+          "curules": 18
+         },
+         {
+          "nombre": "Viva",
+          "curules": 11
+         },
+         {
+          "nombre": "Valor",
+          "curules": 7
+         },
+         {
+          "nombre": "Todos",
+          "curules": 6
+         },
+         {
+          "nombre": "Otros",
+          "curules": 28
+         }
+        ],
+        "mayoria": "simple",
+        "destacar": 2
+       },
+       "alto": 220
+      },
+      {
+       "id": "hemiciclo-medio-panel",
+       "tipo": "panel",
+       "kicker": "CONGRESO 2024–2028 · CURULES POR BLOQUE",
+       "titular": [
+        "160 curules y",
+        "ninguna mayoría"
+       ],
+       "cifra_ids": [
+        "cat-hemiciclo"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla hemiciclo",
+       "pie": "hemiciclo en panel.",
+       "indice": "hemiciclo · panel",
+       "grafico": {
+        "tipo": "hemiciclo",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "total": 160,
+        "bloques": [
+         {
+          "nombre": "Vamos",
+          "curules": 39
+         },
+         {
+          "nombre": "UNE",
+          "curules": 28
+         },
+         {
+          "nombre": "Semilla",
+          "curules": 23
+         },
+         {
+          "nombre": "Cabal",
+          "curules": 18
+         },
+         {
+          "nombre": "Viva",
+          "curules": 11
+         },
+         {
+          "nombre": "Valor",
+          "curules": 7
+         },
+         {
+          "nombre": "Todos",
+          "curules": 6
+         },
+         {
+          "nombre": "Otros",
+          "curules": 28
+         }
+        ],
+        "mayoria": "simple",
+        "destacar": 2
        },
        "alto": 220
       }
@@ -1113,6 +4725,227 @@
         "rotularFin": null,
         "hitos": [],
         "periodos": null
+       },
+       "alto": 220
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "id": "cat-linea-tiempo",
+   "seccion": "linea-tiempo",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "linea-tiempo · papel"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "Campos: eventos, proporcional, forma, destacar. Formato: {\"prefijo\": \"\", \"sufijo\": \"\", \"decimales\": 0, \"miles\": true, \"escala\": 1}."
+     ]
+    },
+    {
+     "b": "figura",
+     "id": "linea-tiempo-papel",
+     "tipo": "papel",
+     "kicker": "SISMOS · MUERTES ESTIMADAS",
+     "titular": [
+      "La tierra se mueve",
+      "y reescribe la historia"
+     ],
+     "cifra_ids": [
+      "cat-linea-tiempo"
+     ],
+     "fuente": "Catálogo · cifras de ejemplo de la plantilla linea-tiempo",
+     "pie": "linea-tiempo en papel.",
+     "indice": "linea-tiempo · papel",
+     "grafico": {
+      "tipo": "linea_tiempo",
+      "formato": {
+       "prefijo": "",
+       "sufijo": "",
+       "decimales": 0,
+       "miles": true,
+       "escala": 1
+      },
+      "eventos": [
+       {
+        "fecha": "1773",
+        "nombre": "Terremotos de Santa Marta",
+        "valor": 600,
+        "sub": "obligó a trasladar la capital"
+       },
+       {
+        "fecha": "1902",
+        "nombre": "San Marcos",
+        "valor": 2000,
+        "sub": "M 7.5"
+       },
+       {
+        "fecha": "1917",
+        "nombre": "Ciudad de Guatemala",
+        "valor": 250,
+        "sub": "M 6.0"
+       },
+       {
+        "fecha": "1976",
+        "nombre": "Motagua",
+        "valor": 23000,
+        "sub": "M 7.5"
+       },
+       {
+        "fecha": "2012",
+        "nombre": "San Marcos",
+        "valor": 44,
+        "sub": "M 7.4"
+       }
+      ],
+      "proporcional": false,
+      "forma": "barra",
+      "destacar": 3
+     }
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "linea-tiempo",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "linea-tiempo · media página"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "El mismo gráfico a media página: 324 px en papel y 284 en panel compacto (lo que ve un bloque `figuras` o el tablero)."
+     ]
+    },
+    {
+     "b": "figuras",
+     "items": [
+      {
+       "id": "linea-tiempo-medio-papel",
+       "tipo": "papel",
+       "kicker": "SISMOS · MUERTES ESTIMADAS",
+       "titular": [
+        "La tierra se mueve",
+        "y reescribe la historia"
+       ],
+       "cifra_ids": [
+        "cat-linea-tiempo"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla linea-tiempo",
+       "pie": "linea-tiempo en papel.",
+       "indice": "linea-tiempo · papel",
+       "grafico": {
+        "tipo": "linea_tiempo",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "eventos": [
+         {
+          "fecha": "1773",
+          "nombre": "Terremotos de Santa Marta",
+          "valor": 600,
+          "sub": "obligó a trasladar la capital"
+         },
+         {
+          "fecha": "1902",
+          "nombre": "San Marcos",
+          "valor": 2000,
+          "sub": "M 7.5"
+         },
+         {
+          "fecha": "1917",
+          "nombre": "Ciudad de Guatemala",
+          "valor": 250,
+          "sub": "M 6.0"
+         },
+         {
+          "fecha": "1976",
+          "nombre": "Motagua",
+          "valor": 23000,
+          "sub": "M 7.5"
+         },
+         {
+          "fecha": "2012",
+          "nombre": "San Marcos",
+          "valor": 44,
+          "sub": "M 7.4"
+         }
+        ],
+        "proporcional": false,
+        "forma": "barra",
+        "destacar": 3
+       },
+       "alto": 220
+      },
+      {
+       "id": "linea-tiempo-medio-panel",
+       "tipo": "panel",
+       "kicker": "SISMOS · MUERTES ESTIMADAS",
+       "titular": [
+        "La tierra se mueve",
+        "y reescribe la historia"
+       ],
+       "cifra_ids": [
+        "cat-linea-tiempo"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla linea-tiempo",
+       "pie": "linea-tiempo en panel.",
+       "indice": "linea-tiempo · panel",
+       "grafico": {
+        "tipo": "linea_tiempo",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "eventos": [
+         {
+          "fecha": "1773",
+          "nombre": "Terremotos de Santa Marta",
+          "valor": 600,
+          "sub": "obligó a trasladar la capital"
+         },
+         {
+          "fecha": "1902",
+          "nombre": "San Marcos",
+          "valor": 2000,
+          "sub": "M 7.5"
+         },
+         {
+          "fecha": "1917",
+          "nombre": "Ciudad de Guatemala",
+          "valor": 250,
+          "sub": "M 6.0"
+         },
+         {
+          "fecha": "1976",
+          "nombre": "Motagua",
+          "valor": 23000,
+          "sub": "M 7.5"
+         },
+         {
+          "fecha": "2012",
+          "nombre": "San Marcos",
+          "valor": 44,
+          "sub": "M 7.4"
+         }
+        ],
+        "proporcional": false,
+        "forma": "barra",
+        "destacar": 3
        },
        "alto": 220
       }
@@ -1526,9 +5359,1679 @@
    ]
   },
   {
+   "tipo": "cuerpo",
+   "id": "cat-multiples",
+   "seccion": "multiples",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "multiples · papel"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "Campos: etiquetasX, paneles, destacar, referencia, yDesdeCero. Formato: {\"prefijo\": \"\", \"sufijo\": \"\", \"decimales\": 0, \"miles\": true, \"escala\": 1}."
+     ]
+    },
+    {
+     "b": "figura",
+     "id": "multiples-papel",
+     "tipo": "papel",
+     "kicker": "PRODUCCIÓN AGRÍCOLA · ÍNDICE 2015 = 100",
+     "titular": [
+      "Seis cultivos,",
+      "seis historias"
+     ],
+     "cifra_ids": [
+      "cat-multiples"
+     ],
+     "fuente": "Catálogo · cifras de ejemplo de la plantilla multiples",
+     "pie": "multiples en papel.",
+     "indice": "multiples · papel",
+     "grafico": {
+      "tipo": "multiples",
+      "formato": {
+       "prefijo": "",
+       "sufijo": "",
+       "decimales": 0,
+       "miles": true,
+       "escala": 1
+      },
+      "etiquetasX": [
+       "2015",
+       "2016",
+       "2017",
+       "2018",
+       "2019",
+       "2020",
+       "2021",
+       "2022",
+       "2023",
+       "2024",
+       "2025"
+      ],
+      "paneles": [
+       {
+        "nombre": "Café",
+        "valores": [
+         100,
+         97,
+         95,
+         96,
+         94,
+         92,
+         93,
+         94,
+         93,
+         92,
+         92
+        ]
+       },
+       {
+        "nombre": "Azúcar",
+        "valores": [
+         100,
+         103,
+         101,
+         104,
+         106,
+         102,
+         105,
+         107,
+         106,
+         109,
+         108
+        ]
+       },
+       {
+        "nombre": "Banano",
+        "valores": [
+         100,
+         106,
+         110,
+         115,
+         118,
+         120,
+         124,
+         128,
+         130,
+         133,
+         135
+        ]
+       },
+       {
+        "nombre": "Cardamomo",
+        "valores": [
+         100,
+         108,
+         118,
+         125,
+         135,
+         150,
+         158,
+         162,
+         165,
+         168,
+         170
+        ]
+       },
+       {
+        "nombre": "Palma",
+        "valores": [
+         100,
+         112,
+         125,
+         140,
+         155,
+         165,
+         178,
+         190,
+         198,
+         205,
+         210
+        ]
+       },
+       {
+        "nombre": "Maíz",
+        "valores": [
+         100,
+         99,
+         101,
+         100,
+         98,
+         99,
+         100,
+         102,
+         101,
+         100,
+         101
+        ]
+       }
+      ],
+      "destacar": 3,
+      "referencia": {
+       "valor": 100,
+       "texto": "nivel de 2015"
+      },
+      "yDesdeCero": true
+     }
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "multiples",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "multiples · media página"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "El mismo gráfico a media página: 324 px en papel y 284 en panel compacto (lo que ve un bloque `figuras` o el tablero)."
+     ]
+    },
+    {
+     "b": "figuras",
+     "items": [
+      {
+       "id": "multiples-medio-papel",
+       "tipo": "papel",
+       "kicker": "PRODUCCIÓN AGRÍCOLA · ÍNDICE 2015 = 100",
+       "titular": [
+        "Seis cultivos,",
+        "seis historias"
+       ],
+       "cifra_ids": [
+        "cat-multiples"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla multiples",
+       "pie": "multiples en papel.",
+       "indice": "multiples · papel",
+       "grafico": {
+        "tipo": "multiples",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "etiquetasX": [
+         "2015",
+         "2016",
+         "2017",
+         "2018",
+         "2019",
+         "2020",
+         "2021",
+         "2022",
+         "2023",
+         "2024",
+         "2025"
+        ],
+        "paneles": [
+         {
+          "nombre": "Café",
+          "valores": [
+           100,
+           97,
+           95,
+           96,
+           94,
+           92,
+           93,
+           94,
+           93,
+           92,
+           92
+          ]
+         },
+         {
+          "nombre": "Azúcar",
+          "valores": [
+           100,
+           103,
+           101,
+           104,
+           106,
+           102,
+           105,
+           107,
+           106,
+           109,
+           108
+          ]
+         },
+         {
+          "nombre": "Banano",
+          "valores": [
+           100,
+           106,
+           110,
+           115,
+           118,
+           120,
+           124,
+           128,
+           130,
+           133,
+           135
+          ]
+         },
+         {
+          "nombre": "Cardamomo",
+          "valores": [
+           100,
+           108,
+           118,
+           125,
+           135,
+           150,
+           158,
+           162,
+           165,
+           168,
+           170
+          ]
+         },
+         {
+          "nombre": "Palma",
+          "valores": [
+           100,
+           112,
+           125,
+           140,
+           155,
+           165,
+           178,
+           190,
+           198,
+           205,
+           210
+          ]
+         },
+         {
+          "nombre": "Maíz",
+          "valores": [
+           100,
+           99,
+           101,
+           100,
+           98,
+           99,
+           100,
+           102,
+           101,
+           100,
+           101
+          ]
+         }
+        ],
+        "destacar": 3,
+        "referencia": {
+         "valor": 100,
+         "texto": "nivel de 2015"
+        },
+        "yDesdeCero": true
+       },
+       "alto": 220
+      },
+      {
+       "id": "multiples-medio-panel",
+       "tipo": "panel",
+       "kicker": "PRODUCCIÓN AGRÍCOLA · ÍNDICE 2015 = 100",
+       "titular": [
+        "Seis cultivos,",
+        "seis historias"
+       ],
+       "cifra_ids": [
+        "cat-multiples"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla multiples",
+       "pie": "multiples en panel.",
+       "indice": "multiples · panel",
+       "grafico": {
+        "tipo": "multiples",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "etiquetasX": [
+         "2015",
+         "2016",
+         "2017",
+         "2018",
+         "2019",
+         "2020",
+         "2021",
+         "2022",
+         "2023",
+         "2024",
+         "2025"
+        ],
+        "paneles": [
+         {
+          "nombre": "Café",
+          "valores": [
+           100,
+           97,
+           95,
+           96,
+           94,
+           92,
+           93,
+           94,
+           93,
+           92,
+           92
+          ]
+         },
+         {
+          "nombre": "Azúcar",
+          "valores": [
+           100,
+           103,
+           101,
+           104,
+           106,
+           102,
+           105,
+           107,
+           106,
+           109,
+           108
+          ]
+         },
+         {
+          "nombre": "Banano",
+          "valores": [
+           100,
+           106,
+           110,
+           115,
+           118,
+           120,
+           124,
+           128,
+           130,
+           133,
+           135
+          ]
+         },
+         {
+          "nombre": "Cardamomo",
+          "valores": [
+           100,
+           108,
+           118,
+           125,
+           135,
+           150,
+           158,
+           162,
+           165,
+           168,
+           170
+          ]
+         },
+         {
+          "nombre": "Palma",
+          "valores": [
+           100,
+           112,
+           125,
+           140,
+           155,
+           165,
+           178,
+           190,
+           198,
+           205,
+           210
+          ]
+         },
+         {
+          "nombre": "Maíz",
+          "valores": [
+           100,
+           99,
+           101,
+           100,
+           98,
+           99,
+           100,
+           102,
+           101,
+           100,
+           101
+          ]
+         }
+        ],
+        "destacar": 3,
+        "referencia": {
+         "valor": 100,
+         "texto": "nivel de 2015"
+        },
+        "yDesdeCero": true
+       },
+       "alto": 220
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "id": "cat-pendiente",
+   "seccion": "pendiente",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "pendiente · papel"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "Campos: fechas, items, destacar. Formato: {\"prefijo\": \"\", \"sufijo\": \"%\", \"decimales\": 0, \"miles\": true, \"escala\": 1}."
+     ]
+    },
+    {
+     "b": "figura",
+     "id": "pendiente-papel",
+     "tipo": "papel",
+     "kicker": "COBERTURA FORESTAL · % DEL TERRITORIO",
+     "titular": [
+      "El bosque retrocede",
+      "donde más había"
+     ],
+     "cifra_ids": [
+      "cat-pendiente"
+     ],
+     "fuente": "Catálogo · cifras de ejemplo de la plantilla pendiente",
+     "pie": "pendiente en papel.",
+     "indice": "pendiente · papel",
+     "grafico": {
+      "tipo": "pendiente",
+      "formato": {
+       "prefijo": "",
+       "sufijo": "%",
+       "decimales": 0,
+       "miles": true,
+       "escala": 1
+      },
+      "fechas": [
+       "1991",
+       "2016"
+      ],
+      "items": [
+       {
+        "nombre": "Petén",
+        "a": 67,
+        "b": 44
+       },
+       {
+        "nombre": "Nacional",
+        "a": 40,
+        "b": 33
+       },
+       {
+        "nombre": "Altiplano",
+        "a": 26,
+        "b": 23
+       }
+      ],
+      "destacar": 0
+     }
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "pendiente",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "pendiente · media página"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "El mismo gráfico a media página: 324 px en papel y 284 en panel compacto (lo que ve un bloque `figuras` o el tablero)."
+     ]
+    },
+    {
+     "b": "figuras",
+     "items": [
+      {
+       "id": "pendiente-medio-papel",
+       "tipo": "papel",
+       "kicker": "COBERTURA FORESTAL · % DEL TERRITORIO",
+       "titular": [
+        "El bosque retrocede",
+        "donde más había"
+       ],
+       "cifra_ids": [
+        "cat-pendiente"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla pendiente",
+       "pie": "pendiente en papel.",
+       "indice": "pendiente · papel",
+       "grafico": {
+        "tipo": "pendiente",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "%",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "fechas": [
+         "1991",
+         "2016"
+        ],
+        "items": [
+         {
+          "nombre": "Petén",
+          "a": 67,
+          "b": 44
+         },
+         {
+          "nombre": "Nacional",
+          "a": 40,
+          "b": 33
+         },
+         {
+          "nombre": "Altiplano",
+          "a": 26,
+          "b": 23
+         }
+        ],
+        "destacar": 0
+       },
+       "alto": 220
+      },
+      {
+       "id": "pendiente-medio-panel",
+       "tipo": "panel",
+       "kicker": "COBERTURA FORESTAL · % DEL TERRITORIO",
+       "titular": [
+        "El bosque retrocede",
+        "donde más había"
+       ],
+       "cifra_ids": [
+        "cat-pendiente"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla pendiente",
+       "pie": "pendiente en panel.",
+       "indice": "pendiente · panel",
+       "grafico": {
+        "tipo": "pendiente",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "%",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "fechas": [
+         "1991",
+         "2016"
+        ],
+        "items": [
+         {
+          "nombre": "Petén",
+          "a": 67,
+          "b": 44
+         },
+         {
+          "nombre": "Nacional",
+          "a": 40,
+          "b": 33
+         },
+         {
+          "nombre": "Altiplano",
+          "a": 26,
+          "b": 23
+         }
+        ],
+        "destacar": 0
+       },
+       "alto": 220
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "id": "cat-pesas",
+   "seccion": "pesas",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "pesas · papel"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "Campos: fechas, items, destacar, orden, desdeCero. Formato: {\"prefijo\": \"\", \"sufijo\": \"%\", \"decimales\": 1, \"miles\": true, \"escala\": 1}."
+     ]
+    },
+    {
+     "b": "figura",
+     "id": "pesas-papel",
+     "tipo": "papel",
+     "kicker": "COBERTURA ELÉCTRICA · % DE HOGARES",
+     "titular": [
+      "Alta Verapaz sigue",
+      "lejos del resto"
+     ],
+     "cifra_ids": [
+      "cat-pesas"
+     ],
+     "fuente": "Catálogo · cifras de ejemplo de la plantilla pesas",
+     "pie": "pesas en papel.",
+     "indice": "pesas · papel",
+     "grafico": {
+      "tipo": "pesas",
+      "formato": {
+       "prefijo": "",
+       "sufijo": "%",
+       "decimales": 1,
+       "miles": true,
+       "escala": 1
+      },
+      "fechas": [
+       "2000",
+       "2023"
+      ],
+      "items": [
+       {
+        "nombre": "Guatemala",
+        "a": 95.8,
+        "b": 99.4
+       },
+       {
+        "nombre": "Sacatepéquez",
+        "a": 94,
+        "b": 99.1
+       },
+       {
+        "nombre": "Quetzaltenango",
+        "a": 85,
+        "b": 97.3
+       },
+       {
+        "nombre": "Huehuetenango",
+        "a": 60.4,
+        "b": 88
+       },
+       {
+        "nombre": "Quiché",
+        "a": 52.7,
+        "b": 84.9
+       },
+       {
+        "nombre": "Petén",
+        "a": 44.1,
+        "b": 79.6
+       },
+       {
+        "nombre": "Alta Verapaz",
+        "a": 21.5,
+        "b": 53.8
+       }
+      ],
+      "destacar": 6,
+      "orden": "dado",
+      "desdeCero": true
+     }
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "pesas",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "pesas · media página"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "El mismo gráfico a media página: 324 px en papel y 284 en panel compacto (lo que ve un bloque `figuras` o el tablero)."
+     ]
+    },
+    {
+     "b": "figuras",
+     "items": [
+      {
+       "id": "pesas-medio-papel",
+       "tipo": "papel",
+       "kicker": "COBERTURA ELÉCTRICA · % DE HOGARES",
+       "titular": [
+        "Alta Verapaz sigue",
+        "lejos del resto"
+       ],
+       "cifra_ids": [
+        "cat-pesas"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla pesas",
+       "pie": "pesas en papel.",
+       "indice": "pesas · papel",
+       "grafico": {
+        "tipo": "pesas",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "%",
+         "decimales": 1,
+         "miles": true,
+         "escala": 1
+        },
+        "fechas": [
+         "2000",
+         "2023"
+        ],
+        "items": [
+         {
+          "nombre": "Guatemala",
+          "a": 95.8,
+          "b": 99.4
+         },
+         {
+          "nombre": "Sacatepéquez",
+          "a": 94,
+          "b": 99.1
+         },
+         {
+          "nombre": "Quetzaltenango",
+          "a": 85,
+          "b": 97.3
+         },
+         {
+          "nombre": "Huehuetenango",
+          "a": 60.4,
+          "b": 88
+         },
+         {
+          "nombre": "Quiché",
+          "a": 52.7,
+          "b": 84.9
+         },
+         {
+          "nombre": "Petén",
+          "a": 44.1,
+          "b": 79.6
+         },
+         {
+          "nombre": "Alta Verapaz",
+          "a": 21.5,
+          "b": 53.8
+         }
+        ],
+        "destacar": 6,
+        "orden": "dado",
+        "desdeCero": true
+       },
+       "alto": 220
+      },
+      {
+       "id": "pesas-medio-panel",
+       "tipo": "panel",
+       "kicker": "COBERTURA ELÉCTRICA · % DE HOGARES",
+       "titular": [
+        "Alta Verapaz sigue",
+        "lejos del resto"
+       ],
+       "cifra_ids": [
+        "cat-pesas"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla pesas",
+       "pie": "pesas en panel.",
+       "indice": "pesas · panel",
+       "grafico": {
+        "tipo": "pesas",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "%",
+         "decimales": 1,
+         "miles": true,
+         "escala": 1
+        },
+        "fechas": [
+         "2000",
+         "2023"
+        ],
+        "items": [
+         {
+          "nombre": "Guatemala",
+          "a": 95.8,
+          "b": 99.4
+         },
+         {
+          "nombre": "Sacatepéquez",
+          "a": 94,
+          "b": 99.1
+         },
+         {
+          "nombre": "Quetzaltenango",
+          "a": 85,
+          "b": 97.3
+         },
+         {
+          "nombre": "Huehuetenango",
+          "a": 60.4,
+          "b": 88
+         },
+         {
+          "nombre": "Quiché",
+          "a": 52.7,
+          "b": 84.9
+         },
+         {
+          "nombre": "Petén",
+          "a": 44.1,
+          "b": 79.6
+         },
+         {
+          "nombre": "Alta Verapaz",
+          "a": 21.5,
+          "b": 53.8
+         }
+        ],
+        "destacar": 6,
+        "orden": "dado",
+        "desdeCero": true
+       },
+       "alto": 220
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "id": "cat-pictograma",
+   "seccion": "pictograma",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "pictograma · papel"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "Campos: total, destacado, texto, etiqueta_destacado, etiqueta_resto, forma, por_fila. Formato: {\"prefijo\": \"\", \"sufijo\": \"\", \"decimales\": 0, \"miles\": true, \"escala\": 1}."
+     ]
+    },
+    {
+     "b": "figura",
+     "id": "pictograma-papel",
+     "tipo": "papel",
+     "kicker": "VOLCANES · ACTIVIDAD REGISTRADA",
+     "titular": [
+      "37 volcanes,",
+      "solo 3 despiertos"
+     ],
+     "cifra_ids": [
+      "cat-pictograma"
+     ],
+     "fuente": "Catálogo · cifras de ejemplo de la plantilla pictograma",
+     "pie": "pictograma en papel.",
+     "indice": "pictograma · papel",
+     "nota": "Pacaya, Fuego y Santiaguito mantienen actividad constante.",
+     "grafico": {
+      "tipo": "pictograma",
+      "formato": {
+       "prefijo": "",
+       "sufijo": "",
+       "decimales": 0,
+       "miles": true,
+       "escala": 1
+      },
+      "total": 37,
+      "destacado": 3,
+      "texto": "volcanes tienen actividad constante",
+      "etiqueta_destacado": "activo",
+      "etiqueta_resto": "inactivo",
+      "forma": "punto",
+      "por_fila": null
+     }
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "pictograma",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "pictograma · media página"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "El mismo gráfico a media página: 324 px en papel y 284 en panel compacto (lo que ve un bloque `figuras` o el tablero)."
+     ]
+    },
+    {
+     "b": "figuras",
+     "items": [
+      {
+       "id": "pictograma-medio-papel",
+       "tipo": "papel",
+       "kicker": "VOLCANES · ACTIVIDAD REGISTRADA",
+       "titular": [
+        "37 volcanes,",
+        "solo 3 despiertos"
+       ],
+       "cifra_ids": [
+        "cat-pictograma"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla pictograma",
+       "pie": "pictograma en papel.",
+       "indice": "pictograma · papel",
+       "nota": "Pacaya, Fuego y Santiaguito mantienen actividad constante.",
+       "grafico": {
+        "tipo": "pictograma",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "total": 37,
+        "destacado": 3,
+        "texto": "volcanes tienen actividad constante",
+        "etiqueta_destacado": "activo",
+        "etiqueta_resto": "inactivo",
+        "forma": "punto",
+        "por_fila": null
+       },
+       "alto": 220
+      },
+      {
+       "id": "pictograma-medio-panel",
+       "tipo": "panel",
+       "kicker": "VOLCANES · ACTIVIDAD REGISTRADA",
+       "titular": [
+        "37 volcanes,",
+        "solo 3 despiertos"
+       ],
+       "cifra_ids": [
+        "cat-pictograma"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla pictograma",
+       "pie": "pictograma en panel.",
+       "indice": "pictograma · panel",
+       "nota": "Pacaya, Fuego y Santiaguito mantienen actividad constante.",
+       "grafico": {
+        "tipo": "pictograma",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "total": 37,
+        "destacado": 3,
+        "texto": "volcanes tienen actividad constante",
+        "etiqueta_destacado": "activo",
+        "etiqueta_resto": "inactivo",
+        "forma": "punto",
+        "por_fila": null
+       },
+       "alto": 220
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "id": "cat-piramide",
+   "seccion": "piramide",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "piramide · papel"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "Campos: grupos, izquierda, derecha, destacar, rotular. Formato: {\"prefijo\": \"\", \"sufijo\": \"%\", \"decimales\": 1, \"miles\": true, \"escala\": 1}."
+     ]
+    },
+    {
+     "b": "figura",
+     "id": "piramide-papel",
+     "tipo": "papel",
+     "kicker": "POBLACIÓN POR EDAD Y SEXO · %",
+     "titular": [
+      "Un país joven:",
+      "uno de cada cinco",
+      "tiene menos de diez"
+     ],
+     "cifra_ids": [
+      "cat-piramide"
+     ],
+     "fuente": "Catálogo · cifras de ejemplo de la plantilla piramide",
+     "pie": "piramide en papel.",
+     "indice": "piramide · papel",
+     "grafico": {
+      "tipo": "piramide",
+      "formato": {
+       "prefijo": "",
+       "sufijo": "%",
+       "decimales": 1,
+       "miles": true,
+       "escala": 1
+      },
+      "grupos": [
+       "70+",
+       "60–69",
+       "50–59",
+       "40–49",
+       "30–39",
+       "20–29",
+       "10–19",
+       "0–9"
+      ],
+      "izquierda": {
+       "nombre": "Hombres",
+       "valores": [
+        1.3,
+        1.8,
+        2.8,
+        4.2,
+        6.2,
+        9,
+        10.6,
+        11.2
+       ]
+      },
+      "derecha": {
+       "nombre": "Mujeres",
+       "valores": [
+        1.6,
+        2.1,
+        3.3,
+        4.9,
+        7,
+        9.6,
+        10.6,
+        10.9
+       ]
+      },
+      "destacar": 7,
+      "rotular": null
+     }
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "piramide",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "piramide · media página"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "El mismo gráfico a media página: 324 px en papel y 284 en panel compacto (lo que ve un bloque `figuras` o el tablero)."
+     ]
+    },
+    {
+     "b": "figuras",
+     "items": [
+      {
+       "id": "piramide-medio-papel",
+       "tipo": "papel",
+       "kicker": "POBLACIÓN POR EDAD Y SEXO · %",
+       "titular": [
+        "Un país joven:",
+        "uno de cada cinco",
+        "tiene menos de diez"
+       ],
+       "cifra_ids": [
+        "cat-piramide"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla piramide",
+       "pie": "piramide en papel.",
+       "indice": "piramide · papel",
+       "grafico": {
+        "tipo": "piramide",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "%",
+         "decimales": 1,
+         "miles": true,
+         "escala": 1
+        },
+        "grupos": [
+         "70+",
+         "60–69",
+         "50–59",
+         "40–49",
+         "30–39",
+         "20–29",
+         "10–19",
+         "0–9"
+        ],
+        "izquierda": {
+         "nombre": "Hombres",
+         "valores": [
+          1.3,
+          1.8,
+          2.8,
+          4.2,
+          6.2,
+          9,
+          10.6,
+          11.2
+         ]
+        },
+        "derecha": {
+         "nombre": "Mujeres",
+         "valores": [
+          1.6,
+          2.1,
+          3.3,
+          4.9,
+          7,
+          9.6,
+          10.6,
+          10.9
+         ]
+        },
+        "destacar": 7,
+        "rotular": null
+       },
+       "alto": 220
+      },
+      {
+       "id": "piramide-medio-panel",
+       "tipo": "panel",
+       "kicker": "POBLACIÓN POR EDAD Y SEXO · %",
+       "titular": [
+        "Un país joven:",
+        "uno de cada cinco",
+        "tiene menos de diez"
+       ],
+       "cifra_ids": [
+        "cat-piramide"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla piramide",
+       "pie": "piramide en panel.",
+       "indice": "piramide · panel",
+       "grafico": {
+        "tipo": "piramide",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "%",
+         "decimales": 1,
+         "miles": true,
+         "escala": 1
+        },
+        "grupos": [
+         "70+",
+         "60–69",
+         "50–59",
+         "40–49",
+         "30–39",
+         "20–29",
+         "10–19",
+         "0–9"
+        ],
+        "izquierda": {
+         "nombre": "Hombres",
+         "valores": [
+          1.3,
+          1.8,
+          2.8,
+          4.2,
+          6.2,
+          9,
+          10.6,
+          11.2
+         ]
+        },
+        "derecha": {
+         "nombre": "Mujeres",
+         "valores": [
+          1.6,
+          2.1,
+          3.3,
+          4.9,
+          7,
+          9.6,
+          10.6,
+          10.9
+         ]
+        },
+        "destacar": 7,
+        "rotular": null
+       },
+       "alto": 220
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "id": "cat-treemap",
+   "seccion": "treemap",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "treemap · papel"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "Campos: partes, destacar, minimo_rotulo. Formato: {\"prefijo\": \"Q\", \"sufijo\": \"\", \"decimales\": 0, \"miles\": true, \"escala\": 1}."
+     ]
+    },
+    {
+     "b": "figura",
+     "id": "treemap-papel",
+     "tipo": "papel",
+     "kicker": "PRESUPUESTO 2025 · MILLONES DE QUETZALES",
+     "titular": [
+      "Educación se lleva",
+      "más que tres",
+      "ministerios juntos"
+     ],
+     "cifra_ids": [
+      "cat-treemap"
+     ],
+     "fuente": "Catálogo · cifras de ejemplo de la plantilla treemap",
+     "pie": "treemap en papel.",
+     "indice": "treemap · papel",
+     "grafico": {
+      "tipo": "treemap",
+      "formato": {
+       "prefijo": "Q",
+       "sufijo": "",
+       "decimales": 0,
+       "miles": true,
+       "escala": 1
+      },
+      "partes": [
+       {
+        "nombre": "Educación",
+        "valor": 25800
+       },
+       {
+        "nombre": "Obligaciones del Estado",
+        "valor": 22100
+       },
+       {
+        "nombre": "Servicio de la deuda",
+        "valor": 19400
+       },
+       {
+        "nombre": "Salud",
+        "valor": 14300
+       },
+       {
+        "nombre": "Comunicaciones",
+        "valor": 9800
+       },
+       {
+        "nombre": "Gobernación",
+        "valor": 8900
+       },
+       {
+        "nombre": "Defensa",
+        "valor": 4100
+       },
+       {
+        "nombre": "Agricultura",
+        "valor": 2300
+       },
+       {
+        "nombre": "Desarrollo Social",
+        "valor": 2100
+       },
+       {
+        "nombre": "Ambiente",
+        "valor": 450
+       },
+       {
+        "nombre": "Cultura",
+        "valor": 420
+       }
+      ],
+      "destacar": "Educación",
+      "minimo_rotulo": 2
+     }
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "treemap",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "treemap · media página"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "El mismo gráfico a media página: 324 px en papel y 284 en panel compacto (lo que ve un bloque `figuras` o el tablero)."
+     ]
+    },
+    {
+     "b": "figuras",
+     "items": [
+      {
+       "id": "treemap-medio-papel",
+       "tipo": "papel",
+       "kicker": "PRESUPUESTO 2025 · MILLONES DE QUETZALES",
+       "titular": [
+        "Educación se lleva",
+        "más que tres",
+        "ministerios juntos"
+       ],
+       "cifra_ids": [
+        "cat-treemap"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla treemap",
+       "pie": "treemap en papel.",
+       "indice": "treemap · papel",
+       "grafico": {
+        "tipo": "treemap",
+        "formato": {
+         "prefijo": "Q",
+         "sufijo": "",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "partes": [
+         {
+          "nombre": "Educación",
+          "valor": 25800
+         },
+         {
+          "nombre": "Obligaciones del Estado",
+          "valor": 22100
+         },
+         {
+          "nombre": "Servicio de la deuda",
+          "valor": 19400
+         },
+         {
+          "nombre": "Salud",
+          "valor": 14300
+         },
+         {
+          "nombre": "Comunicaciones",
+          "valor": 9800
+         },
+         {
+          "nombre": "Gobernación",
+          "valor": 8900
+         },
+         {
+          "nombre": "Defensa",
+          "valor": 4100
+         },
+         {
+          "nombre": "Agricultura",
+          "valor": 2300
+         },
+         {
+          "nombre": "Desarrollo Social",
+          "valor": 2100
+         },
+         {
+          "nombre": "Ambiente",
+          "valor": 450
+         },
+         {
+          "nombre": "Cultura",
+          "valor": 420
+         }
+        ],
+        "destacar": "Educación",
+        "minimo_rotulo": 2
+       },
+       "alto": 220
+      },
+      {
+       "id": "treemap-medio-panel",
+       "tipo": "panel",
+       "kicker": "PRESUPUESTO 2025 · MILLONES DE QUETZALES",
+       "titular": [
+        "Educación se lleva",
+        "más que tres",
+        "ministerios juntos"
+       ],
+       "cifra_ids": [
+        "cat-treemap"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla treemap",
+       "pie": "treemap en panel.",
+       "indice": "treemap · panel",
+       "grafico": {
+        "tipo": "treemap",
+        "formato": {
+         "prefijo": "Q",
+         "sufijo": "",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "partes": [
+         {
+          "nombre": "Educación",
+          "valor": 25800
+         },
+         {
+          "nombre": "Obligaciones del Estado",
+          "valor": 22100
+         },
+         {
+          "nombre": "Servicio de la deuda",
+          "valor": 19400
+         },
+         {
+          "nombre": "Salud",
+          "valor": 14300
+         },
+         {
+          "nombre": "Comunicaciones",
+          "valor": 9800
+         },
+         {
+          "nombre": "Gobernación",
+          "valor": 8900
+         },
+         {
+          "nombre": "Defensa",
+          "valor": 4100
+         },
+         {
+          "nombre": "Agricultura",
+          "valor": 2300
+         },
+         {
+          "nombre": "Desarrollo Social",
+          "valor": 2100
+         },
+         {
+          "nombre": "Ambiente",
+          "valor": 450
+         },
+         {
+          "nombre": "Cultura",
+          "valor": 420
+         }
+        ],
+        "destacar": "Educación",
+        "minimo_rotulo": 2
+       },
+       "alto": 220
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "id": "cat-waffle",
+   "seccion": "waffle",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "waffle · papel"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "Campos: porcentaje, etiqueta_dentro, etiqueta_resto, cifra. Formato: {\"prefijo\": \"\", \"sufijo\": \"%\", \"decimales\": 0, \"miles\": true, \"escala\": 1}."
+     ]
+    },
+    {
+     "b": "figura",
+     "id": "waffle-papel",
+     "tipo": "papel",
+     "kicker": "REMESAS · % DEL PIB 2025",
+     "titular": [
+      "Uno de cada cinco",
+      "quetzales viene de fuera"
+     ],
+     "cifra_ids": [
+      "cat-waffle"
+     ],
+     "fuente": "Catálogo · cifras de ejemplo de la plantilla waffle",
+     "pie": "waffle en papel.",
+     "indice": "waffle · papel",
+     "grafico": {
+      "tipo": "waffle",
+      "formato": {
+       "prefijo": "",
+       "sufijo": "%",
+       "decimales": 0,
+       "miles": true,
+       "escala": 1
+      },
+      "porcentaje": 20,
+      "etiqueta_dentro": "remesas",
+      "etiqueta_resto": "resto de la economía",
+      "cifra": {
+       "valor": 20,
+       "texto": "del PIB son remesas familiares"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "waffle",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "waffle · media página"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "El mismo gráfico a media página: 324 px en papel y 284 en panel compacto (lo que ve un bloque `figuras` o el tablero)."
+     ]
+    },
+    {
+     "b": "figuras",
+     "items": [
+      {
+       "id": "waffle-medio-papel",
+       "tipo": "papel",
+       "kicker": "REMESAS · % DEL PIB 2025",
+       "titular": [
+        "Uno de cada cinco",
+        "quetzales viene de fuera"
+       ],
+       "cifra_ids": [
+        "cat-waffle"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla waffle",
+       "pie": "waffle en papel.",
+       "indice": "waffle · papel",
+       "grafico": {
+        "tipo": "waffle",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "%",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "porcentaje": 20,
+        "etiqueta_dentro": "remesas",
+        "etiqueta_resto": "resto de la economía",
+        "cifra": {
+         "valor": 20,
+         "texto": "del PIB son remesas familiares"
+        }
+       },
+       "alto": 220
+      },
+      {
+       "id": "waffle-medio-panel",
+       "tipo": "panel",
+       "kicker": "REMESAS · % DEL PIB 2025",
+       "titular": [
+        "Uno de cada cinco",
+        "quetzales viene de fuera"
+       ],
+       "cifra_ids": [
+        "cat-waffle"
+       ],
+       "fuente": "Catálogo · cifras de ejemplo de la plantilla waffle",
+       "pie": "waffle en panel.",
+       "indice": "waffle · panel",
+       "grafico": {
+        "tipo": "waffle",
+        "formato": {
+         "prefijo": "",
+         "sufijo": "%",
+         "decimales": 0,
+         "miles": true,
+         "escala": 1
+        },
+        "porcentaje": 20,
+        "etiqueta_dentro": "remesas",
+        "etiqueta_resto": "resto de la economía",
+        "cifra": {
+         "valor": 20,
+         "texto": "del PIB son remesas familiares"
+        }
+       },
+       "alto": 220
+      }
+     ]
+    }
+   ]
+  },
+  {
    "tipo": "tablero",
    "titulo": "Tablero",
-   "subtitulo": "chispa, cuadros y comparacion son solo del tablero; el resto, si cabe a 324 px.",
+   "subtitulo": "chispa, cuadros y comparacion son los únicos gráficos del tablero (celdas de 64 px).",
    "cifras": [
     {
      "kicker": "Serie · chispa",
@@ -1596,12 +7099,98 @@
    ]
   },
   {
+   "tipo": "apaisada",
+   "seccion": "apaisada",
+   "lateral": [
+    {
+     "b": "titulo",
+     "texto": "Una figura ancha"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "La hoja apaisada da 600 px al gráfico."
+     ]
+    }
+   ],
+   "figura": {
+    "id": "combinado-apaisada",
+    "tipo": "panel",
+    "kicker": "TURISMO INTERNACIONAL · 2019–2025",
+    "titular": [
+     "Llegan más visitantes",
+     "y gastan más"
+    ],
+    "cifra_ids": [
+     "cat-combinado"
+    ],
+    "fuente": "Catálogo · cifras de ejemplo de la plantilla combinado",
+    "pie": "combinado en panel.",
+    "indice": "combinado · panel",
+    "grafico": {
+     "tipo": "combinado",
+     "formato": {
+      "prefijo": "",
+      "sufijo": " M",
+      "decimales": 1,
+      "miles": true,
+      "escala": 1000000
+     },
+     "etiquetas": [
+      "2019",
+      "2020",
+      "2021",
+      "2022",
+      "2023",
+      "2024",
+      "2025"
+     ],
+     "barras": {
+      "nombre": "Visitantes · millones",
+      "valores": [
+       2560000,
+       1070000,
+       1440000,
+       2070000,
+       2600000,
+       3080000,
+       3300000
+      ],
+      "formato": null
+     },
+     "linea": {
+      "nombre": "Gasto por visita · US$",
+      "valores": [
+       620,
+       540,
+       700,
+       780,
+       820,
+       860,
+       900
+      ],
+      "formato": {
+       "prefijo": "$",
+       "sufijo": "",
+       "decimales": 0,
+       "miles": true,
+       "escala": 1
+      },
+      "desdeCero": false
+     },
+     "destacar": -1,
+     "rotular": null
+    },
+    "alto": 320
+   }
+  },
+  {
    "tipo": "contraportada",
    "lema": "Un contrato, dos tamaños.",
    "ficha": [
     [
      "Tipos",
-     "5"
+     "26"
     ],
     [
      "Paleta",

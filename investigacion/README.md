@@ -25,8 +25,10 @@ python3 scripts/informe.py <dir> [--salida D] [--paleta X] [--check] [--sin-pdf]
 | `paginas/lectura.js` | `cuerpo`, `anexo`, `apaisada`, `cronologia` |
 | `paginas/sintesis.js` | `indice` (automático), `resumen`, `tablero`, `conclusiones` |
 | `paginas/anexos.js` | `metodo` (cifras desde `datos.json`), `glosario`, `tarjetas` (hoja de contacto del hilo) |
-| `graficos/*.js` | Gráficos dibujados en el documento: `barras_v`, `barras_h`, `divergente`, `agrupadas`, `linea`, `chispa`, `cuadros`, `comparacion`, `mapa` |
+| `graficos/*.js` | Gráficos dibujados en el documento (`G.<tipo>`): los 26 del catálogo de tarjetas con el **mismo `datos`** que `graficos.md` (nombre kebab o snake) más `chispa`, `cuadros`, `comparacion` (tablero) y `columnas`; `_comun.js` es el adaptador `GX` (rampa, anotar, periodos, halo, textoSobre, sinDato). `make informe-catalogo` los dibuja todos |
 | `ejemplos/dengue-2026/` | `informe.json` del hilo de dengue 2026 y su `salida/` (`informe.pdf`, `informe.html`, `figuras/`) |
+| `ejemplos/catalogo/` | generado por `scripts/catalogo_informe.py`: cada tipo de gráfico en papel a toda columna y a media página (y cuatro frente a su tarjeta) |
+| `YYYY-MM-DD-<slug>/` | entregables de `/investigacion`: `informe.json`, `salida/` y `hilo/` (ver `referencias/flujo-investigacion.md`) |
 
 `scripts/informe.py` ensambla todo en un solo `informe.html`:
 - las paletas salen de los tokens;
@@ -37,7 +39,7 @@ Después, `scripts/render_informe.js` lo imprime a PDF. Nada se edita a mano en 
 
 ## Reglas
 
-- **`informe.json` es la fuente de verdad.** La numeración de páginas, figuras y tablas, el índice y las referencias se calculan solos: en el texto se escribe `{fig:id}`, `{Fig:id}`, `{fign:id}`, `{tabla:id}`, `{Tabla:id}` o `{pag:id}`.
+- **`informe.json` es la fuente de verdad.** Lo escribe el redactor (`/investigacion`) o se escribe a mano. La numeración de páginas, figuras y tablas, el índice y las referencias se calculan solos: en el texto se escribe `{fig:id}`, `{Fig:id}`, `{fign:id}`, `{tabla:id}`, `{Tabla:id}` o `{pag:id}`.
 - **Ninguna cifra no confirmada.** Toda cifra o serie con `id` se cruza con los `datos.json` de `meta.datos` (gate I2).
 - **Papel y tinta fijos** (`#F6F2E8` y `#0C1520`); el acento sale de la paleta (`papel_tinta`, `papel_barra`). Portada, aperturas, destacado y contraportada van a sangre con el `bg/ink/a1` de la tarjeta.
 - **Tipografía y medida:** piso de 12 px, una columna de texto de ≤ 560 px y margen de 72 px.

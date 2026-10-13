@@ -705,75 +705,431 @@ const GX = (() => {
   return { fmt, lienzo, rect, linea, t, MONO, MONO_B, MONO_D, SANS, SANS_D, SANS_S, serif, indice, marcador, rampa, textoSobre, halo, anotar, periodos, sinDato };
 })();
 
+// ---- investigacion/graficos/apiladas.js
+// Apiladas · el reparto del todo por fila, a lo largo de una serie o en dos lados: apilada, area_apilada y piramide.
+// Mismo contrato que las plantillas de tarjeta (templates/graficos/apilada.html, area-apilada.html, piramide.html):
+// los porcentajes los calcula el gráfico, la parte destacada va en col.dest y el resto en la rampa de GX
+// (de oscuro a claro), con el mismo tono en las marcas y en la leyenda.
+
+// apilada · barras horizontales apiladas por fila (años o categorías), 100 % o absolutos.
+//   etiquetas[2–8], partes[2–5] {nombre, valores}, normalizar (true: cada fila suma 100 %; false: absolutos con el
+//   total al final), destacar (índice de la parte clave), rotular "todas"|"destacada", formato.
+//   Filas de 34 px con segmentos de 18; leyenda de partes en una fila bajo el gráfico. Alto: 34·n + 30 (+18 por
+//   fila extra de leyenda).
+G.apilada = (el, S, { ancho, col }) => {
+  H.assert(Array.isArray(S.etiquetas) && S.etiquetas.length >= 2 && S.etiquetas.length <= 8, "apilada admite de 2 a 8 filas (etiquetas)");
+  H.assert(Array.isArray(S.partes) && S.partes.length >= 2 && S.partes.length <= 5, "apilada admite de 2 a 5 partes");
+  const n = S.etiquetas.length, m = S.partes.length;
+  S.partes.forEach((p) => {
+    H.assert(p && typeof p.nombre === "string" && Array.isArray(p.valores) && p.valores.length === n, "cada parte necesita nombre y " + n + " valores");
+    p.valores.forEach((v) => H.assert(typeof v === "number" && v >= 0, "valores: números ≥ 0"));
+  });
+  const norm = S.normalizar !== false, hi = GX.indice(S.destacar == null ? 0 : S.destacar, m);
+  const totales = S.etiquetas.map((_, r) => S.partes.reduce((s, p) => s + p.valores[r], 0));
+  totales.forEach((t, r) => H.assert(t > 0, "la fila «" + S.etiquetas[r] + "» suma 0"));
+  const pct = (r, j) => (S.partes[j].valores[r] / totales[r]) * 100;
+  const W = ancho, fila = 34, barH = 18;
+  const rampa = GX.rampa(Math.max(2, m - 1), col).reverse();
+  let k = 0;
+  const colorDe = S.partes.map((_, j) => (j === hi ? col.dest : rampa[Math.min(k++, rampa.length - 1)]));
+  // Leyenda: swatch 10×10 + nombre, en filas de 18 px (se parte si no cabe en una).
+  const ley = S.partes.map((p, j) => ({ j, w: 16 + H.medir(p.nombre, GX.MONO) }));
+  let lx = 0, lfila = 0;
+  ley.forEach((it) => { if (lx > 0 && lx + it.w > W) { lx = 0; lfila++; } it.x = lx; it.fila = lfila; lx += it.w + 16; });
+  const Hh = n * fila + 30 + lfila * 18;
+  const svg = GX.lienzo(el, W, Hh, S.aria);
+  const colIzq = Math.ceil(Math.max(...S.etiquetas.map((e) => H.medir(String(e), GX.SANS)))) + 12;
+  const totW = norm ? 0 : Math.ceil(Math.max(...totales.map((t) => H.medir(GX.fmt(t, S.formato), GX.MONO_B)))) + 10;
+  const maxT = Math.max(...totales), util = W - colIzq - totW;
+  S.etiquetas.forEach((e, r) => {
+    const cy = r * fila + fila / 2, y = cy - barH / 2;
+    GX.t(svg, 0, cy + 5, String(e), GX.SANS, col.texto);
+    const largo = norm ? util : (totales[r] / maxT) * util;
+    let x = colIzq;
+    S.partes.forEach((p, j) => {
+      const w = (p.valores[r] / totales[r]) * largo, wDib = Math.max(0, w - (j === m - 1 ? 0 : 1));   // filo de 1 px
+      if (wDib > 0) GX.rect(svg, x, y, wDib, barH, colorDe[j]);
+      if (S.rotular !== "destacada" || j === hi) {
+        const txt = norm ? H.pct(pct(r, j)) : GX.fmt(p.valores[r], S.formato);
+        if (H.medir(txt, GX.MONO_B) <= wDib - 6) GX.t(svg, x + wDib / 2, cy + 4, txt, GX.MONO_B, GX.textoSobre(colorDe[j], col), { "text-anchor": "middle" });
+      }
+      x += w;
+    });
+    if (!norm) GX.t(svg, x + 8, cy + 4, GX.fmt(totales[r], S.formato), GX.MONO_B, col.texto);
+  });
+  const ly = n * fila + 8;
+  ley.forEach((it) => {
+    const yy = ly + it.fila * 18;
+    GX.rect(svg, it.x, yy + 1, 10, 10, colorDe[it.j]);
+    GX.t(svg, it.x + 16, yy + 10, S.partes[it.j].nombre, GX.MONO, col.texto);
+  });
+  if (norm && S.etiquetas.some((_, r) => S.partes.reduce((s, _p, j) => s + Math.round(pct(r, j)), 0) !== 100))
+    GX.anotar(el, "Los porcentajes no suman 100 por redondeo.");
+};
+
+// area_apilada · bandas apiladas a lo largo de una serie, 100 % o absolutos con eje a la izquierda.
+//   etiquetasX[5–30], partes[2–5] {nombre, valores} (partes[0] va abajo), normalizar, destacar (índice), formato.
+//   Canal derecho fijo de 120 px con nombre + valor final (una línea si cabe, si no dos); a la izquierda el % inicial
+//   (en absolutos, el eje). Etiquetas X: primera, última y cada ⌈n/6⌉ (o más espaciadas si no caben). Alto 260.
+G.area_apilada = (el, S, { ancho, alto, col }) => {
+  H.assert(Array.isArray(S.etiquetasX) && S.etiquetasX.length >= 5 && S.etiquetasX.length <= 30, "area-apilada admite de 5 a 30 puntos (etiquetasX)");
+  H.assert(Array.isArray(S.partes) && S.partes.length >= 2 && S.partes.length <= 5, "area-apilada admite de 2 a 5 partes");
+  const n = S.etiquetasX.length, m = S.partes.length;
+  S.partes.forEach((p) => {
+    H.assert(p && typeof p.nombre === "string" && p.nombre.trim() && Array.isArray(p.valores) && p.valores.length === n, "cada parte necesita nombre y " + n + " valores");
+    p.valores.forEach((v) => H.assert(typeof v === "number" && isFinite(v) && v >= 0, "valores de «" + p.nombre + "»: números ≥ 0"));
+  });
+  const norm = S.normalizar !== false, hi = GX.indice(S.destacar == null ? 0 : S.destacar, m);
+  const totales = S.etiquetasX.map((_, c) => S.partes.reduce((s, p) => s + p.valores[c], 0));
+  totales.forEach((t, c) => H.assert(t > 0, "el punto «" + S.etiquetasX[c] + "» suma 0"));
+  const acum = S.etiquetasX.map((_, c) => { let s = 0; return S.partes.map((p) => (s += p.valores[c])); });
+  const altura = (c, j) => (j < 0 ? 0 : norm ? acum[c][j] / totales[c] : acum[c][j]);
+  const pctDe = (c, j) => (S.partes[j].valores[c] / totales[c]) * 100;
+  const rampa = GX.rampa(Math.max(2, m - 1), col).reverse();
+  let k = 0;
+  const colorDe = S.partes.map((_, j) => (j === hi ? col.dest : rampa[Math.min(k++, rampa.length - 1)]));
+  const etiqIni = S.partes.map((p, j) => (norm ? H.pct(pctDe(0, j)) : GX.fmt(p.valores[0], S.formato)));
+  const etiqFin = S.partes.map((p, j) => (norm ? H.pct(pctDe(n - 1, j)) : GX.fmt(p.valores[n - 1], S.formato)));
+  const W = ancho, Hh = alto || 260, canal = 120, top = 10, y1 = Hh - 24, x1 = W - canal;
+  const SANS_HI = "800 12px Archivo, sans-serif";
+  S.partes.forEach((p) => H.assert(H.medir(p.nombre, GX.SANS_S) <= canal - 12, "doc: el nombre «" + p.nombre + "» no cabe en el canal derecho (120 px): acórtalo"));
+  const unaLinea = S.partes.every((p, j) => H.medir(p.nombre, j === hi ? SANS_HI : GX.SANS_S) + H.medir(" " + etiqFin[j], GX.MONO_B) <= canal - 12);
+  let dom = [0, 1], tk = [], fEje = S.formato;
+  if (!norm) { dom = H.dominio(totales, true); tk = H.ticks(dom[0], dom[1], 4); fEje = H.formatoEje(S.formato, tk); }
+  const izq = Math.ceil(norm ? Math.max(...etiqIni.map((s) => H.medir(s, GX.MONO))) : Math.max(...tk.map((t) => H.medir(H.num(t, fEje), GX.MONO)))) + 10;
+  const x0 = izq;
+  const sx = H.escala([0, n - 1], [x0, x1]), sy = H.escala(dom, [y1, top]);
+  const svg = GX.lienzo(el, W, Hh, S.aria);
+  if (!norm) for (const t of tk) {
+    if (t > 0) GX.linea(svg, x0, sy(t), x1, sy(t), col.suave, { "stroke-width": 1 });
+    if (t > 0) GX.t(svg, x0 - 6, sy(t) + 4, H.num(t, fEje), GX.MONO, col.texto, { "text-anchor": "end" });
+  }
+  // Bandas: path cerrado (borde superior de ida, inferior de vuelta) y filo de 1 px del fondo entre bandas.
+  const px = (c) => sx(c).toFixed(1), py = (c, j) => sy(altura(c, j)).toFixed(1);
+  const borde = (j) => S.etiquetasX.map((_, c) => (c ? "L" : "M") + px(c) + " " + py(c, j)).join(" ");
+  S.partes.forEach((_, j) => {
+    const vuelta = S.etiquetasX.map((_, c) => "L" + px(n - 1 - c) + " " + py(n - 1 - c, j - 1)).join(" ");
+    H.svgEl("path", { d: borde(j) + " " + vuelta + " Z", fill: colorDe[j] }, svg);
+  });
+  for (let j = 0; j < m - 1; j++) H.svgEl("path", { d: borde(j), fill: "none", stroke: col.sobre, "stroke-width": 1, "stroke-linejoin": "round" }, svg);
+  if (norm) for (const q of [0.25, 0.5, 0.75]) GX.linea(svg, x0, sy(q), x1, sy(q), col.sobre, { "stroke-width": 1, "stroke-dasharray": "3 6", "stroke-opacity": 0.5 });
+  GX.linea(svg, x0, y1, x1, y1, col.linea, { "stroke-width": 1 });
+  // Rótulos en el centro de cada banda; si el anti-solape los mueve, una guía fina los une a su banda.
+  const centro = (c, j) => (sy(altura(c, j)) + sy(altura(c, j - 1))) / 2;
+  const colocar = (c, gap, xBorde, xGuia, pinta) => {
+    const its = S.partes.map((_, j) => ({ j, yo: centro(c, j), y: centro(c, j) }));
+    H.antiSolape(its, { minGap: gap, min: top + (gap > 14 ? 14 : 8), max: y1 - (gap > 14 ? 16 : 8) });
+    for (const it of its) {
+      if (Math.abs(it.y - it.yo) > 6) GX.linea(svg, xBorde, it.yo, xGuia, it.y, col.suave, { "stroke-width": 1 });
+      pinta(it);
+    }
+  };
+  if (norm) colocar(0, 14, x0 - 1, x0 - 5, (it) => GX.t(svg, x0 - 6, it.y + 4, etiqIni[it.j], GX.MONO, col.texto, { "text-anchor": "end" }));
+  colocar(n - 1, unaLinea ? 14 : 28, x1 + 1, x1 + 6, (it) => {
+    const d = it.j === hi, tc = d ? (col.tinta || col.dest) : col.texto, nombre = S.partes[it.j].nombre, fn = d ? SANS_HI : GX.SANS_S;
+    if (unaLinea) {
+      const t = H.svgEl("text", { x: x1 + 8, y: it.y + 4, style: "font:" + fn + ";fill:" + tc }, svg);
+      H.svgEl("tspan", {}, t).textContent = nombre;
+      H.svgEl("tspan", { style: "font:" + GX.MONO_B }, t).textContent = " " + etiqFin[it.j];
+    } else {
+      GX.t(svg, x1 + 8, it.y - 2, nombre, fn, tc);
+      GX.t(svg, x1 + 8, it.y + 12, etiqFin[it.j], GX.MONO_B, tc);
+    }
+  });
+  // Etiquetas X: primera, última y cada ⌈n/6⌉; más espaciadas si no caben a 12 px.
+  const wX = Math.max(...S.etiquetasX.map((e) => H.medir(String(e), GX.MONO_B))), pasoPx = (x1 - x0) / (n - 1);
+  const paso = Math.max(1, Math.ceil(n / 6), Math.ceil((wX + 8) / pasoPx));
+  const idx = []; for (let c = 0; c < n; c += paso) idx.push(c);
+  if (idx[idx.length - 1] !== n - 1) { while (idx.length && (n - 1 - idx[idx.length - 1]) * pasoPx < wX + 8) idx.pop(); idx.push(n - 1); }
+  for (const c of idx) GX.t(svg, sx(c), Hh - 8, String(S.etiquetasX[c]), c === n - 1 ? GX.MONO_B : GX.MONO, col.texto, { "text-anchor": "middle" });
+  if (norm && [0, n - 1].some((c) => S.partes.reduce((s, _p, j) => s + Math.round(pctDe(c, j)), 0) !== 100))
+    GX.anotar(el, "Los porcentajes no suman 100 por redondeo.");
+};
+
+// piramide · distribución en dos lados con la misma escala (edades por sexo, grupos por zona).
+//   grupos[4–12] (de arriba abajo), izquierda {nombre, valores}, derecha {nombre, valores}, destacar (índice del
+//   grupo clave; null = ninguno), rotular null|"todos"|"destacado" (null: todos si ≤ 8 grupos y ancho ≥ 480, si no
+//   solo el destacado), formato. Columna central con los grupos; barras col.base (la derecha al 70 %) y el grupo
+//   destacado en col.dest a ambos lados; valores fuera de la barra. Alto: 24·n + 30 (nombres de lado arriba).
+G.piramide = (el, S, { ancho, col }) => {
+  H.assert(Array.isArray(S.grupos) && S.grupos.length >= 4 && S.grupos.length <= 12, "piramide admite de 4 a 12 grupos");
+  const n = S.grupos.length;
+  for (const lado of ["izquierda", "derecha"]) {
+    const L = S[lado];
+    H.assert(L && typeof L.nombre === "string" && Array.isArray(L.valores) && L.valores.length === n, lado + " necesita nombre y " + n + " valores");
+    L.valores.forEach((v) => H.assert(typeof v === "number" && v >= 0, lado + ": valores numéricos ≥ 0"));
+  }
+  const W = ancho, fila = 24, cab = 30, Hh = n * fila + cab, barH = 15;
+  const hi = GX.indice(S.destacar, n);
+  const rotTodos = S.rotular ? S.rotular === "todos" : (n <= 8 && W >= 480);
+  const f = (v) => GX.fmt(v, S.formato);
+  const todos = S.izquierda.valores.concat(S.derecha.valores), max = Math.max(...todos) || 1;
+  const colC = Math.ceil(Math.max(...S.grupos.map((g) => H.medir(String(g), GX.MONO_B)))) + 16;
+  const labW = Math.ceil(Math.max(...todos.map((v) => H.medir(f(v), GX.MONO_B)))) + 8;   // hueco del valor fuera de la barra
+  const lado = (W - colC) / 2, util = lado - labW - 6, xc0 = lado, xc1 = lado + colC;
+  const svg = GX.lienzo(el, W, Hh, S.aria);
+  GX.t(svg, xc0 - 6, 14, S.izquierda.nombre, GX.SANS, col.texto, { "text-anchor": "end" });
+  GX.t(svg, xc1 + 6, 14, S.derecha.nombre, GX.SANS, col.texto);
+  S.grupos.forEach((g, i) => {
+    const d = i === hi, cy = cab + i * fila + fila / 2, y = cy - barH / 2;
+    GX.t(svg, (xc0 + xc1) / 2, cy + 4, String(g), d ? GX.MONO_B : GX.MONO, col.texto, { "text-anchor": "middle" });
+    const vi = S.izquierda.valores[i], vd = S.derecha.valores[i], wi = (vi / max) * util, wd = (vd / max) * util;
+    GX.rect(svg, xc0 - 6 - wi, y, wi, barH, d ? col.dest : col.base);
+    GX.rect(svg, xc1 + 6, y, wd, barH, d ? col.dest : col.base, d ? {} : { "fill-opacity": 0.7 });
+    if (rotTodos || d) {
+      const tc = d ? (col.tinta || col.dest) : col.texto;
+      GX.t(svg, xc0 - 12 - wi, cy + 4, f(vi), GX.MONO_B, tc, { "text-anchor": "end" });
+      GX.t(svg, xc1 + 12 + wd, cy + 4, f(vd), GX.MONO_B, tc);
+    }
+  });
+};
+
 // ---- investigacion/graficos/barras.js
 // barras_v · periodos o grupos en columnas, una destacada (Fig. «casos a la SE 35», «edades»).
-//   etiquetas[], valores[], destacar (índice; -1 = última), rotular "todas"|"destacada",
-//   nivel (índice: línea punteada a la altura de esa barra), banda {desde, hasta, texto},
-//   marcadores [{i, n}] (círculos numerados para una lectura guiada), formato.
+//   Contrato de la tarjeta barras-v: etiquetas[], valores[] (con negativos el eje queda en el cero y el rótulo
+//   va bajo la barra), destacar (índice; -1 = última), rotular "todas"|"destacada", referencia {valor, texto}
+//   (línea punteada en el acento con rótulo), periodos [{desde, hasta, nombre}] (≤ 4 bandas con nombre arriba),
+//   formato. Extensiones del documento: nivel (índice: línea punteada a la altura de esa barra), banda {desde,
+//   hasta, texto}, marcadores [{i, n, lado}] (círculos numerados para una lectura guiada), claves (nombres
+//   largos de las etiquetas; no se dibujan). Alto por defecto 250. De 2 a 12 barras (doc: hasta 16 si el ancho
+//   es ≥ 560). Si los rótulos no caben en su hueco se rotula solo la destacada (y se anota); si las etiquetas
+//   no caben, se escriben alternas conservando la de la destacada.
 G.barras_v = (el, S, { ancho, alto, col }) => {
+  H.assert(Array.isArray(S.etiquetas) && Array.isArray(S.valores) && S.etiquetas.length === S.valores.length, "etiquetas y valores deben tener la misma longitud");
   const n = S.valores.length;
-  H.assert(n >= 2 && n <= 16 && S.etiquetas.length === n, "barras_v: 2 a 16 barras con etiquetas");
-  const W = ancho, Hh = alto || 250, arriba = 22, abajo = 22, base = Hh - abajo;
+  H.assert(n >= 2 && (n <= 12 || (n <= 16 && ancho >= 560)), n > 12 && n <= 16 ? "doc: barras_v admite hasta 16 barras solo con ancho ≥ 560 px (aquí " + ancho + ")" : "barras-v admite de 2 a 12 barras");
+  S.valores.forEach((v) => H.assert(typeof v === "number" && isFinite(v), "valores debe ser numérico"));
+  const P = H.validarPeriodos(S.periodos, n), R = S.referencia || null;
+  if (R) H.assert(typeof R.valor === "number" && isFinite(R.valor) && typeof R.texto === "string" && R.texto.trim(), "referencia necesita valor numérico y texto");
+  const W = ancho, Hh = alto || 250, arriba = P.length ? 40 : 22, abajo = 22, base = Hh - abajo;
   const svg = GX.lienzo(el, W, Hh, S.aria);
-  const max = Math.max(...S.valores) || 1, slot = W / n, bw = Math.min(40, slot * 0.6);
-  const hi = GX.indice(S.destacar == null ? -1 : S.destacar, n);
-  const y = (v) => base - (v / max) * (base - arriba);
-  if (S.banda) {
-    const x0 = S.banda.desde * slot, x1 = (S.banda.hasta + 1) * slot;
-    GX.rect(svg, x0, 0, x1 - x0, base, col.dest, { "fill-opacity": 0.1 });
-    if (S.banda.texto) GX.t(svg, x0 + 10, 18, S.banda.texto, GX.MONO_B, col.tinta || col.texto);
+  const vals = S.valores, hi = GX.indice(S.destacar == null ? -1 : S.destacar, n);
+  const dom = H.dominio(vals.concat(R ? [R.valor] : []), true);
+  // Con negativos, 16 px bajo la barra más baja para su rótulo (va debajo de la barra, como en la tarjeta).
+  const minV = Math.min(...vals);
+  if (minV < 0) { const r = 16 / (base - arriba); dom[0] = Math.min(dom[0], (minV - r * dom[1]) / (1 - r)); }
+  const y = H.escala(dom, [base, arriba]), yz = y(0);
+  const slot = W / n, bw = Math.min(40, slot * 0.6);
+  const fV = (i) => GX.fmt(vals[i], S.formato), fontV = (i) => (i === hi ? GX.MONO_D : GX.MONO_B), fontE = (i) => (i === hi ? GX.MONO_B : GX.MONO);
+  // Rótulos de valor: todos si dos vecinos no se pisan; si no, alternos (con la destacada); si ni así, solo la destacada.
+  const wV = vals.map((v, i) => H.medir(fV(i), fontV(i)));
+  const caben = (p) => wV.every((w, i) => i + p >= n || (w + wV[i + p]) / 2 <= p * slot - 4);
+  let rotular = S.rotular === "destacada" ? "destacada" : "todas", pasoV = 1;
+  if (rotular === "todas" && !caben(1)) {
+    if (caben(2)) pasoV = 2;
+    else { rotular = "destacada"; GX.anotar(el, "Se rotula solo la barra destacada: las cifras no caben a este ancho."); }
   }
-  if (S.nivel != null) GX.linea(svg, 0, y(S.valores[S.nivel]), W, y(S.valores[S.nivel]), col.dest, { "stroke-dasharray": "4 4" });
-  S.valores.forEach((v, i) => {
-    const x = i * slot + (slot - bw) / 2, d = i === hi;
-    GX.rect(svg, x, y(v), bw, base - y(v), d ? col.dest : col.base);
-    if (S.rotular !== "destacada" || d) GX.t(svg, x + bw / 2, y(v) - 8, GX.fmt(v, S.formato), d ? GX.MONO_D : GX.MONO_B, d ? (col.tinta || col.dest) : col.texto, { "text-anchor": "middle" });
-    GX.t(svg, x + bw / 2, Hh - 4, S.etiquetas[i], d ? GX.MONO_B : GX.MONO, col.texto, { "text-anchor": "middle" });
+  const etW = S.etiquetas.map((e, i) => H.medir(String(e), fontE(i)));
+  let paso = 1;
+  if (etW.some((w) => w > slot - 2)) {
+    paso = 2;
+    H.assert(etW.every((w) => w <= 2 * slot - 2), "doc: las etiquetas no caben a " + W + " px: acórtalas o usa menos barras");
+  }
+  const bordes = (i) => [i * slot, (i + 1) * slot];
+  if (P.length) GX.periodos(svg, P, bordes, 16, base, 12, col);
+  if (S.banda) {
+    const x0 = S.banda.desde * slot, x1 = (S.banda.hasta + 1) * slot, yb = P.length ? 16 : 0;
+    GX.rect(svg, x0, yb, x1 - x0, base - yb, col.dest, { "fill-opacity": 0.1 });
+    if (S.banda.texto) GX.t(svg, x0 + 10, yb + 18, S.banda.texto, GX.MONO_B, col.tinta || col.texto);
+  }
+  if (S.nivel != null) GX.linea(svg, 0, y(vals[S.nivel]), W, y(vals[S.nivel]), col.dest, { "stroke-dasharray": "4 4" });
+  vals.forEach((v, i) => {
+    const x = i * slot + (slot - bw) / 2, d = i === hi, yv = y(v);
+    GX.rect(svg, x, Math.min(yv, yz), bw, Math.abs(yz - yv), d ? col.dest : col.base);
+    if (d || (rotular === "todas" && (i - hi) % pasoV === 0)) GX.t(svg, x + bw / 2, v < 0 ? yv + (d ? 15 : 13) : yv - 8, fV(i), fontV(i), d ? (col.tinta || col.dest) : col.texto, { "text-anchor": "middle" });
+    if ((i - hi) % paso === 0) GX.t(svg, x + bw / 2, Hh - 4, String(S.etiquetas[i]), fontE(i), col.texto, { "text-anchor": "middle" });
   });
-  GX.linea(svg, 0, base, W, base, col.linea);
+  GX.linea(svg, 0, yz, W, yz, col.linea);
+  if (R) {
+    const yr = y(R.valor);
+    GX.linea(svg, 0, yr, W, yr, col.dest, { "stroke-dasharray": "5 4" });
+    GX.t(svg, W, yr - 5, R.texto.trim() + " · " + GX.fmt(R.valor, S.formato), GX.MONO_B, col.tinta || col.dest, { "text-anchor": "end" });
+  }
   for (const m of S.marcadores || []) {
     const x = m.i * slot + slot / 2 + (m.lado === "derecha" ? bw / 2 + 18 : 0);
-    GX.marcador(svg, x, Math.max(14, y(S.valores[m.i]) - (m.lado === "derecha" ? 0 : 34)), m.n, col);
+    GX.marcador(svg, x, Math.max(14, y(vals[m.i]) - (m.lado === "derecha" ? 0 : 34)), m.n, col);
   }
 };
 
-// barras_h · ranking con nombre a la izquierda y valor al final de la barra.
-//   items [{nombre, valor}], destacar (índice), formato, orden "dado"|"desc".
+// barras_h · ranking con nombre a la izquierda y valor al final de la barra (tarjeta barras-h).
+//   items [{nombre, valor, valor_texto?}] (valor_texto sustituye al número formateado), destacar (índice tras
+//   ordenar), orden "desc" (defecto) | "dado", formato. De 2 a 12 items; alto fijo n × 30. Los nombres ocupan
+//   hasta el 45 % del ancho (los que no caben bajan a 12 px).
 G.barras_h = (el, S, { ancho, col }) => {
-  const items = S.orden === "desc" ? S.items.slice().sort((a, b) => b.valor - a.valor) : S.items.slice();
-  const n = items.length, fila = 30, Hh = n * fila;
-  H.assert(n >= 2 && n <= 12, "barras_h: 2 a 12 items");
+  H.assert(Array.isArray(S.items) && S.items.length >= 2 && S.items.length <= 12, "barras_h: 2 a 12 items");
+  S.items.forEach((it) => H.assert(it && typeof it.nombre === "string" && typeof it.valor === "number", "cada item necesita nombre y valor numérico"));
+  const items = S.orden === "dado" ? S.items.slice() : S.items.slice().sort((a, b) => b.valor - a.valor);
+  const n = items.length, fila = 30, Hh = n * fila, W = ancho;
   const hi = GX.indice(S.destacar == null ? 0 : S.destacar, n);
-  const etiq = Math.ceil(Math.max(...items.map((it) => H.medir(it.nombre, GX.SANS_D)))) + 16;
-  const valW = Math.ceil(Math.max(...items.map((it) => H.medir(GX.fmt(it.valor, S.formato), GX.MONO_D)))) + 10;
-  const W = ancho, util = W - etiq - valW, max = Math.max(...items.map((it) => it.valor)) || 1;
+  const txt = (it) => (it.valor_texto != null && it.valor_texto !== "" ? String(it.valor_texto) : GX.fmt(it.valor, S.formato));
+  const maxN = Math.floor(W * 0.45) - 16;
+  const fontN = items.map((it, i) => {
+    const fn = H.encajar(it.nombre, [i === hi ? GX.SANS_D : GX.SANS, GX.SANS_S], maxN);
+    H.assert(fn, "doc: «" + it.nombre + "» no cabe en la columna de nombres (" + maxN + " px): acórtalo");
+    return fn;
+  });
+  const etiq = Math.ceil(Math.max(...items.map((it, i) => H.medir(it.nombre, fontN[i])))) + 16;
+  const valW = Math.ceil(Math.max(...items.map((it, i) => H.medir(txt(it), i === hi ? GX.MONO_D : GX.MONO_B)))) + 10;
+  const util = W - etiq - valW, max = Math.max(...items.map((it) => Math.abs(it.valor))) || 1;
   const svg = GX.lienzo(el, W, Hh, S.aria);
   items.forEach((it, i) => {
-    const d = i === hi, w = (it.valor / max) * util, yy = i * fila;
-    GX.t(svg, 0, yy + 20, it.nombre, d ? GX.SANS_D : GX.SANS, col.texto);
+    const d = i === hi, w = Math.max(2, (Math.abs(it.valor) / max) * util), yy = i * fila;
+    GX.t(svg, 0, yy + 20, it.nombre, fontN[i], col.texto);
     GX.rect(svg, etiq, yy + 7, w, 16, d ? col.dest : col.base);
-    GX.t(svg, etiq + w + 8, yy + 20, GX.fmt(it.valor, S.formato), d ? GX.MONO_D : GX.MONO_B, d ? (col.tinta || col.dest) : col.texto);
+    GX.t(svg, etiq + w + 8, yy + 20, txt(it), d ? GX.MONO_D : GX.MONO_B, d ? (col.tinta || col.dest) : col.texto);
   });
   GX.linea(svg, etiq, 0, etiq, Hh, col.linea, { "stroke-width": 1 });
 };
 
-// divergente · cambios con signo; nombre encima de cada barra (cabe a media página).
-//   items [{nombre, valor}], destacar (índice), formato (signo/sufijo).
+// divergente · cambios con signo; nombre encima de cada barra (cabe a media página). Tarjeta divergente.
+//   items [{nombre, valor}], destacar (índice tras ordenar), orden "desc" (defecto: de mayor a menor) | "dado",
+//   formato (signo siempre; sufijo). De 2 a 10 items; alto fijo n × 31.
 G.divergente = (el, S, { ancho, col }) => {
-  const n = S.items.length, fila = 31, Hh = n * fila;
+  H.assert(Array.isArray(S.items) && S.items.length >= 2 && S.items.length <= 10, "divergente admite de 2 a 10 items");
+  S.items.forEach((it) => H.assert(it && typeof it.nombre === "string" && typeof it.valor === "number", "cada item necesita nombre y valor numérico"));
+  const items = S.orden === "dado" ? S.items.slice() : S.items.slice().sort((a, b) => b.valor - a.valor);
+  const n = items.length, fila = 31, Hh = n * fila, W = ancho;
   const hi = GX.indice(S.destacar == null ? 0 : S.destacar, n);
-  const vals = S.items.map((it) => it.valor), min = Math.min(0, ...vals), max = Math.max(0, ...vals);
-  const W = ancho, margen = 44, util = W - margen * (min < 0 && max > 0 ? 2 : 1);
-  const esc = util / ((max - min) || 1), x0 = (min < 0 ? (max > 0 ? margen : margen) : 0) + (-min) * esc;
+  const fmt = Object.assign({ signo: true }, S.formato || {}), lab = (it) => GX.fmt(it.valor, fmt);
+  const vals = items.map((it) => it.valor), min = Math.min(0, ...vals), max = Math.max(0, ...vals);
+  const labW = Math.ceil(Math.max(...items.map((it) => H.medir(lab(it), GX.MONO_B)))) + 8;
+  const xL = min < 0 ? labW : 0, xR = W - (max > 0 ? labW : 0);
+  const esc = (xR - xL) / ((max - min) || 1), x0 = xL + (-min) * esc;
   const svg = GX.lienzo(el, W, Hh, S.aria);
-  S.items.forEach((it, i) => {
+  items.forEach((it, i) => {
     const d = i === hi, yy = i * fila, w = Math.abs(it.valor) * esc, x = it.valor < 0 ? x0 - w : x0;
-    GX.t(svg, 0, yy + 11, it.nombre, d ? "800 13px Archivo, sans-serif" : "600 13px Archivo, sans-serif", d ? col.dest : col.texto);
-    GX.rect(svg, x, yy + 15, w, 11, d ? col.dest : col.base);
-    const lab = GX.fmt(it.valor, S.formato);
-    GX.t(svg, it.valor < 0 ? x - 6 : x + w + 6, yy + 24, lab, GX.MONO_B, d ? col.dest : col.texto, { "text-anchor": it.valor < 0 ? "end" : "start" });
+    GX.t(svg, 0, yy + 11, it.nombre, d ? "800 13px Archivo, sans-serif" : "600 13px Archivo, sans-serif", d ? (col.tinta || col.dest) : col.texto);
+    GX.rect(svg, x, yy + 15, Math.max(2, w), 11, d ? col.dest : col.base);
+    GX.t(svg, it.valor < 0 ? x - 6 : x + w + 6, yy + 24, lab(it), GX.MONO_B, d ? (col.tinta || col.dest) : col.texto, { "text-anchor": it.valor < 0 ? "end" : "start" });
   });
   GX.linea(svg, x0, 0, x0, Hh, col.linea);
+};
+
+// agrupadas · 2–3 series por categoría en barras horizontales desde cero (tarjeta agrupadas).
+//   etiquetas[2–6], series[2–3] {nombre, valores (≥ 0, uno por categoría), destacar?} (≤ 1 destacada; sin ella,
+//   la última), rotular "todas" (defecto) | "destacada" | null (sin cifras), referencia {valor, texto} (línea
+//   vertical punteada con rótulo), formato. Leyenda de series en una fila arriba dentro del SVG; la destacada
+//   en el acento, las otras en tinta (.85) y tinta atenuada. Los nombres ocupan hasta el 40 % del ancho (bajan
+//   a 12 px o a dos líneas). Alto por defecto n × (k × 14 + 16) + 24 (+ 18 con referencia).
+G.agrupadas = (el, S, { ancho, alto, col }) => {
+  H.assert(Array.isArray(S.etiquetas) && S.etiquetas.length >= 2 && S.etiquetas.length <= 6, "agrupadas admite de 2 a 6 categorías");
+  H.assert(Array.isArray(S.series) && S.series.length >= 2 && S.series.length <= 3, "agrupadas admite de 2 a 3 series");
+  const n = S.etiquetas.length, k = S.series.length, W = ancho;
+  S.series.forEach((s) => {
+    H.assert(s && typeof s.nombre === "string" && s.nombre.trim() && Array.isArray(s.valores) && s.valores.length === n, "cada serie necesita nombre y " + n + " valores");
+    s.valores.forEach((v) => H.assert(typeof v === "number" && isFinite(v) && v >= 0, "valores de «" + s.nombre + "»: números ≥ 0"));
+  });
+  H.assert(S.series.filter((s) => s.destacar).length <= 1, "solo una serie puede llevar destacar: true");
+  let hi = S.series.findIndex((s) => s.destacar); if (hi < 0) hi = k - 1;
+  const R = S.referencia || null;
+  if (R) H.assert(typeof R.valor === "number" && isFinite(R.valor) && typeof R.texto === "string" && R.texto.trim(), "referencia necesita valor numérico y texto");
+  const rot = S.rotular === undefined || S.rotular === "todas" ? "todas" : S.rotular === "destacada" ? "destacada" : null;
+  let o = 0;
+  const estilo = S.series.map((s, j) => (j === hi ? { fill: col.dest, op: 1 } : [{ fill: col.texto, op: 0.85 }, { fill: col.base, op: 1 }][Math.min(o++, 1)]));
+  const f = (v) => GX.fmt(v, S.formato);
+  // Leyenda: swatch 10×10 + nombre; pasa a una segunda fila si no cabe.
+  const ley = []; let lx = 0, lf = 0;
+  S.series.forEach((s, j) => {
+    const w = 14 + H.medir(s.nombre, GX.MONO);
+    if (lx > 0 && lx + w > W) { lx = 0; lf++; }
+    ley.push({ j, x: lx, fila: lf }); lx += w + 16;
+  });
+  const yTop = 24 + lf * 16 + (R ? 18 : 0), grupoH = k * 14 - 2, def = yTop + n * (k * 14 + 16);
+  const Hh = Math.max(alto || 0, def), filaH = (Hh - yTop) / n;
+  // Nombres: 14 px, 12 px o dos líneas de 12 px partidas por el espacio que mejor equilibra.
+  const maxN = Math.floor(W * 0.4);
+  const ajustar = (s) => {
+    const fn = H.encajar(s, [GX.SANS, GX.SANS_S], maxN);
+    if (fn) return { lineas: [s], font: fn };
+    const p = s.split(" "); let mejor = null;
+    for (let i = 1; i < p.length; i++) {
+      const a = p.slice(0, i).join(" "), b = p.slice(i).join(" ");
+      if (H.encajar(a, [GX.SANS_S], maxN) && H.encajar(b, [GX.SANS_S], maxN)) {
+        const dif = Math.abs(H.medir(a, GX.SANS_S) - H.medir(b, GX.SANS_S));
+        if (!mejor || dif < mejor.dif) mejor = { lineas: [a, b], font: GX.SANS_S, dif };
+      }
+    }
+    return mejor;
+  };
+  const nom = S.etiquetas.map((e) => { const a = ajustar(String(e)); H.assert(a, "doc: la categoría «" + e + "» no cabe en " + maxN + " px: acórtala"); return a; });
+  const colIzq = Math.ceil(Math.max(...nom.map((a) => Math.max(...a.lineas.map((l) => H.medir(l, a.font)))))) + 12;
+  const labW = rot ? Math.ceil(Math.max(...S.series.flatMap((s) => s.valores.map((v) => H.medir(f(v), GX.MONO_B))))) + 8 : 0;
+  const x0 = colIzq, x1 = W - labW, max = Math.max(...S.series.flatMap((s) => s.valores), R ? R.valor : 0) || 1;
+  const sx = (v) => x0 + (v / max) * (x1 - x0);
+  const svg = GX.lienzo(el, W, Hh, S.aria);
+  ley.forEach((it) => {
+    const y = 3 + it.fila * 16;
+    GX.rect(svg, it.x, y, 10, 10, estilo[it.j].fill, { "fill-opacity": estilo[it.j].op });
+    GX.t(svg, it.x + 14, y + 9, S.series[it.j].nombre, GX.MONO, col.texto);
+  });
+  if (R) {
+    const x = sx(R.valor), txt = R.texto.trim() + " · " + f(R.valor), cabe = x + 6 + H.medir(txt, GX.MONO_B) <= W;
+    GX.linea(svg, x, yTop - 4, x, Hh, col.texto, { "stroke-width": 1, "stroke-dasharray": "4 4" });
+    GX.t(svg, cabe ? x + 6 : x - 6, yTop - 7, txt, GX.MONO_B, col.texto, { "text-anchor": cabe ? "start" : "end" });
+  }
+  S.etiquetas.forEach((e, i) => {
+    const top = yTop + i * filaH + (filaH - grupoH) / 2, cy = top + grupoH / 2, a = nom[i];
+    if (a.lineas.length === 1) GX.t(svg, 0, cy + 5, a.lineas[0], a.font, col.texto);
+    else a.lineas.forEach((l, q) => GX.t(svg, 0, cy - 2 + q * 13, l, a.font, col.texto));
+    S.series.forEach((s, j) => {
+      const y = top + j * 14, v = s.valores[i], w = Math.max(2, sx(v) - x0), d = j === hi;
+      GX.rect(svg, x0, y, w, 12, estilo[j].fill, { "fill-opacity": estilo[j].op });
+      if (rot === "todas" || (rot === "destacada" && d)) GX.t(svg, x0 + w + 6, y + 10, f(v), GX.MONO_B, d ? (col.tinta || col.dest) : col.texto);
+    });
+  });
+  GX.linea(svg, x0, yTop, x0, Hh, col.linea, { "stroke-width": 1 });
+};
+
+// bullet · valor contra meta o referencia, una fila por item (tarjeta bullet).
+//   items[1–6] {nombre, valor (≥ 0), meta?}, meta (común), texto_meta, maximo (tope; null = el mayor entre
+//   valores y metas), destacar (índice), formato. Fila de 44 px: nombre (+ meta propia a la derecha) y valor al
+//   final de la línea; pista hasta el tope, barra de 12 px hasta la meta, exceso rayado y marcador de meta.
+//   Con meta común, «texto_meta · valor» al pie. Alto por defecto n × 44 + 20.
+G.bullet = (el, S, { ancho, alto, col }) => {
+  H.assert(Array.isArray(S.items) && S.items.length >= 1 && S.items.length <= 6, "bullet admite de 1 a 6 items");
+  const items = S.items.map((it) => {
+    H.assert(it && typeof it.nombre === "string" && typeof it.valor === "number" && it.valor >= 0, "cada item necesita nombre y valor numérico ≥ 0");
+    const meta = typeof it.meta === "number" ? it.meta : S.meta;
+    H.assert(typeof meta === "number" && meta > 0, "«" + it.nombre + "» no tiene meta: usa `meta` común o `meta` por item");
+    return { nombre: it.nombre, valor: it.valor, meta };
+  });
+  const n = items.length, hi = S.destacar == null ? -1 : GX.indice(S.destacar, n);
+  const maxDato = Math.max(...items.flatMap((it) => [it.valor, it.meta]));
+  const max = S.maximo == null ? maxDato : S.maximo;
+  H.assert(max >= maxDato, "maximo (" + max + ") es menor que algún valor o meta (" + maxDato + ")");
+  const metaComun = items.every((it) => it.meta === items[0].meta), txtMeta = (S.texto_meta || "meta").trim();
+  const f = (v) => GX.fmt(v, S.formato);
+  const W = ancho, fila = 44, Hh = Math.max(alto || 0, n * fila + 20), filaH = (Hh - 20) / n;
+  const svg = GX.lienzo(el, W, Hh, S.aria);
+  const sx = (v) => (v / max) * W;
+  // Rayado (del color del fondo) sobre el tramo que excede la meta.
+  const pid = "bl" + Math.random().toString(36).slice(2, 7);
+  const pat = H.svgEl("pattern", { id: pid, width: 6, height: 6, patternUnits: "userSpaceOnUse", patternTransform: "rotate(45)" }, H.svgEl("defs", {}, svg));
+  H.svgEl("rect", { width: 3, height: 6, fill: col.sobre, "fill-opacity": 0.75 }, pat);
+  items.forEach((it, i) => {
+    const d = i === hi, top = i * filaH + (filaH - fila) / 2, yN = top + 14, yP = top + 20;
+    const vTxt = f(it.valor), fontV = d ? GX.MONO_D : GX.MONO_B;
+    let xDer = W - H.medir(vTxt, fontV) - 10;
+    if (!metaComun) {
+      const m = txtMeta + " " + f(it.meta) + " ·";
+      GX.t(svg, xDer, yN, m, GX.MONO, col.texto, { "text-anchor": "end" });
+      xDer -= H.medir(m, GX.MONO) + 8;
+    }
+    const fontN = H.encajar(it.nombre, [d ? GX.SANS_D : GX.SANS, GX.SANS_S], xDer - 8);
+    H.assert(fontN, "«" + it.nombre + "»: nombre, meta y valor no caben en una línea");
+    GX.t(svg, 0, yN, it.nombre, fontN, col.texto);
+    GX.t(svg, W, yN, vTxt, fontV, d ? (col.tinta || col.dest) : col.texto, { "text-anchor": "end" });
+    GX.rect(svg, 0, yP, W, 16, col.suave);
+    const xv = sx(it.valor), xm = sx(it.meta), fill = d ? col.dest : col.base;
+    GX.rect(svg, 0, yP + 2, Math.max(2, Math.min(xv, xm)), 12, fill);
+    if (xv > xm) { GX.rect(svg, xm, yP + 2, xv - xm, 12, fill); GX.rect(svg, xm, yP + 2, xv - xm, 12, "url(#" + pid + ")"); }
+    GX.rect(svg, Math.min(W - 2, xm - 1), yP, 2, 16, col.texto);
+  });
+  if (metaComun) {
+    const xm = sx(items[0].meta), t = txtMeta + " · " + f(items[0].meta), w = H.medir(t, GX.MONO);
+    const anc = xm + w / 2 > W ? "end" : xm - w / 2 < 0 ? "start" : "middle";
+    GX.t(svg, anc === "end" ? W : anc === "start" ? 0 : xm, Hh - 4, t, GX.MONO, col.texto, { "text-anchor": anc });
+  }
 };
 
 // columnas · dos series por periodo en columnas verticales (p. ej. año completo frente a SE 35); valores null = sin dato.
@@ -802,70 +1158,768 @@ G.columnas = (el, S, { ancho, alto, col }) => {
   GX.linea(svg, 0, base, W, base, col.linea);
 };
 
+// ---- investigacion/graficos/cambio.js
+// Gráficos de cambio: dos fechas por categoría (pendiente, pesas), dos cifras (antes_despues) y acumulados
+// (cascada). Mismo contrato que las plantillas de tarjeta; la aritmética compartida (píldora, acumulados)
+// la pone H, nunca el gráfico.
+
+// pendiente · cambio entre dos fechas para 2–6 categorías (slope, tarjeta pendiente).
+//   fechas[2], items[2–6] {nombre, a, b}, destacar (índice; línea gruesa en el acento), formato.
+//   Ejes a 1/4 y 3/4 del ancho (se acercan si los rótulos no caben; los nombres bajan a 12 px), fechas arriba;
+//   «nombre valor» a la izquierda y el valor a la derecha, empujados con H.antiSolape. Dominio sin cero.
+//   Alto por defecto 280.
+G.pendiente = (el, S, { ancho, alto, col }) => {
+  H.assert(Array.isArray(S.fechas) && S.fechas.length === 2, "fechas debe tener exactamente 2 valores");
+  H.assert(Array.isArray(S.items) && S.items.length >= 2 && S.items.length <= 6, "pendiente admite de 2 a 6 items");
+  S.items.forEach((it) => H.assert(it && it.nombre && typeof it.a === "number" && typeof it.b === "number", "cada item necesita nombre, a y b numéricos"));
+  const n = S.items.length, hi = GX.indice(S.destacar || 0, n), W = ancho, Hh = alto || 280;
+  const f = (v) => GX.fmt(v, S.formato);
+  const medidaIzq = (fn) => Math.max(...S.items.map((it, i) => H.medir(String(it.nombre), fn(i)) + 6 + H.medir(f(it.a), GX.MONO_B))) + 8;
+  let fN = (i) => (i === hi ? GX.SANS_D : GX.SANS), izqW = medidaIzq(fN);
+  if (izqW > W / 4) { fN = () => GX.SANS_S; izqW = medidaIzq(fN); }
+  const derW = Math.max(...S.items.map((it) => H.medir(f(it.b), GX.MONO_B))) + 8;
+  const x0 = Math.max(W / 4, izqW), x1 = Math.min((W * 3) / 4, W - derW);
+  H.assert(x1 - x0 >= 60, "doc: pendiente no cabe en " + W + " px: acorta los nombres o usa menos items");
+  const y0 = 26, y1 = Hh - 8;
+  const sy = H.escala(H.dominio(S.items.flatMap((it) => [it.a, it.b]), false), [y1, y0]);
+  const svg = GX.lienzo(el, W, Hh, S.aria);
+  GX.linea(svg, x0, y0, x0, y1, col.linea, { "stroke-width": 1, "stroke-opacity": 0.5 });
+  GX.linea(svg, x1, y0, x1, y1, col.linea, { "stroke-width": 1, "stroke-opacity": 0.5 });
+  GX.t(svg, x0, 12, String(S.fechas[0]), GX.MONO_B, col.texto, { "text-anchor": "middle" });
+  GX.t(svg, x1, 12, String(S.fechas[1]), GX.MONO_B, col.texto, { "text-anchor": "middle" });
+  const izq = S.items.map((it, i) => ({ i, y: sy(it.a) })), der = S.items.map((it, i) => ({ i, y: sy(it.b) }));
+  H.antiSolape(izq, { minGap: 16, min: y0 + 4, max: Hh - 8 });
+  H.antiSolape(der, { minGap: 16, min: y0 + 4, max: Hh - 8 });
+  const orden = S.items.map((_, i) => i).sort((a, b) => (a === hi) - (b === hi));
+  for (const i of orden) {
+    const it = S.items[i], d = i === hi, c = d ? col.dest : col.base, tc = d ? (col.tinta || col.dest) : col.texto;
+    GX.linea(svg, x0, sy(it.a), x1, sy(it.b), c, { "stroke-width": d ? 3 : 1.5, "stroke-linecap": "round" });
+    H.svgEl("circle", { cx: x0, cy: sy(it.a), r: d ? 4.5 : 3, fill: c }, svg);
+    H.svgEl("circle", { cx: x1, cy: sy(it.b), r: d ? 4.5 : 3, fill: c }, svg);
+    const yi = izq.find((p) => p.i === i).y + 4, yd = der.find((p) => p.i === i).y + 4, va = f(it.a);
+    GX.t(svg, x0 - 8, yi, va, GX.MONO_B, tc, { "text-anchor": "end" });
+    GX.t(svg, x0 - 8 - H.medir(va, GX.MONO_B) - 6, yi, String(it.nombre), fN(i), tc, { "text-anchor": "end" });
+    GX.t(svg, x1 + 8, yd, f(it.b), GX.MONO_B, tc);
+  }
+};
+
+// pesas · dos fechas por categoría, puntos unidos (dumbbell, tarjeta pesas).
+//   fechas[2], items[2–8] {nombre, a, b}, destacar (índice tras ordenar), orden "dado" (defecto) | "desc" (por b),
+//   desdeCero (false: eje desde el mínimo, anotado «Eje desde N»), formato. Filas de 30 px; las fechas como
+//   leyenda arriba, rejilla con ticks al pie; punto a en tinta y punto b en el acento; valores fuera de los puntos.
+//   Los nombres ocupan hasta el 40 % del ancho. Alto por defecto n × 30 + 40.
+G.pesas = (el, S, { ancho, alto, col }) => {
+  H.assert(Array.isArray(S.fechas) && S.fechas.length === 2, "fechas debe tener exactamente 2 valores");
+  H.assert(Array.isArray(S.items) && S.items.length >= 2 && S.items.length <= 8, "pesas admite de 2 a 8 items");
+  S.items.forEach((it) => H.assert(it && typeof it.nombre === "string" && typeof it.a === "number" && typeof it.b === "number", "cada item necesita nombre, a y b numéricos"));
+  const items = S.orden === "desc" ? S.items.slice().sort((x, y) => y.b - x.b) : S.items.slice();
+  const n = items.length, hi = GX.indice(S.destacar || 0, n), W = ancho;
+  const yTop = 24, Hh = Math.max(alto || 0, n * 30 + 40), filaH = (Hh - 40) / n, yBot = yTop + n * filaH;
+  const f = (v) => GX.fmt(v, S.formato), wLab = (v) => H.medir(f(v), GX.MONO_B);
+  const maxN = Math.floor(W * 0.4);
+  const fontN = items.map((it, i) => {
+    const fn = H.encajar(it.nombre, [i === hi ? GX.SANS_D : GX.SANS, GX.SANS_S], maxN);
+    H.assert(fn, "doc: «" + it.nombre + "» no cabe en la columna de nombres (" + maxN + " px): acórtalo");
+    return fn;
+  });
+  const colN = Math.ceil(Math.max(...items.map((it, i) => H.medir(it.nombre, fontN[i])))) + 12;
+  const dom = H.dominio(items.flatMap((it) => [it.a, it.b]), S.desdeCero !== false);
+  const tk = H.ticks(dom[0], dom[1], W - colN < 220 ? 2 : 4), fEje = H.formatoEje(S.formato, tk);
+  // Reservas: a la derecha, el valor del extremo derecho; a la izquierda, lo que exija el valor del extremo
+  // izquierdo que más se acerque a la columna de nombres (x(v) − 12 − ancho ≥ colN + 2, resuelto en cerrado).
+  const x1 = W - (Math.max(...items.map((it) => wLab(Math.max(it.a, it.b)))) + 12);
+  let res = 0;
+  items.forEach((it) => {
+    const v = Math.min(it.a, it.b), t = (v - dom[0]) / (dom[1] - dom[0]);
+    if (t < 0.999) res = Math.max(res, (14 + wLab(v) - t * (x1 - colN)) / (1 - t));
+  });
+  const x0 = colN + Math.ceil(Math.max(0, res));
+  H.assert(x1 - x0 >= 60, "doc: pesas no cabe en " + W + " px: acorta los nombres o usa escala en formato");
+  const sx = H.escala(dom, [x0, x1]);
+  const svg = GX.lienzo(el, W, Hh, S.aria);
+  H.svgEl("circle", { cx: 5, cy: 8, r: 5, fill: col.texto }, svg);
+  GX.t(svg, 16, 12, String(S.fechas[0]), GX.MONO, col.texto);
+  const xf = 16 + H.medir(String(S.fechas[0]), GX.MONO) + 18;
+  H.svgEl("circle", { cx: xf + 6, cy: 8, r: 6, fill: col.dest }, svg);
+  GX.t(svg, xf + 18, 12, String(S.fechas[1]), GX.MONO, col.texto);
+  let prevR = -Infinity;
+  for (const tick of tk) {
+    const x = sx(tick), s = H.num(tick, fEje), w = H.medir(s, GX.MONO);
+    GX.linea(svg, x, yTop, x, yBot, col.suave, { "stroke-width": 1 });
+    if (x - w / 2 >= prevR + 6 && x - w / 2 >= colN - 10 && x + w / 2 <= W) { GX.t(svg, x, Hh - 2, s, GX.MONO, col.texto, { "text-anchor": "middle" }); prevR = x + w / 2; }
+  }
+  GX.linea(svg, x0, yBot, x1, yBot, col.linea, { "stroke-width": 1 });
+  items.forEach((it, i) => {
+    const d = i === hi, cy = yTop + i * filaH + filaH / 2, xa = sx(it.a), xb = sx(it.b);
+    GX.t(svg, 0, cy + 5, it.nombre, fontN[i], col.texto);
+    GX.rect(svg, Math.min(xa, xb), cy - 3, Math.abs(xb - xa), 6, col.base);
+    H.svgEl("circle", { cx: xa, cy, r: 5, fill: col.texto }, svg);
+    H.svgEl("circle", { cx: xb, cy, r: 6, fill: col.dest }, svg);
+    const izq = it.a <= it.b ? ["a", xa] : ["b", xb], der = it.a <= it.b ? ["b", xb] : ["a", xa];
+    const cv = (q) => (d && q === "b" ? (col.tinta || col.dest) : col.texto);
+    GX.t(svg, izq[1] - 12, cy + 4, f(it[izq[0]]), GX.MONO_B, cv(izq[0]), { "text-anchor": "end" });
+    GX.t(svg, der[1] + 12, cy + 4, f(it[der[0]]), GX.MONO_B, cv(der[0]));
+  });
+  if (S.desdeCero === false) GX.anotar(el, "Eje desde " + H.num(dom[0], fEje) + ".");
+};
+
+// antes_despues · dos cifras grandes, flecha y píldora ×N o ±% calculada (tarjeta antes-despues), en SVG.
+//   antes {etiqueta, valor, sub}, despues {etiqueta, valor, sub}, pildora "factor"|"porcentaje"|"ninguna",
+//   decimales_pildora, formato. Dos columnas: etiqueta, número en serif (48 → 40 → 32 hasta caber en
+//   ancho/2 − 40), sub y barra proporcional de 10 px; la píldora la calcula H.pildora (la misma aritmética que
+//   la tarjeta) y va sobre el acento. Alto fijo 150.
+G.antes_despues = (el, S, { ancho, col }) => {
+  for (const k of ["antes", "despues"]) H.assert(S[k] && typeof S[k].valor === "number" && S[k].etiqueta, k + " necesita etiqueta y valor numérico");
+  const W = ancho, Hh = 150, colW = (W - 40) / 2, maxNum = W / 2 - 40;
+  const svg = GX.lienzo(el, W, Hh, S.aria);
+  const max = Math.max(Math.abs(S.antes.valor), Math.abs(S.despues.valor)) || 1;
+  const txtP = H.pildora(S.antes.valor, S.despues.valor, S.pildora || "factor", S.decimales_pildora);
+  const columna = (D, x, d) => {
+    GX.t(svg, x, 12, String(D.etiqueta).toUpperCase(), GX.MONO, col.texto);
+    const s = GX.fmt(D.valor, S.formato), fn = H.encajar(s, [GX.serif(48), GX.serif(40), GX.serif(32)], maxNum);
+    H.assert(fn, "doc: la cifra «" + s + "» no cabe en " + Math.round(maxNum) + " px ni a 32 px: usa escala en formato");
+    GX.t(svg, x, 60, s, fn, d ? (col.tinta || col.dest) : col.texto);
+    if (D.sub) GX.t(svg, x, 82, String(D.sub), GX.SANS_S, col.texto);
+    GX.rect(svg, x, 92, Math.max(3, (Math.abs(D.valor) / max) * colW), 10, d ? col.dest : col.base);
+  };
+  columna(S.antes, 0, false);
+  columna(S.despues, colW + 40, true);
+  const xa = colW + 6, xb = colW + 34, ya = 48;
+  GX.linea(svg, xa, ya, xb - 6, ya, col.texto, { "stroke-width": 2 });
+  H.svgEl("polygon", { points: (xb - 8) + "," + (ya - 5) + " " + xb + "," + ya + " " + (xb - 8) + "," + (ya + 5), fill: col.texto }, svg);
+  if (txtP) {
+    const w = H.medir(txtP, GX.MONO_D) + 20;
+    GX.rect(svg, 0, 114, w, 26, col.dest, { rx: 10 });
+    GX.t(svg, w / 2, 132, txtP, GX.MONO_D, GX.textoSobre(col.dest, col), { "text-anchor": "middle" });
+  }
+};
+
+// cascada · del inicio al fin sumando y restando (waterfall horizontal, tarjeta cascada).
+//   inicio {nombre, valor} | null, pasos[2–8] {nombre, valor ≥ 0, efecto suma|resta}, fin {nombre, valor?} | null,
+//   destacar "inicio"|"fin"|índice de paso (defecto: fin, o el último paso), formato. Los acumulados los calcula
+//   H.cascada (la misma aritmética que la tarjeta): fin.valor, si va, se coteja; si falta, se anota «calculado».
+//   Filas de 30 px, eje cero vertical, barras flotantes de 16 px con conectores punteados; el rótulo con signo
+//   va fuera del extremo móvil y nunca cruza el eje cero. Los nombres ocupan hasta el 40 % del ancho.
+//   Alto por defecto n × 30.
+G.cascada = (el, S, { ancho, alto, col }) => {
+  H.assert(Array.isArray(S.pasos) && S.pasos.length >= 2 && S.pasos.length <= 8, "cascada admite de 2 a 8 pasos");
+  S.pasos.forEach((p) => {
+    H.assert(p && typeof p.nombre === "string" && p.nombre.trim(), "cada paso necesita nombre");
+    H.assert(typeof p.valor === "number" && isFinite(p.valor) && p.valor >= 0, "paso «" + p.nombre + "»: valor numérico ≥ 0 (el signo va en efecto)");
+    H.assert(p.efecto === "suma" || p.efecto === "resta", "paso «" + p.nombre + "»: efecto debe ser suma o resta");
+  });
+  const ini = S.inicio || null, fin = S.fin || null;
+  H.assert(ini || fin, "cascada necesita inicio y/o fin");
+  if (ini) H.assert(typeof ini.nombre === "string" && ini.nombre.trim() && typeof ini.valor === "number" && isFinite(ini.valor), "inicio necesita nombre y valor numérico");
+  if (fin) H.assert(typeof fin.nombre === "string" && fin.nombre.trim() && (fin.valor == null || (typeof fin.valor === "number" && isFinite(fin.valor))), "fin necesita nombre (y valor numérico si va)");
+  const { filas, calculado } = H.cascada(ini, S.pasos, fin, S.formato);
+  const n = filas.length, np = S.pasos.length;
+  H.assert(n <= 10, "cascada: como máximo 10 filas (inicio + pasos + fin)");
+  const des = S.destacar == null ? (fin ? "fin" : np - 1) : S.destacar;
+  const esHi = (r) => (des === "inicio" && r.tipo === "inicio") || (des === "fin" && r.tipo === "fin") || (Number.isInteger(des) && r.tipo === "paso" && r.i === ((des % np) + np) % np);
+  H.assert(filas.some(esHi), "destacar debe ser \"inicio\", \"fin\" o el índice de un paso");
+  const W = ancho, Hh = Math.max(alto || 0, n * 30), filaH = Hh / n, barH = 16, maxN = Math.floor(W * 0.4);
+  // Nombres: 14 px, 12 px o dos líneas de 12 px (la fila de 30 px las admite) partidas por el espacio que mejor equilibra.
+  const partir = (s, fuentes) => {
+    const fn = H.encajar(s, fuentes, maxN);
+    if (fn) return { lineas: [s], font: fn };
+    const p = s.split(" "); let mejor = null;
+    for (let i = 1; i < p.length; i++) {
+      const a = p.slice(0, i).join(" "), b = p.slice(i).join(" ");
+      if (H.encajar(a, [GX.SANS_S], maxN) && H.encajar(b, [GX.SANS_S], maxN)) {
+        const dif = Math.abs(H.medir(a, GX.SANS_S) - H.medir(b, GX.SANS_S));
+        if (!mejor || dif < mejor.dif) mejor = { lineas: [a, b], font: GX.SANS_S, dif };
+      }
+    }
+    return mejor;
+  };
+  filas.forEach((r) => {
+    r.nom = partir(r.nombre, esHi(r) ? [GX.SANS_D, GX.SANS_S] : [GX.SANS, GX.SANS_S]);
+    H.assert(r.nom, "«" + r.nombre + "» no cabe en la columna de nombres: acórtalo");
+    r.lado = r.hasta >= r.desde ? "der" : "izq";
+    r.wl = H.medir(r.rotulo, GX.MONO_B);
+  });
+  const colIzq = Math.ceil(Math.max(...filas.map((r) => Math.max(...r.nom.lineas.map((l) => H.medir(l, r.nom.font)))))) + 12;
+  const labW = Math.ceil(Math.max(...filas.map((r) => r.wl))) + 10;
+  const todos = filas.flatMap((r) => [r.desde, r.hasta]), dom = [Math.min(0, ...todos), Math.max(0, ...todos)];
+  if (dom[1] === dom[0]) dom[1] = dom[0] + 1;
+  // El rótulo va fuera del extremo móvil y nunca cruza el eje cero ni pisa la columna de nombres: si no cabe
+  // en su lado pasa al otro extremo de la barra; solo los que no caben en ninguno exigen reserva a la izquierda
+  // (resuelta en cerrado y aplicada en una segunda pasada).
+  const colocar = (res) => {
+    const x0 = colIzq + res, x1 = W - (filas.some((r) => r.lado === "der") ? labW : 0);
+    const sx = H.escala(dom, [x0, x1]), xz = sx(0), cruza = (a, b) => a < xz + 3 && b > xz - 3;
+    let falta = 0;
+    const pos = filas.map((r) => {
+      const xa = sx(r.desde), xb = sx(r.hasta), x = Math.min(xa, xb), w = Math.max(2, Math.abs(xb - xa));
+      const cabeIzq = x - 8 - r.wl >= colIzq && !cruza(x - 8 - r.wl, x - 8), cabeDer = x + w + 8 + r.wl <= W && !cruza(x + w + 8, x + w + 8 + r.wl);
+      let lado = r.lado;
+      if (lado === "izq" && !cabeIzq && cabeDer) lado = "der";
+      else if (lado === "der" && !cabeDer && cabeIzq) lado = "izq";
+      if (lado === "izq" && x - 8 - r.wl < colIzq) {
+        const t = (Math.min(r.desde, r.hasta) - dom[0]) / (dom[1] - dom[0]);
+        if (t < 0.999) falta = Math.max(falta, (8 + r.wl - t * (x1 - colIzq)) / (1 - t));
+      }
+      return { x, w, lado };
+    });
+    return { x0, x1, sx, xz, pos, falta };
+  };
+  let L = colocar(0);
+  if (L.falta > 0) L = colocar(Math.ceil(L.falta));
+  H.assert(L.x1 - L.x0 >= 60, "doc: cascada no cabe en " + W + " px: acorta los nombres o usa escala en formato");
+  const svg = GX.lienzo(el, W, Hh, S.aria);
+  if (calculado) GX.anotar(el, fin.nombre + " calculado desde los pasos.");
+  GX.linea(svg, L.xz, 0, L.xz, Hh, col.linea);
+  filas.forEach((r, k) => {
+    const cy = k * filaH + filaH / 2, hi = esHi(r), resta = r.tipo === "paso" && r.hasta < r.desde, { x, w, lado } = L.pos[k];
+    if (r.nom.lineas.length === 1) GX.t(svg, 0, cy + 5, r.nom.lineas[0], r.nom.font, col.texto);
+    else r.nom.lineas.forEach((l, q) => GX.t(svg, 0, cy - 2 + q * 13, l, r.nom.font, col.texto));
+    GX.rect(svg, x, cy - barH / 2, w, barH, hi ? col.dest : r.tipo !== "paso" ? col.texto : col.base, { "fill-opacity": !hi && resta ? 0.55 : 1 });
+    GX.t(svg, lado === "der" ? x + w + 8 : x - 8, cy + 4, r.rotulo, GX.MONO_B, hi ? (col.tinta || col.dest) : col.texto, lado === "der" ? {} : { "text-anchor": "end" });
+    if (k < n - 1) { const xc = L.sx(r.hasta); GX.linea(svg, xc, cy + barH / 2, xc, cy + filaH - barH / 2, col.suave, { "stroke-width": 1, "stroke-dasharray": "3 3" }); }
+  });
+};
+
+// ---- investigacion/graficos/cifras.js
+// cifra · waffle · pictograma: el número héroe y las proporciones «de 100» (brief 4d) y «K de N» (brief 5e).
+//   En la tarjeta son HTML/CSS; en el documento van en UN svg (GX.lienzo) con los mismos campos y límites
+//   que templates/graficos/{cifra,waffle,pictograma}.html. El número grande va en col.tinta || col.dest (un
+//   solo acento); lo demás en col.texto; las marcas atenuadas en col.base. Piso 12 px.
+//   Alturas: cifra 120 (170 con comparación) · waffle 10·celda + 27 · pictograma filas·celda + huecos; si la
+//   columna de texto necesita más (frase o leyenda envueltas a media página), la figura crece.
+const GXC = (() => {
+  // Parte un texto en líneas que caben en maxW (palabras enteras; una palabra más larga que maxW va sola).
+  const envolver = (str, font, maxW) => {
+    const out = [];
+    let linea = "";
+    for (const p of String(str == null ? "" : str).trim().split(/\s+/).filter(Boolean)) {
+      const prueba = linea ? linea + " " + p : p;
+      if (!linea || H.medir(prueba, font) <= maxW) linea = prueba;
+      else { out.push(linea); linea = p; }
+    }
+    if (linea) out.push(linea);
+    return out;
+  };
+  // Cuerpo serif más grande de la lista en el que `str` cabe en maxW (H.encajar); si ninguno, el menor.
+  const serifQueCabe = (str, pxs, maxW) => {
+    const fn = H.encajar(str, pxs.map(GX.serif), maxW);
+    return fn ? pxs[pxs.map(GX.serif).indexOf(fn)] : pxs[pxs.length - 1];
+  };
+  // Columna de texto alineada abajo: cifra grande (serif 40→34→28), frase SANS envuelta y leyenda MONO con
+  // muestra de 10 px. o = { num, numFill, texto, leyenda: [{ texto, muestra(svg, x, y, lado) }] }.
+  // Sin svg solo mide: devuelve el alto que necesita.
+  const columna = (svg, x, maxW, abajo, o, col) => {
+    const px = serifQueCabe(o.num, [40, 34, 28], maxW);
+    const lineas = envolver(o.texto, GX.SANS, maxW);
+    const ley = (o.leyenda || []).map((it) => ({ it, lineas: envolver(it.texto, GX.MONO, maxW - 16) }));
+    const hNum = Math.round(px * 0.85), hTexto = lineas.length * 18, hLey = ley.reduce((s, l) => s + Math.max(1, l.lineas.length) * 16, 0);
+    const total = hNum + 8 + hTexto + (ley.length ? 10 + hLey : 0);
+    if (!svg) return total;
+    let y = abajo - total;
+    GX.t(svg, x, y + Math.round(px * 0.8), o.num, GX.serif(px), o.numFill);
+    y += hNum + 8;
+    lineas.forEach((s, i) => GX.t(svg, x, y + 14 + i * 18, s, GX.SANS, col.texto));
+    y += hTexto + (ley.length ? 10 : 0);
+    for (const l of ley) {
+      l.it.muestra(svg, x, y + 3, 10);
+      l.lineas.forEach((s, i) => GX.t(svg, x + 16, y + 13 + i * 16, s, GX.MONO, col.texto));
+      y += Math.max(1, l.lineas.length) * 16;
+    }
+    return total;
+  };
+  // Silueta de la tarjeta (::before cabeza 42 % · ::after cuerpo 64 %) en una caja de 100 × 145.
+  const PERSONA = "M50 0a21 21 0 1 1 0 42a21 21 0 1 1 0-42zM0 141v-53a50 35 0 0 1 100 0v53a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4z";
+  // Una unidad del pictograma: punto (círculo), cuadro (esquinas suaves) o persona (1 × 1.45), de `lado` px.
+  const forma = (svg, x, y, lado, tipo, fill) => {
+    if (tipo === "cuadro") return GX.rect(svg, x, y, lado, lado, fill, { rx: Math.max(1, lado / 8) });
+    if (tipo === "persona") return H.svgEl("path", { d: PERSONA, fill, transform: "translate(" + x + " " + y + ") scale(" + (lado / 100).toFixed(4) + ")" }, svg);
+    return H.svgEl("circle", { cx: x + lado / 2, cy: y + lado / 2, r: lado / 2, fill }, svg);
+  };
+  return { envolver, serifQueCabe, columna, forma };
+})();
+
+// cifra · número héroe sin gráfico (ancla del T1 o cierre).
+//   cifra {valor, texto}, contexto (≤ 60), tendencia "sube"|"baja"|null (flecha de 8 px en el acento),
+//   comparacion {etiqueta, valor, etiqueta_hero} (dos barras de 12 px proporcionales al mayor; la del héroe en
+//   col.dest, la otra en col.base), formato. Alto 120 · 170 con comparación.
+G.cifra = (el, S, { ancho, alto, col }) => {
+  H.assert(S.cifra && typeof S.cifra.valor === "number", "cifra.valor debe ser un número");
+  H.assert(typeof S.cifra.texto === "string" && S.cifra.texto.trim(), "cifra.texto vacío");
+  H.assert(!S.contexto || S.contexto.length <= 60, "contexto > 60 caracteres");
+  const C = S.comparacion;
+  if (C) H.assert(typeof C.valor === "number" && C.etiqueta, "comparacion necesita etiqueta y valor");
+  const W = ancho, acento = col.tinta || col.dest, f = (v) => GX.fmt(v, S.formato);
+  const numTxt = f(S.cifra.valor), px = GXC.serifQueCabe(numTxt, [48, 40, 32], W);
+  const lineas = GXC.envolver(S.cifra.texto, GX.SANS, W);
+  const hayCtx = !!(S.contexto || S.tendencia);
+  let filas = [];
+  if (C) {
+    const max = Math.max(Math.abs(S.cifra.valor), Math.abs(C.valor)) || 1;
+    filas = [{ lab: String(C.etiqueta).toUpperCase(), v: C.valor, fill: col.base },
+             { lab: String(C.etiqueta_hero || "ahora").toUpperCase(), v: S.cifra.valor, fill: col.dest, hero: true }];
+    filas.forEach((r) => { r.val = f(r.v); r.p = Math.abs(r.v) / max; });
+  }
+  // Fila de contexto 30 (la caja del serif sube ~1 em sobre su base: P5) · número px·0.85 · frase 18 por línea ·
+  // comparación 12 + 2 filas de 22; el bloque se centra en vertical.
+  const hCtx = hayCtx ? 30 : 0, hNum = Math.round(px * 0.85), hTxt = lineas.length * 18, hComp = C ? 12 + filas.length * 22 : 0;
+  const contenido = hCtx + hNum + 10 + hTxt + hComp;
+  const Hh = Math.max(alto || (C ? 170 : 120), contenido);
+  const svg = GX.lienzo(el, W, Hh, S.aria);
+  let y = Math.floor((Hh - contenido) / 2);
+  if (hayCtx) {
+    let x = 0;
+    if (S.tendencia) {
+      H.svgEl("path", { d: S.tendencia === "baja" ? "M0 5l4 8 4-8z" : "M0 13l4-8 4 8z", fill: col.dest, transform: "translate(0 " + y + ")" }, svg);
+      x = 14;
+    }
+    if (S.contexto) GX.t(svg, x, y + 13, S.contexto, GX.MONO, col.texto);
+    y += hCtx;
+  }
+  GX.t(svg, 0, y + Math.round(px * 0.8), numTxt, GX.serif(px), acento);
+  y += hNum + 10;
+  lineas.forEach((s, i) => GX.t(svg, 0, y + 14 + i * 18, s, GX.SANS, col.texto));
+  y += hTxt;
+  if (C) {
+    y += 12;
+    const labW = Math.ceil(Math.max(...filas.map((r) => H.medir(r.lab, GX.MONO)))) + 10;
+    const valW = Math.ceil(Math.max(...filas.map((r) => H.medir(r.val, GX.MONO_B)))) + 8;
+    const util = Math.max(20, W - labW - valW);
+    for (const r of filas) {
+      const w = Math.max(3, r.p * util);
+      GX.t(svg, 0, y + 15, r.lab, GX.MONO, col.texto);
+      GX.rect(svg, labW, y + 5, w, 12, r.fill);
+      GX.t(svg, labW + w + 8, y + 15, r.val, GX.MONO_B, r.hero ? acento : col.texto);
+      y += 22;
+    }
+  }
+};
+
+// waffle · proporción de 100: cuadrícula 10 × 10 a la izquierda (celda = min(18, (W/2 − 40)/10), hueco 3), a la
+//   derecha la cifra, la frase y la leyenda. porcentaje (0, 100] (celdas al entero; si no es entero, nota),
+//   cifra {valor, texto}, etiqueta_dentro, etiqueta_resto, formato. Alto 10·celda + 27.
+G.waffle = (el, S, { ancho, alto, col }) => {
+  H.assert(typeof S.porcentaje === "number" && S.porcentaje > 0 && S.porcentaje <= 100, "porcentaje debe estar en (0, 100]");
+  H.assert(S.cifra && typeof S.cifra.valor === "number" && S.cifra.texto, "cifra necesita valor y texto");
+  const llenas = Math.round(S.porcentaje), W = ancho, hueco = 3;
+  let celda = Math.min(18, (W / 2 - 40) / 10);
+  if (alto) celda = Math.min(celda, (alto - 27) / 10);
+  H.assert(celda >= 6, "doc: no hay sitio para la cuadrícula del waffle (celda de " + celda.toFixed(1) + " px)");
+  const lado = 10 * celda + 9 * hueco, x0 = Math.round(lado) + 24, colW = W - x0;
+  const muestra = (fill) => (svg, x, y, l) => GX.rect(svg, x, y, l, l, fill);
+  const o = { num: GX.fmt(S.cifra.valor, S.formato), numFill: col.tinta || col.dest, texto: S.cifra.texto,
+              leyenda: [{ texto: S.etiqueta_dentro || "", muestra: muestra(col.dest) }, { texto: S.etiqueta_resto || "", muestra: muestra(col.base) }] };
+  const Hh = Math.max(Math.round(lado), Math.ceil(GXC.columna(null, x0, colW, 0, o, col)));
+  const svg = GX.lienzo(el, W, Hh, S.aria);
+  const y0 = Hh - lado;
+  for (let i = 0; i < 100; i++) GX.rect(svg, (i % 10) * (celda + hueco), y0 + Math.floor(i / 10) * (celda + hueco), celda, celda, i < llenas ? col.dest : col.base);
+  GXC.columna(svg, x0, colW, Hh, o, col);
+  if (llenas !== S.porcentaje) GX.anotar(el, "Celdas redondeadas al entero: " + H.num(S.porcentaje, { decimales: 1 }) + "% → " + llenas + " de 100.");
+};
+
+// pictograma · K de N unidades contables, una forma por unidad, en una cuadrícula a la izquierda; a la derecha
+//   K grande, «de N …» y la leyenda. total (entero 2–200), destacado (0–total), texto (≤ 60; completa «K de N …»),
+//   etiqueta_destacado, etiqueta_resto, forma "punto"|"cuadro"|"persona", por_fila (null = automático), formato.
+//   Misma búsqueda de columnas que la tarjeta (candidatos 2–25; prefiere celda grande, fila completa, múltiplo
+//   de 5, más columnas); celda máxima 24 px y mínima 12 (doc). Alto filas·celda + huecos.
+G.pictograma = (el, S, { ancho, alto, col }) => {
+  H.assert(Number.isInteger(S.total) && S.total >= 2 && S.total <= 200, "total debe ser un entero de 2 a 200 (para proporciones usa waffle)");
+  H.assert(Number.isInteger(S.destacado) && S.destacado >= 0 && S.destacado <= S.total, "destacado debe ser un entero entre 0 y total");
+  H.assert(typeof S.texto === "string" && S.texto.trim() && S.texto.length <= 60, "texto: 1–60 caracteres (completa «K de N …»)");
+  const forma = S.forma || "punto";
+  H.assert(["punto", "cuadro", "persona"].includes(forma), "forma debe ser punto, cuadro o persona");
+  H.assert(S.por_fila == null || (Number.isInteger(S.por_fila) && S.por_fila >= 2 && S.por_fila <= 25), "por_fila: null o entero de 2 a 25");
+  const W = ancho, ratio = forma === "persona" ? 1.45 : 1, hueco = forma === "persona" ? 4 : 3;
+  const gridMax = Math.round(W * 0.6), celdaMax = 24, altoMax = alto || 220, f = (v) => GX.fmt(v, S.formato);
+  const cands = S.por_fila ? [S.por_fila] : Array.from({ length: 24 }, (_, i) => i + 2);
+  const mejorQue = (a, b) => { for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) return a[i] > b[i]; return false; };
+  let mejor = null;
+  for (const c of cands) {
+    const filas = Math.ceil(S.total / c);
+    const celda = Math.floor(Math.min((gridMax - hueco * (c - 1)) / c, (altoMax - hueco * (filas - 1)) / filas / ratio, celdaMax));
+    const puntos = [celda, S.total % c === 0 ? 1 : 0, c % 5 === 0 ? 1 : 0, c];
+    if (!mejor || mejorQue(puntos, mejor.puntos)) mejor = { c, filas, celda, puntos };
+  }
+  const { c, filas, celda } = mejor;
+  H.assert(celda >= 12, "doc: no caben " + S.total + " unidades a este ancho: usa waffle");
+  const altoCelda = Math.round(celda * ratio), gridW = c * celda + (c - 1) * hueco, gridH = filas * altoCelda + (filas - 1) * hueco;
+  const x0 = gridW + 24, colW = W - x0;
+  const muestra = (fill) => (svg, x, y, l) => GXC.forma(svg, x, y, l, forma, fill);
+  const o = { num: f(S.destacado), numFill: col.tinta || col.dest, texto: "de " + f(S.total) + " " + S.texto.trim(),
+              leyenda: [{ texto: S.etiqueta_destacado || "", muestra: muestra(col.dest) }, { texto: S.etiqueta_resto || "", muestra: muestra(col.base) }] };
+  const Hh = Math.max(gridH, Math.ceil(GXC.columna(null, x0, colW, 0, o, col)));
+  const svg = GX.lienzo(el, W, Hh, S.aria);
+  const y0 = Hh - gridH;
+  for (let i = 0; i < S.total; i++) GXC.forma(svg, (i % c) * (celda + hueco), y0 + Math.floor(i / c) * (altoCelda + hueco), celda, forma, i < S.destacado ? col.dest : col.base);
+  GXC.columna(svg, x0, colW, Hh, o, col);
+};
+
 // ---- investigacion/graficos/linea.js
 // linea · una o más series en el tiempo; la destacada gruesa en el acento, el resto en tinta atenuada.
-//   etiquetas[], series [{nombre, valores, destacar}], max (techo del eje; por defecto el dato),
-//   sufijo del eje ("%"), anotaciones [{serie, i, texto, lado "arriba"|"izq"}], formato.
+//   Mismo contrato que templates/graficos/linea.html: etiquetas (o etiquetasX; informe.py copia una en la otra) [≥ 3],
+//   series[1–4] {nombre, valores (null = hueco: corta la línea), destacar}, yDesdeCero (true; false ⇒ nota «Eje desde N»),
+//   ejeY (false oculta eje y rejilla), valoresBajoEje (true y n ≤ 12: la serie destacada bajo cada etiqueta),
+//   rotularFin (null = nombre + valor de todas las series al final · [nombres] = solo esas · false = ninguna),
+//   hitos[≤ 1] {i, texto} (línea vertical punteada con el texto arriba), periodos [{desde, hasta, nombre}] (≤ 4).
+//   Propios del documento: max (techo del eje), sufijo del eje ("%"), anotaciones [{serie, i, texto, lado "arriba"|"izq"}].
+//   Alto por defecto 340. Sin destacada, la primera serie lleva el acento. Las etiquetas X se ralean cuando no
+//   caben (la última siempre va).
 G.linea = (el, S, { ancho, alto, col }) => {
-  const n = S.etiquetas.length, W = ancho, Hh = alto || 340;
-  const ejeW = 40, finW = 64, arriba = 10, base = Hh - 30, x0 = ejeW, x1 = W - finW;
-  const todos = S.series.flatMap((s) => s.valores.filter((v) => v != null));
-  const tope = S.max || H.dominio(todos, true)[1];
-  const ticks = H.ticks(0, tope, 4).filter((v) => v <= tope + 1e-9);
+  const E = S.etiquetas || S.etiquetasX;
+  H.assert(Array.isArray(E) && E.length >= 3, "etiquetasX necesita ≥3 puntos");
+  H.assert(Array.isArray(S.series) && S.series.length >= 1 && S.series.length <= 4, "linea admite de 1 a 4 series");
+  const n = E.length;
+  S.series.forEach((s) => {
+    H.assert(s && s.nombre && Array.isArray(s.valores) && s.valores.length === n, "cada serie necesita nombre y " + n + " valores (null = hueco)");
+    s.valores.forEach((v) => H.assert(v === null || typeof v === "number", "valores: número o null"));
+    H.assert(s.valores.filter((v) => v !== null).length >= 2, "la serie «" + s.nombre + "» tiene menos de 2 valores");
+  });
+  H.assert(!S.hitos || S.hitos.length <= 1, "como máximo un hito");
+  const P = H.validarPeriodos(S.periodos, n);
+  const hito = S.hitos && S.hitos.length ? S.hitos[0] : null;
+  if (hito) H.assert(Number.isInteger(hito.i) && hito.i >= 0 && hito.i < n, "hito.i fuera de rango");
+  const rf = S.rotularFin;
+  if (Array.isArray(rf)) rf.forEach((nm) => H.assert(S.series.some((s) => s.nombre === nm), "rotularFin: «" + nm + "» no está en series"));
+  const hi = Math.max(0, S.series.findIndex((s) => s.destacar));
+  const f = (v) => GX.fmt(v, S.formato) + (S.sufijo || "");
+  const todos = S.series.flatMap((s) => s.valores.filter((v) => v !== null));
+  const desdeCero = S.yDesdeCero !== false;
+  const dom = H.dominio(todos, desdeCero);
+  if (S.max != null) { H.assert(S.max >= Math.max(...todos), "doc: max (" + S.max + ") queda por debajo del dato"); dom[1] = S.max; }
+  const tk = H.ticks(dom[0], dom[1], 4).filter((t) => t >= dom[0] - 1e-9 && t <= dom[1] + 1e-9);
+  const esc = (S.formato && S.formato.escala) || 1;
+  const fEje = Object.assign({}, S.formato || {}, { decimales: H.decimalesDe(tk.map((t) => t / esc), Math.max(2, (S.formato && S.formato.decimales) || 0)) });
+  const tickTxt = tk.map((t) => H.num(t, fEje) + (S.sufijo || ""));
+  const ejeY = S.ejeY !== false, valoresBajo = S.valoresBajoEje === true && n <= 12, sb = S.series[hi];
+  const W = ancho, Hh = alto || 340;
+  const ultimo = (s) => { let u = n - 1; while (u > 0 && s.valores[u] === null) u--; return u; };
+  const fin = S.series.map((s, j) => { const u = ultimo(s); return { j, u, v: s.valores[u], rot: rf == null || rf === true || (Array.isArray(rf) && rf.includes(s.nombre)) }; });
+  const finW = Math.ceil(Math.max(8, ...fin.filter((p) => p.rot).map((p) => Math.max(H.medir(S.series[p.j].nombre, GX.MONO_B), H.medir(f(p.v), GX.MONO_D)) + 12)));
+  const ejeW = ejeY ? Math.ceil(Math.max(...tickTxt.map((s) => H.medir(s, GX.MONO)))) + 8 : 6;
+  const arriba = 10 + (P.length ? 16 : 0) + (hito ? 16 : 0), base = Hh - 30 - (valoresBajo ? 16 : 0);
+  const x0 = ejeW, x1 = W - finW;
+  H.assert(x1 - x0 >= 100, "doc: no queda sitio para las líneas (" + Math.round(x1 - x0) + " px): quita rótulos finales (rotularFin) o acorta los nombres");
+  const x = (i) => x0 + (i * (x1 - x0)) / (n - 1), sy = H.escala(dom, [base, arriba]);
   const svg = GX.lienzo(el, W, Hh, S.aria);
-  const x = (i) => x0 + (i * (x1 - x0)) / (n - 1), y = (v) => base - (v / tope) * (base - arriba);
-  for (const tk of ticks) {
-    if (tk > 0) GX.linea(svg, x0, y(tk), x1, y(tk), col.suave, { "stroke-width": 1 });
-    GX.t(svg, 0, y(tk) + 4, H.num(tk, { decimales: H.decimalesDe(ticks) }) + (S.sufijo || ""), GX.MONO, col.texto);
+  if (!desdeCero) GX.anotar(el, "Eje desde " + H.num(dom[0], fEje) + (S.sufijo || "") + ".");
+  if (P.length) { const h = (x1 - x0) / (n - 1) / 2; GX.periodos(svg, P, (i) => [Math.max(x0, x(i) - h), Math.min(x1, x(i) + h)], arriba - 4, base, 12, col); }
+  if (ejeY) {
+    tk.forEach((t, k) => {
+      const yy = sy(t);
+      if (Math.abs(yy - base) > 1) GX.linea(svg, x0, yy, x1, yy, col.suave, { "stroke-width": 1 });
+      GX.t(svg, ejeW - 6, yy + 4, tickTxt[k], GX.MONO, col.texto, { "text-anchor": "end" });
+    });
+    GX.linea(svg, x0, base, x1, base, col.linea);
+  } else GX.linea(svg, x0, base, x1, base, col.linea, { "stroke-dasharray": "4 5" });
+  if (hito) {
+    const hx = x(hito.i), txt = String(hito.texto || ""), der = hx + 6 + H.medir(txt, GX.MONO) <= W;
+    GX.linea(svg, hx, arriba - 6, hx, base, col.texto, { "stroke-width": 1, "stroke-dasharray": "3 4", "stroke-opacity": 0.5 });
+    if (txt) GX.t(svg, der ? hx + 6 : hx - 6, P.length ? 28 : 12, txt, GX.MONO, col.texto, { "text-anchor": der ? "start" : "end" });
   }
-  GX.linea(svg, x0, base, x1, base, col.linea);
-  const orden = S.series.map((s, j) => j).sort((a, b) => (S.series[a].destacar ? 1 : 0) - (S.series[b].destacar ? 1 : 0));
-  // Rótulos finales (nombre + valor, dos líneas de 12 px): se empujan para no solaparse (H.antiSolape es puro).
-  const rot = S.series.map((s) => { const ult = s.valores.length - 1; return { y: y(s.valores[ult]), v: s.valores[ult] }; });
-  H.antiSolape(rot, { minGap: 30, min: 14, max: base - 2 });
+  // Etiquetas X: se ralea a un paso que quepa (la última siempre); un rótulo que se saldría del lienzo se ancla al borde.
+  const ralear = (paso, prioridad) => { const out = []; for (const i of prioridad.concat(Array.from({ length: n }, (_, i) => i).filter((i) => i % paso === 0))) if (out.every((j) => Math.abs(i - j) >= paso)) out.push(i); return new Set(out); };
+  const ancla = (xc, w) => (xc - w / 2 < 0 ? ["start", 0] : xc + w / 2 > W ? ["end", W] : ["middle", xc]);
+  const etW = Math.max(...E.map((e) => H.medir(String(e), GX.MONO_B))) + 6;
+  const valW = valoresBajo ? Math.max(...sb.valores.filter((v) => v !== null).map((v) => H.medir(f(v), GX.MONO))) + 6 : 0;
+  const vis = ralear(Math.max(1, Math.ceil(Math.max(etW, valW) / ((x1 - x0) / (n - 1)))), [n - 1]);
+  E.forEach((et, i) => {
+    if (!vis.has(i)) return;
+    const fe = i === n - 1 ? GX.MONO_B : GX.MONO, [an, ax] = ancla(x(i), H.medir(String(et), fe));
+    GX.t(svg, ax, valoresBajo ? Hh - 24 : Hh - 8, String(et), fe, col.texto, { "text-anchor": an });
+    if (valoresBajo && sb.valores[i] !== null) { const sv = f(sb.valores[i]), [a2, x2] = ancla(x(i), H.medir(sv, GX.MONO)); GX.t(svg, x2, Hh - 8, sv, GX.MONO, col.texto, { "text-anchor": a2 }); }
+  });
+  // Series: primero las atenuadas (.55 / .4 / .3), la destacada encima; null corta la línea.
+  const orden = S.series.map((s, j) => j).sort((a, b) => (a === hi ? 1 : 0) - (b === hi ? 1 : 0));
+  let k = 0;
+  const op = S.series.map((s, j) => (j === hi ? 1 : [0.55, 0.4, 0.3][Math.min(k++, 2)]));
   for (const j of orden) {
-    const s = S.series[j], d = !!s.destacar;
-    const pts = s.valores.map((v, i) => (v == null ? null : x(i) + "," + y(v))).filter(Boolean).join(" ");
-    H.svgEl("polyline", { points: pts, fill: "none", stroke: d ? col.dest : col.texto, "stroke-opacity": d ? 1 : 0.55, "stroke-width": d ? 3.5 : 2, "stroke-linejoin": "round" }, svg);
-    const ult = s.valores.length - 1, v = s.valores[ult], yr = rot[j].y;
-    H.svgEl("circle", { cx: x(ult), cy: y(v), r: d ? 5 : 4, fill: d ? col.dest : col.texto, "fill-opacity": d ? 1 : 0.55 }, svg);
-    const tc = d ? (col.tinta || col.dest) : col.texto;
-    GX.t(svg, x1 + 10, yr - 2, s.nombre, GX.MONO_B, tc, d ? {} : { "fill-opacity": 0.75 });
-    GX.t(svg, x1 + 10, yr + 14, GX.fmt(v, S.formato) + (S.sufijo || ""), d ? GX.MONO_D : GX.MONO_B, tc, d ? {} : { "fill-opacity": 0.75 });
+    const s = S.series[j], d = j === hi;
+    let dd = "", abierto = false;
+    s.valores.forEach((v, i) => { if (v === null) { abierto = false; return; } dd += (abierto ? " L" : " M") + x(i).toFixed(1) + " " + sy(v).toFixed(1); abierto = true; });
+    H.svgEl("path", { d: dd.trim(), fill: "none", stroke: d ? col.dest : col.texto, "stroke-opacity": op[j], "stroke-width": d ? 3 : 2, "stroke-linejoin": "round", "stroke-linecap": "round" }, svg);
+    H.svgEl("circle", { cx: x(fin[j].u), cy: sy(fin[j].v), r: d ? 4.5 : 3.5, fill: d ? col.dest : col.texto, "fill-opacity": op[j] }, svg);
+  }
+  // Rótulos finales (nombre + valor, dos líneas): se empujan para no solaparse (H.antiSolape es puro).
+  const rot = fin.filter((p) => p.rot).map((p) => ({ j: p.j, y: sy(p.v), v: p.v }));
+  H.antiSolape(rot, { minGap: 30, min: arriba + 2, max: base - 8 });
+  for (const r of rot) {
+    const d = r.j === hi, tc = d ? (col.tinta || col.dest) : col.texto, ex = d ? {} : { "fill-opacity": 0.75 };
+    GX.t(svg, x1 + 10, r.y - 2, S.series[r.j].nombre, GX.MONO_B, tc, ex);
+    GX.t(svg, x1 + 10, r.y + 14, f(r.v), d ? GX.MONO_D : GX.MONO_B, tc, ex);
   }
   for (const a of S.anotaciones || []) {
-    const s = S.series[a.serie], v = s.valores[a.i], d = !!s.destacar;
-    if (d) H.svgEl("circle", { cx: x(a.i), cy: y(v), r: 4, fill: col.dest }, svg);
-    const izq = a.lado === "izq";
-    GX.t(svg, izq ? x(a.i) - 8 : x(a.i), izq ? y(v) - 4 : y(v) - 11, a.texto, GX.MONO_B, d ? (col.tinta || col.dest) : col.texto, { "text-anchor": izq ? "end" : "middle" });
+    const s = S.series[a.serie];
+    H.assert(s && typeof s.valores[a.i] === "number", "doc: anotación fuera de rango (serie " + a.serie + ", i " + a.i + ")");
+    const v = s.valores[a.i], d = a.serie === hi, izq = a.lado === "izq";
+    if (d) H.svgEl("circle", { cx: x(a.i), cy: sy(v), r: 4, fill: col.dest }, svg);
+    GX.t(svg, izq ? x(a.i) - 8 : x(a.i), izq ? sy(v) - 4 : sy(v) - 11, a.texto, GX.MONO_B, d ? (col.tinta || col.dest) : col.texto, { "text-anchor": izq ? "end" : "middle" });
   }
-  S.etiquetas.forEach((et, i) => GX.t(svg, x(i), Hh - 8, et, i === n - 1 ? GX.MONO_B : GX.MONO, col.texto, { "text-anchor": "middle" }));
+};
+
+// multiples · pequeños múltiplos: 4–9 mini-líneas en la MISMA escala, con el último valor en la cabecera de cada panel.
+//   Mismo contrato que templates/graficos/multiples.html: etiquetasX[4–30], paneles[4–9] {nombre, valores (null = hueco)},
+//   destacar (índice del panel clave), referencia {valor, texto} (punteada en todos), yDesdeCero (false ⇒ «Eje desde N»).
+//   Rejilla 2×2 / 2×3 / 3×3 (a ancho < 480, dos columnas); alto por defecto filas × 120 + 30 y nunca menos de
+//   filas × 80 + 30 (un panel por debajo de 80 px no se lee). Ticks solo en la primera columna; etiquetas X (primera y
+//   última) solo bajo el último panel de cada columna.
+G.multiples = (el, S, { ancho, alto, col }) => {
+  const E = S.etiquetasX || S.etiquetas;
+  H.assert(Array.isArray(E) && E.length >= 4 && E.length <= 30, "etiquetasX necesita de 4 a 30 puntos");
+  H.assert(Array.isArray(S.paneles) && S.paneles.length >= 4 && S.paneles.length <= 9, "multiples admite de 4 a 9 paneles");
+  const n = E.length, m = S.paneles.length;
+  S.paneles.forEach((p) => {
+    H.assert(p && typeof p.nombre === "string" && p.nombre.trim() && Array.isArray(p.valores) && p.valores.length === n, "cada panel necesita nombre y " + n + " valores (null = hueco)");
+    p.valores.forEach((v) => H.assert(v === null || typeof v === "number", "valores: número o null"));
+    H.assert(p.valores.filter((v) => v !== null).length >= 2, "el panel «" + p.nombre + "» tiene menos de 2 valores");
+  });
+  H.assert(S.referencia == null || (typeof S.referencia.valor === "number" && typeof S.referencia.texto === "string"), "referencia: {valor, texto} o null");
+  const hi = GX.indice(S.destacar, m), f = (v) => GX.fmt(v, S.formato), desdeCero = S.yDesdeCero !== false;
+  const todos = S.paneles.flatMap((p) => p.valores.filter((v) => v !== null)).concat(S.referencia ? [S.referencia.valor] : []);
+  const dom = H.dominio(todos, desdeCero);
+  let tk = H.ticks(dom[0], dom[1], 3);
+  if (tk.length > 4) tk = H.ticks(dom[0], dom[1], 2);
+  const esc = (S.formato && S.formato.escala) || 1;
+  const fEje = Object.assign({}, S.formato || {}, { decimales: H.decimalesDe(tk.map((t) => t / esc), Math.max(2, (S.formato && S.formato.decimales) || 0)) });
+  const W = ancho, cols = W < 480 || m <= 4 ? 2 : 3, filas = Math.ceil(m / cols), gapX = 10, gapY = 10, abajo = 20;
+  const Hh = alto ? Math.max(alto, filas * 80 + 30) : filas * 120 + 30;
+  const svg = GX.lienzo(el, W, Hh, S.aria);
+  GX.anotar(el, (S.referencia ? "Línea punteada: " + S.referencia.texto + ". " : "") + "Misma escala en todos los paneles." + (desdeCero ? "" : " Eje desde " + H.num(dom[0], fEje) + "."));
+  const izq = Math.ceil(Math.max(...tk.map((t) => H.medir(H.num(t, fEje), GX.MONO)))) + 6;
+  const pw = (W - izq - (cols - 1) * gapX) / cols, ph = (Hh - abajo - (filas - 1) * gapY) / filas, cabH = 22, pad = 6;
+  const ultimoDeColumna = (c) => { let u = -1; for (let i = 0; i < m; i++) if (i % cols === c) u = i; return u; };
+  S.paneles.forEach((p, i) => {
+    const c = i % cols, r = Math.floor(i / cols), d = i === hi;
+    const x = izq + c * (pw + gapX), y = r * (ph + gapY);
+    const px0 = x + pad, px1 = x + pw - pad, py0 = y + cabH + 6, py1 = y + ph - 8;
+    const sx = H.escala([0, n - 1], [px0, px1]), sy = H.escala(dom, [py1, py0]);
+    GX.rect(svg, x, y, pw, ph, col.suave);
+    let u = n - 1; while (u > 0 && p.valores[u] === null) u--;
+    const val = f(p.valores[u]), fv = d ? GX.MONO_D : GX.MONO_B, wV = H.medir(val, fv);
+    const fn = H.encajar(p.nombre, d ? [GX.SANS_D, "800 12px Archivo, sans-serif"] : [GX.SANS, GX.SANS_S], pw - 2 * pad - wV - 6);
+    H.assert(fn, "el nombre «" + p.nombre + "» no cabe en su panel: acórtalo");
+    GX.t(svg, px0, y + 16, p.nombre, fn, col.texto);
+    GX.t(svg, px1, y + 16, val, fv, d ? (col.tinta || col.dest) : col.texto, { "text-anchor": "end" });
+    tk.forEach((t) => {
+      const yt = sy(t);
+      GX.linea(svg, px0, yt, px1, yt, col.linea, { "stroke-width": 1, "stroke-opacity": Math.abs(t - dom[0]) < 1e-9 ? 0.5 : 0.15 });
+      if (c === 0) GX.t(svg, x - 4, yt + 4, H.num(t, fEje), GX.MONO, col.texto, { "text-anchor": "end" });
+    });
+    if (S.referencia) { const yr = sy(S.referencia.valor); GX.linea(svg, px0, yr, px1, yr, col.texto, { "stroke-width": 1, "stroke-dasharray": "3 3", "stroke-opacity": 0.6 }); }
+    let dd = "", abierto = false;
+    p.valores.forEach((v, j) => { if (v === null) { abierto = false; return; } dd += (abierto ? " L" : " M") + sx(j).toFixed(1) + " " + sy(v).toFixed(1); abierto = true; });
+    H.svgEl("path", { d: dd.trim(), fill: "none", stroke: d ? col.dest : col.texto, "stroke-width": d ? 2.5 : 1.5, "stroke-linejoin": "round", "stroke-linecap": "round" }, svg);
+    H.svgEl("circle", { cx: sx(u), cy: sy(p.valores[u]), r: d ? 4 : 3, fill: d ? col.dest : col.texto }, svg);
+    if (i === ultimoDeColumna(c)) {
+      GX.t(svg, px0, y + ph + 14, String(E[0]), GX.MONO, col.texto);
+      GX.t(svg, px1, y + ph + 14, String(E[n - 1]), GX.MONO_B, col.texto, { "text-anchor": "end" });
+    }
+  });
+};
+
+// combinado · barras (eje izquierdo, desde cero) + línea (eje derecho) para dos magnitudes en el tiempo.
+//   Mismo contrato que templates/graficos/combinado.html: etiquetas[3–12], barras {nombre, valores ≥ 0, formato},
+//   linea {nombre, valores, formato, desdeCero}, destacar (índice; −1 = el último), rotular (null = todas si ≤ 8
+//   periodos, si no destacada + primero + último · "todas" | "destacada"). Alto por defecto 300. Títulos de eje MONO
+//   encima de cada eje (en dos filas si no caben juntos); el rótulo de la línea lleva halo y, si choca con el de la
+//   barra, baja; si aun así pisa, cae el de la barra (la línea manda).
+G.combinado = (el, S, { ancho, alto, col }) => {
+  const E = S.etiquetas || S.etiquetasX;
+  H.assert(Array.isArray(E) && E.length >= 3 && E.length <= 12, "combinado admite de 3 a 12 periodos");
+  const n = E.length;
+  for (const k of ["barras", "linea"]) {
+    const s = S[k];
+    H.assert(s && typeof s.nombre === "string" && s.nombre.trim() && s.nombre.length <= 30, k + ".nombre: 1–30 caracteres (serie y unidad)");
+    H.assert(Array.isArray(s.valores) && s.valores.length === n, k + ".valores necesita " + n + " valores");
+    s.valores.forEach((v) => H.assert(typeof v === "number" && isFinite(v), k + ".valores: números"));
+  }
+  S.barras.valores.forEach((v) => H.assert(v >= 0, "barras.valores: ≥ 0 (las barras parten de cero)"));
+  const hi = GX.indice(S.destacar == null ? -1 : S.destacar, n);
+  const fB = S.barras.formato || S.formato, fL = S.linea.formato || S.formato;
+  const ejeFmt = (fm, tk) => { const e = (fm && fm.escala) || 1; return Object.assign({}, fm || {}, { decimales: H.decimalesDe(tk.map((t) => t / e), Math.max(2, (fm && fm.decimales) || 0)) }); };
+  const desdeCero = S.linea.desdeCero !== false;
+  const domB = H.dominio(S.barras.valores, true), domL = H.dominio(S.linea.valores, desdeCero);
+  const tkB = H.ticks(domB[0], domB[1], 4), tkL = H.ticks(domL[0], domL[1], 4);
+  const fEB = ejeFmt(fB, tkB), fEL = ejeFmt(fL, tkL);
+  const W = ancho, Hh = alto || 300;
+  const svg = GX.lienzo(el, W, Hh, S.aria);
+  GX.anotar(el, "Dos escalas: barras a la izquierda desde cero; línea a la derecha" + (desdeCero ? "" : " desde " + H.num(domL[0], fEL)) + ".");
+  // Títulos de eje con su marca (cuadro = barras, trazo = línea); en dos filas si no caben juntos.
+  const wTR = H.medir(S.linea.nombre, GX.MONO), yT2 = 14 + H.medir(S.barras.nombre, GX.MONO) + 16 + 22 + wTR > W ? 26 : 12;
+  GX.rect(svg, 0, 3, 10, 10, col.base);
+  GX.t(svg, 14, 12, S.barras.nombre, GX.MONO, col.texto);
+  GX.linea(svg, W - wTR - 22, yT2 - 4, W - wTR - 6, yT2 - 4, col.texto, { "stroke-width": 2 });
+  GX.t(svg, W, yT2, S.linea.nombre, GX.MONO, col.texto, { "text-anchor": "end" });
+  const izq = Math.ceil(Math.max(...tkB.map((t) => H.medir(H.num(t, fEB), GX.MONO)))) + 8;
+  const der = Math.ceil(Math.max(...tkL.map((t) => H.medir(H.num(t, fEL), GX.MONO)))) + 8;
+  const y0 = yT2 + 26, y1 = Hh - 22, x0 = izq, x1 = W - der;
+  H.assert(x1 - x0 >= 90 && y1 - y0 >= 80, "doc: no queda sitio para el gráfico a " + W + "×" + Hh + " px");
+  const syB = H.escala(domB, [y1, y0]), syL = H.escala(domL, [y1, y0]);
+  tkB.forEach((t) => { const yy = syB(t); if (t > 0) GX.linea(svg, x0, yy, x1, yy, col.suave, { "stroke-width": 1 }); GX.t(svg, x0 - 6, yy + 4, H.num(t, fEB), GX.MONO, col.texto, { "text-anchor": "end" }); });
+  GX.linea(svg, x0, y1, x1, y1, col.linea);
+  tkL.forEach((t) => { const yy = syL(t); GX.linea(svg, x1 + 1, yy, x1 + 4, yy, col.linea, { "stroke-width": 1 }); GX.t(svg, x1 + 7, yy + 4, H.num(t, fEL), GX.MONO, col.texto); });
+  // Barras y etiquetas X (raleadas si no caben; la destacada y la última tienen prioridad).
+  const slot = (x1 - x0) / n, bw = Math.min(56, slot * 0.68), xc = (i) => x0 + i * slot + slot / 2;
+  const ralear = (paso, prioridad) => { const out = []; for (const i of prioridad.concat(Array.from({ length: n }, (_, i) => i).filter((i) => i % paso === 0))) if (out.every((j) => Math.abs(i - j) >= paso)) out.push(i); return new Set(out); };
+  const vis = ralear(Math.max(1, Math.ceil((Math.max(...E.map((e) => H.medir(String(e), GX.MONO_B))) + 4) / slot)), [hi, n - 1]);
+  S.barras.valores.forEach((v, i) => {
+    const d = i === hi;
+    GX.rect(svg, xc(i) - bw / 2, syB(v), bw, y1 - syB(v), d ? col.dest : col.base);
+    if (vis.has(i)) GX.t(svg, xc(i), Hh - 6, String(E[i]), d ? GX.MONO_B : GX.MONO, col.texto, { "text-anchor": "middle" });
+  });
+  H.svgEl("path", { d: S.linea.valores.map((v, i) => (i ? " L" : "M") + xc(i).toFixed(1) + " " + syL(v).toFixed(1)).join(""), fill: "none", stroke: col.texto, "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round" }, svg);
+  S.linea.valores.forEach((v, i) => H.svgEl("circle", { cx: xc(i), cy: syL(v), r: i === hi ? 4.5 : 3.5, fill: col.texto, stroke: col.sobre, "stroke-width": 1.5 }, svg));
+  // Rótulos por columna: barra encima de su barra; línea encima del punto (si chocan, baja; si aun así pisa, cae el de la barra).
+  const rotulada = (i) => (S.rotular === "todas" ? true : S.rotular === "destacada" ? i === hi : n <= 8 || i === hi || i === 0 || i === n - 1);
+  const solapan = (a, b) => a[0] < b[1] && b[0] < a[1];
+  const ancla = (i, w) => (w <= bw ? ["middle", xc(i)] : i === 0 ? ["start", x0] : i === n - 1 ? ["end", x1] : ["middle", xc(i)]);
+  S.barras.valores.forEach((v, i) => {
+    if (!rotulada(i)) return;
+    const d = i === hi, vl = S.linea.valores[i], yb = syB(v), yl = syL(vl);
+    const sB = GX.fmt(v, fB), sL = GX.fmt(vl, fL), wB = H.medir(sB, GX.MONO_B), wL = H.medir(sL, GX.MONO_B);
+    const clave = d || i === 0 || i === n - 1, anchoCol = slot - 4;
+    let pintarB = clave || wB <= anchoCol;
+    const pintarL = clave || wL <= anchoCol;
+    const yB = yb - 5, cajaB = [yB - 12, yB + 2];
+    let yL = yl - 9, cajaL = [yL - 12, yL + 2];
+    if (pintarB && pintarL && solapan(cajaB, cajaL)) {
+      const abajo = yl + 18, cajaAbajo = [abajo - 12, abajo + 2];
+      if (abajo <= y1 + 2 && !solapan(cajaB, cajaAbajo)) { yL = abajo; cajaL = cajaAbajo; } else pintarB = false;
+    }
+    if (pintarB) { const [a, xx] = ancla(i, wB); GX.t(svg, xx, yB, sB, GX.MONO_B, d ? (col.tinta || col.dest) : col.texto, { "text-anchor": a, style: "font:" + GX.MONO_B + ";" + GX.halo(col) }); }
+    if (pintarL) { const [a, xx] = ancla(i, wL); GX.t(svg, xx, yL, sL, GX.MONO_B, col.texto, { "text-anchor": a, style: "font:" + GX.MONO_B + ";" + GX.halo(col) }); }
+  });
 };
 
 // ---- investigacion/graficos/mapa.js
 // mapa · los 22 departamentos (GEOMETRIA la inyecta scripts/informe.py desde design/mapa_geometria.svg).
-//   marcados [GTxx…] en el acento, el resto en tinta suave; marcadores [{id, n, dx, dy}] numerados en
-//   el centroide del departamento (dx/dy corrigen en px si dos quedan juntos).
-G.mapa = (el, S, { ancho, col }) => {
+//   Coroplético (contrato de templates/graficos/mapa.html): valores {GTxx|nombre: v} (≥ 12 con valor; el resto
+//   va rayado «sin dato»), cortes [2–5 límites] o clases 3–6 con metodo "cuantiles"|"iguales" y redondear
+//   (H.cortes y H.claseDe, los mismos de la tarjeta), destacar (id o nombre: contorno en el acento con halo),
+//   rotular "extremos"|"ninguno", formato. Colores de clase de GX.rampa; leyenda (de menor a mayor) y las líneas
+//   MAYOR / MENOR en una franja bajo el mapa, dentro del mismo svg (70 px si caben en una fila cada una).
+//   Sin `valores`: marcados [GTxx…] en el acento y el resto en tinta suave (p. ej. «contiene un área en alerta»).
+//   Siempre: marcadores [{id, n, dx, dy}] numerados en el centroide (dx/dy corrigen en px si dos quedan juntos),
+//   ancho (acota el mapa: un mapa a 672 px mide 705 de alto; la franja usa todo el ancho de la columna) y
+//   alto como tope (reduce el mapa hasta 150 px; si aun así no cabe, la figura crece: doc).
+const GXM = (() => {
+  // Unidades inseparables { muestra, borde, partes: [{ s, font, fill, ls, gap }] } repartidas en filas de 16 px
+  // que caben en maxW, separadas `sep` px. Devuelve [[{ u, x, w }…]…] sin dibujar (sirve para medir).
+  const anchoDe = (u) => (u.muestra != null ? 28 : 0) + u.partes.reduce((s, p) => s + H.medir(p.s, p.font) + (p.ls || 0) * p.s.length + (p.gap || 0), 0);
+  const filas = (unidades, maxW, sep) => {
+    const out = [];
+    let fila = [], x = 0;
+    for (const u of unidades) {
+      const w = anchoDe(u);
+      if (fila.length && x + w > maxW) { out.push(fila); fila = []; x = 0; }
+      fila.push({ u, x, w });
+      x += w + sep;
+    }
+    if (fila.length) out.push(fila);
+    return out;
+  };
+  const dibujar = (svg, filasArr, y) => {
+    for (const fila of filasArr) {
+      for (const { u, x } of fila) {
+        let xx = x;
+        if (u.muestra != null) { GX.rect(svg, xx, y + 3, 22, 10, u.muestra, u.borde ? { stroke: u.borde, "stroke-width": 2 } : null); xx += 28; }
+        for (const p of u.partes) {
+          GX.t(svg, xx, y + 13, p.s, p.font, p.fill, p.ls ? { style: "font:" + p.font + ";letter-spacing:" + p.ls + "px" } : null);
+          xx += H.medir(p.s, p.font) + (p.ls || 0) * p.s.length + (p.gap || 0);
+        }
+      }
+      y += 16;
+    }
+    return y;
+  };
+  return { filas, dibujar };
+})();
+
+G.mapa = (el, S, { ancho, alto, col }) => {
   H.assert(typeof GEOMETRIA === "object", "mapa: falta GEOMETRIA (informe.py la inyecta)");
-  const [vx, vy, vw, vh] = GEOMETRIA.viewBox.split(/\s+/).map(Number);
-  const W = Math.min(ancho, S.ancho || ancho), Hh = Math.round((W * vh) / vw), k = W / vw;  // S.ancho acota el mapa (un mapa a 672 px mide 705 de alto)
-  const svg = GX.lienzo(el, W, Hh, S.aria);
-  const g = H.svgEl("g", { transform: "scale(" + k + ") translate(" + -vx + " " + -vy + ")" }, svg);
-  const marcados = new Set(S.marcados || []);
-  const cajas = {};
-  for (const [id, dep] of Object.entries(GEOMETRIA.deptos)) {
-    const p = H.svgEl("path", { d: dep.d, fill: marcados.has(id) ? col.dest : col.suave, stroke: col.sobre, "stroke-width": 2.2, "stroke-linejoin": "round" }, g);
-    cajas[id] = p;
+  const [vx, vy, vw, vh] = GEOMETRIA.viewBox.split(/\s+/).map(Number), razon = vh / vw;
+  const ids = Object.keys(H.NOMBRES), coro = S.valores != null, acento = col.tinta || col.dest;
+  const f = (v) => GX.fmt(v, S.formato), M = GX.MONO, MB = GX.MONO_B;
+
+  // ---- Coroplético: valores → clases (H.cortes, compartido con la tarjeta), destacado y extremos ----
+  const val = {};
+  let con = [], sin = [], cortes = [], colores = [], hi = null, leyenda = [], lineas = [], sinDatoU = null;
+  if (coro) {
+    H.assert(typeof S.valores === "object" && !Array.isArray(S.valores), "valores debe ser un objeto { GT01: 12.3, … }");
+    for (const [k, v] of Object.entries(S.valores)) {
+      if (v === null || v === undefined) continue;
+      const id = H.idDepto(k);
+      H.assert(typeof v === "number" && isFinite(v), "valores: «" + k + "» no es numérico");
+      H.assert(!(id in val), "valores: «" + k + "» está repetido");
+      val[id] = v;
+    }
+    con = ids.filter((id) => id in val);
+    sin = ids.filter((id) => !(id in val));
+    H.assert(con.length >= 12, "mapa necesita al menos 12 departamentos con valor (hay " + con.length + ")");
+    hi = S.destacar ? H.idDepto(S.destacar) : null;
+    if (hi) H.assert(hi in val, "destacar: «" + S.destacar + "» no tiene valor");
+    const rotular = S.rotular === "ninguno" ? "ninguno" : "extremos";
+    const vals = con.map((id) => val[id]).sort((a, b) => a - b), min = vals[0], max = vals[vals.length - 1];
+    cortes = H.cortes(vals, { cortes: S.cortes, clases: S.clases, metodo: S.metodo, redondear: S.redondear });
+    const nc = cortes.length + 1;
+    colores = GX.rampa(nc, col);
+    for (let i = 0; i < nc; i++) {
+      const lo = i === 0 ? min : cortes[i - 1], hiV = i === nc - 1 ? max : cortes[i];
+      leyenda.push({ muestra: colores[i], partes: [{ s: f(lo) + " – " + f(hiV), font: M, fill: col.texto }] });
+    }
+    if (sin.length) leyenda.push(sinDatoU = { muestra: "none", partes: [{ s: "Sin dato", font: M, fill: col.texto }] });
+    const orden = con.slice().sort((a, b) => val[b] - val[a] || a.localeCompare(b));
+    const mayor = orden.slice(0, 3), menor = orden.slice(-3).reverse();
+    const nombreValor = (id, sep) => ({ partes: [
+      { s: H.NOMBRES[id], font: M, fill: id === hi ? acento : col.texto, gap: 5 },
+      { s: f(val[id]), font: MB, fill: id === hi ? acento : col.texto, gap: sep ? 5 : 0 }].concat(sep ? [{ s: "·", font: M, fill: col.texto }] : []) });
+    if (hi && !(rotular === "extremos" && (mayor.includes(hi) || menor.includes(hi))))
+      lineas.push([Object.assign({ muestra: colores[H.claseDe(val[hi], cortes)], borde: col.dest }, nombreValor(hi, false))]);
+    if (rotular === "extremos") {
+      const lista = (t, arr) => [{ partes: [{ s: t, font: M, fill: col.texto, ls: 1.2, gap: 2 }] }].concat(arr.map((id, i) => nombreValor(id, i < arr.length - 1)));
+      lineas.push(lista("MAYOR", mayor), lista("MENOR", menor));
+    }
   }
+
+  // ---- Medidas: la franja ocupa todo el ancho de la columna; el mapa, W (S.ancho) acotado por `alto` ----
+  const franja = { alto: 0, ley: [], lineas: [] };
+  if (coro) {
+    franja.ley = GXM.filas(leyenda, ancho, 14);
+    franja.lineas = lineas.map((l) => GXM.filas(l, ancho, 8));
+    franja.alto = 10 + franja.ley.length * 16 + (lineas.length ? 8 + franja.lineas.reduce((s, r) => s + r.length, 0) * 16 : 0) + 4;
+  }
+  let W = Math.min(ancho, S.ancho || ancho);
+  if (alto) W = Math.max(Math.min(W, 150), Math.min(W, Math.floor((alto - franja.alto) / razon)));
+  const mapaH = Math.round(W * razon), Hh = mapaH + franja.alto, k = W / vw;
+  const svg = GX.lienzo(el, ancho, Hh, S.aria);
+  if (sinDatoU) sinDatoU.muestra = GX.sinDato(svg, col);
+
+  // ---- Mapa: relleno por clase (o marcados), borde entre departamentos en el color del fondo ----
+  const g = H.svgEl("g", { transform: "scale(" + k + ") translate(" + -vx + " " + -vy + ")" }, svg);
+  const marcados = new Set(coro ? [] : S.marcados || []), cajas = {};
+  for (const id of ids) {
+    const geo = GEOMETRIA.deptos[id];
+    H.assert(geo && geo.d, "GEOMETRIA sin " + id + ": corre python3 scripts/build_mapa.py");
+    const fill = coro ? (id in val ? colores[H.claseDe(val[id], cortes)] : sinDatoU.muestra) : marcados.has(id) ? col.dest : col.suave;
+    cajas[id] = H.svgEl("path", { d: geo.d, fill, stroke: col.sobre, "stroke-width": 1.5, "stroke-linejoin": "round", "vector-effect": "non-scaling-stroke" }, g);
+  }
+  if (hi) for (const [stroke, w] of [[col.sobre, 6], [col.dest, 2.5]])  // halo del fondo (separa de los vecinos) + acento encima
+    H.svgEl("path", { d: GEOMETRIA.deptos[hi].d, fill: "none", stroke, "stroke-width": w, "stroke-linejoin": "round", "vector-effect": "non-scaling-stroke" }, g);
+
+  // ---- Franja: leyenda de clases (+ sin dato), destacado si no sale en los extremos, MAYOR / MENOR ----
+  if (coro) {
+    let y = GXM.dibujar(svg, franja.ley, mapaH + 10);
+    if (franja.lineas.length) { y += 8; for (const fl of franja.lineas) y = GXM.dibujar(svg, fl, y); }
+    if (sin.length) GX.anotar(el, sin.length === 1 ? "1 departamento sin dato" : sin.length + " departamentos sin dato");
+  }
+
+  // ---- Marcadores numerados, encima de todo ----
   for (const m of S.marcadores || []) {
     H.assert(cajas[m.id], "mapa: marcador en un departamento desconocido " + m.id);
     // Centroide de área (informe.py) o, si falta, el centro de la caja.
     const b = cajas[m.id].getBBox(), c = (GEOMETRIA.centros || {})[m.id] || [b.x + b.width / 2, b.y + b.height / 2];
     const cx = (c[0] - vx) * k + (m.dx || 0), cy = (c[1] - vy) * k + (m.dy || 0);
-    const txt = String(m.n), w = txt.length > 1 ? Math.max(22, H.medir(txt, GX.MONO_B) + 14) : 22;
+    const txt = String(m.n), w = txt.length > 1 ? Math.max(22, H.medir(txt, MB) + 14) : 22;
     GX.rect(svg, cx - w / 2, cy - 11, w, 22, col.texto, { rx: 11 });
-    GX.t(svg, cx, cy + 4.5, txt, GX.MONO_B, col.sobre, { "text-anchor": "middle" });
+    GX.t(svg, cx, cy + 4.5, txt, MB, col.sobre, { "text-anchor": "middle" });
   }
 };
 
@@ -903,6 +1957,550 @@ G.comparacion = (el, S, { ancho, col }) => {
       '<span style="flex:none;width:92px">' + I.esc(it.nombre) + '</span>' +
       '<span style="width:' + ((it.valor / max) * util).toFixed(1) + 'px;height:12px;background:' + (it.destacar ? col.dest : col.base) + '"></span>' +
       '<span style="font-weight:' + (it.destacar ? 700 : 500) + '">' + I.esc(GX.fmt(it.valor, S.formato)) + '</span></div>').join("") + "</div>";
+};
+
+// ---- investigacion/graficos/partes.js
+// Partes · el reparto de un todo o de una cadena: dona, treemap, hemiciclo y embudo.
+// Mismo contrato que las plantillas de tarjeta (templates/graficos/dona.html, treemap.html, hemiciclo.html,
+// embudo.html) y la misma aritmética compartida de H (squarify, asientos, mayoria, etiquetaEmbudo): el documento
+// y la tarjeta calculan el mismo número. Un solo acento (col.dest) para la parte que importa.
+
+// dona · reparto del todo en 2–5 partes: aro de arcos en SVG, cifra en el centro y lista con swatch.
+//   partes[2–5] {nombre, valor ≥ 0}, destacar (índice), centro {valor, texto} (opcional: por defecto la destacada),
+//   formato (decimales de los %). Aro de radio 90 y grosor 28 a la izquierda con la lista a la derecha; a menos de
+//   400 px el aro va centrado y la lista debajo (+18·n). Alto 200.
+G.dona = (el, S, { ancho, col }) => {
+  H.assert(Array.isArray(S.partes) && S.partes.length >= 2 && S.partes.length <= 5, "dona admite de 2 a 5 partes");
+  S.partes.forEach((p) => H.assert(p && p.nombre && typeof p.valor === "number" && p.valor >= 0, "cada parte necesita nombre y valor ≥ 0"));
+  const total = S.partes.reduce((s, p) => s + p.valor, 0);
+  H.assert(total > 0, "la suma de las partes es 0");
+  const n = S.partes.length, hi = GX.indice(S.destacar || 0, n), dec = (S.formato && S.formato.decimales) || 0;
+  const W = ancho, abajo = W < 400, Hh = 200 + (abajo ? n * 18 : 0), R = 90, r = R - 28;
+  const cx = abajo ? W / 2 : 100, cy = 100;
+  // El resto de las partes en la tinta con opacidades decrecientes (sin pisar el acento).
+  const OP = [0.85, 0.6, 0.4, 0.25];
+  let k = 0;
+  const estilo = S.partes.map((_, i) => (i === hi ? { fill: col.dest } : { fill: col.texto, "fill-opacity": OP[Math.min(k++, OP.length - 1)] }));
+  const svg = GX.lienzo(el, W, Hh, S.aria);
+  // Arcos desde las 12 en sentido horario; una parte del 100 % es un anillo entero.
+  const pt = (rad, a) => (cx + rad * Math.sin(a)).toFixed(2) + " " + (cy - rad * Math.cos(a)).toFixed(2);
+  let a0 = 0;
+  S.partes.forEach((p, i) => {
+    const fr = p.valor / total;
+    if (fr <= 0) return;
+    const a1 = a0 + fr * 2 * Math.PI;
+    if (fr >= 0.9999) H.svgEl("circle", { cx, cy, r: (R + r) / 2, fill: "none", stroke: estilo[i].fill, "stroke-width": R - r, "stroke-opacity": estilo[i]["fill-opacity"] }, svg);
+    else {
+      const grande = fr > 0.5 ? 1 : 0;
+      const d = "M" + pt(R, a0) + " A" + R + " " + R + " 0 " + grande + " 1 " + pt(R, a1) + " L" + pt(r, a1) + " A" + r + " " + r + " 0 " + grande + " 0 " + pt(r, a0) + " Z";
+      H.svgEl("path", Object.assign({ d, stroke: col.sobre, "stroke-width": 1 }, estilo[i]), svg);
+    }
+    a0 = a1;
+  });
+  // Centro: la cifra en serif y el texto en mono, partido por palabras en la cuerda del hueco (≤ 2 líneas).
+  const c = S.centro || { valor: Math.round((S.partes[hi].valor / total) * 100), texto: S.partes[hi].nombre };
+  const vTxt = typeof c.valor === "number" ? H.pct(c.valor) : String(c.valor);
+  const cuerda = (dy) => (r > dy ? 2 * Math.sqrt(r * r - dy * dy) - 8 : 0);
+  const lineas = [];
+  if (c.texto && String(c.texto).trim()) {
+    const pal = String(c.texto).trim().split(/\s+/);
+    let linea = "";
+    for (const w of pal) {
+      const prueba = linea ? linea + " " + w : w, ancho = cuerda(lineas.length === 0 ? 18 : 32);
+      if (H.medir(prueba, GX.MONO) <= ancho) linea = prueba;
+      else { H.assert(linea && lineas.length < 1, "doc: el texto del centro de la dona no cabe en el hueco: acórtalo"); lineas.push(linea); linea = w; }
+    }
+    H.assert(H.medir(linea, GX.MONO) <= cuerda(lineas.length === 0 ? 18 : 32), "doc: el texto del centro de la dona no cabe en el hueco: acórtalo");
+    lineas.push(linea);
+  }
+  GX.t(svg, cx, lineas.length ? cy - 6 : cy + 11, vTxt, GX.serif(32), col.texto, { "text-anchor": "middle" });
+  lineas.forEach((l, i) => GX.t(svg, cx, cy + 14 + i * 14, l, GX.MONO, col.texto, { "text-anchor": "middle" }));
+  // Lista: swatch, nombre y %; la destacada en negrita y con el % en el acento.
+  const pctTxt = S.partes.map((p) => H.pct((p.valor / total) * 100, dec));
+  const wP = Math.ceil(Math.max(...pctTxt.map((t) => H.medir(t, GX.MONO_B)))) + 8;
+  const SANS_HI = "800 12px Archivo, sans-serif";
+  const item = (i, x, yBase, ySw, maxW) => {
+    const p = S.partes[i], d = i === hi;
+    const fn = H.encajar(p.nombre, d ? [GX.SANS_D, SANS_HI] : [GX.SANS, GX.SANS_S], maxW);
+    H.assert(fn, "doc: el nombre «" + p.nombre + "» no cabe en la lista de la dona: acórtalo");
+    GX.rect(svg, x, ySw, 10, 10, estilo[i].fill, estilo[i]["fill-opacity"] == null ? {} : { "fill-opacity": estilo[i]["fill-opacity"] });
+    GX.t(svg, x + 16, yBase, p.nombre, fn, col.texto);
+    GX.t(svg, W, yBase - 1, pctTxt[i], GX.MONO_B, d ? (col.tinta || col.dest) : col.texto, { "text-anchor": "end" });
+  };
+  if (!abajo) {
+    const x = 220, filaH = Math.min(30, 180 / n), y0 = cy - (n * filaH) / 2;
+    S.partes.forEach((_, i) => { const yy = y0 + i * filaH + filaH / 2; item(i, x, yy + 5, yy - 5, W - x - 16 - wP); });
+  } else {
+    S.partes.forEach((_, i) => { const yy = 200 + i * 18; item(i, 0, yy + 13, yy + 4, W - 16 - wP); });
+  }
+};
+
+// treemap · reparto del todo con más de 5 partes: área = proporción (H.squarify, compartido con la tarjeta).
+//   partes[3–12] {nombre, valor > 0}, destacar (nombre, o índice tras ordenar de mayor a menor), minimo_rotulo
+//   (% bajo el cual las partes se agrupan en «Todo lo demás» si son 2 o más; además se agrupan, una a una, las
+//   chicas que no caben con nombre), formato. Rect destacado en col.dest; el resto en la rampa de mayor a menor
+//   («Todo lo demás» en el tono más claro). Alto 300. doc: a media página (ancho < 400) son «chicas» las partes < 10 %.
+G.treemap = (el, S, { ancho, alto, col }) => {
+  H.assert(Array.isArray(S.partes) && S.partes.length >= 3 && S.partes.length <= 12, "treemap admite de 3 a 12 partes");
+  S.partes.forEach((p) => H.assert(p && typeof p.nombre === "string" && typeof p.valor === "number" && p.valor > 0, "cada parte necesita nombre y valor > 0"));
+  const total = S.partes.reduce((s, p) => s + p.valor, 0);
+  const minimo = S.minimo_rotulo == null ? 2 : S.minimo_rotulo;
+  const ordenadas = S.partes.slice().sort((a, b) => b.valor - a.valor);
+  const nombreHi = typeof S.destacar === "string" ? S.destacar : ordenadas[GX.indice(S.destacar == null ? 0 : S.destacar, ordenadas.length)].nombre;
+  H.assert(ordenadas.some((p) => p.nombre === nombreHi), "destacar: «" + S.destacar + "» no es una de las partes");
+  const W = ancho, Hh = alto || 300, G2 = 2, PAD = 8, FN = [14, 12];
+  const fuente = (px, peso) => peso + " " + px + "px Archivo, sans-serif";
+  // Rótulo de un rect, de más a menos holgado: nombre en una línea y % debajo · nombre en dos líneas y % debajo ·
+  // nombre y % en una línea (rect bajo y ancho). null si nada cabe.
+  const rotulo = (r, p, esHi) => {
+    const w = r.w - G2 - 2 * PAD, h = r.h - G2, pc = (p.valor / total) * 100, tP = H.pct(pc, pc < 10 ? 1 : 0);
+    const wP = H.medir(tP, GX.MONO_B), pal = p.nombre.split(/\s+/);
+    if (wP > w) return null;
+    for (const peso of esHi ? [800, 600] : [600]) {   // la destacada cede la negrita antes que el nombre (ya va en el acento)
+      const mide = (t, s) => H.medir(t, fuente(s, peso));
+      const px = FN.find((s) => mide(p.nombre, s) <= w);
+      if (px && h >= px + 36) return { px, peso, tP, lineas: [p.nombre] };
+      for (const s of FN) {
+        let mejor = null;
+        for (let q = 1; q < pal.length; q++) {
+          const ls = [pal.slice(0, q).join(" "), pal.slice(q).join(" ")], a = Math.max(...ls.map((l) => mide(l, s)));
+          if (a <= w && (!mejor || a < mejor.a)) mejor = { ls, a };
+        }
+        if (mejor && h >= Math.round(s * 2.15) + 36) return { px: s, peso, tP, lineas: mejor.ls };
+      }
+      const px1 = FN.find((s) => mide(p.nombre, s) + 8 + wP <= w);
+      if (px1 && h >= px1 + 12) return { px: px1, peso, tP, lineas: [p.nombre], enLinea: true };
+    }
+    return null;
+  };
+  // Agrupa: primero las de menos de `minimo` % (si son 2 o más); luego, una a una, las chicas que no caben con nombre.
+  let sueltas = ordenadas.slice(), grupo = [];
+  const chicas = sueltas.filter((p) => (p.valor / total) * 100 < minimo && p.nombre !== nombreHi);
+  if (chicas.length >= 2) { grupo = chicas; sueltas = sueltas.filter((p) => !chicas.includes(p)); }
+  const armar = () => (grupo.length ? sueltas.concat([{ nombre: "Todo lo demás", valor: grupo.reduce((s, p) => s + p.valor, 0), resto: true }]) : sueltas.slice()).sort((a, b) => b.valor - a.valor);
+  // doc: con un cuarto del área de la tarjeta, se agrupan (si no caben con nombre) las partes < 10 %, no < 5 %.
+  const umbral = Math.max(10, minimo);
+  const chica = (p) => (p.valor / total) * 100 < umbral;
+  let partes, rects, falla;
+  for (let vuelta = 0; vuelta < 12; vuelta++) {
+    partes = armar(); rects = H.squarify(partes, total, W, Hh);
+    falla = rects.filter((r) => !rotulo(r, partes[r.i], partes[r.i].nombre === nombreHi)).map((r) => partes[r.i]);
+    if (!falla.length) break;
+    let movibles = falla.filter((p) => !p.resto && p.nombre !== nombreHi && chica(p));
+    // Si lo que no cabe es «Todo lo demás» o una parte que no se agrupa (la destacada, una mediana), se agrupa la
+    // suelta chica más pequeña para recomponer el reparto (mientras queden > 3 sueltas).
+    if (!movibles.length) movibles = sueltas.length > 3 ? sueltas.filter((p) => p.nombre !== nombreHi && chica(p)) : [];
+    if (!movibles.length) break;
+    const menor = movibles.reduce((a, b) => (b.valor < a.valor ? b : a));
+    grupo.push(menor); sueltas = sueltas.filter((p) => p !== menor);
+  }
+  H.assert(!falla.length, "treemap: no caben con nombre " + falla.map((p) => "«" + p.nombre + "»").join(", ") + ": acorta los nombres o usa barras-h");
+  H.assert(partes.length >= 3, "treemap: tras agrupar quedan " + partes.length + " rectángulos (< 3): usa dona o barras-h");
+  const svg = GX.lienzo(el, W, Hh, S.aria);
+  const hiIdx = partes.findIndex((p) => p.nombre === nombreHi);
+  const rampa = GX.rampa(Math.max(2, partes.length - (hiIdx >= 0 ? 1 : 0)), col).reverse();
+  let k = 0;
+  const colorDe = partes.map((p, i) => (i === hiIdx ? col.dest : p.resto ? rampa[rampa.length - 1] : rampa[Math.min(k++, rampa.length - 1)]));
+  for (const r of rects) {
+    const p = partes[r.i], c = colorDe[r.i], tc = GX.textoSobre(c, col), lab = rotulo(r, p, r.i === hiIdx);
+    const x = r.x + G2 / 2, y = r.y + G2 / 2, est = fuente(lab.px, lab.peso);
+    GX.rect(svg, x, y, r.w - G2, r.h - G2, c);
+    if (lab.enLinea) {
+      const yN = y + Math.min(PAD + lab.px, (r.h - G2) / 2 + lab.px * 0.36);
+      GX.t(svg, x + PAD, yN, p.nombre, est, tc);
+      GX.t(svg, x + PAD + H.medir(p.nombre, est) + 8, yN, lab.tP, GX.MONO_B, tc);
+    } else {
+      const lh = Math.round(lab.px * 1.15);
+      lab.lineas.forEach((l, q) => GX.t(svg, x + PAD, y + PAD + lab.px + q * lh, l, est, tc));
+      GX.t(svg, x + PAD, y + PAD + lab.px + (lab.lineas.length - 1) * lh + 18, lab.tP, GX.MONO_B, tc);
+    }
+  }
+  if (grupo.length) GX.anotar(el, "«Todo lo demás» agrupa " + (grupo.length <= 4 ? grupo.map((p) => p.nombre).join(", ") : grupo.length + " partes") + ".");
+};
+
+// hemiciclo · curules por bloque en semicírculo con la línea de mayoría (H.asientos y H.mayoria, compartidos).
+//   total (10–300), bloques[2–8] {nombre, curules} de izquierda a derecha (suman total), mayoria "simple"|
+//   "calificada"|null, destacar (índice), formato. Columna de bloques a la derecha si ancho ≥ 480; si no, leyenda
+//   debajo (+18 por fila). «N · mayoría simple» en el hueco si cabe, si no en el extremo de la línea.
+//   Alto: ancho × 0.52 + 40. doc: a media página (ancho < 400) caben ≤ 160 curules.
+G.hemiciclo = (el, S, { ancho, alto, col }) => {
+  H.assert(Number.isInteger(S.total) && S.total >= 10 && S.total <= 300, "total debe ser un entero entre 10 y 300");
+  H.assert(Array.isArray(S.bloques) && S.bloques.length >= 2 && S.bloques.length <= 8, "hemiciclo admite de 2 a 8 bloques");
+  S.bloques.forEach((b) => H.assert(b && typeof b.nombre === "string" && b.nombre.trim() && Number.isInteger(b.curules) && b.curules >= 0, "cada bloque necesita nombre y curules entero ≥ 0"));
+  const suma = S.bloques.reduce((s, b) => s + b.curules, 0);
+  H.assert(suma === S.total, "los bloques suman " + suma + ", no total (" + S.total + "): añade un bloque «Vacantes» o corrige las cifras");
+  H.assert(S.mayoria == null || S.mayoria === "simple" || S.mayoria === "calificada", "mayoria debe ser \"simple\", \"calificada\" o null");
+  const W = ancho, n = S.bloques.length, hi = GX.indice(S.destacar, n), f = (v) => GX.fmt(v, S.formato);
+  H.assert(W >= 400 || S.total <= 160, "doc: a media página caben ≤ 160 curules");
+  const columna = W >= 480, Ha = alto || Math.round(W * 0.52) + 40;
+  const R = Math.min(Math.round(W * 0.38), Ha - 40, columna ? Math.floor((W - 130) / 2) : Infinity), r0 = Math.round(0.42 * R);
+  const cx = columna ? R + 6 : W / 2, cy = Ha - 8;
+  const arco = H.asientos(S.total, R, r0, cx, cy, 30, 7);
+  H.assert(arco, "no caben " + S.total + " curules en el arco: dale más alto a la figura o toda la columna");
+  const SANS_HI = "800 12px Archivo, sans-serif";
+  const rampa = GX.rampa(Math.max(2, n - (hi >= 0 ? 1 : 0)), col).reverse();
+  let k = 0;
+  const colores = S.bloques.map((_, i) => (i === hi ? col.dest : rampa[Math.min(k++, rampa.length - 1)]));
+  // Sin columna: leyenda en filas de 18 px bajo el arco (el total como primer item).
+  let ley = [], Hh = Ha;
+  if (!columna) {
+    const tot = f(S.total) + " curules";
+    ley = [{ txt: tot, w: H.medir(tot, GX.MONO_B) }].concat(S.bloques.map((b, i) => {
+      const fn = i === hi ? SANS_HI : GX.SANS_S, val = f(b.curules);
+      return { i, fn, val, w: 14 + H.medir(b.nombre, fn) + 5 + H.medir(val, GX.MONO_B) };
+    }));
+    let x = 0, fila = 0;
+    ley.forEach((it) => { if (x > 0 && x + it.w > W) { x = 0; fila++; } it.x = x; it.fila = fila; x += it.w + 14; });
+    Hh = Ha + 6 + (fila + 1) * 18;
+  }
+  const svg = GX.lienzo(el, W, Hh, S.aria);
+  const s = arco.s, rPunto = 0.36 * s;
+  let pos = 0;
+  S.bloques.forEach((b, i) => { for (let j = 0; j < b.curules; j++) { const a = arco.asientos[pos++]; H.svgEl("circle", { cx: a.x.toFixed(1), cy: a.y.toFixed(1), r: rPunto.toFixed(2), fill: colores[i] }, svg); } });
+  // Mayoría: marcador radial entre el asiento m−1 y m; el rótulo en el hueco si cabe, si no en el extremo de la línea.
+  if (S.mayoria) {
+    const m = H.mayoria(S.total, S.mayoria), A = arco.asientos;
+    const th = m < A.length ? (A[m - 1].th + A[m].th) / 2 : A[A.length - 1].th;
+    const ra = r0 - s / 2, rb = R + 0.7 * s;
+    GX.linea(svg, cx + ra * Math.cos(th), cy - ra * Math.sin(th), cx + rb * Math.cos(th), cy - rb * Math.sin(th), col.texto, { "stroke-width": 1.5, "stroke-dasharray": "4 4" });
+    const etiq = f(m) + " · mayoría " + S.mayoria, wE = H.medir(etiq, GX.MONO_B);
+    const rIn = r0 - 1.2 * rPunto, dy = 18;
+    const cuerda = rIn > dy ? 2 * Math.sqrt(rIn * rIn - dy * dy) - 8 : 0;
+    if (wE <= cuerda) GX.t(svg, cx, cy - 6, etiq, GX.MONO_B, col.texto, { "text-anchor": "middle" });
+    else {
+      // Encima del arco (nunca sobre los asientos), a la altura horizontal del extremo de la línea y dentro del arco.
+      const xe = cx + rb * Math.cos(th), lo = Math.max(0, cx - R) + wE / 2, hi2 = Math.min(W, cx + R) - wE / 2;
+      const x = lo > hi2 ? cx : Math.max(lo, Math.min(hi2, xe)), y = Math.max(12, cy - R - rPunto - 6);
+      GX.t(svg, x, y, etiq, GX.MONO_B, col.texto, { "text-anchor": "middle" });
+    }
+  }
+  if (columna) {
+    const xCol = cx + R + 16, xNom = xCol + 16;
+    GX.t(svg, xCol, 14, f(S.total) + " curules", GX.MONO_B, col.texto);
+    const filaH = Math.min(28, (Hh - 30) / n);
+    S.bloques.forEach((b, i) => {
+      const d = i === hi, yy = 30 + filaH * i + filaH / 2, val = f(b.curules), wV = H.medir(val, GX.MONO_B);
+      const fn = H.encajar(b.nombre, d ? [GX.SANS_D, SANS_HI] : [GX.SANS, GX.SANS_S], W - xNom - wV - 8);
+      H.assert(fn, "el nombre «" + b.nombre + "» no cabe en la columna: acórtalo");
+      H.svgEl("circle", { cx: xCol + 5, cy: yy, r: 5, fill: colores[i] }, svg);
+      GX.t(svg, xNom, yy + 5, b.nombre, fn, col.texto);
+      GX.t(svg, W, yy + 4, val, GX.MONO_B, d ? (col.tinta || col.dest) : col.texto, { "text-anchor": "end" });
+    });
+  } else {
+    ley.forEach((it) => {
+      const yy = Ha + 6 + it.fila * 18;
+      if (it.i == null) { GX.t(svg, it.x, yy + 13, it.txt, GX.MONO_B, col.texto); return; }
+      const d = it.i === hi;
+      H.svgEl("circle", { cx: it.x + 5, cy: yy + 9, r: 5, fill: colores[it.i] }, svg);
+      GX.t(svg, it.x + 14, yy + 13, S.bloques[it.i].nombre, it.fn, col.texto);
+      GX.t(svg, it.x + 14 + H.medir(S.bloques[it.i].nombre, it.fn) + 5, yy + 13, it.val, GX.MONO_B, d ? (col.tinta || col.dest) : col.texto);
+    });
+  }
+};
+
+// embudo · cadena de atrición: cuántos llegan de una etapa a la siguiente (H.etiquetaEmbudo, compartido).
+//   etapas[2–6] {nombre, valor} (no crecientes), porcentaje "inicio"|"anterior"|"ninguno" (siempre calculado aquí),
+//   misma_cohorte (boolean obligatorio; false añade la nota), formato. Filas de 44 px: nombre arriba a la izquierda,
+//   barra proporcional a la primera etapa (col.base; la última en col.dest) con el valor dentro o fuera, y la
+//   etiqueta «N de cada 100» a la derecha (sube a la línea del nombre si chocaría con el valor). Alto: 44·n.
+G.embudo = (el, S, { ancho, col }) => {
+  H.assert(Array.isArray(S.etapas) && S.etapas.length >= 2 && S.etapas.length <= 6, "embudo admite de 2 a 6 etapas");
+  S.etapas.forEach((e, i) => {
+    H.assert(e && typeof e.nombre === "string" && typeof e.valor === "number" && e.valor >= 0, "cada etapa necesita nombre y valor numérico ≥ 0");
+    if (i) H.assert(e.valor <= S.etapas[i - 1].valor, "embudo: «" + e.nombre + "» supera a la etapa anterior (las etapas no pueden crecer)");
+  });
+  H.assert(S.etapas[0].valor > 0, "la primera etapa debe ser > 0");
+  H.assert(typeof S.misma_cohorte === "boolean", "misma_cohorte debe ser true o false (¿las etapas siguen a los mismos casos?)");
+  const modo = S.porcentaje || "inicio";
+  H.assert(["inicio", "anterior", "ninguno"].includes(modo), "porcentaje: inicio | anterior | ninguno");
+  const E = S.etapas, n = E.length, base = E[0].valor, W = ancho, fila = 44, Hh = n * fila, barH = 16;
+  const f = (v) => GX.fmt(v, S.formato), SANS_HI = "800 12px Archivo, sans-serif";
+  const svg = GX.lienzo(el, W, Hh, S.aria);
+  E.forEach((e, i) => {
+    const ult = i === n - 1, top = i * fila, yB = top + 20, yT = yB + barH / 2 + 4;
+    const w = Math.max(4, (e.valor / base) * W);
+    GX.rect(svg, 0, yB, w, barH, ult ? col.dest : col.base);
+    const val = f(e.valor), wV = H.medir(val, GX.MONO_B), dentro = wV + 12 <= w;
+    GX.t(svg, dentro ? w - 6 : w + 6, yT, val, GX.MONO_B, dentro && ult ? GX.textoSobre(col.dest, col) : col.texto, dentro ? { "text-anchor": "end" } : {});
+    const etiq = H.etiquetaEmbudo(E, i, modo), wE = etiq ? H.medir(etiq, GX.MONO) : 0;
+    const enBarra = !etiq || (dentro ? w : w + 6 + wV) + 10 <= W - wE;
+    let fn = ult ? GX.SANS_D : GX.SANS;
+    if (!enBarra) {
+      fn = H.encajar(e.nombre, [fn, ult ? SANS_HI : GX.SANS_S], W - wE - 10);
+      H.assert(fn, "doc: la etapa «" + e.nombre + "» y su etiqueta no caben en " + W + " px: acorta el nombre");
+    }
+    GX.t(svg, 0, top + 13, e.nombre, fn, col.texto);
+    if (etiq) GX.t(svg, W, enBarra ? yT : top + 13, etiq, GX.MONO, col.tinta || col.dest, { "text-anchor": "end" });
+  });
+  if (!S.misma_cohorte) GX.anotar(el, "Etapas del mismo periodo, no de los mismos casos.");
+};
+
+// ---- investigacion/graficos/relacion.js
+// Gráficos de relación del informe: dos variables por unidad (dispersion), filas × columnas en rampa (calor) y
+// hitos con fecha y magnitud (linea_tiempo). Mismo contrato que sus plantillas de tarjeta
+// (templates/graficos/dispersion.html, calor.html, linea-tiempo.html); los límites propios del documento llevan «doc:».
+
+// dispersion · puntos[8–22] {nombre, x, y}, ejeX, ejeY (títulos ≤ 40), formatoX, formatoY, rotular[≤ 4],
+//   destacar (nombre), guias {x, y, texto}, desdeCero. Alto por defecto 320. Rótulos SANS_S con halo colocados en la
+//   mejor de 4 posiciones alrededor del punto y empujados en y (H.antiSolape) si comparten columna; a ancho < 400
+//   (media página) se rotulan ≤ 2 puntos además del destacado.
+G.dispersion = (el, S, { ancho, alto, col }) => {
+  H.assert(Array.isArray(S.puntos) && S.puntos.length >= 8 && S.puntos.length <= 22, "dispersion admite de 8 a 22 puntos");
+  S.puntos.forEach((p) => H.assert(p && typeof p.nombre === "string" && typeof p.x === "number" && typeof p.y === "number", "cada punto necesita nombre, x e y numéricos"));
+  H.assert(typeof S.ejeX === "string" && S.ejeX.trim() && S.ejeX.length <= 40, "ejeX: título del eje horizontal (≤ 40)");
+  H.assert(typeof S.ejeY === "string" && S.ejeY.trim() && S.ejeY.length <= 40, "ejeY: título del eje vertical (≤ 40)");
+  const rot = (S.rotular || []).slice();
+  H.assert(rot.length <= 4, "rotular: como máximo 4 nombres");
+  if (S.destacar && !rot.includes(S.destacar)) rot.push(S.destacar);
+  for (const r of rot) H.assert(S.puntos.some((p) => p.nombre === r), "rotular/destacar: «" + r + "» no está en puntos");
+  H.assert(ancho >= 400 || rot.filter((r) => r !== S.destacar).length <= 2, "doc: a media página rotula ≤ 2 puntos (más el destacado)");
+  const g = S.guias || null;
+  if (g) H.assert(typeof g.x === "number" || typeof g.y === "number", "guias necesita x y/o y numéricos");
+  const fX = S.formatoX || S.formato, fY = S.formatoY || S.formato;
+  const ejeFmt = (fm, tk) => { const e = (fm && fm.escala) || 1; return Object.assign({}, fm || {}, { decimales: H.decimalesDe(tk.map((t) => t / e), Math.max(2, (fm && fm.decimales) || 0)) }); };
+  const W = ancho, Hh = alto || 320;
+  H.assert(H.medir(S.ejeY, GX.MONO) <= W && H.medir(S.ejeX, GX.MONO) <= W, "doc: el título de un eje no cabe a este ancho: acórtalo");
+  const xs = S.puntos.map((p) => p.x).concat(g && typeof g.x === "number" ? [g.x] : []);
+  const ys = S.puntos.map((p) => p.y).concat(g && typeof g.y === "number" ? [g.y] : []);
+  // Dominio con 4 % de aire a cada lado: ningún punto queda montado en un eje.
+  const aire = (vals) => { const a = Math.min(...vals), b = Math.max(...vals), d = (b - a || Math.abs(a) || 1) * 0.04; return S.desdeCero ? vals.concat([b + d]) : vals.concat([a - d, b + d]); };
+  const domX = H.dominio(aire(xs), !!S.desdeCero), domY = H.dominio(aire(ys), !!S.desdeCero);
+  const tkX = H.ticks(domX[0], domX[1], W < 400 ? 4 : 5), tkY = H.ticks(domY[0], domY[1], 4);
+  const fEX = ejeFmt(fX, tkX), fEY = ejeFmt(fY, tkY);
+  const izq = Math.ceil(Math.max(...tkY.map((t) => H.medir(H.num(t, fEY), GX.MONO)))) + 8;
+  const x0 = izq, x1 = W - 8, y0 = 24, y1 = Hh - 36;
+  const sx = H.escala(domX, [x0, x1]), sy = H.escala(domY, [y1, y0]);
+  const svg = GX.lienzo(el, W, Hh, S.aria);
+  if (!S.desdeCero) GX.anotar(el, "Ejes sin cero.");
+  const anclaX = (xc, w) => (xc - w / 2 < 0 ? ["start", 0] : xc + w / 2 > W ? ["end", W] : ["middle", xc]);
+  tkY.forEach((t) => { GX.linea(svg, x0, sy(t), x1, sy(t), col.suave, { "stroke-width": 1 }); GX.t(svg, x0 - 6, sy(t) + 4, H.num(t, fEY), GX.MONO, col.texto, { "text-anchor": "end" }); });
+  tkX.forEach((t) => { const s = H.num(t, fEX), [an, ax] = anclaX(sx(t), H.medir(s, GX.MONO)); GX.linea(svg, sx(t), y0, sx(t), y1, col.suave, { "stroke-width": 1 }); GX.t(svg, ax, y1 + 14, s, GX.MONO, col.texto, { "text-anchor": an }); });
+  GX.linea(svg, x0, y1, x1, y1, col.linea);
+  GX.linea(svg, x0, y0, x0, y1, col.linea);
+  GX.t(svg, 0, 12, S.ejeY, GX.MONO, col.texto);
+  GX.t(svg, W, Hh - 4, S.ejeX, GX.MONO, col.texto, { "text-anchor": "end" });
+  const capaGuias = H.svgEl("g", {}, svg);   // las guías van debajo de los puntos
+  // Puntos comunes; los rotulados y el destacado se dibujan al final, encima de los rótulos.
+  const etiquetas = [];
+  for (const p of S.puntos) {
+    const cx = sx(p.x), cy = sy(p.y), d = p.nombre === S.destacar;
+    if (!rot.includes(p.nombre)) H.svgEl("circle", { cx, cy, r: 4, fill: col.base, "fill-opacity": 0.7, stroke: col.texto, "stroke-opacity": 0.35, "stroke-width": 1 }, svg);
+    else etiquetas.push({ p, cx, cy, d, r: d ? 6 : 5, t: p.nombre, w: H.medir(p.nombre, GX.SANS_S) });
+  }
+  // Colocación: el destacado primero; cada rótulo prueba derecha, izquierda, arriba y abajo y se queda con la que menos
+  // pisa puntos y rótulos ya puestos sin salirse del lienzo ni invadir el eje Y.
+  const solape = (a, b) => Math.max(0, Math.min(a[2], b[2]) - Math.max(a[0], b[0])) * Math.max(0, Math.min(a[3], b[3]) - Math.max(a[1], b[1]));
+  const circ = S.puntos.map((q) => ({ q, c: [sx(q.x) - 6, sy(q.y) - 6, sx(q.x) + 6, sy(q.y) + 6] }));
+  const puestas = [];
+  etiquetas.sort((a, b) => (b.d ? 1 : 0) - (a.d ? 1 : 0));
+  for (const e of etiquetas) {
+    let mejor = null;
+    [{ x: e.cx + e.r + 4, y: e.cy + 4, anc: "start" }, { x: e.cx - e.r - 4, y: e.cy + 4, anc: "end" }, { x: e.cx, y: e.cy - e.r - 4, anc: "middle" }, { x: e.cx, y: e.cy + e.r + 13, anc: "middle" }].forEach((o, k) => {
+      const caja = o.anc === "start" ? [o.x, o.y - 10, o.x + e.w, o.y + 3] : o.anc === "end" ? [o.x - e.w, o.y - 10, o.x, o.y + 3] : [o.x - e.w / 2, o.y - 10, o.x + e.w / 2, o.y + 3];
+      // Fuera del lienzo, del eje Y o encima de los ticks: penalización graduada (gana la que menos se sale).
+      const fuera = Math.max(0, x0 - 2 - caja[0]) + Math.max(0, caja[2] - W) + Math.max(0, y0 - 8 - caja[1]) + Math.max(0, caja[3] - (y1 + 4));
+      let costo = k * 5 + (fuera > 0 ? 1e4 + fuera * 100 : 0);
+      for (const c of circ) if (c.q !== e.p) costo += solape(caja, c.c) * (rot.includes(c.q.nombre) ? 30 : 2);
+      for (const o2 of puestas) costo += solape(caja, o2) * 20;
+      if (!mejor || costo < mejor.costo) mejor = Object.assign({ costo, caja }, o);
+    });
+    Object.assign(e, mejor);
+    puestas.push(mejor.caja);
+  }
+  // Rótulos que comparten columna: empuje vertical (H.antiSolape) y una guía desde el punto si se movieron.
+  const grupo = etiquetas.map((_, i) => i), raiz = (i) => (grupo[i] === i ? i : (grupo[i] = raiz(grupo[i])));
+  etiquetas.forEach((a, i) => etiquetas.forEach((b, j) => { if (j > i && a.caja[0] < b.caja[2] + 4 && b.caja[0] < a.caja[2] + 4) grupo[raiz(i)] = raiz(j); }));
+  const grupos = {};
+  etiquetas.forEach((e, i) => { (grupos[raiz(i)] = grupos[raiz(i)] || []).push(e); });
+  for (const gr of Object.values(grupos)) if (gr.length > 1) { const antes = gr.map((e) => e.y); H.antiSolape(gr, { minGap: 14, min: y0 + 2, max: y1 - 2 }); gr.forEach((e, k) => { e.movida = Math.abs(e.y - antes[k]) > 0.5; }); }
+  // Guías (líneas punteadas): su rótulo va al extremo con menos puntos y rótulos encima.
+  if (g) {
+    const est = { "stroke-width": 1, "stroke-dasharray": "4 4", "stroke-opacity": 0.5 };
+    const txt = String(g.texto || "promedio").trim(), wT = H.medir(txt, GX.MONO);
+    const cajas = circ.map((c) => c.c).concat(etiquetas.map((e) => e.caja));
+    const choques = (c) => cajas.filter((b) => b[0] < c[2] && b[2] > c[0] && b[1] < c[3] && b[3] > c[1]).length;
+    const mejor = (ops) => ops.reduce((a, b) => (choques(b.caja) < choques(a.caja) ? b : a));
+    const pone = (o) => GX.t(svg, o.x, o.y, txt, GX.MONO, col.texto, { "text-anchor": o.anc, style: "font:" + GX.MONO + ";" + GX.halo(col) });
+    if (typeof g.x === "number") GX.linea(capaGuias, sx(g.x), y0, sx(g.x), y1, col.texto, est);
+    if (typeof g.y === "number") {
+      const yg = sy(g.y);
+      GX.linea(capaGuias, x0, yg, x1, yg, col.texto, est);
+      pone(mejor([
+        { x: x1 - 2, y: yg - 5, anc: "end", caja: [x1 - 2 - wT, yg - 15, x1 - 2, yg - 2] },
+        { x: x0 + 6, y: yg - 5, anc: "start", caja: [x0 + 6, yg - 15, x0 + 6 + wT, yg - 2] },
+        { x: x1 - 2, y: yg + 13, anc: "end", caja: [x1 - 2 - wT, yg + 3, x1 - 2, yg + 16] },
+        { x: x0 + 6, y: yg + 13, anc: "start", caja: [x0 + 6, yg + 3, x0 + 6 + wT, yg + 16] },
+      ]));
+    } else {
+      const xg = sx(g.x), lado = xg + 6 + wT <= x1, xx = lado ? xg + 6 : xg - 6, anc = lado ? "start" : "end";
+      const c = (y) => (lado ? [xg + 6, y - 10, xg + 6 + wT, y + 3] : [xg - 6 - wT, y - 10, xg - 6, y + 3]);
+      pone(mejor([{ x: xx, y: y0 + 12, anc, caja: c(y0 + 12) }, { x: xx, y: y1 - 6, anc, caja: c(y1 - 6) }]));
+    }
+  }
+  for (const e of etiquetas) {
+    if (e.movida) GX.linea(svg, e.cx, e.cy, e.anc === "start" ? e.x - 2 : e.anc === "end" ? e.x + 2 : e.x, e.y - 4, col.texto, { "stroke-width": 1, "stroke-opacity": 0.6 });
+    GX.t(svg, e.x, e.y, e.t, GX.SANS_S, e.d ? (col.tinta || col.dest) : col.texto, { "text-anchor": e.anc, style: "font:" + GX.SANS_S + ";" + GX.halo(col) });
+  }
+  for (const e of etiquetas.slice().reverse()) H.svgEl("circle", { cx: e.cx, cy: e.cy, r: e.r, fill: e.d ? col.dest : col.texto, stroke: col.sobre, "stroke-width": 1.5 }, svg);
+};
+
+// calor · filas[1–12] × columnas[2–12], valores[f][c] (null = sin dato), clases (3–7), destacar {fila, col}.
+//   Celdas cuadradas de min(40, lo que quepa) con la rampa GX.rampa sobre [mín, máx] en intervalos iguales; el valor va
+//   dentro solo con ≤ 6 filas y celda ≥ 34 px. Las etiquetas de columna se ralean si no caben (una de cada N, la última
+//   siempre). Alto = filas × celda + 44 (sale del ancho, como el mapa; ignora `alto`).
+G.calor = (el, S, { ancho, col }) => {
+  H.assert(Array.isArray(S.filas) && S.filas.length >= 1 && S.filas.length <= 12, "filas: de 1 a 12");
+  H.assert(Array.isArray(S.columnas) && S.columnas.length >= 2 && S.columnas.length <= 12, "columnas: de 2 a 12");
+  const nf = S.filas.length, ncol = S.columnas.length;
+  H.assert(Array.isArray(S.valores) && S.valores.length === nf, "valores necesita " + nf + " filas");
+  S.valores.forEach((fila, i) => {
+    H.assert(Array.isArray(fila) && fila.length === ncol, "valores[" + i + "] necesita " + ncol + " valores (null = sin dato)");
+    fila.forEach((v) => H.assert(v === null || (typeof v === "number" && isFinite(v)), "valores: número o null"));
+  });
+  const planos = S.valores.flat().filter((v) => v !== null);
+  H.assert(planos.length >= 2, "calor necesita al menos 2 valores");
+  const nc = Math.max(3, Math.min(7, Math.round(S.clases || 5)));
+  const hiC = S.destacar && typeof S.destacar === "object" ? S.destacar : null;
+  if (hiC) H.assert(Number.isInteger(hiC.fila) && Number.isInteger(hiC.col) && hiC.fila >= 0 && hiC.fila < nf && hiC.col >= 0 && hiC.col < ncol, "destacar: {fila, col} fuera de rango");
+  const f = (v) => GX.fmt(v, S.formato), min = Math.min(...planos), max = Math.max(...planos);
+  const cs = GX.rampa(nc, col);
+  const colorDe = (v) => (max > min ? cs[Math.min(nc - 1, Math.max(0, Math.floor(((v - min) / (max - min)) * nc)))] : cs[nc - 1]);
+  const W = ancho, gap = 2;
+  const labW = Math.ceil(Math.max(...S.filas.map((s) => H.medir(String(s), GX.MONO)))) + 10;
+  const celda = Math.min(40, (W - labW - gap * (ncol - 1)) / ncol);
+  H.assert(celda >= 16, "doc: las columnas no caben a este ancho");
+  const paso = Math.max(1, Math.ceil((Math.max(...S.columnas.map((c) => H.medir(String(c), GX.MONO))) + 4) / (celda + gap)));
+  H.assert(paso <= Math.max(1, Math.floor(ncol / 2)), "doc: las columnas no caben a este ancho");
+  const ralear = (p, prioridad) => { const out = []; for (const i of prioridad.concat(Array.from({ length: ncol }, (_, i) => i).filter((i) => i % p === 0))) if (out.every((j) => Math.abs(i - j) >= p)) out.push(i); return new Set(out); };
+  const vis = ralear(paso, [ncol - 1]);
+  const y0 = 18, Hh = y0 + nf * celda + (nf - 1) * gap + 28, x0 = labW;
+  const svg = GX.lienzo(el, W, Hh, S.aria);
+  if (paso > 1) GX.anotar(el, "Se rotula una columna de cada " + paso + ".");
+  const mostrarValor = nf <= 6 && celda >= 34, sinDato = planos.length < nf * ncol ? GX.sinDato(svg, col) : null;
+  S.columnas.forEach((c, j) => { if (vis.has(j)) GX.t(svg, x0 + j * (celda + gap) + celda / 2, 12, String(c), GX.MONO, col.texto, { "text-anchor": "middle" }); });
+  S.filas.forEach((nombre, i) => {
+    const y = y0 + i * (celda + gap);
+    GX.t(svg, x0 - 6, y + celda / 2 + 4, String(nombre), GX.MONO, col.texto, { "text-anchor": "end" });
+    S.valores[i].forEach((v, j) => {
+      const x = x0 + j * (celda + gap);
+      if (v === null) {
+        GX.rect(svg, x, y, celda, celda, sinDato, { rx: 3 });
+        if (mostrarValor) GX.t(svg, x + celda / 2, y + celda / 2 + 4, "—", GX.MONO, col.texto, { "text-anchor": "middle", "fill-opacity": 0.5 });
+        return;
+      }
+      const c = colorDe(v);
+      GX.rect(svg, x, y, celda, celda, c, { rx: 3 });
+      if (mostrarValor) { const s = f(v); if (H.medir(s, GX.MONO) <= celda - 4) GX.t(svg, x + celda / 2, y + celda / 2 + 4, s, GX.MONO, GX.textoSobre(c, col), { "text-anchor": "middle" }); }
+    });
+  });
+  if (hiC) {  // contorno de la destacada: halo del fondo + acento de 2 px, por dentro de la celda
+    const x = x0 + hiC.col * (celda + gap), y = y0 + hiC.fila * (celda + gap);
+    H.svgEl("rect", { x: x + 1, y: y + 1, width: celda - 2, height: celda - 2, rx: 2, fill: "none", stroke: col.sobre, "stroke-width": 4 }, svg);
+    H.svgEl("rect", { x: x + 1, y: y + 1, width: celda - 2, height: celda - 2, rx: 2, fill: "none", stroke: col.dest, "stroke-width": 2 }, svg);
+  }
+  // Leyenda: mín · rampa · máx (y «sin dato» a la derecha si hay nulos)
+  const ly = Hh - 8, sw = 18, sh = 10, tMin = f(min), tMax = f(max);
+  let lx = x0;
+  GX.t(svg, lx, ly, tMin, GX.MONO, col.texto);
+  lx += H.medir(tMin, GX.MONO) + 6;
+  cs.forEach((c, k) => GX.rect(svg, lx + k * sw, ly - sh + 1, sw - 1, sh, c));
+  lx += nc * sw + 5;
+  GX.t(svg, lx, ly, tMax, GX.MONO, col.texto);
+  if (sinDato) {
+    const wS = H.medir("sin dato", GX.MONO), xs = W - wS - 6 - sw;
+    H.assert(lx + H.medir(tMax, GX.MONO) + 10 <= xs, "doc: la leyenda no cabe a este ancho: menos clases");
+    GX.rect(svg, xs, ly - sh + 1, sw, sh, sinDato, { rx: 2 });
+    GX.t(svg, W, ly, "sin dato", GX.MONO, col.texto, { "text-anchor": "end" });
+  }
+};
+
+// linea_tiempo · eventos[3–8] {fecha (empieza por AAAA), nombre ≤ 40, valor ≥ 0, sub ≤ 40, valor_texto}, proporcional,
+//   forma "barra" | "circulo" | "ninguna", destacar (índice). Alto por defecto n × 44 (filas iguales, o centradas según
+//   el año si proporcional). Columnas: fecha serif 22 (+ sub MONO si cabe en los 110 px) · espina punteada con círculo ·
+//   nombre SANS (14 → 12) · magnitud y valor. Si los sub no caben en la columna de fecha van bajo el nombre y la
+//   columna se estrecha a la fecha más ancha; si la magnitud no tiene ≥ 80 px (media página), el nombre va arriba y la
+//   barra debajo, en la misma columna.
+G.linea_tiempo = (el, S, { ancho, alto, col }) => {
+  const E = S.eventos;
+  H.assert(Array.isArray(E) && E.length >= 3 && E.length <= 8, "linea-tiempo admite de 3 a 8 eventos");
+  E.forEach((e) => {
+    H.assert(e && typeof e.fecha === "string" && /^\d{4}/.test(e.fecha.trim()), "cada evento necesita fecha (texto que empieza por el año AAAA)");
+    H.assert(typeof e.nombre === "string" && e.nombre.trim() && e.nombre.length <= 40, "cada evento necesita nombre de 1 a 40 caracteres");
+    H.assert(typeof e.valor === "number" && isFinite(e.valor) && e.valor >= 0, "cada evento necesita valor numérico ≥ 0 («" + e.nombre + "»)");
+    H.assert(e.sub == null || (typeof e.sub === "string" && e.sub.length <= 40), "sub de «" + e.nombre + "»: texto de ≤ 40 caracteres");
+  });
+  const forma = S.forma == null ? "barra" : S.forma;
+  H.assert(["barra", "circulo", "ninguna"].includes(forma), "forma debe ser barra, circulo o ninguna");
+  const prop = S.proporcional === true, n = E.length, hi = GX.indice(S.destacar, n);
+  const W = ancho, Hh = alto || n * 44;
+  const svg = GX.lienzo(el, W, Hh, S.aria);
+  GX.anotar(el, prop ? "Intervalos proporcionales al tiempo." : "Intervalos no proporcionales al tiempo.");
+  // Centros de fila: equidistantes, o según la fecha (año y mes) si proporcional.
+  let cys;
+  if (prop) {
+    const t = E.map((e) => { const m = /^(\d{4})(?:-(\d{2}))?/.exec(e.fecha.trim()); return +m[1] + (m[2] ? (+m[2] - 1) / 12 : 0); });
+    for (let i = 1; i < n; i++) H.assert(t[i] >= t[i - 1], "con proporcional:true los eventos van en orden cronológico («" + E[i].fecha + "»)");
+    const sy = H.escala([t[0], t[n - 1]], [22, Hh - 22]);
+    cys = t.map(sy);
+  } else { const fila = Hh / n; cys = E.map((_, i) => i * fila + fila / 2); }
+  const hueco = Math.min(...cys.slice(1).map((y, k) => y - cys[k]));
+  // Columnas y modo: en línea (nombre y magnitud en columnas) o apilado (nombre arriba, barra debajo).
+  const subEnFecha = E.every((e) => !e.sub || H.medir(e.sub, GX.MONO) <= 98);
+  // La columna de fecha mide 110 px cuando lleva los sub; si no, solo lo que pide la fecha más ancha.
+  const fechaW = subEnFecha ? 110 : Math.min(110, Math.ceil(Math.max(...E.map((e) => H.medir(e.fecha, GX.serif(22))))) + 14);
+  const xSpine = fechaW + 10, xName = xSpine + 12;
+  const etiq = E.map((e) => (e.valor_texto != null ? String(e.valor_texto) : GX.fmt(e.valor, S.formato)));
+  const fontsN = (d) => (d ? [GX.SANS_D, "800 12px Archivo, sans-serif"] : [GX.SANS, GX.SANS_S]);
+  const labW = Math.ceil(Math.max(...etiq.map((s, i) => H.medir(s, i === hi ? GX.MONO_D : GX.MONO_B)))) + 8;
+  const magW = forma === "ninguna" ? 0 : 80;
+  let nameMax = W - xName - labW - magW - 12;
+  let fuentes = E.map((e, i) => H.encajar(e.nombre, fontsN(i === hi), nameMax));
+  const cabeSub = (max) => E.every((e) => !e.sub || subEnFecha || H.medir(e.sub, GX.MONO) <= max);
+  const apilado = fuentes.some((x) => !x) || !cabeSub(nameMax);
+  if (apilado) {
+    nameMax = W - xName;
+    fuentes = E.map((e, i) => H.encajar(e.nombre, fontsN(i === hi), nameMax));
+    E.forEach((e, i) => H.assert(fuentes[i], "doc: el nombre «" + e.nombre + "» no cabe a este ancho: acórtalo"));
+    E.forEach((e) => H.assert(!e.sub || subEnFecha || H.medir(e.sub, GX.MONO) <= nameMax, "doc: el sub «" + e.sub + "» no cabe a este ancho: acórtalo"));
+  }
+  const subBajoNombre = !subEnFecha && E.some((e) => e.sub && e.sub.trim());
+  const minFila = apilado ? (subBajoNombre ? 44 : 34) : subBajoNombre ? 36 : 30;
+  const par = cys.findIndex((y, k) => k > 0 && y - cys[k - 1] < minFila - 0.5);
+  H.assert(par < 0, "doc: hitos a menos de " + minFila + " px (" + (par > 0 ? E[par - 1].fecha + " y " + E[par].fecha : "") + "): " + (prop ? "usa proporcional:false" : "sube alto"));
+  const nameW = apilado ? 0 : Math.max(...E.map((e, i) => Math.max(H.medir(e.nombre, fuentes[i]), e.sub && !subEnFecha ? H.medir(e.sub, GX.MONO) : 0)));
+  const x0m = apilado ? xName : xName + nameW + 12, x1m = W - labW;
+  const max = Math.max(...E.map((e) => e.valor)) || 1;
+  const rMax = apilado ? 7 : Math.max(6, Math.min(16, hueco / 2 - 4));
+  GX.linea(svg, xSpine, cys[0], xSpine, cys[n - 1], col.suave, { "stroke-width": 2, "stroke-dasharray": "2 4" });
+  E.forEach((e, i) => {
+    const d = i === hi, cy = cys[i], fill = d ? col.dest : col.texto, conSub = !!(e.sub && e.sub.trim()), subAqui = conSub && subEnFecha;
+    GX.t(svg, fechaW - 10, subAqui ? cy - 2 : cy + 7, e.fecha, GX.serif(22), col.texto, { "text-anchor": "end" });
+    if (subAqui) GX.t(svg, fechaW - 10, cy + 15, e.sub, GX.MONO, col.texto, { "text-anchor": "end", "fill-opacity": 0.75 });
+    H.svgEl("circle", { cx: xSpine, cy, r: d ? 6 : 5, fill }, svg);
+    const tc = d ? (col.tinta || col.dest) : col.texto;
+    let yBar, hBar, yVal;
+    if (apilado) {
+      const tres = conSub && !subAqui;
+      GX.t(svg, xName, tres ? cy - 12 : cy - 4, e.nombre, fuentes[i], col.texto);
+      if (tres) GX.t(svg, xName, cy + 2, e.sub, GX.MONO, col.texto, { "fill-opacity": 0.75 });
+      hBar = 8; yBar = tres ? cy + 9 : cy + 4; yVal = yBar + 8;
+    } else {
+      GX.t(svg, xName, conSub && !subAqui ? cy - 2 : cy + 5, e.nombre, fuentes[i], col.texto);
+      if (conSub && !subAqui) GX.t(svg, xName, cy + 14, e.sub, GX.MONO, col.texto, { "fill-opacity": 0.75 });
+      hBar = d ? 14 : 12; yBar = cy - hBar / 2; yVal = cy + 4;
+    }
+    let xLab = x0m;
+    if (forma === "barra") {
+      const w = Math.max(2, (e.valor / max) * (x1m - x0m));
+      GX.rect(svg, x0m, yBar, w, hBar, d ? col.dest : col.base);
+      xLab = x0m + w + 6;
+    } else if (forma === "circulo") {
+      const r = Math.max(1.5, rMax * Math.sqrt(e.valor / max));
+      H.svgEl("circle", { cx: x0m + rMax, cy: yBar + hBar / 2, r, fill: d ? col.dest : col.base }, svg);
+      xLab = x0m + 2 * rMax + 8;
+    }
+    GX.t(svg, xLab, yVal, etiq[i], d ? GX.MONO_D : GX.MONO_B, tc);
+  });
 };
 
 </script>

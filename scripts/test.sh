@@ -434,8 +434,18 @@ json.dump(R, open(p,"w",encoding="utf-8"), ensure_ascii=False)' "$D" || return 1
   python3 scripts/informe.py "$D" --salida "$D/salida" --sin-pdf >/dev/null 2>"$TMP/pos.err" || { cat "$TMP/pos.err"; return 1; }
 }
 paso "informe.py admite grafico.tipo en kebab y coteja una tarjeta con cifra_ids (I2 por contrato)" pos_informe
-paso "catalogo_informe.py → informe.json + datos.json sintético" python3 scripts/catalogo_informe.py --dir "$TMP/catalogo" --tarjeta ninguna
-paso "informe.py catálogo --check (todos los G.* en papel, panel y media página: I1–I7 + P1–P5)" python3 scripts/informe.py "$TMP/catalogo" --salida "$TMP/catalogo/salida" --check
+paso "catalogo_informe.py → informe.json + datos.json sintético (26 tipos)" bash -c 'python3 scripts/catalogo_informe.py --dir "$0" --tarjeta ninguna | grep -q "26 tipos · sin G: ninguna"' "$TMP/catalogo"
+paso "informe.py catálogo --check (los 26 G.* en papel y a media página: I1–I7 + P1–P5)" python3 scripts/informe.py "$TMP/catalogo" --salida "$TMP/catalogo/salida" --check
+INF_DENGUE="$INF"; INF="$TMP/catalogo"   # negativos sobre el catálogo: campos obligatorios de los tipos nuevos (CAMPOS_GRAFICO) e I2 por contrato
+pag_cat() { echo 'pg=next(p for p in P if p.get("seccion")=="'"$1"'" and p["bloques"][0]["texto"].endswith("papel")); f=pg["bloques"][2]; g=f["grafico"]; '; }
+neg_informe "catálogo: apilada sin partes"              "I1 página" "$(pag_cat apilada)g.pop(\"partes\")"
+neg_informe "catálogo: embudo sin misma_cohorte"        "I1 página" "$(pag_cat embudo)g.pop(\"misma_cohorte\")"
+neg_informe "catálogo: dispersion sin ejeX"             "I1 página" "$(pag_cat dispersion)g.pop(\"ejeX\")"
+neg_informe "catálogo: cascada sin inicio ni fin"       "I1 página" "$(pag_cat cascada)g.pop(\"inicio\"); g.pop(\"fin\")"
+neg_informe "catálogo: pesas sin cero y sin nota"       "I1 página" "$(pag_cat pesas)g[\"desdeCero\"]=False; f.pop(\"nota\",None)"
+neg_informe "catálogo: cascada con un paso sin respaldo" "I2 página" "$(pag_cat cascada)g[\"pasos\"][0][\"valor\"]+=1"
+neg_informe "catálogo: dona con una parte sin respaldo"  "I2 página" "$(pag_cat dona)g[\"partes\"][0][\"valor\"]+=1"
+INF="$INF_DENGUE"
 neg_texto_pequeno() {  # P1: el render rechaza texto por debajo de 12 px
   sed 's#</style>#.p { font-size: 10px !important; }</style>#' "$TMP/informe/informe.html" > "$TMP/informe/p1.html"
   node scripts/render_informe.js "$TMP/informe/p1.html" --check >"$TMP/p1.log" 2>&1 && return 1

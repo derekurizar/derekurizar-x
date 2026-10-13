@@ -2,6 +2,306 @@
  "slug": "catalogo",
  "cifras": [
   {
+   "id": "cat-agrupadas",
+   "concepto": "Cifras de ejemplo de la plantilla agrupadas",
+   "valor": 83,
+   "unidad": "",
+   "anio": "",
+   "tipo": "desglose",
+   "fuente": "catálogo",
+   "url": "",
+   "veredicto": "verificada",
+   "independencia": "alta",
+   "evidencia": {
+    "url": "",
+    "cita": "DATA de ejemplo de templates/graficos/agrupadas.html",
+    "archivo_local": ""
+   },
+   "partes": [
+    {
+     "nombre": "v1",
+     "valor": 83
+    },
+    {
+     "nombre": "v2",
+     "valor": 54
+    },
+    {
+     "nombre": "v3",
+     "valor": 50
+    },
+    {
+     "nombre": "v4",
+     "valor": 45
+    },
+    {
+     "nombre": "v5",
+     "valor": 56
+    },
+    {
+     "nombre": "v6",
+     "valor": 16
+    },
+    {
+     "nombre": "v7",
+     "valor": 47
+    },
+    {
+     "nombre": "v8",
+     "valor": 10
+    }
+   ]
+  },
+  {
+   "id": "cat-antes-despues",
+   "concepto": "Cifras de ejemplo de la plantilla antes-despues",
+   "valor": 26,
+   "unidad": "",
+   "anio": "",
+   "tipo": "desglose",
+   "fuente": "catálogo",
+   "url": "",
+   "veredicto": "verificada",
+   "independencia": "alta",
+   "evidencia": {
+    "url": "",
+    "cita": "DATA de ejemplo de templates/graficos/antes-despues.html",
+    "archivo_local": ""
+   },
+   "partes": [
+    {
+     "nombre": "v1",
+     "valor": 26
+    },
+    {
+     "nombre": "v2",
+     "valor": 46.1
+    }
+   ]
+  },
+  {
+   "id": "cat-apilada",
+   "concepto": "Cifras de ejemplo de la plantilla apilada",
+   "valor": 7600,
+   "unidad": "",
+   "anio": "",
+   "tipo": "desglose",
+   "fuente": "catálogo",
+   "url": "",
+   "veredicto": "verificada",
+   "independencia": "alta",
+   "evidencia": {
+    "url": "",
+    "cita": "DATA de ejemplo de templates/graficos/apilada.html",
+    "archivo_local": ""
+   },
+   "partes": [
+    {
+     "nombre": "v1",
+     "valor": 7600
+    },
+    {
+     "nombre": "v2",
+     "valor": 9800
+    },
+    {
+     "nombre": "v3",
+     "valor": 15800
+    },
+    {
+     "nombre": "v4",
+     "valor": 19400
+    },
+    {
+     "nombre": "v5",
+     "valor": 6900
+    },
+    {
+     "nombre": "v6",
+     "valor": 6100
+    },
+    {
+     "nombre": "v7",
+     "valor": 5200
+    },
+    {
+     "nombre": "v8",
+     "valor": 4700
+    },
+    {
+     "nombre": "v9",
+     "valor": 4100
+    },
+    {
+     "nombre": "v10",
+     "valor": 3900
+    },
+    {
+     "nombre": "v11",
+     "valor": 3700
+    },
+    {
+     "nombre": "v12",
+     "valor": 3600
+    },
+    {
+     "nombre": "v13",
+     "valor": 3300
+    },
+    {
+     "nombre": "v14",
+     "valor": 3000
+    },
+    {
+     "nombre": "v15",
+     "valor": 2600
+    },
+    {
+     "nombre": "v16",
+     "valor": 2300
+    }
+   ]
+  },
+  {
+   "id": "cat-area-apilada",
+   "concepto": "Cifras de ejemplo de la plantilla area-apilada",
+   "valor": 3700,
+   "unidad": "",
+   "anio": "",
+   "tipo": "desglose",
+   "fuente": "catálogo",
+   "url": "",
+   "veredicto": "verificada",
+   "independencia": "alta",
+   "evidencia": {
+    "url": "",
+    "cita": "DATA de ejemplo de templates/graficos/area-apilada.html",
+    "archivo_local": ""
+   },
+   "partes": [
+    {
+     "nombre": "v1",
+     "valor": 3700
+    },
+    {
+     "nombre": "v2",
+     "valor": 3800
+    },
+    {
+     "nombre": "v3",
+     "valor": 3900
+    },
+    {
+     "nombre": "v4",
+     "valor": 4000
+    },
+    {
+     "nombre": "v5",
+     "valor": 4100
+    },
+    {
+     "nombre": "v6",
+     "valor": 4300
+    },
+    {
+     "nombre": "v7",
+     "valor": 4600
+    },
+    {
+     "nombre": "v8",
+     "valor": 4700
+    },
+    {
+     "nombre": "v9",
+     "valor": 4800
+    },
+    {
+     "nombre": "v10",
+     "valor": 4900
+    },
+    {
+     "nombre": "v11",
+     "valor": 3200
+    },
+    {
+     "nombre": "v12",
+     "valor": 3400
+    },
+    {
+     "nombre": "v13",
+     "valor": 3600
+    },
+    {
+     "nombre": "v14",
+     "valor": 5000
+    },
+    {
+     "nombre": "v15",
+     "valor": 5100
+    },
+    {
+     "nombre": "v16",
+     "valor": 800
+    },
+    {
+     "nombre": "v17",
+     "valor": 820
+    },
+    {
+     "nombre": "v18",
+     "valor": 850
+    },
+    {
+     "nombre": "v19",
+     "valor": 900
+    },
+    {
+     "nombre": "v20",
+     "valor": 950
+    },
+    {
+     "nombre": "v21",
+     "valor": 880
+    },
+    {
+     "nombre": "v22",
+     "valor": 1000
+    },
+    {
+     "nombre": "v23",
+     "valor": 980
+    },
+    {
+     "nombre": "v24",
+     "valor": 3000
+    },
+    {
+     "nombre": "v25",
+     "valor": 3100
+    },
+    {
+     "nombre": "v26",
+     "valor": 3300
+    },
+    {
+     "nombre": "v27",
+     "valor": 3500
+    },
+    {
+     "nombre": "v28",
+     "valor": 4200
+    },
+    {
+     "nombre": "v29",
+     "valor": 4400
+    },
+    {
+     "nombre": "v30",
+     "valor": 4500
+    }
+   ]
+  },
+  {
    "id": "cat-barras-h",
    "concepto": "Cifras de ejemplo de la plantilla barras-h",
    "valor": 5.9,
@@ -80,6 +380,460 @@
    ]
   },
   {
+   "id": "cat-bullet",
+   "concepto": "Cifras de ejemplo de la plantilla bullet",
+   "valor": 95.1,
+   "unidad": "",
+   "anio": "",
+   "tipo": "desglose",
+   "fuente": "catálogo",
+   "url": "",
+   "veredicto": "verificada",
+   "independencia": "alta",
+   "evidencia": {
+    "url": "",
+    "cita": "DATA de ejemplo de templates/graficos/bullet.html",
+    "archivo_local": ""
+   },
+   "partes": [
+    {
+     "nombre": "v1",
+     "valor": 95.1
+    },
+    {
+     "nombre": "v2",
+     "valor": 90.3
+    },
+    {
+     "nombre": "v3",
+     "valor": 88.2
+    },
+    {
+     "nombre": "v4",
+     "valor": 71.4
+    }
+   ]
+  },
+  {
+   "id": "cat-calor",
+   "concepto": "Cifras de ejemplo de la plantilla calor",
+   "valor": 9,
+   "unidad": "",
+   "anio": "",
+   "tipo": "desglose",
+   "fuente": "catálogo",
+   "url": "",
+   "veredicto": "verificada",
+   "independencia": "alta",
+   "evidencia": {
+    "url": "",
+    "cita": "DATA de ejemplo de templates/graficos/calor.html",
+    "archivo_local": ""
+   },
+   "partes": [
+    {
+     "nombre": "v1",
+     "valor": 9
+    },
+    {
+     "nombre": "v2",
+     "valor": 8.7
+    },
+    {
+     "nombre": "v3",
+     "valor": 7.9
+    },
+    {
+     "nombre": "v4",
+     "valor": 6.3
+    },
+    {
+     "nombre": "v5",
+     "valor": 4.9
+    },
+    {
+     "nombre": "v6",
+     "valor": 4.3
+    },
+    {
+     "nombre": "v7",
+     "valor": 4.6
+    },
+    {
+     "nombre": "v8",
+     "valor": 4.5
+    },
+    {
+     "nombre": "v9",
+     "valor": 4.2
+    },
+    {
+     "nombre": "v10",
+     "valor": 4.4
+    },
+    {
+     "nombre": "v11",
+     "valor": 3.9
+    },
+    {
+     "nombre": "v12",
+     "valor": 3.5
+    },
+    {
+     "nombre": "v13",
+     "valor": 3.3
+    },
+    {
+     "nombre": "v14",
+     "valor": 3
+    },
+    {
+     "nombre": "v15",
+     "valor": 3.4
+    },
+    {
+     "nombre": "v16",
+     "valor": 2.9
+    },
+    {
+     "nombre": "v17",
+     "valor": 2.6
+    },
+    {
+     "nombre": "v18",
+     "valor": 2.4
+    },
+    {
+     "nombre": "v19",
+     "valor": 2.3
+    },
+    {
+     "nombre": "v20",
+     "valor": 1.7
+    },
+    {
+     "nombre": "v21",
+     "valor": 1.6
+    },
+    {
+     "nombre": "v22",
+     "valor": 1.8
+    },
+    {
+     "nombre": "v23",
+     "valor": 1.9
+    },
+    {
+     "nombre": "v24",
+     "valor": 1.5
+    },
+    {
+     "nombre": "v25",
+     "valor": 2
+    },
+    {
+     "nombre": "v26",
+     "valor": 3.6
+    },
+    {
+     "nombre": "v27",
+     "valor": 4.7
+    },
+    {
+     "nombre": "v28",
+     "valor": 5.1
+    },
+    {
+     "nombre": "v29",
+     "valor": 5.4
+    },
+    {
+     "nombre": "v30",
+     "valor": 5.6
+    }
+   ]
+  },
+  {
+   "id": "cat-cascada",
+   "concepto": "Cifras de ejemplo de la plantilla cascada",
+   "valor": 108500,
+   "unidad": "",
+   "anio": "",
+   "tipo": "desglose",
+   "fuente": "catálogo",
+   "url": "",
+   "veredicto": "verificada",
+   "independencia": "alta",
+   "evidencia": {
+    "url": "",
+    "cita": "DATA de ejemplo de templates/graficos/cascada.html",
+    "archivo_local": ""
+   },
+   "partes": [
+    {
+     "nombre": "v1",
+     "valor": 108500
+    },
+    {
+     "nombre": "v2",
+     "valor": 71900
+    },
+    {
+     "nombre": "v3",
+     "valor": 23600
+    },
+    {
+     "nombre": "v4",
+     "valor": 18200
+    },
+    {
+     "nombre": "v5",
+     "valor": 5200
+    }
+   ]
+  },
+  {
+   "id": "cat-cifra",
+   "concepto": "Cifras de ejemplo de la plantilla cifra",
+   "valor": 102,
+   "unidad": "",
+   "anio": "",
+   "tipo": "desglose",
+   "fuente": "catálogo",
+   "url": "",
+   "veredicto": "verificada",
+   "independencia": "alta",
+   "evidencia": {
+    "url": "",
+    "cita": "DATA de ejemplo de templates/graficos/cifra.html",
+    "archivo_local": ""
+   },
+   "partes": [
+    {
+     "nombre": "v1",
+     "valor": 102
+    },
+    {
+     "nombre": "v2",
+     "valor": 67
+    }
+   ]
+  },
+  {
+   "id": "cat-combinado",
+   "concepto": "Cifras de ejemplo de la plantilla combinado",
+   "valor": 2560000,
+   "unidad": "",
+   "anio": "",
+   "tipo": "desglose",
+   "fuente": "catálogo",
+   "url": "",
+   "veredicto": "verificada",
+   "independencia": "alta",
+   "evidencia": {
+    "url": "",
+    "cita": "DATA de ejemplo de templates/graficos/combinado.html",
+    "archivo_local": ""
+   },
+   "partes": [
+    {
+     "nombre": "v1",
+     "valor": 2560000
+    },
+    {
+     "nombre": "v2",
+     "valor": 1070000
+    },
+    {
+     "nombre": "v3",
+     "valor": 1440000
+    },
+    {
+     "nombre": "v4",
+     "valor": 2070000
+    },
+    {
+     "nombre": "v5",
+     "valor": 2600000
+    },
+    {
+     "nombre": "v6",
+     "valor": 3080000
+    },
+    {
+     "nombre": "v7",
+     "valor": 3300000
+    },
+    {
+     "nombre": "v8",
+     "valor": 620
+    },
+    {
+     "nombre": "v9",
+     "valor": 540
+    },
+    {
+     "nombre": "v10",
+     "valor": 700
+    },
+    {
+     "nombre": "v11",
+     "valor": 780
+    },
+    {
+     "nombre": "v12",
+     "valor": 820
+    },
+    {
+     "nombre": "v13",
+     "valor": 860
+    },
+    {
+     "nombre": "v14",
+     "valor": 900
+    }
+   ]
+  },
+  {
+   "id": "cat-dispersion",
+   "concepto": "Cifras de ejemplo de la plantilla dispersion",
+   "valor": 33,
+   "unidad": "",
+   "anio": "",
+   "tipo": "desglose",
+   "fuente": "catálogo",
+   "url": "",
+   "veredicto": "verificada",
+   "independencia": "alta",
+   "evidencia": {
+    "url": "",
+    "cita": "DATA de ejemplo de templates/graficos/dispersion.html",
+    "archivo_local": ""
+   },
+   "partes": [
+    {
+     "nombre": "v1",
+     "valor": 33
+    },
+    {
+     "nombre": "v2",
+     "valor": 25
+    },
+    {
+     "nombre": "v3",
+     "valor": 83
+    },
+    {
+     "nombre": "v4",
+     "valor": 50
+    },
+    {
+     "nombre": "v5",
+     "valor": 81
+    },
+    {
+     "nombre": "v6",
+     "valor": 66
+    },
+    {
+     "nombre": "v7",
+     "valor": 77
+    },
+    {
+     "nombre": "v8",
+     "valor": 68
+    },
+    {
+     "nombre": "v9",
+     "valor": 74
+    },
+    {
+     "nombre": "v10",
+     "valor": 60
+    },
+    {
+     "nombre": "v11",
+     "valor": 63
+    },
+    {
+     "nombre": "v12",
+     "valor": 71
+    },
+    {
+     "nombre": "v13",
+     "valor": 52
+    },
+    {
+     "nombre": "v14",
+     "valor": 67
+    },
+    {
+     "nombre": "v15",
+     "valor": 42
+    },
+    {
+     "nombre": "v16",
+     "valor": 49
+    },
+    {
+     "nombre": "v17",
+     "valor": 61
+    },
+    {
+     "nombre": "v18",
+     "valor": 55
+    },
+    {
+     "nombre": "v19",
+     "valor": 30
+    },
+    {
+     "nombre": "v20",
+     "valor": 46
+    },
+    {
+     "nombre": "v21",
+     "valor": 26
+    },
+    {
+     "nombre": "v22",
+     "valor": 41
+    },
+    {
+     "nombre": "v23",
+     "valor": 43
+    },
+    {
+     "nombre": "v24",
+     "valor": 56
+    },
+    {
+     "nombre": "v25",
+     "valor": 45
+    },
+    {
+     "nombre": "v26",
+     "valor": 53
+    },
+    {
+     "nombre": "v27",
+     "valor": 28
+    },
+    {
+     "nombre": "v28",
+     "valor": 62
+    },
+    {
+     "nombre": "v29",
+     "valor": 37
+    },
+    {
+     "nombre": "v30",
+     "valor": 47
+    }
+   ]
+  },
+  {
    "id": "cat-divergente",
    "concepto": "Cifras de ejemplo de la plantilla divergente",
    "valor": -34,
@@ -127,6 +881,135 @@
     {
      "nombre": "v8",
      "valor": 14
+    }
+   ]
+  },
+  {
+   "id": "cat-dona",
+   "concepto": "Cifras de ejemplo de la plantilla dona",
+   "valor": 12,
+   "unidad": "",
+   "anio": "",
+   "tipo": "desglose",
+   "fuente": "catálogo",
+   "url": "",
+   "veredicto": "verificada",
+   "independencia": "alta",
+   "evidencia": {
+    "url": "",
+    "cita": "DATA de ejemplo de templates/graficos/dona.html",
+    "archivo_local": ""
+   },
+   "partes": [
+    {
+     "nombre": "v1",
+     "valor": 12
+    },
+    {
+     "nombre": "v2",
+     "valor": 9
+    },
+    {
+     "nombre": "v3",
+     "valor": 8
+    },
+    {
+     "nombre": "v4",
+     "valor": 6
+    },
+    {
+     "nombre": "v5",
+     "valor": 65
+    },
+    {
+     "nombre": "v6",
+     "valor": 35
+    }
+   ]
+  },
+  {
+   "id": "cat-embudo",
+   "concepto": "Cifras de ejemplo de la plantilla embudo",
+   "valor": 18250,
+   "unidad": "",
+   "anio": "",
+   "tipo": "desglose",
+   "fuente": "catálogo",
+   "url": "",
+   "veredicto": "verificada",
+   "independencia": "alta",
+   "evidencia": {
+    "url": "",
+    "cita": "DATA de ejemplo de templates/graficos/embudo.html",
+    "archivo_local": ""
+   },
+   "partes": [
+    {
+     "nombre": "v1",
+     "valor": 18250
+    },
+    {
+     "nombre": "v2",
+     "valor": 1290
+    },
+    {
+     "nombre": "v3",
+     "valor": 610
+    },
+    {
+     "nombre": "v4",
+     "valor": 312
+    }
+   ]
+  },
+  {
+   "id": "cat-hemiciclo",
+   "concepto": "Cifras de ejemplo de la plantilla hemiciclo",
+   "valor": 160,
+   "unidad": "",
+   "anio": "",
+   "tipo": "desglose",
+   "fuente": "catálogo",
+   "url": "",
+   "veredicto": "verificada",
+   "independencia": "alta",
+   "evidencia": {
+    "url": "",
+    "cita": "DATA de ejemplo de templates/graficos/hemiciclo.html",
+    "archivo_local": ""
+   },
+   "partes": [
+    {
+     "nombre": "v1",
+     "valor": 160
+    },
+    {
+     "nombre": "v2",
+     "valor": 39
+    },
+    {
+     "nombre": "v3",
+     "valor": 28
+    },
+    {
+     "nombre": "v4",
+     "valor": 23
+    },
+    {
+     "nombre": "v5",
+     "valor": 18
+    },
+    {
+     "nombre": "v6",
+     "valor": 11
+    },
+    {
+     "nombre": "v7",
+     "valor": 7
+    },
+    {
+     "nombre": "v8",
+     "valor": 6
     }
    ]
   },
@@ -254,6 +1137,45 @@
    ]
   },
   {
+   "id": "cat-linea-tiempo",
+   "concepto": "Cifras de ejemplo de la plantilla linea-tiempo",
+   "valor": 600,
+   "unidad": "",
+   "anio": "",
+   "tipo": "desglose",
+   "fuente": "catálogo",
+   "url": "",
+   "veredicto": "verificada",
+   "independencia": "alta",
+   "evidencia": {
+    "url": "",
+    "cita": "DATA de ejemplo de templates/graficos/linea-tiempo.html",
+    "archivo_local": ""
+   },
+   "partes": [
+    {
+     "nombre": "v1",
+     "valor": 600
+    },
+    {
+     "nombre": "v2",
+     "valor": 2000
+    },
+    {
+     "nombre": "v3",
+     "valor": 250
+    },
+    {
+     "nombre": "v4",
+     "valor": 23000
+    },
+    {
+     "nombre": "v5",
+     "valor": 44
+    }
+   ]
+  },
+  {
    "id": "cat-mapa",
    "concepto": "Cifras de ejemplo de la plantilla mapa",
    "valor": 30,
@@ -345,6 +1267,503 @@
     {
      "nombre": "v19",
      "valor": 56
+    }
+   ]
+  },
+  {
+   "id": "cat-multiples",
+   "concepto": "Cifras de ejemplo de la plantilla multiples",
+   "valor": 100,
+   "unidad": "",
+   "anio": "",
+   "tipo": "desglose",
+   "fuente": "catálogo",
+   "url": "",
+   "veredicto": "verificada",
+   "independencia": "alta",
+   "evidencia": {
+    "url": "",
+    "cita": "DATA de ejemplo de templates/graficos/multiples.html",
+    "archivo_local": ""
+   },
+   "partes": [
+    {
+     "nombre": "v1",
+     "valor": 100
+    },
+    {
+     "nombre": "v2",
+     "valor": 97
+    },
+    {
+     "nombre": "v3",
+     "valor": 95
+    },
+    {
+     "nombre": "v4",
+     "valor": 96
+    },
+    {
+     "nombre": "v5",
+     "valor": 94
+    },
+    {
+     "nombre": "v6",
+     "valor": 92
+    },
+    {
+     "nombre": "v7",
+     "valor": 93
+    },
+    {
+     "nombre": "v8",
+     "valor": 103
+    },
+    {
+     "nombre": "v9",
+     "valor": 101
+    },
+    {
+     "nombre": "v10",
+     "valor": 104
+    },
+    {
+     "nombre": "v11",
+     "valor": 106
+    },
+    {
+     "nombre": "v12",
+     "valor": 102
+    },
+    {
+     "nombre": "v13",
+     "valor": 105
+    },
+    {
+     "nombre": "v14",
+     "valor": 107
+    },
+    {
+     "nombre": "v15",
+     "valor": 109
+    },
+    {
+     "nombre": "v16",
+     "valor": 108
+    },
+    {
+     "nombre": "v17",
+     "valor": 110
+    },
+    {
+     "nombre": "v18",
+     "valor": 115
+    },
+    {
+     "nombre": "v19",
+     "valor": 118
+    },
+    {
+     "nombre": "v20",
+     "valor": 120
+    },
+    {
+     "nombre": "v21",
+     "valor": 124
+    },
+    {
+     "nombre": "v22",
+     "valor": 128
+    },
+    {
+     "nombre": "v23",
+     "valor": 130
+    },
+    {
+     "nombre": "v24",
+     "valor": 133
+    },
+    {
+     "nombre": "v25",
+     "valor": 135
+    },
+    {
+     "nombre": "v26",
+     "valor": 125
+    },
+    {
+     "nombre": "v27",
+     "valor": 150
+    },
+    {
+     "nombre": "v28",
+     "valor": 158
+    },
+    {
+     "nombre": "v29",
+     "valor": 162
+    },
+    {
+     "nombre": "v30",
+     "valor": 165
+    },
+    {
+     "nombre": "v31",
+     "valor": 168
+    },
+    {
+     "nombre": "v32",
+     "valor": 170
+    },
+    {
+     "nombre": "v33",
+     "valor": 112
+    },
+    {
+     "nombre": "v34",
+     "valor": 140
+    },
+    {
+     "nombre": "v35",
+     "valor": 155
+    },
+    {
+     "nombre": "v36",
+     "valor": 178
+    },
+    {
+     "nombre": "v37",
+     "valor": 190
+    },
+    {
+     "nombre": "v38",
+     "valor": 198
+    },
+    {
+     "nombre": "v39",
+     "valor": 205
+    },
+    {
+     "nombre": "v40",
+     "valor": 210
+    },
+    {
+     "nombre": "v41",
+     "valor": 99
+    },
+    {
+     "nombre": "v42",
+     "valor": 98
+    }
+   ]
+  },
+  {
+   "id": "cat-pendiente",
+   "concepto": "Cifras de ejemplo de la plantilla pendiente",
+   "valor": 67,
+   "unidad": "",
+   "anio": "",
+   "tipo": "desglose",
+   "fuente": "catálogo",
+   "url": "",
+   "veredicto": "verificada",
+   "independencia": "alta",
+   "evidencia": {
+    "url": "",
+    "cita": "DATA de ejemplo de templates/graficos/pendiente.html",
+    "archivo_local": ""
+   },
+   "partes": [
+    {
+     "nombre": "v1",
+     "valor": 67
+    },
+    {
+     "nombre": "v2",
+     "valor": 44
+    },
+    {
+     "nombre": "v3",
+     "valor": 40
+    },
+    {
+     "nombre": "v4",
+     "valor": 33
+    },
+    {
+     "nombre": "v5",
+     "valor": 26
+    },
+    {
+     "nombre": "v6",
+     "valor": 23
+    }
+   ]
+  },
+  {
+   "id": "cat-pesas",
+   "concepto": "Cifras de ejemplo de la plantilla pesas",
+   "valor": 95.8,
+   "unidad": "",
+   "anio": "",
+   "tipo": "desglose",
+   "fuente": "catálogo",
+   "url": "",
+   "veredicto": "verificada",
+   "independencia": "alta",
+   "evidencia": {
+    "url": "",
+    "cita": "DATA de ejemplo de templates/graficos/pesas.html",
+    "archivo_local": ""
+   },
+   "partes": [
+    {
+     "nombre": "v1",
+     "valor": 95.8
+    },
+    {
+     "nombre": "v2",
+     "valor": 99.4
+    },
+    {
+     "nombre": "v3",
+     "valor": 94
+    },
+    {
+     "nombre": "v4",
+     "valor": 99.1
+    },
+    {
+     "nombre": "v5",
+     "valor": 85
+    },
+    {
+     "nombre": "v6",
+     "valor": 97.3
+    },
+    {
+     "nombre": "v7",
+     "valor": 60.4
+    },
+    {
+     "nombre": "v8",
+     "valor": 88
+    },
+    {
+     "nombre": "v9",
+     "valor": 52.7
+    },
+    {
+     "nombre": "v10",
+     "valor": 84.9
+    },
+    {
+     "nombre": "v11",
+     "valor": 44.1
+    },
+    {
+     "nombre": "v12",
+     "valor": 79.6
+    },
+    {
+     "nombre": "v13",
+     "valor": 21.5
+    },
+    {
+     "nombre": "v14",
+     "valor": 53.8
+    }
+   ]
+  },
+  {
+   "id": "cat-pictograma",
+   "concepto": "Cifras de ejemplo de la plantilla pictograma",
+   "valor": 37,
+   "unidad": "",
+   "anio": "",
+   "tipo": "desglose",
+   "fuente": "catálogo",
+   "url": "",
+   "veredicto": "verificada",
+   "independencia": "alta",
+   "evidencia": {
+    "url": "",
+    "cita": "DATA de ejemplo de templates/graficos/pictograma.html",
+    "archivo_local": ""
+   },
+   "partes": [
+    {
+     "nombre": "v1",
+     "valor": 37
+    },
+    {
+     "nombre": "v2",
+     "valor": 3
+    }
+   ]
+  },
+  {
+   "id": "cat-piramide",
+   "concepto": "Cifras de ejemplo de la plantilla piramide",
+   "valor": 1.3,
+   "unidad": "",
+   "anio": "",
+   "tipo": "desglose",
+   "fuente": "catálogo",
+   "url": "",
+   "veredicto": "verificada",
+   "independencia": "alta",
+   "evidencia": {
+    "url": "",
+    "cita": "DATA de ejemplo de templates/graficos/piramide.html",
+    "archivo_local": ""
+   },
+   "partes": [
+    {
+     "nombre": "v1",
+     "valor": 1.3
+    },
+    {
+     "nombre": "v2",
+     "valor": 1.8
+    },
+    {
+     "nombre": "v3",
+     "valor": 2.8
+    },
+    {
+     "nombre": "v4",
+     "valor": 4.2
+    },
+    {
+     "nombre": "v5",
+     "valor": 6.2
+    },
+    {
+     "nombre": "v6",
+     "valor": 9
+    },
+    {
+     "nombre": "v7",
+     "valor": 10.6
+    },
+    {
+     "nombre": "v8",
+     "valor": 11.2
+    },
+    {
+     "nombre": "v9",
+     "valor": 1.6
+    },
+    {
+     "nombre": "v10",
+     "valor": 2.1
+    },
+    {
+     "nombre": "v11",
+     "valor": 3.3
+    },
+    {
+     "nombre": "v12",
+     "valor": 4.9
+    },
+    {
+     "nombre": "v13",
+     "valor": 7
+    },
+    {
+     "nombre": "v14",
+     "valor": 9.6
+    },
+    {
+     "nombre": "v15",
+     "valor": 10.9
+    }
+   ]
+  },
+  {
+   "id": "cat-treemap",
+   "concepto": "Cifras de ejemplo de la plantilla treemap",
+   "valor": 25800,
+   "unidad": "",
+   "anio": "",
+   "tipo": "desglose",
+   "fuente": "catálogo",
+   "url": "",
+   "veredicto": "verificada",
+   "independencia": "alta",
+   "evidencia": {
+    "url": "",
+    "cita": "DATA de ejemplo de templates/graficos/treemap.html",
+    "archivo_local": ""
+   },
+   "partes": [
+    {
+     "nombre": "v1",
+     "valor": 25800
+    },
+    {
+     "nombre": "v2",
+     "valor": 22100
+    },
+    {
+     "nombre": "v3",
+     "valor": 19400
+    },
+    {
+     "nombre": "v4",
+     "valor": 14300
+    },
+    {
+     "nombre": "v5",
+     "valor": 9800
+    },
+    {
+     "nombre": "v6",
+     "valor": 8900
+    },
+    {
+     "nombre": "v7",
+     "valor": 4100
+    },
+    {
+     "nombre": "v8",
+     "valor": 2300
+    },
+    {
+     "nombre": "v9",
+     "valor": 2100
+    },
+    {
+     "nombre": "v10",
+     "valor": 450
+    },
+    {
+     "nombre": "v11",
+     "valor": 420
+    }
+   ]
+  },
+  {
+   "id": "cat-waffle",
+   "concepto": "Cifras de ejemplo de la plantilla waffle",
+   "valor": 20,
+   "unidad": "",
+   "anio": "",
+   "tipo": "desglose",
+   "fuente": "catálogo",
+   "url": "",
+   "veredicto": "verificada",
+   "independencia": "alta",
+   "evidencia": {
+    "url": "",
+    "cita": "DATA de ejemplo de templates/graficos/waffle.html",
+    "archivo_local": ""
+   },
+   "partes": [
+    {
+     "nombre": "v1",
+     "valor": 20
     }
    ]
   }

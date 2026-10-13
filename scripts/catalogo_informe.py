@@ -142,15 +142,9 @@ def main():
                 {"b": "titulo", "texto": "%s · tarjeta frente a papel" % n},
                 {"b": "figuras", "items": [figura("tarjeta", n, cab, datos, cid, "tarjeta"), figura("papel", n, cab, datos, cid, "vs-papel", alto=260)]},
             ]})
-    # Tablero: los tres gráficos mínimos (siempre) + los de tarjeta que caben en 324 px si ya existen.
-    tablero = []
-    for k, c in MINI.items():
-        tablero.append(dict(c, fuente="catálogo · ejemplo"))
-    for n in ("bullet", "dona", "waffle"):
-        if n in con_g:
-            cab, datos = separar(D[n])
-            tablero.append({"kicker": "%s · tablero" % n, "valor": "—", "contexto": "a 324 px", "fuente": "catálogo · ejemplo", "grafico": dict({"tipo": informe.snake(n)}, **datos)})
-    paginas.append({"tipo": "tablero", "titulo": "Tablero", "subtitulo": "chispa, cuadros y comparacion son solo del tablero; el resto, si cabe a 324 px.", "cifras": tablero[:6]})
+    # Tablero: solo los tres gráficos mínimos (sus celdas miden 64 px; los demás tipos van en figuras).
+    tablero = [dict(c, fuente="catálogo · ejemplo") for c in MINI.values()]
+    paginas.append({"tipo": "tablero", "titulo": "Tablero", "subtitulo": "chispa, cuadros y comparacion son los únicos gráficos del tablero (celdas de 64 px).", "cifras": tablero})
     if "combinado" in con_g:
         cab, datos = separar(D["combinado"])
         paginas.append({"tipo": "apaisada", "seccion": "apaisada", "lateral": [{"b": "titulo", "texto": "Una figura ancha"}, {"b": "texto", "parrafos": ["La hoja apaisada da 600 px al gráfico."]}],
