@@ -50,3 +50,31 @@ tesis que probar en ninguno de los dos.
   educación, seguridad o migración, economía local) repartidas en 2–3 ejes;
   cada brief exige el valor del sujeto **y** el nacional de la misma fuente y
   año (per cápita con proyecciones INE) y anota el año de cada dimensión.
+
+## Modo investigación (`/investigacion`)
+
+El hilo acompaña a un informe en PDF, así que el encuadre pide más material y
+un plan de capítulos. La directiva trae `MODO DEL POST: investigacion` y el
+número del informe; escribe `modo: "investigacion"` en `encuadre.json`.
+- `ejes`: 2–5 (smoke 1). Cada brief pide **series completas** (≥ 5 puntos, con
+  todos los puntos publicados) y ≥ 1 **desglose** (por categoría, departamento
+  o año): el informe necesita tablas y figuras propias, no solo las del hilo.
+  Un eje incluye la pregunta de escala humana (beat `impacto`).
+- `informe{numero: "<NN de la directiva>", capitulos[1–4]{n: "01"…, titulo ≤ 60,
+  pregunta, ejes[]}}`: un capítulo ≈ un eje o un par de ejes afines; cada eje
+  aparece en algún capítulo. Es el esqueleto que siguen el guionista (bloque
+  `investigacion.capitulos`) y el redactor (un capítulo del PDF por entrada).
+- Tesis, pregunta, paleta, dedup e idea del banco: igual que en un hilo.
+
+### Modo desde (`/investigacion desde:<slug>`)
+
+No hay investigación nueva: relees una sesión existente (`sesiones/<slug>`) y
+su hilo ya entregado (`<ruta_hilo>/hilo.json`) para darle al redactor el plan
+de capítulos. Lee `encuadre.json` y `hilo.json` (tuits con imagen, plantilla,
+cifra_ids, titular) y corre `python3 scripts/digesto.py sesiones/<slug> --para
+guionista --solo-ok` para los ids ok. Diseña `informe{numero, capitulos[]}`
+agrupando los tuits por eje o tema y **añádelo** a `encuadre.json` sin cambiar
+ningún otro campo (el `modo` sigue siendo el del hilo). Retorno: `slug,
+sesion_dir, tema, tesis, paleta, hook_tipo, modo_hilo, ruta_hilo, fecha_hilo,
+n_tuits, tuits[]{n, beat, imagen, plantilla, cifra_ids, titular}, ok_ids[],
+informe`.

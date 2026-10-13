@@ -13,3 +13,6 @@ __pycache__/
 investigacion/ejemplos/*/salida/fonts/
 investigacion/ejemplos/*/salida/figuras/*.html
 investigacion/ejemplos/catalogo/salida/
+sesiones/_fixture/informe/
+investigacion/*/salida/fonts/
+investigacion/*/salida/figuras/*.html

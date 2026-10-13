@@ -4,12 +4,15 @@
 # Uso: bash scripts/test.sh          # completa (incluye make catalogo)
 #      RAPIDO=1 bash scripts/test.sh # salta el catálogo
 # Pasos: validate · catálogo · contar_x (py + js) · fixture (materializar + ensamblar --check)
+#        · fixture del informe (sesiones/_fixture/informe.json sobre la salida del fixture: I1–I7 + P1–P5,
+#          digesto --para redactor, memoria.py --informe en dry-run, --informes)
 #        · fixture dato (una tarjeta, modo dato de ensamblar) · negativos del gate G1–G8 sobre copias
+#          (incluidos los del modo investigacion: bloque, marcador [ENLACE AL INFORME], rango de tuits)
 #        de los fixtures (siempre con --salida: una copia nunca escribe en hilos/ ni datos/)
 #        · negativos de render.js · banco de ideas (ideas.py sobre un banco temporal)
 #        · informe de investigación (ejemplo → PDF en un temporal, negativos I1–I6, P1, P2; catálogo de
 #          gráficos del informe: todos los G.* en papel, panel y media página con --check)
-#        · node --check de hilo.js, ideas.js y dato.js · check_workflows.py (constantes, modos, gráficos W7–W8).
+#        · node --check de hilo.js, ideas.js, dato.js e investigacion.js · check_workflows.py (W1–W8).
 #        Resumen «N pruebas · M fallos»; exit 1 si hay fallos.
 set -u
 RAIZ="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -91,6 +94,23 @@ memoria_dry() {
 }
 paso "memoria.py --dry-run acepta --hook giro_inversion" memoria_dry
 
+echo "== fixture del informe (sesiones/_fixture/informe.json sobre la salida del fixture; sin agentes)"
+pdf_hojas() {  # pdf_hojas <pdf> <n>: cuenta las hojas por /MediaBox
+  python3 - "$1" "$2" <<'PY2'
+import re, sys
+cajas = re.findall(rb"/MediaBox\s*\[\s*0 0 (\d+(?:\.\d+)?) (\d+(?:\.\d+)?)\s*\]", open(sys.argv[1], "rb").read())
+assert len(cajas) == int(sys.argv[2]), "el PDF tiene %d páginas (se esperaban %s)" % (len(cajas), sys.argv[2])
+PY2
+}
+paso "informe.py sesiones/_fixture --check (I1–I7 + P1–P5; tarjetas con desde_hilo)" python3 scripts/informe.py sesiones/_fixture --salida "$TMP/informe_fixture" --check
+paso "PDF del fixture: 8 hojas" pdf_hojas "$TMP/informe_fixture/informe.pdf" 8
+paso "informe.html del fixture: la página tarjetas se expandió desde hilo.json (item 3/3 · cierre)" grep -q '"n": "3/3", "beat": "cierre"' "$TMP/informe_fixture/informe.html"
+paso "digesto.py --para redactor imprime series completas y el guion" bash -c 'python3 scripts/digesto.py sesiones/_fixture --para redactor --hilo sesiones/_fixture/salida | grep -q "serie: Ene=67" && python3 scripts/digesto.py sesiones/_fixture --para redactor | grep -q "^## guion"'
+paso "digesto.py --para redactor --eje precios (sin guion ni síntesis)" bash -c '! python3 scripts/digesto.py sesiones/_fixture --para redactor --eje precios | grep -q "^## guion"'
+paso "memoria.py --registrar --informe sesiones/_fixture --dry-run → memoria/informes.json (N.º 00)" bash -c 'python3 scripts/memoria.py --registrar sesiones/_fixture --ruta sesiones/_fixture/salida --informe sesiones/_fixture --dry-run 2>/dev/null | grep "informes.json" | grep -q "N.º 00"'
+paso "memoria.py --solo-informe exige el hilo ya registrado (exit 1)" bash -c '! python3 scripts/memoria.py --registrar sesiones/_fixture --ruta sesiones/_fixture/salida --informe sesiones/_fixture --solo-informe --dry-run >/dev/null 2>&1'
+paso "memoria.py --informes da el siguiente N.º" bash -c 'python3 scripts/memoria.py --informes | grep -q "^siguiente N.º [0-9][0-9]"'
+
 echo "== fixture dato (una tarjeta: modo dato de ensamblar.py)"
 paso "materializar.py sesiones/_fixture_dato" python3 scripts/materializar.py sesiones/_fixture_dato
 paso "ensamblar.py sesiones/_fixture_dato --check" python3 scripts/ensamblar.py sesiones/_fixture_dato --check
@@ -150,6 +170,7 @@ positivo_dato_antes() {
   grep -q '"modo": *"antes"' "$S/salida/dato.html" || { echo "dato.html sin el modo en su JSON"; return 1; }
 }
 paso "modo antes válido: dato.json, post.md y dato.html llevan el modo y su bloque" positivo_dato_antes
+negativo "modo de hilo (investigacion) en un dato" "G1 modo" "$(mut 'g["modo"]="investigacion"')"
 FIX=sesiones/_fixture
 
 echo "== negativos del gate mecánico (copias del fixture)"
@@ -204,6 +225,23 @@ EOF
 }
 paso "modo perfil válido (5 tuits, beat dimension, bloque perfil): ensambla y memoria.py --dry-run dice modo perfil" positivo_hilo_perfil
 negativo "modo normal con 3 tuits"           G1 "$(mut 'g["smoke"]=False')" 'python3 -c "import json,sys; p=sys.argv[1]; e=json.load(open(p)); e[\"smoke\"]=False; e[\"fixture\"]=False; json.dump(e, open(p,\"w\"), ensure_ascii=False, indent=2)" "$S/encuadre.json"'
+# Modo investigacion (/investigacion): bloque guion.investigacion y marcador [ENLACE AL INFORME] en el cierre.
+INV_BLOQUE='g["investigacion"]={"numero": "01", "informe_dir": "investigacion/2026-09-28-combustibles-2026-fixture", "capitulos": [{"n": "01", "titulo": "Del crudo al tanque", "tuits": [2]}]}'
+INV_CIERRE='T[2]["texto"]=T[2]["texto"].rstrip()+" Informe completo: [ENLACE AL INFORME]"'
+negativo "modo investigacion sin bloque"              "G1 modo investigacion" "$(mut 'g["modo"]="investigacion"; '"$INV_CIERRE")"
+negativo "modo investigacion: cierre sin el marcador" "G8 modo investigacion" "$(mut 'g["modo"]="investigacion"; '"$INV_BLOQUE")"
+negativo "modo investigacion: marcador en T1"         "G8 modo investigacion" "$(mut 'g["modo"]="investigacion"; '"$INV_BLOQUE"'; '"$INV_CIERRE"'; T[0]["texto"]=T[0]["texto"]+" [ENLACE AL INFORME]"')"
+negativo "modo investigacion con 3 tuits en normal"   "G1 modo investigacion" "$(mut 'g["modo"]="investigacion"; g["smoke"]=False; '"$INV_BLOQUE"'; '"$INV_CIERRE")" 'python3 -c "import json,sys; p=sys.argv[1]; e=json.load(open(p)); e[\"smoke\"]=False; e[\"fixture\"]=False; json.dump(e, open(p,\"w\"), ensure_ascii=False, indent=2)" "$S/encuadre.json"'
+positivo_hilo_investigacion() {
+  local S; S="$(mktemp -d "$TMP/pos.XXXXXX")"; cp -R sesiones/_fixture/. "$S/"; rm -rf "$S/salida" "$S/informe"
+  python3 -c "$(mut 'g["modo"]="investigacion"; '"$INV_BLOQUE"'; '"$INV_CIERRE")" "$S/guion.json" || return 1
+  python3 scripts/ensamblar.py "$S" --check --salida "$S/salida" --sin-contacto >"$TMP/inv.log" 2>&1 || { tail -5 "$TMP/inv.log"; return 1; }
+  python3 -c 'import json,sys; h=json.load(open(sys.argv[1])); assert h["modo"]=="investigacion" and h["investigacion"]["numero"]=="01", h.get("modo")' "$S/salida/hilo.json" || { echo "hilo.json sin modo investigacion o sin su bloque"; return 1; }
+  grep -q '^## Modo investigacion' "$S/salida/post.md" || { echo "post.md sin la sección del modo"; return 1; }
+  grep -q "ENLACE AL INFORME" "$S/salida/post.md" || { echo "post.md sin el marcador"; return 1; }
+  python3 scripts/memoria.py --registrar "$S" --ruta sesiones/_fixture/salida --informe sesiones/_fixture --dry-run 2>/dev/null | grep -q "modo investigacion"
+}
+paso "modo investigacion válido (smoke, bloque y marcador): ensambla, post.md lo lleva y memoria.py --informe dice modo investigacion" positivo_hilo_investigacion
 
 echo "== negativos de render.js"
 render_neg_url() {
@@ -404,6 +442,14 @@ neg_texto_pequeno() {  # P1: el render rechaza texto por debajo de 12 px
   grep -q "P1 " "$TMP/p1.log"
 }
 paso "render_informe.js rechaza texto de 10 px (P1)" neg_texto_pequeno
+INF_DENGUE="$INF"; INF=sesiones/_fixture   # negativos sobre el fixture del informe (cifras del fixture de hilo)
+neg_informe "fixture: cifra no_confirmada (pre-c05) en el resumen"  I2 'P[1]["cifras"][0]["id"]="pre-c05"'
+neg_informe "fixture: punto de la serie del Brent cambiado"          I2 'P[3]["bloques"][2]["grafico"]["series"][0]["valores"][3]=118'
+neg_informe "fixture: figura sin fuente"                             I4 'P[3]["bloques"][2].pop("fuente")'
+neg_informe "fixture: referencia {fign:} sin destino"                I5 'P[5]["hallazgos"][0]["ref"]="{fign:nada}"'
+neg_informe "fixture: desde_hilo sin hilo.json"                      I1 'P[7]["desde_hilo"]="sesiones/no-existe"'
+neg_informe "fixture: página que desborda"                           P2 'P[3]["bloques"][1]["parrafos"]*=14' render
+INF="$INF_DENGUE"
 
 echo "== sintaxis de los workflows"
 check_js() {
@@ -413,6 +459,7 @@ check_js() {
 paso "node --check hilo.js (envuelto en async function)" check_js hilo.js
 paso "node --check ideas.js (envuelto en async function)" check_js ideas.js
 paso "node --check dato.js (envuelto en async function)" check_js dato.js
+paso "node --check investigacion.js (envuelto en async function)" check_js investigacion.js
 paso "check_workflows.py (PALETAS, PLANTILLAS, HOOKS, BEATS, REQ, pesoX, MODOS y gráficos del informe W7–W8)" python3 scripts/check_workflows.py
 
 echo

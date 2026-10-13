@@ -28,6 +28,17 @@ Comprueba:
   M6 ideas/calendario.json (si existe): cada entrada válida (id slug, fecha MM-DD|DD|YYYY-MM-DD,
      tipo, titulo, pista, formato, modo compatible, estado), ids únicos; aviso si una entrada
      `hecha` apunta a una pieza que no existe
+  M7 memoria/informes.json (si existe; registro de /investigacion): schema de cada informe (id, fecha,
+     slug, tema, tesis, paleta, numero, n_paginas, n_figuras, ruta_informe, ruta_hilo, hilo_id, estado,
+     modo ∈ investigacion|desde) · ids y numero únicos · ruta_informe con informe.json y salida/informe.pdf ·
+     ruta_hilo con hilo.json · hilo_id registrado en memoria/hilos.json
+  N1 cada investigacion/<YYYY-MM-DD>-*/ (entregable de /investigacion) tiene informe.json,
+     salida/informe.pdf y salida/informe.html; aviso si no está en memoria/informes.json (corrida
+     interrumpida: reanuda con resumeFromRunId o borra la carpeta)
+  N2 su informe.json: meta.datos[] y los `desde`/`desde_hilo` de figuras y tarjetas existen; meta.numero
+     coincide con el registro
+  N3 si tiene hilo/: mismas reglas que H1–H3, hilo.json con modo "investigacion", el cierre lleva el
+     marcador [ENLACE AL INFORME] e informe_dir apunta al entregable; registrado en hilos.json con esa ruta
 
 Uso: python3 scripts/validate.py [--quiet]   · salida 0 ok · 1 error
 """
@@ -39,7 +50,7 @@ import sys
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(RAIZ, "scripts"))
-from ensamblar import HOOKS, MODOS, RE_LINK  # noqa: E402  (una sola lista de ganchos y de modos para todo el framework)
+from ensamblar import HOOKS, MODOS, RE_LINK, MARCADOR_INFORME  # noqa: E402  (una sola lista de ganchos y de modos para todo el framework)
 from contar_x import peso_x  # noqa: E402
 import ideas as _ideas  # noqa: E402
 import calendario as _cal  # noqa: E402
@@ -156,9 +167,14 @@ def validar_hilos(paletas):
             registrados[os.path.normpath(str(h.get("ruta", "")))] = h
 
     for carpeta in sorted(glob.glob(os.path.join(RAIZ, "hilos", "*"))):
-        if not os.path.isdir(carpeta):
-            continue
-        rel = os.path.relpath(carpeta, RAIZ)
+        if os.path.isdir(carpeta):
+            validar_carpeta_hilo(carpeta, os.path.relpath(carpeta, RAIZ), registrados, paletas)
+    return registrados
+
+
+def validar_carpeta_hilo(carpeta, rel, registrados, paletas):
+    """H1–H3 de una carpeta de hilo (hilos/* o investigacion/*/hilo). Devuelve hilo.json o None."""
+    if True:
         for archivo in ("hilo.json", "post.md", "datos.json", "hilo.html"):
             if not os.path.exists(os.path.join(carpeta, archivo)):
                 err("%s: falta %s" % (rel, archivo))
@@ -166,11 +182,11 @@ def validar_hilos(paletas):
             warn("%s no está registrado en memoria/hilos.json" % rel)
         hj = os.path.join(carpeta, "hilo.json")
         if not os.path.exists(hj):
-            continue
+            return None
         try:
             h = json.load(open(hj, encoding="utf-8"))
         except json.JSONDecodeError as e:
-            err("%s/hilo.json inválido: %s" % (rel, e)); continue
+            err("%s/hilo.json inválido: %s" % (rel, e)); return None
         reg = registrados.get(rel)
         if reg and reg.get("estado") != h.get("estado"):
             e_reg, e_hilo = reg.get("estado"), h.get("estado")
@@ -180,7 +196,7 @@ def validar_hilos(paletas):
                 warn("%s: hilo.json dice estado %r y memoria/hilos.json %r" % (rel, e_hilo, e_reg))
         tuits = h.get("tuits", [])
         if not tuits:
-            err("%s/hilo.json sin tuits" % rel); continue
+            err("%s/hilo.json sin tuits" % rel); return h
         t1 = tuits[0].get("texto", "")
         if not t1.strip():
             err("%s: T1 sin texto" % rel)
@@ -196,6 +212,110 @@ def validar_hilos(paletas):
             err("%s: paleta %r desconocida" % (rel, h.get("paleta")))
         if h.get("modo") and h["modo"] not in MODOS["hilo"]:
             err("%s: hilo.json modo %r no está en %s" % (rel, h.get("modo"), MODOS["hilo"]))
+        return h
+
+
+RE_ENTREGABLE = re.compile(r"^\d{4}-\d{2}-\d{2}-[a-z0-9-]+$")
+
+
+def validar_informes(paletas, hilos_registrados):
+    """M7 + N1–N3: memoria/informes.json y las carpetas investigacion/<fecha>-<slug>/ (entregables de /investigacion)."""
+    registrados = {}
+    rel_mem = "memoria/informes.json"
+    hids = {h.get("id") for h in hilos_registrados.values()}
+    if os.path.exists(os.path.join(RAIZ, rel_mem)):  # ausente = ok: memoria.py lo crea con el primer informe
+        d = cargar(rel_mem)
+        if d:
+            ids, numeros = set(), {}
+            estados = {"borrador", "listo", "publicado", "incompleto"}
+            for i, h in enumerate(d.get("informes", [])):
+                for campo in ("id", "fecha", "slug", "tema", "tesis", "paleta", "numero", "n_paginas", "n_figuras", "ruta_informe", "ruta_hilo", "hilo_id", "estado", "modo"):
+                    if campo not in h:
+                        err("informes[%d] sin %s" % (i, campo))
+                if h.get("id") in ids:
+                    err("informes: id repetido %s" % h.get("id"))
+                ids.add(h.get("id"))
+                num = str(h.get("numero") or "")
+                if not re.fullmatch(r"\d{2,}", num):
+                    err("informes[%d] numero %r debe tener dos dígitos" % (i, h.get("numero")))
+                elif num in numeros:
+                    err("informes: N.º %s repetido (%s y %s)" % (num, numeros[num], h.get("id")))
+                numeros[num] = h.get("id")
+                if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(h.get("fecha", ""))):
+                    err("informes[%d] fecha no es YYYY-MM-DD" % i)
+                if paletas and h.get("paleta") not in paletas:
+                    err("informes[%d] paleta %r desconocida" % (i, h.get("paleta")))
+                if h.get("estado") not in estados:
+                    err("informes[%d] estado %r no está en %s" % (i, h.get("estado"), sorted(estados)))
+                if h.get("modo") not in ("investigacion", "desde"):
+                    err("informes[%d] modo %r no es investigacion|desde" % (i, h.get("modo")))
+                ri, rh = str(h.get("ruta_informe", "")), str(h.get("ruta_hilo", ""))
+                if os.path.isabs(ri) or os.path.isabs(rh):
+                    err("informes[%d] rutas deben ser relativas a la raíz (%s · %s)" % (i, ri, rh))
+                else:
+                    if not os.path.exists(os.path.join(RAIZ, ri, "informe.json")):
+                        err("informes[%d] ruta_informe %s sin informe.json" % (i, ri))
+                    elif not os.path.exists(os.path.join(RAIZ, ri, "salida", "informe.pdf")):
+                        err("informes[%d] %s/salida/informe.pdf no existe" % (i, ri))
+                    if not os.path.exists(os.path.join(RAIZ, rh, "hilo.json")):
+                        err("informes[%d] ruta_hilo %s sin hilo.json" % (i, rh))
+                if h.get("hilo_id") not in hids:
+                    err("informes[%d] hilo_id %r no está en memoria/hilos.json" % (i, h.get("hilo_id")))
+                registrados[os.path.normpath(ri)] = h
+
+    for carpeta in sorted(glob.glob(os.path.join(RAIZ, "investigacion", "*"))):
+        if not os.path.isdir(carpeta) or not RE_ENTREGABLE.match(os.path.basename(carpeta)):
+            continue
+        rel = os.path.relpath(carpeta, RAIZ)
+        # N1
+        for archivo in ("informe.json", os.path.join("salida", "informe.pdf"), os.path.join("salida", "informe.html")):
+            if not os.path.exists(os.path.join(carpeta, archivo)):
+                err("%s: falta %s" % (rel, archivo))
+        reg = registrados.get(rel)
+        if not reg:
+            warn("%s no está registrado en memoria/informes.json (corrida interrumpida: reanuda con resumeFromRunId o borra la carpeta)" % rel)
+        rj = os.path.join(carpeta, "informe.json")
+        if os.path.exists(rj):
+            try:
+                R = json.load(open(rj, encoding="utf-8"))
+            except json.JSONDecodeError as e:
+                err("%s/informe.json inválido: %s" % (rel, e)); R = None
+            if R:  # N2
+                meta = R.get("meta") or {}
+                for rel_d in meta.get("datos") or []:
+                    if not os.path.exists(os.path.join(RAIZ, rel_d)):
+                        err("%s: meta.datos %s no existe" % (rel, rel_d))
+                if not meta.get("numero"):
+                    warn("%s: informe.json sin meta.numero" % rel)
+                elif reg and str(reg.get("numero")) != str(meta.get("numero")):
+                    err("%s: meta.numero %r ≠ registro %r" % (rel, meta.get("numero"), reg.get("numero")))
+                for P in R.get("paginas") or []:
+                    if P.get("desde_hilo") and not os.path.exists(os.path.join(RAIZ, P["desde_hilo"], "hilo.json")):
+                        err("%s: tarjetas desde_hilo %s sin hilo.json" % (rel, P["desde_hilo"]))
+                    for it in P.get("items") or []:
+                        if isinstance(it, dict) and it.get("desde") and not os.path.exists(os.path.join(RAIZ, it["desde"])):
+                            err("%s: tarjeta desde %s no existe" % (rel, it["desde"]))
+                    for B in (P.get("bloques") or []) + (P.get("lateral") or []):
+                        figs = B.get("items", []) if B.get("b") == "figuras" else ([B] if B.get("b") == "figura" else [])
+                        for f in figs:
+                            if isinstance(f, dict) and f.get("desde") and not os.path.exists(os.path.join(RAIZ, f["desde"])):
+                                err("%s: figura desde %s no existe" % (rel, f["desde"]))
+        # N3
+        ch = os.path.join(carpeta, "hilo")
+        if os.path.isdir(ch):
+            relh = os.path.relpath(ch, RAIZ)
+            h = validar_carpeta_hilo(ch, relh, hilos_registrados, paletas)
+            if h:
+                if h.get("modo") != "investigacion":
+                    err("%s: hilo.json debe llevar modo \"investigacion\" (es %r)" % (relh, h.get("modo")))
+                tuits = h.get("tuits") or []
+                if tuits and MARCADOR_INFORME not in (tuits[-1].get("texto") or ""):
+                    err("%s: el cierre no lleva el marcador %s" % (relh, MARCADOR_INFORME))
+                inv = h.get("investigacion") if isinstance(h.get("investigacion"), dict) else {}
+                if inv and os.path.normpath(str(inv.get("informe_dir") or "")) != os.path.normpath(rel):
+                    err("%s: investigacion.informe_dir %r ≠ %s" % (relh, inv.get("informe_dir"), rel))
+        elif reg and os.path.normpath(str(reg.get("ruta_hilo") or "")) == os.path.normpath(os.path.join(rel, "hilo")):
+            err("%s: el registro apunta a %s/hilo pero no existe" % (rel, rel))
 
 
 def validar_datos(paletas):
@@ -330,7 +450,8 @@ def main():
     quiet = "--quiet" in sys.argv
     paletas = validar_tokens()
     validar_fuentes()
-    validar_hilos(paletas)
+    hilos_registrados = validar_hilos(paletas)
+    validar_informes(paletas, hilos_registrados)
     validar_datos(paletas)
     validar_ideas(paletas)
     validar_calendario()

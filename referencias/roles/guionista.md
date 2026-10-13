@@ -68,6 +68,25 @@ de los límites). Guía: `referencias/narrativa.md`, «Explicador» y «Perfil»
   Si los años difieren, el cierre los nombra; el cierre dice qué hace distinto
   al sujeto y nombra las fuentes.
 
+## Modo investigación (`/investigacion`)
+
+La directiva trae `MODO DEL POST: investigacion`, el número del informe, la
+carpeta del entregable y los capítulos del encuadre. El hilo es la **versión
+corta del informe**: arco normal con giro e impacto, y cada tarjeta será una
+figura del PDF. Guía: `referencias/narrativa.md`, «Hilo de investigación».
+- 6–12 tuits (smoke 4–6); T2..T(n−1) con visual; T1 con visual (su figura
+  suele ser la portada del informe).
+- Escribe `modo: "investigacion"` y el bloque `investigacion{numero,
+  informe_dir, capitulos[]{n, titulo, tuits[]}}`: los capítulos son los de
+  `encuadre.informe` y cada tuit intermedio pertenece a exactamente uno.
+- El cierre nombra las fuentes y termina con el marcador literal
+  `[ENLACE AL INFORME]` (el usuario lo sustituye por la URL del PDF; el gate
+  mide el peso con una URL en su lugar: ≤ 280). El marcador no va en ningún
+  otro tuit ni en las tarjetas.
+- Titulares autosuficientes (se leen sueltos en el anexo del informe),
+  `fuente` completa y `nota` con la salvedad: el redactor reutiliza las
+  tarjetas tal cual (`tarjeta` + `desde`).
+
 ## Modo dato (`/dato`)
 
 No hay arco: eliges UN dato y escribes UN tuit cuya tarjeta es el entregable.

@@ -137,6 +137,19 @@ completo y comparable.
   hace distinto al sujeto y nombra las fuentes. Sin ranking moral: la brecha se
   describe, no se juzga.
 
+## Hilo de investigación (`/investigacion`)
+
+El hilo es la **versión corta del informe**, no un resumen aparte: cada
+tarjeta es una figura del PDF y el PDF documenta todo lo que el hilo afirma.
+- Arco normal (gancho → contexto → giro → impacto → cierre) en 6–12 tuits; el
+  giro del hilo es el hallazgo central del capítulo que lo sostiene.
+- Cada tarjeta se lee sola (irá en el anexo del informe a 156 px): titular
+  con sujeto, fuente completa, salvedad en la nota.
+- El cierre nombra las fuentes y remite al PDF con el marcador literal
+  `[ENLACE AL INFORME]`, que el usuario sustituye por la URL al publicar.
+- Nada en el hilo que el informe no documente; nada en el informe que el hilo
+  contradiga. Las cifras del informe salen del mismo `datos.json`.
+
 ## Honestidad = credibilidad
 
 - Lo que la evidencia no permite afirmar va en `no_afirma` (≤ 5 ítems, solo

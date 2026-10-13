@@ -78,6 +78,11 @@ for f in .claude/commands/vs.md .claude/commands/mapa.md .claude/commands/antes.
   [[ -s "$f" ]] || aviso "falta $f (alias de /dato)"
 done
 
+# /investigacion: agente redactor, workflow, comando, fixture del informe y catálogo de gráficos del informe
+for f in .claude/agents/informe-redactor.md .claude/workflows/investigacion.js .claude/commands/investigacion.md sesiones/_fixture/informe.json scripts/catalogo_informe.py referencias/roles/redactor.md; do
+  if [[ -s "$f" ]]; then ok "$f presente"; else aviso "falta $f (/investigacion no estará disponible)"; fi
+done
+
 # informes de investigación: base, renderers, ejemplo y marcadores del bloque H en la base de tarjetas
 for f in investigacion/base.html investigacion/paginas/_comun.js investigacion/graficos/_comun.js investigacion/ejemplos/dengue-2026/informe.json scripts/informe.py scripts/render_informe.js scripts/fuentes_ruta.js; do
   if [[ -s "$f" ]]; then ok "$f presente"; else aviso "falta $f (los informes de investigacion/ no estarán disponibles)"; fi
@@ -92,6 +97,11 @@ if [[ -e memoria/datos.json ]]; then
   if python3 -c "import json; json.load(open('memoria/datos.json', encoding='utf-8'))" 2>/dev/null; then ok "memoria/datos.json es JSON válido"; else error "memoria/datos.json no es JSON válido"; fi
 else
   ok "memoria/datos.json ausente (memoria.py lo crea al registrar el primer dato)"
+fi
+if [[ -e memoria/informes.json ]]; then
+  if python3 -c "import json; json.load(open('memoria/informes.json', encoding='utf-8'))" 2>/dev/null; then ok "memoria/informes.json es JSON válido"; else error "memoria/informes.json no es JSON válido"; fi
+else
+  ok "memoria/informes.json ausente (memoria.py lo crea al registrar el primer informe)"
 fi
 
 # residuos

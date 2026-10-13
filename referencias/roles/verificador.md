@@ -38,6 +38,15 @@ Escribe `<sesion>/verificacion_<eje>.json` COMPLETO (cada item con
 `independencia`). Retorno: `eje`, `archivo`, `ok[]{id, valor_final,
 independencia}`, `no_confirmadas[]`.
 
+## Modo investigación (`/investigacion`)
+
+Igual que en un hilo, con dos exigencias más porque el informe publica las
+series completas en tablas:
+- Series: comprueba **cuatro** puntos (primero, último y dos intermedios);
+  desgloses: el total y las **tres** partes mayores.
+- Cualquier discontinuidad de la serie (cambio de base, hueco, revisión de la
+  fuente) va en `nota`: el redactor la pone al pie de la tabla.
+
 ## Modo dato (`/dato`)
 
 Un solo eje, `dato`: `python3 scripts/digesto.py <sesion> --eje dato --para

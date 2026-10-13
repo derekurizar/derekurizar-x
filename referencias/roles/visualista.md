@@ -23,3 +23,7 @@ fuente_en_pie, iteraciones, dudoso, nota}` y `omitidos[]`.
 
 En `/dato` no hay visualistas: este mismo flujo lo ejecuta el productor sobre
 `tuit_1` (ver `referencias/roles/productor.md`, «Modo dato»).
+
+En `/investigacion` el flujo es el mismo; las tarjetas se imprimen además a
+156 px en el anexo del informe, así que nada de texto diminuto (R1 ya lo cubre)
+ni rótulos que solo se entienden a 1080.

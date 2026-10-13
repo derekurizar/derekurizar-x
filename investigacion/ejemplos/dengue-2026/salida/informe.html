@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Informe · @DerekUrizar</title>
+<!--
+  BASE DE INFORME (@DerekUrizar · sistema «Hilos» llevado a documento)
+  ====================================================================
+  No se edita a mano en los entregables: scripts/informe.py ensambla esta base con
+    I:PALETAS   paletas desde design/tokens.json (bg/ink/a1… de la tarjeta + papel_tinta/papel_barra)
+    I:HELPERS   el bloque `const H` de templates/base.html (una sola fuente de los helpers)
+    I:GRAFICOS  investigacion/graficos/*.js  (G.<tipo>: gráficos dibujados en el documento)
+    I:PAGINAS   investigacion/paginas/*.js   (PAGINAS.<tipo>: una función por tipo de página)
+    INFORME_JSON el informe.json ya resuelto (numeración, referencias, índice, cifras)
+  Diseño de referencia: lienzo «Informe de investigación» (ver investigacion/README.md).
+  Las fuentes se piden como url(fonts/x.woff2): informe.py copia design/fonts/ junto al HTML y
+  scripts/render_informe.js las sirve desde design/fonts/ (cero peticiones externas).
+-->
+<style>
+@font-face { font-family: 'Instrument Serif'; font-style: normal; font-weight: 400; src: url(fonts/instrument-serif-400.woff2) format('woff2'); }
+@font-face { font-family: 'Instrument Serif'; font-style: italic; font-weight: 400; src: url(fonts/instrument-serif-400i.woff2) format('woff2'); }
+@font-face { font-family: 'Archivo'; font-style: normal; font-weight: 100 900; src: url(fonts/archivo-var.woff2) format('woff2'); }
+@font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 100 800; src: url(fonts/jetbrains-mono-var.woff2) format('woff2'); }
+
+body[data-paleta="cielo"] { --bg:#4B92DB; --ink:#0C1520; --a1:#F6F2E8; --a2:#2B4A66; --a3:#8FB8E6; --ink-rgb:12,21,32; --x-fg:#4B92DB; --rule:rgba(12,21,32,.3); --kicker:#0C1520; --tinta:#2B4A66; --barra:#4B92DB; }
+body[data-paleta="jade"] { --bg:#1E6B5C; --ink:#F6F2E8; --a1:#9FD4BF; --a2:#0E3B32; --a3:#5FA38C; --ink-rgb:246,242,232; --x-fg:#1E6B5C; --rule:rgba(246,242,232,.3); --kicker:#F6F2E8; --tinta:#1E6B5C; --barra:#1E6B5C; }
+body[data-paleta="maiz"] { --bg:#E0A33C; --ink:#1A1208; --a1:#F3D08A; --a2:#B97A1C; --a3:#6E440B; --ink-rgb:26,18,8; --x-fg:#E0A33C; --rule:rgba(26,18,8,.3); --kicker:#1A1208; --tinta:#6E440B; --barra:#B97A1C; }
+body[data-paleta="terracota"] { --bg:#B23A26; --ink:#F6F2E8; --a1:#3A0F08; --a2:#E8836F; --a3:#F2C2B6; --ink-rgb:246,242,232; --x-fg:#B23A26; --rule:rgba(246,242,232,.3); --kicker:#F6F2E8; --tinta:#B23A26; --barra:#B23A26; }
+body[data-paleta="cacao"] { --bg:#4A2F22; --ink:#F6F2E8; --a1:#D9A66B; --a2:#A8744A; --a3:#7A5038; --ink-rgb:246,242,232; --x-fg:#4A2F22; --rule:rgba(246,242,232,.3); --kicker:#F6F2E8; --tinta:#4A2F22; --barra:#A8744A; }
+body[data-paleta="jacaranda"] { --bg:#6B4E96; --ink:#F6F2E8; --a1:#1F1530; --a2:#B9A3DB; --a3:#8E73B8; --ink-rgb:246,242,232; --x-fg:#6B4E96; --rule:rgba(246,242,232,.3); --kicker:#F6F2E8; --tinta:#6B4E96; --barra:#6B4E96; }
+body[data-paleta="atitlan"] { --bg:#3FA3A0; --ink:#0C1520; --a1:#F6F2E8; --a2:#7CC3C0; --a3:#1D5E5C; --ink-rgb:12,21,32; --x-fg:#3FA3A0; --rule:rgba(12,21,32,.3); --kicker:#0C1520; --tinta:#1D5E5C; --barra:#3FA3A0; }
+body[data-paleta="obsidiana"] { --bg:#16181D; --ink:#F6F2E8; --a1:#F08A4B; --a2:#8C8F96; --a3:#3A3D44; --ink-rgb:246,242,232; --x-fg:#16181D; --rule:rgba(246,242,232,.3); --kicker:#F08A4B; --tinta:#16181D; --barra:#F08A4B; }
+
+@page { size: 8.5in 11in; margin: 0; }
+@page apaisada { size: 11in 8.5in; margin: 0; }
+
+:root { --papel: #F6F2E8; --tp: #0C1520; --tp-rgb: 12,21,32; --regla: rgba(12,21,32,.2); --regla-f: rgba(12,21,32,.3); --gris: rgba(12,21,32,.68); --suave: rgba(12,21,32,.06); --base: rgba(12,21,32,.2); }
+html, body { margin: 0; padding: 0; }
+body { background: #D9D4C7; font-family: Archivo, system-ui, sans-serif; color: var(--tp); -webkit-font-smoothing: antialiased; text-rendering: geometricPrecision; }
+@media screen { body { padding: 32px 0; } .pagina { margin: 0 auto 32px; box-shadow: 0 2px 18px rgba(0,0,0,.18); } }
+@media print { body { background: var(--papel); } }
+
+/* ---- Hoja ---- */
+.pagina { width: 816px; height: 1056px; box-sizing: border-box; padding: 56px 72px 48px; display: flex; flex-direction: column; background: var(--papel); color: var(--tp); overflow: hidden; position: relative; break-after: page; page: carta; }
+.pagina.apaisada { width: 1056px; height: 816px; padding: 48px 72px 40px; page: apaisada; }
+.pagina.color { background: var(--bg); color: var(--ink); padding: 64px 72px 56px; }
+.pagina.sin-margen { padding: 0; }
+@page carta { size: 8.5in 11in; margin: 0; }
+
+/* ---- Tipografía ---- */
+.k { font: 500 12px/1.3 'JetBrains Mono', monospace; letter-spacing: .16em; text-transform: uppercase; }
+.k.acento { color: var(--tinta); }
+.color .k.acento, .banda .k.acento, .panel .k.acento { color: var(--kicker); }
+.mono { font: 400 12px/1.45 'JetBrains Mono', monospace; }
+.mono-b { font: 700 12px/1.45 'JetBrains Mono', monospace; }
+.gris { color: var(--gris); }
+.t-portada { margin: 56px 0 0; font: 400 104px/.92 'Instrument Serif', Georgia, serif; letter-spacing: -.02em; text-wrap: balance; }
+.t1 { margin: 40px 0 0; font: 400 72px/.95 'Instrument Serif', Georgia, serif; letter-spacing: -.015em; }
+.t2 { margin: 36px 0 0; font: 400 56px/.95 'Instrument Serif', Georgia, serif; letter-spacing: -.015em; text-wrap: balance; }
+.t3 { margin: 32px 0 0; font: 400 36px/1.05 'Instrument Serif', Georgia, serif; letter-spacing: -.01em; text-wrap: balance; }
+.lead { margin: 24px 0 0; max-width: 540px; font: 400 18px/1.55 Archivo, sans-serif; text-wrap: pretty; }
+.p { margin: 14px 0 0; max-width: 560px; font: 400 16px/1.62 Archivo, sans-serif; text-wrap: pretty; }
+.p + .p { margin-top: 12px; }
+.capitular { float: left; font: 400 64px/.8 'Instrument Serif', Georgia, serif; margin: 6px 10px 0 0; color: var(--tinta); }
+.serif { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; }
+em.serif { font-size: 1.15em; line-height: 1; }
+.cifra-g { font: 400 64px/.9 'Instrument Serif', Georgia, serif; color: var(--tinta); }
+
+/* ---- Encabezado corrido y pie ---- */
+.corrido { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding-bottom: 14px; border-bottom: 1px solid var(--regla); }
+.corrido.sobre-color { border-bottom: 1.5px solid var(--rule); padding-bottom: 20px; }
+.pie-pag { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-top: auto; padding-top: 16px; border-top: 1.5px solid var(--regla-f); }
+.pie-pag.sobre-color { border-top-color: var(--rule); padding-top: 18px; }
+.autor { display: flex; align-items: center; gap: 16px; flex: none; }
+.marca { display: flex; align-items: center; gap: 8px; }
+.x { width: 22px; height: 22px; border-radius: 5px; background: var(--tp); color: var(--papel); display: flex; align-items: center; justify-content: center; font: 800 12px/1 Archivo, sans-serif; flex: none; }
+.sobre-color .x, .panel .x { background: var(--ink); color: var(--x-fg); }
+.handle { font: 600 14px/1 Archivo, sans-serif; }
+
+/* ---- Bloques de cuerpo ---- */
+.con-margen { display: flex; gap: 24px; margin-top: 14px; }
+.con-margen > .texto { flex: 1; min-width: 0; }
+.con-margen > .texto .p:first-child { margin-top: 0; }
+.margen { flex: none; width: 136px; display: flex; flex-direction: column; gap: 18px; }
+.margen > span { border-top: 1px solid var(--regla-f); padding-top: 8px; font: 400 12px/1.45 'JetBrains Mono', monospace; color: rgba(12,21,32,.72); }
+.margen b { font-weight: 700; color: var(--tinta); }
+.cita { margin: 32px 0 0; padding: 20px 0; border-top: 1.5px solid var(--tp); border-bottom: 1px solid var(--regla); display: flex; gap: 24px; align-items: baseline; }
+.cita .k { flex: none; width: 128px; }
+.cita .frase { flex: 1; font: 400 italic 30px/1.15 'Instrument Serif', Georgia, serif; text-wrap: balance; }
+.caja { margin-top: 28px; padding: 20px 24px; background: var(--suave); display: flex; gap: 24px; }
+.caja > .k { flex: none; width: 104px; }
+.caja .items { flex: 1; display: flex; flex-direction: column; gap: 8px; font: 400 15px/1.45 Archivo, sans-serif; }
+.caja.vertical { flex-direction: column; gap: 14px; }
+.caja.vertical > .k { width: auto; }
+.lectura .pasos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.lectura .paso { display: flex; gap: 12px; font: 400 14px/1.5 Archivo, sans-serif; }
+.marcador { flex: none; width: 22px; height: 22px; border-radius: 50%; background: var(--tp); color: var(--papel); display: flex; align-items: center; justify-content: center; font: 700 12px/1 'JetBrains Mono', monospace; }
+.marcador.pill { width: auto; padding: 0 7px; border-radius: 11px; }
+
+/* ---- Figuras ---- */
+figure { margin: 0; }
+.fig { margin-top: 22px; display: flex; flex-direction: column; gap: 10px; }
+.fig .marco { display: flex; flex-direction: column; }
+.fig--papel .marco { border-top: 1.5px solid var(--tp); padding-top: 14px; }
+.fig .titular { margin-top: 10px; font: 400 26px/1.1 'Instrument Serif', Georgia, serif; text-wrap: balance; }
+.fig--panel .titular.grande { font-size: 40px; line-height: 1; letter-spacing: -.015em; }
+.panel { background: var(--bg); color: var(--ink); padding: 26px 30px 18px; }
+.panel.compacto { padding: 20px 20px 14px; flex: 1; }
+.panel .k { color: var(--kicker); }
+.panel .nota { margin-top: 12px; font: 500 12px/1.4 'JetBrains Mono', monospace; }
+.fig--papel .nota { margin-top: 12px; font: 400 12px/1.4 'JetBrains Mono', monospace; color: var(--gris); }
+.panel .pie-fig { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; padding-top: 12px; border-top: 1.5px solid var(--rule); }
+.panel .pie-fig .x { width: 20px; height: 20px; font-size: 12px; }
+.panel .pie-fig .handle { font-size: 13px; }
+.grafico { margin-top: 18px; position: relative; }
+.grafico svg { display: block; overflow: visible; }
+.leyenda { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 14px; font: 600 14px/1 Archivo, sans-serif; }
+.leyenda span { display: flex; align-items: center; gap: 8px; }
+.leyenda i { display: block; width: 14px; height: 14px; }
+.leyenda i.linea { width: 28px; height: 3px; }
+figcaption, .figcap { display: flex; gap: 12px; font: 400 12px/1.45 'JetBrains Mono', monospace; }
+.figno { flex: none; font-weight: 700; color: var(--tinta); }
+.dos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 26px; }
+.dos > .fig { margin-top: 0; }
+.tarjeta-img { display: block; width: 100%; height: auto; }
+
+/* ---- Tablas ---- */
+table.t { width: 100%; border-collapse: collapse; font: 400 14px/1.3 Archivo, sans-serif; font-variant-numeric: tabular-nums; }
+table.t th { text-align: left; font: 500 12px/1.25 'JetBrains Mono', monospace; letter-spacing: .06em; text-transform: uppercase; padding: 0 0 8px; vertical-align: bottom; border-bottom: 1.5px solid var(--tp); }
+table.t td { padding: 5px 0; border-bottom: 1px solid var(--regla); }
+table.t tr:last-child td { border-bottom: 1.5px solid var(--tp); }
+table.t .num { text-align: right; font-family: 'JetBrains Mono', monospace; }
+table.t th.num { text-align: right; }
+table.t th + th, table.t td + td { padding-left: 16px; }
+table.t tr.dest td { background: var(--suave); font-weight: 700; }
+table.t tr.dest td:first-child { color: var(--tinta); padding-left: 8px; }
+table.t tr.dest td:last-child { padding-right: 8px; }
+table.t tr.total td { font-weight: 700; }
+table.t td.b { font-weight: 700; }
+.chip { display: inline-block; padding: 2px 8px; border-radius: 999px; background: var(--tinta); color: var(--papel); font: 500 12px/1.4 'JetBrains Mono', monospace; }
+.chip.borde { background: none; border: 1px solid var(--tinta); color: var(--tinta); padding: 1px 7px; }
+.chip.tachado { background: none; border: 1px dashed rgba(12,21,32,.5); color: var(--gris); text-decoration: line-through; padding: 1px 7px; }
+.notas-tabla { display: flex; flex-direction: column; gap: 6px; margin-top: 14px; font: 400 12px/1.45 'JetBrains Mono', monospace; color: rgba(12,21,32,.75); }
+.notas-tabla b { color: var(--tp); }
+
+/* ---- Rejillas de página ---- */
+.rejilla2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; }
+.rejilla3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.rejilla4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.celda { border-top: 1.5px solid var(--tp); padding-top: 14px; display: flex; flex-direction: column; gap: 10px; }
+.lista-reglas { display: flex; flex-direction: column; border-top: 1.5px solid var(--tp); }
+.lista-reglas > * { border-bottom: 1px solid var(--regla); }
+.lista-reglas > *:last-child { border-bottom: 1.5px solid var(--tp); }
+
+/* ---- Bandas de color (aperturas) ---- */
+.banda { background: var(--bg); color: var(--ink); }
+.sobre-color .regla-c { height: 1.5px; background: var(--rule); }
+.cifra-heroe { font: 400 228px/.8 'Instrument Serif', Georgia, serif; letter-spacing: -.03em; color: var(--a1); }
+[hidden] { display: none !important; }
+</style>
+</head>
+<body data-paleta="cielo">
+<main id="informe"></main>
+<script id="informe-json" type="application/json">{"meta": {"titulo": "Dengue 2026: el valle de un ciclo", "corrido": "Dengue 2026 · Informe de datos", "corto": "Dengue 2026", "pie": "Informe N.º 01 · Octubre 2026", "numero_largo": "Informe de datos · N.º 01", "fecha": "Octubre 2026", "handle": "@DerekUrizar", "paleta": "terracota", "numero": "01", "datos": ["hilos/2026-10-06-dengue-2026-caida-serotipos/datos.json"], "fuentes": ["MSPAS/DEGR. Situación epidemiológica de las arbovirosis en Guatemala 2026, hasta la SE 35.", "MSPAS/DEGR. Boletines de arbovirosis SE 53-2025 y SE 35-2026, con datos del Laboratorio Nacional de Salud.", "MSPAS/DEGR. Boletines de arbovirosis 2023 (SE 52) y 2024 (SE 52).", "OPS/OMS. Informe de situación del dengue en las Américas, SE 35 de 2026 (PLISA).", "Secretaría de Salud de Honduras (Sesal), vía La Prensa (Honduras)."], "_paleta_nombre": "Terracota"}, "paginas": [{"tipo": "portada", "kicker_izq": "Informe de datos · Salud", "kicker_der": "N.º 01 · Octubre 2026", "titulo": "Dengue 2026: el valle de un ciclo", "lead": "A la semana 35, Guatemala acumula 12,699 casos sospechosos de dengue: menos que en 2025, pero más que en 2020, 2021 y 2022. La caída es regional y otro serotipo vuelve a ganar terreno.", "cifra": {"id": "cau-c05", "valor": "−40%", "etiqueta": "Casos sospechosos · SE 1–35", "texto": "frente al mismo periodo de 2025, en la red del MSPAS"}, "fuentes": "MSPAS/DEGR, OPS/OMS, Sesal Honduras", "_n": 1, "_n_texto": "01", "_mostrar_numero": false, "_capitulos": [{"numero": "01", "titulo": "Qué tan baja es la baja"}, {"numero": "02", "titulo": "El cambio de serotipo"}, {"numero": "03", "titulo": "Dónde y a quién"}]}, {"tipo": "indice", "titulo": "Contenido", "leer": ["Las cifras van en la unidad de la fuente, sin redondeos que la fuente no hace. Cada figura lleva su fuente al pie.", "Los términos técnicos están en el glosario, página 18."], "_n": 2, "_n_texto": "02", "_mostrar_numero": true, "_entradas": [{"clase": "simple", "titulo": "Resumen", "pag": "03"}, {"clase": "simple", "titulo": "Cifras clave", "pag": "04"}, {"clase": "capitulo", "numero": "01", "titulo": "Qué tan baja es la baja", "desc": "Casos a la semana 35 y en el año completo, muertes confirmadas y la comparación con el resto de América.", "pag": "05"}, {"clase": "capitulo", "numero": "02", "titulo": "El cambio de serotipo", "desc": "Dos años de DENV-3 dominante, un DENV-1 que vuelve a subir y la cronología de las alertas.", "pag": "09"}, {"clase": "capitulo", "numero": "03", "titulo": "Dónde y a quién", "desc": "El mapa, la incidencia por área de salud, el corredor endémico y los casos por grupo de edad.", "pag": "12"}], "_anexos": [{"clase": "simple", "titulo": "En suma", "pag": "16"}, {"clase": "simple", "titulo": "Método y fuentes", "pag": "17"}, {"clase": "simple", "titulo": "Glosario", "pag": "18"}, {"clase": "simple", "titulo": "Anexo A · Serie completa", "pag": "19"}, {"clase": "simple", "titulo": "Anexo B · Tarjetas del hilo", "pag": "20"}], "_figuras": [{"no": "Fig. 1", "titulo": "Casos a la SE 35, 2018–2026", "pag": "06"}, {"no": "Fig. 2", "titulo": "Fallecidos confirmados, 2018–2024", "pag": "07"}, {"no": "Fig. 3", "titulo": "Variación por región de América", "pag": "07"}, {"no": "Fig. 4", "titulo": "Año completo y SE 35, 2018–2026", "pag": "08"}, {"no": "Fig. 5", "titulo": "Serotipos DENV-3 y DENV-1, 2014–2026", "pag": "10"}, {"no": "Fig. 6", "titulo": "Mapa de las áreas con más incidencia", "pag": "13"}, {"no": "Fig. 7", "titulo": "Incidencia por área de salud", "pag": "14"}, {"no": "Tabla 1", "titulo": "Corredor endémico, 2025 y 2026", "pag": "14"}, {"no": "Fig. 8", "titulo": "Casos por grupo de edad", "pag": "15"}, {"no": "Tabla A1", "titulo": "Serie anual completa, 2018–2026", "pag": "19"}, {"no": "Tabla A2", "titulo": "Variación por territorio", "pag": "19"}]}, {"tipo": "resumen", "id": "resumen", "indice": {"titulo": "Resumen"}, "tesis": "A la semana 35, Guatemala acumula 12,699 casos sospechosos de dengue en la red del MSPAS, 40% menos que en 2025 pero más que en 2020, 2021 y 2022. La caída es regional y coincide con dos años de DENV-3 dominante, mientras el DENV-1 sube de 3% a 19% de las muestras: *un valle del ciclo, no el fin del riesgo.*", "cifras": [{"id": "ser-c01", "kicker": "Casos · SE 1–35", "valor": "12,699", "texto": "casos sospechosos de dengue notificados por el MSPAS en 2026", "fuente": "MSPAS/DEGR"}, {"id": "cau-c05", "kicker": "Variación anual", "valor": "−40%", "texto": "frente a 2025; Centroamérica y México bajan lo mismo", "fuente": "MSPAS/DEGR, OPS/OMS"}, {"id": "cau-c02", "kicker": "DENV-1 · % de muestras", "valor": "3% → 19%", "texto": "entre las muestras serotipificadas, de 2025 a 2026", "fuente": "MSPAS/DEGR (LNS)"}, {"id": "ter-c01", "kicker": "Incidencia máxima", "valor": "649.5", "texto": "casos por 100,000 habitantes en Sacatepéquez", "fuente": "MSPAS/DEGR, datos MSPAS + IGSS"}], "no_afirma": ["Que la baja se deba al DENV-3: ni OPS ni MSPAS la atribuyen a eso.", "Cuántas muertes hubo en 2026: el MSPAS no las ha publicado.", "Qué pasará el próximo año: no hay una proyección oficial."], "_n": 3, "_n_texto": "03", "_mostrar_numero": true}, {"tipo": "tablero", "id": "cifras", "indice": {"titulo": "Cifras clave"}, "titulo": "Cifras clave", "subtitulo": "Cada cifra, con su serie. La barra en color es el dato más reciente.", "cifras": [{"kicker": "Casos sospechosos · SE 1–35", "valor": "12,699", "contexto": "en 2026", "fuente": "MSPAS/DEGR", "grafico": {"tipo": "chispa", "id": "ser-c01", "etiquetas": ["2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026"], "valores": [3826, 28810, 5213, 1885, 5364, 19754, 91767, 21252, 12699], "aria": "Casos a la semana 35, 2018 a 2026; 2026 destacado.", "etiquetasX": ["2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026"]}}, {"kicker": "Casos sospechosos · año completo", "valor": "28,473", "contexto": "en 2025", "fuente": "MSPAS/DEGR, hasta la SE 52/53", "grafico": {"tipo": "chispa", "id": "ser-c04", "etiquetas": ["2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025"], "valores": [7592, 50886, 6075, 2959, 8553, 73302, 141747, 28473], "aria": "Casos del año completo, 2018 a 2025; 2025 destacado.", "etiquetasX": ["2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025"]}}, {"kicker": "Fallecidos confirmados", "valor": "232", "contexto": "en 2024, el último año publicado", "fuente": "MSPAS/DEGR, boletines de arbovirosis", "grafico": {"tipo": "chispa", "id": "ser-c08", "etiquetas": ["2018", "2019", "2020", "2021", "2022", "2023", "2024"], "valores": [23, 77, 10, 6, 17, 118, 232], "aria": "Fallecidos confirmados, 2018 a 2024; 2024 destacado.", "etiquetasX": ["2018", "2019", "2020", "2021", "2022", "2023", "2024"]}}, {"kicker": "DENV-1 · % de muestras", "valor": "19%", "contexto": "en 2026, desde 3% en 2025", "fuente": "MSPAS/DEGR (LNS)", "grafico": {"tipo": "chispa", "id": "cau-c02", "etiquetas": ["2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026"], "valores": [28.0, 44.2, 14.2, 6.1, 8.3, 11.1, 22.5, 31.3, 32.5, 12.8, 4.4, 3, 19], "aria": "Porcentaje de DENV-1, 2014 a 2026; 2026 destacado.", "etiquetasX": ["2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026"]}}, {"kicker": "Áreas en zona de alerta", "valor": "10", "contexto": "de 29 a la SE 34; 8 al cierre de 2025", "fuente": "MSPAS/DEGR, corredor endémico", "grafico": {"tipo": "cuadros", "total": 29, "marcados": 10, "texto": "Un cuadro por área de salud (DDRISS)", "aria": "29 cuadros, uno por área de salud; 10 en color están en zona de alerta."}}, {"kicker": "Dengue grave · SE 1–35", "valor": "45", "contexto": "casos en 2026; 133 en todo 2025", "fuente": "MSPAS/DEGR, datos MSPAS + IGSS · periodos distintos", "grafico": {"tipo": "comparacion", "items": [{"nombre": "2026 · SE 35", "valor": 45, "destacar": true}, {"nombre": "2025 · año", "valor": 133}]}}], "_n": 4, "_n_texto": "04", "_mostrar_numero": true}, {"tipo": "capitulo", "id": "cap1", "variante": "banda", "numero": "01", "kicker": "Capítulo 01 · Casos", "titulo": "Qué tan baja es la baja", "descripcion": "Casos a la semana 35 y en el año completo, muertes confirmadas y la comparación con el resto de América.", "lead": "2026 queda lejos del pico de 2024, pero por encima de 2018, 2020, 2021 y 2022. Y casi toda América baja al mismo ritmo.", "bloques": [{"b": "texto", "capitular": true, "parrafos": ["En 2024, el año más alto de la serie que arranca en 2018, el MSPAS y el IGSS sumaron 188,585 casos de dengue y se confirmaron 232 fallecidos. Ese pico es la vara contra la que cualquier año siguiente parece pequeño.", "A la semana epidemiológica 35 de 2026, la red del MSPAS acumula 12,699 casos sospechosos: 40% menos que en el mismo periodo de 2025 (21,252) y cerca de una séptima parte de 2024 (91,767). Pero el año no es bajo en todo: supera a 2020 (5,213), 2021 (1,885) y 2022 (5,364).", "La baja tampoco es solo local. Según OPS/OMS, Centroamérica y México bajan 40% en el mismo periodo, y las Américas en conjunto, 57%."], "margen": [{"termino": "SE", "texto": "semana epidemiológica. Se compara el acumulado de las semanas 1 a 35 de cada año."}, {"termino": "Sospechoso", "texto": "caso notificado a la red del MSPAS; no todos se confirman por laboratorio."}]}], "_n": 5, "_n_texto": "05", "_mostrar_numero": true}, {"tipo": "cuerpo", "seccion": "01 · Casos", "bloques": [{"b": "titulo", "texto": "Un año intermedio, no un año tranquilo"}, {"b": "texto", "parrafos": ["Frente a su propia historia, 2026 queda muy por debajo de 2019 y 2024, por debajo de 2023 y 2025, y por encima de 2018, 2020, 2021 y 2022. Que baje 40% frente a 2025 no lo convierte en un año tranquilo: el punto de comparación es uno de los años altos."]}, {"b": "figura", "id": "casos-se35", "tipo": "panel", "kicker": "Dengue · casos sospechosos a la SE 35", "titular": ["2026 baja, pero supera", "a cuatro años de la serie"], "indice": "Casos a la SE 35, 2018–2026", "grafico": {"tipo": "barras_v", "id": "ser-c01", "etiquetas": ["2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026"], "valores": [3826, 28810, 5213, 1885, 5364, 19754, 91767, 21252, 12699], "destacar": -1, "nivel": 8, "aria": "Barras verticales: casos sospechosos de dengue acumulados a la semana 35, 2018 a 2026; 2026 destacado.", "etiquetasX": ["2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026"]}, "alto": 252, "nota": "Acumulado de las semanas 1 a 35 de cada año. La línea punteada marca el nivel de 2026.", "fuente": "MSPAS/DEGR, sala situacional de arbovirosis", "pie": "Casos sospechosos de dengue notificados por el MSPAS, acumulado a la SE 35, 2018–2026.", "_n": "Figura 1"}], "_n": 6, "_n_texto": "06", "_mostrar_numero": true}, {"tipo": "cuerpo", "seccion": "01 · Casos", "bloques": [{"b": "titulo", "texto": "El mismo pico, la misma caída"}, {"b": "texto", "parrafos": ["Los fallecidos confirmados repiten el pico de los casos: 232 en 2024, casi el doble que en 2023. Y la baja de 2026 tiene compañía: Guatemala cae al mismo ritmo que su subregión, y casi toda América baja con ella."]}, {"b": "figuras", "items": [{"id": "fallecidos", "tipo": "tarjeta", "plantilla": "barras-v", "kicker": "DENGUE · FALLECIDOS CONFIRMADOS POR AÑO", "titular": ["La epidemia de 2024", "dejó 232 muertes, el", "máximo desde 2018"], "indice": "Fallecidos confirmados, 2018–2024", "nota": "Año completo. El boletín de la semana 35 de 2026 no publica muertes; tampoco hay cifra oficial de cierre de 2025.", "fuente": "MSPAS/DEGR · boletines de arbovirosis 2018–2024", "datos": {"formato": {"prefijo": "", "sufijo": "", "decimales": 0, "miles": true, "escala": 1}, "etiquetas": ["2018", "2019", "2020", "2021", "2022", "2023", "2024"], "valores": [23, 77, 10, 6, 17, 118, 232], "destacar": -1, "rotular": "todas", "referencia": null, "periodos": null}, "alt": "Tarjeta de barras verticales con los fallecidos confirmados por dengue de 2018 a 2024; 2024, con 232, es el máximo.", "pie": "Fallecidos por dengue confirmados por año, 2018–2024.", "_n": "Figura 2", "_src": "figuras/fig_01.png"}, {"id": "regional", "tipo": "tarjeta", "plantilla": "divergente", "kicker": "DENGUE · CAMBIO % VS MISMO PERIODO 2025", "titular": ["La caída no es solo", "de Guatemala: casi", "todo el continente baja"], "indice": "Variación por región de América", "nota": "Casos sospechosos a la semana 35 de 2026; subregiones según OPS. Honduras: -44% a la semana 12 según la Secretaría de Salud.", "fuente": "MSPAS/DEGR · OPS SE-35 2026 · Sesal", "datos": {"formato": {"prefijo": "", "sufijo": "%", "decimales": 0, "miles": true, "escala": 1, "signo": true}, "items": [{"nombre": "Andina", "valor": -3}, {"nombre": "Guatemala", "valor": -40}, {"nombre": "Centroamérica y México", "valor": -40}, {"nombre": "Las Américas", "valor": -57}, {"nombre": "Caribe", "valor": -59}, {"nombre": "Cono Sur", "valor": -62}], "orden": "dado", "destacar": 1}, "alt": "Tarjeta de barras divergentes con la variación de casos a la semana 35 de 2026 frente a 2025 por región; Guatemala, −40%, destacada.", "pie": "Variación de casos sospechosos por región, SE 35 de 2026 frente a 2025.", "_n": "Figura 3", "_src": "figuras/fig_02.png"}]}, {"b": "cita", "etiqueta": "En una frase", "texto": "La caída de 2026 no es solo un fenómeno local."}], "_n": 7, "_n_texto": "07", "_mostrar_numero": true}, {"tipo": "apaisada", "seccion": "01 · Casos", "lateral": [{"b": "titulo", "texto": "La semana 35 no es el año"}, {"b": "texto", "parrafos": ["Hasta la semana 35 se acumula una parte del año, no todo. En 2024, 91,767 de los 141,747 casos sospechosos del MSPAS; en 2025, 21,252 de 28,473.", "El dato completo de 2026 se conocerá con el boletín de cierre del año."]}, {"b": "notas", "items": [{"termino": "Año completo", "texto": "hasta la SE 52 o 53, según el año."}, {"termino": "Lectura", "texto": "la barra clara es el año; la oscura, lo acumulado a la SE 35."}]}], "figura": {"id": "ano-completo", "tipo": "panel", "kicker": "Dengue · casos sospechosos por año", "titular": "Cuánto del año va a la semana 35", "indice": "Año completo y SE 35, 2018–2026", "leyenda": [{"texto": "Año completo", "estilo": "base"}, {"texto": "Hasta la SE 35", "estilo": "fuerte"}, {"texto": "2026, en curso", "estilo": "dest"}], "grafico": {"tipo": "columnas", "etiquetas": ["2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026"], "series": [{"nombre": "Año completo", "id": "ser-c04", "valores": [7592, 50886, 6075, 2959, 8553, 73302, 141747, 28473, null]}, {"nombre": "Hasta la SE 35", "id": "ser-c01", "estilo": "fuerte", "valores": [3826, 28810, 5213, 1885, 5364, 19754, 91767, 21252, 12699]}], "destacar": {"serie": 1, "i": 8}, "rotular": [[0, 1], [0, 5], [0, 6], [1, 6], [0, 7]], "aria": "Barras agrupadas: casos sospechosos del año completo y hasta la semana 35, 2018 a 2026.", "etiquetasX": ["2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026"]}, "alto": 326, "fuente": "MSPAS/DEGR, salas situacionales de arbovirosis", "pie": "Casos sospechosos notificados por el MSPAS, año completo y acumulado a la SE 35, 2018–2026.", "_n": "Figura 4"}, "_n": 8, "_n_texto": "08", "_mostrar_numero": true}, {"tipo": "capitulo", "id": "cap2", "variante": "destacado", "numero": "02", "kicker": "Capítulo 02 · Serotipos", "titulo": "El cambio de serotipo", "descripcion": "Dos años de DENV-3 dominante, un DENV-1 que vuelve a subir y la cronología de las alertas.", "lead": "El DENV-3 dominó 2024 y 2025 con más de 85% de las muestras. En 2026 baja a 74%, y otro serotipo, el DENV-1, vuelve a crecer. Según OPS, un serotipo deja inmunidad duradera solo contra sí mismo.", "dato": {"kicker": "DENV-1 · % de muestras serotipificadas", "antes": {"valor": "3%", "etiqueta": "2025 · año completo"}, "despues": {"valor": "19%", "etiqueta": "2026 · hasta la SE 35"}}, "fuente": "MSPAS/DEGR, boletines de arbovirosis (LNS)", "_n": 9, "_n_texto": "09", "_mostrar_numero": true}, {"tipo": "cuerpo", "seccion": "02 · Serotipos", "bloques": [{"b": "titulo", "texto": "El DENV-3 dominó; el DENV-1 vuelve"}, {"b": "texto", "parrafos": ["Entre 2015 y 2022, el DENV-3 nunca pasó de 14.1% de las muestras serotipificadas. En 2023 subió a 54.5% y en 2024 y 2025 rondó 86%. La baja de este año coincide con esos dos años de DENV-3 masivo; ni OPS ni MSPAS la atribuyen a eso."]}, {"b": "figura", "id": "serotipos", "tipo": "papel", "kicker": "Serotipos · % de muestras serotipificadas", "titular": "El DENV-1 pasa de 3% a 19% en un año", "indice": "Serotipos DENV-3 y DENV-1, 2014–2026", "leyenda": [{"texto": "DENV-1", "estilo": "dest", "forma": "linea"}, {"texto": "DENV-3", "estilo": "base", "forma": "linea"}], "grafico": {"tipo": "linea", "max": 100, "sufijo": "%", "etiquetas": ["2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026"], "series": [{"nombre": "DENV-3", "id": "cau-c01", "valores": [26.0, 6.3, 3.0, 0.6, 14.1, 6.7, 4.3, 4.3, 2.8, 54.5, 85.8, 86, 74]}, {"nombre": "DENV-1", "id": "cau-c02", "destacar": true, "valores": [28.0, 44.2, 14.2, 6.1, 8.3, 11.1, 22.5, 31.3, 32.5, 12.8, 4.4, 3, 19]}], "anotaciones": [{"serie": 1, "i": 11, "texto": "3%"}, {"serie": 0, "i": 9, "texto": "54.5%", "lado": "izq"}, {"serie": 1, "i": 1, "texto": "44.2%"}], "aria": "Líneas: porcentaje de muestras serotipificadas por serotipo, 2014 a 2026; DENV-1 destacado.", "etiquetasX": ["2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026"]}, "alto": 330, "fuente": "MSPAS/DEGR, boletines de arbovirosis, con datos del LNS", "pie": "Porcentaje de muestras de dengue serotipificadas por serotipo, 2014–2026 (2026 hasta la SE 35).", "_n": "Figura 5"}, {"b": "texto", "parrafos": ["El DENV-1, que llegó a 44.2% en 2015, cayó a 4.4% en 2024 y a 3% en 2025. En 2026 sube a 19%. Según OPS, la llegada de un serotipo distinto puede causar brotes aun después de una epidemia."], "margen": [{"termino": "N = 216", "texto": "muestras serotipificadas en 2026, hasta la SE 35."}]}], "_n": 10, "_n_texto": "10", "_mostrar_numero": true}, {"tipo": "cronologia", "id": "cronologia", "seccion": "02 · Serotipos", "titulo": "Cronología de un ciclo", "lead": "Del DENV-3 casi ausente al año récord, y de ahí al último corte publicado.", "eventos": [{"fecha": "2015–22", "sub": "ocho años", "texto": "El DENV-3 se mueve entre 0.6% y 14.1% de las muestras serotipificadas."}, {"fecha": "2023", "sub": "año completo", "texto": "El DENV-3 salta a 54.5% de las muestras. El MSPAS notifica 73,302 casos sospechosos."}, {"fecha": "2024", "sub": "el año récord", "destacar": true, "texto": "141,747 casos en la red del MSPAS; 188,585 sumando el IGSS. 232 fallecidos confirmados.", "detalle": "El DENV-3 llega a 85.8% de las muestras."}, {"fecha": "10 feb 2025", "sub": "OPS", "texto": "La OPS emite una alerta por DENV-3 que incluye a Guatemala."}, {"fecha": "2025", "sub": "año completo", "texto": "28,473 casos sospechosos. El DENV-3 sigue en 86%; el DENV-1 cae a 3%."}, {"fecha": "18 feb 2026", "sub": "OPS/OMS", "texto": "Actualización epidemiológica de dengue para las Américas."}, {"fecha": "SE 35, 2026", "sub": "último corte", "destacar": true, "texto": "12,699 casos, 40% menos que en 2025.", "detalle": "El DENV-3 baja a 74% y el DENV-1 sube a 19%."}, {"fecha": "[FECHA]", "sub": "próximo boletín", "pendiente": true, "texto": "Las semanas 36 a 38 aún no están publicadas."}], "fuente": "MSPAS/DEGR, OPS/OMS", "_n": 11, "_n_texto": "11", "_mostrar_numero": true}, {"tipo": "capitulo", "id": "cap3", "variante": "dividida", "numero": "03", "kicker": "Capítulo 03", "kicker2": "Territorio y edad", "titulo": "Dónde y a quién", "descripcion": "El mapa, la incidencia por área de salud, el corredor endémico y los casos por grupo de edad.", "lead": "La baja nacional esconde un mapa desigual: un área de salud del altiplano central encabeza la incidencia, y los menores de 15 años suman cerca de 4 de cada 10 casos.", "secciones": [{"texto": "El mapa de las áreas con más incidencia", "pag": "13"}, {"texto": "Incidencia por área y corredor endémico", "pag": "14"}, {"texto": "Casos por grupo de edad", "pag": "15"}], "_n": 12, "_n_texto": "12", "_mostrar_numero": true}, {"tipo": "cuerpo", "id": "mapa", "seccion": "03 · Dónde y a quién", "bloques": [{"b": "titulo", "texto": "Las ocho áreas con más incidencia, en el mapa"}, {"b": "texto", "parrafos": ["Las ocho áreas de salud caen en siete departamentos: Petén aporta dos. El mapa ubica; la comparación precisa está en la figura 7."]}, {"b": "figura", "id": "mapa-incidencia", "tipo": "papel", "kicker": "Incidencia · casos por 100,000 hab. · SE 1–35", "indice": "Mapa de las áreas con más incidencia", "grafico": {"tipo": "mapa", "ancho": 400, "marcados": ["GT03", "GT17", "GT11", "GT05", "GT22", "GT09", "GT20"], "marcadores": [{"id": "GT03", "n": "1"}, {"id": "GT17", "n": "2·3"}, {"id": "GT11", "n": "4"}, {"id": "GT05", "n": "5"}, {"id": "GT22", "n": "6"}, {"id": "GT09", "n": "7"}, {"id": "GT20", "n": "8"}], "aria": "Mapa de Guatemala por departamento: sombreados los siete que contienen alguna de las ocho áreas de salud con mayor incidencia."}, "lista": [{"n": "1", "nombre": "Sacatepéquez", "valor": "649.5", "destacar": true}, {"n": "2", "nombre": "Petén Norte", "valor": "471.1"}, {"n": "3", "nombre": "Petén Sur Occidental", "valor": "415.5"}, {"n": "4", "nombre": "Retalhuleu", "valor": "369.8"}, {"n": "5", "nombre": "Escuintla", "valor": "309.8"}, {"n": "6", "nombre": "Jutiapa", "valor": "218.7"}, {"n": "7", "nombre": "Quetzaltenango", "valor": "212.4"}, {"n": "8", "nombre": "Chiquimula", "valor": "175.7"}], "leyenda": [{"texto": "Contiene una de las ocho áreas", "estilo": "dest"}, {"texto": "Resto del país", "estilo": "base"}], "fuente": "MSPAS/DEGR, sala situacional de arbovirosis, SE 35", "pie": "El sombreado es del departamento; la cifra, del área de salud (DDRISS) de residencia, datos MSPAS + IGSS.", "_n": "Figura 6"}], "_n": 13, "_n_texto": "13", "_mostrar_numero": true}, {"tipo": "cuerpo", "id": "incidencia", "seccion": "03 · Dónde y a quién", "bloques": [{"b": "titulo", "texto": "Sacatepéquez, primero en incidencia"}, {"b": "texto", "parrafos": ["En Sacatepéquez, la incidencia equivale a cerca de 1 de cada 154 habitantes con dengue notificado en ocho meses. Le siguen las dos áreas de Petén."]}, {"b": "figura", "id": "incidencia", "tipo": "papel", "kicker": "Incidencia · casos por 100,000 hab. · SE 1–35", "titular": "Las 8 de 29 áreas de salud con mayor incidencia", "indice": "Incidencia por área de salud", "derivado": true, "grafico": {"tipo": "barras_h", "id": "ter-c01", "destacar": 0, "items": [{"nombre": "Sacatepéquez", "valor": 649.5}, {"nombre": "Petén Norte", "valor": 471.1}, {"nombre": "Petén Sur Occidental", "valor": 415.5}, {"nombre": "Retalhuleu", "valor": 369.8}, {"nombre": "Escuintla", "valor": 309.8}, {"nombre": "Jutiapa", "valor": 218.7}, {"nombre": "Quetzaltenango", "valor": 212.4}, {"nombre": "Chiquimula", "valor": 175.7}], "aria": "Barras horizontales: incidencia de dengue por 100,000 habitantes en 2026 a la semana 35; Sacatepéquez destacado."}, "fuente": "MSPAS/DEGR, sala situacional de arbovirosis, SE 35", "pie": "Incidencia acumulada por área de salud de residencia, datos MSPAS + IGSS. «1 de cada 154» es 100,000 ÷ 649.5.", "_n": "Figura 7"}, {"b": "texto", "parrafos": ["Menos casos no significa calma: la zona de alerta del corredor endémico tiene hoy dos áreas de salud más que al cierre de 2025."]}, {"b": "tabla", "id": "corredor", "titulo": "", "indice": "Corredor endémico, 2025 y 2026", "columnas": [{"t": "Zona del corredor"}, {"t": "Cierre 2025 · SE 53", "num": true}, {"t": "2026 · SE 34", "num": true}, {"t": "Cambio", "num": true}], "filas": [{"c": ["Brote", "5", "2", "−3"]}, {"c": ["Alerta", "8", "10", "+2"], "dest": true}, {"c": ["Seguridad", "11", "13", "+2"]}, {"c": ["Éxito", "0", "2", "+2"]}, {"c": ["Sin notificación", "5", "2", "−3"]}, {"c": ["Total de áreas", "29", "29", ""], "total": true}], "fuente": "MSPAS/DEGR", "pie": "Áreas de salud (DDRISS) según su zona en el corredor endémico de dengue.", "_n": "Tabla 1"}], "_n": 14, "_n_texto": "14", "_mostrar_numero": true}, {"tipo": "cuerpo", "id": "edades", "seccion": "03 · Dónde y a quién", "bloques": [{"b": "titulo", "texto": "Por año de edad, los escolares suman más"}, {"b": "texto", "parrafos": ["El grupo con más casos es el de 25 a 39 años, pero abarca 15 años de edad. Los menores de 15 suman 5,217 de los 12,699 casos de la red del MSPAS: cerca de 4 de cada 10."]}, {"b": "figura", "id": "edades", "tipo": "papel", "kicker": "Casos por grupo de edad · SE 1–35 de 2026", "titular": "Cuatro de cada diez casos, menores de 15 años", "indice": "Casos por grupo de edad", "derivado": true, "grafico": {"tipo": "barras_v", "id": "ter-c12", "etiquetas": ["<1", "1–4", "5–9", "10–14", "15–19", "20–24", "25–39", "40–49", "50–59", "60–64", "65–69", "70+"], "claves": ["Menores de 1 año", "1 a 4 años", "5 a 9 años", "10 a 14 años", "15 a 19 años", "20 a 24 años", "25 a 39 años", "40 a 49 años", "50 a 59 años", "60 a 64 años", "65 a 69 años", "70 años y más"], "valores": [367, 1128, 1930, 1792, 1444, 1191, 2830, 895, 548, 172, 150, 252], "destacar": 2, "banda": {"desde": 0, "hasta": 3, "texto": "Menores de 15 · 5,217"}, "marcadores": [{"i": 2, "n": 1}, {"i": 6, "n": 2, "lado": "derecha"}], "aria": "Barras verticales: casos de dengue por grupo de edad, red del MSPAS, 2026 a la semana 35; 5 a 9 años destacado y banda sobre los menores de 15.", "etiquetasX": ["<1", "1–4", "5–9", "10–14", "15–19", "20–24", "25–39", "40–49", "50–59", "60–64", "65–69", "70+"]}, "alto": 296, "fuente": "MSPAS/DEGR, sala situacional de arbovirosis", "pie": "Casos de dengue por grupo de edad, red del MSPAS, 2026 hasta la SE 35.", "_n": "Figura 8"}, {"b": "lectura", "titulo": "Cómo leer esta figura", "items": [{"n": 1, "texto": "De 5 a 9 años: 1,930 casos en un grupo de cinco años de edad, cerca de 386 por año."}, {"n": 2, "texto": "De 25 a 39 años: la barra más alta, pero reparte 2,830 casos en quince años, cerca de 189 por año."}], "nota": "Casos por año de edad: cálculo propio, casos del grupo ÷ años que abarca."}], "_n": 15, "_n_texto": "15", "_mostrar_numero": true}, {"tipo": "conclusiones", "id": "conclusiones", "indice": {"titulo": "En suma", "clase": "anexo"}, "titulo": "En suma", "hallazgos": [{"titulo": "El dengue bajó.", "texto": "A la semana 35 hay 40% menos casos sospechosos que en 2025.", "ref": "Fig. 1"}, {"titulo": "No es un año tranquilo.", "texto": "Supera a 2018, 2020, 2021 y 2022, y la zona de alerta tiene dos áreas de salud más que al cierre de 2025.", "ref": "Fig. 1 · Tabla 1"}, {"titulo": "La caída es regional.", "texto": "Centroamérica y México bajan lo mismo que Guatemala; las Américas, 57%.", "ref": "Fig. 3"}, {"titulo": "Otro serotipo gana terreno.", "texto": "El DENV-1 pasa de 3% a 19% de las muestras serotipificadas.", "ref": "Fig. 5"}], "cierre": "Sin muertes de 2026 ni curva semanal publicadas, no se puede decir que el riesgo pasó.", "no_afirma": ["Que la caída se deba a la inmunidad que dejó el DENV-3: es una coincidencia temporal.", "Que 2027 vaya a traer un repunte: no hay proyección oficial.", "Cuántas muertes lleva 2026: el MSPAS no las ha publicado.", "Que las acciones locales no hayan tenido efecto: la comparación regional no lo mide."], "limites": ["El último corte publicado es la semana 35; no hay cortes posteriores.", "El corredor compara el cierre de 2025 (SE 53) con la semana 34 de 2026.", "Honduras se reporta a la semana 12 y vía prensa; el resto, a la 35.", "Casos y edades son solo MSPAS; la incidencia por área integra MSPAS e IGSS."], "_n": 16, "_n_texto": "16", "_mostrar_numero": true}, {"tipo": "metodo", "id": "metodo", "indice": {"titulo": "Método y fuentes", "clase": "anexo"}, "cifras": [{"id": "ser-c01", "concepto": "Casos sospechosos a la SE 35, 2026", "valor": "12,699", "aparece": "Fig. 1 · Resumen"}, {"id": "cau-c05", "concepto": "Variación frente a la SE 35 de 2025", "valor": "−40%", "aparece": "Portada · Cap. 01"}, {"id": "cau-c07", "concepto": "Variación en las Américas, SE 35", "valor": "−57%", "aparece": "Cap. 01"}, {"id": "ser-c08", "concepto": "Fallecidos confirmados, 2024", "valor": "232", "aparece": "Fig. 2 · Tablero"}, {"id": "cau-c02", "concepto": "DENV-1, % de muestras serotipificadas, 2026", "valor": "19%", "aparece": "Fig. 5 · Resumen"}, {"id": "ter-c01", "concepto": "Incidencia en Sacatepéquez, por 100,000 hab.", "valor": "649.5", "aparece": "Fig. 7 · Resumen"}], "nota": "En las seis cifras, la segunda fuente no es independiente de la primera; el informe lo declara.", "_n": 17, "_n_texto": "17", "_mostrar_numero": true, "_cifras": [{"concepto": "Casos sospechosos a la SE 35, 2026", "valor": "12,699", "veredicto": "verificada", "aparece": "Fig. 1 · Resumen"}, {"concepto": "Variación frente a la SE 35 de 2025", "valor": "−40%", "veredicto": "verificada", "aparece": "Portada · Cap. 01"}, {"concepto": "Variación en las Américas, SE 35", "valor": "−57%", "veredicto": "verificada", "aparece": "Cap. 01"}, {"concepto": "Fallecidos confirmados, 2024", "valor": "232", "veredicto": "verificada", "aparece": "Fig. 2 · Tablero"}, {"concepto": "DENV-1, % de muestras serotipificadas, 2026", "valor": "19%", "veredicto": "verificada", "aparece": "Fig. 5 · Resumen"}, {"concepto": "Incidencia en Sacatepéquez, por 100,000 hab.", "valor": "649.5", "veredicto": "verificada", "aparece": "Fig. 7 · Resumen"}], "_fuentes": ["MSPAS/DEGR. Situación epidemiológica de las arbovirosis en Guatemala 2026, hasta la SE 35.", "MSPAS/DEGR. Boletines de arbovirosis SE 53-2025 y SE 35-2026, con datos del Laboratorio Nacional de Salud.", "MSPAS/DEGR. Boletines de arbovirosis 2023 (SE 52) y 2024 (SE 52).", "OPS/OMS. Informe de situación del dengue en las Américas, SE 35 de 2026 (PLISA).", "Secretaría de Salud de Honduras (Sesal), vía La Prensa (Honduras)."]}, {"tipo": "glosario", "id": "glosario", "indice": {"titulo": "Glosario", "clase": "anexo"}, "corte": 7, "terminos": [{"t": "Caso sospechoso", "d": "Caso notificado a la red de salud por síntomas compatibles con dengue. No todos se confirman por laboratorio."}, {"t": "Corredor endémico", "d": "Compara los casos de cada semana con lo esperado según años anteriores. Clasifica cada área en éxito, seguridad, alerta o brote, de menos a más casos."}, {"t": "DDRISS", "d": "Dirección Departamental de Redes Integradas de Servicios de Salud: el área de salud del MSPAS. El informe usa 29."}, {"t": "Dengue grave", "d": "Forma de la enfermedad con complicaciones, según la clasificación clínica de los casos."}, {"t": "Incidencia acumulada", "d": "Casos por cada 100,000 habitantes desde la semana 1 hasta el corte. Permite comparar áreas de distinto tamaño."}, {"t": "Muestra serotipificada", "d": "Muestra positiva en la que el laboratorio identificó el serotipo. Los porcentajes de serotipo se calculan sobre ellas."}, {"t": "Semana epidemiológica", "d": "SE. Unidad de tiempo de la vigilancia. Un año tiene 52 o 53; se comparan acumulados a la misma semana."}, {"t": "Serotipo", "d": "Cada una de las cuatro variantes del virus del dengue, DENV-1 a DENV-4. Según OPS, la infección deja inmunidad duradera solo contra el mismo serotipo."}, {"t": "Veredicto", "d": "Resultado de verificar una cifra con una segunda fuente: verificada, ajustada o no confirmada. Solo las dos primeras aparecen aquí."}], "siglas": [{"s": "IGSS", "d": "Instituto Guatemalteco de Seguridad Social"}, {"s": "LNS", "d": "Laboratorio Nacional de Salud"}, {"s": "MSPAS", "d": "Ministerio de Salud Pública y Asistencia Social"}, {"s": "OPS/OMS", "d": "Organización Panamericana de la Salud / Organización Mundial de la Salud"}, {"s": "PLISA", "d": "Plataforma de Información en Salud para las Américas, de la OPS"}, {"s": "Sesal", "d": "Secretaría de Salud de Honduras"}], "_n": 18, "_n_texto": "18", "_mostrar_numero": true}, {"tipo": "anexo", "id": "anexo-a", "indice": {"titulo": "Anexo A · Serie completa", "clase": "anexo"}, "seccion": "Anexo A", "titulo": "Serie completa", "lead": "Todas las cifras anuales del informe en una tabla, en la unidad de la fuente.", "bloques": [{"b": "tabla", "id": "serie", "numero": "A1", "indice": "Serie anual completa, 2018–2026", "columnas": [{"t": "Año", "ancho": 52}, {"t": "Casos\nSE 35", "num": true}, {"t": "Incid.\nSE 35", "num": true}, {"t": "Casos\naño", "num": true}, {"t": "Falle-\ncidos", "num": true}, {"t": "DENV-3\n%", "num": true}, {"t": "DENV-1\n%", "num": true}], "filas": [{"c": ["2018", "3,826", "22.1", "7,592", "23", "14.1", "8.3"], "b": [0]}, {"c": ["2019", "28,810", "163.1", "50,886", "77", "6.7", "11.1"], "b": [0]}, {"c": ["2020", "5,213", "30.9", "6,075", "10", "4.3", "22.5"], "b": [0]}, {"c": ["2021", "1,885", "11.0", "2,959", "6", "4.3", "31.3"], "b": [0]}, {"c": ["2022", "5,364", "30.9", "8,553", "17", "2.8", "32.5"], "b": [0, 6]}, {"c": ["2023", "19,754", "112.2", "73,302", "118", "54.5", "12.8"], "b": [0]}, {"c": ["2024", "91,767", "514.3", "141,747", "232", "85.8", "4.4"], "b": [0, 1, 2, 3, 4]}, {"c": ["2025", "21,252", "117.5", "28,473", "— a", "86", "3"], "b": [0, 5]}, {"c": ["2026", "12,699", "69.3", "— b", "— a", "74", "19"], "dest": true}], "fuente": "MSPAS/DEGR, boletines y salas situacionales de arbovirosis", "pie": "Dengue en la red del MSPAS, 2018–2026. En negrita, el máximo de cada columna. Incidencia: casos por 100,000 habitantes.", "notas": [{"m": "a", "texto": "La serie de fallecidos confirmados llega a 2024; 2026 no se ha publicado."}, {"m": "b", "texto": "2026 está en curso; el año completo se conocerá con el boletín de cierre."}, {"m": "c", "texto": "Serotipos: % de las muestras serotipificadas por el LNS; 2026 hasta la SE 35 (N = 216)."}], "_n": "Tabla A1"}, {"b": "tabla", "id": "variacion", "numero": "A2", "titulo": "Variación a la SE 35, 2026 frente a 2025", "indice": "Variación por territorio", "columnas": [{"t": "Territorio"}, {"t": "Variación", "num": true}, {"t": "Fuente"}], "filas": [{"c": ["Guatemala", "−40%", "MSPAS/DEGR"], "dest": true}, {"c": ["Centroamérica y México", "−40%", "OPS/OMS"]}, {"c": ["Las Américas", "−57%", "OPS/OMS"]}, {"c": ["Honduras, a la SE 12", "−44%", "Sesal, vía La Prensa"]}, {"c": ["Cono Sur", "−62%", "OPS/OMS"]}], "fuente": "MSPAS/DEGR, OPS/OMS, Sesal", "pie": "Casos sospechosos acumulados frente al mismo periodo de 2025.", "_n": "Tabla A2"}], "_n": 19, "_n_texto": "19", "_mostrar_numero": true}, {"tipo": "tarjetas", "id": "tarjetas", "indice": {"titulo": "Anexo B · Tarjetas del hilo", "clase": "anexo"}, "seccion": "Anexo B", "titulo": "Las tarjetas del hilo", "lead": "El informe y el hilo comparten datos y diseño. Estas son las ocho imágenes publicadas en X, en orden; el tuit 9 cierra sin imagen.", "items": [{"desde": "hilos/2026-10-06-dengue-2026-caida-serotipos/tuit_1.png", "n": "1/9", "beat": "gancho", "titulo": "Casos a la SE 35, 2018–2026", "_src": "figuras/tarjeta_01.png"}, {"desde": "hilos/2026-10-06-dengue-2026-caida-serotipos/tuit_2.png", "n": "2/9", "beat": "contexto", "titulo": "Fallecidos confirmados por año", "_src": "figuras/tarjeta_02.png"}, {"desde": "hilos/2026-10-06-dengue-2026-caida-serotipos/tuit_3.png", "n": "3/9", "beat": "contexto", "titulo": "DENV-3 entre las muestras", "_src": "figuras/tarjeta_03.png"}, {"desde": "hilos/2026-10-06-dengue-2026-caida-serotipos/tuit_4.png", "n": "4/9", "beat": "contexto", "titulo": "Variación por región", "_src": "figuras/tarjeta_04.png"}, {"desde": "hilos/2026-10-06-dengue-2026-caida-serotipos/tuit_5.png", "n": "5/9", "beat": "contexto", "titulo": "Corredor endémico por zona", "_src": "figuras/tarjeta_05.png"}, {"desde": "hilos/2026-10-06-dengue-2026-caida-serotipos/tuit_6.png", "n": "6/9", "beat": "giro", "titulo": "Serotipos, 2014–2026", "_src": "figuras/tarjeta_06.png"}, {"desde": "hilos/2026-10-06-dengue-2026-caida-serotipos/tuit_7.png", "n": "7/9", "beat": "impacto", "titulo": "Incidencia por área de salud", "_src": "figuras/tarjeta_07.png"}, {"desde": "hilos/2026-10-06-dengue-2026-caida-serotipos/tuit_8.png", "n": "8/9", "beat": "impacto", "titulo": "Casos por grupo de edad", "_src": "figuras/tarjeta_08.png"}], "tuit": {"gancho": "Podría pensarse que el dengue ya quedó atrás en Guatemala.", "texto": "Este año va 40% abajo del pasado a la misma semana epidemiológica. Los datos dicen otra cosa: se parece más al valle de un ciclo que a un final.", "publicado": "Publicado en X por @DerekUrizar · [FECHA Y ENLACE]"}, "_n": 20, "_n_texto": "20", "_mostrar_numero": true}, {"tipo": "contraportada", "lema": "Datos de Guatemala, con la fuente a la vista.", "ficha": [["Tema", "Dengue 2026"], ["Corte de datos", "SE 35 de 2026"], ["Fuentes", "MSPAS/DEGR, OPS/OMS, Sesal"], ["Paleta", "Terracota"], ["Cifras", "Solo verificadas o ajustadas"], ["Hilo en X", "[ENLACE AL HILO]"]], "_n": 21, "_n_texto": "21", "_mostrar_numero": false}]}</script>
+<script>
+const H = (() => {
+  const MENOS = "−";
+  const assert = (cond, msg) => { if (!cond) throw new Error("DATA: " + msg); };
+
+  // Formato es-GT sin toLocaleString (la locale del headless no es fiable):
+  // miles con coma, decimal con punto, menos tipográfico, prefijo/sufijo pegados.
+  const num = (v, f = {}) => {
+    assert(typeof v === "number" && isFinite(v), "valor no numérico: " + JSON.stringify(v));
+    const esc = f.escala || 1, d = f.decimales == null ? 0 : f.decimales;
+    const n = v / esc, neg = n < 0;
+    const [ent, dec] = Math.abs(n).toFixed(d).split(".");
+    const con = f.miles === false ? ent : ent.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    // f.signo: «+» delante de los positivos (cambios con signo); el cero no lleva signo.
+    const mas = f.signo && !neg && Number(ent + "." + (dec || "0")) > 0 ? "+" : "";
+    return (neg ? MENOS : mas) + (f.prefijo || "") + con + (dec ? "." + dec : "") + (f.sufijo || "");
+  };
+  const pct = (v, d = 0) => (v < 0 ? MENOS : "") + Math.abs(v).toFixed(d) + "%";
+  // Decimales que de verdad necesita una lista de valores (para ticks de eje):
+  // 0 si todos son enteros, si no los del formato.
+  const decimalesDe = (vals, max = 2) => {
+    for (let d = 0; d <= max; d++) if (vals.every((v) => Math.abs(v * Math.pow(10, d) - Math.round(v * Math.pow(10, d))) < 1e-9)) return d;
+    return max;
+  };
+
+  const css = (k) => getComputedStyle(document.body).getPropertyValue("--" + k).trim();
+  const color = { get bg() { return css("bg"); }, get ink() { return css("ink"); },
+                  get a1() { return css("a1"); }, get a2() { return css("a2"); }, get a3() { return css("a3"); },
+                  inkA(a) { return "rgba(" + css("ink-rgb") + "," + a + ")"; } };
+
+  const NS = "http://www.w3.org/2000/svg";
+  const svgEl = (tag, attrs = {}, padre = null) => {
+    const e = document.createElementNS(NS, tag);
+    for (const [k, v] of Object.entries(attrs)) if (v !== null && v !== undefined) e.setAttribute(k, v);
+    if (padre) padre.appendChild(e);
+    return e;
+  };
+  // EL único <svg> de la tarjeta, dentro de #grafico, viewBox 1:1 con px CSS.
+  const lienzo = (w, h) => {
+    const g = document.getElementById("grafico");
+    g.innerHTML = ""; g.style.width = w + "px"; g.style.height = h + "px";
+    return svgEl("svg", { viewBox: "0 0 " + w + " " + h, width: w, height: h }, g);
+  };
+  // <text> SVG. `fill` va como style: una clase .t-* con fill ganaría al atributo.
+  const texto = (svg, x, y, str, attrs = {}) => {
+    const a = Object.assign({ x, y }, attrs);
+    if (a.fill) { a.style = (a.style ? a.style + ";" : "") + "fill:" + a.fill; delete a.fill; }
+    const t = svgEl("text", a, svg);
+    t.textContent = str; return t;
+  };
+  // Leyenda construida desde render() (cuando los colores salen de las series).
+  const leyenda = (items) => {
+    const ley = document.getElementById("leyenda"); ley.innerHTML = "";
+    for (const it of items) {
+      const item = el("div", "item", ley);
+      const sw = el("span", "sw" + (it.forma ? " " + it.forma : ""), item);
+      sw.style.background = it.color || color.ink;
+      el("span", null, item, esc(it.nombre));
+    }
+    ley.hidden = !items.length;
+  };
+  const el = (tag, cls, padre, html) => {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls; if (html != null) e.innerHTML = html;
+    if (padre) padre.appendChild(e); return e;
+  };
+
+  const escala = (dom, rango) => {
+    const k = dom[1] - dom[0] === 0 ? 0 : (rango[1] - rango[0]) / (dom[1] - dom[0]);
+    return (v) => rango[0] + (v - dom[0]) * k;
+  };
+  // Cortes redondos: 1, 2, 2.5, 5 × 10^n.
+  const ticks = (min, max, n = 4) => {
+    if (max === min) return [min];
+    const bruto = (max - min) / Math.max(1, n);
+    const mag = Math.pow(10, Math.floor(Math.log10(bruto)));
+    const paso = [1, 2, 2.5, 5, 10].map((m) => m * mag).find((s) => s >= bruto) || 10 * mag;
+    const out = [];
+    for (let v = Math.ceil(min / paso) * paso; v <= max + paso * 1e-9; v += paso) out.push(Math.round(v / paso) * paso);
+    return out;
+  };
+  // Dominio "bonito" que contiene [min,max] (y el 0 si se pide).
+  const dominio = (vals, desdeCero = true) => {
+    let min = Math.min(...vals), max = Math.max(...vals);
+    if (desdeCero) { min = Math.min(0, min); max = Math.max(0, max); }
+    if (max === min) max = min + 1;
+    const t = ticks(min, max, 4);
+    const paso = t.length > 1 ? t[1] - t[0] : (max - min);
+    return [Math.min(min, t[0]), Math.max(max, t[t.length - 1] + (t[t.length - 1] < max ? paso : 0))];
+  };
+  // Empuje 1-D de rótulos para que no se solapen (muta y devuelve el array).
+  const antiSolape = (items, o = {}) => {
+    const gap = o.minGap || 26, lim0 = o.min ?? -Infinity, lim1 = o.max ?? Infinity;
+    const orden = items.slice().sort((a, b) => a.y - b.y);
+    for (let k = 1; k < orden.length; k++) if (orden[k].y - orden[k - 1].y < gap) orden[k].y = orden[k - 1].y + gap;
+    const ult = orden[orden.length - 1];
+    if (ult && ult.y > lim1) { ult.y = lim1; for (let k = orden.length - 2; k >= 0; k--) if (orden[k + 1].y - orden[k].y < gap) orden[k].y = orden[k + 1].y - gap; }
+    if (orden.length && orden[0].y < lim0) orden[0].y = lim0;
+    return items;
+  };
+  // Ancho de un texto con una fuente dada (para decidir rótulos).
+  const medir = (str, font) => {
+    const c = medir._c || (medir._c = document.createElement("canvas").getContext("2d"));
+    c.font = font; return c.measureText(str).width;
+  };
+  // Alto disponible para #grafico entre la cabecera y el pie (margin-top:auto
+  // absorbe el hueco). Devuelve min(max, libre) y falla si no hay sitio.
+  const espacio = (max = 520, min = 240) => {
+    const g = document.getElementById("grafico");
+    g.innerHTML = ""; g.style.height = "0px";
+    let prev = g.previousElementSibling;
+    while (prev && prev.hidden) prev = prev.previousElementSibling;
+    const top = g.getBoundingClientRect().top, prevB = prev ? prev.getBoundingClientRect().bottom : 76;
+    const libre = Math.floor(top - prevB - 28);
+    assert(libre >= min, "no queda espacio para el gráfico (" + libre + "px): acorta el titular, la nota o la leyenda");
+    return Math.min(max, libre);
+  };
+
+  // ---- Rampa secuencial (mapa, calor) ----
+  // H.rampa(n) → n colores hex de la clase MÁS BAJA a la MÁS ALTA. La rampa va del
+  // fondo hacia la tinta (no hacia a1: en maíz a1 apenas contrasta con el fondo, y
+  // a1 se reserva para el destacado, que así siempre se ve encima de la rampa):
+  //   · se interpola en RGB lineal (sRGB linealizado con gamma 2.4 y vuelta) para
+  //     que la luminancia avance sin grises sucios ni bandas;
+  //   · los escalones se reparten uniformes en L* (CIELAB), no en luminancia: con
+  //     tinta oscura (cielo, maíz, atitlán) los pasos en luminancia lineal se
+  //     apelotonan en lo oscuro y solo el último salta;
+  //   · el escalón más bajo se aleja del fondo hasta 1.5:1 (WCAG) para que lea
+  //     como zona pintada y no como fondo; el más alto es la tinta.
+  // Resultado: monótona en luminancia en las 8 paletas (hacia oscuro con tinta
+  // oscura, hacia claro con tinta clara) y cada color contrasta ≥ 1.5:1 con --bg.
+  const RAMPA_MIN_CONTRASTE = 1.5;
+  const rgbDe = (hex) => { const h = String(hex).trim().replace("#", ""); const s = h.length === 3 ? h.split("").map((c) => c + c).join("") : h; return [0, 2, 4].map((i) => parseInt(s.slice(i, i + 2), 16)); };
+  const linealizar = (c) => c.map((v) => { v /= 255; return v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
+  const hexDe = (c) => "#" + c.map((v) => { v = Math.max(0, Math.min(1, v)); v = v <= 0.0031308 ? v * 12.92 : 1.055 * Math.pow(v, 1 / 2.4) - 0.055; return Math.round(v * 255).toString(16).padStart(2, "0"); }).join("");
+  const luminancia = (lin) => 0.2126 * lin[0] + 0.7152 * lin[1] + 0.0722 * lin[2];
+  const Lstar = (y) => y <= 216 / 24389 ? y * 24389 / 27 : 116 * Math.cbrt(y) - 16;
+  const Yde = (L) => L <= 8 ? L * 27 / 24389 : Math.pow((L + 16) / 116, 3);
+  const rampa = (n = 5) => {
+    n = Math.max(2, Math.min(9, Math.round(n)));
+    const lb = linealizar(rgbDe(color.bg)), li = linealizar(rgbDe(color.ink));
+    const yb = luminancia(lb), yi = luminancia(li), haciaClaro = yi > yb;
+    let y0 = haciaClaro ? RAMPA_MIN_CONTRASTE * (yb + 0.05) - 0.05 : (yb + 0.05) / RAMPA_MIN_CONTRASTE - 0.05;
+    y0 = haciaClaro ? Math.min(y0, yi) : Math.max(y0, yi);
+    const L0 = Lstar(y0), L1 = Lstar(yi), out = [];
+    for (let k = 0; k < n; k++) {
+      const y = Yde(L0 + (L1 - L0) * k / (n - 1));
+      const t = yi === yb ? 1 : Math.max(0, Math.min(1, (y - yb) / (yi - yb)));
+      out.push(hexDe(lb.map((v, i) => v + (li[i] - v) * t)));
+    }
+    return out;
+  };
+  // Color de clase de un valor: [min,max] partido en n intervalos iguales (el máximo cae en la última clase).
+  const rampaColor = (v, dom, n = 5) => {
+    assert(typeof v === "number" && isFinite(v), "rampaColor: valor no numérico: " + JSON.stringify(v));
+    const cs = rampa(n), [a, b] = dom;
+    if (!(b > a)) return cs[cs.length - 1];
+    return cs[Math.min(cs.length - 1, Math.max(0, Math.floor((v - a) / (b - a) * cs.length)))];
+  };
+
+  // ---- Mezclas de color (apilada, treemap, pirámide) ----
+  // H.mezcla(a, b, t) → hex en RGB lineal: t=0 es `a`, t=1 es `b`. Sirve para dar
+  // tonos sólidos de la tinta sobre el fondo (mismo color en el SVG y en la leyenda).
+  const mezcla = (a, b, t) => { const la = linealizar(rgbDe(a)), lb = linealizar(rgbDe(b)); return hexDe(la.map((v, i) => v + (lb[i] - v) * t)); };
+  const contraste = (a, b) => { const ya = luminancia(linealizar(rgbDe(a))), yb = luminancia(linealizar(rgbDe(b))); return (Math.max(ya, yb) + 0.05) / (Math.min(ya, yb) + 0.05); };
+  // Color de texto legible sobre un relleno: el que más contraste entre la tinta, el fondo
+  // y los dos neutros del sistema (papel y noche, presentes en todas las paletas).
+  const textoSobre = (relleno) => [color.ink, color.bg, "#F6F2E8", "#0C1520"].reduce((m, c) => (contraste(relleno, c) > contraste(relleno, m) ? c : m));
+
+  // ---- Periodos (linea, barras-v): bandas alternas con nombre arriba ----
+  // P = [{desde, hasta, nombre}] (índices sobre las etiquetas, en orden y sin solaparse, ≤ 4);
+  // bordes(i) → [xIzq, xDer] del hueco que ocupa la marca i. Dibuja en `svg` entre yTop e yBot
+  // y escribe el nombre centrado en yNombre. Llamar ANTES de dibujar las marcas.
+  const validarPeriodos = (P, n) => {
+    if (P == null) return [];
+    assert(Array.isArray(P) && P.length <= 4, "periodos: como máximo 4");
+    let prev = -1;
+    for (const p of P) {
+      assert(p && typeof p.nombre === "string" && p.nombre.trim(), "cada periodo necesita nombre");
+      assert(Number.isInteger(p.desde) && Number.isInteger(p.hasta) && p.desde >= 0 && p.hasta < n && p.desde <= p.hasta, "periodo «" + p.nombre + "»: desde/hasta deben ser índices 0.." + (n - 1) + " con desde ≤ hasta");
+      assert(p.desde > prev, "periodos en orden y sin solaparse («" + p.nombre + "»)");
+      prev = p.hasta;
+    }
+    return P;
+  };
+  const periodos = (svg, P, bordes, yTop, yBot, yNombre) => {
+    P.forEach((p, k) => {
+      const xa = bordes(p.desde)[0], xb = bordes(p.hasta)[1];
+      if (k % 2 === 0) svgEl("rect", { x: xa, y: yTop, width: xb - xa, height: yBot - yTop, fill: color.inkA(.09) }, svg);
+      else svgEl("line", { x1: xa, x2: xa, y1: yTop, y2: yBot, stroke: color.inkA(.25), "stroke-width": 1.5, "stroke-dasharray": "4 6" }, svg);
+      const w = medir(p.nombre, "500 17px 'JetBrains Mono'");
+      assert(w <= xb - xa - 8, "periodo «" + p.nombre + "» no cabe en su banda (" + Math.round(w) + "px > " + Math.round(xb - xa - 8) + "): acórtalo");
+      texto(svg, (xa + xb) / 2, yNombre, p.nombre, { class: "t-eje", "text-anchor": "middle" });
+    });
+  };
+
+  // ---- Cabecera común: kicker, titular, leyenda, nota, pie ----
+  const cabecera = (D) => {
+    assert(typeof D.kicker === "string" && D.kicker.trim(), "kicker vacío");
+    assert(Array.isArray(D.titular) && D.titular.length >= 1 && D.titular.length <= 3, "titular debe ser un array de 1 a 3 líneas");
+    assert(typeof D.fuente === "string" && D.fuente.trim(), "fuente vacía (el pie es obligatorio)");
+    assert(!/^fuente:/i.test(D.fuente.trim()), "fuente: no antepongas 'Fuente:', lo pone la plantilla");
+    assert(!/https?:\/\//i.test(JSON.stringify(D)), "no van URLs dentro de la tarjeta");
+    document.getElementById("kicker").textContent = D.kicker;
+    document.getElementById("titular").innerHTML = D.titular.map(esc).join("<br>");
+    const nota = document.getElementById("nota");
+    if (D.nota && D.nota.trim()) { nota.textContent = D.nota; nota.hidden = false; } else nota.hidden = true;
+    document.getElementById("fuente").textContent = "Fuente: " + D.fuente;
+    document.getElementById("handle").textContent = D.handle || "@DerekUrizar";
+    const ley = document.getElementById("leyenda"); ley.innerHTML = "";
+    if (Array.isArray(D.leyenda) && D.leyenda.length) {
+      for (const it of D.leyenda) {
+        const item = el("div", "item", ley);
+        const sw = el("span", "sw" + (it.forma ? " " + it.forma : ""), item);
+        sw.style.background = it.color || color.ink;
+        el("span", null, item, esc(it.nombre));
+      }
+      ley.hidden = false;
+    } else ley.hidden = true;
+  };
+  // Nota automática de la plantilla (redondeo, agrupación): se suma a la del guion.
+  // Llamar ANTES de H.espacio, que mide el hueco con la nota ya puesta.
+  const anotar = (t) => {
+    const nota = document.getElementById("nota");
+    const prev = nota.hidden ? "" : nota.textContent.trim();
+    nota.textContent = prev ? prev + " " + t : t; nota.hidden = false;
+  };
+  const esc = (s) => String(s).replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+
+  // ---- Utilidades de rotulado compartidas ----
+  // Formato de eje: los decimales que de verdad necesitan los ticks (0 si todos son enteros).
+  const formatoEje = (f, tk) => Object.assign({}, f || {}, { decimales: decimalesDe(tk.map((t) => t / ((f && f.escala) || 1)), (f && f.decimales) || 0) });
+  // Primera fuente de la lista en la que `str` cabe en maxW (null si ninguna): para encoger nombres 23→21→19→17.
+  const encajar = (str, fuentes, maxW) => fuentes.find((fn) => medir(str, fn) <= maxW) || null;
+  // Halo del color del fondo para texto que pisa barras o líneas (paint-order).
+  const halo = () => "paint-order:stroke;stroke:" + color.bg + ";stroke-width:6px;stroke-linejoin:round";
+
+  // ---- Verificación final: lo que ningún check de píxeles ve a tiempo ----
+  const verificar = (D) => {
+    const util = 920;
+    for (const linea of D.titular) {
+      const w = medir(linea, "400 88px 'Instrument Serif'") * 0.985; // letter-spacing -.015em
+      assert(w <= util, "titular no cabe en una línea (" + Math.round(w) + "px > " + util + "): «" + linea + "»");
+    }
+    assert(medir(D.kicker.toUpperCase(), "500 20px 'JetBrains Mono'") * 1.16 <= util, "kicker demasiado largo");
+    const g = document.getElementById("grafico");
+    const r = g.getBoundingClientRect();
+    assert(r.height >= 200, "#grafico mide " + Math.round(r.height) + "px de alto (< 200): el gráfico no se maquetó");
+    assert(g.children.length > 0, "#grafico está vacío");
+    const tarjeta = document.querySelector(".tarjeta").getBoundingClientRect();
+    const pie = document.querySelector(".pie").getBoundingClientRect();
+    assert(pie.bottom <= 1080 + 0.5, "el contenido desborda la tarjeta (pie en y=" + Math.round(pie.bottom) + ")");
+    void tarjeta;
+  };
+
+  const fuentesListas = () => Promise.all([
+    document.fonts.load("400 88px 'Instrument Serif'"),
+    document.fonts.load("500 20px 'JetBrains Mono'"),
+    document.fonts.load("700 22px 'JetBrains Mono'"),
+    document.fonts.load("600 24px Archivo"),
+    document.fonts.load("800 19px Archivo"),
+  ]);
+
+
+  // ---- Aritmética compartida con el informe (investigacion/graficos/): la tarjeta y el documento
+  // calculan EL MISMO número y el guionista nunca lo escribe (píldora, «N de cada 100», acumulados,
+  // mayoría, cortes del mapa, squarified, asientos del hemiciclo). Son funciones puras: nada del DOM. ----
+  // Departamentos: nombres oficiales (INE). scripts/build_mapa.py --check los coteja con el svg.
+  const NOMBRES = {
+    GT01: "Guatemala", GT02: "El Progreso", GT03: "Sacatepéquez", GT04: "Chimaltenango",
+    GT05: "Escuintla", GT06: "Santa Rosa", GT07: "Sololá", GT08: "Totonicapán",
+    GT09: "Quetzaltenango", GT10: "Suchitepéquez", GT11: "Retalhuleu", GT12: "San Marcos",
+    GT13: "Huehuetenango", GT14: "Quiché", GT15: "Baja Verapaz", GT16: "Alta Verapaz",
+    GT17: "Petén", GT18: "Izabal", GT19: "Zacapa", GT20: "Chiquimula",
+    GT21: "Jalapa", GT22: "Jutiapa"
+  };
+  const normDepto = (s) => String(s).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z]/g, "");
+  const DEPTO_POR_NOMBRE = {};
+  Object.keys(NOMBRES).forEach((id) => { DEPTO_POR_NOMBRE[normDepto(NOMBRES[id])] = id; });
+  // H.idDepto("Petén") → "GT17"; acepta el id o el nombre oficial; falla si no es un departamento.
+  const idDepto = (k) => {
+    const s = String(k).trim().toUpperCase();
+    if (NOMBRES[s]) return s;
+    const id = DEPTO_POR_NOMBRE[normDepto(k)];
+    assert(id, "«" + k + "» no es un departamento: usa GT01–GT22 o el nombre oficial");
+    return id;
+  };
+  // H.cortes(valores, {cortes, clases, metodo, redondear}) → límites internos de las clases (mapa, calor):
+  // cortes dados (2–5), o cuantiles con `clases` (`metodo: "iguales"` = intervalos iguales). Con `redondear`
+  // (por defecto) los cortes se llevan a pasos «bonitos» (1·2·5·10 × 10ⁿ) sin dejar clases vacías:
+  //   1) cuantiles redondeados al paso más grueso que conserve ≥ k−2 cortes distintos;
+  //   2) si se apelotonan, intervalos iguales al mismo paso, salvo que una clase acapare > 50 %;
+  //   3) datos sesgados: cada cuantil al paso del hueco mínimo entre cortes.
+  const cortes = (valores, o = {}) => {
+    const v = valores.slice().sort((a, b) => a - b), min = v[0], max = v[v.length - 1];
+    let cs;
+    if (Array.isArray(o.cortes) && o.cortes.length) {
+      cs = o.cortes.slice().sort((a, b) => a - b);
+      assert(cs.length >= 2 && cs.length <= 5 && cs.every((c) => typeof c === "number" && isFinite(c)), "cortes: de 2 a 5 límites numéricos");
+    } else {
+      const k = Math.max(3, Math.min(6, Math.round(o.clases || 5)));
+      cs = [];
+      for (let i = 1; i < k; i++) {
+        if (o.metodo === "iguales") { cs.push(min + (max - min) * i / k); continue; }
+        const p = (v.length - 1) * i / k, lo = Math.floor(p), t = p - lo;
+        cs.push(v[lo] + (v[Math.min(lo + 1, v.length - 1)] - v[lo]) * t);
+      }
+      if (o.redondear !== false && max > min) {
+        const enRango = (a) => a.filter((c, i) => c > min && c < max && (i === 0 || c > a[i - 1]));
+        const redondea = (a, paso) => enRango(a.map((c) => +(Math.round(c / paso) * paso).toFixed(10)));
+        const conteo = (a) => { const n = new Array(a.length + 1).fill(0); v.forEach((x) => { let j = 0; while (j < a.length && x >= a[j]) j++; n[j]++; }); return n; };
+        const nice = (x, ms) => { const e = Math.pow(10, Math.floor(Math.log10(x))); return ms.map((m) => m * e); };
+        const iguales = Array.from({ length: k - 1 }, (_, i) => min + (max - min) * (i + 1) / k);
+        let mejor = null;
+        for (const paso of nice((max - min) / k, [10, 5, 2, 1])) {
+          const q = redondea(cs, paso), g = redondea(iguales, paso);
+          if (q.length >= k - 2) { mejor = q; break; }
+          if (g.length >= k - 1 && Math.max(...conteo(g)) / v.length <= 0.5) { mejor = g; break; }
+        }
+        if (!mejor) {
+          const huecos = cs.slice(1).map((c, i) => c - cs[i]).filter((h) => h > 0);
+          if (huecos.length) { const h = Math.min(...huecos); mejor = redondea(cs, nice(h, [5, 2, 1]).find((p) => p <= h)); }
+        }
+        if (mejor && mejor.length >= 2) { const n = conteo(mejor); cs = mejor.filter((c, i) => n[i + 1] > 0); }
+      }
+      cs = cs.filter((c, i) => c > min && c < max && (i === 0 || c > cs[i - 1]));  // empates → menos clases
+    }
+    return cs;
+  };
+  // Índice de clase de un valor según los cortes (0 = la más baja).
+  const claseDe = (v, cs) => { let k = 0; while (k < cs.length && v >= cs[k]) k++; return k; };
+  // H.pildora(antes, despues, "factor"|"porcentaje"|"ninguna", decimales) → "×1.77" | "+77%" | null.
+  const pildora = (antes, despues, modo = "factor", dec) => {
+    if (modo === "ninguna") return null;
+    assert(antes !== 0, "la píldora no se puede calcular con antes.valor = 0");
+    const d = dec == null ? 2 : dec, factor = despues / antes;
+    if (modo === "factor") return "×" + factor.toFixed(d);
+    const p = (factor - 1) * 100;
+    return (p < 0 ? MENOS : "+") + Math.abs(p).toFixed(d > 1 ? 0 : d) + "%";
+  };
+  // «N de cada 100» (o de cada 1,000 si no llega a 1). Por debajo de 10 lleva un decimal:
+  // redondear 1.7 a «2» contradiría «menos de 2».
+  const deCada = (v, ref) => {
+    const corto = (x) => num(x, { decimales: x < 10 && Math.abs(x - Math.round(x)) >= 0.05 ? 1 : 0 });
+    const p = (v / ref) * 100;
+    if (p >= 1 || p === 0) return corto(p) + " de cada 100";
+    if (p >= 0.1) return corto(p * 10) + " de cada 1,000";
+    return "menos de 1 de cada 1,000";
+  };
+  // Etiqueta de la etapa i de un embudo según `porcentaje`: inicio | anterior | ninguno.
+  const etiquetaEmbudo = (E, i, modo = "inicio") => {
+    if (!i || modo === "ninguno") return "";
+    if (modo === "inicio") return deCada(E[i].valor, E[0].valor);
+    const prev = E[i - 1].valor;
+    return prev ? pct((E[i].valor / prev) * 100, E[i].valor / prev < 0.1 ? 1 : 0) + " de la anterior" : "";
+  };
+  // Curules para la mayoría: simple ⌊t/2⌋+1 · calificada ⌈2t/3⌉.
+  const mayoria = (total, modo) => (modo === "simple" ? Math.floor(total / 2) + 1 : Math.ceil(2 * total / 3));
+  // Filas de una cascada: acumulados calculados; fin.valor, si va, solo se coteja (magnitud) contra lo
+  // calculado. Devuelve { filas[{tipo, i, nombre, desde, hasta, rotulo}], acc, calculado } (calculado =
+  // fin sin valor: el gráfico lo anota).
+  const cascada = (ini, pasos, fin, formato) => {
+    const f = (v, extra) => num(v, Object.assign({}, formato || {}, extra || {}));
+    let acc = ini ? ini.valor : 0;
+    const filas = [];
+    if (ini) filas.push({ tipo: "inicio", nombre: ini.nombre, desde: 0, hasta: ini.valor, rotulo: f(ini.valor) });
+    pasos.forEach((p, i) => {
+      const delta = p.efecto === "suma" ? p.valor : -p.valor, desde = acc;
+      acc += delta;
+      filas.push({ tipo: "paso", i, nombre: p.nombre, desde, hasta: acc, rotulo: f(delta, { signo: true }) });
+    });
+    let calculado = false;
+    if (fin) {
+      if (typeof fin.valor === "number") {
+        const tol = Math.max(0.5 * Math.pow(10, -((formato && formato.decimales) || 0)), Math.abs(fin.valor) * 0.001);
+        assert(Math.abs(Math.abs(acc) - Math.abs(fin.valor)) <= tol, "los pasos no cuadran con fin.valor (" + f(fin.valor) + "): calculado " + f(acc));
+      } else calculado = true;
+      filas.push({ tipo: "fin", nombre: fin.nombre, desde: 0, hasta: acc, rotulo: f(acc) });
+    }
+    return { filas, acc, calculado };
+  };
+  // Squarified (Bruls et al.): rects [{i, x, y, w, h}] de `partes` (ordenadas de mayor a menor) en W×alto.
+  const squarify = (partes, total, W, alto) => {
+    const area = W * alto, rects = [];
+    let caja = { x: 0, y: 0, w: W, h: alto }, fila = [];
+    const resto = partes.map((p, i) => ({ i, a: (p.valor / total) * area }));
+    const peor = (f, lado) => { const s = f.reduce((t, r) => t + r.a, 0); return Math.max(...f.map((r) => Math.max((lado * lado * r.a) / (s * s), (s * s) / (lado * lado * r.a)))); };
+    const colocar = (f) => {
+      const s = f.reduce((t, r) => t + r.a, 0), horiz = caja.w >= caja.h;
+      const grosor = s / (horiz ? caja.h : caja.w);
+      let off = 0;
+      for (const r of f) {
+        const largo = r.a / grosor;
+        rects.push(horiz ? { i: r.i, x: caja.x, y: caja.y + off, w: grosor, h: largo } : { i: r.i, x: caja.x + off, y: caja.y, w: largo, h: grosor });
+        off += largo;
+      }
+      caja = horiz ? { x: caja.x + grosor, y: caja.y, w: caja.w - grosor, h: caja.h } : { x: caja.x, y: caja.y + grosor, w: caja.w, h: caja.h - grosor };
+    };
+    while (resto.length) {
+      const lado = Math.min(caja.w, caja.h), r = resto[0];
+      if (!fila.length || peor(fila.concat(r), lado) <= peor(fila, lado)) { fila.push(r); resto.shift(); }
+      else { colocar(fila); fila = []; }
+    }
+    if (fila.length) colocar(fila);
+    return rects;
+  };
+  // Asientos de un hemiciclo: filas concéntricas entre R y r0 con paso s (de sMax a sMin) hasta que
+  // quepa `total`; reparto por fila proporcional a la capacidad (restos mayores); asientos ordenados
+  // de izquierda a derecha (ángulo π → 0). null si no caben.
+  const asientos = (total, R, r0, cx, cy, sMax = 40, sMin = 18) => {
+    let s = sMax, filas = [];
+    const capacidad = (paso) => { const out = []; const k = Math.floor((R - r0) / paso) + 1; for (let i = 0; i < k; i++) { const r = R - i * paso; out.push({ r, cap: Math.floor(Math.PI * r / paso) }); } return out; };
+    for (; s >= sMin; s--) { filas = capacidad(s); if (filas.reduce((t, x) => t + x.cap, 0) >= total) break; }
+    const capTotal = filas.reduce((t, x) => t + x.cap, 0);
+    if (capTotal < total) return null;
+    const cuota = filas.map((x) => total * x.cap / capTotal);
+    const porFila = cuota.map((q) => Math.floor(q));
+    let resto = total - porFila.reduce((t, x) => t + x, 0);
+    cuota.map((q, i) => ({ i, fr: q - Math.floor(q) })).sort((a, b) => b.fr - a.fr).forEach((o) => { if (resto > 0 && porFila[o.i] < filas[o.i].cap) { porFila[o.i]++; resto--; } });
+    for (let i = 0; resto > 0 && i < filas.length; i++) { const d = Math.min(resto, filas[i].cap - porFila[i]); porFila[i] += d; resto -= d; }
+    const pts = [];
+    filas.forEach((x, i) => { for (let j = 0; j < porFila[i]; j++) { const th = Math.PI - Math.PI * (j + 0.5) / porFila[i]; pts.push({ th, x: cx + x.r * Math.cos(th), y: cy - x.r * Math.sin(th) }); } });
+    pts.sort((a, b) => b.th - a.th);
+    return { s, asientos: pts, capTotal };
+  };
+
+  return { assert, num, pct, decimalesDe, color, svgEl, lienzo, texto, leyenda, el, escala, ticks, dominio, antiSolape, medir, espacio, rampa, rampaColor, mezcla, contraste, textoSobre, validarPeriodos, periodos, anotar, cabecera, verificar, fuentesListas, esc, formatoEje, encajar, halo, MENOS,
+           NOMBRES, idDepto, cortes, claseDe, pildora, deCada, etiquetaEmbudo, mayoria, cascada, squarify, asientos };
+})();
+</script>
+<script>
+// =====================================================================
+// I · utilidades del documento (texto seguro, piezas comunes, gráficos diferidos)
+// =====================================================================
+const I = (() => {
+  const esc = (s) => String(s == null ? "" : s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  // Texto con énfasis mínimo: **negrita** y *cursiva serif*. Todo lo demás se escapa.
+  const md = (s) => esc(s).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(/\*(.+?)\*/g, '<em class="serif">$1</em>');
+  const lista = (v) => (v == null ? [] : Array.isArray(v) ? v : [v]);
+  const trabajos = [];
+  // Reserva un contenedor para un gráfico que se dibuja tras insertar la página en el DOM.
+  const grafico = (spec, esquema, alto) => {
+    const id = "g" + trabajos.length;
+    trabajos.push({ id, spec, esquema, alto });
+    return '<div class="grafico" id="' + id + '"></div>';
+  };
+  const dibujar = () => {
+    for (const t of trabajos) {
+      const el = document.getElementById(t.id);
+      const fn = G[t.spec.tipo];
+      H.assert(typeof fn === "function", "gráfico desconocido: " + t.spec.tipo);
+      fn(el, t.spec, { ancho: el.clientWidth, alto: t.alto || t.spec.alto, col: esquema(t.esquema) });
+    }
+  };
+  // Colores de un gráfico según dónde vive: sobre papel (acento = papel_barra) o en un panel (tarjeta).
+  const esquema = (tipo) => tipo === "panel"
+    ? { texto: H.color.ink, base: H.color.inkA(0.45), dest: H.color.a1, linea: H.color.ink, suave: H.color.inkA(0.12), sobre: H.color.bg }
+    : { texto: "#0C1520", base: "rgba(12,21,32,.2)", dest: getComputedStyle(document.body).getPropertyValue("--barra").trim(), linea: "#0C1520", suave: "rgba(12,21,32,.12)", sobre: "#F6F2E8", tinta: getComputedStyle(document.body).getPropertyValue("--tinta").trim() };
+  return { esc, md, lista, grafico, dibujar, trabajos };
+})();
+const G = {};
+const PAGINAS = {};
+</script>
+<script>
+const GEOMETRIA = {"viewBox": "40 40 860 900", "deptos": {"GT22": {"n": "Jutiapa", "d": "M498.5 941.9l0.8-3 1.4-5.5 0-3.9-0.1-1.1-0.4-1.1-2.7-5-2.1-7.7-0.7-1.8-0.7-1-1-0.6-0.5-0.3-0.3-0.4-0.3-0.5-1.5-9.1-0.4-0.9-1.1-1.1-0.7-0.9-0.7-1.6-0.1-0.8-0.1-1.2 0.3-1.2 0.3-0.8 1.3-1 3.9-1.1 6 3.5 4.1 3.5 1.1 0.4 8.4 2.1 2.2 0.8 0.9 0 0.7-0.2 3.3-2.3 3.4-6.3 1.3-2.5 0.7-0.5 1.3-0.7 2.4-0.7 2.9-0.6 0.5-0.2 1.2-1.3 3.7-5.4 1.2-2.4 0.6-1.9 0.2-1.3 0-0.7-0.9-8.7 0.3-4.9-1.1-2.2-5.2-5.1-6.6-5.5-1.5-1.5-0.8-0.7-1.3-0.5-9.9-2.8-3.1-2.2 7.6-19 2.9-2.5 0.4-0.4 7.5-1.5 2.4 0.2 1 0.5 1.1 0.4 0.5-0.3 0.2-0.6-0.7-4.2 3-0.4 3.9-12.2 13.6-0.1 5.1-6.8 0.8-1 0.7-0.3 0.8-0.3 1.5-0.3 0.9-0.1 0.9 0.1 0.6 0.1 0.6 0.2 0.6 0.3 9.6 7.6 1.1-7.6 1.8-2.7 4.4-3 4.1-2.7 3.5-2.4 4.2-1.1 1.5 0.3 0.8 0.6 0.7 0.9 1.4 1.5 2.4 1.8 0.4 0.2 13.4-6.5 4.6-2.7 0.1-0.7 0-2.2-1.6-4.9 8.6 0.9 2.7 1 0.4 0.4 1.5 1.6 1.2 1.8 1.1 2 2.4 3.6 0.8 0.5 0.7 0.3 16.1-0.7 1.4 0.5 3 3.3 0.6 1.5-0.1 1-0.2 1.2-1 3-0.7 1.4-0.6 2.2-0.6 2.5-0.1 1.2 0 0.8 0.2 0.3 0.2 0.5 2.8 3.3 0.1 0.1-1.5 0.6-5.3 6.4-2.9 2.1-0.6-4.1-2.3-2.3-3.2-0.3-3 2.3-1.4 3.5 0.9 2.4 1.6 2.2 0.6 2.6-1.4 2.2-2.1 1.5-1.3 1.9 1.3 3.1 4.5 0.6 1.5 0.7 1.2 1.1 0.7 0.9 1.2 2.3 0.3 1.1 0.4 3.4 0.4 1.4 0.9 0.9 2.7 1.4 0.7 0.9 0 3.4-1.3 1.4-23 5.5-5.7 2.6-5.4 4.2-4.3 4.7-9.1 16.2-0.6 1.8 0.2 1.7 1.4 3.2 0.1 0.4 0 1.2-3.2 1.7-3.1-1.3-5.6-4.3-3.9-1.1-3.1 0.3-9.5 3.6-2.3 1.5-4.6 4.6-20.5 14.4-3.2 2.8-1.8 3.1-1.4 3.2-2 3.1-2.7 2.1-5.8 3.2-2.6 2.6-1.7 3.2-1.1 3.5-0.6 3.6 0.1 3.4 3.5 14.3-30.5-12.6z"}, "GT20": {"n": "Chiquimula", "d": "M657.9 801.9l-0.1-0.1-2.8-3.3-0.2-0.5-0.2-0.3 0-0.8 0.1-1.2 0.6-2.5 0.6-2.2 0.7-1.4 1-3 0.2-1.2 0.1-1-0.6-1.5-3-3.3-1.4-0.5-16.1 0.7-0.7-0.3-0.8-0.5-2.4-3.6-1.1-2-1.2-1.8-1.5-1.6-0.4-0.4-2.7-1-8.6-0.9-2.3 0.1-0.8-0.1 0.8-4.8 7.7-21.4-0.9-2.6-0.7-1.8-0.3-1.2 0.1-1.4 0.1-0.6 0.2-0.6 0.4-2.7 0.1-0.7-0.5-2.6-0.8-2.3-1.1-1.8-2.8-0.8-10.1 0.5 5-9.2 0.9-3.6-0.6-5.4 0.2-1.2 4.9-4.6 3.7-2.8 2.5 0.3 7.3 3.7 6.9 3.4 3.1 0.7 11.5 0.2 3.2-0.7 13-10.5 4.1-1.2 1.8 0.1 4.7 1.4 2.9 2 3.5 0 10.6-3.6 3.3 1.1 0.9 1.1 1.4 1 1.6-0.1 2.5-0.8 1.3-1.1 1-1.2 1.1-1.6 0.9-0.9 1.4-1 4.8-2.4 1.6-0.5 1.1-0.1 0.6 0.2 0.4 0.3 0.4 0.3 0.3 0.4 0.3 0.5 0.9 1.5 0.6 1.6 0.3 0.5 0.2 0.5 0.3 0.5 0.7 1.5 0 0.2-2 2.9-5.3 4.6-1.7 2.6-0.2 4.2 1 3.1 1.9 2.8 4.3 5.3 2 3.3 4 9.8 2.4 3 1.9 1.8 0.9 1.4 0.4 0.5 0.4 3.8-0.5 1.7-2.3 2.5-0.8 1.4 0.9 11.2-0.1 3.9-1 3.7-2.5 2.4-2.5 0.2-5.4-1.9-2.6-0.5-3.6 0.5-1.7 1.1-1 1.7-1.9 2.4-6.7 5.8-3 3.3-2.2 3.8-1.7 1.9-4.8 1.2-2.2 1.5-1.4 2.9-0.3 3.5 0.4 6.8-6.2-4.5-0.2 0.5-1.1 1.7-0.3-4.3-2.2 0.9-4.9 5-3.3 0.7-2.4-0.9-2.5-1.3-3.4-0.4-2.3 1z"}, "GT17": {"n": "Petén", "d": "M713.6 472.7l-0.1-0.1-0.2-0.1-1.1-0.9-5-0.7-19.7 0.4-2.5 2.5-1.3 3.7-0.4 1.5-0.3 0.7-0.4 0.8-0.8 0.8-2.5 1.5-6.5 1.6-2.5 1.2-1.7-0.1-3.7-2-4.5 0.9-5.7 2.6-0.3 0.1-0.1-0.3-0.5-11.5-0.2-0.6-0.9-0.4-1.4-0.1-3 0.2-1.3 0.2-0.9 0.4-0.4 0.3-0.5 0.3-0.6 0.2-0.6 0.1-0.8 0-13.3-1.7-1.5 0-2.5 2.1-0.5 0.3-0.5 0.2-1.2 0.3-2.9-0.2-1-0.3-1.2-0.6-4.4-3.1-3.4-2.9-0.6-0.3-5.1-2.4-0.6-0.2-0.6 0-0.8 0.6-1.2 0.6-0.6 0.1-1.9-0.1-0.6 0-0.6 0.2-0.4 0.3-0.3 0.4-0.9 1.3-0.3 0.3-0.2 0.2-0.4 0.2-1.2 0.3-7.2 0.4-3.3-0.5-0.9 0-0.8 0.1-0.6 0.1-0.7-0.2-0.8-0.7-1-2-0.3-1.1-0.6-1.3-2.8-3.8-0.7-1.4-0.6-0.9-0.6-0.3-1.2 0.2-2-0.2-3.7-2.6-1 1-0.5 0.2-2.4-0.5-3.7-2.8 0.6-1.5-0.1-0.5-0.4-0.3-0.6-0.4-0.3-0.6 0-0.1 0.1-0.1 0.1-0.4 0.2-0.5-0.1-0.6-0.3-0.4-0.4-0.3-1.6-0.7-0.5-0.1-0.3 0.1-0.1 0.7 0.5 1.7 0 0.4 0 0.3 0 0.1-0.1 0.1-0.4 0.2-1.7 0.4-0.6 0.3-0.7 0.1-0.5-0.1-0.8-1-0.3-0.1-0.6 0-1.2 0.3-0.8-0.2-0.6-0.7-0.2-0.8-0.5-0.6-1-0.2-2.3 0.3-1 0.6-0.5 0.5-0.2 0.5-0.1 0.3-0.4 0.3-1.4-0.2-36.4-11.7-43.7-6.7-5.8 0.6 0.8-1.2 1.5-3.1 0.6-1.9-1.2 0.5-0.6 0.2-0.4 0.2-0.7 0.8-1.6 0-0.9-3.8 5.2-4.4-2.7-2.6 0-1.4 4.7-1.9-1.4-2.3-6.3-3.5-0.8-4.3 1.5-3 2.7-2 2.5-1.3-2.9-1.1-2.1-1.7-0.4-2.2 2.5-2.7 0.9 0.9 0.7 0.4 2.7 0.3-0.8-1.1-1.3-2.5-0.8-1.2 1 0.1 0.3-0.3 0-0.6 0.2-0.6 1.3 0.9 1.7 0.5 1.4-0.6 0-2.3-1.4 0.5-3.1-1.1-2.1-1.6 1.5-0.9 3.9-1.2 3.2-3.1 1.2-3.6-1.8-2.9-1.4 0 0 1.7-1.5 0 0.6-3.2 2-1.1 2.9 0.2 3.3 0.9-2.5-4.2-0.3-1.2 0-3-0.4-3.2-1.3-0.3-1.9 0.9-2.4 0.3-1.2-0.5-1.6-1.1-2.2-1-6.8-0.8-0.5-1.3 0.3-1.9-1.2-2.5-1.2-1.2-2.1-1.5-2.4-0.7-5.1 2.5-1.3-2-1-4.7-2.1 0-5.5 1.6-1.2 0.6-1.2-0.7-3.1-0.6-3.4-0.2-2.6 0.8 1.1-2.1 1.9-1.6 1.5-1.7-0.2-2.4-2.4-1.5-3.3-0.2-1.9-0.8 1.8-3.4-0.8-3.6 1.4-3.8 0.7-3.2-2.9-1.8-0.6 1.5-0.7 0.8-1.2 0.3-1.7 0.4 0-1.4 2.8-5.3-3-8-14.4-21-3.1-2.5-7.7-3.9-3.2-2.6 0.8-2.7 0-1.5-3-1.7-2 1.7-2.5 0-14.7-4.6-4-2.3-6.2-6.3-4.4-2.2 3.4-3.7-0.5-1.8-2.9-0.5-3.8 0-0.3 1 0.8 2 0.2 2.1-2.1 0.9-1.2-0.6-2.6-3-1.3-1-8.2-2.9-2.5-2.3-1-4.6-1.2-2.4-7.5-9.2-0.9-2-1.1-4.2-1.1-1.4-2.3-0.5-5.1 0.6-2.2-0.9-7.6-8.4-2-3.1-0.9-2.2-1.1-4-0.9-1.6-1.9-1.1-4.4-1.2-0.9-1.4-0.4-3.5-1.2-4-1.9-3.6-2.3-2-5.9-0.3-5.7 0.9-4.3-0.7-1.8-5.4-3.3-1.8-6.6-1.3-5-2.3 0.9-3.6 1.1-0.2 0.5-0.1 94 0.7 0.1-61.7 0.1-61.8 1.8-1.9 4.4-1.2 9.2 0 47.1 0 47.1 0 47 0.1 47.1 0.1 47.1 0 47 0 47.1 0.1 47.1 0 0.9 48.6 1.2 62.2 0.3 63.9-3.6 58-3.9 62.8-1.9 23.1-3.3 46-5.5 51.5-0.4 10.8z"}, "GT12": {"n": "San Marcos", "d": "M99.1 573.3l1.3 4.6 3.7 4.7 3.2 1.2 0.5 3.3 2.1 23 2.4 1.9 11 0.5 0.5-0.7 7.3-8.4 2.9-1.9 7-0.6 6.5-4 3.6-2.3 1.4-0.5 1.5-0.1 1.8 0.9 7.3 4.6 4.6 0.3 11.6-3.3 3.3-0.1 0.2 0.9 1 3 3.1 5.5 3.5 4.9 4 4.3 4.2 3.6 2.1 1.5 2.2 2.1 1.1 2.9-1 4.2-1.4 1.4-7.4 6.1-3.9 4.2-4.1 6-2 6.6 2.6 6.2 4 3.4 0.9 3.6-1.3 9.5-0.8 2.2-1.8 2.4-6.3 6.1-1.6 0.8-1.7 1-0.3 0.6-0.3 0.9 0.2 1.6-0.4 2.1-1.9 2.7-1.4 8.3-1.7 2.9-0.3 0.5-5.8 12.3-0.2 0.7-0.5 0.8-0.8 0.8-2.8 2.1-1 1.1-0.5 0.8-2.8 5.1-2.1 1.3-1.9 0.8-2.1 0.2-6-0.4-13.5-1.4-18.8 5.4-4.6 0.9-2.5 1.3-5.8 4.7-7.4 8.5-0.8 1.4 0.3 0.6 0.6 0.7 1.9 0.7 1.1 0.3 12.7 1.3 1.8 0.4 0.5 0.3 2 3.8 5.1 15.1-6.4 1.6-1.9 0.9-2.3 2.6-0.9 0.6-0.8 0.4-0.6 0-0.6 0-0.7-0.1-1.1-0.4-2-0.4-2.2-0.2-1 0.2-0.7 0.3-1.9 1.8-1.9 1.3-1.1 0.5-1.1 0.1-2.2-0.5-0.9 0.1-0.6 0.2-0.3 0.6-18-13 4.3-0.7 3.9-4.7 4.7-13 4.6-8.6 0.8-3.4-0.2-4.1-3.8-10.9-0.1-1.6 0.3-3.3-0.2-1.7-1.9-5.5-0.5-1.8-0.2-4.7 1.1-2.6 4.4-5.2 2.4-6.7-0.6-13.8 0.7-7.3 2.6-2.5 2.6-0.8 2.8-0.3 2.8-1.2 2.2-2.6 4.3-9.8-27.8-36.3-1.6-3.6-0.1-4.1 1.4-3.9 4-6.9 10.4-18 6.8-11.7z"}, "GT13": {"n": "Huehuetenango", "d": "M99.1 573.3l8-13.9 16.9-29.4 16.9-29.3 14.8-25.6 10.4-18.2 4-6.9 4.8-8.4 2.6-3.3 3.4-1.7 9.7 0 29.6-0.1 29.5 0 29.5-0.1 29.5 0 28.3-0.1-26.3 52.5-2 4.1-14 28.5-0.5 0.7-4 3.9 0.3 1.5 0.2 0.3 0.2 0.6-0.4 0.4-0.8 0.3-1.8 0.1-0.9 0.2-0.9 1.3-5.8 4.1-0.7 0.1-1.3 0-0.7 0.1-0.6 0.2-0.5 0.2-2.6 2.3-0.9 0.3-0.8 0.1-0.7 0-0.6 0.4-0.5 0.9-0.3 2.7-0.5 2.1-1.3 2.5-0.7 1-0.5 1.3-0.2 0.8-0.3 5.2-1.2 2-0.4 1-0.2 0.6 0 0.7 0 0.7 0.1 1.4 0.1 0.6 0.2 0.6 0.5 1 0.3 0.5 0.2 0.5 0.7 0.9 4.3 5.2 0.3 0.7 0.2 0.7 0 2.8 0.3 1.3 0.9 2.1 1.2 1.9 1.3 1.5 4.1 3.8 0.8 0.2 1.2 0 6.3-0.7 2.7 0.5 5.9 2.8 0.5 4-1.9 8 0.3 1.2 1.2 3.3 1 4.5-3.3 0.8-1.8 0.2-5.3-1-1.9 0.1-4.9 1.6-9.3 1.7-1.7 1.2-0.9 1.9-5.6-0.4-2.5 0.4-5.1 2.4-3.4 2.4-9.2 2.2-2.2 0.6-1 0.5-0.8 0.8-2.8 4.2-1.3 2.5-0.2 0.6-0.4 5.6-0.2 0.6-0.9 0.6-0.8 0.3-7.2 0.4-4.2-5.1-0.7-2 0.1-2.2-1.6-1.3-14.4-3.8-1.1-2.9-2.2-2.1-2.1-1.5-4.2-3.6-4-4.3-3.5-4.9-3.1-5.5-1-3-0.2-0.9-3.3 0.1-11.6 3.3-4.6-0.3-7.3-4.6-1.8-0.9-1.5 0.1-1.4 0.5-3.6 2.3-6.5 4-7 0.6-2.9 1.9-7.3 8.4-0.5 0.7-11-0.5-2.4-1.9-2.1-23-0.5-3.3-3.2-1.2-3.7-4.7-1.3-4.6z"}, "GT14": {"n": "Quiché", "d": "M337 436.3l1.2 0 29.6 0 29.5-0.1 29.5 0 19.2 0 4.2-0.5 3.8-1.4 2.6 1.3 1 1.7-0.4 2.1-1.8 2.5 1.3 2.4-1 2.1-2.1 0.9-2.6-1-0.4 1.2-0.8 0.9-0.3 1.1-1.3 0-2.5-1.6-4.2 2.6-2.2-1-1.5 0-0.8 1.4-0.7 0.1-1.5-1.5-0.5 0.8-0.3 0.7-0.2-0.1-0.4-1.4-0.8 1-1.4 1.2-0.7 0.7-2.8-1.5-1.9-1.8-2.2-1.3-3.6 0.2 0-1.7 1.1-0.3 1-0.6 1-0.4 0-1.7-1.5-0.9-1.2-0.1-1 0.9-0.7 1.8-1.5 0-3-3.2-5.5 1.2-9.1 5 1.5 3-1.9 1.3 0.1 1 0.4 1.1-0.8 1.9-1.5 0.9-1-0.9-0.7-1.5-0.5-0.7-2.4 1.1-3.4 2.8-2.9 0.7 0 1.6 0.9 0.8 1.9 2.1 1.5-1.5 0.4 0.7-0.1 0.4 0.2 0.2 1.1 0.2 0 1.5-2.1 1.6-1.7 3.2-2.1 7.4 5.4 0.6 1.3 3.8-2.3 4.3-5.2 2.1-0.9 1.3-2.8 7.8-5.8 7.4-1.4 3.2 2.8-0.3 2.5 0.3 2.1 1.1 1.4 2-1.1 0.4-0.9 0.9-1.1 0.3 0 1.4 3.2 2.4 1.2 0.8-2.9 2-0.8 2.6 1.7 2.1 7.9 1.4 9.1 2.6 2.6 1.4 1.7-1 2-0.4 2 0.4 1.7 1-0.7 0.2-0.7 0-0.3 0.3 0.1 1 4.1 2.7 2.1 2.8 0.2 3.2-1.9 3.6 3.3 2.3 2.1 4.6 1.5 4.6 1.1 2 1.4 1.3-1.5 2.6-2.3 2.4-1.2 0.6-6 5.4 0 1.5 1.8 2.4-2.6 1.4-8.6 0.8-2.9 1.5-0.9 3.5 0.5 4 1.1 3.1 4.4 4.3 6.7 2.7 33.6 5.2 3.4 1.9-0.1 4.5-2 5.1-2.1 3.7-1.4 2-8 11-7.1 0.6-25.1-1.1-35.5-8.4-1.7-0.9-1.4 24 16 20.7 19.3 12.2-0.1 1-1 4.8 3.9 4.1 1.4 1.2 1.4 1 1.6 1.4 1 2.1 2.4 5.7-2.9-1.1-7.7-1.6-6.3-2.2-3.6-0.5-11.1 0-10.2-3-3.3 0.1-3 0.5-2.5 0.5-13.9 0.4-3.9-0.8-3.6 2.2-3.7 1-2 1.1-0.4 0.2-0.5 0.4-1.3 2.2-4.9 13.7-1.5 1.3-5.7 2.8-3.6-1.2-1 0.6-0.8 3-0.2 0.5-0.3 0.4-0.4 0.4-0.4 0.3-0.5 0.2-0.7 0.1-0.6-0.1-0.6-0.6-0.4-1-0.4-2.4 0-1.2 0.2-0.9 0.3-0.5 1.8-1.9 0.6-1 0.6-1 0.1-0.6-0.4-0.7-1-0.7-2.5-1-1.1-0.3-0.9-0.1-0.6 0-0.6-0.2-1.4-0.9-2-3.7-1.1-2.9-2.6-1.3-6.8-5.3 0.5-1.4 1.2-3.7-0.1-1.4-0.6-1.2-3.5-2.5-1.5-2.4-1-4-0.6-1.1-0.4-0.6-3.9-2.9-2.2-1.5-0.4-0.4-0.3-0.5-0.1-0.7 0-0.7 0.2-1.7 0.5-1.5 0.7-1 1.7-1.4 1.1-0.4 0.9-0.3 2.3 0 0.6-0.5 0.5-0.8 0.2-2.3 0-1.1-1.4-2.5-1.5-0.5-0.3-3.1-2-3-1.1-4.3-1.5-0.7-5.9-6.1-0.7-1.5-2.9-1.5-1.1-3.4 0.1-4 1-6.2 0.9-1.9 1.7-1.2 9.3-1.7 4.9-1.6 1.9-0.1 5.3 1 1.8-0.2 3.3-0.8-1-4.5-1.2-3.3-0.3-1.2 1.9-8-0.5-4-5.9-2.8-2.7-0.5-6.3 0.7-1.2 0-0.8-0.2-4.1-3.8-1.3-1.5-1.2-1.9-0.9-2.1-0.3-1.3 0-2.8-0.2-0.7-0.3-0.7-4.3-5.2-0.7-0.9-0.2-0.5-0.3-0.5-0.5-1-0.2-0.6-0.1-0.6-0.1-1.4 0-0.7 0-0.7 0.2-0.6 0.4-1 1.2-2 0.3-5.2 0.2-0.8 0.5-1.3 0.7-1 1.3-2.5 0.5-2.1 0.3-2.7 0.5-0.9 0.6-0.4 0.7 0 0.8-0.1 0.9-0.3 2.6-2.3 0.5-0.2 0.6-0.2 0.7-0.1 1.3 0 0.7-0.1 5.8-4.1 0.9-1.3 0.9-0.2 1.8-0.1 0.8-0.3 0.4-0.4-0.2-0.6-0.2-0.3-0.3-1.5 4-3.9 0.5-0.7 14-28.5 2-4.1 26.3-52.5z"}, "GT16": {"n": "Alta Verapaz", "d": "M454.1 434.2l5.8-0.6 43.7 6.7 36.4 11.7 1.4 0.2 0.4-0.3 0.1-0.3 0.2-0.5 0.5-0.5 1-0.6 2.3-0.3 1 0.2 0.5 0.6 0.2 0.8 0.6 0.7 0.8 0.2 1.2-0.3 0.6 0 0.3 0.1 0.8 1 0.5 0.1 0.7-0.1 0.6-0.3 1.7-0.4 0.4-0.2 0.1-0.1 0-0.1 0-0.3 0-0.4-0.5-1.7 0.1-0.7 0.3-0.1 0.5 0.1 1.6 0.7 0.4 0.3 0.3 0.4 0.1 0.6-0.2 0.5-0.1 0.4-0.1 0.1 0 0.1 0.3 0.6 0.6 0.4 0.4 0.3 0.1 0.5-0.6 1.5 3.7 2.8 2.4 0.5 0.5-0.2 1-1 3.7 2.6 2 0.2 1.2-0.2 0.6 0.3 0.6 0.9 0.7 1.4 2.8 3.8 0.6 1.3 0.3 1.1 1 2 0.8 0.7 0.7 0.2 0.6-0.1 0.8-0.1 0.9 0 3.3 0.5 7.2-0.4 1.2-0.3 0.4-0.2 0.2-0.2 0.3-0.3 0.9-1.3 0.3-0.4 0.4-0.3 0.6-0.2 0.6 0 1.9 0.1 0.6-0.1 1.2-0.6 0.8-0.6 0.6 0 0.6 0.2 5.1 2.4 0.6 0.3 3.4 2.9 4.4 3.1 1.2 0.6 1 0.3 2.9 0.2 1.2-0.3 0.5-0.2 0.5-0.3 2.5-2.1 1.5 0 13.3 1.7 0.8 0 0.6-0.1 0.6-0.2 0.5-0.3 0.4-0.3 0.9-0.4 1.3-0.2 3-0.2 1.4 0.1 0.9 0.4 0.2 0.6 0.5 11.5 0.1 0.3 0.3-0.1 5.7-2.6 4.5-0.9 3.7 2 1.7 0.1 2.5-1.2 6.5-1.6-5.9 7.9-2.2 1.7-4.1 0.5-0.8 0.4-0.5 0.4-1.1 2-0.2 0.6-2.6 4.8-0.8 1.1-0.8 0.6-2.2 1-3.6 2.5-1.1 0.6-2.2 0.7-0.7 0.4-0.4 0.6-0.5 1.1-13.5 19.1-12 17.1-1.6 3.7 0.6 0.2 1 0.6 0.4 0.3 0.4 0.5 0.3 0.4 0.8 1.3 4.8 5.2 1.7 2.5 1.8 2.1 2.8 2.6 0.8 1.2 0.3 0.8-1.7 2.9-0.3 0.5-0.4 1.1-0.6 2.5-0.5 1-0.3 0.5-0.4 0.4-0.4 0.4-0.4 0.3-4.1 2-1.3 1-0.3 0.4-1.9 26 0 3.3 0.2 0.8 0.9 2.1 0.5 1 1.4 2 1.2 2.1 0.2 0.9 0 1.2-0.7 3.6-0.1 1.2 0.1 1 0.4 1.1 1 2.1 3.8 5.5-14.8 3.5-6.9-0.5-13.6 2.1-2.5-0.5-7.5-2.9-4.9-0.2-2.3 0.3-5.9 2.7-6.2 1.6-3.6 0.3-10.5-1.2 9.5-13.6 2.2-6.5 0.2-2.2-0.4-1.1-0.5-1-1-1.3-2.4-2.2-1.6-1-0.8-0.2-0.7-0.2-9.6 0.8-2 0.5-7 2.8-8.4 0.3-23.4-3.3-10.3-2.5-2.9-0.2-0.9 0.7-0.3 0.4-0.4 0.4-0.5 1-0.2 0.5-0.2 1.4-1.7 6.9-1.4 2.1-1.1 0.8-2.6 3.3-0.8 0.9-2.2 1.2-0.8 0.1-0.6-0.2-2.3-2.2-11.8-8.1-4.6-1.5-5.1 0.2-7.2-0.2-4.9 0-5-0.2 1.4-2 2.1-3.7 2-5.1 0.1-4.5-3.4-1.9-33.6-5.2-6.7-2.7-4.4-4.3-1.1-3.1-0.5-4 0.9-3.5 2.9-1.5 8.6-0.8 2.6-1.4-1.8-2.4 0-1.5 6-5.4 1.2-0.6 2.3-2.4 1.5-2.6-1.4-1.3-1.1-2-1.5-4.6-2.1-4.6-3.3-2.3 1.9-3.6-0.2-3.2-2.1-2.8-4.1-2.7-0.1-1 0.3-0.3 0.7 0 0.7-0.2-1.7-1-2-0.4-2 0.4-1.7 1-2.6-1.4-9.1-2.6-7.9-1.4-1.7-2.1 0.8-2.6 2.9-2-1.2-0.8-3.2-2.4 0-1.4 1.1-0.3 0.9-0.9 1.1-0.4-1.4-2-2.1-1.1-2.5-0.3-2.8 0.3 1.4-3.2 5.8-7.4 2.8-7.8 0.9-1.3 5.2-2.1 2.3-4.3-1.3-3.8-5.4-0.6 2.1-7.4 1.7-3.2 2.1-1.6 0-1.5-1.1-0.2-0.2-0.2 0.1-0.4-0.4-0.7-1.5 1.5-1.9-2.1-0.9-0.8 0-1.6 2.9-0.7 3.4-2.8 2.4-1.1 0.5 0.7 0.7 1.5 1 0.9 1.5-0.9 0.8-1.9-0.4-1.1-0.1-1 1.9-1.3-1.5-3 9.1-5 5.5-1.2 3 3.2 1.5 0 0.7-1.8 1-0.9 1.2 0.1 1.5 0.9 0 1.7-1 0.4-1 0.6-1.1 0.3 0 1.7 3.6-0.2 2.2 1.3 1.9 1.8 2.8 1.5 0.7-0.7 1.4-1.2 0.8-1 0.4 1.4 0.2 0.1 0.3-0.7 0.5-0.8 1.5 1.5 0.7-0.1 0.8-1.4 1.5 0 2.2 1 4.2-2.6 2.5 1.6 1.3 0 0.3-1.1 0.8-0.9 0.4-1.2 2.6 1 2.1-0.9 1-2.1-1.3-2.4 1.8-2.5 0.4-2.1-1-1.7-2.6-1.3 0.1-0.1z"}, "GT18": {"n": "Izabal", "d": "M679.3 482.8l2.5-1.5 0.8-0.8 0.4-0.8 0.3-0.7 0.4-1.5 1.3-3.7 2.5-2.5 19.7-0.4 5 0.7 1.1 0.9 0.2 0.1 0.1 0.1-0.1 2.8 1.8 2.9 0.5-0.7 2-1 2.5-0.8 1.9-0.1 4-1.7 16.3 0.8 6.2-1.1 6.8 0 19 4.9 8.1-3.2 3 1.4 7.2 6.1 7.4-1.8 9.5 2.1 7.3 4.3 0.8 4.7 4.9 0.8 21.5 13.6-2.6 10 0.4 1.5 5.8 0 2.4-0.9 0.6-1.9-0.2-1.6-0.5-0.3-0.1-0.9-0.7-0.8-0.7-1 0-1.7 1.1-0.3 2 0.2 1.9-0.3 0.9-2 0.8-3.6 1.9-2.4 2-1.9 1.2-2 0.3-3.4-1.6-5.3-0.2-3.4 1.5 0 0 2.3 0 0.7 1.4 0 2.5-1.7 6.3 1.2 3-1.2-4.9-4.6-2.8-2.1-4-1.8-1.6-2.2-1.4-2.6-1.5-1.9-9.2-5.2-2.6-3.3 3-3.6 3.3 1.9 6.1 2.7 2.4 1.5 6.3 6.5 4.5 2.6 11.2 9.5 22 10.4 7.3 6.6 2.3 1 9.4 8.3 7.4 3.2 0.2 0.1-2.5 0.9-0.7 2 0.2 2.4-1.4 3-1.4-1.7-3.7 1.6-3.1 1.8-3.4 1.2-4.5 0.1-1.2 1.7-6.5 11.2-10 9.8-14.6 11.5-7 5.6-18.7 14.5-18.6 14.5-18.6 14.5-18.4 14.3-27.1 21.1-7.4 3.5-21.8 7.3-6.5 3.4-1.4 1.1-0.1-0.1-0.6-0.4-1.6-0.7-0.9-0.7-4.2-5-0.4-1.3-1.3-6.2-0.3-3.5 0.2-2.1-0.1-1.4-1.7-7.1 0-1.4 0.2-0.9 2.7-1.1 0.9-0.6 0.4-0.4 0.3-0.4 0.6-1 0.1-0.5 0.3-1.5 0.5-5.5-0.1-1.4-0.2-0.7-0.3-0.6-0.5-0.8-1.1-1.2-0.7-0.6-0.6-0.4-5-2.7-2.1-0.5-6.6-0.7-5 1.1-3.1 1.6-5.5 4.2-25.1 10.1-25.4 8.6-3.2 0.7-8.7 1-3.8-5.5-1-2.1-0.4-1.1-0.1-1 0.1-1.2 0.7-3.6 0-1.2-0.2-0.9-1.2-2.1-1.4-2-0.5-1-0.9-2.1-0.2-0.8 0-3.3 1.9-26 0.3-0.4 1.3-1 4.1-2 0.4-0.3 0.4-0.4 0.4-0.4 0.3-0.5 0.5-1 0.6-2.5 0.4-1.1 0.3-0.5 1.7-2.9-0.3-0.8-0.8-1.2-2.8-2.6-1.8-2.1-1.7-2.5-4.8-5.2-0.8-1.3-0.3-0.4-0.4-0.5-0.4-0.3-1-0.6-0.6-0.2 1.6-3.7 12-17.1 13.5-19.1 0.5-1.1 0.4-0.6 0.7-0.4 2.2-0.7 1.1-0.6 3.6-2.5 2.2-1 0.8-0.6 0.8-1.1 2.6-4.8 0.2-0.6 1.1-2 0.5-0.4 0.8-0.4 4.1-0.5 2.2-1.7 5.9-7.9z"}, "GT19": {"n": "Zacapa", "d": "M723.6 693.4l0-0.2-0.7-1.5-0.3-0.5-0.2-0.5-0.3-0.5-0.6-1.6-0.9-1.5-0.3-0.5-0.3-0.4-0.4-0.3-0.4-0.3-0.6-0.2-1.1 0.1-1.6 0.5-4.8 2.4-1.4 1-0.9 0.9-1.1 1.6-1 1.2-1.3 1.1-2.5 0.8-1.6 0.1-1.4-1-0.9-1.1-3.3-1.1-10.6 3.6-3.5 0-2.9-2-4.7-1.4-1.8-0.1-4.1 1.2-13 10.5-3.2 0.7-11.5-0.2-3.1-0.7-6.9-3.4-7.3-3.7-2.5-0.3-3.7 2.8-4.9 4.6-0.2 1.2 0.6 5.4-0.9 3.6-5 9.2-2.5-0.7-3.4-0.5-5.7 0-0.7-0.1-1.2-1.4-1.8-2.6-3.4-6.5-2-2.8-1.3-2.3-0.6-0.8 1.7-3.7 4.8-5.4 2.7-1.2 4.6-0.2 1-0.2 0.9-0.3 0.4-1.1 0.4-4.4-0.5-0.7-1.1-0.6-2.7-0.4-2.6-1.4-1.7-2.4-9.5-13.1-0.5-1-0.2-0.9 0.8-0.3 1-0.2 10.4-0.2-0.2-3-9.5-14.4-8-11.4 5.9-2.7 2.3-0.3 4.9 0.2 7.5 2.9 2.5 0.5 13.6-2.1 6.9 0.5 14.8-3.5 8.7-1 3.2-0.7 25.4-8.6 25.1-10.1 5.5-4.2 3.1-1.6 5-1.1 6.6 0.7 2.1 0.5 5 2.7 0.6 0.4 0.7 0.6 1.1 1.2 0.5 0.8 0.3 0.6 0.2 0.7 0.1 1.4-0.5 5.5-0.3 1.5-0.1 0.5-0.6 1-0.3 0.4-0.4 0.4-0.9 0.6-2.7 1.1-0.2 0.9 0 1.4 1.7 7.1 0.1 1.4-0.2 2.1 0.3 3.5 1.3 6.2 0.4 1.3 4.2 5 0.9 0.7 1.6 0.7 0.6 0.4 0.1 0.1-3 2.5-2.5 4-3.4 10.2 4.1 3.9 0 5.9-2.6 6.2-1.7 2.4z"}, "GT11": {"n": "Retalhuleu", "d": "M87 787.6l0.3-0.6 0.6-0.2 0.9-0.1 2.2 0.5 1.1-0.1 1.1-0.5 1.9-1.3 1.9-1.8 0.7-0.3 1-0.2 2.2 0.2 2 0.4 1.1 0.4 0.7 0.1 0.6 0 0.6 0 0.8-0.4 0.9-0.6 2.3-2.6 1.9-0.9 6.4-1.6 1.7-1.2 1.1-0.5 0.6-0.1 0.9 0.2 12.5 5.5 2.5 0.3 6.2-0.5 8.9-2 6.7-10.1 2.1-2.4 0.5-1 0.5-1.4 0.7-3.2 0.8-2 0.9-2 3.9-5.8 0.9-2.1 1.9-6.1 1.4-2.2 7.7-3.8 2.9-3.2 1.6-1.4 0.9-0.6 0.6-0.3 0.6-0.3 0.9-0.1 0.8 0 0.5 0.3 0.4 0.5 0.2 0.5-0.3 2.7-3 7.3-0.6 3.9 0.5 0.6 1.1 0.5 2.7 0.5 1.2 0.4 1.7 0.1 2-1.9 0.6-1.5 0.5-0.3 0.7-0.4 1.2 0.4 1.3 0.8 0.6 0 0.8-0.3 1.6-1.8 1.1-1.5 0.2-0.5 1.2-1.9 0.7-0.8 0.6-0.2 0.8-0.1 2.3 0.6 1.2 0.5 1.2 0.3 0.7 0 1-0.3 1.3-0.7 4.4-2.9 1.3-0.4 2.6 0.2 3.4 1.4-6.5 5.7-4.8 5.5-0.6 0.9-0.6 1.4-0.2 0.6-0.1 2.5 0.2 2.8 0.1 2.2-8.5 17.3-0.1 1.4 0.1 0.7 0 0.7-1.7 12.9 0.2 1.4 0.3 1.1 0.5 1.1 2.7 4.9 0.1 1.6-1 14.4 0.2 2.9-0.1 1.5-0.2 1-2.5 3.6-2.6 8.2-1 6.5-0.5 7.3-0.2 1.4-0.2 0.5-6.2 9.1 1.3 8.8 0.2 1.8-22.3-13.9-31.2-22.9-30.3-27.4-24.1-17.6z"}, "GT10": {"n": "Suchitepéquez", "d": "M194.9 869.4l-0.2-1.8-1.3-8.8 6.2-9.1 0.2-0.5 0.2-1.4 0.5-7.3 1-6.5 2.6-8.2 2.5-3.6 0.2-1 0.1-1.5-0.2-2.9 1-14.4-0.1-1.6-2.7-4.9-0.5-1.1-0.3-1.1-0.2-1.4 1.7-12.9 0-0.7-0.1-0.7 0.1-1.4 8.5-17.3-0.1-2.2-0.2-2.8 0.1-2.5 0.2-0.6 0.6-1.4 0.6-0.9 4.8-5.5 6.5-5.7 8.7-5.9 1.1 1.3 0.6 1 2.6 7.2 0.3 1.2 0 0.7-1 3.1-5.1 9.8 3.2 3 9.7 1.4 2.9 0.8 1.1-3.1 0.2-1.7-0.2-2.7 0.1-0.7 0.2-0.6 0.3-0.6 0.6-0.6 1-0.7 0.8-0.5 1.3-0.4 1.6 0.2 3.2 1.5 2.5 2.9 0.1 0.1 4.8-0.4 2.5-0.6 0.8 0.2 0.6 0.2 2.2 2.4 6.2 5.5 1 1.2 0.4 0.9 0.3 1.8 0.1 2.1-0.1 0.6-0.5 2.5 0 0.7 0.1 0.6 0.7 0.5 0.6 0.3 4.8-0.7 5.9-3.1 1.9-0.3 2.2 0.1 1.3 0.2 2.1 0.8 2.8 1.8 8.3 6.4 1.5 1.4 1.4 1.5 0.8 1 0.4 2.1-0.4 5 0 2.9-3.1 8.2-6 12.5-1.4 3.8-0.6 10.6-0.2 1.2-0.3 0.9-1 1.4-1.9 3.8-1.3 0.8-25-1.8-1.4-0.4 1.1-5.3-2.3-2.3-3.9 4.4-1.8 1-2.1 0.1-1.4-0.2-0.8-0.4-1.1-0.6-0.9-0.9-0.5-0.7-0.2-0.7 0-0.6 0-0.6 0.5-1.9-0.1-0.7-0.2-0.7-1-1.4-0.3-0.6-0.2-0.5 0-0.6 0.1-0.6 0.2-0.5 1.6-2.3 0-0.9-0.4-1.1-1.4-2.1-0.9-0.8-0.9-0.3-1.7 0.6-1 0.5-6.1 4.5-0.8 0.8-0.3 0.5-0.4 1-0.5 1.9 0 1.3 0.1 1.4 0.4 2 0.4 1.1 1 1.9 0.2 0.5 0.1 0.6-0.5 0.7-0.7 0.6-1.5 0.9-0.9 0.2-0.6-0.2-0.2-0.4-0.6-1.7-0.7-1.1-1.7-1.2-2.2 1.4-0.4 0.7-0.4 1.5-0.1 2.7 0.1 1.8 0.8 5.2 0.5 8.9-0.3 3.6-1.3 1.7-1.1 1.2-1 1.6-1.8 3.9-10.4 15.4-0.4 1.2-0.2 1 0.7 3.4 0.2 1.8-5-1.9-18.2-10.4-4.6-2.9z"}, "GT05": {"n": "Escuintla", "d": "M217.7 882.7l5 1.9-0.2-1.8-0.7-3.4 0.2-1 0.4-1.2 10.4-15.4 1.8-3.9 1-1.6 1.1-1.2 1.3-1.7 0.3-3.6-0.5-8.9-0.8-5.2-0.1-1.8 0.1-2.7 0.4-1.5 0.4-0.7 2.2-1.4 1.7 1.2 0.7 1.1 0.6 1.7 0.2 0.4 0.6 0.2 0.9-0.2 1.5-0.9 0.7-0.6 0.5-0.7-0.1-0.6-0.2-0.5-1-1.9-0.4-1.1-0.4-2-0.1-1.4 0-1.3 0.5-1.9 0.4-1 0.3-0.5 0.8-0.8 6.1-4.5 1-0.5 1.7-0.6 0.9 0.3 0.9 0.8 1.4 2.1 0.4 1.1 0 0.9-1.6 2.3-0.2 0.5-0.1 0.6 0 0.6 0.2 0.5 0.3 0.6 1 1.4 0.2 0.7 0.1 0.7-0.5 1.9 0 0.6 0 0.6 0.2 0.7 0.5 0.7 0.9 0.9 1.1 0.6 0.8 0.4 1.4 0.2 2.1-0.1 1.8-1 3.9-4.4 2.3 2.3-1.1 5.3 1.4 0.4 25 1.8 1.3-0.8 1.9-3.8 1-1.4 0.3-0.9 0.2-1.2 0.6-10.6 1.4-3.8 6-12.5 3 2.2 0.6 0.5 1 0.5 0.9 0.2 2-0.2 1-0.3 0.7-0.3 2.9-1.7 0.5-0.2 0.6-0.1 0.7-0.1 0.9 0.3 1.1 0.7 2.1 1.9 1.3 0.9 1.2 0.5 1.5-0.1 0.8-0.3 0.6-0.4 1.1-1.2 0.8-0.7 0.6-0.1 0.5 0.4 0.6 0.8 0.4 3.6 0 1.8 0.2 0.7 0.3 0.6 0.6 0.6 1.5-0.7 4.1-8.3 1.3-3.2 0.3-0.6 1.4-1.9 4.5-4.2 5.7-4.6 6.3 5.5 1.8 1.8 0.2 0.6 0.1 0.6 1.6 3.5 2.7 4.4 1.4 1.6 1 0.7 5.6-4.9 1.5-1.7 0.3-0.4 1.1-2 1-1.3 0.5-0.4 0.4-0.3 1.8-1.1 3.1 0 1.3-0.7 1-1.7 1.5-0.4 0.8 0.6 0.3 0.5 2.4 5.1 13.7-5.4 2.8 8.2 3.1 2.8 1.8 0.6 2.8-0.1 0.6 0.1 0.5 0.2 0.9 3 1.4 11.3-0.1 7.3 0.6 2.7 2.6 6 1.4 4.8-3.2 3.1-1.3 2.5-0.7 2.4 0.1 1 0.3 0.7 0.5 0.2 0.9 0.3 2.9 0.6 1.3 0.1 1.4-0.1 0.7-0.1 3.3-1.2 0.8-0.1 1 0.2 1.8 0.9 0.6 0.7 0.1 0.7-2.7 3.4-3.4 3.3-1.4 0.9-0.6 0.2-3.9 0.6-1.5 0.7 0.1 3.1 0.7 1.4 0.4 0.5 3.1 2.9 0.4 0.9 0.1 0.7-0.2 0.5-0.7 0.9-0.8 0.7-2.8 1.6-1.1 1.1-1.6 3.1-0.7 2.2-0.5 0.3-0.6 0.3-2.4 0.4-2.4 0.6-0.9 1-0.5 1.1 0 27.4 0 2.4-2.3-0.4-14.8-1.4-16.6 1.6-2.5 0.8-24.4 1.5-28.6-0.5-26.1-2.9-32.3-6.4-50.4-22.4z"}, "GT06": {"n": "Santa Rosa", "d": "M538.9 799.5l-3.9 12.2-3 0.4 0.7 4.2-0.2 0.6-0.5 0.3-1.1-0.4-1-0.5-2.4-0.2-7.5 1.5-0.4 0.4-2.9 2.5-7.6 19 3.1 2.2 9.9 2.8 1.3 0.5 0.8 0.7 1.5 1.5 6.6 5.5 5.2 5.1 1.1 2.2-0.3 4.9 0.9 8.7 0 0.7-0.2 1.3-0.6 1.9-1.2 2.4-3.7 5.4-1.2 1.3-0.5 0.2-2.9 0.6-2.4 0.7-1.3 0.7-0.7 0.5-1.3 2.5-3.4 6.3-3.3 2.3-0.7 0.2-0.9 0-2.2-0.8-8.4-2.1-1.1-0.4-4.1-3.5-6-3.5-3.9 1.1-1.3 1-0.3 0.8-0.3 1.2 0.1 1.2 0.1 0.8 0.7 1.6 0.7 0.9 1.1 1.1 0.4 0.9 1.5 9.1 0.3 0.5 0.3 0.4 0.5 0.3 1 0.6 0.7 1 0.7 1.8 2.1 7.7 2.7 5 0.4 1.1 0.1 1.1 0 3.9-1.4 5.5-0.8 3-1.1-0.4-33.3-15-21.2-8-17.2-4.1-10-1.6 0-2.4 0-27.4 0.5-1.1 0.9-1 2.4-0.6 2.4-0.4 0.6-0.3 0.5-0.3 0.7-2.2 1.6-3.1 1.1-1.1 2.8-1.6 0.8-0.7 0.7-0.9 0.2-0.5-0.1-0.7-0.4-0.9-3.1-2.9-0.4-0.5-0.7-1.4-0.1-3.1 1.5-0.7 3.9-0.6 0.6-0.2 1.4-0.9 3.4-3.3 2.7-3.4-0.1-0.7-0.6-0.7-1.8-0.9-1-0.2-0.8 0.1-3.3 1.2-0.7 0.1-1.4 0.1-1.3-0.1-2.9-0.6-0.9-0.3-0.5-0.2-0.3-0.7-0.1-1 0.7-2.4 1.3-2.5 3.2-3.1 6.1-2.2 1.6-1.1 4.1-3.8 4.1-2 1.7-0.6 1.3-0.3 0.5-0.2 0.4-0.3 1.8-2.1 0.7-0.6 0.6-0.4 0.6-0.2 0.5-0.3 0.4-0.3 0.4-0.3 1.1-1.3 0.3-2.7-1.2-10.4 4-10.1 8.8-13.9 3.6-1.7 0.9-0.1 1.6 0.5 0.6 0.6 0.4 0.6 0.3 2.7 0.2 0.6 0.2 0.5 0.4 0.4 1-0.3 1.4-0.8 4.1-3.8 1.2-1.3 1.7-0.6 1.9 0 2.5-1.2 2.7 2.8 0.5 0.6 0.8 0.6 0.5 0.3 2.9-0.4 2.8-0.5 23.5-4.5 1.1 5.2 1.9 3.1 7.7 6.3 5.6 4.3z"}, "GT04": {"n": "Chimal.", "d": "M317.2 712.6l5.7-2.8 1.5-1.3 4.9-13.7 1.3-2.2 0.5-0.4 0.4-0.2 2-1.1 3.7-1 3.6-2.2 3.9 0.8 13.9-0.4 2.5-0.5 3-0.5 3.3-0.1 10.2 3 11.1 0 3.6 0.5 6.3 2.2 7.7 1.6 2.9 1.1-0.6 3.4-0.1 0.6-0.2 0.6-0.3 0.6-0.4 0.6-0.7 0.6-1 0.7-2.4 0.8-1 0.6-3.2 2.6-1.1 0.4-0.9 0.1-0.5-0.2-0.6-0.1-0.6 0.1-0.5 0.3-0.9 0.6-0.9 0.8-1.2 2.2-2 6.6-3.9 6-3.4 6.2-0.6 2.7 1.2 6.4 0.7 2.1 0.7 4 0 1.3-0.1 1-0.6 1.1-1.3 1.6-2.8 6.2-5.4 4-9.7 10.7-4.6 9-1.2 6.1 0.2 1.3 0 0.2-5.7 4.6-4.5 4.2-1.4 1.9-0.3 0.6-1.3 3.2-4.1 8.3-1.5 0.7-0.6-0.6-0.3-0.6-0.2-0.7 0-1.8-0.4-3.6-0.6-0.8-0.5-0.4-0.6 0.1-0.8 0.7-1.1 1.2-0.6 0.4-0.8 0.3-1.5 0.1-1.2-0.5-1.3-0.9-2.1-1.9-1.1-0.7-0.9-0.3-0.7 0.1-0.6 0.1-0.5 0.2-2.9 1.7-0.7 0.3-1 0.3-2 0.2-0.9-0.2-1-0.5-0.6-0.5-3-2.2 3.1-8.2 0-2.9 0.4-5-0.4-2.1-0.8-1-1.4-1.5-1.5-1.4 1.8-17.6 0.1-5 0.6-2 1.7-2.4 4.4-10.6-0.4-4.8 0.1-0.7 1.5-4.3-3.5-16.6-0.5-1.5z"}, "GT03": {"n": "Sacatepéquez", "d": "M410.7 791.8l-13.7 5.4-2.4-5.1-0.3-0.5-0.8-0.6-1.5 0.4-1 1.7-1.3 0.7-3.1 0-1.8 1.1-0.4 0.3-0.5 0.4-1 1.3-1.1 2-0.3 0.4-1.5 1.7-5.6 4.9-1-0.7-1.4-1.6-2.7-4.4-1.6-3.5-0.1-0.6-0.2-0.6-1.8-1.8-6.3-5.5 0-0.2-0.2-1.3 1.2-6.1 4.6-9 9.7-10.7 5.4-4 2.8-6.2 1.3-1.6 0.6-1.1 0.1-1 0-1.3-0.7-4-0.7-2.1-1.2-6.4 0.6-2.7 3.4-6.2 4.9 4.6 2.9 1.6 2 0.5 2 0.1 2.6-0.5 0.7 0 0.6 0.2 2.2 2 6.4 8.3 1.9 6.4 2.9 3.3 2.1 2.4 0.3 0.5 0.1 1.6-1.2 4.1 0.4 2.6-1.8 2-1.1 2.7-1.5 17.8-1.9 8.3z"}, "GT01": {"n": "Guatemala", "d": "M429.1 838.7l-1.4-4.8-2.6-6-0.6-2.7 0.1-7.3-1.4-11.3-0.9-3-0.5-0.2-0.6-0.1-2.8 0.1-1.8-0.6-3.1-2.8-2.8-8.2 1.9-8.3 1.5-17.8 1.1-2.7 1.8-2-0.4-2.6 1.2-4.1-0.1-1.6-0.3-0.5-2.1-2.4-2.9-3.3-1.9-6.4-6.4-8.3-2.2-2-0.6-0.2-0.7 0-2.6 0.5-2-0.1-2-0.5-2.9-1.6-4.9-4.6 3.9-6 2-6.6 1.2-2.2 0.9-0.8 0.9-0.6 0.5-0.3 0.6-0.1 0.6 0.1 0.5 0.2 0.9-0.1 1.1-0.4 3.2-2.6 1-0.6 2.4-0.8 1-0.7 0.7-0.6 0.4-0.6 0.3-0.6 0.2-0.6 0.1-0.6 0.6-3.4 7.6 2.8 3.2-0.6 1.7 1.8 1.1 0.5 0.9-0.2 1-0.6 1.3 0 3.3 0.5 5.3-1.1 5.5-1.9 3.4-2 1.6 0 1.1 2 1.6 1 2 0.2 2.5-0.2 2.8-0.8 0.9-1.1 0.5-1.2 1.8-1.3 3.5-0.7 1.6 1.4 1 2.6-2.7 4.7-0.5 0.6-0.6 0.9 0 0.9 0.2 1.2 0.3 0.8 0.4 0.5 0.4 0.3 0.5 0.3 0.5 0.2 1.3 0.2 1.4-0.1 3-0.9 4.9-0.4 1.5 0.6 0.4 0.5 1 2 1.9 5.5 0.8 5.5-0.3 1.8-0.3 0.3-0.3 0.3-0.8 1.2-0.9 1.6-0.3 1 0.1 1 0.2 0.5 1 1.8 4.5 4.8 2 1.6 12.4 4.5 2.9 1.5 1.3 1.1 2.4 2.7 2.2 0.8-1.9 4.9-1 1.6-0.4 0.3-1.8 1.2-7 5.9-1.2 5.2-0.1 3.5-0.6 1.8-0.5 1-0.9 0.7-0.3 1.3-0.2 1.1-0.4 6.9-2.5 1.2-1.9 0-1.7 0.6-1.2 1.3-4.1 3.8-1.4 0.8-1 0.3-0.4-0.4-0.2-0.5-0.2-0.6-0.3-2.7-0.4-0.6-0.6-0.6-1.6-0.5-0.9 0.1-3.6 1.7-8.8 13.9-4 10.1 1.2 10.4-0.3 2.7-1.1 1.3-0.4 0.3-0.4 0.3-0.5 0.3-0.6 0.2-0.6 0.4-0.7 0.6-1.8 2.1-0.4 0.3-0.5 0.2-1.3 0.3-1.7 0.6-4.1 2-4.1 3.8-1.6 1.1-6.1 2.2z"}, "GT21": {"n": "Jalapa", "d": "M617.4 767.7l1.6 4.9 0 2.2-0.1 0.7-4.6 2.7-13.4 6.5-0.4-0.2-2.4-1.8-1.4-1.5-0.7-0.9-0.8-0.6-1.5-0.3-4.2 1.1-3.5 2.4-4.1 2.7-4.4 3-1.8 2.7-1.1 7.6-9.6-7.6-0.6-0.3-0.6-0.2-0.6-0.1-0.9-0.1-0.9 0.1-1.5 0.3-0.8 0.3-0.7 0.3-0.8 1-5.1 6.8-13.6 0.1-5.6-4.3-7.7-6.3-1.9-3.1-1.1-5.2-23.5 4.5-2.8 0.5-2.9 0.4-0.5-0.3-0.8-0.6-0.5-0.6-2.7-2.8 0.4-6.9 0.2-1.1 0.3-1.3 0.9-0.7 0.5-1 0.6-1.8 0.1-3.5 1.2-5.2 7-5.9 1.8-1.2 0.4-0.3 1-1.6 1.9-4.9 0.4-0.2 1.5-0.6 3.5-2 0.8-2.4 0.2-1.4 0.4-0.7 0.9-0.5 5.6-2.2 7.2-2.4 3.3 0.4 2.6 1.3 1.7 0.5 1-0.5 0.8-0.8 6.7-12.5 4.9-1.5 7.2-0.8 6.5-2.4 6.2-3.4 7.5-9.5 2.9-2.6 1.2-0.5 1.3-0.2 2.7-0.2 3.4 0.3-1.7 3.7 0.6 0.8 1.3 2.3 2 2.8 3.4 6.5 1.8 2.6 1.2 1.4 0.7 0.1 5.7 0 3.4 0.5 2.5 0.7 10.1-0.5 2.8 0.8 1.1 1.8 0.8 2.3 0.5 2.6-0.1 0.7-0.4 2.7-0.2 0.6-0.1 0.6-0.1 1.4 0.3 1.2 0.7 1.8 0.9 2.6-7.7 21.4-0.8 4.8 0.8 0.1 2.3-0.1z"}, "GT02": {"n": "El Progreso", "d": "M555.8 639.4l10.5 1.2 3.6-0.3 6.2-1.6 8 11.4 9.5 14.4 0.2 3-10.4 0.2-1 0.2-0.8 0.3 0.2 0.9 0.5 1 9.5 13.1 1.7 2.4 2.6 1.4 2.7 0.4 1.1 0.6 0.5 0.7-0.4 4.4-0.4 1.1-0.9 0.3-1 0.2-4.6 0.2-2.7 1.2-4.8 5.4-3.4-0.3-2.7 0.2-1.3 0.2-1.2 0.5-2.9 2.6-7.5 9.5-6.2 3.4-6.5 2.4-7.2 0.8-4.9 1.5-6.7 12.5-0.8 0.8-1 0.5-1.7-0.5-2.6-1.3-3.3-0.4-7.2 2.4-5.6 2.2-0.9 0.5-0.4 0.7-0.2 1.4-0.8 2.4-3.5 2-1.5 0.6-0.4 0.2-2.2-0.8-2.4-2.7-1.3-1.1-2.9-1.5-12.4-4.5-2-1.6-4.5-4.8-1-1.8-0.2-0.5-0.1-1 0.3-1 0.9-1.6 0.8-1.2 0.3-0.3 0.3-0.3 0.3-1.8-0.8-5.5-1.9-5.5-1-2-0.4-0.5-1.5-0.6-4.9 0.4-3 0.9-1.4 0.1-1.3-0.2-0.5-0.2-0.5-0.3-0.4-0.3-0.4-0.5-0.3-0.8-0.2-1.2 0-0.9 0.6-0.9 0.5-0.6 2.7-4.7 2.7 2.6 7.1 1.3 10.9-1.8 1-3.6 3.4-10.8 34-23.7 18.3-12.3 8.2-5.6 5.8-3.2z"}, "GT07": {"n": "Sololá", "d": "M296.7 693.9l2.6 1.3 1.1 2.9 2 3.7 1.4 0.9 0.6 0.2 0.6 0 0.9 0.1 1.1 0.3 2.5 1 1 0.7 0.4 0.7-0.1 0.6-0.6 1-0.6 1-1.8 1.9-0.3 0.5-0.2 0.9 0 1.2 0.4 2.4 0.4 1 0.6 0.6 0.6 0.1 0.7-0.1 0.5-0.2 0.4-0.3 0.4-0.4 0.3-0.4 0.2-0.5 0.8-3 1-0.6 3.6 1.2 0.5 1.5 3.5 16.6-1.5 4.3-0.1 0.7 0.4 4.8-4.4 10.6-1.7 2.4-0.6 2-0.1 5-1.8 17.6-8.3-6.4-2.8-1.8-2.1-0.8-1.3-0.2-2.2-0.1-1.9 0.3-5.9 3.1-4.8 0.7-0.6-0.3-0.7-0.5-0.1-0.6 0-0.7 0.5-2.5 0.1-0.6-0.1-2.1-0.3-1.8-0.4-0.9-1-1.2-6.2-5.5-2.2-2.4-0.6-0.2-0.8-0.2-2.5 0.6-4.8 0.4-0.1-0.1-2.5-2.9-3.2-1.5-1.6-0.2-1.3 0.4-0.8 0.5-1 0.7-0.6 0.6-0.3 0.6-0.2 0.6-0.1 0.7 0.2 2.7-0.2 1.7-1.1 3.1-2.9-0.8-9.7-1.4-3.2-3 5.1-9.8 1-3.1 0-0.7-0.3-1.2-2.6-7.2-0.6-1-1.1-1.3 6.3-8.6 2.6-8.7 0.8-0.7 9.8-8.4 1.9-0.6 2.5-0.4 4.9 0.8 2 0.5 1.2 0.6 1.6 0.2 4.4-1.9 2.9 0 1.5 0.2 3.4 1.2 0.7 0.1 1.4 0 1.2-0.2 2.3-0.8 3-2.9 2.8-4.1 4.2-4.2z"}, "GT09": {"n": "Quezaltenango", "d": "M118.2 778l-5.1-15.1-2-3.8-0.5-0.3-1.8-0.4-12.7-1.3-1.1-0.3-1.9-0.7-0.6-0.7-0.3-0.6 0.8-1.4 7.4-8.5 5.8-4.7 2.5-1.3 4.6-0.9 18.8-5.4 13.5 1.4 6 0.4 2.1-0.2 1.9-0.8 2.1-1.3 2.8-5.1 0.5-0.8 1-1.1 2.8-2.1 0.8-0.8 0.5-0.8 0.2-0.7 5.8-12.3 0.3-0.5 1.7-2.9 1.4-8.3 1.9-2.7 0.4-2.1-0.2-1.6 0.3-0.9 0.3-0.6 1.7-1 1.6-0.8 6.3-6.1 1.8-2.4 0.8-2.2 1.3-9.5-0.9-3.6-4-3.4-2.6-6.2 2-6.6 4.1-6 3.9-4.2 7.4-6.1 1.4-1.4 1-4.2 14.4 3.8 1.6 1.3-0.1 2.2 0.7 2 4.2 5.1-3.8 1.3-10.9 4.3-0.5 0.2-0.4 0.3-0.5 1.9 1.1 6.4 5.3 20.1 0.8 3.2 1.6 2.2 3.6 3.2 0 2.6-0.5 1.2 0 1.4 0.4 1.5 3.4 4 0.3 0.5 0.3 0.4 1.5 0.5 4.1-0.5 4.5-0.2 1.9 4.4 0.6 6.6 2.4 2.1 4.2 7.4-2.6 8.7-6.3 8.6-8.7 5.9-3.4-1.4-2.6-0.2-1.3 0.4-4.4 2.9-1.3 0.7-1 0.3-0.7 0-1.2-0.3-1.2-0.5-2.3-0.6-0.8 0.1-0.6 0.2-0.7 0.8-1.2 1.9-0.2 0.5-1.1 1.5-1.6 1.8-0.8 0.3-0.6 0-1.3-0.8-1.2-0.4-0.7 0.4-0.5 0.3-0.6 1.5-2 1.9-1.7-0.1-1.2-0.4-2.7-0.5-1.1-0.5-0.5-0.6 0.6-3.9 3-7.3 0.3-2.7-0.2-0.5-0.4-0.5-0.5-0.3-0.8 0-0.9 0.1-0.6 0.3-0.6 0.3-0.9 0.6-1.6 1.4-2.9 3.2-7.7 3.8-1.4 2.2-1.9 6.1-0.9 2.1-3.9 5.8-0.9 2-0.8 2-0.7 3.2-0.5 1.4-0.5 1-2.1 2.4-6.7 10.1-8.9 2-6.2 0.5-2.5-0.3-12.5-5.5-0.9-0.2-0.6 0.1-1.1 0.5-1.7 1.2z"}, "GT15": {"n": "Baja Verapaz", "d": "M409.2 695.4l-2.4-5.7-1-2.1-1.6-1.4-1.4-1-1.4-1.2-3.9-4.1 1-4.8 0.1-1-19.3-12.2-16-20.7 1.4-24 1.7 0.9 35.5 8.4 25.1 1.1 7.1-0.6 8-11 5 0.2 4.9 0 7.2 0.2 5.1-0.2 4.6 1.5 11.8 8.1 2.3 2.2 0.6 0.2 0.8-0.1 2.2-1.2 0.8-0.9 2.6-3.3 1.1-0.8 1.4-2.1 1.7-6.9 0.2-1.4 0.2-0.5 0.5-1 0.4-0.4 0.3-0.4 0.9-0.7 2.9 0.2 10.3 2.5 23.4 3.3 8.4-0.3 7-2.8 2-0.5 9.6-0.8 0.7 0.2 0.8 0.2 1.6 1 2.4 2.2 1 1.3 0.5 1 0.4 1.1-0.2 2.2-2.2 6.5-9.5 13.6-5.8 3.2-8.2 5.6-18.3 12.3-34 23.7-3.4 10.8-1 3.6-10.9 1.8-7.1-1.3-2.7-2.6-1-2.6-1.6-1.4-3.5 0.7-1.8 1.3-0.5 1.2-0.9 1.1-2.8 0.8-2.5 0.2-2-0.2-1.6-1-1.1-2-1.6 0-3.4 2-5.5 1.9-5.3 1.1-3.3-0.5-1.3 0-1 0.6-0.9 0.2-1.1-0.5-1.7-1.8-3.2 0.6-7.6-2.8z"}, "GT08": {"n": "Totonicapán", "d": "M224.8 639.5l7.2-0.4 0.8-0.3 0.9-0.6 0.2-0.6 0.4-5.6 0.2-0.6 1.3-2.5 2.8-4.2 0.8-0.8 1-0.5 2.2-0.6 9.2-2.2 3.4-2.4 5.1-2.4 2.5-0.4 5.6 0.4-1 6.2-0.1 4 1.1 3.4 2.9 1.5 0.7 1.5 5.9 6.1 1.5 0.7 1.1 4.3 2 3 0.3 3.1 1.5 0.5 1.4 2.5 0 1.1-0.2 2.3-0.5 0.8-0.6 0.5-2.3 0-0.9 0.3-1.1 0.4-1.7 1.4-0.7 1-0.5 1.5-0.2 1.7 0 0.7 0.1 0.7 0.3 0.5 0.4 0.4 2.2 1.5 3.9 2.9 0.4 0.6 0.6 1.1 1 4 1.5 2.4 3.5 2.5 0.6 1.2 0.1 1.4-1.2 3.7-0.5 1.4 6.8 5.3-4.2 4.2-2.8 4.1-3 2.9-2.3 0.8-1.2 0.2-1.4 0-0.7-0.1-3.4-1.2-1.5-0.2-2.9 0-4.4 1.9-1.6-0.2-1.2-0.6-2-0.5-4.9-0.8-2.5 0.4-1.9 0.6-9.8 8.4-0.8 0.7-4.2-7.4-2.4-2.1-0.6-6.6-1.9-4.4-4.5 0.2-4.1 0.5-1.5-0.5-0.3-0.4-0.3-0.5-3.4-4-0.4-1.5 0-1.4 0.5-1.2 0-2.6-3.6-3.2-1.6-2.2-0.8-3.2-5.3-20.1-1.1-6.4 0.5-1.9 0.4-0.3 0.5-0.2 10.9-4.3 3.8-1.3z"}}, "centros": {"GT22": [573.9, 846.0], "GT20": [672.7, 741.0], "GT17": [546.9, 234.7], "GT12": [131.8, 671.0], "GT13": [216.0, 527.1], "GT14": [347.0, 572.8], "GT16": [519.1, 532.3], "GT18": [756.0, 551.5], "GT19": [657.8, 662.7], "GT11": [168.4, 799.0], "GT10": [248.0, 803.5], "GT05": [337.6, 858.5], "GT06": [479.3, 858.6], "GT04": [350.3, 739.8], "GT03": [390.8, 767.5], "GT01": [444.5, 754.4], "GT21": [561.0, 755.4], "GT02": [535.0, 692.1], "GT07": [281.3, 734.7], "GT09": [180.1, 717.5], "GT15": [460.5, 650.8], "GT08": [252.3, 666.4]}};
+// ---- investigacion/graficos/_comun.js
+// Comunes de los gráficos del informe. Cada G.<tipo>(el, spec, ctx) dibuja UN <svg> (o HTML) dentro de
+// `el`; ctx = { ancho, alto, col } y col es el esquema de color del lugar (I.esquema: papel o panel):
+//   texto · base (marcas atenuadas) · dest (la marca que importa) · linea (ejes) · suave · sobre (fondo)
+//   · tinta (solo en papel: acento para texto, papel_tinta)
+// Las cifras llegan crudas y en la unidad de la fuente; el formato lo pone spec.formato.
+// Regla: un G.* pinta SOLO con col.* y GX.*; nunca con H.color/H.rampa/H.halo/H.periodos/H.textoSobre
+// (leen las variables CSS de la tarjeta) ni con los helpers que tocan el DOM de la tarjeta
+// (H.espacio, H.lienzo, H.leyenda, H.anotar, H.cabecera, H.verificar). Lo vigila check_workflows W8.
+const GX = (() => {
+  const fmt = (v, f) => {
+    if (v == null) return "—";
+    const ff = Object.assign({ decimales: H.decimalesDe([v], 2), miles: true }, f || {});
+    return H.num(v, ff);
+  };
+  const lienzo = (el, w, h, aria) => {
+    el.innerHTML = "";
+    const svg = H.svgEl("svg", { viewBox: "0 0 " + w + " " + h, width: w, height: h, role: "img", "aria-label": aria || "" }, el);
+    return svg;
+  };
+  const rect = (svg, x, y, w, h, fill, extra) => H.svgEl("rect", Object.assign({ x, y, width: Math.max(0, w), height: Math.max(0, h), fill }, extra || {}), svg);
+  const linea = (svg, x1, y1, x2, y2, stroke, extra) => H.svgEl("line", Object.assign({ x1, y1, x2, y2, stroke, "stroke-width": 1.5 }, extra || {}), svg);
+  const t = (svg, x, y, s, font, fill, extra) => H.texto(svg, x, y, s, Object.assign({ style: "font:" + font, fill }, extra || {}));
+  // Tipografías del documento (piso 12 px, tokens.documento.pisoPx).
+  const MONO = "500 12px 'JetBrains Mono', monospace", MONO_B = "700 12px 'JetBrains Mono', monospace", MONO_D = "700 14px 'JetBrains Mono', monospace";
+  const SANS = "600 14px Archivo, sans-serif", SANS_D = "800 14px Archivo, sans-serif", SANS_S = "600 12px Archivo, sans-serif";
+  const serif = (px) => "400 " + px + "px 'Instrument Serif', Georgia, serif";
+  const indice = (d, n) => (d == null ? -1 : ((d % n) + n) % n);
+  const marcador = (svg, cx, cy, n, col) => {
+    H.svgEl("circle", { cx, cy, r: 11, fill: col.texto }, svg);
+    t(svg, cx, cy + 4.5, String(n), MONO_B, col.sobre, { "text-anchor": "middle" });
+  };
+  // Rampa secuencial de n clases (2–9) de la MÁS BAJA a la MÁS ALTA, según el lugar:
+  //   panel → H.rampa (lee --bg/--ink del body, que informe.py define para la paleta);
+  //   papel → de un tinte claro de col.dest (≥ 1.5:1 sobre el papel) a col.tinta, en RGB lineal (H.mezcla).
+  const rampa = (n, col) => {
+    n = Math.max(2, Math.min(9, Math.round(n)));
+    if (!col.tinta) return H.rampa(n);
+    let t0 = 0.25, a = H.mezcla(col.sobre, col.dest, t0);
+    while (H.contraste(a, col.sobre) < 1.5 && t0 < 0.9) a = H.mezcla(col.sobre, col.dest, (t0 += 0.05));
+    return Array.from({ length: n }, (_, k) => H.mezcla(a, col.tinta, k / (n - 1)));
+  };
+  // Color de texto legible sobre un relleno: el de más contraste entre texto, fondo y los dos neutros.
+  const textoSobre = (relleno, col) => [col.texto, col.sobre, "#F6F2E8", "#0C1520"].reduce((m, c) => (H.contraste(relleno, c) > H.contraste(relleno, m) ? c : m));
+  // Halo del color del fondo para texto que pisa barras o líneas (paint-order).
+  const halo = (col) => "paint-order:stroke;stroke:" + col.sobre + ";stroke-width:4px;stroke-linejoin:round";
+  // Nota automática del gráfico (redondeo, agrupación, dos escalas): un <span class="nota"> tras el SVG,
+  // dentro de .grafico (base.html ya la viste a 12 px mono en papel y en panel). Espejo de H.anotar.
+  const anotar = (el, texto) => {
+    if (!texto) return;
+    let n = el.querySelector(":scope > span.nota");
+    if (!n) { n = document.createElement("span"); n.className = "nota"; n.style.display = "block"; el.appendChild(n); }
+    n.textContent = (n.textContent ? n.textContent + " " : "") + texto;
+  };
+  // Periodos (linea, barras_v): bandas alternas con nombre arriba, a 12 px. P = H.validarPeriodos(...);
+  // bordes(i) → [xIzq, xDer] del hueco de la marca i. Llamar ANTES de dibujar las marcas.
+  const periodos = (svg, P, bordes, yTop, yBot, yNombre, col) => {
+    P.forEach((p, k) => {
+      const xa = bordes(p.desde)[0], xb = bordes(p.hasta)[1];
+      if (k % 2 === 0) rect(svg, xa, yTop, xb - xa, yBot - yTop, col.suave);
+      else linea(svg, xa, yTop, xa, yBot, col.linea, { "stroke-width": 1, "stroke-dasharray": "3 5", "stroke-opacity": 0.5 });
+      const w = H.medir(p.nombre, MONO);
+      H.assert(w <= xb - xa - 6, "periodo «" + p.nombre + "» no cabe en su banda (" + Math.round(w) + "px > " + Math.round(xb - xa - 6) + "): acórtalo");
+      t(svg, (xa + xb) / 2, yNombre, p.nombre, MONO, col.texto, { "text-anchor": "middle" });
+    });
+  };
+  // Patrón rayado «sin dato» (mapa, calor); devuelve la url(#id) y lo define una sola vez por svg.
+  const sinDato = (svg, col) => {
+    const id = "sinDato" + Math.random().toString(36).slice(2, 7);
+    const defs = H.svgEl("defs", {}, svg);
+    const pat = H.svgEl("pattern", { id, width: 8, height: 8, patternUnits: "userSpaceOnUse", patternTransform: "rotate(45)" }, defs);
+    H.svgEl("rect", { width: 8, height: 8, fill: col.suave }, pat);
+    H.svgEl("line", { x1: 0, y1: 0, x2: 0, y2: 8, stroke: col.base, "stroke-width": 2 }, pat);
+    return "url(#" + id + ")";
+  };
+  return { fmt, lienzo, rect, linea, t, MONO, MONO_B, MONO_D, SANS, SANS_D, SANS_S, serif, indice, marcador, rampa, textoSobre, halo, anotar, periodos, sinDato };
+})();
+
+// ---- investigacion/graficos/barras.js
+// barras_v · periodos o grupos en columnas, una destacada (Fig. «casos a la SE 35», «edades»).
+//   etiquetas[], valores[], destacar (índice; -1 = última), rotular "todas"|"destacada",
+//   nivel (índice: línea punteada a la altura de esa barra), banda {desde, hasta, texto},
+//   marcadores [{i, n}] (círculos numerados para una lectura guiada), formato.
+G.barras_v = (el, S, { ancho, alto, col }) => {
+  const n = S.valores.length;
+  H.assert(n >= 2 && n <= 16 && S.etiquetas.length === n, "barras_v: 2 a 16 barras con etiquetas");
+  const W = ancho, Hh = alto || 250, arriba = 22, abajo = 22, base = Hh - abajo;
+  const svg = GX.lienzo(el, W, Hh, S.aria);
+  const max = Math.max(...S.valores) || 1, slot = W / n, bw = Math.min(40, slot * 0.6);
+  const hi = GX.indice(S.destacar == null ? -1 : S.destacar, n);
+  const y = (v) => base - (v / max) * (base - arriba);
+  if (S.banda) {
+    const x0 = S.banda.desde * slot, x1 = (S.banda.hasta + 1) * slot;
+    GX.rect(svg, x0, 0, x1 - x0, base, col.dest, { "fill-opacity": 0.1 });
+    if (S.banda.texto) GX.t(svg, x0 + 10, 18, S.banda.texto, GX.MONO_B, col.tinta || col.texto);
+  }
+  if (S.nivel != null) GX.linea(svg, 0, y(S.valores[S.nivel]), W, y(S.valores[S.nivel]), col.dest, { "stroke-dasharray": "4 4" });
+  S.valores.forEach((v, i) => {
+    const x = i * slot + (slot - bw) / 2, d = i === hi;
+    GX.rect(svg, x, y(v), bw, base - y(v), d ? col.dest : col.base);
+    if (S.rotular !== "destacada" || d) GX.t(svg, x + bw / 2, y(v) - 8, GX.fmt(v, S.formato), d ? GX.MONO_D : GX.MONO_B, d ? (col.tinta || col.dest) : col.texto, { "text-anchor": "middle" });
+    GX.t(svg, x + bw / 2, Hh - 4, S.etiquetas[i], d ? GX.MONO_B : GX.MONO, col.texto, { "text-anchor": "middle" });
+  });
+  GX.linea(svg, 0, base, W, base, col.linea);
+  for (const m of S.marcadores || []) {
+    const x = m.i * slot + slot / 2 + (m.lado === "derecha" ? bw / 2 + 18 : 0);
+    GX.marcador(svg, x, Math.max(14, y(S.valores[m.i]) - (m.lado === "derecha" ? 0 : 34)), m.n, col);
+  }
+};
+
+// barras_h · ranking con nombre a la izquierda y valor al final de la barra.
+//   items [{nombre, valor}], destacar (índice), formato, orden "dado"|"desc".
+G.barras_h = (el, S, { ancho, col }) => {
+  const items = S.orden === "desc" ? S.items.slice().sort((a, b) => b.valor - a.valor) : S.items.slice();
+  const n = items.length, fila = 30, Hh = n * fila;
+  H.assert(n >= 2 && n <= 12, "barras_h: 2 a 12 items");
+  const hi = GX.indice(S.destacar == null ? 0 : S.destacar, n);
+  const etiq = Math.ceil(Math.max(...items.map((it) => H.medir(it.nombre, GX.SANS_D)))) + 16;
+  const valW = Math.ceil(Math.max(...items.map((it) => H.medir(GX.fmt(it.valor, S.formato), GX.MONO_D)))) + 10;
+  const W = ancho, util = W - etiq - valW, max = Math.max(...items.map((it) => it.valor)) || 1;
+  const svg = GX.lienzo(el, W, Hh, S.aria);
+  items.forEach((it, i) => {
+    const d = i === hi, w = (it.valor / max) * util, yy = i * fila;
+    GX.t(svg, 0, yy + 20, it.nombre, d ? GX.SANS_D : GX.SANS, col.texto);
+    GX.rect(svg, etiq, yy + 7, w, 16, d ? col.dest : col.base);
+    GX.t(svg, etiq + w + 8, yy + 20, GX.fmt(it.valor, S.formato), d ? GX.MONO_D : GX.MONO_B, d ? (col.tinta || col.dest) : col.texto);
+  });
+  GX.linea(svg, etiq, 0, etiq, Hh, col.linea, { "stroke-width": 1 });
+};
+
+// divergente · cambios con signo; nombre encima de cada barra (cabe a media página).
+//   items [{nombre, valor}], destacar (índice), formato (signo/sufijo).
+G.divergente = (el, S, { ancho, col }) => {
+  const n = S.items.length, fila = 31, Hh = n * fila;
+  const hi = GX.indice(S.destacar == null ? 0 : S.destacar, n);
+  const vals = S.items.map((it) => it.valor), min = Math.min(0, ...vals), max = Math.max(0, ...vals);
+  const W = ancho, margen = 44, util = W - margen * (min < 0 && max > 0 ? 2 : 1);
+  const esc = util / ((max - min) || 1), x0 = (min < 0 ? (max > 0 ? margen : margen) : 0) + (-min) * esc;
+  const svg = GX.lienzo(el, W, Hh, S.aria);
+  S.items.forEach((it, i) => {
+    const d = i === hi, yy = i * fila, w = Math.abs(it.valor) * esc, x = it.valor < 0 ? x0 - w : x0;
+    GX.t(svg, 0, yy + 11, it.nombre, d ? "800 13px Archivo, sans-serif" : "600 13px Archivo, sans-serif", d ? col.dest : col.texto);
+    GX.rect(svg, x, yy + 15, w, 11, d ? col.dest : col.base);
+    const lab = GX.fmt(it.valor, S.formato);
+    GX.t(svg, it.valor < 0 ? x - 6 : x + w + 6, yy + 24, lab, GX.MONO_B, d ? col.dest : col.texto, { "text-anchor": it.valor < 0 ? "end" : "start" });
+  });
+  GX.linea(svg, x0, 0, x0, Hh, col.linea);
+};
+
+// columnas · dos series por periodo en columnas verticales (p. ej. año completo frente a SE 35); valores null = sin dato.
+//   Solo documento (la plantilla de tarjeta `agrupadas` es horizontal y tiene su propio G.agrupadas).
+//   etiquetas[], series [{nombre, valores, estilo "base"|"fuerte"}], destacar {serie, i},
+//   rotular [[serie, i], …] (qué valores llevan cifra), formato.
+G.columnas = (el, S, { ancho, alto, col }) => {
+  const n = S.etiquetas.length, k = S.series.length, W = ancho, Hh = alto || 326, arriba = 30, base = Hh - 26;
+  const svg = GX.lienzo(el, W, Hh, S.aria);
+  const max = Math.max(...S.series.flatMap((s) => s.valores.filter((v) => v != null))) || 1;
+  const slot = W / n, bw = Math.min(20, (slot * 0.7) / k), gap = 2, grupo = k * bw + (k - 1) * gap;
+  const y = (v) => base - (v / max) * (base - arriba);
+  const rot = new Set((S.rotular || []).map((p) => p.join(":")));
+  S.etiquetas.forEach((et, i) => {
+    const gx = i * slot + (slot - grupo) / 2;
+    S.series.forEach((s, j) => {
+      const v = s.valores[i];
+      if (v == null) return;
+      const d = S.destacar && S.destacar.serie === j && S.destacar.i === i;
+      const x = gx + j * (bw + gap);
+      GX.rect(svg, x, y(v), bw, base - y(v), d ? col.dest : s.estilo === "fuerte" ? col.linea : col.base);
+      if (rot.has(j + ":" + i) || d) GX.t(svg, x + bw / 2, y(v) - 8, GX.fmt(v, S.formato), d ? GX.MONO_D : GX.MONO_B, d ? col.dest : col.texto, { "text-anchor": "middle" });
+    });
+    GX.t(svg, i * slot + slot / 2, Hh - 6, et, i === n - 1 ? GX.MONO_B : GX.MONO, col.texto, { "text-anchor": "middle" });
+  });
+  GX.linea(svg, 0, base, W, base, col.linea);
+};
+
+// ---- investigacion/graficos/linea.js
+// linea · una o más series en el tiempo; la destacada gruesa en el acento, el resto en tinta atenuada.
+//   etiquetas[], series [{nombre, valores, destacar}], max (techo del eje; por defecto el dato),
+//   sufijo del eje ("%"), anotaciones [{serie, i, texto, lado "arriba"|"izq"}], formato.
+G.linea = (el, S, { ancho, alto, col }) => {
+  const n = S.etiquetas.length, W = ancho, Hh = alto || 340;
+  const ejeW = 40, finW = 64, arriba = 10, base = Hh - 30, x0 = ejeW, x1 = W - finW;
+  const todos = S.series.flatMap((s) => s.valores.filter((v) => v != null));
+  const tope = S.max || H.dominio(todos, true)[1];
+  const ticks = H.ticks(0, tope, 4).filter((v) => v <= tope + 1e-9);
+  const svg = GX.lienzo(el, W, Hh, S.aria);
+  const x = (i) => x0 + (i * (x1 - x0)) / (n - 1), y = (v) => base - (v / tope) * (base - arriba);
+  for (const tk of ticks) {
+    if (tk > 0) GX.linea(svg, x0, y(tk), x1, y(tk), col.suave, { "stroke-width": 1 });
+    GX.t(svg, 0, y(tk) + 4, H.num(tk, { decimales: H.decimalesDe(ticks) }) + (S.sufijo || ""), GX.MONO, col.texto);
+  }
+  GX.linea(svg, x0, base, x1, base, col.linea);
+  const orden = S.series.map((s, j) => j).sort((a, b) => (S.series[a].destacar ? 1 : 0) - (S.series[b].destacar ? 1 : 0));
+  // Rótulos finales (nombre + valor, dos líneas de 12 px): se empujan para no solaparse (H.antiSolape es puro).
+  const rot = S.series.map((s) => { const ult = s.valores.length - 1; return { y: y(s.valores[ult]), v: s.valores[ult] }; });
+  H.antiSolape(rot, { minGap: 30, min: 14, max: base - 2 });
+  for (const j of orden) {
+    const s = S.series[j], d = !!s.destacar;
+    const pts = s.valores.map((v, i) => (v == null ? null : x(i) + "," + y(v))).filter(Boolean).join(" ");
+    H.svgEl("polyline", { points: pts, fill: "none", stroke: d ? col.dest : col.texto, "stroke-opacity": d ? 1 : 0.55, "stroke-width": d ? 3.5 : 2, "stroke-linejoin": "round" }, svg);
+    const ult = s.valores.length - 1, v = s.valores[ult], yr = rot[j].y;
+    H.svgEl("circle", { cx: x(ult), cy: y(v), r: d ? 5 : 4, fill: d ? col.dest : col.texto, "fill-opacity": d ? 1 : 0.55 }, svg);
+    const tc = d ? (col.tinta || col.dest) : col.texto;
+    GX.t(svg, x1 + 10, yr - 2, s.nombre, GX.MONO_B, tc, d ? {} : { "fill-opacity": 0.75 });
+    GX.t(svg, x1 + 10, yr + 14, GX.fmt(v, S.formato) + (S.sufijo || ""), d ? GX.MONO_D : GX.MONO_B, tc, d ? {} : { "fill-opacity": 0.75 });
+  }
+  for (const a of S.anotaciones || []) {
+    const s = S.series[a.serie], v = s.valores[a.i], d = !!s.destacar;
+    if (d) H.svgEl("circle", { cx: x(a.i), cy: y(v), r: 4, fill: col.dest }, svg);
+    const izq = a.lado === "izq";
+    GX.t(svg, izq ? x(a.i) - 8 : x(a.i), izq ? y(v) - 4 : y(v) - 11, a.texto, GX.MONO_B, d ? (col.tinta || col.dest) : col.texto, { "text-anchor": izq ? "end" : "middle" });
+  }
+  S.etiquetas.forEach((et, i) => GX.t(svg, x(i), Hh - 8, et, i === n - 1 ? GX.MONO_B : GX.MONO, col.texto, { "text-anchor": "middle" }));
+};
+
+// ---- investigacion/graficos/mapa.js
+// mapa · los 22 departamentos (GEOMETRIA la inyecta scripts/informe.py desde design/mapa_geometria.svg).
+//   marcados [GTxx…] en el acento, el resto en tinta suave; marcadores [{id, n, dx, dy}] numerados en
+//   el centroide del departamento (dx/dy corrigen en px si dos quedan juntos).
+G.mapa = (el, S, { ancho, col }) => {
+  H.assert(typeof GEOMETRIA === "object", "mapa: falta GEOMETRIA (informe.py la inyecta)");
+  const [vx, vy, vw, vh] = GEOMETRIA.viewBox.split(/\s+/).map(Number);
+  const W = Math.min(ancho, S.ancho || ancho), Hh = Math.round((W * vh) / vw), k = W / vw;  // S.ancho acota el mapa (un mapa a 672 px mide 705 de alto)
+  const svg = GX.lienzo(el, W, Hh, S.aria);
+  const g = H.svgEl("g", { transform: "scale(" + k + ") translate(" + -vx + " " + -vy + ")" }, svg);
+  const marcados = new Set(S.marcados || []);
+  const cajas = {};
+  for (const [id, dep] of Object.entries(GEOMETRIA.deptos)) {
+    const p = H.svgEl("path", { d: dep.d, fill: marcados.has(id) ? col.dest : col.suave, stroke: col.sobre, "stroke-width": 2.2, "stroke-linejoin": "round" }, g);
+    cajas[id] = p;
+  }
+  for (const m of S.marcadores || []) {
+    H.assert(cajas[m.id], "mapa: marcador en un departamento desconocido " + m.id);
+    // Centroide de área (informe.py) o, si falta, el centro de la caja.
+    const b = cajas[m.id].getBBox(), c = (GEOMETRIA.centros || {})[m.id] || [b.x + b.width / 2, b.y + b.height / 2];
+    const cx = (c[0] - vx) * k + (m.dx || 0), cy = (c[1] - vy) * k + (m.dy || 0);
+    const txt = String(m.n), w = txt.length > 1 ? Math.max(22, H.medir(txt, GX.MONO_B) + 14) : 22;
+    GX.rect(svg, cx - w / 2, cy - 11, w, 22, col.texto, { rx: 11 });
+    GX.t(svg, cx, cy + 4.5, txt, GX.MONO_B, col.sobre, { "text-anchor": "middle" });
+  }
+};
+
+// ---- investigacion/graficos/mini.js
+// Gráficos pequeños para el tablero de cifras clave.
+
+// chispa · la serie como columnas mínimas; la destacada (por defecto la última) en el acento.
+G.chispa = (el, S, { ancho, col }) => {
+  const n = S.valores.length, W = ancho, Hh = 64, base = 46, tope = 2;
+  const svg = GX.lienzo(el, W, Hh, S.aria);
+  const max = Math.max(...S.valores) || 1, slot = W / n, bw = Math.min(26, slot * 0.64);
+  const hi = GX.indice(S.destacar == null ? -1 : S.destacar, n);
+  S.valores.forEach((v, i) => {
+    const h = Math.max(1, (v / max) * (base - tope));
+    GX.rect(svg, i * slot + (slot - bw) / 2, base - h, bw, h, i === hi ? col.dest : col.base);
+  });
+  GX.linea(svg, 0, base, W, base, col.linea, { "stroke-width": 1 });
+  GX.t(svg, 0, 62, S.etiquetas[0], GX.MONO, col.texto);
+  GX.t(svg, W, 62, S.etiquetas[n - 1], GX.MONO_B, col.texto, { "text-anchor": "end" });
+};
+
+// cuadros · una fila de N cuadros con los marcados en el acento (p. ej. 10 de 29 áreas en alerta).
+G.cuadros = (el, S, { ancho, col }) => {
+  const W = ancho, Hh = 64, paso = Math.min(11, W / S.total), lado = paso - 2;
+  const svg = GX.lienzo(el, W, Hh, S.aria);
+  for (let i = 0; i < S.total; i++) GX.rect(svg, i * paso, 14, lado, 18, i < S.marcados ? col.dest : col.base);
+  if (S.texto) GX.t(svg, 0, 56, S.texto, GX.MONO, col.texto);
+};
+
+// comparacion · dos o tres barras horizontales en HTML con su rótulo (periodos distintos, declarados).
+G.comparacion = (el, S, { ancho, col }) => {
+  const max = Math.max(...S.items.map((it) => it.valor)) || 1, util = ancho - 92 - 10 - 40;
+  el.innerHTML = '<div style="height:64px;display:flex;flex-direction:column;justify-content:center;gap:8px">' +
+    S.items.map((it) => '<div style="display:flex;align-items:center;gap:10px;font:500 12px/1 \'JetBrains Mono\',monospace">' +
+      '<span style="flex:none;width:92px">' + I.esc(it.nombre) + '</span>' +
+      '<span style="width:' + ((it.valor / max) * util).toFixed(1) + 'px;height:12px;background:' + (it.destacar ? col.dest : col.base) + '"></span>' +
+      '<span style="font-weight:' + (it.destacar ? 700 : 500) + '">' + I.esc(GX.fmt(it.valor, S.formato)) + '</span></div>').join("") + "</div>";
+};
+
+</script>
+<script>
+// ---- investigacion/paginas/_comun.js
+// Piezas comunes de las páginas. C(R, P) devuelve el contexto que recibe cada PAGINAS.<tipo>(P, ctx):
+//   cab(derecha)        encabezado corrido (kicker del informe a la izquierda)
+//   pie(izquierda)      pie de página: texto, número de página y badge X + handle
+//   bloques(lista)      bloques de cuerpo: titulo · texto · figura · figuras · tabla · cita · caja · lectura
+//   fig(f) / tabla(t)   una figura o una tabla con su número y su pie («Fuente: …»)
+// La numeración (P._n, f._n, t._n), las referencias {fig:id}/{pag:id}, el índice y las cifras de
+// método ya llegan resueltas por scripts/informe.py: aquí solo se dibuja.
+const C = (R, P) => {
+  const M = R.meta, md = I.md, esc = I.esc;
+  const marca = () => '<div class="marca"><div class="x">X</div><span class="handle">' + esc(M.handle) + "</span></div>";
+  const cab = (der, opc) => '<div class="corrido' + (opc && opc.color ? " sobre-color" : "") + '"><span class="k acento">' + esc((opc && opc.izq) || M.corrido) + '</span><span class="k">' + esc(der || "") + "</span></div>";
+  const pie = (izq, opc) => {
+    const o = opc || {};
+    return '<div class="pie-pag' + (o.color ? " sobre-color" : "") + '"><span class="mono">' + esc(izq || M.pie) + '</span><div class="autor">' +
+      (P._mostrar_numero === false ? "" : '<span class="mono" style="font-weight:500">' + esc(P._n_texto) + "</span>") + (o.sin_marca ? "" : marca()) + "</div></div>";
+  };
+
+  const leyenda = (items) => !items || !items.length ? "" : '<div class="leyenda">' + items.map((it) =>
+    '<span><i class="' + (it.forma === "linea" ? "linea" : "") + '" style="background:' + (it.forma === "linea" && (it.estilo || "base") === "base" ? "var(--fig-fuerte);opacity:.55" : { dest: "var(--fig-dest)", base: "var(--fig-base)", fuerte: "var(--fig-fuerte)" }[it.estilo || "base"]) + '"></i>' + esc(it.texto) + "</span>").join("") + "</div>";
+
+  const fig = (f, opc) => {
+    const o = opc || {}, tipo = f.tipo || "papel", compacto = !!o.compacto;
+    const cap = '<figcaption><span class="figno">' + esc(f._n) + "</span><span>" + md(f.pie || "") +
+      (tipo === "panel" ? "" : (f.pie ? " " : "") + "Fuente: " + esc(f.fuente) + ".") + (f.derivado ? " Incluye cálculo propio." : "") + "</span></figcaption>";
+    if (tipo === "tarjeta") {
+      return '<figure class="fig fig--tarjeta"' + (f.ancho ? ' style="width:' + f.ancho + 'px"' : "") + '><img class="tarjeta-img" src="' + esc(f._src) + '" alt="' + esc(f.alt || f.titular || "") + '">' + cap + "</figure>";
+    }
+    const vars = tipo === "panel" ? "--fig-dest:var(--a1);--fig-base:rgba(var(--ink-rgb),.45);--fig-fuerte:var(--ink)" : "--fig-dest:var(--barra);--fig-base:rgba(12,21,32,.2);--fig-fuerte:#0C1520";
+    const titular = f.titular ? '<span class="titular' + (tipo === "panel" && !compacto ? " grande" : "") + '">' + md(Array.isArray(f.titular) ? f.titular.join("\n") : f.titular).replace(/\n/g, "<br>") + "</span>" : "";
+    let cuerpo;
+    if (!f.lista) cuerpo = I.grafico(f.grafico, tipo, f.alto);
+    else {
+      cuerpo = '<div style="display:flex;gap:32px;margin-top:20px"><div style="flex:none;width:' + (f.grafico.ancho || 400) + 'px">' + I.grafico(f.grafico, tipo, f.alto) + '</div><div style="flex:1;min-width:0;display:flex;flex-direction:column">' +
+        '<div class="lista-reglas" style="border-top-width:1px">' + f.lista.map((it) =>
+          '<div style="display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:10px;align-items:center;padding:9px 0"><span class="marcador">' + esc(it.n) + '</span><span style="font:' + (it.destacar ? 800 : 600) + ' 14px/1.25 Archivo,sans-serif">' + esc(it.nombre) + '</span><span style="font:700 ' + (it.destacar ? 14 : 12) + "px/1 'JetBrains Mono',monospace" + (it.destacar ? ";color:var(--tinta)" : "") + '">' + esc(it.valor) + "</span></div>").join("") +
+        "</div>" + leyenda(f.leyenda).replace('class="leyenda"', 'class="leyenda" style="flex-direction:column;gap:8px;margin-top:18px;font:500 12px/1.3 \'JetBrains Mono\',monospace"') + "</div></div>";
+    }
+    const nota = f.nota ? '<span class="nota">' + md(f.nota) + "</span>" : "";
+    const pieFig = tipo === "panel" ? '<div class="pie-fig"><span class="mono">Fuente: ' + esc(f.fuente) + "</span>" + marca() + "</div>" : "";
+    return '<figure class="fig fig--' + tipo + '" style="' + vars + (o.estilo ? ";" + o.estilo : "") + '"><div class="marco' + (tipo === "panel" ? " panel" + (compacto ? " compacto" : "") : "") + '"' + (o.estilo ? ' style="flex:1"' : "") + ">" +
+      (f.kicker ? '<span class="k acento">' + esc(f.kicker) + "</span>" : "") + titular + (f.lista ? "" : leyenda(f.leyenda)) + cuerpo + nota + pieFig + "</div>" + cap + "</figure>";
+  };
+
+  const tabla = (t) => {
+    const cols = t.columnas;
+    const th = cols.map((c) => '<th class="' + (c.num ? "num" : "") + '" style="text-align:' + (c.num ? "right" : "left") + (c.ancho ? ";width:" + c.ancho + "px" : "") + '">' + esc(c.t).replace(/\n/g, "<br>") + "</th>").join("");
+    const filas = t.filas.map((f) => '<tr class="' + (f.dest ? "dest" : "") + (f.total ? " total" : "") + '">' + f.c.map((v, i) => {
+      const b = (f.b || []).includes(i) || (f.dest && i === 0);
+      const chip = typeof v === "object" && v && v.chip;
+      const contenido = chip ? '<span class="chip' + (v.chip === "ajustada" ? " borde" : "") + '">' + esc(v.chip) + "</span>" : esc(v == null ? "—" : v);
+      return '<td class="' + (cols[i].num ? "num" : "") + (b ? " b" : "") + '"' + (f.dest && cols[i].num ? ' style="color:var(--tinta)"' : "") + ">" + contenido + "</td>";
+    }).join("") + "</tr>").join("");
+    const notas = t.notas && t.notas.length ? '<div class="notas-tabla">' + t.notas.map((n) => "<span><b>" + esc(n.m) + "</b> · " + md(n.texto) + "</span>").join("") + "</div>" : "";
+    return '<figure class="fig tabla">' + (t.titulo ? '<span class="k acento">' + esc(t.titulo) + "</span>" : "") + '<table class="t">' + "<thead><tr>" + th + "</tr></thead><tbody>" + filas + "</tbody></table>" +
+      '<figcaption><span class="figno">' + esc(t._n) + "</span><span>" + md(t.pie || "") + (t.pie ? " " : "") + "Fuente: " + esc(t.fuente) + ".</span></figcaption>" + notas + "</figure>";
+  };
+
+  const parrafos = (B) => I.lista(B.parrafos || B.texto).map((s, i) => i === 0 && B.capitular
+    ? '<p class="p"><span class="capitular">' + esc(s[0]) + "</span>" + md(s.slice(1)) + "</p>"
+    : '<p class="p">' + md(s) + "</p>").join("");
+
+  const bloque = (B) => {
+    switch (B.b) {
+      case "titulo": return '<h3 class="t3">' + md(B.texto) + "</h3>";
+      case "texto":
+        if (B.margen) return '<div class="con-margen"><div class="texto">' + parrafos(B) + '</div><div class="margen">' +
+          B.margen.map((m) => "<span><b>" + esc(m.termino) + "</b> · " + md(m.texto) + "</span>").join("") + "</div></div>";
+        return parrafos(B);
+      case "figura": return fig(B);
+      case "figuras": return '<div class="dos">' + B.items.map((f) => fig(f, { compacto: true })).join("") + "</div>";
+      case "tabla": return tabla(B);
+      case "cita": return '<blockquote class="cita"><span class="k acento">' + esc(B.etiqueta) + '</span><span class="frase">' + md(B.texto) + "</span></blockquote>";
+      case "caja": return '<div class="caja"><span class="k acento">' + esc(B.etiqueta) + '</span><div class="items">' + B.items.map((s) => "<span>" + md(s) + "</span>").join("") + "</div></div>";
+      case "lectura": return '<div class="caja vertical lectura"><span class="k acento">' + esc(B.titulo) + '</span><div class="pasos">' +
+        B.items.map((it) => '<div class="paso"><span class="marcador">' + esc(it.n) + "</span><span>" + md(it.texto) + "</span></div>").join("") + "</div>" +
+        (B.nota ? '<span class="mono" style="color:rgba(12,21,32,.72)">' + md(B.nota) + "</span>" : "") + "</div>";
+      default: throw new Error("bloque desconocido: " + B.b);
+    }
+  };
+  const bloques = (lista) => I.lista(lista).map(bloque).join("");
+  return { M, md, esc, cab, pie, marca, fig, tabla, bloques, bloque, leyenda };
+};
+
+// ---- investigacion/paginas/anexos.js
+// Páginas de cierre: método y fuentes, glosario y la hoja de tarjetas del hilo.
+
+// metodo · pasos [{titulo, texto}] (por defecto los tres del flujo; [] los omite), fuentes: false omite la lista, _cifras [{concepto, valor, veredicto, aparece}]
+// (informe.py las arma desde datos.json por id), nota, _fuentes [texto] (meta.fuentes numeradas)
+PAGINAS.metodo = (P, X) => {
+  const pasos = (P.pasos || [
+    { titulo: "Evidencia", texto: "Cada cifra llega con la URL de la fuente primaria, la cita textual y una copia local del archivo." },
+    { titulo: "Segunda fuente", texto: "Un verificador parte de esa evidencia y busca una segunda fuente para cada cifra." },
+    { titulo: "Veredicto", texto: "Solo entran las cifras verificadas o ajustadas; manda el valor final." },
+  ]).map((p, i) => '<div class="celda" style="padding-top:12px;gap:8px"><span style="font:400 32px/1 \'Instrument Serif\',Georgia,serif;color:var(--tinta)">' + String(i + 1).padStart(2, "0") + '</span><span style="font:700 14px/1.2 Archivo,sans-serif">' + X.esc(p.titulo) + '</span><span style="font:400 14px/1.45 Archivo,sans-serif">' + X.md(p.texto) + "</span></div>").join("");
+  const filas = (P._cifras || []).map((c) => ({ c: [c.concepto, c.valor, { chip: c.veredicto }, c.aparece] }));
+  const tabla = '<table class="t" style="margin-top:12px;font-size:13px"><thead><tr><th>Cifra</th><th class="num">Valor</th><th>Veredicto</th><th class="num">Aparece en</th></tr></thead><tbody>' +
+    filas.map((f) => "<tr><td>" + X.esc(f.c[0]) + '</td><td class="num" style="font-weight:700">' + X.esc(f.c[1]) + '</td><td><span class="chip' + (f.c[2].chip === "ajustada" ? " borde" : "") + '">' + X.esc(f.c[2].chip) + '</span></td><td class="num" style="font-size:12px">' + X.esc(f.c[3]) + "</td></tr>").join("") + "</tbody></table>";
+  const fuentes = (P._fuentes || []).map((f, i) => '<li style="display:flex;gap:14px"><span style="flex:none;width:20px;font:700 12px/1.6 \'JetBrains Mono\',monospace;color:var(--tinta)">' + (i + 1) + "</span><span>" + X.md(f) + "</span></li>").join("");
+  return '<section class="pagina">' + X.cab(P.seccion || "Anexo") + '<h2 class="t2">' + X.esc(P.titulo || "Método y fuentes") + "</h2>" +
+    '<div class="rejilla3" style="margin-top:28px">' + pasos + "</div>" +
+    '<div style="display:flex;align-items:center;gap:10px;margin-top:20px;font:500 12px/1 \'JetBrains Mono\',monospace"><span class="chip">verificada</span><span class="chip borde">ajustada</span><span class="chip tachado">no confirmada</span><span class="gris">· nunca aparece en el informe</span></div>' +
+    '<span class="k acento" style="margin-top:32px">Cifras usadas</span>' + tabla +
+    (P.nota ? '<span class="mono gris" style="margin-top:8px">' + X.md(P.nota) + "</span>" : "") +
+    (P.fuentes === false ? "" : '<span class="k acento" style="margin-top:28px">Fuentes</span><ol style="margin:12px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;font:400 13px/1.45 Archivo,sans-serif">' + fuentes + "</ol>") +
+    X.pie() + "</section>";
+};
+
+// glosario · terminos [{t, d}] (columna izquierda y, si sobran, arriba de la derecha), siglas [{s, d}]
+PAGINAS.glosario = (P, X) => {
+  const corte = P.corte || Math.ceil(P.terminos.length * 0.7);
+  const term = (lst) => lst.map((x, i) => '<div style="display:flex;flex-direction:column;gap:4px;padding:12px 0;border-top:' + (i === 0 ? "1.5px solid var(--tp)" : "1px solid var(--regla)") + '"><span style="font:400 22px/1.1 \'Instrument Serif\',Georgia,serif;color:var(--tinta)">' + X.esc(x.t) + '</span><span style="font:400 13px/1.5 Archivo,sans-serif">' + X.md(x.d) + "</span></div>").join("");
+  const siglas = (P.siglas || []).map((x) => '<b style="padding:9px 0;border-bottom:1px solid var(--regla);font:700 12px/1.6 \'JetBrains Mono\',monospace">' + X.esc(x.s) + '</b><span style="padding:9px 0;border-bottom:1px solid var(--regla)">' + X.esc(x.d) + "</span>").join("");
+  return '<section class="pagina">' + X.cab(P.seccion || "Anexo") + '<h2 class="t2">' + X.esc(P.titulo || "Glosario") + "</h2>" +
+    '<div class="rejilla2" style="margin-top:28px;align-items:start"><div style="display:flex;flex-direction:column;border-bottom:1.5px solid var(--tp)">' + term(P.terminos.slice(0, corte)) + "</div>" +
+    '<div style="display:flex;flex-direction:column">' + term(P.terminos.slice(corte)) +
+    (siglas ? '<span class="k acento" style="margin-top:20px;padding-bottom:10px;border-bottom:1.5px solid var(--tp)">Siglas</span><div style="display:grid;grid-template-columns:72px minmax(0,1fr);gap:0 12px;font:400 13px/1.45 Archivo,sans-serif">' + siglas + "</div>" : "") +
+    "</div></div>" + X.pie() + "</section>";
+};
+
+// tarjetas · titulo, lead, items [{_src, n, beat, titulo, alt}], tuit {gancho, texto, publicado}
+PAGINAS.tarjetas = (P, X) => {
+  const it = P.items.map((t) => '<figure style="display:flex;flex-direction:column;gap:8px"><img src="' + X.esc(t._src) + '" alt="' + X.esc(t.alt || t.titulo) + '" style="display:block;width:156px;height:156px;object-fit:cover"><figcaption style="display:flex;flex-direction:column;gap:3px"><span class="mono-b" style="line-height:1;color:var(--tinta)">' + X.esc(t.n + " · " + t.beat) + '</span><span style="font:400 13px/1.35 Archivo,sans-serif">' + X.esc(t.titulo) + "</span></figcaption></figure>").join("");
+  const T = P.tuit;
+  return '<section class="pagina">' + X.cab(P.seccion || "Anexo") + '<h2 class="t2">' + X.esc(P.titulo) + "</h2>" + (P.lead ? '<p class="p">' + X.md(P.lead) + "</p>" : "") +
+    '<div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px 16px;margin-top:28px">' + it + "</div>" +
+    (T ? '<div class="caja" style="margin-top:36px"><span class="k acento">Tuit 1</span><div class="items" style="gap:10px"><span style="font:400 italic 22px/1.25 \'Instrument Serif\',Georgia,serif">' + X.md(T.gancho) + "</span><span style=\"font:400 14px/1.5 Archivo,sans-serif\">" + X.md(T.texto) + '</span><span class="mono" style="color:rgba(12,21,32,.72)">' + X.esc(T.publicado) + "</span></div></div>" : "") +
+    X.pie() + "</section>";
+};
+
+// ---- investigacion/paginas/aperturas.js
+// Páginas a sangre de color (la tarjeta hecha página): portada, aperturas de capítulo y contraportada.
+
+// portada · kicker_izq, kicker_der, titulo, lead, cifra {valor, etiqueta, texto}; _capitulos y fuentes
+PAGINAS.portada = (P, X) => {
+  const caps = (P._capitulos || []).map((c) => '<div style="flex:1;border-top:1.5px solid var(--rule);padding-top:12px"><span style="opacity:.75">' + X.esc(c.numero) + "</span><br>" + X.esc(c.titulo) + "</div>").join("");
+  return '<section class="pagina color">' +
+    '<div class="corrido sobre-color"><span class="k acento">' + X.esc(P.kicker_izq) + '</span><span class="k">' + X.esc(P.kicker_der || "") + "</span></div>" +
+    '<h1 class="t-portada">' + X.md(P.titulo) + "</h1>" +
+    (P.lead ? '<p class="lead">' + X.md(P.lead) + "</p>" : "") +
+    (P.cifra ? '<div style="margin-top:auto;display:flex;align-items:flex-end;gap:32px"><div class="cifra-heroe">' + X.esc(P.cifra.valor) + '</div>' +
+      '<div style="display:flex;flex-direction:column;gap:10px;padding-bottom:14px;max-width:260px"><span class="k">' + X.esc(P.cifra.etiqueta) + '</span><span style="font:400 16px/1.4 Archivo,sans-serif">' + X.md(P.cifra.texto || "") + "</span></div></div>" : '<div style="margin-top:auto"></div>') +
+    (caps ? '<div style="display:flex;gap:24px;margin-top:44px;font:500 12px/1.4 \'JetBrains Mono\',monospace">' + caps + "</div>" : "") +
+    '<div class="pie-pag sobre-color" style="margin-top:40px"><span class="mono">Fuentes: ' + X.esc(P.fuentes) + "</span>" + X.marca() + "</div></section>";
+};
+
+// capitulo · variante "banda" (banda de color + cuerpo), "dividida" (columna de color + contenido)
+// o "destacado" (página entera de color con un antes → después).
+PAGINAS.capitulo = (P, X) => {
+  const v = P.variante || "banda";
+  if (v === "banda") {
+    return '<section class="pagina sin-margen"><div class="banda sobre-color" style="height:' + (P.alto_banda || 492) + 'px;box-sizing:border-box;padding:56px 72px 48px;display:flex;flex-direction:column">' +
+      '<div style="display:flex;justify-content:space-between"><span class="k acento">' + X.esc(P.kicker) + '</span><span class="k">' + X.esc(X.M.corto) + "</span></div>" +
+      '<div style="margin-top:auto;display:flex;align-items:flex-end;justify-content:space-between;gap:24px"><div style="display:flex;flex-direction:column;gap:22px;max-width:470px">' +
+      '<h2 style="margin:0;font:400 80px/.94 \'Instrument Serif\',Georgia,serif;letter-spacing:-.015em;text-wrap:balance">' + X.md(P.titulo) + "</h2>" +
+      (P.lead ? '<p style="margin:0;font:400 17px/1.5 Archivo,sans-serif;text-wrap:pretty">' + X.md(P.lead) + "</p>" : "") + "</div>" +
+      '<span style="font:400 220px/.78 \'Instrument Serif\',Georgia,serif;letter-spacing:-.03em;color:var(--a1)">' + X.esc(P.numero) + "</span></div></div>" +
+      '<div style="flex:1;box-sizing:border-box;padding:30px 72px 48px;display:flex;flex-direction:column">' + X.bloques(P.bloques) + X.pie() + "</div></section>";
+  }
+  if (v === "dividida") {
+    const secs = (P.secciones || []).map((s) => '<div style="display:flex;justify-content:space-between;gap:16px;padding:12px 0;font:400 15px/1.4 Archivo,sans-serif"><span>' + X.md(s.texto) + '</span><span class="mono" style="font-weight:500">' + X.esc(s.pag) + "</span></div>").join("");
+    return '<section class="pagina sin-margen" style="flex-direction:row">' +
+      '<div class="banda sobre-color" style="flex:none;width:320px;box-sizing:border-box;padding:56px 40px 48px 72px;display:flex;flex-direction:column">' +
+      '<span class="k acento">' + X.esc(P.kicker) + '</span><span class="k" style="margin-top:8px">' + X.esc(P.kicker2 || "") + "</span>" +
+      '<span style="margin-top:auto;font:400 184px/.76 \'Instrument Serif\',Georgia,serif;letter-spacing:-.04em;color:var(--a1)">' + X.esc(P.numero) + "</span>" +
+      '<div style="margin-top:40px;padding-top:16px;border-top:1.5px solid var(--rule)">' + X.marca() + "</div></div>" +
+      '<div style="flex:1;min-width:0;box-sizing:border-box;padding:56px 72px 48px 48px;display:flex;flex-direction:column">' +
+      '<span class="k acento" style="padding-bottom:14px;border-bottom:1px solid var(--regla)">' + X.esc(X.M.corrido) + "</span>" +
+      '<h2 style="margin:120px 0 0;font:400 68px/.94 \'Instrument Serif\',Georgia,serif;letter-spacing:-.015em;text-wrap:balance">' + X.md(P.titulo) + "</h2>" +
+      (P.lead ? '<p style="margin:24px 0 0;font:400 17px/1.55 Archivo,sans-serif;text-wrap:pretty">' + X.md(P.lead) + "</p>" : "") +
+      (secs ? '<div style="margin-top:48px"><span class="k acento" style="display:block;padding-bottom:10px">En este capítulo</span><div class="lista-reglas">' + secs + "</div></div>" : "") +
+      '<div class="pie-pag"><span class="mono">' + X.esc(X.M.pie) + '</span><span class="mono" style="font-weight:500">' + X.esc(P._n_texto) + "</span></div></div></section>";
+  }
+  if (v === "destacado") {
+    const D = P.dato;
+    const flecha = '<svg viewBox="0 0 72 40" width="72" height="40" aria-hidden="true" style="display:block;margin-bottom:92px"><line x1="0" y1="20" x2="64" y2="20" stroke="currentColor" stroke-width="3"></line><polyline points="50,6 66,20 50,34" fill="none" stroke="currentColor" stroke-width="3"></polyline></svg>';
+    return '<section class="pagina color">' +
+      '<div class="corrido sobre-color"><span class="k acento">' + X.esc(P.kicker) + '</span><span class="k">' + X.esc(X.M.corto) + "</span></div>" +
+      '<h2 style="margin:56px 0 0;font:400 88px/.92 \'Instrument Serif\',Georgia,serif;letter-spacing:-.02em;text-wrap:balance">' + X.md(P.titulo) + "</h2>" +
+      (P.lead ? '<p class="lead" style="max-width:520px">' + X.md(P.lead) + "</p>" : "") +
+      '<div style="margin-top:auto;display:flex;flex-direction:column;gap:18px"><span class="k">' + X.esc(D.kicker) + '</span><div style="display:flex;align-items:flex-end;gap:28px">' +
+      '<div style="display:flex;flex-direction:column;gap:14px"><span style="font:400 200px/.8 \'Instrument Serif\',Georgia,serif;letter-spacing:-.03em;opacity:.6">' + X.esc(D.antes.valor) + '</span><span class="mono" style="font-weight:500">' + X.esc(D.antes.etiqueta) + "</span></div>" + flecha +
+      '<div style="display:flex;flex-direction:column;gap:14px"><span style="font:400 200px/.8 \'Instrument Serif\',Georgia,serif;letter-spacing:-.03em;color:var(--a1)">' + X.esc(D.despues.valor) + '</span><span class="mono-b">' + X.esc(D.despues.etiqueta) + "</span></div></div></div>" +
+      '<div style="margin-top:48px">' + X.pie("Fuente: " + P.fuente, { color: true }) + "</div></section>";
+  }
+  throw new Error("capitulo: variante desconocida " + v);
+};
+
+// contraportada · lema y ficha [[clave, valor], …] (la paleta se rellena sola).
+PAGINAS.contraportada = (P, X) => {
+  const ficha = (P.ficha || []).map(([k, v]) => '<div style="display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-top:1.5px solid var(--rule)"><span style="opacity:.8">' + X.esc(k) + "</span><span>" + X.esc(v) + "</span></div>").join("");
+  return '<section class="pagina color">' +
+    '<div class="corrido sobre-color"><span class="k acento">' + X.esc(X.M.numero_largo) + '</span><span class="k">' + X.esc(X.M.fecha) + "</span></div>" +
+    '<p style="margin:64px 0 0;max-width:560px;font:400 64px/.98 \'Instrument Serif\',Georgia,serif;letter-spacing:-.015em;text-wrap:balance">' + X.md(P.lema) + "</p>" +
+    '<div style="margin-top:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 32px;font:400 12px/1.4 \'JetBrains Mono\',monospace;border-bottom:1.5px solid var(--rule)">' + ficha + "</div>" +
+    '<div style="display:flex;align-items:flex-end;justify-content:space-between;margin-top:56px"><div style="display:flex;align-items:center;gap:16px"><div class="x" style="width:56px;height:56px;border-radius:12px;font-size:30px;background:var(--ink);color:var(--x-fg)">X</div><span style="font:600 32px/1 Archivo,sans-serif">' + X.esc(X.M.handle) + "</span></div>" +
+    '<span class="mono" style="text-align:right">Tipografía: Instrument Serif,<br>Archivo y JetBrains Mono</span></div></section>';
+};
+
+// ---- investigacion/paginas/lectura.js
+// Páginas de lectura sobre papel: cuerpo (bloques), anexo (bloques con título de anexo),
+// apaisada (texto lateral + una figura ancha) y cronología.
+
+// cuerpo · seccion (encabezado derecho), bloques [...]
+PAGINAS.cuerpo = (P, X) => '<section class="pagina">' + X.cab(P.seccion) + X.bloques(P.bloques) + X.pie(P.pie) + "</section>";
+
+// anexo · seccion, titulo, lead, bloques
+PAGINAS.anexo = (P, X) => '<section class="pagina">' + X.cab(P.seccion) +
+  '<h2 class="t2">' + X.md(P.titulo) + "</h2>" + (P.lead ? '<p class="p">' + X.md(P.lead) + "</p>" : "") +
+  X.bloques(P.bloques) + X.pie(P.pie) + "</section>";
+
+// apaisada · seccion, lateral [bloques: titulo, texto, notas], figura (panel o papel)
+PAGINAS.apaisada = (P, X) => {
+  const lat = I.lista(P.lateral).map((B) => {
+    if (B.b === "titulo") return '<h3 class="t3" style="margin-top:0">' + X.md(B.texto) + "</h3>";
+    if (B.b === "texto") return I.lista(B.parrafos).map((s) => '<p class="p" style="font-size:15px;line-height:1.6">' + X.md(s) + "</p>").join("");
+    if (B.b === "notas") return '<div class="margen" style="width:auto;margin-top:auto">' + B.items.map((m) => "<span><b>" + X.esc(m.termino) + "</b> · " + X.md(m.texto) + "</span>").join("") + "</div>";
+    return X.bloque(B);
+  }).join("");
+  const f = Object.assign({}, P.figura);
+  return '<section class="pagina apaisada">' + X.cab(P.seccion) +
+    '<div style="flex:1;display:flex;gap:40px;margin-top:32px;min-height:0"><div style="flex:none;width:272px;display:flex;flex-direction:column">' + lat + "</div>" +
+    '<div style="flex:1;min-width:0;display:flex">' + X.fig(f, { estilo: "margin-top:0;flex:1" }) + "</div></div>" +
+    X.pie(P.pie) + "</section>";
+};
+
+// cronologia · seccion, titulo, lead, eventos [{fecha, sub, texto, detalle, destacar, pendiente}], fuente
+PAGINAS.cronologia = (P, X) => {
+  const ev = P.eventos.map((e, i) => {
+    const ult = i === P.eventos.length - 1;
+    const punto = e.destacar ? '<span style="flex:none;width:16px;height:16px;margin-top:4px;border-radius:50%;background:var(--barra)"></span>'
+      : '<span style="flex:none;width:12px;height:12px;margin-top:6px;border-radius:50%;box-sizing:border-box;border:2px ' + (e.pendiente ? "dashed rgba(12,21,32,.5)" : "solid #0C1520") + ';background:var(--papel)"></span>';
+    const color = e.destacar ? "color:var(--tinta)" : e.pendiente ? "color:rgba(12,21,32,.62)" : "";
+    return '<div style="display:grid;grid-template-columns:128px 24px minmax(0,1fr);gap:0 16px">' +
+      '<div style="display:flex;flex-direction:column;gap:4px;padding-bottom:26px"><span style="font:400 24px/1 \'Instrument Serif\',Georgia,serif;' + color + '">' + X.esc(e.fecha) + '</span><span class="mono" style="font-weight:' + (e.destacar ? 700 : 500) + ";" + color + '">' + X.esc(e.sub || "") + "</span></div>" +
+      '<div style="display:flex;flex-direction:column;align-items:center">' + punto + (ult ? "" : '<span style="flex:1;width:2px;background:rgba(12,21,32,.25)"></span>') + "</div>" +
+      '<div style="padding-bottom:26px;display:flex;flex-direction:column;gap:6px;font:400 15px/1.5 Archivo,sans-serif' + (e.pendiente ? ";color:rgba(12,21,32,.72)" : "") + '">' +
+      '<span style="font-weight:' + (e.destacar ? 700 : 400) + '">' + X.md(e.texto) + "</span>" + (e.detalle ? "<span>" + X.md(e.detalle) + "</span>" : "") + "</div></div>";
+  }).join("");
+  return '<section class="pagina">' + X.cab(P.seccion) + '<h3 class="t3" style="margin-top:36px">' + X.md(P.titulo) + "</h3>" +
+    (P.lead ? '<p class="p">' + X.md(P.lead) + "</p>" : "") + '<div style="display:flex;flex-direction:column;margin-top:32px">' + ev + "</div>" +
+    X.pie("Fuentes: " + P.fuente) + "</section>";
+};
+
+// ---- investigacion/paginas/sintesis.js
+// Páginas de síntesis: índice (se genera solo), resumen, tablero de cifras clave y conclusiones.
+
+// indice · titulo; _entradas [{clase, numero, titulo, desc, pag}] · _anexos · _figuras [{no, titulo, pag}] · leer []
+PAGINAS.indice = (P, X) => {
+  const e = P._entradas || [];
+  const fila = (it) => it.clase === "capitulo"
+    ? '<div style="display:grid;grid-template-columns:72px minmax(0,1fr) 48px;gap:16px;align-items:baseline;padding:11px 0"><span style="font:400 44px/.9 \'Instrument Serif\',Georgia,serif;color:var(--tinta)">' + X.esc(it.numero) + '</span><div style="display:flex;flex-direction:column;gap:6px"><span style="font:400 28px/1.1 \'Instrument Serif\',Georgia,serif">' + X.md(it.titulo) + '</span><span style="font:400 14px/1.45 Archivo,sans-serif">' + X.md(it.desc || "") + '</span></div><span class="mono" style="text-align:right;font-weight:500">' + X.esc(it.pag) + "</span></div>"
+    : '<div style="display:flex;justify-content:space-between;align-items:baseline;padding:12px 0"><span style="font:400 26px/1.1 \'Instrument Serif\',Georgia,serif">' + X.md(it.titulo) + '</span><span class="mono" style="font-weight:500">' + X.esc(it.pag) + "</span></div>";
+  // Dos entradas simples seguidas (p. ej. Resumen y Cifras clave) comparten fila.
+  const filas = [];
+  for (let i = 0; i < e.length; i++) {
+    if (e[i].clase !== "capitulo" && e[i + 1] && e[i + 1].clase !== "capitulo") {
+      filas.push('<div class="rejilla2" style="padding:0">' + fila(e[i]) + fila(e[i + 1]) + "</div>");
+      i++;
+    } else filas.push(fila(e[i]));
+  }
+  const anexos = (P._anexos || []).map((a) => '<div style="display:flex;flex-direction:column;gap:4px;padding-top:8px;border-top:1px solid var(--regla-f)"><span style="font-weight:700">' + X.esc(a.pag) + "</span><span>" + X.esc(a.titulo) + "</span></div>").join("");
+  const figs = (P._figuras || []).map((f) => '<div style="display:flex;gap:10px;break-inside:avoid"><b style="flex:none;width:64px">' + X.esc(f.no) + '</b><span style="flex:1">' + X.esc(f.titulo) + "</span><span>" + X.esc(f.pag) + "</span></div>").join("");
+  // Con más de 10 figuras y tablas, la lista va a dos columnas (si no, con 5 capítulos solo caben 11).
+  // Con más de 14 figuras y tablas, la caja «Cómo leer» pasa arriba a lo ancho y la lista va a todo el ancho en
+  // dos columnas (a una columna caben ~12 con tres capítulos; la caja a lo ancho cuesta ~80 px, así que solo compensa desde 15).
+  const nF = (P._figuras || []).length, largo = nF > 14;
+  const leerCaja = (estilo) => (P.leer ? '<div style="' + estilo + 'padding:18px 20px;background:var(--suave);display:flex;' + (largo ? 'gap:24px;align-items:flex-start' : 'flex-direction:column;gap:10px') + '"><span class="k acento"' + (largo ? ' style="flex:none;width:104px;padding-top:3px"' : '') + '>Cómo leer</span>' +
+    (largo ? '<div style="display:flex;flex-direction:column;gap:6px">' : '') + P.leer.map((s) => '<span style="font:400 13px/1.5 Archivo,sans-serif">' + X.md(s) + "</span>").join("") + (largo ? "</div>" : "") + "</div>" : "");
+  const listaFigs = largo
+    ? '<div style="display:grid;grid-auto-flow:column;grid-template-rows:repeat(' + Math.ceil(nF / 2) + ',auto);column-gap:28px;row-gap:4px;margin-top:12px;font:400 12px/1.35 \'JetBrains Mono\',monospace">' + figs + "</div>"
+    : '<div style="display:flex;flex-direction:column;gap:4px;margin-top:12px;font:400 12px/1.35 \'JetBrains Mono\',monospace">' + figs + "</div>";
+  return '<section class="pagina">' + X.cab("Contenido") + '<h1 class="t1" style="margin-top:28px;font-size:64px">' + X.esc(P.titulo || "Contenido") + "</h1>" +
+    '<div class="lista-reglas" style="margin-top:28px">' + filas.join("") + "</div>" +
+    (anexos ? '<div style="display:grid;grid-template-columns:repeat(' + Math.min(5, P._anexos.length) + ',minmax(0,1fr));gap:16px;margin-top:16px;font:400 12px/1.4 \'JetBrains Mono\',monospace">' + anexos + "</div>" : "") +
+    (largo ? leerCaja("margin-top:24px;") : "") +
+    '<div style="display:flex;gap:32px;margin-top:' + (largo ? 24 : 32) + 'px"><div style="flex:1;display:flex;flex-direction:column"><span class="k acento">Figuras y tablas</span>' + listaFigs + "</div>" +
+    (largo ? "" : leerCaja("flex:none;width:232px;align-self:flex-start;")) +
+    "</div>" + X.pie() + "</section>";
+};
+
+// resumen · tesis, cifras [{kicker, valor, texto, fuente, id}], no_afirma []
+PAGINAS.resumen = (P, X) => {
+  const cif = P.cifras.map((c) => '<div class="celda"><span class="k">' + X.esc(c.kicker) + '</span><span class="cifra-g">' + X.esc(c.valor) + '</span><span style="font:400 15px/1.45 Archivo,sans-serif">' + X.md(c.texto) + '</span><span class="mono gris">Fuente: ' + X.esc(c.fuente) + "</span></div>").join("");
+  return '<section class="pagina">' + X.cab("Resumen") + '<h1 class="t1" style="margin-top:36px">' + X.esc(P.titulo || "Resumen") + "</h1>" +
+    '<div style="display:flex;gap:24px;margin-top:28px"><span class="k acento" style="flex:none;width:128px;padding-top:6px">Tesis</span><p style="margin:0;flex:1;font:400 19px/1.55 Archivo,sans-serif;text-wrap:pretty">' + X.md(P.tesis) + "</p></div>" +
+    '<div class="rejilla2" style="margin-top:32px;row-gap:28px">' + cif + "</div>" +
+    (P.no_afirma ? X.bloque({ b: "caja", etiqueta: "No afirma", items: P.no_afirma }).replace('class="caja"', 'class="caja" style="margin-top:32px"') : "") +
+    X.pie() + "</section>";
+};
+
+// tablero · titulo, subtitulo, cifras [{kicker, valor, contexto, grafico, fuente, id}]
+PAGINAS.tablero = (P, X) => {
+  const t = P.cifras.map((c) => '<div class="celda" style="padding-top:12px;gap:8px"><span class="k">' + X.esc(c.kicker) + '</span>' +
+    '<div style="display:flex;align-items:baseline;gap:10px"><span style="font:400 48px/.9 \'Instrument Serif\',Georgia,serif;color:var(--tinta)">' + X.esc(c.valor) + '</span><span style="font:400 14px/1.3 Archivo,sans-serif">' + X.md(c.contexto || "") + "</span></div>" +
+    '<div style="margin-top:6px">' + I.grafico(c.grafico, "papel").replace('class="grafico"', 'class="grafico" style="margin-top:0"') + "</div>" +
+    '<span class="mono gris">Fuente: ' + X.esc(c.fuente) + "</span></div>").join("");
+  return '<section class="pagina">' + X.cab(P.seccion || "Cifras clave") +
+    '<div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-top:36px"><h2 class="t2" style="margin:0">' + X.esc(P.titulo || "Cifras clave") + '</h2><span style="max-width:280px;padding-bottom:6px;font:400 14px/1.45 Archivo,sans-serif">' + X.md(P.subtitulo || "") + "</span></div>" +
+    '<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:36px 24px;margin-top:32px">' + t + "</div>" + X.pie() + "</section>";
+};
+
+// conclusiones · hallazgos [{titulo, texto, ref}], cierre, no_afirma [], limites []
+PAGINAS.conclusiones = (P, X) => {
+  const h = P.hallazgos.map((x, i) => '<li style="display:grid;grid-template-columns:56px minmax(0,1fr) 96px;gap:16px;align-items:baseline;padding:14px 0"><span style="font:400 36px/.9 \'Instrument Serif\',Georgia,serif;color:var(--tinta)">' + (i + 1) + '</span><div style="display:flex;flex-direction:column;gap:4px"><span style="font:700 16px/1.35 Archivo,sans-serif">' + X.md(x.titulo) + '</span><span style="font:400 15px/1.5 Archivo,sans-serif">' + X.md(x.texto) + '</span></div><span class="mono" style="text-align:right">' + X.esc(x.ref || "") + "</span></li>").join("");
+  const col = (titulo, items) => '<div style="display:flex;flex-direction:column;gap:12px"><span class="k acento" style="padding-bottom:10px;border-bottom:1.5px solid var(--tp)">' + X.esc(titulo) + "</span>" + items.map((s) => '<span style="font:400 13px/1.5 Archivo,sans-serif">' + X.md(s) + "</span>").join("") + "</div>";
+  return '<section class="pagina">' + X.cab(P.titulo || "En suma") + '<h2 class="t2">' + X.esc(P.titulo || "En suma") + "</h2>" +
+    '<ol class="lista-reglas" style="margin:24px 0 0;padding:0;list-style:none">' + h + "</ol>" +
+    (P.cierre ? '<p style="margin:28px 0 0;max-width:600px;font:400 italic 28px/1.2 \'Instrument Serif\',Georgia,serif;text-wrap:balance">' + X.md(P.cierre) + "</p>" : "") +
+    '<div class="rejilla2" style="margin-top:32px">' + col("Este informe no afirma", P.no_afirma || []) + col("Límites de los datos", P.limites || []) + "</div>" + X.pie() + "</section>";
+};
+
+</script>
+<script>
+// =====================================================================
+// Arranque: informe.json → páginas → gráficos → fuentes → data-listo.
+// scripts/render_informe.js espera body[data-listo]; cualquier excepción deja body[data-error].
+// =====================================================================
+window.addEventListener("load", async () => {
+  try {
+    const R = JSON.parse(document.getElementById("informe-json").textContent);
+    if (!R) throw new Error("informe.json vacío: esta base se ensambla con scripts/informe.py");
+    document.body.dataset.paleta = R.meta.paleta;
+    await Promise.all(["400 88px 'Instrument Serif'", "italic 400 30px 'Instrument Serif'", "500 12px 'JetBrains Mono'", "700 12px 'JetBrains Mono'", "400 16px Archivo", "700 16px Archivo", "800 12px Archivo"].map((f) => document.fonts.load(f)));
+    const raiz = document.getElementById("informe");
+    raiz.innerHTML = R.paginas.map((P) => {
+      const fn = PAGINAS[P.tipo];
+      H.assert(typeof fn === "function", "tipo de página desconocido: " + P.tipo);
+      return fn(P, C(R, P));
+    }).join("\n");
+    I.dibujar();
+    await document.fonts.ready;
+    document.body.dataset.listo = "1";
+  } catch (e) {
+    document.body.dataset.error = e.message;
+    throw e;
+  }
+});
+</script>
+</body>
+</html>

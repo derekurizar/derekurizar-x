@@ -7,7 +7,9 @@ El sandbox del Workflow no importa módulos, así que hilo.js, dato.js e ideas.j
   W2 PLANTILLAS difiere entre hilo.js y dato.js o del catálogo templates/graficos/*.html
   W3 HOOKS difiere entre workflows o de ensamblar.HOOKS; BEATS (hilo.js) difiere de ensamblar.BEATS
   W4 REQ, RE_LINK, RE_BAIT, RE_SUPER o pesoX difieren entre hilo.js y dato.js
-  W5 las claves de MODOS de hilo.js y dato.js no coinciden con ensamblar.MODOS (aviso si aún no existen)
+  W5 las claves de MODOS de dato.js no coinciden con ensamblar.MODOS["dato"]; las de hilo.js ∪ investigacion.js
+     no coinciden con ensamblar.MODOS["hilo"] o se repiten entre ambos (aviso si aún no existen)
+  W6 investigacion.js: TIPOS_PAGINA igual a informe.TIPOS_PAGINA y MARCADOR_INFORME igual al de ensamblar.py
   W7 gráficos del informe: todo G.<tipo> de investigacion/graficos/*.js tiene plantilla de tarjeta (o está en
      informe.SOLO_DOCUMENTO), campos en informe.CAMPOS_GRAFICO y extractor en ensamblar.CLAVES_DATO; ningún
      G.<tipo> se define dos veces; las plantillas sin G.* se avisan (informe.plantillas_sin_g)
@@ -25,7 +27,7 @@ import sys
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(RAIZ, "scripts"))
-from ensamblar import BEATS, HOOKS, MODOS, CLAVES_DATO  # noqa: E402
+from ensamblar import BEATS, HOOKS, MODOS, CLAVES_DATO, MARCADOR_INFORME  # noqa: E402
 import informe  # noqa: E402  (TIPOS_GRAFICO, CAMPOS_GRAFICO, SOLO_DOCUMENTO, plantillas_sin_g, snake)
 
 RE_PROHIBIDO = re.compile(r"\bH\.(color|rampa|rampaColor|halo|periodos|textoSobre|espacio|lienzo|leyenda|anotar|cabecera|verificar)\b|document\.getElementById\(")
@@ -38,10 +40,10 @@ def err(m): ERRORES.append(m)
 def warn(m): AVISOS.append(m)
 
 
-def fuente(nombre):
+def fuente(nombre, opcional=False):
     ruta = os.path.join(WF, nombre)
     if not os.path.exists(ruta):
-        err("falta %s" % os.path.relpath(ruta, RAIZ)); return ""
+        (warn if opcional else err)("falta %s%s" % (os.path.relpath(ruta, RAIZ), " (aún no existe: /investigacion no estará disponible)" if opcional else "")); return ""
     return open(ruta, encoding="utf-8").read()
 
 
@@ -81,7 +83,7 @@ def claves_modos(src):
 
 def main():
     quiet = "--quiet" in sys.argv
-    hilo, dato, ideas = fuente("hilo.js"), fuente("dato.js"), fuente("ideas.js")
+    hilo, dato, ideas, inv = fuente("hilo.js"), fuente("dato.js"), fuente("ideas.js"), fuente("investigacion.js", opcional=True)
     if not (hilo and dato):
         return fin(quiet)
     tokens = json.load(open(os.path.join(RAIZ, "design", "tokens.json"), encoding="utf-8"))
@@ -89,7 +91,7 @@ def main():
     catalogo = sorted(os.path.splitext(os.path.basename(p))[0] for p in glob.glob(os.path.join(RAIZ, "templates", "graficos", "*.html")))
 
     # W1 paletas
-    for nombre, src in (("hilo.js", hilo), ("dato.js", dato), ("ideas.js", ideas)):
+    for nombre, src in (("hilo.js", hilo), ("dato.js", dato), ("ideas.js", ideas), ("investigacion.js", inv)):
         if not src:
             continue
         p = lista(src, "PALETAS")
@@ -98,14 +100,16 @@ def main():
         elif sorted(p) != sorted(paletas):
             err("W1 %s PALETAS %s ≠ design/tokens.json %s" % (nombre, p, paletas))
     # W2 plantillas
-    for nombre, src in (("hilo.js", hilo), ("dato.js", dato)):
+    for nombre, src in (("hilo.js", hilo), ("dato.js", dato), ("investigacion.js", inv)):
+        if not src:
+            continue
         p = lista(src, "PLANTILLAS")
         if p is None:
             err("W2 %s: no se encontró `const PLANTILLAS = [...]`" % nombre)
         elif sorted(p) != catalogo:
             err("W2 %s PLANTILLAS ≠ templates/graficos/: sobran %s, faltan %s" % (nombre, sorted(set(p) - set(catalogo)), sorted(set(catalogo) - set(p))))
     # W3 hooks y beats
-    for nombre, src in (("hilo.js", hilo), ("dato.js", dato), ("ideas.js", ideas)):
+    for nombre, src in (("hilo.js", hilo), ("dato.js", dato), ("ideas.js", ideas), ("investigacion.js", inv)):
         if not src:
             continue
         h = lista(src, "HOOKS")
@@ -113,11 +117,14 @@ def main():
             err("W3 %s: no se encontró `const HOOKS = [...]`" % nombre)
         elif h != HOOKS:
             err("W3 %s HOOKS %s ≠ ensamblar.HOOKS %s" % (nombre, h, HOOKS))
-    b = lista(hilo, "BEATS")
-    if b is None:
-        err("W3 hilo.js: no se encontró `const BEATS = [...]`")
-    elif b != BEATS:
-        err("W3 hilo.js BEATS %s ≠ ensamblar.BEATS %s" % (b, BEATS))
+    for nombre, src in (("hilo.js", hilo), ("investigacion.js", inv)):
+        if not src:
+            continue
+        b = lista(src, "BEATS")
+        if b is None:
+            err("W3 %s: no se encontró `const BEATS = [...]`" % nombre)
+        elif b != BEATS:
+            err("W3 %s BEATS %s ≠ ensamblar.BEATS %s" % (nombre, b, BEATS))
     # W4 bloques que deben ser idénticos en hilo.js y dato.js
     for etiqueta, extraer in (
         ("REQ", lambda s: bloque(s, "const REQ = {")),
@@ -126,18 +133,45 @@ def main():
         ("RE_SUPER", lambda s: linea(s, "const RE_SUPER")),
         ("pesoX", lambda s: bloque(s, "function pesoX(texto) {")),
     ):
-        a, c = extraer(hilo), extraer(dato)
-        if a is None or c is None:
-            err("W4 %s: no se encontró en %s" % (etiqueta, "hilo.js" if a is None else "dato.js"))
-        elif norm(a) != norm(c):
-            err("W4 %s difiere entre hilo.js y dato.js (copia el bloque de uno al otro)" % etiqueta)
-    # W5 modos
-    for nombre, src, tipo in (("hilo.js", hilo, "hilo"), ("dato.js", dato, "dato")):
-        k = claves_modos(src)
-        if k is None:
-            warn("W5 %s: aún no tiene `const MODOS = {…}` (modos de ensamblar.MODOS[%r]: %s)" % (nombre, tipo, MODOS[tipo]))
-        elif sorted(k) != sorted(MODOS[tipo]):
-            err("W5 %s MODOS %s ≠ ensamblar.MODOS[%r] %s" % (nombre, k, tipo, MODOS[tipo]))
+        a = extraer(hilo)
+        for otro, src in (("dato.js", dato), ("investigacion.js", inv)):
+            if not src:
+                continue
+            c = extraer(src)
+            if a is None or c is None:
+                err("W4 %s: no se encontró en %s" % (etiqueta, "hilo.js" if a is None else otro))
+            elif norm(a) != norm(c):
+                err("W4 %s difiere entre hilo.js y %s (copia el bloque de uno al otro)" % (etiqueta, otro))
+    # W5 modos: dato.js solo; hilo.js ∪ investigacion.js (cada workflow declara los modos que sirve)
+    k = claves_modos(dato)
+    if k is None:
+        warn("W5 dato.js: aún no tiene `const MODOS = {…}` (modos de ensamblar.MODOS['dato']: %s)" % MODOS["dato"])
+    elif sorted(k) != sorted(MODOS["dato"]):
+        err("W5 dato.js MODOS %s ≠ ensamblar.MODOS['dato'] %s" % (k, MODOS["dato"]))
+    kh, ki = claves_modos(hilo), (claves_modos(inv) if inv else [])
+    if kh is None:
+        warn("W5 hilo.js: aún no tiene `const MODOS = {…}`")
+    else:
+        if inv and ki is None:
+            err("W5 investigacion.js: no se encontró `const MODOS = {…}`")
+        ki = ki or []
+        esperado = MODOS["hilo"] if inv else [m for m in MODOS["hilo"] if m != "investigacion"]
+        if set(kh) & set(ki):
+            err("W5 modos repetidos entre hilo.js e investigacion.js: %s" % sorted(set(kh) & set(ki)))
+        if sorted(kh + ki) != sorted(esperado):
+            err("W5 hilo.js ∪ investigacion.js MODOS %s ≠ ensamblar.MODOS['hilo'] %s" % (sorted(kh + ki), sorted(esperado)))
+    # W6 espejos de investigacion.js
+    if inv:
+        tp = lista(inv, "TIPOS_PAGINA")
+        if tp is None:
+            err("W6 investigacion.js: no se encontró `const TIPOS_PAGINA = [...]`")
+        elif sorted(tp) != sorted(informe.TIPOS_PAGINA):
+            err("W6 investigacion.js TIPOS_PAGINA %s ≠ informe.TIPOS_PAGINA %s" % (sorted(tp), sorted(informe.TIPOS_PAGINA)))
+        m = re.search(r"^const MARCADOR_INFORME = '([^']*)'", inv, re.M)
+        if not m:
+            err("W6 investigacion.js: no se encontró `const MARCADOR_INFORME = '…'`")
+        elif m.group(1) != MARCADOR_INFORME:
+            err("W6 investigacion.js MARCADOR_INFORME %r ≠ ensamblar.MARCADOR_INFORME %r" % (m.group(1), MARCADOR_INFORME))
     graficos_informe(catalogo)
     return fin(quiet)
 

@@ -56,6 +56,42 @@ El modo llega en la directiva; `ensamblar.py` copia el bloque a `hilo.json` y
   unidad y el rótulo lo dice; C7 recalcula per cápita con el denominador
   declarado; si las dimensiones son de años distintos, el cierre los nombra.
 
+## Modo investigación (`/investigacion`)
+
+Corres dos veces: **Producción** (el hilo) y **Cierre** (el informe). El
+redactor escribe el informe entre ambas.
+
+**Producción.** Igual que un hilo (pasos 1–3b y 5) con dos diferencias:
+`ensamblar.py <sesion> --check --salida investigacion/<fecha>-<slug>/hilo`
+(y el mismo `--salida` en `--solo-estado`; en smoke/fixture, sin `--salida`:
+queda en `<sesion>/salida/`); y **no corras memoria.py** todavía:
+`registro_id: "pendiente"`. En el gate de coherencia, C1 incluye que cada
+tarjeta se sostiene sola (irá en el anexo del informe) y C8 que el cierre
+lleva `[ENLACE AL INFORME]` (G8 lo comprueba).
+
+**Cierre.** El redactor dejó `<sesion>/informe.json` y su staging en
+`<sesion>/informe/`.
+1. Normal y `desde`: `mkdir -p <entregable> && cp <sesion>/informe.json
+   <entregable>/informe.json` y `python3 scripts/informe.py <entregable>
+   --check --png <sesion>/informe/png` (el PDF queda en `<entregable>/salida/`;
+   los PNG, en el staging). Smoke/fixture: `python3 scripts/informe.py
+   <sesion> --check --salida <sesion>/informe --png <sesion>/informe/png`.
+2. QA del PDF con ≤ 3 `Read` (smoke 2, fixture 1) de `pagina_NN.png`: portada,
+   la página de tarjetas y una de capítulo. Si algo no se ve bien, corrige
+   `informe.json` en la sesión (y vuelve a copiar) y repite (≤ 2 vueltas); si
+   persiste, `qa_visual: "incompleto"`.
+3. Registro (no en smoke ni fixture): `python3 scripts/memoria.py --registrar
+   <sesion> --ruta <ruta_hilo> --informe <entregable> --estado
+   listo|incompleto` (hilo a `hilos.json` con modo investigacion, informe a
+   `informes.json`, series y fuentes, idea hecha). En `desde`, añade
+   `--solo-informe` (el hilo ya estaba registrado).
+4. `make validate` → exit 0.
+
+Retorno del cierre: `{ruta (entregable, RELATIVA), ruta_informe (informe.json),
+pdf, n_paginas, registro_id ("<fecha>-<slug>"; "smoke"|"fixture" cuando no
+se registra), estado, gates{informe, qa_visual, validate}, avisos[]}`.
+`estado` es `incompleto` si el hilo quedó incompleto o `qa_visual` lo está.
+
 ## Modo dato (`/dato`)
 
 Hay una sola tarjeta y no hay visualistas: el QA visual lo haces tú. Eres el

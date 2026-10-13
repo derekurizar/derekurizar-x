@@ -3,7 +3,8 @@
 Framework de Claude Code para producir **hilos de X con datos de Guatemala**
 que cuentan una historia: a partir de un tema, agentes orquestados investigan,
 verifican cifras, escriben el guion y generan una tarjeta 1080×1080 por tuit.
-También produce **datos sueltos** (una tarjeta) en varios géneros.
+También produce **datos sueltos** (una tarjeta) en varios géneros y
+**investigaciones**: un informe de datos en PDF más el hilo que lo acompaña.
 
 ```
 /hilo precios de combustibles en Guatemala 2026
@@ -15,6 +16,7 @@ También produce **datos sueltos** (una tarjeta) en varios géneros.
 /perfil Alta Verapaz               # retrato frente al país (5–8 tarjetas)
 /fecha                             # qué ocasiones con dato vienen en 30 días
 /ideas                             # banco de ideas para hilos
+/investigacion dengue 2026         # informe PDF (14–30 páginas) + hilo de 6–12 tuits
 ```
 
 Deja en `hilos/2026-09-28-<slug>/`:
@@ -45,6 +47,8 @@ se registran al arrancar) y:
 /dato fixture                  # ~3 min, sin web: solo el productor
 /dato [vs|mapa|antes] <pista>  # un dato (~8–15 min); con modo cambia el género
 /hilo [explica|perfil] <tema>  # hilo sin giro: explicador o perfil
+/investigacion fixture         # ~10 min, sin web: hilo + informe de 6–10 páginas en staging
+/investigacion <tema>          # informe PDF + hilo (~45–70 min); desde:<slug> solo el informe
 ```
 
 Abre `hilo.html`, revisa `contacto.png`, y publica a mano: PNG + texto + alt-text.
@@ -72,22 +76,41 @@ línea de tiempo, barras agrupadas, pictograma, área apilada y cascada.
 Además de tarjetas, el mismo sistema visual arma **documentos largos** (Letter, PDF)
 desde un `informe.json`: portada, índice automático, resumen, tablero de cifras,
 aperturas de capítulo, páginas de cuerpo con figuras (la tarjeta del hilo embebida
-o el gráfico redibujado sobre papel), mapa, cronología, tablas, conclusiones,
-método, glosario, anexos y contraportada. Las cifras con `id` se cruzan con
+o cualquiera de los 26 gráficos redibujado sobre papel o en panel, con el mismo
+`datos` que la tarjeta), mapa, cronología, tablas, conclusiones, método, glosario,
+anexos, las tarjetas del hilo y contraportada. Las cifras con `id` se cruzan con
 `datos.json` (solo verificadas o ajustadas) antes de escribir nada.
+
+`/investigacion <tema>` lo produce con agentes:
+
+```
+/investigacion <tema> ──▶ Workflow investigacion.js
+   editor (ejes + plan de capítulos) ──▶ investigador ⇢ verificador (por eje)
+   ──▶ guionista (6–12 tuits; el cierre remite al PDF con [ENLACE AL INFORME])
+   ──▶ visualistas ──▶ productor (el hilo, en investigacion/<fecha>-<slug>/hilo/)
+   ──▶ redactor (informe.json → informe.py --check: I1–I7 + P1–P5)
+   ──▶ productor (PDF al entregable, QA, memoria/informes.json, validate)
+```
+
+Deja en `investigacion/2026-10-13-<slug>/`: `informe.json`, `salida/informe.pdf`
+(y su HTML y figuras) y `hilo/` con lo mismo que un hilo. `desde:<slug>` escribe
+solo el informe sobre un hilo ya entregado.
 
 ```bash
 make informe-ejemplo                         # investigacion/ejemplos/dengue-2026 → salida/informe.pdf
 make informe DIR=<carpeta con informe.json>  # cualquier informe; PAL=<paleta> para probar otra
+make informe-fixture                         # informe de prueba de 8 páginas sobre el fixture de hilo
+make informe-catalogo                        # todos los gráficos del informe en papel, panel y media página
 ```
 
-Plantillas en `investigacion/` (ver su `README.md`); contrato en `referencias/diseno/informe.md`.
+Plantillas en `investigacion/` (ver su `README.md`); contrato en `referencias/diseno/informe.md`;
+flujo en `referencias/flujo-investigacion.md`.
 
 ## Cuando algo falla
 
-- **«El agente hilo-… no está registrado en esta sesión»**: reinicia Claude
-  Code (los agentes se cargan al arrancar). Si editaste `hilo.js` en la sesión,
-  lanza con `scriptPath: ".claude/workflows/hilo.js"`.
+- **«El agente hilo-… (o informe-redactor) no está registrado en esta sesión»**:
+  reinicia Claude Code (los agentes se cargan al arrancar). Si editaste `hilo.js`
+  o `investigacion.js` en la sesión, lanza con `scriptPath`.
 - **El workflow se cayó a mitad**: `Workflow({ scriptPath, resumeFromRunId, args })`
   reutiliza los agentes ya terminados.
 - **Un gate rechazó el guion o una tarjeta**: el mensaje dice el tuit y el
@@ -97,4 +120,5 @@ Plantillas en `investigacion/` (ver su `README.md`); contrato en `referencias/di
 ## Estructura
 
 Ver `CLAUDE.md` (mapa del proyecto, reglas de oro y comandos),
-`referencias/flujo-hilo.md` (índice del flujo) y `referencias/roles/` (guía por agente).
+`referencias/flujo-hilo.md` y `referencias/flujo-investigacion.md` (índices de los flujos) y
+`referencias/roles/` (guía por agente).

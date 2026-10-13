@@ -28,7 +28,18 @@
     <ruta>/dato.json y <ruta>/datos.json. Series y fuentes van a memoria/fuentes.json igual que en un
     hilo. El banco de ideas NO se toca (/dato no usa ideas).
 
+  Modo INVESTIGACIÓN (guion.modo == "investigacion", lo produce /investigacion): el hilo se registra igual en
+    memoria/hilos.json (modo investigacion, ruta investigacion/<fecha>-<slug>/hilo) y, con --informe <dir>, el
+    informe va a memoria/informes.json → informes[]
+    {id: "<fecha>-<slug>", fecha, slug, tema, tesis, paleta, numero, n_paginas, n_figuras, ruta_informe,
+     ruta_hilo, hilo_id, estado, modo (investigacion | desde)}
+    (numero = informe.json meta.numero; fecha y slug, del nombre de la carpeta <fecha>-<slug>; hilo_id, el id del
+    hilo en hilos.json). --solo-informe registra solo el informe sobre un hilo YA registrado (flujo desde:<slug>):
+    el hilo no se toca ni se funden series. Un numero ya usado por otro informe es error.
+
 --series "tema"   mismo filtro que scripts/fuentes.py --series
+--informes ["tema"] lista los informes registrados (del más reciente al más antiguo; con tema, filtrados) y
+                  termina con «siguiente N.º NN» (lo usa /investigacion para numerar)
 --datos ["tema"]  lista los datos registrados en memoria/datos.json, del más reciente al más antiguo
                   (con tema, filtrados por palabras clave); lo consulta el investigador de /dato para
                   no repetir un dato y para hook_evitar (el hook_tipo del primero de la lista).
@@ -50,6 +61,12 @@ from ensamblar import HOOKS  # noqa: E402  (los ocho nombres de gancho: una sola
 
 HILOS = os.path.join(RAIZ, "memoria", "hilos.json")
 DATOS = os.path.join(RAIZ, "memoria", "datos.json")
+INFORMES = os.path.join(RAIZ, "memoria", "informes.json")
+VACIO_INFORMES = {
+    "version": 1,
+    "_comentario": "Registro de informes de investigación (PDF) producidos por /investigacion. Lo escribe SOLO scripts/memoria.py (--registrar … --informe) desde el productor; `python3 scripts/memoria.py --informes` lista y da el siguiente N.º. estado: borrador | listo | publicado | incompleto · modo: investigacion (flujo completo) | desde (informe sobre un hilo previo).",
+    "informes": [],
+}
 FUENTES = os.path.join(RAIZ, "memoria", "fuentes.json")
 VACIO_DATOS = {
     "version": 1,
@@ -214,8 +231,40 @@ def registro_dato(a, ruta_abs, guion, encuadre, datos, hid, fecha, slug, hook):
     }
 
 
+def registro_informe(a, guion, hid_hilo, slug, tema, tesis):
+    """Registro para memoria/informes.json a partir de <informe>/informe.json (None si algo falta)."""
+    import informe as _informe  # noqa: E402  (figuras_de_pagina; se importa aquí para no cargar Playwright/tokens en cada uso)
+    d = os.path.join(RAIZ, a.informe)
+    ruta = os.path.join(d, "informe.json")
+    if not os.path.exists(ruta):
+        print("ERROR: --informe %s no tiene informe.json" % a.informe, file=sys.stderr)
+        return None
+    R = leer(ruta)
+    meta = R.get("meta") or {}
+    numero = str(meta.get("numero") or "").strip()
+    if not numero:
+        m = re.search(r"N\.º\s*(\d+)", "%s %s" % (meta.get("numero_largo") or "", meta.get("pie") or ""))
+        numero = m.group(1) if m else ""
+    if not re.fullmatch(r"\d{2,}", numero):
+        print("ERROR: informe.json sin meta.numero (dos dígitos) ni «N.º NN» en numero_largo/pie", file=sys.stderr)
+        return None
+    nombre = os.path.basename(os.path.normpath(a.informe))
+    m = re.match(r"(\d{4}-\d{2}-\d{2})-([a-z0-9-]+)$", nombre)
+    fecha_inf, slug_inf = (m.group(1), m.group(2)) if m else (guion.get("fecha") or "", slug)
+    paginas = R.get("paginas") or []
+    n_fig = sum(1 for P in paginas for k, _ in _informe.figuras_de_pagina(P) if k == "figura")
+    if not os.path.exists(os.path.join(d, "salida", "informe.pdf")):
+        print("AVISO: %s/salida/informe.pdf no existe todavía (corre scripts/informe.py %s --check)" % (a.informe, a.informe), file=sys.stderr)
+    return {
+        "id": "%s-%s" % (fecha_inf, slug_inf), "fecha": fecha_inf, "slug": slug_inf, "tema": tema, "tesis": tesis,
+        "paleta": meta.get("paleta") or guion.get("paleta"), "numero": numero, "n_paginas": len(paginas), "n_figuras": n_fig,
+        "ruta_informe": os.path.normpath(a.informe), "ruta_hilo": os.path.normpath(a.ruta), "hilo_id": hid_hilo,
+        "estado": a.estado, "modo": "desde" if a.solo_informe else "investigacion",
+    }
+
+
 def registrar(a):
-    if os.path.isabs(a.ruta):
+    if os.path.isabs(a.ruta) or (a.informe and os.path.isabs(a.informe)):
         print("ERROR: --ruta debe ser relativa a la raíz del repo (p. ej. hilos/2026-09-28-remesas o datos/2026-09-28-remesas)", file=sys.stderr)
         return 2
     sesion = os.path.abspath(a.registrar)
@@ -260,10 +309,34 @@ def registrar(a):
     if smoke:
         print("AVISO: la sesión es smoke; en smoke el productor NO escribe memoria/ (usa --dry-run o confirma que quieres registrarla).", file=sys.stderr)
 
+    # Informe (modo investigacion): memoria/informes.json; con --solo-informe el hilo debe estar ya registrado.
+    reg_inf, mi = None, None
+    if a.informe:
+        if modo_dato:
+            print("ERROR: --informe solo aplica a un hilo (modo investigacion), no a un dato", file=sys.stderr)
+            return 2
+        hid_hilo = hid
+        if a.solo_informe:
+            prev = next((h for h in (leer(HILOS).get("hilos") or []) if os.path.normpath(str(h.get("ruta") or "")) == os.path.normpath(a.ruta)), None)
+            if not prev:
+                print("ERROR: --solo-informe exige que el hilo %s ya esté en memoria/hilos.json" % a.ruta, file=sys.stderr)
+                return 1
+            hid_hilo = prev["id"]
+        reg_inf = registro_informe(a, guion, hid_hilo, slug, reg["tema"], reg["tesis"])
+        if reg_inf is None:
+            return 1
+        mi = leer(INFORMES, obligatorio=False) or json.loads(json.dumps(VACIO_INFORMES))
+        choque = next((x for x in mi.get("informes", []) if str(x.get("numero")) == reg_inf["numero"] and x.get("id") != reg_inf["id"]), None)
+        if choque:
+            print("ERROR: el N.º %s ya es del informe %s; corre `memoria.py --informes` para ver el siguiente número" % (reg_inf["numero"], choque["id"]), file=sys.stderr)
+            return 1
+
     items = mh.setdefault(clave, [])
     idx = next((i for i, h in enumerate(items) if h.get("id") == hid), None)
     accion = "actualizado" if idx is not None else "añadido"
-    if idx is not None:
+    if a.solo_informe:
+        accion = "ya registrado (--solo-informe no lo toca)"
+    elif idx is not None:
         items[idx].update(reg)
     else:
         items.append(reg)
@@ -274,14 +347,24 @@ def registrar(a):
     clave_serie = lambda s: (str(s.get("url") or "").strip().lower(), _fuentes.normalizar(s.get("nombre")))
     vistas = {clave_serie(s) for s in series}
     nuevas, repetidas = [], []
-    for s in series_de(datos, hid, etiqueta):
+    for s in ([] if a.solo_informe else series_de(datos, hid, etiqueta)):
         if clave_serie(s) in vistas:
             repetidas.append(s["nombre"])
             continue
         vistas.add(clave_serie(s))
         series.append(s); nuevas.append(s)
-    primarias, vacios = hallazgos_de(sesion)
+    primarias, vacios = hallazgos_de(sesion) if not a.solo_informe else ([], [])
     fuentes_nuevas, notas = fusionar_fuentes(mf, primarias, vacios, reg["tema"], hid, fecha)
+    if reg_inf:
+        inf_items = mi.setdefault("informes", [])
+        j = next((i for i, x in enumerate(inf_items) if x.get("id") == reg_inf["id"]), None)
+        if j is not None:
+            inf_items[j].update(reg_inf)
+        else:
+            inf_items.append(reg_inf)
+        print("%sinforme %s → memoria/informes.json (%s, N.º %s, %d páginas, %d figuras, paleta %s, estado %s, modo %s, hilo %s)" % (
+            "[dry-run] " if a.dry_run else "", reg_inf["id"], "actualizado" if j is not None else "añadido", reg_inf["numero"], reg_inf["n_paginas"],
+            reg_inf["n_figuras"], reg_inf["paleta"], reg_inf["estado"], reg_inf["modo"], reg_inf["hilo_id"]))
 
     if modo_dato:
         print("%sdato %s → memoria/datos.json (%s, cifra %s = %s %s · %s, plantilla %s, paleta %s, estado %s%s%s)" % (
@@ -312,14 +395,18 @@ def registrar(a):
         print("  (idea %s ignorada: /dato no usa el banco de ideas)" % idea_id)
     elif idea_id and smoke:
         print("  (idea %s: sesión smoke/fixture, el banco de ideas no se toca)" % idea_id)
-    marcar_idea = bool(idea_id) and not smoke and not modo_dato
+    marcar_idea = bool(idea_id) and not smoke and not modo_dato and not a.solo_informe
     if a.dry_run:
         if marcar_idea:
             print("  idea %s → %s (hilo %s)" % (idea_id, "hecha" if a.estado == "listo" else "en_curso", hid))
         print("[dry-run] no se escribió nada")
         return 0
-    escribir(archivo, mh)
+    if not a.solo_informe:
+        escribir(archivo, mh)
     escribir(FUENTES, mf)
+    if reg_inf:
+        escribir(INFORMES, mi)
+        print("escrito memoria/informes.json (%d informes)" % len(mi["informes"]))
     print("escrito memoria/%s.json (%d %s) y memoria/fuentes.json (%d series, %d nuevas; %d fuentes nuevas, %d notas)" % (
         clave, len(items), clave, len(series), len(nuevas), len(fuentes_nuevas), len(notas)))
     if marcar_idea:
@@ -347,13 +434,36 @@ def listar_datos(tema, maximo):
     return 0
 
 
+def listar_informes(tema, maximo):
+    """--informes [TEMA]: una línea por informe (el más reciente primero) y el siguiente número disponible."""
+    items = list((leer(INFORMES, obligatorio=False) or VACIO_INFORMES).get("informes", []))
+    todos = items
+    items = [d for _, d in sorted(enumerate(items), key=lambda x: (str(x[1].get("fecha") or ""), x[0]), reverse=True)]
+    claves = _fuentes.palabras_clave(tema) if tema else []
+    if claves:
+        pts = [(_fuentes.puntuar(claves, [(d.get("tema"), 3), (d.get("tesis"), 2), (d.get("slug"), 2)]), d) for d in items]
+        items = [d for p, d in sorted(pts, key=lambda x: -x[0]) if p]
+    print("informes registrados: %d%s" % (len(items), (" · tema: %s · claves: %s" % (tema, ", ".join(claves))) if claves else ""))
+    for d in items[:maximo]:
+        print("  %s · N.º %s · %s · %s págs · %s · %s (hilo: %s)" % (
+            d.get("id"), d.get("numero"), (d.get("tema") or "")[:60], d.get("n_paginas"), d.get("estado"), d.get("ruta_informe"), d.get("ruta_hilo")))
+    if not items:
+        print("  (ninguno)")
+    usados = [int(d["numero"]) for d in todos if str(d.get("numero") or "").isdigit()]
+    print("siguiente N.º %02d" % ((max(usados) + 1) if usados else 1))
+    return 0
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     g = p.add_mutually_exclusive_group(required=True)
     g.add_argument("--registrar", metavar="SESION", help="carpeta sesiones/<slug> (hilo o dato según guion.tipo)")
     g.add_argument("--series", metavar="TEMA", help="busca series conocidas para un tema")
     g.add_argument("--datos", nargs="?", const="", metavar="TEMA", help="lista los datos registrados en memoria/datos.json (/dato), del más reciente al más antiguo; con TEMA filtra por palabras clave")
-    p.add_argument("--ruta", help="carpeta de entrega, relativa a la raíz (hilos/<fecha>-<slug> o datos/<fecha>-<slug>)")
+    g.add_argument("--informes", nargs="?", const="", metavar="TEMA", help="lista los informes de memoria/informes.json (/investigacion) y el siguiente N.º; con TEMA filtra")
+    p.add_argument("--ruta", help="carpeta de entrega, relativa a la raíz (hilos/<fecha>-<slug>, datos/<fecha>-<slug> o investigacion/<fecha>-<slug>/hilo)")
+    p.add_argument("--informe", metavar="DIR", help="con --registrar: carpeta del informe (investigacion/<fecha>-<slug>, con informe.json) → memoria/informes.json")
+    p.add_argument("--solo-informe", action="store_true", help="con --informe: registra solo el informe; el hilo ya está en hilos.json (flujo desde:<slug>)")
     p.add_argument("--estado", choices=["listo", "incompleto"], default="listo")
     p.add_argument("--hook", choices=HOOKS, metavar="<hook_tipo>", help="nombre del gancho (por defecto, guion.hook_tipo): " + "|".join(HOOKS))
     p.add_argument("--dry-run", action="store_true")
@@ -361,6 +471,10 @@ def main():
     a = p.parse_args()
     if a.datos is not None:
         return listar_datos(a.datos, a.max)
+    if a.informes is not None:
+        return listar_informes(a.informes, a.max)
+    if a.solo_informe and not a.informe:
+        p.error("--solo-informe exige --informe <dir>")
     if a.series:
         claves = _fuentes.palabras_clave(a.series)
         if not claves:

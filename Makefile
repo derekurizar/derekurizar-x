@@ -6,7 +6,7 @@ GALERIA := templates/.galeria
 PALETAS ?= cielo
 PALETA ?= cielo
 
-.PHONY: help nuevo render visual catalogo validate tabla pdf ensamblar limpiar test doctor costo contacto digesto fuentes ideas calendario informe informe-ejemplo informe-catalogo
+.PHONY: help nuevo render visual catalogo validate tabla pdf ensamblar limpiar test doctor costo contacto digesto fuentes ideas calendario informe informe-ejemplo informe-catalogo informe-fixture
 
 help:
 	@echo "make nuevo T=<plantilla> OUT=<ruta.html> [PALETA=cielo]  ensambla una tarjeta (base + plantilla)"
@@ -28,6 +28,7 @@ help:
 	@echo "make informe DIR=<carpeta con informe.json> [PAL=x]    informe de investigación: gates I1-I6, PDF Letter y checks P1-P5 (salida en DIR/salida)"
 	@echo "make informe-ejemplo                                     construye investigacion/ejemplos/dengue-2026 (21 páginas)"
 	@echo "make informe-catalogo [PAL=x]                            genera y renderiza investigacion/ejemplos/catalogo (todos los G.* en papel, panel y media página; PNG por página)"
+	@echo "make informe-fixture                                     informe de prueba (8 páginas) sobre sesiones/_fixture/salida, sin agentes (requiere el fixture ensamblado)"
 	@echo "make limpiar [SESION=sesiones/<slug>]                    borra $(GALERIA)/, salidas de _fixture y _fixture_dato y .playwright-mcp/ (o una sesión)"
 
 nuevo:
@@ -66,7 +67,7 @@ limpiar:
 ifdef SESION
 	@case "$(SESION)" in sesiones/_fixture*|sesiones/_descargas*|sesiones/|sesiones) echo "no se borra $(SESION)"; exit 2;; sesiones/*) rm -rf "$(SESION)" && echo "borrada $(SESION)";; *) echo "SESION debe empezar por sesiones/"; exit 2;; esac
 else
-	rm -rf $(GALERIA) sesiones/_fixture/salida sesiones/_fixture_dato/salida .playwright-mcp
+	rm -rf $(GALERIA) sesiones/_fixture/salida sesiones/_fixture/informe sesiones/_fixture_dato/salida .playwright-mcp
 endif
 
 test:
@@ -102,6 +103,9 @@ informe:
 
 informe-ejemplo:
 	python3 scripts/informe.py investigacion/ejemplos/dengue-2026 --check
+
+informe-fixture:
+	python3 scripts/informe.py sesiones/_fixture --check --salida sesiones/_fixture/informe --png sesiones/_fixture/informe/png
 
 informe-catalogo:
 	python3 scripts/catalogo_informe.py $(if $(PAL),--paleta $(PAL),)

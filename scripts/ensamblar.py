@@ -41,7 +41,9 @@ Modo del post (guion.modo, lo fija el workflow con args.modo; encuadre.modo de r
   se copia a dato.json (clave del modo) y a post.md («## Modo <modo>»).
   Modos de hilo (espejo mínimo de hilo.js): explica → 3–6 tuits, sin giro, intermedios beat paso,
   bloque guion.explica{pregunta, pasos[]}; perfil → 5–8 tuits, sin giro, intermedios beat dimension,
-  bloque guion.perfil{sujeto, tipo, dimensiones[]}. El bloque va a hilo.json y a post.md.
+  bloque guion.perfil{sujeto, tipo, dimensiones[]}; investigacion (/investigacion) → 6–12 tuits con giro, bloque
+  guion.investigacion{numero, informe_dir, capitulos[]} y el cierre con el marcador literal [ENLACE AL INFORME] (G8).
+  El bloque va a hilo.json y a post.md.
 
 --estado borrador|listo|incompleto  estado que se escribe en hilo.json (dato.json), su vista previa y post.md (default borrador).
 --solo-estado  no ensambla ni renderiza: solo reescribe el estado (exige --estado) en la
@@ -72,7 +74,10 @@ BEATS = ["gancho", "contexto", "giro", "impacto", "cierre", "paso", "dimension"]
 HOOKS = ["giro_inversion", "escala_humana", "brecha_territorial", "pregunta_directa", "curiosity_gap", "mito_vs_dato", "antes_despues", "titular_clasico"]
 # Tipos de entregable y modos por tipo. El modo viaja en guion.modo (lo fija el workflow con args.modo).
 TIPOS = ["hilo", "dato"]
-MODOS = {"hilo": ["hilo", "explica", "perfil"], "dato": ["dato", "vs", "mapa", "antes"]}
+MODOS = {"hilo": ["hilo", "explica", "perfil", "investigacion"], "dato": ["dato", "vs", "mapa", "antes"]}
+# Modo investigacion (/investigacion): el hilo acompaña a un informe PDF; el cierre lleva este marcador literal, que el
+# usuario sustituye por la URL del PDF al publicar (investigacion.js lo copia; check_workflows W6 los compara).
+MARCADOR_INFORME = "[ENLACE AL INFORME]"
 RE_LINK = re.compile(r"https?://|www\.|\.com\b|\.gt\b", re.I)
 RE_BAIT = re.compile(r"(dale|da|dame|dejen?)\s+(rt|like|me gusta)|s[ií]gue(me|nos)|retuitea|comparte si|like si|guarda este|no te lo pierdas", re.I)
 RE_SUPER = re.compile(r"r[ée]cord|hist[óo]ric[oa]|m[áa]s alt[oa] de la historia|nunca antes", re.I)
@@ -275,7 +280,7 @@ def gate(guion, encuadre, cifras, veredictos, sesion, plantillas, paletas, modo_
     else:
         modo_h = modo_de(guion, encuadre)
         # Modos de hilo: explica (3–6, sin giro, intermedios paso) · perfil (5–8, sin giro, intermedios dimension).
-        rango = {"explica": (3, 6), "perfil": (5, 8)}.get(modo_h, (4, MAX_TUITS))
+        rango = {"explica": (3, 6), "perfil": (5, 8), "investigacion": (6, 12)}.get(modo_h, (4, MAX_TUITS))
         lo, hi = (3, MAX_TUITS) if smoke else rango
         beat_medio = {"explica": "paso", "perfil": "dimension"}.get(modo_h)
         if not lo <= n <= hi:
@@ -300,6 +305,18 @@ def gate(guion, encuadre, cifras, veredictos, sesion, plantillas, paletas, modo_
                 F.append("G1 debe haber exactamente un beat 'giro' (hay %d)" % len(giros))
             if not smoke and n >= 5 and not any(t.get("beat") == "impacto" for t in tuits):
                 F.append("G1 en modo normal con ≥5 tuits debe haber un beat 'impacto' (escala humana)")
+        if modo_h == "investigacion":
+            inv = guion.get("investigacion")
+            if not isinstance(inv, dict):
+                F.append("G1 modo investigacion exige el bloque guion.investigacion {numero, informe_dir, capitulos[]}")
+            else:
+                if not re.fullmatch(r"\d{2,}", str(inv.get("numero") or "")):
+                    F.append("G1 modo investigacion: investigacion.numero debe ser el número del informe con dos dígitos (%r)" % inv.get("numero"))
+                if not str(inv.get("informe_dir") or "").strip():
+                    F.append("G1 modo investigacion: investigacion.informe_dir vacío (carpeta del entregable)")
+                caps = inv.get("capitulos")
+                if not isinstance(caps, list) or not caps or not all(isinstance(c, dict) and c.get("n") and c.get("titulo") for c in caps):
+                    F.append("G1 modo investigacion: investigacion.capitulos debe ser una lista no vacía de {n, titulo, tuits[]}")
     for t in tuits:
         if t.get("beat") not in BEATS:
             F.append("G1 T%s beat %r no está en %s" % (t.get("n"), t.get("beat"), BEATS))
@@ -435,6 +452,14 @@ def gate(guion, encuadre, cifras, veredictos, sesion, plantillas, paletas, modo_
             F.append("G8 el cierre no tiene texto: debe nombrar las fuentes de las tarjetas")
         elif faltan:
             F.append("G8 el cierre no nombra las fuentes de las tarjetas: %s" % ", ".join(faltan))
+        if modo_de(guion, encuadre) == "investigacion":
+            cierre_txt = tuits[-1].get("texto") or ""
+            if MARCADOR_INFORME not in cierre_txt:
+                F.append("G8 modo investigacion: el cierre debe llevar el marcador literal %s (se sustituye por la URL del PDF al publicar)" % MARCADOR_INFORME)
+            elif peso_x(cierre_txt.replace(MARCADOR_INFORME, "https://x.co/i")) > 280:
+                F.append("G8 modo investigacion: el cierre con la URL del informe (peso 23) superaría 280")
+            if any(MARCADOR_INFORME in (t.get("texto") or "") for t in tuits[:-1]):
+                F.append("G8 modo investigacion: el marcador %s solo va en el cierre" % MARCADOR_INFORME)
     return F, W
 
 

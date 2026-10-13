@@ -76,3 +76,30 @@ visual, salida en `<sesion>/salida/`, sin tocar `memoria/` (sin pista usa
 «remesas familiares 2025»). Modo `fixture`: el productor copia
 `sesiones/_fixture_dato` a `sesiones/fixture-dato-<YYYYMMDD>` y se saltan
 investigación, verificación y guion.
+
+## Sesión investigación (`/investigacion`)
+
+Mismo contrato que un hilo (`tipo: "hilo"`, `modo: "investigacion"`) con más
+material y dos archivos más. El redactor es el único que escribe `informe.json`.
+
+| Archivo | Lo escribe | Contenido |
+|---|---|---|
+| `encuadre.json` | editor | como en un hilo, más `modo: "investigacion"` e `informe{numero: "NN", capitulos[1–4]{n, titulo, pregunta, ejes[]}}` (en `desde:<slug>` el editor lo **añade** al encuadre existente sin tocar lo demás) |
+| `hallazgos_<eje>.json` | investigador | como en un hilo, hasta 16 cifras, series completas y ≥ 1 desglose por eje |
+| `verificacion_<eje>.json` | verificador | igual |
+| `guion.json` | guionista | como en un hilo (6–12 tuits, giro e impacto) más `modo: "investigacion"` y el bloque `investigacion{numero, informe_dir, capitulos[]{n, titulo, tuits[]}}`; el cierre termina con `[ENLACE AL INFORME]` |
+| `visuales/…` | visualistas | igual |
+| `informe.json` | **redactor** | contrato de `referencias/diseno/informe.md`: `meta.datos = ["<ruta_hilo>/datos.json"]`, `meta.numero`, página `tarjetas` con `desde_hilo` |
+| `informe/` | redactor (staging) | `informe.html`, `informe.pdf`, `figuras/`, `png/pagina_NN.png`; nunca se entrega |
+| `salida/` | productor (solo smoke/fixture) | el hilo cuando no se toca `investigacion/` |
+
+Entregable (normal): `investigacion/YYYY-MM-DD-<slug>/` con `informe.json`,
+`salida/` (`informe.pdf`, `informe.html`, `figuras/`, `fonts/`) y `hilo/`
+(`hilo.html`, `post.md`, `tuit_N.png`, `datos.json`, `hilo.json`,
+`contacto.png`). En `desde:<slug>` no hay `hilo/`: el informe apunta a
+`hilos/<fecha>-<slug>/`. Registro: `memoria/hilos.json` (modo investigacion,
+ruta `investigacion/…/hilo`) y `memoria/informes.json` (solo `memoria.py
+--registrar … --informe`). Modo `smoke`: 1 eje, 4–6 tuits, 8–12 páginas, todo
+en `<sesion>/{salida,informe}/`, sin tocar `memoria/`. Modo `fixture`: se copia
+`sesiones/_fixture` (que trae un `informe.json` de ejemplo) y se saltan
+investigación y verificación; el redactor escribe el suyo.

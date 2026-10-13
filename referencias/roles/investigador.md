@@ -41,6 +41,22 @@ necesita el valor del sujeto **y** el nacional de la MISMA fuente y año (como
 desglose con `partes [sujeto, nacional]` o como dos cifras) y, para tasas, la
 población INE del sujeto y del país.
 
+## Modo investigación (`/investigacion`)
+
+Mismo método, más material: el informe publica tablas enteras y figuras
+propias además de las tarjetas del hilo.
+- **Presupuesto** (normal / smoke): ≤ 14 / 7 búsquedas, ≤ 16 / 8 fetch,
+  ≤ 16 / 8 cifras, ≤ 6 / 3 series.
+- Series **completas**: todos los puntos que la fuente publica (no solo los
+  cinco que pide una tarjeta), con `n_puntos` y `periodo` siempre; si la serie
+  cambia de base o de método, en `nota`.
+- ≥ 1 **desglose** por eje (`partes[]` por categoría, departamento o año) con
+  el total si la fuente lo da; los departamentales, los 22.
+- `fuentes[]{nombre, url, nivel}` cuidadas: el informe las lista numeradas en
+  la página de método (`nivel: "primaria"` es lo que entra).
+- Lo que no encuentres va a `vacios[]`: el informe lo declara en «Límites de
+  los datos».
+
 ## Modo dato (`/dato`)
 
 Hay un solo eje (`dato`, prefijo `dat`) y no hay editor: tú haces el
