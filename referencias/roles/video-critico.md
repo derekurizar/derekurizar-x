@@ -18,7 +18,7 @@ escribes solo `<TRABAJO>/critica.json`.
 1. `<TRABAJO>/guion.json`: la estructura (gancho, promesa, escenas con tipo,
    enlace, golpe o pantalla + línea, calculo, cierre, captions).
 2. `<TRABAJO>/locucion.json`: por escena, `voz` **tal como se oirá** (las
-   cifras ya en palabras, el prefijo «En Guatemala:» puesto), `estimado_s`,
+   cifras ya en palabras, el prefijo «En Guatemala» puesto), `estimado_s`,
    `hueco_max_s` (segundos sin cifra ni fin de oración, estimados), `cinetico`
    (`pantalla` y `linea` del gancho o del golpe), `golpe` (el re-gancho que va
    arriba de la tarjeta), `enlace`, `calculo` y `valor_calculo`.
@@ -27,7 +27,7 @@ escribes solo `<TRABAJO>/critica.json`.
    y la tesis, y la «escala humana posible» que sugiere por cifra. Solo para
    cotejar y para escribir arreglos con cifras reales.
 
-## Qué revisas (C1–C9)
+## Qué revisas (C1–C10)
 
 - **C1 · Gancho en silencio (s 0–3).** Mira solo `pantalla` y `linea` de la
   escena 1, sin la voz: ¿frenan el scroll? ¿Traen una cifra concreta o una
@@ -65,6 +65,22 @@ escribes solo `<TRABAJO>/critica.json`.
   sin explicar ni jerga; sin muletillas repetidas; nada que contradiga
   `no_afirma` ni cambie «coincide con» por «gracias a»; un recuento no oficial
   se dice como tal.
+- **C10 · Lectura de corrido.** Lee la `voz` de TODAS las escenas seguida, como
+  un solo texto y sin mirar la pantalla: ¿se entiende sola? ¿cada frase nombra
+  su sujeto («ocho mil kilos de cocaína en seis meses» no dice qué pasó con
+  ellos: faltaba «decomisados»)? ¿cada frase tiene **verbo conjugado**? Lee en voz
+  alta la primera frase del gancho: «En Guatemala casi ciento sesenta y ocho
+  bebés al día, de madres de diez a diecinueve años» es un titular, no se
+  entiende; «En Guatemala nacen casi ciento sesenta y ocho bebés al día…» sí
+  (el gate solo comprueba el `verbo` declarado en la oración de la pantalla;
+  tú, que el resto de las frases también lo tengan y que el verbo sea el que da
+  sentido)? ¿hay repeticiones cercanas («más de cinco veces
+  más»), dos cifras pegadas sin aire, una frase que solo tiene sentido viendo
+  el golpe? La pantalla del gancho y su voz dicen lo mismo (el gate lo exige);
+  en los golpes revísalo tú: un sinónimo vale, una omisión no. Y **ninguna
+  escena abre con las palabras que cerraron la anterior** («¿Y en 2024?» →
+  «El resultado: en 2024…» se oye repetido; el gate lo rechaza): la siguiente
+  escena responde, no repite la pregunta.
 
 ## Puntajes (1–5)
 
@@ -72,7 +88,7 @@ escribes solo `<TRABAJO>/critica.json`.
 |---|---|---|---|---|
 | `gancho` | C1 | lo publicarías tal cual | se sostiene | no se entrega sin arreglo |
 | `bucle` | C2 + C4 | | | |
-| `ritmo` | C3 + C7 | | | |
+| `ritmo` | C3 + C7 + C10 | | | |
 | `escala_humana` | C5 | | | |
 | `pago` | C6 | | | |
 | `cierre` | C8 | | | |
@@ -86,8 +102,9 @@ toque.
 - **bloquea**: pantalla del gancho que sola no se entiende o sin cifra ni
   pregunta concreta (C1); promesa vaga o ausente (C2); dos o más enlaces falsos
   (C4); pago que no cierra la brecha (C6); pregunta de opinión o abstracta
-  (C8); golpe que lee el titular o afirma algo de `no_afirma` (C9); cualquier
-  puntaje ≤ 2.
+  (C8); golpe que lee el titular o afirma algo de `no_afirma` (C9); una frase
+  de la voz que no se entiende sin la pantalla o que no tiene verbo conjugado o una repetición audible en la
+  frase del dato (C10); cualquier puntaje ≤ 2.
 - **mejora**: todo lo demás (una cifra sin traducir, un hueco de 5 s, un «y»
   que podría ser «pero», una muletilla).
 

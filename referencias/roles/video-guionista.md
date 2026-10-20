@@ -9,7 +9,7 @@ después cada escena tiene que ganarse la siguiente. Sin cara: la pantalla la ll
 ## Insumo y salida
 
 - Insumo: `<TRABAJO>/digesto.md` — presupuesto (duración, tarjetas y golpes, caracteres de voz), la guía de
-  estructura, la sugerencia de tarjetas, si el gancho lleva «En Guatemala:» (lo pone el script), la
+  estructura, la sugerencia de tarjetas, si el gancho lleva «En Guatemala» (lo pone el script), la
   música, y cada tarjeta con beat, kicker, titular, texto, alt-text, cifras (valor, unidad, periodo, series
   y partes) y la «escala humana posible» de cada cifra con su `calculo`.
 - Salida: `<TRABAJO>/guion.json` v2 (ejemplo sobre el hilo de crimen organizado):
@@ -19,11 +19,11 @@ después cada escena tiene que ganarse la siguiente. Sin cara: la pantalla la ll
  "contexto_superior": "Crimen organizado · Guatemala 2026",
  "promesa": {"texto": "Pero hay un dato que cambia todo.", "en": 1, "pago": 5},
  "escenas": [
-  {"tipo": "gancho", "formula": "cifra", "pantalla": "8,402 kg", "linea": "de cocaína decomisada en seis meses",
-   "texto": "8,402 kg de cocaína decomisados en seis meses. ¿Se nota en la calle? Pero hay un dato que cambia todo."},
+  {"tipo": "gancho", "formula": "cifra", "pantalla": "8,402 kg", "linea": "de cocaína decomisada en seis meses", "verbo": "decomisaron",
+   "texto": "Se decomisaron 8,402 kg de cocaína en seis meses. ¿Se nota en la calle? Pero hay un dato que cambia todo."},
   {"tipo": "tarjeta", "tuit": 1, "enlace": null, "golpe": "Cinco veces más cocaína", "calculo": "nar-c02.partes[1]/nar-c02.partes[0]",
    "texto": "En el primer semestre de 2025 se decomisaron {1,596.2:m}. En el de 2026, 8,402.4 kg: cinco veces más."},
-  {"tipo": "golpe", "enlace": "por_eso", "pantalla": "2 de cada 3", "linea": "kilos salieron de un solo barco", "calculo": "100/nar-c04",
+  {"tipo": "golpe", "enlace": "por_eso", "pantalla": "2 de cada 3", "linea": "kilos salieron de un solo barco", "calculo": "100/nar-c04", "verbo": "salió",
    "texto": "Así que ojo: el 66.7% de esa cocaína salió de un solo cargamento, el de Puerto Quetzal."},
   {"tipo": "tarjeta", "tuit": 12, "enlace": "pero", "golpe": "El doble de policías asesinados",
    "texto": "Pero mientras suben los decomisos, los policías asesinados pasaron de {10:m} a {20:m} en un año."},
@@ -47,10 +47,14 @@ ya no existe: la escena 1 ES el gancho.
 
 1. **Gancho (escena 1).** `tipo: "gancho"`, sin tuit. Lo primero que se ve, EN SILENCIO, es `pantalla`
    (una cifra como «8,402 kg» o ≤ 4 palabras, ≤ 24 caracteres) y debajo `linea` (≤ 8 palabras, ≤ 60
-   caracteres). Esa pantalla sola debe frenar el scroll; la voz (30–120 caracteres, sin el prefijo) la
-   remata y combina **dos disparadores**. Elige `formula`:
-   - `cifra` (la cifra fuerte primero): «8,402 kg» / «de cocaína decomisada en seis meses» / «8,402 kg de
-     cocaína decomisados en seis meses. Cinco veces más que el año pasado. Pero hay un dato que cambia todo.»
+   caracteres). Esa pantalla sola debe frenar el scroll; la voz (30–130 caracteres, sin el prefijo) la
+   remata y combina **dos disparadores**. **La pantalla puede ser titular; la voz no**: la oración que dice la
+   cifra de la pantalla lleva un verbo conjugado y lo declaras en `verbo` (V9 lo busca en esa oración).
+   «Casi 168 al día» / «bebés de madres de 10 a 19 años» en pantalla → voz «Nacen casi 168 bebés al día de
+   madres de 10 a 19 años», `verbo`: «nacen». Nunca el titular leído en voz alta («Casi 168 bebés al día, de
+   madres de 10 a 19 años»): sin verbo no se entiende. Elige `formula`:
+   - `cifra` (la cifra fuerte primero): «8,402 kg» / «de cocaína decomisada en seis meses» / «Se decomisaron
+     8,402 kg de cocaína en seis meses. Es cinco veces más que el año pasado. Pero hay un dato que cambia todo.»
    - `contradiccion` (creías X, pasa Y; pantalla o línea llevan una cifra): «Menos denuncias» / «pero el
      doble de policías asesinados» / «Las denuncias de extorsión cayeron. Pero los policías asesinados pasaron
      de {10:m} a {20:m}.»
@@ -61,7 +65,8 @@ ya no existe: la escena 1 ES el gancho.
      «homicidios terminan en sentencia» / «Solo 4 de cada 100 homicidios terminan en sentencia. Así llegamos
      ahí.» («A de cada 100» vale si A es un porcentaje del digesto.)
    Sin saludo, sin «hoy les cuento», sin anunciar el tema: la primera palabra ya es el dato o la pregunta.
-   «En Guatemala:» lo antepone el script si tu voz no dice «Guatemala».
+   «En Guatemala» (sin dos puntos) lo antepone el script si tu voz no dice «Guatemala», así que tu voz es el
+   resto de la frase: «Nacen casi 168…» → «En Guatemala nacen casi 168…».
 2. **Promesa y pago.** `promesa.texto` (10–80 caracteres) aparece **literal** en la voz de la escena `en`
    (1 o 2) y abre una brecha específica: dice qué falta saber («…y al final te digo cuántos terminan en
    condena», «Pero hay un dato que cambia todo»), nunca «¿qué opinas?» ni «sigue viendo». `pago` es la
@@ -71,11 +76,12 @@ ya no existe: la escena 1 ES el gancho.
    entonces, el resultado, de ahí que, la consecuencia) o `y` (y, además, también, encima, más aún). Nunca
    «y luego»; `y` como máximo en un tercio de los enlaces. El **giro** del hilo (beat `giro` en el digesto) es
    tu «pero» mayor.
+   **Nunca abras una escena con las palabras que cerraron la anterior**: si la escena 4 termina «¿Y en 2024?», la 5 no empieza «El resultado: en 2024…» (se oye repetido; el gate lo rechaza). La siguiente escena responde o avanza: «Solo 1 de cada 25…».
 4. **Golpes.** Cada tarjeta lleva `golpe` (1–6 palabras, ≤ 40 caracteres): el re-gancho que aparece arriba
    mientras entra la tarjeta, en lenguaje llano y con la cifra si cabe («Cinco veces más cocaína», «1 de
    cada 3 no denuncia», «El doble de policías muertos»). Nunca el titular de la tarjeta ni parte de él. Una
    escena `tipo: "golpe"` (texto cinético a pantalla completa, voz 20–110 caracteres, con `pantalla` y
-   `linea` como el gancho) sirve para tres cosas: traducir la cifra de la tarjeta anterior a escala humana,
+   `linea` como el gancho, y `verbo` de la oración que dice su pantalla) sirve para tres cosas: traducir la cifra de la tarjeta anterior a escala humana,
    pagar la promesa, o re-ganchar a mitad en medio y largo («Espera, se pone peor»). Nunca dos golpes
    seguidos, nunca en la escena 2, nunca para repetir la tarjeta.
 5. **Escala humana y `calculo`.** Redondea al hablar (el gate acepta «8,402 kg» o «8 mil kilos» por 8402.4),
@@ -86,7 +92,7 @@ ya no existe: la escena 1 ES el gancho.
    texto). Ejemplos: `nar-c02.partes[1]/nar-c02.partes[0]` → «5 veces»; `100/vle-c13` → «1 de cada 3»;
    `(1-est-c05.partes[1]/est-c05.partes[0])*100` → «39% menos denuncias»; `nar-c02/1000` → «8.4 toneladas».
    El digesto sugiere las traducciones posibles por cifra: úsalas.
-6. **Ritmo.** Tarjetas de 40–230 caracteres de voz (≤ 15 s), golpes de 20–110, gancho de 30–120, cierre de
+6. **Ritmo.** Tarjetas de 40–230 caracteres de voz (≤ 15 s), golpes de 20–110, gancho de 30–130, cierre de
    40–200. La cifra va en la primera oración de cada tarjeta; el gate (V9) rechaza más de 6 s estimados sin
    un evento (inicio, fin de la primera oración, cada cifra, fin): acorta o mueve la cifra. Tus cifras y
    golpes son los cambios visuales que sostienen la atención.
@@ -113,8 +119,8 @@ ya no existe: la escena 1 ES el gancho.
 
 | Duración | Objetivo | Escenas (más el cierre) | Voz |
 |---|---|---|---|
-| `corto` (por defecto) | 60 s ±10 % | gancho + 3–4 tarjetas + 1–2 golpes | ≈ 810 caracteres |
-| `medio` | 120 s ±10 % | gancho + 6–8 tarjetas + 2–4 golpes | ≈ 1,675 |
+| `corto` | 60 s ±10 % | gancho + 3–4 tarjetas + 1–2 golpes | ≈ 810 caracteres |
+| `medio` (por defecto) | 120 s ±10 % | gancho + 6–8 tarjetas + 2–4 golpes | ≈ 1,675 |
 | `largo` | 240 s ±10 % | gancho + 11–15 tarjetas + 3–6 golpes | ≈ 3,437 |
 | `prueba` (fixture) | 45 s ±10 % | gancho + 2–3 tarjetas + 0–1 golpes | ≈ 599 |
 
@@ -122,6 +128,6 @@ La voz total (con cifras en palabras, ≈ 1.4× el texto en dígitos) debe caer 
 (V4) imprime la duración estimada. Si te pasas, quita una tarjeta o acorta frases; no aceleres a costa de la
 claridad. V9 comprueba: escena 1 gancho con fórmula y prueba en silencio; escena 2 = T1; enlaces desde la 3
 con su conector al inicio y `y` ≤ ⌊n/3⌋; golpe en cada tarjeta, ≤ 6 palabras y distinto del titular; nunca
-dos golpes seguidos; promesa literal en 1–2 y pago en el último tercio; `calculo` legible que da el número
+dos golpes seguidos; `verbo` del gancho y de cada golpe dentro de la oración que dice su pantalla; promesa literal en 1–2 y pago en el último tercio; `calculo` legible que da el número
 escrito; ritmo ≤ 6 s. Si la directiva trae faltas del crítico o fallos del workflow, corrige **solo** eso y
 vuelve a pasar el gate.

@@ -216,10 +216,15 @@
     }
   };
 
-  // elementos de la tarjeta que muestran el valor con clave k (misma clave que T.valores)
+  // elementos de la tarjeta que muestran el valor con clave k (misma clave que T.valores). La voz redondea
+  // («mil quinientos noventa y seis» por 1,596.2): coincide si el valor, redondeado a los decimales de k, es k
+  const coincide = (v, k) => { if (v == null || Number.isNaN(Number(v))) return false;
+    if (clave(v) === k) return true;
+    const kv = Number(k), dec = (k.split(".")[1] || "").length;
+    return !Number.isNaN(kv) && Math.abs(kv) >= 1 && Math.abs(Number(v) - kv) <= 0.5 * Math.pow(10, -dec) + 1e-9; };
   function elementos(k) {
-    const D = DATA, ck = (v) => v != null && !Number.isNaN(Number(v)) && clave(v) === k;
-    const num = (el) => { const n = el && numTexto(el.textContent); return !!n && clave(n.v) === k; };
+    const D = DATA, ck = (v) => coincide(v, k);
+    const num = (el) => { const n = el && numTexto(el.textContent); return !!n && coincide(n.v, k); };
     const q = (s) => document.querySelector(s), qa = (s) => [...document.querySelectorAll(s)];
     if (plantilla === "antes-despues") return E.cols.filter((c) => ck(D[c.k].valor) || num(c.num)).map((c) => c.num);
     if (plantilla === "cifra") return ck(D.cifra.valor) || num(E.num) ? [E.num] : [];

@@ -8,7 +8,7 @@ música ni efectos).
 
 Subcomandos (TRABAJO = sesiones/<slug>/video):
   preparar <hilo|ultimo> [--duracion corto|medio|largo] [--musica ID] [--trabajo DIR] [--permitir-borrador]
-        crea TRABAJO, elige la música y escribe digesto.md para el guionista (también lo imprime); corto por defecto
+        crea TRABAJO, elige la música y escribe digesto.md para el guionista (también lo imprime); medio por defecto
   guion TRABAJO --check        gate V1–V5 + V9 (estructura de retención) sobre guion.json v2 → locucion.json
   voz TRABAJO                  imprime JSON con la voz y el texto de cada nodo TTS
   descargar TRABAJO --voz URLS.json | --palabras URLS.json   ({"<n>": "<url>"} → audio/voz_N.mp3 | palabras_N.json)
@@ -47,8 +47,8 @@ VELOCIDAD = 1.1      # la voz se acelera con atempo (sin cambiar el tono); los t
 CPS = 15.5           # caracteres de voz por segundo ya acelerada (medido en la prueba del hilo de crimen)
 COLA = 0.7           # aire tras la última palabra de cada escena
 COLA_CIERRE = 2.8    # «Sígueme en» se queda en pantalla tras la pregunta final
-PREFIJO = "En Guatemala:"
-DURACION_DEFECTO = "corto"
+PREFIJO = "En Guatemala"   # sin dos puntos (2026-10-20): con «:» la voz sonaba a titular sin verbo
+DURACION_DEFECTO = "medio"   # decisión del usuario (2026-10-20): en 1 min lo informativo «se siente como un resumen y corriendo»
 DURACIONES = {  # objetivo en s · tarjetas y golpes (más el gancho y el cierre); «prueba» es solo para el fixture
     "corto": {"s": 60, "tarjetas": (3, 4), "golpes": (1, 2)},
     "medio": {"s": 120, "tarjetas": (6, 8), "golpes": (2, 4)},
@@ -61,7 +61,7 @@ ENLACES = {"pero": r"pero|sin embargo|aunque|solo que|en cambio|aun así",
            "por_eso": r"por eso|así que|entonces|el resultado|de ahí que|la consecuencia",
            "y": r"y|además|también|encima|más aún"}
 RE_ENLACE = {k: re.compile(r"^[¿¡]?\s*(?:%s)\b" % v, re.I) for k, v in ENLACES.items()}
-CARACTERES = {"gancho": (30, 120), "tarjeta": (40, 230), "golpe": (20, 110), "cierre": (40, 200)}  # voz ya en palabras
+CARACTERES = {"gancho": (30, 130), "tarjeta": (40, 230), "golpe": (20, 110), "cierre": (40, 200)}  # voz ya en palabras
 GOLPE_PALABRAS, GOLPE_CARACTERES = 6, 40
 PANTALLA_PALABRAS, PANTALLA_CARACTERES, LINEA_PALABRAS, LINEA_CARACTERES = 4, 24, 8, 60
 RITMO_MAX_S = 6.0    # V9 (estimado) y V10 (real): hueco máximo entre eventos visuales
@@ -80,6 +80,30 @@ PLANTILLAS_ANIMADAS = {"antes-despues", "cifra", "barras-v", "linea", "barras-h"
                        "mapa", "pendiente"}
 SFX_DIR = os.path.join(RAIZ, "design", "sfx")
 RE_DE_CADA = re.compile(r"\b(\d+)\s+de\s+cada\s+(\d+)\b")
+TRANSICION = 0.3     # deslizamiento entre escenas (xfade); los primeros 0.3 s de cada escena quedan bajo la transición
+STOP = set("de del en los las una uno unos unas que para con por mas sin sobre entre hasta desde cada como pero este esta "
+           "estos estas ano anos mil millones casi solo hace todo toda todos todas donde cuando mientras tambien ademas "
+           "segun contra entonces resultado veces".split())
+
+
+def eco_entre_escenas(voz_anterior, voz):
+    """Palabras (≥ 5 letras, sin vacías) con las que cierra una escena y abre la siguiente: «¿Y en dos mil
+    veinticuatro?» → «El resultado: en dos mil veinticuatro…» se oye repetido."""
+    cola = [w for w in _plano(voz_anterior).split()[-5:] if len(w) >= 5 and w not in STOP]
+    cabeza = [w for w in _plano(voz).split()[:7] if len(w) >= 5 and w not in STOP]
+    return [w for w in cabeza if w in cola]
+
+
+def palabras_no_dichas(pantalla, voz):
+    """Palabras clave de la pantalla (≥ 6 letras, sin vacías ni números) que la voz no dice: se comparan raíces de
+    6 letras sin tildes («decomisados» ↔ «decomisada», «condenas» ↔ «condena»)."""
+    raices = {w[:6] for w in _plano(voz).split() if len(w) >= 6}
+    out = []
+    for w in _plano(pantalla).split():
+        if len(w) < 6 or w in STOP or w.isdigit() or w[:6] in raices:
+            continue
+        out.append(w)
+    return out
 
 
 # ---------- utilidades ----------
@@ -226,7 +250,7 @@ def escala_humana(cid, c):
 
 def cmd_preparar(a):
     if a.duracion not in DURACIONES:
-        return falla("duración «%s»: usa corto (por defecto), medio o largo" % a.duracion)
+        return falla("duración «%s»: usa corto, medio (por defecto) o largo" % a.duracion)
     hilo_dir = resolver_hilo(a.hilo)
     if not hilo_dir:
         return falla("no encuentro el hilo «%s» (slug, carpeta de hilos/ o «ultimo»)" % a.hilo)
@@ -302,13 +326,16 @@ def cmd_preparar(a):
            % (*CARACTERES["gancho"], *CARACTERES["tarjeta"], *CARACTERES["golpe"], *CARACTERES["cierre"]),
            "- Ritmo: dentro de cada escena, como mucho %.0f s (≈ %d caracteres) entre el inicio, el fin de la primera "
            "oración, cada cifra y el fin: la cifra, pronto." % (RITMO_MAX_S, RITMO_MAX_S * CPS),
-           "- «En Guatemala:» al inicio de la voz del gancho: %s (lo pone el script si tu texto no dice «Guatemala»; no lo escribas)."
+           "- «En Guatemala» al inicio de la voz del gancho: %s (lo pone el script si tu texto no dice «Guatemala»; no lo escribas; "
+           "tu voz sigue la frase: «Nacen casi 168 bebés al día…» → «En Guatemala nacen casi 168 bebés al día…»)."
            % ("SÍ" if prefijo else "no"),
            "- Música: %s (%s)" % (musica["id"], musica.get("ambiente", "")),
            "", "## Estructura (la comprueba el gate V9)",
            "1. Escena 1 = **gancho**: `formula` cifra | contradiccion | pregunta | resultado; `pantalla` (una cifra o ≤ %d palabras, "
            "≤ %d caracteres) y `linea` (≤ %d palabras, ≤ %d caracteres) deben contar el gancho **en silencio**: cifra/resultado → la "
-           "cifra en pantalla; pregunta → termina en «?»; contradiccion → una cifra en pantalla o línea."
+           "cifra en pantalla; pregunta → termina en «?»; contradiccion → una cifra en pantalla o línea. La pantalla puede ser "
+           "titular; la **voz no**: la oración que dice la pantalla lleva verbo conjugado, declarado en `verbo` (gancho y golpes): "
+           "«Casi 168 al día» en pantalla → «Nacen casi 168 bebés al día de madres de 10 a 19 años» en la voz (`verbo`: «nacen»)."
            % (PANTALLA_PALABRAS, PANTALLA_CARACTERES, LINEA_PALABRAS, LINEA_CARACTERES),
            "2. Escena 2 = la **tarjeta T1**, sin enlace. Luego tarjetas y golpes en el orden del arco.",
            "3. Desde la escena 3, `enlace` pero | por_eso | y, y la voz EMPIEZA con ese conector (pero / sin embargo / aunque / "
@@ -316,7 +343,7 @@ def cmd_preparar(a):
            "también / encima / más aún). «y» como máximo en un tercio de los enlaces; nunca «y luego».",
            "4. Cada tarjeta lleva `golpe` (≤ %d palabras, ≤ %d caracteres): el re-gancho que va arriba, en lenguaje llano, con la "
            "cifra si cabe; nunca el titular de la tarjeta." % (GOLPE_PALABRAS, GOLPE_CARACTERES),
-           "5. Las escenas `golpe` (texto a pantalla completa) llevan `pantalla` + `linea`; nunca dos seguidas ni en la escena 2; "
+           "5. Las escenas `golpe` (texto a pantalla completa) llevan `pantalla` + `linea` + `verbo`; nunca dos seguidas ni en la escena 2; "
            "sirven para traducir la cifra anterior a escala humana, pagar la promesa o re-ganchar a mitad.",
            "6. `promesa`: {texto (10–80 caracteres, LITERAL en la voz de la escena `en` = 1 o 2), en, pago (escena del último tercio "
            "que cierra exactamente esa brecha)}.",
@@ -357,8 +384,42 @@ def valores_respaldo(hilo_dir):
 
 
 def con_prefijo(texto):
-    i = 1 if texto[:1] in "¿¡" else 0
-    return PREFIJO + " " + texto[:i] + texto[i].lower() + texto[i + 1:]
+    """«Nacen casi 168…» → «En Guatemala nacen casi 168…»; una pregunta o exclamación va tras coma:
+    «En Guatemala, ¿cuánto…?»."""
+    if texto[:1] in "¿¡":
+        return PREFIJO + ", " + texto[0] + texto[1].lower() + texto[2:]
+    return PREFIJO + " " + texto[0].lower() + texto[1:]
+
+
+def oracion_de_la_pantalla(texto, pantalla):
+    """La oración de la voz que dice la cifra de la pantalla (o la primera si la pantalla no lleva cifra). Se corta
+    en . ? ! ; … (no en «:», que en la voz encadena)."""
+    oraciones = [o.strip() for o in re.split(r"(?<=[.?!;…])\s+", (texto or "").strip()) if o.strip()]
+    if not oraciones:
+        return ""
+    for n in re.findall(NE.NUM, pantalla or ""):
+        for o in oraciones:
+            if re.search(r"(?<![\d,.])%s(?!\d)" % re.escape(n), o):
+                return o
+    return oraciones[0]
+
+
+def falta_verbo(e):
+    """V9: la pantalla de un gancho o golpe puede ser titular («Casi 168 al día»), la voz no: la oración que la
+    dice lleva un verbo conjugado, declarado en `verbo` («En Guatemala nacen casi 168 bebés al día…»).
+    Devuelve el motivo de la falla o None."""
+    verbo = (e.get("verbo") or "").strip()
+    oracion = oracion_de_la_pantalla(e.get("texto"), e.get("pantalla"))
+    if not verbo:
+        return ("falta «verbo»: el verbo conjugado de la oración «%s» (p. ej. «nacen», «llegó», «es»); la pantalla "
+                "puede ser titular, la voz es una oración completa" % oracion)
+    if not re.fullmatch(r"[^\W\d_]+", verbo) or _plano(verbo) in STOP:
+        return "verbo «%s» debe ser una sola palabra: el verbo conjugado de la oración que dice la pantalla" % verbo
+    if _plano(verbo) not in _plano(oracion).split():
+        return ("la oración «%s» no lleva el verbo «%s»: la voz no es el titular de la pantalla leído en voz alta, es una "
+                "oración con verbo conjugado («En Guatemala nacen casi 168 bebés al día…», no «casi 168 bebés al día…»)"
+                % (oracion, verbo))
+    return None
 
 
 def _coincide(x, v, tol):
@@ -623,7 +684,7 @@ def cmd_guion(a):
 
     # V2, V3, V4 y ritmo por escena (escenas + cierre)
     valores, titulares, cifras = valores_respaldo(st["hilo"])
-    loc = []
+    loc, avisos = [], []
     for i, e in enumerate(escenas + [{"tipo": "cierre", "tuit": None, "texto": ct}], 1):
         tipo = e.get("tipo") if e.get("tipo") in TIPOS else "cierre"
         texto = e.get("texto", "")
@@ -657,6 +718,23 @@ def cmd_guion(a):
                 if sin:
                     fallas.append("V9 escena %d: %s «%s» tiene un número sin respaldo en datos.json ni «calculo»: %s"
                                   % (i, campo, e[campo], ", ".join(map(str, sin))))
+        # la pantalla y la voz cuentan lo mismo: en el gancho es falla (es el gancho), en un golpe es aviso
+        if tipo in ("gancho", "golpe"):
+            faltan = palabras_no_dichas(" ".join(filter(None, (e.get("pantalla"), e.get("linea")))), voz)
+            if faltan and tipo == "gancho":
+                fallas.append("V9 escena %d: la voz no dice «%s», que está en pantalla: la pantalla y la voz del gancho cuentan lo mismo"
+                              % (i, "», «".join(faltan)))
+            elif faltan:
+                avisos.append("escena %d: la pantalla dice «%s» y la voz no (vale si es un sinónimo)" % (i, "», «".join(faltan)))
+            motivo = falta_verbo(e)
+            if motivo:
+                fallas.append("V9 escena %d (%s): %s" % (i, tipo, motivo))
+        # una escena no abre con las palabras que cerraron la anterior (regla del usuario: se oye repetitivo)
+        if loc and tipo != "cierre":
+            eco = eco_entre_escenas(loc[-1]["voz"], voz)
+            if eco:
+                fallas.append("V9 escena %d: empieza con «%s», que cierra la escena anterior; no repitas el cierre de una escena al "
+                              "abrir la siguiente" % (i, "», «".join(eco)))
         for av in NE.AVISOS:
             fallas.append("V3 escena %d: %s" % (i, av))
         if re.search(r"\d", voz):
@@ -695,6 +773,8 @@ def cmd_guion(a):
     for x in loc:
         print("E%-2d %-7s T%-3s %-14s %5.1fs hueco %.1fs  %s" % (x["n"], x["tipo"], x["tuit"] or "-", x["plantilla"],
                                                              x["estimado_s"], x["hueco_max_s"], x["voz"]))
+    for x in avisos:
+        print("AVISO", x)
     if fallas:
         for f in fallas:
             print("FALLA", f)
@@ -863,11 +943,13 @@ def cmd_tiempos(a):
             texto_p, v = cin.get("pantalla") or "", valor_de(cin.get("pantalla"))
             dicho = next((w for w in pal if v is not None and w.get("clave") == clave(v)), None)
             pulso = None
-            # la cifra cuenta desde el inicio (la pantalla debe funcionar en silencio); si la voz la dice más tarde, late
+            # la cifra cuenta desde el inicio (la pantalla debe funcionar en silencio); si la voz la dice más tarde, late.
+            # Tras la transición de entrada (no en la escena 1) empieza 0.35 s después
+            t0 = 0.15 if n == 1 else TRANSICION + 0.05
             if dicho and dicho["start"] < 1.5:
-                desde, hasta = max(0.0, dicho["start"] - 0.3), dicho["end"]
+                desde, hasta = max(t0, dicho["start"] - 0.3), max(dicho["end"], t0 + 0.6)
             else:
-                desde, hasta = 0.15, 1.1
+                desde, hasta = t0, t0 + 0.95
                 if dicho:
                     pulso = [dicho["start"], dicho["end"]]
             linea = repartir((cin.get("linea") or "").split(), hasta + 0.1, max(hasta + 0.4, fin_voz - 0.3))
@@ -889,10 +971,11 @@ def cmd_tiempos(a):
                     continue
                 valores.setdefault(clave(valor_de(seg["p"])), [round(p["start"] - 0.5, 3), round(p["end"], 3)])
             golpe = (e.get("golpe") or "").split()
-            if golpe:
-                S["arriba"] = [{"text": w, "start": round(0.12 * k, 3)} for k, w in enumerate(golpe)]
-            tit = 0.45 if golpe else 0.15
-            ini = tit + 0.6
+            if golpe:  # el golpe entra cuando termina la transición de la escena
+                S["arriba"] = [{"text": w, "start": round(TRANSICION + 0.12 * k, 3)} for k, w in enumerate(golpe)]
+            # en el layout vertical no hay titular: el gráfico entra en cuanto termina la transición (el golpe, a la vez)
+            tit = TRANSICION + 0.05
+            ini = TRANSICION + 0.3
             fin_vals = max([w[1] for w in valores.values()] or [ini + 1.5])
             # alias escalados: la voz dice «12.8» y la barra guarda 12818 (formato.escala 1000); misma ventana
             con_alias = dict(valores)
@@ -917,22 +1000,24 @@ def cmd_tiempos(a):
                 sfx.append((0.0, "grave"))
         if n == pago_n and n != 1:
             sfx.append((-2.0, "riser"))
+        # transición de entrada (xfade en montar): deslizamiento lateral; vertical en el giro
+        S["transicion"] = None if n == 1 else ("slideup" if n == giro_n else "slideleft")
         ev.append((dur, "fin"))
         S["eventos"] = [{"t": round(t, 3), "tipo": k} for t, k in sorted(ev, key=lambda x: x[0])]
         S["sfx"] = [{"t": round(t, 3), "id": k} for t, k in sorted(sfx, key=lambda x: x[0])]
         escenas.append(S)
         print("E%-2d %-7s %6.2f s  eventos=%d  %s" % (n, tipo, dur, len(S["eventos"]), json.dumps(S["T"], ensure_ascii=False)[:140]))
-    total = sum(s["dur"] for s in escenas)
+    total = sum(s["dur"] for s in escenas) - TRANSICION * (len(escenas) - 1)
     obj = st["objetivo_s"]
     if abs(total - obj) > obj * 0.15:
         avisos.append("V6 duración real %.1f s fuera de ±15 %% de %d s" % (total, obj))
-    # V10 ritmo real: hueco máximo entre eventos consecutivos de todo el video
+    # V10 ritmo real: hueco máximo entre eventos consecutivos de todo el video (las escenas se solapan TRANSICION s)
     linea_t, off, pago_t = [], 0.0, None
     for s in escenas:
         if s["n"] == pago_n:
             pago_t = off
         linea_t += [(off + x["t"], x["tipo"], s["n"]) for x in s["eventos"]]
-        off += s["dur"]
+        off += s["dur"] - TRANSICION
     linea_t.sort()
     peor = max(zip(linea_t, linea_t[1:]), key=lambda ab: ab[1][0] - ab[0][0]) if len(linea_t) > 1 else None
     if peor and peor[1][0] - peor[0][0] > RITMO_MAX_S:
@@ -944,7 +1029,7 @@ def cmd_tiempos(a):
         "gancho": {"pantalla": (e1.get("cinetico") or {}).get("pantalla"), "linea": (e1.get("cinetico") or {}).get("linea")},
         "pago": {"n": pago_n, "t": round(pago_t, 3) if pago_t is not None else None},
         "cierre": {"resumen": g["cierre"]["resumen"], "pregunta": g["cierre"]["pregunta"]},
-        "total_s": round(total, 2), "escenas": escenas})
+        "transicion_s": TRANSICION, "total_s": round(total, 2), "escenas": escenas})
     for x in avisos:
         print("AVISO", x)
     print("total %.1f s (objetivo %d s) · hueco máximo %.1f s → %s"
@@ -1014,18 +1099,30 @@ def cmd_montar(a):
     g = leer(os.path.join(trabajo, "guion.json"))
     segs = os.path.join(trabajo, "segs")
     clips = [os.path.join(trabajo, "clips", "e%d.mp4" % e["n"]) for e in E["escenas"]]
+    durs = [ffprobe_dur(c) for c in clips]  # lo que grabó Playwright (round(dur·fps)/fps)
+    TR = E.get("transicion_s", 0.0) if len(clips) > 1 else 0.0
     offs, off = [], 0.0
-    for c in clips:  # desplazamientos exactos: lo que grabó Playwright (round(dur·fps)/fps)
+    for k, d in enumerate(durs):  # desplazamientos exactos: cada escena entra TR s antes de que acabe la anterior
         offs.append(off)
-        off += ffprobe_dur(c)
+        off += d - (TR if k < len(durs) - 1 else 0.0)
     D = off
-    # 1. solo video
-    lista = os.path.join(segs, "lista.txt")
-    with open(lista, "w") as f:
-        for c in clips:
-            f.write("file '%s'\n" % c)
+    # 1. solo video: las escenas encadenadas con un deslizamiento (xfade) de TR s
     video_solo = os.path.join(segs, "voz_video.mp4")
-    ff("-f", "concat", "-safe", "0", "-i", lista, "-c", "copy", "-an", video_solo)
+    if TR > 0:
+        fc, prev = "", "[0:v]"
+        for k in range(1, len(clips)):
+            out = "[x%d]" % k
+            fc += "%s[%d:v]xfade=transition=%s:duration=%.3f:offset=%.3f%s;" % (
+                prev, k, E["escenas"][k].get("transicion") or "slideleft", TR, offs[k], out)
+            prev = out
+        ff(*sum([["-i", c] for c in clips], []), "-filter_complex", fc.rstrip(";"), "-map", prev, "-an",
+           "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "16", "-preset", "medium", video_solo)
+    else:
+        lista = os.path.join(segs, "lista.txt")
+        with open(lista, "w") as f:
+            for c in clips:
+                f.write("file '%s'\n" % c)
+        ff("-f", "concat", "-safe", "0", "-i", lista, "-c", "copy", "-an", video_solo)
     # 2. la voz en una sola pista, nivelada a VOZ_LUFS (llave determinista del ducking)
     voces = [os.path.join(trabajo, "audio", "voz_%d_r.mp3" % e["n"]) for e in E["escenas"]]
     fc = "".join("[%d:a]aresample=48000,aformat=channel_layouts=stereo,adelay=%s:all=1[v%d];" % (i, muestras(o), i)
@@ -1156,6 +1253,13 @@ def cmd_revisar(a):
     ff("-framerate", "1", "-i", os.path.join(rev, "c_%03d.png"), "-vf",
        "scale=270:480,tile=%dx%d:padding=6:color=white" % (cols, filas), "-frames:v", "1", out)
     print("hoja de contacto (%d cuadros: cifra completa · pico del foco · final de cada escena) → %s" % (k, rel(out)))
+    # línea de tiempo del video final: un cuadro cada 2 s, para verlo «de corrido» (transiciones incluidas)
+    video = os.path.join(trabajo, "salida", "video.mp4")
+    if os.path.exists(video):
+        n = math.ceil(ffprobe_dur(video) / 2)
+        lt = os.path.join(rev, "linea_tiempo.png")
+        ff("-i", video, "-vf", "fps=0.5,scale=270:480,tile=8x%d:padding=4:color=white" % math.ceil(n / 8), "-frames:v", "1", lt)
+        print("línea de tiempo (%d cuadros, uno cada 2 s) → %s" % (n, rel(lt)))
     return 0
 
 

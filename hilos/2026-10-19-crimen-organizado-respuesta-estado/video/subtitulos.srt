@@ -1,87 +1,175 @@
 1
-00:00:00,000 --> 00:00:01,079
+00:00:00,000 --> 00:00:01,057
 En Guatemala:
 
 2
-00:00:01,477 --> 00:00:04,065
-más de 8 mil kilos de cocaína en seis
+00:00:01,161 --> 00:00:03,813
+en seis meses, más de 8 mil kilos de
 
 3
-00:00:03,979 --> 00:00:04,656
-meses.
+00:00:03,705 --> 00:00:05,226
+cocaína decomisada.
 
 4
-00:00:04,728 --> 00:00:07,200
-¿Y cuántos homicidios acaban en condena?
+00:00:05,710 --> 00:00:08,003
+Pero, ¿cuántos casos de homicidio terminan
 
 5
-00:00:07,766 --> 00:00:10,471
-Un año antes, de enero a junio, fueron
+00:00:07,895 --> 00:00:08,974
+en condena?
 
 6
-00:00:10,404 --> 00:00:13,056
-1,596 kg.
+00:00:09,233 --> 00:00:12,898
+De enero a junio de 2025 se decomisaron
 
 7
-00:00:13,128 --> 00:00:16,149
-Este año, más de 5 veces más.
+00:00:12,832 --> 00:00:15,315
+1,596 kilos:
 
 8
-00:00:16,699 --> 00:00:18,738
-Pero la violencia cambió de blanco.
+00:00:15,513 --> 00:00:19,938
+en 2026, más de 5 veces esa cantidad.
 
 9
-00:00:18,936 --> 00:00:22,084
-Según un recuento de la agencia EFE, al 28
+00:00:20,200 --> 00:00:21,163
+Pero ojo:
 
 10
-00:00:21,976 --> 00:00:24,934
-de julio iban 20 policías asesinados:
+00:00:21,266 --> 00:00:23,981
+2 de cada 3 kilos decomisados hasta mayo
 
 11
-00:00:25,079 --> 00:00:28,037
-el doble que en todo 2025.
+00:00:23,905 --> 00:00:26,598
+salieron de un solo cargamento, en Puerto
 
 12
-00:00:28,599 --> 00:00:30,448
-Y en la justicia, peor:
+00:00:26,501 --> 00:00:27,443
+Quetzal.
 
 13
-00:00:30,699 --> 00:00:34,828
-en 2014, el 13% de los casos de homicidio
+00:00:27,700 --> 00:00:31,058
+Aun así, la policía aprehendió a casi 27
 
 14
-00:00:34,731 --> 00:00:36,886
-concluidos terminaba en sentencia.
+00:00:30,993 --> 00:00:33,444
+mil personas hasta el 12 de julio:
 
 15
-00:00:37,084 --> 00:00:39,219
-¿Y en 2024?
+00:00:33,642 --> 00:00:37,983
+un 17% más que en 2025.
 
 16
-00:00:39,766 --> 00:00:40,708
-El resultado:
+00:00:38,233 --> 00:00:40,315
+Entonces, ¿hay menos crimen?
 
 17
-00:00:40,600 --> 00:00:45,109
-en 2024, 1 de cada 25 casos de homicidio
+00:00:40,513 --> 00:00:41,803
+Se miden denuncias:
 
 18
-00:00:45,001 --> 00:00:47,431
-concluidos acaba en condena.
+00:00:41,906 --> 00:00:45,950
+las de extorsión bajaron de 2,457 al mes
 
 19
-00:00:47,966 --> 00:00:50,744
-Más cocaína decomisada, pero más policías
+00:00:45,959 --> 00:00:49,951
+en enero de 2025 a 1,121 en agosto de
 
 20
-00:00:50,647 --> 00:00:53,182
-asesinados y muy pocas condenas.
+00:00:49,843 --> 00:00:51,197
+2026.
 
 21
-00:00:53,285 --> 00:00:55,705
-Y tú, ¿te sientes más seguro que hace un
+00:00:51,510 --> 00:00:53,201
+Menos de la mitad.
 
 22
-00:00:55,597 --> 00:00:56,349
-año?
+00:00:53,466 --> 00:00:55,590
+Y los homicidios denunciados en enero y
+
+23
+00:00:55,503 --> 00:01:01,849
+febrero bajaron de 504 en 2025 a 378 en
+
+24
+00:01:01,772 --> 00:01:03,369
+2026.
+
+25
+00:01:03,851 --> 00:01:06,556
+Coincide con el estado de sitio, aunque
+
+26
+00:01:06,448 --> 00:01:08,646
+eso no prueba que lo causara.
+
+27
+00:01:08,900 --> 00:01:10,781
+Pero aquí cambia la historia:
+
+28
+00:01:10,926 --> 00:01:13,441
+20 policías asesinados hasta julio de
+
+29
+00:01:13,365 --> 00:01:18,222
+2026, el doble que los 10 de todo 2025,
+
+30
+00:01:18,209 --> 00:01:20,702
+según un recuento de la agencia EFE.
+
+31
+00:01:20,966 --> 00:01:23,280
+Y hay violencia que casi no se ve:
+
+32
+00:01:23,425 --> 00:01:26,636
+en 2025 se activaron 18 alertas
+
+33
+00:01:26,591 --> 00:01:29,612
+Alba-Keneth al día por niñas, niños y
+
+34
+00:01:29,515 --> 00:01:31,460
+adolescentes desaparecidos.
+
+35
+00:01:31,700 --> 00:01:34,215
+Aunque la policía captura más, la justicia
+
+36
+00:01:34,106 --> 00:01:35,692
+condena cada vez menos:
+
+37
+00:01:35,837 --> 00:01:39,492
+en 2014, 13 de cada 100 casos de homicidio
+
+38
+00:01:39,384 --> 00:01:41,983
+concluidos terminaban en sentencia.
+
+39
+00:01:42,233 --> 00:01:46,637
+Así que en 2024, solo 1 de cada 25 casos
+
+40
+00:01:46,508 --> 00:01:49,560
+de homicidio concluidos acabó en condena.
+
+41
+00:01:49,833 --> 00:01:52,706
+Más decomisos y menos denuncias, pero más
+
+42
+00:01:52,608 --> 00:01:55,387
+policías asesinados y pocas condenas.
+
+43
+00:01:55,870 --> 00:01:58,374
+Y tú, ¿has denunciado alguna vez una
+
+44
+00:01:58,245 --> 00:01:59,313
+extorsión?

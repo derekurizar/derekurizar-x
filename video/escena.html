@@ -1,34 +1,36 @@
 <!DOCTYPE html>
 <html lang="es"><head><meta charset="utf-8">
 <!-- Escena vertical 1080×1920 de /video para una tarjeta del hilo (?n=N): el golpe (re-gancho de ≤ 6 palabras)
-     y la barra de progreso arriba, la tarjeta animada en el centro con FOCO (zoom suave hacia el elemento cuyo
-     valor dice la voz) y subtítulos con la palabra activa resaltada y las cifras en grande. Colores de la
-     paleta del hilo (escenas.json). La graba scripts/video_grabar.js llamando a seek(t).
+     y la barra de progreso arriba; debajo la tarjeta en MODO VERTICAL (video/vertical.css, inyectado en el iframe
+     cuando la tarjeta ya se dibujó: sin titular ni handle, el gráfico a todo el ancho bajo el kicker, la nota y la
+     fuente), animada con FOCO (zoom fuerte hacia el elemento cuyo valor dice la voz) y una DERIVA lenta cuando no
+     pasa nada; abajo los subtítulos con la palabra activa resaltada y las cifras en grande. Colores de la paleta
+     del hilo (escenas.json). La graba scripts/video_grabar.js llamando a seek(t).
      Zona segura de TikTok (medida en un iPhone con la app, 2026-10): el video se escala para llenar el alto y pierde
      ~57 px por lado; arriba la barra de pestañas tapa hasta y≈215; a la derecha los íconos ocupan x ≥ 900 desde
-     y≈1070; abajo el nombre y el texto empiezan en y≈1645. Todo va en la columna x 85–876 (--izq / --der).
-     El foco vive en el transform de #marco (fuera del iframe) y solo actúa dentro de la ventana de cada valor:
-     el último cuadro es la tarjeta a escala neutra, así que V7 (video_animar.js) no se ve afectado.
-     ?debug=1 dibuja las cajas de los focos. -->
+     y≈1070; abajo el nombre y el texto empiezan en y≈1645. El golpe va en la columna x 85–876; la tarjeta a escala
+     1 ocupa x 80–1000 (por encima de y≈1070 todo el ancho es seguro); los subtítulos en y=1500.
+     El foco y la deriva viven en el transform de #marco (fuera del iframe): el estado final de la tarjeta lo
+     comprueba V7 (video_animar.js) con la misma hoja vertical. ?debug=1 dibuja las cajas de los focos. -->
 <style>
 @font-face { font-family: 'Instrument Serif'; font-weight: 400; src: url(fonts/instrument-serif-400.woff2) format('woff2'); }
 @font-face { font-family: 'Archivo'; font-weight: 100 900; src: url(fonts/archivo-var.woff2) format('woff2'); }
 @font-face { font-family: 'JetBrains Mono'; font-weight: 100 800; src: url(fonts/jetbrains-mono-var.woff2) format('woff2'); }
 html, body { margin: 0; }
-:root { --izq: 85px; --der: 204px; --escala: .86; }
+:root { --izq: 85px; --der: 204px; }
 body { width: 1080px; height: 1920px; overflow: hidden; background: var(--bg); color: var(--ink); position: relative; font-family: Archivo, sans-serif; }
 #arriba { position: absolute; top: 250px; left: var(--izq); right: var(--der); }
-#golpe { font: 400 64px/1.0 'Instrument Serif', serif; letter-spacing: -.015em; }
+#golpe { font: 400 72px/1.0 'Instrument Serif', serif; letter-spacing: -.015em; }
 #golpe span { display: inline-block; margin-right: .22em; }
 #progreso { display: flex; gap: 10px; margin-top: 26px; }
 #progreso i { flex: 1; height: 6px; background: color-mix(in srgb, var(--ink) 28%, transparent); border-radius: 3px; overflow: hidden; }
 #progreso i b { display: block; height: 100%; width: 0; background: var(--ink); }
-/* la tarjeta a 0.86 dentro de una ventana recortada: su contenido (x 80–1000 de 1080) cae en la columna 85–876 */
-#ventana { position: absolute; top: 470px; left: calc(var(--izq) - 80px * var(--escala)); right: 0; height: calc(1080px * var(--escala)); overflow: hidden; }
-#marco { width: 1080px; height: 1080px; transform: scale(var(--escala)); transform-origin: 0 0; }
+/* la tarjeta a escala 1 bajo el golpe; la ventana recorta lo que el foco saca de cuadro */
+#ventana { position: absolute; top: 420px; left: 0; width: 1080px; height: 800px; overflow: hidden; }
+#marco { width: 1080px; height: 1080px; transform-origin: 0 0; will-change: transform; }
 #marco iframe { width: 1080px; height: 1080px; border: 0; display: block; }
 #ventana .caja { position: absolute; border: 3px dotted #ff3b30; box-sizing: border-box; pointer-events: none; }
-#subs { position: absolute; top: 1500px; left: var(--izq); right: var(--der); text-align: center; font: 700 48px/1.25 Archivo, sans-serif; }
+#subs { position: absolute; top: 1400px; left: var(--izq); right: var(--der); text-align: center; font: 700 48px/1.25 Archivo, sans-serif; }
 #subs span { margin: 0 .1em; }
 #subs .no { opacity: .38; }
 #subs .cifra { font-size: 60px; font-weight: 800; letter-spacing: -.01em; }
@@ -41,10 +43,9 @@ body { width: 1080px; height: 1920px; overflow: hidden; background: var(--bg); c
 <script>
 const n = Number(new URLSearchParams(location.search).get('n'));
 const DEBUG = new URLSearchParams(location.search).get('debug') === '1';
-const ESCALA = .86, W = 1080 * ESCALA;                 // ventana (px)
-const COL = [80 * ESCALA, 1000 * ESCALA], ALTO = [16, W - 16];  // columna segura y alto útil dentro de la ventana
-const IZQ_V = 85 - 80 * ESCALA, WV = 1080 - IZQ_V;              // la ventana llega al borde derecho de la página
-const CORTE_D = 1023 - IZQ_V, RAIL_Y = 1070 - 470;               // recorte lateral del teléfono · inicio de los íconos
+const VT = 420, VH = 800;            // ventana de la tarjeta (página y = 420–1220)
+const CORTE = [57, 1023];            // recorte lateral del teléfono (x de página = x de la ventana)
+const DERIVA = { s: 0.035, tx: -12, ty: -8 };  // movimiento lento de toda la escena cuando no hay foco
 let S, TROZOS, FOCOS = [];
 const clamp = (x) => Math.max(0, Math.min(1, x)), eo = (x) => 1 - Math.pow(1 - clamp(x), 3);
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
@@ -66,53 +67,57 @@ window.__listo = (async () => {
   document.getElementById('progreso').innerHTML = todo.escenas.map(() => '<i><b></b></i>').join('');
   const fr = document.getElementById('tarjeta');
   fr.src = 'tarjeta_' + S.tuit + '.html';
-  await document.fonts.ready;
+  const [, css] = await Promise.all([document.fonts.ready, (await fetch('vertical.css')).text()]);
   // el golpe no puede bajar de la tarjeta: se achica hasta que golpe + barra quepan sobre ella
   const g = document.getElementById('golpe'), arriba = document.getElementById('arriba');
-  for (let fs = 64; S.arriba.length && fs > 44 && arriba.offsetTop + arriba.offsetHeight > 470 - 16; fs -= 4) g.style.fontSize = fs + 'px';
+  for (let fs = 72; S.arriba.length && fs > 48 && arriba.offsetTop + arriba.offsetHeight > VT - 16; fs -= 4) g.style.fontSize = fs + 'px';
   await new Promise((r, x) => { const t0 = Date.now(); const i = setInterval(() => { const d = fr.contentDocument;
     if (d && d.body && d.body.dataset.listo) { clearInterval(i); if (d.body.dataset.error) x(new Error(d.body.dataset.error)); else r(); }
     else if (Date.now() - t0 > 15000) { clearInterval(i); x(new Error('la tarjeta no terminó de dibujarse')); } }, 50); });
+  // modo vertical: se inyecta DESPUÉS de dibujar (las plantillas ya midieron su espacio); V7 hace lo mismo
+  const st = fr.contentDocument.createElement('style'); st.textContent = css; fr.contentDocument.head.appendChild(st);
+  fr.contentDocument.body.getBoundingClientRect();  // fuerza el reflow antes de medir las cajas
   // focos: la caja de cada valor que dice la voz, leída del DOM final (antes del primer seek)
   if (S.T.foco !== false && S.T.valores && typeof fr.contentWindow.__caja === 'function') {
     for (const [k, [a, b]] of Object.entries(S.T.valores)) {
       const c = fr.contentWindow.__caja(k);
       if (!c || c[2] > 0.7 * 1080 || c[3] > 0.7 * 1080) continue;
       const [x, y, bw, bh] = c;
-      const lim = (v, lo, hi, lo2, hi2) => { let a = Math.max(lo, lo2), b = Math.min(hi, hi2);
-        if (a > b) { a = lo; b = hi; } return a > b ? (a + b) / 2 : Math.max(a, Math.min(b, v)); };
-      // límite derecho de la caja: la columna segura si queda a la altura de los íconos de TikTok (y ≥ 1070 en la
-      // página); si no, solo el recorte lateral del teléfono. La escala baja lo justo para que el borde izquierdo del
-      // contenido (x = 80 de la tarjeta) siga visible: la caja crece donde está, sin cortar el titular.
-      let s = Math.min(1.12, Math.max(1, 300 / bw));
-      let ty = lim(0, ALTO[0] - s * y, ALTO[1] - s * (y + bh), W - 1080 * s, 0);
-      const limD = ty + s * (y + bh) > RAIL_Y ? COL[1] : CORTE_D;
-      if (x + bw > 80) s = Math.max(ESCALA, Math.min(s, limD / (x + bw - 80)));
-      ty = lim(0, ALTO[0] - s * y, ALTO[1] - s * (y + bh), W - 1080 * s, 0);
-      const tx = lim((ESCALA - s) * (x + bw / 2), Math.max(COL[0] - s * x, -80 * s), limD - s * (x + bw), WV - 1080 * s, 0);
-      FOCOS.push({ k, a, b, s, tx, ty, caja: c });
+      // zoom que se note: 1.25–1.45 según el ancho de la caja, centrada en la pantalla (dentro del recorte del
+      // teléfono y de la ventana); el resto de la tarjeta puede salirse de cuadro
+      const s = Math.min(1.45, Math.max(1.25, 420 / bw));
+      const cl = (v, lo, hi) => (lo > hi ? (lo + hi) / 2 : Math.max(lo, Math.min(hi, v)));
+      const tx = cl(540 - s * (x + bw / 2), CORTE[0] - s * x, CORTE[1] - s * (x + bw));
+      const ty = cl(VH / 2 - s * (y + bh / 2), 16 - s * y, VH - 16 - s * (y + bh));
+      FOCOS.push({ k, a, b: b + 0.8, s, tx, ty, caja: c });
     }
   }
   if (DEBUG) FOCOS.forEach((f) => { const d = document.createElement('div'); d.className = 'caja'; d.dataset.k = f.k; document.getElementById('ventana').appendChild(d); });
 })();
-// transform de #marco en t: neutro (scale .86) fuera de los focos; dentro, mezcla ponderada de los focos activos
+// transform de #marco en t: deriva lenta (escala 1 → 1.035, −12/−8 px a lo largo de la escena) fuera de los focos;
+// dentro, mezcla ponderada de los focos activos (entrada 0.45 s, sostenido hasta `hasta` + 0.8, salida 0.6 s)
 const marco = (t) => {
+  const u = clamp(t / S.dur), d = { tx: DERIVA.tx * u, ty: DERIVA.ty * u, s: 1 + DERIVA.s * u };
   let sw = 0, stx = 0, sty = 0, ss = 0;
   for (const f of FOCOS) {
-    const w = eo((t - f.a) / 0.5) * (1 - eo((t - f.b) / 0.6));
+    const w = eo((t - f.a) / 0.45) * (1 - eo((t - f.b) / 0.6));
     sw += w; stx += w * f.tx; sty += w * f.ty; ss += w * f.s;
   }
-  if (sw <= 0) return { tx: 0, ty: 0, s: ESCALA };
+  if (sw <= 0) return d;
   const Wt = Math.min(1, sw);
-  return { tx: (stx / sw) * Wt, ty: (sty / sw) * Wt, s: ESCALA + (ss / sw - ESCALA) * Wt };
+  return { tx: d.tx * (1 - Wt) + (stx / sw) * Wt, ty: d.ty * (1 - Wt) + (sty / sw) * Wt, s: d.s * (1 - Wt) + (ss / sw) * Wt };
 };
 window.seek = (t) => {
+  // el golpe entra deslizándose desde la izquierda, palabra a palabra
+  // el bloque entero entra desde la izquierda; cada palabra aparece subiendo (sin montarse sobre la anterior)
+  const pg = eo((t - (S.arriba.length ? S.arriba[0].start : 0) + 0.15) / 0.4);
+  document.getElementById('golpe').style.transform = `translateX(${(1 - pg) * -60}px)`;
   [...document.querySelectorAll('#golpe span')].forEach((s, i) => {
-    const p = eo((t - S.arriba[i].start + 0.15) / 0.3); s.style.opacity = p; s.style.transform = `translateY(${(1 - p) * 30}px)`; });
+    const p = eo((t - S.arriba[i].start + 0.15) / 0.3); s.style.opacity = p; s.style.transform = `translateY(${(1 - p) * 16}px)`; });
   // progreso: escenas anteriores llenas, la actual avanza con el tiempo
   [...document.querySelectorAll('#progreso b')].forEach((b, i) => { b.style.width = (i + 1 < n ? 100 : i + 1 === n ? 100 * clamp(t / S.dur) : 0) + '%'; });
   const m = marco(t);
-  document.getElementById('marco').style.transform = m.s === ESCALA && !m.tx && !m.ty ? `scale(${ESCALA})` : `translate(${m.tx.toFixed(2)}px, ${m.ty.toFixed(2)}px) scale(${m.s.toFixed(4)})`;
+  document.getElementById('marco').style.transform = `translate(${m.tx.toFixed(2)}px, ${m.ty.toFixed(2)}px) scale(${m.s.toFixed(4)})`;
   if (DEBUG) [...document.querySelectorAll('#ventana .caja')].forEach((d, i) => { const [x, y, bw, bh] = FOCOS[i].caja;
     d.style.left = (m.tx + m.s * x) + 'px'; d.style.top = (m.ty + m.s * y) + 'px'; d.style.width = (m.s * bw) + 'px'; d.style.height = (m.s * bh) + 'px'; });
   document.getElementById('tarjeta').contentWindow.__seek(t, S.T);

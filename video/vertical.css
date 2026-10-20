@@ -1,0 +1,15 @@
+/* Modo vertical de la tarjeta para /video.
+   Se inyecta DESPUÉS de que la tarjeta se dibuje (body[data-listo]): así las plantillas miden el mismo espacio de
+   siempre (H.espacio) y el gráfico conserva su tamaño; después el titular y el handle desaparecen (la voz y el
+   golpe ya dicen el hallazgo) y el gráfico sube bajo el kicker, seguido de la nota y la fuente. Lo inyectan
+   video/escena.html (en el iframe) y scripts/video_animar.js (V7 compara vertical contra vertical). La tarjeta
+   sigue midiendo 1080×1080: lo que sobra abajo es fondo del mismo color. */
+.tarjeta { padding: 60px 80px; justify-content: flex-start; }
+.kicker { font-size: 24px; }
+h1.titular { display: none !important; }
+.leyenda { margin-top: 26px; }
+#grafico { margin-top: 26px; }
+.nota { margin-top: 22px; font-size: 20px; }
+.pie { margin-top: 26px; padding-top: 18px; }
+.pie .autor { display: none !important; }
+.pie .fuente { font-size: 22px; }

@@ -18,12 +18,12 @@ body { width: 1080px; height: 1920px; overflow: hidden; background: var(--bg); c
 #progreso i { flex: 1; height: 6px; background: color-mix(in srgb, var(--ink) 28%, transparent); border-radius: 3px; overflow: hidden; }
 #progreso i b { display: block; height: 100%; width: 0; background: var(--ink); }
 #contexto { font: 500 22px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; margin-top: 18px; opacity: .85; }
-#cuerpo { position: absolute; top: 560px; left: var(--izq); right: var(--der); }
+#cuerpo { position: absolute; top: 560px; left: var(--izq); right: var(--der); transform-origin: 0 40%; will-change: transform; }
 #cifra { font: 400 300px/.9 'Instrument Serif', serif; letter-spacing: -.03em; color: var(--acento, var(--ink)); white-space: nowrap; transform-origin: 0 60%; }
 #cifra.texto { font-size: 150px; line-height: 1; letter-spacing: -.015em; white-space: normal; }
 #linea { font: 700 64px/1.1 Archivo, sans-serif; margin-top: 48px; }
 #linea span { display: inline-block; margin-right: .25em; }
-#subs { position: absolute; top: 1500px; left: var(--izq); right: var(--der); text-align: center; font: 700 48px/1.25 Archivo, sans-serif; }
+#subs { position: absolute; top: 1400px; left: var(--izq); right: var(--der); text-align: center; font: 700 48px/1.25 Archivo, sans-serif; }
 #subs span { margin: 0 .1em; }
 #subs .no { opacity: .38; }
 #subs .cifra { font-size: 60px; font-weight: 800; letter-spacing: -.01em; }
@@ -70,7 +70,7 @@ window.__listo = (async () => {
   cifra.textContent = P.texto;
   // cuenta solo si es una cifra con algo que contar (≥ 2 o con decimales); «1 de cada 3» o «Menos denuncias» entran de golpe
   const nt = P.v != null ? numTexto(P.texto) : null;
-  NUM = nt && (Math.abs(nt.v) >= 2 || nt.dec > 0) ? nt : null;
+  NUM = nt && (Math.abs(nt.v) >= 2 || nt.dec > 0) && !/\bde cada\b/i.test(P.texto) ? nt : null;
   document.getElementById('linea').innerHTML = (S.T.linea || []).map((w) => `<span>${esc(w.text)}</span>`).join('');
   await document.fonts.ready;
   const ancho = document.getElementById('cuerpo').clientWidth;
@@ -89,17 +89,18 @@ window.seek = (t) => {
   [...document.querySelectorAll('#progreso b')].forEach((b, i) => { b.style.width = (i + 1 < n ? 100 : i + 1 === n ? 100 * clamp(t / S.dur) : 0) + '%'; });
   const cifra = document.getElementById('cifra'), P = S.T.pant;
   const p = prog(t, P.desde, P.hasta);
-  let escala = 1;
+  // la cifra entra creciendo (.9 → 1) mientras cuenta; late cuando la voz la dice más tarde que la pantalla
+  let escala = .9 + .1 * eo((t - P.desde + 0.15) / 0.45);
   if (NUM) {
     cifra.textContent = p >= 1 ? P.texto : NUM.fmt(NUM.v * p);
     cifra.style.opacity = prog(t, P.desde - 0.15, P.desde + 0.1);
-    // latido cuando la voz dice la cifra más tarde que la pantalla
-    if (P.pulso) escala = 1 + 0.06 * Math.sin(Math.PI * clamp((t - P.pulso[0]) / Math.max(0.001, P.pulso[1] - P.pulso[0])));
+    if (P.pulso) escala *= 1 + 0.06 * Math.sin(Math.PI * clamp((t - P.pulso[0]) / Math.max(0.001, P.pulso[1] - P.pulso[0])));
   } else {
-    const q = prog(t, P.desde, P.desde + 0.35);
-    cifra.style.opacity = q; escala = .92 + .08 * q;
+    cifra.style.opacity = prog(t, P.desde, P.desde + 0.35);
   }
-  cifra.style.transform = escala === 1 ? '' : `scale(${escala.toFixed(4)})`;
+  cifra.style.transform = `scale(${escala.toFixed(4)})`;
+  // deriva lenta de todo el cuerpo durante la escena (nunca quieto)
+  document.getElementById('cuerpo').style.transform = `scale(${(1 + 0.03 * clamp(t / S.dur)).toFixed(4)})`;
   [...document.querySelectorAll('#linea span')].forEach((s, i) => {
     const w = eo((t - S.T.linea[i].start + 0.15) / 0.3); s.style.opacity = w; s.style.transform = `translateY(${(1 - w) * 30}px)`; });
   const subs = document.getElementById('subs');

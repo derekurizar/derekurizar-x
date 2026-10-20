@@ -4,7 +4,7 @@ export const meta = {
   whenToUse: 'Invocado por /video <slug|ultimo> [corto|medio|largo] DESPUÉS de `python3 scripts/video.py preparar`. args: {trabajo, duracion, slug, fixture, permitir_fallback}. trabajo = sesiones/<slug>/video (lo imprime preparar); duracion = corto (por defecto) | medio | largo | prueba. Solo produce y aprueba <trabajo>/guion.json, locucion.json y critica.json; la voz (MCP ElevenLabs), tiempos, grabación, montaje y entrega los hace la sesión principal después. Si el crítico sigue en «corregir» tras 2 vueltas, el workflow NO falla: devuelve veredicto corregir + faltas_pendientes y el comando pregunta al usuario antes de gastar créditos.',
   phases: [
     { title: 'Guion', detail: 'video-guionista: guion.json v2 (gancho, promesa, tarjetas y golpes con enlace, cierre, captions); gate python3 scripts/video.py guion --check (V1–V5, V9); ≤ 3 autoreparaciones' },
-    { title: 'Crítica', detail: 'video-critico: lee guion.json, locucion.json y digesto.md como espectador (C1–C9); puntajes 1–5 y faltas bloquea|mejora con arreglo; lo que bloquea vuelve al guionista, ≤ 2 vueltas' },
+    { title: 'Crítica', detail: 'video-critico: lee guion.json, locucion.json y digesto.md como espectador (C1–C10); puntajes 1–5 y faltas bloquea|mejora con arreglo; lo que bloquea vuelve al guionista, ≤ 2 vueltas' },
   ],
 }
 
@@ -20,10 +20,10 @@ const TIPOS = ['gancho', 'tarjeta', 'golpe']
 const FORMULAS = ['cifra', 'contradiccion', 'pregunta', 'resultado']
 const ENLACES = ['pero', 'por_eso', 'y']
 const PUNTAJES = ['gancho', 'bucle', 'ritmo', 'escala_humana', 'pago', 'cierre']
-const VUELTAS_CRITICA = 2
+const VUELTAS_CRITICA = 3
 const PUNTAJE_MIN = 3
-// Qué regla del crítico (C1–C9) sostiene cada puntaje: un puntaje ≤ 2 exige una falta «bloquea» de su regla.
-const REGLA_DE = { gancho: ['C1'], bucle: ['C2', 'C4'], ritmo: ['C3', 'C7'], escala_humana: ['C5'], pago: ['C6'], cierre: ['C8'] }
+// Qué regla del crítico (C1–C10) sostiene cada puntaje: un puntaje ≤ 2 exige una falta «bloquea» de su regla.
+const REGLA_DE = { gancho: ['C1'], bucle: ['C2', 'C4'], ritmo: ['C3', 'C7', 'C10'], escala_humana: ['C5'], pago: ['C6'], cierre: ['C8'] }
 
 // ── Argumentos ───────────────────────────────────────────────────────────────
 const A = typeof args === 'string' ? { trabajo: args } : (args || {})
@@ -146,7 +146,7 @@ const S = {
           type: 'object', required: ['regla', 'gravedad', 'problema', 'arreglo'],
           properties: {
             n: { type: 'integer' }, escena: { type: ['integer', 'null'] },
-            regla: { type: 'string', pattern: '^C[1-9]$' },
+            regla: { type: 'string', pattern: '^C(10|[1-9])$' },
             gravedad: { type: 'string', enum: ['bloquea', 'mejora'] },
             problema: { type: 'string' }, arreglo: { type: 'string' },
           },
@@ -197,7 +197,7 @@ let G = null
 const invocarGuionista = (fallos) =>
   agentRol(
     `Eres el guionista de video (lee referencias/roles/video-guionista.md). TRABAJO = ${trabajo} · hilo ${slug} · duración ${duracion}${fixture ? ' (FIXTURE: sin créditos, voz falsa)' : ''}.\n` +
-      `Lee SOLO ${trabajo}/digesto.md (NO hilo.json, datos.json, HTML ni código). Escribe ${trabajo}/guion.json v2 COMPLETO: contexto_superior, promesa{texto, en, pago}, escenas[] (la 1 de tipo gancho con formula/pantalla/linea/texto; la 2 la tarjeta T1; luego tarjetas y golpes con enlace pero|por_eso|y, golpe ≤ 6 palabras, calculo cuando traduzcas una cifra), cierre{texto, resumen[2], pregunta} y caption{tiktok, facebook}.\n` +
+      `Lee SOLO ${trabajo}/digesto.md (NO hilo.json, datos.json, HTML ni código). Escribe ${trabajo}/guion.json v2 COMPLETO: contexto_superior, promesa{texto, en, pago}, escenas[] (la 1 de tipo gancho con formula/pantalla/linea/verbo/texto; la 2 la tarjeta T1; luego tarjetas y golpes con enlace pero|por_eso|y, golpe ≤ 6 palabras, calculo cuando traduzcas una cifra; las escenas golpe con pantalla/linea/verbo). La pantalla puede ser titular, la voz NO: la oración que dice la pantalla lleva verbo conjugado («Nacen casi 168 bebés al día…», nunca «Casi 168 bebés al día…»), cierre{texto, resumen[2], pregunta} y caption{tiktok, facebook}.\n` +
       `Corre python3 scripts/video.py guion ${trabajo} --check hasta exit 0 (≤ 3 intentos; corrige SOLO las líneas FALLA).\n` +
       (fallos.length ? `TU GUION FUE RECHAZADO; corrige SOLO esto, no toques lo que ya pasó, y vuelve a pasar el gate:\n - ${fallos.join('\n - ')}\n` : '') +
       'Retorno: {archivo, gate: ok|falla, fallas[], n_escenas (sin el cierre), tipos[] (uno por escena), estimado_s, promesa{texto, en, pago}, gancho{formula, pantalla, linea}, pregunta, intentos}.',
@@ -216,10 +216,10 @@ const criticar = (vuelta, previas) =>
       agentRol(
         `Eres el crítico de retención (lee referencias/roles/video-critico.md). TRABAJO = ${trabajo} · vuelta ${vuelta}/${VUELTAS_CRITICA + 1} · duración ${duracion}${fixture ? ' (FIXTURE)' : ''}.\n` +
           `Lee SOLO ${trabajo}/guion.json, ${trabajo}/locucion.json y ${trabajo}/digesto.md. Léelo como alguien que desliza en TikTok y no leyó el hilo: primero los 3 primeros segundos EN SILENCIO (solo pantalla y línea del gancho), luego escena por escena «¿por qué seguiría viendo?».\n` +
-          `Comprueba C1–C9; una falta por problema; el arreglo lleva el texto exacto y SOLO cifras del digesto (si hace falta un derivado, escribe su calculo). Escribe ${trabajo}/critica.json.\n` +
+          `Comprueba C1–C10; una falta por problema; el arreglo lleva el texto exacto y SOLO cifras del digesto (si hace falta un derivado, escribe su calculo). Escribe ${trabajo}/critica.json.\n` +
           (previas && previas.length ? `FALTAS DE LA VUELTA ANTERIOR (comprueba primero cada una; omite las resueltas):\n - ${fmtFaltas(previas).join('\n - ')}\n` : '') +
           (fallos.length ? `TU RETORNO ANTERIOR FUE RECHAZADO; corrige:\n - ${fallos.join('\n - ')}\n` : '') +
-          'Retorno: {archivo, vuelta, veredicto: pasa|corregir, puntajes{gancho, bucle, ritmo, escala_humana, pago, cierre} (1–5), bloqueantes, mejoras, faltas[]{n, escena (null = global), regla C1–C9, gravedad bloquea|mejora, problema, arreglo}}.',
+          'Retorno: {archivo, vuelta, veredicto: pasa|corregir, puntajes{gancho, bucle, ritmo, escala_humana, pago, cierre} (1–5), bloqueantes, mejoras, faltas[]{n, escena (null = global), regla C1–C10, gravedad bloquea|mejora, problema, arreglo}}.',
         { agentType: 'video-critico', schema: S.critica, label: `critico-${vuelta}` }
       ),
     validarCritica,
@@ -228,7 +228,7 @@ const criticar = (vuelta, previas) =>
 let C = await criticar(1, null)
 // vuelve al guionista lo que bloquea; y si el crítico aprueba con algún puntaje justo (= PUNTAJE_MIN) dejando mejoras,
 // una vuelta de pulido con esas mejoras (0 créditos: la voz aún no se ha generado)
-const pulir = (c) => c.veredicto === 'pasa' && Math.min(...PUNTAJES.map((p) => c.puntajes[p])) <= PUNTAJE_MIN && c.faltas.some((f) => f.gravedad === 'mejora')
+const pulir = (c) => c.veredicto === 'pasa' && c.faltas.some((f) => f.gravedad === 'mejora')
 for (let k = 0; k < VUELTAS_CRITICA && (C.veredicto !== 'pasa' || pulir(C)); k++) {
   const faltas = C.faltas.filter((f) => f.gravedad === 'bloquea').concat(C.faltas.filter((f) => f.gravedad === 'mejora'))
   const cabecera = C.veredicto === 'pasa'

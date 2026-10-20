@@ -1,11 +1,11 @@
 ---
-description: Convierte un hilo ya entregado en un video vertical narrado para TikTok, Reels y Facebook (uso — /video <slug|ultimo> [corto|medio|largo] [musica:<id>] [fixture]; corto ≈ 1 min (por defecto), medio ≈ 2 min, largo ≈ 4 min; guion de retención sin cara (gancho con cifra a pantalla completa, golpes de texto cinético, «pero / por eso», promesa y pago) aprobado por un crítico ANTES de gastar créditos; voz de ElevenLabs con las cifras en palabras, tarjetas del hilo animadas con zoom a la cifra, subtítulos, barra de progreso, música con ducking y efectos del catálogo fijo; entrega en hilos/<fecha>-<slug>/video/)
+description: Convierte un hilo ya entregado en un video vertical narrado para TikTok, Reels y Facebook (uso — /video <slug|ultimo> [corto|medio|largo] [musica:<id>] [fixture]; corto ≈ 1 min, medio ≈ 2 min (por defecto), largo ≈ 4 min; guion de retención sin cara (gancho con cifra a pantalla completa, golpes de texto cinético, «pero / por eso», promesa y pago) aprobado por un crítico ANTES de gastar créditos; voz de ElevenLabs con las cifras en palabras, tarjetas del hilo animadas con zoom a la cifra, subtítulos, barra de progreso, música con ducking y efectos del catálogo fijo; entrega en hilos/<fecha>-<slug>/video/)
 ---
 
 Eres el coordinador del flujo **/video** de @DerekUrizar. Sus argumentos son: "$ARGUMENTS".
 - La primera palabra es el **hilo**: un slug (`crimen-organizado-respuesta-estado`), la carpeta
   (`hilos/2026-10-19-…`) o `ultimo` (el hilo listo más reciente).
-- `corto`, `medio` o `largo` fijan la **duración**. Sin ella se usa `corto` (60 s).
+- `corto`, `medio` o `largo` fijan la **duración**. Sin ella se usa `medio` (120 s).
 - `musica:<id>` fuerza una pista del catálogo (`make musica` las lista).
 - `fixture` corre la prueba sin créditos (`make video-fixture`) y termina.
 
@@ -29,7 +29,7 @@ decisión del usuario.**
      "<slug>", "fixture": false}`. Si editaste `.claude/workflows/video.js` en esta sesión, pásalo con
      `scriptPath: ".claude/workflows/video.js"`. Para reanudar una corrida interrumpida, `resumeFromRunId`.
    - El Workflow corre al `video-guionista` (guion v2 + gate `guion --check`, V1–V5 y V9) y al
-     `video-critico` (C1–C9, puntajes 1–5, faltas con arreglo); lo que bloquea vuelve al guionista, y si
+     `video-critico` (C1–C10, puntajes 1–5, faltas con arreglo); lo que bloquea vuelve al guionista, y si
      aprueba con algún puntaje de 3 dejando mejoras, el guionista las pule; en total ≤ 2
      vueltas. No gasta créditos.
    - Si falla con «no está registrado», pide al usuario reiniciar Claude Code (los agentes y el workflow se
@@ -61,8 +61,10 @@ decisión del usuario.**
    - Corre `python3 scripts/video.py grabar <TRABAJO>` (V7; ~1 min por cada minuto de video).
    - Corre `python3 scripts/video.py montar <TRABAJO>` (V8: música con ducking, efectos del catálogo, dos
      pasadas de loudnorm).
-   - Corre `python3 scripts/video.py revisar <TRABAJO>` y lee **una vez** `<TRABAJO>/revision/contacto.png`.
-     Muestra, por escena, el cuadro al completar la cifra, el pico del foco (zoom) y el final.
+   - Corre `python3 scripts/video.py revisar <TRABAJO>` y lee **una vez** `<TRABAJO>/revision/contacto.png`
+     (por escena: el cuadro al completar la cifra, el pico del foco y el final) y **una vez**
+     `<TRABAJO>/revision/linea_tiempo.png` (el video final de corrido, un cuadro cada 2 s, transiciones
+     incluidas): es lo más cerca de «verlo» que tienes; busca escenas quietas, texto cortado o pantallas vacías.
    - Coteja las cifras con los `tuit_N.png` del hilo; revisa que el gancho se lea sin sonido, que el golpe no
      se monte sobre la tarjeta, que el foco no corte el número y que los subtítulos se lean. Si algo está mal
      en una escena, corrígelo y corre `grabar --solo N` y `montar` de nuevo.

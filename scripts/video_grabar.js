@@ -8,8 +8,9 @@
  * Lee TRABAJO/escenas.json y escribe TRABAJO/clips/eN.mp4. Las páginas se sirven desde un origen
  * ficticio http://video.local/ con page.route (mismo origen para que escena.html controle la tarjeta
  * del iframe): video/escena.html (tarjeta), video/golpe.html (gancho y golpes), video/cierre.html,
- * video/animar.js, design/fonts/*.woff2, TRABAJO/escenas.json y tarjeta_N.html = el tuit_N.html del hilo
- * con animar.js inyectado. La plantilla de cada escena la decide su `tipo` (gancho|tarjeta|golpe|cierre).
+ * video/animar.js, video/vertical.css (modo vertical de la tarjeta; escena.html lo inyecta en el iframe cuando
+ * la tarjeta ya se dibujó), design/fonts/*.woff2, TRABAJO/escenas.json y tarjeta_N.html = el tuit_N.html del
+ * hilo con animar.js inyectado. La plantilla de cada escena la decide su `tipo` (gancho|tarjeta|golpe|cierre).
  * Cualquier otra petición se aborta (cero dependencias externas, como las tarjetas).
  *
  * Salida: 0 ok · 1 error de página o de ffmpeg · 2 uso incorrecto.
@@ -21,7 +22,7 @@ const { chromium } = require("playwright");
 
 const RAIZ = path.dirname(__dirname);
 const ORIGEN = "http://video.local/";
-const TIPOS = { ".html": "text/html", ".js": "text/javascript", ".json": "application/json", ".woff2": "font/woff2" };
+const TIPOS = { ".html": "text/html", ".js": "text/javascript", ".json": "application/json", ".woff2": "font/woff2", ".css": "text/css" };
 
 function args(argv) {
   const o = { fps: 30, solo: null };
@@ -48,7 +49,7 @@ function servir(o, ruta) {
   }
   let archivo = null;
   if (/^fonts\/[^/]+\.woff2$/.test(nombre)) archivo = path.join(RAIZ, "design", nombre);
-  else if (["escena.html", "golpe.html", "cierre.html", "animar.js"].includes(nombre)) archivo = path.join(RAIZ, "video", nombre);
+  else if (["escena.html", "golpe.html", "cierre.html", "animar.js", "vertical.css"].includes(nombre)) archivo = path.join(RAIZ, "video", nombre);
   else if (nombre === "escenas.json") archivo = path.join(o.dir, nombre);
   if (!archivo || !fs.existsSync(archivo)) return null;
   return { tipo: TIPOS[path.extname(archivo)] || "application/octet-stream", cuerpo: fs.readFileSync(archivo) };

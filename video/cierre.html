@@ -54,6 +54,7 @@ let S, N, ECO = false;
 const clamp = (x) => Math.max(0, Math.min(1, x)), eo = (x) => 1 - Math.pow(1 - clamp(x), 3);
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
 const ap = (el, p, dy = 30) => { el.style.opacity = p; el.style.transform = `translateY(${(1 - p) * dy}px)`; };
+const apx = (el, p, dx = -40) => { el.style.opacity = p; el.style.transform = `translateX(${(1 - p) * dx}px)`; };  // entra desde la izquierda
 window.__listo = (async () => {
   const todo = await (await fetch('escenas.json')).json();
   for (const [k, v] of Object.entries(todo.colores)) document.documentElement.style.setProperty('--' + k.replace('_', '-'), v);
@@ -72,8 +73,8 @@ window.seek = (t) => {
   [...document.querySelectorAll('#progreso b')].forEach((b, i) => { b.style.width = (i + 1 < N ? 100 : 100 * clamp(t / S.dur)) + '%'; });
   const [r1, r2] = document.querySelectorAll('#resumen span');
   if (ECO) ap(document.getElementById('eco'), eo((t - 0.1) / 0.5), 24);
-  ap(r1, eo((t - (ECO ? Math.max(0.3, S.T.r2 - 0.4) : 0.1)) / 0.5)); ap(r2, eo((t - S.T.r2) / 0.5));
-  ap(document.getElementById('pregunta'), eo((t - S.T.preg) / 0.6), 40);
+  apx(r1, eo((t - (ECO ? Math.max(0.3, S.T.r2 - 0.4) : 0.1)) / 0.5)); apx(r2, eo((t - S.T.r2) / 0.5));
+  apx(document.getElementById('pregunta'), eo((t - S.T.preg) / 0.6), -40);
   [...document.querySelectorAll('#sigue > div')].forEach((el, i) => ap(el, eo((t - S.T.sigue - 0.15 * i) / 0.5), 20));
   const subs = document.getElementById('subs');
   const ini = S.palabras.findIndex((p) => t < p.end + 0.08);

@@ -1,0 +1,184 @@
+{
+ "id": "2026-09-29-sequia-guatemala-2026",
+ "slug": "sequia-guatemala-2026",
+ "hilo": "hilos/2026-09-29-sequia-guatemala-2026",
+ "paleta": "maiz",
+ "duracion": "medio",
+ "duracion_s": 108.6,
+ "n_escenas": 9,
+ "musica": "maiz-1",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 1571,
+ "contexto_superior": "Sequía · Guatemala 2026",
+ "gancho": {
+  "formula": "cifra",
+  "pantalla": "23 de 39",
+  "linea": "estaciones con la menor lluvia de su historia"
+ },
+ "promesa": {
+  "texto": "Pero con el hambre pasó algo que no esperas.",
+  "en": 1,
+  "pago": 7
+ },
+ "critica": {
+  "veredicto": "pasa",
+  "vuelta": 4,
+  "puntajes": {
+   "gancho": 4,
+   "bucle": 4,
+   "ritmo": 4,
+   "escala_humana": 4,
+   "pago": 5,
+   "cierre": 4
+  }
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "tuit": null,
+   "plantilla": "gancho",
+   "enlace": null,
+   "golpe": null,
+   "cinetico": {
+    "pantalla": "23 de 39",
+    "linea": "estaciones con la menor lluvia de su historia"
+   },
+   "pantalla": "En Guatemala 23 de 39 estaciones midieron la menor lluvia de su historia. Pero con el hambre pasó algo que no esperas.",
+   "voz": "En Guatemala veintitrés de treinta y nueve estaciones midieron la menor lluvia de su historia. Pero con el hambre pasó algo que no esperas.",
+   "dur": 9.107
+  },
+  {
+   "n": 2,
+   "tipo": "tarjeta",
+   "tuit": 1,
+   "plantilla": "barras-v",
+   "enlace": null,
+   "golpe": "Junio-agosto: más caliente que 1997",
+   "cinetico": null,
+   "pantalla": "Entre junio y agosto, el Pacífico estuvo 1.8 grados más caliente de lo normal. Es El Niño, y en esas fechas supera a 1997 y 2015.",
+   "voz": "Entre junio y agosto, el Pacífico estuvo uno punto ocho grados más caliente de lo normal. Es El Niño, y en esas fechas supera a mil novecientos noventa y siete y dos mil quince.",
+   "dur": 12.362
+  },
+  {
+   "n": 3,
+   "tipo": "tarjeta",
+   "tuit": 2,
+   "plantilla": "barras-h",
+   "enlace": "y",
+   "golpe": "Faltó casi 1 de 3 gotas",
+   "cinetico": null,
+   "pantalla": "Además, de enero a junio, en los Valles de Oriente faltó casi 1 de cada 3 gotas: 30% menos lluvia de lo normal. Y eso fue antes de la canícula.",
+   "voz": "Además, de enero a junio, en los Valles de Oriente faltó casi una de cada tres gotas: treinta por ciento menos lluvia de lo normal. Y eso fue antes de la canícula.",
+   "dur": 11.685
+  },
+  {
+   "n": 4,
+   "tipo": "tarjeta",
+   "tuit": 3,
+   "plantilla": "pesas",
+   "enlace": "y",
+   "golpe": "142 milímetros: su mínimo era 331",
+   "cinetico": null,
+   "pantalla": "Más aún, de mayo a agosto cayeron casi 142 milímetros en Suiza Contenta, Sacatepéquez. Su año más seco hasta entonces había dado 331 milímetros.",
+   "voz": "Más aún, de mayo a agosto cayeron casi ciento cuarenta y dos milímetros en Suiza Contenta, Sacatepéquez. Su año más seco hasta entonces había dado trescientos treinta y un milímetros.",
+   "dur": 12.741
+  },
+  {
+   "n": 5,
+   "tipo": "golpe",
+   "tuit": null,
+   "plantilla": "golpe",
+   "enlace": "por_eso",
+   "golpe": null,
+   "cinetico": {
+    "pantalla": "43%",
+    "linea": "de la lluvia de su año más seco"
+   },
+   "pantalla": "Así que esa estación recibió apenas el 43% de la lluvia de su peor año anterior.",
+   "voz": "Así que esa estación recibió apenas el cuarenta y tres por ciento de la lluvia de su peor año anterior.",
+   "dur": 6.915
+  },
+  {
+   "n": 6,
+   "tipo": "tarjeta",
+   "tuit": 4,
+   "plantilla": "waffle",
+   "enlace": "por_eso",
+   "golpe": "8 de 10 perdieron casi todo",
+   "cinetico": null,
+   "pantalla": "Por eso, en el Corredor Seco, 8 de cada 10 hogares con maíz dañado perdieron el 75% o más de su cosecha, según una evaluación de Oxfam. Con la milpa perdida, esperarías que el hambre rompiera récord.",
+   "voz": "Por eso, en el Corredor Seco, ocho de cada diez hogares con maíz dañado perdieron el setenta y cinco por ciento o más de su cosecha, según una evaluación de Oxfam. Con la milpa perdida, esperarías que el hambre rompiera récord.",
+   "dur": 15.566
+  },
+  {
+   "n": 7,
+   "tipo": "tarjeta",
+   "tuit": 5,
+   "plantilla": "barras-v",
+   "enlace": "pero",
+   "golpe": "Menos hambre que en 2022",
+   "cinetico": null,
+   "pantalla": "Pero no: este año la proyección es de 3.18 millones de personas en crisis o peor. En 2022 fueron 4.6 millones.",
+   "voz": "Pero no: este año la proyección es de tres punto dieciocho millones de personas en crisis o peor. En dos mil veintidós fueron cuatro punto seis millones.",
+   "dur": 11.003
+  },
+  {
+   "n": 8,
+   "tipo": "golpe",
+   "tuit": null,
+   "plantilla": "golpe",
+   "enlace": "por_eso",
+   "golpe": null,
+   "cinetico": {
+    "pantalla": "31% menos",
+    "linea": "hambre aguda que en el pico de 2022"
+   },
+   "pantalla": "Así que la proyección queda 31% por debajo de 2022 en hambre aguda.",
+   "voz": "Así que la proyección queda treinta y uno por ciento por debajo de dos mil veintidós en hambre aguda.",
+   "dur": 6.914
+  },
+  {
+   "n": 9,
+   "tipo": "tarjeta",
+   "tuit": 6,
+   "plantilla": "mapa",
+   "enlace": "pero",
+   "golpe": "Alta Verapaz: 28% con hambre aguda",
+   "cinetico": null,
+   "pantalla": "Aun así, en Alta Verapaz el 28% de la población está en crisis o emergencia: más de 1 de cada 4 personas. Es el departamento con más hambre aguda del país.",
+   "voz": "Aun así, en Alta Verapaz el veintiocho por ciento de la población está en crisis o emergencia: más de una de cada cuatro personas. Es el departamento con más hambre aguda del país.",
+   "dur": 12.829
+  },
+  {
+   "n": 10,
+   "tipo": "cierre",
+   "tuit": null,
+   "plantilla": "cierre",
+   "enlace": null,
+   "golpe": null,
+   "cinetico": null,
+   "pantalla": "Una sequía de récord en el cielo, pero un hambre proyectada por debajo de 2022. Y en tu pueblo, ¿cuántas semanas pasaron sin llover?",
+   "voz": "Una sequía de récord en el cielo, pero un hambre proyectada por debajo de dos mil veintidós. Y en tu pueblo, ¿cuántas semanas pasaron sin llover?",
+   "dur": 12.219
+  }
+ ],
+ "cierre": {
+  "texto": "Una sequía de récord en el cielo, pero un hambre proyectada por debajo de 2022. Y en tu pueblo, ¿cuántas semanas pasaron sin llover?",
+  "resumen": [
+   "Lluvia mínima de registro.",
+   "Hambre proyectada bajo 2022."
+  ],
+  "pregunta": "Y en tu pueblo, ¿cuántas semanas pasaron sin llover?"
+ },
+ "caption": {
+  "tiktok": "En 23 de 39 estaciones llovió menos que nunca. Pero la proyección de hambre aguda queda por debajo de 2022.\n#Guatemala #DatosGT #Sequia #ElNino",
+  "facebook": "En 23 de 39 estaciones de Guatemala llovió menos que nunca de mayo a agosto. Pero la proyección de hambre aguda queda por debajo de 2022.\n▸ El Niño llegó a 1.8 °C entre junio y agosto, más que en 1997 y 2015.\n▸ Los Valles de Oriente recibieron 30% menos lluvia de enero a junio.\n▸ En el Corredor Seco, el 80.73% de los hogares con pérdidas de maíz perdió de 75% a 100% de su cosecha.\n▸ La proyección de hambre aguda para 2026 es de 3.18 millones de personas; en 2022 fueron 4.6 millones.\n▸ En Alta Verapaz, el 28% de la población está en crisis o emergencia.\nFuentes: NOAA CPC; INSIVUMEH; análisis USAC con datos del INSIVUMEH; Oxfam Centroamérica y socias; CIF (IPC) vía HDX; SESAN."
+ }
+}

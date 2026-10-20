@@ -1,0 +1,208 @@
+{
+ "id": "2026-10-06-madres-ninas-adolescentes-2026",
+ "slug": "madres-ninas-adolescentes-2026",
+ "hilo": "hilos/2026-10-06-madres-ninas-adolescentes-2026",
+ "paleta": "jacaranda",
+ "duracion": "medio",
+ "duracion_s": 132.2,
+ "n_escenas": 11,
+ "musica": "jacaranda-1",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 1862,
+ "contexto_superior": "Madres adolescentes · Guatemala 2026",
+ "gancho": {
+  "formula": "cifra",
+  "pantalla": "Casi 168 al día",
+  "linea": "bebés de madres de 10 a 19 años"
+ },
+ "promesa": {
+  "texto": "Y al final te digo cuántas condenas hubo.",
+  "en": 1,
+  "pago": 11
+ },
+ "critica": {
+  "veredicto": "pasa",
+  "vuelta": 4,
+  "puntajes": {
+   "gancho": 4,
+   "bucle": 4,
+   "ritmo": 4,
+   "escala_humana": 4,
+   "pago": 5,
+   "cierre": 4
+  }
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "tuit": null,
+   "plantilla": "gancho",
+   "enlace": null,
+   "golpe": null,
+   "cinetico": {
+    "pantalla": "Casi 168 al día",
+    "linea": "bebés de madres de 10 a 19 años"
+   },
+   "pantalla": "En Guatemala nacen casi 168 bebés al día de madres de 10 a 19 años. Y al final te digo cuántas condenas hubo.",
+   "voz": "En Guatemala nacen casi ciento sesenta y ocho bebés al día de madres de diez a diecinueve años. Y al final te digo cuántas condenas hubo.",
+   "dur": 10.573
+  },
+  {
+   "n": 2,
+   "tipo": "tarjeta",
+   "tuit": 1,
+   "plantilla": "cifra",
+   "enlace": null,
+   "golpe": "7.5% más inscripciones al día",
+   "cinetico": null,
+   "pantalla": "En 2025 se inscribían casi 156 al día; en 2026, hasta agosto, un 7.5% más. Ojo: cuenta cuándo se registra al bebé, no cuándo nace.",
+   "voz": "En dos mil veinticinco se inscribían casi ciento cincuenta y seis al día; en dos mil veintiséis, hasta agosto, un siete punto cinco por ciento más. Ojo: cuenta cuándo se registra al bebé, no cuándo nace.",
+   "dur": 15.904
+  },
+  {
+   "n": 3,
+   "tipo": "tarjeta",
+   "tuit": 7,
+   "plantilla": "barras-h",
+   "enlace": "y",
+   "golpe": "7,187 en un solo departamento",
+   "cinetico": null,
+   "pantalla": "Además, en números manda el departamento de Guatemala: 7,187 nacimientos inscritos en ocho meses, más de 1 de cada 6 del país.",
+   "voz": "Además, en números manda el departamento de Guatemala: siete mil ciento ochenta y siete nacimientos inscritos en ocho meses, más de uno de cada seis del país.",
+   "dur": 11.549
+  },
+  {
+   "n": 4,
+   "tipo": "tarjeta",
+   "tuit": 8,
+   "plantilla": "mapa",
+   "enlace": "pero",
+   "golpe": "46.9 por cada 1,000 muchachas",
+   "cinetico": null,
+   "pantalla": "Pero contar casos premia a los más poblados. En 2025, por cada 1,000 mujeres de 10 a 19 años, Alta Verapaz tiene 46.9 y el departamento de Guatemala, octavo, 32.8.",
+   "voz": "Pero contar casos premia a los más poblados. En dos mil veinticinco, por cada mil mujeres de diez a diecinueve años, Alta Verapaz tiene cuarenta y seis punto nueve y el departamento de Guatemala, octavo, treinta y dos punto ocho.",
+   "dur": 14.808
+  },
+  {
+   "n": 5,
+   "tipo": "golpe",
+   "tuit": null,
+   "plantilla": "golpe",
+   "enlace": "por_eso",
+   "golpe": null,
+   "cinetico": {
+    "pantalla": "2.6 veces",
+    "linea": "Alta Verapaz frente a Sololá"
+   },
+   "pantalla": "Así que la tasa de Alta Verapaz es 2.6 veces la de Sololá, la más baja.",
+   "voz": "Así que la tasa de Alta Verapaz es dos punto seis veces la de Sololá, la más baja.",
+   "dur": 6.531
+  },
+  {
+   "n": 6,
+   "tipo": "tarjeta",
+   "tuit": 9,
+   "plantilla": "cifra",
+   "enlace": "y",
+   "golpe": "39 niñas madres por semana",
+   "cinetico": null,
+   "pantalla": "Y se pone peor: entre las más pequeñas, 5.6 nacimientos al día de madres de 10 a 14 años: 39 por semana.",
+   "voz": "Y se pone peor: entre las más pequeñas, cinco punto seis nacimientos al día de madres de diez a catorce años: treinta y nueve por semana.",
+   "dur": 9.829
+  },
+  {
+   "n": 7,
+   "tipo": "tarjeta",
+   "tuit": 10,
+   "plantilla": "barras-v",
+   "enlace": "pero",
+   "golpe": "Tres de apenas diez años",
+   "cinetico": null,
+   "pantalla": "Aunque la mayoría estaba por cumplir quince años, hay 51 madres de 12 años o menos. Y 3 tenían apenas 10.",
+   "voz": "Aunque la mayoría estaba por cumplir quince años, hay cincuenta y una madres de doce años o menos. Y tres tenían apenas diez.",
+   "dur": 8.685
+  },
+  {
+   "n": 8,
+   "tipo": "tarjeta",
+   "tuit": 12,
+   "plantilla": "barras-h",
+   "enlace": "y",
+   "golpe": "Más de la mitad, por cesárea",
+   "cinetico": null,
+   "pantalla": "Encima, en 2024 el 56.7% de los partos de estas niñas fue por cesárea: más de la mitad, por encima de cualquier otro grupo.",
+   "voz": "Encima, en dos mil veinticuatro el cincuenta y seis punto siete por ciento de los partos de estas niñas fue por cesárea: más de la mitad, por encima de cualquier otro grupo.",
+   "dur": 11.213
+  },
+  {
+   "n": 9,
+   "tipo": "tarjeta",
+   "tuit": 13,
+   "plantilla": "dona",
+   "enlace": "pero",
+   "golpe": "944 sin padre en el registro",
+   "cinetico": null,
+   "pantalla": "Pero ese mismo registro muchas veces no anota al padre: en 2024, 944 de sus bebés sin padre registrado. Cuando sí consta, casi 3 de cada 4 veces era mayor de edad.",
+   "voz": "Pero ese mismo registro muchas veces no anota al padre: en dos mil veinticuatro, novecientos cuarenta y cuatro de sus bebés sin padre registrado. Cuando sí consta, casi tres de cada cuatro veces era mayor de edad.",
+   "dur": 14.799
+  },
+  {
+   "n": 10,
+   "tipo": "golpe",
+   "tuit": null,
+   "plantilla": "golpe",
+   "enlace": "por_eso",
+   "golpe": null,
+   "cinetico": {
+    "pantalla": "¿Y la justicia?",
+    "linea": "menor de 14: la ley lo llama violación"
+   },
+   "pantalla": "Por eso importa la justicia: la ley llama violación a cualquier relación sexual con una menor de 14 años.",
+   "voz": "Por eso importa la justicia: la ley llama violación a cualquier relación sexual con una menor de catorce años.",
+   "dur": 7.886
+  },
+  {
+   "n": 11,
+   "tipo": "tarjeta",
+   "tuit": 14,
+   "plantilla": "embudo",
+   "enlace": "pero",
+   "golpe": "Solo 102 personas condenadas",
+   "cinetico": null,
+   "pantalla": "Pero de 2018 a 2023, la condena casi nunca llega. En el Ministerio Público, 1,911 casos de niñas embarazadas y solo 102 personas condenadas.",
+   "voz": "Pero de dos mil dieciocho a dos mil veintitrés, la condena casi nunca llega. En el Ministerio Público, mil novecientos once casos de niñas embarazadas y solo ciento dos personas condenadas.",
+   "dur": 13.326
+  },
+  {
+   "n": 12,
+   "tipo": "cierre",
+   "tuit": null,
+   "plantilla": "cierre",
+   "enlace": null,
+   "golpe": null,
+   "cinetico": null,
+   "pantalla": "Madres desde los 10 años, el norte por delante y muy pocas condenas. Y tú, ¿a qué edad fue mamá tu mamá?",
+   "voz": "Madres desde los diez años, el norte por delante y muy pocas condenas. Y tú, ¿a qué edad fue mamá tu mamá?",
+   "dur": 10.365
+  }
+ ],
+ "cierre": {
+  "texto": "Madres desde los 10 años, el norte por delante y muy pocas condenas. Y tú, ¿a qué edad fue mamá tu mamá?",
+  "resumen": [
+   "Más peso en el norte que en la capital.",
+   "Muchos casos, muy pocas condenas."
+  ],
+  "pregunta": "Y tú, ¿a qué edad fue mamá tu mamá?"
+ },
+ "caption": {
+  "tiktok": "Casi 168 bebés al día de madres de 10 a 19 años en Guatemala. Algunas, de apenas 10.\nEntre 2018 y 2023, el MP registró 1,911 casos de niñas embarazadas menores de 14 años; personas condenadas: 102.\n#Guatemala #DatosGT #EmbarazoAdolescente",
+  "facebook": "Casi 168 bebés al día de madres de 10 a 19 años se inscriben en Guatemala.\n▸ 167.6 nacimientos inscritos al día de enero a agosto de 2026, frente a 155.9 en 2025 (por fecha de inscripción).\n▸ El departamento de Guatemala pone más casos (7,187), pero por cada mil jóvenes lidera Alta Verapaz con 46.9.\n▸ 5.6 nacimientos al día de niñas de 10 a 14 años: 1,355 de enero a agosto de 2026.\n▸ En 2024, el 56.7% de los partos de niñas de 10 a 14 años fue por cesárea.\n▸ Entre 2018 y 2023, el Ministerio Público registró 1,911 casos de niñas embarazadas menores de 14 años; personas condenadas: 102.\nFuentes: OSAR con datos de RENAP; INE, Estadísticas Vitales y proyección de población 2024; Human Rights Watch con datos del MP."
+ }
+}

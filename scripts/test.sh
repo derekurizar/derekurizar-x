@@ -614,7 +614,7 @@ L = json.load(open(sys.argv[1], encoding="utf-8"))["escenas"]
 assert [e["tipo"] for e in L] == ["gancho", "tarjeta", "tarjeta", "golpe", "tarjeta", "cierre"], [e["tipo"] for e in L]
 assert L[3]["cinetico"]["pantalla"] == "1.8 veces" and 1.7 < L[3]["valor_calculo"] < 1.8 and L[1]["valor_calculo"] > 50
 assert all(e["hueco_max_s"] <= 6 for e in L[:-1]), [e["hueco_max_s"] for e in L]
-assert L[0]["voz"].startswith("En Guatemala:") and "Guatemala" not in L[0]["cinetico"]["pantalla"]
+assert L[0]["voz"].startswith("En Guatemala, ¿cuánto") and "Guatemala" not in L[0]["cinetico"]["pantalla"], L[0]["voz"]
 ' "$VT/locucion.json"
 paso "sfx.py --check (K2: los 8 efectos fijos)" python3 scripts/sfx.py --check
 paso "video.py preparar rechaza un hilo en borrador sin --permitir-borrador (exit 1)" bash -c "! python3 scripts/video.py preparar sesiones/_fixture/salida --duracion prueba --trabajo '$TMP/video_borrador' >/dev/null 2>&1"
@@ -660,6 +660,11 @@ paso "video gate: pantalla sin respaldo ni calculo → V9" video_neg "sin respal
 paso "video gate: literal del calculo sin respaldo → V9" video_neg "usa el literal 181" 'G["escenas"][3]["calculo"] = "pre-c03/181"'
 paso "video gate: cifra inexistente en el calculo → V9" video_neg "usa la cifra pre-c09" 'G["escenas"][3]["calculo"] = "pre-c09/pre-c02"'
 paso "video gate: hueco de más de 6 s sin cifra → V9 ritmo" video_neg "sin evento entre" 'G["escenas"][1]["texto"] += " Y eso sin contar lo que subieron el transporte, la comida y todo lo que se mueve en camión por el país entero."'
+paso "video gate: la voz del gancho no dice lo que está en pantalla → V9" video_neg "la voz no dice «septiembre»" 'G["escenas"][0]["texto"] = G["escenas"][0]["texto"].replace("En septiembre el", "El")'
+paso "video gate: gancho sin «verbo» → V9" video_neg "V9 escena 1 (gancho): falta «verbo»" 'del G["escenas"][0]["verbo"]'
+paso "video gate: voz del gancho que lee el titular sin verbo → V9" video_neg "no lleva el verbo «llegó»" 'G["escenas"][0]["texto"] = G["escenas"][0]["texto"].replace("En septiembre el barril llegó a 102 dólares.", "El barril en septiembre, 102 dólares.")'
+paso "video gate: golpe sin «verbo» → V9" video_neg "V9 escena 4 (golpe): falta «verbo»" 'del G["escenas"][3]["verbo"]'
+paso "video gate: una escena abre con las palabras que cerraron la anterior → V9" video_neg "V9 escena 5: empieza con «enero»" 'G["escenas"][4]["texto"] = "Pero lo de enero no es lo peor: en México el galón de diésel promedia 5.9 dólares; en Guatemala, 4.85."'
 if [[ "$RAPIDO" == "1" ]]; then echo "SKIP   make video-fixture (RAPIDO=1)"; else
   paso "make video-fixture (voz falsa, V6–V8, V10, 10 fps)" make video-fixture
   paso "fixture de video: 1080×1920 con audio y guion de entrega" bash -c 'ffprobe -v error -show_entries stream=codec_type,width,height -of csv=p=0 sesiones/_fixture_video/salida/video.mp4 | grep -q "video,1080,1920" && test -s sesiones/_fixture_video/salida/guion.json && test -s sesiones/_fixture_video/salida/subtitulos.srt'
@@ -668,6 +673,8 @@ import json
 E = json.load(open("sesiones/_fixture_video/trabajo/escenas.json", encoding="utf-8"))
 cat = {x["id"] for x in json.load(open("design/sfx/catalogo.json", encoding="utf-8"))["efectos"]}
 assert E["version"] == 2 and E["escenas"][0]["tipo"] == "gancho" and E["gancho"]["pantalla"] == "102 dólares"
+assert E["transicion_s"] == 0.3 and E["escenas"][0]["transicion"] is None and E["escenas"][1]["transicion"] == "slideleft"
+import os; assert os.path.exists("sesiones/_fixture_video/trabajo/revision/linea_tiempo.png")
 assert all(e.get("eventos") for e in E["escenas"]) and all(s["id"] in cat for e in E["escenas"] for s in e["sfx"])
 ts, off = [], 0.0
 for e in E["escenas"]:
