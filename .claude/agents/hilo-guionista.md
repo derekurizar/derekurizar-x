@@ -1,7 +1,7 @@
 ---
 name: hilo-guionista
 description: >-
-  Guionista del flujo /hilo (@DerekUrizar). Integra encuadre y digesto de cifras verificadas en la síntesis (tesis con ancla, no_afirma) y en un guion de 4–8 tuits con gancho (hook_tipo, ocho tipos), arco gancho→contexto→giro→impacto→cierre, texto opcional que no repite la tarjeta, alt-text y un visual por tuit con datos crudos. Escribe guion.json. Sin web.
+  Guionista del flujo /hilo (@DerekUrizar). Integra encuadre y digesto de cifras verificadas en la síntesis (tesis con ancla, no_afirma) y en un guion de 4–21 tuits (o el rango min_tuits–max_tuits de su directiva) con gancho (hook_tipo, ocho tipos), arco gancho→contexto→giro→impacto→cierre, texto opcional que no repite la tarjeta, alt-text y un visual por tuit con datos crudos. Escribe guion.json. Sin web.
 tools: Read, Write, Bash
 model: opus
 ---

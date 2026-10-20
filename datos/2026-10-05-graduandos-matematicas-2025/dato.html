@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dato · vista previa</title>
+<!-- Vista previa de un dato (/dato): la abre el usuario en su navegador. La rellena scripts/ensamblar.py (DATO_JSON). -->
+<style>
+  :root { --papel:#F6F2E8; --tinta:#0C1520; --gris:#5c6470; --linea:rgba(12,21,32,.14); --acento:#4B92DB; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--papel); color: var(--tinta); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 40px 20px 80px; }
+  header h1 { font: 700 30px/1.15 Georgia, "Times New Roman", serif; margin: 0 0 8px; }
+  header .meta { color: var(--gris); font-size: 14px; display: flex; flex-wrap: wrap; gap: 10px 18px; }
+  .chip { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; background: var(--tinta); color: var(--papel); }
+  .chip.suave { background: #e9e3d6; color: var(--tinta); }
+  .dato { margin: 18px 0 0; padding: 14px 18px; border-left: 4px solid var(--acento); background: rgba(75,146,219,.08); font-size: 17px; }
+  .porque { margin: 10px 0 0; color: var(--gris); font-size: 15px; }
+  .tarjeta { margin-top: 24px; }
+  .tarjeta img { width: 100%; max-width: 760px; display: block; border-radius: 12px; box-shadow: 0 2px 14px rgba(0,0,0,.12); }
+  .texto { position: relative; margin-top: 18px; padding: 14px 16px; background: #fff; border: 1px solid var(--linea); border-radius: 10px; white-space: pre-wrap; font-size: 17px; }
+  .fila { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; font-size: 13px; color: var(--gris); }
+  .fila .cnt.alerta { color: #B23A26; font-weight: 700; }
+  button { font: 600 13px/1 system-ui, sans-serif; padding: 7px 12px; border-radius: 8px; border: 1px solid var(--linea); background: #fff; color: var(--tinta); cursor: pointer; }
+  button:hover { background: var(--tinta); color: var(--papel); }
+  .alt { margin-top: 10px; font-size: 14px; color: var(--gris); }
+  .alt b { color: var(--tinta); }
+  .fuente { margin-top: 6px; font-size: 13px; color: var(--gris); }
+  .fuente a { color: var(--acento); }
+  section.extra { margin-top: 44px; padding-top: 24px; border-top: 2px solid var(--tinta); }
+  section.extra h2 { font: 700 18px/1.2 system-ui, sans-serif; margin: 22px 0 8px; }
+  section.extra ul { margin: 0; padding-left: 20px; }
+  table.cifras { width: 100%; border-collapse: collapse; font-size: 14px; }
+  table.cifras th, table.cifras td { padding: 6px 8px; border-bottom: 1px solid var(--linea); text-align: left; vertical-align: top; }
+  table.cifras th { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--gris); }
+  .cand li.elegida { font-weight: 600; }
+  .cand .pts { color: var(--gris); font-weight: 400; font-size: 13px; }
+  .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--tinta); color: var(--papel); padding: 10px 16px; border-radius: 8px; font-size: 14px; opacity: 0; transition: opacity .2s; pointer-events: none; }
+  .toast.on { opacity: 1; }
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<div class="toast" id="toast">Copiado</div>
+<script id="dato-json" type="application/json">{"slug": "graduandos-matematicas-2025", "fecha": "2026-10-05", "tema": "Logro en Matemáticas de los graduandos en Guatemala 2025", "pista": null, "tipo": "dato", "dato": "Aun en su mejor año desde 2013, 84 de cada 100 graduandos no alcanzan Matemáticas", "por_que_impacta": "Rompe la lectura de buena noticia: el logro se duplicó en doce años y es el más alto de la serie, pero la gran mayoría de quienes terminan el diversificado sigue sin el nivel esperado.", "paleta": "jacaranda", "hook_tipo": "giro_inversion", "pregunta": "¿Cuántos de cada 100 graduandos salen del diversificado con el nivel esperado en Matemáticas y cómo se compara con años anteriores?", "tesis": "En 2025, 16.2 % de los graduandos alcanzó el Logro en Matemáticas, el más alto desde 2013; 84 de cada 100 quedaron sin el nivel esperado.", "estado": "listo", "tuit": {"texto": "Una buena noticia con letra pequeña.\n\nEl logro se duplicó en doce años, pero aun en su mejor año 84 de cada 100 graduandos salen del diversificado sin el nivel esperado en Matemáticas.", "caracteres": 184, "alt_text": "Gráfico de línea: porcentaje de graduandos de diversificado en Guatemala que alcanzó el Logro en Matemáticas (niveles Satisfactorio y Excelente), 2013–2025. Sube de 8.02 % en 2013 a 13.56 % en 2019; sin dato en 2020 y 2021; 14.01 % en 2022, baja a 10.07 % en 2023, 12.95 % en 2024 y llega a 16.2 % en 2025, el valor más alto de la serie. Equivale a que 84 de cada 100 graduandos no alcanzaron el nivel esperado. Fuente: Mineduc/Digeduca, Evaluación Graduandos.", "imagen": "dato.png", "tarjeta": "tarjeta.html", "plantilla": "linea", "kicker": "GRADUANDOS · % CON LOGRO EN MATEMÁTICAS", "titular": ["El logro en Matemáticas", "es el más alto desde 2013:", "16.2 % de los graduandos"], "nota": "Logro = niveles Satisfactorio y Excelente. Sin dato en 2020 y 2021.", "fuente": "Mineduc/Digeduca · Evaluación Graduandos 2013–2025", "cifra_ids": ["dat-c01"]}, "cifras": [{"id": "dat-c01", "concepto": "Porcentaje de graduandos que alcanzó el Logro en Matemáticas (Satisfactorio + Excelente), nacional", "valor": 16.2, "unidad": "% de evaluados", "anio": 2025, "veredicto": "verificada", "fuente": "MINEDUC/Digeduca, Resultados generales de la evaluación educativa · Graduandos 2025 (2025) y MINEDUC/Digeduca, Informe Graduandos 2024 (2013–2024)", "fuente_2": "Digeduca, Informe Graduandos 2024 (serie 2013-2024) + infografía Resultados GRAD2025 (16 %)", "url": "https://edu.mineduc.gob.gt/digeduca/documents/resultados/Resultados_generales.pdf"}], "candidatas": [{"id": "dat-c01", "puntaje": 20, "criterios": {"sorpresa": 4, "magnitud": 5, "comparacion": 5, "actualidad": 3, "solidez": 3}, "elegida": true, "motivo": "Elegida: giro claro (mejor año desde 2013 y aun así 84 de cada 100 sin el nivel), serie de 11 puntos y es el corazón del tema.", "dato": "Porcentaje de graduandos que alcanzó el Logro en Matemáticas (Satisfactorio + Excelente), nacional"}, {"id": "dat-c02", "puntaje": 17, "criterios": {"sorpresa": 4, "magnitud": 4, "comparacion": 3, "actualidad": 3, "solidez": 3}, "elegida": false, "motivo": "Misma historia que dat-c01 vista como reparto; sin comparación en el tiempo pierde el contraste del mejor año.", "dato": "Distribución de graduandos por nivel de desempeño en Matemáticas"}, {"id": "dat-c03", "puntaje": 19, "criterios": {"sorpresa": 4, "magnitud": 4, "comparacion": 5, "actualidad": 3, "solidez": 3}, "elegida": false, "motivo": "Buena brecha, pero Ciudad Capital va separada de Guatemala sin evaluados para fusionar: el mapa de 22 no queda limpio.", "dato": "Porcentaje de Logro en Matemáticas por departamento (con Ciudad Capital separada)"}, {"id": "dat-c04", "puntaje": 17, "criterios": {"sorpresa": 3, "magnitud": 4, "comparacion": 4, "actualidad": 3, "solidez": 3}, "elegida": false, "motivo": "Brecha público/privado esperable; menos sorpresa y la cifra nacional ya cuenta la historia mayor.", "dato": "Porcentaje de Logro en Matemáticas por sector del establecimiento"}, {"id": "dat-c05", "puntaje": 17, "criterios": {"sorpresa": 4, "magnitud": 4, "comparacion": 3, "actualidad": 3, "solidez": 3}, "elegida": false, "motivo": "Gancho de futuros maestros atractivo, pero las ramas difieren poco (13 a 17 %) salvo Secretariado.", "dato": "Porcentaje de Logro en Matemáticas por rama de enseñanza"}, {"id": "dat-c06", "puntaje": 18, "criterios": {"sorpresa": 5, "magnitud": 5, "comparacion": 2, "actualidad": 3, "solidez": 3}, "elegida": false, "motivo": "Muy sorpresiva, pero compara percepción de toda la preparación con logro en una materia: no es la misma medida.", "dato": "Graduandos que consideran que su preparación académica fue la necesaria"}, {"id": "dat-c07", "puntaje": 17, "criterios": {"sorpresa": 3, "magnitud": 4, "comparacion": 4, "actualidad": 3, "solidez": 3}, "elegida": false, "motivo": "Lectura no es el tema del encuadre y el retroceso frente a 2019 es de menos de dos puntos.", "dato": "Porcentaje de graduandos que alcanzó el Logro en Lectura, nacional"}, {"id": "dat-c08", "puntaje": 15, "criterios": {"sorpresa": 3, "magnitud": 4, "comparacion": 3, "actualidad": 2, "solidez": 3}, "elegida": false, "motivo": "Otra población (docentes optantes) y otro año (2024); se desvía del logro de graduandos.", "dato": "Docentes optantes a plaza del Nivel Medio que alcanzaron 60 puntos o más de promedio en la evaluación diagnóstica"}], "no_afirma": ["Que 2025 sea récord histórico: la serie de la sesión empieza en 2013.", "Que la mejora se deba a una política, a la prueba en computadora u otra causa: ninguna fuente lo atribuye.", "Que todos los años sean estrictamente comparables: no hay nota oficial de comparabilidad 2025 vs. años anteriores."], "incertidumbre": ["La segunda fuente reproduce la primaria; sin verificación independiente.", "Sin nota oficial de comparabilidad entre 2025 y años anteriores; la serie no tiene dato en 2020 y 2021.", "La tarjeta solo rotula el valor de 2025; el alt-text da los valores exactos de cada año."], "fuentes": ["Mineduc/Digeduca · Evaluación Graduandos 2013–2025"], "fuentes_cifras": ["MINEDUC/Digeduca, Resultados generales de la evaluación educativa · Graduandos 2025 (2025) y MINEDUC/Digeduca, Informe Graduandos 2024 (2013–2024)"], "gate_mecanico": "ok"}</script>
+<script>
+/* Peso según X: copia literal de scripts/contar_x.js (pesoX). No editar aquí; regenerar desde el script. */
+function pesoX(texto) {
+  // Reglas: NFC; cada URL pesa 23; puntos de código en 0–4351, 8192–8205,
+  // 8208–8223 y 8242–8247 pesan 1; el resto 2; los emoji compuestos
+  // (FE0F, ZWJ+siguiente, tono 1F3FB–1F3FF, keycap 20E3, par regional) son uno y pesan 2.
+  var t = String(texto == null ? "" : texto).normalize("NFC");
+  var reUrl = /https?:\/\/\S+|www\.\S+|(?<![\p{L}\p{N}\p{M}_])[a-z0-9-]+(\.[a-z0-9-]+)*\.(com|gt|org|net|io|edu|gov|mx|sv|hn|es|info|co)(\/\S*)?/giu;
+  var rangos1 = [[0, 4351], [8192, 8205], [8208, 8223], [8242, 8247]];
+  var pesoCp = function (cp) {
+    for (var k = 0; k < rangos1.length; k++) if (cp >= rangos1[k][0] && cp <= rangos1[k][1]) return 1;
+    return 2;
+  };
+  var esTono = function (cp) { return cp >= 0x1f3fb && cp <= 0x1f3ff; };
+  var esRegional = function (cp) { return cp >= 0x1f1e6 && cp <= 0x1f1ff; };
+  var pesoPlano = function (s) {
+    var cps = Array.from(s, function (c) { return c.codePointAt(0); });
+    var i = 0, n = cps.length, total = 0;
+    while (i < n) {
+      var j = i + 1;
+      if (esRegional(cps[i]) && j < n && esRegional(cps[j])) j += 1; // bandera
+      while (j < n) {
+        if (cps[j] === 0xfe0f || cps[j] === 0x20e3 || esTono(cps[j])) j += 1;
+        else if (cps[j] === 0x200d && j + 1 < n) j += 2; // ZWJ + siguiente
+        else break;
+      }
+      total += j - i > 1 ? 2 : pesoCp(cps[i]);
+      i = j;
+    }
+    return total;
+  };
+  var total = 0, pos = 0, m;
+  while ((m = reUrl.exec(t)) !== null) {
+    total += pesoPlano(t.slice(pos, m.index)) + 23;
+    pos = m.index + m[0].length;
+    if (m[0].length === 0) reUrl.lastIndex++;
+  }
+  return total + pesoPlano(t.slice(pos));
+}
+</script>
+<script>
+(() => {
+  const D = JSON.parse(document.getElementById("dato-json").textContent);
+  const app = document.getElementById("app");
+  const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const toast = (m) => { const t = document.getElementById("toast"); t.textContent = m; t.classList.add("on"); setTimeout(() => t.classList.remove("on"), 1400); };
+  const copiar = async (txt) => {
+    try { await navigator.clipboard.writeText(txt); toast("Copiado"); return; } catch (e) { /* fallback */ }
+    const ta = document.createElement("textarea"); ta.value = txt; document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); toast("Copiado"); } catch (e) { toast("No se pudo copiar"); }
+    ta.remove();
+  };
+  if (!D) { app.innerHTML = "<p>Sin datos: este archivo lo genera scripts/ensamblar.py.</p>"; return; }
+
+  const t = D.tuit || {};
+  const peso = pesoX(t.texto || "");
+  const fuera = peso < 40 || peso > 280;
+  const lista = (xs) => (xs || []).map((x) => `<li>${esc(x)}</li>`).join("") || "<li>(nada declarado)</li>";
+  // Sin duplicar la misma fuente escrita de dos formas («EIA · … · 2026» y «EIA · …»): se compara el nombre corto, como fuente_corta en ensamblar.py.
+  const corta = (s) => String(s || "").split(/\s+[·—–]\s+|,|\s+\/\s+|\(/)[0].trim().toLowerCase();
+  const fuentes = [...(D.fuentes || []), ...(D.fuentes_cifras || [])].filter((x, i, a) => x && a.findIndex((y) => corta(y) === corta(x)) === i);
+  let html = `<header>
+    <h1>${esc(D.tema)}</h1>
+    <div class="meta"><span class="chip">${esc(D.paleta)}</span><span>${esc(D.fecha)}</span><span class="chip suave">${esc(D.hook_tipo || "sin gancho")}</span><span>tarjeta: ${esc(t.plantilla || "")}</span><span>gate mecánico: ${esc(D.gate_mecanico)}</span><span>estado: ${esc(D.estado)}</span></div>
+    ${D.pista ? `<div class="meta" style="margin-top:6px"><span>pista: «${esc(D.pista)}»</span></div>` : ""}
+    <p class="dato"><b>Dato:</b> ${esc(D.dato)}</p>
+    ${D.por_que_impacta ? `<p class="porque"><b>Por qué impacta:</b> ${esc(D.por_que_impacta)}</p>` : ""}
+  </header>
+  <div class="tarjeta"><a href="${esc(t.imagen || "dato.png")}" target="_blank" rel="noopener"><img src="${esc(t.imagen || "dato.png")}" alt="${esc(t.alt_text)}"></a></div>
+  <div class="texto">${esc(t.texto)}</div>
+  <div class="fila"><span class="cnt${fuera ? " alerta" : ""}">${peso}/280 (peso X${peso !== t.caracteres ? `, ${t.caracteres} caracteres` : ""})</span><span><button data-copy="${esc(t.texto)}">Copiar texto</button> <button data-copy="${esc(t.alt_text)}">Copiar alt</button></span></div>
+  <div class="alt"><b>Alt:</b> ${esc(t.alt_text)}</div>
+  <div class="fuente">Fuente en el pie: ${esc(t.fuente || "")} · cifras: ${esc((t.cifra_ids || []).join(", "))}${t.tarjeta ? ` · HTML: <a href="${esc(t.tarjeta)}" target="_blank" rel="noopener">${esc(t.tarjeta)}</a>` : ""}</div>
+  <section class="extra">
+    <h2>Cifras usadas</h2>
+    <table class="cifras"><tr><th>id</th><th>Concepto</th><th>Valor</th><th>Año</th><th>Veredicto</th><th>Fuente</th><th>Fuente 2</th></tr>${(D.cifras || []).map((c) => `<tr><td>${esc(c.id)}</td><td>${esc(c.concepto)}</td><td>${esc(c.valor)} ${esc(c.unidad || "")}</td><td>${esc(c.anio || "")}</td><td>${esc(c.veredicto)}</td><td>${esc(c.fuente || "")}</td><td>${esc(c.fuente_2 || "")}</td></tr>`).join("")}</table>
+    ${(D.candidatas || []).length ? `<h2>Candidatas consideradas</h2><ul class="cand">${D.candidatas.map((c) => `<li class="${c.elegida ? "elegida" : ""}">${esc(c.dato || c.id)} <span class="pts">(${esc(c.id)}, puntaje ${esc(c.puntaje ?? "—")})</span>${c.motivo ? ` — ${esc(c.motivo)}` : ""}</li>`).join("")}</ul>` : ""}
+    <h2>Lo que este dato NO afirma</h2><ul>${lista(D.no_afirma)}</ul>
+    <h2>Incertidumbre declarada</h2><ul>${lista(D.incertidumbre)}</ul>
+    <h2>Fuentes</h2><ul>${fuentes.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
+    <p style="color:var(--gris);font-size:13px">Detalle de cifras y veredictos en <code>datos.json</code>; texto listo para pegar en <code>post.md</code>.</p>
+  </section>`;
+  app.innerHTML = html;
+  app.addEventListener("click", (e) => { const b = e.target.closest("button[data-copy]"); if (b) copiar(b.getAttribute("data-copy")); });
+})();
+</script>
+</body>
+</html>

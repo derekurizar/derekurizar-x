@@ -1,0 +1,208 @@
+{
+  "slug": "lago-atitlan-nivel",
+  "fecha": "2026-10-11",
+  "tesis": "Entre mayo de 2014 y octubre de 2025 el nivel del lago de Atitlán bajó 3.00 m en la escala de Panajachel, según AMSCLAE.",
+  "ancla_id": "dat-c01",
+  "paleta": "jade",
+  "hook_tipo": "curiosity_gap",
+  "cifras": [
+    {
+      "id": "dat-c01",
+      "concepto": "Cambio del nivel del lago de Atitlán de mayo 2014 a octubre 2025 (descenso)",
+      "unidad": "m",
+      "anio": "2025",
+      "tipo": "puntual",
+      "fuente": "AMSCLAE · Departamento de Investigación y Calidad Ambiental (DICA) · Monitoreo de nivel del lago Atitlán 2025",
+      "url": "https://www.amsclae.gob.gt/wp-content/uploads/2026/01/Monitoreo-de-nivel-del-lago-Atitlan.pdf",
+      "periodo": "may-2014..oct-2025",
+      "valor": 3.0,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Living in Guatemala (reproduce el informe AMSCLAE 2025) y coherencia aritmética con 1556.57 msnm inicial (nivel resultante ~1553.57; la figura del informe muestra máx. oct 1553.67)",
+      "evidencia": {
+        "url": "https://www.amsclae.gob.gt/wp-content/uploads/2026/01/Monitoreo-de-nivel-del-lago-Atitlan.pdf",
+        "cita": "El cambio del nivel del lago desde mayo del 2014 a octubre del 2025, ha sido de 3.00 m.",
+        "archivo_local": "sesiones/_descargas/Monitoreo-de-nivel-del-lago-Atitlan.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "dato.png"
+      ]
+    },
+    {
+      "id": "dat-c02",
+      "concepto": "Descenso acumulado del nivel del lago desde mayo 2014, medido a octubre de cada año (informes anuales AMSCLAE)",
+      "unidad": "m",
+      "anio": "2025",
+      "tipo": "serie",
+      "fuente": "AMSCLAE · Departamento de Investigación y Calidad Ambiental (DICA) · informes anuales de nivel 2019, 2020, 2024 y 2025",
+      "url": "https://www.amsclae.gob.gt/wp-content/uploads/2026/01/Monitoreo-de-nivel-del-lago-Atitlan.pdf",
+      "periodo": "oct-2019..oct-2025 (faltan 2021-2023)",
+      "n_puntos": 4,
+      "valor": 3.0,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AMSCLAE/DICA (informes de años distintos, misma escala de Panajachel); Living in Guatemala",
+      "evidencia": {
+        "url": "https://www.amsclae.gob.gt/descargas/informesdica2020/oscilacionlago2020.pdf",
+        "cita": "El cambio del nivel lacustre desde mayo del 2014 a octubre del 2020, ha sido de 3.42 m.",
+        "archivo_local": "sesiones/_descargas/oscilacionlago2020.txt"
+      },
+      "serie": [
+        {
+          "p": "2019",
+          "v": 1.72
+        },
+        {
+          "p": "2020",
+          "v": 3.42
+        },
+        {
+          "p": "2024",
+          "v": 2.9
+        },
+        {
+          "p": "2025",
+          "v": 3.0
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c03",
+      "concepto": "Nivel del lago en octubre 2020 y descenso desde mayo 2014 (punto más bajo de los informes localizados)",
+      "unidad": "m",
+      "anio": "2020",
+      "tipo": "puntual",
+      "fuente": "AMSCLAE · Departamento de Investigación y Calidad Ambiental (DICA) · Monitoreo de nivel del lago Atitlán 2020",
+      "url": "https://www.amsclae.gob.gt/descargas/informesdica2020/oscilacionlago2020.pdf",
+      "periodo": "may-2014..oct-2020",
+      "valor": 3.42,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AMSCLAE/DICA (informes de años distintos, misma escala de Panajachel)",
+      "evidencia": {
+        "url": "https://www.amsclae.gob.gt/descargas/informesdica2020/oscilacionlago2020.pdf",
+        "cita": "El registro inicial del nivel del lago en el 2014 fue de 1556.57 msnm y el último registro en octubre del 2020 fue de 1553.15 msnm.",
+        "archivo_local": "sesiones/_descargas/oscilacionlago2020.txt"
+      },
+      "partes": [
+        {
+          "etiqueta": "Mayo 2014 (registro inicial)",
+          "valor": 1556.57,
+          "unidad": "msnm"
+        },
+        {
+          "etiqueta": "Octubre 2020",
+          "valor": 1553.15,
+          "unidad": "msnm"
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c04",
+      "concepto": "Descenso del lago de abril a octubre 2019 que dejó la escala limnimétrica fuera del agua y obligó a instalar una nueva",
+      "unidad": "m",
+      "anio": "2019",
+      "tipo": "puntual",
+      "fuente": "AMSCLAE · Departamento de Investigación y Calidad Ambiental (DICA) · Monitoreo de nivel del lago Atitlán 2019",
+      "url": "https://www.amsclae.gob.gt/wp-content/uploads/2019/12/nivellago2019.pdf",
+      "periodo": "abr-2019..oct-2019",
+      "valor": 0.5,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AMSCLAE/DICA (informes de años distintos, misma escala de Panajachel)",
+      "evidencia": {
+        "url": "https://www.amsclae.gob.gt/wp-content/uploads/2019/12/nivellago2019.pdf",
+        "cita": "Este fenómeno provocó que la escala quedara fuera del nivel máximo del agua (Fig. 4), obligando a la instalación de una nueva escala limnimétrica (Fig. 5).",
+        "archivo_local": "sesiones/lago-atitlan-nivel/ocr_nivellago2019.txt (OCR de sesiones/_descargas/nivellago2019.pdf)"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c05",
+      "concepto": "Descenso del lago entre el máximo de noviembre 2014 y octubre 2019",
+      "unidad": "m",
+      "anio": "2019",
+      "tipo": "desglose",
+      "fuente": "AMSCLAE · Departamento de Investigación y Calidad Ambiental (DICA) · Monitoreo de nivel del lago Atitlán 2019",
+      "url": "https://www.amsclae.gob.gt/wp-content/uploads/2019/12/nivellago2019.pdf",
+      "periodo": "nov-2014..oct-2019",
+      "valor": 2.5,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AMSCLAE/DICA (informes de años distintos, misma escala de Panajachel)",
+      "evidencia": {
+        "url": "https://www.amsclae.gob.gt/wp-content/uploads/2019/12/nivellago2019.pdf",
+        "cita": "El cambio del nivel lacustre desde mayo del 2014, ha sido de 1.72 m y de 2.5 m desde el valor máximo registrado en noviembre del 2014 (1557.35 msnm).",
+        "archivo_local": "sesiones/lago-atitlan-nivel/ocr_nivellago2019.txt"
+      },
+      "partes": [
+        {
+          "etiqueta": "Máximo nov-2014",
+          "valor": 1557.35,
+          "unidad": "msnm"
+        },
+        {
+          "etiqueta": "Inicial may-2014",
+          "valor": 1556.57,
+          "unidad": "msnm"
+        },
+        {
+          "etiqueta": "Octubre 2019",
+          "valor": 1554.85,
+          "unidad": "msnm"
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    }
+  ],
+  "fuentes": [
+    {
+      "nombre": "AMSCLAE · Monitoreo de nivel del lago Atitlán 2025 (pub. ene-2026)",
+      "url": "https://www.amsclae.gob.gt/wp-content/uploads/2026/01/Monitoreo-de-nivel-del-lago-Atitlan.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "AMSCLAE · Evaluación de la calidad ambiental del lago Atitlán 2024 (DICA)",
+      "url": "https://amsclae.gob.gt/wp-content/uploads/2025/02/InformesDICA2024.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "AMSCLAE · Monitoreo de nivel del lago Atitlán 2020",
+      "url": "https://www.amsclae.gob.gt/descargas/informesdica2020/oscilacionlago2020.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "AMSCLAE · Monitoreo de nivel del lago Atitlán 2019 (PDF escaneado)",
+      "url": "https://www.amsclae.gob.gt/wp-content/uploads/2019/12/nivellago2019.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "AMSCLAE · Monitoreo de nivel del lago Atitlán 2018",
+      "url": "https://www.amsclae.gob.gt/descargas/informesdica2018/oscilacionnivellago2018.pdf",
+      "nivel": "primaria"
+    }
+  ],
+  "no_afirma": [
+    "No atribuye el descenso a una causa única (clima, evaporación o extracción de agua).",
+    "No afirma que sea el nivel más bajo registrado: en octubre de 2020 estuvo 3.42 m abajo y faltan los informes de 2021 a 2023.",
+    "No dice cuál es el nivel en 2026: el último informe oficial llega a octubre de 2025."
+  ],
+  "incertidumbre": [
+    "La segunda fuente reproduce la primaria (AMSCLAE); sin verificación independiente (INSIVUMEH o estudio académico).",
+    "Los 3.00 m parten de mayo de 2014; desde el máximo de noviembre de 2014 el descenso sería mayor. AMSCLAE cambió de referencia entre los informes 2018 y 2019."
+  ],
+  "descartadas": [
+    {
+      "id": "dat-c06",
+      "por": "no_confirmada (contradicción interna del informe 2025 sobre la oscilación ene-oct)"
+    }
+  ],
+  "tipo": "dato"
+}

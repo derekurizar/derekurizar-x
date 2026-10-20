@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hilo · vista previa</title>
+<!-- Vista previa del hilo: la abre el usuario en su navegador. La rellena scripts/ensamblar.py (HILO_JSON). -->
+<style>
+  :root { --papel:#F6F2E8; --tinta:#0C1520; --gris:#5c6470; --linea:rgba(12,21,32,.14); --acento:#4B92DB; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--papel); color: var(--tinta); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 40px 20px 80px; }
+  header h1 { font: 700 30px/1.15 Georgia, "Times New Roman", serif; margin: 0 0 8px; }
+  header .meta { color: var(--gris); font-size: 14px; display: flex; flex-wrap: wrap; gap: 10px 18px; }
+  .chip { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; background: var(--tinta); color: var(--papel); }
+  .tesis { margin: 18px 0 0; padding: 14px 18px; border-left: 4px solid var(--acento); background: rgba(75,146,219,.08); font-size: 17px; }
+  .contacto { margin-top: 18px; }
+  .contacto a { display: inline-block; margin-bottom: 8px; font-size: 14px; font-weight: 600; color: var(--acento); }
+  .contacto img { width: 100%; max-width: 760px; display: block; border-radius: 12px; box-shadow: 0 2px 14px rgba(0,0,0,.12); }
+  .tuit { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--linea); }
+  .tuit .cab { display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--gris); }
+  .tuit .cab .n { font-weight: 800; font-size: 15px; color: var(--tinta); }
+  .texto { position: relative; margin-top: 12px; padding: 14px 16px; background: #fff; border: 1px solid var(--linea); border-radius: 10px; white-space: pre-wrap; font-size: 17px; }
+  .texto.vacio { color: var(--gris); font-style: italic; }
+  .fila { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; font-size: 13px; color: var(--gris); }
+  .fila .cnt.alerta { color: #B23A26; font-weight: 700; }
+  button { font: 600 13px/1 system-ui, sans-serif; padding: 7px 12px; border-radius: 8px; border: 1px solid var(--linea); background: #fff; color: var(--tinta); cursor: pointer; }
+  button:hover { background: var(--tinta); color: var(--papel); }
+  .img { margin-top: 14px; }
+  .img img { width: 100%; max-width: 560px; display: block; border-radius: 12px; box-shadow: 0 2px 14px rgba(0,0,0,.12); }
+  .alt { margin-top: 10px; font-size: 14px; color: var(--gris); }
+  .alt b { color: var(--tinta); }
+  .fuente { margin-top: 6px; font-size: 13px; color: var(--gris); }
+  section.extra { margin-top: 44px; padding-top: 24px; border-top: 2px solid var(--tinta); }
+  section.extra h2 { font: 700 18px/1.2 system-ui, sans-serif; margin: 22px 0 8px; }
+  section.extra ul { margin: 0; padding-left: 20px; }
+  .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--tinta); color: var(--papel); padding: 10px 16px; border-radius: 8px; font-size: 14px; opacity: 0; transition: opacity .2s; pointer-events: none; }
+  .toast.on { opacity: 1; }
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<div class="toast" id="toast">Copiado</div>
+<script id="hilo-json" type="application/json">{"slug": "dengue-2026-caida-serotipos", "fecha": "2026-10-06", "tema": "Dengue 2026: 43% menos casos que en 2025, pero ¿por qué y por cuánto tiempo?", "tesis": "A la semana 35, Guatemala acumula 12,699 casos sospechosos de dengue en la red del MSPAS, 40% menos que en 2025 pero más que en 2020, 2021 y 2022; la caída es regional y coincide con dos años de DENV-3 dominante, mientras el DENV-1 sube de 3% a 19% de las muestras: un valle del ciclo, no el fin del riesgo.", "paleta": "terracota", "hook_tipo": "mito_vs_dato", "pregunta": "¿Por qué cayeron los casos de dengue en Guatemala en 2026, dónde siguen concentrándose y qué tan duradera es esa caída?", "n_tuits": 9, "estado": "listo", "tuits": [{"n": 1, "beat": "gancho", "texto": "Podría pensarse que el dengue ya quedó atrás en Guatemala.\n\nEste año va 40% abajo del pasado a la misma semana epidemiológica. Los datos dicen otra cosa: se parece más al valle de un ciclo que a un final, y el serotipo que puede encender el siguiente ya sube. 🧵", "caracteres": 262, "alt_text": "Gráfico de barras verticales: casos sospechosos de dengue notificados por el MSPAS acumulados hasta la semana epidemiológica 35 de cada año. 2018: 3,826; 2019: 28,810; 2020: 5,213; 2021: 1,885; 2022: 5,364; 2023: 19,754; 2024: 91,767; 2025: 21,252; 2026: 12,699 (destacado). 2026 baja frente a 2025 y 2024, pero supera a 2020, 2021 y 2022. Fuente: MSPAS/DEGR, sala situacional de arbovirosis, semana 35 de 2026.", "imagen": "tuit_1.png", "plantilla": "barras-v", "fuente": "MSPAS/DEGR · sala situacional arbovirosis SE-35 2026", "cifra_ids": ["ser-c01"]}, {"n": 2, "beat": "contexto", "texto": "Ese año el MSPAS y el IGSS sumaron 188,585 casos. Ese pico es la vara contra la que cualquier año siguiente parece pequeño.", "caracteres": 123, "alt_text": "Gráfico de barras verticales: fallecidos por dengue confirmados por año en Guatemala. 2018: 23; 2019: 77; 2020: 10; 2021: 6; 2022: 17; 2023: 118; 2024: 232 (destacado), el máximo de la serie. El MSPAS no ha publicado las muertes de 2026. Fuente: MSPAS/DEGR, boletines de arbovirosis.", "imagen": "tuit_2.png", "plantilla": "barras-v", "fuente": "MSPAS/DEGR · boletines de arbovirosis 2018–2024", "cifra_ids": ["ser-c08"]}, {"n": 3, "beat": "contexto", "texto": "Según OPS, un serotipo deja inmunidad duradera solo contra sí mismo. La baja de este año coincide con dos años de DENV-3 masivo; ni OPS ni MSPAS la atribuyen a eso.", "caracteres": 164, "alt_text": "Gráfico de línea: porcentaje de muestras de dengue serotipificadas que resultaron DENV-3 en Guatemala, 2014 a 2026. Entre 2015 y 2022 osciló entre 0.6% y 14.1%; subió a 54.5% en 2023, 85.8% en 2024, 86% en 2025 y 74% en 2026 (hasta la semana 35). Fuente: MSPAS/DEGR, boletines de arbovirosis.", "imagen": "tuit_3.png", "plantilla": "linea", "fuente": "MSPAS/DEGR · boletines de arbovirosis 2014–2026", "cifra_ids": ["cau-c01"]}, {"n": 4, "beat": "contexto", "texto": "Guatemala baja al mismo ritmo que su subregión y casi toda América baja con ella: la caída no es solo un fenómeno local.", "caracteres": 120, "alt_text": "Gráfico de barras divergentes: variación de casos sospechosos de dengue hasta la semana 35 de 2026 frente al mismo periodo de 2025. Andina: -3%; Guatemala: -40% (destacado); Centroamérica y México: -40%; las Américas: -57%; Caribe: -59%; Cono Sur: -62%. En Honduras, la Secretaría de Salud reporta -44% a la semana 12. Fuentes: MSPAS/DEGR, OPS/OMS y Sesal Honduras.", "imagen": "tuit_4.png", "plantilla": "divergente", "fuente": "MSPAS/DEGR · OPS SE-35 2026 · Sesal", "cifra_ids": ["cau-c05", "cau-c06", "cau-c07", "cau-c11"]}, {"n": 5, "beat": "contexto", "texto": "Pero que haya menos brotes no significa calma: la zona de alerta tiene hoy dos áreas más que al cierre del año pasado.", "caracteres": 118, "alt_text": "Gráfico de barras apiladas: áreas de salud (DDRISS) según su zona en el corredor endémico de dengue. Cierre de 2025 (semana 53): 5 en brote, 8 en alerta, 11 en seguridad, 0 en éxito y 5 sin notificación. 2026 (semana 34): 2 en brote, 10 en alerta, 13 en seguridad, 2 en éxito y 2 sin notificación. Total: 29 áreas. Fuente: MSPAS/DEGR, sala situacional de arbovirosis.", "imagen": "tuit_5.png", "plantilla": "apilada", "fuente": "MSPAS/DEGR · sala situacional arbovirosis SE-35 2026", "cifra_ids": ["ter-c07"]}, {"n": 6, "beat": "giro", "texto": "Según OPS, la llegada de un serotipo distinto puede causar brotes aun después de una epidemia. Ni OPS ni MSPAS han publicado una proyección para el próximo año.", "caracteres": 160, "alt_text": "Gráfico de líneas: porcentaje de muestras de dengue serotipificadas por serotipo en Guatemala, 2014 a 2026. DENV-1 (destacado) cayó a 4.4% en 2024 y 3% en 2025, y subió a 19% en 2026 (hasta la semana 35). DENV-3 pasó de 2.8% en 2022 a 86% en 2025 y bajó a 74% en 2026. Fuente: MSPAS/DEGR, boletines de arbovirosis.", "imagen": "tuit_6.png", "plantilla": "linea", "fuente": "MSPAS/DEGR · boletines de arbovirosis 2014–2026", "cifra_ids": ["cau-c02", "cau-c01"]}, {"n": 7, "beat": "impacto", "texto": "Así se reparte hoy. En Sacatepéquez equivale a cerca de 1 de cada 154 habitantes con dengue notificado en ocho meses.", "caracteres": 117, "alt_text": "Gráfico de barras horizontales: incidencia acumulada de dengue por 100,000 habitantes en 2026 hasta la semana 35, datos MSPAS más IGSS, por área de salud. Sacatepéquez: 649.5 (destacado); Petén Norte: 471.1; Petén Sur Occidental: 415.5; Retalhuleu: 369.8; Escuintla: 309.8; Jutiapa: 218.7; Quetzaltenango: 212.4; Chiquimula: 175.7. Son las 8 de 29 áreas con mayor incidencia. Fuente: MSPAS/DEGR, sala situacional de arbovirosis.", "imagen": "tuit_7.png", "plantilla": "barras-h", "fuente": "MSPAS/DEGR · sala situacional arbovirosis SE-35 2026", "cifra_ids": ["ter-c01"]}, {"n": 8, "beat": "impacto", "texto": "El grupo adulto más grande abarca muchos más años de edad; por cada año de edad, ningún grupo suma más casos que los escolares.", "caracteres": 127, "alt_text": "Gráfico de barras verticales: casos de dengue por grupo de edad en la red del MSPAS, 2026 hasta la semana 35. Menores de 1 año: 367; 1 a 4: 1,128; 5 a 9: 1,930 (destacado); 10 a 14: 1,792; 15 a 19: 1,444; 20 a 24: 1,191; 25 a 39: 2,830; 40 a 49: 895; 50 a 59: 548; 60 a 64: 172; 65 a 69: 150; 70 y más: 252. Una banda sombrea los cuatro grupos menores de 15 años, que suman cerca de 4 de cada 10 casos. Fuente: MSPAS/DEGR, sala situacional de arbovirosis.", "imagen": "tuit_8.png", "plantilla": "barras-v", "fuente": "MSPAS/DEGR · sala situacional arbovirosis SE-35 2026", "cifra_ids": ["ter-c12"]}, {"n": 9, "beat": "cierre", "texto": "En suma: el dengue bajó, pero no desapareció, y otro serotipo gana terreno. Sin muertes de 2026 ni curva semanal publicadas, no se puede decir que el riesgo pasó.\n\nFuentes: MSPAS/DEGR (salas situacionales y boletines de arbovirosis), OPS/OMS y Sesal Honduras.", "caracteres": 259, "alt_text": "Tuit de cierre sin imagen: resume que el dengue bajó en 2026 pero no desapareció, que el DENV-1 gana terreno y lista las fuentes: MSPAS/DEGR, OPS/OMS y Secretaría de Salud de Honduras.", "imagen": null, "plantilla": null, "fuente": null, "cifra_ids": []}], "no_afirma": ["Que la caída se deba a la inmunidad que dejó la epidemia de DENV-3: ni OPS ni MSPAS lo afirman; es una coincidencia temporal.", "Que 2027 vaya a traer un repunte: no hay proyección oficial; el DENV-1 aún no desplaza al DENV-3.", "Cuántas muertes lleva 2026: el MSPAS no las ha publicado al corte de la semana 35.", "Que las acciones locales no hayan tenido efecto: la comparación regional no lo mide.", "Que la incidencia por área de salud haya subido o bajado frente a 2025 a la misma semana: no hay corte comparable publicado."], "incertidumbre": ["Todas las cifras usadas tienen segunda fuente NO independiente (reproduce la primaria del MSPAS/DEGR, OPS o Sesal); la ancla ser-c01 incluida: la segunda fuente reproduce la primaria, sin verificación independiente.", "La tesis provisional hablaba de ~43% (Infobae, semana 30); al último corte publicado (semana 35) el MSPAS reporta 40% menos que 2025. No hay cortes posteriores (SE-36 a SE-38 dan 404).", "T1 usa solo la red del MSPAS (sin IGSS); la incidencia por área (T7) integra MSPAS + IGSS; las edades (T8) son solo MSPAS.", "La comparación de zonas del corredor (T5) mezcla cierre de 2025 (semana 53) con la semana 34 de 2026.", "Honduras (-44%) es a la semana 12 y de la Sesal vía prensa; el resto, semana 35. «1 de cada 154» en Sacatepéquez es derivado de la incidencia (100,000/649.5); el boletín no publica la población por área.", "La afirmación de OPS sobre inmunidad homotípica viene de la nota de prensa de la alerta DENV-3 (10-feb-2025), no del PDF de la alerta."], "fuentes": ["MSPAS/DEGR · sala situacional arbovirosis SE-35 2026", "MSPAS/DEGR · boletines de arbovirosis 2018–2024", "MSPAS/DEGR · boletines de arbovirosis 2014–2026", "MSPAS/DEGR · OPS SE-35 2026 · Sesal"], "fuentes_cifras": ["MSPAS — DEGR, Situación epidemiológica de las arbovirosis 2026, hasta SE-35", "MSPAS/DEGR — Situación epidemiológica de arbovirosis, SE-35-2026", "MSPAS/DEGR — boletines de arbovirosis SE-53-2025 y SE-35-2026 (LNS)", "MSPAS/DEGR — boletines de arbovirosis SE-53-2025 y SE-35-2026 (datos del Laboratorio Nacional de Salud)", "MSPAS/DEGR, Situación epidemiológica de las arbovirosis en Guatemala 2026, hasta SE-35", "MSPAS/DEGR, boletines de arbovirosis 2023 (SE-52) y 2024 (SE-52)", "OPS/OMS — Informe de situación del dengue en las Américas, SE-35 2026 (PLISA)", "Secretaría de Salud de Honduras (Sesal), vía La Prensa (Honduras)"], "gate_mecanico": "ok", "contacto": "contacto.png"}</script>
+<script>
+/* Peso según X: copia literal de scripts/contar_x.js (pesoX). No editar aquí; regenerar desde el script. */
+function pesoX(texto) {
+  // Reglas: NFC; cada URL pesa 23; puntos de código en 0–4351, 8192–8205,
+  // 8208–8223 y 8242–8247 pesan 1; el resto 2; los emoji compuestos
+  // (FE0F, ZWJ+siguiente, tono 1F3FB–1F3FF, keycap 20E3, par regional) son uno y pesan 2.
+  var t = String(texto == null ? "" : texto).normalize("NFC");
+  var reUrl = /https?:\/\/\S+|www\.\S+|(?<![\p{L}\p{N}\p{M}_])[a-z0-9-]+(\.[a-z0-9-]+)*\.(com|gt|org|net|io|edu|gov|mx|sv|hn|es|info|co)(\/\S*)?/giu;
+  var rangos1 = [[0, 4351], [8192, 8205], [8208, 8223], [8242, 8247]];
+  var pesoCp = function (cp) {
+    for (var k = 0; k < rangos1.length; k++) if (cp >= rangos1[k][0] && cp <= rangos1[k][1]) return 1;
+    return 2;
+  };
+  var esTono = function (cp) { return cp >= 0x1f3fb && cp <= 0x1f3ff; };
+  var esRegional = function (cp) { return cp >= 0x1f1e6 && cp <= 0x1f1ff; };
+  var pesoPlano = function (s) {
+    var cps = Array.from(s, function (c) { return c.codePointAt(0); });
+    var i = 0, n = cps.length, total = 0;
+    while (i < n) {
+      var j = i + 1;
+      if (esRegional(cps[i]) && j < n && esRegional(cps[j])) j += 1; // bandera
+      while (j < n) {
+        if (cps[j] === 0xfe0f || cps[j] === 0x20e3 || esTono(cps[j])) j += 1;
+        else if (cps[j] === 0x200d && j + 1 < n) j += 2; // ZWJ + siguiente
+        else break;
+      }
+      total += j - i > 1 ? 2 : pesoCp(cps[i]);
+      i = j;
+    }
+    return total;
+  };
+  var total = 0, pos = 0, m;
+  while ((m = reUrl.exec(t)) !== null) {
+    total += pesoPlano(t.slice(pos, m.index)) + 23;
+    pos = m.index + m[0].length;
+    if (m[0].length === 0) reUrl.lastIndex++;
+  }
+  return total + pesoPlano(t.slice(pos));
+}
+</script>
+<script>
+(() => {
+  const H = JSON.parse(document.getElementById("hilo-json").textContent);
+  const app = document.getElementById("app");
+  const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const toast = (m) => { const t = document.getElementById("toast"); t.textContent = m; t.classList.add("on"); setTimeout(() => t.classList.remove("on"), 1400); };
+  const copiar = async (txt) => {
+    try { await navigator.clipboard.writeText(txt); toast("Copiado"); return; } catch (e) { /* fallback */ }
+    const ta = document.createElement("textarea"); ta.value = txt; document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); toast("Copiado"); } catch (e) { toast("No se pudo copiar"); }
+    ta.remove();
+  };
+  if (!H) { app.innerHTML = "<p>Sin datos: este archivo lo genera scripts/ensamblar.py.</p>"; return; }
+
+  let html = `<header>
+    <h1>${esc(H.tema)}</h1>
+    <div class="meta"><span class="chip">${esc(H.paleta)}</span><span>${esc(H.fecha)}</span><span>${H.n_tuits} tuits · ${H.tuits.filter((t) => t.imagen).length} imágenes</span><span>gate mecánico: ${esc(H.gate_mecanico)}</span></div>
+    ${H.tesis ? `<p class="tesis"><b>Tesis:</b> ${esc(H.tesis)}</p>` : ""}
+  </header>
+  <div class="contacto" id="contacto" hidden>
+    <a href="contacto.png" target="_blank" rel="noopener">Ver hoja de contacto</a>
+    <img src="contacto.png" alt="Hoja de contacto: todas las tarjetas del hilo" onload="this.parentNode.hidden=false" onerror="this.parentNode.remove()">
+  </div>`;
+  for (const t of H.tuits) {
+    const vacio = !t.texto.trim();
+    const peso = pesoX(t.texto);
+    html += `<article class="tuit" id="t${t.n}">
+      <div class="cab"><span class="n">Tuit ${t.n}/${H.n_tuits}</span><span class="chip" style="background:#e9e3d6;color:#0C1520">${esc(t.beat || "")}</span>${t.plantilla ? `<span>tarjeta: ${esc(t.plantilla)}</span>` : "<span>sin imagen</span>"}</div>
+      <div class="texto${vacio ? " vacio" : ""}">${vacio ? "(sin texto: la imagen lo dice)" : esc(t.texto)}</div>
+      <div class="fila"><span class="cnt${peso > 280 ? " alerta" : ""}">${peso}/280 (peso X${peso !== t.caracteres ? `, ${t.caracteres} caracteres` : ""})</span>${vacio ? "" : `<button data-copy="${esc(t.texto)}">Copiar texto</button>`}</div>
+      ${t.imagen ? `<div class="img"><img src="${esc(t.imagen)}" alt="${esc(t.alt_text)}"></div>
+      <div class="alt"><b>Alt:</b> ${esc(t.alt_text)} <button data-copy="${esc(t.alt_text)}">Copiar alt</button></div>
+      <div class="fuente">Fuente en el pie: ${esc(t.fuente || "")} · cifras: ${esc((t.cifra_ids || []).join(", "))}</div>` : ""}
+    </article>`;
+  }
+  html += `<section class="extra">
+    <h2>Lo que este hilo NO afirma</h2><ul>${(H.no_afirma || []).map((x) => `<li>${esc(x)}</li>`).join("") || "<li>(nada declarado)</li>"}</ul>
+    <h2>Incertidumbre declarada</h2><ul>${(H.incertidumbre || []).map((x) => `<li>${esc(x)}</li>`).join("") || "<li>(nada declarado)</li>"}</ul>
+    <h2>Fuentes</h2><ul>${(H.fuentes || []).map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
+    <p style="color:var(--gris);font-size:13px">Detalle de cifras y veredictos en <code>datos.json</code>; texto listo para pegar en <code>post.md</code>.</p>
+  </section>`;
+  app.innerHTML = html;
+  app.addEventListener("click", (e) => { const b = e.target.closest("button[data-copy]"); if (b) copiar(b.getAttribute("data-copy")); });
+})();
+</script>
+</body>
+</html>

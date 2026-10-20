@@ -1,0 +1,197 @@
+{
+  "slug": "remesas-deportaciones-2026",
+  "fecha": "2026-10-11",
+  "tema": "Remesas y deportaciones en 2026: más guatemaltecos retornados desde EE.UU. y México y, aun así, remesas en récord",
+  "tesis": "De enero a septiembre de 2026 volvieron 53,373 guatemaltecos retornados, 45% más que en 2025 pero menos que en 2022-2024, mientras las remesas marcaron récord mensual en julio (US$2,468.6 millones) y su crecimiento se frenó a 5.5%, el menor desde 2020.",
+  "paleta": "cielo",
+  "hook_tipo": "giro_inversion",
+  "pregunta": "Si en 2026 Guatemala recibe muchos más deportados que en 2025, ¿por qué las remesas siguen en récord y cuánto pesan en los hogares?",
+  "n_tuits": 11,
+  "estado": "listo",
+  "tuits": [
+    {
+      "n": 1,
+      "beat": "gancho",
+      "texto": "Este año Guatemala recibe muchos más deportados que el año pasado.\nPero las remesas no han caído: siguen por encima de las del año pasado.\n\nDos curvas que parecen chocar. Esto dicen los datos del IGM y del Banguat:",
+      "caracteres": 214,
+      "alt_text": "Gráfico antes y después. Personas guatemaltecas retornadas desde Estados Unidos y México de enero a septiembre: 36,800 en 2025 y 53,373 en 2026, un aumento de 45%. Fuente: Instituto Guatemalteco de Migración (IGM).",
+      "imagen": "tuit_1.png",
+      "plantilla": "antes-despues",
+      "fuente": "IGM · retornados enero-septiembre 2025 y 2026",
+      "cifra_ids": [
+        "ret-c01"
+      ]
+    },
+    {
+      "n": 2,
+      "beat": "contexto",
+      "texto": "El primer semestre fue estable; el salto llegó a mitad de año y desde entonces se ha mantenido arriba.",
+      "caracteres": 102,
+      "alt_text": "Gráfico de línea con los retornados guatemaltecos por mes desde Estados Unidos y México, de enero de 2024 a septiembre de 2026. La serie baja de 9,201 en enero de 2024 a un mínimo de 2,839 en abril de 2025 y repunta a 7,463 en julio de 2026, el mes más alto desde febrero de 2024; septiembre de 2026 cierra en 7,179. Fuente: IGM.",
+      "imagen": "tuit_2.png",
+      "plantilla": "linea",
+      "fuente": "IGM · retornados por mes, 2024-2026",
+      "cifra_ids": [
+        "ret-c03"
+      ]
+    },
+    {
+      "n": 3,
+      "beat": "contexto",
+      "texto": "El aumento tiene un solo origen.",
+      "caracteres": 32,
+      "alt_text": "Gráfico de pesas con los retornados guatemaltecos de enero a septiembre por país. Desde Estados Unidos: 31,835 en 2025 y 48,905 en 2026. Desde México: 4,965 en 2025 y 4,468 en 2026. Fuente: IGM.",
+      "imagen": "tuit_3.png",
+      "plantilla": "pesas",
+      "fuente": "IGM · retornados por país, enero-septiembre",
+      "cifra_ids": [
+        "ret-c07"
+      ]
+    },
+    {
+      "n": 4,
+      "beat": "giro",
+      "texto": "El salto se mide contra un año inusualmente bajo. Comparado con hace dos años, este año hay menos retornados, no más.",
+      "caracteres": 117,
+      "alt_text": "Gráfico de barras verticales con los retornados guatemaltecos de enero a septiembre de cada año: 33,054 en 2020, 39,205 en 2021, 74,980 en 2022, 58,735 en 2023, 61,892 en 2024, 36,800 en 2025 y 53,373 en 2026. 2026 queda por debajo de 2022, 2023 y 2024. Fuente: IGM.",
+      "imagen": "tuit_4.png",
+      "plantilla": "barras-v",
+      "fuente": "IGM · retornados enero-septiembre, 2020-2026",
+      "cifra_ids": [
+        "ret-c04"
+      ]
+    },
+    {
+      "n": 5,
+      "beat": "contexto",
+      "texto": "El retorno se concentra en el occidente del país.",
+      "caracteres": 49,
+      "alt_text": "Mapa de Guatemala por departamento con los retornados de enero a septiembre de 2026 según departamento de residencia. Huehuetenango encabeza con 10,292 personas, seguido de San Marcos (7,596) y Quiché (5,666); el menor es Sacatepéquez con 229. Fuente: IGM.",
+      "imagen": "tuit_5.png",
+      "plantilla": "mapa",
+      "fuente": "IGM · retornados por departamento, enero-septiembre 2026",
+      "cifra_ids": [
+        "ret-c10"
+      ]
+    },
+    {
+      "n": 6,
+      "beat": "contexto",
+      "texto": "Mientras aumentaban los retornos, el dinero que llega cada mes siguió alto.",
+      "caracteres": 75,
+      "alt_text": "Gráfico de línea con el ingreso mensual de remesas familiares a Guatemala, en millones de dólares, de enero de 2024 a septiembre de 2026. Sube de 1,468.0 en enero de 2024 a 2,468.6 en julio de 2026, el mes más alto de la serie 2002-2026 del Banguat; septiembre de 2026 suma 2,240.8. Fuente: Banco de Guatemala.",
+      "imagen": "tuit_6.png",
+      "plantilla": "linea",
+      "fuente": "Banguat · ingreso de divisas por remesas familiares",
+      "cifra_ids": [
+        "rem-c01",
+        "rem-c05"
+      ]
+    },
+    {
+      "n": 7,
+      "beat": "contexto",
+      "texto": "El monto sigue subiendo; lo que se frenó es el ritmo. Banguat proyecta cerrar el año con más que lo recibido en todo 2025.",
+      "caracteres": 122,
+      "alt_text": "Gráfico de barras verticales con el crecimiento de las remesas de enero a septiembre frente al mismo periodo del año anterior, 2015 a 2026: 10.7%, 14.8%, 15.6%, 11.9%, 13.5%, 4.0% (2020), 36.6% (2021), 21.0%, 10.9%, 7.2%, 19.8% (2025) y 5.5% (2026). Es el menor crecimiento desde 2020. Fuente: Banco de Guatemala.",
+      "imagen": "tuit_7.png",
+      "plantilla": "barras-v",
+      "fuente": "Banguat · remesas familiares, variación acumulada",
+      "cifra_ids": [
+        "rem-c06"
+      ]
+    },
+    {
+      "n": 8,
+      "beat": "impacto",
+      "texto": "El ritmo importa porque no es una cifra macro lejana: es ingreso de más de 1.7 millones de hogares.",
+      "caracteres": 99,
+      "alt_text": "Gráfico de cuadrícula de 100 cuadros con 38 resaltados: 37.8% de la población de Guatemala vive en hogares que reciben remesas (6,555,944 personas en 2022). Cálculo propio con la Encuesta de Migración y Remesas 2022 de OIM y la población estimada del INE. Fuente: OIM e INE.",
+      "imagen": "tuit_8.png",
+      "plantilla": "waffle",
+      "fuente": "OIM · Encuesta de Migración y Remesas 2022; INE",
+      "cifra_ids": [
+        "hog-c03",
+        "hog-c02"
+      ]
+    },
+    {
+      "n": 9,
+      "beat": "impacto",
+      "texto": "Es un promedio que supone que el número de hogares receptores no cambió desde la última encuesta.",
+      "caracteres": 97,
+      "alt_text": "Tarjeta de cifra: 1,272 dólares al mes por hogar receptor en enero-septiembre de 2026, frente a 860 en 2022. Cálculo propio: remesas del Banguat entre 1,748,040 hogares receptores de la encuesta OIM 2022. Fuente: Banguat y OIM.",
+      "imagen": "tuit_9.png",
+      "plantilla": "cifra",
+      "fuente": "Banguat · remesas; OIM · Encuesta de Migración y Remesas 2022",
+      "cifra_ids": [
+        "hog-c09",
+        "hog-c01"
+      ]
+    },
+    {
+      "n": 10,
+      "beat": "impacto",
+      "texto": "Para esas familias, un mes flojo de remesas no es una estadística: es el gasto de la casa.",
+      "caracteres": 90,
+      "alt_text": "Gráfico de barras horizontales con los hogares receptores de remesas según la parte de sus gastos que cubren las remesas, 2022: cubren todo el gasto 24.4%; la mitad 26.7%; 40% del gasto 8.1%; una cuarta parte 13.4%; 10% del gasto 15.0%; no dependen 5.3%. Fuente: OIM, Encuesta de Migración y Remesas 2022.",
+      "imagen": "tuit_10.png",
+      "plantilla": "barras-h",
+      "fuente": "OIM · Encuesta de Migración y Remesas 2022",
+      "cifra_ids": [
+        "hog-c05"
+      ]
+    },
+    {
+      "n": 11,
+      "beat": "cierre",
+      "texto": "En resumen: los retornos suben frente a un 2025 bajo, sin llegar a los de 2024, y las remesas siguen altas pero crecen menos. Los datos muestran que coinciden, no que una cosa cause la otra.\n\nFuentes: IGM, Banguat, OIM, INE.",
+      "caracteres": 224,
+      "alt_text": "Tuit de cierre sin imagen: resumen del hilo y fuentes (IGM, Banguat, OIM, INE).",
+      "imagen": null,
+      "plantilla": null,
+      "fuente": null,
+      "cifra_ids": []
+    }
+  ],
+  "no_afirma": [
+    "No afirma que las deportaciones causen (ni que no causen) cambios en las remesas: solo coinciden en el tiempo.",
+    "No afirma que 2026 sea un año récord de deportaciones: en enero-septiembre está por debajo de 2022, 2023 y 2024.",
+    "No afirma que el número de hogares receptores siga siendo el de 2022: el promedio por hogar lo supone constante.",
+    "No afirma ningún efecto del impuesto de 1% de EE.UU. a las remesas en efectivo: no hay cifra oficial confirmada.",
+    "No atribuye el repunte de retornos a una política concreta de EE.UU.: las bases del IGM no registran causas."
+  ],
+  "incertidumbre": [
+    "Todas las cifras usadas tienen segunda fuente que reproduce la primaria (IGM, Banguat, OIM, INE); sin verificación independiente. La ancla (ret-c01, ene-sep 2026) no se halló en prensa; solo ene-ago (46,194) tiene confirmación de EFE/Emisoras Unidas.",
+    "La escala de hogares es de la encuesta OIM 2022; el promedio US$ por hogar 2026 supone hogares receptores constantes.",
+    "La proporción de población en hogares receptores (37.8%) es cálculo propio con población estimada INE 2022.",
+    "Octubre 2026 en adelante no publicado: no hay total anual 2026 de remesas ni de retornados; la proyección Banguat (rem-c08) solo se menciona en texto."
+  ],
+  "fuentes": [
+    "IGM · retornados enero-septiembre 2025 y 2026",
+    "IGM · retornados por mes, 2024-2026",
+    "IGM · retornados por país, enero-septiembre",
+    "IGM · retornados enero-septiembre, 2020-2026",
+    "IGM · retornados por departamento, enero-septiembre 2026",
+    "Banguat · ingreso de divisas por remesas familiares",
+    "Banguat · remesas familiares, variación acumulada",
+    "OIM · Encuesta de Migración y Remesas 2022; INE",
+    "Banguat · remesas; OIM · Encuesta de Migración y Remesas 2022",
+    "OIM · Encuesta de Migración y Remesas 2022"
+  ],
+  "fuentes_cifras": [
+    "Banco de Guatemala (Banguat), Cuadro 1 Ingreso de Divisas por Remesas Familiares",
+    "Banco de Guatemala (Banguat), Cuadro 2 Variaciones porcentuales acumuladas",
+    "Cálculo propio con Banguat, Cuadro 1 Ingreso de divisas por remesas familiares (remfam2002_2026) y OIM 2022 (hogares receptores)",
+    "Cálculo propio con OIM 2022 (6,555,944 beneficiarios) y población estimada 2022 del INE citada por la misma OIM (17,357,886)",
+    "Instituto Guatemalteco de Migración (IGM), base de datos de personas guatemaltecas retornadas (bases 2024, 2025 y ene-sep 2026)",
+    "Instituto Guatemalteco de Migración (IGM), base de datos de personas guatemaltecas retornadas (bases anuales 2020-2026)",
+    "Instituto Guatemalteco de Migración (IGM), base de datos de personas guatemaltecas retornadas (ene-sep 2026 y ene-dic 2025)",
+    "Instituto Guatemalteco de Migración (IGM), base de datos de personas guatemaltecas retornadas (ene-sep 2026, datos por departamento)",
+    "Instituto Guatemalteco de Migración (IGM), base de datos de personas guatemaltecas retornadas (microdatos 2024, 2025 y 2026)",
+    "OIM, Encuesta sobre migración internacional de personas guatemaltecas y remesas 2022 (resumen)",
+    "OIM, Encuesta sobre migración internacional de personas guatemaltecas y remesas 2022 (resumen), Tabla 4"
+  ],
+  "gate_mecanico": "ok",
+  "contacto": "contacto.png"
+}

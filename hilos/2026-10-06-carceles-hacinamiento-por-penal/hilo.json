@@ -1,0 +1,211 @@
+{
+  "slug": "carceles-hacinamiento-por-penal",
+  "fecha": "2026-10-06",
+  "tema": "Pavón: 4,464 presos en un penal para 960. Mapa del hacinamiento carcelario",
+  "tesis": "Las cárceles de Guatemala alojan 3.42 personas por espacio (23,382 para 6,842 en junio de 2025) y el exceso se concentra: Pavón tiene 4,464 presos para 960 lugares y seis de los 11 penales con capacidad publicada superan el 300%.",
+  "paleta": "obsidiana",
+  "hook_tipo": "escala_humana",
+  "pregunta": "¿Cuántas personas caben en las cárceles de Guatemala frente a cuántas hay, y qué penales concentran el hacinamiento?",
+  "n_tuits": 11,
+  "estado": "listo",
+  "tuits": [
+    {
+      "n": 1,
+      "beat": "gancho",
+      "texto": "En Pavón hay más de cuatro presos por cada lugar disponible.\n\nY no es el penal más lleno. Así está el hacinamiento en las cárceles de Guatemala, centro por centro 🧵",
+      "caracteres": 165,
+      "alt_text": "Tarjeta de cifra: la Granja Modelo de Rehabilitación Pavón, en Fraijanes, tenía 4,464 personas privadas de libertad al 8 de agosto de 2025, con capacidad para 960. Son 4.65 personas por cada lugar. Dos barras comparan población y capacidad. Fuente: Prensa Libre con datos de la Dirección General del Sistema Penitenciario (DGSP).",
+      "imagen": "tuit_1.png",
+      "plantilla": "cifra",
+      "fuente": "Prensa Libre · datos DGSP al 8-ago-2025",
+      "cifra_ids": [
+        "pen-c02"
+      ]
+    },
+    {
+      "n": 2,
+      "beat": "contexto",
+      "texto": "En todo el sistema, la ocupación es de 342%. El censo penitenciario de febrero de 2026 contó 23,837 personas presas, pero no publicó cuántas plazas hay.",
+      "caracteres": 152,
+      "alt_text": "Tarjeta de cifra: en junio de 2025 el Sistema Penitenciario de Guatemala tenía 23,382 personas privadas de libertad y 6,842 espacios, es decir 3.42 personas por cada espacio. Dos barras comparan población y capacidad. Nota: World Prison Brief usa otra capacidad oficial, 7,982 plazas (septiembre de 2023). Fuente: CIEN con datos de la DGSP.",
+      "imagen": "tuit_2.png",
+      "plantilla": "cifra",
+      "fuente": "CIEN · datos DGSP, junio 2025",
+      "cifra_ids": [
+        "sis-c01",
+        "sis-c03",
+        "sis-c04",
+        "sis-c11",
+        "sis-c02",
+        "sis-c09"
+      ]
+    },
+    {
+      "n": 3,
+      "beat": "contexto",
+      "texto": "En el ranking mundial de World Prison Brief, Guatemala ocupa el puesto 9 de 209 sistemas penitenciarios. En América, solo Haití la supera.",
+      "caracteres": 138,
+      "alt_text": "Barras horizontales del nivel de ocupación sobre la capacidad oficial en Centroamérica: Guatemala 299.4% (2023), Nicaragua 177.6% (2018), Panamá 168.6% (2026), El Salvador 162.8% (2024), Honduras 150.0% (2023, estimación), Costa Rica 120.4% (2021) y Belice 64.8% (2025). Las fechas difieren por país. Fuente: World Prison Brief (ICPR, Birkbeck).",
+      "imagen": "tuit_3.png",
+      "plantilla": "barras-h",
+      "fuente": "World Prison Brief · ICPR, Birkbeck",
+      "cifra_ids": [
+        "sis-c06",
+        "sis-c11",
+        "sis-c07"
+      ]
+    },
+    {
+      "n": 4,
+      "beat": "contexto",
+      "texto": "Canadá ya era el penal con más sobrepoblación en marzo de 2024, según la DGSP. En el otro extremo, Renovación 1, también en Escuintla, tiene lugares libres.",
+      "caracteres": 156,
+      "alt_text": "Barras horizontales de ocupación por centro penitenciario (población entre capacidad) al 8 de agosto de 2025: Canadá, Escuintla 515.2%; Pavón, Fraijanes 465.0%; Mazatenango 433.3%; Puerto Barrios 396.9%; Cobán 356.7%; Cantel, Quetzaltenango 313.3%; Preventivo zona 18 221.7%; Renovación 1, Escuintla 66.7%. Seis de los 11 centros con capacidad publicada superan el 300%. Cálculo propio con la tabla de la DGSP publicada por Prensa Libre.",
+      "imagen": "tuit_4.png",
+      "plantilla": "barras-h",
+      "fuente": "Prensa Libre · datos DGSP al 8-ago-2025",
+      "cifra_ids": [
+        "pen-c01",
+        "pen-c08",
+        "pen-c09",
+        "pen-c03"
+      ]
+    },
+    {
+      "n": 5,
+      "beat": "contexto",
+      "texto": "Y casi tres de cada cuatro presos del país están en solo diez cárceles.",
+      "caracteres": 71,
+      "alt_text": "Mapa de los 22 departamentos de Guatemala con la población reclusa según dónde está cada centro, agosto de 2025: Guatemala 12,878; Escuintla 3,259; Quetzaltenango 2,077; Izabal 1,905; Santa Rosa 673; Zacapa 577; Suchitepéquez 520; Alta Verapaz 428; Chimaltenango 396; Petén 188; San Marcos 77. Los otros 11 departamentos no tienen centro penitenciario. Mide presos, no hacinamiento. Fuente: Prensa Libre con datos de la DGSP.",
+      "imagen": "tuit_5.png",
+      "plantilla": "mapa",
+      "fuente": "Prensa Libre · datos DGSP al 8-ago-2025",
+      "cifra_ids": [
+        "pen-c07",
+        "pen-c05",
+        "pen-c04"
+      ]
+    },
+    {
+      "n": 6,
+      "beat": "contexto",
+      "texto": "¿Más presos o menos espacio? Conviene separar las dos cosas.",
+      "caracteres": 60,
+      "alt_text": "Gráfico de línea de la tasa de ocupación penitenciaria de Guatemala, 2014 a 2025: 276% en 2014, 299% en 2015, 311% en 2016, 340% en 2017, 359% en 2018, 374% en 2019 (máximo), 372% en 2020, 361% en 2021, 354% en 2022, 339% en 2023, 336% en 2024 y 342% en 2025 (dato a junio). Fuente: CIEN con datos de la DGSP.",
+      "imagen": "tuit_6.png",
+      "plantilla": "linea",
+      "fuente": "CIEN · datos DGSP, junio 2025",
+      "cifra_ids": [
+        "sis-c02"
+      ]
+    },
+    {
+      "n": 7,
+      "beat": "giro",
+      "texto": "Desde el pico de 2019 hay unas 2 mil personas presas menos, y aun así la ocupación nunca bajó de 336%: la capacidad casi no se movió.",
+      "caracteres": 133,
+      "alt_text": "Gráfico de pesas que compara 2014 con 2025 (dato a junio): las personas privadas de libertad pasaron de 18,444 a 23,382; los espacios penitenciarios, de 6,676 a 6,842. Fuente: CIEN con datos de la DGSP.",
+      "imagen": "tuit_7.png",
+      "plantilla": "pesas",
+      "fuente": "CIEN · datos DGSP, junio 2025",
+      "cifra_ids": [
+        "sis-c01",
+        "sis-c12",
+        "sis-c03",
+        "sis-c02"
+      ]
+    },
+    {
+      "n": 8,
+      "beat": "impacto",
+      "texto": "Solo las personas que no caben llenarían más de dos veces todas las cárceles del país.",
+      "caracteres": 86,
+      "alt_text": "Gráfico de dona con las personas privadas de libertad en junio de 2025: 16,540 por encima de la capacidad (71%) y 6,842 dentro de ella (29%). Siete de cada diez presos no tienen un espacio que les corresponda. Fuente: CIEN con datos de la DGSP; cálculo propio.",
+      "imagen": "tuit_8.png",
+      "plantilla": "dona",
+      "fuente": "CIEN · datos DGSP, junio 2025",
+      "cifra_ids": [
+        "sis-c05",
+        "sis-c03",
+        "sis-c01"
+      ]
+    },
+    {
+      "n": 9,
+      "beat": "contexto",
+      "texto": "El presupuesto vigente del Sistema Penitenciario en 2026 es de Q991 millones. La Coalición calcula un costo de Q118.41 diarios por persona presa.",
+      "caracteres": 145,
+      "alt_text": "Tarjeta de cifra: Guatemala destina 0.08% del PIB al sistema penitenciario en 2026, frente a un promedio centroamericano de 0.17%; es el 47% del promedio. Dos barras comparan ambos valores. Fuente: Coalición por la Seguridad Ciudadana.",
+      "imagen": "tuit_9.png",
+      "plantilla": "cifra",
+      "fuente": "Coalición por la Seguridad Ciudadana · 2026",
+      "cifra_ids": [
+        "res-c07",
+        "res-c05",
+        "res-c06"
+      ]
+    },
+    {
+      "n": 10,
+      "beat": "contexto",
+      "texto": "En septiembre, el Gobierno sumó otra cifra: unas 5,000 personas presas podrían optar a libertad anticipada. Es una estimación, no una meta con plazo.",
+      "caracteres": 149,
+      "alt_text": "Barras horizontales de la inversión prevista en 2026 para remozar ocho cárceles con presencia de pandillas, en millones de quetzales: Preventivo zona 18 41; Pavoncito 40; Renovación I 35; Centro de Orientación Femenina 30; Chimaltenango 24; Santa Teresa 23; El Boquerón 18; Fraijanes II 15. Total: Q226 millones. Fuente: Infobae, citación en el Congreso, julio de 2026.",
+      "imagen": "tuit_10.png",
+      "plantilla": "barras-h",
+      "fuente": "Infobae · citación en el Congreso, jul-2026",
+      "cifra_ids": [
+        "res-c08",
+        "res-c02"
+      ]
+    },
+    {
+      "n": 11,
+      "beat": "cierre",
+      "texto": "En 2026, el director del Sistema Penitenciario aún habla de 300% de sobrepoblación. No sabemos cuánto espacio sumará el plan ni qué explica el exceso.\n\nFuentes: Prensa Libre y CIEN (datos DGSP), World Prison Brief, Coalición por la Seguridad Ciudadana, Infobae.",
+      "caracteres": 261,
+      "alt_text": "Tuit de cierre sin imagen: resume la tesis y lista las fuentes del hilo.",
+      "imagen": null,
+      "plantilla": null,
+      "fuente": null,
+      "cifra_ids": []
+    }
+  ],
+  "no_afirma": [
+    "No afirma qué causa el hacinamiento (ni más detenciones ni pandillas): las fuentes no lo atribuyen.",
+    "Las ocupaciones por penal son cálculo propio con la tabla DGSP de agosto de 2025; 11 de 22 centros no publican capacidad.",
+    "El mapa mide presos por departamento, no hacinamiento.",
+    "Las 5,000 personas que podrían optar a libertad anticipada son una estimación oficial, no liberaciones.",
+    "La comparación regional mezcla fechas (2018–2026) y usa la capacidad de WPB (7,982), distinta de la DGSP (6,842)."
+  ],
+  "incertidumbre": [
+    "Todas las cifras tienen una segunda fuente que reproduce la primaria (independencia baja); la ancla (pen-c02, Pavón) se sostiene en la tabla DGSP publicada por Prensa Libre, sin verificación independiente.",
+    "La capacidad oficial difiere entre fuentes: 6,842 (DGSP vía CIEN, jun-2025), 6,800 aprox. (DGSP vía Prensa Libre, ago-2025), 7,982 (WPB, sep-2023) y 7,922 (Fundesa, 2025). El hilo fija 6,842.",
+    "2025 en la serie CIEN es dato a junio; los espacios 2016–2024 se infieren de las tasas (solo se usan 2014 y 2025, rotulados).",
+    "El 300% de 2026 es una declaración redondeada del director de la DGSP; no hay tasa oficial exacta de 2026.",
+    "La tabla por centro suma 22,978 frente a 23,379 del total oficial; Boquerón figura como «más de 673»."
+  ],
+  "fuentes": [
+    "Prensa Libre · datos DGSP al 8-ago-2025",
+    "CIEN · datos DGSP, junio 2025",
+    "World Prison Brief · ICPR, Birkbeck",
+    "Coalición por la Seguridad Ciudadana · 2026",
+    "Infobae · citación en el Congreso, jul-2026"
+  ],
+  "fuentes_cifras": [
+    "CIEN, Boletín julio 2025, con datos de la DGSP",
+    "Coalición por la Seguridad Ciudadana (Fundesa, CIEN, Crime Stoppers), estudio «Retos y Oportunidades del Sistema Penitenciario en Guatemala», presentado el 22-jul-2026; reproducido por Prensa Libre",
+    "Coalición por la Seguridad Ciudadana (Fundesa, CIEN, Crime Stoppers), jul-2026; reproducido por Prensa Libre",
+    "Cálculo propio con datos DGSP publicados por CIEN (jul 2025)",
+    "DGSP vía Emisoras Unidas (18-abr-2024)",
+    "DGSP vía Prensa Libre (12-ago-2025, datos al 8-ago-2025)",
+    "Diario de Centro América (diario oficial), 14-sep-2026, declaraciones del director general del SP Jorge Guillermo López Dellachiessa",
+    "Infobae (22-jul-2026), citación en el Congreso del director general del SP Melvin Rosales; confirmado por Diario de Centro América (26-jul-2026)",
+    "Ministerio de Gobernación, censo penitenciario (reportado por Emisoras Unidas y AGN, feb 2026)",
+    "World Prison Brief (ICPR, Birkbeck)",
+    "World Prison Brief (ICPR, Birkbeck), fichas por país",
+    "World Prison Brief, Highest to Lowest - Occupancy level (based on official capacity)"
+  ],
+  "gate_mecanico": "ok",
+  "contacto": "contacto.png"
+}

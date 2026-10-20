@@ -1,0 +1,1478 @@
+{
+  "slug": "carceles-hacinamiento-por-penal",
+  "fecha": "2026-10-06",
+  "tesis": "Las cárceles de Guatemala alojan 3.42 personas por espacio (23,382 para 6,842 en junio de 2025) y el exceso se concentra: Pavón tiene 4,464 presos para 960 lugares y seis de los 11 penales con capacidad publicada superan el 300%.",
+  "ancla_id": "pen-c02",
+  "paleta": "obsidiana",
+  "hook_tipo": "escala_humana",
+  "cifras": [
+    {
+      "id": "pen-c01",
+      "concepto": "Ocupación por centro penitenciario (población actual / capacidad × 100), 11 centros con capacidad publicada",
+      "unidad": "% de ocupación",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "DGSP vía Prensa Libre (12-ago-2025, datos al 8-ago-2025)",
+      "url": "https://www.prensalibre.com/guatemala/justicia/diez-carceles-albergan-al-72-6-de-la-poblacion-reclusa-en-guatemala/",
+      "periodo": "2025-08-08",
+      "n_puntos": 11,
+      "valor": 515.2,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recalculo desde tabla DGSP (PL 12-ago-2025); cuadra Canada 3091/600=515.2",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/guatemala/justicia/diez-carceles-albergan-al-72-6-de-la-poblacion-reclusa-en-guatemala/",
+        "cita": "Centro de Alta Seguridad Canadá, Escuintla 600 3 mil 91 · Granja Modelo de Rehabilitación Pavón, Fraijanes 960 4 mil 464",
+        "archivo_local": "sesiones/_descargas/prensalibre_diez_carceles_72-6_2025-08-12.html"
+      },
+      "partes": [
+        {
+          "nombre": "Granja Modelo de Rehabilitación Canadá (Escuintla)",
+          "valor": 515.2,
+          "capacidad": 600,
+          "poblacion": 3091,
+          "departamento": "Escuintla"
+        },
+        {
+          "nombre": "Granja Modelo de Rehabilitación Pavón (Fraijanes, Guatemala)",
+          "valor": 465.0,
+          "capacidad": 960,
+          "poblacion": 4464,
+          "departamento": "Guatemala"
+        },
+        {
+          "nombre": "Preventivo Hombres y Mujeres Mazatenango (Suchitepéquez)",
+          "valor": 433.3,
+          "capacidad": 120,
+          "poblacion": 520,
+          "departamento": "Suchitepéquez"
+        },
+        {
+          "nombre": "Centro de Rehabilitación Puerto Barrios (Izabal)",
+          "valor": 396.9,
+          "capacidad": 480,
+          "poblacion": 1905,
+          "departamento": "Izabal"
+        },
+        {
+          "nombre": "Preventivo Hombres y Mujeres Cobán (Alta Verapaz)",
+          "valor": 356.7,
+          "capacidad": 120,
+          "poblacion": 428,
+          "departamento": "Alta Verapaz"
+        },
+        {
+          "nombre": "Granja Modelo de Rehabilitación Cantel (Quetzaltenango)",
+          "valor": 313.3,
+          "capacidad": 625,
+          "poblacion": 1958,
+          "departamento": "Quetzaltenango"
+        },
+        {
+          "nombre": "Preventivo Hombres y Mujeres Los Jocotes (Zacapa)",
+          "valor": 295.9,
+          "capacidad": 195,
+          "poblacion": 577,
+          "departamento": "Zacapa"
+        },
+        {
+          "nombre": "Preventivo El Boquerón, Cuilapa (Santa Rosa)",
+          "valor": 269.2,
+          "capacidad": 250,
+          "poblacion": 673,
+          "departamento": "Santa Rosa"
+        },
+        {
+          "nombre": "Preventivo para Hombres zona 18 (Guatemala)",
+          "valor": 221.7,
+          "capacidad": 1500,
+          "poblacion": 3325,
+          "departamento": "Guatemala"
+        },
+        {
+          "nombre": "Cárcel de Matamoros, zona 1 (Guatemala)",
+          "valor": 109.4,
+          "capacidad": 32,
+          "poblacion": 35,
+          "departamento": "Guatemala"
+        },
+        {
+          "nombre": "Renovación 1 (Escuintla)",
+          "valor": 66.7,
+          "capacidad": 252,
+          "poblacion": 168,
+          "departamento": "Escuintla"
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_4.png"
+      ]
+    },
+    {
+      "id": "pen-c02",
+      "concepto": "Granja Modelo de Rehabilitación Pavón (Fraijanes): capacidad vs población",
+      "unidad": "personas privadas de libertad",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "DGSP vía Prensa Libre (12-ago-2025, datos al 8-ago-2025)",
+      "url": "https://www.prensalibre.com/guatemala/justicia/diez-carceles-albergan-al-72-6-de-la-poblacion-reclusa-en-guatemala/",
+      "periodo": "2025-08-08",
+      "n_puntos": 2,
+      "valor": 4464,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Emisoras Unidas 18-abr-2024 (DGSP): Pavon cap. 960, 4,520 internos a mar-2024",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/guatemala/justicia/diez-carceles-albergan-al-72-6-de-la-poblacion-reclusa-en-guatemala/",
+        "cita": "Granja Modelo de Rehabilitación Pavón, Fraijanes 960 4 mil 464",
+        "archivo_local": "sesiones/_descargas/prensalibre_diez_carceles_72-6_2025-08-12.html"
+      },
+      "partes": [
+        {
+          "nombre": "Capacidad",
+          "valor": 960
+        },
+        {
+          "nombre": "Población actual",
+          "valor": 4464
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_1.png"
+      ]
+    },
+    {
+      "id": "pen-c03",
+      "concepto": "Centro de Alta Seguridad / Granja Canadá (Escuintla): capacidad vs población",
+      "unidad": "personas privadas de libertad",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "DGSP vía Prensa Libre (12-ago-2025, datos al 8-ago-2025)",
+      "url": "https://www.prensalibre.com/guatemala/justicia/diez-carceles-albergan-al-72-6-de-la-poblacion-reclusa-en-guatemala/",
+      "periodo": "2025-08-08",
+      "n_puntos": 2,
+      "valor": 3091,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Emisoras Unidas 18-abr-2024 (DGSP): Canada cap. 600, 3,103 a mar-2024",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/guatemala/justicia/diez-carceles-albergan-al-72-6-de-la-poblacion-reclusa-en-guatemala/",
+        "cita": "Centro de Alta Seguridad Canadá, Escuintla 600 3 mil 91",
+        "archivo_local": "sesiones/_descargas/prensalibre_diez_carceles_72-6_2025-08-12.html"
+      },
+      "partes": [
+        {
+          "nombre": "Capacidad",
+          "valor": 600
+        },
+        {
+          "nombre": "Población actual",
+          "valor": 3091
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_4.png"
+      ]
+    },
+    {
+      "id": "pen-c04",
+      "concepto": "Personas recluidas en las diez cárceles más pobladas vs el resto del sistema",
+      "unidad": "personas privadas de libertad",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "DGSP vía Prensa Libre (12-ago-2025, datos al 8-ago-2025)",
+      "url": "https://www.prensalibre.com/guatemala/justicia/diez-carceles-albergan-al-72-6-de-la-poblacion-reclusa-en-guatemala/",
+      "periodo": "2025-08-08",
+      "n_puntos": 2,
+      "valor": 16976,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recalculo suma de las 10 filas de la tabla (cuadra exacto con Boquerón=673); PL cita 16 mil 976 = 72.61%",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/guatemala/justicia/diez-carceles-albergan-al-72-6-de-la-poblacion-reclusa-en-guatemala/",
+        "cita": "estas diez cárceles albergan a 16 mil 976 reos, lo que representa el 72.61% de toda la población reclusa del país",
+        "archivo_local": "sesiones/_descargas/prensalibre_diez_carceles_72-6_2025-08-12.html"
+      },
+      "partes": [
+        {
+          "nombre": "Diez cárceles más pobladas",
+          "valor": 16976
+        },
+        {
+          "nombre": "Resto del sistema",
+          "valor": 6403
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_5.png"
+      ]
+    },
+    {
+      "id": "pen-c05",
+      "concepto": "Porcentaje de la población reclusa en diez cárceles",
+      "unidad": "%",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "DGSP vía Prensa Libre (12-ago-2025, datos al 8-ago-2025)",
+      "url": "https://www.prensalibre.com/guatemala/justicia/diez-carceles-albergan-al-72-6-de-la-poblacion-reclusa-en-guatemala/",
+      "periodo": "2025-08-08",
+      "n_puntos": 1,
+      "valor": 72.61,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recalculo 16,976/23,379=72.61%",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/guatemala/justicia/diez-carceles-albergan-al-72-6-de-la-poblacion-reclusa-en-guatemala/",
+        "cita": "estas diez cárceles albergan a 16 mil 976 reos, lo que representa el 72.61% de toda la población reclusa del país",
+        "archivo_local": "sesiones/_descargas/prensalibre_diez_carceles_72-6_2025-08-12.html"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_5.png"
+      ]
+    },
+    {
+      "id": "pen-c06",
+      "concepto": "Ocupación conjunta de las diez cárceles más pobladas (16,976 personas en 4,882 plazas)",
+      "unidad": "% de ocupación",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "DGSP vía Prensa Libre (12-ago-2025, datos al 8-ago-2025)",
+      "url": "https://www.prensalibre.com/guatemala/justicia/diez-carceles-albergan-al-72-6-de-la-poblacion-reclusa-en-guatemala/",
+      "periodo": "2025-08-08",
+      "n_puntos": 1,
+      "valor": 347.7,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recalculo: capacidades 960+1500+625+600+120+480+195+250+120+32=4,882; 16,976/4,882",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/guatemala/justicia/diez-carceles-albergan-al-72-6-de-la-poblacion-reclusa-en-guatemala/",
+        "cita": "estas diez cárceles albergan a 16 mil 976 reos",
+        "archivo_local": "sesiones/_descargas/prensalibre_diez_carceles_72-6_2025-08-12.html"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "pen-c07",
+      "concepto": "Población reclusa por departamento donde está el centro (22 departamentos)",
+      "unidad": "personas privadas de libertad",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "DGSP vía Prensa Libre (12-ago-2025, datos al 8-ago-2025)",
+      "url": "https://www.prensalibre.com/guatemala/justicia/diez-carceles-albergan-al-72-6-de-la-poblacion-reclusa-en-guatemala/",
+      "periodo": "2025-08-08",
+      "n_puntos": 22,
+      "valor": 12878,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recalculo suma de centros en depto. Guatemala: 4464+3325+2009+1182+986+369+248+197+63+35",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/guatemala/justicia/diez-carceles-albergan-al-72-6-de-la-poblacion-reclusa-en-guatemala/",
+        "cita": "23 mil 379 reos [...] distribuidos en 22 centros de detención ubicados en distintos puntos del país",
+        "archivo_local": "sesiones/_descargas/prensalibre_diez_carceles_72-6_2025-08-12.html"
+      },
+      "partes": [
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 428,
+          "sin_centro": false
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 0,
+          "sin_centro": true
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 396,
+          "sin_centro": false
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 0,
+          "sin_centro": true
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 0,
+          "sin_centro": true
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 3259,
+          "sin_centro": false
+        },
+        {
+          "nombre": "Guatemala",
+          "valor": 12878,
+          "sin_centro": false
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 0,
+          "sin_centro": true
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 1905,
+          "sin_centro": false
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 0,
+          "sin_centro": true
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 0,
+          "sin_centro": true
+        },
+        {
+          "nombre": "Petén",
+          "valor": 188,
+          "sin_centro": false
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 2077,
+          "sin_centro": false
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 0,
+          "sin_centro": true
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 0,
+          "sin_centro": true
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 0,
+          "sin_centro": true
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 77,
+          "sin_centro": false
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 673,
+          "sin_centro": false
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 0,
+          "sin_centro": true
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 520,
+          "sin_centro": false
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 0,
+          "sin_centro": true
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 577,
+          "sin_centro": false
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_5.png"
+      ]
+    },
+    {
+      "id": "pen-c08",
+      "concepto": "Centros con capacidad publicada que superan el 300% de ocupación",
+      "unidad": "centros (de 11 con capacidad publicada)",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "DGSP vía Prensa Libre (12-ago-2025, datos al 8-ago-2025)",
+      "url": "https://www.prensalibre.com/guatemala/justicia/diez-carceles-albergan-al-72-6-de-la-poblacion-reclusa-en-guatemala/",
+      "periodo": "2025-08-08",
+      "n_puntos": 1,
+      "valor": 6,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recalculo desde pen-c01: >300% = Canada, Pavon, Mazatenango, Pto Barrios, Coban, Cantel",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/guatemala/justicia/diez-carceles-albergan-al-72-6-de-la-poblacion-reclusa-en-guatemala/",
+        "cita": "Granja Modelo de Rehabilitación Cantel, Quetzaltenango 625 1 mil 958",
+        "archivo_local": "sesiones/_descargas/prensalibre_diez_carceles_72-6_2025-08-12.html"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_4.png"
+      ]
+    },
+    {
+      "id": "pen-c09",
+      "concepto": "Población de penales emblemáticos en marzo 2024 (DGSP) — punto previo para mostrar exceso crónico",
+      "unidad": "personas privadas de libertad",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "DGSP vía Emisoras Unidas (18-abr-2024)",
+      "url": "https://emisorasunidas.com/2024/04/18/carceles-hacinamiento-sistema-penitenciario-guatemala/",
+      "periodo": "2024-03-26",
+      "n_puntos": 2,
+      "valor": 4520,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Emisoras Unidas 18-abr-2024: «capacidad para 960 personas y registra 4 mil 520 internos» (datos DGSP al 26-mar-2024)",
+      "evidencia": {
+        "url": "https://emisorasunidas.com/2024/04/18/carceles-hacinamiento-sistema-penitenciario-guatemala/",
+        "cita": "Le sigue la Granja Penal Pavón, ubicada en Fraijanes, Guatemala, con 371%, pues tiene capacidad para 960 personas y registra 4 mil 520 internos",
+        "archivo_local": "sesiones/_descargas/emisorasunidas_carceles_hacinamiento_2024-04-18.html"
+      },
+      "partes": [
+        {
+          "nombre": "Pavón (cap. 960)",
+          "valor": 4520
+        },
+        {
+          "nombre": "Canadá (cap. 600)",
+          "valor": 3103
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_4.png"
+      ]
+    },
+    {
+      "id": "pen-c11",
+      "concepto": "Población reclusa total y capacidad aproximada del sistema (base de la tabla por centro)",
+      "unidad": "personas privadas de libertad",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "DGSP vía Prensa Libre (12-ago-2025, datos al 8-ago-2025)",
+      "url": "https://www.prensalibre.com/guatemala/justicia/diez-carceles-albergan-al-72-6-de-la-poblacion-reclusa-en-guatemala/",
+      "periodo": "2025-08-08",
+      "n_puntos": 2,
+      "valor": 23379,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Busqueda: 23,382 personas a junio 2025, capacidad real 6,842 (342%), fuente primaria no identificada; PL: 23,379 al 8-ago-2025",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/guatemala/justicia/diez-carceles-albergan-al-72-6-de-la-poblacion-reclusa-en-guatemala/",
+        "cita": "hasta el 8 de agosto en las cárceles del país se encuentran recluidos 23 mil 379 reos, de los cuales 20 mil 583 son hombres y 2 mil 796 mujeres",
+        "archivo_local": "sesiones/_descargas/prensalibre_diez_carceles_72-6_2025-08-12.html"
+      },
+      "partes": [
+        {
+          "nombre": "Población recluida",
+          "valor": 23379
+        },
+        {
+          "nombre": "Capacidad aproximada (SP)",
+          "valor": 6800
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "res-c01",
+      "concepto": "Ocupación penitenciaria promedio que invoca el amparo del diputado José Chic (VOS) ante la Corte de Constitucionalidad para obligar al Ejecutivo a garantizar la construcción de las cárceles de Masagua (Escuintla) y El Triunfo (Morales, Izabal)",
+      "unidad": "% de ocupación",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Infobae (9-jul-2026) con datos del Sistema Penitenciario/Mingob citados por el diputado José Chic",
+      "url": "https://www.infobae.com/guatemala/2026/07/09/amparo-ante-la-corte-de-constitucionalidad-por-hacinamientos-en-las-carceles-de-guatemala-que-superan-el-300-de-su-capacidad/",
+      "periodo": "julio 2026",
+      "n_puntos": 1,
+      "valor": 339,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa Libre / Mingob (ocupación 339%, mar-2025); Prensa Latina y otros citan ~340% en ene-2026",
+      "evidencia": {
+        "url": "https://www.infobae.com/guatemala/2026/07/09/amparo-ante-la-corte-de-constitucionalidad-por-hacinamientos-en-las-carceles-de-guatemala-que-superan-el-300-de-su-capacidad/",
+        "cita": "Sostuvo que la expansión de la infraestructura penal es necesaria ante una ocupación promedio del 339% en el sistema penitenciario arriba de su capacidad",
+        "archivo_local": "sesiones/_descargas/res-carceles/infobae_amparo_2026-07-09.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "res-c02",
+      "concepto": "Personas privadas de libertad que podrían acceder a libertad anticipada o a régimen progresivo, según el director general del Sistema Penitenciario (vía jurídica y administrativa del plan de despresurización)",
+      "unidad": "personas privadas de libertad (aprox.)",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Diario de Centro América (diario oficial), 14-sep-2026, declaraciones del director general del SP Jorge Guillermo López Dellachiessa",
+      "url": "https://dca.gob.gt/noticias-guatemala-diario-centro-america/el-plan-para-separar-perfiles-criminales-y-aliviar-las-24-carceles-del-pais/",
+      "periodo": "septiembre 2026",
+      "n_puntos": 1,
+      "valor": 5000,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Infobae 15-sep-2026 (plan) repite 5 mil reclusos con beneficios; Mingob habla de ~4,000-6,000 con condena cumplida por multas (otro universo)",
+      "evidencia": {
+        "url": "https://dca.gob.gt/noticias-guatemala-diario-centro-america/el-plan-para-separar-perfiles-criminales-y-aliviar-las-24-carceles-del-pais/",
+        "cita": "existen alrededor de 5 mil privados de libertad que podrían acceder a libertad anticipada o a un régimen progresivo",
+        "archivo_local": "sesiones/_descargas/res-carceles/dca_plan.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_10.png",
+        "T10"
+      ]
+    },
+    {
+      "id": "res-c03",
+      "concepto": "Capacidad prevista de la cárcel de máxima seguridad El Triunfo (Morales, Izabal), pieza central del plan: entre 2,000 y 2,700 internos de alta peligrosidad, celdas de máximo dos personas",
+      "unidad": "personas privadas de libertad (tope del rango)",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Diario de Centro América, 14-sep-2026 (Sistema Penitenciario)",
+      "url": "https://dca.gob.gt/noticias-guatemala-diario-centro-america/el-plan-para-separar-perfiles-criminales-y-aliviar-las-24-carceles-del-pais/",
+      "periodo": "proyecto 2026–2027",
+      "n_puntos": 2,
+      "valor": 2074,
+      "valor_original": 2700,
+      "veredicto": "ajustada",
+      "independencia": "baja",
+      "fuente_2": "Presidencia/EFE al inaugurar obra: capacidad 2,074 reos y ~1,032 celdas en 12 módulos (vía eldiario.ec/revistaeyn)",
+      "evidencia": {
+        "url": "https://dca.gob.gt/noticias-guatemala-diario-centro-america/el-plan-para-separar-perfiles-criminales-y-aliviar-las-24-carceles-del-pais/",
+        "cita": "El recinto está pensado para entre 2 mil y 2 mil 700 privados de libertad de alta peligrosidad, con celdas para un máximo de dos personas",
+        "archivo_local": "sesiones/_descargas/res-carceles/dca_plan.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Capacidad mínima prevista",
+          "valor": 2000
+        },
+        {
+          "nombre": "Capacidad máxima prevista",
+          "valor": 2700
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "res-c05",
+      "concepto": "Presupuesto vigente del Sistema Penitenciario en 2026",
+      "unidad": "millones de quetzales",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Coalición por la Seguridad Ciudadana (Fundesa, CIEN, Crime Stoppers), estudio «Retos y Oportunidades del Sistema Penitenciario en Guatemala», presentado el 22-jul-2026; reproducido por Prensa Libre",
+      "url": "https://www.prensalibre.com/guatemala/justicia/fundesa-analiza-transformacion-del-sistema-penitenciario-para-combatir-el-crimen/",
+      "periodo": "2026 (presupuesto vigente a julio)",
+      "n_puntos": 1,
+      "valor": 991,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Infobae 23-jul-2026 (misma cifra de la Coalición/Fundesa); sanidad: Q991M ≈ 0.08% de un PIB ~Q1.2 billones",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/guatemala/justicia/fundesa-analiza-transformacion-del-sistema-penitenciario-para-combatir-el-crimen/",
+        "cita": "el presupuesto vigente del Sistema Penitenciario para este año es de Q991 millones, equivalente al 0.08% del Producto Interno Bruto (PIB), muy por debajo del promedio centroamericano de 0.17%",
+        "archivo_local": "sesiones/_descargas/res-carceles/pl_fundesa.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_9.png",
+        "T9"
+      ]
+    },
+    {
+      "id": "res-c06",
+      "concepto": "Costo diario por persona privada de libertad",
+      "unidad": "quetzales por día",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Coalición por la Seguridad Ciudadana (Fundesa, CIEN, Crime Stoppers), jul-2026; reproducido por Prensa Libre",
+      "url": "https://www.prensalibre.com/guatemala/justicia/fundesa-analiza-transformacion-del-sistema-penitenciario-para-combatir-el-crimen/",
+      "periodo": "2026",
+      "n_puntos": 1,
+      "valor": 118.41,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Infobae 23-jul-2026 reproduce Q118.41 de la Coalición",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/guatemala/justicia/fundesa-analiza-transformacion-del-sistema-penitenciario-para-combatir-el-crimen/",
+        "cita": "El análisis también revela que el costo diario por privado de libertad asciende a Q118.41",
+        "archivo_local": "sesiones/_descargas/res-carceles/pl_fundesa.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_9.png",
+        "T9"
+      ]
+    },
+    {
+      "id": "res-c07",
+      "concepto": "Gasto penitenciario como % del PIB: Guatemala frente al promedio centroamericano",
+      "unidad": "% del PIB",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Coalición por la Seguridad Ciudadana (Fundesa, CIEN, Crime Stoppers), jul-2026; reproducido por Prensa Libre",
+      "url": "https://www.prensalibre.com/guatemala/justicia/fundesa-analiza-transformacion-del-sistema-penitenciario-para-combatir-el-crimen/",
+      "periodo": "2026",
+      "n_puntos": 2,
+      "valor": 0.08,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo: Q991M frente a PIB nominal ~Q1.2 billones da ~0.08%; Infobae repite 0.08% y 0.17% regional",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/guatemala/justicia/fundesa-analiza-transformacion-del-sistema-penitenciario-para-combatir-el-crimen/",
+        "cita": "equivalente al 0.08% del Producto Interno Bruto (PIB), muy por debajo del promedio centroamericano de 0.17%",
+        "archivo_local": "sesiones/_descargas/res-carceles/pl_fundesa.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala",
+          "valor": 0.08
+        },
+        {
+          "nombre": "Promedio centroamericano",
+          "valor": 0.17
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_9.png"
+      ]
+    },
+    {
+      "id": "res-c08",
+      "concepto": "Inversión prevista para remozar ocho cárceles con presencia de pandillas (controles de ingreso, perímetros, cuadras de guardias), por centro",
+      "unidad": "millones de quetzales",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Infobae (22-jul-2026), citación en el Congreso del director general del SP Melvin Rosales; confirmado por Diario de Centro América (26-jul-2026)",
+      "url": "https://www.infobae.com/guatemala/2026/07/22/guatemala-preve-una-inversion-de-q226-millones-para-el-remozamiento-de-las-carceles-donde-estan-los-pandilleros/",
+      "periodo": "2026 (prevista)",
+      "n_puntos": 8,
+      "valor": 226,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Diario de Centro América: Melvin Rosales (DGSP) Q226M para ocho centros; tabla suma Q226M (titular erróneo 'Q2 mil 267')",
+      "evidencia": {
+        "url": "https://www.infobae.com/guatemala/2026/07/22/guatemala-preve-una-inversion-de-q226-millones-para-el-remozamiento-de-las-carceles-donde-estan-los-pandilleros/",
+        "cita": "El gobierno de Guatemala prevé una inversión de Q226 millones- USD 29,645,866- para mejorar infraestructuras carcelarias",
+        "archivo_local": "sesiones/_descargas/res-carceles/infobae_q226_2026-07-22.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Preventivo para Varones zona 18",
+          "valor": 41
+        },
+        {
+          "nombre": "Pavoncito",
+          "valor": 40
+        },
+        {
+          "nombre": "Renovación I",
+          "valor": 35
+        },
+        {
+          "nombre": "Centro de Orientación Femenina (COF)",
+          "valor": 30
+        },
+        {
+          "nombre": "Chimaltenango (hombres y mujeres)",
+          "valor": 24
+        },
+        {
+          "nombre": "Santa Teresa (mujeres)",
+          "valor": 23
+        },
+        {
+          "nombre": "El Boquerón",
+          "valor": 18
+        },
+        {
+          "nombre": "Fraijanes II",
+          "valor": 15
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_10.png"
+      ]
+    },
+    {
+      "id": "res-c09",
+      "concepto": "Techo presupuestario 2027: Administración de Asuntos Penitenciarios (clasificación funcional) y partidas penitenciarias destacadas",
+      "unidad": "millones de quetzales",
+      "anio": 2027,
+      "tipo": "desglose",
+      "fuente": "La Hora (4-ago-2026), presentación del Ministerio de Finanzas en el foro de presupuesto de seguridad y justicia de Fundesa",
+      "url": "https://lahora.gt/nacionales/dguzman/2026/08/04/gobierno-plantea-destinar-q20-mil-100-millones-a-seguridad-y-justicia-para-2027-con-mas-del-80-para-la-policia-y-sistema-judicial/",
+      "periodo": "proyecto 2027",
+      "n_puntos": 5,
+      "valor": 1753.23,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Búsqueda de contraste: proyecto presupuesto 2027 (Minfin/medios) lista Q1,753.23M Asuntos Penitenciarios y Q266.5M remozamiento",
+      "evidencia": {
+        "url": "https://lahora.gt/nacionales/dguzman/2026/08/04/gobierno-plantea-destinar-q20-mil-100-millones-a-seguridad-y-justicia-para-2027-con-mas-del-80-para-la-policia-y-sistema-judicial/",
+        "cita": "El resto del presupuesto se distribuiría entre la Administración de Asuntos Penitenciarios, con Q1 mil 753.23 millones",
+        "archivo_local": "sesiones/_descargas/res-carceles/lahora_2027.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Remozamiento de infraestructura penitenciaria",
+          "valor": 266.5
+        },
+        {
+          "nombre": "Construcción centro de cumplimiento de condena Masagua",
+          "valor": 250.8
+        },
+        {
+          "nombre": "Operación centro penitenciario Masagua",
+          "valor": 116
+        },
+        {
+          "nombre": "Funcionamiento cárcel de Morales, Izabal (El Triunfo)",
+          "valor": 90
+        },
+        {
+          "nombre": "Equipamiento del Sistema Penitenciario",
+          "valor": 50
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "res-c10",
+      "concepto": "Plazas que faltarían para llevar la ocupación al 100% con la población censada en 2026",
+      "unidad": "plazas",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Cálculo propio: 23,837 PPL (censo Mingob, feb-2026, Emisoras Unidas) menos 7,922 plazas (Coalición por la Seguridad Ciudadana, 2025, Prensa Libre)",
+      "url": "https://www.prensalibre.com/guatemala/justicia/fundesa-analiza-transformacion-del-sistema-penitenciario-para-combatir-el-crimen/",
+      "periodo": "2025–2026",
+      "n_puntos": 3,
+      "valor": 15915,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo: 23,837 (censo Mingob, Emisoras Unidas/Prensa) - 7,922 (Coalición) = 15,915",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/guatemala/justicia/fundesa-analiza-transformacion-del-sistema-penitenciario-para-combatir-el-crimen/",
+        "cita": "En las cárceles, los espacios aumentaron de 6 mil 812 en el 2023 a 7 mil 922 en el 2025 y únicamente se han realizado ampliaciones menores",
+        "archivo_local": "sesiones/_descargas/res-carceles/pl_fundesa.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Personas privadas de libertad (censo feb-2026)",
+          "valor": 23837
+        },
+        {
+          "nombre": "Plazas existentes (2025)",
+          "valor": 7922
+        },
+        {
+          "nombre": "Plazas faltantes",
+          "valor": 15915
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "res-c11",
+      "concepto": "Pandilleros (Barrio 18 y MS-13) entre las personas privadas de libertad del primer censo penitenciario (registro biométrico de las 24 prisiones)",
+      "unidad": "personas",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Emisoras Unidas (11-feb-2026), declaraciones del ministro de Gobernación Marco Antonio Villeda en rueda de prensa",
+      "url": "https://emisorasunidas.com/nacional/2026/02/11/guatemala-presos-censo-carceles-pandilleros/",
+      "periodo": "febrero 2026",
+      "n_puntos": 2,
+      "valor": 2545,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Emisoras Unidas / Prensa Latina: censo biométrico 23,837 PPL, 2,545 de B18 y MS-13",
+      "evidencia": {
+        "url": "https://emisorasunidas.com/nacional/2026/02/11/guatemala-presos-censo-carceles-pandilleros/",
+        "cita": "identificar y perfilar a los 23 mil 837 privados de libertad, de los cuales 2 mil 545 pertenecen a las pandillas Barrio 18 y Mara Salvatrucha (MS-13)",
+        "archivo_local": "sesiones/_descargas/res-carceles/eu_censo_2026-02-11.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Pandilleros (Barrio 18 y MS-13)",
+          "valor": 2545
+        },
+        {
+          "nombre": "Resto de privados de libertad",
+          "valor": 21292
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "sis-c01",
+      "concepto": "Personas privadas de libertad en el Sistema Penitenciario por año",
+      "unidad": "personas",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "CIEN, Boletín julio 2025, con datos de la DGSP",
+      "url": "https://cien.org.gt/wp-content/uploads/2025/07/Boletin-julio-2025-Hacia-Donde-va-el-Sistema-Penitenciario-vf.pdf",
+      "periodo": "2014-2025 (2025 a junio)",
+      "n_puntos": 12,
+      "valor": 23382,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "World Prison Brief (administración penitenciaria nacional): 2014=18,425; 2020=25,538; 2023=23,361",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2025/07/Boletin-julio-2025-Hacia-Donde-va-el-Sistema-Penitenciario-vf.pdf",
+        "cita": "En junio de 2025, Guatemala registró 23,382 personas privadas de libertad [...] la población carcelaria aumentó de 18,444 en 2014 a más de 25,400 en 2019",
+        "archivo_local": "sesiones/_descargas/Boletin-julio-2025-Hacia-Donde-va-el-Sistema-Penitenciario-vf.raw.txt"
+      },
+      "serie": [
+        {
+          "p": "2014",
+          "v": 18444
+        },
+        {
+          "p": "2015",
+          "v": 19962
+        },
+        {
+          "p": "2016",
+          "v": 21203
+        },
+        {
+          "p": "2017",
+          "v": 23140
+        },
+        {
+          "p": "2018",
+          "v": 24422
+        },
+        {
+          "p": "2019",
+          "v": 25447
+        },
+        {
+          "p": "2020",
+          "v": 25335
+        },
+        {
+          "p": "2021",
+          "v": 24673
+        },
+        {
+          "p": "2022",
+          "v": 24188
+        },
+        {
+          "p": "2023",
+          "v": 23206
+        },
+        {
+          "p": "2024",
+          "v": 23017
+        },
+        {
+          "p": "2025*",
+          "v": 23382
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_2.png",
+        "tuit_7.png",
+        "tuit_8.png"
+      ]
+    },
+    {
+      "id": "sis-c02",
+      "concepto": "Tasa de ocupación penitenciaria (privados de libertad / espacios)",
+      "unidad": "% de ocupación",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "CIEN, Boletín julio 2025, con datos de la DGSP",
+      "url": "https://cien.org.gt/wp-content/uploads/2025/07/Boletin-julio-2025-Hacia-Donde-va-el-Sistema-Penitenciario-vf.pdf",
+      "periodo": "2014-2025 (2025 a junio)",
+      "n_puntos": 12,
+      "valor": 342,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo 23,382/6,842=341.7% y 18,444/6,676=276.3%; consistente con tasa 339% a marzo 2025 citada en prensa",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2025/07/Boletin-julio-2025-Hacia-Donde-va-el-Sistema-Penitenciario-vf.pdf",
+        "cita": "las prisiones solo cuentan con capacidad para 6,842; lo que representa una tasa de ocupación del 342% [...] se mantiene por encima del 300% desde hace una década",
+        "archivo_local": "sesiones/_descargas/Boletin-julio-2025-Hacia-Donde-va-el-Sistema-Penitenciario-vf.raw.txt"
+      },
+      "serie": [
+        {
+          "p": "2014",
+          "v": 276
+        },
+        {
+          "p": "2015",
+          "v": 299
+        },
+        {
+          "p": "2016",
+          "v": 311
+        },
+        {
+          "p": "2017",
+          "v": 340
+        },
+        {
+          "p": "2018",
+          "v": 359
+        },
+        {
+          "p": "2019",
+          "v": 374
+        },
+        {
+          "p": "2020",
+          "v": 372
+        },
+        {
+          "p": "2021",
+          "v": 361
+        },
+        {
+          "p": "2022",
+          "v": 354
+        },
+        {
+          "p": "2023",
+          "v": 339
+        },
+        {
+          "p": "2024",
+          "v": 336
+        },
+        {
+          "p": "2025*",
+          "v": 342
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_2.png",
+        "T2",
+        "tuit_6.png",
+        "tuit_7.png"
+      ]
+    },
+    {
+      "id": "sis-c03",
+      "concepto": "Capacidad del Sistema Penitenciario (espacios penitenciarios)",
+      "unidad": "espacios",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "CIEN, Boletín julio 2025, con datos de la DGSP",
+      "url": "https://cien.org.gt/wp-content/uploads/2025/07/Boletin-julio-2025-Hacia-Donde-va-el-Sistema-Penitenciario-vf.pdf",
+      "periodo": "junio 2025",
+      "n_puntos": 1,
+      "valor": 6842,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Búsqueda: prensa repite 6,842 de capacidad real en 22 centros (jun-2025)",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2025/07/Boletin-julio-2025-Hacia-Donde-va-el-Sistema-Penitenciario-vf.pdf",
+        "cita": "En junio de 2025, Guatemala registró 23,382 personas privadas de libertad, pero las prisiones solo cuentan con capacidad para 6,842",
+        "archivo_local": "sesiones/_descargas/Boletin-julio-2025-Hacia-Donde-va-el-Sistema-Penitenciario-vf.raw.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_2.png",
+        "tuit_7.png",
+        "tuit_8.png"
+      ]
+    },
+    {
+      "id": "sis-c04",
+      "concepto": "Personas privadas de libertad por cada espacio penitenciario",
+      "unidad": "personas por espacio",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "Cálculo propio con datos DGSP publicados por CIEN (jul 2025)",
+      "url": "https://cien.org.gt/wp-content/uploads/2025/07/Boletin-julio-2025-Hacia-Donde-va-el-Sistema-Penitenciario-vf.pdf",
+      "periodo": "junio 2025",
+      "n_puntos": 1,
+      "valor": 3.42,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo 23,382/6,842=3.417",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2025/07/Boletin-julio-2025-Hacia-Donde-va-el-Sistema-Penitenciario-vf.pdf",
+        "cita": "23,382 personas privadas de libertad, pero las prisiones solo cuentan con capacidad para 6,842; lo que representa una tasa de ocupación del 342%",
+        "archivo_local": "sesiones/_descargas/Boletin-julio-2025-Hacia-Donde-va-el-Sistema-Penitenciario-vf.raw.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_2.png"
+      ]
+    },
+    {
+      "id": "sis-c05",
+      "concepto": "Personas privadas de libertad sin espacio penitenciario (población menos capacidad)",
+      "unidad": "personas",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "Cálculo propio con datos DGSP publicados por CIEN (jul 2025)",
+      "url": "https://cien.org.gt/wp-content/uploads/2025/07/Boletin-julio-2025-Hacia-Donde-va-el-Sistema-Penitenciario-vf.pdf",
+      "periodo": "junio 2025",
+      "n_puntos": 1,
+      "valor": 16540,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo 23,382-6,842=16,540 (70.7% de la población)",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2025/07/Boletin-julio-2025-Hacia-Donde-va-el-Sistema-Penitenciario-vf.pdf",
+        "cita": "Guatemala registró 23,382 personas privadas de libertad, pero las prisiones solo cuentan con capacidad para 6,842",
+        "archivo_local": "sesiones/_descargas/Boletin-julio-2025-Hacia-Donde-va-el-Sistema-Penitenciario-vf.raw.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Con espacio (capacidad)",
+          "valor": 6842
+        },
+        {
+          "nombre": "Sin espacio (exceso)",
+          "valor": 16540
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_8.png"
+      ]
+    },
+    {
+      "id": "sis-c06",
+      "concepto": "Nivel de ocupación según capacidad oficial, países de Centroamérica",
+      "unidad": "% de ocupación",
+      "anio": 2023,
+      "tipo": "desglose",
+      "fuente": "World Prison Brief (ICPR, Birkbeck), fichas por país",
+      "url": "https://www.prisonstudies.org/country/guatemala",
+      "periodo": "fechas distintas por país (2018-2026)",
+      "n_puntos": 7,
+      "valor": 299.4,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "World Prison Brief, ranking Highest to Lowest (datos de Guatemala 299.4; Nicaragua 177.6)",
+      "evidencia": {
+        "url": "https://www.prisonstudies.org/country/guatemala",
+        "cita": "Official capacity of prison system 7,982 (September 2023) Occupancy level (based on official capacity) 299.4% (September 2023)",
+        "archivo_local": "sesiones/_descargas/wpb/guatemala.html"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala (sep-2023)",
+          "valor": 299.4
+        },
+        {
+          "nombre": "Nicaragua (oct-2018)",
+          "valor": 177.6
+        },
+        {
+          "nombre": "Panamá (31-ago-2026)",
+          "valor": 168.6
+        },
+        {
+          "nombre": "El Salvador (mar-2024)",
+          "valor": 162.8
+        },
+        {
+          "nombre": "Honduras (31-mar-2023, estimación c.)",
+          "valor": 150.0
+        },
+        {
+          "nombre": "Costa Rica (31-ago-2021, centros cerrados)",
+          "valor": 120.4
+        },
+        {
+          "nombre": "Belice (31-may-2025)",
+          "valor": 64.8
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_3.png"
+      ]
+    },
+    {
+      "id": "sis-c07",
+      "concepto": "Posición de Guatemala en el ranking mundial de ocupación penitenciaria (capacidad oficial)",
+      "unidad": "puesto de 209 sistemas",
+      "anio": 2023,
+      "tipo": "puntual",
+      "fuente": "World Prison Brief, Highest to Lowest - Occupancy level (based on official capacity)",
+      "url": "https://www.prisonstudies.org/world-prison-data/highest-lowest/highest-lowest-occupancy-level-based-official-capacity",
+      "periodo": "consulta 2026-10-06 (dato de Guatemala: sep-2023)",
+      "n_puntos": 1,
+      "valor": 9,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Chequeo en el JSON del ranking WPB: Guatemala en posición 9 (299.4), Haití 8 (302.0), 209 sistemas",
+      "evidencia": {
+        "url": "https://www.prisonstudies.org/world-prison-data/highest-lowest/highest-lowest-occupancy-level-based-official-capacity",
+        "cita": "Haiti Caribbean More Less information 8 Occupancy level (based on official capacity) 302.0% [...] Guatemala Central America More Less information 9 Occupancy level (based on official capacity) 299.4%",
+        "archivo_local": "sesiones/_descargas/wpb/occupancy-ranking.html"
+      },
+      "partes": [
+        {
+          "nombre": "Haití (8.º)",
+          "valor": 302.0
+        },
+        {
+          "nombre": "Guatemala (9.º)",
+          "valor": 299.4
+        },
+        {
+          "nombre": "Bolivia (14.º)",
+          "valor": 274.1
+        },
+        {
+          "nombre": "Perú (18.º)",
+          "valor": 255.9
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_3.png",
+        "T3"
+      ]
+    },
+    {
+      "id": "sis-c08",
+      "concepto": "Población reclusa total de Guatemala (incluye prisión preventiva)",
+      "unidad": "personas",
+      "anio": 2023,
+      "tipo": "serie",
+      "fuente": "World Prison Brief (ICPR, Birkbeck), datos de la administración penitenciaria nacional",
+      "url": "https://www.prisonstudies.org/country/guatemala",
+      "periodo": "2000-2023 (bienal hasta 2020 + 27-nov-2023)",
+      "n_puntos": 12,
+      "valor": 23361,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "CIEN/DGSP 2023=23,206; 2014=18,444 vs WPB 18,425",
+      "evidencia": {
+        "url": "https://www.prisonstudies.org/country/guatemala",
+        "cita": "23,361 at 27.11.2023 (national prison administration) [...] Prison population trend Year Prison population total [...] 2000 6,974 62",
+        "archivo_local": "sesiones/_descargas/wpb/guatemala.html"
+      },
+      "serie": [
+        {
+          "p": "2000",
+          "v": 6974
+        },
+        {
+          "p": "2002",
+          "v": 8077
+        },
+        {
+          "p": "2004",
+          "v": 8698
+        },
+        {
+          "p": "2006",
+          "v": 7477
+        },
+        {
+          "p": "2008",
+          "v": 8158
+        },
+        {
+          "p": "2010",
+          "v": 11148
+        },
+        {
+          "p": "2012",
+          "v": 15013
+        },
+        {
+          "p": "2014",
+          "v": 18425
+        },
+        {
+          "p": "2016",
+          "v": 21031
+        },
+        {
+          "p": "2018",
+          "v": 24303
+        },
+        {
+          "p": "2020",
+          "v": 25538
+        },
+        {
+          "p": "2023",
+          "v": 23361
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "sis-c09",
+      "concepto": "Personas privadas de libertad identificadas en el censo/registro biométrico penitenciario",
+      "unidad": "personas",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Ministerio de Gobernación, censo penitenciario (reportado por Emisoras Unidas y AGN, feb 2026)",
+      "url": "https://emisorasunidas.com/nacional/2026/02/11/guatemala-presos-censo-carceles-pandilleros/",
+      "periodo": "febrero 2026",
+      "n_puntos": 1,
+      "valor": 23837,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Emisoras Unidas, nota del 11-feb-2026 (fetch): 'identificar y perfilar a los 23 mil 837 privados de libertad'; ministro Villeda",
+      "evidencia": {
+        "url": "https://emisorasunidas.com/nacional/2026/02/11/guatemala-presos-censo-carceles-pandilleros/",
+        "cita": "El proceso de sistematización del Gobierno identificó y perfiló a 23,837 privados de libertad, de los cuales 2,545 pertenecen a las pandillas Barrio 18 y Mara Salvatrucha"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_2.png",
+        "T2"
+      ]
+    },
+    {
+      "id": "sis-c10",
+      "concepto": "Sobrepoblación declarada por el director del Sistema Penitenciario (24 cárceles, más de 24 mil privados de libertad)",
+      "unidad": "% de sobrepoblación (declaración)",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "AGN, entrevista al director de la DGSP Jorge López Dellachiessa (31-ago-2026)",
+      "url": "https://agn.gt/sistema-penitenciario-busca-reducir-la-sobrepoblacion-con-nuevas-carceles-y-segmentacion-de-reos/",
+      "periodo": "31 de agosto de 2026",
+      "n_puntos": 1,
+      "valor": 300,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Búsqueda: AGN, misma entrevista (director DGSP) vía resultado de búsqueda",
+      "evidencia": {
+        "url": "https://agn.gt/sistema-penitenciario-busca-reducir-la-sobrepoblacion-con-nuevas-carceles-y-segmentacion-de-reos/",
+        "cita": "actualmente las 24 cárceles del país albergan a más de 24 mil privados de libertad [...] los centros penitenciarios tienen un 300% de sobrepoblación",
+        "archivo_local": "sesiones/_descargas/agn/sp-reducir-sobrepoblacion.html"
+      },
+      "usada": false,
+      "aparece_en": [
+        "T11"
+      ]
+    },
+    {
+      "id": "sis-c11",
+      "concepto": "Capacidad oficial del sistema penitenciario según World Prison Brief",
+      "unidad": "plazas",
+      "anio": 2023,
+      "tipo": "puntual",
+      "fuente": "World Prison Brief (ICPR, Birkbeck)",
+      "url": "https://www.prisonstudies.org/country/guatemala",
+      "periodo": "septiembre 2023",
+      "n_puntos": 1,
+      "valor": 7982,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "World Prison Brief, ficha y ranking (299.4% sep-2023)",
+      "evidencia": {
+        "url": "https://www.prisonstudies.org/country/guatemala",
+        "cita": "Number of establishments / institutions 21 (2017) Official capacity of prison system 7,982 (September 2023)",
+        "archivo_local": "sesiones/_descargas/wpb/guatemala.html"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_2.png",
+        "tuit_3.png"
+      ]
+    },
+    {
+      "id": "sis-c12",
+      "concepto": "Espacios penitenciarios en 2014 (para comparar con 2025)",
+      "unidad": "espacios",
+      "anio": 2014,
+      "tipo": "puntual",
+      "fuente": "CIEN, Boletín julio 2025, con datos de la DGSP",
+      "url": "https://cien.org.gt/wp-content/uploads/2025/07/Boletin-julio-2025-Hacia-Donde-va-el-Sistema-Penitenciario-vf.pdf",
+      "periodo": "2014",
+      "n_puntos": 1,
+      "valor": 6676,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo 18,444/6,676=276.3% coincide con la tasa 2014 rotulada (276%)",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2025/07/Boletin-julio-2025-Hacia-Donde-va-el-Sistema-Penitenciario-vf.pdf",
+        "cita": "Privados de libertad, espacios y tasa de ocupación, 2014 a 2025 [...] 6,676 6,812 6,842 6,842 [...] la infraestructura disponible prácticamente no ha crecido",
+        "archivo_local": "sesiones/_descargas/Boletin-julio-2025-Hacia-Donde-va-el-Sistema-Penitenciario-vf.raw.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Espacios 2014",
+          "valor": 6676
+        },
+        {
+          "nombre": "Espacios 2025",
+          "valor": 6842
+        },
+        {
+          "nombre": "Privados de libertad 2014",
+          "valor": 18444
+        },
+        {
+          "nombre": "Privados de libertad 2025 (jun)",
+          "valor": 23382
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_7.png"
+      ]
+    }
+  ],
+  "fuentes": [
+    {
+      "nombre": "Prensa Libre con datos DGSP al 8-ago-2025 (tabla capacidad/población por centro)",
+      "url": "https://www.prensalibre.com/guatemala/justicia/diez-carceles-albergan-al-72-6-de-la-poblacion-reclusa-en-guatemala/",
+      "nivel": "prensa que reproduce dato oficial"
+    },
+    {
+      "nombre": "Emisoras Unidas con datos DGSP al 26-mar-2024",
+      "url": "https://emisorasunidas.com/2024/04/18/carceles-hacinamiento-sistema-penitenciario-guatemala/",
+      "nivel": "prensa que reproduce dato oficial"
+    },
+    {
+      "nombre": "Prensa Libre con datos SP, ene-2016",
+      "url": "https://www.prensalibre.com/ciudades/izabal/impera-crisis-carcelaria-en-la-provincia/",
+      "nivel": "prensa que reproduce dato oficial"
+    },
+    {
+      "nombre": "World Prison Brief — Guatemala",
+      "url": "https://www.prisonstudies.org/country/guatemala",
+      "nivel": "secundaria internacional (datos de la administración penitenciaria)",
+      "archivo_local": "sesiones/_descargas/wpb_guatemala.html"
+    },
+    {
+      "nombre": "AGN, «Sistema Penitenciario apuesta por separar perfiles y ampliar capacidad carcelaria» (16-sep-2026)",
+      "url": "https://agn.gt/sistema-penitenciario-apuesta-por-separar-perfiles-y-ampliar-capacidad-carcelaria/",
+      "nivel": "oficial (agencia de gobierno)"
+    },
+    {
+      "nombre": "Prensa Libre, columna 27-jul-2026 (7,922 espacios, 289%)",
+      "url": "https://www.prensalibre.com/?p=25761968",
+      "nivel": "opinión con cifras"
+    },
+    {
+      "nombre": "Diario de Centro América — plan del SP para separar perfiles y aliviar 24 cárceles (14-sep-2026)",
+      "url": "https://dca.gob.gt/noticias-guatemala-diario-centro-america/el-plan-para-separar-perfiles-criminales-y-aliviar-las-24-carceles-del-pais/",
+      "nivel": "oficial (diario del Estado)"
+    },
+    {
+      "nombre": "Infobae — plan para despresurizar cárceles (15-sep-2026)",
+      "url": "https://www.infobae.com/guatemala/2026/09/15/guatemala-y-el-plan-para-despresurizar-sus-carceles-nuevos-penales-bloqueadores-de-senal-y-una-clasificacion-por-peligrosidad-para-cortar-las-extorsiones/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Infobae — amparo de José Chic ante la CC (9-jul-2026)",
+      "url": "https://www.infobae.com/guatemala/2026/07/09/amparo-ante-la-corte-de-constitucionalidad-por-hacinamientos-en-las-carceles-de-guatemala-que-superan-el-300-de-su-capacidad/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Infobae — El Triunfo avanza 12% (1-sep-2026)",
+      "url": "https://www.infobae.com/guatemala/2026/09/01/carcel-el-triunfo-avanza-12-en-guatemala-150-trabajadores-una-finca-decomisada-y-la-promesa-de-aliviar-prisiones-con-300-de-sobrepoblacion/",
+      "nivel": "prensa (cita citación en el Congreso)"
+    },
+    {
+      "nombre": "Prensa Libre — Fundesa/Coalición por la Seguridad Ciudadana, estudio Retos y Oportunidades del SP (22-jul-2026)",
+      "url": "https://www.prensalibre.com/guatemala/justicia/fundesa-analiza-transformacion-del-sistema-penitenciario-para-combatir-el-crimen/",
+      "nivel": "prensa que reproduce estudio CIEN/Fundesa"
+    },
+    {
+      "nombre": "Infobae — Coalición: ocupación 299.4%, 7,922 plazas (23-jul-2026)",
+      "url": "https://www.infobae.com/guatemala/2026/07/23/la-crisis-carcelaria-en-guatemala-llega-a-una-ocupacion-del-2994-casi-el-doble-del-promedio-regional/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Infobae — Q226 millones para remozar ocho cárceles (22-jul-2026)",
+      "url": "https://www.infobae.com/guatemala/2026/07/22/guatemala-preve-una-inversion-de-q226-millones-para-el-remozamiento-de-las-carceles-donde-estan-los-pandilleros/",
+      "nivel": "prensa (cita citación en el Congreso)"
+    },
+    {
+      "nombre": "Diario de Centro América — Q226 millones para ocho centros (26-jul-2026)",
+      "url": "https://dca.gob.gt/noticias-guatemala-diario-centro-america/ejecutivo-invertira-q2-mil-267-millones-para-remozar-ocho-centros-penitenciarios/",
+      "nivel": "oficial (diario del Estado)"
+    },
+    {
+      "nombre": "La Hora — techos presupuestarios 2027 seguridad y justicia (4-ago-2026)",
+      "url": "https://lahora.gt/nacionales/dguzman/2026/08/04/gobierno-plantea-destinar-q20-mil-100-millones-a-seguridad-y-justicia-para-2027-con-mas-del-80-para-la-policia-y-sistema-judicial/",
+      "nivel": "prensa que reproduce presentación del Minfin"
+    },
+    {
+      "nombre": "Emisoras Unidas — censo penitenciario (11-feb-2026)",
+      "url": "https://emisorasunidas.com/nacional/2026/02/11/guatemala-presos-censo-carceles-pandilleros/",
+      "nivel": "prensa que reproduce dato Mingob"
+    },
+    {
+      "nombre": "AGN — Mingob detalla cárcel de máxima seguridad en Escuintla (jun-2022)",
+      "url": "https://agn.gt/mingob-brinda-detalles-sobre-construccion-de-carcel-de-maxima-seguridad-en-escuintla/",
+      "nivel": "oficial"
+    },
+    {
+      "nombre": "CIEN, Boletín julio 2025 «¿Hacia dónde va el Sistema Penitenciario?» (datos DGSP)",
+      "url": "https://cien.org.gt/wp-content/uploads/2025/07/Boletin-julio-2025-Hacia-Donde-va-el-Sistema-Penitenciario-vf.pdf",
+      "nivel": "secundaria con dato oficial (DGSP)"
+    },
+    {
+      "nombre": "World Prison Brief (ICPR, Birkbeck) — Guatemala y Centroamérica",
+      "url": "https://www.prisonstudies.org/country/guatemala",
+      "nivel": "internacional (compila administración penitenciaria nacional)"
+    },
+    {
+      "nombre": "World Prison Brief — ranking de ocupación",
+      "url": "https://www.prisonstudies.org/world-prison-data/highest-lowest/highest-lowest-occupancy-level-based-official-capacity",
+      "nivel": "internacional"
+    },
+    {
+      "nombre": "AGN — entrevista director DGSP (31-ago-2026)",
+      "url": "https://agn.gt/sistema-penitenciario-busca-reducir-la-sobrepoblacion-con-nuevas-carceles-y-segmentacion-de-reos/",
+      "nivel": "oficial (agencia estatal)"
+    }
+  ],
+  "no_afirma": [
+    "No afirma qué causa el hacinamiento (ni más detenciones ni pandillas): las fuentes no lo atribuyen.",
+    "Las ocupaciones por penal son cálculo propio con la tabla DGSP de agosto de 2025; 11 de 22 centros no publican capacidad.",
+    "El mapa mide presos por departamento, no hacinamiento.",
+    "Las 5,000 personas que podrían optar a libertad anticipada son una estimación oficial, no liberaciones.",
+    "La comparación regional mezcla fechas (2018–2026) y usa la capacidad de WPB (7,982), distinta de la DGSP (6,842)."
+  ],
+  "incertidumbre": [
+    "Todas las cifras tienen una segunda fuente que reproduce la primaria (independencia baja); la ancla (pen-c02, Pavón) se sostiene en la tabla DGSP publicada por Prensa Libre, sin verificación independiente.",
+    "La capacidad oficial difiere entre fuentes: 6,842 (DGSP vía CIEN, jun-2025), 6,800 aprox. (DGSP vía Prensa Libre, ago-2025), 7,982 (WPB, sep-2023) y 7,922 (Fundesa, 2025). El hilo fija 6,842.",
+    "2025 en la serie CIEN es dato a junio; los espacios 2016–2024 se infieren de las tasas (solo se usan 2014 y 2025, rotulados).",
+    "El 300% de 2026 es una declaración redondeada del director de la DGSP; no hay tasa oficial exacta de 2026.",
+    "La tabla por centro suma 22,978 frente a 23,379 del total oficial; Boquerón figura como «más de 673»."
+  ],
+  "descartadas": [
+    {
+      "id": "pen-c10",
+      "por": "no_confirmada"
+    },
+    {
+      "id": "res-c04",
+      "por": "no_confirmada"
+    },
+    {
+      "id": "res-c12",
+      "por": "no_confirmada"
+    }
+  ]
+}

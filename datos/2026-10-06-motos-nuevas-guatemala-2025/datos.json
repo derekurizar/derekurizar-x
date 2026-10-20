@@ -1,0 +1,569 @@
+{
+  "slug": "motos-nuevas-guatemala-2025",
+  "fecha": "2026-10-06",
+  "tesis": "En 2024 se inscribieron en Guatemala 379,021 motos que siguen activas, frente a 299,256 nacimientos registrados por el INE: 127 motos por cada 100 bebés.",
+  "ancla_id": "dat-c01",
+  "paleta": "atitlan",
+  "hook_tipo": "escala_humana",
+  "cifras": [
+    {
+      "id": "dat-c01",
+      "concepto": "Motocicletas (tipo MOTO) con alta en 2024 en el parque activo vs nacimientos registrados en 2024 (INE)",
+      "unidad": "motocicletas",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "SAT, Análisis estadístico del parque vehicular (agosto 2026); INE, Estadísticas vitales 2024",
+      "url": "https://portal.sat.gob.gt/portal/descarga/4801/analisis-estadistico-del-parque-vehicular/96445/informacion_para_analisis_estadistico_vehiculos_2026_agosto",
+      "n_puntos": 2,
+      "valor": 379021,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AGN (cita a SAT, corte julio 2026): 6,773,536 vehiculos y 3,474,069 motos",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/4801/analisis-estadistico-del-parque-vehicular/96445/informacion_para_analisis_estadistico_vehiculos_2026_agosto",
+        "cita": "ANIO_ALZA=2024, TIPO_VEHICULO=MOTO: suma CANTIDAD = 379021 (uso MOTOCICLETA: 394626)",
+        "archivo_local": "sesiones/_descargas/sat_pv_2026_08/resumen_anios.json"
+      },
+      "partes": [
+        {
+          "etiqueta": "Motos con alta en 2024 (SAT)",
+          "v": 379021,
+          "valor": 379021,
+          "nombre": "Motos con alta en 2024 (SAT)"
+        },
+        {
+          "etiqueta": "Nacimientos 2024 (INE)",
+          "v": 299256,
+          "valor": 299256,
+          "nombre": "Nacimientos 2024 (INE)"
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "dato.png"
+      ]
+    },
+    {
+      "id": "dat-c02",
+      "concepto": "Motocicletas (tipo MOTO) con alta en 2025 en el parque activo, total y por día",
+      "unidad": "motocicletas",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "SAT, Análisis estadístico del parque vehicular (agosto 2026)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/4801/analisis-estadistico-del-parque-vehicular/96445/informacion_para_analisis_estadistico_vehiculos_2026_agosto",
+      "periodo": "2006-2025",
+      "n_puntos": 20,
+      "valor": 456622,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AGN (cita a SAT, corte julio 2026): 6,773,536 vehiculos y 3,474,069 motos",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/4801/analisis-estadistico-del-parque-vehicular/96445/informacion_para_analisis_estadistico_vehiculos_2026_agosto",
+        "cita": "ANIO_ALZA=2025, TIPO_VEHICULO=MOTO: suma CANTIDAD = 456622; ANIO_ALZA=2015: 96433",
+        "archivo_local": "sesiones/_descargas/sat_pv_2026_08/resumen_anios.json"
+      },
+      "serie": [
+        {
+          "p": "2006",
+          "v": 33409
+        },
+        {
+          "p": "2007",
+          "v": 42129
+        },
+        {
+          "p": "2008",
+          "v": 39435
+        },
+        {
+          "p": "2009",
+          "v": 29852
+        },
+        {
+          "p": "2010",
+          "v": 35074
+        },
+        {
+          "p": "2011",
+          "v": 49909
+        },
+        {
+          "p": "2012",
+          "v": 65768
+        },
+        {
+          "p": "2013",
+          "v": 71246
+        },
+        {
+          "p": "2014",
+          "v": 72261
+        },
+        {
+          "p": "2015",
+          "v": 96433
+        },
+        {
+          "p": "2016",
+          "v": 116186
+        },
+        {
+          "p": "2017",
+          "v": 135390
+        },
+        {
+          "p": "2018",
+          "v": 153015
+        },
+        {
+          "p": "2019",
+          "v": 172596
+        },
+        {
+          "p": "2020",
+          "v": 213098
+        },
+        {
+          "p": "2021",
+          "v": 251446
+        },
+        {
+          "p": "2022",
+          "v": 267204
+        },
+        {
+          "p": "2023",
+          "v": 318427
+        },
+        {
+          "p": "2024",
+          "v": 379021
+        },
+        {
+          "p": "2025",
+          "v": 456622
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c03",
+      "concepto": "Vehículos de todo tipo con alta en 2025 en el parque activo y parte que son motos",
+      "unidad": "vehículos",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "SAT, Análisis estadístico del parque vehicular (agosto 2026)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/4801/analisis-estadistico-del-parque-vehicular/96445/informacion_para_analisis_estadistico_vehiculos_2026_agosto",
+      "periodo": "2006-2025",
+      "n_puntos": 20,
+      "valor": 724170,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AGN (cita a SAT, corte julio 2026): 6,773,536 vehiculos y 3,474,069 motos",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/4801/analisis-estadistico-del-parque-vehicular/96445/informacion_para_analisis_estadistico_vehiculos_2026_agosto",
+        "cita": "ANIO_ALZA=2025: suma CANTIDAD total = 724170; TIPO_VEHICULO=MOTO = 456622; ANIO_ALZA=2015 total = 216959, MOTO = 96433",
+        "archivo_local": "sesiones/_descargas/sat_pv_2026_08/resumen_anios.json"
+      },
+      "serie": [
+        {
+          "p": "2006",
+          "v": 124902
+        },
+        {
+          "p": "2007",
+          "v": 142031
+        },
+        {
+          "p": "2008",
+          "v": 129595
+        },
+        {
+          "p": "2009",
+          "v": 106902
+        },
+        {
+          "p": "2010",
+          "v": 108374
+        },
+        {
+          "p": "2011",
+          "v": 126111
+        },
+        {
+          "p": "2012",
+          "v": 143134
+        },
+        {
+          "p": "2013",
+          "v": 145708
+        },
+        {
+          "p": "2014",
+          "v": 161687
+        },
+        {
+          "p": "2015",
+          "v": 216959
+        },
+        {
+          "p": "2016",
+          "v": 273304
+        },
+        {
+          "p": "2017",
+          "v": 299990
+        },
+        {
+          "p": "2018",
+          "v": 309032
+        },
+        {
+          "p": "2019",
+          "v": 332007
+        },
+        {
+          "p": "2020",
+          "v": 342072
+        },
+        {
+          "p": "2021",
+          "v": 436684
+        },
+        {
+          "p": "2022",
+          "v": 448551
+        },
+        {
+          "p": "2023",
+          "v": 532781
+        },
+        {
+          "p": "2024",
+          "v": 612019
+        },
+        {
+          "p": "2025",
+          "v": 724170
+        }
+      ],
+      "partes": [
+        {
+          "etiqueta": "Motos (tipo MOTO) 2025",
+          "v": 456622,
+          "valor": 456622,
+          "nombre": "Motos (tipo MOTO) 2025"
+        },
+        {
+          "etiqueta": "Resto de vehículos 2025",
+          "v": 267548,
+          "valor": 267548,
+          "nombre": "Resto de vehículos 2025"
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c04",
+      "concepto": "Parque vehicular activo total y motocicletas, agosto 2026",
+      "unidad": "vehículos",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "SAT, Análisis estadístico del parque vehicular (archivo de agosto 2026, publicado 08-09-2026)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/4801/analisis-estadistico-del-parque-vehicular/96445/informacion_para_analisis_estadistico_vehiculos_2026_agosto",
+      "n_puntos": 2,
+      "valor": 6891249,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AGN (cita a SAT, corte julio 2026): 6,773,536 vehiculos y 3,474,069 motos",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/4801/analisis-estadistico-del-parque-vehicular/96445/informacion_para_analisis_estadistico_vehiculos_2026_agosto",
+        "cita": "Suma CANTIDAD total = 6891249; TIPO_VEHICULO=MOTO = 3405054; USO_VEHICULO=MOTOCICLETA = 3529393",
+        "archivo_local": "sesiones/_descargas/sat_pv_2026_08/INE_PARQUE_VEHICULAR_080926.txt"
+      },
+      "partes": [
+        {
+          "etiqueta": "Motos (tipo MOTO)",
+          "v": 3405054,
+          "valor": 3405054,
+          "nombre": "Motos (tipo MOTO)"
+        },
+        {
+          "etiqueta": "Resto",
+          "v": 3486195,
+          "valor": 3486195,
+          "nombre": "Resto"
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "dato.png"
+      ]
+    },
+    {
+      "id": "dat-c05",
+      "concepto": "Proporción de motos (tipo MOTO) en el parque activo por departamento, agosto 2026",
+      "unidad": "% del parque del departamento (Petén)",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "SAT, Análisis estadístico del parque vehicular (agosto 2026)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/4801/analisis-estadistico-del-parque-vehicular/96445/informacion_para_analisis_estadistico_vehiculos_2026_agosto",
+      "n_puntos": 22,
+      "valor": 77.8,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AGN (cita a SAT, corte julio 2026): 6,773,536 vehiculos y 3,474,069 motos",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/4801/analisis-estadistico-del-parque-vehicular/96445/informacion_para_analisis_estadistico_vehiculos_2026_agosto",
+        "cita": "PETEN total 208017, MOTO 161740 (77.8 %); QUETZALTENANGO total 440703, MOTO 139035 (31.5 %)",
+        "archivo_local": "sesiones/_descargas/sat_pv_2026_08/resumen_departamentos.json"
+      },
+      "partes": [
+        {
+          "etiqueta": "Peten",
+          "v": 77.8,
+          "moto": 161740,
+          "total": 208017,
+          "valor": 77.8,
+          "nombre": "Peten"
+        },
+        {
+          "etiqueta": "Baja Verapaz",
+          "v": 74.3,
+          "moto": 64126,
+          "total": 86249,
+          "valor": 74.3,
+          "nombre": "Baja Verapaz"
+        },
+        {
+          "etiqueta": "Escuintla",
+          "v": 71.5,
+          "moto": 284726,
+          "total": 398409,
+          "valor": 71.5,
+          "nombre": "Escuintla"
+        },
+        {
+          "etiqueta": "Alta Verapaz",
+          "v": 69.2,
+          "moto": 108906,
+          "total": 157473,
+          "valor": 69.2,
+          "nombre": "Alta Verapaz"
+        },
+        {
+          "etiqueta": "Quiche",
+          "v": 68.0,
+          "moto": 127712,
+          "total": 187790,
+          "valor": 68.0,
+          "nombre": "Quiche"
+        },
+        {
+          "etiqueta": "Suchitepequez",
+          "v": 67.4,
+          "moto": 127821,
+          "total": 189598,
+          "valor": 67.4,
+          "nombre": "Suchitepequez"
+        },
+        {
+          "etiqueta": "Retalhuleu",
+          "v": 67.4,
+          "moto": 98651,
+          "total": 146449,
+          "valor": 67.4,
+          "nombre": "Retalhuleu"
+        },
+        {
+          "etiqueta": "Solola",
+          "v": 67.0,
+          "moto": 48866,
+          "total": 72941,
+          "valor": 67.0,
+          "nombre": "Solola"
+        },
+        {
+          "etiqueta": "Izabal",
+          "v": 66.3,
+          "moto": 127977,
+          "total": 193130,
+          "valor": 66.3,
+          "nombre": "Izabal"
+        },
+        {
+          "etiqueta": "Jalapa",
+          "v": 65.0,
+          "moto": 67849,
+          "total": 104361,
+          "valor": 65.0,
+          "nombre": "Jalapa"
+        },
+        {
+          "etiqueta": "El Progreso",
+          "v": 61.3,
+          "moto": 49448,
+          "total": 80670,
+          "valor": 61.3,
+          "nombre": "El Progreso"
+        },
+        {
+          "etiqueta": "Sacatepequez",
+          "v": 58.3,
+          "moto": 80257,
+          "total": 137658,
+          "valor": 58.3,
+          "nombre": "Sacatepequez"
+        },
+        {
+          "etiqueta": "Chiquimula",
+          "v": 56.4,
+          "moto": 88342,
+          "total": 156747,
+          "valor": 56.4,
+          "nombre": "Chiquimula"
+        },
+        {
+          "etiqueta": "Huehuetenango",
+          "v": 56.0,
+          "moto": 158095,
+          "total": 282482,
+          "valor": 56.0,
+          "nombre": "Huehuetenango"
+        },
+        {
+          "etiqueta": "Santa Rosa",
+          "v": 52.5,
+          "moto": 85461,
+          "total": 162654,
+          "valor": 52.5,
+          "nombre": "Santa Rosa"
+        },
+        {
+          "etiqueta": "Zacapa",
+          "v": 51.7,
+          "moto": 77283,
+          "total": 149484,
+          "valor": 51.7,
+          "nombre": "Zacapa"
+        },
+        {
+          "etiqueta": "Jutiapa",
+          "v": 46.0,
+          "moto": 96532,
+          "total": 209788,
+          "valor": 46.0,
+          "nombre": "Jutiapa"
+        },
+        {
+          "etiqueta": "San Marcos",
+          "v": 45.7,
+          "moto": 143268,
+          "total": 313220,
+          "valor": 45.7,
+          "nombre": "San Marcos"
+        },
+        {
+          "etiqueta": "Chimaltenango",
+          "v": 44.3,
+          "moto": 120939,
+          "total": 272950,
+          "valor": 44.3,
+          "nombre": "Chimaltenango"
+        },
+        {
+          "etiqueta": "Guatemala",
+          "v": 39.1,
+          "moto": 1117547,
+          "total": 2860826,
+          "valor": 39.1,
+          "nombre": "Guatemala"
+        },
+        {
+          "etiqueta": "Totonicapan",
+          "v": 38.3,
+          "moto": 30473,
+          "total": 79650,
+          "valor": 38.3,
+          "nombre": "Totonicapan"
+        },
+        {
+          "etiqueta": "Quetzaltenango",
+          "v": 31.5,
+          "moto": 139035,
+          "total": 440703,
+          "valor": 31.5,
+          "nombre": "Quetzaltenango"
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c06",
+      "concepto": "Motocicletas (tipo MOTO) con alta enero-agosto 2026 vs enero-agosto 2025",
+      "unidad": "motocicletas",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "SAT, Análisis estadístico del parque vehicular (agosto 2026)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/4801/analisis-estadistico-del-parque-vehicular/96445/informacion_para_analisis_estadistico_vehiculos_2026_agosto",
+      "n_puntos": 2,
+      "valor": 344417,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AGN (cita a SAT, corte julio 2026): 6,773,536 vehiculos y 3,474,069 motos",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/4801/analisis-estadistico-del-parque-vehicular/96445/informacion_para_analisis_estadistico_vehiculos_2026_agosto",
+        "cita": "ANIO_ALZA=2026 (meses 01-08), MOTO = 344417; ANIO_ALZA=2025 meses 01-08 suman 305022",
+        "archivo_local": "sesiones/_descargas/sat_pv_2026_08/resumen_anios.json"
+      },
+      "partes": [
+        {
+          "etiqueta": "Ene-ago 2025",
+          "v": 305022,
+          "valor": 305022,
+          "nombre": "Ene-ago 2025"
+        },
+        {
+          "etiqueta": "Ene-ago 2026",
+          "v": 344417,
+          "valor": 344417,
+          "nombre": "Ene-ago 2026"
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    }
+  ],
+  "fuentes": [
+    {
+      "nombre": "SAT — Análisis estadístico del parque vehicular",
+      "url": "https://portal.sat.gob.gt/portal/parque-vehicular/",
+      "nota": "Página con archivos mensuales zip (txt | ) desde 2025-01; agosto 2026 publicado 08-09-2026; fetch directo con curl/fetch_tabla funciona (sin WAF). Descomprimir y agregar CANTIDAD por ANIO_ALZA/TIPO/USO/DEPARTAMENTO."
+    },
+    {
+      "nombre": "INE — nacimientos 2024 (datos abiertos)",
+      "url": "https://datos.ine.gob.gt/dataset/96888fc0-5ced-4a58-bfd0-2a6a292e3208/resource/14f54638-cf4a-4476-9a45-e03ab2baa3c3/download/nacimientos2024_da.xlsx",
+      "nota": "Ya en caché: sesiones/_descargas/nacimientos2024_da_hoja1.csv (299,256 filas)."
+    },
+    {
+      "nombre": "AGN — SAT y el ISCV 2026",
+      "url": "https://agn.gt/?p=558465",
+      "nota": "Reproduce totales SAT de parque activo (julio 2026)."
+    }
+  ],
+  "no_afirma": [
+    "No afirma que el país tenga más motos que personas ni que el parque crezca más que la población: no descuenta bajas, defunciones ni migración.",
+    "No usa altas brutas: la SAT no publica esa serie; cuenta las motos con alta en 2024 que seguían activas en agosto de 2026.",
+    "No atribuye el auge de la moto a una causa (transporte público, crédito, remesas)."
+  ],
+  "incertidumbre": [
+    "La segunda fuente reproduce la primaria; sin verificación independiente.",
+    "Motos = parque activo a agosto de 2026 por año de alta (piso de las inscritas en 2024); nacimientos = registros del INE. Otra fuente de nacimientos (RENAP) no se verificó.",
+    "Tipo de vehículo MOTO; por uso MOTOCICLETA la cifra es algo mayor."
+  ],
+  "descartadas": [],
+  "tipo": "dato"
+}

@@ -1,0 +1,20 @@
+{
+ "slug": "fixture-auditoria",
+ "tema": "fixture de auditoría",
+ "fecha": "2026-10-14",
+ "modo": "investigacion",
+ "paleta": "obsidiana",
+ "sesion_dir": "sesiones/_fixture_auditoria",
+ "fixture": true,
+ "smoke": true,
+ "ejes": [
+  {
+   "id": "aaa",
+   "prefijo": "aaa"
+  },
+  {
+   "id": "bbb",
+   "prefijo": "bbb"
+  }
+ ]
+}

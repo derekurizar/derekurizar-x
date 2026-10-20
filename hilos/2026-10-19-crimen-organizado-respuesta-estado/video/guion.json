@@ -1,0 +1,133 @@
+{
+ "id": "2026-10-19-crimen-organizado-respuesta-estado",
+ "slug": "crimen-organizado-respuesta-estado",
+ "hilo": "hilos/2026-10-19-crimen-organizado-respuesta-estado",
+ "paleta": "terracota",
+ "duracion": "corto",
+ "duracion_s": 59.0,
+ "n_escenas": 5,
+ "musica": "terracota-1",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 768,
+ "contexto_superior": "Crimen organizado · Guatemala 2026",
+ "gancho": {
+  "formula": "cifra",
+  "pantalla": "8,402 kg de cocaína",
+  "linea": "decomisados en 6 meses. ¿Y las condenas?"
+ },
+ "promesa": {
+  "texto": "¿Y cuántos homicidios acaban en condena?",
+  "en": 1,
+  "pago": 5
+ },
+ "critica": {
+  "veredicto": "pasa",
+  "vuelta": 2,
+  "puntajes": {
+   "gancho": 4,
+   "bucle": 4,
+   "ritmo": 4,
+   "escala_humana": 4,
+   "pago": 4,
+   "cierre": 4
+  }
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "tuit": null,
+   "plantilla": "gancho",
+   "enlace": null,
+   "golpe": null,
+   "cinetico": {
+    "pantalla": "8,402 kg de cocaína",
+    "linea": "decomisados en 6 meses. ¿Y las condenas?"
+   },
+   "pantalla": "En Guatemala: más de 8 mil kilos de cocaína en seis meses. ¿Y cuántos homicidios acaban en condena?",
+   "voz": "En Guatemala: más de ocho mil kilos de cocaína en seis meses. ¿Y cuántos homicidios acaban en condena?",
+   "dur": 7.752
+  },
+  {
+   "n": 2,
+   "tipo": "tarjeta",
+   "tuit": 1,
+   "plantilla": "antes-despues",
+   "enlace": null,
+   "golpe": "5 veces más cocaína decomisada",
+   "cinetico": null,
+   "pantalla": "Un año antes, de enero a junio, fueron 1,596 kg. Este año, más de 5 veces más.",
+   "voz": "Un año antes, de enero a junio, fueron mil quinientos noventa y seis kilogramos. Este año, más de cinco veces más.",
+   "dur": 8.946
+  },
+  {
+   "n": 3,
+   "tipo": "tarjeta",
+   "tuit": 12,
+   "plantilla": "barras-v",
+   "enlace": "pero",
+   "golpe": "De 10 a 20 agentes muertos",
+   "cinetico": null,
+   "pantalla": "Pero la violencia cambió de blanco. Según un recuento de la agencia EFE, al 28 de julio iban 20 policías asesinados: el doble que en todo 2025.",
+   "voz": "Pero la violencia cambió de blanco. Según un recuento de la agencia EFE, al veintiocho de julio iban veinte policías asesinados: el doble que en todo dos mil veinticinco.",
+   "dur": 11.897
+  },
+  {
+   "n": 4,
+   "tipo": "tarjeta",
+   "tuit": 16,
+   "plantilla": "antes-despues",
+   "enlace": "y",
+   "golpe": "Cada vez menos condenas",
+   "cinetico": null,
+   "pantalla": "Y en la justicia, peor: en 2014, el 13% de los casos de homicidio concluidos terminaba en sentencia. ¿Y en 2024?",
+   "voz": "Y en la justicia, peor: en dos mil catorce, el trece por ciento de los casos de homicidio concluidos terminaba en sentencia. ¿Y en dos mil veinticuatro?",
+   "dur": 11.177
+  },
+  {
+   "n": 5,
+   "tipo": "golpe",
+   "tuit": null,
+   "plantilla": "golpe",
+   "enlace": "por_eso",
+   "golpe": null,
+   "cinetico": {
+    "pantalla": "1 de cada 25",
+    "linea": "casos de homicidio concluidos termina en sentencia"
+   },
+   "pantalla": "El resultado: en 2024, 1 de cada 25 casos de homicidio concluidos acaba en condena.",
+   "voz": "El resultado: en dos mil veinticuatro, uno de cada veinticinco casos de homicidio concluidos acaba en condena.",
+   "dur": 8.216
+  },
+  {
+   "n": 6,
+   "tipo": "cierre",
+   "tuit": null,
+   "plantilla": "cierre",
+   "enlace": null,
+   "golpe": null,
+   "cinetico": null,
+   "pantalla": "Más cocaína decomisada, pero más policías asesinados y muy pocas condenas. Y tú, ¿te sientes más seguro que hace un año?",
+   "voz": "Más cocaína decomisada, pero más policías asesinados y muy pocas condenas. Y tú, ¿te sientes más seguro que hace un año?",
+   "dur": 11.041
+  }
+ ],
+ "cierre": {
+  "texto": "Más cocaína decomisada, pero más policías asesinados y muy pocas condenas. Y tú, ¿te sientes más seguro que hace un año?",
+  "resumen": [
+   "Más cocaína decomisada.",
+   "Más policías asesinados, pocas condenas."
+  ],
+  "pregunta": "Y tú, ¿te sientes más seguro que hace un año?"
+ },
+ "caption": {
+  "tiktok": "Más de 8 mil kilos de cocaína decomisados en seis meses en Guatemala. Pero solo 4 de cada 100 casos de homicidio concluidos terminan en sentencia.\n#Guatemala #DatosGT #Seguridad #CrimenOrganizado",
+  "facebook": "Más de 8 mil kilos de cocaína decomisados en seis meses en Guatemala. ¿Se nota en la calle?\n▸ Cocaína decomisada de enero a junio: 1,596 kg en 2025 y 8,402 kg en 2026.\n▸ Policías asesinados: 10 en todo 2025 y 20 en 2026 al 28 de julio (recuento de EFE).\n▸ Casos de homicidio concluidos que terminan en sentencia: 13% en 2014 y 4% en 2024.\n▸ Solo 1 de cada 25 llega a una condena.\nFuentes: PNC vía AGN; recuento de EFE publicado por Emisoras Unidas; CIEN, boletín Respuesta institucional."
+ }
+}

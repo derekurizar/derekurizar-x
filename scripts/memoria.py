@@ -37,6 +37,12 @@
     hilo en hilos.json). --solo-informe registra solo el informe sobre un hilo YA registrado (flujo desde:<slug>):
     el hilo no se toca ni se funden series. Un numero ya usado por otro informe es error.
 
+--video <hilos/<fecha>-<slug>/video> [--estado listo|incompleto] [--dry-run]
+  Registra el video de /video (lee el guion.json de entrega que escribe scripts/video.py entregar) en
+  memoria/videos.json → videos[] {id, fecha, slug, hilo_id, tema, paleta, duracion, duracion_s, n_escenas,
+  musica, creditos_voz, ruta_video, ruta_hilo, estado}; un id repetido se actualiza. video.py lo lee para rotar
+  la música de cada paleta.
+
 --series "tema"   mismo filtro que scripts/fuentes.py --series
 --informes ["tema"] lista los informes registrados (del más reciente al más antiguo; con tema, filtrados) y
                   termina con «siguiente N.º NN» (lo usa /investigacion para numerar)
@@ -52,6 +58,7 @@ import json
 import os
 import re
 import sys
+import time
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(RAIZ, "scripts"))
@@ -66,6 +73,12 @@ VACIO_INFORMES = {
     "version": 1,
     "_comentario": "Registro de informes de investigación (PDF) producidos por /investigacion. Lo escribe SOLO scripts/memoria.py (--registrar … --informe) desde el productor; `python3 scripts/memoria.py --informes` lista y da el siguiente N.º. estado: borrador | listo | publicado | incompleto · modo: investigacion (flujo completo) | desde (informe sobre un hilo previo).",
     "informes": [],
+}
+VIDEOS = os.path.join(RAIZ, "memoria", "videos.json")
+VACIO_VIDEOS = {
+    "version": 1,
+    "_comentario": "Registro de videos verticales producidos por /video a partir de un hilo entregado. Lo escribe SOLO scripts/memoria.py --video <hilos/<fecha>-<slug>/video>; scripts/video.py lo lee para rotar la música de cada paleta. estado: listo | publicado | incompleto · duracion: corto | medio | largo.",
+    "videos": [],
 }
 FUENTES = os.path.join(RAIZ, "memoria", "fuentes.json")
 VACIO_DATOS = {
@@ -251,7 +264,8 @@ def registro_informe(a, guion, hid_hilo, slug, tema, tesis):
     nombre = os.path.basename(os.path.normpath(a.informe))
     m = re.match(r"(\d{4}-\d{2}-\d{2})-([a-z0-9-]+)$", nombre)
     fecha_inf, slug_inf = (m.group(1), m.group(2)) if m else (guion.get("fecha") or "", slug)
-    paginas = R.get("paginas") or []
+    paginas = list(R.get("paginas") or [])
+    _informe.continuar_indice(paginas)  # hojas «Figuras y tablas» que informe.py inserta tras el índice
     n_fig = sum(1 for P in paginas for k, _ in _informe.figuras_de_pagina(P) if k == "figura")
     if not os.path.exists(os.path.join(d, "salida", "informe.pdf")):
         print("AVISO: %s/salida/informe.pdf no existe todavía (corre scripts/informe.py %s --check)" % (a.informe, a.informe), file=sys.stderr)
@@ -454,13 +468,66 @@ def listar_informes(tema, maximo):
     return 0
 
 
+def registrar_video(d, estado, dry_run=False):
+    """--video DIR: registra en memoria/videos.json el video entregado en DIR (hilos/<fecha>-<slug>/video, con guion.json)."""
+    ruta = os.path.normpath(d)
+    g = leer(os.path.join(RAIZ, ruta, "guion.json"), obligatorio=False)
+    if not g or not g.get("id"):
+        print("ERROR: %s no tiene guion.json de entrega (scripts/video.py entregar)" % ruta, file=sys.stderr)
+        return 1
+    hilo = leer(os.path.join(RAIZ, g["hilo"], "hilo.json"), obligatorio=False) or {}
+    reg = {
+        "id": g["id"], "fecha": time.strftime("%Y-%m-%d"), "slug": g["slug"], "hilo_id": "%s-%s" % (hilo.get("fecha"), g["slug"]),
+        "tema": hilo.get("tema", ""), "paleta": g["paleta"], "duracion": g["duracion"], "duracion_s": g["duracion_s"],
+        "n_escenas": g["n_escenas"], "musica": g["musica"], "creditos_voz": g.get("creditos_voz"),
+        "ruta_video": ruta, "ruta_hilo": g["hilo"], "estado": estado,
+    }
+    mv = leer(VIDEOS, obligatorio=False) or json.loads(json.dumps(VACIO_VIDEOS))
+    previos = [i for i, v in enumerate(mv["videos"]) if v.get("id") == reg["id"]]
+    if previos:
+        mv["videos"][previos[0]] = reg
+    else:
+        mv["videos"].append(reg)
+    print("video %s · %s %.0f s · %d escenas · música %s · %s" % (reg["id"], reg["duracion"], reg["duracion_s"],
+                                                              reg["n_escenas"], reg["musica"], reg["estado"]))
+    if dry_run:
+        print("[dry-run] no se escribió nada")
+        return 0
+    escribir(VIDEOS, mv)
+    print("escrito memoria/videos.json (%d videos)" % len(mv["videos"]))
+    return 0
+
+
+def conciliar_modos(dry_run=False):
+    """Registros viejos sin «modo»: lo toma del hilo.json / dato.json de su entrega (o el del tipo)."""
+    n = 0
+    for archivo, clave, entrega, defecto in ((HILOS, "hilos", "hilo.json", "hilo"), (DATOS, "datos", "dato.json", "dato")):
+        d = leer(archivo, obligatorio=False)
+        if not d:
+            continue
+        cambia = False
+        for r in d.get(clave, []):
+            if r.get("modo"):
+                continue
+            j = leer(os.path.join(RAIZ, str(r.get("ruta", "")), entrega), obligatorio=False) or {}
+            r["modo"] = j.get("modo") or defecto
+            cambia, n = True, n + 1
+            print("%s%s → modo %s" % ("[dry-run] " if dry_run else "", r.get("id"), r["modo"]))
+        if cambia and not dry_run:
+            escribir(archivo, d)
+    print("[memoria] %d registro(s) con modo completado" % n)
+    return 0
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     g = p.add_mutually_exclusive_group(required=True)
     g.add_argument("--registrar", metavar="SESION", help="carpeta sesiones/<slug> (hilo o dato según guion.tipo)")
     g.add_argument("--series", metavar="TEMA", help="busca series conocidas para un tema")
     g.add_argument("--datos", nargs="?", const="", metavar="TEMA", help="lista los datos registrados en memoria/datos.json (/dato), del más reciente al más antiguo; con TEMA filtra por palabras clave")
+    g.add_argument("--conciliar-modos", action="store_true", help="completa «modo» en los registros de hilos.json y datos.json que no lo tienen, desde el hilo.json / dato.json de su entrega")
     g.add_argument("--informes", nargs="?", const="", metavar="TEMA", help="lista los informes de memoria/informes.json (/investigacion) y el siguiente N.º; con TEMA filtra")
+    g.add_argument("--video", metavar="DIR", help="registra el video de /video entregado en DIR (hilos/<fecha>-<slug>/video) en memoria/videos.json")
     p.add_argument("--ruta", help="carpeta de entrega, relativa a la raíz (hilos/<fecha>-<slug>, datos/<fecha>-<slug> o investigacion/<fecha>-<slug>/hilo)")
     p.add_argument("--informe", metavar="DIR", help="con --registrar: carpeta del informe (investigacion/<fecha>-<slug>, con informe.json) → memoria/informes.json")
     p.add_argument("--solo-informe", action="store_true", help="con --informe: registra solo el informe; el hilo ya está en hilos.json (flujo desde:<slug>)")
@@ -469,6 +536,10 @@ def main():
     p.add_argument("--dry-run", action="store_true")
     p.add_argument("--max", type=int, default=12)
     a = p.parse_args()
+    if a.conciliar_modos:
+        return conciliar_modos(a.dry_run)
+    if a.video:
+        return registrar_video(a.video, a.estado, a.dry_run)
     if a.datos is not None:
         return listar_datos(a.datos, a.max)
     if a.informes is not None:

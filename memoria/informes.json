@@ -17,6 +17,22 @@
       "hilo_id": "2026-10-06-dengue-2026-caida-serotipos",
       "estado": "listo",
       "modo": "desde"
+    },
+    {
+      "id": "2026-10-13-cumplimiento-plan-semilla",
+      "fecha": "2026-10-13",
+      "slug": "cumplimiento-plan-semilla",
+      "tema": "Cumplimiento del Plan de Gobierno 2024-2028 del Movimiento Semilla (gobierno de Bernardo Arévalo) a octubre de 2026: avance de cada uno de sus 140 compromisos, de cada una de las 10 semillas, del marco fiscal y global",
+      "tesis": "A octubre de 2026, con el 68.7% del mandato transcurrido, el Plan de Gobierno de Semilla avanza 22.9% (promedio de las 10 semillas, con los compromisos sin dato oficial en 0); ninguna semilla va al ritmo del mandato y lo que más avanza es el marco fiscal (44.9%).",
+      "paleta": "obsidiana",
+      "numero": "02",
+      "n_paginas": 127,
+      "n_figuras": 49,
+      "ruta_informe": "investigacion/2026-10-13-cumplimiento-plan-semilla",
+      "ruta_hilo": "investigacion/2026-10-13-cumplimiento-plan-semilla/hilo",
+      "hilo_id": "2026-10-13-cumplimiento-plan-semilla",
+      "estado": "listo",
+      "modo": "investigacion"
     }
   ]
 }

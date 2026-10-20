@@ -1,0 +1,51 @@
+{
+ "eje": "aaa",
+ "items": [
+  {
+   "id": "aaa-c01",
+   "veredicto": "verificada",
+   "valor_final": 400,
+   "fuente_2": "FIXTURE",
+   "url_2": "https://example.com/2",
+   "independencia": "baja",
+   "nota": "FIXTURE"
+  },
+  {
+   "id": "aaa-c02",
+   "veredicto": "verificada",
+   "valor_final": 120,
+   "fuente_2": "FIXTURE",
+   "url_2": "https://example.com/2",
+   "independencia": "baja",
+   "nota": "FIXTURE"
+  }
+ ],
+ "compromisos": [
+  {
+   "id": "S1-01",
+   "veredicto": "confirmado",
+   "url_2": "https://example.com/2",
+   "nota": "FIXTURE"
+  },
+  {
+   "id": "S1-02",
+   "veredicto": "confirmado",
+   "url_2": "https://example.com/2",
+   "nota": "FIXTURE"
+  },
+  {
+   "id": "S1-03",
+   "veredicto": "confirmado",
+   "url_2": "https://example.com/2",
+   "nota": "FIXTURE"
+  },
+  {
+   "id": "S1-04",
+   "veredicto": "corregido",
+   "estado": "no_atribuible",
+   "existe_desde": "2013",
+   "nota": "no atribuible: la evaluación docente existe desde 2013 (FIXTURE)",
+   "url_2": "https://example.com/2"
+  }
+ ]
+}

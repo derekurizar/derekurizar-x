@@ -287,6 +287,11 @@ const H = (() => {
     assert(!/https?:\/\//i.test(JSON.stringify(D)), "no van URLs dentro de la tarjeta");
     document.getElementById("kicker").textContent = D.kicker;
     document.getElementById("titular").innerHTML = D.titular.map(esc).join("<br>");
+    // titular_escala (1–1.5, opcional): titular más grande en tarjetas de titular corto (p. ej. el nombre de una sección).
+    if (D.titular_escala != null) {
+      assert(typeof D.titular_escala === "number" && D.titular_escala >= 1 && D.titular_escala <= 1.5, "titular_escala debe ser un número entre 1 y 1.5");
+      document.getElementById("titular").style.fontSize = Math.round(88 * D.titular_escala) + "px";
+    }
     const nota = document.getElementById("nota");
     if (D.nota && D.nota.trim()) { nota.textContent = D.nota; nota.hidden = false; } else nota.hidden = true;
     document.getElementById("fuente").textContent = "Fuente: " + D.fuente;
@@ -323,7 +328,7 @@ const H = (() => {
   const verificar = (D) => {
     const util = 920;
     for (const linea of D.titular) {
-      const w = medir(linea, "400 88px 'Instrument Serif'") * 0.985; // letter-spacing -.015em
+      const w = medir(linea, "400 " + Math.round(88 * (D.titular_escala || 1)) + "px 'Instrument Serif'") * 0.985; // letter-spacing -.015em
       assert(w <= util, "titular no cabe en una línea (" + Math.round(w) + "px > " + util + "): «" + linea + "»");
     }
     assert(medir(D.kicker.toUpperCase(), "500 20px 'JetBrains Mono'") * 1.16 <= util, "kicker demasiado largo");

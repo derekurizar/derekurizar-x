@@ -1,0 +1,213 @@
+{
+  "slug": "voto-extranjero-2027",
+  "fecha": "2026-10-11",
+  "tesis": "En la primera vuelta de 2023 hubo 1,443 votos válidos en Estados Unidos sobre un padrón de 90,708 empadronados allá: menos de 2 de cada 100.",
+  "ancla_id": "dat-c01",
+  "paleta": "obsidiana",
+  "hook_tipo": "escala_humana",
+  "cifras": [
+    {
+      "id": "dat-c01",
+      "unidad": "votos válidos",
+      "tipo": "desglose",
+      "fuente": "TSE, citado por Prensa Libre",
+      "periodo": "2023-06-25 (primera vuelta)",
+      "n_puntos": 2,
+      "valor": 1443,
+      "veredicto": "ajustada",
+      "independencia": "baja",
+      "fuente_2": "AGN (Agencia Guatemalteca de Noticias), citando datos preliminares del TSE",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/?p=16164305",
+        "cita": "«1 mil 443 sufragios válidos» ... «98.4% de abstencionismo, de un padrón de 90 mil 708 guatemaltecos»",
+        "archivo_local": null
+      },
+      "partes": [
+        {
+          "etiqueta": "Votos válidos (1a vuelta 2023)",
+          "valor": 1443
+        },
+        {
+          "etiqueta": "Empadronados habilitados en EE.UU.",
+          "valor": 90708
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "dato.png"
+      ]
+    },
+    {
+      "id": "dat-c02",
+      "unidad": "personas",
+      "tipo": "desglose",
+      "fuente": "TSE, citado por La Hora (7-may-2023)",
+      "periodo": "2023",
+      "n_puntos": 3,
+      "valor": 90708,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa Libre (Elecciones Generales 2023) y AGN",
+      "evidencia": {
+        "url": "https://lahora.gt/nacionales/engelberth-blanco/2023/05/07/tse-utilizara-mas-de-q19-millones-para-voto-migrante-entre-lapiceros-viaticos-y-alimentacion/",
+        "cita": "total de empadronados que podrán emitir su voto [...] será de 90 mil 708 personas, es decir el 3.24% de los guatemaltecos residentes en el país norteamericano",
+        "archivo_local": "sesiones/voto-extranjero-2027/lahora_2023_voto_migrante_q19m.html"
+      },
+      "partes": [
+        {
+          "etiqueta": "Guatemaltecos estimados en EE.UU.",
+          "valor": 2800000
+        },
+        {
+          "etiqueta": "Con DPI tramitado",
+          "valor": 471816
+        },
+        {
+          "etiqueta": "Empadronados habilitados para votar",
+          "valor": 90708
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c03",
+      "unidad": "quetzales",
+      "tipo": "puntual",
+      "fuente": "TSE, Acuerdo 324-2023, citado por La Hora",
+      "periodo": "2023 (primera y segunda vuelta)",
+      "n_puntos": 1,
+      "valor": 19506730,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa Libre / búsqueda: TSE aprobó Q19,506,730 para elecciones en EE.UU. 2023",
+      "evidencia": {
+        "url": "https://lahora.gt/nacionales/engelberth-blanco/2023/05/07/tse-utilizara-mas-de-q19-millones-para-voto-migrante-entre-lapiceros-viaticos-y-alimentacion/",
+        "cita": "Por medio del Acuerdo 324-2023, el TSE aprobó el Plan Operativo Electoral 2023 [...] se estableció Q19 millones 506 mil 730 para las elecciones en Estados Unidos",
+        "archivo_local": "sesiones/voto-extranjero-2027/lahora_2023_voto_migrante_q19m.html"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c04",
+      "unidad": "votantes",
+      "tipo": "desglose",
+      "fuente": "TSE, citado por La Hora (7-may-2023)",
+      "periodo": "2019 (primera vuelta)",
+      "n_puntos": 3,
+      "valor": 734,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa Libre (búsqueda, nota 2019) / Emisoras Unidas (63 mil empadronados)",
+      "evidencia": {
+        "url": "https://lahora.gt/nacionales/engelberth-blanco/2023/05/07/tse-utilizara-mas-de-q19-millones-para-voto-migrante-entre-lapiceros-viaticos-y-alimentacion/",
+        "cita": "únicamente 734 guatemaltecos en la primera vuelta y en la segunda 521 se hicieron presentes [...] en 2019 el 63 mil 695 personas estaban habilitadas para votar en el extranjero",
+        "archivo_local": "sesiones/voto-extranjero-2027/lahora_2023_voto_migrante_q19m.html"
+      },
+      "partes": [
+        {
+          "etiqueta": "Habilitados 2019",
+          "valor": 63695
+        },
+        {
+          "etiqueta": "Votaron 1a vuelta 2019",
+          "valor": 734
+        },
+        {
+          "etiqueta": "Votaron 2a vuelta 2019",
+          "valor": 521
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c06",
+      "unidad": "empadronados (cifra redonda de la fuente)",
+      "tipo": "puntual",
+      "fuente": "TSE (magistrado Mario Velásquez), citado por La Hora",
+      "periodo": "agosto 2026",
+      "n_puntos": 1,
+      "valor": 95274,
+      "valor_original": 100000,
+      "veredicto": "ajustada",
+      "independencia": "baja",
+      "fuente_2": "AGN (DICEP/TSE, corte 25-sep-2026)",
+      "evidencia": {
+        "url": "https://lahora.gt/nacionales/jmaldonado/2026/08/12/tse-reconoce-que-el-voto-en-el-extranjero-es-el-mas-caro-del-mundo/",
+        "cita": "solo en Estados Unidos hay 100 mil empadronados",
+        "archivo_local": "sesiones/voto-extranjero-2027/lahora_voto_extranjero_mas_caro.html"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c07",
+      "unidad": "ciudadanos inscritos",
+      "tipo": "puntual",
+      "fuente": "TSE, noticia oficial (DICEP)",
+      "periodo": "2026-10-01",
+      "n_puntos": 1,
+      "valor": 10252221,
+      "valor_original": 10225221,
+      "veredicto": "ajustada",
+      "independencia": "baja",
+      "fuente_2": "AGN (DICEP/TSE, corte 25-sep-2026)",
+      "evidencia": {
+        "url": "https://tse.org.gt/comunicacion/noticias/padron-electoral-supera-los-10-2-millones-de-inscritos",
+        "cita": "el padrón electoral continúa en crecimiento y actualmente registra 10,225,221 ciudadanos inscritos",
+        "archivo_local": "sesiones/voto-extranjero-2027/tse_padron_10_2.html"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c08",
+      "unidad": "mujeres empadronadas",
+      "tipo": "desglose",
+      "fuente": "TSE (portal de estadísticas), citado por La Hora",
+      "periodo": "2026-09-17",
+      "n_puntos": 2,
+      "valor": 5516458,
+      "valor_original": 5509665,
+      "veredicto": "ajustada",
+      "independencia": "baja",
+      "fuente_2": "AGN (DICEP/TSE, corte 25-sep-2026)",
+      "evidencia": {
+        "url": "https://lahora.gt/nacionales/hgodinez/2026/09/20/empadronamiento-continua-abierto-5-5-millones-de-mujeres-y-4-7-millones-de-hombres-ya-estan-registrados/",
+        "cita": "5 millones 509 mil 665 mujeres y 4 millones 729 mil 529 hombres se encuentran inscritos en el Registro de Ciudadanos",
+        "archivo_local": "sesiones/voto-extranjero-2027/lahora_padron_mujeres.html"
+      },
+      "partes": [
+        {
+          "etiqueta": "Mujeres",
+          "valor": 5509665
+        },
+        {
+          "etiqueta": "Hombres",
+          "valor": 4729529
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    }
+  ],
+  "fuentes": [],
+  "no_afirma": [
+    "No afirma cuántos votos se emitieron en total: la cifra es de votos válidos (sin nulos ni blancos).",
+    "No afirma por qué no votaron los empadronados (distancia, horarios, documentos).",
+    "No afirma cuánto costó cada voto ni cuánto costará 2027."
+  ],
+  "incertidumbre": [
+    "La segunda fuente reproduce la primaria; sin verificación independiente. No se localizó el cuadro oficial del TSE de resultados de la circunscripción EE.UU.; las cifras son del TSE citado por Prensa Libre y La Hora.",
+    "Prensa da cifras inconsistentes para la segunda vuelta; el dato se limita a la primera."
+  ],
+  "descartadas": [
+    {
+      "id": "dat-c05",
+      "por": "no_confirmada"
+    }
+  ],
+  "tipo": "dato"
+}

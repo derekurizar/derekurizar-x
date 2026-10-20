@@ -1,0 +1,2691 @@
+{
+ "plan": {
+  "titulo": "Plan de Gobierno 2024-2028 · Por un país para vivir",
+  "autor": "Movimiento Semilla",
+  "fecha": "2023-03",
+  "archivo_texto": "investigacion/auditorias/plan-semilla-2023/plan.txt",
+  "paginas": 64,
+  "mandato": {
+   "inicio": "2024-01-14",
+   "fin": "2028-01-14"
+  }
+ },
+ "semillas": [
+  {
+   "id": 1,
+   "nombre": "Desarrollo social"
+  },
+  {
+   "id": 2,
+   "nombre": "Protección, asistencia y seguridad social"
+  },
+  {
+   "id": 3,
+   "nombre": "Lucha contra la desnutrición"
+  },
+  {
+   "id": 4,
+   "nombre": "La infraestructura económica de un país para vivir"
+  },
+  {
+   "id": 5,
+   "nombre": "Tecnología e innovación"
+  },
+  {
+   "id": 6,
+   "nombre": "Seguridad democrática en un país para vivir"
+  },
+  {
+   "id": 7,
+   "nombre": "Cuidado de la naturaleza"
+  },
+  {
+   "id": 8,
+   "nombre": "Una ciudadanía sin fronteras"
+  },
+  {
+   "id": 9,
+   "nombre": "Hacia una función pública legítima y eficaz"
+  },
+  {
+   "id": 10,
+   "nombre": "Sembrar las semillas de un nuevo contrato social"
+  },
+  {
+   "id": "F",
+   "nombre": "El financiamiento del desarrollo (bases macrofiscales)"
+  }
+ ],
+ "ejes": [
+  {
+   "id": "edu",
+   "nombre": "Educación y cultura",
+   "prefijo": "edu",
+   "compromisos": [
+    "S1-01",
+    "S1-02",
+    "S1-03",
+    "S1-04",
+    "S1-05",
+    "S1-06",
+    "S1-07",
+    "S1-08",
+    "S1-09",
+    "S1-10",
+    "S1-11",
+    "S1-12",
+    "S1-13",
+    "S1-14"
+   ]
+  },
+  {
+   "id": "sal",
+   "nombre": "Salud",
+   "prefijo": "sal",
+   "compromisos": [
+    "S1-15",
+    "S1-16",
+    "S1-17",
+    "S1-18",
+    "S1-19",
+    "S1-20",
+    "S1-21",
+    "S1-22",
+    "S1-23",
+    "S1-24",
+    "S1-25"
+   ]
+  },
+  {
+   "id": "viv",
+   "nombre": "Vivienda, servicios y desnutrición",
+   "prefijo": "viv",
+   "compromisos": [
+    "S1-26",
+    "S1-27",
+    "S1-28",
+    "S1-29",
+    "S1-30",
+    "S1-31",
+    "S1-32",
+    "S3-01",
+    "S3-02",
+    "S3-03",
+    "S3-04",
+    "S3-05",
+    "S3-06",
+    "S3-07",
+    "S3-08",
+    "S3-09"
+   ]
+  },
+  {
+   "id": "emp",
+   "nombre": "Empleo, tecnología e innovación",
+   "prefijo": "emp",
+   "compromisos": [
+    "S1-33",
+    "S1-34",
+    "S1-35",
+    "S1-36",
+    "S1-37",
+    "S1-38",
+    "S1-39",
+    "S1-40",
+    "S5-01",
+    "S5-02",
+    "S5-03",
+    "S5-04",
+    "S5-05",
+    "S5-06",
+    "S5-07",
+    "S5-08",
+    "S5-09"
+   ]
+  },
+  {
+   "id": "pro",
+   "nombre": "Protección social, IGSS y diáspora",
+   "prefijo": "pro",
+   "compromisos": [
+    "S2-01",
+    "S2-02",
+    "S2-03",
+    "S2-04",
+    "S2-05",
+    "S2-06",
+    "S2-07",
+    "S2-08",
+    "S2-09",
+    "S8-01",
+    "S8-02",
+    "S8-03",
+    "S8-04",
+    "S8-05"
+   ]
+  },
+  {
+   "id": "inf",
+   "nombre": "Infraestructura económica",
+   "prefijo": "inf",
+   "compromisos": [
+    "S4-01",
+    "S4-02",
+    "S4-03",
+    "S4-04",
+    "S4-05",
+    "S4-06",
+    "S4-07",
+    "S4-08",
+    "S4-09",
+    "S4-10",
+    "S4-11"
+   ]
+  },
+  {
+   "id": "seg",
+   "nombre": "Seguridad democrática",
+   "prefijo": "seg",
+   "compromisos": [
+    "S6-01",
+    "S6-02",
+    "S6-03",
+    "S6-04",
+    "S6-05",
+    "S6-06",
+    "S6-07",
+    "S6-08",
+    "S6-09",
+    "S6-10",
+    "S6-11"
+   ]
+  },
+  {
+   "id": "amb",
+   "nombre": "Cuidado de la naturaleza",
+   "prefijo": "amb",
+   "compromisos": [
+    "S7-01",
+    "S7-02",
+    "S7-03",
+    "S7-04",
+    "S7-05",
+    "S7-06",
+    "S7-07",
+    "S7-08",
+    "S7-09",
+    "S7-10"
+   ]
+  },
+  {
+   "id": "gob",
+   "nombre": "Función pública y nuevo contrato social",
+   "prefijo": "gob",
+   "compromisos": [
+    "S9-01",
+    "S9-02",
+    "S9-03",
+    "S9-04",
+    "S9-05",
+    "S9-06",
+    "S10-01",
+    "S10-02",
+    "S10-03",
+    "S10-04",
+    "S10-05",
+    "S10-06"
+   ]
+  },
+  {
+   "id": "ori",
+   "nombre": "Orientaciones fiscales",
+   "prefijo": "ori",
+   "compromisos": [
+    "F-01",
+    "F-02",
+    "F-03",
+    "F-04",
+    "F-05",
+    "F-06",
+    "F-07",
+    "F-08",
+    "F-09",
+    "F-10",
+    "F-11",
+    "F-12",
+    "F-13",
+    "F-14",
+    "F-15"
+   ]
+  },
+  {
+   "id": "mac",
+   "nombre": "Metas macrofiscales",
+   "prefijo": "mac",
+   "compromisos": [
+    "F-16",
+    "F-17",
+    "F-18",
+    "F-19",
+    "F-20",
+    "F-21",
+    "F-22",
+    "F-23",
+    "F-24"
+   ]
+  }
+ ],
+ "compromisos": [
+  {
+   "id": "S1-01",
+   "corto": "Q110 millardos en educación",
+   "semilla": 1,
+   "eje": "edu",
+   "bloque": "Educación",
+   "medida": "monto",
+   "texto": "Invertir Q110.0 millardos en educación durante el periodo",
+   "pagina": 28,
+   "monto_mq": 110000,
+   "indicador": "Gasto devengado del Mineduc 2024, 2025 y 2026 (vigente/devengado a la fecha)",
+   "fuentes_sugeridas": [
+    "SICOIN / Minfin (ejecución por institución y programa)"
+   ]
+  },
+  {
+   "id": "S1-02",
+   "corto": "540,000 estudiantes más",
+   "semilla": 1,
+   "eje": "edu",
+   "bloque": "Educación",
+   "medida": "meta",
+   "texto": "540,000 estudiantes más en la educación pública, en todos los niveles, con especial atención en la educación media",
+   "pagina": 28,
+   "meta": {
+    "valor": 540000,
+    "unidad": "estudiantes",
+    "base": null,
+    "sentido": "sube"
+   },
+   "indicador": "Matrícula inicial del sector oficial: último año disponible menos 2023",
+   "fuentes_sugeridas": [
+    "Mineduc (estadísticas y anuarios)",
+    "SICOIN / Minfin (ejecución por institución y programa)"
+   ]
+  },
+  {
+   "id": "S1-03",
+   "corto": "70,000 aulas y laboratorios",
+   "semilla": 1,
+   "eje": "edu",
+   "bloque": "Educación",
+   "medida": "meta",
+   "texto": "70,000 aulas, salas y laboratorios nuevos en la educación pública",
+   "pagina": 28,
+   "meta": {
+    "valor": 70000,
+    "unidad": "aulas, salas y laboratorios",
+    "base": null,
+    "sentido": "sube"
+   },
+   "indicador": "Aulas nuevas construidas/entregadas (Mineduc, Dideduc, CIV, Consejos de Desarrollo)",
+   "fuentes_sugeridas": [
+    "Mineduc (estadísticas y anuarios)",
+    "SICOIN / Minfin (ejecución por institución y programa)"
+   ]
+  },
+  {
+   "id": "S1-04",
+   "corto": "29.5 millones de libros",
+   "semilla": 1,
+   "eje": "edu",
+   "bloque": "Educación",
+   "medida": "meta",
+   "texto": "Más de 29.5 millones de libros y guías de enseñanza impresos y entregados",
+   "pagina": 28,
+   "meta": {
+    "valor": 29500000,
+    "unidad": "libros y guías",
+    "base": null,
+    "sentido": "sube"
+   },
+   "indicador": "Textos y guías impresos y entregados por el Mineduc (Digecade/programa de textos)",
+   "fuentes_sugeridas": [
+    "Mineduc (estadísticas y anuarios)",
+    "SICOIN / Minfin (ejecución por institución y programa)"
+   ]
+  },
+  {
+   "id": "S1-05",
+   "corto": "36,000 baños escolares",
+   "semilla": 1,
+   "eje": "edu",
+   "bloque": "Educación",
+   "medida": "meta",
+   "texto": "Más de 36,000 nuevos baños y agua garantizada en todas las escuelas e institutos",
+   "pagina": 28,
+   "meta": {
+    "valor": 36000,
+    "unidad": "baños",
+    "base": null,
+    "sentido": "sube"
+   },
+   "indicador": "Servicios sanitarios construidos o remozados en escuelas; escuelas con agua",
+   "fuentes_sugeridas": [
+    "Mineduc (estadísticas y anuarios)",
+    "SICOIN / Minfin (ejecución por institución y programa)"
+   ]
+  },
+  {
+   "id": "S1-06",
+   "corto": "Nueva formación inicial docente",
+   "semilla": 1,
+   "eje": "edu",
+   "bloque": "Educación",
+   "medida": "hito",
+   "texto": "Cambio del Programa de Formación Inicial Docente (Mineduc/Usac)",
+   "pagina": 28,
+   "indicador": "Nuevo programa o convenio de formación inicial docente aprobado y en ejecución",
+   "fuentes_sugeridas": [
+    "Mineduc",
+    "Usac / EFPEM"
+   ]
+  },
+  {
+   "id": "S1-07",
+   "corto": "Evaluación de calidad educativa",
+   "semilla": 1,
+   "eje": "edu",
+   "bloque": "Educación",
+   "medida": "hito",
+   "texto": "Programa de evaluación y mejora continua de la calidad de la educación",
+   "pagina": 28,
+   "indicador": "Programa formal de evaluación (Digeduca) y su aplicación 2024–2026",
+   "fuentes_sugeridas": [
+    "Mineduc / Digeduca"
+   ]
+  },
+  {
+   "id": "S1-08",
+   "corto": "Programa contra la deserción",
+   "semilla": 1,
+   "eje": "edu",
+   "bloque": "Educación",
+   "medida": "hito",
+   "texto": "Programa de atención especial para evitar la deserción y el fracaso escolar",
+   "pagina": 28,
+   "indicador": "Programa formal antideserción y tasas de deserción/fracaso 2023 frente a 2025",
+   "fuentes_sugeridas": [
+    "Mineduc (estadísticas y anuarios)",
+    "SICOIN / Minfin (ejecución por institución y programa)"
+   ]
+  },
+  {
+   "id": "S1-09",
+   "corto": "8 institutos de excelencia",
+   "semilla": 1,
+   "eje": "edu",
+   "bloque": "Educación",
+   "medida": "meta",
+   "texto": "Ocho institutos regionales de excelencia (800 estudiantes cada uno, beca de Q3,600 al mes)",
+   "pagina": 28,
+   "meta": {
+    "valor": 8,
+    "unidad": "institutos",
+    "base": null,
+    "sentido": "sube"
+   },
+   "indicador": "Institutos regionales de excelencia creados y funcionando",
+   "fuentes_sugeridas": [
+    "Mineduc (estadísticas y anuarios)",
+    "SICOIN / Minfin (ejecución por institución y programa)"
+   ]
+  },
+  {
+   "id": "S1-10",
+   "corto": "+30% para artistas del MCD",
+   "semilla": 1,
+   "eje": "edu",
+   "bloque": "Cultura",
+   "medida": "meta",
+   "texto": "Incremento del 30.0% en las asignaciones para mejorar las condiciones de los artistas y el personal del Ministerio de Cultura y Deportes",
+   "pagina": 29,
+   "meta": {
+    "valor": 30,
+    "unidad": "% de aumento",
+    "base": 0,
+    "sentido": "sube"
+   },
+   "indicador": "Variación del presupuesto (devengado) de los programas de formación y difusión artística del MCD frente a 2023",
+   "fuentes_sugeridas": [
+    "SICOIN / Minfin (ejecución por institución y programa)",
+    "Ministerio de Cultura y Deportes"
+   ]
+  },
+  {
+   "id": "S1-11",
+   "corto": "Patrimonio cultural",
+   "semilla": 1,
+   "eje": "edu",
+   "bloque": "Cultura",
+   "medida": "declarativo",
+   "texto": "Fortalecer los programas de patrimonio cultural (museos, sitios arqueológicos, Biblioteca Nacional)",
+   "pagina": 29,
+   "indicador": "Presupuesto y ejecución de los programas de patrimonio del MCD 2023 frente a 2025",
+   "fuentes_sugeridas": [
+    "SICOIN / Minfin (ejecución por institución y programa)"
+   ]
+  },
+  {
+   "id": "S1-12",
+   "corto": "Diversidad cultural",
+   "semilla": 1,
+   "eje": "edu",
+   "bloque": "Cultura",
+   "medida": "declarativo",
+   "texto": "Promoción, respeto y garantía de la diversidad cultural",
+   "pagina": 29,
+   "indicador": "Política o programa formal de diversidad cultural vigente",
+   "fuentes_sugeridas": [
+    "Ministerio de Cultura y Deportes"
+   ]
+  },
+  {
+   "id": "S1-13",
+   "corto": "Cultura y Biblioteca virtuales",
+   "semilla": 1,
+   "eje": "edu",
+   "bloque": "Cultura",
+   "medida": "hito",
+   "texto": "Creación en formatos virtuales del Centro Cultural y de la Biblioteca Nacional",
+   "pagina": 29,
+   "indicador": "Plataformas virtuales del Centro Cultural y de la Biblioteca Nacional en funcionamiento",
+   "fuentes_sugeridas": [
+    "Ministerio de Cultura y Deportes"
+   ]
+  },
+  {
+   "id": "S1-14",
+   "corto": "Fondo de Q125 M de contenidos",
+   "semilla": 1,
+   "eje": "edu",
+   "bloque": "Cultura",
+   "medida": "hito",
+   "texto": "Fondo de Q125.0 millones para la creación de contenido educativo y cultural",
+   "pagina": 29,
+   "monto_mq": 125,
+   "indicador": "Fondo creado y montos asignados/ejecutados",
+   "fuentes_sugeridas": [
+    "SICOIN / Minfin (ejecución por institución y programa)"
+   ]
+  },
+  {
+   "id": "S1-15",
+   "corto": "Q61 millardos en salud",
+   "semilla": 1,
+   "eje": "sal",
+   "bloque": "Salud",
+   "medida": "monto",
+   "texto": "Destinar como mínimo Q61.0 millardos a la salud",
+   "pagina": 30,
+   "monto_mq": 61000,
+   "indicador": "Gasto devengado del MSPAS 2024, 2025 y 2026",
+   "fuentes_sugeridas": [
+    "SICOIN / Minfin (ejecución por institución y programa)"
+   ]
+  },
+  {
+   "id": "S1-16",
+   "corto": "7 millones más atendidos",
+   "semilla": 1,
+   "eje": "sal",
+   "bloque": "Salud",
+   "medida": "meta",
+   "texto": "Ampliar la atención para llegar a 7.0 millones más de personas",
+   "pagina": 30,
+   "meta": {
+    "valor": 7000000,
+    "unidad": "personas",
+    "base": null,
+    "sentido": "sube"
+   },
+   "indicador": "Población cubierta/atendida adicional por el MSPAS (primer nivel) frente a 2023",
+   "fuentes_sugeridas": [
+    "MSPAS / SIGSA"
+   ]
+  },
+  {
+   "id": "S1-17",
+   "corto": "400 puestos de salud",
+   "semilla": 1,
+   "eje": "sal",
+   "bloque": "Salud",
+   "medida": "meta",
+   "texto": "400 puestos de salud con capacidad de resolución mejorada",
+   "pagina": 30,
+   "meta": {
+    "valor": 400,
+    "unidad": "puestos de salud",
+    "base": null,
+    "sentido": "sube"
+   },
+   "indicador": "Puestos de salud remozados, ampliados o fortalecidos",
+   "fuentes_sugeridas": [
+    "MSPAS",
+    "SNIP / Segeplán"
+   ]
+  },
+  {
+   "id": "S1-18",
+   "corto": "50 CAP nuevos",
+   "semilla": 1,
+   "eje": "sal",
+   "bloque": "Salud",
+   "medida": "meta",
+   "texto": "50 centros de atención permanente (CAP) para poblaciones de más de 15,000 habitantes y comunidades rurales de difícil acceso",
+   "pagina": 30,
+   "meta": {
+    "valor": 50,
+    "unidad": "CAP",
+    "base": null,
+    "sentido": "sube"
+   },
+   "indicador": "CAP nuevos construidos o habilitados",
+   "fuentes_sugeridas": [
+    "MSPAS",
+    "SNIP / Segeplán"
+   ]
+  },
+  {
+   "id": "S1-19",
+   "corto": "Hospital de cáncer",
+   "semilla": 1,
+   "eje": "sal",
+   "bloque": "Salud",
+   "medida": "hito",
+   "texto": "Construir el hospital público especializado para la atención del cáncer con unidad de radioterapia (Q800.0 millones)",
+   "pagina": 30,
+   "monto_mq": 800,
+   "indicador": "Estado del proyecto (SNIP, licitación, obra) y monto ejecutado",
+   "fuentes_sugeridas": [
+    "MSPAS",
+    "SNIP / Segeplán",
+    "Guatecompras"
+   ]
+  },
+  {
+   "id": "S1-20",
+   "corto": "Reestructurar la Unaerc",
+   "semilla": 1,
+   "eje": "sal",
+   "bloque": "Salud",
+   "medida": "hito",
+   "texto": "Reestructurar la Unidad Nacional de Atención al Enfermo Renal Crónico (Unaerc)",
+   "pagina": 30,
+   "indicador": "Reestructuración formal (acuerdo, nuevo modelo) de la Unaerc",
+   "fuentes_sugeridas": [
+    "MSPAS",
+    "Unaerc"
+   ]
+  },
+  {
+   "id": "S1-21",
+   "corto": "Atención intercultural",
+   "semilla": 1,
+   "eje": "sal",
+   "bloque": "Salud",
+   "medida": "hito",
+   "texto": "Impulsar un modelo de atención con pertinencia intercultural para todas las etapas del ciclo de vida",
+   "pagina": 30,
+   "indicador": "Modelo de atención aprobado (acuerdo ministerial) y en implementación",
+   "fuentes_sugeridas": [
+    "MSPAS"
+   ]
+  },
+  {
+   "id": "S1-22",
+   "corto": "Medicinas para crónicos",
+   "semilla": 1,
+   "eje": "sal",
+   "bloque": "Salud",
+   "medida": "hito",
+   "texto": "Programa de adscripción voluntaria para la entrega de medicamentos para enfermedades crónicas frecuentes",
+   "pagina": 30,
+   "indicador": "Programa creado y beneficiarios",
+   "fuentes_sugeridas": [
+    "MSPAS"
+   ]
+  },
+  {
+   "id": "S1-23",
+   "corto": "Garantía de vacunación",
+   "semilla": 1,
+   "eje": "sal",
+   "bloque": "Salud",
+   "medida": "hito",
+   "texto": "Programa de garantía de vacunación",
+   "pagina": 30,
+   "indicador": "Programa y coberturas de vacunación (SRP, pentavalente) 2023 frente a 2025",
+   "fuentes_sugeridas": [
+    "MSPAS / PNI",
+    "OPS/OMS-UNICEF WUENIC"
+   ]
+  },
+  {
+   "id": "S1-24",
+   "corto": "Red de farmacias públicas",
+   "semilla": 1,
+   "eje": "sal",
+   "bloque": "Salud",
+   "medida": "hito",
+   "texto": "Empresa estatal con una red de farmacias públicas en todo el país",
+   "pagina": 30,
+   "indicador": "Empresa o red de farmacias públicas creada y número de farmacias",
+   "fuentes_sugeridas": [
+    "MSPAS",
+    "Congreso"
+   ]
+  },
+  {
+   "id": "S1-25",
+   "corto": "Más presupuesto al MSPAS",
+   "semilla": 1,
+   "eje": "sal",
+   "bloque": "Salud",
+   "medida": "meta",
+   "texto": "Fortalecer al MSPAS aumentando su presupuesto anualmente y con planes maestros de infraestructura, recursos humanos, tecnologías y logística",
+   "pagina": 30,
+   "meta": {
+    "valor": 3,
+    "unidad": "años con aumento (2024–2026)",
+    "base": 0,
+    "sentido": "sube",
+    "nivel": true
+   },
+   "indicador": "Presupuesto vigente del MSPAS 2023, 2024, 2025, 2026 (¿sube cada año?) y planes maestros publicados",
+   "fuentes_sugeridas": [
+    "SICOIN / Minfin (ejecución por institución y programa)",
+    "MSPAS"
+   ]
+  },
+  {
+   "id": "S1-26",
+   "corto": "Q22 millardos en vivienda",
+   "semilla": 1,
+   "eje": "viv",
+   "bloque": "Vivienda y servicios",
+   "medida": "monto",
+   "texto": "Inversiones públicas para vivienda y ampliación de servicios en los hogares por aproximadamente Q22.0 millardos",
+   "pagina": 30,
+   "monto_mq": 22000,
+   "indicador": "Devengado en vivienda, agua, saneamiento y electrificación (CIV/Fopavi, Infom, MEM/INDE, municipalidades vía Codedes)",
+   "fuentes_sugeridas": [
+    "SICOIN / Minfin (ejecución por institución y programa)"
+   ]
+  },
+  {
+   "id": "S1-27",
+   "corto": "Q4 millardos para vivienda",
+   "semilla": 1,
+   "eje": "viv",
+   "bloque": "Vivienda y servicios",
+   "medida": "monto",
+   "texto": "Provisión para el apoyo a la producción de vivienda digna (Q4.0 millardos)",
+   "pagina": 31,
+   "monto_mq": 4000,
+   "indicador": "Subsidios Fopavi/CIV otorgados y monto 2024–2026",
+   "fuentes_sugeridas": [
+    "SICOIN / Minfin (ejecución por institución y programa)",
+    "Fopavi / CIV"
+   ]
+  },
+  {
+   "id": "S1-28",
+   "corto": "Piso de cemento",
+   "semilla": 1,
+   "eje": "viv",
+   "bloque": "Vivienda y servicios",
+   "medida": "hito",
+   "texto": "Programa de piso de cemento y revocado de paredes (Q600.0 millones)",
+   "pagina": 31,
+   "monto_mq": 600,
+   "indicador": "Programa creado, viviendas atendidas y monto ejecutado",
+   "fuentes_sugeridas": [
+    "SICOIN / Minfin (ejecución por institución y programa)",
+    "MIDES / CIV"
+   ]
+  },
+  {
+   "id": "S1-29",
+   "corto": "Agua potable 88→95%",
+   "semilla": 1,
+   "eje": "viv",
+   "bloque": "Vivienda y servicios",
+   "medida": "meta",
+   "texto": "Ampliar la cobertura de agua potable del 88 al 95% (Q650.0 millones), con cobertura del 100% de las escuelas",
+   "pagina": 31,
+   "meta": {
+    "valor": 95,
+    "unidad": "% de hogares",
+    "base": 88,
+    "sentido": "sube"
+   },
+   "monto_mq": 650,
+   "indicador": "% de hogares con agua por tubería (ENCOVI/INE o equivalente oficial) y monto ejecutado",
+   "fuentes_sugeridas": [
+    "INE (ENCOVI)",
+    "Infom",
+    "SICOIN / Minfin (ejecución por institución y programa)"
+   ]
+  },
+  {
+   "id": "S1-30",
+   "corto": "Saneamiento 46→85%",
+   "semilla": 1,
+   "eje": "viv",
+   "bloque": "Vivienda y servicios",
+   "medida": "meta",
+   "texto": "Saneamiento ambiental y alcantarillado del 46 al 85% (Q5,450.0 millones)",
+   "pagina": 31,
+   "meta": {
+    "valor": 85,
+    "unidad": "% de hogares",
+    "base": 46,
+    "sentido": "sube"
+   },
+   "monto_mq": 5450,
+   "indicador": "% de hogares conectados a red de drenaje y monto ejecutado",
+   "fuentes_sugeridas": [
+    "INE (ENCOVI)",
+    "Infom",
+    "SICOIN / Minfin (ejecución por institución y programa)"
+   ]
+  },
+  {
+   "id": "S1-31",
+   "corto": "Tratamiento de agua 49→80%",
+   "semilla": 1,
+   "eje": "viv",
+   "bloque": "Vivienda y servicios",
+   "medida": "meta",
+   "texto": "Tratamiento de agua del 49 al 80% (Q4,850.0 millones)",
+   "pagina": 31,
+   "meta": {
+    "valor": 80,
+    "unidad": "% de aguas tratadas",
+    "base": 49,
+    "sentido": "sube"
+   },
+   "monto_mq": 4850,
+   "indicador": "% de aguas residuales/agua tratada y plantas construidas; monto ejecutado",
+   "fuentes_sugeridas": [
+    "MARN",
+    "Infom",
+    "SICOIN / Minfin (ejecución por institución y programa)"
+   ]
+  },
+  {
+   "id": "S1-32",
+   "corto": "Electricidad para todos",
+   "semilla": 1,
+   "eje": "viv",
+   "bloque": "Vivienda y servicios",
+   "medida": "meta",
+   "texto": "Universalizar el acceso a la energía eléctrica (Q7,100.0 millones), impulsando pequeños proyectos comunitarios de generación renovable",
+   "pagina": 31,
+   "meta": {
+    "valor": 100,
+    "unidad": "% de cobertura eléctrica",
+    "base": null,
+    "sentido": "sube"
+   },
+   "monto_mq": 7100,
+   "indicador": "Índice de cobertura eléctrica del MEM 2023 frente al último disponible; proyectos de electrificación rural (INDE/PER)",
+   "fuentes_sugeridas": [
+    "MEM (índice de cobertura eléctrica)",
+    "INDE"
+   ],
+   "nota": "la base se toma del índice del MEM para 2023 (el plan no la declara)"
+  },
+  {
+   "id": "S3-01",
+   "corto": "Desnutrición crónica −10%",
+   "semilla": 3,
+   "eje": "viv",
+   "bloque": "Desnutrición",
+   "medida": "meta",
+   "texto": "Reducir en un 10% la prevalencia de desnutrición crónica",
+   "pagina": 37,
+   "meta": {
+    "valor": 10,
+    "unidad": "% de reducción relativa",
+    "base": 0,
+    "sentido": "sube"
+   },
+   "indicador": "Prevalencia de desnutrición crónica en menores de 5 años: última medición oficial frente a la línea de base",
+   "fuentes_sugeridas": [
+    "INE (ENSMI/ENCOVI)",
+    "SESAN",
+    "MSPAS / SIGSA"
+   ]
+  },
+  {
+   "id": "S3-02",
+   "corto": "Protegiendo la Nueva Cosecha",
+   "semilla": 3,
+   "eje": "viv",
+   "bloque": "Desnutrición",
+   "medida": "hito",
+   "texto": "Programa Protegiendo la Nueva Cosecha (Q16.5 millardos) contra la pobreza y la desnutrición crónica",
+   "pagina": 37,
+   "monto_mq": 16500,
+   "indicador": "Programa creado con ese nombre o equivalente; presupuesto de la Gran Cruzada Nacional por la Nutrición/ SESAN",
+   "fuentes_sugeridas": [
+    "SESAN",
+    "SICOIN / Minfin (ejecución por institución y programa)"
+   ]
+  },
+  {
+   "id": "S3-03",
+   "corto": "Agua potable 88→95%",
+   "semilla": 3,
+   "eje": "viv",
+   "bloque": "Desnutrición",
+   "medida": "meta",
+   "texto": "Agua potable del 88 al 95% y cobertura del 100% de las escuelas",
+   "pagina": 37,
+   "espejo_de": "S1-29"
+  },
+  {
+   "id": "S3-04",
+   "corto": "Saneamiento 46→85%",
+   "semilla": 3,
+   "eje": "viv",
+   "bloque": "Desnutrición",
+   "medida": "meta",
+   "texto": "Saneamiento y alcantarillado del 46 al 85% y cobertura en el 100% de las escuelas",
+   "pagina": 37,
+   "espejo_de": "S1-30"
+  },
+  {
+   "id": "S3-05",
+   "corto": "Tratamiento de agua 49→80%",
+   "semilla": 3,
+   "eje": "viv",
+   "bloque": "Desnutrición",
+   "medida": "meta",
+   "texto": "Tratamiento de agua del 49 al 80%",
+   "pagina": 37,
+   "espejo_de": "S1-31"
+  },
+  {
+   "id": "S3-06",
+   "corto": "Empleo temporal masivo",
+   "semilla": 3,
+   "eje": "viv",
+   "bloque": "Desnutrición",
+   "medida": "meta",
+   "texto": "Programa de empleo masivo en los cuatro meses sin producción agrícola (Q4,800.0 millones)",
+   "pagina": 37,
+   "espejo_de": "S1-36"
+  },
+  {
+   "id": "S3-07",
+   "corto": "Piso de cemento",
+   "semilla": 3,
+   "eje": "viv",
+   "bloque": "Desnutrición",
+   "medida": "hito",
+   "texto": "Programa de piso de cemento y revocado de paredes (Q600.0 millones)",
+   "pagina": 37,
+   "espejo_de": "S1-28"
+  },
+  {
+   "id": "S3-08",
+   "corto": "Insumos agrícolas Q110 M",
+   "semilla": 3,
+   "eje": "viv",
+   "bloque": "Desnutrición",
+   "medida": "monto",
+   "texto": "Dotación de insumos para la producción agropecuaria (Q110.0 millones)",
+   "pagina": 37,
+   "monto_mq": 110,
+   "indicador": "Entrega de insumos (MAGA: fertilizantes, semillas) y monto ejecutado",
+   "fuentes_sugeridas": [
+    "MAGA",
+    "SICOIN / Minfin (ejecución por institución y programa)"
+   ]
+  },
+  {
+   "id": "S3-09",
+   "corto": "Cero muertes por desnutrición",
+   "semilla": 3,
+   "eje": "viv",
+   "bloque": "Desnutrición",
+   "medida": "meta",
+   "texto": "No tolerar una sola muerte por desnutrición",
+   "pagina": 9,
+   "meta": {
+    "valor": 0,
+    "unidad": "muertes por desnutrición aguda",
+    "base": null,
+    "sentido": "baja"
+   },
+   "indicador": "Muertes por desnutrición aguda en menores de 5 años 2023, 2024, 2025, 2026 (MSPAS/SIGSA, SESAN)",
+   "fuentes_sugeridas": [
+    "MSPAS / SIGSA",
+    "SESAN"
+   ],
+   "nota": "meta absoluta: se cumple solo con cero; se evalúa la tendencia frente a 2023"
+  },
+  {
+   "id": "S1-33",
+   "corto": "Q6.9 millardos para empleo",
+   "semilla": 1,
+   "eje": "emp",
+   "bloque": "Empleo",
+   "medida": "monto",
+   "texto": "Asignar Q6.9 millardos a las medidas de empleo",
+   "pagina": 31,
+   "monto_mq": 6900,
+   "indicador": "Devengado de los programas de empleo y formación (Mintrab, Intecap, Mineco, CHN)",
+   "fuentes_sugeridas": [
+    "SICOIN / Minfin (ejecución por institución y programa)"
+   ]
+  },
+  {
+   "id": "S1-34",
+   "corto": "200,000 formados para trabajar",
+   "semilla": 1,
+   "eje": "emp",
+   "bloque": "Empleo",
+   "medida": "meta",
+   "texto": "200,000 graduados del Programa de capacitación y formación para el trabajo (Q1.0 millardo)",
+   "pagina": 31,
+   "meta": {
+    "valor": 200000,
+    "unidad": "graduados",
+    "base": null,
+    "sentido": "sube"
+   },
+   "monto_mq": 1000,
+   "indicador": "Graduados del programa gratuito de formación para el trabajo (Mintrab/Intecap/Mineco)",
+   "fuentes_sugeridas": [
+    "Mintrab",
+    "Intecap"
+   ]
+  },
+  {
+   "id": "S1-35",
+   "corto": "100,000 en Bolsa de Empleo",
+   "semilla": 1,
+   "eje": "emp",
+   "bloque": "Empleo",
+   "medida": "meta",
+   "texto": "100,000 beneficiarios de la Bolsa Nacional de Empleo",
+   "pagina": 31,
+   "meta": {
+    "valor": 100000,
+    "unidad": "beneficiarios",
+    "base": null,
+    "sentido": "sube"
+   },
+   "indicador": "Personas colocadas/atendidas por el Servicio Nacional de Empleo del Mintrab",
+   "fuentes_sugeridas": [
+    "Mintrab"
+   ]
+  },
+  {
+   "id": "S1-36",
+   "corto": "1 millón en empleo temporal",
+   "semilla": 1,
+   "eje": "emp",
+   "bloque": "Empleo",
+   "medida": "meta",
+   "texto": "1 millón de beneficiarios del Programa de Empleo Masivo Temporal (80 medios jornales) en los cuatro meses sin producción agrícola (Q4.8 millardos)",
+   "pagina": 31,
+   "meta": {
+    "valor": 1000000,
+    "unidad": "beneficiarios",
+    "base": null,
+    "sentido": "sube"
+   },
+   "monto_mq": 4800,
+   "indicador": "Programa creado y beneficiarios; monto ejecutado",
+   "fuentes_sugeridas": [
+    "Mintrab",
+    "MIDES",
+    "MAGA",
+    "SICOIN / Minfin (ejecución por institución y programa)"
+   ]
+  },
+  {
+   "id": "S1-37",
+   "corto": "50,000 emprendedores",
+   "semilla": 1,
+   "eje": "emp",
+   "bloque": "Empleo",
+   "medida": "meta",
+   "texto": "50,000 emprendedores atendidos en todo el territorio",
+   "pagina": 31,
+   "meta": {
+    "valor": 50000,
+    "unidad": "emprendedores",
+    "base": null,
+    "sentido": "sube"
+   },
+   "indicador": "Emprendedores atendidos por el Mineco (programa de emprendimiento)",
+   "fuentes_sugeridas": [
+    "Mineco"
+   ]
+  },
+  {
+   "id": "S1-38",
+   "corto": "22 centros de emprendimiento",
+   "semilla": 1,
+   "eje": "emp",
+   "bloque": "Empleo",
+   "medida": "meta",
+   "texto": "22 centros departamentales de emprendimiento funcionando",
+   "pagina": 31,
+   "meta": {
+    "valor": 22,
+    "unidad": "centros",
+    "base": null,
+    "sentido": "sube"
+   },
+   "indicador": "Centros de emprendimiento (Mineco / centros Promipyme) funcionando por departamento",
+   "fuentes_sugeridas": [
+    "Mineco"
+   ]
+  },
+  {
+   "id": "S1-39",
+   "corto": "50,000 créditos blandos",
+   "semilla": 1,
+   "eje": "emp",
+   "bloque": "Empleo",
+   "medida": "meta",
+   "texto": "Créditos blandos de Q2,500 a Q100,000 por el CHN y cooperativas: Q750.0 millones y unos 50,000 beneficiarios",
+   "pagina": 31,
+   "meta": {
+    "valor": 50000,
+    "unidad": "beneficiarios",
+    "base": null,
+    "sentido": "sube"
+   },
+   "monto_mq": 750,
+   "indicador": "Créditos otorgados (número y monto) por el CHN/Mineco/cooperativas en el programa",
+   "fuentes_sugeridas": [
+    "CHN",
+    "Mineco"
+   ]
+  },
+  {
+   "id": "S1-40",
+   "corto": "Cooperativismo",
+   "semilla": 1,
+   "eje": "emp",
+   "bloque": "Empleo",
+   "medida": "declarativo",
+   "texto": "Apoyo a la asociatividad y el cooperativismo",
+   "pagina": 31,
+   "indicador": "Programa o política de apoyo a cooperativas (Inacop) y su presupuesto",
+   "fuentes_sugeridas": [
+    "Inacop",
+    "SICOIN / Minfin (ejecución por institución y programa)"
+   ]
+  },
+  {
+   "id": "S5-01",
+   "corto": "Tabletas y computadoras",
+   "semilla": 5,
+   "eje": "emp",
+   "bloque": "Tecnología",
+   "medida": "hito",
+   "texto": "Entregar tabletas/computadoras a adolescentes de 13 y 16 años, maestros de educación pública y personas en programas de formación (Q2.6 millardos)",
+   "pagina": 43,
+   "monto_mq": 2600,
+   "indicador": "Dispositivos entregados y monto ejecutado",
+   "fuentes_sugeridas": [
+    "Mineduc",
+    "Senacyt / CIV (Subtel)",
+    "SICOIN / Minfin (ejecución por institución y programa)"
+   ]
+  },
+  {
+   "id": "S5-02",
+   "corto": "4 centros virtuales",
+   "semilla": 5,
+   "eje": "emp",
+   "bloque": "Tecnología",
+   "medida": "hito",
+   "texto": "Crear virtualmente el centro de idiomas, el centro de capacitación y formación, el centro cultural y el centro democrático",
+   "pagina": 43,
+   "indicador": "Plataformas creadas y en funcionamiento (cuántas de las cuatro)",
+   "fuentes_sugeridas": [
+    "Mineduc",
+    "Mintrab",
+    "MCD"
+   ]
+  },
+  {
+   "id": "S5-03",
+   "corto": "Fondo de Innovación Q1.8 mil M",
+   "semilla": 5,
+   "eje": "emp",
+   "bloque": "Tecnología",
+   "medida": "hito",
+   "texto": "Crear el Fondo Nacional para la Innovación y la Transformación Productiva (Q1.8 millardos de inversión inicial)",
+   "pagina": 44,
+   "monto_mq": 1800,
+   "indicador": "Fondo creado (ley o acuerdo) y capital asignado",
+   "fuentes_sugeridas": [
+    "Senacyt",
+    "Mineco",
+    "Congreso"
+   ]
+  },
+  {
+   "id": "S5-04",
+   "corto": "Q275 M en contenidos digitales",
+   "semilla": 5,
+   "eje": "emp",
+   "bloque": "Tecnología",
+   "medida": "monto",
+   "texto": "Destinar Q275.0 millones a contenidos para el programa de tabletas/computadoras",
+   "pagina": 44,
+   "monto_mq": 275,
+   "indicador": "Monto asignado/ejecutado en contenidos digitales",
+   "fuentes_sugeridas": [
+    "SICOIN / Minfin (ejecución por institución y programa)"
+   ]
+  },
+  {
+   "id": "S5-05",
+   "corto": "Formación para el trabajo",
+   "semilla": 5,
+   "eje": "emp",
+   "bloque": "Tecnología",
+   "medida": "meta",
+   "texto": "Programa de capacitación y formación para el trabajo (Q1.0 millardo)",
+   "pagina": 44,
+   "espejo_de": "S1-34"
+  },
+  {
+   "id": "S5-06",
+   "corto": "Electricidad para todos",
+   "semilla": 5,
+   "eje": "emp",
+   "bloque": "Tecnología",
+   "medida": "meta",
+   "texto": "Universalización del acceso a la energía eléctrica (Q7.1 millardos)",
+   "pagina": 45,
+   "espejo_de": "S1-32"
+  },
+  {
+   "id": "S5-07",
+   "corto": "Tasa de alumbrado más baja",
+   "semilla": 5,
+   "eje": "emp",
+   "bloque": "Tecnología",
+   "medida": "meta",
+   "texto": "Reestructurar la tasa de alumbrado público para bajar significativamente la factura de luz a más de 1 millón de guatemaltecos",
+   "pagina": 45,
+   "meta": {
+    "valor": 1000000,
+    "unidad": "personas beneficiadas",
+    "base": null,
+    "sentido": "sube"
+   },
+   "indicador": "Reforma/acuerdo sobre la tasa de alumbrado público y usuarios beneficiados (CNEE, Congreso)",
+   "fuentes_sugeridas": [
+    "CNEE",
+    "Congreso",
+    "MEM"
+   ]
+  },
+  {
+   "id": "S5-08",
+   "corto": "Ley de competencia",
+   "semilla": 5,
+   "eje": "emp",
+   "bloque": "Tecnología",
+   "medida": "hito",
+   "texto": "Promover una ley de competencia",
+   "pagina": 45,
+   "indicador": "Ley de Competencia aprobada (decreto) y su autoridad en funcionamiento",
+   "fuentes_sugeridas": [
+    "Congreso (decretos)",
+    "Diario de Centro América"
+   ]
+  },
+  {
+   "id": "S5-09",
+   "corto": "Ley General de Inversiones",
+   "semilla": 5,
+   "eje": "emp",
+   "bloque": "Tecnología",
+   "medida": "hito",
+   "texto": "Promover una Ley General de Inversiones",
+   "pagina": 45,
+   "indicador": "Iniciativa presentada, dictamen o decreto",
+   "fuentes_sugeridas": [
+    "Congreso (iniciativas y decretos)"
+   ]
+  },
+  {
+   "id": "S2-01",
+   "corto": "Registro único de beneficiarios",
+   "semilla": 2,
+   "eje": "pro",
+   "bloque": "Protección social",
+   "medida": "hito",
+   "texto": "Rediseñar y consolidar los programas de protección y asistencia social en el MIDES con un Registro Único de Beneficiarios",
+   "pagina": 33,
+   "indicador": "Registro Social de Hogares / Registro Único de Beneficiarios en funcionamiento",
+   "fuentes_sugeridas": [
+    "MIDES"
+   ]
+  },
+  {
+   "id": "S2-02",
+   "corto": "500,000 hogares con bono",
+   "semilla": 2,
+   "eje": "pro",
+   "bloque": "Protección social",
+   "medida": "meta",
+   "texto": "500,000 hogares beneficiarios de transferencias monetarias condicionadas (niñez con riesgo de hambre, enfermedad o deserción)",
+   "pagina": 33,
+   "meta": {
+    "valor": 500000,
+    "unidad": "hogares",
+    "base": null,
+    "sentido": "sube",
+    "nivel": true
+   },
+   "indicador": "Hogares con transferencias condicionadas (Bono Social/Bono de Salud y Educación) por año",
+   "fuentes_sugeridas": [
+    "MIDES"
+   ],
+   "nota": "se compara el máximo anual de hogares con la meta (no acumulado)"
+  },
+  {
+   "id": "S2-03",
+   "corto": "Adulto mayor: 200,000",
+   "semilla": 2,
+   "eje": "pro",
+   "bloque": "Protección social",
+   "medida": "meta",
+   "texto": "Ampliar la cobertura del Programa del Adulto Mayor (pensión no contributiva) de 132,000 a 200,000 beneficiarios",
+   "pagina": 34,
+   "meta": {
+    "valor": 200000,
+    "unidad": "beneficiarios",
+    "base": 132000,
+    "sentido": "sube"
+   },
+   "indicador": "Beneficiarios del Programa del Adulto Mayor (Mintrab) último dato",
+   "fuentes_sugeridas": [
+    "Mintrab"
+   ]
+  },
+  {
+   "id": "S2-04",
+   "corto": "Adulto mayor: Q625 al mes",
+   "semilla": 2,
+   "eje": "pro",
+   "bloque": "Protección social",
+   "medida": "meta",
+   "texto": "Subir el aporte del Programa del Adulto Mayor de Q500 a Q625 mensuales",
+   "pagina": 34,
+   "meta": {
+    "valor": 625,
+    "unidad": "quetzales al mes",
+    "base": 500,
+    "sentido": "sube",
+    "nivel": true
+   },
+   "indicador": "Monto mensual vigente del aporte económico al adulto mayor",
+   "fuentes_sugeridas": [
+    "Mintrab",
+    "Congreso"
+   ]
+  },
+  {
+   "id": "S2-05",
+   "corto": "Política de discapacidad",
+   "semilla": 2,
+   "eje": "pro",
+   "bloque": "Protección social",
+   "medida": "hito",
+   "texto": "Implementar la política de personas con discapacidad y fortalecer sus acciones",
+   "pagina": 34,
+   "indicador": "Política aprobada/vigente y plan de implementación (Conadi)",
+   "fuentes_sugeridas": [
+    "Conadi",
+    "SBS"
+   ]
+  },
+  {
+   "id": "S2-06",
+   "corto": "Cuidado infantil: 350,000",
+   "semilla": 2,
+   "eje": "pro",
+   "bloque": "Protección social",
+   "medida": "meta",
+   "texto": "Red Nacional de Centros de Cuidado Infantil que atienda a 350,000 niñas y niños en cuatro años (224,000 madres y padres)",
+   "pagina": 34,
+   "meta": {
+    "valor": 350000,
+    "unidad": "niñas y niños",
+    "base": null,
+    "sentido": "sube"
+   },
+   "indicador": "Centros creados y niñez atendida (SBS/SOSEP/MIDES)",
+   "fuentes_sugeridas": [
+    "SOSEP",
+    "SBS",
+    "MIDES"
+   ]
+  },
+  {
+   "id": "S2-07",
+   "corto": "Estrategia de mejora del IGSS",
+   "semilla": 2,
+   "eje": "pro",
+   "bloque": "Seguridad social",
+   "medida": "hito",
+   "texto": "Estrategia para mejorar la cobertura y calidad del IGSS (primer nivel, medicina familiar, más personal, menos lista de espera)",
+   "pagina": 35,
+   "indicador": "Estrategia o plan del IGSS y resultados (personal, listas de espera)",
+   "fuentes_sugeridas": [
+    "IGSS"
+   ]
+  },
+  {
+   "id": "S2-08",
+   "corto": "Cuota del Estado al IGSS",
+   "semilla": 2,
+   "eje": "pro",
+   "bloque": "Seguridad social",
+   "medida": "meta",
+   "texto": "Garantizar el aporte anual del Estado al IGSS como cuota del Estado (~Q3.2 millardos anuales)",
+   "pagina": 35,
+   "meta": {
+    "valor": 3200,
+    "unidad": "millones de quetzales al año",
+    "base": null,
+    "sentido": "sube",
+    "nivel": true
+   },
+   "indicador": "Pagos del Estado al IGSS por cuota del Estado en 2024, 2025 y 2026",
+   "fuentes_sugeridas": [
+    "IGSS",
+    "SICOIN / Minfin (ejecución por institución y programa)"
+   ],
+   "nota": "se compara el pago anual promedio con Q3.2 millardos"
+  },
+  {
+   "id": "S2-09",
+   "corto": "1.5 millones de cotizantes",
+   "semilla": 2,
+   "eje": "pro",
+   "bloque": "Seguridad social",
+   "medida": "meta",
+   "texto": "1.5 millones de nuevos cotizantes al IGSS",
+   "pagina": 35,
+   "meta": {
+    "valor": 1500000,
+    "unidad": "cotizantes nuevos",
+    "base": null,
+    "sentido": "sube"
+   },
+   "indicador": "Afiliados cotizantes al IGSS: último dato menos 2023",
+   "fuentes_sugeridas": [
+    "IGSS (boletines estadísticos)"
+   ]
+  },
+  {
+   "id": "S8-01",
+   "corto": "Q1,850 M para consulados",
+   "semilla": 8,
+   "eje": "pro",
+   "bloque": "Diáspora",
+   "medida": "monto",
+   "texto": "Duplicar los recursos de los servicios consulares: Q1,850.0 millones en los cuatro años",
+   "pagina": 51,
+   "monto_mq": 1850,
+   "indicador": "Devengado del Minex en servicios consulares/programa de atención al migrante 2024–2026 frente a 2020–2023",
+   "fuentes_sugeridas": [
+    "SICOIN / Minfin (ejecución por institución y programa)",
+    "Minex"
+   ]
+  },
+  {
+   "id": "S8-02",
+   "corto": "Institución financiera migrante",
+   "semilla": 8,
+   "eje": "pro",
+   "bloque": "Diáspora",
+   "medida": "hito",
+   "texto": "Apoyar la formación de una institución financiera para servicios a guatemaltecos en el exterior y sus familias",
+   "pagina": 51,
+   "indicador": "Institución o producto financiero creado (CHN, banca) para migrantes",
+   "fuentes_sugeridas": [
+    "CHN",
+    "Minex",
+    "Junta Monetaria"
+   ]
+  },
+  {
+   "id": "S8-03",
+   "corto": "Registro de ADN de adoptados",
+   "semilla": 8,
+   "eje": "pro",
+   "bloque": "Diáspora",
+   "medida": "hito",
+   "texto": "Registro voluntario de ADN para identificar a personas sujetas a adopciones (CNA)",
+   "pagina": 51,
+   "indicador": "Registro de ADN creado en el Consejo Nacional de Adopciones",
+   "fuentes_sugeridas": [
+    "Consejo Nacional de Adopciones"
+   ]
+  },
+  {
+   "id": "S8-04",
+   "corto": "IGSS para migrantes",
+   "semilla": 8,
+   "eje": "pro",
+   "bloque": "Diáspora",
+   "medida": "hito",
+   "texto": "Programa del IGSS que cubra a guatemaltecos en el exterior y sus familias",
+   "pagina": 51,
+   "indicador": "Programa del IGSS para migrantes aprobado/en funcionamiento",
+   "fuentes_sugeridas": [
+    "IGSS"
+   ]
+  },
+  {
+   "id": "S8-05",
+   "corto": "Distrito 25",
+   "semilla": 8,
+   "eje": "pro",
+   "bloque": "Diáspora",
+   "medida": "hito",
+   "texto": "Distrito 25: nuevo distrito electoral para que los guatemaltecos en el exterior elijan diputados",
+   "pagina": 51,
+   "indicador": "Reforma a la Ley Electoral y de Partidos Políticos aprobada",
+   "fuentes_sugeridas": [
+    "Congreso",
+    "TSE"
+   ]
+  },
+  {
+   "id": "S4-01",
+   "corto": "Q27.1 millardos en vías",
+   "semilla": 4,
+   "eje": "inf",
+   "bloque": "Vías de comunicación",
+   "medida": "monto",
+   "texto": "Asignar más de Q27.1 millardos a vías de comunicación, puertos y aeropuertos",
+   "pagina": 39,
+   "monto_mq": 27100,
+   "indicador": "Devengado del CIV (Caminos, Covial, Fopavi excluido) y obra vial vía Codedes 2024–2026",
+   "fuentes_sugeridas": [
+    "SICOIN / Minfin (ejecución por institución y programa)",
+    "CIV"
+   ]
+  },
+  {
+   "id": "S4-02",
+   "corto": "500 km de primarias",
+   "semilla": 4,
+   "eje": "inf",
+   "bloque": "Vías de comunicación",
+   "medida": "meta",
+   "texto": "500 kilómetros nuevos y mejorados de carreteras primarias",
+   "pagina": 40,
+   "meta": {
+    "valor": 500,
+    "unidad": "km",
+    "base": null,
+    "sentido": "sube"
+   },
+   "indicador": "Km de carreteras primarias construidos o mejorados (CIV/Dirección General de Caminos)",
+   "fuentes_sugeridas": [
+    "CIV / DGC"
+   ]
+  },
+  {
+   "id": "S4-03",
+   "corto": "1,820 km de secundarias",
+   "semilla": 4,
+   "eje": "inf",
+   "bloque": "Vías de comunicación",
+   "medida": "meta",
+   "texto": "1,820 kilómetros nuevos y mejorados de carreteras secundarias (Altiplano, Verapaces y Corredor Seco)",
+   "pagina": 40,
+   "meta": {
+    "valor": 1820,
+    "unidad": "km",
+    "base": null,
+    "sentido": "sube"
+   },
+   "indicador": "Km de carreteras secundarias construidos o mejorados",
+   "fuentes_sugeridas": [
+    "CIV / DGC"
+   ]
+  },
+  {
+   "id": "S4-04",
+   "corto": "1,500 km de caminos rurales",
+   "semilla": 4,
+   "eje": "inf",
+   "bloque": "Vías de comunicación",
+   "medida": "meta",
+   "texto": "1,500 kilómetros nuevos y mejorados de caminos rurales",
+   "pagina": 40,
+   "meta": {
+    "valor": 1500,
+    "unidad": "km",
+    "base": null,
+    "sentido": "sube"
+   },
+   "indicador": "Km de caminos rurales construidos o mejorados",
+   "fuentes_sugeridas": [
+    "CIV / DGC",
+    "Codedes"
+   ]
+  },
+  {
+   "id": "S4-05",
+   "corto": "Mantenimiento de 18,200 km",
+   "semilla": 4,
+   "eje": "inf",
+   "bloque": "Vías de comunicación",
+   "medida": "meta",
+   "texto": "Mantenimiento del 100% de la red vial registrada (18,200 km iniciales; segunda fase de 20,799 km)",
+   "pagina": 40,
+   "meta": {
+    "valor": 18200,
+    "unidad": "km con mantenimiento",
+    "base": null,
+    "sentido": "sube",
+    "nivel": true
+   },
+   "indicador": "Km de red vial atendidos por Covial/CIV por año",
+   "fuentes_sugeridas": [
+    "Covial",
+    "CIV"
+   ],
+   "nota": "se compara el máximo anual atendido con 18,200 km"
+  },
+  {
+   "id": "S4-06",
+   "corto": "Puertos y aeropuertos",
+   "semilla": 4,
+   "eje": "inf",
+   "bloque": "Puertos y aeropuertos",
+   "medida": "hito",
+   "texto": "Mejorar puertos y aeropuertos con Q1,400.0 millones y elaborar el plan maestro del sector",
+   "pagina": 40,
+   "monto_mq": 1400,
+   "indicador": "Plan maestro publicado e inversión ejecutada (DGAC, Empornac, Portuaria Quetzal)",
+   "fuentes_sugeridas": [
+    "CIV",
+    "DGAC",
+    "Empornac",
+    "Portuaria Quetzal"
+   ]
+  },
+  {
+   "id": "S4-07",
+   "corto": "45,000 ha con riego",
+   "semilla": 4,
+   "eje": "inf",
+   "bloque": "Riego y agricultura",
+   "medida": "meta",
+   "texto": "Programa de riego para pequeños y medianos productores: 45,000 hectáreas beneficiadas (~Q2.1 millardos)",
+   "pagina": 40,
+   "meta": {
+    "valor": 45000,
+    "unidad": "hectáreas",
+    "base": null,
+    "sentido": "sube"
+   },
+   "monto_mq": 2100,
+   "indicador": "Hectáreas bajo riego habilitadas por el MAGA (2024–2026)",
+   "fuentes_sugeridas": [
+    "MAGA"
+   ]
+  },
+  {
+   "id": "S4-08",
+   "corto": "Agricultura familiar",
+   "semilla": 4,
+   "eje": "inf",
+   "bloque": "Riego y agricultura",
+   "medida": "hito",
+   "texto": "Programa de incentivos para la agricultura familiar agroecológica que la haga proveedora de la alimentación escolar",
+   "pagina": 41,
+   "indicador": "Programa de incentivos creado; agricultores proveedores de alimentación escolar",
+   "fuentes_sugeridas": [
+    "MAGA",
+    "Mineduc"
+   ]
+  },
+  {
+   "id": "S4-09",
+   "corto": "Plan maestro de transporte",
+   "semilla": 4,
+   "eje": "inf",
+   "bloque": "Transporte metropolitano",
+   "medida": "hito",
+   "texto": "Plan maestro del sistema de transporte metropolitano",
+   "pagina": 41,
+   "indicador": "Plan maestro elaborado/publicado",
+   "fuentes_sugeridas": [
+    "CIV",
+    "Municipalidad de Guatemala"
+   ]
+  },
+  {
+   "id": "S4-10",
+   "corto": "Metro: fase 1 de la línea 1",
+   "semilla": 4,
+   "eje": "inf",
+   "bloque": "Transporte metropolitano",
+   "medida": "hito",
+   "texto": "Entregar en funcionamiento la fase 1 de la línea 1 del metro subterráneo (~6 km San Cristóbal–Obelisco; Q7.8 millardos)",
+   "pagina": 41,
+   "monto_mq": 7800,
+   "indicador": "Estado del proyecto del metro (estudios, licitación, obra)",
+   "fuentes_sugeridas": [
+    "CIV",
+    "Anadie",
+    "Municipalidad de Guatemala"
+   ]
+  },
+  {
+   "id": "S4-11",
+   "corto": "Obra pública más barata",
+   "semilla": 4,
+   "eje": "inf",
+   "bloque": "Vías de comunicación",
+   "medida": "declarativo",
+   "texto": "Plan para reducir significativamente los costos de construcción y cerrar los caminos a la corrupción en la obra pública",
+   "pagina": 39,
+   "indicador": "Medidas formales (reformas a contrataciones, precios de referencia, auditorías) y su efecto",
+   "fuentes_sugeridas": [
+    "CIV",
+    "Minfin (Guatecompras)",
+    "Contraloría"
+   ]
+  },
+  {
+   "id": "S6-01",
+   "corto": "Q37.6 millardos en seguridad",
+   "semilla": 6,
+   "eje": "seg",
+   "bloque": "Seguridad",
+   "medida": "monto",
+   "texto": "Movilizar Q37.6 millardos para garantizar la seguridad de la población",
+   "pagina": 47,
+   "monto_mq": 37600,
+   "indicador": "Devengado del Mingob (y Sistema Penitenciario) 2024–2026",
+   "fuentes_sugeridas": [
+    "SICOIN / Minfin (ejecución por institución y programa)"
+   ]
+  },
+  {
+   "id": "S6-02",
+   "corto": "Menos extorsiones",
+   "semilla": 6,
+   "eje": "seg",
+   "bloque": "Seguridad",
+   "medida": "tendencia",
+   "texto": "Abordaje estratégico de las extorsiones con resultados efectivos en el corto plazo",
+   "pagina": 47,
+   "meta": {
+    "valor": null,
+    "unidad": "denuncias de extorsión",
+    "base": null,
+    "sentido": "baja"
+   },
+   "indicador": "Denuncias de extorsión (PNC/MP) 2023 frente a 2025 y 2026",
+   "fuentes_sugeridas": [
+    "PNC",
+    "MP",
+    "GAM / Diálogos (como referencia)"
+   ]
+  },
+  {
+   "id": "S6-03",
+   "corto": "Desarticular bandas",
+   "semilla": 6,
+   "eje": "seg",
+   "bloque": "Seguridad",
+   "medida": "declarativo",
+   "texto": "Desarticular bandas criminales con inteligencia civil e investigación criminal fortalecidas",
+   "pagina": 47,
+   "indicador": "Estructuras desarticuladas reportadas por Mingob/MP/Digici",
+   "fuentes_sugeridas": [
+    "Mingob",
+    "MP"
+   ]
+  },
+  {
+   "id": "S6-04",
+   "corto": "Cárcel para penas graves",
+   "semilla": 6,
+   "eje": "seg",
+   "bloque": "Sistema penitenciario",
+   "medida": "hito",
+   "texto": "Construir una nueva cárcel para penas graves (Q1.1 millardos)",
+   "pagina": 47,
+   "monto_mq": 1100,
+   "indicador": "Estado del proyecto (diseño, licitación, obra) de la cárcel de máxima seguridad",
+   "fuentes_sugeridas": [
+    "Mingob",
+    "SP",
+    "Guatecompras"
+   ]
+  },
+  {
+   "id": "S6-05",
+   "corto": "Control de las cárceles",
+   "semilla": 6,
+   "eje": "seg",
+   "bloque": "Sistema penitenciario",
+   "medida": "hito",
+   "texto": "Quitar el control de las cárceles al crimen con un modelo de gestión penitenciaria más seguro y una política penitenciaria actualizada",
+   "pagina": 47,
+   "indicador": "Política penitenciaria actualizada; fugas, motines, estado de emergencia",
+   "fuentes_sugeridas": [
+    "Mingob",
+    "SP"
+   ]
+  },
+  {
+   "id": "S6-06",
+   "corto": "12,000 policías nuevos",
+   "semilla": 6,
+   "eje": "seg",
+   "bloque": "Policía",
+   "medida": "meta",
+   "texto": "12,000 nuevos elementos en la Policía Nacional Civil",
+   "pagina": 47,
+   "meta": {
+    "valor": 12000,
+    "unidad": "agentes nuevos",
+    "base": null,
+    "sentido": "sube"
+   },
+   "indicador": "Agentes graduados de la Academia PNC 2024–2026 (y crecimiento neto del estado de fuerza)",
+   "fuentes_sugeridas": [
+    "PNC",
+    "Mingob"
+   ]
+  },
+  {
+   "id": "S6-07",
+   "corto": "Policía comunitaria",
+   "semilla": 6,
+   "eje": "seg",
+   "bloque": "Policía",
+   "medida": "hito",
+   "texto": "Estrategia integral de policía comunitaria",
+   "pagina": 47,
+   "indicador": "Estrategia aprobada y en implementación",
+   "fuentes_sugeridas": [
+    "Mingob",
+    "PNC"
+   ]
+  },
+  {
+   "id": "S6-08",
+   "corto": "Sedes de la PNC Q1.2 mil M",
+   "semilla": 6,
+   "eje": "seg",
+   "bloque": "Policía",
+   "medida": "monto",
+   "texto": "Construir y mejorar instalaciones de la PNC (Q1.2 millardos)",
+   "pagina": 47,
+   "monto_mq": 1200,
+   "indicador": "Inversión ejecutada en sedes policiales 2024–2026",
+   "fuentes_sugeridas": [
+    "SICOIN / Minfin (ejecución por institución y programa)",
+    "Mingob"
+   ]
+  },
+  {
+   "id": "S6-09",
+   "corto": "Inteligencia profesional",
+   "semilla": 6,
+   "eje": "seg",
+   "bloque": "Seguridad",
+   "medida": "declarativo",
+   "texto": "Profesionalizar los servicios de inteligencia",
+   "pagina": 47,
+   "indicador": "Reformas o medidas formales en la SIE/Digici",
+   "fuentes_sugeridas": [
+    "SIE",
+    "Mingob"
+   ]
+  },
+  {
+   "id": "S6-10",
+   "corto": "Vigilancia de fronteras",
+   "semilla": 6,
+   "eje": "seg",
+   "bloque": "Seguridad",
+   "medida": "declarativo",
+   "texto": "Fortalecer la vigilancia de fronteras marítimas, aéreas y terrestres contra tráficos ilegales",
+   "pagina": 47,
+   "indicador": "Medidas formales e incautaciones en fronteras 2023 frente a 2025",
+   "fuentes_sugeridas": [
+    "Mingob",
+    "Mindef",
+    "SAT"
+   ]
+  },
+  {
+   "id": "S6-11",
+   "corto": "Menos homicidios",
+   "semilla": 6,
+   "eje": "seg",
+   "bloque": "Seguridad",
+   "medida": "tendencia",
+   "texto": "Garantizar la seguridad de bienes y personas (un país para vivir sin miedo)",
+   "pagina": 47,
+   "meta": {
+    "valor": null,
+    "unidad": "homicidios por 100,000 habitantes",
+    "base": null,
+    "sentido": "baja"
+   },
+   "indicador": "Tasa de homicidios (PNC/Inacif) 2023 frente a 2025 y 2026",
+   "fuentes_sugeridas": [
+    "PNC",
+    "Inacif"
+   ]
+  },
+  {
+   "id": "S7-01",
+   "corto": "Q7 millardos para naturaleza",
+   "semilla": 7,
+   "eje": "amb",
+   "bloque": "Naturaleza",
+   "medida": "monto",
+   "texto": "Invertir más de Q7.0 millardos en programas directos para la recuperación de suelos, aguas y bosques",
+   "pagina": 49,
+   "monto_mq": 7000,
+   "indicador": "Devengado de MARN, INAB (incentivos), Conap 2024–2026",
+   "fuentes_sugeridas": [
+    "SICOIN / Minfin (ejecución por institución y programa)"
+   ]
+  },
+  {
+   "id": "S7-02",
+   "corto": "150,000 ha restauradas",
+   "semilla": 7,
+   "eje": "amb",
+   "bloque": "Cuencas",
+   "medida": "meta",
+   "texto": "Restaurar más de 150,000 hectáreas de cuencas hidrográficas (Q2.0 millardos)",
+   "pagina": 49,
+   "meta": {
+    "valor": 150000,
+    "unidad": "hectáreas",
+    "base": null,
+    "sentido": "sube"
+   },
+   "monto_mq": 2000,
+   "indicador": "Hectáreas restauradas (INAB, MARN)",
+   "fuentes_sugeridas": [
+    "INAB",
+    "MARN"
+   ]
+  },
+  {
+   "id": "S7-03",
+   "corto": "650,000 ha preservadas",
+   "semilla": 7,
+   "eje": "amb",
+   "bloque": "Cuencas",
+   "medida": "meta",
+   "texto": "Preservación y mantenimiento de 650,000 hectáreas de cuencas (Q1.9 millardos)",
+   "pagina": 49,
+   "meta": {
+    "valor": 650000,
+    "unidad": "hectáreas",
+    "base": null,
+    "sentido": "sube"
+   },
+   "monto_mq": 1900,
+   "indicador": "Hectáreas bajo preservación/manejo de cuencas",
+   "fuentes_sugeridas": [
+    "MARN",
+    "INAB"
+   ]
+  },
+  {
+   "id": "S7-04",
+   "corto": "700,000 ha de bosque",
+   "semilla": 7,
+   "eje": "amb",
+   "bloque": "Bosques",
+   "medida": "meta",
+   "texto": "Programa de protección de bosques naturales: 700,000 hectáreas (Q1.3 millardos)",
+   "pagina": 49,
+   "meta": {
+    "valor": 700000,
+    "unidad": "hectáreas",
+    "base": null,
+    "sentido": "sube"
+   },
+   "monto_mq": 1300,
+   "indicador": "Hectáreas de bosque natural bajo protección/incentivo (Probosques, Pinpep, Conap)",
+   "fuentes_sugeridas": [
+    "INAB",
+    "Conap"
+   ]
+  },
+  {
+   "id": "S7-05",
+   "corto": "Probosques Q1.7 millardos",
+   "semilla": 7,
+   "eje": "amb",
+   "bloque": "Bosques",
+   "medida": "monto",
+   "texto": "Reforzar Probosques con Q1.7 millardos",
+   "pagina": 49,
+   "monto_mq": 1700,
+   "indicador": "Incentivos forestales Probosques pagados 2024–2026",
+   "fuentes_sugeridas": [
+    "INAB"
+   ]
+  },
+  {
+   "id": "S7-06",
+   "corto": "100,000 ha con certeza jurídica",
+   "semilla": 7,
+   "eje": "amb",
+   "bloque": "Tierras",
+   "medida": "meta",
+   "texto": "Dar certeza jurídica a 100,000 hectáreas de tierras y bosques comunales y municipales",
+   "pagina": 49,
+   "meta": {
+    "valor": 100000,
+    "unidad": "hectáreas",
+    "base": null,
+    "sentido": "sube"
+   },
+   "indicador": "Hectáreas regularizadas/registradas (RIC, Fontierras, RGP)",
+   "fuentes_sugeridas": [
+    "RIC",
+    "Fontierras"
+   ]
+  },
+  {
+   "id": "S7-07",
+   "corto": "Agencia de bonos de carbono",
+   "semilla": 7,
+   "eje": "amb",
+   "bloque": "Bosques",
+   "medida": "hito",
+   "texto": "Agencia pública para certificar bosques y promover bonos de carbono, para movilizar Q1,000 millones privados e internacionales",
+   "pagina": 49,
+   "indicador": "Agencia creada; transacciones de carbono (p. ej. acuerdo LEAF/ERPA)",
+   "fuentes_sugeridas": [
+    "MARN",
+    "INAB",
+    "Banco Mundial (FCPF)"
+   ]
+  },
+  {
+   "id": "S7-08",
+   "corto": "Kilovatio verde",
+   "semilla": 7,
+   "eje": "amb",
+   "bloque": "Financiamiento",
+   "medida": "hito",
+   "texto": "Implementar el kilovatio verde para financiar estos programas",
+   "pagina": 49,
+   "indicador": "Mecanismo de «kilovatio verde» aprobado e implementado",
+   "fuentes_sugeridas": [
+    "MEM",
+    "CNEE",
+    "MARN"
+   ]
+  },
+  {
+   "id": "S7-09",
+   "corto": "Manejo colectivo de recursos",
+   "semilla": 7,
+   "eje": "amb",
+   "bloque": "Tierras",
+   "medida": "declarativo",
+   "texto": "Apoyar los modelos de manejo colectivo de tierras, bosques, pesquerías y áreas silvestres",
+   "pagina": 49,
+   "indicador": "Programas o acuerdos de comanejo/concesiones comunitarias apoyados",
+   "fuentes_sugeridas": [
+    "Conap",
+    "INAB"
+   ]
+  },
+  {
+   "id": "S7-10",
+   "corto": "Modelo de residuos sólidos",
+   "semilla": 7,
+   "eje": "amb",
+   "bloque": "Residuos",
+   "medida": "hito",
+   "texto": "Desarrollar un nuevo modelo para el manejo integral de los residuos sólidos",
+   "pagina": 49,
+   "indicador": "Modelo/política aprobada (Reglamento 164-2021 y su aplicación)",
+   "fuentes_sugeridas": [
+    "MARN"
+   ]
+  },
+  {
+   "id": "S9-01",
+   "corto": "Q1,500 M en gestión pública",
+   "semilla": 9,
+   "eje": "gob",
+   "bloque": "Función pública",
+   "medida": "monto",
+   "texto": "Invertir Q1,500.0 millones para orientar la administración pública hacia más efectividad y cerrar espacios a la corrupción",
+   "pagina": 53,
+   "monto_mq": 1500,
+   "indicador": "Asignaciones identificables (CNC, ONSEC, gobierno electrónico) 2024–2026",
+   "fuentes_sugeridas": [
+    "SICOIN / Minfin (ejecución por institución y programa)"
+   ]
+  },
+  {
+   "id": "S9-02",
+   "corto": "Sistema Nacional Anticorrupción",
+   "semilla": 9,
+   "eje": "gob",
+   "bloque": "Función pública",
+   "medida": "hito",
+   "texto": "Crear el Sistema Nacional Anticorrupción como marco legal e institucional",
+   "pagina": 53,
+   "indicador": "Ley o decreto del sistema; Comisión Nacional contra la Corrupción (CNC)",
+   "fuentes_sugeridas": [
+    "CNC",
+    "Congreso"
+   ]
+  },
+  {
+   "id": "S9-03",
+   "corto": "Ley de Servicio Civil",
+   "semilla": 9,
+   "eje": "gob",
+   "bloque": "Función pública",
+   "medida": "hito",
+   "texto": "Fortalecer el Servicio Civil con base meritocrática: carrera de la función pública",
+   "pagina": 53,
+   "indicador": "Nueva Ley de Servicio Civil aprobada/vigente",
+   "fuentes_sugeridas": [
+    "Congreso",
+    "ONSEC"
+   ]
+  },
+  {
+   "id": "S9-04",
+   "corto": "Foros anticorrupción",
+   "semilla": 9,
+   "eje": "gob",
+   "bloque": "Función pública",
+   "medida": "declarativo",
+   "texto": "Participar activamente en foros multilaterales y arreglos bilaterales contra la corrupción",
+   "pagina": 53,
+   "indicador": "Adhesiones, acuerdos y participación formal (OEA-MESICIC, UNCAC, acuerdos bilaterales)",
+   "fuentes_sugeridas": [
+    "Minex",
+    "CNC"
+   ]
+  },
+  {
+   "id": "S9-05",
+   "corto": "Gobierno electrónico",
+   "semilla": 9,
+   "eje": "gob",
+   "bloque": "Función pública",
+   "medida": "hito",
+   "texto": "Fortalecer el gobierno electrónico con prioridad en salud, educación, economía, comercio exterior, tributación y rendición de cuentas",
+   "pagina": 53,
+   "indicador": "Ley/agenda de gobierno digital y trámites en línea habilitados",
+   "fuentes_sugeridas": [
+    "Comisión de Gobierno Digital",
+    "Congreso"
+   ]
+  },
+  {
+   "id": "S9-06",
+   "corto": "Muerte civil por corrupción",
+   "semilla": 9,
+   "eje": "gob",
+   "bloque": "Función pública",
+   "medida": "hito",
+   "texto": "Reformar el Código Penal para la «muerte civil» de los condenados por corrupción",
+   "pagina": 53,
+   "indicador": "Reforma aprobada en el Congreso",
+   "fuentes_sugeridas": [
+    "Congreso"
+   ]
+  },
+  {
+   "id": "S10-01",
+   "corto": "Pacto por la Educación",
+   "semilla": 10,
+   "eje": "gob",
+   "bloque": "Nuevo contrato social",
+   "medida": "hito",
+   "texto": "Pacto Nacional por la Educación",
+   "pagina": 55,
+   "indicador": "Pacto firmado o proceso formal de diálogo",
+   "fuentes_sugeridas": [
+    "Mineduc",
+    "Presidencia"
+   ]
+  },
+  {
+   "id": "S10-02",
+   "corto": "Pacto por la Salud",
+   "semilla": 10,
+   "eje": "gob",
+   "bloque": "Nuevo contrato social",
+   "medida": "hito",
+   "texto": "Pacto Nacional por la Salud",
+   "pagina": 55,
+   "indicador": "Pacto firmado o proceso formal de diálogo",
+   "fuentes_sugeridas": [
+    "MSPAS",
+    "Presidencia"
+   ]
+  },
+  {
+   "id": "S10-03",
+   "corto": "Pacto por el Desarrollo",
+   "semilla": 10,
+   "eje": "gob",
+   "bloque": "Nuevo contrato social",
+   "medida": "hito",
+   "texto": "Pacto Nacional por el Desarrollo",
+   "pagina": 55,
+   "indicador": "Pacto firmado o proceso formal de diálogo",
+   "fuentes_sugeridas": [
+    "Segeplán",
+    "Presidencia"
+   ]
+  },
+  {
+   "id": "S10-04",
+   "corto": "Pacto por el Medio Ambiente",
+   "semilla": 10,
+   "eje": "gob",
+   "bloque": "Nuevo contrato social",
+   "medida": "hito",
+   "texto": "Pacto Nacional por el Medio Ambiente",
+   "pagina": 55,
+   "indicador": "Pacto firmado o proceso formal de diálogo",
+   "fuentes_sugeridas": [
+    "MARN",
+    "Presidencia"
+   ]
+  },
+  {
+   "id": "S10-05",
+   "corto": "Diálogo constitucional",
+   "semilla": 10,
+   "eje": "gob",
+   "bloque": "Nuevo contrato social",
+   "medida": "hito",
+   "texto": "Acuerdo de bases para un diálogo constitucional",
+   "pagina": 55,
+   "indicador": "Acuerdo o proceso formal",
+   "fuentes_sugeridas": [
+    "Presidencia",
+    "Congreso"
+   ]
+  },
+  {
+   "id": "S10-06",
+   "corto": "Agenda para la paz",
+   "semilla": 10,
+   "eje": "gob",
+   "bloque": "Nuevo contrato social",
+   "medida": "hito",
+   "texto": "Coordinar una nueva agenda para la paz y el desarrollo con el espíritu de los Acuerdos de Paz",
+   "pagina": 17,
+   "indicador": "Agenda formal elaborada (Comisión Presidencial por la Paz y los Derechos Humanos u otra)",
+   "fuentes_sugeridas": [
+    "Copadeh",
+    "Sepaz"
+   ]
+  },
+  {
+   "id": "F-01",
+   "corto": "Presupuesto por resultados",
+   "semilla": "F",
+   "eje": "ori",
+   "bloque": "Orientaciones fiscales",
+   "medida": "hito",
+   "texto": "Elaborar y ejecutar los presupuestos con base en las metas y resultados del plan de gobierno",
+   "pagina": 57,
+   "indicador": "Plan General de Gobierno/Política General y vínculo con el presupuesto (Segeplán, Minfin)",
+   "fuentes_sugeridas": [
+    "Segeplán",
+    "Minfin"
+   ]
+  },
+  {
+   "id": "F-02",
+   "corto": "Prioridad a excluidos",
+   "semilla": "F",
+   "eje": "ori",
+   "bloque": "Orientaciones fiscales",
+   "medida": "declarativo",
+   "texto": "Producir bienes y servicios universales priorizando a los sectores excluidos (rural, indígena, mujeres, niñez, juventud, adultos mayores)",
+   "pagina": 57,
+   "indicador": "Clasificadores temáticos del presupuesto (género, pueblos indígenas, niñez) 2023 frente a 2025",
+   "fuentes_sugeridas": [
+    "Minfin (clasificadores temáticos)"
+   ]
+  },
+  {
+   "id": "F-03",
+   "corto": "Seguimiento público de metas",
+   "semilla": "F",
+   "eje": "ori",
+   "bloque": "Orientaciones fiscales",
+   "medida": "hito",
+   "texto": "Monitorear las principales políticas y los compromisos del plan de gobierno con indicadores medibles y verificables",
+   "pagina": 58,
+   "indicador": "Sistema público de seguimiento de metas presidenciales (Segeplán) y su publicación",
+   "fuentes_sugeridas": [
+    "Segeplán",
+    "Presidencia"
+   ]
+  },
+  {
+   "id": "F-04",
+   "corto": "Flujos financieros ilícitos",
+   "semilla": "F",
+   "eje": "ori",
+   "bloque": "Orientaciones fiscales",
+   "medida": "hito",
+   "texto": "Crear las bases para un combate efectivo de los flujos financieros ilícitos",
+   "pagina": 58,
+   "indicador": "Reformas (ley contra el lavado de dinero, evaluación GAFILAT) y medidas formales",
+   "fuentes_sugeridas": [
+    "IVE / SIB",
+    "GAFILAT",
+    "Congreso"
+   ]
+  },
+  {
+   "id": "F-05",
+   "corto": "Eliminar gasto superfluo",
+   "semilla": "F",
+   "eje": "ori",
+   "bloque": "Orientaciones fiscales",
+   "medida": "declarativo",
+   "texto": "Eliminar gastos superfluos",
+   "pagina": 58,
+   "indicador": "Normas de austeridad/calidad del gasto emitidas y su efecto",
+   "fuentes_sugeridas": [
+    "Minfin"
+   ]
+  },
+  {
+   "id": "F-06",
+   "corto": "Auditar la deuda de 20 años",
+   "semilla": "F",
+   "eje": "ori",
+   "bloque": "Orientaciones fiscales",
+   "medida": "hito",
+   "texto": "Auditar la deuda pública contraída en los últimos 20 años",
+   "pagina": 58,
+   "indicador": "Auditoría de deuda contratada/ejecutada y publicada",
+   "fuentes_sugeridas": [
+    "Minfin",
+    "Contraloría"
+   ]
+  },
+  {
+   "id": "F-07",
+   "corto": "Cero corrupción",
+   "semilla": "F",
+   "eje": "ori",
+   "bloque": "Orientaciones fiscales",
+   "medida": "declarativo",
+   "texto": "Eliminar toda manifestación de corrupción",
+   "pagina": 58,
+   "indicador": "Casos y medidas del Ejecutivo; ver también el Índice de Percepción de la Corrupción (F-23)",
+   "fuentes_sugeridas": [
+    "CNC",
+    "Transparencia Internacional"
+   ]
+  },
+  {
+   "id": "F-08",
+   "corto": "Mejor ejecución del gasto",
+   "semilla": "F",
+   "eje": "ori",
+   "bloque": "Orientaciones fiscales",
+   "medida": "tendencia",
+   "texto": "Eliminar cuellos de botella que entorpecen la ejecución oportuna del gasto y la inversión pública",
+   "pagina": 58,
+   "meta": {
+    "valor": null,
+    "unidad": "% de ejecución del presupuesto",
+    "base": null,
+    "sentido": "sube"
+   },
+   "indicador": "% de ejecución presupuestaria total y de inversión 2023 frente a 2024 y 2025",
+   "fuentes_sugeridas": [
+    "SICOIN / Minfin (ejecución por institución y programa)"
+   ]
+  },
+  {
+   "id": "F-09",
+   "corto": "Evaluar el sistema tributario",
+   "semilla": "F",
+   "eje": "ori",
+   "bloque": "Orientaciones fiscales",
+   "medida": "hito",
+   "texto": "Evaluar el sistema tributario para fortalecer la administración tributaria",
+   "pagina": 58,
+   "indicador": "Evaluación formal publicada (Minfin/SAT/FMI-FAD)",
+   "fuentes_sugeridas": [
+    "Minfin",
+    "SAT"
+   ]
+  },
+  {
+   "id": "F-10",
+   "corto": "No subir impuestos",
+   "semilla": "F",
+   "eje": "ori",
+   "bloque": "Orientaciones fiscales",
+   "medida": "hito",
+   "texto": "No incrementar las tasas de los impuestos actuales",
+   "pagina": 58,
+   "indicador": "Decretos que modifiquen tasas de impuestos 2024–2026",
+   "fuentes_sugeridas": [
+    "Congreso",
+    "SAT"
+   ]
+  },
+  {
+   "id": "F-11",
+   "corto": "Ninguna amnistía tributaria",
+   "semilla": "F",
+   "eje": "ori",
+   "bloque": "Orientaciones fiscales",
+   "medida": "hito",
+   "texto": "No otorgar ninguna amnistía tributaria",
+   "pagina": 58,
+   "indicador": "Amnistías o condonaciones de multas/intereses aprobadas 2024–2026",
+   "fuentes_sugeridas": [
+    "Congreso",
+    "SAT"
+   ]
+  },
+  {
+   "id": "F-12",
+   "corto": "Contra el contrabando",
+   "semilla": "F",
+   "eje": "ori",
+   "bloque": "Orientaciones fiscales",
+   "medida": "declarativo",
+   "texto": "Perseguir el contrabando y la defraudación aduanera con mecanismos modernos",
+   "pagina": 59,
+   "indicador": "Medidas de SAT (escáneres, aduanas) y casos/incautaciones 2023 frente a 2025",
+   "fuentes_sugeridas": [
+    "SAT"
+   ]
+  },
+  {
+   "id": "F-13",
+   "corto": "Deuda para infraestructura",
+   "semilla": "F",
+   "eje": "ori",
+   "bloque": "Orientaciones fiscales",
+   "medida": "declarativo",
+   "texto": "Usar la deuda pública para financiar infraestructura social y económica urgente",
+   "pagina": 59,
+   "indicador": "Préstamos aprobados 2024–2026 y su destino",
+   "fuentes_sugeridas": [
+    "Minfin (crédito público)",
+    "Congreso"
+   ]
+  },
+  {
+   "id": "F-14",
+   "corto": "Reestructurar la deuda",
+   "semilla": "F",
+   "eje": "ori",
+   "bloque": "Orientaciones fiscales",
+   "medida": "hito",
+   "texto": "Ejecutar una estrategia de reestructuración de la deuda (plazos más largos, más gracia, tasas más bajas)",
+   "pagina": 59,
+   "indicador": "Operaciones de manejo de pasivos / estrategia publicada",
+   "fuentes_sugeridas": [
+    "Minfin (crédito público)"
+   ]
+  },
+  {
+   "id": "F-15",
+   "corto": "Mejor calificación fiscal",
+   "semilla": "F",
+   "eje": "ori",
+   "bloque": "Orientaciones fiscales",
+   "medida": "tendencia",
+   "texto": "Mejorar los indicadores internacionales de transparencia y sostenibilidad de las finanzas y la deuda",
+   "pagina": 59,
+   "meta": {
+    "valor": null,
+    "unidad": "calificación de riesgo / índices de transparencia fiscal",
+    "base": null,
+    "sentido": "sube"
+   },
+   "indicador": "Calificaciones (Moody's, S&P, Fitch) y Encuesta de Presupuesto Abierto 2023 frente a 2025–2026",
+   "fuentes_sugeridas": [
+    "Moody's",
+    "S&P",
+    "Fitch",
+    "International Budget Partnership"
+   ]
+  },
+  {
+   "id": "F-16",
+   "corto": "PIB +4.2% al año",
+   "semilla": "F",
+   "eje": "mac",
+   "bloque": "Resultados macro",
+   "medida": "meta",
+   "texto": "Crecimiento del PIB de aproximadamente 4.2% anual entre 2024 y 2027",
+   "pagina": 60,
+   "meta": {
+    "valor": 4.2,
+    "unidad": "% de crecimiento real anual",
+    "base": null,
+    "sentido": "sube",
+    "nivel": true
+   },
+   "indicador": "Crecimiento real del PIB 2024, 2025 (y estimación 2026) del Banguat; se evalúa el promedio frente a 4.2",
+   "fuentes_sugeridas": [
+    "Banguat"
+   ],
+   "nota": "meta de nivel, no acumulativa: avance = promedio observado ÷ 4.2"
+  },
+  {
+   "id": "F-17",
+   "corto": "PIB de Q1 billón en 2025",
+   "semilla": "F",
+   "eje": "mac",
+   "bloque": "Resultados macro",
+   "medida": "hito",
+   "texto": "Que la economía rompa la barrera del millón de millones de quetzales (PIB nominal) en 2025",
+   "pagina": 60,
+   "indicador": "PIB nominal 2025 (Banguat) ≥ Q1,000,000 millones",
+   "fuentes_sugeridas": [
+    "Banguat"
+   ]
+  },
+  {
+   "id": "F-18",
+   "corto": "Empleo formal: 289,526",
+   "semilla": "F",
+   "eje": "mac",
+   "bloque": "Resultados macro",
+   "medida": "meta",
+   "texto": "Apoyar la generación de aproximadamente un millón de empleos directos e indirectos entre 2024 y 2027 (289,526 formales)",
+   "pagina": 61,
+   "meta": {
+    "valor": 289526,
+    "unidad": "empleos formales (proxy: cotizantes IGSS nuevos)",
+    "base": null,
+    "sentido": "sube"
+   },
+   "indicador": "Aumento de afiliados cotizantes al IGSS desde 2023 (único proxy oficial de empleo formal)",
+   "fuentes_sugeridas": [
+    "IGSS",
+    "INE (ENEI)"
+   ],
+   "nota": "la meta formal del plan (217,524 directos + 72,002 indirectos) se coteja con cotizantes nuevos; el plan no da meta informal medible"
+  },
+  {
+   "id": "F-19",
+   "corto": "Carga tributaria 13% del PIB",
+   "semilla": "F",
+   "eje": "mac",
+   "bloque": "Resultados macro",
+   "medida": "meta",
+   "texto": "Subir la carga tributaria de 11.7% a 13.0% del PIB en 2027",
+   "pagina": 63,
+   "meta": {
+    "valor": 13.0,
+    "unidad": "% del PIB",
+    "base": 11.7,
+    "sentido": "sube"
+   },
+   "indicador": "Carga tributaria (SAT/Minfin) 2024, 2025 y proyección 2026",
+   "fuentes_sugeridas": [
+    "SAT",
+    "Minfin",
+    "Icefi"
+   ]
+  },
+  {
+   "id": "F-20",
+   "corto": "Deuda 26.8% del PIB",
+   "semilla": "F",
+   "eje": "mac",
+   "bloque": "Resultados macro",
+   "medida": "meta",
+   "texto": "Reducir la deuda pública de 27.7% a 26.8% del PIB en 2027",
+   "pagina": 63,
+   "meta": {
+    "valor": 26.8,
+    "unidad": "% del PIB",
+    "base": 27.7,
+    "sentido": "baja"
+   },
+   "indicador": "Deuda del Gobierno Central/PIB al cierre 2024 y 2025 (Minfin/Banguat)",
+   "fuentes_sugeridas": [
+    "Minfin",
+    "Banguat"
+   ]
+  },
+  {
+   "id": "F-21",
+   "corto": "Inversión 28.2% del gasto",
+   "semilla": "F",
+   "eje": "mac",
+   "bloque": "Resultados macro",
+   "medida": "meta",
+   "texto": "Subir la inversión pública de 20.5% a 28.2% del presupuesto de egresos",
+   "pagina": 63,
+   "meta": {
+    "valor": 28.2,
+    "unidad": "% del presupuesto",
+    "base": 20.5,
+    "sentido": "sube"
+   },
+   "indicador": "Inversión (gasto de capital) ÷ gasto total devengado 2024, 2025",
+   "fuentes_sugeridas": [
+    "SICOIN / Minfin (ejecución por institución y programa)",
+    "Minfin"
+   ]
+  },
+  {
+   "id": "F-22",
+   "corto": "Inversión 4.2% del PIB",
+   "semilla": "F",
+   "eje": "mac",
+   "bloque": "Resultados macro",
+   "medida": "meta",
+   "texto": "Llevar la inversión pública de 2.6% a 4.2% del PIB",
+   "pagina": 59,
+   "meta": {
+    "valor": 4.2,
+    "unidad": "% del PIB",
+    "base": 2.6,
+    "sentido": "sube"
+   },
+   "indicador": "Gasto de capital del Gobierno Central / PIB 2024 y 2025",
+   "fuentes_sugeridas": [
+    "Minfin",
+    "Banguat"
+   ]
+  },
+  {
+   "id": "F-23",
+   "corto": "Mejor IPC de TI",
+   "semilla": "F",
+   "eje": "mac",
+   "bloque": "Resultados macro",
+   "medida": "tendencia",
+   "texto": "Mejorar el punteo (24) y la posición (150) de Guatemala en el Índice de Percepción de la Corrupción",
+   "pagina": 63,
+   "meta": {
+    "valor": null,
+    "unidad": "puntos del IPC",
+    "base": 24,
+    "sentido": "sube"
+   },
+   "indicador": "IPC de Transparencia Internacional 2023, 2024 y 2025: punteo y posición",
+   "fuentes_sugeridas": [
+    "Transparencia Internacional"
+   ]
+  },
+  {
+   "id": "F-24",
+   "corto": "Déficit ≤ 2.9% del PIB",
+   "semilla": "F",
+   "eje": "mac",
+   "bloque": "Resultados macro",
+   "medida": "meta",
+   "texto": "Mantener el déficit fiscal en torno a 2.9% del PIB o menos (2.5% en 2024, 2.9% en 2025–2027)",
+   "pagina": 59,
+   "meta": {
+    "valor": 2.9,
+    "unidad": "% del PIB (techo)",
+    "base": null,
+    "sentido": "baja",
+    "techo": true
+   },
+   "indicador": "Déficit fiscal del Gobierno Central 2024 y 2025 (Minfin)",
+   "fuentes_sugeridas": [
+    "Minfin"
+   ],
+   "nota": "meta techo: se cumple si el déficit observado ≤ la trayectoria del plan"
+  }
+ ]
+}

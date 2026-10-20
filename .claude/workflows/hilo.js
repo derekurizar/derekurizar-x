@@ -1,12 +1,13 @@
 export const meta = {
   name: 'hilo',
   description: 'Hilo de X con datos de Guatemala: encuadre → investigación ⇢ verificación por eje → guion → visuales → ensamblado',
-  whenToUse: 'Invocado por /hilo [modo] [tema] [smoke|fixture] (y por los alias /explica y /perfil). args: {tema, modo, smoke, fixture, fecha, min_tuits, idea, permitir_fallback} (fecha YYYY-MM-DD obligatoria, la pone el comando con `date +%F`). modo = hilo (defecto, historia con giro) | explica (el tema explicado con sus números en 3–6 tarjetas, sin giro) | perfil (retrato de un departamento o grupo frente al país en 5–8 tarjetas; tema = el sujeto). smoke = corrida corta sin tocar memoria/; fixture = sin web, copia sesiones/_fixture. idea = id de ideas/banco.json (el editor parte de ella; memoria.py la marca hecha al registrar).',
+  whenToUse: 'Invocado por /hilo [modo] [tema] [smoke|fixture] (y por los alias /explica y /perfil). args: {tema, modo, smoke, fixture, fecha, min_tuits, max_tuits, idea, permitir_fallback} (fecha YYYY-MM-DD obligatoria, la pone el comando con `date +%F`). modo = hilo (defecto, historia con giro) | explica (el tema explicado con sus números en 3–6 tarjetas, sin giro) | perfil (retrato de un departamento o grupo frente al país en 5–8 tarjetas; tema = el sujeto). smoke = corrida corta sin tocar memoria/; fixture = sin web, copia sesiones/_fixture. idea = id de ideas/banco.json (el editor parte de ella; memoria.py la marca hecha al registrar).',
   phases: [
     { title: 'Encuadre', detail: 'editor: pregunta, tesis provisional, paleta, ejes con prefijo y fuentes sugeridas' },
     { title: 'Investigación', detail: 'un investigador por eje (SIFT, con presupuesto): cifras con evidencia' },
     { title: 'Verificación', detail: 'un verificador por eje: parte de la evidencia, una segunda fuente, veredicto' },
     { title: 'Guion', detail: 'guionista: tesis final + 4–21 tuits (min_tuits opcional) con gancho (hook_tipo), visual y alt-text' },
+    { title: 'Rechequeo', detail: 'verificador en modo rechequeo: ancla, T1 y cifras de segunda fuente baja; lo que cae vuelve al guionista' },
     { title: 'Visuales', detail: 'visualistas en lotes de 3: materializar → gate R1–R6 → QA' },
     { title: 'Ensamblado', detail: 'productor: consolidar → ensamblar.py --check → C1–C8 → memoria.py → make validate' },
   ],
@@ -35,7 +36,8 @@ const RE_BAIT = /(dale|da|dame|dejen?)\s+(rt|like|me gusta)|s[ií]gue(me|nos)|re
 const RE_SUPER = /r[ée]cord|hist[óo]ric[oa]|m[áa]s alt[oa] de la historia|nunca antes/i
 const LOTE = 3
 const MAX_TUITS = 21
-const TOPES = { normal: { busquedas: 10, fetch: 12, cifras: 12 }, smoke: { busquedas: 5, fetch: 6, cifras: 6 } }
+// largo = hilo de ≥10 tuits (min_tuits): más cifras y series por eje para que cada tarjeta lleve un dato distinto.
+const TOPES = { normal: { busquedas: 10, fetch: 12, cifras: 12, series: 4 }, largo: { busquedas: 14, fetch: 16, cifras: 16, series: 6 }, smoke: { busquedas: 5, fetch: 6, cifras: 6, series: 2 } }
 // Modos de /hilo (args.modo): cambian el arco y los gates; guion.tipo sigue siendo "hilo".
 // Las claves coinciden con ensamblar.MODOS["hilo"] (lo comprueba scripts/check_workflows.py). min null = min_tuits.
 const MODOS = {
@@ -131,6 +133,14 @@ const S = {
       vacios: { type: 'array', items: { type: 'string' } },
     },
   },
+  rechequeo: {
+    type: 'object',
+    required: ['items'],
+    properties: {
+      archivo: { type: 'string' },
+      items: { type: 'array', items: { type: 'object', required: ['id', 'veredicto', 'motivo'], properties: { id: { type: 'string' }, veredicto: { type: 'string', enum: ['sostiene', 'matizar', 'caer'] }, motivo: { type: 'string' }, fuente: { type: 'string' }, url: { type: 'string' } } } },
+    },
+  },
   verificacion: {
     type: 'object',
     required: ['eje', 'archivo', 'ok', 'no_confirmadas'],
@@ -138,6 +148,7 @@ const S = {
       eje: { type: 'string' }, archivo: { type: 'string' },
       ok: { type: 'array', items: { type: 'object', required: ['id'], properties: { id: { type: 'string' }, valor_final: { type: 'number' }, independencia: { type: 'string', enum: ['alta', 'baja'] } } } },
       no_confirmadas: { type: 'array', items: { type: 'string' } },
+      fallas_mecanicas: { type: 'array', items: { type: 'string' } },
     },
   },
   guion: {
@@ -243,22 +254,30 @@ if (!/^\d{4}-\d{2}-\d{2}$/.test(fecha)) throw new Error('args.fecha (YYYY-MM-DD)
 const modo = smoke ? 'smoke' : 'normal'
 // Mínimo de tuits en modo normal (4 por defecto; el usuario puede pedir un hilo largo).
 const minT = Math.min(MAX_TUITS, Math.max(4, parseInt(A.min_tuits, 10) || 4))
+// Máximo opcional (max_tuits, nunca por debajo de min_tuits ni por encima de MAX_TUITS).
+const maxT = Math.min(MAX_TUITS, Math.max(minT, parseInt(A.max_tuits, 10) || MAX_TUITS))
+const largo = !smoke && minT >= 10
 // Modo del post (hilo | explica | perfil): lo fija el comando; desconocido = error, no silencio.
 const modoPost = A.modo ? String(A.modo).toLowerCase() : 'hilo'
 if (!MODOS[modoPost]) throw new Error(`args.modo "${A.modo}" desconocido (${Object.keys(MODOS).join('|')}).`)
 const MP = MODOS[modoPost]
 const IM = INSTR[modoPost]
 const minN = smoke ? 3 : (MP.min || minT)
-const maxN = smoke ? 4 : MP.max
-const T = TOPES[modo]
+const maxN = smoke ? 4 : Math.min(MP.max, maxT)
+const T = TOPES[largo ? 'largo' : modo]
 // Idea del banco (ideas/banco.json): la resuelve /hilo en el preflight y llega como id.
 const idea = /^[a-z0-9-]+$/.test(String(A.idea || '')) ? String(A.idea) : null
+// <comun> generado por scripts/armar_workflows.py desde scripts/workflow_comun.js: no editar aquí
+// Código común de los workflows hilo.js, dato.js, investigacion.js y video.js (el sandbox de Workflow no importa módulos).
+// Fuente ÚNICA: este archivo. scripts/armar_workflows.py lo copia entre los marcadores de bloque común
+// de cada workflow; scripts/check_workflows.py (W9) falla si una copia difiere.
+// Requiere en el workflow, antes del bloque: `A` (args), `meta` y un esquema `S.rechequeo`.
 const fail = (msg) => { throw new Error(msg) }
 // Los avisos del workflow viajan también en el retorno (el journal no conserva los log()).
 const AVISOS_WF = []
 const avisar = (m) => { AVISOS_WF.push(String(m)); log(m) }
 
-// Los roles viven en .claude/agents/hilo-*.md y se registran al arrancar la
+// Los roles viven en .claude/agents/ (hilo-*, informe-*) y se registran al arrancar la
 // sesión. Si no existen todavía se falla con instrucciones claras: correr todo
 // en general-purpose es caro, ignora los modelos por rol y rompe la caché de
 // resume. Solo con args.permitir_fallback se degrada a general-purpose.
@@ -267,11 +286,47 @@ const agentRol = async (prompt, opts) => {
     return await agent(prompt, opts)
   } catch (e) {
     if (!opts || !opts.agentType || !/agent type .* not found/i.test(String(e && e.message))) throw e
-    if (!A.permitir_fallback) fail(`El agente ${opts.agentType} no está registrado en esta sesión (los .claude/agents/ se cargan al arrancar). Reinicia Claude Code y vuelve a lanzar /hilo, o pasa args.permitir_fallback: true para correr con general-purpose.`)
+    if (!A.permitir_fallback) fail(`El agente ${opts.agentType} no está registrado en esta sesión (los .claude/agents/ se cargan al arrancar). Reinicia Claude Code y vuelve a lanzar /${meta.name}, o pasa args.permitir_fallback: true para correr con general-purpose.`)
     avisar(`AVISO: ${opts.agentType} no registrado; se usa general-purpose (permitir_fallback).`)
     const { agentType, ...resto } = opts
     return agent(`Asume el rol definido en .claude/agents/${agentType}.md: léelo primero y sigue sus instrucciones y sus límites. ` + prompt, { ...resto, agentType: 'general-purpose' })
   }
+}
+
+// Verificación mecánica (scripts/verificacion.py V-A–V-E): forma única del veredicto, cierre que el verificador
+// corre antes de devolver y una vuelta de reparación si quedan fallas; lo que siga fallando no se usa.
+const FORMA_ITEM = '{"id", "veredicto": "verificada|ajustada|no_confirmada", "valor_final", "fuente_2", "url_2", "independencia": "alta|baja", "calculo"?, "serie_final"?, "partes_final"?, "nota"}'
+const cierreVer = (ses, eje) =>
+  `ANTES DE DEVOLVER corre python3 scripts/verificacion.py ${ses} --eje ${eje} y corrige cada FALLA: V-A, que la cita contenga el número o, si es derivado, «calculo» con la operación (p. ej. "(188442390/226077000-1)*100"); V-B, serie_final/partes_final con los puntos corregidos de una ajustada; V-C, independencia alta|baja (alta nunca con url_2 del mismo dominio que la primaria). Si no puedes, marca la cifra no_confirmada. Devuelve fallas_mecanicas[] con los ids que sigan fallando (vacío si 0). `
+async function conMecanico(v, prompt, opts, ses, eje) {
+  if (!v || !(v.fallas_mecanicas || []).length) return v
+  avisar(`${eje}: verificacion.py deja ${v.fallas_mecanicas.length} falla(s) (${v.fallas_mecanicas.join(', ')}) → una vuelta de reparación.`)
+  const r = await agentRol(`${prompt} REPARACIÓN: verificacion_${eje}.json ya existe; no repitas la verificación. Corre python3 scripts/verificacion.py ${ses} --eje ${eje} y corrige solo ${v.fallas_mecanicas.join(', ')} (o márcalas no_confirmada); devuelve el retorno completo del eje.`, { ...opts, label: `${opts.label}-mecanico` })
+  const w = r || v
+  const quedan = new Set(w.fallas_mecanicas || [])
+  if (quedan.size) {
+    avisar(`AVISO: ${eje}: ${[...quedan].join(', ')} siguen sin pasar verificacion.py; no se usan.`)
+    w.ok = w.ok.filter((it) => !quedan.has(it.id))
+    w.no_confirmadas = [...new Set([...(w.no_confirmadas || []), ...quedan])]
+  }
+  return w
+}
+
+// Rechequeo adversarial (referencias/roles/verificador.md «Rechequeo»): una invocación tras el guion sobre las
+// pocas cifras que sostienen la conclusión; las que «caen» vuelven al guionista para quitarlas.
+async function rechequear(ses, ids, extra, presupuesto) {
+  if (!ids.length) return { items: [] }
+  const r = await agentRol(
+    `Eres el verificador en MODO RECHEQUEO (lee referencias/roles/verificador.md, sección «Rechequeo»). Sesión: ${ses}. ` +
+      `Cifras que sostienen la conclusión: ${ids.join(', ')} (python3 scripts/digesto.py ${ses} --para verificador y --serie <id>; python3 scripts/verificacion.py ${ses} para sus avisos; no leas los JSON enteros). ${extra || ''}` +
+      'Para cada una, ¿por qué podría estar mal? (definición o categoría distinta entre la base y el dato actual, periodo o universo mezclado, cifra preliminar revisada, segunda fuente que copia la primera). Busca una fuente de independencia alta si no la hay. ' +
+      `Presupuesto: ${presupuesto}. No reescribas verificacion_*.json. Escribe ${ses}/rechequeo.json {"items": [{"id", "veredicto": "sostiene|matizar|caer", "motivo", "fuente"?, "url"?}]} y devuelve el mismo contenido.`,
+    { agentType: 'hilo-verificador', schema: S.rechequeo, phase: 'Rechequeo', label: 'rechequeo' }
+  )
+  if (!r) { avisar('AVISO: el rechequeo no terminó; sigue la verificación de la primera pasada.'); return { items: [] } }
+  const caen = r.items.filter((x) => x.veredicto === 'caer').map((x) => x.id)
+  avisar(`Rechequeo: ${r.items.length} cifra(s) · ${caen.length} caen${caen.length ? ' (' + caen.join(', ') + ')' : ''} · ${r.items.filter((x) => x.veredicto === 'matizar').length} a matizar`)
+  return r
 }
 
 // Bucle de reparación: valida el retorno y reinvoca con la lista de fallos.
@@ -286,6 +341,7 @@ async function conReparacion(etiqueta, invocar, validar, max = 2) {
   }
   fail(`${etiqueta} rechazado tras ${max} reparaciones:\n - ${fallos.join('\n - ')}`)
 }
+// </comun>
 
 // ── FASE 1: ENCUADRE ────────────────────────────────────────────────────────
 phase('Encuadre')
@@ -329,7 +385,8 @@ if (!fixture) {
     agentRol(
       `Eres el investigador del eje "${eje.id}" (lee referencias/roles/investigador.md y referencias/contrato-sesion.md). Sesión: ${enc.sesion_dir} ` +
         `(lee encuadre.json: tu brief, preguntas y fuentes_sugeridas). Prefijo de ids: "${prefijoDe(eje)}-cNN". ` + IM.investigador +
-        `PRESUPUESTO: ≤${T.busquedas} búsquedas, ≤${T.fetch} fetch, ≤${T.cifras} cifras, ≤${smoke ? 2 : 4} series; cada cifra con evidencia {url, cita, archivo_local}. ` +
+        `PRESUPUESTO: ≤${T.busquedas} búsquedas, ≤${T.fetch} fetch, ≤${T.cifras} cifras, ≤${T.series} series; cada cifra con evidencia {url, cita, archivo_local}. ` +
+        (largo ? `HILO LARGO: el guion tendrá ${minN}–${maxN} tuits; reúne cifras variadas (puntuales, series, desgloses por departamento, sexo, edad o tipo) que den cada una una tarjeta distinta, no variantes de la misma. ` : '') +
         `Sin Playwright MCP. Escribe ${enc.sesion_dir}/hallazgos_${eje.id}.json completo y devuelve solo el resumen (ids, tipo, n_puntos).`,
       { agentType: 'hilo-investigador', schema: S.hallazgos, phase: 'Investigación', label: `investigar-${eje.id}` }
     )
@@ -341,11 +398,13 @@ if (!fixture) {
       `Corre python3 scripts/digesto.py ${enc.sesion_dir} --eje ${eje.id} --para verificador (no leas ${h.archivo} entero). ` +
       `Verifica TODAS: ${h.cifras.map((c) => c.id).join(', ')}. Parte de la cita y del archivo local; una segunda fuente independiente por cifra; ≤2 fetch por cifra. ` +
       `${smoke ? 'MODO SMOKE: cita + una segunda fuente; extremos de cada serie. ' : ''}` +
-      `Escribe ${enc.sesion_dir}/verificacion_${eje.id}.json completo con EXACTAMENTE esta forma: {"eje": "${eje.id}", "items": [{"id", "veredicto": "verificada|ajustada|no_confirmada", "valor_final", "fuente_2", "url_2", "nota"}]} (la clave es items, no cifras) y devuelve ok[] (id, valor_final) y no_confirmadas[].`
+      `Escribe ${enc.sesion_dir}/verificacion_${eje.id}.json completo con EXACTAMENTE esta forma: {"eje": "${eje.id}", "items": [${FORMA_ITEM}]} (la clave es items, no cifras). ` + cierreVer(enc.sesion_dir, eje.id) +
+      'Devuelve ok[] (id, valor_final, independencia), no_confirmadas[] y fallas_mecanicas[].'
     const opts = { agentType: 'hilo-verificador', schema: S.verificacion, phase: 'Verificación', label: `verificar-${eje.id}` }
     let v = await agentRol(prompt, opts)
     if (!v) { avisar(`AVISO: el verificador de ${eje.id} no terminó; se reintenta una vez.`); v = await agentRol(prompt, { ...opts, label: `verificar-${eje.id}-2` }) }
     if (!v) { ejesCaidos.push(eje.id); return null }
+    v = await conMecanico(v, prompt, opts, enc.sesion_dir, eje.id)
     return { eje: eje.id, hallazgos: h, verificacion: v }
   }
   const porEje = (await pipeline(enc.ejes, investigar, verificar)).filter(Boolean)
@@ -525,9 +584,7 @@ const validarGuion = (g) => {
   if (n >= 5 && new Set(visuales.map((t) => t.visual.plantilla)).size === 1) avisar('AVISO: todas las tarjetas usan la misma plantilla.')
   return F
 }
-const g = await conReparacion(
-  'Guion',
-  (fallos) =>
+const invocarGuion = (fallos) =>
     agentRol(
       `Eres el guionista (lee referencias/roles/guionista.md, referencias/narrativa.md y referencias/diseno/graficos.md). Sesión: ${enc.sesion_dir}. ` +
         `Lee encuadre.json y corre python3 scripts/digesto.py ${enc.sesion_dir} --para guionista (no leas los hallazgos_*.json ni verificacion_*.json enteros; para copiar puntos de una serie usa --serie <id>). ` +
@@ -536,14 +593,33 @@ const g = await conReparacion(
         (okIds ? `Solo cifras verificada|ajustada con su valor_final: ${[...okIds].join(', ')}. ` : 'MODO FIXTURE: usa las cifras verificadas de la sesión copiada. ') +
         (bajas.length ? `Cifras con segunda fuente NO independiente (reproduce la primaria): ${bajas.join(', ')}: no sostengas la ancla solo en ellas si hay alternativa; si las usas, decláralo en sintesis.incertidumbre. ` : '') +
         `${smoke ? 'MODO SMOKE: 3–4 tuits, smoke:true. ' : `${minN}–${maxN} tuits${MP.impacto ? ' con un beat impacto' : ''}, smoke:false. `}` +
+        (largo ? `HILO LARGO: apunta a ${maxN} tuits si el digesto lo sostiene (varios contexto e impacto, un solo giro); cada tarjeta lleva un dato distinto, sin repetir cifra ni gráfico. ` : '') +
         LIMITES + ' ' +
         (fallos.length ? `TU GUION ANTERIOR FUE RECHAZADO; corrige SOLO esto y vuelve a escribir guion.json completo:\n - ${fallos.join('\n - ')}\n` : '') +
         `Escribe ${enc.sesion_dir}/guion.json completo (con modo: "${modoPost}"${modoPost !== 'hilo' ? ` y el bloque ${modoPost}` : ''}) y devuelve el mismo contenido compacto (con modo, visual.datos en números crudos${modoPost !== 'hilo' ? ' y el bloque ' + modoPost : ''}).`,
       { agentType: 'hilo-guionista', schema: S.guion, label: fallos.length ? 'guionista-reparacion' : 'guionista' }
-    ),
-  validarGuion,
-  2
-)
+    )
+let g = await conReparacion('Guion', invocarGuion, validarGuion, 2)
+
+// ── RECHEQUEO (adversarial, solo lo que sostiene la conclusión) ─────────────
+if (!fixture) {
+  phase('Rechequeo')
+  const t1 = ((g.tuits[0] || {}).visual || {}).cifra_ids || []
+  const usadas = new Set(g.tuits.flatMap((t) => (t.visual || {}).cifra_ids || []))
+  const ids = [...new Set([g.ancla_id, ...t1, ...bajas.filter((b) => usadas.has(b))])].filter((x) => x && CIF.has(x)).slice(0, smoke ? 3 : 8)
+  const rq = await rechequear(enc.sesion_dir, ids, '', smoke ? '≤ 2 búsquedas y ≤ 3 fetch' : '≤ 8 búsquedas y ≤ 10 fetch en total')
+  const caen = new Set(rq.items.filter((x) => x.veredicto === 'caer').map((x) => x.id))
+  const matizar = rq.items.filter((x) => x.veredicto === 'matizar').map((x) => `${x.id}: ${x.motivo}`)
+  if (caen.size || matizar.length) {
+    for (const c of caen) okIds.delete(c)
+    const pedido = [
+      ...(caen.size ? [`el rechequeo descartó ${[...caen].join(', ')} (rechequeo.json): quítalas de cifra_ids, del texto y de la ancla y rehaz esos tuits con otras cifras verificadas`] : []),
+      ...(matizar.length ? [`declara en sintesis.incertidumbre lo que el rechequeo pide matizar: ${matizar.join(' · ')}`] : []),
+    ]
+    const validarSinCaidas = (r) => [...validarGuion(r), ...r.tuits.filter((t) => ((t.visual || {}).cifra_ids || []).some((c) => caen.has(c))).map((t) => `T${t.n} usa una cifra descartada por el rechequeo`), ...(caen.has(r.ancla_id) ? ['ancla_id descartada por el rechequeo'] : [])]
+    g = await conReparacion('Guion (rechequeo)', (f, i) => invocarGuion(i === 0 ? pedido : f), validarSinCaidas, 2)
+  }
+}
 avisar(`Tesis: ${g.tesis} · gancho ${g.hook_tipo}${modoPost !== 'hilo' ? ' · modo ' + modoPost : ''} · ${g.tuits.length} tuits (${g.tuits.map((t) => t.beat[0].toUpperCase()).join('')}) · ${g.tuits.filter((t) => t.visual).length} visuales`)
 
 // ── FASE 4: VISUALES (lotes de 3 en paralelo, con reparación por tuit) ──────

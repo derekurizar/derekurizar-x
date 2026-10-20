@@ -44,12 +44,14 @@ const C = (R, P) => {
   const tabla = (t) => {
     const cols = t.columnas;
     const th = cols.map((c) => '<th class="' + (c.num ? "num" : "") + '" style="text-align:' + (c.num ? "right" : "left") + (c.ancho ? ";width:" + c.ancho + "px" : "") + '">' + esc(c.t).replace(/\n/g, "<br>") + "</th>").join("");
-    const filas = t.filas.map((f) => '<tr class="' + (f.dest ? "dest" : "") + (f.total ? " total" : "") + '">' + f.c.map((v, i) => {
+    const filas = t.filas.map((f) => '<tr class="' + (f.dest ? "dest" : "") + (f.total ? " total" : "") + (f.detalle ? " con-detalle" : "") + '">' + f.c.map((v, i) => {
       const b = (f.b || []).includes(i) || (f.dest && i === 0);
       const chip = typeof v === "object" && v && v.chip;
       const contenido = chip ? '<span class="chip' + (v.chip === "ajustada" ? " borde" : "") + '">' + esc(v.chip) + "</span>" : esc(v == null ? "—" : v);
       return '<td class="' + (cols[i].num ? "num" : "") + (b ? " b" : "") + '"' + (f.dest && cols[i].num ? ' style="color:var(--tinta)"' : "") + ">" + contenido + "</td>";
-    }).join("") + "</tr>").join("");
+    }).join("") + "</tr>" +
+      // detalle: una segunda línea a lo ancho bajo la fila (qué encontramos, fuente), sin la columna del id
+      (f.detalle ? '<tr class="detalle' + (f.dest ? " dest" : "") + '"><td></td><td colspan="' + (cols.length - 1) + '">' + md(f.detalle) + "</td></tr>" : "")).join("");
     const notas = t.notas && t.notas.length ? '<div class="notas-tabla">' + t.notas.map((n) => "<span><b>" + esc(n.m) + "</b> · " + md(n.texto) + "</span>").join("") + "</div>" : "";
     return '<figure class="fig tabla">' + (t.titulo ? '<span class="k acento">' + esc(t.titulo) + "</span>" : "") + '<table class="t">' + "<thead><tr>" + th + "</tr></thead><tbody>" + filas + "</tbody></table>" +
       '<figcaption><span class="figno">' + esc(t._n) + "</span><span>" + md(t.pie || "") + (t.pie ? " " : "") + "Fuente: " + esc(t.fuente) + ".</span></figcaption>" + notas + "</figure>";

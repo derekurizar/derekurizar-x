@@ -59,9 +59,9 @@
         "actualidad": 4,
         "total": 11
       },
-      "estado": "pendiente",
-      "hilo_id": null,
-      "actualizada": "2026-10-03",
+      "estado": "hecha",
+      "hilo_id": "2026-10-11-graduandos-lectura-matematica-logro",
+      "actualizada": "2026-10-11",
       "nota": "Tablero interactivo: confirmar si hay descarga; si no, usar informes PDF de DIGEDUCA y Anuario MINEDUC como respaldo."
     },
     {
@@ -98,10 +98,337 @@
         "actualidad": 4,
         "total": 12
       },
-      "estado": "pendiente",
-      "hilo_id": null,
-      "actualizada": "2026-10-03",
+      "estado": "hecha",
+      "hilo_id": "2026-10-06-tarifa-electrica-brecha-regional",
+      "actualizada": "2026-10-06",
       "nota": "Cifras de tarifa vienen de prensa; el investigador debe confirmarlas en el PDF CNEE."
+    },
+    {
+      "id": "remesas-freno-2026-vs-2025",
+      "creada": "2026-10-06",
+      "area": "economia",
+      "titulo": "Remesas: de +18% en 2025 a +7% en 2026, el freno mes a mes",
+      "pregunta": "¿Cuánto se enfrió el flujo de remesas respecto al sprint de 2025 y cuántos quetzales dejan de llegar a los hogares?",
+      "por_que_ahora": "Banguat proyecta US$26.8 mil millones y crecimiento de ~7% para 2026; análisis (La Hora, 21 sep) advierten estancamiento en 2027; cambio de presidencia en Banguat.",
+      "angulo": "Mes contra mes 2025 vs 2026 y proyección a fin de año; distinto del hilo 2016–2026 de tres gobiernos: foco en el miedo a deportaciones y el efecto rebote.",
+      "hook_sugerido": "giro_inversion",
+      "paleta_sugerida": "jade",
+      "datos": [
+        {
+          "fuente": "Banco de Guatemala",
+          "indicador": "Ingreso de divisas por remesas familiares, mensual y variación acumulada",
+          "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/remesas/remfam2002_2026.xlsx",
+          "formato": "xlsx",
+          "periodo": "2002–2026",
+          "evidencia": "Guatemala: Ingreso de Divisas por Remesas Familiares. Cuadro 1; Cuadro 2 Variaciones porcentuales acumuladas. Años: 2002 - 2026"
+        },
+        {
+          "fuente": "OIM",
+          "indicador": "Hogares receptores (~1.75 M) y dependencia",
+          "url": "https://infounitnca.iom.int/uploads/RemesasGT2022/Resumen_EncuestaRemesas2022_gt.pdf",
+          "formato": "pdf",
+          "periodo": "2022",
+          "evidencia": "Encuesta sobre Migración y Remesas 2022 (catálogo: hogares receptores y beneficiarios)"
+        }
+      ],
+      "puntaje": {
+        "interes": 5,
+        "datos": 5,
+        "actualidad": 4,
+        "total": 14
+      },
+      "estado": "descartada",
+      "hilo_id": null,
+      "actualizada": "2026-10-06",
+      "nota": "Cuidar que no se solape con el hilo de tres gobiernos; usar solo 2025 vs 2026."
+    },
+    {
+      "id": "presupuesto-2027-q192-mil-millones",
+      "creada": "2026-10-06",
+      "area": "fiscal",
+      "titulo": "Presupuesto 2027: Q192 mil millones, déficit y qué ministerios crecieron más",
+      "pregunta": "¿Hacia dónde va el presupuesto 2027 y qué ministerios crecieron más desde 2023?",
+      "por_que_ahora": "La Comisión de Finanzas inicia audiencias el 6 de octubre (hasta el 30) sobre la iniciativa 6841; solo 13 de 23 instituciones habían respondido el 23 de septiembre.",
+      "angulo": "Crecimiento 2023–2026 por ministerio (Economía +51.8%, Agricultura +40.3%, Gobernación +39.2%, Educación +22.8%) frente a lo que se pide comprobar; déficit propuesto.",
+      "hook_sugerido": "titular_clasico",
+      "paleta_sugerida": "maiz",
+      "datos": [
+        {
+          "fuente": "MINFIN",
+          "indicador": "Proyecto de Presupuesto 2027 por institución y déficit fiscal",
+          "url": "https://www.minfin.gob.gt/",
+          "formato": "pdf",
+          "periodo": "2023–2027",
+          "evidencia": "Infobae 23-sep-2026: Economía 422.22 a 640.77 millones (+51.8%); Educación 21,665.8 a 26,616.5 millones (+22.8%)"
+        },
+        {
+          "fuente": "Congreso de la República",
+          "indicador": "Calendario de audiencias y aumentos por cartera",
+          "url": "https://www.infobae.com/guatemala/2026/09/23/congreso-fija-calendario-de-audiencias-para-revisar-el-presupuesto-2027-de-guatemala-y-exigira-comprobar-el-uso-de-los-recursos/",
+          "formato": "html",
+          "periodo": "2023–2027",
+          "evidencia": "Audiencias del 6 al 30 de octubre; 13 de 23 instituciones respondieron al 23 de septiembre"
+        }
+      ],
+      "puntaje": {
+        "interes": 4,
+        "datos": 3,
+        "actualidad": 5,
+        "total": 12
+      },
+      "estado": "hecha",
+      "hilo_id": "2026-10-06-presupuesto-2027-deficit-ministerios",
+      "actualizada": "2026-10-06",
+      "nota": "Cifras de déficit discrepan entre fuentes (3.7% vs 4.4% en prensa): el verificador debe cotejar con el documento oficial. MINFIN/portal puede dar 403."
+    },
+    {
+      "id": "recaudacion-sat-2026-meta-nueve-meses",
+      "creada": "2026-10-06",
+      "area": "fiscal",
+      "titulo": "SAT 2026: Q75 mil millones en nueve meses, ¿llega a la meta de Q119,762 millones?",
+      "pregunta": "¿Va la recaudación 2026 por encima de la meta y qué impuestos la sostienen?",
+      "por_que_ahora": "SAT proyecta Q119,762 millones (+9.6%); hasta mayo ejecución de 101.9%; el cierre del tercer trimestre y el debate del presupuesto 2027 dependen de esa meta.",
+      "angulo": "Recaudación mensual vs meta por impuesto (ISR, IVA, aranceles) y comparación con la serie 2016–2025; mide cuánto del gasto se financia con ingresos propios.",
+      "hook_sugerido": "pregunta_directa",
+      "paleta_sugerida": "cacao",
+      "datos": [
+        {
+          "fuente": "SAT",
+          "indicador": "Recaudación tributaria mensual por impuesto y meta",
+          "url": "https://portal.sat.gob.gt/portal/estadisticas-tributarias-sat/",
+          "formato": "xlsx",
+          "periodo": "2005–2026",
+          "evidencia": "Catálogo: serie mensual en millones de Q; búsqueda: Q50,308.3 millones a mayo vs meta Q49,374.8 millones (101.9%). Fetch del portal dio 403."
+        },
+        {
+          "fuente": "SAT",
+          "indicador": "Serie anual por impuesto (rimpa.xlsx)",
+          "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/5151/rimpa.xlsx",
+          "formato": "xlsx",
+          "periodo": "2016–2025",
+          "evidencia": "Serie anual ya registrada en memoria/fuentes.json desde hilo 2026-09-29"
+        }
+      ],
+      "puntaje": {
+        "interes": 3,
+        "datos": 4,
+        "actualidad": 4,
+        "total": 11
+      },
+      "estado": "hecha",
+      "hilo_id": "2026-10-06-recaudacion-sat-2026-meta",
+      "actualizada": "2026-10-06",
+      "nota": "Acceso al portal SAT dio 403 en fetch; usar make tabla / URL directa de rimpa.xlsx."
+    },
+    {
+      "id": "retornados-2026-de-donde-vuelven",
+      "creada": "2026-10-06",
+      "area": "poblacion",
+      "titulo": "39 mil retornados en siete meses: de qué departamentos salen los deportados",
+      "pregunta": "¿De qué departamentos y municipios vienen los guatemaltecos deportados en 2026, y cómo se compara con años anteriores?",
+      "por_que_ahora": "El IGM reportó 39,243 retornados de EE.UU. y México entre enero y julio de 2026; Huehuetenango (7,748) y San Marcos (5,552) encabezan.",
+      "angulo": "Mapa departamental per cápita de los retornados (microdatos IGM) frente a la población INE: quién absorbe el golpe, no solo cuántos llegan. Distinto al hilo de remesas/economía.",
+      "hook_sugerido": "brecha_territorial",
+      "paleta_sugerida": "terracota",
+      "datos": [
+        {
+          "fuente": "IGM (Instituto Guatemalteco de Migración)",
+          "indicador": "Retornados por departamento, sexo, edad y vía (base anual en Excel)",
+          "url": "https://igm.gob.gt/index.php?view=article&id=6:estadisticas&catid=9",
+          "formato": "xlsx",
+          "periodo": "2016–2026",
+          "evidencia": "Portal IGM enlaza «Estadísticas» (id=6); catálogo: base anual Excel con DEPARTAMENTO y MUNICIPIO. Prensa: 39,243 retornados a jul-2026."
+        },
+        {
+          "fuente": "INE",
+          "indicador": "Proyecciones de población por departamento",
+          "url": "https://www.ine.gob.gt/proyecciones/",
+          "formato": "xlsx",
+          "periodo": "2018–2050",
+          "evidencia": "Catálogo: proyecciones 2018-2050 por departamento, sexo y edad."
+        }
+      ],
+      "puntaje": {
+        "interes": 5,
+        "datos": 4,
+        "actualidad": 5,
+        "total": 14
+      },
+      "estado": "descartada",
+      "hilo_id": null,
+      "actualizada": "2026-10-06",
+      "nota": "El fetch a igm.gob.gt/informes-estadisticos/ dio 404; confirmar URL real del Excel (la portada enlaza Estadísticas). Cifras de prensa (Infobae/DCA, 7 ago 2026)."
+    },
+    {
+      "id": "carceles-hacinamiento-por-penal",
+      "creada": "2026-10-06",
+      "area": "seguridad",
+      "titulo": "Pavón: 4,464 presos en un penal para 960. Mapa del hacinamiento carcelario",
+      "pregunta": "¿Cuántas personas caben en las cárceles de Guatemala frente a cuántas hay, y qué penales concentran el hacinamiento?",
+      "por_que_ahora": "Amparo ante la CC por hacinamiento superior al 300% (jul 2026) y plan oficial para despresurizar cárceles y cortar extorsiones (15 sep 2026).",
+      "angulo": "Capacidad vs. población por centro (no la tasa de encarcelamiento ni prisión preventiva ya usadas en el hilo de violencia); 10 cárceles concentran 72.6%.",
+      "hook_sugerido": "escala_humana",
+      "paleta_sugerida": "obsidiana",
+      "datos": [
+        {
+          "fuente": "World Prison Brief (ICPR) con datos del Sistema Penitenciario",
+          "indicador": "Población reclusa y ocupación oficial",
+          "url": "https://www.prisonstudies.org/country/guatemala",
+          "formato": "html",
+          "periodo": "2001–2023",
+          "evidencia": "WPB: 23,361 reclusos (27-nov-2023), ocupación oficial 299.4%, prisión preventiva 47.2%."
+        },
+        {
+          "fuente": "Dirección General del Sistema Penitenciario / Mingob",
+          "indicador": "Capacidad y población por centro (2026)",
+          "url": "https://www.prensalibre.com/guatemala/justicia/diez-carceles-albergan-al-72-6-de-la-poblacion-reclusa-en-guatemala/",
+          "formato": "html",
+          "periodo": "2026",
+          "evidencia": "Prensa Libre: «Diez cárceles albergan al 72.6% de la población reclusa»; Infobae: capacidad real 6,800, más de 23 mil reclusos."
+        }
+      ],
+      "puntaje": {
+        "interes": 4,
+        "datos": 3,
+        "actualidad": 5,
+        "total": 12
+      },
+      "estado": "hecha",
+      "hilo_id": "2026-10-06-carceles-hacinamiento-por-penal",
+      "actualizada": "2026-10-06",
+      "nota": "Datos por penal solo en prensa/Mingob; buscar el cuadro oficial (SP o solicitud de información pública) antes de producir."
+    },
+    {
+      "id": "madres-ninas-adolescentes-2026",
+      "creada": "2026-10-06",
+      "area": "poblacion",
+      "titulo": "30 mil nacimientos de madres de 10 a 19 años en seis meses: dónde ocurren",
+      "pregunta": "¿Cuántas niñas y adolescentes han sido madres en 2026 y en qué departamentos se concentra?",
+      "por_que_ahora": "Se presentó el PLANEA 2026-2032 (2 oct 2026); OSAR reporta 1,015 madres de 10 a 14 años en el primer semestre.",
+      "angulo": "Serie anual de nacimientos por edad de la madre con peso departamental y las menores de 14 como dato héroe (escala humana); no tocado por hilos previos.",
+      "hook_sugerido": "escala_humana",
+      "paleta_sugerida": "jacaranda",
+      "datos": [
+        {
+          "fuente": "OSAR Guatemala (Observatorio en Salud Sexual y Reproductiva)",
+          "indicador": "Nacimientos de madres de 10 a 19 años y embarazos 10 a 14",
+          "url": "https://osarguatemala.org/",
+          "formato": "html",
+          "periodo": "2023–2026",
+          "evidencia": "Sitio OSAR: «Registros de nacimientos de madres entre 10 – 19 años»; sección Datos abiertos; datos anuales 2023-2026."
+        },
+        {
+          "fuente": "INE — Estadísticas Vitales (datos abiertos)",
+          "indicador": "Nacimientos por edad de la madre y departamento",
+          "url": "https://datos.ine.gob.gt",
+          "formato": "xlsx",
+          "periodo": "2010–2024",
+          "evidencia": "Catálogo: portal CKAN con Estadísticas Vitales en XLSX (API no respondió en prueba rápida; verificar dataset)."
+        }
+      ],
+      "puntaje": {
+        "interes": 5,
+        "datos": 4,
+        "actualidad": 4,
+        "total": 13
+      },
+      "estado": "hecha",
+      "hilo_id": "2026-10-06-madres-ninas-adolescentes-2026",
+      "actualizada": "2026-10-06",
+      "nota": "OSAR publica sobre todo como gráficos; la serie larga debe bajarse de INE. Tema sensible: tratar con cuidado (violencia sexual en menores de 14)."
+    },
+    {
+      "id": "electricidad-con-fuego-matriz-2026",
+      "creada": "2026-10-06",
+      "area": "energia",
+      "titulo": "«La cubrimos con fuego»: la generación térmica se duplicó y el spot subió 86%",
+      "pregunta": "Cuánto más cara y más térmica es la electricidad de 2026 y por qué la solar no alcanza a las 7 p.m.?",
+      "por_que_ahora": "Demanda máxima +8.6% en 2026, hidro -25.5% en agosto, spot a US$167/MWh; Ager advierte escasez desde 2027.",
+      "angulo": "Matriz y precio mayorista (AMM), no tarifa al usuario ni sequía en general: la curva horaria solar vs. pico nocturno.",
+      "hook_sugerido": "giro_inversion",
+      "paleta_sugerida": "cielo",
+      "datos": [
+        {
+          "fuente": "AMM",
+          "indicador": "Generación por tecnología, demanda máxima y precio spot",
+          "url": "https://www.amm.org.gt/portal/?page_id=145",
+          "formato": "xlsx",
+          "periodo": "2010–2026",
+          "evidencia": "Catálogo: serie AMM mensual (GWh, MW, spot US$/MWh) 2010+. Prensa: spot ago-2026 US$167.46 vs 89.92 en ago-2025."
+        }
+      ],
+      "puntaje": {
+        "interes": 5,
+        "datos": 4,
+        "actualidad": 5,
+        "total": 14
+      },
+      "estado": "hecha",
+      "hilo_id": "2026-10-06-electricidad-con-fuego",
+      "actualizada": "2026-10-06",
+      "nota": "No se hizo fetch directo a AMM (cifras de 2026 vistas vía Infobae); confirmar xlsx al investigar."
+    },
+    {
+      "id": "dengue-2026-cae-43-por-ciento",
+      "creada": "2026-10-06",
+      "area": "salud",
+      "titulo": "Dengue 2026: 43% menos casos que en 2025, pero ¿por qué y por cuánto tiempo?",
+      "pregunta": "Por qué cayó el dengue en 2026 frente a 2024 (96 mil casos) y 2025, y dónde sigue pegando?",
+      "por_que_ahora": "Semana 30: 9,689 casos vs ~17,000; MSPAS advierte que un cambio de serotipo podría disparar 2027 en plena temporada de lluvias.",
+      "angulo": "Serie 2023–2026 con inmunidad por serotipo y mapa departamental, no desnutrición ni sequía.",
+      "hook_sugerido": "mito_vs_dato",
+      "paleta_sugerida": "jade",
+      "datos": [
+        {
+          "fuente": "MSPAS Epidemiología",
+          "indicador": "Casos y muertes por dengue por semana epidemiológica y departamento",
+          "url": "https://epidemiologia.mspas.gob.gt/",
+          "formato": "html",
+          "periodo": "2023–2026",
+          "evidencia": "Infobae 23-ago-2026: 9,689 casos a semana 30; 2024: 96,000 casos y 117 muertes; 2025: 48,278 casos y 5 muertes."
+        }
+      ],
+      "puntaje": {
+        "interes": 4,
+        "datos": 3,
+        "actualidad": 4,
+        "total": 11
+      },
+      "estado": "hecha",
+      "hilo_id": "2026-10-06-dengue-2026-caida-serotipos",
+      "actualizada": "2026-10-06",
+      "nota": "Dato oficial en sala situacional/boletines; no se confirmó descarga tabular. MSPAS suma criterios clínicos y de laboratorio."
+    },
+    {
+      "id": "matricula-record-2026-deserccion-por-nivel",
+      "creada": "2026-10-06",
+      "area": "educacion",
+      "titulo": "Más de 3.3 millones en las aulas: la matrícula sube, pero ¿quién abandona en básico y diversificado?",
+      "pregunta": "Dónde se pierden los estudiantes entre primaria, básico y diversificado, y cuánto creció la matrícula 2026?",
+      "por_que_ahora": "Cierre del ciclo escolar 2026 (octubre); MINEDUC reporta +150,000 estudiantes y menor deserción.",
+      "angulo": "Deserción por nivel y departamento (primaria 1.6%, básico 11.8%, diversificado 14.5% en 2023), no resultados de Graduandos.",
+      "hook_sugerido": "brecha_territorial",
+      "paleta_sugerida": "maiz",
+      "datos": [
+        {
+          "fuente": "MINEDUC Anuario Estadístico",
+          "indicador": "Matrícula, deserción y cobertura por nivel y departamento",
+          "url": "https://estadistica.mineduc.gob.gt/anuario/home.html",
+          "formato": "xlsx",
+          "periodo": "2015–2026",
+          "evidencia": "Página «Anuario Estadístico de la educación de Guatemala» con menú de estadísticas y anuarios anteriores; catálogo rating 10."
+        }
+      ],
+      "puntaje": {
+        "interes": 4,
+        "datos": 4,
+        "actualidad": 3,
+        "total": 11
+      },
+      "estado": "hecha",
+      "hilo_id": "2026-10-11-matricula-desercion-basico-diversificado",
+      "actualizada": "2026-10-11",
+      "nota": "El fetch solo mostró el menú; verificar años y tablas disponibles. Complemento: Guate en Datos (cobertura)."
     }
   ]
 }

@@ -1,0 +1,3166 @@
+{
+  "slug": "crimen-organizado-respuesta-estado",
+  "fecha": "2026-10-19",
+  "tesis": "En 2026 el Estado multiplicó lo que controla (8,402.4 kg de cocaína decomisada en el primer semestre, frente a 1,596.2 kg en 2025) y bajaron las denuncias de extorsión y de homicidio, pero la violencia cambió de blanco: 20 policías asesinados al 28 de julio, el doble que en todo 2025, y solo 4% de los casos de homicidio concluidos termina en sentencia.",
+  "ancla_id": "nar-c02",
+  "paleta": "terracota",
+  "hook_tipo": "pregunta_directa",
+  "cifras": [
+    {
+      "id": "nar-c01",
+      "concepto": "Cocaína decomisada en Guatemala por año (kg), 2016–2025",
+      "unidad": "kg",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Ministerio de Gobernación (cifras oficiales anuales reproducidas por EFE/Emisoras Unidas, AGN, Infobae, Primicias)",
+      "url": "https://emisorasunidas.com/nacional/2026/01/02/guatemala-cocaina-decomiso-droga-2025/",
+      "periodo": "2016–2025",
+      "n_puntos": 10,
+      "valor": 9850,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa Latina (reproduce cifras de Gobernación: 9.850,25 kilos en 2025)",
+      "evidencia": {
+        "url": "https://emisorasunidas.com/nacional/2026/01/02/guatemala-cocaina-decomiso-droga-2025/",
+        "cita": "Las fuerzas antinarcóticas de Guatemala incautaron 9,85 toneladas de cocaína durante 2025, lo que representa una disminución del 46 % respecto a las 18,2 toneladas decomisadas en 2024",
+        "archivo_local": "sesiones/_descargas/html/nar/eu_cocaina_2025.html"
+      },
+      "serie": [
+        {
+          "p": "2016",
+          "v": 12818
+        },
+        {
+          "p": "2017",
+          "v": 13659
+        },
+        {
+          "p": "2018",
+          "v": 16829
+        },
+        {
+          "p": "2019",
+          "v": 18910
+        },
+        {
+          "p": "2020",
+          "v": 13628
+        },
+        {
+          "p": "2021",
+          "v": 11011
+        },
+        {
+          "p": "2022",
+          "v": 5800
+        },
+        {
+          "p": "2023",
+          "v": 5037
+        },
+        {
+          "p": "2024",
+          "v": 18200
+        },
+        {
+          "p": "2025",
+          "v": 9850
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_3.png"
+      ]
+    },
+    {
+      "id": "nar-c02",
+      "concepto": "Cocaína decomisada en el primer semestre (enero–junio): 2025 frente a 2026",
+      "unidad": "kg",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Policía Nacional Civil (estadísticas) vía AGN / Diario de Centro América",
+      "url": "https://agn.gt/incautacion-de-cocaina-supera-las-ocho-toneladas-en-guatemala-durante-el-primer-semestre-de-2026/",
+      "periodo": "ene–jun 2025 y ene–jun 2026",
+      "n_puntos": 2,
+      "valor": 8402.4,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local); AGN replica MINGOB/PNC, sin segunda fuente independiente encontrada",
+      "evidencia": {
+        "url": "https://agn.gt/incautacion-de-cocaina-supera-las-ocho-toneladas-en-guatemala-durante-el-primer-semestre-de-2026/",
+        "cita": "lograron incautar 8 mil 402.4 kilogramos de cocaína, un incremento del 426.4 % en comparación con los 1 mil 596.2 kilogramos decomisados entre enero y junio de 2025",
+        "archivo_local": "sesiones/_descargas/html/nar/agn_semestre_2026.html"
+      },
+      "partes": [
+        {
+          "nombre": "Ene–jun 2025",
+          "valor": 1596.2
+        },
+        {
+          "nombre": "Ene–jun 2026",
+          "valor": 8402.4
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_1.png"
+      ]
+    },
+    {
+      "id": "nar-c03",
+      "concepto": "Peso del decomiso más grande (4.9 t, enero 2026, Puerto Quetzal) dentro de la cocaína incautada del 1 de enero al 28 de mayo de 2026",
+      "unidad": "% del total del semestre",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "MINGOB vía AGN (cálculo propio con nar-c02)",
+      "url": "https://agn.gt/incautaciones-de-cocaina-aumentan-424-en-guatemala-y-superan-las-7-toneladas-en-cinco-meses/",
+      "periodo": "1-ene a 28-may 2026",
+      "n_puntos": 1,
+      "valor": 66.7,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Emisoras Unidas (decomiso de casi 5 toneladas, Puerto Quetzal, 29-ene-2026) + AGN (7,342 kg al 28-may)",
+      "evidencia": {
+        "url": "https://agn.gt/incautaciones-de-cocaina-aumentan-424-en-guatemala-y-superan-las-7-toneladas-en-cinco-meses/",
+        "cita": "han decomisado 7 mil 342 kilogramos de cocaína entre el 1 de enero y el 28 de mayo de 2026 ... sobresalen la incautación de 4.9 toneladas de cocaína",
+        "archivo_local": "sesiones/_descargas/html/nar/agn_424_mayo_2026.html"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_4.png"
+      ]
+    },
+    {
+      "id": "nar-c04",
+      "concepto": "Cocaína decomisada acumulada en 2026 (kg) en tres cortes oficiales",
+      "unidad": "kg",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "MINGOB/PNC vía AGN",
+      "url": "https://agn.gt/incautaciones-de-cocaina-aumentan-424-en-guatemala-y-superan-las-7-toneladas-en-cinco-meses/",
+      "periodo": "20-mar, 28-may y 30-jun de 2026",
+      "n_puntos": 3,
+      "valor": 8402.4,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa Latina (7.342 kg en cinco meses, +424,35 %, informes de Gobernación)",
+      "evidencia": {
+        "url": "https://agn.gt/incautaciones-de-cocaina-aumentan-424-en-guatemala-y-superan-las-7-toneladas-en-cinco-meses/",
+        "cita": "Las fuerzas de seguridad de Guatemala han decomisado 7 mil 342 kilogramos de cocaína entre el 1 de enero y el 28 de mayo de 2026",
+        "archivo_local": "sesiones/_descargas/html/nar/agn_424_mayo_2026.html"
+      },
+      "serie": [
+        {
+          "p": "2026-03-20",
+          "v": 5160
+        },
+        {
+          "p": "2026-05-28",
+          "v": 7342
+        },
+        {
+          "p": "2026-06-30",
+          "v": 8402.4
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "nar-c05",
+      "concepto": "Plantas ilícitas erradicadas en 2025 por tipo (unidades)",
+      "unidad": "plantas/arbustos",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "MINGOB — Memoria de Labores 2025 (feb 2026)",
+      "url": "https://mingob.gob.gt/wp-content/uploads/2026/02/MEMORIA-DE-LABORES-2026reduce.pdf",
+      "periodo": "2025",
+      "n_puntos": 3,
+      "valor": 4088739,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://mingob.gob.gt/wp-content/uploads/2026/02/MEMORIA-DE-LABORES-2026reduce.pdf",
+        "cita": "Plantas de amapola 4,582 Q114,550 Matas de marihuana 2,609,777 Q978,666,375 Arbustos de hoja de coca 4,088,739 Q40,887,390",
+        "archivo_local": "sesiones/_descargas/MEMORIA-DE-LABORES-2026reduce.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Arbustos de hoja de coca",
+          "valor": 4088739
+        },
+        {
+          "nombre": "Matas de marihuana",
+          "valor": 2609777
+        },
+        {
+          "nombre": "Plantas de amapola",
+          "valor": 4582
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "nar-c06",
+      "concepto": "Otras drogas decomisadas en el primer semestre: metanfetamina y crack, 2025 frente a 2026 (kg)",
+      "unidad": "kg",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "PNC vía AGN / Diario de Centro América",
+      "url": "https://agn.gt/incautacion-de-cocaina-supera-las-ocho-toneladas-en-guatemala-durante-el-primer-semestre-de-2026/",
+      "periodo": "ene–jun 2025 y ene–jun 2026",
+      "n_puntos": 4,
+      "valor": 16.3,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://agn.gt/incautacion-de-cocaina-supera-las-ocho-toneladas-en-guatemala-durante-el-primer-semestre-de-2026/",
+        "cita": "metanfetamina, que pasó de 1.2 a 8.5 kilogramos (623.7 %), y crack, cuyas incautaciones crecieron de 8.5 a 16.3 kilogramos (93 %)",
+        "archivo_local": "sesiones/_descargas/html/nar/agn_semestre_2026.html"
+      },
+      "partes": [
+        {
+          "nombre": "Metanfetamina 2025",
+          "valor": 1.2
+        },
+        {
+          "nombre": "Metanfetamina 2026",
+          "valor": 8.5
+        },
+        {
+          "nombre": "Crack 2025",
+          "valor": 8.5
+        },
+        {
+          "nombre": "Crack 2026",
+          "valor": 16.3
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "nar-c07",
+      "concepto": "Capturas por delitos relacionados con drogas, enero–mayo 2025 frente a 2026",
+      "unidad": "personas",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "MINGOB vía AGN",
+      "url": "https://agn.gt/incautaciones-de-cocaina-aumentan-424-en-guatemala-y-superan-las-7-toneladas-en-cinco-meses/",
+      "periodo": "primeros 5 meses de 2025 y 2026",
+      "n_puntos": 2,
+      "valor": 1190,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://agn.gt/incautaciones-de-cocaina-aumentan-424-en-guatemala-y-superan-las-7-toneladas-en-cinco-meses/",
+        "cita": "Durante los primeros 5 meses del año fueron capturadas mil 190 personas por delitos relacionados con drogas, frente a las 743 registradas en el mismo período de 2025.",
+        "archivo_local": "sesiones/_descargas/html/nar/agn_424_mayo_2026.html"
+      },
+      "partes": [
+        {
+          "nombre": "Ene–may 2025",
+          "valor": 743
+        },
+        {
+          "nombre": "Ene–may 2026",
+          "valor": 1190
+        }
+      ],
+      "usada": false,
+      "aparece_en": [
+        "T5"
+      ]
+    },
+    {
+      "id": "nar-c08",
+      "concepto": "Personas capturadas con fines de extradición por año",
+      "unidad": "personas",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "MP/PNC vía AGN",
+      "url": "https://agn.gt/pnc-captura-en-palencia-al-extraditable-40-de-2026/",
+      "periodo": "2024, 2025 y 2026 al 13 de octubre",
+      "n_puntos": 3,
+      "valor": 40,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://agn.gt/pnc-captura-en-palencia-al-extraditable-40-de-2026/",
+        "cita": "La Policía Nacional Civil (PNC) capturó en Palencia, Guatemala, al extraditable número 40 del 2026",
+        "archivo_local": "sesiones/_descargas/html/nar/agn_extraditable_40_2026.html"
+      },
+      "serie": [
+        {
+          "p": "2024",
+          "v": 31
+        },
+        {
+          "p": "2025",
+          "v": 33
+        },
+        {
+          "p": "2026 (al 13-oct)",
+          "v": 40
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "nar-c09",
+      "concepto": "Capturas con fines de extradición en 2025 según país solicitante y delito",
+      "unidad": "personas",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "MP/PNC vía AGN",
+      "url": "https://agn.gt/guatemala-cierra-2025-con-33-capturas-por-ordenes-de-extradicion-la-mayoria-vinculadas-al-narcotrafico/",
+      "periodo": "2025",
+      "n_puntos": 2,
+      "valor": 33,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://agn.gt/guatemala-cierra-2025-con-33-capturas-por-ordenes-de-extradicion-la-mayoria-vinculadas-al-narcotrafico/",
+        "cita": "Guatemala cerró el año 2025 con 33 capturas de personas con órdenes de extradición solicitadas por distintos países, de las cuales 22 fueron requeridas por Estados Unidos.",
+        "archivo_local": "sesiones/_descargas/html/nar/agn_extradicion_2025.html"
+      },
+      "partes": [
+        {
+          "nombre": "Requeridas por Estados Unidos",
+          "valor": 22
+        },
+        {
+          "nombre": "Requeridas por otros países (El Salvador, México, Costa Rica, Honduras)",
+          "valor": 11
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "nar-c11",
+      "concepto": "Índice Global de Crimen Organizado (GI-TOC): puntaje de criminalidad de Guatemala (0–10)",
+      "unidad": "puntos (0–10)",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Global Initiative Against Transnational Organized Crime — Global Organized Crime Index, perfil Guatemala",
+      "url": "https://ocindex.net/assets/downloads/2025/english/ocindex_profile_guatemala_2025.pdf",
+      "periodo": "2021, 2023, 2025",
+      "n_puntos": 3,
+      "valor": 6.77,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://ocindex.net/assets/downloads/2025/english/ocindex_profile_guatemala_2025.pdf",
+        "cita": "6.77 ↗0.17 CRIMINALITY SCORE 25th of 193 countries ↗1 9th of 35 American countries",
+        "archivo_local": "sesiones/_descargas/ocindex_profile_guatemala_2025.txt"
+      },
+      "serie": [
+        {
+          "p": "2021",
+          "v": 6.48
+        },
+        {
+          "p": "2023",
+          "v": 6.6
+        },
+        {
+          "p": "2025",
+          "v": 6.77
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_19.png"
+      ]
+    },
+    {
+      "id": "nar-c12",
+      "concepto": "Índice Global de Crimen Organizado (GI-TOC): puntaje de resiliencia del Estado de Guatemala frente al crimen organizado (0–10)",
+      "unidad": "puntos (0–10)",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "GI-TOC — Global Organized Crime Index, perfil Guatemala",
+      "url": "https://ocindex.net/assets/downloads/2025/english/ocindex_profile_guatemala_2025.pdf",
+      "periodo": "2021, 2023, 2025",
+      "n_puntos": 3,
+      "valor": 4.0,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://ocindex.net/assets/downloads/2025/english/ocindex_profile_guatemala_2025.pdf",
+        "cita": "4.00 ↘0.08 RESILIENCE SCORE 130th of 193 countries ↘3 27th of 35 American countries",
+        "archivo_local": "sesiones/_descargas/ocindex_profile_guatemala_2025.txt"
+      },
+      "serie": [
+        {
+          "p": "2021",
+          "v": 4.42
+        },
+        {
+          "p": "2023",
+          "v": 4.08
+        },
+        {
+          "p": "2025",
+          "v": 4.0
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_19.png"
+      ]
+    },
+    {
+      "id": "nar-c13",
+      "concepto": "GI-TOC 2025: puntaje de los mercados criminales en Guatemala (0–10)",
+      "unidad": "puntos (0–10)",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "GI-TOC — Global Organized Crime Index 2025, perfil Guatemala",
+      "url": "https://ocindex.net/assets/downloads/2025/english/ocindex_profile_guatemala_2025.pdf",
+      "periodo": "2025",
+      "n_puntos": 15,
+      "valor": 8.5,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://ocindex.net/assets/downloads/2025/english/ocindex_profile_guatemala_2025.pdf",
+        "cita": "EXTORTION & PROTECTION RACKETEERING 8.50 ↗0.50 ... COCAINE TRADE 8.50 0.00",
+        "archivo_local": "sesiones/_descargas/ocindex_profile_guatemala_2025.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Extorsión y cobro de protección",
+          "valor": 8.5
+        },
+        {
+          "nombre": "Tráfico de cocaína",
+          "valor": 8.5
+        },
+        {
+          "nombre": "Trata de personas",
+          "valor": 7.5
+        },
+        {
+          "nombre": "Tráfico ilícito de migrantes",
+          "valor": 7.5
+        },
+        {
+          "nombre": "Tráfico de armas",
+          "valor": 7.0
+        },
+        {
+          "nombre": "Tráfico de heroína",
+          "valor": 7.0
+        },
+        {
+          "nombre": "Delitos financieros",
+          "valor": 7.0
+        },
+        {
+          "nombre": "Drogas sintéticas",
+          "valor": 6.5
+        },
+        {
+          "nombre": "Mercancía falsificada",
+          "valor": 6.0
+        },
+        {
+          "nombre": "Cannabis",
+          "valor": 6.0
+        },
+        {
+          "nombre": "Comercio ilícito de bienes sujetos a impuestos",
+          "valor": 5.5
+        },
+        {
+          "nombre": "Ciberdelitos",
+          "valor": 5.0
+        },
+        {
+          "nombre": "Delitos contra la flora",
+          "valor": 4.5
+        },
+        {
+          "nombre": "Delitos contra la fauna",
+          "valor": 4.0
+        },
+        {
+          "nombre": "Recursos no renovables",
+          "valor": 3.0
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_2.png"
+      ]
+    },
+    {
+      "id": "nar-c14",
+      "concepto": "GI-TOC 2025: indicadores de resiliencia del Estado (0–10)",
+      "unidad": "puntos (0–10)",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "GI-TOC — Global Organized Crime Index 2025, perfil Guatemala",
+      "url": "https://ocindex.net/assets/downloads/2025/english/ocindex_profile_guatemala_2025.pdf",
+      "periodo": "2025",
+      "n_puntos": 12,
+      "valor": 3.0,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://ocindex.net/assets/downloads/2025/english/ocindex_profile_guatemala_2025.pdf",
+        "cita": "POLITICAL LEADERSHIP AND GOVERNANCE 3.00 0.00 ... TERRITORIAL INTEGRITY 3.00 ↘0.50 ANTI-MONEY LAUNDERING 4.00 ↘0.50",
+        "archivo_local": "sesiones/_descargas/ocindex_profile_guatemala_2025.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Cooperación internacional",
+          "valor": 5.5
+        },
+        {
+          "nombre": "Fuerzas del orden",
+          "valor": 5.5
+        },
+        {
+          "nombre": "Políticas y leyes nacionales",
+          "valor": 4.5
+        },
+        {
+          "nombre": "Antilavado de dinero",
+          "valor": 4.0
+        },
+        {
+          "nombre": "Capacidad regulatoria económica",
+          "valor": 4.0
+        },
+        {
+          "nombre": "Apoyo a víctimas y testigos",
+          "valor": 4.0
+        },
+        {
+          "nombre": "Prevención",
+          "valor": 4.0
+        },
+        {
+          "nombre": "Transparencia y rendición de cuentas",
+          "valor": 3.5
+        },
+        {
+          "nombre": "Sistema judicial y detención",
+          "valor": 3.5
+        },
+        {
+          "nombre": "Actores no estatales",
+          "valor": 3.5
+        },
+        {
+          "nombre": "Liderazgo político y gobernanza",
+          "valor": 3.0
+        },
+        {
+          "nombre": "Integridad territorial",
+          "valor": 3.0
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "nar-c15",
+      "concepto": "Cocaína decomisada por día en el primer semestre de 2026",
+      "unidad": "kg por día",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "PNC vía AGN (cálculo propio)",
+      "url": "https://agn.gt/incautacion-de-cocaina-supera-las-ocho-toneladas-en-guatemala-durante-el-primer-semestre-de-2026/",
+      "periodo": "1-ene a 30-jun 2026 (181 días)",
+      "n_puntos": 1,
+      "valor": 46.4,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AGN 1-jun-2026 (datos Mingob): 7,342 kg al 28-may, +424.35% vs 1,400 kg; coherente con 8,402.4 kg al cierre de junio",
+      "evidencia": {
+        "url": "https://agn.gt/incautacion-de-cocaina-supera-las-ocho-toneladas-en-guatemala-durante-el-primer-semestre-de-2026/",
+        "cita": "Durante el primer semestre de 2026, período en el que lograron incautar 8 mil 402.4 kilogramos de cocaína",
+        "archivo_local": "sesiones/_descargas/html/nar/agn_semestre_2026.html"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "nar-c16",
+      "concepto": "Resultados antinarcóticos de la PNC (SGAIA) en 2025: aprehensiones y decomisos",
+      "unidad": "personas aprehendidas",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "MINGOB — Memoria de Labores 2025 (feb 2026)",
+      "url": "https://mingob.gob.gt/wp-content/uploads/2026/02/MEMORIA-DE-LABORES-2026reduce.pdf",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 2808,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://mingob.gob.gt/wp-content/uploads/2026/02/MEMORIA-DE-LABORES-2026reduce.pdf",
+        "cita": "Durante estas acciones también se logró la aprehensión de 2,808 personas por delitos relacionados con la narcoatividad. Del total de capturados, 20 eran requeridos por la justicia estadounidense",
+        "archivo_local": "sesiones/_descargas/MEMORIA-DE-LABORES-2026reduce.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "est-c01",
+      "concepto": "Presupuesto devengado (gasto ejecutado) del Ministerio de Gobernación, total funcionamiento + inversión",
+      "unidad": "millones de quetzales corrientes",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "MINFIN-Sicoin vía Guate en Datos (gastopublico-ejecucion.csv)",
+      "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+      "periodo": "2008–2025",
+      "n_puntos": 18,
+      "valor": 7624.3,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AGN/MINGOB: ejecutó 7 mil 624 millones 300 mil 453 en 2025 (misma fuente Sicoin)",
+      "evidencia": {
+        "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+        "cita": "\"Gobernación\",\"Total\",2015,4573.5,3912.8,85.55 … \"Gobernación\",\"Total\",2025,8000.77,7624.3,95.29 (vigente, devengado, % ejecución; millones GTQ)",
+        "archivo_local": "sesiones/_descargas/gastopublico-ejecucion.csv"
+      },
+      "serie": [
+        {
+          "p": "2008",
+          "v": 2323.6
+        },
+        {
+          "p": "2009",
+          "v": 2476.2
+        },
+        {
+          "p": "2010",
+          "v": 2629.6
+        },
+        {
+          "p": "2011",
+          "v": 2967.6
+        },
+        {
+          "p": "2012",
+          "v": 3081.5
+        },
+        {
+          "p": "2013",
+          "v": 3640
+        },
+        {
+          "p": "2014",
+          "v": 4067.9
+        },
+        {
+          "p": "2015",
+          "v": 3912.8
+        },
+        {
+          "p": "2016",
+          "v": 4160.57
+        },
+        {
+          "p": "2017",
+          "v": 4463.82
+        },
+        {
+          "p": "2018",
+          "v": 4854.82
+        },
+        {
+          "p": "2019",
+          "v": 4661.84
+        },
+        {
+          "p": "2020",
+          "v": 5100.28
+        },
+        {
+          "p": "2021",
+          "v": 5699.96
+        },
+        {
+          "p": "2022",
+          "v": 5894.81
+        },
+        {
+          "p": "2023",
+          "v": 6857.63
+        },
+        {
+          "p": "2024",
+          "v": 7061.59
+        },
+        {
+          "p": "2025",
+          "v": 7624.3
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_8.png"
+      ]
+    },
+    {
+      "id": "est-c02",
+      "concepto": "Presupuesto del Ministerio de Gobernación: ejecutado 2025, vigente 2026 y proyecto 2027",
+      "unidad": "quetzales corrientes",
+      "anio": 2027,
+      "tipo": "desglose",
+      "fuente": "AGN (Agencia Guatemalteca de Noticias) con datos del MINGOB presentados al Congreso, 9-oct-2026",
+      "url": "https://agn.gt/?p=576354",
+      "periodo": "2025–2027",
+      "n_puntos": 3,
+      "valor": 10490048594,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Búsqueda: reproducciones de la misma nota AGN; sin segunda fuente independiente",
+      "evidencia": {
+        "url": "https://agn.gt/?p=576354",
+        "cita": "proyecto de presupuesto del Ministerio de Gobernación (Mingob) para el ejercicio fiscal 2027, por un monto de 10 mil 490 millones 48 mil 594 quetzales.",
+        "archivo_local": "sesiones/_descargas/est_agn_mingob_presupuesto_2027.html"
+      },
+      "partes": [
+        {
+          "nombre": "2025 ejecutado",
+          "valor": 7624300453
+        },
+        {
+          "nombre": "2026 vigente",
+          "valor": 9753425600
+        },
+        {
+          "nombre": "2027 proyecto",
+          "valor": 10490048594
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "est-c03",
+      "concepto": "Porcentaje de ejecución del presupuesto de INVERSIÓN del Ministerio de Gobernación (devengado / vigente)",
+      "unidad": "% del presupuesto vigente de inversión",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "MINFIN-Sicoin vía Guate en Datos (gastopublico-ejecucion.csv)",
+      "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+      "periodo": "2015–2025",
+      "n_puntos": 11,
+      "valor": 49.17,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+        "cita": "\"Gobernación\",\"Inversión\",2024,583.38,119.82,20.54 … \"Gobernación\",\"Inversión\",2025,299.77,147.39,49.17",
+        "archivo_local": "sesiones/_descargas/gastopublico-ejecucion.csv"
+      },
+      "serie": [
+        {
+          "p": "2015",
+          "v": 7.41
+        },
+        {
+          "p": "2016",
+          "v": 22.52
+        },
+        {
+          "p": "2017",
+          "v": 24.38
+        },
+        {
+          "p": "2018",
+          "v": 82.09
+        },
+        {
+          "p": "2019",
+          "v": 50.09
+        },
+        {
+          "p": "2020",
+          "v": 13.77
+        },
+        {
+          "p": "2021",
+          "v": 16.77
+        },
+        {
+          "p": "2022",
+          "v": 70.26
+        },
+        {
+          "p": "2023",
+          "v": 79.8
+        },
+        {
+          "p": "2024",
+          "v": 20.54
+        },
+        {
+          "p": "2025",
+          "v": 49.17
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_9.png"
+      ]
+    },
+    {
+      "id": "est-c04",
+      "concepto": "Denuncias mensuales de extorsión (PLADEIC/PNC), enero 2025 – agosto 2026",
+      "unidad": "denuncias por mes",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "CIEN, Índice de Denuncias de Delitos, boletín agosto 2026 (anexo estadístico, datos PNC y PLADEIC)",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/09/Boletin-del-IDD-de-agosto-base-2020.pdf",
+      "periodo": "2025-01 a 2026-08",
+      "n_puntos": 20,
+      "valor": 1121,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2026/09/Boletin-del-IDD-de-agosto-base-2020.pdf",
+        "cita": "En agosto de 2026, según PLADEIC se registraron 1,121 denuncias por extorsión, equivalentes a un promedio de 36.16 diarias […] inferior a la de agosto del año anterior (1,916 casos).",
+        "archivo_local": "sesiones/_descargas/Boletin-del-IDD-de-agosto-base-2020.txt"
+      },
+      "serie": [
+        {
+          "p": "2025-01",
+          "v": 2457
+        },
+        {
+          "p": "2025-02",
+          "v": 2385
+        },
+        {
+          "p": "2025-03",
+          "v": 2167
+        },
+        {
+          "p": "2025-04",
+          "v": 2076
+        },
+        {
+          "p": "2025-05",
+          "v": 2712
+        },
+        {
+          "p": "2025-06",
+          "v": 2216
+        },
+        {
+          "p": "2025-07",
+          "v": 2396
+        },
+        {
+          "p": "2025-08",
+          "v": 1916
+        },
+        {
+          "p": "2025-09",
+          "v": 2053
+        },
+        {
+          "p": "2025-10",
+          "v": 2092
+        },
+        {
+          "p": "2025-11",
+          "v": 1865
+        },
+        {
+          "p": "2025-12",
+          "v": 1608
+        },
+        {
+          "p": "2026-01",
+          "v": 1708
+        },
+        {
+          "p": "2026-02",
+          "v": 1542
+        },
+        {
+          "p": "2026-03",
+          "v": 1436
+        },
+        {
+          "p": "2026-04",
+          "v": 1391
+        },
+        {
+          "p": "2026-05",
+          "v": 1366
+        },
+        {
+          "p": "2026-06",
+          "v": 1264
+        },
+        {
+          "p": "2026-07",
+          "v": 1298
+        },
+        {
+          "p": "2026-08",
+          "v": 1121
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_10.png"
+      ]
+    },
+    {
+      "id": "est-c05",
+      "concepto": "Denuncias de extorsión acumuladas enero–agosto: 2025 frente a 2026",
+      "unidad": "denuncias (ene–ago)",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "CIEN, IDD boletín agosto 2026 (datos PNC y PLADEIC)",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/09/Boletin-del-IDD-de-agosto-base-2020.pdf",
+      "periodo": "ene–ago 2025 vs ene–ago 2026",
+      "n_puntos": 2,
+      "valor": 11126,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2026/09/Boletin-del-IDD-de-agosto-base-2020.pdf",
+        "cita": "ene-26 … 1,708 · feb-26 1,542 · mar-26 1,436 · abr-26 1,391 · may-26 1,366 · jun-26 1,264 · jul-26 1,298 · ago-26 1,121 (columna Extorsiones, anexo 2026)",
+        "archivo_local": "sesiones/_descargas/Boletin-del-IDD-de-agosto-base-2020.txt"
+      },
+      "partes": [
+        {
+          "nombre": "ene–ago 2025",
+          "valor": 18325
+        },
+        {
+          "nombre": "ene–ago 2026",
+          "valor": 11126
+        }
+      ],
+      "usada": false,
+      "aparece_en": [
+        "T10"
+      ]
+    },
+    {
+      "id": "est-c06",
+      "concepto": "Homicidios denunciados a la PNC en enero–febrero: 2025 frente a 2026 (contraste con el «−50% de homicidios» anunciado al cierre del estado de sitio)",
+      "unidad": "homicidios denunciados (ene–feb)",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "CIEN, IDD boletín agosto 2026 (anexo, datos PNC)",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/09/Boletin-del-IDD-de-agosto-base-2020.pdf",
+      "periodo": "ene–feb 2025 vs ene–feb 2026",
+      "n_puntos": 2,
+      "valor": 378,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2026/09/Boletin-del-IDD-de-agosto-base-2020.pdf",
+        "cita": "ene-25 252 … feb-25 252 … ene-26 204 … feb-26 174 (columna Homicidios, Denuncias de delitos 2025 y 2026)",
+        "archivo_local": "sesiones/_descargas/Boletin-del-IDD-de-agosto-base-2020.txt"
+      },
+      "partes": [
+        {
+          "nombre": "ene–feb 2025",
+          "valor": 504
+        },
+        {
+          "nombre": "ene–feb 2026",
+          "valor": 378
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_11.png"
+      ]
+    },
+    {
+      "id": "est-c07",
+      "concepto": "Pandilleros capturados en la primera semana del estado de sitio (18–26 ene 2026), por pandilla",
+      "unidad": "personas capturadas",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Ministro de Gobernación Marco Antonio Villeda vía Emisoras Unidas, 27-ene-2026",
+      "url": "https://emisorasunidas.com/nacional/2026/01/27/estado-de-sitio-capturados-pandilleros-ataques-pnc/",
+      "periodo": "18–26 ene 2026",
+      "n_puntos": 2,
+      "valor": 44,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Cotejo con la nota de Emisoras Unidas (declaración del ministro, archivo local)",
+      "evidencia": {
+        "url": "https://emisorasunidas.com/nacional/2026/01/27/estado-de-sitio-capturados-pandilleros-ataques-pnc/",
+        "cita": "en los últimos ocho días han sido capturados 39 integrantes de la pandilla del Barrio 18 y cinco de la Mara Salvatrucha, para un total de 44 personas",
+        "archivo_local": "sesiones/_descargas/est_emisoras_estado_sitio_mil_detenidos.html"
+      },
+      "partes": [
+        {
+          "nombre": "Barrio 18",
+          "valor": 39
+        },
+        {
+          "nombre": "Mara Salvatrucha",
+          "valor": 5
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_6.png"
+      ]
+    },
+    {
+      "id": "est-c08",
+      "concepto": "Balance oficial al cierre del estado de sitio (16-feb-2026): pandilleros de alta peligrosidad puestos a disposición judicial",
+      "unidad": "pandilleros",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Presidente Bernardo Arévalo en cadena nacional, vía El Imparcial (citando DW), 16-feb-2026",
+      "url": "https://www.elimparcial.com/mundo/2026/02/16/gobierno-de-guatemala-finaliza-estado-de-sitio-con-reduccion-del-50-en-homicidios-y-anuncia-nuevo-estado-de-prevencion-a-partir-del-17-de-febrero/",
+      "periodo": "18 ene–16 feb 2026",
+      "n_puntos": 1,
+      "valor": 83,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Emisoras Unidas, 17-feb-2026: «se capturaron 83 pandilleros de alto perfil»",
+      "evidencia": {
+        "url": "https://www.elimparcial.com/mundo/2026/02/16/gobierno-de-guatemala-finaliza-estado-de-sitio-con-reduccion-del-50-en-homicidios-y-anuncia-nuevo-estado-de-prevencion-a-partir-del-17-de-febrero/",
+        "cita": "Capturas: 83 pandilleros de alta peligrosidad puestos a disposición judicial.",
+        "archivo_local": "sesiones/_descargas/est_elimparcial_fin_estado_sitio.html"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_6.png"
+      ]
+    },
+    {
+      "id": "est-c09",
+      "concepto": "Armas de fuego incautadas por la PNC, 1 ene–12 jul 2026, por tipo",
+      "unidad": "armas de fuego",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "PNC vía AGN, 16-jul-2026",
+      "url": "https://agn.gt/pnc-reporta-mas-de-26-mil-capturas-y-decomiso-de-2-mil-671-armas-en-2026/",
+      "periodo": "1 ene–12 jul 2026 (vs mismo periodo 2025)",
+      "n_puntos": 5,
+      "valor": 2671,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://agn.gt/pnc-reporta-mas-de-26-mil-capturas-y-decomiso-de-2-mil-671-armas-en-2026/",
+        "cita": "incautaron 2 mil 671 armas de fuego, 752 más que las 1 mil 919 decomisadas en 2025 […] las pistolas incautadas aumentaron de 1 mil 411 a 1 mil 841; los fusiles […] de 127 a 357",
+        "archivo_local": "sesiones/_descargas/est_agn_capturas_armas_2026.html"
+      },
+      "partes": [
+        {
+          "nombre": "Pistolas",
+          "valor": 1841
+        },
+        {
+          "nombre": "Fusiles, carabinas y rifles",
+          "valor": 357
+        },
+        {
+          "nombre": "Escopetas",
+          "valor": 229
+        },
+        {
+          "nombre": "Armas hechizas",
+          "valor": 65
+        },
+        {
+          "nombre": "Otras (resto, derivado)",
+          "valor": 179
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "est-c10",
+      "concepto": "Personas aprehendidas por la PNC, 1 ene–12 jul: 2025 frente a 2026",
+      "unidad": "personas aprehendidas",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "PNC vía AGN, 16-jul-2026",
+      "url": "https://agn.gt/pnc-reporta-mas-de-26-mil-capturas-y-decomiso-de-2-mil-671-armas-en-2026/",
+      "periodo": "1 ene–12 jul 2025 vs 2026",
+      "n_puntos": 2,
+      "valor": 26955,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://agn.gt/pnc-reporta-mas-de-26-mil-capturas-y-decomiso-de-2-mil-671-armas-en-2026/",
+        "cita": "los agentes de la PNC aprehendieron a 26 mil 955 personas, cifra que representa 3 mil 974 capturas más que las 22 mil 981 registradas durante el mismo período del año pasado",
+        "archivo_local": "sesiones/_descargas/est_agn_capturas_armas_2026.html"
+      },
+      "partes": [
+        {
+          "nombre": "2025 (1 ene–12 jul)",
+          "valor": 22981
+        },
+        {
+          "nombre": "2026 (1 ene–12 jul)",
+          "valor": 26955
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_5.png"
+      ]
+    },
+    {
+      "id": "est-c11",
+      "concepto": "Estructuras criminales desarticuladas por la PNC (investigación criminal) en 2025: integrantes aprehendidos por tipo de estructura",
+      "unidad": "integrantes aprehendidos",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "MINGOB, Memoria de Labores 2025 (feb 2026)",
+      "url": "https://mingob.gob.gt/wp-content/uploads/2026/02/MEMORIA-DE-LABORES-2026reduce.pdf",
+      "periodo": "2025",
+      "n_puntos": 14,
+      "valor": 921,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://mingob.gob.gt/wp-content/uploads/2026/02/MEMORIA-DE-LABORES-2026reduce.pdf",
+        "cita": "Estas acciones resultaron en la desarticulación de 148 estructuras criminales y la aprehensión de 921 personas por diferentes delitos. […] Extorsión 60 382",
+        "archivo_local": "sesiones/_descargas/MEMORIA-DE-LABORES-2026reduce.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Extorsión",
+          "valor": 382
+        },
+        {
+          "nombre": "Homicidio",
+          "valor": 96
+        },
+        {
+          "nombre": "Plagio y/o secuestro",
+          "valor": 73
+        },
+        {
+          "nombre": "Homicidio y extorsión",
+          "valor": 71
+        },
+        {
+          "nombre": "Trata de personas",
+          "valor": 70
+        },
+        {
+          "nombre": "Narcomenudeo",
+          "valor": 69
+        },
+        {
+          "nombre": "Robo (delitos patrimoniales)",
+          "valor": 58
+        },
+        {
+          "nombre": "Robo y hurto de vehículos",
+          "valor": 36
+        },
+        {
+          "nombre": "Tráfico ilícito de personas",
+          "valor": 25
+        },
+        {
+          "nombre": "Usura",
+          "valor": 14
+        },
+        {
+          "nombre": "Homicidio y robo",
+          "valor": 11
+        },
+        {
+          "nombre": "Estafa",
+          "valor": 6
+        },
+        {
+          "nombre": "Usurpación agravada",
+          "valor": 5
+        },
+        {
+          "nombre": "Lavado de dinero y otros activos",
+          "valor": 5
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "est-c12",
+      "concepto": "Agentes de la Policía Nacional Civil (aprox.) según el ministro de Gobernación, abril 2026",
+      "unidad": "agentes (aproximado)",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Ministro Marco Antonio Villeda vía AGN, 27-abr-2026",
+      "url": "https://agn.gt/mingob-apuesta-al-fortalecimiento-de-la-pnc-con-mas-agentes-patrullas-y-comisarias/",
+      "periodo": "abril 2026",
+      "n_puntos": 1,
+      "valor": 44000,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://agn.gt/mingob-apuesta-al-fortalecimiento-de-la-pnc-con-mas-agentes-patrullas-y-comisarias/",
+        "cita": "Villeda informó que actualmente Guatemala cuenta con aproximadamente 44 mil agentes policiales",
+        "archivo_local": "sesiones/_descargas/est_agn_mingob_mas_agentes.html"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "est-c13",
+      "concepto": "Nuevos agentes de la PNC incorporados en 2025, por sexo",
+      "unidad": "agentes",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "MINGOB, Memoria de Labores 2025 (feb 2026)",
+      "url": "https://mingob.gob.gt/wp-content/uploads/2026/02/MEMORIA-DE-LABORES-2026reduce.pdf",
+      "periodo": "2025",
+      "n_puntos": 2,
+      "valor": 3223,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://mingob.gob.gt/wp-content/uploads/2026/02/MEMORIA-DE-LABORES-2026reduce.pdf",
+        "cita": "La incorporación de 3,223 nuevos agentes fortaleció las capacidades operativas […] 2,525 hombres y 698 mujeres juraron cumplir con honor",
+        "archivo_local": "sesiones/_descargas/MEMORIA-DE-LABORES-2026reduce.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Hombres",
+          "valor": 2525
+        },
+        {
+          "nombre": "Mujeres",
+          "valor": 698
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "est-c14",
+      "concepto": "Primer censo penitenciario (feb 2026): personas privadas de libertad y cuántas pertenecen a Barrio 18 o MS-13",
+      "unidad": "personas privadas de libertad",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "MINGOB (ministro Villeda) vía Emisoras Unidas/EFE, 11-feb-2026",
+      "url": "https://emisorasunidas.com/nacional/2026/02/11/guatemala-presos-censo-carceles-pandilleros/",
+      "periodo": "censo nov 2025–feb 2026",
+      "n_puntos": 2,
+      "valor": 23837,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://emisorasunidas.com/nacional/2026/02/11/guatemala-presos-censo-carceles-pandilleros/",
+        "cita": "identificar y perfilar a los 23 mil 837 privados de libertad, de los cuales 2 mil 545 pertenecen a las pandillas Barrio 18 y Mara Salvatrucha (MS-13)",
+        "archivo_local": "sesiones/_descargas/res-carceles/eu_censo_2026-02-11.html"
+      },
+      "partes": [
+        {
+          "nombre": "Pandilleros (Barrio 18 y MS-13)",
+          "valor": 2545
+        },
+        {
+          "nombre": "Resto de privados de libertad (derivado)",
+          "valor": 21292
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_7.png"
+      ]
+    },
+    {
+      "id": "est-c15",
+      "concepto": "Sentencias como proporción de los casos concluidos de homicidio simple y calificado (MP), 2024 frente a 2014",
+      "unidad": "% de casos concluidos",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "CIEN, Boletín Respuesta Institucional al Delito de Homicidio, ago 2025 (datos MP/SICOMP)",
+      "url": "https://cien.org.gt/wp-content/uploads/2025/08/Boletin-Respuesta-Institucional-al-Delito-de-Homicidio-vf.pdf",
+      "periodo": "2014 vs 2024",
+      "n_puntos": 2,
+      "valor": 4,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2025/08/Boletin-Respuesta-Institucional-al-Delito-de-Homicidio-vf.pdf",
+        "cita": "Las sentencias muestran una tendencia decreciente: en 2014 representaban el 13% de los casos, mientras que en 2024 apenas alcanzaron el 4%.",
+        "archivo_local": "sesiones/_descargas/Boletin-Respuesta-Institucional-al-Delito-de-Homicidio-vf.txt"
+      },
+      "partes": [
+        {
+          "nombre": "2014",
+          "valor": 13
+        },
+        {
+          "nombre": "2024",
+          "valor": 4
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_16.png"
+      ]
+    },
+    {
+      "id": "est-c16",
+      "concepto": "Personas en Guatemala que dicen sentirse seguras caminando solas de noche donde viven",
+      "unidad": "% de encuestados",
+      "anio": 2024,
+      "tipo": "puntual",
+      "fuente": "Gallup, Global Safety Report 2025 (encuesta 2024)",
+      "url": "https://khovar.tj/wp-content/uploads/2025/09/Gallup_Global-Safety-Report-2025.pdf",
+      "periodo": "2024",
+      "n_puntos": 1,
+      "valor": 54,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://khovar.tj/wp-content/uploads/2025/09/Gallup_Global-Safety-Report-2025.pdf",
+        "cita": "Safe to Walk Alone at Night (% Yes), 2024 … Guatemala 54%",
+        "archivo_local": "sesiones/_descargas/Gallup_Global-Safety-Report-2025.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "vul-c01",
+      "concepto": "Víctimas de femicidio registradas por el MP, por año",
+      "unidad": "víctimas de femicidio",
+      "anio": "2025",
+      "tipo": "serie",
+      "fuente": "CIEN con datos del Ministerio Público (Fiscalía contra el Delito de Femicidio)",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/02/Presentacion-IDD-y-Situacion-del-Femicidio-en-Guatemala-vf.pdf",
+      "periodo": "2019..2025",
+      "n_puntos": 7,
+      "valor": 206,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local); sin segunda fuente 2025 localizada",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2026/02/Presentacion-IDD-y-Situacion-del-Femicidio-en-Guatemala-vf.pdf",
+        "cita": "Muertes Violentas de Mujeres vs Femicidios [2019-2025, Femicidio]: 166 132 146 145 187 180 206 · En 2025, los femicidios aumentaron 14.4% ... frente a 2024",
+        "archivo_local": "sesiones/_descargas/Presentacion-IDD-y-Situacion-del-Femicidio-en-Guatemala-vf.txt"
+      },
+      "serie": [
+        {
+          "p": "2019",
+          "v": 166
+        },
+        {
+          "p": "2020",
+          "v": 132
+        },
+        {
+          "p": "2021",
+          "v": 146
+        },
+        {
+          "p": "2022",
+          "v": 145
+        },
+        {
+          "p": "2023",
+          "v": 187
+        },
+        {
+          "p": "2024",
+          "v": 180
+        },
+        {
+          "p": "2025",
+          "v": 206
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_17.png"
+      ]
+    },
+    {
+      "id": "vul-c02",
+      "concepto": "Muertes violentas de mujeres no tipificadas como femicidio (asesinato, homicidio y otros delitos), registradas por el MP, por año",
+      "unidad": "mujeres fallecidas",
+      "anio": "2025",
+      "tipo": "serie",
+      "fuente": "CIEN con datos del Ministerio Público",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/02/Presentacion-IDD-y-Situacion-del-Femicidio-en-Guatemala-vf.pdf",
+      "periodo": "2019..2025",
+      "n_puntos": 7,
+      "valor": 441,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2026/02/Presentacion-IDD-y-Situacion-del-Femicidio-en-Guatemala-vf.pdf",
+        "cita": "Muertes Violentas de Mujeres vs Femicidios [2019-2025, Muertes Violentas]: 651 414 504 538 443 416 441 · las muertes violentas de mujeres en 25 casos (6.0%) frente a 2024",
+        "archivo_local": "sesiones/_descargas/Presentacion-IDD-y-Situacion-del-Femicidio-en-Guatemala-vf.txt"
+      },
+      "serie": [
+        {
+          "p": "2019",
+          "v": 651
+        },
+        {
+          "p": "2020",
+          "v": 414
+        },
+        {
+          "p": "2021",
+          "v": 504
+        },
+        {
+          "p": "2022",
+          "v": 538
+        },
+        {
+          "p": "2023",
+          "v": 443
+        },
+        {
+          "p": "2024",
+          "v": 416
+        },
+        {
+          "p": "2025",
+          "v": 441
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_17.png"
+      ]
+    },
+    {
+      "id": "vul-c03",
+      "concepto": "Muertes violentas de mujeres en 2025 por delito con que el MP las registra (porcentaje)",
+      "unidad": "% de las muertes violentas de mujeres",
+      "anio": "2025",
+      "tipo": "desglose",
+      "fuente": "CIEN con datos del Ministerio Público",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/02/Presentacion-IDD-y-Situacion-del-Femicidio-en-Guatemala-vf.pdf",
+      "periodo": "2025",
+      "n_puntos": 4,
+      "valor": 41,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2026/02/Presentacion-IDD-y-Situacion-del-Femicidio-en-Guatemala-vf.pdf",
+        "cita": "Desglose de las muertes violentas de mujeres, 2025: 1% · 41% · 32% · 26% (Asesinato, Femicidio, Homicidio, Otros delitos). En 2025, cerca de 1 de cada 3 muertes violentas de mujeres fue un femicidio",
+        "archivo_local": "sesiones/_descargas/Presentacion-IDD-y-Situacion-del-Femicidio-en-Guatemala-vf.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Homicidio",
+          "valor": 41
+        },
+        {
+          "nombre": "Femicidio",
+          "valor": 32
+        },
+        {
+          "nombre": "Asesinato",
+          "valor": 26
+        },
+        {
+          "nombre": "Otros delitos",
+          "valor": 1
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "vul-c04",
+      "concepto": "Tasa de femicidios por 100 mil mujeres en 2025: los dos departamentos más altos frente al país",
+      "unidad": "femicidios por 100 mil mujeres",
+      "anio": "2025",
+      "tipo": "desglose",
+      "fuente": "CIEN con datos del MP e INE",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/02/Presentacion-IDD-y-Situacion-del-Femicidio-en-Guatemala-vf.pdf",
+      "periodo": "2025",
+      "n_puntos": 3,
+      "valor": 12.5,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2026/02/Presentacion-IDD-y-Situacion-del-Femicidio-en-Guatemala-vf.pdf",
+        "cita": "Tasa a nivel nacional: 2.6 casos por cada 100,000 mujeres ... Chiquimula registró la tasa más alta de femicidios, con 12.5 casos ... seguido por Escuintla, con una tasa de 8.49",
+        "archivo_local": "sesiones/_descargas/Presentacion-IDD-y-Situacion-del-Femicidio-en-Guatemala-vf.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Chiquimula",
+          "valor": 12.5
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 8.49
+        },
+        {
+          "nombre": "Nacional",
+          "valor": 2.6
+        }
+      ],
+      "usada": false,
+      "aparece_en": [
+        "T17"
+      ]
+    },
+    {
+      "id": "vul-c05",
+      "concepto": "Tasa interanual de homicidios de mujeres por 100 mil mujeres, por departamento, a diciembre de 2025 (los 22)",
+      "unidad": "homicidios de mujeres por 100 mil mujeres",
+      "anio": "2025",
+      "tipo": "desglose",
+      "fuente": "Diálogos, Observatorio de la Violencia, con datos de la PNC y proyecciones de población del INE",
+      "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/InformeHomicidios.pdf",
+      "periodo": "ene-2025..dic-2025",
+      "n_puntos": 22,
+      "valor": 9.2,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/InformeHomicidios.pdf",
+        "cita": "indicadores de homicidios por sexo y departamento en diciembre de 2025 · Mujer Tasa interanual: Izabal 9,2 · Escuintla 8,9 · Guatemala 8,7 ... Totonicapán 0,4 · Baja Verapaz 0,0",
+        "archivo_local": "sesiones/_descargas/InformeHomicidios.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Izabal",
+          "valor": 9.2
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 8.9
+        },
+        {
+          "nombre": "Guatemala",
+          "valor": 8.7
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 7.1
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 6.9
+        },
+        {
+          "nombre": "Petén",
+          "valor": 6.3
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 6.1
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 4.9
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 4.9
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 4.5
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 3.9
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 3.7
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 1.4
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 1.4
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 1.2
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 1.2
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 1.1
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 1.0
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 0.9
+        },
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 0.8
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 0.4
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 0.0
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "vul-c06",
+      "concepto": "Homicidios de mujeres registrados por la PNC, por año",
+      "unidad": "mujeres víctimas de homicidio",
+      "anio": "2025",
+      "tipo": "serie",
+      "fuente": "Diálogos, Observatorio de la Violencia, con datos de la PNC",
+      "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/InformeHomicidios.pdf",
+      "periodo": "2015..2025",
+      "n_puntos": 11,
+      "valor": 389,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "La Hora (CIEN: 3,139 homicidios en 2025, consistente con 3,138)",
+      "evidencia": {
+        "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/InformeHomicidios.pdf",
+        "cita": "homicidios anuales registrados por sexo de la víctima 2015 - 2025 [Mujer]: 601 573 600 570 544 353 412 434 371 356 389 · un total de 3138 homicidios ... (389 mujeres y 2749 hombres)",
+        "archivo_local": "sesiones/_descargas/InformeHomicidios.txt"
+      },
+      "serie": [
+        {
+          "p": "2015",
+          "v": 601
+        },
+        {
+          "p": "2016",
+          "v": 573
+        },
+        {
+          "p": "2017",
+          "v": 600
+        },
+        {
+          "p": "2018",
+          "v": 570
+        },
+        {
+          "p": "2019",
+          "v": 544
+        },
+        {
+          "p": "2020",
+          "v": 353
+        },
+        {
+          "p": "2021",
+          "v": 412
+        },
+        {
+          "p": "2022",
+          "v": 434
+        },
+        {
+          "p": "2023",
+          "v": 371
+        },
+        {
+          "p": "2024",
+          "v": 356
+        },
+        {
+          "p": "2025",
+          "v": 389
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "vul-c07",
+      "concepto": "Denuncias diarias por violencia contra la mujer ante el MP en 2025 (promedio)",
+      "unidad": "denuncias por día",
+      "anio": "2025",
+      "tipo": "puntual",
+      "fuente": "Prensa Latina, citando a Nuestro Diario con datos del Observatorio de las Mujeres del MP",
+      "url": "https://www.prensa-latina.cu/2025/12/23/al-menos-cinco-mujeres-denuncian-agresiones-en-guatemala-cada-hora/",
+      "periodo": "2025 (corte a diciembre)",
+      "n_puntos": 1,
+      "valor": 123,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la cita de Prensa Latina (archivo local); primaria MP no consultada",
+      "evidencia": {
+        "url": "https://www.prensa-latina.cu/2025/12/23/al-menos-cinco-mujeres-denuncian-agresiones-en-guatemala-cada-hora/",
+        "cita": "Con un promedio de 123 diarias, este fenómeno se consolida como el delito más registrado en el país, lo cual representa el 10 por ciento de toda la actividad criminal",
+        "archivo_local": "sesiones/_descargas/vul_prensalatina_vcm_dic2025.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "vul-c08",
+      "concepto": "Alertas Alba-Keneth activadas por desaparición o sustracción de niñas, niños y adolescentes, por año",
+      "unidad": "alertas activadas",
+      "anio": "2024",
+      "tipo": "serie",
+      "fuente": "PGN, Unidad Operativa del Sistema de Alerta Alba-Keneth (vía AGN y La Hora)",
+      "url": "https://agn.gt/?p=297852",
+      "periodo": "2022..2024",
+      "n_puntos": 3,
+      "valor": 6970,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "La Hora con datos de PGN (6,970 en 2024); AGN para 2022-2023",
+      "evidencia": {
+        "url": "https://agn.gt/?p=297852",
+        "cita": "El Sistema de Alerta Alba Keneth activó 6 mil 205 alertas ... del 1 de enero al 31 de diciembre de 2023 ... En el año 2022 se activaron 5 mil 917 alertas",
+        "archivo_local": "sesiones/_descargas/vul_agn_albakeneth_297852.txt"
+      },
+      "serie": [
+        {
+          "p": "2022",
+          "v": 5917
+        },
+        {
+          "p": "2023",
+          "v": 6205
+        },
+        {
+          "p": "2024",
+          "v": 6970
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "vul-c09",
+      "concepto": "Reportes de desaparición de menores con alerta Alba-Keneth del 1 de enero al 10 de diciembre de 2025",
+      "unidad": "alertas activadas",
+      "anio": "2025",
+      "tipo": "puntual",
+      "fuente": "PGN, Unidad Operativa del Sistema de Alerta Alba-Keneth (vía AGN)",
+      "url": "https://agn.gt/?p=504739",
+      "periodo": "01-ene-2025..10-dic-2025",
+      "n_puntos": 1,
+      "valor": 6229,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://agn.gt/?p=504739",
+        "cita": "del 1 de enero al 10 de diciembre de 2025 se han registrado 6 mil 229 reportes de desaparición. De ese total, 5 mil 275 alertas ya han sido desactivadas",
+        "archivo_local": "sesiones/_descargas/vul_agn_albakeneth_dic2025.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_18.png"
+      ]
+    },
+    {
+      "id": "vul-c10",
+      "concepto": "Alertas Alba-Keneth activadas por día en 2025 (promedio del 1 de enero al 10 de diciembre)",
+      "unidad": "alertas por día",
+      "anio": "2025",
+      "tipo": "puntual",
+      "fuente": "Cálculo propio con datos de la PGN (vía AGN)",
+      "url": "https://agn.gt/?p=504739",
+      "periodo": "01-ene-2025..10-dic-2025",
+      "n_puntos": 1,
+      "valor": 18.1,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://agn.gt/?p=504739",
+        "cita": "del 1 de enero al 10 de diciembre de 2025 se han registrado 6 mil 229 reportes de desaparición",
+        "archivo_local": "sesiones/_descargas/vul_agn_albakeneth_dic2025.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_18.png"
+      ]
+    },
+    {
+      "id": "vul-c11",
+      "concepto": "Alertas Alba-Keneth que siguen activas (menores sin localizar) de todas las activadas desde 2010, a agosto de 2026",
+      "unidad": "alertas activas",
+      "anio": "2026",
+      "tipo": "puntual",
+      "fuente": "Cálculo propio con datos de la Coordinadora Nacional del Sistema de Alerta Alba-Keneth (vía AGN)",
+      "url": "https://agn.gt/?p=562989",
+      "periodo": "2010..ago-2026",
+      "n_puntos": 1,
+      "valor": 4730,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://agn.gt/?p=562989",
+        "cita": "Desde su creación en 2010, 84 mil 816 alertas han sido activadas y de ellas 80 mil 86 se han desactivado",
+        "archivo_local": "sesiones/_descargas/vul_agn_albakeneth_562989.txt"
+      },
+      "usada": false,
+      "aparece_en": [
+        "T18"
+      ]
+    },
+    {
+      "id": "vul-c12",
+      "concepto": "Alertas Alba-Keneth activadas en enero y febrero de 2026",
+      "unidad": "alertas activadas",
+      "anio": "2026",
+      "tipo": "puntual",
+      "fuente": "PGN, Unidad Operativa del Sistema de Alerta Alba-Keneth (vía AGN)",
+      "url": "https://agn.gt/sistema-de-alerta-alba-keneth-refleja-que-el-grupo-mas-vulnerable-son-jovenes-mujeres-de-entre-13-y-15-anos/",
+      "periodo": "ene-2026..feb-2026",
+      "n_puntos": 1,
+      "valor": 943,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://agn.gt/sistema-de-alerta-alba-keneth-refleja-que-el-grupo-mas-vulnerable-son-jovenes-mujeres-de-entre-13-y-15-anos/",
+        "cita": "durante los primeros dos meses del año se activaron 943 alertas ... 691 alertas ya fueron desactivadas, lo que representa un 73.30 %",
+        "archivo_local": "sesiones/_descargas/vul_agn_albakeneth_perfil.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "vul-c13",
+      "concepto": "Menores con alerta Alba-Keneth localizados sin vida entre enero y septiembre de 2025",
+      "unidad": "menores",
+      "anio": "2025",
+      "tipo": "puntual",
+      "fuente": "La Hora, con información de la PGN",
+      "url": "https://lahora.gt/?p=881783",
+      "periodo": "ene-2025..sep-2025",
+      "n_puntos": 1,
+      "valor": 27,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://lahora.gt/?p=881783",
+        "cita": "Aunque gran parte de los reportes son resueltos, por lo menos 27 menores han sido localizados sin vida en lo que va del año",
+        "archivo_local": "sesiones/_descargas/vul_lahora_albakeneth_sep2025.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "vul-c14",
+      "concepto": "Alertas Isabel-Claudina activadas por mujeres desaparecidas entre el 1 de julio de 2025 y el 30 de junio de 2026",
+      "unidad": "alertas activadas",
+      "anio": "2025-2026",
+      "tipo": "puntual",
+      "fuente": "Ministerio Público, Alerta Isabel-Claudina (vía AGN)",
+      "url": "https://agn.gt/desde-su-creacion-alerta-isabel-claudina-ha-localizado-a-mas-del-90-de-las-mujeres-reportadas-como-desaparecidas/",
+      "periodo": "01-jul-2025..30-jun-2026",
+      "n_puntos": 1,
+      "valor": 1673,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://agn.gt/desde-su-creacion-alerta-isabel-claudina-ha-localizado-a-mas-del-90-de-las-mujeres-reportadas-como-desaparecidas/",
+        "cita": "entre el 1 de julio de 2025 y el 30 de junio de 2026 , se registraron mil 673 alertas, de las cuales mil 572 ya fueron desactivadas, mientras 101 continúan activas",
+        "archivo_local": "sesiones/_descargas/vul_agn_isabelclaudina_2026.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "vul-c15",
+      "concepto": "Alertas Isabel-Claudina que siguen activas (mujeres sin localizar) de todas las activadas desde 2018, a agosto de 2026",
+      "unidad": "alertas activas",
+      "anio": "2026",
+      "tipo": "puntual",
+      "fuente": "Ministerio Público, Alerta Isabel-Claudina (vía AGN)",
+      "url": "https://agn.gt/desde-su-creacion-alerta-isabel-claudina-ha-localizado-a-mas-del-90-de-las-mujeres-reportadas-como-desaparecidas/",
+      "periodo": "ago-2018..ago-2026",
+      "n_puntos": 1,
+      "valor": 546,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://agn.gt/desde-su-creacion-alerta-isabel-claudina-ha-localizado-a-mas-del-90-de-las-mujeres-reportadas-como-desaparecidas/",
+        "cita": "se han activado 14 mil 743 alertas , de las cuales 14 mil 197 fueron desactivadas ... Actualmente permanecen 546 alertas activas",
+        "archivo_local": "sesiones/_descargas/vul_agn_isabelclaudina_2026.txt"
+      },
+      "usada": false,
+      "aparece_en": [
+        "T18"
+      ]
+    },
+    {
+      "id": "vul-c16",
+      "concepto": "Menores de edad víctimas de homicidio entre julio y septiembre de 2025",
+      "unidad": "víctimas menores de 18 años",
+      "anio": "2025",
+      "tipo": "puntual",
+      "fuente": "Diálogos, Observatorio de la Violencia, con datos de PNC/PLADEIC (MINGOB)",
+      "url": "https://dialogos.org.gt/wp-content/uploads/2025/11/Informe-3er-trimestre-Observatorio-Violencia-1.pdf",
+      "periodo": "jul-2025..sep-2025",
+      "n_puntos": 1,
+      "valor": 41,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://dialogos.org.gt/wp-content/uploads/2025/11/Informe-3er-trimestre-Observatorio-Violencia-1.pdf",
+        "cita": "Entre julio y septiembre de 2025 se registraron 797 víctimas de homicidio ... 41 víctimas eran menores de edad, equivalentes al 5% del total",
+        "archivo_local": "sesiones/_descargas/Informe-3er-trimestre-Observatorio-Violencia-1.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "vle-c01",
+      "concepto": "Tasa interanual de homicidios por 100 mil habitantes (últimos 12 meses), mensual enero 2025–agosto 2026: baja hasta mayo de 2026 y repunta tres meses seguidos",
+      "unidad": "homicidios por cada 100 mil habitantes (interanual)",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "CIEN, Boletín del Índice de Denuncias de Delitos (IDD) agosto 2026, con datos de PNC/PLADEIC y proyecciones INE",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/09/Boletin-del-IDD-de-agosto-base-2020.pdf",
+      "periodo": "2025-01 a 2026-08",
+      "n_puntos": 20,
+      "valor": 16.65,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Emisoras Unidas / Coalición por la Seguridad Ciudadana (26-ago-2026)",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2026/09/Boletin-del-IDD-de-agosto-base-2020.pdf",
+        "cita": "Tasas interanuales de delitos por cada 100 mil habitantes ... 2026 | may-26 16.22 | jun-26 16.26 | jul-26 16.46 | ago-26 16.65 | La tasa aumentó por tercer mes consecutivo.",
+        "archivo_local": "sesiones/_descargas/Boletin-del-IDD-de-agosto-base-2020.txt"
+      },
+      "serie": [
+        {
+          "p": "2025-01",
+          "v": 16.09
+        },
+        {
+          "p": "2025-02",
+          "v": 16.61
+        },
+        {
+          "p": "2025-03",
+          "v": 16.97
+        },
+        {
+          "p": "2025-04",
+          "v": 17.09
+        },
+        {
+          "p": "2025-05",
+          "v": 17.38
+        },
+        {
+          "p": "2025-06",
+          "v": 17.47
+        },
+        {
+          "p": "2025-07",
+          "v": 17.65
+        },
+        {
+          "p": "2025-08",
+          "v": 17.7
+        },
+        {
+          "p": "2025-09",
+          "v": 17.42
+        },
+        {
+          "p": "2025-10",
+          "v": 17.05
+        },
+        {
+          "p": "2025-11",
+          "v": 16.99
+        },
+        {
+          "p": "2025-12",
+          "v": 17.25
+        },
+        {
+          "p": "2026-01",
+          "v": 16.97
+        },
+        {
+          "p": "2026-02",
+          "v": 16.52
+        },
+        {
+          "p": "2026-03",
+          "v": 16.3
+        },
+        {
+          "p": "2026-04",
+          "v": 16.27
+        },
+        {
+          "p": "2026-05",
+          "v": 16.22
+        },
+        {
+          "p": "2026-06",
+          "v": 16.26
+        },
+        {
+          "p": "2026-07",
+          "v": 16.46
+        },
+        {
+          "p": "2026-08",
+          "v": 16.65
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "vle-c02",
+      "concepto": "Homicidios registrados enero–septiembre 2026 frente al mismo periodo de 2025",
+      "unidad": "homicidios",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "CIEN con datos PNC/PLADEIC, reproducido por AGN (7-oct-2026)",
+      "url": "https://agn.gt/cien-reporta-disminucion-de-homicidios-durante-septiembre/",
+      "periodo": "enero–septiembre 2025 y 2026",
+      "n_puntos": 2,
+      "valor": 2335,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local, AGN citando CIEN/PNC)",
+      "evidencia": {
+        "url": "https://agn.gt/cien-reporta-disminucion-de-homicidios-durante-septiembre/",
+        "cita": "entre enero y septiembre de 2025 se contabilizaron 2 mil 397 homicidios, mientras que en el mismo período de 2026 se registran 2 mil 335 casos",
+        "archivo_local": "sesiones/_descargas/vle/agn_cien_septiembre_2026.html"
+      },
+      "partes": [
+        {
+          "nombre": "Enero–septiembre 2025",
+          "valor": 2397
+        },
+        {
+          "nombre": "Enero–septiembre 2026",
+          "valor": 2335
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "vle-c03",
+      "concepto": "Homicidios por día en enero–septiembre 2026 (escala humana)",
+      "unidad": "homicidios al día",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Cálculo propio con CIEN/PNC vía AGN",
+      "url": "https://agn.gt/cien-reporta-disminucion-de-homicidios-durante-septiembre/",
+      "periodo": "2026-01-01 a 2026-09-30 (273 días)",
+      "n_puntos": 1,
+      "valor": 8.55,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cálculo propio sobre vle-c02 (archivo local)",
+      "evidencia": {
+        "url": "https://agn.gt/cien-reporta-disminucion-de-homicidios-durante-septiembre/",
+        "cita": "en el mismo período de 2026 se registran 2 mil 335 casos",
+        "archivo_local": "sesiones/_descargas/vle/agn_cien_septiembre_2026.html"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "vle-c04",
+      "concepto": "Homicidios registrados por mes, enero 2025–agosto 2026 (mayo–agosto 2026 por encima de 2025)",
+      "unidad": "homicidios por mes",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "CIEN, Boletín IDD agosto 2026, anexo estadístico (PNC y PLADEIC)",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/09/Boletin-del-IDD-de-agosto-base-2020.pdf",
+      "periodo": "2025-01 a 2026-08",
+      "n_puntos": 20,
+      "valor": 318,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Emisoras Unidas / Coalición por la Seguridad Ciudadana (26-ago-2026)",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2026/09/Boletin-del-IDD-de-agosto-base-2020.pdf",
+        "cita": "en agosto de 2026 se registraron 318 homicidios, equivalentes a un promedio de 10.26 diarios ... mayor a la registrada en agosto del año anterior (283 homicidios)",
+        "archivo_local": "sesiones/_descargas/Boletin-del-IDD-de-agosto-base-2020.txt"
+      },
+      "serie": [
+        {
+          "p": "2025-01",
+          "v": 252
+        },
+        {
+          "p": "2025-02",
+          "v": 252
+        },
+        {
+          "p": "2025-03",
+          "v": 275
+        },
+        {
+          "p": "2025-04",
+          "v": 261
+        },
+        {
+          "p": "2025-05",
+          "v": 304
+        },
+        {
+          "p": "2025-06",
+          "v": 254
+        },
+        {
+          "p": "2025-07",
+          "v": 272
+        },
+        {
+          "p": "2025-08",
+          "v": 283
+        },
+        {
+          "p": "2025-09",
+          "v": 242
+        },
+        {
+          "p": "2025-10",
+          "v": 233
+        },
+        {
+          "p": "2025-11",
+          "v": 248
+        },
+        {
+          "p": "2025-12",
+          "v": 260
+        },
+        {
+          "p": "2026-01",
+          "v": 204
+        },
+        {
+          "p": "2026-02",
+          "v": 174
+        },
+        {
+          "p": "2026-03",
+          "v": 238
+        },
+        {
+          "p": "2026-04",
+          "v": 259
+        },
+        {
+          "p": "2026-05",
+          "v": 298
+        },
+        {
+          "p": "2026-06",
+          "v": 266
+        },
+        {
+          "p": "2026-07",
+          "v": 312
+        },
+        {
+          "p": "2026-08",
+          "v": 318
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "vle-c05",
+      "concepto": "Tasa interanual de homicidios por 100 mil habitantes por departamento, diciembre 2025 (los 22): de 39.3 en Escuintla a 0.9 en Totonicapán",
+      "unidad": "homicidios por cada 100 mil habitantes (interanual a dic-2025)",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Asociación Civil Diálogos, Observatorio de la Violencia, Informe sobre la violencia homicida en Guatemala, diciembre 2025 (datos PNC y proyecciones INE)",
+      "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/InformeHomicidios.pdf",
+      "periodo": "enero–diciembre 2025 (interanual a diciembre)",
+      "n_puntos": 22,
+      "valor": 39.3,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local, Diálogos)",
+      "evidencia": {
+        "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/InformeHomicidios.pdf",
+        "cita": "indicadores de homicidios por departamento en diciembre de 2025 ... Escuintla 32 3,8 39,3 | Guatemala 84 2,2 38,9 ... Totonicapán 1 0,2 0,9",
+        "archivo_local": "sesiones/_descargas/InformeHomicidios.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Escuintla",
+          "valor": 39.3
+        },
+        {
+          "nombre": "Guatemala",
+          "valor": 38.9
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 31.7
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 27.7
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 27.2
+        },
+        {
+          "nombre": "Petén",
+          "valor": 25.7
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 25.2
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 21.5
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 16.2
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 16.0
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 13.6
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 10.5
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 9.6
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 7.7
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 5.9
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 5.0
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 4.5
+        },
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 3.4
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 2.0
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 1.8
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 1.1
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 0.9
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "vle-c06",
+      "concepto": "Homicidios registrados en 2025 por departamento (los 22); Guatemala y Escuintla concentran el 57%",
+      "unidad": "homicidios",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Diálogos, Informe sobre la violencia homicida, diciembre 2025 (datos PNC)",
+      "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/InformeHomicidios.pdf",
+      "periodo": "enero–diciembre 2025",
+      "n_puntos": 22,
+      "valor": 3138,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local, Diálogos)",
+      "evidencia": {
+        "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/InformeHomicidios.pdf",
+        "cita": "En lo que va del año, se ha registrado un total de 3138 homicidios para ambos sexos (389 mujeres y 2749 hombres).",
+        "archivo_local": "sesiones/_descargas/InformeHomicidios.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala",
+          "valor": 1460
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 335
+        },
+        {
+          "nombre": "Petén",
+          "valor": 171
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 132
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 129
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 119
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 93
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 90
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 79
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 75
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 75
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 68
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 65
+        },
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 51
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 41
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 40
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 32
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 30
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 23
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 21
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 5
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 4
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "vle-c07",
+      "concepto": "Los 14 municipios que acumulan la mitad de los homicidios de 2025",
+      "unidad": "homicidios",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Diálogos, Observatorio de la Violencia, Balance anual de la violencia homicida 2025 (datos PLADEIC/PNC), Tabla 1",
+      "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/Balance-anual.pdf",
+      "periodo": "enero–diciembre 2025",
+      "n_puntos": 14,
+      "valor": 608,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local, Diálogos Balance anual)",
+      "evidencia": {
+        "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/Balance-anual.pdf",
+        "cita": "A nivel municipal, la mitad de los homicidios se acumuló en solo 14 municipios. Entre ellos destacan el municipio de Guatemala, con 608 homicidios, seguido por Villa Nueva (208), Mixco",
+        "archivo_local": "sesiones/_descargas/Balance-anual.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala",
+          "valor": 608
+        },
+        {
+          "nombre": "Villa Nueva",
+          "valor": 208
+        },
+        {
+          "nombre": "Mixco",
+          "valor": 141
+        },
+        {
+          "nombre": "Villa Canales",
+          "valor": 92
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 82
+        },
+        {
+          "nombre": "Amatitlán",
+          "valor": 56
+        },
+        {
+          "nombre": "San Miguel Petapa",
+          "valor": 56
+        },
+        {
+          "nombre": "Puerto Barrios",
+          "valor": 51
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 50
+        },
+        {
+          "nombre": "Tiquisate",
+          "valor": 49
+        },
+        {
+          "nombre": "Santa Catarina Pinula",
+          "valor": 48
+        },
+        {
+          "nombre": "Chinautla",
+          "valor": 47
+        },
+        {
+          "nombre": "Palencia",
+          "valor": 44
+        },
+        {
+          "nombre": "Nueva Concepción",
+          "valor": 44
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "vle-c08",
+      "concepto": "Municipios que reportaron cero homicidios en 2025",
+      "unidad": "municipios",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "Ministerio de Gobernación, Memoria de Labores 2025 (feb 2026)",
+      "url": "https://mingob.gob.gt/wp-content/uploads/2026/02/MEMORIA-DE-LABORES-2026reduce.pdf",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 110,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local, MINGOB Memoria de Labores 2025)",
+      "evidencia": {
+        "url": "https://mingob.gob.gt/wp-content/uploads/2026/02/MEMORIA-DE-LABORES-2026reduce.pdf",
+        "cita": "han permitido que 110 municipios del país reporten cero homicidios y una reducción sostenida en la incidencia delictiva en 2025.",
+        "archivo_local": "sesiones/_descargas/MEMORIA-DE-LABORES-2026reduce.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "vle-c09",
+      "concepto": "Proporción de homicidios cometidos con arma de fuego en 2025",
+      "unidad": "% de los homicidios",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "Diálogos, Balance anual de la violencia homicida 2025 (datos PLADEIC/PNC)",
+      "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/Balance-anual.pdf",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 85,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local, Diálogos); coherente con tasa por arma 14,5/17,2",
+      "evidencia": {
+        "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/Balance-anual.pdf",
+        "cita": "En 2025, el 85% de los homicidios se cometieron con arma de fuego, lo que confirma la centralidad de este medio en la violencia letal.",
+        "archivo_local": "sesiones/_descargas/Balance-anual.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "vle-c10",
+      "concepto": "Armas de fuego decomisadas por la PNC en 2025, por tipo",
+      "unidad": "armas de fuego",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "PNC, balance al 30-dic-2025, reproducido por Prensa Libre",
+      "url": "https://www.prensalibre.com/guatemala/justicia/decomisos-de-armas-persiste-trasiego-por-encomiendas-desde-sudamerica/",
+      "periodo": "2025 (al 30 de diciembre)",
+      "n_puntos": 6,
+      "valor": 3835,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local, Prensa Libre citando a la PNC)",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/guatemala/justicia/decomisos-de-armas-persiste-trasiego-por-encomiendas-desde-sudamerica/",
+        "cita": "el decomiso de 3,835 armas de fuego, de las cuales 2,815 son pistolas, 294 escopetas, 339 revólveres, 303 fusiles y carabinas, 64 armas hechizas y 20 subametralladoras",
+        "archivo_local": "sesiones/_descargas/vle/pl_24481742.html"
+      },
+      "partes": [
+        {
+          "nombre": "Pistolas",
+          "valor": 2815
+        },
+        {
+          "nombre": "Revólveres",
+          "valor": 339
+        },
+        {
+          "nombre": "Fusiles y carabinas",
+          "valor": 303
+        },
+        {
+          "nombre": "Escopetas",
+          "valor": 294
+        },
+        {
+          "nombre": "Armas hechizas",
+          "valor": 64
+        },
+        {
+          "nombre": "Subametralladoras",
+          "valor": 20
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "vle-c11",
+      "concepto": "Armas de fuego incautadas enero–mayo 2026 frente a enero–mayo 2025 (+41%)",
+      "unidad": "armas de fuego",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "PNC/MINGOB, reproducido por AGN (4-jun-2026)",
+      "url": "https://agn.gt/incautacion-de-armas-en-guatemala-se-incremento-el-41-en-comparacion-con-el-2025/",
+      "periodo": "enero–mayo 2025 y 2026",
+      "n_puntos": 2,
+      "valor": 2083,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AGN (misma fuente PNC); contexto AGN ene-jul 2026",
+      "evidencia": {
+        "url": "https://agn.gt/incautacion-de-armas-en-guatemala-se-incremento-el-41-en-comparacion-con-el-2025/",
+        "cita": "Entre enero y mayo del 2026 se decomisaron 2 mil 83 armas de fuego, mientras que en 2025 la cifra fue de mil 477",
+        "archivo_local": "sesiones/_descargas/vle/agn_546488.html"
+      },
+      "partes": [
+        {
+          "nombre": "Enero–mayo 2025",
+          "valor": 1477
+        },
+        {
+          "nombre": "Enero–mayo 2026",
+          "valor": 2083
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "vle-c12",
+      "concepto": "Homicidios 2025 por sexo de la víctima: 9 de cada 10 son hombres",
+      "unidad": "homicidios",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Diálogos, Informe sobre la violencia homicida, diciembre 2025 (datos PNC)",
+      "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/InformeHomicidios.pdf",
+      "periodo": "enero–diciembre 2025",
+      "n_puntos": 2,
+      "valor": 2749,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local, Diálogos)",
+      "evidencia": {
+        "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/InformeHomicidios.pdf",
+        "cita": "En lo que va del año, se ha registrado un total de 3138 homicidios para ambos sexos (389 mujeres y 2749 hombres).",
+        "archivo_local": "sesiones/_descargas/InformeHomicidios.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Hombres",
+          "valor": 2749
+        },
+        {
+          "nombre": "Mujeres",
+          "valor": 389
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "vle-c13",
+      "concepto": "Víctimas de homicidio de 18 a 35 años en 2025 (proporción y número)",
+      "unidad": "% de las víctimas de homicidio",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "Diálogos, Balance anual de la violencia homicida 2025 (datos PLADEIC/PNC)",
+      "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/Balance-anual.pdf",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 61.3,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Cotejo con el texto local del propio informe de Diálogos (1,847 personas = 61.3%); sin segunda fuente independiente hallada",
+      "evidencia": {
+        "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/Balance-anual.pdf",
+        "cita": "en 2025, el 61.3% de las víctimas de homicidio tenía entre 18 y 35 años, lo que equivale a un total de 1,847 personas ... cinco jóvenes asesinados cada día",
+        "archivo_local": "sesiones/_descargas/Balance-anual.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_13.png"
+      ]
+    },
+    {
+      "id": "vle-c14",
+      "concepto": "Homicidios por linchamiento 2024 frente a 2025 (+140%)",
+      "unidad": "homicidios por linchamiento",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Diálogos, Balance anual de la violencia homicida 2025 (datos PLADEIC/PNC)",
+      "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/Balance-anual.pdf",
+      "periodo": "2024 y 2025",
+      "n_puntos": 2,
+      "valor": 24,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Cotejo con el texto local del propio informe de Diálogos (10 en 2024, 24 en 2025, +140%)",
+      "evidencia": {
+        "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/Balance-anual.pdf",
+        "cita": "esta modalidad de homicidio registró un incremento del 140%, al pasar de 10 casos en 2024 a 24 en 2025.",
+        "archivo_local": "sesiones/_descargas/Balance-anual.txt"
+      },
+      "partes": [
+        {
+          "nombre": "2024",
+          "valor": 10
+        },
+        {
+          "nombre": "2025",
+          "valor": 24
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_15.png"
+      ]
+    },
+    {
+      "id": "vle-c15",
+      "concepto": "Agentes de la PNC asesinados: 20 en 2026 (al 28 de julio) frente a 10 en todo 2025",
+      "unidad": "agentes de la PNC asesinados",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "EFE, publicado por Emisoras Unidas (28-jul-2026), con declaraciones del ministro de Gobernación",
+      "url": "https://emisorasunidas.com/nacional/2026/07/28/guatemala-agentes-pnc-policias-muertos-2026/",
+      "periodo": "2025 completo; 2026 al 28 de julio",
+      "n_puntos": 2,
+      "valor": 20,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "El Mundo (SV) / Swissinfo, republicación del mismo despacho EFE",
+      "evidencia": {
+        "url": "https://emisorasunidas.com/nacional/2026/07/28/guatemala-agentes-pnc-policias-muertos-2026/",
+        "cita": "Los 20 policías asesinados este 2026 suponen el doble de los agentes fallecidos el año pasado (10), en base al recuento realizado por EFE, ante la falta de estadísticas oficiales.",
+        "archivo_local": "sesiones/_descargas/vle/emisoras_policias_2026-07-28.html"
+      },
+      "partes": [
+        {
+          "nombre": "2025 (año completo)",
+          "valor": 10
+        },
+        {
+          "nombre": "2026 (al 28 de julio)",
+          "valor": 20
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_12.png"
+      ]
+    },
+    {
+      "id": "vle-c16",
+      "concepto": "Necropsias por heridas de proyectil de arma de fuego en 2025, por departamento (INACIF, conteo forense independiente de la PNC)",
+      "unidad": "necropsias",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "INACIF, Estadísticas forenses (API estadisticasweb, necropsias por departamento y causa de muerte)",
+      "url": "https://www.inacif.gob.gt/estadisticasweb/routes/api/necropsias.php?grupo=E&anios=2025&idgenero=1,2,3",
+      "periodo": "enero–diciembre 2025",
+      "n_puntos": 22,
+      "valor": 3105,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Suma de las 22 partes del JSON INACIF (archivo local) y cotejo interno",
+      "evidencia": {
+        "url": "https://www.inacif.gob.gt/estadisticasweb/routes/api/necropsias.php?grupo=E&anios=2025&idgenero=1,2,3",
+        "cita": "\"departamento_descripcion\":\"GUATEMALA\",\"idcausamuerte\":34,\"causa_muerte_descripcion\":\"HERIDAS PRODUCIDAS POR PROYECTIL DE ARMA DE FUEGO\",\"count\":1475",
+        "archivo_local": "sesiones/_descargas/api/6029173d971487475ed30f70c0458ab4b627d876.json"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala",
+          "valor": 1475
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 305
+        },
+        {
+          "nombre": "Petén",
+          "valor": 202
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 159
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 117
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 114
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 95
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 94
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 80
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 79
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 76
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 61
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 57
+        },
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 39
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 34
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 34
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 33
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 30
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 10
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 4
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 4
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 3
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_14.png"
+      ]
+    }
+  ],
+  "fuentes": [
+    {
+      "nombre": "Ministerio de Gobernación — Memoria de Labores 2025",
+      "url": "https://mingob.gob.gt/wp-content/uploads/2026/02/MEMORIA-DE-LABORES-2026reduce.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Global Initiative Against Transnational Organized Crime — Global Organized Crime Index, perfil Guatemala 2021, 2023, 2025",
+      "url": "https://ocindex.net/country/guatemala",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Agencia Guatemalteca de Noticias (AGN) — cifras de PNC/MINGOB sobre decomisos 2026",
+      "url": "https://agn.gt/incautacion-de-cocaina-supera-las-ocho-toneladas-en-guatemala-durante-el-primer-semestre-de-2026/",
+      "nivel": "secundaria (agencia oficial que reproduce estadística PNC/MINGOB)"
+    },
+    {
+      "nombre": "AGN — capturas con fines de extradición 2024–2026",
+      "url": "https://agn.gt/guatemala-cierra-2025-con-33-capturas-por-ordenes-de-extradicion-la-mayoria-vinculadas-al-narcotrafico/",
+      "nivel": "secundaria (agencia oficial)"
+    },
+    {
+      "nombre": "EFE vía Emisoras Unidas — cocaína decomisada 2025 (MINGOB)",
+      "url": "https://emisorasunidas.com/nacional/2026/01/02/guatemala-cocaina-decomiso-droga-2025/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Emisoras Unidas — cocaína decomisada 2016–2019 (MINGOB)",
+      "url": "https://emisorasunidas.com/2020/01/04/decomiso-cocaina-guatemala-crecio-346-por-ciento-4-anos/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Emisoras Unidas — cocaína decomisada 2020–2021 (MINGOB)",
+      "url": "https://emisorasunidas.com/2022/01/01/decomisos-cocaina-guatemala-2021/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Primicias — cocaína decomisada 2022",
+      "url": "https://www.primicias.ec/noticias/sucesos/guatemala-incauta-cocaina-procedente-ecuador",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "EFE vía Infobae — cocaína decomisada 2024",
+      "url": "https://www.infobae.com/america/agencias/2025/01/06/guatemala-confisco-18-toneladas-de-cocaina-en-2024-segunda-cifra-mas-alta-de-su-historia/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "EFE vía Diario El Mundo — 2023 = 5.04 t y 29.2 t desde 2024",
+      "url": "https://diario.elmundo.sv/el-mundo/guatemala-decomisa-29-toneladas-de-cocaina-con-apoyo-de-la-dea",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "MINFIN-Sicoin vía Guate en Datos — gastopublico-ejecucion.csv",
+      "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "CIEN — Índice de Denuncias de Delitos, boletín agosto 2026 (datos PNC/PLADEIC)",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/09/Boletin-del-IDD-de-agosto-base-2020.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "MINGOB — Memoria de Labores 2025",
+      "url": "https://mingob.gob.gt/wp-content/uploads/2026/02/MEMORIA-DE-LABORES-2026reduce.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Diálogos — Informe sobre extorsiones en Guatemala, enero 2026",
+      "url": "https://dialogos.org.gt/wp-content/uploads/2026/03/Informe-Extorsiones-1.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "AGN — Presupuesto 2027: Mingob solicita Q10.49 mil millones (9-oct-2026)",
+      "url": "https://agn.gt/?p=576354",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "AGN — PNC reporta más de 26 mil capturas y decomiso de 2 mil 671 armas en 2026",
+      "url": "https://agn.gt/pnc-reporta-mas-de-26-mil-capturas-y-decomiso-de-2-mil-671-armas-en-2026/",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "AGN — Mingob apuesta al fortalecimiento de la PNC (27-abr-2026)",
+      "url": "https://agn.gt/mingob-apuesta-al-fortalecimiento-de-la-pnc-con-mas-agentes-patrullas-y-comisarias/",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "AGN — PNC reporta más de mil capturas durante estado de prevención del 7 al 20 de abril",
+      "url": "https://agn.gt/pnc-reporta-mas-de-mil-capturas-durante-estado-de-prevencion-del-7-al-20-de-abril/",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "Emisoras Unidas — Estado de Sitio: más de mil detenidos (27-ene-2026)",
+      "url": "https://emisorasunidas.com/nacional/2026/01/27/estado-de-sitio-capturados-pandilleros-ataques-pnc/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Emisoras Unidas — Censo penitenciario (11-feb-2026)",
+      "url": "https://emisorasunidas.com/nacional/2026/02/11/guatemala-presos-censo-carceles-pandilleros/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "El Imparcial (DW) — Gobierno finaliza estado de sitio (16-feb-2026)",
+      "url": "https://www.elimparcial.com/mundo/2026/02/16/gobierno-de-guatemala-finaliza-estado-de-sitio-con-reduccion-del-50-en-homicidios-y-anuncia-nuevo-estado-de-prevencion-a-partir-del-17-de-febrero/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Prensa Latina — Capturan a presunto extorsionista 540 de 2026 (8-may-2026)",
+      "url": "https://www.prensa-latina.cu/2026/05/08/capturan-en-guatemala-a-presunto-extorsionista-540-de-2026/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "CIEN — Respuesta Institucional al Delito de Homicidio, ago 2025",
+      "url": "https://cien.org.gt/wp-content/uploads/2025/08/Boletin-Respuesta-Institucional-al-Delito-de-Homicidio-vf.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Gallup — Global Safety Report 2025",
+      "url": "https://khovar.tj/wp-content/uploads/2025/09/Gallup_Global-Safety-Report-2025.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "CIEN — Presentación IDD y Situación del Femicidio en Guatemala, feb 2026 (datos MP)",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/02/Presentacion-IDD-y-Situacion-del-Femicidio-en-Guatemala-vf.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "CIEN — Boletín Situación del Femicidio en Guatemala, feb 2026",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/02/Boletin-Situacion-del-Femicidio-en-Guatemala-febrero-2026-vf.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Diálogos — Informe sobre la violencia homicida en Guatemala, diciembre 2025 (datos PNC e INE)",
+      "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/InformeHomicidios.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Diálogos — Situación de la violencia homicida, tercer trimestre 2025 (PLADEIC)",
+      "url": "https://dialogos.org.gt/wp-content/uploads/2025/11/Informe-3er-trimestre-Observatorio-Violencia-1.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "AGN — PGN: 6,229 reportes Alba-Keneth del 1-ene al 10-dic-2025",
+      "url": "https://agn.gt/?p=504739",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "AGN — Alba-Keneth 2023 y 2022 (informe anual PGN)",
+      "url": "https://agn.gt/?p=297852",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "AGN — Presentan informe del Sistema de Alerta Alba-Keneth 2023",
+      "url": "https://agn.gt/?p=313040",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "La Hora — Más de 4,900 alertas Alba-Keneth en 2025 (PGN)",
+      "url": "https://lahora.gt/?p=881783",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "AGN — 16 años de Alerta Alba-Keneth (acumulado a ago-2026)",
+      "url": "https://agn.gt/?p=562989",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "AGN — Alba-Keneth enero–febrero 2026",
+      "url": "https://agn.gt/sistema-de-alerta-alba-keneth-refleja-que-el-grupo-mas-vulnerable-son-jovenes-mujeres-de-entre-13-y-15-anos/",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "AGN — 8 años de Alerta Isabel-Claudina (MP, ago-2026)",
+      "url": "https://agn.gt/desde-su-creacion-alerta-isabel-claudina-ha-localizado-a-mas-del-90-de-las-mujeres-reportadas-como-desaparecidas/",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "Prensa Libre — Alerta Isabel-Claudina: cinco mujeres desaparecen cada día (ago-2025)",
+      "url": "https://www.prensalibre.com/?p=23395296",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "Prensa Latina — Al menos cinco mujeres denuncian agresiones cada hora (dic-2025)",
+      "url": "https://www.prensa-latina.cu/2025/12/23/al-menos-cinco-mujeres-denuncian-agresiones-en-guatemala-cada-hora/",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "CIEN — Boletín del Índice de Denuncias de Delitos (IDD), agosto 2026, base 2020 (PNC/PLADEIC, INE)",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/09/Boletin-del-IDD-de-agosto-base-2020.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Asociación Civil Diálogos — Informe sobre la violencia homicida en Guatemala, diciembre 2025 (PNC, INE)",
+      "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/InformeHomicidios.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Asociación Civil Diálogos — Balance anual de la violencia homicida 2025 (PLADEIC)",
+      "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/Balance-anual.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Ministerio de Gobernación — Informe de Violencia Armada v7 (ene 2024; PNC, DIGECAM)",
+      "url": "https://mingob.gob.gt/wp-content/uploads/2024/01/Informe-Violencia-Armada-v7.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "INACIF — Estadísticas forenses, necropsias por departamento y causa 2025",
+      "url": "https://www.inacif.gob.gt/estadisticasweb/routes/api/necropsias.php?grupo=E&anios=2025&idgenero=1,2,3",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "AGN — CIEN reporta disminución de homicidios durante septiembre (7-oct-2026)",
+      "url": "https://agn.gt/cien-reporta-disminucion-de-homicidios-durante-septiembre/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "AGN — Incautación de armas se incrementó el 41% (4-jun-2026)",
+      "url": "https://agn.gt/incautacion-de-armas-en-guatemala-se-incremento-el-41-en-comparacion-con-el-2025/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Prensa Libre — Decomisos de armas: persiste trasiego por encomiendas (balance PNC 2025)",
+      "url": "https://www.prensalibre.com/guatemala/justicia/decomisos-de-armas-persiste-trasiego-por-encomiendas-desde-sudamerica/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "EFE/Emisoras Unidas — Guatemala suma 20 agentes de PNC asesinados en 2026 (28-jul-2026)",
+      "url": "https://emisorasunidas.com/nacional/2026/07/28/guatemala-agentes-pnc-policias-muertos-2026/",
+      "nivel": "prensa"
+    }
+  ],
+  "no_afirma": [
+    "No afirma que el estado de sitio o la Ley Antipandillas causaran la baja de denuncias de extorsión u homicidio: solo coinciden en el tiempo (la extorsión ya bajaba desde mediados de 2025).",
+    "No afirma que los homicidios de todo 2026 bajen: el dato de homicidios denunciados de 2026 cubre solo enero y febrero.",
+    "No afirma que haya menos extorsiones: se miden denuncias ante la PNC y muchas víctimas no denuncian.",
+    "No afirma que circule menos cocaína: los decomisos dependen de cargamentos puntuales y no hay estimación del flujo que transita por Guatemala.",
+    "No presenta como oficial el número de policías asesinados (es un recuento de EFE) ni afirma que el gasto de Gobernación creciera en términos reales (quetzales corrientes)."
+  ],
+  "incertidumbre": [
+    "Todas las cifras usadas tienen segunda fuente no independiente (reproduce la primaria), incluida la ancla nar-c02 (PNC vía AGN): verifican el número, no lo respaldan de forma independiente.",
+    "La serie anual de cocaína (nar-c01) se arma con comunicados oficiales reproducidos por prensa; 2022 tiene versiones en conflicto y no hay segunda fuente independiente.",
+    "Los periodos de comparación difieren entre tarjetas (ene–feb, ene–may, ene–jun, 1 ene–12 jul, ene–ago 2026) según el último corte publicado por cada fuente.",
+    "No hay homicidios de 2026 verificados más allá de enero–febrero (est-c06); las tarjetas de violencia letal usan 2025 (INACIF, Diálogos) y el recuento de EFE de policías asesinados.",
+    "Las necropsias por arma de fuego por departamento (vle-c16) son absolutos, no tasas; el dato de sentencias (est-c15) es de 2024, anterior a la ofensiva de 2025–2026.",
+    "nar-c02 (ancla): los 8,402.4 kg de enero–junio de 2026 están confirmados, pero la cifra de 2026 se atribuye a 'fuerzas de seguridad' y la base de 2025 (1,596.2 kg) es de la PNC; otras instituciones dan conteos distintos y no hay segunda fuente independiente. El salto descansa en buena parte en un solo decomiso de 4.9 toneladas.",
+    "nar-c03: el 66.7% es cálculo propio sobre el acumulado oficial al 28 de mayo de 2026 (7,342 kg), base que declara la nota de la tarjeta; sobre el semestre completo (8,402.4 kg) el mismo cargamento es el 58.3%, es decir, más de la mitad.",
+    "vul-c01: los 206 femicidios de 2025 son la serie de CIEN con datos del MP (delito de femicidio tipificado); no hay segunda fuente independiente para 2025 y las series de prensa de 2023–2024 discrepan según la definición usada.",
+    "vul-c02: las 441 otras muertes violentas de mujeres de 2025 excluyen los femicidios (total 647); no es comparable con otras series de muertes violentas de mujeres ni con proporciones calculadas sobre otros totales. Sin segunda fuente independiente.",
+    "vul-c09: las 6,229 alertas Alba-Keneth de 2025 son un corte parcial al 10 de diciembre, no el cierre anual; no se comparan con las 6,970 de 2024 como una caída (el corte de septiembre, 4,940, es coherente con la serie).",
+    "vul-c10: 18.1 alertas al día = 6,229 alertas / 344 días (1 de enero al 10 de diciembre de 2025), promedio sobre un periodo parcial; una alerta activada no equivale a un menor que siga desaparecido (la mayoría se desactiva al localizarlo)."
+  ],
+  "descartadas": [
+    {
+      "id": "vle-c01..vle-c12",
+      "por": "fuera de la lista de cifras verificadas de la directiva (homicidios ene–sep 2026, serie mensual, mapa de tasas, municipios, armas 2025)"
+    },
+    {
+      "id": "nar-c10",
+      "por": "no_confirmada"
+    },
+    {
+      "id": "caso Fopa",
+      "por": "sin fuente verificable en la sesión; el hilo no lo nombra"
+    }
+  ]
+}

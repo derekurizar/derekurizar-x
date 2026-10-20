@@ -15,7 +15,7 @@ informe; el productor cierra con el PDF y el registro) y entrega todo en `invest
 
 ## 1. Preflight (sin lanzar el workflow)
 
-1. `make doctor` → exit 0 y sin errores. Debe listar `.claude/agents/informe-redactor.md`,
+1. `make doctor` → exit 0 y sin errores. Debe listar `.claude/agents/informe-redactor.md`, `.claude/agents/informe-revisor.md`,
    `.claude/workflows/investigacion.js` y `.claude/commands/investigacion.md`; si falta el agente,
    DETENTE: hay que crearlo y **reiniciar Claude Code** (los agentes se registran al arrancar).
 2. Salvo en `fixture` y `desde`: una búsqueda web de prueba (WebSearch «INE Guatemala»); si falla, DETENTE.
@@ -32,7 +32,7 @@ informe; el productor cierra con el PDF y el registro) y entrega todo en `invest
    va en git) y busca en `memoria/hilos.json` el registro cuyo `slug` es ese → `desde_hilo = ruta`
    (debe existir con `hilo.json`; si no, DETENTE). Si `--informes` ya lista un informe con ese
    `hilo_id`, avisa («se creará el N.º NN nuevo»).
-8. Avisa de la duración: normal ~45–70 min (12–16 agentes), `desde` ~15–25, `smoke` ~20, `fixture` ~10.
+8. Avisa de la duración: normal ~50–80 min (13–19 agentes, con la revisión de justificación), `desde` ~20–35, `smoke` ~25, `fixture` ~12.
 
 ## 2. Invocación
 
@@ -45,6 +45,12 @@ workflow falla con «agente no registrado», pide reiniciar Claude Code; `permit
 con autorización expresa del usuario (corre ese rol en general-purpose). Para reanudar una corrida
 interrumpida: `Workflow({ scriptPath, resumeFromRunId: "wf_…", args })` con los mismos args. Los
 errores de gate se muestran tal cual (son accionables).
+
+**Variante auditoría** (evaluar un plan de gobierno): `args.auditoria = {inventario, slug, plan,
+mandato_inicio?, ejes, capitulos}`. Los ejes salen de `python3 scripts/auditoria.py --inventario
+investigacion/auditorias/<plan>/compromisos.json --ejes`; los capítulos, uno por eje del plan (detalle en
+`referencias/flujo-investigacion.md` «Variante auditoría»). Para corregir a mano y rehacer sin agentes:
+`make auditoria-rehacer SESION=sesiones/<slug> DIR=investigacion/<fecha>-<slug>`.
 
 ## 3. Post-checks
 
@@ -65,11 +71,12 @@ errores de gate se muestran tal cual (son accionables).
   figuras), `marcadores` pendientes (`[FECHA]`, `[ENLACE AL HILO]`) y la ruta del PDF.
 - Hilo: gancho (`hook_tipo`) y paleta; cada tuit con su texto, `[📸 tuit_N.png]` y alt; el cierre con
   `[ENLACE AL INFORME]` resaltado: «sustitúyelo por la URL del PDF al publicar».
+- Revisión de justificación (`revision`): veredicto, vueltas, faltas que bloquean y mejoras pendientes (`<sesion>/revision_informe.json`); si quedan faltas que bloquean, eso va primero junto al `incompleto`.
 - `no_afirma`, `independencia_baja`, `avisos_workflow`, `visuales_dudosos`.
 - Rutas: `salida/informe.pdf`, `hilo/hilo.html`, `hilo/contacto.png`, `hilo/post.md` (o, en `desde`,
   la ruta del hilo previo).
 
 Reglas: el agente nunca publica en X; `memoria/` la escribe solo `memoria.py` desde el productor en el
 Cierre (hilo en `hilos.json`, informe en `informes.json`); el hilo y el informe comparten `datos.json`
-(ninguna cifra del informe sale de otra parte); los agentes `hilo-*` e `informe-redactor` declaran
+(ninguna cifra del informe sale de otra parte); los agentes `hilo-*`, `informe-redactor` e `informe-revisor` declaran
 `tools:` y no heredan los MCP.

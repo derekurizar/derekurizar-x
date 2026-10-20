@@ -1,0 +1,224 @@
+{
+  "slug": "presupuesto-2027-deficit-ministerios",
+  "fecha": "2026-10-06",
+  "tema": "Presupuesto 2027: Q192 mil millones, déficit y qué ministerios crecieron más",
+  "tesis": "El proyecto 2027 no reparte parejo: frente al vigente de 2023, Desarrollo Social crece 208.6% y Educación 28.8% (el total, 61.9%), y se financia con un déficit de 4.4% del PIB que en 2012–2027 solo supera el de 2020.",
+  "paleta": "cielo",
+  "hook_tipo": "giro_inversion",
+  "pregunta": "¿Hacia dónde va el presupuesto 2027 (iniciativa 6841) que el Congreso empieza a revisar hoy, cuánto se financia con deuda y qué ministerios crecieron más desde 2023?",
+  "n_tuits": 12,
+  "estado": "listo",
+  "tuits": [
+    {
+      "n": 1,
+      "beat": "gancho",
+      "texto": "El presupuesto que el Congreso empieza a revisar hoy da más dinero a casi todos.\nPero no al mismo ritmo: una cartera se triplica y Educación queda por debajo del promedio.\n\nY el déficit con que se financia sería el mayor en 15 años, salvo el de la pandemia. 🧵",
+      "caracteres": 260,
+      "alt_text": "Gráfico de barras horizontales: aumento del presupuesto por cartera entre el vigente de 2023 y el proyecto 2027, en porcentaje. Desarrollo Social +208.6%, Economía +135.1%, Defensa Nacional +86.0%, Agricultura +76.6%, Salud +64.3%, presupuesto total +61.9%, Educación +28.8% y Comunicaciones +17.8%. Quetzales corrientes. Fuente: cálculo propio con Sicoin (vía Guate en Datos) y Minfin.",
+      "imagen": "tuit_1.png",
+      "plantilla": "barras-h",
+      "fuente": "Sicoin/Guate en Datos · Minfin · cálculo propio",
+      "cifra_ids": [
+        "min-c02"
+      ]
+    },
+    {
+      "n": 2,
+      "beat": "contexto",
+      "texto": "Frente a lo vigente en 2026, el proyecto sube 13.8%.",
+      "caracteres": 52,
+      "alt_text": "Gráfico de línea del presupuesto de la Administración Central en millones de quetzales corrientes, 2016 a 2027: de 71,347 millones en 2016 a 154,837 en 2025, 168,767 vigente en 2026 y 192,045.1 en el proyecto 2027. 2016–2025 vigente al cierre; 2026 vigente a junio. Fuente: Minfin/Sicoin vía Guate en Datos y Minfin.",
+      "imagen": "tuit_2.png",
+      "plantilla": "linea",
+      "fuente": "Sicoin/Guate en Datos · Minfin (proyecto 2027)",
+      "cifra_ids": [
+        "tot-c02",
+        "tot-c03"
+      ]
+    },
+    {
+      "n": 3,
+      "beat": "contexto",
+      "texto": "",
+      "caracteres": 0,
+      "alt_text": "Tarjeta de cifra: el proyecto 2027 equivale a 10,358 quetzales por habitante, 2.3 veces los 4,507.7 de 2016, en quetzales corrientes. Presupuesto entre la población proyectada por el INE. Fuente: cálculo propio con Minfin/Sicoin e INE.",
+      "imagen": "tuit_3.png",
+      "plantilla": "cifra",
+      "fuente": "Sicoin/Guate en Datos · INE · cálculo propio",
+      "cifra_ids": [
+        "tot-c10"
+      ]
+    },
+    {
+      "n": 4,
+      "beat": "contexto",
+      "texto": "Economía, que más que duplicó su presupuesto desde 2023, es de las pocas carteras que bajan frente a 2026.",
+      "caracteres": 106,
+      "alt_text": "Barras divergentes: variación del proyecto 2027 frente al presupuesto 2026 (aprobado más ampliaciones al 31 de julio), en porcentaje. Defensa +37.3%, Desarrollo Social +31.0%, servicio de la deuda +15.1%, total +13.8%, Salud +12.6%, Gobernación +7.5%, Educación +4.4%, Comunicaciones +0.3%, Economía -4.6% y Energía y Minas -58.8%. Fuente: Minfin, Presupuesto Institucional 2026–2027.",
+      "imagen": "tuit_4.png",
+      "plantilla": "divergente",
+      "fuente": "Minfin · Presupuesto Institucional 2026–2027",
+      "cifra_ids": [
+        "min-c03"
+      ]
+    },
+    {
+      "n": 5,
+      "beat": "contexto",
+      "texto": "El servicio de la deuda ya casi alcanza a Educación, el ministerio con más presupuesto.",
+      "caracteres": 87,
+      "alt_text": "Barras horizontales del proyecto de presupuesto 2027 por entidad, en millones de quetzales: Obligaciones del Estado a cargo del Tesoro 74,192.6; Educación 27,898; servicio de la deuda pública 24,601.1; Salud 18,615.5; Comunicaciones 10,668.6; Gobernación 10,490; Defensa 6,374.7; Desarrollo Social 5,500. Fuente: Minfin, Presupuesto Institucional 2026–2027.",
+      "imagen": "tuit_5.png",
+      "plantilla": "barras-h",
+      "fuente": "Minfin · Presupuesto Institucional 2026–2027",
+      "cifra_ids": [
+        "min-c01",
+        "min-c07"
+      ]
+    },
+    {
+      "n": 6,
+      "beat": "giro",
+      "texto": "Gastar más tiene una cara menos visible: cuánto se pide prestado. Y en julio, el plan preliminar preveía menos.",
+      "caracteres": 111,
+      "alt_text": "Gráfico de línea del déficit fiscal del Gobierno Central en porcentaje del PIB, 2012 a 2027. Osciló entre 1.0% y 2.4% salvo en 2020, año de la pandemia, cuando llegó a 4.9%; 2026 se proyecta en 3.5% y el proyecto 2027 prevé 4.4%, el mayor de la serie fuera de 2020. Fuente: Banguat con datos de Minfin; 2027, Minfin vía EFE.",
+      "imagen": "tuit_6.png",
+      "plantilla": "linea",
+      "fuente": "Banguat (con datos Minfin); Minfin vía EFE (2027)",
+      "cifra_ids": [
+        "def-c03",
+        "def-c02",
+        "def-c07"
+      ]
+    },
+    {
+      "n": 7,
+      "beat": "contexto",
+      "texto": "En el mismo lapso, el presupuesto pasó de Q181,563.2 millones a Q192,045.1 millones.",
+      "caracteres": 84,
+      "alt_text": "Tarjeta antes y después: el déficit previsto para 2027 pasó de 3.7% del PIB en el techo preliminar de julio de 2026 a 4.4% del PIB en el proyecto entregado al Congreso en septiembre. Fuente: Minfin vía EFE y AGN.",
+      "imagen": "tuit_7.png",
+      "plantilla": "antes-despues",
+      "fuente": "Minfin · vía EFE y AGN",
+      "cifra_ids": [
+        "def-c06",
+        "def-c03",
+        "tot-c07",
+        "tot-c01"
+      ]
+    },
+    {
+      "n": 8,
+      "beat": "contexto",
+      "texto": "",
+      "caracteres": 0,
+      "alt_text": "Barras horizontales de los rubros extraordinarios que Minfin citó al presentar el proyecto 2027, en millones de quetzales: ampliación de Puerto Quetzal 4,800; fondo de proyectos viales prioritarios 3,517.6; deficiencias netas del Banco de Guatemala 2,600; fondos de la Agencia Nacional de Infraestructura 2,550; elecciones generales 2,000. Fuente: Minfin vía AGN y Emisoras Unidas.",
+      "imagen": "tuit_8.png",
+      "plantilla": "barras-h",
+      "fuente": "Minfin · vía AGN y Emisoras Unidas",
+      "cifra_ids": [
+        "tot-c06"
+      ]
+    },
+    {
+      "n": 9,
+      "beat": "impacto",
+      "texto": "Es el dinero que el Estado planea gastar sin tenerlo: lo cubriría con endeudamiento.",
+      "caracteres": 84,
+      "alt_text": "Tarjeta de cifra: el déficit previsto para 2027 es de 48,300 millones de quetzales, 2.6 veces los 18,615.5 millones del presupuesto 2027 del Ministerio de Salud. Minfin prevé cubrirlo con unos 5,913 millones de dólares de endeudamiento. Fuente: Minfin vía EFE y AGN.",
+      "imagen": "tuit_9.png",
+      "plantilla": "cifra",
+      "fuente": "Minfin · vía EFE y AGN",
+      "cifra_ids": [
+        "def-c04",
+        "min-c06",
+        "def-c05"
+      ]
+    },
+    {
+      "n": 10,
+      "beat": "contexto",
+      "texto": "Un matiz para no exagerar: el saldo de la deuda aún no se dispara.",
+      "caracteres": 66,
+      "alt_text": "Gráfico de línea del saldo de la deuda pública del Gobierno Central en porcentaje del PIB, 2012 a 2027: entre 24.8% y 26.5% hasta 2019, pico de 31.5% en 2020, 26.9% en 2025, 27.5% proyectado en 2026 y 27.9% estimado para 2027 en julio, antes de que el déficit previsto subiera a 4.4%. Fuente: Banguat con datos de Minfin; 2027, Minfin vía EFE.",
+      "imagen": "tuit_10.png",
+      "plantilla": "linea",
+      "fuente": "Banguat (con datos Minfin); Minfin vía EFE (2027)",
+      "cifra_ids": [
+        "def-c11",
+        "def-c12",
+        "def-c06",
+        "def-c03"
+      ]
+    },
+    {
+      "n": 11,
+      "beat": "contexto",
+      "texto": "Aprobar es una cosa; ejecutar, otra. Esa es la pregunta de fondo en las audiencias.",
+      "caracteres": 83,
+      "alt_text": "Gráfico de bullet: ejecución presupuestaria de 2025 como porcentaje devengado del presupuesto vigente. Defensa 99.96%, Educación 94.58%, Salud 92.02%, total 90.76%, Agricultura 89.17% y Comunicaciones, Infraestructura y Vivienda 68.19%. Fuente: Sicoin vía Guate en Datos.",
+      "imagen": "tuit_11.png",
+      "plantilla": "bullet",
+      "fuente": "Sicoin/Guate en Datos · ejecución 2025",
+      "cifra_ids": [
+        "min-c12",
+        "tot-c11"
+      ]
+    },
+    {
+      "n": 12,
+      "beat": "cierre",
+      "texto": "En suma: un presupuesto más grande, repartido de forma desigual y con el déficit más alto en 15 años fuera de la pandemia.\n\nNo es una comparación en términos reales ni un pronóstico de ejecución.\n\nFuentes: Minfin, Sicoin/Guate en Datos, Banguat, INE, EFE, AGN, Emisoras Unidas.",
+      "caracteres": 277,
+      "alt_text": "Tuit de cierre sin imagen: resume que el proyecto de presupuesto 2027 es más grande, se reparte de forma desigual entre carteras y prevé el déficit más alto en 15 años fuera de 2020. Fuentes: Minfin, Sicoin vía Guate en Datos, Banguat, INE, EFE, AGN y Emisoras Unidas.",
+      "imagen": null,
+      "plantilla": null,
+      "fuente": null,
+      "cifra_ids": []
+    }
+  ],
+  "no_afirma": [
+    "No afirma que el presupuesto 2027 sea mayor en términos reales: todo va en quetzales corrientes, sin descontar inflación.",
+    "No afirma que el déficit de 4.4% vaya a ocurrir: es lo previsto en el proyecto; el Congreso puede cambiarlo y la ejecución suele quedar por debajo del vigente.",
+    "No afirma que los rubros extraordinarios expliquen todo el aumento del déficit: Minfin los citó, sin desglose completo.",
+    "No afirma que la deuda pública sea insostenible ni que vaya a superar su pico de 2020.",
+    "No atribuye el reparto desigual a una decisión política concreta ni juzga si cada aumento está justificado."
+  ],
+  "incertidumbre": [
+    "La segunda fuente de todas las cifras usadas salvo min-c02 reproduce la primaria (Minfin vía AGN/EFE/Emisoras Unidas, Banguat con datos Minfin, Sicoin vía Guate en Datos): verifican el número, sin respaldo independiente. La ancla (min-c02) es cálculo propio con Sicoin y el cuadro Minfin.",
+    "Base 2023 = presupuesto vigente al cierre (Sicoin), no el aprobado inicial (Decreto 54-2022).",
+    "El desglose institucional 2027 se transcribió de la imagen del cuadro Minfin publicada por AGN: el PDF de minfin.gob.gt devolvió 403.",
+    "Déficit 2026 tiene dos valores (3.5% Banguat, 3.8% Minfin); ambos menores que 4.4%, por lo que la lectura no cambia.",
+    "La deuda 2027 (27.9% del PIB) es la estimación de julio con déficit de 3.7%; no incorpora el 4.4% del proyecto final."
+  ],
+  "fuentes": [
+    "Sicoin/Guate en Datos · Minfin · cálculo propio",
+    "Sicoin/Guate en Datos · Minfin (proyecto 2027)",
+    "Sicoin/Guate en Datos · INE · cálculo propio",
+    "Minfin · Presupuesto Institucional 2026–2027",
+    "Banguat (con datos Minfin); Minfin vía EFE (2027)",
+    "Minfin · vía EFE y AGN",
+    "Minfin · vía AGN y Emisoras Unidas",
+    "Sicoin/Guate en Datos · ejecución 2025"
+  ],
+  "fuentes_cifras": [
+    "AGN (Agencia Guatemalteca de Noticias) con datos del Minfin",
+    "AGN con datos del Minfin",
+    "AGN con datos del Minfin; Emisoras Unidas",
+    "Banguat, 'Resultados macroeconómicos 2025 y perspectivas 2026' (14-ene-2026), gráfica 'Déficit Fiscal (% del PIB)', fuente MINFIN y Banguat",
+    "Banguat, 'Resultados macroeconómicos 2025 y perspectivas 2026', gráfica 'Deuda Pública (% del PIB)', fuente MINFIN y Banguat",
+    "Cálculo propio con tot-c02 y proyecciones de población INE (revisión 2019)",
+    "Cálculo propio: Sicoin vía Guate en Datos (vigente 2023) y Minfin (proyecto 2027)",
+    "EFE/E&N con declaraciones del Minfin",
+    "Guate en Datos con datos MINFIN/Sicoin",
+    "Guate en Datos con datos MINFIN/Sicoin (2016–2025); Minfin vía EFE/E&N (2026 vigente); Minfin vía AGN (2027 proyecto)",
+    "MINFIN (Menkos) vía Agencia EFE, Revista E&N (1-jul-2026)",
+    "MINFIN (ministro Jonathan Menkos) vía Agencia EFE, publicado por Revista E&N y Revista Summa",
+    "MINFIN vía Agencia EFE (Revista E&N)",
+    "Minfin vía AGN; ConsultorSalud",
+    "Minfin, cuadro 'Presupuesto Institucional 2026-2027' (Sicoin), publicado por AGN",
+    "Sicoin vía Guate en Datos"
+  ],
+  "gate_mecanico": "ok",
+  "contacto": "contacto.png"
+}

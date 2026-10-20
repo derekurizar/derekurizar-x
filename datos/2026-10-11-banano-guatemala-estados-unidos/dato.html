@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dato · vista previa</title>
+<!-- Vista previa de un dato (/dato): la abre el usuario en su navegador. La rellena scripts/ensamblar.py (DATO_JSON). -->
+<style>
+  :root { --papel:#F6F2E8; --tinta:#0C1520; --gris:#5c6470; --linea:rgba(12,21,32,.14); --acento:#4B92DB; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--papel); color: var(--tinta); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 40px 20px 80px; }
+  header h1 { font: 700 30px/1.15 Georgia, "Times New Roman", serif; margin: 0 0 8px; }
+  header .meta { color: var(--gris); font-size: 14px; display: flex; flex-wrap: wrap; gap: 10px 18px; }
+  .chip { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; background: var(--tinta); color: var(--papel); }
+  .chip.suave { background: #e9e3d6; color: var(--tinta); }
+  .dato { margin: 18px 0 0; padding: 14px 18px; border-left: 4px solid var(--acento); background: rgba(75,146,219,.08); font-size: 17px; }
+  .porque { margin: 10px 0 0; color: var(--gris); font-size: 15px; }
+  .tarjeta { margin-top: 24px; }
+  .tarjeta img { width: 100%; max-width: 760px; display: block; border-radius: 12px; box-shadow: 0 2px 14px rgba(0,0,0,.12); }
+  .texto { position: relative; margin-top: 18px; padding: 14px 16px; background: #fff; border: 1px solid var(--linea); border-radius: 10px; white-space: pre-wrap; font-size: 17px; }
+  .fila { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; font-size: 13px; color: var(--gris); }
+  .fila .cnt.alerta { color: #B23A26; font-weight: 700; }
+  button { font: 600 13px/1 system-ui, sans-serif; padding: 7px 12px; border-radius: 8px; border: 1px solid var(--linea); background: #fff; color: var(--tinta); cursor: pointer; }
+  button:hover { background: var(--tinta); color: var(--papel); }
+  .alt { margin-top: 10px; font-size: 14px; color: var(--gris); }
+  .alt b { color: var(--tinta); }
+  .fuente { margin-top: 6px; font-size: 13px; color: var(--gris); }
+  .fuente a { color: var(--acento); }
+  section.extra { margin-top: 44px; padding-top: 24px; border-top: 2px solid var(--tinta); }
+  section.extra h2 { font: 700 18px/1.2 system-ui, sans-serif; margin: 22px 0 8px; }
+  section.extra ul { margin: 0; padding-left: 20px; }
+  table.cifras { width: 100%; border-collapse: collapse; font-size: 14px; }
+  table.cifras th, table.cifras td { padding: 6px 8px; border-bottom: 1px solid var(--linea); text-align: left; vertical-align: top; }
+  table.cifras th { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--gris); }
+  .cand li.elegida { font-weight: 600; }
+  .cand .pts { color: var(--gris); font-weight: 400; font-size: 13px; }
+  .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--tinta); color: var(--papel); padding: 10px 16px; border-radius: 8px; font-size: 14px; opacity: 0; transition: opacity .2s; pointer-events: none; }
+  .toast.on { opacity: 1; }
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<div class="toast" id="toast">Copiado</div>
+<script id="dato-json" type="application/json">{"slug": "banano-guatemala-estados-unidos", "fecha": "2026-10-11", "tema": "El banano de Guatemala en la mesa de Estados Unidos", "pista": null, "tipo": "dato", "dato": "Más de 4 de cada 10 kilos de banano que compra EE.UU. salen de Guatemala", "cifra_id": "dat-c01", "por_que_impacta": "El banano se asocia con Ecuador, pero en el mayor mercado del continente el primer proveedor es Guatemala, y su parte creció de 36.7 % en 2015 a 40.9 % en 2025.", "paleta": "cacao", "hook_tipo": "mito_vs_dato", "pregunta": "¿Qué parte del banano que importa Estados Unidos viene de Guatemala?", "tesis": "En 2025, el 40.88 % del peso neto del banano que importó EE.UU. vino de Guatemala, frente a 36.7 % en 2015.", "estado": "listo", "tuit": {"texto": "Si piensas en banano, seguramente piensas en Ecuador.\n\nPero el primer proveedor de banano de EE.UU. es Guatemala: le vende más que Ecuador y Costa Rica juntos.\n\nY su parte de ese mercado creció en la última década.", "caracteres": 214, "alt_text": "Tarjeta con una cifra grande: 40.9 % del peso neto del banano que importó Estados Unidos en 2025 vino de Guatemala, 4.2 puntos más que el 36.7 % de 2015. Dos barras comparan 2015 y 2025. Fuente: UN Comtrade, importaciones de banano (HS 0803) reportadas por EE.UU.", "imagen": "dato.png", "tarjeta": "tarjeta.html", "plantilla": "cifra", "kicker": "BANANO · IMPORTACIONES DE EE.UU. · 2025", "titular": ["Más de 4 de cada 10 kilos", "de banano que compra", "EE.UU. son de Guatemala"], "nota": "Peso neto importado de banano (HS 0803), según los datos que reporta EE.UU. como importador.", "fuente": "UN Comtrade · importaciones de EE.UU. · 2015 y 2025", "cifra_ids": ["dat-c01", "dat-c02", "dat-c03"]}, "cifras": [{"id": "dat-c01", "concepto": "Participación de Guatemala en los kilos de banano (HS 0803) importados por EE.UU., 2025, por país de origen", "valor": 40.88, "unidad": "% del peso neto importado", "anio": "2025", "veredicto": "verificada", "fuente": "UN Comtrade · importaciones reportadas por EE.UU. (HS 0803, bananos y plátanos)", "fuente_2": "UN Comtrade, reporte espejo de Guatemala (exportaciones 0803, 2025)", "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?reporterCode=842&period=2025&cmdCode=0803&flowCode=M"}, {"id": "dat-c02", "concepto": "Kilos de banano importados por EE.UU. desde Guatemala vs. desde Ecuador y Costa Rica juntos, 2025", "valor": 2085918089, "unidad": "kg", "anio": "2025", "veredicto": "verificada", "fuente": "UN Comtrade · importaciones reportadas por EE.UU. (HS 0803)", "fuente_2": "UN Comtrade, reporte espejo de Guatemala (2025)", "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?reporterCode=842&period=2025&cmdCode=0803&flowCode=M"}, {"id": "dat-c03", "concepto": "Participación de Guatemala en los kilos de banano importados por EE.UU., 2015", "valor": 36.7, "unidad": "% del peso neto importado", "anio": "2015", "veredicto": "verificada", "fuente": "UN Comtrade · importaciones reportadas por EE.UU. (HS 0803)", "fuente_2": "UN Comtrade, reporte espejo de Guatemala (2015)", "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?reporterCode=842&period=2015&cmdCode=0803&flowCode=M"}], "candidatas": [{"id": "dat-c01", "puntaje": 20, "criterios": {"sorpresa": 4, "magnitud": 5, "comparacion": 4, "actualidad": 4, "solidez": 3}, "elegida": true, "motivo": "Escala humana directa (más de 4 de cada 10 kilos), contradice la idea de que el banano es de Ecuador y se compara con 2015 en la misma unidad.", "dato": "Participación de Guatemala en los kilos de banano (HS 0803) importados por EE.UU., 2025, por país de origen"}, {"id": "dat-c02", "puntaje": 18, "criterios": {"sorpresa": 4, "magnitud": 2, "comparacion": 5, "actualidad": 4, "solidez": 3}, "elegida": false, "motivo": "Misma historia que dat-c01 en miles de millones de kilos, sin escala humana; se usa como contexto en el texto.", "dato": "Kilos de banano importados por EE.UU. desde Guatemala vs. desde Ecuador y Costa Rica juntos, 2025"}, {"id": "dat-c03", "puntaje": 16, "criterios": {"sorpresa": 3, "magnitud": 3, "comparacion": 4, "actualidad": 3, "solidez": 3}, "elegida": false, "motivo": "Es el punto de comparación (2015) del dato elegido; solo, es un dato de hace diez años.", "dato": "Participación de Guatemala en los kilos de banano importados por EE.UU., 2015"}, {"id": "dat-c04", "puntaje": 16, "criterios": {"sorpresa": 3, "magnitud": 2, "comparacion": 4, "actualidad": 4, "solidez": 3}, "elegida": false, "motivo": "Récord real de 24 años, pero US$1,081 millones es un número macro sin traducción y menos sorprendente.", "dato": "Valor FOB anual de las exportaciones de banano de Guatemala, 2002-2025"}, {"id": "dat-c05", "puntaje": 15, "criterios": {"sorpresa": 3, "magnitud": 3, "comparacion": 3, "actualidad": 3, "solidez": 3}, "elegida": false, "motivo": "Crecimiento en dólares corrientes de 2002 a 2025 sin ajustar por inflación; comparación menos limpia.", "dato": "Crecimiento del valor exportado de banano, 2025 vs 2002"}, {"id": "dat-c06", "puntaje": 15, "criterios": {"sorpresa": 3, "magnitud": 4, "comparacion": 2, "actualidad": 3, "solidez": 3}, "elegida": false, "motivo": "Repite dat-c01 en valor FOB, sin punto de comparación en el tiempo.", "dato": "Participación de Guatemala en el valor FOB del banano importado por EE.UU., 2025"}, {"id": "dat-c07", "puntaje": 14, "criterios": {"sorpresa": 2, "magnitud": 4, "comparacion": 2, "actualidad": 3, "solidez": 3}, "elegida": false, "motivo": "Peso del banano en las exportaciones: esperable y sin comparación clara.", "dato": "Peso del banano en las exportaciones totales de Guatemala, 2025"}], "no_afirma": ["No afirma que Guatemala sea el mayor exportador de banano del mundo, solo el primer proveedor de EE.UU.", "Mide peso neto (kg), no valor en dólares.", "No afirma que la participación subiera cada año entre 2015 y 2025: solo hay dos puntos."], "incertidumbre": ["La segunda fuente reproduce la primaria; sin verificación independiente.", "Son datos reportados por EE.UU. como importador; las cifras de Guatemala como exportador pueden diferir."], "fuentes": ["UN Comtrade · importaciones de EE.UU. · 2015 y 2025"], "fuentes_cifras": ["UN Comtrade · importaciones reportadas por EE.UU. (HS 0803)", "UN Comtrade · importaciones reportadas por EE.UU. (HS 0803, bananos y plátanos)"], "gate_mecanico": "ok"}</script>
+<script>
+/* Peso según X: copia literal de scripts/contar_x.js (pesoX). No editar aquí; regenerar desde el script. */
+function pesoX(texto) {
+  // Reglas: NFC; cada URL pesa 23; puntos de código en 0–4351, 8192–8205,
+  // 8208–8223 y 8242–8247 pesan 1; el resto 2; los emoji compuestos
+  // (FE0F, ZWJ+siguiente, tono 1F3FB–1F3FF, keycap 20E3, par regional) son uno y pesan 2.
+  var t = String(texto == null ? "" : texto).normalize("NFC");
+  var reUrl = /https?:\/\/\S+|www\.\S+|(?<![\p{L}\p{N}\p{M}_])[a-z0-9-]+(\.[a-z0-9-]+)*\.(com|gt|org|net|io|edu|gov|mx|sv|hn|es|info|co)(\/\S*)?/giu;
+  var rangos1 = [[0, 4351], [8192, 8205], [8208, 8223], [8242, 8247]];
+  var pesoCp = function (cp) {
+    for (var k = 0; k < rangos1.length; k++) if (cp >= rangos1[k][0] && cp <= rangos1[k][1]) return 1;
+    return 2;
+  };
+  var esTono = function (cp) { return cp >= 0x1f3fb && cp <= 0x1f3ff; };
+  var esRegional = function (cp) { return cp >= 0x1f1e6 && cp <= 0x1f1ff; };
+  var pesoPlano = function (s) {
+    var cps = Array.from(s, function (c) { return c.codePointAt(0); });
+    var i = 0, n = cps.length, total = 0;
+    while (i < n) {
+      var j = i + 1;
+      if (esRegional(cps[i]) && j < n && esRegional(cps[j])) j += 1; // bandera
+      while (j < n) {
+        if (cps[j] === 0xfe0f || cps[j] === 0x20e3 || esTono(cps[j])) j += 1;
+        else if (cps[j] === 0x200d && j + 1 < n) j += 2; // ZWJ + siguiente
+        else break;
+      }
+      total += j - i > 1 ? 2 : pesoCp(cps[i]);
+      i = j;
+    }
+    return total;
+  };
+  var total = 0, pos = 0, m;
+  while ((m = reUrl.exec(t)) !== null) {
+    total += pesoPlano(t.slice(pos, m.index)) + 23;
+    pos = m.index + m[0].length;
+    if (m[0].length === 0) reUrl.lastIndex++;
+  }
+  return total + pesoPlano(t.slice(pos));
+}
+</script>
+<script>
+(() => {
+  const D = JSON.parse(document.getElementById("dato-json").textContent);
+  const app = document.getElementById("app");
+  const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const toast = (m) => { const t = document.getElementById("toast"); t.textContent = m; t.classList.add("on"); setTimeout(() => t.classList.remove("on"), 1400); };
+  const copiar = async (txt) => {
+    try { await navigator.clipboard.writeText(txt); toast("Copiado"); return; } catch (e) { /* fallback */ }
+    const ta = document.createElement("textarea"); ta.value = txt; document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); toast("Copiado"); } catch (e) { toast("No se pudo copiar"); }
+    ta.remove();
+  };
+  if (!D) { app.innerHTML = "<p>Sin datos: este archivo lo genera scripts/ensamblar.py.</p>"; return; }
+
+  const t = D.tuit || {};
+  const peso = pesoX(t.texto || "");
+  const fuera = peso < 40 || peso > 280;
+  const lista = (xs) => (xs || []).map((x) => `<li>${esc(x)}</li>`).join("") || "<li>(nada declarado)</li>";
+  // Sin duplicar la misma fuente escrita de dos formas («EIA · … · 2026» y «EIA · …»): se compara el nombre corto, como fuente_corta en ensamblar.py.
+  const corta = (s) => String(s || "").split(/\s+[·—–]\s+|,|\s+\/\s+|\(/)[0].trim().toLowerCase();
+  const fuentes = [...(D.fuentes || []), ...(D.fuentes_cifras || [])].filter((x, i, a) => x && a.findIndex((y) => corta(y) === corta(x)) === i);
+  let html = `<header>
+    <h1>${esc(D.tema)}</h1>
+    <div class="meta"><span class="chip">${esc(D.paleta)}</span><span>${esc(D.fecha)}</span><span class="chip suave">${esc(D.hook_tipo || "sin gancho")}</span><span>tarjeta: ${esc(t.plantilla || "")}</span><span>gate mecánico: ${esc(D.gate_mecanico)}</span><span>estado: ${esc(D.estado)}</span></div>
+    ${D.pista ? `<div class="meta" style="margin-top:6px"><span>pista: «${esc(D.pista)}»</span></div>` : ""}
+    <p class="dato"><b>Dato:</b> ${esc(D.dato)}</p>
+    ${D.por_que_impacta ? `<p class="porque"><b>Por qué impacta:</b> ${esc(D.por_que_impacta)}</p>` : ""}
+  </header>
+  <div class="tarjeta"><a href="${esc(t.imagen || "dato.png")}" target="_blank" rel="noopener"><img src="${esc(t.imagen || "dato.png")}" alt="${esc(t.alt_text)}"></a></div>
+  <div class="texto">${esc(t.texto)}</div>
+  <div class="fila"><span class="cnt${fuera ? " alerta" : ""}">${peso}/280 (peso X${peso !== t.caracteres ? `, ${t.caracteres} caracteres` : ""})</span><span><button data-copy="${esc(t.texto)}">Copiar texto</button> <button data-copy="${esc(t.alt_text)}">Copiar alt</button></span></div>
+  <div class="alt"><b>Alt:</b> ${esc(t.alt_text)}</div>
+  <div class="fuente">Fuente en el pie: ${esc(t.fuente || "")} · cifras: ${esc((t.cifra_ids || []).join(", "))}${t.tarjeta ? ` · HTML: <a href="${esc(t.tarjeta)}" target="_blank" rel="noopener">${esc(t.tarjeta)}</a>` : ""}</div>
+  <section class="extra">
+    <h2>Cifras usadas</h2>
+    <table class="cifras"><tr><th>id</th><th>Concepto</th><th>Valor</th><th>Año</th><th>Veredicto</th><th>Fuente</th><th>Fuente 2</th></tr>${(D.cifras || []).map((c) => `<tr><td>${esc(c.id)}</td><td>${esc(c.concepto)}</td><td>${esc(c.valor)} ${esc(c.unidad || "")}</td><td>${esc(c.anio || "")}</td><td>${esc(c.veredicto)}</td><td>${esc(c.fuente || "")}</td><td>${esc(c.fuente_2 || "")}</td></tr>`).join("")}</table>
+    ${(D.candidatas || []).length ? `<h2>Candidatas consideradas</h2><ul class="cand">${D.candidatas.map((c) => `<li class="${c.elegida ? "elegida" : ""}">${esc(c.dato || c.id)} <span class="pts">(${esc(c.id)}, puntaje ${esc(c.puntaje ?? "—")})</span>${c.motivo ? ` — ${esc(c.motivo)}` : ""}</li>`).join("")}</ul>` : ""}
+    <h2>Lo que este dato NO afirma</h2><ul>${lista(D.no_afirma)}</ul>
+    <h2>Incertidumbre declarada</h2><ul>${lista(D.incertidumbre)}</ul>
+    <h2>Fuentes</h2><ul>${fuentes.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
+    <p style="color:var(--gris);font-size:13px">Detalle de cifras y veredictos en <code>datos.json</code>; texto listo para pegar en <code>post.md</code>.</p>
+  </section>`;
+  app.innerHTML = html;
+  app.addEventListener("click", (e) => { const b = e.target.closest("button[data-copy]"); if (b) copiar(b.getAttribute("data-copy")); });
+})();
+</script>
+</body>
+</html>

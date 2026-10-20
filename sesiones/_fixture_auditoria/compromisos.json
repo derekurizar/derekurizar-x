@@ -1,0 +1,154 @@
+{
+ "plan": {
+  "titulo": "Plan de prueba 2024-2028 · Fixture",
+  "autor": "Partido Fixture",
+  "fecha": "2023-03",
+  "paginas": 10,
+  "mandato": {
+   "inicio": "2024-01-14",
+   "fin": "2028-01-14"
+  }
+ },
+ "_nota": "FIXTURE de auditoría: 2 semillas y 8 compromisos que cubren cumplido, en proceso, retroceso por poco, sin iniciar (exactamente igual), no atribuible (existe_desde y meta ya cumplida en 2023) y sin dato.",
+ "semillas": [
+  {
+   "id": 1,
+   "nombre": "Social"
+  },
+  {
+   "id": 2,
+   "nombre": "Seguridad"
+  }
+ ],
+ "ejes": [
+  {
+   "id": "aaa",
+   "nombre": "Social",
+   "prefijo": "aaa",
+   "compromisos": [
+    "S1-01",
+    "S1-02",
+    "S1-03",
+    "S1-04"
+   ]
+  },
+  {
+   "id": "bbb",
+   "nombre": "Seguridad",
+   "prefijo": "bbb",
+   "compromisos": [
+    "S2-01",
+    "S2-02",
+    "S2-03",
+    "S2-04"
+   ]
+  }
+ ],
+ "compromisos": [
+  {
+   "id": "S1-01",
+   "corto": "Q1,000 millones en escuelas",
+   "semilla": 1,
+   "eje": "aaa",
+   "medida": "monto",
+   "texto": "Invertir Q1,000 millones en escuelas",
+   "pagina": 1,
+   "monto_mq": 1000,
+   "indicador": "Devengado 2024–2026"
+  },
+  {
+   "id": "S1-02",
+   "corto": "100 escuelas nuevas",
+   "semilla": 1,
+   "eje": "aaa",
+   "medida": "meta",
+   "texto": "Construir 100 escuelas nuevas",
+   "pagina": 1,
+   "meta": {
+    "valor": 100,
+    "unidad": "escuelas",
+    "base": null,
+    "sentido": "sube"
+   },
+   "indicador": "Escuelas inauguradas desde 2024"
+  },
+  {
+   "id": "S1-03",
+   "corto": "Ley de becas",
+   "semilla": 1,
+   "eje": "aaa",
+   "medida": "hito",
+   "texto": "Aprobar una ley de becas",
+   "pagina": 2,
+   "indicador": "Decreto del Congreso"
+  },
+  {
+   "id": "S1-04",
+   "corto": "Evaluación docente",
+   "semilla": 1,
+   "eje": "aaa",
+   "medida": "hito",
+   "texto": "Programa de evaluación docente",
+   "pagina": 2,
+   "indicador": "Programa vigente"
+  },
+  {
+   "id": "S2-01",
+   "corto": "Menos homicidios",
+   "semilla": 2,
+   "eje": "bbb",
+   "medida": "tendencia",
+   "texto": "Reducir los homicidios",
+   "pagina": 3,
+   "meta": {
+    "valor": null,
+    "unidad": "tasa por 100 mil",
+    "base": null,
+    "sentido": "baja"
+   },
+   "indicador": "Tasa de homicidios"
+  },
+  {
+   "id": "S2-02",
+   "corto": "Más denuncias atendidas",
+   "semilla": 2,
+   "eje": "bbb",
+   "medida": "tendencia",
+   "texto": "Atender más denuncias",
+   "pagina": 3,
+   "meta": {
+    "valor": null,
+    "unidad": "%",
+    "base": null,
+    "sentido": "sube"
+   },
+   "indicador": "% de denuncias atendidas"
+  },
+  {
+   "id": "S2-03",
+   "corto": "Cobertura policial 90%",
+   "semilla": 2,
+   "eje": "bbb",
+   "medida": "meta",
+   "texto": "Cobertura policial de 90% de los municipios",
+   "pagina": 4,
+   "meta": {
+    "valor": 90,
+    "unidad": "%",
+    "base": 80,
+    "sentido": "sube"
+   },
+   "indicador": "% de municipios con subestación"
+  },
+  {
+   "id": "S2-04",
+   "corto": "Registro de armas digital",
+   "semilla": 2,
+   "eje": "bbb",
+   "medida": "hito",
+   "texto": "Digitalizar el registro de armas",
+   "pagina": 4,
+   "indicador": "Sistema en operación"
+  }
+ ]
+}

@@ -1,0 +1,462 @@
+{
+  "slug": "sarampion-guatemala-2026",
+  "fecha": "2026-10-06",
+  "tesis": "Guatemala suma 33,866 de los 53,957 casos confirmados de sarampión de las Américas en 2026 (SE 1–37): 6 de cada 10, más que México, EE. UU. y Canadá juntos (17,534).",
+  "ancla_id": "dat-c01",
+  "paleta": "terracota",
+  "hook_tipo": "pregunta_directa",
+  "cifras": [
+    {
+      "id": "dat-c01",
+      "concepto": "Casos confirmados de sarampión en Guatemala, 2026 (SE 1–37), y su peso en el total de las Américas",
+      "unidad": "casos confirmados",
+      "anio": "2026 (SE 1–37, al 19-sep)",
+      "tipo": "desglose",
+      "fuente": "OPS/OMS · Informe de situación regional n.º 12, sarampión en las Américas (24-sep-2026)",
+      "url": "https://www.paho.org/sites/default/files/2026/09/pahomeaslessitrep12esp.pdf",
+      "valor": 33866,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Texto y Tabla 2 del mismo informe n.º 12 (coincidencia interna) + MSPAS vía Emisoras Unidas (32,106 al 11-ago, tendencia coherente)",
+      "evidencia": {
+        "url": "https://www.paho.org/sites/default/files/2026/09/pahomeaslessitrep12esp.pdf",
+        "cita": "la Región de las Américas notificó 53.957 casos confirmados [...] Guatemala (33.866), México (12.943), Estados Unidos (3.471), Perú (2.292) y Canadá (1.120)",
+        "archivo_local": "sesiones/_descargas/pahomeaslessitrep12esp.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala",
+          "valor": 33866
+        },
+        {
+          "nombre": "México",
+          "valor": 12943
+        },
+        {
+          "nombre": "Estados Unidos",
+          "valor": 3471
+        },
+        {
+          "nombre": "Perú",
+          "valor": 2292
+        },
+        {
+          "nombre": "Canadá",
+          "valor": 1120
+        },
+        {
+          "nombre": "Resto (12 países y territorios)",
+          "valor": 265
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "dato.png"
+      ]
+    },
+    {
+      "id": "dat-c02",
+      "concepto": "Muertes por sarampión en Guatemala, 2026 (SE 1–37), frente al total de las Américas",
+      "unidad": "muertes",
+      "anio": "2026 (SE 1–37)",
+      "tipo": "desglose",
+      "fuente": "OPS/OMS · Informe de situación regional n.º 12 (24-sep-2026)",
+      "url": "https://www.paho.org/sites/default/files/2026/09/pahomeaslessitrep12esp.pdf",
+      "valor": 45,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Búsqueda: reportes de 45 muertes en Guatemala al 19-sep; MSPAS vía Emisoras Unidas (32 al 11-ago, serie creciente)",
+      "evidencia": {
+        "url": "https://www.paho.org/sites/default/files/2026/09/pahomeaslessitrep12esp.pdf",
+        "cita": "Se han notificado un total de 68 muertes, de los cuales 45 ocurrieron en Guatemala, 22 en México y una en Bolivia",
+        "archivo_local": "sesiones/_descargas/pahomeaslessitrep12esp.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala",
+          "valor": 45
+        },
+        {
+          "nombre": "México",
+          "valor": 22
+        },
+        {
+          "nombre": "Bolivia",
+          "valor": 1
+        }
+      ],
+      "usada": false,
+      "aparece_en": [
+        "T1"
+      ]
+    },
+    {
+      "id": "dat-c03",
+      "concepto": "Casos confirmados de sarampión en Guatemala: todo 2025 frente a 2026 hasta la SE 28",
+      "unidad": "casos confirmados",
+      "anio": "2025 vs 2026 (SE 1–28)",
+      "tipo": "desglose",
+      "fuente": "OPS/OMS · Alerta epidemiológica sarampión, 7-ago-2026, Tabla 1",
+      "url": "https://www.paho.org/sites/default/files/2026/08/2026-agosto-7-phe-alerta-epi-sarampionesfinal.pdf",
+      "valor": 30371,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Mismo hecho en texto del propio alerta (líneas 65 y 333) y trayectoria posterior en informes n.º 10–12",
+      "evidencia": {
+        "url": "https://www.paho.org/sites/default/files/2026/08/2026-agosto-7-phe-alerta-epi-sarampionesfinal.pdf",
+        "cita": "Tabla 1 [...] Guatemala   9   30.371   SE 28 del 2026 (columnas: casos confirmados 2025 · casos confirmados 2026 hasta SE 28)",
+        "archivo_local": "sesiones/_descargas/2026-agosto-7-phe-alerta-epi-sarampionesfinal.txt"
+      },
+      "partes": [
+        {
+          "nombre": "2025 (año completo)",
+          "valor": 9
+        },
+        {
+          "nombre": "2026 (SE 1–28)",
+          "valor": 30371
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c04",
+      "concepto": "Casos confirmados de sarampión 2026 (SE 1–37): Guatemala frente al resto de Centroamérica",
+      "unidad": "casos confirmados",
+      "anio": "2026 (SE 1–37)",
+      "tipo": "desglose",
+      "fuente": "OPS/OMS · Informe de situación regional n.º 12, Tabla 2 (24-sep-2026)",
+      "url": "https://www.paho.org/sites/default/files/2026/09/pahomeaslessitrep12esp.pdf",
+      "valor": 33866,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Tabla 2 del informe n.º 12: El Salvador 58, Honduras 15, Belice 15, Panamá 9, Costa Rica 5 (suma 102 verificada)",
+      "evidencia": {
+        "url": "https://www.paho.org/sites/default/files/2026/09/pahomeaslessitrep12esp.pdf",
+        "cita": "Tabla 2: Guatemala* +176 33.866 45 · El Salvador 0 58 0 · Honduras 0 15 0 · Belice 0 15 0 · Panamá 0 9 0 · Costa Rica 0 5 0",
+        "archivo_local": "sesiones/_descargas/pahomeaslessitrep12esp.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala",
+          "valor": 33866
+        },
+        {
+          "nombre": "El Salvador",
+          "valor": 58
+        },
+        {
+          "nombre": "Honduras",
+          "valor": 15
+        },
+        {
+          "nombre": "Belice",
+          "valor": 15
+        },
+        {
+          "nombre": "Panamá",
+          "valor": 9
+        },
+        {
+          "nombre": "Costa Rica",
+          "valor": 5
+        },
+        {
+          "nombre": "Nicaragua",
+          "valor": 0
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c05",
+      "concepto": "Casos de sarampión 2026 por cada 100,000 habitantes: Guatemala, México, Perú, Canadá, EE. UU.",
+      "unidad": "casos por 100,000 habitantes",
+      "anio": "2026 (SE 1–37) / población 2025",
+      "tipo": "desglose",
+      "fuente": "Cálculo propio: casos OPS n.º 12 ÷ población Banco Mundial (SP.POP.TOTL 2025)",
+      "url": "https://www.paho.org/sites/default/files/2026/09/pahomeaslessitrep12esp.pdf",
+      "valor": 181.22,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo propio: casos OPS ÷ población Banco Mundial SP.POP.TOTL 2025 (archivo local verificado)",
+      "evidencia": {
+        "url": "https://api.worldbank.org/v2/country/GTM;MEX;USA;CAN;PER/indicator/SP.POP.TOTL?format=json&date=2024:2025&per_page=50",
+        "cita": "GTM 2025 18687881 · MEX 2025 131946900 · USA 2025 341784857 · CAN 2025 41651653 · PER 2025 34576665 (SP.POP.TOTL); casos: Guatemala (33.866), México (12.943), Estados Unidos (3.471), Perú (2.292)",
+        "archivo_local": "sesiones/_descargas/api/b33e00fed3d628657133b59845d19cd856ff9b3b.json"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala",
+          "valor": 181.22
+        },
+        {
+          "nombre": "México",
+          "valor": 9.81
+        },
+        {
+          "nombre": "Perú",
+          "valor": 6.63
+        },
+        {
+          "nombre": "Canadá",
+          "valor": 2.69
+        },
+        {
+          "nombre": "Estados Unidos",
+          "valor": 1.02
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c06",
+      "concepto": "Cobertura de la primera dosis de vacuna contra el sarampión (MCV1) en Guatemala, 2000–2025",
+      "unidad": "% de niños de 1 año",
+      "anio": "2025",
+      "tipo": "serie",
+      "fuente": "OMS/UNICEF (WUENIC) vía OMS Global Health Observatory, indicador WHS4_100",
+      "url": "https://ghoapi.azureedge.net/api/WHS4_100?$filter=SpatialDim%20eq%20'GTM'",
+      "periodo": "2000..2025",
+      "n_puntos": 26,
+      "valor": 77,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "OMS GHO WHS4_100 (archivo local, 26 puntos 2000–2025; 2014 74, 2015 70, 2023 88, 2024 90, 2025 77). Segunda fuente WUENIC/UNICEF no accesible (403) ni en nota PAHO 15-jul-2026 (solo agregado regional)",
+      "evidencia": {
+        "url": "https://ghoapi.azureedge.net/api/WHS4_100?$filter=SpatialDim%20eq%20'GTM'",
+        "cita": "WHS4_100 GTM: 2012 96 · 2013 96 · 2014 74 · 2015 70 · 2023 88 · 2024 90 · 2025 77",
+        "archivo_local": "sesiones/_descargas/api/170e22cf52f24468a482f512d4a2e6cff213cf51.json"
+      },
+      "serie": [
+        {
+          "p": "2000",
+          "v": 81
+        },
+        {
+          "p": "2001",
+          "v": 77
+        },
+        {
+          "p": "2002",
+          "v": 82
+        },
+        {
+          "p": "2003",
+          "v": 84
+        },
+        {
+          "p": "2004",
+          "v": 87
+        },
+        {
+          "p": "2005",
+          "v": 87
+        },
+        {
+          "p": "2006",
+          "v": 89
+        },
+        {
+          "p": "2007",
+          "v": 85
+        },
+        {
+          "p": "2008",
+          "v": 95
+        },
+        {
+          "p": "2009",
+          "v": 92
+        },
+        {
+          "p": "2010",
+          "v": 94
+        },
+        {
+          "p": "2011",
+          "v": 88
+        },
+        {
+          "p": "2012",
+          "v": 96
+        },
+        {
+          "p": "2013",
+          "v": 96
+        },
+        {
+          "p": "2014",
+          "v": 74
+        },
+        {
+          "p": "2015",
+          "v": 70
+        },
+        {
+          "p": "2016",
+          "v": 83
+        },
+        {
+          "p": "2017",
+          "v": 91
+        },
+        {
+          "p": "2018",
+          "v": 85
+        },
+        {
+          "p": "2019",
+          "v": 88
+        },
+        {
+          "p": "2020",
+          "v": 90
+        },
+        {
+          "p": "2021",
+          "v": 80
+        },
+        {
+          "p": "2022",
+          "v": 81
+        },
+        {
+          "p": "2023",
+          "v": 88
+        },
+        {
+          "p": "2024",
+          "v": 90
+        },
+        {
+          "p": "2025",
+          "v": 77
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c07",
+      "concepto": "Proporción de casos de sarampión en Guatemala sin antecedente de vacunación, 2026",
+      "unidad": "% de los casos confirmados",
+      "anio": "2026 (SE 1–37)",
+      "tipo": "puntual",
+      "fuente": "OPS/OMS · Informe de situación regional n.º 12, Tabla 2, notas de Guatemala",
+      "url": "https://www.paho.org/sites/default/files/2026/09/pahomeaslessitrep12esp.pdf",
+      "valor": 67.5,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Alerta OPS 7-ago (SE 28): 67,1 % sin vacunar de 30.371 casos, consistente",
+      "evidencia": {
+        "url": "https://www.paho.org/sites/default/files/2026/09/pahomeaslessitrep12esp.pdf",
+        "cita": "el 63% se produjo en personas de entre 15 y 39 años, siendo el grupo de edad de 20 a 29 años el más afectado [...] El 67,5% de los casos no tenía antecedentes de vacunación.",
+        "archivo_local": "sesiones/_descargas/pahomeaslessitrep12esp.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Sin antecedente de vacunación",
+          "valor": 67.5
+        },
+        {
+          "nombre": "Resto de casos",
+          "valor": 32.5
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c08",
+      "concepto": "Incidencia de sarampión 2026 en los departamentos más afectados de Guatemala",
+      "unidad": "casos por 100,000 habitantes",
+      "anio": "2026 (SE 1–37)",
+      "tipo": "desglose",
+      "fuente": "OPS/OMS · Informe de situación regional n.º 12, Tabla 2, notas de Guatemala",
+      "url": "https://www.paho.org/sites/default/files/2026/09/pahomeaslessitrep12esp.pdf",
+      "valor": 374.9,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Misma tabla del informe; sin fuente MSPAS departamental contrastada (búsqueda no la devolvió)",
+      "evidencia": {
+        "url": "https://www.paho.org/sites/default/files/2026/09/pahomeaslessitrep12esp.pdf",
+        "cita": "se han notificado transmisión en los 22 departamentos [...] Izabal (374,9 casos por cada 100.000 habitantes), seguida de Guatemala Central (322,4 [...]) y Sololá (302,4",
+        "archivo_local": "sesiones/_descargas/pahomeaslessitrep12esp.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Izabal",
+          "valor": 374.9
+        },
+        {
+          "nombre": "Guatemala Central",
+          "valor": 322.4
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 302.4
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    }
+  ],
+  "fuentes": [
+    {
+      "nombre": "OPS/OMS · Informe de situación regional n.º 12 sarampión (24-sep-2026)",
+      "url": "https://www.paho.org/sites/default/files/2026/09/pahomeaslessitrep12esp.pdf",
+      "archivo_local": "sesiones/_descargas/pahomeaslessitrep12esp.txt"
+    },
+    {
+      "nombre": "OPS/OMS · Informe de situación n.º 10 (1-sep-2026)",
+      "url": "https://www.paho.org/sites/default/files/2026/09/measles-sitrep-10-sept01-2026-es.pdf",
+      "archivo_local": "sesiones/_descargas/measles-sitrep-10-sept01-2026-es.txt"
+    },
+    {
+      "nombre": "OPS/OMS · Informe de situación n.º 8 (31-jul-2026)",
+      "url": "https://www.paho.org/sites/default/files/2026/08/sarampion-sitrep8-31julio-2026-es.pdf",
+      "archivo_local": "sesiones/_descargas/sarampion-sitrep8-31julio-2026-es.txt"
+    },
+    {
+      "nombre": "OPS/OMS · Informe de situación n.º 3 (21-may-2026)",
+      "url": "https://www.paho.org/sites/default/files/2026/05/sarampion-brote-multipais-informe-situacion-no3-21mayo-2026-es.pdf",
+      "archivo_local": "sesiones/_descargas/sarampion-brote-multipais-informe-situacion-no3-21mayo-2026-es.txt"
+    },
+    {
+      "nombre": "OPS/OMS · Alerta epidemiológica sarampión (7-ago-2026)",
+      "url": "https://www.paho.org/sites/default/files/2026/08/2026-agosto-7-phe-alerta-epi-sarampionesfinal.pdf",
+      "archivo_local": "sesiones/_descargas/2026-agosto-7-phe-alerta-epi-sarampionesfinal.txt"
+    },
+    {
+      "nombre": "Banco Mundial · población total SP.POP.TOTL",
+      "url": "https://api.worldbank.org/v2/country/GTM;MEX;USA;CAN;PER/indicator/SP.POP.TOTL?format=json&date=2024:2025&per_page=50",
+      "archivo_local": "sesiones/_descargas/api/b33e00fed3d628657133b59845d19cd856ff9b3b.json"
+    },
+    {
+      "nombre": "OMS GHO · MCV1 WHS4_100 Guatemala",
+      "url": "https://ghoapi.azureedge.net/api/WHS4_100?$filter=SpatialDim%20eq%20'GTM'",
+      "archivo_local": "sesiones/_descargas/api/170e22cf52f24468a482f512d4a2e6cff213cf51.json"
+    },
+    {
+      "nombre": "OMS GHO · MCV2 Guatemala",
+      "url": "https://ghoapi.azureedge.net/api/MCV2?$filter=SpatialDim%20eq%20'GTM'",
+      "archivo_local": "sesiones/_descargas/api/11c71921170147a1cdfa4a9191a7b25c7a43f101.json"
+    }
+  ],
+  "no_afirma": [
+    "No afirma que el conteo sea comparable uno a uno: Guatemala suma casos por laboratorio, nexo epidemiológico y criterio clínico.",
+    "No atribuye el brote a una sola causa (la caída de la vacunación es contexto, no se mide aquí).",
+    "No da cifras posteriores a la semana epidemiológica 37 (corte al 19 de septiembre)."
+  ],
+  "incertidumbre": [
+    "La segunda fuente reproduce la primaria (OPS); sin verificación independiente.",
+    "Desde el informe n.º 8 la OPS cuenta para Guatemala casos por laboratorio, nexo y clínica; con solo laboratorio la cifra sería menor.",
+    "Cifras acumuladas al 19-sep-2026 (SE 37); el brote sigue activo."
+  ],
+  "descartadas": [],
+  "tipo": "dato"
+}

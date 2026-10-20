@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hilo · vista previa</title>
+<!-- Vista previa del hilo: la abre el usuario en su navegador. La rellena scripts/ensamblar.py (HILO_JSON). -->
+<style>
+  :root { --papel:#F6F2E8; --tinta:#0C1520; --gris:#5c6470; --linea:rgba(12,21,32,.14); --acento:#4B92DB; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--papel); color: var(--tinta); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 40px 20px 80px; }
+  header h1 { font: 700 30px/1.15 Georgia, "Times New Roman", serif; margin: 0 0 8px; }
+  header .meta { color: var(--gris); font-size: 14px; display: flex; flex-wrap: wrap; gap: 10px 18px; }
+  .chip { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; background: var(--tinta); color: var(--papel); }
+  .tesis { margin: 18px 0 0; padding: 14px 18px; border-left: 4px solid var(--acento); background: rgba(75,146,219,.08); font-size: 17px; }
+  .contacto { margin-top: 18px; }
+  .contacto a { display: inline-block; margin-bottom: 8px; font-size: 14px; font-weight: 600; color: var(--acento); }
+  .contacto img { width: 100%; max-width: 760px; display: block; border-radius: 12px; box-shadow: 0 2px 14px rgba(0,0,0,.12); }
+  .tuit { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--linea); }
+  .tuit .cab { display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--gris); }
+  .tuit .cab .n { font-weight: 800; font-size: 15px; color: var(--tinta); }
+  .texto { position: relative; margin-top: 12px; padding: 14px 16px; background: #fff; border: 1px solid var(--linea); border-radius: 10px; white-space: pre-wrap; font-size: 17px; }
+  .texto.vacio { color: var(--gris); font-style: italic; }
+  .fila { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; font-size: 13px; color: var(--gris); }
+  .fila .cnt.alerta { color: #B23A26; font-weight: 700; }
+  button { font: 600 13px/1 system-ui, sans-serif; padding: 7px 12px; border-radius: 8px; border: 1px solid var(--linea); background: #fff; color: var(--tinta); cursor: pointer; }
+  button:hover { background: var(--tinta); color: var(--papel); }
+  .img { margin-top: 14px; }
+  .img img { width: 100%; max-width: 560px; display: block; border-radius: 12px; box-shadow: 0 2px 14px rgba(0,0,0,.12); }
+  .alt { margin-top: 10px; font-size: 14px; color: var(--gris); }
+  .alt b { color: var(--tinta); }
+  .fuente { margin-top: 6px; font-size: 13px; color: var(--gris); }
+  section.extra { margin-top: 44px; padding-top: 24px; border-top: 2px solid var(--tinta); }
+  section.extra h2 { font: 700 18px/1.2 system-ui, sans-serif; margin: 22px 0 8px; }
+  section.extra ul { margin: 0; padding-left: 20px; }
+  .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--tinta); color: var(--papel); padding: 10px 16px; border-radius: 8px; font-size: 14px; opacity: 0; transition: opacity .2s; pointer-events: none; }
+  .toast.on { opacity: 1; }
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<div class="toast" id="toast">Copiado</div>
+<script id="hilo-json" type="application/json">{"slug": "electricidad-con-fuego", "fecha": "2026-10-06", "tema": "«La cubrimos con fuego»: la generación térmica se duplicó y el spot subió 86%", "tesis": "En agosto de 2026, 59.19% de la electricidad del SNI salió de combustibles fósiles: la hidro cayó 25.5% frente a agosto de 2025 y la solar casi se triplicó, pero el pico de demanda llega de noche, cuando el sol no aporta.", "paleta": "cielo", "hook_tipo": "giro_inversion", "pregunta": "¿Cuánto más térmica y más cara es la electricidad mayorista de 2026 frente a 2025, y por qué la solar no alcanza a cubrir el pico de la noche?", "n_tuits": 10, "estado": "listo", "tuits": [{"n": 1, "beat": "gancho", "texto": "La generación solar de Guatemala casi se triplicó en un año.\n\nPero en agosto, la mayor parte de la electricidad del país salió de quemar carbón, coque de petróleo y bunker. 🧵", "caracteres": 175, "alt_text": "Gráfico de cuadrícula de 100 celdas: 59.19% de la electricidad generada en el Sistema Nacional Interconectado en agosto de 2026 salió de combustibles fósiles (carbón mineral, coque de petróleo, bunker, gas natural y diésel); el resto, de hidroeléctricas, solar, eólica, geotermia y biomasa. Fuente: AMM, generación mensual por planta 2026.", "imagen": "tuit_1.png", "plantilla": "waffle", "fuente": "AMM · generación mensual por planta 2026", "cifra_ids": ["mat-c01"]}, {"n": 2, "beat": "contexto", "texto": "Carbón, coque de petróleo, bunker, gas natural y diésel: eso cuenta como fósil en este hilo.", "caracteres": 92, "alt_text": "Mapa de rectángulos (treemap) de la generación del SNI por recurso en agosto de 2026, en GWh: carbón mineral 478.14, hidroeléctrica 322.69, coque de petróleo 159.7, solar 142.28, bunker 127.42, eólica 49.78, geotérmica 21.94, gas natural 11.5, diésel 3.88, biogás 1.27 y biomasa 0.27. Total 1,318.87 GWh. El carbón generó más que todas las hidroeléctricas. Fuente: AMM, generación mensual por planta 2026.", "imagen": "tuit_2.png", "plantilla": "treemap", "fuente": "AMM · generación mensual por planta 2026", "cifra_ids": ["mat-c04"]}, {"n": 3, "beat": "contexto", "texto": "El sol sumó, pero el carbón sumó todavía más GWh. Y el agua perdió más de lo que ganó cualquiera de los dos.", "caracteres": 108, "alt_text": "Gráfico de pesas que compara la generación de agosto de 2025 con la de agosto de 2026, en GWh: hidroeléctrica bajó de 432.9 a 322.69; carbón mineral subió de 378.22 a 478.14; bunker, de 50.64 a 127.42; solar, de 48.6 a 142.28. Fuente: AMM, generación mensual por planta 2025 y 2026.", "imagen": "tuit_3.png", "plantilla": "pesas", "fuente": "AMM · generación mensual por planta 2025–2026", "cifra_ids": ["mat-c03", "mat-c06", "mat-c05", "mat-c09"]}, {"n": 4, "beat": "contexto", "texto": "No es un mes aislado: en GWh, agosto fue el máximo de la parte fósil en toda la serie, que arranca en enero de 2024.", "caracteres": 116, "alt_text": "Gráfico de líneas de la generación mensual del SNI de enero de 2024 a agosto de 2026, en GWh: fósil frente a hidroeléctrica. De febrero a agosto de 2026 la fósil superó a la hidro todos los meses; en agosto de 2026 la fósil llegó a 780.64 GWh, el máximo de la serie, y la hidro a 322.69. Fuente: AMM, generación mensual por planta 2024–2026.", "imagen": "tuit_4.png", "plantilla": "linea", "fuente": "AMM · generación mensual por planta 2024–2026", "cifra_ids": ["mat-c08", "mat-c07"]}, {"n": 5, "beat": "giro", "texto": "El problema es la hora: de febrero a agosto de 2026, la demanda máxima de cada mes llegó entre las 6 y las 8 de la noche, ya sin sol.", "caracteres": 133, "alt_text": "Gráfico de líneas del precio spot promedio por hora del día en 2025, en US$ por MWh: el mínimo es 62.72 a las 3 de la madrugada y sube hasta 112.71 a las 7 de la noche (19 h), la hora más cara, cuando los paneles solares ya no producen. Fuente: AMM, precios de oportunidad de la energía (PSA) 2025.", "imagen": "tuit_5.png", "plantilla": "linea", "fuente": "AMM · precios de oportunidad (PSA) 2025", "cifra_ids": ["spo-c05"]}, {"n": 6, "beat": "contexto", "texto": "Y cada agosto se pide más potencia, justo a la hora en que los paneles ya no producen.", "caracteres": 86, "alt_text": "Comparación antes y después de la demanda máxima de potencia del SNI en agosto: 2,141.11 MW en agosto de 2025 y 2,374.89 MW en agosto de 2026, casi 11% más. En 2026 ocurrió el 13 de agosto a las 20 h. Fuente: AMM, análisis del mercado mayorista 2025 y 2026.", "imagen": "tuit_6.png", "plantilla": "antes-despues", "fuente": "AMM · análisis del mercado mayorista 2025–2026", "cifra_ids": ["cur-c04", "cur-c05"]}, {"n": 7, "beat": "impacto", "texto": "Es el precio del mercado de oportunidad, donde se compra la energía que no cubren los contratos.", "caracteres": 96, "alt_text": "Comparación antes y después del precio spot promedio de julio, convertido a centavos de dólar por kWh: 8.4 centavos en julio de 2025 (US$84.45 por MWh) y 13.4 centavos en julio de 2026 (US$133.97 por MWh), 59% más. Fuente: AMM, PSA 2025, y Rio Times con datos del AMM para 2026.", "imagen": "tuit_7.png", "plantilla": "antes-despues", "fuente": "AMM · PSA 2025; Rio Times con datos del AMM · 2026", "cifra_ids": ["spo-c04"]}, {"n": 8, "beat": "contexto", "texto": "No es la primera vez: hace dos y tres años, de abril a junio, el mercado spot fue todavía más caro.", "caracteres": 99, "alt_text": "Gráfico de barras verticales del precio spot promedio del segundo trimestre (abril a junio), en US$ por MWh: 143.8 en 2023, 173.33 en 2024, 103.5 en 2025 y 128.97 en 2026. El de 2026 sube frente a 2025, pero sigue por debajo de 2024 y 2023. Fuente: AMM, PSA 2023–2024 e informe estadístico del segundo trimestre de 2026.", "imagen": "tuit_8.png", "plantilla": "barras-v", "fuente": "AMM · PSA 2023–2024 e informe estadístico 2T 2026", "cifra_ids": ["spo-c06"]}, {"n": 9, "beat": "contexto", "texto": "El precio spot no es tu factura: la tarifa al usuario la fija la CNEE, y este hilo no la mide.", "caracteres": 94, "alt_text": "Gráfico de dona de las transacciones del mercado mayorista en el segundo trimestre de 2026: 86% en el mercado a término (contratos) y 14% en el mercado de oportunidad, al precio spot. Fuente: AMM, informe estadístico del segundo trimestre de 2026.", "imagen": "tuit_9.png", "plantilla": "dona", "fuente": "AMM · informe estadístico 2T 2026", "cifra_ids": ["spo-c08"]}, {"n": 10, "beat": "cierre", "texto": "En resumen: en agosto el agua dio menos y el carbón y el bunker dieron más. La solar crece, pero no produce a la hora de más demanda.\n\nLo que los datos no dicen: que la generación fósil se duplicara. Subió 31.9% frente a agosto de 2025.\n\nFuentes: AMM y Rio Times.", "caracteres": 263, "alt_text": "Tuit de cierre sin imagen.", "imagen": null, "plantilla": null, "fuente": null, "cifra_ids": []}], "no_afirma": ["No afirma que la generación térmica se duplicara: la fósil de agosto subió 31.9% frente a agosto de 2025 (solo el bunker se multiplicó por 2.5).", "No afirma un precio spot de agosto de 2026 ni el +86% de la tesis inicial: no se confirmó en fuente primaria.", "No afirma cuánto sube la tarifa al usuario: el spot cubre 14% de las transacciones y la tarifa la fija la CNEE.", "No afirma qué tecnología cubre ni qué planta marca el precio en la hora pico: el AMM no publica la mezcla horaria en archivo descargable.", "No afirma que la participación fósil sea un récord histórico: la serie solo cubre 2024–2026 y mayo de 2024 (63.27%) fue mayor."], "incertidumbre": ["Todas las cifras usadas tienen una segunda fuente que reproduce la primaria (independencia baja), incluida la ancla mat-c01; no hay verificación independiente de ninguna.", "El spot de julio de 2026 (US$133.97/MWh) viene de prensa (Rio Times) citando al AMM; el archivo PSA 2026 no estaba disponible. Julio 2025 (84.45) sí coincide con el PSA del AMM.", "La participación fósil depende de la clasificación por recurso del AMM (incluye coque de petróleo; los ingenios se separan por combustible).", "El precio por hora es el promedio de 2025, no de 2026; la curva horaria de demanda por tecnología del día de máxima no está disponible en archivo.", "La conversión a centavos por kWh (T7) es aritmética de unidades (1 MWh = 1,000 kWh), no una cifra publicada."], "fuentes": ["AMM · generación mensual por planta 2026", "AMM · generación mensual por planta 2025–2026", "AMM · generación mensual por planta 2024–2026", "AMM · precios de oportunidad (PSA) 2025", "AMM · análisis del mercado mayorista 2025–2026", "AMM · PSA 2025; Rio Times con datos del AMM · 2026", "AMM · PSA 2023–2024 e informe estadístico 2T 2026", "AMM · informe estadístico 2T 2026"], "fuentes_cifras": ["AMM · Análisis del Mercado Mayorista (rd.amm.org.gt), con base en la Carga Horaria", "AMM · Generación mensual por planta (Despacho de carga ejecutado del SNI), tabla «Generación por tipo de recurso»", "AMM · Informe Estadístico Segundo Trimestre 2026", "AMM · PSA 2023–2024 (cálculo propio) e Informe Estadístico 2T 2026", "AMM · PSA 2025 (cálculo propio por hora)", "Rio Times (prensa) citando datos AMM analizados por Ager"], "gate_mecanico": "ok", "contacto": "contacto.png"}</script>
+<script>
+/* Peso según X: copia literal de scripts/contar_x.js (pesoX). No editar aquí; regenerar desde el script. */
+function pesoX(texto) {
+  // Reglas: NFC; cada URL pesa 23; puntos de código en 0–4351, 8192–8205,
+  // 8208–8223 y 8242–8247 pesan 1; el resto 2; los emoji compuestos
+  // (FE0F, ZWJ+siguiente, tono 1F3FB–1F3FF, keycap 20E3, par regional) son uno y pesan 2.
+  var t = String(texto == null ? "" : texto).normalize("NFC");
+  var reUrl = /https?:\/\/\S+|www\.\S+|(?<![\p{L}\p{N}\p{M}_])[a-z0-9-]+(\.[a-z0-9-]+)*\.(com|gt|org|net|io|edu|gov|mx|sv|hn|es|info|co)(\/\S*)?/giu;
+  var rangos1 = [[0, 4351], [8192, 8205], [8208, 8223], [8242, 8247]];
+  var pesoCp = function (cp) {
+    for (var k = 0; k < rangos1.length; k++) if (cp >= rangos1[k][0] && cp <= rangos1[k][1]) return 1;
+    return 2;
+  };
+  var esTono = function (cp) { return cp >= 0x1f3fb && cp <= 0x1f3ff; };
+  var esRegional = function (cp) { return cp >= 0x1f1e6 && cp <= 0x1f1ff; };
+  var pesoPlano = function (s) {
+    var cps = Array.from(s, function (c) { return c.codePointAt(0); });
+    var i = 0, n = cps.length, total = 0;
+    while (i < n) {
+      var j = i + 1;
+      if (esRegional(cps[i]) && j < n && esRegional(cps[j])) j += 1; // bandera
+      while (j < n) {
+        if (cps[j] === 0xfe0f || cps[j] === 0x20e3 || esTono(cps[j])) j += 1;
+        else if (cps[j] === 0x200d && j + 1 < n) j += 2; // ZWJ + siguiente
+        else break;
+      }
+      total += j - i > 1 ? 2 : pesoCp(cps[i]);
+      i = j;
+    }
+    return total;
+  };
+  var total = 0, pos = 0, m;
+  while ((m = reUrl.exec(t)) !== null) {
+    total += pesoPlano(t.slice(pos, m.index)) + 23;
+    pos = m.index + m[0].length;
+    if (m[0].length === 0) reUrl.lastIndex++;
+  }
+  return total + pesoPlano(t.slice(pos));
+}
+</script>
+<script>
+(() => {
+  const H = JSON.parse(document.getElementById("hilo-json").textContent);
+  const app = document.getElementById("app");
+  const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const toast = (m) => { const t = document.getElementById("toast"); t.textContent = m; t.classList.add("on"); setTimeout(() => t.classList.remove("on"), 1400); };
+  const copiar = async (txt) => {
+    try { await navigator.clipboard.writeText(txt); toast("Copiado"); return; } catch (e) { /* fallback */ }
+    const ta = document.createElement("textarea"); ta.value = txt; document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); toast("Copiado"); } catch (e) { toast("No se pudo copiar"); }
+    ta.remove();
+  };
+  if (!H) { app.innerHTML = "<p>Sin datos: este archivo lo genera scripts/ensamblar.py.</p>"; return; }
+
+  let html = `<header>
+    <h1>${esc(H.tema)}</h1>
+    <div class="meta"><span class="chip">${esc(H.paleta)}</span><span>${esc(H.fecha)}</span><span>${H.n_tuits} tuits · ${H.tuits.filter((t) => t.imagen).length} imágenes</span><span>gate mecánico: ${esc(H.gate_mecanico)}</span></div>
+    ${H.tesis ? `<p class="tesis"><b>Tesis:</b> ${esc(H.tesis)}</p>` : ""}
+  </header>
+  <div class="contacto" id="contacto" hidden>
+    <a href="contacto.png" target="_blank" rel="noopener">Ver hoja de contacto</a>
+    <img src="contacto.png" alt="Hoja de contacto: todas las tarjetas del hilo" onload="this.parentNode.hidden=false" onerror="this.parentNode.remove()">
+  </div>`;
+  for (const t of H.tuits) {
+    const vacio = !t.texto.trim();
+    const peso = pesoX(t.texto);
+    html += `<article class="tuit" id="t${t.n}">
+      <div class="cab"><span class="n">Tuit ${t.n}/${H.n_tuits}</span><span class="chip" style="background:#e9e3d6;color:#0C1520">${esc(t.beat || "")}</span>${t.plantilla ? `<span>tarjeta: ${esc(t.plantilla)}</span>` : "<span>sin imagen</span>"}</div>
+      <div class="texto${vacio ? " vacio" : ""}">${vacio ? "(sin texto: la imagen lo dice)" : esc(t.texto)}</div>
+      <div class="fila"><span class="cnt${peso > 280 ? " alerta" : ""}">${peso}/280 (peso X${peso !== t.caracteres ? `, ${t.caracteres} caracteres` : ""})</span>${vacio ? "" : `<button data-copy="${esc(t.texto)}">Copiar texto</button>`}</div>
+      ${t.imagen ? `<div class="img"><img src="${esc(t.imagen)}" alt="${esc(t.alt_text)}"></div>
+      <div class="alt"><b>Alt:</b> ${esc(t.alt_text)} <button data-copy="${esc(t.alt_text)}">Copiar alt</button></div>
+      <div class="fuente">Fuente en el pie: ${esc(t.fuente || "")} · cifras: ${esc((t.cifra_ids || []).join(", "))}</div>` : ""}
+    </article>`;
+  }
+  html += `<section class="extra">
+    <h2>Lo que este hilo NO afirma</h2><ul>${(H.no_afirma || []).map((x) => `<li>${esc(x)}</li>`).join("") || "<li>(nada declarado)</li>"}</ul>
+    <h2>Incertidumbre declarada</h2><ul>${(H.incertidumbre || []).map((x) => `<li>${esc(x)}</li>`).join("") || "<li>(nada declarado)</li>"}</ul>
+    <h2>Fuentes</h2><ul>${(H.fuentes || []).map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
+    <p style="color:var(--gris);font-size:13px">Detalle de cifras y veredictos en <code>datos.json</code>; texto listo para pegar en <code>post.md</code>.</p>
+  </section>`;
+  app.innerHTML = html;
+  app.addEventListener("click", (e) => { const b = e.target.closest("button[data-copy]"); if (b) copiar(b.getAttribute("data-copy")); });
+})();
+</script>
+</body>
+</html>

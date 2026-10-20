@@ -1,0 +1,423 @@
+{
+  "slug": "sismos-guatemala-2025",
+  "fecha": "2026-10-11",
+  "tesis": "La Red Sismológica Nacional del INSIVUMEH registró 11,811 sismos en 2025, 2.6 veces los 4,486 de 2024 (unos 32 al día), con 93 sensores frente a 96 el año anterior.",
+  "ancla_id": "dat-c01",
+  "paleta": "obsidiana",
+  "hook_tipo": "escala_humana",
+  "cifras": [
+    {
+      "id": "dat-c01",
+      "concepto": "Sismos registrados por la Red Sismológica Nacional, 2024 vs 2025",
+      "unidad": "sismos registrados",
+      "anio": "2025",
+      "tipo": "desglose",
+      "fuente": "INSIVUMEH · Reporte anual de la actividad sísmica en Guatemala 2025 y 2024",
+      "url": "https://geo.insivumeh.gob.gt/REPORTES_SECCION_SISMOLOGIA/REPORTES_ANUALES/2025/reporte_anual_2025.pdf",
+      "periodo": "2025",
+      "n_puntos": 2,
+      "valor": 11811,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Emisoras Unidas / prensa (cifras preliminares INSIVUMEH) + recálculo desde reporte_info_all_2025.csv y reporte anual 2024",
+      "evidencia": {
+        "url": "https://geo.insivumeh.gob.gt/REPORTES_SECCION_SISMOLOGIA/REPORTES_ANUALES/2025/reporte_anual_2025.pdf",
+        "cita": "En el año 2025 se registraron un total de 11811 eventos sísmicos. La magnitud máxima registrada fue de 6.4",
+        "archivo_local": "sesiones/_descargas/insivumeh_reporte_anual_2025.txt"
+      },
+      "partes": [
+        {
+          "valor": 4486,
+          "evidencia": {
+            "url": "https://geo.insivumeh.gob.gt/REPORTES_SECCION_SISMOLOGIA/REPORTES_ANUALES/2024/reporte_anual_2024.pdf",
+            "cita": "En el año 2024 se registraron un total de 4486 eventos sísmicos.",
+            "archivo_local": "sesiones/_descargas/insivumeh_reporte_anual_2024.txt"
+          },
+          "nombre": "2024"
+        },
+        {
+          "valor": 11811,
+          "evidencia": {
+            "url": "https://geo.insivumeh.gob.gt/REPORTES_SECCION_SISMOLOGIA/REPORTES_ANUALES/2025/reporte_anual_2025.pdf",
+            "cita": "En el año 2025 se registraron un total de 11811 eventos sísmicos. La magnitud máxima registrada fue de 6.4",
+            "archivo_local": "sesiones/_descargas/insivumeh_reporte_anual_2025.txt"
+          },
+          "nombre": "2025"
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "dato.png"
+      ]
+    },
+    {
+      "id": "dat-c02",
+      "concepto": "Sismos registrados por mes en 2025",
+      "unidad": "sismos registrados",
+      "anio": "2025",
+      "tipo": "serie",
+      "fuente": "INSIVUMEH · Reporte anual 2025, Cuadro 1",
+      "url": "https://geo.insivumeh.gob.gt/REPORTES_SECCION_SISMOLOGIA/REPORTES_ANUALES/2025/reporte_anual_2025.pdf",
+      "periodo": "ene-2025..dic-2025",
+      "n_puntos": 12,
+      "valor": 2533,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Emisoras Unidas / prensa (cifras preliminares INSIVUMEH) + recálculo desde reporte_info_all_2025.csv y reporte anual 2024",
+      "evidencia": {
+        "url": "https://geo.insivumeh.gob.gt/REPORTES_SECCION_SISMOLOGIA/REPORTES_ANUALES/2025/reporte_anual_2025.pdf",
+        "cita": "Cuadro 1: TABLA RESUMEN DE LOS SISMOS REGISTRADOS POR MES EN EL AÑO 2025 ... JULIO 2533 145 ... AGOSTO 2246 75 ... TOTAL 11811 397",
+        "archivo_local": "sesiones/_descargas/insivumeh_tabla_resumen_2025.csv"
+      },
+      "serie": [
+        {
+          "p": "Ene",
+          "v": 410
+        },
+        {
+          "p": "Feb",
+          "v": 461
+        },
+        {
+          "p": "Mar",
+          "v": 494
+        },
+        {
+          "p": "Abr",
+          "v": 505
+        },
+        {
+          "p": "May",
+          "v": 573
+        },
+        {
+          "p": "Jun",
+          "v": 457
+        },
+        {
+          "p": "Jul",
+          "v": 2533
+        },
+        {
+          "p": "Ago",
+          "v": 2246
+        },
+        {
+          "p": "Sep",
+          "v": 1180
+        },
+        {
+          "p": "Oct",
+          "v": 1568
+        },
+        {
+          "p": "Nov",
+          "v": 739
+        },
+        {
+          "p": "Dic",
+          "v": 645
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "dato.png"
+      ]
+    },
+    {
+      "id": "dat-c03",
+      "concepto": "Sismos sensibles (sentidos por la población), 2024 vs 2025",
+      "unidad": "sismos sensibles",
+      "anio": "2025",
+      "tipo": "desglose",
+      "fuente": "INSIVUMEH · Reportes anuales 2024 y 2025, Cuadro 1",
+      "url": "https://geo.insivumeh.gob.gt/REPORTES_SECCION_SISMOLOGIA/REPORTES_ANUALES/2025/reporte_anual_2025.pdf",
+      "periodo": "2025",
+      "n_puntos": 2,
+      "valor": 397,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Emisoras Unidas / prensa (cifras preliminares INSIVUMEH) + recálculo desde reporte_info_all_2025.csv y reporte anual 2024",
+      "evidencia": {
+        "url": "https://geo.insivumeh.gob.gt/REPORTES_SECCION_SISMOLOGIA/REPORTES_ANUALES/2025/reporte_anual_2025.pdf",
+        "cita": "período sismos registrados* sismos sensibles ... TOTAL 11811 397",
+        "archivo_local": "sesiones/_descargas/insivumeh_reporte_anual_2025.txt"
+      },
+      "partes": [
+        {
+          "valor": 141,
+          "evidencia": {
+            "url": "https://geo.insivumeh.gob.gt/REPORTES_SECCION_SISMOLOGIA/REPORTES_ANUALES/2024/reporte_anual_2024.pdf",
+            "cita": "TOTAL 4486 141",
+            "archivo_local": "sesiones/_descargas/insivumeh_reporte_anual_2024.txt"
+          },
+          "nombre": "2024"
+        },
+        {
+          "valor": 397,
+          "evidencia": {
+            "url": "https://geo.insivumeh.gob.gt/REPORTES_SECCION_SISMOLOGIA/REPORTES_ANUALES/2025/reporte_anual_2025.pdf",
+            "cita": "TOTAL 11811 397",
+            "archivo_local": "sesiones/_descargas/insivumeh_reporte_anual_2025.txt"
+          },
+          "nombre": "2025"
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c04",
+      "concepto": "Sismos en la zona Guatemala Arco Volcánico Este (G4), 2024 vs 2025, registrados y sensibles",
+      "unidad": "sismos registrados",
+      "anio": "2025",
+      "tipo": "desglose",
+      "fuente": "INSIVUMEH · Reportes anuales 2024 y 2025, sección 3.1.4",
+      "url": "https://geo.insivumeh.gob.gt/REPORTES_SECCION_SISMOLOGIA/REPORTES_ANUALES/2025/reporte_anual_2025.pdf",
+      "periodo": "2025",
+      "n_puntos": 4,
+      "valor": 7731,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Emisoras Unidas / prensa (cifras preliminares INSIVUMEH) + recálculo desde reporte_info_all_2025.csv y reporte anual 2024",
+      "evidencia": {
+        "url": "https://geo.insivumeh.gob.gt/REPORTES_SECCION_SISMOLOGIA/REPORTES_ANUALES/2025/reporte_anual_2025.pdf",
+        "cita": "Durante el año 2025 se contabilizaron 7731 sismos dentro de esta zona. De los cuales 206 fueron sensibles.",
+        "archivo_local": "sesiones/_descargas/insivumeh_reporte_anual_2025.txt"
+      },
+      "partes": [
+        {
+          "valor": 1148,
+          "evidencia": {
+            "url": "https://geo.insivumeh.gob.gt/REPORTES_SECCION_SISMOLOGIA/REPORTES_ANUALES/2024/reporte_anual_2024.pdf",
+            "cita": "Durante el año 2024 se contabilizaron 1148 sismos dentro de esta zona. De los cuales 10 fueron sensibles.",
+            "archivo_local": "sesiones/_descargas/insivumeh_reporte_anual_2024.txt"
+          },
+          "nombre": "2024 registrados"
+        },
+        {
+          "valor": 10,
+          "nombre": "2024 sensibles"
+        },
+        {
+          "valor": 7731,
+          "evidencia": {
+            "url": "https://geo.insivumeh.gob.gt/REPORTES_SECCION_SISMOLOGIA/REPORTES_ANUALES/2025/reporte_anual_2025.pdf",
+            "cita": "Durante el año 2025 se contabilizaron 7731 sismos dentro de esta zona. De los cuales 206 fueron sensibles.",
+            "archivo_local": "sesiones/_descargas/insivumeh_reporte_anual_2025.txt"
+          },
+          "nombre": "2025 registrados"
+        },
+        {
+          "valor": 206,
+          "nombre": "2025 sensibles"
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c05",
+      "concepto": "Sensores de la Red Sismológica Nacional, 2024 vs 2025 (control de detección)",
+      "unidad": "sensores sismológicos",
+      "anio": "2025",
+      "tipo": "desglose",
+      "fuente": "INSIVUMEH · Reportes anuales 2024 y 2025, sección 1",
+      "url": "https://geo.insivumeh.gob.gt/REPORTES_SECCION_SISMOLOGIA/REPORTES_ANUALES/2025/reporte_anual_2025.pdf",
+      "periodo": "2025",
+      "n_puntos": 2,
+      "valor": 93,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Emisoras Unidas / prensa (cifras preliminares INSIVUMEH) + recálculo desde reporte_info_all_2025.csv y reporte anual 2024",
+      "evidencia": {
+        "url": "https://geo.insivumeh.gob.gt/REPORTES_SECCION_SISMOLOGIA/REPORTES_ANUALES/2025/reporte_anual_2025.pdf",
+        "cita": "Para el año 2025 la red sismológica nacional (RSN) contó con 93 sensores sismológicos",
+        "archivo_local": "sesiones/_descargas/insivumeh_reporte_anual_2025.txt"
+      },
+      "partes": [
+        {
+          "valor": 96,
+          "evidencia": {
+            "url": "https://geo.insivumeh.gob.gt/REPORTES_SECCION_SISMOLOGIA/REPORTES_ANUALES/2024/reporte_anual_2024.pdf",
+            "cita": "Para el año 2024 la red sismológica nacional (RSN) contó con 96 sensores sismológicos",
+            "archivo_local": "sesiones/_descargas/insivumeh_reporte_anual_2024.txt"
+          },
+          "nombre": "2024"
+        },
+        {
+          "valor": 93,
+          "evidencia": {
+            "url": "https://geo.insivumeh.gob.gt/REPORTES_SECCION_SISMOLOGIA/REPORTES_ANUALES/2025/reporte_anual_2025.pdf",
+            "cita": "Para el año 2025 la red sismológica nacional (RSN) contó con 93 sensores sismológicos",
+            "archivo_local": "sesiones/_descargas/insivumeh_reporte_anual_2025.txt"
+          },
+          "nombre": "2025"
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "dato.png"
+      ]
+    },
+    {
+      "id": "dat-c06",
+      "concepto": "Sismos registrados en julio, 2024 vs 2025",
+      "unidad": "sismos registrados",
+      "anio": "2025",
+      "tipo": "desglose",
+      "fuente": "INSIVUMEH · Reportes anuales 2024 y 2025, Cuadro 1",
+      "url": "https://geo.insivumeh.gob.gt/REPORTES_SECCION_SISMOLOGIA/REPORTES_ANUALES/2025/reporte_anual_2025.pdf",
+      "periodo": "julio 2025",
+      "n_puntos": 2,
+      "valor": 2533,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Emisoras Unidas / prensa (cifras preliminares INSIVUMEH) + recálculo desde reporte_info_all_2025.csv y reporte anual 2024",
+      "evidencia": {
+        "url": "https://geo.insivumeh.gob.gt/REPORTES_SECCION_SISMOLOGIA/REPORTES_ANUALES/2025/reporte_anual_2025.pdf",
+        "cita": "JULIO 2533 145",
+        "archivo_local": "sesiones/_descargas/insivumeh_reporte_anual_2025.txt"
+      },
+      "partes": [
+        {
+          "valor": 402,
+          "evidencia": {
+            "url": "https://geo.insivumeh.gob.gt/REPORTES_SECCION_SISMOLOGIA/REPORTES_ANUALES/2024/reporte_anual_2024.pdf",
+            "cita": "JULIO 402 5",
+            "archivo_local": "sesiones/_descargas/insivumeh_reporte_anual_2024.txt"
+          },
+          "nombre": "julio 2024"
+        },
+        {
+          "valor": 2533,
+          "evidencia": {
+            "url": "https://geo.insivumeh.gob.gt/REPORTES_SECCION_SISMOLOGIA/REPORTES_ANUALES/2025/reporte_anual_2025.pdf",
+            "cita": "JULIO 2533 145",
+            "archivo_local": "sesiones/_descargas/insivumeh_reporte_anual_2025.txt"
+          },
+          "nombre": "julio 2025"
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c07",
+      "concepto": "Sismos registrados el 8 de julio de 2025 y día con más sismos del año",
+      "unidad": "sismos registrados en un día",
+      "anio": "2025",
+      "tipo": "puntual",
+      "fuente": "INSIVUMEH · catálogo de eventos 2025 (reporte_info_all_2025.csv), tabulación propia",
+      "url": "https://geo.insivumeh.gob.gt/REPORTES_SECCION_SISMOLOGIA/REPORTES_ANUALES/2025/reporte_info_all_2025.csv",
+      "periodo": "2025-07-08",
+      "n_puntos": 1,
+      "valor": 263,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Emisoras Unidas / prensa (cifras preliminares INSIVUMEH) + recálculo desde reporte_info_all_2025.csv y reporte anual 2024",
+      "evidencia": {
+        "url": "https://geo.insivumeh.gob.gt/REPORTES_SECCION_SISMOLOGIA/REPORTES_ANUALES/2025/reporte_info_all_2025.csv",
+        "cita": "Catálogo de 11811 filas (NO,ID,OT,...,FELT); conteo propio de OT que empiezan con 2025-07-08 = 263; FELT distinto de '-' = 25",
+        "archivo_local": "sesiones/_descargas/insivumeh_reporte_info_all_2025.csv"
+      },
+      "partes": [
+        {
+          "valor": 263,
+          "nombre": "8 jul 2025 registrados"
+        },
+        {
+          "valor": 25,
+          "nombre": "8 jul 2025 sensibles"
+        },
+        {
+          "valor": 290,
+          "nombre": "19 oct 2025 registrados (día máximo)"
+        },
+        {
+          "valor": 32.4,
+          "nombre": "promedio diario 2025"
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c08",
+      "concepto": "Sismos por fuente sísmica, 2024 vs 2025 (cortical, subducción, regional)",
+      "unidad": "sismos corticales",
+      "anio": "2025",
+      "tipo": "desglose",
+      "fuente": "INSIVUMEH · Reportes anuales 2024 y 2025, Cuadro 2",
+      "url": "https://geo.insivumeh.gob.gt/REPORTES_SECCION_SISMOLOGIA/REPORTES_ANUALES/2025/reporte_anual_2025.pdf",
+      "periodo": "2025",
+      "n_puntos": 6,
+      "valor": 9409,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Emisoras Unidas / prensa (cifras preliminares INSIVUMEH) + recálculo desde reporte_info_all_2025.csv y reporte anual 2024",
+      "evidencia": {
+        "url": "https://geo.insivumeh.gob.gt/REPORTES_SECCION_SISMOLOGIA/REPORTES_ANUALES/2025/reporte_anual_2025.pdf",
+        "cita": "ZONA sismos registrados cortical 9409 subduccion 1415 regional 987 TOTAL 11811",
+        "archivo_local": "sesiones/_descargas/insivumeh_reporte_anual_2025.txt"
+      },
+      "partes": [
+        {
+          "valor": 2318,
+          "evidencia": {
+            "url": "https://geo.insivumeh.gob.gt/REPORTES_SECCION_SISMOLOGIA/REPORTES_ANUALES/2024/reporte_anual_2024.pdf",
+            "cita": "cortical 2318 subduccion 1104 regional 1064",
+            "archivo_local": "sesiones/_descargas/insivumeh_reporte_anual_2024.txt"
+          },
+          "nombre": "cortical 2024"
+        },
+        {
+          "valor": 1104,
+          "nombre": "subducción 2024"
+        },
+        {
+          "valor": 1064,
+          "nombre": "regional 2024"
+        },
+        {
+          "valor": 9409,
+          "evidencia": {
+            "url": "https://geo.insivumeh.gob.gt/REPORTES_SECCION_SISMOLOGIA/REPORTES_ANUALES/2025/reporte_anual_2025.pdf",
+            "cita": "ZONA sismos registrados cortical 9409 subduccion 1415 regional 987 TOTAL 11811",
+            "archivo_local": "sesiones/_descargas/insivumeh_reporte_anual_2025.txt"
+          },
+          "nombre": "cortical 2025"
+        },
+        {
+          "valor": 1415,
+          "nombre": "subducción 2025"
+        },
+        {
+          "valor": 987,
+          "nombre": "regional 2025"
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    }
+  ],
+  "fuentes": [
+    {
+      "nombre": "INSIVUMEH — catálogo anual de sismos (CSV)",
+      "url": "https://geo.insivumeh.gob.gt/REPORTES_SECCION_SISMOLOGIA/REPORTES_ANUALES/2025/reporte_info_all_2025.csv",
+      "nota": "CSV con cada evento (OT, lat, lon, prof, magnitud, FELT); FELT distinto de '-' = sensible; tabulable por día."
+    }
+  ],
+  "no_afirma": [
+    "No afirma que 2025 sea récord histórico: no se revisó la serie 2009-2023.",
+    "No afirma que el aumento anticipe un terremoto mayor ni mayor riesgo.",
+    "No atribuye víctimas ni daños a los sismos de 2025."
+  ],
+  "incertidumbre": [
+    "La segunda fuente reproduce la primaria (INSIVUMEH); sin verificación independiente.",
+    "Sismos registrados (localizados por la red), no todos sentidos; el promedio diario y por hora (11,811 / 365) y la parte de julio (2,533 / 11,811 = 21.4 %) son cálculo propio.",
+    "Menos sensores descarta que el salto venga de ampliar la red, pero no descarta otros cambios de detección o procesamiento: no se atribuye causa."
+  ],
+  "descartadas": [],
+  "tipo": "dato"
+}

@@ -13,9 +13,13 @@ ANTES DE ACTUAR, lee `referencias/roles/verificador.md`. Tu insumo es
 `python3 scripts/digesto.py <sesion_dir> --eje <eje> --para verificador`
 (NO leas hallazgos_<eje>.json entero ni memoria/fuentes.json).
 
-Parte de la cita y del archivo local de cada cifra; busca UNA segunda fuente
-independiente; ≤ 2 fetch por cifra. Veredicto verificada / ajustada /
-no_confirmada, siempre con `valor_final` numérico en las dos primeras.
+Parte de la cita y del archivo local de cada cifra; segunda fuente por
+niveles (A completa para ancla, derivadas y comparaciones; B cotejo con la
+primaria para el resto). Veredicto verificada / ajustada / no_confirmada,
+siempre con `valor_final` numérico en las dos primeras. Antes de devolver,
+`python3 scripts/verificacion.py <sesion_dir> --eje <eje>` hasta 0 fallas.
 
-Escribe `<sesion_dir>/verificacion_<eje>.json` COMPLETO. Tu retorno
-(StructuredOutput): `eje`, `archivo`, `ok[]{id, valor_final}`, `no_confirmadas[]`.
+Escribe `<sesion_dir>/verificacion_<eje>.json` COMPLETO con la forma que te da
+la directiva. Tu retorno (StructuredOutput): `eje`, `archivo`, `ok[]{id,
+valor_final, independencia}`, `no_confirmadas[]`, `fallas_mecanicas[]`. En
+modo rechequeo, el retorno que pida la directiva.

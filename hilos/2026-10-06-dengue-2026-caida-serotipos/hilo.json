@@ -1,0 +1,165 @@
+{
+  "slug": "dengue-2026-caida-serotipos",
+  "fecha": "2026-10-06",
+  "tema": "Dengue 2026: 43% menos casos que en 2025, pero ¿por qué y por cuánto tiempo?",
+  "tesis": "A la semana 35, Guatemala acumula 12,699 casos sospechosos de dengue en la red del MSPAS, 40% menos que en 2025 pero más que en 2020, 2021 y 2022; la caída es regional y coincide con dos años de DENV-3 dominante, mientras el DENV-1 sube de 3% a 19% de las muestras: un valle del ciclo, no el fin del riesgo.",
+  "paleta": "terracota",
+  "hook_tipo": "mito_vs_dato",
+  "pregunta": "¿Por qué cayeron los casos de dengue en Guatemala en 2026, dónde siguen concentrándose y qué tan duradera es esa caída?",
+  "n_tuits": 9,
+  "estado": "listo",
+  "tuits": [
+    {
+      "n": 1,
+      "beat": "gancho",
+      "texto": "Podría pensarse que el dengue ya quedó atrás en Guatemala.\n\nEste año va 40% abajo del pasado a la misma semana epidemiológica. Los datos dicen otra cosa: se parece más al valle de un ciclo que a un final, y el serotipo que puede encender el siguiente ya sube. 🧵",
+      "caracteres": 262,
+      "alt_text": "Gráfico de barras verticales: casos sospechosos de dengue notificados por el MSPAS acumulados hasta la semana epidemiológica 35 de cada año. 2018: 3,826; 2019: 28,810; 2020: 5,213; 2021: 1,885; 2022: 5,364; 2023: 19,754; 2024: 91,767; 2025: 21,252; 2026: 12,699 (destacado). 2026 baja frente a 2025 y 2024, pero supera a 2020, 2021 y 2022. Fuente: MSPAS/DEGR, sala situacional de arbovirosis, semana 35 de 2026.",
+      "imagen": "tuit_1.png",
+      "plantilla": "barras-v",
+      "fuente": "MSPAS/DEGR · sala situacional arbovirosis SE-35 2026",
+      "cifra_ids": [
+        "ser-c01"
+      ]
+    },
+    {
+      "n": 2,
+      "beat": "contexto",
+      "texto": "Ese año el MSPAS y el IGSS sumaron 188,585 casos. Ese pico es la vara contra la que cualquier año siguiente parece pequeño.",
+      "caracteres": 123,
+      "alt_text": "Gráfico de barras verticales: fallecidos por dengue confirmados por año en Guatemala. 2018: 23; 2019: 77; 2020: 10; 2021: 6; 2022: 17; 2023: 118; 2024: 232 (destacado), el máximo de la serie. El MSPAS no ha publicado las muertes de 2026. Fuente: MSPAS/DEGR, boletines de arbovirosis.",
+      "imagen": "tuit_2.png",
+      "plantilla": "barras-v",
+      "fuente": "MSPAS/DEGR · boletines de arbovirosis 2018–2024",
+      "cifra_ids": [
+        "ser-c08"
+      ]
+    },
+    {
+      "n": 3,
+      "beat": "contexto",
+      "texto": "Según OPS, un serotipo deja inmunidad duradera solo contra sí mismo. La baja de este año coincide con dos años de DENV-3 masivo; ni OPS ni MSPAS la atribuyen a eso.",
+      "caracteres": 164,
+      "alt_text": "Gráfico de línea: porcentaje de muestras de dengue serotipificadas que resultaron DENV-3 en Guatemala, 2014 a 2026. Entre 2015 y 2022 osciló entre 0.6% y 14.1%; subió a 54.5% en 2023, 85.8% en 2024, 86% en 2025 y 74% en 2026 (hasta la semana 35). Fuente: MSPAS/DEGR, boletines de arbovirosis.",
+      "imagen": "tuit_3.png",
+      "plantilla": "linea",
+      "fuente": "MSPAS/DEGR · boletines de arbovirosis 2014–2026",
+      "cifra_ids": [
+        "cau-c01"
+      ]
+    },
+    {
+      "n": 4,
+      "beat": "contexto",
+      "texto": "Guatemala baja al mismo ritmo que su subregión y casi toda América baja con ella: la caída no es solo un fenómeno local.",
+      "caracteres": 120,
+      "alt_text": "Gráfico de barras divergentes: variación de casos sospechosos de dengue hasta la semana 35 de 2026 frente al mismo periodo de 2025. Andina: -3%; Guatemala: -40% (destacado); Centroamérica y México: -40%; las Américas: -57%; Caribe: -59%; Cono Sur: -62%. En Honduras, la Secretaría de Salud reporta -44% a la semana 12. Fuentes: MSPAS/DEGR, OPS/OMS y Sesal Honduras.",
+      "imagen": "tuit_4.png",
+      "plantilla": "divergente",
+      "fuente": "MSPAS/DEGR · OPS SE-35 2026 · Sesal",
+      "cifra_ids": [
+        "cau-c05",
+        "cau-c06",
+        "cau-c07",
+        "cau-c11"
+      ]
+    },
+    {
+      "n": 5,
+      "beat": "contexto",
+      "texto": "Pero que haya menos brotes no significa calma: la zona de alerta tiene hoy dos áreas más que al cierre del año pasado.",
+      "caracteres": 118,
+      "alt_text": "Gráfico de barras apiladas: áreas de salud (DDRISS) según su zona en el corredor endémico de dengue. Cierre de 2025 (semana 53): 5 en brote, 8 en alerta, 11 en seguridad, 0 en éxito y 5 sin notificación. 2026 (semana 34): 2 en brote, 10 en alerta, 13 en seguridad, 2 en éxito y 2 sin notificación. Total: 29 áreas. Fuente: MSPAS/DEGR, sala situacional de arbovirosis.",
+      "imagen": "tuit_5.png",
+      "plantilla": "apilada",
+      "fuente": "MSPAS/DEGR · sala situacional arbovirosis SE-35 2026",
+      "cifra_ids": [
+        "ter-c07"
+      ]
+    },
+    {
+      "n": 6,
+      "beat": "giro",
+      "texto": "Según OPS, la llegada de un serotipo distinto puede causar brotes aun después de una epidemia. Ni OPS ni MSPAS han publicado una proyección para el próximo año.",
+      "caracteres": 160,
+      "alt_text": "Gráfico de líneas: porcentaje de muestras de dengue serotipificadas por serotipo en Guatemala, 2014 a 2026. DENV-1 (destacado) cayó a 4.4% en 2024 y 3% en 2025, y subió a 19% en 2026 (hasta la semana 35). DENV-3 pasó de 2.8% en 2022 a 86% en 2025 y bajó a 74% en 2026. Fuente: MSPAS/DEGR, boletines de arbovirosis.",
+      "imagen": "tuit_6.png",
+      "plantilla": "linea",
+      "fuente": "MSPAS/DEGR · boletines de arbovirosis 2014–2026",
+      "cifra_ids": [
+        "cau-c02",
+        "cau-c01"
+      ]
+    },
+    {
+      "n": 7,
+      "beat": "impacto",
+      "texto": "Así se reparte hoy. En Sacatepéquez equivale a cerca de 1 de cada 154 habitantes con dengue notificado en ocho meses.",
+      "caracteres": 117,
+      "alt_text": "Gráfico de barras horizontales: incidencia acumulada de dengue por 100,000 habitantes en 2026 hasta la semana 35, datos MSPAS más IGSS, por área de salud. Sacatepéquez: 649.5 (destacado); Petén Norte: 471.1; Petén Sur Occidental: 415.5; Retalhuleu: 369.8; Escuintla: 309.8; Jutiapa: 218.7; Quetzaltenango: 212.4; Chiquimula: 175.7. Son las 8 de 29 áreas con mayor incidencia. Fuente: MSPAS/DEGR, sala situacional de arbovirosis.",
+      "imagen": "tuit_7.png",
+      "plantilla": "barras-h",
+      "fuente": "MSPAS/DEGR · sala situacional arbovirosis SE-35 2026",
+      "cifra_ids": [
+        "ter-c01"
+      ]
+    },
+    {
+      "n": 8,
+      "beat": "impacto",
+      "texto": "El grupo adulto más grande abarca muchos más años de edad; por cada año de edad, ningún grupo suma más casos que los escolares.",
+      "caracteres": 127,
+      "alt_text": "Gráfico de barras verticales: casos de dengue por grupo de edad en la red del MSPAS, 2026 hasta la semana 35. Menores de 1 año: 367; 1 a 4: 1,128; 5 a 9: 1,930 (destacado); 10 a 14: 1,792; 15 a 19: 1,444; 20 a 24: 1,191; 25 a 39: 2,830; 40 a 49: 895; 50 a 59: 548; 60 a 64: 172; 65 a 69: 150; 70 y más: 252. Una banda sombrea los cuatro grupos menores de 15 años, que suman cerca de 4 de cada 10 casos. Fuente: MSPAS/DEGR, sala situacional de arbovirosis.",
+      "imagen": "tuit_8.png",
+      "plantilla": "barras-v",
+      "fuente": "MSPAS/DEGR · sala situacional arbovirosis SE-35 2026",
+      "cifra_ids": [
+        "ter-c12"
+      ]
+    },
+    {
+      "n": 9,
+      "beat": "cierre",
+      "texto": "En suma: el dengue bajó, pero no desapareció, y otro serotipo gana terreno. Sin muertes de 2026 ni curva semanal publicadas, no se puede decir que el riesgo pasó.\n\nFuentes: MSPAS/DEGR (salas situacionales y boletines de arbovirosis), OPS/OMS y Sesal Honduras.",
+      "caracteres": 259,
+      "alt_text": "Tuit de cierre sin imagen: resume que el dengue bajó en 2026 pero no desapareció, que el DENV-1 gana terreno y lista las fuentes: MSPAS/DEGR, OPS/OMS y Secretaría de Salud de Honduras.",
+      "imagen": null,
+      "plantilla": null,
+      "fuente": null,
+      "cifra_ids": []
+    }
+  ],
+  "no_afirma": [
+    "Que la caída se deba a la inmunidad que dejó la epidemia de DENV-3: ni OPS ni MSPAS lo afirman; es una coincidencia temporal.",
+    "Que 2027 vaya a traer un repunte: no hay proyección oficial; el DENV-1 aún no desplaza al DENV-3.",
+    "Cuántas muertes lleva 2026: el MSPAS no las ha publicado al corte de la semana 35.",
+    "Que las acciones locales no hayan tenido efecto: la comparación regional no lo mide.",
+    "Que la incidencia por área de salud haya subido o bajado frente a 2025 a la misma semana: no hay corte comparable publicado."
+  ],
+  "incertidumbre": [
+    "Todas las cifras usadas tienen segunda fuente NO independiente (reproduce la primaria del MSPAS/DEGR, OPS o Sesal); la ancla ser-c01 incluida: la segunda fuente reproduce la primaria, sin verificación independiente.",
+    "La tesis provisional hablaba de ~43% (Infobae, semana 30); al último corte publicado (semana 35) el MSPAS reporta 40% menos que 2025. No hay cortes posteriores (SE-36 a SE-38 dan 404).",
+    "T1 usa solo la red del MSPAS (sin IGSS); la incidencia por área (T7) integra MSPAS + IGSS; las edades (T8) son solo MSPAS.",
+    "La comparación de zonas del corredor (T5) mezcla cierre de 2025 (semana 53) con la semana 34 de 2026.",
+    "Honduras (-44%) es a la semana 12 y de la Sesal vía prensa; el resto, semana 35. «1 de cada 154» en Sacatepéquez es derivado de la incidencia (100,000/649.5); el boletín no publica la población por área.",
+    "La afirmación de OPS sobre inmunidad homotípica viene de la nota de prensa de la alerta DENV-3 (10-feb-2025), no del PDF de la alerta."
+  ],
+  "fuentes": [
+    "MSPAS/DEGR · sala situacional arbovirosis SE-35 2026",
+    "MSPAS/DEGR · boletines de arbovirosis 2018–2024",
+    "MSPAS/DEGR · boletines de arbovirosis 2014–2026",
+    "MSPAS/DEGR · OPS SE-35 2026 · Sesal"
+  ],
+  "fuentes_cifras": [
+    "MSPAS — DEGR, Situación epidemiológica de las arbovirosis 2026, hasta SE-35",
+    "MSPAS/DEGR — Situación epidemiológica de arbovirosis, SE-35-2026",
+    "MSPAS/DEGR — boletines de arbovirosis SE-53-2025 y SE-35-2026 (LNS)",
+    "MSPAS/DEGR — boletines de arbovirosis SE-53-2025 y SE-35-2026 (datos del Laboratorio Nacional de Salud)",
+    "MSPAS/DEGR, Situación epidemiológica de las arbovirosis en Guatemala 2026, hasta SE-35",
+    "MSPAS/DEGR, boletines de arbovirosis 2023 (SE-52) y 2024 (SE-52)",
+    "OPS/OMS — Informe de situación del dengue en las Américas, SE-35 2026 (PLISA)",
+    "Secretaría de Salud de Honduras (Sesal), vía La Prensa (Honduras)"
+  ],
+  "gate_mecanico": "ok",
+  "contacto": "contacto.png"
+}

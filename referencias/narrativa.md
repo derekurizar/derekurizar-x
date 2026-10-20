@@ -178,3 +178,5 @@ unidad, y la fuente. Es la única versión textual del PNG.
 Español guatemalteco neutro; lenguaje accesible; precisión («~», «cerca de» si
 es aproximado); tono informativo ante datos negativos, sin exagerar los
 positivos; emoji solo en el texto del tuit (nunca en la tarjeta) y con medida.
+Nunca «en suma» (ni como título ni como conector; los gates G2 e I3 lo rechazan): la
+sección de cierre del informe se titula «Conclusiones».

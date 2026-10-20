@@ -1,11 +1,14 @@
 node_modules/
-.DS_Store
+**/.DS_Store
 templates/.galeria/
 sesiones/*
 !sesiones/_fixture/
 sesiones/_fixture/salida/
 !sesiones/_fixture_dato/
 sesiones/_fixture_dato/salida/
+!sesiones/_fixture_video/
+sesiones/_fixture_video/trabajo/
+sesiones/_fixture_video/salida/
 *.log
 sesiones/_descargas/
 .playwright-mcp/
@@ -16,3 +19,10 @@ investigacion/ejemplos/catalogo/salida/
 sesiones/_fixture/informe/
 investigacion/*/salida/fonts/
 investigacion/*/salida/figuras/*.html
+investigacion/*/salida/png/
+investigacion/ejemplos/*/salida/png/
+sesiones/_ideas/
+!sesiones/_fixture_auditoria/
+sesiones/_fixture_auditoria/informe/
+# /video: el mp4 queda fuera de git (se regenera con /video); guion, srt, caption y PNG sí se versionan
+hilos/*/video/*.mp4

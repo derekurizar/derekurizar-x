@@ -1,0 +1,316 @@
+{
+  "slug": "cafe-exportaciones-2025",
+  "fecha": "2026-10-06",
+  "tesis": "En 2025 Guatemala exportó café por US$1,307.3 millones FOB, 43.2 % más que los US$912.7 millones de 2024, aunque el volumen bajó de 189.3 a 170.6 millones de kilos (-9.9 %); el precio medio por kilo pasó de US$4.82 a US$7.66.",
+  "ancla_id": "dat-c01",
+  "paleta": "cacao",
+  "hook_tipo": "giro_inversion",
+  "cifras": [
+    {
+      "id": "dat-c01",
+      "concepto": "Valor FOB de las exportaciones de café, 2025 vs 2024",
+      "unidad": "miles de US$",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Banco de Guatemala · Valor (FOB), volumen y precio medio de los 25 principales productos de exportación (comercio general)",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/ceie/CG/2025/ceie01.htm",
+      "periodo": "2024-2025",
+      "n_puntos": 2,
+      "valor": 1307341.8,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa Latina / AGN / Emisoras Unidas (reproducen Banguat)",
+      "evidencia": {
+        "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/ceie/CG/2025/ceie01.htm",
+        "cita": "2,Café,\"912,660.7\",\"189,288.7\",4.82,,\"1,307,341.8\",\"170,574.6\",7.66,,\"394,681.1\",43.2,\"(18,714.0)\",(9.9),2.84,59.0",
+        "archivo_local": "sesiones/cafe-exportaciones-2025/fuentes/banguat_ceie01_2025_tabla1.csv"
+      },
+      "partes": [
+        {
+          "nombre": "2024",
+          "valor": 912660.7
+        },
+        {
+          "nombre": "2025",
+          "valor": 1307341.8
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "dato.png"
+      ]
+    },
+    {
+      "id": "dat-c02",
+      "concepto": "Volumen de las exportaciones de café, 2025 vs 2024",
+      "unidad": "miles de kg",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Banco de Guatemala · Valor (FOB), volumen y precio medio de los 25 principales productos de exportación (comercio general)",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/ceie/CG/2025/ceie01.htm",
+      "periodo": "2024-2025",
+      "n_puntos": 2,
+      "valor": 170574.6,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Anacafé vía Prensa Libre (cosecha oct-sep, no calendario)",
+      "evidencia": {
+        "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/ceie/CG/2025/ceie01.htm",
+        "cita": "Café ... volumen 2024 \"189,288.7\" · 2025 \"170,574.6\" · variación \"(18,714.0)\",(9.9) [miles de kilogramos]",
+        "archivo_local": "sesiones/cafe-exportaciones-2025/fuentes/banguat_ceie01_2025_tabla1.csv"
+      },
+      "partes": [
+        {
+          "nombre": "2024",
+          "valor": 189288.7
+        },
+        {
+          "nombre": "2025",
+          "valor": 170574.6
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "dato.png"
+      ]
+    },
+    {
+      "id": "dat-c03",
+      "concepto": "Precio medio por kilogramo del café exportado, 2025 vs 2024",
+      "unidad": "US$ por kg",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Banco de Guatemala · Valor (FOB), volumen y precio medio de los 25 principales productos de exportación (comercio general)",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/ceie/CG/2025/ceie01.htm",
+      "periodo": "2024-2025",
+      "n_puntos": 2,
+      "valor": 7.66,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo propio con ceie01 + Prensa Latina",
+      "evidencia": {
+        "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/ceie/CG/2025/ceie01.htm",
+        "cita": "Café ... Precio Medio* 2024: 4.82 · 2025: 7.66 · variación 2.84, 59.0",
+        "archivo_local": "sesiones/cafe-exportaciones-2025/fuentes/banguat_ceie01_2025_tabla1.csv"
+      },
+      "partes": [
+        {
+          "nombre": "2024",
+          "valor": 4.82
+        },
+        {
+          "nombre": "2025",
+          "valor": 7.66
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "dato.png",
+        "T1"
+      ]
+    },
+    {
+      "id": "dat-c04",
+      "concepto": "Valor FOB anual de las exportaciones de café, 2002-2025",
+      "unidad": "millones de US$",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Banco de Guatemala · Valor (FOB) de las exportaciones por producto y trimestre, comercio general 2002-2025",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/comercio/sercom/4_POR_PRODUCTO_TRIMESTRE/X_PROD_TRIM_2002_2025.xlsx",
+      "periodo": "2002-2025",
+      "n_puntos": 24,
+      "valor": 1307.3,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa Latina / AGN / Emisoras Unidas (reproducen Banguat)",
+      "evidencia": {
+        "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/comercio/sercom/4_POR_PRODUCTO_TRIMESTRE/X_PROD_TRIM_2002_2025.xlsx",
+        "cita": "Café 2011 trimestres: 334151830, 447374743, 270392891, 122269210 (suma 1,174.2 millones); 2025 p/: 425725929, 567379714, 206940374, 107283946",
+        "archivo_local": "sesiones/cafe-exportaciones-2025/fuentes/X_PROD_TRIM_2002_2025_hoja1.csv"
+      },
+      "serie": [
+        {
+          "p": "2002",
+          "v": 261.8
+        },
+        {
+          "p": "2003",
+          "v": 299.4
+        },
+        {
+          "p": "2004",
+          "v": 328.0
+        },
+        {
+          "p": "2005",
+          "v": 464.1
+        },
+        {
+          "p": "2006",
+          "v": 464.0
+        },
+        {
+          "p": "2007",
+          "v": 577.3
+        },
+        {
+          "p": "2008",
+          "v": 646.2
+        },
+        {
+          "p": "2009",
+          "v": 582.3
+        },
+        {
+          "p": "2010",
+          "v": 713.9
+        },
+        {
+          "p": "2011",
+          "v": 1174.2
+        },
+        {
+          "p": "2012",
+          "v": 958.1
+        },
+        {
+          "p": "2013",
+          "v": 714.5
+        },
+        {
+          "p": "2014",
+          "v": 668.2
+        },
+        {
+          "p": "2015",
+          "v": 663.0
+        },
+        {
+          "p": "2016",
+          "v": 649.1
+        },
+        {
+          "p": "2017",
+          "v": 748.0
+        },
+        {
+          "p": "2018",
+          "v": 679.9
+        },
+        {
+          "p": "2019",
+          "v": 662.4
+        },
+        {
+          "p": "2020",
+          "v": 650.6
+        },
+        {
+          "p": "2021",
+          "v": 926.0
+        },
+        {
+          "p": "2022",
+          "v": 1112.8
+        },
+        {
+          "p": "2023",
+          "v": 945.6
+        },
+        {
+          "p": "2024",
+          "v": 912.7
+        },
+        {
+          "p": "2025",
+          "v": 1307.3
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "dato.png"
+      ]
+    },
+    {
+      "id": "dat-c08",
+      "concepto": "Divisas por café en la cosecha 2024-2025 (oct-sep) según Anacafé",
+      "unidad": "millones de US$",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Anacafé, vía Prensa Libre",
+      "url": "https://www.prensalibre.com/?p=23901850",
+      "periodo": "cosechas 2023-2024 / 2024-2025",
+      "n_puntos": 2,
+      "valor": 1281,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Anacafé vía Prensa Libre (fuente re-leída; búsqueda agrega copias)",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/?p=23901850",
+        "cita": "US$1,281 millones ... 42.53% ... US$898.79 millones ... 3.72 millones de quintales ... 4.08 millones de quintales (resumen WebFetch)",
+        "archivo_local": null
+      },
+      "partes": [
+        {
+          "nombre": "Cosecha 2023-2024",
+          "valor": 898.79
+        },
+        {
+          "nombre": "Cosecha 2024-2025",
+          "valor": 1281
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    }
+  ],
+  "fuentes": [
+    {
+      "nombre": "Banco de Guatemala · Valor (FOB), volumen y precio medio de los 25 principales productos de exportación (comercio general) (cuadro 2024-2025)",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/ceie/CG/2025/ceie01.htm",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Banco de Guatemala · Valor (FOB), volumen y precio medio de los 25 principales productos de exportación (comercio general) (a julio 2025-2026)",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/ceie/CG/2026/ceie01.htm",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Banco de Guatemala · X_PROD_TRIM 2002-2025",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/comercio/sercom/4_POR_PRODUCTO_TRIMESTRE/X_PROD_TRIM_2002_2025.xlsx",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Prensa Libre (Anacafé)",
+      "url": "https://www.prensalibre.com/?p=23901850",
+      "nivel": "secundaria"
+    }
+  ],
+  "no_afirma": [
+    "No afirma por qué subió el precio internacional del café ni atribuye el alza a una causa concreta.",
+    "No afirma que 2025 sea el año de menor volumen exportado: solo hay volumen para 2024-2025.",
+    "No ajusta por inflación: el máximo de la serie 2002-2025 es en dólares corrientes."
+  ],
+  "incertidumbre": [
+    "La segunda fuente de cada cifra reproduce la primaria (Banguat); sin verificación independiente.",
+    "Cifras de comercio general (DUCA/FYDUCA) del Banguat, sujetas a revisión; valores nominales en US$ FOB."
+  ],
+  "descartadas": [
+    {
+      "id": "dat-c05",
+      "por": "no_confirmada",
+      "nota": "La cita local contiene ambos lados (1,193,777.8 y 1,112,971.3 ene-jul), pero la prensa solo publica ene-may 2026 (café 892.3 M) y la nota ene-jul (total 8,744 M) no cuadra con el total 10,074.9 del cuadro; no se halló confirmación externa del corte a julio. Ene-jul 2025 es consistente con el ritmo (ene-jun 994 M; ene-sep 1,200.7 M), pero no basta para confirmar. Sin segunda fuente: no usar."
+    },
+    {
+      "id": "dat-c06",
+      "por": "no_confirmada",
+      "nota": "Café #1 también en ene-may (892.3 M, 12.4 %) con vestuario 665.8 M, pero el ranking ene-jul (vestuario 958.9, banano 630.5; la prensa da banano 588.2 en un corte distinto) no se pudo confirmar. Sin segunda fuente en el mismo periodo."
+    },
+    {
+      "id": "dat-c07",
+      "por": "no_confirmada",
+      "nota": "El lado 2025 se corrobora (0.37 M qq ≈ 16.8 M kg; 433.95 M vs 434.8 M US$), pero el lado 2024 (28,510.3 miles kg; 495.1 M US$) no se confirmó fuera de la tabla. En comparación, si un lado queda sin confirmar la candidata cae."
+    }
+  ],
+  "tipo": "dato"
+}

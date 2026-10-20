@@ -197,6 +197,34 @@ Un término entra si aparece ≥ 2 veces o es el eje de una figura. Definición 
 - Tono: español guatemalteco neutro, sin adjetivos valorativos; la escalada la
   pone el orden de los hechos. Nada en el informe que el hilo contradiga.
 
+## Justificación (lo revisa el `informe-revisor`)
+
+Quien lee el informe debe poder responder «¿de dónde sale esto?» para cada
+número, barra, estado y afirmación, en la misma página, en el pie o en una
+tabla a la que se remite. Antes de devolver:
+
+- Cada figura: el texto de su página dice qué muestra y qué se lee; con más de
+  5 valores, comenta los que cambian la conclusión (extremos, 0 y 100, los que
+  suben o bajan) y remite con `{tabla:id}` (y `{pag:id}`, que también da la
+  página de una figura o tabla) a donde está el resto.
+- Cada derivado lleva su operación en el pie (sumandos, ÷, −) o la remisión a
+  la fila que la muestra; cada % dice de qué total o frente a qué meta y fecha.
+- Cada estado o tendencia («subió», «en retroceso», «no funciona») va con su
+  cifra y año o su hecho con fecha.
+- El mismo número vale lo mismo en lead, texto, figura, tabla y conclusiones.
+- Auditoría: las fichas generadas explican cada barra (hallazgo, fuente y
+  cálculo) y `--insertar` remite cada gráfico a ellas; tú explicas en el texto
+  del capítulo los compromisos que pesan: cada cumplido, cada retroceso o
+  incumplido, los ceros sin dato y todo hito en proceso o anunciado que
+  nombres (qué hecho y cuándo). `auditoria.py <sesion> --justificar
+  <sesion>/informe.json` sale OK antes de devolver.
+
+`python3 scripts/revision.py <sesion> --avisos` da las pistas mecánicas R1–R3
+(barra que nadie nombra, figura que el texto no comenta, derivada sin
+operación). Si la directiva trae faltas del revisor, corrige cada una con el
+texto de su ARREGLO (nunca inventes una cifra que no esté en el digesto) y
+vuelve a pasar los gates.
+
 ## Bucle de QA
 
 1. Escribe `<sesion>/informe.json` completo (`meta.datos` = `["<ruta_hilo>/datos.json"]`,

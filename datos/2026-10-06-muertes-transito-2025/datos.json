@@ -1,0 +1,398 @@
+{
+  "slug": "muertes-transito-2025",
+  "fecha": "2026-10-06",
+  "tesis": "En 2025 murieron 2,432 personas en hechos de tránsito en Guatemala, el equivalente al 77% de los 3,139 homicidios del mismo año: casi 8 por cada 10.",
+  "ancla_id": "dat-c06",
+  "paleta": "atitlan",
+  "hook_tipo": "pregunta_directa",
+  "cifras": [
+    {
+      "id": "dat-c01",
+      "concepto": "Personas fallecidas en hechos de tránsito, total nacional anual",
+      "unidad": "personas fallecidas",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Departamento de Tránsito de la PNC / ONSET, Boletín Estadístico No. 7-2026 (publicado 31/08/2026), Gráfico 14",
+      "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-7-2026.pdf",
+      "periodo": "2011-2025",
+      "n_puntos": 15,
+      "valor": 2432,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AGN (cita ONSET/DT-PNC) y La Hora; recálculo de la serie del boletín",
+      "evidencia": {
+        "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-7-2026.pdf",
+        "cita": "GRÁFICO NO. 14. SERIE HISTÓRICA DE PERSONAS FALLECIDAS EN HECHOS DE TRÁNSITO DE 2011 A 2025 [...] 2,432 [...] se han reportado 27,118 personas fallecidas",
+        "archivo_local": "sesiones/_descargas/Boletin-Estadistico-No.-7-2026.txt"
+      },
+      "serie": [
+        {
+          "p": "2011",
+          "v": 1223
+        },
+        {
+          "p": "2012",
+          "v": 1311
+        },
+        {
+          "p": "2013",
+          "v": 1521
+        },
+        {
+          "p": "2014",
+          "v": 1525
+        },
+        {
+          "p": "2015",
+          "v": 1698
+        },
+        {
+          "p": "2016",
+          "v": 2059
+        },
+        {
+          "p": "2017",
+          "v": 1546
+        },
+        {
+          "p": "2018",
+          "v": 1489
+        },
+        {
+          "p": "2019",
+          "v": 1782
+        },
+        {
+          "p": "2020",
+          "v": 1566
+        },
+        {
+          "p": "2021",
+          "v": 2154
+        },
+        {
+          "p": "2022",
+          "v": 2176
+        },
+        {
+          "p": "2023",
+          "v": 2272
+        },
+        {
+          "p": "2024",
+          "v": 2364
+        },
+        {
+          "p": "2025",
+          "v": 2432
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "dato.png"
+      ]
+    },
+    {
+      "id": "dat-c02",
+      "concepto": "Promedio diario de personas fallecidas en hechos de tránsito en 2025 (cálculo propio: 2,432 / 365)",
+      "unidad": "fallecidos por día",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "Departamento de Tránsito de la PNC / ONSET, Boletín Estadístico No. 7-2026 (publicado 31/08/2026) (cálculo propio)",
+      "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-7-2026.pdf",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 6.66,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo propio 2,432/365",
+      "evidencia": {
+        "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-7-2026.pdf",
+        "cita": "2,432 (fallecidos 2025, Gráfico 14); Fallecidos enero-julio 2025-2026: 1,384 1,466",
+        "archivo_local": "sesiones/_descargas/Boletin-Estadistico-No.-7-2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "2025 (2,432/365)",
+          "valor": 6.66
+        },
+        {
+          "nombre": "enero-julio 2025 (1,384/212)",
+          "valor": 6.53
+        },
+        {
+          "nombre": "enero-julio 2026 (1,466/212)",
+          "valor": 6.92
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c03",
+      "concepto": "Personas fallecidas en hechos de tránsito, enero a julio 2025 vs 2026",
+      "unidad": "personas fallecidas",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Departamento de Tránsito de la PNC / ONSET, Boletín Estadístico No. 7-2026 (publicado 31/08/2026), Gráfico 16 y Tabla 4",
+      "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-7-2026.pdf",
+      "periodo": "enero-julio 2025 y 2026",
+      "n_puntos": 2,
+      "valor": 1466,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Boletín 7-2026 (misma tabla/gráfico) y consistencia interna con Tabla 5",
+      "evidencia": {
+        "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-7-2026.pdf",
+        "cita": "COMPARATIVA DE SINIESTRALIDAD VIAL [...] ENERO A JULIO DE LOS AÑOS 2025-2026 [...] 1,384 1,466 [...] Aumento valores absolutos [...] 82 [...] 6%",
+        "archivo_local": "sesiones/_descargas/Boletin-Estadistico-No.-7-2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "enero-julio 2025",
+          "valor": 1384
+        },
+        {
+          "nombre": "enero-julio 2026",
+          "valor": 1466
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c04",
+      "concepto": "Personas fallecidas en hechos de tránsito por departamento, enero a julio 2026",
+      "unidad": "personas fallecidas",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Departamento de Tránsito de la PNC / ONSET, Boletín Estadístico No. 7-2026 (publicado 31/08/2026), Tabla 5",
+      "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-7-2026.pdf",
+      "periodo": "enero-julio 2026",
+      "n_puntos": 22,
+      "valor": 1466,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo desde la Tabla 5 del boletín (22 departamentos)",
+      "evidencia": {
+        "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-7-2026.pdf",
+        "cita": "Petén 205,771 3.01% 196 115 171 [...] Guatemala 2,839,650 41.58% 2,228 345 2,422 [...] Total general 6,829,492 100% 5,459 1,466 5,783",
+        "archivo_local": "sesiones/_descargas/Boletin-Estadistico-No.-7-2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala",
+          "valor": 345
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 169
+        },
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 92
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 47
+        },
+        {
+          "nombre": "Petén",
+          "valor": 115
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 66
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 89
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 55
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 27
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 48
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 48
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 44
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 57
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 44
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 24
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 43
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 30
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 23
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 37
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 23
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 21
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 19
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c05",
+      "concepto": "Parque vehicular registrado en SAT (total nacional)",
+      "unidad": "vehículos",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Departamento de Tránsito de la PNC / ONSET, Boletín Estadístico No. 7-2026 (publicado 31/08/2026), Tabla 5 (Registro fiscal de vehículos SAT a julio 2026)",
+      "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-7-2026.pdf",
+      "periodo": "junio 2025 y julio 2026",
+      "n_puntos": 2,
+      "valor": 6829492,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "SAT vía AGN (parque vehicular ~6,773,536 en julio 2026)",
+      "evidencia": {
+        "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-7-2026.pdf",
+        "cita": "Total general 6,829,492 100% 5,459 1,466 5,783 Fuente: Registro fiscal de vehículos de la Superintendencia de Administración Tributaria -SAT-, al mes de julio de 2026",
+        "archivo_local": "sesiones/_descargas/Boletin-Estadistico-No.-7-2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "junio 2025",
+          "valor": 6104633
+        },
+        {
+          "nombre": "julio 2026",
+          "valor": 6829492
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c06",
+      "concepto": "Homicidios registrados en Guatemala en 2025 (datos PNC, Índice de Denuncias de Delitos del CIEN)",
+      "unidad": "homicidios",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "CIEN, Índice de Denuncias de Delitos con datos de la PNC, vía Prensa Latina (22/01/2026)",
+      "url": "https://www.prensa-latina.cu/2026/01/22/guatemala-cerro-2025-con-270-homicidios-mas-que-en-ano-anterior/",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 3139,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "La Hora / Prensa Latina citando CIEN (IDD diciembre 2025)",
+      "evidencia": {
+        "url": "https://www.prensa-latina.cu/2026/01/22/guatemala-cerro-2025-con-270-homicidios-mas-que-en-ano-anterior/",
+        "cita": "El departamento de Guatemala concentró el 47 por ciento de los 3 mil 139 homicidios ocurridos en el recién concluido año [tasa de 17,3 por cada 100 mil habitantes]",
+        "archivo_local": null
+      },
+      "usada": true,
+      "aparece_en": [
+        "dato.png"
+      ]
+    },
+    {
+      "id": "dat-c07",
+      "concepto": "Homicidios registrados en Guatemala en 2011 (PNC)",
+      "unidad": "homicidios",
+      "anio": 2011,
+      "tipo": "puntual",
+      "fuente": "Procurador de los Derechos Humanos con datos de la PNC, citado por informe en ecoi.net",
+      "url": "https://www.ecoi.net/en/document/2011463.html",
+      "periodo": "2011",
+      "n_puntos": 1,
+      "valor": 5681,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "InSight Crime / GunPolicy (PNC 2011, tasa 38.61)",
+      "evidencia": {
+        "url": "https://www.ecoi.net/en/document/2011463.html",
+        "cita": "In 2011, there were 5,681 homicides in Guatemala [...] a rate of 39 homicides per 100,000 (PDH con estadísticas de la PNC)",
+        "archivo_local": null
+      },
+      "usada": false,
+      "aparece_en": []
+    }
+  ],
+  "fuentes": [
+    {
+      "nombre": "Departamento de Tránsito de la PNC / ONSET, Boletín Estadístico No. 7-2026 (publicado 31/08/2026)",
+      "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-7-2026.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Departamento de Tránsito de la PNC / ONSET, Boletín Estadístico No. 6-2025",
+      "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No._-6-2025.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Listado de boletines ONSET",
+      "url": "https://transito.gob.gt/informes-y-estudios-estadisticos/",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Prensa Latina (reproduce CIEN/PNC homicidios 2025)",
+      "url": "https://www.prensa-latina.cu/2026/01/22/guatemala-cerro-2025-con-270-homicidios-mas-que-en-ano-anterior/",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "ecoi.net (reproduce PDH/PNC homicidios 2011)",
+      "url": "https://www.ecoi.net/en/document/2011463.html",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "La Hora, rutas más peligrosas (ONSET 2011-2025)",
+      "url": "https://lahora.gt/nacionales/hgodinez/2026/03/01/cuales-son-las-rutas-mas-peligrosas-de-guatemala-en-15-anos-han-ocurrido-mas-de-104-mil-accidentes/",
+      "nivel": "secundaria"
+    }
+  ],
+  "no_afirma": [
+    "No afirma que el tránsito ya mate más que la violencia: los homicidios siguen siendo más.",
+    "No atribuye el aumento de muertes viales al crecimiento del parque vehicular ni a otra causa.",
+    "No compara tasas por habitante ni con otros países."
+  ],
+  "incertidumbre": [
+    "La segunda fuente de cada cifra reproduce la primaria; sin verificación independiente.",
+    "Muertes viales (PNC/ONSET) y homicidios (datos PNC compilados por CIEN) vienen de registros distintos; INACIF usa otras definiciones.",
+    "La caída de homicidios desde 2011 del texto usa 5,681 (PDH con datos PNC), otra fuente distinta a la de 2025."
+  ],
+  "descartadas": [],
+  "tipo": "dato"
+}

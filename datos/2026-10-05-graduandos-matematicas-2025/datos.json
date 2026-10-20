@@ -1,0 +1,493 @@
+{
+  "slug": "graduandos-matematicas-2025",
+  "fecha": "2026-10-05",
+  "tesis": "En 2025, 16.2 % de los graduandos alcanzó el Logro en Matemáticas, el más alto desde 2013; 84 de cada 100 quedaron sin el nivel esperado.",
+  "ancla_id": "dat-c01",
+  "paleta": "jacaranda",
+  "hook_tipo": "giro_inversion",
+  "cifras": [
+    {
+      "id": "dat-c01",
+      "concepto": "Porcentaje de graduandos que alcanzó el Logro en Matemáticas (Satisfactorio + Excelente), nacional",
+      "unidad": "% de evaluados",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "MINEDUC/Digeduca, Resultados generales de la evaluación educativa · Graduandos 2025 (2025) y MINEDUC/Digeduca, Informe Graduandos 2024 (2013–2024)",
+      "url": "https://edu.mineduc.gob.gt/digeduca/documents/resultados/Resultados_generales.pdf",
+      "periodo": "2013–2025 (sin 2020 ni 2021: no hubo evaluación por COVID-19)",
+      "n_puntos": 11,
+      "valor": 16.2,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Digeduca, Informe Graduandos 2024 (serie 2013-2024) + infografía Resultados GRAD2025 (16 %)",
+      "evidencia": {
+        "url": "https://edu.mineduc.gob.gt/digeduca/documents/resultados/Resultados_generales.pdf",
+        "cita": "Logro nacional en Graduandos 2025 [...] Logro en Lectura 35.38 % · Logro en Matemáticas 16.2 % · 147,199 estudiantes evaluados",
+        "archivo_local": "sesiones/_descargas/Resultados_generales.txt"
+      },
+      "serie": [
+        {
+          "p": "2013",
+          "v": 8.02
+        },
+        {
+          "p": "2014",
+          "v": 8.47
+        },
+        {
+          "p": "2015",
+          "v": 8.51
+        },
+        {
+          "p": "2016",
+          "v": 9.01
+        },
+        {
+          "p": "2017",
+          "v": 9.6
+        },
+        {
+          "p": "2018",
+          "v": 11.44
+        },
+        {
+          "p": "2019",
+          "v": 13.56
+        },
+        {
+          "p": "2022",
+          "v": 14.01
+        },
+        {
+          "p": "2023",
+          "v": 10.07
+        },
+        {
+          "p": "2024",
+          "v": 12.95
+        },
+        {
+          "p": "2025",
+          "v": 16.2
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "dato.png"
+      ]
+    },
+    {
+      "id": "dat-c02",
+      "concepto": "Distribución de graduandos por nivel de desempeño en Matemáticas",
+      "unidad": "% de evaluados en nivel Insatisfactorio",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "MINEDUC/Digeduca, infografía Resultados de la evaluación Graduandos 2025 (nov. 2025)",
+      "url": "https://concriterio.gt/wp-content/uploads/2026/03/Resultados_GRAD2025.pdf",
+      "periodo": "2025",
+      "n_puntos": 4,
+      "valor": 51,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Digeduca, Resultados generales (misma infografía, PDF oficial alojado en concriterio.gt) y búsqueda web",
+      "evidencia": {
+        "url": "https://concriterio.gt/wp-content/uploads/2026/03/Resultados_GRAD2025.pdf",
+        "cita": "Resultados en Matemáticas [...] Logro 16 % · Excelente 12 % · Satisfactorio 4 % · Debe Mejorar 33 % · Insatisfactorio 51 %",
+        "archivo_local": "sesiones/_descargas/Resultados_GRAD2025.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Excelente",
+          "valor": 12
+        },
+        {
+          "nombre": "Satisfactorio",
+          "valor": 4
+        },
+        {
+          "nombre": "Debe mejorar",
+          "valor": 33
+        },
+        {
+          "nombre": "Insatisfactorio",
+          "valor": 51
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c03",
+      "concepto": "Porcentaje de Logro en Matemáticas por departamento (con Ciudad Capital separada)",
+      "unidad": "% de evaluados (máximo: Chimaltenango)",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "MINEDUC/Digeduca, Resultados generales de la evaluación educativa · Graduandos 2025",
+      "url": "https://edu.mineduc.gob.gt/digeduca/documents/resultados/Resultados_generales.pdf",
+      "periodo": "2025",
+      "n_puntos": 23,
+      "valor": 28,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Digeduca, Resultados generales vs infografía GRAD2025 (tabla departamental repetida)",
+      "evidencia": {
+        "url": "https://edu.mineduc.gob.gt/digeduca/documents/resultados/Resultados_generales.pdf",
+        "cita": "Chimaltenango 28 % 42 % [...] Santa Rosa 7% 24 % [...] Jutiapa 7% 21 %",
+        "archivo_local": "sesiones/_descargas/Resultados_generales.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 17
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 9
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 28
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 9
+        },
+        {
+          "nombre": "Ciudad Capital",
+          "valor": 19
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 18
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 15
+        },
+        {
+          "nombre": "Guatemala",
+          "valor": 15
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 17
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 9
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 10
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 7
+        },
+        {
+          "nombre": "Petén",
+          "valor": 17
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 19
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 16
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 12
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 12
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 27
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 7
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 15
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 17
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 13
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 8
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c04",
+      "concepto": "Porcentaje de Logro en Matemáticas por sector del establecimiento",
+      "unidad": "% de evaluados (sector privado)",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "MINEDUC/Digeduca, infografía Resultados de la evaluación Graduandos 2025",
+      "url": "https://concriterio.gt/wp-content/uploads/2026/03/Resultados_GRAD2025.pdf",
+      "periodo": "2025",
+      "n_puntos": 4,
+      "valor": 19,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Digeduca, infografía Resultados GRAD2025 (copia en concriterio.gt)",
+      "evidencia": {
+        "url": "https://concriterio.gt/wp-content/uploads/2026/03/Resultados_GRAD2025.pdf",
+        "cita": "Porcentaje de Logro según sector en Lectura y Matemáticas: Público 9% / 28 %, Privado 19 % / 38 %, Municipal 5% / 22 %, Por Cooperativa 9% / 24 %",
+        "archivo_local": "sesiones/_descargas/Resultados_GRAD2025.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Público",
+          "valor": 9
+        },
+        {
+          "nombre": "Privado",
+          "valor": 19
+        },
+        {
+          "nombre": "Municipal",
+          "valor": 5
+        },
+        {
+          "nombre": "Por cooperativa",
+          "valor": 9
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c05",
+      "concepto": "Porcentaje de Logro en Matemáticas por rama de enseñanza",
+      "unidad": "% de evaluados (Bachillerato)",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "MINEDUC/Digeduca, infografía Resultados de la evaluación Graduandos 2025",
+      "url": "https://concriterio.gt/wp-content/uploads/2026/03/Resultados_GRAD2025.pdf",
+      "periodo": "2025",
+      "n_puntos": 4,
+      "valor": 17,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Digeduca, infografía Resultados GRAD2025 (copia en concriterio.gt)",
+      "evidencia": {
+        "url": "https://concriterio.gt/wp-content/uploads/2026/03/Resultados_GRAD2025.pdf",
+        "cita": "Porcentaje de Logro según rama de enseñanza: Bachillerato 17 % / 35 %, Magisterio 13 % / 33 %, Perito 15 % / 37 %, Secretariado 6% / 26 % (Matemáticas / Lectura)",
+        "archivo_local": "sesiones/_descargas/Resultados_GRAD2025.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Bachillerato",
+          "valor": 17
+        },
+        {
+          "nombre": "Magisterio",
+          "valor": 13
+        },
+        {
+          "nombre": "Perito",
+          "valor": 15
+        },
+        {
+          "nombre": "Secretariado",
+          "valor": 6
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c06",
+      "concepto": "Graduandos que consideran que su preparación académica fue la necesaria",
+      "unidad": "% de evaluados",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "MINEDUC/Digeduca, infografía Resultados de la evaluación Graduandos 2025 (cuestionario de contexto)",
+      "url": "https://concriterio.gt/wp-content/uploads/2026/03/Resultados_GRAD2025.pdf",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 94,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Digeduca, infografía Resultados GRAD2025 (cuestionario de contexto)",
+      "evidencia": {
+        "url": "https://concriterio.gt/wp-content/uploads/2026/03/Resultados_GRAD2025.pdf",
+        "cita": "94 % considera que su preparación académica fue la necesaria [...] 8 % percibió que sus resultados fueron muy buenos o excelentes en la prueba de Matemáticas",
+        "archivo_local": "sesiones/_descargas/Resultados_GRAD2025.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Cree que su preparación fue la necesaria",
+          "valor": 94
+        },
+        {
+          "nombre": "Alcanzó el Logro en Lectura",
+          "valor": 35
+        },
+        {
+          "nombre": "Alcanzó el Logro en Matemáticas",
+          "valor": 16
+        },
+        {
+          "nombre": "Percibió resultado muy bueno o excelente en Matemáticas",
+          "valor": 8
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c07",
+      "concepto": "Porcentaje de graduandos que alcanzó el Logro en Lectura, nacional",
+      "unidad": "% de evaluados",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "MINEDUC/Digeduca, Resultados generales de la evaluación educativa · Graduandos 2025 (2025) y MINEDUC/Digeduca, Informe Graduandos 2024 (2013–2024)",
+      "url": "https://edu.mineduc.gob.gt/digeduca/documents/resultados/Resultados_generales.pdf",
+      "periodo": "2013–2025 (sin 2020 ni 2021)",
+      "n_puntos": 11,
+      "valor": 35.38,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Digeduca, Informe Graduandos 2024 (serie 2013-2024)",
+      "evidencia": {
+        "url": "https://edu.mineduc.gob.gt/digeduca/images/informes/graduandos/INFORME_GRAD2024.pdf",
+        "cita": "En 2013, el porcentaje de logro en Lectura fue de 26.03 % [...] alcanzar su punto más alto en el 2018 con un 37.03 % [...] En 2024 [...] 35.53 %",
+        "archivo_local": "sesiones/_descargas/INFORME_GRAD2024.txt"
+      },
+      "serie": [
+        {
+          "p": "2013",
+          "v": 26.03
+        },
+        {
+          "p": "2014",
+          "v": 26.02
+        },
+        {
+          "p": "2015",
+          "v": 25.97
+        },
+        {
+          "p": "2016",
+          "v": 32.32
+        },
+        {
+          "p": "2017",
+          "v": 32.33
+        },
+        {
+          "p": "2018",
+          "v": 34.81
+        },
+        {
+          "p": "2019",
+          "v": 37.03
+        },
+        {
+          "p": "2022",
+          "v": 30.82
+        },
+        {
+          "p": "2023",
+          "v": 31.73
+        },
+        {
+          "p": "2024",
+          "v": 35.53
+        },
+        {
+          "p": "2025",
+          "v": 35.38
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c08",
+      "concepto": "Docentes optantes a plaza del Nivel Medio que alcanzaron 60 puntos o más de promedio en la evaluación diagnóstica",
+      "unidad": "docentes (de 25,958 evaluados)",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "MINEDUC/Digeduca, Resultados generales de la evaluación educativa (Evaluación diagnóstica para docentes optantes a plaza del Nivel de Educación Media 2024)",
+      "url": "https://edu.mineduc.gob.gt/digeduca/documents/resultados/Resultados_generales.pdf",
+      "periodo": "2024",
+      "n_puntos": 4,
+      "valor": 8661,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Digeduca, Resultados generales (cuadro docentes optantes 2024); búsqueda web sin fuente independiente",
+      "evidencia": {
+        "url": "https://edu.mineduc.gob.gt/digeduca/documents/resultados/Resultados_generales.pdf",
+        "cita": "Durante el 2024 se evaluaron 25,958 docentes [...] Alcanzaron 90 puntos o más 19 1,278 773 63 / Alcanzaron 60 puntos o más 6,306 9,094 14,837 8,661",
+        "archivo_local": "sesiones/_descargas/Resultados_generales.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Evaluados",
+          "valor": 25958
+        },
+        {
+          "nombre": "60+ promedio",
+          "valor": 8661
+        },
+        {
+          "nombre": "90+ promedio",
+          "valor": 63
+        },
+        {
+          "nombre": "90+ Comunicación y Lenguaje",
+          "valor": 19
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    }
+  ],
+  "fuentes": [
+    {
+      "nombre": "MINEDUC/Digeduca — Resultados generales de la evaluación educativa (Graduandos 2025, TER, primaria, docentes)",
+      "url": "https://edu.mineduc.gob.gt/digeduca/documents/resultados/Resultados_generales.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "MINEDUC/Digeduca — Informe Graduandos 2024",
+      "url": "https://edu.mineduc.gob.gt/digeduca/images/informes/graduandos/INFORME_GRAD2024.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "MINEDUC/Digeduca — Infografía Resultados de la evaluación Graduandos 2025 (copia en concriterio.gt)",
+      "url": "https://concriterio.gt/wp-content/uploads/2026/03/Resultados_GRAD2025.pdf",
+      "nivel": "primaria (réplica)"
+    }
+  ],
+  "no_afirma": [
+    "Que 2025 sea récord histórico: la serie de la sesión empieza en 2013.",
+    "Que la mejora se deba a una política, a la prueba en computadora u otra causa: ninguna fuente lo atribuye.",
+    "Que todos los años sean estrictamente comparables: no hay nota oficial de comparabilidad 2025 vs. años anteriores."
+  ],
+  "incertidumbre": [
+    "La segunda fuente reproduce la primaria; sin verificación independiente.",
+    "Sin nota oficial de comparabilidad entre 2025 y años anteriores; la serie no tiene dato en 2020 y 2021.",
+    "La tarjeta solo rotula el valor de 2025; el alt-text da los valores exactos de cada año."
+  ],
+  "descartadas": [],
+  "tipo": "dato"
+}

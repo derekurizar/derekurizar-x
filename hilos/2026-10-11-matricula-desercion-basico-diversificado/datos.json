@@ -1,0 +1,1944 @@
+{
+  "slug": "matricula-desercion-basico-diversificado",
+  "fecha": "2026-10-11",
+  "tesis": "Cerca de 85% de los jóvenes termina la primaria, pero solo 56.5% termina básico y 23.1% diversificado (UIS, 2024): la matrícula pública sube en 2026, pero la secundaria pierde a los jóvenes por dos vías distintas, pocos llegan a diversificado (tasa neta 27.52%, 9.62% en Totonicapán) y básico es el nivel con más abandono durante el año (12.63% en 2025).",
+  "ancla_id": "des-c02",
+  "paleta": "jacaranda",
+  "hook_tipo": "giro_inversion",
+  "cifras": [
+    {
+      "id": "dep-c01",
+      "concepto": "Tasa neta de escolaridad, ciclo diversificado, por departamento (todos los sectores)",
+      "unidad": "%",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "MINEDUC, Anuario Estadístico de la Educación (SIRE, Dirección de Planificación)",
+      "url": "https://estadistica.mineduc.gob.gt/anuario/data/tablero.aspx?ID=15356&p=$lsMAnio=2025$lsMAniop=2025$lsMDep1=ALTA%20VERAPAZ$lsMDep2=ZACAPA$lsMNivel=DIVERSIFICADO",
+      "periodo": "2025",
+      "n_puntos": 22,
+      "valor": 27.52,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recalculo propio desde las columnas del mismo cuadro MINEDUC (SIRE); busqueda web sin fuente externa con cifras 2025 por departamento",
+      "evidencia": {
+        "url": "https://estadistica.mineduc.gob.gt/anuario/data/tablero.aspx?ID=15356&p=$lsMAnio=2025$lsMAniop=2025$lsMDep1=ALTA%20VERAPAZ$lsMDep2=ZACAPA$lsMNivel=DIVERSIFICADO",
+        "cita": "REPUBLICA DE GUATEMALA, CICLO DIVERSIFICADO AÑO 2025 Tasa Neta de escolaridad: TOTAL 27.52%; GUATEMALA 53.01%; TOTONICAPAN 9.62%",
+        "archivo_local": "sesiones/_descargas/mineduc_anuario/cobertura_2025_diversificado_deptos.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 16.15
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 18.78
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 28.07
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 16.53
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 39.76
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 33.05
+        },
+        {
+          "nombre": "Guatemala",
+          "valor": 53.01
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 12.77
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 26.05
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 19.29
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 30.25
+        },
+        {
+          "nombre": "Petén",
+          "valor": 20.96
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 34.76
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 12.33
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 33.16
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 39.18
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 21.07
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 33.06
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 19.87
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 23.69
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 9.62
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 28.83
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_4.png",
+        "tuit_5.png"
+      ]
+    },
+    {
+      "id": "dep-c02",
+      "concepto": "Tasa neta de escolaridad, ciclo básico, por departamento (todos los sectores)",
+      "unidad": "%",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "MINEDUC, Anuario Estadístico de la Educación (SIRE, Dirección de Planificación)",
+      "url": "https://estadistica.mineduc.gob.gt/anuario/data/tablero.aspx?ID=15356&p=$lsMAnio=2025$lsMAniop=2025$lsMDep1=ALTA%20VERAPAZ$lsMDep2=ZACAPA$lsMNivel=BASICO",
+      "periodo": "2025",
+      "n_puntos": 22,
+      "valor": 55.29,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recalculo propio desde las columnas del mismo cuadro MINEDUC (SIRE); busqueda web sin fuente externa con cifras 2025 por departamento",
+      "evidencia": {
+        "url": "https://estadistica.mineduc.gob.gt/anuario/data/tablero.aspx?ID=15356&p=$lsMAnio=2025$lsMAniop=2025$lsMDep1=ALTA%20VERAPAZ$lsMDep2=ZACAPA$lsMNivel=BASICO",
+        "cita": "REPUBLICA DE GUATEMALA, CICLO BASICO AÑO 2025 Tasa Neta de escolaridad: TOTAL 55.29%; GUATEMALA 86.25%; HUEHUETENANGO 31.11%",
+        "archivo_local": "sesiones/_descargas/mineduc_anuario/cobertura_2025_basico_deptos.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 40.41
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 44.96
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 53.73
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 41.27
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 71.47
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 69.33
+        },
+        {
+          "nombre": "Guatemala",
+          "valor": 86.25
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 31.11
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 54.15
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 45.5
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 61.29
+        },
+        {
+          "nombre": "Petén",
+          "valor": 49.3
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 63.04
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 33.12
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 62.83
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 71.97
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 51.87
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 63.88
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 55.2
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 59.55
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 37.24
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 56.29
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_4.png",
+        "tuit_7.png"
+      ]
+    },
+    {
+      "id": "dep-c03",
+      "concepto": "Tasa de deserción intraanual, ciclo básico, por departamento (todos los sectores)",
+      "unidad": "%",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "MINEDUC, Anuario Estadístico de la Educación (SIRE, Dirección de Planificación)",
+      "url": "https://estadistica.mineduc.gob.gt/anuario/data/tablero.aspx?ID=18488&p=$lsMAnio=2025$lsMDep1=ALTA%20VERAPAZ$lsMDep2=ZACAPA$lsMNivel=45",
+      "periodo": "2025",
+      "n_puntos": 22,
+      "valor": 12.63,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recalculo propio desde las columnas del mismo cuadro MINEDUC (SIRE); busqueda web sin fuente externa con cifras 2025 por departamento",
+      "evidencia": {
+        "url": "https://estadistica.mineduc.gob.gt/anuario/data/tablero.aspx?ID=18488&p=$lsMAnio=2025$lsMDep1=ALTA%20VERAPAZ$lsMDep2=ZACAPA$lsMNivel=45",
+        "cita": "REPUBLICA DE GUATEMALA, CICLO BASICO, AÑO 2025: TOTAL 12.63%; SACATEPEQUEZ 15.90%; RETALHULEU 10.04%",
+        "archivo_local": "sesiones/_descargas/mineduc_anuario/eficiencia_2025_basico_deptos.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 11.87
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 13.82
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 15.2
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 13.71
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 11.0
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 11.81
+        },
+        {
+          "nombre": "Guatemala",
+          "valor": 11.97
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 13.37
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 10.79
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 13.58
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 11.88
+        },
+        {
+          "nombre": "Petén",
+          "valor": 15.39
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 13.49
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 11.63
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 10.04
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 15.9
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 11.73
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 11.82
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 13.99
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 14.63
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 13.8
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 11.83
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_6.png",
+        "tuit_7.png"
+      ]
+    },
+    {
+      "id": "dep-c04",
+      "concepto": "Tasa de deserción intraanual, ciclo diversificado, por departamento (todos los sectores)",
+      "unidad": "%",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "MINEDUC, Anuario Estadístico de la Educación (SIRE, Dirección de Planificación)",
+      "url": "https://estadistica.mineduc.gob.gt/anuario/data/tablero.aspx?ID=18488&p=$lsMAnio=2025$lsMDep1=ALTA%20VERAPAZ$lsMDep2=ZACAPA$lsMNivel=46",
+      "periodo": "2025",
+      "n_puntos": 22,
+      "valor": 9.44,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recalculo propio desde las columnas del mismo cuadro MINEDUC (SIRE); busqueda web sin fuente externa con cifras 2025 por departamento",
+      "evidencia": {
+        "url": "https://estadistica.mineduc.gob.gt/anuario/data/tablero.aspx?ID=18488&p=$lsMAnio=2025$lsMDep1=ALTA%20VERAPAZ$lsMDep2=ZACAPA$lsMNivel=46",
+        "cita": "REPUBLICA DE GUATEMALA, CICLO DIVERSIFICADO, AÑO 2025: TOTAL 9.44%; BAJA VERAPAZ 11.77%; RETALHULEU 5.84%",
+        "archivo_local": "sesiones/_descargas/mineduc_anuario/eficiencia_2025_diversificado_deptos.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 10.92
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 11.77
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 11.08
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 11.03
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 7.75
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 7.85
+        },
+        {
+          "nombre": "Guatemala",
+          "valor": 9.07
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 10.95
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 7.44
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 10.46
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 9.12
+        },
+        {
+          "nombre": "Petén",
+          "valor": 11.35
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 8.54
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 10.25
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 5.84
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 8.66
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 9.49
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 10.49
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 9.79
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 10.68
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 11.74
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 8.49
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_6.png"
+      ]
+    },
+    {
+      "id": "dep-c05",
+      "concepto": "Estudiantes retirados, ciclo básico, por departamento (todos los sectores)",
+      "unidad": "estudiantes",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "MINEDUC, Anuario Estadístico de la Educación (SIRE, Dirección de Planificación)",
+      "url": "https://estadistica.mineduc.gob.gt/anuario/data/tablero.aspx?ID=19020&p=$lsMAnio=2025$lsMDep1=ALTA%20VERAPAZ$lsMDep2=ZACAPA$lsMNivel=45",
+      "periodo": "2025",
+      "n_puntos": 22,
+      "valor": 99709,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recalculo propio desde las columnas del mismo cuadro MINEDUC (SIRE); busqueda web sin fuente externa con cifras 2025 por departamento",
+      "evidencia": {
+        "url": "https://estadistica.mineduc.gob.gt/anuario/data/tablero.aspx?ID=19020&p=$lsMAnio=2025$lsMDep1=ALTA%20VERAPAZ$lsMDep2=ZACAPA$lsMNivel=45",
+        "cita": "REPUBLICA DE GUATEMALA, CICLO BASICO, AÑO 2025: TOTAL 99,709; GUATEMALA 24,210; EL PROGRESO 1,066",
+        "archivo_local": "sesiones/_descargas/mineduc_anuario/cifras_2025_basico_deptos.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 7227
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 1845
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 4857
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 2291
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 1066
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 5078
+        },
+        {
+          "nombre": "Guatemala",
+          "valor": 24210
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 5580
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 2309
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 2192
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 3169
+        },
+        {
+          "nombre": "Petén",
+          "valor": 4351
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 6439
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 4141
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 1941
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 3182
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 6296
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 2555
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 2825
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 4450
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 2189
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 1516
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_8.png"
+      ]
+    },
+    {
+      "id": "dep-c06",
+      "concepto": "Estudiantes retirados, ciclo diversificado, por departamento (todos los sectores)",
+      "unidad": "estudiantes",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "MINEDUC, Anuario Estadístico de la Educación (SIRE, Dirección de Planificación)",
+      "url": "https://estadistica.mineduc.gob.gt/anuario/data/tablero.aspx?ID=19020&p=$lsMAnio=2025$lsMDep1=ALTA%20VERAPAZ$lsMDep2=ZACAPA$lsMNivel=46",
+      "periodo": "2025",
+      "n_puntos": 22,
+      "valor": 36486,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recalculo propio desde las columnas del mismo cuadro MINEDUC (SIRE); busqueda web sin fuente externa con cifras 2025 por departamento",
+      "evidencia": {
+        "url": "https://estadistica.mineduc.gob.gt/anuario/data/tablero.aspx?ID=19020&p=$lsMAnio=2025$lsMDep1=ALTA%20VERAPAZ$lsMDep2=ZACAPA$lsMNivel=46",
+        "cita": "REPUBLICA DE GUATEMALA, CICLO DIVERSIFICADO, AÑO 2025: TOTAL 36,486; GUATEMALA 11,781; EL PROGRESO 404",
+        "archivo_local": "sesiones/_descargas/mineduc_anuario/cifras_2025_diversificado_deptos.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 2377
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 627
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 1870
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 729
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 404
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 1601
+        },
+        {
+          "nombre": "Guatemala",
+          "valor": 11781
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 1732
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 715
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 702
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 1186
+        },
+        {
+          "nombre": "Petén",
+          "valor": 1317
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 2236
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 1285
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 602
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 993
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 2059
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 1125
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 742
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 1415
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 483
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 505
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_8.png",
+        "T8"
+      ]
+    },
+    {
+      "id": "dep-c07",
+      "concepto": "Tasa de deserción intraanual, ciclo básico, por departamento, 2024 (todos los sectores)",
+      "unidad": "%",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "MINEDUC, Anuario Estadístico de la Educación (SIRE, Dirección de Planificación)",
+      "url": "https://estadistica.mineduc.gob.gt/anuario/data/tablero.aspx?ID=18488&p=$lsMAnio=2024$lsMDep1=ALTA%20VERAPAZ$lsMDep2=ZACAPA$lsMNivel=45",
+      "periodo": "2024",
+      "n_puntos": 22,
+      "valor": 13.54,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recalculo propio desde las columnas del mismo cuadro MINEDUC (SIRE); busqueda web sin fuente externa con cifras 2025 por departamento",
+      "evidencia": {
+        "url": "https://estadistica.mineduc.gob.gt/anuario/data/tablero.aspx?ID=18488&p=$lsMAnio=2024$lsMDep1=ALTA%20VERAPAZ$lsMDep2=ZACAPA$lsMNivel=45",
+        "cita": "REPUBLICA DE GUATEMALA, CICLO BASICO, AÑO 2024: TOTAL 13.54%; SACATEPEQUEZ 16.48%; RETALHULEU 11.58%",
+        "archivo_local": "sesiones/_descargas/mineduc_anuario/eficiencia_2024_basico_deptos.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 12.48
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 15.24
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 15.68
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 15.31
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 12.77
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 12.43
+        },
+        {
+          "nombre": "Guatemala",
+          "valor": 13.23
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 13.6
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 12.89
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 14.29
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 14.74
+        },
+        {
+          "nombre": "Petén",
+          "valor": 16.2
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 13.53
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 12.43
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 11.58
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 16.48
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 11.86
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 14.29
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 13.17
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 15.28
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 14.59
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 12.5
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_6.png"
+      ]
+    },
+    {
+      "id": "dep-c08",
+      "concepto": "Tasa de deserción intraanual, ciclo diversificado, por departamento, 2024 (todos los sectores)",
+      "unidad": "%",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "MINEDUC, Anuario Estadístico de la Educación (SIRE, Dirección de Planificación)",
+      "url": "https://estadistica.mineduc.gob.gt/anuario/data/tablero.aspx?ID=18488&p=$lsMAnio=2024$lsMDep1=ALTA%20VERAPAZ$lsMDep2=ZACAPA$lsMNivel=46",
+      "periodo": "2024",
+      "n_puntos": 22,
+      "valor": 10.19,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recalculo propio desde las columnas del mismo cuadro MINEDUC (SIRE); busqueda web sin fuente externa con cifras 2025 por departamento",
+      "evidencia": {
+        "url": "https://estadistica.mineduc.gob.gt/anuario/data/tablero.aspx?ID=18488&p=$lsMAnio=2024$lsMDep1=ALTA%20VERAPAZ$lsMDep2=ZACAPA$lsMNivel=46",
+        "cita": "REPUBLICA DE GUATEMALA, CICLO DIVERSIFICADO, AÑO 2024: TOTAL 10.19%; TOTONICAPAN 13.63%; RETALHULEU 7.11%",
+        "archivo_local": "sesiones/_descargas/mineduc_anuario/eficiencia_2024_diversificado_deptos.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 12.11
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 13.19
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 12.7
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 9.8
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 8.6
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 9.07
+        },
+        {
+          "nombre": "Guatemala",
+          "valor": 9.58
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 10.55
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 8.72
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 11.77
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 11.46
+        },
+        {
+          "nombre": "Petén",
+          "valor": 12.75
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 10.03
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 9.75
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 7.11
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 9.81
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 10.2
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 10.08
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 10.06
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 11.29
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 13.63
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 9.5
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_6.png"
+      ]
+    },
+    {
+      "id": "dep-c09",
+      "concepto": "Estudiantes inscritos (matrícula inicial), ciclo básico, por departamento (todos los sectores)",
+      "unidad": "estudiantes",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "MINEDUC, Anuario Estadístico de la Educación (SIRE, Dirección de Planificación)",
+      "url": "https://estadistica.mineduc.gob.gt/anuario/data/tablero.aspx?ID=19020&p=$lsMAnio=2025$lsMDep1=ALTA%20VERAPAZ$lsMDep2=ZACAPA$lsMNivel=45",
+      "periodo": "2025",
+      "n_puntos": 22,
+      "valor": 789363,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recalculo propio desde las columnas del mismo cuadro MINEDUC (SIRE); busqueda web sin fuente externa con cifras 2025 por departamento",
+      "evidencia": {
+        "url": "https://estadistica.mineduc.gob.gt/anuario/data/tablero.aspx?ID=19020&p=$lsMAnio=2025$lsMDep1=ALTA%20VERAPAZ$lsMDep2=ZACAPA$lsMNivel=45",
+        "cita": "REPUBLICA DE GUATEMALA, CICLO BASICO, AÑO 2025: TOTAL 789,363; GUATEMALA 202,289; EL PROGRESO 9,695",
+        "archivo_local": "sesiones/_descargas/mineduc_anuario/cifras_2025_basico_deptos.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 60894
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 13352
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 31951
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 16710
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 9695
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 42998
+        },
+        {
+          "nombre": "Guatemala",
+          "valor": 202289
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 41721
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 21392
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 16142
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 26666
+        },
+        {
+          "nombre": "Petén",
+          "valor": 28265
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 47746
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 35620
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 19335
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 20013
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 53655
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 21622
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 20198
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 30422
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 15867
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 12810
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_8.png"
+      ]
+    },
+    {
+      "id": "dep-c10",
+      "concepto": "Estudiantes inscritos (matrícula inicial), ciclo diversificado, por departamento (todos los sectores)",
+      "unidad": "estudiantes",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "MINEDUC, Anuario Estadístico de la Educación (SIRE, Dirección de Planificación)",
+      "url": "https://estadistica.mineduc.gob.gt/anuario/data/tablero.aspx?ID=19020&p=$lsMAnio=2025$lsMDep1=ALTA%20VERAPAZ$lsMDep2=ZACAPA$lsMNivel=46",
+      "periodo": "2025",
+      "n_puntos": 22,
+      "valor": 386686,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recalculo propio desde las columnas del mismo cuadro MINEDUC (SIRE); busqueda web sin fuente externa con cifras 2025 por departamento",
+      "evidencia": {
+        "url": "https://estadistica.mineduc.gob.gt/anuario/data/tablero.aspx?ID=19020&p=$lsMAnio=2025$lsMDep1=ALTA%20VERAPAZ$lsMDep2=ZACAPA$lsMNivel=46",
+        "cita": "REPUBLICA DE GUATEMALA, CICLO DIVERSIFICADO, AÑO 2025: TOTAL 386,686; GUATEMALA 129,943; TOTONICAPAN 4,115",
+        "archivo_local": "sesiones/_descargas/mineduc_anuario/cifras_2025_diversificado_deptos.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 21760
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 5327
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 16871
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 6611
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 5216
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 20397
+        },
+        {
+          "nombre": "Guatemala",
+          "valor": 129943
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 15824
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 9613
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 6711
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 13000
+        },
+        {
+          "nombre": "Petén",
+          "valor": 11602
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 26182
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 12542
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 10310
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 11465
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 21692
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 10721
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 7583
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 13255
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 4115
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 5946
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dep-c11",
+      "concepto": "Tasa neta de escolaridad de diversificado en Totonicapán (la más baja del país)",
+      "unidad": "%",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "MINEDUC, Anuario Estadístico de la Educación (SIRE, Dirección de Planificación)",
+      "url": "https://estadistica.mineduc.gob.gt/anuario/data/tablero.aspx?ID=15356&p=$lsMAnio=2025$lsMAniop=2025$lsMDep1=ALTA%20VERAPAZ$lsMDep2=ZACAPA$lsMNivel=DIVERSIFICADO",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 9.62,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recalculo propio desde las columnas del mismo cuadro MINEDUC (SIRE); busqueda web sin fuente externa con cifras 2025 por departamento",
+      "evidencia": {
+        "url": "https://estadistica.mineduc.gob.gt/anuario/data/tablero.aspx?ID=15356&p=$lsMAnio=2025$lsMAniop=2025$lsMDep1=ALTA%20VERAPAZ$lsMDep2=ZACAPA$lsMNivel=DIVERSIFICADO",
+        "cita": "CICLO DIVERSIFICADO AÑO 2025 · TOTONICAPAN: estudiantes en edad adecuada 3,028; población en edad escolar 31,480; Tasa Neta de escolaridad 9.62%",
+        "archivo_local": "sesiones/_descargas/mineduc_anuario/cobertura_2025_diversificado_deptos.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Totonicapán",
+          "valor": 9.62
+        },
+        {
+          "nombre": "Guatemala (depto.)",
+          "valor": 53.01
+        },
+        {
+          "nombre": "País",
+          "valor": 27.52
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_5.png"
+      ]
+    },
+    {
+      "id": "des-c02",
+      "concepto": "Tasa de finalización de primaria, total, % del grupo de edad pertinente",
+      "unidad": "%",
+      "anio": 2024,
+      "tipo": "serie",
+      "fuente": "Banco Mundial / UNESCO-UIS (SE.PRM.CMPT.ZS)",
+      "url": "https://api.worldbank.org/v2/country/GTM/indicator/SE.PRM.CMPT.ZS?format=json&per_page=60",
+      "periodo": "2015-2024",
+      "n_puntos": 10,
+      "valor": 84.970444,
+      "valor_original": 86.5089663572102,
+      "veredicto": "ajustada",
+      "independencia": "alta",
+      "fuente_2": "UNESCO-UIS API (CR.1, finalizacion de primaria)",
+      "evidencia": {
+        "url": "https://api.worldbank.org/v2/country/GTM/indicator/SE.PRM.CMPT.ZS?format=json&per_page=60",
+        "cita": "Primary completion rate, total (% of relevant age group) GTM 2024: 86.5089663572102; 2015: 85.5154368345798",
+        "archivo_local": "sesiones/_descargas/api/16a7f26d107b855b52d5485b495a1198f947b23c.json"
+      },
+      "serie": [
+        {
+          "p": "2015",
+          "v": 85.5154368345798
+        },
+        {
+          "p": "2016",
+          "v": 81.5293180244785
+        },
+        {
+          "p": "2017",
+          "v": 81.5305646046828
+        },
+        {
+          "p": "2018",
+          "v": 81.2403988309223
+        },
+        {
+          "p": "2019",
+          "v": 80.0990747241132
+        },
+        {
+          "p": "2020",
+          "v": 81.0594376245934
+        },
+        {
+          "p": "2021",
+          "v": 88.103916062937
+        },
+        {
+          "p": "2022",
+          "v": 86.5454469268622
+        },
+        {
+          "p": "2023",
+          "v": 85.8256653187583
+        },
+        {
+          "p": "2024",
+          "v": 86.5089663572102
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_1.png"
+      ]
+    },
+    {
+      "id": "des-c05",
+      "concepto": "Deserción escolar global del sistema según la ministra de Educación (2019 vs 2023)",
+      "unidad": "%",
+      "anio": 2023,
+      "tipo": "desglose",
+      "fuente": "AGN citando a la ministra de Educación (29 jul 2023)",
+      "url": "https://agn.gt/gobierno-destaca-acciones-para-reducir-la-desercion-escolar",
+      "periodo": "2019-2023",
+      "n_puntos": 2,
+      "valor": 4,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AGN (otra nota que repite la declaracion de la ministra Claudia Ruiz)",
+      "evidencia": {
+        "url": "https://agn.gt/gobierno-destaca-acciones-para-reducir-la-desercion-escolar",
+        "cita": "En el 2019 recibimos un sistema educativo con un 5 % de deserción. Actualmente este tema reporta un 4 %"
+      },
+      "partes": [
+        {
+          "nombre": "2019",
+          "valor": 5
+        },
+        {
+          "nombre": "2023",
+          "valor": 4
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "mat-c01",
+      "concepto": "Matrícula del sector público, ciclo escolar 2025 (registro del ciclo anterior citado por la ministra)",
+      "unidad": "estudiantes",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "MINEDUC (ministra Anabella Giracca ante la Comisión de Educación del Congreso) vía AGN, 11-mar-2026",
+      "url": "https://agn.gt/mineduc-reporta-aumento-de-estudiantes-en-la-matricula-estudiantil-de-este-ano/",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 3149866,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AGN/Emisoras Unidas: más de 3 millones inscritos al inicio del ciclo 2025",
+      "evidencia": {
+        "url": "https://agn.gt/mineduc-reporta-aumento-de-estudiantes-en-la-matricula-estudiantil-de-este-ano/",
+        "cita": "explicó que el registro del ciclo anterior fue de 3 millones 149 mil 866 estudiantes, el cual ya fue superado.",
+        "archivo_local": "sesiones/matricula-desercion-basico-diversificado/fuentes_mat/agn_mineduc_reporta_aumento.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "mat-c02",
+      "concepto": "Aumento de inscritos en el sector público 2026 vs 2025 a la misma fecha (febrero), por nivel",
+      "unidad": "estudiantes",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "MINEDUC (ministra Giracca) vía AGN, 11-mar-2026",
+      "url": "https://agn.gt/mineduc-reporta-aumento-de-estudiantes-en-la-matricula-estudiantil-de-este-ano/",
+      "periodo": "feb 2026 vs feb 2025",
+      "n_puntos": 4,
+      "valor": 150000,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AGN 19-mar-2026 repite 'superar en 150 mil' alumnos mismo período",
+      "evidencia": {
+        "url": "https://agn.gt/mineduc-reporta-aumento-de-estudiantes-en-la-matricula-estudiantil-de-este-ano/",
+        "cita": "41 mil nuevos estudiantes en preprimaria, 40 mil en primaria, 39 mil en el nivel básico y 22 mil en diversificado",
+        "archivo_local": "sesiones/matricula-desercion-basico-diversificado/fuentes_mat/agn_mineduc_reporta_aumento.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Preprimaria",
+          "valor": 41000
+        },
+        {
+          "nombre": "Primaria",
+          "valor": 40000
+        },
+        {
+          "nombre": "Básico",
+          "valor": 39000
+        },
+        {
+          "nombre": "Diversificado",
+          "valor": 22000
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_2.png"
+      ]
+    },
+    {
+      "id": "mat-c03",
+      "concepto": "Matrícula del sector público 2024 por nivel",
+      "unidad": "estudiantes",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "MINEDUC vía Prensa Latina, 10-ene-2025",
+      "url": "https://www.prensa-latina.cu/2025/01/10/guatemala-matriculo-32-millones-de-alumnos-en-2024-en-sector-publico/",
+      "periodo": "2024",
+      "n_puntos": 6,
+      "valor": 3201876,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AGN, matrícula 2024: 3,197,809 al 1-jun-2024 (corte de mitad de año; total similar)",
+      "evidencia": {
+        "url": "https://www.prensa-latina.cu/2025/01/10/guatemala-matriculo-32-millones-de-alumnos-en-2024-en-sector-publico/",
+        "cita": "matricularon tres millones 201 mil 876 niños y adolescentes en el sistema público [...] el básico con 337 mil 55 adolescentes. El diversificado (bachillerato) contabilizó, por su parte, 83 mil",
+        "archivo_local": "sesiones/matricula-desercion-basico-diversificado/fuentes_mat/prensalatina_matricula_2024.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Primaria",
+          "valor": 2131115
+        },
+        {
+          "nombre": "Preprimaria",
+          "valor": 579950
+        },
+        {
+          "nombre": "Básico",
+          "valor": 337055
+        },
+        {
+          "nombre": "Diversificado",
+          "valor": 83000
+        },
+        {
+          "nombre": "Inicial",
+          "valor": 64690
+        },
+        {
+          "nombre": "Primaria para adultos",
+          "valor": 5962
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "mat-c04",
+      "concepto": "Distribución de la matrícula de diversificado por sector, 2020",
+      "unidad": "% de la matrícula del nivel",
+      "anio": 2020,
+      "tipo": "desglose",
+      "fuente": "CEPAL, infografía 'Brechas de acceso y calidad' sobre base MINEDUC (Base educación formal, INE)",
+      "url": "https://www.cepal.org/sites/default/files/infographic/files/infografia._brechas_de_acceso_y_calidad_desafio_para_la_transformacion_educativa_en_guatemala.pdf",
+      "periodo": "2020",
+      "n_puntos": 4,
+      "valor": 70,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Verificado en texto local de la infografía CEPAL (fila Diversificado: oficial 22,5; privado 70; coop 5,6; municipal 1,5)",
+      "evidencia": {
+        "url": "https://www.cepal.org/sites/default/files/infographic/files/infografia._brechas_de_acceso_y_calidad_desafio_para_la_transformacion_educativa_en_guatemala.pdf",
+        "cita": "Matrícula por nivel educativo, según sector 2020 [...] Diversificado 22,5 [...] 70 [...] 5,6 1,5 (Oficial, Privado, Cooperativa, Municipal)",
+        "archivo_local": "sesiones/_descargas/infografia._brechas_de_acceso_y_calidad_desafio_para_la_transformacion_educativa_en_guatemala.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Privado",
+          "valor": 70
+        },
+        {
+          "nombre": "Oficial",
+          "valor": 22.5
+        },
+        {
+          "nombre": "Cooperativa",
+          "valor": 5.6
+        },
+        {
+          "nombre": "Municipal",
+          "valor": 1.5
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_3.png"
+      ]
+    },
+    {
+      "id": "mat-c05",
+      "concepto": "Distribución de la matrícula de básico por sector, 2020 (con preprimaria y primaria de contraste)",
+      "unidad": "% de la matrícula del nivel",
+      "anio": 2020,
+      "tipo": "desglose",
+      "fuente": "CEPAL, infografía 'Brechas de acceso y calidad' sobre base MINEDUC",
+      "url": "https://www.cepal.org/sites/default/files/infographic/files/infografia._brechas_de_acceso_y_calidad_desafio_para_la_transformacion_educativa_en_guatemala.pdf",
+      "periodo": "2020",
+      "n_puntos": 4,
+      "valor": 42.7,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Texto local infografía CEPAL (Básico oficial 42,7; privado 37; coop 18,9; municipal 1,1)",
+      "evidencia": {
+        "url": "https://www.cepal.org/sites/default/files/infographic/files/infografia._brechas_de_acceso_y_calidad_desafio_para_la_transformacion_educativa_en_guatemala.pdf",
+        "cita": "Básico 42,7 37 18,9 1,1 · Primaria 87,1 12,7 0 0,1 · Preprimaria 83,7 16 0 0,3 (Oficial, Privado, Cooperativa, Municipal)",
+        "archivo_local": "sesiones/_descargas/infografia._brechas_de_acceso_y_calidad_desafio_para_la_transformacion_educativa_en_guatemala.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Oficial",
+          "valor": 42.7
+        },
+        {
+          "nombre": "Privado",
+          "valor": 37
+        },
+        {
+          "nombre": "Cooperativa",
+          "valor": 18.9
+        },
+        {
+          "nombre": "Municipal",
+          "valor": 1.1
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "mat-c06",
+      "concepto": "Tasa de jóvenes en edad de diversificado (secundaria alta) fuera de la escuela",
+      "unidad": "% de la población en edad de secundaria alta",
+      "anio": 2024,
+      "tipo": "serie",
+      "fuente": "UNESCO Institute for Statistics (UIS), indicador ROFST.3.CP",
+      "url": "https://api.uis.unesco.org/api/public/data/indicators?indicator=ROFST.2.CP&indicator=ROFST.3.CP&indicator=OFST.2.CP&indicator=OFST.3.CP&indicator=CR.2&indicator=CR.3&indicator=NERA.2.CP&indicator=NERA.3.CP&geoUnit=GTM&start=2010&end=2025",
+      "periodo": "2010-2024",
+      "n_puntos": 15,
+      "valor": 65.56392395968238,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Archivo local UIS contiene ROFST.3.CP 2024 = 65.5639; coherente con OFST.3.CP (mat-c07)",
+      "evidencia": {
+        "url": "https://api.uis.unesco.org/api/public/data/indicators?indicator=ROFST.2.CP&indicator=ROFST.3.CP&indicator=OFST.2.CP&indicator=OFST.3.CP&indicator=CR.2&indicator=CR.3&indicator=NERA.2.CP&indicator=NERA.3.CP&geoUnit=GTM&start=2010&end=2025",
+        "cita": "{\"indicatorId\": \"ROFST.3.CP\", \"geoUnit\": \"GTM\", \"year\": 2024, \"value\": 65.56392395968238}",
+        "archivo_local": "sesiones/_descargas/api/ba6ef93cba668ef716f67f75a36c8577ed891de0.json"
+      },
+      "serie": [
+        {
+          "p": "2010",
+          "v": 61.63990356093458
+        },
+        {
+          "p": "2011",
+          "v": 61.01815411958867
+        },
+        {
+          "p": "2012",
+          "v": 58.35837252580583
+        },
+        {
+          "p": "2013",
+          "v": 59.18826395755864
+        },
+        {
+          "p": "2014",
+          "v": 59.32880191299154
+        },
+        {
+          "p": "2015",
+          "v": 58.62113870048311
+        },
+        {
+          "p": "2016",
+          "v": 58.44209994658566
+        },
+        {
+          "p": "2017",
+          "v": 58.12648314393718
+        },
+        {
+          "p": "2018",
+          "v": 58.22821534666242
+        },
+        {
+          "p": "2019",
+          "v": 81.01159446699685
+        },
+        {
+          "p": "2020",
+          "v": 61.693374060565
+        },
+        {
+          "p": "2021",
+          "v": 64.9874412450115
+        },
+        {
+          "p": "2022",
+          "v": 64.72098278193535
+        },
+        {
+          "p": "2023",
+          "v": 63.24597881038173
+        },
+        {
+          "p": "2024",
+          "v": 65.56392395968238
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_9.png"
+      ]
+    },
+    {
+      "id": "mat-c07",
+      "concepto": "Jóvenes en edad de diversificado (secundaria alta) fuera de la escuela, número",
+      "unidad": "personas",
+      "anio": 2024,
+      "tipo": "serie",
+      "fuente": "UNESCO Institute for Statistics (UIS), indicador OFST.3.CP",
+      "url": "https://api.uis.unesco.org/api/public/data/indicators?indicator=ROFST.2.CP&indicator=ROFST.3.CP&indicator=OFST.2.CP&indicator=OFST.3.CP&indicator=CR.2&indicator=CR.3&indicator=NERA.2.CP&indicator=NERA.3.CP&geoUnit=GTM&start=2010&end=2025",
+      "periodo": "2010-2024",
+      "n_puntos": 15,
+      "valor": 743687,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Archivo local UIS OFST.3.CP 2024 = 743687",
+      "evidencia": {
+        "url": "https://api.uis.unesco.org/api/public/data/indicators?indicator=ROFST.2.CP&indicator=ROFST.3.CP&indicator=OFST.2.CP&indicator=OFST.3.CP&indicator=CR.2&indicator=CR.3&indicator=NERA.2.CP&indicator=NERA.3.CP&geoUnit=GTM&start=2010&end=2025",
+        "cita": "{\"indicatorId\": \"OFST.3.CP\", \"geoUnit\": \"GTM\", \"year\": 2024, \"value\": 743687}",
+        "archivo_local": "sesiones/_descargas/api/ba6ef93cba668ef716f67f75a36c8577ed891de0.json"
+      },
+      "serie": [
+        {
+          "p": "2010",
+          "v": 617172
+        },
+        {
+          "p": "2011",
+          "v": 624832
+        },
+        {
+          "p": "2012",
+          "v": 610250
+        },
+        {
+          "p": "2013",
+          "v": 629685
+        },
+        {
+          "p": "2014",
+          "v": 639625
+        },
+        {
+          "p": "2015",
+          "v": 639226
+        },
+        {
+          "p": "2016",
+          "v": 643347
+        },
+        {
+          "p": "2017",
+          "v": 646903
+        },
+        {
+          "p": "2018",
+          "v": 654286
+        },
+        {
+          "p": "2019",
+          "v": 915798
+        },
+        {
+          "p": "2020",
+          "v": 699229
+        },
+        {
+          "p": "2021",
+          "v": 738167
+        },
+        {
+          "p": "2022",
+          "v": 734677
+        },
+        {
+          "p": "2023",
+          "v": 717716
+        },
+        {
+          "p": "2024",
+          "v": 743687
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_9.png"
+      ]
+    },
+    {
+      "id": "mat-c08",
+      "concepto": "Adolescentes en edad de básico (secundaria baja) fuera de la escuela, número",
+      "unidad": "personas",
+      "anio": 2024,
+      "tipo": "puntual",
+      "fuente": "UNESCO Institute for Statistics (UIS), indicador OFST.2.CP",
+      "url": "https://api.uis.unesco.org/api/public/data/indicators?indicator=ROFST.2.CP&indicator=ROFST.3.CP&indicator=OFST.2.CP&indicator=OFST.3.CP&indicator=CR.2&indicator=CR.3&indicator=NERA.2.CP&indicator=NERA.3.CP&geoUnit=GTM&start=2010&end=2025",
+      "periodo": "2024",
+      "n_puntos": 1,
+      "valor": 370838,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Archivo local UIS OFST.2.CP 2024 = 370838",
+      "evidencia": {
+        "url": "https://api.uis.unesco.org/api/public/data/indicators?indicator=ROFST.2.CP&indicator=ROFST.3.CP&indicator=OFST.2.CP&indicator=OFST.3.CP&indicator=CR.2&indicator=CR.3&indicator=NERA.2.CP&indicator=NERA.3.CP&geoUnit=GTM&start=2010&end=2025",
+        "cita": "{\"indicatorId\": \"OFST.2.CP\", \"geoUnit\": \"GTM\", \"year\": 2024, \"value\": 370838}",
+        "archivo_local": "sesiones/_descargas/api/ba6ef93cba668ef716f67f75a36c8577ed891de0.json"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_9.png"
+      ]
+    },
+    {
+      "id": "mat-c09",
+      "concepto": "Tasa de adolescentes en edad de básico (secundaria baja) fuera de la escuela",
+      "unidad": "% de la población en edad de secundaria baja",
+      "anio": 2024,
+      "tipo": "serie",
+      "fuente": "UIS (ROFST.2.CP), reproducido por Banco Mundial (SE.SEC.UNER.LO.ZS)",
+      "url": "https://api.uis.unesco.org/api/public/data/indicators?indicator=ROFST.2.CP&indicator=ROFST.3.CP&indicator=OFST.2.CP&indicator=OFST.3.CP&indicator=CR.2&indicator=CR.3&indicator=NERA.2.CP&indicator=NERA.3.CP&geoUnit=GTM&start=2010&end=2025",
+      "periodo": "2010-2024",
+      "n_puntos": 15,
+      "valor": 32.38072618649492,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Banco Mundial SE.SEC.UNER.LO.ZS 2024 = 32.3807 (archivo local a18d36...)",
+      "evidencia": {
+        "url": "https://api.uis.unesco.org/api/public/data/indicators?indicator=ROFST.2.CP&indicator=ROFST.3.CP&indicator=OFST.2.CP&indicator=OFST.3.CP&indicator=CR.2&indicator=CR.3&indicator=NERA.2.CP&indicator=NERA.3.CP&geoUnit=GTM&start=2010&end=2025",
+        "cita": "{\"indicatorId\": \"ROFST.2.CP\", \"geoUnit\": \"GTM\", \"year\": 2024, \"value\": 32.38072618649492}",
+        "archivo_local": "sesiones/_descargas/api/ba6ef93cba668ef716f67f75a36c8577ed891de0.json"
+      },
+      "serie": [
+        {
+          "p": "2010",
+          "v": 19.30115045402846
+        },
+        {
+          "p": "2011",
+          "v": 23.04660975623221
+        },
+        {
+          "p": "2012",
+          "v": 27.00066475878169
+        },
+        {
+          "p": "2013",
+          "v": 26.75984457147795
+        },
+        {
+          "p": "2014",
+          "v": 26.46381017792256
+        },
+        {
+          "p": "2015",
+          "v": 26.63084328165967
+        },
+        {
+          "p": "2016",
+          "v": 29.5153490051587
+        },
+        {
+          "p": "2017",
+          "v": 31.51529759440809
+        },
+        {
+          "p": "2018",
+          "v": 30.85278368946006
+        },
+        {
+          "p": "2019",
+          "v": 36.30313996881283
+        },
+        {
+          "p": "2020",
+          "v": 33.43161028673025
+        },
+        {
+          "p": "2021",
+          "v": 33.97037011032219
+        },
+        {
+          "p": "2022",
+          "v": 37.70583060121764
+        },
+        {
+          "p": "2023",
+          "v": 37.37462341017314
+        },
+        {
+          "p": "2024",
+          "v": 32.38072618649492
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "mat-c10",
+      "concepto": "Tasa de finalización de secundaria alta (diversificado)",
+      "unidad": "% del grupo de edad relevante",
+      "anio": 2024,
+      "tipo": "serie",
+      "fuente": "UIS, indicador CR.3 (encuestas de hogares)",
+      "url": "https://api.uis.unesco.org/api/public/data/indicators?indicator=ROFST.2.CP&indicator=ROFST.3.CP&indicator=OFST.2.CP&indicator=OFST.3.CP&indicator=CR.2&indicator=CR.3&indicator=NERA.2.CP&indicator=NERA.3.CP&geoUnit=GTM&start=2010&end=2025",
+      "periodo": "2011-2024 (irregular)",
+      "n_puntos": 5,
+      "valor": 23.09317970275879,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Archivo local UIS CR.3 2024 = 23.0931 (encuestas de hogares)",
+      "evidencia": {
+        "url": "https://api.uis.unesco.org/api/public/data/indicators?indicator=ROFST.2.CP&indicator=ROFST.3.CP&indicator=OFST.2.CP&indicator=OFST.3.CP&indicator=CR.2&indicator=CR.3&indicator=NERA.2.CP&indicator=NERA.3.CP&geoUnit=GTM&start=2010&end=2025",
+        "cita": "{\"indicatorId\": \"CR.3\", \"geoUnit\": \"GTM\", \"year\": 2024, \"value\": 23.09317970275879}",
+        "archivo_local": "sesiones/_descargas/api/ba6ef93cba668ef716f67f75a36c8577ed891de0.json"
+      },
+      "serie": [
+        {
+          "p": "2011",
+          "v": 24.51
+        },
+        {
+          "p": "2014",
+          "v": 34
+        },
+        {
+          "p": "2015",
+          "v": 26.33075904846191
+        },
+        {
+          "p": "2022",
+          "v": 25.64934921264648
+        },
+        {
+          "p": "2024",
+          "v": 23.09317970275879
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_1.png"
+      ]
+    },
+    {
+      "id": "mat-c11",
+      "concepto": "Tasa de finalización de secundaria baja (básico)",
+      "unidad": "% del grupo de edad relevante",
+      "anio": 2024,
+      "tipo": "puntual",
+      "fuente": "UIS, indicador CR.2 (encuestas de hogares)",
+      "url": "https://api.uis.unesco.org/api/public/data/indicators?indicator=ROFST.2.CP&indicator=ROFST.3.CP&indicator=OFST.2.CP&indicator=OFST.3.CP&indicator=CR.2&indicator=CR.3&indicator=NERA.2.CP&indicator=NERA.3.CP&geoUnit=GTM&start=2010&end=2025",
+      "periodo": "2024",
+      "n_puntos": 1,
+      "valor": 56.49832916259766,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Archivo local UIS CR.2 2024 = 56.4983; WB SE.SEC.CMPT.LO.ZS (49.29) es otro indicador, no comparable",
+      "evidencia": {
+        "url": "https://api.uis.unesco.org/api/public/data/indicators?indicator=ROFST.2.CP&indicator=ROFST.3.CP&indicator=OFST.2.CP&indicator=OFST.3.CP&indicator=CR.2&indicator=CR.3&indicator=NERA.2.CP&indicator=NERA.3.CP&geoUnit=GTM&start=2010&end=2025",
+        "cita": "{\"indicatorId\": \"CR.2\", \"geoUnit\": \"GTM\", \"year\": 2024, \"value\": 56.49832916259766}",
+        "archivo_local": "sesiones/_descargas/api/ba6ef93cba668ef716f67f75a36c8577ed891de0.json"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_1.png"
+      ]
+    },
+    {
+      "id": "mat-c12",
+      "concepto": "Tasa neta de matrícula en secundaria (básico + diversificado), último año disponible",
+      "unidad": "%",
+      "anio": 2018,
+      "tipo": "puntual",
+      "fuente": "Banco Mundial (WDI) con datos UIS, SE.SEC.NENR",
+      "url": "https://api.worldbank.org/v2/country/GTM/indicator/SE.SEC.NENR;SE.SEC.UNER.LO.ZS;SE.SEC.CMPT.LO.ZS;SE.ENR.SECO.FM.ZS?source=2&format=json&date=2010:2025&per_page=500",
+      "periodo": "2018",
+      "n_puntos": 1,
+      "valor": 43.77665,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Archivo local WB SE.SEC.NENR 2018 = 43.77665",
+      "evidencia": {
+        "url": "https://api.worldbank.org/v2/country/GTM/indicator/SE.SEC.NENR;SE.SEC.UNER.LO.ZS;SE.SEC.CMPT.LO.ZS;SE.ENR.SECO.FM.ZS?source=2&format=json&date=2010:2025&per_page=500",
+        "cita": "\"indicator\":{\"id\":\"SE.SEC.NENR\"...},\"date\":\"2018\",\"value\":43.77665",
+        "archivo_local": "sesiones/_descargas/api/a18d366928816607f60dd6e79829eac3bb0540d3.json"
+      },
+      "usada": false,
+      "aparece_en": []
+    }
+  ],
+  "fuentes": [
+    {
+      "nombre": "MINEDUC — Anuario Estadístico de la Educación 2024-2025 (tablero SAP BO, cuadros Cifras educativas ID 19020, Indicadores de cobertura ID 15356, Indicadores de eficiencia ID 18488)",
+      "url": "https://estadistica.mineduc.gob.gt/anuario/home.html",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Banco Mundial API (UNESCO-UIS) — finalización primaria y secundaria baja",
+      "url": "https://api.worldbank.org/v2/country/GTM/indicator/SE.SEC.CMPT.LO.ZS",
+      "nivel": "primaria (organismo internacional con datos administrativos MINEDUC)"
+    },
+    {
+      "nombre": "CEPAL — Infografía Brechas de acceso y calidad (con base en MINEDUC/INE)",
+      "url": "https://www.cepal.org/sites/default/files/infographic/files/infografia._brechas_de_acceso_y_calidad_desafio_para_la_transformacion_educativa_en_guatemala.pdf",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "AGN — Gobierno destaca acciones para reducir la deserción escolar",
+      "url": "https://agn.gt/gobierno-destaca-acciones-para-reducir-la-desercion-escolar",
+      "nivel": "oficial (agencia de gobierno)"
+    },
+    {
+      "nombre": "MINEDUC — Anuario Estadístico (tablero.aspx → SAP BO pisi.mineduc.gob.gt:8443)",
+      "url": "https://estadistica.mineduc.gob.gt/anuario/home.html",
+      "nivel": "primaria (no accesible sin navegador)"
+    },
+    {
+      "nombre": "AGN — Mineduc reporta aumento de estudiantes (11-mar-2026)",
+      "url": "https://agn.gt/mineduc-reporta-aumento-de-estudiantes-en-la-matricula-estudiantil-de-este-ano/",
+      "nivel": "oficial (agencia estatal citando a MINEDUC)"
+    },
+    {
+      "nombre": "AGN — Ministra aplaude aumento de matrícula pública 2026 (19-mar-2026)",
+      "url": "https://agn.gt/ministra-de-educacion-aplaude-aumento-de-la-matricula-escolar-del-sector-publico-en-2026/",
+      "nivel": "oficial (agencia estatal)"
+    },
+    {
+      "nombre": "Prensa Latina — matrícula pública 2024 por nivel (cita MINEDUC)",
+      "url": "https://www.prensa-latina.cu/2025/01/10/guatemala-matriculo-32-millones-de-alumnos-en-2024-en-sector-publico/",
+      "nivel": "prensa reproduciendo dato oficial"
+    },
+    {
+      "nombre": "CEPAL — Infografía Brechas de acceso y calidad (base MINEDUC 2020)",
+      "url": "https://www.cepal.org/sites/default/files/infographic/files/infografia._brechas_de_acceso_y_calidad_desafio_para_la_transformacion_educativa_en_guatemala.pdf",
+      "nivel": "organismo internacional sobre dato oficial"
+    },
+    {
+      "nombre": "UNESCO UIS API — fuera de la escuela y finalización",
+      "url": "https://api.uis.unesco.org/api/public/data/indicators?indicator=ROFST.2.CP&indicator=ROFST.3.CP&indicator=OFST.2.CP&indicator=OFST.3.CP&indicator=CR.2&indicator=CR.3&indicator=NERA.2.CP&indicator=NERA.3.CP&geoUnit=GTM&start=2010&end=2025",
+      "nivel": "organismo internacional (primaria internacional)"
+    },
+    {
+      "nombre": "Banco Mundial API (WDI/UIS)",
+      "url": "https://api.worldbank.org/v2/country/GTM/indicator/SE.SEC.NENR;SE.SEC.UNER.LO.ZS;SE.SEC.CMPT.LO.ZS;SE.ENR.SECO.FM.ZS?source=2&format=json&date=2010:2025&per_page=500",
+      "nivel": "organismo internacional (reproduce UIS)"
+    },
+    {
+      "nombre": "MINEDUC Anuario Estadístico (tablero.aspx → SAP BO openDocument)",
+      "url": "https://estadistica.mineduc.gob.gt/anuario/home.html",
+      "nivel": "oficial primaria (no accesible sin navegador)"
+    }
+  ],
+  "no_afirma": [
+    "No afirma que la matrícula pública 2026 sea récord ni que llegue a 3.3 millones: el aumento de 150 mil es preliminar a febrero y no hay cierre publicado.",
+    "No compara la deserción de secundaria con la de primaria: la tasa de deserción de primaria por nivel no se obtuvo.",
+    "Las tasas de finalización de UIS no siguen a una misma cohorte: no son pasos de un embudo ni dicen cuántos de los que terminan primaria terminan después básico.",
+    "No atribuye causas (trabajo, migración, costo, embarazo) a la deserción ni a las diferencias entre departamentos.",
+    "No afirma una tendencia a la baja de la deserción: solo se comparan 2024 y 2025."
+  ],
+  "incertidumbre": [
+    "La ancla (des-c02, finalización de primaria) tiene segunda fuente independiente (Banco Mundial vs UIS; manda UIS, 84.97%). Las demás cifras del hilo tienen segunda fuente que reproduce la primaria, sin verificación independiente: Anuario MINEDUC (dep-c01 a dep-c11, recalculadas desde el mismo cuadro), UIS (mat-c06, mat-c07, mat-c08, mat-c10, mat-c11), AGN (mat-c02) y CEPAL (mat-c04).",
+    "mat-c02 es preliminar a febrero 2026 y sus partes por nivel suman 142 mil, no 150 mil; la fuente no explica la diferencia.",
+    "Las cifras departamentales y de cobertura son de todos los sectores; el aumento 2026 es solo del sector público. No se mezclan en una misma tarjeta.",
+    "La serie UIS de jóvenes fuera de la escuela tiene 2019 atípico; solo se usa 2024. El rango de edad de la tasa neta MINEDUC no aparece en el cuadro (por convención, 16-18 para diversificado).",
+    "La distribución por sector (CEPAL) es de 2020; puede haber cambiado. La finalización por nivel no es un embudo: se usó barras-v, no embudo."
+  ],
+  "descartadas": [
+    {
+      "id": "des-c01",
+      "por": "no_confirmada"
+    },
+    {
+      "id": "des-c03",
+      "por": "no_confirmada"
+    },
+    {
+      "id": "des-c04",
+      "por": "no_confirmada"
+    }
+  ]
+}

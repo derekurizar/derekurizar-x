@@ -1,0 +1,188 @@
+{
+  "slug": "banano-guatemala-estados-unidos",
+  "fecha": "2026-10-11",
+  "tema": "El banano de Guatemala en la mesa de Estados Unidos",
+  "pista": null,
+  "tipo": "dato",
+  "dato": "Más de 4 de cada 10 kilos de banano que compra EE.UU. salen de Guatemala",
+  "cifra_id": "dat-c01",
+  "por_que_impacta": "El banano se asocia con Ecuador, pero en el mayor mercado del continente el primer proveedor es Guatemala, y su parte creció de 36.7 % en 2015 a 40.9 % en 2025.",
+  "paleta": "cacao",
+  "hook_tipo": "mito_vs_dato",
+  "pregunta": "¿Qué parte del banano que importa Estados Unidos viene de Guatemala?",
+  "tesis": "En 2025, el 40.88 % del peso neto del banano que importó EE.UU. vino de Guatemala, frente a 36.7 % en 2015.",
+  "estado": "listo",
+  "tuit": {
+    "texto": "Si piensas en banano, seguramente piensas en Ecuador.\n\nPero el primer proveedor de banano de EE.UU. es Guatemala: le vende más que Ecuador y Costa Rica juntos.\n\nY su parte de ese mercado creció en la última década.",
+    "caracteres": 214,
+    "alt_text": "Tarjeta con una cifra grande: 40.9 % del peso neto del banano que importó Estados Unidos en 2025 vino de Guatemala, 4.2 puntos más que el 36.7 % de 2015. Dos barras comparan 2015 y 2025. Fuente: UN Comtrade, importaciones de banano (HS 0803) reportadas por EE.UU.",
+    "imagen": "dato.png",
+    "tarjeta": "tarjeta.html",
+    "plantilla": "cifra",
+    "kicker": "BANANO · IMPORTACIONES DE EE.UU. · 2025",
+    "titular": [
+      "Más de 4 de cada 10 kilos",
+      "de banano que compra",
+      "EE.UU. son de Guatemala"
+    ],
+    "nota": "Peso neto importado de banano (HS 0803), según los datos que reporta EE.UU. como importador.",
+    "fuente": "UN Comtrade · importaciones de EE.UU. · 2015 y 2025",
+    "cifra_ids": [
+      "dat-c01",
+      "dat-c02",
+      "dat-c03"
+    ]
+  },
+  "cifras": [
+    {
+      "id": "dat-c01",
+      "concepto": "Participación de Guatemala en los kilos de banano (HS 0803) importados por EE.UU., 2025, por país de origen",
+      "valor": 40.88,
+      "unidad": "% del peso neto importado",
+      "anio": "2025",
+      "veredicto": "verificada",
+      "fuente": "UN Comtrade · importaciones reportadas por EE.UU. (HS 0803, bananos y plátanos)",
+      "fuente_2": "UN Comtrade, reporte espejo de Guatemala (exportaciones 0803, 2025)",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?reporterCode=842&period=2025&cmdCode=0803&flowCode=M"
+    },
+    {
+      "id": "dat-c02",
+      "concepto": "Kilos de banano importados por EE.UU. desde Guatemala vs. desde Ecuador y Costa Rica juntos, 2025",
+      "valor": 2085918089,
+      "unidad": "kg",
+      "anio": "2025",
+      "veredicto": "verificada",
+      "fuente": "UN Comtrade · importaciones reportadas por EE.UU. (HS 0803)",
+      "fuente_2": "UN Comtrade, reporte espejo de Guatemala (2025)",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?reporterCode=842&period=2025&cmdCode=0803&flowCode=M"
+    },
+    {
+      "id": "dat-c03",
+      "concepto": "Participación de Guatemala en los kilos de banano importados por EE.UU., 2015",
+      "valor": 36.7,
+      "unidad": "% del peso neto importado",
+      "anio": "2015",
+      "veredicto": "verificada",
+      "fuente": "UN Comtrade · importaciones reportadas por EE.UU. (HS 0803)",
+      "fuente_2": "UN Comtrade, reporte espejo de Guatemala (2015)",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?reporterCode=842&period=2015&cmdCode=0803&flowCode=M"
+    }
+  ],
+  "candidatas": [
+    {
+      "id": "dat-c01",
+      "puntaje": 20,
+      "criterios": {
+        "sorpresa": 4,
+        "magnitud": 5,
+        "comparacion": 4,
+        "actualidad": 4,
+        "solidez": 3
+      },
+      "elegida": true,
+      "motivo": "Escala humana directa (más de 4 de cada 10 kilos), contradice la idea de que el banano es de Ecuador y se compara con 2015 en la misma unidad.",
+      "dato": "Participación de Guatemala en los kilos de banano (HS 0803) importados por EE.UU., 2025, por país de origen"
+    },
+    {
+      "id": "dat-c02",
+      "puntaje": 18,
+      "criterios": {
+        "sorpresa": 4,
+        "magnitud": 2,
+        "comparacion": 5,
+        "actualidad": 4,
+        "solidez": 3
+      },
+      "elegida": false,
+      "motivo": "Misma historia que dat-c01 en miles de millones de kilos, sin escala humana; se usa como contexto en el texto.",
+      "dato": "Kilos de banano importados por EE.UU. desde Guatemala vs. desde Ecuador y Costa Rica juntos, 2025"
+    },
+    {
+      "id": "dat-c03",
+      "puntaje": 16,
+      "criterios": {
+        "sorpresa": 3,
+        "magnitud": 3,
+        "comparacion": 4,
+        "actualidad": 3,
+        "solidez": 3
+      },
+      "elegida": false,
+      "motivo": "Es el punto de comparación (2015) del dato elegido; solo, es un dato de hace diez años.",
+      "dato": "Participación de Guatemala en los kilos de banano importados por EE.UU., 2015"
+    },
+    {
+      "id": "dat-c04",
+      "puntaje": 16,
+      "criterios": {
+        "sorpresa": 3,
+        "magnitud": 2,
+        "comparacion": 4,
+        "actualidad": 4,
+        "solidez": 3
+      },
+      "elegida": false,
+      "motivo": "Récord real de 24 años, pero US$1,081 millones es un número macro sin traducción y menos sorprendente.",
+      "dato": "Valor FOB anual de las exportaciones de banano de Guatemala, 2002-2025"
+    },
+    {
+      "id": "dat-c05",
+      "puntaje": 15,
+      "criterios": {
+        "sorpresa": 3,
+        "magnitud": 3,
+        "comparacion": 3,
+        "actualidad": 3,
+        "solidez": 3
+      },
+      "elegida": false,
+      "motivo": "Crecimiento en dólares corrientes de 2002 a 2025 sin ajustar por inflación; comparación menos limpia.",
+      "dato": "Crecimiento del valor exportado de banano, 2025 vs 2002"
+    },
+    {
+      "id": "dat-c06",
+      "puntaje": 15,
+      "criterios": {
+        "sorpresa": 3,
+        "magnitud": 4,
+        "comparacion": 2,
+        "actualidad": 3,
+        "solidez": 3
+      },
+      "elegida": false,
+      "motivo": "Repite dat-c01 en valor FOB, sin punto de comparación en el tiempo.",
+      "dato": "Participación de Guatemala en el valor FOB del banano importado por EE.UU., 2025"
+    },
+    {
+      "id": "dat-c07",
+      "puntaje": 14,
+      "criterios": {
+        "sorpresa": 2,
+        "magnitud": 4,
+        "comparacion": 2,
+        "actualidad": 3,
+        "solidez": 3
+      },
+      "elegida": false,
+      "motivo": "Peso del banano en las exportaciones: esperable y sin comparación clara.",
+      "dato": "Peso del banano en las exportaciones totales de Guatemala, 2025"
+    }
+  ],
+  "no_afirma": [
+    "No afirma que Guatemala sea el mayor exportador de banano del mundo, solo el primer proveedor de EE.UU.",
+    "Mide peso neto (kg), no valor en dólares.",
+    "No afirma que la participación subiera cada año entre 2015 y 2025: solo hay dos puntos."
+  ],
+  "incertidumbre": [
+    "La segunda fuente reproduce la primaria; sin verificación independiente.",
+    "Son datos reportados por EE.UU. como importador; las cifras de Guatemala como exportador pueden diferir."
+  ],
+  "fuentes": [
+    "UN Comtrade · importaciones de EE.UU. · 2015 y 2025"
+  ],
+  "fuentes_cifras": [
+    "UN Comtrade · importaciones reportadas por EE.UU. (HS 0803)",
+    "UN Comtrade · importaciones reportadas por EE.UU. (HS 0803, bananos y plátanos)"
+  ],
+  "gate_mecanico": "ok"
+}

@@ -1,0 +1,341 @@
+{
+  "slug": "turismo-divisas-saldo-2026",
+  "fecha": "2026-10-06",
+  "tesis": "En enero–agosto de 2026 salieron US$867.7 millones en divisas por viajes al exterior frente a US$873.0 millones que dejaron los visitantes: 99.4 de cada 100 dólares del turismo se fueron afuera.",
+  "ancla_id": "dat-c01",
+  "paleta": "atitlan",
+  "hook_tipo": "mito_vs_dato",
+  "cifras": [
+    {
+      "id": "dat-c01",
+      "concepto": "Ingreso vs egreso de divisas por turismo y viajes, enero–agosto 2026",
+      "unidad": "millones de US$",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Banco de Guatemala · Balanza cambiaria, Mercado Institucional de Divisas",
+      "url": "https://www.banguat.gob.gt/sites/default/files/banguat/imm/imm31.htm",
+      "periodo": "enero–agosto 2026",
+      "n_puntos": 2,
+      "valor": 867.7,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Banguat imm25 (ingreso 873.0) y suma de meses imm31 recalculada; primarias releídas en vivo",
+      "evidencia": {
+        "url": "https://www.banguat.gob.gt/sites/default/files/banguat/imm/imm31.htm",
+        "cita": "EGRESO DE DIVISAS POR TURISMO Y VIAJES … TOTAL | 203.1 | 659.7 | 885.2 | 1,100.1 | 1,248.0 | 867.7 (columna 2026 p/)",
+        "archivo_local": "sesiones/turismo-divisas-saldo-2026/fuentes/banguat_imm31_tabla.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Ingreso (lo que dejan visitantes)",
+          "valor": 873.0
+        },
+        {
+          "nombre": "Egreso (lo que se gasta en viajes fuera)",
+          "valor": 867.7
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "dato.png"
+      ]
+    },
+    {
+      "id": "dat-c02",
+      "concepto": "Saldo (ingreso menos egreso) de divisas por turismo y viajes, ene–ago 2025 vs ene–ago 2026",
+      "unidad": "millones de US$",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Banco de Guatemala · Balanza cambiaria, Mercado Institucional de Divisas",
+      "url": "https://www.banguat.gob.gt/sites/default/files/banguat/imm/imm25.htm",
+      "periodo": "enero–agosto 2025 y 2026",
+      "n_puntos": 2,
+      "valor": 5.3,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo desde imm25 e imm31 (Banguat)",
+      "evidencia": {
+        "url": "https://www.banguat.gob.gt/sites/default/files/banguat/imm/imm25.htm",
+        "cita": "2025 p/ ENERO 96.5 FEBRERO 76.7 MARZO 108.9 ABRIL 140.9 MAYO 95.5 JUNIO 105.7 JULIO 119.2 AGOSTO 117.1; 2026 p/ TOTAL 873.0",
+        "archivo_local": "sesiones/turismo-divisas-saldo-2026/fuentes/banguat_imm25_tabla.txt"
+      },
+      "partes": [
+        {
+          "nombre": "ene–ago 2025",
+          "valor": 89.0,
+          "ingreso": 860.5,
+          "egreso": 771.5
+        },
+        {
+          "nombre": "ene–ago 2026",
+          "valor": 5.3,
+          "ingreso": 873.0,
+          "egreso": 867.7
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c03",
+      "concepto": "Crecimiento interanual ene–ago 2026: egreso vs ingreso de divisas por turismo y viajes",
+      "unidad": "% de variación",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Banco de Guatemala · Balanza cambiaria, Mercado Institucional de Divisas",
+      "url": "https://www.banguat.gob.gt/sites/default/files/banguat/imm/imm31.htm",
+      "periodo": "enero–agosto 2026 vs 2025",
+      "n_puntos": 2,
+      "valor": 12.5,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo desde imm31/imm25 (Banguat)",
+      "evidencia": {
+        "url": "https://www.banguat.gob.gt/sites/default/files/banguat/imm/imm31.htm",
+        "cita": "EGRESO … 2026 p/: ENERO 103.5 FEBRERO 88.6 MARZO 94.1 ABRIL 109.8 MAYO 113.7 JUNIO 121.7 JULIO 121.2 AGOSTO 115.1; TOTAL 867.7",
+        "archivo_local": "sesiones/turismo-divisas-saldo-2026/fuentes/banguat_imm31_tabla.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Egreso (viajes fuera)",
+          "valor": 12.5,
+          "de": 771.5,
+          "a": 867.7
+        },
+        {
+          "nombre": "Ingreso (visitantes)",
+          "valor": 1.5,
+          "de": 860.5,
+          "a": 873.0
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c04",
+      "concepto": "Ingreso y egreso anual de divisas por turismo y viajes, 2021–2026",
+      "unidad": "millones de US$",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Banco de Guatemala · Balanza cambiaria, Mercado Institucional de Divisas",
+      "url": "https://www.banguat.gob.gt/sites/default/files/banguat/imm/imm25.htm",
+      "periodo": "2021–2026 (2026 = ene–ago)",
+      "n_puntos": 6,
+      "valor": 1340.1,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "INGUAT vía newsinamerica/PDCC (cierre 2025, 17-ene-2026)",
+      "evidencia": {
+        "url": "https://www.banguat.gob.gt/sites/default/files/banguat/imm/imm25.htm",
+        "cita": "MES | 2021 | 2022 | 2023 | 2024 p/ | 2025 p/ | 2026 p/ TOTAL | 244.7 | 649.3 | 1,076.0 | 1,208.7 | 1,340.1 | 873.0",
+        "archivo_local": "sesiones/turismo-divisas-saldo-2026/fuentes/banguat_imm25_tabla.txt"
+      },
+      "serie": [
+        {
+          "periodo": "2021",
+          "valor": 244.7,
+          "egreso": 203.1
+        },
+        {
+          "periodo": "2022",
+          "valor": 649.3,
+          "egreso": 659.7
+        },
+        {
+          "periodo": "2023",
+          "valor": 1076.0,
+          "egreso": 885.2
+        },
+        {
+          "periodo": "2024",
+          "valor": 1208.7,
+          "egreso": 1100.1
+        },
+        {
+          "periodo": "2025",
+          "valor": 1340.1,
+          "egreso": 1248.0
+        },
+        {
+          "periodo": "2026 ene–ago",
+          "valor": 873.0,
+          "egreso": 867.7
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c05",
+      "concepto": "Meses de 2026 en que el egreso de divisas por turismo superó al ingreso",
+      "unidad": "meses de 8",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Banco de Guatemala · Balanza cambiaria, Mercado Institucional de Divisas",
+      "url": "https://www.banguat.gob.gt/sites/default/files/banguat/imm/imm31.htm",
+      "periodo": "enero–agosto 2026",
+      "n_puntos": 1,
+      "valor": 3,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo mes a mes imm25 vs imm31 (Banguat)",
+      "evidencia": {
+        "url": "https://www.banguat.gob.gt/sites/default/files/banguat/imm/imm31.htm",
+        "cita": "EGRESO 2026 p/: FEBRERO 88.6 · MAYO 113.7 · JUNIO 121.7 (INGRESO imm25 2026 p/: FEBRERO 83.1 · MAYO 93.9 · JUNIO 103.3)",
+        "archivo_local": "sesiones/turismo-divisas-saldo-2026/fuentes/banguat_imm31_tabla.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Febrero",
+          "ingreso": 83.1,
+          "egreso": 88.6
+        },
+        {
+          "nombre": "Mayo",
+          "ingreso": 93.9,
+          "egreso": 113.7
+        },
+        {
+          "nombre": "Junio",
+          "ingreso": 103.3,
+          "egreso": 121.7
+        },
+        {
+          "nombre": "Julio (casi empate)",
+          "ingreso": 121.8,
+          "egreso": 121.2
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c06",
+      "concepto": "Remesas de un solo mes (julio 2026) vs ingreso por turismo de todo 2025",
+      "unidad": "millones de US$",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Banco de Guatemala · Cuadro 1 Ingreso de divisas por remesas familiares; balanza cambiaria imm25",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/remesas/remfam2002_2026.xlsx",
+      "periodo": "julio 2026 vs año 2025",
+      "n_puntos": 2,
+      "valor": 2468.590521,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Emisoras Unidas / EFE-swissinfo: remesas julio 2026 US$2,468.6 millones, máximo histórico mensual",
+      "evidencia": {
+        "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/remesas/remfam2002_2026.xlsx",
+        "cita": "Cuadro 1 Guatemala: Ingreso de Divisas por Remesas Familiares, En millones de US dólares … Julio … 2468.5905212899997 (columna 2026)",
+        "archivo_local": "sesiones/turismo-divisas-saldo-2026/fuentes/banguat_remfam2002_2026_hoja1.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Remesas, julio 2026",
+          "valor": 2468.5905212899997
+        },
+        {
+          "nombre": "Turismo y viajes, todo 2025",
+          "valor": 1340.1
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c07",
+      "concepto": "Remesas vs ingreso por turismo y viajes, enero–agosto 2026",
+      "unidad": "millones de US$",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Banco de Guatemala · Cuadro 1 remesas familiares; balanza cambiaria imm25",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/remesas/remfam2002_2026.xlsx",
+      "periodo": "enero–agosto 2026",
+      "n_puntos": 2,
+      "valor": 17774.857831,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa (acumulado ene-jul 15,447.1) + agosto 2,327.74 del CSV = 17,774.84",
+      "evidencia": {
+        "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/remesas/remfam2002_2026.xlsx",
+        "cita": "Total … 17774.857831249999 (columna 2026; suma enero–agosto)",
+        "archivo_local": "sesiones/turismo-divisas-saldo-2026/fuentes/banguat_remfam2002_2026_hoja1.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Remesas",
+          "valor": 17774.85783125
+        },
+        {
+          "nombre": "Turismo y viajes (ingreso)",
+          "valor": 873.0
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c08",
+      "concepto": "Visitantes no residentes, primer semestre 2026 (INGUAT)",
+      "unidad": "visitantes no residentes",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "INGUAT vía Agencia Guatemalteca de Noticias (AGN)",
+      "url": "https://agn.gt/guatemala-registra-la-llegada-de-un-millon-625-mil-849-visitantes-no-residentes-durante-el-primer-semestre-del-2026/",
+      "periodo": "enero–junio 2026",
+      "n_puntos": 1,
+      "valor": 1625849,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AGN (boletín INGUAT 23-jul-2026) + búsqueda que reproduce 1,625,849 y +14,944 (+1%)",
+      "evidencia": {
+        "url": "https://agn.gt/guatemala-registra-la-llegada-de-un-millon-625-mil-849-visitantes-no-residentes-durante-el-primer-semestre-del-2026/",
+        "cita": "un millón 625 mil 849 visitantes no residentes … 14 mil 944 visitantes no residentes más … un aumento del 1%",
+        "archivo_local": null
+      },
+      "partes": [
+        {
+          "nombre": "Aumento vs ene–jun 2025",
+          "valor": 14944,
+          "unidad": "visitantes"
+        },
+        {
+          "nombre": "Variación",
+          "valor": 1,
+          "unidad": "%"
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    }
+  ],
+  "fuentes": [
+    {
+      "nombre": "Banguat · Balanza cambiaria (imm23, imm25, imm31)",
+      "url": "https://www.banguat.gob.gt/sites/default/files/banguat/imm/imm25.htm",
+      "tipo": "primaria"
+    },
+    {
+      "nombre": "Banguat · Cuadro 1 remesas familiares remfam2002_2026.xlsx",
+      "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/remesas/remfam2002_2026.xlsx",
+      "tipo": "primaria"
+    },
+    {
+      "nombre": "AGN · boletín INGUAT primer semestre 2026",
+      "url": "https://agn.gt/guatemala-registra-la-llegada-de-un-millon-625-mil-849-visitantes-no-residentes-durante-el-primer-semestre-del-2026/",
+      "tipo": "secundaria oficial"
+    }
+  ],
+  "no_afirma": [
+    "No afirma que el turismo no aporte a la economía: mide solo el flujo de divisas en el mercado cambiario, no empleo ni valor agregado.",
+    "No afirma quiénes viajan ni para qué (turismo, compras, salud, estudios): no hay desglose del egreso.",
+    "No afirma que sea el saldo más bajo de la historia: la serie consultada solo cubre 2021–2026."
+  ],
+  "incertidumbre": [
+    "La segunda fuente reproduce la primaria (Banguat); sin verificación independiente.",
+    "Cifras preliminares de la balanza cambiaria (Mercado Institucional de Divisas); la cuenta Viajes de la balanza de pagos puede diferir.",
+    "Acumulado enero–agosto; septiembre aún no publicado."
+  ],
+  "descartadas": [],
+  "tipo": "dato"
+}

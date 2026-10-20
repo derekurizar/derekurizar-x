@@ -26,7 +26,7 @@ import sys
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RE_DATA = re.compile(r"const DATA = \{.*?\n\};\n", re.S)
-CABECERA = ("kicker", "titular", "nota", "fuente", "handle", "leyenda")
+CABECERA = ("kicker", "titular", "titular_escala", "nota", "fuente", "handle", "leyenda")
 
 
 def data_de(visual, handle):

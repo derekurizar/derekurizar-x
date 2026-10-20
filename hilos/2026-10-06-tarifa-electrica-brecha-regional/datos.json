@@ -1,0 +1,1998 @@
+{
+  "slug": "tarifa-electrica-brecha-regional",
+  "fecha": "2026-10-06",
+  "tesis": "En ago-oct 2026 el kWh no social de DEOCSA (Q2.12) cuesta más de 40% más que el de EEGSA (Q1.51), pero esa brecha es la más baja de los 43 pliegos trimestrales desde 2016 (máximo: 66.9% en 2018): desde 2022 la tarifa de Energuate bajó y la de EEGSA subió.",
+  "ancla_id": "bre-c02",
+  "paleta": "cielo",
+  "hook_tipo": "brecha_territorial",
+  "cifras": [
+    {
+      "id": "bre-c01",
+      "concepto": "Tarifa social vigente (1 ago-31 oct 2026) por distribuidora",
+      "unidad": "Q/kWh",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "CNEE, comunicado tarifas trimestrales ago-oct 2026 (31 jul 2026)",
+      "url": "https://cnee.gob.gt/wp-content/uploads/2026/07/Comunicado-CNEE-tarifas-trimestrales-agosto-a-octubre.pdf",
+      "periodo": "ago-oct 2026",
+      "n_puntos": 3,
+      "valor": 2.03,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa Libre (resumen de busqueda) reproduce el comunicado CNEE",
+      "evidencia": {
+        "url": "https://cnee.gob.gt/wp-content/uploads/2026/07/Comunicado-CNEE-tarifas-trimestrales-agosto-a-octubre.pdf",
+        "cita": "DEOCSA TS 2.04 2.03 -0.01 -0.5% 1.4 | DEORSA TS 1.98 1.98 0.00 0.0% 0.9 | EEGSA TS 1.42 1.42 0.00 0.0% 1.4",
+        "archivo_local": "sesiones/_descargas/Comunicado-CNEE-tarifas-trimestrales-agosto-a-octubre.txt"
+      },
+      "partes": [
+        {
+          "nombre": "DEOCSA",
+          "valor": 2.03
+        },
+        {
+          "nombre": "DEORSA",
+          "valor": 1.98
+        },
+        {
+          "nombre": "EEGSA",
+          "valor": 1.42
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_3.png"
+      ]
+    },
+    {
+      "id": "bre-c02",
+      "concepto": "Tarifa no social vigente (1 ago-31 oct 2026) por distribuidora",
+      "unidad": "Q/kWh",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "CNEE, comunicado tarifas trimestrales ago-oct 2026 (31 jul 2026)",
+      "url": "https://cnee.gob.gt/wp-content/uploads/2026/07/Comunicado-CNEE-tarifas-trimestrales-agosto-a-octubre.pdf",
+      "periodo": "ago-oct 2026",
+      "n_puntos": 3,
+      "valor": 2.12,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Archivo local del comunicado CNEE (linea DEOCSA TNS 2.12); sin 2a fuente independiente",
+      "evidencia": {
+        "url": "https://cnee.gob.gt/wp-content/uploads/2026/07/Comunicado-CNEE-tarifas-trimestrales-agosto-a-octubre.pdf",
+        "cita": "DEOCSA TNS 2.13 2.12 -0.01 -0.5% 50 | DEORSA TNS 2.06 2.06 0.00 0.0% 55 | EEGSA TNS 1.51 1.51 0.00 0.0% 175",
+        "archivo_local": "sesiones/_descargas/Comunicado-CNEE-tarifas-trimestrales-agosto-a-octubre.txt"
+      },
+      "partes": [
+        {
+          "nombre": "DEOCSA",
+          "valor": 2.12
+        },
+        {
+          "nombre": "DEORSA",
+          "valor": 2.06
+        },
+        {
+          "nombre": "EEGSA",
+          "valor": 1.51
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_1.png"
+      ]
+    },
+    {
+      "id": "bre-c03",
+      "concepto": "Brecha del precio del kWh frente a EEGSA (capital), ago-oct 2026",
+      "unidad": "% más caro que EEGSA",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "CNEE, comunicado tarifas trimestrales ago-oct 2026 (31 jul 2026) (cálculo propio)",
+      "url": "https://cnee.gob.gt/wp-content/uploads/2026/07/Comunicado-CNEE-tarifas-trimestrales-agosto-a-octubre.pdf",
+      "periodo": "ago-oct 2026",
+      "n_puntos": 4,
+      "valor": 42.96,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recalculo propio desde tarifas CNEE (2.03-1.42)/1.42=42.958%; TNS 40.40%",
+      "evidencia": {
+        "url": "https://cnee.gob.gt/wp-content/uploads/2026/07/Comunicado-CNEE-tarifas-trimestrales-agosto-a-octubre.pdf",
+        "cita": "DEOCSA TS ... 2.03 | EEGSA TS ... 1.42 | DEOCSA TNS ... 2.12 | EEGSA TNS ... 1.51",
+        "archivo_local": "sesiones/_descargas/Comunicado-CNEE-tarifas-trimestrales-agosto-a-octubre.txt"
+      },
+      "partes": [
+        {
+          "nombre": "DEOCSA social",
+          "valor": 42.96
+        },
+        {
+          "nombre": "DEOCSA no social",
+          "valor": 40.4
+        },
+        {
+          "nombre": "DEORSA social",
+          "valor": 39.44
+        },
+        {
+          "nombre": "DEORSA no social",
+          "valor": 36.42
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_3.png"
+      ]
+    },
+    {
+      "id": "bre-c04",
+      "concepto": "Usuarios en tarifa social por distribuidora (comunicado ago-oct 2026)",
+      "unidad": "millones de usuarios",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "CNEE, comunicado tarifas trimestrales ago-oct 2026 (31 jul 2026)",
+      "url": "https://cnee.gob.gt/wp-content/uploads/2026/07/Comunicado-CNEE-tarifas-trimestrales-agosto-a-octubre.pdf",
+      "periodo": "ago-oct 2026",
+      "n_puntos": 3,
+      "valor": 1.4,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Archivo local del comunicado CNEE (EEGSA/DEOCSA TS 1.4 M); sin 2a fuente",
+      "evidencia": {
+        "url": "https://cnee.gob.gt/wp-content/uploads/2026/07/Comunicado-CNEE-tarifas-trimestrales-agosto-a-octubre.pdf",
+        "cita": "Variación % Usuarios Millones | DEOCSA TS ... 1.4 | DEORSA TS ... 0.9 | EEGSA TS ... 1.4",
+        "archivo_local": "sesiones/_descargas/Comunicado-CNEE-tarifas-trimestrales-agosto-a-octubre.txt"
+      },
+      "partes": [
+        {
+          "nombre": "DEOCSA",
+          "valor": 1.4
+        },
+        {
+          "nombre": "DEORSA",
+          "valor": 0.9
+        },
+        {
+          "nombre": "EEGSA",
+          "valor": 1.4
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "bre-c05",
+      "concepto": "Usuarios del país en tarifa social",
+      "unidad": "% de usuarios del país",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "CNEE, comunicado tarifas trimestrales ago-oct 2026 (31 jul 2026)",
+      "url": "https://cnee.gob.gt/wp-content/uploads/2026/07/Comunicado-CNEE-tarifas-trimestrales-agosto-a-octubre.pdf",
+      "periodo": "ago-oct 2026",
+      "n_puntos": 1,
+      "valor": 93,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa Libre (resumen de busqueda) reproduce el comunicado CNEE",
+      "evidencia": {
+        "url": "https://cnee.gob.gt/wp-content/uploads/2026/07/Comunicado-CNEE-tarifas-trimestrales-agosto-a-octubre.pdf",
+        "cita": "La tarifa social beneficia a aproximadamente 3.9 millones de familias guatemaltecas, equivalentes al 93% de los usuarios del país.",
+        "archivo_local": "sesiones/_descargas/Comunicado-CNEE-tarifas-trimestrales-agosto-a-octubre.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_2.png"
+      ]
+    },
+    {
+      "id": "bre-c06",
+      "concepto": "Familias con aporte INDE en su factura (consumo hasta 100 kWh/mes)",
+      "unidad": "millones de familias",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "CNEE, comunicado tarifas trimestrales ago-oct 2026 (31 jul 2026)",
+      "url": "https://cnee.gob.gt/wp-content/uploads/2026/07/Comunicado-CNEE-tarifas-trimestrales-agosto-a-octubre.pdf",
+      "periodo": "ago-oct 2026",
+      "n_puntos": 1,
+      "valor": 2.3,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa Libre 2026: INDE 2025 promedio mensual 2.3 M beneficiarios; resumen de busqueda repite el comunicado",
+      "evidencia": {
+        "url": "https://cnee.gob.gt/wp-content/uploads/2026/07/Comunicado-CNEE-tarifas-trimestrales-agosto-a-octubre.pdf",
+        "cita": "más de 2.3 millones de familias guatemaltecas que consumen hasta 100 kilovatios hora (kWh) al mes reciben un aporte económico del INDE en su factura.",
+        "archivo_local": "sesiones/_descargas/Comunicado-CNEE-tarifas-trimestrales-agosto-a-octubre.txt"
+      },
+      "usada": false,
+      "aparece_en": [
+        "T4"
+      ]
+    },
+    {
+      "id": "bre-c07",
+      "concepto": "Costo de 100 kWh al mes a tarifa social, antes de subsidio, alumbrado e IVA, ago-oct 2026",
+      "unidad": "Q por mes",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "CNEE, comunicado tarifas trimestrales ago-oct 2026 (31 jul 2026) (cálculo propio: 100 kWh x tarifa social)",
+      "url": "https://cnee.gob.gt/wp-content/uploads/2026/07/Comunicado-CNEE-tarifas-trimestrales-agosto-a-octubre.pdf",
+      "periodo": "ago-oct 2026",
+      "n_puntos": 3,
+      "valor": 203,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recalculo 100 kWh x 2.03 = Q203",
+      "evidencia": {
+        "url": "https://cnee.gob.gt/wp-content/uploads/2026/07/Comunicado-CNEE-tarifas-trimestrales-agosto-a-octubre.pdf",
+        "cita": "DEOCSA TS 2.04 2.03 | DEORSA TS 1.98 1.98 | EEGSA TS 1.42 1.42 (Q/kWh)",
+        "archivo_local": "sesiones/_descargas/Comunicado-CNEE-tarifas-trimestrales-agosto-a-octubre.txt"
+      },
+      "partes": [
+        {
+          "nombre": "DEOCSA",
+          "valor": 203.0
+        },
+        {
+          "nombre": "DEORSA",
+          "valor": 198.0
+        },
+        {
+          "nombre": "EEGSA",
+          "valor": 142.0
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_4.png"
+      ]
+    },
+    {
+      "id": "bre-c10",
+      "concepto": "Presupuesto del aporte social INDE 2026 (consumo 0-100 kWh)",
+      "unidad": "millones de Q",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Prensa Libre (2 ene 2026) citando al INDE",
+      "url": "https://www.prensalibre.com/economia/inde-mantendra-subsidio-a-energia-en-el-2026-hasta-100-kilovatios-pero-se-reducira-apoyo-para-rangos-de-mayor-consumo/",
+      "periodo": "2026",
+      "n_puntos": 1,
+      "valor": 900,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa Libre (2 ene 2026) y AGN (7 feb 2025: Q986 M es de 2025)",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/economia/inde-mantendra-subsidio-a-energia-en-el-2026-hasta-100-kilovatios-pero-se-reducira-apoyo-para-rangos-de-mayor-consumo/",
+        "cita": "El INDE asignó Q900 millones para el subsidio 2026 ... frente a unos Q974 millones en 2025, que benefició a un promedio mensual estimado de 2 millones 300 mil usuarios",
+        "archivo_local": null
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "bre-c11",
+      "concepto": "Usuarios por departamento y distribuidora que los atiende (etiquetas de gráfica, 2020)",
+      "unidad": "miles de usuarios",
+      "anio": 2020,
+      "tipo": "desglose",
+      "fuente": "CNEE, Informe estadístico de tarifas (mayo 2021, datos 2020), págs. 17-18",
+      "url": "https://www.cnee.gob.gt/xhtml/informacion/Docs/Informe%20estad%C3%ADstico%20GT%20(2).pdf",
+      "periodo": "2020",
+      "n_puntos": 21,
+      "valor": 930,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Imagen local de pag. CNEE: EEGSA Guatemala TS 0.93 mill.",
+      "evidencia": {
+        "url": "https://www.cnee.gob.gt/xhtml/informacion/Docs/Informe%20estad%C3%ADstico%20GT%20(2).pdf",
+        "cita": "Distribución de Usuarios por Departamento por tarifa TS/TNS, EEGSA: Guatemala 0.93 mill. / 0.11 mill.; DEOCSA: San Marcos 187 mil, Huehuetenango 184 mil",
+        "archivo_local": "sesiones/_descargas/cnee-informe-estadistico-2021-p20.png"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala (EEGSA)",
+          "valor": 930
+        },
+        {
+          "nombre": "Escuintla (EEGSA)",
+          "valor": 160
+        },
+        {
+          "nombre": "Sacatepéquez (EEGSA)",
+          "valor": 100
+        },
+        {
+          "nombre": "San Marcos (DEOCSA)",
+          "valor": 187
+        },
+        {
+          "nombre": "Huehuetenango (DEOCSA)",
+          "valor": 184
+        },
+        {
+          "nombre": "Quetzaltenango (DEOCSA)",
+          "valor": 156
+        },
+        {
+          "nombre": "Chimaltenango (DEOCSA)",
+          "valor": 134
+        },
+        {
+          "nombre": "Suchitepéquez (DEOCSA)",
+          "valor": 114
+        },
+        {
+          "nombre": "Totonicapán (DEOCSA)",
+          "valor": 100
+        },
+        {
+          "nombre": "Sololá (DEOCSA)",
+          "valor": 88
+        },
+        {
+          "nombre": "Retalhuleu (DEOCSA)",
+          "valor": 55
+        },
+        {
+          "nombre": "Jutiapa (DEORSA)",
+          "valor": 116
+        },
+        {
+          "nombre": "Alta Verapaz (DEORSA)",
+          "valor": 111
+        },
+        {
+          "nombre": "Petén (DEORSA)",
+          "valor": 90
+        },
+        {
+          "nombre": "Santa Rosa (DEORSA)",
+          "valor": 90
+        },
+        {
+          "nombre": "Chiquimula (DEORSA)",
+          "valor": 82
+        },
+        {
+          "nombre": "Baja Verapaz (DEORSA)",
+          "valor": 55
+        },
+        {
+          "nombre": "Jalapa (DEORSA)",
+          "valor": 53
+        },
+        {
+          "nombre": "Izabal (DEORSA)",
+          "valor": 52
+        },
+        {
+          "nombre": "Zacapa (DEORSA)",
+          "valor": 38
+        },
+        {
+          "nombre": "El Progreso (DEORSA)",
+          "valor": 36
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_1.png"
+      ]
+    },
+    {
+      "id": "bre-c12",
+      "concepto": "Consumo medio mensual de usuarios en tarifa social por distribuidora (2020)",
+      "unidad": "kWh/mes",
+      "anio": 2020,
+      "tipo": "desglose",
+      "fuente": "CNEE, Informe estadístico de tarifas (mayo 2021, datos 2020)",
+      "url": "https://www.cnee.gob.gt/xhtml/informacion/Docs/Informe%20estad%C3%ADstico%20GT%20(2).pdf",
+      "periodo": "2020",
+      "n_puntos": 3,
+      "valor": 84,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Texto local del informe CNEE: EEGSA alrededor de 84 kWh; 94% TS",
+      "evidencia": {
+        "url": "https://www.cnee.gob.gt/xhtml/informacion/Docs/Informe%20estad%C3%ADstico%20GT%20(2).pdf",
+        "cita": "para EEGSA este valor se encuentra alrededor de 84 kWh mientras que para DEOCSA se encuentra alrededor de 60 kWh y para DEORSA se encuentra alrededor de 65 kWh.",
+        "archivo_local": "sesiones/_descargas/Informe%20estad%C3%ADstico%20GT%20(2).txt"
+      },
+      "partes": [
+        {
+          "nombre": "EEGSA",
+          "valor": 84
+        },
+        {
+          "nombre": "DEORSA",
+          "valor": 65
+        },
+        {
+          "nombre": "DEOCSA",
+          "valor": 60
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "gen-c01",
+      "concepto": "Precio spot (POE) promedio trimestral del Mercado Mayorista, 1T 2025 a 2T 2026",
+      "unidad": "USD/MWh",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "AMM · Informe Estadístico Segundo Trimestre 2026",
+      "url": "https://www.amm.org.gt/portal/?wpfb_dl=1108",
+      "periodo": "1T 2025 - 2T 2026",
+      "n_puntos": 6,
+      "valor": 128.97,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AMM 2T 2026 (cita en archivo local) + recálculo propio desde PSA2025 (1T 2025=75.44, 2T 2025=103.72 vs 75.39/103.50 del gráfico; 103.50×1.2461=128.97)",
+      "evidencia": {
+        "url": "https://www.amm.org.gt/portal/?wpfb_dl=1108",
+        "cita": "Precio SPOT promedio trimestral 128.97 USD/MWh 24.61% · Crecimiento con respecto al segundo trimestre del año anterior",
+        "archivo_local": "sesiones/_descargas/amm_informe_estadistico_2t2026.txt"
+      },
+      "serie": [
+        {
+          "p": "1T 2025",
+          "v": 75.39
+        },
+        {
+          "p": "2T 2025",
+          "v": 103.5
+        },
+        {
+          "p": "3T 2025",
+          "v": 85.43
+        },
+        {
+          "p": "4T 2025",
+          "v": 73.74
+        },
+        {
+          "p": "1T 2026",
+          "v": 73.44
+        },
+        {
+          "p": "2T 2026",
+          "v": 128.97
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_8.png"
+      ]
+    },
+    {
+      "id": "gen-c02",
+      "concepto": "Precio spot (POE) promedio anual, 2016-2025 (promedio simple de los precios horarios)",
+      "unidad": "USD/MWh",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "AMM · Precios SPOT anuales (PSA, precio horario de oportunidad)",
+      "url": "https://www.amm.org.gt/pdfs2/2025/spot/PSA20250101.xls",
+      "periodo": "2016-2025",
+      "n_puntos": 10,
+      "valor": 84.59,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "CNEE Compendio Estadístico 2024 (promedio SPOT 2019-2023: 63.3, 41.1, 63.4, 86.2, 105.2 vs recálculo 63.27, 41.12, 63.37, 86.29, 105.34)",
+      "evidencia": {
+        "url": "https://www.amm.org.gt/pdfs2/2025/spot/PSA20250101.xls",
+        "cita": "Precios de Oportunidad de la Energía · Año 2025 · Día / hora / USD/MWH (8,760 registros horarios; promedio simple calculado 84.59)",
+        "archivo_local": "sesiones/_descargas/amm_gpsp/spot_promedios_calculados.csv"
+      },
+      "serie": [
+        {
+          "p": "2016",
+          "v": 51.75
+        },
+        {
+          "p": "2017",
+          "v": 51.38
+        },
+        {
+          "p": "2018",
+          "v": 62.46
+        },
+        {
+          "p": "2019",
+          "v": 63.27
+        },
+        {
+          "p": "2020",
+          "v": 41.12
+        },
+        {
+          "p": "2021",
+          "v": 63.37
+        },
+        {
+          "p": "2022",
+          "v": 86.29
+        },
+        {
+          "p": "2023",
+          "v": 105.34
+        },
+        {
+          "p": "2024",
+          "v": 116.47
+        },
+        {
+          "p": "2025",
+          "v": 84.59
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "gen-c03",
+      "concepto": "Precio spot (POE) promedio mensual, ene 2024 - dic 2025",
+      "unidad": "USD/MWh",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "AMM · Precios SPOT anuales (PSA 2024 y 2025, precio horario)",
+      "url": "https://www.amm.org.gt/pdfs2/2024/spot/PSA20240101.xls",
+      "periodo": "2024-01 a 2025-12",
+      "n_puntos": 24,
+      "valor": 75.21,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo propio mensual consistente con anual AMM; CNEE Compendio valida método en 2019-2023",
+      "evidencia": {
+        "url": "https://www.amm.org.gt/pdfs2/2024/spot/PSA20240101.xls",
+        "cita": "Precios de Oportunidad de la Energía · Año 2024 · USD/MWH (precio horario; promedio simple de mayo 2024 calculado 214.17)",
+        "archivo_local": "sesiones/_descargas/amm_gpsp/spot_promedios_calculados.csv"
+      },
+      "serie": [
+        {
+          "p": "2024-01",
+          "v": 105.02
+        },
+        {
+          "p": "2024-02",
+          "v": 108.37
+        },
+        {
+          "p": "2024-03",
+          "v": 173.6
+        },
+        {
+          "p": "2024-04",
+          "v": 170.82
+        },
+        {
+          "p": "2024-05",
+          "v": 214.17
+        },
+        {
+          "p": "2024-06",
+          "v": 133.63
+        },
+        {
+          "p": "2024-07",
+          "v": 95.59
+        },
+        {
+          "p": "2024-08",
+          "v": 86.07
+        },
+        {
+          "p": "2024-09",
+          "v": 101.73
+        },
+        {
+          "p": "2024-10",
+          "v": 80.04
+        },
+        {
+          "p": "2024-11",
+          "v": 74.28
+        },
+        {
+          "p": "2024-12",
+          "v": 54.27
+        },
+        {
+          "p": "2025-01",
+          "v": 60.68
+        },
+        {
+          "p": "2025-02",
+          "v": 73.98
+        },
+        {
+          "p": "2025-03",
+          "v": 91.51
+        },
+        {
+          "p": "2025-04",
+          "v": 106.83
+        },
+        {
+          "p": "2025-05",
+          "v": 124.07
+        },
+        {
+          "p": "2025-06",
+          "v": 79.6
+        },
+        {
+          "p": "2025-07",
+          "v": 84.45
+        },
+        {
+          "p": "2025-08",
+          "v": 87.24
+        },
+        {
+          "p": "2025-09",
+          "v": 84.58
+        },
+        {
+          "p": "2025-10",
+          "v": 73.73
+        },
+        {
+          "p": "2025-11",
+          "v": 72.3
+        },
+        {
+          "p": "2025-12",
+          "v": 75.21
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "gen-c04",
+      "concepto": "Energía transada por mercado, 2T 2026: Mercado a Término (contratos) vs Mercado de Oportunidad (spot)",
+      "unidad": "% de la energía transada",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "AMM · Informe Estadístico Segundo Trimestre 2026",
+      "url": "https://www.amm.org.gt/portal/?wpfb_dl=1108",
+      "periodo": "abr-jun 2026",
+      "n_puntos": 2,
+      "valor": 86,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AMM 2T 2026 (gráfico 86%/14%); consistente con CNEE Compendio 2023 (término ~89.9% consumidores)",
+      "evidencia": {
+        "url": "https://www.amm.org.gt/portal/?wpfb_dl=1108",
+        "cita": "MERCADO A TÉRMINO Y MERCADO DE OPORTUNIDAD SEGUNDO TRIMESTRE 2026 ... Mercado de Oportunidad 14% ... 86% Mercado a Término",
+        "archivo_local": "sesiones/_descargas/amm_informe_estadistico_2t2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Mercado a Término (contratos)",
+          "valor": 86
+        },
+        {
+          "nombre": "Mercado de Oportunidad (spot)",
+          "valor": 14
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_9.png"
+      ]
+    },
+    {
+      "id": "gen-c05",
+      "concepto": "Energía transada por participantes consumidores en 2023: Mercado a Término vs Mercado de Oportunidad",
+      "unidad": "GWh",
+      "anio": 2023,
+      "tipo": "desglose",
+      "fuente": "CNEE · Compendio Estadístico 2024 (Tabla 2, datos del AMM)",
+      "url": "https://cnee.gob.gt/xhtml/informacion/Docs/Compendio_Estadistico_2024.pdf",
+      "periodo": "2023",
+      "n_puntos": 2,
+      "valor": 12224,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "CNEE Compendio 2024, tabla local (12,224 término / 1,377 oportunidad 2023); 12,224/13,601=89.9%",
+      "evidencia": {
+        "url": "https://cnee.gob.gt/xhtml/informacion/Docs/Compendio_Estadistico_2024.pdf",
+        "cita": "Energía Transada en el Mercado a Término, Participantes Consumidores (GWh) ... 12,224 · Energía Transada en el Mercado de Oportunidad ... 1,377",
+        "archivo_local": "sesiones/_descargas/Compendio_Estadistico_2024.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Mercado a Término",
+          "valor": 12224
+        },
+        {
+          "nombre": "Mercado de Oportunidad",
+          "valor": 1377
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "gen-c06",
+      "concepto": "Producción por tipo de recurso, 2T 2026 (incluye importaciones)",
+      "unidad": "GWh (partes en %)",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "AMM · Informe Estadístico Segundo Trimestre 2026",
+      "url": "https://www.amm.org.gt/portal/?wpfb_dl=1108",
+      "periodo": "abr-jun 2026",
+      "n_puntos": 12,
+      "valor": 4307.74,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AMM 2T 2026 archivo local (4,307.74; hídricos 24.34; carbón 22.33; importaciones 15.21)",
+      "evidencia": {
+        "url": "https://www.amm.org.gt/portal/?wpfb_dl=1108",
+        "cita": "Producción por tipo de recurso ... Total 4,307.74 GWh ... Recursos Hídricos 24.34% ... Carbón 22.33% ... Importaciones 15.21% ... Renovables 46% No Renovables 39%",
+        "archivo_local": "sesiones/_descargas/amm_informe_estadistico_2t2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Hídricos",
+          "valor": 24.34
+        },
+        {
+          "nombre": "Carbón",
+          "valor": 22.33
+        },
+        {
+          "nombre": "Importaciones",
+          "valor": 15.21
+        },
+        {
+          "nombre": "Biomasa",
+          "valor": 12.78
+        },
+        {
+          "nombre": "Coque de petróleo",
+          "valor": 8.81
+        },
+        {
+          "nombre": "Búnker",
+          "valor": 6.37
+        },
+        {
+          "nombre": "Solar",
+          "valor": 6.15
+        },
+        {
+          "nombre": "Geotérmico",
+          "valor": 1.5
+        },
+        {
+          "nombre": "Eólico",
+          "valor": 1.37
+        },
+        {
+          "nombre": "Gas natural",
+          "valor": 0.94
+        },
+        {
+          "nombre": "Diésel",
+          "valor": 0.13
+        },
+        {
+          "nombre": "Biogás",
+          "valor": 0.08
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "gen-c08",
+      "concepto": "Licitación Abierta 1-2026 de EEGSA, DEOCSA y DEORSA: potencia firme a contratar de mayo 2027 a abril 2032",
+      "unidad": "MW",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "García Bodán (bufete) sobre bases aprobadas por la CNEE",
+      "url": "https://garciabodan.com/en/guatemala-approves-bidding-rules-for-the-procurement-of-300-mw-of-power-supply/",
+      "periodo": "mayo 2027 - abril 2032",
+      "n_puntos": 1,
+      "valor": 300,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "García Bodán (bufete): 300 MW firmes uniformes may 2027-abr 2032, 5,614 MWh/día; corto plazo 162-204 MW",
+      "evidencia": {
+        "url": "https://garciabodan.com/en/guatemala-approves-bidding-rules-for-the-procurement-of-300-mw-of-power-supply/",
+        "cita": "Medium-/long-term (May 2027 – April 2032) with a uniform 300 MW of firm capacity for each seasonal year, with required daily energy of 5,614 MWh"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "gen-c09",
+      "concepto": "Licitación PEG-5-2025: potencia garantizada máxima a contratar desde 2030, plazo de hasta 15 años",
+      "unidad": "MW",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "Revista Summa / Boletín de lanzamiento PEG-5-2025 (EEGSA, DEOCSA, DEORSA)",
+      "url": "https://revistasumma.com/comienza-proceso-para-contratar-la-mayor-cantidad-de-energia-electrica-en-guatemala-por-mil-400-megavatios",
+      "periodo": "suministro desde 2030, hasta 15 años",
+      "n_puntos": 1,
+      "valor": 1400,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "EEGSA/NewEnergyEvents/AGN/Revista E&N repiten 'hasta 1,400 MW de potencia garantizada desde 2030, 15 años' (búsqueda); boletín EEGSA no legible por fetch",
+      "evidencia": {
+        "url": "https://revistasumma.com/comienza-proceso-para-contratar-la-mayor-cantidad-de-energia-electrica-en-guatemala-por-mil-400-megavatios",
+        "cita": "requerimiento de hasta 1,400 MW de potencia garantizada y energía asociada, con inicio de suministro a partir de 2030 por un plazo de hasta 15 años"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "gen-c12",
+      "concepto": "Demanda máxima del SNI, 2T 2026",
+      "unidad": "MW",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "AMM · Informe Estadístico Segundo Trimestre 2026",
+      "url": "https://www.amm.org.gt/portal/?wpfb_dl=1108",
+      "periodo": "abr-jun 2026",
+      "n_puntos": 1,
+      "valor": 2417.15,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AMM 2T 2026 archivo local; interanual cuadra: 2,417.15/2,204.22=+9.66%",
+      "evidencia": {
+        "url": "https://www.amm.org.gt/portal/?wpfb_dl=1108",
+        "cita": "DEMANDA MÁXIMA 9.66% 2,417.15 MW ... CONSUMO S.N.I. 9.71% 3,893.36 GWh (crecimiento con respecto al segundo trimestre del año anterior)",
+        "archivo_local": "sesiones/_descargas/amm_informe_estadistico_2t2026.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ser-c01",
+      "concepto": "Tarifa no social (BTS) DEOCSA, cargo por energía, serie trimestral",
+      "unidad": "Q/kWh",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "CNEE, pliegos tarifarios trimestrales (consulta histórica de pliegos)",
+      "url": "https://cnee-app1.wearecodecrafters.com/Calculadora/pliegos.php",
+      "periodo": "feb-abr 2016 a ago-oct 2026 (43 trimestres tarifarios)",
+      "n_puntos": 43,
+      "valor": 2.123466,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Comunicado CNEE 31-jul-2026 (misma CNEE; cifras redondeadas a 2 decimales) y Prensa Libre que lo reproduce",
+      "evidencia": {
+        "url": "https://cnee-app1.wearecodecrafters.com/Calculadora/pliegos.php",
+        "cita": "RESOLUCIÓN CNEE-264-2026 CNEE-265-2026 ... Tarifa: Baja Tensión No Social - BTS ... Cargo Unitario por Energía (Q/kWh) 2.123466",
+        "archivo_local": "sesiones/_descargas/cnee_pliegos/dist2_2026_08.html"
+      },
+      "serie": [
+        {
+          "p": "2016-02",
+          "v": 1.660058
+        },
+        {
+          "p": "2016-05",
+          "v": 1.679044
+        },
+        {
+          "p": "2016-08",
+          "v": 1.69758
+        },
+        {
+          "p": "2016-11",
+          "v": 1.697623
+        },
+        {
+          "p": "2017-02",
+          "v": 1.697305
+        },
+        {
+          "p": "2017-05",
+          "v": 1.770192
+        },
+        {
+          "p": "2017-08",
+          "v": 1.785194
+        },
+        {
+          "p": "2017-11",
+          "v": 1.779026
+        },
+        {
+          "p": "2018-02",
+          "v": 1.816373
+        },
+        {
+          "p": "2018-05",
+          "v": 1.860205
+        },
+        {
+          "p": "2018-08",
+          "v": 1.877956
+        },
+        {
+          "p": "2018-11",
+          "v": 1.912999
+        },
+        {
+          "p": "2019-02",
+          "v": 1.952015
+        },
+        {
+          "p": "2019-05",
+          "v": 1.982251
+        },
+        {
+          "p": "2019-08",
+          "v": 1.950103
+        },
+        {
+          "p": "2019-11",
+          "v": 1.988257
+        },
+        {
+          "p": "2020-02",
+          "v": 1.949601
+        },
+        {
+          "p": "2020-05",
+          "v": 1.939607
+        },
+        {
+          "p": "2020-08",
+          "v": 1.939618
+        },
+        {
+          "p": "2020-11",
+          "v": 1.969596
+        },
+        {
+          "p": "2021-02",
+          "v": 1.998553
+        },
+        {
+          "p": "2021-05",
+          "v": 2.015557
+        },
+        {
+          "p": "2021-08",
+          "v": 2.015527
+        },
+        {
+          "p": "2021-11",
+          "v": 2.060408
+        },
+        {
+          "p": "2022-02",
+          "v": 2.108417
+        },
+        {
+          "p": "2022-05",
+          "v": 2.248439
+        },
+        {
+          "p": "2022-08",
+          "v": 2.328442
+        },
+        {
+          "p": "2022-11",
+          "v": 2.328438
+        },
+        {
+          "p": "2023-02",
+          "v": 2.328408
+        },
+        {
+          "p": "2023-05",
+          "v": 2.328408
+        },
+        {
+          "p": "2023-08",
+          "v": 2.328405
+        },
+        {
+          "p": "2023-11",
+          "v": 2.328403
+        },
+        {
+          "p": "2024-02",
+          "v": 2.308391
+        },
+        {
+          "p": "2024-05",
+          "v": 2.293391
+        },
+        {
+          "p": "2024-08",
+          "v": 2.278392
+        },
+        {
+          "p": "2024-11",
+          "v": 2.23839
+        },
+        {
+          "p": "2025-02",
+          "v": 2.213386
+        },
+        {
+          "p": "2025-05",
+          "v": 2.213441
+        },
+        {
+          "p": "2025-08",
+          "v": 2.19344
+        },
+        {
+          "p": "2025-11",
+          "v": 2.168444
+        },
+        {
+          "p": "2026-02",
+          "v": 2.153455
+        },
+        {
+          "p": "2026-05",
+          "v": 2.13346
+        },
+        {
+          "p": "2026-08",
+          "v": 2.123466
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ser-c02",
+      "concepto": "Tarifa no social (BTS) EEGSA, cargo por energía, serie trimestral",
+      "unidad": "Q/kWh",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "CNEE, pliegos tarifarios trimestrales (consulta histórica de pliegos)",
+      "url": "https://cnee-app1.wearecodecrafters.com/Calculadora/pliegos.php",
+      "periodo": "feb-abr 2016 a ago-oct 2026 (43 trimestres tarifarios)",
+      "n_puntos": 43,
+      "valor": 1.509058,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Comunicado CNEE 31-jul-2026 (misma CNEE; cifras redondeadas a 2 decimales) y Prensa Libre que lo reproduce",
+      "evidencia": {
+        "url": "https://cnee-app1.wearecodecrafters.com/Calculadora/pliegos.php",
+        "cita": "RESOLUCIÓN CNEE-262-2026 CNEE-263-2026 ... Tarifa: Baja Tensión No Social - BTS ... Cargo Unitario por Energía (Q/kWh) 1.509058",
+        "archivo_local": "sesiones/_descargas/cnee_pliegos/dist1_2026_08.html"
+      },
+      "serie": [
+        {
+          "p": "2016-02",
+          "v": 1.13188
+        },
+        {
+          "p": "2016-05",
+          "v": 1.131838
+        },
+        {
+          "p": "2016-08",
+          "v": 1.131823
+        },
+        {
+          "p": "2016-11",
+          "v": 1.099962
+        },
+        {
+          "p": "2017-02",
+          "v": 1.099677
+        },
+        {
+          "p": "2017-05",
+          "v": 1.100072
+        },
+        {
+          "p": "2017-08",
+          "v": 1.100147
+        },
+        {
+          "p": "2017-11",
+          "v": 1.089764
+        },
+        {
+          "p": "2018-02",
+          "v": 1.113724
+        },
+        {
+          "p": "2018-05",
+          "v": 1.144928
+        },
+        {
+          "p": "2018-08",
+          "v": 1.125292
+        },
+        {
+          "p": "2018-11",
+          "v": 1.172832
+        },
+        {
+          "p": "2019-02",
+          "v": 1.230627
+        },
+        {
+          "p": "2019-05",
+          "v": 1.306812
+        },
+        {
+          "p": "2019-08",
+          "v": 1.336747
+        },
+        {
+          "p": "2019-11",
+          "v": 1.34423
+        },
+        {
+          "p": "2020-02",
+          "v": 1.336649
+        },
+        {
+          "p": "2020-05",
+          "v": 1.311648
+        },
+        {
+          "p": "2020-08",
+          "v": 1.288631
+        },
+        {
+          "p": "2020-11",
+          "v": 1.298633
+        },
+        {
+          "p": "2021-02",
+          "v": 1.303632
+        },
+        {
+          "p": "2021-05",
+          "v": 1.321127
+        },
+        {
+          "p": "2021-08",
+          "v": 1.321121
+        },
+        {
+          "p": "2021-11",
+          "v": 1.346068
+        },
+        {
+          "p": "2022-02",
+          "v": 1.36927
+        },
+        {
+          "p": "2022-05",
+          "v": 1.414039
+        },
+        {
+          "p": "2022-08",
+          "v": 1.47404
+        },
+        {
+          "p": "2022-11",
+          "v": 1.474043
+        },
+        {
+          "p": "2023-02",
+          "v": 1.474044
+        },
+        {
+          "p": "2023-05",
+          "v": 1.474041
+        },
+        {
+          "p": "2023-08",
+          "v": 1.474046
+        },
+        {
+          "p": "2023-11",
+          "v": 1.474047
+        },
+        {
+          "p": "2024-02",
+          "v": 1.469047
+        },
+        {
+          "p": "2024-05",
+          "v": 1.464023
+        },
+        {
+          "p": "2024-08",
+          "v": 1.459022
+        },
+        {
+          "p": "2024-11",
+          "v": 1.459019
+        },
+        {
+          "p": "2025-02",
+          "v": 1.479023
+        },
+        {
+          "p": "2025-05",
+          "v": 1.509025
+        },
+        {
+          "p": "2025-08",
+          "v": 1.509031
+        },
+        {
+          "p": "2025-11",
+          "v": 1.509032
+        },
+        {
+          "p": "2026-02",
+          "v": 1.509037
+        },
+        {
+          "p": "2026-05",
+          "v": 1.509048
+        },
+        {
+          "p": "2026-08",
+          "v": 1.509058
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ser-c03",
+      "concepto": "Tarifa no social (BTS) DEORSA, cargo por energía, serie trimestral",
+      "unidad": "Q/kWh",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "CNEE, pliegos tarifarios trimestrales (consulta histórica de pliegos)",
+      "url": "https://cnee-app1.wearecodecrafters.com/Calculadora/pliegos.php",
+      "periodo": "feb-abr 2016 a ago-oct 2026 (43 trimestres tarifarios)",
+      "n_puntos": 43,
+      "valor": 2.06451,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Comunicado CNEE 31-jul-2026 (misma CNEE; cifras redondeadas a 2 decimales) y Prensa Libre que lo reproduce",
+      "evidencia": {
+        "url": "https://cnee-app1.wearecodecrafters.com/Calculadora/pliegos.php",
+        "cita": "RESOLUCIÓN CNEE-266-2026 CNEE-267-2026 ... Tarifa: Baja Tensión No Social - BTS ... Cargo Unitario por Energía (Q/kWh) 2.06451",
+        "archivo_local": "sesiones/_descargas/cnee_pliegos/dist3_2026_08.html"
+      },
+      "serie": [
+        {
+          "p": "2016-02",
+          "v": 1.560352
+        },
+        {
+          "p": "2016-05",
+          "v": 1.560328
+        },
+        {
+          "p": "2016-08",
+          "v": 1.570344
+        },
+        {
+          "p": "2016-11",
+          "v": 1.570643
+        },
+        {
+          "p": "2017-02",
+          "v": 1.570318
+        },
+        {
+          "p": "2017-05",
+          "v": 1.660915
+        },
+        {
+          "p": "2017-08",
+          "v": 1.675913
+        },
+        {
+          "p": "2017-11",
+          "v": 1.669876
+        },
+        {
+          "p": "2018-02",
+          "v": 1.704858
+        },
+        {
+          "p": "2018-05",
+          "v": 1.738106
+        },
+        {
+          "p": "2018-08",
+          "v": 1.749854
+        },
+        {
+          "p": "2018-11",
+          "v": 1.784888
+        },
+        {
+          "p": "2019-02",
+          "v": 1.8239
+        },
+        {
+          "p": "2019-05",
+          "v": 1.856757
+        },
+        {
+          "p": "2019-08",
+          "v": 1.817903
+        },
+        {
+          "p": "2019-11",
+          "v": 1.852925
+        },
+        {
+          "p": "2020-02",
+          "v": 1.817794
+        },
+        {
+          "p": "2020-05",
+          "v": 1.807805
+        },
+        {
+          "p": "2020-08",
+          "v": 1.807794
+        },
+        {
+          "p": "2020-11",
+          "v": 1.837492
+        },
+        {
+          "p": "2021-02",
+          "v": 1.865475
+        },
+        {
+          "p": "2021-05",
+          "v": 1.884483
+        },
+        {
+          "p": "2021-08",
+          "v": 1.884457
+        },
+        {
+          "p": "2021-11",
+          "v": 1.929073
+        },
+        {
+          "p": "2022-02",
+          "v": 1.978469
+        },
+        {
+          "p": "2022-05",
+          "v": 2.118509
+        },
+        {
+          "p": "2022-08",
+          "v": 2.198489
+        },
+        {
+          "p": "2022-11",
+          "v": 2.198488
+        },
+        {
+          "p": "2023-02",
+          "v": 2.198397
+        },
+        {
+          "p": "2023-05",
+          "v": 2.198391
+        },
+        {
+          "p": "2023-08",
+          "v": 2.198388
+        },
+        {
+          "p": "2023-11",
+          "v": 2.198386
+        },
+        {
+          "p": "2024-02",
+          "v": 2.17838
+        },
+        {
+          "p": "2024-05",
+          "v": 2.163384
+        },
+        {
+          "p": "2024-08",
+          "v": 2.153384
+        },
+        {
+          "p": "2024-11",
+          "v": 2.134772
+        },
+        {
+          "p": "2025-02",
+          "v": 2.114772
+        },
+        {
+          "p": "2025-05",
+          "v": 2.114803
+        },
+        {
+          "p": "2025-08",
+          "v": 2.094803
+        },
+        {
+          "p": "2025-11",
+          "v": 2.074806
+        },
+        {
+          "p": "2026-02",
+          "v": 2.064496
+        },
+        {
+          "p": "2026-05",
+          "v": 2.064514
+        },
+        {
+          "p": "2026-08",
+          "v": 2.06451
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ser-c04",
+      "concepto": "Brecha de la tarifa no social: cuánto más cara es DEOCSA que EEGSA por kWh, por trimestre",
+      "unidad": "% sobre EEGSA",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "CNEE, pliegos tarifarios trimestrales (consulta histórica de pliegos) (cálculo propio)",
+      "url": "https://cnee-app1.wearecodecrafters.com/Calculadora/pliegos.php",
+      "periodo": "feb-abr 2016 a ago-oct 2026 (43 trimestres tarifarios)",
+      "n_puntos": 43,
+      "valor": 40.7,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recalculo propio desde pliegos CNEE; con cifras redondeadas del comunicado (2.12/1.51) da 40.4%",
+      "evidencia": {
+        "url": "https://cnee-app1.wearecodecrafters.com/Calculadora/pliegos.php",
+        "cita": "DEOCSA BTS Cargo Unitario por Energía (Q/kWh) 2.123466 · EEGSA BTS Cargo Unitario por Energía (Q/kWh) 1.509058 (pliegos ago-oct 2026)",
+        "archivo_local": "sesiones/_descargas/cnee_pliegos/serie_ts_bts_2016_2026.csv"
+      },
+      "serie": [
+        {
+          "p": "2016-02",
+          "v": 46.7
+        },
+        {
+          "p": "2016-05",
+          "v": 48.3
+        },
+        {
+          "p": "2016-08",
+          "v": 50.0
+        },
+        {
+          "p": "2016-11",
+          "v": 54.3
+        },
+        {
+          "p": "2017-02",
+          "v": 54.3
+        },
+        {
+          "p": "2017-05",
+          "v": 60.9
+        },
+        {
+          "p": "2017-08",
+          "v": 62.3
+        },
+        {
+          "p": "2017-11",
+          "v": 63.2
+        },
+        {
+          "p": "2018-02",
+          "v": 63.1
+        },
+        {
+          "p": "2018-05",
+          "v": 62.5
+        },
+        {
+          "p": "2018-08",
+          "v": 66.9
+        },
+        {
+          "p": "2018-11",
+          "v": 63.1
+        },
+        {
+          "p": "2019-02",
+          "v": 58.6
+        },
+        {
+          "p": "2019-05",
+          "v": 51.7
+        },
+        {
+          "p": "2019-08",
+          "v": 45.9
+        },
+        {
+          "p": "2019-11",
+          "v": 47.9
+        },
+        {
+          "p": "2020-02",
+          "v": 45.9
+        },
+        {
+          "p": "2020-05",
+          "v": 47.9
+        },
+        {
+          "p": "2020-08",
+          "v": 50.5
+        },
+        {
+          "p": "2020-11",
+          "v": 51.7
+        },
+        {
+          "p": "2021-02",
+          "v": 53.3
+        },
+        {
+          "p": "2021-05",
+          "v": 52.6
+        },
+        {
+          "p": "2021-08",
+          "v": 52.6
+        },
+        {
+          "p": "2021-11",
+          "v": 53.1
+        },
+        {
+          "p": "2022-02",
+          "v": 54.0
+        },
+        {
+          "p": "2022-05",
+          "v": 59.0
+        },
+        {
+          "p": "2022-08",
+          "v": 58.0
+        },
+        {
+          "p": "2022-11",
+          "v": 58.0
+        },
+        {
+          "p": "2023-02",
+          "v": 58.0
+        },
+        {
+          "p": "2023-05",
+          "v": 58.0
+        },
+        {
+          "p": "2023-08",
+          "v": 58.0
+        },
+        {
+          "p": "2023-11",
+          "v": 58.0
+        },
+        {
+          "p": "2024-02",
+          "v": 57.1
+        },
+        {
+          "p": "2024-05",
+          "v": 56.6
+        },
+        {
+          "p": "2024-08",
+          "v": 56.2
+        },
+        {
+          "p": "2024-11",
+          "v": 53.4
+        },
+        {
+          "p": "2025-02",
+          "v": 49.7
+        },
+        {
+          "p": "2025-05",
+          "v": 46.7
+        },
+        {
+          "p": "2025-08",
+          "v": 45.4
+        },
+        {
+          "p": "2025-11",
+          "v": 43.7
+        },
+        {
+          "p": "2026-02",
+          "v": 42.7
+        },
+        {
+          "p": "2026-05",
+          "v": 41.4
+        },
+        {
+          "p": "2026-08",
+          "v": 40.7
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_6.png"
+      ]
+    },
+    {
+      "id": "ser-c05",
+      "concepto": "Brecha máxima de la década: tarifa no social DEOCSA vs EEGSA en ago-oct 2018",
+      "unidad": "% sobre EEGSA",
+      "anio": 2018,
+      "tipo": "desglose",
+      "fuente": "CNEE, pliegos tarifarios trimestrales (consulta histórica de pliegos) (cálculo propio)",
+      "url": "https://cnee-app1.wearecodecrafters.com/Calculadora/pliegos.php",
+      "periodo": "ago-oct 2018",
+      "valor": 66.9,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recalculo propio desde pliegos CNEE 2018 (HTML locales de las tres distribuidoras)",
+      "evidencia": {
+        "url": "https://cnee-app1.wearecodecrafters.com/Calculadora/pliegos.php",
+        "cita": "DEOCSA (CNEE-147-2018): Baja Tensión No Social - BTS ... (Q/kWh) 1.877956 · EEGSA (CNEE-154-2018): BTS ... (Q/kWh) 1.125292",
+        "archivo_local": "sesiones/_descargas/cnee_pliegos/dist2_2018_08.html"
+      },
+      "partes": [
+        {
+          "nombre": "DEOCSA",
+          "valor": 1.877956
+        },
+        {
+          "nombre": "EEGSA",
+          "valor": 1.125292
+        },
+        {
+          "nombre": "DEORSA",
+          "valor": 1.749854
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_6.png"
+      ]
+    },
+    {
+      "id": "ser-c06",
+      "concepto": "Tarifa social (TS) vigente ago-oct 2026 por distribuidora y brecha DEOCSA vs EEGSA",
+      "unidad": "Q/kWh",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "CNEE, pliegos tarifarios trimestrales (consulta histórica de pliegos)",
+      "url": "https://cnee-app1.wearecodecrafters.com/Calculadora/pliegos.php",
+      "periodo": "ago-oct 2026",
+      "valor": 2.034495,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Comunicado CNEE 31-jul-2026 (misma CNEE; cifras redondeadas a 2 decimales) y Prensa Libre que lo reproduce",
+      "evidencia": {
+        "url": "https://cnee-app1.wearecodecrafters.com/Calculadora/pliegos.php",
+        "cita": "Tarifa: Social - TS Valor Cargo por Consumidor (Q/usuario-mes) 23.487763 Cargo Unitario por Energía (Q/kWh) 2.034495 (DEOCSA, CNEE-264-2026)",
+        "archivo_local": "sesiones/_descargas/cnee_pliegos/dist2_2026_08.html"
+      },
+      "partes": [
+        {
+          "nombre": "DEOCSA",
+          "valor": 2.034495
+        },
+        {
+          "nombre": "DEORSA",
+          "valor": 1.984035
+        },
+        {
+          "nombre": "EEGSA",
+          "valor": 1.419389
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ser-c07",
+      "concepto": "Variación de la tarifa no social desde el pico de ago-oct 2022 hasta ago-oct 2026, por distribuidora",
+      "unidad": "% (ago-oct 2022 a ago-oct 2026)",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "CNEE, pliegos tarifarios trimestrales (consulta histórica de pliegos) (cálculo propio)",
+      "url": "https://cnee-app1.wearecodecrafters.com/Calculadora/pliegos.php",
+      "periodo": "ago-oct 2022 a ago-oct 2026",
+      "valor": -8.8,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recalculo propio desde pliegos CNEE (2022 vs 2026); comunicado habla de cuatro anos de estabilidad desde ago-oct 2022",
+      "evidencia": {
+        "url": "https://cnee-app1.wearecodecrafters.com/Calculadora/pliegos.php",
+        "cita": "DEOCSA BTS ago-oct 2022 (CNEE-181-2022) Cargo Unitario por Energía (Q/kWh) 2.328442; ago-oct 2026 (CNEE-264-2026) 2.123466",
+        "archivo_local": "sesiones/_descargas/cnee_pliegos/dist2_2022_08.html"
+      },
+      "partes": [
+        {
+          "nombre": "DEOCSA",
+          "valor": -8.8
+        },
+        {
+          "nombre": "DEORSA",
+          "valor": -6.1
+        },
+        {
+          "nombre": "EEGSA",
+          "valor": 2.4
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_7.png"
+      ]
+    },
+    {
+      "id": "ser-c08",
+      "concepto": "Variación de la tarifa no social en diez años (ago-oct 2016 a ago-oct 2026), por distribuidora",
+      "unidad": "% (ago-oct 2016 a ago-oct 2026)",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "CNEE, pliegos tarifarios trimestrales (consulta histórica de pliegos) (cálculo propio)",
+      "url": "https://cnee-app1.wearecodecrafters.com/Calculadora/pliegos.php",
+      "periodo": "ago-oct 2016 a ago-oct 2026",
+      "valor": 33.3,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recalculo propio desde pliegos CNEE (2016 vs 2026)",
+      "evidencia": {
+        "url": "https://cnee-app1.wearecodecrafters.com/Calculadora/pliegos.php",
+        "cita": "EEGSA BTS ago-oct 2016 (CNEE-199-2016) Cargo Unitario por Energía (Q/kWh) 1.131823; ago-oct 2026 (CNEE-262-2026) 1.509058",
+        "archivo_local": "sesiones/_descargas/cnee_pliegos/dist1_2016_08.html"
+      },
+      "partes": [
+        {
+          "nombre": "EEGSA",
+          "valor": 33.3
+        },
+        {
+          "nombre": "DEORSA",
+          "valor": 31.5
+        },
+        {
+          "nombre": "DEOCSA",
+          "valor": 25.1
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ser-c09",
+      "concepto": "Cargo fijo por consumidor (tarifa social y no social) ago-oct 2026 por distribuidora",
+      "unidad": "Q/usuario-mes",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "CNEE, pliegos tarifarios trimestrales (consulta histórica de pliegos)",
+      "url": "https://cnee-app1.wearecodecrafters.com/Calculadora/pliegos.php",
+      "periodo": "ago-oct 2026",
+      "valor": 23.487763,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Pliegos CNEE (HTML locales de las tres distribuidoras); comunicado no publica cargo fijo",
+      "evidencia": {
+        "url": "https://cnee-app1.wearecodecrafters.com/Calculadora/pliegos.php",
+        "cita": "DEOCSA Tarifa: Social - TS Valor Cargo por Consumidor (Q/usuario-mes) 23.487763 · EEGSA ... Cargo por Consumidor (Q/usuario-mes) 11.623405",
+        "archivo_local": "sesiones/_descargas/cnee_pliegos/dist2_2026_08.html"
+      },
+      "partes": [
+        {
+          "nombre": "DEORSA",
+          "valor": 24.514623
+        },
+        {
+          "nombre": "DEOCSA",
+          "valor": 23.487763
+        },
+        {
+          "nombre": "EEGSA",
+          "valor": 11.623405
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_5.png"
+      ]
+    },
+    {
+      "id": "ser-c10",
+      "concepto": "Variación interanual de tarifas ago 2025 a ago 2026 según el comunicado CNEE",
+      "unidad": "% (tarifa no social DEOCSA)",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "CNEE, comunicado tarifas trimestrales agosto a octubre 2026 (31-jul-2026)",
+      "url": "https://cnee.gob.gt/wp-content/uploads/2026/07/Comunicado-CNEE-tarifas-trimestrales-agosto-a-octubre.pdf",
+      "periodo": "ago-oct 2025 a ago-oct 2026",
+      "valor": -3.2,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Pliegos CNEE: DEOCSA BTS 2.19344->2.123466 = -3.19%; comunicado CNEE tabla ago 2025-ago 2026",
+      "evidencia": {
+        "url": "https://cnee.gob.gt/wp-content/uploads/2026/07/Comunicado-CNEE-tarifas-trimestrales-agosto-a-octubre.pdf",
+        "cita": "EEGSA 0.0% 0.0% Estabilidad / DEOCSA -2.4% -3.2% Reducción sostenida / DEORSA -1.5% -1.4% Reducción sostenida",
+        "archivo_local": "sesiones/_descargas/Comunicado-CNEE-tarifas-trimestrales-agosto-a-octubre.txt"
+      },
+      "partes": [
+        {
+          "nombre": "DEOCSA no social",
+          "valor": -3.2
+        },
+        {
+          "nombre": "DEOCSA social",
+          "valor": -2.4
+        },
+        {
+          "nombre": "DEORSA social",
+          "valor": -1.5
+        },
+        {
+          "nombre": "DEORSA no social",
+          "valor": -1.4
+        },
+        {
+          "nombre": "EEGSA social",
+          "valor": 0.0
+        },
+        {
+          "nombre": "EEGSA no social",
+          "valor": 0.0
+        }
+      ],
+      "usada": false,
+      "aparece_en": [
+        "T8"
+      ]
+    }
+  ],
+  "fuentes": [
+    {
+      "nombre": "CNEE · Comunicado tarifas trimestrales ago-oct 2026",
+      "url": "https://cnee.gob.gt/wp-content/uploads/2026/07/Comunicado-CNEE-tarifas-trimestrales-agosto-a-octubre.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "CNEE · Informe estadístico de tarifas 2020 (pub. mayo 2021)",
+      "url": "https://www.cnee.gob.gt/xhtml/informacion/Docs/Informe%20estad%C3%ADstico%20GT%20(2).pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "CNEE · Precios regulados (índice de comunicados y resoluciones)",
+      "url": "https://cnee.gob.gt/precios-regulados/",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Prensa Libre · Subsidio INDE may-jul 2026 (datos INDE/CNEE)",
+      "url": "https://www.prensalibre.com/economia/este-es-el-subsidio-para-la-energia-electrica-en-el-trimestre-de-mayo-a-julio-y-lo-que-deben-pagar-los-usuarios/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Prensa Libre · INDE subsidio 2026 hasta 100 kWh",
+      "url": "https://www.prensalibre.com/economia/inde-mantendra-subsidio-a-energia-en-el-2026-hasta-100-kilovatios-pero-se-reducira-apoyo-para-rangos-de-mayor-consumo/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Prensa Libre · tarifas ago-oct 2026 (reproduce comunicado CNEE)",
+      "url": "https://www.prensalibre.com/?p=25786104",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "AMM · Informe Estadístico Segundo Trimestre 2026",
+      "url": "https://www.amm.org.gt/portal/?wpfb_dl=1108",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "AMM · Precios SPOT anuales PSA<año>0101.xls (horario, 2016-2025)",
+      "url": "https://www.amm.org.gt/pdfs2/<anio>/spot/PSA<anio>0101.xls",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "CNEE · Compendio Estadístico 2024",
+      "url": "https://cnee.gob.gt/xhtml/informacion/Docs/Compendio_Estadistico_2024.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "CNEE · Comunicado tarifas ago-oct 2026",
+      "url": "https://cnee.gob.gt/wp-content/uploads/2026/07/Comunicado-CNEE-tarifas-trimestrales-agosto-a-octubre.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "La Hora · La electricidad sube 60% pero la factura no (4 sep 2026)",
+      "url": "https://lahora.gt/lh-economia/esmith/2026/09/04/la-electricidad-en-guatemala-sube-60-pero-la-factura-de-energia-no-cual-es-la-razon-de-ese-comportamiento-now/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "García Bodán · Licitación Abierta 1-2026 (300 MW)",
+      "url": "https://garciabodan.com/en/guatemala-approves-bidding-rules-for-the-procurement-of-300-mw-of-power-supply/",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "Revista Summa · PEG-5-2025 (1,400 MW)",
+      "url": "https://revistasumma.com/comienza-proceso-para-contratar-la-mayor-cantidad-de-energia-electrica-en-guatemala-por-mil-400-megavatios",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "BNamericas (Fitch) · pérdidas Energuate",
+      "url": "https://www.bnamericas.com/en/news/guatemala-power-distribution-set-to-receive-us175mn-injection",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "CNEE · Consulta histórica de pliegos tarifarios (buscador enlazado desde Precios regulados)",
+      "url": "https://cnee-app1.wearecodecrafters.com/Calculadora/pliegos.php",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "CNEE · Precios regulados (página que enlaza pliegos, resoluciones y comunicados)",
+      "url": "https://cnee.gob.gt/precios-regulados/",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "CNEE · Comunicado tarifas trimestrales agosto a octubre 2026",
+      "url": "https://cnee.gob.gt/wp-content/uploads/2026/07/Comunicado-CNEE-tarifas-trimestrales-agosto-a-octubre.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Prensa Libre · tarifas ago-oct 2020 (31-jul-2020), control de un punto de la serie",
+      "url": "https://www.prensalibre.com/?p=6377242",
+      "nivel": "secundaria"
+    }
+  ],
+  "no_afirma": [
+    "No afirma que la brecha se deba al costo de distribuir en zonas rurales (VAD o pérdidas): no hay desglose verificado de la tarifa por componente.",
+    "No afirma que los contratos sean la causa de la estabilidad de la tarifa; el 86% por contrato es de todo el Mercado Mayorista, no de cada distribuidora.",
+    "No afirma que todos los usuarios de un departamento paguen la tarifa de esa distribuidora: la asignación es del informe CNEE 2020 y Quiché no aparece.",
+    "No descuenta inflación: todas las variaciones de tarifa son nominales.",
+    "No calcula la factura final con el aporte del INDE: el aporte por kWh no quedó confirmado."
+  ],
+  "incertidumbre": [
+    "Todas las cifras usadas tienen segunda fuente que reproduce la primaria (CNEE o AMM): verificación del número, sin respaldo independiente; la ancla bre-c02 y la brecha ser-c04 dependen solo de la CNEE.",
+    "La brecha de T3 (42.96%) se calcula con tarifas redondeadas a dos decimales del comunicado; la de T6 (40.7%) con los cargos exactos del pliego. Por eso el texto dice «más de 40%».",
+    "El mapa asigna a cada departamento la distribuidora del informe CNEE 2020; puede haber municipios atendidos por otra empresa.",
+    "El spot de 2026 solo está como promedio trimestral hasta el 2T; no se verificó el mensual ni el ~60% citado por prensa.",
+    "Hilo de 10 tuits con 9 tarjetas; la serie de brecha se muestra con el trimestre ago-oct de cada año (11 de los 43 puntos)."
+  ],
+  "descartadas": [
+    {
+      "id": "bre-c08",
+      "por": "no_confirmada"
+    },
+    {
+      "id": "bre-c09",
+      "por": "no_confirmada"
+    },
+    {
+      "id": "gen-c07",
+      "por": "no_confirmada"
+    },
+    {
+      "id": "gen-c10",
+      "por": "no_confirmada"
+    },
+    {
+      "id": "gen-c11",
+      "por": "no_confirmada"
+    }
+  ]
+}

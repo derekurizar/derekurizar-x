@@ -40,6 +40,8 @@ Modos (misma investigación y verificación; cambian el arco y los gates):
    smoke ~10–15 minutos; fixture ~5 minutos. La publicación en X es manual.
 3. Invoca la herramienta **Workflow** con `name: "hilo"` y `args` como OBJETO:
    `{ "tema": "<tema o sujeto, sin modo ni smoke/fixture>", "modo": "hilo"|"explica"|"perfil", "smoke": <bool>, "fixture": <bool>, "fecha": "<YYYY-MM-DD>", "idea": "<id>"|null }`.
+   - Si el usuario pide un hilo largo o profundo («hasta N tuits», «muchos datos»), añade
+     `"min_tuits"` (≥ 10 activa el presupuesto `largo` de los investigadores) y `"max_tuits"` (≤ 21).
    - Si `.claude/workflows/hilo.js` se editó en ESTA sesión, `name` resuelve una
      copia en caché: usa `scriptPath: ".claude/workflows/hilo.js"`.
    - Si el workflow falla con «no está registrado en esta sesión», los agentes

@@ -1,0 +1,411 @@
+{
+ "plan": {
+  "titulo": "Plan de prueba 2024-2028 · Fixture",
+  "autor": "Partido Fixture",
+  "fecha": "2023-03",
+  "paginas": 10,
+  "mandato": {
+   "inicio": "2024-01-14",
+   "fin": "2028-01-14"
+  }
+ },
+ "corte": "2026-10-14",
+ "mandato": {
+  "inicio": "2024-01-14",
+  "fin": "2028-01-14"
+ },
+ "transcurrido": 68.7,
+ "global": 30.0,
+ "global_con_dato": 30.0,
+ "global_compromisos": 30.0,
+ "fiscal": null,
+ "n_compromisos": 8,
+ "n_unicos": 8,
+ "n_verificables": 7,
+ "estados": {
+  "cumplido": 2,
+  "en_proceso": 1,
+  "anunciado": 0,
+  "no_iniciado": 1,
+  "incumplido": 0,
+  "retroceso": 1,
+  "no_atribuible": 2,
+  "no_verificable": 1
+ },
+ "ejes_sin_evaluacion": [],
+ "semillas": [
+  {
+   "id": 1,
+   "nombre": "Social",
+   "n": 4,
+   "verificables": 4,
+   "cobertura": 100.0,
+   "avance": 60.0,
+   "con_dato": 60.0,
+   "estados": {
+    "cumplido": 2,
+    "en_proceso": 1,
+    "anunciado": 0,
+    "no_iniciado": 0,
+    "incumplido": 0,
+    "retroceso": 0,
+    "no_atribuible": 1,
+    "no_verificable": 0
+   }
+  },
+  {
+   "id": 2,
+   "nombre": "Seguridad",
+   "n": 4,
+   "verificables": 3,
+   "cobertura": 75.0,
+   "avance": 0.0,
+   "con_dato": 0.0,
+   "estados": {
+    "cumplido": 0,
+    "en_proceso": 0,
+    "anunciado": 0,
+    "no_iniciado": 1,
+    "incumplido": 0,
+    "retroceso": 1,
+    "no_atribuible": 1,
+    "no_verificable": 1
+   }
+  }
+ ],
+ "compromisos": [
+  {
+   "id": "S1-01",
+   "corto": "Q1,000 millones en escuelas",
+   "semilla": 1,
+   "eje": "aaa",
+   "medida_plan": "monto",
+   "estado_declarado": "en_proceso",
+   "medida_usada": "monto",
+   "observado": 400,
+   "base_obs": null,
+   "base_fecha": "2024-01",
+   "fecha_dato": "2026-08",
+   "cifra_ids": [
+    "aaa-c01"
+   ],
+   "resumen": "Se devengaron Q400 millones en escuelas entre 2024 y agosto de 2026, frente a Q1,000 millones prometidos.",
+   "fuente": "Fuente fixture",
+   "evidencia": [
+    {
+     "url": "https://example.org/x",
+     "cita": "FIXTURE"
+    }
+   ],
+   "revision": {
+    "veredicto": "confirmado",
+    "nota": "FIXTURE",
+    "url_2": "https://example.com/2"
+   },
+   "regla": "monto",
+   "avance_bruto": 40.0,
+   "avance": 40.0,
+   "puntos": 40.0,
+   "estado": "en_proceso",
+   "esperado": 65.7,
+   "ritmo": "rezagado",
+   "texto": "Invertir Q1,000 millones en escuelas",
+   "pagina": 1,
+   "meta_plan": null,
+   "monto_mq": 1000,
+   "bloque": null
+  },
+  {
+   "id": "S1-02",
+   "corto": "100 escuelas nuevas",
+   "semilla": 1,
+   "eje": "aaa",
+   "medida_plan": "meta",
+   "estado_declarado": "cumplido",
+   "medida_usada": "meta",
+   "observado": 120,
+   "base_obs": 0,
+   "base_fecha": "2024-01",
+   "fecha_dato": "2026-09",
+   "cifra_ids": [
+    "aaa-c02"
+   ],
+   "resumen": "El Mineduc inauguró 120 escuelas desde enero de 2024, más que las 100 prometidas.",
+   "fuente": "Fuente fixture",
+   "evidencia": [
+    {
+     "url": "https://example.org/x",
+     "cita": "FIXTURE"
+    }
+   ],
+   "revision": {
+    "veredicto": "confirmado",
+    "nota": "FIXTURE",
+    "url_2": "https://example.com/2"
+   },
+   "base_usada": 0,
+   "regla": "incremento",
+   "avance_bruto": 120.0,
+   "avance": 100.0,
+   "puntos": 100.0,
+   "estado": "cumplido",
+   "esperado": 67.8,
+   "ritmo": "en ritmo",
+   "texto": "Construir 100 escuelas nuevas",
+   "pagina": 1,
+   "meta_plan": {
+    "valor": 100,
+    "unidad": "escuelas",
+    "base": null,
+    "sentido": "sube"
+   },
+   "monto_mq": null,
+   "bloque": null
+  },
+  {
+   "id": "S1-03",
+   "corto": "Ley de becas",
+   "semilla": 1,
+   "eje": "aaa",
+   "medida_plan": "hito",
+   "estado_declarado": "cumplido",
+   "medida_usada": "hito",
+   "observado": null,
+   "base_obs": null,
+   "base_fecha": "",
+   "fecha_dato": "2025-03",
+   "cifra_ids": [],
+   "resumen": "El Congreso aprobó la ley de becas en marzo de 2025 (Decreto fixture 1-2025).",
+   "fuente": "Fuente fixture",
+   "evidencia": [
+    {
+     "url": "https://example.org/x",
+     "cita": "FIXTURE"
+    }
+   ],
+   "revision": {
+    "veredicto": "confirmado",
+    "nota": "FIXTURE",
+    "url_2": "https://example.com/2"
+   },
+   "estado": "cumplido",
+   "puntos": 100,
+   "avance": 100,
+   "ritmo": null,
+   "regla": "hito",
+   "texto": "Aprobar una ley de becas",
+   "pagina": 2,
+   "meta_plan": null,
+   "monto_mq": null,
+   "bloque": null
+  },
+  {
+   "id": "S1-04",
+   "corto": "Evaluación docente",
+   "semilla": 1,
+   "eje": "aaa",
+   "medida_plan": "hito",
+   "estado_declarado": "no_atribuible",
+   "medida_usada": "hito",
+   "observado": null,
+   "base_obs": null,
+   "base_fecha": "",
+   "fecha_dato": "2025-06",
+   "cifra_ids": [],
+   "resumen": "El programa de evaluación docente siguió aplicándose en 2024 y 2025.",
+   "fuente": "Fuente fixture",
+   "evidencia": [
+    {
+     "url": "https://example.org/x",
+     "cita": "FIXTURE"
+    }
+   ],
+   "revision": {
+    "veredicto": "corregido",
+    "nota": "no atribuible: la evaluación docente existe desde 2013 (FIXTURE)",
+    "url_2": "https://example.com/2"
+   },
+   "estado": "no_atribuible",
+   "avance": 0.0,
+   "puntos": 0.0,
+   "ritmo": null,
+   "regla": "no_atribuible",
+   "motivo": "no atribuible: la evaluación docente existe desde 2013 (FIXTURE)",
+   "texto": "Programa de evaluación docente",
+   "pagina": 2,
+   "meta_plan": null,
+   "monto_mq": null,
+   "bloque": null
+  },
+  {
+   "id": "S2-01",
+   "corto": "Menos homicidios",
+   "semilla": 2,
+   "eje": "bbb",
+   "medida_plan": "tendencia",
+   "estado_declarado": "retroceso",
+   "medida_usada": "meta",
+   "observado": 16.65,
+   "base_obs": 16.61,
+   "base_fecha": "2023",
+   "fecha_dato": "2026-08",
+   "cifra_ids": [
+    "bbb-c01"
+   ],
+   "resumen": "La tasa de homicidios pasó de 16.61 en 2023 a 16.65 en 2026: peor, aunque por poco.",
+   "fuente": "Fuente fixture",
+   "evidencia": [
+    {
+     "url": "https://example.org/x",
+     "cita": "FIXTURE"
+    }
+   ],
+   "revision": {
+    "veredicto": "confirmado",
+    "nota": "FIXTURE",
+    "url_2": "https://example.com/2"
+   },
+   "cambio_rel": -0.24,
+   "regla": "tendencia",
+   "estado": "retroceso",
+   "puntos": 0,
+   "avance": 0,
+   "ritmo": null,
+   "texto": "Reducir los homicidios",
+   "pagina": 3,
+   "meta_plan": {
+    "valor": null,
+    "unidad": "tasa por 100 mil",
+    "base": null,
+    "sentido": "baja"
+   },
+   "monto_mq": null,
+   "bloque": null
+  },
+  {
+   "id": "S2-02",
+   "corto": "Más denuncias atendidas",
+   "semilla": 2,
+   "eje": "bbb",
+   "medida_plan": "tendencia",
+   "estado_declarado": "no_iniciado",
+   "medida_usada": "meta",
+   "observado": 50,
+   "base_obs": 50,
+   "base_fecha": "2023",
+   "fecha_dato": "2026-08",
+   "cifra_ids": [
+    "bbb-c02"
+   ],
+   "resumen": "Las denuncias atendidas siguen en 50%, igual que en 2023.",
+   "fuente": "Fuente fixture",
+   "evidencia": [
+    {
+     "url": "https://example.org/x",
+     "cita": "FIXTURE"
+    }
+   ],
+   "revision": {
+    "veredicto": "confirmado",
+    "nota": "FIXTURE",
+    "url_2": "https://example.com/2"
+   },
+   "cambio_rel": 0.0,
+   "regla": "tendencia",
+   "estado": "no_iniciado",
+   "puntos": 0,
+   "avance": 0,
+   "ritmo": null,
+   "texto": "Atender más denuncias",
+   "pagina": 3,
+   "meta_plan": {
+    "valor": null,
+    "unidad": "%",
+    "base": null,
+    "sentido": "sube"
+   },
+   "monto_mq": null,
+   "bloque": null
+  },
+  {
+   "id": "S2-03",
+   "corto": "Cobertura policial 90%",
+   "semilla": 2,
+   "eje": "bbb",
+   "medida_plan": "meta",
+   "estado_declarado": "en_proceso",
+   "medida_usada": "meta",
+   "observado": 93,
+   "base_obs": 92,
+   "base_fecha": "2023",
+   "fecha_dato": "2026-08",
+   "cifra_ids": [
+    "bbb-c03"
+   ],
+   "resumen": "La cobertura policial pasó de 92% en 2023 a 93% en 2026; la meta era 90%.",
+   "fuente": "Fuente fixture",
+   "evidencia": [
+    {
+     "url": "https://example.org/x",
+     "cita": "FIXTURE"
+    }
+   ],
+   "revision": {
+    "veredicto": "confirmado",
+    "nota": "FIXTURE",
+    "url_2": "https://example.com/2"
+   },
+   "base_usada": 92,
+   "estado": "no_atribuible",
+   "puntos": 0.0,
+   "avance": 0.0,
+   "ritmo": null,
+   "regla": "ya_cumplida",
+   "nota_base": "la meta ya se cumplía al inicio del mandato (92 en 2023); se sostiene, pero no es atribuible al gobierno",
+   "motivo": "no atribuible: la meta ya se cumplía al inicio del mandato (92 en 2023); se sostiene, pero no es atribuible al gobierno",
+   "texto": "Cobertura policial de 90% de los municipios",
+   "pagina": 4,
+   "meta_plan": {
+    "valor": 90,
+    "unidad": "%",
+    "base": 80,
+    "sentido": "sube"
+   },
+   "monto_mq": null,
+   "bloque": null
+  },
+  {
+   "id": "S2-04",
+   "corto": "Registro de armas digital",
+   "semilla": 2,
+   "eje": "bbb",
+   "medida_plan": "hito",
+   "estado_declarado": "no_verificable",
+   "medida_usada": "hito",
+   "observado": null,
+   "base_obs": null,
+   "base_fecha": "",
+   "fecha_dato": "",
+   "cifra_ids": [],
+   "resumen": "No hay información pública sobre el registro digital de armas.",
+   "fuente": "",
+   "evidencia": [],
+   "revision": {
+    "veredicto": "confirmado",
+    "nota": "FIXTURE",
+    "url_2": "https://example.com/2"
+   },
+   "estado": "no_verificable",
+   "avance": 0.0,
+   "puntos": 0.0,
+   "motivo": "sin información pública suficiente",
+   "ritmo": null,
+   "regla": "sin_dato",
+   "texto": "Digitalizar el registro de armas",
+   "pagina": 4,
+   "meta_plan": null,
+   "monto_mq": null,
+   "bloque": null
+  }
+ ]
+}

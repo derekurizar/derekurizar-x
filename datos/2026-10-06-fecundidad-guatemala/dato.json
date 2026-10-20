@@ -1,0 +1,175 @@
+{
+  "slug": "fecundidad-guatemala",
+  "fecha": "2026-10-06",
+  "tema": "Guatemala tiene cada vez menos hijos por mujer",
+  "pista": null,
+  "tipo": "dato",
+  "dato": "Guatemala ya no es el país con más hijos por mujer de Centroamérica: Honduras la rebasó",
+  "cifra_id": "dat-c02",
+  "por_que_impacta": "Rompe una idea muy instalada: Guatemala ya no encabeza la fecundidad de la región. Honduras la rebasó en 2019 y en 2024 tiene 2.476 hijos por mujer frente a 2.287.",
+  "paleta": "cielo",
+  "hook_tipo": "giro_inversion",
+  "pregunta": "¿Sigue siendo Guatemala el país de Centroamérica con más hijos por mujer?",
+  "tesis": "Guatemala (2.287 hijos por mujer en 2024) ya no tiene la fecundidad más alta de Centroamérica: Honduras (2.476) la rebasó en 2019.",
+  "estado": "listo",
+  "tuit": {
+    "texto": "En 2018, Guatemala aún tenía más hijos por mujer que Honduras; en 2019, ya no.\n\nNo porque Honduras subiera: en los dos países la fecundidad baja, pero en Guatemala cae más rápido.",
+    "caracteres": 179,
+    "alt_text": "Gráfico de barras horizontales: tasa global de fecundidad en 2024 en los siete países de Centroamérica, en hijos por mujer. Honduras 2.48, Guatemala 2.29 (segunda, destacada), Nicaragua 2.21, Panamá 2.11, Belice 2.02, El Salvador 1.77 y Costa Rica 1.32. Nota: Honduras rebasó a Guatemala en 2019. Fuente: Banco Mundial con estimaciones de la ONU (World Population Prospects).",
+    "imagen": "dato.png",
+    "tarjeta": "tarjeta.html",
+    "plantilla": "barras-h",
+    "kicker": "HIJOS POR MUJER · CENTROAMÉRICA · 2024",
+    "titular": [
+      "Guatemala ya no tiene",
+      "la fecundidad más alta",
+      "de Centroamérica"
+    ],
+    "nota": "Tasa global de fecundidad: hijos que tendría una mujer en su vida. Estimaciones de la ONU (WPP); Honduras rebasó a Guatemala en 2019.",
+    "fuente": "Banco Mundial con estimaciones de la ONU (WPP) · 2024",
+    "cifra_ids": [
+      "dat-c02",
+      "dat-c03"
+    ]
+  },
+  "cifras": [
+    {
+      "id": "dat-c02",
+      "concepto": "Tasa global de fecundidad 2024 en Centroamérica y México (hijos por mujer)",
+      "valor": 2.287,
+      "unidad": "hijos por mujer",
+      "anio": 2024,
+      "veredicto": "verificada",
+      "fuente": "Banco Mundial, SP.DYN.TFRT.IN (UN WPP)",
+      "fuente_2": "UN World Population Prospects 2024 (vía Measured World); Honduras",
+      "url": "https://api.worldbank.org/v2/country/GTM;SLV;HND;NIC;CRI;PAN;MEX;BLZ/indicator/SP.DYN.TFRT.IN?format=json&per_page=1000&date=1960:2025"
+    },
+    {
+      "id": "dat-c03",
+      "concepto": "Cruce Guatemala-Honduras: fecundidad 2018 vs 2019",
+      "valor": 2.593,
+      "unidad": "hijos por mujer",
+      "anio": 2019,
+      "veredicto": "verificada",
+      "fuente": "Banco Mundial, SP.DYN.TFRT.IN (UN WPP)",
+      "fuente_2": "UN WPP 2024 (vía Measured World, Honduras)",
+      "url": "https://api.worldbank.org/v2/country/GTM;SLV;HND;NIC;CRI;PAN;MEX;BLZ/indicator/SP.DYN.TFRT.IN?format=json&per_page=1000&date=1960:2025"
+    }
+  ],
+  "candidatas": [
+    {
+      "id": "dat-c02",
+      "puntaje": 21,
+      "criterios": {
+        "sorpresa": 5,
+        "magnitud": 4,
+        "comparacion": 5,
+        "actualidad": 4,
+        "solidez": 3
+      },
+      "elegida": true,
+      "motivo": "Contradice la idea de que Guatemala es el país con más hijos de la región; comparación con vecinos en la misma unidad, último año. 2ª fuente no independiente.",
+      "dato": "Tasa global de fecundidad 2024 en Centroamérica y México (hijos por mujer)"
+    },
+    {
+      "id": "dat-c01",
+      "puntaje": 19,
+      "criterios": {
+        "sorpresa": 3,
+        "magnitud": 5,
+        "comparacion": 5,
+        "actualidad": 3,
+        "solidez": 3
+      },
+      "elegida": false,
+      "motivo": "Caída enorme (7 a 2.29) pero esperada; el giro regional sorprende más. Queda para otro dato.",
+      "dato": "Tasa global de fecundidad de Guatemala (hijos por mujer), 1960-2024"
+    },
+    {
+      "id": "dat-c03",
+      "puntaje": 16,
+      "criterios": {
+        "sorpresa": 4,
+        "magnitud": 3,
+        "comparacion": 4,
+        "actualidad": 2,
+        "solidez": 3
+      },
+      "elegida": false,
+      "motivo": "Misma historia que dat-c02, con datos de 2018-2019 y solo dos países; respalda el texto del tuit.",
+      "dato": "Cruce Guatemala-Honduras: fecundidad 2018 vs 2019"
+    },
+    {
+      "id": "dat-c04",
+      "puntaje": 17,
+      "criterios": {
+        "sorpresa": 4,
+        "magnitud": 4,
+        "comparacion": 4,
+        "actualidad": 3,
+        "solidez": 2
+      },
+      "elegida": false,
+      "motivo": "Buena escala humana (238 menos al día), pero el 2014 viene del INE citado por prensa y la base 2024 podría estar incompleta.",
+      "dato": "Nacimientos en Guatemala, 2014 vs 2024 (año de ocurrencia, INE)"
+    },
+    {
+      "id": "dat-c05",
+      "puntaje": 15,
+      "criterios": {
+        "sorpresa": 3,
+        "magnitud": 3,
+        "comparacion": 4,
+        "actualidad": 3,
+        "solidez": 2
+      },
+      "elegida": false,
+      "motivo": "Serie sin 2022 y caída 2023-2024 posiblemente por base 2024 incompleta; menos sólida que dat-c02.",
+      "dato": "Nacimientos por año de ocurrencia, Guatemala 2018-2024 (sin 2022), microdatos INE"
+    },
+    {
+      "id": "dat-c06",
+      "puntaje": 15,
+      "criterios": {
+        "sorpresa": 2,
+        "magnitud": 3,
+        "comparacion": 3,
+        "actualidad": 4,
+        "solidez": 3
+      },
+      "elegida": false,
+      "motivo": "Inscripciones por fecha de trámite, no nacimientos ocurridos; el repunte de 2025 enturbia el mensaje.",
+      "dato": "Nacimientos inscritos en RENAP por año, 2022-2025 y enero-julio 2026"
+    },
+    {
+      "id": "dat-c07",
+      "puntaje": 15,
+      "criterios": {
+        "sorpresa": 3,
+        "magnitud": 2,
+        "comparacion": 3,
+        "actualidad": 4,
+        "solidez": 3
+      },
+      "elegida": false,
+      "motivo": "Matrimonios: tangencial a la fecundidad y número macro sin traducción humana.",
+      "dato": "Matrimonios inscritos en RENAP, 2022 vs 2025"
+    }
+  ],
+  "no_afirma": [
+    "No afirma por qué baja la fecundidad ni por qué Guatemala cae más rápido que Honduras.",
+    "No es una tasa oficial del INE: son estimaciones de la ONU (WPP) publicadas por el Banco Mundial.",
+    "No afirma que la brecha con Honduras crezca cada año; solo compara 2018, 2019 y 2024."
+  ],
+  "incertidumbre": [
+    "La segunda fuente reproduce la primaria (UN WPP vía Banco Mundial): verifica el número, pero no es un respaldo independiente.",
+    "Son estimaciones modeladas: el INE no ha publicado una tasa global de fecundidad posterior a 2019."
+  ],
+  "fuentes": [
+    "Banco Mundial con estimaciones de la ONU (WPP) · 2024"
+  ],
+  "fuentes_cifras": [
+    "Banco Mundial, SP.DYN.TFRT.IN (UN WPP)"
+  ],
+  "gate_mecanico": "ok"
+}

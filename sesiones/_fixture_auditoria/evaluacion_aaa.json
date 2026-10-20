@@ -1,0 +1,74 @@
+{
+ "eje": "aaa",
+ "corte": "2026-10-14",
+ "items": [
+  {
+   "evidencia": [
+    {
+     "url": "https://example.org/x",
+     "cita": "FIXTURE"
+    }
+   ],
+   "fuente": "Fuente fixture",
+   "id": "S1-01",
+   "estado": "en_proceso",
+   "medida_usada": "monto",
+   "observado": 400,
+   "base_obs": null,
+   "base_fecha": "2024-01",
+   "fecha_dato": "2026-08",
+   "cifra_ids": [
+    "aaa-c01"
+   ],
+   "resumen": "Se devengaron Q400 millones en escuelas entre 2024 y agosto de 2026, frente a Q1,000 millones prometidos."
+  },
+  {
+   "evidencia": [
+    {
+     "url": "https://example.org/x",
+     "cita": "FIXTURE"
+    }
+   ],
+   "fuente": "Fuente fixture",
+   "id": "S1-02",
+   "estado": "cumplido",
+   "medida_usada": "meta",
+   "observado": 120,
+   "base_obs": 0,
+   "base_fecha": "2024-01",
+   "fecha_dato": "2026-09",
+   "cifra_ids": [
+    "aaa-c02"
+   ],
+   "resumen": "El Mineduc inauguró 120 escuelas desde enero de 2024, más que las 100 prometidas."
+  },
+  {
+   "evidencia": [
+    {
+     "url": "https://example.org/x",
+     "cita": "FIXTURE"
+    }
+   ],
+   "fuente": "Fuente fixture",
+   "id": "S1-03",
+   "estado": "cumplido",
+   "medida_usada": "hito",
+   "fecha_dato": "2025-03",
+   "resumen": "El Congreso aprobó la ley de becas en marzo de 2025 (Decreto fixture 1-2025)."
+  },
+  {
+   "evidencia": [
+    {
+     "url": "https://example.org/x",
+     "cita": "FIXTURE"
+    }
+   ],
+   "fuente": "Fuente fixture",
+   "id": "S1-04",
+   "estado": "en_proceso",
+   "medida_usada": "hito",
+   "fecha_dato": "2025-06",
+   "resumen": "El programa de evaluación docente siguió aplicándose en 2024 y 2025."
+  }
+ ]
+}

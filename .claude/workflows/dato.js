@@ -6,12 +6,13 @@ export const meta = {
     { title: 'Investigación', detail: 'investigador: pista → tema final, encuadre ligero (sesión, paleta, hook_evitar) y candidatas a dato impactante con evidencia e impacto' },
     { title: 'Verificación', detail: 'verificador: segunda fuente independiente por candidata, veredicto y valor_final' },
     { title: 'Guion', detail: 'guionista: puntúa las candidatas (1–5 × 5 criterios), elige UNA, hook_tipo y un solo tuit con visual y alt-text' },
+    { title: 'Rechequeo', detail: 'verificador en modo rechequeo: la cifra elegida y su comparación; si cae, el guionista elige otra' },
     { title: 'Producción', detail: 'productor: QA visual (materializar → Read PNG → ajuste) → consolidar → ensamblar.py --check → C1/C5/C7/alt → memoria.py → make validate' },
   ],
 }
 
 // Guías: referencias/flujo-dato.md, referencias/contrato-sesion.md («Sesión dato»),
-// referencias/roles/*.md («Modo dato»), referencias/narrativa.md («Dato único»).
+// referencias/roles/*.md y referencias/roles/*-dato.md, referencias/narrativa.md («Dato único»).
 // Cuatro agentes reutilizados de /hilo (no hay editor ni visualistas): el investigador
 // hace el encuadre ligero y el productor el QA visual. Los agentes escriben su artefacto
 // COMPLETO en sesiones/<slug>/ y devuelven un resumen validado por schema; los gates se
@@ -132,6 +133,14 @@ const S = {
       vacios: { type: 'array', items: { type: 'string' } },
     },
   },
+  rechequeo: {
+    type: 'object',
+    required: ['items'],
+    properties: {
+      archivo: { type: 'string' },
+      items: { type: 'array', items: { type: 'object', required: ['id', 'veredicto', 'motivo'], properties: { id: { type: 'string' }, veredicto: { type: 'string', enum: ['sostiene', 'matizar', 'caer'] }, motivo: { type: 'string' }, fuente: { type: 'string' }, url: { type: 'string' } } } },
+    },
+  },
   verificacion: {
     type: 'object',
     required: ['eje', 'archivo', 'ok', 'no_confirmadas'],
@@ -139,6 +148,7 @@ const S = {
       eje: { type: 'string' }, archivo: { type: 'string', pattern: 'verificacion_dato\\.json$' },
       ok: { type: 'array', items: { type: 'object', required: ['id'], properties: { id: { type: 'string' }, valor_final: { type: 'number' }, independencia: { type: 'string', enum: ['alta', 'baja'] } } } },
       no_confirmadas: { type: 'array', items: { type: 'string' } },
+      fallas_mecanicas: { type: 'array', items: { type: 'string' } },
     },
   },
   guion_dato: {
@@ -245,24 +255,66 @@ const modo = smoke ? 'smoke' : 'normal'
 const T = TOPES[modo]
 const maxIter = ITER_VISUAL[modo]
 const sesionFixture = `sesiones/fixture-dato-${fecha.replace(/-/g, '')}`
+// <comun> generado por scripts/armar_workflows.py desde scripts/workflow_comun.js: no editar aquí
+// Código común de los workflows hilo.js, dato.js, investigacion.js y video.js (el sandbox de Workflow no importa módulos).
+// Fuente ÚNICA: este archivo. scripts/armar_workflows.py lo copia entre los marcadores de bloque común
+// de cada workflow; scripts/check_workflows.py (W9) falla si una copia difiere.
+// Requiere en el workflow, antes del bloque: `A` (args), `meta` y un esquema `S.rechequeo`.
 const fail = (msg) => { throw new Error(msg) }
 // Los avisos del workflow viajan también en el retorno (el journal no conserva los log()).
 const AVISOS_WF = []
 const avisar = (m) => { AVISOS_WF.push(String(m)); log(m) }
 
-// Los roles viven en .claude/agents/hilo-*.md (los mismos de /hilo) y se registran al
-// arrancar la sesión. Si no existen se falla con instrucciones claras; solo con
-// args.permitir_fallback se degrada a general-purpose.
+// Los roles viven en .claude/agents/ (hilo-*, informe-*) y se registran al arrancar la
+// sesión. Si no existen todavía se falla con instrucciones claras: correr todo
+// en general-purpose es caro, ignora los modelos por rol y rompe la caché de
+// resume. Solo con args.permitir_fallback se degrada a general-purpose.
 const agentRol = async (prompt, opts) => {
   try {
     return await agent(prompt, opts)
   } catch (e) {
     if (!opts || !opts.agentType || !/agent type .* not found/i.test(String(e && e.message))) throw e
-    if (!A.permitir_fallback) fail(`El agente ${opts.agentType} no está registrado en esta sesión (los .claude/agents/ se cargan al arrancar). Reinicia Claude Code y vuelve a lanzar /dato, o pasa args.permitir_fallback: true para correr con general-purpose.`)
+    if (!A.permitir_fallback) fail(`El agente ${opts.agentType} no está registrado en esta sesión (los .claude/agents/ se cargan al arrancar). Reinicia Claude Code y vuelve a lanzar /${meta.name}, o pasa args.permitir_fallback: true para correr con general-purpose.`)
     avisar(`AVISO: ${opts.agentType} no registrado; se usa general-purpose (permitir_fallback).`)
     const { agentType, ...resto } = opts
     return agent(`Asume el rol definido en .claude/agents/${agentType}.md: léelo primero y sigue sus instrucciones y sus límites. ` + prompt, { ...resto, agentType: 'general-purpose' })
   }
+}
+
+// Verificación mecánica (scripts/verificacion.py V-A–V-E): forma única del veredicto, cierre que el verificador
+// corre antes de devolver y una vuelta de reparación si quedan fallas; lo que siga fallando no se usa.
+const FORMA_ITEM = '{"id", "veredicto": "verificada|ajustada|no_confirmada", "valor_final", "fuente_2", "url_2", "independencia": "alta|baja", "calculo"?, "serie_final"?, "partes_final"?, "nota"}'
+const cierreVer = (ses, eje) =>
+  `ANTES DE DEVOLVER corre python3 scripts/verificacion.py ${ses} --eje ${eje} y corrige cada FALLA: V-A, que la cita contenga el número o, si es derivado, «calculo» con la operación (p. ej. "(188442390/226077000-1)*100"); V-B, serie_final/partes_final con los puntos corregidos de una ajustada; V-C, independencia alta|baja (alta nunca con url_2 del mismo dominio que la primaria). Si no puedes, marca la cifra no_confirmada. Devuelve fallas_mecanicas[] con los ids que sigan fallando (vacío si 0). `
+async function conMecanico(v, prompt, opts, ses, eje) {
+  if (!v || !(v.fallas_mecanicas || []).length) return v
+  avisar(`${eje}: verificacion.py deja ${v.fallas_mecanicas.length} falla(s) (${v.fallas_mecanicas.join(', ')}) → una vuelta de reparación.`)
+  const r = await agentRol(`${prompt} REPARACIÓN: verificacion_${eje}.json ya existe; no repitas la verificación. Corre python3 scripts/verificacion.py ${ses} --eje ${eje} y corrige solo ${v.fallas_mecanicas.join(', ')} (o márcalas no_confirmada); devuelve el retorno completo del eje.`, { ...opts, label: `${opts.label}-mecanico` })
+  const w = r || v
+  const quedan = new Set(w.fallas_mecanicas || [])
+  if (quedan.size) {
+    avisar(`AVISO: ${eje}: ${[...quedan].join(', ')} siguen sin pasar verificacion.py; no se usan.`)
+    w.ok = w.ok.filter((it) => !quedan.has(it.id))
+    w.no_confirmadas = [...new Set([...(w.no_confirmadas || []), ...quedan])]
+  }
+  return w
+}
+
+// Rechequeo adversarial (referencias/roles/verificador.md «Rechequeo»): una invocación tras el guion sobre las
+// pocas cifras que sostienen la conclusión; las que «caen» vuelven al guionista para quitarlas.
+async function rechequear(ses, ids, extra, presupuesto) {
+  if (!ids.length) return { items: [] }
+  const r = await agentRol(
+    `Eres el verificador en MODO RECHEQUEO (lee referencias/roles/verificador.md, sección «Rechequeo»). Sesión: ${ses}. ` +
+      `Cifras que sostienen la conclusión: ${ids.join(', ')} (python3 scripts/digesto.py ${ses} --para verificador y --serie <id>; python3 scripts/verificacion.py ${ses} para sus avisos; no leas los JSON enteros). ${extra || ''}` +
+      'Para cada una, ¿por qué podría estar mal? (definición o categoría distinta entre la base y el dato actual, periodo o universo mezclado, cifra preliminar revisada, segunda fuente que copia la primera). Busca una fuente de independencia alta si no la hay. ' +
+      `Presupuesto: ${presupuesto}. No reescribas verificacion_*.json. Escribe ${ses}/rechequeo.json {"items": [{"id", "veredicto": "sostiene|matizar|caer", "motivo", "fuente"?, "url"?}]} y devuelve el mismo contenido.`,
+    { agentType: 'hilo-verificador', schema: S.rechequeo, phase: 'Rechequeo', label: 'rechequeo' }
+  )
+  if (!r) { avisar('AVISO: el rechequeo no terminó; sigue la verificación de la primera pasada.'); return { items: [] } }
+  const caen = r.items.filter((x) => x.veredicto === 'caer').map((x) => x.id)
+  avisar(`Rechequeo: ${r.items.length} cifra(s) · ${caen.length} caen${caen.length ? ' (' + caen.join(', ') + ')' : ''} · ${r.items.filter((x) => x.veredicto === 'matizar').length} a matizar`)
+  return r
 }
 
 // Bucle de reparación: valida el retorno y reinvoca con la lista de fallos.
@@ -277,6 +329,7 @@ async function conReparacion(etiqueta, invocar, validar, max = 2) {
   }
   fail(`${etiqueta} rechazado tras ${max} reparaciones:\n - ${fallos.join('\n - ')}`)
 }
+// </comun>
 
 // ── FASE 1: INVESTIGACIÓN (incluye el encuadre ligero) ──────────────────────
 const CIF = new Map()
@@ -294,7 +347,7 @@ if (fixture) {
 } else {
   phase('Investigación')
   const hal = await agentRol(
-    `Eres el investigador del flujo /dato (lee referencias/roles/investigador.md, sección «Modo dato»${modoPost !== 'dato' ? ' y su apartado «Modos vs · mapa · antes»' : ''}, y referencias/contrato-sesion.md, «Sesión dato»). Fecha: ${fecha}. ${smoke ? 'MODO SMOKE: presupuesto corto. ' : 'Modo normal. '}` +
+    `Eres el investigador del flujo /dato (lee referencias/roles/investigador.md y referencias/roles/investigador-dato.md${modoPost !== 'dato' ? ' y su apartado «Modos vs · mapa · antes»' : ''}, y referencias/contrato-sesion.md, «Sesión dato»). Fecha: ${fecha}. ${smoke ? 'MODO SMOKE: presupuesto corto. ' : 'Modo normal. '}` +
       `MODO DEL POST: ${modoPost}. ` + IM.investigador +
       (pista
         ? `PISTA del usuario: «${pista}». Es una orientación, no un encargo cerrado: puede ser un tema, un ángulo, una fuente o una corazonada. Úsala para empezar y desvíate si en su vecindad (misma área o misma fuente) encuentras un dato más fuerte; el tema final lo decides tú. `
@@ -331,16 +384,18 @@ if (fixture) {
   // ── FASE 2: VERIFICACIÓN ──────────────────────────────────────────────────
   phase('Verificación')
   const promptV =
-    `Eres el verificador del flujo /dato (lee referencias/roles/verificador.md, sección «Modo dato»). Sesión: ${enc.sesion_dir}. ` +
+    `Eres el verificador del flujo /dato (lee referencias/roles/verificador.md y referencias/roles/verificador-dato.md). Sesión: ${enc.sesion_dir}. ` +
     `Corre python3 scripts/digesto.py ${enc.sesion_dir} --eje dato --para verificador (no leas hallazgos_dato.json entero). ` +
     `Verifica TODAS las candidatas: ${hal.cifras.map((c) => c.id).join(', ')}. Parte de la cita y del archivo local; una segunda fuente genuinamente independiente por cifra; ≤2 fetch y ≤1 búsqueda por cifra. ` +
     `En una comparación verifica los dos lados (misma definición, unidad y periodo); en una candidata «récord» verifica que el máximo de la serie sea ese valor. ${smoke ? 'MODO SMOKE: cita + una segunda fuente; extremos de cada serie. ' : ''}` +
     (modoPost !== 'dato' ? `MODO DEL POST: ${modoPost} (apartado «Modos vs · mapa · antes» de tu guía). ` + IM.verificador : '') +
-    `Escribe ${enc.sesion_dir}/verificacion_dato.json COMPLETO con EXACTAMENTE esta forma: {"eje": "dato", "items": [{"id", "veredicto": "verificada|ajustada|no_confirmada", "valor_final", "fuente_2", "url_2", "nota"}]} (la clave es items, no cifras) y devuelve ok[] (id, valor_final) y no_confirmadas[].`
+    `Escribe ${enc.sesion_dir}/verificacion_dato.json COMPLETO con EXACTAMENTE esta forma: {"eje": "dato", "items": [${FORMA_ITEM}]} (la clave es items, no cifras). ` + cierreVer(enc.sesion_dir, 'dato') +
+    'Devuelve ok[] (id, valor_final, independencia), no_confirmadas[] y fallas_mecanicas[].'
   const optsV = { agentType: 'hilo-verificador', schema: S.verificacion, label: 'verificador' }
   let ver = await agentRol(promptV, optsV)
   if (!ver) { avisar('AVISO: el verificador no terminó; se reintenta una vez.'); ver = await agentRol(promptV, { ...optsV, label: 'verificador-2' }) }
   if (!ver) fail('Verificación sin resultado: el verificador no terminó dos veces.')
+  ver = await conMecanico(ver, promptV, optsV, enc.sesion_dir, 'dato')
   for (const it of ver.ok) { if (CIF.has(it.id)) VER.set(it.id, it); else avisar(`AVISO: el verificador devolvió ${it.id}, que no está en hallazgos_dato.json; se ignora.`) }
   noConf = (ver.no_confirmadas || []).length
   okIds = new Set(VER.keys())
@@ -550,11 +605,9 @@ if (fixture) {
     return F
   }
   const impactos = [...okIds].map((id) => `${id} · ${(CIF.get(id) || {}).impacto || '(sin impacto declarado)'}${bajas.includes(id) ? ' (2ª fuente NO independiente: solidez ≤3)' : ''}`).join('; ')
-  g = await conReparacion(
-    'Guion',
-    (fallos) =>
+  const invocarGuion = (fallos) =>
       agentRol(
-        `Eres el guionista del flujo /dato (lee referencias/roles/guionista.md «Modo dato», referencias/narrativa.md «Dato único» y referencias/diseno/graficos.md). Sesión: ${enc.sesion_dir}. ` +
+        `Eres el guionista del flujo /dato (lee referencias/roles/guionista.md y referencias/roles/guionista-dato.md, referencias/narrativa.md «Dato único» y referencias/diseno/graficos.md). Sesión: ${enc.sesion_dir}. ` +
           `Lee encuadre.json y corre python3 scripts/digesto.py ${enc.sesion_dir} --para guionista (no leas hallazgos_dato.json ni verificacion_dato.json enteros; para los puntos de una serie usa --serie <id>). ` +
           `Paleta: ${enc.paleta}. Fecha: ${fecha}. hook_evitar: ${enc.hook_evitar || 'ninguno'}. ${smoke ? 'MODO SMOKE (smoke: true). ' : 'smoke: false. '}` +
           `CANDIDATAS VERIFICADAS (id · impacto según el investigador): ${impactos}. ` +
@@ -566,10 +619,24 @@ if (fixture) {
           (fallos.length ? `TU GUION ANTERIOR FUE RECHAZADO; corrige SOLO esto y vuelve a escribir guion.json completo:\n - ${fallos.join('\n - ')}\n` : '') +
           `Escribe ${enc.sesion_dir}/guion.json COMPLETO {slug, fecha, tipo: "dato", modo: "${modoPost}", paleta, smoke, handle, hook_tipo, dato, candidatas, sintesis{pregunta, tesis, ancla_id, no_afirma, incertidumbre, descartadas}, tuits${modoPost !== 'dato' ? `, ${modoPost}{…}` : ''}} y devuelve el mismo contenido compacto (archivo, tipo, modo, tesis, ancla_id, paleta, hook_tipo, dato, candidatas, no_afirma, tuits con visual.datos en números crudos${modoPost !== 'dato' ? ', y el bloque ' + modoPost : ''}).`,
         { agentType: 'hilo-guionista', schema: S.guion_dato, label: fallos.length ? 'guionista-reparacion' : 'guionista' }
-      ),
-    validarGuion,
-    2
-  )
+      )
+  g = await conReparacion('Guion', invocarGuion, validarGuion, 2)
+
+  // Rechequeo adversarial: la tarjeta se sostiene en UNA cifra (y en su comparación).
+  phase('Rechequeo')
+  const idsRq = [...new Set([g.dato.cifra_id, ...((g.tuits[0] || {}).visual || {}).cifra_ids || []])].filter((x) => CIF.has(x)).slice(0, 3)
+  const rq = await rechequear(enc.sesion_dir, idsRq, modoPost !== 'dato' ? `MODO DEL POST: ${modoPost}: comprueba que los dos lados de la comparación compartan definición, unidad y periodo. ` : '', smoke ? '≤ 2 búsquedas y ≤ 3 fetch' : '≤ 4 búsquedas y ≤ 6 fetch en total')
+  const caen = new Set(rq.items.filter((x) => x.veredicto === 'caer').map((x) => x.id))
+  const matizar = rq.items.filter((x) => x.veredicto === 'matizar').map((x) => `${x.id}: ${x.motivo}`)
+  if (caen.size || matizar.length) {
+    for (const c of caen) okIds.delete(c)
+    if (!okIds.size) fail(`El rechequeo descartó ${[...caen].join(', ')} y no queda ninguna candidata verificada.`)
+    const pedido = [
+      ...(caen.size ? [`el rechequeo descartó ${[...caen].join(', ')} (rechequeo.json): elige otra candidata entre ${[...okIds].join(', ')} y rehaz el tuit`] : []),
+      ...(matizar.length ? [`declara en sintesis.incertidumbre lo que el rechequeo pide matizar: ${matizar.join(' · ')}`] : []),
+    ]
+    g = await conReparacion('Guion (rechequeo)', (f, i) => invocarGuion(i === 0 ? pedido : f), validarGuion, 2)
+  }
   const vf = VER.get(g.dato.cifra_id)
   avisar(`Dato: ${g.dato.titular} · ${g.dato.cifra_id} = ${vf ? vf.valor_final : '?'} · gancho ${g.hook_tipo} · ${g.tuits[0].visual.plantilla}${modoPost !== 'dato' ? ' · modo ' + modoPost : ''} · texto ${pesoX(g.tuits[0].texto)} de peso X`)
 }
@@ -596,7 +663,7 @@ const prod = await conReparacion(
   'Producción',
   (fallos) =>
     agentRol(
-      `Eres el productor del flujo /dato (lee referencias/roles/productor.md «Modo dato», referencias/roles/visualista.md y la «Checklist de QA visual» de referencias/diseno/graficos.md). Sesión: ${enc.sesion_dir}. Fecha: ${fecha}. ` +
+      `Eres el productor del flujo /dato (lee referencias/roles/productor.md y referencias/roles/productor-dato.md, referencias/roles/visualista.md y la «Checklist de QA visual» de referencias/diseno/graficos.md). Sesión: ${enc.sesion_dir}. Fecha: ${fecha}. ` +
         (fixture
           ? `MODO FIXTURE: primero mkdir -p ${enc.sesion_dir} && cp -R sesiones/_fixture_dato/. ${enc.sesion_dir}/ (con el punto final: así no anida si ya existe); en encuadre.json y guion.json copiados pon fixture: true, smoke: true, fecha "${fecha}" y sesion_dir "${enc.sesion_dir}". `
           : `Gancho: ${g.hook_tipo}. Dato elegido: ${g.dato.cifra_id} (${g.dato.titular}). Modo del post: ${modoPost}. ${IM.productor}${smoke ? 'MODO SMOKE. ' : ''}` +

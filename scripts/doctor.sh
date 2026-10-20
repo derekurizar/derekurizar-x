@@ -57,6 +57,15 @@ fi
 # pdftotext
 if command -v pdftotext >/dev/null; then ok "pdftotext ($(pdftotext -v 2>&1 | head -1))"; else aviso "falta pdftotext (brew install poppler): make pdf no funcionará"; fi
 
+# /video: ffmpeg/ffprobe, los agentes, el workflow, el comando, las plantillas verticales, la música y los efectos fijos
+if command -v ffmpeg >/dev/null && command -v ffprobe >/dev/null; then ok "ffmpeg y ffprobe ($(ffmpeg -version | head -1 | cut -d' ' -f1-3))"; else aviso "falta ffmpeg (brew install ffmpeg): /video no funcionará"; fi
+for f in scripts/video.py scripts/numeros_es.py scripts/video_grabar.js scripts/video_animar.js video/escena.html video/cierre.html video/golpe.html video/animar.js .claude/agents/video-guionista.md .claude/agents/video-critico.md .claude/workflows/video.js .claude/commands/video.md referencias/roles/video-guionista.md referencias/roles/video-critico.md referencias/flujo-video.md design/musica/catalogo.json design/sfx/catalogo.json sesiones/_fixture_video/guion.json; do
+  [[ -s "$f" ]] || aviso "falta $f (/video no estará disponible)"
+done
+for id in whoosh tic pulso impacto grave riser resolucion foco; do
+  [[ -s "design/sfx/$id.wav" ]] || aviso "falta design/sfx/$id.wav (biblioteca FIJA de efectos: se genera UNA vez con scripts/sfx.py --importar; /video montar no funcionará)"
+done
+
 # agentes y workflow
 NAG="$(ls .claude/agents/hilo-*.md 2>/dev/null | wc -l | tr -d ' ')"
 if [[ "$NAG" -eq 6 ]]; then ok ".claude/agents/: 6 archivos hilo-*.md"; else error ".claude/agents/: hay $NAG hilo-*.md (deben ser 6: editor, investigador, verificador, guionista, visualista, productor)"; fi
@@ -79,7 +88,7 @@ for f in .claude/commands/vs.md .claude/commands/mapa.md .claude/commands/antes.
 done
 
 # /investigacion: agente redactor, workflow, comando, fixture del informe y catálogo de gráficos del informe
-for f in .claude/agents/informe-redactor.md .claude/workflows/investigacion.js .claude/commands/investigacion.md sesiones/_fixture/informe.json scripts/catalogo_informe.py referencias/roles/redactor.md; do
+for f in .claude/agents/informe-redactor.md .claude/agents/informe-revisor.md scripts/revision.py scripts/verificacion.py scripts/workflow_comun.js scripts/armar_workflows.py sesiones/_fixture_auditoria/compromisos.json referencias/roles/revisor.md referencias/roles/guionista-dato.md .claude/workflows/investigacion.js .claude/commands/investigacion.md sesiones/_fixture/informe.json scripts/catalogo_informe.py referencias/roles/redactor.md; do
   if [[ -s "$f" ]]; then ok "$f presente"; else aviso "falta $f (/investigacion no estará disponible)"; fi
 done
 

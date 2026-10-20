@@ -23,6 +23,11 @@ Salida:   hilos/<fecha>-<slug>/ (o --salida DIR; en smoke/fixture <sesion>/salid
   G7 superlativos («récord», «histórico»…) solo con una serie ≥ 10 puntos en las
      cifras del tuit cuyo máximo sea el valor
   G8 el cierre nombra la fuente corta de cada tarjeta
+  G10 (aviso) cada número del texto de un tuit es una cifra verificada (redondeada como se escribió, a
+     cualquier escala), un derivado simple de dos de ellas, un año, una fecha o un entero ≤ 12
+  G9 verificación mecánica (scripts/verificacion.py) de las cifras de cada tarjeta: V-A la cita, el archivo
+     local o una operación declarada («calculo») contiene el número; V-B una ajustada no deja valores viejos en
+     su serie o desglose; V-C «alta» nunca con url_2 del mismo dominio (falla); falta de independencia = aviso
 
 Modo DATO (guion.tipo == "dato" o encuadre.tipo == "dato"; lo produce /dato): un solo tuit con tarjeta.
   Salida: datos/<fecha>-<slug>/ (o --salida DIR; smoke/fixture → <sesion>/salida/) con
@@ -42,7 +47,7 @@ Modo del post (guion.modo, lo fija el workflow con args.modo; encuadre.modo de r
   Modos de hilo (espejo mínimo de hilo.js): explica → 3–6 tuits, sin giro, intermedios beat paso,
   bloque guion.explica{pregunta, pasos[]}; perfil → 5–8 tuits, sin giro, intermedios beat dimension,
   bloque guion.perfil{sujeto, tipo, dimensiones[]}; investigacion (/investigacion) → 6–12 tuits con giro, bloque
-  guion.investigacion{numero, informe_dir, capitulos[]} y el cierre con el marcador literal [ENLACE AL INFORME] (G8).
+  guion.investigacion{numero, informe_dir, capitulos[], auditoria?} (auditoria: true sube el tope a 20 tuits) y el cierre con el marcador literal [ENLACE AL INFORME] (G8).
   El bloque va a hilo.json y a post.md.
 
 --estado borrador|listo|incompleto  estado que se escribe en hilo.json (dato.json), su vista previa y post.md (default borrador).
@@ -74,6 +79,7 @@ BEATS = ["gancho", "contexto", "giro", "impacto", "cierre", "paso", "dimension"]
 HOOKS = ["giro_inversion", "escala_humana", "brecha_territorial", "pregunta_directa", "curiosity_gap", "mito_vs_dato", "antes_despues", "titular_clasico"]
 # Tipos de entregable y modos por tipo. El modo viaja en guion.modo (lo fija el workflow con args.modo).
 TIPOS = ["hilo", "dato"]
+MAX_TUITS_AUDITORIA = 20  # espejo de investigacion.js (maxN con args.auditoria)
 MODOS = {"hilo": ["hilo", "explica", "perfil", "investigacion"], "dato": ["dato", "vs", "mapa", "antes"]}
 # Modo investigacion (/investigacion): el hilo acompaña a un informe PDF; el cierre lleva este marcador literal, que el
 # usuario sustituye por la URL del PDF al publicar (investigacion.js lo copia; check_workflows W6 los compara).
@@ -84,6 +90,7 @@ RE_SUPER = re.compile(r"r[ée]cord|hist[óo]ric[oa]|m[áa]s alt[oa] de la histor
 # Superlativos relativos («el más bajo desde 2020», «el más alto en los últimos 5 años»): aviso si no hay serie o desglose ≥5 puntos.
 RE_RELATIVO = re.compile(r"m[áa]s (alt|baj|grand|car|barat)\w*\s+(desde|en los [úu]ltimos|de los [úu]ltimos|en \d+ a[ñn]os)", re.I)
 # Marcador nacionalista (modo vs): el titular dice la brecha, no quién «gana».
+RE_EN_SUMA = re.compile(r"\ben suma\b", re.I)  # muletilla vetada (CLAUDE.md, Estilo): «en conclusión», «Conclusiones»
 RE_NACIONALISTA = re.compile(r"\b(ganamos|perdemos|nos ganan|le ganamos|somos los (peores|mejores))\b", re.I)
 # Claves de visual.datos que son DATOS (se cotejan contra las cifras); el resto es presentación.
 CLAVES_DATO = {
@@ -149,14 +156,29 @@ def cargar_sesion(sesion):
         v = leer(ruta)
         for it in (v.get("items") or v.get("cifras") or []):
             veredictos[it["id"]] = it
+    aplicar_ajustes(cifras, veredictos)
     return guion, encuadre, cifras, veredictos, fuentes
 
 
+def aplicar_ajustes(cifras, veredictos):
+    """La serie y el desglose corregidos por el verificador (serie_final, partes_final) reemplazan a los del
+    investigador: desde la verificación manda lo verificado, también punto por punto (lo exige verificacion.py V-B)."""
+    for cid, c in cifras.items():
+        v = veredictos.get(cid) or {}
+        if isinstance(v.get("serie_final"), list):
+            c["serie"] = v["serie_final"]
+        if isinstance(v.get("partes_final"), list):
+            c["partes"] = v["partes_final"]
+    return cifras
+
+
 def valores_de(cifra, veredicto):
-    """Conjunto de números que una cifra 'contiene' (valor final, serie, partes)."""
+    """Conjunto de números que una cifra 'contiene' (valor final, serie, partes). Una cifra ajustada ya no
+    respalda su valor original: solo valor_final (antes el número viejo seguía pasando G4)."""
     vals = set()
     vf = veredicto.get("valor_final") if veredicto else None
-    for v in (vf, cifra.get("valor")):
+    ajustada = (veredicto or {}).get("veredicto") == "ajustada" and isinstance(vf, (int, float))
+    for v in ((vf,) if ajustada else (vf, cifra.get("valor"))):
         if isinstance(v, (int, float)):
             vals.add(round(float(v), 6))
     for p in cifra.get("serie", []) or []:
@@ -231,6 +253,14 @@ MAX_TUITS = 21  # igual que hilo.js
 
 def gate(guion, encuadre, cifras, veredictos, sesion, plantillas, paletas, modo_dato=False):
     F, W = [], []
+    mecanico, _VM = {}, None
+    try:
+        import verificacion as _VM
+        fallas, _ = _VM.revisar(sesion)
+        for x in fallas:
+            mecanico.setdefault(x["id"], []).append(x)
+    except (ImportError, OSError, ValueError, KeyError) as e:
+        W.append("G9 no se pudo correr verificacion.py: %s" % e)
     tuits = guion.get("tuits", [])
     n = len(tuits)
     smoke = bool(guion.get("smoke") or (encuadre or {}).get("smoke") or (encuadre or {}).get("fixture"))
@@ -281,6 +311,8 @@ def gate(guion, encuadre, cifras, veredictos, sesion, plantillas, paletas, modo_
         modo_h = modo_de(guion, encuadre)
         # Modos de hilo: explica (3–6, sin giro, intermedios paso) · perfil (5–8, sin giro, intermedios dimension).
         rango = {"explica": (3, 6), "perfil": (5, 8), "investigacion": (6, 12)}.get(modo_h, (4, MAX_TUITS))
+        if modo_h == "investigacion" and isinstance(guion.get("investigacion"), dict) and guion["investigacion"].get("auditoria"):
+            rango = (6, MAX_TUITS_AUDITORIA)  # auditoría de un plan: una tarjeta por semilla cabe en el hilo
         lo, hi = (3, MAX_TUITS) if smoke else rango
         beat_medio = {"explica": "paso", "perfil": "dimension"}.get(modo_h)
         if not lo <= n <= hi:
@@ -332,6 +364,11 @@ def gate(guion, encuadre, cifras, veredictos, sesion, plantillas, paletas, modo_
         F.append("G6 paleta del guion (%s) ≠ encuadre (%s)" % (pal, encuadre.get("paleta")))
     # G2 + G3 + G4 + G5 + G7
     fuentes_tarjetas = []
+    todas_ids_set = {c for t in tuits if t.get("visual") for c in t["visual"].get("cifra_ids", [])}
+    valores_ok = sorted({(x, _VM.factor_unidad(cf.get("unidad")) if _VM else 1.0) for c, cf in cifras.items()
+                         if (veredictos.get(c) or {}).get("veredicto") in ("verificada", "ajustada") for x in valores_de(cf, veredictos.get(c))})
+    titulares_ok = [(veredictos.get(c) or {}).get("valor_final", cf.get("valor")) for c, cf in cifras.items()
+                    if (veredictos.get(c) or {}).get("veredicto") in ("verificada", "ajustada") and c in todas_ids_set]
     todas_ids = [c for t in tuits if t.get("visual") for c in t["visual"].get("cifra_ids", [])]
     for i, t in enumerate(tuits):
         k = t.get("n", i + 1)
@@ -348,6 +385,14 @@ def gate(guion, encuadre, cifras, veredictos, sesion, plantillas, paletas, modo_
             F.append("G2 T%d pesa %d en X (>280)" % (k, peso))
         if RE_BAIT.search(texto):
             F.append("G2 T%d contiene engagement bait" % k)
+        # G10 (aviso): números del texto sin respaldo en las cifras verificadas de la sesión (con tolerancia de
+        # redondeo y escala; derivados simples de dos cifras, años, fechas y enteros ≤ 12 pasan)
+        if texto.strip() and valores_ok:
+            sin = _VM.sueltos(texto, valores_ok, titulares_ok) if _VM else []
+            if sin:
+                W.append("G10 T%d números del texto sin respaldo en las cifras verificadas (¿redondeo o derivado?): %s" % (k, ", ".join(sin[:6])))
+        if RE_EN_SUMA.search(texto + " " + " ".join(((t.get("visual") or {}).get("titular") or []))):
+            F.append("G2 T%d dice «en suma»: está vetado (usa «en conclusión» o reescribe)" % k)
         v = t.get("visual")
         if v is None:
             if modo_dato:
@@ -394,6 +439,12 @@ def gate(guion, encuadre, cifras, veredictos, sesion, plantillas, paletas, modo_
             if len(repetidos) >= 2:
                 msg = "G2 T%d el texto repite %d números de su tarjeta (dato héroe): %s" % (k, len(repetidos), sorted(repetidos))
                 (F if i == 0 else W).append(msg)
+        # G9 (verificación mecánica, scripts/verificacion.py): una cifra de la tarjeta cuya cita no contiene el
+        # número, ajustada con valores viejos en la serie o con «independencia alta» de su mismo dominio
+        for c in ids:
+            for x in mecanico.get(c, []):
+                (F if x["regla"] in ("V-A", "V-B") or (x["regla"] == "V-C" and "dominio" in x["detalle"]) else W).append(
+                    "G9 T%d cifra %s no pasa verificacion.py %s: %s" % (k, c, x["regla"], x["detalle"]))
         # G4
         permitidos = set()
         for c in ids:

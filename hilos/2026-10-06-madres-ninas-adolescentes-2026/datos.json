@@ -1,0 +1,2217 @@
+{
+  "slug": "madres-ninas-adolescentes-2026",
+  "fecha": "2026-10-06",
+  "tesis": "Entre enero y agosto de 2026 RENAP inscribió 167.6 nacimientos al día de madres de 10 a 19 años (155.9 en 2025); el departamento de Guatemala pone más casos, pero por cada 1,000 jóvenes lidera Alta Verapaz (46.9) y la capital queda octava.",
+  "ancla_id": "nac-c06",
+  "paleta": "jacaranda",
+  "hook_tipo": "escala_humana",
+  "cifras": [
+    {
+      "id": "ctx-c01",
+      "concepto": "Cadena de justicia en casos de niñas embarazadas menores de 14 años víctimas de violencia sexual: casos registrados por el MP, autos de procesamiento y condenas",
+      "unidad": "casos",
+      "anio": "2018-2023",
+      "tipo": "desglose",
+      "fuente": "Human Rights Watch, 'Forzadas a renunciar a sus sueños' (18/02/2025), con datos del Ministerio Público y del Organismo Judicial obtenidos por solicitud de información",
+      "url": "https://www.hrw.org/es/report/2025/02/18/forzadas-a-renunciar-a-sus-suenos/violencia-sexual-contra-ninas-en-guatemala",
+      "periodo": "ene 2018 – sep/oct 2023",
+      "n_puntos": 3,
+      "valor": 1911,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Bloomberg Línea reproduciendo HRW (confirma 136 autos/acusaciones preliminares y 102 condenas; no cita 1,911)",
+      "evidencia": {
+        "url": "https://www.hrw.org/es/report/2025/02/18/forzadas-a-renunciar-a-sus-suenos/violencia-sexual-contra-ninas-en-guatemala",
+        "cita": "El Ministerio Público reportó una cifra igualmente baja de 1,911 casos de niñas menores de 14 años que estaban embarazadas y eran sobrevivientes de violencia sexual",
+        "archivo_local": "sesiones/_descargas/ctx/hrw_forzadas_2025.html"
+      },
+      "partes": [
+        {
+          "nombre": "Casos en el MP (ene 2018–sep 2023)",
+          "valor": 1911
+        },
+        {
+          "nombre": "Autos de procesamiento (ene 2018–sep 2023)",
+          "valor": 136
+        },
+        {
+          "nombre": "Personas condenadas (ene 2018–oct 2023)",
+          "valor": 102
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_14.png"
+      ]
+    },
+    {
+      "id": "ctx-c02",
+      "concepto": "Porcentaje de casos de maternidad en niñas de 10 a 14 años que queda en la impunidad (ODHAG, 2025)",
+      "unidad": "%",
+      "anio": "2025",
+      "tipo": "puntual",
+      "fuente": "ODHAG (Oficina de Derechos Humanos del Arzobispado), investigación presentada el 07/05/2025, vía EFE/Emisoras Unidas",
+      "url": "https://emisorasunidas.com/nacional/2025/05/07/guatemala-registra-2000-partos-en-menores-de-14-anos-anualmente/",
+      "periodo": "desde 2018",
+      "n_puntos": 1,
+      "valor": 99,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo: 102 condenas (HRW/Bloomberg Línea) frente a 14,696 partos de niñas <14 en 2018-2024 (RENAP, vía Bloomberg Línea) = 0.7% con condena; y 5,937 partos 2022-2024 = ~1,979/año, coherente con 2,000",
+      "evidencia": {
+        "url": "https://emisorasunidas.com/nacional/2025/05/07/guatemala-registra-2000-partos-en-menores-de-14-anos-anualmente/",
+        "cita": "En Guatemala cada año un promedio de 2.000 niñas entre 10 y 14 años se convierten en madres producto de la violencia sexual y el 99% de los casos queda en la impunidad",
+        "archivo_local": "sesiones/_descargas/ctx/eu_2000_partos_2025.html"
+      },
+      "usada": false,
+      "aparece_en": [
+        "T14"
+      ]
+    },
+    {
+      "id": "ctx-c03",
+      "concepto": "Tasa de fecundidad adolescente (nacimientos por 1,000 mujeres de 15 a 19 años), Guatemala",
+      "unidad": "nacimientos por 1,000 mujeres de 15-19 años",
+      "anio": "2024",
+      "tipo": "serie",
+      "fuente": "Banco Mundial, indicador SP.ADO.TFRT (estimaciones de UN Population Division, World Population Prospects); actualizado 13/07/2026",
+      "url": "https://api.worldbank.org/v2/country/GT/indicator/SP.ADO.TFRT?format=json&per_page=100",
+      "periodo": "2010-2024",
+      "n_puntos": 15,
+      "valor": 67.865,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Re-consulta directa de la API del Banco Mundial (2024=67.865, 2023=68.269); coincide con el archivo local",
+      "evidencia": {
+        "url": "https://api.worldbank.org/v2/country/GT/indicator/SP.ADO.TFRT?format=json&per_page=100",
+        "cita": "\"id\":\"SP.ADO.TFRT\",\"value\":\"Adolescent fertility rate (births per 1,000 women ages 15-19)\" … \"date\":\"2024\",\"value\":67.865",
+        "archivo_local": "sesiones/_descargas/api/3b70d00c2df3310568f4d53492bd266b301f277c.json"
+      },
+      "serie": [
+        {
+          "p": "2010",
+          "v": 93.44
+        },
+        {
+          "p": "2011",
+          "v": 94.826
+        },
+        {
+          "p": "2012",
+          "v": 95.398
+        },
+        {
+          "p": "2013",
+          "v": 88.548
+        },
+        {
+          "p": "2014",
+          "v": 87.065
+        },
+        {
+          "p": "2015",
+          "v": 85.762
+        },
+        {
+          "p": "2016",
+          "v": 85.004
+        },
+        {
+          "p": "2017",
+          "v": 83.905
+        },
+        {
+          "p": "2018",
+          "v": 81.694
+        },
+        {
+          "p": "2019",
+          "v": 77.103
+        },
+        {
+          "p": "2020",
+          "v": 72.461
+        },
+        {
+          "p": "2021",
+          "v": 70.295
+        },
+        {
+          "p": "2022",
+          "v": 69.116
+        },
+        {
+          "p": "2023",
+          "v": 68.269
+        },
+        {
+          "p": "2024",
+          "v": 67.865
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_2.png"
+      ]
+    },
+    {
+      "id": "dep-c01",
+      "concepto": "Nacimientos registrados de madres de 10 a 19 años por departamento, enero-agosto 2026 (22 departamentos)",
+      "unidad": "nacimientos registrados",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "OSAR Guatemala con datos de RENAP (Registros de nacimientos de madres entre 10–19 años)",
+      "url": "https://osarguatemala.org/registros-de-nacimientos-de-madres-entre-10-19-anos-ano-2026/",
+      "periodo": "enero–agosto 2026",
+      "n_puntos": 22,
+      "valor": 40732,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo desde tabla OSAR por departamento y edad (22 deptos suman 40,732); prensa (Emisoras Unidas) cita OSAR/RENAP corte ene-abr 2026 (~20 mil), coherente con ene-ago",
+      "evidencia": {
+        "url": "https://osarguatemala.org/registros-de-nacimientos-de-madres-entre-10-19-anos-ano-2026/",
+        "cita": "Enero a agosto - Año 2026 · 40,732 Registros de nacimiento · Guatemala 7,187 · Alta Verapaz 5,233 · Huehuetenango 4,637 · Quiché 3,372 · San Marcos 3,051",
+        "archivo_local": "sesiones/madres-ninas-adolescentes-2026/fuentes_dep/osar_2026.html; sesiones/madres-ninas-adolescentes-2026/fuentes_dep/osar_2026_infografia.png; sesiones/madres-ninas-adolescentes-2026/fuentes_dep/osar_2026_departamentos.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala",
+          "valor": 7187
+        },
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 5233
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 4637
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 3372
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 3051
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 1783
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 1724
+        },
+        {
+          "nombre": "Petén",
+          "valor": 1655
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 1299
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 1217
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 1172
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 1063
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 1035
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 1023
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 853
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 805
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 718
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 702
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 691
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 631
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 600
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 281
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "T1",
+        "tuit_7.png"
+      ]
+    },
+    {
+      "id": "dep-c02",
+      "concepto": "Nacimientos registrados de madres de 10 a 19 años por departamento, año 2025 completo",
+      "unidad": "nacimientos registrados",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "OSAR Guatemala con datos de RENAP (Registros de nacimientos de madres entre 10–19 años)",
+      "url": "https://osarguatemala.org/registros-de-nacimientos-de-madres-entre-10-19-anos-ano-2025/",
+      "periodo": "enero–diciembre 2025",
+      "n_puntos": 22,
+      "valor": 56889,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa (Prensa Latina/OSAR) reporta 56,889 nacimientos 2025 de madres 10-19",
+      "evidencia": {
+        "url": "https://osarguatemala.org/registros-de-nacimientos-de-madres-entre-10-19-anos-ano-2025/",
+        "cita": "Enero a diciembre - Año 2025 · 56,889 Registros de nacimiento · Guatemala 9,839 · Alta Verapaz 7,350 · Huehuetenango 6,142 · Quiché 4,854",
+        "archivo_local": "sesiones/madres-ninas-adolescentes-2026/fuentes_dep/osar_2025.html; sesiones/madres-ninas-adolescentes-2026/fuentes_dep/osar_2025_infografia.png; sesiones/madres-ninas-adolescentes-2026/fuentes_dep/osar_2025_departamentos.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala",
+          "valor": 9839
+        },
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 7350
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 6142
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 4854
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 3776
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 2600
+        },
+        {
+          "nombre": "Petén",
+          "valor": 2553
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 2505
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 1822
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 1726
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 1646
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 1592
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 1532
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 1387
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 1307
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 1149
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 1009
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 978
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 936
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 887
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 883
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 416
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dep-c03",
+      "concepto": "Nacimientos registrados de madres de 10 a 19 años por cada 1,000 mujeres de 10 a 19 años, por departamento, 2025",
+      "unidad": "nacimientos por 1,000 mujeres de 10 a 19 años",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "OSAR Guatemala con datos de RENAP (Registros de nacimientos de madres entre 10–19 años); INE Guatemala, proyecciones de población (base censo 2018), año 2024, vía OCHA HDX COD-PS",
+      "url": "https://osarguatemala.org/registros-de-nacimientos-de-madres-entre-10-19-anos-ano-2025/",
+      "periodo": "2025 (denominador: población proyectada 2024)",
+      "n_puntos": 22,
+      "valor": 32.5,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo: 56,889 / 1,752,123 x 1000 = 32.47 -> 32.5; población INE 2024 (HDX)",
+      "evidencia": {
+        "url": "https://data.humdata.org/dataset/452f4fe9-6baf-46ef-a50e-7a6b1862d9fb/resource/a983f193-2cb3-4f7c-af0b-6b889b7201bc/download/gtm_admpop_adm1_2024.csv",
+        "cita": "Alta Verapaz,GT16 ... F_10_14 81411, F_15_19 75200 → 7,350/(81,411+75,200)×1000 = 46.9; Guatemala 9,839 → 32.8; nacional 56,889/1,752,123 = 32.5",
+        "archivo_local": "sesiones/_descargas/gtm_admpop_adm1_2024.csv; sesiones/madres-ninas-adolescentes-2026/fuentes_dep/osar_2025_departamentos.csv; sesiones/madres-ninas-adolescentes-2026/fuentes_dep/tasas_departamentos.json"
+      },
+      "partes": [
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 46.9
+        },
+        {
+          "nombre": "Petén",
+          "valor": 39.2
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 38.5
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 37.8
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 35.1
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 34.8
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 33.9
+        },
+        {
+          "nombre": "Guatemala",
+          "valor": 32.8
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 32.7
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 32.2
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 31.2
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 30.9
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 27.9
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 27.7
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 26.7
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 26.4
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 26.1
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 26.1
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 23.4
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 21.3
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 20.3
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 18.3
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_8.png"
+      ]
+    },
+    {
+      "id": "dep-c04",
+      "concepto": "Nacimientos registrados de madres de 10 a 19 años por cada 1,000 mujeres de 10 a 19 años, por departamento, 2024 (numerador y denominador del mismo año)",
+      "unidad": "nacimientos por 1,000 mujeres de 10 a 19 años",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "OSAR Guatemala con datos de RENAP (Registros de nacimientos de madres entre 10–19 años); INE Guatemala, proyecciones de población (base censo 2018), año 2024, vía OCHA HDX COD-PS",
+      "url": "https://osarguatemala.org/registros-de-nacimientos-y-embarazos-en-madres-adolescentes-ano-2024/",
+      "periodo": "2024",
+      "n_puntos": 22,
+      "valor": 32.3,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo: 56,568 / 1,752,123 x 1000 = 32.29 -> 32.3",
+      "evidencia": {
+        "url": "https://data.humdata.org/dataset/452f4fe9-6baf-46ef-a50e-7a6b1862d9fb/resource/a983f193-2cb3-4f7c-af0b-6b889b7201bc/download/gtm_admpop_adm1_2024.csv",
+        "cita": "Guatemala,GT01 F_10_14 y F_15_19 (proyección 2024) con 7,129 nacimientos OSAR 2024 → 23.8 por 1,000 (19.º de 22); Alta Verapaz 7,128 → 45.5 (1.º)",
+        "archivo_local": "sesiones/_descargas/gtm_admpop_adm1_2024.csv; sesiones/madres-ninas-adolescentes-2026/fuentes_dep/osar_2024_departamentos.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 45.5
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 41.0
+        },
+        {
+          "nombre": "Petén",
+          "valor": 40.4
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 39.0
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 38.0
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 38.0
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 37.6
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 35.1
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 33.5
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 33.2
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 33.1
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 30.9
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 29.6
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 29.4
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 28.6
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 28.2
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 25.8
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 25.5
+        },
+        {
+          "nombre": "Guatemala",
+          "valor": 23.8
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 23.8
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 22.0
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 19.6
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dep-c05",
+      "concepto": "Nacimientos registrados de madres de 10 a 14 años por departamento, enero-agosto 2026",
+      "unidad": "nacimientos registrados",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "OSAR Guatemala con datos de RENAP (Registros de nacimientos de madres entre 10–19 años)",
+      "url": "https://osarguatemala.org/registros-de-nacimientos-de-madres-entre-10-19-anos-ano-2026/",
+      "periodo": "enero–agosto 2026",
+      "n_puntos": 22,
+      "valor": 1355,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Suma de edades 10-14 de los 22 deptos = 1,355; coincide con infografía OSAR; prensa (EU) cita 691 a abril, coherente",
+      "evidencia": {
+        "url": "https://osarguatemala.org/registros-de-nacimientos-de-madres-entre-10-19-anos-ano-2026/",
+        "cita": "1,355 Madres entre 10 - 14 años · 39,377 Madres entre 15 - 19 años (Enero a agosto - Año 2026)",
+        "archivo_local": "sesiones/madres-ninas-adolescentes-2026/fuentes_dep/osar_2026_infografia.png; sesiones/madres-ninas-adolescentes-2026/fuentes_dep/osar_2026_departamentos.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Huehuetenango",
+          "valor": 198
+        },
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 157
+        },
+        {
+          "nombre": "Guatemala",
+          "valor": 155
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 121
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 114
+        },
+        {
+          "nombre": "Petén",
+          "valor": 91
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 74
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 59
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 45
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 44
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 40
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 37
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 34
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 30
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 25
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 23
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 22
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 22
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 21
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 16
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 14
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 13
+        }
+      ],
+      "usada": false,
+      "aparece_en": [
+        "T9"
+      ]
+    },
+    {
+      "id": "dep-c06",
+      "concepto": "Nacimientos registrados de madres de 10 a 14 años por cada 1,000 niñas de 10 a 14 años, por departamento, 2025",
+      "unidad": "nacimientos por 1,000 niñas de 10 a 14 años",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "OSAR Guatemala con datos de RENAP (Registros de nacimientos de madres entre 10–19 años); INE Guatemala, proyecciones de población (base censo 2018), año 2024, vía OCHA HDX COD-PS",
+      "url": "https://osarguatemala.org/registros-de-nacimientos-de-madres-entre-10-19-anos-ano-2025/",
+      "periodo": "2025 (denominador: población proyectada 2024)",
+      "n_puntos": 22,
+      "valor": 2.36,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo: 2,101 / 890,378 x 1000 = 2.3597 -> 2.36",
+      "evidencia": {
+        "url": "https://data.humdata.org/dataset/452f4fe9-6baf-46ef-a50e-7a6b1862d9fb/resource/a983f193-2cb3-4f7c-af0b-6b889b7201bc/download/gtm_admpop_adm1_2024.csv",
+        "cita": "Petén: 177 madres de 10-14 (OSAR 2025) ÷ F_10_14 de Petén (proyección 2024) ×1000 = 5.19; Guatemala 218 → 1.47; nacional 2,101/890,378 = 2.36",
+        "archivo_local": "sesiones/_descargas/gtm_admpop_adm1_2024.csv; sesiones/madres-ninas-adolescentes-2026/fuentes_dep/osar_2025_departamentos.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Petén",
+          "valor": 5.19
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 3.53
+        },
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 3.43
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 2.88
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 2.84
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 2.64
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 2.58
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 2.53
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 2.23
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 2.03
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 1.91
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 1.81
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 1.81
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 1.77
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 1.56
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 1.54
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 1.49
+        },
+        {
+          "nombre": "Guatemala",
+          "valor": 1.47
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 1.44
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 1.38
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 0.97
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 0.9
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_11.png"
+      ]
+    },
+    {
+      "id": "dep-c07",
+      "concepto": "Porcentaje del total nacional de nacimientos de madres de 10 a 19 años que suman los 5 departamentos con más casos, enero-agosto 2026",
+      "unidad": "% del total nacional",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "OSAR Guatemala con datos de RENAP (Registros de nacimientos de madres entre 10–19 años)",
+      "url": "https://osarguatemala.org/registros-de-nacimientos-de-madres-entre-10-19-anos-ano-2026/",
+      "periodo": "enero–agosto 2026",
+      "n_puntos": 1,
+      "valor": 57.6,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo: top-5 (7,187+5,233+4,637+3,372+3,051 = 23,480) / 40,732 = 57.65% (57.6 truncado; 57.64 exacto)",
+      "evidencia": {
+        "url": "https://osarguatemala.org/registros-de-nacimientos-de-madres-entre-10-19-anos-ano-2026/",
+        "cita": "Guatemala 7,187 + Alta Verapaz 5,233 + Huehuetenango 4,637 + Quiché 3,372 + San Marcos 3,051 = 23,480 de 40,732",
+        "archivo_local": "sesiones/madres-ninas-adolescentes-2026/fuentes_dep/osar_2026_departamentos.csv"
+      },
+      "partes": [
+        {
+          "nombre": "5 departamentos (Guatemala, Alta Verapaz, Huehuetenango, Quiché, San Marcos)",
+          "valor": 23480
+        },
+        {
+          "nombre": "17 departamentos restantes",
+          "valor": 17252
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_7.png",
+        "T7"
+      ]
+    },
+    {
+      "id": "dep-c08",
+      "concepto": "Nacimientos registrados de madres de 10 a 19 años en el departamento de Guatemala, 2024–2026",
+      "unidad": "nacimientos registrados",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "OSAR Guatemala con datos de RENAP (Registros de nacimientos de madres entre 10–19 años)",
+      "url": "https://osarguatemala.org/registros-de-nacimientos-de-madres-entre-10-19-anos-ano-2025/",
+      "periodo": "2024–2026 (2026 = enero-agosto, parcial)",
+      "n_puntos": 3,
+      "valor": 7187,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Tablas OSAR 2024/2025/2026 locales: Guatemala 7,129 / 9,839 / 7,187; prensa (Prensa Latina) respalda Guatemala como mayor incidencia",
+      "evidencia": {
+        "url": "https://osarguatemala.org/registros-de-nacimientos-y-embarazos-en-madres-adolescentes-ano-2024/",
+        "cita": "GUATEMALA ... Total 7129 (Año 2024); GUATEMALA ... 9839 (Año 2025); GUATEMALA ... 7187 (enero-agosto 2026)",
+        "archivo_local": "sesiones/madres-ninas-adolescentes-2026/fuentes_dep/osar_2024_departamentos.csv; sesiones/madres-ninas-adolescentes-2026/fuentes_dep/osar_2025_departamentos.csv; sesiones/madres-ninas-adolescentes-2026/fuentes_dep/osar_2026_departamentos.csv"
+      },
+      "serie": [
+        {
+          "p": "2024",
+          "v": 7129
+        },
+        {
+          "p": "2025",
+          "v": 9839
+        },
+        {
+          "p": "2026 ene-ago",
+          "v": 7187
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dep-c09",
+      "concepto": "Nacimientos registrados de madres de 10 a 14 años por departamento, año 2025",
+      "unidad": "nacimientos registrados",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "OSAR Guatemala con datos de RENAP (Registros de nacimientos de madres entre 10–19 años)",
+      "url": "https://osarguatemala.org/registros-de-nacimientos-de-madres-entre-10-19-anos-ano-2025/",
+      "periodo": "enero–diciembre 2025",
+      "n_puntos": 22,
+      "valor": 2101,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Suma de edades 10-14 = 2,101, cuadra con infografía OSAR 2025; prensa reporta ~2,600/año 2020-abr 2025 (orden de magnitud)",
+      "evidencia": {
+        "url": "https://osarguatemala.org/registros-de-nacimientos-de-madres-entre-10-19-anos-ano-2025/",
+        "cita": "56,889 Registros de nacimiento · 54,788 Madres entre 15 - 19 años · 2,101 Madres entre 10 - 14 años (Enero a diciembre - Año 2025)",
+        "archivo_local": "sesiones/madres-ninas-adolescentes-2026/fuentes_dep/osar_2025_infografia.png; sesiones/madres-ninas-adolescentes-2026/fuentes_dep/osar_2025_departamentos.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Huehuetenango",
+          "valor": 305
+        },
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 279
+        },
+        {
+          "nombre": "Guatemala",
+          "valor": 218
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 188
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 184
+        },
+        {
+          "nombre": "Petén",
+          "valor": 177
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 122
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 78
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 67
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 59
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 56
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 56
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 49
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 42
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 34
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 33
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 32
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 31
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 28
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 27
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 27
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 9
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dep-c10",
+      "concepto": "Mujeres de 10 a 19 años por departamento (proyección INE 2024), denominador de las tasas",
+      "unidad": "mujeres de 10 a 19 años",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "INE Guatemala, proyecciones de población (base censo 2018), año 2024, vía OCHA HDX COD-PS",
+      "url": "https://data.humdata.org/dataset/452f4fe9-6baf-46ef-a50e-7a6b1862d9fb/resource/a983f193-2cb3-4f7c-af0b-6b889b7201bc/download/gtm_admpop_adm1_2024.csv",
+      "periodo": "2024 (proyección al 30 de junio)",
+      "n_puntos": 22,
+      "valor": 1752123,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Suma F_10_14+F_15_19 del CSV INE/HDX COD-PS 2024 (22 deptos) = 1,752,123",
+      "evidencia": {
+        "url": "https://data.humdata.org/dataset/452f4fe9-6baf-46ef-a50e-7a6b1862d9fb/resource/a983f193-2cb3-4f7c-af0b-6b889b7201bc/download/gtm_admpop_adm1_2024.csv",
+        "cita": "Source(s) Instituto Nacional de Estadística (INE) Guatemala · Population projection · Baseline Population Year 2018 (nota explicativa COD-PS 2024)",
+        "archivo_local": "sesiones/_descargas/gtm_admpop_adm1_2024.csv; sesiones/_descargas/gtm-cod-ps-2024-explanatory-note.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala",
+          "valor": 299635
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 162676
+        },
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 156611
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 136396
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 126014
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 95803
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 76658
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 75394
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 68357
+        },
+        {
+          "nombre": "Petén",
+          "valor": 65198
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 53957
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 52801
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 49235
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 48222
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 45767
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 43075
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 42260
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 37049
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 36147
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 35896
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 27157
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 17815
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_8.png"
+      ]
+    },
+    {
+      "id": "dep-c11",
+      "concepto": "Nacimientos registrados de madres de 10 a 19 años por departamento, año 2024 completo",
+      "unidad": "nacimientos registrados",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "OSAR Guatemala con datos de RENAP (Registros de nacimientos de madres entre 10–19 años)",
+      "url": "https://osarguatemala.org/registros-de-nacimientos-y-embarazos-en-madres-adolescentes-ano-2024/",
+      "periodo": "enero–diciembre 2024",
+      "n_puntos": 22,
+      "valor": 56568,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Tabla OSAR 2024: suma de 22 deptos = TOTAL GENERAL 56,568",
+      "evidencia": {
+        "url": "https://osarguatemala.org/registros-de-nacimientos-y-embarazos-en-madres-adolescentes-ano-2024/",
+        "cita": "TOTAL GENERAL ... 56568 (tabla Año 2024; publicada 10/01/2025, infografía Registros-de-nacimiento-diciembre); 1,953 de 10-14",
+        "archivo_local": "sesiones/madres-ninas-adolescentes-2026/fuentes_dep/osar_2024.html; sesiones/madres-ninas-adolescentes-2026/fuentes_dep/osar_2024_departamentos.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala",
+          "valor": 7129
+        },
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 7128
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 6677
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 4917
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 4016
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 2744
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 2689
+        },
+        {
+          "nombre": "Petén",
+          "valor": 2632
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 1931
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 1869
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 1769
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 1738
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 1657
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 1427
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 1404
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 1282
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 1118
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 1098
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 1020
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 947
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 916
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 460
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "per-c01",
+      "concepto": "Edad del padre registrado en nacimientos de madres de 10 a 14 años",
+      "unidad": "nacimientos de madres de 10 a 14 años",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "INE Guatemala, Estadísticas Vitales: nacimientos (microdatos), cálculo propio",
+      "url": "https://datos.ine.gob.gt/dataset/estadisticas-vitales-nacimientos",
+      "periodo": "2024 (año de ocurrencia)",
+      "n_puntos": 3,
+      "valor": 944,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo propio desde microdatos INE (verif_per.py)",
+      "evidencia": {
+        "url": "https://datos.ine.gob.gt/dataset/estadisticas-vitales-nacimientos",
+        "cita": "2024 madres 10-14: total 1745; padre no registrado 944 (54.1%); padre <18 210; padre 18+ 591 (73.8% de 801 con edad); padre 20+ 380 (47.4%)",
+        "archivo_local": "sesiones/madres-ninas-adolescentes-2026/fuentes_per/resumen_per.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Padre no registrado",
+          "valor": 944
+        },
+        {
+          "nombre": "Padre menor de 18",
+          "valor": 210
+        },
+        {
+          "nombre": "Padre de 18 o más",
+          "valor": 591
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_13.png"
+      ]
+    },
+    {
+      "id": "per-c02",
+      "concepto": "Edad del padre registrado en nacimientos de madres de 15 a 19 años",
+      "unidad": "nacimientos de madres de 15 a 19 años",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "INE Guatemala, Estadísticas Vitales: nacimientos (microdatos), cálculo propio",
+      "url": "https://datos.ine.gob.gt/dataset/estadisticas-vitales-nacimientos",
+      "periodo": "2024 (año de ocurrencia)",
+      "n_puntos": 6,
+      "valor": 19289,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo propio desde microdatos INE (verif_per.py)",
+      "evidencia": {
+        "url": "https://datos.ine.gob.gt/dataset/estadisticas-vitales-nacimientos",
+        "cita": "2024 madres 15-19: total 48608; no_registrado 10316; <18 2326; 18-19 7248; 20-24 19289; 25-29 6369; 30+ 3060; padre 20+ 28718 (75.0% de 38292 con edad)",
+        "archivo_local": "sesiones/madres-ninas-adolescentes-2026/fuentes_per/resumen_per.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Padre no registrado",
+          "valor": 10316
+        },
+        {
+          "nombre": "Padre menor de 18",
+          "valor": 2326
+        },
+        {
+          "nombre": "Padre de 18 a 19",
+          "valor": 7248
+        },
+        {
+          "nombre": "Padre de 20 a 24",
+          "valor": 19289
+        },
+        {
+          "nombre": "Padre de 25 a 29",
+          "valor": 6369
+        },
+        {
+          "nombre": "Padre de 30 o más",
+          "valor": 3060
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_15.png"
+      ]
+    },
+    {
+      "id": "per-c03",
+      "concepto": "Diferencia de edad padre − madre en nacimientos de madres de 15 a 19 años con edad del padre registrada",
+      "unidad": "nacimientos de madres de 15 a 19 años con edad del padre registrada",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "INE Guatemala, Estadísticas Vitales: nacimientos (microdatos), cálculo propio",
+      "url": "https://datos.ine.gob.gt/dataset/estadisticas-vitales-nacimientos",
+      "periodo": "2024 (año de ocurrencia)",
+      "n_puntos": 4,
+      "valor": 17745,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo propio desde microdatos INE (verif_per.py)",
+      "evidencia": {
+        "url": "https://datos.ine.gob.gt/dataset/estadisticas-vitales-nacimientos",
+        "cita": "2024 dif edad padre-madre, madres 15-19 con padre registrado (38292): <=0 3903 (10.2%); 1-4 17745 (46.3%); 5-9 11664 (30.5%); 10+ 4980 (13.0%) | madres 10-14 (801): <=0 9; 1-4 295; 5-9 364; 10+ 133",
+        "archivo_local": "sesiones/madres-ninas-adolescentes-2026/fuentes_per/resumen_per.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Padre de igual edad o menor",
+          "valor": 3903
+        },
+        {
+          "nombre": "Padre 1 a 4 años mayor",
+          "valor": 17745
+        },
+        {
+          "nombre": "Padre 5 a 9 años mayor",
+          "valor": 11664
+        },
+        {
+          "nombre": "Padre 10 o más años mayor",
+          "valor": 4980
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_15.png"
+      ]
+    },
+    {
+      "id": "per-c04",
+      "concepto": "Madres de 15 a 19 años para quienes el nacimiento de 2024 no era su primer hijo (Tohite ≥ 2)",
+      "unidad": "% de madres de 15 a 19 años con número de hijos conocido",
+      "anio": 2024,
+      "tipo": "puntual",
+      "fuente": "INE Guatemala, Estadísticas Vitales: nacimientos (microdatos), cálculo propio",
+      "url": "https://datos.ine.gob.gt/dataset/estadisticas-vitales-nacimientos",
+      "periodo": "2024 (año de ocurrencia)",
+      "n_puntos": 1,
+      "valor": 19.9,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo propio desde microdatos INE (verif_per.py)",
+      "evidencia": {
+        "url": "https://datos.ine.gob.gt/dataset/estadisticas-vitales-nacimientos",
+        "cita": "2024 madres 15-19 Tohite: 1=38298; 2=8633; 3=832; 4=46; 5+=5; ignorado=794; >=2 total 9516 = 19.9% de 47814 conocidas | 10-14: 2=17 de 1673 conocidas",
+        "archivo_local": "sesiones/madres-ninas-adolescentes-2026/fuentes_per/resumen_per.csv"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_16.png"
+      ]
+    },
+    {
+      "id": "per-c05",
+      "concepto": "Porcentaje de partos por cesárea según grupo de edad de la madre",
+      "unidad": "% de nacimientos por cesárea",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "INE Guatemala, Estadísticas Vitales: nacimientos (microdatos), cálculo propio",
+      "url": "https://datos.ine.gob.gt/dataset/estadisticas-vitales-nacimientos",
+      "periodo": "2024 (año de ocurrencia)",
+      "n_puntos": 4,
+      "valor": 56.7,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Formulario INE Informe de Nacimiento (ítem 13: 1 parto normal, 2 cesárea) + recálculo",
+      "evidencia": {
+        "url": "https://datos.ine.gob.gt/dataset/estadisticas-vitales-nacimientos",
+        "cita": "2024 Viapar=2 (cesarea): 10-14 990/1745=56.7%; 15-19 19788/48608=40.7%; 20+ 115729/248828=46.5%; nacional 136518/299256=45.6%",
+        "archivo_local": "sesiones/madres-ninas-adolescentes-2026/fuentes_per/resumen_per.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Madres de 10 a 14",
+          "valor": 56.7
+        },
+        {
+          "nombre": "Madres de 15 a 19",
+          "valor": 40.7
+        },
+        {
+          "nombre": "Madres de 20 y más",
+          "valor": 46.5
+        },
+        {
+          "nombre": "Nacional",
+          "valor": 45.6
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_12.png"
+      ]
+    },
+    {
+      "id": "per-c06",
+      "concepto": "Nacimientos de madres de 10 a 14 años por año de ocurrencia",
+      "unidad": "nacimientos",
+      "anio": 2024,
+      "tipo": "serie",
+      "fuente": "INE Guatemala, Estadísticas Vitales: nacimientos (microdatos), cálculo propio",
+      "url": "https://datos.ine.gob.gt/dataset/estadisticas-vitales-nacimientos",
+      "periodo": "2018-2024 (sin 2022)",
+      "n_puntos": 6,
+      "valor": 1745,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo propio desde microdatos INE (verif_per.py)",
+      "evidencia": {
+        "url": "https://datos.ine.gob.gt/dataset/estadisticas-vitales-nacimientos",
+        "cita": "madres 10-14 por anio de ocurrencia: 2018 2004; 2019 1914; 2020 1578; 2021 1805; 2023 1944; 2024 1745",
+        "archivo_local": "sesiones/madres-ninas-adolescentes-2026/fuentes_per/resumen_per.csv"
+      },
+      "serie": [
+        {
+          "p": "2018",
+          "v": 2004
+        },
+        {
+          "p": "2019",
+          "v": 1914
+        },
+        {
+          "p": "2020",
+          "v": 1578
+        },
+        {
+          "p": "2021",
+          "v": 1805
+        },
+        {
+          "p": "2023",
+          "v": 1944
+        },
+        {
+          "p": "2024",
+          "v": 1745
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_13.png"
+      ]
+    },
+    {
+      "id": "per-c07",
+      "concepto": "Nacimientos de madres de 15 a 19 años por año de ocurrencia",
+      "unidad": "nacimientos",
+      "anio": 2024,
+      "tipo": "serie",
+      "fuente": "INE Guatemala, Estadísticas Vitales: nacimientos (microdatos), cálculo propio",
+      "url": "https://datos.ine.gob.gt/dataset/estadisticas-vitales-nacimientos",
+      "periodo": "2018-2024 (sin 2022)",
+      "n_puntos": 6,
+      "valor": 48608,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa (Prensa Libre/Soy502 citando INE): total 2024 299,256 nacimientos",
+      "evidencia": {
+        "url": "https://datos.ine.gob.gt/dataset/estadisticas-vitales-nacimientos",
+        "cita": "madres 15-19 por anio de ocurrencia: 2018 72615; 2019 67984; 2020 60410; 2021 60731; 2023 53837; 2024 48608",
+        "archivo_local": "sesiones/madres-ninas-adolescentes-2026/fuentes_per/resumen_per.csv"
+      },
+      "serie": [
+        {
+          "p": "2018",
+          "v": 72615
+        },
+        {
+          "p": "2019",
+          "v": 67984
+        },
+        {
+          "p": "2020",
+          "v": 60410
+        },
+        {
+          "p": "2021",
+          "v": 60731
+        },
+        {
+          "p": "2023",
+          "v": 53837
+        },
+        {
+          "p": "2024",
+          "v": 48608
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_15.png"
+      ]
+    },
+    {
+      "id": "per-c08",
+      "concepto": "Variación de los nacimientos 2018 → 2024 por grupo de edad de la madre",
+      "unidad": "% de variación 2018-2024",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "INE Guatemala, Estadísticas Vitales: nacimientos (microdatos), cálculo propio",
+      "url": "https://datos.ine.gob.gt/dataset/estadisticas-vitales-nacimientos",
+      "periodo": "2018-2024",
+      "n_puntos": 4,
+      "valor": -33.1,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo propio desde microdatos INE (verif_per.py)",
+      "evidencia": {
+        "url": "https://datos.ine.gob.gt/dataset/estadisticas-vitales-nacimientos",
+        "cita": "variacion 2018->2024: 10-14 2004->1745 (-12.9%); 15-19 72615->48608 (-33.1%); 20+ 308505->248828 (-19.3%); total 383263->299256 (-21.9%)",
+        "archivo_local": "sesiones/madres-ninas-adolescentes-2026/fuentes_per/resumen_per.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Madres de 10 a 14",
+          "valor": -12.9
+        },
+        {
+          "nombre": "Madres de 15 a 19",
+          "valor": -33.1
+        },
+        {
+          "nombre": "Madres de 20 y más",
+          "valor": -19.3
+        },
+        {
+          "nombre": "Total nacional",
+          "valor": -21.9
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_5.png"
+      ]
+    },
+    {
+      "id": "reg-c01",
+      "concepto": "Tasa de fecundidad adolescente 2024: Guatemala frente a Centroamérica, México y el promedio de América Latina y el Caribe",
+      "unidad": "nacimientos por 1,000 mujeres de 15-19 años",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "Banco Mundial, indicador SP.ADO.TFRT (estimaciones de UN Population Division, World Population Prospects); actualizado 13/07/2026",
+      "url": "https://api.worldbank.org/v2/country/GTM;SLV;HND;NIC;CRI;PAN;BLZ;MEX;LCN/indicator/SP.ADO.TFRT?format=json&per_page=400&date=2010:2024",
+      "periodo": "2024",
+      "n_puntos": 9,
+      "valor": 67.865,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "FRED (SPADOTFRTGTM) reproduce WB: GTM 2024=67.865, 2023=68.269, 2022=69.116, 2021=70.295, 2020=72.461; PAHO/OPS country profile (hia.paho.org/en/node/215) da 67.9 para 2024 (redondeo de WPP)",
+      "evidencia": {
+        "url": "https://api.worldbank.org/v2/country/GTM;SLV;HND;NIC;CRI;PAN;BLZ;MEX;LCN/indicator/SP.ADO.TFRT?format=json&per_page=400&date=2010:2024",
+        "cita": "\"country\":{\"id\":\"GT\",\"value\":\"Guatemala\"},\"countryiso3code\":\"GTM\",\"date\":\"2024\",\"value\":67.865 (NIC 93.174; HND 81.254; LCN 50.361370860852)",
+        "archivo_local": "sesiones/madres-ninas-adolescentes-2026/fuentes_reg/wb_sp_ado_tfrt_2010_2024.json"
+      },
+      "partes": [
+        {
+          "nombre": "Nicaragua",
+          "valor": 93.174
+        },
+        {
+          "nombre": "Honduras",
+          "valor": 81.254
+        },
+        {
+          "nombre": "Guatemala",
+          "valor": 67.865
+        },
+        {
+          "nombre": "México",
+          "valor": 59.316
+        },
+        {
+          "nombre": "Panamá",
+          "valor": 55.851
+        },
+        {
+          "nombre": "Belice",
+          "valor": 55.6
+        },
+        {
+          "nombre": "El Salvador",
+          "valor": 53.452
+        },
+        {
+          "nombre": "América Latina y el Caribe",
+          "valor": 50.361370860852
+        },
+        {
+          "nombre": "Costa Rica",
+          "valor": 24.838
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_3.png"
+      ]
+    },
+    {
+      "id": "reg-c02",
+      "concepto": "Variación porcentual 2010→2024 de la tasa de fecundidad adolescente por país (cálculo propio)",
+      "unidad": "% de variación 2010-2024",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "Banco Mundial, indicador SP.ADO.TFRT (estimaciones de UN Population Division, World Population Prospects); actualizado 13/07/2026; variación: cálculo propio",
+      "url": "https://api.worldbank.org/v2/country/GTM;SLV;HND;NIC;CRI;PAN;BLZ;MEX;LCN/indicator/SP.ADO.TFRT?format=json&per_page=400&date=2010:2024",
+      "periodo": "2010-2024",
+      "n_puntos": 9,
+      "valor": -27.4,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recalculo propio desde valores crudos del CSV local (que coinciden con el JSON del BM): (67.865/93.44-1)*100 = -27.4; los 9 territorios recalculados coinciden con var_pct_2010_2024",
+      "evidencia": {
+        "url": "https://api.worldbank.org/v2/country/GTM;SLV;HND;NIC;CRI;PAN;BLZ;MEX;LCN/indicator/SP.ADO.TFRT?format=json&per_page=400&date=2010:2024",
+        "cita": "GTM \"date\":\"2010\",\"value\":93.44 … \"date\":\"2024\",\"value\":67.865 → (67.865/93.44−1)×100 = −27.4 % (cálculo propio)",
+        "archivo_local": "sesiones/madres-ninas-adolescentes-2026/fuentes_reg/sp_ado_tfrt_2010_2024.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Costa Rica",
+          "valor": -60.6
+        },
+        {
+          "nombre": "Panamá",
+          "valor": -38.6
+        },
+        {
+          "nombre": "América Latina y el Caribe",
+          "valor": -31.4
+        },
+        {
+          "nombre": "Guatemala",
+          "valor": -27.4
+        },
+        {
+          "nombre": "El Salvador",
+          "valor": -26.6
+        },
+        {
+          "nombre": "México",
+          "valor": -22.7
+        },
+        {
+          "nombre": "Belice",
+          "valor": -21.4
+        },
+        {
+          "nombre": "Honduras",
+          "valor": -17.4
+        },
+        {
+          "nombre": "Nicaragua",
+          "valor": -13.9
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "nac-c01",
+      "concepto": "Nacimientos registrados de madres de 10 a 19 años, enero a agosto de 2026",
+      "unidad": "nacimientos registrados",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "OSAR Guatemala con datos de RENAP",
+      "url": "https://osarguatemala.org/registros-de-nacimientos-de-madres-entre-10-19-anos-ano-2026/",
+      "periodo": "2026-01 a 2026-08",
+      "n_puntos": 1,
+      "valor": 40732,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo: suma de columnas de edad de la tabla OSAR (3+4+44+245+1059+3053+5866+8299+10351+11808)",
+      "evidencia": {
+        "url": "https://osarguatemala.org/registros-de-nacimientos-de-madres-entre-10-19-anos-ano-2026/",
+        "cita": "Enero a agosto - Año 2026 ... 40,732 Registros de nacimiento (infografía); tabla: TOTAL GENERAL 3 4 44 245 1059 3053 5866 8299 10351 11808 40732",
+        "archivo_local": "sesiones/_descargas/osar2026/infografia_agosto2026.png; sesiones/_descargas/osar2026/osar_2026.html"
+      },
+      "usada": false,
+      "aparece_en": [
+        "T1"
+      ]
+    },
+    {
+      "id": "nac-c02",
+      "concepto": "Nacimientos registrados de madres niñas de 10 a 14 años, enero a agosto de 2026",
+      "unidad": "nacimientos registrados",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "OSAR Guatemala con datos de RENAP",
+      "url": "https://osarguatemala.org/registros-de-nacimientos-de-madres-entre-10-19-anos-ano-2026/",
+      "periodo": "2026-01 a 2026-08",
+      "n_puntos": 1,
+      "valor": 1355,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo suma 10-14 de la tabla OSAR; trayectoria AGN/Seprem-OSAR ene-may 2026: 844 de 10-14",
+      "evidencia": {
+        "url": "https://osarguatemala.org/registros-de-nacimientos-de-madres-entre-10-19-anos-ano-2026/",
+        "cita": "1,355 Madres entre 10 - 14 años; 39,377 Madres entre 15 - 19 años",
+        "archivo_local": "sesiones/_descargas/osar2026/infografia_agosto2026.png; sesiones/_descargas/osar2026/osar_2026.html"
+      },
+      "usada": true,
+      "aparece_en": [
+        "T9",
+        "tuit_10.png"
+      ]
+    },
+    {
+      "id": "nac-c03",
+      "concepto": "Nacimientos registrados de madres de 10 a 19 años por edad simple de la madre, enero a agosto de 2026",
+      "unidad": "nacimientos registrados",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "OSAR Guatemala con datos de RENAP",
+      "url": "https://osarguatemala.org/registros-de-nacimientos-de-madres-entre-10-19-anos-ano-2026/",
+      "periodo": "2026-01 a 2026-08",
+      "n_puntos": 10,
+      "valor": 40732,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo: suma de las 10 columnas = total",
+      "evidencia": {
+        "url": "https://osarguatemala.org/registros-de-nacimientos-de-madres-entre-10-19-anos-ano-2026/",
+        "cita": "TOTAL GENERAL 3 4 44 245 1059 3053 5866 8299 10351 11808 40732 (columnas 10 11 12 13 14 15 16 17 18 19 Total)",
+        "archivo_local": "sesiones/_descargas/osar2026/osar_2026.html; sesiones/_descargas/osar2026/osar_2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "10 años",
+          "valor": 3
+        },
+        {
+          "nombre": "11 años",
+          "valor": 4
+        },
+        {
+          "nombre": "12 años",
+          "valor": 44
+        },
+        {
+          "nombre": "13 años",
+          "valor": 245
+        },
+        {
+          "nombre": "14 años",
+          "valor": 1059
+        },
+        {
+          "nombre": "15 años",
+          "valor": 3053
+        },
+        {
+          "nombre": "16 años",
+          "valor": 5866
+        },
+        {
+          "nombre": "17 años",
+          "valor": 8299
+        },
+        {
+          "nombre": "18 años",
+          "valor": 10351
+        },
+        {
+          "nombre": "19 años",
+          "valor": 11808
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "T1",
+        "tuit_10.png"
+      ]
+    },
+    {
+      "id": "nac-c04",
+      "concepto": "Nacimientos registrados de madres de 10 a 19 años por año (enero a diciembre), 2021-2025",
+      "unidad": "nacimientos registrados",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "OSAR Guatemala con datos de RENAP",
+      "url": "https://osarguatemala.org/registros-de-nacimientos-de-madres-entre-10-19-anos-ano-2025/",
+      "periodo": "2021-2025",
+      "n_puntos": 5,
+      "valor": 56889,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa Latina/OSAR (búsqueda) y recálculo de tablas 2021-2025",
+      "evidencia": {
+        "url": "https://osarguatemala.org/registros-de-nacimientos-de-madres-entre-10-19-anos-ano-2025/",
+        "cita": "2025: TOTAL GENERAL ... 56889 (infografía: Enero a diciembre - Año 2025, 56,889 Registros de nacimiento). 2024: 56568; 2023: Total general 62306; 2022: 67688; 2021: 72077",
+        "archivo_local": "sesiones/_descargas/osar2026/osar_2025.html; sesiones/_descargas/osar2026/osar_2024.html; sesiones/_descargas/osar2026/osar_2023.html; sesiones/_descargas/osar2026/osar_2022.html; sesiones/_descargas/osar2026/osar_2021.html; sesiones/_descargas/osar2026/infografia_diciembre2025.png"
+      },
+      "serie": [
+        {
+          "p": "2021",
+          "v": 72077
+        },
+        {
+          "p": "2022",
+          "v": 67688
+        },
+        {
+          "p": "2023",
+          "v": 62306
+        },
+        {
+          "p": "2024",
+          "v": 56568
+        },
+        {
+          "p": "2025",
+          "v": 56889
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_4.png",
+        "tuit_6.png"
+      ]
+    },
+    {
+      "id": "nac-c05",
+      "concepto": "Nacimientos registrados de madres niñas de 10 a 14 años por año, 2021-2025",
+      "unidad": "nacimientos registrados",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "OSAR Guatemala con datos de RENAP",
+      "url": "https://osarguatemala.org/registros-de-nacimientos-de-madres-entre-10-19-anos-ano-2025/",
+      "periodo": "2021-2025",
+      "n_puntos": 5,
+      "valor": 2101,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo: suma de columnas 10-14 de cada año",
+      "evidencia": {
+        "url": "https://osarguatemala.org/registros-de-nacimientos-de-madres-entre-10-19-anos-ano-2025/",
+        "cita": "2,101 Madres entre 10 - 14 años (infografía Enero a diciembre - Año 2025); TOTAL GENERAL 2 9 72 396 1622 ...",
+        "archivo_local": "sesiones/_descargas/osar2026/infografia_diciembre2025.png; sesiones/_descargas/osar2026/osar_2025.html; sesiones/_descargas/osar2026/osar_2024.html; sesiones/_descargas/osar2026/osar_2023.html; sesiones/_descargas/osar2026/osar_2022.html; sesiones/_descargas/osar2026/osar_2021.html"
+      },
+      "serie": [
+        {
+          "p": "2021",
+          "v": 2041
+        },
+        {
+          "p": "2022",
+          "v": 2187
+        },
+        {
+          "p": "2023",
+          "v": 2289
+        },
+        {
+          "p": "2024",
+          "v": 1953
+        },
+        {
+          "p": "2025",
+          "v": 2101
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "nac-c06",
+      "concepto": "Nacimientos registrados de madres de 10 a 19 años por día, enero a agosto de 2026",
+      "unidad": "nacimientos por día",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Cálculo propio con OSAR/RENAP",
+      "url": "https://osarguatemala.org/registros-de-nacimientos-de-madres-entre-10-19-anos-ano-2026/",
+      "periodo": "2026-01-01 a 2026-08-31",
+      "n_puntos": 1,
+      "valor": 167.6,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo 40,732/243 días",
+      "evidencia": {
+        "url": "https://osarguatemala.org/registros-de-nacimientos-de-madres-entre-10-19-anos-ano-2026/",
+        "cita": "Enero a agosto - Año 2026 ... 40,732 Registros de nacimiento",
+        "archivo_local": "sesiones/_descargas/osar2026/infografia_agosto2026.png"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_1.png"
+      ]
+    },
+    {
+      "id": "nac-c07",
+      "concepto": "Nacimientos registrados de madres niñas de 10 a 14 años por día, enero a agosto de 2026",
+      "unidad": "nacimientos por día",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Cálculo propio con OSAR/RENAP",
+      "url": "https://osarguatemala.org/registros-de-nacimientos-de-madres-entre-10-19-anos-ano-2026/",
+      "periodo": "2026-01-01 a 2026-08-31",
+      "n_puntos": 1,
+      "valor": 5.6,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo 1,355/243 días",
+      "evidencia": {
+        "url": "https://osarguatemala.org/registros-de-nacimientos-de-madres-entre-10-19-anos-ano-2026/",
+        "cita": "1,355 Madres entre 10 - 14 años (Enero a agosto - Año 2026)",
+        "archivo_local": "sesiones/_descargas/osar2026/infografia_agosto2026.png"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_9.png"
+      ]
+    },
+    {
+      "id": "nac-c08",
+      "concepto": "Promedio diario de nacimientos registrados de madres de 10 a 19 años: 2025 completo vs enero-agosto 2026",
+      "unidad": "nacimientos por día",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Cálculo propio con OSAR/RENAP",
+      "url": "https://osarguatemala.org/registros-de-nacimientos-de-madres-entre-10-19-anos-ano-2026/",
+      "periodo": "2025 vs 2026-01 a 2026-08",
+      "n_puntos": 2,
+      "valor": 167.6,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo 40,732/243 y 56,889/365",
+      "evidencia": {
+        "url": "https://osarguatemala.org/registros-de-nacimientos-de-madres-entre-10-19-anos-ano-2025/",
+        "cita": "2025: 56,889 Registros de nacimiento (Enero a diciembre); 2026: 40,732 Registros de nacimiento (Enero a agosto)",
+        "archivo_local": "sesiones/_descargas/osar2026/infografia_diciembre2025.png; sesiones/_descargas/osar2026/infografia_agosto2026.png"
+      },
+      "partes": [
+        {
+          "nombre": "2025 (ene-dic)",
+          "valor": 155.9
+        },
+        {
+          "nombre": "2026 (ene-ago)",
+          "valor": 167.6
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_1.png"
+      ]
+    },
+    {
+      "id": "nac-c09",
+      "concepto": "Total de nacimientos inscritos en RENAP por año, 2022-2025",
+      "unidad": "nacimientos inscritos",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "RENAP, Informe de Eventos Registrales julio 2026",
+      "url": "https://renap.gob.gt/sites/default/files/informacion-publica/a_eventos_registrales_julio_2026.pdf",
+      "periodo": "2022-2025",
+      "n_puntos": 4,
+      "valor": 368917,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "RENAP, Informe de Eventos Registrales julio 2026 (archivo local, total consolidado de columnas)",
+      "evidencia": {
+        "url": "https://renap.gob.gt/sites/default/files/informacion-publica/a_eventos_registrales_julio_2026.pdf",
+        "cita": "2022 403,346 / 2023 398,138 / 2024 353,667 / 2025 368,917 / 2026 224,515 (columna Nacimientos, consolidado del año 2,022 al 31 de julio de 2,026)",
+        "archivo_local": "sesiones/_descargas/a_eventos_registrales_julio_2026.txt"
+      },
+      "serie": [
+        {
+          "p": "2022",
+          "v": 403346
+        },
+        {
+          "p": "2023",
+          "v": 398138
+        },
+        {
+          "p": "2024",
+          "v": 353667
+        },
+        {
+          "p": "2025",
+          "v": 368917
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_6.png"
+      ]
+    },
+    {
+      "id": "nac-c10",
+      "concepto": "Proporción de nacimientos registrados de madres de 10 a 19 años sobre el total de nacimientos inscritos en RENAP, 2022-2025",
+      "unidad": "% del total de nacimientos inscritos",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Cálculo propio con OSAR (datos RENAP) y RENAP",
+      "url": "https://renap.gob.gt/sites/default/files/informacion-publica/a_eventos_registrales_julio_2026.pdf",
+      "periodo": "2022-2025",
+      "n_puntos": 4,
+      "valor": 15.42,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo 56,889/368,917 (OSAR sobre RENAP)",
+      "evidencia": {
+        "url": "https://renap.gob.gt/sites/default/files/informacion-publica/a_eventos_registrales_julio_2026.pdf",
+        "cita": "2025 368,917 (Nacimientos, RENAP) y 56,889 Registros de nacimiento madres 10-19 (OSAR, Enero a diciembre 2025)",
+        "archivo_local": "sesiones/_descargas/a_eventos_registrales_julio_2026.txt; sesiones/_descargas/osar2026/infografia_diciembre2025.png"
+      },
+      "serie": [
+        {
+          "p": "2022",
+          "v": 16.78
+        },
+        {
+          "p": "2023",
+          "v": 15.65
+        },
+        {
+          "p": "2024",
+          "v": 15.99
+        },
+        {
+          "p": "2025",
+          "v": 15.42
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_6.png"
+      ]
+    },
+    {
+      "id": "nac-c11",
+      "concepto": "Nacimientos registrados de madres de 10 a 14 años, enero a abril de 2026 (prensa que cita OSAR/RENAP)",
+      "unidad": "nacimientos registrados",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Emisoras Unidas citando OSAR/RENAP",
+      "url": "https://emisorasunidas.com/nacional/2026/05/10/mas-de-20-mil-bebes-nacieron-de-madres-de-entre-10-y-19-anos-en-cuatro-meses-de-2026/",
+      "periodo": "2026-01 a 2026-04",
+      "n_puntos": 1,
+      "valor": 691,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Emisoras Unidas (10/05/2026) citando OSAR; AGN ene-may 2026 da 844",
+      "evidencia": {
+        "url": "https://emisorasunidas.com/nacional/2026/05/10/mas-de-20-mil-bebes-nacieron-de-madres-de-entre-10-y-19-anos-en-cuatro-meses-de-2026/",
+        "cita": "más de 20 mil bebés nacieron de madres que están entre las edades de 10 a 19 años ... en 691 casos las mamás son niñas de entre 10 y 14 años de edad"
+      },
+      "usada": false,
+      "aparece_en": []
+    }
+  ],
+  "fuentes": [
+    {
+      "nombre": "Human Rights Watch — Forzadas a renunciar a sus sueños (2025)",
+      "url": "https://www.hrw.org/es/report/2025/02/18/forzadas-a-renunciar-a-sus-suenos/violencia-sexual-contra-ninas-en-guatemala",
+      "nivel": "secundaria (reproduce MP, OJ, RENAP, MSPAS, PGN, INACIF)"
+    },
+    {
+      "nombre": "Emisoras Unidas/EFE — investigación ODHAG (07/05/2025)",
+      "url": "https://emisorasunidas.com/nacional/2025/05/07/guatemala-registra-2000-partos-en-menores-de-14-anos-anualmente/",
+      "nivel": "prensa (ONG)"
+    },
+    {
+      "nombre": "Banco Mundial — SP.ADO.TFRT",
+      "url": "https://api.worldbank.org/v2/country/GT/indicator/SP.ADO.TFRT?format=json&per_page=100",
+      "nivel": "internacional (modelada ONU)"
+    },
+    {
+      "nombre": "Infobae — PLANEA 2026-2032 (02/10/2026)",
+      "url": "https://www.infobae.com/guatemala/2026/10/02/guatemala-presenta-el-planea-2026-2032-para-prevenir-los-embarazos-en-ninas-y-adolescentes/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "OSAR — Niñas embarazadas y violencia sexual (Programa Vida 2018-2020)",
+      "url": "https://osarguatemala.org/ninas-embarazadas-violencia-sexual/",
+      "nivel": "ONG con datos oficiales (desactualizada)"
+    },
+    {
+      "nombre": "INE — datos abiertos, Estadísticas Vitales Nacimientos (microdatos XLSX 2022-2024 y anteriores)",
+      "url": "https://datos.ine.gob.gt/dataset/estadisticas-vitales-nacimientos",
+      "nivel": "primaria (no procesada)"
+    },
+    {
+      "nombre": "OSAR Guatemala — Registros de nacimientos de madres entre 10–19 años (2024, 2025, 2026), datos RENAP",
+      "url": "https://osarguatemala.org/registros-de-nacimientos-de-madres-entre-10-19-anos-ano-2026/",
+      "nivel": "primaria (sistematiza RENAP)"
+    },
+    {
+      "nombre": "INE Guatemala — Proyecciones de población base censo 2018, año 2024 por departamento, sexo y edad (vía OCHA HDX COD-PS)",
+      "url": "https://data.humdata.org/dataset/452f4fe9-6baf-46ef-a50e-7a6b1862d9fb/resource/a983f193-2cb3-4f7c-af0b-6b889b7201bc/download/gtm_admpop_adm1_2024.csv",
+      "nivel": "primaria (INE, redistribuida por OCHA)"
+    },
+    {
+      "nombre": "OCHA HDX — Nota explicativa COD-PS Guatemala 2024",
+      "url": "https://data.humdata.org/dataset/452f4fe9-6baf-46ef-a50e-7a6b1862d9fb/resource/50e39d84-8c79-4bed-9c16-31fdcf6975d5/download/gtm-cod-ps-2024-explanatory-note.pdf",
+      "nivel": "metodológica"
+    },
+    {
+      "nombre": "INE Guatemala — Estadísticas Vitales, Nacimientos (microdatos 2018-2021, 2023, 2024)",
+      "url": "https://datos.ine.gob.gt/dataset/estadisticas-vitales-nacimientos",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "INE Guatemala — Formulario «Informe de Nacimiento» (códigos de tipo de parto y número de hijos)",
+      "url": "https://www.ine.gob.gt/ine/wp-content/uploads/2020/01/Informe-de-Nacimiento.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Prensa Libre (04/10/2025) — Cesáreas en Guatemala, cita INE: casi 80 % en sector privado 2020-2022",
+      "url": "https://www.prensalibre.com/vida/salud-y-familia/cesareas-en-guatemala-cuando-son-necesarias-y-por-que-preocupa-su-aumento/",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "Prensa Libre (19/08/2024) — OSAR/RENAP ene-may 2024, madres 10-17: 30 % sin padre registrado, 37 % padres de 14-19 (base y métrica distintas; solo contexto)",
+      "url": "https://www.prensalibre.com/guatemala/comunitario/el-37-de-los-bebes-nacidos-de-un-embarazo-adolescente-en-2024-tienen-un-papa-menor-de-edad/",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "Banco Mundial — API, indicador SP.ADO.TFRT (Adolescent fertility rate, births per 1,000 women ages 15-19), fuente UN WPP; lastupdated 2026-07-13",
+      "url": "https://api.worldbank.org/v2/country/GTM;SLV;HND;NIC;CRI;PAN;BLZ;MEX;LCN/indicator/SP.ADO.TFRT?format=json&per_page=400&date=2010:2024",
+      "nivel": "primaria (agregador oficial de estimaciones ONU)"
+    },
+    {
+      "nombre": "OSAR Guatemala — Registros de nacimientos de madres entre 10–19 años, Año 2026 (datos RENAP)",
+      "url": "https://osarguatemala.org/registros-de-nacimientos-de-madres-entre-10-19-anos-ano-2026/",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "OSAR Guatemala — páginas anuales 2021-2025 (datos RENAP)",
+      "url": "https://osarguatemala.org/registros-de-nacimientos-de-madres-entre-10-19-anos-ano-2025/",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "RENAP — Informe de Eventos Registrales, julio 2026",
+      "url": "https://renap.gob.gt/sites/default/files/informacion-publica/a_eventos_registrales_julio_2026.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Emisoras Unidas (10/05/2026)",
+      "url": "https://emisorasunidas.com/nacional/2026/05/10/mas-de-20-mil-bebes-nacieron-de-madres-de-entre-10-y-19-anos-en-cuatro-meses-de-2026/",
+      "nivel": "prensa"
+    }
+  ],
+  "no_afirma": [
+    "No afirma que en 2026 haya más embarazos adolescentes: RENAP cuenta por fecha de inscripción y 2026 es un corte parcial de ocho meses.",
+    "No afirma que el departamento sea el de residencia de la madre (OSAR no lo aclara) ni atribuye causa a las diferencias entre departamentos ni a la cesárea en niñas: los datos describen, no explican.",
+    "No afirma que cada uno de los 1,355 nacimientos de madres de 10 a 14 años sea un caso denunciado o probado de violación; algunas madres de 14 pudieron concebir con 14 cumplidos.",
+    "No compara entre sí Banco Mundial (15 a 19, estimación), INE (por año de ocurrencia) y OSAR/RENAP (por fecha de inscripción): son medidas distintas y sus cifras no se restan ni se suman.",
+    "No afirma que el padre no registrado sea adulto ni menor (su edad se desconoce), ni que la cesárea en niñas haya subido o bajado: solo 2024 es comparable."
+  ],
+  "incertidumbre": [
+    "Todas las cifras usadas tienen segunda fuente NO independiente (reproduce la primaria), incluida la ancla nac-c06: los números están verificados, pero sin respaldo independiente.",
+    "La ancla (167.6 al día) y su comparación (155.9 en 2025) son cálculo propio sobre totales OSAR/RENAP: 40,732 en ene–ago 2026 y 56,889 en 2025; los conteos por trámite pueden variar con rezagos de inscripción.",
+    "Las tasas departamentales de 2025 usan como denominador la proyección INE de 2024 (no se halló la de 2025/2026 por departamento); no se calculó tasa 2026 para no anualizar un periodo parcial.",
+    "El salto del depto. de Guatemala de 2024 a 2025 sugiere un posible efecto de oficina de registro; por eso el tuit de absolutos lo advierte en la nota.",
+    "El embudo del MP (HRW) cubre 2018–2023 y no es del mismo periodo que los nacimientos de 2026; las etapas no son los mismos casos.",
+    "Las cifras del perfil (edad del padre, hijos previos, cesárea, variación 2018–2024) son cálculo propio sobre microdatos INE por año de ocurrencia; ninguna publicación oficial las reproduce. La serie INE no tiene 2022 (descarga fallida), por eso se muestra solo la variación entre extremos 2018 y 2024, no una serie consecutiva.",
+    "La cesárea por edad solo es comparable en 2024 (la codificación de la vía del parto cambia entre 2018–2020 y 2021–2024); el 19.9% de hijos previos y el 43.5% de diferencia de edad se calculan sobre los nacimientos con dato conocido.",
+    "La comparación regional (Banco Mundial 2024) no tiene segunda fuente independiente capturada (UNFPA no se pudo extraer)."
+  ],
+  "descartadas": [
+    {
+      "id": "ctx-c04",
+      "por": "no_confirmada"
+    }
+  ]
+}

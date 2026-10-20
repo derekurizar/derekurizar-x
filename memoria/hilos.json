@@ -12,7 +12,8 @@
       "n_tuits": 7,
       "ruta": "hilos/2026-09-29-sequia-guatemala-2026",
       "estado": "listo",
-      "hook_tipo": "giro_inversion"
+      "hook_tipo": "giro_inversion",
+      "modo": "hilo"
     },
     {
       "id": "2026-09-29-economia-tres-gobiernos",
@@ -24,7 +25,8 @@
       "n_tuits": 18,
       "ruta": "hilos/2026-09-29-economia-tres-gobiernos",
       "estado": "listo",
-      "hook_tipo": "pregunta_directa"
+      "hook_tipo": "pregunta_directa",
+      "modo": "hilo"
     },
     {
       "id": "2026-10-02-violencia-guatemala-decada",
@@ -36,7 +38,8 @@
       "n_tuits": 21,
       "ruta": "hilos/2026-10-02-violencia-guatemala-decada",
       "estado": "listo",
-      "hook_tipo": "giro_inversion"
+      "hook_tipo": "giro_inversion",
+      "modo": "hilo"
     },
     {
       "id": "2026-10-03-desnutricion-aguda-2026",
@@ -49,7 +52,186 @@
       "ruta": "hilos/2026-10-03-desnutricion-aguda-2026",
       "estado": "listo",
       "hook_tipo": "mito_vs_dato",
-      "idea_id": "desnutricion-aguda-2026-semana-a-semana"
+      "idea_id": "desnutricion-aguda-2026-semana-a-semana",
+      "modo": "hilo"
+    },
+    {
+      "id": "2026-10-06-tarifa-electrica-brecha-regional",
+      "fecha": "2026-10-06",
+      "slug": "tarifa-electrica-brecha-regional",
+      "tema": "Q1.51 en la capital, Q2.12 en Occidente: por qué el kWh cuesta distinto según dónde vive",
+      "tesis": "En ago-oct 2026 el kWh no social de DEOCSA (Q2.12) cuesta más de 40% más que el de EEGSA (Q1.51), pero esa brecha es la más baja de los 43 pliegos trimestrales desde 2016 (máximo: 66.9% en 2018): desde 2022 la tarifa de Energuate bajó y la de EEGSA subió.",
+      "paleta": "cielo",
+      "n_tuits": 10,
+      "ruta": "hilos/2026-10-06-tarifa-electrica-brecha-regional",
+      "estado": "listo",
+      "hook_tipo": "brecha_territorial",
+      "idea_id": "tarifa-electrica-estable-por-region",
+      "modo": "hilo"
+    },
+    {
+      "id": "2026-10-06-electricidad-con-fuego",
+      "fecha": "2026-10-06",
+      "slug": "electricidad-con-fuego",
+      "tema": "«La cubrimos con fuego»: la generación térmica se duplicó y el spot subió 86%",
+      "tesis": "En agosto de 2026, 59.19% de la electricidad del SNI salió de combustibles fósiles: la hidro cayó 25.5% frente a agosto de 2025 y la solar casi se triplicó, pero el pico de demanda llega de noche, cuando el sol no aporta.",
+      "paleta": "cielo",
+      "n_tuits": 10,
+      "ruta": "hilos/2026-10-06-electricidad-con-fuego",
+      "estado": "listo",
+      "hook_tipo": "giro_inversion",
+      "idea_id": "electricidad-con-fuego-matriz-2026",
+      "modo": "hilo"
+    },
+    {
+      "id": "2026-10-06-madres-ninas-adolescentes-2026",
+      "fecha": "2026-10-06",
+      "slug": "madres-ninas-adolescentes-2026",
+      "tema": "30 mil nacimientos de madres de 10 a 19 años en seis meses: dónde ocurren",
+      "tesis": "Entre enero y agosto de 2026 RENAP inscribió 167.6 nacimientos al día de madres de 10 a 19 años (155.9 en 2025); el departamento de Guatemala pone más casos, pero por cada 1,000 jóvenes lidera Alta Verapaz (46.9) y la capital queda octava.",
+      "paleta": "jacaranda",
+      "n_tuits": 17,
+      "ruta": "hilos/2026-10-06-madres-ninas-adolescentes-2026",
+      "estado": "listo",
+      "hook_tipo": "escala_humana",
+      "idea_id": "madres-ninas-adolescentes-2026",
+      "modo": "hilo"
+    },
+    {
+      "id": "2026-10-06-presupuesto-2027-deficit-ministerios",
+      "fecha": "2026-10-06",
+      "slug": "presupuesto-2027-deficit-ministerios",
+      "tema": "Presupuesto 2027: Q192 mil millones, déficit y qué ministerios crecieron más",
+      "tesis": "El proyecto 2027 no reparte parejo: frente al vigente de 2023, Desarrollo Social crece 208.6% y Educación 28.8% (el total, 61.9%), y se financia con un déficit de 4.4% del PIB que en 2012–2027 solo supera el de 2020.",
+      "paleta": "cielo",
+      "n_tuits": 12,
+      "ruta": "hilos/2026-10-06-presupuesto-2027-deficit-ministerios",
+      "estado": "listo",
+      "hook_tipo": "giro_inversion",
+      "idea_id": "presupuesto-2027-q192-mil-millones",
+      "modo": "hilo"
+    },
+    {
+      "id": "2026-10-06-carceles-hacinamiento-por-penal",
+      "fecha": "2026-10-06",
+      "slug": "carceles-hacinamiento-por-penal",
+      "tema": "Pavón: 4,464 presos en un penal para 960. Mapa del hacinamiento carcelario",
+      "tesis": "Las cárceles de Guatemala alojan 3.42 personas por espacio (23,382 para 6,842 en junio de 2025) y el exceso se concentra: Pavón tiene 4,464 presos para 960 lugares y seis de los 11 penales con capacidad publicada superan el 300%.",
+      "paleta": "obsidiana",
+      "n_tuits": 11,
+      "ruta": "hilos/2026-10-06-carceles-hacinamiento-por-penal",
+      "estado": "listo",
+      "hook_tipo": "escala_humana",
+      "idea_id": "carceles-hacinamiento-por-penal",
+      "modo": "hilo"
+    },
+    {
+      "id": "2026-10-06-recaudacion-sat-2026-meta",
+      "fecha": "2026-10-06",
+      "slug": "recaudacion-sat-2026-meta",
+      "tema": "SAT 2026: Q75 mil millones en nueve meses, ¿llega a la meta de Q119,762 millones?",
+      "tesis": "Para llegar a su meta anual de Q119,161.7 millones, a la SAT le faltan Q37,577.1 millones de septiembre a diciembre de 2026, casi lo mismo que cobró en esos meses de 2025 (Q37,549.6 millones): a agosto va en 102.89% de lo programado, pero el excedente lo sostiene el IVA y el ISR va bajo su meta.",
+      "paleta": "cielo",
+      "n_tuits": 10,
+      "ruta": "hilos/2026-10-06-recaudacion-sat-2026-meta",
+      "estado": "listo",
+      "hook_tipo": "pregunta_directa",
+      "idea_id": "recaudacion-sat-2026-meta-nueve-meses",
+      "modo": "hilo"
+    },
+    {
+      "id": "2026-10-06-dengue-2026-caida-serotipos",
+      "fecha": "2026-10-06",
+      "slug": "dengue-2026-caida-serotipos",
+      "tema": "Dengue 2026: 43% menos casos que en 2025, pero ¿por qué y por cuánto tiempo?",
+      "tesis": "A la semana 35, Guatemala acumula 12,699 casos sospechosos de dengue en la red del MSPAS, 40% menos que en 2025 pero más que en 2020, 2021 y 2022; la caída es regional y coincide con dos años de DENV-3 dominante, mientras el DENV-1 sube de 3% a 19% de las muestras: un valle del ciclo, no el fin del riesgo.",
+      "paleta": "terracota",
+      "n_tuits": 9,
+      "ruta": "hilos/2026-10-06-dengue-2026-caida-serotipos",
+      "estado": "listo",
+      "hook_tipo": "mito_vs_dato",
+      "idea_id": "dengue-2026-cae-43-por-ciento",
+      "modo": "hilo"
+    },
+    {
+      "id": "2026-10-11-matricula-desercion-basico-diversificado",
+      "fecha": "2026-10-11",
+      "slug": "matricula-desercion-basico-diversificado",
+      "tema": "Más de 3.3 millones en las aulas: la matrícula sube, pero ¿quién abandona en básico y diversificado?",
+      "tesis": "Cerca de 85% de los jóvenes termina la primaria, pero solo 56.5% termina básico y 23.1% diversificado (UIS, 2024): la matrícula pública sube en 2026, pero la secundaria pierde a los jóvenes por dos vías distintas, pocos llegan a diversificado (tasa neta 27.52%, 9.62% en Totonicapán) y básico es el nivel con más abandono durante el año (12.63% en 2025).",
+      "paleta": "jacaranda",
+      "n_tuits": 10,
+      "ruta": "hilos/2026-10-11-matricula-desercion-basico-diversificado",
+      "estado": "listo",
+      "hook_tipo": "giro_inversion",
+      "idea_id": "matricula-record-2026-deserccion-por-nivel",
+      "modo": "hilo"
+    },
+    {
+      "id": "2026-10-11-graduandos-lectura-matematica-logro",
+      "fecha": "2026-10-11",
+      "slug": "graduandos-lectura-matematica-logro",
+      "tema": "Evaluación de Graduandos: la mitad sale del diversificado sin lo mínimo en lectura y mate",
+      "tesis": "En la Evaluación de Graduandos 2025, el 51 % de los 147,199 evaluados quedó en Insatisfactorio en Matemáticas (solo 16.2 % alcanzó el Logro) y el Logro en Lectura, 35.38 %, sigue por debajo del 37.03 % de 2019; la tesis provisional se confirma.",
+      "paleta": "jacaranda",
+      "n_tuits": 10,
+      "ruta": "hilos/2026-10-11-graduandos-lectura-matematica-logro",
+      "estado": "listo",
+      "hook_tipo": "mito_vs_dato",
+      "idea_id": "evaluacion-graduandos-mitad-sin-competencias",
+      "modo": "hilo"
+    },
+    {
+      "id": "2026-10-11-remesas-deportaciones-2026",
+      "fecha": "2026-10-11",
+      "slug": "remesas-deportaciones-2026",
+      "tema": "Remesas y deportaciones en 2026: más guatemaltecos retornados desde EE.UU. y México y, aun así, remesas en récord",
+      "tesis": "De enero a septiembre de 2026 volvieron 53,373 guatemaltecos retornados, 45% más que en 2025 pero menos que en 2022-2024, mientras las remesas marcaron récord mensual en julio (US$2,468.6 millones) y su crecimiento se frenó a 5.5%, el menor desde 2020.",
+      "paleta": "cielo",
+      "n_tuits": 11,
+      "ruta": "hilos/2026-10-11-remesas-deportaciones-2026",
+      "estado": "listo",
+      "hook_tipo": "giro_inversion",
+      "modo": "hilo"
+    },
+    {
+      "id": "2026-10-12-guatemala-vs-mexico-seguridad",
+      "fecha": "2026-10-12",
+      "slug": "guatemala-vs-mexico-seguridad",
+      "tema": "Guatemala frente a México en estadísticas de seguridad: homicidios, desapariciones, violencia contra mujeres, extorsión, impunidad y cárceles",
+      "tesis": "Con la misma vara de la ONU, Guatemala (23.4) y México (24.9) tuvieron casi la misma tasa de homicidios por 100 mil en 2023; lo que los distingue es la forma de la violencia (desapariciones en México; mayor tasa de femicidio en 2024 y denuncias de extorsión quintuplicadas desde 2015 en Guatemala) y en ambos la gran mayoría de los homicidios queda sin castigo.",
+      "paleta": "terracota",
+      "n_tuits": 17,
+      "ruta": "hilos/2026-10-12-guatemala-vs-mexico-seguridad",
+      "estado": "listo",
+      "hook_tipo": "mito_vs_dato",
+      "modo": "hilo"
+    },
+    {
+      "id": "2026-10-13-cumplimiento-plan-semilla",
+      "fecha": "2026-10-13",
+      "slug": "cumplimiento-plan-semilla",
+      "tema": "Cumplimiento del Plan de Gobierno 2024-2028 del Movimiento Semilla (gobierno de Bernardo Arévalo) a octubre de 2026: avance de cada uno de sus 140 compromisos, de cada una de las 10 semillas, del marco fiscal y global",
+      "tesis": "A octubre de 2026, con el 68.7% del mandato transcurrido, el Plan de Gobierno de Semilla avanza 22.9% (promedio de las 10 semillas, con los compromisos sin dato oficial en 0); ninguna semilla va al ritmo del mandato y lo que más avanza es el marco fiscal (44.9%).",
+      "paleta": "obsidiana",
+      "n_tuits": 20,
+      "ruta": "investigacion/2026-10-13-cumplimiento-plan-semilla/hilo",
+      "estado": "listo",
+      "hook_tipo": "giro_inversion",
+      "modo": "investigacion"
+    },
+    {
+      "id": "2026-10-19-crimen-organizado-respuesta-estado",
+      "fecha": "2026-10-19",
+      "slug": "crimen-organizado-respuesta-estado",
+      "tema": "Crimen organizado y violencia en Guatemala hoy: las caras del crimen (violencia letal y su geografía, armas, narcotráfico, extorsión y pandillas, desapariciones, violencia contra mujeres y niñez) y lo que el Estado hace al respecto (estado de sitio y de prevención 2026, Ley Antipandillas, presupuesto y agentes, capturas, decomisos, extradiciones, cárceles) con sus resultados medibles",
+      "tesis": "En 2026 el Estado multiplicó lo que controla (8,402.4 kg de cocaína decomisada en el primer semestre, frente a 1,596.2 kg en 2025) y bajaron las denuncias de extorsión y de homicidio, pero la violencia cambió de blanco: 20 policías asesinados al 28 de julio, el doble que en todo 2025, y solo 4% de los casos de homicidio concluidos termina en sentencia.",
+      "paleta": "terracota",
+      "n_tuits": 20,
+      "ruta": "hilos/2026-10-19-crimen-organizado-respuesta-estado",
+      "estado": "listo",
+      "hook_tipo": "pregunta_directa",
+      "modo": "hilo"
     }
   ]
 }

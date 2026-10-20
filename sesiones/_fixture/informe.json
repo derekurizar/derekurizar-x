@@ -119,8 +119,8 @@
     {
       "tipo": "conclusiones",
       "id": "conclusiones",
-      "indice": { "titulo": "En suma", "clase": "anexo" },
-      "titulo": "En suma",
+      "indice": { "titulo": "Conclusiones", "clase": "anexo" },
+      "titulo": "Conclusiones",
       "hallazgos": [
         { "titulo": "El crudo subió 54%.", "texto": "De 67 a 102 dólares por barril entre enero y septiembre, con un pico de 117 en abril.", "ref": "{fign:fig-brent} · {Tabla:tabla-brent}" },
         { "titulo": "El diésel local subió más: 77%.", "texto": "De 26.0 a 46.1 quetzales por galón en el precio de referencia del MEM.", "ref": "{fign:fig-diesel}" },

@@ -1,0 +1,140 @@
+{
+ "eje": "aud",
+ "items": [
+  {
+   "id": "aud-c01",
+   "veredicto": "verificada",
+   "valor_final": 30.0,
+   "fuente_2": "Recálculo determinista (scripts/auditoria.py)",
+   "url_2": "",
+   "independencia": "baja",
+   "nota": "Cálculo propio: no es un dato publicado por una fuente."
+  },
+  {
+   "id": "aud-c02",
+   "veredicto": "verificada",
+   "valor_final": 30.0,
+   "fuente_2": "Recálculo determinista (scripts/auditoria.py)",
+   "url_2": "",
+   "independencia": "baja",
+   "nota": "Cálculo propio: no es un dato publicado por una fuente."
+  },
+  {
+   "id": "aud-c03",
+   "veredicto": "verificada",
+   "valor_final": 30.0,
+   "fuente_2": "Recálculo determinista (scripts/auditoria.py)",
+   "url_2": "",
+   "independencia": "baja",
+   "nota": "Cálculo propio: no es un dato publicado por una fuente."
+  },
+  {
+   "id": "aud-c04",
+   "veredicto": "verificada",
+   "valor_final": 8,
+   "fuente_2": "Recálculo determinista (scripts/auditoria.py)",
+   "url_2": "",
+   "independencia": "baja",
+   "nota": "Cálculo propio: no es un dato publicado por una fuente."
+  },
+  {
+   "id": "aud-c05",
+   "veredicto": "verificada",
+   "valor_final": 68.7,
+   "fuente_2": "Recálculo determinista (scripts/auditoria.py)",
+   "url_2": "",
+   "independencia": "baja",
+   "nota": "Cálculo propio: no es un dato publicado por una fuente."
+  },
+  {
+   "id": "aud-c06",
+   "veredicto": "verificada",
+   "valor_final": 7,
+   "fuente_2": "Recálculo determinista (scripts/auditoria.py)",
+   "url_2": "",
+   "independencia": "baja",
+   "nota": "Cálculo propio: no es un dato publicado por una fuente."
+  },
+  {
+   "id": "aud-c07",
+   "veredicto": "verificada",
+   "valor_final": 7,
+   "fuente_2": "Recálculo determinista (scripts/auditoria.py)",
+   "url_2": "",
+   "independencia": "baja",
+   "nota": "Cálculo propio: no es un dato publicado por una fuente."
+  },
+  {
+   "id": "aud-c08",
+   "veredicto": "verificada",
+   "valor_final": 0.0,
+   "fuente_2": "Recálculo determinista (scripts/auditoria.py)",
+   "url_2": "",
+   "independencia": "baja",
+   "nota": "Cálculo propio: no es un dato publicado por una fuente."
+  },
+  {
+   "id": "aud-c09",
+   "veredicto": "verificada",
+   "valor_final": 25.0,
+   "fuente_2": "Recálculo determinista (scripts/auditoria.py)",
+   "url_2": "",
+   "independencia": "baja",
+   "nota": "Cálculo propio: no es un dato publicado por una fuente."
+  },
+  {
+   "id": "aud-c10",
+   "veredicto": "verificada",
+   "valor_final": 75.0,
+   "fuente_2": "Recálculo determinista (scripts/auditoria.py)",
+   "url_2": "",
+   "independencia": "baja",
+   "nota": "Cálculo propio: no es un dato publicado por una fuente."
+  },
+  {
+   "id": "aud-c22",
+   "veredicto": "verificada",
+   "valor_final": 30.0,
+   "fuente_2": "Recálculo determinista (scripts/auditoria.py)",
+   "url_2": "",
+   "independencia": "baja",
+   "nota": "Cálculo propio: no es un dato publicado por una fuente."
+  },
+  {
+   "id": "aud-c31",
+   "veredicto": "verificada",
+   "valor_final": 4,
+   "fuente_2": "Recálculo determinista (scripts/auditoria.py)",
+   "url_2": "",
+   "independencia": "baja",
+   "nota": "Cálculo propio: no es un dato publicado por una fuente."
+  },
+  {
+   "id": "aud-c32",
+   "veredicto": "verificada",
+   "valor_final": 4,
+   "fuente_2": "Recálculo determinista (scripts/auditoria.py)",
+   "url_2": "",
+   "independencia": "baja",
+   "nota": "Cálculo propio: no es un dato publicado por una fuente."
+  },
+  {
+   "id": "aud-c11",
+   "veredicto": "verificada",
+   "valor_final": 60.0,
+   "fuente_2": "Recálculo determinista (scripts/auditoria.py)",
+   "url_2": "",
+   "independencia": "baja",
+   "nota": "Cálculo propio: no es un dato publicado por una fuente."
+  },
+  {
+   "id": "aud-c12",
+   "veredicto": "verificada",
+   "valor_final": 0.0,
+   "fuente_2": "Recálculo determinista (scripts/auditoria.py)",
+   "url_2": "",
+   "independencia": "baja",
+   "nota": "Cálculo propio: no es un dato publicado por una fuente."
+  }
+ ]
+}

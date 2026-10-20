@@ -8,8 +8,9 @@ resultado de herramienta.
 | Archivo | Lo escribe | Contenido |
 |---|---|---|
 | `encuadre.json` | editor | `slug, tema, fecha, modo: "hilo"\|"explica"\|"perfil", pregunta, tesis_provisional, angulo, paleta, necesita_serie, repetido, hook_evitar, idea_id (id del banco de ideas o null), ejes[2–4]{id, prefijo (3 letras únicas), brief, preguntas[], fuentes_sugeridas[], series_sugeridas[]}, sesion_dir, smoke, fixture` |
-| `hallazgos_<eje>.json` | investigador | `eje, n_busquedas, n_fetch, cifras[≤12]{id "<prefijo>-cNN", concepto, valor:number, unidad, anio, fuente, url, tipo: puntual\|serie\|desglose, n_puntos, periodo, candidata_ancla, evidencia{url, cita ≤200, archivo_local?}, serie:[{p, v}], partes:[{nombre, valor}], nota}, fuentes[]{nombre, url, nivel}, vacios[]` |
-| `verificacion_<eje>.json` | verificador | `eje, items[]{id, veredicto: verificada\|ajustada\|no_confirmada, valor_final, fuente_2, url_2, independencia: alta\|baja (baja = la 2ª fuente reproduce la primaria o es recálculo de sus microdatos), nota}` |
+| `hallazgos_<eje>.json` | investigador | `eje, n_busquedas, n_fetch, cifras[≤12]{id "<prefijo>-cNN", concepto, valor:number, unidad, anio, fuente, url, tipo: puntual\|serie\|desglose, n_puntos, periodo, candidata_ancla, evidencia{url, cita ≤200, archivo_local?}, calculo? (operación de un derivado), serie:[{p, v}], partes:[{nombre, valor}], nota}, fuentes[]{nombre, url, nivel}, vacios[]` |
+| `verificacion_<eje>.json` | verificador | `eje, items[]{id, veredicto: verificada\|ajustada\|no_confirmada, valor_final, fuente_2, url_2, independencia: alta\|baja (baja = la 2ª fuente reproduce la primaria o es recálculo de sus microdatos), calculo? (operación de un derivado, la evalúa verificacion.py), serie_final?/partes_final? (puntos corregidos de una ajustada: reemplazan a los del investigador), nota}` |
+| `rechequeo.json` | verificador (modo rechequeo, tras el guion) | `items[]{id, veredicto: sostiene\|matizar\|caer, motivo, fuente?, url?}` |
 | `guion.json` | guionista | `slug, fecha, modo, paleta, smoke, handle, hook_tipo, sintesis{pregunta, tesis, ancla_id, arco[], no_afirma[≤5], incertidumbre[], descartadas[]}, tuits[]{n, beat, texto, alt_text ≤1000, visual\|null}` con `visual = {plantilla, kicker, titular[], leyenda[], nota, fuente, cifra_ids[], datos{}}`; en modo `explica` el bloque `explica{pregunta, pasos[]{n, titulo}}` y en `perfil` el bloque `perfil{sujeto, tipo: departamento\|grupo, dimensiones[]{n, nombre, anio}}` |
 | `visuales/tuit_N.html/.png` | visualista (vía `materializar.py`) | tarjeta ensamblada y su PNG |
 | `visuales/tuit_N.ajuste.json` | visualista | cambios parciales al `visual` de ese tuit; los consolida el productor |
@@ -20,7 +21,10 @@ Reglas del contrato:
   único por eje. Una serie es UNA cifra (`valor` = último punto, `serie[]`
   completa, `n_puntos`); un desglose es UNA cifra (`valor` = total o parte
   mayor, `partes[]`).
-- Desde la verificación **manda `valor_final`**. `no_confirmada` nunca llega al hilo.
+- Desde la verificación **manda `valor_final`** (y `serie_final`/`partes_final`):
+  el valor original de una ajustada ya no respalda ningún número (G4, I2).
+  `no_confirmada` nunca llega al hilo. `scripts/verificacion.py` (V-A–V-E) es el
+  cierre mecánico de la verificación y `ensamblar.py` lo repite como G9.
 - Los números de `visual.datos` van crudos, en la unidad de la fuente; el gate
   mecánico (`ensamblar.py --check`, G4) los coteja contra `valor_final`, los
   puntos de la serie o las partes del desglose.

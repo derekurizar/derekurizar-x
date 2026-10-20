@@ -1,0 +1,189 @@
+{
+  "slug": "recaudacion-sat-2026-meta",
+  "fecha": "2026-10-06",
+  "tema": "SAT 2026: Q75 mil millones en nueve meses, ¿llega a la meta de Q119,762 millones?",
+  "tesis": "Para llegar a su meta anual de Q119,161.7 millones, a la SAT le faltan Q37,577.1 millones de septiembre a diciembre de 2026, casi lo mismo que cobró en esos meses de 2025 (Q37,549.6 millones): a agosto va en 102.89% de lo programado, pero el excedente lo sostiene el IVA y el ISR va bajo su meta.",
+  "paleta": "cielo",
+  "hook_tipo": "pregunta_directa",
+  "pregunta": "¿Va la recaudación tributaria de 2026 por encima de su meta, qué impuestos la sostienen y cuánto le falta para cumplir la meta anual?",
+  "n_tuits": 10,
+  "estado": "listo",
+  "tuits": [
+    {
+      "n": 1,
+      "beat": "gancho",
+      "texto": "¿Le alcanza a la SAT para llegar a su meta de 2026?\n\nCon datos a agosto, va adelante del calendario. Para cumplir necesita cobrar de septiembre a diciembre casi lo mismo que en esos meses de 2025.\n\nPero su colchón lo pone, casi solo, un impuesto. 🧵",
+      "caracteres": 249,
+      "alt_text": "Tarjeta de cifra destacada: la SAT recaudó Q81,584.6 millones netos de enero a agosto de 2026; una barra la compara con la meta anual de Q119,161.7 millones. Nota: septiembre aún no se publica; los Q119,762.8 millones del presupuesto incluyen Q601.1 millones que no cobra la SAT. Fuente: SAT (recaudación y programación 2026) e Icefi.",
+      "imagen": "tuit_1.png",
+      "plantilla": "cifra",
+      "fuente": "SAT · recaudación y programación 2026; Icefi",
+      "cifra_ids": [
+        "met-c03",
+        "met-c01",
+        "met-c06"
+      ]
+    },
+    {
+      "n": 2,
+      "beat": "contexto",
+      "texto": "Si cobra igual que el año pasado en ese tramo, queda a un paso de la meta. Con apenas un poco más, la cruza.",
+      "caracteres": 108,
+      "alt_text": "Tarjeta de cifra destacada: a la SAT le faltan Q37,577.1 millones de septiembre a diciembre de 2026 para su meta anual; una barra la compara con los Q37,549.6 millones que recaudó de septiembre a diciembre de 2025. Fuente: SAT.",
+      "imagen": "tuit_2.png",
+      "plantilla": "cifra",
+      "fuente": "SAT · recaudación y programación 2025–2026",
+      "cifra_ids": [
+        "met-c07",
+        "met-c08"
+      ]
+    },
+    {
+      "n": 3,
+      "beat": "contexto",
+      "texto": "Lo que casi equilibra la cuenta es el colchón: a agosto, la SAT iba Q2,294 millones arriba de lo programado.",
+      "caracteres": 108,
+      "alt_text": "Gráfico de pesas: meta mensual 2026 de la SAT frente a lo recaudado en el mismo mes de 2025, en millones de quetzales. Septiembre: 7,660.4 cobrado en 2025 vs meta 8,176.2. Octubre: 13,544.2 vs 14,474.6. Noviembre: 7,804.8 vs 8,509.1. Diciembre: 8,540.2 vs 8,711.2. Cada mes la meta pide más que lo cobrado en 2025. Fuente: SAT.",
+      "imagen": "tuit_3.png",
+      "plantilla": "pesas",
+      "fuente": "SAT · recaudación y programación 2025–2026",
+      "cifra_ids": [
+        "met-c03",
+        "met-c08"
+      ]
+    },
+    {
+      "n": 4,
+      "beat": "contexto",
+      "texto": "Septiembre aún no se publica, así que cualquier cifra de «nueve meses» es una estimación. El dato oficial más reciente es agosto.",
+      "caracteres": 129,
+      "alt_text": "Gráfico de línea: porcentaje de ejecución acumulada de la meta de recaudación SAT en 2026, mes a mes. Enero 97.46%, febrero 100.21%, marzo 102.30%, abril 102.21%, mayo 101.89%, junio 102.70%, julio 103.16%, agosto 102.89%. El eje no parte de cero. Fuente: SAT.",
+      "imagen": "tuit_4.png",
+      "plantilla": "linea",
+      "fuente": "SAT · recaudación y programación 2026",
+      "cifra_ids": [
+        "met-c04"
+      ]
+    },
+    {
+      "n": 5,
+      "beat": "contexto",
+      "texto": "La meta del año solo exigía crecer 6.4% sobre lo cobrado el año pasado. Va por encima de ese ritmo.",
+      "caracteres": 99,
+      "alt_text": "Tarjeta antes y después: la recaudación neta de la SAT de enero a agosto pasó de Q74,431.9 millones en 2025 a Q81,584.6 millones en 2026, un aumento de 9.6%. Fuente: SAT.",
+      "imagen": "tuit_5.png",
+      "plantilla": "antes-despues",
+      "fuente": "SAT · recaudación y programación 2025–2026",
+      "cifra_ids": [
+        "met-c10",
+        "met-c01"
+      ]
+    },
+    {
+      "n": 6,
+      "beat": "contexto",
+      "texto": "Pero el margen del año pasado fue el más corto de esos cinco años. Y este año va por uno parecido.",
+      "caracteres": 98,
+      "alt_text": "Gráfico de barras verticales: recaudación neta de la SAT como porcentaje de la meta original del presupuesto, 2016 a 2025. 2016: 99.7%; 2017: 97.8%; 2018: 101.3%; 2019: 97.8%; 2020: 94.6%; 2021: 122.3%; 2022: 115.7%; 2023: 110.8%; 2024: 119.8%; 2025: 103.0%. Desde 2021 todos los años superan la meta. Nota: en 2024 la meta se revisó a Q99,201.6 millones y también se superó. Fuente: SAT e IIES-USAC.",
+      "imagen": "tuit_6.png",
+      "plantilla": "barras-v",
+      "fuente": "SAT · rimpa y Boletín Estadístico; IIES-USAC",
+      "cifra_ids": [
+        "ctx-c03",
+        "ctx-c04"
+      ]
+    },
+    {
+      "n": 7,
+      "beat": "contexto",
+      "texto": "El IVA de importaciones sube en paralelo a la factura de combustibles importados: de US$335.4 M en enero a US$696.6 M en julio.",
+      "caracteres": 127,
+      "alt_text": "Gráfico de barras horizontales: aumento de la recaudación bruta de enero a julio de 2026 frente a 2025, por impuesto, en millones de quetzales. IVA doméstico 2,344.1; IVA importaciones 1,851.1; ISR 1,528.3; ISO 574.6; aranceles 257.6; distribución de petróleo 222.6; resto 185.8. Aumento total: Q6,964.1 millones; las dos barras del IVA suman seis de cada diez quetzales del aumento. Fuente: SAT.",
+      "imagen": "tuit_7.png",
+      "plantilla": "barras-h",
+      "fuente": "SAT · recaudación por impuesto 2025–2026",
+      "cifra_ids": [
+        "imp-c03"
+      ]
+    },
+    {
+      "n": 8,
+      "beat": "giro",
+      "texto": "El colchón lo pone el IVA: neto de devoluciones, a julio iba Q2,313.5 M arriba de lo programado, más que todo el excedente de la SAT a esa fecha.",
+      "caracteres": 145,
+      "alt_text": "Gráfico de bullet: ejecución de la recaudación de enero a julio de 2026 frente a la meta al periodo, por impuesto (meta = 100%). ISR 97.9%, petróleo y derivados 99.0%, bebidas 94.1%, ISO 105.2%, aranceles 105.8%, timbres fiscales 106.6%. El ISR va por debajo de su meta. El IVA no se muestra porque su meta es neta de devoluciones. Fuente: SAT.",
+      "imagen": "tuit_8.png",
+      "plantilla": "bullet",
+      "fuente": "SAT · recaudación por impuesto y programación 2026",
+      "cifra_ids": [
+        "imp-c04"
+      ]
+    },
+    {
+      "n": 9,
+      "beat": "impacto",
+      "texto": "Por habitante, la meta del año equivale a Q6,507.17 por persona.",
+      "caracteres": 64,
+      "alt_text": "Gráfico de waffle de 100 cuadros: si se cumple la meta de recaudación SAT, los impuestos cubrirían Q71.3 de cada Q100 del presupuesto vigente 2026 (71 cuadros llenos). Meta SAT Q119,161.7 millones entre presupuesto vigente al 30 de marzo de Q167,109.02 millones. Fuente: SAT y Prensa Libre con datos del portal de Transparencia.",
+      "imagen": "tuit_9.png",
+      "plantilla": "waffle",
+      "fuente": "Prensa Libre con datos de Transparencia · SAT",
+      "cifra_ids": [
+        "ctx-c11",
+        "ctx-c10",
+        "met-c03"
+      ]
+    },
+    {
+      "n": 10,
+      "beat": "cierre",
+      "texto": "En corto: a agosto la SAT va arriba de lo programado y le falta casi lo mismo que cobró de septiembre a diciembre de 2025. Lo frágil: el ISR va corto y el IVA carga el excedente.\n\nFuentes: SAT, Icefi, IIES-USAC, Prensa Libre con datos de Transparencia, INE.",
+      "caracteres": 257,
+      "alt_text": "Tuit de cierre sin imagen: resume que la SAT va arriba de su meta a agosto de 2026 y lista las fuentes: SAT, Icefi, IIES-USAC, Prensa Libre con datos de Transparencia e INE.",
+      "imagen": null,
+      "plantilla": null,
+      "fuente": null,
+      "cifra_ids": []
+    }
+  ],
+  "no_afirma": [
+    "No afirma cuánto se recaudó en septiembre ni que la meta ya esté asegurada: la SAT solo ha publicado datos hasta agosto de 2026.",
+    "No afirma que exista una meta revisada de Q119,762.8 M: es el total de ingresos tributarios del presupuesto, que suma Q601.1 M de otras instituciones.",
+    "No afirma que el alza del IVA de importaciones se deba al precio del petróleo: solo coincide en el tiempo con la factura de combustibles importados.",
+    "No compara el IVA contra su meta en porcentaje: la recaudación por impuesto es bruta y la meta del IVA es neta de devoluciones.",
+    "No afirma cómo se financia el resto del presupuesto (deuda u otras fuentes): el déficit 2026 no se confirmó."
+  ],
+  "incertidumbre": [
+    "La tesis se ancla en la meta anual (met-c03, verificada con fuente independiente), pero lo recaudado a agosto (met-c01), la ejecución (met-c02, met-c04), lo que falta (met-c07), lo cobrado sep–dic 2025 (met-c08) y el crecimiento interanual (met-c10) tienen segunda fuente que reproduce la primaria (archivos SAT): sin verificación independiente.",
+    "El desglose por impuesto (imp-c03, imp-c04, imp-c05, imp-c09) y las cifras de contexto (ctx-c03, ctx-c04, ctx-c07, ctx-c09, ctx-c10, ctx-c11) también tienen segunda fuente no independiente.",
+    "El desglose por impuesto llega solo a julio de 2026; la meta por impuesto pudo cambiar tras el 29-sep-2026 (no se volvió a descargar el boletín).",
+    "La afirmación de que el excedente del IVA a julio (Q2,313.5 M) supera el excedente total se calcula con los puntos de julio de met-c01 (Q73,340.0 M) y met-c03 (Q71,093.0 M): excedente total Q2,247.0 M; mezcla IVA neto con total neto.",
+    "Q71.3 de cada Q100 usa el presupuesto vigente al 30-mar-2026; si hubo ampliaciones posteriores, la proporción baja. El cumplimiento histórico (ctx-c03) es contra la meta original del presupuesto, no contra metas revisadas (solo se confirmó la revisada de 2024)."
+  ],
+  "fuentes": [
+    "SAT · recaudación y programación 2026; Icefi",
+    "SAT · recaudación y programación 2025–2026",
+    "SAT · recaudación y programación 2026",
+    "SAT · rimpa y Boletín Estadístico; IIES-USAC",
+    "SAT · recaudación por impuesto 2025–2026",
+    "SAT · recaudación por impuesto y programación 2026",
+    "Prensa Libre con datos de Transparencia · SAT"
+  ],
+  "fuentes_cifras": [
+    "Cálculo con SAT progra2026.xlsx (meta anual) y emr2026.xlsx (acumulado a agosto)",
+    "Cálculo con SAT rimp2025.xlsx",
+    "Cálculo con SAT rimp2026.xlsx y progra2026.xlsx",
+    "Cálculo propio con SAT rimpa.xlsx y Boletín Estadístico SAT (programación)",
+    "Cálculo propio: meta convenio 2026 / presupuesto vigente 2026 (Minfin vía Prensa Libre)",
+    "IIES-USAC, 'La SAT superó la meta fiscal 2024' (con datos SAT)",
+    "Icefi, comunicado 01-2026 (3-feb-2026), anexos 1 y 2, con base en decretos 27-2025 y 3-2026",
+    "Prensa Libre con datos del portal de Transparencia Presupuestaria del Minfin",
+    "SAT — Programación de Ingresos Tributarios SAT 2026 (progra2026.xlsx)",
+    "SAT — Recaudación de Ingresos Tributarios año 2026 (rimp2026.xlsx)",
+    "SAT — emr2026.xlsx",
+    "SAT, Estadísticas Tributarias (rim.xlsx)",
+    "SAT, Estadísticas Tributarias (rim.xlsx) y Boletín Estadístico, hoja «Programación de Ingresos Tributarios 2026»"
+  ],
+  "gate_mecanico": "ok",
+  "contacto": "contacto.png"
+}

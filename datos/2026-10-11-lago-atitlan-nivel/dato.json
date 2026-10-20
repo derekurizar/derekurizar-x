@@ -1,0 +1,135 @@
+{
+  "slug": "lago-atitlan-nivel",
+  "fecha": "2026-10-11",
+  "tema": "El lago de Atitlán está 3 metros más bajo que en 2014",
+  "pista": null,
+  "tipo": "dato",
+  "dato": "El lago de Atitlán está 3 metros más bajo que cuando empezó a medirse en Panajachel, en 2014",
+  "cifra_id": "dat-c01",
+  "por_que_impacta": "Es el lago más conocido del país y la medición oficial es de octubre, al final de la época de lluvia: ni el invierno le devuelve el agua que tenía hace once años.",
+  "paleta": "jade",
+  "hook_tipo": "curiosity_gap",
+  "pregunta": "¿Cuánto ha bajado el nivel del lago de Atitlán desde que empezó a medirse en Panajachel (mayo de 2014)?",
+  "tesis": "Entre mayo de 2014 y octubre de 2025 el nivel del lago de Atitlán bajó 3.00 m en la escala de Panajachel, según AMSCLAE.",
+  "estado": "listo",
+  "tuit": {
+    "texto": "El lago de Atitlán no ha vuelto al nivel que tenía cuando comenzaron a medirlo.\n\nY la medición es de octubre, al final de la época de lluvia: ni el invierno alcanza a reponerlo. En 2019 el lago bajó tanto que la regla de medición quedó fuera del agua.",
+    "caracteres": 251,
+    "alt_text": "Tarjeta de cifra héroe sobre fondo verde jade: el nivel del lago de Atitlán bajó 3.00 metros entre mayo de 2014 y octubre de 2025, medido en la escala limnimétrica de Panajachel. Flecha de tendencia a la baja. Fuente: AMSCLAE, monitoreo de nivel del lago de Atitlán, informe 2025.",
+    "imagen": "dato.png",
+    "tarjeta": "tarjeta.html",
+    "plantilla": "cifra",
+    "kicker": "LAGO DE ATITLÁN · NIVEL · METROS",
+    "titular": [
+      "El lago de Atitlán está",
+      "3 metros más bajo",
+      "que en 2014"
+    ],
+    "nota": "Escala limnimétrica de Panajachel. Cambio entre mayo de 2014 y octubre de 2025.",
+    "fuente": "AMSCLAE · monitoreo de nivel del lago · informe 2025",
+    "cifra_ids": [
+      "dat-c01"
+    ]
+  },
+  "cifras": [
+    {
+      "id": "dat-c01",
+      "concepto": "Cambio del nivel del lago de Atitlán de mayo 2014 a octubre 2025 (descenso)",
+      "valor": 3.0,
+      "unidad": "m",
+      "anio": "2025",
+      "veredicto": "verificada",
+      "fuente": "AMSCLAE · Departamento de Investigación y Calidad Ambiental (DICA) · Monitoreo de nivel del lago Atitlán 2025",
+      "fuente_2": "Living in Guatemala (reproduce el informe AMSCLAE 2025) y coherencia aritmética con 1556.57 msnm inicial (nivel resultante ~1553.57; la figura del informe muestra máx. oct 1553.67)",
+      "url": "https://www.amsclae.gob.gt/wp-content/uploads/2026/01/Monitoreo-de-nivel-del-lago-Atitlan.pdf"
+    }
+  ],
+  "candidatas": [
+    {
+      "id": "dat-c01",
+      "puntaje": 18,
+      "criterios": {
+        "sorpresa": 4,
+        "magnitud": 4,
+        "comparacion": 4,
+        "actualidad": 3,
+        "solidez": 3
+      },
+      "elegida": true,
+      "motivo": "El dato más reciente (informe 2025) y el más limpio: un antes/después de 11 años en metros que cualquiera imagina. Solidez 3: la 2.ª fuente reproduce a AMSCLAE.",
+      "dato": "Cambio del nivel del lago de Atitlán de mayo 2014 a octubre 2025 (descenso)"
+    },
+    {
+      "id": "dat-c02",
+      "puntaje": 16,
+      "criterios": {
+        "sorpresa": 4,
+        "magnitud": 3,
+        "comparacion": 3,
+        "actualidad": 3,
+        "solidez": 3
+      },
+      "elegida": false,
+      "motivo": "Serie de solo 4 puntos con huecos 2021-2023: no da para línea ni para afirmar que 2020 fue el fondo; cuenta la misma historia que dat-c01 con más salvedades.",
+      "dato": "Descenso acumulado del nivel del lago desde mayo 2014, medido a octubre de cada año (informes anuales AMSCLAE)"
+    },
+    {
+      "id": "dat-c03",
+      "puntaje": 15,
+      "criterios": {
+        "sorpresa": 3,
+        "magnitud": 3,
+        "comparacion": 4,
+        "actualidad": 2,
+        "solidez": 3
+      },
+      "elegida": false,
+      "motivo": "Mayor caída (3.42 m) pero a octubre de 2020, seis años atrás; en msnm se lee peor que el cambio en metros de dat-c01.",
+      "dato": "Nivel del lago en octubre 2020 y descenso desde mayo 2014 (punto más bajo de los informes localizados)"
+    },
+    {
+      "id": "dat-c04",
+      "puntaje": 12,
+      "criterios": {
+        "sorpresa": 4,
+        "magnitud": 2,
+        "comparacion": 2,
+        "actualidad": 1,
+        "solidez": 3
+      },
+      "elegida": false,
+      "motivo": "Anécdota potente pero de 2019 y con una cifra chica (0.5 m en seis meses); sirve como contexto en el texto, no como dato héroe.",
+      "dato": "Descenso del lago de abril a octubre 2019 que dejó la escala limnimétrica fuera del agua y obligó a instalar una nueva"
+    },
+    {
+      "id": "dat-c05",
+      "puntaje": 15,
+      "criterios": {
+        "sorpresa": 3,
+        "magnitud": 3,
+        "comparacion": 4,
+        "actualidad": 2,
+        "solidez": 3
+      },
+      "elegida": false,
+      "motivo": "Parte del máximo de nov-2014 y llega solo a 2019: comparación con otra referencia y menos actual que dat-c01.",
+      "dato": "Descenso del lago entre el máximo de noviembre 2014 y octubre 2019"
+    }
+  ],
+  "no_afirma": [
+    "No atribuye el descenso a una causa única (clima, evaporación o extracción de agua).",
+    "No afirma que sea el nivel más bajo registrado: en octubre de 2020 estuvo 3.42 m abajo y faltan los informes de 2021 a 2023.",
+    "No dice cuál es el nivel en 2026: el último informe oficial llega a octubre de 2025."
+  ],
+  "incertidumbre": [
+    "La segunda fuente reproduce la primaria (AMSCLAE); sin verificación independiente (INSIVUMEH o estudio académico).",
+    "Los 3.00 m parten de mayo de 2014; desde el máximo de noviembre de 2014 el descenso sería mayor. AMSCLAE cambió de referencia entre los informes 2018 y 2019."
+  ],
+  "fuentes": [
+    "AMSCLAE · monitoreo de nivel del lago · informe 2025"
+  ],
+  "fuentes_cifras": [
+    "AMSCLAE · Departamento de Investigación y Calidad Ambiental (DICA) · Monitoreo de nivel del lago Atitlán 2025"
+  ],
+  "gate_mecanico": "ok"
+}

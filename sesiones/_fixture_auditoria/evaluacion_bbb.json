@@ -1,0 +1,73 @@
+{
+ "eje": "bbb",
+ "corte": "2026-10-14",
+ "items": [
+  {
+   "evidencia": [
+    {
+     "url": "https://example.org/x",
+     "cita": "FIXTURE"
+    }
+   ],
+   "fuente": "Fuente fixture",
+   "id": "S2-01",
+   "estado": "retroceso",
+   "medida_usada": "meta",
+   "observado": 16.65,
+   "base_obs": 16.61,
+   "base_fecha": "2023",
+   "fecha_dato": "2026-08",
+   "cifra_ids": [
+    "bbb-c01"
+   ],
+   "resumen": "La tasa de homicidios pasó de 16.61 en 2023 a 16.65 en 2026: peor, aunque por poco."
+  },
+  {
+   "evidencia": [
+    {
+     "url": "https://example.org/x",
+     "cita": "FIXTURE"
+    }
+   ],
+   "fuente": "Fuente fixture",
+   "id": "S2-02",
+   "estado": "no_iniciado",
+   "medida_usada": "meta",
+   "observado": 50,
+   "base_obs": 50,
+   "base_fecha": "2023",
+   "fecha_dato": "2026-08",
+   "cifra_ids": [
+    "bbb-c02"
+   ],
+   "resumen": "Las denuncias atendidas siguen en 50%, igual que en 2023."
+  },
+  {
+   "evidencia": [
+    {
+     "url": "https://example.org/x",
+     "cita": "FIXTURE"
+    }
+   ],
+   "fuente": "Fuente fixture",
+   "id": "S2-03",
+   "estado": "en_proceso",
+   "medida_usada": "meta",
+   "observado": 93,
+   "base_obs": 92,
+   "base_fecha": "2023",
+   "fecha_dato": "2026-08",
+   "cifra_ids": [
+    "bbb-c03"
+   ],
+   "resumen": "La cobertura policial pasó de 92% en 2023 a 93% en 2026; la meta era 90%."
+  },
+  {
+   "id": "S2-04",
+   "estado": "no_verificable",
+   "medida_usada": "hito",
+   "resumen": "No hay información pública sobre el registro digital de armas.",
+   "nota": "sin información pública suficiente"
+  }
+ ]
+}

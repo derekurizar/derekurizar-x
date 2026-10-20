@@ -16,6 +16,11 @@ El sandbox del Workflow no importa módulos, así que hilo.js, dato.js e ideas.j
   W8 ningún gráfico del informe (salvo el adaptador _comun.js) usa helpers de la tarjeta que leen su DOM o sus variables CSS
      (H.color, H.rampa, H.rampaColor, H.halo, H.periodos, H.textoSobre, H.espacio, H.lienzo, H.leyenda,
      H.anotar, H.cabecera, H.verificar, document.getElementById)
+  W9 el bloque común (agentRol, conReparacion, avisar, verificación mecánica, rechequeo) de hilo.js, dato.js,
+     investigacion.js y video.js es copia exacta de scripts/workflow_comun.js (lo copia scripts/armar_workflows.py)
+  W10 video.js: DURACIONES, TIPOS, FORMULAS, ENLACES y PUNTAJES son espejos literales de scripts/video.py, y el
+     workflow no redefine las constantes del gate (CPS, COLA, RITMO_MAX_S, CARACTERES, DURACION_DEFECTO), que
+     viven solo en video.py
 
 Uso: python3 scripts/check_workflows.py [--quiet]   · salida 0 ok · 1 diferencias
 """
@@ -43,7 +48,7 @@ def warn(m): AVISOS.append(m)
 def fuente(nombre, opcional=False):
     ruta = os.path.join(WF, nombre)
     if not os.path.exists(ruta):
-        (warn if opcional else err)("falta %s%s" % (os.path.relpath(ruta, RAIZ), " (aún no existe: /investigacion no estará disponible)" if opcional else "")); return ""
+        (warn if opcional else err)("falta %s%s" % (os.path.relpath(ruta, RAIZ), " (aún no existe: /%s no estará disponible)" % nombre[:-3] if opcional else "")); return ""
     return open(ruta, encoding="utf-8").read()
 
 
@@ -173,7 +178,39 @@ def main():
         elif m.group(1) != MARCADOR_INFORME:
             err("W6 investigacion.js MARCADOR_INFORME %r ≠ ensamblar.MARCADOR_INFORME %r" % (m.group(1), MARCADOR_INFORME))
     graficos_informe(catalogo)
+    video_workflow()
     return fin(quiet)
+
+
+# Espejos de scripts/video.py en video.js y constantes que el workflow NO debe duplicar.
+W10_LISTAS = ("DURACIONES", "TIPOS", "FORMULAS", "ENLACES", "PUNTAJES")
+W10_PROHIBIDAS = ("CPS", "COLA", "RITMO_MAX_S", "CARACTERES", "DURACION_DEFECTO")
+
+
+def video_workflow():
+    """W10: video.js refleja las listas de scripts/video.py y no redefine las constantes del gate."""
+    vid = fuente("video.js", opcional=True)
+    if not vid:
+        return
+    try:
+        import video as VID
+    except Exception as ex:  # video.py importa numeros_es y verificacion; si está a medias, se avisa como error
+        err("W10 no se pudo importar scripts/video.py: %s" % ex)
+        return
+    for nombre in W10_LISTAS:
+        js = lista(vid, nombre)
+        if js is None:
+            err("W10 video.js: no se encontró `const %s = [...]`" % nombre)
+            continue
+        if not hasattr(VID, nombre):
+            err("W10 scripts/video.py no define %s (video.js lo espera)" % nombre)
+            continue
+        py = list(getattr(VID, nombre))
+        if js != py:
+            err("W10 video.js %s %s ≠ video.%s %s" % (nombre, js, nombre, py))
+    for nombre in W10_PROHIBIDAS:
+        if re.search(r"^const %s\b" % nombre, vid, re.M):
+            err("W10 video.js define `const %s`: las constantes del gate viven solo en scripts/video.py" % nombre)
 
 
 def graficos_informe(catalogo):
@@ -204,6 +241,17 @@ def graficos_informe(catalogo):
             m = RE_PROHIBIDO.search(linea_src)
             if m and not linea_src.lstrip().startswith("//"):
                 err("W8 %s:%d usa %s (helper de la tarjeta; en el informe se pinta con col.* y GX.*)" % (os.path.relpath(ruta, RAIZ), k, m.group(0)))
+
+    # W9 el bloque común de hilo.js, dato.js e investigacion.js es copia exacta de scripts/workflow_comun.js
+    import armar_workflows as AW
+    src = AW.bloque_fuente()
+    for w in AW.WORKFLOWS:
+        with open(os.path.join(RAIZ, ".claude", "workflows", w), encoding="utf-8") as fh:
+            p = AW.partes(fh.read())
+        if not p:
+            err("W9 %s: faltan los marcadores del bloque común (%s … %s)" % (w, AW.INI, AW.FIN))
+        elif p[1] != src:
+            err("W9 %s: el bloque común difiere de scripts/workflow_comun.js (edita ese archivo y corre python3 scripts/armar_workflows.py)" % w)
 
 
 def fin(quiet):

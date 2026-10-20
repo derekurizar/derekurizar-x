@@ -1,16 +1,19 @@
 export const meta = {
   name: 'investigacion',
-  description: 'Informe de investigación (PDF Letter) + hilo de X cuyas tarjetas son figuras del informe: encuadre → investigación ⇢ verificación por eje → guion → visuales → producción del hilo → informe (redactor) → cierre',
-  whenToUse: 'Invocado por /investigacion <tema|idea:<id>|desde:<slug>> [smoke|fixture]. args: {tema, idea, desde, desde_hilo, numero, smoke, fixture, fecha, min_tuits, permitir_fallback}. fecha (YYYY-MM-DD) y numero ("NN", de `python3 scripts/memoria.py --informes`) son obligatorios: los pone el comando. desde = slug de una sesión existente cuyo hilo ya se entregó (desde_hilo = su ruta relativa): salta a Relectura → Informe → Cierre y no re-entrega el hilo. smoke = 1 eje, 4–6 tuits, 8–12 páginas, todo en sesiones/<slug>/{salida,informe}, sin tocar memoria/. fixture = sin web, copia sesiones/_fixture (3 tuits, 6–10 páginas).',
+  description: 'Informe de investigación (PDF Letter) + hilo de X cuyas tarjetas son figuras del informe: encuadre → investigación ⇢ verificación por eje → guion → visuales → producción del hilo → informe (redactor) → revisión de justificación (revisor) → cierre',
+  whenToUse: 'Invocado por /investigacion <tema|idea:<id>|desde:<slug>> [smoke|fixture]. args: {tema, idea, desde, desde_hilo, numero, smoke, fixture, fecha, min_tuits, permitir_fallback, auditoria}. fecha (YYYY-MM-DD) y numero ("NN", de `python3 scripts/memoria.py --informes`) son obligatorios: los pone el comando. desde = slug de una sesión existente cuyo hilo ya se entregó (desde_hilo = su ruta relativa): salta a Relectura → Informe → Cierre y no re-entrega el hilo. smoke = 1 eje, 4–6 tuits, 8–12 páginas, todo en sesiones/<slug>/{salida,informe}, sin tocar memoria/. fixture = sin web, copia sesiones/_fixture (3 tuits, 6–10 páginas). auditoria = {inventario, slug, plan, ejes[{id, nombre, prefijo, compromisos[]}], capitulos[{n, titulo, pregunta, ejes[]}]}: variante que evalúa cada compromiso de un plan de gobierno (scripts/auditoria.py): un eje por grupo de compromisos, evaluacion_<eje>.json, fase Puntaje y informe de 30–140 páginas con fichas («de dónde sale cada barra») y anexo de enlaces generados.',
   phases: [
     { title: 'Encuadre', detail: 'editor: pregunta, tesis, paleta, 2–5 ejes y plan de capítulos (encuadre.informe)' },
     { title: 'Relectura', detail: 'solo desde:<slug>: el editor relee la sesión y el hilo entregado y añade encuadre.informe' },
     { title: 'Investigación', detail: 'un investigador por eje con presupuesto ampliado: series completas y desgloses' },
     { title: 'Verificación', detail: 'un verificador por eje: segunda fuente, veredicto, independencia' },
+    { title: 'Rechequeo', detail: 'verificador en modo rechequeo: en auditoría, los compromisos que mueven la conclusión antes del puntaje; después del guion, la ancla y T1' },
+    { title: 'Puntaje', detail: 'solo auditoría: auditoria.py --calcular → % por compromiso, semilla y global; cifras derivadas aud-cNN' },
     { title: 'Guion', detail: 'guionista: 6–12 tuits con giro e impacto, bloque investigacion{numero, informe_dir, capitulos[]}, cierre con [ENLACE AL INFORME]' },
     { title: 'Visuales', detail: 'visualistas en lotes de 3: materializar → gate R1–R6 → QA' },
     { title: 'Producción', detail: 'productor: ensamblar.py --check --salida investigacion/<fecha>-<slug>/hilo + coherencia C1–C8 (sin memoria todavía)' },
     { title: 'Informe', detail: 'redactor: informe.json → informe.py --check --png (I1–I7, P1–P5) en bucle, ≤ 3 corridas' },
+    { title: 'Revisión', detail: 'revisor: ¿de dónde sale cada número, barra y afirmación? (V1–V8 y los avisos R1–R6 de revision.py; auditoría: J1–J5) → el redactor corrige las faltas que bloquean, ≤ 3 vueltas' },
     { title: 'Cierre', detail: 'productor: informe.py al entregable, QA de ≤ 3 páginas, memoria.py --registrar --informe, make validate' },
   ],
 }
@@ -63,7 +66,7 @@ const PAGINAS_OBLIGATORIAS = {
 }
 // Espejo de informe.TIPOS_PAGINA (scripts/informe.py); lo vigila check_workflows W6.
 const TIPOS_PAGINA = ['portada', 'indice', 'resumen', 'tablero', 'capitulo', 'cuerpo', 'apaisada', 'cronologia', 'conclusiones', 'metodo', 'glosario', 'anexo', 'tarjetas', 'contraportada']
-const QA = { iter_informe: 3, lecturas_redactor: { normal: 6, smoke: 3, fixture: 2 }, lecturas_productor: { normal: 3, smoke: 2, fixture: 1 } }
+const QA = { vueltas_revision: 3, iter_informe: 3, lecturas_redactor: { normal: 6, smoke: 3, fixture: 2 }, lecturas_productor: { normal: 3, smoke: 2, fixture: 1 } }
 const MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'] // sin Date en el sandbox: «Mes Año» sale de args.fecha
 const TEMA_SMOKE = 'remesas familiares 2025'
 // Instrucciones del modo que viajan en los prompts (el detalle vive en referencias/roles/*.md «Modo investigación»).
@@ -73,6 +76,44 @@ const INSTR = {
   verificador: 'MODO INVESTIGACIÓN: series con cuatro puntos comprobados (primero, último y dos intermedios); desgloses: total y las tres partes mayores; cualquier discontinuidad de la serie en nota (el informe la publica entera). ',
   guionista: 'MODO INVESTIGACIÓN: el hilo es la versión corta del informe (referencias/narrativa.md «Hilo de investigación»): arco normal con giro e impacto; T1 con visual; escribe modo: "investigacion" y el bloque investigacion {numero, informe_dir, capitulos[]{n, titulo, tuits[]}} con los capítulos del encuadre (cada tuit intermedio en exactamente uno); el cierre nombra las fuentes y termina con el marcador literal [ENLACE AL INFORME] (solo ahí; el gate mide su peso con una URL en su lugar); titulares autosuficientes, fuente completa y nota con la salvedad: el redactor reutiliza las tarjetas tal cual. ',
   productor: 'MODO INVESTIGACIÓN (Producción): C1 incluye que cada tarjeta se sostiene sola (irá en el anexo del informe) y C8 que el cierre lleva [ENLACE AL INFORME]. ',
+}
+
+// Variante auditoría: instrucciones que se suman a las del modo (detalle en referencias/flujo-investigacion.md «Variante auditoría»).
+// El inicio del mandato sale de args.auditoria.mandato_inicio (por defecto el del plan auditado hasta hoy, 2024-01-14).
+const MANDATO_INI = String(((args && typeof args === 'object' && args.auditoria) || {}).mandato_inicio || '2024-01-14')
+const ANIO_INI = Number(MANDATO_INI.slice(0, 4)), ANIO_BASE = ANIO_INI - 1
+const INI_TXT = `${Number(MANDATO_INI.slice(8, 10))}-${['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'][Number(MANDATO_INI.slice(5, 7)) - 1]}-${ANIO_INI}`
+const INSTR_AUD_ATRIB = () => INSTR_AUD.atribucion
+const INSTR_AUD = {
+  atribucion:
+    `solo cuenta lo ocurrido en el mandato (desde el ${INI_TXT}): fecha_dato dentro del mandato; cada meta y monto lleva base_fecha (desde cuándo se mide el cambio); las metas se miden desde el nivel de ${ANIO_BASE} o el primer dato del mandato (base_obs con su cifra), NUNCA contra un dato anterior a ${ANIO_BASE} ni contra la base del plan; los conteos acumulados llevan base_fecha "${MANDATO_INI.slice(0, 7)}" (base_obs null o 0); los montos cuentan la ejecución desde ${ANIO_INI}; los hitos, solo hechos del mandato. Sin dato que mida dentro del mandato, no_verificable, que cuenta 0 en el puntaje.`,
+  investigador: (ses, eje, ids, fechaCorte) =>
+    `VARIANTE AUDITORÍA: tu eje evalúa ${ids.length} compromisos del plan (${ids.join(', ')}). (1) python3 scripts/auditoria.py ${ses} --eje ${eje} los lista con meta, monto, indicador y fuentes sugeridas; --plantilla ${eje} da el esqueleto de evaluacion_${eje}.json. ` +
+    `(2) Por compromiso busca el dato oficial más reciente al ${fechaCorte}: ejecución SICOIN/Minfin para montos (devengado acumulado 2024–2026 en millones de Q; 2026 a la fecha, dilo), memorias de labores, informes presidenciales al Congreso (enero 2025 y enero 2026), Segeplán, portales y comunicados institucionales, decretos y acuerdos (Congreso, Diario de Centro América) para hitos; prensa y centros de pensamiento solo si citan el documento oficial (dilo en nota). Agrupa: una misma fuente (p. ej. la ejecución por institución de SICOIN o el informe presidencial) suele servir para varios compromisos. ` +
+    `(3) Todo número que uses como observado o base_obs es una cifra de hallazgos_${eje}.json (evidencia {url, cita, archivo_local}) y va en cifra_ids; si el observado es una operación (suma de años, diferencia de matrícula frente a 2023), la cifra lleva la serie o las partes y el resumen dice la operación; --validar coteja observado y base_obs con los valores de sus cifras (redondeo, escala, operación de dos o suma de hasta cuatro) y, si no salen, exige calculo_observado / calculo_base_obs con la operación ("2108803+11000000+11000000"). Retroceso = peor que la base, aunque sea por poco; exactamente igual = no_iniciado. ` +
+    'ATRIBUCIÓN: ' + INSTR_AUD_ATRIB() + ' ' +
+    '(4) HITOS ATRIBUIBLES: fecha_dato de un hito es la fecha del HECHO del mandato que sostiene el estado (creación, aprobación, inauguración, firma), nunca la de la consulta del portal; si lo que existe se creó antes del ' + INI_TXT + ' y no hay un hecho del mandato que lo amplíe o lo cambie (seguir aplicando o seguir operando no cuenta), el estado es no_atribuible con existe_desde "<YYYY | YYYY-MM | YYYY-MM-DD>" (anterior al mandato) y nota con la fuente (cuenta 0), aunque opere hoy; igual una meta que ya se cumplía en 2023 (el script la marca sola). Estado de hitos y declarativos: cumplido (existe y opera), en_proceso (creado o aprobado y en ejecución parcial, o iniciativa con trámite real), anunciado (solo anuncio, plan o iniciativa presentada sin trámite), no_iniciado (no hay nada), incumplido (se hizo lo contrario de lo prometido), retroceso (empeoró); no_verificable SOLO si buscaste a fondo y no hay información pública (la nota dice qué buscaste): cuenta 0, así que agota fuentes (y proxies oficiales del mismo fenómeno medidos en el mandato) antes de dejarlo así. En metas y montos el script recalcula el estado. ' +
+    '(5) resumen de 20–260 caracteres, autosuficiente, con la cifra y su año, sin adjetivos ni juicios («Mineduc reporta 2,310 aulas nuevas en 2024–2025, frente a 70,000 prometidas.»); fuente corta ≤90; no inventes ni extrapoles (si el dato es de 2024, fecha_dato 2024). ' +
+    `(6) Escribe ${ses}/evaluacion_${eje}.json y corre python3 scripts/auditoria.py ${ses} --validar ${eje} hasta OK. Devuelve además evaluacion {archivo, n_compromisos, validacion, estados}. `,
+  verificador: (ses, eje, ids) =>
+    `VARIANTE AUDITORÍA: además revisa los ${ids.length} compromisos de ${ses}/evaluacion_${eje}.json (léelo: es solo tu eje) con python3 scripts/auditoria.py ${ses} --eje ${eje} al lado. Hitos y declarativos: confirma el estado con UNA fuente distinta (≤1 búsqueda y ≤1 fetch por compromiso) y que el hecho que lo sostiene es DEL MANDATO (fecha de creación o aprobación ≥ 14-ene-2024): un programa, norma o evaluación anterior que solo sigue operando se corrige a estado no_atribuible con existe_desde (fecha anterior al mandato) y nota con la fuente; si lo único del mandato es un anuncio, a anunciado. Metas y montos: comprueba que observado, base_obs, base_fecha y fecha_dato salen de cifras que verificaste, que la línea base es de 2023 o del mandato (nunca anterior) y que la operación del resumen es correcta. ` +
+    `Añade a verificacion_${eje}.json la clave "compromisos": [{"id", "veredicto": "confirmado|corregido|sin_sustento", y si corriges los campos corregidos ("estado", "observado", "base_obs", "base_fecha", "fecha_dato", "medida_usada", "resumen", "existe_desde"), "url_2", "nota"}] (uno por compromiso; NO edites evaluacion_${eje}.json) y corre python3 scripts/auditoria.py ${ses} --validar ${eje} --verificacion hasta OK. Devuelve además revision {revisados, corregidos[], sin_sustento[], validacion}. `,
+  guionista: (ses) =>
+    (REV ? `MODO REVISIÓN (${REV.motivo || 'reglas nuevas'}): ${ses}/guion.json es de la pasada anterior: escríbelo de nuevo desde --resumen y el digesto actuales; no reutilices ningún número viejo. ` : '') +
+    (pun ? `PUNTAJE VIGENTE: global ${pun.global}% (con dato ${pun.global_con_dato}%), ${pun.n_verificables}/${pun.n_unicos} verificables, ${pun.transcurrido}% del mandato. ` : '') +
+    `VARIANTE AUDITORÍA: el hilo resume la auditoría del plan. Corre python3 scripts/auditoria.py ${ses} --resumen (puntaje por semilla y compromiso; las cifras derivadas aud-cNN tienen fuente «Cálculo propio sobre el Plan de Gobierno y fuentes oficiales»). ` +
+    'El hilo resume y DESTACA (preferencia del usuario): nada de una tarjeta por semilla que repita lo mismo con otra gráfica; los generales, la mejor y la peor, datos interesantes y los retrocesos uno por uno. Pon auditoria: true en guion.investigacion (tope de 20 tuits). ' +
+    'Arco: T1 con el avance global (aud-c02) frente al mandato transcurrido (aud-c05); una tarjeta cifra grande con el % de compromisos cumplidos sin contar el avance parcial (aud-c09; no cumplidos aud-c10); el método en una línea y lo que resta la falta de datos (aud-c02 frente a aud-c03, aud-c08, aud-c07) y lo no atribuible; los compromisos por estado (aud-c04); el avance de las semillas (aud-c01, con la referencia de aud-c05); la semilla que más avanza y la que menos, con lo que las explica (sus compromisos de aud-c1N); 1–3 datos interesantes del avance (el marco fiscal aud-c21/aud-c41, el avance por tipo de compromiso aud-c22, la cobertura aud-c06…); los RETROCESOS: una tarjeta que los cuenta y UNA tarjeta por retroceso con la gráfica de sus datos reales (las cifras de sus cifra_ids: línea base de 2023 frente al último dato) y un texto que explica por qué es retroceso (si no caben todos, los de mayor caída y una lista con el resto); los incumplidos si caben; conclusiones con tarjeta; cierre. ' +
+    'Los % son derivados: su tarjeta lleva la fuente «Cálculo propio sobre el Plan de Gobierno y fuentes oficiales» y la nota dice el método en una línea. No afirmes intención ni culpa; «no verificable» cuenta 0 porque no se puede comprobar con datos oficiales: dilo así (no «incumplido» ni «no se hizo») y di que la falta de datos también pesa en el resultado; no compares con otros gobiernos. Nunca escribas «en suma». Asigna cada tuit intermedio al capítulo de su semilla (los capítulos sin tuit van con tuits: []). ',
+  redactor: (ses) =>
+    (REV ? `MODO REVISIÓN (${REV.motivo || 'reglas nuevas'}): ${ses}/informe.json es de la pasada anterior: reescribe todo texto con %, estados o método y coteja cada número con --resumen y el digesto actuales; las referencias a tarjetas del hilo cambian con el guion nuevo. ` : '') +
+    (pun ? `PUNTAJE VIGENTE: global ${pun.global}% (con dato ${pun.global_con_dato}%), ${pun.n_verificables}/${pun.n_unicos} verificables. ` : '') +
+    `VARIANTE AUDITORÍA: la exhaustividad es el encargo (todas las semillas, todos los compromisos). Insumo extra: python3 scripts/auditoria.py ${ses} --resumen --para redactor (puntaje de cada compromiso con cifras, fuente y resumen). ` +
+    'Estructura: portada (cifra aud-c02) · índice · resumen (aud-c02, aud-c05, aud-c08 y los cumplidos de aud-c04) · tablero (6 cifras) · cuerpo «Cómo medimos» (meta = logrado ÷ meta o desde la línea base; monto = ejecutado ÷ prometido; hito 0/25/50/100; tendencia ≥10 % = 100; no verificable (sin dato oficial, sin línea base atribuible o con su cifra sin confirmar) cuenta 0, y aparte se publican el avance con dato (aud-c03) y los puntos que restan (aud-c08); no atribuible (existía o ya se cumplía antes del ' + INI_TXT + ' y solo se sostiene) cuenta 0 y sí entra en el avance con dato; atribución: línea base de 2023 o del inicio del mandato, nunca anterior; montos desde 2024; hitos por hechos del mandato; espejos; ritmo frente al mandato transcurrido; semilla = promedio simple, global = promedio de las semillas, marco fiscal aparte; figura barras_h con aud-c01) · ' +
+    'un capítulo por semilla en el orden del plan: página capitulo (banda o destacado) con lo prometido, el % de la semilla y su lectura; ≥1 cuerpo con figura papel barras_h de aud-c1N (items = partes de aud-c1N por nombre, tal cual) y figuras de las series reales de sus ejes donde las haya; luego {"tipo": "cuerpo", "auto": "fichas:<N>"} (las tablas de fichas las genera el script; el capítulo del marco fiscal usa fichas:F) · ' +
+    'conclusiones con titulo «Conclusiones» (nunca «En suma», ni como título ni en el texto; un hallazgo por semilla; no_afirma: «no verificable» cuenta 0 por falta de dato oficial pero no afirma que no se hizo nada, los % no miden impacto ni calidad del gasto) · metodo (las cifras de las figuras; si no caben, una segunda metodo con fuentes: false) · glosario · {"tipo": "anexo", "auto": "evidencias:todas"} · tarjetas · contraportada. ' +
+    `Corre python3 scripts/auditoria.py ${ses} --insertar ${ses}/informe.json ANTES de cada informe.py --check (idempotente; no edites a mano las páginas con "auto"; si P2 salta en una, pon "lineas" menor en su placeholder). Las páginas fichas cuentan en capitulos[].paginas y sus tablas en n_tablas. ` +
+    `JUSTIFICACIÓN (lo revisa después el informe-revisor, V1–V8): las fichas («de dónde sale cada barra») dan por compromiso el hallazgo, la fuente y el cálculo, y --insertar remite cada gráfico a ellas; además el TEXTO de cada capítulo explica los compromisos que pesan (cada cumplido, cada retroceso o incumplido, los ceros sin dato y todo hito en proceso o anunciado que nombres: qué hecho y cuándo) y todo % dice de qué es y cómo sale. Antes de devolver, python3 scripts/auditoria.py ${ses} --justificar ${ses}/informe.json debe salir OK (J1–J5). `,
 }
 
 // Peso de un texto según X (copia de scripts/contar_x.js: el sandbox no importa).
@@ -126,33 +167,100 @@ const desdeHilo = String(A.desde_hilo || '').replace(/\/$/, '')
 if (desde && fixture) throw new Error('desde:<slug> no se combina con fixture.')
 if (desde && !/^(hilos|investigacion)\/\d{4}-\d{2}-\d{2}-[a-z0-9-]+(\/hilo)?$/.test(desdeHilo)) throw new Error('args.desde_hilo debe ser la ruta relativa del hilo ya entregado (hilos/<fecha>-<slug> o investigacion/<fecha>-<slug>/hilo).')
 const modo = fixture ? 'fixture' : smoke ? 'smoke' : 'normal'
+// Variante auditoría (args.auditoria): cada compromiso de un plan de gobierno se evalúa y puntúa con scripts/auditoria.py
+// (guía: referencias/flujo-investigacion.md «Variante auditoría»). Solo en modo normal.
+const AUD = A.auditoria && typeof A.auditoria === 'object' && Array.isArray(A.auditoria.ejes) && A.auditoria.ejes.length ? A.auditoria : null
+if (AUD && (smoke || desde)) throw new Error('args.auditoria solo corre en modo normal (sin smoke, fixture ni desde).')
+if (AUD && !/^investigacion\/auditorias\/[a-z0-9-]+\/compromisos\.json$/.test(String(AUD.inventario || ''))) throw new Error('args.auditoria.inventario debe ser investigacion/auditorias/<plan>/compromisos.json')
+if (AUD && !/^[a-z0-9-]+$/.test(String(AUD.slug || ''))) throw new Error('args.auditoria.slug (minúsculas y guiones) es obligatorio')
+if (AUD && !(Array.isArray(AUD.capitulos) && AUD.capitulos.length)) throw new Error('args.auditoria.capitulos[] es obligatorio (un capítulo por semilla)')
+const AUD_LIM = { paginas: [30, 140], figuras: 12, tablas: 11, iter: 6, lecturas: 10 }
+// Revisión (args.auditoria.revision {motivo, ids: {<eje>: [compromisos a reinvestigar]}}): rehace una auditoría sobre su
+// sesión existente: cada eje corrige y amplía evaluacion/hallazgos/verificacion en su lugar; luego Puntaje → … → Cierre.
+const REV = AUD && AUD.revision && typeof AUD.revision === 'object' ? AUD.revision : null
+if (REV && !(REV.ids && typeof REV.ids === 'object')) throw new Error('args.auditoria.revision.ids debe ser {<eje>: [ids]}')
+const revIds = (eje) => (REV && REV.ids[eje.id]) || []
+const topesRev = (eje) => { const n = revIds(eje).length; return { busquedas: Math.min(36, 6 + 3 * n), fetch: Math.min(36, 6 + 3 * n), cifras: Math.min(24, 4 + 2 * n) } }
+const topesEje = (eje) => {
+  if (!AUD) return T
+  const n = ((AUD.ejes.find((e) => e.id === eje.id) || {}).compromisos || []).length || 10
+  return { busquedas: Math.min(36, 8 + 2 * n), fetch: Math.min(40, 10 + 2 * n), cifras: Math.min(40, 8 + 2 * n), series: 6, desgloses: 4 }
+}
 const modoPost = 'investigacion'
 const MP = MODOS.investigacion
 const T = TOPES[smoke ? 'smoke' : 'normal']
 const minT = Math.min(MP.max, Math.max(MP.min, parseInt(A.min_tuits, 10) || MP.min))
 const minN = fixture ? 3 : smoke ? 4 : minT
-const maxN = fixture ? 4 : smoke ? 6 : MP.max
-const [minPag, maxPag] = PAGINAS[modo]
+const maxN = fixture ? 4 : smoke ? 6 : AUD ? 20 : MP.max // auditoría: espejo de ensamblar.MAX_TUITS_AUDITORIA
+const [minPag, maxPag] = AUD ? AUD_LIM.paginas : PAGINAS[modo]
+const minCap = AUD ? AUD.capitulos.length : MIN_CAPITULOS[modo]
+const maxCap = AUD ? AUD.capitulos.length : MAX_CAPITULOS[modo]
+const minFig = AUD ? AUD_LIM.figuras : MIN_FIGURAS[modo]
+const minTab = AUD ? AUD_LIM.tablas : MIN_TABLAS[modo]
+const iterInf = AUD ? AUD_LIM.iter : QA.iter_informe
 const mesAnio = (() => { const m = MESES[parseInt(fecha.slice(5, 7), 10) - 1] || ''; return m.charAt(0).toUpperCase() + m.slice(1) + ' ' + fecha.slice(0, 4) })()
 // Idea del banco (ideas/banco.json): la resuelve /investigacion en el preflight y llega como id.
 const idea = /^[a-z0-9-]+$/.test(String(A.idea || '')) ? String(A.idea) : null
+// <comun> generado por scripts/armar_workflows.py desde scripts/workflow_comun.js: no editar aquí
+// Código común de los workflows hilo.js, dato.js, investigacion.js y video.js (el sandbox de Workflow no importa módulos).
+// Fuente ÚNICA: este archivo. scripts/armar_workflows.py lo copia entre los marcadores de bloque común
+// de cada workflow; scripts/check_workflows.py (W9) falla si una copia difiere.
+// Requiere en el workflow, antes del bloque: `A` (args), `meta` y un esquema `S.rechequeo`.
 const fail = (msg) => { throw new Error(msg) }
 // Los avisos del workflow viajan también en el retorno (el journal no conserva los log()).
 const AVISOS_WF = []
 const avisar = (m) => { AVISOS_WF.push(String(m)); log(m) }
 
-// Los roles viven en .claude/agents/ (hilo-* e informe-redactor) y se registran al arrancar la sesión.
-// Si no existen todavía se falla con instrucciones claras; solo con args.permitir_fallback se degrada a general-purpose.
+// Los roles viven en .claude/agents/ (hilo-*, informe-*) y se registran al arrancar la
+// sesión. Si no existen todavía se falla con instrucciones claras: correr todo
+// en general-purpose es caro, ignora los modelos por rol y rompe la caché de
+// resume. Solo con args.permitir_fallback se degrada a general-purpose.
 const agentRol = async (prompt, opts) => {
   try {
     return await agent(prompt, opts)
   } catch (e) {
     if (!opts || !opts.agentType || !/agent type .* not found/i.test(String(e && e.message))) throw e
-    if (!A.permitir_fallback) fail(`El agente ${opts.agentType} no está registrado en esta sesión (los .claude/agents/ se cargan al arrancar). Reinicia Claude Code y vuelve a lanzar /investigacion, o pasa args.permitir_fallback: true para correr con general-purpose.`)
+    if (!A.permitir_fallback) fail(`El agente ${opts.agentType} no está registrado en esta sesión (los .claude/agents/ se cargan al arrancar). Reinicia Claude Code y vuelve a lanzar /${meta.name}, o pasa args.permitir_fallback: true para correr con general-purpose.`)
     avisar(`AVISO: ${opts.agentType} no registrado; se usa general-purpose (permitir_fallback).`)
     const { agentType, ...resto } = opts
     return agent(`Asume el rol definido en .claude/agents/${agentType}.md: léelo primero y sigue sus instrucciones y sus límites. ` + prompt, { ...resto, agentType: 'general-purpose' })
   }
+}
+
+// Verificación mecánica (scripts/verificacion.py V-A–V-E): forma única del veredicto, cierre que el verificador
+// corre antes de devolver y una vuelta de reparación si quedan fallas; lo que siga fallando no se usa.
+const FORMA_ITEM = '{"id", "veredicto": "verificada|ajustada|no_confirmada", "valor_final", "fuente_2", "url_2", "independencia": "alta|baja", "calculo"?, "serie_final"?, "partes_final"?, "nota"}'
+const cierreVer = (ses, eje) =>
+  `ANTES DE DEVOLVER corre python3 scripts/verificacion.py ${ses} --eje ${eje} y corrige cada FALLA: V-A, que la cita contenga el número o, si es derivado, «calculo» con la operación (p. ej. "(188442390/226077000-1)*100"); V-B, serie_final/partes_final con los puntos corregidos de una ajustada; V-C, independencia alta|baja (alta nunca con url_2 del mismo dominio que la primaria). Si no puedes, marca la cifra no_confirmada. Devuelve fallas_mecanicas[] con los ids que sigan fallando (vacío si 0). `
+async function conMecanico(v, prompt, opts, ses, eje) {
+  if (!v || !(v.fallas_mecanicas || []).length) return v
+  avisar(`${eje}: verificacion.py deja ${v.fallas_mecanicas.length} falla(s) (${v.fallas_mecanicas.join(', ')}) → una vuelta de reparación.`)
+  const r = await agentRol(`${prompt} REPARACIÓN: verificacion_${eje}.json ya existe; no repitas la verificación. Corre python3 scripts/verificacion.py ${ses} --eje ${eje} y corrige solo ${v.fallas_mecanicas.join(', ')} (o márcalas no_confirmada); devuelve el retorno completo del eje.`, { ...opts, label: `${opts.label}-mecanico` })
+  const w = r || v
+  const quedan = new Set(w.fallas_mecanicas || [])
+  if (quedan.size) {
+    avisar(`AVISO: ${eje}: ${[...quedan].join(', ')} siguen sin pasar verificacion.py; no se usan.`)
+    w.ok = w.ok.filter((it) => !quedan.has(it.id))
+    w.no_confirmadas = [...new Set([...(w.no_confirmadas || []), ...quedan])]
+  }
+  return w
+}
+
+// Rechequeo adversarial (referencias/roles/verificador.md «Rechequeo»): una invocación tras el guion sobre las
+// pocas cifras que sostienen la conclusión; las que «caen» vuelven al guionista para quitarlas.
+async function rechequear(ses, ids, extra, presupuesto) {
+  if (!ids.length) return { items: [] }
+  const r = await agentRol(
+    `Eres el verificador en MODO RECHEQUEO (lee referencias/roles/verificador.md, sección «Rechequeo»). Sesión: ${ses}. ` +
+      `Cifras que sostienen la conclusión: ${ids.join(', ')} (python3 scripts/digesto.py ${ses} --para verificador y --serie <id>; python3 scripts/verificacion.py ${ses} para sus avisos; no leas los JSON enteros). ${extra || ''}` +
+      'Para cada una, ¿por qué podría estar mal? (definición o categoría distinta entre la base y el dato actual, periodo o universo mezclado, cifra preliminar revisada, segunda fuente que copia la primera). Busca una fuente de independencia alta si no la hay. ' +
+      `Presupuesto: ${presupuesto}. No reescribas verificacion_*.json. Escribe ${ses}/rechequeo.json {"items": [{"id", "veredicto": "sostiene|matizar|caer", "motivo", "fuente"?, "url"?}]} y devuelve el mismo contenido.`,
+    { agentType: 'hilo-verificador', schema: S.rechequeo, phase: 'Rechequeo', label: 'rechequeo' }
+  )
+  if (!r) { avisar('AVISO: el rechequeo no terminó; sigue la verificación de la primera pasada.'); return { items: [] } }
+  const caen = r.items.filter((x) => x.veredicto === 'caer').map((x) => x.id)
+  avisar(`Rechequeo: ${r.items.length} cifra(s) · ${caen.length} caen${caen.length ? ' (' + caen.join(', ') + ')' : ''} · ${r.items.filter((x) => x.veredicto === 'matizar').length} a matizar`)
+  return r
 }
 
 // Bucle de reparación: valida el retorno y reinvoca con la lista de fallos.
@@ -167,6 +275,7 @@ async function conReparacion(etiqueta, invocar, validar, max = 2) {
   }
   fail(`${etiqueta} rechazado tras ${max} reparaciones:\n - ${fallos.join('\n - ')}`)
 }
+// </comun>
 
 // ── Schemas de retorno ─────────────────────────────────────────────────────
 const INFORME_PLAN = {
@@ -174,7 +283,7 @@ const INFORME_PLAN = {
   properties: {
     numero: { type: 'string', pattern: '^\\d{2}$' },
     capitulos: {
-      type: 'array', minItems: 1, maxItems: 5,
+      type: 'array', minItems: 1, maxItems: AUD ? 14 : 5,
       items: { type: 'object', required: ['n', 'titulo', 'ejes'], properties: { n: { type: 'string', pattern: '^\\d{2}$' }, titulo: { type: 'string', maxLength: 60 }, pregunta: { type: 'string' }, ejes: { type: 'array', minItems: 1, items: { type: 'string' } } } },
     },
   },
@@ -208,7 +317,7 @@ const S = {
       idea_id: { type: ['string', 'null'] },
       modo: { type: 'string', enum: ['investigacion'] },
       ejes: {
-        type: 'array', minItems: 1, maxItems: 5,
+        type: 'array', minItems: 1, maxItems: AUD ? 14 : 5,
         items: {
           type: 'object', required: ['id', 'brief'],
           properties: {
@@ -242,7 +351,7 @@ const S = {
     properties: {
       eje: { type: 'string' }, archivo: { type: 'string' }, n_busquedas: { type: 'number' }, n_fetch: { type: 'number' },
       cifras: {
-        type: 'array', maxItems: 16,
+        type: 'array', maxItems: AUD ? 60 : 16,
         items: {
           type: 'object', required: ['id', 'tipo'],
           properties: {
@@ -252,6 +361,16 @@ const S = {
         },
       },
       vacios: { type: 'array', items: { type: 'string' } },
+      nuevas: { type: 'array', items: { type: 'string' } }, revisados: { type: 'array', items: { type: 'string' } },
+      evaluacion: { type: 'object', properties: { archivo: { type: 'string' }, n_compromisos: { type: 'integer' }, validacion: { type: 'string', enum: ['ok', 'falla'] }, estados: { type: 'object' } } },
+    },
+  },
+  rechequeo: {
+    type: 'object',
+    required: ['items'],
+    properties: {
+      archivo: { type: 'string' },
+      items: { type: 'array', items: { type: 'object', required: ['id', 'veredicto', 'motivo'], properties: { id: { type: 'string' }, veredicto: { type: 'string', enum: ['sostiene', 'matizar', 'caer'] }, motivo: { type: 'string' }, fuente: { type: 'string' }, url: { type: 'string' } } } },
     },
   },
   verificacion: {
@@ -261,6 +380,20 @@ const S = {
       eje: { type: 'string' }, archivo: { type: 'string' },
       ok: { type: 'array', items: { type: 'object', required: ['id'], properties: { id: { type: 'string' }, valor_final: { type: 'number' }, independencia: { type: 'string', enum: ['alta', 'baja'] } } } },
       no_confirmadas: { type: 'array', items: { type: 'string' } },
+      fallas_mecanicas: { type: 'array', items: { type: 'string' } },
+      revision: { type: 'object', properties: { revisados: { type: 'integer' }, corregidos: { type: 'array', items: { type: 'string' } }, sin_sustento: { type: 'array', items: { type: 'string' } }, validacion: { type: 'string', enum: ['ok', 'falla'] } } },
+    },
+  },
+  puntaje: {
+    type: 'object',
+    required: ['global', 'global_con_dato', 'transcurrido', 'corte', 'n_compromisos', 'n_unicos', 'n_verificables', 'estados', 'semillas', 'cifras_aud', 'ejes_sin_evaluacion'],
+    properties: {
+      global: { type: ['number', 'null'] }, global_con_dato: { type: ['number', 'null'] }, global_compromisos: { type: ['number', 'null'] },
+      transcurrido: { type: 'number' }, corte: { type: 'string' }, fiscal: { type: ['number', 'null'] },
+      n_compromisos: { type: 'integer' }, n_unicos: { type: 'integer' }, n_verificables: { type: 'integer' }, estados: { type: 'object' },
+      semillas: { type: 'array', items: { type: 'object', required: ['id', 'avance'], properties: { id: { type: ['integer', 'string'] }, avance: { type: ['number', 'null'] }, con_dato: { type: ['number', 'null'] }, n: { type: 'integer' }, verificables: { type: 'integer' } } } },
+      cifras_aud: { type: 'array', items: { type: 'string' } },
+      ejes_sin_evaluacion: { type: 'array', items: { type: 'string' } },
     },
   },
   guion: {
@@ -343,6 +476,26 @@ const S = {
       avisos: { type: 'array', items: { type: 'string' } },
     },
   },
+  revision: {
+    type: 'object',
+    required: ['archivo', 'vuelta', 'veredicto', 'revisadas', 'bloqueantes', 'faltas'],
+    properties: {
+      archivo: { type: 'string', pattern: 'revision_informe\\.json$' }, vuelta: { type: 'integer' },
+      veredicto: { type: 'string', enum: ['ok', 'reparar'] }, revisadas: { type: 'integer' },
+      bloqueantes: { type: 'integer' }, mejoras: { type: 'integer' },
+      faltas: {
+        type: 'array',
+        items: {
+          type: 'object', required: ['pagina', 'regla', 'gravedad', 'detalle', 'arreglo'],
+          properties: {
+            n: { type: 'integer' }, pagina: { type: 'integer' }, donde: { type: 'string' },
+            regla: { type: 'string', pattern: '^(V[1-8]|R[1-6]|J[1-5])$' },
+            gravedad: { type: 'string', enum: ['bloquea', 'mejora'] }, detalle: { type: 'string' }, arreglo: { type: 'string' },
+          },
+        },
+      },
+    },
+  },
   cierre: {
     type: 'object',
     required: ['ruta', 'ruta_informe', 'pdf', 'n_paginas', 'registro_id', 'estado', 'gates'],
@@ -378,7 +531,7 @@ const validarPlan = (inf, ejes) => {
   if (!inf) { F.push('falta informe {numero, capitulos[]}'); return F }
   if (inf.numero !== numero) F.push(`informe.numero ${inf.numero} ≠ ${numero} (el número lo da la directiva)`)
   const caps = inf.capitulos || []
-  if (caps.length < MIN_CAPITULOS[modo] || caps.length > MAX_CAPITULOS[modo]) F.push(`${caps.length} capítulos (deben ser ${MIN_CAPITULOS[modo]}–${MAX_CAPITULOS[modo]} en ${modo})`)
+  if (caps.length < minCap || caps.length > maxCap) F.push(`${caps.length} capítulos (deben ser ${minCap}–${maxCap} en ${modo})`)
   const ids = new Set((ejes || []).map((e) => e.id))
   for (const c of caps) for (const e of c.ejes || []) if (ids.size && !ids.has(e)) F.push(`capítulo ${c.n}: eje ${e} no existe (hay ${[...ids].join(', ')})`)
   const ns = caps.map((c) => c.n)
@@ -396,6 +549,17 @@ if (!desde) {
     fixture
       ? `Eres el editor del flujo /investigacion (lee referencias/roles/editor.md, «Modo fixture» y «Modo investigación»). MODO FIXTURE: copia sesiones/_fixture a sesiones/fixture-${fecha.replace(/-/g, '')} con cp -R, ` +
         `edita el encuadre.json copiado poniendo fixture:true, smoke:true, fecha "${fecha}", sesion_dir "sesiones/fixture-${fecha.replace(/-/g, '')}", modo: "investigacion" e informe: {numero: "${numero}", capitulos: [{n: "01", titulo: "Del crudo al tanque", pregunta: "¿Cuánto subió el combustible?", ejes: ["precios"]}]}, y devuélvelo tal cual.`
+      : REV
+      ? `Eres el editor del flujo /investigacion en VARIANTE AUDITORÍA, MODO REVISIÓN: la sesión sesiones/${AUD.slug} ya existe. No crees, copies ni edites nada. ` +
+        `Lee sesiones/${AUD.slug}/encuadre.json y devuélvelo tal cual (mismos campos y valores; no abras otros archivos).`
+      : AUD
+      ? `Eres el editor del flujo /investigacion en VARIANTE AUDITORÍA (lee referencias/roles/editor.md «Modo investigación» y referencias/flujo-investigacion.md «Variante auditoría»). ` +
+        `Tema: "${tema}". Fecha: ${fecha}. Número del informe: ${numero}. MODO DEL POST: investigacion. Se audita el cumplimiento de: ${AUD.plan || AUD.inventario}. ` +
+        `(1) mkdir -p sesiones/${AUD.slug} && cp ${AUD.inventario} sesiones/${AUD.slug}/compromisos.json (slug "${AUD.slug}", sesion_dir "sesiones/${AUD.slug}"). ` +
+        `(2) Los ejes son EXACTAMENTE estos ${AUD.ejes.length} (id = prefijo): ${AUD.ejes.map((e) => `${e.id} «${e.nombre}» (${e.compromisos.length} compromisos)`).join(' · ')}. Para cada eje corre python3 scripts/auditoria.py sesiones/${AUD.slug} --eje <id> (no abras compromisos.json entero) y escribe brief (qué compromisos evalúa y con qué indicadores y fuentes), preguntas (3–6) y fuentes_sugeridas (python3 scripts/fuentes.py --tema "…" y las del inventario). ` +
+        `(3) informe {numero: "${numero}", capitulos} con EXACTAMENTE estos capítulos: ${JSON.stringify(AUD.capitulos)}. ` +
+        '(4) pregunta, tesis_provisional falsable y neutra (sin calificar al gobierno), ángulo; paleta neutra (no la del partido: evita cielo y jade); necesita_serie true; idea_id null; smoke false; modo "investigacion". ' +
+        `Lee memoria/hilos.json solo para repetido y hook_evitar. Escribe sesiones/${AUD.slug}/encuadre.json completo con fecha "${fecha}" y devuélvelo.`
       : `Eres el editor del flujo /investigacion (lee referencias/roles/editor.md y referencias/contrato-sesion.md «Sesión investigación»). ` +
         `Tema: ${tema ? `"${tema}"` : '(no dado: elige uno de actualidad con datos duros y series largas)'}. Fecha: ${fecha}. Número del informe: ${numero}. MODO DEL POST: investigacion. ` + INSTR.editor +
         (idea ? `IDEA DEL BANCO: corre python3 scripts/ideas.py --ver ${idea} (no abras ideas/banco.json) y parte de su pregunta, ángulo, hook_sugerido, paleta_sugerida y datos; pon idea_id: "${idea}" en encuadre.json y en tu retorno. ` : 'idea_id: null. ') +
@@ -408,6 +572,15 @@ if (!desde) {
   if (!enc.sesion_dir || !enc.ejes || !enc.ejes.length) fail('Encuadre incompleto: hacen falta sesion_dir y ejes.')
   if (!fixture && smoke && enc.ejes.length !== 1) fail(`Smoke exige exactamente 1 eje (hay ${enc.ejes.length}).`)
   if (!fixture && !smoke && enc.ejes.length < 2) fail('Modo normal exige ≥2 ejes.')
+  if (AUD) {
+    const esp = AUD.ejes.map((e) => e.id).join(',')
+    const lleg = enc.ejes.map((e) => e.id).join(',')
+    if (esp !== lleg) fail(`Auditoría: los ejes deben ser exactamente ${esp} (llegaron ${lleg}).`)
+    for (const e of enc.ejes) if (prefijoDe(e) !== String(AUD.ejes.find((x) => x.id === e.id).prefijo)) fail(`Auditoría: el eje ${e.id} debe tener prefijo ${AUD.ejes.find((x) => x.id === e.id).prefijo}.`)
+    if (enc.sesion_dir !== `sesiones/${AUD.slug}`) fail(`Auditoría: sesion_dir debe ser sesiones/${AUD.slug} (llegó ${enc.sesion_dir}).`)
+    const capEsp = AUD.capitulos.map((c) => c.n).join(',')
+    if (enc.informe.capitulos.map((c) => c.n).join(',') !== capEsp) fail(`Auditoría: los capítulos deben ser ${capEsp}.`)
+  }
   {
     const pref = enc.ejes.map(prefijoDe)
     if (new Set(pref).size !== pref.length) fail(`Prefijos de eje repetidos (${pref.join(', ')}): cada eje necesita un prefijo de 3 letras único.`)
@@ -425,7 +598,7 @@ if (!desde) {
   const rl = await agentRol(
     `Eres el editor del flujo /investigacion en «Modo desde» (lee referencias/roles/editor.md, «Modo desde»). Sesión: ${sesionDesde}; hilo ya entregado en ${desdeHilo} (lee su hilo.json: tuits con imagen, plantilla, cifra_ids, titular; no lo modifiques). ` +
       `Número del informe: ${numero}. Fecha del informe: ${fecha}. Corre python3 scripts/digesto.py ${sesionDesde} --para guionista --solo-ok para los ids ok (no leas hallazgos_*.json ni verificacion_*.json enteros). ` +
-      `Diseña informe {numero: "${numero}", capitulos[${MIN_CAPITULOS[modo]}–${MAX_CAPITULOS[modo]}]{n, titulo ≤60, pregunta, ejes[]}} agrupando los tuits por eje o tema y AÑÁDELO a ${sesionDesde}/encuadre.json sin cambiar ningún otro campo. ` +
+      `Diseña informe {numero: "${numero}", capitulos[${minCap}–${maxCap}]{n, titulo ≤60, pregunta, ejes[]}} agrupando los tuits por eje o tema y AÑÁDELO a ${sesionDesde}/encuadre.json sin cambiar ningún otro campo. ` +
       `Devuelve slug "${desde}", sesion_dir "${sesionDesde}", tema, tesis (la del guion), paleta, hook_tipo, modo_hilo, ruta_hilo "${desdeHilo}", fecha_hilo, n_tuits, tuits[]{n, beat, imagen, plantilla, cifra_ids, titular}, ok_ids[], no_afirma[] e informe.`,
     { agentType: 'hilo-editor', schema: S.relectura, label: 'relectura' }
   )
@@ -448,31 +621,68 @@ if (!desde) {
 const slug = enc.slug
 const entregable = smoke ? null : entregableDe(slug)
 const informeDir = smoke ? enc.sesion_dir : entregable
-const lecturasRed = QA.lecturas_redactor[modo], lecturasProd = QA.lecturas_productor[modo]
+const lecturasRed = AUD ? AUD_LIM.lecturas : QA.lecturas_redactor[modo], lecturasProd = QA.lecturas_productor[modo]
 
 if (!desde && !fixture) {
   // ── FASE 2: INVESTIGACIÓN ⇢ VERIFICACIÓN (pipeline por eje, sin barrera) ──
-  const investigar = (eje) =>
+  const idsDe = (eje) => (AUD ? (AUD.ejes.find((e) => e.id === eje.id) || {}).compromisos || [] : [])
+  const investigarRev = (eje) => { const T = topesRev(eje), ses = enc.sesion_dir, ids = revIds(eje); return agentRol(
+    `Eres el investigador del eje "${eje.id}" en MODO REVISIÓN de una auditoría ya hecha (lee referencias/roles/investigador.md «Modo investigación» y referencias/flujo-investigacion.md «Variante auditoría», «Revisión»). Sesión: ${ses}. ` +
+      `Ya existen evaluacion_${eje.id}.json, hallazgos_${eje.id}.json y verificacion_${eje.id}.json de la primera pasada: no los rehagas desde cero; corrígelos y amplíalos en su lugar. Motivo de la revisión: ${REV.motivo || 'reglas nuevas de atribución y puntaje'}. ` +
+      `Reglas (las aplica python3 scripts/auditoria.py ${ses} --validar ${eje.id}): ${INSTR_AUD.atribucion} ` +
+      `TAREAS: (1) corre --validar ${eje.id}: añade base_fecha a cada meta y monto (sale de la evidencia que ya tienes; dilo en nota) y corrige observado y base_obs donde la comparación partía de antes de 2023 o de la base del plan (busca el nivel de 2023 o el primer dato del mandato, como cifra nueva). ` +
+      `(2) Reinvestiga a fondo ${ids.length ? `estos compromisos: ${ids.join(', ')} (los no_verificable de la primera pasada y los que se medían contra una base anterior a 2023 o la del plan)` : 'solo lo que --validar marque'}. ` +
+      'Para cada uno agota fuentes antes de dejarlo no_verificable: SICOIN/Minfin (ejecución por programa y actividad, metas físicas), informes presidenciales al Congreso (enero de 2025 y de 2026), memorias de labores 2024 y 2025 del ministerio, información pública de oficio (Ley de Acceso, art. 10), Segeplán (SIPLAN, SNIP), Guatecompras, INE, Banguat, SAT, registros administrativos (MSPAS/SIGSA, Mineduc), encuestas nacionales recientes, y prensa o centros de pensamiento que citen el documento oficial (dilo en nota). ' +
+      'Si el indicador del plan no se mide desde 2023, busca un indicador oficial del mismo fenómeno medido dentro del mandato y dilo en el resumen; si tampoco hay, no_verificable con la nota de lo que buscaste. ' +
+      `(3) Cifras nuevas: AÑÁDELAS a hallazgos_${eje.id}.json con ids que sigan la numeración (${prefijoDe(eje)}-cNN mayor que el último), con evidencia {url, cita, archivo_local}; no borres ni renumeres las existentes. ` +
+      `(4) Escribe evaluacion_${eje.id}.json corregido (resumen y nota al día: nunca una comparación contra un dato anterior a 2023) y corre --validar ${eje.id} hasta OK. ` +
+      `PRESUPUESTO de la revisión: ≤${T.busquedas} búsquedas, ≤${T.fetch} fetch, ≤${T.cifras} cifras nuevas. Sin Playwright MCP. ` +
+      `Devuelve el resumen de hallazgos_${eje.id}.json COMPLETO (todas las cifras, viejas y nuevas: id, tipo, n_puntos; n_busquedas y n_fetch de esta revisión), nuevas[] (ids de cifras nuevas o cambiadas), revisados[] (compromisos que cambiaste) y evaluacion {archivo, n_compromisos, validacion, estados}.`,
+    { agentType: 'hilo-investigador', schema: S.hallazgos, phase: 'Investigación', label: `revisar-${eje.id}` }
+  ) }
+  const investigar = (eje) => { if (REV) return investigarRev(eje); const T = topesEje(eje); return (
     agentRol(
       `Eres el investigador del eje "${eje.id}" (lee referencias/roles/investigador.md «Modo investigación» y referencias/contrato-sesion.md). Sesión: ${enc.sesion_dir} ` +
         `(lee encuadre.json: tu brief, preguntas y fuentes_sugeridas). Prefijo de ids: "${prefijoDe(eje)}-cNN". ` + INSTR.investigador +
         `PRESUPUESTO: ≤${T.busquedas} búsquedas, ≤${T.fetch} fetch, ≤${T.cifras} cifras, ≤${T.series} series; cada cifra con evidencia {url, cita, archivo_local}. ` +
+        (AUD ? INSTR_AUD.investigador(enc.sesion_dir, eje.id, idsDe(eje), fecha) : '') +
         `Sin Playwright MCP. Escribe ${enc.sesion_dir}/hallazgos_${eje.id}.json completo y devuelve solo el resumen (ids, tipo, n_puntos).`,
       { agentType: 'hilo-investigador', schema: S.hallazgos, phase: 'Investigación', label: `investigar-${eje.id}` }
-    )
+    )) }
   const verificar = async (h, eje) => {
     if (!h) { ejesCaidos.push(eje.id); return null }
-    if (h.n_busquedas > T.busquedas || (h.n_fetch || 0) > T.fetch || h.cifras.length > T.cifras) avisar(`AVISO: ${eje.id} excedió el presupuesto (${h.n_busquedas} búsquedas, ${h.n_fetch || '?'} fetch, ${h.cifras.length} cifras).`)
-    const prompt =
-      `Eres el verificador del eje "${eje.id}" (lee referencias/roles/verificador.md «Modo investigación»). Sesión: ${enc.sesion_dir}. ` +
+    const T = topesEje(eje)
+    if (AUD) {
+      const ev = h.evaluacion || {}
+      if (ev.validacion !== 'ok') avisar(`AVISO: ${eje.id}: evaluacion_${eje.id}.json no pasó auditoria.py --validar (${ev.validacion || 'sin dato'}); el puntaje marcará no_verificable lo que falte.`)
+      if (ev.n_compromisos !== idsDe(eje).length) avisar(`AVISO: ${eje.id}: ${ev.n_compromisos} compromisos evaluados de ${idsDe(eje).length}.`)
+    }
+    if (REV) {
+      const TR = topesRev(eje)
+      if (h.n_busquedas > TR.busquedas || (h.n_fetch || 0) > TR.fetch || (h.nuevas || []).length > TR.cifras) avisar(`AVISO: revisión de ${eje.id} excedió el presupuesto (${h.n_busquedas} búsquedas, ${h.n_fetch || '?'} fetch, ${(h.nuevas || []).length} cifras nuevas).`)
+    } else if (h.n_busquedas > T.busquedas || (h.n_fetch || 0) > T.fetch || h.cifras.length > T.cifras) avisar(`AVISO: ${eje.id} excedió el presupuesto (${h.n_busquedas} búsquedas, ${h.n_fetch || '?'} fetch, ${h.cifras.length} cifras).`)
+    const formaVer = `{"eje": "${eje.id}", "items": [${FORMA_ITEM}]${AUD ? ', "compromisos": [...]' : ''}}`
+    const prompt = REV
+      ? `Eres el verificador del eje "${eje.id}" en MODO REVISIÓN (lee referencias/roles/verificador.md «Modo investigación»). Sesión: ${enc.sesion_dir}. verificacion_${eje.id}.json ya tiene los veredictos de la primera pasada: consérvalos. ` +
+        `(1) Verifica SOLO las cifras nuevas o cambiadas: ${(h.nuevas || []).join(', ') || '(ninguna)'} (python3 scripts/digesto.py ${enc.sesion_dir} --eje ${eje.id} --para verificador; no leas hallazgos enteros): parte de la cita y del archivo local; una segunda fuente por cifra; ≤2 fetch por cifra; sus items reemplazan a los de mismo id en verificacion_${eje.id}.json. ` +
+        `(2) Revisa de nuevo los compromisos cambiados (${(h.revisados || []).join(', ') || 'ninguno'}): base_fecha de 2023 o del mandato (nunca anterior), observado, base_obs y la operación; reemplaza su entrada en "compromisos" (confirmado | corregido, que puede traer base_fecha | sin_sustento). En los demás compromisos comprueba solo que su base_fecha corresponda a su evidencia (sin búsquedas). ` +
+        `Reglas: ${INSTR_AUD.atribucion} ` +
+        `(3) python3 scripts/auditoria.py ${enc.sesion_dir} --validar ${eje.id} --verificacion hasta OK. verificacion_${eje.id}.json queda con la forma ${formaVer}. ` +
+        cierreVer(enc.sesion_dir, eje.id) +
+        'Devuelve ok[] con TODAS las cifras ok del eje (viejas y nuevas: id, valor_final, independencia), no_confirmadas[] (todas), fallas_mecanicas[] y revision {revisados, corregidos[], sin_sustento[], validacion}.'
+      : `Eres el verificador del eje "${eje.id}" (lee referencias/roles/verificador.md «Modo investigación»). Sesión: ${enc.sesion_dir}. ` +
       `Corre python3 scripts/digesto.py ${enc.sesion_dir} --eje ${eje.id} --para verificador (no leas ${h.archivo} entero). ` +
       `Verifica TODAS: ${h.cifras.map((c) => c.id).join(', ')}. Parte de la cita y del archivo local; una segunda fuente independiente por cifra; ≤2 fetch por cifra. ` + INSTR.verificador +
       `${smoke ? 'MODO SMOKE: cita + una segunda fuente; extremos de cada serie. ' : ''}` +
-      `Escribe ${enc.sesion_dir}/verificacion_${eje.id}.json completo con EXACTAMENTE esta forma: {"eje": "${eje.id}", "items": [{"id", "veredicto": "verificada|ajustada|no_confirmada", "valor_final", "fuente_2", "url_2", "independencia": "alta|baja", "nota"}]} (la clave es items, no cifras) y devuelve ok[] (id, valor_final, independencia) y no_confirmadas[].`
-    const opts = { agentType: 'hilo-verificador', schema: S.verificacion, phase: 'Verificación', label: `verificar-${eje.id}` }
+      (AUD ? INSTR_AUD.verificador(enc.sesion_dir, eje.id, idsDe(eje)) : '') +
+      `Escribe ${enc.sesion_dir}/verificacion_${eje.id}.json completo con EXACTAMENTE esta forma: ${formaVer} (la clave es items, no cifras). ` + cierreVer(enc.sesion_dir, eje.id) +
+      'Devuelve ok[] (id, valor_final, independencia), no_confirmadas[] y fallas_mecanicas[].'
+    const opts = { agentType: 'hilo-verificador', schema: S.verificacion, phase: 'Verificación', label: `${REV ? 'reverificar' : 'verificar'}-${eje.id}` }
     let v = await agentRol(prompt, opts)
     if (!v) { avisar(`AVISO: el verificador de ${eje.id} no terminó; se reintenta una vez.`); v = await agentRol(prompt, { ...opts, label: `verificar-${eje.id}-2` }) }
     if (!v) { ejesCaidos.push(eje.id); return null }
+    v = await conMecanico(v, prompt, opts, enc.sesion_dir, eje.id)
+    if (AUD && (!v.revision || v.revision.validacion !== 'ok')) avisar(`AVISO: ${eje.id}: la revisión de compromisos no pasó auditoria.py --validar --verificacion; se usa la evaluación del investigador donde falte.`)
     return { eje: eje.id, hallazgos: h, verificacion: v }
   }
   const porEje = (await pipeline(enc.ejes, investigar, verificar)).filter(Boolean)
@@ -494,11 +704,49 @@ if (!desde && !fixture) {
   const desglosesOk = [...okIds].filter((id) => CIF.get(id) && CIF.get(id).tipo === 'desglose')
   if (seriesOk.length < 2 || desglosesOk.length < 2) {
     const msg = `hay ${seriesOk.length} serie(s) ok con ≥5 puntos y ${desglosesOk.length} desglose(s) ok: el informe necesita al menos 2 y 2 (tablas y figuras propias).`
-    if (smoke) avisar('AVISO smoke: ' + msg); else fail('Material insuficiente: ' + msg)
+    if (smoke || AUD) avisar('AVISO ' + (AUD ? 'auditoría' : 'smoke') + ': ' + msg); else fail('Material insuficiente: ' + msg)
   }
   const total = okIds.size + noConf
   if (total && noConf / total >= 0.5) avisar(`AVISO: ${noConf} de ${total} cifras no se confirmaron (calidad de fuentes baja).`)
   avisar(`Verificación: ${okIds.size} cifras utilizables (${noConf} descartadas) · ${seriesOk.length} series con ≥5 puntos · ${desglosesOk.length} desgloses`)
+}
+
+// ── FASE 2b: PUNTAJE (solo auditoría; determinista vía auditoria.py) ───────
+let pun = null
+if (AUD) {
+  // Rechequeo de auditoría: los compromisos que mueven la conclusión (cumplido, retroceso, incumplido,
+  // no_atribuible) se revisan con la pregunta «¿por qué podría estar mal?» ANTES del puntaje final; lo que cae
+  // entra como «corregido» en verificacion_<eje>.json y --calcular lo recoge.
+  if (!fixture) {
+    phase('Rechequeo')
+    const rqa = await agentRol(
+      `Eres el verificador en MODO RECHEQUEO DE AUDITORÍA (lee referencias/roles/verificador.md, «Rechequeo», y «Modo investigación»). Sesión: ${enc.sesion_dir}. ` +
+        `(1) python3 scripts/auditoria.py ${enc.sesion_dir} --calcular y luego --resumen --para redactor. (2) Toma TODOS los compromisos en estado cumplido, retroceso, incumplido o no_atribuible (y, en metas, los que avanzan o retroceden por menos que el redondeo de la fuente). ` +
+        `Para cada uno: ¿por qué podría estar mal? Atribución (el hecho es del mandato, desde el ${INI_TXT}; si ya existía antes, no_atribuible con existe_desde), base y dato actual con la MISMA definición y categoría (si la fuente cambió de nombre o de cobertura entre años, no son comparables), magnitud real del cambio, cifra preliminar revisada. ` +
+        `Reglas: ${INSTR_AUD.atribucion} ` +
+        `(3) Si un compromiso no se sostiene, añade o reemplaza su entrada en "compromisos" de verificacion_<eje>.json con veredicto corregido (estado y nota con el motivo y la fuente) o sin_sustento, y corre python3 scripts/auditoria.py ${enc.sesion_dir} --validar <eje> --verificacion hasta OK. No toques los items de cifras. ` +
+        `Presupuesto: ${smoke ? '≤ 3 búsquedas y ≤ 4 fetch' : '≤ 10 búsquedas y ≤ 12 fetch en total'}. Escribe ${enc.sesion_dir}/rechequeo.json {"items": [{"id" (del compromiso), "veredicto": "sostiene|matizar|caer", "motivo", "fuente"?, "url"?}]} y devuelve el mismo contenido.`,
+      { agentType: 'hilo-verificador', schema: S.rechequeo, phase: 'Rechequeo', label: 'rechequeo-auditoria' }
+    )
+    if (!rqa) avisar('AVISO: el rechequeo de auditoría no terminó; el puntaje usa la verificación de primera pasada.')
+    else avisar(`Rechequeo de auditoría: ${rqa.items.length} compromiso(s) · ${rqa.items.filter((x) => x.veredicto === 'caer').length} corregidos · ${rqa.items.filter((x) => x.veredicto === 'matizar').length} a matizar`)
+  }
+  phase('Puntaje')
+  pun = await agentRol(
+    `Paso determinista de la auditoría (no escribas ni edites ningún archivo a mano). Sesión: ${enc.sesion_dir}. ` +
+      `(1) python3 scripts/auditoria.py ${enc.sesion_dir} --calcular (sin dato oficial = 0; exit 1 = falta la evaluación de algún eje: sigue igual). (2) python3 scripts/auditoria.py ${enc.sesion_dir} --resumen | head -20 para comprobar. ` +
+      'Devuelve EXACTAMENTE el JSON que imprimió --calcular (una línea), sin cambiar ningún número.',
+    { agentType: 'hilo-guionista', schema: S.puntaje, phase: 'Puntaje', label: 'puntaje' }
+  )
+  if (!pun) fail('Puntaje sin resultado.')
+  if (pun.ejes_sin_evaluacion.length) avisar(`AVISO: ejes sin evaluacion_<eje>.json: ${pun.ejes_sin_evaluacion.join(', ')} (sus compromisos quedan no_verificable).`)
+  for (const id of pun.cifras_aud) {
+    okIds.add(id)
+    VER.set(id, { id, independencia: 'baja' })
+    CIF.set(id, { id, tipo: ['aud-c02', 'aud-c03', 'aud-c05', 'aud-c07', 'aud-c08', 'aud-c09', 'aud-c10'].includes(id) ? 'puntual' : 'desglose' })
+  }
+  avisar(`Puntaje: avance global ${pun.global}% (sin dato = 0; con dato ${pun.global_con_dato}%) con ${pun.transcurrido}% del mandato transcurrido · ${pun.n_verificables}/${pun.n_unicos} compromisos verificables · ` +
+    pun.semillas.map((x) => `${x.id === 'F' ? 'F' : 'S' + x.id} ${x.avance}%`).join(' · '))
 }
 
 if (!desde) {
@@ -635,13 +883,11 @@ if (!desde) {
     return F
   }
   const capsTxt = enc.informe.capitulos.map((c) => `${c.n} «${c.titulo}» (ejes ${(c.ejes || []).join(', ')})`).join(' · ')
-  g = await conReparacion(
-    'Guion',
-    (fallos) =>
+  const invocarGuion = (fallos) =>
       agentRol(
         `Eres el guionista (lee referencias/roles/guionista.md «Modo investigación», referencias/narrativa.md y referencias/diseno/graficos.md). Sesión: ${enc.sesion_dir}. ` +
           `Lee encuadre.json y corre python3 scripts/digesto.py ${enc.sesion_dir} --para guionista (no leas los hallazgos_*.json ni verificacion_*.json enteros; para copiar puntos de una serie usa --serie <id>). ` +
-          `Paleta: ${enc.paleta}. Fecha: ${fecha}. hook_evitar: ${enc.hook_evitar || 'ninguno'}. MODO DEL POST: investigacion. Número del informe: ${numero}. informe_dir: "${informeDir}". Capítulos del encuadre: ${capsTxt}. ` + INSTR.guionista +
+          `Paleta: ${enc.paleta}. Fecha: ${fecha}. hook_evitar: ${enc.hook_evitar || 'ninguno'}. MODO DEL POST: investigacion. Número del informe: ${numero}. informe_dir: "${informeDir}". Capítulos del encuadre: ${capsTxt}. ` + INSTR.guionista + (AUD ? INSTR_AUD.guionista(enc.sesion_dir) : '') +
           `ancla_id debe ser una cifra del visual de T1 (T1.visual.cifra_ids la incluye). ` +
           (okIds ? `Solo cifras verificada|ajustada con su valor_final: ${[...okIds].join(', ')}. ` : 'MODO FIXTURE: usa las cifras verificadas de la sesión copiada; 3–4 tuits. ') +
           (bajas.length ? `Cifras con segunda fuente NO independiente (reproduce la primaria): ${bajas.join(', ')}: no sostengas la ancla solo en ellas si hay alternativa; si las usas, decláralo en sintesis.incertidumbre. ` : '') +
@@ -650,10 +896,29 @@ if (!desde) {
           (fallos.length ? `TU GUION ANTERIOR FUE RECHAZADO; corrige SOLO esto y vuelve a escribir guion.json completo:\n - ${fallos.join('\n - ')}\n` : '') +
           `Escribe ${enc.sesion_dir}/guion.json completo (con modo: "investigacion" y el bloque investigacion) y devuelve el mismo contenido compacto (con modo, el bloque investigacion y visual.datos en números crudos).`,
         { agentType: 'hilo-guionista', schema: S.guion, label: fallos.length ? 'guionista-reparacion' : 'guionista' }
-      ),
-    validarGuion,
-    2
-  )
+      )
+  g = await conReparacion('Guion', invocarGuion, validarGuion, 2)
+
+  // Rechequeo adversarial de lo que sostiene el hilo (ancla, T1, segunda fuente baja); las aud-cNN son cálculo
+  // propio sobre compromisos que ya pasaron su rechequeo de auditoría.
+  if (!fixture) {
+    phase('Rechequeo')
+    const t1 = ((g.tuits[0] || {}).visual || {}).cifra_ids || []
+    const usadas = new Set(g.tuits.flatMap((t) => (t.visual || {}).cifra_ids || []))
+    const ids = [...new Set([g.ancla_id, ...t1, ...bajas.filter((b) => usadas.has(b))])].filter((x) => x && CIF.has(x) && !/^aud-/.test(x)).slice(0, smoke ? 3 : 8)
+    const rq = await rechequear(enc.sesion_dir, ids, '', smoke ? '≤ 2 búsquedas y ≤ 3 fetch' : '≤ 8 búsquedas y ≤ 10 fetch en total')
+    const caen = new Set(rq.items.filter((x) => x.veredicto === 'caer').map((x) => x.id))
+    const matizar = rq.items.filter((x) => x.veredicto === 'matizar').map((x) => `${x.id}: ${x.motivo}`)
+    if (caen.size || matizar.length) {
+      for (const c of caen) okIds.delete(c)
+      const pedido = [
+        ...(caen.size ? [`el rechequeo descartó ${[...caen].join(', ')} (rechequeo.json): quítalas de cifra_ids, del texto y de la ancla y rehaz esos tuits con otras cifras verificadas`] : []),
+        ...(matizar.length ? [`declara en sintesis.incertidumbre lo que el rechequeo pide matizar: ${matizar.join(' · ')}`] : []),
+      ]
+      const validarSinCaidas = (r) => [...validarGuion(r), ...r.tuits.filter((t) => ((t.visual || {}).cifra_ids || []).some((c) => caen.has(c))).map((t) => `T${t.n} usa una cifra descartada por el rechequeo`), ...(caen.has(r.ancla_id) ? ['ancla_id descartada por el rechequeo'] : [])]
+      g = await conReparacion('Guion (rechequeo)', (f, i) => invocarGuion(i === 0 ? pedido : f), validarSinCaidas, 2)
+    }
+  }
   conVisual = g.tuits.filter((t) => t.visual)
   avisar(`Tesis: ${g.tesis} · gancho ${g.hook_tipo} · ${g.tuits.length} tuits (${g.tuits.map((t) => t.beat[0].toUpperCase()).join('')}) · ${conVisual.length} visuales · ${g.investigacion.capitulos.length} capítulos`)
 
@@ -755,15 +1020,15 @@ const validarInforme = (r) => {
   if (tipos[tipos.length - 1] !== 'contraportada') F.push('la última página debe ser contraportada')
   const plan = enc.informe.capitulos.map((c) => c.n)
   const ns = r.capitulos.map((c) => c.n)
-  if (r.capitulos.length < MIN_CAPITULOS[modo]) F.push(`${r.capitulos.length} capítulos (mínimo ${MIN_CAPITULOS[modo]})`)
+  if (r.capitulos.length < minCap) F.push(`${r.capitulos.length} capítulos (mínimo ${minCap})`)
   const ajenos = ns.filter((k) => !plan.includes(k))
   if (ajenos.length) F.push(`capítulos fuera del plan del encuadre (${plan.join(', ')}): ${ajenos.join(', ')}`)
   const perdidos = plan.filter((k) => !ns.includes(k))
   if (perdidos.length) avisar(`AVISO: capítulos del plan sin página en el informe: ${perdidos.join(', ')} (el redactor lo justifica en avisos)`)
   for (const c of r.capitulos) if (!(c.n_figuras >= 1)) F.push(`capítulo ${c.n} sin figura con id (mínimo 1)`)
   for (const c of r.capitulos) if (!(c.paginas || []).length || (c.paginas || []).length < 2) F.push(`capítulo ${c.n} con ${(c.paginas || []).length} página(s): mínimo 2`)
-  if (r.n_figuras < MIN_FIGURAS[modo]) F.push(`${r.n_figuras} figuras (mínimo ${MIN_FIGURAS[modo]})`)
-  if (r.n_tablas < MIN_TABLAS[modo]) F.push(`${r.n_tablas} tablas (mínimo ${MIN_TABLAS[modo]})`)
+  if (r.n_figuras < minFig) F.push(`${r.n_figuras} figuras (mínimo ${minFig})`)
+  if (r.n_tablas < minTab) F.push(`${r.n_tablas} tablas (mínimo ${minTab})`)
   if (okIds) {
     const fuera = (r.cifras_usadas || []).filter((c) => !okIds.has(c))
     if (fuera.length) F.push(`cifras usadas sin verificar: ${fuera.join(', ')}`)
@@ -771,35 +1036,80 @@ const validarInforme = (r) => {
   }
   const sinTarjeta = nTarjetas.filter((k) => !(r.tarjetas_incluidas || []).includes(k))
   if (sinTarjeta.length) F.push(`tarjetas del hilo que no están en la página tarjetas (desde_hilo): ${sinTarjeta.map((k) => 'T' + k).join(', ')}`)
-  if (r.iteraciones > QA.iter_informe) avisar(`AVISO: el redactor corrió informe.py ${r.iteraciones} veces (presupuesto ${QA.iter_informe}).`)
+  if (r.iteraciones > iterInf) avisar(`AVISO: el redactor corrió informe.py ${r.iteraciones} veces (presupuesto ${iterInf}).`)
   if (r.lecturas_png > lecturasRed) avisar(`AVISO: el redactor leyó ${r.lecturas_png} PNG (presupuesto ${lecturasRed}).`)
   return F
 }
-const inf = await conReparacion(
-  'Informe',
-  (fallos, intento) =>
+const invocarRedactor = (fallos, intento, etiqueta) =>
     agentRol(
-      `INFORME DE INVESTIGACIÓN · redactor · vuelta ${intento + 1}/${QA.iter_informe} (lee referencias/roles/redactor.md y referencias/diseno/informe.md).\n` +
+      `INFORME DE INVESTIGACIÓN · redactor · vuelta ${intento + 1}/${iterInf} (lee referencias/roles/redactor.md y referencias/diseno/informe.md).\n` +
         `Sesión: ${enc.sesion_dir} → escribe ${enc.sesion_dir}/informe.json; staging en ${enc.sesion_dir}/informe/ (html, pdf, figuras, png/).\n` +
         `Hilo YA ensamblado (no lo toques): ${rutaHilo} con datos.json, hilo.json y tuit_N.png · ${prod ? `estado ${prod.estado} · ` : ''}${g.tuits.length} tuits · hook ${g.hook_tipo}.\n` +
         `meta: titulo (lo eliges tú) · corrido «<Tema corto> · Informe de datos» · corto «<Tema corto>» · pie «Informe N.º ${numero} · ${mesAnio}» · numero_largo «Informe de datos · N.º ${numero}» · fecha «${mesAnio}» · numero "${numero}" · handle @DerekUrizar · paleta ${enc.paleta} · datos ["${rutaHilo}/datos.json"] · fuentes (las primarias del digesto).\n` +
-        `Modo ${modo}: ${minPag}–${maxPag} páginas · ${MIN_CAPITULOS[modo]}–${MAX_CAPITULOS[modo]} capítulos · ≥${MIN_FIGURAS[modo]} figuras · ≥${MIN_TABLAS[modo]} tablas · páginas obligatorias: ${PAGINAS_OBLIGATORIAS[modo].join(', ')} · ≤${lecturasRed} lecturas de PNG · ≤${QA.iter_informe} corridas.\n` +
+        `Modo ${modo}: ${minPag}–${maxPag} páginas · ${minCap}–${maxCap} capítulos · ≥${minFig} figuras · ≥${minTab} tablas · páginas obligatorias: ${PAGINAS_OBLIGATORIAS[modo].join(', ')} · ≤${lecturasRed} lecturas de PNG · ≤${iterInf} corridas.\n` +
         `Plan de capítulos (encuadre.informe): ${enc.informe.capitulos.map((c) => `${c.n} «${c.titulo}»${c.ejes && c.ejes.length ? ' (ejes ' + c.ejes.join(', ') + ')' : ''}`).join(' · ')}. Cada capítulo del plan es un capítulo del PDF (≥2 páginas, ≥1 figura con id); si uno no tiene material, dilo en avisos.\n` +
         (okIds ? `Cifras ok (solo estas llevan id): ${[...okIds].join(', ')}.\n` : 'MODO FIXTURE: las cifras ok son las de la sesión copiada (el digesto las lista); sobrescribe el informe.json copiado.\n') +
         `Ancla: ${g.ancla_id || 'la del guion'} (portada.cifra; si no cabe en 5 caracteres, otra cifra ok de la tesis y avísalo). Tesis: ${g.tesis}.\n` +
         (bajas.length ? `Independencia baja: ${bajas.join(', ')} → decláralo en metodo.nota y en el pie de su figura o tabla.\n` : '') +
         `Tarjetas del hilo: ${tarjetasHilo || 'ninguna'} → reúsalas como figuras tarjeta + desde "${rutaHilo}/tuit_N.png" donde convenga y TODAS en la página tarjetas con desde_hilo: "${rutaHilo}" (tarjetas_incluidas = [${nTarjetas.join(', ')}]).\n` +
-        `Insumos: encuadre.json · python3 scripts/digesto.py ${enc.sesion_dir} --para redactor --hilo ${rutaHilo} (y --eje <eje> si se recortó) · puntos exactos: --serie <id>.\n` +
+        `Insumos: encuadre.json · python3 scripts/digesto.py ${enc.sesion_dir} --para redactor --hilo ${rutaHilo}${AUD ? ' --max-bytes 60000' : ''} (y --eje <eje> si se recortó) · puntos exactos: --serie <id>.\n` +
+        (AUD ? INSTR_AUD.redactor(enc.sesion_dir) + '\n' : '') +
         `Gate: python3 scripts/informe.py ${enc.sesion_dir} --check --salida ${enc.sesion_dir}/informe --png ${enc.sesion_dir}/informe/png (exit 0 = pasa I1–I7 y P1–P5).\n` +
         `El workflow gatea tu retorno: n_paginas en rango · tipos obligatorios · capitulos[].n ⊆ plan · cada capítulo ≥2 páginas y ≥1 figura con id · cifras_usadas ⊆ ok · tarjetas_incluidas ⊇ las del hilo · gates i y p en ok.\n` +
         (fallos.length ? `TU INFORME ANTERIOR FUE RECHAZADO; corrige SOLO esto (con Edit) y vuelve a pasar el gate:\n - ${fallos.join('\n - ')}\n` : '') +
         `Retorno: {archivo, numero, n_paginas, n_figuras, n_tablas, cifras_usadas[], capitulos[]{n, titulo, paginas[], n_figuras, n_tablas}, tarjetas_incluidas[], paginas[]{n, tipo, id}, gates{i, p}, iteraciones, lecturas_png, marcadores[], avisos[]}.`,
-      { agentType: 'informe-redactor', schema: S.informe, label: fallos.length ? 'redactor-reparacion' : 'redactor' }
-    ),
-  validarInforme,
-  2
-)
+      { agentType: 'informe-redactor', schema: S.informe, label: etiqueta || (fallos.length ? 'redactor-reparacion' : 'redactor') }
+    )
+let inf = await conReparacion('Informe', (fallos, intento) => invocarRedactor(fallos, intento), validarInforme, 2)
 avisar(`Informe N.º ${numero}: ${inf.n_paginas} páginas · ${inf.n_figuras} figuras · ${inf.n_tablas} tablas · ${inf.capitulos.length} capítulos · ${(inf.cifras_usadas || []).length} cifras · ${inf.iteraciones} corrida(s)`)
+
+// ── FASE 6b: REVISIÓN (revisor: ¿de dónde sale cada cosa? → el redactor corrige) ─
+phase('Revisión')
+const archivoRev = `${enc.sesion_dir}/revision_informe.json`
+const validarRevision = (r) => {
+  const F = []
+  if ((r.archivo || '').replace(/^\.\//, '') !== archivoRev) F.push(`archivo debe ser ${archivoRev} (llegó ${r.archivo})`)
+  const bloq = (r.faltas || []).filter((f) => f.gravedad === 'bloquea').length
+  if (r.bloqueantes !== bloq) F.push(`bloqueantes ${r.bloqueantes} ≠ ${bloq} faltas con gravedad bloquea`)
+  if ((r.veredicto === 'ok') !== (bloq === 0)) F.push(`veredicto ${r.veredicto} con ${bloq} falta(s) que bloquean (ok solo sin ninguna)`)
+  if (!(r.revisadas > 0)) F.push('revisadas debe ser el número de páginas leídas (> 0)')
+  return F
+}
+const fmtFaltas = (fs) => fs.map((f) => `[${f.regla} · p. ${f.pagina}${f.donde ? ' · ' + f.donde : ''}] ${f.detalle} → ARREGLO: ${f.arreglo}`)
+const revisar = (vuelta, previas) =>
+  conReparacion(
+    'Revisión',
+    (fallos) =>
+      agentRol(
+        `REVISIÓN DE JUSTIFICACIÓN · revisor · vuelta ${vuelta}/${QA.vueltas_revision + 1} (lee referencias/roles/revisor.md). Sesión: ${enc.sesion_dir} · informe ${enc.sesion_dir}/informe.json (ya pasó I1–I7 y P1–P5; PNG en ${enc.sesion_dir}/informe/png/) · hilo ${rutaHilo}.\n` +
+          `Insumos: python3 scripts/revision.py ${enc.sesion_dir}${AUD ? ` · python3 scripts/auditoria.py ${enc.sesion_dir} --justificar ${enc.sesion_dir}/informe.json · python3 scripts/auditoria.py ${enc.sesion_dir} --resumen --para redactor` : ''} · cotejo: python3 scripts/digesto.py ${enc.sesion_dir} --para redactor --hilo ${rutaHilo}.\n` +
+          `Revisa V1–V8 en TODO el informe: cada figura se explica, cada valor tiene origen, cada % dice de qué es, cada afirmación lleva respaldo, coherencia, nada sin definir, nada falta, honestidad. ` +
+          `EN LA PRIMERA VUELTA resuelve primero los avisos mecánicos (python3 scripts/revision.py ${enc.sesion_dir} --avisos: R1–R6${AUD ? '; y --justificar: J1–J5' : ''}): cada uno es una falta (regla R4, R6, J2…) o se descarta con motivo; así las vueltas siguientes solo comprueban arreglos. ` +
+          (AUD ? 'AUDITORÍA: las fichas generadas cubren cada barra (J1–J5); exige además que el texto de cada capítulo explique los compromisos que pesan (cumplidos, retrocesos o incumplidos, ceros sin dato, hitos en proceso o anunciados que nombre). ' : '') +
+          `Una falta por problema; arreglo con el texto exacto y solo cifras y fechas de los digestos. Escribe ${archivoRev}.\n` +
+          (previas && previas.length ? `FALTAS DE LA VUELTA ANTERIOR (comprueba primero cada una):\n - ${fmtFaltas(previas).join('\n - ')}\n` : '') +
+          (fallos.length ? `TU RETORNO ANTERIOR FUE RECHAZADO; corrige:\n - ${fallos.join('\n - ')}\n` : '') +
+          'Retorno: {archivo, vuelta, veredicto: ok|reparar, revisadas, bloqueantes, mejoras, faltas[]{n, pagina, donde, regla, gravedad, detalle, arreglo}}.',
+        { agentType: 'informe-revisor', schema: S.revision, label: `revisor-${vuelta}` }
+      ),
+    validarRevision,
+    1
+  )
+let rev = await revisar(1, null)
+for (let k = 0; k < QA.vueltas_revision && rev.bloqueantes > 0; k++) {
+  const faltas = rev.faltas.filter((f) => f.gravedad === 'bloquea').concat(rev.faltas.filter((f) => f.gravedad === 'mejora'))
+  avisar(`Revisión ${k + 1}: ${rev.bloqueantes} falta(s) que bloquean y ${rev.faltas.length - rev.bloqueantes} mejora(s) → el redactor corrige`)
+  inf = await conReparacion(
+    'Informe (revisión)',
+    (fallos, intento) => invocarRedactor(intento === 0 ? ['REVISIÓN DE JUSTIFICACIÓN: corrige TODAS las faltas que bloquean y las mejoras que quepan (con Edit; el texto exacto viene en ARREGLO; si un arreglo pide una cifra que no está en el digesto, no la inventes: declara la falta de dato). Después vuelve a correr los gates:'].concat(fmtFaltas(faltas)) : fallos, intento, 'redactor-revision'),
+    validarInforme,
+    1
+  )
+  rev = await revisar(k + 2, rev.faltas)
+}
+const revPendiente = rev.bloqueantes > 0
+if (revPendiente) avisar(`AVISO: la revisión de justificación deja ${rev.bloqueantes} falta(s) que bloquean tras ${QA.vueltas_revision} vueltas: el informe se entrega incompleto (${archivoRev}).`)
+else avisar(`Revisión de justificación: ok (${rev.faltas.length} mejora(s) anotadas en ${archivoRev}).`)
 
 // ── FASE 7: CIERRE (productor: informe final, QA, memoria, validate) ─────────
 phase('Cierre')
@@ -815,8 +1125,8 @@ const validarCierre = (c) => {
   if (!['ok', 'incompleto'].includes(c.gates.qa_visual)) F.push(`qa_visual: ${c.gates.qa_visual}`)
   if (c.gates.validate !== 'ok') F.push(`make validate: ${c.gates.validate}`)
   if (c.registro_id !== registroEsperado) F.push(`registro_id debe ser "${registroEsperado}" (llegó ${c.registro_id})`)
-  const debeIncompleto = (prod && prod.estado === 'incompleto') || c.gates.qa_visual === 'incompleto'
-  if (debeIncompleto && c.estado !== 'incompleto') F.push('el hilo o el QA visual quedaron incompletos: estado debe ser incompleto')
+  const debeIncompleto = (prod && prod.estado === 'incompleto') || c.gates.qa_visual === 'incompleto' || revPendiente
+  if (debeIncompleto && c.estado !== 'incompleto') F.push('el hilo, el QA visual o la revisión de justificación quedaron incompletos: estado debe ser incompleto')
   return F
 }
 const cierre = await conReparacion(
@@ -828,7 +1138,7 @@ const cierre = await conReparacion(
           ? `MODO ${fixture ? 'FIXTURE' : 'SMOKE'}: (1) python3 scripts/informe.py ${enc.sesion_dir} --check --salida ${enc.sesion_dir}/informe --png ${enc.sesion_dir}/informe/png (exit 0); (2) QA del PDF con ≤${lecturasProd} Read de ${enc.sesion_dir}/informe/png/pagina_NN.png (portada y la página de tarjetas); si algo no se ve bien, corrige ${enc.sesion_dir}/informe.json y repite (≤2 vueltas; si persiste, qa_visual "incompleto"); (3) NO toques memoria/: registro_id = "${registroEsperado}"; (4) make validate (exit 0). Devuelve ruta "${enc.sesion_dir}", ruta_informe "${enc.sesion_dir}/informe.json" y pdf "${enc.sesion_dir}/informe/informe.pdf". `
           : `(1) mkdir -p ${entregable} && cp ${enc.sesion_dir}/informe.json ${entregable}/informe.json; (2) python3 scripts/informe.py ${entregable} --check --png ${enc.sesion_dir}/informe/png (exit 0; el PDF queda en ${entregable}/salida/); (3) QA del PDF con ≤${lecturasProd} Read de ${enc.sesion_dir}/informe/png/pagina_NN.png (portada, la página de tarjetas y una de capítulo); si algo no se ve bien, corrige ${enc.sesion_dir}/informe.json, vuelve a copiar y repite (≤2 vueltas; si persiste, qa_visual "incompleto"); ` +
             `(4) python3 scripts/memoria.py --registrar ${enc.sesion_dir} --ruta ${rutaHilo} --informe ${entregable} --estado listo|incompleto${desde ? ' --solo-informe' : ''} (${desde ? 'solo el informe: el hilo ya estaba registrado' : 'registra el hilo en hilos.json con modo investigacion, el informe en informes.json, series y fuentes' + (enc.idea_id ? ' y marca la idea ' + enc.idea_id : '')}); registro_id = "${registroEsperado}"; (5) make validate (exit 0). Devuelve ruta "${entregable}", ruta_informe "${entregable}/informe.json" y pdf "${entregable}/salida/informe.pdf". `) +
-        `estado = "incompleto" si el hilo quedó incompleto o el QA visual lo está; si no, "listo". Gates EXACTAMENTE como "ok" | "falla" | "incompleto"; los detalles van en avisos.` +
+        `estado = "incompleto" si el hilo quedó incompleto, el QA visual lo está${revPendiente ? ' o (como ahora) la revisión de justificación dejó faltas que bloquean' : ''}; si no, "listo". Gates EXACTAMENTE como "ok" | "falla" | "incompleto"; los detalles van en avisos.` +
         (fallos.length ? `\nTU RETORNO ANTERIOR FUE RECHAZADO; corrige:\n - ${fallos.join('\n - ')}` : ''),
       { agentType: 'hilo-productor', schema: S.cierre, label: fallos.length ? 'cierre-reparacion' : 'cierre' }
     ),
@@ -850,6 +1160,7 @@ return {
   ruta_hilo: rutaHilo,
   n_paginas: cierre.n_paginas,
   n_figuras: inf.n_figuras,
+  revision: { archivo: archivoRev, veredicto: rev.veredicto, vueltas: rev.vuelta, bloqueantes: rev.bloqueantes, mejoras: rev.faltas.length - rev.bloqueantes },
   n_tablas: inf.n_tablas,
   capitulos: inf.capitulos,
   n_tuits: prod ? prod.n_tuits : g.tuits.length,
@@ -867,6 +1178,7 @@ return {
   avisos: [...((prod && prod.avisos) || []), ...(inf.avisos || []), ...(cierre.avisos || [])],
   sesion_dir: enc.sesion_dir,
   idea_id: enc.idea_id || null,
+  auditoria: pun,
   smoke,
   fixture,
 }

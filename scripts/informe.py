@@ -24,10 +24,10 @@ Gates (exit 1 si alguno falla; el informe no se escribe):
      coincide; además, en todo gráfico y toda figura `tarjeta` con datos, cada número de los datos está entre
      los valores de sus cifras (`id`, `cifra_ids`, ids anidados), cotejado con ensamblar.CLAVES_DATO
      (regla de oro 1: ninguna cifra no_confirmada en el informe)
-  I3 ningún texto lleva URL (http/https) ni emoji
+  I3 ningún texto lleva URL (http/https), emoji ni «en suma»
   I4 toda figura y tabla tiene `fuente`
   I5 toda referencia {fig:} {Fig:} {fign:} {tabla:} {Tabla:} {pag:} resuelve ({paleta} = nombre de la paleta)
-  I6 la paleta existe en tokens · 1 a 100 páginas
+  I6 la paleta existe en tokens · 1 a 160 páginas (las auditorías exhaustivas pasan de 100)
   I7 (solo AVISO) números del cuerpo (párrafos, leads, tesis, hallazgos, cierre) que no son una cifra
      verificada, un año ni un derivado declarado en un pie o nota con ÷ × − o «cálculo propio»
 
@@ -48,6 +48,7 @@ RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(RAIZ, "scripts"))
 import build_mapa  # noqa: E402  (extraer() de la geometría)
 import ensamblar  # noqa: E402  (CLAVES_DATO, catalogo_plantillas: el mismo cotejo que G4)
+import verificacion as VM  # noqa: E402  (sueltos: el mismo cotejo con tolerancia que G10)
 import materializar  # noqa: E402  (RE_DATA, data_de)
 import nuevo_visual  # noqa: E402  (ensamblar)
 
@@ -125,11 +126,9 @@ def numeros_de_datos(tipo, datos):
 
 
 def valores_de_cifra(c):
-    """Valores que respalda una cifra de datos.json: valor (final), valor_original, serie[].v, partes[].valor."""
-    out = []
-    for k in ("valor", "valor_original"):
-        if isinstance(c.get(k), (int, float)):
-            out.append(c[k])
+    """Valores que respalda una cifra de datos.json: valor (final), serie[].v, partes[].valor. El valor_original de
+    una cifra ajustada NO respalda nada: es el número que el verificador corrigió."""
+    out = [c["valor"]] if isinstance(c.get("valor"), (int, float)) else []
     out += [p.get("v") for p in c.get("serie") or [] if isinstance(p, dict) and isinstance(p.get("v"), (int, float))]
     out += [p.get("valor") for p in c.get("partes") or [] if isinstance(p, dict) and isinstance(p.get("valor"), (int, float))]
     return out
@@ -154,9 +153,10 @@ def ids_de(obj):
 VEREDICTOS_OK = {"verificada", "ajustada"}
 SIN_NUMERO = {"portada", "contraportada"}
 RE_URL = re.compile(r"https?://", re.I)
+RE_EN_SUMA = re.compile(r"\ben suma\b", re.I)  # muletilla vetada (CLAUDE.md, Estilo)
 RE_EMOJI = re.compile("[\U0001F000-\U0001FAFF☀-➿️‍]")
 RE_REF = re.compile(r"\{(fig|Fig|fign|tabla|Tabla|pag):([A-Za-z0-9_-]+)\}")
-# {fig:id} «figura 5» · {Fig:id} «Figura 5» · {fign:id} «Fig. 5» · {tabla:id} «tabla 1» · {Tabla:id} «Tabla 1» · {pag:id} «13»
+# {fig:id} «figura 5» · {Fig:id} «Figura 5» · {fign:id} «Fig. 5» · {tabla:id} «tabla 1» · {Tabla:id} «Tabla 1» · {pag:id} «13» (página, figura o tabla)
 RE_NUM = re.compile(r"[−-]?\d[\d,]*(?:\.\d+)?")
 
 
@@ -354,12 +354,16 @@ RUTAS_CUERPO = re.compile(r"\.(parrafos\[\d+\]|lead|tesis|cierre|hallazgos\[\d+\
 
 
 def avisos_texto(R, cifras):
-    """I7 (aviso): números del cuerpo que no son cifra verificada, año (1900–2100), entero ≤ 100 ni derivado
-    declarado (un pie, nota o margen con ÷ × − o «cálculo propio» en la misma página)."""
+    """I7 (aviso): números del cuerpo que no son cifra verificada (redondeada como se escribió, a cualquier escala),
+    derivado simple de dos de ellas, año, fecha, entero ≤ 12 ni derivado declarado (un pie, nota o margen con ÷ × −
+    o «cálculo propio» en la misma página). Un «45 %» ya no pasa por ser entero."""
     permitidos = set()
     for c in cifras.values():
         if c.get("veredicto") in VEREDICTOS_OK:
             permitidos |= {round(abs(float(v)), 6) for v in valores_de_cifra(c)}
+    con_factor = sorted({(round(abs(float(v)), 6), VM.factor_unidad(c.get("unidad"))) for c in cifras.values()
+                         if c.get("veredicto") in VEREDICTOS_OK for v in valores_de_cifra(c)})
+    titulares = [c.get("valor") for c in cifras.values() if c.get("veredicto") in VEREDICTOS_OK and c.get("tipo") != "serie"][:60]
     avisos = []
     for i, P in enumerate(R.get("paginas") or [], 1):
         declarados = set()
@@ -369,14 +373,9 @@ def avisos_texto(R, cifras):
         for ruta, s in textos(P, "p"):
             if not RUTAS_CUERPO.search(ruta):
                 continue
-            sueltos = []
-            for n in numeros(s):
-                v = round(abs(n), 6)
-                if v in permitidos or v in declarados or (1900 <= v <= 2100 and v == int(v)) or (v <= 100 and v == int(v)):
-                    continue
-                sueltos.append(n)
+            sueltos = VM.sueltos(s, con_factor + [(x, None) for x in sorted(declarados)], titulares)  # tolerancia de redondeo y escala (verificacion.py)
             if sueltos:
-                avisos.append("I7 página %d (%s): %s no es cifra verificada ni derivado declarado" % (i, ruta[2:], ", ".join("%g" % x for x in sueltos[:6])))
+                avisos.append("I7 página %d (%s): %s no es cifra verificada ni derivado declarado" % (i, ruta[2:], ", ".join(sueltos[:6])))
     return avisos
 
 
@@ -386,8 +385,8 @@ def validar(R, tk, cifras, g):
     # I6
     if meta.get("paleta") not in tk["paletas"]:
         g("I6", "paleta %r no existe en design/tokens.json" % meta.get("paleta"))
-    if not 1 <= len(paginas) <= 100:
-        g("I6", "el informe tiene %d páginas (1 a 100)" % len(paginas))
+    if not 1 <= len(paginas) <= 160:
+        g("I6", "el informe tiene %d páginas (1 a 160)" % len(paginas))
     for campo in ("titulo", "corrido", "pie", "handle"):
         if not meta.get(campo):
             g("I1", "meta.%s es obligatorio" % campo)
@@ -515,11 +514,36 @@ def validar(R, tk, cifras, g):
             g("I3", "%s lleva una URL" % ruta)
         if RE_EMOJI.search(s):
             g("I3", "%s lleva un emoji (no se renderiza en el PDF)" % ruta)
+        if RE_EN_SUMA.search(s):
+            g("I3", "%s dice «en suma»: está vetado (la sección de cierre se titula «Conclusiones»)" % ruta)
 
 
 # ---------------------------------------------------------------- resolución
+# Índice largo: la lista de figuras y tablas va en hojas de continuación del índice (INDICE_FIGS_HOJA por hoja)
+# cuando hay más de INDICE_CAPS capítulos o más de INDICE_FIGS entradas.
+INDICE_CAPS, INDICE_FIGS, INDICE_FIGS_HOJA = 6, 24, 40
+
+
+def continuar_indice(paginas):
+    """Inserta tras la página `indice` las hojas de continuación de la lista de figuras (idempotente)."""
+    paginas[:] = [P for P in paginas if not P.get("_indice_cont")]
+    pos = next((i for i, P in enumerate(paginas) if P["tipo"] == "indice"), None)
+    if pos is None:
+        return
+    n = sum(1 for P in paginas for _, f in figuras_de_pagina(P) if f.get("indice") is not False)
+    caps = sum(1 for P in paginas if P["tipo"] == "capitulo" and P.get("indice") is not False)
+    if caps <= INDICE_CAPS and n <= INDICE_FIGS:
+        return
+    hojas = max(1, -(-n // INDICE_FIGS_HOJA))
+    por_hoja = -(-n // hojas)  # reparto parejo entre las hojas
+    paginas[pos]["_hojas_figuras"] = hojas
+    for k in range(hojas):
+        paginas.insert(pos + 1 + k, {"tipo": "indice", "titulo": "Figuras y tablas", "_indice_cont": k + 1, "_hojas_figuras": hojas, "_por_hoja": por_hoja})
+
+
 def resolver(R, cifras, g):
     paginas = R["paginas"]
+    continuar_indice(paginas)
     refs = {k: {} for k in ("fig", "Fig", "fign", "tabla", "Tabla", "pag")}
     nfig = ntab = 0
     lista_figuras = []
@@ -542,10 +566,13 @@ def resolver(R, cifras, g):
                 f["_n"] = "Figura %d" % nfig
                 corto = "Fig. %d" % nfig
             if f.get("id"):
+                refs["pag"].setdefault(f["id"], "%02d" % i)  # {pag:id} también da la página de una figura o tabla
                 if kind == "figura":
                     refs["fig"][f["id"]], refs["Fig"][f["id"]], refs["fign"][f["id"]] = f["_n"].lower(), f["_n"], corto
                 else:
                     refs["tabla"][f["id"]], refs["Tabla"][f["id"]] = f["_n"][0].lower() + f["_n"][1:], f["_n"]
+            if f.get("indice") is False:
+                continue
             titulo = f.get("indice") or (" ".join(f["titular"]) if isinstance(f.get("titular"), list) else f.get("titular")) or f.get("titulo") or f.get("pie") or ""
             lista_figuras.append({"no": corto, "titulo": titulo, "pag": "%02d" % i})
 
@@ -577,6 +604,11 @@ def resolver(R, cifras, g):
                 elif isinstance(ind, dict):
                     (anexos if ind.get("clase") == "anexo" else entradas).append({"clase": "simple", "titulo": ind["titulo"], "pag": Q["_n_texto"]})
             P["_entradas"], P["_anexos"], P["_figuras"] = entradas, anexos, lista_figuras
+            if P.get("_hojas_figuras"):
+                k = P.get("_indice_cont", 0)
+                ph = P.get("_por_hoja", INDICE_FIGS_HOJA)
+                P["_figuras"] = lista_figuras[(k - 1) * ph:k * ph] if k else []
+                P["_figuras_en"] = next((Q["_n_texto"] for Q in paginas if Q.get("_indice_cont") == 1), "")
         if P["tipo"] == "metodo":
             filas = []
             for c in P.get("cifras", []):
@@ -624,9 +656,11 @@ def preparar_figuras(R, salida, paleta, handle, errores):
                 errores.append("figura %s (%s) no pasa el gate de tarjeta:\n%s" % (f["_n"], f["plantilla"], (r.stdout + r.stderr).strip()))
                 continue
             f["_src"] = "figuras/fig_%02d.png" % k
+    j = 0  # numeración común a todas las páginas tarjetas: si se reiniciara, la segunda pisaría las imágenes de la primera
     for P in R["paginas"]:
         if P["tipo"] == "tarjetas":
-            for j, it in enumerate(P["items"], 1):
+            for it in P["items"]:
+                j += 1
                 destino = os.path.join(dfig, "tarjeta_%02d.png" % j)
                 shutil.copyfile(os.path.join(RAIZ, it["desde"]), destino)
                 it["_src"] = "figuras/" + os.path.basename(destino)

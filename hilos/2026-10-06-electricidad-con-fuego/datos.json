@@ -1,0 +1,1884 @@
+{
+  "slug": "electricidad-con-fuego",
+  "fecha": "2026-10-06",
+  "tesis": "En agosto de 2026, 59.19% de la electricidad del SNI salió de combustibles fósiles: la hidro cayó 25.5% frente a agosto de 2025 y la solar casi se triplicó, pero el pico de demanda llega de noche, cuando el sol no aporta.",
+  "ancla_id": "mat-c01",
+  "paleta": "cielo",
+  "hook_tipo": "giro_inversion",
+  "cifras": [
+    {
+      "id": "cur-c01",
+      "concepto": "Demanda máxima histórica del SNI (récord), registrada a las 19:00 del 18 de mayo de 2026",
+      "unidad": "MW",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "AMM · Análisis del Mercado Mayorista (rd.amm.org.gt), con base en la Carga Horaria",
+      "url": "https://rd.amm.org.gt/2026/07/31/analisis-del-mm-mayo-2026/",
+      "periodo": "2026-05-18 19:00",
+      "n_puntos": 1,
+      "valor": 2417.15,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AMM · Informe Estadístico 2T 2026 (documento distinto, mismo organismo)",
+      "evidencia": {
+        "url": "https://rd.amm.org.gt/2026/07/31/analisis-del-mm-mayo-2026/",
+        "cita": "La demanda máxima de potencia en mayo de 2026 fue de 2,417.15 MW se registró a las 19:00 horas del 18 de mayo .",
+        "archivo_local": "sesiones/_descargas/amm_rd_analisis_mayo_2026.html"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "cur-c02",
+      "concepto": "Demanda máxima mensual del SNI, feb–ago 2026",
+      "unidad": "MW",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "AMM · Análisis del Mercado Mayorista (rd.amm.org.gt), con base en la Carga Horaria",
+      "url": "https://rd.amm.org.gt/2026/09/18/analisis-del-mm-agosto-2026/",
+      "periodo": "2026-02 a 2026-08",
+      "n_puntos": 7,
+      "valor": 2374.89,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AMM · Informe Estadístico 2T 2026 (documento distinto, mismo organismo)",
+      "evidencia": {
+        "url": "https://rd.amm.org.gt/2026/09/18/analisis-del-mm-agosto-2026/",
+        "cita": "La demanda máxima de potencia en agosto de 2026 fue de 2,374.89 MW y se registró el 13 de agosto a las 20:00 horas . En comparación con julio de 2026 (2,354.12 MW",
+        "archivo_local": "sesiones/_descargas/amm_rd_analisis_agosto_2026.html"
+      },
+      "serie": [
+        {
+          "p": "2026-02",
+          "v": 2170.65
+        },
+        {
+          "p": "2026-03",
+          "v": 2263.23
+        },
+        {
+          "p": "2026-04",
+          "v": 2371.45
+        },
+        {
+          "p": "2026-05",
+          "v": 2417.15
+        },
+        {
+          "p": "2026-06",
+          "v": 2294.89
+        },
+        {
+          "p": "2026-07",
+          "v": 2354.12
+        },
+        {
+          "p": "2026-08",
+          "v": 2374.89
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "cur-c03",
+      "concepto": "Demanda máxima de mayo: 2024 vs 2025 vs 2026",
+      "unidad": "MW",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "AMM · Análisis del Mercado Mayorista (rd.amm.org.gt), con base en la Carga Horaria",
+      "url": "https://rd.amm.org.gt/2026/07/31/analisis-del-mm-mayo-2026/",
+      "periodo": "mayo 2024, 2025, 2026",
+      "n_puntos": 3,
+      "valor": 2417.15,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AMM · Informe Estadístico 2T 2026 (documento distinto, mismo organismo)",
+      "evidencia": {
+        "url": "https://rd.amm.org.gt/2026/07/31/analisis-del-mm-mayo-2026/",
+        "cita": "respecto a mayo de 2025 ( 2,204.22 MW ), el nivel fue superior en 212.93 MW , con una variación de 9.66% . Frente a mayo de 2024 ( 2,121.80 MW ), la diferencia fue de 295.35 MW",
+        "archivo_local": "sesiones/_descargas/amm_rd_analisis_mayo_2026.html"
+      },
+      "partes": [
+        {
+          "nombre": "Mayo 2024",
+          "valor": 2121.8
+        },
+        {
+          "nombre": "Mayo 2025",
+          "valor": 2204.22
+        },
+        {
+          "nombre": "Mayo 2026",
+          "valor": 2417.15
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "cur-c04",
+      "concepto": "Demanda máxima de agosto: 2024 vs 2025 vs 2026",
+      "unidad": "MW",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "AMM · Análisis del Mercado Mayorista (rd.amm.org.gt), con base en la Carga Horaria",
+      "url": "https://rd.amm.org.gt/2026/09/18/analisis-del-mm-agosto-2026/",
+      "periodo": "agosto 2024, 2025, 2026",
+      "n_puntos": 3,
+      "valor": 2374.89,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo desde cita AMM (2,374.89-2,141.11=233.78; 233.78/2,141.11=10.92%)",
+      "evidencia": {
+        "url": "https://rd.amm.org.gt/2026/09/18/analisis-del-mm-agosto-2026/",
+        "cita": "respecto a agosto de 2025 (2,141.11 MW) , el nivel fue superior en 233.78 MW , con una variación de 10.92% . Frente a agosto de 2024 (1,981.17 MW) , la diferencia fue de 393.72 MW",
+        "archivo_local": "sesiones/_descargas/amm_rd_analisis_agosto_2026.html"
+      },
+      "partes": [
+        {
+          "nombre": "Agosto 2024",
+          "valor": 1981.17
+        },
+        {
+          "nombre": "Agosto 2025",
+          "valor": 2141.11
+        },
+        {
+          "nombre": "Agosto 2026",
+          "valor": 2374.89
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_6.png"
+      ]
+    },
+    {
+      "id": "cur-c05",
+      "concepto": "Hora en que ocurrió la demanda máxima de cada mes, feb–ago 2026",
+      "unidad": "hora del día (0–23)",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "AMM · Análisis del Mercado Mayorista (rd.amm.org.gt), con base en la Carga Horaria",
+      "url": "https://rd.amm.org.gt/2026/09/18/analisis-del-mm-agosto-2026/",
+      "periodo": "2026-02 a 2026-08",
+      "n_puntos": 7,
+      "valor": 20,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo desde citas AMM (ago 13-ago 20:00; jul 30-jul 20:00; jun 19:00; may 19:00)",
+      "evidencia": {
+        "url": "https://rd.amm.org.gt/2026/07/31/analisis-del-mm-junio-2026/",
+        "cita": "La demanda máxima de potencia en junio de 2026 fue de 2,294.89 MW se registró a las 19:00 horas del 01 de junio . En comparación con mayo de 2026 ( 2,417.15 MW el cual se registró a las 19:00 horas",
+        "archivo_local": "sesiones/_descargas/amm_rd_analisis_junio_2026.html"
+      },
+      "partes": [
+        {
+          "nombre": "Feb 2026 (17-feb)",
+          "valor": 18
+        },
+        {
+          "nombre": "Mar 2026 (11-mar)",
+          "valor": 18
+        },
+        {
+          "nombre": "Abr 2026 (24-abr)",
+          "valor": 19
+        },
+        {
+          "nombre": "May 2026 (18-may)",
+          "valor": 19
+        },
+        {
+          "nombre": "Jun 2026 (01-jun)",
+          "valor": 19
+        },
+        {
+          "nombre": "Jul 2026 (30-jul)",
+          "valor": 20
+        },
+        {
+          "nombre": "Ago 2026 (13-ago)",
+          "valor": 20
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_6.png"
+      ]
+    },
+    {
+      "id": "cur-c06",
+      "concepto": "Generación solar en agosto de 2026 (y su crecimiento interanual)",
+      "unidad": "GWh",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "AMM · Análisis del Mercado Mayorista agosto 2026 (con base en el ITE 08-2026 V.O.)",
+      "url": "https://rd.amm.org.gt/2026/09/18/analisis-del-mm-agosto-2026/",
+      "periodo": "2026-08",
+      "n_puntos": 1,
+      "valor": 142.28,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo desde cita AMM (142.28/1,318.87=10.8%; 142.28-93.68=48.60, +192.8%)",
+      "evidencia": {
+        "url": "https://rd.amm.org.gt/2026/09/18/analisis-del-mm-agosto-2026/",
+        "cita": "la generación solar ascendió a 142.28 GWh , con un incremento interanual de 192.8% (+93.68 GWh)",
+        "archivo_local": "sesiones/_descargas/amm_rd_analisis_agosto_2026.html"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "cur-c07",
+      "concepto": "Participación fotovoltaica en la producción por tecnología del SNI, 2T 2026",
+      "unidad": "% de la producción",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "AMM · Informe Estadístico Segundo Trimestre 2026",
+      "url": "https://www.amm.org.gt/portal/?wpfb_dl=1108",
+      "periodo": "2T 2026 (abr–jun)",
+      "n_puntos": 1,
+      "valor": 6.15,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AMM · Informe Estadístico 2T 2026 (documento distinto, mismo organismo)",
+      "evidencia": {
+        "url": "https://www.amm.org.gt/portal/?wpfb_dl=1108",
+        "cita": "Fotovoltaíca 6.15%  Total ... 4,307.74 GWh",
+        "archivo_local": "sesiones/_descargas/amm_informe_estadistico_2t2026.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "cur-c08",
+      "concepto": "Demanda máxima trimestral 2T 2026 y crecimiento frente a 2T 2025",
+      "unidad": "MW",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "AMM · Informe Estadístico Segundo Trimestre 2026",
+      "url": "https://www.amm.org.gt/portal/?wpfb_dl=1108",
+      "periodo": "2T 2026",
+      "n_puntos": 1,
+      "valor": 2417.15,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AMM · Análisis mensual mayo 2026 (rd.amm.org.gt)",
+      "evidencia": {
+        "url": "https://www.amm.org.gt/portal/?wpfb_dl=1108",
+        "cita": "DEMANDA MÁXIMA ... 9.66% 2,417.15 MW ... Crecimiento con respecto al segundo trimestre del año anterior",
+        "archivo_local": "sesiones/_descargas/amm_informe_estadistico_2t2026.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "mat-c01",
+      "concepto": "Participación de la generación con combustibles fósiles (carbón mineral + coque de petróleo + bunker + gas natural + diésel) en la generación total del SNI, mensual",
+      "unidad": "% de la generación SNI",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "AMM · Generación mensual por planta (Despacho de carga ejecutado del SNI), tabla «Generación por tipo de recurso»",
+      "url": "https://www.amm.org.gt/pdfs2/pub_gen_mensual_x_planta/GM20260101.xlsx",
+      "periodo": "2024-01 a 2026-08",
+      "n_puntos": 32,
+      "valor": 59.19,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo propio desde los CSV locales de los tres archivos AMM GM{2024,2025,2026}0101 (suma de tecnologías por tabla y por planta; coincide con filas No Renovable y TOTAL)",
+      "evidencia": {
+        "url": "https://www.amm.org.gt/pdfs2/pub_gen_mensual_x_planta/GM20260101.xlsx",
+        "cita": "2026, No Renovable GWh … agosto 780.63758017497503; TOTAL (generación por tipo de recurso) agosto 1318.8738391960478 GWh",
+        "archivo_local": "sesiones/_descargas/GM20260101_hoja2.csv ; sesiones/_descargas/GM20260101_hoja1.csv"
+      },
+      "serie": [
+        {
+          "p": "2024-01",
+          "v": 36.37
+        },
+        {
+          "p": "2024-02",
+          "v": 37.33
+        },
+        {
+          "p": "2024-03",
+          "v": 46.47
+        },
+        {
+          "p": "2024-04",
+          "v": 48.39
+        },
+        {
+          "p": "2024-05",
+          "v": 63.27
+        },
+        {
+          "p": "2024-06",
+          "v": 56.82
+        },
+        {
+          "p": "2024-07",
+          "v": 41.84
+        },
+        {
+          "p": "2024-08",
+          "v": 38.47
+        },
+        {
+          "p": "2024-09",
+          "v": 37.5
+        },
+        {
+          "p": "2024-10",
+          "v": 34.01
+        },
+        {
+          "p": "2024-11",
+          "v": 31.96
+        },
+        {
+          "p": "2024-12",
+          "v": 14.6
+        },
+        {
+          "p": "2025-01",
+          "v": 18.39
+        },
+        {
+          "p": "2025-02",
+          "v": 29.15
+        },
+        {
+          "p": "2025-03",
+          "v": 38.57
+        },
+        {
+          "p": "2025-04",
+          "v": 41.84
+        },
+        {
+          "p": "2025-05",
+          "v": 55.97
+        },
+        {
+          "p": "2025-06",
+          "v": 45.69
+        },
+        {
+          "p": "2025-07",
+          "v": 45.5
+        },
+        {
+          "p": "2025-08",
+          "v": 52.79
+        },
+        {
+          "p": "2025-09",
+          "v": 38.37
+        },
+        {
+          "p": "2025-10",
+          "v": 25.03
+        },
+        {
+          "p": "2025-11",
+          "v": 32.37
+        },
+        {
+          "p": "2025-12",
+          "v": 26.36
+        },
+        {
+          "p": "2026-01",
+          "v": 27.9
+        },
+        {
+          "p": "2026-02",
+          "v": 31.19
+        },
+        {
+          "p": "2026-03",
+          "v": 35.39
+        },
+        {
+          "p": "2026-04",
+          "v": 36.58
+        },
+        {
+          "p": "2026-05",
+          "v": 47.24
+        },
+        {
+          "p": "2026-06",
+          "v": 52.9
+        },
+        {
+          "p": "2026-07",
+          "v": 53.87
+        },
+        {
+          "p": "2026-08",
+          "v": 59.19
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_1.png"
+      ]
+    },
+    {
+      "id": "mat-c02",
+      "concepto": "Generación fósil (no renovable) del SNI en agosto: 2024, 2025 y 2026",
+      "unidad": "GWh",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "AMM · Generación mensual por planta (Despacho de carga ejecutado del SNI), tabla «Generación por tipo de recurso»",
+      "url": "https://www.amm.org.gt/pdfs2/pub_gen_mensual_x_planta/GM20260101.xlsx",
+      "periodo": "agosto 2024 / 2025 / 2026",
+      "n_puntos": 3,
+      "valor": 780.64,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo propio desde los CSV locales de los tres archivos AMM GM{2024,2025,2026}0101 (suma de tecnologías por tabla y por planta; coincide con filas No Renovable y TOTAL)",
+      "evidencia": {
+        "url": "https://www.amm.org.gt/pdfs2/pub_gen_mensual_x_planta/GM20260101.xlsx",
+        "cita": "No Renovable GWh, agosto: 780.63758017497503 (archivo 2026) y 591.84616863064412 (archivo 2025)",
+        "archivo_local": "sesiones/_descargas/GM20260101_hoja2.csv ; sesiones/_descargas/GM20250101_hoja2.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Ago-2024",
+          "valor": 430.26
+        },
+        {
+          "nombre": "Ago-2025",
+          "valor": 591.85
+        },
+        {
+          "nombre": "Ago-2026",
+          "valor": 780.64
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "mat-c03",
+      "concepto": "Generación hidroeléctrica del SNI en agosto: 2024, 2025 y 2026",
+      "unidad": "GWh",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "AMM · Generación mensual por planta (Despacho de carga ejecutado del SNI), tabla «Generación por tipo de recurso»",
+      "url": "https://www.amm.org.gt/pdfs2/pub_gen_mensual_x_planta/GM20260101.xlsx",
+      "periodo": "agosto 2024 / 2025 / 2026",
+      "n_puntos": 3,
+      "valor": 322.69,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo propio desde los CSV locales de los tres archivos AMM GM{2024,2025,2026}0101 (suma de tecnologías por tabla y por planta; coincide con filas No Renovable y TOTAL)",
+      "evidencia": {
+        "url": "https://www.amm.org.gt/pdfs2/pub_gen_mensual_x_planta/GM20260101.xlsx",
+        "cita": "PLANTAS HIDROELÉCTRICAS, agosto: 322.69343651645403 (GM20260101); 432.89529773730669 (GM20250101); 615.38595316825035 (GM20240101)",
+        "archivo_local": "sesiones/_descargas/GM20260101_hoja1.csv ; sesiones/_descargas/GM20250101_hoja1.csv ; sesiones/_descargas/GM20240101_hoja1.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Ago-2024",
+          "valor": 615.39
+        },
+        {
+          "nombre": "Ago-2025",
+          "valor": 432.9
+        },
+        {
+          "nombre": "Ago-2026",
+          "valor": 322.69
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_3.png"
+      ]
+    },
+    {
+      "id": "mat-c04",
+      "concepto": "Generación del SNI por tipo de recurso, agosto 2026",
+      "unidad": "GWh",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "AMM · Generación mensual por planta (Despacho de carga ejecutado del SNI), tabla «Generación por tipo de recurso»",
+      "url": "https://www.amm.org.gt/pdfs2/pub_gen_mensual_x_planta/GM20260101.xlsx",
+      "periodo": "2026-08",
+      "n_puntos": 12,
+      "valor": 1318.87,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo propio desde los CSV locales de los tres archivos AMM GM{2024,2025,2026}0101 (suma de tecnologías por tabla y por planta; coincide con filas No Renovable y TOTAL)",
+      "evidencia": {
+        "url": "https://www.amm.org.gt/pdfs2/pub_gen_mensual_x_planta/GM20260101.xlsx",
+        "cita": "Carbon Mineral 478.143181696755; Hidroeléctrica 322.69343651645403; Coque de Petróleo 159.70029826000004; Solar 142.27836050124495; Bunker 127.41724864357099; TOTAL 1318.8738391960478",
+        "archivo_local": "sesiones/_descargas/GM20260101_hoja1.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Carbon Mineral",
+          "valor": 478.14
+        },
+        {
+          "nombre": "Hidroeléctrica",
+          "valor": 322.69
+        },
+        {
+          "nombre": "Coque de Petróleo",
+          "valor": 159.7
+        },
+        {
+          "nombre": "Solar",
+          "valor": 142.28
+        },
+        {
+          "nombre": "Bunker",
+          "valor": 127.42
+        },
+        {
+          "nombre": "Eólica",
+          "valor": 49.78
+        },
+        {
+          "nombre": "Geotérmica",
+          "valor": 21.94
+        },
+        {
+          "nombre": "Gas Natural",
+          "valor": 11.5
+        },
+        {
+          "nombre": "Diesel",
+          "valor": 3.88
+        },
+        {
+          "nombre": "Biogás",
+          "valor": 1.27
+        },
+        {
+          "nombre": "Biomasa",
+          "valor": 0.27
+        },
+        {
+          "nombre": "Syngas",
+          "valor": 0.0
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_2.png"
+      ]
+    },
+    {
+      "id": "mat-c05",
+      "concepto": "Generación con bunker (motores reciprocantes y cogeneración) en agosto: 2024, 2025 y 2026",
+      "unidad": "GWh",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "AMM · Generación mensual por planta (Despacho de carga ejecutado del SNI), tabla «Generación por tipo de recurso»",
+      "url": "https://www.amm.org.gt/pdfs2/pub_gen_mensual_x_planta/GM20260101.xlsx",
+      "periodo": "agosto 2024 / 2025 / 2026",
+      "n_puntos": 3,
+      "valor": 127.42,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo propio desde los CSV locales de los tres archivos AMM GM{2024,2025,2026}0101 (suma de tecnologías por tabla y por planta; coincide con filas No Renovable y TOTAL)",
+      "evidencia": {
+        "url": "https://www.amm.org.gt/pdfs2/pub_gen_mensual_x_planta/GM20260101.xlsx",
+        "cita": "Bunker, agosto: 127.41724864357099 (GM20260101); 50.641058270864995 (GM20250101); 31.721614858496995 (GM20240101)",
+        "archivo_local": "sesiones/_descargas/GM20260101_hoja1.csv ; sesiones/_descargas/GM20250101_hoja1.csv ; sesiones/_descargas/GM20240101_hoja1.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Ago-2024",
+          "valor": 31.72
+        },
+        {
+          "nombre": "Ago-2025",
+          "valor": 50.64
+        },
+        {
+          "nombre": "Ago-2026",
+          "valor": 127.42
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_3.png"
+      ]
+    },
+    {
+      "id": "mat-c06",
+      "concepto": "Generación con carbón mineral en agosto: 2024, 2025 y 2026",
+      "unidad": "GWh",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "AMM · Generación mensual por planta (Despacho de carga ejecutado del SNI), tabla «Generación por tipo de recurso»",
+      "url": "https://www.amm.org.gt/pdfs2/pub_gen_mensual_x_planta/GM20260101.xlsx",
+      "periodo": "agosto 2024 / 2025 / 2026",
+      "n_puntos": 3,
+      "valor": 478.14,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo propio desde los CSV locales de los tres archivos AMM GM{2024,2025,2026}0101 (suma de tecnologías por tabla y por planta; coincide con filas No Renovable y TOTAL)",
+      "evidencia": {
+        "url": "https://www.amm.org.gt/pdfs2/pub_gen_mensual_x_planta/GM20260101.xlsx",
+        "cita": "Carbon Mineral, agosto: 478.143181696755 (GM20260101); 378.22324548333825 (GM20250101); 248.011218059931 (GM20240101)",
+        "archivo_local": "sesiones/_descargas/GM20260101_hoja1.csv ; sesiones/_descargas/GM20250101_hoja1.csv ; sesiones/_descargas/GM20240101_hoja1.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Ago-2024",
+          "valor": 248.01
+        },
+        {
+          "nombre": "Ago-2025",
+          "valor": 378.22
+        },
+        {
+          "nombre": "Ago-2026",
+          "valor": 478.14
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_3.png"
+      ]
+    },
+    {
+      "id": "mat-c07",
+      "concepto": "Generación hidroeléctrica mensual del SNI",
+      "unidad": "GWh",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "AMM · Generación mensual por planta (Despacho de carga ejecutado del SNI), tabla «Generación por tipo de recurso»",
+      "url": "https://www.amm.org.gt/pdfs2/pub_gen_mensual_x_planta/GM20260101.xlsx",
+      "periodo": "2024-01 a 2026-08",
+      "n_puntos": 32,
+      "valor": 322.69,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo propio desde los CSV locales de los tres archivos AMM GM{2024,2025,2026}0101 (suma de tecnologías por tabla y por planta; coincide con filas No Renovable y TOTAL)",
+      "evidencia": {
+        "url": "https://www.amm.org.gt/pdfs2/pub_gen_mensual_x_planta/GM20260101.xlsx",
+        "cita": "Hidroeléctrica, 386.33551678507092, 294.239331884732, … 440.93364806772615, 322.69343651645403 (ene–ago 2026, GWh)",
+        "archivo_local": "sesiones/_descargas/GM20240101_hoja1.csv ; sesiones/_descargas/GM20250101_hoja1.csv ; sesiones/_descargas/GM20260101_hoja1.csv"
+      },
+      "serie": [
+        {
+          "p": "2024-01",
+          "v": 321.26
+        },
+        {
+          "p": "2024-02",
+          "v": 280.9
+        },
+        {
+          "p": "2024-03",
+          "v": 225.46
+        },
+        {
+          "p": "2024-04",
+          "v": 235.92
+        },
+        {
+          "p": "2024-05",
+          "v": 229.41
+        },
+        {
+          "p": "2024-06",
+          "v": 401.41
+        },
+        {
+          "p": "2024-07",
+          "v": 588.89
+        },
+        {
+          "p": "2024-08",
+          "v": 615.39
+        },
+        {
+          "p": "2024-09",
+          "v": 624.83
+        },
+        {
+          "p": "2024-10",
+          "v": 658.89
+        },
+        {
+          "p": "2024-11",
+          "v": 599.47
+        },
+        {
+          "p": "2024-12",
+          "v": 552.33
+        },
+        {
+          "p": "2025-01",
+          "v": 462.06
+        },
+        {
+          "p": "2025-02",
+          "v": 337.9
+        },
+        {
+          "p": "2025-03",
+          "v": 331.41
+        },
+        {
+          "p": "2025-04",
+          "v": 298.09
+        },
+        {
+          "p": "2025-05",
+          "v": 275.33
+        },
+        {
+          "p": "2025-06",
+          "v": 470.75
+        },
+        {
+          "p": "2025-07",
+          "v": 480.19
+        },
+        {
+          "p": "2025-08",
+          "v": 432.9
+        },
+        {
+          "p": "2025-09",
+          "v": 613.1
+        },
+        {
+          "p": "2025-10",
+          "v": 768.66
+        },
+        {
+          "p": "2025-11",
+          "v": 525.74
+        },
+        {
+          "p": "2025-12",
+          "v": 477.4
+        },
+        {
+          "p": "2026-01",
+          "v": 386.34
+        },
+        {
+          "p": "2026-02",
+          "v": 294.24
+        },
+        {
+          "p": "2026-03",
+          "v": 339.81
+        },
+        {
+          "p": "2026-04",
+          "v": 346.88
+        },
+        {
+          "p": "2026-05",
+          "v": 297.2
+        },
+        {
+          "p": "2026-06",
+          "v": 404.36
+        },
+        {
+          "p": "2026-07",
+          "v": 440.93
+        },
+        {
+          "p": "2026-08",
+          "v": 322.69
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_4.png"
+      ]
+    },
+    {
+      "id": "mat-c08",
+      "concepto": "Generación fósil (no renovable) mensual del SNI",
+      "unidad": "GWh",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "AMM · Generación mensual por planta (Despacho de carga ejecutado del SNI), tabla «Generación por tipo de recurso»",
+      "url": "https://www.amm.org.gt/pdfs2/pub_gen_mensual_x_planta/GM20260101.xlsx",
+      "periodo": "2024-01 a 2026-08",
+      "n_puntos": 32,
+      "valor": 780.64,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo propio desde los CSV locales de los tres archivos AMM GM{2024,2025,2026}0101 (suma de tecnologías por tabla y por planta; coincide con filas No Renovable y TOTAL)",
+      "evidencia": {
+        "url": "https://www.amm.org.gt/pdfs2/pub_gen_mensual_x_planta/GM20260101.xlsx",
+        "cita": "No Renovable GWh,314.05154411926861,308.21102998822556,…,728.32425895498807,780.63758017497503 (ene–ago 2026)",
+        "archivo_local": "sesiones/_descargas/GM20240101_hoja2.csv ; sesiones/_descargas/GM20250101_hoja2.csv ; sesiones/_descargas/GM20260101_hoja2.csv"
+      },
+      "serie": [
+        {
+          "p": "2024-01",
+          "v": 395.61
+        },
+        {
+          "p": "2024-02",
+          "v": 380.97
+        },
+        {
+          "p": "2024-03",
+          "v": 516.13
+        },
+        {
+          "p": "2024-04",
+          "v": 546.83
+        },
+        {
+          "p": "2024-05",
+          "v": 722.23
+        },
+        {
+          "p": "2024-06",
+          "v": 618.56
+        },
+        {
+          "p": "2024-07",
+          "v": 476.56
+        },
+        {
+          "p": "2024-08",
+          "v": 430.26
+        },
+        {
+          "p": "2024-09",
+          "v": 404.58
+        },
+        {
+          "p": "2024-10",
+          "v": 380.13
+        },
+        {
+          "p": "2024-11",
+          "v": 334.94
+        },
+        {
+          "p": "2024-12",
+          "v": 151.21
+        },
+        {
+          "p": "2025-01",
+          "v": 197.04
+        },
+        {
+          "p": "2025-02",
+          "v": 288.59
+        },
+        {
+          "p": "2025-03",
+          "v": 455.6
+        },
+        {
+          "p": "2025-04",
+          "v": 472.65
+        },
+        {
+          "p": "2025-05",
+          "v": 636.37
+        },
+        {
+          "p": "2025-06",
+          "v": 483.75
+        },
+        {
+          "p": "2025-07",
+          "v": 494.9
+        },
+        {
+          "p": "2025-08",
+          "v": 591.85
+        },
+        {
+          "p": "2025-09",
+          "v": 432.69
+        },
+        {
+          "p": "2025-10",
+          "v": 289.21
+        },
+        {
+          "p": "2025-11",
+          "v": 353.35
+        },
+        {
+          "p": "2025-12",
+          "v": 304.91
+        },
+        {
+          "p": "2026-01",
+          "v": 314.05
+        },
+        {
+          "p": "2026-02",
+          "v": 308.21
+        },
+        {
+          "p": "2026-03",
+          "v": 428.55
+        },
+        {
+          "p": "2026-04",
+          "v": 442.64
+        },
+        {
+          "p": "2026-05",
+          "v": 565.29
+        },
+        {
+          "p": "2026-06",
+          "v": 653.78
+        },
+        {
+          "p": "2026-07",
+          "v": 728.32
+        },
+        {
+          "p": "2026-08",
+          "v": 780.64
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_4.png"
+      ]
+    },
+    {
+      "id": "mat-c09",
+      "concepto": "Generación solar fotovoltaica mensual del SNI",
+      "unidad": "GWh",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "AMM · Generación mensual por planta (Despacho de carga ejecutado del SNI), tabla «Generación por tipo de recurso»",
+      "url": "https://www.amm.org.gt/pdfs2/pub_gen_mensual_x_planta/GM20260101.xlsx",
+      "periodo": "2024-01 a 2026-08",
+      "n_puntos": 32,
+      "valor": 142.28,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo propio desde los CSV locales de los tres archivos AMM GM{2024,2025,2026}0101 (suma de tecnologías por tabla y por planta; coincide con filas No Renovable y TOTAL)",
+      "evidencia": {
+        "url": "https://www.amm.org.gt/pdfs2/pub_gen_mensual_x_planta/GM20260101.xlsx",
+        "cita": "Solar, agosto 2026: 142.27836050124495; PLANTAS SOLARES agosto: 48.600428297037993 (GM20250101); 22.913146277719001 (GM20240101)",
+        "archivo_local": "sesiones/_descargas/GM20260101_hoja1.csv ; sesiones/_descargas/GM20250101_hoja1.csv ; sesiones/_descargas/GM20240101_hoja1.csv"
+      },
+      "serie": [
+        {
+          "p": "2024-01",
+          "v": 22.15
+        },
+        {
+          "p": "2024-02",
+          "v": 23.06
+        },
+        {
+          "p": "2024-03",
+          "v": 23.57
+        },
+        {
+          "p": "2024-04",
+          "v": 21.28
+        },
+        {
+          "p": "2024-05",
+          "v": 19.72
+        },
+        {
+          "p": "2024-06",
+          "v": 15.03
+        },
+        {
+          "p": "2024-07",
+          "v": 21.29
+        },
+        {
+          "p": "2024-08",
+          "v": 22.91
+        },
+        {
+          "p": "2024-09",
+          "v": 19.84
+        },
+        {
+          "p": "2024-10",
+          "v": 21.66
+        },
+        {
+          "p": "2024-11",
+          "v": 19.35
+        },
+        {
+          "p": "2024-12",
+          "v": 22.24
+        },
+        {
+          "p": "2025-01",
+          "v": 29.89
+        },
+        {
+          "p": "2025-02",
+          "v": 33.39
+        },
+        {
+          "p": "2025-03",
+          "v": 41.25
+        },
+        {
+          "p": "2025-04",
+          "v": 41.45
+        },
+        {
+          "p": "2025-05",
+          "v": 39.64
+        },
+        {
+          "p": "2025-06",
+          "v": 34.94
+        },
+        {
+          "p": "2025-07",
+          "v": 44.01
+        },
+        {
+          "p": "2025-08",
+          "v": 48.6
+        },
+        {
+          "p": "2025-09",
+          "v": 47.89
+        },
+        {
+          "p": "2025-10",
+          "v": 51.51
+        },
+        {
+          "p": "2025-11",
+          "v": 56.9
+        },
+        {
+          "p": "2025-12",
+          "v": 59.75
+        },
+        {
+          "p": "2026-01",
+          "v": 64.93
+        },
+        {
+          "p": "2026-02",
+          "v": 65.81
+        },
+        {
+          "p": "2026-03",
+          "v": 82.15
+        },
+        {
+          "p": "2026-04",
+          "v": 83.44
+        },
+        {
+          "p": "2026-05",
+          "v": 84.9
+        },
+        {
+          "p": "2026-06",
+          "v": 86.6
+        },
+        {
+          "p": "2026-07",
+          "v": 114.56
+        },
+        {
+          "p": "2026-08",
+          "v": 142.28
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_3.png"
+      ]
+    },
+    {
+      "id": "mat-c10",
+      "concepto": "Generación fósil acumulada enero–agosto y su participación: 2024, 2025, 2026",
+      "unidad": "GWh",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "AMM · Generación mensual por planta (Despacho de carga ejecutado del SNI), tabla «Generación por tipo de recurso»",
+      "url": "https://www.amm.org.gt/pdfs2/pub_gen_mensual_x_planta/GM20260101.xlsx",
+      "periodo": "ene–ago 2024 / 2025 / 2026",
+      "n_puntos": 3,
+      "valor": 4221.49,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo propio desde los CSV locales de los tres archivos AMM GM{2024,2025,2026}0101 (suma de tecnologías por tabla y por planta; coincide con filas No Renovable y TOTAL)",
+      "evidencia": {
+        "url": "https://www.amm.org.gt/pdfs2/pub_gen_mensual_x_planta/GM20260101.xlsx",
+        "cita": "No Renovable GWh … Total 4221.4887303769901, 0.43799385189196738 (archivo 2026, datos a agosto)",
+        "archivo_local": "sesiones/_descargas/GM20260101_hoja2.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Ene–ago 2024",
+          "valor": 4087.15
+        },
+        {
+          "nombre": "Ene–ago 2025",
+          "valor": 3620.74
+        },
+        {
+          "nombre": "Ene–ago 2026",
+          "valor": 4221.49
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "mat-c11",
+      "concepto": "Demanda de energía del SNI en agosto 2026 vs agosto 2025",
+      "unidad": "GWh",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "AMM · Generación mensual por planta, fila «DEMANDA S.N.I. [GWH]»",
+      "url": "https://www.amm.org.gt/pdfs2/pub_gen_mensual_x_planta/GM20260101.xlsx",
+      "periodo": "agosto 2025 / 2026",
+      "n_puntos": 2,
+      "valor": 1424.98,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo propio desde los CSV locales de los tres archivos AMM GM{2024,2025,2026}0101 (suma de tecnologías por tabla y por planta; coincide con filas No Renovable y TOTAL)",
+      "evidencia": {
+        "url": "https://www.amm.org.gt/pdfs2/pub_gen_mensual_x_planta/GM20260101.xlsx",
+        "cita": "DEMANDA S.N.I. [GWH], agosto: 1424.9836782986583 (GM20260101); 1253.5933965043048 (GM20250101)",
+        "archivo_local": "sesiones/_descargas/GM20260101_hoja1.csv ; sesiones/_descargas/GM20250101_hoja1.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Ago-2025",
+          "valor": 1253.59
+        },
+        {
+          "nombre": "Ago-2026",
+          "valor": 1424.98
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "spo-c01",
+      "concepto": "Precio spot (POE) promedio mensual, promedio simple de los precios horarios",
+      "unidad": "USD/MWh",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "AMM · Precios de Oportunidad de la Energía anuales (PSA 2023, 2024, 2025)",
+      "url": "https://www.amm.org.gt/pdfs2/2025/spot/PSA20250101.xls",
+      "periodo": "2023-01 a 2025-12",
+      "n_puntos": 36,
+      "valor": 75.21,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AMM · PSA 2025 (recálculo propio desde CSV local); jul-2025 coincide con Rio Times/Ager 84.45",
+      "evidencia": {
+        "url": "https://www.amm.org.gt/pdfs2/2025/spot/PSA20250101.xls",
+        "cita": "Administrador del Mercado Mayorista de Guatemala | Precios de Oportunidad de la Energía | Año 2025 | Día, hora, USD/MWH (8,760 registros horarios)",
+        "archivo_local": "sesiones/_descargas/PSA20250101.csv; sesiones/_descargas/PSA20240101.csv; sesiones/_descargas/PSA20230101.csv"
+      },
+      "serie": [
+        {
+          "p": "2023-01",
+          "v": 76.12
+        },
+        {
+          "p": "2023-02",
+          "v": 81.87
+        },
+        {
+          "p": "2023-03",
+          "v": 115.47
+        },
+        {
+          "p": "2023-04",
+          "v": 112.96
+        },
+        {
+          "p": "2023-05",
+          "v": 157.19
+        },
+        {
+          "p": "2023-06",
+          "v": 160.81
+        },
+        {
+          "p": "2023-07",
+          "v": 109.67
+        },
+        {
+          "p": "2023-08",
+          "v": 105.76
+        },
+        {
+          "p": "2023-09",
+          "v": 88.0
+        },
+        {
+          "p": "2023-10",
+          "v": 89.74
+        },
+        {
+          "p": "2023-11",
+          "v": 77.75
+        },
+        {
+          "p": "2023-12",
+          "v": 87.04
+        },
+        {
+          "p": "2024-01",
+          "v": 105.02
+        },
+        {
+          "p": "2024-02",
+          "v": 108.37
+        },
+        {
+          "p": "2024-03",
+          "v": 173.6
+        },
+        {
+          "p": "2024-04",
+          "v": 170.82
+        },
+        {
+          "p": "2024-05",
+          "v": 214.17
+        },
+        {
+          "p": "2024-06",
+          "v": 133.63
+        },
+        {
+          "p": "2024-07",
+          "v": 95.59
+        },
+        {
+          "p": "2024-08",
+          "v": 86.07
+        },
+        {
+          "p": "2024-09",
+          "v": 101.73
+        },
+        {
+          "p": "2024-10",
+          "v": 80.04
+        },
+        {
+          "p": "2024-11",
+          "v": 74.28
+        },
+        {
+          "p": "2024-12",
+          "v": 54.27
+        },
+        {
+          "p": "2025-01",
+          "v": 60.68
+        },
+        {
+          "p": "2025-02",
+          "v": 73.98
+        },
+        {
+          "p": "2025-03",
+          "v": 91.51
+        },
+        {
+          "p": "2025-04",
+          "v": 106.83
+        },
+        {
+          "p": "2025-05",
+          "v": 124.07
+        },
+        {
+          "p": "2025-06",
+          "v": 79.6
+        },
+        {
+          "p": "2025-07",
+          "v": 84.45
+        },
+        {
+          "p": "2025-08",
+          "v": 87.24
+        },
+        {
+          "p": "2025-09",
+          "v": 84.58
+        },
+        {
+          "p": "2025-10",
+          "v": 73.73
+        },
+        {
+          "p": "2025-11",
+          "v": 72.3
+        },
+        {
+          "p": "2025-12",
+          "v": 75.21
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "spo-c02",
+      "concepto": "Precio spot (POE) promedio trimestral",
+      "unidad": "USD/MWh",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "AMM · Informe Estadístico Segundo Trimestre 2026",
+      "url": "https://www.amm.org.gt/portal/?wpfb_dl=1108",
+      "periodo": "1T 2025 a 2T 2026",
+      "n_puntos": 6,
+      "valor": 128.97,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AMM Informe Estadístico 2T 2026 (texto local) + recálculo PSA2025",
+      "evidencia": {
+        "url": "https://www.amm.org.gt/portal/?wpfb_dl=1108",
+        "cita": "Precio SPOT promedio trimestral 128.97 USD/MWh 24.61% ... *Nota: Variación con respecto al promedio de 2do Trimestre del año anterior.",
+        "archivo_local": "sesiones/_descargas/amm_informe_estadistico_2t2026.txt"
+      },
+      "serie": [
+        {
+          "p": "1T 2025",
+          "v": 75.39
+        },
+        {
+          "p": "2T 2025",
+          "v": 103.5
+        },
+        {
+          "p": "3T 2025",
+          "v": 85.43
+        },
+        {
+          "p": "4T 2025",
+          "v": 73.74
+        },
+        {
+          "p": "1T 2026",
+          "v": 73.44
+        },
+        {
+          "p": "2T 2026",
+          "v": 128.97
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "spo-c03",
+      "concepto": "Precio spot (POE) promedio anual",
+      "unidad": "USD/MWh",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "CNEE · Compendio Estadístico 2024 (2019–2023) y AMM PSA 2024–2025 (cálculo propio)",
+      "url": "https://cnee.gob.gt/xhtml/informacion/Docs/Compendio_Estadistico_2024.pdf",
+      "periodo": "2019 a 2025",
+      "n_puntos": 7,
+      "valor": 84.59,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "CNEE Compendio 2024 (2019-2023) + recálculo PSA",
+      "evidencia": {
+        "url": "https://cnee.gob.gt/xhtml/informacion/Docs/Compendio_Estadistico_2024.pdf",
+        "cita": "Promedio del Precio SPOT de la energía - USD/MWh 63.3 41.1 63.4 86.2 105.2 (Datos Generales 2019 2020 2021 2022 2023)",
+        "archivo_local": "sesiones/_descargas/Compendio_Estadistico_2024.txt; sesiones/_descargas/PSA20240101.csv; sesiones/_descargas/PSA20250101.csv"
+      },
+      "serie": [
+        {
+          "p": "2019",
+          "v": 63.3
+        },
+        {
+          "p": "2020",
+          "v": 41.1
+        },
+        {
+          "p": "2021",
+          "v": 63.4
+        },
+        {
+          "p": "2022",
+          "v": 86.2
+        },
+        {
+          "p": "2023",
+          "v": 105.2
+        },
+        {
+          "p": "2024",
+          "v": 116.47
+        },
+        {
+          "p": "2025",
+          "v": 84.59
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "spo-c04",
+      "concepto": "Precio spot promedio de julio 2026 vs julio 2025",
+      "unidad": "USD/MWh",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Rio Times (prensa) citando datos AMM analizados por Ager",
+      "url": "https://www.riotimesonline.com/guatemala-power-emergency-drought-hydropower-2026/",
+      "periodo": "jul-2025 vs jul-2026",
+      "n_puntos": 2,
+      "valor": 133.97,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Rio Times citando AMM analizado por Ager",
+      "evidencia": {
+        "url": "https://www.riotimesonline.com/guatemala-power-emergency-drought-hydropower-2026/",
+        "cita": "July 2026 at US$133.97 per megawatt-hour, compared to US$84.45 in July 2025",
+        "archivo_local": null
+      },
+      "partes": [
+        {
+          "nombre": "julio 2025",
+          "valor": 84.45
+        },
+        {
+          "nombre": "julio 2026",
+          "valor": 133.97
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_7.png"
+      ]
+    },
+    {
+      "id": "spo-c05",
+      "concepto": "Precio spot promedio por hora del día, año 2025",
+      "unidad": "USD/MWh",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "AMM · PSA 2025 (cálculo propio por hora)",
+      "url": "https://www.amm.org.gt/pdfs2/2025/spot/PSA20250101.xls",
+      "periodo": "2025 (00:00 a 23:00)",
+      "n_puntos": 24,
+      "valor": 112.71,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AMM · PSA 2025 (recálculo propio desde CSV local)",
+      "evidencia": {
+        "url": "https://www.amm.org.gt/pdfs2/2025/spot/PSA20250101.xls",
+        "cita": "Año 2025 | Día | hora | USD/MWH (columna hora 0–23; promedio de 365 valores por hora)",
+        "archivo_local": "sesiones/_descargas/PSA20250101.csv"
+      },
+      "partes": [
+        {
+          "nombre": "00:00",
+          "valor": 70.65
+        },
+        {
+          "nombre": "01:00",
+          "valor": 66.79
+        },
+        {
+          "nombre": "02:00",
+          "valor": 63.85
+        },
+        {
+          "nombre": "03:00",
+          "valor": 62.72
+        },
+        {
+          "nombre": "04:00",
+          "valor": 64.05
+        },
+        {
+          "nombre": "05:00",
+          "valor": 68.66
+        },
+        {
+          "nombre": "06:00",
+          "valor": 74.05
+        },
+        {
+          "nombre": "07:00",
+          "valor": 76.8
+        },
+        {
+          "nombre": "08:00",
+          "valor": 80.01
+        },
+        {
+          "nombre": "09:00",
+          "valor": 82.29
+        },
+        {
+          "nombre": "10:00",
+          "valor": 83.98
+        },
+        {
+          "nombre": "11:00",
+          "valor": 86.13
+        },
+        {
+          "nombre": "12:00",
+          "valor": 87.51
+        },
+        {
+          "nombre": "13:00",
+          "valor": 87.45
+        },
+        {
+          "nombre": "14:00",
+          "valor": 89.25
+        },
+        {
+          "nombre": "15:00",
+          "valor": 93.01
+        },
+        {
+          "nombre": "16:00",
+          "valor": 96.38
+        },
+        {
+          "nombre": "17:00",
+          "valor": 100.28
+        },
+        {
+          "nombre": "18:00",
+          "valor": 110.65
+        },
+        {
+          "nombre": "19:00",
+          "valor": 112.71
+        },
+        {
+          "nombre": "20:00",
+          "valor": 108.05
+        },
+        {
+          "nombre": "21:00",
+          "valor": 99.92
+        },
+        {
+          "nombre": "22:00",
+          "valor": 85.54
+        },
+        {
+          "nombre": "23:00",
+          "valor": 79.37
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_5.png"
+      ]
+    },
+    {
+      "id": "spo-c06",
+      "concepto": "Precio spot promedio del segundo trimestre (abr–jun), 2023 a 2026",
+      "unidad": "USD/MWh",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "AMM · PSA 2023–2024 (cálculo propio) e Informe Estadístico 2T 2026",
+      "url": "https://www.amm.org.gt/portal/?wpfb_dl=1108",
+      "periodo": "2T 2023 a 2T 2026",
+      "n_puntos": 4,
+      "valor": 128.97,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AMM Informe 2T 2026 + recálculo PSA2023/2024",
+      "evidencia": {
+        "url": "https://www.amm.org.gt/portal/?wpfb_dl=1108",
+        "cita": "Precio SPOT promedio trimestral 128.97 USD/MWh 24.61%",
+        "archivo_local": "sesiones/_descargas/amm_informe_estadistico_2t2026.txt; sesiones/_descargas/PSA20240101.csv; sesiones/_descargas/PSA20230101.csv"
+      },
+      "partes": [
+        {
+          "nombre": "2T 2023",
+          "valor": 143.8
+        },
+        {
+          "nombre": "2T 2024",
+          "valor": 173.33
+        },
+        {
+          "nombre": "2T 2025",
+          "valor": 103.5
+        },
+        {
+          "nombre": "2T 2026",
+          "valor": 128.97
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_8.png"
+      ]
+    },
+    {
+      "id": "spo-c07",
+      "concepto": "Precio Brent spot FOB promedio mensual",
+      "unidad": "USD/barril",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "EIA · Europe Brent Spot Price FOB (RBRTE)",
+      "url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=RBRTE&f=M",
+      "periodo": "2025-01 a 2026-08",
+      "n_puntos": 20,
+      "valor": 91.08,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "FRED (St. Louis Fed) MCOILBRENTEU, serie derivada de EIA",
+      "evidencia": {
+        "url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=RBRTE&f=M",
+        "cita": "2026 66.60 70.89 103.13 117.29 107.14 85.40 83.76 91.08",
+        "archivo_local": "sesiones/_descargas/LeafHandler.ashx"
+      },
+      "serie": [
+        {
+          "p": "2025-01",
+          "v": 79.27
+        },
+        {
+          "p": "2025-02",
+          "v": 75.44
+        },
+        {
+          "p": "2025-03",
+          "v": 72.73
+        },
+        {
+          "p": "2025-04",
+          "v": 68.13
+        },
+        {
+          "p": "2025-05",
+          "v": 64.45
+        },
+        {
+          "p": "2025-06",
+          "v": 71.44
+        },
+        {
+          "p": "2025-07",
+          "v": 71.04
+        },
+        {
+          "p": "2025-08",
+          "v": 67.87
+        },
+        {
+          "p": "2025-09",
+          "v": 67.99
+        },
+        {
+          "p": "2025-10",
+          "v": 64.54
+        },
+        {
+          "p": "2025-11",
+          "v": 63.8
+        },
+        {
+          "p": "2025-12",
+          "v": 62.54
+        },
+        {
+          "p": "2026-01",
+          "v": 66.6
+        },
+        {
+          "p": "2026-02",
+          "v": 70.89
+        },
+        {
+          "p": "2026-03",
+          "v": 103.13
+        },
+        {
+          "p": "2026-04",
+          "v": 117.29
+        },
+        {
+          "p": "2026-05",
+          "v": 107.14
+        },
+        {
+          "p": "2026-06",
+          "v": 85.4
+        },
+        {
+          "p": "2026-07",
+          "v": 83.76
+        },
+        {
+          "p": "2026-08",
+          "v": 91.08
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "spo-c08",
+      "concepto": "Participación del Mercado de Oportunidad en las transacciones de energía, 2T 2026",
+      "unidad": "%",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "AMM · Informe Estadístico Segundo Trimestre 2026",
+      "url": "https://www.amm.org.gt/portal/?wpfb_dl=1108",
+      "periodo": "2T 2026",
+      "n_puntos": 2,
+      "valor": 14,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AMM Informe Estadístico 2T 2026 (archivo local)",
+      "evidencia": {
+        "url": "https://www.amm.org.gt/portal/?wpfb_dl=1108",
+        "cita": "MERCADO A TÉRMINO Y MERCADO DE OPORTUNIDAD SEGUNDO TRIMESTRE 2026 ... Mercado de Oportunidad 14% ... 86% Mercado a Término",
+        "archivo_local": "sesiones/_descargas/amm_informe_estadistico_2t2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Mercado a Término",
+          "valor": 86
+        },
+        {
+          "nombre": "Mercado de Oportunidad",
+          "valor": 14
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_9.png"
+      ]
+    },
+    {
+      "id": "spo-c09",
+      "concepto": "Precio spot promedio de agosto 2025",
+      "unidad": "USD/MWh",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "AMM · PSA 2025 (cálculo propio)",
+      "url": "https://www.amm.org.gt/pdfs2/2025/spot/PSA20250101.xls",
+      "periodo": "2025-08",
+      "n_puntos": 1,
+      "valor": 87.24,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AMM · PSA 2025 (recálculo propio desde CSV local)",
+      "evidencia": {
+        "url": "https://www.amm.org.gt/pdfs2/2025/spot/PSA20250101.xls",
+        "cita": "Año 2025 | Día | hora | USD/MWH — 744 registros horarios de agosto, media 87.2427",
+        "archivo_local": "sesiones/_descargas/PSA20250101.csv"
+      },
+      "usada": false,
+      "aparece_en": []
+    }
+  ],
+  "fuentes": [
+    {
+      "nombre": "AMM · Análisis del Mercado Mayorista (mensual), rd.amm.org.gt",
+      "url": "https://rd.amm.org.gt/category/analisis-del-mercado-mayorista/",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "AMM · Informe Estadístico Segundo Trimestre 2026",
+      "url": "https://www.amm.org.gt/portal/?wpfb_dl=1108",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Prensa Libre · ¿Por qué aumenta la demanda de electricidad en Guatemala? (23-may-2026)",
+      "url": "https://www.prensalibre.com/economia/por-que-aumenta-la-demanda-de-electricidad-en-guatemala-calor-industria-y-mas-consumo/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "García Bodán · resumen de las bases de la Licitación Abierta 1-2026 (CNEE)",
+      "url": "https://garciabodan.com/en/guatemala-approves-bidding-rules-for-the-procurement-of-300-mw-of-power-supply/",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "AMM · Generación Mensual por Planta (XLSX) 2024, 2025, 2026 (pub_gen_mensual_x_planta)",
+      "url": "https://www.amm.org.gt/pdfs2/pub_gen_mensual_x_planta/GM20260101.xlsx",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Rio Times (prensa, cita datos AMM y Ager)",
+      "url": "https://www.riotimesonline.com/guatemala-power-emergency-drought-hydropower-2026/",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "AMM · Precios de Oportunidad de la Energía anuales (PSA)",
+      "url": "https://www.amm.org.gt/pdfs2/2025/spot/PSA20250101.xls",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "CNEE · Compendio Estadístico 2024",
+      "url": "https://cnee.gob.gt/xhtml/informacion/Docs/Compendio_Estadistico_2024.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "EIA · Europe Brent Spot Price FOB",
+      "url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=RBRTE&f=M",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Rio Times · Guatemala power emergency (cita AMM/Ager)",
+      "url": "https://www.riotimesonline.com/guatemala-power-emergency-drought-hydropower-2026/",
+      "nivel": "prensa"
+    }
+  ],
+  "no_afirma": [
+    "No afirma que la generación térmica se duplicara: la fósil de agosto subió 31.9% frente a agosto de 2025 (solo el bunker se multiplicó por 2.5).",
+    "No afirma un precio spot de agosto de 2026 ni el +86% de la tesis inicial: no se confirmó en fuente primaria.",
+    "No afirma cuánto sube la tarifa al usuario: el spot cubre 14% de las transacciones y la tarifa la fija la CNEE.",
+    "No afirma qué tecnología cubre ni qué planta marca el precio en la hora pico: el AMM no publica la mezcla horaria en archivo descargable.",
+    "No afirma que la participación fósil sea un récord histórico: la serie solo cubre 2024–2026 y mayo de 2024 (63.27%) fue mayor."
+  ],
+  "incertidumbre": [
+    "Todas las cifras usadas tienen una segunda fuente que reproduce la primaria (independencia baja), incluida la ancla mat-c01; no hay verificación independiente de ninguna.",
+    "El spot de julio de 2026 (US$133.97/MWh) viene de prensa (Rio Times) citando al AMM; el archivo PSA 2026 no estaba disponible. Julio 2025 (84.45) sí coincide con el PSA del AMM.",
+    "La participación fósil depende de la clasificación por recurso del AMM (incluye coque de petróleo; los ingenios se separan por combustible).",
+    "El precio por hora es el promedio de 2025, no de 2026; la curva horaria de demanda por tecnología del día de máxima no está disponible en archivo.",
+    "La conversión a centavos por kWh (T7) es aritmética de unidades (1 MWh = 1,000 kWh), no una cifra publicada."
+  ],
+  "descartadas": [
+    {
+      "id": "cur-c09",
+      "por": "no_confirmada"
+    }
+  ]
+}

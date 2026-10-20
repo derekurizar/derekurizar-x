@@ -1,0 +1,22 @@
+{
+ "meta": {
+  "titulo": "Fixture de auditoría",
+  "numero": "00",
+  "fecha": "2026-10-14",
+  "paleta": "obsidiana"
+ },
+ "paginas": [
+  {
+   "tipo": "cuerpo",
+   "auto": "fichas:1"
+  },
+  {
+   "tipo": "cuerpo",
+   "auto": "fichas:2"
+  },
+  {
+   "tipo": "anexo",
+   "auto": "evidencias:todas"
+  }
+ ]
+}

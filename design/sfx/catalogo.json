@@ -1,0 +1,94 @@
+{
+ "version": 1,
+ "_comentario": "Biblioteca FIJA de efectos de /video, generada UNA vez con el nodo sfx (eleven_text_to_sound_v2) e importada con scripts/sfx.py --importar. /video nunca genera efectos; para cambiar uno, reimportar la url de otra variación.",
+ "efectos": [
+  {
+   "id": "whoosh",
+   "archivo": "whoosh.wav",
+   "duracion_s": 0.68,
+   "uso": "entrada de tarjeta",
+   "ganancia_db": -18,
+   "prompt": "Short soft air whoosh, smooth and dry, close-mic, no tail",
+   "prompt_influence": 0.6,
+   "generation_id": "9szjywWBsoLyw4TprTH3",
+   "flow_id": "Wl0H0rKpaZFB5bWqsDsM"
+  },
+  {
+   "id": "tic",
+   "archivo": "tic.wav",
+   "duracion_s": 0.267,
+   "uso": "fin de conteo",
+   "ganancia_db": -14,
+   "prompt": "Single short dry wooden tick, like a soft pencil tap on a desk, no reverb",
+   "prompt_influence": 0.7,
+   "generation_id": "sMJ3sam11ZHJbbHZzFer",
+   "flow_id": "Wl0H0rKpaZFB5bWqsDsM"
+  },
+  {
+   "id": "pulso",
+   "archivo": "pulso.wav",
+   "duracion_s": 0.6,
+   "uso": "cifra del gancho completa",
+   "ganancia_db": -10,
+   "prompt": "Single soft deep thump, muted kick-like, dry, quick decay",
+   "prompt_influence": 0.6,
+   "generation_id": "uOoyCSLtrWci3v3R1Hky",
+   "flow_id": "Wl0H0rKpaZFB5bWqsDsM"
+  },
+  {
+   "id": "impacto",
+   "archivo": "impacto.wav",
+   "duracion_s": 0.88,
+   "uso": "escena golpe",
+   "ganancia_db": -10,
+   "prompt": "Short cinematic impact with a muted low boom and a subtle tight click, dry, fast decay",
+   "prompt_influence": 0.6,
+   "generation_id": "thdBWTUMVqyjyp42fBr5",
+   "flow_id": "Wl0H0rKpaZFB5bWqsDsM"
+  },
+  {
+   "id": "grave",
+   "archivo": "grave.wav",
+   "duracion_s": 1.36,
+   "uso": "giro (enlace «pero»)",
+   "ganancia_db": -8,
+   "prompt": "Deep low sub-bass drop hit with a slow dark tail, cinematic, no high frequencies",
+   "prompt_influence": 0.6,
+   "generation_id": "kMdDsAo0cg06HtrTbKov",
+   "flow_id": "Wl0H0rKpaZFB5bWqsDsM"
+  },
+  {
+   "id": "riser",
+   "archivo": "riser.wav",
+   "duracion_s": 1.614,
+   "uso": "2 s antes del pago",
+   "ganancia_db": -16,
+   "prompt": "Two second tense filtered noise riser building steadily and cutting off cleanly at the end",
+   "prompt_influence": 0.7,
+   "generation_id": "6xLwMTzjfb7kqqKMLocD",
+   "flow_id": "Wl0H0rKpaZFB5bWqsDsM"
+  },
+  {
+   "id": "resolucion",
+   "archivo": "resolucion.wav",
+   "duracion_s": 1.6,
+   "uso": "pregunta del cierre",
+   "ganancia_db": -14,
+   "prompt": "Soft warm synth pad chord swelling gently and resolving, short, calm",
+   "prompt_influence": 0.5,
+   "generation_id": "DEnIRnDVkpIODDrKcbXt",
+   "flow_id": "Wl0H0rKpaZFB5bWqsDsM"
+  },
+  {
+   "id": "foco",
+   "archivo": "foco.wav",
+   "duracion_s": 0.577,
+   "uso": "inicio del zoom",
+   "ganancia_db": -22,
+   "prompt": "Very subtle soft airy sweep, quiet, like a slow breath, short",
+   "prompt_influence": 0.5,
+   "generation_id": "7dUiVhhcTXn1pxo8zjkQ",
+   "flow_id": "Wl0H0rKpaZFB5bWqsDsM"
+  }
+ ]
+}

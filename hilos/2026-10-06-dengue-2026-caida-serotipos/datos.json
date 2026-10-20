@@ -1,0 +1,2207 @@
+{
+  "slug": "dengue-2026-caida-serotipos",
+  "fecha": "2026-10-06",
+  "tesis": "A la semana 35, Guatemala acumula 12,699 casos sospechosos de dengue en la red del MSPAS, 40% menos que en 2025 pero más que en 2020, 2021 y 2022; la caída es regional y coincide con dos años de DENV-3 dominante, mientras el DENV-1 sube de 3% a 19% de las muestras: un valle del ciclo, no el fin del riesgo.",
+  "ancla_id": "ser-c01",
+  "paleta": "terracota",
+  "hook_tipo": "mito_vs_dato",
+  "cifras": [
+    {
+      "id": "cau-c01",
+      "concepto": "Proporción de DENV-3 entre las muestras de dengue serotipificadas en Guatemala, 2014–2026",
+      "unidad": "% de muestras serotipificadas",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "MSPAS/DEGR — boletines de arbovirosis SE-53-2025 y SE-35-2026 (datos del Laboratorio Nacional de Salud)",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+      "periodo": "2014–2026 (2026 a SE-35)",
+      "n_puntos": 13,
+      "valor": 74,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AGN Guatemala / Prensa Latina: DEN-3 predominante (83%) en 2024 (corte parcial)",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2025/arbovirosis-semana-53-2025.pdf",
+        "cita": "DEN-3 26.0% 6.3% 3.0% 0.6% 14.1% 6.7% 4.3% 4.3% 2.8% 54.5% 85.8% (2014-2024) · 2025: 'El serotipo DENV-3 representa el 86% de los casos tipificados' · 2026 SE-35: 'DENV-3: 74%'",
+        "archivo_local": "sesiones/_descargas/arbovirosis-semana-53-2025.txt"
+      },
+      "serie": [
+        {
+          "p": "2014",
+          "v": 26.0
+        },
+        {
+          "p": "2015",
+          "v": 6.3
+        },
+        {
+          "p": "2016",
+          "v": 3.0
+        },
+        {
+          "p": "2017",
+          "v": 0.6
+        },
+        {
+          "p": "2018",
+          "v": 14.1
+        },
+        {
+          "p": "2019",
+          "v": 6.7
+        },
+        {
+          "p": "2020",
+          "v": 4.3
+        },
+        {
+          "p": "2021",
+          "v": 4.3
+        },
+        {
+          "p": "2022",
+          "v": 2.8
+        },
+        {
+          "p": "2023",
+          "v": 54.5
+        },
+        {
+          "p": "2024",
+          "v": 85.8
+        },
+        {
+          "p": "2025",
+          "v": 86
+        },
+        {
+          "p": "2026",
+          "v": 74
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_3.png",
+        "tuit_6.png"
+      ]
+    },
+    {
+      "id": "cau-c02",
+      "concepto": "Proporción de DENV-1 entre las muestras de dengue serotipificadas en Guatemala, 2014–2026 (señal de cambio de serotipo)",
+      "unidad": "% de muestras serotipificadas",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "MSPAS/DEGR — boletines de arbovirosis SE-53-2025 y SE-35-2026 (LNS)",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+      "periodo": "2014–2026 (2026 a SE-35)",
+      "n_puntos": 13,
+      "valor": 19,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recalculo desde cuadro LNS/CHAI y boletín SE-35 (mismo MSPAS)",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+        "cita": "DENV-1: 19% ... Posterior a la alerta emitida en SE-30 por el incremento en la detección de DENV-1, no se evidencia hasta SE-35 un incremento sostenido de este serotipo ni un desplazamiento de DENV-3",
+        "archivo_local": "sesiones/_descargas/arbovirosis-semana-35-2026.txt"
+      },
+      "serie": [
+        {
+          "p": "2014",
+          "v": 28.0
+        },
+        {
+          "p": "2015",
+          "v": 44.2
+        },
+        {
+          "p": "2016",
+          "v": 14.2
+        },
+        {
+          "p": "2017",
+          "v": 6.1
+        },
+        {
+          "p": "2018",
+          "v": 8.3
+        },
+        {
+          "p": "2019",
+          "v": 11.1
+        },
+        {
+          "p": "2020",
+          "v": 22.5
+        },
+        {
+          "p": "2021",
+          "v": 31.3
+        },
+        {
+          "p": "2022",
+          "v": 32.5
+        },
+        {
+          "p": "2023",
+          "v": 12.8
+        },
+        {
+          "p": "2024",
+          "v": 4.4
+        },
+        {
+          "p": "2025",
+          "v": 3
+        },
+        {
+          "p": "2026",
+          "v": 19
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_6.png"
+      ]
+    },
+    {
+      "id": "cau-c03",
+      "concepto": "Serotipos de dengue circulantes en Guatemala en 2026 (a SE-35)",
+      "unidad": "% de muestras serotipificadas (N=216)",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "MSPAS/DEGR — Situación epidemiológica de arbovirosis, SE-35-2026 (LNS)",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+      "periodo": "SE-1 a SE-35 2026",
+      "n_puntos": 4,
+      "valor": 74,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "OPS: Guatemala reporta circulación DENV-1/2/3 (act. epi 18-feb-2026)",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+        "cita": "N = 216 (Muestras procesadas para serotipificación) DENV-1: 19% DENV-2: 8% DENV-3: 74% DENV-4: 0%",
+        "archivo_local": "sesiones/_descargas/arbovirosis-semana-35-2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "DENV-3",
+          "valor": 74
+        },
+        {
+          "nombre": "DENV-1",
+          "valor": 19
+        },
+        {
+          "nombre": "DENV-2",
+          "valor": 8
+        },
+        {
+          "nombre": "DENV-4",
+          "valor": 0
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "cau-c04",
+      "concepto": "Muestras PCR positivas por serotipo de dengue en Guatemala, 2025",
+      "unidad": "muestras PCR positivas",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "MSPAS/DEGR — Situación epidemiológica de arbovirosis, SE-53-2025 (LNS)",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2025/arbovirosis-semana-53-2025.pdf",
+      "periodo": "SE-1 a SE-53 2025",
+      "n_puntos": 3,
+      "valor": 514,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "OPS act. epi 18-feb-2026: Guatemala 2025 con DENV-1,2,3 y predominio de DENV-3",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2025/arbovirosis-semana-53-2025.pdf",
+        "cita": "Total 18 63 514 (DENV-1 DENV-2 DENV-3) · Circulación serotipos (sobre muestras PCR = 595) DENV-1: 3% DENV-2: 11% DENV-3: 86% DENV-4: 0%",
+        "archivo_local": "sesiones/_descargas/arbovirosis-semana-53-2025.txt"
+      },
+      "partes": [
+        {
+          "nombre": "DENV-3",
+          "valor": 514
+        },
+        {
+          "nombre": "DENV-2",
+          "valor": 63
+        },
+        {
+          "nombre": "DENV-1",
+          "valor": 18
+        },
+        {
+          "nombre": "DENV-4",
+          "valor": 0
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "cau-c05",
+      "concepto": "Variación de casos de dengue notificados en Guatemala a SE-35 2026 frente al mismo periodo de 2025",
+      "unidad": "% vs mismo periodo 2025",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "MSPAS/DEGR — Situación epidemiológica de arbovirosis, SE-35-2026",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+      "periodo": "SE-1 a SE-35 2026 vs 2025",
+      "n_puntos": 1,
+      "valor": -40,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo desde la gráfica del mismo boletín: 12,699 vs 21,252 = -40.2%",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+        "cita": "Hasta la SE-35 2026, el número de casos acumulados notificados: - 40% menor que en 2025 - 87% menor que 2024 (año epidémico).",
+        "archivo_local": "sesiones/_descargas/arbovirosis-semana-35-2026.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "T1",
+        "tuit_4.png"
+      ]
+    },
+    {
+      "id": "cau-c06",
+      "concepto": "Variación de casos sospechosos de dengue en la subregión Centroamérica y México a SE-35 2026 frente al mismo periodo de 2025",
+      "unidad": "% vs mismo periodo 2025",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "OPS/OMS — Informe de situación del dengue en las Américas, SE-35 2026 (PLISA)",
+      "url": "https://www.paho.org/sites/default/files/2026/09/2026-cde-dengue-sitrep-americas-epi-week-35-sep-es.pdf",
+      "periodo": "SE-1 a SE-35 2026 vs 2025",
+      "n_puntos": 1,
+      "valor": -40,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Cuadra con Honduras (-44% a SE-12) y Guatemala (-40%) dentro de la subregión",
+      "evidencia": {
+        "url": "https://www.paho.org/sites/default/files/2026/09/2026-cde-dengue-sitrep-americas-epi-week-35-sep-es.pdf",
+        "cita": "Subregión Centroamérica y México ... Hasta esta semana la subregión presenta una disminución de 40% en comparación con el mismo periodo del 2025 y 61% con respecto al promedio de los últimos 5 años",
+        "archivo_local": "sesiones/_descargas/2026-cde-dengue-sitrep-americas-epi-week-35-sep-es.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "T1",
+        "tuit_4.png"
+      ]
+    },
+    {
+      "id": "cau-c07",
+      "concepto": "Casos sospechosos de dengue en las Américas a SE-35 2026 y variación frente al mismo periodo de 2025",
+      "unidad": "% vs mismo periodo 2025",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "OPS/OMS — Informe de situación del dengue en las Américas, SE-35 2026 (PLISA)",
+      "url": "https://www.paho.org/sites/default/files/2026/09/2026-cde-dengue-sitrep-americas-epi-week-35-sep-es.pdf",
+      "periodo": "SE-1 a SE-35 2026 vs 2025",
+      "n_puntos": 4,
+      "valor": -57,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo de partes del mismo informe; OPS es primaria",
+      "evidencia": {
+        "url": "https://www.paho.org/sites/default/files/2026/09/2026-cde-dengue-sitrep-americas-epi-week-35-sep-es.pdf",
+        "cita": "un total de 1,658,783 casos sospechosos de dengue (incidencia acumulada de 159 casos por 100,000 hab.). Esta cifra representa una disminución de 57% en comparación con el mismo periodo del 2025",
+        "archivo_local": "sesiones/_descargas/2026-cde-dengue-sitrep-americas-epi-week-35-sep-es.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Cono Sur",
+          "valor": -62
+        },
+        {
+          "nombre": "Caribe",
+          "valor": -59
+        },
+        {
+          "nombre": "Centroamérica y México",
+          "valor": -40
+        },
+        {
+          "nombre": "Andina",
+          "valor": -3
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_4.png"
+      ]
+    },
+    {
+      "id": "cau-c08",
+      "concepto": "Casos sospechosos de dengue en el Istmo Centroamericano y México: 2024 vs 2025 (año completo)",
+      "unidad": "casos sospechosos",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "OPS/OMS — Actualización epidemiológica dengue en la Región de las Américas, 18-feb-2026",
+      "url": "https://www.paho.org/sites/default/files/2026/02/2026-18feb-phe-actualizacion-dengue-es-final1.pdf",
+      "periodo": "SE-1 a SE-53, 2024 y 2025",
+      "n_puntos": 2,
+      "valor": 251057,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo: 251,057/1,094,852 = -77.07%",
+      "evidencia": {
+        "url": "https://www.paho.org/sites/default/files/2026/02/2026-18feb-phe-actualizacion-dengue-es-final1.pdf",
+        "cita": "Entre la SE 1 y la SE 53 del 2025 se reportaron 251.057 casos sospechosos de dengue, lo que representa un descenso del 77% respecto al 2024 (n= 1.094.852)",
+        "archivo_local": "sesiones/_descargas/2026-18feb-phe-actualizacion-dengue-es-final1.txt"
+      },
+      "partes": [
+        {
+          "nombre": "2024",
+          "valor": 1094852
+        },
+        {
+          "nombre": "2025",
+          "valor": 251057
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "cau-c09",
+      "concepto": "Casos sospechosos de dengue en las Américas: 2024 (récord) vs 2025",
+      "unidad": "casos sospechosos",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "OPS/OMS — Actualización epidemiológica dengue en la Región de las Américas, 18-feb-2026",
+      "url": "https://www.paho.org/sites/default/files/2026/02/2026-18feb-phe-actualizacion-dengue-es-final1.pdf",
+      "periodo": "SE-1 a SE-53, 2024 y 2025",
+      "n_puntos": 2,
+      "valor": 4459521,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo: 4,459,521/13,063,434 = -65.9%",
+      "evidencia": {
+        "url": "https://www.paho.org/sites/default/files/2026/02/2026-18feb-phe-actualizacion-dengue-es-final1.pdf",
+        "cita": "se notificaron 4.459.521 casos sospechosos de dengue ... descenso de 66% en comparación con lo registrado en el 2024, año en el que se registró un incremento histórico ... (n= 13.063.434 casos)",
+        "archivo_local": "sesiones/_descargas/2026-18feb-phe-actualizacion-dengue-es-final1.txt"
+      },
+      "partes": [
+        {
+          "nombre": "2024",
+          "valor": 13063434
+        },
+        {
+          "nombre": "2025",
+          "valor": 4459521
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "cau-c10",
+      "concepto": "Variación de casos de dengue acumulados en Guatemala en 2025 frente al mismo periodo de 2024",
+      "unidad": "% vs mismo periodo 2024",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "MSPAS/DEGR — Situación epidemiológica de arbovirosis, SE-53-2025",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2025/arbovirosis-semana-53-2025.pdf",
+      "periodo": "SE-1 a SE-53 2025 vs 2024",
+      "n_puntos": 1,
+      "valor": -80,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa Latina: casos 2025 a julio 17,883 vs 65,500 en 2024 (-73%), misma tendencia",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2025/arbovirosis-semana-53-2025.pdf",
+        "cita": "El total de casos acumulados en 2025 es 80% menor que en el mismo período de 2024, lo que sugiere una reducción significativa de la transmisión del virus.",
+        "archivo_local": "sesiones/_descargas/arbovirosis-semana-53-2025.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "cau-c11",
+      "concepto": "Variación de casos sospechosos de dengue en Honduras a SE-12 2026 frente al mismo periodo de 2025",
+      "unidad": "% vs mismo periodo 2025",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Secretaría de Salud de Honduras (Sesal), vía La Prensa (Honduras)",
+      "url": "https://www.laprensa.hn/honduras/dengue-cifras-salud-casos-estadisticas-prevencion-ME30075108",
+      "periodo": "SE-1 a SE-12, 2025 y 2026",
+      "n_puntos": 2,
+      "valor": -44,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "El Heraldo (Honduras): 2,197 casos a SE-12 2026",
+      "evidencia": {
+        "url": "https://www.laprensa.hn/honduras/dengue-cifras-salud-casos-estadisticas-prevencion-ME30075108",
+        "cita": "2,197 casos sospechosos [SE-12 2026] ... en el mismo período de 2025, cuando se reportaban 3,909 casos ... una disminución de aproximadamente 44%, equivalente a 1,712 casos menos",
+        "archivo_local": null
+      },
+      "partes": [
+        {
+          "nombre": "2025",
+          "valor": 3909
+        },
+        {
+          "nombre": "2026",
+          "valor": 2197
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_4.png"
+      ]
+    },
+    {
+      "id": "ser-c01",
+      "concepto": "Casos sospechosos de dengue notificados por el MSPAS acumulados hasta la SE-35 de cada año, 2018-2026",
+      "unidad": "casos",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "MSPAS/DEGR, Situación epidemiológica de las arbovirosis en Guatemala 2026, hasta SE-35",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+      "periodo": "2018-2026 (acumulado a SE-35)",
+      "n_puntos": 9,
+      "valor": 12699,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo cruzado con tabla 'Total País 12,699' del mismo boletín + serie del gráfico (extremos 2018: 3,826; 2023: 19,754; 2026: 12,699 en el texto local)",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+        "cita": "Casos e incidencia histórica de dengue en SE-35, Guatemala, 2018 a 2026 [...] 3,826 28,810 5,213 1,885 5,364 19,754 91,767 21,252 12,699",
+        "archivo_local": "sesiones/_descargas/arbovirosis-semana-35-2026.txt"
+      },
+      "serie": [
+        {
+          "p": "2018",
+          "v": 3826
+        },
+        {
+          "p": "2019",
+          "v": 28810
+        },
+        {
+          "p": "2020",
+          "v": 5213
+        },
+        {
+          "p": "2021",
+          "v": 1885
+        },
+        {
+          "p": "2022",
+          "v": 5364
+        },
+        {
+          "p": "2023",
+          "v": 19754
+        },
+        {
+          "p": "2024",
+          "v": 91767
+        },
+        {
+          "p": "2025",
+          "v": 21252
+        },
+        {
+          "p": "2026",
+          "v": 12699
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_1.png"
+      ]
+    },
+    {
+      "id": "ser-c02",
+      "concepto": "Reducción de casos de dengue notificados hasta SE-35 de 2026 frente a la misma semana de 2025 y de 2024 (según el MSPAS)",
+      "unidad": "% menos",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "MSPAS/DEGR, Situación epidemiológica de las arbovirosis en Guatemala 2026, hasta SE-35",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+      "periodo": "SE-1 a SE-35, 2024/2025/2026",
+      "valor": 40,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo 1-12,699/21,252=40.2%; OPS sitrep SE-35 2026: subregión CA y México -40% vs 2025 (contexto, otro universo)",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+        "cita": "Hasta la SE-35 2026, el número de casos acumulados notificados: - 40% menor que en 2025 - 87% menor que 2024 (año epidémico).",
+        "archivo_local": "sesiones/_descargas/arbovirosis-semana-35-2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "vs 2025 (misma SE-35)",
+          "valor": 40
+        },
+        {
+          "nombre": "vs 2024 (misma SE-35, año epidémico)",
+          "valor": 87
+        }
+      ],
+      "usada": false,
+      "aparece_en": [
+        "T1"
+      ]
+    },
+    {
+      "id": "ser-c03",
+      "concepto": "Incidencia acumulada de dengue (MSPAS) hasta la SE-35 por 100,000 habitantes, 2018-2026",
+      "unidad": "casos por 100,000 hab",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "MSPAS/DEGR, Situación epidemiológica de las arbovirosis en Guatemala 2026, hasta SE-35",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+      "periodo": "2018-2026 (acumulado a SE-35)",
+      "n_puntos": 9,
+      "valor": 69.3,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Tabla 'Total País 12,699 69,3' del mismo boletín; coherencia casos/incidencia",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+        "cita": "Casos e incidencia histórica de dengue en SE-35 [...] 514.3 [...] 163.1 [...] 112.2 117.5 [...] 22.1 30.9 30.9 11.0 [...] 69.3",
+        "archivo_local": "sesiones/_descargas/arbovirosis-semana-35-2026.txt"
+      },
+      "serie": [
+        {
+          "p": "2018",
+          "v": 22.1
+        },
+        {
+          "p": "2019",
+          "v": 163.1
+        },
+        {
+          "p": "2020",
+          "v": 30.9
+        },
+        {
+          "p": "2021",
+          "v": 11.0
+        },
+        {
+          "p": "2022",
+          "v": 30.9
+        },
+        {
+          "p": "2023",
+          "v": 112.2
+        },
+        {
+          "p": "2024",
+          "v": 514.3
+        },
+        {
+          "p": "2025",
+          "v": 117.5
+        },
+        {
+          "p": "2026",
+          "v": 69.3
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ser-c04",
+      "concepto": "Casos sospechosos de dengue notificados por el MSPAS, año completo (hasta SE-52/53), 2018-2025",
+      "unidad": "casos",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "MSPAS/DEGR, Situación epidemiológica de las arbovirosis en Guatemala 2025, hasta SE-53",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2025/arbovirosis-semana-53-2025.pdf",
+      "periodo": "2018-2025 (año completo)",
+      "n_puntos": 8,
+      "valor": 28473,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Boletín SE-53 2025: tabla 'Total País 141,747 794.4 28,473 157.5' y texto '80% menor (28,473)'",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2025/arbovirosis-semana-53-2025.pdf",
+        "cita": "Casos e incidencia histórica de dengue en SE-53, Guatemala, 2018 a 2025 [...] 7,592 50,886 6,075 2,959 8,553 73,302 141,747 28,473",
+        "archivo_local": "sesiones/_descargas/arbovirosis-semana-53-2025.txt"
+      },
+      "serie": [
+        {
+          "p": "2018",
+          "v": 7592
+        },
+        {
+          "p": "2019",
+          "v": 50886
+        },
+        {
+          "p": "2020",
+          "v": 6075
+        },
+        {
+          "p": "2021",
+          "v": 2959
+        },
+        {
+          "p": "2022",
+          "v": 8553
+        },
+        {
+          "p": "2023",
+          "v": 73302
+        },
+        {
+          "p": "2024",
+          "v": 141747
+        },
+        {
+          "p": "2025",
+          "v": 28473
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ser-c05",
+      "concepto": "Casos de dengue 2026 hasta SE-35 integrando MSPAS e IGSS",
+      "unidad": "casos",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "MSPAS/DEGR, Situación epidemiológica de las arbovirosis en Guatemala 2026, hasta SE-35",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+      "periodo": "2026, SE-1 a SE-35 (IGSS a SE-34)",
+      "valor": 24155,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Mismo boletín: 'Casos a la SE-35: 24,155 / Reportados por MSPAS: 12,699 / incidencia 131.9'",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+        "cita": "Casos a la SE-35: 24,155 Reportados por MSPAS: 12,699 Reportados por IGSS (SE-34): 11,456 Incidencia acumulada nacional: 131.9 *100,000 hab",
+        "archivo_local": "sesiones/_descargas/arbovirosis-semana-35-2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "MSPAS",
+          "valor": 12699
+        },
+        {
+          "nombre": "IGSS (a SE-34)",
+          "valor": 11456
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ser-c06",
+      "concepto": "Casos de dengue 2025, año completo (SE-53), integrando MSPAS e IGSS",
+      "unidad": "casos",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "MSPAS/DEGR, Situación epidemiológica de las arbovirosis en Guatemala 2025, hasta SE-53",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2025/arbovirosis-semana-53-2025.pdf",
+      "periodo": "2025, SE-1 a SE-53",
+      "valor": 48278,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Boletín SE-53 2025: 'Casos a la SE-53: 48,278 / Reportados por MSPAS: 28,473'; total 48,278",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2025/arbovirosis-semana-53-2025.pdf",
+        "cita": "Casos a la SE-53: 48,278 Reportados por MSPAS: 28,473 Reportados por IGSS (SE-53): 19,805 Incidencia acumulada nacional: 267 *100,000 hab",
+        "archivo_local": "sesiones/_descargas/arbovirosis-semana-53-2025.txt"
+      },
+      "partes": [
+        {
+          "nombre": "MSPAS",
+          "valor": 28473
+        },
+        {
+          "nombre": "IGSS",
+          "valor": 19805
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ser-c07",
+      "concepto": "Casos de dengue 2024, año completo (SE-52), integrando MSPAS e IGSS",
+      "unidad": "casos",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "MSPAS/DEGR, Situación epidemiológica de las arbovirosis en Guatemala 2024, hasta SE-52",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/arbovirosis-sem-52%202024.pdf",
+      "periodo": "2024, SE-1 a SE-52",
+      "valor": 188585,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Boletín 2024: 'Casos SE-52: 188,585'; letalidad tabla Total País 188,585",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/arbovirosis-sem-52%202024.pdf",
+        "cita": "Casos SE-52: 188,585 Reportados por MSPAS: 141,369 Reportados por IGSS: 47,216 Incidencia acumulada nacional: 1,056.9 *100,000 hab",
+        "archivo_local": "sesiones/_descargas/arbovirosis-sem-52%202024.txt"
+      },
+      "partes": [
+        {
+          "nombre": "MSPAS",
+          "valor": 141369
+        },
+        {
+          "nombre": "IGSS",
+          "valor": 47216
+        }
+      ],
+      "usada": false,
+      "aparece_en": [
+        "T2"
+      ]
+    },
+    {
+      "id": "ser-c08",
+      "concepto": "Fallecidos por dengue confirmados por año, Guatemala 2018-2024",
+      "unidad": "fallecidos",
+      "anio": 2024,
+      "tipo": "serie",
+      "fuente": "MSPAS/DEGR, boletines de arbovirosis 2023 (SE-52) y 2024 (SE-52)",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/arbovirosis-sem-52%202024.pdf",
+      "periodo": "2018-2024",
+      "n_puntos": 7,
+      "valor": 232,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Boletín 2024 'Total País 188,585 232 0.12'; 2018-2022 y 2023 (118) confirmados en boletín 2023 local",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/arbovirosis-sem-52%202024.pdf",
+        "cita": "Total País 188,585 232 0.12 *Las defunciones fueron analizados y confirmadas por Direcciones Departamentales en conjunto con los Hospitales",
+        "archivo_local": "sesiones/_descargas/arbovirosis-sem-52%202024.txt"
+      },
+      "serie": [
+        {
+          "p": "2018",
+          "v": 23
+        },
+        {
+          "p": "2019",
+          "v": 77
+        },
+        {
+          "p": "2020",
+          "v": 10
+        },
+        {
+          "p": "2021",
+          "v": 6
+        },
+        {
+          "p": "2022",
+          "v": 17
+        },
+        {
+          "p": "2023",
+          "v": 118
+        },
+        {
+          "p": "2024",
+          "v": 232
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_2.png"
+      ]
+    },
+    {
+      "id": "ser-c09",
+      "concepto": "Letalidad por dengue en Guatemala 2024 (fallecidos/casos x 100) frente a la meta regional de las Américas",
+      "unidad": "%",
+      "anio": 2024,
+      "tipo": "puntual",
+      "fuente": "MSPAS/DEGR, Situación epidemiológica de las arbovirosis en Guatemala 2024, hasta SE-52",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/arbovirosis-sem-52%202024.pdf",
+      "periodo": "2024, hasta SE-52",
+      "valor": 0.12,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Boletín 2024: Total País 188,585 / 232 / 0.12; recálculo 232/188,585=0.123%",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/arbovirosis-sem-52%202024.pdf",
+        "cita": "Total País 188,585 232 0.12 [...] Meta para región de las Américas: 0.05%",
+        "archivo_local": "sesiones/_descargas/arbovirosis-sem-52%202024.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ser-c10",
+      "concepto": "Fallecidos por dengue en 2025 al 30 de agosto de 2025 según el MSPAS (prensa)",
+      "unidad": "fallecidos",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "Prensa Libre, 30-ago-2025, citando al MSPAS",
+      "url": "https://www.prensalibre.com/?p=23576229",
+      "periodo": "2025, enero a 30-ago",
+      "valor": 5,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Emisoras Unidas / búsqueda: MSPAS 18,429 confirmados y 5 fallecidos en 2025 (misma comunicación del MSPAS)",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/?p=23576229",
+        "cita": "El MSPAS reporta 18,429 casos confirmados de dengue en 2025 y cinco personas fallecidas por complicaciones asociadas a la enfermedad (30-ago-2025)"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ser-c11",
+      "concepto": "Áreas de salud (DDRISS) según zona del corredor endémico de dengue, SE-34 2026",
+      "unidad": "DDRISS",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "MSPAS/DEGR, Situación epidemiológica de las arbovirosis en Guatemala 2026, hasta SE-35",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+      "periodo": "2026, SE-34",
+      "valor": 10,
+      "veredicto": "ajustada",
+      "independencia": "baja",
+      "fuente_2": "Mismo boletín: zona de alerta 10 DDRISS (34%), brote 2 (7%), seguridad 13, éxito 2, sin notificación 2; texto 'dos en brote y diez en alerta' (SE-34)",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+        "cita": "Para SE-34 • Zona de brote: 2 DDRISS (7 %) • Zona de alerta: 10 DDRISS (34 %) • Zona de seguridad: 13 DDRISS (45 %) • Zona de éxito: 2 DDRISS (7 %)",
+        "archivo_local": "sesiones/_descargas/arbovirosis-semana-35-2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Zona de brote",
+          "valor": 2
+        },
+        {
+          "nombre": "Zona de alerta",
+          "valor": 10
+        },
+        {
+          "nombre": "Zona de seguridad",
+          "valor": 13
+        },
+        {
+          "nombre": "Zona de éxito",
+          "valor": 2
+        },
+        {
+          "nombre": "Sin notificación",
+          "valor": 2
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ser-c12",
+      "concepto": "Clasificación clínica de casos de dengue 2026 hasta SE-35 (MSPAS e IGSS)",
+      "unidad": "casos",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "MSPAS/DEGR, Situación epidemiológica de las arbovirosis en Guatemala 2026, hasta SE-35",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+      "periodo": "2026, SE-1 a SE-35",
+      "valor": 21840,
+      "veredicto": "ajustada",
+      "independencia": "baja",
+      "fuente_2": "Mismo boletín: clasificación clínica 21,840 (90.4%) sin signos de alarma; 2,270 (9.4%) con signos de alarma; 45 dengue grave (0.2%)",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+        "cita": "Dengue sin signos de alarma (DSSA) 21,840 90.4% Dengue con signos de alarma (DCSA) 2,270 9.4% Dengue grave (DG) 45 0.2%",
+        "archivo_local": "sesiones/_descargas/arbovirosis-semana-35-2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Dengue sin signos de alarma",
+          "valor": 21840
+        },
+        {
+          "nombre": "Dengue con signos de alarma",
+          "valor": 2270
+        },
+        {
+          "nombre": "Dengue grave",
+          "valor": 45
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ter-c01",
+      "concepto": "Incidencia acumulada de dengue por DDRISS de residencia, datos integrados MSPAS + IGSS, 2026 hasta SE-35 (casos por 100,000 hab.)",
+      "unidad": "casos por 100,000 habitantes",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "MSPAS — DEGR, Situación epidemiológica de las arbovirosis 2026, hasta SE-35",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+      "periodo": "2026 SE-1 a SE-35 (IGSS hasta SE-34)",
+      "n_puntos": 29,
+      "valor": 649.5,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "MSPAS DEGR boletín (archivo local sesiones/_descargas/arbovirosis-semana-35.txt, recálculo)",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+        "cita": "Dengue total. Casos e incidencia acumulada por DDRISS de Residencia. Integración de datos MSPAS e IGSS. ... 1 Sacatepéquez 2,450 319 2,769 649.5",
+        "archivo_local": "sesiones/_descargas/arbovirosis-semana-35-2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 649.5
+        },
+        {
+          "nombre": "Petén Norte",
+          "valor": 471.1
+        },
+        {
+          "nombre": "Petén Sur Occidental",
+          "valor": 415.5
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 369.8
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 309.8
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 218.7
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 212.4
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 175.7
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 172.5
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 157.4
+        },
+        {
+          "nombre": "Guatemala Sur",
+          "valor": 153.9
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 126.2
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 121.7
+        },
+        {
+          "nombre": "Petén Sur Oriental",
+          "valor": 105.3
+        },
+        {
+          "nombre": "Guatemala Central",
+          "valor": 104.6
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 97.6
+        },
+        {
+          "nombre": "Guatemala Nor Occidente",
+          "valor": 85.9
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 80.7
+        },
+        {
+          "nombre": "Ixcán",
+          "valor": 74.3
+        },
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 65.2
+        },
+        {
+          "nombre": "Guatemala Nor Oriente",
+          "valor": 59.4
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 53.2
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 49.6
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 49.1
+        },
+        {
+          "nombre": "El Quiché",
+          "valor": 45.0
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 44.3
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 28.8
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 2.1
+        },
+        {
+          "nombre": "Ixil",
+          "valor": 1.1
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_7.png"
+      ]
+    },
+    {
+      "id": "ter-c02",
+      "concepto": "Incidencia de dengue por DDRISS de residencia, solo red MSPAS, 2026 hasta SE-35 (casos por 100,000 hab.)",
+      "unidad": "casos por 100,000 habitantes",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "MSPAS — DEGR, Situación epidemiológica de las arbovirosis 2026, hasta SE-35",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+      "periodo": "2026 SE-1 a SE-35",
+      "n_puntos": 29,
+      "valor": 442.0,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "MSPAS DEGR boletín (archivo local sesiones/_descargas/arbovirosis-semana-35.txt, recálculo)",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+        "cita": "Casos e incidencia por DDRISS de Residencia (datos MSPAS). Guatemala, 2026 (hasta SE-35) ... 1 Petén Norte 882 442,0 ... Total País 12,699 69,3",
+        "archivo_local": "sesiones/_descargas/arbovirosis-semana-35-2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Petén Norte",
+          "valor": 442.0,
+          "casos": 882
+        },
+        {
+          "nombre": "Petén Sur Occidental",
+          "valor": 386.6,
+          "casos": 923
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 178.3,
+          "casos": 1738
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 161.4,
+          "casos": 698
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 157.0,
+          "casos": 748
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 136.2,
+          "casos": 547
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 112.8,
+          "casos": 226
+        },
+        {
+          "nombre": "Petén Sur Oriental",
+          "valor": 100.0,
+          "casos": 228
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 95.2,
+          "casos": 813
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 93.3,
+          "casos": 542
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 74.8,
+          "casos": 319
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 74.4,
+          "casos": 481
+        },
+        {
+          "nombre": "Ixcán",
+          "valor": 74.3,
+          "casos": 89
+        },
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 59.3,
+          "casos": 879
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 51.0,
+          "casos": 649
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 46.3,
+          "casos": 235
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 45.9,
+          "casos": 218
+        },
+        {
+          "nombre": "El Quiché",
+          "valor": 43.7,
+          "casos": 381
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 43.3,
+          "casos": 156
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 41.9,
+          "casos": 119
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 39.2,
+          "casos": 185
+        },
+        {
+          "nombre": "Guatemala Nor Oriente",
+          "valor": 37.0,
+          "casos": 197
+        },
+        {
+          "nombre": "Guatemala Nor Occidente",
+          "valor": 30.8,
+          "casos": 300
+        },
+        {
+          "nombre": "Guatemala Sur",
+          "valor": 29.2,
+          "casos": 294
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 27.0,
+          "casos": 414
+        },
+        {
+          "nombre": "Guatemala Central",
+          "valor": 18.8,
+          "casos": 233
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 17.8,
+          "casos": 144
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 1.5,
+          "casos": 8
+        },
+        {
+          "nombre": "Ixil",
+          "valor": 1.1,
+          "casos": 2
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ter-c03",
+      "concepto": "Casos de dengue notificados 2026 hasta SE-35, integración MSPAS + IGSS",
+      "unidad": "casos",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "MSPAS — DEGR, Situación epidemiológica de las arbovirosis 2026, hasta SE-35",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+      "periodo": "2026 SE-1 a SE-35 (IGSS hasta SE-34)",
+      "n_puntos": 2,
+      "valor": 24155,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "MSPAS DEGR boletín (archivo local sesiones/_descargas/arbovirosis-semana-35.txt, recálculo)",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+        "cita": "Casos a la SE-35: 24,155 Reportados por MSPAS: 12,699 Reportados por IGSS (SE-34): 11,456 Incidencia acumulada nacional: 131.9 *100,000 hab",
+        "archivo_local": "sesiones/_descargas/arbovirosis-semana-35-2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "MSPAS",
+          "valor": 12699
+        },
+        {
+          "nombre": "IGSS (hasta SE-34)",
+          "valor": 11456
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ter-c04",
+      "concepto": "Clasificación clínica de casos de dengue 2026 hasta SE-35 (MSPAS + IGSS): sin signos de alarma, con signos de alarma, dengue grave",
+      "unidad": "casos de dengue grave",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "MSPAS — DEGR, Situación epidemiológica de las arbovirosis 2026, hasta SE-35",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+      "periodo": "2026 SE-1 a SE-35",
+      "n_puntos": 3,
+      "valor": 45,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "MSPAS DEGR boletín (archivo local sesiones/_descargas/arbovirosis-semana-35.txt, recálculo)",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+        "cita": "Dengue sin signos de alarma (DSSA) 21,840 90.4% ... Dengue con signos de alarma (DCSA) 2,270 9.4% ... Dengue grave (DG) 45 0.2%",
+        "archivo_local": "sesiones/_descargas/arbovirosis-semana-35-2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Sin signos de alarma (DSSA)",
+          "valor": 21840
+        },
+        {
+          "nombre": "Con signos de alarma (DCSA)",
+          "valor": 2270
+        },
+        {
+          "nombre": "Dengue grave (DG)",
+          "valor": 45
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ter-c05",
+      "concepto": "Clasificación clínica de casos de dengue 2025 año completo (hasta SE-53, MSPAS + IGSS)",
+      "unidad": "casos de dengue grave",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "MSPAS — DEGR, Situación epidemiológica de las arbovirosis 2025, hasta SE-53",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2025/arbovirosis-semana-53-2025.pdf",
+      "periodo": "2025 SE-1 a SE-53",
+      "n_puntos": 3,
+      "valor": 133,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "MSPAS DEGR boletín (archivo local sesiones/_descargas/arbovirosis-semana-53.txt, recálculo)",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2025/arbovirosis-semana-53-2025.pdf",
+        "cita": "Dengue sin signos de alarma (DSSA) 41,868 86.7% ... Dengue con signos de alarma (DCSA) 6,108 12.7% ... Dengue grave (DG) 133 0.3%",
+        "archivo_local": "sesiones/_descargas/arbovirosis-semana-53-2025.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Sin signos de alarma (DSSA)",
+          "valor": 41868
+        },
+        {
+          "nombre": "Con signos de alarma (DCSA)",
+          "valor": 6108
+        },
+        {
+          "nombre": "Dengue grave (DG)",
+          "valor": 133
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ter-c06",
+      "concepto": "Casos sospechosos de dengue acumulados a la SE-35 por año, red MSPAS, 2018–2026",
+      "unidad": "casos",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "MSPAS — DEGR, Situación epidemiológica de las arbovirosis 2026, hasta SE-35",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+      "periodo": "2018–2026, corte SE-35 de cada año",
+      "n_puntos": 9,
+      "valor": 12699,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "MSPAS DEGR boletín (archivo local sesiones/_descargas/arbovirosis-semana-35.txt, recálculo)",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+        "cita": "Casos e incidencia histórica de dengue en SE-35, Guatemala, 2018 a 2026 ... 3,826 28,810 5,213 1,885 5,364 19,754 91,767 21,252 12,699 ... 40% menor que en 2025 - 87% menor que 2024",
+        "archivo_local": "sesiones/_descargas/arbovirosis-semana-35-2026.txt"
+      },
+      "serie": [
+        {
+          "p": "2018",
+          "v": 3826
+        },
+        {
+          "p": "2019",
+          "v": 28810
+        },
+        {
+          "p": "2020",
+          "v": 5213
+        },
+        {
+          "p": "2021",
+          "v": 1885
+        },
+        {
+          "p": "2022",
+          "v": 5364
+        },
+        {
+          "p": "2023",
+          "v": 19754
+        },
+        {
+          "p": "2024",
+          "v": 91767
+        },
+        {
+          "p": "2025",
+          "v": 21252
+        },
+        {
+          "p": "2026",
+          "v": 12699
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ter-c07",
+      "concepto": "DDRISS por zona del corredor endémico de dengue: 2026 (SE-34) vs 2025 (SE-53)",
+      "unidad": "DDRISS en zona de brote (2026, SE-34)",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "MSPAS — DEGR, Situación epidemiológica de las arbovirosis 2026, hasta SE-35",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+      "periodo": "2026 SE-34 y 2025 SE-53",
+      "n_puntos": 10,
+      "valor": 2,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "MSPAS DEGR boletín (archivo local sesiones/_descargas/arbovirosis-semana-35.txt, recálculo)",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+        "cita": "Para SE-34 • Zona de brote: 2 DDRISS (7 %) • Zona de alerta: 10 DDRISS (34 %) • Zona de seguridad: 13 DDRISS (45 %) • Zona de éxito: 2 DDRISS (7 %) • Sin notificación de casos: 2 DDRISS (7 %)",
+        "archivo_local": "sesiones/_descargas/arbovirosis-semana-35-2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "2026 brote",
+          "valor": 2
+        },
+        {
+          "nombre": "2026 alerta",
+          "valor": 10
+        },
+        {
+          "nombre": "2026 seguridad",
+          "valor": 13
+        },
+        {
+          "nombre": "2026 éxito",
+          "valor": 2
+        },
+        {
+          "nombre": "2026 sin notificación",
+          "valor": 2
+        },
+        {
+          "nombre": "2025 brote",
+          "valor": 5
+        },
+        {
+          "nombre": "2025 alerta",
+          "valor": 8
+        },
+        {
+          "nombre": "2025 seguridad",
+          "valor": 11
+        },
+        {
+          "nombre": "2025 éxito",
+          "valor": 0
+        },
+        {
+          "nombre": "2025 sin notificación",
+          "valor": 5
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_5.png"
+      ]
+    },
+    {
+      "id": "ter-c08",
+      "concepto": "Incidencia acumulada de dengue por DDRISS, integración MSPAS + IGSS, 2025 año completo (hasta SE-53)",
+      "unidad": "casos por 100,000 habitantes",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "MSPAS — DEGR, Situación epidemiológica de las arbovirosis 2025, hasta SE-53",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2025/arbovirosis-semana-53-2025.pdf",
+      "periodo": "2025 SE-1 a SE-53",
+      "n_puntos": 29,
+      "valor": 1294.1,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "MSPAS DEGR boletín (archivo local sesiones/_descargas/arbovirosis-semana-53.txt, recálculo)",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2025/arbovirosis-semana-53-2025.pdf",
+        "cita": "Integración de datos MSPAS e IGSS. Guatemala, hasta SE-53 ... 1 Sacatepéquez 4,385 1,056 5,441 1,294.1 ... Casos a la SE-53: 48,278",
+        "archivo_local": "sesiones/_descargas/arbovirosis-semana-53-2025.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 1294.1
+        },
+        {
+          "nombre": "Petén Norte",
+          "valor": 844.3
+        },
+        {
+          "nombre": "Petén Sur Occidental",
+          "valor": 746.0
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 536.5
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 491.0
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 457.4
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 362.8
+        },
+        {
+          "nombre": "Guatemala Central",
+          "valor": 342.1
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 281.1
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 274.1
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 270.3
+        },
+        {
+          "nombre": "Guatemala Sur",
+          "valor": 264.4
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 237.5
+        },
+        {
+          "nombre": "Petén Sur Oriental",
+          "valor": 230.4
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 226.5
+        },
+        {
+          "nombre": "Guatemala Nor Occidente",
+          "valor": 216.7
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 209.4
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 207.7
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 191.7
+        },
+        {
+          "nombre": "Guatemala Nor Oriente",
+          "valor": 189.7
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 178.1
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 146.0
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 132.1
+        },
+        {
+          "nombre": "El Quiché",
+          "valor": 124.9
+        },
+        {
+          "nombre": "Ixcán",
+          "valor": 123.2
+        },
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 112.0
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 86.2
+        },
+        {
+          "nombre": "Ixil",
+          "valor": 12.9
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 4.6
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ter-c09",
+      "concepto": "Incidencia de dengue por DDRISS, red MSPAS, 2024 (año epidémico, hasta SE-53)",
+      "unidad": "casos por 100,000 habitantes",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "MSPAS — DEGR, Situación epidemiológica de las arbovirosis 2025, hasta SE-53",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2025/arbovirosis-semana-53-2025.pdf",
+      "periodo": "2024 año completo",
+      "n_puntos": 29,
+      "valor": 2209.0,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "MSPAS DEGR boletín (archivo local sesiones/_descargas/arbovirosis-semana-53.txt, recálculo)",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2025/arbovirosis-semana-53-2025.pdf",
+        "cita": "Casos e incidencia por DDRISS de Residencia. Guatemala, 2024 – 2025 (hasta SE-53) ... 11 Jutiapa 12,584 2,209.0 1,186 206.2 ... Total País 141,747 794.4 28,473 157.5",
+        "archivo_local": "sesiones/_descargas/arbovirosis-semana-53-2025.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Jutiapa",
+          "valor": 2209.0
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 1685.6
+        },
+        {
+          "nombre": "Petén Norte",
+          "valor": 1491.5
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 1319.3
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 1249.9
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 1230.6
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 1220.0
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 1142.8
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 1101.3
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 1031.4
+        },
+        {
+          "nombre": "Petén Sur Oriental",
+          "valor": 950.2
+        },
+        {
+          "nombre": "Guatemala Nor Occidente",
+          "valor": 924.2
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 856.9
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 840.7
+        },
+        {
+          "nombre": "Guatemala Nor Oriente",
+          "valor": 836.4
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 767.2
+        },
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 748.5
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 683.8
+        },
+        {
+          "nombre": "El Quiché",
+          "valor": 669.5
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 663.9
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 605.3
+        },
+        {
+          "nombre": "Guatemala Central",
+          "valor": 596.2
+        },
+        {
+          "nombre": "Guatemala Sur",
+          "valor": 533.3
+        },
+        {
+          "nombre": "Petén Sur Occidental",
+          "valor": 487.1
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 351.1
+        },
+        {
+          "nombre": "Ixcán",
+          "valor": 300.1
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 250.8
+        },
+        {
+          "nombre": "Ixil",
+          "valor": 25.7
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 11.3
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ter-c10",
+      "concepto": "Cambio porcentual de casos de dengue por DDRISS, 2025 vs 2024 (red MSPAS, año completo)",
+      "unidad": "% de cambio (Petén Sur Occidental, único DDRISS que subió)",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "MSPAS — DEGR, Situación epidemiológica de las arbovirosis 2025, hasta SE-53",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2025/arbovirosis-semana-53-2025.pdf",
+      "periodo": "2024 vs 2025, hasta SE-53",
+      "n_puntos": 29,
+      "valor": 52,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "MSPAS DEGR boletín (archivo local sesiones/_descargas/arbovirosis-semana-53.txt, recálculo)",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2025/arbovirosis-semana-53-2025.pdf",
+        "cita": "Casos y cambio porcentual por DDRISS de Residencia. Guatemala, 2024 – 2025 (hasta SE-53) ... 1 Jutiapa 12,584 1,186.0 -91% ... 29 Petén Sur Occidental 1,130 1,715.0 52%",
+        "archivo_local": "sesiones/_descargas/arbovirosis-semana-53-2025.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Jutiapa",
+          "valor": -91
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": -90
+        },
+        {
+          "nombre": "Guatemala Nor Occidente",
+          "valor": -89
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": -88
+        },
+        {
+          "nombre": "Guatemala Sur",
+          "valor": -88
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": -88
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": -87
+        },
+        {
+          "nombre": "Guatemala Nor Oriente",
+          "valor": -87
+        },
+        {
+          "nombre": "Alta Verapaz",
+          "valor": -87
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": -86
+        },
+        {
+          "nombre": "Guatemala Central",
+          "valor": -86
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": -84
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": -84
+        },
+        {
+          "nombre": "El Quiché",
+          "valor": -82
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": -80
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": -79
+        },
+        {
+          "nombre": "Sololá",
+          "valor": -79
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": -77
+        },
+        {
+          "nombre": "Petén Sur Oriental",
+          "valor": -76
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": -74
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": -72
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": -70
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": -63
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": -60
+        },
+        {
+          "nombre": "Ixcán",
+          "valor": -58
+        },
+        {
+          "nombre": "Izabal",
+          "valor": -58
+        },
+        {
+          "nombre": "Ixil",
+          "valor": -51
+        },
+        {
+          "nombre": "Petén Norte",
+          "valor": -46
+        },
+        {
+          "nombre": "Petén Sur Occidental",
+          "valor": 52
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ter-c11",
+      "concepto": "Positividad de muestras de dengue en el LNS por DDRISS de notificación, 2026 hasta SE-35 (%)",
+      "unidad": "% de muestras positivas",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "MSPAS — DEGR, Situación epidemiológica de las arbovirosis 2026, hasta SE-35 (Laboratorio Nacional de Salud)",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+      "periodo": "2026 SE-1 a SE-35",
+      "n_puntos": 29,
+      "valor": 50.0,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "MSPAS DEGR boletín (archivo local sesiones/_descargas/arbovirosis-semana-35.txt, recálculo)",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+        "cita": "Resultados de muestras de dengue recibidas en LNS (por DDRISS de notificación) Guatemala, SE-35, 2026 ... PETEN SUR OCCIDENTE 50.0 PETEN NORTE 45.0 ... % Positivos 18.5%",
+        "archivo_local": "sesiones/_descargas/arbovirosis-semana-35-2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Petén Sur Occidental",
+          "valor": 50.0
+        },
+        {
+          "nombre": "Petén Norte",
+          "valor": 45.0
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 33.9
+        },
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 30.6
+        },
+        {
+          "nombre": "El Quiché",
+          "valor": 27.8
+        },
+        {
+          "nombre": "Petén Sur Oriental",
+          "valor": 24.8
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 24.1
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 23.5
+        },
+        {
+          "nombre": "Ixcán",
+          "valor": 20.6
+        },
+        {
+          "nombre": "Guatemala Sur",
+          "valor": 20.6
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 19.6
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 18.3
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 14.3
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 13.8
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 13.4
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 13.1
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 12.9
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 12.7
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 12.1
+        },
+        {
+          "nombre": "Guatemala Nor Occidente",
+          "valor": 11.6
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 11.5
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 11.4
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 9.6
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 9.5
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 8.6
+        },
+        {
+          "nombre": "Guatemala Central",
+          "valor": 8.6
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 7.6
+        },
+        {
+          "nombre": "Guatemala Nor Oriente",
+          "valor": 2.5
+        },
+        {
+          "nombre": "Ixil",
+          "valor": 0.0
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ter-c12",
+      "concepto": "Casos de dengue por grupo de edad, red MSPAS, 2026 hasta SE-35",
+      "unidad": "casos (grupo 25 a 39 años, el mayor)",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "MSPAS — DEGR, Situación epidemiológica de las arbovirosis 2026, hasta SE-35",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+      "periodo": "2026 SE-1 a SE-35",
+      "n_puntos": 12,
+      "valor": 2830,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "MSPAS DEGR boletín (archivo local sesiones/_descargas/arbovirosis-semana-35.txt, recálculo)",
+      "evidencia": {
+        "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+        "cita": "Menores de 1 año 367 3% 3% ... De 5 a 9 años 1,930 15% 27% De 10 a 14 años 1,792 14% 41% ... Total 12,699 100%",
+        "archivo_local": "sesiones/_descargas/arbovirosis-semana-35-2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Menores de 1 año",
+          "valor": 367
+        },
+        {
+          "nombre": "1 a 4 años",
+          "valor": 1128
+        },
+        {
+          "nombre": "5 a 9 años",
+          "valor": 1930
+        },
+        {
+          "nombre": "10 a 14 años",
+          "valor": 1792
+        },
+        {
+          "nombre": "15 a 19 años",
+          "valor": 1444
+        },
+        {
+          "nombre": "20 a 24 años",
+          "valor": 1191
+        },
+        {
+          "nombre": "25 a 39 años",
+          "valor": 2830
+        },
+        {
+          "nombre": "40 a 49 años",
+          "valor": 895
+        },
+        {
+          "nombre": "50 a 59 años",
+          "valor": 548
+        },
+        {
+          "nombre": "60 a 64 años",
+          "valor": 172
+        },
+        {
+          "nombre": "65 a 69 años",
+          "valor": 150
+        },
+        {
+          "nombre": "70 años y más",
+          "valor": 252
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_8.png"
+      ]
+    }
+  ],
+  "fuentes": [
+    {
+      "nombre": "MSPAS/DEGR — Situación epidemiológica de las arbovirosis, SE-35-2026",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "MSPAS/DEGR — Situación epidemiológica de las arbovirosis, SE-53-2025",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2025/arbovirosis-semana-53-2025.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "OPS/OMS — Informe de situación dengue Américas SE-35 2026",
+      "url": "https://www.paho.org/sites/default/files/2026/09/2026-cde-dengue-sitrep-americas-epi-week-35-sep-es.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "OPS/OMS — Actualización epidemiológica dengue 18-feb-2026",
+      "url": "https://www.paho.org/sites/default/files/2026/02/2026-18feb-phe-actualizacion-dengue-es-final1.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "OPS — nota 10-feb-2025: alerta por DENV-3 (incluye a Guatemala)",
+      "url": "https://www.paho.org/es/noticias/10-2-2025-ops-alerta-sobre-riesgo-brotes-dengue-por-circulacion-serotipo-denv-3-americas",
+      "nivel": "primaria (contexto cualitativo)"
+    },
+    {
+      "nombre": "La Prensa (Honduras) — Sesal, reducción 44%",
+      "url": "https://www.laprensa.hn/honduras/dengue-cifras-salud-casos-estadisticas-prevencion-ME30075108",
+      "nivel": "prensa que reproduce dato oficial"
+    },
+    {
+      "nombre": "MSPAS/DEGR, Situación epidemiológica de las arbovirosis en Guatemala 2026, hasta SE-35",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "MSPAS/DEGR, Situación epidemiológica de las arbovirosis en Guatemala 2025, hasta SE-53",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2025/arbovirosis-semana-53-2025.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "MSPAS/DEGR, Situación epidemiológica de las arbovirosis en Guatemala 2024, hasta SE-52",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/arbovirosis-sem-52%202024.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "MSPAS/DEGR, Situación epidemiológica de las arbovirosis en Guatemala 2023, hasta SE-52",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/arbovirosis-sem-52-2023.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "OPS/OMS, Report on the epidemiological situation of dengue in the Americas, EW 35 2026 (PLISA)",
+      "url": "https://www.paho.org/sites/default/files/2026/09/2026-cde-dengue-sitrep-americas-epi-week-35-sep.pdf",
+      "nivel": "primaria (regional)"
+    },
+    {
+      "nombre": "Prensa Libre, 30-ago-2025",
+      "url": "https://www.prensalibre.com/?p=23576229",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "MSPAS — DEGR, Situación epidemiológica de las arbovirosis 2026, hasta SE-35",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2026/arbovirosis-semana-35-2026.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "MSPAS — DEGR, Situación epidemiológica de las arbovirosis 2025, hasta SE-53",
+      "url": "https://epidemiologia.mspas.gob.gt/phocadownload/userupload/arbovirosis/2025/arbovirosis-semana-53-2025.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "OPS/OMS — Dengue sitrep Américas SE-34 2026",
+      "url": "https://www.paho.org/sites/default/files/2026/09/2026-cde-dengue-sitrep-americas-epi-week-34-sep.pdf",
+      "nivel": "primaria",
+      "nota": "Centroamérica y México -42% vs misma semana 2025; tabla por país es imagen (sin Guatemala en texto). Archivo: sesiones/_descargas/2026-cde-dengue-sitrep-americas-epi-week-34-sep.txt"
+    }
+  ],
+  "no_afirma": [
+    "Que la caída se deba a la inmunidad que dejó la epidemia de DENV-3: ni OPS ni MSPAS lo afirman; es una coincidencia temporal.",
+    "Que 2027 vaya a traer un repunte: no hay proyección oficial; el DENV-1 aún no desplaza al DENV-3.",
+    "Cuántas muertes lleva 2026: el MSPAS no las ha publicado al corte de la semana 35.",
+    "Que las acciones locales no hayan tenido efecto: la comparación regional no lo mide.",
+    "Que la incidencia por área de salud haya subido o bajado frente a 2025 a la misma semana: no hay corte comparable publicado."
+  ],
+  "incertidumbre": [
+    "Todas las cifras usadas tienen segunda fuente NO independiente (reproduce la primaria del MSPAS/DEGR, OPS o Sesal); la ancla ser-c01 incluida: la segunda fuente reproduce la primaria, sin verificación independiente.",
+    "La tesis provisional hablaba de ~43% (Infobae, semana 30); al último corte publicado (semana 35) el MSPAS reporta 40% menos que 2025. No hay cortes posteriores (SE-36 a SE-38 dan 404).",
+    "T1 usa solo la red del MSPAS (sin IGSS); la incidencia por área (T7) integra MSPAS + IGSS; las edades (T8) son solo MSPAS.",
+    "La comparación de zonas del corredor (T5) mezcla cierre de 2025 (semana 53) con la semana 34 de 2026.",
+    "Honduras (-44%) es a la semana 12 y de la Sesal vía prensa; el resto, semana 35. «1 de cada 154» en Sacatepéquez es derivado de la incidencia (100,000/649.5); el boletín no publica la población por área.",
+    "La afirmación de OPS sobre inmunidad homotípica viene de la nota de prensa de la alerta DENV-3 (10-feb-2025), no del PDF de la alerta."
+  ],
+  "descartadas": []
+}

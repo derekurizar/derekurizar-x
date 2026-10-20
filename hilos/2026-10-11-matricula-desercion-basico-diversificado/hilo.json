@@ -1,0 +1,188 @@
+{
+  "slug": "matricula-desercion-basico-diversificado",
+  "fecha": "2026-10-11",
+  "tema": "Más de 3.3 millones en las aulas: la matrícula sube, pero ¿quién abandona en básico y diversificado?",
+  "tesis": "Cerca de 85% de los jóvenes termina la primaria, pero solo 56.5% termina básico y 23.1% diversificado (UIS, 2024): la matrícula pública sube en 2026, pero la secundaria pierde a los jóvenes por dos vías distintas, pocos llegan a diversificado (tasa neta 27.52%, 9.62% en Totonicapán) y básico es el nivel con más abandono durante el año (12.63% en 2025).",
+  "paleta": "jacaranda",
+  "hook_tipo": "giro_inversion",
+  "pregunta": "Si la matrícula pública 2026 creció en unos 150 mil estudiantes, ¿en qué nivel y en qué departamentos se siguen perdiendo los jóvenes entre primaria, básico y diversificado?",
+  "n_tuits": 10,
+  "estado": "listo",
+  "tuits": [
+    {
+      "n": 1,
+      "beat": "gancho",
+      "texto": "A febrero, las escuelas públicas tenían 150 mil inscritos más que en 2025.\n\nPero inscribirse no es terminar: la cadena se rompe justo después de la primaria. 🧵",
+      "caracteres": 160,
+      "alt_text": "Gráfico de barras verticales con la tasa de finalización por nivel en Guatemala, 2024: primaria 85.0%, básico 56.5% y diversificado 23.1% (destacado). Es el porcentaje de jóvenes algo mayores que la edad de egreso de cada nivel que lo completaron. Fuente: UNESCO-UIS con encuestas de hogares.",
+      "imagen": "tuit_1.png",
+      "plantilla": "barras-v",
+      "fuente": "UNESCO-UIS · tasa de finalización · 2024",
+      "cifra_ids": [
+        "des-c02",
+        "mat-c11",
+        "mat-c10"
+      ]
+    },
+    {
+      "n": 2,
+      "beat": "contexto",
+      "texto": "Es un dato preliminar y solo del sector público. Y en diversificado, el sector público es minoría.",
+      "caracteres": 98,
+      "alt_text": "Gráfico de barras verticales con el aumento de inscritos en el sector público a febrero de 2026 frente a la misma fecha de 2025, por nivel: preprimaria 41,000, primaria 40,000, básico 39,000 y diversificado 22,000 (destacado). Cifras preliminares. Fuente: Mineduc vía AGN.",
+      "imagen": "tuit_2.png",
+      "plantilla": "barras-v",
+      "fuente": "Mineduc vía AGN · febrero 2026",
+      "cifra_ids": [
+        "mat-c02"
+      ]
+    },
+    {
+      "n": 3,
+      "beat": "contexto",
+      "texto": "Por eso la matrícula pública cuenta poco del diversificado. Para verlo entero hay que mirar todos los sectores.",
+      "caracteres": 111,
+      "alt_text": "Gráfico de dona con la matrícula de diversificado por sector en 2020, porcentajes redondeados al entero: privado 70% (destacado), oficial o público 23%, cooperativa 6% y municipal 2%. En la fuente son 70%, 22.5%, 5.6% y 1.5%, que no suman exactamente 100. Fuente: CEPAL con datos de Mineduc.",
+      "imagen": "tuit_3.png",
+      "plantilla": "dona",
+      "fuente": "CEPAL con datos de Mineduc · 2020",
+      "cifra_ids": [
+        "mat-c04"
+      ]
+    },
+    {
+      "n": 4,
+      "beat": "contexto",
+      "texto": "En básico la tasa es el doble, y aun así apenas pasa de la mitad.",
+      "caracteres": 65,
+      "alt_text": "Gráfico de cuadrícula de 100 celdas: la tasa neta de escolaridad de diversificado en Guatemala fue 27.52% en 2025, todos los sectores; unas 28 de cada 100 personas en edad de diversificado estaban inscritas en ese nivel. Fuente: Mineduc, Anuario Estadístico de la Educación 2025.",
+      "imagen": "tuit_4.png",
+      "plantilla": "waffle",
+      "fuente": "Mineduc · Anuario Estadístico 2025",
+      "cifra_ids": [
+        "dep-c01",
+        "dep-c02"
+      ]
+    },
+    {
+      "n": 5,
+      "beat": "contexto",
+      "texto": "Huehuetenango y Quiché están casi igual de lejos. El departamento de Guatemala, en el otro extremo.",
+      "caracteres": 99,
+      "alt_text": "Mapa de los 22 departamentos con la tasa neta de escolaridad de diversificado en 2025. Totonicapán (destacado) tiene 9.62%, Quiché 12.33% y Huehuetenango 12.77%; en el otro extremo, Guatemala 53.01%, El Progreso 39.76% y Sacatepéquez 39.18%. Promedio nacional 27.52%. Fuente: Mineduc, Anuario Estadístico de la Educación 2025.",
+      "imagen": "tuit_5.png",
+      "plantilla": "mapa",
+      "fuente": "Mineduc · Anuario Estadístico 2025",
+      "cifra_ids": [
+        "dep-c01",
+        "dep-c11"
+      ]
+    },
+    {
+      "n": 6,
+      "beat": "giro",
+      "texto": "Aquí cambia la lectura: en el último ciclo el problema es que pocos llegan. Y entre quienes sí se inscriben, el abandono durante el año golpea más al ciclo básico.",
+      "caracteres": 163,
+      "alt_text": "Gráfico de pesas con la tasa de deserción intraanual, todos los sectores. Básico: 13.54% en 2024 y 12.63% en 2025. Diversificado: 10.19% en 2024 y 9.44% en 2025. Fuente: Mineduc, Anuario Estadístico de la Educación 2024 y 2025.",
+      "imagen": "tuit_6.png",
+      "plantilla": "pesas",
+      "fuente": "Mineduc · Anuario Estadístico 2024 y 2025",
+      "cifra_ids": [
+        "dep-c07",
+        "dep-c08",
+        "dep-c03",
+        "dep-c04"
+      ]
+    },
+    {
+      "n": 7,
+      "beat": "contexto",
+      "texto": "No es el mapa de la cobertura: Sacatepéquez tiene una de las mayores tasas netas del ciclo básico y aun así encabeza el abandono.",
+      "caracteres": 129,
+      "alt_text": "Mapa de los 22 departamentos con la tasa de deserción intraanual en básico en 2025, todos los sectores. Mayores: Sacatepéquez 15.9% (destacado), Petén 15.39% y Chimaltenango 15.2%. Menores: Retalhuleu 10.04%, Izabal 10.79% y El Progreso 11.0%. Promedio nacional 12.63%. Fuente: Mineduc, Anuario Estadístico de la Educación 2025.",
+      "imagen": "tuit_7.png",
+      "plantilla": "mapa",
+      "fuente": "Mineduc · Anuario Estadístico 2025",
+      "cifra_ids": [
+        "dep-c03",
+        "dep-c02"
+      ]
+    },
+    {
+      "n": 8,
+      "beat": "impacto",
+      "texto": "En diversificado se retiraron otros 36,486 en el mismo año.",
+      "caracteres": 59,
+      "alt_text": "Cifra destacada: 99,709 estudiantes de básico se retiraron durante el ciclo 2025, el 12.6% de los 789,363 inscritos al inicio, todos los sectores. Dos barras comparan retirados e inscritos. Fuente: Mineduc, Anuario Estadístico de la Educación 2025.",
+      "imagen": "tuit_8.png",
+      "plantilla": "cifra",
+      "fuente": "Mineduc · Anuario Estadístico 2025",
+      "cifra_ids": [
+        "dep-c05",
+        "dep-c09",
+        "dep-c06"
+      ]
+    },
+    {
+      "n": 9,
+      "beat": "impacto",
+      "texto": "No aparecen en ninguna lista de inscritos, así que la matrícula no los cuenta.",
+      "caracteres": 78,
+      "alt_text": "Cifra destacada: 743,687 jóvenes en edad de diversificado estaban fuera de la escuela en Guatemala en 2024, el 65.6% de ese grupo de edad. Comparación con 370,838 adolescentes en edad de básico fuera de la escuela. Fuente: UNESCO-UIS.",
+      "imagen": "tuit_9.png",
+      "plantilla": "cifra",
+      "fuente": "UNESCO-UIS · niños y jóvenes fuera de la escuela · 2024",
+      "cifra_ids": [
+        "mat-c07",
+        "mat-c08",
+        "mat-c06"
+      ]
+    },
+    {
+      "n": 10,
+      "beat": "cierre",
+      "texto": "La matrícula pública sube, pero la escuela sigue perdiendo a sus jóvenes en básico y diversificado. Y el mapa de quién no llega no es el mismo que el de quién abandona.\n\nFuentes: UNESCO-UIS, Mineduc (Anuario Estadístico), Mineduc vía AGN, CEPAL con datos de Mineduc.",
+      "caracteres": 266,
+      "alt_text": "Tuit de cierre sin imagen: resume el hilo y lista las fuentes (UNESCO-UIS, Mineduc, Mineduc vía AGN y CEPAL con datos de Mineduc).",
+      "imagen": null,
+      "plantilla": null,
+      "fuente": null,
+      "cifra_ids": []
+    }
+  ],
+  "no_afirma": [
+    "No afirma que la matrícula pública 2026 sea récord ni que llegue a 3.3 millones: el aumento de 150 mil es preliminar a febrero y no hay cierre publicado.",
+    "No compara la deserción de secundaria con la de primaria: la tasa de deserción de primaria por nivel no se obtuvo.",
+    "Las tasas de finalización de UIS no siguen a una misma cohorte: no son pasos de un embudo ni dicen cuántos de los que terminan primaria terminan después básico.",
+    "No atribuye causas (trabajo, migración, costo, embarazo) a la deserción ni a las diferencias entre departamentos.",
+    "No afirma una tendencia a la baja de la deserción: solo se comparan 2024 y 2025."
+  ],
+  "incertidumbre": [
+    "La ancla (des-c02, finalización de primaria) tiene segunda fuente independiente (Banco Mundial vs UIS; manda UIS, 84.97%). Las demás cifras del hilo tienen segunda fuente que reproduce la primaria, sin verificación independiente: Anuario MINEDUC (dep-c01 a dep-c11, recalculadas desde el mismo cuadro), UIS (mat-c06, mat-c07, mat-c08, mat-c10, mat-c11), AGN (mat-c02) y CEPAL (mat-c04).",
+    "mat-c02 es preliminar a febrero 2026 y sus partes por nivel suman 142 mil, no 150 mil; la fuente no explica la diferencia.",
+    "Las cifras departamentales y de cobertura son de todos los sectores; el aumento 2026 es solo del sector público. No se mezclan en una misma tarjeta.",
+    "La serie UIS de jóvenes fuera de la escuela tiene 2019 atípico; solo se usa 2024. El rango de edad de la tasa neta MINEDUC no aparece en el cuadro (por convención, 16-18 para diversificado).",
+    "La distribución por sector (CEPAL) es de 2020; puede haber cambiado. La finalización por nivel no es un embudo: se usó barras-v, no embudo."
+  ],
+  "fuentes": [
+    "UNESCO-UIS · tasa de finalización · 2024",
+    "Mineduc vía AGN · febrero 2026",
+    "CEPAL con datos de Mineduc · 2020",
+    "Mineduc · Anuario Estadístico 2025",
+    "Mineduc · Anuario Estadístico 2024 y 2025",
+    "UNESCO-UIS · niños y jóvenes fuera de la escuela · 2024"
+  ],
+  "fuentes_cifras": [
+    "Banco Mundial / UNESCO-UIS (SE.PRM.CMPT.ZS)",
+    "CEPAL, infografía 'Brechas de acceso y calidad' sobre base MINEDUC (Base educación formal, INE)",
+    "MINEDUC (ministra Giracca) vía AGN, 11-mar-2026",
+    "MINEDUC, Anuario Estadístico de la Educación (SIRE, Dirección de Planificación)",
+    "UIS, indicador CR.2 (encuestas de hogares)",
+    "UIS, indicador CR.3 (encuestas de hogares)",
+    "UNESCO Institute for Statistics (UIS), indicador OFST.2.CP",
+    "UNESCO Institute for Statistics (UIS), indicador OFST.3.CP",
+    "UNESCO Institute for Statistics (UIS), indicador ROFST.3.CP"
+  ],
+  "gate_mecanico": "ok",
+  "contacto": "contacto.png"
+}

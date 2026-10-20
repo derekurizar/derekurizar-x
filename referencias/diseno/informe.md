@@ -57,7 +57,7 @@ Las plantillas viven en `investigacion/`; ensambla `scripts/informe.py` y render
 | tipo | Campos (obligatorios en **negrita**) |
 |---|---|
 | `portada` | **titulo**, kicker_izq, kicker_der, lead, cifra `{valor, etiqueta, texto, id}`, fuentes. Los capítulos se listan solos |
-| `indice` | titulo, leer `[…]` (caja «Cómo leer»). Entradas, anexos y lista de figuras: automáticos |
+| `indice` | titulo, leer `[…]` (caja «Cómo leer»). Entradas, anexos y lista de figuras: automáticos. Con más de 6 capítulos, los capítulos van a dos columnas sin descripción; con más de 6 capítulos o más de 24 figuras y tablas, la lista sigue en hojas «Figuras y tablas» insertadas tras el índice (≤ 40 entradas por hoja, repartidas parejo; cuentan como páginas) |
 | `resumen` | **tesis**, **cifras** `[{kicker, valor, texto, fuente, id}]` (4), no_afirma `[…]` |
 | `tablero` | **cifras** `[{kicker, valor, contexto, fuente, grafico}]` (6), titulo, subtitulo |
 | `capitulo` | **numero**, **titulo**, variante `banda` (kicker, lead, bloques) · `dividida` (kicker, kicker2, lead, secciones `[{texto, pag:"{pag:id}"}]`) · `destacado` (kicker, lead, **dato** `{kicker, antes:{valor,etiqueta}, despues:{valor,etiqueta}}`, **fuente**). Además: titulo_corto, descripcion (índice) |
@@ -79,7 +79,7 @@ Las plantillas viven en `investigacion/`; ensambla `scripts/informe.py` y render
 | `texto` | parrafos `[…]`, capitular (letra capitular), margen `[{termino, texto}]` (notas al margen, 136 px) |
 | `figura` | ver abajo |
 | `figuras` | items `[figura, figura]`: dos figuras a media página |
-| `tabla` | columnas `[{t, num, ancho}]`, filas `[{c:[…], dest, total, b:[índices en negrita]}]`, **fuente**, pie, titulo, numero («A1»; si no, se numera sola), notas `[{m, texto}]`, indice |
+| `tabla` | columnas `[{t, num, ancho}]`, filas `[{c:[…], dest, total, b:[índices en negrita], detalle}]` (`detalle`: una segunda línea a lo ancho bajo la fila, sin la columna del id; la usan las fichas de auditoría para «qué encontramos»), **fuente**, pie, titulo, numero («A1»; si no, se numera sola), notas `[{m, texto}]`, indice |
 | `cita` | etiqueta, texto (frase en serif cursiva entre reglas) |
 | `caja` | etiqueta, items `[…]` (p. ej. «No afirma») |
 | `lectura` | titulo, items `[{n, texto}]`, nota: lectura guiada con marcadores ① ② que el gráfico pinta con `marcadores` |
@@ -90,7 +90,7 @@ En todo texto, `**negrita**` y `*cursiva serif*`. Nada de HTML: se escapa.
 
 Campos comunes:
 - **fuente** y pie (leyenda bajo la figura);
-- id (destino de `{fig:id}`), indice (título corto para la lista de figuras), kicker, titular (texto o líneas), nota;
+- id (destino de `{fig:id}`), indice (título corto para la lista de figuras; `false` la deja fuera, p. ej. una tabla que continúa), kicker, titular (texto o líneas), nota;
 - leyenda `[{texto, estilo: dest|base|fuerte, forma: linea}]`;
 - alto (px del gráfico);
 - derivado (`true` añade «Incluye cálculo propio»).
@@ -145,8 +145,8 @@ paneles. Cuándo `tarjeta`: la pieza ya existe publicada (`desde`) o se quiere m
 - **I2** toda cifra o serie con `id` existe en `meta.datos`, es `verificada|ajustada` y su valor coincide; en todo gráfico y toda figura `tarjeta` con datos, cada número está entre los valores de sus cifras.
 - **I3** sin URL ni emoji en los textos.
 - **I4** toda figura, tabla y cifra de resumen o tablero tiene `fuente`.
-- **I5** las referencias `{fig:}` `{Fig:}` `{fign:}` `{tabla:}` `{Tabla:}` `{pag:}` resuelven.
-- **I6** la paleta existe; 1 a 100 páginas.
+- **I5** las referencias `{fig:}` `{Fig:}` `{fign:}` `{tabla:}` `{Tabla:}` `{pag:}` resuelven (`{pag:id}` da la página de una página, una figura o una tabla con ese id).
+- **I6** la paleta existe; 1 a 160 páginas (cada flujo pone su rango: 14–30 normal, 30–140 auditoría).
 - **I7** (solo aviso) números del cuerpo (párrafos, leads, tesis, hallazgos, cierre) que no son una cifra verificada, un año, un entero ≤ 100 ni un derivado declarado en la misma página (un pie, nota o margen con ÷ × − o «cálculo propio»).
 
 **`scripts/render_informe.js --check`** (sobre la página maquetada):

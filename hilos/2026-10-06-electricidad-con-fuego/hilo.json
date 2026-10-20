@@ -1,0 +1,180 @@
+{
+  "slug": "electricidad-con-fuego",
+  "fecha": "2026-10-06",
+  "tema": "«La cubrimos con fuego»: la generación térmica se duplicó y el spot subió 86%",
+  "tesis": "En agosto de 2026, 59.19% de la electricidad del SNI salió de combustibles fósiles: la hidro cayó 25.5% frente a agosto de 2025 y la solar casi se triplicó, pero el pico de demanda llega de noche, cuando el sol no aporta.",
+  "paleta": "cielo",
+  "hook_tipo": "giro_inversion",
+  "pregunta": "¿Cuánto más térmica y más cara es la electricidad mayorista de 2026 frente a 2025, y por qué la solar no alcanza a cubrir el pico de la noche?",
+  "n_tuits": 10,
+  "estado": "listo",
+  "tuits": [
+    {
+      "n": 1,
+      "beat": "gancho",
+      "texto": "La generación solar de Guatemala casi se triplicó en un año.\n\nPero en agosto, la mayor parte de la electricidad del país salió de quemar carbón, coque de petróleo y bunker. 🧵",
+      "caracteres": 175,
+      "alt_text": "Gráfico de cuadrícula de 100 celdas: 59.19% de la electricidad generada en el Sistema Nacional Interconectado en agosto de 2026 salió de combustibles fósiles (carbón mineral, coque de petróleo, bunker, gas natural y diésel); el resto, de hidroeléctricas, solar, eólica, geotermia y biomasa. Fuente: AMM, generación mensual por planta 2026.",
+      "imagen": "tuit_1.png",
+      "plantilla": "waffle",
+      "fuente": "AMM · generación mensual por planta 2026",
+      "cifra_ids": [
+        "mat-c01"
+      ]
+    },
+    {
+      "n": 2,
+      "beat": "contexto",
+      "texto": "Carbón, coque de petróleo, bunker, gas natural y diésel: eso cuenta como fósil en este hilo.",
+      "caracteres": 92,
+      "alt_text": "Mapa de rectángulos (treemap) de la generación del SNI por recurso en agosto de 2026, en GWh: carbón mineral 478.14, hidroeléctrica 322.69, coque de petróleo 159.7, solar 142.28, bunker 127.42, eólica 49.78, geotérmica 21.94, gas natural 11.5, diésel 3.88, biogás 1.27 y biomasa 0.27. Total 1,318.87 GWh. El carbón generó más que todas las hidroeléctricas. Fuente: AMM, generación mensual por planta 2026.",
+      "imagen": "tuit_2.png",
+      "plantilla": "treemap",
+      "fuente": "AMM · generación mensual por planta 2026",
+      "cifra_ids": [
+        "mat-c04"
+      ]
+    },
+    {
+      "n": 3,
+      "beat": "contexto",
+      "texto": "El sol sumó, pero el carbón sumó todavía más GWh. Y el agua perdió más de lo que ganó cualquiera de los dos.",
+      "caracteres": 108,
+      "alt_text": "Gráfico de pesas que compara la generación de agosto de 2025 con la de agosto de 2026, en GWh: hidroeléctrica bajó de 432.9 a 322.69; carbón mineral subió de 378.22 a 478.14; bunker, de 50.64 a 127.42; solar, de 48.6 a 142.28. Fuente: AMM, generación mensual por planta 2025 y 2026.",
+      "imagen": "tuit_3.png",
+      "plantilla": "pesas",
+      "fuente": "AMM · generación mensual por planta 2025–2026",
+      "cifra_ids": [
+        "mat-c03",
+        "mat-c06",
+        "mat-c05",
+        "mat-c09"
+      ]
+    },
+    {
+      "n": 4,
+      "beat": "contexto",
+      "texto": "No es un mes aislado: en GWh, agosto fue el máximo de la parte fósil en toda la serie, que arranca en enero de 2024.",
+      "caracteres": 116,
+      "alt_text": "Gráfico de líneas de la generación mensual del SNI de enero de 2024 a agosto de 2026, en GWh: fósil frente a hidroeléctrica. De febrero a agosto de 2026 la fósil superó a la hidro todos los meses; en agosto de 2026 la fósil llegó a 780.64 GWh, el máximo de la serie, y la hidro a 322.69. Fuente: AMM, generación mensual por planta 2024–2026.",
+      "imagen": "tuit_4.png",
+      "plantilla": "linea",
+      "fuente": "AMM · generación mensual por planta 2024–2026",
+      "cifra_ids": [
+        "mat-c08",
+        "mat-c07"
+      ]
+    },
+    {
+      "n": 5,
+      "beat": "giro",
+      "texto": "El problema es la hora: de febrero a agosto de 2026, la demanda máxima de cada mes llegó entre las 6 y las 8 de la noche, ya sin sol.",
+      "caracteres": 133,
+      "alt_text": "Gráfico de líneas del precio spot promedio por hora del día en 2025, en US$ por MWh: el mínimo es 62.72 a las 3 de la madrugada y sube hasta 112.71 a las 7 de la noche (19 h), la hora más cara, cuando los paneles solares ya no producen. Fuente: AMM, precios de oportunidad de la energía (PSA) 2025.",
+      "imagen": "tuit_5.png",
+      "plantilla": "linea",
+      "fuente": "AMM · precios de oportunidad (PSA) 2025",
+      "cifra_ids": [
+        "spo-c05"
+      ]
+    },
+    {
+      "n": 6,
+      "beat": "contexto",
+      "texto": "Y cada agosto se pide más potencia, justo a la hora en que los paneles ya no producen.",
+      "caracteres": 86,
+      "alt_text": "Comparación antes y después de la demanda máxima de potencia del SNI en agosto: 2,141.11 MW en agosto de 2025 y 2,374.89 MW en agosto de 2026, casi 11% más. En 2026 ocurrió el 13 de agosto a las 20 h. Fuente: AMM, análisis del mercado mayorista 2025 y 2026.",
+      "imagen": "tuit_6.png",
+      "plantilla": "antes-despues",
+      "fuente": "AMM · análisis del mercado mayorista 2025–2026",
+      "cifra_ids": [
+        "cur-c04",
+        "cur-c05"
+      ]
+    },
+    {
+      "n": 7,
+      "beat": "impacto",
+      "texto": "Es el precio del mercado de oportunidad, donde se compra la energía que no cubren los contratos.",
+      "caracteres": 96,
+      "alt_text": "Comparación antes y después del precio spot promedio de julio, convertido a centavos de dólar por kWh: 8.4 centavos en julio de 2025 (US$84.45 por MWh) y 13.4 centavos en julio de 2026 (US$133.97 por MWh), 59% más. Fuente: AMM, PSA 2025, y Rio Times con datos del AMM para 2026.",
+      "imagen": "tuit_7.png",
+      "plantilla": "antes-despues",
+      "fuente": "AMM · PSA 2025; Rio Times con datos del AMM · 2026",
+      "cifra_ids": [
+        "spo-c04"
+      ]
+    },
+    {
+      "n": 8,
+      "beat": "contexto",
+      "texto": "No es la primera vez: hace dos y tres años, de abril a junio, el mercado spot fue todavía más caro.",
+      "caracteres": 99,
+      "alt_text": "Gráfico de barras verticales del precio spot promedio del segundo trimestre (abril a junio), en US$ por MWh: 143.8 en 2023, 173.33 en 2024, 103.5 en 2025 y 128.97 en 2026. El de 2026 sube frente a 2025, pero sigue por debajo de 2024 y 2023. Fuente: AMM, PSA 2023–2024 e informe estadístico del segundo trimestre de 2026.",
+      "imagen": "tuit_8.png",
+      "plantilla": "barras-v",
+      "fuente": "AMM · PSA 2023–2024 e informe estadístico 2T 2026",
+      "cifra_ids": [
+        "spo-c06"
+      ]
+    },
+    {
+      "n": 9,
+      "beat": "contexto",
+      "texto": "El precio spot no es tu factura: la tarifa al usuario la fija la CNEE, y este hilo no la mide.",
+      "caracteres": 94,
+      "alt_text": "Gráfico de dona de las transacciones del mercado mayorista en el segundo trimestre de 2026: 86% en el mercado a término (contratos) y 14% en el mercado de oportunidad, al precio spot. Fuente: AMM, informe estadístico del segundo trimestre de 2026.",
+      "imagen": "tuit_9.png",
+      "plantilla": "dona",
+      "fuente": "AMM · informe estadístico 2T 2026",
+      "cifra_ids": [
+        "spo-c08"
+      ]
+    },
+    {
+      "n": 10,
+      "beat": "cierre",
+      "texto": "En resumen: en agosto el agua dio menos y el carbón y el bunker dieron más. La solar crece, pero no produce a la hora de más demanda.\n\nLo que los datos no dicen: que la generación fósil se duplicara. Subió 31.9% frente a agosto de 2025.\n\nFuentes: AMM y Rio Times.",
+      "caracteres": 263,
+      "alt_text": "Tuit de cierre sin imagen.",
+      "imagen": null,
+      "plantilla": null,
+      "fuente": null,
+      "cifra_ids": []
+    }
+  ],
+  "no_afirma": [
+    "No afirma que la generación térmica se duplicara: la fósil de agosto subió 31.9% frente a agosto de 2025 (solo el bunker se multiplicó por 2.5).",
+    "No afirma un precio spot de agosto de 2026 ni el +86% de la tesis inicial: no se confirmó en fuente primaria.",
+    "No afirma cuánto sube la tarifa al usuario: el spot cubre 14% de las transacciones y la tarifa la fija la CNEE.",
+    "No afirma qué tecnología cubre ni qué planta marca el precio en la hora pico: el AMM no publica la mezcla horaria en archivo descargable.",
+    "No afirma que la participación fósil sea un récord histórico: la serie solo cubre 2024–2026 y mayo de 2024 (63.27%) fue mayor."
+  ],
+  "incertidumbre": [
+    "Todas las cifras usadas tienen una segunda fuente que reproduce la primaria (independencia baja), incluida la ancla mat-c01; no hay verificación independiente de ninguna.",
+    "El spot de julio de 2026 (US$133.97/MWh) viene de prensa (Rio Times) citando al AMM; el archivo PSA 2026 no estaba disponible. Julio 2025 (84.45) sí coincide con el PSA del AMM.",
+    "La participación fósil depende de la clasificación por recurso del AMM (incluye coque de petróleo; los ingenios se separan por combustible).",
+    "El precio por hora es el promedio de 2025, no de 2026; la curva horaria de demanda por tecnología del día de máxima no está disponible en archivo.",
+    "La conversión a centavos por kWh (T7) es aritmética de unidades (1 MWh = 1,000 kWh), no una cifra publicada."
+  ],
+  "fuentes": [
+    "AMM · generación mensual por planta 2026",
+    "AMM · generación mensual por planta 2025–2026",
+    "AMM · generación mensual por planta 2024–2026",
+    "AMM · precios de oportunidad (PSA) 2025",
+    "AMM · análisis del mercado mayorista 2025–2026",
+    "AMM · PSA 2025; Rio Times con datos del AMM · 2026",
+    "AMM · PSA 2023–2024 e informe estadístico 2T 2026",
+    "AMM · informe estadístico 2T 2026"
+  ],
+  "fuentes_cifras": [
+    "AMM · Análisis del Mercado Mayorista (rd.amm.org.gt), con base en la Carga Horaria",
+    "AMM · Generación mensual por planta (Despacho de carga ejecutado del SNI), tabla «Generación por tipo de recurso»",
+    "AMM · Informe Estadístico Segundo Trimestre 2026",
+    "AMM · PSA 2023–2024 (cálculo propio) e Informe Estadístico 2T 2026",
+    "AMM · PSA 2025 (cálculo propio por hora)",
+    "Rio Times (prensa) citando datos AMM analizados por Ager"
+  ],
+  "gate_mecanico": "ok",
+  "contacto": "contacto.png"
+}

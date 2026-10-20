@@ -83,6 +83,12 @@ def cargar(sesion):
         _v = leer(ruta)
         for it in (_v.get("items") or _v.get("cifras") or []):
             ver[it.get("id")] = it
+    for e in ejes.values():  # serie_final / partes_final del verificador mandan (ensamblar.aplicar_ajustes)
+        for c in e["cifras"]:
+            v = ver.get(c.get("id")) or {}
+            for k, d in (("serie_final", "serie"), ("partes_final", "partes")):
+                if isinstance(v.get(k), list):
+                    c[d] = v[k]
     rg = os.path.join(sesion, "guion.json")
     guion = leer(rg) if os.path.exists(rg) else None
     return ejes, ver, guion

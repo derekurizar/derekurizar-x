@@ -1,0 +1,52 @@
+{
+ "eje": "aaa",
+ "n_busquedas": 0,
+ "cifras": [
+  {
+   "id": "aaa-c01",
+   "concepto": "Devengado en escuelas 2024–2026",
+   "valor": 400,
+   "unidad": "millones de quetzales",
+   "anio": 2026,
+   "fuente": "Minfin · Sicoin",
+   "url": "https://example.org/sicoin",
+   "tipo": "serie",
+   "n_puntos": 3,
+   "periodo": "2024–2026",
+   "serie": [
+    {
+     "p": "2024",
+     "v": 150
+    },
+    {
+     "p": "2025",
+     "v": 180
+    },
+    {
+     "p": "2026",
+     "v": 70
+    }
+   ],
+   "evidencia": {
+    "url": "https://example.org/sicoin",
+    "cita": "Escuelas: 2024 Q150.0 M; 2025 Q180.0 M; 2026 Q70.0 M (FIXTURE)"
+   }
+  },
+  {
+   "id": "aaa-c02",
+   "concepto": "Escuelas inauguradas desde 2024",
+   "valor": 120,
+   "unidad": "escuelas",
+   "anio": 2026,
+   "fuente": "Mineduc",
+   "url": "https://example.org/mineduc",
+   "tipo": "puntual",
+   "evidencia": {
+    "url": "https://example.org/mineduc",
+    "cita": "se han inaugurado 120 escuelas desde enero de 2024 (FIXTURE)"
+   }
+  }
+ ],
+ "fuentes": [],
+ "vacios": []
+}

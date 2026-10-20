@@ -12,7 +12,8 @@
 #        · negativos de render.js · banco de ideas (ideas.py sobre un banco temporal)
 #        · informe de investigación (ejemplo → PDF en un temporal, negativos I1–I6, P1, P2; catálogo de
 #          gráficos del informe: todos los G.* en papel, panel y media página con --check)
-#        · node --check de hilo.js, ideas.js, dato.js e investigacion.js · check_workflows.py (W1–W8).
+#        · /video: numeros_es, gate V1–V5+V9 con sus negativos, K2 (efectos fijos), make video-fixture (V6–V8, V10,
+#          ducking medido) · node --check de hilo.js, ideas.js, dato.js, investigacion.js y video.js · check_workflows.py (W1–W10).
 #        Resumen «N pruebas · M fallos»; exit 1 si hay fallos.
 set -u
 RAIZ="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -436,6 +437,25 @@ json.dump(R, open(p,"w",encoding="utf-8"), ensure_ascii=False)' "$D" || return 1
 paso "informe.py admite grafico.tipo en kebab y coteja una tarjeta con cifra_ids (I2 por contrato)" pos_informe
 paso "catalogo_informe.py → informe.json + datos.json sintético (26 tipos)" bash -c 'python3 scripts/catalogo_informe.py --dir "$0" --tarjeta ninguna | grep -q "26 tipos · sin G: ninguna"' "$TMP/catalogo"
 paso "informe.py catálogo --check (los 26 G.* en papel y a media página: I1–I7 + P1–P5)" python3 scripts/informe.py "$TMP/catalogo" --salida "$TMP/catalogo/salida" --check
+tarjetas_partidas() {  # dos páginas tarjetas: la segunda no pisa las imágenes de la primera
+  local D; D="$(mktemp -d "$TMP/tarj.XXXXXX")"
+  python3 - "$INF/informe.json" "$D" <<'PY' || return 1
+import json, sys
+R = json.load(open(sys.argv[1], encoding="utf-8")); P = R["paginas"]
+i = next(k for k, p in enumerate(P) if p["tipo"] == "tarjetas")
+segunda = dict(P[i], items=P[i]["items"][4:], titulo="Las tarjetas del hilo (sigue)")
+for k in ("id", "indice", "tuit", "lead"):
+    segunda.pop(k, None)
+P[i] = dict(P[i], items=P[i]["items"][:4]); P[i].pop("tuit", None)
+P.insert(i + 1, segunda)
+json.dump(R, open(sys.argv[2] + "/informe.json", "w", encoding="utf-8"), ensure_ascii=False)
+open(sys.argv[2] + "/esperada.txt", "w").write(segunda["items"][0]["desde"])
+PY
+  python3 scripts/informe.py "$D" --salida "$D/salida" --sin-pdf >/dev/null 2>&1 || return 1
+  cmp -s "$D/salida/figuras/tarjeta_05.png" "$(cat "$D/esperada.txt")"
+}
+paso "tarjetas partidas en dos páginas: cada imagen en su lugar" tarjetas_partidas
+
 INF_DENGUE="$INF"; INF="$TMP/catalogo"   # negativos sobre el catálogo: campos obligatorios de los tipos nuevos (CAMPOS_GRAFICO) e I2 por contrato
 pag_cat() { echo 'pg=next(p for p in P if p.get("seccion")=="'"$1"'" and p["bloques"][0]["texto"].endswith("papel")); f=pg["bloques"][2]; g=f["grafico"]; '; }
 neg_informe "catálogo: apilada sin partes"              "I1 página" "$(pag_cat apilada)g.pop(\"partes\")"
@@ -461,6 +481,209 @@ neg_informe "fixture: desde_hilo sin hilo.json"                      I1 'P[7]["d
 neg_informe "fixture: página que desborda"                           P2 'P[3]["bloques"][1]["parrafos"]*=14' render
 INF="$INF_DENGUE"
 
+echo "== revisión de justificación (digesto del revisor)"
+revision_ok() { python3 scripts/revision.py "$1" | grep -q "^# revisión" && python3 scripts/revision.py "$1" --avisos >/dev/null; }
+paso "revision.py da el digesto y los avisos R1–R3 del informe de ejemplo" revision_ok investigacion/ejemplos/dengue-2026
+paso "revision.py da el digesto y los avisos R1–R3 del fixture" revision_ok sesiones/_fixture
+revision_r3() {  # una figura derivada sin la operación en el pie salta R3
+  python3 - "$TMP/rev_r3" <<'PY'
+import json, os, sys
+d = sys.argv[1]; os.makedirs(d, exist_ok=True)
+R = {"meta": {}, "paginas": [{"tipo": "cuerpo", "seccion": "01 · Prueba", "bloques": [
+    {"b": "texto", "parrafos": ["Texto que no nombra la barra."]},
+    {"b": "figura", "id": "f1", "tipo": "papel", "derivado": True, "fuente": "Cálculo propio", "pie": "Sin operación.",
+     "grafico": {"tipo": "barras_h", "items": [{"nombre": "Barra muda", "valor": 3}]}}]}]}
+json.dump(R, open(os.path.join(d, "informe.json"), "w"))
+PY
+  python3 scripts/revision.py "$TMP/rev_r3" --avisos | grep -q "^R3" && python3 scripts/revision.py "$TMP/rev_r3" --avisos | grep -q "^R1"
+}
+paso "revision.py marca R1 (barra sin explicar) y R3 (derivada sin operación)" revision_r3
+revision_r456() {  # mismo número con otro redondeo (R4), conteo de estados distinto (R5), sigla sin glosario (R6)
+  python3 - "$TMP/rev_r4" <<'PY'
+import json, os, sys
+d = sys.argv[1]; os.makedirs(d, exist_ok=True)
+R = {"meta": {}, "paginas": [{"tipo": "cuerpo", "seccion": "01 · Prueba", "bloques": [
+    {"b": "texto", "parrafos": ["Covial programó 6,347.84 km; hay 3 retrocesos según el MSPAS."]},
+    {"b": "figura", "id": "km", "tipo": "papel", "fuente": "Covial", "pie": "Kilómetros.",
+     "grafico": {"tipo": "barras_h", "items": [{"nombre": "Covial programó", "valor": 6348}]}},
+    {"b": "figura", "id": "estados", "tipo": "papel", "fuente": "Cálculo propio ÷", "pie": "Estados.",
+     "grafico": {"tipo": "barras_h", "items": [{"nombre": "Cumplido", "valor": 2}, {"nombre": "En proceso", "valor": 3},
+                                               {"nombre": "Retroceso", "valor": 1}, {"nombre": "Sin iniciar", "valor": 4}]}}]}]}
+json.dump(R, open(os.path.join(d, "informe.json"), "w"))
+PY
+  local A; A="$(python3 scripts/revision.py "$TMP/rev_r4" --avisos)"
+  grep -q "^R4" <<<"$A" && grep -q "^R5" <<<"$A" && grep -q "^R6 .*MSPAS" <<<"$A" || { echo "$A"; return 1; }
+}
+paso "revision.py marca R4 (otro redondeo), R5 (conteo de estados) y R6 (sigla sin glosario)" revision_r456
+
+echo "== verificación mecánica (verificacion.py V-A–V-E, G9, G10)"
+paso "verificacion.py: el fixture de hilo pasa sin fallas" python3 scripts/verificacion.py sesiones/_fixture
+paso "verificacion.py: el fixture de dato pasa sin fallas" python3 scripts/verificacion.py sesiones/_fixture_dato
+ver_neg() {  # ver_neg REGLA "mutación python sobre (h, v) = (hallazgos, verificación) del fixture"
+  local S; S="$(mktemp -d "$TMP/ver.XXXXXX")"; cp -R sesiones/_fixture/. "$S/"; rm -rf "$S/salida"
+  python3 - "$S" "$2" <<'PY' || return 1
+import json, sys
+s, code = sys.argv[1], sys.argv[2]
+hp, vp = s + "/hallazgos_precios.json", s + "/verificacion_precios.json"
+h, v = json.load(open(hp)), json.load(open(vp))
+C = {c["id"]: c for c in h["cifras"]}; V = {i["id"]: i for i in v["items"]}
+exec(code)
+json.dump(h, open(hp, "w"), ensure_ascii=False); json.dump(v, open(vp, "w"), ensure_ascii=False)
+PY
+  python3 scripts/verificacion.py "$S" >"$TMP/ver.out" 2>&1; local rc=$?
+  [[ $rc -eq 1 ]] && grep -q "FALLA $1" "$TMP/ver.out" || { cat "$TMP/ver.out"; return 1; }
+  [[ -z "${3:-}" ]] || { python3 scripts/ensamblar.py "$S" --check --salida "$S/salida" >/dev/null 2>"$TMP/ver.err"; grep -q "$3" "$TMP/ver.err" || { cat "$TMP/ver.err"; return 1; }; }
+}
+paso "V-A: la cita dice 46.0 y el valor es 46.1 → falla (y G9 en ensamblar)" ver_neg V-A 'C["pre-c03"]["evidencia"]["cita"] = "Diésel, septiembre 2026: Q46.0 por galón"' "G9 T2 cifra pre-c03"
+paso "V-A: un derivado con calculo que no da el valor → falla" ver_neg V-A 'C["pre-c03"]["evidencia"]["cita"] = "sin el número"; C["pre-c03"]["calculo"] = "26/0.5"'
+paso "V-B: ajustada que deja el valor viejo en partes[] → falla" ver_neg V-B 'V["pre-c04"]["valor_final"] = 6.1; C["pre-c04"]["evidencia"]["cita"] += " 6.1"'
+paso "V-C: independencia alta con url_2 del mismo dominio → falla" ver_neg V-C 'V["pre-c02"]["independencia"] = "alta"; V["pre-c02"]["url_2"] = "https://www.mem.gob.gt/otra"'
+paso "V-C: independencia ausente → falla" ver_neg V-C 'V["pre-c02"].pop("independencia")'
+ver_calculo() {  # un derivado bien declarado pasa: calculo evaluado
+  local S; S="$(mktemp -d "$TMP/ver.XXXXXX")"; cp -R sesiones/_fixture/. "$S/"
+  python3 - "$S" <<'PY'
+import json, sys
+p = sys.argv[1] + "/hallazgos_precios.json"; h = json.load(open(p))
+for c in h["cifras"]:
+    if c["id"] == "pre-c03":
+        c["evidencia"]["cita"] = "el diésel subió de Q26 a Q46.10"; c["calculo"] = "26 + 20.1"
+json.dump(h, open(p, "w"), ensure_ascii=False)
+PY
+  python3 scripts/verificacion.py "$S"
+}
+paso "V-A: un derivado con calculo correcto pasa" ver_calculo
+paso "verificacion.py lee números de prensa (mil 734, 16 mil 537 millones, Q18.615,5 millones)" python3 -c '
+import sys; sys.path.insert(0, "scripts"); import verificacion as V
+casos = [("mil 734 kilómetros", 1734), ("Q16 mil 537 millones 678 mil", 16537.678), ("Q18.615,5 millones", 18615.5), ("un millón 625 mil 849", 1625849), ("cinco personas", 5)]
+assert all(V.coincide(v, V.numeros(t)) for t, v in casos), [t for t, v in casos if not V.coincide(v, V.numeros(t))]
+assert not V.coincide(17.3, V.numeros("17.4%")) and V.sueltos("15.4 mil casos", [15454]) == ["15.4 mil"]'
+g10() {  # un número del texto que no es ninguna cifra → aviso G10
+  local S; S="$(mktemp -d "$TMP/g10.XXXXXX")"; cp -R sesiones/_fixture/. "$S/"; rm -rf "$S/salida"
+  python3 -c "$(mut 'T[1]["texto"]="El diésel llegó a Q47.3 el galón."')" "$S/guion.json"
+  python3 scripts/ensamblar.py "$S" --check --salida "$S/salida" 2>&1 | grep -q "G10 T2.*47.3"
+}
+paso "G10: número del texto sin respaldo en las cifras → aviso" g10
+
+echo "== auditoría (fixture: retroceso por poco, igual = sin iniciar, no atribuible, sin dato)"
+AUDF=sesiones/_fixture_auditoria
+aud_pos() {
+  local S; S="$(mktemp -d "$TMP/aud.XXXXXX")"; cp -R "$AUDF/." "$S/"
+  for e in aaa bbb; do python3 scripts/auditoria.py "$S" --validar $e --verificacion >/dev/null || return 1; done
+  python3 scripts/auditoria.py "$S" --calcular >"$TMP/aud.json" || return 1
+  python3 - "$TMP/aud.json" "$S/auditoria.json" <<'PY' || return 1
+import json, sys
+r = json.load(open(sys.argv[1])); a = json.load(open(sys.argv[2]))
+est = {c["id"]: c["estado"] for c in a["compromisos"]}
+assert r["global"] == 30.0, r["global"]
+esperado = {"S1-01": "en_proceso", "S1-02": "cumplido", "S1-03": "cumplido", "S1-04": "no_atribuible",
+            "S2-01": "retroceso", "S2-02": "no_iniciado", "S2-03": "no_atribuible", "S2-04": "no_verificable"}
+assert est == esperado, {k: (est.get(k), v) for k, v in esperado.items() if est.get(k) != v}
+PY
+  python3 scripts/auditoria.py "$S" --insertar "$S/informe.json" >/dev/null || return 1
+  python3 scripts/auditoria.py "$S" --justificar "$S/informe.json" >/dev/null || return 1
+  python3 scripts/auditoria.py "$S" --resumen | grep -q "16.65" || { echo "--resumen no da 16.65 con sus dos decimales"; return 1; }
+}
+paso "auditoria.py: validar → calcular (global 30.0, 8 estados) → insertar → justificar J1–J5" aud_pos
+aud_neg() {  # aud_neg "texto esperado en la falla" eje "mutación python sobre ev (evaluación) y vr (verificación)"
+  local S; S="$(mktemp -d "$TMP/aud.XXXXXX")"; cp -R "$AUDF/." "$S/"
+  python3 - "$S" "$2" "$3" <<'PY' || return 1
+import json, sys
+s, eje, code = sys.argv[1], sys.argv[2], sys.argv[3]
+ep, vp = "%s/evaluacion_%s.json" % (s, eje), "%s/verificacion_%s.json" % (s, eje)
+ev, vr = json.load(open(ep)), json.load(open(vp))
+E = {i["id"]: i for i in ev["items"]}; R = {i["id"]: i for i in vr["compromisos"]}
+exec(code)
+json.dump(ev, open(ep, "w"), ensure_ascii=False); json.dump(vr, open(vp, "w"), ensure_ascii=False)
+PY
+  python3 scripts/auditoria.py "$S" --validar "$2" --verificacion >"$TMP/audn.out" 2>&1; local rc=$?
+  [[ $rc -eq 1 ]] && grep -q "$1" "$TMP/audn.out" || { cat "$TMP/audn.out"; return 1; }
+}
+paso "auditoría: observado que no es el valor de su cifra → falla" aud_neg "observado 401 no es un valor" aaa 'E["S1-01"]["observado"] = 401'
+paso "auditoría: no_atribuible con existe_desde del mandato → falla" aud_neg "existe_desde anterior al mandato" aaa 'R["S1-04"]["existe_desde"] = "2025"'
+paso "auditoría: no_atribuible sin existe_desde → falla" aud_neg "existe_desde anterior al mandato" aaa 'R["S1-04"].pop("existe_desde")'
+paso "auditoría: hito con hecho anterior al mandato → sugiere no_atribuible" aud_neg "estado no_atribuible con existe_desde" aaa 'E["S1-03"]["fecha_dato"] = "2023-05"'
+
+echo "== video (/video)"
+paso "numeros_es.py --prueba (cifras → palabras, ida y vuelta)" python3 scripts/numeros_es.py --prueba
+VT="$TMP/video"
+paso "video.py preparar sobre el fixture (duración prueba)" bash -c "python3 scripts/video.py preparar sesiones/_fixture/salida --duracion prueba --trabajo '$VT' --permitir-borrador >/dev/null && cp sesiones/_fixture_video/guion.json '$VT/'"
+paso "video.py guion --check (V1–V5, V9) sobre el guion v2 del fixture" python3 scripts/video.py guion "$VT" --check
+paso "locucion.json v2 (tipos, cinetico, valor_calculo, hueco_max_s ≤ 6)" python3 -c '
+import json, sys
+L = json.load(open(sys.argv[1], encoding="utf-8"))["escenas"]
+assert [e["tipo"] for e in L] == ["gancho", "tarjeta", "tarjeta", "golpe", "tarjeta", "cierre"], [e["tipo"] for e in L]
+assert L[3]["cinetico"]["pantalla"] == "1.8 veces" and 1.7 < L[3]["valor_calculo"] < 1.8 and L[1]["valor_calculo"] > 50
+assert all(e["hueco_max_s"] <= 6 for e in L[:-1]), [e["hueco_max_s"] for e in L]
+assert L[0]["voz"].startswith("En Guatemala:") and "Guatemala" not in L[0]["cinetico"]["pantalla"]
+' "$VT/locucion.json"
+paso "sfx.py --check (K2: los 8 efectos fijos)" python3 scripts/sfx.py --check
+paso "video.py preparar rechaza un hilo en borrador sin --permitir-borrador (exit 1)" bash -c "! python3 scripts/video.py preparar sesiones/_fixture/salida --duracion prueba --trabajo '$TMP/video_borrador' >/dev/null 2>&1"
+# video_neg "<texto esperado en FALLA>" '<python que muta G (guion.json)>': el gate debe fallar con ese motivo
+video_neg() {
+  local esperado="$1" mut="$2" d="$TMP/video_neg"
+  rm -rf "$d"; cp -R "$VT" "$d"
+  python3 - "$d/guion.json" "$mut" <<'PY' || return 1
+import json, sys
+G = json.load(open(sys.argv[1], encoding="utf-8"))
+exec(sys.argv[2])
+json.dump(G, open(sys.argv[1], "w", encoding="utf-8"), ensure_ascii=False)
+PY
+  local out; out="$(python3 scripts/video.py guion "$d" --check 2>&1)" && return 1
+  grep -q "$esperado" <<<"$out"
+}
+# índices del guion v2 del fixture: [0] gancho · [1] T1 · [2] T2 · [3] golpe · [4] T3
+paso "video gate: número sin respaldo → V2" video_neg "V2 escena 3" 'G["escenas"][2]["texto"] = G["escenas"][2]["texto"].replace("46.1", "47.3")'
+paso "video gate: cifra de género ambiguo sin marca → V3" video_neg "V3 escena 5" 'G["escenas"][4]["texto"] += " Fueron 200 en total."'
+paso "video gate: cierre sin pregunta → V5" video_neg "V5 el cierre debe terminar en pregunta" 'G["cierre"]["texto"] = "El barril subió y la bomba lo sintió."'
+paso "video gate: cierre que menciona fuentes → V5" video_neg "V5 el cierre no menciona" 'G["cierre"]["texto"] = "Las fuentes están en el hilo. " + G["cierre"]["texto"]'
+paso "video gate: tarjeta repetida → V1" video_neg "V1 escena 5: T2 repetida" 'G["escenas"][4]["tuit"] = 2'
+paso "video gate: demasiado largo → V4" video_neg "V4 duración estimada" 'G["escenas"][4]["texto"] += " Guatemala sale bajo en el promedio del año porque incluye los meses de subsidio, cuando el Congreso aprobó un techo al precio."'
+paso "video gate: «gancho» de la v1 → migración" video_neg "V1 «gancho» ya no existe" 'G["gancho"] = "¿Cuánto pesa el crudo?"'
+paso "video gate: escena 1 que no es gancho → V9" video_neg "V9 la escena 1 debe ser tipo gancho" 'G["escenas"][0]["tipo"] = "golpe"'
+paso "video gate: fórmula desconocida → V9" video_neg "V9 gancho: formula «susto»" 'G["escenas"][0]["formula"] = "susto"'
+paso "video gate: pantalla del gancho demasiado larga → V9" video_neg "V9 gancho: pantalla" 'G["escenas"][0]["pantalla"] = "El barril de petróleo subió mucho este año"'
+paso "video gate: gancho cifra sin cifra en pantalla → V9" video_neg "V9 gancho (cifra): la pantalla debe llevar la cifra" 'G["escenas"][0]["pantalla"] = "El barril"'
+paso "video gate: voz del gancho demasiado larga → V4" video_neg "V4 escena 1 (gancho)" 'G["escenas"][0]["texto"] += " Y el transporte público subió en todo el país, departamento por departamento, sin excepción alguna."'
+paso "video gate: escena 2 que no es T1 → V9" video_neg "V9 la escena 2 debe ser la tarjeta T1" 'G["escenas"][1], G["escenas"][2] = G["escenas"][2], G["escenas"][1]'
+paso "video gate: enlace ausente → V9" video_neg "V9 escena 3: falta enlace" 'del G["escenas"][2]["enlace"]'
+paso "video gate: enlace desconocido → V9" video_neg "V9 escena 4: enlace «luego»" 'G["escenas"][3]["enlace"] = "luego"'
+paso "video gate: voz sin conector → V9" video_neg "V9 escena 3: la voz no empieza con un conector" 'G["escenas"][2]["texto"] = G["escenas"][2]["texto"].replace("Por eso en", "En")'
+paso "video gate: exceso de enlaces «y» → V9" video_neg "enlaces «y»" 'exec("for e in G[\"escenas\"][2:]:\n e[\"enlace\"] = \"y\"; e[\"texto\"] = \"Y \" + e[\"texto\"][0].lower() + e[\"texto\"][1:]")'
+paso "video gate: golpe demasiado largo → V9" video_neg "V9 escena 3: golpe «" 'G["escenas"][2]["golpe"] = "El galón de diésel pasó de veintiséis a cuarenta y seis"'
+paso "video gate: golpe que repite el titular → V9" video_neg "V9 escena 2: golpe repite el titular de T1" 'G["escenas"][1]["golpe"] = "cerró septiembre en US$102"'
+paso "video gate: dos golpes seguidos → V9" video_neg "dos golpes seguidos" 'G["escenas"].insert(4, dict(G["escenas"][3]))'
+paso "video gate: golpes fuera de rango → V1" video_neg "V1 2 golpes; «prueba» pide 0–1" 'G["escenas"].append({"tipo": "golpe", "enlace": "y", "pantalla": "102 dólares", "linea": "el barril", "texto": "Y el barril sigue en 102 dólares."})'
+paso "video gate: promesa que no es literal → V9" video_neg "V9 promesa.texto no aparece literal" 'G["promesa"]["texto"] = "Y esto no termina aquí."'
+paso "video gate: pago fuera del último tercio → V9" video_neg "V9 promesa.pago = 2" 'G["promesa"]["pago"] = 2'
+paso "video gate: calculo que no da la pantalla → V9" video_neg "V9 escena 4: calculo pre-c03/pre-c02\*2 da" 'G["escenas"][3]["calculo"] = "pre-c03/pre-c02*2"'
+paso "video gate: pantalla sin respaldo ni calculo → V9" video_neg "sin respaldo en datos.json ni «calculo»" 'G["escenas"][3]["pantalla"] = "2.5 veces"; del G["escenas"][3]["calculo"]'
+paso "video gate: literal del calculo sin respaldo → V9" video_neg "usa el literal 181" 'G["escenas"][3]["calculo"] = "pre-c03/181"'
+paso "video gate: cifra inexistente en el calculo → V9" video_neg "usa la cifra pre-c09" 'G["escenas"][3]["calculo"] = "pre-c09/pre-c02"'
+paso "video gate: hueco de más de 6 s sin cifra → V9 ritmo" video_neg "sin evento entre" 'G["escenas"][1]["texto"] += " Y eso sin contar lo que subieron el transporte, la comida y todo lo que se mueve en camión por el país entero."'
+if [[ "$RAPIDO" == "1" ]]; then echo "SKIP   make video-fixture (RAPIDO=1)"; else
+  paso "make video-fixture (voz falsa, V6–V8, V10, 10 fps)" make video-fixture
+  paso "fixture de video: 1080×1920 con audio y guion de entrega" bash -c 'ffprobe -v error -show_entries stream=codec_type,width,height -of csv=p=0 sesiones/_fixture_video/salida/video.mp4 | grep -q "video,1080,1920" && test -s sesiones/_fixture_video/salida/guion.json && test -s sesiones/_fixture_video/salida/subtitulos.srt'
+  paso "escenas.json v2 (tipos, eventos, efectos del catálogo, hueco real ≤ 6 s)" python3 -c '
+import json
+E = json.load(open("sesiones/_fixture_video/trabajo/escenas.json", encoding="utf-8"))
+cat = {x["id"] for x in json.load(open("design/sfx/catalogo.json", encoding="utf-8"))["efectos"]}
+assert E["version"] == 2 and E["escenas"][0]["tipo"] == "gancho" and E["gancho"]["pantalla"] == "102 dólares"
+assert all(e.get("eventos") for e in E["escenas"]) and all(s["id"] in cat for e in E["escenas"] for s in e["sfx"])
+ts, off = [], 0.0
+for e in E["escenas"]:
+    ts += [off + x["t"] for x in e["eventos"]]; off += e["dur"]
+ts.sort(); hueco = max(b - a for a, b in zip(ts, ts[1:]))
+assert hueco <= 6, "hueco real %.1f s" % hueco
+assert sum(len(e["sfx"]) for e in E["escenas"]) >= 6 and any(s["id"] == "riser" for e in E["escenas"] for s in e["sfx"])
+'
+  paso "ducking: la música baja ≥ 6 dB bajo la voz" bash -c '
+rms() { ffmpeg -hide_banner -i "$1" -af "atrim=$2:$3,astats=measure_overall=RMS_level:measure_perchannel=none" -f null - 2>&1 | grep "RMS level dB" | tail -1 | grep -o "[-0-9.]*$"; }
+A=$(python3 -c "import json; E=json.load(open(\"sesiones/_fixture_video/trabajo/escenas.json\")); e=E[\"escenas\"][1]; print(\"%.2f %.2f\" % (E[\"escenas\"][0][\"dur\"] + e[\"palabras\"][1][\"start\"], E[\"escenas\"][0][\"dur\"] + e[\"palabras\"][6][\"end\"]))")
+set -- $A
+D=$(rms sesiones/_fixture_video/trabajo/segs/musica_duck.wav $1 $2); M=$(rms sesiones/_fixture_video/trabajo/segs/musica.wav $1 $2)
+python3 -c "import math,sys; d=float(sys.argv[1]); m=float(sys.argv[2]) + 20*math.log10(0.22); print(\"ducking %.1f dB (duck %.1f · musica %.1f)\" % (m-d, d, m)); sys.exit(0 if m - d >= 6 else 1)" "$D" "$M"'
+fi
+
 echo "== sintaxis de los workflows"
 check_js() {
   { echo "(async function(){"; sed 's/^export //' ".claude/workflows/$1"; echo "})"; } > "$TMP/check_$1"
@@ -470,7 +693,8 @@ paso "node --check hilo.js (envuelto en async function)" check_js hilo.js
 paso "node --check ideas.js (envuelto en async function)" check_js ideas.js
 paso "node --check dato.js (envuelto en async function)" check_js dato.js
 paso "node --check investigacion.js (envuelto en async function)" check_js investigacion.js
-paso "check_workflows.py (PALETAS, PLANTILLAS, HOOKS, BEATS, REQ, pesoX, MODOS y gráficos del informe W7–W8)" python3 scripts/check_workflows.py
+paso "node --check video.js (envuelto en async function)" check_js video.js
+paso "check_workflows.py (PALETAS, PLANTILLAS, HOOKS, BEATS, REQ, pesoX, MODOS, gráficos del informe W7–W8, bloque común W9 y espejos de video.js W10)" python3 scripts/check_workflows.py
 
 echo
 echo "[test] $N pruebas · $FALLOS fallos"

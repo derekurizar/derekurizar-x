@@ -27,7 +27,7 @@ import ensamblar  # noqa: E402
 import informe  # noqa: E402
 import materializar  # noqa: E402
 
-CABECERA = ("kicker", "titular", "nota", "fuente", "handle", "leyenda")
+CABECERA = ("kicker", "titular", "titular_escala", "nota", "fuente", "handle", "leyenda")
 TARJETA_DEFECTO = ["barras-v", "mapa", "dona", "cascada"]
 MINI = {  # gráficos solo del tablero (sin plantilla de tarjeta)
     "chispa": {"kicker": "Serie · chispa", "valor": "12,699", "contexto": "en 2026", "grafico": {"tipo": "chispa", "etiquetas": ["2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026"], "valores": [3826, 28810, 5213, 1885, 5364, 19754, 91767, 21252, 12699]}},

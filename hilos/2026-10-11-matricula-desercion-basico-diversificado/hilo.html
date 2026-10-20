@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hilo · vista previa</title>
+<!-- Vista previa del hilo: la abre el usuario en su navegador. La rellena scripts/ensamblar.py (HILO_JSON). -->
+<style>
+  :root { --papel:#F6F2E8; --tinta:#0C1520; --gris:#5c6470; --linea:rgba(12,21,32,.14); --acento:#4B92DB; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--papel); color: var(--tinta); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 40px 20px 80px; }
+  header h1 { font: 700 30px/1.15 Georgia, "Times New Roman", serif; margin: 0 0 8px; }
+  header .meta { color: var(--gris); font-size: 14px; display: flex; flex-wrap: wrap; gap: 10px 18px; }
+  .chip { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; background: var(--tinta); color: var(--papel); }
+  .tesis { margin: 18px 0 0; padding: 14px 18px; border-left: 4px solid var(--acento); background: rgba(75,146,219,.08); font-size: 17px; }
+  .contacto { margin-top: 18px; }
+  .contacto a { display: inline-block; margin-bottom: 8px; font-size: 14px; font-weight: 600; color: var(--acento); }
+  .contacto img { width: 100%; max-width: 760px; display: block; border-radius: 12px; box-shadow: 0 2px 14px rgba(0,0,0,.12); }
+  .tuit { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--linea); }
+  .tuit .cab { display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--gris); }
+  .tuit .cab .n { font-weight: 800; font-size: 15px; color: var(--tinta); }
+  .texto { position: relative; margin-top: 12px; padding: 14px 16px; background: #fff; border: 1px solid var(--linea); border-radius: 10px; white-space: pre-wrap; font-size: 17px; }
+  .texto.vacio { color: var(--gris); font-style: italic; }
+  .fila { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; font-size: 13px; color: var(--gris); }
+  .fila .cnt.alerta { color: #B23A26; font-weight: 700; }
+  button { font: 600 13px/1 system-ui, sans-serif; padding: 7px 12px; border-radius: 8px; border: 1px solid var(--linea); background: #fff; color: var(--tinta); cursor: pointer; }
+  button:hover { background: var(--tinta); color: var(--papel); }
+  .img { margin-top: 14px; }
+  .img img { width: 100%; max-width: 560px; display: block; border-radius: 12px; box-shadow: 0 2px 14px rgba(0,0,0,.12); }
+  .alt { margin-top: 10px; font-size: 14px; color: var(--gris); }
+  .alt b { color: var(--tinta); }
+  .fuente { margin-top: 6px; font-size: 13px; color: var(--gris); }
+  section.extra { margin-top: 44px; padding-top: 24px; border-top: 2px solid var(--tinta); }
+  section.extra h2 { font: 700 18px/1.2 system-ui, sans-serif; margin: 22px 0 8px; }
+  section.extra ul { margin: 0; padding-left: 20px; }
+  .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--tinta); color: var(--papel); padding: 10px 16px; border-radius: 8px; font-size: 14px; opacity: 0; transition: opacity .2s; pointer-events: none; }
+  .toast.on { opacity: 1; }
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<div class="toast" id="toast">Copiado</div>
+<script id="hilo-json" type="application/json">{"slug": "matricula-desercion-basico-diversificado", "fecha": "2026-10-11", "tema": "Más de 3.3 millones en las aulas: la matrícula sube, pero ¿quién abandona en básico y diversificado?", "tesis": "Cerca de 85% de los jóvenes termina la primaria, pero solo 56.5% termina básico y 23.1% diversificado (UIS, 2024): la matrícula pública sube en 2026, pero la secundaria pierde a los jóvenes por dos vías distintas, pocos llegan a diversificado (tasa neta 27.52%, 9.62% en Totonicapán) y básico es el nivel con más abandono durante el año (12.63% en 2025).", "paleta": "jacaranda", "hook_tipo": "giro_inversion", "pregunta": "Si la matrícula pública 2026 creció en unos 150 mil estudiantes, ¿en qué nivel y en qué departamentos se siguen perdiendo los jóvenes entre primaria, básico y diversificado?", "n_tuits": 10, "estado": "listo", "tuits": [{"n": 1, "beat": "gancho", "texto": "A febrero, las escuelas públicas tenían 150 mil inscritos más que en 2025.\n\nPero inscribirse no es terminar: la cadena se rompe justo después de la primaria. 🧵", "caracteres": 160, "alt_text": "Gráfico de barras verticales con la tasa de finalización por nivel en Guatemala, 2024: primaria 85.0%, básico 56.5% y diversificado 23.1% (destacado). Es el porcentaje de jóvenes algo mayores que la edad de egreso de cada nivel que lo completaron. Fuente: UNESCO-UIS con encuestas de hogares.", "imagen": "tuit_1.png", "plantilla": "barras-v", "fuente": "UNESCO-UIS · tasa de finalización · 2024", "cifra_ids": ["des-c02", "mat-c11", "mat-c10"]}, {"n": 2, "beat": "contexto", "texto": "Es un dato preliminar y solo del sector público. Y en diversificado, el sector público es minoría.", "caracteres": 98, "alt_text": "Gráfico de barras verticales con el aumento de inscritos en el sector público a febrero de 2026 frente a la misma fecha de 2025, por nivel: preprimaria 41,000, primaria 40,000, básico 39,000 y diversificado 22,000 (destacado). Cifras preliminares. Fuente: Mineduc vía AGN.", "imagen": "tuit_2.png", "plantilla": "barras-v", "fuente": "Mineduc vía AGN · febrero 2026", "cifra_ids": ["mat-c02"]}, {"n": 3, "beat": "contexto", "texto": "Por eso la matrícula pública cuenta poco del diversificado. Para verlo entero hay que mirar todos los sectores.", "caracteres": 111, "alt_text": "Gráfico de dona con la matrícula de diversificado por sector en 2020, porcentajes redondeados al entero: privado 70% (destacado), oficial o público 23%, cooperativa 6% y municipal 2%. En la fuente son 70%, 22.5%, 5.6% y 1.5%, que no suman exactamente 100. Fuente: CEPAL con datos de Mineduc.", "imagen": "tuit_3.png", "plantilla": "dona", "fuente": "CEPAL con datos de Mineduc · 2020", "cifra_ids": ["mat-c04"]}, {"n": 4, "beat": "contexto", "texto": "En básico la tasa es el doble, y aun así apenas pasa de la mitad.", "caracteres": 65, "alt_text": "Gráfico de cuadrícula de 100 celdas: la tasa neta de escolaridad de diversificado en Guatemala fue 27.52% en 2025, todos los sectores; unas 28 de cada 100 personas en edad de diversificado estaban inscritas en ese nivel. Fuente: Mineduc, Anuario Estadístico de la Educación 2025.", "imagen": "tuit_4.png", "plantilla": "waffle", "fuente": "Mineduc · Anuario Estadístico 2025", "cifra_ids": ["dep-c01", "dep-c02"]}, {"n": 5, "beat": "contexto", "texto": "Huehuetenango y Quiché están casi igual de lejos. El departamento de Guatemala, en el otro extremo.", "caracteres": 99, "alt_text": "Mapa de los 22 departamentos con la tasa neta de escolaridad de diversificado en 2025. Totonicapán (destacado) tiene 9.62%, Quiché 12.33% y Huehuetenango 12.77%; en el otro extremo, Guatemala 53.01%, El Progreso 39.76% y Sacatepéquez 39.18%. Promedio nacional 27.52%. Fuente: Mineduc, Anuario Estadístico de la Educación 2025.", "imagen": "tuit_5.png", "plantilla": "mapa", "fuente": "Mineduc · Anuario Estadístico 2025", "cifra_ids": ["dep-c01", "dep-c11"]}, {"n": 6, "beat": "giro", "texto": "Aquí cambia la lectura: en el último ciclo el problema es que pocos llegan. Y entre quienes sí se inscriben, el abandono durante el año golpea más al ciclo básico.", "caracteres": 163, "alt_text": "Gráfico de pesas con la tasa de deserción intraanual, todos los sectores. Básico: 13.54% en 2024 y 12.63% en 2025. Diversificado: 10.19% en 2024 y 9.44% en 2025. Fuente: Mineduc, Anuario Estadístico de la Educación 2024 y 2025.", "imagen": "tuit_6.png", "plantilla": "pesas", "fuente": "Mineduc · Anuario Estadístico 2024 y 2025", "cifra_ids": ["dep-c07", "dep-c08", "dep-c03", "dep-c04"]}, {"n": 7, "beat": "contexto", "texto": "No es el mapa de la cobertura: Sacatepéquez tiene una de las mayores tasas netas del ciclo básico y aun así encabeza el abandono.", "caracteres": 129, "alt_text": "Mapa de los 22 departamentos con la tasa de deserción intraanual en básico en 2025, todos los sectores. Mayores: Sacatepéquez 15.9% (destacado), Petén 15.39% y Chimaltenango 15.2%. Menores: Retalhuleu 10.04%, Izabal 10.79% y El Progreso 11.0%. Promedio nacional 12.63%. Fuente: Mineduc, Anuario Estadístico de la Educación 2025.", "imagen": "tuit_7.png", "plantilla": "mapa", "fuente": "Mineduc · Anuario Estadístico 2025", "cifra_ids": ["dep-c03", "dep-c02"]}, {"n": 8, "beat": "impacto", "texto": "En diversificado se retiraron otros 36,486 en el mismo año.", "caracteres": 59, "alt_text": "Cifra destacada: 99,709 estudiantes de básico se retiraron durante el ciclo 2025, el 12.6% de los 789,363 inscritos al inicio, todos los sectores. Dos barras comparan retirados e inscritos. Fuente: Mineduc, Anuario Estadístico de la Educación 2025.", "imagen": "tuit_8.png", "plantilla": "cifra", "fuente": "Mineduc · Anuario Estadístico 2025", "cifra_ids": ["dep-c05", "dep-c09", "dep-c06"]}, {"n": 9, "beat": "impacto", "texto": "No aparecen en ninguna lista de inscritos, así que la matrícula no los cuenta.", "caracteres": 78, "alt_text": "Cifra destacada: 743,687 jóvenes en edad de diversificado estaban fuera de la escuela en Guatemala en 2024, el 65.6% de ese grupo de edad. Comparación con 370,838 adolescentes en edad de básico fuera de la escuela. Fuente: UNESCO-UIS.", "imagen": "tuit_9.png", "plantilla": "cifra", "fuente": "UNESCO-UIS · niños y jóvenes fuera de la escuela · 2024", "cifra_ids": ["mat-c07", "mat-c08", "mat-c06"]}, {"n": 10, "beat": "cierre", "texto": "La matrícula pública sube, pero la escuela sigue perdiendo a sus jóvenes en básico y diversificado. Y el mapa de quién no llega no es el mismo que el de quién abandona.\n\nFuentes: UNESCO-UIS, Mineduc (Anuario Estadístico), Mineduc vía AGN, CEPAL con datos de Mineduc.", "caracteres": 266, "alt_text": "Tuit de cierre sin imagen: resume el hilo y lista las fuentes (UNESCO-UIS, Mineduc, Mineduc vía AGN y CEPAL con datos de Mineduc).", "imagen": null, "plantilla": null, "fuente": null, "cifra_ids": []}], "no_afirma": ["No afirma que la matrícula pública 2026 sea récord ni que llegue a 3.3 millones: el aumento de 150 mil es preliminar a febrero y no hay cierre publicado.", "No compara la deserción de secundaria con la de primaria: la tasa de deserción de primaria por nivel no se obtuvo.", "Las tasas de finalización de UIS no siguen a una misma cohorte: no son pasos de un embudo ni dicen cuántos de los que terminan primaria terminan después básico.", "No atribuye causas (trabajo, migración, costo, embarazo) a la deserción ni a las diferencias entre departamentos.", "No afirma una tendencia a la baja de la deserción: solo se comparan 2024 y 2025."], "incertidumbre": ["La ancla (des-c02, finalización de primaria) tiene segunda fuente independiente (Banco Mundial vs UIS; manda UIS, 84.97%). Las demás cifras del hilo tienen segunda fuente que reproduce la primaria, sin verificación independiente: Anuario MINEDUC (dep-c01 a dep-c11, recalculadas desde el mismo cuadro), UIS (mat-c06, mat-c07, mat-c08, mat-c10, mat-c11), AGN (mat-c02) y CEPAL (mat-c04).", "mat-c02 es preliminar a febrero 2026 y sus partes por nivel suman 142 mil, no 150 mil; la fuente no explica la diferencia.", "Las cifras departamentales y de cobertura son de todos los sectores; el aumento 2026 es solo del sector público. No se mezclan en una misma tarjeta.", "La serie UIS de jóvenes fuera de la escuela tiene 2019 atípico; solo se usa 2024. El rango de edad de la tasa neta MINEDUC no aparece en el cuadro (por convención, 16-18 para diversificado).", "La distribución por sector (CEPAL) es de 2020; puede haber cambiado. La finalización por nivel no es un embudo: se usó barras-v, no embudo."], "fuentes": ["UNESCO-UIS · tasa de finalización · 2024", "Mineduc vía AGN · febrero 2026", "CEPAL con datos de Mineduc · 2020", "Mineduc · Anuario Estadístico 2025", "Mineduc · Anuario Estadístico 2024 y 2025", "UNESCO-UIS · niños y jóvenes fuera de la escuela · 2024"], "fuentes_cifras": ["Banco Mundial / UNESCO-UIS (SE.PRM.CMPT.ZS)", "CEPAL, infografía 'Brechas de acceso y calidad' sobre base MINEDUC (Base educación formal, INE)", "MINEDUC (ministra Giracca) vía AGN, 11-mar-2026", "MINEDUC, Anuario Estadístico de la Educación (SIRE, Dirección de Planificación)", "UIS, indicador CR.2 (encuestas de hogares)", "UIS, indicador CR.3 (encuestas de hogares)", "UNESCO Institute for Statistics (UIS), indicador OFST.2.CP", "UNESCO Institute for Statistics (UIS), indicador OFST.3.CP", "UNESCO Institute for Statistics (UIS), indicador ROFST.3.CP"], "gate_mecanico": "ok", "contacto": "contacto.png"}</script>
+<script>
+/* Peso según X: copia literal de scripts/contar_x.js (pesoX). No editar aquí; regenerar desde el script. */
+function pesoX(texto) {
+  // Reglas: NFC; cada URL pesa 23; puntos de código en 0–4351, 8192–8205,
+  // 8208–8223 y 8242–8247 pesan 1; el resto 2; los emoji compuestos
+  // (FE0F, ZWJ+siguiente, tono 1F3FB–1F3FF, keycap 20E3, par regional) son uno y pesan 2.
+  var t = String(texto == null ? "" : texto).normalize("NFC");
+  var reUrl = /https?:\/\/\S+|www\.\S+|(?<![\p{L}\p{N}\p{M}_])[a-z0-9-]+(\.[a-z0-9-]+)*\.(com|gt|org|net|io|edu|gov|mx|sv|hn|es|info|co)(\/\S*)?/giu;
+  var rangos1 = [[0, 4351], [8192, 8205], [8208, 8223], [8242, 8247]];
+  var pesoCp = function (cp) {
+    for (var k = 0; k < rangos1.length; k++) if (cp >= rangos1[k][0] && cp <= rangos1[k][1]) return 1;
+    return 2;
+  };
+  var esTono = function (cp) { return cp >= 0x1f3fb && cp <= 0x1f3ff; };
+  var esRegional = function (cp) { return cp >= 0x1f1e6 && cp <= 0x1f1ff; };
+  var pesoPlano = function (s) {
+    var cps = Array.from(s, function (c) { return c.codePointAt(0); });
+    var i = 0, n = cps.length, total = 0;
+    while (i < n) {
+      var j = i + 1;
+      if (esRegional(cps[i]) && j < n && esRegional(cps[j])) j += 1; // bandera
+      while (j < n) {
+        if (cps[j] === 0xfe0f || cps[j] === 0x20e3 || esTono(cps[j])) j += 1;
+        else if (cps[j] === 0x200d && j + 1 < n) j += 2; // ZWJ + siguiente
+        else break;
+      }
+      total += j - i > 1 ? 2 : pesoCp(cps[i]);
+      i = j;
+    }
+    return total;
+  };
+  var total = 0, pos = 0, m;
+  while ((m = reUrl.exec(t)) !== null) {
+    total += pesoPlano(t.slice(pos, m.index)) + 23;
+    pos = m.index + m[0].length;
+    if (m[0].length === 0) reUrl.lastIndex++;
+  }
+  return total + pesoPlano(t.slice(pos));
+}
+</script>
+<script>
+(() => {
+  const H = JSON.parse(document.getElementById("hilo-json").textContent);
+  const app = document.getElementById("app");
+  const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const toast = (m) => { const t = document.getElementById("toast"); t.textContent = m; t.classList.add("on"); setTimeout(() => t.classList.remove("on"), 1400); };
+  const copiar = async (txt) => {
+    try { await navigator.clipboard.writeText(txt); toast("Copiado"); return; } catch (e) { /* fallback */ }
+    const ta = document.createElement("textarea"); ta.value = txt; document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); toast("Copiado"); } catch (e) { toast("No se pudo copiar"); }
+    ta.remove();
+  };
+  if (!H) { app.innerHTML = "<p>Sin datos: este archivo lo genera scripts/ensamblar.py.</p>"; return; }
+
+  let html = `<header>
+    <h1>${esc(H.tema)}</h1>
+    <div class="meta"><span class="chip">${esc(H.paleta)}</span><span>${esc(H.fecha)}</span><span>${H.n_tuits} tuits · ${H.tuits.filter((t) => t.imagen).length} imágenes</span><span>gate mecánico: ${esc(H.gate_mecanico)}</span></div>
+    ${H.tesis ? `<p class="tesis"><b>Tesis:</b> ${esc(H.tesis)}</p>` : ""}
+  </header>
+  <div class="contacto" id="contacto" hidden>
+    <a href="contacto.png" target="_blank" rel="noopener">Ver hoja de contacto</a>
+    <img src="contacto.png" alt="Hoja de contacto: todas las tarjetas del hilo" onload="this.parentNode.hidden=false" onerror="this.parentNode.remove()">
+  </div>`;
+  for (const t of H.tuits) {
+    const vacio = !t.texto.trim();
+    const peso = pesoX(t.texto);
+    html += `<article class="tuit" id="t${t.n}">
+      <div class="cab"><span class="n">Tuit ${t.n}/${H.n_tuits}</span><span class="chip" style="background:#e9e3d6;color:#0C1520">${esc(t.beat || "")}</span>${t.plantilla ? `<span>tarjeta: ${esc(t.plantilla)}</span>` : "<span>sin imagen</span>"}</div>
+      <div class="texto${vacio ? " vacio" : ""}">${vacio ? "(sin texto: la imagen lo dice)" : esc(t.texto)}</div>
+      <div class="fila"><span class="cnt${peso > 280 ? " alerta" : ""}">${peso}/280 (peso X${peso !== t.caracteres ? `, ${t.caracteres} caracteres` : ""})</span>${vacio ? "" : `<button data-copy="${esc(t.texto)}">Copiar texto</button>`}</div>
+      ${t.imagen ? `<div class="img"><img src="${esc(t.imagen)}" alt="${esc(t.alt_text)}"></div>
+      <div class="alt"><b>Alt:</b> ${esc(t.alt_text)} <button data-copy="${esc(t.alt_text)}">Copiar alt</button></div>
+      <div class="fuente">Fuente en el pie: ${esc(t.fuente || "")} · cifras: ${esc((t.cifra_ids || []).join(", "))}</div>` : ""}
+    </article>`;
+  }
+  html += `<section class="extra">
+    <h2>Lo que este hilo NO afirma</h2><ul>${(H.no_afirma || []).map((x) => `<li>${esc(x)}</li>`).join("") || "<li>(nada declarado)</li>"}</ul>
+    <h2>Incertidumbre declarada</h2><ul>${(H.incertidumbre || []).map((x) => `<li>${esc(x)}</li>`).join("") || "<li>(nada declarado)</li>"}</ul>
+    <h2>Fuentes</h2><ul>${(H.fuentes || []).map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
+    <p style="color:var(--gris);font-size:13px">Detalle de cifras y veredictos en <code>datos.json</code>; texto listo para pegar en <code>post.md</code>.</p>
+  </section>`;
+  app.innerHTML = html;
+  app.addEventListener("click", (e) => { const b = e.target.closest("button[data-copy]"); if (b) copiar(b.getAttribute("data-copy")); });
+})();
+</script>
+</body>
+</html>

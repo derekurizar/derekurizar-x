@@ -77,7 +77,7 @@ total → `cascada` (en `/explica`); reparto que cambia en ≥ 5 periodos →
 }
 ```
 
-- `kicker` ≤ 45 · `titular` 1–3 líneas de ≤ 26 · `nota` ≤ 150 (o `""`) ·
+- `kicker` ≤ 45 · `titular` 1–3 líneas de ≤ 26 (opcional `titular_escala` 1–1.5: titular más grande para títulos cortos, como el nombre de una sección; con 1.4, líneas de ≤ 18) · `nota` ≤ 150 (o `""`) ·
   `fuente` 1–70 sin «Fuente:» · nada de URLs.
 - `datos.formato` rotula los valores: `prefijo` («Q», «US$»), `sufijo` («%»,
   « M»), `decimales`, `miles` (coma), `escala` (divide antes de rotular: 1e6

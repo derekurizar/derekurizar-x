@@ -1,0 +1,58 @@
+{
+ "eje": "bbb",
+ "items": [
+  {
+   "id": "bbb-c01",
+   "veredicto": "verificada",
+   "valor_final": 16.65,
+   "fuente_2": "FIXTURE",
+   "url_2": "https://example.com/2",
+   "independencia": "baja",
+   "nota": "FIXTURE"
+  },
+  {
+   "id": "bbb-c02",
+   "veredicto": "verificada",
+   "valor_final": 50,
+   "fuente_2": "FIXTURE",
+   "url_2": "https://example.com/2",
+   "independencia": "baja",
+   "nota": "FIXTURE"
+  },
+  {
+   "id": "bbb-c03",
+   "veredicto": "verificada",
+   "valor_final": 93,
+   "fuente_2": "FIXTURE",
+   "url_2": "https://example.com/2",
+   "independencia": "baja",
+   "nota": "FIXTURE"
+  }
+ ],
+ "compromisos": [
+  {
+   "id": "S2-01",
+   "veredicto": "confirmado",
+   "url_2": "https://example.com/2",
+   "nota": "FIXTURE"
+  },
+  {
+   "id": "S2-02",
+   "veredicto": "confirmado",
+   "url_2": "https://example.com/2",
+   "nota": "FIXTURE"
+  },
+  {
+   "id": "S2-03",
+   "veredicto": "confirmado",
+   "url_2": "https://example.com/2",
+   "nota": "FIXTURE"
+  },
+  {
+   "id": "S2-04",
+   "veredicto": "confirmado",
+   "url_2": "https://example.com/2",
+   "nota": "FIXTURE"
+  }
+ ]
+}

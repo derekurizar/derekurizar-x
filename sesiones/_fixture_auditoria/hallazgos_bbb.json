@@ -1,0 +1,86 @@
+{
+ "eje": "bbb",
+ "n_busquedas": 0,
+ "cifras": [
+  {
+   "id": "bbb-c01",
+   "concepto": "Tasa de homicidios por 100 mil",
+   "valor": 16.65,
+   "unidad": "tasa por 100 mil",
+   "anio": 2026,
+   "fuente": "PNC",
+   "url": "https://example.org/pnc",
+   "tipo": "serie",
+   "n_puntos": 2,
+   "periodo": "2023–2026",
+   "serie": [
+    {
+     "p": "2023",
+     "v": 16.61
+    },
+    {
+     "p": "2026",
+     "v": 16.65
+    }
+   ],
+   "evidencia": {
+    "url": "https://example.org/pnc",
+    "cita": "Tasa de homicidios: 2023 16.61; 2026 16.65 (FIXTURE)"
+   }
+  },
+  {
+   "id": "bbb-c02",
+   "concepto": "Denuncias atendidas",
+   "valor": 50,
+   "unidad": "%",
+   "anio": 2026,
+   "fuente": "MP",
+   "url": "https://example.org/mp",
+   "tipo": "serie",
+   "n_puntos": 2,
+   "periodo": "2023–2026",
+   "serie": [
+    {
+     "p": "2023",
+     "v": 50
+    },
+    {
+     "p": "2026",
+     "v": 50
+    }
+   ],
+   "evidencia": {
+    "url": "https://example.org/mp",
+    "cita": "Denuncias atendidas: 50% en 2023 y 50% en 2026 (FIXTURE)"
+   }
+  },
+  {
+   "id": "bbb-c03",
+   "concepto": "Municipios con subestación",
+   "valor": 93,
+   "unidad": "%",
+   "anio": 2026,
+   "fuente": "Mingob",
+   "url": "https://example.org/mingob",
+   "tipo": "serie",
+   "n_puntos": 2,
+   "periodo": "2023–2026",
+   "serie": [
+    {
+     "p": "2023",
+     "v": 92
+    },
+    {
+     "p": "2026",
+     "v": 93
+    }
+   ],
+   "evidencia": {
+    "url": "https://example.org/mingob",
+    "cita": "Cobertura: 92% (2023) y 93% (2026) (FIXTURE)"
+   }
+  }
+ ],
+ "fuentes": [],
+ "vacios": []
+}

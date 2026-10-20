@@ -32,9 +32,14 @@ Comprueba:
      slug, tema, tesis, paleta, numero, n_paginas, n_figuras, ruta_informe, ruta_hilo, hilo_id, estado,
      modo ∈ investigacion|desde) · ids y numero únicos · ruta_informe con informe.json y salida/informe.pdf ·
      ruta_hilo con hilo.json · hilo_id registrado en memoria/hilos.json
+  M8 memoria/videos.json (si existe; registro de /video): schema de cada video (id, fecha, slug, hilo_id, paleta,
+     duracion ∈ corto|medio|largo, duracion_s, n_escenas, musica, ruta_video, ruta_hilo, estado) · ids únicos ·
+     ruta_video con guion.json (el mp4 está fuera de git: su ausencia es aviso) · musica en el catálogo
+  K1 design/musica/catalogo.json: cada pista existe, ids únicos, paleta conocida y ≥ 2 pistas por paleta
   N1 cada investigacion/<YYYY-MM-DD>-*/ (entregable de /investigacion) tiene informe.json,
      salida/informe.pdf y salida/informe.html; aviso si no está en memoria/informes.json (corrida
-     interrumpida: reanuda con resumeFromRunId o borra la carpeta)
+     interrumpida: reanuda con resumeFromRunId o borra la carpeta); si no está registrada, tiene hilo/
+     y aún no tiene informe.json (entre Producción y Cierre), los faltantes son aviso y no error
   N2 su informe.json: meta.datos[] y los `desde`/`desde_hilo` de figuras y tarjetas existen; meta.numero
      coincide con el registro
   N3 si tiene hilo/: mismas reglas que H1–H3, hilo.json con modo "investigacion", el cierre lleva el
@@ -165,6 +170,9 @@ def validar_hilos(paletas):
             if os.path.isabs(str(h.get("ruta", ""))):
                 err("hilos[%d] ruta debe ser relativa a la raíz del repo (%s)" % (i, h.get("ruta")))
             registrados[os.path.normpath(str(h.get("ruta", "")))] = h
+        sin_modo = [h.get("id") for h in d.get("hilos", []) if not h.get("modo")]
+        if sin_modo:
+            warn("hilos: %d registro(s) sin modo (corre python3 scripts/memoria.py --conciliar-modos): %s" % (len(sin_modo), ", ".join(map(str, sin_modo[:4])) + (" …" if len(sin_modo) > 4 else "")))
 
     for carpeta in sorted(glob.glob(os.path.join(RAIZ, "hilos", "*"))):
         if os.path.isdir(carpeta):
@@ -267,11 +275,13 @@ def validar_informes(paletas, hilos_registrados):
         if not os.path.isdir(carpeta) or not RE_ENTREGABLE.match(os.path.basename(carpeta)):
             continue
         rel = os.path.relpath(carpeta, RAIZ)
-        # N1
+        # N1 (entre Producción y Cierre de /investigacion la carpeta solo tiene hilo/ y aún no está
+        # registrada: los archivos del informe faltan por diseño → aviso; registrada, son error)
+        reg = registrados.get(rel)
+        en_curso = not reg and os.path.isdir(os.path.join(carpeta, "hilo")) and not os.path.exists(os.path.join(carpeta, "informe.json"))
         for archivo in ("informe.json", os.path.join("salida", "informe.pdf"), os.path.join("salida", "informe.html")):
             if not os.path.exists(os.path.join(carpeta, archivo)):
-                err("%s: falta %s" % (rel, archivo))
-        reg = registrados.get(rel)
+                (warn if en_curso else err)("%s: falta %s%s" % (rel, archivo, " (informe pendiente: lo escribe el Cierre)" if en_curso else ""))
         if not reg:
             warn("%s no está registrado en memoria/informes.json (corrida interrumpida: reanuda con resumeFromRunId o borra la carpeta)" % rel)
         rj = os.path.join(carpeta, "informe.json")
@@ -421,11 +431,38 @@ def validar_ideas(paletas):
             err("ideas %s: estado %r no está en %s" % (iid, idea.get("estado"), _ideas.ESTADOS))
         if idea.get("estado") == "hecha" and idea.get("hilo_id") not in hids:
             err("ideas %s: hecha con hilo_id %r que no está en memoria/hilos.json" % (iid, idea.get("hilo_id")))
+    if d.get("ideas") and not any(i.get("estado") == "pendiente" for i in d["ideas"]):
+        warn("ideas: el banco no tiene ninguna idea pendiente (/hilo sin tema no tendrá de dónde elegir): corre /ideas")
     estado = {idea.get("id"): idea.get("estado") for idea in d.get("ideas", [])}
     for h in hilos:
         if h.get("idea_id") and estado.get(h["idea_id"]) not in ("hecha", "en_curso"):
             warn("hilo %s apunta a la idea %s (%s): corre python3 scripts/ideas.py --conciliar" % (
                 h.get("id"), h["idea_id"], estado.get(h["idea_id"], "no existe")))
+
+
+def _hoy():
+    import datetime as _dt
+    return _dt.date.today().isoformat()
+
+
+def huerfanas(borrar=False):
+    """Sesiones (sin _ al inicio) que ningún registro de memoria/ menciona por slug o ruta."""
+    import shutil
+    textos = " ".join(json.dumps(cargar(r) or {}, ensure_ascii=False) for r in ("memoria/hilos.json", "memoria/datos.json", "memoria/informes.json"))
+    out = []
+    for d in sorted(glob.glob(os.path.join(RAIZ, "sesiones", "*"))):
+        n = os.path.basename(d)
+        if not os.path.isdir(d) or n.startswith("_"):
+            continue
+        if ('"%s"' % n) in textos or ("-%s\"" % n) in textos or ("-%s/" % n) in textos:
+            continue
+        out.append(n)
+    for n in out:
+        if borrar:
+            shutil.rmtree(os.path.join(RAIZ, "sesiones", n))
+        print("%s sesiones/%s" % ("borrada" if borrar else "huérfana", n))
+    print("[podar] %d sesión(es) huérfana(s)%s" % (len(out), "" if borrar or not out else " · make podar BORRAR=1 para borrarlas"))
+    return 0
 
 
 def validar_calendario():
@@ -444,9 +481,74 @@ def validar_calendario():
             err("calendario %s: %s" % (eid, p))
         if e.get("estado") == "hecha" and e.get("pieza") and not os.path.isdir(os.path.join(RAIZ, str(e["pieza"]))):
             warn("calendario %s: hecha con pieza %s que no existe" % (eid, e["pieza"]))
+        if e.get("estado") == "pendiente" and re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(e.get("fecha", ""))) and str(e["fecha"]) < _hoy():
+            warn("calendario %s: fecha puntual %s ya pasó y sigue pendiente (márcala hecha o descartada con calendario.py --marcar)" % (eid, e["fecha"]))
+
+
+def validar_videos(paletas):
+    """K1 (catálogo fijo de música de /video) y M8 (memoria/videos.json)."""
+    ids_musica = set()
+    rel_cat = "design/musica/catalogo.json"
+    if not os.path.exists(os.path.join(RAIZ, rel_cat)):
+        err("K1 falta %s (biblioteca de música de /video)" % rel_cat)
+    else:
+        cat = cargar(rel_cat) or {}
+        por_paleta = {}
+        for i, p in enumerate(cat.get("pistas", [])):
+            if p.get("id") in ids_musica:
+                err("K1 pista repetida %s" % p.get("id"))
+            ids_musica.add(p.get("id"))
+            if paletas and p.get("paleta") not in paletas:
+                err("K1 pistas[%d] paleta %r desconocida" % (i, p.get("paleta")))
+            if not os.path.exists(os.path.join(RAIZ, "design", "musica", str(p.get("archivo", "")))):
+                err("K1 pistas[%d] falta design/musica/%s" % (i, p.get("archivo")))
+            por_paleta[p.get("paleta")] = por_paleta.get(p.get("paleta"), 0) + 1
+        for pal in paletas or []:
+            if por_paleta.get(pal, 0) < 2:
+                err("K1 la paleta %s tiene %d pista(s) de música; se piden ≥ 2" % (pal, por_paleta.get(pal, 0)))
+    # K2: biblioteca fija de efectos de /video (design/sfx/), comprobada por scripts/sfx.py
+    try:
+        import sfx as _sfx  # noqa: E402
+        for x in _sfx.fallas_k2():
+            err(x)
+    except Exception as e:  # noqa: BLE001
+        err("K2 scripts/sfx.py: %s" % e)
+    rel_mem = "memoria/videos.json"
+    if not os.path.exists(os.path.join(RAIZ, rel_mem)):  # ausente = ok: memoria.py lo crea con el primer video
+        return
+    d = cargar(rel_mem) or {}
+    ids = set()
+    for i, v in enumerate(d.get("videos", [])):
+        for campo in ("id", "fecha", "slug", "hilo_id", "paleta", "duracion", "duracion_s", "n_escenas", "musica",
+                      "ruta_video", "ruta_hilo", "estado"):
+            if campo not in v:
+                err("M8 videos[%d] sin %s" % (i, campo))
+        if v.get("id") in ids:
+            err("M8 videos: id repetido %s" % v.get("id"))
+        ids.add(v.get("id"))
+        if v.get("duracion") not in ("corto", "medio", "largo"):
+            err("M8 videos[%d] duracion %r no es corto|medio|largo" % (i, v.get("duracion")))
+        if v.get("estado") not in ("listo", "publicado", "incompleto"):
+            err("M8 videos[%d] estado %r" % (i, v.get("estado")))
+        if paletas and v.get("paleta") not in paletas:
+            err("M8 videos[%d] paleta %r desconocida" % (i, v.get("paleta")))
+        if ids_musica and v.get("musica") not in ids_musica:
+            err("M8 videos[%d] música %r no está en el catálogo" % (i, v.get("musica")))
+        rv, rh = str(v.get("ruta_video", "")), str(v.get("ruta_hilo", ""))
+        if os.path.isabs(rv) or os.path.isabs(rh):
+            err("M8 videos[%d] rutas deben ser relativas a la raíz" % i)
+            continue
+        if not os.path.exists(os.path.join(RAIZ, rv, "guion.json")):
+            err("M8 videos[%d] %s sin guion.json" % (i, rv))
+        elif not os.path.exists(os.path.join(RAIZ, rv, "video.mp4")):
+            warn("M8 videos[%d] %s/video.mp4 no está (fuera de git: se regenera con /video)" % (i, rv))
+        if not os.path.exists(os.path.join(RAIZ, rh, "hilo.json")):
+            err("M8 videos[%d] ruta_hilo %s sin hilo.json" % (i, rh))
 
 
 def main():
+    if "--huerfanas" in sys.argv:
+        return huerfanas("--borrar" in sys.argv)
     quiet = "--quiet" in sys.argv
     paletas = validar_tokens()
     validar_fuentes()
@@ -455,6 +557,7 @@ def main():
     validar_datos(paletas)
     validar_ideas(paletas)
     validar_calendario()
+    validar_videos(paletas)
     for a in AVISOS:
         print("AVISO  " + a)
     for e in ERRORES:

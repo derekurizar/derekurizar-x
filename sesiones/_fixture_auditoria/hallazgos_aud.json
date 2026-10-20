@@ -1,0 +1,398 @@
+{
+ "eje": "aud",
+ "n_busquedas": 0,
+ "n_fetch": 0,
+ "cifras": [
+  {
+   "id": "aud-c01",
+   "concepto": "Avance promedio por semilla del Plan de Gobierno",
+   "valor": 30.0,
+   "unidad": "% de avance",
+   "anio": 2026,
+   "fuente": "Cálculo propio sobre el Plan de Gobierno y fuentes oficiales",
+   "url": "",
+   "tipo": "desglose",
+   "periodo": "2024-01-14 a 2026-10-14",
+   "evidencia": {
+    "url": "local:sesiones/_fixture_auditoria/auditoria.json",
+    "cita": "Cálculo determinista de scripts/auditoria.py sobre las evaluaciones verificadas",
+    "archivo_local": "sesiones/_fixture_auditoria/auditoria.json"
+   },
+   "nota": "Derivado: promedio de puntajes por compromiso (método mixto).",
+   "partes": [
+    {
+     "nombre": "Semilla 1",
+     "valor": 60.0
+    },
+    {
+     "nombre": "Semilla 2",
+     "valor": 0.0
+    }
+   ]
+  },
+  {
+   "id": "aud-c02",
+   "concepto": "Avance global del Plan de Gobierno (promedio de las 2 semillas; sin dato oficial = 0)",
+   "valor": 30.0,
+   "unidad": "% de avance",
+   "anio": 2026,
+   "fuente": "Cálculo propio sobre el Plan de Gobierno y fuentes oficiales",
+   "url": "",
+   "tipo": "puntual",
+   "periodo": "2024-01-14 a 2026-10-14",
+   "evidencia": {
+    "url": "local:sesiones/_fixture_auditoria/auditoria.json",
+    "cita": "Cálculo determinista de scripts/auditoria.py sobre las evaluaciones verificadas",
+    "archivo_local": "sesiones/_fixture_auditoria/auditoria.json"
+   },
+   "nota": "Derivado: promedio de puntajes por compromiso (método mixto)."
+  },
+  {
+   "id": "aud-c03",
+   "concepto": "Avance global si solo contaran los compromisos con dato oficial",
+   "valor": 30.0,
+   "unidad": "% de avance",
+   "anio": 2026,
+   "fuente": "Cálculo propio sobre el Plan de Gobierno y fuentes oficiales",
+   "url": "",
+   "tipo": "puntual",
+   "periodo": "2024-01-14 a 2026-10-14",
+   "evidencia": {
+    "url": "local:sesiones/_fixture_auditoria/auditoria.json",
+    "cita": "Cálculo determinista de scripts/auditoria.py sobre las evaluaciones verificadas",
+    "archivo_local": "sesiones/_fixture_auditoria/auditoria.json"
+   },
+   "nota": "Derivado: promedio de las 2 semillas sin los compromisos no verificables. No es el resultado del plan: el resultado es aud-c02."
+  },
+  {
+   "id": "aud-c04",
+   "concepto": "Compromisos por estado de cumplimiento",
+   "valor": 8,
+   "unidad": "compromisos",
+   "anio": 2026,
+   "fuente": "Cálculo propio sobre el Plan de Gobierno y fuentes oficiales",
+   "url": "",
+   "tipo": "desglose",
+   "periodo": "2024-01-14 a 2026-10-14",
+   "evidencia": {
+    "url": "local:sesiones/_fixture_auditoria/auditoria.json",
+    "cita": "Cálculo determinista de scripts/auditoria.py sobre las evaluaciones verificadas",
+    "archivo_local": "sesiones/_fixture_auditoria/auditoria.json"
+   },
+   "nota": "Derivado: promedio de puntajes por compromiso (método mixto).",
+   "partes": [
+    {
+     "nombre": "Cumplido",
+     "valor": 2
+    },
+    {
+     "nombre": "En proceso",
+     "valor": 1
+    },
+    {
+     "nombre": "Sin iniciar",
+     "valor": 1
+    },
+    {
+     "nombre": "Retroceso",
+     "valor": 1
+    },
+    {
+     "nombre": "No atribuible",
+     "valor": 2
+    },
+    {
+     "nombre": "No verificable",
+     "valor": 1
+    }
+   ]
+  },
+  {
+   "id": "aud-c05",
+   "concepto": "Mandato transcurrido a la fecha de corte",
+   "valor": 68.7,
+   "unidad": "% del periodo 2024–2028",
+   "anio": 2026,
+   "fuente": "Cálculo propio sobre el Plan de Gobierno y fuentes oficiales",
+   "url": "",
+   "tipo": "puntual",
+   "periodo": "2024-01-14 a 2026-10-14",
+   "evidencia": {
+    "url": "local:sesiones/_fixture_auditoria/auditoria.json",
+    "cita": "Cálculo determinista de scripts/auditoria.py sobre las evaluaciones verificadas",
+    "archivo_local": "sesiones/_fixture_auditoria/auditoria.json"
+   },
+   "nota": "Días desde el 14 de enero de 2024 ÷ 1,461 días del mandato."
+  },
+  {
+   "id": "aud-c06",
+   "concepto": "Cobertura de verificación por semilla",
+   "valor": 7,
+   "unidad": "% de compromisos verificables",
+   "anio": 2026,
+   "fuente": "Cálculo propio sobre el Plan de Gobierno y fuentes oficiales",
+   "url": "",
+   "tipo": "desglose",
+   "periodo": "2024-01-14 a 2026-10-14",
+   "evidencia": {
+    "url": "local:sesiones/_fixture_auditoria/auditoria.json",
+    "cita": "Cálculo determinista de scripts/auditoria.py sobre las evaluaciones verificadas",
+    "archivo_local": "sesiones/_fixture_auditoria/auditoria.json"
+   },
+   "nota": "Derivado: promedio de puntajes por compromiso (método mixto).",
+   "partes": [
+    {
+     "nombre": "Semilla 1",
+     "valor": 100.0
+    },
+    {
+     "nombre": "Semilla 2",
+     "valor": 75.0
+    }
+   ]
+  },
+  {
+   "id": "aud-c07",
+   "concepto": "Compromisos verificables",
+   "valor": 7,
+   "unidad": "compromisos",
+   "anio": 2026,
+   "fuente": "Cálculo propio sobre el Plan de Gobierno y fuentes oficiales",
+   "url": "",
+   "tipo": "puntual",
+   "periodo": "2024-01-14 a 2026-10-14",
+   "evidencia": {
+    "url": "local:sesiones/_fixture_auditoria/auditoria.json",
+    "cita": "Cálculo determinista de scripts/auditoria.py sobre las evaluaciones verificadas",
+    "archivo_local": "sesiones/_fixture_auditoria/auditoria.json"
+   },
+   "nota": "Derivado: promedio de puntajes por compromiso (método mixto)."
+  },
+  {
+   "id": "aud-c08",
+   "concepto": "Puntos de avance que restan los compromisos sin dato oficial",
+   "valor": 0.0,
+   "unidad": "puntos porcentuales",
+   "anio": 2026,
+   "fuente": "Cálculo propio sobre el Plan de Gobierno y fuentes oficiales",
+   "url": "",
+   "tipo": "puntual",
+   "periodo": "2024-01-14 a 2026-10-14",
+   "evidencia": {
+    "url": "local:sesiones/_fixture_auditoria/auditoria.json",
+    "cita": "Cálculo determinista de scripts/auditoria.py sobre las evaluaciones verificadas",
+    "archivo_local": "sesiones/_fixture_auditoria/auditoria.json"
+   },
+   "nota": "Derivado: aud-c03 − aud-c02. Lo que el plan pierde por compromisos que no se pueden comprobar con datos oficiales."
+  },
+  {
+   "id": "aud-c09",
+   "concepto": "Compromisos cumplidos, sin contar el avance parcial",
+   "valor": 25.0,
+   "unidad": "% de los compromisos distintos",
+   "anio": 2026,
+   "fuente": "Cálculo propio sobre el Plan de Gobierno y fuentes oficiales",
+   "url": "",
+   "tipo": "puntual",
+   "periodo": "2024-01-14 a 2026-10-14",
+   "evidencia": {
+    "url": "local:sesiones/_fixture_auditoria/auditoria.json",
+    "cita": "Cálculo determinista de scripts/auditoria.py sobre las evaluaciones verificadas",
+    "archivo_local": "sesiones/_fixture_auditoria/auditoria.json"
+   },
+   "nota": "Derivado: 2 cumplidos ÷ 8 compromisos distintos. No toma en cuenta el avance parcial de los demás."
+  },
+  {
+   "id": "aud-c10",
+   "concepto": "Compromisos no cumplidos (en proceso, anunciados, sin iniciar, incumplidos, en retroceso o sin dato)",
+   "valor": 75.0,
+   "unidad": "% de los compromisos distintos",
+   "anio": 2026,
+   "fuente": "Cálculo propio sobre el Plan de Gobierno y fuentes oficiales",
+   "url": "",
+   "tipo": "puntual",
+   "periodo": "2024-01-14 a 2026-10-14",
+   "evidencia": {
+    "url": "local:sesiones/_fixture_auditoria/auditoria.json",
+    "cita": "Cálculo determinista de scripts/auditoria.py sobre las evaluaciones verificadas",
+    "archivo_local": "sesiones/_fixture_auditoria/auditoria.json"
+   },
+   "nota": "Derivado: 100 − aud-c09."
+  },
+  {
+   "id": "aud-c22",
+   "concepto": "Avance promedio por tipo de compromiso (las 2 semillas, sin espejos ni marco fiscal)",
+   "valor": 30.0,
+   "unidad": "% de avance",
+   "anio": 2026,
+   "fuente": "Cálculo propio sobre el Plan de Gobierno y fuentes oficiales",
+   "url": "",
+   "tipo": "desglose",
+   "periodo": "2024-01-14 a 2026-10-14",
+   "evidencia": {
+    "url": "local:sesiones/_fixture_auditoria/auditoria.json",
+    "cita": "Cálculo determinista de scripts/auditoria.py sobre las evaluaciones verificadas",
+    "archivo_local": "sesiones/_fixture_auditoria/auditoria.json"
+   },
+   "nota": "Derivado: promedio simple de los compromisos de cada tipo (Montos: 1, Metas con número: 4, Hitos: 3). Sin dato oficial o no atribuible = 0.",
+   "partes": [
+    {
+     "nombre": "Montos (dinero ejecutado)",
+     "valor": 40.0
+    },
+    {
+     "nombre": "Metas con número",
+     "valor": 25.0
+    },
+    {
+     "nombre": "Hitos (leyes, programas, instituciones)",
+     "valor": 33.3
+    }
+   ]
+  },
+  {
+   "id": "aud-c31",
+   "concepto": "Compromisos por estado · Semilla 1",
+   "valor": 4,
+   "unidad": "compromisos",
+   "anio": 2026,
+   "fuente": "Cálculo propio sobre el Plan de Gobierno y fuentes oficiales",
+   "url": "",
+   "tipo": "desglose",
+   "periodo": "2024-01-14 a 2026-10-14",
+   "evidencia": {
+    "url": "local:sesiones/_fixture_auditoria/auditoria.json",
+    "cita": "Cálculo determinista de scripts/auditoria.py sobre las evaluaciones verificadas",
+    "archivo_local": "sesiones/_fixture_auditoria/auditoria.json"
+   },
+   "nota": "Derivado: estado de cada compromiso de la semilla (los espejos cuentan en las dos semillas).",
+   "partes": [
+    {
+     "nombre": "Cumplido",
+     "valor": 2
+    },
+    {
+     "nombre": "En proceso",
+     "valor": 1
+    },
+    {
+     "nombre": "No atribuible",
+     "valor": 1
+    }
+   ]
+  },
+  {
+   "id": "aud-c32",
+   "concepto": "Compromisos por estado · Semilla 2",
+   "valor": 4,
+   "unidad": "compromisos",
+   "anio": 2026,
+   "fuente": "Cálculo propio sobre el Plan de Gobierno y fuentes oficiales",
+   "url": "",
+   "tipo": "desglose",
+   "periodo": "2024-01-14 a 2026-10-14",
+   "evidencia": {
+    "url": "local:sesiones/_fixture_auditoria/auditoria.json",
+    "cita": "Cálculo determinista de scripts/auditoria.py sobre las evaluaciones verificadas",
+    "archivo_local": "sesiones/_fixture_auditoria/auditoria.json"
+   },
+   "nota": "Derivado: estado de cada compromiso de la semilla (los espejos cuentan en las dos semillas).",
+   "partes": [
+    {
+     "nombre": "Sin iniciar",
+     "valor": 1
+    },
+    {
+     "nombre": "Retroceso",
+     "valor": 1
+    },
+    {
+     "nombre": "No atribuible",
+     "valor": 1
+    },
+    {
+     "nombre": "No verificable",
+     "valor": 1
+    }
+   ]
+  },
+  {
+   "id": "aud-c11",
+   "concepto": "Avance por compromiso · Semilla 1",
+   "valor": 60.0,
+   "unidad": "% de avance",
+   "anio": 2026,
+   "fuente": "Cálculo propio sobre el Plan de Gobierno y fuentes oficiales",
+   "url": "",
+   "tipo": "desglose",
+   "periodo": "2024-01-14 a 2026-10-14",
+   "evidencia": {
+    "url": "local:sesiones/_fixture_auditoria/auditoria.json",
+    "cita": "Cálculo determinista de scripts/auditoria.py sobre las evaluaciones verificadas",
+    "archivo_local": "sesiones/_fixture_auditoria/auditoria.json"
+   },
+   "nota": "Derivado: promedio de puntajes por compromiso (método mixto).",
+   "partes": [
+    {
+     "nombre": "Q1,000 millones en escuelas",
+     "valor": 40.0
+    },
+    {
+     "nombre": "100 escuelas nuevas",
+     "valor": 100.0
+    },
+    {
+     "nombre": "Ley de becas",
+     "valor": 100
+    },
+    {
+     "nombre": "Evaluación docente",
+     "valor": 0.0
+    }
+   ]
+  },
+  {
+   "id": "aud-c12",
+   "concepto": "Avance por compromiso · Semilla 2",
+   "valor": 0.0,
+   "unidad": "% de avance",
+   "anio": 2026,
+   "fuente": "Cálculo propio sobre el Plan de Gobierno y fuentes oficiales",
+   "url": "",
+   "tipo": "desglose",
+   "periodo": "2024-01-14 a 2026-10-14",
+   "evidencia": {
+    "url": "local:sesiones/_fixture_auditoria/auditoria.json",
+    "cita": "Cálculo determinista de scripts/auditoria.py sobre las evaluaciones verificadas",
+    "archivo_local": "sesiones/_fixture_auditoria/auditoria.json"
+   },
+   "nota": "Derivado: promedio de puntajes por compromiso (método mixto).",
+   "partes": [
+    {
+     "nombre": "Menos homicidios",
+     "valor": 0
+    },
+    {
+     "nombre": "Más denuncias atendidas",
+     "valor": 0
+    },
+    {
+     "nombre": "Cobertura policial 90%",
+     "valor": 0.0
+    },
+    {
+     "nombre": "Registro de armas digital",
+     "valor": 0.0
+    }
+   ]
+  }
+ ],
+ "fuentes": [
+  {
+   "nombre": "Cálculo propio sobre el Plan de Gobierno y fuentes oficiales",
+   "url": "",
+   "nivel": "propia"
+  }
+ ],
+ "vacios": []
+}

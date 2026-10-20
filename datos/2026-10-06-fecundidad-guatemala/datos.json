@@ -1,0 +1,599 @@
+{
+  "slug": "fecundidad-guatemala",
+  "fecha": "2026-10-06",
+  "tesis": "Guatemala (2.287 hijos por mujer en 2024) ya no tiene la fecundidad más alta de Centroamérica: Honduras (2.476) la rebasó en 2019.",
+  "ancla_id": "dat-c02",
+  "paleta": "cielo",
+  "hook_tipo": "giro_inversion",
+  "cifras": [
+    {
+      "id": "dat-c01",
+      "concepto": "Tasa global de fecundidad de Guatemala (hijos por mujer), 1960-2024",
+      "unidad": "hijos por mujer",
+      "anio": 2024,
+      "tipo": "serie",
+      "fuente": "Banco Mundial, SP.DYN.TFRT.IN (estimaciones UN Population Division, World Population Prospects); act. 13/07/2026",
+      "url": "https://api.worldbank.org/v2/country/GTM;SLV;HND;NIC;CRI;PAN;MEX;BLZ/indicator/SP.DYN.TFRT.IN?format=json&per_page=1000&date=1960:2025",
+      "periodo": "1960-2024",
+      "n_puntos": 65,
+      "valor": 2.287,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "UN World Population Prospects 2024 (vía Measured World)",
+      "evidencia": {
+        "url": "https://api.worldbank.org/v2/country/GTM;SLV;HND;NIC;CRI;PAN;MEX;BLZ/indicator/SP.DYN.TFRT.IN?format=json&per_page=1000&date=1960:2025",
+        "cita": "GTM SP.DYN.TFRT.IN: 1960 6.999 · 1990 5.48 · 2019 2.593 · 2024 2.287 (lastupdated 2026-07-13)",
+        "archivo_local": "sesiones/fecundidad-guatemala/fuentes/bm_tfr_centroamerica_1960_2024.csv"
+      },
+      "serie": [
+        {
+          "p": "1960",
+          "v": 6.999
+        },
+        {
+          "p": "1961",
+          "v": 6.979
+        },
+        {
+          "p": "1962",
+          "v": 6.934
+        },
+        {
+          "p": "1963",
+          "v": 6.899
+        },
+        {
+          "p": "1964",
+          "v": 6.871
+        },
+        {
+          "p": "1965",
+          "v": 6.839
+        },
+        {
+          "p": "1966",
+          "v": 6.802
+        },
+        {
+          "p": "1967",
+          "v": 6.755
+        },
+        {
+          "p": "1968",
+          "v": 6.699
+        },
+        {
+          "p": "1969",
+          "v": 6.646
+        },
+        {
+          "p": "1970",
+          "v": 6.6
+        },
+        {
+          "p": "1971",
+          "v": 6.546
+        },
+        {
+          "p": "1972",
+          "v": 6.511
+        },
+        {
+          "p": "1973",
+          "v": 6.487
+        },
+        {
+          "p": "1974",
+          "v": 6.458
+        },
+        {
+          "p": "1975",
+          "v": 6.41
+        },
+        {
+          "p": "1976",
+          "v": 6.368
+        },
+        {
+          "p": "1977",
+          "v": 6.319
+        },
+        {
+          "p": "1978",
+          "v": 6.261
+        },
+        {
+          "p": "1979",
+          "v": 6.216
+        },
+        {
+          "p": "1980",
+          "v": 6.171
+        },
+        {
+          "p": "1981",
+          "v": 6.121
+        },
+        {
+          "p": "1982",
+          "v": 6.057
+        },
+        {
+          "p": "1983",
+          "v": 5.976
+        },
+        {
+          "p": "1984",
+          "v": 5.855
+        },
+        {
+          "p": "1985",
+          "v": 5.729
+        },
+        {
+          "p": "1986",
+          "v": 5.663
+        },
+        {
+          "p": "1987",
+          "v": 5.639
+        },
+        {
+          "p": "1988",
+          "v": 5.621
+        },
+        {
+          "p": "1989",
+          "v": 5.559
+        },
+        {
+          "p": "1990",
+          "v": 5.48
+        },
+        {
+          "p": "1991",
+          "v": 5.377
+        },
+        {
+          "p": "1992",
+          "v": 5.314
+        },
+        {
+          "p": "1993",
+          "v": 5.254
+        },
+        {
+          "p": "1994",
+          "v": 5.191
+        },
+        {
+          "p": "1995",
+          "v": 5.105
+        },
+        {
+          "p": "1996",
+          "v": 5.008
+        },
+        {
+          "p": "1997",
+          "v": 4.906
+        },
+        {
+          "p": "1998",
+          "v": 4.8
+        },
+        {
+          "p": "1999",
+          "v": 4.687
+        },
+        {
+          "p": "2000",
+          "v": 4.583
+        },
+        {
+          "p": "2001",
+          "v": 4.502
+        },
+        {
+          "p": "2002",
+          "v": 4.371
+        },
+        {
+          "p": "2003",
+          "v": 4.25
+        },
+        {
+          "p": "2004",
+          "v": 4.134
+        },
+        {
+          "p": "2005",
+          "v": 3.974
+        },
+        {
+          "p": "2006",
+          "v": 3.845
+        },
+        {
+          "p": "2007",
+          "v": 3.716
+        },
+        {
+          "p": "2008",
+          "v": 3.571
+        },
+        {
+          "p": "2009",
+          "v": 3.465
+        },
+        {
+          "p": "2010",
+          "v": 3.375
+        },
+        {
+          "p": "2011",
+          "v": 3.292
+        },
+        {
+          "p": "2012",
+          "v": 3.219
+        },
+        {
+          "p": "2013",
+          "v": 3.151
+        },
+        {
+          "p": "2014",
+          "v": 3.088
+        },
+        {
+          "p": "2015",
+          "v": 3.029
+        },
+        {
+          "p": "2016",
+          "v": 2.973
+        },
+        {
+          "p": "2017",
+          "v": 2.857
+        },
+        {
+          "p": "2018",
+          "v": 2.743
+        },
+        {
+          "p": "2019",
+          "v": 2.593
+        },
+        {
+          "p": "2020",
+          "v": 2.47
+        },
+        {
+          "p": "2021",
+          "v": 2.388
+        },
+        {
+          "p": "2022",
+          "v": 2.343
+        },
+        {
+          "p": "2023",
+          "v": 2.311
+        },
+        {
+          "p": "2024",
+          "v": 2.287
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c02",
+      "concepto": "Tasa global de fecundidad 2024 en Centroamérica y México (hijos por mujer)",
+      "unidad": "hijos por mujer",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "Banco Mundial, SP.DYN.TFRT.IN (UN WPP)",
+      "url": "https://api.worldbank.org/v2/country/GTM;SLV;HND;NIC;CRI;PAN;MEX;BLZ/indicator/SP.DYN.TFRT.IN?format=json&per_page=1000&date=1960:2025",
+      "periodo": "2024",
+      "n_puntos": 8,
+      "valor": 2.287,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "UN World Population Prospects 2024 (vía Measured World); Honduras",
+      "evidencia": {
+        "url": "https://api.worldbank.org/v2/country/GTM;SLV;HND;NIC;CRI;PAN;MEX;BLZ/indicator/SP.DYN.TFRT.IN?format=json&per_page=1000&date=1960:2025",
+        "cita": "2024: HND 2.476 · GTM 2.287 · NIC 2.206 · PAN 2.106 · BLZ 2.021 · MEX 1.892 · SLV 1.768 · CRI 1.318",
+        "archivo_local": "sesiones/fecundidad-guatemala/fuentes/bm_tfr_centroamerica_1960_2024.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Honduras",
+          "valor": 2.476
+        },
+        {
+          "nombre": "Guatemala",
+          "valor": 2.287
+        },
+        {
+          "nombre": "Nicaragua",
+          "valor": 2.206
+        },
+        {
+          "nombre": "Panamá",
+          "valor": 2.106
+        },
+        {
+          "nombre": "Belice",
+          "valor": 2.021
+        },
+        {
+          "nombre": "México",
+          "valor": 1.892
+        },
+        {
+          "nombre": "El Salvador",
+          "valor": 1.768
+        },
+        {
+          "nombre": "Costa Rica",
+          "valor": 1.318
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "dato.png"
+      ]
+    },
+    {
+      "id": "dat-c03",
+      "concepto": "Cruce Guatemala-Honduras: fecundidad 2018 vs 2019",
+      "unidad": "hijos por mujer",
+      "anio": 2019,
+      "tipo": "desglose",
+      "fuente": "Banco Mundial, SP.DYN.TFRT.IN (UN WPP)",
+      "url": "https://api.worldbank.org/v2/country/GTM;SLV;HND;NIC;CRI;PAN;MEX;BLZ/indicator/SP.DYN.TFRT.IN?format=json&per_page=1000&date=1960:2025",
+      "periodo": "2018-2019",
+      "n_puntos": 4,
+      "valor": 2.593,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "UN WPP 2024 (vía Measured World, Honduras)",
+      "evidencia": {
+        "url": "https://api.worldbank.org/v2/country/GTM;SLV;HND;NIC;CRI;PAN;MEX;BLZ/indicator/SP.DYN.TFRT.IN?format=json&per_page=1000&date=1960:2025",
+        "cita": "GTM 2018 2.743 · HND 2018 2.645 · GTM 2019 2.593 · HND 2019 2.611",
+        "archivo_local": "sesiones/fecundidad-guatemala/fuentes/bm_tfr_centroamerica_1960_2024.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala 2018",
+          "valor": 2.743
+        },
+        {
+          "nombre": "Honduras 2018",
+          "valor": 2.645
+        },
+        {
+          "nombre": "Guatemala 2019",
+          "valor": 2.593
+        },
+        {
+          "nombre": "Honduras 2019",
+          "valor": 2.611
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "dato.png"
+      ]
+    },
+    {
+      "id": "dat-c04",
+      "concepto": "Nacimientos en Guatemala, 2014 vs 2024 (año de ocurrencia, INE)",
+      "unidad": "nacimientos",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "INE · Estadísticas Vitales (citado por Prensa Libre vía Prensa Latina, 19/11/2025); 2024 confirmado con microdatos INE",
+      "url": "https://www.prensa-latina.cu/?p=1666926",
+      "periodo": "2014-2024",
+      "n_puntos": 2,
+      "valor": 299256,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa Libre (cita INE, 5-dic-2025)",
+      "evidencia": {
+        "url": "https://www.prensa-latina.cu/?p=1666926",
+        "cita": "La cifra en 2014 fue de 386 mil 195 nacimientos contra 299 mil 256 el pasado año, lo que significó un descenso de 86 mil 939 (25 por ciento menos)",
+        "archivo_local": "sesiones/fecundidad-guatemala/fuentes/prensalatina_caida_nacimientos_2025-11-19.html"
+      },
+      "partes": [
+        {
+          "nombre": "2014",
+          "valor": 386195
+        },
+        {
+          "nombre": "2024",
+          "valor": 299256
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c05",
+      "concepto": "Nacimientos por año de ocurrencia, Guatemala 2018-2024 (sin 2022), microdatos INE",
+      "unidad": "nacimientos",
+      "anio": 2024,
+      "tipo": "serie",
+      "fuente": "INE · Estadísticas Vitales, nacimientos (microdatos, tabulación propia)",
+      "url": "https://datos.ine.gob.gt/dataset/estadisticas-vitales-nacimientos",
+      "periodo": "2018-2024",
+      "n_puntos": 7,
+      "valor": 299256,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa Libre (cita INE, 5-dic-2025)",
+      "evidencia": {
+        "url": "https://datos.ine.gob.gt/dataset/96888fc0-5ced-4a58-bfd0-2a6a292e3208/resource/14f54638-cf4a-4476-9a45-e03ab2baa3c3/download/nacimientos2024_da.xlsx",
+        "cita": "Registros por base: 2018 383263 · 2019 366855 · 2020 341212 · 2021 345149 · 2023 342694 · 2024 299256; 2022: 345 mil 869 (INE vía Prensa Latina)",
+        "archivo_local": "sesiones/ninas-madres-2024/fuentes/ine_nacimientos_por_edad_madre_2018_2024.csv"
+      },
+      "serie": [
+        {
+          "p": "2018",
+          "v": 383263
+        },
+        {
+          "p": "2019",
+          "v": 366855
+        },
+        {
+          "p": "2020",
+          "v": 341212
+        },
+        {
+          "p": "2021",
+          "v": 345149
+        },
+        {
+          "p": "2022",
+          "v": 345869
+        },
+        {
+          "p": "2023",
+          "v": 342694
+        },
+        {
+          "p": "2024",
+          "v": 299256
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c06",
+      "concepto": "Nacimientos inscritos en RENAP por año, 2022-2025 y enero-julio 2026",
+      "unidad": "nacimientos inscritos",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "RENAP · Informe de Eventos Registrales, julio 2026",
+      "url": "https://renap.gob.gt/sites/default/files/informacion-publica/a_eventos_registrales_julio_2026.pdf",
+      "periodo": "2022-2026 (2026 a julio)",
+      "n_puntos": 5,
+      "valor": 368917,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "RENAP, informe eventos registrales noviembre 2025",
+      "evidencia": {
+        "url": "https://renap.gob.gt/sites/default/files/informacion-publica/a_eventos_registrales_julio_2026.pdf",
+        "cita": "Nacimientos: 2022 403,346 · 2023 398,138 · 2024 353,667 · 2025 368,917 · 2026 224,515 (al 31 de julio)",
+        "archivo_local": "sesiones/_descargas/a_eventos_registrales_julio_2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "2022",
+          "valor": 403346
+        },
+        {
+          "nombre": "2023",
+          "valor": 398138
+        },
+        {
+          "nombre": "2024",
+          "valor": 353667
+        },
+        {
+          "nombre": "2025",
+          "valor": 368917
+        },
+        {
+          "nombre": "2026 (ene-jul)",
+          "valor": 224515
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c07",
+      "concepto": "Matrimonios inscritos en RENAP, 2022 vs 2025",
+      "unidad": "matrimonios inscritos",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "RENAP · Informe de Eventos Registrales, julio 2026",
+      "url": "https://renap.gob.gt/sites/default/files/informacion-publica/a_eventos_registrales_julio_2026.pdf",
+      "periodo": "2022-2026 (2026 a julio)",
+      "n_puntos": 5,
+      "valor": 90068,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "RENAP, informe eventos registrales noviembre 2025",
+      "evidencia": {
+        "url": "https://renap.gob.gt/sites/default/files/informacion-publica/a_eventos_registrales_julio_2026.pdf",
+        "cita": "Matrimonios: 2022 104,594 · 2023 93,950 · 2024 89,327 · 2025 90,068 · 2026 51,439 (al 31 de julio)",
+        "archivo_local": "sesiones/_descargas/a_eventos_registrales_julio_2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "2022",
+          "valor": 104594
+        },
+        {
+          "nombre": "2023",
+          "valor": 93950
+        },
+        {
+          "nombre": "2024",
+          "valor": 89327
+        },
+        {
+          "nombre": "2025",
+          "valor": 90068
+        },
+        {
+          "nombre": "2026 (ene-jul)",
+          "valor": 51439
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    }
+  ],
+  "fuentes": [
+    {
+      "nombre": "Banco Mundial · WDI SP.DYN.TFRT.IN (UN WPP)",
+      "url": "https://api.worldbank.org/v2/country/GTM;SLV;HND;NIC;CRI;PAN;MEX;BLZ/indicator/SP.DYN.TFRT.IN?format=json&per_page=1000&date=1960:2025",
+      "nivel": "internacional"
+    },
+    {
+      "nombre": "INE · Estadísticas Vitales, nacimientos (microdatos)",
+      "url": "https://datos.ine.gob.gt/dataset/estadisticas-vitales-nacimientos",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "RENAP · Informe de Eventos Registrales julio 2026",
+      "url": "https://renap.gob.gt/sites/default/files/informacion-publica/a_eventos_registrales_julio_2026.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Prensa Latina (cita INE vía Prensa Libre), 19/11/2025",
+      "url": "https://www.prensa-latina.cu/?p=1666926",
+      "nivel": "prensa"
+    }
+  ],
+  "no_afirma": [
+    "No afirma por qué baja la fecundidad ni por qué Guatemala cae más rápido que Honduras.",
+    "No es una tasa oficial del INE: son estimaciones de la ONU (WPP) publicadas por el Banco Mundial.",
+    "No afirma que la brecha con Honduras crezca cada año; solo compara 2018, 2019 y 2024."
+  ],
+  "incertidumbre": [
+    "La segunda fuente reproduce la primaria (UN WPP vía Banco Mundial): verifica el número, pero no es un respaldo independiente.",
+    "Son estimaciones modeladas: el INE no ha publicado una tasa global de fecundidad posterior a 2019."
+  ],
+  "descartadas": [],
+  "tipo": "dato"
+}

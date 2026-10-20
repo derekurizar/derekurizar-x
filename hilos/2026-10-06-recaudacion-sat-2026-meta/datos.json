@@ -1,0 +1,1698 @@
+{
+  "slug": "recaudacion-sat-2026-meta",
+  "fecha": "2026-10-06",
+  "tesis": "Para llegar a su meta anual de Q119,161.7 millones, a la SAT le faltan Q37,577.1 millones de septiembre a diciembre de 2026, casi lo mismo que cobró en esos meses de 2025 (Q37,549.6 millones): a agosto va en 102.89% de lo programado, pero el excedente lo sostiene el IVA y el ISR va bajo su meta.",
+  "ancla_id": "met-c03",
+  "paleta": "cielo",
+  "hook_tipo": "pregunta_directa",
+  "cifras": [
+    {
+      "id": "met-c01",
+      "concepto": "Recaudación tributaria neta SAT acumulada 2026, enero–agosto (mes a mes)",
+      "unidad": "millones de Q",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "SAT — Recaudación de Ingresos Tributarios año 2026 (rimp2026.xlsx)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/93330/rimp2026",
+      "periodo": "2026-01 a 2026-08",
+      "n_puntos": 8,
+      "valor": 81584.6,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo desde rimp2026 (netos menos otras instituciones) y emr2026; AGN feb 18,467.2 y may 50,308.3 cuadran",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/93330/rimp2026",
+        "cita": "INGRESOS TRIBUTARIOS NETOS,81964.708…; RECAUDACIÓN OTRAS INSTITUCIONES,380.120… (Ene 10857.407… / 38.093…; Ago 8292.772… / 48.152…); Sep–Dic = 0",
+        "archivo_local": "sesiones/_descargas/sat2026/rimp2026.xlsx"
+      },
+      "serie": [
+        {
+          "p": "2026-ene",
+          "v": 10819.3
+        },
+        {
+          "p": "2026-feb",
+          "v": 18467.2
+        },
+        {
+          "p": "2026-mar",
+          "v": 29221.9
+        },
+        {
+          "p": "2026-abr",
+          "v": 42063.3
+        },
+        {
+          "p": "2026-may",
+          "v": 50308.3
+        },
+        {
+          "p": "2026-jun",
+          "v": 58632.8
+        },
+        {
+          "p": "2026-jul",
+          "v": 73340.0
+        },
+        {
+          "p": "2026-ago",
+          "v": 81584.6
+        }
+      ],
+      "partes": [
+        {
+          "nombre": "2026-ene (mes)",
+          "valor": 10819.3
+        },
+        {
+          "nombre": "2026-feb (mes)",
+          "valor": 7647.9
+        },
+        {
+          "nombre": "2026-mar (mes)",
+          "valor": 10754.6
+        },
+        {
+          "nombre": "2026-abr (mes)",
+          "valor": 12841.4
+        },
+        {
+          "nombre": "2026-may (mes)",
+          "valor": 8245.0
+        },
+        {
+          "nombre": "2026-jun (mes)",
+          "valor": 8324.5
+        },
+        {
+          "nombre": "2026-jul (mes)",
+          "valor": 14707.2
+        },
+        {
+          "nombre": "2026-ago (mes)",
+          "valor": 8244.6
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_1.png",
+        "tuit_5.png"
+      ]
+    },
+    {
+      "id": "met-c02",
+      "concepto": "Ejecución de la meta de recaudación SAT acumulada a agosto 2026 (recaudado vs programado)",
+      "unidad": "% de ejecución",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "SAT — Ejecución de Ingresos Tributarios 2026 (emr2026.xlsx)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/93319/emr2026",
+      "periodo": "2026-01 a 2026-08",
+      "valor": 102.89,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo 81,584.6/79,290.6 = 1.0289; emr2026 cita 1.02893",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/93319/emr2026",
+        "cita": "INGRESOS TRIBUTARIOS NETOS,81584.587978359996,79290.558464029993,2294.02951433002,1.0289319379099899 … Información actualizada a agosto.",
+        "archivo_local": "sesiones/_descargas/sat2026/emr2026.xlsx"
+      },
+      "partes": [
+        {
+          "nombre": "Recaudado ene–ago 2026",
+          "valor": 81584.6
+        },
+        {
+          "nombre": "Meta programada ene–ago 2026",
+          "valor": 79290.6
+        },
+        {
+          "nombre": "Excedente sobre la meta",
+          "valor": 2294.0
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "met-c03",
+      "concepto": "Meta de recaudación SAT 2026 programada, acumulada mes a mes (enero–diciembre)",
+      "unidad": "millones de Q",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "SAT — Programación de Ingresos Tributarios SAT 2026 (progra2026.xlsx)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/91977/progra2026",
+      "periodo": "2026-01 a 2026-12",
+      "n_puntos": 12,
+      "valor": 119161.7,
+      "veredicto": "verificada",
+      "independencia": "alta",
+      "fuente_2": "Icefi comunicado 01-2026 y AGN convenio",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/91977/progra2026",
+        "cita": "RECAUDACIÓN TRIBUTARIA NETA SAT,11101.683…,7326.124…,10137.692…,12589.035…,8220.235…,7716.551…,14001.685…,8197.554…,8176.222…,14474.647…,8509.097…,8711.176…,119161.70000000001",
+        "archivo_local": "sesiones/_descargas/sat2026/progra2026.xlsx"
+      },
+      "serie": [
+        {
+          "p": "2026-ene",
+          "v": 11101.7
+        },
+        {
+          "p": "2026-feb",
+          "v": 18427.8
+        },
+        {
+          "p": "2026-mar",
+          "v": 28565.5
+        },
+        {
+          "p": "2026-abr",
+          "v": 41154.5
+        },
+        {
+          "p": "2026-may",
+          "v": 49374.8
+        },
+        {
+          "p": "2026-jun",
+          "v": 57091.3
+        },
+        {
+          "p": "2026-jul",
+          "v": 71093.0
+        },
+        {
+          "p": "2026-ago",
+          "v": 79290.6
+        },
+        {
+          "p": "2026-sep",
+          "v": 87466.8
+        },
+        {
+          "p": "2026-oct",
+          "v": 101941.4
+        },
+        {
+          "p": "2026-nov",
+          "v": 110450.5
+        },
+        {
+          "p": "2026-dic",
+          "v": 119161.7
+        }
+      ],
+      "partes": [
+        {
+          "nombre": "2026-ene (meta del mes)",
+          "valor": 11101.7
+        },
+        {
+          "nombre": "2026-feb (meta del mes)",
+          "valor": 7326.1
+        },
+        {
+          "nombre": "2026-mar (meta del mes)",
+          "valor": 10137.7
+        },
+        {
+          "nombre": "2026-abr (meta del mes)",
+          "valor": 12589.0
+        },
+        {
+          "nombre": "2026-may (meta del mes)",
+          "valor": 8220.2
+        },
+        {
+          "nombre": "2026-jun (meta del mes)",
+          "valor": 7716.6
+        },
+        {
+          "nombre": "2026-jul (meta del mes)",
+          "valor": 14001.7
+        },
+        {
+          "nombre": "2026-ago (meta del mes)",
+          "valor": 8197.6
+        },
+        {
+          "nombre": "2026-sep (meta del mes)",
+          "valor": 8176.2
+        },
+        {
+          "nombre": "2026-oct (meta del mes)",
+          "valor": 14474.6
+        },
+        {
+          "nombre": "2026-nov (meta del mes)",
+          "valor": 8509.1
+        },
+        {
+          "nombre": "2026-dic (meta del mes)",
+          "valor": 8711.2
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_1.png",
+        "tuit_3.png",
+        "tuit_9.png"
+      ]
+    },
+    {
+      "id": "met-c04",
+      "concepto": "Porcentaje de ejecución acumulada de la meta SAT 2026, mes a mes",
+      "unidad": "% (recaudado acumulado / meta acumulada)",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "Cálculo con SAT rimp2026.xlsx y progra2026.xlsx",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/91977/progra2026",
+      "periodo": "2026-01 a 2026-08",
+      "n_puntos": 8,
+      "valor": 102.89,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo propio desde rimp2026/progra2026; feb 100.21% = AGN 100.2%",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/93319/emr2026",
+        "cita": "INGRESOS TRIBUTARIOS NETOS,81584.587…,79290.558…,2294.029…,1.0289319379099899 (punto de agosto); los demás meses salen de rimp2026 y progra2026",
+        "archivo_local": "sesiones/_descargas/sat2026/progra2026.xlsx"
+      },
+      "serie": [
+        {
+          "p": "2026-ene",
+          "v": 97.46
+        },
+        {
+          "p": "2026-feb",
+          "v": 100.21
+        },
+        {
+          "p": "2026-mar",
+          "v": 102.3
+        },
+        {
+          "p": "2026-abr",
+          "v": 102.21
+        },
+        {
+          "p": "2026-may",
+          "v": 101.89
+        },
+        {
+          "p": "2026-jun",
+          "v": 102.7
+        },
+        {
+          "p": "2026-jul",
+          "v": 103.16
+        },
+        {
+          "p": "2026-ago",
+          "v": 102.89
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_4.png"
+      ]
+    },
+    {
+      "id": "met-c05",
+      "concepto": "Meta anual de recaudación SAT 2026 (convenio Minfin–SAT)",
+      "unidad": "millones de Q",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "AGN (convenio Minfin–SAT, 18-dic-2025); SAT progra2026.xlsx",
+      "url": "https://agn.gt/suscriben-convenio-sobre-meta-de-recaudacion-tributaria-de-119-millardos-de-quetzales-en-2026/",
+      "periodo": "2026",
+      "valor": 119161.7,
+      "veredicto": "verificada",
+      "independencia": "alta",
+      "fuente_2": "AGN (convenio Minfin-SAT, 18-dic-2025); Icefi anexo",
+      "evidencia": {
+        "url": "https://agn.gt/suscriben-convenio-sobre-meta-de-recaudacion-tributaria-de-119-millardos-de-quetzales-en-2026/",
+        "cita": "La meta de recaudación para el próximo año es de 119 mil 161.7 millones de quetzales.",
+        "archivo_local": "sesiones/_descargas/sat2026/progra2026.xlsx"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "met-c06",
+      "concepto": "Ingresos tributarios del presupuesto 2026 (Dto. 3-2026) = meta SAT + otras instituciones",
+      "unidad": "millones de Q",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Icefi, comunicado 01-2026 (3-feb-2026), anexos 1 y 2, con base en decretos 27-2025 y 3-2026",
+      "url": "https://mail.icefi.org/sites/default/files/01-2026_comunicado_icefi_ampliacion_presupuestaria_03febrero2026.pdf",
+      "periodo": "2026",
+      "valor": 119762.8,
+      "veredicto": "verificada",
+      "independencia": "alta",
+      "fuente_2": "Icefi comunicado 01-2026 (3-feb-2026), tabla ingresos tributarios",
+      "evidencia": {
+        "url": "https://mail.icefi.org/sites/default/files/01-2026_comunicado_icefi_ampliacion_presupuestaria_03febrero2026.pdf",
+        "cita": "Recaudación SAT 111,981.5 119,161.7 … Otras instituciones 548.4 601.1 … Totales 112,529.9 119,762.8 … 6.4%",
+        "archivo_local": "sesiones/_descargas/01-2026_comunicado_icefi_ampliacion_presupuestaria_03febrero2026.pdf"
+      },
+      "partes": [
+        {
+          "nombre": "Recaudación SAT (meta)",
+          "valor": 119161.7
+        },
+        {
+          "nombre": "Otras instituciones (regalías e hidrocarburos compartibles 74.6; salida del país 526.5)",
+          "valor": 601.1
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_1.png"
+      ]
+    },
+    {
+      "id": "met-c07",
+      "concepto": "Monto que falta recaudar en septiembre–diciembre 2026 para cumplir la meta anual SAT",
+      "unidad": "millones de Q",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Cálculo con SAT progra2026.xlsx (meta anual) y emr2026.xlsx (acumulado a agosto)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/93319/emr2026",
+      "periodo": "2026-09 a 2026-12",
+      "valor": 37577.1,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Aritmética 119,161.7 - 81,584.6 con met-c05 (AGN/Icefi) y met-c01",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/93319/emr2026",
+        "cita": "INGRESOS TRIBUTARIOS NETOS,81584.587978359996 … Información actualizada a agosto. (meta anual progra2026: 119161.70000000001)",
+        "archivo_local": "sesiones/_descargas/sat2026/emr2026.xlsx"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_2.png"
+      ]
+    },
+    {
+      "id": "met-c08",
+      "concepto": "Recaudación SAT en septiembre–diciembre 2025",
+      "unidad": "millones de Q",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Cálculo con SAT rimp2025.xlsx",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/84469/rimp2025.xlsx",
+      "periodo": "2025-09 a 2025-12",
+      "valor": 37549.6,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo desde rimp2025 (netos - otras instituciones, sep-dic) ; acumulado dic 111,981.5 menos ago 74,431.9 (AGN)",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/84469/rimp2025.xlsx",
+        "cita": "INGRESOS TRIBUTARIOS NETOS … Sep 7736.427…, Oct 13579.698…, Nov 7843.556…, Dic 8588.843…; RECAUDACIÓN OTRAS INSTITUCIONES … 76.024…, 35.547…, 38.780…, 48.610…",
+        "archivo_local": "sesiones/_descargas/sat2026/rimp2025.xlsx"
+      },
+      "partes": [
+        {
+          "nombre": "Sep 2025",
+          "valor": 7660.4
+        },
+        {
+          "nombre": "Oct 2025",
+          "valor": 13544.2
+        },
+        {
+          "nombre": "Nov 2025",
+          "valor": 7804.8
+        },
+        {
+          "nombre": "Dic 2025",
+          "valor": 8540.2
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_2.png",
+        "tuit_3.png"
+      ]
+    },
+    {
+      "id": "met-c09",
+      "concepto": "Recaudación SAT acumulada 2025, mes a mes (enero–diciembre)",
+      "unidad": "millones de Q",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "SAT — Recaudación de Ingresos Tributarios año 2025 (rimp2025.xlsx)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/84469/rimp2025.xlsx",
+      "periodo": "2025-01 a 2025-12",
+      "n_puntos": 12,
+      "valor": 111981.5,
+      "veredicto": "verificada",
+      "independencia": "alta",
+      "fuente_2": "AGN: SAT superó meta 2025 con 111 mil 981 millones",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/84469/rimp2025.xlsx",
+        "cita": "INGRESOS TRIBUTARIOS NETOS,112529.859761071 …; RECAUDACIÓN OTRAS INSTITUCIONES,548.40382671999998 …",
+        "archivo_local": "sesiones/_descargas/sat2026/rimp2025.xlsx"
+      },
+      "serie": [
+        {
+          "p": "2025-ene",
+          "v": 10452.7
+        },
+        {
+          "p": "2025-feb",
+          "v": 17358.8
+        },
+        {
+          "p": "2025-mar",
+          "v": 26847.3
+        },
+        {
+          "p": "2025-abr",
+          "v": 38747.1
+        },
+        {
+          "p": "2025-may",
+          "v": 46474.5
+        },
+        {
+          "p": "2025-jun",
+          "v": 53683.1
+        },
+        {
+          "p": "2025-jul",
+          "v": 66757.9
+        },
+        {
+          "p": "2025-ago",
+          "v": 74431.9
+        },
+        {
+          "p": "2025-sep",
+          "v": 82092.3
+        },
+        {
+          "p": "2025-oct",
+          "v": 95636.4
+        },
+        {
+          "p": "2025-nov",
+          "v": 103441.2
+        },
+        {
+          "p": "2025-dic",
+          "v": 111981.5
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "met-c10",
+      "concepto": "Crecimiento interanual de la recaudación SAT enero–agosto 2026 vs enero–agosto 2025",
+      "unidad": "%",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "SAT — emr2026.xlsx",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/93319/emr2026",
+      "periodo": "ene–ago 2026 vs ene–ago 2025",
+      "valor": 9.61,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo 81,584.6/74,431.9 - 1 = 9.61%; ago-2025 74,431 confirmado por AGN",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/93319/emr2026",
+        "cita": "INGRESOS TRIBUTARIOS NETOS,81584.587…,79290.558…,2294.029…,1.0289…,74431.892491460007,7152.6954869000501,9.6097186937987897E-2",
+        "archivo_local": "sesiones/_descargas/sat2026/emr2026.xlsx"
+      },
+      "partes": [
+        {
+          "nombre": "Ene–ago 2026",
+          "valor": 81584.6
+        },
+        {
+          "nombre": "Ene–ago 2025",
+          "valor": 74431.9
+        },
+        {
+          "nombre": "Diferencia",
+          "valor": 7152.7
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_5.png"
+      ]
+    },
+    {
+      "id": "ctx-c01",
+      "concepto": "Meta anual de ingresos tributarios netos según la programación del presupuesto aprobado (SAT), 2016–2026",
+      "unidad": "millones de Q",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "SAT, Boletín Estadístico, hoja 'Programación de Ingresos Tributarios - consolidado' (fila TOTAL DE INGRESOS NETOS)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+      "periodo": "2016–2026",
+      "n_puntos": 11,
+      "valor": 119161.7,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AGN convenio Minfin-SAT 2026 (119,161.7); Banguat 2026 (meta 2025 = 108,737.5, coincide con la serie)",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+        "cita": "Año 2025 TOTAL DE INGRESOS NETOS 108737.49 ... Año 2026 TOTAL DE INGRESOS NETOS 119161.7 (Programación de Ingresos Tributarios - consolidado, Millones de Quetzales)",
+        "archivo_local": "sesiones/_descargas/sat_boletinestadistico_hoja3.csv"
+      },
+      "serie": [
+        {
+          "p": "2016",
+          "v": 53850.35
+        },
+        {
+          "p": "2017",
+          "v": 57463
+        },
+        {
+          "p": "2018",
+          "v": 57463
+        },
+        {
+          "p": "2019",
+          "v": 63468.9
+        },
+        {
+          "p": "2020",
+          "v": 63468.9
+        },
+        {
+          "p": "2021",
+          "v": 63468.899999
+        },
+        {
+          "p": "2022",
+          "v": 75999.62
+        },
+        {
+          "p": "2023",
+          "v": 85765.03
+        },
+        {
+          "p": "2024",
+          "v": 85765.03
+        },
+        {
+          "p": "2025",
+          "v": 108737.49
+        },
+        {
+          "p": "2026",
+          "v": 119161.7
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ctx-c02",
+      "concepto": "Recaudación tributaria neta SAT (recaudación SAT menos provisión para devolución de crédito fiscal), 2016–2025",
+      "unidad": "millones de Q",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "SAT, Recaudación de Ingresos Tributarios (rimpa.xlsx)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/5151/rimpa.xlsx",
+      "periodo": "2016–2025",
+      "n_puntos": 10,
+      "valor": 111981.46,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AGN: SAT superó la meta 2025 con Q111,981 M (+Q9,223.8 M, 9% vs 2024)",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/5151/rimpa.xlsx",
+        "cita": "RECAUDACIÓN TRIBUTARIA SAT 2025: 115433.862289931; (-) Provisión para devolución del Crédito Fiscal 2025: 3452.4063555799999",
+        "archivo_local": "sesiones/_descargas/rimpa_hoja1.csv"
+      },
+      "serie": [
+        {
+          "p": "2016",
+          "v": 53680.86
+        },
+        {
+          "p": "2017",
+          "v": 56177.01
+        },
+        {
+          "p": "2018",
+          "v": 58200.74
+        },
+        {
+          "p": "2019",
+          "v": 62077.26
+        },
+        {
+          "p": "2020",
+          "v": 60044.33
+        },
+        {
+          "p": "2021",
+          "v": 77627.08
+        },
+        {
+          "p": "2022",
+          "v": 87929.79
+        },
+        {
+          "p": "2023",
+          "v": 95027.18
+        },
+        {
+          "p": "2024",
+          "v": 102757.69
+        },
+        {
+          "p": "2025",
+          "v": 111981.46
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ctx-c03",
+      "concepto": "Cumplimiento de la meta original del presupuesto: recaudación neta SAT / meta (programación), 2016–2025",
+      "unidad": "% de la meta",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Cálculo propio con SAT rimpa.xlsx y Boletín Estadístico SAT (programación)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/5151/rimpa.xlsx",
+      "periodo": "2016–2025",
+      "n_puntos": 10,
+      "valor": 103.0,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AGN y La Hora: meta 108,737 M, recaudado 111,981 M, excedente 3,244 M; La Hora titula 103%",
+      "evidencia": {
+        "url": "https://agn.gt/sat-supero-la-meta-de-recaudacion-de-2025-con-111-mil-981-millones-de-quetzales/",
+        "cita": "Se alcanzó 111 mil 981.5 millones de quetzales (meta 2025: 108,737 millones; excedente 3,244.5 millones)",
+        "archivo_local": "sesiones/_descargas/rimpa_hoja1.csv"
+      },
+      "serie": [
+        {
+          "p": "2016",
+          "v": 99.7
+        },
+        {
+          "p": "2017",
+          "v": 97.8
+        },
+        {
+          "p": "2018",
+          "v": 101.3
+        },
+        {
+          "p": "2019",
+          "v": 97.8
+        },
+        {
+          "p": "2020",
+          "v": 94.6
+        },
+        {
+          "p": "2021",
+          "v": 122.3
+        },
+        {
+          "p": "2022",
+          "v": 115.7
+        },
+        {
+          "p": "2023",
+          "v": 110.8
+        },
+        {
+          "p": "2024",
+          "v": 119.8
+        },
+        {
+          "p": "2025",
+          "v": 103.0
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_6.png"
+      ]
+    },
+    {
+      "id": "ctx-c04",
+      "concepto": "Meta de recaudación 2024 revisada tras la ampliación presupuestaria (Decreto 17-2024) vs recaudación SAT 2024",
+      "unidad": "millones de Q",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "IIES-USAC, 'La SAT superó la meta fiscal 2024' (con datos SAT)",
+      "url": "https://iies.usac.edu.gt/wp-content/uploads/2025/02/SAT.pdf",
+      "periodo": "2024",
+      "valor": 99201.6,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Resumen de búsqueda sobre IIES/Minfin metas_2024: meta Q99,201.6 M tras Decreto 17-2024; antes Q85,765 M; recaudó Q102,757.7 M",
+      "evidencia": {
+        "url": "https://iies.usac.edu.gt/wp-content/uploads/2025/02/SAT.pdf",
+        "cita": "la recaudación esperada para el año pasado era de Q99 mil 201.6 millones ... la meta de recaudación para 2024 era de Q85 mil 765 millones",
+        "archivo_local": "sesiones/_descargas/SAT.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Meta original 2024",
+          "valor": 85765
+        },
+        {
+          "nombre": "Meta revisada 2024",
+          "valor": 99201.6
+        },
+        {
+          "nombre": "Recaudación SAT 2024",
+          "valor": 102757.7
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_6.png"
+      ]
+    },
+    {
+      "id": "ctx-c05",
+      "concepto": "Carga tributaria neta del Gobierno Central, % del PIB, 2016–2025 (solo referencia)",
+      "unidad": "% del PIB",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "SAT, Boletín Estadístico, hoja 'Guatemala: Carga tributaria neta / Gobierno Central'",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+      "periodo": "2016–2025",
+      "n_puntos": 10,
+      "valor": 11.88,
+      "veredicto": "ajustada",
+      "independencia": "alta",
+      "fuente_2": "Banguat, Resultados 2025 y perspectivas 2026: carga tributaria 2025 ≈ 11.7% (con otro PIB); ICEFI: estable en ~11.8%",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+        "cita": "2025 | 947005.52963213599 | ... | 112529.859761071 | 0.118827035576849",
+        "archivo_local": "sesiones/_descargas/sat_boletinestadistico_hoja27.csv"
+      },
+      "serie": [
+        {
+          "p": "2016",
+          "v": 10.78
+        },
+        {
+          "p": "2017",
+          "v": 10.77
+        },
+        {
+          "p": "2018",
+          "v": 10.67
+        },
+        {
+          "p": "2019",
+          "v": 10.54
+        },
+        {
+          "p": "2020",
+          "v": 10.04
+        },
+        {
+          "p": "2021",
+          "v": 11.66
+        },
+        {
+          "p": "2022",
+          "v": 11.95
+        },
+        {
+          "p": "2023",
+          "v": 11.68
+        },
+        {
+          "p": "2024",
+          "v": 11.76
+        },
+        {
+          "p": "2025",
+          "v": 11.88
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ctx-c06",
+      "concepto": "Meta de recaudación tributaria 2026 del convenio Minfin–SAT",
+      "unidad": "millones de Q",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "AGN (Agencia Guatemalteca de Noticias), 18-dic-2025",
+      "url": "https://agn.gt/suscriben-convenio-sobre-meta-de-recaudacion-tributaria-de-119-millardos-de-quetzales-en-2026/",
+      "periodo": "2026",
+      "valor": 119161.7,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "SAT Boletín Estadístico, hoja programación 2026 (119,161.7); AGN fetch confirma 'Q119,161.7 millones'",
+      "evidencia": {
+        "url": "https://agn.gt/suscriben-convenio-sobre-meta-de-recaudacion-tributaria-de-119-millardos-de-quetzales-en-2026/",
+        "cita": "La meta de recaudación para el próximo año es de 119 mil 161.7 millones de quetzales.",
+        "archivo_local": "sesiones/_descargas/sat_boletinestadistico_hoja2.csv"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ctx-c07",
+      "concepto": "Crecimiento que exige la meta 2026 frente a lo recaudado (neto SAT) en 2025, vs crecimiento promedio anual 2016–2025",
+      "unidad": "%",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Cálculo propio con SAT rimpa.xlsx y convenio 2026",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/5151/rimpa.xlsx",
+      "periodo": "2016–2026",
+      "valor": 6.4,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo: 119,161.7/111,981.46 - 1 = 6.41%; promedio 2016-2025 = 8.51% (CAGR)",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/5151/rimpa.xlsx",
+        "cita": "RECAUDACIÓN TRIBUTARIA SAT 2016: 56135.387231890003; 2025: 115433.862289931; provisión devolución 2016: 2454.5299809; 2025: 3452.4063555799999",
+        "archivo_local": "sesiones/_descargas/rimpa_hoja1.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Meta 2026 vs recaudación neta SAT 2025",
+          "valor": 6.4
+        },
+        {
+          "nombre": "Meta 2026 vs meta 2025",
+          "valor": 9.6
+        },
+        {
+          "nombre": "Crecimiento anual compuesto recaudación neta SAT 2016–2025",
+          "valor": 8.5
+        },
+        {
+          "nombre": "Crecimiento 2025 vs 2024",
+          "valor": 9.0
+        }
+      ],
+      "usada": false,
+      "aparece_en": [
+        "T5"
+      ]
+    },
+    {
+      "id": "ctx-c08",
+      "concepto": "Población estimada de Guatemala 2026 (INE, proyecciones revisión 2019)",
+      "unidad": "personas",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "INE, Estimaciones y proyecciones nacionales de población, revisión 2019 (Metodología Nacional)",
+      "url": "https://prensalibre.com/wp-content/uploads/2024/09/01-Metodologia-Nacional.pdf",
+      "periodo": "2026",
+      "valor": 18312373,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "INE, Clasificador/CIF 2026-2027 y proyección INE (total 18,312,373 al 30-jun-2026) vía AGN/búsqueda",
+      "evidencia": {
+        "url": "https://prensalibre.com/wp-content/uploads/2024/09/01-Metodologia-Nacional.pdf",
+        "cita": "2026        18,312,373        9,007,032         9,305,341",
+        "archivo_local": "sesiones/_descargas/01-Metodologia-Nacional.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ctx-c09",
+      "concepto": "Meta de recaudación 2026 por habitante",
+      "unidad": "Q por persona",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Cálculo propio: meta convenio Minfin–SAT / población INE 2026",
+      "url": "https://agn.gt/suscriben-convenio-sobre-meta-de-recaudacion-tributaria-de-119-millardos-de-quetzales-en-2026/",
+      "periodo": "2026",
+      "valor": 6507.17,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo: 119,161,700,000 / 18,312,373",
+      "evidencia": {
+        "url": "https://agn.gt/suscriben-convenio-sobre-meta-de-recaudacion-tributaria-de-119-millardos-de-quetzales-en-2026/",
+        "cita": "La meta de recaudación para el próximo año es de 119 mil 161.7 millones de quetzales. (Población 2026 INE: 18,312,373)",
+        "archivo_local": "sesiones/_descargas/01-Metodologia-Nacional.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ctx-c10",
+      "concepto": "Presupuesto vigente 2026 del Estado (al 30-mar-2026, portal de Transparencia Presupuestaria Minfin)",
+      "unidad": "millones de Q",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Prensa Libre con datos del portal de Transparencia Presupuestaria del Minfin",
+      "url": "https://www.prensalibre.com/guatemala/politica/ejecucion-presupuestaria-del-organismo-ejecutivo-alcanza-el-18-62-en-primer-trimestre-del-2026/",
+      "periodo": "2026 (vigente a marzo)",
+      "valor": 167109.02,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa Libre con Transparencia Presupuestaria Minfin: vigente Q167,109,019,119.67 al 30-mar; ejecutado 18.62%",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/guatemala/politica/ejecucion-presupuestaria-del-organismo-ejecutivo-alcanza-el-18-62-en-primer-trimestre-del-2026/",
+        "cita": "ritmo moderado de ejecución para el presupuesto de Q167 mil 109 millones 19 mil 119.67, vigente para el 2026",
+        "archivo_local": "sesiones/_descargas/prensalibre_ejecucion_q1_2026.html"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_9.png"
+      ]
+    },
+    {
+      "id": "ctx-c11",
+      "concepto": "De cada Q100 del presupuesto vigente 2026, cuántos cubre la meta de recaudación tributaria",
+      "unidad": "Q de cada Q100",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Cálculo propio: meta convenio 2026 / presupuesto vigente 2026 (Minfin vía Prensa Libre)",
+      "url": "https://www.prensalibre.com/guatemala/politica/ejecucion-presupuestaria-del-organismo-ejecutivo-alcanza-el-18-62-en-primer-trimestre-del-2026/",
+      "periodo": "2026",
+      "valor": 71.3,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo: 119,161.7/167,109.02 = 71.31",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/guatemala/politica/ejecucion-presupuestaria-del-organismo-ejecutivo-alcanza-el-18-62-en-primer-trimestre-del-2026/",
+        "cita": "presupuesto de Q167 mil 109 millones 19 mil 119.67, vigente para el 2026 (meta tributaria 2026: 119 mil 161.7 millones)",
+        "archivo_local": "sesiones/_descargas/prensalibre_ejecucion_q1_2026.html"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_9.png"
+      ]
+    },
+    {
+      "id": "imp-c01",
+      "concepto": "Recaudación tributaria bruta enero–julio 2026 por impuesto",
+      "unidad": "millones de quetzales",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "SAT, Estadísticas Tributarias (rim.xlsx, recaudación mensual por impuesto)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/5462/rim.xlsx",
+      "periodo": "ene–jul 2026",
+      "n_puntos": 7,
+      "valor": 76806.7,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo: suma ene-jul de rim_hoja2 = 76806.7 y 7 partes cuadran (18576.5+18327.1+22780.7+6670.3+3072.3+2969.7+4410.0). sesiones/_descargas/sat2026/rimp2026_hoja1.csv (informe mensual SAT rimp2026, archivo distinto de rim.xlsx)",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/5462/rim.xlsx",
+        "cita": "Año 2026: Ingresos tributarios brutos 76806.708681760007; Sobre la Renta 22780.718807980003; Al Valor Agregado Importaciones 18576.538496342597; Al Valor Agregado Doméstico 18327.113752327401",
+        "archivo_local": "sesiones/_descargas/rim_hoja2.csv"
+      },
+      "partes": [
+        {
+          "nombre": "IVA importaciones",
+          "valor": 18576.5
+        },
+        {
+          "nombre": "IVA doméstico",
+          "valor": 18327.1
+        },
+        {
+          "nombre": "ISR",
+          "valor": 22780.7
+        },
+        {
+          "nombre": "ISO (Solidaridad)",
+          "valor": 6670.3
+        },
+        {
+          "nombre": "Aranceles (DAI)",
+          "valor": 3072.3
+        },
+        {
+          "nombre": "Distribución de petróleo y derivados",
+          "valor": 2969.7
+        },
+        {
+          "nombre": "Resto de impuestos y otras instituciones",
+          "valor": 4410.0
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "imp-c02",
+      "concepto": "Variación de la recaudación enero–julio 2026 vs enero–julio 2025, por impuesto",
+      "unidad": "% (variación interanual)",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "SAT, Estadísticas Tributarias (rim.xlsx)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/5462/rim.xlsx",
+      "periodo": "ene–jul 2026 vs ene–jul 2025",
+      "n_puntos": 12,
+      "valor": 9.8,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo suma ene-jul: neto 73671.9 vs 67068.5 = +9.85%; por impuesto IVA imp +11.1, IVA dom +14.7, ISR +7.2, petróleo +8.1 recalculados.",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/5462/rim.xlsx",
+        "cita": "Año 2025 (meses ene–jul) Al Valor Agregado Doméstico: 2613.3, 2123.2, 2098.7, 2397.9, 2178.7, 2305.6, 2265.6; Año 2026 Al Valor Agregado Doméstico 18327.113752327401",
+        "archivo_local": "sesiones/_descargas/rim_hoja2.csv"
+      },
+      "partes": [
+        {
+          "nombre": "IVA importaciones",
+          "valor": 11.1
+        },
+        {
+          "nombre": "IVA doméstico",
+          "valor": 14.7
+        },
+        {
+          "nombre": "ISR",
+          "valor": 7.2
+        },
+        {
+          "nombre": "ISO (Solidaridad)",
+          "valor": 9.4
+        },
+        {
+          "nombre": "Aranceles (DAI)",
+          "valor": 9.2
+        },
+        {
+          "nombre": "Distribución de petróleo y derivados",
+          "valor": 8.1
+        },
+        {
+          "nombre": "Circulación de vehículos",
+          "valor": 2.3
+        },
+        {
+          "nombre": "Primera matrícula de vehículos",
+          "valor": 2.0
+        },
+        {
+          "nombre": "Bebidas",
+          "valor": 6.1
+        },
+        {
+          "nombre": "Timbres fiscales",
+          "valor": 10.8
+        },
+        {
+          "nombre": "Tabaco",
+          "valor": 10.3
+        },
+        {
+          "nombre": "Cemento",
+          "valor": 17.9
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "imp-c03",
+      "concepto": "Aporte de cada impuesto al aumento de la recaudación bruta enero–julio 2026 frente a 2025",
+      "unidad": "millones de quetzales (diferencia)",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "SAT, Estadísticas Tributarias (rim.xlsx)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/5462/rim.xlsx",
+      "periodo": "ene–jul 2026 vs ene–jul 2025",
+      "n_puntos": 7,
+      "valor": 6964.1,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo: bruto 76806.7 - 69842.6 = 6964.1; partes suman 6778.3 + resto 185.8.",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/5462/rim.xlsx",
+        "cita": "Ingresos tributarios brutos: Año 2025 ene–jul 10949.7, 7324.6, 9899.9, 12346.3, 8179.0, 7633.0, 13510.1; Año 2026 total 76806.708681760007",
+        "archivo_local": "sesiones/_descargas/rim_hoja2.csv"
+      },
+      "partes": [
+        {
+          "nombre": "IVA importaciones",
+          "valor": 1851.1
+        },
+        {
+          "nombre": "IVA doméstico",
+          "valor": 2344.1
+        },
+        {
+          "nombre": "ISR",
+          "valor": 1528.3
+        },
+        {
+          "nombre": "ISO (Solidaridad)",
+          "valor": 574.6
+        },
+        {
+          "nombre": "Aranceles (DAI)",
+          "valor": 257.6
+        },
+        {
+          "nombre": "Distribución de petróleo y derivados",
+          "valor": 222.6
+        },
+        {
+          "nombre": "Resto de impuestos y otras instituciones",
+          "valor": 185.8
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_7.png"
+      ]
+    },
+    {
+      "id": "imp-c04",
+      "concepto": "Ejecución de la recaudación enero–julio 2026 frente a la meta programada al mismo periodo, por impuesto",
+      "unidad": "% de la meta al periodo",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "SAT, Estadísticas Tributarias (rim.xlsx) y Boletín Estadístico, hoja «Programación de Ingresos Tributarios 2026»",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+      "periodo": "ene–jul 2026",
+      "n_puntos": 12,
+      "valor": 103.2,
+      "valor_original": 103.6,
+      "veredicto": "ajustada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo: neto SAT sin otras instituciones (73671.9-332.0=73339.9) / meta neta SAT ene-jul 71093.0 (progra2026) = 103.16%; coincide con met-c04 (jul 103.16).",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+        "cita": "Programación de Ingresos Tributarios 2026: TOTAL DE INGRESOS NETOS 119161.7; Sobre la Renta 36876.9 (ene–jul 2889.2, 1842.9, 4500.3, 4690.2, 2309.5, 1949.4, 5080.4)",
+        "archivo_local": "sesiones/_descargas/sat_boletinestadistico_hoja2.csv"
+      },
+      "partes": [
+        {
+          "nombre": "IVA importaciones",
+          "valor": 114.5
+        },
+        {
+          "nombre": "IVA doméstico",
+          "valor": 120.3
+        },
+        {
+          "nombre": "ISR",
+          "valor": 97.9
+        },
+        {
+          "nombre": "ISO (Solidaridad)",
+          "valor": 105.2
+        },
+        {
+          "nombre": "Aranceles (DAI)",
+          "valor": 105.8
+        },
+        {
+          "nombre": "Distribución de petróleo y derivados",
+          "valor": 99.0
+        },
+        {
+          "nombre": "Circulación de vehículos",
+          "valor": 96.7
+        },
+        {
+          "nombre": "Primera matrícula de vehículos",
+          "valor": 97.2
+        },
+        {
+          "nombre": "Bebidas",
+          "valor": 94.1
+        },
+        {
+          "nombre": "Timbres fiscales",
+          "valor": 106.6
+        },
+        {
+          "nombre": "Tabaco",
+          "valor": 118.4
+        },
+        {
+          "nombre": "Cemento",
+          "valor": 122.2
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_8.png"
+      ]
+    },
+    {
+      "id": "imp-c05",
+      "concepto": "IVA total neto de la provisión de crédito fiscal, enero–julio 2026, frente a su meta al periodo: excedente",
+      "unidad": "millones de quetzales (excedente sobre meta)",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "SAT, Estadísticas Tributarias (rim.xlsx) y Boletín Estadístico (programación 2026)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/5462/rim.xlsx",
+      "periodo": "ene–jul 2026",
+      "n_puntos": 1,
+      "valor": 2313.5,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo: 18576.5+18327.1-3134.8=33768.9; meta IVA 16226.4+15229.0=31455.4; excedente 2313.5 (107.4%).",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/5462/rim.xlsx",
+        "cita": "Año 2026: Al Valor Agregado Importaciones 18576.538496342597; Al Valor Agregado Doméstico 18327.113752327401; (-) Provisión para devolución del Crédito Fiscal y Autoacreditamiento 3134.7722593199996",
+        "archivo_local": "sesiones/_descargas/rim_hoja2.csv"
+      },
+      "partes": [
+        {
+          "nombre": "IVA neto recaudado ene–jul 2026",
+          "valor": 33768.9
+        },
+        {
+          "nombre": "Meta IVA ene–jul 2026",
+          "valor": 31455.4
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "imp-c06",
+      "concepto": "ISR recaudado enero–julio 2026 frente a su meta al periodo",
+      "unidad": "millones de quetzales",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "SAT, Estadísticas Tributarias (rim.xlsx) y Boletín Estadístico (programación 2026)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/5462/rim.xlsx",
+      "periodo": "ene–jul 2026",
+      "n_puntos": 1,
+      "valor": 22780.7,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo suma ene-jul 2026 y rimp2026 (22780.7); meta ISR ene-jul 23262.0 (progra2026), ejecución 97.9%.",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/5462/rim.xlsx",
+        "cita": "Año 2026: Sobre la Renta,22780.718807980003, ene 2598.2, feb 1930.8, mar 4465.5, abr 4456.3, may 2089.1, jun 1929.9, jul 5310.9",
+        "archivo_local": "sesiones/_descargas/rim_hoja2.csv"
+      },
+      "partes": [
+        {
+          "nombre": "ISR recaudado",
+          "valor": 22780.7
+        },
+        {
+          "nombre": "Meta ISR ene–jul",
+          "valor": 23262.0
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "imp-c07",
+      "concepto": "IVA doméstico recaudado enero–julio 2026 y su crecimiento frente a 2025",
+      "unidad": "millones de quetzales",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "SAT, Estadísticas Tributarias (rim.xlsx)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/5462/rim.xlsx",
+      "periodo": "ene–jul 2026",
+      "n_puntos": 1,
+      "valor": 18327.1,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo: rim_hoja2 y rimp2026 = 18327.1; 2025 = 15983.0 (+14.7%).",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/5462/rim.xlsx",
+        "cita": "Año 2026: Al Valor Agregado Doméstico,18327.113752327401; Año 2025 ene–jul: 2613.3, 2123.2, 2098.7, 2397.9, 2178.7, 2305.6, 2265.6",
+        "archivo_local": "sesiones/_descargas/rim_hoja2.csv"
+      },
+      "partes": [
+        {
+          "nombre": "ene–jul 2026",
+          "valor": 18327.1
+        },
+        {
+          "nombre": "ene–jul 2025",
+          "valor": 15983.0
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "imp-c08",
+      "concepto": "IVA de importaciones mensual 2026 (enero–julio)",
+      "unidad": "millones de quetzales",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "SAT, Estadísticas Tributarias (rim.xlsx)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/5462/rim.xlsx",
+      "periodo": "ene–jul 2026",
+      "n_puntos": 7,
+      "valor": 3003.8,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Serie recalculada: 7 meses 2026 coinciden (2386.1, 2347.5, 2805.5, 2660.2, 2632.5, 2740.8, 3003.8) en rim y rimp2026; 2025 jul 2610.4.",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/5462/rim.xlsx",
+        "cita": "Año 2026: Al Valor Agregado Importaciones 18576.538496342597; ene 2386.1, feb 2347.5, mar 2805.5, abr 2660.2, may 2632.5, jun 2740.8, jul 3003.8",
+        "archivo_local": "sesiones/_descargas/rim_hoja2.csv"
+      },
+      "serie": [
+        {
+          "p": "2026-01",
+          "v": 2386.1
+        },
+        {
+          "p": "2026-02",
+          "v": 2347.5
+        },
+        {
+          "p": "2026-03",
+          "v": 2805.5
+        },
+        {
+          "p": "2026-04",
+          "v": 2660.2
+        },
+        {
+          "p": "2026-05",
+          "v": 2632.5
+        },
+        {
+          "p": "2026-06",
+          "v": 2740.8
+        },
+        {
+          "p": "2026-07",
+          "v": 3003.8
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "imp-c09",
+      "concepto": "Valor de las importaciones gravadas de combustibles, mensual 2026 (enero–julio)",
+      "unidad": "millones de US$",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "SAT, Boletín Estadístico, hoja «Valor de las importaciones gravadas por uso o destino económico»",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+      "periodo": "ene–jul 2026",
+      "n_puntos": 7,
+      "valor": 696.6,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo hoja50 del boletín: serie 335.4, 323.2, 575.8, 607.5, 556.0, 530.8, 696.6; acumulado 3625.4; 2025 jul 370.1 (hoja51).",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+        "cita": "Año 2026, 31. Combustibles: 3625.39520042613; ene 335.4, feb 323.2, mar 575.8, abr 607.5, may 556.0, jun 530.8, jul 696.6 (millones de USD)",
+        "archivo_local": "sesiones/_descargas/sat_boletinestadistico_hoja50.csv"
+      },
+      "serie": [
+        {
+          "p": "2026-01",
+          "v": 335.4
+        },
+        {
+          "p": "2026-02",
+          "v": 323.2
+        },
+        {
+          "p": "2026-03",
+          "v": 575.8
+        },
+        {
+          "p": "2026-04",
+          "v": 607.5
+        },
+        {
+          "p": "2026-05",
+          "v": 556.0
+        },
+        {
+          "p": "2026-06",
+          "v": 530.8
+        },
+        {
+          "p": "2026-07",
+          "v": 696.6
+        }
+      ],
+      "usada": false,
+      "aparece_en": [
+        "T7"
+      ]
+    },
+    {
+      "id": "imp-c10",
+      "concepto": "Valor total de las importaciones gravadas enero–julio 2026 vs 2025",
+      "unidad": "millones de US$",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "SAT, Boletín Estadístico (importaciones gravadas por uso o destino económico)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+      "periodo": "ene–jul 2026 vs ene–jul 2025",
+      "n_puntos": 2,
+      "valor": 19858.9,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo hoja50: suma de 7 meses 2026 = 19858.9; 2025 suma = 17745.7 (≈17745.8 por redondeo), +11.9%.",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+        "cita": "Mercancías / Año 2026, TOTAL 19858.883719138201 (ene 2535.4 … jul 3219.7); Año 2025 TOTAL ene–jul 2628.1, 2368.6, 2549.9, 2530.1, 2570.3, 2326.1, 2772.6",
+        "archivo_local": "sesiones/_descargas/sat_boletinestadistico_hoja50.csv"
+      },
+      "partes": [
+        {
+          "nombre": "ene–jul 2026",
+          "valor": 19858.9
+        },
+        {
+          "nombre": "ene–jul 2025",
+          "valor": 17745.8
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "imp-c11",
+      "concepto": "Impuesto a la distribución de petróleo y derivados, enero–julio 2026 vs 2025",
+      "unidad": "millones de quetzales",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "SAT, Estadísticas Tributarias (rim.xlsx)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/5462/rim.xlsx",
+      "periodo": "ene–jul 2026",
+      "n_puntos": 1,
+      "valor": 2969.7,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo rim_hoja2 y rimp2026: 2969.7 en 2026 vs 2747.1 en 2025 (+8.1%).",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/5462/rim.xlsx",
+        "cita": "Año 2026: Sobre Distribución de Petróleo y Derivados,2969.6693664599998; Año 2025 ene–jul: 430.4, 367.4, 375.2, 390.0, 444.0, 370.5, 369.7",
+        "archivo_local": "sesiones/_descargas/rim_hoja2.csv"
+      },
+      "partes": [
+        {
+          "nombre": "ene–jul 2026",
+          "valor": 2969.7
+        },
+        {
+          "nombre": "ene–jul 2025",
+          "valor": 2747.1
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "imp-c12",
+      "concepto": "Meta (programación) anual de recaudación 2026 por impuesto",
+      "unidad": "millones de quetzales",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "SAT, Boletín Estadístico, hoja «Programación de Ingresos Tributarios 2026»",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+      "periodo": "2026",
+      "n_puntos": 6,
+      "valor": 119161.7,
+      "veredicto": "verificada",
+      "independencia": "alta",
+      "fuente_2": "AGN: convenio Minfin-SAT meta 119,161.7 millones; Icefi comunicado 01-2026 (verificadas en met-c03/met-c05 del eje avance-meta). Programación recalculada: suma mensual = total.",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+        "cita": "Programación de Ingresos Tributarios 2026, TOTAL DE INGRESOS NETOS 119161.7; Sobre la Renta 36876.9; Al Valor Agregado Importaciones 29037.58; Al Valor Agregado Doméstico 27357.67",
+        "archivo_local": "sesiones/_descargas/sat_boletinestadistico_hoja2.csv"
+      },
+      "partes": [
+        {
+          "nombre": "IVA importaciones",
+          "valor": 29037.6
+        },
+        {
+          "nombre": "IVA doméstico",
+          "valor": 27357.7
+        },
+        {
+          "nombre": "ISR",
+          "valor": 36876.9
+        },
+        {
+          "nombre": "ISO (Solidaridad)",
+          "valor": 8888.2
+        },
+        {
+          "nombre": "Aranceles (DAI)",
+          "valor": 5328.5
+        },
+        {
+          "nombre": "Distribución de petróleo y derivados",
+          "valor": 5261.0
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    }
+  ],
+  "fuentes": [
+    {
+      "nombre": "SAT — Recaudación de Ingresos Tributarios 2026 (rimp2026)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/93330/rimp2026",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "SAT — Ejecución de Ingresos Tributarios 2026 vs programado (emr2026)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/93319/emr2026",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "SAT — Programación de Ingresos Tributarios SAT 2026 (progra2026)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/91977/progra2026",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "SAT — Recaudación de Ingresos Tributarios 2025 (rimp2025)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/84469/rimp2025.xlsx",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "SAT — Meta de recaudación y cumplimiento (página índice)",
+      "url": "https://portal.sat.gob.gt/portal/meta-de-recaudacion-y-cumplimiento/",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "AGN — Convenio meta 2026",
+      "url": "https://agn.gt/suscriben-convenio-sobre-meta-de-recaudacion-tributaria-de-119-millardos-de-quetzales-en-2026/",
+      "nivel": "oficial (agencia de gobierno)"
+    },
+    {
+      "nombre": "Icefi — Comunicado 01-2026 ampliación presupuestaria (anexos)",
+      "url": "https://mail.icefi.org/sites/default/files/01-2026_comunicado_icefi_ampliacion_presupuestaria_03febrero2026.pdf",
+      "nivel": "secundaria (centro de análisis, con base en decretos)"
+    },
+    {
+      "nombre": "SAT — Recaudación de Ingresos Tributarios (rimpa.xlsx)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/5151/rimpa.xlsx",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "SAT — Boletín Estadístico (programación de ingresos y carga tributaria)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "AGN — Convenio meta de recaudación 2026",
+      "url": "https://agn.gt/suscriben-convenio-sobre-meta-de-recaudacion-tributaria-de-119-millardos-de-quetzales-en-2026/",
+      "nivel": "oficial"
+    },
+    {
+      "nombre": "AGN — SAT superó la meta de recaudación de 2025",
+      "url": "https://agn.gt/sat-supero-la-meta-de-recaudacion-de-2025-con-111-mil-981-millones-de-quetzales/",
+      "nivel": "oficial"
+    },
+    {
+      "nombre": "AGN — Recaudación supera por primera vez Q100 mil millones (2024)",
+      "url": "https://agn.gt/recaudacion-tributaria-supera-por-primera-vez-los-100-mil-millones-de-quetzales",
+      "nivel": "oficial"
+    },
+    {
+      "nombre": "IIES-USAC — La SAT superó la meta fiscal 2024",
+      "url": "https://iies.usac.edu.gt/wp-content/uploads/2025/02/SAT.pdf",
+      "nivel": "academica"
+    },
+    {
+      "nombre": "IIES-USAC — Presupuesto General 2026 (infografía)",
+      "url": "https://iies.usac.edu.gt/wp-content/uploads/2026/02/Presupuesto-General-2026.pdf",
+      "nivel": "academica"
+    },
+    {
+      "nombre": "IIES-USAC — Boletín Economía al día No. 1 (enero 2026)",
+      "url": "https://iies.usac.edu.gt/wp-content/uploads/2026/02/Boletin-Economia-al-dia-No.-1-enero-2026.pdf",
+      "nivel": "academica"
+    },
+    {
+      "nombre": "Prensa Libre — Ejecución presupuestaria Q1 2026 (datos portal Minfin)",
+      "url": "https://www.prensalibre.com/guatemala/politica/ejecucion-presupuestaria-del-organismo-ejecutivo-alcanza-el-18-62-en-primer-trimestre-del-2026/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Emisoras Unidas — Congreso aprueba ampliación 2026 (Decreto 3-2026, Q9,326,723,238)",
+      "url": "https://emisorasunidas.com/nacional/2026/01/28/congreso-aprueba-modificaciones-presupuesto-2026/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "INE — Proyecciones de población revisión 2019",
+      "url": "https://prensalibre.com/wp-content/uploads/2024/09/01-Metodologia-Nacional.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Banguat — Resultados macroeconómicos 2025 y perspectivas 2026",
+      "url": "https://www.fundesa.org.gt/content/files/publicaciones/BANGUAT_2026_Resultados_macroeconmicos_2025_y_Perspectivas.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "SAT — Estadísticas Tributarias, recaudación mensual por impuesto (rim.xlsx)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/5462/rim.xlsx",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "SAT — Boletín Estadístico (boletinestadisticosat.xlsx): programación 2026 e importaciones gravadas",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Prensa Libre — SAT proyecta recaudar Q119 mil 762 millones en 2026 (3-jun-2025)",
+      "url": "https://www.prensalibre.com/economia/sat-proyecta-recaudar-q119-mil-762-millones-en-2026-y-asi-quedaria-por-impuesto/",
+      "nivel": "secundaria"
+    }
+  ],
+  "no_afirma": [
+    "No afirma cuánto se recaudó en septiembre ni que la meta ya esté asegurada: la SAT solo ha publicado datos hasta agosto de 2026.",
+    "No afirma que exista una meta revisada de Q119,762.8 M: es el total de ingresos tributarios del presupuesto, que suma Q601.1 M de otras instituciones.",
+    "No afirma que el alza del IVA de importaciones se deba al precio del petróleo: solo coincide en el tiempo con la factura de combustibles importados.",
+    "No compara el IVA contra su meta en porcentaje: la recaudación por impuesto es bruta y la meta del IVA es neta de devoluciones.",
+    "No afirma cómo se financia el resto del presupuesto (deuda u otras fuentes): el déficit 2026 no se confirmó."
+  ],
+  "incertidumbre": [
+    "La tesis se ancla en la meta anual (met-c03, verificada con fuente independiente), pero lo recaudado a agosto (met-c01), la ejecución (met-c02, met-c04), lo que falta (met-c07), lo cobrado sep–dic 2025 (met-c08) y el crecimiento interanual (met-c10) tienen segunda fuente que reproduce la primaria (archivos SAT): sin verificación independiente.",
+    "El desglose por impuesto (imp-c03, imp-c04, imp-c05, imp-c09) y las cifras de contexto (ctx-c03, ctx-c04, ctx-c07, ctx-c09, ctx-c10, ctx-c11) también tienen segunda fuente no independiente.",
+    "El desglose por impuesto llega solo a julio de 2026; la meta por impuesto pudo cambiar tras el 29-sep-2026 (no se volvió a descargar el boletín).",
+    "La afirmación de que el excedente del IVA a julio (Q2,313.5 M) supera el excedente total se calcula con los puntos de julio de met-c01 (Q73,340.0 M) y met-c03 (Q71,093.0 M): excedente total Q2,247.0 M; mezcla IVA neto con total neto.",
+    "Q71.3 de cada Q100 usa el presupuesto vigente al 30-mar-2026; si hubo ampliaciones posteriores, la proporción baja. El cumplimiento histórico (ctx-c03) es contra la meta original del presupuesto, no contra metas revisadas (solo se confirmó la revisada de 2024)."
+  ],
+  "descartadas": [
+    {
+      "id": "ctx-c12",
+      "por": "no_confirmada"
+    }
+  ]
+}

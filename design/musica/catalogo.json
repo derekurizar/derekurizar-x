@@ -1,0 +1,166 @@
+{
+ "version": 1,
+ "_comentario": "Biblioteca FIJA de música de fondo de /video: ≥2 pistas por paleta, generadas una sola vez con ElevenLabs Music (eleven_music_v2_5, instrumental). /video nunca genera música: scripts/video.py elige aquí por paleta (la usada hace más tiempo según memoria/videos.json).",
+ "pistas": [
+  {
+   "id": "terracota-1",
+   "paleta": "terracota",
+   "archivo": "terracota-1.mp3",
+   "ambiente": "tenso y grave: salud, seguridad, violencia, pobreza",
+   "duracion_s": 95.0,
+   "prompt": "Sober, tense documentary underscore for a data-journalism video about organized crime and state response. Low sustained synth pads, soft muted piano motif, subtle pulsing low percussion, slow tempo around 80 BPM, minor key. Stays quiet and steady under a spoken voiceover, a slight lift in intensity around the middle, gentle fade out at the end. No vocals.",
+   "generation_id": null,
+   "flow_id": "4fSrZbXKfcy7EpnViGCw"
+  },
+  {
+   "id": "terracota-2",
+   "paleta": "terracota",
+   "archivo": "terracota-2.mp3",
+   "ambiente": "tenso y grave: salud, seguridad, violencia, pobreza",
+   "duracion_s": 120.0,
+   "prompt": "Sober, tense documentary underscore for a data-journalism video about public health, crime and violence. Low sustained synth pads, soft muted piano motif, subtle pulsing low percussion, slow tempo aro",
+   "generation_id": "jTfAH0ASvH5lkumkQm3w",
+   "flow_id": "W4ya5f4nkEpfJJR4jLGN"
+  },
+  {
+   "id": "obsidiana-1",
+   "paleta": "obsidiana",
+   "archivo": "obsidiana-1.mp3",
+   "ambiente": "oscuro, suspenso contenido: política, justicia, sismos, riesgo",
+   "duracion_s": 120.0,
+   "prompt": "Sober, dark documentary underscore for a data-journalism video about politics, justice and natural disasters. Low drones, sparse deep piano notes, distant soft timpani-like pulses, restrained suspense",
+   "generation_id": "9t3KSNAjZzrU6SQWMJNY",
+   "flow_id": "W4ya5f4nkEpfJJR4jLGN"
+  },
+  {
+   "id": "obsidiana-2",
+   "paleta": "obsidiana",
+   "archivo": "obsidiana-2.mp3",
+   "ambiente": "oscuro, suspenso contenido: política, justicia, sismos, riesgo",
+   "duracion_s": 120.0,
+   "prompt": "Sober, dark documentary underscore for a data-journalism video about politics, justice and natural disasters. Low drones, sparse deep piano notes, distant soft timpani-like pulses, restrained suspense",
+   "generation_id": "sZgiG031LdCXKBusRxd0",
+   "flow_id": "W4ya5f4nkEpfJJR4jLGN"
+  },
+  {
+   "id": "cielo-1",
+   "paleta": "cielo",
+   "archivo": "cielo-1.mp3",
+   "ambiente": "neutro y analítico: economía, precios, remesas, migración",
+   "duracion_s": 120.0,
+   "prompt": "Sober, analytical documentary underscore for a data-journalism video about the economy, prices and migration. Steady soft synth arpeggio, light muted piano, gentle low pulse, curious and neutral mood,",
+   "generation_id": "DlJFVgfPPjtcaTTTWvPC",
+   "flow_id": "W4ya5f4nkEpfJJR4jLGN"
+  },
+  {
+   "id": "cielo-2",
+   "paleta": "cielo",
+   "archivo": "cielo-2.mp3",
+   "ambiente": "neutro y analítico: economía, precios, remesas, migración",
+   "duracion_s": 120.0,
+   "prompt": "Sober, analytical documentary underscore for a data-journalism video about the economy, prices and migration. Steady soft synth arpeggio, light muted piano, gentle low pulse, curious and neutral mood,",
+   "generation_id": "hg3Tt96RFOZu3hdR1tmq",
+   "flow_id": "W4ya5f4nkEpfJJR4jLGN"
+  },
+  {
+   "id": "maiz-1",
+   "paleta": "maiz",
+   "archivo": "maiz-1.mp3",
+   "ambiente": "terroso y cálido: agricultura, alimentos, lluvias",
+   "duracion_s": 120.0,
+   "prompt": "Sober, warm documentary underscore for a data-journalism video about agriculture, food and rainfall. Soft wooden percussion, gentle marimba-like mallet motif, warm low pads, grounded and contemplative",
+   "generation_id": "2BL3PaHCGQKeBqkgwY60",
+   "flow_id": "W4ya5f4nkEpfJJR4jLGN"
+  },
+  {
+   "id": "maiz-2",
+   "paleta": "maiz",
+   "archivo": "maiz-2.mp3",
+   "ambiente": "terroso y cálido: agricultura, alimentos, lluvias",
+   "duracion_s": 120.0,
+   "prompt": "Sober, warm documentary underscore for a data-journalism video about agriculture, food and rainfall. Soft wooden percussion, gentle marimba-like mallet motif, warm low pads, grounded and contemplative",
+   "generation_id": "0xyQFTFfidVm0HrBBsYM",
+   "flow_id": "W4ya5f4nkEpfJJR4jLGN"
+  },
+  {
+   "id": "cacao-1",
+   "paleta": "cacao",
+   "archivo": "cacao-1.mp3",
+   "ambiente": "firme y sobrio: comercio, exportaciones, industria",
+   "duracion_s": 110.0,
+   "prompt": "Sober, firm documentary underscore for a data-journalism video about trade, exports and industry. Steady low pulse, muted plucked strings, warm synth pads, confident businesslike mood, tempo around 88",
+   "generation_id": "A4wrrGleed9YxhFRJlGt",
+   "flow_id": "W4ya5f4nkEpfJJR4jLGN"
+  },
+  {
+   "id": "cacao-2",
+   "paleta": "cacao",
+   "archivo": "cacao-2.mp3",
+   "ambiente": "firme y sobrio: comercio, exportaciones, industria",
+   "duracion_s": 120.0,
+   "prompt": "Sober, firm documentary underscore for a data-journalism video about trade, exports and industry. Steady low pulse, muted plucked strings, warm synth pads, confident businesslike mood, tempo around 88",
+   "generation_id": "ALgi8vrUICVP8jwDjnoH",
+   "flow_id": "W4ya5f4nkEpfJJR4jLGN"
+  },
+  {
+   "id": "jacaranda-1",
+   "paleta": "jacaranda",
+   "archivo": "jacaranda-1.mp3",
+   "ambiente": "reflexivo con algo de esperanza: educación, sociedad, juventud",
+   "duracion_s": 120.0,
+   "prompt": "Sober, reflective documentary underscore for a data-journalism video about education, society and youth. Soft piano melody over warm pads, light sustained strings, thoughtful mood with a faint note of",
+   "generation_id": "2yFTj0b0tHVzFC4FzBxU",
+   "flow_id": "W4ya5f4nkEpfJJR4jLGN"
+  },
+  {
+   "id": "jacaranda-2",
+   "paleta": "jacaranda",
+   "archivo": "jacaranda-2.mp3",
+   "ambiente": "reflexivo con algo de esperanza: educación, sociedad, juventud",
+   "duracion_s": 120.0,
+   "prompt": "Sober, reflective documentary underscore for a data-journalism video about education, society and youth. Soft piano melody over warm pads, light sustained strings, thoughtful mood with a faint note of",
+   "generation_id": "ZTmeaaeiW16HyNgYIGCy",
+   "flow_id": "W4ya5f4nkEpfJJR4jLGN"
+  },
+  {
+   "id": "atitlan-1",
+   "paleta": "atitlan",
+   "archivo": "atitlan-1.mp3",
+   "ambiente": "movimiento ligero: turismo, transporte, infraestructura",
+   "duracion_s": 120.0,
+   "prompt": "Sober documentary underscore with a light sense of movement for a data-journalism video about tourism, transport and infrastructure. Soft rhythmic pulse, muted plucked guitar, airy pads, steady forwar",
+   "generation_id": "AS1KKIt5HT3y3F1Hij6j",
+   "flow_id": "W4ya5f4nkEpfJJR4jLGN"
+  },
+  {
+   "id": "atitlan-2",
+   "paleta": "atitlan",
+   "archivo": "atitlan-2.mp3",
+   "ambiente": "movimiento ligero: turismo, transporte, infraestructura",
+   "duracion_s": 120.0,
+   "prompt": "Sober documentary underscore with a light sense of movement for a data-journalism video about tourism, transport and infrastructure. Soft rhythmic pulse, muted plucked guitar, airy pads, steady forwar",
+   "generation_id": "oZbfdtygSW6RePnjGxYO",
+   "flow_id": "W4ya5f4nkEpfJJR4jLGN"
+  },
+  {
+   "id": "jade-1",
+   "paleta": "jade",
+   "archivo": "jade-1.mp3",
+   "ambiente": "orgánico y atmosférico: ambiente, bosques, agua",
+   "duracion_s": 120.0,
+   "prompt": "Sober, organic documentary underscore for a data-journalism video about the environment, forests and water. Atmospheric airy pads, sparse piano, subtle soft natural percussion, concerned and contempla",
+   "generation_id": "2Fid9ApaWdcTXi9Z2F7V",
+   "flow_id": "W4ya5f4nkEpfJJR4jLGN"
+  },
+  {
+   "id": "jade-2",
+   "paleta": "jade",
+   "archivo": "jade-2.mp3",
+   "ambiente": "orgánico y atmosférico: ambiente, bosques, agua",
+   "duracion_s": 120.0,
+   "prompt": "Sober, organic documentary underscore for a data-journalism video about the environment, forests and water. Atmospheric airy pads, sparse piano, subtle soft natural percussion, concerned and contempla",
+   "generation_id": "via3w1Wd7JUDwFDcmOq7",
+   "flow_id": "W4ya5f4nkEpfJJR4jLGN"
+  }
+ ]
+}

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dato · vista previa</title>
+<!-- Vista previa de un dato (/dato): la abre el usuario en su navegador. La rellena scripts/ensamblar.py (DATO_JSON). -->
+<style>
+  :root { --papel:#F6F2E8; --tinta:#0C1520; --gris:#5c6470; --linea:rgba(12,21,32,.14); --acento:#4B92DB; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--papel); color: var(--tinta); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 40px 20px 80px; }
+  header h1 { font: 700 30px/1.15 Georgia, "Times New Roman", serif; margin: 0 0 8px; }
+  header .meta { color: var(--gris); font-size: 14px; display: flex; flex-wrap: wrap; gap: 10px 18px; }
+  .chip { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; background: var(--tinta); color: var(--papel); }
+  .chip.suave { background: #e9e3d6; color: var(--tinta); }
+  .dato { margin: 18px 0 0; padding: 14px 18px; border-left: 4px solid var(--acento); background: rgba(75,146,219,.08); font-size: 17px; }
+  .porque { margin: 10px 0 0; color: var(--gris); font-size: 15px; }
+  .tarjeta { margin-top: 24px; }
+  .tarjeta img { width: 100%; max-width: 760px; display: block; border-radius: 12px; box-shadow: 0 2px 14px rgba(0,0,0,.12); }
+  .texto { position: relative; margin-top: 18px; padding: 14px 16px; background: #fff; border: 1px solid var(--linea); border-radius: 10px; white-space: pre-wrap; font-size: 17px; }
+  .fila { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; font-size: 13px; color: var(--gris); }
+  .fila .cnt.alerta { color: #B23A26; font-weight: 700; }
+  button { font: 600 13px/1 system-ui, sans-serif; padding: 7px 12px; border-radius: 8px; border: 1px solid var(--linea); background: #fff; color: var(--tinta); cursor: pointer; }
+  button:hover { background: var(--tinta); color: var(--papel); }
+  .alt { margin-top: 10px; font-size: 14px; color: var(--gris); }
+  .alt b { color: var(--tinta); }
+  .fuente { margin-top: 6px; font-size: 13px; color: var(--gris); }
+  .fuente a { color: var(--acento); }
+  section.extra { margin-top: 44px; padding-top: 24px; border-top: 2px solid var(--tinta); }
+  section.extra h2 { font: 700 18px/1.2 system-ui, sans-serif; margin: 22px 0 8px; }
+  section.extra ul { margin: 0; padding-left: 20px; }
+  table.cifras { width: 100%; border-collapse: collapse; font-size: 14px; }
+  table.cifras th, table.cifras td { padding: 6px 8px; border-bottom: 1px solid var(--linea); text-align: left; vertical-align: top; }
+  table.cifras th { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--gris); }
+  .cand li.elegida { font-weight: 600; }
+  .cand .pts { color: var(--gris); font-weight: 400; font-size: 13px; }
+  .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--tinta); color: var(--papel); padding: 10px 16px; border-radius: 8px; font-size: 14px; opacity: 0; transition: opacity .2s; pointer-events: none; }
+  .toast.on { opacity: 1; }
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<div class="toast" id="toast">Copiado</div>
+<script id="dato-json" type="application/json">{"slug": "turismo-divisas-saldo-2026", "fecha": "2026-10-06", "tema": "Lo que dejan los turistas en Guatemala casi lo gastan los guatemaltecos afuera", "pista": null, "tipo": "dato", "dato": "De cada US$100 que dejaron los turistas en 2026, US$99.4 salieron en viajes al exterior", "cifra_id": "dat-c01", "por_que_impacta": "El turismo se piensa como fuente de dólares, pero en ene–ago 2026 lo que entró por visitantes (US$873.0 M) casi igualó lo que salió por viajes al exterior (US$867.7 M): el saldo neto prácticamente desapareció.", "paleta": "atitlan", "hook_tipo": "mito_vs_dato", "pregunta": "¿Cuánto le queda a Guatemala del turismo una vez que se resta lo que se gasta en divisas al viajar fuera, y cómo cambió en 2026?", "tesis": "En enero–agosto de 2026 salieron US$867.7 millones en divisas por viajes al exterior frente a US$873.0 millones que dejaron los visitantes: 99.4 de cada 100 dólares del turismo se fueron afuera.", "estado": "listo", "tuit": {"texto": "Solemos pensar en el turismo como una fuente de dólares.\nEn saldo neto, en 2026 casi no deja nada.\n\nEn los mismos ocho meses de 2025 el saldo a favor fue de US$89 millones: lo que se gasta afuera crece más rápido que lo que dejan los visitantes.", "caracteres": 245, "alt_text": "Tarjeta de cifra con dos barras casi del mismo largo: en enero–agosto de 2026 salieron US$867.7 millones en divisas por viajes al exterior, frente a US$873.0 millones que dejaron los turistas; 99.4 de cada 100 dólares. Cifras preliminares. Fuente: Banco de Guatemala, balanza cambiaria de turismo y viajes.", "imagen": "dato.png", "tarjeta": "tarjeta.html", "plantilla": "cifra", "kicker": "DIVISAS POR TURISMO · ENE–AGO 2026", "titular": ["Casi todo lo que dejan", "los turistas sale en", "viajes al exterior"], "nota": "Egreso: divisas vendidas para viajes al exterior. Cifras preliminares de la balanza cambiaria, no de la balanza de pagos.", "fuente": "Banguat · balanza cambiaria, turismo y viajes · 2026", "cifra_ids": ["dat-c01"]}, "cifras": [{"id": "dat-c01", "concepto": "Ingreso vs egreso de divisas por turismo y viajes, enero–agosto 2026", "valor": 867.7, "unidad": "millones de US$", "anio": 2026, "veredicto": "verificada", "fuente": "Banco de Guatemala · Balanza cambiaria, Mercado Institucional de Divisas", "fuente_2": "Banguat imm25 (ingreso 873.0) y suma de meses imm31 recalculada; primarias releídas en vivo", "url": "https://www.banguat.gob.gt/sites/default/files/banguat/imm/imm31.htm"}], "candidatas": [{"id": "dat-c01", "puntaje": 22, "criterios": {"sorpresa": 5, "magnitud": 5, "comparacion": 5, "actualidad": 4, "solidez": 3}, "elegida": true, "motivo": "Contradice la idea del turismo como fuente de dólares, ya viene en escala humana (de cada 100) y compara entrada y salida en la misma unidad y periodo.", "dato": "Ingreso vs egreso de divisas por turismo y viajes, enero–agosto 2026"}, {"id": "dat-c02", "puntaje": 19, "criterios": {"sorpresa": 4, "magnitud": 3, "comparacion": 5, "actualidad": 4, "solidez": 3}, "elegida": false, "motivo": "Misma historia que dat-c01 contada como caída de un saldo; menos escala humana. Se usa como contexto en el texto.", "dato": "Saldo (ingreso menos egreso) de divisas por turismo y viajes, ene–ago 2025 vs ene–ago 2026"}, {"id": "dat-c03", "puntaje": 17, "criterios": {"sorpresa": 4, "magnitud": 2, "comparacion": 4, "actualidad": 4, "solidez": 3}, "elegida": false, "motivo": "Explica el porqué (egreso crece más rápido) pero son dos tasas sin escala humana; el «ocho veces» es un cociente de tasas poco legible.", "dato": "Crecimiento interanual ene–ago 2026: egreso vs ingreso de divisas por turismo y viajes"}, {"id": "dat-c04", "puntaje": 16, "criterios": {"sorpresa": 3, "magnitud": 3, "comparacion": 4, "actualidad": 3, "solidez": 3}, "elegida": false, "motivo": "Serie de solo seis años que mezcla anuales con un parcial; 2022 ya superó el 100 %, lo que diluye la novedad de 2026.", "dato": "Ingreso y egreso anual de divisas por turismo y viajes, 2021–2026"}, {"id": "dat-c05", "puntaje": 16, "criterios": {"sorpresa": 3, "magnitud": 3, "comparacion": 3, "actualidad": 4, "solidez": 3}, "elegida": false, "motivo": "Conteo de meses con déficit: anecdótico frente al acumulado de dat-c01, que ya resume el año.", "dato": "Meses de 2026 en que el egreso de divisas por turismo superó al ingreso"}, {"id": "dat-c06", "puntaje": 18, "criterios": {"sorpresa": 4, "magnitud": 3, "comparacion": 4, "actualidad": 4, "solidez": 3}, "elegida": false, "motivo": "Compara un mes contra un año (periodos distintos) y el «récord mensual» no se sostiene con las cifras de la tarjeta; cambia la historia hacia remesas.", "dato": "Remesas de un solo mes (julio 2026) vs ingreso por turismo de todo 2025"}, {"id": "dat-c07", "puntaje": 19, "criterios": {"sorpresa": 3, "magnitud": 4, "comparacion": 5, "actualidad": 4, "solidez": 3}, "elegida": false, "motivo": "Que las remesas superen al turismo es conocido; menos sorpresa que el saldo casi nulo de dat-c01.", "dato": "Remesas vs ingreso por turismo y viajes, enero–agosto 2026"}, {"id": "dat-c08", "puntaje": 13, "criterios": {"sorpresa": 2, "magnitud": 2, "comparacion": 2, "actualidad": 4, "solidez": 3}, "elegida": false, "motivo": "Crecimiento de llegadas de un semestre, sin comparación clara ni sorpresa; solo da contexto.", "dato": "Visitantes no residentes, primer semestre 2026 (INGUAT)"}], "no_afirma": ["No afirma que el turismo no aporte a la economía: mide solo el flujo de divisas en el mercado cambiario, no empleo ni valor agregado.", "No afirma quiénes viajan ni para qué (turismo, compras, salud, estudios): no hay desglose del egreso.", "No afirma que sea el saldo más bajo de la historia: la serie consultada solo cubre 2021–2026."], "incertidumbre": ["La segunda fuente reproduce la primaria (Banguat); sin verificación independiente.", "Cifras preliminares de la balanza cambiaria (Mercado Institucional de Divisas); la cuenta Viajes de la balanza de pagos puede diferir.", "Acumulado enero–agosto; septiembre aún no publicado."], "fuentes": ["Banguat · balanza cambiaria, turismo y viajes · 2026"], "fuentes_cifras": ["Banco de Guatemala · Balanza cambiaria, Mercado Institucional de Divisas"], "gate_mecanico": "ok"}</script>
+<script>
+/* Peso según X: copia literal de scripts/contar_x.js (pesoX). No editar aquí; regenerar desde el script. */
+function pesoX(texto) {
+  // Reglas: NFC; cada URL pesa 23; puntos de código en 0–4351, 8192–8205,
+  // 8208–8223 y 8242–8247 pesan 1; el resto 2; los emoji compuestos
+  // (FE0F, ZWJ+siguiente, tono 1F3FB–1F3FF, keycap 20E3, par regional) son uno y pesan 2.
+  var t = String(texto == null ? "" : texto).normalize("NFC");
+  var reUrl = /https?:\/\/\S+|www\.\S+|(?<![\p{L}\p{N}\p{M}_])[a-z0-9-]+(\.[a-z0-9-]+)*\.(com|gt|org|net|io|edu|gov|mx|sv|hn|es|info|co)(\/\S*)?/giu;
+  var rangos1 = [[0, 4351], [8192, 8205], [8208, 8223], [8242, 8247]];
+  var pesoCp = function (cp) {
+    for (var k = 0; k < rangos1.length; k++) if (cp >= rangos1[k][0] && cp <= rangos1[k][1]) return 1;
+    return 2;
+  };
+  var esTono = function (cp) { return cp >= 0x1f3fb && cp <= 0x1f3ff; };
+  var esRegional = function (cp) { return cp >= 0x1f1e6 && cp <= 0x1f1ff; };
+  var pesoPlano = function (s) {
+    var cps = Array.from(s, function (c) { return c.codePointAt(0); });
+    var i = 0, n = cps.length, total = 0;
+    while (i < n) {
+      var j = i + 1;
+      if (esRegional(cps[i]) && j < n && esRegional(cps[j])) j += 1; // bandera
+      while (j < n) {
+        if (cps[j] === 0xfe0f || cps[j] === 0x20e3 || esTono(cps[j])) j += 1;
+        else if (cps[j] === 0x200d && j + 1 < n) j += 2; // ZWJ + siguiente
+        else break;
+      }
+      total += j - i > 1 ? 2 : pesoCp(cps[i]);
+      i = j;
+    }
+    return total;
+  };
+  var total = 0, pos = 0, m;
+  while ((m = reUrl.exec(t)) !== null) {
+    total += pesoPlano(t.slice(pos, m.index)) + 23;
+    pos = m.index + m[0].length;
+    if (m[0].length === 0) reUrl.lastIndex++;
+  }
+  return total + pesoPlano(t.slice(pos));
+}
+</script>
+<script>
+(() => {
+  const D = JSON.parse(document.getElementById("dato-json").textContent);
+  const app = document.getElementById("app");
+  const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const toast = (m) => { const t = document.getElementById("toast"); t.textContent = m; t.classList.add("on"); setTimeout(() => t.classList.remove("on"), 1400); };
+  const copiar = async (txt) => {
+    try { await navigator.clipboard.writeText(txt); toast("Copiado"); return; } catch (e) { /* fallback */ }
+    const ta = document.createElement("textarea"); ta.value = txt; document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); toast("Copiado"); } catch (e) { toast("No se pudo copiar"); }
+    ta.remove();
+  };
+  if (!D) { app.innerHTML = "<p>Sin datos: este archivo lo genera scripts/ensamblar.py.</p>"; return; }
+
+  const t = D.tuit || {};
+  const peso = pesoX(t.texto || "");
+  const fuera = peso < 40 || peso > 280;
+  const lista = (xs) => (xs || []).map((x) => `<li>${esc(x)}</li>`).join("") || "<li>(nada declarado)</li>";
+  // Sin duplicar la misma fuente escrita de dos formas («EIA · … · 2026» y «EIA · …»): se compara el nombre corto, como fuente_corta en ensamblar.py.
+  const corta = (s) => String(s || "").split(/\s+[·—–]\s+|,|\s+\/\s+|\(/)[0].trim().toLowerCase();
+  const fuentes = [...(D.fuentes || []), ...(D.fuentes_cifras || [])].filter((x, i, a) => x && a.findIndex((y) => corta(y) === corta(x)) === i);
+  let html = `<header>
+    <h1>${esc(D.tema)}</h1>
+    <div class="meta"><span class="chip">${esc(D.paleta)}</span><span>${esc(D.fecha)}</span><span class="chip suave">${esc(D.hook_tipo || "sin gancho")}</span><span>tarjeta: ${esc(t.plantilla || "")}</span><span>gate mecánico: ${esc(D.gate_mecanico)}</span><span>estado: ${esc(D.estado)}</span></div>
+    ${D.pista ? `<div class="meta" style="margin-top:6px"><span>pista: «${esc(D.pista)}»</span></div>` : ""}
+    <p class="dato"><b>Dato:</b> ${esc(D.dato)}</p>
+    ${D.por_que_impacta ? `<p class="porque"><b>Por qué impacta:</b> ${esc(D.por_que_impacta)}</p>` : ""}
+  </header>
+  <div class="tarjeta"><a href="${esc(t.imagen || "dato.png")}" target="_blank" rel="noopener"><img src="${esc(t.imagen || "dato.png")}" alt="${esc(t.alt_text)}"></a></div>
+  <div class="texto">${esc(t.texto)}</div>
+  <div class="fila"><span class="cnt${fuera ? " alerta" : ""}">${peso}/280 (peso X${peso !== t.caracteres ? `, ${t.caracteres} caracteres` : ""})</span><span><button data-copy="${esc(t.texto)}">Copiar texto</button> <button data-copy="${esc(t.alt_text)}">Copiar alt</button></span></div>
+  <div class="alt"><b>Alt:</b> ${esc(t.alt_text)}</div>
+  <div class="fuente">Fuente en el pie: ${esc(t.fuente || "")} · cifras: ${esc((t.cifra_ids || []).join(", "))}${t.tarjeta ? ` · HTML: <a href="${esc(t.tarjeta)}" target="_blank" rel="noopener">${esc(t.tarjeta)}</a>` : ""}</div>
+  <section class="extra">
+    <h2>Cifras usadas</h2>
+    <table class="cifras"><tr><th>id</th><th>Concepto</th><th>Valor</th><th>Año</th><th>Veredicto</th><th>Fuente</th><th>Fuente 2</th></tr>${(D.cifras || []).map((c) => `<tr><td>${esc(c.id)}</td><td>${esc(c.concepto)}</td><td>${esc(c.valor)} ${esc(c.unidad || "")}</td><td>${esc(c.anio || "")}</td><td>${esc(c.veredicto)}</td><td>${esc(c.fuente || "")}</td><td>${esc(c.fuente_2 || "")}</td></tr>`).join("")}</table>
+    ${(D.candidatas || []).length ? `<h2>Candidatas consideradas</h2><ul class="cand">${D.candidatas.map((c) => `<li class="${c.elegida ? "elegida" : ""}">${esc(c.dato || c.id)} <span class="pts">(${esc(c.id)}, puntaje ${esc(c.puntaje ?? "—")})</span>${c.motivo ? ` — ${esc(c.motivo)}` : ""}</li>`).join("")}</ul>` : ""}
+    <h2>Lo que este dato NO afirma</h2><ul>${lista(D.no_afirma)}</ul>
+    <h2>Incertidumbre declarada</h2><ul>${lista(D.incertidumbre)}</ul>
+    <h2>Fuentes</h2><ul>${fuentes.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
+    <p style="color:var(--gris);font-size:13px">Detalle de cifras y veredictos en <code>datos.json</code>; texto listo para pegar en <code>post.md</code>.</p>
+  </section>`;
+  app.innerHTML = html;
+  app.addEventListener("click", (e) => { const b = e.target.closest("button[data-copy]"); if (b) copiar(b.getAttribute("data-copy")); });
+})();
+</script>
+</body>
+</html>

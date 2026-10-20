@@ -1,0 +1,445 @@
+{
+  "slug": "ninas-madres-2024",
+  "fecha": "2026-10-06",
+  "tesis": "En 2024, de los 801 partos de niñas de 10 a 14 años con la edad del padre en el acta, 591 (3 de cada 4) tenían un padre de 18 años o más; en otros 944 partos no consta la edad del padre.",
+  "ancla_id": "dat-c02",
+  "paleta": "terracota",
+  "hook_tipo": "mito_vs_dato",
+  "cifras": [
+    {
+      "id": "dat-c01",
+      "concepto": "Nacimientos de madres de 10 a 14 años en Guatemala, 2024",
+      "unidad": "nacimientos",
+      "anio": 2024,
+      "tipo": "puntual",
+      "fuente": "INE · Estadísticas Vitales, nacimientos (microdatos, año de ocurrencia)",
+      "url": "https://datos.ine.gob.gt/dataset/estadisticas-vitales-nacimientos",
+      "periodo": "2024",
+      "n_puntos": 1,
+      "valor": 1745,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "INE microdatos (recálculo propio, bases anuales de nacimientos 2018-2024)",
+      "evidencia": {
+        "url": "https://datos.ine.gob.gt/dataset/96888fc0-5ced-4a58-bfd0-2a6a292e3208/resource/14f54638-cf4a-4476-9a45-e03ab2baa3c3/download/nacimientos2024_da.xlsx",
+        "cita": "nacimientos2024_da.xlsx (299,256 registros): filas con Edadm 10-14 = 1745 (10: 1, 11: 4, 12: 44, 13: 316, 14: 1380)",
+        "archivo_local": "sesiones/ninas-madres-2024/fuentes/ine_nacimientos_por_edad_madre_2018_2024.csv"
+      },
+      "partes": [
+        {
+          "nombre": "10 años",
+          "valor": 1
+        },
+        {
+          "nombre": "11 años",
+          "valor": 4
+        },
+        {
+          "nombre": "12 años",
+          "valor": 44
+        },
+        {
+          "nombre": "13 años",
+          "valor": 316
+        },
+        {
+          "nombre": "14 años",
+          "valor": 1380
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c02",
+      "concepto": "Edad del padre registrado en los nacimientos de madres de 10 a 14 años, 2024",
+      "unidad": "nacimientos con padre de 18 años o más",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "INE · Estadísticas Vitales, nacimientos (microdatos, año de ocurrencia)",
+      "url": "https://datos.ine.gob.gt/dataset/estadisticas-vitales-nacimientos",
+      "periodo": "2024",
+      "n_puntos": 3,
+      "valor": 591,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "INE microdatos (recálculo propio, bases anuales de nacimientos 2018-2024)",
+      "evidencia": {
+        "url": "https://datos.ine.gob.gt/dataset/96888fc0-5ced-4a58-bfd0-2a6a292e3208/resource/14f54638-cf4a-4476-9a45-e03ab2baa3c3/download/nacimientos2024_da.xlsx",
+        "cita": "Edadm 10-14, Edadp: 999 = 944; 18 o más = 591; menor de 18 = 210 (total 1745). Padre de 25 o más: 104; de 30 o más: 33; máximo 52",
+        "archivo_local": "sesiones/ninas-madres-2024/fuentes/ine_nacimientos_madre_10_14_edad_padre_2024.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Padre de 18 años o más",
+          "valor": 591
+        },
+        {
+          "nombre": "Padre menor de 18",
+          "valor": 210
+        },
+        {
+          "nombre": "Padre no registrado (999)",
+          "valor": 944
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "dato.png"
+      ]
+    },
+    {
+      "id": "dat-c03",
+      "concepto": "Variación 2018-2024 de los nacimientos: total, madres de 15-19 y madres de 10-14",
+      "unidad": "% de variación 2018-2024 (madres de 10 a 14)",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "INE · Estadísticas Vitales, nacimientos (microdatos, año de ocurrencia)",
+      "url": "https://datos.ine.gob.gt/dataset/estadisticas-vitales-nacimientos",
+      "periodo": "2018-2024",
+      "n_puntos": 3,
+      "valor": -12.9,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "INE microdatos (recálculo propio, bases anuales de nacimientos 2018-2024); totales 2024 coinciden con Prensa Latina citando INE (19-nov-2025)",
+      "evidencia": {
+        "url": "https://datos.ine.gob.gt/dataset/96888fc0-5ced-4a58-bfd0-2a6a292e3208/resource/41b95ebc-35c6-43d3-86db-4b85998cda04/download/nacimientos-2018.xlsx",
+        "cita": "Nacimientos 2018: total 383263, Edadm 10-14 = 2004, 15-19 = 72615; 2024: total 299256, 10-14 = 1745, 15-19 = 48608",
+        "archivo_local": "sesiones/ninas-madres-2024/fuentes/ine_nacimientos_por_edad_madre_2018_2024.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Total de nacimientos",
+          "valor": -21.9,
+          "de": 383263,
+          "a": 299256
+        },
+        {
+          "nombre": "Madres de 15 a 19",
+          "valor": -33.1,
+          "de": 72615,
+          "a": 48608
+        },
+        {
+          "nombre": "Madres de 10 a 14",
+          "valor": -12.9,
+          "de": 2004,
+          "a": 1745
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c04",
+      "concepto": "Nacimientos de madres de 10 a 14 años por año de ocurrencia, 2018-2024 (sin 2022)",
+      "unidad": "nacimientos",
+      "anio": 2024,
+      "tipo": "serie",
+      "fuente": "INE · Estadísticas Vitales, nacimientos (microdatos, año de ocurrencia)",
+      "url": "https://datos.ine.gob.gt/dataset/estadisticas-vitales-nacimientos",
+      "periodo": "2018-2024 (falta 2022)",
+      "n_puntos": 6,
+      "valor": 1745,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "INE microdatos (recálculo propio, bases anuales de nacimientos 2018-2024)",
+      "evidencia": {
+        "url": "https://datos.ine.gob.gt/dataset/estadisticas-vitales-nacimientos",
+        "cita": "Edadm 10-14 por base anual: 2018 2004 · 2019 1914 · 2020 1578 · 2021 1805 · 2023 1944 · 2024 1745",
+        "archivo_local": "sesiones/ninas-madres-2024/fuentes/ine_nacimientos_por_edad_madre_2018_2024.csv"
+      },
+      "serie": [
+        {
+          "periodo": "2018",
+          "valor": 2004
+        },
+        {
+          "periodo": "2019",
+          "valor": 1914
+        },
+        {
+          "periodo": "2020",
+          "valor": 1578
+        },
+        {
+          "periodo": "2021",
+          "valor": 1805
+        },
+        {
+          "periodo": "2023",
+          "valor": 1944
+        },
+        {
+          "periodo": "2024",
+          "valor": 1745
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c05",
+      "concepto": "Nacimientos totales en Guatemala por año de ocurrencia, 2018-2024 (sin 2022)",
+      "unidad": "nacimientos",
+      "anio": 2024,
+      "tipo": "serie",
+      "fuente": "INE · Estadísticas Vitales, nacimientos (microdatos, año de ocurrencia)",
+      "url": "https://datos.ine.gob.gt/dataset/estadisticas-vitales-nacimientos",
+      "periodo": "2018-2024 (falta 2022)",
+      "n_puntos": 6,
+      "valor": 299256,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa Latina citando INE (19-nov-2025): 'la cifra en 2014 fue de 386 mil 195 nacimientos contra 299 mil 256 el pasado año'",
+      "evidencia": {
+        "url": "https://datos.ine.gob.gt/dataset/96888fc0-5ced-4a58-bfd0-2a6a292e3208/resource/14f54638-cf4a-4476-9a45-e03ab2baa3c3/download/nacimientos2024_da.xlsx",
+        "cita": "Registros por base: 2018 383263 · 2019 366855 · 2020 341212 · 2021 345149 · 2023 342694 · 2024 299256",
+        "archivo_local": "sesiones/ninas-madres-2024/fuentes/ine_nacimientos_por_edad_madre_2018_2024.csv"
+      },
+      "serie": [
+        {
+          "periodo": "2018",
+          "valor": 383263
+        },
+        {
+          "periodo": "2019",
+          "valor": 366855
+        },
+        {
+          "periodo": "2020",
+          "valor": 341212
+        },
+        {
+          "periodo": "2021",
+          "valor": 345149
+        },
+        {
+          "periodo": "2023",
+          "valor": 342694
+        },
+        {
+          "periodo": "2024",
+          "valor": 299256
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c06",
+      "concepto": "Nacimientos de madres de 10 a 14 años por cada 1,000 nacimientos, por departamento de ocurrencia, 2024",
+      "unidad": "por cada 1,000 nacimientos (Petén)",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "INE · Estadísticas Vitales, nacimientos (microdatos, año de ocurrencia)",
+      "url": "https://datos.ine.gob.gt/dataset/estadisticas-vitales-nacimientos",
+      "periodo": "2024",
+      "n_puntos": 22,
+      "valor": 11.6,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "INE microdatos (recálculo propio, bases anuales de nacimientos 2018-2024)",
+      "evidencia": {
+        "url": "https://datos.ine.gob.gt/dataset/96888fc0-5ced-4a58-bfd0-2a6a292e3208/resource/14f54638-cf4a-4476-9a45-e03ab2baa3c3/download/nacimientos2024_da.xlsx",
+        "cita": "Depocu 17 (Petén): Edadm 10-14 = 134 de 11519 nacimientos; Depocu 1 (Guatemala): 162 de 50408; Depocu 13 (Huehuetenango): 250 de 28126",
+        "archivo_local": "sesiones/ninas-madres-2024/fuentes/ine_nacimientos_madre_10_14_por_depto_2024.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala",
+          "valor": 3.2,
+          "n": 162,
+          "total": 50408
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 3.8,
+          "n": 8,
+          "total": 2100
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 3.1,
+          "n": 20,
+          "total": 6492
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 2.7,
+          "n": 32,
+          "total": 11930
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 5.8,
+          "n": 77,
+          "total": 13264
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 5.5,
+          "n": 37,
+          "total": 6723
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 3.4,
+          "n": 25,
+          "total": 7281
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 2.8,
+          "n": 27,
+          "total": 9788
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 6.8,
+          "n": 122,
+          "total": 17856
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 4.7,
+          "n": 50,
+          "total": 10535
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 6.4,
+          "n": 40,
+          "total": 6218
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 8.1,
+          "n": 151,
+          "total": 18651
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 8.9,
+          "n": 250,
+          "total": 28126
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 7.1,
+          "n": 178,
+          "total": 25171
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 6.3,
+          "n": 33,
+          "total": 5232
+        },
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 6.3,
+          "n": 195,
+          "total": 31190
+        },
+        {
+          "nombre": "Petén",
+          "valor": 11.6,
+          "n": 134,
+          "total": 11519
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 7.1,
+          "n": 51,
+          "total": 7206
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 5.6,
+          "n": 31,
+          "total": 5500
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 5.0,
+          "n": 50,
+          "total": 10013
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 5.2,
+          "n": 36,
+          "total": 6967
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 5.1,
+          "n": 36,
+          "total": 7086
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c07",
+      "concepto": "Madres de 14 años cuyo parto simple de 2024 figura como su segundo hijo",
+      "unidad": "madres",
+      "anio": 2024,
+      "tipo": "puntual",
+      "fuente": "INE · Estadísticas Vitales, nacimientos (microdatos, año de ocurrencia)",
+      "url": "https://datos.ine.gob.gt/dataset/estadisticas-vitales-nacimientos",
+      "periodo": "2024",
+      "n_puntos": 1,
+      "valor": 14,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "INE microdatos (recálculo propio, bases anuales de nacimientos 2018-2024)",
+      "evidencia": {
+        "url": "https://datos.ine.gob.gt/dataset/96888fc0-5ced-4a58-bfd0-2a6a292e3208/resource/14f54638-cf4a-4476-9a45-e03ab2baa3c3/download/nacimientos2024_da.xlsx",
+        "cita": "Edadm 10-14 por (Tohite, Tipar): (1,1) 1653 · (99,1) 70 · (2,1) 14 · (1,2) 3 · (2,2) 3 · (99,2) 2; los 17 con Tohite=2 tienen 14 años",
+        "archivo_local": "sesiones/_descargas/nacimientos2024_da_hoja1.csv"
+      },
+      "usada": false,
+      "aparece_en": [
+        "T1"
+      ]
+    },
+    {
+      "id": "dat-c08",
+      "concepto": "Nacimientos de niñas de 10 a 14 años registrados enero-mayo 2026 (OSAR/RENAP)",
+      "unidad": "nacimientos",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "OSAR con Seprem, datos RENAP (vía AGN)",
+      "url": "https://agn.gt/santa-rosa-figura-entre-los-departamentos-con-menos-nacimientos-registrados-en-madres-adolescentes/",
+      "periodo": "enero-mayo 2026",
+      "n_puntos": 1,
+      "valor": 844,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AGN (Seprem con OSAR/RENAP, 17-jul-2026) abierta y leída; contraste con Emisoras Unidas (10-may-2026): 691 ene-abr",
+      "evidencia": {
+        "url": "https://agn.gt/santa-rosa-figura-entre-los-departamentos-con-menos-nacimientos-registrados-en-madres-adolescentes/",
+        "cita": "de enero a mayo de 2026, se registraron 844 nacimientos de niñas de 10 a 14 años a nivel nacional (resumen del buscador; página no descargada)",
+        "archivo_local": null
+      },
+      "usada": false,
+      "aparece_en": []
+    }
+  ],
+  "fuentes": [],
+  "no_afirma": [
+    "No afirma la edad de los padres en los 944 partos cuya acta no la registra.",
+    "No afirma que todos estos embarazos sean legalmente violación: 1,380 de las madres tenían 14 años al dar a luz.",
+    "No calcula tasas por población ni compara con otros países."
+  ],
+  "incertidumbre": [
+    "La segunda fuente reproduce la primaria (microdatos INE); sin verificación independiente.",
+    "Tabulación propia de los microdatos del INE 2024; el código 999 = ignorado según el diccionario 2018-2022 (no hay diccionario 2024 aparte).",
+    "Los porcentajes (73.8 % y 54.1 %) son cálculos propios sobre los conteos verificados."
+  ],
+  "descartadas": [],
+  "tipo": "dato"
+}

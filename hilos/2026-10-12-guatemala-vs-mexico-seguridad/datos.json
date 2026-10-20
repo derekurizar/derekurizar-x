@@ -1,0 +1,2005 @@
+{
+  "slug": "guatemala-vs-mexico-seguridad",
+  "fecha": "2026-10-12",
+  "tesis": "Con la misma vara de la ONU, Guatemala (23.4) y México (24.9) tuvieron casi la misma tasa de homicidios por 100 mil en 2023; lo que los distingue es la forma de la violencia (desapariciones en México; mayor tasa de femicidio en 2024 y denuncias de extorsión quintuplicadas desde 2015 en Guatemala) y en ambos la gran mayoría de los homicidios queda sin castigo.",
+  "ancla_id": "hom-c03",
+  "paleta": "terracota",
+  "hook_tipo": "mito_vs_dato",
+  "cifras": [
+    {
+      "id": "des-c01",
+      "concepto": "Personas desaparecidas y no localizadas registradas en el RNPDNO con fecha de desaparición en 2025, México (corte revisado del 21 de enero de 2026)",
+      "unidad": "personas",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "Observatorio Nacional Ciudadano, Reporte Anual 2025, con base en el RNPDNO (Comisión Nacional de Búsqueda)",
+      "url": "https://onc.org.mx/public/onc_site/uploads/reportes/Anual2025.pdf",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 12870,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Red Lupa/UnoTV (RNPDNO, solo contexto: 2024=13,106)",
+      "evidencia": {
+        "url": "https://onc.org.mx/public/onc_site/uploads/reportes/Anual2025.pdf",
+        "cita": "Diez días después (21 de enero) las cifras se modificaron: ... Cifra 2025: 12,870 casos ... Variación respecto a 2024: -0.05%",
+        "archivo_local": "sesiones/_descargas/Anual2025.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_7.png"
+      ]
+    },
+    {
+      "id": "des-c02",
+      "concepto": "Personas desaparecidas y no localizadas registradas por año, México 2019–2025 (RNPDNO, consulta de inicios de enero de 2026)",
+      "unidad": "personas",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Latinus con datos del RNPDNO (Comisión Nacional de Búsqueda)",
+      "url": "https://latinus.us/mexico/2026/1/9/cifra-de-desaparecidos-en-mexico-se-duplica-en-gobiernos-de-la-cuarta-transformacion-161399.html",
+      "periodo": "2019–2025",
+      "n_puntos": 7,
+      "valor": 14002,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "ONC Anual 2025 (14,100 al 11 ene) y Red Lupa (2024=13,106)",
+      "evidencia": {
+        "url": "https://latinus.us/mexico/2026/1/9/cifra-de-desaparecidos-en-mexico-se-duplica-en-gobiernos-de-la-cuarta-transformacion-161399.html",
+        "cita": "2019: 8,417 2020: 7,964 2021: 8,097 2022: 8,186 2023: 10,383 2024: 13,045 2025: 14,002 Total: 70 mil 94",
+        "archivo_local": "sesiones/_descargas/web/latinus_desaparecidos_4t.txt"
+      },
+      "serie": [
+        {
+          "p": "2019",
+          "v": 8417
+        },
+        {
+          "p": "2020",
+          "v": 7964
+        },
+        {
+          "p": "2021",
+          "v": 8097
+        },
+        {
+          "p": "2022",
+          "v": 8186
+        },
+        {
+          "p": "2023",
+          "v": 10383
+        },
+        {
+          "p": "2024",
+          "v": 13045
+        },
+        {
+          "p": "2025",
+          "v": 14002
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_6.png"
+      ]
+    },
+    {
+      "id": "des-c03",
+      "concepto": "Personas desaparecidas y no localizadas acumuladas en el RNPDNO, México (registro histórico 1952 a enero de 2026, corte del 21 de enero de 2026)",
+      "unidad": "personas",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Observatorio Nacional Ciudadano, Reporte Anual 2025, con base en el RNPDNO",
+      "url": "https://onc.org.mx/public/onc_site/uploads/reportes/Anual2025.pdf",
+      "periodo": "1952–ene 2026",
+      "n_puntos": 1,
+      "valor": 132085,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Red Lupa/ONC; Crónica/Zeta cifras con otros cortes (133,180 abr; 132,534 mar 2026)",
+      "evidencia": {
+        "url": "https://onc.org.mx/public/onc_site/uploads/reportes/Anual2025.pdf",
+        "cita": "Diez días después (21 de enero) las cifras se modificaron: ○ Cifra histórica (1952 a 11 de enero de 2026): 132,085 personas",
+        "archivo_local": "sesiones/_descargas/Anual2025.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "des-c04",
+      "concepto": "Registros de personas desaparecidas en México 2000–30 de junio de 2026 según su estatus: aún desaparecidas, localizadas con vida y localizadas sin vida",
+      "unidad": "personas",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Crónica (análisis de datos del RNPDNO, consulta de inicios de agosto de 2026)",
+      "url": "https://www.cronica.com.mx/nacional/2026/09/16/desapariciones-forzadas-en-mexico-los-localizados/",
+      "periodo": "2000–30 jun 2026",
+      "n_puntos": 3,
+      "valor": 365024,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Crónica 14 sep 2026 (misma analisis RNPDNO 2000-30 jun 2026)",
+      "evidencia": {
+        "url": "https://www.cronica.com.mx/nacional/2026/09/16/desapariciones-forzadas-en-mexico-los-localizados/",
+        "cita": "asciende a 365,024 personas. De este total, 121,631 personas permanecen desaparecidas y no localizadas, mientras que 243,393 fueron localizadas. ... 21,172 personas, equivalentes al 8.7%",
+        "archivo_local": "sesiones/_descargas/web/cronica_localizados_2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Permanecen desaparecidas y no localizadas",
+          "valor": 121631
+        },
+        {
+          "nombre": "Localizadas con vida",
+          "valor": 222221
+        },
+        {
+          "nombre": "Localizadas sin vida",
+          "valor": 21172
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_8.png"
+      ]
+    },
+    {
+      "id": "des-c06",
+      "concepto": "Personas desaparecidas y no localizadas por día en México en 2025 (RNPDNO, corte del 21 de enero de 2026)",
+      "unidad": "personas por día",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "Cálculo propio con ONC/RNPDNO",
+      "url": "https://onc.org.mx/public/onc_site/uploads/reportes/Anual2025.pdf",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 35.26,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recalculo 12,870/365 (UnoTV/Red Lupa cita 40+/dia con otro corte)",
+      "evidencia": {
+        "url": "https://onc.org.mx/public/onc_site/uploads/reportes/Anual2025.pdf",
+        "cita": "Cifra 2025: 12,870 casos",
+        "archivo_local": "sesiones/_descargas/Anual2025.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_7.png"
+      ]
+    },
+    {
+      "id": "des-c07",
+      "concepto": "Tasa de personas desaparecidas y no localizadas registradas por año por cada 100 mil habitantes, México 2019–2025",
+      "unidad": "por 100 mil habitantes",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Cálculo propio: RNPDNO vía Latinus (numerador) y Banco Mundial SP.POP.TOTL (denominador)",
+      "url": "https://latinus.us/mexico/2026/1/9/cifra-de-desaparecidos-en-mexico-se-duplica-en-gobiernos-de-la-cuarta-transformacion-161399.html",
+      "periodo": "2019–2025",
+      "n_puntos": 7,
+      "valor": 10.61,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Banco Mundial SP.POP.TOTL (MEX 2025=131,946,900) + recalculo",
+      "evidencia": {
+        "url": "https://api.worldbank.org/v2/country/GTM;MEX/indicator/SP.POP.TOTL?format=json&per_page=100&date=2015:2025",
+        "cita": "MEX 2025 value 131946900; 2024 130861007; 2019 125762982 (SP.POP.TOTL)",
+        "archivo_local": "sesiones/_descargas/api/e69d6512844aed267364f74a0ee63301c70b75b6.json"
+      },
+      "serie": [
+        {
+          "p": "2019",
+          "v": 6.69
+        },
+        {
+          "p": "2020",
+          "v": 6.28
+        },
+        {
+          "p": "2021",
+          "v": 6.34
+        },
+        {
+          "p": "2022",
+          "v": 6.36
+        },
+        {
+          "p": "2023",
+          "v": 8.0
+        },
+        {
+          "p": "2024",
+          "v": 9.97
+        },
+        {
+          "p": "2025",
+          "v": 10.61
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_6.png"
+      ]
+    },
+    {
+      "id": "des-c08",
+      "concepto": "Alertas Isabel-Claudina (mujeres adultas desaparecidas) en Guatemala desde 2018 a agosto de 2026: activadas, desactivadas tras localizar y aún activas",
+      "unidad": "alertas",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Ministerio Público de Guatemala (Secretaría de la Mujer), vía Agencia Guatemalteca de Noticias, 6 ago 2026",
+      "url": "https://agn.gt/desde-su-creacion-alerta-isabel-claudina-ha-localizado-a-mas-del-90-de-las-mujeres-reportadas-como-desaparecidas/",
+      "periodo": "ago 2018–ago 2026",
+      "n_puntos": 2,
+      "valor": 14743,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Busqueda independiente solo reencuentra AGN; suma interna 14,197+546=14,743",
+      "evidencia": {
+        "url": "https://agn.gt/desde-su-creacion-alerta-isabel-claudina-ha-localizado-a-mas-del-90-de-las-mujeres-reportadas-como-desaparecidas/",
+        "cita": "se han activado 14 mil 743 alertas, de las cuales 14 mil 197 fueron desactivadas tras la localización de las mujeres, lo que representa un 96 % del total. Actualmente permanecen 546 alertas activas",
+        "archivo_local": "sesiones/_descargas/web/agn_isabelclaudina_90pct.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Desactivadas tras localizar a la mujer",
+          "valor": 14197
+        },
+        {
+          "nombre": "Activas (siguen buscándose)",
+          "valor": 546
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_9.png"
+      ]
+    },
+    {
+      "id": "des-c09",
+      "concepto": "Alertas Isabel-Claudina activadas en Guatemala entre el 1 de julio de 2025 y el 30 de junio de 2026",
+      "unidad": "alertas",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Ministerio Público de Guatemala, vía AGN, 6 ago 2026",
+      "url": "https://agn.gt/desde-su-creacion-alerta-isabel-claudina-ha-localizado-a-mas-del-90-de-las-mujeres-reportadas-como-desaparecidas/",
+      "periodo": "jul 2025–jun 2026",
+      "n_puntos": 2,
+      "valor": 1673,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AGN (suma interna 1,572+101=1,673)",
+      "evidencia": {
+        "url": "https://agn.gt/desde-su-creacion-alerta-isabel-claudina-ha-localizado-a-mas-del-90-de-las-mujeres-reportadas-como-desaparecidas/",
+        "cita": "entre el 1 de julio de 2025 y el 30 de junio de 2026, se registraron mil 673 alertas, de las cuales mil 572 ya fueron desactivadas, mientras 101 continúan activas",
+        "archivo_local": "sesiones/_descargas/web/agn_isabelclaudina_90pct.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Desactivadas",
+          "valor": 1572
+        },
+        {
+          "nombre": "Activas",
+          "valor": 101
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "des-c10",
+      "concepto": "Alertas Alba-Keneth (niñas, niños y adolescentes desaparecidos) activadas en Guatemala en 2024",
+      "unidad": "alertas",
+      "anio": 2024,
+      "tipo": "puntual",
+      "fuente": "Procuraduría General de la Nación (PGN), vía La Hora, 4 oct 2025",
+      "url": "https://lahora.gt/?p=881783",
+      "periodo": "ene–dic 2024",
+      "n_puntos": 1,
+      "valor": 6970,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Sin comunicado PGN localizado; AGN: 6,205 en 2023, 3,572 ene-jun 2024 (coherente)",
+      "evidencia": {
+        "url": "https://lahora.gt/?p=881783",
+        "cita": "entre enero y diciembre de 2024 se generaron 6,970 alertas Alba-Keneth ... En 2024, además, se reportaron 5,894 alertas desactivadas",
+        "archivo_local": "sesiones/_descargas/web/lahora_albakeneth_2025.txt"
+      },
+      "usada": false,
+      "aparece_en": [
+        "T9"
+      ]
+    },
+    {
+      "id": "des-c11",
+      "concepto": "Alertas Alba-Keneth en Guatemala del 1 de enero al 30 de septiembre de 2025: desactivadas (menor localizado) y sin desactivar",
+      "unidad": "alertas",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "PGN, vía La Hora, 4 oct 2025",
+      "url": "https://lahora.gt/?p=881783",
+      "periodo": "ene–sep 2025",
+      "n_puntos": 2,
+      "valor": 4940,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AGN (tendencia 2023-2024 coherente); suma interna 4,182+758=4,940",
+      "evidencia": {
+        "url": "https://lahora.gt/?p=881783",
+        "cita": "entre el 1 de enero y el 30 de septiembre de 2025 se activaron en el país 4,940 alertas Alba-Keneth ... De las 4,940 alertas emitidas, 4,182 fueron desactivadas",
+        "archivo_local": "sesiones/_descargas/web/lahora_albakeneth_2025.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Desactivadas",
+          "valor": 4182
+        },
+        {
+          "nombre": "Sin desactivar",
+          "valor": 758
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "des-c12",
+      "concepto": "Personas desaparecidas en México en 2025 según la fecha de consulta del RNPDNO: 11 frente a 21 de enero de 2026",
+      "unidad": "personas",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Observatorio Nacional Ciudadano, Reporte Anual 2025",
+      "url": "https://onc.org.mx/public/onc_site/uploads/reportes/Anual2025.pdf",
+      "periodo": "2025 (consultas 11 y 21 ene 2026)",
+      "n_puntos": 2,
+      "valor": 14100,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Red Lupa/UnoTV (+12% sobre 13,106 = ~14,680 a sep; consistente en magnitud)",
+      "evidencia": {
+        "url": "https://onc.org.mx/public/onc_site/uploads/reportes/Anual2025.pdf",
+        "cita": "El 11 de enero se reportaban a 14,100 personas ... mientras que el 21 de enero en el registro se reportaron 12,870 personas desaparecidas y no localizadas, es decir, 1,230 casos menos",
+        "archivo_local": "sesiones/_descargas/Anual2025.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Consulta 11 ene 2026",
+          "valor": 14100
+        },
+        {
+          "nombre": "Consulta 21 ene 2026",
+          "valor": 12870
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_7.png"
+      ]
+    },
+    {
+      "id": "hom-c01",
+      "concepto": "Tasa de homicidios intencionales por 100 mil habitantes, Guatemala (UNODC vía Banco Mundial)",
+      "unidad": "homicidios por 100 mil habitantes",
+      "anio": 2023,
+      "tipo": "serie",
+      "fuente": "UNODC (Estudio de tendencias delictivas, UN-CTS) vía Banco Mundial WDI, indicador VC.IHR.PSRC.P5",
+      "url": "https://api.worldbank.org/v2/country/GTM;MEX/indicator/VC.IHR.PSRC.P5?format=json&per_page=100&date=2005:2025",
+      "periodo": "2010-2023 (sin 2015 ni 2016)",
+      "n_puntos": 12,
+      "valor": 23.3657267272051,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Banco Mundial WDI (API re-consultada) + recálculo 4235/18124838",
+      "evidencia": {
+        "url": "https://api.worldbank.org/v2/country/GTM;MEX/indicator/VC.IHR.PSRC.P5?format=json&per_page=100&date=2005:2025",
+        "cita": "\"countryiso3code\": \"GTM\", \"date\": \"2023\", \"value\": 23.3657267272051 (Intentional homicides (per 100,000 people))",
+        "archivo_local": "sesiones/_descargas/api/f77de71188b763b08b2e90d7e284f14778455d2a.json"
+      },
+      "serie": [
+        {
+          "p": "2010",
+          "v": 41.1031293722721
+        },
+        {
+          "p": "2011",
+          "v": 38.4055692334411
+        },
+        {
+          "p": "2012",
+          "v": 34.1624967821479
+        },
+        {
+          "p": "2013",
+          "v": 33.5015723155484
+        },
+        {
+          "p": "2014",
+          "v": 33.4975903480006
+        },
+        {
+          "p": "2017",
+          "v": 32.8054740415143
+        },
+        {
+          "p": "2018",
+          "v": 28.9035441420162
+        },
+        {
+          "p": "2019",
+          "v": 25.9415998284592
+        },
+        {
+          "p": "2020",
+          "v": 18.1882859775834
+        },
+        {
+          "p": "2021",
+          "v": 20.2458705569498
+        },
+        {
+          "p": "2022",
+          "v": 22.0474401521257
+        },
+        {
+          "p": "2023",
+          "v": 23.3657267272051
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_1.png",
+        "tuit_2.png"
+      ]
+    },
+    {
+      "id": "hom-c02",
+      "concepto": "Tasa de homicidios intencionales por 100 mil habitantes, México (UNODC vía Banco Mundial)",
+      "unidad": "homicidios por 100 mil habitantes",
+      "anio": 2023,
+      "tipo": "serie",
+      "fuente": "UNODC vía Banco Mundial WDI, indicador VC.IHR.PSRC.P5",
+      "url": "https://api.worldbank.org/v2/country/GTM;MEX/indicator/VC.IHR.PSRC.P5?format=json&per_page=100&date=2005:2025",
+      "periodo": "2010-2023",
+      "n_puntos": 14,
+      "valor": 24.8589948436701,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Banco Mundial WDI re-consultado + INEGI 32,252 defunciones 2023 (Tabla 1 del Reporte 28/26)",
+      "evidencia": {
+        "url": "https://api.worldbank.org/v2/country/GTM;MEX/indicator/VC.IHR.PSRC.P5?format=json&per_page=100&date=2005:2025",
+        "cita": "\"countryiso3code\": \"MEX\", \"date\": \"2023\", \"value\": 24.8589948436701 (Intentional homicides (per 100,000 people))",
+        "archivo_local": "sesiones/_descargas/api/f77de71188b763b08b2e90d7e284f14778455d2a.json"
+      },
+      "serie": [
+        {
+          "p": "2010",
+          "v": 22.6686472946558
+        },
+        {
+          "p": "2011",
+          "v": 23.6134785680132
+        },
+        {
+          "p": "2012",
+          "v": 22.2285552341782
+        },
+        {
+          "p": "2013",
+          "v": 19.4881727966757
+        },
+        {
+          "p": "2014",
+          "v": 16.7050327254596
+        },
+        {
+          "p": "2015",
+          "v": 17.1484302942078
+        },
+        {
+          "p": "2016",
+          "v": 20.0889396309777
+        },
+        {
+          "p": "2017",
+          "v": 25.9959360229634
+        },
+        {
+          "p": "2018",
+          "v": 29.4484283285099
+        },
+        {
+          "p": "2019",
+          "v": 29.150867187807
+        },
+        {
+          "p": "2020",
+          "v": 29.0010048931398
+        },
+        {
+          "p": "2021",
+          "v": 27.9675034061893
+        },
+        {
+          "p": "2022",
+          "v": 25.8814968854168
+        },
+        {
+          "p": "2023",
+          "v": 24.8589948436701
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_1.png",
+        "tuit_2.png"
+      ]
+    },
+    {
+      "id": "hom-c03",
+      "concepto": "Tasa de homicidios por 100 mil habitantes en 2023, Guatemala frente a México (misma fuente)",
+      "unidad": "homicidios por 100 mil habitantes",
+      "anio": 2023,
+      "tipo": "desglose",
+      "fuente": "UNODC vía Banco Mundial WDI (VC.IHR.PSRC.P5)",
+      "url": "https://api.worldbank.org/v2/country/GTM;MEX/indicator/VC.IHR.PSRC.P5?format=json&per_page=100&date=2005:2025",
+      "periodo": "2023",
+      "n_puntos": 2,
+      "valor": 24.8589948436701,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Banco Mundial WDI re-consultado (GTM 23.37, MEX 24.86; 2024 null en ambos)",
+      "evidencia": {
+        "url": "https://api.worldbank.org/v2/country/GTM;MEX/indicator/VC.IHR.PSRC.P5?format=json&per_page=100&date=2005:2025",
+        "cita": "GTM 2023 value 23.3657267272051; MEX 2023 value 24.8589948436701 (VC.IHR.PSRC.P5, lastupdated 2026-10-08)",
+        "archivo_local": "sesiones/_descargas/api/f77de71188b763b08b2e90d7e284f14778455d2a.json"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala",
+          "valor": 23.3657267272051
+        },
+        {
+          "nombre": "México",
+          "valor": 24.8589948436701
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_1.png"
+      ]
+    },
+    {
+      "id": "hom-c04",
+      "concepto": "Víctimas de homicidio intencional en 2023 (conteo UNODC), Guatemala y México",
+      "unidad": "víctimas",
+      "anio": 2023,
+      "tipo": "desglose",
+      "fuente": "UNODC, víctimas de homicidio intencional, vía Our World in Data (grapher homicides-unodc)",
+      "url": "https://ourworldindata.org/grapher/homicides-unodc.csv?country=GTM~MEX&v=1&csvType=filtered&useColumnShortNames=true",
+      "periodo": "2023",
+      "n_puntos": 2,
+      "valor": 32252,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "INEGI Reporte 28/26 Tabla 1 (México 2023 = 32,252); Guatemala sin segunda fuente",
+      "evidencia": {
+        "url": "https://ourworldindata.org/grapher/homicides-unodc.csv?country=GTM~MEX&v=1&csvType=filtered&useColumnShortNames=true",
+        "cita": "Guatemala,GTM,2024,4235,,2023 / Mexico,MEX,2024,32252,,2023 (última columna = año original del dato)",
+        "archivo_local": "sesiones/_descargas/homicides-unodc.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala",
+          "valor": 4235
+        },
+        {
+          "nombre": "México",
+          "valor": 32252
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_4.png"
+      ]
+    },
+    {
+      "id": "hom-c05",
+      "concepto": "Tasa de homicidio por sexo de la víctima en 2023, Guatemala y México (por 100 mil hombres / mujeres)",
+      "unidad": "homicidios por 100 mil personas del mismo sexo",
+      "anio": 2023,
+      "tipo": "desglose",
+      "fuente": "UNODC vía Banco Mundial WDI (VC.IHR.PSRC.MA.P5 y VC.IHR.PSRC.FE.P5)",
+      "url": "https://api.worldbank.org/v2/country/GTM;MEX/indicator/VC.IHR.PSRC.MA.P5?format=json&per_page=100&date=2018:2025",
+      "periodo": "2023",
+      "n_puntos": 4,
+      "valor": 44.8827845074188,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo: tasa total ponderada por sexo (~49/51%) reproduce la tasa total WB (GTM ~23.2 vs 23.37; MEX ~24.8 vs 24.86)",
+      "evidencia": {
+        "url": "https://api.worldbank.org/v2/country/GTM;MEX/indicator/VC.IHR.PSRC.MA.P5?format=json&per_page=100&date=2018:2025",
+        "cita": "MA.P5: GTM 2023 40.2380150343553; MEX 2023 44.8827845074188. FE.P5: GTM 2023 6.76457754146027; MEX 2023 5.59616374668476",
+        "archivo_local": "sesiones/_descargas/api/a3ecae081179809a5645483eb6b8d3c4d42b828b.json"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala hombres",
+          "valor": 40.2380150343553
+        },
+        {
+          "nombre": "Guatemala mujeres",
+          "valor": 6.76457754146027
+        },
+        {
+          "nombre": "México hombres",
+          "valor": 44.8827845074188
+        },
+        {
+          "nombre": "México mujeres",
+          "valor": 5.59616374668476
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_5.png"
+      ]
+    },
+    {
+      "id": "hom-c06",
+      "concepto": "Defunciones por presunto homicidio registradas en México por año (INEGI, EDR)",
+      "unidad": "defunciones",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "INEGI, Estadísticas de Defunciones Registradas, Reporte de resultados 28/26 (3 ago 2026), Tabla 1",
+      "url": "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2026/edr/DH2025en-jn_RR.pdf",
+      "periodo": "2012-2025 (2025 preliminar)",
+      "n_puntos": 14,
+      "valor": 27989,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "La Razón (INEGI): 27,989 en 2025, -16.6% vs 33,550 en 2024",
+      "evidencia": {
+        "url": "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2026/edr/DH2025en-jn_RR.pdf",
+        "cita": "En 2025, en México se registraron en forma preliminar 27 989 presuntos homicidios. Estos corresponden a una tasa de 21.4 homicidios por cada 100 mil habitantes",
+        "archivo_local": "sesiones/_descargas/DH2025en-jn_RR.pdf"
+      },
+      "serie": [
+        {
+          "p": "2012",
+          "v": 25967
+        },
+        {
+          "p": "2013",
+          "v": 23063
+        },
+        {
+          "p": "2014",
+          "v": 20010
+        },
+        {
+          "p": "2015",
+          "v": 20762
+        },
+        {
+          "p": "2016",
+          "v": 24559
+        },
+        {
+          "p": "2017",
+          "v": 32079
+        },
+        {
+          "p": "2018",
+          "v": 36685
+        },
+        {
+          "p": "2019",
+          "v": 36661
+        },
+        {
+          "p": "2020",
+          "v": 36773
+        },
+        {
+          "p": "2021",
+          "v": 35700
+        },
+        {
+          "p": "2022",
+          "v": 33287
+        },
+        {
+          "p": "2023",
+          "v": 32252
+        },
+        {
+          "p": "2024",
+          "v": 33550
+        },
+        {
+          "p": "2025",
+          "v": 27989
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "hom-c07",
+      "concepto": "Tasa nacional de homicidios de México 2025 (preliminar) y 2024 (definitiva), INEGI",
+      "unidad": "homicidios por 100 mil habitantes",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "INEGI, Reporte de resultados 28/26, Defunciones por homicidio",
+      "url": "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2026/edr/DH2025en-jn_RR.pdf",
+      "periodo": "2024-2025",
+      "n_puntos": 2,
+      "valor": 21.4,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "La Razón (INEGI): tasa 21.4 en 2025 frente a 25.8 en 2024",
+      "evidencia": {
+        "url": "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2026/edr/DH2025en-jn_RR.pdf",
+        "cita": "una tasa de 21.4 homicidios por cada 100 mil habitantes a nivel nacional. La tasa fue menor a la que se generó con la información definitiva de 2024, que fue de 25.8",
+        "archivo_local": "sesiones/_descargas/DH2025en-jn_RR.pdf"
+      },
+      "partes": [
+        {
+          "nombre": "2024 (definitiva)",
+          "valor": 25.8
+        },
+        {
+          "nombre": "2025 (preliminar)",
+          "valor": 21.4
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "hom-c08",
+      "concepto": "Tasa interanual de homicidios por 100 mil habitantes a diciembre, Guatemala (PNC/PLADEIC, CIEN)",
+      "unidad": "homicidios por 100 mil habitantes (tasa interanual a diciembre)",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "CIEN, Boletín del Índice de Denuncias de Delitos, agosto 2026 (anexo estadístico), con datos PNC/PLADEIC y proyecciones INE",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/09/Boletin-del-IDD-de-agosto-base-2020.pdf",
+      "periodo": "2020-2025 (diciembre de cada año)",
+      "n_puntos": 6,
+      "valor": 17.25,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo con la población del anexo CIEN (18,196,092) y Diálogos (tasa interanual dic-2025 = 17,2)",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2026/09/Boletin-del-IDD-de-agosto-base-2020.pdf",
+        "cita": "dic-25  17.25 ... (Tasa de Homicidios, anexo estadístico; fuente: CIEN, con base en proyecciones de población del INE y cifras de la PNC y PLADEIC)",
+        "archivo_local": "sesiones/_descargas/Boletin-del-IDD-de-agosto-base-2020.pdf"
+      },
+      "serie": [
+        {
+          "p": "2020",
+          "v": 15.17
+        },
+        {
+          "p": "2021",
+          "v": 16.5
+        },
+        {
+          "p": "2022",
+          "v": 17.19
+        },
+        {
+          "p": "2023",
+          "v": 16.61
+        },
+        {
+          "p": "2024",
+          "v": 15.97
+        },
+        {
+          "p": "2025",
+          "v": 17.25
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "hom-c09",
+      "concepto": "Homicidios registrados por la PNC en Guatemala en 2025, por sexo de la víctima",
+      "unidad": "homicidios",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Diálogos, Informe sobre la violencia homicida en Guatemala, diciembre de 2025 (datos PNC)",
+      "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/InformeHomicidios.pdf",
+      "periodo": "2025",
+      "n_puntos": 2,
+      "valor": 3138,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo: 17.25 x 18,196,092 / 100,000 = 3,139 (CIEN)",
+      "evidencia": {
+        "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/InformeHomicidios.pdf",
+        "cita": "En lo que va del año, se ha registrado un total de 3138 homicidios para ambos sexos (389 mujeres y 2749 hombres).",
+        "archivo_local": "sesiones/_descargas/InformeHomicidios.pdf"
+      },
+      "partes": [
+        {
+          "nombre": "Hombres",
+          "valor": 2749
+        },
+        {
+          "nombre": "Mujeres",
+          "valor": 389
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "hom-c11",
+      "concepto": "Homicidios por día en 2023, Guatemala y México (conteo UNODC / 365)",
+      "unidad": "homicidios por día",
+      "anio": 2023,
+      "tipo": "desglose",
+      "fuente": "Cálculo propio con UNODC (vía Our World in Data)",
+      "url": "https://ourworldindata.org/grapher/homicides-unodc.csv?country=GTM~MEX&v=1&csvType=filtered&useColumnShortNames=true",
+      "periodo": "2023",
+      "n_puntos": 2,
+      "valor": 88.4,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo desde conteos UNODC: 32,252/365 = 88.36; 4,235/365 = 11.60",
+      "evidencia": {
+        "url": "https://ourworldindata.org/grapher/homicides-unodc.csv?country=GTM~MEX&v=1&csvType=filtered&useColumnShortNames=true",
+        "cita": "Guatemala,GTM,2024,4235,,2023 / Mexico,MEX,2024,32252,,2023",
+        "archivo_local": "sesiones/_descargas/homicides-unodc.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala",
+          "valor": 11.6
+        },
+        {
+          "nombre": "México",
+          "valor": 88.4
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_4.png"
+      ]
+    },
+    {
+      "id": "hom-c12",
+      "concepto": "Homicidios de Guatemala en 2023 según UNODC frente a la PNC",
+      "unidad": "homicidios",
+      "anio": 2023,
+      "tipo": "desglose",
+      "fuente": "UNODC (vía Our World in Data) y Diálogos con datos PNC",
+      "url": "https://ourworldindata.org/grapher/homicides-unodc.csv?country=GTM~MEX&v=1&csvType=filtered&useColumnShortNames=true",
+      "periodo": "2023",
+      "n_puntos": 2,
+      "valor": 4235,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "MINGOB/PNC 2023 = 2,944 homicidios (PNUD) y Diálogos 2,942",
+      "evidencia": {
+        "url": "https://ourworldindata.org/grapher/homicides-unodc.csv?country=GTM~MEX&v=1&csvType=filtered&useColumnShortNames=true",
+        "cita": "Guatemala,GTM,2024,4235,,2023",
+        "archivo_local": "sesiones/_descargas/homicides-unodc.csv"
+      },
+      "partes": [
+        {
+          "nombre": "UNODC",
+          "valor": 4235
+        },
+        {
+          "nombre": "PNC",
+          "valor": 2942
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_3.png"
+      ]
+    },
+    {
+      "id": "jus-c01",
+      "concepto": "Sentencias como % de los casos concluidos de homicidio simple y calificado, Guatemala, por año del hecho",
+      "unidad": "% de casos concluidos",
+      "anio": 2024,
+      "tipo": "serie",
+      "fuente": "CIEN con datos de SICOMP (Ministerio Público), boletín «Respuesta institucional al delito de homicidio», agosto 2025",
+      "url": "https://cien.org.gt/wp-content/uploads/2025/08/Boletin-Respuesta-Institucional-al-Delito-de-Homicidio-vf.pdf",
+      "periodo": "2014-2024",
+      "n_puntos": 11,
+      "valor": 4,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo 113 sentencias / 2,516 casos concluidos 2024 = 4.5% (CIEN Tabla 3 y Tabla 2)",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2025/08/Boletin-Respuesta-Institucional-al-Delito-de-Homicidio-vf.pdf",
+        "cita": "Las sentencias muestran una tendencia decreciente: en 2014 representaban el 13% de los casos, mientras que en 2024 apenas alcanzaron el 4%.",
+        "archivo_local": "sesiones/_descargas/Boletin-Respuesta-Institucional-al-Delito-de-Homicidio-vf.pdf"
+      },
+      "serie": [
+        {
+          "p": "2014",
+          "v": 13
+        },
+        {
+          "p": "2015",
+          "v": 12
+        },
+        {
+          "p": "2016",
+          "v": 12
+        },
+        {
+          "p": "2017",
+          "v": 13
+        },
+        {
+          "p": "2018",
+          "v": 13
+        },
+        {
+          "p": "2019",
+          "v": 11
+        },
+        {
+          "p": "2020",
+          "v": 12
+        },
+        {
+          "p": "2021",
+          "v": 12
+        },
+        {
+          "p": "2022",
+          "v": 9
+        },
+        {
+          "p": "2023",
+          "v": 6
+        },
+        {
+          "p": "2024",
+          "v": 4
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "jus-c02",
+      "concepto": "Sentencias por cada 100 casos (denuncias con al menos un fallecido) de homicidio simple y calificado, Guatemala, por año del hecho",
+      "unidad": "sentencias por cada 100 casos",
+      "anio": 2024,
+      "tipo": "serie",
+      "fuente": "Cálculo propio con CIEN/SICOMP (Tabla 3 sentencias ÷ Tabla 1 casos)",
+      "url": "https://cien.org.gt/wp-content/uploads/2025/08/Boletin-Respuesta-Institucional-al-Delito-de-Homicidio-vf.pdf",
+      "periodo": "2014-2024",
+      "n_puntos": 11,
+      "valor": 3.1,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo propio 113/3,653 = 3.09; 814/6,161 = 13.2 (2014)",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2025/08/Boletin-Respuesta-Institucional-al-Delito-de-Homicidio-vf.pdf",
+        "cita": "Tabla 1: 2. Homicidio simple y calificado 6,161 ... 3,653 (2014...2024). Tabla 3: 5. Sentencias 814 702 648 642 560 478 362 400 316 209 113",
+        "archivo_local": "sesiones/_descargas/Boletin-Respuesta-Institucional-al-Delito-de-Homicidio-vf.pdf"
+      },
+      "serie": [
+        {
+          "p": "2014",
+          "v": 13.2
+        },
+        {
+          "p": "2015",
+          "v": 12.2
+        },
+        {
+          "p": "2016",
+          "v": 11.5
+        },
+        {
+          "p": "2017",
+          "v": 12.4
+        },
+        {
+          "p": "2018",
+          "v": 12.2
+        },
+        {
+          "p": "2019",
+          "v": 11.2
+        },
+        {
+          "p": "2020",
+          "v": 11.5
+        },
+        {
+          "p": "2021",
+          "v": 11.6
+        },
+        {
+          "p": "2022",
+          "v": 8.8
+        },
+        {
+          "p": "2023",
+          "v": 5.6
+        },
+        {
+          "p": "2024",
+          "v": 3.1
+        }
+      ],
+      "partes": [
+        {
+          "nombre": "Casos 2019 (homicidio simple y calificado)",
+          "valor": 4271
+        },
+        {
+          "nombre": "Sentencias 2019",
+          "valor": 478
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_14.png"
+      ]
+    },
+    {
+      "id": "jus-c03",
+      "concepto": "Impunidad en homicidio doloso, México (indicador de México Evalúa, metodología basada en la CICIG)",
+      "unidad": "%",
+      "anio": 2023,
+      "tipo": "desglose",
+      "fuente": "México Evalúa, «Hallazgos 2023. Seguimiento y evaluación de la justicia penal en México» (vía Expansión Política, 31-oct-2024)",
+      "url": "https://politica.expansion.mx/mexico/2024/10/31/la-impunidad-crece-en-delitos-de-homicidio-desaparicion-secuestro-y-violacion",
+      "periodo": "2022-2023",
+      "n_puntos": 2,
+      "valor": 96.86,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Excélsior, «Repunta impunidad en delitos graves» (reporta homicidio doloso 96.8%) y otros medios con el mismo informe",
+      "evidencia": {
+        "url": "https://politica.expansion.mx/mexico/2024/10/31/la-impunidad-crece-en-delitos-de-homicidio-desaparicion-secuestro-y-violacion",
+        "cita": "Homicidio doloso, de 95.7% a 96.86%.",
+        "archivo_local": null
+      },
+      "partes": [
+        {
+          "nombre": "2022",
+          "valor": 95.7
+        },
+        {
+          "nombre": "2023",
+          "valor": 96.86
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_15.png"
+      ]
+    },
+    {
+      "id": "jus-c04",
+      "concepto": "Cifra oculta (delitos no denunciados o sin carpeta de investigación), México",
+      "unidad": "% de los delitos",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "INEGI, ENVIPE 2026, comunicado de prensa 50/26 (10-sep-2026)",
+      "url": "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2026/envipe/ENVIPE2026_CP.pdf",
+      "periodo": "2024-2025",
+      "n_puntos": 2,
+      "valor": 93.4,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Expansión/El Mundo/La Razón reproducen el comunicado INEGI ENVIPE 2026 (93.4%, 33.8 millones; 2024 = 93.2%)",
+      "evidencia": {
+        "url": "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2026/envipe/ENVIPE2026_CP.pdf",
+        "cita": "93.4 % de los 33.8 millones de delitos que ocurrieron no se denunció o la autoridad no inició una carpeta de investigación. Este subregistro se conoce como cifra oculta.",
+        "archivo_local": "sesiones/_descargas/ENVIPE2026_CP.pdf"
+      },
+      "partes": [
+        {
+          "nombre": "2024",
+          "valor": 93.2
+        },
+        {
+          "nombre": "2025",
+          "valor": 93.4
+        }
+      ],
+      "usada": false,
+      "aparece_en": [
+        "T15"
+      ]
+    },
+    {
+      "id": "jus-c05",
+      "concepto": "Delitos con resolución positiva para la víctima como % del total de delitos, México",
+      "unidad": "% del total de delitos",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "INEGI, ENVIPE 2026, comunicado de prensa 50/26",
+      "url": "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2026/envipe/ENVIPE2026_CP.pdf",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 1.1,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Diario El Mundo (SV) reproduce INEGI: 1.1% del total de delitos con resolución positiva",
+      "evidencia": {
+        "url": "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2026/envipe/ENVIPE2026_CP.pdf",
+        "cita": "el resultado fue positivo para la persona denunciante en 16.0 % de las ocasiones. Lo anterior significa que 1.1 % del total de delitos tuvo una resolución positiva",
+        "archivo_local": "sesiones/_descargas/ENVIPE2026_CP.pdf"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "jus-c09",
+      "concepto": "Tasa de población penitenciaria por 100 mil habitantes, Guatemala",
+      "unidad": "presos por 100 mil habitantes",
+      "anio": 2023,
+      "tipo": "serie",
+      "fuente": "World Prison Brief (ICPR, Birkbeck)",
+      "url": "https://www.prisonstudies.org/country/guatemala",
+      "periodo": "2000-2023",
+      "n_puntos": 12,
+      "valor": 123,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo 23,361 presos / 19.04 M hab = 122.7 por 100 mil (WPB); 2010: 11,148 -> 78",
+      "evidencia": {
+        "url": "https://www.prisonstudies.org/country/guatemala",
+        "cita": "Prison population trend: 2000 6,974 62 ... 2010 11,148 78 ... 2020 25,538 142; Prison population rate 123 (27.11.2023)",
+        "archivo_local": "sesiones/_descargas/guatemala"
+      },
+      "serie": [
+        {
+          "p": "2000",
+          "v": 62
+        },
+        {
+          "p": "2002",
+          "v": 69
+        },
+        {
+          "p": "2004",
+          "v": 70
+        },
+        {
+          "p": "2006",
+          "v": 57
+        },
+        {
+          "p": "2008",
+          "v": 60
+        },
+        {
+          "p": "2010",
+          "v": 78
+        },
+        {
+          "p": "2012",
+          "v": 100
+        },
+        {
+          "p": "2014",
+          "v": 115
+        },
+        {
+          "p": "2016",
+          "v": 125
+        },
+        {
+          "p": "2018",
+          "v": 140
+        },
+        {
+          "p": "2020",
+          "v": 142
+        },
+        {
+          "p": "2023",
+          "v": 123
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_13.png"
+      ]
+    },
+    {
+      "id": "jus-c10",
+      "concepto": "Tasa de población penitenciaria por 100 mil habitantes, México",
+      "unidad": "presos por 100 mil habitantes",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "World Prison Brief (ICPR, Birkbeck)",
+      "url": "https://www.prisonstudies.org/country/mexico",
+      "periodo": "2000-2026",
+      "n_puntos": 14,
+      "valor": 202,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo 275,497/136.65 M = 201.6; OADPRS vía Milenio: 265,874 presos en abril-2026 (+21,426 en un año), coherente con trayectoria 175 (2024) a 202",
+      "evidencia": {
+        "url": "https://www.prisonstudies.org/country/mexico",
+        "cita": "Prison population trend: 2000 154,765 156 ... 2014 255,638 212 ... 2024 235,197 175; rate 202 (31.8.2026)",
+        "archivo_local": "sesiones/_descargas/mexico"
+      },
+      "serie": [
+        {
+          "p": "2000",
+          "v": 156
+        },
+        {
+          "p": "2002",
+          "v": 169
+        },
+        {
+          "p": "2004",
+          "v": 186
+        },
+        {
+          "p": "2006",
+          "v": 197
+        },
+        {
+          "p": "2008",
+          "v": 202
+        },
+        {
+          "p": "2010",
+          "v": 191
+        },
+        {
+          "p": "2012",
+          "v": 203
+        },
+        {
+          "p": "2014",
+          "v": 212
+        },
+        {
+          "p": "2016",
+          "v": 176
+        },
+        {
+          "p": "2018",
+          "v": 156
+        },
+        {
+          "p": "2020",
+          "v": 169
+        },
+        {
+          "p": "2022",
+          "v": 173
+        },
+        {
+          "p": "2024",
+          "v": 175
+        },
+        {
+          "p": "2026",
+          "v": 202
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_13.png"
+      ]
+    },
+    {
+      "id": "jus-c11",
+      "concepto": "Puntaje de criminalidad del Índice Global de Crimen Organizado 2025 (escala 1-10), Guatemala y México",
+      "unidad": "puntaje 1-10",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "GI-TOC, Global Organized Crime Index 2025, perfiles de país",
+      "url": "https://ocindex.net/assets/downloads/2025/english/ocindex_profile_mexico_2025.pdf",
+      "periodo": "edición 2025",
+      "n_puntos": 2,
+      "valor": 7.68,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Perfil GI-TOC de Guatemala 2025 (mismo organismo): 6.77, 25.º de 193; búsqueda web no halló fuente independiente que repita los puntajes (solo confirma MX 3.º de 193)",
+      "evidencia": {
+        "url": "https://ocindex.net/assets/downloads/2025/english/ocindex_profile_mexico_2025.pdf",
+        "cita": "MEXICO 7.68 ↗0.11 CRIMINALITY SCORE 3rd of 193 countries  [GUATEMALA 6.77 ↗0.17 CRIMINALITY SCORE 25th of 193 countries]",
+        "archivo_local": "sesiones/_descargas/ocindex_profile_mexico_2025.pdf"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala",
+          "valor": 6.77
+        },
+        {
+          "nombre": "México",
+          "valor": 7.68
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_16.png"
+      ]
+    },
+    {
+      "id": "jus-c12",
+      "concepto": "Puntaje de resiliencia frente al crimen organizado, Índice Global de Crimen Organizado 2025 (escala 1-10), Guatemala y México",
+      "unidad": "puntaje 1-10",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "GI-TOC, Global Organized Crime Index 2025, perfiles de país",
+      "url": "https://ocindex.net/assets/downloads/2025/english/ocindex_profile_guatemala_2025.pdf",
+      "periodo": "edición 2025",
+      "n_puntos": 2,
+      "valor": 4.0,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Perfil GI-TOC de México 2025 (mismo organismo): 4.50, 111.º de 193; sin fuente independiente en web",
+      "evidencia": {
+        "url": "https://ocindex.net/assets/downloads/2025/english/ocindex_profile_guatemala_2025.pdf",
+        "cita": "GUATEMALA 4.00 ↘0.08 RESILIENCE SCORE 130th of 193 countries  [MEXICO 4.50 ↗0.29 RESILIENCE SCORE 111th of 193 countries]",
+        "archivo_local": "sesiones/_descargas/ocindex_profile_guatemala_2025.pdf"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala",
+          "valor": 4.0
+        },
+        {
+          "nombre": "México",
+          "valor": 4.5
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_16.png"
+      ]
+    },
+    {
+      "id": "muj-c01",
+      "concepto": "Tasa de femicidio o feminicidio por cada 100,000 mujeres, Guatemala y México, 2024 (CEPAL OIG, misma edición)",
+      "unidad": "por 100,000 mujeres",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "CEPAL, Observatorio de Igualdad de Género (CEPALSTAT, indicador 2812)",
+      "url": "https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/2812/data?lang=es&format=json&in=1",
+      "periodo": "2024",
+      "n_puntos": 2,
+      "valor": 1.9,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "CEPAL, presentación Medición del feminicidio (nov-2025) y comunicado CEPAL",
+      "evidencia": {
+        "url": "https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/2812/data?lang=es&format=json&in=1",
+        "cita": "\"value\": \"1.9\", \"iso3\": \"GTM\", \"dim_29117\": 29194 (=2024) · \"value\": \"1.3\", \"iso3\": \"MEX\", \"dim_29117\": 29194 (=2024); unidad: Tasa por cada 100.000 mujeres",
+        "archivo_local": "sesiones/_descargas/api/ee2469404571d071f88c54f6298a266081a76c3d.json"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala",
+          "valor": 1.9
+        },
+        {
+          "nombre": "México",
+          "valor": 1.3
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_10.png"
+      ]
+    },
+    {
+      "id": "muj-c02",
+      "concepto": "Tasa de femicidio por cada 100,000 mujeres, Guatemala, 2013–2024 (CEPAL OIG)",
+      "unidad": "por 100,000 mujeres",
+      "anio": 2024,
+      "tipo": "serie",
+      "fuente": "CEPAL, Observatorio de Igualdad de Género (CEPALSTAT, indicador 2812)",
+      "url": "https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/2812/data?lang=es&format=json&in=1",
+      "periodo": "2013-2024",
+      "n_puntos": 12,
+      "valor": 1.9,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "CIEN con datos del MP / Prensa Latina (feb-2025): 180 femicidios en 2024",
+      "evidencia": {
+        "url": "https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/2812/data?lang=es&format=json&in=1",
+        "cita": "GTM: 2013 \"2.8\", 2019 \"1.3\", 2022 \"1\", 2023 \"0.5\", 2024 \"1.9\" (source_id 1315: Guatemala: Organismo Judicial y Ministerio Público)",
+        "archivo_local": "sesiones/_descargas/api/ee2469404571d071f88c54f6298a266081a76c3d.json"
+      },
+      "serie": [
+        {
+          "p": "2013",
+          "v": 2.8
+        },
+        {
+          "p": "2014",
+          "v": 2.6
+        },
+        {
+          "p": "2015",
+          "v": 2.3
+        },
+        {
+          "p": "2016",
+          "v": 2.0
+        },
+        {
+          "p": "2017",
+          "v": 1.9
+        },
+        {
+          "p": "2018",
+          "v": 1.5
+        },
+        {
+          "p": "2019",
+          "v": 1.3
+        },
+        {
+          "p": "2020",
+          "v": 1.1
+        },
+        {
+          "p": "2021",
+          "v": 1.2
+        },
+        {
+          "p": "2022",
+          "v": 1.0
+        },
+        {
+          "p": "2023",
+          "v": 0.5
+        },
+        {
+          "p": "2024",
+          "v": 1.9
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_10.png"
+      ]
+    },
+    {
+      "id": "muj-c03",
+      "concepto": "Tasa de feminicidio por cada 100,000 mujeres, México, 2015–2024 (CEPAL OIG)",
+      "unidad": "por 100,000 mujeres",
+      "anio": 2024,
+      "tipo": "serie",
+      "fuente": "CEPAL, Observatorio de Igualdad de Género (CEPALSTAT, indicador 2812)",
+      "url": "https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/2812/data?lang=es&format=json&in=1",
+      "periodo": "2015-2024",
+      "n_puntos": 10,
+      "valor": 1.3,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "CEPAL, presentación nov-2025 (gráfico: México 1.3 en 2024)",
+      "evidencia": {
+        "url": "https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/2812/data?lang=es&format=json&in=1",
+        "cita": "MEX: 2015 \"0.7\", 2019 \"1.5\", 2021 \"1.6\", 2023 \"1.3\", 2024 \"1.3\" (source_id 1838: México: SESNSP)",
+        "archivo_local": "sesiones/_descargas/api/ee2469404571d071f88c54f6298a266081a76c3d.json"
+      },
+      "serie": [
+        {
+          "p": "2015",
+          "v": 0.7
+        },
+        {
+          "p": "2016",
+          "v": 1.0
+        },
+        {
+          "p": "2017",
+          "v": 1.2
+        },
+        {
+          "p": "2018",
+          "v": 1.4
+        },
+        {
+          "p": "2019",
+          "v": 1.5
+        },
+        {
+          "p": "2020",
+          "v": 1.5
+        },
+        {
+          "p": "2021",
+          "v": 1.6
+        },
+        {
+          "p": "2022",
+          "v": 1.5
+        },
+        {
+          "p": "2023",
+          "v": 1.3
+        },
+        {
+          "p": "2024",
+          "v": 1.3
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_10.png"
+      ]
+    },
+    {
+      "id": "muj-c04",
+      "concepto": "Número de víctimas de femicidio o feminicidio, Guatemala y México, 2024 (CEPAL OIG)",
+      "unidad": "víctimas",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "CEPAL, Observatorio de Igualdad de Género (CEPALSTAT, indicador 2780)",
+      "url": "https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/2780/data?lang=es&format=json&in=1",
+      "periodo": "2024",
+      "n_puntos": 2,
+      "valor": 853,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "CEPAL, presentación nov-2025 (México 852, Guatemala 175)",
+      "evidencia": {
+        "url": "https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/2780/data?lang=es&format=json&in=1",
+        "cita": "Número de femicidios o feminicidios · GTM 2024 \"175\" · MEX 2024 \"853\"",
+        "archivo_local": "sesiones/_descargas/api/d6d2310a73d27db80ab81c09cc50751c6e3f689f.json"
+      },
+      "partes": [
+        {
+          "nombre": "México",
+          "valor": 853
+        },
+        {
+          "nombre": "Guatemala",
+          "valor": 175
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "muj-c05",
+      "concepto": "Víctimas de femicidio en Guatemala en 2025 según el MP (CIEN)",
+      "unidad": "víctimas",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "CIEN con datos del Ministerio Público, boletín «El Femicidio en Guatemala», febrero 2026",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/02/Boletin-Situacion-del-Femicidio-en-Guatemala-febrero-2026-vf.pdf",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 206,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa Latina (2024 = 180 femicidios, dato MP)",
+      "evidencia": {
+        "url": "https://cien.org.gt/wp-content/uploads/2026/02/Boletin-Situacion-del-Femicidio-en-Guatemala-febrero-2026-vf.pdf",
+        "cita": "La tendencia al alza de los femicidios continuó en 2025, con un aumento del 14.4% respecto al 2024, contabilizando 206 víctimas de femicidio.",
+        "archivo_local": "sesiones/_descargas/Boletin-Situacion-del-Femicidio-en-Guatemala-febrero-2026-vf.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "muj-c07",
+      "concepto": "Extorsiones registradas (denuncias al MP) en Guatemala por año, 2015–2025",
+      "unidad": "extorsiones registradas",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Observatorio de la Violencia de Diálogos, con datos del PLADEIC (denuncias registradas por el MP), Informe sobre extorsiones enero 2026",
+      "url": "https://dialogos.org.gt/wp-content/uploads/2026/03/Informe-Extorsiones-1.pdf",
+      "periodo": "2015-2025",
+      "n_puntos": 11,
+      "valor": 26082,
+      "veredicto": "ajustada",
+      "independencia": "baja",
+      "fuente_2": "Emisoras Unidas (2025 cerró con 25,961 denuncias)",
+      "evidencia": {
+        "url": "https://dialogos.org.gt/wp-content/uploads/2026/03/Informe-Extorsiones-1.pdf",
+        "cita": "Guatemala: extorsiones anuales registradas 2015 - 2025 … 5151 … 15.945 … 23.481 … 26.082 · Fuente: elaboración propia con los datos del PLADEIC",
+        "archivo_local": "sesiones/_descargas/Informe-Extorsiones-1.txt"
+      },
+      "serie": [
+        {
+          "p": "2015",
+          "v": 5151
+        },
+        {
+          "p": "2016",
+          "v": 6759
+        },
+        {
+          "p": "2017",
+          "v": 7461
+        },
+        {
+          "p": "2018",
+          "v": 9953
+        },
+        {
+          "p": "2019",
+          "v": 15945
+        },
+        {
+          "p": "2020",
+          "v": 13104
+        },
+        {
+          "p": "2021",
+          "v": 13780
+        },
+        {
+          "p": "2022",
+          "v": 14493
+        },
+        {
+          "p": "2023",
+          "v": 16636
+        },
+        {
+          "p": "2024",
+          "v": 23481
+        },
+        {
+          "p": "2025",
+          "v": 26082
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_11.png"
+      ]
+    },
+    {
+      "id": "muj-c08",
+      "concepto": "Víctimas de extorsión registradas por el SESNSP en México, 2025 y 2024",
+      "unidad": "víctimas",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "SESNSP, datos abiertos de víctimas del fuero común (vía Grupo Animal, 27-ene-2026)",
+      "url": "https://grupoanimal.mx/explicaciones/extorsion-cifra-mas-alta-en-una-decada",
+      "periodo": "2024-2025",
+      "n_puntos": 2,
+      "valor": 11081,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Zeta Tijuana / Expansión (SESNSP, 6,223 en 2015; 10,862 en 2024)",
+      "evidencia": {
+        "url": "https://grupoanimal.mx/explicaciones/extorsion-cifra-mas-alta-en-una-decada",
+        "cita": "Durante el año 2025 se reportaron 11,081 víctimas de extorsión, la cifra anual más alta en los últimos diez años … se registraron 10,862 víctimas de extorsión en todo el país.",
+        "archivo_local": null
+      },
+      "partes": [
+        {
+          "nombre": "2024",
+          "valor": 10862
+        },
+        {
+          "nombre": "2025",
+          "valor": 11081
+        }
+      ],
+      "usada": false,
+      "aparece_en": [
+        "T11"
+      ]
+    },
+    {
+      "id": "muj-c09",
+      "concepto": "Tasa interanual de extorsiones denunciadas por cada 100,000 habitantes en Guatemala, a enero de 2026",
+      "unidad": "por 100,000 habitantes",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Observatorio de la Violencia de Diálogos (MP/PLADEIC; proyecciones INE 2020)",
+      "url": "https://dialogos.org.gt/wp-content/uploads/2026/03/Informe-Extorsiones-1.pdf",
+      "periodo": "feb-2025 a ene-2026",
+      "n_puntos": 1,
+      "valor": 138.3,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo: Emisoras Unidas 25,961 (2025) / pob. INE ~ 140 por 100,000",
+      "evidencia": {
+        "url": "https://dialogos.org.gt/wp-content/uploads/2026/03/Informe-Extorsiones-1.pdf",
+        "cita": "La tasa interanual nacional para ambos sexos al mes de enero 2026, fue de 138,3 extorsiones por cada cien mil habitantes. Esto representa un cambio de 4,0% en comparación a la tasa de un año antes.",
+        "archivo_local": "sesiones/_descargas/Informe-Extorsiones-1.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "muj-c10",
+      "concepto": "Índice de Ley y Orden de Gallup (0–100), Guatemala y México, 2024",
+      "unidad": "puntos (0-100)",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "Gallup, Global Safety Report 2025 (Gallup World Poll 2024, 144 países)",
+      "url": "https://khovar.tj/wp-content/uploads/2025/09/Gallup_Global-Safety-Report-2025.pdf",
+      "periodo": "2024",
+      "n_puntos": 2,
+      "valor": 74,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Gallup Global Safety Report 2024 (datos 2023: GT 74, MX 66)",
+      "evidencia": {
+        "url": "https://khovar.tj/wp-content/uploads/2025/09/Gallup_Global-Safety-Report-2025.pdf",
+        "cita": "Law and Order Index Score … Guatemala 74 … Mexico 68",
+        "archivo_local": "sesiones/_descargas/Gallup_Global-Safety-Report-2025.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala",
+          "valor": 74
+        },
+        {
+          "nombre": "México",
+          "valor": 68
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_12.png"
+      ]
+    },
+    {
+      "id": "muj-c11",
+      "concepto": "Porcentaje de adultos que se sienten seguros caminando solos de noche en su zona, Guatemala y México, 2024",
+      "unidad": "% de adultos",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "Gallup, Global Safety Report 2025 (Gallup World Poll 2024)",
+      "url": "https://khovar.tj/wp-content/uploads/2025/09/Gallup_Global-Safety-Report-2025.pdf",
+      "periodo": "2024",
+      "n_puntos": 2,
+      "valor": 54,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Gallup Global Safety Report 2024 y 2025 (mismo informe, texto local)",
+      "evidencia": {
+        "url": "https://khovar.tj/wp-content/uploads/2025/09/Gallup_Global-Safety-Report-2025.pdf",
+        "cita": "Safe to Walk Alone at Night … Guatemala 54% … Mexico 51%",
+        "archivo_local": "sesiones/_descargas/Gallup_Global-Safety-Report-2025.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala",
+          "valor": 54
+        },
+        {
+          "nombre": "México",
+          "valor": 51
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_12.png"
+      ]
+    },
+    {
+      "id": "muj-c12",
+      "concepto": "Índice de Ley y Orden de Gallup, Guatemala y México, 2017 frente a 2024",
+      "unidad": "puntos (0-100)",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "Gallup, Global Law and Order 2018 (datos 2017) y Global Safety Report 2025 (datos 2024)",
+      "url": "https://insightcrime.org/wp-content/uploads/2018/06/Gallup_Global_Law_And_Order_Report_2018.pdf",
+      "periodo": "2017 y 2024",
+      "n_puntos": 4,
+      "valor": 68,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Gallup Global Law and Order 2018 (texto local, datos 2017: GT 71, MX 58) y 2025 (MX 68)",
+      "evidencia": {
+        "url": "https://insightcrime.org/wp-content/uploads/2018/06/Gallup_Global_Law_And_Order_Report_2018.pdf",
+        "cita": "Law and Order Index Score Results for 2017 … Guatemala 71 … Lowest Law and Order Index Scores … Mexico 58",
+        "archivo_local": "sesiones/_descargas/Gallup_Global_Law_And_Order_Report_2018.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala 2017",
+          "valor": 71
+        },
+        {
+          "nombre": "Guatemala 2024",
+          "valor": 74
+        },
+        {
+          "nombre": "México 2017",
+          "valor": 58
+        },
+        {
+          "nombre": "México 2024",
+          "valor": 68
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_12.png"
+      ]
+    }
+  ],
+  "fuentes": [
+    {
+      "nombre": "Observatorio Nacional Ciudadano — Reporte Anual 2025 (con base en RNPDNO)",
+      "url": "https://onc.org.mx/public/onc_site/uploads/reportes/Anual2025.pdf",
+      "nivel": "secundaria (reproduce registro oficial con fecha de corte)"
+    },
+    {
+      "nombre": "Banco Mundial WDI SP.POP.TOTL GTM;MEX",
+      "url": "https://api.worldbank.org/v2/country/GTM;MEX/indicator/SP.POP.TOTL?format=json&per_page=100&date=2015:2025",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Latinus — serie anual RNPDNO 2019–2025",
+      "url": "https://latinus.us/mexico/2026/1/9/cifra-de-desaparecidos-en-mexico-se-duplica-en-gobiernos-de-la-cuarta-transformacion-161399.html",
+      "nivel": "prensa que reproduce dato oficial"
+    },
+    {
+      "nombre": "Crónica — análisis RNPDNO localizados/no localizados 2000–jun 2026",
+      "url": "https://www.cronica.com.mx/nacional/2026/09/16/desapariciones-forzadas-en-mexico-los-localizados/",
+      "nivel": "prensa/análisis que reproduce dato oficial"
+    },
+    {
+      "nombre": "AGN — MP, 8 años de la Alerta Isabel-Claudina (6 ago 2026)",
+      "url": "https://agn.gt/desde-su-creacion-alerta-isabel-claudina-ha-localizado-a-mas-del-90-de-las-mujeres-reportadas-como-desaparecidas/",
+      "nivel": "agencia oficial que reproduce dato del MP"
+    },
+    {
+      "nombre": "La Hora — PGN, alertas Alba-Keneth 2024 y ene–sep 2025",
+      "url": "https://lahora.gt/?p=881783",
+      "nivel": "prensa que reproduce dato oficial (PGN)"
+    },
+    {
+      "nombre": "RNPDNO versión estadística (CNB)",
+      "url": "https://versionpublicarnpdno.segob.gob.mx/Dashboard/ContextoGeneral",
+      "nivel": "primaria (sin datos descargables al consultar)"
+    },
+    {
+      "nombre": "Banco Mundial WDI (espejo de UNODC) VC.IHR.PSRC.P5/.MA/.FE y SP.POP.TOTL",
+      "url": "https://api.worldbank.org/v2/country/GTM;MEX/indicator/VC.IHR.PSRC.P5?format=json&per_page=100&date=2005:2025",
+      "nivel": "supranacional"
+    },
+    {
+      "nombre": "UNODC víctimas de homicidio vía Our World in Data",
+      "url": "https://ourworldindata.org/grapher/homicides-unodc.csv?country=GTM~MEX&v=1&csvType=filtered&useColumnShortNames=true",
+      "nivel": "supranacional (espejo)"
+    },
+    {
+      "nombre": "INEGI Reporte de resultados 28/26 Defunciones por homicidio 2025",
+      "url": "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2026/edr/DH2025en-jn_RR.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "CIEN Boletín IDD agosto 2026 (PNC/PLADEIC)",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/09/Boletin-del-IDD-de-agosto-base-2020.pdf",
+      "nivel": "secundaria con datos oficiales"
+    },
+    {
+      "nombre": "Diálogos Informe violencia homicida dic-2025 (PNC)",
+      "url": "https://dialogos.org.gt/wp-content/uploads/2026/01/InformeHomicidios.pdf",
+      "nivel": "secundaria con datos oficiales"
+    },
+    {
+      "nombre": "CIEN — Respuesta institucional al delito de homicidio (ago-2025), datos SICOMP/MP",
+      "url": "https://cien.org.gt/wp-content/uploads/2025/08/Boletin-Respuesta-Institucional-al-Delito-de-Homicidio-vf.pdf",
+      "nivel": "secundaria con datos oficiales"
+    },
+    {
+      "nombre": "World Prison Brief (ICPR, Birkbeck) — Guatemala",
+      "url": "https://www.prisonstudies.org/country/guatemala",
+      "nivel": "supranacional/académica"
+    },
+    {
+      "nombre": "World Prison Brief (ICPR, Birkbeck) — México",
+      "url": "https://www.prisonstudies.org/country/mexico",
+      "nivel": "supranacional/académica"
+    },
+    {
+      "nombre": "GI-TOC Global Organized Crime Index 2025 — perfil Guatemala",
+      "url": "https://ocindex.net/assets/downloads/2025/english/ocindex_profile_guatemala_2025.pdf",
+      "nivel": "supranacional (índice experto)"
+    },
+    {
+      "nombre": "GI-TOC Global Organized Crime Index 2025 — perfil México",
+      "url": "https://ocindex.net/assets/downloads/2025/english/ocindex_profile_mexico_2025.pdf",
+      "nivel": "supranacional (índice experto)"
+    },
+    {
+      "nombre": "INEGI — ENVIPE 2026, comunicado 50/26",
+      "url": "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2026/envipe/ENVIPE2026_CP.pdf",
+      "nivel": "primaria oficial"
+    },
+    {
+      "nombre": "Expansión Política — reproduce México Evalúa Hallazgos 2023",
+      "url": "https://politica.expansion.mx/mexico/2024/10/31/la-impunidad-crece-en-delitos-de-homicidio-desaparicion-secuestro-y-violacion",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "CEPALSTAT / OIG CEPAL — femicidio (indicadores 2812 y 2780)",
+      "url": "https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/2812/data?lang=es&format=json&in=1",
+      "nivel": "supranacional"
+    },
+    {
+      "nombre": "CEPAL — comunicado nov-2025 y presentación 'Measuring feminicide'",
+      "url": "https://www.cepal.org/es/comunicados/cepal-al-menos-19254-feminicidios-se-han-registrado-ultimos-cinco-anos-america-latina",
+      "nivel": "supranacional"
+    },
+    {
+      "nombre": "CIEN — El Femicidio en Guatemala, feb-2026",
+      "url": "https://cien.org.gt/wp-content/uploads/2026/02/Boletin-Situacion-del-Femicidio-en-Guatemala-febrero-2026-vf.pdf",
+      "nivel": "secundaria con datos oficiales (MP)"
+    },
+    {
+      "nombre": "Diálogos — Informe sobre extorsiones, enero 2026",
+      "url": "https://dialogos.org.gt/wp-content/uploads/2026/03/Informe-Extorsiones-1.pdf",
+      "nivel": "secundaria con datos oficiales (MP/PLADEIC)"
+    },
+    {
+      "nombre": "Grupo Animal — SESNSP víctimas de extorsión 2025",
+      "url": "https://grupoanimal.mx/explicaciones/extorsion-cifra-mas-alta-en-una-decada",
+      "nivel": "prensa que reproduce dato oficial"
+    },
+    {
+      "nombre": "Banco Mundial — SP.POP.TOTL",
+      "url": "https://api.worldbank.org/v2/country/GTM;MEX/indicator/SP.POP.TOTL?format=json&per_page=100&date=2015:2025",
+      "nivel": "supranacional"
+    },
+    {
+      "nombre": "Gallup — Global Safety Report 2025 / 2024 y Global Law and Order 2018",
+      "url": "https://khovar.tj/wp-content/uploads/2025/09/Gallup_Global-Safety-Report-2025.pdf",
+      "nivel": "encuesta internacional armonizada"
+    }
+  ],
+  "no_afirma": [
+    "Que Guatemala sea en general más segura o más violenta que México: cada indicador mide algo distinto.",
+    "Que Guatemala tenga menos desapariciones que México: no existe un registro guatemalteco equivalente al RNPDNO.",
+    "Que haya más extorsión en Guatemala que en México: denuncias al MP y víctimas del SESNSP no son la misma medida.",
+    "Que las cifras de impunidad de ambos países sean comparables entre sí: usan metodologías distintas.",
+    "Que algún gobierno o política haya causado las subidas o bajadas de las series."
+  ],
+  "incertidumbre": [
+    "Todas las cifras usadas tienen segunda fuente no independiente (reproduce la primaria), incluida la ancla hom-c03 (UNODC vía Banco Mundial): verificación del número, sin respaldo independiente.",
+    "UNODC cuenta 4,235 homicidios en Guatemala en 2023 y la PNC 2,942; no se confirmó qué institución reporta a la UNODC. Las tasas nacionales (PNC/CIEN, INEGI) no se mezclan con la serie UNODC.",
+    "Las desapariciones de México 2025 varían según el corte del RNPDNO (14,100, 14,002 o 12,870); la tasa usa la serie de Latinus y el promedio diario el corte del ONC del 21 de enero de 2026.",
+    "La comparación de cárceles usa años con dato para ambos (2000–2020); los últimos datos son de años distintos (Guatemala 2023, México 2026).",
+    "Las extorsiones de Guatemala (muj-c07, ajustada) son denuncias al MP; Gallup mide percepción; la impunidad de Guatemala (sentencias por casos de 2019, CIEN/SICOMP) y la de México (México Evalúa) no se calculan igual.",
+    "En femicidio (CEPAL), Guatemala supera a México en 2015–2018 y 2024; de 2019 a 2023 México estuvo arriba, y el 0.5 de Guatemala en 2023 es un mínimo atípico."
+  ],
+  "descartadas": [
+    {
+      "id": "hom-c10",
+      "por": "no_confirmada"
+    },
+    {
+      "id": "des-c05",
+      "por": "no_confirmada"
+    },
+    {
+      "id": "jus-c06",
+      "por": "no_confirmada"
+    },
+    {
+      "id": "jus-c07",
+      "por": "no_confirmada"
+    },
+    {
+      "id": "jus-c08",
+      "por": "no_confirmada"
+    }
+  ]
+}

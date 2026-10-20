@@ -348,8 +348,8 @@
     {
       "tipo": "conclusiones",
       "id": "conclusiones",
-      "indice": { "titulo": "En suma", "clase": "anexo" },
-      "titulo": "En suma",
+      "indice": { "titulo": "Conclusiones", "clase": "anexo" },
+      "titulo": "Conclusiones",
       "hallazgos": [
         { "titulo": "El dengue bajó.", "texto": "A la semana 35 hay 40% menos casos sospechosos que en 2025.", "ref": "{fign:casos-se35}" },
         { "titulo": "No es un año tranquilo.", "texto": "Supera a 2018, 2020, 2021 y 2022, y la zona de alerta tiene dos áreas de salud más que al cierre de 2025.", "ref": "{fign:casos-se35} · {Tabla:corredor}" },

@@ -1,0 +1,397 @@
+{
+  "slug": "incendios-bosque-guatemala-2024",
+  "fecha": "2026-10-06",
+  "tesis": "En 2024 Guatemala perdió 50,585 ha de cobertura arbórea por incendios, más que Nicaragua, Belice, Honduras, Costa Rica, Panamá y El Salvador juntos (45,738 ha).",
+  "ancla_id": "dat-c02",
+  "paleta": "jade",
+  "hook_tipo": "curiosity_gap",
+  "cifras": [
+    {
+      "id": "dat-c01",
+      "unidad": "hectáreas",
+      "tipo": "serie",
+      "fuente": "Global Forest Watch, Tree Cover Loss by Dominant Driver (vía Our World in Data)",
+      "periodo": "2024",
+      "n_puntos": 24,
+      "valor": 50584.73,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo sobre serie completa 2001-2024 del CSV local (24 puntos): 2024=50,584.73 es el máximo; previo 2020=20,308.12, 2016=17,885.5. Contraste de orden de magnitud: INAB/Conred vía Emisoras Unidas, 41,647 ha quemadas dic-2023 a may-2024 (métrica distinta: área quemada, no pérdida de cobertura)",
+      "evidencia": {
+        "url": "https://ourworldindata.org/grapher/tree-cover-loss-from-wildfires.csv?useColumnShortNames=true",
+        "cita": "Guatemala,GTM,2024,50584.73 (columna tree_cover_loss_ha__category_wildfire); máximo previo Guatemala,GTM,2020,20308.12",
+        "archivo_local": "sesiones/_descargas/api/216ef2539b66309ef6d755b9fdce0c4f51e7d3d0.json"
+      },
+      "serie": [
+        {
+          "periodo": "2001",
+          "valor": 613.26294
+        },
+        {
+          "periodo": "2002",
+          "valor": 491.93692
+        },
+        {
+          "periodo": "2003",
+          "valor": 1210.6925
+        },
+        {
+          "periodo": "2004",
+          "valor": 676.5403
+        },
+        {
+          "periodo": "2005",
+          "valor": 1639.1559
+        },
+        {
+          "periodo": "2006",
+          "valor": 763.42163
+        },
+        {
+          "periodo": "2007",
+          "valor": 1904.4628
+        },
+        {
+          "periodo": "2008",
+          "valor": 1315.9384
+        },
+        {
+          "periodo": "2009",
+          "valor": 1938.2666
+        },
+        {
+          "periodo": "2010",
+          "valor": 921.99915
+        },
+        {
+          "periodo": "2011",
+          "valor": 602.1491
+        },
+        {
+          "periodo": "2012",
+          "valor": 1132.9229
+        },
+        {
+          "periodo": "2013",
+          "valor": 1627.5209
+        },
+        {
+          "periodo": "2014",
+          "valor": 974.1088
+        },
+        {
+          "periodo": "2015",
+          "valor": 999.8129
+        },
+        {
+          "periodo": "2016",
+          "valor": 17885.5
+        },
+        {
+          "periodo": "2017",
+          "valor": 1825.8579
+        },
+        {
+          "periodo": "2018",
+          "valor": 1239.1287
+        },
+        {
+          "periodo": "2019",
+          "valor": 7931.155
+        },
+        {
+          "periodo": "2020",
+          "valor": 20308.12
+        },
+        {
+          "periodo": "2021",
+          "valor": 1308.6774
+        },
+        {
+          "periodo": "2022",
+          "valor": 1479.7172
+        },
+        {
+          "periodo": "2023",
+          "valor": 7270.6743
+        },
+        {
+          "periodo": "2024",
+          "valor": 50584.73
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "dato.png"
+      ]
+    },
+    {
+      "id": "dat-c02",
+      "unidad": "hectáreas",
+      "tipo": "desglose",
+      "fuente": "Global Forest Watch (vía Our World in Data)",
+      "periodo": "2024",
+      "valor": 50584.73,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo local: NIC 23,055.256 + BLZ 15,768.009 + HND 6,700.964 + CRI 112.593 + PAN 100.930 + SLV 0.672 = 45,738.42 < Guatemala 50,584.73 (México 122,734.17 solo referencia)",
+      "evidencia": {
+        "url": "https://ourworldindata.org/grapher/tree-cover-loss-from-wildfires.csv?useColumnShortNames=true",
+        "cita": "Guatemala,GTM,2024,50584.73 · Nicaragua,NIC,2024,23055.256 · Belize,BLZ,2024,15768.009 · Honduras,HND,2024,6700.9644",
+        "archivo_local": "sesiones/_descargas/api/216ef2539b66309ef6d755b9fdce0c4f51e7d3d0.json"
+      },
+      "partes": [
+        {
+          "etiqueta": "Guatemala",
+          "valor": 50584.73
+        },
+        {
+          "etiqueta": "Nicaragua",
+          "valor": 23055.256
+        },
+        {
+          "etiqueta": "Belice",
+          "valor": 15768.009
+        },
+        {
+          "etiqueta": "Honduras",
+          "valor": 6700.9644
+        },
+        {
+          "etiqueta": "Costa Rica",
+          "valor": 112.59317
+        },
+        {
+          "etiqueta": "Panamá",
+          "valor": 100.93003
+        },
+        {
+          "etiqueta": "El Salvador",
+          "valor": 0.6717408
+        },
+        {
+          "etiqueta": "México (referencia)",
+          "valor": 122734.17
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "dato.png"
+      ]
+    },
+    {
+      "id": "dat-c03",
+      "unidad": "hectáreas",
+      "tipo": "serie",
+      "fuente": "Global Forest Watch (vía Our World in Data)",
+      "periodo": "2024",
+      "n_puntos": 24,
+      "valor": 141961.45,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo local de la serie 2001-2024: 2024=141,961.45 es el 2.º valor más alto; máximo 2016=178,431.53; 2022=46,342.27",
+      "evidencia": {
+        "url": "https://ourworldindata.org/grapher/tree-cover-loss.csv?country=~GTM&useColumnShortNames=true",
+        "cita": "Guatemala,GTM,2024,141961.45 (tree_cover_loss_ha__category_total); Guatemala,GTM,2022,46342.27; máximo Guatemala,GTM,2016,178431.53",
+        "archivo_local": "sesiones/_descargas/api/4532fafc2fe87baa2560633119ef927bf7baac06.json"
+      },
+      "serie": [
+        {
+          "periodo": "2001",
+          "valor": 53139.242
+        },
+        {
+          "periodo": "2002",
+          "valor": 55505.94
+        },
+        {
+          "periodo": "2003",
+          "valor": 98119.75
+        },
+        {
+          "periodo": "2004",
+          "valor": 56326.28
+        },
+        {
+          "periodo": "2005",
+          "valor": 100710.52
+        },
+        {
+          "periodo": "2006",
+          "valor": 52398.43
+        },
+        {
+          "periodo": "2007",
+          "valor": 126361.1
+        },
+        {
+          "periodo": "2008",
+          "valor": 77000.42
+        },
+        {
+          "periodo": "2009",
+          "valor": 86853.9
+        },
+        {
+          "periodo": "2010",
+          "valor": 59418.07
+        },
+        {
+          "periodo": "2011",
+          "valor": 40438.61
+        },
+        {
+          "periodo": "2012",
+          "valor": 83695.0
+        },
+        {
+          "periodo": "2013",
+          "valor": 54995.883
+        },
+        {
+          "periodo": "2014",
+          "valor": 61813.625
+        },
+        {
+          "periodo": "2015",
+          "valor": 54195.25
+        },
+        {
+          "periodo": "2016",
+          "valor": 178431.53
+        },
+        {
+          "periodo": "2017",
+          "valor": 79747.63
+        },
+        {
+          "periodo": "2018",
+          "valor": 71094.06
+        },
+        {
+          "periodo": "2019",
+          "valor": 90233.12
+        },
+        {
+          "periodo": "2020",
+          "valor": 98524.28
+        },
+        {
+          "periodo": "2021",
+          "valor": 49863.324
+        },
+        {
+          "periodo": "2022",
+          "valor": 46342.27
+        },
+        {
+          "periodo": "2023",
+          "valor": 71077.695
+        },
+        {
+          "periodo": "2024",
+          "valor": 141961.45
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c04",
+      "unidad": "% de la pérdida total",
+      "tipo": "desglose",
+      "fuente": "Global Forest Watch (vía Our World in Data); cálculo propio",
+      "periodo": "2024",
+      "valor": 35.6,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo: 50,584.73 / 141,961.45 = 35.63%; 2022: 1,479.72/46,342.27 = 3.2%; ambos archivos locales de la misma serie GFW",
+      "evidencia": {
+        "url": "https://ourworldindata.org/grapher/tree-cover-loss-from-wildfires.csv?useColumnShortNames=true",
+        "cita": "Guatemala,GTM,2024,50584.73 (wildfire) y Guatemala,GTM,2024,141961.45 (total, archivo de tree-cover-loss)",
+        "archivo_local": "sesiones/_descargas/api/216ef2539b66309ef6d755b9fdce0c4f51e7d3d0.json"
+      },
+      "partes": [
+        {
+          "etiqueta": "Incendios",
+          "valor": 50584.73
+        },
+        {
+          "etiqueta": "Otros motores",
+          "valor": 91376.72
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c05",
+      "unidad": "% de la deforestación bruta nacional",
+      "tipo": "puntual",
+      "fuente": "INAB y Conap (2023), citado por Iarna-URL, boletín técnico jul-2026",
+      "periodo": "2020",
+      "valor": 45,
+      "veredicto": "ajustada",
+      "independencia": "baja",
+      "fuente_2": "Cita local verificada (poco menos de 245,000 ha brutas; casi 110,000 en áreas protegidas; 110/245=44.9%). Búsqueda de segunda fuente (INAB/Conap) no devolvió la cifra",
+      "evidencia": {
+        "url": "https://sie.url.edu.gt/wp-content/uploads/2026/07/Boletin-deforestacion-bruta.pdf",
+        "cita": "alcanzó la cifra de poco menos de 245 000 hectáreas. De esta totalidad, casi 110 000 hectáreas se perdieron dentro de áreas legalmente protegidas, valor que equivale al 45 %",
+        "archivo_local": "sesiones/_descargas/Boletin-deforestacion-bruta.txt"
+      },
+      "partes": [
+        {
+          "etiqueta": "Dentro de áreas protegidas",
+          "valor": 110000
+        },
+        {
+          "etiqueta": "Total nacional (poco menos de)",
+          "valor": 245000
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dat-c06",
+      "unidad": "% del territorio",
+      "tipo": "puntual",
+      "fuente": "Iarna-URL, Perfil Ambiental (Sandoval et al.), citado en boletín técnico jul-2026",
+      "periodo": "2020",
+      "valor": 33,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Cita local: cobertura forestal pasó de 64% (1950) a 33% (2020), Sandoval et al. vía Boletín Iarna-URL. Búsqueda no halló fuente independiente que confirme el 33%",
+      "evidencia": {
+        "url": "https://sie.url.edu.gt/wp-content/uploads/2026/07/Boletin-deforestacion-bruta.pdf",
+        "cita": "la cobertura forestal pasó de cubrir el 64 % del territorio en 1950 a solo el 33 % en 2020",
+        "archivo_local": "sesiones/_descargas/Boletin-deforestacion-bruta.txt"
+      },
+      "partes": [
+        {
+          "etiqueta": "1950",
+          "valor": 64
+        },
+        {
+          "etiqueta": "2020",
+          "valor": 33
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    }
+  ],
+  "fuentes": [],
+  "no_afirma": [
+    "No afirma que sea bosque natural: es cobertura arbórea medida por satélite (incluye plantaciones y árboles fuera de bosque).",
+    "No afirma quién o qué causó los incendios ni que el fuego explique toda la pérdida de 2024: es el motor dominante asignado por píxel.",
+    "No dice nada de 2025: la serie de la fuente llega a 2024."
+  ],
+  "incertidumbre": [
+    "La segunda fuente reproduce la primaria (GFW vía OWID); sin verificación independiente.",
+    "La suma de los otros seis (45,738.42 ha) es cálculo propio sobre las cifras por país de la fuente.",
+    "Las cifras oficiales de área afectada (SIPECIF/CONRED/Conap) miden otra cosa y son inconsistentes en prensa; no se comparan."
+  ],
+  "descartadas": [],
+  "tipo": "dato"
+}

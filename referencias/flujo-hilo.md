@@ -6,8 +6,9 @@ tuits (el usuario puede fijar un mínimo con `min_tuits`), cada uno con una tarj
 framework deja todo en `hilos/YYYY-MM-DD-<slug>/`.
 
 ```
-Encuadre (editor) → [Investigación → Verificación] por eje, en pipeline
-→ Guion (guionista) → Visuales (visualistas en lotes de 3)
+Encuadre (editor) → [Investigación → Verificación (+ verificacion.py)] por eje, en pipeline
+→ Guion (guionista) → Rechequeo (verificador: ancla, T1, segunda fuente baja)
+→ Visuales (visualistas en lotes de 3)
 → Ensamblado (productor: ensamblar.py --check + coherencia C1–C8 + memoria)
 ```
 

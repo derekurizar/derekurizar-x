@@ -9,8 +9,9 @@ hilo. La publicación en X es manual; el framework deja todo en
 
 ```
 Investigación (investigador: pista → tema final, encuadre ligero, candidatas con `impacto`)
-→ Verificación (verificador: todas las candidatas)
+→ Verificación (verificador: todas las candidatas, cierre con verificacion.py)
 → Guion (guionista: puntúa 1–5 × 5 criterios, elige UNA, un tuit con visual)
+→ Rechequeo (verificador: la cifra elegida y su comparación; si cae, otra candidata)
 → Producción (productor: QA visual → consolidar → ensamblar.py --check
   → C1/C5/C7/alt → --solo-estado → memoria.py → make validate)
 ```
@@ -34,11 +35,11 @@ bloque del modo.
 | `mapa` | brecha por departamento | `brecha_territorial` | `mapa` | desglose ≥ 12 departamentos (ideal 22, nombres INE); tasa per cápita con denominador INE (absoluto solo con motivo); nota con unidad y año |
 | `antes` | hace N años frente a hoy | `antes_despues` | `antes-despues`, `pendiente`, `pesas`, `linea`, `agrupadas` (series = los dos años) | misma serie y fuente, ≥ 5 años de distancia; etiquetas con los años; dinero corriente declarado en la nota |
 
-Guía por rol: apartado «Modos vs · mapa · antes» de cada «Modo dato»; reglas
+Guía por rol: apartado «Modos vs · mapa · antes» de cada `roles/<rol>-dato.md`; reglas
 editoriales en `referencias/narrativa.md`, «Modos de un dato».
 
 - Contrato de archivos: `referencias/contrato-sesion.md`, «Sesión dato»
-- Guía por rol: sección «Modo dato» de `referencias/roles/{investigador,verificador,guionista,productor}.md`
+- Guía por rol: `referencias/roles/{investigador,verificador,guionista,productor}.md` y su complemento `roles/<rol>-dato.md`
 - Qué hace impactante un dato, reparto tarjeta/texto, ganchos: `referencias/narrativa.md`, «Dato único»
 - Sistema visual y catálogo (`cifra` = «¿Cuál es EL dato?»): `referencias/diseno/sistema.md`, `referencias/diseno/graficos.md`
 - Registro y consulta: `python3 scripts/memoria.py --registrar <sesion> --ruta datos/<fecha>-<slug>` · `python3 scripts/memoria.py --datos ["tema"]`

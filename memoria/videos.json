@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "_comentario": "Registro de videos verticales producidos por /video a partir de un hilo entregado. Lo escribe SOLO scripts/memoria.py --video <hilos/<fecha>-<slug>/video>; scripts/video.py lo lee para rotar la música de cada paleta. estado: listo | publicado | incompleto · duracion: corto | medio | largo.",
+  "videos": [
+    {
+      "id": "2026-10-19-crimen-organizado-respuesta-estado",
+      "fecha": "2026-10-19",
+      "slug": "crimen-organizado-respuesta-estado",
+      "hilo_id": "2026-10-19-crimen-organizado-respuesta-estado",
+      "tema": "Crimen organizado y violencia en Guatemala hoy: las caras del crimen (violencia letal y su geografía, armas, narcotráfico, extorsión y pandillas, desapariciones, violencia contra mujeres y niñez) y lo que el Estado hace al respecto (estado de sitio y de prevención 2026, Ley Antipandillas, presupuesto y agentes, capturas, decomisos, extradiciones, cárceles) con sus resultados medibles",
+      "paleta": "terracota",
+      "duracion": "corto",
+      "duracion_s": 59.0,
+      "n_escenas": 5,
+      "musica": "terracota-1",
+      "creditos_voz": 768,
+      "ruta_video": "hilos/2026-10-19-crimen-organizado-respuesta-estado/video",
+      "ruta_hilo": "hilos/2026-10-19-crimen-organizado-respuesta-estado",
+      "estado": "listo"
+    }
+  ]
+}
