@@ -14,14 +14,17 @@ hilo (y derivados declarados con `calculo`). La publicación es manual; el entre
 preparar (video.py: hilo → TRABAJO, digesto con estructura y sugerencias, música por paleta)
 → Workflow video [guionista → guion.json v2 → gate V1–V5 + V9 (video.py guion --check)
                   → crítico de retención (C1–C10, puntajes, faltas) → el guionista corrige lo que bloquea
-                    (o pule las mejoras si el crítico aprueba con algún puntaje justo de 3), ≤ 2 vueltas]
+                    (≤ 2 vueltas) o, una sola vez, pule las mejoras si el crítico aprueba con algún puntaje de 3
+                  → animador (solo si hay una escena explica nueva: video/animaciones/<id>.js, animaciones.py --check)]
 → voz (MCP ElevenLabs: un nodo TTS por escena, 1 toma) → Scribe por escena (tiempos por palabra, 0 créditos)
-→ tiempos (atempo 1.1, V6, eventos y efectos por escena, V10 ritmo) → grabar (Playwright cuadro a cuadro, V7)
-→ montar (ducking + efectos + loudnorm en dos pasadas, V8) → revisar (hoja de contacto) → entregar
+→ descargar --estado (el JSON de estado guardado → voz_N.mp3, palabras_N.json, creditos.json)
+→ tiempos (atempo 1.1, V6, eventos y efectos por escena, V10 ritmo) → escuchar (whisper.cpp local, V11: las cifras
+  dichas) → grabar (Playwright cuadro a cuadro, N escenas a la vez con `--paralelo`, V7)
+→ montar (ducking + efectos + loudnorm en dos pasadas, V8) → revisar (hoja de contacto, V12 quietud) → entregar
 → memoria.py --video → make validate
 ```
 
-El **guion lo orquesta el Workflow `.claude/workflows/video.js`** (0 créditos: guionista + crítico). La voz y todo
+El **guion lo orquesta el Workflow `.claude/workflows/video.js`** (0 créditos: guionista + crítico + animador). La voz y todo
 lo que gasta créditos sigue en la **sesión principal** (`.claude/commands/video.md`), porque las llamadas al
 MCP de ElevenLabs se hacen desde ahí. `TRABAJO` = `sesiones/<slug>/video/` (memoria de trabajo: audio, clips,
 cuadros, `critica.json`).
@@ -31,11 +34,51 @@ cuadros, `critica.json`).
 - **Sin cara**: texto cinético (gancho y golpes) y las tarjetas del hilo animadas. Ni presentador ni avatar.
 - Voz **El Faraon 4** (`8mBRP99B2Ng2QwsJMFQl`), `eleven_multilingual_v2`, `language_code: es`, a **1.1×**
   (atempo, sin cambiar el tono). Las cifras se dicen en palabras (`scripts/numeros_es.py`).
+- **Pausas**: `[pausa]` (0.6 s) y `[pausa larga]` (1.2 s) en el texto del guion (más `[pausa adivina]`, 2.0 s, que el
+  script mete antes de la respuesta de la adivina) salen como `<break time="…s" />`
+  **solo en el prompt** de ElevenLabs (Multilingual v2 lo acepta; v3 y v4 no). Van tras puntuación fuerte o justo
+  antes de un «pero»; ≤ 1 por escena y ≤ 3 por video (V9): la documentación avisa de que el exceso acelera o ensucia
+  la voz. La locución alineada (V6), los subtítulos y el conteo de caracteres no las llevan (ElevenLabs sí las
+  cobra, ~25 caracteres cada una). Scribe, conectado al nodo TTS, devuelve la etiqueta como tres «palabras» de
+  duración cero (`<break`, `time="0.6s"`, `/>`): `descargar` y `tiempos` las quitan (`sin_etiquetas`). El MCP
+  recorta `generations[].prompt` a 200 caracteres en el estado: `descargar --estado` casa la voz por
+  `media[].prompt` (entero) y, si no viene, por prefijo.
 - **Estructura de retención** (la comprueba V9): escena 1 = gancho con fórmula (`cifra`, `contradiccion`,
   `pregunta`, `resultado`) cuya pantalla funciona en silencio; **promesa** literal en la escena 1–2 que se
   **paga** en el último tercio; cada escena desde la 3 empieza con «pero» o «por eso» (y «y» como máximo en un
   tercio); un **golpe** ≤ 6 palabras arriba de cada tarjeta; escenas `golpe` para traducir a escala humana
-  («1 de cada 3», con `calculo` verificado), pagar o re-ganchar; ≤ 6 s entre eventos.
+  («1 de cada 3», con `calculo` verificado), pagar o re-ganchar; ≤ 6 s entre eventos. Dos escenas de texto más,
+  opcionales: **`definicion`** (término ≤ 3 palabras + una línea llana ≤ 90 caracteres; ≤ 1, 2 en largo) y
+  **`adivina`** (pregunta con «?», tres opciones con cifra, `correcta`, una oración que pide pausar para responder
+  («Pausa el video y piénsalo.», V9) con la píldora «Pausa y responde» en pantalla y el revelado tras 2 s de silencio;
+  ≤ 1, desde la escena 3). Y **`explica`** (≤ 1, 2 en largo; cuenta en el presupuesto de escenas de texto; página
+  `video/explica.html`): una **animación a medida que explica el mecanismo** del fenómeno (por qué o cómo pasa), con
+  `titulo` arriba y 2–6 `pasos` que entran cuando la voz los dice. La animación sale de la **biblioteca**
+  `video/animaciones/` (`<id>.js` con `ANIM.registrar(id, {meta, pintar, seek})`, `catalogo.json` que escribe solo
+  `scripts/animaciones.py`; semilla `cadena`): el guionista reutiliza una del digesto o deja `animacion: null` con un
+  `brief`, y tras la crítica el agente `video-animador` la escribe, la prueba (`animaciones.py --check`: lint sin azar,
+  reloj, red ni colores fijos; grabación doble con framemd5 igual; 4:5; quietud; hoja de contacto por paso), la
+  registra para otros videos y la asigna (`--asignar`, que repasa el gate). K4 (`validate.py`) cuida la biblioteca. Golpe, definición y adivina son escenas de texto (`golpe.html`): nunca dos seguidas. Y la
+  escena **`mapa`** (≤ 1; cuenta como tarjeta): la tarjeta de mapa del hilo a pantalla completa (`video/mapa.html`,
+  con el bloque `H` de `base.html` y la `GEOMETRIA` de la plantilla): los 22 departamentos se encienden uno a uno,
+  el destacado entra al final con su rótulo y cada valor que dice la voz ilumina su departamento. Tres escenas más
+  a pantalla completa, con página propia (≤ 1 de cada; la misma tarjeta no va dos veces): **`ranking`**
+  (`video/ranking.html`; tarjeta barras-h o mapa, `top` 3–6, `orden` desc|asc): cuenta regresiva en la que cada
+  puesto entra del último al primero cuando la voz dice su valor (la voz dice al menos el del primero, V9); el
+  primero (o el `destacar` de la tarjeta) va con el acento. **`tiempo`** (`video/tiempo.html`; tarjeta
+  antes-despues o linea, hasta 9 puntos): un riel con los puntos equiespaciados, un marcador que lo recorre y el
+  valor de cada punto que salta cuando la voz lo dice (o cuando el marcador llega); en antes-despues, la píldora
+  (×1.77 o +77 %) al final. **`escala`** (`video/escala.html`; sin tuit, u opcionalmente waffle o pictograma):
+  `de_cada: [K, N]` (N entre 2 y 100), `etiqueta` (≤ 40) y `calculo` que respalda «K de cada N» (la voz lo dice,
+  V9): N figuras de persona y las K primeras se encienden al decir K. `preparar` guarda los `DATA` de cada tarjeta
+  (`datos` en `video.json`, evaluados con node) para que `tiempos` sepa qué valores entran y cuándo.
+- **El gancho en 3 segundos**: la cifra cuenta desde el primer cuadro (0.15 s) y late cuando la voz la dice; la
+  `linea` entra palabra a palabra **en sincronía con la voz** (cada palabra que la voz dice literal, al decirla; las
+  demás, agrupadas como frase; sin ninguna coincidencia, repartidas hasta el fin de la primera oración); igual en
+  golpes, definición y la pregunta de la adivina. V9 exige primera oración ≤ 4 s estimados, promesa ≤ 3 s si va en
+  la escena 1 (si no, `en: 2`) y voz del gancho ≤ 7.5 s. La promesa es un evento (`promesa`, con `tic`). En las
+  escenas de texto el subtítulo se oculta mientras solo repite lo que ya está en pantalla (y hasta que aterriza
+  la cifra): aparece para lo que no está (la promesa, la respuesta de la adivina, la explicación).
 - **Barra de progreso** arriba en todas las escenas, un tramo por escena (cierre incluido).
 - **«En Guatemala»** (sin dos puntos) al inicio de la voz del gancho cuando no dice «Guatemala» (automático): la
   voz sigue la frase, «En Guatemala nacen casi 168 bebés al día…».
@@ -43,9 +86,22 @@ cuadros, `critica.json`).
   dice la pantalla lleva un verbo conjugado, declarado en `verbo` (V9): «Casi 168 al día» en pantalla → «Nacen casi
   168 bebés al día de madres de 10 a 19 años» en la voz. «Casi 168 bebés al día, de madres de 10 a 19 años» (el
   titular leído en voz alta) no se entiende (usuario, 2026-10-20).
-- **Cierre**: resumen + pregunta al espectador (voz y pantalla) y luego «Sígueme en» con TikTok
+- **Cierre en dos pantallas** (una sola voz): primero **Conclusiones** (rótulo, eco de la cifra del gancho y el
+  `resumen` de 2–3 líneas mientras la voz las dice; V9 pide ≥ 3 s de voz antes de la pregunta); cuando la voz llega a
+  la pregunta, las conclusiones salen hacia arriba y queda la pregunta sola en grande y luego «Sígueme en» con TikTok
   @derekurizargt, Instagram @derekurizargt y X @DerekUrizar **solo en pantalla**. Sin logo, sin fuentes, sin la
   marca en la voz.
+- **Cierre en bucle**: tras «Sígueme en», el primer cuadro del gancho (barra de progreso en 0) durante 0.5 s con un
+  fundido de 0.25 s: cuando TikTok repite el video, el reinicio no se nota (`montar --sin-bucle` lo quita).
+- **Formato 4:5** (opcional, `formato:4:5`): además del 9:16, `video_4x5.mp4` a 1080×1350 para el feed de Facebook e
+  Instagram, con los mismos tiempos y audio; las páginas de escena cambian de layout con `?f=45` (`html.f45`: sin zona
+  segura de teléfono, golpe en y=70, tarjeta en y=250–1090, subtítulos en y=1120). `grabar/montar/revisar --formato 4:5`
+  (`clips_4x5/`, `segs_4x5/`, `contacto_4x5.png`); V8 espera 1080×1350.
+- **Portadas**: cuadros **limpios** (Playwright vuelve a dibujar la escena en ese segundo con `&portada=1`: sin
+  subtítulos ni barra de progreso; `video_grabar.js --portadas`): `portada.png` (el gancho leído en silencio),
+  `portada_texto.png` (`video/portada.html`: solo el gancho en texto, para la miniatura del feed) y, para elegir,
+  `portada_pregunta.png` (el cierre con la pregunta en pantalla), `portada_giro.png` (la escena del giro con su cifra
+  ya contada) y `portada_adivina.png` (las opciones a la vista). `entregar` copia todas.
 - **Música** solo del catálogo fijo `design/musica/catalogo.json` (2 pistas por paleta; se elige la de la paleta
   del hilo usada hace más tiempo), con **ducking** bajo la voz (sidechain). **Efectos** solo del catálogo fijo
   `design/sfx/catalogo.json` (8 WAV: whoosh, tic, pulso, impacto, grave, riser, resolucion, foco), disparados
@@ -70,7 +126,7 @@ cuadros, `critica.json`).
 | `corto` | 60 s ±10 % | gancho + 3–4 tarjetas + 1–2 golpes | ≈ 810 caracteres | ≈ 850 créditos |
 | `medio` (por defecto) | 120 s ±10 % | gancho + 6–8 tarjetas + 2–4 golpes | ≈ 1,675 | ≈ 1,700 |
 | `largo` | 240 s ±10 % | gancho + 11–15 tarjetas + 3–6 golpes | ≈ 3,437 | ≈ 3,450 |
-| `prueba` (solo fixture) | 45 s ±10 % | gancho + 2–3 tarjetas + 0–1 golpes | ≈ 599 | 0 (voz falsa) |
+| `prueba` (solo fixture) | 55 s ±10 % | gancho + 2–3 tarjetas + 0–2 escenas de texto | ≈ 744 | 0 (voz falsa) |
 
 Medido: 15.5 caracteres de voz por segundo a 1.1×, más 0.7 s por escena y 2.8 s de cierre; presupuesto =
 `(s − 0.7·(1 + máx tarjetas + máx golpes) − 2.8)·15.5`. Por escena: gancho 30–130 caracteres, tarjeta 40–230,
@@ -81,18 +137,21 @@ dan una media de 84 s y recomiendan ≤ 90 s, pero el usuario prefiere `medio` p
 
 | Gate | Dónde | Qué exige |
 |---|---|---|
-| V1 escenas | `guion --check` | tipos `gancho|tarjeta|golpe`; tarjetas y golpes en el rango de la duración; cada `tuit` con tarjeta y sin repetir; contexto ≤ 40; cierre con texto, 2 líneas de resumen y pregunta; el `gancho` de texto suelto del formato viejo se rechaza |
-| V2 cifras | `guion --check` | cada número de la voz, la pantalla, la línea, el golpe, el resumen y los captions tiene respaldo en `datos.json` (`verificacion.sueltos`, como G10) o en el `valor_calculo` de su escena |
+| V1 escenas | `guion --check` | tipos `gancho|tarjeta|golpe|definicion|adivina|mapa|ranking|escala|tiempo|explica`; tarjetas y escenas de texto (con `explica`) en el rango de la duración; cada `tuit` con tarjeta y sin repetir; contexto ≤ 40; cierre con texto, 2–3 líneas de resumen (≤ 40) y pregunta; ≤ 1 `explica` (2 en largo), nunca dos seguidas; el `gancho` de texto suelto del formato viejo se rechaza |
+| V2 cifras | `guion --check` | cada número de la voz, la pantalla, la línea, el golpe, el resumen y los captions tiene respaldo en `datos.json` (`verificacion.sueltos`, como G10) o en el `valor_calculo` de su escena; «K de cada N» en la voz o en pantalla no cuenta como números sueltos cuando su `calculo` respalda N/K (o K con N = 100): así se escribe la escala humana y la escena `escala` |
 | V3 voz | `guion --check` | sin dígitos en la voz; ida y vuelta de cada conversión; ninguna cifra de género ambiguo sin `{n:f}`/`{n:m}` |
 | V4 presupuesto | `guion --check` | caracteres de voz por tipo (gancho 30–130, tarjeta 40–230, golpe 20–110, cierre 40–200); duración estimada en ±10 % del objetivo |
 | V5 reglas | `guion --check` | cierre termina en la pregunta; el cierre no menciona fuentes, el hilo, la marca ni «sígueme»; sin «en suma», enlaces ni @handles en voz, golpes, pantallas ni líneas; captions presentes |
-| **V9 estructura** | `guion --check` | escena 1 = gancho único con `formula` válida, `pantalla` (cifra o ≤ 4 palabras, ≤ 24) y `linea` (≤ 8 palabras, ≤ 60) que pasan la prueba en silencio **y cuyas palabras clave la voz dice** (en un golpe, solo aviso: vale un sinónimo); en gancho y golpes, la oración de la voz que dice la cifra de la pantalla (o la primera) contiene el `verbo` declarado; escena 2 = T1 sin enlace; cada tarjeta con `golpe` (1–6 palabras, ≤ 40, ≠ titular); `enlace ∈ pero|por_eso|y` desde la escena 3 con su conector al inicio de la voz y «y» ≤ ⌊n/3⌋; golpes con pantalla y línea, nunca dos seguidos ni en la escena 2; `promesa.texto` (10–80) literal en la escena `en` ∈ {1, 2} y `pago` en el último tercio; `calculo` legible (ids de cifra, literales de `datos.json`, constantes) cuyo resultado aparece escrito en la escena; **ritmo estimado** ≤ 6 s entre inicio, fin de la primera oración, cada cifra y fin |
-| Workflow | `video.js` | retorno del guionista coherente (gate ok, tipos, gancho primero, T1 segunda, promesa/pago en rango, pregunta con «?»); retorno del crítico coherente (bloqueantes, veredicto, cada puntaje ≤ 2 con falta `bloquea` de su regla); ≤ 3 vueltas (corrección de lo que bloquea, o pulido mientras el crítico deje mejoras); si sigue en `corregir`, el comando pregunta al usuario antes de gastar créditos |
+| **V9 estructura** | `guion --check` | escena 1 = gancho único con `formula` válida, `pantalla` (cifra o ≤ 4 palabras, ≤ 24) y `linea` (≤ 8 palabras, ≤ 60) que pasan la prueba en silencio **y cuyas palabras clave la voz dice** (en un golpe, solo aviso: vale un sinónimo); en gancho y golpes, la oración de la voz que dice la cifra de la pantalla (o la primera) contiene el `verbo` declarado; escena 2 = T1 sin enlace; cada tarjeta con `golpe` (1–6 palabras, ≤ 40, ≠ titular); `enlace ∈ pero|por_eso|y` desde la escena 3 con su conector al inicio de la voz y «y» ≤ ⌊n/3⌋; golpes con pantalla y línea, nunca dos escenas de texto seguidas ni en la escena 2; `definicion` con `termino` (≤ 3 palabras, ≤ 24) y `definicion` (≤ 90), la voz dice el término y **antes** anuncia que viene un concepto (`ANUNCIOS_DEFINICION`: «para entender», «qué es», «antes de seguir»…; la pantalla pone el rótulo «Para entender»); `adivina` con `pregunta` (≤ 70, «?») cuyas palabras dice la voz (se escribe a su ritmo), 3 `opciones` (≤ 14, con cifra, distintas) y `correcta`, la voz nombra las tres, después pide pausar para responder (`PAUSA_ADIVINA`) y su última cifra es la correcta, que lleva respaldo (V2) mientras las otras dos son señuelos exentos; `explica` con `animacion` del catálogo o `brief` (40–400), `titulo` (≤ 6 palabras, ≤ 40), 2–6 `pasos` (≤ 28, cifras con respaldo) que la voz dice uno por uno; cierre con ≥ 3 s de voz antes de la pregunta (la pantalla de conclusiones); ≤ 1 definición (2 en largo) y ≤ 1 adivina; `mapa`, `ranking`, `tiempo` y `escala` ≤ 1 cada una, con `tuit` de una tarjeta de la plantilla que admiten (mapa; barras-h o mapa; antes-despues o linea; waffle o pictograma, opcional) y `golpe`; `ranking` con `top` 3–6 ≤ items y la voz dice el primer valor; `escala` con `de_cada` [K, N] válido, `etiqueta` ≤ 40, `calculo` y la voz dice «K de cada N»; `promesa.texto` (10–80) literal en la escena `en` ∈ {1, 2} y `pago` en el último tercio; `calculo` legible (ids de cifra, literales de `datos.json`, constantes) cuyo resultado aparece escrito en la escena; **ritmo estimado** ≤ 6 s entre inicio, fin de la primera oración, cada cifra y fin (la `explica` marca su ritmo con los pasos: lo mide V10 con los tiempos reales); **gancho en 3 s**: primera oración de la voz ≤ 4 s estimados, promesa ≤ 3 s si `en: 1`, voz del gancho ≤ 7.5 s |
+| Workflow | `video.js` | retorno del guionista coherente (gate ok, tipos, gancho primero, T1 segunda, promesa/pago en rango, pregunta con «?»); retorno del crítico coherente (bloqueantes, veredicto, cada puntaje ≤ 2 con falta `bloquea` de su regla); ≤ 2 vueltas de corrección de lo que bloquea; una sola vuelta de pulido, solo si aprueba con algún puntaje de 3 (aprobado con todo ≥ 4 no se pule: las mejoras van al reporte y el coordinador aplica las que son solo texto en pantalla); si sigue en `corregir`, el comando pregunta al usuario antes de gastar créditos |
 | V6 alineación | `tiempos` | las palabras de Scribe coinciden con la locución (si no, rehacer la voz de esa escena); duración real fuera de ±15 % = aviso |
-| **V10 ritmo** | `tiempos` | con tiempos reales, hueco máximo entre eventos visuales (golpe, entrada, cifra, foco, nota, fin de línea, fin) ≤ 6 s; **aviso**, no falla. `tiempos` también fija la transición de entrada de cada escena (`slideleft`; `slideup` en el giro) y desplaza golpe y cifra 0.3 s para que no queden bajo el `xfade` |
+| **V10 ritmo** | `tiempos` | con tiempos reales, hueco máximo entre eventos visuales (golpe, entrada, cifra, foco, nota, línea y cada palabra de la línea que la voz dice, promesa, fin, y cada año dicho que la tarjeta tiene en su eje: la columna late sin zoom) ≤ 6 s; **aviso**, no falla. `tiempos` también fija la transición de entrada de cada escena del catálogo `TRANSICIONES` (del gancho a la primera tarjeta `smoothleft`; tarjeta → tarjeta `slideleft`; entrada a golpe o definición `smoothleft`; a la adivina `circleopen`; a una escena a pantalla completa `circleopen`; el giro `slideup`; el cierre `fade`; el bucle `fade`; `zoomin` queda fuera: escala con píxeles enteros y se ve pixelado) y desplaza golpe y cifra 0.3 s para que no queden bajo el `xfade`; `montar` rechaza (V8) una transición fuera del catálogo |
+| **V11 escucha** | `escuchar` | **whisper.cpp local** (`brew install whisper-cpp` + `make whisper`, modelo `ggml-small` en `sesiones/_descargas/whisper/`; opcional) transcribe cada `voz_N.mp3` **sin el guion** y lo coteja con la locución: dígitos → palabras con `numeros_es`, coma decimal, género de los numerales y tildes no cuentan; un tramo distinto que toca una palabra numérica es **FALLA** (retoma de esa escena), el resto aviso (ortografía de whisper). Scribe, conectado al nodo TTS, alinea el prompt (devuelve hasta `<break>`): V6 no detecta una cifra mal dicha. Sin whisper, `AVISO V11` y sigue. Resultado en `audio/escucha.json` |
+| **V12 quietud** | `revisar` | por clip, diferencia media de luma entre cuadros muestreados a 4 fps y 270 px (`tblend=difference` + `signalstats`): un tramo de ≥ 2.0 s con todo < 0.02 es pantalla congelada → **aviso** («E7 2.3 s sin movimiento desde 7.5 s»; `--estricto` lo vuelve fallo). La deriva (0.1–0.9) y cada palabra que entra (0.3–1.0) cuentan como movimiento; una pantalla quieta mide < 0.01. `revision/quietud.json` guarda la serie por escena |
 | V7 animación | `grabar` | el último cuadro de cada tarjeta animada es idéntico a su render estático (`scripts/video_animar.js --check`, ≤ 0.1 % de píxeles); el foco vive fuera del iframe y `__caja` no lanza |
 | V8 salida | `montar` | 1080×1920 con audio; −14 ±1.5 LUFS; true peak ≤ −1 dBTP (música 0.22 con ducking; efectos del catálogo; loudnorm en dos pasadas) |
 | K2 efectos | `validate.py` / `sfx.py --check` | `design/sfx/catalogo.json` con los 8 ids fijos, cada WAV presente, duración 0.2–4 s coherente con la cabecera, ganancia −40–0 dB |
+| K3 iconos | `validate.py` / `iconos.py --check` | `design/iconos/catalogo.json` (biblioteca FIJA: 50 iconos Lucide, tag fijado, licencia ISC; `make iconos` la baja UNA vez): cada SVG presente, 24×24, ninguno fuera del catálogo, `LICENSE.txt`. Solo se comprueba si el catálogo existe; el guion la usa con `icono: "<id>"` en gancho, golpe y definición (V1) |
 
 Crítico (`referencias/roles/video-critico.md`, C1–C10): gancho en silencio · razón para quedarse · «¿por qué seguiría
 viendo?» por escena · pero/por eso reales · escala humana · pago · ritmo y re-gancho · cierre · lenguaje y honestidad.
@@ -101,11 +160,16 @@ Puntajes 1–5: gancho, bucle, ritmo, escala_humana, pago, cierre. `pasa` = sin 
 ## Piezas
 
 - `scripts/video.py` (subcomandos, `--help`) · `scripts/numeros_es.py` (`--prueba`) · `scripts/video_grabar.js`
-  · `scripts/video_animar.js` (V7) · `scripts/sfx.py` (`--importar`, `--check` = K2).
+  · `scripts/video_animar.js` (V7) · `scripts/sfx.py` (`--importar`, `--check` = K2) · `scripts/iconos.py` (`--importar`,
+  `--check` = K3, `--lista`) · `video/portada.html` (portada de texto).
 - `video/golpe.html` (gancho y golpes: cifra que cuenta + línea palabra a palabra) · `video/escena.html` (tarjeta con
-  golpe arriba, foco y subtítulos con `.cifra`) · `video/cierre.html` · `video/animar.js` (animadores por plantilla:
-  antes-despues, cifra, barras-v, linea, barras-h, waffle, dona, pesas, mapa, pendiente; el resto aparece con wipe;
-  `__caja(clave)` para el foco).
+  golpe arriba, foco y subtítulos con `.cifra`) · `video/mapa.html` (la tarjeta de mapa a pantalla completa) · `video/ranking.html` · `video/escala.html` · `video/tiempo.html` (escenas a pantalla completa) ·
+  `video/cierre.html` · `video/animar.js` (animador propio para las 26 plantillas: estado = f(t), en p = 1 el DOM queda igual que el render, V7; `__caja` para el foco).
+- `video/comun.css` y `video/comun.js` (módulo común `V`): fuentes, lienzo, golpe de arriba, barra de progreso,
+  subtítulos, portada limpia y base 4:5; parámetros de la URL, curvas (`V.eo`, `V.prog`), `V.cargar` (escenas.json y
+  paleta), `V.tarjeta` (los `DATA` de una tarjeta), `V.subtitulos`. **Una escena nueva** enlaza `comun.css` antes de su
+  `<style>`, carga `comun.js` antes de su script, usa `V.*` y escribe solo lo propio; su `seek(t)` sigue siendo
+  función pura de t (sin relojes ni animaciones CSS), y `video_grabar.js` la añade a su lista blanca.
 - `design/musica/` y `design/sfx/` (bibliotecas fijas) · `.claude/workflows/video.js` · `.claude/agents/video-guionista.md`
   + `referencias/roles/video-guionista.md` · `.claude/agents/video-critico.md` + `referencias/roles/video-critico.md`.
 - Prueba sin créditos: `make video-fixture` (hilo `sesiones/_fixture/salida`, duración `prueba` de 45 s, voz falsa

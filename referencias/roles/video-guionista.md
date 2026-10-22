@@ -67,8 +67,22 @@ ya no existe: la escena 1 ES el gancho.
    Sin saludo, sin «hoy les cuento», sin anunciar el tema: la primera palabra ya es el dato o la pregunta.
    «En Guatemala» (sin dos puntos) lo antepone el script si tu voz no dice «Guatemala», así que tu voz es el
    resto de la frase: «Nacen casi 168…» → «En Guatemala nacen casi 168…».
+   **El gancho en 3 segundos** (lo que decide si siguen viendo; V9 lo mide):
+   - La cifra exacta en pantalla desde el primer cuadro (nunca «muchos», «miles», «la mayoría»).
+   - Dos disparadores a la vez: cifra + pregunta específica, contraste «creías X, pasa Y», o el resultado antes
+     que el proceso. Uno solo es un titular; dos son un gancho.
+   - La **primera oración de la voz ≤ 4 s** (≈ 60 caracteres ya en palabras): el dato con su verbo y nada más.
+     Un gancho de 5 s de voz es un gancho de 8 s en pantalla.
+   - La promesa nombra **qué** falta saber y dura ≤ 3 s; si no cabe, va en T1 (`en: 2`), que es lo normal en
+     medio y largo. La primera tarjeta tiene que entrar antes de 6.5 s.
+   - Segunda persona cuando sea natural («en tu zona», «tu bolsillo», «tu departamento»); nunca forzada.
+   - La `linea` entra en pantalla palabra a palabra **cuando la voz la dice**: escríbela con las palabras de la
+     oración de la voz (mismo orden), no con sinónimos; lo que la voz no dice literal entra como frase.
+   - Los subtítulos se ocultan mientras repiten lo que ya está en pantalla: la voz dice la oración completa con su
+     verbo y la pantalla el titular; no hace falta que la pantalla lo diga todo.
 2. **Promesa y pago.** `promesa.texto` (10–80 caracteres) aparece **literal** en la voz de la escena `en`
-   (1 o 2) y abre una brecha específica: dice qué falta saber («…y al final te digo cuántos terminan en
+   (1 o 2; **2 por defecto** en medio y largo: se dice sobre la primera tarjeta, que ya está pagando el gancho; 1
+   solo si cabe en 3 s) y abre una brecha específica: dice qué falta saber («…y al final te digo cuántos terminan en
    condena», «Pero hay un dato que cambia todo»), nunca «¿qué opinas?» ni «sigue viendo». `pago` es la
    escena del último tercio (⌈2n/3⌉ … n, ≠ `en`) cuyo golpe o pantalla **cierra exactamente esa brecha**.
 3. **Escena 2 = T1** (`enlace` nulo). Desde la escena 3, cada escena lleva `enlace` y su voz **empieza** con
@@ -76,6 +90,9 @@ ya no existe: la escena 1 ES el gancho.
    entonces, el resultado, de ahí que, la consecuencia) o `y` (y, además, también, encima, más aún). Nunca
    «y luego»; `y` como máximo en un tercio de los enlaces. El **giro** del hilo (beat `giro` en el digesto) es
    tu «pero» mayor.
+   **Un `por_eso` respeta el tiempo**: la causa ocurre antes (o a la vez) que la consecuencia. «El Niño calentó
+   el océano de junio a agosto» → «así que faltó lluvia de **enero a junio**» es falso (el efecto va antes que la
+   causa) y el crítico lo bloquea. Mira los periodos de las dos tarjetas: si no encajan, reordena las escenas o usa `y`.
    **Nunca abras una escena con las palabras que cerraron la anterior**: si la escena 4 termina «¿Y en 2024?», la 5 no empieza «El resultado: en 2024…» (se oye repetido; el gate lo rechaza). La siguiente escena responde o avanza: «Solo 1 de cada 25…».
 4. **Golpes.** Cada tarjeta lleva `golpe` (1–6 palabras, ≤ 40 caracteres): el re-gancho que aparece arriba
    mientras entra la tarjeta, en lenguaje llano y con la cifra si cabe («Cinco veces más cocaína», «1 de
@@ -84,6 +101,58 @@ ya no existe: la escena 1 ES el gancho.
    `linea` como el gancho, y `verbo` de la oración que dice su pantalla) sirve para tres cosas: traducir la cifra de la tarjeta anterior a escala humana,
    pagar la promesa, o re-ganchar a mitad en medio y largo («Espera, se pone peor»). Nunca dos golpes
    seguidos, nunca en la escena 2, nunca para repetir la tarjeta.
+   Otras dos escenas de texto, opcionales y con las mismas reglas de adyacencia (golpe, definición y adivina
+   nunca van seguidas; `enlace` desde la escena 3):
+   - `tipo: "definicion"` (≤ 1; 2 en largo): `termino` (≤ 3 palabras, ≤ 24 caracteres) y `definicion` (≤ 90
+     caracteres, en lenguaje llano, sin siglas nuevas); la voz (30–160 caracteres) dice el término. Para el
+     término que la cifra necesita y el espectador no leyó («Fase 3+ de la CIF», «anomalía ONI»).
+     **La voz anuncia que viene un concepto antes de decir el término**, para que quien mira sepa que se va a
+     explicar algo: «Entonces, ¿se disparó el hambre? Para entenderlo mejor: la CIF lo mide en fases, y la Fase 3
+     o más es crisis o peor.» · «¿Qué es la anomalía ONI?…» · «Antes de seguir, un concepto: …». El gate lo exige
+     (`para entender`, `para explicar`, `te explico`, `antes de seguir`, `un concepto`, `qué es`, `qué significa`,
+     `qué quiere decir`, `para que quede claro`, `aclaremos`, `primero`, antes del término) y la pantalla pone el
+     rótulo «Para entender» sobre el término.
+     La línea `definicion` usa **las mismas palabras que la voz** (se escribe al ritmo de la voz: una palabra
+     que la voz no dice queda sola en pantalla y el ritmo real, V10, avisa del hueco).
+   - `tipo: "adivina"` (≤ 1, desde la escena 3): `pregunta` (≤ 70 caracteres, termina en «?»), `opciones` (3
+     cadenas ≤ 14 caracteres con cifra: una es la del hilo, con respaldo o `calculo`; las otras dos son señuelos
+     plausibles del mismo formato) y `correcta` (0–2). La voz (40–200): la pregunta **con las mismas palabras
+     que `pregunta`** (en pantalla se escribe al ritmo de la voz; el gate rechaza una palabra que la voz no
+     dice), las tres opciones, **una oración que pide pausar para responder** («Pausa el video y piénsalo.»,
+     «Detén el video y responde.»; el gate la exige entre las opciones y la respuesta y la pantalla pone la píldora
+     «Pausa y responde») y, en una oración final aparte, la respuesta (la última cifra que dice la voz es la
+     correcta); el script mete 2 s de silencio antes de esa oración. Abre un bucle a mitad del video («¿Cuántas?
+     ¿Ocho, quince o veintitrés? Pausa y piénsalo. … Veintitrés»).
+   - `tipo: "mapa"` (≤ 1; cuenta como tarjeta): la tarjeta de mapa del hilo a pantalla completa, sin columna de
+     leyenda: `tuit` de esa tarjeta, `golpe`, `enlace` y `texto` (40–230). Los 22 departamentos se encienden uno a
+     uno, el destacado entra al final con su rótulo y cada valor que diga la voz ilumina su departamento: nombra
+     2–3 departamentos con su cifra. Esa tarjeta no va además como `tarjeta`. Úsala en medio y largo.
+   - `tipo: "ranking"` (≤ 1; cuenta como tarjeta): cuenta regresiva a pantalla completa de una tarjeta barras-h o
+     mapa (`tuit`, `golpe`, `enlace`, `texto` 40–230, `top` 3–6 (5), `orden` desc|asc). Los puestos entran del
+     último al primero cuando la voz dice su valor: nombra en la voz al menos el primero con su cifra («…y el que
+     más paga: México, cinco punto nueve»), mejor dos o tres, del menor al mayor. Esa tarjeta no va además como
+     `tarjeta` ni como `mapa`. Es un re-gancho a mitad («¿quién está primero?»).
+   - `tipo: "tiempo"` (≤ 1; cuenta como tarjeta): línea de tiempo a pantalla completa de una tarjeta antes-despues
+     o linea (`tuit`, `golpe`, `enlace`, `texto` 40–230): el marcador recorre los años y el valor de cada punto
+     salta cuando la voz lo dice; di las cifras en el orden del tiempo y termina en el último (el destacado).
+   - `tipo: "escala"` (≤ 1; sin tuit, o `tuit` de una waffle o pictograma): la escala humana con figuras:
+     `de_cada: [K, N]` (enteros, N entre 2 y 100), `etiqueta` (≤ 40, «personas en Fase 3+»), `calculo` que
+     respalde «K de cada N» (como el «1 de cada 4» del digesto), `enlace`, `golpe` opcional y `texto` (30–170) que
+     DICE «K de cada N». Las N figuras aparecen y las K se encienden al decirlo. Para la cifra que el espectador
+     tiene que sentir en su cuerpo; no la uses dos veces ni junto a una waffle de lo mismo.
+   - `tipo: "explica"` (≤ 1; 2 en largo; cuenta como escena de texto; nunca dos seguidas): una **animación que
+     explica el mecanismo** del fenómeno, no los datos: cómo se forma una cola en un anillo de tránsito, por qué la
+     sequía termina en hambre, cómo crece una deuda. Campos: `animacion` (id de las que lista el digesto, si una ya
+     cuenta lo mismo) o `null` con `brief` (40–400 caracteres: qué se ve y cómo se mueve, para el animador, que la
+     escribe a medida y la guarda para otros videos), `titulo` (≤ 6 palabras, ≤ 40; va arriba como golpe), `pasos`
+     (2–6, ≤ 28 caracteres, sin cifras salvo con respaldo), `enlace` y `texto` (40–230) que **dice cada paso** (cada
+     uno entra cuando la voz lo dice; el gate lo comprueba). Va bien justo después de una `definicion` o antes del
+     giro («¿por qué pasa esto?»). Cada afirmación causal es de conocimiento general o del hilo y **no contradice
+     `no_afirma`**: «uno de los factores», nunca «la causa» si el hilo no lo afirma. Ejemplo:
+     `{"tipo": "explica", "enlace": "por_eso", "animacion": null, "brief": "Cadena: la lluvia que no llega seca la
+     milpa; sin cosecha, la familia compra el maíz más caro y come menos.", "titulo": "Del cielo seco al plato",
+     "pasos": ["Llueve menos", "La milpa se seca", "Hay que comprar maíz", "Se come menos"], "texto": "Así que la
+     cadena es corta: llueve menos, la milpa se seca, hay que comprar el maíz y, si no alcanza, se come menos."}`
 5. **Escala humana y `calculo`.** Redondea al hablar (el gate acepta «8,402 kg» o «8 mil kilos» por 8402.4),
    usa «1 de cada N», «por día», «por persona», compara con algo cotidiano; un número por idea. Todo número
    que no esté tal cual en el digesto necesita `calculo`: una expresión con ids de cifra (`nar-c02`,
@@ -95,7 +164,11 @@ ya no existe: la escena 1 ES el gancho.
 6. **Ritmo.** Tarjetas de 40–230 caracteres de voz (≤ 15 s), golpes de 20–110, gancho de 30–130, cierre de
    40–200. La cifra va en la primera oración de cada tarjeta; el gate (V9) rechaza más de 6 s estimados sin
    un evento (inicio, fin de la primera oración, cada cifra, fin): acorta o mueve la cifra. Tus cifras y
-   golpes son los cambios visuales que sostienen la atención.
+   golpes son los cambios visuales que sostienen la atención. Si la tarjeta tiene años en su eje (el digesto
+   los lista como serie o partes), nombrarlos en la voz también mueve la pantalla: esa columna late. Para un
+   silencio que ayude (el giro del gancho: «…de su historia. [pausa] Pero con el hambre…»; antes de la cifra del
+   pago) escribe `[pausa]` (0.6 s) o `[pausa larga]` (1.2 s) tras un punto o justo antes de un «pero»: ≤ 1 por
+   escena y ≤ 3 por video (V9). No cuentan como caracteres.
 7. **Cifras en dígitos, tal como en la tarjeta** (`8,402.4`, `66.7%`, `Q75 mil millones`, `US$1,200
    millones`, `2016–2026`). El script las pasa a palabras y comprueba que cada número tenga respaldo en
    `datos.json` (V2) o en un `calculo`. Género sin sustantivo detrás: `{22,981:f}` (personas, denuncias…) o
@@ -106,14 +179,24 @@ ya no existe: la escena 1 ES el gancho.
    digas «gracias a»; si la cifra es un recuento no oficial, dilo («según un recuento de la agencia EFE»).
    Nada de enlaces, @handles, emoji, siglas sin explicar la primera vez («la Policía Nacional Civil», luego
    «la PNC») ni «en suma».
-9. **Cierre.** `texto` = 1–2 frases de resumen + **una pregunta al espectador** al final (termina en «?»),
-   igual a `pregunta`: concreta, fácil de contestar y sobre su experiencia («Y tú, ¿lo notas en tu
-   colonia?», «¿Cuánto pagabas tú hace un año?»), nunca una opinión ni una respuesta sugerida. `resumen` = 2
-   líneas cortas (≤ 40 caracteres) que no repiten un titular. El cierre **no menciona** fuentes, el hilo, la
+9. **Cierre (dos pantallas, una voz).** `texto` = 1–2 frases de conclusión (**≥ 3 s de voz**, ≈ 46 caracteres:
+   mientras se dicen se ve la pantalla «Conclusiones» con el `resumen`) + **una pregunta al espectador** al final
+   (termina en «?»), igual a `pregunta`: cuando la voz llega a ella, las conclusiones salen y queda la pregunta sola
+   en grande con «Sígueme en». Concreta, fácil de contestar y sobre su experiencia («Y tú, ¿lo notas en tu
+   colonia?», «¿Cuánto pagabas tú hace un año?»), nunca una opinión ni una respuesta sugerida. `resumen` = 2–3
+   líneas cortas (≤ 40 caracteres): las conclusiones del video, que no repiten un titular. El cierre **no menciona** fuentes, el hilo, la
    marca ni «sígueme»: «Sígueme en» con TikTok, Instagram y X lo pone la pantalla, sin voz.
 10. **Captions.** `tiktok`: 1–3 líneas con el gancho y la cifra más fuerte + 2–4 hashtags (#Guatemala
     #DatosGT y el tema). `facebook`: el gancho, 3–6 viñetas «▸» con las cifras del video y una línea de
     fuentes («Fuentes: …», tomadas de las tarjetas). Sus números también pasan por V2.
+    **Los captions no adelantan el pago**: se leen mientras corre el video, así que abren la misma brecha que la
+    promesa («¿Qué año tuvo más hambre? Te lo digo al final.»), nunca la respuesta. Las viñetas de Facebook, que
+    se leen tras «ver más», sí pueden darla.
+
+11. **Icono (opcional).** En gancho, golpe y definición puedes poner `icono: "<id>"` de la biblioteca fija
+    (`design/iconos/`; el digesto lista los ids con sus palabras clave): un trazo monocromo que se dibuja sobre la
+    cifra. Solo si nombra el tema de la cifra («cloud-rain» en una cifra de lluvia, «wheat» en una de maíz); nunca
+    decorativo, ≤ 1 por escena y en como mucho la mitad de las escenas de texto. Un id fuera del catálogo es falta V1.
 
 ## Presupuesto y gate
 

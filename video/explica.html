@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<!-- Escena «explica» de /video (?n=N): una animación que explica el mecanismo del fenómeno (por qué o cómo pasa), no los
+     datos. Arriba el título como golpe y la barra de progreso; en medio el lienzo donde se dibuja la animación de la
+     biblioteca video/animaciones/<id>.js (S.animacion), que se registra con ANIM.registrar(id, {meta, pintar, seek});
+     abajo los subtítulos. Los pasos y sus tiempos (cuando la voz dice cada uno) vienen en S.T (video.py tiempos) y sus
+     textos en S.P. La página añade una deriva lenta al lienzo (nunca quieto). La graba scripts/video_grabar.js llamando
+     a seek(t). -->
+<link rel="stylesheet" href="comun.css">
+<style>
+#lienzo { position: absolute; top: 450px; left: var(--izq); right: var(--der); height: 920px; transform-origin: 50% 50%; will-change: transform; }
+/* formato 4:5 (1080×1350) para el feed */
+html.f45 #lienzo { top: 260px; height: 820px; }
+</style>
+</head>
+<body>
+<div id="arriba"><div id="golpe"></div><div id="progreso"></div></div>
+<div id="lienzo"></div>
+<div id="subs"></div>
+<script src="comun.js"></script>
+<script>
+// registro de animaciones: cada video/animaciones/<id>.js llama ANIM.registrar('<id>', { meta, pintar, seek })
+const ANIM = { _m: {}, registrar(id, m) { this._m[id] = m; } };
+const n = V.n, F45 = V.F45, { clamp } = V;
+let S, TROZOS, M;
+const cargarScript = (src) => new Promise((ok, mal) => {
+  const s = document.createElement('script');
+  s.src = src; s.onload = ok; s.onerror = () => mal(new Error('no existe ' + src));
+  document.head.appendChild(s);
+});
+
+window.__listo = (async () => {
+  const C = await V.cargar(), todo = C.todo; S = C.S; TROZOS = C.trozos;
+  S.arriba = S.arriba || [];
+  V.pintarGolpe(S);
+  V.pintarProgreso(todo);
+  if (!/^[a-z0-9-]+$/.test(S.animacion || '')) throw new Error('escena explica sin animación válida: «' + S.animacion + '»');
+  await cargarScript('animaciones/' + S.animacion + '.js');
+  M = ANIM._m[S.animacion];
+  if (!M || typeof M.pintar !== 'function' || typeof M.seek !== 'function') throw new Error('animaciones/' + S.animacion + '.js no registra { pintar, seek }');
+  await document.fonts.ready;
+  V.ajustarGolpe(S, F45 ? 250 : 430);
+  const lienzo = document.getElementById('lienzo');
+  M.pintar(lienzo, S.P, { colores: todo.colores, F45, ancho: lienzo.clientWidth, alto: lienzo.clientHeight, V });
+})();
+
+window.seek = (t) => {
+  V.seekGolpe(t, S);
+  V.seekProgreso(t, n, S.dur);
+  M.seek(t, S.T);
+  // deriva lenta del lienzo durante la escena (nunca quieto)
+  document.getElementById('lienzo').style.transform = `scale(${(1 + 0.025 * clamp(t / S.dur)).toFixed(4)})`;
+  V.subtitulos(t, S, TROZOS);
+};
+</script>
+</body></html>

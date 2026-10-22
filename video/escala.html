@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<!-- Escena «escala» de /video (?n=N): la escala humana con pictogramas. «K de cada N» en grande y N figuras de
+     persona (SVG propio, sin descargas) en una fila (N ≤ 10) o en filas de 10; las K primeras se encienden con el
+     acento cuando la voz dice K (S.T.destacadas), una tras otra; debajo, la etiqueta («personas en Fase 3+»).
+     Arriba el golpe (si lo hay) y la barra de progreso; abajo los subtítulos. Los tiempos vienen en S.T
+     (video.py tiempos). La graba scripts/video_grabar.js llamando a seek(t). -->
+<link rel="stylesheet" href="comun.css">
+<style>
+#cuerpo { position: absolute; top: 500px; left: var(--izq); right: var(--der); transform-origin: 0 0; will-change: transform; }
+#cifra { font: 400 190px/1 'Instrument Serif', serif; letter-spacing: -.03em; white-space: nowrap; }
+#cifra b { font-weight: 400; color: var(--acento, var(--ink)); }
+#figuras { margin-top: 48px; display: grid; gap: 10px; justify-content: start; }
+#figuras svg { width: 100%; height: auto; display: block; opacity: 0; }
+#figuras svg * { fill: color-mix(in srgb, var(--ink) 26%, transparent); }
+#figuras svg.si * { fill: var(--acento, var(--ink)); }
+#etiqueta { margin-top: 44px; font: 700 52px/1.15 Archivo, sans-serif; }
+/* formato 4:5 (1080×1350) para el feed */
+html.f45 #cuerpo { top: 300px; }
+html.f45 #cifra { font-size: 150px; }
+html.f45 #figuras { margin-top: 32px; }
+html.f45 #etiqueta { margin-top: 30px; font-size: 44px; }
+</style>
+</head>
+<body>
+<div id="arriba"><div id="golpe"></div><div id="progreso"></div></div>
+<div id="cuerpo"><div id="cifra"></div><div id="figuras"></div><div id="etiqueta"></div></div>
+<div id="subs"></div>
+<script src="comun.js"></script>
+<script>
+const n = V.n, F45 = V.F45, { clamp, prog } = V;
+let S, TROZOS, FIG = [];
+// una persona: cabeza y cuerpo (viewBox 0 0 40 64)
+const PERSONA = '<svg viewBox="0 0 40 64"><circle cx="20" cy="11" r="10"/><path d="M8 26h24a6 6 0 0 1 6 6v18h-7v14h-7V48h-8v16H9V50H2V32a6 6 0 0 1 6-6z"/></svg>';
+
+window.__listo = (async () => {
+  const C = await V.cargar(), todo = C.todo; S = C.S; TROZOS = C.trozos;
+  S.arriba = S.arriba || [];
+  V.pintarGolpe(S);
+  V.pintarProgreso(todo);
+  const T = S.T, K = T.k, N = T.n;
+  document.getElementById('cifra').innerHTML = `<b>${K}</b> de cada ${N}`;
+  const cols = N <= 10 ? N : 10, celda = N <= 10 ? Math.min(78, Math.floor((F45 ? 910 : 791) / N) - 10) : (N <= 50 ? 66 : 54);
+  const fig = document.getElementById('figuras');
+  fig.style.gridTemplateColumns = `repeat(${cols}, ${celda}px)`;
+  fig.innerHTML = Array.from({ length: N }, () => PERSONA).join('');
+  FIG = [...fig.querySelectorAll('svg')];
+  document.getElementById('etiqueta').textContent = T.etiqueta || '';
+  await document.fonts.ready;
+  V.ajustarGolpe(S, F45 ? 250 : 430);
+})();
+
+window.seek = (t) => {
+  V.seekGolpe(t, S);
+  V.seekProgreso(t, n, S.dur);
+  const T = S.T, N = T.n, K = T.k;
+  // «K de cada N» entra con la escena; las figuras aparecen escalonadas desde T.figuras; las K primeras se encienden
+  // una tras otra desde T.destacadas (cuando la voz dice K)
+  const pc = prog(t, T.ini - 0.1, T.ini + 0.4);
+  const cifra = document.getElementById('cifra');
+  cifra.style.opacity = pc; cifra.style.transform = `translateY(${((1 - pc) * 24).toFixed(1)}px)`;
+  const paso = Math.min(0.03, 0.8 / N), pasoK = Math.min(0.08, 0.9 / Math.max(1, K));
+  FIG.forEach((f, i) => {
+    f.style.opacity = prog(t, T.figuras + i * paso, T.figuras + i * paso + 0.25);
+    if (i < K) {
+      const q = prog(t, T.destacadas + i * pasoK, T.destacadas + i * pasoK + 0.2);
+      f.classList.toggle('si', q > 0.5);
+      f.style.transform = `scale(${(1 + 0.18 * Math.sin(Math.PI * q)).toFixed(4)})`;
+    }
+  });
+  const pe = prog(t, T.etiqueta_t, T.etiqueta_t + 0.4);
+  document.getElementById('etiqueta').style.opacity = pe;
+  // deriva lenta del cuerpo durante la escena (nunca quieto)
+  document.getElementById('cuerpo').style.transform = `scale(${(1 + 0.03 * clamp(t / S.dur)).toFixed(4)})`;
+  V.subtitulos(t, S, TROZOS);
+};
+</script>
+</body></html>

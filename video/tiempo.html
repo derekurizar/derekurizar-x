@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<!-- Escena «tiempo» de /video (?n=N): línea de tiempo a pantalla completa de una tarjeta antes-despues (dos puntos)
+     o linea (hasta 9 puntos de la serie destacada): un riel horizontal con los puntos equiespaciados y sus etiquetas
+     debajo; un marcador recorre el riel durante la escena y el valor de cada punto salta encima cuando la voz lo
+     dice (o cuando el marcador lo alcanza); el último (o el destacado) va con el acento y en grande; en antes-despues
+     la píldora (×1.77 o +77 %) aparece al final. Arriba el golpe y la barra de progreso; debajo el kicker y la
+     fuente; abajo los subtítulos. Los puntos y sus tiempos vienen en S.T (video.py tiempos); el formato se lee de
+     los DATA de tarjeta_N.html (h.js). La graba scripts/video_grabar.js llamando a seek(t). -->
+<link rel="stylesheet" href="comun.css">
+<style>
+#kicker { position: absolute; top: 440px; left: var(--izq); right: var(--der); font: 500 24px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; }
+#cuerpo { position: absolute; top: 520px; left: var(--izq); right: var(--der); height: 760px; transform-origin: 50% 50%; will-change: transform; }
+#riel { position: absolute; top: 420px; left: 0; right: 0; height: 10px; border-radius: 5px; background: color-mix(in srgb, var(--ink) 22%, transparent); }
+#riel b { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: var(--ink); border-radius: 5px; }
+#marcador { position: absolute; top: 404px; width: 42px; height: 42px; margin-left: -21px; border-radius: 50%; background: var(--bg); border: 8px solid var(--ink); box-sizing: border-box; }
+.punto { position: absolute; top: 425px; width: 0; }
+.punto i { position: absolute; left: -13px; top: -13px; width: 26px; height: 26px; border-radius: 50%; background: var(--ink); transform: scale(0); }
+.punto.si i { left: -19px; top: -19px; width: 38px; height: 38px; background: var(--acento, var(--ink)); }
+.punto .et { position: absolute; top: 44px; left: 0; transform: translateX(-50%); font: 600 28px/1 'JetBrains Mono', monospace; white-space: nowrap; letter-spacing: .02em; }
+.punto .v { position: absolute; bottom: 40px; left: 0; transform: translateX(-50%); font: 700 48px/1 'JetBrains Mono', monospace; letter-spacing: -.02em; white-space: nowrap; opacity: 0; }
+.punto.si .v { font-size: 72px; color: var(--acento, var(--ink)); bottom: 48px; }
+.punto .sub { position: absolute; top: 84px; left: 0; transform: translateX(-50%); font: 500 22px/1.2 Archivo, sans-serif; white-space: nowrap; opacity: .75; }
+#pildora { position: absolute; top: 600px; left: 50%; transform: translateX(-50%); padding: 18px 40px; border-radius: 999px; background: var(--acento, var(--ink)); color: var(--bg); font: 800 64px/1 Archivo, sans-serif; letter-spacing: -.02em; opacity: 0; white-space: nowrap; }
+#fuente { position: absolute; top: 1340px; left: var(--izq); right: var(--der); font: 500 20px/1.2 'JetBrains Mono', monospace; opacity: .75; }
+/* formato 4:5 (1080×1350) para el feed */
+html.f45 #kicker { top: 250px; }
+html.f45 #cuerpo { top: 300px; height: 620px; }
+html.f45 #riel { top: 330px; }
+html.f45 #marcador { top: 314px; }
+html.f45 .punto { top: 335px; }
+html.f45 #pildora { top: 490px; font-size: 54px; }
+html.f45 #fuente { top: 1000px; }
+</style>
+<script src="h.js"></script>
+</head>
+<body>
+<div id="arriba"><div id="golpe"></div><div id="progreso"></div></div>
+<div id="kicker"></div>
+<div id="cuerpo"><div id="riel"><b></b></div><div id="marcador"></div><div id="puntos"></div><div id="pildora"></div></div>
+<div id="fuente"></div>
+<div id="subs"></div>
+<script src="comun.js"></script>
+<script>
+const n = V.n, F45 = V.F45, { clamp, prog, esc } = V;
+let S, TROZOS, D, PUNTOS = [];
+
+window.__listo = (async () => {
+  const C = await V.cargar(), todo = C.todo; S = C.S; TROZOS = C.trozos;
+  S.arriba = S.arriba || [];
+  V.pintarGolpe(S);
+  V.pintarProgreso(todo);
+  D = await V.tarjeta(S.tuit);
+  document.getElementById('kicker').textContent = D.kicker || '';
+  document.getElementById('fuente').textContent = D.fuente ? 'Fuente: ' + D.fuente : '';
+  const f = (v) => H.num(v, D.formato || {});
+  const pts = S.T.puntos || [], ancho = 1080 - (F45 ? 170 : 289);
+  // los puntos equiespaciados sobre el riel, con margen para que los rótulos de los extremos no se salgan
+  const margen = Math.min(120, ancho / (2 * Math.max(1, pts.length)));
+  const xDe = (i) => margen + (pts.length > 1 ? (ancho - 2 * margen) * i / (pts.length - 1) : (ancho - 2 * margen) / 2);
+  document.getElementById('puntos').innerHTML = pts.map((p, i) => `<div class="punto${p.hi ? ' si' : ''}" style="left:${xDe(i).toFixed(1)}px"><i></i>` +
+    `<div class="v">${esc(f(p.valor))}</div><div class="et">${esc(p.etiqueta)}</div>${p.sub ? `<div class="sub">${esc(p.sub)}</div>` : ''}</div>`).join('');
+  PUNTOS = [...document.querySelectorAll('.punto')].map((el, i) => ({ el, p: pts[i], x: xDe(i), v: el.querySelector('.v'), i: el.querySelector('i'), f }));
+  if (S.T.pildora) document.getElementById('pildora').textContent = S.T.pildora.texto;
+  await document.fonts.ready;
+  V.ajustarGolpe(S, F45 ? 250 : 430);
+})();
+
+window.seek = (t) => {
+  V.seekGolpe(t, S);
+  V.seekProgreso(t, n, S.dur);
+  const T = S.T, ini = T.ini;
+  document.getElementById('kicker').style.opacity = prog(t, ini - 0.3, ini + 0.2);
+  document.getElementById('fuente').style.opacity = prog(t, ini + 0.3, ini + 0.8);
+  // el riel se dibuja al entrar; el marcador lo recorre de T.marcador[0] a T.marcador[1]; cada punto aparece cuando
+  // el marcador pasa y su valor salta cuando la voz lo dice (p.start)
+  const pr = prog(t, ini, ini + 0.6);
+  document.getElementById('riel').style.opacity = pr;
+  const [ma, mb] = T.marcador, u = clamp((t - ma) / Math.max(0.001, mb - ma));
+  const x0 = PUNTOS.length ? PUNTOS[0].x : 0, x1 = PUNTOS.length ? PUNTOS[PUNTOS.length - 1].x : 0;
+  const xm = x0 + (x1 - x0) * u;
+  document.getElementById('marcador').style.left = xm.toFixed(1) + 'px';
+  document.getElementById('marcador').style.opacity = prog(t, ma - 0.3, ma + 0.1);
+  document.getElementById('riel').querySelector('b').style.width = Math.max(0, xm).toFixed(1) + 'px';
+  for (const q of PUNTOS) {
+    const llega = ma + (mb - ma) * (x1 > x0 ? (q.x - x0) / (x1 - x0) : 0);
+    const pp = prog(t, Math.min(llega, q.p.start), Math.min(llega, q.p.start) + 0.3);
+    q.i.style.transform = `scale(${pp.toFixed(3)})`;
+    q.el.querySelector('.et').style.opacity = prog(t, ini + 0.2, ini + 0.7);
+    const pv = prog(t, q.p.start, q.p.start + 0.35);
+    q.v.style.opacity = pv;
+    q.v.style.transform = `translateX(-50%) translateY(${((1 - pv) * 22).toFixed(1)}px) scale(${(0.9 + 0.1 * pv + (q.p.dicho ? 0.06 * Math.sin(Math.PI * clamp((t - q.p.dicho[0]) / Math.max(0.001, q.p.dicho[1] - q.p.dicho[0]))) : 0)).toFixed(4)})`;
+  }
+  if (T.pildora) {
+    const pl = prog(t, T.pildora.start, T.pildora.start + 0.4);
+    const el = document.getElementById('pildora');
+    el.style.opacity = pl; el.style.transform = `translateX(-50%) scale(${(0.8 + 0.2 * pl).toFixed(4)})`;
+  }
+  // deriva lenta del cuerpo durante la escena (nunca quieto)
+  document.getElementById('cuerpo').style.transform = `scale(${(1 + 0.03 * clamp(t / S.dur)).toFixed(4)})`;
+  V.subtitulos(t, S, TROZOS);
+};
+</script>
+</body></html>

@@ -6,39 +6,59 @@
      va en --acento. Zona segura de TikTok: columna x 85–876, arriba desde y=250, subtítulos en y=1500 (ver
      escena.html). La graba scripts/video_grabar.js llamando a seek(t).
      T = { pant: { texto, v, desde, hasta, pulso }, linea: [{ text, start }], fin } -->
+<link rel="stylesheet" href="comun.css">
 <style>
-@font-face { font-family: 'Instrument Serif'; font-weight: 400; src: url(fonts/instrument-serif-400.woff2) format('woff2'); }
-@font-face { font-family: 'Archivo'; font-weight: 100 900; src: url(fonts/archivo-var.woff2) format('woff2'); }
-@font-face { font-family: 'JetBrains Mono'; font-weight: 100 800; src: url(fonts/jetbrains-mono-var.woff2) format('woff2'); }
-html, body { margin: 0; }
-:root { --izq: 85px; --der: 204px; }
-body { width: 1080px; height: 1920px; overflow: hidden; background: var(--bg); color: var(--ink); position: relative; font-family: Archivo, sans-serif; }
-#arriba { position: absolute; top: 250px; left: var(--izq); right: var(--der); }
-#progreso { display: flex; gap: 10px; }
-#progreso i { flex: 1; height: 6px; background: color-mix(in srgb, var(--ink) 28%, transparent); border-radius: 3px; overflow: hidden; }
-#progreso i b { display: block; height: 100%; width: 0; background: var(--ink); }
+#progreso { margin-top: 0; }
 #contexto { font: 500 22px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; margin-top: 18px; opacity: .85; }
 #cuerpo { position: absolute; top: 560px; left: var(--izq); right: var(--der); transform-origin: 0 40%; will-change: transform; }
+#icono { height: 0; margin-bottom: 0; color: var(--ink); }
+#icono svg { width: 140px; height: 140px; stroke-width: 1.5; display: block; }
+body.con-icono #icono { height: 140px; margin-bottom: 28px; }
+html.f45 #icono svg { width: 110px; height: 110px; }
+html.f45 body.con-icono #icono { height: 110px; margin-bottom: 20px; }
 #cifra { font: 400 300px/.9 'Instrument Serif', serif; letter-spacing: -.03em; color: var(--acento, var(--ink)); white-space: nowrap; transform-origin: 0 60%; }
 #cifra.texto { font-size: 150px; line-height: 1; letter-spacing: -.015em; white-space: normal; }
 #linea { font: 700 64px/1.1 Archivo, sans-serif; margin-top: 48px; }
 #linea span { display: inline-block; margin-right: .25em; }
-#subs { position: absolute; top: 1400px; left: var(--izq); right: var(--der); text-align: center; font: 700 48px/1.25 Archivo, sans-serif; }
-#subs span { margin: 0 .1em; }
-#subs .no { opacity: .38; }
-#subs .cifra { font-size: 60px; font-weight: 800; letter-spacing: -.01em; }
-#subs .ahora { color: var(--resalte-ink); background: var(--resalte-bg); border-radius: 10px; padding: 0 .12em; }
+/* definición: el rótulo «Para entender» avisa que viene un concepto; el término como texto (no cuenta) y la definición
+   en hasta tres líneas */
+#rotulo { display: none; font: 600 30px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--acento, var(--ink)); margin-bottom: 26px; opacity: 0; }
+body.definicion #rotulo { display: block; }
+html.f45 #rotulo { font-size: 26px; margin-bottom: 20px; }
+body.definicion #linea { font-size: 56px; line-height: 1.15; margin-top: 40px; }
+/* adivina: la pregunta y tres opciones que entran una a una; al revelar, la correcta se rellena y las otras se apagan */
+body.adivina #cuerpo { top: 470px; }
+#pregunta { font: 400 76px/1.05 'Instrument Serif', serif; letter-spacing: -.015em; }
+#pregunta span { display: inline-block; margin-right: .22em; }
+#opciones { margin-top: 44px; display: flex; flex-direction: column; gap: 22px; align-items: flex-start; }
+.op { font: 700 58px/1 'JetBrains Mono', monospace; padding: 22px 34px; border: 4px solid var(--ink); border-radius: 22px; transform-origin: 0 50%; opacity: 0; }
+.op b { font-weight: 500; opacity: .6; margin-right: .5em; }
+.op.si { background: var(--acento, var(--ink)); color: var(--bg); border-color: var(--acento, var(--ink)); }
+.op.si b { opacity: .8; }
+/* «pausa y responde»: entra cuando la voz lo pide; la barra de abajo se vacía hasta el revelado */
+#pausa { position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: 20px; margin-top: 52px; padding: 18px 34px 22px 26px;
+  border-radius: 999px; background: var(--ink); color: var(--bg); font: 700 42px/1 Archivo, sans-serif; opacity: 0; transform-origin: 0 50%; }
+#pausa .barras { display: flex; gap: 8px; }
+#pausa .barras i { width: 11px; height: 36px; border-radius: 3px; background: var(--bg); }
+#pausa b { position: absolute; left: 0; bottom: 0; height: 7px; width: 100%; background: var(--bg); opacity: .6; transform-origin: 0 50%; }
+/* formato 4:5 (1080×1350) para el feed */
+html.f45 #cuerpo { top: 330px; }
+html.f45 #linea { font-size: 56px; margin-top: 36px; }
+html.f45 body.adivina #cuerpo { top: 290px; }
+html.f45 #pregunta { font-size: 64px; }
+html.f45 .op { font-size: 50px; padding: 18px 28px; }
+html.f45 #opciones { margin-top: 32px; gap: 16px; }
+html.f45 #pausa { margin-top: 34px; font-size: 36px; padding: 14px 28px 18px 22px; }
 </style></head>
 <body>
 <div id="arriba"><div id="progreso"></div><div id="contexto"></div></div>
-<div id="cuerpo"><div id="cifra"></div><div id="linea"></div></div>
+<div id="cuerpo"><div id="icono"></div><div id="rotulo">Para entender</div><div id="cifra"></div><div id="linea"></div></div>
 <div id="subs"></div>
+<script src="comun.js"></script>
 <script>
-const n = Number(new URLSearchParams(location.search).get('n'));
-let S, TROZOS, NUM = null;
-const clamp = (x) => Math.max(0, Math.min(1, x)), eo = (x) => 1 - Math.pow(1 - clamp(x), 3);
-const prog = (t, a, b) => (t >= b ? 1 : eo((t - a) / Math.max(0.001, b - a)));
-const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+const n = V.n, F45 = V.F45, { clamp, eo, prog, esc, normal } = V;
+let S, TROZOS, NUM = null, TRAZOS = [], EN_PANTALLA = new Set(), T_CIFRA = 0;
 // número dentro de un texto formateado («US$5.90», «1,596.2 kg»): se cuenta con el mismo formato (copiado de animar.js)
 const RE_NUM = /([-−]?)(\d{1,3}(?:,\d{3})+|\d+)(?:\.(\d+))?/;
 function numTexto(s) {
@@ -54,20 +74,36 @@ function numTexto(s) {
   };
   return { v, dec, fmt };
 }
-const trocear = (ps) => { const out = []; let cur = [];
-  for (const p of ps) { const largo = cur.map((x) => x.text).join(' ').length + p.text.length + 1;
-    if (cur.length && largo > 26) { out.push(cur); cur = []; }
-    cur.push(p); if (/[.?:;…]$/.test(p.text)) { out.push(cur); cur = []; } }
-  if (cur.length) out.push(cur); return out; };
 window.__listo = (async () => {
-  const todo = await (await fetch('escenas.json')).json();
-  for (const [k, v] of Object.entries(todo.colores)) document.documentElement.style.setProperty('--' + k.replace('_', '-'), v);
-  S = todo.escenas.find((e) => e.n === n);
-  TROZOS = trocear(S.palabras);
-  document.getElementById('progreso').innerHTML = todo.escenas.map(() => '<i><b></b></i>').join('');
+  const C = await V.cargar(), todo = C.todo; S = C.S; TROZOS = C.trozos;
+  document.body.classList.add(S.tipo || 'golpe');
+  V.pintarProgreso(todo);
   document.getElementById('contexto').textContent = todo.contexto_superior || '';
+  // lo que ya está en pantalla (pantalla + línea, o pregunta + opciones) más el prefijo y el contexto: el subtítulo se
+  // oculta mientras solo repita eso (la primera oración) y vuelve para lo que no está (la promesa, la respuesta)
+  const enPantalla = S.tipo === 'adivina' ? [...S.T.pregunta.map((w) => w.text), ...S.T.opciones.map((o) => o.text)]
+    : [S.T.pant.texto, ...(S.T.linea || []).map((w) => w.text)];
+  [...enPantalla, 'En Guatemala', todo.contexto_superior || ''].forEach((s) => String(s).split(/\s+/).forEach((w) => { const k = normal(w); if (k) EN_PANTALLA.add(k); }));
+  // en la adivina el subtítulo sale desde el principio: la frase que la voz dice antes de la pregunta («Aun así, …»)
+  // no está en pantalla, y esconderla dejaba la pantalla quieta (V12)
+  T_CIFRA = S.tipo === 'adivina' ? 0 : S.T.pant.desde;
+  if (S.tipo === 'adivina') {
+    document.getElementById('cuerpo').innerHTML = `<div id="pregunta">${S.T.pregunta.map((w) => `<span>${esc(w.text)}</span>`).join('')}</div>` +
+      `<div id="opciones">${S.T.opciones.map((o, i) => `<div class="op"><b>${'ABC'[i]}</b>${esc(o.text)}</div>`).join('')}</div>` +
+      (S.T.pausa != null ? '<div id="pausa"><span class="barras"><i></i><i></i></span><span>Pausa y responde</span><b></b></div>' : '');
+    await document.fonts.ready;
+    return;
+  }
   const cifra = document.getElementById('cifra'), P = S.T.pant;
   cifra.textContent = P.texto;
+  if (S.icono) {  // acento de la biblioteca fija (design/iconos/): se dibuja trazo a trazo al entrar la cifra
+    const r = await fetch('iconos/' + S.icono + '.svg');
+    if (!r.ok) throw new Error('icono «' + S.icono + '» no está en design/iconos/');
+    document.getElementById('icono').innerHTML = await r.text();
+    document.body.classList.add('con-icono');
+    TRAZOS = [...document.querySelectorAll('#icono svg *')].filter((el) => el.getTotalLength).map((el) => {
+      const L = el.getTotalLength(); el.style.strokeDasharray = L; el.style.strokeDashoffset = L; return { el, L }; });
+  }
   // cuenta solo si es una cifra con algo que contar (≥ 2 o con decimales); «1 de cada 3» o «Menos denuncias» entran de golpe
   const nt = P.v != null ? numTexto(P.texto) : null;
   NUM = nt && (Math.abs(nt.v) >= 2 || nt.dec > 0) && !/\bde cada\b/i.test(P.texto) ? nt : null;
@@ -75,18 +111,43 @@ window.__listo = (async () => {
   await document.fonts.ready;
   const ancho = document.getElementById('cuerpo').clientWidth;
   if (NUM) {  // una línea: se achica hasta caber en la columna; si ni a 160 px cabe («8,402 kg de cocaína»), dos líneas
-    for (let fs = 300; fs > 160 && cifra.scrollWidth > ancho; fs -= 10) cifra.style.fontSize = fs + 'px';
+    if (F45) cifra.style.fontSize = '240px';
+    for (let fs = F45 ? 240 : 300; fs > 160 && cifra.scrollWidth > ancho; fs -= 10) cifra.style.fontSize = fs + 'px';
     if (cifra.scrollWidth > ancho) {
       cifra.style.whiteSpace = 'normal'; cifra.style.lineHeight = '.95';
       for (let fs = 160; fs > 100 && (cifra.scrollWidth > ancho || cifra.offsetHeight > 2.1 * fs); fs -= 8) cifra.style.fontSize = fs + 'px';
     }
-  } else {    // texto: hasta dos líneas
+  } else {    // texto: hasta dos líneas (el término de una definición arranca más chico)
     cifra.classList.add('texto');
-    for (let fs = 150; fs > 96 && cifra.offsetHeight > 2.1 * fs; fs -= 6) cifra.style.fontSize = fs + 'px';
+    const fs0 = S.tipo === 'definicion' ? (F45 ? 96 : 110) : (F45 ? 130 : 150);
+    cifra.style.fontSize = fs0 + 'px';
+    for (let fs = fs0; fs > 96 && cifra.offsetHeight > 2.1 * fs; fs -= 6) cifra.style.fontSize = fs + 'px';
   }
 })();
+// sin subtítulo antes de que aterrice la cifra ni mientras solo repite lo que ya está en pantalla
+const subtitulos = (t) => V.subtitulos(t, S, TROZOS, { ocultar: (tr, t) => t < T_CIFRA + 0.3 || tr.every((x) => EN_PANTALLA.has(normal(x.text))) });
+const seekAdivina = (t) => {
+  const T = S.T, rev = eo((t - T.revelado) / 0.35);
+  [...document.querySelectorAll('#pregunta span')].forEach((s, i) => {
+    const w = eo((t - T.pregunta[i].start + 0.15) / 0.3); s.style.opacity = w; s.style.transform = `translateY(${(1 - w) * 30}px)`; });
+  [...document.querySelectorAll('#opciones .op')].forEach((el, i) => {
+    const w = eo((t - T.opciones[i].start) / 0.35), si = i === T.correcta;
+    el.style.opacity = w * (1 - (si ? 0 : 0.65) * rev);
+    el.style.transform = `translateX(${(1 - w) * -40}px) scale(${(1 + (si ? 0.08 : 0) * rev).toFixed(4)})`;
+    el.classList.toggle('si', si && rev > 0.5);
+  });
+  const pz = document.getElementById('pausa');
+  if (pz) {
+    const w = eo((t - T.pausa) / 0.3);
+    pz.style.opacity = w * (1 - rev);
+    pz.style.transform = `translateY(${((1 - w) * 24).toFixed(1)}px) scale(${(0.94 + 0.06 * w).toFixed(4)})`;
+    pz.querySelector('b').style.transform = `scaleX(${(1 - clamp((t - T.pausa) / Math.max(0.3, T.revelado - T.pausa))).toFixed(4)})`;
+  }
+  document.getElementById('cuerpo').style.transform = `scale(${(1 + 0.03 * clamp(t / S.dur)).toFixed(4)})`;
+};
 window.seek = (t) => {
-  [...document.querySelectorAll('#progreso b')].forEach((b, i) => { b.style.width = (i + 1 < n ? 100 : i + 1 === n ? 100 * clamp(t / S.dur) : 0) + '%'; });
+  V.seekProgreso(t, n, S.dur);
+  if (S.tipo === 'adivina') { seekAdivina(t); subtitulos(t); return; }
   const cifra = document.getElementById('cifra'), P = S.T.pant;
   const p = prog(t, P.desde, P.hasta);
   // la cifra entra creciendo (.9 → 1) mientras cuenta; late cuando la voz la dice más tarde que la pantalla
@@ -99,14 +160,20 @@ window.seek = (t) => {
     cifra.style.opacity = prog(t, P.desde, P.desde + 0.35);
   }
   cifra.style.transform = `scale(${escala.toFixed(4)})`;
+  // el rótulo de la definición entra un poco antes que el término
+  if (S.tipo === 'definicion') document.getElementById('rotulo').style.opacity = prog(t, P.desde - 0.25, P.desde + 0.1);
+  // el icono se traza de P.desde − 0.3 a P.desde + 0.2 y late con la cifra
+  if (TRAZOS.length) {
+    const q = prog(t, P.desde - 0.3, P.desde + 0.2);
+    TRAZOS.forEach((x) => { x.el.style.strokeDashoffset = (x.L * (1 - q)).toFixed(2); });
+    document.getElementById('icono').style.transform = `scale(${(escala / (.9 + .1)).toFixed(4)})`;
+    document.getElementById('icono').style.opacity = Math.min(1, 0.3 + q);
+  }
   // deriva lenta de todo el cuerpo durante la escena (nunca quieto)
   document.getElementById('cuerpo').style.transform = `scale(${(1 + 0.03 * clamp(t / S.dur)).toFixed(4)})`;
   [...document.querySelectorAll('#linea span')].forEach((s, i) => {
     const w = eo((t - S.T.linea[i].start + 0.15) / 0.3); s.style.opacity = w; s.style.transform = `translateY(${(1 - w) * 30}px)`; });
-  const subs = document.getElementById('subs');
-  const k = TROZOS.findIndex((c, j) => t >= c[0].start - 0.05 && t < ((TROZOS[j + 1] || [{ start: 1e9 }])[0].start - 0.05));
-  const tr = TROZOS[k];
-  subs.innerHTML = !tr || t > S.fin_voz + 0.4 ? '' : tr.map((x) => `<span class="${t >= x.start && t < x.end + 0.08 ? 'ahora' : t >= x.end ? '' : 'no'}${x.num ? ' cifra' : ''}">${esc(x.text)}</span>`).join(' ');
+  subtitulos(t);
 };
 </script>
 </body></html>

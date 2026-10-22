@@ -12,65 +12,39 @@
      1 ocupa x 80–1000 (por encima de y≈1070 todo el ancho es seguro); los subtítulos en y=1500.
      El foco y la deriva viven en el transform de #marco (fuera del iframe): el estado final de la tarjeta lo
      comprueba V7 (video_animar.js) con la misma hoja vertical. ?debug=1 dibuja las cajas de los focos. -->
+<link rel="stylesheet" href="comun.css">
 <style>
-@font-face { font-family: 'Instrument Serif'; font-weight: 400; src: url(fonts/instrument-serif-400.woff2) format('woff2'); }
-@font-face { font-family: 'Archivo'; font-weight: 100 900; src: url(fonts/archivo-var.woff2) format('woff2'); }
-@font-face { font-family: 'JetBrains Mono'; font-weight: 100 800; src: url(fonts/jetbrains-mono-var.woff2) format('woff2'); }
-html, body { margin: 0; }
-:root { --izq: 85px; --der: 204px; }
-body { width: 1080px; height: 1920px; overflow: hidden; background: var(--bg); color: var(--ink); position: relative; font-family: Archivo, sans-serif; }
-#arriba { position: absolute; top: 250px; left: var(--izq); right: var(--der); }
-#golpe { font: 400 72px/1.0 'Instrument Serif', serif; letter-spacing: -.015em; }
-#golpe span { display: inline-block; margin-right: .22em; }
-#progreso { display: flex; gap: 10px; margin-top: 26px; }
-#progreso i { flex: 1; height: 6px; background: color-mix(in srgb, var(--ink) 28%, transparent); border-radius: 3px; overflow: hidden; }
-#progreso i b { display: block; height: 100%; width: 0; background: var(--ink); }
 /* la tarjeta a escala 1 bajo el golpe; la ventana recorta lo que el foco saca de cuadro */
 #ventana { position: absolute; top: 420px; left: 0; width: 1080px; height: 800px; overflow: hidden; }
 #marco { width: 1080px; height: 1080px; transform-origin: 0 0; will-change: transform; }
 #marco iframe { width: 1080px; height: 1080px; border: 0; display: block; }
 #ventana .caja { position: absolute; border: 3px dotted #ff3b30; box-sizing: border-box; pointer-events: none; }
-#subs { position: absolute; top: 1400px; left: var(--izq); right: var(--der); text-align: center; font: 700 48px/1.25 Archivo, sans-serif; }
-#subs span { margin: 0 .1em; }
-#subs .no { opacity: .38; }
-#subs .cifra { font-size: 60px; font-weight: 800; letter-spacing: -.01em; }
-#subs .ahora { color: var(--resalte-ink); background: var(--resalte-bg); border-radius: 10px; padding: 0 .12em; }
+/* formato 4:5 (1080×1350) para el feed: sin zona segura de teléfono, todo más junto */
+html.f45 #ventana { top: 250px; height: 840px; }
 </style></head>
 <body>
 <div id="arriba"><div id="golpe"></div><div id="progreso"></div></div>
 <div id="ventana"><div id="marco"><iframe id="tarjeta"></iframe></div></div>
 <div id="subs"></div>
+<script src="comun.js"></script>
 <script>
-const n = Number(new URLSearchParams(location.search).get('n'));
+const n = V.n, F45 = V.F45, { clamp, eo } = V;
 const DEBUG = new URLSearchParams(location.search).get('debug') === '1';
-const VT = 420, VH = 800;            // ventana de la tarjeta (página y = 420–1220)
-const CORTE = [57, 1023];            // recorte lateral del teléfono (x de página = x de la ventana)
+const VT = F45 ? 250 : 420, VH = F45 ? 840 : 800;   // ventana de la tarjeta (página y = 420–1220; 250–1090 en 4:5)
+const CORTE = F45 ? [0, 1080] : [57, 1023];         // recorte lateral del teléfono (x de página = x de la ventana)
 const DERIVA = { s: 0.035, tx: -12, ty: -8 };  // movimiento lento de toda la escena cuando no hay foco
 let S, TROZOS, FOCOS = [];
-const clamp = (x) => Math.max(0, Math.min(1, x)), eo = (x) => 1 - Math.pow(1 - clamp(x), 3);
-const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
-// subtítulos en trozos de ≤ 26 caracteres (caben en la columna segura); corta también tras puntuación fuerte
-const trocear = (ps) => { const out = []; let cur = [];
-  for (const p of ps) { const largo = cur.map((x) => x.text).join(' ').length + p.text.length + 1;
-    if (cur.length && largo > 26) { out.push(cur); cur = []; }
-    cur.push(p); if (/[.?:;…]$/.test(p.text)) { out.push(cur); cur = []; } }
-  if (cur.length) out.push(cur); return out; };
 window.__listo = (async () => {
-  const todo = await (await fetch('escenas.json')).json();
-  for (const [k, v] of Object.entries(todo.colores)) document.documentElement.style.setProperty('--' + k.replace('_', '-'), v);
-  S = todo.escenas.find((e) => e.n === n);
-  TROZOS = trocear(S.palabras);
+  const C = await V.cargar(), todo = C.todo; S = C.S; TROZOS = C.trozos;
   // el golpe (v2: S.arriba) o, en un escenas.json v1, el gancho de la escena 1
   S.arriba = S.arriba || S.gancho || [];
-  document.getElementById('golpe').innerHTML = S.arriba.map((w) => `<span>${esc(w.text)}</span>`).join('');
-  // barra de progreso en todas las escenas (cierre incluido): un tramo por escena
-  document.getElementById('progreso').innerHTML = todo.escenas.map(() => '<i><b></b></i>').join('');
+  V.pintarGolpe(S);
+  V.pintarProgreso(todo);
   const fr = document.getElementById('tarjeta');
   fr.src = 'tarjeta_' + S.tuit + '.html';
   const [, css] = await Promise.all([document.fonts.ready, (await fetch('vertical.css')).text()]);
   // el golpe no puede bajar de la tarjeta: se achica hasta que golpe + barra quepan sobre ella
-  const g = document.getElementById('golpe'), arriba = document.getElementById('arriba');
-  for (let fs = 72; S.arriba.length && fs > 48 && arriba.offsetTop + arriba.offsetHeight > VT - 16; fs -= 4) g.style.fontSize = fs + 'px';
+  V.ajustarGolpe(S, VT);
   await new Promise((r, x) => { const t0 = Date.now(); const i = setInterval(() => { const d = fr.contentDocument;
     if (d && d.body && d.body.dataset.listo) { clearInterval(i); if (d.body.dataset.error) x(new Error(d.body.dataset.error)); else r(); }
     else if (Date.now() - t0 > 15000) { clearInterval(i); x(new Error('la tarjeta no terminó de dibujarse')); } }, 50); });
@@ -108,23 +82,14 @@ const marco = (t) => {
   return { tx: d.tx * (1 - Wt) + (stx / sw) * Wt, ty: d.ty * (1 - Wt) + (sty / sw) * Wt, s: d.s * (1 - Wt) + (ss / sw) * Wt };
 };
 window.seek = (t) => {
-  // el golpe entra deslizándose desde la izquierda, palabra a palabra
-  // el bloque entero entra desde la izquierda; cada palabra aparece subiendo (sin montarse sobre la anterior)
-  const pg = eo((t - (S.arriba.length ? S.arriba[0].start : 0) + 0.15) / 0.4);
-  document.getElementById('golpe').style.transform = `translateX(${(1 - pg) * -60}px)`;
-  [...document.querySelectorAll('#golpe span')].forEach((s, i) => {
-    const p = eo((t - S.arriba[i].start + 0.15) / 0.3); s.style.opacity = p; s.style.transform = `translateY(${(1 - p) * 16}px)`; });
-  // progreso: escenas anteriores llenas, la actual avanza con el tiempo
-  [...document.querySelectorAll('#progreso b')].forEach((b, i) => { b.style.width = (i + 1 < n ? 100 : i + 1 === n ? 100 * clamp(t / S.dur) : 0) + '%'; });
+  V.seekGolpe(t, S);
+  V.seekProgreso(t, n, S.dur);
   const m = marco(t);
   document.getElementById('marco').style.transform = `translate(${m.tx.toFixed(2)}px, ${m.ty.toFixed(2)}px) scale(${m.s.toFixed(4)})`;
   if (DEBUG) [...document.querySelectorAll('#ventana .caja')].forEach((d, i) => { const [x, y, bw, bh] = FOCOS[i].caja;
     d.style.left = (m.tx + m.s * x) + 'px'; d.style.top = (m.ty + m.s * y) + 'px'; d.style.width = (m.s * bw) + 'px'; d.style.height = (m.s * bh) + 'px'; });
   document.getElementById('tarjeta').contentWindow.__seek(t, S.T);
-  const subs = document.getElementById('subs');
-  const k = TROZOS.findIndex((c, j) => t >= c[0].start - 0.05 && t < ((TROZOS[j + 1] || [{ start: 1e9 }])[0].start - 0.05));
-  const tr = TROZOS[k];
-  subs.innerHTML = !tr || t > S.fin_voz + 0.4 ? '' : tr.map((p) => `<span class="${t >= p.start && t < p.end + 0.08 ? 'ahora' : t >= p.end ? '' : 'no'}${p.num ? ' cifra' : ''}">${esc(p.text)}</span>`).join(' ');
+  V.subtitulos(t, S, TROZOS);
 };
 </script>
 </body></html>

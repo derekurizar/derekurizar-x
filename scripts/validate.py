@@ -513,6 +513,22 @@ def validar_videos(paletas):
             err(x)
     except Exception as e:  # noqa: BLE001
         err("K2 scripts/sfx.py: %s" % e)
+    # K3: biblioteca fija de iconos de /video (design/iconos/), solo si está importada (scripts/iconos.py)
+    if os.path.exists(os.path.join(RAIZ, "design", "iconos", "catalogo.json")):
+        try:
+            import iconos as _iconos  # noqa: E402
+            for x in _iconos.fallas_k3():
+                err("K3 " + x)
+        except Exception as e:  # noqa: BLE001
+            err("K3 scripts/iconos.py: %s" % e)
+    # K4: biblioteca de animaciones de la escena explica (video/animaciones/, scripts/animaciones.py)
+    if os.path.isdir(os.path.join(RAIZ, "video", "animaciones")):
+        try:
+            import animaciones as _anim  # noqa: E402
+            for x in _anim.fallas_k4():
+                err("K4 " + x)
+        except Exception as e:  # noqa: BLE001
+            err("K4 scripts/animaciones.py: %s" % e)
     rel_mem = "memoria/videos.json"
     if not os.path.exists(os.path.join(RAIZ, rel_mem)):  # ausente = ok: memoria.py lo crea con el primer video
         return

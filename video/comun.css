@@ -1,0 +1,30 @@
+/* Hoja común de las páginas de escena de /video (video/*.html): fuentes locales, lienzo 1080×1920, golpe de arriba,
+   barra de progreso, subtítulos, portada limpia y la base del formato 4:5. Cada página la enlaza ANTES de su <style>,
+   que conserva solo lo propio y las excepciones (misma especificidad: gana la página). La sirve scripts/video_grabar.js. */
+@font-face { font-family: 'Instrument Serif'; font-weight: 400; src: url(fonts/instrument-serif-400.woff2) format('woff2'); }
+@font-face { font-family: 'Archivo'; font-weight: 100 900; src: url(fonts/archivo-var.woff2) format('woff2'); }
+@font-face { font-family: 'JetBrains Mono'; font-weight: 100 800; src: url(fonts/jetbrains-mono-var.woff2) format('woff2'); }
+html, body { margin: 0; }
+/* columna segura de TikTok: x 85–876 (ver escena.html) */
+:root { --izq: 85px; --der: 204px; }
+body { width: 1080px; height: 1920px; overflow: hidden; background: var(--bg); color: var(--ink); position: relative; font-family: Archivo, sans-serif; }
+#arriba { position: absolute; top: 250px; left: var(--izq); right: var(--der); }
+#golpe { font: 400 72px/1.0 'Instrument Serif', serif; letter-spacing: -.015em; }
+#golpe span { display: inline-block; margin-right: .22em; }
+/* barra de progreso: un tramo por escena */
+#progreso { display: flex; gap: 10px; margin-top: 26px; }
+#progreso i { flex: 1; height: 6px; background: color-mix(in srgb, var(--ink) 28%, transparent); border-radius: 3px; overflow: hidden; }
+#progreso i b { display: block; height: 100%; width: 0; background: var(--ink); }
+/* subtítulos: la palabra activa resaltada, las que faltan apagadas, las cifras en grande */
+#subs { position: absolute; top: 1400px; left: var(--izq); right: var(--der); text-align: center; font: 700 48px/1.25 Archivo, sans-serif; }
+#subs span { margin: 0 .1em; }
+#subs .no { opacity: .38; }
+#subs .cifra { font-size: 60px; font-weight: 800; letter-spacing: -.01em; }
+#subs .ahora { color: var(--resalte-ink); background: var(--resalte-bg); border-radius: 10px; padding: 0 .12em; }
+/* portada (&portada=1): el cuadro limpio para la miniatura, sin subtítulos ni barra de progreso */
+html.portada #subs, html.portada #progreso { visibility: hidden; }
+/* formato 4:5 (1080×1350) para el feed: sin zona segura de teléfono */
+html.f45 { --izq: 85px; --der: 85px; }
+html.f45 body { height: 1350px; }
+html.f45 #arriba { top: 70px; }
+html.f45 #subs { top: 1120px; }

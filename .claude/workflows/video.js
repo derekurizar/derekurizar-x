@@ -5,10 +5,12 @@ export const meta = {
   phases: [
     { title: 'Guion', detail: 'video-guionista: guion.json v2 (gancho, promesa, tarjetas y golpes con enlace, cierre, captions); gate python3 scripts/video.py guion --check (V1–V5, V9); ≤ 3 autoreparaciones' },
     { title: 'Crítica', detail: 'video-critico: lee guion.json, locucion.json y digesto.md como espectador (C1–C10); puntajes 1–5 y faltas bloquea|mejora con arreglo; lo que bloquea vuelve al guionista, ≤ 2 vueltas' },
+    { title: 'Animación', detail: 'video-animador (solo si el crítico aprueba y hay una escena explica con animacion null): escribe video/animaciones/<id>.js desde el brief, pasa scripts/animaciones.py --check, la registra en la biblioteca y la asigna a la escena' },
   ],
 }
 
-// Guías: referencias/flujo-video.md, referencias/roles/video-guionista.md y referencias/roles/video-critico.md.
+// Guías: referencias/flujo-video.md, referencias/roles/video-guionista.md, referencias/roles/video-critico.md y
+// referencias/roles/video-animador.md.
 // Los agentes escriben su artefacto COMPLETO en <trabajo>/ y devuelven aquí un resumen validado por schema; los
 // gates de contenido viven en scripts/video.py (V1–V5, V9) y aquí solo se valida el retorno (el sandbox del
 // workflow no lee disco ni tiene Date). Las listas de abajo son ESPEJOS literales de scripts/video.py
@@ -16,11 +18,11 @@ export const meta = {
 // constantes del gate (CPS, COLA, rangos, RITMO_MAX_S, CARACTERES, DURACION_DEFECTO) viven SOLO en video.py.
 
 const DURACIONES = ['corto', 'medio', 'largo', 'prueba']
-const TIPOS = ['gancho', 'tarjeta', 'golpe']
+const TIPOS = ['gancho', 'tarjeta', 'golpe', 'definicion', 'adivina', 'mapa', 'ranking', 'escala', 'tiempo', 'explica']
 const FORMULAS = ['cifra', 'contradiccion', 'pregunta', 'resultado']
 const ENLACES = ['pero', 'por_eso', 'y']
 const PUNTAJES = ['gancho', 'bucle', 'ritmo', 'escala_humana', 'pago', 'cierre']
-const VUELTAS_CRITICA = 3
+const VUELTAS_CRITICA = 2
 const PUNTAJE_MIN = 3
 // Qué regla del crítico (C1–C10) sostiene cada puntaje: un puntaje ≤ 2 exige una falta «bloquea» de su regla.
 const REGLA_DE = { gancho: ['C1'], bucle: ['C2', 'C4'], ritmo: ['C3', 'C7', 'C10'], escala_humana: ['C5'], pago: ['C6'], cierre: ['C8'] }
@@ -114,7 +116,7 @@ async function conReparacion(etiqueta, invocar, validar, max = 2) {
 const S = {
   guion: {
     type: 'object',
-    required: ['archivo', 'gate', 'n_escenas', 'tipos', 'estimado_s', 'promesa', 'gancho', 'pregunta', 'intentos'],
+    required: ['archivo', 'gate', 'n_escenas', 'tipos', 'estimado_s', 'promesa', 'gancho', 'pregunta', 'intentos', 'animaciones_nuevas'],
     properties: {
       archivo: { type: 'string', pattern: 'guion\\.json$' },
       gate: { type: 'string', enum: ['ok', 'falla'] },
@@ -126,6 +128,26 @@ const S = {
       gancho: { type: 'object', required: ['formula', 'pantalla', 'linea'], properties: { formula: { type: 'string', enum: FORMULAS }, pantalla: { type: 'string' }, linea: { type: 'string' } } },
       pregunta: { type: 'string' },
       intentos: { type: 'integer' },
+      // escenas explica con `animacion: null` (piden una animación nueva al animador); [] si no hay
+      animaciones_nuevas: {
+        type: 'array',
+        items: {
+          type: 'object', required: ['escena', 'brief', 'titulo', 'pasos'],
+          properties: { escena: { type: 'integer' }, brief: { type: 'string' }, titulo: { type: 'string' }, pasos: { type: 'array', items: { type: 'string' } } },
+        },
+      },
+    },
+  },
+  animacion: {
+    type: 'object',
+    required: ['id', 'archivo', 'check', 'reutilizada'],
+    properties: {
+      id: { type: 'string', pattern: '^[a-z0-9]+(-[a-z0-9]+)*$' },
+      archivo: { type: 'string' },
+      check: { type: 'string', enum: ['ok', 'falla'] },
+      fallas: { type: 'array', items: { type: 'string' } },
+      lecturas: { type: 'integer' }, vueltas: { type: 'integer' },
+      reutilizada: { type: 'boolean' },
     },
   },
   critica: {
@@ -170,6 +192,16 @@ const validarGuion = (r) => {
   if (!(p.pago >= Math.ceil((2 * n) / 3) && p.pago <= n) || p.pago === p.en) F.push(`promesa.pago = ${p.pago} debe estar en el último tercio (escenas ${Math.ceil((2 * n) / 3)}–${n}) y ser distinto de promesa.en`)
   if (!/\?$/.test(String(r.pregunta || '').trim())) F.push('pregunta del cierre debe terminar en «?»')
   if (r.intentos > 3) avisar(`AVISO: el guionista necesitó ${r.intentos} intentos con el gate (presupuesto 3).`)
+  for (const a of r.animaciones_nuevas || []) {
+    if (!(r.tipos || [])[a.escena - 1] || r.tipos[a.escena - 1] !== 'explica') F.push(`animaciones_nuevas: la escena ${a.escena} no es de tipo explica`)
+  }
+  return F
+}
+const validarAnimacion = (r) => {
+  const F = []
+  if (r.archivo !== `video/animaciones/${r.id}.js`) F.push(`archivo debe ser video/animaciones/${r.id}.js (llegó ${r.archivo})`)
+  if (r.check !== 'ok' && !(r.fallas && r.fallas.length)) F.push('check falla sin detalle: copia las líneas FALLA de scripts/animaciones.py --check')
+  if (r.lecturas > 3) avisar(`AVISO: el animador leyó la hoja de contacto ${r.lecturas} veces (presupuesto 3).`)
   return F
 }
 const validarCritica = (r) => {
@@ -197,10 +229,10 @@ let G = null
 const invocarGuionista = (fallos) =>
   agentRol(
     `Eres el guionista de video (lee referencias/roles/video-guionista.md). TRABAJO = ${trabajo} · hilo ${slug} · duración ${duracion}${fixture ? ' (FIXTURE: sin créditos, voz falsa)' : ''}.\n` +
-      `Lee SOLO ${trabajo}/digesto.md (NO hilo.json, datos.json, HTML ni código). Escribe ${trabajo}/guion.json v2 COMPLETO: contexto_superior, promesa{texto, en, pago}, escenas[] (la 1 de tipo gancho con formula/pantalla/linea/verbo/texto; la 2 la tarjeta T1; luego tarjetas y golpes con enlace pero|por_eso|y, golpe ≤ 6 palabras, calculo cuando traduzcas una cifra; las escenas golpe con pantalla/linea/verbo). La pantalla puede ser titular, la voz NO: la oración que dice la pantalla lleva verbo conjugado («Nacen casi 168 bebés al día…», nunca «Casi 168 bebés al día…»), cierre{texto, resumen[2], pregunta} y caption{tiktok, facebook}.\n` +
+      `Lee SOLO ${trabajo}/digesto.md (NO hilo.json, datos.json, HTML ni código). Escribe ${trabajo}/guion.json v2 COMPLETO: contexto_superior, promesa{texto, en, pago}, escenas[] (la 1 de tipo gancho con formula/pantalla/linea/verbo/texto; la 2 la tarjeta T1; luego tarjetas y golpes con enlace pero|por_eso|y, golpe ≤ 6 palabras, calculo cuando traduzcas una cifra; las escenas golpe con pantalla/linea/verbo; opcionales, como dice el digesto: UNA escena definicion {termino, definicion}, UNA adivina {pregunta, opciones[3], correcta}, UNA escena explica {animacion (id de las del digesto) o null con brief, titulo, pasos[]} que explique el mecanismo del fenómeno y, si el hilo tiene tarjeta de mapa, UNA escena mapa {tuit, golpe} en su lugar). La pantalla puede ser titular, la voz NO: la oración que dice la pantalla lleva verbo conjugado («Nacen casi 168 bebés al día…», nunca «Casi 168 bebés al día…»), cierre{texto, resumen[2–3], pregunta} y caption{tiktok, facebook}.\n` +
       `Corre python3 scripts/video.py guion ${trabajo} --check hasta exit 0 (≤ 3 intentos; corrige SOLO las líneas FALLA).\n` +
       (fallos.length ? `TU GUION FUE RECHAZADO; corrige SOLO esto, no toques lo que ya pasó, y vuelve a pasar el gate:\n - ${fallos.join('\n - ')}\n` : '') +
-      'Retorno: {archivo, gate: ok|falla, fallas[], n_escenas (sin el cierre), tipos[] (uno por escena), estimado_s, promesa{texto, en, pago}, gancho{formula, pantalla, linea}, pregunta, intentos}.',
+      'Retorno: {archivo, gate: ok|falla, fallas[], n_escenas (sin el cierre), tipos[] (uno por escena), estimado_s, promesa{texto, en, pago}, gancho{formula, pantalla, linea}, pregunta, intentos, animaciones_nuevas[]{escena, brief, titulo, pasos} (las escenas explica con animacion null; [] si no hay)}.',
     { agentType: 'video-guionista', schema: S.guion, label: fallos.length ? 'guionista-reparacion' : 'guionista' }
   )
 G = await conReparacion('Guion', invocarGuionista, validarGuion, 2)
@@ -226,10 +258,15 @@ const criticar = (vuelta, previas) =>
     1
   )
 let C = await criticar(1, null)
-// vuelve al guionista lo que bloquea; y si el crítico aprueba con algún puntaje justo (= PUNTAJE_MIN) dejando mejoras,
-// una vuelta de pulido con esas mejoras (0 créditos: la voz aún no se ha generado)
-const pulir = (c) => c.veredicto === 'pasa' && c.faltas.some((f) => f.gravedad === 'mejora')
+// vuelve al guionista lo que bloquea (≤ VUELTAS_CRITICA vueltas en total); y si el crítico aprueba con algún
+// puntaje justo (= PUNTAJE_MIN) dejando mejoras, UNA sola vuelta de pulido con esas mejoras (0 créditos: la voz aún
+// no se ha generado). Aprobado con todo ≥ 4 no se pule: las mejoras que queden van al reporte.
+let pulido = false
+let intentosGuionista = G.intentos
+const pulir = (c) => c.veredicto === 'pasa' && !pulido &&
+  Math.min(...PUNTAJES.map((k) => (c.puntajes || {})[k] ?? 5)) <= PUNTAJE_MIN && c.faltas.some((f) => f.gravedad === 'mejora')
 for (let k = 0; k < VUELTAS_CRITICA && (C.veredicto !== 'pasa' || pulir(C)); k++) {
+  if (C.veredicto === 'pasa') pulido = true
   const faltas = C.faltas.filter((f) => f.gravedad === 'bloquea').concat(C.faltas.filter((f) => f.gravedad === 'mejora'))
   const cabecera = C.veredicto === 'pasa'
     ? 'EL CRÍTICO APROBÓ TU GUION CON PUNTAJES JUSTOS; aplica estas mejoras (el texto exacto viene en ARREGLO; si un arreglo pide una cifra que no está en el digesto, no la inventes: declara la falta de dato) sin tocar lo que ya funciona. Después vuelve a pasar el gate:'
@@ -241,12 +278,41 @@ for (let k = 0; k < VUELTAS_CRITICA && (C.veredicto !== 'pasa' || pulir(C)); k++
     validarGuion,
     1
   )
+  intentosGuionista += G.intentos
   C = await criticar(k + 2, C.faltas)
 }
 const pendientes = C.faltas.filter((f) => f.gravedad === 'bloquea')
 const mejoras = C.faltas.filter((f) => f.gravedad === 'mejora')
 if (C.veredicto !== 'pasa') avisar(`AVISO: la crítica deja ${pendientes.length} falta(s) que bloquean tras ${VUELTAS_CRITICA} vueltas (${trabajo}/critica.json): no gastes créditos de voz sin decidirlo con el usuario.`)
 else avisar(`Crítica: pasa · puntajes ${PUNTAJES.map((p) => p + ' ' + C.puntajes[p]).join(' · ')} · ${mejoras.length} mejora(s) anotadas`)
+
+// ── FASE 3: ANIMACIÓN (solo con el guion aprobado: una animación a medida por escena explica nueva) ─────
+phase('Animación')
+const animaciones = [], animacionesPendientes = []
+const nuevas = G.animaciones_nuevas || []
+if (nuevas.length && (C.veredicto !== 'pasa' || fixture)) {
+  animacionesPendientes.push(...nuevas)
+  avisar(`AVISO: ${nuevas.length} animación(es) sin escribir (${fixture ? 'fixture' : 'el guion no pasó la crítica'}): lanza video-animador cuando el guion quede decidido.`)
+} else {
+  for (const a of nuevas) {
+    const r = await conReparacion(
+      `Animación E${a.escena}`,
+      (fallos) =>
+        agentRol(
+          `Eres el animador de video (lee referencias/roles/video-animador.md y mira video/animaciones/cadena.js). TRABAJO = ${trabajo} · hilo ${slug} · escena ${a.escena} (explica).\n` +
+            `BRIEF: ${a.brief}\nTÍTULO (va arriba, no lo repitas en el lienzo): ${a.titulo}\nPASOS (cada uno entra cuando la voz lo dice): ${a.pasos.map((p, i) => `${i + 1}. ${p}`).join(' · ')}\n` +
+            `Primero python3 scripts/animaciones.py --lista: si una ya sirve, reutilízala. Si no, escribe video/animaciones/<id>.js (id por lo que HACE, no por el video) y pasa python3 scripts/animaciones.py --check <id> (≤ 3 vueltas, ≤ 3 lecturas de su contacto.png). Con check ok: --registrar <id> --video ${slug} y --asignar ${trabajo} --escena ${a.escena} --id <id> (exit 0).\n` +
+            (fallos.length ? `TU RETORNO ANTERIOR FUE RECHAZADO; corrige:\n - ${fallos.join('\n - ')}\n` : '') +
+            'Retorno: {id, archivo, check: ok|falla, fallas[], lecturas, vueltas, reutilizada}.',
+          { agentType: 'video-animador', schema: S.animacion, label: `animador-e${a.escena}` }
+        ),
+      validarAnimacion,
+      1
+    )
+    if (r.check === 'ok') { animaciones.push({ escena: a.escena, ...r }); avisar(`Animación E${a.escena}: «${r.id}»${r.reutilizada ? ' (reutilizada)' : ' (nueva, en la biblioteca)'}`) }
+    else { animacionesPendientes.push({ ...a, fallas: r.fallas }); avisar(`AVISO: la animación de E${a.escena} no pasó animaciones.py --check: ${(r.fallas || []).join(' · ')}`) }
+  }
+}
 
 return {
   trabajo,
@@ -262,11 +328,13 @@ return {
   promesa: G.promesa,
   gancho: G.gancho,
   pregunta: G.pregunta,
-  intentos_guionista: G.intentos,
+  intentos_guionista: intentosGuionista,
   veredicto: C.veredicto,
   puntajes: C.puntajes,
   vueltas_critica: C.vuelta,
   faltas_pendientes: pendientes,
   mejoras,
+  animaciones,
+  animaciones_pendientes: animacionesPendientes,
   avisos_workflow: AVISOS_WF,
 }

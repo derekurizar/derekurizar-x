@@ -105,6 +105,7 @@ async function comparar(browser, a, b) {
         const caja = await pb.evaluate(() => { try { return window.__caja("0") === null ? "null" : "caja"; } catch (e) { return "ERROR " + e.message; } });
         if (caja.startsWith("ERROR")) errores.push("__caja lanza: " + caja.slice(6));
         const B = await foto(pb); await pb.close();
+        if (o.medio) fs.writeFileSync(path.join(o.medio, path.basename(path.dirname(abs)) + "-" + nombre + ".final.png"), B);
         const r = await comparar(browser, A, B);
         const ok = !errores.length && r.n <= r.total * TOLERANCIA;
         if (!ok) fallos++;

@@ -1,159 +1,175 @@
 1
-00:00:00,000 --> 00:00:03,475
-En Guatemala 23 de 39 estaciones midieron
+00:00:00,000 --> 00:00:02,746
+En Guatemala llovió menos que nunca en 23
 
 2
-00:00:03,388 --> 00:00:05,533
-la menor lluvia de su historia.
+00:00:02,649 --> 00:00:03,443
+lugares.
 
 3
-00:00:05,932 --> 00:00:07,728
-Pero con el hambre pasó algo que no
+00:00:03,915 --> 00:00:06,483
+Pero no se proyecta hambre récord.
 
 4
-00:00:07,631 --> 00:00:08,552
-esperas.
+00:00:06,733 --> 00:00:09,120
+Entre junio y agosto, El Niño calentó el
 
 5
-00:00:08,800 --> 00:00:11,177
-Entre junio y agosto, el Pacífico estuvo
+00:00:09,045 --> 00:00:12,635
+océano 1.8 grados sobre lo normal, más que
 
 6
-00:00:11,165 --> 00:00:14,312
-1.8 grados más caliente de lo normal.
+00:00:12,538 --> 00:00:16,181
+en 1997 y 2015.
 
 7
-00:00:14,457 --> 00:00:19,040
-Es El Niño, y en esas fechas supera a 1997
+00:00:16,433 --> 00:00:19,507
+Al final te digo qué año tuvo más hambre.
 
 8
-00:00:19,080 --> 00:00:20,602
-y 2015.
+00:00:19,766 --> 00:00:22,396
+Además, la lluvia ya venía faltando:
 
 9
-00:00:20,867 --> 00:00:23,666
-Además, de enero a junio, en los Valles de
+00:00:22,594 --> 00:00:26,301
+de enero a junio, 29% bajo lo normal en el
 
 10
-00:00:23,548 --> 00:00:26,347
-Oriente faltó casi 1 de cada 3 gotas:
+00:00:26,215 --> 00:00:29,510
+Pacífico y 30% en los Valles de Oriente:
 
 11
-00:00:26,598 --> 00:00:29,292
-30% menos lluvia de lo normal.
+00:00:29,709 --> 00:00:31,863
+casi un tercio de su lluvia.
 
 12
-00:00:29,542 --> 00:00:31,993
-Y eso fue antes de la canícula.
+00:00:32,133 --> 00:00:34,964
+Encima, en Suiza Contenta, Sacatepéquez,
 
 13
-00:00:32,267 --> 00:00:36,428
-Más aún, de mayo a agosto cayeron casi 142
+00:00:34,951 --> 00:00:39,259
+cayeron 141.6 milímetros de mayo a agosto:
 
 14
-00:00:36,352 --> 00:00:38,338
-milímetros en Suiza Contenta,
+00:00:39,510 --> 00:00:42,288
+menos de la mitad que en su año más seco.
 
 15
-00:00:38,293 --> 00:00:39,446
-Sacatepéquez.
+00:00:42,566 --> 00:00:43,540
+El resultado:
 
 16
-00:00:39,845 --> 00:00:41,990
-Su año más seco hasta entonces había dado
+00:00:43,463 --> 00:00:46,051
+8 de cada 10 hogares con pérdidas en el
 
 17
-00:00:41,892 --> 00:00:44,449
-331 milímetros.
+00:00:45,954 --> 00:00:49,745
+Corredor Seco se quedaron sin el 75% o más
 
 18
-00:00:44,700 --> 00:00:48,871
-Así que esa estación recibió apenas el 43%
+00:00:49,627 --> 00:00:51,877
+de su maíz, según Oxfam.
 
 19
-00:00:48,764 --> 00:00:51,056
-de la lluvia de su peor año anterior.
+00:00:52,132 --> 00:00:54,393
+Entonces, ¿se disparó el hambre?
 
 20
-00:00:51,300 --> 00:00:54,468
-Por eso, en el Corredor Seco, 8 de cada 10
+00:00:54,644 --> 00:00:55,755
+Un concepto:
 
 21
-00:00:54,372 --> 00:00:58,595
-hogares con maíz dañado perdieron el 75% o
+00:00:56,153 --> 00:00:58,847
+la CIF mide el hambre en fases;
 
 22
-00:00:58,530 --> 00:01:01,297
-más de su cosecha, según una evaluación de
+00:00:58,992 --> 00:01:01,707
+Fase 3 o más es cuando la familia no cubre
 
 23
-00:01:01,221 --> 00:01:01,878
-Oxfam.
+00:01:01,589 --> 00:01:04,018
+su comida sin sacrificar lo básico.
 
 24
-00:01:02,276 --> 00:01:04,675
-Con la milpa perdida, esperarías que el
-
-25
-00:01:04,588 --> 00:01:06,311
-hambre rompiera récord.
-
-26
-00:01:06,566 --> 00:01:07,339
+00:01:04,265 --> 00:01:05,080
 Pero no:
 
+25
+00:01:05,226 --> 00:01:09,650
+el año con más hambre desde 2019 fue 2022,
+
+26
+00:01:09,690 --> 00:01:13,175
+con 4.6 millones de personas en Fase 3 o
+
 27
-00:01:07,484 --> 00:01:10,864
-este año la proyección es de 3.18 millones
+00:01:13,089 --> 00:01:13,692
+más.
 
 28
-00:01:10,746 --> 00:01:13,070
-de personas en crisis o peor.
+00:01:14,091 --> 00:01:17,175
+Para este año la CIF proyecta 3.2
 
 29
-00:01:13,469 --> 00:01:17,017
-En 2022 fueron 4.6 millones.
+00:01:17,089 --> 00:01:17,861
+millones:
 
 30
-00:01:17,266 --> 00:01:21,237
-Así que la proyección queda 31% por debajo
+00:01:17,870 --> 00:01:19,276
+bastante menos.
 
 31
-00:01:21,129 --> 00:01:23,622
-de 2022 en hambre aguda.
+00:01:19,532 --> 00:01:22,184
+Aun así, el hambre no se reparte igual.
 
 32
-00:01:23,866 --> 00:01:27,351
-Aun así, en Alta Verapaz el 28% de la
+00:01:22,224 --> 00:01:25,001
+¿Qué parte de Alta Verapaz está en Fase 3
 
 33
-00:01:27,243 --> 00:01:29,884
-población está en crisis o emergencia:
+00:01:24,957 --> 00:01:25,614
+o más?
 
 34
-00:01:30,082 --> 00:01:32,449
-más de 1 de cada 4 personas.
+00:01:25,622 --> 00:01:29,149
+¿7, 15 o 28%?
 
 35
-00:01:32,848 --> 00:01:35,035
-Es el departamento con más hambre aguda
+00:01:30,160 --> 00:01:32,685
+El 28% de su gente.
 
 36
-00:01:34,927 --> 00:01:36,132
-del país.
+00:01:32,965 --> 00:01:35,226
+En cambio, Chiquimula, el departamento con
 
 37
-00:01:36,400 --> 00:01:39,210
-Una sequía de récord en el cielo, pero un
+00:01:35,129 --> 00:01:37,284
+menos, tiene 7%.
 
 38
-00:01:39,102 --> 00:01:42,207
-hambre proyectada por debajo de 2022.
+00:01:37,683 --> 00:01:40,229
+Detrás de Alta Verapaz van Huehuetenango y
 
 39
-00:01:42,405 --> 00:01:44,962
-Y en tu pueblo, ¿cuántas semanas pasaron
+00:01:40,152 --> 00:01:42,868
+Jalapa, con 23%.
 
 40
-00:01:44,865 --> 00:01:45,965
-sin llover?
+00:01:43,132 --> 00:01:46,164
+El clima rompió récords y se perdió maíz,
+
+41
+00:01:46,204 --> 00:01:48,422
+pero el hambre proyectada queda por debajo
+
+42
+00:01:48,325 --> 00:01:49,763
+de 2022.
+
+43
+00:01:50,161 --> 00:01:52,612
+Y en tu comunidad, ¿se perdió la milpa
+
+44
+00:01:52,515 --> 00:01:53,541
+este año?

@@ -34,11 +34,23 @@ escribes solo `<TRABAJO>/critica.json`.
   pregunta específica (no «¿qué pasa con…?»)? ¿Hay dos disparadores a la vez
   (cifra + pregunta, contradicción «creías X, pasa Y», resultado primero)?
   Luego con la voz: ¿paga algo o abre algo en ≤ 10–15 s? Un gancho que solo
-  anuncia el tema («Hablemos de la cocaína») es falta.
+  anuncia el tema («Hablemos de la cocaína») es falta. Pregúntate qué hay en
+  pantalla en el segundo 1, 2 y 3: la cifra desde el primer cuadro, la línea
+  completa cuando la voz la termina (≈ 4 s) y, después, ¿qué más? Un gancho sin
+  segundo disparador bloquea; una primera oración de voz > 4 s estimados
+  (`locucion.json`, ≈ 62 caracteres en palabras) bloquea: la primera tarjeta
+  debe entrar antes de 6.5 s. Si la escena lleva `icono`, pregúntate si nombra el tema de la cifra; si
+  es decorativo o despista, pide quitarlo (mejora, no bloquea).
 - **C2 · Razón para quedarse.** `promesa.texto` abre una brecha específica y
   alcanzable: dice **qué** falta saber («y al final te digo cuántos terminan
   en condena»), no «hay más» ni «sigue viendo». Se dice en la escena 1 o 2 y
-  suena natural en la voz.
+  suena natural en la voz; en la escena 1 dura ≤ 3 s (si no cabe, pide `en: 2`)
+  y no repite la línea de pantalla. Una escena `adivina` (pregunta, tres opciones,
+  revelado) abre otro bucle a mitad: vale si la pregunta se contesta con una
+  cifra del hilo y la respuesta llega después de las opciones y de la frase que
+  pide pausar («Pausa el video y piénsalo»: el gate la exige; tú, que suene
+  natural y no regañe); una respuesta adelantada o una pregunta que no importa
+  es falta.
 - **C3 · Por escena: «¿por qué seguiría viendo?».** Cada escena añade algo
   nuevo (ni la cifra ni la idea de la anterior); lo más fuerte va primero
   dentro de la escena; la voz dice **por qué importa**, no «explica» el
@@ -46,9 +58,17 @@ escribes solo `<TRABAJO>/critica.json`.
 - **C4 · «Pero» / «por eso» reales.** El «pero» contradice de verdad lo
   anterior; el «por eso» es consecuencia real. Un «y luego» disfrazado de
   «pero» es falta. El giro del hilo (el beat `giro` del digesto) es el «pero»
-  mayor y debe sonar como tal.
+  mayor y debe sonar como tal. **Mira los periodos**: un «por eso» cuya
+  consecuencia ocurre antes que su causa («El Niño de junio a agosto… así que
+  faltó lluvia de enero a junio») es un enlace falso que **bloquea** aunque sea
+  uno solo: el espectador atento lo nota y deja de creerle al video.
 - **C5 · Escala humana.** Toda cifra grande tiene traducción (1 de cada N,
   por día, por persona, comparada con algo cotidiano); un número por idea;
+  en una escena `mapa`, la voz nombra departamentos con su cifra (el mapa
+  grande paga «¿y en el tuyo?»); en un `ranking`, la voz dice el primer puesto
+  con su cifra y los puestos entran en orden; en un `tiempo`, las cifras van en
+  el orden de los años; una `escala` solo vale si «K de cada N» es la cifra que
+  más duele del video (si no, es relleno: pide quitarla);
   redondeo hablado: «ocho mil cuatrocientos kilos» mejor que «ocho mil
   cuatrocientos dos punto cuatro» cuando el gate lo acepta.
 - **C6 · Pago.** La escena `promesa.pago` cierra **exactamente** la brecha que
@@ -56,13 +76,25 @@ escribes solo `<TRABAJO>/critica.json`.
   antes ni queda sin pagar ni se paga con otra cosa.
 - **C7 · Ritmo y re-gancho.** `hueco_max_s` cerca de 6 es señal de escena
   lenta; la cifra llega pronto en cada tarjeta; en medio y largo hay un
-  re-gancho a mitad («espera, se pone peor»); el cierre no se alarga.
-- **C8 · Cierre.** La pregunta es concreta, fácil de contestar y sobre la
-  experiencia del espectador (no una opinión, no una respuesta sugerida, no
-  «¿qué opinas?»); el resumen de 2 líneas no repite el titular de una
-  tarjeta.
+  re-gancho a mitad («espera, se pone peor»); el cierre no se alarga. La
+  `adivina` cuenta como re-gancho; la `definicion` no (es contexto: corta y
+  sin cifra nueva).
+- **C8 · Cierre.** Dos pantallas: primero las conclusiones (el `resumen` de
+  2–3 líneas mientras la voz las dice) y luego la pregunta sola con «Sígueme
+  en». Las conclusiones dicen lo que el espectador se lleva (no repiten el
+  titular de una tarjeta); la pregunta es concreta, fácil de contestar y sobre
+  la experiencia del espectador (no una opinión, no una respuesta sugerida, no
+  «¿qué opinas?»).
 - **C9 · Lenguaje y honestidad.** El golpe no es el titular leído; sin siglas
-  sin explicar ni jerga; sin muletillas repetidas; nada que contradiga
+  sin explicar ni jerga (una escena `definicion` las explica en una línea
+  llana, y su voz **anuncia el concepto antes de nombrarlo**: «Para entenderlo
+  mejor: …», «¿Qué es…?»; el gate exige la fórmula, tú que suene natural y que
+  quede claro que se está explicando algo); una escena `explica` explica un
+  **mecanismo** (por qué o cómo pasa) que el espectador no tenía, no repite
+  datos ni el titular, cada afirmación causal es de conocimiento general o del
+  hilo y **no contradice `no_afirma`** (un mecanismo dudoso o que afirma más que
+  el hilo **bloquea**); su `brief` describe algo que se puede ver moverse; sin
+  muletillas repetidas; nada que contradiga
   `no_afirma` ni cambie «coincide con» por «gracias a»; un recuento no oficial
   se dice como tal.
 - **C10 · Lectura de corrido.** Lee la `voz` de TODAS las escenas seguida, como
@@ -100,11 +132,13 @@ toque.
 ## Gravedad
 
 - **bloquea**: pantalla del gancho que sola no se entiende o sin cifra ni
-  pregunta concreta (C1); promesa vaga o ausente (C2); dos o más enlaces falsos
-  (C4); pago que no cierra la brecha (C6); pregunta de opinión o abstracta
+  pregunta concreta (C1); promesa vaga o ausente (C2); dos o más enlaces falsos,
+  o un solo «por eso» con la causa después del efecto (C4); pago que no cierra la brecha (C6); pregunta de opinión o abstracta
   (C8); golpe que lee el titular o afirma algo de `no_afirma` (C9); una frase
   de la voz que no se entiende sin la pantalla o que no tiene verbo conjugado o una repetición audible en la
   frase del dato (C10); cualquier puntaje ≤ 2.
+- Un caption que adelanta el pago es **mejora** (no toca la voz), pero señálalo
+  siempre: se lee mientras corre el video.
 - **mejora**: todo lo demás (una cifra sin traducir, un hueco de 5 s, un «y»
   que podría ser «pero», una muletilla).
 

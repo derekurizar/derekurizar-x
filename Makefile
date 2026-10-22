@@ -6,7 +6,7 @@ GALERIA := templates/.galeria
 PALETAS ?= cielo
 PALETA ?= cielo
 
-.PHONY: help nuevo render visual catalogo validate tabla pdf ensamblar limpiar test doctor costo contacto digesto fuentes ideas calendario informe informe-ejemplo informe-catalogo informe-fixture verificacion auditoria-rehacer podar video-fixture musica
+.PHONY: help nuevo render visual catalogo validate tabla pdf ensamblar limpiar test doctor costo contacto digesto fuentes ideas calendario informe informe-ejemplo informe-catalogo informe-fixture verificacion auditoria-rehacer podar video-fixture video-fixture-4x5 musica whisper iconos
 
 help:
 	@echo "make nuevo T=<plantilla> OUT=<ruta.html> [PALETA=cielo]  ensambla una tarjeta (base + plantilla)"
@@ -31,6 +31,8 @@ help:
 	@echo "make informe-fixture                                     informe de prueba (8 páginas) sobre sesiones/_fixture/salida, sin agentes (requiere el fixture ensamblado)"
 	@echo "make video-fixture [FPS=10]                              /video de prueba sin créditos (voz falsa) sobre sesiones/_fixture/salida → sesiones/_fixture_video/salida"
 	@echo "make musica                                              catálogo fijo de música de /video (design/musica/) y sus usos"
+	@echo "make whisper                                             baja una vez el modelo ggml-small de whisper.cpp (escucha V11 de /video; antes: brew install whisper-cpp)"
+	@echo "make iconos                                              biblioteca FIJA de iconos de /video (design/iconos/, Lucide; se baja UNA vez) y su check K3"
 	@echo "make limpiar [SESION=sesiones/<slug>]                    borra $(GALERIA)/, salidas de _fixture y _fixture_dato y .playwright-mcp/ (o una sesión)"
 
 nuevo:
@@ -146,6 +148,19 @@ video-fixture:
 	python3 scripts/video.py grabar $(VF)/trabajo --fps $(FPS)
 	python3 scripts/video.py montar $(VF)/trabajo
 	python3 scripts/video.py revisar $(VF)/trabajo
+	python3 scripts/video.py entregar $(VF)/trabajo --salida $(VF)/salida
+
+whisper:   # V11: whisper.cpp local; el binario viene de Homebrew (brew install whisper-cpp), el modelo se baja aquí
+	python3 scripts/video.py whisper
+
+iconos:   # K3: biblioteca fija de iconos (Lucide, tag fijado en scripts/iconos.py); importar solo si falta el catálogo
+	@test -s design/iconos/catalogo.json || python3 scripts/iconos.py --importar
+	python3 scripts/iconos.py --check
+
+video-fixture-4x5:   # sobre el trabajo que dejó video-fixture: la versión 1080×1350 para el feed
+	python3 scripts/video.py grabar $(VF)/trabajo --fps $(FPS) --formato 4:5
+	python3 scripts/video.py montar $(VF)/trabajo --formato 4:5
+	python3 scripts/video.py revisar $(VF)/trabajo --formato 4:5
 	python3 scripts/video.py entregar $(VF)/trabajo --salida $(VF)/salida
 
 musica:

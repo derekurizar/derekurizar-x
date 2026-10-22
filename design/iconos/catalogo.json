@@ -1,0 +1,259 @@
+{
+ "fuente": "Lucide",
+ "version": "0.547.0",
+ "licencia": "ISC (los iconos heredados de Feather, MIT); ver LICENSE.txt",
+ "fecha": "2026-10-20",
+ "uso": "acento opcional en gancho, golpe y definición de /video (icono: <id>); ≤ 1 por escena",
+ "iconos": [
+  {
+   "id": "cloud-rain",
+   "archivo": "cloud-rain.svg",
+   "claves": "lluvia, precipitación, temporal"
+  },
+  {
+   "id": "cloud-sun",
+   "archivo": "cloud-sun.svg",
+   "claves": "clima, canícula, sequía"
+  },
+  {
+   "id": "sun",
+   "archivo": "sun.svg",
+   "claves": "sol, calor, sequía"
+  },
+  {
+   "id": "droplets",
+   "archivo": "droplets.svg",
+   "claves": "agua, gotas, lluvia"
+  },
+  {
+   "id": "thermometer",
+   "archivo": "thermometer.svg",
+   "claves": "temperatura, calor, El Niño"
+  },
+  {
+   "id": "wind",
+   "archivo": "wind.svg",
+   "claves": "viento, huracán, tormenta"
+  },
+  {
+   "id": "waves",
+   "archivo": "waves.svg",
+   "claves": "mar, océano, inundación"
+  },
+  {
+   "id": "mountain",
+   "archivo": "mountain.svg",
+   "claves": "volcán, montaña, altiplano"
+  },
+  {
+   "id": "flame",
+   "archivo": "flame.svg",
+   "claves": "incendio, fuego"
+  },
+  {
+   "id": "wheat",
+   "archivo": "wheat.svg",
+   "claves": "maíz, cosecha, grano, frijol"
+  },
+  {
+   "id": "sprout",
+   "archivo": "sprout.svg",
+   "claves": "siembra, agricultura, campo"
+  },
+  {
+   "id": "tractor",
+   "archivo": "tractor.svg",
+   "claves": "agro, finca, producción"
+  },
+  {
+   "id": "utensils",
+   "archivo": "utensils.svg",
+   "claves": "comida, alimentación, canasta básica"
+  },
+  {
+   "id": "baby",
+   "archivo": "baby.svg",
+   "claves": "niñez, nacimientos, primera infancia"
+  },
+  {
+   "id": "user",
+   "archivo": "user.svg",
+   "claves": "persona, habitante"
+  },
+  {
+   "id": "users",
+   "archivo": "users.svg",
+   "claves": "población, familias, hogares"
+  },
+  {
+   "id": "heart-pulse",
+   "archivo": "heart-pulse.svg",
+   "claves": "salud, mortalidad, hospital"
+  },
+  {
+   "id": "hospital",
+   "archivo": "hospital.svg",
+   "claves": "hospital, centro de salud"
+  },
+  {
+   "id": "stethoscope",
+   "archivo": "stethoscope.svg",
+   "claves": "médicos, consulta, salud"
+  },
+  {
+   "id": "syringe",
+   "archivo": "syringe.svg",
+   "claves": "vacuna, vacunación"
+  },
+  {
+   "id": "graduation-cap",
+   "archivo": "graduation-cap.svg",
+   "claves": "educación, graduados, escuela"
+  },
+  {
+   "id": "school",
+   "archivo": "school.svg",
+   "claves": "escuela, aulas, matrícula"
+  },
+  {
+   "id": "book-open",
+   "archivo": "book-open.svg",
+   "claves": "lectura, estudio"
+  },
+  {
+   "id": "banknote",
+   "archivo": "banknote.svg",
+   "claves": "dinero, salario, quetzales"
+  },
+  {
+   "id": "coins",
+   "archivo": "coins.svg",
+   "claves": "precio, costo, inflación"
+  },
+  {
+   "id": "wallet",
+   "archivo": "wallet.svg",
+   "claves": "gasto, ingreso, bolsillo"
+  },
+  {
+   "id": "trending-up",
+   "archivo": "trending-up.svg",
+   "claves": "sube, aumento, récord"
+  },
+  {
+   "id": "trending-down",
+   "archivo": "trending-down.svg",
+   "claves": "baja, caída, descenso"
+  },
+  {
+   "id": "percent",
+   "archivo": "percent.svg",
+   "claves": "porcentaje, tasa"
+  },
+  {
+   "id": "scale",
+   "archivo": "scale.svg",
+   "claves": "justicia, ley, balanza"
+  },
+  {
+   "id": "shield",
+   "archivo": "shield.svg",
+   "claves": "seguridad, protección, policía"
+  },
+  {
+   "id": "siren",
+   "archivo": "siren.svg",
+   "claves": "emergencia, alerta, homicidios"
+  },
+  {
+   "id": "gavel",
+   "archivo": "gavel.svg",
+   "claves": "justicia, sentencias, tribunales"
+  },
+  {
+   "id": "zap",
+   "archivo": "zap.svg",
+   "claves": "electricidad, energía, luz"
+  },
+  {
+   "id": "fuel",
+   "archivo": "fuel.svg",
+   "claves": "combustible, gasolina, diésel"
+  },
+  {
+   "id": "car",
+   "archivo": "car.svg",
+   "claves": "vehículos, tránsito"
+  },
+  {
+   "id": "bus",
+   "archivo": "bus.svg",
+   "claves": "transporte, pasajeros"
+  },
+  {
+   "id": "plane",
+   "archivo": "plane.svg",
+   "claves": "migración, vuelos, deportados"
+  },
+  {
+   "id": "map-pin",
+   "archivo": "map-pin.svg",
+   "claves": "lugar, municipio, departamento"
+  },
+  {
+   "id": "map",
+   "archivo": "map.svg",
+   "claves": "territorio, país, mapa"
+  },
+  {
+   "id": "house",
+   "archivo": "house.svg",
+   "claves": "vivienda, hogar, casa"
+  },
+  {
+   "id": "building-2",
+   "archivo": "building-2.svg",
+   "claves": "ciudad, edificio, empresa"
+  },
+  {
+   "id": "factory",
+   "archivo": "factory.svg",
+   "claves": "industria, fábrica, exportación"
+  },
+  {
+   "id": "calendar",
+   "archivo": "calendar.svg",
+   "claves": "fecha, año, plazo"
+  },
+  {
+   "id": "clock",
+   "archivo": "clock.svg",
+   "claves": "tiempo, horas, espera"
+  },
+  {
+   "id": "hourglass",
+   "archivo": "hourglass.svg",
+   "claves": "demora, plazo vencido"
+  },
+  {
+   "id": "globe",
+   "archivo": "globe.svg",
+   "claves": "mundo, países, comparación"
+  },
+  {
+   "id": "flag",
+   "archivo": "flag.svg",
+   "claves": "nación, Guatemala, bandera"
+  },
+  {
+   "id": "landmark",
+   "archivo": "landmark.svg",
+   "claves": "Estado, Congreso, gobierno"
+  },
+  {
+   "id": "vote",
+   "archivo": "vote.svg",
+   "claves": "elecciones, voto"
+  }
+ ]
+}

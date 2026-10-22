@@ -1,27 +1,21 @@
 <!DOCTYPE html>
 <html lang="es"><head><meta charset="utf-8">
-<!-- Cierre de /video: eco de la cifra del gancho (si la hay), resumen en dos líneas, la pregunta al espectador y
-     «Sígueme en» (TikTok, Instagram y X) solo en pantalla, sin logo ni fuentes. Colores de la paleta del hilo
-     (escenas.json); subtítulos con las cifras en grande. -->
+<!-- Cierre de /video en dos pantallas con una sola voz. A · Conclusiones (hasta T.preg): rótulo, eco de la cifra del
+     gancho (si la hay) y el resumen en 2–3 líneas que entran en T.r. B · Pregunta (desde T.preg): A sale hacia arriba
+     y queda la pregunta al espectador, sola, y luego «Sígueme en» (TikTok, Instagram y X) solo en pantalla, sin logo ni
+     fuentes. Colores de la paleta del hilo (escenas.json); subtítulos con las cifras en grande. -->
+<link rel="stylesheet" href="comun.css">
 <style>
-@font-face { font-family: 'Instrument Serif'; font-weight: 400; src: url(fonts/instrument-serif-400.woff2) format('woff2'); }
-@font-face { font-family: 'Archivo'; font-weight: 100 900; src: url(fonts/archivo-var.woff2) format('woff2'); }
-@font-face { font-family: 'JetBrains Mono'; font-weight: 100 800; src: url(fonts/jetbrains-mono-var.woff2) format('woff2'); }
-html, body { margin: 0; }
-:root { --izq: 85px; --der: 204px; }
-body { width: 1080px; height: 1920px; overflow: hidden; background: var(--bg); color: var(--ink); position: relative; font-family: Archivo, sans-serif; }
-#arriba { position: absolute; top: 250px; left: var(--izq); right: var(--der); }
 #contexto { font: 500 26px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; }
-#progreso { display: flex; gap: 10px; margin-top: 26px; }
-#progreso i { flex: 1; height: 6px; background: color-mix(in srgb, var(--ink) 28%, transparent); border-radius: 3px; overflow: hidden; }
-#progreso i b { display: block; height: 100%; width: 0; background: var(--ink); }
-/* zona segura de TikTok: ver escena.html; resumen, pregunta y «Sígueme en» van apilados en la columna */
-#cuerpo { position: absolute; top: 380px; left: var(--izq); right: var(--der); display: flex; flex-direction: column; gap: 70px; }
+/* zona segura de TikTok: ver escena.html; cada pantalla apila lo suyo en la columna */
+.pant { position: absolute; top: 380px; left: var(--izq); right: var(--der); display: flex; flex-direction: column; gap: 70px; }
+#pantB { gap: 110px; }
+#rotulo { font: 600 30px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; color: var(--acento, var(--ink)); margin-bottom: -30px; }
 #eco { font: 400 96px/1 'Instrument Serif', serif; letter-spacing: -.02em; color: var(--acento, var(--ink)); display: none; }
 #eco.si { display: block; }
-#resumen { font: 400 70px/1.04 'Instrument Serif', serif; letter-spacing: -.015em; }
+#resumen { font: 400 76px/1.04 'Instrument Serif', serif; letter-spacing: -.015em; display: flex; flex-direction: column; gap: 28px; }
 #resumen span { display: block; }
-#pregunta { font: 400 96px/1.0 'Instrument Serif', serif; letter-spacing: -.015em; color: var(--pregunta); }
+#pregunta { font: 400 112px/1.0 'Instrument Serif', serif; letter-spacing: -.015em; color: var(--pregunta); }
 #sigue { }
 #sigue .t { font: 500 28px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 30px; }
 #sigue .c { display: flex; align-items: center; gap: 22px; margin-top: 22px; }
@@ -29,20 +23,37 @@ body { width: 1080px; height: 1920px; overflow: hidden; background: var(--bg); c
 #sigue .i svg { width: 36px; height: 36px; fill: var(--bg); stroke: var(--bg); }
 #sigue .h { font: 700 54px/1 Archivo, sans-serif; letter-spacing: .01em; }
 #subs { position: absolute; top: 1500px; left: var(--izq); right: var(--der); text-align: center; font: 700 46px/1.25 Archivo, sans-serif; }
-#subs .no { opacity: .38; }
+#subs span { margin: 0; }
 #subs .cifra { font-size: 58px; font-weight: 800; letter-spacing: -.01em; }
-#subs .ahora { color: var(--resalte-ink); background: var(--resalte-bg); border-radius: 10px; padding: 0 .12em; }
+/* formato 4:5 (1080×1350) para el feed: más compacto, «Sígueme en» en una fila */
+html.f45 .pant { top: 230px; gap: 44px; }
+html.f45 #pantB { gap: 70px; }
+html.f45 #rotulo { font-size: 26px; margin-bottom: -18px; }
+html.f45 #eco { font-size: 76px; }
+html.f45 #resumen { font-size: 60px; gap: 20px; }
+html.f45 #pregunta { font-size: 88px; }
+html.f45 #sigue { display: flex; flex-wrap: wrap; align-items: center; column-gap: 40px; }
+html.f45 #sigue .t { width: 100%; margin-bottom: 8px; }
+html.f45 #sigue .c { gap: 14px; margin-top: 12px; }
+html.f45 #sigue .i { width: 48px; height: 48px; }
+html.f45 #sigue .i svg { width: 28px; height: 28px; }
+html.f45 #sigue .h { font-size: 38px; }
+html.f45 #subs { top: 1130px; }
 </style></head>
 <body>
 <div id="arriba"><div id="contexto"></div><div id="progreso"></div></div>
-<div id="cuerpo">
+<div class="pant" id="pantA">
+<div id="rotulo">Conclusiones</div>
 <div id="eco"></div>
-<div id="resumen"><span></span><span></span></div>
+<div id="resumen"></div>
+</div>
+<div class="pant" id="pantB">
 <div id="pregunta"></div>
 <!-- solo texto: la voz no lo dice -->
 <div id="sigue"><div class="t">Sígueme en</div></div>
 </div>
 <div id="subs"></div>
+<script src="comun.js"></script>
 <script>
 // contenido de cada ícono en un viewBox de 24×24 (relleno y trazo del color del fondo)
 const ICONOS = {
@@ -50,37 +61,38 @@ const ICONOS = {
   instagram: '<rect x="2.6" y="2.6" width="18.8" height="18.8" rx="5.4" fill="none" stroke-width="2.2"/><circle cx="12" cy="12" r="4.3" fill="none" stroke-width="2.2"/><circle cx="17.5" cy="6.5" r="1.4"/>',
   x: '<path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/>',
 };
+const { clamp, eo, esc } = V;
 let S, N, ECO = false;
-const clamp = (x) => Math.max(0, Math.min(1, x)), eo = (x) => 1 - Math.pow(1 - clamp(x), 3);
-const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
 const ap = (el, p, dy = 30) => { el.style.opacity = p; el.style.transform = `translateY(${(1 - p) * dy}px)`; };
 const apx = (el, p, dx = -40) => { el.style.opacity = p; el.style.transform = `translateX(${(1 - p) * dx}px)`; };  // entra desde la izquierda
 window.__listo = (async () => {
-  const todo = await (await fetch('escenas.json')).json();
-  for (const [k, v] of Object.entries(todo.colores)) document.documentElement.style.setProperty('--' + k.replace('_', '-'), v);
-  S = todo.escenas.find((e) => e.tipo === 'cierre' || e.plantilla === 'cierre'); N = todo.escenas.length;
+  const C = await V.cargar((e) => e.tipo === 'cierre' || e.plantilla === 'cierre'), todo = C.todo; S = C.S; N = todo.escenas.length;
   document.getElementById('contexto').textContent = todo.contexto_superior;
   // eco: la cifra del gancho vuelve sobre el resumen (solo si la pantalla del gancho es numérica)
   if (todo.gancho && /\d/.test(todo.gancho.pantalla || '')) { ECO = true; const e = document.getElementById('eco'); e.textContent = todo.gancho.pantalla; e.classList.add('si'); }
-  document.getElementById('progreso').innerHTML = todo.escenas.map(() => '<i><b></b></i>').join('');
-  document.querySelectorAll('#resumen span').forEach((s, i) => (s.textContent = todo.cierre.resumen[i]));
+  V.pintarProgreso(todo);
+  document.getElementById('resumen').innerHTML = todo.cierre.resumen.map((r) => `<span>${esc(r)}</span>`).join('');
   document.getElementById('pregunta').textContent = todo.cierre.pregunta;
   document.getElementById('sigue').insertAdjacentHTML('beforeend', todo.redes.map((r) =>
     `<div class="c"><div class="i"><svg viewBox="0 0 24 24">${ICONOS[r.red]}</svg></div><span class="h">${esc(r.handle)}</span></div>`).join(''));
   await document.fonts.ready;
 })();
 window.seek = (t) => {
-  [...document.querySelectorAll('#progreso b')].forEach((b, i) => { b.style.width = (i + 1 < N ? 100 : 100 * clamp(t / S.dur)) + '%'; });
-  const [r1, r2] = document.querySelectorAll('#resumen span');
+  V.seekProgreso(t, N, S.dur);
+  // A · conclusiones: rótulo, eco y las líneas del resumen en T.r (con eco, la primera espera un poco)
+  const R = S.T.r || [0.1, S.T.r2];
+  ap(document.getElementById('rotulo'), eo((t - 0.05) / 0.4), 16);
   if (ECO) ap(document.getElementById('eco'), eo((t - 0.1) / 0.5), 24);
-  apx(r1, eo((t - (ECO ? Math.max(0.3, S.T.r2 - 0.4) : 0.1)) / 0.5)); apx(r2, eo((t - S.T.r2) / 0.5));
-  apx(document.getElementById('pregunta'), eo((t - S.T.preg) / 0.6), -40);
+  [...document.querySelectorAll('#resumen span')].forEach((s, i) => {
+    const ti = i === 0 && ECO ? Math.max(0.3, (R[1] ?? 0.8) - 0.4) : (R[i] ?? R[R.length - 1]);
+    apx(s, eo((t - ti) / 0.5));
+  });
+  // al llegar la pregunta, A sale hacia arriba y entra B
+  const sale = eo((t - S.T.preg) / 0.4), A = document.getElementById('pantA');
+  A.style.opacity = 1 - sale; A.style.transform = `translateY(${(-90 * sale).toFixed(1)}px)`;
+  apx(document.getElementById('pregunta'), eo((t - S.T.preg - 0.15) / 0.6), -40);
   [...document.querySelectorAll('#sigue > div')].forEach((el, i) => ap(el, eo((t - S.T.sigue - 0.15 * i) / 0.5), 20));
-  const subs = document.getElementById('subs');
-  const ini = S.palabras.findIndex((p) => t < p.end + 0.08);
-  const k = ini < 0 ? S.palabras.length - 1 : ini;
-  const ventana = S.palabras.slice(Math.max(0, k - 2), k + 3);
-  subs.innerHTML = t > S.fin_voz + 0.4 ? '' : ventana.map((p) => `<span class="${t >= p.start && t < p.end + 0.08 ? 'ahora' : t >= p.end ? '' : 'no'}${p.num ? ' cifra' : ''}">${esc(p.text)}</span>`).join(' ');
+  V.subtitulosVentana(t, S);
 };
 </script>
 </body></html>

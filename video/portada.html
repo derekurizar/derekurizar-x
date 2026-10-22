@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<!-- Portada de texto de /video (portada_texto.png): el gancho leído en silencio para la miniatura del feed: el
+     contexto arriba, la cifra (o las ≤ 4 palabras) enorme en --acento, la línea que la explica y el handle abajo.
+     Sin barra de progreso ni subtítulos. Colores de la paleta del hilo (escenas.json). La dibuja
+     scripts/video_grabar.js --portadas (seek no hace nada: es un cuadro fijo). -->
+<link rel="stylesheet" href="comun.css">
+<style>
+:root { --izq: 85px; --der: 85px; }
+#contexto { position: absolute; top: 330px; left: var(--izq); right: var(--der); font: 500 26px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; opacity: .85; }
+#regla { position: absolute; top: 384px; left: var(--izq); width: 120px; height: 8px; background: var(--ink); border-radius: 4px; }
+#cuerpo { position: absolute; top: 520px; left: var(--izq); right: var(--der); }
+#cifra { font: 400 320px/.9 'Instrument Serif', serif; letter-spacing: -.03em; color: var(--acento, var(--ink)); white-space: nowrap; }
+#cifra.texto { font-size: 170px; line-height: 1; letter-spacing: -.015em; white-space: normal; }
+#linea { font: 700 76px/1.1 Archivo, sans-serif; margin-top: 56px; }
+#pie { position: absolute; bottom: 300px; left: var(--izq); right: var(--der); font: 600 30px/1 'JetBrains Mono', monospace; letter-spacing: .06em; opacity: .8; }
+</style></head>
+<body>
+<div id="contexto"></div><div id="regla"></div>
+<div id="cuerpo"><div id="cifra"></div><div id="linea"></div></div>
+<div id="pie"></div>
+<script>
+const n = Number(new URLSearchParams(location.search).get('n')) || 1;
+const esc = (s) => (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;');
+window.seek = () => {};
+window.__listo = (async () => {
+  const todo = await (await fetch('escenas.json')).json();
+  for (const [k, v] of Object.entries(todo.colores)) document.documentElement.style.setProperty('--' + k.replace('_', '-'), v);
+  const S = todo.escenas.find((e) => e.n === n) || todo.escenas[0];
+  document.getElementById('contexto').textContent = todo.contexto_superior || '';
+  const cifra = document.getElementById('cifra'), P = (S.T && S.T.pant) || {};
+  const texto = P.texto || (S.cinetico && S.cinetico.pantalla) || '';
+  cifra.textContent = texto;
+  if (P.v === null || P.v === undefined) cifra.classList.add('texto');
+  document.getElementById('linea').textContent = ((S.T && S.T.linea) || []).map((w) => w.text).join(' ') || ((S.cinetico && S.cinetico.linea) || '');
+  const redes = (todo.redes || []).map((r) => r.handle);
+  document.getElementById('pie').textContent = [...new Set(redes)].join(' · ');
+  await document.fonts.ready;
+  // la cifra cabe en la columna: se encoge hasta que cabe
+  const ancho = 1080 - 85 - 85;
+  for (let fs = cifra.classList.contains('texto') ? 170 : 320; fs > 120 && cifra.scrollWidth > ancho; fs -= 10) cifra.style.fontSize = fs + 'px';
+})();
+</script>
+</body></html>
