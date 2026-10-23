@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="es"><head><meta charset="utf-8">
 <!-- Escena «escala» de /video (?n=N): la escala humana con pictogramas. «K de cada N» en grande y N figuras de
-     persona (SVG propio, sin descargas) en una fila (N ≤ 10) o en filas de 10; las K primeras se encienden con el
-     acento cuando la voz dice K (S.T.destacadas), una tras otra; debajo, la etiqueta («personas en Fase 3+»).
+     persona (SVG propio, sin descargas) en una fila (N ≤ 10) o en una cuadrícula de filas parejas (columnas que dividen N), la
+     que dé figuras más grandes sin salir de la zona segura (V.zona(): todo termina antes de los subtítulos y de la
+     columna de íconos, deriva incluida; gate V13); las K primeras se encienden con el acento cuando la voz dice K
+     (S.T.destacadas), una tras otra; debajo, la etiqueta («personas en Fase 3+»).
      Arriba el golpe (si lo hay) y la barra de progreso; abajo los subtítulos. Los tiempos vienen en S.T
      (video.py tiempos). La graba scripts/video_grabar.js llamando a seek(t). -->
 <link rel="stylesheet" href="comun.css">
@@ -10,7 +12,7 @@
 #cuerpo { position: absolute; top: 500px; left: var(--izq); right: var(--der); transform-origin: 0 0; will-change: transform; }
 #cifra { font: 400 190px/1 'Instrument Serif', serif; letter-spacing: -.03em; white-space: nowrap; }
 #cifra b { font-weight: 400; color: var(--acento, var(--ink)); }
-#figuras { margin-top: 48px; display: grid; gap: 10px; justify-content: start; }
+#figuras { margin-top: 48px; display: grid; justify-content: start; }
 #figuras svg { width: 100%; height: auto; display: block; opacity: 0; }
 #figuras svg * { fill: color-mix(in srgb, var(--ink) 26%, transparent); }
 #figuras svg.si * { fill: var(--acento, var(--ink)); }
@@ -31,6 +33,7 @@ html.f45 #etiqueta { margin-top: 30px; font-size: 44px; }
 const n = V.n, F45 = V.F45, { clamp, prog } = V;
 let S, TROZOS, FIG = [];
 // una persona: cabeza y cuerpo (viewBox 0 0 40 64)
+const DERIVA = 0.02;   // el cuerpo crece de 1 a 1 + DERIVA a lo largo de la escena (nunca quieto)
 const PERSONA = '<svg viewBox="0 0 40 64"><circle cx="20" cy="11" r="10"/><path d="M8 26h24a6 6 0 0 1 6 6v18h-7v14h-7V48h-8v16H9V50H2V32a6 6 0 0 1 6-6z"/></svg>';
 
 window.__listo = (async () => {
@@ -40,14 +43,29 @@ window.__listo = (async () => {
   V.pintarProgreso(todo);
   const T = S.T, K = T.k, N = T.n;
   document.getElementById('cifra').innerHTML = `<b>${K}</b> de cada ${N}`;
-  const cols = N <= 10 ? N : 10, celda = N <= 10 ? Math.min(78, Math.floor((F45 ? 910 : 791) / N) - 10) : (N <= 50 ? 66 : 54);
   const fig = document.getElementById('figuras');
-  fig.style.gridTemplateColumns = `repeat(${cols}, ${celda}px)`;
   fig.innerHTML = Array.from({ length: N }, () => PERSONA).join('');
   FIG = [...fig.querySelectorAll('svg')];
   document.getElementById('etiqueta').textContent = T.etiqueta || '';
   await document.fonts.ready;
   V.ajustarGolpe(S, F45 ? 250 : 430);
+  // la cuadrícula cabe en la zona segura con la deriva (DERIVA) y el pulso de las destacadas: alto disponible entre
+  // la cifra y la etiqueta; ancho hasta la columna de íconos. Se elige el número de columnas que da la figura mayor.
+  const Z = V.zona(), cuerpo = document.getElementById('cuerpo'), et = document.getElementById('etiqueta');
+  const mt = (el) => parseFloat(getComputedStyle(el).marginTop) || 0;
+  const alto = (Z.fin - cuerpo.offsetTop) / (1 + DERIVA) - document.getElementById('cifra').offsetHeight - mt(fig) - mt(et) - et.offsetHeight - 10;
+  const ancho = Math.min(cuerpo.clientWidth, (Math.min(Z.iconosX, Z.ancho - Z.corte) - cuerpo.offsetLeft) / (1 + DERIVA) - 6);
+  // columnas que dividen N (filas parejas: 100 → 10, 20 o 25); si ninguna, 10
+  const divisores = [5, 8, 10, 12, 15, 20, 25].filter((c) => c <= N && N % c === 0);
+  const opciones = (N <= 10 ? [N] : divisores.length ? divisores : [10]).map((cols) => {
+    const gap = cols <= 10 ? 10 : 8, filas = Math.ceil(N / cols);
+    const porAncho = Math.floor((ancho - (cols - 1) * gap) / cols);
+    const porAlto = Math.floor(((alto - (filas - 1) * gap) / filas) * 40 / 64 / 1.09);   // 1.09: el pulso de la figura
+    return { cols, gap, celda: Math.max(8, Math.min(78, porAncho, porAlto)) };
+  });
+  const mejor = opciones.reduce((a, b) => (b.celda > a.celda ? b : a));
+  fig.style.gap = mejor.gap + 'px';
+  fig.style.gridTemplateColumns = `repeat(${mejor.cols}, ${mejor.celda}px)`;
 })();
 
 window.seek = (t) => {
@@ -71,7 +89,7 @@ window.seek = (t) => {
   const pe = prog(t, T.etiqueta_t, T.etiqueta_t + 0.4);
   document.getElementById('etiqueta').style.opacity = pe;
   // deriva lenta del cuerpo durante la escena (nunca quieto)
-  document.getElementById('cuerpo').style.transform = `scale(${(1 + 0.03 * clamp(t / S.dur)).toFixed(4)})`;
+  document.getElementById('cuerpo').style.transform = `scale(${(1 + DERIVA * clamp(t / S.dur)).toFixed(4)})`;
   V.subtitulos(t, S, TROZOS);
 };
 </script>

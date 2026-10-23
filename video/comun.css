@@ -5,8 +5,12 @@
 @font-face { font-family: 'Archivo'; font-weight: 100 900; src: url(fonts/archivo-var.woff2) format('woff2'); }
 @font-face { font-family: 'JetBrains Mono'; font-weight: 100 800; src: url(fonts/jetbrains-mono-var.woff2) format('woff2'); }
 html, body { margin: 0; }
-/* columna segura de TikTok: x 85–876 (ver escena.html) */
-:root { --izq: 85px; --der: 204px; }
+/* ZONA SEGURA (medida en la app, 2026-10; ver referencias/flujo-video.md «Plataformas»). Una sola para TikTok, Reels y
+   Shorts: el teléfono recorta ~57 px por lado (--corte); arriba la barra de pestañas tapa hasta y≈215 (--sup); a la
+   derecha los íconos ocupan x ≥ 900 (--iconos-x) desde y≈1070 (--iconos-y); el contenido termina 30 px antes de los
+   subtítulos (--fin; en una página con #subs se usa su top − 30) y abajo el texto de la app empieza en y≈1645.
+   La columna de diseño es x 85–876 (--izq, --der). V.zona la expone a las páginas y V.medirZona() es el gate V13. */
+:root { --izq: 85px; --der: 204px; --corte: 57px; --sup: 215px; --fin: 1370px; --iconos-x: 900px; --iconos-y: 1070px; }
 body { width: 1080px; height: 1920px; overflow: hidden; background: var(--bg); color: var(--ink); position: relative; font-family: Archivo, sans-serif; }
 #arriba { position: absolute; top: 250px; left: var(--izq); right: var(--der); }
 #golpe { font: 400 72px/1.0 'Instrument Serif', serif; letter-spacing: -.015em; }
@@ -24,7 +28,7 @@ body { width: 1080px; height: 1920px; overflow: hidden; background: var(--bg); c
 /* portada (&portada=1): el cuadro limpio para la miniatura, sin subtítulos ni barra de progreso */
 html.portada #subs, html.portada #progreso { visibility: hidden; }
 /* formato 4:5 (1080×1350) para el feed: sin zona segura de teléfono */
-html.f45 { --izq: 85px; --der: 85px; }
+html.f45 { --izq: 85px; --der: 85px; --corte: 0px; --sup: 0px; --fin: 1090px; --iconos-y: 99999px; }
 html.f45 body { height: 1350px; }
 html.f45 #arriba { top: 70px; }
 html.f45 #subs { top: 1120px; }

@@ -42,6 +42,7 @@ html.f45 #fuente { top: 1000px; }
 <script>
 const n = V.n, F45 = V.F45, { clamp, prog, esc } = V;
 let S, TROZOS, D, FILAS = [];
+const DERIVA = 0.02;   // la lista crece de 1 a 1 + DERIVA (nunca quieta); con origen arriba a la izquierda, ≤ x 892
 
 window.__listo = (async () => {
   const C = await V.cargar(), todo = C.todo; S = C.S; TROZOS = C.trozos;
@@ -61,6 +62,19 @@ window.__listo = (async () => {
   FILAS.forEach((x) => { x.valor.textContent = f(x.it.valor); });
   await document.fonts.ready;
   V.ajustarGolpe(S, F45 ? 250 : 430);
+  // zona segura (V.zona, gate V13): las filas y la fuente, con la deriva, terminan antes de los subtítulos. Con top 6
+  // las filas se achican (alto y letra en proporción); la fuente va justo debajo de la última fila.
+  const Z = V.zona(), fu = document.getElementById('fuente'), base = F45 ? 118 : 150, sep = F45 ? 8 : 10;
+  const cabe = Math.floor((Z.fin - lista.offsetTop - fu.offsetHeight - 14) / (1 + DERIVA) / Math.max(1, FILAS.length)) - sep;
+  if (cabe < base) {
+    const k = cabe / base;
+    for (const x of FILAS) {
+      x.el.style.height = cabe + 'px';
+      for (const [sel, px] of [['.puesto', F45 ? 96 : 120], ['.nombre', F45 ? 42 : 50], ['.valor', F45 ? 48 : 56]])
+        x.el.querySelector(sel).style.fontSize = Math.round(px * Math.max(0.7, k)) + 'px';
+    }
+  }
+  fu.style.top = Math.ceil(lista.offsetTop + lista.offsetHeight * (1 + DERIVA) + 14) + 'px';
 })();
 
 window.seek = (t) => {
@@ -81,7 +95,7 @@ window.seek = (t) => {
     x.el.style.scale = (1 + 0.03 * lat).toFixed(4);
   }
   // deriva lenta de la lista durante la escena (nunca quieto)
-  document.getElementById('lista').style.transform = `scale(${(1 + 0.03 * clamp(t / S.dur)).toFixed(4)})`;
+  document.getElementById('lista').style.transform = `scale(${(1 + DERIVA * clamp(t / S.dur)).toFixed(4)})`;
   V.subtitulos(t, S, TROZOS);
 };
 </script>

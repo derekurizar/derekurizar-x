@@ -25,9 +25,11 @@ escribes solo `<TRABAJO>/critica.json`.
 3. `<TRABAJO>/digesto.md`: las tarjetas del hilo (kicker, titular, texto, alt,
    cifras con serie y partes), el beat de cada una (giro, impacto), `no_afirma`
    y la tesis, y la «escala humana posible» que sugiere por cifra. Solo para
-   cotejar y para escribir arreglos con cifras reales.
+   cotejar y para escribir arreglos con cifras reales. Al final trae **«Frases ya
+   usadas»**: la promesa, el gancho, las aperturas de escena y la pregunta del
+   cierre de los últimos videos (para C11).
 
-## Qué revisas (C1–C10)
+## Qué revisas (C1–C11)
 
 - **C1 · Gancho en silencio (s 0–3).** Mira solo `pantalla` y `linea` de la
   escena 1, sin la voz: ¿frenan el scroll? ¿Traen una cifra concreta o una
@@ -42,9 +44,12 @@ escribes solo `<TRABAJO>/critica.json`.
   debe entrar antes de 6.5 s. Si la escena lleva `icono`, pregúntate si nombra el tema de la cifra; si
   es decorativo o despista, pide quitarlo (mejora, no bloquea).
 - **C2 · Razón para quedarse.** `promesa.texto` abre una brecha específica y
-  alcanzable: dice **qué** falta saber («y al final te digo cuántos terminan
-  en condena»), no «hay más» ni «sigue viendo». Se dice en la escena 1 o 2 y
-  suena natural en la voz; en la escena 1 dura ≤ 3 s (si no cabe, pide `en: 2`)
+  alcanzable: dice **qué** falta saber (la cifra o el dato concreto que llegará),
+  no «hay más» ni «sigue viendo». Es una oración que se entiende sola: si
+  empieza con «Y», «Pero» o «Así que» y solo tiene sentido pegada a la frase
+  anterior, es falta (el gate rechaza el conector suelto y «al final te digo»;
+  tú, que la fórmula suene natural y no sea la de otro video). Se dice en la
+  escena 1 o 2; en la escena 1 dura ≤ 3 s (si no cabe, pide `en: 2`)
   y no repite la línea de pantalla. Una escena `adivina` (pregunta, tres opciones,
   revelado) abre otro bucle a mitad: vale si la pregunta se contesta con una
   cifra del hilo y la respuesta llega después de las opciones y de la frase que
@@ -113,17 +118,26 @@ escribes solo `<TRABAJO>/critica.json`.
   escena abre con las palabras que cerraron la anterior** («¿Y en 2024?» →
   «El resultado: en 2024…» se oye repetido; el gate lo rechaza): la siguiente
   escena responde, no repite la pregunta.
+- **C11 · Plantilla.** Compara con «Frases ya usadas» del digesto: la
+  promesa, la primera oración del gancho, cómo abre cada escena (lo que sigue
+  al conector) y la pregunta del cierre. Si alguna repite casi literal la de
+  otro video («Y al final te digo…», «Y tú, ¿…?», «Entonces, ¿se disparó…?»), es
+  falta: quien sigue la cuenta oye la misma fórmula en cada video. También es
+  falta una oración que empieza con un conector que no se apoya en la anterior
+  (un «Y» o un «Pero» que no suma ni contradice nada). El arreglo da una frase
+  nueva, no la de otra guía. Bloquea en la promesa y en la pregunta del
+  cierre; en una apertura de escena es mejora.
 
 ## Puntajes (1–5)
 
 | Puntaje | Lo sostiene | 5 | 3 | ≤ 2 |
 |---|---|---|---|---|
 | `gancho` | C1 | lo publicarías tal cual | se sostiene | no se entrega sin arreglo |
-| `bucle` | C2 + C4 | | | |
+| `bucle` | C2 + C4 + C11 | | | |
 | `ritmo` | C3 + C7 + C10 | | | |
 | `escala_humana` | C5 | | | |
 | `pago` | C6 | | | |
-| `cierre` | C8 | | | |
+| `cierre` | C8 + C11 | | | |
 
 Un puntaje **≤ 2 exige una falta `bloquea`** de su regla (el workflow lo
 comprueba). C9 no tiene puntaje propio: sus faltas van con la gravedad que
@@ -136,7 +150,8 @@ toque.
   o un solo «por eso» con la causa después del efecto (C4); pago que no cierra la brecha (C6); pregunta de opinión o abstracta
   (C8); golpe que lee el titular o afirma algo de `no_afirma` (C9); una frase
   de la voz que no se entiende sin la pantalla o que no tiene verbo conjugado o una repetición audible en la
-  frase del dato (C10); cualquier puntaje ≤ 2.
+  frase del dato (C10); una promesa o una pregunta del cierre que repite la de
+  otro video, o una promesa con conector suelto (C11); cualquier puntaje ≤ 2.
 - Un caption que adelanta el pago es **mejora** (no toca la voz), pero señálalo
   siempre: se lee mientras corre el video.
 - **mejora**: todo lo demás (una cifra sin traducir, un hueco de 5 s, un «y»

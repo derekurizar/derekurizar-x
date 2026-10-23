@@ -16,7 +16,7 @@ Subcomandos (TRABAJO = sesiones/<slug>/video):
   descargar TRABAJO --voz URLS.json | --palabras URLS.json   respaldo: {"<n>": "<url>"} → voz_N.mp3 | palabras_N.json
   voz-falsa TRABAJO            tono por palabra + tiempos sintéticos (fixture, 0 créditos)
   tiempos TRABAJO              atempo 1.1, alineación por palabra (V6), eventos y efectos por escena, V10 → escenas.json
-  grabar TRABAJO [--fps 30] [--solo 1,3] [--formato 4:5]   clips por escena (Playwright) + V7; 4:5 = 1080×1350 para el feed en clips_4x5/
+  grabar TRABAJO [--fps 30] [--solo 1,3] [--formato 4:5]   clips por escena (Playwright) + V7 + V13 (zona segura); 4:5 = 1080×1350 para el feed en clips_4x5/
   montar TRABAJO [--sin-bucle]   voz + música con ducking + efectos + loudnorm en 2 pasadas (V8), cierre en bucle (el primer
         cuadro del gancho al final, con fundido), subtitulos.srt, caption.md, portada.png y portada_pregunta/giro.png
   revisar TRABAJO [--formato 4:5]   revision/contacto.png (cifra completa · pico del foco · final de cada escena) y linea_tiempo.png
@@ -46,7 +46,14 @@ import verificacion as VM  # noqa: E402
 VOZ = {"voice_id": "8mBRP99B2Ng2QwsJMFQl", "nombre": "El Faraon 4", "modelo": "eleven_multilingual_v2", "idioma": "es"}
 REDES = [{"red": "tiktok", "nombre": "TikTok", "handle": "@derekurizargt"},
          {"red": "instagram", "nombre": "Instagram", "handle": "@derekurizargt"},
+         {"red": "facebook", "nombre": "Facebook", "handle": "Derek Urizar"},
+         {"red": "youtube", "nombre": "YouTube", "handle": "@derekurizar"},
          {"red": "x", "nombre": "X", "handle": "@DerekUrizar"}]
+# un maestro 9:16 sirve en las cuatro apps (misma zona segura, gate V13) y el 4:5 en el feed; cada plataforma lleva su
+# texto (caption.md). Shorts admite hasta 3 min: un video más largo se publica en YouTube como video normal.
+PLATAFORMAS = (("tiktok", "TikTok"), ("instagram", "Instagram Reels (y feed con video_4x5.mp4)"),
+               ("facebook", "Facebook Reels (y feed con video_4x5.mp4)"), ("shorts", "YouTube Shorts"))
+SHORTS_MAX_S, SHORTS_TITULO = 180, 100
 VELOCIDAD = 1.1      # la voz se acelera con atempo (sin cambiar el tono); los tiempos de Scribe se dividen igual
 CPS = 15.5           # caracteres de voz por segundo ya acelerada (medido en la prueba del hilo de crimen)
 COLA = 0.7           # aire tras la última palabra de cada escena
@@ -78,6 +85,11 @@ ANUNCIOS_DEFINICION = (r"para entender\w*", r"para explicar\w*", "te explico", r
 PREGUNTA_CARACTERES, OPCION_CARACTERES = 70, 14                           # escena adivina: 3 opciones con cifra
 # la adivina pide al espectador que pause para responder, entre las opciones y la respuesta («Pausa el video y piénsalo.»)
 PAUSA_ADIVINA = (r"pausa\w*", r"deten\w*", r"para el video", r"piensa\w*", r"respond\w*", r"contest\w*")
+# la promesa es una oración propia: no empieza con un conector suelto ni usa la muletilla que se copiaba de las guías
+# («Y al final te digo cuántas…»); vale una familia variada («Quédate hasta el final y sabrás…», «Al final vas a ver…»)
+PROMESA_CONECTOR = re.compile(r"^[¿¡«\s]*(?:y|e|pero|así que|asi que|entonces|aunque|además|ademas)\b", re.I)
+PROMESA_PROHIBIDA = re.compile(r"al final te (?:lo )?(?:digo|cuento)|te lo (?:digo|cuento) al final", re.I)
+FRASES_USADAS_VIDEOS = 6   # videos anteriores cuyas frases (promesa, gancho, aperturas, pregunta) ve el digesto
 # cierre en dos pantallas: conclusiones (resumen) y luego la pregunta con «Sígueme en»; la voz necesita este tiempo antes
 # de la pregunta para que las conclusiones se lean
 RESUMEN_LINEAS, RESUMEN_CARACTERES, CIERRE_ANTES_S = (2, 3), 40, 3.0
@@ -413,6 +425,25 @@ def elegir_musica(paleta, forzada):
     return sorted(propias, key=lambda x: (usos.get(x["id"], ""), x["id"]))[0]
 
 
+def frases_usadas(slug_actual, n=FRASES_USADAS_VIDEOS):
+    """Las frases de voz de los últimos n videos (memoria/videos.json → frases): el guionista no las repite y el crítico
+    las coteja (C11). Los ejemplos de las guías son forma, no texto: copiarlos hacía que todos los videos sonaran igual."""
+    vids = os.path.join(RAIZ, "memoria", "videos.json")
+    regs = [v for v in (leer(vids)["videos"] if os.path.exists(vids) else [])
+            if v.get("slug") != slug_actual and v.get("frases")]
+    regs = sorted(regs, key=lambda v: (v.get("fecha", ""), v.get("id", "")))[-n:]
+    if not regs:
+        return ["- (ningún video anterior registrado)"]
+    out = ["Varía la fórmula de la promesa, la forma del gancho, cómo abres cada escena y la pregunta del cierre. "
+           "Los conectores (pero / por eso / y) se repiten por fuerza; lo que no se repite es la frase que los sigue."]
+    for v in reversed(regs):
+        fr = v["frases"]
+        out.append("- **%s** · promesa: «%s» · gancho: «%s» · pregunta: «%s» · aperturas: %s"
+                   % (v["slug"], fr.get("promesa", ""), fr.get("gancho", ""), fr.get("pregunta", ""),
+                      " / ".join("«%s…»" % x for x in fr.get("aperturas", []))))
+    return out
+
+
 def sugerir_tarjetas(tuits, tarjetas, dur):
     """Orden sugerido: T1, luego giro e impacto, luego contexto con plantilla animada, luego el resto (sin el cierre)."""
     beats = {t["n"]: t.get("beat") for t in tuits}
@@ -657,7 +688,9 @@ def cmd_preparar(a):
            "5. Las escenas `golpe` (texto a pantalla completa) llevan `pantalla` + `linea` + `verbo`; nunca dos seguidas ni en la escena 2; "
            "sirven para traducir la cifra anterior a escala humana, pagar la promesa o re-ganchar a mitad.",
            "6. `promesa`: {texto (10–80 caracteres, LITERAL en la voz de la escena `en` = 1 o 2), en, pago (escena del último tercio "
-           "que cierra exactamente esa brecha)}.",
+           "que cierra exactamente esa brecha)}. Es una oración propia con verbo que nombra qué falta saber: no empieza con «Y», "
+           "«Pero» ni «Así que» suelto y nunca dice «al final te digo» (el gate lo rechaza). Varía la fórmula respecto de «Frases "
+           "ya usadas»: «Quédate hasta el final y sabrás cuántas…», «Al final vas a ver…», «Espera al final: ahí está…».",
            "7. `calculo` (opcional en tarjetas y gancho; obligatorio en un golpe con un número nuevo): ids del digesto (%s), literales de "
            "datos.json, constantes 7/12/24/30/31/52/100/365/1000 y + − × ÷ ( ); su resultado debe aparecer escrito en la escena "
            "(«1 de cada 3», «×5», «52%%»)." % ", ".join(sorted(cifras)[:3] + [sorted(cifras)[0] + ".serie[0]", sorted(cifras)[0] + ".partes[1]"]),
@@ -679,6 +712,7 @@ def cmd_preparar(a):
            "(≤ %d palabras), `pasos` (%d–%d, ≤ %d caracteres, sin cifras salvo con respaldo), `enlace` y `texto` que dice cada paso "
            "(entra cuando la voz lo dice). Cada afirmación causal es de conocimiento general o del hilo y no contradice `no_afirma` "
            "(«uno de los factores», nunca «la causa»)." % (*BRIEF_CARACTERES, TITULO_PALABRAS, *EXPLICA_PASOS, PASO_CARACTERES),
+           "", "## Frases ya usadas (no las repitas: C11 del crítico)"] + frases_usadas(hilo["slug"]) + [
            "", "## Sugerencia de tarjetas (no obligatoria)",
            "- Orden sugerido: %s (T1, luego giro e impacto, luego contexto animado). Giro: %s · impacto: %s. Marca el giro como tu "
            "«pero» mayor y un impacto como pago de la promesa."
@@ -1052,6 +1086,12 @@ def validar_estructura(g, st, dur, tarjetas):
             f.append("V9 promesa.en debe ser 1 o 2 (llegó %s)" % p.get("en"))
         elif txt and _plano(txt) not in _plano(escenas[p["en"] - 1].get("texto")):
             f.append("V9 promesa.texto no aparece literal en la voz de la escena %d" % p["en"])
+        if txt and PROMESA_CONECTOR.match(txt):
+            f.append("V9 promesa.texto empieza con un conector suelto («%s»): la promesa es una oración propia "
+                     "(«Quédate hasta el final y sabrás…», «Al final vas a ver…»)" % txt.split()[0])
+        if txt and PROMESA_PROHIBIDA.search(txt):
+            f.append("V9 promesa.texto usa «al final te digo»: es la muletilla copiada de las guías; varía la fórmula "
+                     "(«Quédate hasta el final y sabrás…», «Al final vas a ver…», «Espera al final: ahí está…»)")
         lo = math.ceil(2 * n / 3)
         if not isinstance(p.get("pago"), int) or not lo <= p["pago"] <= n or p["pago"] == p.get("en"):
             f.append("V9 promesa.pago = %s debe estar en el último tercio (escenas %d–%d) y ser distinto de «en»" % (p.get("pago"), lo, n))
@@ -1099,9 +1139,19 @@ def cmd_guion(a):
     cierre_pantalla = " ".join([ct, " ".join(cierre.get("resumen") or []), cierre.get("pregunta", "")])
     if PROHIBIDO_CIERRE.search(cierre_pantalla):
         fallas.append("V5 el cierre no menciona fuentes, el hilo, la marca ni «sígueme» (va solo en pantalla)")
-    for k in ("tiktok", "facebook"):
+    for k, _ in PLATAFORMAS:
         if not ((g.get("caption") or {}).get(k) or "").strip():
             fallas.append("V5 falta caption.%s" % k)
+    sh = ((g.get("caption") or {}).get("shorts") or "").strip()
+    if sh:
+        titulo = sh.splitlines()[0].strip()
+        if len(titulo) > SHORTS_TITULO:
+            fallas.append("V5 caption.shorts: la primera línea es el título de YouTube (≤ %d caracteres; llegó %d)" % (SHORTS_TITULO, len(titulo)))
+        if "#shorts" not in sh.lower():
+            fallas.append("V5 caption.shorts lleva #Shorts")
+    for k, v in (g.get("caption") or {}).items():
+        if isinstance(v, str) and PROMESA_PROHIBIDA.search(v):
+            fallas.append("V5 caption.%s usa «al final te digo / te lo digo al final»: varía la fórmula" % k)
 
     # V2, V3, V4 y ritmo por escena (escenas + cierre)
     valores, titulares, cifras = valores_respaldo(st["hilo"])
@@ -1847,7 +1897,11 @@ def cmd_grabar(a):
         args += ["--solo", a.solo]
     if a.paralelo:
         args += ["--paralelo", str(a.paralelo)]
-    if subprocess.run(args, cwd=RAIZ).returncode:
+    rc = subprocess.run(args, cwd=RAIZ).returncode
+    if rc == 3:   # los clips quedaron escritos; algo visible sale de la zona segura (revision/zona[_4x5].json)
+        return falla("V13 algo visible sale de la zona segura de TikTok, Reels y Shorts (ver las líneas FALLA V13 y "
+                     "revision/zona%s.json): corrige la escena y vuelve a grabar" % ("_4x5" if a.formato == "4:5" else ""))
+    if rc:
         return falla("la grabación falló")
     # V7: el último cuadro de cada tarjeta animada es idéntico a su render estático
     esc = leer(os.path.join(trabajo, "escenas.json"))["escenas"]
@@ -1891,6 +1945,43 @@ def ts(s):
 
 def muestras(t):
     return "%dS" % round(t * 48000)
+
+
+def titulo_shorts(tk):
+    """Respaldo para un guion sin caption.shorts: las oraciones del caption de TikTok que caben en el título (nunca una
+    palabra a medias), y #Shorts."""
+    if not tk:
+        return ""
+    lim, titulo = SHORTS_TITULO - 9, ""
+    for o in re.split(r"(?<=[.?!])\s+", tk.splitlines()[0].strip()):
+        if len((titulo + " " + o).strip()) > lim:
+            break
+        titulo = (titulo + " " + o).strip()
+    if not titulo:
+        titulo = tk.splitlines()[0][:lim].rsplit(" ", 1)[0]
+    return titulo + " #Shorts"
+
+
+def escribir_caption(ruta, cap, redes, dur):
+    """caption.md: una sección por plataforma (PLATAFORMAS). Un guion anterior a los cuatro captions toma el de TikTok
+    para Instagram y Shorts."""
+    tk = (cap.get("tiktok") or "").strip()
+    txt = {"tiktok": tk, "instagram": (cap.get("instagram") or tk).strip(), "facebook": (cap.get("facebook") or tk).strip(),
+           "shorts": (cap.get("shorts") or titulo_shorts(tk)).strip()}
+    partes = ["# Texto para publicar", "",
+              "Un solo video para las cuatro apps: **video.mp4** (9:16). Para el feed de Facebook e Instagram, "
+              "**video_4x5.mp4**. Miniatura: una de las portada_*.png (lo importante queda en el 3:4 central, que es lo "
+              "que muestran las cuadrículas de perfil).", ""]
+    for k, nombre in PLATAFORMAS:
+        partes += ["## " + nombre]
+        if k == "shorts":
+            partes += ["Título (primera línea, ≤ %d caracteres) y descripción." % SHORTS_TITULO]
+            if dur > SHORTS_MAX_S:
+                partes += ["**Este video dura %.0f s: pasa de los %d s de Shorts.** Súbelo como video normal o usa la "
+                           "versión corta o media." % (dur, SHORTS_MAX_S)]
+        partes += [txt[k], ""]
+    partes += ["Sígueme: %s" % redes]
+    open(ruta, "w", encoding="utf-8").write("\n".join(partes) + "\n")
 
 
 def cmd_montar(a):
@@ -2025,10 +2116,7 @@ def cmd_montar(a):
                 k, cur = k + 1, []
     open(os.path.join(sal, "subtitulos.srt"), "w", encoding="utf-8").write("\n".join(out))
     redes = " · ".join("%s %s" % (r["nombre"], r["handle"]) for r in REDES)
-    cap = g["caption"]
-    open(os.path.join(sal, "caption.md"), "w", encoding="utf-8").write(
-        "# Texto para publicar\n\n## TikTok / Reels\n%s\n\n## Facebook\n%s\n\nSígueme: %s\n"
-        % (cap["tiktok"].strip(), cap["facebook"].strip(), redes))
+    escribir_caption(os.path.join(sal, "caption.md"), g["caption"], redes, ffprobe_dur(video))
     e1 = E["escenas"][0]
     if e1.get("tipo") in ("gancho", "golpe"):  # la portada se lee en silencio: cifra completa y línea entera
         t_port = max(e1["T"]["pant"]["hasta"], (e1["T"]["linea"] or [{"start": 0}])[-1]["start"]) + 0.35
@@ -2233,9 +2321,14 @@ def cmd_revisar(a):
     cols = 3 * min(len(E), 4)
     filas = math.ceil(k / cols)
     out = os.path.join(rev, "contacto%s.png" % suf)
+    # la zona segura (V13, video/comun.css) dibujada encima en 9:16: el rectángulo rojo es donde va el contenido
+    # (recorte lateral, barra de arriba, fin antes de los subtítulos) y la esquina sombreada, la columna de íconos
+    zona = "" if f45 else ("drawbox=x=57:y=215:w=966:h=1155:color=red@0.55:t=5,"
+                           "drawbox=x=900:y=1070:w=180:h=850:color=red@0.18:t=fill,")
     ff("-framerate", "1", "-i", os.path.join(rev, "c%s_%%03d.png" % suf), "-vf",
-       "scale=270:%d,tile=%dx%d:padding=6:color=white" % (alto, cols, filas), "-frames:v", "1", out)
-    print("hoja de contacto (%d cuadros: cifra completa · pico del foco · final de cada escena) → %s" % (k, rel(out)))
+       "%sscale=270:%d,tile=%dx%d:padding=6:color=white" % (zona, alto, cols, filas), "-frames:v", "1", out)
+    print("hoja de contacto (%d cuadros: cifra completa · pico del foco · final de cada escena%s) → %s"
+          % (k, "" if f45 else "; en rojo, la zona segura", rel(out)))
     # línea de tiempo del video final: un cuadro cada 2 s, para verlo «de corrido» (transiciones incluidas)
     video = os.path.join(trabajo, "salida", "video%s.mp4" % suf)
     if os.path.exists(video):
@@ -2292,6 +2385,9 @@ def cmd_entregar(a):
     loc = leer(os.path.join(trabajo, "locucion.json"))
     g = leer(os.path.join(trabajo, "guion.json"))
     destino = os.path.abspath(a.salida or os.path.join(RAIZ, st["hilo"], "video"))
+    if not os.path.exists(os.path.join(trabajo, "salida", "video_4x5.mp4")):
+        return falla("falta salida/video_4x5.mp4: graba, monta y revisa también --formato 4:5 (el feed de Facebook e "
+                     "Instagram) antes de entregar")
     os.makedirs(destino, exist_ok=True)
     for f in ("video.mp4", "subtitulos.srt", "caption.md", "portada.png"):
         shutil.copy2(os.path.join(trabajo, "salida", f), os.path.join(destino, f))
@@ -2299,7 +2395,7 @@ def cmd_entregar(a):
         os.remove(f)
     for f in glob.glob(os.path.join(trabajo, "salida", "portada_*.png")):
         shutil.copy2(f, os.path.join(destino, os.path.basename(f)))
-    for f in ("salida/video_4x5.mp4", "revision/contacto_4x5.png"):  # la versión 4:5 para el feed, si se grabó
+    for f in ("salida/video_4x5.mp4", "revision/contacto_4x5.png"):  # la versión 4:5 para el feed
         if os.path.exists(os.path.join(trabajo, f)):
             shutil.copy2(os.path.join(trabajo, f), os.path.join(destino, os.path.basename(f)))
     shutil.copy2(os.path.join(trabajo, "revision", "contacto.png"), os.path.join(destino, "contacto.png"))
@@ -2327,7 +2423,10 @@ def cmd_entregar(a):
         "cierre": g["cierre"], "caption": g["caption"],
     }
     escribir(os.path.join(destino, "guion.json"), entrega)
-    print("entregado en %s (%.1f s)" % (rel(destino), entrega["duracion_s"]))
+    print("entregado en %s (%.1f s) · video.mp4 (TikTok, Reels, Shorts) + video_4x5.mp4 (feed) · caption.md con %d "
+          "plataformas" % (rel(destino), entrega["duracion_s"], len(PLATAFORMAS)))
+    if entrega["duracion_s"] > SHORTS_MAX_S:
+        print("AVISO dura %.0f s: pasa de los %d s de YouTube Shorts (súbelo como video normal)" % (entrega["duracion_s"], SHORTS_MAX_S))
     return 0
 
 

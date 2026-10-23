@@ -154,6 +154,8 @@ def escena_de_prueba(aid, meta, paleta):
 def grabar(d, formato):
     args = ["node", os.path.join(RAIZ, "scripts", "video_grabar.js"), "--dir", d, "--hilo", d, "--fps", "10", "--paralelo", "1"]
     r = subprocess.run(args + (["--formato", "4:5"] if formato == "4:5" else []), capture_output=True, text=True)
+    if r.returncode == 3:   # V13: algo de la animación sale de la zona segura (lienzo de explica.html, V.zona)
+        return "V13 zona segura: " + " | ".join(ln.split(": ", 1)[-1] for ln in r.stderr.splitlines() if ln.startswith("FALLA V13"))[:600]
     return None if r.returncode == 0 else (r.stderr.strip() or r.stdout.strip())[-600:]
 
 

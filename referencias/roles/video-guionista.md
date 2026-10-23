@@ -12,15 +12,19 @@ después cada escena tiene que ganarse la siguiente. Sin cara: la pantalla la ll
   estructura, la sugerencia de tarjetas, si el gancho lleva «En Guatemala» (lo pone el script), la
   música, y cada tarjeta con beat, kicker, titular, texto, alt-text, cifras (valor, unidad, periodo, series
   y partes) y la «escala humana posible» de cada cifra con su `calculo`.
-- Salida: `<TRABAJO>/guion.json` v2 (ejemplo sobre el hilo de crimen organizado):
+- Salida: `<TRABAJO>/guion.json` v2 (ejemplo sobre el hilo de crimen organizado).
+  **Los ejemplos de esta guía muestran la forma, no el texto.** Si copias sus frases, todos los videos suenan
+  igual (pasó con «Y al final te digo…», que acabó en tres de cuatro videos). El digesto trae **«Frases ya
+  usadas»**: la promesa, el gancho, cómo abre cada escena y la pregunta del cierre de los últimos videos. Escribe
+  las tuyas distintas; el crítico las coteja (C11).
 
 ```json
 {
  "contexto_superior": "Crimen organizado · Guatemala 2026",
- "promesa": {"texto": "Pero hay un dato que cambia todo.", "en": 1, "pago": 5},
+ "promesa": {"texto": "Quédate: hay un dato que lo cambia todo.", "en": 1, "pago": 5},
  "escenas": [
   {"tipo": "gancho", "formula": "cifra", "pantalla": "8,402 kg", "linea": "de cocaína decomisada en seis meses", "verbo": "decomisaron",
-   "texto": "Se decomisaron 8,402 kg de cocaína en seis meses. ¿Se nota en la calle? Pero hay un dato que cambia todo."},
+   "texto": "Se decomisaron 8,402 kg de cocaína en seis meses. ¿Se nota en la calle? Quédate: hay un dato que lo cambia todo."},
   {"tipo": "tarjeta", "tuit": 1, "enlace": null, "golpe": "Cinco veces más cocaína", "calculo": "nar-c02.partes[1]/nar-c02.partes[0]",
    "texto": "En el primer semestre de 2025 se decomisaron {1,596.2:m}. En el de 2026, 8,402.4 kg: cinco veces más."},
   {"tipo": "golpe", "enlace": "por_eso", "pantalla": "2 de cada 3", "linea": "kilos salieron de un solo barco", "calculo": "100/nar-c04", "verbo": "salió",
@@ -31,11 +35,11 @@ después cada escena tiene que ganarse la siguiente. Sin cara: la pantalla la ll
    "texto": "Por eso el dato que cambia todo: el 61.3% de los homicidios de 2025 sigue sin una sola persona condenada."}
  ],
  "cierre": {
-  "texto": "Más decomisos y menos denuncias, pero más policías asesinados y pocas condenas. Y tú, ¿lo notas en tu colonia?",
-  "resumen": ["Más decomisos, menos denuncias.", "Más policías asesinados, pocas condenas."],
-  "pregunta": "Y tú, ¿lo notas en tu colonia?"
+  "texto": "<1–2 frases de conclusión con verbo>. <pregunta concreta sobre la experiencia de quien mira>?",
+  "resumen": ["<conclusión 1, ≤ 40>", "<conclusión 2, ≤ 40>"],
+  "pregunta": "<la misma pregunta>?"
  },
- "caption": {"tiktok": "…", "facebook": "…"}
+ "caption": {"tiktok": "…", "instagram": "…", "facebook": "…", "shorts": "<título ≤ 100>\n<descripción> #Shorts"}
 }
 ```
 
@@ -54,7 +58,7 @@ ya no existe: la escena 1 ES el gancho.
    madres de 10 a 19 años», `verbo`: «nacen». Nunca el titular leído en voz alta («Casi 168 bebés al día, de
    madres de 10 a 19 años»): sin verbo no se entiende. Elige `formula`:
    - `cifra` (la cifra fuerte primero): «8,402 kg» / «de cocaína decomisada en seis meses» / «Se decomisaron
-     8,402 kg de cocaína en seis meses. Es cinco veces más que el año pasado. Pero hay un dato que cambia todo.»
+     8,402 kg de cocaína en seis meses. Es cinco veces más que el año pasado.»
    - `contradiccion` (creías X, pasa Y; pantalla o línea llevan una cifra): «Menos denuncias» / «pero el
      doble de policías asesinados» / «Las denuncias de extorsión cayeron. Pero los policías asesinados pasaron
      de {10:m} a {20:m}.»
@@ -82,9 +86,15 @@ ya no existe: la escena 1 ES el gancho.
      verbo y la pantalla el titular; no hace falta que la pantalla lo diga todo.
 2. **Promesa y pago.** `promesa.texto` (10–80 caracteres) aparece **literal** en la voz de la escena `en`
    (1 o 2; **2 por defecto** en medio y largo: se dice sobre la primera tarjeta, que ya está pagando el gancho; 1
-   solo si cabe en 3 s) y abre una brecha específica: dice qué falta saber («…y al final te digo cuántos terminan en
-   condena», «Pero hay un dato que cambia todo»), nunca «¿qué opinas?» ni «sigue viendo». `pago` es la
-   escena del último tercio (⌈2n/3⌉ … n, ≠ `en`) cuyo golpe o pantalla **cierra exactamente esa brecha**.
+   solo si cabe en 3 s) y abre una brecha específica: dice qué falta saber, nunca «¿qué opinas?» ni «sigue viendo».
+   Es **una oración propia con verbo**: no empieza con «Y», «Pero», «Así que» ni «Entonces» suelto (va pegada a
+   lo anterior en la voz, pero se tiene que entender sola) y **nunca dice «al final te digo»** (el gate rechaza
+   las dos cosas). Familia de fórmulas para variar entre videos, sin copiarlas tal cual: invitar a quedarse
+   («Quédate hasta el final y sabrás cuántas…»), anunciar lo que se verá («Al final vas a ver qué departamento…»),
+   señalar la cifra que falta («Quédate: la cifra de condenas llega al final»), plantear la pregunta que se
+   responderá («¿Y cuántos terminan en condena? Espera al final.»). Mira la promesa de los videos anteriores en
+   «Frases ya usadas» y usa otra forma. `pago` es la escena del último tercio (⌈2n/3⌉ … n, ≠ `en`) cuyo golpe o
+   pantalla **cierra exactamente esa brecha**.
 3. **Escena 2 = T1** (`enlace` nulo). Desde la escena 3, cada escena lleva `enlace` y su voz **empieza** con
    el conector: `pero` (pero, sin embargo, aunque, solo que, en cambio, aun así), `por_eso` (por eso, así que,
    entonces, el resultado, de ahí que, la consecuencia) o `y` (y, además, también, encima, más aún). Nunca
@@ -99,7 +109,7 @@ ya no existe: la escena 1 ES el gancho.
    cada 3 no denuncia», «El doble de policías muertos»). Nunca el titular de la tarjeta ni parte de él. Una
    escena `tipo: "golpe"` (texto cinético a pantalla completa, voz 20–110 caracteres, con `pantalla` y
    `linea` como el gancho, y `verbo` de la oración que dice su pantalla) sirve para tres cosas: traducir la cifra de la tarjeta anterior a escala humana,
-   pagar la promesa, o re-ganchar a mitad en medio y largo («Espera, se pone peor»). Nunca dos golpes
+   pagar la promesa, o re-ganchar a mitad en medio y largo (con una frase propia, no una de «Frases ya usadas»). Nunca dos golpes
    seguidos, nunca en la escena 2, nunca para repetir la tarjeta.
    Otras dos escenas de texto, opcionales y con las mismas reglas de adyacencia (golpe, definición y adivina
    nunca van seguidas; `enlace` desde la escena 3):
@@ -107,8 +117,9 @@ ya no existe: la escena 1 ES el gancho.
      caracteres, en lenguaje llano, sin siglas nuevas); la voz (30–160 caracteres) dice el término. Para el
      término que la cifra necesita y el espectador no leyó («Fase 3+ de la CIF», «anomalía ONI»).
      **La voz anuncia que viene un concepto antes de decir el término**, para que quien mira sepa que se va a
-     explicar algo: «Entonces, ¿se disparó el hambre? Para entenderlo mejor: la CIF lo mide en fases, y la Fase 3
-     o más es crisis o peor.» · «¿Qué es la anomalía ONI?…» · «Antes de seguir, un concepto: …». El gate lo exige
+     explicar algo: «…Para entenderlo mejor: la CIF lo mide en fases, y la Fase 3 o más es crisis o peor.» ·
+     «¿Qué es la anomalía ONI?…» · «Antes de seguir, un concepto: …» (formas; varía la pregunta que lleva al
+     concepto respecto de «Frases ya usadas»). El gate lo exige
      (`para entender`, `para explicar`, `te explico`, `antes de seguir`, `un concepto`, `qué es`, `qué significa`,
      `qué quiere decir`, `para que quede claro`, `aclaremos`, `primero`, antes del término) y la pantalla pone el
      rótulo «Para entender» sobre el término.
@@ -182,15 +193,20 @@ ya no existe: la escena 1 ES el gancho.
 9. **Cierre (dos pantallas, una voz).** `texto` = 1–2 frases de conclusión (**≥ 3 s de voz**, ≈ 46 caracteres:
    mientras se dicen se ve la pantalla «Conclusiones» con el `resumen`) + **una pregunta al espectador** al final
    (termina en «?»), igual a `pregunta`: cuando la voz llega a ella, las conclusiones salen y queda la pregunta sola
-   en grande con «Sígueme en». Concreta, fácil de contestar y sobre su experiencia («Y tú, ¿lo notas en tu
-   colonia?», «¿Cuánto pagabas tú hace un año?»), nunca una opinión ni una respuesta sugerida. `resumen` = 2–3
+   en grande con «Sígueme en». Concreta, fácil de contestar y sobre su experiencia («¿Cuánto pagabas tú hace un
+   año?», «¿Cuánto tardas en llegar al trabajo?»), nunca una opinión ni una respuesta sugerida. No la empieces
+   siempre igual: «Y tú, ¿…?» ya salió en tres videos (mira «Frases ya usadas»). `resumen` = 2–3
    líneas cortas (≤ 40 caracteres): las conclusiones del video, que no repiten un titular. El cierre **no menciona** fuentes, el hilo, la
-   marca ni «sígueme»: «Sígueme en» con TikTok, Instagram y X lo pone la pantalla, sin voz.
-10. **Captions.** `tiktok`: 1–3 líneas con el gancho y la cifra más fuerte + 2–4 hashtags (#Guatemala
-    #DatosGT y el tema). `facebook`: el gancho, 3–6 viñetas «▸» con las cifras del video y una línea de
-    fuentes («Fuentes: …», tomadas de las tarjetas). Sus números también pasan por V2.
+   marca ni «sígueme»: «Sígueme en» con TikTok, Instagram, Facebook, YouTube y X lo pone la pantalla, sin voz.
+10. **Captions (uno por plataforma; el mismo video se sube a las cuatro).** `tiktok`: 1–3 líneas con el gancho y
+    la cifra más fuerte + 2–4 hashtags (#Guatemala #DatosGT y el tema). `instagram`: el gancho en 1–2 líneas, una
+    línea que invita a guardar o compartir («Guárdalo para…») y 3–5 hashtags al final. `facebook`: el gancho, 3–6
+    viñetas «▸» con las cifras del video y una línea de fuentes («Fuentes: …», tomadas de las tarjetas). `shorts`:
+    la primera línea es el **título de YouTube** (≤ 100 caracteres, con la cifra; se lee en buscadores), luego 1–2
+    líneas de descripción y `#Shorts` con 1–2 hashtags más. Sus números también pasan por V2.
     **Los captions no adelantan el pago**: se leen mientras corre el video, así que abren la misma brecha que la
-    promesa («¿Qué año tuvo más hambre? Te lo digo al final.»), nunca la respuesta. Las viñetas de Facebook, que
+    promesa («¿Qué año tuvo más hambre? La respuesta llega al final del video.»; nunca «te lo digo al final»: el
+    gate lo rechaza), nunca la respuesta. Las viñetas de Facebook, que
     se leen tras «ver más», sí pueden darla.
 
 11. **Icono (opcional).** En gancho, golpe y definición puedes poner `icono: "<id>"` de la biblioteca fija

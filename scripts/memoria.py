@@ -40,7 +40,8 @@
 --video <hilos/<fecha>-<slug>/video> [--estado listo|incompleto] [--dry-run]
   Registra el video de /video (lee el guion.json de entrega que escribe scripts/video.py entregar) en
   memoria/videos.json → videos[] {id, fecha, slug, hilo_id, tema, paleta, duracion, duracion_s, n_escenas,
-  musica, creditos_voz, ruta_video, ruta_hilo, estado}; un id repetido se actualiza. video.py lo lee para rotar
+  musica, creditos_voz, ruta_video, ruta_hilo, estado, frases {promesa, gancho, aperturas[], pregunta}}; un id
+  repetido se actualiza (conserva su fecha). video.py lo lee para rotar
   la música de cada paleta.
 
 --series "tema"   mismo filtro que scripts/fuentes.py --series
@@ -468,6 +469,21 @@ def listar_informes(tema, maximo):
     return 0
 
 
+def frases_video(g):
+    """Frases de la voz que el guionista tiende a repetir entre videos: la promesa, la primera oración del gancho, cómo
+    abre cada escena desde la 3 y la pregunta del cierre. video.py preparar las pone en el digesto («Frases ya usadas»)."""
+    def primera(t):
+        return re.split(r"(?<=[.?!])\s+", (t or "").strip())[0] if t else ""
+    esc = g.get("escenas") or []
+    voz = [e.get("voz") or e.get("texto") or "" for e in esc]
+    return {
+        "promesa": (g.get("promesa") or {}).get("texto", ""),
+        "gancho": primera(voz[0]) if voz else "",
+        "aperturas": [" ".join(v.split()[:4]) for v in voz[2:] if v.strip()],
+        "pregunta": (g.get("cierre") or {}).get("pregunta", ""),
+    }
+
+
 def registrar_video(d, estado, dry_run=False):
     """--video DIR: registra en memoria/videos.json el video entregado en DIR (hilos/<fecha>-<slug>/video, con guion.json)."""
     ruta = os.path.normpath(d)
@@ -480,11 +496,15 @@ def registrar_video(d, estado, dry_run=False):
         "id": g["id"], "fecha": time.strftime("%Y-%m-%d"), "slug": g["slug"], "hilo_id": "%s-%s" % (hilo.get("fecha"), g["slug"]),
         "tema": hilo.get("tema", ""), "paleta": g["paleta"], "duracion": g["duracion"], "duracion_s": g["duracion_s"],
         "n_escenas": g["n_escenas"], "musica": g["musica"], "creditos_voz": g.get("creditos_voz"),
-        "ruta_video": ruta, "ruta_hilo": g["hilo"], "estado": estado,
+        "ruta_video": ruta, "ruta_hilo": g["hilo"], "estado": estado, "frases": frases_video(g),
     }
     mv = leer(VIDEOS, obligatorio=False) or json.loads(json.dumps(VACIO_VIDEOS))
     previos = [i for i, v in enumerate(mv["videos"]) if v.get("id") == reg["id"]]
-    if previos:
+    if previos:  # volver a registrar conserva la fecha original (y el estado «publicado» si ya lo tenía)
+        viejo = mv["videos"][previos[0]]
+        reg["fecha"] = viejo.get("fecha", reg["fecha"])
+        if viejo.get("estado") == "publicado" and estado == "listo":
+            reg["estado"] = "publicado"
         mv["videos"][previos[0]] = reg
     else:
         mv["videos"].append(reg)

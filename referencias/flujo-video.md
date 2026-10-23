@@ -13,7 +13,7 @@ hilo (y derivados declarados con `calculo`). La publicación es manual; el entre
 ```
 preparar (video.py: hilo → TRABAJO, digesto con estructura y sugerencias, música por paleta)
 → Workflow video [guionista → guion.json v2 → gate V1–V5 + V9 (video.py guion --check)
-                  → crítico de retención (C1–C10, puntajes, faltas) → el guionista corrige lo que bloquea
+                  → crítico de retención (C1–C11, puntajes, faltas) → el guionista corrige lo que bloquea
                     (≤ 2 vueltas) o, una sola vez, pule las mejoras si el crítico aprueba con algún puntaje de 3
                   → animador (solo si hay una escena explica nueva: video/animaciones/<id>.js, animaciones.py --check)]
 → voz (MCP ElevenLabs: un nodo TTS por escena, 1 toma) → Scribe por escena (tiempos por palabra, 0 créditos)
@@ -89,12 +89,13 @@ cuadros, `critica.json`).
 - **Cierre en dos pantallas** (una sola voz): primero **Conclusiones** (rótulo, eco de la cifra del gancho y el
   `resumen` de 2–3 líneas mientras la voz las dice; V9 pide ≥ 3 s de voz antes de la pregunta); cuando la voz llega a
   la pregunta, las conclusiones salen hacia arriba y queda la pregunta sola en grande y luego «Sígueme en» con TikTok
-  @derekurizargt, Instagram @derekurizargt y X @DerekUrizar **solo en pantalla**. Sin logo, sin fuentes, sin la
+  @derekurizargt, Instagram @derekurizargt, Facebook Derek Urizar, YouTube @derekurizar y X @DerekUrizar **solo en
+  pantalla** (`REDES` en `scripts/video.py`, íconos en `video/cierre.html`). Sin logo, sin fuentes, sin la
   marca en la voz.
 - **Cierre en bucle**: tras «Sígueme en», el primer cuadro del gancho (barra de progreso en 0) durante 0.5 s con un
   fundido de 0.25 s: cuando TikTok repite el video, el reinicio no se nota (`montar --sin-bucle` lo quita).
-- **Formato 4:5** (opcional, `formato:4:5`): además del 9:16, `video_4x5.mp4` a 1080×1350 para el feed de Facebook e
-  Instagram, con los mismos tiempos y audio; las páginas de escena cambian de layout con `?f=45` (`html.f45`: sin zona
+- **Formato 4:5** (siempre; `entregar` lo exige): además del 9:16, `video_4x5.mp4` a 1080×1350 para el feed de
+  Facebook e Instagram, con los mismos tiempos y audio; las páginas de escena cambian de layout con `?f=45` (`html.f45`: sin zona
   segura de teléfono, golpe en y=70, tarjeta en y=250–1090, subtítulos en y=1120). `grabar/montar/revisar --formato 4:5`
   (`clips_4x5/`, `segs_4x5/`, `contacto_4x5.png`); V8 espera 1080×1350.
 - **Portadas**: cuadros **limpios** (Playwright vuelve a dibujar la escena en ese segundo con `&portada=1`: sin
@@ -107,10 +108,13 @@ cuadros, `critica.json`).
   `design/sfx/catalogo.json` (8 WAV: whoosh, tic, pulso, impacto, grave, riser, resolucion, foco), disparados
   por los eventos de cada escena. **`/video` nunca genera música ni efectos.**
 - Colores de la paleta del hilo (`design/tokens.json`).
-- **Zona segura de TikTok** (medida en un iPhone con la app): el video se escala para llenar el alto y pierde
-  ~57 px por lado; la barra de pestañas tapa hasta y≈215, los íconos de la derecha x ≥ 900 desde y≈1070 y el
-  nombre y el texto empiezan en y≈1645. Golpe y barra desde y=250 en la columna x 85–876; subtítulos en y=1400
-  (1500 en el cierre).
+- **Zona segura** (medida en un iPhone con la app; vale para TikTok, Reels y Shorts, ver «Plataformas»): el video
+  se escala para llenar el alto y pierde ~57 px por lado; la barra de pestañas tapa hasta y≈215, los íconos de la
+  derecha x ≥ 900 desde y≈1070 y el nombre y el texto empiezan en y≈1645. Golpe y barra desde y=250 en la columna
+  x 85–876; subtítulos en y=1400 (1500 en el cierre); **el contenido termina 30 px antes de los subtítulos**. Las
+  variables viven en `video/comun.css` (`--corte`, `--sup`, `--fin`, `--iconos-x`, `--iconos-y`; sus valores 4:5 en
+  `html.f45`), las páginas las leen con `V.zona()` (escala, ranking, mapa y el encaje de la tarjeta se dimensionan
+  con ella) y el gate **V13** (`V.medirZona()`, cada 0.5 s mientras graba) rechaza lo que se salga.
 - **Layout vertical de la tarjeta** (`video/vertical.css`, decisión del usuario tras el primer video: «en redes el
   layout es distinto»): la tarjeta no se incrusta al 86 %; se inyecta una hoja que oculta el titular y el handle,
   deja kicker → gráfico a todo el ancho (escala 1, y≈420–1220: por encima de la franja de íconos todo el ancho es
@@ -118,6 +122,21 @@ cuadros, `critica.json`).
   se sale de cuadro), con **deriva** lenta cuando no hay foco; el golpe entra desde la izquierda. V7 compara el
   render vertical contra el animado vertical (`video_animar.js` inyecta la misma hoja; `--cuadrada` para el modo
   viejo). Entre escenas, **transición de deslizamiento** de 0.3 s (`xfade` en `montar`, vertical en el giro).
+
+## Plataformas
+
+Un solo **maestro 9:16** (`video.mp4`, 1080×1920) se sube igual a **TikTok, Instagram Reels, Facebook Reels y YouTube
+Shorts**; es el que se abre al entregar. Las cuatro apps tapan casi lo mismo: la zona segura medida (arriba) sale de
+TikTok y cubre las otras en publicaciones normales; las guías de anuncios de Meta y YouTube reservan más abajo
+(y > 1248), pero solo aplican a anuncios. **4:5** (`video_4x5.mp4`) para el feed de Facebook e Instagram.
+
+- **Duración**: Shorts admite hasta 3 min (`SHORTS_MAX_S`); el `largo` (~4 min) se sube a YouTube como video normal
+  (`entregar` y `caption.md` lo avisan). TikTok, Reels y Facebook admiten los tres.
+- **Texto**: `caption.md` con una sección por plataforma (`caption.tiktok|instagram|facebook|shorts`; V5 exige las
+  cuatro; la primera línea de `shorts` es el título de YouTube, ≤ 100 caracteres, y lleva `#Shorts`).
+- **Miniatura**: una `portada_*.png` (1080×1920); lo importante va en el 3:4 central, que es lo que muestran las
+  cuadrículas de perfil de Instagram y TikTok. En Shorts se elige en la app.
+- **Sonido**: −14 LUFS y −1 dBTP (V8) sirven en las cuatro; ninguna publica un objetivo.
 
 ## Duraciones
 
@@ -148,13 +167,15 @@ dan una media de 84 s y recomiendan ≤ 90 s, pero el usuario prefiere `medio` p
 | **V10 ritmo** | `tiempos` | con tiempos reales, hueco máximo entre eventos visuales (golpe, entrada, cifra, foco, nota, línea y cada palabra de la línea que la voz dice, promesa, fin, y cada año dicho que la tarjeta tiene en su eje: la columna late sin zoom) ≤ 6 s; **aviso**, no falla. `tiempos` también fija la transición de entrada de cada escena del catálogo `TRANSICIONES` (del gancho a la primera tarjeta `smoothleft`; tarjeta → tarjeta `slideleft`; entrada a golpe o definición `smoothleft`; a la adivina `circleopen`; a una escena a pantalla completa `circleopen`; el giro `slideup`; el cierre `fade`; el bucle `fade`; `zoomin` queda fuera: escala con píxeles enteros y se ve pixelado) y desplaza golpe y cifra 0.3 s para que no queden bajo el `xfade`; `montar` rechaza (V8) una transición fuera del catálogo |
 | **V11 escucha** | `escuchar` | **whisper.cpp local** (`brew install whisper-cpp` + `make whisper`, modelo `ggml-small` en `sesiones/_descargas/whisper/`; opcional) transcribe cada `voz_N.mp3` **sin el guion** y lo coteja con la locución: dígitos → palabras con `numeros_es`, coma decimal, género de los numerales y tildes no cuentan; un tramo distinto que toca una palabra numérica es **FALLA** (retoma de esa escena), el resto aviso (ortografía de whisper). Scribe, conectado al nodo TTS, alinea el prompt (devuelve hasta `<break>`): V6 no detecta una cifra mal dicha. Sin whisper, `AVISO V11` y sigue. Resultado en `audio/escucha.json` |
 | **V12 quietud** | `revisar` | por clip, diferencia media de luma entre cuadros muestreados a 4 fps y 270 px (`tblend=difference` + `signalstats`): un tramo de ≥ 2.0 s con todo < 0.02 es pantalla congelada → **aviso** («E7 2.3 s sin movimiento desde 7.5 s»; `--estricto` lo vuelve fallo). La deriva (0.1–0.9) y cada palabra que entra (0.3–1.0) cuentan como movimiento; una pantalla quieta mide < 0.01. `revision/quietud.json` guarda la serie por escena |
+| **V13 zona segura** | `grabar` (y `animaciones.py --check`) | cada 0.5 s y en el último cuadro, `V.medirZona()` (`video/comun.js`) mide lo visible al menos a media opacidad (texto, SVG, imágenes, cajas con fondo; también dentro de la tarjeta, con su transform): nada sale del recorte lateral (57 px), entra en la barra de arriba (y < 215), baja de los subtítulos (top de `#subs` − 30) ni entra en la columna de íconos (x > 900 desde y 1070); en 4:5, solo el fin antes de los subtítulos. Durante un foco de la tarjeta se mide solo la caja enfocada (el resto sale de cuadro a propósito) y el paso de un foco a otro no se mide. Escribe `revision/zona[_4x5].json`; falla (los clips quedan escritos). `revisar` dibuja la zona en rojo sobre `contacto.png` |
 | V7 animación | `grabar` | el último cuadro de cada tarjeta animada es idéntico a su render estático (`scripts/video_animar.js --check`, ≤ 0.1 % de píxeles); el foco vive fuera del iframe y `__caja` no lanza |
 | V8 salida | `montar` | 1080×1920 con audio; −14 ±1.5 LUFS; true peak ≤ −1 dBTP (música 0.22 con ducking; efectos del catálogo; loudnorm en dos pasadas) |
 | K2 efectos | `validate.py` / `sfx.py --check` | `design/sfx/catalogo.json` con los 8 ids fijos, cada WAV presente, duración 0.2–4 s coherente con la cabecera, ganancia −40–0 dB |
 | K3 iconos | `validate.py` / `iconos.py --check` | `design/iconos/catalogo.json` (biblioteca FIJA: 50 iconos Lucide, tag fijado, licencia ISC; `make iconos` la baja UNA vez): cada SVG presente, 24×24, ninguno fuera del catálogo, `LICENSE.txt`. Solo se comprueba si el catálogo existe; el guion la usa con `icono: "<id>"` en gancho, golpe y definición (V1) |
 
-Crítico (`referencias/roles/video-critico.md`, C1–C10): gancho en silencio · razón para quedarse · «¿por qué seguiría
-viendo?» por escena · pero/por eso reales · escala humana · pago · ritmo y re-gancho · cierre · lenguaje y honestidad.
+Crítico (`referencias/roles/video-critico.md`, C1–C11): gancho en silencio · razón para quedarse · «¿por qué seguiría
+viendo?» por escena · pero/por eso reales · escala humana · pago · ritmo y re-gancho · cierre · lenguaje y honestidad ·
+lectura de corrido · plantilla (C11: la promesa, el gancho, las aperturas y la pregunta no repiten las de «Frases ya usadas»).
 Puntajes 1–5: gancho, bucle, ritmo, escala_humana, pago, cierre. `pasa` = sin faltas `bloquea` y todos ≥ 3.
 
 ## Piezas

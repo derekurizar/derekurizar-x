@@ -148,6 +148,9 @@ video-fixture:
 	python3 scripts/video.py grabar $(VF)/trabajo --fps $(FPS)
 	python3 scripts/video.py montar $(VF)/trabajo
 	python3 scripts/video.py revisar $(VF)/trabajo
+	python3 scripts/video.py grabar $(VF)/trabajo --fps $(FPS) --formato 4:5
+	python3 scripts/video.py montar $(VF)/trabajo --formato 4:5
+	python3 scripts/video.py revisar $(VF)/trabajo --formato 4:5
 	python3 scripts/video.py entregar $(VF)/trabajo --salida $(VF)/salida
 
 whisper:   # V11: whisper.cpp local; el binario viene de Homebrew (brew install whisper-cpp), el modelo se baja aquí
@@ -157,7 +160,7 @@ iconos:   # K3: biblioteca fija de iconos (Lucide, tag fijado en scripts/iconos.
 	@test -s design/iconos/catalogo.json || python3 scripts/iconos.py --importar
 	python3 scripts/iconos.py --check
 
-video-fixture-4x5:   # sobre el trabajo que dejó video-fixture: la versión 1080×1350 para el feed
+video-fixture-4x5:   # sobre el trabajo que dejó video-fixture: vuelve a grabar solo la versión 1080×1350 del feed
 	python3 scripts/video.py grabar $(VF)/trabajo --fps $(FPS) --formato 4:5
 	python3 scripts/video.py montar $(VF)/trabajo --formato 4:5
 	python3 scripts/video.py revisar $(VF)/trabajo --formato 4:5

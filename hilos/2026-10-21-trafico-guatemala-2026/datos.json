@@ -1,0 +1,3265 @@
+{
+  "slug": "trafico-guatemala-2026",
+  "fecha": "2026-10-21",
+  "tesis": "Entre 2010 y 2025 el parque vehicular registrado creció 208% frente a 27% de la población; la red vial apenas creció (12% entre 2017 y 2026), el peso del CIV en el gasto cayó a 3.65% y los fallecidos en tránsito casi se duplicaron desde 2011.",
+  "ancla_id": "pqv-c14",
+  "paleta": "atitlan",
+  "hook_tipo": "escala_humana",
+  "cifras": [
+    {
+      "id": "cng-c01",
+      "concepto": "Horas que pierde cada persona al año atrapada en el tráfico del área metropolitana de Guatemala (equivalen a 54 días)",
+      "unidad": "horas al año por persona",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Gobierno de Guatemala (Secretaría Privada de la Presidencia) citando datos del BID, presentación del Plan Maestro de Movilidad KOICA; vía AGN",
+      "url": "https://agn.gt/plan-maestro-de-movilidad-de-koica-respalda-los-13-proyectos-estrategicos-del-gobierno-para-el-area-metropolitana/",
+      "periodo": "2026 (año de publicación; el año del dato del BID no se declara)",
+      "n_puntos": 1,
+      "valor": 1300,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "La Hora (10 feb 2026): presidente de Fundesa cita al BID, «casi 1 mil 300 horas… más de 54 días al año»",
+      "evidencia": {
+        "url": "https://agn.gt/plan-maestro-de-movilidad-de-koica-respalda-los-13-proyectos-estrategicos-del-gobierno-para-el-area-metropolitana/",
+        "cita": "cada persona pierde aproximadamente mil 300 horas al año atrapada en el tráfico, equivalentes a 54 días",
+        "archivo_local": "sesiones/_descargas/web/agn_2026_plan_maestro_koica_13_proyectos.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_15.png"
+      ]
+    },
+    {
+      "id": "cng-c02",
+      "concepto": "Costo económico anual de la congestión vial en la Ciudad de Guatemala (más de)",
+      "unidad": "quetzales al año",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Gobierno de Guatemala citando datos del BID; vía AGN (2 jul 2026). Segunda mención: Fundesa citando al BID, vía La Hora (10 feb 2026)",
+      "url": "https://agn.gt/plan-maestro-de-movilidad-de-koica-respalda-los-13-proyectos-estrategicos-del-gobierno-para-el-area-metropolitana/",
+      "periodo": "anual (año base no declarado)",
+      "n_puntos": 1,
+      "valor": 25000000000,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "La Hora (10 feb 2026): Fundesa citando al BID, «más de Q25 mil millones»",
+      "evidencia": {
+        "url": "https://agn.gt/plan-maestro-de-movilidad-de-koica-respalda-los-13-proyectos-estrategicos-del-gobierno-para-el-area-metropolitana/",
+        "cita": "el costo económico de la congestión supera los 25 mil millones de quetzales anuales , de acuerdo con datos citados del Banco Interamericano de Desarrollo",
+        "archivo_local": "sesiones/_descargas/web/agn_2026_plan_maestro_koica_13_proyectos.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_16.png"
+      ]
+    },
+    {
+      "id": "cng-c03",
+      "concepto": "Pérdidas por congestión vial como porcentaje del PIB, según el Plan Maestro de Movilidad del Área Metropolitana (KOICA)",
+      "unidad": "% del PIB (cerca del)",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Plan Maestro de Movilidad para el Área Metropolitana de Guatemala (KOICA), presentado por la SPP; vía AGN (2 jul 2026)",
+      "url": "https://agn.gt/plan-maestro-de-movilidad-de-koica-respalda-los-13-proyectos-estrategicos-del-gobierno-para-el-area-metropolitana/",
+      "periodo": "2026 (presentación del estudio, 4 años de análisis)",
+      "n_puntos": 1,
+      "valor": 10,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa Libre «Every Guatemalan loses 54 days a year in traffic» (Fundesa): pérdidas equivalentes a 9.4 % del PIB del departamento de Guatemala",
+      "evidencia": {
+        "url": "https://agn.gt/plan-maestro-de-movilidad-de-koica-respalda-los-13-proyectos-estrategicos-del-gobierno-para-el-area-metropolitana/",
+        "cita": "De acuerdo con los resultados, la congestión vial genera pérdidas equivalentes a cerca del 10 % del producto interno bruto (PIB)",
+        "archivo_local": "sesiones/_descargas/web/agn_2026_plan_maestro_koica_13_proyectos.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "cng-c04",
+      "concepto": "Horas diarias que puede invertir una persona en desplazamientos en el área metropolitana: trabajador frente a residente de municipios periféricos (máximos)",
+      "unidad": "horas al día (hasta)",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Gobierno de Guatemala, presentación del Plan Maestro de Movilidad (KOICA); vía AGN (2 jul 2026)",
+      "url": "https://agn.gt/plan-maestro-de-movilidad-de-koica-respalda-los-13-proyectos-estrategicos-del-gobierno-para-el-area-metropolitana/",
+      "periodo": "2026",
+      "n_puntos": 2,
+      "valor": 6,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://agn.gt/plan-maestro-de-movilidad-de-koica-respalda-los-13-proyectos-estrategicos-del-gobierno-para-el-area-metropolitana/",
+        "cita": "un trabajador puede invertir hasta cuatro horas diarias en desplazamientos, mientras que quienes residen en municipios periféricos llegan incluso a perder seis horas al día",
+        "archivo_local": "sesiones/_descargas/web/agn_2026_plan_maestro_koica_13_proyectos.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Trabajador del área metropolitana (hasta)",
+          "valor": 4
+        },
+        {
+          "nombre": "Residente de municipios periféricos (hasta)",
+          "valor": 6
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "cng-c05",
+      "concepto": "Vehículos que ingresan al día al área urbana de la Ciudad de Guatemala por las cuatro rutas centroamericanas (aforo KOICA retomado por el Plan Maestro de Movilidad)",
+      "unidad": "vehículos por día",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Datos de carga vehicular de KOICA, Plan Maestro de Movilidad del AMG; vía La Hora (30 nov 2025)",
+      "url": "https://lahora.gt/nacionales/gherrera/2025/11/30/plan-de-mejora-vial-del-amg-requerira-mas-de-60-puentes-para-funcionar/",
+      "periodo": "aforo del estudio KOICA (2022–2025), publicado nov 2025",
+      "n_puntos": 4,
+      "valor": 821320,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://lahora.gt/nacionales/gherrera/2025/11/30/plan-de-mejora-vial-del-amg-requerira-mas-de-60-puentes-para-funcionar/",
+        "cita": "las rutas centroamericanas aportan más de 820 mil vehículos diarios que ingresan al área urbana. De estas, la CA-1 Oriente es la que soporta el mayor flujo, con 308,214 vehículos al día",
+        "archivo_local": "sesiones/_descargas/web/lahora_2025-11-30_plan_mejora_vial_amg.txt"
+      },
+      "partes": [
+        {
+          "nombre": "CA-1 Oriente",
+          "valor": 308214
+        },
+        {
+          "nombre": "CA-9 Sur",
+          "valor": 226934
+        },
+        {
+          "nombre": "CA-1 Occidente",
+          "valor": 193589
+        },
+        {
+          "nombre": "CA-9 Norte",
+          "valor": 92583
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "cng-c06",
+      "concepto": "Vehículos que circulan cada día en la Ciudad de Guatemala, según la estimación del Plan Maestro de Movilidad (KOICA)",
+      "unidad": "vehículos por día",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "Plan Maestro de Movilidad del AMG (datos de carga vehicular de KOICA); vía La Hora (30 nov 2025)",
+      "url": "https://lahora.gt/nacionales/gherrera/2025/11/30/plan-de-mejora-vial-del-amg-requerira-mas-de-60-puentes-para-funcionar/",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 2700000,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://lahora.gt/nacionales/gherrera/2025/11/30/plan-de-mejora-vial-del-amg-requerira-mas-de-60-puentes-para-funcionar/",
+        "cita": "Movilidad también retoma los datos de carga vehicular proporcionados por KOICA … Se estima que 2.7 millones de vehículos circulan cada día en la Ciudad de Guatemala.",
+        "archivo_local": "sesiones/_descargas/web/lahora_2025-11-30_plan_mejora_vial_amg.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "cng-c07",
+      "concepto": "Vehículos que circulan diariamente en la Ciudad de Guatemala según EMETRA (rango estimado)",
+      "unidad": "vehículos por día",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "EMETRA (Amílcar Montejo, portavoz), entrevista en Emisoras Unidas, 12 oct 2026",
+      "url": "https://emisorasunidas.com/nacional/2026/10/12/parque-vehicular-guatemala-transito-capital-montejo/",
+      "periodo": "octubre 2026",
+      "n_puntos": 2,
+      "valor": 1700000,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://emisorasunidas.com/nacional/2026/10/12/parque-vehicular-guatemala-transito-capital-montejo/",
+        "cita": "específicamente en la Ciudad de Guatemala, circulan diariamente entre 1.3 y 1.7 millones de vehículos la actualidad",
+        "archivo_local": "sesiones/_descargas/web/emisorasunidas_2026-10-12_parque_vehicular_emetra.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Estimación mínima EMETRA",
+          "valor": 1300000
+        },
+        {
+          "nombre": "Estimación máxima EMETRA",
+          "valor": 1700000
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "cng-c08",
+      "concepto": "Aumento mensual estimado de vehículos en circulación (EMETRA) y parte que son motos",
+      "unidad": "vehículos por mes (alrededor de)",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "EMETRA (Amílcar Montejo), entrevista en Emisoras Unidas, 12 oct 2026",
+      "url": "https://emisorasunidas.com/nacional/2026/10/12/parque-vehicular-guatemala-transito-capital-montejo/",
+      "periodo": "2026",
+      "n_puntos": 1,
+      "valor": 40000,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://emisorasunidas.com/nacional/2026/10/12/parque-vehicular-guatemala-transito-capital-montejo/",
+        "cita": "Sobre el aumento mensual de alrededor de 40 mil vehículos, Montejo detalló que el cálculo se basa en datos provenientes de la Superintendencia de Administración Tributaria (SAT)",
+        "archivo_local": "sesiones/_descargas/web/emisorasunidas_2026-10-12_parque_vehicular_emetra.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "cng-c09",
+      "concepto": "Personas que moviliza el Transmetro a diario en todos sus ejes (Municipalidad de Guatemala)",
+      "unidad": "personas por día (alrededor de)",
+      "anio": 2022,
+      "tipo": "puntual",
+      "fuente": "Municipalidad de Guatemala; vía AGN (18 ene 2022)",
+      "url": "https://agn.gt/PONDRAN-EN-MARCHA-PLAN-PILOTO-PARA-LINEA-5-DEL-TRANSMETRO",
+      "periodo": "enero 2022",
+      "n_puntos": 1,
+      "valor": 460000,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://agn.gt/PONDRAN-EN-MARCHA-PLAN-PILOTO-PARA-LINEA-5-DEL-TRANSMETRO",
+        "cita": "La ruta involucra la ampliación del sistema de Transmetro, que moviliza a alrededor de 460 mil personas a diario en todos sus ejes.",
+        "archivo_local": "sesiones/_descargas/web/agn_transmetro_linea5_2022.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "cng-c10",
+      "concepto": "Tiempo promedio de traslado de ida al trabajo o estudio en capitales latinoamericanas (Numbeo Time Index, edición 2026)",
+      "unidad": "minutos (solo ida), Ciudad de Guatemala",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Numbeo, Traffic Index by City 2026",
+      "url": "https://www.numbeo.com/traffic/rankings.jsp?title=2026",
+      "periodo": "edición 2026 (percepciones de los últimos 5 años)",
+      "n_puntos": 8,
+      "valor": 49.2,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Medio costarricense (resultado de búsqueda) reproduce el Traffic Index 2026 de Numbeo (Guatemala 255.1; San José 327.8, 63.3 min); la tabla local coincide en todas las filas citadas",
+      "evidencia": {
+        "url": "https://www.numbeo.com/traffic/rankings.jsp?title=2026",
+        "cita": "Traffic Index by City 2026 … Guatemala City, Guatemala 255.1 49.2 5793.4 278.0 12808.3",
+        "archivo_local": "sesiones/_descargas/web/numbeo_traffic_rankings_2026.html"
+      },
+      "partes": [
+        {
+          "nombre": "San José (Costa Rica)",
+          "valor": 63.3
+        },
+        {
+          "nombre": "Ciudad de México",
+          "valor": 52.7
+        },
+        {
+          "nombre": "Bogotá",
+          "valor": 51.4
+        },
+        {
+          "nombre": "Lima",
+          "valor": 51.2
+        },
+        {
+          "nombre": "Ciudad de Guatemala",
+          "valor": 49.2
+        },
+        {
+          "nombre": "San Salvador",
+          "valor": 40.7
+        },
+        {
+          "nombre": "Santo Domingo",
+          "valor": 35.5
+        },
+        {
+          "nombre": "Panamá",
+          "valor": 32.8
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_14.png"
+      ]
+    },
+    {
+      "id": "cng-c11",
+      "concepto": "Puesto de la Ciudad de Guatemala en el Traffic Index de Numbeo, edición 2026 (de 340 ciudades)",
+      "unidad": "puesto de 340 ciudades",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Numbeo, Traffic Index by City 2026",
+      "url": "https://www.numbeo.com/traffic/rankings.jsp?title=2026",
+      "periodo": "edición 2026",
+      "n_puntos": 1,
+      "valor": 12,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://www.numbeo.com/traffic/rankings.jsp?title=2026",
+        "cita": "Traffic Index by City 2026 · fila 12 de 340: Guatemala City, Guatemala 255.1",
+        "archivo_local": "sesiones/_descargas/web/numbeo_traffic_rankings_2026.html"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_14.png"
+      ]
+    },
+    {
+      "id": "cng-c12",
+      "concepto": "Habitantes del área metropolitana de Guatemala (44 municipios) según el Ejecutivo",
+      "unidad": "habitantes (más de)",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Gobierno de Guatemala, presentación de los 13 proyectos de movilidad; vía AGN (2 jul 2026)",
+      "url": "https://agn.gt/plan-maestro-de-movilidad-de-koica-respalda-los-13-proyectos-estrategicos-del-gobierno-para-el-area-metropolitana/",
+      "periodo": "2026",
+      "n_puntos": 1,
+      "valor": 5000000,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://agn.gt/plan-maestro-de-movilidad-de-koica-respalda-los-13-proyectos-estrategicos-del-gobierno-para-el-area-metropolitana/",
+        "cita": "actualmente el área metropolitana concentra más de 5 millones de habitantes distribuidos en 44 municipios",
+        "archivo_local": "sesiones/_descargas/web/agn_2026_plan_maestro_koica_13_proyectos.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "cng-c13",
+      "concepto": "Kilómetros de vías nuevas que propone el Plan de Mejora Vial del Plan Maestro de Movilidad: tres circunvalaciones y cinco radiales",
+      "unidad": "km",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Plan Maestro de Movilidad del AMG (KOICA/CIV); vía La Hora (30 nov 2025)",
+      "url": "https://lahora.gt/nacionales/gherrera/2025/11/30/plan-de-mejora-vial-del-amg-requerira-mas-de-60-puentes-para-funcionar/",
+      "periodo": "propuesta 2025 (horizonte 20 años)",
+      "n_puntos": 2,
+      "valor": 169,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://lahora.gt/nacionales/gherrera/2025/11/30/plan-de-mejora-vial-del-amg-requerira-mas-de-60-puentes-para-funcionar/",
+        "cita": "Las circunvalaciones suman 123 kilómetros de longitud […] el plan incorpora cinco vías radiales, con 46 kilómetros de extensión.",
+        "archivo_local": "sesiones/_descargas/web/lahora_2025-11-30_plan_mejora_vial_amg.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Tres circunvalaciones",
+          "valor": 123
+        },
+        {
+          "nombre": "Cinco vías radiales",
+          "valor": 46
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "pqv-c01",
+      "concepto": "Parque vehicular total registrado en la SAT al 31 de diciembre de cada año",
+      "unidad": "vehículos",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "SAT, Boletín de Estadísticas Tributarias (G2/G1 Parque vehicular), Sistema de recaudación SAT",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+      "periodo": "2006–2025",
+      "n_puntos": 20,
+      "valor": 6363145,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa Libre: Guatemala supera los 6.3 millones de vehículos en 2025 (reproduce SAT)",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+        "cita": "TOTAL,...,4829864,5266843,5771508,6363145,6829492 (Dic-2022…Dic-2025, Jul-2026)",
+        "archivo_local": "sesiones/_descargas/boletinestadisticosat_hoja31.csv"
+      },
+      "serie": [
+        {
+          "p": "2006",
+          "v": 1302272
+        },
+        {
+          "p": "2007",
+          "v": 1558145
+        },
+        {
+          "p": "2008",
+          "v": 1760013
+        },
+        {
+          "p": "2009",
+          "v": 1912469
+        },
+        {
+          "p": "2010",
+          "v": 2064035
+        },
+        {
+          "p": "2011",
+          "v": 2222182
+        },
+        {
+          "p": "2012",
+          "v": 2389240
+        },
+        {
+          "p": "2013",
+          "v": 2562925
+        },
+        {
+          "p": "2014",
+          "v": 2738925
+        },
+        {
+          "p": "2015",
+          "v": 2970678
+        },
+        {
+          "p": "2016",
+          "v": 3250194
+        },
+        {
+          "p": "2017",
+          "v": 3535682
+        },
+        {
+          "p": "2018",
+          "v": 3504405
+        },
+        {
+          "p": "2019",
+          "v": 3795178
+        },
+        {
+          "p": "2020",
+          "v": 4096800
+        },
+        {
+          "p": "2021",
+          "v": 4472894
+        },
+        {
+          "p": "2022",
+          "v": 4829864
+        },
+        {
+          "p": "2023",
+          "v": 5266843
+        },
+        {
+          "p": "2024",
+          "v": 5771508
+        },
+        {
+          "p": "2025",
+          "v": 6363145
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_2.png"
+      ]
+    },
+    {
+      "id": "pqv-c02",
+      "concepto": "Parque vehicular total registrado en la SAT a julio de 2026",
+      "unidad": "vehículos",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "SAT, Boletín de Estadísticas Tributarias (G2/G1 Parque vehicular), Sistema de recaudación SAT",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+      "periodo": "jul-2026",
+      "n_puntos": 1,
+      "valor": 6829492,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+        "cita": "TOTAL,...,5771508,6363145,6829492 (última columna: Jul - 2026)",
+        "archivo_local": "sesiones/_descargas/boletinestadisticosat_hoja31.csv"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_2.png"
+      ]
+    },
+    {
+      "id": "pqv-c03",
+      "concepto": "Crecimiento del parque vehicular registrado en 2025 (dic-2024 a dic-2025)",
+      "unidad": "%",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "SAT, Boletín de Estadísticas Tributarias (G2/G1 Parque vehicular), Sistema de recaudación SAT (cálculo propio)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+      "periodo": "2024–2025",
+      "n_puntos": 1,
+      "valor": 10.25,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa Libre: Guatemala supera los 6.3 millones de vehículos en 2025 (reproduce SAT)",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+        "cita": "TOTAL,...,5266843,5771508,6363145 (Dic-2023, Dic-2024, Dic-2025)",
+        "archivo_local": "sesiones/_descargas/boletinestadisticosat_hoja31.csv"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "pqv-c04",
+      "concepto": "Aumento neto del parque vehicular registrado por día en 2025",
+      "unidad": "vehículos por día",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "SAT, Boletín de Estadísticas Tributarias (G2/G1 Parque vehicular), Sistema de recaudación SAT (cálculo propio)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 1620.9,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+        "cita": "TOTAL,...,5771508,6363145 (Dic-2024, Dic-2025)",
+        "archivo_local": "sesiones/_descargas/boletinestadisticosat_hoja31.csv"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "pqv-c05",
+      "concepto": "Motocicletas en el parque vehicular registrado al 31 de diciembre",
+      "unidad": "motocicletas",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "SAT, Boletín de Estadísticas Tributarias (G2/G1 Parque vehicular), Sistema de recaudación SAT",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+      "periodo": "2006–2025",
+      "n_puntos": 20,
+      "valor": 3186706,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+        "cita": "Motocicletas,...,2463238,2791574,3186706,3502653 (Dic-2023, Dic-2024, Dic-2025, Jul-2026)",
+        "archivo_local": "sesiones/_descargas/boletinestadisticosat_hoja31.csv"
+      },
+      "serie": [
+        {
+          "p": "2006",
+          "v": 259541
+        },
+        {
+          "p": "2007",
+          "v": 358005
+        },
+        {
+          "p": "2008",
+          "v": 447068
+        },
+        {
+          "p": "2009",
+          "v": 508999
+        },
+        {
+          "p": "2010",
+          "v": 575645
+        },
+        {
+          "p": "2011",
+          "v": 656590
+        },
+        {
+          "p": "2012",
+          "v": 756438
+        },
+        {
+          "p": "2013",
+          "v": 863991
+        },
+        {
+          "p": "2014",
+          "v": 963859
+        },
+        {
+          "p": "2015",
+          "v": 1087834
+        },
+        {
+          "p": "2016",
+          "v": 1227879
+        },
+        {
+          "p": "2017",
+          "v": 1379149
+        },
+        {
+          "p": "2018",
+          "v": 1358756
+        },
+        {
+          "p": "2019",
+          "v": 1524121
+        },
+        {
+          "p": "2020",
+          "v": 1729356
+        },
+        {
+          "p": "2021",
+          "v": 1961880
+        },
+        {
+          "p": "2022",
+          "v": 2190578
+        },
+        {
+          "p": "2023",
+          "v": 2463238
+        },
+        {
+          "p": "2024",
+          "v": 2791574
+        },
+        {
+          "p": "2025",
+          "v": 3186706
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_4.png"
+      ]
+    },
+    {
+      "id": "pqv-c06",
+      "concepto": "Participación de las motocicletas en el parque vehicular registrado (al 31 de diciembre)",
+      "unidad": "% del parque",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "SAT, Boletín de Estadísticas Tributarias (G2/G1 Parque vehicular), Sistema de recaudación SAT (cálculo propio)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+      "periodo": "2006–2025",
+      "n_puntos": 20,
+      "valor": 50.08,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "PNUD, Análisis sobre hechos de tránsito en Guatemala 2023 (reproduce SAT)",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+        "cita": "TOTAL,...,6363145 · Motocicletas,...,3186706 (Dic-2025)",
+        "archivo_local": "sesiones/_descargas/boletinestadisticosat_hoja31.csv"
+      },
+      "serie": [
+        {
+          "p": "2006",
+          "v": 19.93
+        },
+        {
+          "p": "2007",
+          "v": 22.98
+        },
+        {
+          "p": "2008",
+          "v": 25.4
+        },
+        {
+          "p": "2009",
+          "v": 26.61
+        },
+        {
+          "p": "2010",
+          "v": 27.89
+        },
+        {
+          "p": "2011",
+          "v": 29.55
+        },
+        {
+          "p": "2012",
+          "v": 31.66
+        },
+        {
+          "p": "2013",
+          "v": 33.71
+        },
+        {
+          "p": "2014",
+          "v": 35.19
+        },
+        {
+          "p": "2015",
+          "v": 36.62
+        },
+        {
+          "p": "2016",
+          "v": 37.78
+        },
+        {
+          "p": "2017",
+          "v": 39.01
+        },
+        {
+          "p": "2018",
+          "v": 38.77
+        },
+        {
+          "p": "2019",
+          "v": 40.16
+        },
+        {
+          "p": "2020",
+          "v": 42.21
+        },
+        {
+          "p": "2021",
+          "v": 43.86
+        },
+        {
+          "p": "2022",
+          "v": 45.35
+        },
+        {
+          "p": "2023",
+          "v": 46.77
+        },
+        {
+          "p": "2024",
+          "v": 48.37
+        },
+        {
+          "p": "2025",
+          "v": 50.08
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_4.png"
+      ]
+    },
+    {
+      "id": "pqv-c07",
+      "concepto": "Parque vehicular registrado por tipo de vehículo al 31 de diciembre de 2025",
+      "unidad": "vehículos",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "SAT, Boletín de Estadísticas Tributarias (G2/G1 Parque vehicular), Sistema de recaudación SAT",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+      "periodo": "dic-2025",
+      "n_puntos": 12,
+      "valor": 6363145,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+        "cita": "Motocicletas,...,3186706 · Automóviles,...,942251 · Camionetas, camionetillas y tipo panel,...,902061 · Pick-up,...,840670 (Dic-2025)",
+        "archivo_local": "sesiones/_descargas/boletinestadisticosat_hoja31.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Motocicletas",
+          "valor": 3186706
+        },
+        {
+          "nombre": "Automóviles",
+          "valor": 942251
+        },
+        {
+          "nombre": "Camionetas, camionetillas y tipo panel",
+          "valor": 902061
+        },
+        {
+          "nombre": "Pick-up",
+          "valor": 840670
+        },
+        {
+          "nombre": "Camiones, cabezales y transporte de carga",
+          "valor": 259593
+        },
+        {
+          "nombre": "Autobuses, buses, microbuses",
+          "valor": 126267
+        },
+        {
+          "nombre": "Furgones y plataformas",
+          "valor": 39433
+        },
+        {
+          "nombre": "Jeep",
+          "valor": 25172
+        },
+        {
+          "nombre": "Otros",
+          "valor": 23377
+        },
+        {
+          "nombre": "Carretas, carretones, remolques, etc.",
+          "valor": 13926
+        },
+        {
+          "nombre": "Grúas",
+          "valor": 3336
+        },
+        {
+          "nombre": "Tractores y mini tractores",
+          "valor": 353
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "pqv-c08",
+      "concepto": "Parque vehicular registrado por departamento al 31 de diciembre de 2025 (22 departamentos)",
+      "unidad": "vehículos",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "SAT, Boletín de Estadísticas Tributarias (G2/G1 Parque vehicular), Sistema de recaudación SAT",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+      "periodo": "dic-2025",
+      "n_puntos": 22,
+      "valor": 2679435,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+        "cita": "Guatemala,...,2457885,2679435,2839650 (Dic-2024, Dic-2025, Jul-2026)",
+        "archivo_local": "sesiones/_descargas/boletinestadisticosat_hoja30.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala",
+          "valor": 2679435
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 412165
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 365491
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 286833
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 255740
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 249228
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 192017
+        },
+        {
+          "nombre": "Petén",
+          "valor": 187989
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 177602
+        },
+        {
+          "nombre": "Suchitepequez",
+          "valor": 173182
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 168013
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 147926
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 143913
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 138368
+        },
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 137756
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 134283
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 126910
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 94382
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 78709
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 73967
+        },
+        {
+          "nombre": "Totonicapan",
+          "valor": 73591
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 65645
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "pqv-c09",
+      "concepto": "Participación del departamento de Guatemala en el parque vehicular registrado, dic-2025",
+      "unidad": "% del parque",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "SAT, Boletín de Estadísticas Tributarias (G2/G1 Parque vehicular), Sistema de recaudación SAT (cálculo propio)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+      "periodo": "dic-2025",
+      "n_puntos": 1,
+      "valor": 42.11,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+        "cita": "TOTAL,...,6363145 · Guatemala,...,2679435 (Dic-2025)",
+        "archivo_local": "sesiones/_descargas/boletinestadisticosat_hoja30.csv"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_6.png"
+      ]
+    },
+    {
+      "id": "pqv-c10",
+      "concepto": "Vehículos del parque activo según año de alta (inscripción) en la SAT",
+      "unidad": "vehículos con alta en el año y aún activos",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "SAT, Análisis estadístico del parque vehicular (microdatos, corte agosto 2026) (agregación propia)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/4801/analisis-estadistico-del-parque-vehicular/96445/informacion_para_analisis_estadistico_vehiculos_2026_agosto",
+      "periodo": "2010–2025",
+      "n_puntos": 16,
+      "valor": 724170,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/4801/analisis-estadistico-del-parque-vehicular/96445/informacion_para_analisis_estadistico_vehiculos_2026_agosto",
+        "cita": "2023,532781,318427 · 2024,612019,379021 · 2025,724170,456622 (anio_alta, vehiculos_activos, motos)",
+        "archivo_local": "sesiones/_descargas/sat_parque_2026_agosto/altas_por_anio_alta.csv"
+      },
+      "serie": [
+        {
+          "p": "2010",
+          "v": 108374
+        },
+        {
+          "p": "2011",
+          "v": 126111
+        },
+        {
+          "p": "2012",
+          "v": 143134
+        },
+        {
+          "p": "2013",
+          "v": 145708
+        },
+        {
+          "p": "2014",
+          "v": 161687
+        },
+        {
+          "p": "2015",
+          "v": 216959
+        },
+        {
+          "p": "2016",
+          "v": 273304
+        },
+        {
+          "p": "2017",
+          "v": 299990
+        },
+        {
+          "p": "2018",
+          "v": 309032
+        },
+        {
+          "p": "2019",
+          "v": 332007
+        },
+        {
+          "p": "2020",
+          "v": 342072
+        },
+        {
+          "p": "2021",
+          "v": 436684
+        },
+        {
+          "p": "2022",
+          "v": 448551
+        },
+        {
+          "p": "2023",
+          "v": 532781
+        },
+        {
+          "p": "2024",
+          "v": 612019
+        },
+        {
+          "p": "2025",
+          "v": 724170
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_3.png"
+      ]
+    },
+    {
+      "id": "pqv-c11",
+      "concepto": "Vehículos con alta en 2025 (aún activos) por día",
+      "unidad": "vehículos por día",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "SAT, Análisis estadístico del parque vehicular (microdatos, corte agosto 2026) (cálculo propio)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/4801/analisis-estadistico-del-parque-vehicular/96445/informacion_para_analisis_estadistico_vehiculos_2026_agosto",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 1984,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/4801/analisis-estadistico-del-parque-vehicular/96445/informacion_para_analisis_estadistico_vehiculos_2026_agosto",
+        "cita": "2025,724170,456622 (anio_alta, vehiculos_activos, motos)",
+        "archivo_local": "sesiones/_descargas/sat_parque_2026_agosto/altas_por_anio_alta.csv"
+      },
+      "usada": true,
+      "aparece_en": [
+        "T1",
+        "tuit_3.png"
+      ]
+    },
+    {
+      "id": "pqv-c12",
+      "concepto": "Motocicletas con alta en 2025 (aún activas) por día",
+      "unidad": "motos por día",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "SAT, Análisis estadístico del parque vehicular (microdatos, corte agosto 2026) (cálculo propio)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/4801/analisis-estadistico-del-parque-vehicular/96445/informacion_para_analisis_estadistico_vehiculos_2026_agosto",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 1251,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/4801/analisis-estadistico-del-parque-vehicular/96445/informacion_para_analisis_estadistico_vehiculos_2026_agosto",
+        "cita": "2025,724170,456622 (anio_alta, vehiculos_activos, motos)",
+        "archivo_local": "sesiones/_descargas/sat_parque_2026_agosto/altas_por_anio_alta.csv"
+      },
+      "usada": true,
+      "aparece_en": [
+        "T1",
+        "tuit_3.png"
+      ]
+    },
+    {
+      "id": "pqv-c13",
+      "concepto": "Vehículos registrados por cada 1,000 habitantes (parque SAT al 31-dic / población INE al 30-jun)",
+      "unidad": "vehículos por 1,000 habitantes",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "SAT, Boletín de Estadísticas Tributarias (G2/G1 Parque vehicular), Sistema de recaudación SAT + INE, Estimaciones y proyecciones nacionales de población 1950–2050, revisión 2019 (cálculo propio)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+      "periodo": "2010–2025",
+      "n_puntos": 16,
+      "valor": 351.9,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo SAT (hoja 31) / INE revisión 2019 (Cuadro 7)",
+      "evidencia": {
+        "url": "https://prensalibre.com/wp-content/uploads/2024/09/01-Metodologia-Nacional.pdf",
+        "cita": "2025        18,079,810        8,893,214         9,186,596 (Cuadro 7, población total al 30 de junio)",
+        "archivo_local": "sesiones/_descargas/01-Metodologia-Nacional.txt"
+      },
+      "serie": [
+        {
+          "p": "2010",
+          "v": 144.7
+        },
+        {
+          "p": "2011",
+          "v": 153.0
+        },
+        {
+          "p": "2012",
+          "v": 161.6
+        },
+        {
+          "p": "2013",
+          "v": 170.4
+        },
+        {
+          "p": "2014",
+          "v": 178.9
+        },
+        {
+          "p": "2015",
+          "v": 190.8
+        },
+        {
+          "p": "2016",
+          "v": 205.3
+        },
+        {
+          "p": "2017",
+          "v": 219.8
+        },
+        {
+          "p": "2018",
+          "v": 214.4
+        },
+        {
+          "p": "2019",
+          "v": 228.6
+        },
+        {
+          "p": "2020",
+          "v": 243.0
+        },
+        {
+          "p": "2021",
+          "v": 261.4
+        },
+        {
+          "p": "2022",
+          "v": 278.3
+        },
+        {
+          "p": "2023",
+          "v": 299.2
+        },
+        {
+          "p": "2024",
+          "v": 323.5
+        },
+        {
+          "p": "2025",
+          "v": 351.9
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_5.png"
+      ]
+    },
+    {
+      "id": "pqv-c14",
+      "concepto": "Crecimiento 2010–2025: parque vehicular registrado frente a población",
+      "unidad": "% de crecimiento",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "SAT, Boletín de Estadísticas Tributarias (G2/G1 Parque vehicular), Sistema de recaudación SAT + INE, Estimaciones y proyecciones nacionales de población 1950–2050, revisión 2019 (cálculo propio)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+      "periodo": "2010–2025",
+      "n_puntos": 2,
+      "valor": 208.29,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+        "cita": "TOTAL,1302272,1558145,1760013,1912469,2064035,... (Dic-2010 = 2064035) ... 6363145 (Dic-2025)",
+        "archivo_local": "sesiones/_descargas/boletinestadisticosat_hoja31.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Parque vehicular (SAT)",
+          "valor": 208.29
+        },
+        {
+          "nombre": "Población (INE)",
+          "valor": 26.79
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_1.png"
+      ]
+    },
+    {
+      "id": "pqv-c15",
+      "concepto": "Vehículos registrados por cada 1,000 habitantes, 2022: departamento de Guatemala frente al resto del país",
+      "unidad": "vehículos por 1,000 habitantes",
+      "anio": 2022,
+      "tipo": "desglose",
+      "fuente": "SAT, Boletín de Estadísticas Tributarias (G2/G1 Parque vehicular), Sistema de recaudación SAT + INE vía AGN (19-ene-2022) (cálculo propio)",
+      "url": "https://agn.gt/conozca-los-cinco-departamentos-mas-poblados-del-pais-segun-las-proyecciones-del-ine",
+      "periodo": "2022",
+      "n_puntos": 3,
+      "valor": 577.4,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AGN citando proyecciones INE (población departamental 2022)",
+      "evidencia": {
+        "url": "https://agn.gt/conozca-los-cinco-departamentos-mas-poblados-del-pais-segun-las-proyecciones-del-ine",
+        "cita": "el departamento de Guatemala, el más poblado, con 3 millones 599 mil 257 · La población estimada del país para este año es de 17 millones 357 mil 886 personas"
+      },
+      "partes": [
+        {
+          "nombre": "Departamento de Guatemala",
+          "valor": 577.4
+        },
+        {
+          "nombre": "Resto del país",
+          "valor": 200.0
+        },
+        {
+          "nombre": "Total nacional",
+          "valor": 278.3
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_6.png"
+      ]
+    },
+    {
+      "id": "pqv-c16",
+      "concepto": "Vehículos importados por año (sin motocicletas), total",
+      "unidad": "vehículos importados",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "SAT, Boletín de Estadísticas Tributarias (I6 Importación de vehículos clasificados por uso), Sistema de recaudación SAT",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+      "periodo": "2010–2025",
+      "n_puntos": 16,
+      "valor": 256252,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+        "cita": "Año 2025,Nuevo ,Usado,TOTAL · TOTAL,71650,184602,256252",
+        "archivo_local": "sesiones/_descargas/boletinestadisticosat_hoja49.csv"
+      },
+      "serie": [
+        {
+          "p": "2010",
+          "v": 92775
+        },
+        {
+          "p": "2011",
+          "v": 93679
+        },
+        {
+          "p": "2012",
+          "v": 89476
+        },
+        {
+          "p": "2013",
+          "v": 86492
+        },
+        {
+          "p": "2014",
+          "v": 99795
+        },
+        {
+          "p": "2015",
+          "v": 133928
+        },
+        {
+          "p": "2016",
+          "v": 170133
+        },
+        {
+          "p": "2017",
+          "v": 175592
+        },
+        {
+          "p": "2018",
+          "v": 165566
+        },
+        {
+          "p": "2019",
+          "v": 163895
+        },
+        {
+          "p": "2020",
+          "v": 131016
+        },
+        {
+          "p": "2021",
+          "v": 174050
+        },
+        {
+          "p": "2022",
+          "v": 183971
+        },
+        {
+          "p": "2023",
+          "v": 214731
+        },
+        {
+          "p": "2024",
+          "v": 230812
+        },
+        {
+          "p": "2025",
+          "v": 256252
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "sev-c01",
+      "concepto": "Personas fallecidas en hechos de tránsito, total nacional por año (PNC/ONSET, en el lugar y a 24 horas)",
+      "unidad": "personas",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "PNC/ONSET, Boletín Estadístico No. 12-2025 (Gráfico 14) y No. 7-2026 (Gráfico 14)",
+      "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-7-2026.pdf",
+      "periodo": "2011–2025",
+      "n_puntos": 15,
+      "valor": 2432,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "La Hora, reproduce el boletín PNC/ONSET 12-2025",
+      "evidencia": {
+        "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-7-2026.pdf",
+        "cita": "Gráfico 14: 1,223 (2011) … 2,364 (2024), 2,432 (2025). «se han reportado 27,118 personas fallecidas en hechos de tránsito», media anual de 1,808",
+        "archivo_local": "sesiones/_descargas/Boletin-Estadistico-No.-7-2026.txt"
+      },
+      "serie": [
+        {
+          "p": "2011",
+          "v": 1223
+        },
+        {
+          "p": "2012",
+          "v": 1311
+        },
+        {
+          "p": "2013",
+          "v": 1521
+        },
+        {
+          "p": "2014",
+          "v": 1525
+        },
+        {
+          "p": "2015",
+          "v": 1698
+        },
+        {
+          "p": "2016",
+          "v": 2059
+        },
+        {
+          "p": "2017",
+          "v": 1546
+        },
+        {
+          "p": "2018",
+          "v": 1489
+        },
+        {
+          "p": "2019",
+          "v": 1782
+        },
+        {
+          "p": "2020",
+          "v": 1566
+        },
+        {
+          "p": "2021",
+          "v": 2154
+        },
+        {
+          "p": "2022",
+          "v": 2176
+        },
+        {
+          "p": "2023",
+          "v": 2272
+        },
+        {
+          "p": "2024",
+          "v": 2364
+        },
+        {
+          "p": "2025",
+          "v": 2432
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_17.png"
+      ]
+    },
+    {
+      "id": "sev-c02",
+      "concepto": "Hechos de tránsito registrados por la PNC, total nacional por año",
+      "unidad": "hechos de tránsito",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "PNC/ONSET, Boletín Estadístico No. 12-2025 (Gráfico 13) y No. 7-2026 (Gráfico 13)",
+      "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-7-2026.pdf",
+      "periodo": "2011–2025",
+      "n_puntos": 15,
+      "valor": 8864,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "La Hora, reproduce el boletín PNC/ONSET 12-2025",
+      "evidencia": {
+        "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-7-2026.pdf",
+        "cita": "Gráfico 13: 4,729 (2011) … 8,403 (2024), 8,864 (2025). «se han suscitado 104,602 hechos de tránsito, representando una media anual de 6,973 hechos»",
+        "archivo_local": "sesiones/_descargas/Boletin-Estadistico-No.-7-2026.txt"
+      },
+      "serie": [
+        {
+          "p": "2011",
+          "v": 4729
+        },
+        {
+          "p": "2012",
+          "v": 5390
+        },
+        {
+          "p": "2013",
+          "v": 6324
+        },
+        {
+          "p": "2014",
+          "v": 5674
+        },
+        {
+          "p": "2015",
+          "v": 6926
+        },
+        {
+          "p": "2016",
+          "v": 8101
+        },
+        {
+          "p": "2017",
+          "v": 6007
+        },
+        {
+          "p": "2018",
+          "v": 6480
+        },
+        {
+          "p": "2019",
+          "v": 7163
+        },
+        {
+          "p": "2020",
+          "v": 6434
+        },
+        {
+          "p": "2021",
+          "v": 8141
+        },
+        {
+          "p": "2022",
+          "v": 7914
+        },
+        {
+          "p": "2023",
+          "v": 8052
+        },
+        {
+          "p": "2024",
+          "v": 8403
+        },
+        {
+          "p": "2025",
+          "v": 8864
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "sev-c03",
+      "concepto": "Personas lesionadas en hechos de tránsito, total nacional por año",
+      "unidad": "personas",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "PNC/ONSET, Boletín Estadístico No. 7-2026 (Gráfico 15)",
+      "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-7-2026.pdf",
+      "periodo": "2011–2025",
+      "n_puntos": 15,
+      "valor": 9601,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-7-2026.pdf",
+        "cita": "Gráfico 15: 7,136 (2011) … 8,907 (2024), 9,601 (2025). «se han reportado 123,892 personas lesionadas en hechos de tránsito»",
+        "archivo_local": "sesiones/_descargas/Boletin-Estadistico-No.-7-2026.txt"
+      },
+      "serie": [
+        {
+          "p": "2011",
+          "v": 7136
+        },
+        {
+          "p": "2012",
+          "v": 7480
+        },
+        {
+          "p": "2013",
+          "v": 7549
+        },
+        {
+          "p": "2014",
+          "v": 7707
+        },
+        {
+          "p": "2015",
+          "v": 8773
+        },
+        {
+          "p": "2016",
+          "v": 9802
+        },
+        {
+          "p": "2017",
+          "v": 7398
+        },
+        {
+          "p": "2018",
+          "v": 8029
+        },
+        {
+          "p": "2019",
+          "v": 9011
+        },
+        {
+          "p": "2020",
+          "v": 6632
+        },
+        {
+          "p": "2021",
+          "v": 8402
+        },
+        {
+          "p": "2022",
+          "v": 8551
+        },
+        {
+          "p": "2023",
+          "v": 8914
+        },
+        {
+          "p": "2024",
+          "v": 8907
+        },
+        {
+          "p": "2025",
+          "v": 9601
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "sev-c04",
+      "concepto": "Tasa de fallecidos en hechos de tránsito por cada 100,000 habitantes (cálculo propio: PNC/ONSET ÷ proyección de población INE)",
+      "unidad": "fallecidos por 100,000 habitantes",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "PNC/ONSET, Boletín Estadístico No. 7-2026 (Gráfico 14) e INE, Estimaciones y proyecciones nacionales de población (revisión 2019, Cuadro 7)",
+      "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-7-2026.pdf",
+      "periodo": "2011–2025",
+      "n_puntos": 15,
+      "valor": 13.45,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://prensalibre.com/wp-content/uploads/2024/09/01-Metodologia-Nacional.pdf",
+        "cita": "INE, Cuadro 7: «2011 14,521,515» … «2025 18,079,810»; fallecidos PNC: 1,223 (2011) y 2,432 (2025)",
+        "archivo_local": "sesiones/_descargas/01-Metodologia-Nacional.txt"
+      },
+      "serie": [
+        {
+          "p": "2011",
+          "v": 8.42
+        },
+        {
+          "p": "2012",
+          "v": 8.87
+        },
+        {
+          "p": "2013",
+          "v": 10.11
+        },
+        {
+          "p": "2014",
+          "v": 9.96
+        },
+        {
+          "p": "2015",
+          "v": 10.91
+        },
+        {
+          "p": "2016",
+          "v": 13.01
+        },
+        {
+          "p": "2017",
+          "v": 9.61
+        },
+        {
+          "p": "2018",
+          "v": 9.11
+        },
+        {
+          "p": "2019",
+          "v": 10.73
+        },
+        {
+          "p": "2020",
+          "v": 9.29
+        },
+        {
+          "p": "2021",
+          "v": 12.59
+        },
+        {
+          "p": "2022",
+          "v": 12.54
+        },
+        {
+          "p": "2023",
+          "v": 12.91
+        },
+        {
+          "p": "2024",
+          "v": 13.25
+        },
+        {
+          "p": "2025",
+          "v": 13.45
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_17.png",
+        "T17"
+      ]
+    },
+    {
+      "id": "sev-c05",
+      "concepto": "Personas fallecidas en hechos de tránsito por día en 2025 (promedio)",
+      "unidad": "fallecidos por día",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "PNC/ONSET, Boletín Estadístico No. 12-2025",
+      "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-12-2025-1.pdf",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 6.66,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-12-2025-1.pdf",
+        "cita": "Gráfico 16: fallecidos 2024 «2,364», 2025 «2,432»; Gráfico 23 promedio diario de fallecidos: 2024 «6», 2025 «7»",
+        "archivo_local": "sesiones/_descargas/Boletin-Estadistico-No.-12-2025-1.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_18.png"
+      ]
+    },
+    {
+      "id": "sev-c06",
+      "concepto": "Personas fallecidas en hechos de tránsito por departamento, enero–diciembre 2025 (22 departamentos)",
+      "unidad": "personas",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "PNC/ONSET, Boletín Estadístico No. 12-2025 (Tabla No. 5)",
+      "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-12-2025-1.pdf",
+      "periodo": "2025",
+      "n_puntos": 22,
+      "valor": 2432,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-12-2025-1.pdf",
+        "cita": "Tabla No. 5: Guatemala 2,776,521 43.41% 3,624 661 3,785 … Escuintla 359,077 5.61% 1,125 287 1,258 … Total general 6,395,738 100% 8,864 2,432 9,601",
+        "archivo_local": "sesiones/_descargas/Boletin-Estadistico-No.-12-2025-1.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala",
+          "valor": 661
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 287
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 81
+        },
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 119
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 120
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 99
+        },
+        {
+          "nombre": "Petén",
+          "valor": 145
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 99
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 72
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 105
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 60
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 66
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 66
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 63
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 42
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 60
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 52
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 73
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 38
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 34
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 48
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 42
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "sev-c07",
+      "concepto": "Fallecidos en hechos de tránsito por cada 10,000 vehículos del parque SAT, por departamento, 2025 (cálculo propio)",
+      "unidad": "fallecidos por 10,000 vehículos",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "PNC/ONSET, Boletín Estadístico No. 12-2025 (Tabla No. 5: fallecidos y parque vehicular SAT a diciembre 2025)",
+      "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-12-2025-1.pdf",
+      "periodo": "2025",
+      "n_puntos": 22,
+      "valor": 9.09,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-12-2025-1.pdf",
+        "cita": "Tabla No. 5: El Progreso 72,610 1.14% 191 66 243; Huehuetenango 251,770 3.94% 123 38 159; Total general 6,395,738 100% 8,864 2,432 9,601",
+        "archivo_local": "sesiones/_descargas/Boletin-Estadistico-No.-12-2025-1.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala",
+          "valor": 2.38
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 7.99
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 6.5
+        },
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 8.92
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 4.87
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 5.23
+        },
+        {
+          "nombre": "Petén",
+          "valor": 7.96
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 6.78
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 1.76
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 6.04
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 4.57
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 3.9
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 9.09
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 4.47
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 5.47
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 2.12
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 3.18
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 5.35
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 1.51
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 3.67
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 6.6
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 6.57
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_20.png"
+      ]
+    },
+    {
+      "id": "sev-c08",
+      "concepto": "Parte de las personas fallecidas en hechos de tránsito que se transportaban en motocicleta, 2025",
+      "unidad": "% de los fallecidos",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "PNC/ONSET, Boletín Estadístico No. 12-2025 (Gráficos 16 y 29)",
+      "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-12-2025-1.pdf",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 56.95,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-12-2025-1.pdf",
+        "cita": "Gráfico 29, motocicletas 2024-2025: Fallecidos «1,349» y «1,385»; TOTAL fallecidos 2025 «2,432»",
+        "archivo_local": "sesiones/trafico-guatemala-2026/evidencia/pnc12_graficos_transcripcion.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_19.png"
+      ]
+    },
+    {
+      "id": "sev-c09",
+      "concepto": "Parte de las personas fallecidas en hechos de tránsito que iban en motocicleta, enero–julio 2026",
+      "unidad": "% de los fallecidos",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "PNC/ONSET, Boletín Estadístico No. 7-2026 (Gráficos 16 y 29)",
+      "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-7-2026.pdf",
+      "periodo": "enero–julio 2026",
+      "n_puntos": 1,
+      "valor": 62.76,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-7-2026.pdf",
+        "cita": "Gráfico 29, motocicletas ene-jul 2025-2026: Fallecidos «785» y «920»; Gráfico 16: fallecidos 2026 «1,466»",
+        "archivo_local": "sesiones/trafico-guatemala-2026/evidencia/pnc7_graficos_transcripcion.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_19.png"
+      ]
+    },
+    {
+      "id": "sev-c10",
+      "concepto": "Vehículos involucrados en hechos de tránsito por tipo, 2025 (porcentaje)",
+      "unidad": "% de los vehículos involucrados",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "PNC/ONSET, Boletín Estadístico No. 12-2025 (Gráfico 24)",
+      "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-12-2025-1.pdf",
+      "periodo": "2025",
+      "n_puntos": 8,
+      "valor": 50,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "La Hora, reproduce el boletín PNC/ONSET 12-2025",
+      "evidencia": {
+        "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-12-2025-1.pdf",
+        "cita": "Gráfico 24: MOTOCICLETA 50% | AUTOMÓVIL 18% | CAMIÓN 9% | PICK UP 8% | CAMIONETA 7% | MICROBUS 2% | BUS 2% | otros 4%",
+        "archivo_local": "sesiones/trafico-guatemala-2026/evidencia/pnc12_graficos_transcripcion.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Motocicleta",
+          "valor": 50
+        },
+        {
+          "nombre": "Automóvil",
+          "valor": 18
+        },
+        {
+          "nombre": "Camión",
+          "valor": 9
+        },
+        {
+          "nombre": "Pick up",
+          "valor": 8
+        },
+        {
+          "nombre": "Camioneta",
+          "valor": 7
+        },
+        {
+          "nombre": "Microbús",
+          "valor": 2
+        },
+        {
+          "nombre": "Bus",
+          "valor": 2
+        },
+        {
+          "nombre": "Otros (mototaxi, cuatrimoto, maquinaria, bicicleta, trimoto, triciclo, ignorado)",
+          "valor": 4
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "sev-c11",
+      "concepto": "Personas fallecidas en hechos de tránsito por grupo de edad (ambos sexos), 2025",
+      "unidad": "personas",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "PNC/ONSET, Boletín Estadístico No. 12-2025 (Gráfico 27)",
+      "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-12-2025-1.pdf",
+      "periodo": "2025",
+      "n_puntos": 20,
+      "valor": 2432,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-12-2025-1.pdf",
+        "cita": "Gráfico 27: 20 a 24: 59 | 255; 25 a 29: 46 | 279; Anillo: Hombres 82% 1,984 | Mujeres 18% 446 | Ignorado 0% 2 | TOTAL 2,432",
+        "archivo_local": "sesiones/trafico-guatemala-2026/evidencia/pnc12_graficos_transcripcion.txt"
+      },
+      "partes": [
+        {
+          "nombre": "0 a 4",
+          "valor": 19
+        },
+        {
+          "nombre": "5 a 9",
+          "valor": 21
+        },
+        {
+          "nombre": "10 a 14",
+          "valor": 39
+        },
+        {
+          "nombre": "15 a 19",
+          "valor": 214
+        },
+        {
+          "nombre": "20 a 24",
+          "valor": 314
+        },
+        {
+          "nombre": "25 a 29",
+          "valor": 325
+        },
+        {
+          "nombre": "30 a 34",
+          "valor": 249
+        },
+        {
+          "nombre": "35 a 39",
+          "valor": 203
+        },
+        {
+          "nombre": "40 a 44",
+          "valor": 146
+        },
+        {
+          "nombre": "45 a 49",
+          "valor": 120
+        },
+        {
+          "nombre": "50 a 54",
+          "valor": 119
+        },
+        {
+          "nombre": "55 a 59",
+          "valor": 54
+        },
+        {
+          "nombre": "60 a 64",
+          "valor": 69
+        },
+        {
+          "nombre": "65 a 69",
+          "valor": 54
+        },
+        {
+          "nombre": "70 a 74",
+          "valor": 45
+        },
+        {
+          "nombre": "75 a 79",
+          "valor": 29
+        },
+        {
+          "nombre": "80 a 84",
+          "valor": 13
+        },
+        {
+          "nombre": "85 a 89",
+          "valor": 7
+        },
+        {
+          "nombre": "90 a 94",
+          "valor": 2
+        },
+        {
+          "nombre": "Edad ignorada",
+          "valor": 388
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "sev-c12",
+      "concepto": "Hechos de tránsito por tipo, 2025",
+      "unidad": "hechos de tránsito",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "PNC/ONSET, Boletín Estadístico No. 12-2025 (Gráfico 22)",
+      "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-12-2025-1.pdf",
+      "periodo": "2025",
+      "n_puntos": 6,
+      "valor": 8864,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-12-2025-1.pdf",
+        "cita": "Gráfico 22: COLISIÓN 4,761 | ATROPELLO 2,058 | CAÍDA 1,330 | CHOQUE 485 | VUELCO 152 | SALIDA DE PISTA 78 | TOTAL 8,864",
+        "archivo_local": "sesiones/trafico-guatemala-2026/evidencia/pnc12_graficos_transcripcion.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Colisión",
+          "valor": 4761
+        },
+        {
+          "nombre": "Atropello",
+          "valor": 2058
+        },
+        {
+          "nombre": "Caída",
+          "valor": 1330
+        },
+        {
+          "nombre": "Choque",
+          "valor": 485
+        },
+        {
+          "nombre": "Vuelco",
+          "valor": 152
+        },
+        {
+          "nombre": "Salida de pista",
+          "valor": 78
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "via-c01",
+      "concepto": "Gasto devengado total del Ministerio de Comunicaciones, Infraestructura y Vivienda (CIV), por año",
+      "unidad": "millones de quetzales corrientes",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Minfin–Sicoin vía Guate en Datos (gastopublico-ejecucion.csv)",
+      "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+      "periodo": "2008–2025",
+      "n_puntos": 18,
+      "valor": 5132.32,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+        "cita": "\"Comunicaciones, Infraestructura y Vivienda\",\"Total\",2025,7526.74,5132.32,68.19 · (\"Total\",2008,4447,4248.2,95.53)",
+        "archivo_local": "sesiones/_descargas/gastopublico-ejecucion.csv"
+      },
+      "serie": [
+        {
+          "p": "2008",
+          "v": 4248.2
+        },
+        {
+          "p": "2009",
+          "v": 4377.9
+        },
+        {
+          "p": "2010",
+          "v": 4981.5
+        },
+        {
+          "p": "2011",
+          "v": 6929.7
+        },
+        {
+          "p": "2012",
+          "v": 5241.9
+        },
+        {
+          "p": "2013",
+          "v": 5357.1
+        },
+        {
+          "p": "2014",
+          "v": 5234.9
+        },
+        {
+          "p": "2015",
+          "v": 3580.2
+        },
+        {
+          "p": "2016",
+          "v": 2199.53
+        },
+        {
+          "p": "2017",
+          "v": 2885.49
+        },
+        {
+          "p": "2018",
+          "v": 4782.54
+        },
+        {
+          "p": "2019",
+          "v": 5858.74
+        },
+        {
+          "p": "2020",
+          "v": 4813.08
+        },
+        {
+          "p": "2021",
+          "v": 6424.58
+        },
+        {
+          "p": "2022",
+          "v": 8983.66
+        },
+        {
+          "p": "2023",
+          "v": 8403.9
+        },
+        {
+          "p": "2024",
+          "v": 4270.26
+        },
+        {
+          "p": "2025",
+          "v": 5132.32
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_13.png"
+      ]
+    },
+    {
+      "id": "via-c02",
+      "concepto": "Gasto de inversión devengado del CIV, por año (excluye funcionamiento)",
+      "unidad": "millones de quetzales corrientes",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Minfin–Sicoin vía Guate en Datos",
+      "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+      "periodo": "2008–2025",
+      "n_puntos": 18,
+      "valor": 2426.82,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+        "cita": "\"Comunicaciones, Infraestructura y Vivienda\",\"Inversión\",2008,4044.2,3862.4,95.5 · \"Inversión\",2025,4225.6,2426.82,57.43",
+        "archivo_local": "sesiones/_descargas/gastopublico-ejecucion.csv"
+      },
+      "serie": [
+        {
+          "p": "2008",
+          "v": 3862.4
+        },
+        {
+          "p": "2009",
+          "v": 3940.7
+        },
+        {
+          "p": "2010",
+          "v": 4277.6
+        },
+        {
+          "p": "2011",
+          "v": 6055.8
+        },
+        {
+          "p": "2012",
+          "v": 3656.31
+        },
+        {
+          "p": "2013",
+          "v": 3457.7
+        },
+        {
+          "p": "2014",
+          "v": 3653.4
+        },
+        {
+          "p": "2015",
+          "v": 2018.8
+        },
+        {
+          "p": "2016",
+          "v": 1035.27
+        },
+        {
+          "p": "2017",
+          "v": 1685.66
+        },
+        {
+          "p": "2018",
+          "v": 2936.36
+        },
+        {
+          "p": "2019",
+          "v": 4155.64
+        },
+        {
+          "p": "2020",
+          "v": 2765.98
+        },
+        {
+          "p": "2021",
+          "v": 3392.36
+        },
+        {
+          "p": "2022",
+          "v": 3311.69
+        },
+        {
+          "p": "2023",
+          "v": 3972.65
+        },
+        {
+          "p": "2024",
+          "v": 1917.06
+        },
+        {
+          "p": "2025",
+          "v": 2426.82
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "via-c03",
+      "concepto": "Participación del CIV en el gasto público devengado total del Gobierno central",
+      "unidad": "% del gasto total devengado",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Minfin–Sicoin vía Guate en Datos (cálculo propio)",
+      "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+      "periodo": "2008–2025",
+      "n_puntos": 18,
+      "valor": 3.65,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+        "cita": "\"Comunicaciones, Infraestructura y Vivienda\",\"Total\",2025,7526.74,5132.32,68.19 · \"Total\",\"Total\",2025,154836.61,140525.47,90.76",
+        "archivo_local": "sesiones/_descargas/gastopublico-ejecucion.csv"
+      },
+      "serie": [
+        {
+          "p": "2008",
+          "v": 9.96
+        },
+        {
+          "p": "2009",
+          "v": 9.55
+        },
+        {
+          "p": "2010",
+          "v": 9.88
+        },
+        {
+          "p": "2011",
+          "v": 12.46
+        },
+        {
+          "p": "2012",
+          "v": 9.08
+        },
+        {
+          "p": "2013",
+          "v": 8.85
+        },
+        {
+          "p": "2014",
+          "v": 8.29
+        },
+        {
+          "p": "2015",
+          "v": 5.73
+        },
+        {
+          "p": "2016",
+          "v": 3.35
+        },
+        {
+          "p": "2017",
+          "v": 4.05
+        },
+        {
+          "p": "2018",
+          "v": 6.35
+        },
+        {
+          "p": "2019",
+          "v": 7.07
+        },
+        {
+          "p": "2020",
+          "v": 4.98
+        },
+        {
+          "p": "2021",
+          "v": 6.91
+        },
+        {
+          "p": "2022",
+          "v": 8.27
+        },
+        {
+          "p": "2023",
+          "v": 7.31
+        },
+        {
+          "p": "2024",
+          "v": 3.53
+        },
+        {
+          "p": "2025",
+          "v": 3.65
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_13.png"
+      ]
+    },
+    {
+      "id": "via-c04",
+      "concepto": "Porcentaje de ejecución del presupuesto de inversión del CIV (devengado / vigente)",
+      "unidad": "%",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Minfin–Sicoin vía Guate en Datos",
+      "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+      "periodo": "2008–2025",
+      "n_puntos": 18,
+      "valor": 57.43,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+        "cita": "\"Comunicaciones, Infraestructura y Vivienda\",\"Inversión\",2025,4225.6,2426.82,57.43",
+        "archivo_local": "sesiones/_descargas/gastopublico-ejecucion.csv"
+      },
+      "serie": [
+        {
+          "p": "2008",
+          "v": 95.5
+        },
+        {
+          "p": "2009",
+          "v": 81.39
+        },
+        {
+          "p": "2010",
+          "v": 71.24
+        },
+        {
+          "p": "2011",
+          "v": 83.07
+        },
+        {
+          "p": "2012",
+          "v": 93.24
+        },
+        {
+          "p": "2013",
+          "v": 87.45
+        },
+        {
+          "p": "2014",
+          "v": 85.48
+        },
+        {
+          "p": "2015",
+          "v": 53.91
+        },
+        {
+          "p": "2016",
+          "v": 45.81
+        },
+        {
+          "p": "2017",
+          "v": 73.22
+        },
+        {
+          "p": "2018",
+          "v": 96.38
+        },
+        {
+          "p": "2019",
+          "v": 96.59
+        },
+        {
+          "p": "2020",
+          "v": 70.49
+        },
+        {
+          "p": "2021",
+          "v": 86.84
+        },
+        {
+          "p": "2022",
+          "v": 80.53
+        },
+        {
+          "p": "2023",
+          "v": 88.74
+        },
+        {
+          "p": "2024",
+          "v": 64.56
+        },
+        {
+          "p": "2025",
+          "v": 57.43
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_12.png"
+      ]
+    },
+    {
+      "id": "via-c05",
+      "concepto": "Red vial registrada por tipo de rodadura (pavimentada vs terracería)",
+      "unidad": "km",
+      "anio": 2018,
+      "tipo": "desglose",
+      "fuente": "Dirección General de Caminos (DGC/CIV), Reformulación y actualización del Plan de Desarrollo Vial 2018–2032",
+      "url": "https://www.caminos.gob.gt/Descargas/Otros/Plan%20de%20Desarrollo%20Vial%202018%20-%202032.pdf",
+      "periodo": "2018",
+      "n_puntos": 2,
+      "valor": 17211,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://www.caminos.gob.gt/Descargas/Otros/Plan%20de%20Desarrollo%20Vial%202018%20-%202032.pdf",
+        "cita": "del total de 17,211 kilómetros que componen la Red Vial de Guatemala, 7,457 kilómetros están asfaltados, lo que supone un 43.33% del total",
+        "archivo_local": "sesiones/_descargas/dgc_plan_desarrollo_vial_2018_2032.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Pavimentada (asfalto)",
+          "valor": 7457
+        },
+        {
+          "nombre": "No pavimentada (terracería)",
+          "valor": 9754
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "via-c06",
+      "concepto": "Porcentaje de la red vial registrada que está pavimentada, por departamento (22)",
+      "unidad": "% de km pavimentados",
+      "anio": 2018,
+      "tipo": "desglose",
+      "fuente": "DGC/CIV, Plan de Desarrollo Vial 2018–2032, Tabla 13 (cálculo propio)",
+      "url": "https://www.caminos.gob.gt/Descargas/Otros/Plan%20de%20Desarrollo%20Vial%202018%20-%202032.pdf",
+      "periodo": "2018",
+      "n_puntos": 22,
+      "valor": 43.33,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://www.caminos.gob.gt/Descargas/Otros/Plan%20de%20Desarrollo%20Vial%202018%20-%202032.pdf",
+        "cita": "Tabla 13: Composición de la red vial según departamento y tipo de rodadura · GUATEMALA RUTAS DEPARTAMENTALES 490.95 76.50 567.45",
+        "archivo_local": "sesiones/_descargas/dgc_plan_desarrollo_vial_2018_2032.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 28.7
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 27.2
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 20.9
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 45.1
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 65.4
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 58.8
+        },
+        {
+          "nombre": "Guatemala",
+          "valor": 82.2
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 34.5
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 46.8
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 37.6
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 60.5
+        },
+        {
+          "nombre": "Petén",
+          "valor": 36.4
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 53.6
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 33.6
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 58.4
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 77.5
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 37.7
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 48.4
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 44.4
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 51.3
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 26.6
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 52.3
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_9.png"
+      ]
+    },
+    {
+      "id": "via-c07",
+      "concepto": "Km de carreteras asfaltadas añadidos entre el PDV 2008–2017 y 2018",
+      "unidad": "km",
+      "anio": 2018,
+      "tipo": "puntual",
+      "fuente": "DGC/CIV, Plan de Desarrollo Vial 2018–2032",
+      "url": "https://www.caminos.gob.gt/Descargas/Otros/Plan%20de%20Desarrollo%20Vial%202018%20-%202032.pdf",
+      "periodo": "2008–2018",
+      "n_puntos": 1,
+      "valor": 1039,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://www.caminos.gob.gt/Descargas/Otros/Plan%20de%20Desarrollo%20Vial%202018%20-%202032.pdf",
+        "cita": "7,457 kilómetros están asfaltados, lo que supone un 43.33% del total. Esta cantidad de carreteras asfaltadas supone un aumento de 1,039 kilómetros desde la elaboración del PDV 2008-2017",
+        "archivo_local": "sesiones/_descargas/dgc_plan_desarrollo_vial_2018_2032.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "via-c08",
+      "concepto": "Km ejecutados del Plan de Desarrollo Vial 2008–2017 frente a los programados",
+      "unidad": "% ejecutado",
+      "anio": 2018,
+      "tipo": "desglose",
+      "fuente": "DGC/CIV, Plan de Desarrollo Vial 2018–2032 (Gráfico 22)",
+      "url": "https://www.caminos.gob.gt/Descargas/Otros/Plan%20de%20Desarrollo%20Vial%202018%20-%202032.pdf",
+      "periodo": "2008–2017",
+      "n_puntos": 2,
+      "valor": 30,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://www.caminos.gob.gt/Descargas/Otros/Plan%20de%20Desarrollo%20Vial%202018%20-%202032.pdf",
+        "cita": "En total, se han ejecutado 1,512 km de 5,079 km de las actuaciones programadas (30%).",
+        "archivo_local": "sesiones/_descargas/dgc_plan_desarrollo_vial_2018_2032.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Ejecutado",
+          "valor": 1512
+        },
+        {
+          "nombre": "Programado",
+          "valor": 5079
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_11.png"
+      ]
+    },
+    {
+      "id": "via-c09",
+      "concepto": "Vehículos por km de red vial registrada: 2017 frente a 2026",
+      "unidad": "vehículos por km",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Cálculo propio: parque SAT (dic 2017 vía DGC; jul 2026 vía AGN) / red vial DGC 2018 y CIV 2025",
+      "url": "https://agn.gt/?p=558465",
+      "periodo": "2017–2026",
+      "n_puntos": 2,
+      "valor": 351.25,
+      "veredicto": "ajustada",
+      "independencia": "baja",
+      "fuente_2": "AGN (SAT, 25 jul 2026) y La Hora (CIV, 25 jun 2025); ICEX 2025 da 19,025 km",
+      "evidencia": {
+        "url": "https://agn.gt/?p=558465",
+        "cita": "el parque vehicular activo en Guatemala asciende a 6 millones 773 mil 536 vehículos",
+        "archivo_local": "sesiones/_descargas/inf_agn_parque_6773536.txt"
+      },
+      "partes": [
+        {
+          "nombre": "2017",
+          "valor": 205.43
+        },
+        {
+          "nombre": "2026",
+          "valor": 351.25
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_8.png"
+      ]
+    },
+    {
+      "id": "via-c10",
+      "concepto": "Crecimiento del parque vehicular frente al de la red vial registrada, 2017–2026",
+      "unidad": "% de crecimiento",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Cálculo propio: SAT (vía DGC y AGN) y DGC/CIV",
+      "url": "https://agn.gt/?p=558465",
+      "periodo": "2017–2026",
+      "n_puntos": 2,
+      "valor": 93.16,
+      "valor_original": 93.53,
+      "veredicto": "ajustada",
+      "independencia": "baja",
+      "fuente_2": "AGN reproduce SAT (6,773,536 a jul 2026 daría 91.58% sobre la base exacta); La Hora/CIV para la red",
+      "evidencia": {
+        "url": "https://agn.gt/?p=558465",
+        "cita": "el parque vehicular activo en Guatemala asciende a 6 millones 773 mil 536 vehículos",
+        "archivo_local": "sesiones/_descargas/inf_agn_parque_6773536.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Parque vehicular activo",
+          "valor": 93.16
+        },
+        {
+          "nombre": "Red vial registrada (km)",
+          "valor": 12.04
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_7.png"
+      ]
+    },
+    {
+      "id": "via-c11",
+      "concepto": "Calidad de la infraestructura vial (encuesta de opinión ejecutiva, 1–7), América Latina y el Caribe",
+      "unidad": "puntaje 1–7 (7 = mejor)",
+      "anio": 2019,
+      "tipo": "desglose",
+      "fuente": "Foro Económico Mundial, Global Competitiveness Report 2019, indicador 2.02",
+      "url": "https://www3.weforum.org/docs/WEF_TheGlobalCompetitivenessReport2019.pdf",
+      "periodo": "2019",
+      "n_puntos": 20,
+      "valor": 2.4,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "La Hora (columna sobre el GCR 2019): Guatemala puesto 132 de 141 en calidad de carreteras",
+      "evidencia": {
+        "url": "https://www3.weforum.org/docs/WEF_TheGlobalCompetitivenessReport2019.pdf",
+        "cita": "2.02 Quality of road infrastructure 1–7 (best)   2.4   24.1   132 (perfil Guatemala)",
+        "archivo_local": "sesiones/_descargas/wef_gcr_2019.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Chile",
+          "valor": 5.2
+        },
+        {
+          "nombre": "Ecuador",
+          "valor": 4.9
+        },
+        {
+          "nombre": "República Dominicana",
+          "valor": 4.7
+        },
+        {
+          "nombre": "México",
+          "valor": 4.5
+        },
+        {
+          "nombre": "Panamá",
+          "valor": 4.5
+        },
+        {
+          "nombre": "Nicaragua",
+          "valor": 4.2
+        },
+        {
+          "nombre": "El Salvador",
+          "valor": 4.2
+        },
+        {
+          "nombre": "Honduras",
+          "valor": 4.1
+        },
+        {
+          "nombre": "Jamaica",
+          "valor": 3.9
+        },
+        {
+          "nombre": "Uruguay",
+          "valor": 3.7
+        },
+        {
+          "nombre": "Argentina",
+          "valor": 3.6
+        },
+        {
+          "nombre": "Bolivia",
+          "valor": 3.5
+        },
+        {
+          "nombre": "Colombia",
+          "valor": 3.4
+        },
+        {
+          "nombre": "Perú",
+          "valor": 3.2
+        },
+        {
+          "nombre": "Brasil",
+          "valor": 3.0
+        },
+        {
+          "nombre": "Costa Rica",
+          "valor": 3.0
+        },
+        {
+          "nombre": "Paraguay",
+          "valor": 2.6
+        },
+        {
+          "nombre": "Venezuela",
+          "valor": 2.6
+        },
+        {
+          "nombre": "Guatemala",
+          "valor": 2.4
+        },
+        {
+          "nombre": "Haití",
+          "valor": 2.1
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "via-c12",
+      "concepto": "Índice de conectividad vial (velocidad media y rectitud del trayecto entre las 10 mayores ciudades), Guatemala",
+      "unidad": "índice 0–100 (100 = mejor)",
+      "anio": 2019,
+      "tipo": "puntual",
+      "fuente": "Foro Económico Mundial, Global Competitiveness Report 2019, indicador 2.01",
+      "url": "https://www3.weforum.org/docs/WEF_TheGlobalCompetitivenessReport2019.pdf",
+      "periodo": "2019",
+      "n_puntos": 1,
+      "valor": 38.0,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "La Hora (columna sobre el GCR 2019) y blog del Banco Mundial: conectividad vial puesto 134 de 141",
+      "evidencia": {
+        "url": "https://www3.weforum.org/docs/WEF_TheGlobalCompetitivenessReport2019.pdf",
+        "cita": "2.01 Road connectivity 0–100 (best)   38.0   38.0   134",
+        "archivo_local": "sesiones/_descargas/wef_gcr_2019.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "via-c14",
+      "concepto": "Metros de carretera por habitante en Centroamérica",
+      "unidad": "metros por habitante",
+      "anio": 2018,
+      "tipo": "desglose",
+      "fuente": "DGC/CIV, Plan de Desarrollo Vial 2018–2032 (datos DGC, CEPAL y BID)",
+      "url": "https://www.caminos.gob.gt/Descargas/Otros/Plan%20de%20Desarrollo%20Vial%202018%20-%202032.pdf",
+      "periodo": "2018",
+      "n_puntos": 4,
+      "valor": 1,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://www.caminos.gob.gt/Descargas/Otros/Plan%20de%20Desarrollo%20Vial%202018%20-%202032.pdf",
+        "cita": "El país dispone de 1 metros de carretera por habitante, el menor de Centroamérica. ... Honduras y El Salvador presentan valores de 1.6 y 2 metros por habitante",
+        "archivo_local": "sesiones/_descargas/dgc_plan_desarrollo_vial_2018_2032.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala",
+          "valor": 1
+        },
+        {
+          "nombre": "Honduras",
+          "valor": 1.6
+        },
+        {
+          "nombre": "El Salvador",
+          "valor": 2
+        },
+        {
+          "nombre": "Costa Rica",
+          "valor": 8.5
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "via-c15",
+      "concepto": "Crecimiento promedio anual de la red vial (km nuevos por año) y meta",
+      "unidad": "km por año",
+      "anio": 2022,
+      "tipo": "desglose",
+      "fuente": "Fundesa con datos de la DGC/CIV, vía AGN (15 dic 2022)",
+      "url": "https://agn.gt/red-vial-del-pais-crece-en-promedio-218-kilometros-por-ano",
+      "periodo": "1996–2020",
+      "n_puntos": 6,
+      "valor": 218,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Fundesa vía AGN (15 dic 2022); búsqueda confirma la misma cadena",
+      "evidencia": {
+        "url": "https://agn.gt/red-vial-del-pais-crece-en-promedio-218-kilometros-por-ano",
+        "cita": "el crecimiento de la red vial del país que, en promedio, es de unos 218 kilómetros por año. Fundesa basa lo anterior en datos de la Dirección General de Caminos",
+        "archivo_local": "sesiones/_descargas/inf_agn_red_vial_218km.txt"
+      },
+      "partes": [
+        {
+          "nombre": "1996-2000",
+          "valor": 369
+        },
+        {
+          "nombre": "2000-2004",
+          "valor": 83
+        },
+        {
+          "nombre": "2004-2008",
+          "valor": 261
+        },
+        {
+          "nombre": "2008-2012",
+          "valor": 199
+        },
+        {
+          "nombre": "2012-2015",
+          "valor": 207
+        },
+        {
+          "nombre": "2016-2020",
+          "valor": 72
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_10.png"
+      ]
+    }
+  ],
+  "fuentes": [
+    {
+      "nombre": "AGN — Plan Maestro de Movilidad de Koica respalda los 13 proyectos estratégicos (2 jul 2026)",
+      "url": "https://agn.gt/plan-maestro-de-movilidad-de-koica-respalda-los-13-proyectos-estrategicos-del-gobierno-para-el-area-metropolitana/",
+      "nivel": "oficial_secundaria"
+    },
+    {
+      "nombre": "La Hora — Plan de mejora vial del AMG requerirá más de 60 puentes (30 nov 2025), datos KOICA",
+      "url": "https://lahora.gt/nacionales/gherrera/2025/11/30/plan-de-mejora-vial-del-amg-requerira-mas-de-60-puentes-para-funcionar/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "La Hora — Más carreteras y transporte, sectores urgen acciones conjuntas (10 feb 2026), Fundesa citando al BID",
+      "url": "https://lahora.gt/lh-economia/hloarca/2026/02/10/mas-carreteras-y-transporte-sectores-urgen-acciones-conjuntas-para-resolver-el-transito/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Emisoras Unidas — Entrevista a EMETRA (12 oct 2026)",
+      "url": "https://emisorasunidas.com/nacional/2026/10/12/parque-vehicular-guatemala-transito-capital-montejo/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "AGN — Plan piloto Línea 5 del Transmetro (18 ene 2022)",
+      "url": "https://agn.gt/PONDRAN-EN-MARCHA-PLAN-PILOTO-PARA-LINEA-5-DEL-TRANSMETRO",
+      "nivel": "oficial_secundaria"
+    },
+    {
+      "nombre": "Numbeo — Traffic Index by City 2026 y 2025 Mid-Year; ficha Guatemala City",
+      "url": "https://www.numbeo.com/traffic/rankings.jsp?title=2026",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "TomTom Traffic Index — ranking (sin ciudades de Guatemala)",
+      "url": "https://www.tomtom.com/traffic-index/ranking/",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "CEUR-USAC — Plan Maestro de Movilidad para el Área Metropolitana: percepción ciudadana (mayo 2026)",
+      "url": "https://ceur.usac.edu.gt/informes/2026/INF-2026-01-RMPS.pdf",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "SAT — Boletín de Estadísticas Tributarias (Parque vehicular G1–G4; Importación de vehículos I6)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "SAT — Análisis estadístico del parque vehicular, microdatos agosto 2026 (INE_PARQUE_VEHICULAR_080926.txt)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/4801/analisis-estadistico-del-parque-vehicular/96445/informacion_para_analisis_estadistico_vehiculos_2026_agosto",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "INE — Estimaciones y proyecciones nacionales de población 1950–2050, revisión 2019 (documento metodológico, copia alojada por Prensa Libre)",
+      "url": "https://prensalibre.com/wp-content/uploads/2024/09/01-Metodologia-Nacional.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "AGN — «Conozca los cinco departamentos más poblados del país, según las proyecciones del INE» (19-ene-2022)",
+      "url": "https://agn.gt/conozca-los-cinco-departamentos-mas-poblados-del-pais-segun-las-proyecciones-del-ine",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "Departamento de Tránsito PNC / ONSET — Boletín Estadístico No. 12-2025 (publicado 29/01/2026)",
+      "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-12-2025-1.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Departamento de Tránsito PNC / ONSET — Boletín Estadístico No. 7-2026 (publicado 31/08/2026)",
+      "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-7-2026.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "INE — Estimaciones y proyecciones nacionales de población, revisión 2019 (Cuadro 7)",
+      "url": "https://prensalibre.com/wp-content/uploads/2024/09/01-Metodologia-Nacional.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "OMS — Global Health Observatory, RS_198 (tasa estimada de muertes por tránsito)",
+      "url": "https://ghoapi.azureedge.net/api/RS_198",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Emisoras Unidas (16/01/2026), cifras de INACIF 2025",
+      "url": "https://emisorasunidas.com/nacional/2026/01/16/motorista-muere-accidente-san-miguel-petapa/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "AGN (enero 2026), reporte anual del DT-PNC",
+      "url": "https://agn.gt/accidentes-de-transito-incrementaron-en-2025-segun-reporte-de-transito-de-la-pnc/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "La Hora, «En 15 años, hechos de tránsito aumentan a 8 mil 864…»",
+      "url": "https://lahora.gt/?p=967336",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Minfin–Sicoin vía Guate en Datos, gasto público por entidad 2008–2025",
+      "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Dirección General de Caminos (CIV), Reformulación y actualización del Plan de Desarrollo Vial 2018–2032",
+      "url": "https://www.caminos.gob.gt/Descargas/Otros/Plan%20de%20Desarrollo%20Vial%202018%20-%202032.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Foro Económico Mundial, The Global Competitiveness Report 2019",
+      "url": "https://www3.weforum.org/docs/WEF_TheGlobalCompetitivenessReport2019.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "AGN, SAT: parque vehicular activo (25 jul 2026)",
+      "url": "https://agn.gt/?p=558465",
+      "nivel": "prensa oficial"
+    },
+    {
+      "nombre": "La Hora, red vial según el CIV (25 jun 2025)",
+      "url": "https://lahora.gt/?p=842980",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "AGN, Fundesa/DGC: crecimiento de la red vial (15 dic 2022)",
+      "url": "https://agn.gt/red-vial-del-pais-crece-en-promedio-218-kilometros-por-ano",
+      "nivel": "prensa oficial"
+    },
+    {
+      "nombre": "Prensa Libre, columna de Juan Carlos Zapata (Fundesa), 4 sep 2023",
+      "url": "https://www.prensalibre.com/?p=16295163",
+      "nivel": "prensa"
+    }
+  ],
+  "no_afirma": [
+    "No afirma que el crecimiento del parque cause por sí solo la congestión o las muertes: las series van juntas, ninguna fuente lo atribuye.",
+    "El parque de la SAT es el registrado, no los vehículos que circulan cada día.",
+    "Las horas perdidas y el costo de la congestión son estimaciones del BID citadas por el Gobierno, no mediciones.",
+    "El tiempo de traslado de Numbeo es percepción declarada por usuarios, no medición GPS.",
+    "No afirma que la caída del peso del CIV explique la falta de vías nuevas; el gasto va en quetzales corrientes, sin deflactar."
+  ],
+  "incertidumbre": [
+    "Todas las cifras usadas, incluida la ancla pqv-c14 (SAT + INE), tienen segunda fuente no independiente (reproduce la primaria); no había alternativa con respaldo independiente.",
+    "via-c09 y via-c10 usan un parque de 2017 aproximado (3.5 millones, del Plan de Desarrollo Vial) y una red vial registrada que incluye terracería.",
+    "La red vial no tiene serie anual oficial: el % pavimentado es el corte 2018 y los km por año de Fundesa terminan en 2020.",
+    "sev-c07 es cálculo propio (fallecidos PNC entre parque por departamento del mismo boletín); cng-c02 es un piso («supera»); Numbeo para Ciudad de Guatemala se basa en pocos usuarios.",
+    "pqv-c02 (6,829,492 vehículos) es el boletín de la SAT con corte de julio de 2026, preliminar; AGN cita a la SAT con 6,773,536 activos a julio de 2026 y los microdatos dan 6,891,249 (corte 08-09-2026): la diferencia viene de la fecha de corte y de activo frente a registrado. Se declara como 'boletín SAT, corte jul-2026' y no se mezcla con las otras cifras.",
+    "pqv-c09 (42.11%) es registro por departamento de inscripción o domicilio fiscal, no donde circulan los vehículos, y sobrerrepresenta al departamento de Guatemala por las flotas de empresas; se formula como 'registrados en el departamento de Guatemala'. Fuente única SAT, sin segunda fuente independiente.",
+    "pqv-c10 (724,170 en 2025) sale de los microdatos de la SAT con corte 08-09-2026: cuenta solo las altas de cada año que siguen activas, no inscripciones brutas, puede revisarse y subestima los años antiguos. Se formula como 'altas de 2025 aún activas'. Fuente única SAT.",
+    "pqv-c11 (1,984 por día = 724,170/365) mide altas de 2025 aún activas, no aumento neto del parque (1,620.9 por día según pqv-c04); no se mezclan ni se restan. Fuente única SAT.",
+    "pqv-c12 (1,251 motos por día = 456,622/365) tiene la misma salvedad de altas aún activas; la prensa citó 45 mil placas mensuales de motos (mayo 2024), orden de magnitud compatible pero con otra definición. Fuente única SAT."
+  ],
+  "descartadas": [
+    {
+      "id": "via-c13",
+      "por": "no_confirmada"
+    },
+    {
+      "id": "sev-c13",
+      "por": "sin veredicto"
+    },
+    {
+      "id": "sev-c14",
+      "por": "sin veredicto"
+    },
+    {
+      "id": "sev-c15",
+      "por": "sin veredicto"
+    },
+    {
+      "id": "sev-c16",
+      "por": "sin veredicto"
+    }
+  ]
+}

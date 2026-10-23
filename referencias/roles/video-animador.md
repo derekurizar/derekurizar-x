@@ -28,7 +28,7 @@ ANIM.registrar('<id>', {
   `ciclo-vicioso`, `ola-calor`), para que sirva a otros temas. El archivo es `video/animaciones/<id>.js`.
 - **meta**: `descripcion` (10–160 caracteres, qué muestra), `temas` (palabras para encontrarla), `pasos` [mín, máx]
   dentro de 2–6, y `ejemplo` con un título y pasos reales: con ese ejemplo se prueba en `--check`.
-- **`pintar(lienzo, P, ctx)`**: `lienzo` es un `div` de `ctx.ancho` × `ctx.alto` px (≈ 791 × 920 en 9:16; ≈ 910 × 820
+- **`pintar(lienzo, P, ctx)`**: `lienzo` es un `div` de `ctx.ancho` × `ctx.alto` px (≈ 791 × 900 en 9:16; ≈ 910 × 800
   en 4:5) entre el título de arriba y los subtítulos; `P = {titulo, pasos}` (textos del guion); `ctx = {colores, F45,
   ancho, alto, V}` con `V` = `video/comun.js` (`V.clamp`, `V.eo` (ease-out), `V.prog(t, a, b)`, `V.esc`). Guarda en
   `this` lo que `seek` necesite.
@@ -47,6 +47,8 @@ ANIM.registrar('<id>', {
 - **Texto en el lienzo**: solo los `pasos` (o una palabra de ellos) y rótulos de ≤ 3 palabras; **cifras solo si están
   en los pasos** (ya pasaron V2). Nada de títulos propios: el título ya va arriba.
 - **Zona segura**: todo dentro del lienzo (no salgas de sus bordes); en 4:5 el lienzo es más bajo: usa `ctx.alto`.
+  `--check` corre el gate **V13**: nada visible puede salir de la zona segura de TikTok, Reels y Shorts (fin antes
+  de los subtítulos, columna de íconos a la derecha desde y≈1070); el lienzo ya cabe con su deriva si no te sales.
 - ≤ 40 KB. Una animación es UNA idea.
 
 ## Principios de movimiento

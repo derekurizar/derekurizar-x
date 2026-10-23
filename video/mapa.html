@@ -6,11 +6,13 @@
      departamento, ese brilla y muestra el suyo. Debajo, la leyenda en una fila y la fuente; arriba el golpe y la
      barra de progreso; abajo los subtítulos. Lee los DATA de tarjeta_N.html (los sirve scripts/video_grabar.js, que
      también sirve h.js = bloque H de templates/base.html y geometria.js = GEOMETRIA de templates/graficos/mapa.html).
-     Misma zona segura que escena.html. La graba scripts/video_grabar.js llamando a seek(t). -->
+     Zona segura (V.zona, gate V13): el mapa termina en x ≤ 890 (los íconos de la app cubren x ≥ 900 desde y≈1070) y
+     la leyenda y la fuente van en un pie que fluye bajo el mapa y termina antes de los subtítulos. La graba
+     scripts/video_grabar.js llamando a seek(t). -->
 <link rel="stylesheet" href="comun.css">
 <style>
-#kicker { position: absolute; top: 440px; left: 80px; font: 500 24px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; }
-#mapa { position: absolute; top: 480px; left: 70px; width: 940px; height: 800px; transform-origin: 50% 50%; will-change: transform; }
+#kicker { position: absolute; top: 440px; left: var(--izq); font: 500 24px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; }
+#mapa { position: absolute; top: 474px; left: var(--izq); width: 805px; height: 770px; transform-origin: 50% 50%; will-change: transform; }
 #mapa svg { width: 100%; height: 100%; display: block; }
 #mapa path { stroke: var(--bg); stroke-width: 2; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
 #mapa path.halo { fill: none; stroke: var(--bg); stroke-width: 9; }
@@ -19,15 +21,15 @@
 #mapa .rotulo text { font: 800 30px Archivo, sans-serif; fill: var(--ink); }
 #mapa .rotulo text.v { font: 700 30px 'JetBrains Mono', monospace; }
 #mapa .rotulo line { stroke: var(--ink); stroke-width: 3; }
-#leyenda { position: absolute; top: 1296px; left: 80px; right: 80px; display: flex; flex-wrap: wrap; gap: 10px 26px; font: 500 22px/1 'JetBrains Mono', monospace; }
+#pie { position: absolute; top: 1268px; left: var(--izq); right: var(--der); }
+#leyenda { display: flex; flex-wrap: wrap; gap: 10px 26px; font: 500 22px/1 'JetBrains Mono', monospace; }
 #leyenda span { display: inline-flex; align-items: center; gap: 10px; }
 #leyenda i { width: 24px; height: 24px; display: inline-block; }
-#fuente { position: absolute; top: 1346px; left: 80px; right: 80px; font: 500 20px/1.2 'JetBrains Mono', monospace; opacity: .75; }
+#fuente { margin-top: 12px; font: 500 20px/1.2 'JetBrains Mono', monospace; opacity: .75; }
 /* formato 4:5 (1080×1350) para el feed */
 html.f45 #kicker { top: 250px; }
-html.f45 #mapa { top: 290px; height: 640px; }
-html.f45 #leyenda { top: 950px; }
-html.f45 #fuente { top: 1000px; }
+html.f45 #mapa { top: 290px; width: 910px; height: 640px; }
+html.f45 #pie { top: 950px; }
 </style>
 <script src="h.js"></script>
 <script src="geometria.js"></script>
@@ -36,8 +38,7 @@ html.f45 #fuente { top: 1000px; }
 <div id="arriba"><div id="golpe"></div><div id="progreso"></div></div>
 <div id="kicker"></div>
 <div id="mapa"></div>
-<div id="leyenda"></div>
-<div id="fuente"></div>
+<div id="pie"><div id="leyenda"></div><div id="fuente"></div></div>
 <div id="subs"></div>
 <script src="comun.js"></script>
 <script>
@@ -159,7 +160,7 @@ window.seek = (t) => {
   document.getElementById('leyenda').style.opacity = prog(t, ini + 0.3, ini + 0.8);
   document.getElementById('fuente').style.opacity = prog(t, ini + 0.6, ini + 1.1);
   // deriva lenta del mapa durante la escena (nunca quieto)
-  document.getElementById('mapa').style.transform = `scale(${(1 + 0.03 * clamp(t / S.dur)).toFixed(4)})`;
+  document.getElementById('mapa').style.transform = `scale(${(1 + 0.02 * clamp(t / S.dur)).toFixed(4)})`;   // ≤ x 898 (V13)
   V.subtitulos(t, S, TROZOS);
 };
 </script>

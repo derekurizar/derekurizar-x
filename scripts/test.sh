@@ -623,7 +623,7 @@ assert L[5]["cinetico"] == {"pantalla": "Precio promedio", "linea": "Lo que pag�
 assert L[3]["cinetico"]["pantalla"] == "1.8 veces" and 1.7 < L[3]["valor_calculo"] < 1.8 and L[1]["valor_calculo"] > 50
 assert all(e["hueco_max_s"] <= 6 for e in L[:-1]), [e["hueco_max_s"] for e in L]
 assert L[0]["voz"].startswith("En Guatemala, ¿cuánto") and "Guatemala" not in L[0]["cinetico"]["pantalla"], L[0]["voz"]
-assert "<break time=\"0.6s\" />" in L[0]["prompt"] and "[pausa]" not in L[0]["voz"] and "<" not in L[0]["voz"] and "dólares. Y un" in L[0]["voz"], L[0]
+assert "<break time=\"0.6s\" />" in L[0]["prompt"] and "[pausa]" not in L[0]["voz"] and "<" not in L[0]["voz"] and "dólares. Un vecino" in L[0]["voz"], L[0]
 assert all(e["prompt"] == e["voz"] for e in L[1:]), "solo el gancho lleva pausa"
 ' "$VT/locucion.json"
 paso "sfx.py --check (K2: los 8 efectos fijos)" python3 scripts/sfx.py --check
@@ -646,8 +646,11 @@ paso "video gate: número sin respaldo → V2" video_neg "V2 escena 3" 'G["escen
 paso "video gate: cifra de género ambiguo sin marca → V3" video_neg "V3 escena 5" 'G["escenas"][4]["texto"] += " Fueron 200 en total."'
 paso "video gate: cierre sin pregunta → V5" video_neg "V5 el cierre debe terminar en pregunta" 'G["cierre"]["texto"] = "El barril subió y la bomba lo sintió."'
 paso "video gate: icono desconocido → V1" video_neg "V1 escena 1: icono «no-existe»" 'G["escenas"][0]["icono"] = "no-existe"'
-paso "video gate: primera oración del gancho de más de 4 s → V9" video_neg "V9 gancho: la primera oración dura" 'G["escenas"][0]["texto"] = "El barril de crudo que importa Guatemala llegó en septiembre a 102 dólares y la gasolina lo siguió en la bomba de cada esquina. Y un vecino paga más."'
-paso "video gate: promesa de más de 3 s en la escena 1 → V9 (en: 2)" video_neg "V9 gancho: la promesa dura" 'G["escenas"][0]["texto"] = "¿Cuánto pesa el crudo en tu bolsillo? Al final te digo cuál de nuestros vecinos paga todavía más por cada galón."; G["promesa"]["texto"] = "Al final te digo cuál de nuestros vecinos paga todavía más por cada galón."'
+paso "video gate: primera oración del gancho de más de 4 s → V9" video_neg "V9 gancho: la primera oración dura" 'G["escenas"][0]["texto"] = "El barril de crudo que importa Guatemala llegó en septiembre a 102 dólares y la gasolina lo siguió en la bomba de cada esquina. Un vecino paga aún más."'
+paso "video gate: promesa de más de 3 s en la escena 1 → V9 (en: 2)" video_neg "V9 gancho: la promesa dura" 'G["escenas"][0]["texto"] = "¿Cuánto pesa el crudo en tu bolsillo? Quédate hasta el final y sabrás cuál de nuestros vecinos paga todavía más por cada galón."; G["promesa"]["texto"] = "Quédate hasta el final y sabrás cuál de nuestros vecinos paga todavía más por cada galón."'
+paso "video gate: promesa con «al final te digo» → V9" video_neg "V9 promesa.texto usa «al final te digo»" 'G["escenas"][0]["texto"] = G["escenas"][0]["texto"].replace("Un vecino paga aún más.", "Al final te digo qué vecino paga más."); G["promesa"]["texto"] = "Al final te digo qué vecino paga más."'
+paso "video gate: promesa que empieza con un conector suelto → V9" video_neg "V9 promesa.texto empieza con un conector suelto" 'G["escenas"][0]["texto"] = G["escenas"][0]["texto"].replace("Un vecino paga aún más.", "Pero un vecino paga más."); G["promesa"]["texto"] = "Pero un vecino paga más."'
+paso "video gate: caption con «te lo digo al final» → V5" video_neg "V5 caption.tiktok usa" 'G["caption"]["tiktok"] += " ¿Quién paga más? Te lo digo al final."'
 paso "video gate: ranking sobre una tarjeta cifra → V1" video_neg "V1 escena 2: la escena ranking necesita una tarjeta barras-h o mapa" 'G["escenas"][1]["tipo"] = "ranking"'
 paso "video gate: ranking con top 7 → V1" video_neg "V1 escena 5: top 7 fuera de 3–6" 'G["escenas"][4]["top"] = 7'
 paso "video gate: ranking cuya voz no dice el primer valor → V9" video_neg "V9 escena 5: la voz no dice el valor del primer puesto" 'G["escenas"][4]["texto"] = "Pero no somos los que más pagan: en Guatemala el galón promedia 4.85 dólares."'
@@ -1035,7 +1038,7 @@ fin1 = next(w["end"] for w in e["palabras"] if w["text"].endswith((".", "?", "!"
 assert all(w["start"] <= max(fin1, max(x["start"] for x in dichas)) + 0.12 * len(T["linea"]) for w in T["linea"]), (T["linea"], fin1)
 starts = [w["start"] for w in T["linea"]]; assert starts == sorted(starts) and all(b - a >= 0.119 for a, b in zip(starts, starts[1:])), starts
 ev = [x["tipo"] for x in e["eventos"]]; assert "promesa" in ev and "linea_fin" in ev, ev
-tp = next(x["t"] for x in e["eventos"] if x["tipo"] == "promesa"); assert any(txt == "y" and abs(tp - t) < 0.01 for txt, t in voz), (tp, voz)
+tp = next(x["t"] for x in e["eventos"] if x["tipo"] == "promesa"); assert any(txt == "un" and abs(tp - t) < 0.01 for txt, t in voz), (tp, voz)
 assert any(x["id"] == "tic" and abs(x["t"] - tp) < 0.01 for x in e["sfx"])
 g = E[3]; assert g["T"]["linea"][-1]["start"] <= g["fin_voz"], g["T"]["linea"]
 PY'
@@ -1097,6 +1100,33 @@ test -s "$d/clips/e4.mp4"' _ "$TMP" "$EXPLICA"
   paso "animaciones.py --check cadena: lint, meta, dos grabaciones iguales, 4:5, sin quietud y hojas de contacto" bash -c '
 python3 scripts/animaciones.py --check cadena --salida "$1/anim_cadena" >/dev/null && test -s "$1/anim_cadena/contacto.png" && test -s "$1/anim_cadena/contacto_4x5.png"' _ "$TMP"
   paso "make video-fixture-4x5 (formato 1080×1350 para el feed: clips_4x5, video_4x5.mp4, contacto_4x5.png, entrega)" bash -c 'make video-fixture-4x5 >/dev/null && ffprobe -v error -show_entries stream=codec_type,width,height -of csv=p=0 sesiones/_fixture_video/salida/video_4x5.mp4 | grep -q "video,1080,1350" && test -s sesiones/_fixture_video/salida/contacto_4x5.png && test -s sesiones/_fixture_video/trabajo/revision/linea_tiempo_4x5.png'
+  paso "V13 zona segura: el fixture (9:16 y 4:5), una escala de 100 figuras con etiqueta de dos líneas y un ranking de 6 caben; con el fin de zona en y 900 el gate falla (exit 3) y escribe zona.json" bash -c '
+set -e; W="$1/zona"; rm -rf "$W"; mkdir -p "$W"; cp sesiones/_fixture_video/trabajo/escenas.json "$W/"
+python3 - "$W/escenas.json" <<PY
+import json, sys, copy
+p = sys.argv[1]; d = json.load(open(p)); E = d["escenas"]
+base = next(e for e in E if e.get("tipo") == "golpe")
+esc = copy.deepcopy(base); esc.update({"n": 90, "tipo": "escala", "tuit": None, "plantilla": "escala",
+  "T": {"k": 63, "n": 100, "etiqueta": "muertos en tránsito iban en moto (2026)", "ini": 0.6, "figuras": 1.0, "destacadas": 2.0, "etiqueta_t": 3.0}})
+rk = copy.deepcopy(next(e for e in E if e.get("tipo") == "ranking")); rk["n"] = 91
+items = rk["T"]["items"]
+while len(items) < 6:
+    x = copy.deepcopy(items[-1]); x["puesto"] = len(items) + 1; x["hi"] = False; items.append(x)
+d["escenas"] = [esc, rk]; json.dump(d, open(p, "w"), ensure_ascii=False)
+PY
+H=sesiones/_fixture/salida
+node scripts/video_grabar.js --dir "$W" --hilo "$H" --zona >/dev/null
+node scripts/video_grabar.js --dir "$W" --hilo "$H" --zona --formato 4:5 >/dev/null
+node scripts/video_grabar.js --dir sesiones/_fixture_video/trabajo --hilo "$H" --zona >/dev/null
+set +e; node scripts/video_grabar.js --dir "$W" --hilo "$H" --zona --zona-fin 900 2>"$W/err"; rc=$?; set -e
+test "$rc" = 3 && grep -q "FALLA V13 e90 (escala" "$W/err" && grep -q "baja de y 900" "$W/err" && test -s "$W/revision/zona.json"' _ "$TMP"
+  paso "entrega para cuatro plataformas: caption.md con TikTok, Instagram, Facebook y Shorts; sin video_4x5.mp4, entregar falla" bash -c '
+set -e; C=sesiones/_fixture_video/salida/caption.md
+for x in "## TikTok" "## Instagram Reels" "## Facebook Reels" "## YouTube Shorts" "#Shorts"; do grep -q "$x" "$C"; done
+W="$1/sin45"; rm -rf "$W"; cp -R sesiones/_fixture_video/trabajo "$W"; rm -f "$W/salida/video_4x5.mp4"
+! python3 scripts/video.py entregar "$W" --salida "$1/sin45_salida" 2>/dev/null' _ "$TMP"
+  paso "video gate: faltan captions de Instagram y Shorts → V5" video_neg "V5 falta caption.instagram" 'del G["caption"]["instagram"]'
+  paso "video gate: título de Shorts de más de 100 caracteres → V5" video_neg "V5 caption.shorts: la primera línea" 'G["caption"]["shorts"] = "x" * 120 + "\\n#Shorts"'
   paso "escena mapa: tarjeta de mapa a pantalla completa (gate, tiempos, grabación con h.js y geometria.js)" bash -c '
 set -e; H="$1/hilo_mapa"; W="$1/video_mapa"; rm -rf "$H" "$W"; cp -R sesiones/_fixture/salida "$H"; cp templates/.galeria/mapa.html "$H/tuit_9.html"
 python3 - "$H/hilo.json" <<PY

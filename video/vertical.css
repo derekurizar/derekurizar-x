@@ -9,7 +9,9 @@
 h1.titular { display: none !important; }
 .leyenda { margin-top: 26px; }
 #grafico { margin-top: 26px; }
-.nota { margin-top: 22px; font-size: 20px; }
-.pie { margin-top: 26px; padding-top: 18px; }
+/* la nota y el pie caen por debajo de y≈1070, donde los íconos de la app cubren x ≥ 900: terminan en x 870 (con la
+   deriva de escena.html, ≤ 878; gate V13) */
+.nota { margin-top: 22px; font-size: 20px; margin-right: 130px; }
+.pie { margin-top: 26px; padding-top: 18px; margin-right: 130px; }
 .pie .autor { display: none !important; }
 .pie .fuente { font-size: 22px; }

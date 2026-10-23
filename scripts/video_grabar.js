@@ -19,10 +19,14 @@
  * Cualquier otra petición se aborta (cero dependencias externas, como las tarjetas).
  * `--paralelo N` graba N escenas a la vez en N páginas del mismo navegador (por defecto min(4, núcleos/4)): el
  * estado de cada página es solo seek(t), así que los clips salen idénticos a la grabación en serie.
+ * V13 zona segura: mientras graba, cada 0.5 s y en el último cuadro mide con V.medirZona() (video/comun.js) que lo
+ * visible quede en la zona segura de TikTok, Reels y Shorts (recorte lateral, barra de arriba, columna de iconos, antes
+ * de los subtítulos); escribe TRABAJO/revision/zona[_4x5].json y sale con 3 si algo se sale (los clips quedan
+ * escritos). `--zona` mide sin grabar (rápido: pruebas y animaciones.py --check).
  * `--portadas <json>`: [{nombre, n, t, archivo} | {nombre, pagina: "portada", archivo}] → un PNG por entrada, la escena en t
  * con `&portada=1` (sin subtítulos ni barra de progreso) o video/portada.html (portada de texto). No graba clips.
  *
- * Salida: 0 ok · 1 error de página o de ffmpeg · 2 uso incorrecto.
+ * Salida: 0 ok · 1 error de página o de ffmpeg · 2 uso incorrecto · 3 V13 (algo visible fuera de la zona segura).
  */
 const path = require("path");
 const fs = require("fs");
@@ -45,6 +49,8 @@ function args(argv) {
     else if (a === "--formato") o.formato = argv[++i];
     else if (a === "--paralelo") o.paralelo = Number(argv[++i]);
     else if (a === "--portadas") o.portadas = argv[++i];
+    else if (a === "--zona") o.soloZona = true;
+    else if (a === "--zona-fin") o.zonaFin = Number(argv[++i]);   // solo para probar el gate: fin de zona más arriba
     else if (a === "--help" || a === "-h") { console.log(fs.readFileSync(__filename, "utf8").split("*/")[0]); process.exit(0); }
     else { console.error("Opción desconocida: " + a); process.exit(2); }
   }
@@ -84,6 +90,7 @@ function servir(o, ruta) {
 async function prepararPagina(browser, o, F45, errores) {
   const page = await browser.newPage({ viewport: { width: 1080, height: F45 ? 1350 : 1920 }, deviceScaleFactor: 1 });
   page.on("pageerror", (e) => errores.push(e.message));
+  if (o.zonaFin) await page.addInitScript((f) => { window.__zonaFin = f; }, o.zonaFin);
   page.on("console", (m) => { if (m.type() === "error") errores.push(m.text()); });
   await page.route("**", (route) => {
     const url = route.request().url();
@@ -102,19 +109,36 @@ function urlDe(e, F45) {
   return ORIGEN + pagina + (F45 ? "&f=45" : "");
 }
 
-// graba una escena cuadro a cuadro en la página dada → la línea de resumen, o null si hubo error
-async function grabarEscena(page, o, e, F45, CLIPS, errores) {
+// V13: junta las fallas de zona de un cuadro en `zona` (una por elemento y regla, con la caja que más se sale)
+async function medirZona(page, t, zona) {
+  for (const f of await page.evaluate(() => V.medirZona())) {
+    const k = f.que + " · " + f.regla, prev = zona.get(k);
+    if (!prev) zona.set(k, { ...f, t: +t.toFixed(2) });
+    else prev.caja = [Math.min(prev.caja[0], f.caja[0]), Math.min(prev.caja[1], f.caja[1]), Math.max(prev.caja[2], f.caja[2]), Math.max(prev.caja[3], f.caja[3])];
+  }
+}
+
+// graba una escena cuadro a cuadro en la página dada → la línea de resumen, o null si hubo error; mide V13 en `zona`
+async function grabarEscena(page, o, e, F45, CLIPS, errores, zona) {
   await page.goto(urlDe(e, F45), { waitUntil: "load", timeout: 20000 });
   await page.evaluate(() => window.__listo);
   if (errores.length) return null;
+  const n = Math.round(e.dur * o.fps), cada = Math.max(1, Math.round(o.fps / 2));
+  if (o.soloZona) {   // sin grabar: solo los cuadros que mide V13
+    for (let i = 0; i < n; i++) if (i % cada === 0 || i === n - 1) {
+      await page.evaluate((t) => window.seek(t), i / o.fps);
+      await medirZona(page, i / o.fps, zona);
+    }
+    return `e${e.n} · zona medida en ${Math.ceil(n / cada)} cuadros`;
+  }
   const salida = path.join(o.dir, CLIPS, `e${e.n}.mp4`);
   const ff = spawn("ffmpeg", ["-y", "-loglevel", "error", "-f", "image2pipe", "-framerate", String(o.fps), "-i", "-",
     "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "16", "-preset", "medium", "-r", String(o.fps), salida],
     { stdio: ["pipe", "inherit", "inherit"] });
   const cerrado = new Promise((r) => ff.on("close", r));
-  const n = Math.round(e.dur * o.fps);
   for (let i = 0; i < n; i++) {
     await page.evaluate((t) => window.seek(t), i / o.fps);
+    if (i % cada === 0 || i === n - 1) await medirZona(page, i / o.fps, zona);
     ff.stdin.write(await page.screenshot({ type: "png" }));
   }
   ff.stdin.end();
@@ -148,13 +172,14 @@ async function grabarEscena(page, o, e, F45, CLIPS, errores) {
     return;
   }
   fs.mkdirSync(path.join(o.dir, CLIPS), { recursive: true });
+  const zonas = new Map(cola.map((e) => [e.n, new Map()]));
   let k = 0;
   // N trabajadores toman escenas de la cola en orden; al primer error, los demás dejan de tomar
   const trabajador = async () => {
     const page = await prepararPagina(browser, o, F45, errores);
     while (k < cola.length && !errores.length) {
       const e = cola[k++];
-      const linea = await grabarEscena(page, o, e, F45, CLIPS, errores);
+      const linea = await grabarEscena(page, o, e, F45, CLIPS, errores, zonas.get(e.n));
       if (linea) lineas.set(e.n, linea);
     }
     await page.close();
@@ -163,4 +188,15 @@ async function grabarEscena(page, o, e, F45, CLIPS, errores) {
   await browser.close();
   for (const e of cola) if (lineas.has(e.n)) console.log(lineas.get(e.n));
   if (errores.length) { errores.forEach((x) => console.error("ERROR:", x)); process.exit(1); }
+  // V13: zona segura
+  const informe = cola.map((e) => ({ n: e.n, tipo: e.tipo || "tarjeta", fallas: [...zonas.get(e.n).values()] }));
+  fs.mkdirSync(path.join(o.dir, "revision"), { recursive: true });
+  fs.writeFileSync(path.join(o.dir, "revision", F45 ? "zona_4x5.json" : "zona.json"), JSON.stringify({ formato: o.formato, escenas: informe }, null, 1));
+  let malas = 0;
+  for (const s of informe) for (const f of s.fallas) {
+    malas++;
+    console.error(`FALLA V13 e${s.n} (${s.tipo}, t ${f.t} s): «${f.que}» x ${f.caja[0]}–${f.caja[2]}, y ${f.caja[1]}–${f.caja[3]}: ${f.regla}`);
+  }
+  if (malas) process.exit(3);
+  console.log(`V13 zona segura ok (${o.formato}, ${cola.length} escenas)`);
 })().catch((e) => { console.error("ERROR:", e.message); process.exit(1); });

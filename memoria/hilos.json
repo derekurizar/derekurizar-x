@@ -232,6 +232,19 @@
       "estado": "listo",
       "hook_tipo": "pregunta_directa",
       "modo": "hilo"
+    },
+    {
+      "id": "2026-10-21-trafico-guatemala-2026",
+      "fecha": "2026-10-21",
+      "slug": "trafico-guatemala-2026",
+      "tema": "Tráfico en Guatemala: parque vehicular, red vial, congestión y seguridad vial",
+      "tesis": "Entre 2010 y 2025 el parque vehicular registrado creció 208% frente a 27% de la población; la red vial apenas creció (12% entre 2017 y 2026), el peso del CIV en el gasto cayó a 3.65% y los fallecidos en tránsito casi se duplicaron desde 2011.",
+      "paleta": "atitlan",
+      "n_tuits": 21,
+      "ruta": "hilos/2026-10-21-trafico-guatemala-2026",
+      "estado": "listo",
+      "hook_tipo": "escala_humana",
+      "modo": "hilo"
     }
   ]
 }

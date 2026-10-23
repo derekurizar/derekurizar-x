@@ -75,6 +75,82 @@ const V = (() => {
     document.getElementById('subs').innerHTML = t > S.fin_voz + 0.4 ? '' : palabras(ventana, t);
   };
 
+  // ZONA SEGURA (variables de comun.css): x en [corte, ancho − corte]; desde iconosY, x ≤ iconosX; y en [sup, fin], con
+  // fin = top de #subs − 30 si la página tiene subtítulos. Las páginas que dimensionan en JS la leen con V.zona().
+  const zona = () => {
+    const cs = getComputedStyle(document.documentElement), px = (k) => parseFloat(cs.getPropertyValue(k)) || 0;
+    const ancho = document.body.clientWidth, alto = document.body.clientHeight, subs = document.getElementById('subs');
+    const fin = window.__zonaFin || (subs ? Math.min(alto, subs.offsetTop - 30) : px('--fin'));   // __zonaFin: prueba del gate
+    return { ancho, alto, izq: px('--izq'), der: ancho - px('--der'), corte: px('--corte'), sup: px('--sup'), fin,
+      iconosX: px('--iconos-x'), iconosY: px('--iconos-y') };
+  };
+  // gate V13: lo visible (texto, SVG, imágenes y cajas con fondo o borde; también dentro de la tarjeta del iframe,
+  // con su transform) fuera de la zona. Cuenta lo que se ve al menos a media opacidad (lo que entra o sale
+  // deslizándose, más tenue, es movimiento). Fuera de la medición: subtítulos, barra de progreso, lo marcado con
+  // data-fuera-de-zona (fondos a sangre) y la tarjeta durante un foco (#ventana[data-foco]: solo la caja enfocada;
+  // «mov» = la cámara pasa de un foco a otro). Devuelve [{que, caja: [x0, y0, x1, y1], regla}].
+  const medirZona = () => {
+    const Z = zona(), fallas = [], TOL = 2;
+    const fuera = (el) => el.closest && el.closest('#subs, #progreso, [data-fuera-de-zona]');
+    const visible = (el, win) => { let op = 1; for (let x = el; x && x.nodeType === 1; x = x.parentElement) {
+      const c = win.getComputedStyle(x); if (c.display === 'none' || c.visibility === 'hidden') return false; op *= parseFloat(c.opacity); }
+      return op >= 0.5; };
+    const recorte = (el, win, r) => { for (let x = el.parentElement; x && r; x = x.parentElement) {
+      const c = win.getComputedStyle(x); if (c.overflow === 'visible' && c.overflowX === 'visible' && c.overflowY === 'visible') continue;
+      const b = x.getBoundingClientRect(); r = [Math.max(r[0], b.left), Math.max(r[1], b.top), Math.min(r[2], b.right), Math.min(r[3], b.bottom)];
+      if (r[0] >= r[2] || r[1] >= r[3]) return null; }
+      return r; };
+    const conFondo = (c) => { const m = c.backgroundColor.match(/[\d.]+/g); return (m && (m.length < 4 || +m[3] > 0.05) && c.backgroundColor !== 'transparent')
+      || parseFloat(c.borderTopWidth) + parseFloat(c.borderBottomWidth) + parseFloat(c.borderLeftWidth) + parseFloat(c.borderRightWidth) > 0; };
+    const revisar = (que, r) => {
+      const [x0, y0, x1, y1] = r;
+      if ((x1 - x0) * (y1 - y0) < 6) return;
+      const reglas = [];
+      if (x0 < Z.corte - TOL || x1 > Z.ancho - Z.corte + TOL) reglas.push('sale del recorte lateral (' + Z.corte + ' px por lado)');
+      if (y0 < Z.sup - TOL) reglas.push('entra en la barra de arriba (y < ' + Z.sup + ')');
+      if (y1 > Z.fin + TOL) reglas.push('baja de y ' + Z.fin + ' (subtítulos y texto de la app)');
+      if (y1 > Z.iconosY + TOL && x1 > Z.iconosX + TOL) reglas.push('entra en la columna de iconos (x > ' + Z.iconosX + ' desde y ' + Z.iconosY + ')');
+      if (reglas.length) fallas.push({ que: que.slice(0, 40), caja: r.map((v) => Math.round(v)), regla: reglas.join('; ') });
+    };
+    // recorre un documento; `map` lleva las cajas del iframe a coordenadas de la página (translate + escala) y `clip`
+    // es el recorte del iframe en la página
+    const recorrer = (doc, win, map, clip) => {
+      const corta = (r) => { r = map(r); if (!clip) return r; const q = [Math.max(r[0], clip[0]), Math.max(r[1], clip[1]), Math.min(r[2], clip[2]), Math.min(r[3], clip[3])];
+        return q[0] < q[2] && q[1] < q[3] ? q : null; };
+      const w = doc.createTreeWalker(doc.body, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT);
+      for (let nodo = w.currentNode; nodo; nodo = w.nextNode()) {
+        if (nodo.nodeType === 3) {
+          if (!nodo.textContent.trim() || fuera(nodo.parentElement) || !visible(nodo.parentElement, win)) continue;
+          const rg = doc.createRange(); rg.selectNodeContents(nodo); const b = rg.getBoundingClientRect();
+          let r = recorte(nodo, win, [b.left, b.top, b.right, b.bottom]);   // el texto se recorta desde su propio padre
+          if (r && (r = corta(r))) revisar(nodo.textContent.trim(), r);
+          continue;
+        }
+        const el = nodo, tag = el.tagName.toLowerCase();
+        if (fuera(el)) continue;
+        if (el.dataset && el.dataset.foco) { if (el.dataset.foco !== 'mov') revisar('foco de la tarjeta', JSON.parse(el.dataset.foco)); continue; }
+        if (el.closest && el.closest('[data-foco]:not([data-foco=""])')) continue;   // durante un foco, lo demás sale de cuadro a propósito
+        if (tag === 'iframe') {
+          const d = el.contentDocument; if (!d || !d.body || !visible(el, win)) continue;
+          const b = el.getBoundingClientRect(), k = b.width / (el.clientWidth || 1);
+          const sub = (r) => map([b.left + r[0] * k, b.top + r[1] * k, b.left + r[2] * k, b.top + r[3] * k]);
+          const cl = recorte(el, win, [b.left, b.top, b.right, b.bottom]);
+          if (cl) recorrer(d, el.contentWindow, sub, map(cl));
+          continue;
+        }
+        if (['script', 'style', 'defs', 'clippath', 'lineargradient', 'mask'].includes(tag)) continue;
+        if (el.parentElement && el.parentElement.closest('svg')) continue;   // el SVG cuenta entero
+        const hoja = tag === 'svg' || tag === 'img' || tag === 'canvas' || (!el.firstElementChild && conFondo(win.getComputedStyle(el)));
+        if (!hoja || !visible(el, win)) continue;
+        const b = el.getBoundingClientRect();
+        let r = recorte(el, win, [b.left, b.top, b.right, b.bottom]);
+        if (r && (r = corta(r))) revisar(tag === 'svg' ? 'svg' + (el.id ? '#' + el.id : '') : '<' + tag + (el.id ? '#' + el.id : '') + '>', r);
+      }
+    };
+    recorrer(document, window, (r) => r, null);
+    return fallas;
+  };
+
   return { n, F45, portada, clamp, eo, prog, esc, normal, trocear, cargar, tarjeta, pintarGolpe, ajustarGolpe, seekGolpe,
-    pintarProgreso, seekProgreso, subtitulos, subtitulosVentana };
+    pintarProgreso, seekProgreso, subtitulos, subtitulosVentana, zona, medirZona };
 })();

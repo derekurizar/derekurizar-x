@@ -1,0 +1,243 @@
+{
+ "id": "2026-10-21-trafico-guatemala-2026",
+ "slug": "trafico-guatemala-2026",
+ "hilo": "hilos/2026-10-21-trafico-guatemala-2026",
+ "paleta": "atitlan",
+ "duracion": "medio",
+ "duracion_s": 135.8,
+ "n_escenas": 11,
+ "musica": "atitlan-1",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2084.0,
+ "contexto_superior": "Tráfico · Guatemala 2026",
+ "gancho": {
+  "formula": "cifra",
+  "pantalla": "Casi 2 mil",
+  "linea": "vehículos inscritos al día. ¿Y las calles?"
+ },
+ "promesa": {
+  "texto": "Quédate hasta el final y sabrás cuántas vidas cobra el tránsito.",
+  "en": 2,
+  "pago": 10
+ },
+ "critica": {
+  "veredicto": "pasa",
+  "vuelta": 3,
+  "puntajes": {
+   "gancho": 4,
+   "bucle": 4,
+   "ritmo": 4,
+   "escala_humana": 4,
+   "pago": 4,
+   "cierre": 4
+  }
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "tuit": null,
+   "plantilla": "gancho",
+   "enlace": null,
+   "golpe": null,
+   "cinetico": {
+    "pantalla": "Casi 2 mil",
+    "linea": "vehículos inscritos al día. ¿Y las calles?"
+   },
+   "adivina": null,
+   "icono": "car",
+   "pantalla": "En Guatemala se inscriben casi 2 mil vehículos al día. ¿Y las calles?",
+   "voz": "En Guatemala se inscriben casi dos mil vehículos al día. ¿Y las calles?",
+   "dur": 5.856
+  },
+  {
+   "n": 2,
+   "tipo": "tarjeta",
+   "tuit": 1,
+   "plantilla": "cifra",
+   "enlace": null,
+   "golpe": "208% contra 27%",
+   "cinetico": null,
+   "adivina": null,
+   "icono": null,
+   "pantalla": "Desde 2010, los vehículos registrados crecieron 208%; la población, 27%. Quédate hasta el final y sabrás cuántas vidas cobra el tránsito.",
+   "voz": "Desde dos mil diez, los vehículos registrados crecieron doscientos ocho por ciento; la población, veintisiete por ciento. Quédate hasta el final y sabrás cuántas vidas cobra el tránsito.",
+   "dur": 13.128
+  },
+  {
+   "n": 3,
+   "tipo": "tarjeta",
+   "tuit": 8,
+   "plantilla": "antes-despues",
+   "enlace": "pero",
+   "golpe": "71% más vehículos por kilómetro",
+   "cinetico": null,
+   "adivina": null,
+   "icono": null,
+   "pantalla": "Pero las calles casi no crecen: desde 2017, la red vial sumó apenas 12%. Cada kilómetro pasó de 205 vehículos a 351.",
+   "voz": "Pero las calles casi no crecen: desde dos mil diecisiete, la red vial sumó apenas doce por ciento. Cada kilómetro pasó de doscientos cinco vehículos a trescientos cincuenta y uno.",
+   "dur": 12.57
+  },
+  {
+   "n": 4,
+   "tipo": "explica",
+   "tuit": null,
+   "plantilla": "explica",
+   "enlace": "por_eso",
+   "golpe": null,
+   "cinetico": {
+    "pantalla": "Cómo nace una cola",
+    "linea": "Más carros por kilómetro · Menos espacio entre ellos · Un frenazo se contagia · Se forma la cola"
+   },
+   "adivina": null,
+   "icono": null,
+   "pantalla": "Entonces, ¿cómo nace una cola? Uno de los factores: más carros por kilómetro, menos espacio entre ellos, un frenazo se contagia y se forma la cola.",
+   "voz": "Entonces, ¿cómo nace una cola? Uno de los factores: más carros por kilómetro, menos espacio entre ellos, un frenazo se contagia y se forma la cola.",
+   "dur": 10.507
+  },
+  {
+   "n": 5,
+   "tipo": "tarjeta",
+   "tuit": 13,
+   "plantilla": "linea",
+   "enlace": "pero",
+   "golpe": "1 de cada 27 quetzales",
+   "cinetico": null,
+   "adivina": null,
+   "icono": null,
+   "pantalla": "Pero con tantos carros, uno esperaría más gasto en obras. Al revés: en 2011, el ministerio de obras era más del 12% del gasto del Gobierno; en 2025, apenas 1 de cada 27 quetzales.",
+   "voz": "Pero con tantos carros, uno esperaría más gasto en obras. Al revés: en dos mil once, el ministerio de obras era más del doce por ciento del gasto del Gobierno; en dos mil veinticinco, apenas uno de cada veintisiete quetzales.",
+   "dur": 15.307
+  },
+  {
+   "n": 6,
+   "tipo": "tarjeta",
+   "tuit": 14,
+   "plantilla": "barras-h",
+   "enlace": "y",
+   "golpe": "Puesto 12 del índice de tráfico",
+   "cinetico": null,
+   "adivina": null,
+   "icono": null,
+   "pantalla": "Y en la capital, ir al trabajo toma 49 minutos de ida, según usuarios de Numbeo: es la número 12 de 340 ciudades en su índice de tráfico.",
+   "voz": "Y en la capital, ir al trabajo toma cuarenta y nueve minutos de ida, según usuarios de Numbeo: es la número doce de trescientos cuarenta ciudades en su índice de tráfico.",
+   "dur": 10.887
+  },
+  {
+   "n": 7,
+   "tipo": "adivina",
+   "tuit": null,
+   "plantilla": "adivina",
+   "enlace": "pero",
+   "golpe": null,
+   "cinetico": {
+    "pantalla": "¿Cuántas horas pierde cada persona al año en el tráfico?",
+    "linea": "300 horas · 1,300 horas · 3,000 horas"
+   },
+   "adivina": {
+    "pregunta": "¿Cuántas horas pierde cada persona al año en el tráfico?",
+    "opciones": [
+     "300 horas",
+     "1,300 horas",
+     "3,000 horas"
+    ],
+    "correcta": 1
+   },
+   "icono": null,
+   "pantalla": "Pero una estimación es peor. ¿Cuántas horas pierde cada persona al año en el tráfico? ¿300, 1,300 o 3,000? Pausa y piénsalo. 54 días: unas 1,300 horas.",
+   "voz": "Pero una estimación es peor. ¿Cuántas horas pierde cada persona al año en el tráfico? ¿trescientas, mil trescientas o tres mil? Pausa y piénsalo. cincuenta y cuatro días: unas mil trescientas horas.",
+   "dur": 16.803
+  },
+  {
+   "n": 8,
+   "tipo": "tarjeta",
+   "tuit": 16,
+   "plantilla": "cifra",
+   "enlace": "y",
+   "golpe": "Casi 5 veces gasto en obras",
+   "cinetico": null,
+   "adivina": null,
+   "icono": null,
+   "pantalla": "Y según esa fuente, la congestión cuesta más de Q25 mil millones al año: casi 5 veces lo que gastó el ministerio de obras en 2025.",
+   "voz": "Y según esa fuente, la congestión cuesta más de veinticinco mil millones de quetzales al año: casi cinco veces lo que gastó el ministerio de obras en dos mil veinticinco.",
+   "dur": 11.941
+  },
+  {
+   "n": 9,
+   "tipo": "tarjeta",
+   "tuit": 17,
+   "plantilla": "linea",
+   "enlace": "pero",
+   "golpe": "Casi el doble de muertos",
+   "cinetico": null,
+   "adivina": null,
+   "icono": null,
+   "pantalla": "Pero lo más caro no se mide en horas ni en quetzales: desde 2011, los muertos en tránsito casi se duplicaron.",
+   "voz": "Pero lo más caro no se mide en horas ni en quetzales: desde dos mil once, los muertos en tránsito casi se duplicaron.",
+   "dur": 8.444
+  },
+  {
+   "n": 10,
+   "tipo": "tarjeta",
+   "tuit": 18,
+   "plantilla": "cifra",
+   "enlace": "por_eso",
+   "golpe": "Casi 7 vidas cada día",
+   "cinetico": null,
+   "adivina": null,
+   "icono": null,
+   "pantalla": "El resultado: en 2025 murieron 2,432 personas en el tránsito. Casi 7 cada día.",
+   "voz": "El resultado: en dos mil veinticinco murieron dos mil cuatrocientas treinta y dos personas en el tránsito. Casi siete cada día.",
+   "dur": 10.045
+  },
+  {
+   "n": 11,
+   "tipo": "escala",
+   "tuit": null,
+   "plantilla": "escala",
+   "enlace": "y",
+   "golpe": null,
+   "cinetico": null,
+   "adivina": null,
+   "icono": null,
+   "pantalla": "Y hay un patrón: las motos son la mitad del parque, pero en lo que va de 2026, 63 de cada 100 muertos en tránsito iban en moto.",
+   "voz": "Y hay un patrón: las motos son la mitad del parque, pero en lo que va de dos mil veintiséis, sesenta y tres de cada cien muertos en tránsito iban en moto.",
+   "dur": 10.972
+  },
+  {
+   "n": 12,
+   "tipo": "cierre",
+   "tuit": null,
+   "plantilla": "cierre",
+   "enlace": null,
+   "golpe": null,
+   "cinetico": null,
+   "adivina": null,
+   "icono": null,
+   "pantalla": "Los vehículos crecen más que las vías, las obras pesan menos y mueren casi 7 personas al día. ¿Cuánto tardas tú en llegar al trabajo?",
+   "voz": "Los vehículos crecen más que las vías, las obras pesan menos y mueren casi siete personas al día. ¿Cuánto tardas tú en llegar al trabajo?",
+   "dur": 12.262
+  }
+ ],
+ "cierre": {
+  "texto": "Los vehículos crecen más que las vías, las obras pesan menos y mueren casi 7 personas al día. ¿Cuánto tardas tú en llegar al trabajo?",
+  "resumen": [
+   "Los vehículos crecen más que las vías.",
+   "Las obras pesan menos en el gasto.",
+   "Casi 7 muertes al día en el tránsito."
+  ],
+  "pregunta": "¿Cuánto tardas tú en llegar al trabajo?"
+ },
+ "caption": {
+  "tiktok": "En Guatemala se inscriben casi 2 mil vehículos al día. ¿Y las calles? Al final, la cuenta en vidas.\n#Guatemala #DatosGT #Tráfico #Movilidad",
+  "instagram": "En Guatemala se inscriben casi 2 mil vehículos al día. ¿Y las calles? La cuenta en vidas llega al final del video.\nGuárdalo para la próxima vez que estés en el tráfico.\n#Guatemala #DatosGT #Tráfico #Movilidad #CiudadDeGuatemala",
+  "facebook": "En Guatemala se inscriben casi 2 mil vehículos al día. ¿Y las calles?\n▸ Desde 2010, los vehículos registrados crecieron 208%; la población, 27%.\n▸ De 205 vehículos por kilómetro de red vial en 2017 a 351 en 2026.\n▸ El ministerio de obras pasó de 12.46% del gasto del Gobierno en 2011 a 3.65% en 2025.\n▸ 49 minutos de ida al trabajo en la capital, según usuarios de Numbeo: puesto 12 de 340 ciudades.\n▸ La congestión cuesta más de Q25 mil millones al año (estimación del BID).\n▸ Y la cuenta en vidas: la verás al final.\nFuentes: SAT, INE, DGC/CIV, Minfin–Sicoin, Numbeo, BID citado por el Gobierno de Guatemala, PNC/ONSET.",
+  "shorts": "Casi 2 mil vehículos inscritos al día en Guatemala. ¿Y las calles?\nDesde 2010, los vehículos registrados crecieron 208% y la población, 27%. #Shorts #Guatemala #Tráfico"
+ }
+}

@@ -16,7 +16,23 @@
       "creditos_voz": 1704,
       "ruta_video": "hilos/2026-10-19-crimen-organizado-respuesta-estado/video",
       "ruta_hilo": "hilos/2026-10-19-crimen-organizado-respuesta-estado",
-      "estado": "listo"
+      "estado": "listo",
+      "frases": {
+        "promesa": "Pero, ¿cuántos casos de homicidio terminan en condena?",
+        "gancho": "En Guatemala: en seis meses, más de ocho mil kilos de cocaína decomisada.",
+        "aperturas": [
+          "Pero ojo: dos de",
+          "Aun así, la policía",
+          "Entonces, ¿hay menos crimen?",
+          "Y los homicidios denunciados",
+          "Pero aquí cambia la",
+          "Y hay violencia que",
+          "Aunque la policía captura",
+          "Así que en dos",
+          "Más decomisos y menos"
+        ],
+        "pregunta": "Y tú, ¿has denunciado alguna vez una extorsión?"
+      }
     },
     {
       "id": "2026-10-06-madres-ninas-adolescentes-2026",
@@ -32,7 +48,24 @@
       "creditos_voz": 1862,
       "ruta_video": "hilos/2026-10-06-madres-ninas-adolescentes-2026/video",
       "ruta_hilo": "hilos/2026-10-06-madres-ninas-adolescentes-2026",
-      "estado": "listo"
+      "estado": "listo",
+      "frases": {
+        "promesa": "Y al final te digo cuántas condenas hubo.",
+        "gancho": "En Guatemala nacen casi ciento sesenta y ocho bebés al día de madres de diez a diecinueve años.",
+        "aperturas": [
+          "Además, en números manda",
+          "Pero contar casos premia",
+          "Así que la tasa",
+          "Y se pone peor:",
+          "Aunque la mayoría estaba",
+          "Encima, en dos mil",
+          "Pero ese mismo registro",
+          "Por eso importa la",
+          "Pero de dos mil",
+          "Madres desde los diez"
+        ],
+        "pregunta": "Y tú, ¿a qué edad fue mamá tu mamá?"
+      }
     },
     {
       "id": "2026-09-29-sequia-guatemala-2026",
@@ -48,7 +81,55 @@
       "creditos_voz": 1803.0,
       "ruta_video": "hilos/2026-09-29-sequia-guatemala-2026/video",
       "ruta_hilo": "hilos/2026-09-29-sequia-guatemala-2026",
-      "estado": "listo"
+      "estado": "listo",
+      "frases": {
+        "promesa": "Al final te digo qué año tuvo más hambre.",
+        "gancho": "En Guatemala llovió menos que nunca en veintitrés lugares.",
+        "aperturas": [
+          "Además, la lluvia ya",
+          "Encima, en Suiza Contenta,",
+          "El resultado: ocho de",
+          "Entonces, ¿se disparó el",
+          "Pero no: el año",
+          "Aun así, el hambre",
+          "En cambio, Chiquimula, el",
+          "El clima rompió récords"
+        ],
+        "pregunta": "Y en tu comunidad, ¿se perdió la milpa este año?"
+      }
+    },
+    {
+      "id": "2026-10-21-trafico-guatemala-2026",
+      "fecha": "2026-10-21",
+      "slug": "trafico-guatemala-2026",
+      "hilo_id": "2026-10-21-trafico-guatemala-2026",
+      "tema": "Tráfico en Guatemala: parque vehicular, red vial, congestión y seguridad vial",
+      "paleta": "atitlan",
+      "duracion": "medio",
+      "duracion_s": 135.8,
+      "n_escenas": 11,
+      "musica": "atitlan-1",
+      "creditos_voz": 2084.0,
+      "ruta_video": "hilos/2026-10-21-trafico-guatemala-2026/video",
+      "ruta_hilo": "hilos/2026-10-21-trafico-guatemala-2026",
+      "estado": "listo",
+      "frases": {
+        "promesa": "Quédate hasta el final y sabrás cuántas vidas cobra el tránsito.",
+        "gancho": "En Guatemala se inscriben casi dos mil vehículos al día.",
+        "aperturas": [
+          "Pero las calles casi",
+          "Entonces, ¿cómo nace una",
+          "Pero con tantos carros,",
+          "Y en la capital,",
+          "Pero una estimación es",
+          "Y según esa fuente,",
+          "Pero lo más caro",
+          "El resultado: en dos",
+          "Y hay un patrón:",
+          "Los vehículos crecen más"
+        ],
+        "pregunta": "¿Cuánto tardas tú en llegar al trabajo?"
+      }
     }
   ]
 }

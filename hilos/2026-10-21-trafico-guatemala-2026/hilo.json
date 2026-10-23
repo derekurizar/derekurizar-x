@@ -1,0 +1,353 @@
+{
+  "slug": "trafico-guatemala-2026",
+  "fecha": "2026-10-21",
+  "tema": "Tráfico en Guatemala: parque vehicular, red vial, congestión y seguridad vial",
+  "tesis": "Entre 2010 y 2025 el parque vehicular registrado creció 208% frente a 27% de la población; la red vial apenas creció (12% entre 2017 y 2026), el peso del CIV en el gasto cayó a 3.65% y los fallecidos en tránsito casi se duplicaron desde 2011.",
+  "paleta": "atitlan",
+  "hook_tipo": "escala_humana",
+  "modo": "hilo",
+  "pregunta": "¿Por qué el tráfico en Guatemala empeora cada año: crecen más los vehículos que las calles, y cuánto nos cuesta en tiempo, dinero y vidas?",
+  "n_tuits": 21,
+  "estado": "listo",
+  "tuits": [
+    {
+      "n": 1,
+      "beat": "gancho",
+      "texto": "En 2025 se dieron de alta al menos 1,984 vehículos al día en Guatemala; 1,251, motos.\n\nLas calles no crecen a ese ritmo. Esta es la cuenta en vehículos, vías, gasto, horas, quetzales y vidas. 🧵",
+      "caracteres": 194,
+      "alt_text": "Tarjeta de cifra: entre 2010 y 2025 el parque vehicular registrado en la SAT creció 208.3 %, mientras la población del país, según las proyecciones del INE, creció 26.8 % en el mismo periodo. Dos barras comparan ambos crecimientos. Fuente: SAT, Boletín de Estadísticas Tributarias, e INE.",
+      "imagen": "tuit_1.png",
+      "plantilla": "cifra",
+      "fuente": "SAT · Estadísticas Tributarias e INE · proyecciones",
+      "cifra_ids": [
+        "pqv-c14"
+      ]
+    },
+    {
+      "n": 2,
+      "beat": "contexto",
+      "texto": "La única caída de la serie es la de 2018, y el boletín de la SAT no la explica.",
+      "caracteres": 79,
+      "alt_text": "Gráfico de línea: parque vehicular registrado en la SAT al 31 de diciembre de cada año, de 1.3 millones de vehículos en 2006 a 6.36 millones en 2025, con una sola baja en 2018. A julio de 2026 eran 6,829,492. Fuente: SAT, Boletín de Estadísticas Tributarias.",
+      "imagen": "tuit_2.png",
+      "plantilla": "linea",
+      "fuente": "SAT · Boletín de Estadísticas Tributarias",
+      "cifra_ids": [
+        "pqv-c01",
+        "pqv-c02"
+      ]
+    },
+    {
+      "n": 3,
+      "beat": "contexto",
+      "texto": "Ojo: cuenta solo los que siguen activos, así que los años más viejos se ven más bajos de lo que fueron.",
+      "caracteres": 103,
+      "alt_text": "Gráfico de barras verticales: vehículos con alta en cada año que siguen activos en el parque de la SAT, de 161,687 en 2014 a 724,170 en 2025; cada año supera al anterior. En 2025 equivalen a 1,984 por día, 1,251 de ellos motos. Fuente: SAT, Análisis estadístico del parque vehicular.",
+      "imagen": "tuit_3.png",
+      "plantilla": "barras-v",
+      "fuente": "SAT · Análisis estadístico del parque vehicular 2026",
+      "cifra_ids": [
+        "pqv-c10",
+        "pqv-c11",
+        "pqv-c12"
+      ]
+    },
+    {
+      "n": 4,
+      "beat": "contexto",
+      "texto": "Retén este número: la moto vuelve a aparecer cuando lleguemos a los fallecidos.",
+      "caracteres": 79,
+      "alt_text": "Gráfico de línea: participación de las motocicletas en el parque vehicular registrado, de 19.93 % en 2006 a 50.08 % en 2025, con 3,186,706 motos al cierre de 2025. Fuente: SAT, Boletín de Estadísticas Tributarias.",
+      "imagen": "tuit_4.png",
+      "plantilla": "linea",
+      "fuente": "SAT · Boletín de Estadísticas Tributarias",
+      "cifra_ids": [
+        "pqv-c06",
+        "pqv-c05"
+      ]
+    },
+    {
+      "n": 5,
+      "beat": "contexto",
+      "texto": "Y no están repartidos parejo.",
+      "caracteres": 29,
+      "alt_text": "Tarjeta antes y después: vehículos registrados por cada 1,000 habitantes en Guatemala, 144.7 en 2010 y 351.9 en 2025, 2.4 veces más. Parque de la SAT al 31 de diciembre entre la población del INE a mitad de año. Fuente: SAT e INE.",
+      "imagen": "tuit_5.png",
+      "plantilla": "antes-despues",
+      "fuente": "SAT · Estadísticas Tributarias e INE · proyecciones",
+      "cifra_ids": [
+        "pqv-c13"
+      ]
+    },
+    {
+      "n": 6,
+      "beat": "contexto",
+      "texto": "Más de cuatro de cada diez vehículos del país están registrados en ese departamento.",
+      "caracteres": 84,
+      "alt_text": "Gráfico de barras horizontales: vehículos registrados por cada 1,000 habitantes en 2022: departamento de Guatemala 577.4, total nacional 278.3 y resto del país 200. El departamento concentra el 42.11 % del parque a diciembre de 2025. Fuente: SAT, Boletín de Estadísticas Tributarias.",
+      "imagen": "tuit_6.png",
+      "plantilla": "barras-h",
+      "fuente": "SAT · Boletín de Estadísticas Tributarias",
+      "cifra_ids": [
+        "pqv-c15",
+        "pqv-c09"
+      ]
+    },
+    {
+      "n": 7,
+      "beat": "contexto",
+      "texto": "Las carreteras crecen en kilómetros; los vehículos, en cientos de miles por año.",
+      "caracteres": 80,
+      "alt_text": "Gráfico de barras horizontales: entre 2017 y 2026 el parque vehicular activo creció 93.2 % y la red vial registrada, 12 %. Cálculo propio con datos de la SAT, AGN y la Dirección General de Caminos.",
+      "imagen": "tuit_7.png",
+      "plantilla": "barras-h",
+      "fuente": "SAT, AGN y DGC/CIV · cálculo propio",
+      "cifra_ids": [
+        "via-c10"
+      ]
+    },
+    {
+      "n": 8,
+      "beat": "contexto",
+      "texto": "Y esa cuenta incluye los caminos de terracería.",
+      "caracteres": 47,
+      "alt_text": "Tarjeta antes y después: vehículos por kilómetro de red vial registrada, 205 en 2017 y 351 en 2026, un aumento de 71 %. Cálculo propio: parque de la SAT entre kilómetros de la red vial de la Dirección General de Caminos.",
+      "imagen": "tuit_8.png",
+      "plantilla": "antes-despues",
+      "fuente": "SAT, AGN y DGC/CIV · cálculo propio",
+      "cifra_ids": [
+        "via-c09"
+      ]
+    },
+    {
+      "n": 9,
+      "beat": "contexto",
+      "texto": "Es el último corte disponible: la Dirección General de Caminos no publica una serie anual de su red.",
+      "caracteres": 100,
+      "alt_text": "Mapa de Guatemala por departamento: porcentaje de la red vial registrada que está pavimentada en 2018. El más alto es el departamento de Guatemala con 82.2 % y Sacatepéquez con 77.5 %; el más bajo, Chimaltenango con 20.9 %. En todo el país, 43.33 %. Fuente: DGC/CIV, Plan de Desarrollo Vial 2018–2032.",
+      "imagen": "tuit_9.png",
+      "plantilla": "mapa",
+      "fuente": "DGC/CIV · Plan de Desarrollo Vial 2018–2032",
+      "cifra_ids": [
+        "via-c06"
+      ]
+    },
+    {
+      "n": 10,
+      "beat": "contexto",
+      "texto": "La medición de Fundesa termina en 2020.",
+      "caracteres": 39,
+      "alt_text": "Gráfico de barras verticales: kilómetros nuevos de red vial por año, promedio por periodo: 369 en 1996–2000, 83 en 2000–2004, 261 en 2004–2008, 199 en 2008–2012, 207 en 2012–2015 y 72 en 2016–2020. Promedio general: 218 km por año. Fuente: Fundesa con datos de la DGC/CIV.",
+      "imagen": "tuit_10.png",
+      "plantilla": "barras-v",
+      "fuente": "Fundesa · datos de la DGC/CIV",
+      "cifra_ids": [
+        "via-c15"
+      ]
+    },
+    {
+      "n": 11,
+      "beat": "contexto",
+      "texto": "Y la brecha no es solo de planes: también es de ejecución.",
+      "caracteres": 58,
+      "alt_text": "Gráfico de embudo: del Plan de Desarrollo Vial 2008–2017 se programaron 5,079 kilómetros de actuaciones y se ejecutaron 1,512, 30 de cada 100. Fuente: DGC/CIV, Plan de Desarrollo Vial 2018–2032.",
+      "imagen": "tuit_11.png",
+      "plantilla": "embudo",
+      "fuente": "DGC/CIV · Plan de Desarrollo Vial 2018–2032",
+      "cifra_ids": [
+        "via-c08"
+      ]
+    },
+    {
+      "n": 12,
+      "beat": "contexto",
+      "texto": "Hay que volver a 2016 para encontrar una ejecución más baja.",
+      "caracteres": 60,
+      "alt_text": "Gráfico de bullet: porcentaje del presupuesto de inversión del CIV que se devengó cada año frente al vigente: 86.8 % en 2021, 80.5 % en 2022, 88.7 % en 2023, 64.6 % en 2024 y 57.4 % en 2025. Fuente: Minfin–Sicoin vía Guate en Datos.",
+      "imagen": "tuit_12.png",
+      "plantilla": "bullet",
+      "fuente": "Minfin–Sicoin · vía Guate en Datos",
+      "cifra_ids": [
+        "via-c04"
+      ]
+    },
+    {
+      "n": 13,
+      "beat": "giro",
+      "texto": "Con el parque creciendo así, podría pensarse que las obras ganan peso en el gasto público. Pasa lo contrario.",
+      "caracteres": 109,
+      "alt_text": "Gráfico de línea: participación del Ministerio de Comunicaciones, Infraestructura y Vivienda en el gasto devengado del Gobierno central, de 9.96 % en 2008 y un máximo de 12.46 % en 2011 a 3.65 % en 2025. En 2025 devengó 5,132.32 millones de quetzales corrientes. Fuente: Minfin–Sicoin vía Guate en Datos.",
+      "imagen": "tuit_13.png",
+      "plantilla": "linea",
+      "fuente": "Minfin–Sicoin · vía Guate en Datos",
+      "cifra_ids": [
+        "via-c03",
+        "via-c01"
+      ]
+    },
+    {
+      "n": 14,
+      "beat": "impacto",
+      "texto": "Es una encuesta a usuarios, no una medición: TomTom, que mide con GPS, no incluye ninguna ciudad centroamericana.",
+      "caracteres": 113,
+      "alt_text": "Gráfico de barras horizontales: tiempo promedio de traslado de ida al trabajo o estudio en capitales latinoamericanas según Numbeo 2026: San José 63.3 minutos, Ciudad de México 52.7, Bogotá 51.4, Lima 51.2, Ciudad de Guatemala 49.2, San Salvador 40.7, Santo Domingo 35.5 y Panamá 32.8. Ciudad de Guatemala ocupa el puesto 12 de 340 en su índice de tráfico. Fuente: Numbeo.",
+      "imagen": "tuit_14.png",
+      "plantilla": "barras-h",
+      "fuente": "Numbeo · Traffic Index by City 2026",
+      "cifra_ids": [
+        "cng-c10",
+        "cng-c11"
+      ]
+    },
+    {
+      "n": 15,
+      "beat": "impacto",
+      "texto": "Equivale a unas tres horas y media diarias, más que el traslado que declaran los usuarios en Numbeo: tómese como estimación, no como medición.",
+      "caracteres": 142,
+      "alt_text": "Tarjeta de cifra: cada persona pierde aproximadamente 1,300 horas al año atrapada en el tráfico del área metropolitana. Es una estimación del BID citada por el Gobierno de Guatemala al presentar el Plan Maestro de Movilidad en 2026, no una medición.",
+      "imagen": "tuit_15.png",
+      "plantilla": "cifra",
+      "fuente": "BID · citado por el Gobierno (AGN, 2026)",
+      "cifra_ids": [
+        "cng-c01"
+      ]
+    },
+    {
+      "n": 16,
+      "beat": "impacto",
+      "texto": "Es una estimación, no una cuenta oficial: el estudio original y su metodología no están publicados.",
+      "caracteres": 99,
+      "alt_text": "Tarjeta de cifra: la congestión vial en la Ciudad de Guatemala cuesta más de 25 mil millones de quetzales al año, según datos del BID citados por el Gobierno de Guatemala en 2026. Es un piso estimado, no una medición.",
+      "imagen": "tuit_16.png",
+      "plantilla": "cifra",
+      "fuente": "BID · citado por el Gobierno (AGN, 2026)",
+      "cifra_ids": [
+        "cng-c02"
+      ]
+    },
+    {
+      "n": 17,
+      "beat": "impacto",
+      "texto": "No es solo que haya más gente: la tasa pasó de 8.42 a 13.45 muertes por cada cien mil habitantes.",
+      "caracteres": 97,
+      "alt_text": "Gráfico de línea: personas fallecidas en hechos de tránsito en Guatemala según la PNC, de 1,223 en 2011 a 2,432 en 2025, el valor más alto de la serie. Fuente: PNC/ONSET, Boletín Estadístico 12-2025.",
+      "imagen": "tuit_17.png",
+      "plantilla": "linea",
+      "fuente": "PNC/ONSET · Boletín Estadístico 12-2025",
+      "cifra_ids": [
+        "sev-c01",
+        "sev-c04"
+      ]
+    },
+    {
+      "n": 18,
+      "beat": "impacto",
+      "texto": "Y hay un patrón en quiénes son.",
+      "caracteres": 31,
+      "alt_text": "Tarjeta de cifra: en 2025 murieron en promedio 6.66 personas por día en hechos de tránsito en Guatemala, según la PNC. Fuente: PNC/ONSET, Boletín Estadístico 12-2025.",
+      "imagen": "tuit_18.png",
+      "plantilla": "cifra",
+      "fuente": "PNC/ONSET · Boletín Estadístico 12-2025",
+      "cifra_ids": [
+        "sev-c05"
+      ]
+    },
+    {
+      "n": 19,
+      "beat": "impacto",
+      "texto": "Las motos son la mitad del parque, pero ponen una parte mayor de los muertos. Y en 2026 la proporción sube.",
+      "caracteres": 107,
+      "alt_text": "Gráfico de cuadrícula de 100: en 2025, el 56.95 % de las personas fallecidas en hechos de tránsito iba en motocicleta. De enero a julio de 2026 la proporción llegó a 62.76 %. Fuente: PNC/ONSET, boletines 12-2025 y 7-2026.",
+      "imagen": "tuit_19.png",
+      "plantilla": "waffle",
+      "fuente": "PNC/ONSET · Boletines 12-2025 y 7-2026",
+      "cifra_ids": [
+        "sev-c08",
+        "sev-c09"
+      ]
+    },
+    {
+      "n": 20,
+      "beat": "impacto",
+      "texto": "Salvedad: muchas flotas de empresas se registran en la capital aunque circulen en otros departamentos; eso baja la tasa de Guatemala.",
+      "caracteres": 133,
+      "alt_text": "Mapa de Guatemala por departamento: fallecidos en hechos de tránsito por cada 10,000 vehículos registrados en 2025. Los más altos son El Progreso con 9.09, Alta Verapaz con 8.92 y Escuintla con 7.99; los más bajos, Huehuetenango con 1.51, Quetzaltenango con 1.76 y San Marcos con 2.12. El departamento de Guatemala, 2.38. Cálculo propio con datos de la PNC/ONSET.",
+      "imagen": "tuit_20.png",
+      "plantilla": "mapa",
+      "fuente": "PNC/ONSET · Boletín 12-2025 · cálculo propio",
+      "cifra_ids": [
+        "sev-c07"
+      ]
+    },
+    {
+      "n": 21,
+      "beat": "cierre",
+      "texto": "El parque crece casi ocho veces más rápido que la población; la red vial y el gasto en obras no lo siguen, y las muertes en tránsito casi se duplicaron. Van juntos: no probamos causa.\n\nFuentes: SAT, INE, DGC/CIV, Fundesa, Minfin–Sicoin, Numbeo, BID vía AGN, PNC/ONSET.",
+      "caracteres": 268,
+      "alt_text": "Último tuit del hilo, sin tarjeta: resume que el parque vehicular crece mucho más rápido que la población, que la red vial y el gasto en obras no lo siguen y que las muertes en tránsito casi se duplicaron, y lista las fuentes.",
+      "imagen": null,
+      "plantilla": null,
+      "fuente": null,
+      "cifra_ids": []
+    }
+  ],
+  "no_afirma": [
+    "No afirma que el crecimiento del parque cause por sí solo la congestión o las muertes: las series van juntas, ninguna fuente lo atribuye.",
+    "El parque de la SAT es el registrado, no los vehículos que circulan cada día.",
+    "Las horas perdidas y el costo de la congestión son estimaciones del BID citadas por el Gobierno, no mediciones.",
+    "El tiempo de traslado de Numbeo es percepción declarada por usuarios, no medición GPS.",
+    "No afirma que la caída del peso del CIV explique la falta de vías nuevas; el gasto va en quetzales corrientes, sin deflactar."
+  ],
+  "incertidumbre": [
+    "Todas las cifras usadas, incluida la ancla pqv-c14 (SAT + INE), tienen segunda fuente no independiente (reproduce la primaria); no había alternativa con respaldo independiente.",
+    "via-c09 y via-c10 usan un parque de 2017 aproximado (3.5 millones, del Plan de Desarrollo Vial) y una red vial registrada que incluye terracería.",
+    "La red vial no tiene serie anual oficial: el % pavimentado es el corte 2018 y los km por año de Fundesa terminan en 2020.",
+    "sev-c07 es cálculo propio (fallecidos PNC entre parque por departamento del mismo boletín); cng-c02 es un piso («supera»); Numbeo para Ciudad de Guatemala se basa en pocos usuarios.",
+    "pqv-c02 (6,829,492 vehículos) es el boletín de la SAT con corte de julio de 2026, preliminar; AGN cita a la SAT con 6,773,536 activos a julio de 2026 y los microdatos dan 6,891,249 (corte 08-09-2026): la diferencia viene de la fecha de corte y de activo frente a registrado. Se declara como 'boletín SAT, corte jul-2026' y no se mezcla con las otras cifras.",
+    "pqv-c09 (42.11%) es registro por departamento de inscripción o domicilio fiscal, no donde circulan los vehículos, y sobrerrepresenta al departamento de Guatemala por las flotas de empresas; se formula como 'registrados en el departamento de Guatemala'. Fuente única SAT, sin segunda fuente independiente.",
+    "pqv-c10 (724,170 en 2025) sale de los microdatos de la SAT con corte 08-09-2026: cuenta solo las altas de cada año que siguen activas, no inscripciones brutas, puede revisarse y subestima los años antiguos. Se formula como 'altas de 2025 aún activas'. Fuente única SAT.",
+    "pqv-c11 (1,984 por día = 724,170/365) mide altas de 2025 aún activas, no aumento neto del parque (1,620.9 por día según pqv-c04); no se mezclan ni se restan. Fuente única SAT.",
+    "pqv-c12 (1,251 motos por día = 456,622/365) tiene la misma salvedad de altas aún activas; la prensa citó 45 mil placas mensuales de motos (mayo 2024), orden de magnitud compatible pero con otra definición. Fuente única SAT."
+  ],
+  "fuentes": [
+    "SAT · Estadísticas Tributarias e INE · proyecciones",
+    "SAT · Boletín de Estadísticas Tributarias",
+    "SAT · Análisis estadístico del parque vehicular 2026",
+    "SAT, AGN y DGC/CIV · cálculo propio",
+    "DGC/CIV · Plan de Desarrollo Vial 2018–2032",
+    "Fundesa · datos de la DGC/CIV",
+    "Minfin–Sicoin · vía Guate en Datos",
+    "Numbeo · Traffic Index by City 2026",
+    "BID · citado por el Gobierno (AGN, 2026)",
+    "PNC/ONSET · Boletín Estadístico 12-2025",
+    "PNC/ONSET · Boletines 12-2025 y 7-2026",
+    "PNC/ONSET · Boletín 12-2025 · cálculo propio"
+  ],
+  "fuentes_cifras": [
+    "Cálculo propio: SAT (vía DGC y AGN) y DGC/CIV",
+    "Cálculo propio: parque SAT (dic 2017 vía DGC; jul 2026 vía AGN) / red vial DGC 2018 y CIV 2025",
+    "DGC/CIV, Plan de Desarrollo Vial 2018–2032 (Gráfico 22)",
+    "DGC/CIV, Plan de Desarrollo Vial 2018–2032, Tabla 13 (cálculo propio)",
+    "Fundesa con datos de la DGC/CIV, vía AGN (15 dic 2022)",
+    "Gobierno de Guatemala (Secretaría Privada de la Presidencia) citando datos del BID, presentación del Plan Maestro de Movilidad KOICA; vía AGN",
+    "Gobierno de Guatemala citando datos del BID; vía AGN (2 jul 2026). Segunda mención: Fundesa citando al BID, vía La Hora (10 feb 2026)",
+    "Minfin–Sicoin vía Guate en Datos",
+    "Minfin–Sicoin vía Guate en Datos (cálculo propio)",
+    "Minfin–Sicoin vía Guate en Datos (gastopublico-ejecucion.csv)",
+    "Numbeo, Traffic Index by City 2026",
+    "PNC/ONSET, Boletín Estadístico No. 12-2025",
+    "PNC/ONSET, Boletín Estadístico No. 12-2025 (Gráfico 14) y No. 7-2026 (Gráfico 14)",
+    "PNC/ONSET, Boletín Estadístico No. 12-2025 (Gráficos 16 y 29)",
+    "PNC/ONSET, Boletín Estadístico No. 12-2025 (Tabla No. 5: fallecidos y parque vehicular SAT a diciembre 2025)",
+    "PNC/ONSET, Boletín Estadístico No. 7-2026 (Gráfico 14) e INE, Estimaciones y proyecciones nacionales de población (revisión 2019, Cuadro 7)",
+    "PNC/ONSET, Boletín Estadístico No. 7-2026 (Gráficos 16 y 29)",
+    "SAT, Análisis estadístico del parque vehicular (microdatos, corte agosto 2026) (agregación propia)",
+    "SAT, Análisis estadístico del parque vehicular (microdatos, corte agosto 2026) (cálculo propio)",
+    "SAT, Boletín de Estadísticas Tributarias (G2/G1 Parque vehicular), Sistema de recaudación SAT",
+    "SAT, Boletín de Estadísticas Tributarias (G2/G1 Parque vehicular), Sistema de recaudación SAT (cálculo propio)",
+    "SAT, Boletín de Estadísticas Tributarias (G2/G1 Parque vehicular), Sistema de recaudación SAT + INE vía AGN (19-ene-2022) (cálculo propio)",
+    "SAT, Boletín de Estadísticas Tributarias (G2/G1 Parque vehicular), Sistema de recaudación SAT + INE, Estimaciones y proyecciones nacionales de población 1950–2050, revisión 2019 (cálculo propio)"
+  ],
+  "gate_mecanico": "ok",
+  "contacto": "contacto.png"
+}

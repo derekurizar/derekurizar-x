@@ -8,8 +8,10 @@
      del hilo (escenas.json). La graba scripts/video_grabar.js llamando a seek(t).
      Zona segura de TikTok (medida en un iPhone con la app, 2026-10): el video se escala para llenar el alto y pierde
      ~57 px por lado; arriba la barra de pestañas tapa hasta y≈215; a la derecha los íconos ocupan x ≥ 900 desde
-     y≈1070; abajo el nombre y el texto empiezan en y≈1645. El golpe va en la columna x 85–876; la tarjeta a escala
-     1 ocupa x 80–1000 (por encima de y≈1070 todo el ancho es seguro); los subtítulos en y=1500.
+     y≈1070; abajo el nombre y el texto empiezan en y≈1645 (variables en comun.css, V.zona). El golpe va en la
+     columna x 85–876; la tarjeta a escala 1 ocupa x 80–1000 (por encima de y≈1070 todo el ancho es seguro; la nota
+     y el pie, que caen debajo, terminan en x 870: vertical.css); los subtítulos en y=1400. Durante un foco el resto
+     de la tarjeta sale de cuadro a propósito: #ventana[data-foco] le dice al gate V13 que mida solo la caja enfocada.
      El foco y la deriva viven en el transform de #marco (fuera del iframe): el estado final de la tarjeta lo
      comprueba V7 (video_animar.js) con la misma hoja vertical. ?debug=1 dibuja las cajas de los focos. -->
 <link rel="stylesheet" href="comun.css">
@@ -32,7 +34,9 @@ const n = V.n, F45 = V.F45, { clamp, eo } = V;
 const DEBUG = new URLSearchParams(location.search).get('debug') === '1';
 const VT = F45 ? 250 : 420, VH = F45 ? 840 : 800;   // ventana de la tarjeta (página y = 420–1220; 250–1090 en 4:5)
 const CORTE = F45 ? [0, 1080] : [57, 1023];         // recorte lateral del teléfono (x de página = x de la ventana)
-const DERIVA = { s: 0.035, tx: -12, ty: -8 };  // movimiento lento de toda la escena cuando no hay foco
+let ZONA;                                            // V.zona(): columna de íconos (x ≤ iconosX desde iconosY)
+let BASE = { s: 1, tx: 0, ty: 0 };                          // encaje de la tarjeta en reposo: solo cambia si lo dibujado desborda
+const DERIVA = { s: 0.025, tx: -14, ty: -8 };  // movimiento lento sin foco; la tarjeta (x 80–1010) queda en el recorte (57–1023)
 let S, TROZOS, FOCOS = [];
 window.__listo = (async () => {
   const C = await V.cargar(), todo = C.todo; S = C.S; TROZOS = C.trozos;
@@ -45,12 +49,39 @@ window.__listo = (async () => {
   const [, css] = await Promise.all([document.fonts.ready, (await fetch('vertical.css')).text()]);
   // el golpe no puede bajar de la tarjeta: se achica hasta que golpe + barra quepan sobre ella
   V.ajustarGolpe(S, VT);
+  ZONA = V.zona();
   await new Promise((r, x) => { const t0 = Date.now(); const i = setInterval(() => { const d = fr.contentDocument;
     if (d && d.body && d.body.dataset.listo) { clearInterval(i); if (d.body.dataset.error) x(new Error(d.body.dataset.error)); else r(); }
     else if (Date.now() - t0 > 15000) { clearInterval(i); x(new Error('la tarjeta no terminó de dibujarse')); } }, 50); });
   // modo vertical: se inyecta DESPUÉS de dibujar (las plantillas ya midieron su espacio); V7 hace lo mismo
   const st = fr.contentDocument.createElement('style'); st.textContent = css; fr.contentDocument.head.appendChild(st);
   fr.contentDocument.body.getBoundingClientRect();  // fuerza el reflow antes de medir las cajas
+  // encaje: algunas plantillas dibujan etiquetas fuera de su margen (un «ago 2026» hasta x 1045); con la deriva, lo
+  // dibujado tiene que quedar dentro del recorte del teléfono (gate V13). Si no cabe, la tarjeta se achica o se corre
+  // lo justo; si cabe (lo normal: x 80–1000), BASE queda en {1, 0}.
+  {
+    const d = fr.contentDocument, xs = [];
+    const w = d.createTreeWalker(d.body, NodeFilter.SHOW_TEXT);
+    for (let t = w.nextNode(); t; t = w.nextNode()) if (t.textContent.trim()) { const r = d.createRange(); r.selectNodeContents(t);
+      const b = r.getBoundingClientRect(); if (b.width) xs.push(b.left, b.right); }
+    for (const e of d.querySelectorAll('svg, img, canvas')) { const b = e.getBoundingClientRect(); if (b.width) xs.push(b.left, b.right); }
+    if (xs.length) {
+      const x0 = Math.min(...xs), x1 = Math.max(...xs), l0 = CORTE[0] + 4, l1 = CORTE[1] - 4, k = 1 + DERIVA.s;
+      const s = Math.min(1, (l1 - l0) / ((x1 - x0) * k)), s1 = s * k;
+      const lo = Math.max(l0 - x0 * s, l0 - x0 * s1 - DERIVA.tx), hi = Math.min(l1 - x1 * s, l1 - x1 * s1 - DERIVA.tx);
+      BASE = { s, tx: lo > hi ? (lo + hi) / 2 : Math.max(lo, Math.min(hi, 0)), ty: 0 };
+      // lo dibujado a la derecha que cae por debajo de y≈1070 queda bajo los íconos: la tarjeta sube lo justo (≤ 48 px;
+      // arriba sobra el margen de 60 px de la tarjeta). Con la deriva, el peor momento es el inicio (ty 0).
+      let baja = 0;
+      for (const e of d.querySelectorAll('*')) {
+        if (e.firstElementChild && e.tagName.toLowerCase() !== 'svg') continue;
+        const b = e.getBoundingClientRect(); if (!b.width || !b.height) continue;
+        for (const [ss, tt, dy] of [[s, BASE.tx, 0], [s * k, BASE.tx + DERIVA.tx, DERIVA.ty]])
+          if (b.right * ss + tt > ZONA.iconosX - 2) baja = Math.max(baja, VT + b.bottom * ss + dy - (ZONA.iconosY - 4));
+      }
+      BASE.ty = -Math.min(48, Math.max(0, baja));
+    }
+  }
   // focos: la caja de cada valor que dice la voz, leída del DOM final (antes del primer seek)
   if (S.T.foco !== false && S.T.valores && typeof fr.contentWindow.__caja === 'function') {
     for (const [k, [a, b]] of Object.entries(S.T.valores)) {
@@ -61,8 +92,10 @@ window.__listo = (async () => {
       // teléfono y de la ventana); el resto de la tarjeta puede salirse de cuadro
       const s = Math.min(1.45, Math.max(1.25, 420 / bw));
       const cl = (v, lo, hi) => (lo > hi ? (lo + hi) / 2 : Math.max(lo, Math.min(hi, v)));
-      const tx = cl(540 - s * (x + bw / 2), CORTE[0] - s * x, CORTE[1] - s * (x + bw));
       const ty = cl(VH / 2 - s * (y + bh / 2), 16 - s * y, VH - 16 - s * (y + bh));
+      // si la caja enfocada queda por debajo de y≈1070, su borde derecho no entra en la columna de íconos
+      const derecha = VT + ty + s * (y + bh) > ZONA.iconosY ? Math.min(CORTE[1], ZONA.iconosX - 12) : CORTE[1];
+      const tx = cl(540 - s * (x + bw / 2), CORTE[0] - s * x, derecha - s * (x + bw));
       FOCOS.push({ k, a, b: b + 0.8, s, tx, ty, caja: c });
     }
   }
@@ -71,7 +104,7 @@ window.__listo = (async () => {
 // transform de #marco en t: deriva lenta (escala 1 → 1.035, −12/−8 px a lo largo de la escena) fuera de los focos;
 // dentro, mezcla ponderada de los focos activos (entrada 0.45 s, sostenido hasta `hasta` + 0.8, salida 0.6 s)
 const marco = (t) => {
-  const u = clamp(t / S.dur), d = { tx: DERIVA.tx * u, ty: DERIVA.ty * u, s: 1 + DERIVA.s * u };
+  const u = clamp(t / S.dur), d = { tx: BASE.tx + DERIVA.tx * u, ty: BASE.ty + DERIVA.ty * u, s: BASE.s * (1 + DERIVA.s * u) };
   let sw = 0, stx = 0, sty = 0, ss = 0;
   for (const f of FOCOS) {
     const w = eo((t - f.a) / 0.45) * (1 - eo((t - f.b) / 0.6));
@@ -79,13 +112,19 @@ const marco = (t) => {
   }
   if (sw <= 0) return d;
   const Wt = Math.min(1, sw);
-  return { tx: d.tx * (1 - Wt) + (stx / sw) * Wt, ty: d.ty * (1 - Wt) + (sty / sw) * Wt, s: d.s * (1 - Wt) + (ss / sw) * Wt };
+  return { tx: d.tx * (1 - Wt) + (stx / sw) * Wt, ty: d.ty * (1 - Wt) + (sty / sw) * Wt, s: d.s * (1 - Wt) + (ss / sw) * Wt, w: Wt };
 };
 window.seek = (t) => {
   V.seekGolpe(t, S);
   V.seekProgreso(t, n, S.dur);
   const m = marco(t);
   document.getElementById('marco').style.transform = `translate(${m.tx.toFixed(2)}px, ${m.ty.toFixed(2)}px) scale(${m.s.toFixed(4)})`;
+  // V13: con un foco puesto, la caja enfocada (en coordenadas de página) es lo único que tiene que estar en la zona
+  //      con dos focos activos la cámara va de uno a otro: «mov» (no se mide ese tránsito)
+  const activos = FOCOS.map((f) => ({ f, w: eo((t - f.a) / 0.45) * (1 - eo((t - f.b) / 0.6)) })).filter((x) => x.w > 0.001);
+  const fa = activos.length === 1 ? activos[0].f : null;
+  document.getElementById('ventana').dataset.foco = activos.length > 1 ? 'mov' : fa ? JSON.stringify([m.tx + m.s * fa.caja[0], VT + m.ty + m.s * fa.caja[1],
+    m.tx + m.s * (fa.caja[0] + fa.caja[2]), VT + m.ty + m.s * (fa.caja[1] + fa.caja[3])].map((v) => Math.round(v))) : '';
   if (DEBUG) [...document.querySelectorAll('#ventana .caja')].forEach((d, i) => { const [x, y, bw, bh] = FOCOS[i].caja;
     d.style.left = (m.tx + m.s * x) + 'px'; d.style.top = (m.ty + m.s * y) + 'px'; d.style.width = (m.s * bw) + 'px'; d.style.height = (m.s * bh) + 'px'; });
   document.getElementById('tarjeta').contentWindow.__seek(t, S.T);

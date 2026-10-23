@@ -25,7 +25,7 @@
         "cuentas nacionales",
         "economía"
       ],
-      "nota": "[2026-09-29] RIN último dato 2026 (semanal/mensual) no descargado: presupuesto de fetch agotado; la página banguat.gob.gt/page/reservas-monetarias-internacionales-netas-banco-de-guatemala lo publica · [2026-09-29] Serie de IED Banguat 2016-2023 en tabla (solo xlsx por año flujo_IED_YYYY.xlsx; se usó WDI para la serie y Banguat solo para 2024p-2025p) · [2026-09-29] Exportaciones ene-ago 2026 (Banguat publica mensual en 'exportaciones-e-importaciones-mensuales-por-producto'; prensa DCA reporta +5.5 % a mayo 2026, no descargado) · [2026-09-29] Remesas % PIB 2025 con PIB nominal Banguat (se calculó con PIB US$ del Banco Mundial) · [2026-09-29] Calificaciones 2016–2020 (Morales y primeros años de Giammattei) sin fuente descargada; fecha exacta del alza de S&P de BB- a BB no confirmada; mayo vs junio 2025 para S&P BB+ discrepan (Banguat vs BM · [2026-09-29] Deuda 2025: 26.9 % (Banguat ene-2026, preliminar) vs 26.8 % (MINFIN vía Prensa Latina/Prensa Libre, mar-2026) sin archivo local de la segunda. · [2026-10-06] Déficit 2026 en quetzales (aprobado o estimado) para completar la serie def-c01; serie % PIB de 2026 tiene dos valores (3.5 aprobado Banguat vs 3.8 previsto MINFIN). · [2026-10-06] Balanza de pagos (cuenta Viajes, crédito/débito) de Banguat no consultada: sería la segunda fuente natural y cubre canales fuera del Mercado Institucional de Divisas. · [2026-10-06] Déficit 2026 en millones de Q (solo % PIB leído de gráfico); pim25 de Banguat en caché no revisado para 2026. · [2026-10-11] Remesas en quetzales no las publica Banguat: la conversión con TC mensual es cálculo propio (el verificador puede replicarla con los dos archivos locales). · [2026-10-11] Volumen (kg) exportado de banano según Banguat no descargado; el volumen sale del lado de EE.UU. (Comtrade). · [2026-10-11] Remesas como % del PIB 2025: no halle cifra oficial de Banguat (un resultado de busqueda decia 20.7% sin fuente verificable); no se registra. · [2026-10-11] Octubre 2026 aun no publicado: no se puede comparar el anual 2026 con 2025; solo la proyeccion Banguat (26,806.7, +5.0%). · [2026-10-13] Tabla oficial de Minfin de deuda del Gobierno Central en % del PIB: no se descargó; se usa el gráfico de Banguat (Minfin) y el ministro citó 26.8 % para 2025 (prensa). · [2026-10-13] Banguat pim22–pim24 no traen gasto de capital del Gobierno Central reciente (pim24 llega a 1997); no hay segunda medición oficial de inversión en % del PIB para 2023–2025 descargable. · [2026-10-13] Cifra oficial de cierre 2025 de la deuda del Gobierno Central en una tabla del Minfin: no localizada; el ministro dio 26.8 % preliminar (prensa) y Banguat 26.9 %. Se usa Banguat. · [2026-10-13] S8-02, revisión: sin rastro de institución o producto financiero para migrantes en 2024-2026 tras buscar CHN, Junta Monetaria/Banguat, Mineco y Plan Retorno al Hogar, y leer los Informes Presidenciale"
+      "nota": "[2026-09-29] RIN último dato 2026 (semanal/mensual) no descargado: presupuesto de fetch agotado; la página banguat.gob.gt/page/reservas-monetarias-internacionales-netas-banco-de-guatemala lo publica · [2026-09-29] Serie de IED Banguat 2016-2023 en tabla (solo xlsx por año flujo_IED_YYYY.xlsx; se usó WDI para la serie y Banguat solo para 2024p-2025p) · [2026-09-29] Exportaciones ene-ago 2026 (Banguat publica mensual en 'exportaciones-e-importaciones-mensuales-por-producto'; prensa DCA reporta +5.5 % a mayo 2026, no descargado) · [2026-09-29] Remesas % PIB 2025 con PIB nominal Banguat (se calculó con PIB US$ del Banco Mundial) · [2026-09-29] Calificaciones 2016–2020 (Morales y primeros años de Giammattei) sin fuente descargada; fecha exacta del alza de S&P de BB- a BB no confirmada; mayo vs junio 2025 para S&P BB+ discrepan (Banguat vs BM · [2026-09-29] Deuda 2025: 26.9 % (Banguat ene-2026, preliminar) vs 26.8 % (MINFIN vía Prensa Latina/Prensa Libre, mar-2026) sin archivo local de la segunda. · [2026-10-06] Déficit 2026 en quetzales (aprobado o estimado) para completar la serie def-c01; serie % PIB de 2026 tiene dos valores (3.5 aprobado Banguat vs 3.8 previsto MINFIN). · [2026-10-06] Balanza de pagos (cuenta Viajes, crédito/débito) de Banguat no consultada: sería la segunda fuente natural y cubre canales fuera del Mercado Institucional de Divisas. · [2026-10-06] Déficit 2026 en millones de Q (solo % PIB leído de gráfico); pim25 de Banguat en caché no revisado para 2026. · [2026-10-11] Remesas en quetzales no las publica Banguat: la conversión con TC mensual es cálculo propio (el verificador puede replicarla con los dos archivos locales). · [2026-10-11] Volumen (kg) exportado de banano según Banguat no descargado; el volumen sale del lado de EE.UU. (Comtrade). · [2026-10-11] Remesas como % del PIB 2025: no halle cifra oficial de Banguat (un resultado de busqueda decia 20.7% sin fuente verificable); no se registra. · [2026-10-11] Octubre 2026 aun no publicado: no se puede comparar el anual 2026 con 2025; solo la proyeccion Banguat (26,806.7, +5.0%). · [2026-10-13] Tabla oficial de Minfin de deuda del Gobierno Central en % del PIB: no se descargó; se usa el gráfico de Banguat (Minfin) y el ministro citó 26.8 % para 2025 (prensa). · [2026-10-13] Banguat pim22–pim24 no traen gasto de capital del Gobierno Central reciente (pim24 llega a 1997); no hay segunda medición oficial de inversión en % del PIB para 2023–2025 descargable. · [2026-10-13] Cifra oficial de cierre 2025 de la deuda del Gobierno Central en una tabla del Minfin: no localizada; el ministro dio 26.8 % preliminar (prensa) y Banguat 26.9 %. Se usa Banguat. · [2026-10-13] S8-02, revisión: sin rastro de institución o producto financiero para migrantes en 2024-2026 tras buscar CHN, Junta Monetaria/Banguat, Mineco y Plan Retorno al Hogar, y leer los Informes Presidenciale · [2026-10-21] Importaciones de motocicletas: la tabla I6 de la SAT las excluye; no busqué Banguat/Aduanas en US$."
     },
     {
       "nombre": "INE Guatemala",
@@ -50,7 +50,7 @@
         "defunciones",
         "estadísticas"
       ],
-      "nota": "[2026-09-29] CBA del INE de julio y agosto 2026: no localicé los PDF (la página del INE carga con JS); el Q950 de agosto solo aparece en prensa. La CBA 2026 es per cápita y con metodología nueva, así que no se com · [2026-10-05] Retornados por 100,000 habitantes por departamento (falta población INE 2026 por depto; el mapa va en absolutos). · [2026-10-06] Tasa de mortalidad vial por 100,000 habitantes 2025 y por departamento (página 38 del boletín en imagen); no se calculó con población INE · [2026-10-06] Hogares ENCOVI 2023 (INE) no consultados por presupuesto. · [2026-10-06] IPC del INE (división vivienda/electricidad) no consultado: las variaciones 2016-2026 son nominales, sin deflactar. · [2026-10-06] Nacimientos 2022 (nacimientos-2022.xlsx dio HTTP 502; presupuesto de fetch agotado): la serie INE tiene 6 puntos con hueco en 2022. · [2026-10-06] Confirmar con publicación oficial del INE la caída de nacimientos totales 2023-2024 (-12.7 %). · [2026-10-06] INE Estadísticas Vitales 2010-2024 (% nacimientos de madres <20): el CKAN respondió 502 y luego listó microdatos (nacimientos2024_da.xlsx, bdnacimientos2023.xlsx, nacimientos-2022.xlsx, …) pero no que · [2026-10-06] Denominador 2026: no hallé la proyección INE 2026 por departamento, sexo y edad descargable (ine.gob.gt/proyecciones sin xlsx, censopoblacion.gt con error SSL); las tasas usan la proyección 2024 (HDX · [2026-10-06] INE Estadísticas Vitales (nacimientos por edad de la madre, por año de ocurrencia) no consultado por presupuesto; sería la segunda fuente independiente de la serie y de la proporción. · [2026-10-06] No localicé una tasa global de fecundidad oficial del INE posterior a 2019 (proyección 2.7 para 2018-2019); la serie larga es estimación UN WPP vía Banco Mundial. · [2026-10-06] No tabulé los microdatos INE 2014-2017 ni 2022 (2014 y 2022 vienen de INE citado por prensa). · [2026-10-06] Portal CKAN del INE (package_show) dio timeout dos veces; no revisé precios CBA ni matrimonios INE. · [2026-10-06] n_fetch (17) excede el presupuesto de 12: incluye 5 intentos fallidos (403 de Summa x2 y Minfin; INE sin enlaces x3). · [2026-10-06] Motos por habitante por departamento: no se descargó la proyección de población del INE (presupuesto). · [2026-10-06] Nacimientos 2022 (INE): HTTP 502 en el único intento del 2026-10-07; las series per-c06/per-c07 tienen hueco en 2022. · [2026-10-06] Diccionario INE nacimientos 2018-2022: HTTP 502; el código Viapar 2 = cesárea se confirmó con el formulario INE y la consistencia interna de 2024, no con el diccionario. · [2026-10-06] Ninguna publicación oficial (INE/OSAR/UNFPA) hallada reproduce las cifras 2024 de edad del padre, Tohite o cesárea por edad: son cálculo propio sobre microdatos; el verificador debe recalcular con los · [2026-10-11] Población INE 13-15 y 16-18 años para escala humana propia: no descargada (UIS ya trae números absolutos fuera de la escuela). · [2026-10-11] No se localizó el documento INE directo del Censo 2018 con el total de hogares (solo prensa que reproduce la presentación del INE) · [2026-10-11] Canasta básica INE 2026 es per cápita y en quetzales (CBAR jun-2026 Q727.14, CBAU Q943.14; caché sesiones/_descargas/20260707110852iZwkJLBrcyCmachhwmugKt4pf6cK8kRg.txt): no se cruzó con la remesa por · [2026-10-13] Denominador INE 2024 por departamento para convertir afiliados IGSS en tasa: no capturado. · [2026-10-13] S1-29/S1-30/S1-31: no hay medición oficial posterior a 2023 de % de hogares con agua por tubería, conexión a drenaje o tratamiento de aguas; ENDESA 2025 (INE) solo se obtuvo vía prensa («siete de cada · [2026-10-13] ENDESA 2025: cifra nacional de desnutrición crónica (42 %) solo vía prensa que cita la presentación del INE; falta el documento oficial y el desglose por departamento. · [2026-10-13] REVISIÓN S3-01: no hay medición de desnutrición crónica de 2023 con el mismo diseño que la ENDESA 2025; se usó la evaluación final de la GCNN (ago-2023 a sep-2024), otra encuesta. El informe final de · [2026-10-13] REVISIÓN S3-01: no hay medición de desnutrición crónica de 2023 con el mismo diseño que la ENDESA 2025; se usó la evaluación final de la GCNN (ago-2023 a sep-2024), otra encuesta. El informe final de · [2026-10-19] Agentes PNC por 100 mil habitantes: el ratio oficial (133) no cuadra con 44 mil agentes y la población INE (~240); no hay serie oficial 2020–2026 del estado de fuerza en las fuentes revisadas. · [2026-10-19] Población INE por año (rev. 2019) desde fuente primaria para el presupuesto por habitante: solo fuente secundaria (18,079,810 en 2025)."
+      "nota": "[2026-09-29] CBA del INE de julio y agosto 2026: no localicé los PDF (la página del INE carga con JS); el Q950 de agosto solo aparece en prensa. La CBA 2026 es per cápita y con metodología nueva, así que no se com · [2026-10-05] Retornados por 100,000 habitantes por departamento (falta población INE 2026 por depto; el mapa va en absolutos). · [2026-10-06] Tasa de mortalidad vial por 100,000 habitantes 2025 y por departamento (página 38 del boletín en imagen); no se calculó con población INE · [2026-10-06] Hogares ENCOVI 2023 (INE) no consultados por presupuesto. · [2026-10-06] IPC del INE (división vivienda/electricidad) no consultado: las variaciones 2016-2026 son nominales, sin deflactar. · [2026-10-06] Nacimientos 2022 (nacimientos-2022.xlsx dio HTTP 502; presupuesto de fetch agotado): la serie INE tiene 6 puntos con hueco en 2022. · [2026-10-06] Confirmar con publicación oficial del INE la caída de nacimientos totales 2023-2024 (-12.7 %). · [2026-10-06] INE Estadísticas Vitales 2010-2024 (% nacimientos de madres <20): el CKAN respondió 502 y luego listó microdatos (nacimientos2024_da.xlsx, bdnacimientos2023.xlsx, nacimientos-2022.xlsx, …) pero no que · [2026-10-06] Denominador 2026: no hallé la proyección INE 2026 por departamento, sexo y edad descargable (ine.gob.gt/proyecciones sin xlsx, censopoblacion.gt con error SSL); las tasas usan la proyección 2024 (HDX · [2026-10-06] INE Estadísticas Vitales (nacimientos por edad de la madre, por año de ocurrencia) no consultado por presupuesto; sería la segunda fuente independiente de la serie y de la proporción. · [2026-10-06] No localicé una tasa global de fecundidad oficial del INE posterior a 2019 (proyección 2.7 para 2018-2019); la serie larga es estimación UN WPP vía Banco Mundial. · [2026-10-06] No tabulé los microdatos INE 2014-2017 ni 2022 (2014 y 2022 vienen de INE citado por prensa). · [2026-10-06] Portal CKAN del INE (package_show) dio timeout dos veces; no revisé precios CBA ni matrimonios INE. · [2026-10-06] n_fetch (17) excede el presupuesto de 12: incluye 5 intentos fallidos (403 de Summa x2 y Minfin; INE sin enlaces x3). · [2026-10-06] Motos por habitante por departamento: no se descargó la proyección de población del INE (presupuesto). · [2026-10-06] Nacimientos 2022 (INE): HTTP 502 en el único intento del 2026-10-07; las series per-c06/per-c07 tienen hueco en 2022. · [2026-10-06] Diccionario INE nacimientos 2018-2022: HTTP 502; el código Viapar 2 = cesárea se confirmó con el formulario INE y la consistencia interna de 2024, no con el diccionario. · [2026-10-06] Ninguna publicación oficial (INE/OSAR/UNFPA) hallada reproduce las cifras 2024 de edad del padre, Tohite o cesárea por edad: son cálculo propio sobre microdatos; el verificador debe recalcular con los · [2026-10-11] Población INE 13-15 y 16-18 años para escala humana propia: no descargada (UIS ya trae números absolutos fuera de la escuela). · [2026-10-11] No se localizó el documento INE directo del Censo 2018 con el total de hogares (solo prensa que reproduce la presentación del INE) · [2026-10-11] Canasta básica INE 2026 es per cápita y en quetzales (CBAR jun-2026 Q727.14, CBAU Q943.14; caché sesiones/_descargas/20260707110852iZwkJLBrcyCmachhwmugKt4pf6cK8kRg.txt): no se cruzó con la remesa por · [2026-10-13] Denominador INE 2024 por departamento para convertir afiliados IGSS en tasa: no capturado. · [2026-10-13] S1-29/S1-30/S1-31: no hay medición oficial posterior a 2023 de % de hogares con agua por tubería, conexión a drenaje o tratamiento de aguas; ENDESA 2025 (INE) solo se obtuvo vía prensa («siete de cada · [2026-10-13] ENDESA 2025: cifra nacional de desnutrición crónica (42 %) solo vía prensa que cita la presentación del INE; falta el documento oficial y el desglose por departamento. · [2026-10-13] REVISIÓN S3-01: no hay medición de desnutrición crónica de 2023 con el mismo diseño que la ENDESA 2025; se usó la evaluación final de la GCNN (ago-2023 a sep-2024), otra encuesta. El informe final de · [2026-10-13] REVISIÓN S3-01: no hay medición de desnutrición crónica de 2023 con el mismo diseño que la ENDESA 2025; se usó la evaluación final de la GCNN (ago-2023 a sep-2024), otra encuesta. El informe final de · [2026-10-19] Agentes PNC por 100 mil habitantes: el ratio oficial (133) no cuadra con 44 mil agentes y la población INE (~240); no hay serie oficial 2020–2026 del estado de fuerza en las fuentes revisadas. · [2026-10-19] Población INE por año (rev. 2019) desde fuente primaria para el presupuesto por habitante: solo fuente secundaria (18,079,810 en 2025). · [2026-10-21] Población INE por departamento 2025 (proyecciones 2010–2050): ine.gob.gt/proyecciones carga con JS (fetch_tabla --enlaces = 0 enlaces) y la API CKAN datos.ine.gob.gt dio timeout; solo Guatemala 2022 v · [2026-10-21] Tasa de mortalidad por 100,000 habitantes por departamento con valores: la PNC solo publica un mapa por rangos (Escuintla y El Progreso 27–34; Huehuetenango, Quiché y San Marcos 3–5) y no se halló la "
     },
     {
       "nombre": "INSIVUMEH",
@@ -127,7 +127,7 @@
         "tributario",
         "aduanas"
       ],
-      "nota": "[2026-10-06] La cifra del tema 'Q75 mil millones en nueve meses' no se confirma: a julio Q73,340.0 M, a agosto Q81,584.6 M (concepto SAT). · [2026-10-06] No se encontró revisión formal de la meta SAT 2026: Q119,762.8 M es el total presupuestario de ingresos tributarios (incluye Q601.1 M de otras instituciones), no una meta nueva. · [2026-10-06] Metas revisadas (convenio Minfin–SAT tras ampliaciones) de 2016–2023: solo se confirmó la de 2024 (Q99,201.6 M). Un resultado de búsqueda citaba meta 2023 = Q86,247.6 M (vs programación 85,765.03) sin · [2026-10-06] Altas brutas anuales de motos (no solo las que siguen activas): la SAT no publica la serie histórica de inscripciones; el archivo es parque activo por año de alta, así que no sostiene «récord». · [2026-10-06] Archivos SAT de diciembre de años anteriores a 2025 no están en la página (solo 2025-01 a 2026-08). · [2026-10-11] Recaudación SAT enero-agosto 2025 no extraída: el cociente ene-ago 2026 (dat-c05) no tiene su par comparable de 2025. · [2026-10-13] Evaluación formal del sistema tributario (FMI-FAD/TADAT/Minfin) 2024–2026: no hallada; solo estimaciones anuales de evasión de la SAT (titulares)."
+      "nota": "[2026-10-06] La cifra del tema 'Q75 mil millones en nueve meses' no se confirma: a julio Q73,340.0 M, a agosto Q81,584.6 M (concepto SAT). · [2026-10-06] No se encontró revisión formal de la meta SAT 2026: Q119,762.8 M es el total presupuestario de ingresos tributarios (incluye Q601.1 M de otras instituciones), no una meta nueva. · [2026-10-06] Metas revisadas (convenio Minfin–SAT tras ampliaciones) de 2016–2023: solo se confirmó la de 2024 (Q99,201.6 M). Un resultado de búsqueda citaba meta 2023 = Q86,247.6 M (vs programación 85,765.03) sin · [2026-10-06] Altas brutas anuales de motos (no solo las que siguen activas): la SAT no publica la serie histórica de inscripciones; el archivo es parque activo por año de alta, así que no sostiene «récord». · [2026-10-06] Archivos SAT de diciembre de años anteriores a 2025 no están en la página (solo 2025-01 a 2026-08). · [2026-10-11] Recaudación SAT enero-agosto 2025 no extraída: el cociente ene-ago 2026 (dat-c05) no tiene su par comparable de 2025. · [2026-10-13] Evaluación formal del sistema tributario (FMI-FAD/TADAT/Minfin) 2024–2026: no hallada; solo estimaciones anuales de evasión de la SAT (titulares). · [2026-10-21] Comunicado AGN/SAT de julio 2026 (6,773,536 activos; 3,474,069 motos) no localizado; el boletín SAT da 6,829,492 y 3,502,653 a jul-2026 y los microdatos 6,891,249 a sep-2026: difieren por corte. · [2026-10-21] Parque vehicular exacto SAT al 31 dic 2017: se usó el aproximado del PDV (3,500,000); el eje parque puede aportar el corte exacto."
     },
     {
       "nombre": "CONADI — Estadísticas de Discapacidad",
@@ -173,7 +173,7 @@
         "violencia",
         "seguridad"
       ],
-      "nota": "[2026-10-02] INACIF necropsias de mujeres por hechos criminales 2016–2025: no se consultó (presupuesto); los datos de muertes de mujeres son del MP vía CIEN · [2026-10-02] INACIF serie anual 2016–2025 (necropsias por hechos criminales / arma de fuego): estadisticasweb no descargado por presupuesto; solo 2025 vía prensa. · [2026-10-12] Guatemala sin conteo anual de homicidios por arma de fuego: el % (84.3) es cálculo propio con tasas interanuales redondeadas de Diálogos; INACIF no se consultó (403 en prensa). · [2026-10-13] Contraste de homicidios con Inacif: no consultado (se usaron PNC/PLADEIC vía CIEN y Diálogos, y el Mingob). · [2026-10-19] Niñez: sin total anual 2025 de homicidios de menores (solo 41 en jul–sep 2025, Diálogos); el portal INACIF (estadisticasweb, API routes/api/necropsias.php?grupo=D&anios=AAAA&idgenero=1,2,3 por rango d · [2026-10-19] Evaluaciones médicas por delitos sexuales (INACIF evalmedicas) 2025: no consultado."
+      "nota": "[2026-10-02] INACIF necropsias de mujeres por hechos criminales 2016–2025: no se consultó (presupuesto); los datos de muertes de mujeres son del MP vía CIEN · [2026-10-02] INACIF serie anual 2016–2025 (necropsias por hechos criminales / arma de fuego): estadisticasweb no descargado por presupuesto; solo 2025 vía prensa. · [2026-10-12] Guatemala sin conteo anual de homicidios por arma de fuego: el % (84.3) es cálculo propio con tasas interanuales redondeadas de Diálogos; INACIF no se consultó (403 en prensa). · [2026-10-13] Contraste de homicidios con Inacif: no consultado (se usaron PNC/PLADEIC vía CIEN y Diálogos, y el Mingob). · [2026-10-19] Niñez: sin total anual 2025 de homicidios de menores (solo 41 en jul–sep 2025, Diálogos); el portal INACIF (estadisticasweb, API routes/api/necropsias.php?grupo=D&anios=AAAA&idgenero=1,2,3 por rango d · [2026-10-19] Evaluaciones médicas por delitos sexuales (INACIF evalmedicas) 2025: no consultado. · [2026-10-21] INACIF: el reporte original 2025 de necropsias por hechos de tránsito no se halló; sev-c15 sale de prensa. Su API pública agrupa por causa médica (trauma craneoencefálico, politraumatismo), sin tipo d"
     },
     {
       "nombre": "Statista Guatemala",
@@ -1682,6 +1682,57 @@
         "violencia"
       ],
       "nota": "hallada en 2026-10-19-crimen-organizado-respuesta-estado: https://khovar.tj/wp-content/uploads/2025/09/Gallup_Global-Safety-Report-2025.pdf"
+    },
+    {
+      "nombre": "TomTom Traffic Index — ranking (sin ciudades de Guatemala)",
+      "url": "tomtom.com",
+      "categoria": "auto",
+      "rating": 8,
+      "alias": [],
+      "temas": [
+        "congestion",
+        "guatemala",
+        "parque",
+        "seguridad",
+        "trafico",
+        "vehicular",
+        "vial"
+      ],
+      "nota": "hallada en 2026-10-21-trafico-guatemala-2026: https://www.tomtom.com/traffic-index/ranking/"
+    },
+    {
+      "nombre": "Dirección General de Caminos (CIV), Reformulación y actualización del Plan de Desarrollo Vial 2018–2032",
+      "url": "caminos.gob.gt",
+      "categoria": "auto",
+      "rating": 8,
+      "alias": [],
+      "temas": [
+        "congestion",
+        "guatemala",
+        "parque",
+        "seguridad",
+        "trafico",
+        "vehicular",
+        "vial"
+      ],
+      "nota": "hallada en 2026-10-21-trafico-guatemala-2026: https://www.caminos.gob.gt/Descargas/Otros/Plan%20de%20Desarrollo%20Vial%202018%20-%202032.pdf"
+    },
+    {
+      "nombre": "Foro Económico Mundial, The Global Competitiveness Report 2019",
+      "url": "www3.weforum.org",
+      "categoria": "auto",
+      "rating": 8,
+      "alias": [],
+      "temas": [
+        "congestion",
+        "guatemala",
+        "parque",
+        "seguridad",
+        "trafico",
+        "vehicular",
+        "vial"
+      ],
+      "nota": "hallada en 2026-10-21-trafico-guatemala-2026: https://www3.weforum.org/docs/WEF_TheGlobalCompetitivenessReport2019.pdf"
     }
   ],
   "series": [
@@ -4129,6 +4180,160 @@
       "hasta": "2026-08",
       "frecuencia": "mensual",
       "nota": "registrada desde hilo 2026-10-19-crimen-organizado-respuesta-estado"
+    },
+    {
+      "nombre": "Parque vehicular total registrado en la SAT al 31 de diciembre de cada año",
+      "fuente": "SAT, Boletín de Estadísticas Tributarias (G2/G1 Parque vehicular), Sistema de recaudación SAT",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+      "formato": "xlsx",
+      "unidad": "vehículos",
+      "desde": "2006",
+      "hasta": "2025",
+      "frecuencia": "anual",
+      "nota": "registrada desde hilo 2026-10-21-trafico-guatemala-2026"
+    },
+    {
+      "nombre": "Motocicletas en el parque vehicular registrado al 31 de diciembre",
+      "fuente": "SAT, Boletín de Estadísticas Tributarias (G2/G1 Parque vehicular), Sistema de recaudación SAT",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+      "formato": "xlsx",
+      "unidad": "motocicletas",
+      "desde": "2006",
+      "hasta": "2025",
+      "frecuencia": "anual",
+      "nota": "registrada desde hilo 2026-10-21-trafico-guatemala-2026"
+    },
+    {
+      "nombre": "Participación de las motocicletas en el parque vehicular registrado (al 31 de diciembre)",
+      "fuente": "SAT, Boletín de Estadísticas Tributarias (G2/G1 Parque vehicular), Sistema de recaudación SAT (cálculo propio)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+      "formato": "xlsx",
+      "unidad": "% del parque",
+      "desde": "2006",
+      "hasta": "2025",
+      "frecuencia": "anual",
+      "nota": "registrada desde hilo 2026-10-21-trafico-guatemala-2026"
+    },
+    {
+      "nombre": "Vehículos del parque activo según año de alta (inscripción) en la SAT",
+      "fuente": "SAT, Análisis estadístico del parque vehicular (microdatos, corte agosto 2026) (agregación propia)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/4801/analisis-estadistico-del-parque-vehicular/96445/informacion_para_analisis_estadistico_vehiculos_2026_agosto",
+      "formato": "html",
+      "unidad": "vehículos con alta en el año y aún activos",
+      "desde": "2010",
+      "hasta": "2025",
+      "frecuencia": "anual",
+      "nota": "registrada desde hilo 2026-10-21-trafico-guatemala-2026"
+    },
+    {
+      "nombre": "Vehículos registrados por cada 1,000 habitantes (parque SAT al 31-dic / población INE al 30-jun)",
+      "fuente": "SAT, Boletín de Estadísticas Tributarias (G2/G1 Parque vehicular), Sistema de recaudación SAT + INE, Estimaciones y proyecciones nacionales de población 1950–2050, revisión 2019 (cálculo propio)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+      "formato": "xlsx",
+      "unidad": "vehículos por 1,000 habitantes",
+      "desde": "2010",
+      "hasta": "2025",
+      "frecuencia": "anual",
+      "nota": "registrada desde hilo 2026-10-21-trafico-guatemala-2026"
+    },
+    {
+      "nombre": "Vehículos importados por año (sin motocicletas), total",
+      "fuente": "SAT, Boletín de Estadísticas Tributarias (I6 Importación de vehículos clasificados por uso), Sistema de recaudación SAT",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+      "formato": "xlsx",
+      "unidad": "vehículos importados",
+      "desde": "2010",
+      "hasta": "2025",
+      "frecuencia": "anual",
+      "nota": "registrada desde hilo 2026-10-21-trafico-guatemala-2026"
+    },
+    {
+      "nombre": "Personas fallecidas en hechos de tránsito, total nacional por año (PNC/ONSET, en el lugar y a 24 horas)",
+      "fuente": "PNC/ONSET, Boletín Estadístico No. 12-2025 (Gráfico 14) y No. 7-2026 (Gráfico 14)",
+      "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-7-2026.pdf",
+      "formato": "pdf",
+      "unidad": "personas",
+      "desde": "2011",
+      "hasta": "2025",
+      "frecuencia": "anual",
+      "nota": "registrada desde hilo 2026-10-21-trafico-guatemala-2026"
+    },
+    {
+      "nombre": "Hechos de tránsito registrados por la PNC, total nacional por año",
+      "fuente": "PNC/ONSET, Boletín Estadístico No. 12-2025 (Gráfico 13) y No. 7-2026 (Gráfico 13)",
+      "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-7-2026.pdf",
+      "formato": "pdf",
+      "unidad": "hechos de tránsito",
+      "desde": "2011",
+      "hasta": "2025",
+      "frecuencia": "anual",
+      "nota": "registrada desde hilo 2026-10-21-trafico-guatemala-2026"
+    },
+    {
+      "nombre": "Personas lesionadas en hechos de tránsito, total nacional por año",
+      "fuente": "PNC/ONSET, Boletín Estadístico No. 7-2026 (Gráfico 15)",
+      "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-7-2026.pdf",
+      "formato": "pdf",
+      "unidad": "personas",
+      "desde": "2011",
+      "hasta": "2025",
+      "frecuencia": "anual",
+      "nota": "registrada desde hilo 2026-10-21-trafico-guatemala-2026"
+    },
+    {
+      "nombre": "Tasa de fallecidos en hechos de tránsito por cada 100,000 habitantes (cálculo propio: PNC/ONSET ÷ proyección de población INE)",
+      "fuente": "PNC/ONSET, Boletín Estadístico No. 7-2026 (Gráfico 14) e INE, Estimaciones y proyecciones nacionales de población (revisión 2019, Cuadro 7)",
+      "url": "https://transito.gob.gt/wp-content/uploads/2023/03/Boletin-Estadistico-No.-7-2026.pdf",
+      "formato": "pdf",
+      "unidad": "fallecidos por 100,000 habitantes",
+      "desde": "2011",
+      "hasta": "2025",
+      "frecuencia": "anual",
+      "nota": "registrada desde hilo 2026-10-21-trafico-guatemala-2026"
+    },
+    {
+      "nombre": "Gasto devengado total del Ministerio de Comunicaciones, Infraestructura y Vivienda (CIV), por año",
+      "fuente": "Minfin–Sicoin vía Guate en Datos (gastopublico-ejecucion.csv)",
+      "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+      "formato": "csv",
+      "unidad": "millones de quetzales corrientes",
+      "desde": "2008",
+      "hasta": "2025",
+      "frecuencia": "anual",
+      "nota": "registrada desde hilo 2026-10-21-trafico-guatemala-2026"
+    },
+    {
+      "nombre": "Gasto de inversión devengado del CIV, por año (excluye funcionamiento)",
+      "fuente": "Minfin–Sicoin vía Guate en Datos",
+      "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+      "formato": "csv",
+      "unidad": "millones de quetzales corrientes",
+      "desde": "2008",
+      "hasta": "2025",
+      "frecuencia": "anual",
+      "nota": "registrada desde hilo 2026-10-21-trafico-guatemala-2026"
+    },
+    {
+      "nombre": "Participación del CIV en el gasto público devengado total del Gobierno central",
+      "fuente": "Minfin–Sicoin vía Guate en Datos (cálculo propio)",
+      "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+      "formato": "csv",
+      "unidad": "% del gasto total devengado",
+      "desde": "2008",
+      "hasta": "2025",
+      "frecuencia": "anual",
+      "nota": "registrada desde hilo 2026-10-21-trafico-guatemala-2026"
+    },
+    {
+      "nombre": "Porcentaje de ejecución del presupuesto de inversión del CIV (devengado / vigente)",
+      "fuente": "Minfin–Sicoin vía Guate en Datos",
+      "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+      "formato": "csv",
+      "unidad": "%",
+      "desde": "2008",
+      "hasta": "2025",
+      "frecuencia": "anual",
+      "nota": "registrada desde hilo 2026-10-21-trafico-guatemala-2026"
     }
   ]
 }

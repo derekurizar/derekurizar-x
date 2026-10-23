@@ -1,5 +1,5 @@
 ---
-description: Convierte un hilo ya entregado en un video vertical narrado para TikTok, Reels y Facebook (uso — /video <slug|ultimo> [corto|medio|largo] [musica:<id>] [fixture]; corto ≈ 1 min, medio ≈ 2 min (por defecto), largo ≈ 4 min; guion de retención sin cara (gancho con cifra a pantalla completa, golpes de texto cinético, «pero / por eso», promesa y pago) aprobado por un crítico ANTES de gastar créditos; voz de ElevenLabs con las cifras en palabras, tarjetas del hilo animadas con zoom a la cifra, subtítulos, barra de progreso, música con ducking y efectos del catálogo fijo; entrega en hilos/<fecha>-<slug>/video/)
+description: Convierte un hilo ya entregado en un video vertical narrado para TikTok, Instagram y Facebook Reels y YouTube Shorts, más su versión 4:5 para el feed (uso — /video <slug|ultimo> [corto|medio|largo] [musica:<id>] [fixture]; corto ≈ 1 min, medio ≈ 2 min (por defecto), largo ≈ 4 min; guion de retención sin cara (gancho con cifra a pantalla completa, golpes de texto cinético, «pero / por eso», promesa y pago) aprobado por un crítico ANTES de gastar créditos; voz de ElevenLabs con las cifras en palabras, tarjetas del hilo animadas con zoom a la cifra, subtítulos, barra de progreso, música con ducking y efectos del catálogo fijo; entrega en hilos/<fecha>-<slug>/video/)
 ---
 
 Eres el coordinador del flujo **/video** de @DerekUrizar. Sus argumentos son: "$ARGUMENTS".
@@ -7,8 +7,10 @@ Eres el coordinador del flujo **/video** de @DerekUrizar. Sus argumentos son: "$
   (`hilos/2026-10-19-…`) o `ultimo` (el hilo listo más reciente).
 - `corto`, `medio` o `largo` fijan la **duración**. Sin ella se usa `medio` (120 s).
 - `musica:<id>` fuerza una pista del catálogo (`make musica` las lista).
-- `formato:4:5` añade, además del 9:16, una versión 1080×1350 para el feed de Facebook e Instagram
-  (`video_4x5.mp4`, mismos tiempos y audio).
+- Siempre salen dos videos con la misma voz y los mismos tiempos: `video.mp4` (9:16, el mismo para TikTok, Instagram
+  y Facebook Reels y YouTube Shorts; es el que se abre) y `video_4x5.mp4` (1080×1350, el feed de Facebook e
+  Instagram), más `caption.md` con el texto de cada plataforma (`referencias/flujo-video.md` «Plataformas»). La voz
+  se genera una sola vez.
 - `fixture` corre la prueba sin créditos (`make video-fixture`) y termina.
 
 La guía es `referencias/flujo-video.md`. **`/video` nunca genera música ni efectos**: solo los catálogos
@@ -86,26 +88,31 @@ decisión del usuario.**
      imprime `AVISO V11` (sin `whisper-cli` o sin modelo: `brew install whisper-cpp` y `make whisper`), sigue y dilo
      en el reporte. Los avisos de palabras no numéricas («Zacatepeques» por Sacatepéquez) son ortografía de whisper.
 5. **GRABAR Y MONTAR**
-   - Corre `python3 scripts/video.py grabar <TRABAJO>` (V7; graba 3 escenas a la vez: ~20–30 s por minuto de
-     video; `--paralelo 1` para ir en serie).
+   - Corre `python3 scripts/video.py grabar <TRABAJO>` (V7 y **V13 zona segura**; graba 3 escenas a la vez: ~20–30 s
+     por minuto de video; `--paralelo 1` para ir en serie). Si falla V13, la línea `FALLA V13 eN` dice qué elemento
+     sale de la zona y por dónde (`revision/zona.json`): corrige la página de esa escena (no el guion) y `grabar --solo N`.
    - Corre `python3 scripts/video.py montar <TRABAJO>` (V8: música con ducking, efectos del catálogo, dos
      pasadas de loudnorm).
    - Corre `python3 scripts/video.py revisar <TRABAJO>` y lee **una vez** `<TRABAJO>/revision/contacto.png`
      (por escena: el cuadro al completar la cifra, el pico del foco y el final) y **una vez**
      `<TRABAJO>/revision/linea_tiempo.png` (el video final de corrido, un cuadro cada 2 s, transiciones
-     incluidas): es lo más cerca de «verlo» que tienes; busca escenas quietas, texto cortado o pantallas vacías.
+     incluidas): es lo más cerca de «verlo» que tienes; busca escenas quietas, texto cortado o pantallas vacías. El
+     rectángulo rojo de `contacto.png` es la zona segura y la esquina sombreada, la columna de íconos.
    - Coteja las cifras con los `tuit_N.png` del hilo; revisa que el gancho se lea sin sonido, que el golpe no
      se monte sobre la tarjeta, que el foco no corte el número y que los subtítulos se lean. Si algo está mal
      en una escena, corrígelo y corre `grabar --solo N` y `montar` de nuevo.
-   - Si pidieron `formato:4:5`, cuando el 9:16 esté bien: `grabar <TRABAJO> --formato 4:5`, `montar <TRABAJO>
-     --formato 4:5` y `revisar <TRABAJO> --formato 4:5` (`revision/contacto_4x5.png`); `entregar` copia
-     `video_4x5.mp4` y `contacto_4x5.png` solos.
+   - Cuando el 9:16 esté bien, **siempre** el 4:5 (misma voz, mismos tiempos): `grabar <TRABAJO> --formato 4:5`,
+     `montar <TRABAJO> --formato 4:5` y `revisar <TRABAJO> --formato 4:5` (lee una vez `revision/contacto_4x5.png`).
+     `entregar` lo exige.
 6. **ENTREGAR**
-   - Corre `python3 scripts/video.py entregar <TRABAJO>`, que copia a `hilos/<fecha>-<slug>/video/`.
+   - Corre `python3 scripts/video.py entregar <TRABAJO>`, que copia a `hilos/<fecha>-<slug>/video/` el 9:16, el 4:5 y
+     `caption.md` (avisa si el video pasa de los 3 min de Shorts).
    - Luego `python3 scripts/memoria.py --video hilos/<fecha>-<slug>/video` y `make validate` (exit 0).
-   - Abre el video con `open`.
+   - Abre `video.mp4` (la versión de TikTok) con `open`.
 7. **REPORTE**
-   - La ruta del video y su duración frente al objetivo (incluye el medio segundo del cierre en bucle).
+   - Las rutas de `video.mp4` (TikTok, Instagram y Facebook Reels, YouTube Shorts) y `video_4x5.mp4` (feed), y la
+     duración frente al objetivo (incluye el medio segundo del cierre en bucle); si pasa de 180 s, que no entra
+     como Short.
    - Las portadas para elegir la miniatura, todas sin subtítulos ni barra: `portada.png` (gancho),
      `portada_texto.png` (solo el gancho en texto, para el feed), `portada_pregunta.png`, `portada_giro.png` y, si
      hay adivina, `portada_adivina.png`.
@@ -118,7 +125,8 @@ decisión del usuario.**
    - La pregunta del cierre, la música y los créditos de voz gastados (`creditos_voz` en `guion.json`: la suma
      de `audio/creditos.json` cuando la voz bajó con `--estado`, retomas incluidas; si no, los caracteres, más las
      retomas).
-   - Los avisos (V6, V10, V12 quietud de `revisar`) y la ruta de `caption.md`.
+   - Los avisos (V6, V10, V12 quietud de `revisar`), el resultado de V13 en los dos formatos y la ruta de
+     `caption.md` (una sección por plataforma).
    - El resultado de la escucha (V11): escenas cotejadas por whisper, % de palabras distintas y avisos; si se saltó,
      **pide al usuario escuchar las cifras** (Scribe alinea el guion, no es una escucha independiente).
 
