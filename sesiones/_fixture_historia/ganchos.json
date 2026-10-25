@@ -1,0 +1,70 @@
+{
+ "candidatos": [
+  {
+   "id": "g1",
+   "familia": "resultado",
+   "visual": "foto",
+   "visual_datos": {
+    "foto": "ori-f02",
+    "etiqueta": "Quetzaltenango · 1977"
+   },
+   "pantalla": "Bajo una carpa",
+   "linea": "Una panadería reabrió tras el terremoto",
+   "verbo": "reabrió",
+   "texto": "Una panadería reabrió bajo una carpa. Fue en Guatemala, tras el terremoto de 1976.",
+   "promesa_sugerida": "Al final vas a ver qué quedó de sus 25 sucursales.",
+   "por_que": "resultado primero: el momento más fuerte de la historia, con la foto de la carpa desde el cuadro 0"
+  },
+  {
+   "id": "g2",
+   "familia": "paradoja",
+   "visual": "pareja",
+   "visual_datos": {
+    "a": {
+     "valor": "ori-c01",
+     "etiqueta": "panes al día, 1968"
+    },
+    "b": {
+     "valor": "cas-c01",
+     "etiqueta": "quetzales de multa, 2004"
+    }
+   },
+   "pantalla": "Q85,000 de multa",
+   "linea": "para una panadería de 4,500 panes al día",
+   "verbo": "pagó",
+   "texto": "Una panadería pagó Q85,000 de multa. Vendía 4,500 panes al día, en Guatemala.",
+   "promesa_sugerida": "Quédate y verás por qué se apagó.",
+   "por_que": "paradoja: crecer y terminar donde empezó"
+  },
+  {
+   "id": "g3",
+   "familia": "personaje",
+   "visual": "foto",
+   "visual_datos": {
+    "foto": "ori-f03",
+    "etiqueta": "Quetzaltenango · 1952"
+   },
+   "pantalla": "Marta Pérez",
+   "linea": "Encendió un horno de leña en 1952",
+   "verbo": "encendió",
+   "texto": "Marta Pérez encendió un horno de leña. Fue en 1952, en Guatemala.",
+   "promesa_sugerida": "Al final vas a ver qué quedó de ese horno.",
+   "por_que": "personaje: una persona y un objeto concreto"
+  },
+  {
+   "id": "g4",
+   "familia": "lugar",
+   "visual": "lugar",
+   "visual_datos": {
+    "depto": "Quetzaltenango",
+    "etiqueta": "Quetzaltenango"
+   },
+   "pantalla": "Quetzaltenango",
+   "linea": "Un horno que llegó a 25 locales",
+   "verbo": "llegó",
+   "texto": "Desde Quetzaltenango, un horno llegó a 25 locales. Todo pasó en Guatemala.",
+   "promesa_sugerida": "Al final verás cuántas quedaron abiertas.",
+   "por_que": "lugar: el mapa con Xela encendido"
+  }
+ ]
+}

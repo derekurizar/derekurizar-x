@@ -29,7 +29,15 @@ MESES = "enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|setiembre|
 FEMENINOS = {"personas", "persona", "denuncias", "denuncia", "víctimas", "víctima", "alertas", "alerta", "capturas",
              "captura", "toneladas", "tonelada", "muertes", "muerte", "mujeres", "mujer", "niñas", "niña", "horas",
              "hora", "semanas", "semana", "veces", "vez", "gráficas", "gráfica", "sentencias", "sentencia",
-             "necropsias", "necropsia", "extorsiones", "extorsión", "armas", "arma", "cárceles", "cárcel", "pandillas"}
+             "necropsias", "necropsia", "extorsiones", "extorsión", "armas", "arma", "cárceles", "cárcel", "pandillas",
+             # /noticias: sustantivos que salen a diario en las noticias
+             "familias", "familia", "viviendas", "vivienda", "casas", "casa", "escuelas", "escuela", "comunidades",
+             "comunidad", "aldeas", "aldea", "empresas", "empresa", "plazas", "plaza", "hectáreas", "hectárea",
+             "carreteras", "carretera", "unidades", "unidad", "órdenes", "vacunas", "vacuna", "dosis", "camas", "cama",
+             "consultas", "consulta", "solicitudes", "solicitud", "licencias", "licencia", "fincas", "finca", "libras",
+             "libra", "elecciones", "mesas", "mesa", "municipalidades", "municipalidad", "zonas", "zona", "rutas", "ruta",
+             "detenciones", "detención", "operaciones", "quejas", "queja", "jornadas", "madres", "madre", "pruebas",
+             "prueba", "plantas", "planta", "obras", "obra", "becas", "beca", "multas", "multa"}
 UNIDADES_ABREV = {"kg": "kilogramos", "km²": "kilómetros cuadrados", "km": "kilómetros", "kWh": "kilovatios hora",
                   "ha": "hectáreas", "pp": "puntos porcentuales"}
 
@@ -132,6 +140,7 @@ RE_TOKEN = re.compile(
 RE_SIGUE = re.compile(r"\s+([\wáéíóúñü²]+)")
 RE_RANGO = re.compile(r"\s*[–-]\s*(" + NUM + r")(?![\d])")
 RE_ESCALA = re.compile(r"\s+(mil millones|millones|millón)\b")
+RE_MONEDA_TRAS = re.compile(r"\s+(dólares|dólar|quetzales|quetzal)\b")   # «1.15 dólares»: la moneda escrita después
 RE_UNIDAD = re.compile(r"\s*(%s)(?![\w²])" % "|".join(re.escape(u) for u in sorted(UNIDADES_ABREV, key=len, reverse=True)))
 NO_SUSTANTIVO = {"de", "a", "y", "en", "frente", "por", "con", "o", "al", "del", "mil", "millones", "millón"}
 AVISOS = []  # cifras cuyo género cambia la lectura y no tienen sustantivo ni marca
@@ -154,9 +163,12 @@ def _dinero(bruto, moneda, escala):
     if escala:  # «Q75 mil millones» → «setenta y cinco mil millones de quetzales»
         return "%s %s de %s" % (_numero(bruto, "m", True), escala, nombre)
     if len(dec) == 2:  # «Q1.51» → «un quetzal con cincuenta y un centavos»
-        ent = int(entero_txt)
+        ent, cts = int(entero_txt), int(dec)
+        centavos = "%s %s" % (_numero(str(cts), "m", True), "centavo" if cts == 1 else "centavos")
+        if ent == 0:  # «US$0.50» → «cincuenta centavos»
+            return centavos
         base = "%s %s" % (_numero(entero_txt, "m", True), singular if ent == 1 else nombre)
-        return base if dec == "00" else base + " con %s centavos" % _numero(str(int(dec)), "m", True)
+        return base if cts == 0 else base + " con " + centavos
     return "%s %s" % (_numero(bruto, "m", True), singular if bruto == "1" else nombre)
 
 
@@ -197,7 +209,11 @@ def segmentos(texto):
         entero = int(entero_txt)
         es_fecha = re.match(r"\s+de\s+(%s)\b" % MESES, resto, re.I) is not None and not dec and not moneda
         rango = None if es_pct or moneda else RE_RANGO.match(resto)
-        if moneda:
+        tras = RE_MONEDA_TRAS.match(resto) if len(dec) == 2 and not (moneda or es_pct or rango) else None
+        if tras:  # «1.15 dólares» se dice como «US$1.15»: «un dólar con quince centavos»
+            dicho = _dinero(bruto, "Q" if tras.group(1).startswith("quetzal") else "US$", None)
+            fin += tras.end()
+        elif moneda:
             esc = RE_ESCALA.match(resto)
             dicho = _dinero(bruto, moneda, esc.group(1) if esc else None)
             fin += esc.end() if esc else 0
@@ -262,6 +278,11 @@ CASOS = [
     ("Q1.51 por kWh", "un quetzal con cincuenta y un centavos por kilovatio hora"),
     ("Q2.12 en Occidente", "dos quetzales con doce centavos en Occidente"),
     ("US$1,200 millones", "mil doscientos millones de dólares"),
+    ("costaba 1.15 dólares en 1979", "costaba un dólar con quince centavos en mil novecientos setenta y nueve"),
+    ("3.75 quetzales", "tres quetzales con setenta y cinco centavos"),
+    ("US$0.50 por litro", "cincuenta centavos por litro"),
+    ("Q0.01", "un centavo"),
+    ("2.5 millones de dólares", "dos punto cinco millones de dólares"),
     ("entre 2016–2026", "entre dos mil dieciséis y dos mil veintiséis"),
     ("de 2016–2026", "de dos mil dieciséis a dos mil veintiséis"),
     ("3.3 millones de estudiantes", "tres punto tres millones de estudiantes"),

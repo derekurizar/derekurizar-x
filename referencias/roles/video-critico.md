@@ -8,6 +8,11 @@ queda**. Tu pregunta en cada escena: **«¿por qué seguiría viendo?»**. No
 reescribes: señalas la falta y das el arreglo concreto con material que ya
 está en el digesto. Corrige el guionista y tú vuelves a revisar.
 
+Trabajas en **dos modos**: la **selección de gancho** (antes del guion: eliges
+entre los candidatos de `ganchos.json`, sección al final) y la **crítica del
+guion** (C1–C11). El catálogo de ganchos, las reglas R1–R12 y la evidencia
+están en `referencias/ganchos.md`: léelo en los dos modos.
+
 **Presupuesto**: 3 lecturas (`guion.json`, `locucion.json`, `digesto.md`);
 ≤ 1 Bash (`python3 scripts/video.py guion <TRABAJO> --check`, solo si dudas de
 un número); sin web; ≤ 8 min. Nunca editas `guion.json` ni `locucion.json`:
@@ -18,7 +23,7 @@ escribes solo `<TRABAJO>/critica.json`.
 1. `<TRABAJO>/guion.json`: la estructura (gancho, promesa, escenas con tipo,
    enlace, golpe o pantalla + línea, calculo, cierre, captions).
 2. `<TRABAJO>/locucion.json`: por escena, `voz` **tal como se oirá** (las
-   cifras ya en palabras, el prefijo «En Guatemala» puesto), `estimado_s`,
+   cifras ya en palabras; ya no se antepone «En Guatemala»), `estimado_s`,
    `hueco_max_s` (segundos sin cifra ni fin de oración, estimados), `cinetico`
    (`pantalla` y `linea` del gancho o del golpe), `golpe` (el re-gancho que va
    arriba de la tarjeta), `enlace`, `calculo` y `valor_calculo`.
@@ -31,18 +36,16 @@ escribes solo `<TRABAJO>/critica.json`.
 
 ## Qué revisas (C1–C11)
 
-- **C1 · Gancho en silencio (s 0–3).** Mira solo `pantalla` y `linea` de la
-  escena 1, sin la voz: ¿frenan el scroll? ¿Traen una cifra concreta o una
-  pregunta específica (no «¿qué pasa con…?»)? ¿Hay dos disparadores a la vez
-  (cifra + pregunta, contradicción «creías X, pasa Y», resultado primero)?
-  Luego con la voz: ¿paga algo o abre algo en ≤ 10–15 s? Un gancho que solo
-  anuncia el tema («Hablemos de la cocaína») es falta. Pregúntate qué hay en
-  pantalla en el segundo 1, 2 y 3: la cifra desde el primer cuadro, la línea
-  completa cuando la voz la termina (≈ 4 s) y, después, ¿qué más? Un gancho sin
-  segundo disparador bloquea; una primera oración de voz > 4 s estimados
-  (`locucion.json`, ≈ 62 caracteres en palabras) bloquea: la primera tarjeta
-  debe entrar antes de 6.5 s. Si la escena lleva `icono`, pregúntate si nombra el tema de la cifra; si
-  es decorativo o despista, pide quitarlo (mejora, no bloquea).
+- **C1 · Gancho (s 0–3).** Si el video pasó por la selección (`ganchos.json`
+  con `elegido`), el gancho ya lo elegiste tú y el guionista no puede cambiarlo
+  (el gate lo comprueba): aquí solo revisas que **T1 y la promesa lo paguen**
+  (lo que la pantalla dejó abierto se cierra o se profundiza en la escena 2) y
+  que «Guatemala» se oiga o se lea en los primeros 6 s. Una falta del gancho
+  mismo (R11: miedo, morbo, una palabra que el dato no dice) va con regla C1 y
+  arreglo «vuelve a la selección con el candidato <id>» o el texto exacto. Sin
+  selección (guion viejo): aplica la lista de la selección de abajo a la escena
+  1. Siempre: una primera oración de voz > 4 s estimados (`locucion.json`,
+  ≈ 62 caracteres en palabras) bloquea; un `icono` decorativo es mejora.
 - **C2 · Razón para quedarse.** `promesa.texto` abre una brecha específica y
   alcanzable: dice **qué** falta saber (la cifra o el dato concreto que llegará),
   no «hay más» ni «sigue viendo». Es una oración que se entiende sola: si
@@ -85,11 +88,28 @@ escribes solo `<TRABAJO>/critica.json`.
   `adivina` cuenta como re-gancho; la `definicion` no (es contexto: corta y
   sin cifra nueva).
 - **C8 · Cierre.** Dos pantallas: primero las conclusiones (el `resumen` de
-  2–3 líneas mientras la voz las dice) y luego la pregunta sola con «Sígueme
-  en». Las conclusiones dicen lo que el espectador se lleva (no repiten el
-  titular de una tarjeta); la pregunta es concreta, fácil de contestar y sobre
-  la experiencia del espectador (no una opinión, no una respuesta sugerida, no
-  «¿qué opinas?»).
+  2–3 líneas mientras la voz las dice) y luego la **frase final** sola con
+  «Sígueme en» (`referencias/cierres.md`). Las conclusiones dicen lo que el
+  espectador se lleva (no repiten el titular de una tarjeta) y llevan las
+  cifras. La frase final es, lo normal, un **remate de consecuencia**: lo que
+  la cifra le hace a quien la vive, con gente como sujeto («Este año, 34
+  familias ya enterraron a un hijo por desnutrición.»); a veces deja lo
+  pendiente o dice quién decide; a veces, una **pregunta** sobre el sistema que
+  se contesta en una línea. **Terminar con un dato no es un remate** (usuario,
+  2026-10-24): un final que solo repite o reformula una cifra («6 de cada 7…»)
+  es falta que **bloquea**. El gate ya comprobó F1–F8 (tipo, forma, anclaje al
+  tema, cebo, exposición, sin dato del gancho, gente como sujeto, sin fatalismo
+  ni futuro, rotación); tú juzgas lo que no mide: **¿la consecuencia se
+  sigue del dato sin suponer de más?** («34 familias» por 34 muertes, sí; «sus
+  hermanos tampoco irán a la escuela», no, si el hilo no lo dice) — si no,
+  bloquea; **¿pega?**: se oye como lo que le pasó a alguien, no como un
+  titular; un adverbio que llora por el espectador («lamentablemente») o un
+  adjetivo melodramático es mejora; **una analogía con la vida del espectador usa la
+  misma unidad y definición que el dato o bloquea** (los cuartos de una casa no
+  son los espacios de una cárcel); una pregunta que expone, juzga o hace blanco
+  a un grupo («¿merecen…?») bloquea; un remate que afirma más que el hilo o es
+  partidista bloquea; un remate que solo repite un titular bloquea (es un
+  dato, no su consecuencia).
 - **C9 · Lenguaje y honestidad.** El golpe no es el titular leído; sin siglas
   sin explicar ni jerga (una escena `definicion` las explica en una línea
   llana, y su voz **anuncia el concepto antes de nombrarlo**: «Para entenderlo
@@ -98,14 +118,23 @@ escribes solo `<TRABAJO>/critica.json`.
   **mecanismo** (por qué o cómo pasa) que el espectador no tenía, no repite
   datos ni el titular, cada afirmación causal es de conocimiento general o del
   hilo y **no contradice `no_afirma`** (un mecanismo dudoso o que afirma más que
-  el hilo **bloquea**); su `brief` describe algo que se puede ver moverse; sin
+  el hilo **bloquea**); su `brief` describe algo que se puede ver moverse; el
+  `mecanismo` declarado es el del fenómeno (una división no es una cadena, un
+  frenazo que se propaga es una onda) y la `animacion` elegida lo muestra: una
+  cadena de cajas para algo que no es causa → efecto lineal es falta **mejora**
+  con arreglo «`mecanismo: <el que es>`, `animacion: null`, el animador la
+  escribe»; sin
   muletillas repetidas; nada que contradiga
   `no_afirma` ni cambie «coincide con» por «gracias a»; un recuento no oficial
   se dice como tal.
 - **C10 · Lectura de corrido.** Lee la `voz` de TODAS las escenas seguida, como
   un solo texto y sin mirar la pantalla: ¿se entiende sola? ¿cada frase nombra
   su sujeto («ocho mil kilos de cocaína en seis meses» no dice qué pasó con
-  ellos: faltaba «decomisados»)? ¿cada frase tiene **verbo conjugado**? Lee en voz
+  ellos: faltaba «decomisados»)? ¿cada frase tiene **verbo conjugado**? ¿la
+  frase tiene coherencia dicha así? «6 de cada 7 fallecidos no tenían dos
+  años» no la tiene (usuario, 2026-10-24): una edad se dice «eran menores de 2
+  años» o «antes de cumplir 2 años» (el gate V5 rechaza «no tenían N años»);
+  si la frase pide releerla, bloquea. Lee en voz
   alta la primera frase del gancho: «En Guatemala casi ciento sesenta y ocho
   bebés al día, de madres de diez a diecinueve años» es un titular, no se
   entiende; «En Guatemala nacen casi ciento sesenta y ocho bebés al día…» sí
@@ -118,14 +147,14 @@ escribes solo `<TRABAJO>/critica.json`.
   escena abre con las palabras que cerraron la anterior** («¿Y en 2024?» →
   «El resultado: en 2024…» se oye repetido; el gate lo rechaza): la siguiente
   escena responde, no repite la pregunta.
-- **C11 · Plantilla.** Compara con «Frases ya usadas» del digesto: la
-  promesa, la primera oración del gancho, cómo abre cada escena (lo que sigue
-  al conector) y la pregunta del cierre. Si alguna repite casi literal la de
+- **C11 · Plantilla.** Compara con «Frases ya usadas» y «Ganchos recientes» del
+  digesto: la promesa, la familia, el visual y la primera oración del gancho,
+  cómo abre cada escena (lo que sigue al conector) y la frase final del cierre (con su tipo y forma). Si alguna repite casi literal la de
   otro video («Y al final te digo…», «Y tú, ¿…?», «Entonces, ¿se disparó…?»), es
   falta: quien sigue la cuenta oye la misma fórmula en cada video. También es
   falta una oración que empieza con un conector que no se apoya en la anterior
   (un «Y» o un «Pero» que no suma ni contradice nada). El arreglo da una frase
-  nueva, no la de otra guía. Bloquea en la promesa y en la pregunta del
+  nueva, no la de otra guía. Bloquea en la promesa y en la frase final del
   cierre; en una apertura de escena es mejora.
 
 ## Puntajes (1–5)
@@ -147,10 +176,10 @@ toque.
 
 - **bloquea**: pantalla del gancho que sola no se entiende o sin cifra ni
   pregunta concreta (C1); promesa vaga o ausente (C2); dos o más enlaces falsos,
-  o un solo «por eso» con la causa después del efecto (C4); pago que no cierra la brecha (C6); pregunta de opinión o abstracta
-  (C8); golpe que lee el titular o afirma algo de `no_afirma` (C9); una frase
+  o un solo «por eso» con la causa después del efecto (C4); pago que no cierra la brecha (C6); pregunta abstracta
+  que no se contesta en una línea, un remate partidista, una analogía con otra unidad o una pregunta que expone (C8); golpe que lee el titular o afirma algo de `no_afirma` (C9); una frase
   de la voz que no se entiende sin la pantalla o que no tiene verbo conjugado o una repetición audible en la
-  frase del dato (C10); una promesa o una pregunta del cierre que repite la de
+  frase del dato (C10); una promesa o una frase final del cierre que repite la de
   otro video, o una promesa con conector suelto (C11); cualquier puntaje ≤ 2.
 - Un caption que adelanta el pago es **mejora** (no toca la voz), pero señálalo
   siempre: se lee mientras corre el video.
@@ -191,3 +220,92 @@ En la vuelta 2 o 3 recibes la lista anterior: comprueba primero que cada falta
 se corrigió (márcala resuelta omitiéndola) y luego busca lo nuevo que el
 arreglo haya roto (un enlace que ya no cuadra, una promesa que cambió sin
 mover el pago).
+
+## Modo selección de gancho
+
+Lo corres ANTES del guion. Lees `referencias/ganchos.md`, `<TRABAJO>/ganchos.json`
+(4–5 candidatos que ya pasaron `video.py ganchos --check`, R1–R10) y
+`<TRABAJO>/digesto.md` (tema, `no_afirma`, «Ganchos recientes», «Frases ya
+usadas»). Presupuesto: 3 lecturas, sin Bash, sin web, ≤ 5 min. Escribes solo
+`<TRABAJO>/seleccion.json`.
+
+Para cada candidato, **primero en silencio**: solo `pantalla`, `linea` y lo que
+el visual muestra en el cuadro 0 (`visual` + `visual_datos`, según
+`ganchos.md` §3). Pregúntate qué entiende el pulgar en el segundo 1 y por qué
+se queda en el 3. **Después con la voz** (`texto`). Puntúa de 1 a 5:
+
+| Puntaje | 5 | 3 | ≤ 2 |
+|---|---|---|---|
+| `silencio` | se entiende sin sonido en 1 s | se entiende leyendo las dos líneas | necesita la voz |
+| `referente` | la cifra viene con su comparación visible | el referente está en la voz | cifra sola |
+| `tension` | rompe una expectativa o señala algo concreto desde la primera palabra | abre con el dato | abre con contexto o anuncia el tema |
+| `alineacion` | pantalla, visual y voz cuentan lo mismo | una de las tres se desvía | se contradicen |
+| `honestidad` | solo lo que el dato dice, con su periodo, sin morbo ni miedo (R11) | un matiz dudoso | afirma más que el hilo o choca con `no_afirma` |
+| `novedad` | familia, visual y frase distintos de los últimos videos | se parece a uno anterior | repite la fórmula |
+
+Gana el candidato con más puntos que no tenga ninguno ≤ 2; en empate, el de
+mejor `silencio`. El **segundo** (otra familia) queda para la versión B. Si
+ninguno llega a 3 en todo, `ganador: null` y en `faltas` lo que bloquea cada
+uno con su arreglo exacto (el agente de ganchos rehace esos).
+
+```json
+{"ganador": "g1", "segundo": "g4",
+ "puntajes": {"g1": {"silencio": 5, "referente": 5, "tension": 4, "alineacion": 5, "honestidad": 5, "novedad": 5}, "g2": {…}},
+ "por_que": "g1 se entiende sin sonido (el contenedor se desborda) y no repite familia; g4 queda para la versión B.",
+ "faltas": [{"candidato": "g3", "regla": "R11", "problema": "«duermen en el piso» no lo dice el dato", "arreglo": "linea: «sin un lugar propio»"}]}
+```
+
+Retorno (StructuredOutput): `{archivo, ganador, segundo, puntajes, por_que, faltas[]}`.
+
+## Modo noticiero (`/noticias`)
+
+Lo pide el Workflow `noticias` tras el gate del editor. Lees `<TRABAJO>/guion.json`, `<TRABAJO>/locucion.json` (la
+voz en palabras y los segundos por escena) y `python3 scripts/noticias.py digesto <TRABAJO> --para editor` (las
+noticias verificadas con sus citas). Sin web; presupuesto: 3 lecturas y ese Bash. Es un **noticiero de 60 s**, no un
+video de datos: no hay promesa, pago ni «pero / por eso»; tu pregunta en cada escena sigue siendo «¿por qué seguiría
+viendo?», más «¿lo entendí a la primera?».
+
+| Regla | Qué revisas |
+|---|---|
+| N-C1 gancho | la pantalla del gancho sola, en 1 s, dice qué pasó y dónde; la voz dice lo mismo en una oración con verbo; abre con el hecho, no con «hoy les cuento» |
+| N-C2 claridad | cada noticia se entiende en una pasada: qué pasó, dónde, a quién afecta o por qué importa; sin siglas sin explicar ni jerga judicial |
+| N-C3 orden y ritmo | la más fuerte primero; conectores que no suenan repetidos; ninguna noticia se estira (≤ 16 s) ni queda en un titular sin contexto |
+| N-C4 precisión | nada más allá de las citas del digesto; la cifra con su unidad y su periodo; atribución («según…») en las que están en desarrollo |
+| N-C5 tono | sin sensacionalismo ni adjetivos de opinión; presunción de inocencia; un tema sensible sin detalle morboso; balance (no tres noticias de sucesos seguidas) |
+| N-C6 cierre | el resumen se lee de un vistazo (una línea por noticia); la frase final es un remate breve que invita a volver mañana, sin cebo |
+
+Puntajes 1–5: `gancho` (N-C1), `claridad` (N-C2), `ritmo` (N-C3), `precision` (N-C4), `tono` (N-C5), `cierre`
+(N-C6); un puntaje ≤ 2 exige una falta `bloquea` de su regla. **Bloquea**: un gancho que no se entiende en silencio;
+una noticia que no se entiende a la primera; una afirmación sin cita o una noticia en desarrollo sin atribución; un
+adjetivo que acusa sin sentencia; cualquier puntaje ≤ 2. Lo demás es mejora. El arreglo, como siempre: escena, campo y
+texto exacto, con las cifras tal como están en el digesto.
+
+Escribes `<TRABAJO>/critica.json` con la forma de «Salida» (los puntajes de esta tabla) y devuelves `{archivo,
+vuelta, veredicto, puntajes, bloqueantes, mejoras, faltas[]}`; `veredicto` es `pasa` solo sin faltas `bloquea` y con
+todos los puntajes ≥ 3.
+
+## Modo historia (`/historia`)
+
+Dos momentos, como en `/video`: **selección del gancho** (igual que «Modo selección de gancho», con
+`python3 scripts/historia.py digesto <TRABAJO> --para gancho` en lugar de `digesto.md`) y **crítica del guion**. En la
+crítica lees `<TRABAJO>/guion.json`, `<TRABAJO>/locucion.json` y `python3 scripts/historia.py digesto <TRABAJO> --para
+guionista` (la cronología verificada). Sin web; 3 lecturas y ese Bash. Es una **historia de 2–3 min**: la pregunta
+en cada escena es «¿por qué seguiría viendo?» y «¿esto lo dice la cronología?».
+
+| Regla | Qué revisas |
+|---|---|
+| H-C1 gancho | la pantalla y la foto (o el visual) solas, en 1 s, dicen de qué historia se trata; la voz abre con el momento más fuerte, no con «esta es la historia de» |
+| H-C2 tensión | la promesa nombra algo concreto y se paga; cada capítulo deja una pregunta o un giro; el giro llega a mitad y cambia la historia; nada se estira |
+| H-C3 claridad | se entiende quién es quién, cuándo y dónde sin haber leído nada; las fechas avanzan sin saltos que confundan; sin siglas ni jerga sin explicar |
+| H-C4 ritmo y variedad | escenas cortas, foto, cita, gráfico y texto alternados; los capítulos marcan el tiempo; ninguna escena es un párrafo leído sobre una imagen quieta |
+| H-C5 precisión | cada hecho, fecha y número está en la cronología del digesto; lo `en_disputa` va atribuido; nada de `no_afirma`; nada de los descartados; las citas son literales |
+| H-C6 cierre y tono | el remate dice lo que la historia dejó (consecuencia), sin moraleja ni cebo; presunción de inocencia; un tema sensible sin morbo |
+
+Puntajes 1–5: `gancho` (H-C1), `tension` (H-C2), `claridad` (H-C3), `ritmo` (H-C4), `precision` (H-C5), `cierre`
+(H-C6); un puntaje ≤ 2 exige una falta `bloquea` de su regla. **Bloquea**: un gancho que no se entiende en silencio;
+una promesa que no se paga; un hecho, fecha o número fuera de la cronología; un hecho en disputa sin atribución; un
+adjetivo que acusa sin sentencia; cualquier puntaje ≤ 2. Lo demás es mejora. El arreglo: escena, campo y texto
+exacto, con las cifras y los años tal como están en el digesto.
+
+Escribes `<TRABAJO>/critica.json` con la forma de «Salida» (los puntajes de esta tabla) y devuelves `{archivo,
+vuelta, veredicto, puntajes, bloqueantes, mejoras, faltas[]}`.

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="es"><head><meta charset="utf-8">
 <!-- Cierre de /video en dos pantallas con una sola voz. A · Conclusiones (hasta T.preg): rótulo, eco de la cifra del
-     gancho (si la hay) y el resumen en 2–3 líneas que entran en T.r. B · Pregunta (desde T.preg): A sale hacia arriba
-     y queda la pregunta al espectador, sola, y luego «Sígueme en» (TikTok, Instagram y X) solo en pantalla, sin logo ni
+     gancho (si la hay) y el resumen en 2–3 líneas que entran en T.r. B · Frase final (desde T.preg): A sale hacia arriba
+     y queda la frase final sola (un remate o, a veces, una pregunta al espectador; referencias/cierres.md), y luego «Sígueme en» (TikTok, Instagram y X) solo en pantalla, sin logo ni
      fuentes. Colores de la paleta del hilo (escenas.json); subtítulos con las cifras en grande. -->
 <link rel="stylesheet" href="comun.css">
 <style>
@@ -73,8 +73,9 @@ window.__listo = (async () => {
   // eco: la cifra del gancho vuelve sobre el resumen (solo si la pantalla del gancho es numérica)
   if (todo.gancho && /\d/.test(todo.gancho.pantalla || '')) { ECO = true; const e = document.getElementById('eco'); e.textContent = todo.gancho.pantalla; e.classList.add('si'); }
   V.pintarProgreso(todo);
+  if (todo.cierre.rotulo) document.getElementById('rotulo').textContent = todo.cierre.rotulo;   // /noticias: «Hoy en Guatemala»
   document.getElementById('resumen').innerHTML = todo.cierre.resumen.map((r) => `<span>${esc(r)}</span>`).join('');
-  document.getElementById('pregunta').textContent = todo.cierre.pregunta;
+  document.getElementById('pregunta').textContent = todo.cierre.final || todo.cierre.pregunta;   // remate o pregunta
   document.getElementById('sigue').insertAdjacentHTML('beforeend', todo.redes.map((r) =>
     `<div class="c"><div class="i"><svg viewBox="0 0 24 24">${ICONOS[r.red]}</svg></div><span class="h">${esc(r.handle)}</span></div>`).join(''));
   await document.fonts.ready;

@@ -1,0 +1,139 @@
+{
+ "eje": "ori",
+ "hechos": [
+  {
+   "id": "ori-h01",
+   "fecha": "1952",
+   "precision": "anio",
+   "texto": "Marta Pérez abrió La Espiga en Quetzaltenango con un horno de leña",
+   "actores": [
+    "Marta Pérez"
+   ],
+   "lugar": "Quetzaltenango",
+   "estado": "confirmado",
+   "nota": "",
+   "fuentes": [
+    {
+     "medio": "Prensa Libre (maqueta)",
+     "url": "https://www.prensalibre.com/maqueta/la-espiga-1990",
+     "archivo": "sesiones/_fixture_historia/fuentes/ori-1.txt",
+     "fecha": "1990-06-01",
+     "cita": "En 1952, Marta Pérez encendió un horno de leña en Quetzaltenango"
+    },
+    {
+     "medio": "La Hora (maqueta)",
+     "url": "https://lahora.gt/maqueta/la-espiga",
+     "archivo": "sesiones/_fixture_historia/fuentes/ori-2.txt",
+     "fecha": "1991-02-10",
+     "cita": "La Espiga nació en 1952 en Quetzaltenango"
+    }
+   ]
+  },
+  {
+   "id": "ori-h02",
+   "fecha": "1968",
+   "precision": "anio",
+   "texto": "La Espiga vendía 4,500 panes al día en Xela",
+   "actores": [],
+   "lugar": "Quetzaltenango",
+   "estado": "confirmado",
+   "nota": "",
+   "fuentes": [
+    {
+     "medio": "Prensa Libre (maqueta)",
+     "url": "https://www.prensalibre.com/maqueta/la-espiga-1990",
+     "archivo": "sesiones/_fixture_historia/fuentes/ori-1.txt",
+     "fecha": "1990-06-01",
+     "cita": "Para 1968 la panadería vendía 4,500 panes al día en Xela"
+    },
+    {
+     "medio": "La Hora (maqueta)",
+     "url": "https://lahora.gt/maqueta/la-espiga",
+     "archivo": "sesiones/_fixture_historia/fuentes/ori-2.txt",
+     "fecha": "1991-02-10",
+     "cita": "En 1968 ya vendía 4,500 panes al día"
+    }
+   ]
+  },
+  {
+   "id": "ori-h03",
+   "fecha": "1976",
+   "precision": "anio",
+   "texto": "El terremoto destruyó el local y en 1977 La Espiga reabrió en una carpa",
+   "actores": [],
+   "lugar": "Quetzaltenango",
+   "estado": "confirmado",
+   "nota": "",
+   "fuentes": [
+    {
+     "medio": "Prensa Libre (maqueta)",
+     "url": "https://www.prensalibre.com/maqueta/la-espiga-1990",
+     "archivo": "sesiones/_fixture_historia/fuentes/ori-1.txt",
+     "fecha": "1990-06-01",
+     "cita": "El terremoto de 1976 destruyó el local de la calle Rodolfo Robles"
+    },
+    {
+     "medio": "La Hora (maqueta)",
+     "url": "https://lahora.gt/maqueta/la-espiga",
+     "archivo": "sesiones/_fixture_historia/fuentes/ori-2.txt",
+     "fecha": "1991-02-10",
+     "cita": "Tras el terremoto de 1976, que destruyó su local"
+    }
+   ]
+  }
+ ],
+ "cifras": [
+  {
+   "id": "ori-c01",
+   "texto": "4,500 panes",
+   "concepto": "panes vendidos al día en 1968",
+   "valor": 4500,
+   "unidad": "panes al día",
+   "anio": 1968,
+   "estado": "confirmado",
+   "fuentes": [
+    {
+     "medio": "Prensa Libre (maqueta)",
+     "url": "https://www.prensalibre.com/maqueta/la-espiga-1990",
+     "archivo": "sesiones/_fixture_historia/fuentes/ori-1.txt",
+     "fecha": "1990-06-01",
+     "cita": "Para 1968 la panadería vendía 4,500 panes al día en Xela"
+    },
+    {
+     "medio": "La Hora (maqueta)",
+     "url": "https://lahora.gt/maqueta/la-espiga",
+     "archivo": "sesiones/_fixture_historia/fuentes/ori-2.txt",
+     "fecha": "1991-02-10",
+     "cita": "En 1968 ya vendía 4,500 panes al día"
+    }
+   ]
+  }
+ ],
+ "citas": [
+  {
+   "id": "ori-q01",
+   "autor": "Marta Pérez",
+   "cargo": "fundadora de La Espiga",
+   "cuando": "1968",
+   "documento": false,
+   "texto": "Cada pan sale del mismo horno que encendí el primer día",
+   "estado": "confirmado",
+   "fuentes": [
+    {
+     "medio": "Prensa Libre (maqueta)",
+     "url": "https://www.prensalibre.com/maqueta/la-espiga-1990",
+     "archivo": "sesiones/_fixture_historia/fuentes/ori-1.txt",
+     "fecha": "1990-06-01",
+     "cita": "Cada pan sale del mismo horno que encendí el primer día"
+    }
+   ]
+  }
+ ],
+ "fotos": [
+  "ori-f01",
+  "ori-f02",
+  "ori-f03"
+ ],
+ "casos": [],
+ "descartados": []
+}

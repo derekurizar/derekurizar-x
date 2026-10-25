@@ -1,73 +1,85 @@
 {
- "_comentario": "Guion v2 fijo del fixture de /video (make video-fixture): hilo sesiones/_fixture/salida, duración «prueba» (45 s), voz falsa. gancho (cifra) → T1 → T2 → golpe con calculo → T3 (pago) → cierre.",
- "contexto_superior": "Combustibles · Guatemala 2026",
- "promesa": {
-  "texto": "Un vecino paga aún más.",
-  "en": 1,
-  "pago": 5
- },
- "escenas": [
-  {
-   "tipo": "gancho",
-   "formula": "cifra",
-   "pantalla": "102 dólares",
-   "linea": "costó el barril en septiembre",
-   "verbo": "llegó",
-   "texto": "¿Cuánto pesa el crudo en tu bolsillo? En septiembre el barril llegó a 102 dólares. [pausa] Un vecino paga aún más.",
-   "icono": "droplets"
+  "_comentario": "Guion v2 fijo del fixture de /video (make video-fixture): hilo sesiones/_fixture/salida, duración «prueba» (45 s), voz falsa. gancho (cifra) → T1 → T2 → golpe con calculo → T3 (pago) → cierre.",
+  "contexto_superior": "Combustibles · Guatemala 2026",
+  "promesa": {
+    "texto": "Un vecino paga todavía más.",
+    "en": 2,
+    "pago": 5
   },
-  {
-   "tipo": "tarjeta",
-   "tuit": 1,
-   "enlace": null,
-   "golpe": "De 67 a 102 dólares",
-   "calculo": "(pre-c01/pre-c01.serie[0]-1)*100",
-   "texto": "En enero el barril costaba 67 dólares. En septiembre, 102: un 52% más."
-  },
-  {
-   "tipo": "tarjeta",
-   "tuit": 2,
-   "enlace": "por_eso",
-   "golpe": "El galón, casi el doble",
-   "texto": "Por eso en la bomba se nota: el galón de diésel pasó de 26.0 a 46.1 quetzales."
-  },
-  {
-   "tipo": "golpe",
-   "enlace": "por_eso",
-   "pantalla": "1.8 veces",
-   "linea": "más caro que en enero",
-   "calculo": "pre-c03/pre-c02",
-   "verbo": "cuesta",
-   "texto": "Así que llenar el tanque cuesta 1.8 veces lo de enero."
-  },
-  {
-   "tipo": "ranking",
-   "tuit": 3,
-   "enlace": "pero",
-   "golpe": "México paga aún más",
-   "texto": "Pero no somos los que más pagan: en México el galón de diésel promedia 5.9 dólares; en Guatemala, 4.85.",
-   "top": 4
-  },
-  {
-   "tipo": "definicion",
-   "enlace": "y",
-   "termino": "Precio promedio",
-   "definicion": "Lo que pagó un conductor típico en el mes, no el precio de un solo día.",
-   "texto": "Y, ¿qué es el precio promedio? Lo que pagó un conductor típico en el mes. No el precio de un solo día."
-  }
- ],
- "cierre": {
-  "texto": "El barril subió y la bomba lo sintió en el país. Y tú, ¿cuánto pagaste esta semana?",
-  "resumen": [
-   "El barril, arriba.",
-   "El galón, casi el doble."
+  "escenas": [
+    {
+      "tipo": "gancho",
+      "familia": "tu",
+      "visual": "llenado",
+      "visual_datos": {
+        "capacidad": "pre-c02",
+        "total": "pre-c03",
+        "unidad": "quetzales"
+      },
+      "pantalla": "26 → 46.1",
+      "linea": "quetzales por tu galón de diésel",
+      "verbo": "costaba",
+      "texto": "Tu galón de diésel costaba 26 quetzales. En septiembre, Guatemala pagó 46.1."
+    },
+    {
+      "tipo": "tarjeta",
+      "tuit": 1,
+      "enlace": null,
+      "golpe": "De 67 a 102 dólares",
+      "calculo": "(pre-c01/pre-c01.serie[0]-1)*100",
+      "texto": "En enero el barril costaba 67 dólares. En septiembre, 102: un 52% más. Un vecino paga todavía más."
+    },
+    {
+      "tipo": "tarjeta",
+      "tuit": 2,
+      "enlace": "por_eso",
+      "golpe": "El galón, casi el doble",
+      "texto": "Por eso en la bomba se nota: el galón de diésel pasó de 26.0 a 46.1 quetzales."
+    },
+    {
+      "tipo": "golpe",
+      "enlace": "por_eso",
+      "pantalla": "1.8 veces",
+      "linea": "más caro que en enero",
+      "calculo": "pre-c03/pre-c02",
+      "verbo": "cuesta",
+      "texto": "Así que llenar el tanque cuesta 1.8 veces lo de enero."
+    },
+    {
+      "tipo": "ranking",
+      "tuit": 3,
+      "enlace": "pero",
+      "golpe": "México paga aún más",
+      "texto": "Pero no somos los que más pagan: en México el galón de diésel promedia 5.9 dólares; en Guatemala, 4.85.",
+      "top": 4
+    },
+    {
+      "tipo": "definicion",
+      "enlace": "y",
+      "termino": "Precio promedio",
+      "definicion": "Lo que pagó un conductor típico en el mes, no el precio de un solo día.",
+      "texto": "Y, ¿qué es el precio promedio? Lo que pagó un conductor típico en el mes. No el precio de un solo día."
+    }
   ],
-  "pregunta": "Y tú, ¿cuánto pagaste esta semana?"
- },
- "caption": {
-  "tiktok": "El barril llegó a 102 dólares y el galón pasó de Q26.0 a Q46.1. #Guatemala #DatosGT",
-  "instagram": "El barril llegó a 102 dólares y el galón pasó de Q26.0 a Q46.1. Guárdalo para la próxima vez que llenes el tanque.\n#Guatemala #DatosGT #Combustibles",
-  "facebook": "Precios de combustibles en Guatemala 2026: el barril de petróleo llegó a 102 dólares en septiembre y el galón pasó de Q26.0 a Q46.1. En México el diésel promedia US$5.9 por galón.",
-  "shorts": "El galón pasó de Q26.0 a Q46.1 en Guatemala\nEl barril llegó a 102 dólares en septiembre. #Shorts #Guatemala"
- }
+  "cierre": {
+    "texto": "El barril subió y la bomba lo sintió en el país. Un conductor paga casi el doble por su diésel.",
+    "resumen": [
+      "El barril, arriba.",
+      "El galón, casi el doble."
+    ],
+    "tipo": "remate",
+    "forma": "consecuencia",
+    "final": "Un conductor paga casi el doble por su diésel.",
+    "consecuencia": {
+      "mecanismo": "perdida",
+      "quien": "Un conductor",
+      "verbo": "paga"
+    }
+  },
+  "caption": {
+    "tiktok": "El barril llegó a 102 dólares y el galón pasó de Q26.0 a Q46.1. #Guatemala #DatosGT",
+    "instagram": "El barril llegó a 102 dólares y el galón pasó de Q26.0 a Q46.1. Guárdalo para la próxima vez que llenes el tanque.\n#Guatemala #DatosGT #Combustibles",
+    "facebook": "Precios de combustibles en Guatemala 2026: el barril de petróleo llegó a 102 dólares en septiembre y el galón pasó de Q26.0 a Q46.1. En México el diésel promedia US$5.9 por galón.",
+    "shorts": "El galón pasó de Q26.0 a Q46.1 en Guatemala\nEl barril llegó a 102 dólares en septiembre. #Shorts #Guatemala"
+  }
 }

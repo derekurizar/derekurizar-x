@@ -1,0 +1,296 @@
+{
+ "id": "2026-10-06-carceles-hacinamiento-por-penal",
+ "slug": "carceles-hacinamiento-por-penal",
+ "hilo": "hilos/2026-10-06-carceles-hacinamiento-por-penal",
+ "paleta": "obsidiana",
+ "duracion": "medio",
+ "duracion_s": 120.5,
+ "n_escenas": 9,
+ "musica": "obsidiana-2",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 1686.0,
+ "contexto_superior": "Cárceles · Guatemala 2025",
+ "gancho": {
+  "familia": "pregunta",
+  "visual": "llenado",
+  "pantalla": "¿Cuántos tenía Pavón?",
+  "linea": "Penal para 960 presos, en 2025"
+ },
+ "ganchos": {
+  "elegido": "g1",
+  "segundo": "g4",
+  "candidatos": [
+   {
+    "id": "g1",
+    "familia": "pregunta",
+    "visual": "llenado",
+    "pantalla": "¿Cuántos tenía Pavón?"
+   },
+   {
+    "id": "g2",
+    "familia": "lugar",
+    "visual": "lugar",
+    "pantalla": "Cárcel Canadá, Escuintla"
+   },
+   {
+    "id": "g3",
+    "familia": "paradoja",
+    "visual": "pareja",
+    "pantalla": "16,540 presos sin lugar"
+   },
+   {
+    "id": "g4",
+    "familia": "escala",
+    "visual": "figuras",
+    "pantalla": "7 de cada 10"
+   },
+   {
+    "id": "g5",
+    "familia": "contraste",
+    "visual": "pareja",
+    "pantalla": "166 lugares de cárcel"
+   }
+  ],
+  "puntajes": {
+   "g1": {
+    "silencio": 4,
+    "referente": 5,
+    "tension": 4,
+    "alineacion": 5,
+    "honestidad": 5,
+    "novedad": 4
+   },
+   "g2": {
+    "silencio": 3,
+    "referente": 4,
+    "tension": 3,
+    "alineacion": 4,
+    "honestidad": 5,
+    "novedad": 4
+   },
+   "g3": {
+    "silencio": 4,
+    "referente": 5,
+    "tension": 4,
+    "alineacion": 4,
+    "honestidad": 4,
+    "novedad": 4
+   },
+   "g4": {
+    "silencio": 5,
+    "referente": 5,
+    "tension": 3,
+    "alineacion": 5,
+    "honestidad": 4,
+    "novedad": 3
+   },
+   "g5": {
+    "silencio": 3,
+    "referente": 5,
+    "tension": 4,
+    "alineacion": 4,
+    "honestidad": 3,
+    "novedad": 5
+   }
+  },
+  "version_b": false
+ },
+ "promesa": {
+  "texto": "Hay un penal todavía más lleno que Pavón, y vas a ver cuál.",
+  "en": 2,
+  "pago": 9
+ },
+ "critica": {
+  "veredicto": "pasa",
+  "vuelta": 2,
+  "puntajes": {
+   "gancho": 4,
+   "bucle": 4,
+   "ritmo": 4,
+   "escala_humana": 4,
+   "pago": 4,
+   "cierre": 4
+  }
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "tuit": null,
+   "plantilla": "gancho",
+   "enlace": null,
+   "golpe": null,
+   "cinetico": {
+    "pantalla": "¿Cuántos tenía Pavón?",
+    "linea": "Penal para 960 presos, en 2025"
+   },
+   "adivina": null,
+   "icono": null,
+   "pantalla": "Pavón, en Guatemala, era para 960 presos. ¿Cuántos tenía? 4,464.",
+   "voz": "Pavón, en Guatemala, era para novecientos sesenta presos. ¿Cuántos tenía? Cuatro mil cuatrocientos sesenta y cuatro.",
+   "dur": 8.349
+  },
+  {
+   "n": 2,
+   "tipo": "tarjeta",
+   "tuit": 1,
+   "plantilla": "cifra",
+   "enlace": null,
+   "golpe": "Casi 5 presos por lugar",
+   "cinetico": null,
+   "adivina": null,
+   "icono": null,
+   "pantalla": "La Granja Pavón, en Fraijanes, tenía casi 5 presos por cada lugar en agosto de 2025. Hay un penal todavía más lleno que Pavón, y vas a ver cuál.",
+   "voz": "La Granja Pavón, en Fraijanes, tenía casi cinco presos por cada lugar en agosto de dos mil veinticinco. Hay un penal todavía más lleno que Pavón, y vas a ver cuál.",
+   "dur": 11.599
+  },
+  {
+   "n": 3,
+   "tipo": "tarjeta",
+   "tuit": 2,
+   "plantilla": "cifra",
+   "enlace": "pero",
+   "golpe": "Ocupación al 342%",
+   "cinetico": null,
+   "adivina": null,
+   "icono": null,
+   "pantalla": "Pero Pavón no es la excepción: en junio de 2025, todo el sistema tenía más de 3 presos por cada espacio.",
+   "voz": "Pero Pavón no es la excepción: en junio de dos mil veinticinco, todo el sistema tenía más de tres presos por cada espacio.",
+   "dur": 8.472
+  },
+  {
+   "n": 4,
+   "tipo": "adivina",
+   "tuit": null,
+   "plantilla": "adivina",
+   "enlace": "y",
+   "golpe": null,
+   "cinetico": {
+    "pantalla": "¿Qué puesto tiene Guatemala entre las cárceles más llenas del mundo?",
+    "linea": "Puesto 30 · Puesto 60 · Puesto 9"
+   },
+   "adivina": {
+    "pregunta": "¿Qué puesto tiene Guatemala entre las cárceles más llenas del mundo?",
+    "opciones": [
+     "Puesto 30",
+     "Puesto 60",
+     "Puesto 9"
+    ],
+    "correcta": 2
+   },
+   "icono": null,
+   "pantalla": "Y fuera del país, ¿qué puesto tiene Guatemala entre las cárceles más llenas del mundo? ¿El 30, el 60 o el 9? Pausa y piénsalo. Es el 9: en América, solo Haití la supera.",
+   "voz": "Y fuera del país, ¿qué puesto tiene Guatemala entre las cárceles más llenas del mundo? ¿El treinta, el sesenta o el nueve? Pausa y piénsalo. Es el nueve: en América, solo Haití la supera.",
+   "dur": 15.485
+  },
+  {
+   "n": 5,
+   "tipo": "tiempo",
+   "tuit": 6,
+   "plantilla": "linea",
+   "enlace": "y",
+   "golpe": "El pico: 374% en 2019",
+   "cinetico": null,
+   "adivina": null,
+   "icono": null,
+   "pantalla": "Y no es nuevo: la ocupación era de 276% en 2014, tocó 374% en 2019 e iba en 342% en 2025.",
+   "voz": "Y no es nuevo: la ocupación era de doscientos setenta y seis por ciento en dos mil catorce, tocó trescientos setenta y cuatro por ciento en dos mil diecinueve e iba en trescientos cuarenta y dos por ciento en dos mil veinticinco.",
+   "dur": 16.459
+  },
+  {
+   "n": 6,
+   "tipo": "tarjeta",
+   "tuit": 7,
+   "plantilla": "pesas",
+   "enlace": "pero",
+   "golpe": "Solo 166 espacios nuevos",
+   "cinetico": null,
+   "adivina": null,
+   "icono": null,
+   "pantalla": "Pero que baje no es alivio. La ocupación nunca bajó de 336%, aunque hay menos presos que en 2019. Solo hubo 166 espacios nuevos desde 2014.",
+   "voz": "Pero que baje no es alivio. La ocupación nunca bajó de trescientos treinta y seis por ciento, aunque hay menos presos que en dos mil diecinueve. Solo hubo ciento sesenta y seis espacios nuevos desde dos mil catorce.",
+   "dur": 14.636
+  },
+  {
+   "n": 7,
+   "tipo": "explica",
+   "tuit": null,
+   "plantilla": "explica",
+   "enlace": "por_eso",
+   "golpe": null,
+   "cinetico": {
+    "pantalla": "Por qué la ocupación no cede",
+    "linea": "Presos entre espacios · Los espacios no crecen · Salgan algunos presos · La ocupación apenas baja"
+   },
+   "adivina": null,
+   "icono": null,
+   "pantalla": "Entonces, la ocupación es una división: presos entre espacios. Si los espacios no crecen, aunque salgan algunos presos, la ocupación apenas baja.",
+   "voz": "Entonces, la ocupación es una división: presos entre espacios. Si los espacios no crecen, aunque salgan algunos presos, la ocupación apenas baja.",
+   "dur": 10.462
+  },
+  {
+   "n": 8,
+   "tipo": "tarjeta",
+   "tuit": 8,
+   "plantilla": "dona",
+   "enlace": "por_eso",
+   "golpe": "16,540 presos sin espacio",
+   "cinetico": null,
+   "adivina": null,
+   "icono": null,
+   "pantalla": "De ahí que 16,540 presos no tuvieran un espacio en junio de 2025: 7 de cada 10.",
+   "voz": "De ahí que dieciséis mil quinientos cuarenta presos no tuvieran un espacio en junio de dos mil veinticinco: siete de cada diez.",
+   "dur": 8.889
+  },
+  {
+   "n": 9,
+   "tipo": "ranking",
+   "tuit": 4,
+   "plantilla": "barras-h",
+   "enlace": "pero",
+   "golpe": "Canadá, más lleno que Pavón",
+   "cinetico": null,
+   "adivina": null,
+   "icono": null,
+   "pantalla": "Pero ese exceso no se reparte parejo: Pavón llega a 465% y Canadá, en Escuintla, a 515.2%: más de 5 presos por cada lugar.",
+   "voz": "Pero ese exceso no se reparte parejo: Pavón llega a cuatrocientos sesenta y cinco por ciento y Canadá, en Escuintla, a quinientos quince punto dos por ciento: más de cinco presos por cada lugar.",
+   "dur": 14.688
+  },
+  {
+   "n": 10,
+   "tipo": "cierre",
+   "tuit": null,
+   "plantilla": "cierre",
+   "enlace": null,
+   "golpe": null,
+   "cinetico": null,
+   "adivina": null,
+   "icono": null,
+   "pantalla": "Las cárceles guardan más del triple de presos que de lugares, y el exceso pesa más en Canadá y Pavón. En la tabla oficial, la mitad de los penales no dice cuántos lugares tiene.",
+   "voz": "Las cárceles guardan más del triple de presos que de lugares, y el exceso pesa más en Canadá y Pavón. En la tabla oficial, la mitad de los penales no dice cuántos lugares tiene.",
+   "dur": 13.782
+  }
+ ],
+ "cierre": {
+  "texto": "Las cárceles guardan más del triple de presos que de lugares, y el exceso pesa más en Canadá y Pavón. En la tabla oficial, la mitad de los penales no dice cuántos lugares tiene.",
+  "resumen": [
+   "Más del triple de presos que lugares",
+   "El exceso pesa más en Canadá y Pavón"
+  ],
+  "tipo": "remate",
+  "forma": "pendiente",
+  "final": "En la tabla oficial, la mitad de los penales no dice cuántos lugares tiene."
+ },
+ "caption": {
+  "tiktok": "Pavón, en Guatemala, era para 960 presos y tenía 4,464. Y hay un penal todavía más lleno: míralo en el video.\n#Guatemala #DatosGT #Cárceles",
+  "instagram": "Pavón era para 960 presos. Tenía 4,464, y no es el penal más lleno de Guatemala.\nGuárdalo para cuando se hable de cárceles.\n#Guatemala #DatosGT #Cárceles #SistemaPenitenciario",
+  "facebook": "Pavón, en Guatemala, era para 960 presos y tenía 4,464 en agosto de 2025.\n▸ Todo el sistema: 23,382 presos para 6,842 espacios (junio de 2025)\n▸ Ocupación de 342%; el pico fue 374% en 2019\n▸ ¿Qué puesto tiene Guatemala en el mundo? Está en el video (World Prison Brief)\n▸ De 2014 a 2025, solo 166 espacios nuevos\n▸ Y un penal todavía más lleno que Pavón: está en el video\nFuentes: Prensa Libre con datos de la DGSP; CIEN con datos de la DGSP; World Prison Brief.",
+  "shorts": "Pavón era para 960 presos y tenía 4,464: así están las cárceles de Guatemala\nY no es el penal más lleno del país. Míralo en el video.\n#Shorts #Guatemala #DatosGT"
+ }
+}

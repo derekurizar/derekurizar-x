@@ -429,6 +429,123 @@
       "hilo_id": "2026-10-11-matricula-desercion-basico-diversificado",
       "actualizada": "2026-10-11",
       "nota": "El fetch solo mostró el menú; verificar años y tablas disponibles. Complemento: Guate en Datos (cobertura)."
+    },
+    {
+      "id": "canasta-basica-salario-minimo-2019-2026",
+      "creada": "2026-10-23",
+      "area": "economia",
+      "titulo": "¿Cuántos salarios mínimos cuesta la canasta básica? De 2019 a 2026",
+      "pregunta": "¿Cuánto del salario mínimo se va en la canasta básica alimentaria y la ampliada, y cómo cambió desde 2019 en la ciudad y en el campo?",
+      "por_que_ahora": "El costo de vida se aceleró en 2026 (CBA urbana Q930.52 en marzo, +0.67% en el trimestre) y se acerca la discusión del salario mínimo 2027.",
+      "angulo": "Cruza canasta INE (alimentaria y ampliada) con el salario mínimo vigente cada año: la cifra es 'cuántas veces cabe', no el precio. Distinto del hilo de remesas o de métricas económicas por gobierno.",
+      "hook_sugerido": "pregunta_directa",
+      "paleta_sugerida": "maiz",
+      "datos": [
+        {
+          "fuente": "INE Guatemala",
+          "indicador": "Canasta Básica Alimentaria y Ampliada, mensual, urbano/rural",
+          "url": "https://www.ine.gob.gt/canasta-basica/",
+          "formato": "pdf",
+          "periodo": "2019–2026",
+          "evidencia": "Catálogo: serie CBA/CBV mensual desde 2019; prensa: CBA urbana Q924.35 (ene) a Q930.52 (mar 2026). Sitio INE bloquea fetch (WAF)."
+        },
+        {
+          "fuente": "Banco de Guatemala",
+          "indicador": "IPC e inflación interanual a diciembre (cuadro SR005)",
+          "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/SR/sr005.htm",
+          "formato": "html",
+          "periodo": "2016–2025",
+          "evidencia": "Serie registrada en catálogo: inflación interanual a diciembre, IPC empalmado base 2024=100."
+        }
+      ],
+      "puntaje": {
+        "interes": 5,
+        "datos": 3,
+        "actualidad": 4,
+        "total": 12
+      },
+      "estado": "pendiente",
+      "hilo_id": null,
+      "actualizada": "2026-10-23",
+      "nota": "El INE exige JS/WAF: bajar PDFs vía mirror o prensa; el salario mínimo (MINTRAB, acuerdos gubernativos) hay que confirmarlo en investigación."
+    },
+    {
+      "id": "igss-record-afiliados-informalidad",
+      "creada": "2026-10-23",
+      "area": "poblacion",
+      "titulo": "IGSS bate récord con 1.81 millones de cotizantes: ¿y los demás trabajadores?",
+      "pregunta": "¿Qué parte de quienes trabajan en Guatemala cotiza al IGSS, y cuánto ha cambiado desde la caída de 2020?",
+      "por_que_ahora": "El 12 de octubre de 2026 el IGSS anunció un récord de 1,814,143 afiliados en julio, +71,333 frente al cierre de 2025.",
+      "angulo": "Contrasta el récord absoluto con la cobertura relativa (afiliados sobre ocupados/PEA, ENEI) para separar crecimiento de formalidad real; advierte de denominadores distintos.",
+      "hook_sugerido": "mito_vs_dato",
+      "paleta_sugerida": "jade",
+      "datos": [
+        {
+          "fuente": "IGSS",
+          "indicador": "Afiliados cotizantes anuales y mensuales",
+          "url": "https://www.igssgt.org/wp-content/uploads/2026/01/DAE2025-Flashlights-mes-mayo-de-2025-2025.pdf",
+          "formato": "pdf",
+          "periodo": "2019–2026",
+          "evidencia": "AGN 12-oct-2026: 1,814,143 afiliados en julio; 1,742,810 al cierre de 2025; 2020 cayó a 1.29 millones."
+        },
+        {
+          "fuente": "INE Guatemala",
+          "indicador": "ENEI: ocupados e informalidad",
+          "url": "https://www.ine.gob.gt/ine/empleo-e-ingresos/",
+          "formato": "html",
+          "periodo": "2017–2025",
+          "evidencia": "Denominador por confirmar; boletín Icesh usa afiliados/PEA de 11% en 2023 vs 23% que cita el IGSS."
+        }
+      ],
+      "puntaje": {
+        "interes": 4,
+        "datos": 3,
+        "actualidad": 5,
+        "total": 12
+      },
+      "estado": "pendiente",
+      "hilo_id": null,
+      "actualizada": "2026-10-23",
+      "nota": "Riesgo: denominadores distintos (PEA vs ocupados). Definir uno solo en el encuadre."
+    },
+    {
+      "id": "sarampion-2026-region-cobertura-brote",
+      "creada": "2026-10-23",
+      "area": "salud",
+      "titulo": "Sarampión 2026: la región frente a Guatemala, cobertura de vacunas y brote",
+      "pregunta": "¿Cómo se compara el brote de sarampión de Guatemala con el de otros países de América, y qué decía su cobertura de vacunación antes?",
+      "por_que_ahora": "OPS publicó el Informe de Situación #13 el 8 de octubre de 2026; Guatemala llegó a 6,209 confirmados y 12 muertes a mayo, con alerta roja.",
+      "angulo": "Perspectiva regional con definición de caso armonizada de OPS y la brecha entre cobertura administrativa (92% en 2024) y estimada WUENIC; no repite el conteo semanal nacional del dato previo.",
+      "hook_sugerido": "curiosity_gap",
+      "paleta_sugerida": "terracota",
+      "datos": [
+        {
+          "fuente": "OPS/OMS",
+          "indicador": "Informes de situación del brote multipaís de sarampión 2026",
+          "url": "https://www.paho.org/en/measles-multi-country-outbreak-2026",
+          "formato": "pdf",
+          "periodo": "2025–2026",
+          "evidencia": "Página 'Measles Multi - Country Outbreak 2026 - PAHO/WHO': Situation Report #13 (8 oct 2026); tablero Power BI enlazado."
+        },
+        {
+          "fuente": "OMS/UNICEF WUENIC vía GHO",
+          "indicador": "Cobertura MCV1 y MCV2 Guatemala",
+          "url": "https://ghoapi.azureedge.net/api/WHS8_110?$filter=SpatialDim%20eq%20'GTM'",
+          "formato": "api",
+          "periodo": "2000–2025",
+          "evidencia": "Serie ya registrada en catálogo (api, anual desde 2000)."
+        }
+      ],
+      "puntaje": {
+        "interes": 4,
+        "datos": 4,
+        "actualidad": 4,
+        "total": 12
+      },
+      "estado": "descartada",
+      "hilo_id": null,
+      "actualizada": "2026-10-23",
+      "nota": "ya cubierta por el dato 2026-10-06-sarampion-guatemala-2026"
     }
   ]
 }

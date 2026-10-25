@@ -7,10 +7,14 @@ del catálogo fijo design/musica/catalogo.json y los efectos SOLO de design/sfx/
 música ni efectos).
 
 Subcomandos (TRABAJO = sesiones/<slug>/video):
-  preparar <hilo|ultimo> [--duracion corto|medio|largo] [--musica ID] [--trabajo DIR] [--permitir-borrador]
+  preparar <hilo|ultimo> [--duracion corto|medio|largo] [--musica ID] [--trabajo DIR] [--permitir-borrador] [--sin-rotacion]
         crea TRABAJO, elige la música y escribe digesto.md para el guionista (también lo imprime); medio por defecto
-  guion TRABAJO --check        gate V1–V5 + V9 (estructura de retención) sobre guion.json v2 → locucion.json
+  ganchos TRABAJO --check      candidatos del agente video-gancho (ganchos.json): 4–5 familias distintas, R1–R10 cada uno
+  ganchos TRABAJO --usar [ID] [--segundo ID]   el elegido (de seleccion.json si no se da) → escena 1 de guion.json
+  guion TRABAJO --check        gate V1–V5 + V9 (estructura de retención, gancho R2–R10) sobre guion.json v2 → locucion.json
   voz TRABAJO                  imprime JSON con la voz y el texto de cada nodo TTS
+  variante TRABAJO [--cerrar]  versión B con el segundo gancho: variante_b/ con la voz y los clips de las demás escenas;
+        imprime solo el nodo de voz de la escena 1; --cerrar copia su video a salida/video_b.mp4
   descargar TRABAJO --estado ESTADO.json [...]   el JSON guardado de creative_get_flow_run_status (voz y Scribe) →
         audio/voz_N.mp3 (por el prompt), palabras_N.json (por el id de generación) y creditos.json (créditos cobrados)
   descargar TRABAJO --voz URLS.json | --palabras URLS.json   respaldo: {"<n>": "<url>"} → voz_N.mp3 | palabras_N.json
@@ -18,7 +22,7 @@ Subcomandos (TRABAJO = sesiones/<slug>/video):
   tiempos TRABAJO              atempo 1.1, alineación por palabra (V6), eventos y efectos por escena, V10 → escenas.json
   grabar TRABAJO [--fps 30] [--solo 1,3] [--formato 4:5]   clips por escena (Playwright) + V7 + V13 (zona segura); 4:5 = 1080×1350 para el feed en clips_4x5/
   montar TRABAJO [--sin-bucle]   voz + música con ducking + efectos + loudnorm en 2 pasadas (V8), cierre en bucle (el primer
-        cuadro del gancho al final, con fundido), subtitulos.srt, caption.md, portada.png y portada_pregunta/giro.png
+        cuadro del gancho al final, con fundido), subtitulos.srt, caption.md, portada.png y portada_cierre/giro.png
   revisar TRABAJO [--formato 4:5]   revision/contacto.png (cifra completa · pico del foco · final de cada escena) y linea_tiempo.png
   entregar TRABAJO [--salida DIR]   copia a <hilo>/video/ (o DIR) con guion.json de entrega
   musica                       lista el catálogo fijo con cuántas veces y cuándo se usó cada pista
@@ -26,6 +30,7 @@ Subcomandos (TRABAJO = sesiones/<slug>/video):
 Exit: 0 ok · 1 gate o paso fallido · 2 uso incorrecto.
 """
 import argparse
+import datetime
 import difflib
 import glob
 import json
@@ -58,7 +63,9 @@ VELOCIDAD = 1.1      # la voz se acelera con atempo (sin cambiar el tono); los t
 CPS = 15.5           # caracteres de voz por segundo ya acelerada (medido en la prueba del hilo de crimen)
 COLA = 0.7           # aire tras la última palabra de cada escena
 COLA_CIERRE = 2.8    # «Sígueme en» se queda en pantalla tras la pregunta final
-PREFIJO = "En Guatemala"   # sin dos puntos (2026-10-20): con «:» la voz sonaba a titular sin verbo
+# «En Guatemala» ya no se antepone a la voz del gancho (2026-10-23, decisión del usuario): abrir con contexto frena
+# menos; «Guatemala» se dice o se lee en los primeros 6 s donde funcione mejor (R6, referencias/ganchos.md)
+ANIO = int(os.environ.get("HILOS_ANIO") or datetime.date.today().year)   # R7: «hoy» solo con datos de este año
 DURACION_DEFECTO = "medio"   # decisión del usuario (2026-10-20): en 1 min lo informativo «se siente como un resumen y corriendo»
 DURACIONES = {  # objetivo en s · tarjetas y golpes (más el gancho y el cierre); «prueba» es solo para el fixture
     "corto": {"s": 60, "tarjetas": (3, 4), "golpes": (1, 2)},
@@ -69,7 +76,69 @@ DURACIONES = {  # objetivo en s · tarjetas y golpes (más el gancho y el cierre
 TIPOS = ("gancho", "tarjeta", "golpe", "definicion", "adivina", "mapa", "ranking", "escala", "tiempo", "explica")   # escenas del guion; locucion.json añade "cierre"
 CON_TUIT = ("tarjeta", "mapa", "ranking", "tiempo")                # escenas que llevan una tarjeta del hilo (y su golpe)
 ESCENAS_TEXTO = ("golpe", "definicion", "adivina")                 # texto cinético (golpe.html); «golpes» en DURACIONES las cuenta a todas
-FORMULAS = ("cifra", "contradiccion", "pregunta", "resultado")
+FORMULAS = ("cifra", "contradiccion", "pregunta", "resultado")   # fórmulas de los guiones anteriores al catálogo de ganchos
+# catálogo de ganchos (referencias/ganchos.md): la familia es el mecanismo que frena el scroll y el visual lo que se ve
+# en el cuadro 0; los escribe el agente video-gancho (4–5 candidatos de familias distintas) y los elige el crítico
+FAMILIAS = ("contraste", "paradoja", "lugar", "escala", "tu", "pregunta", "ranking", "resultado")
+FAMILIAS_ALIAS = {"cifra": "resultado", "contradiccion": "contraste"}   # la `formula` de un guion viejo → familia
+VISUALES = ("cifra", "llenado", "pareja", "figuras", "lugar")
+VISUALES_DE = {"contraste": ("llenado", "pareja", "cifra"), "paradoja": ("pareja", "figuras", "cifra"),
+               "lugar": ("lugar", "llenado", "cifra"), "escala": ("figuras", "llenado", "pareja"),
+               "tu": ("figuras", "llenado", "pareja", "cifra"), "pregunta": ("cifra", "pareja", "llenado"),
+               "ranking": ("cifra", "lugar"), "resultado": ("cifra", "pareja", "figuras")}
+CANDIDATOS = (4, 5)            # ganchos.json: candidatos por video, de familias distintas
+CANDIDATOS_CON_VISUAL = 2      # … y al menos estos con un visual que no sea la cifra sola
+ROTACION_FAMILIAS, ROTACION_VISUALES = 2, 1   # R9: la familia no repite la de los últimos 2 videos; el visual, la del último
+VISUAL_UNIDAD, VISUAL_ETIQUETA, LUGAR_ETIQUETA = 20, 24, 30
+# R3: la voz del gancho no abre con contexto (la institución, el anuncio del tema o «En Guatemala…»): abre con tensión
+APERTURAS_PROHIBIDAS = re.compile(
+    r"^[¿¡«\s]*(?:en guatemala\b|seg[uú]n\b|de acuerdo con\b|hoy (?:les|te|vamos|hablamos)\b|en este video\b|"
+    r"(?:les|te) (?:cuento|voy a contar|explico)\b|hablemos\b|vamos a hablar\b|(?:un|el) (?:informe|estudio|reporte)\b|"
+    r"(?:el|la|los|las) (?:sistema|ministerio|gobierno|instituto|congreso|direcci[oó]n|secretar[ií]a|procuradur[ií]a|"
+    r"polic[ií]a|ine|mp|organismo)\b)", re.I)
+# R7: «hoy» solo con un dato del año en curso
+RE_AHORA = re.compile(r"\b(?:hoy|ahora mismo|ahora|actualmente|en este momento|hoy en d[ií]a)\b", re.I)
+# V5: «no tenían 2 años», «no tenía ni un año» → «eran menores de 2 años»
+RE_EDAD_NEGADA = re.compile(r"\bno\s+ten[ií]an?\s+(?:ni\s+)?(\d+|un|uno|una|dos|tres|cuatro|cinco)\s+a[ñn]os?\b", re.I)
+RE_GUATEMALA = re.compile(r"\bguatemal\w*|\bchap[ií]n\w*", re.I)
+# cierre (referencias/cierres.md): lo normal es un REMATE de CONSECUENCIA (lo que la cifra le hace a la gente: «34 familias
+# ya enterraron a un hijo»; el dato va en las conclusiones, no en la frase final); a veces lo pendiente o quién decide; A
+# VECES una PREGUNTA (nunca dos videos seguidos). Decisiones del usuario, 2026-10-23 y 2026-10-24 («terminar con un dato
+# no es un buen punch, la consecuencia de un dato sí»): los remates de dato (bucle, cuenta, escala) salen del catálogo
+CIERRE_FORMAS = {"remate": ("consecuencia", "pendiente", "quien_decide"),
+                 "pregunta": ("elegir", "prediccion", "decidir", "lugar", "porque", "dato_faltante", "experiencia")}
+CIERRE_TIPOS = tuple(CIERRE_FORMAS)          # espejo en video.js (W10)
+# el mecanismo de la consecuencia: quién lo vive · lo que pierde · el reloj (mientras pasa el video, al día) · lo que
+# sigue después para ellos · lo que esperan y no llega
+MECANISMOS = ("quien", "perdida", "reloj", "despues", "espera")
+FINAL_PALABRAS, FINAL_CARACTERES = 14, 90    # la frase final se lee sola en grande (pantalla B del cierre)
+ROTACION_CIERRES = 2                         # F7: la forma no repite la de los últimos 2 videos (salvo consecuencia,
+                                             # que es la normal: rota su mecanismo, que no repite el del último video)
+# F6: el sujeto de la consecuencia es gente (o lo suyo: su casa, su escuela, su milpa), no una tasa ni una institución
+HUMANO = re.compile(r"\b(?:familias?|hogar(?:es)?|ni[ñn][oa]s?|beb[eé]s?|hij[oa]s?|madres?|padres?|mam[aá]s?|pap[aá]s?|"
+                    r"mujer(?:es)?|hombres?|j[oó]venes|adolescentes?|personas?|gente|vecin[oa]s?|comunidad(?:es)?|pueblos?|"
+                    r"aldeas?|estudiantes?|alumn[oa]s?|maestr[oa]s?|trabajador(?:a|as|es)?|agricultor(?:a|as|es)?|"
+                    r"campesin[oa]s?|productor(?:a|as|es)?|pacientes?|enferm[oa]s?|conductor(?:a|as|es)?|pasajer[oa]s?|"
+                    r"pres[oa]s?|reos?|v[ií]ctimas?|migrantes?|abuel[oa]s?|ancian[oa]s?|guatemaltec[oa]s?|chapines|"
+                    r"usuari[oa]s?|clientes?|vendedor(?:a|as|es)?|comerciantes?|due[ñn][oa]s?|inquilin[oa]s?|"
+                    r"m[eé]dicos?|enfermer[oa]s?|polic[ií]as?|agentes?|jornaler[oa]s?|cada (?:uno|una|d[ií]a|hora))\b", re.I)
+# F8: un remate no afirma lo que el hilo no dice: ni fatalismo («no hay nada que hacer») ni el futuro de una pérdida
+FATALISMO = re.compile(r"no hay nada que|nada que (?:se )?(?:pueda|puede) hacer|nada que hacer|nadie (?:hace|har[aá]|hizo) "
+                       r"nada|no tiene soluci[oó]n|sin soluci[oó]n|nunca va a cambiar|nunca cambiar[aá]|es inevitable|"
+                       r"no se puede hacer nada|a nadie le importa|est[aá]n condenad", re.I)
+FUTURO = re.compile(r"\b\w{3,}(?:ar|er|ir)(?:[aá]n|[aá]s|[aá]|emos)\b", re.I)   # «perderán», «morirá», «enterrarán»
+# F4: cebo de interacción (Meta baja la distribución de lo que pide comentar, etiquetar o compartir, también en el audio)
+CEBO = re.compile(r"\b(?:comenta\w*|etiquet\w*|menciona a\b|comparte\w*|dale (?:like|me gusta)|deja (?:tu|un) comentario|"
+                  r"escribe (?:s[ií]|no|un|una|tu|\d)\b|te le(?:o|emos)\b|cu[eé]ntame\w*)", re.I)
+# F5: en un tema sensible la pregunta no expone al espectador (víctima, familia, intimidad): quien responde miente o calla
+TEMA_SENSIBLE = re.compile(r"c[aá]rcel|\bpres[oa]s\b|penal|penitenciari|homicid|asesin|extorsi|violen|secuestr|abuso|"
+                           r"violaci|sexual|embaraz|\bmadres?\b|migra|deport|suicid|desaparec|\btrata\b|narco|pandill", re.I)
+EXPONE = re.compile(r"\b(?:tu|tus) (?:casa|familia|mam[aá]|madre|pap[aá]|padre|hij[oa]s?|pareja|herman[oa]s?|cuerpo|salud)\b|"
+                    r"\b(?:has|hayas|fuiste|estuviste|te han|te ha|conoces a)\b|alguna vez", re.I)
+# F3: palabras que no anclan la frase final al tema (están en cualquier video)
+GENERICAS = set("personas persona guatemala guatemaltecos guatemalteca pais nacional total datos cifra cifras porcentaje "
+                "numero numeros millones miles junio julio enero febrero marzo abril mayo agosto septiembre octubre noviembre "
+                "diciembre semana semanas meses dias anual cuanto cuantos cuantas mucho muchos menos crees tienes".split())
 ENLACES = {"pero": r"pero|sin embargo|aunque|solo que|en cambio|aun así",
            "por_eso": r"por eso|así que|entonces|el resultado|de ahí que|la consecuencia",
            "y": r"y|además|también|encima|más aún"}
@@ -139,8 +208,26 @@ _NOMBRES_DEPTO = None
 ANIMACIONES_DIR = os.path.join(RAIZ, "video", "animaciones")   # biblioteca de animaciones a medida (scripts/animaciones.py, K4)
 # escena «explica»: una animación que explica el mecanismo (por qué o cómo), con 2–6 pasos que entran cuando la voz los dice
 EXPLICA_PASOS, PASO_CARACTERES, TITULO_PALABRAS, TITULO_CARACTERES, BRIEF_CARACTERES = (2, 6), 28, 6, 40, (40, 400)
+# el mecanismo que muestra la escena explica (y cada animación del catálogo, meta.mecanismo): una animación solo se
+# reutiliza para el mismo mecanismo; si ninguna lo muestra, `animacion: null` y el animador la escribe
+MECANISMOS_EXPLICA = {
+    "cadena": "causa → efecto lineal: A lleva a B, B a C (sin vuelta atrás)",
+    "ciclo": "se retroalimenta: el último paso vuelve a empujar el primero",
+    "balance": "entra contra sale: un tanque que sube o baja según cuál pesa más",
+    "onda": "se propaga o se contagia: algo que empieza en un punto y viaja",
+    "embudo": "etapas que filtran o descartan: entran muchos, quedan pocos",
+    "proporcion": "una división: si el denominador no crece, el cociente apenas cambia",
+    "umbral": "se acumula hasta cruzar un límite y entonces cambia de estado",
+    "cronologia": "eventos con fecha, uno tras otro en el tiempo",
+}
+ROTACION_ANIMACIONES = 2   # una animación no repite la de los últimos 2 videos (memoria/videos.json → frases.animaciones)
 ICONOS_DIR = os.path.join(RAIZ, "design", "iconos")   # biblioteca FIJA de iconos (scripts/iconos.py --importar, K3)
 ICONO_TIPOS = ("gancho", "golpe", "definicion")        # escenas que admiten `icono: "<id>"` (≤ 1, acento sobre la cifra)
+# extensiones de los flujos que reusan este gate y estos tiempos con escenas propias (scripts/historia.py): el
+# constructor de tiempos de cada tipo propio, f(S, e, ps, pal, fin_voz, dur, g) → (eventos, efectos) o None para seguir
+# con el de aquí, y su transición de entrada (clave de TRANSICIONES); SIN_HUECO = tipos sin el hueco estimado de V9
+CONSTRUCTORES, TRANSICION_DE = {}, {}
+SIN_HUECO = ("cierre", "explica")
 
 
 def animaciones_catalogo():
@@ -149,15 +236,57 @@ def animaciones_catalogo():
     return {a["id"]: a for a in leer(ruta).get("animaciones") or []} if os.path.exists(ruta) else {}
 
 
-def explica_mal_armada(e, catalogo):
-    """V1/V9 de una escena explica: animación del catálogo o `brief` para una nueva, `titulo` corto y 2–6 `pasos`."""
+def animaciones_recientes(slug_actual):
+    """Las animaciones de las escenas explica de los últimos ROTACION_ANIMACIONES videos (memoria/videos.json →
+    frases.animaciones; un registro anterior a ese campo se completa con los `usos` del catálogo)."""
+    vids = os.path.join(RAIZ, "memoria", "videos.json")
+    regs = [v for v in (leer(vids)["videos"] if os.path.exists(vids) else []) if v.get("slug") != slug_actual]
+    regs = sorted(regs, key=lambda v: (v.get("fecha", ""), v.get("id", "")))[-ROTACION_ANIMACIONES:]
+    cat = animaciones_catalogo()
+    out = []
+    for v in regs:
+        fr = v.get("frases") or {}
+        ids = fr["animaciones"] if "animaciones" in fr else [k for k, a in cat.items() if v.get("slug") in (a.get("usos") or [])]
+        out += [x for x in ids if x and x not in out]
+    return out
+
+
+def lineas_animaciones(recientes, sin_rotacion=False):
+    """El bloque del digesto para la escena explica: los mecanismos, la biblioteca por mecanismo y las recientes."""
+    cat = animaciones_catalogo()
+    out = ["- Escena `explica`: PRIMERO nombra el `mecanismo` del fenómeno (qué hace, no el tema): " +
+           " · ".join("%s (%s)" % (k, v) for k, v in MECANISMOS_EXPLICA.items()) + ".",
+           "- Reutiliza una animación SOLO si muestra ESE mecanismo y no salió en los últimos videos; si no, `animacion: null` "
+           "con `brief`: el animador la escribe y queda como plantilla para otros videos (pedir una nueva es lo normal). "
+           "`cadena` es solo para causa → efecto lineal, nunca el comodín."]
+    for m in MECANISMOS_EXPLICA:
+        ids = ["%s (%s; %d–%d pasos)" % (k, v.get("descripcion", ""), *(v.get("pasos") or EXPLICA_PASOS))
+               for k, v in sorted(cat.items()) if v.get("mecanismo") == m]
+        out.append("  - %s: %s" % (m, " · ".join(ids) if ids else "ninguna aún (pide una nueva con `brief`)"))
+    out.append("- Animaciones bloqueadas (salieron en los últimos %d videos): %s"
+               % (ROTACION_ANIMACIONES, "(prueba: sin rotación)" if sin_rotacion else ", ".join(recientes) or "ninguna"))
+    return out
+
+
+def explica_mal_armada(e, catalogo, recientes=()):
+    """V1/V9 de una escena explica: `mecanismo` declarado, `brief` siempre, animación del catálogo con ese mismo mecanismo
+    que no salió en los últimos videos (o null: el animador la escribe), `titulo` corto y 2–6 `pasos`."""
     out = []
     anim, brief = e.get("animacion"), (e.get("brief") or "").strip()
+    mec = e.get("mecanismo")
+    if mec not in MECANISMOS_EXPLICA:
+        out.append("«mecanismo» es uno de %s (qué hace el fenómeno, no el tema)" % "|".join(MECANISMOS_EXPLICA))
     if anim and anim not in catalogo:
         out.append("animación «%s» no está en video/animaciones/catalogo.json (usa una del digesto o deja `animacion: null` con "
                    "un `brief`)" % anim)
-    if not anim and not BRIEF_CARACTERES[0] <= len(brief) <= BRIEF_CARACTERES[1]:
-        out.append("una animación nueva necesita `brief` de %d–%d caracteres (qué muestra y cómo se mueve)" % BRIEF_CARACTERES)
+    elif anim and mec in MECANISMOS_EXPLICA and catalogo[anim].get("mecanismo") != mec:
+        out.append("la animación «%s» muestra «%s», no «%s»: deja `animacion: null` con el `brief` y el animador escribe una "
+                   "de «%s» (queda en la biblioteca para otros videos)" % (anim, catalogo[anim].get("mecanismo") or "?", mec, mec))
+    elif anim and anim in recientes:
+        out.append("la animación «%s» salió en uno de los últimos %d videos: usa otra del mismo mecanismo o deja `animacion: "
+                   "null` (el animador escribe una nueva)" % (anim, ROTACION_ANIMACIONES))
+    if not BRIEF_CARACTERES[0] <= len(brief) <= BRIEF_CARACTERES[1]:
+        out.append("«brief» de %d–%d caracteres (qué se ve y cómo se mueve), también al reutilizar una animación" % BRIEF_CARACTERES)
     tit = (e.get("titulo") or "").strip()
     if not tit or palabras(tit) > TITULO_PALABRAS or len(tit) > TITULO_CARACTERES:
         out.append("«titulo» de 1–%d palabras y ≤ %d caracteres" % (TITULO_PALABRAS, TITULO_CARACTERES))
@@ -284,6 +413,23 @@ def cinetico_de(tipo, e):
     return None
 
 
+def mayuscula_inicial(segs):
+    """Una cifra que abre oración sale de numeros_es en minúscula («¿Cuántos tenía? cuatro mil…»): mayúscula en la
+    primera letra de la voz y en la de cada oración (tras . ? ! …), en el texto hablado (`v`) de los segmentos."""
+    previo = ""
+    for sg in segs:
+        v = sg["v"]
+        if (not sin_pausas(previo).strip() or re.search(r"[.?!…]\s*$", sin_pausas(previo))) and sin_pausas(v).strip():
+            k = next((j for j, ch in enumerate(v) if ch.isalpha() and not RE_PAUSA.match(v[max(0, j - 1):]) and
+                      "[" not in v[:j].split("]")[-1]), len(v) - len(v.lstrip()))
+            if k >= len(v):
+                previo += v
+                continue
+            v = v[:k] + v[k].upper() + v[k + 1:]
+            sg["v"] = v
+        previo += v
+
+
 def con_breaks(voz):
     """El prompt de ElevenLabs: cada marca de pausa como <break time="…s" />."""
     def tipo(m):
@@ -379,7 +525,10 @@ def colores(paleta):
     return {"bg": p["bg"], "ink": p["ink"], "a1": p["a1"], "a2": p["a2"], "a3": p["a3"],
             "resalte_bg": rbg, "resalte_ink": rink,
             "pregunta": p["a3"] if contraste(p["a3"], p["bg"]) >= 3 else p["ink"],
-            "acento": p["a1"] if contraste(p["a1"], p["bg"]) >= 3 else p["ink"]}  # la cifra grande del gancho/golpe
+            "acento": p["a1"] if contraste(p["a1"], p["bg"]) >= 3 else p["ink"],  # la cifra grande del gancho/golpe
+            # lo que el visual del gancho destaca (el desborde, el bloque que crece, las figuras encendidas): una forma, no
+            # texto, así que basta 2.5:1; si ningún acento llega, la tinta
+            "grafico": next((p[c] for c in ("a1", "a3", "a2") if contraste(p[c], p["bg"]) >= 2.5), p["ink"])}
 
 
 def palabras(s):
@@ -438,10 +587,154 @@ def frases_usadas(slug_actual, n=FRASES_USADAS_VIDEOS):
            "Los conectores (pero / por eso / y) se repiten por fuerza; lo que no se repite es la frase que los sigue."]
     for v in reversed(regs):
         fr = v["frases"]
-        out.append("- **%s** · promesa: «%s» · gancho: «%s» · pregunta: «%s» · aperturas: %s"
-                   % (v["slug"], fr.get("promesa", ""), fr.get("gancho", ""), fr.get("pregunta", ""),
+        out.append("- **%s** · promesa: «%s» · gancho: «%s» · cierre (%s · %s): «%s» · aperturas: %s"
+                   % (v["slug"], fr.get("promesa", ""), fr.get("gancho", ""), fr.get("cierre_tipo") or "pregunta",
+                      fr.get("cierre_forma") or "experiencia", fr.get("cierre") or fr.get("pregunta", ""),
                       " / ".join("«%s…»" % x for x in fr.get("aperturas", []))))
     return out
+
+
+def ganchos_recientes(slug_actual):
+    """R9: familias de los últimos ROTACION_FAMILIAS videos y visuales del último ROTACION_VISUALES (memoria/videos.json →
+    frases.familia y frases.visual). Un video anterior al catálogo de ganchos no tiene familia y su visual era la cifra."""
+    vids = os.path.join(RAIZ, "memoria", "videos.json")
+    regs = [v for v in (leer(vids)["videos"] if os.path.exists(vids) else []) if v.get("slug") != slug_actual]
+    regs = sorted(regs, key=lambda v: (v.get("fecha", ""), v.get("id", "")))
+    fr = [v.get("frases") or {} for v in regs]
+    return {"familias": [x["familia"] for x in fr[-ROTACION_FAMILIAS:] if x.get("familia")],
+            "visuales": [x.get("visual") or "cifra" for x in fr[-ROTACION_VISUALES:]]}
+
+
+def cierres_recientes(slug_actual):
+    """F7: el tipo de cierre del último video (una pregunta no sigue a otra), las formas de los últimos ROTACION_CIERRES y
+    el mecanismo de consecuencia del último. Un video anterior al catálogo de cierres cerró con una pregunta sobre la
+    experiencia del espectador."""
+    vids = os.path.join(RAIZ, "memoria", "videos.json")
+    regs = [v for v in (leer(vids)["videos"] if os.path.exists(vids) else []) if v.get("slug") != slug_actual]
+    fr = [v.get("frases") or {} for v in sorted(regs, key=lambda v: (v.get("fecha", ""), v.get("id", "")))]
+    return {"tipos": [x.get("cierre_tipo") or "pregunta" for x in fr[-1:]],
+            "formas": [x.get("cierre_forma") or "experiencia" for x in fr[-ROTACION_CIERRES:]],
+            "mecanismos": [x["cierre_mecanismo"] for x in fr[-1:] if x.get("cierre_mecanismo")]}
+
+
+def final_de(cierre):
+    """La frase final del cierre (el remate o la pregunta); `pregunta` es el nombre del formato anterior."""
+    cierre = cierre or {}
+    return (cierre.get("final") or cierre.get("pregunta") or "").strip()
+
+
+def vocabulario_tema(hilo, tarjetas, cifras=None):
+    """Raíces (5 letras) de las palabras con contenido del tema, la tesis, los titulares y el concepto y la unidad de cada
+    cifra verificada del hilo: F3 ancla la frase final al fenómeno del video (no a lo que el guion se invente)."""
+    texto = " ".join([hilo.get("tema", ""), hilo.get("tesis", "")] + [t.get("titular") or "" for t in tarjetas] +
+                     ["%s %s" % (c.get("concepto", ""), c.get("unidad", "")) for c in (cifras or {}).values()])
+    return {w[:5] for w in _plano(texto).split() if len(w) >= 5 and w not in STOP and w not in GENERICAS and not w.isdigit()}
+
+
+def reglas_cierre(cierre, st, hilo, tarjetas, numeros_gancho, cifras=None):
+    """F1–F8 de la frase final del cierre (referencias/cierres.md) → fallas."""
+    f = []
+    tipo, forma, fin = cierre.get("tipo"), cierre.get("forma"), final_de(cierre)
+    if tipo not in CIERRE_FORMAS:
+        return ["F1 cierre.tipo «%s» no es remate|pregunta (lo normal es remate; a veces, pregunta)" % tipo]
+    if forma not in CIERRE_FORMAS[tipo]:
+        f.append("F1 cierre.forma «%s» no es una forma de %s (%s)" % (forma, tipo, "|".join(CIERRE_FORMAS[tipo])))
+    if not fin:
+        return f + ["F1 falta cierre.final (la frase con que termina la voz)"]
+    if palabras(fin) > FINAL_PALABRAS or len(fin) > FINAL_CARACTERES:
+        f.append("F2 la frase final «%s» tiene más de %d palabras o %d caracteres: se lee sola en grande" % (fin, FINAL_PALABRAS, FINAL_CARACTERES))
+    if tipo == "pregunta" and (not fin.endswith("?") or fin.count("?") > 1):
+        f.append("F2 una pregunta final: una sola y termina en «?»")
+    if tipo == "remate" and "?" in fin:
+        f.append("F2 un remate no es una pregunta (sin «?»); si quieres preguntar, tipo pregunta")
+    vocab = vocabulario_tema(hilo, tarjetas, cifras)
+    if not any(w[:5] in vocab for w in _plano(fin).split() if len(w) >= 5):
+        pista = [w for w in dict.fromkeys(_plano(" ".join([hilo.get("tema", "")] + [t.get("titular") or "" for t in tarjetas])).split())
+                 if len(w) >= 5 and w not in STOP and w not in GENERICAS and not w.isdigit()][:6]
+        f.append("F3 «%s» no nombra nada del tema del video (%s…): la frase final habla del fenómeno del video, no de una "
+                 "analogía de otro ámbito (los cuartos de una casa no son los espacios de una cárcel)" % (fin, ", ".join(pista)))
+    m = CEBO.search(" ".join((fin, cierre.get("texto") or "")))
+    if m:
+        f.append("F4 «%s» es cebo de interacción (pedir comentar, etiquetar, compartir): Meta lo penaliza, también en el audio" % m.group())
+    if tipo == "pregunta" and TEMA_SENSIBLE.search(" ".join((hilo.get("tema", ""), hilo.get("tesis", "")))):
+        if forma == "experiencia":
+            f.append("F5 tema sensible: la pregunta no pide la experiencia del espectador (lo expone como víctima o juzgado); "
+                     "pregunta por el sistema (elegir, predicción, decidir, lugar, porqué)")
+        m = EXPONE.search(fin)
+        if m:
+            f.append("F5 tema sensible: «%s» expone al espectador o a su familia" % m.group())
+    con = cierre.get("consecuencia") or {}
+    if tipo == "remate":
+        # F6: un remate no termina con un dato (el dato va en las conclusiones): a lo más una cifra y nunca la del gancho
+        nums = numeros_sin_anios(fin)
+        if len(nums) > 1:
+            f.append("F6 el remate «%s» dice %d cifras: terminar con un dato no es un remate; las cifras van en las "
+                     "conclusiones y la frase final dice lo que le pasa a la gente (a lo más una cifra: cuántos lo viven)"
+                     % (fin, len(nums)))
+        repetidas = [v for v in numeros_gancho if escribe_numero(v, [fin])]
+        if repetidas:
+            f.append("F6 el remate repite la cifra del gancho (%s): eso es volver al dato; di su consecuencia (quién lo vive, "
+                     "qué pierde, qué le sigue)" % ", ".join(clave(v) for v in repetidas))
+    if forma == "consecuencia":
+        if con.get("mecanismo") not in MECANISMOS:
+            f.append("F6 cierre.consecuencia.mecanismo «%s» no es uno de %s" % (con.get("mecanismo"), "|".join(MECANISMOS)))
+        quien, verbo = (con.get("quien") or "").strip(), (con.get("verbo") or "").strip()
+        if not quien or _plano(quien) not in _plano(fin):
+            f.append("F6 cierre.consecuencia.quien «%s» tiene que estar en la frase final (quién vive la consecuencia)" % quien)
+        elif not HUMANO.search(quien):
+            f.append("F6 cierre.consecuencia.quien «%s» no es gente (familias, niños, madres, conductores, presos…): la "
+                     "consecuencia le pasa a personas, no a una tasa ni a una institución" % quien)
+        if not verbo or not re.search(r"\b%s\b" % re.escape(_plano(verbo)), _plano(fin)):
+            f.append("F6 cierre.consecuencia.verbo «%s» tiene que estar en la frase final (lo que les pasa, conjugado)" % verbo)
+    if tipo == "remate":
+        m = FATALISMO.search(" ".join((fin, cierre.get("texto") or "")))
+        if m:
+            f.append("F8 «%s» afirma lo que el hilo no dice (fatalismo): di lo que ya pasó o lo que sigue pendiente, no que "
+                     "no tiene remedio" % m.group())
+        m = FUTURO.search(fin)
+        if m and not (con.get("proyeccion") and con["proyeccion"] in (cifras or {})):
+            f.append("F8 «%s» proyecta al futuro una pérdida que la fuente no proyecta: usa lo que ya pasó («ya», «este año "
+                     "van») o declara cierre.consecuencia.proyeccion con el id de una cifra que proyecte" % m.group())
+    rec = st.get("cierres_recientes") or {}
+    if tipo == "pregunta" and "pregunta" in (rec.get("tipos") or []):
+        f.append("F7 el video anterior cerró con una pregunta: la pregunta va solo a veces; este cierra con un remate")
+    if forma != "consecuencia" and forma in (rec.get("formas") or []):
+        f.append("F7 la forma «%s» cerró uno de los últimos %d videos (%s): usa otra" % (forma, ROTACION_CIERRES, ", ".join(rec["formas"])))
+    if forma == "consecuencia" and con.get("mecanismo") in (rec.get("mecanismos") or []):
+        f.append("F7 el mecanismo «%s» cerró el último video: usa otro (%s)"
+                 % (con["mecanismo"], "|".join(m for m in MECANISMOS if m != con["mecanismo"])))
+    return f
+
+
+def lineas_recientes(rec, sin_rotacion=False):
+    if sin_rotacion:
+        return ["- (prueba: sin rotación)"]
+    return ["- Familias bloqueadas (últimos %d videos): %s" % (ROTACION_FAMILIAS, ", ".join(rec["familias"]) or "ninguna"),
+            "- Visual bloqueado (último video): %s" % (", ".join(rec["visuales"]) or "ninguno"),
+            "- Todas las familias: %s · visuales: %s (qué visual admite cada familia: referencias/ganchos.md)"
+            % (", ".join(FAMILIAS), ", ".join(VISUALES))]
+
+
+def gancho_elegido(trabajo):
+    """El candidato que eligió el crítico (ganchos.json → elegido), o None si el video no pasó por la fase de ganchos."""
+    ruta = os.path.join(trabajo, "ganchos.json")
+    if not os.path.exists(ruta):
+        return None
+    G = leer(ruta)
+    return next((c for c in G.get("candidatos") or [] if c.get("id") == G.get("elegido")), None)
+
+
+CAMPOS_GANCHO = ("familia", "visual", "visual_datos", "pantalla", "linea", "verbo", "calculo", "icono")
+
+
+def mismo_gancho(e, c, promesa=None):
+    """La escena 1 es el candidato `c` tal cual; la voz puede llevar además la promesa si va en la escena 1."""
+    if any((e.get(k) or None) != (c.get(k) or None) for k in CAMPOS_GANCHO):
+        return False
+    t, tc = _plano(e.get("texto")), _plano(c.get("texto"))
+    if t == tc:
+        return True
+    return (promesa or {}).get("en") == 1 and t.startswith(tc) and _plano(promesa.get("texto")) in t
 
 
 def sugerir_tarjetas(tuits, tarjetas, dur):
@@ -518,9 +811,11 @@ def items_de(datos, orden=None):
     return sorted(its, key=lambda x: x[1], reverse=(orden != "asc"))
 
 
-def puntos_de(datos):
+def puntos_de(datos, guardar_et=(), guardar_v=()):
     """[(etiqueta, valor, sub, destacado)] de una tarjeta antes-despues (2 puntos) o linea (la serie destacada o la
-    primera; si tiene más de TIEMPO_PUNTOS, los equiespaciados con el primero y el último): la escena tiempo."""
+    primera; si tiene más de TIEMPO_PUNTOS, el primero, el último y los que la voz dice (etiquetas `guardar_et` o
+    valores `guardar_v`), y el resto de los lugares equiespaciados entre los demás): la escena tiempo. Antes se
+    muestreaba sin mirar la voz y se perdía el año que la voz decía (el pico de 2019 en cárceles)."""
     datos = datos or {}
     if datos.get("antes") and datos.get("despues"):
         a, b = datos["antes"], datos["despues"]
@@ -531,7 +826,13 @@ def puntos_de(datos):
         ets, vals = datos.get("etiquetasX") or [], serie.get("valores") or []
         idx = [k for k, v in enumerate(vals) if v is not None]
         if len(idx) > TIEMPO_PUNTOS:
-            idx = [idx[round(j * (len(idx) - 1) / (TIEMPO_PUNTOS - 1))] for j in range(TIEMPO_PUNTOS)]
+            et_de = lambda k: str(ets[k]) if k < len(ets) else str(k + 1)  # noqa: E731
+            fijos = {idx[0], idx[-1]} | {k for k in idx if et_de(k) in set(map(str, guardar_et))
+                                         or any(abs(float(vals[k]) - float(g)) < 1e-6 for g in guardar_v)}
+            otros = [k for k in idx if k not in fijos]
+            libres = max(0, TIEMPO_PUNTOS - len(fijos))
+            elegidos = [otros[round(j * (len(otros) - 1) / max(1, libres - 1))] for j in range(libres)] if otros and libres else []
+            idx = sorted(fijos | set(elegidos))
         return [(str(ets[k]) if k < len(ets) else str(k + 1), float(vals[k]), None, k == idx[-1]) for k in idx]
     return []
 
@@ -628,13 +929,15 @@ def cmd_preparar(a):
     if len(tarjetas) < dur["tarjetas"][0]:
         return falla("el hilo tiene %d tarjetas y «%s» pide al menos %d: usa una duración menor"
                      % (len(tarjetas), a.duracion, dur["tarjetas"][0]))
-    t1 = next((x for x in tarjetas if x["n"] == 1), None)
-    prefijo = bool(t1) and "guatemala" not in t1["titular"].lower()
+    recientes = {"familias": [], "visuales": []} if a.sin_rotacion else ganchos_recientes(hilo["slug"])
+    cierres = {"tipos": [], "formas": []} if a.sin_rotacion else cierres_recientes(hilo["slug"])
+    anim_rec = [] if a.sin_rotacion else animaciones_recientes(hilo["slug"])
     n_max = 1 + dur["tarjetas"][1] + dur["golpes"][1]
     caracteres = int((dur["s"] - COLA * n_max - COLA_CIERRE) * CPS)
     sugeridas = sugerir_tarjetas(hilo["tuits"], tarjetas, dur)
     st = {"hilo": rel(hilo_dir), "slug": hilo["slug"], "fecha_hilo": hilo.get("fecha"), "paleta": hilo["paleta"],
-          "duracion": a.duracion, "objetivo_s": dur["s"], "musica": musica["id"], "prefijo": prefijo,
+          "duracion": a.duracion, "objetivo_s": dur["s"], "musica": musica["id"],
+          "ganchos_recientes": recientes, "cierres_recientes": cierres, "animaciones_recientes": anim_rec,
           "tarjetas": tarjetas, "sugeridas": sugeridas}
     escribir(os.path.join(trabajo, "video.json"), st)
 
@@ -665,20 +968,16 @@ def cmd_preparar(a):
            ("- Icono (opcional, `icono: \"<id>\"` en gancho, golpe o definición; ≤ 1 por escena y solo si nombra el tema de la "
             "cifra, nunca decorativo): " + " · ".join("%s (%s)" % (k, v) for k, v in (iconos_catalogo() or {}).items()))
            if iconos_catalogo() else "- Iconos: sin biblioteca (make iconos); no uses `icono`.",
-           "- Animaciones ya hechas para la escena `explica` (reutiliza antes de pedir una nueva): " +
-           (" · ".join("%s (%s; %d–%d pasos)" % (k, v.get("descripcion", ""), *(v.get("pasos") or EXPLICA_PASOS))
-                       for k, v in animaciones_catalogo().items()) or "ninguna"),
-           "- «En Guatemala» al inicio de la voz del gancho: %s (lo pone el script si tu texto no dice «Guatemala»; no lo escribas; "
-           "tu voz sigue la frase: «Nacen casi 168 bebés al día…» → «En Guatemala nacen casi 168 bebés al día…»)."
-           % ("SÍ" if prefijo else "no"),
+           *lineas_animaciones(anim_rec, a.sin_rotacion),
+           "- «Guatemala» se dice o se lee en los primeros 6 s (R6): en la voz o la pantalla del gancho, o en la primera oración "
+           "de T1. El script ya no antepone «En Guatemala» y la voz no abre con contexto (R3).",
            "- Música: %s (%s)" % (musica["id"], musica.get("ambiente", "")),
            "", "## Estructura (la comprueba el gate V9)",
-           "1. Escena 1 = **gancho**: `formula` cifra | contradiccion | pregunta | resultado; `pantalla` (una cifra o ≤ %d palabras, "
-           "≤ %d caracteres) y `linea` (≤ %d palabras, ≤ %d caracteres) deben contar el gancho **en silencio**: cifra/resultado → la "
-           "cifra en pantalla; pregunta → termina en «?»; contradiccion → una cifra en pantalla o línea. La pantalla puede ser "
-           "titular; la **voz no**: la oración que dice la pantalla lleva verbo conjugado, declarado en `verbo` (gancho y golpes): "
-           "«Casi 168 al día» en pantalla → «Nacen casi 168 bebés al día de madres de 10 a 19 años» en la voz (`verbo`: «nacen»)."
-           % (PANTALLA_PALABRAS, PANTALLA_CARACTERES, LINEA_PALABRAS, LINEA_CARACTERES),
+           "1. Escena 1 = **gancho**: lo escribe el agente `video-gancho` (4–5 candidatos en ganchos.json) y lo elige el crítico; "
+           "el guionista lo copia con `video.py ganchos TRABAJO --usar` y no lo cambia. `familia` (%s), `visual` (%s), "
+           "`pantalla` (una cifra o ≤ %d palabras, ≤ %d caracteres) y `linea` (≤ %d palabras, ≤ %d caracteres) cuentan el gancho "
+           "**en silencio**; la voz es una oración con `verbo`. Reglas R1–R12 en referencias/ganchos.md."
+           % (" | ".join(FAMILIAS), " | ".join(VISUALES), PANTALLA_PALABRAS, PANTALLA_CARACTERES, LINEA_PALABRAS, LINEA_CARACTERES),
            "2. Escena 2 = la **tarjeta T1**, sin enlace. Luego tarjetas y golpes en el orden del arco.",
            "3. Desde la escena 3, `enlace` pero | por_eso | y, y la voz EMPIEZA con ese conector (pero / sin embargo / aunque / "
            "solo que / en cambio / aun así · por eso / así que / entonces / el resultado / de ahí que / la consecuencia · y / además / "
@@ -707,11 +1006,31 @@ def cmd_preparar(a):
            "entra al final con su rótulo y cada valor que diga la voz ilumina su departamento (di 2–3 valores con su nombre). Esa tarjeta "
            "no va además como `tarjeta`. Mejor que la tarjeta cuando el hilo es medio o largo.",
            "11. Escena `explica` (opcional, ≤ 1; 2 en largo; cuenta como escena de texto): una animación que explica el MECANISMO "
-           "del fenómeno (por qué o cómo pasa: cómo se forma una cola, por qué la sequía da hambre), no los datos. `animacion` (id de "
-           "las ya hechas) o `null` con `brief` (%d–%d caracteres: qué muestra y cómo se mueve; la escribe el animador), `titulo` "
+           "del fenómeno (por qué o cómo pasa: cómo se forma una cola, por qué la sequía da hambre), no los datos. `mecanismo` (de la "
+           "lista de arriba), `brief` SIEMPRE (%d–%d caracteres: qué se ve y cómo se mueve), `animacion` (id de una ya hecha con "
+           "ese mismo mecanismo y no bloqueada) o `null` (la escribe el animador a medida), `titulo` "
            "(≤ %d palabras), `pasos` (%d–%d, ≤ %d caracteres, sin cifras salvo con respaldo), `enlace` y `texto` que dice cada paso "
            "(entra cuando la voz lo dice). Cada afirmación causal es de conocimiento general o del hilo y no contradice `no_afirma` "
            "(«uno de los factores», nunca «la causa»)." % (*BRIEF_CARACTERES, TITULO_PALABRAS, *EXPLICA_PASOS, PASO_CARACTERES),
+           "12. **Cierre**: las cifras van en las conclusiones (`texto` antes de la frase final y `resumen`); la frase final NO "
+           "es un dato sino su **consecuencia**: `tipo` remate, `forma` consecuencia (lo normal) con `consecuencia` {mecanismo "
+           "%s, quien (gente: «34 familias», «los conductores de la ruta»), verbo (conjugado, en pasado o presente)} — lo que "
+           "la cifra le hace a quien la vive («Este año, 34 familias ya enterraron a un hijo por desnutrición.»), sin repetir la "
+           "cifra del gancho, ≤ 1 cifra, sin fatalismo («no hay nada que hacer») ni futuro que la fuente no proyecta, sin "
+           "adjetivos que lloren por el espectador; a veces `pendiente` o `quien_decide`; o pregunta (a veces: nunca si el "
+           "video anterior cerró con pregunta). `final` (≤ %d palabras) = la última frase de `texto`; nombra el tema del "
+           "video, sin cebo y, en un tema sensible, sin preguntar por la vida del espectador. Reglas F1–F8 en "
+           "referencias/cierres.md." % ("|".join(MECANISMOS), FINAL_PALABRAS),
+           "", "## Ganchos recientes (R9: no repitas familia ni visual)"] + lineas_recientes(recientes, a.sin_rotacion) + [
+           "", "## Cierres recientes (F7)",
+           "- %s" % ("(prueba: sin rotación)" if a.sin_rotacion else "Último cierre: %s · formas bloqueadas: %s · mecanismo de "
+               "consecuencia bloqueado: %s%s" % (
+               ", ".join(cierres["tipos"]) or "—",
+               ", ".join(x for x in cierres["formas"] if x != "consecuencia") or "ninguna",
+               ", ".join(cierres.get("mecanismos") or []) or "ninguno",
+               " · **este video cierra con un remate**" if "pregunta" in cierres["tipos"] else "")),
+           "- Remates: %s (consecuencia: %s) · preguntas: %s" % (", ".join(CIERRE_FORMAS["remate"]), "|".join(MECANISMOS),
+                                                               ", ".join(CIERRE_FORMAS["pregunta"])),
            "", "## Frases ya usadas (no las repitas: C11 del crítico)"] + frases_usadas(hilo["slug"]) + [
            "", "## Sugerencia de tarjetas (no obligatoria)",
            "- Orden sugerido: %s (T1, luego giro e impacto, luego contexto animado). Giro: %s · impacto: %s. Marca el giro como tu "
@@ -744,14 +1063,6 @@ def valores_respaldo(hilo_dir):
     titulares = [por_id[i] for t in hilo["tuits"] for i in t.get("cifra_ids") or []
                  if isinstance(por_id.get(i), (int, float))]
     return sorted(valores), titulares, cifras
-
-
-def con_prefijo(texto):
-    """«Nacen casi 168…» → «En Guatemala nacen casi 168…»; una pregunta o exclamación va tras coma:
-    «En Guatemala, ¿cuánto…?»."""
-    if texto[:1] in "¿¡":
-        return PREFIJO + ", " + texto[0] + texto[1].lower() + texto[2:]
-    return PREFIJO + " " + texto[0].lower() + texto[1:]
 
 
 def oracion_de_la_pantalla(texto, pantalla):
@@ -838,7 +1149,7 @@ def escribe_numero(r, textos):
         t = VM.RE_FECHA.sub(" ", t or "")
         for m in RE_DE_CADA.finditer(t):
             a, b = float(m.group(1)), float(m.group(2))
-            if a and (_coincide(r, b / a, 0.5 / a) or (b == 100 and _coincide(r, a, 0.5))):
+            if a and (_coincide(r, b / a, 0.5 / a) or de_cada_pct(r, a, b)):
                 return True
         for m in re.finditer(NE.NUM, t):
             v = float(m.group().replace(",", ""))
@@ -847,12 +1158,18 @@ def escribe_numero(r, textos):
     return False
 
 
+def de_cada_pct(r, a, b):
+    """«A de cada B» como porcentaje r, con el redondeo que implica B: «7 de cada 10» vale para 65–75 % (70.74 % → 7 de
+    cada 10), «71 de cada 100» para 70.5–71.5 %."""
+    return _coincide(r, 100 * a / b, 50 / b)
+
+
 def exentar_de_cada(texto, vals):
     """«A de cada B» deja de contar como números sueltos cuando B/A tiene respaldo en vals (o A lo tiene cuando
     B = 100): la escala humana («1 de cada 4», «77 de cada 100») se respalda por su `calculo`, no por A y B."""
     def de_cada(m):
         a, b = float(m.group(1)), float(m.group(2))
-        if a and any(_coincide(x, b / a, 0.5 / a) or (b == 100 and _coincide(x, a, 0.5)) for x, f in vals):
+        if a and any(_coincide(x, b / a, 0.5 / a) or de_cada_pct(x, a, b) for x, f in vals):
             return " "
         return m.group(0)
     return RE_DE_CADA.sub(de_cada, texto or "")
@@ -889,6 +1206,176 @@ def hueco_maximo(segs, voz):
     marcas = sorted(set(marcas))
     a, b = max(zip(marcas, marcas[1:]), key=lambda ab: ab[1] - ab[0])
     return (b - a) / CPS, voz[max(0, a - 25):a].strip(), voz[b:b + 25].strip()
+
+
+# ---------- gancho (catálogo de familias y visuales: referencias/ganchos.md) ----------
+def numeros_sin_anios(s):
+    """Números de un texto sin los años (1900–2100 enteros)."""
+    out = []
+    for m in re.finditer(NE.NUM, VM.RE_FECHA.sub(" ", s or "")):
+        v = float(m.group().replace(",", ""))
+        if not (v.is_integer() and 1900 <= v <= 2100):
+            out.append(v)
+    return out
+
+
+def valor_visual(x, cifras, valores):
+    """Un número del visual: literal con respaldo en datos.json o expresión `calculo` (ids de cifra) → (valor, motivo)."""
+    if isinstance(x, bool) or x is None or x == "":
+        return None, "falta"
+    if isinstance(x, (int, float)):
+        sin = sin_respaldo(clave(float(x)), valores)
+        return (None, "no tiene respaldo en datos.json (usa el id de la cifra: «pen-c02.partes[1]»)") if sin else (float(x), None)
+    r, motivo = resolver_calculo(str(x), cifras, valores)
+    return (None, motivo) if motivo else (r, None)
+
+
+def visual_del_gancho(e, cifras, valores):
+    """Datos del visual del gancho (VISUALES) resueltos, con respaldo (V2) → (resuelto, fallas). El resuelto lleva
+    `numeros`: los valores que la voz o la pantalla deben decir (R4) y que V2 acepta como respaldados."""
+    vis = e.get("visual") or "cifra"
+    d = e.get("visual_datos") or {}
+    out, f, nums = {"tipo": vis}, [], []
+
+    def num(campo, x):
+        v, motivo = valor_visual(x, cifras, valores)
+        if motivo:
+            f.append("visual %s: %s «%s» %s" % (vis, campo, x, motivo))
+            return None
+        nums.append(v)
+        return v
+
+    def etiqueta(campo, x, maximo):
+        x = (x or "").strip()
+        if not x or len(x) > maximo:
+            f.append("visual %s: «%s» de 1–%d caracteres" % (vis, campo, maximo))
+        return x
+    if vis not in VISUALES:
+        return out, ["visual «%s» no es %s" % (vis, "|".join(VISUALES))]
+    if vis == "llenado":
+        cap, tot = num("capacidad", d.get("capacidad")), num("total", d.get("total"))
+        out.update(capacidad=cap, total=tot, unidad=etiqueta("unidad", d.get("unidad"), VISUAL_ETIQUETA))
+        if cap is not None and tot is not None and not 0 < cap < tot:
+            f.append("visual llenado: 0 < capacidad < total (llegaron %s y %s): el contenedor se desborda" % (clave(cap), clave(tot)))
+    elif vis == "pareja":
+        for k in ("a", "b"):
+            p = d.get(k) or {}
+            v = num(k + ".valor", p.get("valor"))
+            out[k] = {"valor": v, "etiqueta": etiqueta(k + ".etiqueta", p.get("etiqueta"), VISUAL_ETIQUETA)}
+            if v is not None and v <= 0:
+                f.append("visual pareja: %s.valor debe ser mayor que 0" % k)
+    elif vis == "figuras":
+        dc = d.get("de_cada")
+        if not (isinstance(dc, list) and len(dc) == 2 and all(isinstance(x, int) and not isinstance(x, bool) for x in dc)
+                and ESCALA_N[0] <= dc[1] <= ESCALA_N[1] and 1 <= dc[0] < dc[1]):
+            f.append("visual figuras: de_cada [K, N] enteros con 1 ≤ K < N y N entre %d y %d" % ESCALA_N)
+            dc = None
+        out.update(etiqueta=etiqueta("etiqueta", d.get("etiqueta"), ESCALA_ETIQUETA))
+        if dc:
+            out.update(k=dc[0], n=dc[1])
+            r, motivo = resolver_calculo(d.get("calculo"), cifras, valores) if d.get("calculo") else (None, "falta: «K de cada N» se respalda con un calculo")
+            if motivo:
+                f.append("visual figuras: calculo «%s» %s" % (d.get("calculo") or "", motivo))
+            elif not escribe_numero(r, ["%d de cada %d" % tuple(dc)]):
+                f.append("visual figuras: calculo %s da %.4g y no respalda «%d de cada %d»" % (d["calculo"], r, *dc))
+            else:
+                nums.append(r)
+    elif vis == "lugar":
+        dep, nombres = (d.get("depto") or "").strip(), nombres_depto()
+        cod = dep if dep in nombres else next((k for k, v in nombres.items() if _plano(v) == _plano(dep)), None)
+        if not cod:
+            f.append("visual lugar: «depto» «%s» no es uno de los 22 departamentos (nombre o código GTxx)" % dep)
+        out.update(depto=cod, nombre=nombres.get(cod), etiqueta=etiqueta("etiqueta", d.get("etiqueta"), LUGAR_ETIQUETA))
+    out["numeros"] = nums
+    return out, f
+
+
+def periodos_de(nums, cifras):
+    """Años de los periodos de las cifras cuyos valores (valor, serie o partes) aparecen en `nums`."""
+    anios = []
+    for c in cifras.values():
+        vals = [c.get("valor")] + [p.get("v") for p in c.get("serie") or []] + [p.get("valor") for p in c.get("partes") or []]
+        vals = [float(x) for x in vals if isinstance(x, (int, float)) and not isinstance(x, bool)]
+        if any(_coincide(x, v, 0.5 * 10 ** -VM.decimales(v)) for v in nums for x in vals):
+            anios += [int(y) for y in RE_ANIO.findall(str(c.get("periodo", "")))]
+    return anios
+
+
+def reglas_gancho(e, voz_p, ctx):
+    """R2–R10 del gancho (referencias/ganchos.md) sobre una escena gancho → (fallas, avisos). `voz_p` es la voz con
+    las cifras en dígitos (lo que se subtitula); ctx = {cifras, valores, recientes {familias, visuales}, anio,
+    e2 (voz de la escena 2 o None si aún no hay guion), visual (lo que devolvió visual_del_gancho)}."""
+    f, av = [], []
+    fam, vis = e.get("familia"), e.get("visual") or "cifra"
+    pant, lin, texto = e.get("pantalla") or "", e.get("linea") or "", sin_pausas(e.get("texto") or "").strip()
+    V_ = ctx.get("visual") or {}
+    if fam not in FAMILIAS:
+        f.append("familia «%s» no es %s%s" % (fam, "|".join(FAMILIAS),
+                 " (`formula` es del formato viejo: usa `familia`, referencias/ganchos.md)" if e.get("formula") and not fam else ""))
+        return f, av
+    if vis not in VISUALES_DE[fam]:
+        f.append("el visual «%s» no va con la familia %s (admite %s)" % (vis, fam, ", ".join(VISUALES_DE[fam])))
+    if e.get("icono") and vis != "cifra":
+        f.append("el icono va solo con el visual cifra (con %s, el visual ya nombra el tema)" % vis)
+    silencio = " ".join((pant, lin))
+    # R2 referente: la cifra nunca va sola
+    if fam != "pregunta" and vis in ("cifra", "lugar") and len(set(numeros_sin_anios(silencio))) < 2 and not (
+            RE_DE_CADA.search(silencio) or re.search(r"×\s?\d|\d\s*veces\b|\bde\s+\d[\d,]*\b|\bpor\s+(?:cada\s+)?\w+", silencio, re.I)):
+        f.append("R2 la cifra va sola en pantalla («%s»): dale un referente que se lea en silencio (dos cifras, «K de cada N», "
+                 "«×N», «de 209», «por lugar») o un visual llenado, pareja o figuras" % silencio.strip())
+    # R3 tensión primero
+    if APERTURAS_PROHIBIDAS.match(texto):
+        f.append("R3 la voz abre con contexto («%s…»): abre con la tensión (el contraste, la paradoja, el lugar, la escala); "
+                 "«Guatemala» va dentro de la frase o en la segunda oración" % " ".join(texto.split()[:4]))
+    # R4 triple alineación: los números del visual se dicen o se leen
+    dichos = [pant, lin, voz_p]
+    if vis in ("llenado", "pareja"):
+        for v in [x for x in V_.get("numeros", []) if x is not None]:
+            if not escribe_numero(v, dichos):
+                f.append("R4 el visual %s muestra %s y ni la voz ni la pantalla lo dicen: imagen, pantalla y voz cuentan lo mismo"
+                         % (vis, clave(v)))
+    elif vis == "figuras" and V_.get("k"):
+        if (V_["k"], V_["n"]) not in [(int(a), int(b)) for a, b in RE_DE_CADA.findall(" ".join(dichos))]:
+            f.append("R4 el visual figuras muestra «%d de cada %d» y ni la voz ni la pantalla lo dicen" % (V_["k"], V_["n"]))
+    elif vis == "lugar" and V_.get("nombre"):
+        claves_lugar = [_plano(V_["nombre"])] + [w for w in _plano(V_.get("etiqueta")).split() if len(w) >= 4 and w not in STOP]
+        if not any(c and c in _plano(" ".join(dichos)) for c in claves_lugar):
+            f.append("R4 el visual lugar señala %s y ni la voz ni la pantalla nombran el lugar" % V_["nombre"])
+    # R6 Guatemala en ≤ 6 s
+    if not RE_GUATEMALA.search(" ".join((texto, pant, lin))):
+        e2 = ctx.get("e2")
+        if e2 is None:
+            av.append("R6 el gancho no dice «Guatemala»: dilo en la primera oración de T1 o el gate del guion fallará")
+        elif not RE_GUATEMALA.search(re.split(r"(?<=[.?!…])\s+", sin_pausas(e2).strip())[0]):
+            f.append("R6 «Guatemala» no se dice ni se lee en los primeros 6 s: va en la voz o la pantalla del gancho, o en la "
+                     "primera oración de T1 (ya no se antepone «En Guatemala»)")
+    # R7 honestidad temporal
+    etiquetas_v = " ".join(str(x) for x in (V_.get("etiqueta"), V_.get("unidad"), (V_.get("a") or {}).get("etiqueta"),
+                                              (V_.get("b") or {}).get("etiqueta")) if x)
+    m = RE_AHORA.search(" ".join((texto, pant, lin, etiquetas_v)))
+    if m:
+        anios = periodos_de(numeros_sin_anios(" ".join(dichos)) + list(V_.get("numeros") or []), ctx["cifras"])
+        if not anios or max(anios) < ctx["anio"]:
+            f.append("R7 «%s» con un dato de %s: di el periodo («en 2025 tenía…»), no «%s»"
+                     % (m.group(), max(anios) if anios else "fecha desconocida", m.group()))
+    # R8 la pregunta se contesta en el gancho
+    if fam == "pregunta":
+        if not (pant.rstrip().endswith("?") or lin.rstrip().endswith("?")):
+            f.append("R8 familia pregunta: pantalla o línea terminan en «?»")
+        q = voz_p.rfind("?")
+        if q < 0 or not numeros_sin_anios(voz_p[q + 1:]):
+            f.append("R8 la pregunta se contesta con una cifra en el mismo gancho (después del «?»): una pregunta sin respuesta "
+                     "pronta es un titular de pregunta y rinde peor")
+    # R9 rotación
+    rec = ctx.get("recientes") or {}
+    if fam in (rec.get("familias") or []):
+        f.append("R9 la familia «%s» ya abrió uno de los últimos %d videos (%s): usa otra" % (fam, ROTACION_FAMILIAS, ", ".join(rec["familias"])))
+    if vis in (rec.get("visuales") or []):
+        f.append("R9 el visual «%s» abrió el video anterior: usa otro" % vis)
+    # R10 al menos un número con respaldo en los primeros segundos
+    if not (numeros_sin_anios(" ".join(dichos)) or V_.get("numeros")):
+        f.append("R10 el gancho no trae ningún número (pantalla, línea, visual o voz): la cuenta es de datos")
+    return f, av
 
 
 def validar_estructura(g, st, dur, tarjetas):
@@ -974,9 +1461,9 @@ def validar_estructura(g, st, dur, tarjetas):
     if not (g.get("contexto_superior") or "").strip() or len(g.get("contexto_superior", "")) > 40:
         f.append("V1 «contexto_superior» vacío o de más de 40 caracteres")
     cierre = g.get("cierre") or {}
-    for k in ("texto", "pregunta"):
+    for k in ("texto", "tipo", "forma", "final"):
         if not (cierre.get(k) or "").strip():
-            f.append("V1 cierre sin «%s»" % k)
+            f.append("V1 cierre sin «%s» (tipo remate|pregunta, forma del catálogo y final = la última frase de la voz)" % k)
     res = cierre.get("resumen") or []
     if not RESUMEN_LINEAS[0] <= len(res) <= RESUMEN_LINEAS[1] or any(not str(x).strip() or len(str(x)) > RESUMEN_CARACTERES for x in res):
         f.append("V1 cierre.resumen: %d–%d líneas de ≤ %d caracteres (las conclusiones)" % (*RESUMEN_LINEAS, RESUMEN_CARACTERES))
@@ -1000,17 +1487,7 @@ def validar_estructura(g, st, dur, tarjetas):
             elif palabras(v) > maxp or len(v) > maxc:
                 f.append("V9 %s: %s «%s» de más de %d palabras o %d caracteres (%s)" % (etiqueta, campo, v, maxp, maxc, desc))
     if g1.get("tipo") == "gancho":
-        if g1.get("formula") not in FORMULAS:
-            f.append("V9 gancho: formula «%s» no es cifra|contradiccion|pregunta|resultado" % g1.get("formula"))
-        cinetico(1, g1, "gancho")
-        pant, lin = g1.get("pantalla") or "", g1.get("linea") or ""
-        tiene_cifra = lambda s: bool(re.search(NE.NUM, s))  # noqa: E731
-        if g1.get("formula") in ("cifra", "resultado") and not tiene_cifra(pant):
-            f.append("V9 gancho (%s): la pantalla debe llevar la cifra" % g1["formula"])
-        if g1.get("formula") == "pregunta" and not (pant.rstrip().endswith("?") or lin.rstrip().endswith("?")):
-            f.append("V9 gancho (pregunta): pantalla o linea deben terminar en «?»")
-        if g1.get("formula") == "contradiccion" and not (tiene_cifra(pant) or tiene_cifra(lin)):
-            f.append("V9 gancho (contradiccion): pantalla o linea deben llevar una cifra")
+        cinetico(1, g1, "gancho")   # familia, visual y R2–R10: reglas_gancho, en cmd_guion (necesita la voz)
     # V9: escena 2 = T1
     if len(escenas) < 2 or escenas[1].get("tipo") != "tarjeta" or escenas[1].get("tuit") != 1:
         f.append("V9 la escena 2 debe ser la tarjeta T1 (el gancho se paga con la primera tarjeta)")
@@ -1067,7 +1544,7 @@ def validar_estructura(g, st, dur, tarjetas):
             for motivo in adivina_mal_armada(e):
                 f.append("V9 escena %d (adivina): %s" % (i, motivo))
         elif tipo == "explica":
-            for motivo in explica_mal_armada(e, cat_anim):
+            for motivo in explica_mal_armada(e, cat_anim, st.get("animaciones_recientes") or ()):
                 f.append("V9 escena %d (explica): %s" % (i, motivo))
         if tipo in ESCENAS_TEXTO and i >= 2 and escenas[i - 2].get("tipo") in ESCENAS_TEXTO:
             f.append("V9 escena %d: dos golpes seguidos (golpe, definición y adivina son escenas de texto: entre dos va una tarjeta)" % i)
@@ -1111,22 +1588,26 @@ def cmd_guion(a):
     cierre = g.get("cierre") or {}
     fallas = validar_estructura(g, st, dur, tarjetas)
 
-    # V5 reglas (antes de convertir: el prefijo cambia el texto del gancho)
+    # V5 reglas
     textos = [e.get("texto", "") for e in escenas] + [cierre.get("texto", "")]
     pantallas = [" ".join(filter(None, (e.get("golpe"), e.get("pantalla"), e.get("linea")))) for e in escenas]
-    todo = " ".join(textos + pantallas + [" ".join(cierre.get("resumen") or []), cierre.get("pregunta", ""),
+    todo = " ".join(textos + pantallas + [" ".join(cierre.get("resumen") or []), final_de(cierre),
                                           json.dumps(g.get("caption") or {}, ensure_ascii=False)])
     if re.search(r"\ben suma\b", todo, re.I):
         fallas.append("V5 «en suma» está prohibido")
+    # la edad de quien murió o enfermó no se dice «no tenía(n) N años» (usuario, 2026-10-24: «6 de cada 7 fallecidos
+    # no tenían dos años» no tiene coherencia): «eran menores de N años» o «murieron antes de cumplir N años»
+    for m in RE_EDAD_NEGADA.finditer(" ".join(textos + pantallas + [final_de(cierre)])):
+        fallas.append("V5 «%s» no se entiende: di «eran menores de %s años» o «antes de cumplir %s años»"
+                      % (m.group(), m.group(1), m.group(1)))
     if re.search(r"https?://|@\w", " ".join(textos + pantallas)):
         fallas.append("V5 la voz y la pantalla no llevan enlaces ni @handles")
     ct = (cierre.get("texto") or "").strip()
-    if not ct.endswith("?"):
-        fallas.append("V5 el cierre debe terminar en pregunta")
-    if cierre.get("pregunta") and not ct.endswith(cierre["pregunta"].strip()):
-        fallas.append("V5 cierre.texto debe terminar con cierre.pregunta")
-    if cierre.get("pregunta") and ct.endswith(cierre["pregunta"].strip()):
-        antes_preg = ct[:len(ct) - len(cierre["pregunta"].strip())].strip()
+    fin = final_de(cierre)
+    if fin and not ct.endswith(fin):
+        fallas.append("V5 cierre.texto debe terminar con cierre.final (la frase final: el remate o la pregunta)")
+    if fin and ct.endswith(fin):
+        antes_preg = ct[:len(ct) - len(fin)].strip()
         NE.AVISOS.clear()
         try:
             s_antes = len(NE.convertir(sin_pausas(antes_preg))[1]) / CPS
@@ -1134,9 +1615,9 @@ def cmd_guion(a):
             s_antes = len(antes_preg) / CPS
         NE.AVISOS.clear()
         if s_antes < CIERRE_ANTES_S:
-            fallas.append("V9 cierre: %.1f s de voz antes de la pregunta (mínimo %.0f s): las conclusiones van en su propia "
+            fallas.append("V9 cierre: %.1f s de voz antes de la frase final (mínimo %.0f s): las conclusiones van en su propia "
                           "pantalla y necesitan tiempo para leerse" % (s_antes, CIERRE_ANTES_S))
-    cierre_pantalla = " ".join([ct, " ".join(cierre.get("resumen") or []), cierre.get("pregunta", "")])
+    cierre_pantalla = " ".join([ct, " ".join(cierre.get("resumen") or []), fin])
     if PROHIBIDO_CIERRE.search(cierre_pantalla):
         fallas.append("V5 el cierre no menciona fuentes, el hilo, la marca ni «sígueme» (va solo en pantalla)")
     for k, _ in PLATAFORMAS:
@@ -1155,13 +1636,10 @@ def cmd_guion(a):
 
     # V2, V3, V4 y ritmo por escena (escenas + cierre)
     valores, titulares, cifras = valores_respaldo(st["hilo"])
-    loc, avisos, n_pausas = [], [], 0
+    loc, avisos, n_pausas, numeros_gancho = [], [], 0, []
     for i, e in enumerate(escenas + [{"tipo": "cierre", "tuit": None, "texto": ct}], 1):
         tipo = e.get("tipo") if e.get("tipo") in TIPOS else "cierre"
         texto = e.get("texto", "")
-        prefijado = False
-        if i == 1 and st.get("prefijo") and "guatemala" not in texto.lower():
-            texto, prefijado = con_prefijo(texto), True
         # pausas del guion (cuentan para el límite); la adivina lleva además la suya antes de la respuesta (no cuenta)
         for motivo in pausas_mal_puestas(texto):
             fallas.append("V9 escena %d: %s" % (i, motivo))
@@ -1175,6 +1653,7 @@ def cmd_guion(a):
             fallas.append("V3 escena %d: %s" % (i, ex))
             continue
         # pausas: en el prompt como <break>; fuera de la locución que se alinea (V6), se subtitula y se mide (V4)
+        mayuscula_inicial(segs)   # «7 de cada 10…» → «Siete de cada diez…»; también tras «?» o «.»
         prompt = con_breaks("".join(s["v"] for s in segs))
         for s in segs:
             s["p"], s["v"] = sin_pausas(s["p"]), sin_pausas(s["v"])
@@ -1191,6 +1670,12 @@ def cmd_guion(a):
                               % (i, e["calculo"], valor_calculo))
             else:
                 extra = [valor_calculo]
+        # el visual del gancho: sus números (con id o calculo) respaldan lo que dice la voz y R4 exige que se digan
+        vis_out = None
+        if tipo == "gancho":
+            vis_out, vis_f = visual_del_gancho(e, cifras, valores)
+            fallas.extend("V9 gancho: " + x for x in vis_f)
+            extra += [x for x in vis_out["numeros"] if x is not None]
         # adivina: la opción correcta necesita respaldo; las otras dos son señuelos de un juego (exentas de V2)
         senuelos = []
         if tipo == "adivina":
@@ -1231,6 +1716,19 @@ def cmd_guion(a):
                 if sin:
                     fallas.append("V9 escena %d: %s «%s» tiene un número sin respaldo en datos.json ni «calculo»: %s"
                                   % (i, campo, e[campo], ", ".join(map(str, sin))))
+        if tipo == "gancho":   # los números del gancho (F6: el remate no los repite)
+            numeros_gancho = numeros_sin_anios(" ".join((pantalla, e.get("pantalla") or "", e.get("linea") or ""))) + \
+                [x for x in (vis_out or {}).get("numeros") or [] if x is not None]
+        if tipo == "gancho":   # R2–R10 (referencias/ganchos.md) y que sea el gancho que eligió el crítico
+            r_f, r_av = reglas_gancho(e, pantalla, {"cifras": cifras, "valores": valores, "anio": ANIO,
+                                                     "recientes": st.get("ganchos_recientes"), "visual": vis_out,
+                                                     "e2": escenas[1].get("texto", "") if len(escenas) > 1 else ""})
+            fallas.extend("V9 gancho: " + x for x in r_f)
+            avisos.extend("gancho: " + x for x in r_av)
+            elegido = gancho_elegido(trabajo)
+            if elegido and not mismo_gancho(e, elegido, (g.get("promesa") or {})):
+                fallas.append("V9 gancho: la escena 1 no es el gancho elegido «%s» de ganchos.json (familia, visual, pantalla, "
+                              "línea y voz van tal cual; corre `video.py ganchos TRABAJO --usar`)" % elegido.get("id"))
         # la pantalla y la voz cuentan lo mismo: en el gancho es falla (es el gancho), en un golpe es aviso
         if tipo in ("gancho", "golpe"):
             faltan = palabras_no_dichas(" ".join(filter(None, (e.get("pantalla"), e.get("linea")))), voz)
@@ -1252,13 +1750,12 @@ def cmd_guion(a):
             fallas.append("V3 escena %d: %s" % (i, av))
         if re.search(r"\d", voz):
             fallas.append("V3 escena %d: la voz conserva dígitos: «%s»" % (i, voz))
-        largo = len(voz) - (len(PREFIJO) + 1 if prefijado else 0)
+        largo = len(voz)
         if not CARACTERES[tipo][0] <= largo <= CARACTERES[tipo][1]:
             fallas.append("V4 escena %d (%s): %d caracteres de voz (rango %d–%d)" % (i, tipo, largo, *CARACTERES[tipo]))
         if tipo == "gancho":   # el gancho en 3 segundos: una oración corta, la promesa corta o en T1
-            voz_sin = re.sub(r"^%s,?\s*" % re.escape(PREFIJO), "", voz) if prefijado else voz
-            oraciones = [o for o in re.split(r"(?<=[.?!…])\s+", voz_sin.strip()) if o]
-            o1 = oraciones[0] if oraciones else voz_sin
+            oraciones = [o for o in re.split(r"(?<=[.?!…])\s+", voz.strip()) if o]
+            o1 = oraciones[0] if oraciones else voz
             if len(o1) / CPS > GANCHO_ORACION_S:
                 fallas.append("V9 gancho: la primera oración dura %.1f s estimados (máximo %.0f s ≈ %d caracteres en palabras): «%s»"
                               % (len(o1) / CPS, GANCHO_ORACION_S, int(GANCHO_ORACION_S * CPS), o1))
@@ -1271,7 +1768,7 @@ def cmd_guion(a):
                 NE.AVISOS.clear()
                 if sp > PROMESA_S:
                     fallas.append("V9 gancho: la promesa dura %.1f s estimados (máximo %.0f s): acórtala o dila en T1 (en: 2)" % (sp, PROMESA_S))
-        hueco, antes, despues = hueco_maximo(segs, voz) if tipo not in ("cierre", "explica") else (0.0, "", "")
+        hueco, antes, despues = hueco_maximo(segs, voz) if tipo not in SIN_HUECO else (0.0, "", "")
         if hueco > RITMO_MAX_S:
             fallas.append("V9 escena %d: %.1f s sin evento entre «…%s» y «%s…» (máximo %.0f s): acorta o mueve la cifra"
                           % (i, hueco, antes, despues, RITMO_MAX_S))
@@ -1283,10 +1780,11 @@ def cmd_guion(a):
                     "cinetico": cinetico_de(tipo, e),
                     "adivina": {"pregunta": (e.get("pregunta") or "").strip(), "opciones": [o.strip() for o in e.get("opciones") or []],
                                 "correcta": e.get("correcta")} if tipo == "adivina" else None,
-                    "explica": {"animacion": e.get("animacion"), "brief": (e.get("brief") or "").strip(),
+                    "explica": {"animacion": e.get("animacion"), "mecanismo": e.get("mecanismo"), "brief": (e.get("brief") or "").strip(),
                                 "titulo": (e.get("titulo") or "").strip(),
                                 "pasos": [str(x).strip() for x in e.get("pasos") or []]} if tipo == "explica" else None,
-                    "formula": e.get("formula") if tipo == "gancho" else None,
+                    "familia": e.get("familia") if tipo == "gancho" else None,
+                    "visual": {k: v for k, v in vis_out.items() if k != "numeros"} if vis_out else None,
                     "icono": e.get("icono") if tipo in ICONO_TIPOS else None,
                     "calculo": e.get("calculo"), "valor_calculo": valor_calculo,
                     "pantalla": pantalla, "voz": voz, "prompt": prompt, "segmentos": segs,
@@ -1298,12 +1796,16 @@ def cmd_guion(a):
         if sin:
             fallas.append("V2 %s: números sin respaldo: %s" % (etiqueta, ", ".join(map(str, sin))))
 
+    # F1–F8: la frase final del cierre (remate de consecuencia o, a veces, pregunta; referencias/cierres.md)
+    hilo = leer(os.path.join(RAIZ, st["hilo"], "hilo.json"))
+    fallas.extend(reglas_cierre(cierre, st, hilo, st["tarjetas"], numeros_gancho, cifras))
     if n_pausas > PAUSAS_MAX_VIDEO:
         fallas.append("V9 %d pausas en el video (máximo %d: el exceso de <break> ensucia la voz)" % (n_pausas, PAUSAS_MAX_VIDEO))
     # V4 presupuesto
     chars = sum(len(x["voz"]) for x in loc)
     estimado = chars / CPS + COLA * (len(loc) - 1) + COLA_CIERRE
-    lo, hi = dur["s"] * (1 - TOLERANCIA), dur["s"] * (1 + TOLERANCIA)
+    tol = dur.get("tol", TOLERANCIA)
+    lo, hi = dur["s"] * (1 - tol), dur["s"] * (1 + tol)
     if not lo <= estimado <= hi:
         fallas.append("V4 duración estimada %.0f s (%d caracteres de voz); «%s» pide %.0f–%.0f s"
                       % (estimado, chars, st["duracion"], lo, hi))
@@ -1322,6 +1824,183 @@ def cmd_guion(a):
              {"voz": VOZ, "caracteres": chars, "estimado_s": round(estimado, 1), "duracion": st["duracion"],
               "objetivo_s": dur["s"], "n_escenas": len(escenas), "promesa": g.get("promesa"), "escenas": loc})
     print("→ %s · V1–V5, V9 ok" % rel(os.path.join(trabajo, "locucion.json")))
+    return 0
+
+
+# ---------- ganchos (candidatos del agente video-gancho → elección del crítico → escena 1) ----------
+def revisar_gancho(e, st, valores, cifras, titulares, e2=None):
+    """Todas las reglas de una escena gancho suelta (candidato): R1 en silencio, voz en palabras (V3), presupuesto (V4),
+    respaldo (V2), verbo, pantalla dicha, gancho en 3 s y R2–R10 → (fallas, avisos, voz en palabras)."""
+    f = []
+    for campo, maxp, maxc in (("pantalla", PANTALLA_PALABRAS, PANTALLA_CARACTERES), ("linea", LINEA_PALABRAS, LINEA_CARACTERES)):
+        v = (e.get(campo) or "").strip()
+        if not v or palabras(v) > maxp or len(v) > maxc:
+            f.append("R1 «%s» de 1–%d palabras y ≤ %d caracteres (se lee en silencio)" % (campo, maxp, maxc))
+    texto = e.get("texto") or ""
+    f += ["V9 " + x for x in pausas_mal_puestas(texto)]
+    NE.AVISOS.clear()
+    try:
+        segs = NE.segmentos(texto)
+    except ValueError as ex:
+        return f + ["V3 %s" % ex], [], ""
+    f += ["V3 %s" % x for x in NE.AVISOS]
+    NE.AVISOS.clear()
+    for s_ in segs:
+        s_["p"], s_["v"] = sin_pausas(s_["p"]), sin_pausas(s_["v"])
+    segs[0]["v"] = segs[0]["v"].lstrip()
+    mayuscula_inicial(segs)
+    voz_p, voz = "".join(s_["p"] for s_ in segs).strip(), "".join(s_["v"] for s_ in segs).strip()
+    if not CARACTERES["gancho"][0] <= len(voz) <= CARACTERES["gancho"][1]:
+        f.append("V4 %d caracteres de voz (rango %d–%d)" % (len(voz), *CARACTERES["gancho"]))
+    oraciones = [o for o in re.split(r"(?<=[.?!…])\s+", voz) if o]
+    if oraciones and len(oraciones[0]) / CPS > GANCHO_ORACION_S:
+        f.append("V9 la primera oración dura %.1f s estimados (máximo %.0f s): «%s»" % (len(oraciones[0]) / CPS, GANCHO_ORACION_S, oraciones[0]))
+    if len(voz) / CPS > GANCHO_VOZ_S:
+        f.append("V9 la voz dura %.1f s estimados (máximo %.1f s)" % (len(voz) / CPS, GANCHO_VOZ_S))
+    extra = []
+    if e.get("calculo"):
+        r, motivo = resolver_calculo(e["calculo"], cifras, valores)
+        if motivo:
+            f.append("V9 calculo «%s» %s" % (e["calculo"], motivo))
+        elif not escribe_numero(r, [e.get("pantalla"), e.get("linea"), voz_p]):
+            f.append("V9 calculo %s da %.4g y el gancho no escribe ese número" % (e["calculo"], r))
+        else:
+            extra.append(r)
+    vis, vf = visual_del_gancho(e, cifras, valores)
+    f += vf
+    extra += [x for x in vis["numeros"] if x is not None]
+    vals = valores + [(round(float(x), 6), 1.0) for x in extra]
+    sin = VM.sueltos(exentar_de_cada(voz_p, vals), vals, titulares)
+    if sin:
+        f.append("V2 números de la voz sin respaldo en datos.json: %s" % ", ".join(map(str, sin)))
+    for campo in ("pantalla", "linea"):
+        sin = sin_respaldo(e.get(campo) or "", valores, extra)
+        if sin:
+            f.append("V2 %s «%s» con un número sin respaldo: %s" % (campo, e.get(campo), ", ".join(map(str, sin))))
+    faltan = palabras_no_dichas(" ".join(filter(None, (e.get("pantalla"), e.get("linea")))), voz)
+    if faltan:
+        f.append("V9 la voz no dice «%s», que está en pantalla" % "», «".join(faltan))
+    motivo = falta_verbo(e)
+    if motivo:
+        f.append("V9 " + motivo)
+    if e.get("icono") and e["icono"] not in (iconos_catalogo() or {}):
+        f.append("V1 icono «%s» no está en design/iconos/catalogo.json" % e["icono"])
+    rf, ra = reglas_gancho(e, voz_p, {"cifras": cifras, "valores": valores, "anio": ANIO, "visual": vis,
+                                      "recientes": st.get("ganchos_recientes"), "e2": e2})
+    return f + rf, ra, voz
+
+
+def cmd_ganchos(a):
+    """ganchos.json: --check (4–5 candidatos de familias distintas, cada uno con R1–R10) · --usar [ID] (el elegido del
+    crítico, de seleccion.json si no se da ID, pasa a la escena 1 de guion.json; el segundo queda para la versión B)."""
+    trabajo = os.path.abspath(a.trabajo)
+    st = estado(trabajo)
+    ruta = os.path.join(trabajo, "ganchos.json")
+    try:
+        G = leer(ruta)
+    except (OSError, ValueError) as e:
+        return falla("ganchos.json ilegible: %s" % e)
+    cands = G.get("candidatos") or []
+    valores, titulares, cifras = valores_respaldo(st["hilo"])
+    fallas, por_id = [], {}
+    if not CANDIDATOS[0] <= len(cands) <= CANDIDATOS[1]:
+        fallas.append("G %d candidatos; van %d–%d de familias distintas" % (len(cands), *CANDIDATOS))
+    fams = [c.get("familia") for c in cands]
+    if len(set(fams)) < len(fams):
+        fallas.append("G familias repetidas (%s): cada candidato prueba un mecanismo distinto" % ", ".join(map(str, fams)))
+    if sum(1 for c in cands if (c.get("visual") or "cifra") != "cifra") < CANDIDATOS_CON_VISUAL:
+        fallas.append("G al menos %d candidatos con un visual que no sea la cifra sola (llenado, pareja, figuras o lugar)" % CANDIDATOS_CON_VISUAL)
+    for k, c in enumerate(cands, 1):
+        cid = c.get("id") or "g%d" % k
+        if cid in por_id:
+            fallas.append("G id «%s» repetido" % cid)
+        por_id[cid] = c
+        f, av, voz = revisar_gancho(c, st, valores, cifras, titulares)
+        pr = (c.get("promesa_sugerida") or "").strip()
+        if not 10 <= len(pr) <= 80 or PROMESA_CONECTOR.match(pr) or PROMESA_PROHIBIDA.search(pr):
+            f.append("promesa_sugerida de 10–80 caracteres, oración propia, sin conector suelto ni «al final te digo»")
+        if not (c.get("por_que") or "").strip():
+            f.append("falta «por_que» (mecanismo y evidencia en una línea)")
+        print("%-3s %-10s %-8s %-24s · %s%s" % (cid, c.get("familia"), c.get("visual") or "cifra", (c.get("pantalla") or "")[:24], voz,
+                                               "" if f else "  ✓"))
+        fallas += ["%s: %s" % (cid, x) for x in f]
+        for x in av:
+            print("AVISO %s: %s" % (cid, x))
+    if a.usar is not None:
+        if fallas:
+            for x in fallas:
+                print("FALLA", x)
+            return falla("ganchos.json no pasa el gate: no se elige un candidato que no cumple las reglas")
+        sel = leer(os.path.join(trabajo, "seleccion.json")) if not a.usar and os.path.exists(os.path.join(trabajo, "seleccion.json")) else {}
+        gan, seg = a.usar or sel.get("ganador"), a.segundo or sel.get("segundo")
+        if gan not in por_id or (seg and seg not in por_id) or gan == seg:
+            return falla("--usar: el ganador «%s» y el segundo «%s» deben ser ids distintos de ganchos.json (o estar en "
+                         "seleccion.json)" % (gan, seg))
+        G["elegido"], G["segundo"] = gan, seg
+        escribir(ruta, G)
+        escena = {"tipo": "gancho", **{k: por_id[gan][k] for k in CAMPOS_GANCHO if por_id[gan].get(k) is not None},
+                  "texto": por_id[gan]["texto"]}
+        rg = os.path.join(trabajo, "guion.json")
+        guion = leer(rg) if os.path.exists(rg) else {"escenas": []}
+        esc = guion.get("escenas") or []
+        if esc and esc[0].get("tipo") == "gancho":
+            esc[0] = escena
+        else:
+            esc.insert(0, escena)
+        guion["escenas"] = esc
+        escribir(rg, guion)
+        print("→ escena 1 = %s (%s · %s); segundo para la versión B: %s · %s" % (gan, por_id[gan]["familia"],
+              por_id[gan].get("visual") or "cifra", seg or "—", rel(rg)))
+        return 0
+    for x in fallas:
+        print("FALLA", x)
+    if fallas:
+        return 1
+    print("→ %s · %d candidatos · R1–R10 ok" % (rel(ruta), len(cands)))
+    return 0
+
+
+def cmd_variante(a):
+    """Versión B del gancho (el segundo lugar de la selección) sobre el mismo video: arma <TRABAJO>/variante_b con el
+    guion igual salvo la escena 1, reutiliza la voz, las palabras y los clips de las demás escenas e imprime el nodo de
+    voz SOLO de la escena 1 (≈ 100 créditos). Con --cerrar, copia variante_b/salida/video.mp4 → salida/video_b.mp4."""
+    trabajo = os.path.abspath(a.trabajo)
+    vb = os.path.join(trabajo, "variante_b")
+    if a.cerrar:
+        src = os.path.join(vb, "salida", "video.mp4")
+        if not os.path.exists(src):
+            return falla("falta %s: descargar → tiempos → grabar --solo 1 → montar sobre variante_b" % rel(src))
+        shutil.copy2(src, os.path.join(trabajo, "salida", "video_b.mp4"))
+        print("→ %s (versión B: el gancho «%s»)" % (rel(os.path.join(trabajo, "salida", "video_b.mp4")),
+                                                    (gancho_elegido(vb) or {}).get("pantalla")))
+        return 0
+    G = leer(os.path.join(trabajo, "ganchos.json"))
+    seg = next((c for c in G.get("candidatos") or [] if c.get("id") == G.get("segundo")), None)
+    if not seg:
+        return falla("ganchos.json no tiene «segundo»: la versión B usa el segundo lugar de la selección (ganchos --usar)")
+    for sub in ("audio", "clips", "segs", "revision", "salida"):
+        os.makedirs(os.path.join(vb, sub), exist_ok=True)
+    shutil.copy2(os.path.join(trabajo, "video.json"), os.path.join(vb, "video.json"))
+    g = leer(os.path.join(trabajo, "guion.json"))
+    pr = g.get("promesa") or {}
+    texto = seg["texto"] + (" " + pr["texto"] if pr.get("en") == 1 and pr.get("texto") else "")
+    g["escenas"][0] = {"tipo": "gancho", **{k: seg[k] for k in CAMPOS_GANCHO if seg.get(k) is not None}, "texto": texto}
+    escribir(os.path.join(vb, "guion.json"), g)
+    escribir(os.path.join(vb, "ganchos.json"), dict(G, elegido=seg["id"], segundo=G.get("elegido")))
+    if cmd_guion(argparse.Namespace(trabajo=vb)):
+        return falla("la versión B no pasa el gate del guion (variante_b/guion.json)")
+    n = len(g["escenas"]) + 1
+    for k in range(2, n + 1):   # la voz, las palabras y los clips de las escenas 2…cierre son los del video A
+        for f in ("audio/voz_%d.mp3", "audio/palabras_%d.json", "clips/e%d.mp4"):
+            if os.path.exists(os.path.join(trabajo, f % k)):
+                shutil.copy2(os.path.join(trabajo, f % k), os.path.join(vb, f % k))
+    loc = leer(os.path.join(vb, "locucion.json"))
+    e1 = loc["escenas"][0]
+    print(json.dumps({"voz": loc["voz"], "model_parameters": {"language_code": loc["voz"]["idioma"]},
+                      "caracteres": len(e1["voz"]), "nodos": [{"n": 1, "prompt": e1.get("prompt") or e1["voz"]}]},
+                     ensure_ascii=False, indent=1))
+    print("→ %s · luego: descargar %s --estado … (solo la escena 1), tiempos, grabar --solo 1, montar y variante --cerrar"
+          % (rel(vb), rel(vb)))
     return 0
 
 
@@ -1589,6 +2268,52 @@ def repartir(palabras_, t0, t1, minimo=0.18):
     return [{"text": w, "start": round(ini + paso * k, 3)} for k, w in enumerate(palabras_)]
 
 
+UNIDADES_LLENADO = (1, 2, 5, 10, 20, 25, 50, 100, 200, 250, 500, 1000, 2000, 2500, 5000, 10000, 25000, 50000, 100000)
+LLENADO_PUNTOS = 240   # puntos máximos del visual llenado (cada punto = u unidades)
+
+
+def tiempos_visual(vis, pal, fin_1, fin_voz):
+    """El visual del gancho sincronizado con la voz (gancho.html lee S.V): está entero en el cuadro 0 (R12: miniatura y
+    bucle) y cada número cambia cuando la voz lo dice → (V, eventos, efectos)."""
+    def dicho(v):
+        w = next((x for x in pal if v is not None and x.get("clave") == clave(v)), None)
+        return [w["start"], w["end"]] if w else None
+    tipo, V_ = vis.get("tipo"), {k: v for k, v in vis.items()}
+    ev, sfx = [(0.0, "visual")], []
+    if tipo == "llenado":
+        cap, tot = vis["capacidad"], vis["total"]
+        u = next(x for x in UNIDADES_LLENADO + (10 ** 9,) if tot / x <= LLENADO_PUNTOS)
+        d = dicho(tot)
+        a = d[0] if d else max(0.6, fin_1 - 1.6)
+        b = max(a + 0.9, d[1] + 0.1 if d else a + 1.3)
+        V_.update(u=u, puntos=math.ceil(tot / u), dentro=max(1, round(cap / u)), desborde=[round(a, 3), round(min(b, fin_voz + 0.6), 3)])
+        ev += [(a, "desborde"), (V_["desborde"][1], "desborde_fin")]
+        sfx += [(a, "whoosh"), (V_["desborde"][1], "resolucion")]
+    elif tipo == "pareja":
+        da, db = dicho(vis["a"]["valor"]), dicho(vis["b"]["valor"])
+        tb = db[0] if db else max(0.8, fin_1 - 1.0)
+        V_["t_a"] = round(da[0] if da and da[0] < tb else 0.15, 3)
+        V_["t_b"] = [round(tb, 3), round(max(tb + 0.9, db[1] + 0.2 if db else tb + 1.2), 3)]
+        ev += [(V_["t_b"][0], "pareja"), (V_["t_b"][1], "pareja_fin")]
+        sfx += [(V_["t_b"][0], "whoosh"), (V_["t_b"][1], "pulso")]
+    elif tipo == "figuras":
+        dk = dicho(vis["k"])
+        t = dk[0] if dk else max(0.8, fin_1 - 1.2)
+        V_["destacadas"] = round(t, 3)
+        paso = min(0.08, 0.9 / max(1, vis["k"]))
+        ev += [(t, "destacadas"), (t + paso * vis["k"], "destacadas_fin")]
+        sfx += [(t + paso * j, "tic") for j in range(min(vis["k"], 10))] + [(t + paso * vis["k"] + 0.1, "resolucion")]
+    elif tipo == "lugar":
+        claves_l = [_plano(vis.get("nombre"))] + [w for w in _plano(vis.get("etiqueta")).split() if len(w) >= 4 and w not in STOP]
+        w = next((x for x in pal if any(c and _plano(x["text"]) and c.split()[0] == _plano(x["text"]) for c in claves_l)), None)
+        t = w["start"] if w else 0.8
+        V_["pin"] = round(t, 3)
+        ev += [(t, "pin"), (t + 0.6, "pin_fin")]
+        sfx += [(t, "foco")]
+    V_.pop("numeros", None)
+    return V_, ev, sfx
+
+
 def cmd_tiempos(a):
     trabajo = os.path.abspath(a.trabajo)
     st, loc = estado(trabajo), leer(os.path.join(trabajo, "locucion.json"))
@@ -1629,8 +2354,15 @@ def cmd_tiempos(a):
         S = {"n": n, "tipo": tipo, "tuit": e.get("tuit"), "plantilla": e["plantilla"], "enlace": e.get("enlace"),
              "icono": e.get("icono"), "dur": dur, "fin_voz": round(fin_voz, 3), "palabras": pal, "arriba": None}
         ev, sfx = [], []
-        if cierre:
-            k_preg = max([k for k, p in enumerate(ps[:-1]) if p["text"].endswith((".", "!"))] or [-1]) + 1
+        propio = CONSTRUCTORES.get(tipo)
+        hecho = propio(S, e, ps, pal, fin_voz, dur, g) if propio else None
+        if hecho is not None:
+            ev, sfx = hecho
+        elif cierre:
+            # la frase final (remate o pregunta) empieza donde la voz la dice; si no se encuentra, tras el último punto
+            k_preg = indice_frase(ps, final_de(g.get("cierre")))
+            if k_preg is None or k_preg == 0:
+                k_preg = max([k for k, p in enumerate(ps[:-1]) if p["text"].endswith((".", "!"))] or [-1]) + 1
             # pantalla A (conclusiones): las líneas del resumen se reparten entre el inicio y la pregunta; pantalla B
             # (desde «preg»): la pregunta sola y luego «Sígueme en»
             n_r = len((g.get("cierre") or {}).get("resumen") or []) or 2
@@ -1725,6 +2457,11 @@ def cmd_tiempos(a):
                  [(w["start"], "linea_dicha") for w in linea[1:-1] if w.get("dicha")] + ([(pulso[0], "pulso")] if pulso else [])
             if tipo == "gancho":
                 sfx = [(0.1, "impacto"), (pulso[1] if pulso else hasta, "pulso")]
+                vis = e.get("visual") or {}
+                if vis.get("tipo") not in (None, "cifra"):   # gancho con visual: página gancho.html (S.V)
+                    S["V"], ev_v, sfx_v = tiempos_visual(vis, pal, fin_1, fin_voz)
+                    ev += ev_v
+                    sfx += sfx_v
             else:
                 sfx = [(0.0, "grave" if e.get("enlace") == "pero" else "impacto"), (hasta, "tic")]
         else:
@@ -1808,7 +2545,8 @@ def cmd_tiempos(a):
                 ev += [(it["start"], "item") for it in items]
                 sfx += [(it["start"], "resolucion" if it["hi"] else "tic") for it in items]
             elif tipo == "tiempo":
-                pts = puntos_de(dat)
+                dichos_v = [float(k) for k in valores]   # los valores que dice la voz (sin los alias ×1000)
+                pts = puntos_de(dat, T["anios"].keys(), dichos_v)
                 ma, mb = ini + 0.3, max(ini + 1.5, fin_voz - 0.8)
                 puntos = []
                 for k, (et, v, sub, hi) in enumerate(pts):   # el marcador recorre el riel; el valor salta cuando la voz lo dice
@@ -1816,8 +2554,10 @@ def cmd_tiempos(a):
                     d = dicho_de(v)
                     an = T["anios"].get(et) if et.isdigit() else None
                     start = d[0] + 0.4 if d else (an[0] if an else llega)
+                    # el valor se rotula solo si la voz lo dice, en los extremos o en el destacado: nueve valores no caben
                     puntos.append({"etiqueta": et, "valor": v, "sub": sub, "hi": hi, "start": round(start, 3),
-                                   "dicho": [round(d[0] + 0.5, 3), round(d[1], 3)] if d else None})
+                                   "dicho": [round(d[0] + 0.5, 3), round(d[1], 3)] if d else None,
+                                   "rotulo": bool(d) or hi or k in (0, len(pts) - 1)})
                 T["puntos"], T["marcador"] = puntos, [round(ma, 3), round(mb, 3)]
                 ev += [(p["start"], "punto") for p in puntos]
                 sfx += [(p["start"], "resolucion" if p["hi"] else "tic") for p in puntos]
@@ -1848,7 +2588,7 @@ def cmd_tiempos(a):
         # transición de entrada (xfade en montar) del catálogo TRANSICIONES: por papel (giro, primera tarjeta, cierre)
         # y, si no, por tipo (texto, adivina, pantalla completa, tarjeta)
         S["transicion"] = None if n == 1 else TRANSICIONES[
-            "giro" if n == giro_n else "cierre" if tipo == "cierre" else "primera" if len(escenas) == 1 else
+            "giro" if n == giro_n else TRANSICION_DE[tipo] if tipo in TRANSICION_DE else "cierre" if tipo == "cierre" else "primera" if len(escenas) == 1 else
             "texto" if tipo in ("golpe", "definicion") else "adivina" if tipo == "adivina" else
             "completa" if tipo in PANTALLA_COMPLETA + ("explica",) else "tarjeta"]
         ev.append((dur, "fin"))
@@ -1877,7 +2617,8 @@ def cmd_tiempos(a):
         "version": 2, "colores": colores(st["paleta"]), "contexto_superior": g["contexto_superior"], "redes": REDES,
         "gancho": {"pantalla": (e1.get("cinetico") or {}).get("pantalla"), "linea": (e1.get("cinetico") or {}).get("linea")},
         "pago": {"n": pago_n, "t": round(pago_t, 3) if pago_t is not None else None},
-        "cierre": {"resumen": g["cierre"]["resumen"], "pregunta": g["cierre"]["pregunta"]},
+        "cierre": {"resumen": g["cierre"]["resumen"], "final": final_de(g["cierre"]), "pregunta": final_de(g["cierre"]),
+                   "tipo": g["cierre"].get("tipo") or "pregunta"},
         "transicion_s": TRANSICION, "total_s": round(total, 2), "escenas": escenas})
     for x in avisos:
         print("AVISO", x)
@@ -1890,8 +2631,8 @@ def cmd_tiempos(a):
 def cmd_grabar(a):
     trabajo = os.path.abspath(a.trabajo)
     st = estado(trabajo)
-    hilo_dir = os.path.join(RAIZ, st["hilo"])
-    args = ["node", os.path.join(RAIZ, "scripts", "video_grabar.js"), "--dir", trabajo, "--hilo", hilo_dir,
+    hilo_dir = os.path.join(RAIZ, st["hilo"]) if st.get("hilo") else None   # /noticias no tiene hilo ni tarjetas
+    args = ["node", os.path.join(RAIZ, "scripts", "video_grabar.js"), "--dir", trabajo, *(["--hilo", hilo_dir] if hilo_dir else []),
             "--fps", str(a.fps), "--formato", a.formato]
     if a.solo:
         args += ["--solo", a.solo]
@@ -1905,8 +2646,8 @@ def cmd_grabar(a):
         return falla("la grabación falló")
     # V7: el último cuadro de cada tarjeta animada es idéntico a su render estático
     esc = leer(os.path.join(trabajo, "escenas.json"))["escenas"]
-    htmls = [os.path.join(hilo_dir, "tuit_%d.html" % e["tuit"]) for e in esc if e["tuit"]]
-    if subprocess.run(["node", os.path.join(RAIZ, "scripts", "video_animar.js"), "--check", *htmls], cwd=RAIZ).returncode:
+    htmls = [os.path.join(hilo_dir, "tuit_%d.html" % e["tuit"]) for e in esc if e.get("tuit")] if hilo_dir else []
+    if htmls and subprocess.run(["node", os.path.join(RAIZ, "scripts", "video_animar.js"), "--check", *htmls], cwd=RAIZ).returncode:
         return falla("V7 el estado final de alguna tarjeta animada no coincide con su PNG")
     return 0
 
@@ -2070,11 +2811,16 @@ def cmd_montar(a):
     m1 = medir(mezcla)
     sal = os.path.join(trabajo, "salida")
     video = os.path.join(sal, "video_4x5.mp4" if f45 else "video.mp4")
-    ff("-i", video_solo, "-i", mezcla, "-filter_complex",
-       "[1:a]loudnorm=I=%s:TP=-1.5:LRA=11:measured_I=%.2f:measured_TP=%.2f:measured_LRA=%.2f:measured_thresh=%.2f:offset=%.2f:linear=true[a]"
-       % (LUFS, m1["input_i"], m1["input_tp"], m1["input_lra"], m1["input_thresh"], m1["target_offset"]),
-       "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-ar", "48000",
-       "-movflags", "+faststart", video)
+    v916 = os.path.join(sal, "video.mp4")
+    if f45 and os.path.exists(v916) and abs(ffprobe_dur(v916) - D) < 0.1:
+        # el feed lleva la pista ya masterizada del 9:16: el mismo sonido, sin otra pasada de AAC que mueva el pico
+        ff("-i", video_solo, "-i", v916, "-map", "0:v", "-map", "1:a", "-c", "copy", "-movflags", "+faststart", video)
+    else:
+        ff("-i", video_solo, "-i", mezcla, "-filter_complex",
+           "[1:a]loudnorm=I=%s:TP=-1.5:LRA=11:measured_I=%.2f:measured_TP=%.2f:measured_LRA=%.2f:measured_thresh=%.2f:offset=%.2f:linear=true[a]"
+           % (LUFS, m1["input_i"], m1["input_tp"], m1["input_lra"], m1["input_thresh"], m1["target_offset"]),
+           "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-ar", "48000",
+           "-movflags", "+faststart", video)
 
     # V8
     pr = json.loads(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "stream=codec_type,width,height,r_frame_rate",
@@ -2118,8 +2864,9 @@ def cmd_montar(a):
     redes = " · ".join("%s %s" % (r["nombre"], r["handle"]) for r in REDES)
     escribir_caption(os.path.join(sal, "caption.md"), g["caption"], redes, ffprobe_dur(video))
     e1 = E["escenas"][0]
-    if e1.get("tipo") in ("gancho", "golpe"):  # la portada se lee en silencio: cifra completa y línea entera
-        t_port = max(e1["T"]["pant"]["hasta"], (e1["T"]["linea"] or [{"start": 0}])[-1]["start"]) + 0.35
+    if e1.get("tipo") in ("gancho", "golpe"):  # la portada se lee en silencio: cifra completa, línea entera y el visual completo
+        fin_visual = max([x["t"] for x in e1.get("eventos") or [] if x["tipo"] in ("desborde_fin", "pareja_fin", "destacadas_fin", "pin_fin")] or [0])
+        t_port = max(e1["T"]["pant"]["hasta"], (e1["T"]["linea"] or [{"start": 0}])[-1]["start"], fin_visual) + 0.35
     else:
         t_port = e1["T"]["tit"] + 1.2
     # portadas: cuadros limpios (sin subtítulos ni barra) que Playwright vuelve a dibujar en el segundo elegido: la del
@@ -2133,7 +2880,7 @@ def cmd_montar(a):
         portadas.append({"nombre": "texto", "pagina": "portada", "archivo": os.path.join(sal, "portada_texto.png")})
     escribir(os.path.join(segs, "portadas.json"), portadas)
     st = estado(trabajo)
-    if subprocess.run(["node", os.path.join(RAIZ, "scripts", "video_grabar.js"), "--dir", trabajo, "--hilo", os.path.join(RAIZ, st["hilo"]),
+    if subprocess.run(["node", os.path.join(RAIZ, "scripts", "video_grabar.js"), "--dir", trabajo, *(["--hilo", os.path.join(RAIZ, st["hilo"])] if st.get("hilo") else []),
                        "--portadas", os.path.join(segs, "portadas.json")], cwd=RAIZ, stdout=subprocess.DEVNULL).returncode:
         return falla("las portadas no se dibujaron")
     print("video %.1f s · %.1f LUFS · %.1f dBTP · %d subtítulos · efectos %d · música %.2f con ducking → %s"
@@ -2152,6 +2899,9 @@ def cuadros_de(e):
     tipo = e.get("tipo")
     if tipo in ("gancho", "golpe", "definicion"):
         ts_ = [(primero("cifra_fin") or 0.5) + 0.15]
+        fin_v = next((x["t"] for x in ev if x["tipo"] in ("desborde_fin", "pareja_fin", "destacadas_fin", "pin_fin")), None)
+        if fin_v is not None:
+            ts_.append(fin_v + 0.3)
     elif tipo == "adivina":
         ts_ = [(ultimo("opcion") or 1.0) + 0.5] + ([primero("pausa") + 0.5] if primero("pausa") is not None else []) + \
               [(primero("revelado") or e["dur"] * 0.6) + 0.4]
@@ -2164,6 +2914,9 @@ def cuadros_de(e):
         ts_ = [(primero("pildora") or ultimo("punto") or e["dur"] * 0.6) + 0.5]
     elif tipo == "escala":
         ts_ = [(primero("destacadas") or e["dur"] * 0.5) + 1.0]
+    elif tipo in ("titular", "noticia"):   # /noticias: el titular entero, la cifra contada (o la fuente)
+        ts_ = [(ultimo("titular") or 0.8) + 0.4] + ([primero("cifra") + 1.1] if primero("cifra") is not None else
+                                                    [(primero("fuente") or e["dur"] * 0.6) + 0.5])
     elif tipo == "explica":
         pasos_ = [x["t"] for x in ev if x["tipo"] == "paso"]
         ts_ = ([pasos_[len(pasos_) // 2] + 0.5] if len(pasos_) > 2 else []) + [(pasos_[-1] if pasos_ else e["dur"] * 0.5) + 0.8]
@@ -2183,10 +2936,11 @@ _GENERO = {"uno": "un", "una": "un", "veintiuno": "veintiun", "veintiuna": "vein
 
 def tokens_escucha(texto, oido=False):
     """Palabras comparables: minúsculas, sin tildes ni puntuación, sin género en los numerales (una/uno → un,
-    doscientas → doscientos). En lo oído, antes, la coma decimal de whisper («1,8») pasa a punto y los dígitos a
-    palabras con numeros_es, igual que la locución."""
+    doscientas → doscientos). En lo oído, antes, el punto de miles de whisper («4.464», «12.878») se quita, la coma
+    decimal («1,8») pasa a punto y los dígitos a palabras con numeros_es, igual que la locución."""
     t = texto or ""
     if oido:
+        t = re.sub(r"(?<![\d.])\d{1,3}(?:\.\d{3})+(?![.,]?\d)", lambda m: m.group(0).replace(".", ""), t)
         t = re.sub(r"(?<=\d),(?=\d{1,2}(?!\d))", ".", t)
         NE.AVISOS.clear()
         try:
@@ -2304,6 +3058,24 @@ def ventanas_quietas(vals, fps=QUIETUD_FPS, minimo=QUIETUD_S, umbral=QUIETUD_UMB
     return out
 
 
+PRIMER_CUADRO_MIN = 0.015   # V15: fracción mínima de la zona de contenido con algo dibujado en el cuadro 0 del gancho
+
+
+def llenado_primer_cuadro(clip, f45=False):
+    """V15 (R12): fracción de píxeles de la zona de contenido (bajo la barra de arriba, sobre los subtítulos) que se
+    distinguen del fondo en el cuadro 0: el primer cuadro es la miniatura del feed y el del bucle."""
+    w, h = (108, 135) if f45 else (108, 192)
+    r = subprocess.run(["ffmpeg", "-v", "error", "-i", clip, "-frames:v", "1", "-vf", "scale=%d:%d,format=gray" % (w, h),
+                        "-f", "rawvideo", "-"], capture_output=True)
+    px = r.stdout
+    if len(px) < w * h:
+        return None
+    y0, y1 = (int(h * 0.12), int(h * 0.80)) if f45 else (int(h * 0.17), int(h * 0.71))
+    zona = [px[y * w + x] for y in range(y0, y1) for x in range(int(w * 0.08), int(w * 0.81))]
+    fondo = max(set(zona), key=zona.count)
+    return sum(1 for v in zona if abs(v - fondo) > 24) / len(zona)
+
+
 def cmd_revisar(a):
     trabajo = os.path.abspath(a.trabajo)
     E = leer(os.path.join(trabajo, "escenas.json"))["escenas"]
@@ -2344,6 +3116,11 @@ def cmd_revisar(a):
         quietud["escenas"][str(e["n"])] = {"movimiento": [round(v, 3) for v in vals], "quieto": tramos}
         avisos += ["V12 quietud: E%d %.1f s sin movimiento desde %.1f s" % (e["n"], d, t0) for t0, d in tramos]
     escribir(os.path.join(rev, "quietud%s.json" % suf), quietud)
+    # V15 primer cuadro (R12): el cuadro 0 del gancho ya cuenta algo (miniatura del feed y vuelta del bucle)
+    lleno = llenado_primer_cuadro(os.path.join(trabajo, clips_dir, "e1.mp4"), f45)
+    if lleno is not None and lleno < PRIMER_CUADRO_MIN:
+        avisos.append("V15 primer cuadro: el cuadro 0 del gancho está casi vacío (%.1f %% dibujado): la cifra o el visual "
+                      "van desde el primer cuadro" % (100 * lleno))
     for x in avisos:
         print("AVISO " + x)
     if avisos and getattr(a, "estricto", False):
@@ -2358,12 +3135,12 @@ def fps_de(clip):
 
 
 def portadas_alternativas(escenas):
-    """[(nombre, índice de escena, segundo)] de las portadas además de la del gancho: «pregunta» (el cierre con la
-    pregunta ya en pantalla) y «giro» (la escena que entra con slideup, con su cifra ya contada)."""
+    """[(nombre, índice de escena, segundo)] de las portadas además de la del gancho: «cierre» (la frase final, remate o
+    pregunta, ya en pantalla) y «giro» (la escena que entra con slideup, con su cifra ya contada)."""
     out = []
     ec = escenas[-1]
     if ec.get("tipo") == "cierre" and (ec.get("T") or {}).get("preg") is not None:
-        out.append(("pregunta", len(escenas) - 1, min(ec["T"]["preg"] + 0.8, ec["dur"] - 0.1)))
+        out.append(("cierre", len(escenas) - 1, min(ec["T"]["preg"] + 0.8, ec["dur"] - 0.1)))
     kg = next((k for k, e in enumerate(escenas) if e.get("transicion") == "slideup"), None)
     if kg is not None:
         eg, ev = escenas[kg], escenas[kg].get("eventos") or []
@@ -2378,6 +3155,21 @@ def portadas_alternativas(escenas):
 
 
 # ---------- entregar ----------
+def resumen_ganchos(trabajo):
+    """Para la entrega: los candidatos (familia, visual, pantalla), el elegido, el segundo (versión B) y los puntajes de
+    la selección; None si el video no pasó por la fase de ganchos."""
+    ruta = os.path.join(trabajo, "ganchos.json")
+    if not os.path.exists(ruta):
+        return None
+    G = leer(ruta)
+    sel = leer(os.path.join(trabajo, "seleccion.json")) if os.path.exists(os.path.join(trabajo, "seleccion.json")) else {}
+    return {"elegido": G.get("elegido"), "segundo": G.get("segundo"),
+            "candidatos": [{"id": c.get("id"), "familia": c.get("familia"), "visual": c.get("visual") or "cifra",
+                            "pantalla": c.get("pantalla")} for c in G.get("candidatos") or []],
+            "puntajes": sel.get("puntajes"),
+            "version_b": os.path.exists(os.path.join(trabajo, "salida", "video_b.mp4"))}
+
+
 def cmd_entregar(a):
     trabajo = os.path.abspath(a.trabajo)
     st = estado(trabajo)
@@ -2395,7 +3187,7 @@ def cmd_entregar(a):
         os.remove(f)
     for f in glob.glob(os.path.join(trabajo, "salida", "portada_*.png")):
         shutil.copy2(f, os.path.join(destino, os.path.basename(f)))
-    for f in ("salida/video_4x5.mp4", "revision/contacto_4x5.png"):  # la versión 4:5 para el feed
+    for f in ("salida/video_4x5.mp4", "revision/contacto_4x5.png", "salida/video_b.mp4"):  # el 4:5 del feed y la versión B
         if os.path.exists(os.path.join(trabajo, f)):
             shutil.copy2(os.path.join(trabajo, f), os.path.join(destino, os.path.basename(f)))
     shutil.copy2(os.path.join(trabajo, "revision", "contacto.png"), os.path.join(destino, "contacto.png"))
@@ -2415,14 +3207,22 @@ def cmd_entregar(a):
         "paleta": st["paleta"], "duracion": st["duracion"], "duracion_s": round(ffprobe_dur(os.path.join(destino, "video.mp4")), 1),
         "n_escenas": len(loc["escenas"]) - 1, "musica": st["musica"], "voz": loc["voz"], "velocidad": VELOCIDAD,
         "creditos_voz": creditos, "contexto_superior": g["contexto_superior"],
-        "gancho": {"formula": g1.get("formula"), "pantalla": g1.get("pantalla"), "linea": g1.get("linea")},
+        "gancho": {"familia": g1.get("familia"), "visual": g1.get("visual") or "cifra", "pantalla": g1.get("pantalla"),
+                   "linea": g1.get("linea"), **({"formula": g1["formula"]} if g1.get("formula") else {})},
+        "ganchos": resumen_ganchos(trabajo),
         "promesa": g.get("promesa"), "critica": critica,
         "escenas": [{"n": e["n"], "tipo": e.get("tipo"), "tuit": e["tuit"], "plantilla": e["plantilla"], "enlace": e.get("enlace"),
                      "golpe": e.get("golpe"), "cinetico": e.get("cinetico"), "adivina": e.get("adivina"), "icono": e.get("icono"), "pantalla": e["pantalla"], "voz": e["voz"],
+                     **({"animacion": s.get("animacion"), "mecanismo": (e.get("explica") or {}).get("mecanismo")}
+                        if e.get("tipo") == "explica" else {}),
                      "dur": s["dur"]} for e, s in zip(loc["escenas"], E["escenas"])],
         "cierre": g["cierre"], "caption": g["caption"],
     }
     escribir(os.path.join(destino, "guion.json"), entrega)
+    for aid in dict.fromkeys(x["animacion"] for x in entrega["escenas"] if x.get("animacion")):   # usos del catálogo
+        r = subprocess.run([sys.executable, os.path.join(RAIZ, "scripts", "animaciones.py"), "--registrar", aid, "--video", st["slug"]],
+                           capture_output=True, text=True)
+        print(r.stdout.strip() if r.returncode == 0 else "AVISO no se sumó el uso de «%s» al catálogo: %s" % (aid, r.stdout.strip()))
     print("entregado en %s (%.1f s) · video.mp4 (TikTok, Reels, Shorts) + video_4x5.mp4 (feed) · caption.md con %d "
           "plataformas" % (rel(destino), entrega["duracion_s"], len(PLATAFORMAS)))
     if entrega["duracion_s"] > SHORTS_MAX_S:
@@ -2453,9 +3253,19 @@ def main():
     p.add_argument("--musica")
     p.add_argument("--trabajo")
     p.add_argument("--permitir-borrador", action="store_true", help="solo para el fixture")
+    p.add_argument("--sin-rotacion", action="store_true", help="pruebas: sin bloquear las familias y visuales recientes (R9)")
+    p = sub.add_parser("ganchos", help="ganchos.json: --check de los candidatos o --usar el elegido como escena 1")
+    p.add_argument("trabajo")
+    x = p.add_mutually_exclusive_group(required=True)
+    x.add_argument("--check", action="store_true")
+    x.add_argument("--usar", nargs="?", const="", help="id del ganador (sin id: el de seleccion.json)")
+    p.add_argument("--segundo", help="id del segundo lugar (versión B); sin él, el de seleccion.json")
     p = sub.add_parser("guion")
     p.add_argument("trabajo")
     p.add_argument("--check", action="store_true", required=True)
+    p = sub.add_parser("variante", help="versión B del gancho (el segundo lugar): solo la voz de la escena 1")
+    p.add_argument("trabajo")
+    p.add_argument("--cerrar", action="store_true", help="copia variante_b/salida/video.mp4 → salida/video_b.mp4")
     for nombre in ("voz", "voz-falsa", "tiempos"):
         sub.add_parser(nombre).add_argument("trabajo")
     p = sub.add_parser("revisar")
@@ -2491,7 +3301,9 @@ def main():
     if not a.cmd:
         ap.print_help()
         return 2
-    return {"preparar": cmd_preparar, "guion": cmd_guion, "voz": cmd_voz, "descargar": cmd_descargar,
+    if a.cmd == "ganchos" and a.check:
+        a.usar = None
+    return {"preparar": cmd_preparar, "ganchos": cmd_ganchos, "guion": cmd_guion, "variante": cmd_variante, "voz": cmd_voz, "descargar": cmd_descargar,
             "voz-falsa": cmd_voz_falsa, "tiempos": cmd_tiempos, "grabar": cmd_grabar, "montar": cmd_montar,
             "revisar": cmd_revisar, "entregar": cmd_entregar, "musica": cmd_musica, "escuchar": cmd_escuchar,
             "whisper": cmd_whisper}[a.cmd](a)

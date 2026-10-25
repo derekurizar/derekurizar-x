@@ -2,7 +2,14 @@
 
 Generado por `scripts/ideas.py`: no editar a mano. Nuevas ideas con `/ideas`; producir una con `/hilo idea:<id>` (o `/hilo` sin tema toma la primera pendiente).
 
-0 pendientes · 0 en curso · 10 hechas · 2 descartadas
+2 pendientes · 0 en curso · 10 hechas · 3 descartadas
+
+## Pendientes
+
+| Puntaje | id | Idea | Área | Fuentes |
+|---|---|---|---|---|
+| 12 (5·3·4) | `canasta-basica-salario-minimo-2019-2026` | ¿Cuántos salarios mínimos cuesta la canasta básica? De 2019 a 2026 | economia | Banco de Guatemala, INE Guatemala |
+| 12 (4·3·5) | `igss-record-afiliados-informalidad` | IGSS bate récord con 1.81 millones de cotizantes: ¿y los demás trabajadores? | poblacion | IGSS, INE Guatemala |
 
 ## Hechas
 
@@ -21,3 +28,4 @@ Generado por `scripts/ideas.py`: no editar a mano. Nuevas ideas con `/ideas`; pr
 
 - `remesas-freno-2026-vs-2025` — Remesas: de +18% en 2025 a +7% en 2026, el freno mes a mes: Cuidar que no se solape con el hilo de tres gobiernos; usar solo 2025 vs 2026.
 - `retornados-2026-de-donde-vuelven` — 39 mil retornados en siete meses: de qué departamentos salen los deportados: El fetch a igm.gob.gt/informes-estadisticos/ dio 404; confirmar URL real del Excel (la portada enlaza Estadísticas). Cifras de prensa (Infobae/DCA, 7 ago 2026).
+- `sarampion-2026-region-cobertura-brote` — Sarampión 2026: la región frente a Guatemala, cobertura de vacunas y brote: ya cubierta por el dato 2026-10-06-sarampion-guatemala-2026

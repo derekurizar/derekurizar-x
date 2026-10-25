@@ -5,20 +5,27 @@ forma una cola en un anillo de tránsito, por qué la sequía termina en hambre,
 escribió su `brief`, su `titulo` y sus 2–6 `pasos`, y el crítico la aprobó; tú escribes la animación que lo cuenta,
 a medida para este video, y la dejas en la biblioteca `video/animaciones/` para que otro video la reutilice.
 
+**La biblioteca crece contigo.** Puedes crear todas las animaciones que hagan falta: cada una que pase `--check`
+queda como **plantilla** del mecanismo que muestra (paramétrica en `titulo` y `pasos`, sin nada del video que la
+pidió), y el próximo guionista la ve en su digesto. Una biblioteca con una sola forma hace que todos los videos se
+vean iguales: si el mecanismo pide algo nuevo, escríbelo.
+
 **Presupuesto**: ≤ 3 vueltas de `--check`; ≤ 3 lecturas de la hoja de contacto (`sesiones/_animaciones/<id>/contacto.png`,
 y `contacto_4x5.png` si dudas del formato del feed); sin web; ≤ 15 min. Escribes SOLO `video/animaciones/<id>.js`.
 
 ## Antes de escribir: ¿ya existe?
 
-Corre `python3 scripts/animaciones.py --lista`. Si una animación existente cuenta lo mismo con otros textos (una cadena
-causa → efecto, un ciclo, un tanque que se vacía) y admite ese número de pasos, **reutilízala**: `--registrar <id>
---video <slug>` y `--asignar …`, y devuelve `reutilizada: true`. Solo escribe una nueva si ninguna sirve.
+Corre `python3 scripts/animaciones.py --lista` (agrupada por mecanismo). Reutiliza una **solo si es del mismo
+`mecanismo`** que la escena, cuenta lo mismo con otros textos y admite ese número de pasos: `--registrar <id> --video
+<slug>` y `--asignar …`, y devuelve `reutilizada: true` (`--asignar` repasa el gate, que rechaza otro mecanismo y las
+animaciones de los últimos 2 videos). Si no hay una de ese mecanismo, o la que hay no muestra este caso, escribe una
+nueva. Para el contrato puedes mirar cualquier módulo de la biblioteca, pero no copies la forma de cajas de `cadena`.
 
 ## El contrato del módulo
 
 ```js
 ANIM.registrar('<id>', {
-  meta: { descripcion, temas: [...], pasos: [mín, máx], ejemplo: { titulo, pasos: [...] } },
+  meta: { descripcion, mecanismo, temas: [...], pasos: [mín, máx], ejemplo: { titulo, pasos: [...] } },
   pintar(lienzo, P, ctx) { … },   // construye el DOM/SVG una vez
   seek(t, T) { … },               // pone cada elemento en su estado en el segundo t
 });
@@ -26,7 +33,8 @@ ANIM.registrar('<id>', {
 
 - **id**: minúsculas y guiones, por lo que la animación HACE, no por el video (`cola-anillo`, `tanque-balance`,
   `ciclo-vicioso`, `ola-calor`), para que sirva a otros temas. El archivo es `video/animaciones/<id>.js`.
-- **meta**: `descripcion` (10–160 caracteres, qué muestra), `temas` (palabras para encontrarla), `pasos` [mín, máx]
+- **meta**: `descripcion` (10–160 caracteres, qué muestra), `mecanismo` (uno de `cadena|ciclo|balance|onda|embudo|
+  proporcion|umbral|cronologia`, el de la escena: con él la encuentra el próximo guionista), `temas` (palabras para encontrarla), `pasos` [mín, máx]
   dentro de 2–6, y `ejemplo` con un título y pasos reales: con ese ejemplo se prueba en `--check`.
 - **`pintar(lienzo, P, ctx)`**: `lienzo` es un `div` de `ctx.ancho` × `ctx.alto` px (≈ 791 × 900 en 9:16; ≈ 910 × 800
   en 4:5) entre el título de arriba y los subtítulos; `P = {titulo, pasos}` (textos del guion); `ctx = {colores, F45,
@@ -80,3 +88,11 @@ ANIM.registrar('<id>', {
 ## Salida
 
 `{id, archivo: "video/animaciones/<id>.js", check: ok|falla, fallas[], lecturas, vueltas, reutilizada}`.
+
+## Modo historia (`/historia`)
+
+Igual, con dos diferencias: la animación explica el **mecanismo de la historia** (cómo funcionaba el contrato, la
+ruta que siguió el producto, por qué una decisión llevó a la siguiente), y el guion es el de `/historia`
+(`--asignar` corre `historia.py guion --check`, que también exige que cada año y número de los pasos esté en la
+cronología). Registra con `--video <slug de la historia>`. Antes de escribir una nueva, revisa `cronologia` (una línea
+de eventos con fecha) y `cadena` en el catálogo.

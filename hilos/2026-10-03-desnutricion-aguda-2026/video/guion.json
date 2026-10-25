@@ -1,0 +1,294 @@
+{
+ "id": "2026-10-03-desnutricion-aguda-2026",
+ "slug": "desnutricion-aguda-2026",
+ "hilo": "hilos/2026-10-03-desnutricion-aguda-2026",
+ "paleta": "terracota",
+ "duracion": "medio",
+ "duracion_s": 109.6,
+ "n_escenas": 9,
+ "musica": "terracota-1",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2053.0,
+ "contexto_superior": "Desnutrición aguda · Guatemala 2026",
+ "gancho": {
+  "familia": "escala",
+  "visual": "figuras",
+  "pantalla": "6 de cada 7",
+  "linea": "muertos por desnutrición eran menores de 2 años"
+ },
+ "ganchos": {
+  "elegido": "g4",
+  "segundo": "g1",
+  "candidatos": [
+   {
+    "id": "g1",
+    "familia": "contraste",
+    "visual": "pareja",
+    "pantalla": "Severos: casi no bajaron"
+   },
+   {
+    "id": "g2",
+    "familia": "paradoja",
+    "visual": "pareja",
+    "pantalla": "Bajan casos, no muertes"
+   },
+   {
+    "id": "g3",
+    "familia": "lugar",
+    "visual": "lugar",
+    "pantalla": "Suchitepéquez"
+   },
+   {
+    "id": "g4",
+    "familia": "escala",
+    "visual": "figuras",
+    "pantalla": "6 de cada 7"
+   },
+   {
+    "id": "g5",
+    "familia": "resultado",
+    "visual": "cifra",
+    "pantalla": "43 en análisis"
+   }
+  ],
+  "puntajes": {
+   "g1": {
+    "silencio": 3,
+    "referente": 5,
+    "tension": 4,
+    "alineacion": 4,
+    "honestidad": 4,
+    "novedad": 5
+   },
+   "g2": {
+    "silencio": 3,
+    "referente": 5,
+    "tension": 5,
+    "alineacion": 4,
+    "honestidad": 2,
+    "novedad": 5
+   },
+   "g3": {
+    "silencio": 4,
+    "referente": 5,
+    "tension": 3,
+    "alineacion": 5,
+    "honestidad": 4,
+    "novedad": 3
+   },
+   "g4": {
+    "silencio": 4,
+    "referente": 5,
+    "tension": 5,
+    "alineacion": 4,
+    "honestidad": 4,
+    "novedad": 5
+   },
+   "g5": {
+    "silencio": 3,
+    "referente": 4,
+    "tension": 3,
+    "alineacion": 5,
+    "honestidad": 4,
+    "novedad": 4
+   }
+  },
+  "version_b": false
+ },
+ "promesa": {
+  "texto": "Antes del cierre verás cuántas muertes siguen sin dictamen.",
+  "en": 2,
+  "pago": 9
+ },
+ "critica": {
+  "veredicto": "pasa",
+  "vuelta": 2,
+  "puntajes": {
+   "gancho": 4,
+   "bucle": 4,
+   "ritmo": 4,
+   "escala_humana": 4,
+   "pago": 5,
+   "cierre": 4
+  }
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "tuit": null,
+   "plantilla": "gancho",
+   "enlace": null,
+   "golpe": null,
+   "cinetico": {
+    "pantalla": "6 de cada 7",
+    "linea": "muertos por desnutrición eran menores de 2 años"
+   },
+   "adivina": null,
+   "icono": null,
+   "pantalla": "6 de cada 7 eran menores de 2 años. Son los niños muertos por desnutrición este año en Guatemala.",
+   "voz": "Seis de cada siete eran menores de dos años. Son los niños muertos por desnutrición este año en Guatemala.",
+   "dur": 7.333
+  },
+  {
+   "n": 2,
+   "tipo": "tarjeta",
+   "tuit": 1,
+   "plantilla": "barras-v",
+   "enlace": null,
+   "golpe": "Menos niños diagnosticados",
+   "cinetico": null,
+   "adivina": null,
+   "icono": null,
+   "pantalla": "Y eso que hay menos casos: este año van 15,454 niños diagnosticados, un 7.6% menos que hace un año. Antes del cierre verás cuántas muertes siguen sin dictamen.",
+   "voz": "Y eso que hay menos casos: este año van quince mil cuatrocientos cincuenta y cuatro niños diagnosticados, un siete punto seis por ciento menos que hace un año. Antes del cierre verás cuántas muertes siguen sin dictamen.",
+   "dur": 15.483
+  },
+  {
+   "n": 3,
+   "tipo": "tarjeta",
+   "tuit": 5,
+   "plantilla": "pesas",
+   "enlace": "pero",
+   "golpe": "Los graves no se movieron",
+   "cinetico": null,
+   "adivina": null,
+   "icono": null,
+   "pantalla": "Pero casi toda la baja está en los casos moderados: este año hay 1,261 casos menos que a esta misma semana de 2025.",
+   "voz": "Pero casi toda la baja está en los casos moderados: este año hay mil doscientos sesenta y un casos menos que a esta misma semana de dos mil veinticinco.",
+   "dur": 10.846
+  },
+  {
+   "n": 4,
+   "tipo": "golpe",
+   "tuit": null,
+   "plantilla": "golpe",
+   "enlace": "por_eso",
+   "golpe": null,
+   "cinetico": {
+    "pantalla": "6 casos menos",
+    "linea": "en desnutrición severa que hace un año"
+   },
+   "adivina": null,
+   "icono": null,
+   "pantalla": "Así que en desnutrición severa hay apenas 6 casos menos que hace un año.",
+   "voz": "Así que en desnutrición severa hay apenas seis casos menos que hace un año.",
+   "dur": 5.985
+  },
+  {
+   "n": 5,
+   "tipo": "tarjeta",
+   "tuit": 6,
+   "plantilla": "apilada",
+   "enlace": "y",
+   "golpe": "34 muertes, como hace un año",
+   "cinetico": null,
+   "adivina": null,
+   "icono": null,
+   "pantalla": "Y las muertes confirmadas tampoco bajan: 34 niños este año, igual que a esa altura de 2025, que cerró con 75.",
+   "voz": "Y las muertes confirmadas tampoco bajan: treinta y cuatro niños este año, igual que a esa altura de dos mil veinticinco, que cerró con setenta y cinco.",
+   "dur": 10.037
+  },
+  {
+   "n": 6,
+   "tipo": "mapa",
+   "tuit": 3,
+   "plantilla": "mapa",
+   "enlace": "y",
+   "golpe": "220 frente a 86",
+   "cinetico": null,
+   "adivina": null,
+   "icono": null,
+   "pantalla": "Y los casos no se reparten parejo: Suchitepéquez tiene 220 casos por cada 10,000 niños, Escuintla 152 y el promedio del país, 86. Suchitepéquez tiene más del doble que el promedio.",
+   "voz": "Y los casos no se reparten parejo: Suchitepéquez tiene doscientos veinte casos por cada diez mil niños, Escuintla ciento cincuenta y dos y el promedio del país, ochenta y seis. Suchitepéquez tiene más del doble que el promedio.",
+   "dur": 15.324
+  },
+  {
+   "n": 7,
+   "tipo": "ranking",
+   "tuit": 9,
+   "plantilla": "barras-h",
+   "enlace": "pero",
+   "golpe": "¿Dónde mueren más niños?",
+   "cinetico": null,
+   "adivina": null,
+   "icono": null,
+   "pantalla": "Pero las muertes no siguen al mapa de casos: San Marcos suma 7, Huehuetenango 7 y Alta Verapaz, 9. Ninguna está entre las de tasa más alta.",
+   "voz": "Pero las muertes no siguen al mapa de casos: San Marcos suma siete, Huehuetenango siete y Alta Verapaz, nueve. Ninguna está entre las de tasa más alta.",
+   "dur": 11.353
+  },
+  {
+   "n": 8,
+   "tipo": "explica",
+   "tuit": null,
+   "plantilla": "explica",
+   "enlace": "pero",
+   "golpe": null,
+   "cinetico": {
+    "pantalla": "Cómo se confirma una muerte",
+    "linea": "Se notifica la sospecha · Se investiga el caso · Una mesa técnica revisa · Se confirma o se descarta"
+   },
+   "adivina": null,
+   "icono": null,
+   "pantalla": "Solo que ese conteo no está cerrado: se notifica la sospecha, se investiga el caso, una mesa técnica revisa y se confirma o se descarta.",
+   "voz": "Solo que ese conteo no está cerrado: se notifica la sospecha, se investiga el caso, una mesa técnica revisa y se confirma o se descarta.",
+   "dur": 10.083
+  },
+  {
+   "n": 9,
+   "tipo": "tarjeta",
+   "tuit": 7,
+   "plantilla": "barras-v",
+   "enlace": "por_eso",
+   "golpe": "43 muertes, aún por confirmar",
+   "cinetico": null,
+   "adivina": null,
+   "icono": null,
+   "pantalla": "Por eso el conteo va atrasado: 43 muertes siguen sin dictamen, más que las 34 ya confirmadas, y 16 ocurrieron en agosto. Son niños, no tasas.",
+   "voz": "Por eso el conteo va atrasado: cuarenta y tres muertes siguen sin dictamen, más que las treinta y cuatro ya confirmadas, y dieciséis ocurrieron en agosto. Son niños, no tasas.",
+   "dur": 12.647
+  },
+  {
+   "n": 10,
+   "tipo": "cierre",
+   "tuit": null,
+   "plantilla": "cierre",
+   "enlace": null,
+   "golpe": null,
+   "cinetico": null,
+   "adivina": null,
+   "icono": null,
+   "pantalla": "Bajan los casos, pero no los severos ni las muertes confirmadas, y el conteo sigue abierto. Este año, 34 familias ya enterraron a un hijo por desnutrición.",
+   "voz": "Bajan los casos, pero no los severos ni las muertes confirmadas, y el conteo sigue abierto. Este año, treinta y cuatro familias ya enterraron a un hijo por desnutrición.",
+   "dur": 12.817
+  }
+ ],
+ "cierre": {
+  "texto": "Bajan los casos, pero no los severos ni las muertes confirmadas, y el conteo sigue abierto. Este año, 34 familias ya enterraron a un hijo por desnutrición.",
+  "resumen": [
+   "Menos casos, los mismos severos",
+   "34 muertes, igual que hace un año",
+   "43 muertes aún sin dictamen"
+  ],
+  "tipo": "remate",
+  "forma": "consecuencia",
+  "final": "Este año, 34 familias ya enterraron a un hijo por desnutrición.",
+  "consecuencia": {
+   "mecanismo": "quien",
+   "quien": "34 familias",
+   "verbo": "enterraron"
+  }
+ },
+ "caption": {
+  "tiktok": "6 de cada 7 niños que murieron por desnutrición en Guatemala este año no tenían 2 años.\n¿Cuántas muertes siguen sin dictamen? Esa cifra aparece al final del video.\n#Guatemala #DatosGT #Desnutrición",
+  "instagram": "6 de cada 7 niños fallecidos por desnutrición en Guatemala no tenían 2 años, y hay menos casos que en 2025.\nGuárdalo para cuando alguien diga que el hambre infantil ya bajó.\n#Guatemala #DatosGT #Desnutrición #Niñez #Salud",
+  "facebook": "6 de cada 7 niños fallecidos por desnutrición en Guatemala en 2026 no tenían 2 años.\n▸ 15,454 niños diagnosticados hasta la semana 36, un 7.58% menos que en 2025\n▸ Casos severos: 2,684 en 2025 y 2,678 en 2026\n▸ 34 muertes confirmadas, las mismas que a esa semana de 2025\n▸ Suchitepéquez: 219.69 casos por cada 10,000 menores de 5 años; el país, 85.84\n▸ ¿Cuántas muertes siguen sin dictamen? Está al final del video.\nFuentes: MSPAS/DEGR, situación epidemiológica y mesa técnica de análisis de mortalidad, semana 36 de 2026; SIINSAN/SESAN.",
+  "shorts": "Desnutrición en Guatemala 2026: 6 de cada 7 niños fallecidos no tenían 2 años\nHay menos casos que en 2025, pero los severos y las muertes confirmadas no bajan. ¿Cuántas faltan por confirmar?\n#Shorts #Guatemala #DatosGT"
+ }
+}

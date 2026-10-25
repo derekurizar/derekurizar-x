@@ -5,7 +5,7 @@ reutilizarlas. Cada una es video/animaciones/<id>.js con ANIM.registrar('<id>', 
 referencias/roles/video-animador.md); catalogo.json lo escribe SOLO este script.
 
 Uso:
-  python3 scripts/animaciones.py --lista                             las animaciones del catálogo
+  python3 scripts/animaciones.py --lista                             las animaciones del catálogo, por mecanismo
   python3 scripts/animaciones.py --check ID [--paleta P] [--salida D] lint + node --check + meta + grabación doble a
                                                                      10 fps (framemd5 igual) + 4:5 + quietud V12 +
                                                                      hojas de contacto (una por paso) en D
@@ -113,7 +113,10 @@ def fallas_meta(meta):
     lo_hi = VID.EXPLICA_PASOS
     out = []
     if not isinstance(meta, dict):
-        return ["falta `meta` {descripcion, temas, pasos: [mín, máx], ejemplo: {titulo, pasos}}"]
+        return ["falta `meta` {descripcion, mecanismo, temas, pasos: [mín, máx], ejemplo: {titulo, pasos}}"]
+    if meta.get("mecanismo") not in VID.MECANISMOS_EXPLICA:
+        out.append("meta.mecanismo: uno de %s (lo que la animación muestra; solo se reutiliza para ese mecanismo)"
+                   % "|".join(VID.MECANISMOS_EXPLICA))
     if not 10 <= len(str(meta.get("descripcion") or "")) <= 160:
         out.append("meta.descripcion de 10–160 caracteres")
     if not isinstance(meta.get("temas"), list) or not meta["temas"]:
@@ -245,7 +248,7 @@ def cmd_registrar(a):
     if nueva:
         ent = {"id": aid, "origen": a.video or "semilla", "usos": []}
         cat["animaciones"].append(ent)
-    ent.update({"descripcion": meta["descripcion"], "temas": meta["temas"], "pasos": meta["pasos"], "ejemplo": meta["ejemplo"]})
+    ent.update({"descripcion": meta["descripcion"], "mecanismo": meta["mecanismo"], "temas": meta["temas"], "pasos": meta["pasos"], "ejemplo": meta["ejemplo"]})
     if a.video and a.video not in ent["usos"]:
         ent["usos"].append(a.video)
     cat["animaciones"].sort(key=lambda x: x["id"])
@@ -271,12 +274,16 @@ def cmd_asignar(a):
     es[a.escena - 1]["animacion"] = a.id
     escribir(p, g)
     print("escena %d → animacion «%s»" % (a.escena, a.id))
-    return subprocess.run([sys.executable, os.path.join(RAIZ, "scripts", "video.py"), "guion", trabajo, "--check"]).returncode
+    # el gate del guion es el del flujo del TRABAJO: /historia tiene el suyo (que llama al de /video con sus escenas)
+    st = os.path.join(trabajo, "video.json")
+    script = "historia.py" if os.path.exists(st) and leer(st).get("tipo") == "historia" else "video.py"
+    return subprocess.run([sys.executable, os.path.join(RAIZ, "scripts", script), "guion", trabajo, "--check"]).returncode
 
 
 def fallas_k4():
     """K4 (validate.py): el catálogo es JSON con {animaciones: [...]}, cada entrada tiene su archivo y pasa el lint, y
     no hay módulos sin entrada."""
+    import video as VID
     out = []
     try:
         cat = catalogo()
@@ -293,6 +300,9 @@ def fallas_k4():
         ps = x.get("pasos")
         if not (isinstance(ps, list) and len(ps) == 2):
             out.append("%s: la entrada no tiene pasos [mín, máx] (corre --registrar)" % aid)
+        if x.get("mecanismo") not in VID.MECANISMOS_EXPLICA:
+            out.append("%s: la entrada no tiene mecanismo de %s (pon meta.mecanismo y corre --registrar)"
+                       % (aid, "|".join(VID.MECANISMOS_EXPLICA)))
     if len(ids) != len(set(ids)):
         out.append("ids repetidos en el catálogo")
     sueltos = sorted(f[:-3] for f in os.listdir(DIR) if f.endswith(".js") and f[:-3] not in ids) if os.path.isdir(DIR) else []
@@ -315,9 +325,16 @@ def main():
     ap.add_argument("--escena", type=int, help="número de la escena explica (--asignar)")
     ap.add_argument("--id", help="id de la animación (--asignar)")
     a = ap.parse_args()
-    if a.lista:
-        for x in catalogo()["animaciones"]:
-            print("%-24s %d–%d pasos · %s · usos: %s" % (x["id"], *x.get("pasos", [0, 0]), x.get("descripcion", ""), ", ".join(x.get("usos") or []) or "—"))
+    if a.lista:   # por mecanismo: una animación se reutiliza solo para el mismo (video.py MECANISMOS_EXPLICA)
+        import video as VID
+        cat = catalogo()["animaciones"]
+        for m, que in VID.MECANISMOS_EXPLICA.items():
+            print("%s — %s" % (m, que))
+            for x in [x for x in cat if x.get("mecanismo") == m] or [None]:
+                print("  %s" % ("(ninguna aún: el animador escribe la primera)" if x is None else "%-22s %d–%d pasos · %s · usos: %s" % (
+                    x["id"], *x.get("pasos", [0, 0]), x.get("descripcion", ""), ", ".join(x.get("usos") or []) or "—")))
+        for x in [x for x in cat if x.get("mecanismo") not in VID.MECANISMOS_EXPLICA]:
+            print("SIN MECANISMO %s (corre --registrar %s)" % (x["id"], x["id"]))
         return 0
     if a.check:
         return cmd_check(a)

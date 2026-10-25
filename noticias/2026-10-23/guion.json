@@ -1,0 +1,175 @@
+{
+ "id": "2026-10-23",
+ "tipo": "noticias",
+ "fecha": "2026-10-23",
+ "paleta": "obsidiana",
+ "musica": "obsidiana-2",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 912.0,
+ "duracion_s": 62.9,
+ "critica": {
+  "veredicto": "pasa",
+  "vuelta": 2,
+  "puntajes": {
+   "gancho": 4,
+   "claridad": 4,
+   "ritmo": 4,
+   "precision": 5,
+   "tono": 5,
+   "cierre": 4
+  }
+ },
+ "contexto_superior": "Guatemala · 23 oct 2026",
+ "gancho": {
+  "noticia": "pol-1",
+  "pantalla": "Guatemala suma tres aviones contra incendios",
+  "texto": "Guatemala suma tres aviones para apagar incendios."
+ },
+ "noticias": [
+  {
+   "id": "pol-1",
+   "seccion": "Gobierno",
+   "titular": "Fuerza Aérea incorpora cuatro aeronaves",
+   "fuente": "AGN · Prensa Libre",
+   "estado": "confirmada",
+   "breve": false,
+   "cifra": {
+    "texto": "Q230 M",
+    "etiqueta": "inversión aproximada"
+   },
+   "foto": {
+    "credito": "Foto: AGN",
+    "origen": "oficial"
+   },
+   "urls": [
+    "https://agn.gt/presidente-sobre-nuevas-aeronaves-hoy-guatemala-cuenta-con-medios-que-no-tenia-para-enfrentar-emergencias/",
+    "https://www.prensalibre.com/guatemala/politica/guatemala-presenta-aviones-adquiridos-a-ee-uu-para-combatir-incendios-forestales-y-atender-emergencias-breaking/"
+   ]
+  },
+  {
+   "id": "eco-2",
+   "seccion": "Economía",
+   "titular": "70 % de usuarios dejó la gasolina regular",
+   "fuente": "MEM · Prensa Libre",
+   "estado": "en_desarrollo",
+   "breve": false,
+   "cifra": {
+    "texto": "70 %",
+    "etiqueta": "pasó de regular a superior"
+   },
+   "foto": {
+    "credito": "Foto: Prensa Libre",
+    "origen": "medio"
+   },
+   "urls": [
+    "https://www.prensalibre.com/economia/etanol-en-guatemala-siete-de-cada-diez-usuarios-de-regular-migraron-a-la-superior-en-dos-meses-segun-el-mem/"
+   ]
+  },
+  {
+   "id": "pol-2",
+   "seccion": "Justicia",
+   "titular": "Sala cierra caso de militares por fusiles",
+   "fuente": "Prensa Libre · Prensa Comunitaria",
+   "estado": "confirmada",
+   "breve": false,
+   "cifra": {
+    "texto": "74",
+    "etiqueta": "fusiles sustraídos"
+   },
+   "foto": null,
+   "urls": [
+    "https://www.prensalibre.com/guatemala/politica/sala-de-apelaciones-libra-a-tres-militares-por-hurto-de-74-fusiles-y-municiones-del-comando-aereo-de-peten/",
+    "https://prensacomunitaria.org/2026/10/militares-se-libran-de-ir-a-juicio-por-robo-de-arsenal-del-ejercito-en-peten/"
+   ]
+  },
+  {
+   "id": "seg-1",
+   "seccion": "Seguridad",
+   "titular": "Asesinan a condenado por crimen de periodista",
+   "fuente": "Sistema Penitenciario · AGN",
+   "estado": "en_desarrollo",
+   "breve": true,
+   "cifra": null,
+   "foto": {
+    "credito": "Foto: AGN",
+    "origen": "oficial"
+   },
+   "urls": [
+    "https://agn.gt/sp-aclara-que-cardona-condenado-por-asesinato-de-un-periodista-salio-de-prision-en-2024-por-orden-judicial/"
+   ]
+  }
+ ],
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "titular",
+   "noticia": "pol-1",
+   "pantalla": "Guatemala suma tres aviones para apagar incendios.",
+   "voz": "Guatemala suma tres aviones para apagar incendios.",
+   "dur": 4.003
+  },
+  {
+   "n": 2,
+   "tipo": "noticia",
+   "noticia": "pol-1",
+   "pantalla": "El presidente Bernardo Arévalo presentó la nueva flota de la Fuerza Aérea: tres aviones combaten incendios desde el aire y uno sirve para transporte y evacuaciones médicas. La compra costó unos Q230 millones.",
+   "voz": "El presidente Bernardo Arévalo presentó la nueva flota de la Fuerza Aérea: tres aviones combaten incendios desde el aire y uno sirve para transporte y evacuaciones médicas. La compra costó unos doscientos treinta millones de quetzales.",
+   "dur": 15.485
+  },
+  {
+   "n": 3,
+   "tipo": "noticia",
+   "noticia": "eco-2",
+   "pantalla": "En economía, el Ministerio de Energía y Minas informó al Congreso que el 70 % de quienes usaban gasolina regular pasó a la superior. El ministro lo atribuyó a la desconfianza hacia la mezcla con etanol.",
+   "voz": "En economía, el Ministerio de Energía y Minas informó al Congreso que el setenta por ciento de quienes usaban gasolina regular pasó a la superior. El ministro lo atribuyó a la desconfianza hacia la mezcla con etanol.",
+   "dur": 13.788
+  },
+  {
+   "n": 4,
+   "tipo": "noticia",
+   "noticia": "pol-2",
+   "pantalla": "En justicia, la Sala de Apelaciones de Petén rechazó la apelación del Ministerio Público y mantuvo cerrado el caso de tres militares por la sustracción de 74 fusiles. Solo uno de los cuatro procesados irá a juicio.",
+   "voz": "En justicia, la Sala de Apelaciones de Petén rechazó la apelación del Ministerio Público y mantuvo cerrado el caso de tres militares por la sustracción de setenta y cuatro fusiles. Solo uno de los cuatro procesados irá a juicio.",
+   "dur": 14.375
+  },
+  {
+   "n": 5,
+   "tipo": "noticia",
+   "noticia": "seg-1",
+   "pantalla": "Y en Retalhuleu asesinaron a un condenado por matar a un periodista; según Presidios, un juez lo había liberado.",
+   "voz": "Y en Retalhuleu asesinaron a un condenado por matar a un periodista; según Presidios, un juez lo había liberado.",
+   "dur": 8.518
+  },
+  {
+   "n": 6,
+   "tipo": "cierre",
+   "noticia": null,
+   "pantalla": "Eso fue lo más importante de hoy en Guatemala. Mañana volvemos con más.",
+   "voz": "Eso fue lo más importante de hoy en Guatemala. Mañana volvemos con más.",
+   "dur": 7.78
+  }
+ ],
+ "cierre": {
+  "rotulo": "Hoy en Guatemala",
+  "resumen": [
+   "Tres aviones contra incendios",
+   "70 % dejó la gasolina regular",
+   "Sala libra a tres militares",
+   "Retalhuleu: asesinan a condenado"
+  ],
+  "texto": "Eso fue lo más importante de hoy en Guatemala. Mañana volvemos con más.",
+  "final": "Mañana volvemos con más."
+ },
+ "caption": {
+  "tiktok": "Las noticias de hoy en Guatemala en un minuto: nuevos aviones contra incendios, la gasolina regular tras el etanol, el caso de los fusiles en Petén y un crimen en Retalhuleu. #Guatemala #Noticias",
+  "instagram": "Lo más importante de hoy en Guatemala, verificado y con su fuente: aviones contra incendios, gasolina, justicia y seguridad. #Guatemala #NoticiasGuatemala",
+  "facebook": "Las noticias de hoy en Guatemala en un minuto, verificadas y con su fuente. Fuentes en el primer comentario.",
+  "shorts": "Noticias de Guatemala hoy: aviones contra incendios, gasolina y justicia #Shorts\nLo más importante del día, con su fuente."
+ }
+}

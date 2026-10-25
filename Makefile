@@ -6,7 +6,7 @@ GALERIA := templates/.galeria
 PALETAS ?= cielo
 PALETA ?= cielo
 
-.PHONY: help nuevo render visual catalogo validate tabla pdf ensamblar limpiar test doctor costo contacto digesto fuentes ideas calendario informe informe-ejemplo informe-catalogo informe-fixture verificacion auditoria-rehacer podar video-fixture video-fixture-4x5 musica whisper iconos
+.PHONY: help nuevo render visual catalogo validate tabla pdf ensamblar limpiar test doctor costo contacto digesto fuentes ideas calendario informe informe-ejemplo informe-catalogo informe-fixture verificacion auditoria-rehacer podar video-fixture video-fixture-4x5 noticias-fixture historia-fixture musica whisper iconos
 
 help:
 	@echo "make nuevo T=<plantilla> OUT=<ruta.html> [PALETA=cielo]  ensambla una tarjeta (base + plantilla)"
@@ -30,6 +30,8 @@ help:
 	@echo "make informe-catalogo [PAL=x]                            genera y renderiza investigacion/ejemplos/catalogo (todos los G.* en papel, panel y media página; PNG por página)"
 	@echo "make informe-fixture                                     informe de prueba (8 páginas) sobre sesiones/_fixture/salida, sin agentes (requiere el fixture ensamblado)"
 	@echo "make video-fixture [FPS=10]                              /video de prueba sin créditos (voz falsa) sobre sesiones/_fixture/salida → sesiones/_fixture_video/salida"
+	@echo "make noticias-fixture [FPS=10]                           /noticias de prueba (maqueta: noticias de ejemplo, voz falsa, 0 créditos) → sesiones/_fixture_noticias/trabajo/salida"
+	@echo "make historia-fixture [FPS=10]                           /historia de prueba (maqueta: una panadería inventada, voz falsa, 0 créditos) → sesiones/_fixture_historia/trabajo/salida"
 	@echo "make musica                                              catálogo fijo de música de /video (design/musica/) y sus usos"
 	@echo "make whisper                                             baja una vez el modelo ggml-small de whisper.cpp (escucha V11 de /video; antes: brew install whisper-cpp)"
 	@echo "make iconos                                              biblioteca FIJA de iconos de /video (design/iconos/, Lucide; se baja UNA vez) y su check K3"
@@ -140,8 +142,10 @@ VF := sesiones/_fixture_video
 video-fixture:
 	@test -s sesiones/_fixture/salida/hilo.json || { echo "Primero: python3 scripts/materializar.py sesiones/_fixture && python3 scripts/ensamblar.py sesiones/_fixture --check"; exit 2; }
 	rm -rf $(VF)/trabajo $(VF)/salida
-	python3 scripts/video.py preparar sesiones/_fixture/salida --duracion prueba --trabajo $(VF)/trabajo --permitir-borrador > /dev/null
-	cp $(VF)/guion.json $(VF)/trabajo/guion.json
+	python3 scripts/video.py preparar sesiones/_fixture/salida --duracion prueba --trabajo $(VF)/trabajo --permitir-borrador --sin-rotacion > /dev/null
+	cp $(VF)/guion.json $(VF)/ganchos.json $(VF)/seleccion.json $(VF)/trabajo/
+	python3 scripts/video.py ganchos $(VF)/trabajo --check
+	python3 scripts/video.py ganchos $(VF)/trabajo --usar
 	python3 scripts/video.py guion $(VF)/trabajo --check
 	python3 scripts/video.py voz-falsa $(VF)/trabajo
 	python3 scripts/video.py tiempos $(VF)/trabajo
@@ -165,6 +169,38 @@ video-fixture-4x5:   # sobre el trabajo que dejó video-fixture: vuelve a grabar
 	python3 scripts/video.py montar $(VF)/trabajo --formato 4:5
 	python3 scripts/video.py revisar $(VF)/trabajo --formato 4:5
 	python3 scripts/video.py entregar $(VF)/trabajo --salida $(VF)/salida
+
+NF := sesiones/_fixture_noticias
+noticias-fixture:   # maqueta de /noticias: noticias de ejemplo con fotos generadas, voz falsa, 9:16 y 4:5
+	rm -rf $(NF)/trabajo
+	python3 scripts/noticias.py preparar --fecha 2026-10-23 --trabajo $(NF)/trabajo --fixture
+	python3 scripts/noticias.py guion $(NF)/trabajo --check
+	python3 scripts/noticias.py voz-falsa $(NF)/trabajo
+	python3 scripts/noticias.py tiempos $(NF)/trabajo
+	python3 scripts/noticias.py grabar $(NF)/trabajo --fps $(FPS)
+	python3 scripts/noticias.py montar $(NF)/trabajo
+	python3 scripts/noticias.py revisar $(NF)/trabajo
+	python3 scripts/noticias.py grabar $(NF)/trabajo --fps $(FPS) --formato 4:5
+	python3 scripts/noticias.py montar $(NF)/trabajo --formato 4:5
+	python3 scripts/noticias.py revisar $(NF)/trabajo --formato 4:5
+
+HF := sesiones/_fixture_historia
+historia-fixture:   # maqueta de /historia: hechos verificados de ejemplo, fotos generadas, voz falsa, 9:16 y 4:5
+	rm -rf $(HF)/trabajo
+	python3 scripts/historia.py preparar "La panadería La Espiga de Xela (historia de ejemplo)" --slug la-espiga-maqueta --trabajo $(HF)/trabajo --fixture
+	python3 scripts/historia.py hechos $(HF)/trabajo --check
+	python3 scripts/historia.py consolidar $(HF)/trabajo
+	python3 scripts/historia.py ganchos $(HF)/trabajo --check
+	python3 scripts/historia.py ganchos $(HF)/trabajo --usar
+	python3 scripts/historia.py guion $(HF)/trabajo --check
+	python3 scripts/historia.py voz-falsa $(HF)/trabajo
+	python3 scripts/historia.py tiempos $(HF)/trabajo
+	python3 scripts/historia.py grabar $(HF)/trabajo --fps $(FPS)
+	python3 scripts/historia.py montar $(HF)/trabajo
+	python3 scripts/historia.py revisar $(HF)/trabajo
+	python3 scripts/historia.py grabar $(HF)/trabajo --fps $(FPS) --formato 4:5
+	python3 scripts/historia.py montar $(HF)/trabajo --formato 4:5
+	python3 scripts/historia.py revisar $(HF)/trabajo --formato 4:5
 
 musica:
 	@python3 scripts/video.py musica

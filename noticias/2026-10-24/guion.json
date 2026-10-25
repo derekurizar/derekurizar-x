@@ -1,0 +1,177 @@
+{
+ "id": "2026-10-24",
+ "tipo": "noticias",
+ "fecha": "2026-10-24",
+ "paleta": "cielo",
+ "musica": "cielo-2",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 905.0,
+ "duracion_s": 61.7,
+ "critica": {
+  "veredicto": "pasa",
+  "vuelta": 1,
+  "puntajes": {
+   "gancho": 4,
+   "claridad": 3,
+   "ritmo": 4,
+   "precision": 4,
+   "tono": 5,
+   "cierre": 4
+  }
+ },
+ "contexto_superior": "Guatemala · 24 oct 2026",
+ "gancho": {
+  "noticia": "seg-2",
+  "pantalla": "Asesinan al director de la Granja Penal Canadá",
+  "texto": "Un ataque armado mata al director de la Granja Penal Canadá."
+ },
+ "noticias": [
+  {
+   "id": "seg-2",
+   "seccion": "Seguridad",
+   "titular": "Director penitenciario muere en ataque en Escuintla",
+   "fuente": "DGSP · Emisoras Unidas · Prensa Libre",
+   "estado": "confirmada",
+   "breve": false,
+   "cifra": {
+    "texto": "41 años",
+    "etiqueta": "edad del director"
+   },
+   "foto": {
+    "credito": "Foto: AGN (DGSP)",
+    "origen": "oficial"
+   },
+   "urls": [
+    "https://agn.gt/dgsp-confirma-fallecimiento-del-director-en-funciones-de-la-granja-modelo-de-rehabilitacion-canada/",
+    "https://emisorasunidas.com/nacional/2026/10/24/asesinan-al-director-de-la-granja-penal-canada-escuintla/",
+    "https://www.prensalibre.com/guatemala/justicia/asesinato-del-director-de-la-granja-penal-canada-activa-alerta-por-posibles-motines-en-dos-carceles-breaking/"
+   ]
+  },
+  {
+   "id": "seg-1",
+   "seccion": "Justicia",
+   "titular": "Siete policías, ante tribunales por el caso Choc Toz",
+   "fuente": "AGN · Soy502",
+   "estado": "confirmada",
+   "breve": false,
+   "cifra": {
+    "texto": "7",
+    "etiqueta": "policías ante tribunales"
+   },
+   "foto": {
+    "credito": "Foto: AGN",
+    "origen": "oficial"
+   },
+   "urls": [
+    "https://agn.gt/mingob-pone-a-disposicion-de-tribunales-a-siete-integrantes-de-la-pnc/",
+    "https://www.soy502.com/articulo/policias-vinculados-al-caso-choc-toz-seran-escuchados-lunes-102052"
+   ]
+  },
+  {
+   "id": "eco-1",
+   "seccion": "Economía",
+   "titular": "SAT pedirá revisar la meta de recaudación",
+   "fuente": "Prensa Libre",
+   "estado": "en_desarrollo",
+   "breve": false,
+   "cifra": {
+    "texto": "Q3,400 millones",
+    "etiqueta": "sacrificio fiscal estimado"
+   },
+   "foto": null,
+   "urls": [
+    "https://www.prensalibre.com/economia/sat-solicitara-revisar-meta-de-recaudacion-del-2026-por-exoneracion-de-impuestos-a-combustibles/"
+   ]
+  },
+  {
+   "id": "pol-3",
+   "seccion": "Política",
+   "titular": "Viva proclama a Armando Castillo como candidato",
+   "fuente": "Prensa Libre · Publinews",
+   "estado": "confirmada",
+   "breve": true,
+   "cifra": null,
+   "foto": {
+    "credito": "Foto: Prensa Libre",
+    "origen": "medio"
+   },
+   "urls": [
+    "https://www.prensalibre.com/guatemala/politica/partido-viva-proclama-a-candidatos-a-binomio-presidencial-y-para-alcalde-de-la-capital/",
+    "https://www.publinews.gt/noticias/2026/10/24/viva-proclama-a-armando-castillo-y-luis-ralda-como-candidatos-a-la-presidencia-y-vicepresidencia/"
+   ]
+  }
+ ],
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "titular",
+   "noticia": "seg-2",
+   "pantalla": "Un ataque armado mata al director de la Granja Penal Canadá.",
+   "voz": "Un ataque armado mata al director de la Granja Penal Canadá.",
+   "dur": 4.264
+  },
+  {
+   "n": 2,
+   "tipo": "noticia",
+   "noticia": "seg-2",
+   "pantalla": "José Ariel Barrios, de 41 años, dirigía la Granja Penal Canadá. Lo mataron en el cantón Voladores, Escuintla. La PNC recibió una alerta roja por posibles motines, pero Gobernación descartó un motín en la granja.",
+   "voz": "José Ariel Barrios, de cuarenta y un años, dirigía la Granja Penal Canadá. Lo mataron en el cantón Voladores, Escuintla. La PNC recibió una alerta roja por posibles motines, pero Gobernación descartó un motín en la granja.",
+   "dur": 15.818
+  },
+  {
+   "n": 3,
+   "tipo": "noticia",
+   "noticia": "seg-1",
+   "pantalla": "En justicia, 7 policías fueron llevados ante tribunales por presuntas irregularidades en la captura de los hermanos Choc Toz. Se denuncia que habrían colocado un arma de fuego para involucrarlos. Declaran el lunes.",
+   "voz": "En justicia, siete policías fueron llevados ante tribunales por presuntas irregularidades en la captura de los hermanos Choc Toz. Se denuncia que habrían colocado un arma de fuego para involucrarlos. Declaran el lunes.",
+   "dur": 13.712
+  },
+  {
+   "n": 4,
+   "tipo": "noticia",
+   "noticia": "eco-1",
+   "pantalla": "En economía, la SAT prevé pedir a Finanzas que revise la meta de recaudación de 2026, según Prensa Libre. Dejar sin impuestos a gasolinas y diésel costaría al fisco unos Q3,400 millones.",
+   "voz": "En economía, la SAT prevé pedir a Finanzas que revise la meta de recaudación de dos mil veintiséis, según Prensa Libre. Dejar sin impuestos a gasolinas y diésel costaría al fisco unos tres mil cuatrocientos millones de quetzales.",
+   "dur": 14.811
+  },
+  {
+   "n": 5,
+   "tipo": "noticia",
+   "noticia": "pol-3",
+   "pantalla": "Y en política, el partido Viva proclamó a Armando Castillo y a Luis Miguel Ralda como su binomio presidencial.",
+   "voz": "Y en política, el partido Viva proclamó a Armando Castillo y a Luis Miguel Ralda como su binomio presidencial.",
+   "dur": 7.331
+  },
+  {
+   "n": 6,
+   "tipo": "cierre",
+   "noticia": null,
+   "pantalla": "Eso fue lo más importante de hoy. Mañana seguimos con lo que pase.",
+   "voz": "Eso fue lo más importante de hoy. Mañana seguimos con lo que pase.",
+   "dur": 6.858
+  }
+ ],
+ "cierre": {
+  "rotulo": "Hoy en Guatemala",
+  "resumen": [
+   "Matan a director penitenciario",
+   "Siete policías ante tribunales",
+   "SAT pediría revisar meta fiscal",
+   "Viva proclama a Castillo"
+  ],
+  "texto": "Eso fue lo más importante de hoy. Mañana seguimos con lo que pase.",
+  "final": "Mañana seguimos con lo que pase."
+ },
+ "caption": {
+  "tiktok": "Lo más importante de hoy en Guatemala en un minuto: matan al director de la Granja Canadá, siete policías ante tribunales por el caso Choc Toz, la SAT y la meta de recaudación, y Viva proclama a su candidato. #Guatemala #Noticias",
+  "instagram": "Lo más importante de hoy en Guatemala, verificado y con fuente: Granja Canadá, caso Choc Toz, meta de recaudación de la SAT y el binomio de Viva. #Guatemala #NoticiasGuatemala",
+  "facebook": "Las noticias de hoy en Guatemala en un minuto: el ataque contra el director de la Granja Canadá, los policías del caso Choc Toz, la meta de la SAT y el binomio de Viva. Fuentes en el primer comentario.",
+  "shorts": "Noticias de Guatemala hoy: Granja Canadá, caso Choc Toz y la SAT #Shorts\nLo más importante del día, con fuente."
+ }
+}

@@ -150,9 +150,15 @@ window.seek = (t) => {
   if (S.tipo === 'adivina') { seekAdivina(t); subtitulos(t); return; }
   const cifra = document.getElementById('cifra'), P = S.T.pant;
   const p = prog(t, P.desde, P.hasta);
-  // la cifra entra creciendo (.9 → 1) mientras cuenta; late cuando la voz la dice más tarde que la pantalla
-  let escala = .9 + .1 * eo((t - P.desde + 0.15) / 0.45);
-  if (NUM) {
+  // la cifra entra creciendo (.9 → 1) mientras cuenta; late cuando la voz la dice más tarde que la pantalla. En el
+  // gancho (escena 1) está entera desde el cuadro 0: es la miniatura del feed y la vuelta del bucle (R12, gate V15)
+  const gancho = S.tipo === 'gancho';
+  let escala = gancho ? 1 : .9 + .1 * eo((t - P.desde + 0.15) / 0.45);
+  if (gancho) {
+    cifra.textContent = P.texto;
+    cifra.style.opacity = 1;
+    if (P.pulso) escala *= 1 + 0.06 * Math.sin(Math.PI * clamp((t - P.pulso[0]) / Math.max(0.001, P.pulso[1] - P.pulso[0])));
+  } else if (NUM) {
     cifra.textContent = p >= 1 ? P.texto : NUM.fmt(NUM.v * p);
     cifra.style.opacity = prog(t, P.desde - 0.15, P.desde + 0.1);
     if (P.pulso) escala *= 1 + 0.06 * Math.sin(Math.PI * clamp((t - P.pulso[0]) / Math.max(0.001, P.pulso[1] - P.pulso[0])));

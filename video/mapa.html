@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="es"><head><meta charset="utf-8">
 <!-- Escena «mapa» de /video (?n=N): la tarjeta de mapa del hilo (tuit N) dibujada a pantalla completa, sin columna:
-     los 22 departamentos a ~820 px de alto, cada uno se enciende en el orden de la geometría; el destacado entra al
-     final con su contorno y su rótulo (nombre · valor) junto al departamento; cuando la voz dice el valor de otro
-     departamento, ese brilla y muestra el suyo. Debajo, la leyenda en una fila y la fuente; arriba el golpe y la
+     los 22 departamentos a ~820 px de alto: el país entra completo en un tono neutro y cada departamento toma su color
+     de menor a mayor valor (el más alto llega al final); el destacado entra con su contorno y su rótulo (nombre ·
+     valor) junto al departamento; cuando la voz dice el valor de otro departamento (redondeado como lo dice: «152» es
+     152.42), ese brilla y muestra el suyo, y el rótulo escribe la cifra como la dice la voz. Si la voz dice la
+     referencia nacional (D.referencia {etiqueta, valor} o «Tasa nacional: X» en la nota), aparece su píldora. Debajo, la leyenda en una fila y la fuente; arriba el golpe y la
      barra de progreso; abajo los subtítulos. Lee los DATA de tarjeta_N.html (los sirve scripts/video_grabar.js, que
      también sirve h.js = bloque H de templates/base.html y geometria.js = GEOMETRIA de templates/graficos/mapa.html).
      Zona segura (V.zona, gate V13): el mapa termina en x ≤ 890 (los íconos de la app cubren x ≥ 900 desde y≈1070) y
@@ -21,6 +23,9 @@
 #mapa .rotulo text { font: 800 30px Archivo, sans-serif; fill: var(--ink); }
 #mapa .rotulo text.v { font: 700 30px 'JetBrains Mono', monospace; }
 #mapa .rotulo line { stroke: var(--ink); stroke-width: 3; }
+#ref { position: absolute; top: 500px; left: var(--izq); padding: 10px 18px; border: 3px solid var(--ink); border-radius: 12px;
+       background: var(--bg); font: 800 30px/1.2 Archivo, sans-serif; opacity: 0; }
+#ref span { font: 700 30px 'JetBrains Mono', monospace; margin-left: 14px; }
 #pie { position: absolute; top: 1268px; left: var(--izq); right: var(--der); }
 #leyenda { display: flex; flex-wrap: wrap; gap: 10px 26px; font: 500 22px/1 'JetBrains Mono', monospace; }
 #leyenda span { display: inline-flex; align-items: center; gap: 10px; }
@@ -30,6 +35,7 @@
 html.f45 #kicker { top: 250px; }
 html.f45 #mapa { top: 290px; width: 910px; height: 640px; }
 html.f45 #pie { top: 950px; }
+html.f45 #ref { top: 300px; }
 </style>
 <script src="h.js"></script>
 <script src="geometria.js"></script>
@@ -38,6 +44,7 @@ html.f45 #pie { top: 950px; }
 <div id="arriba"><div id="golpe"></div><div id="progreso"></div></div>
 <div id="kicker"></div>
 <div id="mapa"></div>
+<div id="ref"></div>
 <div id="pie"><div id="leyenda"></div><div id="fuente"></div></div>
 <div id="subs"></div>
 <script src="comun.js"></script>
@@ -65,13 +72,34 @@ function dibujar() {
   const pat = el('pattern', { id: 'sinDato', width: 12, height: 12, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)' }, defs);
   el('rect', { width: 12, height: 12, fill: H.color.inkA(.10) }, pat);
   el('line', { x1: 0, y1: 0, x2: 0, y2: 12, stroke: H.color.inkA(.35), 'stroke-width': 2 }, pat);
-  M = { deptos: [], porValor: {}, dest: [], hi: null, f };
+  M = { deptos: [], porValor: {}, dest: [], hi: null, f, ref: null, neutro: H.mezcla(H.color.bg, H.color.ink, 0.22) };
   for (const id of ids) {
     const geo = GEOMETRIA.deptos[id];
     const p = el('path', { d: geo.d, fill: id in val ? colores[claseDe(val[id])] : 'url(#sinDato)' }, svg);
-    const d = { id, path: p, v: val[id], rotulo: null, color: id in val ? colores[claseDe(val[id])] : null };
+    const d = { id, path: p, v: val[id], rotulo: null, dicho: null, color: id in val ? colores[claseDe(val[id])] : null };
     M.deptos.push(d);
-    if (id in val) (M.porValor[clave(val[id])] = M.porValor[clave(val[id])] || []).push(d);
+  }
+  // los valores que dice la voz (S.T.valores) se casan con los departamentos redondeados como los dice: «220» es 219.69
+  // y «152» es 152.42 (antes se exigía el valor exacto y nada brillaba); el rótulo escribe la cifra dicha
+  const decs = (k) => (String(k).split('.')[1] || '').length;
+  const casa = (v, k) => Math.abs(v - Number(k)) <= 0.5 * 10 ** -decs(k) + 1e-9;
+  const fDicho = (k) => H.num(Number(k), Object.assign({}, D.formato, { decimales: decs(k) }));
+  for (const k of Object.keys(S.T.valores || {})) {
+    const ds = M.deptos.filter((d) => d.v !== undefined && casa(d.v, k));
+    if (ds.length) { M.porValor[k] = ds; ds.forEach((d) => { d.dicho = d.dicho || k; }); }
+  }
+  // el orden en que se encienden: de menor a mayor (sin dato primero); el destacado y los más altos llegan al final
+  M.orden = M.deptos.slice().sort((a, b) => (a.v === undefined ? -1e12 : a.v) - (b.v === undefined ? -1e12 : b.v));
+  // la referencia nacional («el promedio del país, 86»): de D.referencia o de «Tasa nacional: 85.84» en la nota
+  const mr = /(?:tasa|promedio|media)\s+(?:nacional|del pa[ií]s)[^:]*:\s*(\d[\d,]*(?:\.\d+)?)/i.exec(D.nota || '');
+  const ref = D.referencia || (mr ? { etiqueta: 'Promedio del país', valor: Number(mr[1].replace(/,/g, '')) } : null);
+  if (ref) {
+    const k = Object.keys(S.T.valores || {}).find((k) => !M.porValor[k] && casa(ref.valor, k));
+    if (k) {
+      const r = document.getElementById('ref');
+      r.innerHTML = `${esc(ref.etiqueta || 'Promedio del país')}<span>${esc(fDicho(k))}</span>`;
+      M.ref = { k, el: r };
+    }
   }
   if (hi) {
     M.dest.push(el('path', { d: GEOMETRIA.deptos[hi].d, class: 'halo' }, svg));
@@ -89,7 +117,7 @@ function dibujar() {
     const bb = d.path.getBBox(), cx = bb.x + bb.width / 2, cy = bb.y + bb.height / 2;
     const g = el('g', { class: 'rotulo' }, svg);
     const t1 = el('text', { x: 0, y: 0 }, g); t1.textContent = NOMBRES[d.id];
-    const t2 = el('text', { x: 0, y: 0, class: 'v' }, g); t2.textContent = f(val[d.id]);
+    const t2 = el('text', { x: 0, y: 0, class: 'v' }, g); t2.textContent = d.dicho ? fDicho(d.dicho) : f(val[d.id]);
     const w1 = t1.getBBox().width, w2 = t2.getBBox().width, w = w1 + 18 + w2 + 32, h = 52;
     const otros = puestos.filter((r) => r.d === M.hi || clave(r.d.v) === clave(d.v));
     const cands = [[cx + 70, cy - 80], [cx - 70 - w, cy - 80], [cx + 70, cy + 30], [cx - 70 - w, cy + 30],
@@ -138,9 +166,15 @@ window.seek = (t) => {
   V.seekProgreso(t, n, S.dur);
   const T = S.T, ini = T.ini;
   document.getElementById('kicker').style.opacity = prog(t, ini - 0.3, ini + 0.2);
-  // los departamentos se encienden en 2 s en el orden de la geometría, cada uno con un brillo al entrar
-  const nD = M.deptos.length;
-  M.deptos.forEach((d, k) => { const a = ini + 2.0 * k / nD, p = prog(t, a, a + 0.45); d.path.style.opacity = p; d.brillo = (1 - p) * 0.35; });
+  // el país entra completo en tono neutro (0.4 s) y cada departamento toma su color de menor a mayor valor en 1.6 s,
+  // con un brillo al llegar (antes cada uno aparecía solo en el orden de la geometría: el mapa se armaba a pedazos)
+  const nD = M.orden.length, base = prog(t, ini, ini + 0.4);
+  M.orden.forEach((d, k) => {
+    const a = ini + 0.3 + 1.6 * k / nD, p = prog(t, a, a + 0.4);
+    d.path.style.opacity = base;
+    d.tono = d.color ? (p < 1 ? H.mezcla(M.neutro, d.color, p) : d.color) : null;
+    d.brillo = 0.3 * Math.sin(Math.PI * p);
+  });
   // el destacado: contorno y rótulo cuando el mapa está completo
   const pd = prog(t, ini + 2.1, ini + 2.6);
   M.dest.forEach((e) => (e.style.opacity = pd));
@@ -154,8 +188,12 @@ window.seek = (t) => {
     const w = activos.get(d) || 0, b = d.brillo + 0.3 * w;
     // el brillo es un color calculado (mezcla hacia blanco), no un filter: el filter cambia el antialiasing de toda la
     // página de una grabación a otra y los clips dejan de ser deterministas
-    if (d.color) d.path.setAttribute('fill', b > 0.01 ? H.mezcla(d.color, '#FFFFFF', Math.min(0.6, b)) : d.color);
+    if (d.tono) d.path.setAttribute('fill', b > 0.01 ? H.mezcla(d.tono, '#FFFFFF', Math.min(0.6, b)) : d.tono);
     if (d.rotulo) { const o = d === M.hi ? Math.max(pd, w) : w; d.rotulo.style.opacity = o; d.rotulo.style.transform = `translateY(${((1 - o) * 14).toFixed(1)}px)`; }
+  }
+  if (M.ref) {
+    const [a, b] = T.valores[M.ref.k], w = prog(t, a - 0.1, a + 0.3) * (1 - prog(t, b + 1.2, b + 1.6));
+    M.ref.el.style.opacity = w; M.ref.el.style.transform = `translateY(${((1 - w) * 14).toFixed(1)}px)`;
   }
   document.getElementById('leyenda').style.opacity = prog(t, ini + 0.3, ini + 0.8);
   document.getElementById('fuente').style.opacity = prog(t, ini + 0.6, ini + 1.1);

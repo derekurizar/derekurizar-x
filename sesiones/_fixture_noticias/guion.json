@@ -1,0 +1,99 @@
+{
+  "tipo": "noticias",
+  "fecha": "2026-10-23",
+  "contexto_superior": "Maqueta · 23 oct 2026",
+  "gancho": {
+    "noticia": "n1",
+    "pantalla": "Lluvias dejan 1,200 familias afectadas en Escuintla",
+    "texto": "La lluvia afecta a 1,200 familias en Escuintla."
+  },
+  "noticias": [
+    {
+      "id": "n1",
+      "seccion": "Clima",
+      "titular": "Lluvias afectan a 1,200 familias",
+      "texto": "Las lluvias de las últimas 24 horas dejaron 1,200 familias afectadas en Escuintla, según Conred. Hay 14 albergues abiertos y el pronóstico anuncia más lluvia hasta el domingo.",
+      "cifra": {
+        "texto": "1,200",
+        "etiqueta": "familias afectadas"
+      },
+      "fuente": "Conred · Prensa Libre",
+      "foto": {
+        "archivo": "fotos/n1.jpg",
+        "credito": "Foto: ejemplo (maqueta)",
+        "origen": "oficial"
+      },
+      "icono": "cloud-rain",
+      "depto": "Escuintla"
+    },
+    {
+      "id": "n2",
+      "seccion": "Economía",
+      "titular": "Congreso aprueba el presupuesto 2027",
+      "texto": "Además, el Congreso aprobó el presupuesto de 2027: Q148,500 millones. Son Q6,200 millones más que el de este año y la mayor parte va a salud.",
+      "cifra": {
+        "texto": "Q148,500 M",
+        "etiqueta": "presupuesto 2027"
+      },
+      "fuente": "Congreso · República",
+      "foto": {
+        "archivo": "fotos/n2.jpg",
+        "credito": "Foto: ejemplo (maqueta)",
+        "origen": "medio"
+      },
+      "icono": "landmark",
+      "depto": "Guatemala"
+    },
+    {
+      "id": "n3",
+      "seccion": "Salud",
+      "titular": "Casos de dengue bajan 35 %",
+      "texto": "En salud, los casos de dengue bajaron 35 % frente al año pasado, informó el Ministerio de Salud. La capital sigue con más casos y piden eliminar los criaderos en casa.",
+      "cifra": {
+        "texto": "35 %",
+        "etiqueta": "menos casos que en 2025"
+      },
+      "fuente": "MSPAS · La Hora",
+      "foto": {
+        "archivo": "fotos/n3.jpg",
+        "credito": "Foto de referencia: ejemplo (maqueta)",
+        "origen": "referencia"
+      },
+      "icono": "heart-pulse",
+      "depto": "Guatemala"
+    },
+    {
+      "id": "n4",
+      "seccion": "Deportes",
+      "titular": "La Selección gana 2 a 0 en casa",
+      "breve": true,
+      "texto": "Y en deportes, la Selección ganó 2 a 0 en el Doroteo Guamuch Flores y ya suma seis puntos.",
+      "cifra": null,
+      "fuente": "Soy502 · Fedefut",
+      "foto": {
+        "archivo": "fotos/n4.jpg",
+        "credito": "Foto: ejemplo (maqueta)",
+        "origen": "medio"
+      },
+      "icono": "flag",
+      "depto": "Guatemala"
+    }
+  ],
+  "cierre": {
+    "rotulo": "Hoy en Guatemala",
+    "resumen": [
+      "1,200 familias afectadas",
+      "Presupuesto 2027 aprobado",
+      "Dengue: 35 % menos casos",
+      "La Selección gana 2 a 0"
+    ],
+    "texto": "Eso fue lo más importante de hoy en Guatemala. Mañana te cuento lo que siga.",
+    "final": "Mañana te cuento lo que siga."
+  },
+  "caption": {
+    "tiktok": "MAQUETA · Las noticias de hoy en Guatemala en un minuto: lluvias en Escuintla, presupuesto, dengue y la Selección. #Guatemala #Noticias",
+    "instagram": "MAQUETA · Lo más importante de hoy en Guatemala, verificado y con fuente. #Guatemala #NoticiasGuatemala",
+    "facebook": "MAQUETA · Las noticias de hoy en Guatemala en un minuto, con su fuente. Fuentes en el primer comentario.",
+    "shorts": "MAQUETA · Noticias de Guatemala hoy: lluvias, presupuesto y dengue #Shorts\nLo más importante del día, con fuente."
+  }
+}

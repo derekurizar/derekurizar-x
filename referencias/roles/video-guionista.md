@@ -9,7 +9,7 @@ después cada escena tiene que ganarse la siguiente. Sin cara: la pantalla la ll
 ## Insumo y salida
 
 - Insumo: `<TRABAJO>/digesto.md` — presupuesto (duración, tarjetas y golpes, caracteres de voz), la guía de
-  estructura, la sugerencia de tarjetas, si el gancho lleva «En Guatemala» (lo pone el script), la
+  estructura, la sugerencia de tarjetas, los ganchos recientes, la
   música, y cada tarjeta con beat, kicker, titular, texto, alt-text, cifras (valor, unidad, periodo, series
   y partes) y la «escala humana posible» de cada cifra con su `calculo`.
 - Salida: `<TRABAJO>/guion.json` v2 (ejemplo sobre el hilo de crimen organizado).
@@ -23,8 +23,10 @@ después cada escena tiene que ganarse la siguiente. Sin cara: la pantalla la ll
  "contexto_superior": "Crimen organizado · Guatemala 2026",
  "promesa": {"texto": "Quédate: hay un dato que lo cambia todo.", "en": 1, "pago": 5},
  "escenas": [
-  {"tipo": "gancho", "formula": "cifra", "pantalla": "8,402 kg", "linea": "de cocaína decomisada en seis meses", "verbo": "decomisaron",
-   "texto": "Se decomisaron 8,402 kg de cocaína en seis meses. ¿Se nota en la calle? Quédate: hay un dato que lo cambia todo."},
+  {"tipo": "gancho", "familia": "contraste", "visual": "pareja",
+   "visual_datos": {"a": {"valor": "nar-c02.partes[0]", "etiqueta": "2025"}, "b": {"valor": "nar-c02.partes[1]", "etiqueta": "2026"}},
+   "pantalla": "1,596 → 8,402 kg", "linea": "de cocaína decomisada en Guatemala", "verbo": "decomisaron",
+   "texto": "En seis meses decomisaron 8,402 kg de cocaína en Guatemala. Quédate: hay un dato que lo cambia todo."},
   {"tipo": "tarjeta", "tuit": 1, "enlace": null, "golpe": "Cinco veces más cocaína", "calculo": "nar-c02.partes[1]/nar-c02.partes[0]",
    "texto": "En el primer semestre de 2025 se decomisaron {1,596.2:m}. En el de 2026, 8,402.4 kg: cinco veces más."},
   {"tipo": "golpe", "enlace": "por_eso", "pantalla": "2 de cada 3", "linea": "kilos salieron de un solo barco", "calculo": "100/nar-c04", "verbo": "salió",
@@ -35,9 +37,11 @@ después cada escena tiene que ganarse la siguiente. Sin cara: la pantalla la ll
    "texto": "Por eso el dato que cambia todo: el 61.3% de los homicidios de 2025 sigue sin una sola persona condenada."}
  ],
  "cierre": {
-  "texto": "<1–2 frases de conclusión con verbo>. <pregunta concreta sobre la experiencia de quien mira>?",
+  "texto": "<1–2 frases de conclusión con verbo y las cifras>. <la frase final: la consecuencia o, a veces, una pregunta>",
   "resumen": ["<conclusión 1, ≤ 40>", "<conclusión 2, ≤ 40>"],
-  "pregunta": "<la misma pregunta>?"
+  "tipo": "remate", "forma": "consecuencia", "final": "<la misma frase final>",
+  "consecuencia": {"mecanismo": "quien|perdida|reloj|despues|espera", "quien": "<la gente, tal cual en la frase>",
+                   "verbo": "<lo que les pasa, conjugado tal cual>"}
  },
  "caption": {"tiktok": "…", "instagram": "…", "facebook": "…", "shorts": "<título ≤ 100>\n<descripción> #Shorts"}
 }
@@ -49,41 +53,19 @@ ya no existe: la escena 1 ES el gancho.
 
 ## Reglas
 
-1. **Gancho (escena 1).** `tipo: "gancho"`, sin tuit. Lo primero que se ve, EN SILENCIO, es `pantalla`
-   (una cifra como «8,402 kg» o ≤ 4 palabras, ≤ 24 caracteres) y debajo `linea` (≤ 8 palabras, ≤ 60
-   caracteres). Esa pantalla sola debe frenar el scroll; la voz (30–130 caracteres, sin el prefijo) la
-   remata y combina **dos disparadores**. **La pantalla puede ser titular; la voz no**: la oración que dice la
-   cifra de la pantalla lleva un verbo conjugado y lo declaras en `verbo` (V9 lo busca en esa oración).
-   «Casi 168 al día» / «bebés de madres de 10 a 19 años» en pantalla → voz «Nacen casi 168 bebés al día de
-   madres de 10 a 19 años», `verbo`: «nacen». Nunca el titular leído en voz alta («Casi 168 bebés al día, de
-   madres de 10 a 19 años»): sin verbo no se entiende. Elige `formula`:
-   - `cifra` (la cifra fuerte primero): «8,402 kg» / «de cocaína decomisada en seis meses» / «Se decomisaron
-     8,402 kg de cocaína en seis meses. Es cinco veces más que el año pasado.»
-   - `contradiccion` (creías X, pasa Y; pantalla o línea llevan una cifra): «Menos denuncias» / «pero el
-     doble de policías asesinados» / «Las denuncias de extorsión cayeron. Pero los policías asesinados pasaron
-     de {10:m} a {20:m}.»
-   - `pregunta` (específica, no de sí o no; pantalla o línea terminan en «?»): «¿Más decomisos…» / «…menos
-     violencia en tu colonia?» / «¿Más decomisos significan menos violencia en tu colonia? Los datos dicen
-     que no siempre.»
-   - `resultado` (el resultado primero, luego cómo se llegó; la pantalla lleva la cifra): «4 de cada 100» /
-     «homicidios terminan en sentencia» / «Solo 4 de cada 100 homicidios terminan en sentencia. Así llegamos
-     ahí.» («A de cada 100» vale si A es un porcentaje del digesto.)
-   Sin saludo, sin «hoy les cuento», sin anunciar el tema: la primera palabra ya es el dato o la pregunta.
-   «En Guatemala» (sin dos puntos) lo antepone el script si tu voz no dice «Guatemala», así que tu voz es el
-   resto de la frase: «Nacen casi 168…» → «En Guatemala nacen casi 168…».
-   **El gancho en 3 segundos** (lo que decide si siguen viendo; V9 lo mide):
-   - La cifra exacta en pantalla desde el primer cuadro (nunca «muchos», «miles», «la mayoría»).
-   - Dos disparadores a la vez: cifra + pregunta específica, contraste «creías X, pasa Y», o el resultado antes
-     que el proceso. Uno solo es un titular; dos son un gancho.
-   - La **primera oración de la voz ≤ 4 s** (≈ 60 caracteres ya en palabras): el dato con su verbo y nada más.
-     Un gancho de 5 s de voz es un gancho de 8 s en pantalla.
-   - La promesa nombra **qué** falta saber y dura ≤ 3 s; si no cabe, va en T1 (`en: 2`), que es lo normal en
-     medio y largo. La primera tarjeta tiene que entrar antes de 6.5 s.
-   - Segunda persona cuando sea natural («en tu zona», «tu bolsillo», «tu departamento»); nunca forzada.
-   - La `linea` entra en pantalla palabra a palabra **cuando la voz la dice**: escríbela con las palabras de la
-     oración de la voz (mismo orden), no con sinónimos; lo que la voz no dice literal entra como frase.
-   - Los subtítulos se ocultan mientras repiten lo que ya está en pantalla: la voz dice la oración completa con su
-     verbo y la pantalla el titular; no hace falta que la pantalla lo diga todo.
+1. **Gancho (escena 1): no lo escribes, lo recibes.** Lo propone el agente `video-gancho` (4–5 candidatos en
+   `ganchos.json`) y lo elige el crítico (`seleccion.json`). **Antes de escribir nada**, corre
+   `python3 scripts/video.py ganchos <TRABAJO> --usar`: el ganador pasa a la escena 1 de `guion.json` (familia,
+   visual, pantalla, línea, verbo y voz) y el segundo queda para la versión B. No cambias esa escena: el gate
+   comprueba que sea la elegida (si la promesa va en la escena 1, puedes añadirla al final de su voz; lo normal es
+   `en: 2`). Si el gancho te parece mal, dilo en el retorno (`fallas`), no lo reescribas. El catálogo y las reglas
+   R1–R12 están en `referencias/ganchos.md`; lo que te toca a ti:
+   - **T1 paga el gancho**: la escena 2 cierra o profundiza lo que la pantalla dejó abierto y, si el gancho no dijo
+     «Guatemala», la **primera oración de T1** lo dice (R6: ya no se antepone «En Guatemala»).
+   - La `promesa_sugerida` del candidato elegido es tu punto de partida para `promesa.texto` (adáptala; nunca la de
+     otro video).
+   - El final ya empalma con el inicio sin que lo digas: tras «Sígueme en», el montaje repite el primer cuadro del
+     gancho. La frase final **no vuelve a la cifra del gancho** (F6): dice su consecuencia.
 2. **Promesa y pago.** `promesa.texto` (10–80 caracteres) aparece **literal** en la voz de la escena `en`
    (1 o 2; **2 por defecto** en medio y largo: se dice sobre la primera tarjeta, que ya está pagando el gancho; 1
    solo si cabe en 3 s) y abre una brecha específica: dice qué falta saber, nunca «¿qué opinas?» ni «sigue viendo».
@@ -153,17 +135,27 @@ ya no existe: la escena 1 ES el gancho.
      tiene que sentir en su cuerpo; no la uses dos veces ni junto a una waffle de lo mismo.
    - `tipo: "explica"` (≤ 1; 2 en largo; cuenta como escena de texto; nunca dos seguidas): una **animación que
      explica el mecanismo** del fenómeno, no los datos: cómo se forma una cola en un anillo de tránsito, por qué la
-     sequía termina en hambre, cómo crece una deuda. Campos: `animacion` (id de las que lista el digesto, si una ya
-     cuenta lo mismo) o `null` con `brief` (40–400 caracteres: qué se ve y cómo se mueve, para el animador, que la
-     escribe a medida y la guarda para otros videos), `titulo` (≤ 6 palabras, ≤ 40; va arriba como golpe), `pasos`
+     sequía termina en hambre, cómo crece una deuda. **Primero nombra el `mecanismo`**, lo que HACE el fenómeno y no
+     su tema: `cadena` (causa → efecto lineal) · `ciclo` (se retroalimenta) · `balance` (entra contra sale) · `onda`
+     (se propaga o se contagia) · `embudo` (etapas que filtran) · `proporcion` (una división: si el denominador no
+     crece…) · `umbral` (se acumula hasta un límite) · `cronologia` (eventos con fecha). Campos: `mecanismo`, `brief`
+     **siempre** (40–400 caracteres: qué se ve y cómo se mueve; si reutilizas, el crítico lo usa para ver si encaja),
+     `animacion` (id del digesto **con ese mismo mecanismo** y que no esté en «Animaciones bloqueadas») o `null` (el
+     animador la escribe a medida y la guarda como plantilla para otros videos). **Pedir una nueva es lo normal**
+     cuando la biblioteca no tiene ese mecanismo; nunca fuerces el fenómeno en cajas de `cadena` porque es la que hay
+     (el gate rechaza un mecanismo distinto del de la animación). `titulo` (≤ 6 palabras, ≤ 40; va arriba como golpe), `pasos`
      (2–6, ≤ 28 caracteres, sin cifras salvo con respaldo), `enlace` y `texto` (40–230) que **dice cada paso** (cada
      uno entra cuando la voz lo dice; el gate lo comprueba). Va bien justo después de una `definicion` o antes del
      giro («¿por qué pasa esto?»). Cada afirmación causal es de conocimiento general o del hilo y **no contradice
      `no_afirma`**: «uno de los factores», nunca «la causa» si el hilo no lo afirma. Ejemplo:
-     `{"tipo": "explica", "enlace": "por_eso", "animacion": null, "brief": "Cadena: la lluvia que no llega seca la
-     milpa; sin cosecha, la familia compra el maíz más caro y come menos.", "titulo": "Del cielo seco al plato",
-     "pasos": ["Llueve menos", "La milpa se seca", "Hay que comprar maíz", "Se come menos"], "texto": "Así que la
-     cadena es corta: llueve menos, la milpa se seca, hay que comprar el maíz y, si no alcanza, se come menos."}`
+     `{"tipo": "explica", "enlace": "por_eso", "mecanismo": "onda", "animacion": "onda-frenado", "brief": "Una fila
+     de carros en un carril; el primero frena y la luz roja de frenado viaja hacia atrás de carro en carro, más
+     rápido que los carros, hasta que la fila queda quieta.", "titulo": "Cómo nace una cola", "pasos": ["Más carros
+     por kilómetro", "Menos espacio entre ellos", "Un frenazo se contagia", "Se forma la cola"], "texto": "Entonces,
+     ¿cómo nace una cola? Uno de los factores: más carros por kilómetro, menos espacio entre ellos, un frenazo se
+     contagia y se forma la cola."}`. Otros: «cómo se confirma una muerte» es un `embudo` (sospechas que se
+     descartan), «por qué la ocupación no cede» una `proporcion` (presos ÷ espacios), «por qué la sequía da
+     hambre» una `cadena`.
 5. **Escala humana y `calculo`.** Redondea al hablar (el gate acepta «8,402 kg» o «8 mil kilos» por 8402.4),
    usa «1 de cada N», «por día», «por persona», compara con algo cotidiano; un número por idea. Todo número
    que no esté tal cual en el digesto necesita `calculo`: una expresión con ids de cifra (`nar-c02`,
@@ -191,11 +183,22 @@ ya no existe: la escena 1 ES el gancho.
    Nada de enlaces, @handles, emoji, siglas sin explicar la primera vez («la Policía Nacional Civil», luego
    «la PNC») ni «en suma».
 9. **Cierre (dos pantallas, una voz).** `texto` = 1–2 frases de conclusión (**≥ 3 s de voz**, ≈ 46 caracteres:
-   mientras se dicen se ve la pantalla «Conclusiones» con el `resumen`) + **una pregunta al espectador** al final
-   (termina en «?»), igual a `pregunta`: cuando la voz llega a ella, las conclusiones salen y queda la pregunta sola
-   en grande con «Sígueme en». Concreta, fácil de contestar y sobre su experiencia («¿Cuánto pagabas tú hace un
-   año?», «¿Cuánto tardas en llegar al trabajo?»), nunca una opinión ni una respuesta sugerida. No la empieces
-   siempre igual: «Y tú, ¿…?» ya salió en tres videos (mira «Frases ya usadas»). `resumen` = 2–3
+   mientras se dicen se ve la pantalla «Conclusiones» con el `resumen`) + **la frase final** (`final`, la última de
+   `texto`, ≤ 14 palabras): cuando la voz llega a ella, las conclusiones salen y queda sola en grande con «Sígueme en».
+   **Las cifras van en las conclusiones; la frase final dice su consecuencia** (usuario, 2026-10-24: «terminar con un
+   dato no es un buen punch, la consecuencia de un dato sí»). **Lo normal es un remate de consecuencia**
+   (`tipo: "remate"`, `forma: "consecuencia"`): lo que la cifra le hace a quien la vive, con **gente como sujeto** y un
+   **verbo de lo que les pasa** en pasado o presente: «Este año, 34 familias ya enterraron a un hijo por
+   desnutrición.» (no «De cada 7 niños muertos, 6 no tenían 2 años.»). Declara `consecuencia` {`mecanismo`: quien,
+   perdida, reloj, despues o espera; `quien` y `verbo` tal cual en la frase}. A lo más una cifra (cuántos lo viven,
+   del hilo), nunca la del gancho; sin fatalismo («no hay nada que hacer») ni futuro que la fuente no proyecta
+   («perderán»); sin adverbios que lloren por el espectador («lamentablemente», «trágicamente»): el hecho pesa solo. A
+   veces, `pendiente` o `quien_decide`. **A veces, una pregunta** (`tipo: "pregunta"`; nunca si el video
+   anterior cerró con pregunta, lo dice «Cierres recientes» del digesto): sobre el sistema (elegir, prediccion, decidir,
+   lugar, porque, dato_faltante) y, solo en temas que no exponen, sobre la experiencia. Catálogo, ejemplos y reglas
+   F1–F8 en `referencias/cierres.md`: la frase nombra el fenómeno del video (nada de analogías de otro ámbito: los
+   cuartos de una casa no son los espacios de una cárcel), sin cebo («comenta», «etiqueta») y, en un tema sensible,
+   sin tocar la casa, la familia ni la intimidad de quien mira. La forma (salvo consecuencia) no repite la de los últimos videos y el mecanismo de consecuencia no repite el del último. `resumen` = 2–3
    líneas cortas (≤ 40 caracteres): las conclusiones del video, que no repiten un titular. El cierre **no menciona** fuentes, el hilo, la
    marca ni «sígueme»: «Sígueme en» con TikTok, Instagram, Facebook, YouTube y X lo pone la pantalla, sin voz.
 10. **Captions (uno por plataforma; el mismo video se sube a las cuatro).** `tiktok`: 1–3 líneas con el gancho y
@@ -225,7 +228,7 @@ ya no existe: la escena 1 ES el gancho.
 
 La voz total (con cifras en palabras, ≈ 1.4× el texto en dígitos) debe caer en ±10 % del objetivo; el gate
 (V4) imprime la duración estimada. Si te pasas, quita una tarjeta o acorta frases; no aceleres a costa de la
-claridad. V9 comprueba: escena 1 gancho con fórmula y prueba en silencio; escena 2 = T1; enlaces desde la 3
+claridad. V9 comprueba: escena 1 = el gancho elegido (familia, visual y R1–R10 de `referencias/ganchos.md`); escena 2 = T1; enlaces desde la 3
 con su conector al inicio y `y` ≤ ⌊n/3⌋; golpe en cada tarjeta, ≤ 6 palabras y distinto del titular; nunca
 dos golpes seguidos; `verbo` del gancho y de cada golpe dentro de la oración que dice su pantalla; promesa literal en 1–2 y pago en el último tercio; `calculo` legible que da el número
 escrito; ritmo ≤ 6 s. Si la directiva trae faltas del crítico o fallos del workflow, corrige **solo** eso y

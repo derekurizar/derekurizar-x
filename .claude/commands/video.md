@@ -1,5 +1,5 @@
 ---
-description: Convierte un hilo ya entregado en un video vertical narrado para TikTok, Instagram y Facebook Reels y YouTube Shorts, más su versión 4:5 para el feed (uso — /video <slug|ultimo> [corto|medio|largo] [musica:<id>] [fixture]; corto ≈ 1 min, medio ≈ 2 min (por defecto), largo ≈ 4 min; guion de retención sin cara (gancho con cifra a pantalla completa, golpes de texto cinético, «pero / por eso», promesa y pago) aprobado por un crítico ANTES de gastar créditos; voz de ElevenLabs con las cifras en palabras, tarjetas del hilo animadas con zoom a la cifra, subtítulos, barra de progreso, música con ducking y efectos del catálogo fijo; entrega en hilos/<fecha>-<slug>/video/)
+description: Convierte un hilo ya entregado en un video vertical narrado para TikTok, Instagram y Facebook Reels y YouTube Shorts, más su versión 4:5 para el feed (uso — /video <slug|ultimo> [corto|medio|largo] [musica:<id>] [fixture]; corto ≈ 1 min, medio ≈ 2 min (por defecto), largo ≈ 4 min; guion de retención sin cara (gancho elegido entre 4–5 familias distintas, con su visual, golpes de texto cinético, «pero / por eso», promesa y pago) aprobado por un crítico ANTES de gastar créditos; voz de ElevenLabs con las cifras en palabras, tarjetas del hilo animadas con zoom a la cifra, subtítulos, barra de progreso, música con ducking y efectos del catálogo fijo; entrega en hilos/<fecha>-<slug>/video/)
 ---
 
 Eres el coordinador del flujo **/video** de @DerekUrizar. Sus argumentos son: "$ARGUMENTS".
@@ -31,11 +31,16 @@ decisión del usuario.**
    - Avisa al usuario de la duración, la música y el costo estimado de la voz (≈ 1 crédito por carácter:
      corto ≈ 850, medio ≈ 1,700, largo ≈ 3,450). El Workflow tarda ~5–10 min sin créditos (~10 más si escribe una
      animación nueva); la voz y el render, otros ~5–10 min.
-2. **GUION Y CRÍTICA (Workflow `video`)**
+2. **GANCHOS, SELECCIÓN, GUION Y CRÍTICA (Workflow `video`)**
    - Lanza el Workflow con `name: "video"` y `args: {"trabajo": "<TRABAJO>", "duracion": "<d>", "slug":
      "<slug>", "fixture": false}`. Si editaste `.claude/workflows/video.js` en esta sesión, pásalo con
      `scriptPath: ".claude/workflows/video.js"`. Para reanudar una corrida interrumpida, `resumeFromRunId`.
-   - El Workflow corre al `video-guionista` (guion v2 + gate `guion --check`, V1–V5 y V9) y al
+   - El Workflow corre primero al `video-gancho` (4–5 candidatos de familias distintas en `ganchos.json`, gate
+     `ganchos --check` con R1–R10 y la rotación; `referencias/ganchos.md`) y al `video-critico` en **modo selección**
+     (los mira en silencio y elige ganador y segundo en `seleccion.json`; si ninguno llega a 3, el agente de ganchos
+     rehace una vez). Si aun así no hay ganador, vuelve `veredicto: "corregir"` con las faltas de la selección:
+     muéstralas y **pregunta al usuario**. Después corre al `video-guionista` (copia el ganador con `ganchos --usar`,
+     guion v2 + gate `guion --check`, V1–V5 y V9) y al
      `video-critico` (C1–C10, puntajes 1–5, faltas con arreglo); lo que bloquea vuelve al guionista, y si
      aprueba con algún puntaje de 3 dejando mejoras, el guionista las pule; en total ≤ 2
      vueltas. Si el guion aprobado tiene una escena `explica` con `animacion: null`, corre además al
@@ -56,6 +61,7 @@ decisión del usuario.**
      de la fase Animación de `video.js`); si tampoco sale, propón al usuario cambiar esa escena `explica` por otra.
      Lee una vez `sesiones/_animaciones/<id>/contacto.png` de cada animación nueva antes de gastar créditos.
    - Corre tú `python3 scripts/video.py guion <TRABAJO> --check` (exit 0) para confirmar `locucion.json`.
+   - Avisa al usuario qué gancho ganó (familia, visual, pantalla y voz), el segundo y por qué (`seleccion.json`).
 3. **VOZ (MCP)**
    - `python3 scripts/video.py voz <TRABAJO>` imprime la voz y un `prompt` por escena (gancho, tarjetas,
      golpes y cierre).
@@ -104,6 +110,14 @@ decisión del usuario.**
    - Cuando el 9:16 esté bien, **siempre** el 4:5 (misma voz, mismos tiempos): `grabar <TRABAJO> --formato 4:5`,
      `montar <TRABAJO> --formato 4:5` y `revisar <TRABAJO> --formato 4:5` (lee una vez `revision/contacto_4x5.png`).
      `entregar` lo exige.
+5b. **VERSIÓN B (opcional, si el usuario la pide o la aprobó)**: el segundo gancho sobre el mismo video.
+   - `python3 scripts/video.py variante <TRABAJO>` arma `<TRABAJO>/variante_b/` (mismo guion salvo la escena 1; copia
+     la voz, las palabras y los clips de las demás escenas) e imprime el nodo de voz SOLO de la escena 1 (≈ 100
+     créditos: dilo antes de gastarlos).
+   - En el mismo flow: un nodo TTS con ese `prompt` (1 toma) y su Scribe; una llamada de estado con las dos sesiones →
+     `descargar <TRABAJO>/variante_b --estado <archivo>`; luego `tiempos`, `escuchar --solo 1`, `grabar --solo 1` y
+     `montar` sobre `<TRABAJO>/variante_b`; lee una vez su `revision/contacto.png` tras `revisar`.
+   - `python3 scripts/video.py variante <TRABAJO> --cerrar` deja `salida/video_b.mp4`; `entregar` lo copia.
 6. **ENTREGAR**
    - Corre `python3 scripts/video.py entregar <TRABAJO>`, que copia a `hilos/<fecha>-<slug>/video/` el 9:16, el 4:5 y
      `caption.md` (avisa si el video pasa de los 3 min de Shorts).
@@ -114,18 +128,21 @@ decisión del usuario.**
      duración frente al objetivo (incluye el medio segundo del cierre en bucle); si pasa de 180 s, que no entra
      como Short.
    - Las portadas para elegir la miniatura, todas sin subtítulos ni barra: `portada.png` (gancho),
-     `portada_texto.png` (solo el gancho en texto, para el feed), `portada_pregunta.png`, `portada_giro.png` y, si
+     `portada_texto.png` (solo el gancho en texto, para el feed), `portada_cierre.png`, `portada_giro.png` y, si
      hay adivina, `portada_adivina.png`.
    - La estructura: por escena `tipo · T<tuit> · golpe o pantalla · una línea de lo que dice`; la promesa y en
      qué escena se paga.
+   - El **gancho**: los candidatos (familia · visual · pantalla), el ganador y el segundo con sus puntajes de selección
+     y el porqué (`seleccion.json`); si hay `video_b.mp4`, cuál es A y cuál B, y que se compara en «Visto frente a
+     deslizado» (YouTube Studio) o la retención a 3 s (TikTok).
    - Los **puntajes del crítico** (gancho, bucle, ritmo, escala_humana, pago, cierre), las vueltas y las
      mejoras no aplicadas (`<TRABAJO>/critica.json`).
    - Las animaciones de las escenas `explica`: id, si es nueva (queda en `video/animaciones/` para otros videos) o
      reutilizada, y la ruta de su hoja de contacto.
-   - La pregunta del cierre, la música y los créditos de voz gastados (`creditos_voz` en `guion.json`: la suma
+   - La frase final del cierre (remate o pregunta, con su forma), la música y los créditos de voz gastados (`creditos_voz` en `guion.json`: la suma
      de `audio/creditos.json` cuando la voz bajó con `--estado`, retomas incluidas; si no, los caracteres, más las
      retomas).
-   - Los avisos (V6, V10, V12 quietud de `revisar`), el resultado de V13 en los dos formatos y la ruta de
+   - Los avisos (V6, V10, V12 quietud y V15 primer cuadro de `revisar`), el resultado de V13 en los dos formatos y la ruta de
      `caption.md` (una sección por plataforma).
    - El resultado de la escucha (V11): escenas cotejadas por whisper, % de palabras distintas y avisos; si se saltó,
      **pide al usuario escuchar las cifras** (Scribe alinea el guion, no es una escucha independiente).

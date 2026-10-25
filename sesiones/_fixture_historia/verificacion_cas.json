@@ -1,0 +1,129 @@
+{
+ "eje": "cas",
+ "hechos": [
+  {
+   "id": "cas-h01",
+   "fecha": "1990",
+   "precision": "anio",
+   "texto": "La Espiga llegó a 25 sucursales y abrió la primera en la capital",
+   "actores": [],
+   "lugar": "Guatemala",
+   "estado": "confirmado",
+   "nota": "",
+   "fuentes": [
+    {
+     "medio": "Prensa Libre (maqueta)",
+     "url": "https://www.prensalibre.com/maqueta/la-espiga-1990",
+     "archivo": "sesiones/_fixture_historia/fuentes/ori-1.txt",
+     "fecha": "1990-06-01",
+     "cita": "En 1990 La Espiga abrió su sucursal número 25"
+    },
+    {
+     "medio": "La Hora (maqueta)",
+     "url": "https://lahora.gt/maqueta/la-espiga",
+     "archivo": "sesiones/_fixture_historia/fuentes/ori-2.txt",
+     "fecha": "1991-02-10",
+     "cita": "La cadena llegó a 25 sucursales en 1990"
+    }
+   ]
+  },
+  {
+   "id": "cas-h02",
+   "fecha": "2004-03-12",
+   "precision": "dia",
+   "texto": "Una inspección encontró 40 sacos de harina vencida y La Espiga pagó una multa de Q85,000",
+   "actores": [
+    "MSPAS"
+   ],
+   "lugar": "Quetzaltenango",
+   "estado": "confirmado",
+   "nota": "",
+   "fuentes": [
+    {
+     "medio": "MSPAS (maqueta)",
+     "url": "https://www.mspas.gob.gt/maqueta/inspeccion-2004",
+     "archivo": "sesiones/_fixture_historia/fuentes/cas-1.txt",
+     "fecha": "2004-03-20",
+     "cita": "se encontraron 40 sacos de harina con fecha vencida en la planta de La Espiga. La empresa pagó una multa de Q85,000"
+    },
+    {
+     "medio": "Soy502 (maqueta)",
+     "url": "https://www.soy502.com/maqueta/la-espiga-2010",
+     "archivo": "sesiones/_fixture_historia/fuentes/cas-2.txt",
+     "fecha": "2010-11-05",
+     "cita": "En 2004 una inspección encontró harina vencida en la planta de La Espiga, que pagó una multa de Q85,000"
+    }
+   ]
+  },
+  {
+   "id": "cas-h03",
+   "fecha": "2010",
+   "precision": "anio",
+   "texto": "La Espiga cerró su última sucursal en la capital y quedaron dos hornos en Xela",
+   "actores": [],
+   "lugar": "Guatemala",
+   "estado": "en_disputa",
+   "nota": "solo Soy502 lo reporta: la voz lo atribuye",
+   "fuentes": [
+    {
+     "medio": "Soy502 (maqueta)",
+     "url": "https://www.soy502.com/maqueta/la-espiga-2010",
+     "archivo": "sesiones/_fixture_historia/fuentes/cas-2.txt",
+     "fecha": "2010-11-05",
+     "cita": "En 2010 La Espiga cerró su última sucursal en la capital; solo quedaron dos hornos en Xela"
+    }
+   ]
+  }
+ ],
+ "cifras": [
+  {
+   "id": "cas-c01",
+   "texto": "Q85,000",
+   "concepto": "multa por harina vencida",
+   "valor": 85000,
+   "unidad": "quetzales",
+   "anio": 2004,
+   "estado": "confirmado",
+   "fuentes": [
+    {
+     "medio": "MSPAS (maqueta)",
+     "url": "https://www.mspas.gob.gt/maqueta/inspeccion-2004",
+     "archivo": "sesiones/_fixture_historia/fuentes/cas-1.txt",
+     "fecha": "2004-03-20",
+     "cita": "La empresa pagó una multa de Q85,000 en 2004"
+    }
+   ]
+  }
+ ],
+ "citas": [
+  {
+   "id": "cas-q01",
+   "autor": "Ministerio de Salud",
+   "cargo": "informe de inspección",
+   "cuando": "2004",
+   "documento": true,
+   "membrete": "MSPAS · Inspección sanitaria · 2004",
+   "texto": "se encontraron 40 sacos de harina con fecha vencida en la planta de La Espiga",
+   "estado": "confirmado",
+   "fuentes": [
+    {
+     "medio": "MSPAS (maqueta)",
+     "url": "https://www.mspas.gob.gt/maqueta/inspeccion-2004",
+     "archivo": "sesiones/_fixture_historia/fuentes/cas-1.txt",
+     "fecha": "2004-03-20",
+     "cita": "se encontraron 40 sacos de harina con fecha vencida en la planta de La Espiga"
+    }
+   ]
+  }
+ ],
+ "fotos": [
+  "cas-f01"
+ ],
+ "casos": [],
+ "descartados": [
+  {
+   "texto": "La Espiga vendía en tres países",
+   "motivo": "ninguna fuente lo dice"
+  }
+ ]
+}

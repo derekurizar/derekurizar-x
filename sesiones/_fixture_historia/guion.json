@@ -1,0 +1,193 @@
+{
+ "tipo": "historia",
+ "contexto_superior": "Historia · Maqueta",
+ "promesa": {
+  "texto": "Al final vas a ver qué quedó de sus 25 sucursales.",
+  "en": 2,
+  "pago": 12
+ },
+ "escenas": [
+  {
+   "tipo": "gancho",
+   "familia": "resultado",
+   "visual": "foto",
+   "visual_datos": {
+    "foto": "ori-f02",
+    "etiqueta": "Quetzaltenango · 1977"
+   },
+   "pantalla": "Bajo una carpa",
+   "linea": "Una panadería reabrió tras el terremoto",
+   "verbo": "reabrió",
+   "texto": "Una panadería reabrió bajo una carpa. Fue en Guatemala, tras el terremoto de 1976."
+  },
+  {
+   "tipo": "foto",
+   "foto": "ori-f01",
+   "fecha": "1952",
+   "lugar": "Quetzaltenango",
+   "titular": "Un horno de leña en Xela",
+   "hechos": [
+    "ori-h01"
+   ],
+   "fuente": "Prensa Libre · La Hora",
+   "texto": "Esta es la historia de La Espiga, una panadería que nació con un horno de leña, creció por todo el país y se apagó casi sin hacer ruido. Al final vas a ver qué quedó de sus 25 sucursales."
+  },
+  {
+   "tipo": "capitulo",
+   "numero": 1,
+   "anio": "1952",
+   "titulo": "Una idea en Xela",
+   "lugar": "Quetzaltenango",
+   "texto": "1952. Una idea en Xela."
+  },
+  {
+   "tipo": "cita",
+   "cita": "ori-q01",
+   "retrato": "ori-f03",
+   "hechos": [
+    "ori-h01"
+   ],
+   "fuente": "Prensa Libre",
+   "texto": "Marta Pérez encendió un horno de leña en Quetzaltenango y abrió La Espiga. Años después, ya famosa en Xela, lo resumió así: Cada pan sale del mismo horno que encendí el primer día."
+  },
+  {
+   "tipo": "tarjeta",
+   "tuit": 1,
+   "enlace": "por_eso",
+   "golpe": "De un horno a 25 locales",
+   "hechos": [
+    "ori-h02",
+    "cas-h01"
+   ],
+   "grafico": {
+    "plantilla": "antes-despues",
+    "kicker": "LA ESPIGA · LOCALES",
+    "titular": [
+     "De un horno",
+     "a 25 sucursales"
+    ],
+    "nota": "",
+    "fuente": "Prensa Libre · La Hora (maqueta)",
+    "datos": {
+     "formato": {
+      "prefijo": "",
+      "sufijo": "",
+      "decimales": 0,
+      "miles": true,
+      "escala": 1
+     },
+     "antes": {
+      "etiqueta": "1952",
+      "valor": 1,
+      "sub": "horno"
+     },
+     "despues": {
+      "etiqueta": "1990",
+      "valor": 25,
+      "sub": "sucursales"
+     },
+     "pildora": "factor",
+     "decimales_pildora": 0
+    }
+   },
+   "texto": "Por eso el pan de La Espiga se volvió costumbre: en 1968 ya vendía 4,500 panes al día. Y en 1990 abrió su sucursal número 25, la primera en la capital."
+  },
+  {
+   "tipo": "capitulo",
+   "numero": 2,
+   "anio": "1976",
+   "titulo": "El terremoto",
+   "lugar": "Quetzaltenango",
+   "texto": "1976. La tierra tembló."
+  },
+  {
+   "tipo": "foto",
+   "foto": "ori-f02",
+   "fecha": "1977",
+   "lugar": "Quetzaltenango",
+   "titular": "Reabrió bajo una carpa",
+   "hechos": [
+    "ori-h03"
+   ],
+   "fuente": "Prensa Libre · La Hora",
+   "texto": "El terremoto destruyó el local de la calle Rodolfo Robles. Un año después, en 1977, La Espiga volvió a hornear bajo una carpa, y los clientes hicieron fila en la banqueta."
+  },
+  {
+   "tipo": "capitulo",
+   "numero": 3,
+   "anio": "2004",
+   "titulo": "La inspección",
+   "lugar": "Quetzaltenango",
+   "texto": "2004. Llega una inspección."
+  },
+  {
+   "tipo": "cita",
+   "cita": "cas-q01",
+   "giro": true,
+   "resalte": "harina con fecha vencida",
+   "hechos": [
+    "cas-h02"
+   ],
+   "fuente": "MSPAS",
+   "texto": "El Ministerio de Salud entró a la planta en marzo de 2004. Su informe dice que se encontraron 40 sacos de harina con fecha vencida en la planta de La Espiga."
+  },
+  {
+   "tipo": "golpe",
+   "enlace": "pero",
+   "pantalla": "Q85,000",
+   "linea": "de multa por la harina vencida",
+   "verbo": "pagó",
+   "texto": "Pero lo que más pesó fue la multa: pagó Q85,000 por la harina vencida."
+  },
+  {
+   "tipo": "explica",
+   "enlace": "por_eso",
+   "mecanismo": "cadena",
+   "animacion": "cadena",
+   "titulo": "¿Cómo se apagó?",
+   "brief": "Cadena lineal de la caída: la harina vencida trae la multa y la mala fama, eso aleja clientes y cierran sucursales; cada caja se llena al decirla.",
+   "pasos": [
+    "Harina vencida",
+    "Multa y mala fama",
+    "Menos clientes",
+    "Cierran sucursales"
+   ],
+   "texto": "Por eso vino la caída, paso a paso: primero la harina vencida, luego la multa y mala fama, después menos clientes, y al final cierran sucursales una tras otra."
+  },
+  {
+   "tipo": "foto",
+   "foto": "cas-f01",
+   "fecha": "2010",
+   "lugar": "Ciudad de Guatemala",
+   "titular": "Cierra la última sucursal",
+   "hechos": [
+    "cas-h03"
+   ],
+   "fuente": "Soy502",
+   "texto": "Según la prensa de entonces, en 2010 La Espiga cerró su última sucursal en la capital. De aquellas 25 sucursales, solo quedaron dos hornos encendidos en Xela."
+  }
+ ],
+ "cierre": {
+  "rotulo": "Lo que dejó",
+  "resumen": [
+   "Nació en 1952 con un horno",
+   "Llegó a 25 sucursales",
+   "Cerró la última en 2010"
+  ],
+  "texto": "La Espiga nació con un horno de leña y llegó a tener 25 sucursales. En Xela, sus trabajadores aún encienden los dos hornos.",
+  "tipo": "remate",
+  "forma": "consecuencia",
+  "final": "En Xela, sus trabajadores aún encienden los dos hornos.",
+  "consecuencia": {
+   "mecanismo": "despues",
+   "quien": "trabajadores",
+   "verbo": "encienden"
+  }
+ },
+ "caption": {
+  "tiktok": "MAQUETA · La Espiga: de un horno de leña en 1952 a 25 sucursales, y de vuelta a dos hornos. Historia de ejemplo.",
+  "instagram": "MAQUETA · Historia de ejemplo: una panadería de Xela que llegó a 25 sucursales.",
+  "facebook": "MAQUETA · Historia de ejemplo de una panadería de Xela. Fuentes en el primer comentario.",
+  "shorts": "MAQUETA · La panadería que llegó a 25 sucursales #Shorts\nHistoria de ejemplo."
+ }
+}

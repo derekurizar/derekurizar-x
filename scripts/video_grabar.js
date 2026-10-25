@@ -3,19 +3,21 @@
  * Video · graba cada escena cuadro a cuadro (estado = seek(t)) y la pasa a ffmpeg (H.264 1080×1920)
  * =================================================================================================
  * Uso (lo llama `scripts/video.py grabar`):
- *   node scripts/video_grabar.js --dir <TRABAJO> --hilo <carpeta del hilo> [--fps 30] [--solo 1,3] [--formato 9:16|4:5] [--paralelo N]
+ *   node scripts/video_grabar.js --dir <TRABAJO> [--hilo <carpeta del hilo>] [--fps 30] [--solo 1,3] [--formato 9:16|4:5] [--paralelo N]
  *   node scripts/video_grabar.js --dir <TRABAJO> --hilo <carpeta del hilo> --portadas <json>   (solo cuadros sueltos)
  *
  * Lee TRABAJO/escenas.json y escribe TRABAJO/clips/eN.mp4. Las páginas se sirven desde un origen
  * ficticio http://video.local/ con page.route (mismo origen para que escena.html controle la tarjeta
  * del iframe): video/comun.css y video/comun.js (hoja y módulo común V de todas las páginas de escena),
- * video/escena.html (tarjeta), video/golpe.html (gancho y golpes), video/cierre.html,
+ * video/escena.html (tarjeta), video/golpe.html (gancho y golpes), video/gancho.html (gancho con visual), video/cierre.html,
  * video/animar.js, video/vertical.css (modo vertical de la tarjeta; escena.html lo inyecta en el iframe cuando
  * la tarjeta ya se dibujó), video/mapa.html (la tarjeta de mapa a pantalla completa) con h.js (bloque H de
  * templates/base.html) y geometria.js (GEOMETRIA de templates/graficos/mapa.html), video/explica.html con
  * video/animaciones/<id>.js (la biblioteca de animaciones de la escena explica), design/fonts/*.woff2,
- * TRABAJO/escenas.json y tarjeta_N.html = el tuit_N.html del hilo con animar.js inyectado. La plantilla de cada
- * escena la decide su `tipo` (gancho|tarjeta|golpe|definicion|adivina|mapa|ranking|escala|tiempo|explica|cierre).
+ * TRABAJO/escenas.json y tarjeta_N.html = el tuit_N.html del hilo con animar.js inyectado; para /noticias,
+ * video/noticia.html y TRABAJO/fotos/*.jpg|png|webp (sin --hilo); para /historia, además video/historia.html. La
+ * plantilla de cada escena la decide su `pagina` si la trae (/historia) o, si no, su `tipo`
+ * (gancho|tarjeta|golpe|definicion|adivina|mapa|ranking|escala|tiempo|explica|titular|noticia|cierre).
  * Cualquier otra petición se aborta (cero dependencias externas, como las tarjetas).
  * `--paralelo N` graba N escenas a la vez en N páginas del mismo navegador (por defecto min(4, núcleos/4)): el
  * estado de cada página es solo seek(t), así que los clips salen idénticos a la grabación en serie.
@@ -36,7 +38,7 @@ const { chromium } = require("playwright");
 
 const RAIZ = path.dirname(__dirname);
 const ORIGEN = "http://video.local/";
-const TIPOS = { ".html": "text/html", ".js": "text/javascript", ".json": "application/json", ".woff2": "font/woff2", ".css": "text/css", ".svg": "image/svg+xml" };
+const TIPOS = { ".html": "text/html", ".js": "text/javascript", ".json": "application/json", ".woff2": "font/woff2", ".css": "text/css", ".svg": "image/svg+xml", ".jpg": "image/jpeg", ".png": "image/png", ".webp": "image/webp" };
 
 function args(argv) {
   const o = { fps: 30, solo: null, formato: "9:16", paralelo: Math.min(4, Math.max(1, Math.floor(os.cpus().length / 4))) };
@@ -54,7 +56,9 @@ function args(argv) {
     else if (a === "--help" || a === "-h") { console.log(fs.readFileSync(__filename, "utf8").split("*/")[0]); process.exit(0); }
     else { console.error("Opción desconocida: " + a); process.exit(2); }
   }
-  if (!o.dir || !o.hilo || !(o.fps > 0) || !(o.paralelo >= 1)) { console.error("Uso: node scripts/video_grabar.js --dir TRABAJO --hilo HILO [--fps 30] [--solo 1,3] [--paralelo N]"); process.exit(2); }
+  if (!o.dir) { console.error("Uso: node scripts/video_grabar.js --dir TRABAJO [--hilo HILO] [--fps 30] [--solo 1,3] [--paralelo N]"); process.exit(2); }
+  o.hilo = o.hilo || o.dir;   // /noticias no tiene hilo: no sirve tarjetas
+  if (!(o.fps > 0) || !(o.paralelo >= 1)) { console.error("Uso: node scripts/video_grabar.js --dir TRABAJO --hilo HILO [--fps 30] [--solo 1,3] [--paralelo N]"); process.exit(2); }
   return o;
 }
 
@@ -80,7 +84,8 @@ function servir(o, ruta) {
   if (/^fonts\/[^/]+\.woff2$/.test(nombre)) archivo = path.join(RAIZ, "design", nombre);
   else if (/^iconos\/[a-z0-9-]+\.svg$/.test(nombre)) archivo = path.join(RAIZ, "design", nombre);   // biblioteca fija de iconos
   else if (/^animaciones\/[a-z0-9-]+\.js$/.test(nombre)) archivo = path.join(RAIZ, "video", nombre);   // animaciones de la escena explica
-  else if (["escena.html", "golpe.html", "cierre.html", "mapa.html", "ranking.html", "escala.html", "tiempo.html", "portada.html", "explica.html", "comun.js", "comun.css", "animar.js", "vertical.css"].includes(nombre)) archivo = path.join(RAIZ, "video", nombre);
+  else if (/^fotos\/[a-z0-9_-]+\.(jpg|png|webp)$/.test(nombre)) archivo = path.join(o.dir, nombre);   // fotos de /noticias y /historia (TRABAJO/fotos/)
+  else if (["escena.html", "golpe.html", "gancho.html", "cierre.html", "mapa.html", "ranking.html", "escala.html", "tiempo.html", "portada.html", "explica.html", "noticia.html", "historia.html", "comun.js", "comun.css", "animar.js", "vertical.css"].includes(nombre)) archivo = path.join(RAIZ, "video", nombre);
   else if (nombre === "escenas.json") archivo = path.join(o.dir, nombre);
   if (!archivo || !fs.existsSync(archivo)) return null;
   return { tipo: TIPOS[path.extname(archivo)] || "application/octet-stream", cuerpo: fs.readFileSync(archivo) };
@@ -105,7 +110,10 @@ async function prepararPagina(browser, o, F45, errores) {
 function urlDe(e, F45) {
   const tipo = e.tipo || (e.plantilla === "cierre" ? "cierre" : "tarjeta");
   const propia = ["mapa", "ranking", "escala", "tiempo", "explica"].includes(tipo);   // escenas a pantalla completa con página propia
-  const pagina = tipo === "cierre" ? "cierre.html?" : tipo === "tarjeta" ? `escena.html?n=${e.n}` : propia ? `${tipo}.html?n=${e.n}` : `golpe.html?n=${e.n}`;
+  const pagina = e.pagina ? `${e.pagina}.html?n=${e.n}`   // la escena nombra su página (/historia: foto → noticia, cita y capitulo → historia)
+    : tipo === "cierre" ? "cierre.html?" : tipo === "tarjeta" ? `escena.html?n=${e.n}` : propia ? `${tipo}.html?n=${e.n}`
+    : ["titular", "noticia"].includes(tipo) ? `noticia.html?n=${e.n}`   // /noticias: el gancho y cada noticia
+    : tipo === "gancho" && e.V ? `gancho.html?n=${e.n}` : `golpe.html?n=${e.n}`;   // gancho con visual (llenado, pareja, figuras, lugar)
   return ORIGEN + pagina + (F45 ? "&f=45" : "");
 }
 

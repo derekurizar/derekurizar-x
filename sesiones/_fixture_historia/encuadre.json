@@ -1,0 +1,67 @@
+{
+ "tema": "La panadería La Espiga de Xela (historia de ejemplo)",
+ "slug": "la-espiga-maqueta",
+ "pregunta": "¿Cómo una panadería de un solo horno llegó a 25 sucursales y volvió a dos hornos?",
+ "resumen": "Cómo una panadería de Xela pasó de un horno de leña a 25 sucursales y volvió a dos hornos.",
+ "arco": "ascenso y caída",
+ "paleta": "terracota",
+ "dominios_propios": [],
+ "capitulos": [
+  {
+   "n": 1,
+   "titulo": "El primer horno",
+   "periodo": "1952–1975",
+   "pregunta": "¿Cómo empezó?"
+  },
+  {
+   "n": 2,
+   "titulo": "El terremoto",
+   "periodo": "1976–1990",
+   "pregunta": "¿Cómo sobrevivió?"
+  },
+  {
+   "n": 3,
+   "titulo": "La caída",
+   "periodo": "2004–2010",
+   "pregunta": "¿Por qué cerró?"
+  }
+ ],
+ "ejes": [
+  {
+   "id": "ori",
+   "nombre": "origen y crecimiento",
+   "capitulos": [
+    1,
+    2
+   ],
+   "preguntas": [
+    "fundación",
+    "crecimiento"
+   ],
+   "fuentes": [
+    "hemeroteca"
+   ]
+  },
+  {
+   "id": "cas",
+   "nombre": "la inspección y el cierre",
+   "capitulos": [
+    3
+   ],
+   "preguntas": [
+    "inspección",
+    "cierre"
+   ],
+   "fuentes": [
+    "MSPAS"
+   ]
+  }
+ ],
+ "sensibles": {
+  "justicia": false,
+  "personas": []
+ },
+ "no_afirma": [
+  "que la multa fue la única causa del cierre"
+ ]
+}

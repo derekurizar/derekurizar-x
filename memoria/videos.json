@@ -130,6 +130,79 @@
         ],
         "pregunta": "¿Cuánto tardas tú en llegar al trabajo?"
       }
+    },
+    {
+      "id": "2026-10-06-carceles-hacinamiento-por-penal",
+      "fecha": "2026-10-23",
+      "slug": "carceles-hacinamiento-por-penal",
+      "hilo_id": "2026-10-06-carceles-hacinamiento-por-penal",
+      "tema": "Pavón: 4,464 presos en un penal para 960. Mapa del hacinamiento carcelario",
+      "paleta": "obsidiana",
+      "duracion": "medio",
+      "duracion_s": 120.5,
+      "n_escenas": 9,
+      "musica": "obsidiana-2",
+      "creditos_voz": 1686.0,
+      "ruta_video": "hilos/2026-10-06-carceles-hacinamiento-por-penal/video",
+      "ruta_hilo": "hilos/2026-10-06-carceles-hacinamiento-por-penal",
+      "estado": "listo",
+      "frases": {
+        "promesa": "Hay un penal todavía más lleno que Pavón, y vas a ver cuál.",
+        "gancho": "Pavón, en Guatemala, era para novecientos sesenta presos.",
+        "aperturas": [
+          "Pero Pavón no es",
+          "Y fuera del país,",
+          "Y no es nuevo:",
+          "Pero que baje no",
+          "Entonces, la ocupación es",
+          "De ahí que dieciséis",
+          "Pero ese exceso no",
+          "Las cárceles guardan más"
+        ],
+        "pregunta": "En la tabla oficial, la mitad de los penales no dice cuántos lugares tiene.",
+        "cierre": "En la tabla oficial, la mitad de los penales no dice cuántos lugares tiene.",
+        "cierre_tipo": "remate",
+        "cierre_forma": "pendiente",
+        "familia": "pregunta",
+        "visual": "llenado"
+      }
+    },
+    {
+      "id": "2026-10-03-desnutricion-aguda-2026",
+      "fecha": "2026-10-24",
+      "slug": "desnutricion-aguda-2026",
+      "hilo_id": "2026-10-03-desnutricion-aguda-2026",
+      "tema": "desnutrición aguda 2026 semana a semana",
+      "paleta": "terracota",
+      "duracion": "medio",
+      "duracion_s": 109.6,
+      "n_escenas": 9,
+      "musica": "terracota-1",
+      "creditos_voz": 2053.0,
+      "ruta_video": "hilos/2026-10-03-desnutricion-aguda-2026/video",
+      "ruta_hilo": "hilos/2026-10-03-desnutricion-aguda-2026",
+      "estado": "listo",
+      "frases": {
+        "promesa": "Antes del cierre verás cuántas muertes siguen sin dictamen.",
+        "gancho": "Seis de cada siete eran menores de dos años.",
+        "aperturas": [
+          "Pero casi toda la",
+          "Así que en desnutrición",
+          "Y las muertes confirmadas",
+          "Y los casos no",
+          "Pero las muertes no",
+          "Solo que ese conteo",
+          "Por eso el conteo",
+          "Bajan los casos, pero"
+        ],
+        "pregunta": "Este año, 34 familias ya enterraron a un hijo por desnutrición.",
+        "cierre": "Este año, 34 familias ya enterraron a un hijo por desnutrición.",
+        "cierre_tipo": "remate",
+        "cierre_forma": "consecuencia",
+        "cierre_mecanismo": "quien",
+        "familia": "escala",
+        "visual": "figuras"
+      }
     }
   ]
 }

@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "_comentario": "Registro de noticieros diarios producidos por /noticias. Lo escribe SOLO scripts/memoria.py --noticias <noticias/<fecha>>; scripts/noticias.py lo lee para no repetir una noticia de los últimos 3 días (por url o titular). estado: listo | publicado | incompleto.",
+  "noticieros": [
+    {
+      "id": "2026-10-23",
+      "fecha": "2026-10-23",
+      "ruta": "noticias/2026-10-23",
+      "paleta": "obsidiana",
+      "musica": "obsidiana-2",
+      "duracion_s": 62.9,
+      "creditos_voz": 912.0,
+      "estado": "listo",
+      "noticias": [
+        {
+          "id": "pol-1",
+          "seccion": "Gobierno",
+          "titular": "Fuerza Aérea incorpora cuatro aeronaves",
+          "urls": [
+            "https://agn.gt/presidente-sobre-nuevas-aeronaves-hoy-guatemala-cuenta-con-medios-que-no-tenia-para-enfrentar-emergencias/",
+            "https://www.prensalibre.com/guatemala/politica/guatemala-presenta-aviones-adquiridos-a-ee-uu-para-combatir-incendios-forestales-y-atender-emergencias-breaking/"
+          ]
+        },
+        {
+          "id": "eco-2",
+          "seccion": "Economía",
+          "titular": "70 % de usuarios dejó la gasolina regular",
+          "urls": [
+            "https://www.prensalibre.com/economia/etanol-en-guatemala-siete-de-cada-diez-usuarios-de-regular-migraron-a-la-superior-en-dos-meses-segun-el-mem/"
+          ]
+        },
+        {
+          "id": "pol-2",
+          "seccion": "Justicia",
+          "titular": "Sala cierra caso de militares por fusiles",
+          "urls": [
+            "https://www.prensalibre.com/guatemala/politica/sala-de-apelaciones-libra-a-tres-militares-por-hurto-de-74-fusiles-y-municiones-del-comando-aereo-de-peten/",
+            "https://prensacomunitaria.org/2026/10/militares-se-libran-de-ir-a-juicio-por-robo-de-arsenal-del-ejercito-en-peten/"
+          ]
+        },
+        {
+          "id": "seg-1",
+          "seccion": "Seguridad",
+          "titular": "Asesinan a condenado por crimen de periodista",
+          "urls": [
+            "https://agn.gt/sp-aclara-que-cardona-condenado-por-asesinato-de-un-periodista-salio-de-prision-en-2024-por-orden-judicial/"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-24",
+      "fecha": "2026-10-24",
+      "ruta": "noticias/2026-10-24",
+      "paleta": "cielo",
+      "musica": "cielo-2",
+      "duracion_s": 61.7,
+      "creditos_voz": 905.0,
+      "estado": "listo",
+      "noticias": [
+        {
+          "id": "seg-2",
+          "seccion": "Seguridad",
+          "titular": "Director penitenciario muere en ataque en Escuintla",
+          "urls": [
+            "https://agn.gt/dgsp-confirma-fallecimiento-del-director-en-funciones-de-la-granja-modelo-de-rehabilitacion-canada/",
+            "https://emisorasunidas.com/nacional/2026/10/24/asesinan-al-director-de-la-granja-penal-canada-escuintla/",
+            "https://www.prensalibre.com/guatemala/justicia/asesinato-del-director-de-la-granja-penal-canada-activa-alerta-por-posibles-motines-en-dos-carceles-breaking/"
+          ]
+        },
+        {
+          "id": "seg-1",
+          "seccion": "Justicia",
+          "titular": "Siete policías, ante tribunales por el caso Choc Toz",
+          "urls": [
+            "https://agn.gt/mingob-pone-a-disposicion-de-tribunales-a-siete-integrantes-de-la-pnc/",
+            "https://www.soy502.com/articulo/policias-vinculados-al-caso-choc-toz-seran-escuchados-lunes-102052"
+          ]
+        },
+        {
+          "id": "eco-1",
+          "seccion": "Economía",
+          "titular": "SAT pedirá revisar la meta de recaudación",
+          "urls": [
+            "https://www.prensalibre.com/economia/sat-solicitara-revisar-meta-de-recaudacion-del-2026-por-exoneracion-de-impuestos-a-combustibles/"
+          ]
+        },
+        {
+          "id": "pol-3",
+          "seccion": "Política",
+          "titular": "Viva proclama a Armando Castillo como candidato",
+          "urls": [
+            "https://www.prensalibre.com/guatemala/politica/partido-viva-proclama-a-candidatos-a-binomio-presidencial-y-para-alcalde-de-la-capital/",
+            "https://www.publinews.gt/noticias/2026/10/24/viva-proclama-a-armando-castillo-y-luis-ralda-como-candidatos-a-la-presidencia-y-vicepresidencia/"
+          ]
+        }
+      ]
+    }
+  ]
+}

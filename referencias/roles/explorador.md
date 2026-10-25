@@ -17,19 +17,38 @@ Presupuesto: ≤ 6 búsquedas, ≤ 6 fetch, las ideas que fije la directiva (3�
    barato y más sólido. Si la fuente no está en el catálogo, que sea oficial o
    de un organismo reconocido (INE, Banguat, MINFIN, SAT, MSPAS, MINEDUC, PNC,
    INACIF, MP, INSIVUMEH, MAGA, CNEE, MEM, BID, Banco Mundial, CEPAL, FAO…).
+   **Lee las notas de acceso**: si `fuentes.py` dice que la página bloquea el
+   fetch, carga con JS o «no localicé los PDF» (p. ej. la canasta del INE), no
+   gastes un fetch ahí: busca un espejo (Banguat, datos abiertos, el PDF
+   directo) o deja ese dato con `acceso: bloqueado`.
 3. **Confirmar acceso** con **≤ 1 fetch por idea** (a la página o archivo de la
    fuente): que publica ese indicador y ese periodo. Copia en `evidencia` una
-   cita corta (≤ 160 caracteres) de lo que viste: título del cuadro, nombre del
-   archivo, «actualizado a …». Sin evidencia no hay idea. Si el dato solo está
-   en notas de prensa, baja `puntaje.datos`.
-4. **Evita** los temas de la lista `excluir` de tu directiva (ya están en el
-   banco o ya son hilos) salvo con un ángulo claramente distinto, dicho en
-   `angulo`. No repitas ideas entre tú y otro explorador: quédate en tus áreas.
+   cita corta (≤ 160 caracteres) de lo que viste **en esa `url`**: título del
+   cuadro, nombre del archivo, «actualizado a …». Si lo viste en una nota de
+   prensa, la nota va como su propio dato (su url, `acceso: prensa`); no pongas
+   la url de un PDF con la cita de un periódico. Sin evidencia no hay idea.
+   Cada dato lleva `acceso`:
+   - `confirmado`: tu fetch a esa url mostró el indicador y el periodo;
+   - `serie`: ya está en `fuentes.py --series` (cita el id de la serie);
+   - `prensa`: solo lo viste en prensa;
+   - `bloqueado`: la página no cargó (WAF, JS, 403).
+   Sin ningún dato `confirmado` o `serie`, `ideas.py` topa `puntaje.datos` en 2.
+4. **No repitas** lo que trae la lista `excluir` de tu directiva. Lo marcado
+   `[hilo]`, `[dato]` o `[informe]` ya se publicó: no se propone de nuevo, ni
+   con otro ángulo, ni en otro formato (un dato de sarampión ya cubre «el
+   sarampión en Guatemala»). `[idea pendiente]` y `[idea en_curso]` ya están
+   en el banco. Solo una `[idea descartada]` admite volver, y únicamente con un
+   ángulo claramente distinto, dicho en `angulo`. `ideas.py` rechaza lo que
+   comparte tema con algo producido. No repitas ideas entre tú y otro
+   explorador: quédate en tus áreas.
 5. **Puntaje** (enteros 1–5, el total lo calcula el script):
    - `interes`: ¿le importa a mucha gente en Guatemala o desmiente una creencia?
    - `datos`: 5 = serie oficial descargable (xlsx/csv/api) de ≥ 10 puntos;
      3 = cifras puntuales en pdf; 1 = solo prensa.
-   - `actualidad`: 5 = dato nuevo o debate de esta semana; 1 = atemporal.
+   - `actualidad`: 5 = dato nuevo o debate de esta semana; 4 = publicación o
+     debate con fecha de los últimos ~45 días; 1 = atemporal. Una cifra de hace
+     cinco meses no es «por qué ahora»: `por_que_ahora` cita el hecho reciente
+     y su fecha.
 
 Cada idea:
 
@@ -38,7 +57,7 @@ Cada idea:
  "pregunta": "la que respondería el hilo", "por_que_ahora": "gancho de actualidad", "angulo": "qué la hace distinta",
  "hook_sugerido": "giro_inversion|escala_humana|brecha_territorial|pregunta_directa|curiosity_gap|mito_vs_dato|antes_despues|titular_clasico",
  "paleta_sugerida": "cielo|jade|maiz|terracota|cacao|jacaranda|atitlan|obsidiana",
- "datos": [{"fuente": "…", "indicador": "…", "url": "https://…", "formato": "xlsx|xls|csv|html|pdf|json|api", "periodo": "2016–2026", "evidencia": "…"}],
+ "datos": [{"fuente": "…", "indicador": "…", "url": "https://…", "formato": "xlsx|xls|csv|html|pdf|json|api", "periodo": "2016–2026", "evidencia": "lo que viste en esa url", "acceso": "confirmado|serie|prensa|bloqueado"}],
  "puntaje": {"interes": 1, "datos": 1, "actualidad": 1}, "nota": "opcional"}
 ```
 

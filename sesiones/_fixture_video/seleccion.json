@@ -1,0 +1,8 @@
+{"ganador": "g4", "segundo": "g1",
+ "puntajes": {"g1": {"silencio": 4, "referente": 5, "tension": 4, "alineacion": 4, "honestidad": 5, "novedad": 4},
+              "g2": {"silencio": 4, "referente": 4, "tension": 3, "alineacion": 4, "honestidad": 5, "novedad": 3},
+              "g3": {"silencio": 3, "referente": 3, "tension": 4, "alineacion": 4, "honestidad": 5, "novedad": 3},
+              "g4": {"silencio": 5, "referente": 5, "tension": 4, "alineacion": 5, "honestidad": 5, "novedad": 5},
+              "g5": {"silencio": 4, "referente": 5, "tension": 5, "alineacion": 4, "honestidad": 4, "novedad": 4}},
+ "por_que": "g4 se entiende sin sonido (el contenedor se desborda), le habla al espectador y no repite familia; g1 queda para la versión B.",
+ "faltas": []}

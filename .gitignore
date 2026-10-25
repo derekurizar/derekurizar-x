@@ -9,6 +9,10 @@ sesiones/_fixture_dato/salida/
 !sesiones/_fixture_video/
 sesiones/_fixture_video/trabajo/
 sesiones/_fixture_video/salida/
+!sesiones/_fixture_noticias/
+sesiones/_fixture_noticias/trabajo/
+!sesiones/_fixture_historia/
+sesiones/_fixture_historia/trabajo/
 *.log
 sesiones/_descargas/
 .playwright-mcp/
@@ -26,3 +30,7 @@ sesiones/_ideas/
 sesiones/_fixture_auditoria/informe/
 # /video: el mp4 queda fuera de git (se regenera con /video); guion, srt, caption y PNG sí se versionan
 hilos/*/video/*.mp4
+# /noticias: igual, el mp4 del noticiero queda fuera de git
+noticias/*/*.mp4
+# /historia: igual, los mp4 de la historia quedan fuera de git (las fotos ni siquiera se copian: son de terceros)
+historias/*/*.mp4

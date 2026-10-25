@@ -8,13 +8,16 @@ export const meta = {
 }
 
 // Guía: referencias/roles/explorador.md. Los exploradores escriben <dir>/ideas_<grupo>.json;
-// aquí solo se valida el retorno. Dedup contra el banco y contra memoria/hilos.json, y la
-// escritura del banco, las hace scripts/ideas.py --importar (el sandbox no lee disco).
+// aquí solo se valida el retorno. args.excluir sale de `scripts/ideas.py --excluir` (etiquetado
+// [hilo] | [dato] | [informe] | [idea <estado>]). Dedup contra el banco y contra lo producido
+// (memoria/hilos.json, datos.json, informes.json), tope de puntaje.datos sin acceso firme y la
+// escritura del banco las hace scripts/ideas.py --importar (el sandbox no lee disco).
 
 const AREAS = ['economia', 'seguridad', 'salud', 'educacion', 'clima-agro', 'energia', 'fiscal', 'poblacion', 'otra']
 const HOOKS = ['giro_inversion', 'escala_humana', 'brecha_territorial', 'pregunta_directa', 'curiosity_gap', 'mito_vs_dato', 'antes_despues', 'titular_clasico']
 const PALETAS = ['cielo', 'jade', 'maiz', 'terracota', 'cacao', 'jacaranda', 'atitlan', 'obsidiana']
 const FORMATOS = ['xlsx', 'xls', 'csv', 'html', 'pdf', 'json', 'api']
+const ACCESOS = ['confirmado', 'serie', 'prensa', 'bloqueado']
 const GRUPOS = [
   { id: 'economia', areas: ['economia', 'fiscal'], foco: 'precios, empleo, remesas, comercio, deuda, presupuesto y recaudación' },
   { id: 'sociedad', areas: ['seguridad', 'poblacion'], foco: 'violencia, justicia, migración, demografía y pobreza' },
@@ -41,8 +44,8 @@ const S = {
             datos: {
               type: 'array', minItems: 1,
               items: {
-                type: 'object', required: ['fuente', 'indicador', 'url', 'evidencia'],
-                properties: { fuente: { type: 'string' }, indicador: { type: 'string' }, url: { type: 'string' }, formato: { type: 'string', enum: FORMATOS }, periodo: { type: 'string' }, evidencia: { type: 'string' } },
+                type: 'object', required: ['fuente', 'indicador', 'url', 'evidencia', 'acceso'],
+                properties: { fuente: { type: 'string' }, indicador: { type: 'string' }, url: { type: 'string' }, formato: { type: 'string', enum: FORMATOS }, periodo: { type: 'string' }, evidencia: { type: 'string' }, acceso: { type: 'string', enum: ACCESOS } },
               },
             },
             puntaje: {
@@ -93,6 +96,7 @@ const agentRol = async (prompt, opts) => {
 const problemas = (i) => {
   const F = []
   if (!i.datos.some((d) => /^https?:\/\//.test(d.url || '') && (d.evidencia || '').trim().length >= 10)) F.push('ningún dato con url y evidencia (≥10 caracteres) de que la fuente lo publica')
+  if (!i.datos.some((d) => d.acceso !== 'bloqueado')) F.push('todos los datos con acceso bloqueado: busca un espejo o cambia de idea')
   if (!(i.pregunta || '').trim() || !(i.por_que_ahora || '').trim()) F.push('pregunta o por_que_ahora vacíos')
   return F
 }
@@ -105,7 +109,8 @@ const explorar = async (gr) => {
     `Eres el explorador del grupo "${gr.id}" (lee referencias/roles/explorador.md). Fecha: ${fecha}. ` +
     (enfoque ? `ENFOQUE pedido por el usuario: «${enfoque}»; area de cada idea ∈ ${AREAS.join('|')}. ` : `Áreas: ${gr.areas.join(', ')} (${gr.foco}); area de cada idea ∈ ${gr.areas.join('|')}. `) +
     `Propón EXACTAMENTE ${porGrupo} ideas. PRESUPUESTO: ≤${PRESUPUESTO.busquedas} búsquedas, ≤${PRESUPUESTO.fetch} fetch (≤1 por idea, para confirmar acceso al dato). ` +
-    `EVITA (ya están en el banco o ya son hilos; solo con ángulo claramente distinto): ${excluir.length ? excluir.map((x) => `«${x}»`).join('; ') : 'nada'}. ` +
+    `NO PROPONGAS (ni con otro ángulo ni en otro formato) los temas ya publicados [hilo] [dato] [informe] ni los que ya están en el banco [idea pendiente] [idea en_curso]; [idea descartada] solo con un ángulo claramente distinto, dicho en angulo: ${excluir.length ? excluir.map((x) => `«${x}»`).join('; ') : 'nada'}. ` +
+    `Cada dato lleva acceso (confirmado|serie|prensa|bloqueado, ver §3 de tu guía) y su evidencia describe ESA url. ` +
     `Crea ${dir}/ con mkdir -p y escribe ${archivo} completo como {"grupo": "${gr.id}", "ideas": [...]}; devuelve el mismo contenido con archivo, n_busquedas y n_fetch.` +
     (fallos.length ? `\nTU RETORNO ANTERIOR FUE RECHAZADO; corrige y vuelve a escribir ${archivo}:\n - ${fallos.join('\n - ')}` : '')
   const opts = { agentType: 'ideas-explorador', schema: S.lote, phase: 'Exploración' }
@@ -135,9 +140,9 @@ for (const l of lotes) for (const i of l.ideas) {
   else vistos.set(i.id, l.grupo)
 }
 const ideas = lotes.flatMap((l) => l.ideas.map((i) => ({
-  id: i.id, titulo: i.titulo, area: i.area, grupo: l.grupo,
+  id: i.id, titulo: i.titulo, area: i.area, grupo: l.grupo, por_que_ahora: i.por_que_ahora,
   puntaje: i.puntaje.interes + i.puntaje.datos + i.puntaje.actualidad,
-  fuentes: [...new Set(i.datos.map((d) => d.fuente))],
+  fuentes: [...new Set(i.datos.map((d) => `${d.fuente} (${d.acceso})`))],
 })))
 if (!ideas.length) fail('Los exploradores no devolvieron ninguna idea con evidencia de datos.')
 log(`Ideas válidas: ${ideas.length} de ${lotes.length} grupo(s) · importar con: python3 scripts/ideas.py --importar ${dir}`)

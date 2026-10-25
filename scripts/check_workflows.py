@@ -3,7 +3,7 @@
 
 El sandbox del Workflow no importa módulos, así que hilo.js, dato.js e ideas.js duplican constantes
 (PALETAS, PLANTILLAS, HOOKS, REQ, RE_*) y la función pesoX. Este script las extrae por regex y falla si:
-  W1 PALETAS difiere entre workflows o de design/tokens.json
+  W1 PALETAS difiere entre workflows o de design/tokens.json; AREAS, FORMATOS y ACCESOS de ideas.js ≠ ideas.py
   W2 PLANTILLAS difiere entre hilo.js y dato.js o del catálogo templates/graficos/*.html
   W3 HOOKS difiere entre workflows o de ensamblar.HOOKS; BEATS (hilo.js) difiere de ensamblar.BEATS
   W4 REQ, RE_LINK, RE_BAIT, RE_SUPER o pesoX difieren entre hilo.js y dato.js
@@ -18,9 +18,13 @@ El sandbox del Workflow no importa módulos, así que hilo.js, dato.js e ideas.j
      H.anotar, H.cabecera, H.verificar, document.getElementById)
   W9 el bloque común (agentRol, conReparacion, avisar, verificación mecánica, rechequeo) de hilo.js, dato.js,
      investigacion.js y video.js es copia exacta de scripts/workflow_comun.js (lo copia scripts/armar_workflows.py)
-  W10 video.js: DURACIONES, TIPOS, FORMULAS, ENLACES y PUNTAJES son espejos literales de scripts/video.py, y el
-     workflow no redefine las constantes del gate (CPS, COLA, RITMO_MAX_S, CARACTERES, DURACION_DEFECTO), que
+  W10 video.js: DURACIONES, TIPOS, FAMILIAS, VISUALES, MECANISMOS_EXPLICA, CIERRE_TIPOS, ENLACES y PUNTAJES son espejos literales de scripts/video.py, y el
+     workflow no redefine las constantes del gate (CPS, COLA, RITMO_MAX_S, CARACTERES, DURACION_DEFECTO, VISUALES_DE,
+     APERTURAS_PROHIBIDAS), que
      viven solo en video.py
+  W11 noticias.js: SECCIONES es espejo literal de noticias.SECCIONES (los prefijos de los rastreadores)
+  W12 historia.js: TIPOS (los de video.py más foto, cita y capitulo), FAMILIAS, VISUALES y PUNTAJES son espejos literales de
+      scripts/historia.py
 
 Uso: python3 scripts/check_workflows.py [--quiet]   · salida 0 ok · 1 diferencias
 """
@@ -104,6 +108,14 @@ def main():
             err("W1 %s: no se encontró `const PALETAS = [...]`" % nombre)
         elif sorted(p) != sorted(paletas):
             err("W1 %s PALETAS %s ≠ design/tokens.json %s" % (nombre, p, paletas))
+    if ideas:  # W1 también: las enumeraciones de ideas.js frente a ideas.py
+        import ideas as _ideas
+        for const in ("AREAS", "FORMATOS", "ACCESOS"):
+            v = lista(ideas, const)
+            if v is None:
+                err("W1 ideas.js: no se encontró `const %s = [...]`" % const)
+            elif v != getattr(_ideas, const):
+                err("W1 ideas.js %s %s ≠ ideas.%s %s" % (const, v, const, getattr(_ideas, const)))
     # W2 plantillas
     for nombre, src in (("hilo.js", hilo), ("dato.js", dato), ("investigacion.js", inv)):
         if not src:
@@ -179,12 +191,14 @@ def main():
             err("W6 investigacion.js MARCADOR_INFORME %r ≠ ensamblar.MARCADOR_INFORME %r" % (m.group(1), MARCADOR_INFORME))
     graficos_informe(catalogo)
     video_workflow()
+    noticias_workflow()
+    historia_workflow()
     return fin(quiet)
 
 
 # Espejos de scripts/video.py en video.js y constantes que el workflow NO debe duplicar.
-W10_LISTAS = ("DURACIONES", "TIPOS", "FORMULAS", "ENLACES", "PUNTAJES")
-W10_PROHIBIDAS = ("CPS", "COLA", "RITMO_MAX_S", "CARACTERES", "DURACION_DEFECTO")
+W10_LISTAS = ("DURACIONES", "TIPOS", "FAMILIAS", "VISUALES", "MECANISMOS_EXPLICA", "CIERRE_TIPOS", "ENLACES", "PUNTAJES")
+W10_PROHIBIDAS = ("CPS", "COLA", "RITMO_MAX_S", "CARACTERES", "DURACION_DEFECTO", "VISUALES_DE", "APERTURAS_PROHIBIDAS")
 
 
 def video_workflow():
@@ -211,6 +225,43 @@ def video_workflow():
     for nombre in W10_PROHIBIDAS:
         if re.search(r"^const %s\b" % nombre, vid, re.M):
             err("W10 video.js define `const %s`: las constantes del gate viven solo en scripts/video.py" % nombre)
+
+
+def noticias_workflow():
+    """W11: noticias.js refleja las secciones de scripts/noticias.py."""
+    src = fuente("noticias.js", opcional=True)
+    if not src:
+        return
+    try:
+        import noticias as NOT
+    except Exception as ex:  # noqa: BLE001
+        err("W11 no se pudo importar scripts/noticias.py: %s" % ex)
+        return
+    js = lista(src, "SECCIONES")
+    if js is None:
+        err("W11 noticias.js: no se encontró `const SECCIONES = [...]`")
+    elif js != list(NOT.SECCIONES):
+        err("W11 noticias.js SECCIONES %s ≠ noticias.SECCIONES %s" % (js, list(NOT.SECCIONES)))
+
+
+def historia_workflow():
+    """W12: historia.js refleja las listas de scripts/historia.py."""
+    src = fuente("historia.js", opcional=True)
+    if not src:
+        return
+    try:
+        import historia as HI
+    except Exception as ex:  # noqa: BLE001
+        err("W12 no se pudo importar scripts/historia.py: %s" % ex)
+        return
+    esperado = {"TIPOS": list(HI.VD.TIPOS) + [t for t in HI.TIPOS_PROPIOS if t not in HI.VD.TIPOS],
+                "FAMILIAS": list(HI.FAMILIAS), "VISUALES": list(HI.VISUALES), "PUNTAJES": list(HI.PUNTAJES)}
+    for nombre, py in esperado.items():
+        js = lista(src, nombre)
+        if js is None:
+            err("W12 historia.js: no se encontró `const %s = [...]`" % nombre)
+        elif js != py:
+            err("W12 historia.js %s %s ≠ historia.py %s" % (nombre, js, py))
 
 
 def graficos_informe(catalogo):

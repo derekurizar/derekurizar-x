@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "_comentario": "Registro de historias narradas producidas por /historia. Lo escribe SOLO scripts/memoria.py --historia <historias/<fecha>-<slug>>; scripts/historia.py lo lee para no repetir una historia, rotar ganchos, cierres, animaciones y música, y para las frases ya usadas (C11). estado: listo | publicado | incompleto.",
+  "historias": [
+    {
+      "id": "2026-10-24-la-cajita-feliz-se-invento-en-guatemala",
+      "slug": "la-cajita-feliz-se-invento-en-guatemala",
+      "tema": "la cajita feliz se inventó en guatemala",
+      "fecha": "2026-10-24",
+      "ruta": "historias/2026-10-24-la-cajita-feliz-se-invento-en-guatemala",
+      "arco": "origen disputado: una idea local que llega a la corporación, una invención paralela en Estados Unidos y el reconocimiento que llega décadas después; la historia contesta qué está documentado de cada versión, no quién «ganó»",
+      "paleta": "maiz",
+      "musica": "maiz-1",
+      "duracion_s": 161.0,
+      "creditos_voz": 2347.0,
+      "estado": "listo",
+      "frases": {
+        "promesa": "Lo que falta saber es a quién le da el crédito la corporación.",
+        "gancho": "La Cajita Feliz tiene dos creadores.",
+        "aperturas": [
+          "Mil novecientos setenta y",
+          "Ese año, la familia",
+          "A finales de los",
+          "Yolanda armó en Guatemala",
+          "Así nació el Menú",
+          "Por eso, según la",
+          "Mientras tanto, en Kansas",
+          "El publicista Bob Bernstein",
+          "Y según CNN, la",
+          "Pero en Guatemala se",
+          "Dos mil veintiuno. Una",
+          "Yolanda Fernández de Cofiño",
+          "Pero según el museo",
+          "En su homenaje, McDonald's",
+          "En dos mil diecinueve",
+          "Quedan dos historias con"
+        ],
+        "pregunta": "Y los guatemaltecos todavía escuchan decir que la Cajita Feliz nació aquí.",
+        "cierre": "Y los guatemaltecos todavía escuchan decir que la Cajita Feliz nació aquí.",
+        "cierre_tipo": "remate",
+        "cierre_forma": "consecuencia",
+        "cierre_mecanismo": "despues",
+        "familia": "paradoja",
+        "visual": "foto",
+        "animaciones": [
+          "cadena"
+        ]
+      }
+    }
+  ]
+}

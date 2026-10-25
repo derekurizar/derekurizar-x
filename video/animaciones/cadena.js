@@ -10,6 +10,7 @@
 ANIM.registrar('cadena', {
   meta: {
     descripcion: 'cadena causa → efecto: cajas apiladas que se llenan al decir cada paso, flechas con partículas',
+    mecanismo: 'cadena',
     temas: ['causas', 'consecuencias', 'proceso'],
     pasos: [2, 6],
     ejemplo: { titulo: '¿Por qué la sequía da hambre?', pasos: ['Llueve menos', 'La milpa se seca', 'Se pierde la cosecha', 'Hay menos comida en casa'] },

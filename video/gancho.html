@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<!-- Escena 1 de /video cuando el gancho lleva visual (S.V: llenado | pareja | figuras | lugar; referencias/ganchos.md):
+     arriba la barra de progreso y el contexto; la pantalla (#cifra) y la línea (#linea) como en golpe.html, más chicas; debajo
+     el visual en un SVG que ocupa el resto de la zona segura (V.zona(), gate V13). El visual está entero en el cuadro 0
+     (R12: es la miniatura y el bucle) y cada número cambia cuando la voz lo dice (S.V, video.py tiempos):
+     - llenado: el contenedor (la capacidad) ya lleno de puntos; al decir el total, los puntos lo desbordan y el contador sube.
+     - pareja: dos bloques con área proporcional; el primero entero, el segundo (contorno desde el cuadro 0) crece al decirlo.
+     - figuras: N personas apagadas; las K primeras se encienden al decir «K de cada N».
+     - lugar: los 22 departamentos; al nombrar el lugar cae el pin, el departamento se enciende y la cámara se acerca.
+     La graba scripts/video_grabar.js llamando a seek(t). -->
+<link rel="stylesheet" href="comun.css">
+<style>
+#progreso { margin-top: 0; }
+#contexto { font: 500 22px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; margin-top: 18px; opacity: .85; }
+#cuerpo { position: absolute; top: 380px; left: var(--izq); right: var(--der); transform-origin: 0 0; }
+#cifra { font: 400 128px/.95 'Instrument Serif', serif; letter-spacing: -.02em; color: var(--acento, var(--ink)); }
+#linea { font: 700 52px/1.1 Archivo, sans-serif; margin-top: 22px; }
+#linea span { display: inline-block; margin-right: .25em; }
+#visual { position: absolute; left: var(--izq); right: var(--der); overflow: hidden; transform-origin: 50% 50%; }
+#visual svg { width: 100%; height: 100%; display: block; }
+#visual .mono { font: 600 26px 'JetBrains Mono', monospace; letter-spacing: .06em; fill: var(--ink); }
+#visual .serif { font: 400 76px 'Instrument Serif', serif; fill: var(--ink); }
+#visual .bold { font: 700 34px Archivo, sans-serif; fill: var(--ink); }
+#rotulo { position: absolute; padding: 10px 18px; background: var(--bg); border: 3px solid var(--ink); border-radius: 12px;
+  font: 800 30px/1 Archivo, sans-serif; white-space: nowrap; opacity: 0; }
+/* formato 4:5 (1080×1350) para el feed */
+html.f45 #cuerpo { top: 190px; }
+html.f45 #cifra { font-size: 104px; }
+html.f45 #linea { font-size: 44px; margin-top: 16px; }
+</style></head>
+<body>
+<div id="arriba"><div id="progreso"></div><div id="contexto"></div></div>
+<div id="cuerpo"><div id="cifra"></div><div id="linea"></div></div>
+<div id="visual"><div id="rotulo"></div></div>
+<div id="subs"></div>
+<script src="comun.js"></script>
+<script>
+const n = V.n, F45 = V.F45, { clamp, eo, prog, esc, normal } = V;
+const NS = 'http://www.w3.org/2000/svg', DERIVA = 0.02;
+let S, TROZOS, VV, EN_PANTALLA = new Set(), T_CIFRA = 0, R = {};
+const el = (tag, at, padre) => { const x = document.createElementNS(NS, tag); for (const [k, v] of Object.entries(at || {})) x.setAttribute(k, v); if (padre) padre.appendChild(x); return x; };
+const miles = (v) => Math.round(v).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+// el contador con los decimales del valor final («46.1»), con separador de miles
+const cuenta = (v, final) => { const d = (String(final).split('.')[1] || '').length;
+  const [e, f] = v.toFixed(d).split('.'); return e.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (f ? '.' + f : ''); };
+const cargarScript = (src) => new Promise((ok, mal) => { const s = document.createElement('script'); s.src = src; s.onload = ok;
+  s.onerror = () => mal(new Error('no existe ' + src)); document.head.appendChild(s); });
+
+// ── los cuatro visuales: pintar(W, H, svg) arma el dibujo; seek(t) lo mueve ──────────────────────────────────────
+const VISUAL = {
+  llenado: {
+    pintar(W, H, svg) {
+      // la cuadrícula (P puntos, los D primeros dentro del contenedor) con margen para el borde y la leyenda abajo
+      const P = VV.puntos, D = Math.min(VV.dentro, P), LEY = 124, M = 12, y0 = 46;
+      let mejor = null;
+      for (let cols = 6; cols <= 40; cols++) {
+        const filas = Math.ceil(P / cols), c = Math.min((W - 2 * M) / cols, (H - y0 - LEY) / filas);
+        if (!mejor || c > mejor.c) mejor = { cols, filas, c };
+      }
+      const { cols, filas, c } = mejor, x0 = (W - cols * c) / 2;
+      el('text', { x: x0, y: 22, class: 'mono' }, svg).textContent = 'CAPACIDAD · ' + miles(VV.capacidad);
+      const fd = Math.floor(D / cols), resto = D % cols, pad = c * 0.1;
+      const pts = resto
+        ? [[0, 0], [cols, 0], [cols, fd], [resto, fd], [resto, fd + 1], [0, fd + 1]]
+        : [[0, 0], [cols, 0], [cols, fd], [0, fd]];
+      R.caja = el('path', { d: 'M' + pts.map(([a, b]) => `${(x0 + a * c + (a ? pad : -pad)).toFixed(1)},${(y0 + b * c + (b ? pad : -pad)).toFixed(1)}`).join('L') + 'Z',
+        fill: 'none', stroke: 'var(--ink)', 'stroke-width': 4, 'stroke-linejoin': 'round' }, svg);
+      R.puntos = [];
+      for (let i = 0; i < P; i++) {
+        const cx = x0 + (i % cols + 0.5) * c, cy = y0 + (Math.floor(i / cols) + 0.5) * c;
+        const p = el('circle', { cx: cx.toFixed(1), cy: cy.toFixed(1), r: (c * 0.36).toFixed(1), fill: i < D ? 'var(--ink)' : 'var(--grafico)' }, svg);
+        p.style.transformBox = 'fill-box'; p.style.transformOrigin = 'center';
+        R.puntos.push(p);
+      }
+      const yl = y0 + filas * c + 28;
+      const ley = el('text', { x: x0, y: yl + 30, class: 'mono' }, svg);
+      ley.textContent = VV.unidad.toUpperCase() + ' · ● = ' + miles(VV.u);
+      R.cuenta = el('text', { x: x0 + cols * c, y: yl + 62, class: 'serif', 'text-anchor': 'end', fill: 'var(--acento)' }, svg);
+      R.D = D;
+    },
+    seek(t) {
+      const [a, b] = VV.desborde, P = R.puntos.length, D = R.D, k = P - D;
+      let vistos = 0;
+      R.puntos.forEach((p, i) => {
+        if (i < D) return;
+        const ti = a + (b - a) * (i - D) / Math.max(1, k), q = prog(t, ti, ti + 0.18);
+        p.style.opacity = q; p.style.transform = `scale(${(0.4 + 0.6 * q).toFixed(3)})`;
+        if (q > 0.5) vistos++;
+      });
+      const lleno = t >= b - 0.05;
+      // antes del desborde, la capacidad con sus propios decimales («26»); al desbordar, con los del total («46.1»)
+      R.cuenta.textContent = t < a ? cuenta(VV.capacidad, VV.capacidad) : cuenta(lleno ? VV.total : Math.min(VV.total, VV.capacidad + vistos * VV.u), VV.total);
+      const desb = prog(t, a, a + 0.3);
+      R.caja.setAttribute('stroke', desb > 0.5 ? 'var(--grafico)' : 'var(--ink)');
+      R.caja.setAttribute('stroke-width', (4 + 3 * Math.sin(Math.PI * clamp((t - a) / 0.6))).toFixed(2));
+    },
+  },
+  pareja: {
+    pintar(W, H, svg) {
+      const va = VV.a.valor, vb = VV.b.valor, ETQ = 150, gap = 56;
+      const k = Math.min((W - gap) / (Math.sqrt(va) + Math.sqrt(vb)), (H - ETQ) / Math.sqrt(Math.max(va, vb)));
+      const sa = k * Math.sqrt(va), sb = k * Math.sqrt(vb), base = ETQ + Math.max(sa, sb), x0 = (W - sa - sb - gap) / 2;
+      const bloque = (x, s, v, et, color, clase) => {
+        const g = el('g', {}, svg);
+        const r = el('rect', { x, y: base - s, width: s, height: s, fill: color, rx: 6 }, g);
+        const tv = el('text', { x, y: base - s - 62, class: 'serif' }, g); tv.textContent = cuenta(v, v);
+        const te = el('text', { x, y: base - s - 18, class: 'bold' }, g); te.textContent = et;
+        return { g, r, tv, te, x, s };
+      };
+      R.a = bloque(x0, sa, va, VV.a.etiqueta, 'color-mix(in srgb, var(--ink) 38%, transparent)');
+      R.b = bloque(x0 + sa + gap, sb, vb, VV.b.etiqueta, 'var(--grafico)');
+      R.bc = el('rect', { x: R.b.x, y: base - sb, width: sb, height: sb, fill: 'none', stroke: 'var(--grafico)', 'stroke-width': 3,
+        'stroke-dasharray': '14 10', rx: 6 }, svg);
+      R.base = base;
+    },
+    seek(t) {
+      const [b0, b1] = VV.t_b, q = prog(t, b0, b1);
+      const s = R.b.s * Math.sqrt(Math.max(0.0001, q));
+      R.b.r.setAttribute('width', s.toFixed(1)); R.b.r.setAttribute('height', s.toFixed(1)); R.b.r.setAttribute('y', (R.base - s).toFixed(1));
+      R.b.tv.textContent = cuenta(VV.b.valor * q, VV.b.valor);
+      R.b.tv.style.opacity = prog(t, b0 - 0.1, b0 + 0.2);
+      R.bc.style.opacity = 1 - 0.6 * q;
+    },
+  },
+  figuras: {
+    pintar(W, H, svg) {
+      const N = VV.n, ETQ = 70, divs = [5, 8, 10, 12, 15, 20, 25].filter((c) => c <= N && N % c === 0);
+      // con N ≤ 10 también en dos filas (5 de 10 por fila): se elige la disposición que da figuras más grandes
+      const ops = (N <= 10 ? [N, ...(N % 2 === 0 && N >= 6 ? [N / 2] : [])] : divs.length ? divs : [10]).map((cols) => {
+        const filas = Math.ceil(N / cols), gap = cols <= 10 ? 12 : 8;
+        const w = Math.min((W - (cols - 1) * gap) / cols, ((H - ETQ - (filas - 1) * gap) / filas) * 40 / 64 / 1.09);
+        return { cols, filas, gap, w };
+      });
+      const { cols, gap, w } = ops.reduce((a, b) => (b.w > a.w ? b : a)), h = w * 64 / 40, x0 = (W - cols * w - (cols - 1) * gap) / 2;
+      R.fig = [];
+      for (let i = 0; i < N; i++) {
+        const g = el('g', { transform: `translate(${(x0 + (i % cols) * (w + gap)).toFixed(1)},${(Math.floor(i / cols) * (h + gap) + 10).toFixed(1)}) scale(${(w / 40).toFixed(4)})` }, svg);
+        el('circle', { cx: 20, cy: 11, r: 10 }, g);
+        el('path', { d: 'M8 26h24a6 6 0 0 1 6 6v18h-7v14h-7V48h-8v16H9V50H2V32a6 6 0 0 1 6-6z' }, g);
+        g.setAttribute('fill', 'color-mix(in srgb, var(--ink) 26%, transparent)');
+        R.fig.push(g);
+      }
+      const filas = Math.ceil(N / cols);
+      el('text', { x: x0, y: filas * (h + gap) + 54, class: 'bold' }, svg).textContent = VV.etiqueta || '';
+    },
+    seek(t) {
+      const K = VV.k, paso = Math.min(0.08, 0.9 / Math.max(1, K));
+      R.fig.forEach((g, i) => {
+        if (i >= K) return;
+        const q = prog(t, VV.destacadas + i * paso, VV.destacadas + i * paso + 0.2);
+        g.setAttribute('fill', q > 0.5 ? 'var(--grafico)' : 'color-mix(in srgb, var(--ink) 26%, transparent)');
+      });
+    },
+  },
+  lugar: {
+    async pintar(W, H, svg) {
+      await cargarScript('geometria.js');
+      const vb = GEOMETRIA.viewBox.split(' ').map(Number);
+      svg.setAttribute('viewBox', GEOMETRIA.viewBox);
+      svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+      R.zoom = el('g', {}, svg);
+      R.paths = {};
+      for (const [id, geo] of Object.entries(GEOMETRIA.deptos)) {
+        R.paths[id] = el('path', { d: geo.d, fill: 'color-mix(in srgb, var(--ink) 20%, transparent)', stroke: 'var(--bg)', 'stroke-width': 2,
+          'vector-effect': 'non-scaling-stroke', 'stroke-linejoin': 'round' }, R.zoom);
+      }
+      const p = R.paths[VV.depto];
+      if (!p) throw new Error('lugar: departamento «' + VV.depto + '» sin geometría');
+      R.borde = el('path', { d: GEOMETRIA.deptos[VV.depto].d, fill: 'none', stroke: 'var(--ink)', 'stroke-width': 5, 'vector-effect': 'non-scaling-stroke' }, R.zoom);
+      const bb = p.getBBox();
+      R.c = [bb.x + bb.width / 2, bb.y + bb.height / 2];
+      R.pin = el('g', {}, R.zoom);
+      el('line', { x1: R.c[0], y1: R.c[1], x2: R.c[0], y2: R.c[1] - 60, stroke: 'var(--ink)', 'stroke-width': 4, 'vector-effect': 'non-scaling-stroke' }, R.pin);
+      el('circle', { cx: R.c[0], cy: R.c[1], r: 9, fill: 'var(--ink)' }, R.pin);
+      R.vb = vb;
+      document.getElementById('rotulo').textContent = VV.etiqueta || VV.nombre;
+    },
+    seek(t) {
+      const q = prog(t, VV.pin, VV.pin + 0.6), z = 1 + 0.35 * prog(t, VV.pin, VV.pin + 1.4);
+      R.paths[VV.depto].setAttribute('fill', q > 0.4 ? 'var(--grafico)' : 'color-mix(in srgb, var(--ink) 34%, transparent)');
+      R.borde.style.opacity = q;
+      R.pin.style.opacity = q;
+      R.pin.setAttribute('transform', `translate(0 ${((1 - q) * -40).toFixed(1)})`);
+      // la cámara se acerca al departamento (el recorte de #visual corta lo que sale)
+      const [cx, cy] = R.c;
+      R.zoom.setAttribute('transform', `translate(${cx} ${cy}) scale(${z.toFixed(4)}) translate(${-cx} ${-cy})`);
+      // el rótulo junto al pin, en coordenadas de la página
+      const svg = R.zoom.ownerSVGElement, m = R.pin.getScreenCTM(), vis = document.getElementById('visual').getBoundingClientRect();
+      const pt = svg.createSVGPoint(); pt.x = cx; pt.y = cy - 60; const s = pt.matrixTransform(m);
+      const rot = document.getElementById('rotulo'), w = rot.offsetWidth;
+      rot.style.left = Math.max(8, Math.min(vis.width - w - 8, s.x - vis.left - w / 2)).toFixed(1) + 'px';
+      rot.style.top = Math.max(8, s.y - vis.top - rot.offsetHeight - 14).toFixed(1) + 'px';
+      rot.style.opacity = prog(t, VV.pin + 0.3, VV.pin + 0.6);
+    },
+  },
+};
+
+window.__listo = (async () => {
+  const C = await V.cargar(), todo = C.todo; S = C.S; TROZOS = C.trozos; VV = S.V;
+  if (!VV || !VISUAL[VV.tipo]) throw new Error('gancho.html: visual «' + (VV && VV.tipo) + '» desconocido');
+  V.pintarProgreso(todo);
+  document.getElementById('contexto').textContent = todo.contexto_superior || '';
+  [S.T.pant.texto, ...(S.T.linea || []).map((w) => w.text), todo.contexto_superior || '']
+    .forEach((s) => String(s).split(/\s+/).forEach((w) => { const k = normal(w); if (k) EN_PANTALLA.add(k); }));
+  T_CIFRA = S.T.pant.desde;
+  const cifra = document.getElementById('cifra'), P = S.T.pant;
+  cifra.textContent = P.texto;
+  document.getElementById('linea').innerHTML = (S.T.linea || []).map((w) => `<span>${esc(w.text)}</span>`).join('');
+  await document.fonts.ready;
+  const cuerpo = document.getElementById('cuerpo'), ancho = cuerpo.clientWidth, fs0 = F45 ? 104 : 128;
+  for (let fs = fs0; fs > 76 && (cifra.scrollWidth > ancho || cifra.offsetHeight > 2.1 * fs); fs -= 6) cifra.style.fontSize = fs + 'px';
+  // el visual ocupa de debajo de la línea al fin de la zona segura (con la deriva)
+  const Z = V.zona(), vis = document.getElementById('visual');
+  const top = cuerpo.offsetTop + cuerpo.offsetHeight + (F45 ? 26 : 40);
+  const alto = Math.max(200, (Z.fin - top) / (1 + DERIVA) - 6);
+  vis.style.top = top + 'px'; vis.style.height = alto + 'px';
+  const W = vis.clientWidth, H = alto;
+  const svg = el('svg', { viewBox: `0 0 ${W} ${H}` }, null);
+  vis.insertBefore(svg, vis.firstChild);
+  await VISUAL[VV.tipo].pintar(W, H, svg);
+  // centrado vertical en el área (el mapa ya se centra con su viewBox)
+  if (VV.tipo !== 'lugar') {
+    const g = el('g', {}, null);
+    while (svg.firstChild) g.appendChild(svg.firstChild);
+    svg.appendChild(g);
+    const bb = g.getBBox(), dy = Math.max(0, (H - bb.height) / 2 - bb.y);
+    g.setAttribute('transform', `translate(0 ${dy.toFixed(1)})`);
+  }
+})();
+
+const subtitulos = (t) => V.subtitulos(t, S, TROZOS, { ocultar: (tr, t) => t < T_CIFRA + 0.3 || tr.every((x) => EN_PANTALLA.has(normal(x.text))) });
+window.seek = (t) => {
+  V.seekProgreso(t, n, S.dur);
+  const cifra = document.getElementById('cifra'), P = S.T.pant;
+  // la pantalla está entera desde el cuadro 0 (R12: miniatura y bucle; el movimiento lo pone el visual): late cuando la
+  // voz dice su cifra
+  let escala = 1;
+  if (P.pulso) escala *= 1 + 0.05 * Math.sin(Math.PI * clamp((t - P.pulso[0]) / Math.max(0.001, P.pulso[1] - P.pulso[0])));
+  cifra.style.transform = `scale(${escala.toFixed(4)})`; cifra.style.transformOrigin = '0 60%';
+  [...document.querySelectorAll('#linea span')].forEach((s, i) => {
+    const w = eo((t - S.T.linea[i].start + 0.15) / 0.3); s.style.opacity = w; s.style.transform = `translateY(${(1 - w) * 24}px)`; });
+  VISUAL[VV.tipo].seek(t);
+  document.getElementById('visual').style.transform = `scale(${(1 + DERIVA * clamp(t / S.dur)).toFixed(4)})`;
+  subtitulos(t);
+};
+</script>
+</body></html>

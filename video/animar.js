@@ -610,8 +610,10 @@
     if (plantilla === "waffle") return E.num && (ck(D.cifra && D.cifra.valor) || ck(D.porcentaje) || num(E.num)) ? [E.num] : [];
     if (plantilla === "dona") {
       if (num(E.v)) return [E.v];
-      const it = E.items.find((x, i) => num(x.it.querySelector(".p")) || ck((D.partes[i] || {}).valor));
-      return it ? [it.it] : [];
+      const i = E.items.findIndex((x, j) => num(x.it.querySelector(".p")) || ck((D.partes[j] || {}).valor));
+      // la parte destacada es la que muestra el centro: el foco va al centro, no a la fila de la leyenda
+      if (i >= 0 && i === (D.destacar || 0) && E.v) return [E.v];
+      return i >= 0 ? [E.items[i].it] : [];
     }
     if (plantilla === "pesas" || plantilla === "pendiente") {
       return E.items.flatMap((it) => (ck(it.b) || num(it.lb)) ? [it.nombre, it.cb, it.lb] : (ck(it.a) || num(it.la)) ? [it.nombre, it.ca, it.la] : []);

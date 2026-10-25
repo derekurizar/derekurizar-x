@@ -35,6 +35,10 @@ Comprueba:
   M8 memoria/videos.json (si existe; registro de /video): schema de cada video (id, fecha, slug, hilo_id, paleta,
      duracion ∈ corto|medio|largo, duracion_s, n_escenas, musica, ruta_video, ruta_hilo, estado) · ids únicos ·
      ruta_video con guion.json (el mp4 está fuera de git: su ausencia es aviso) · musica en el catálogo
+  M9 memoria/noticias.json (si existe; registro de /noticias): campos, ids únicos, estado, paleta y música conocidas,
+     ruta con guion.json, fuentes.md y caption.md (el mp4 fuera de git: aviso) · cada noticia con titular y urls
+  M10 memoria/historias.json (si existe; registro de /historia): campos, ids y slugs únicos, estado, paleta y música
+     conocidas, ruta con guion.json (tipo historia), fuentes.md, cronologia.md y caption.md (el mp4 fuera de git: aviso)
   K1 design/musica/catalogo.json: cada pista existe, ids únicos, paleta conocida y ≥ 2 pistas por paleta
   N1 cada investigacion/<YYYY-MM-DD>-*/ (entregable de /investigacion) tiene informe.json,
      salida/informe.pdf y salida/informe.html; aviso si no está en memoria/informes.json (corrida
@@ -562,6 +566,77 @@ def validar_videos(paletas):
             err("M8 videos[%d] ruta_hilo %s sin hilo.json" % (i, rh))
 
 
+def validar_historias(paletas):
+    """M10 memoria/historias.json (registro de /historia)."""
+    rel_mem = "memoria/historias.json"
+    if not os.path.exists(os.path.join(RAIZ, rel_mem)):  # ausente = ok: memoria.py lo crea con la primera historia
+        return
+    d = cargar(rel_mem) or {}
+    musica = {p.get("id") for p in (cargar("design/musica/catalogo.json") or {}).get("pistas", [])}
+    ids, slugs = set(), set()
+    for i, v in enumerate(d.get("historias", [])):
+        for campo in ("id", "slug", "fecha", "ruta", "paleta", "musica", "duracion_s", "estado", "frases"):
+            if campo not in v:
+                err("M10 historias[%d] sin %s" % (i, campo))
+        for clave, vistos in (("id", ids), ("slug", slugs)):
+            if v.get(clave) in vistos:
+                err("M10 historias: %s repetido %s" % (clave, v.get(clave)))
+            vistos.add(v.get(clave))
+        if v.get("estado") not in ("listo", "publicado", "incompleto"):
+            err("M10 historias[%d] estado %r" % (i, v.get("estado")))
+        if paletas and v.get("paleta") not in paletas:
+            err("M10 historias[%d] paleta %r desconocida" % (i, v.get("paleta")))
+        if v.get("musica") not in musica:
+            err("M10 historias[%d] música %r no está en el catálogo" % (i, v.get("musica")))
+        r = str(v.get("ruta", ""))
+        if os.path.isabs(r):
+            err("M10 historias[%d] la ruta debe ser relativa a la raíz" % i)
+            continue
+        for f in ("guion.json", "fuentes.md", "cronologia.md", "caption.md"):
+            if not os.path.exists(os.path.join(RAIZ, r, f)):
+                err("M10 historias[%d] %s sin %s" % (i, r, f))
+        g = cargar(os.path.join(r, "guion.json")) if os.path.exists(os.path.join(RAIZ, r, "guion.json")) else {}
+        if g and g.get("tipo") != "historia":
+            err("M10 historias[%d] %s/guion.json no es de /historia (tipo %r)" % (i, r, g.get("tipo")))
+        if not os.path.exists(os.path.join(RAIZ, r, "video.mp4")):
+            warn("M10 historias[%d] %s/video.mp4 no está (fuera de git: se regenera con /historia)" % (i, r))
+
+
+def validar_noticias(paletas):
+    """M9 memoria/noticias.json (registro de /noticias)."""
+    rel_mem = "memoria/noticias.json"
+    if not os.path.exists(os.path.join(RAIZ, rel_mem)):  # ausente = ok: memoria.py lo crea con el primer noticiero
+        return
+    d = cargar(rel_mem) or {}
+    musica = {p.get("id") for p in (cargar("design/musica/catalogo.json") or {}).get("pistas", [])}
+    ids = set()
+    for i, v in enumerate(d.get("noticieros", [])):
+        for campo in ("id", "fecha", "ruta", "paleta", "musica", "duracion_s", "estado", "noticias"):
+            if campo not in v:
+                err("M9 noticieros[%d] sin %s" % (i, campo))
+        if v.get("id") in ids:
+            err("M9 noticieros: id repetido %s" % v.get("id"))
+        ids.add(v.get("id"))
+        if v.get("estado") not in ("listo", "publicado", "incompleto"):
+            err("M9 noticieros[%d] estado %r" % (i, v.get("estado")))
+        if paletas and v.get("paleta") not in paletas:
+            err("M9 noticieros[%d] paleta %r desconocida" % (i, v.get("paleta")))
+        if v.get("musica") not in musica:
+            err("M9 noticieros[%d] música %r no está en el catálogo" % (i, v.get("musica")))
+        r = str(v.get("ruta", ""))
+        if os.path.isabs(r):
+            err("M9 noticieros[%d] la ruta debe ser relativa a la raíz" % i)
+            continue
+        for f in ("guion.json", "fuentes.md", "caption.md"):
+            if not os.path.exists(os.path.join(RAIZ, r, f)):
+                err("M9 noticieros[%d] %s sin %s" % (i, r, f))
+        if not os.path.exists(os.path.join(RAIZ, r, "video.mp4")):
+            warn("M9 noticieros[%d] %s/video.mp4 no está (fuera de git: se regenera con /noticias)" % (i, r))
+        for k, x in enumerate(v.get("noticias") or []):
+            if not x.get("titular") or not x.get("urls"):
+                err("M9 noticieros[%d].noticias[%d] sin titular o sin urls" % (i, k))
+
+
 def main():
     if "--huerfanas" in sys.argv:
         return huerfanas("--borrar" in sys.argv)
@@ -574,6 +649,8 @@ def main():
     validar_ideas(paletas)
     validar_calendario()
     validar_videos(paletas)
+    validar_noticias(paletas)
+    validar_historias(paletas)
     for a in AVISOS:
         print("AVISO  " + a)
     for e in ERRORES:

@@ -3,7 +3,12 @@
     {
       "id": "cadena",
       "origen": "semilla",
-      "usos": [],
+      "usos": [
+        "desnutricion-aguda-2026",
+        "carceles-hacinamiento-por-penal",
+        "trafico-guatemala-2026",
+        "la-cajita-feliz-se-invento-en-guatemala"
+      ],
       "descripcion": "cadena causa → efecto: cajas apiladas que se llenan al decir cada paso, flechas con partículas",
       "temas": [
         "causas",
@@ -21,6 +26,179 @@
           "La milpa se seca",
           "Se pierde la cosecha",
           "Hay menos comida en casa"
+        ]
+      },
+      "mecanismo": "cadena"
+    },
+    {
+      "id": "ciclo-vicioso",
+      "origen": "semilla",
+      "usos": [],
+      "descripcion": "ciclo que se retroalimenta: nodos en anillo que se encienden al decirlos y un pulso que da la vuelta y lo refuerza",
+      "mecanismo": "ciclo",
+      "temas": [
+        "pobreza",
+        "ciclo",
+        "círculo vicioso",
+        "retroalimentación",
+        "se repite",
+        "trampa"
+      ],
+      "pasos": [
+        3,
+        6
+      ],
+      "ejemplo": {
+        "titulo": "Por qué cuesta salir",
+        "pasos": [
+          "Poco ingreso",
+          "Se deja la escuela",
+          "Trabajo informal",
+          "Hijos con poco ingreso"
+        ]
+      }
+    },
+    {
+      "id": "cronologia",
+      "origen": "semilla",
+      "usos": [],
+      "descripcion": "línea de tiempo vertical: cada evento «fecha · qué pasó» se enciende en el riel cuando la voz lo dice",
+      "temas": [
+        "historia",
+        "cronología",
+        "línea de tiempo",
+        "caso",
+        "fechas",
+        "etapas"
+      ],
+      "pasos": [
+        2,
+        6
+      ],
+      "ejemplo": {
+        "titulo": "¿Cómo pasó?",
+        "pasos": [
+          "1952 · Abre el horno",
+          "1976 · El terremoto",
+          "1990 · 25 sucursales",
+          "2010 · Cierra la última"
+        ]
+      },
+      "mecanismo": "cronologia"
+    },
+    {
+      "id": "embudo-filtro",
+      "origen": "semilla",
+      "usos": [],
+      "descripcion": "embudo de etapas: entran muchas partículas arriba, cada etapa descarta una parte y abajo quedan pocas",
+      "mecanismo": "embudo",
+      "temas": [
+        "filtro",
+        "etapas",
+        "confirmación",
+        "casos",
+        "proceso",
+        "descarte",
+        "embudo"
+      ],
+      "pasos": [
+        2,
+        6
+      ],
+      "ejemplo": {
+        "titulo": "Cómo se confirma una muerte",
+        "pasos": [
+          "Se notifica la sospecha",
+          "Se investiga el caso",
+          "Una mesa técnica revisa",
+          "Se confirma o se descarta"
+        ]
+      }
+    },
+    {
+      "id": "fraccion-espacios",
+      "origen": "semilla",
+      "usos": [],
+      "descripcion": "una fracción: las figuras de arriba sobre los espacios de abajo; si el denominador no crece, quitar unas pocas casi no baja el medidor",
+      "mecanismo": "proporcion",
+      "temas": [
+        "ocupación",
+        "hacinamiento",
+        "tasa",
+        "proporción",
+        "denominador",
+        "cárceles",
+        "cupo"
+      ],
+      "pasos": [
+        2,
+        6
+      ],
+      "ejemplo": {
+        "titulo": "Por qué la ocupación no cede",
+        "pasos": [
+          "Presos entre espacios",
+          "Los espacios no crecen",
+          "Salgan algunos presos",
+          "La ocupación apenas baja"
+        ]
+      }
+    },
+    {
+      "id": "onda-frenado",
+      "origen": "semilla",
+      "usos": [],
+      "descripcion": "onda de frenado: una fila de carros se aprieta y la luz del frenazo viaja hacia atrás hasta formar la cola",
+      "mecanismo": "onda",
+      "temas": [
+        "tránsito",
+        "tráfico",
+        "cola",
+        "contagio",
+        "propagación",
+        "onda"
+      ],
+      "pasos": [
+        2,
+        6
+      ],
+      "ejemplo": {
+        "titulo": "Cómo nace una cola",
+        "pasos": [
+          "Más carros por kilómetro",
+          "Menos espacio entre ellos",
+          "Un frenazo se contagia",
+          "Se forma la cola"
+        ]
+      }
+    },
+    {
+      "id": "tanque-balance",
+      "origen": "semilla",
+      "usos": [],
+      "descripcion": "tanque con entrada y salida: cuando sale más de lo que entra el nivel baja (o sube si es al revés)",
+      "mecanismo": "balance",
+      "temas": [
+        "agua",
+        "lago",
+        "nivel",
+        "presupuesto",
+        "deuda",
+        "reservas",
+        "balance",
+        "entradas y salidas"
+      ],
+      "pasos": [
+        2,
+        6
+      ],
+      "ejemplo": {
+        "titulo": "¿Por qué baja el lago?",
+        "pasos": [
+          "Entra el agua de lluvia",
+          "Sale más de la que entra",
+          "El nivel baja",
+          "El lago se encoge"
         ]
       }
     }

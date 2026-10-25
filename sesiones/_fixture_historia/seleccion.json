@@ -1,0 +1,31 @@
+{
+ "ganador": "g1",
+ "segundo": "g3",
+ "por_que": "maqueta: la foto de la carpa frena el scroll en silencio",
+ "puntajes": {
+  "g1": {
+   "silencio": 4,
+   "brecha": 4,
+   "referente": 3,
+   "evidencia": 4
+  },
+  "g2": {
+   "silencio": 4,
+   "brecha": 4,
+   "referente": 3,
+   "evidencia": 4
+  },
+  "g3": {
+   "silencio": 4,
+   "brecha": 4,
+   "referente": 3,
+   "evidencia": 4
+  },
+  "g4": {
+   "silencio": 4,
+   "brecha": 4,
+   "referente": 3,
+   "evidencia": 4
+  }
+ }
+}

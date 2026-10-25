@@ -1,0 +1,336 @@
+{
+ "id": "2026-10-24-la-cajita-feliz-se-invento-en-guatemala",
+ "tipo": "historia",
+ "slug": "la-cajita-feliz-se-invento-en-guatemala",
+ "tema": "la cajita feliz se inventó en guatemala",
+ "fecha": "2026-10-24",
+ "pregunta": "¿Nació en Guatemala la Cajita Feliz, o la idea surgió a la vez en dos países y McDonald's terminó reconociendo a los dos?",
+ "arco": "origen disputado: una idea local que llega a la corporación, una invención paralela en Estados Unidos y el reconocimiento que llega décadas después; la historia contesta qué está documentado de cada versión, no quién «ganó»",
+ "capitulos": [
+  {
+   "numero": 1,
+   "anio": "1974",
+   "titulo": "La primera franquicia"
+  },
+  {
+   "numero": 2,
+   "anio": "Años setenta",
+   "titulo": "El Menú de Ronald"
+  },
+  {
+   "numero": 3,
+   "anio": "1977",
+   "titulo": "Mientras, en Kansas"
+  },
+  {
+   "numero": 4,
+   "anio": "2021",
+   "titulo": "¿De quién es?"
+  }
+ ],
+ "paleta": "maiz",
+ "musica": "maiz-1",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2347.0,
+ "duracion_s": 161.0,
+ "critica": {
+  "veredicto": "pasa",
+  "vuelta": 2,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 4,
+   "claridad": 4,
+   "ritmo": 4,
+   "precision": 4,
+   "cierre": 4
+  }
+ },
+ "gancho": {
+  "familia": "paradoja",
+  "visual": "foto",
+  "pantalla": "Dos creadores, una caja",
+  "linea": "uno en Kansas City, otra en Guatemala"
+ },
+ "promesa": {
+  "texto": "Lo que falta saber es a quién le da el crédito la corporación.",
+  "en": 2,
+  "pago": 15
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "La Cajita Feliz tiene dos creadores. Uno en Kansas City y otra en Guatemala.",
+   "voz": "La Cajita Feliz tiene dos creadores. Uno en Kansas City y otra en Guatemala.",
+   "dur": 5.731,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Joshuald · CC BY-SA 3.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 3.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "Una es Yolanda de Cofiño: McDonald's Guatemala la llama creadora de la Cajita Feliz. El otro es un publicista con su propia versión. Lo que falta saber es a quién le da el crédito la corporación.",
+   "voz": "Una es Yolanda de Cofiño: McDonald's Guatemala la llama creadora de la Cajita Feliz. El otro es un publicista con su propia versión. Lo que falta saber es a quién le da el crédito la corporación.",
+   "dur": 12.358,
+   "hechos": [
+    "gua-h13",
+    "eua-h01"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: McDonald's Guatemala / Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© McDonald's Guatemala / Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "capitulo",
+   "pantalla": "1974. Llega McDonald's a Guatemala.",
+   "voz": "Mil novecientos setenta y cuatro. Llega McDonald's a Guatemala.",
+   "dur": 4.883,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "foto",
+   "pantalla": "Ese año, la familia Cofiño compra la franquicia y José María Cofiño abre el primer restaurante del país, en el centro de la capital. En esa familia está Yolanda.",
+   "voz": "Ese año, la familia Cofiño compra la franquicia y José María Cofiño abre el primer restaurante del país, en el centro de la capital. En esa familia está Yolanda.",
+   "dur": 10.958,
+   "hechos": [
+    "gua-h01"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "capitulo",
+   "pantalla": "A finales de los setenta. Un menú para niños.",
+   "voz": "A finales de los setenta. Un menú para niños.",
+   "dur": 4.041,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "cita",
+   "pantalla": "Yolanda armó en Guatemala un menú para niños, y años después contó cómo empezó: A todo esto se me ocurrió agregarle un juguetito, entonces me fui a la cuarta avenida a buscar los juguetes y con eso comenzamos.",
+   "voz": "Yolanda armó en Guatemala un menú para niños, y años después contó cómo empezó: A todo esto se me ocurrió agregarle un juguetito, entonces me fui a la cuarta avenida a buscar los juguetes y con eso comenzamos.",
+   "dur": 13.963,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "foto",
+   "pantalla": "Así nació el Menú de Ronald: hamburguesa, papas, soda y juguete en una bolsa especial. McDonald's Guatemala dice que ella lo ofreció por primera vez en 1978.",
+   "voz": "Así nació el Menú de Ronald: hamburguesa, papas, soda y juguete en una bolsa especial. McDonald's Guatemala dice que ella lo ofreció por primera vez en mil novecientos setenta y ocho.",
+   "dur": 13.202,
+   "hechos": [
+    "gua-h06",
+    "rec-h04"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "golpe",
+   "pantalla": "Por eso, según la empresa, la corporación se fijó: Yolanda ganó el premio Ronald de Plata.",
+   "voz": "Por eso, según la empresa, la corporación se fijó: Yolanda ganó el premio Ronald de Plata.",
+   "dur": 6.618,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "capitulo",
+   "pantalla": "Mientras tanto, en Kansas City.",
+   "voz": "Mientras tanto, en Kansas City.",
+   "dur": 2.774,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "cita",
+   "pantalla": "El publicista Bob Bernstein cuenta que McDonald's le encargó una comida para niños. Su razón, en sus palabras: kids want something to do while they're eating. Los niños quieren algo que hacer mientras comen.",
+   "voz": "El publicista Bob Bernstein cuenta que McDonald's le encargó una comida para niños. Su razón, en sus palabras: kids want something to do while they're eating. Los niños quieren algo que hacer mientras comen.",
+   "dur": 12.651,
+   "hechos": [
+    "eua-h01"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Joshuald · CC BY-SA 3.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 3.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "tarjeta",
+   "pantalla": "Y según CNN, la probaron en 1977 en Kansas City. En 1979 costaba 1.15 dólares en todo Estados Unidos, en cajas de circo.",
+   "voz": "Y según CNN, la probaron en mil novecientos setenta y siete en Kansas City. En mil novecientos setenta y nueve costaba uno punto quince dólares en todo Estados Unidos, en cajas de circo.",
+   "dur": 13.924,
+   "hechos": [
+    "eua-h03",
+    "eua-h04"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "explica",
+   "pantalla": "Pero en Guatemala se cuenta otra cadena: el Menú de Ronald, la visita de ejecutivos, la convención mundial, y de ahí nace la Happy Meal, que aquí se llamó Cajita Feliz.",
+   "voz": "Pero en Guatemala se cuenta otra cadena: el Menú de Ronald, la visita de ejecutivos, la convención mundial, y de ahí nace la Happy Meal, que aquí se llamó Cajita Feliz.",
+   "dur": 12.105,
+   "hechos": [
+    "gua-h08",
+    "gua-h05",
+    "gua-h10"
+   ],
+   "fotos": [],
+   "animacion": "cadena",
+   "mecanismo": null
+  },
+  {
+   "n": 13,
+   "tipo": "capitulo",
+   "pantalla": "2021. Una despedida.",
+   "voz": "Dos mil veintiuno. Una despedida.",
+   "dur": 3.153,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 14,
+   "tipo": "foto",
+   "pantalla": "Yolanda Fernández de Cofiño murió el 6 de septiembre de 2021. El 11, McDonald's Guatemala sacó una Cajita Feliz con el empaque de su Menú de Ronald.",
+   "voz": "Yolanda Fernández de Cofiño murió el seis de septiembre de dos mil veintiuno. El once, McDonald's Guatemala sacó una Cajita Feliz con el empaque de su Menú de Ronald.",
+   "dur": 10.374,
+   "hechos": [
+    "gua-h13",
+    "gua-h14"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre (cortesía)",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (cortesía) (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 15,
+   "tipo": "golpe",
+   "pantalla": "Pero según el museo Henry Ford, la corporación acredita como su creador a Bob Bernstein.",
+   "voz": "Pero según el museo Henry Ford, la corporación acredita como su creador a Bob Bernstein.",
+   "dur": 6.074,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 16,
+   "tipo": "cita",
+   "pantalla": "En su homenaje, McDonald's Guatemala eligió sus palabras con cuidado: con orgullo escuchamos decir que la Cajita Feliz se inventó en Guatemala.",
+   "voz": "En su homenaje, McDonald's Guatemala eligió sus palabras con cuidado: con orgullo escuchamos decir que la Cajita Feliz se inventó en Guatemala.",
+   "dur": 9.325,
+   "hechos": [
+    "rec-h03"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 17,
+   "tipo": "foto",
+   "pantalla": "En 2019 abrió en Miraflores el Museo de la Cajita Feliz. Yolanda dijo: Nunca me imaginé que iba a ser algo de tantos años.",
+   "voz": "En dos mil diecinueve abrió en Miraflores el Museo de la Cajita Feliz. Yolanda dijo: Nunca me imaginé que iba a ser algo de tantos años.",
+   "dur": 9.829,
+   "hechos": [
+    "rec-h10"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 18,
+   "tipo": "cierre",
+   "pantalla": "Quedan dos historias con papeles: el Menú de Ronald de Yolanda y la Happy Meal de Bernstein. Y los guatemaltecos todavía escuchan decir que la Cajita Feliz nació aquí.",
+   "voz": "Quedan dos historias con papeles: el Menú de Ronald de Yolanda y la Happy Meal de Bernstein. Y los guatemaltecos todavía escuchan decir que la Cajita Feliz nació aquí.",
+   "dur": 13.658,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Lo que dejó",
+  "resumen": [
+   "Yolanda creó el Menú de Ronald",
+   "Bernstein, la Happy Meal de EE. UU.",
+   "El crédito oficial: Bob Bernstein"
+  ],
+  "texto": "Quedan dos historias con papeles: el Menú de Ronald de Yolanda y la Happy Meal de Bernstein. Y los guatemaltecos todavía escuchan decir que la Cajita Feliz nació aquí.",
+  "tipo": "remate",
+  "forma": "consecuencia",
+  "final": "Y los guatemaltecos todavía escuchan decir que la Cajita Feliz nació aquí.",
+  "consecuencia": {
+   "mecanismo": "despues",
+   "quien": "guatemaltecos",
+   "verbo": "escuchan"
+  }
+ },
+ "caption": {
+  "tiktok": "¿Se inventó en Guatemala la Cajita Feliz? Yolanda de Cofiño y su Menú de Ronald, frente a Bob Bernstein y la Happy Meal de Kansas City. Lo que dicen los documentos de cada versión. #Guatemala #historia",
+  "instagram": "La Cajita Feliz tiene dos historias de origen: el Menú de Ronald de Yolanda de Cofiño en Guatemala y la Happy Meal de Bob Bernstein en Estados Unidos. Aquí, lo que está documentado de cada una.",
+  "facebook": "¿Nació en Guatemala la Cajita Feliz? Contamos las dos versiones, la de Yolanda de Cofiño y la de Bob Bernstein, con lo que dicen las fuentes. Fuentes en el primer comentario.",
+  "shorts": "La Cajita Feliz: ¿se inventó en Guatemala? #Shorts\nEl Menú de Ronald de Yolanda de Cofiño y la Happy Meal de Bob Bernstein."
+ }
+}

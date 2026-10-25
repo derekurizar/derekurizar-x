@@ -40,7 +40,15 @@
 --video <hilos/<fecha>-<slug>/video> [--estado listo|incompleto] [--dry-run]
   Registra el video de /video (lee el guion.json de entrega que escribe scripts/video.py entregar) en
   memoria/videos.json → videos[] {id, fecha, slug, hilo_id, tema, paleta, duracion, duracion_s, n_escenas,
-  musica, creditos_voz, ruta_video, ruta_hilo, estado, frases {promesa, gancho, aperturas[], pregunta}}; un id
+  musica, creditos_voz, ruta_video, ruta_hilo, estado, frases {promesa, gancho, aperturas[], pregunta, cierre, cierre_tipo, cierre_forma, cierre_mecanismo, familia, visual, animaciones[]}}; un id
+--noticias <noticias/<fecha>> [--estado listo|incompleto] [--dry-run]
+  memoria/noticias.json → noticieros[] {id (= fecha), fecha, ruta, paleta, musica, duracion_s, creditos_voz, estado,
+  noticias[] {id, seccion, titular, urls[]}}; registrar el mismo día reemplaza. noticias.py lo lee para no repetir.
+--historia <historias/<fecha>-<slug>> [--estado listo|incompleto] [--dry-run]
+  memoria/historias.json → historias[] {id (= <fecha>-<slug>), slug, tema, fecha, ruta, arco, paleta, musica,
+  duracion_s, creditos_voz, estado, frases {… como en --video}}; registrar el mismo slug reemplaza. historia.py lo lee
+  para avisar si la historia ya se contó, rotar la familia y el visual del gancho, el cierre, las animaciones y la
+  música, y para las frases ya usadas (C11).
   repetido se actualiza (conserva su fecha). video.py lo lee para rotar
   la música de cada paleta.
 
@@ -80,6 +88,18 @@ VACIO_VIDEOS = {
     "version": 1,
     "_comentario": "Registro de videos verticales producidos por /video a partir de un hilo entregado. Lo escribe SOLO scripts/memoria.py --video <hilos/<fecha>-<slug>/video>; scripts/video.py lo lee para rotar la música de cada paleta. estado: listo | publicado | incompleto · duracion: corto | medio | largo.",
     "videos": [],
+}
+NOTICIAS = os.path.join(RAIZ, "memoria", "noticias.json")
+VACIO_NOTICIAS = {
+    "version": 1,
+    "_comentario": "Registro de noticieros diarios producidos por /noticias. Lo escribe SOLO scripts/memoria.py --noticias <noticias/<fecha>>; scripts/noticias.py lo lee para no repetir una noticia de los últimos 3 días (por url o titular). estado: listo | publicado | incompleto.",
+    "noticieros": [],
+}
+HISTORIAS = os.path.join(RAIZ, "memoria", "historias.json")
+VACIO_HISTORIAS = {
+    "version": 1,
+    "_comentario": "Registro de historias narradas producidas por /historia. Lo escribe SOLO scripts/memoria.py --historia <historias/<fecha>-<slug>>; scripts/historia.py lo lee para no repetir una historia, rotar ganchos, cierres, animaciones y música, y para las frases ya usadas (C11). estado: listo | publicado | incompleto.",
+    "historias": [],
 }
 FUENTES = os.path.join(RAIZ, "memoria", "fuentes.json")
 VACIO_DATOS = {
@@ -471,7 +491,8 @@ def listar_informes(tema, maximo):
 
 def frases_video(g):
     """Frases de la voz que el guionista tiende a repetir entre videos: la promesa, la primera oración del gancho, cómo
-    abre cada escena desde la 3 y la pregunta del cierre. video.py preparar las pone en el digesto («Frases ya usadas»)."""
+    abre cada escena desde la 3 y la pregunta del cierre, más la familia y el visual del gancho. video.py preparar las pone
+    en el digesto («Frases ya usadas», «Ganchos recientes»)."""
     def primera(t):
         return re.split(r"(?<=[.?!])\s+", (t or "").strip())[0] if t else ""
     esc = g.get("escenas") or []
@@ -480,7 +501,17 @@ def frases_video(g):
         "promesa": (g.get("promesa") or {}).get("texto", ""),
         "gancho": primera(voz[0]) if voz else "",
         "aperturas": [" ".join(v.split()[:4]) for v in voz[2:] if v.strip()],
-        "pregunta": (g.get("cierre") or {}).get("pregunta", ""),
+        # el cierre: la frase final (remate o pregunta), su tipo y su forma (F7 de /video: rotan entre videos)
+        "pregunta": (g.get("cierre") or {}).get("final") or (g.get("cierre") or {}).get("pregunta", ""),
+        "cierre": (g.get("cierre") or {}).get("final") or (g.get("cierre") or {}).get("pregunta", ""),
+        "cierre_tipo": (g.get("cierre") or {}).get("tipo") or "pregunta",
+        "cierre_forma": (g.get("cierre") or {}).get("forma") or "experiencia",
+        "cierre_mecanismo": ((g.get("cierre") or {}).get("consecuencia") or {}).get("mecanismo"),
+        # R9 de /video: la familia y el visual del gancho no se repiten en los videos siguientes (referencias/ganchos.md)
+        "familia": (g.get("gancho") or {}).get("familia"),
+        "visual": (g.get("gancho") or {}).get("visual") or "cifra",
+        # rotación de la escena explica: la misma animación no repite la de los últimos videos (video.py)
+        "animaciones": [e["animacion"] for e in esc if e.get("tipo") == "explica" and e.get("animacion")],
     }
 
 
@@ -518,6 +549,67 @@ def registrar_video(d, estado, dry_run=False):
     return 0
 
 
+def registrar_noticias(d, estado, dry_run=False):
+    """--noticias DIR: registra en memoria/noticias.json el noticiero entregado en DIR (noticias/<fecha>, con guion.json)."""
+    ruta = os.path.normpath(d)
+    g = leer(os.path.join(RAIZ, ruta, "guion.json"), obligatorio=False)
+    if not g or g.get("tipo") != "noticias" or not g.get("id"):
+        print("ERROR: %s no tiene guion.json de entrega de /noticias (scripts/noticias.py entregar)" % ruta, file=sys.stderr)
+        return 1
+    reg = {"id": g["id"], "fecha": g["fecha"], "ruta": ruta, "paleta": g["paleta"], "musica": g["musica"],
+           "duracion_s": g["duracion_s"], "creditos_voz": g.get("creditos_voz"), "estado": estado,
+           "noticias": [{"id": x["id"], "seccion": x.get("seccion"), "titular": x.get("titular"), "urls": x.get("urls") or []}
+                        for x in g.get("noticias") or []]}
+    mn = leer(NOTICIAS, obligatorio=False) or json.loads(json.dumps(VACIO_NOTICIAS))
+    previos = [i for i, v in enumerate(mn["noticieros"]) if v.get("id") == reg["id"]]
+    if previos:  # volver a registrar el mismo día reemplaza (y conserva «publicado»)
+        if mn["noticieros"][previos[0]].get("estado") == "publicado" and estado == "listo":
+            reg["estado"] = "publicado"
+        mn["noticieros"][previos[0]] = reg
+    else:
+        mn["noticieros"].append(reg)
+    mn["noticieros"].sort(key=lambda v: v["fecha"])
+    print("noticiero %s · %.0f s · %d noticias (%s) · %s" % (reg["id"], reg["duracion_s"], len(reg["noticias"]),
+                                                          ", ".join(x["seccion"] or "?" for x in reg["noticias"]), reg["estado"]))
+    if dry_run:
+        print("[dry-run] no se escribió nada")
+        return 0
+    escribir(NOTICIAS, mn)
+    print("escrito memoria/noticias.json (%d noticieros)" % len(mn["noticieros"]))
+    return 0
+
+
+def registrar_historia(d, estado, dry_run=False):
+    """--historia DIR: registra en memoria/historias.json la historia entregada en DIR (historias/<fecha>-<slug>, con
+    guion.json de entrega)."""
+    ruta = os.path.normpath(d)
+    g = leer(os.path.join(RAIZ, ruta, "guion.json"), obligatorio=False)
+    if not g or g.get("tipo") != "historia" or not g.get("id"):
+        print("ERROR: %s no tiene guion.json de entrega de /historia (scripts/historia.py entregar)" % ruta, file=sys.stderr)
+        return 1
+    reg = {"id": g["id"], "slug": g["slug"], "tema": g.get("tema", ""), "fecha": g["fecha"], "ruta": ruta,
+           "arco": g.get("arco"), "paleta": g["paleta"], "musica": g["musica"], "duracion_s": g["duracion_s"],
+           "creditos_voz": g.get("creditos_voz"), "estado": estado, "frases": frases_video(g)}
+    mh = leer(HISTORIAS, obligatorio=False) or json.loads(json.dumps(VACIO_HISTORIAS))
+    previos = [i for i, v in enumerate(mh["historias"]) if v.get("slug") == reg["slug"]]
+    if previos:  # volver a registrar la misma historia reemplaza (y conserva «publicado»)
+        if mh["historias"][previos[0]].get("estado") == "publicado" and estado == "listo":
+            reg["estado"] = "publicado"
+        mh["historias"][previos[0]] = reg
+    else:
+        mh["historias"].append(reg)
+    mh["historias"].sort(key=lambda v: (v["fecha"], v["id"]))
+    fr = reg["frases"]
+    print("historia %s · %.0f s · gancho %s/%s · cierre %s · %s" % (reg["id"], reg["duracion_s"], fr.get("familia"),
+                                                                   fr.get("visual"), fr.get("cierre_forma"), reg["estado"]))
+    if dry_run:
+        print("[dry-run] no se escribió nada")
+        return 0
+    escribir(HISTORIAS, mh)
+    print("escrito memoria/historias.json (%d historias)" % len(mh["historias"]))
+    return 0
+
+
 def conciliar_modos(dry_run=False):
     """Registros viejos sin «modo»: lo toma del hilo.json / dato.json de su entrega (o el del tipo)."""
     n = 0
@@ -547,7 +639,9 @@ def main():
     g.add_argument("--datos", nargs="?", const="", metavar="TEMA", help="lista los datos registrados en memoria/datos.json (/dato), del más reciente al más antiguo; con TEMA filtra por palabras clave")
     g.add_argument("--conciliar-modos", action="store_true", help="completa «modo» en los registros de hilos.json y datos.json que no lo tienen, desde el hilo.json / dato.json de su entrega")
     g.add_argument("--informes", nargs="?", const="", metavar="TEMA", help="lista los informes de memoria/informes.json (/investigacion) y el siguiente N.º; con TEMA filtra")
+    g.add_argument("--noticias", metavar="DIR", help="registra el noticiero de /noticias entregado en DIR (noticias/<fecha>) en memoria/noticias.json")
     g.add_argument("--video", metavar="DIR", help="registra el video de /video entregado en DIR (hilos/<fecha>-<slug>/video) en memoria/videos.json")
+    g.add_argument("--historia", metavar="DIR", help="registra la historia de /historia entregada en DIR (historias/<fecha>-<slug>) en memoria/historias.json")
     p.add_argument("--ruta", help="carpeta de entrega, relativa a la raíz (hilos/<fecha>-<slug>, datos/<fecha>-<slug> o investigacion/<fecha>-<slug>/hilo)")
     p.add_argument("--informe", metavar="DIR", help="con --registrar: carpeta del informe (investigacion/<fecha>-<slug>, con informe.json) → memoria/informes.json")
     p.add_argument("--solo-informe", action="store_true", help="con --informe: registra solo el informe; el hilo ya está en hilos.json (flujo desde:<slug>)")
@@ -560,6 +654,10 @@ def main():
         return conciliar_modos(a.dry_run)
     if a.video:
         return registrar_video(a.video, a.estado, a.dry_run)
+    if a.noticias:
+        return registrar_noticias(a.noticias, a.estado, a.dry_run)
+    if a.historia:
+        return registrar_historia(a.historia, a.estado, a.dry_run)
     if a.datos is not None:
         return listar_datos(a.datos, a.max)
     if a.informes is not None:

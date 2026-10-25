@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<!-- Escena de /noticias (?n=N) para el gancho (`titular`: la noticia más fuerte con su foto a sangre, oscurecida, y su
+     titular entero desde el cuadro 0, que se enciende palabra a palabra cuando la voz lo dice) y cada `noticia` (chip
+     «2/4 · Sección» bajo la barra de progreso; foto en marco redondeado con Ken Burns lento y «Foto: …»; titular que
+     entra con la voz; píldora de la cifra que cuenta y late cuando la voz la dice; «Fuente: …»; subtítulos). Sin foto,
+     el marco lleva el mapa de los 22 departamentos con el de la noticia encendido y su pin (o el icono de la noticia).
+     Paleta del noticiero (escenas.json). Todo es función de t (seek): lo graba scripts/video_grabar.js.
+     S.N = { indice, total, seccion, titular: [{text, start, dicha?}], foto, credito, icono, depto, lugar,
+             cifra: { texto, etiqueta, start, pulso } | null, fuente: { texto, start }, oraciones: [t] (la foto late), kb: { z: [z0, z1], x: [x0, x1],
+             y: [y0, y1] }, fecha, conteo }
+     /historia la usa con S.N.modo («titular»: el gancho con foto; «noticia»: la escena `foto`) y S.N.chip = { b, s } en
+     lugar de «indice/total · sección» (la fecha o la época y el lugar: «1971 · Escuintla»). -->
+<link rel="stylesheet" href="comun.css">
+<style>
+#progreso { margin-top: 0; }
+#chip { display: flex; align-items: center; gap: 18px; margin-top: 22px; font: 600 26px/1 'JetBrains Mono', monospace;
+  letter-spacing: .12em; text-transform: uppercase; }
+#chip b { background: var(--acento); color: var(--bg); border-radius: 10px; padding: 8px 14px 9px; font-weight: 700; }
+#chip span { opacity: .85; }
+/* la columna: foto (se ajusta al alto que deje el texto) → titular → cifra → fuente; termina antes de los subtítulos */
+#col { position: absolute; top: 352px; bottom: calc(1920px - var(--fin) + 10px); left: var(--izq); right: var(--der);
+  display: flex; flex-direction: column; gap: 26px; }
+#foto { position: relative; flex: 1 1 auto; min-height: 380px; border-radius: 28px; overflow: hidden;
+  background: color-mix(in srgb, var(--ink) 9%, var(--bg)); }
+#foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform-origin: 50% 50%; will-change: transform; }
+#foto svg.mapa { position: absolute; inset: 7% 10%; width: 80%; height: 86%; }
+#foto .icono { position: absolute; left: 50%; top: 50%; width: 220px; height: 220px; margin: -110px 0 0 -110px; color: var(--ink); opacity: .9; }
+#foto .icono svg { width: 100%; height: 100%; stroke-width: 1.4; }
+#foto .lugar { position: absolute; left: 26px; top: 24px; font: 600 26px/1 'JetBrains Mono', monospace; letter-spacing: .1em;
+  text-transform: uppercase; background: var(--bg); padding: 10px 14px; border-radius: 10px; }
+#credito { position: absolute; left: 18px; bottom: 16px; font: 500 20px/1 'JetBrains Mono', monospace; letter-spacing: .06em;
+  color: #fff; background: rgba(0, 0, 0, .58); padding: 8px 12px; border-radius: 8px; }
+#titular { font: 700 56px/1.08 Archivo, sans-serif; letter-spacing: -.01em; }
+#titular span { display: inline-block; margin-right: .24em; }
+#cifra { display: flex; align-items: baseline; gap: 22px; transform-origin: 0 70%; }
+#cifra .v { font: 400 112px/.9 'Instrument Serif', serif; letter-spacing: -.02em; color: var(--acento); white-space: nowrap; }
+#cifra .e { font: 600 32px/1.1 Archivo, sans-serif; opacity: .85; }
+#fuente { font: 600 22px/1 'JetBrains Mono', monospace; letter-spacing: .1em; text-transform: uppercase; opacity: .8; }
+/* gancho: la foto a sangre (fuera de la zona a propósito), un degradado que deja leer y el titular grande abajo */
+body.titular #col { display: none; }
+#sangre { position: absolute; inset: 0; overflow: hidden; display: none; }
+body.titular #sangre { display: block; }
+#sangre img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform-origin: 50% 40%; }
+#sangre .velo { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.62) 0%, rgba(0,0,0,.18) 30%,
+  rgba(0,0,0,.25) 50%, rgba(0,0,0,.86) 74%, rgba(0,0,0,.92) 100%); }
+#sangre svg.mapa { position: absolute; left: 12%; top: 16%; width: 76%; height: 44%; }
+#gancho { position: absolute; left: var(--izq); right: var(--der); bottom: calc(1920px - var(--fin) + 10px); display: none; }
+body.titular #gancho { display: block; }
+body.titular { color: #fff; }
+#hoy { display: flex; align-items: center; gap: 18px; font: 700 28px/1 'JetBrains Mono', monospace; letter-spacing: .12em;
+  text-transform: uppercase; margin-bottom: 30px; }
+#hoy b { background: var(--realce); color: #141414; border-radius: 10px; padding: 9px 15px 10px; }
+#gtit { font: 400 104px/.98 'Instrument Serif', serif; letter-spacing: -.02em; }
+#gtit span { display: inline-block; margin-right: .2em; }
+#gtit span.dicha { color: var(--realce); }
+#gcred { margin-top: 26px; font: 500 20px/1 'JetBrains Mono', monospace; letter-spacing: .06em; opacity: .75; }
+body.titular #progreso i { background: rgba(255, 255, 255, .3); }
+body.titular #progreso i b { background: #fff; }
+/* formato 4:5 (1080×1350) para el feed */
+html.f45 #chip { margin-top: 16px; font-size: 22px; }
+html.f45 #col { top: 150px; bottom: calc(1350px - var(--fin) + 10px); gap: 18px; }
+html.f45 #gancho { bottom: calc(1350px - var(--fin) + 10px); }
+html.f45 #foto { min-height: 300px; }
+html.f45 #titular { font-size: 46px; }
+html.f45 #cifra .v { font-size: 88px; }
+html.f45 #cifra .e { font-size: 28px; }
+html.f45 #gtit { font-size: 84px; }
+html.f45 #hoy { font-size: 24px; margin-bottom: 22px; }
+</style></head>
+<body>
+<div id="sangre" data-fuera-de-zona><div class="velo"></div></div>
+<div id="arriba"><div id="progreso"></div><div id="chip"></div></div>
+<div id="col">
+  <div id="foto"></div>
+  <div id="titular"></div>
+  <div id="cifra"></div>
+  <div id="fuente"></div>
+</div>
+<div id="gancho"><div id="hoy"></div><div id="gtit"></div><div id="gcred"></div></div>
+<div id="subs"></div>
+<script src="comun.js"></script>
+<script>
+const n = V.n, F45 = V.F45, { clamp, eo, prog, esc, normal } = V;
+let S, N, MODO, TROZOS, NUM = null, KB = null, EN_PANTALLA = new Set();
+const RE_NUM = /([-−]?)(\d{1,3}(?:,\d{3})+|\d+)(?:\.(\d+))?/;   // número dentro de un texto formateado (como golpe.html)
+function numTexto(s) {
+  const m = (s || '').match(RE_NUM);
+  if (!m) return null;
+  const dec = m[3] ? m[3].length : 0, miles = m[2].includes(',');
+  const v = parseFloat(m[2].replace(/,/g, '') + (m[3] ? '.' + m[3] : '')) * (m[1] ? -1 : 1);
+  const pre = s.slice(0, m.index), post = s.slice(m.index + m[0].length);
+  const fmt = (x) => {
+    let c = Math.abs(x).toFixed(dec);
+    if (miles) { const [e, d] = c.split('.'); c = e.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (d ? '.' + d : ''); }
+    return pre + (x < 0 ? m[1] || '-' : '') + c + post;
+  };
+  return { v, dec, fmt };
+}
+const svgEl = (tag, at, padre) => { const e = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  for (const [k, v] of Object.entries(at)) e.setAttribute(k, v); padre.appendChild(e); return e; };
+const cargarScript = (src) => new Promise((ok, mal) => { const s = document.createElement('script'); s.src = src; s.onload = ok;
+  s.onerror = () => mal(new Error('no carga ' + src)); document.head.appendChild(s); });
+// sin foto: el mapa con el departamento encendido y su pin, o el icono de la noticia
+async function tipografica(caja) {
+  if (N.depto) {
+    await cargarScript('geometria.js');
+    const svg = svgEl('svg', { class: 'mapa', viewBox: GEOMETRIA.viewBox, preserveAspectRatio: 'xMidYMid meet' }, caja);
+    if (!GEOMETRIA.deptos[N.depto]) throw new Error('departamento «' + N.depto + '» sin geometría');
+    let destacado = null;
+    for (const [id, geo] of Object.entries(GEOMETRIA.deptos)) {
+      const p = svgEl('path', { d: geo.d, fill: id === N.depto ? 'var(--acento)' : 'color-mix(in srgb, var(--ink) 22%, transparent)',
+        stroke: 'var(--bg)', 'stroke-width': 2, 'vector-effect': 'non-scaling-stroke', 'stroke-linejoin': 'round' }, svg);
+      if (id === N.depto) destacado = p;
+    }
+    const bb = destacado.getBBox();
+    const g = svgEl('g', { id: 'pin' }, svg);
+    svgEl('line', { x1: bb.x + bb.width / 2, y1: bb.y + bb.height / 2, x2: bb.x + bb.width / 2, y2: bb.y + bb.height / 2 - 70,
+      stroke: 'var(--ink)', 'stroke-width': 5, 'vector-effect': 'non-scaling-stroke' }, g);
+    svgEl('circle', { cx: bb.x + bb.width / 2, cy: bb.y + bb.height / 2, r: 11, fill: 'var(--ink)' }, g);
+  } else if (N.icono) {
+    const r = await fetch('iconos/' + N.icono + '.svg');
+    if (!r.ok) throw new Error('icono «' + N.icono + '» no está en design/iconos/');
+    caja.insertAdjacentHTML('beforeend', `<div class="icono">${await r.text()}</div>`);
+  }
+  if (N.lugar && caja.id === 'foto') caja.insertAdjacentHTML('beforeend', `<div class="lugar">${esc(N.lugar)}</div>`);
+}
+async function foto(caja) {
+  const img = new Image();
+  img.src = N.foto;
+  await img.decode().catch(() => { throw new Error('no carga la foto ' + N.foto); });
+  caja.appendChild(img);
+  return img;
+}
+window.__listo = (async () => {
+  const C = await V.cargar(), todo = C.todo; S = C.S; TROZOS = C.trozos; N = S.N;
+  MODO = N.modo || S.tipo;
+  document.body.classList.add(MODO);
+  V.pintarProgreso(todo);
+  const palabras = (ws, cls) => ws.map((w) => `<span${cls ? ` class="${cls}"` : ''}>${esc(w.text)}</span>`).join('');
+  if (MODO === 'titular') {
+    const caja = document.getElementById('sangre');
+    if (N.foto) KB = await foto(caja); else await tipografica(caja);
+    caja.appendChild(caja.querySelector('.velo'));   // el velo encima de la foto
+    document.getElementById('hoy').innerHTML = `<b>${esc(N.fecha)}</b><span>${esc(N.conteo || '')}</span>`;
+    document.getElementById('gtit').innerHTML = palabras(N.titular);
+    document.getElementById('gcred').textContent = N.foto ? N.credito || '' : '';
+    document.getElementById('chip').textContent = todo.contexto_superior || '';
+  } else {
+    document.getElementById('chip').innerHTML = N.chip ? `<b>${esc(N.chip.b)}</b><span>${esc(N.chip.s || '')}</span>`
+      : `<b>${N.indice}/${N.total}</b><span>${esc(N.seccion)}</span>`;
+    const caja = document.getElementById('foto');
+    if (N.foto) { KB = await foto(caja); caja.insertAdjacentHTML('beforeend', `<div id="credito">${esc(N.credito || '')}</div>`); }
+    else await tipografica(caja);
+    document.getElementById('titular').innerHTML = palabras(N.titular);
+    if (N.cifra) {
+      document.getElementById('cifra').innerHTML = `<span class="v">${esc(N.cifra.texto)}</span><span class="e">${esc(N.cifra.etiqueta || '')}</span>`;
+      const nt = numTexto(N.cifra.texto);
+      NUM = nt && (Math.abs(nt.v) >= 2 || nt.dec > 0) ? nt : null;
+    } else document.getElementById('cifra').style.display = 'none';
+    document.getElementById('fuente').textContent = N.fuente ? N.fuente.texto : '';
+  }
+  // el subtítulo se oculta mientras solo repite el titular que ya está en pantalla
+  N.titular.forEach((w) => { const k = normal(w.text); if (k) EN_PANTALLA.add(k); });
+  await document.fonts.ready;
+  if (MODO === 'titular') {   // el titular del gancho: hasta 4 líneas sin pasar del alto disponible
+    const t = document.getElementById('gtit');
+    for (let fs = F45 ? 84 : 104; fs > 64 && t.offsetHeight > 4.1 * fs * 0.98; fs -= 4) t.style.fontSize = fs + 'px';
+  } else {                      // el titular de la noticia: hasta 3 líneas
+    const t = document.getElementById('titular');
+    for (let fs = F45 ? 46 : 56; fs > 40 && t.offsetHeight > 3.1 * fs * 1.08; fs -= 2) t.style.fontSize = fs + 'px';
+    const c = document.querySelector('#cifra .v'), col = document.getElementById('col').clientWidth;
+    if (c) for (let fs = F45 ? 88 : 112; fs > 60 && document.getElementById('cifra').scrollWidth > col; fs -= 6) c.style.fontSize = fs + 'px';
+  }
+})();
+const subtitulos = (t) => V.subtitulos(t, S, TROZOS, { ocultar: (tr) => tr.every((x) => EN_PANTALLA.has(normal(x.text))) });
+// Ken Burns: zoom y paneo lentos, función de t
+const kenBurns = (img, t) => {
+  if (!img) return;
+  const k = N.kb || { z: [1.0, 1.08], x: [0, -2], y: [0, -1.5] }, p = clamp(t / S.dur);
+  const z = k.z[0] + (k.z[1] - k.z[0]) * p, x = k.x[0] + (k.x[1] - k.x[0]) * p, y = k.y[0] + (k.y[1] - k.y[0]) * p;
+  img.style.transform = `translate(${x.toFixed(3)}%, ${y.toFixed(3)}%) scale(${z.toFixed(4)})`;
+};
+window.seek = (t) => {
+  V.seekProgreso(t, n, S.dur);
+  kenBurns(KB, t);
+  if (MODO === 'titular') {
+    // entero desde el cuadro 0 (miniatura y vuelta del bucle); cada palabra que la voz dice se enciende al decirla
+    [...document.querySelectorAll('#gtit span')].forEach((s, i) => {
+      const w = N.titular[i], on = w.dicha && t >= w.start;
+      s.classList.toggle('dicha', !!on);
+      const q = w.dicha ? eo((t - w.start) / 0.25) : 0;
+      s.style.transform = `translateY(${(-6 * Math.sin(Math.PI * clamp(q))).toFixed(2)}px)`;
+    });
+    const pin = document.getElementById('pin');
+    if (pin) pin.style.transform = `translateY(${(-8 * Math.sin(Math.PI * 2 * t / 1.6)).toFixed(2)}px)`;
+    subtitulos(t);
+    return;
+  }
+  // la noticia entra: chip y foto al principio; el titular con la voz; la cifra cuando la voz la dice; la fuente al final
+  const ch = eo((t - 0.1) / 0.4), chip = document.getElementById('chip');
+  chip.style.opacity = ch; chip.style.transform = `translateX(${((1 - ch) * -40).toFixed(1)}px)`;
+  // la foto entra y late al empezar cada oración nueva (un evento visual cada pocos segundos: V10)
+  const fo = eo((t - 0.05) / 0.5), caja = document.getElementById('foto');
+  const late = (N.oraciones || []).reduce((m, x) => Math.max(m, Math.sin(Math.PI * clamp((t - x) / 0.5))), 0);
+  caja.style.opacity = fo; caja.style.transform = `scale(${((0.96 + 0.04 * fo) * (1 + 0.025 * late)).toFixed(4)})`;
+  [...document.querySelectorAll('#titular span')].forEach((s, i) => {
+    const w = eo((t - N.titular[i].start + 0.15) / 0.3); s.style.opacity = w; s.style.transform = `translateY(${((1 - w) * 26).toFixed(1)}px)`; });
+  if (N.cifra) {
+    const C = N.cifra, cifra = document.getElementById('cifra'), v = cifra.querySelector('.v');
+    const p = prog(t, C.start, C.start + 0.9), ap = eo((t - C.start + 0.1) / 0.35);
+    v.textContent = NUM ? (p >= 1 ? C.texto : NUM.fmt(NUM.v * p)) : C.texto;
+    let esc_ = 0.9 + 0.1 * ap;
+    if (C.pulso) esc_ *= 1 + 0.07 * Math.sin(Math.PI * clamp((t - C.pulso[0]) / Math.max(0.001, C.pulso[1] - C.pulso[0])));
+    cifra.style.opacity = ap; cifra.style.transform = `scale(${esc_.toFixed(4)})`;
+  }
+  if (N.fuente) {
+    const f = eo((t - N.fuente.start) / 0.4), el = document.getElementById('fuente');
+    el.style.opacity = 0.8 * f; el.style.transform = `translateX(${((1 - f) * -30).toFixed(1)}px)`;
+  }
+  const pin = document.getElementById('pin');
+  if (pin) pin.style.transform = `translateY(${(-8 * Math.sin(Math.PI * 2 * t / 1.6)).toFixed(2)}px)`;
+  subtitulos(t);
+};
+</script>
+</body></html>
