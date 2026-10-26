@@ -464,9 +464,9 @@
         "actualidad": 4,
         "total": 12
       },
-      "estado": "pendiente",
-      "hilo_id": null,
-      "actualizada": "2026-10-23",
+      "estado": "hecha",
+      "hilo_id": "2026-10-25-canasta-basica-salario-minimo-2019-2026",
+      "actualizada": "2026-10-25",
       "nota": "El INE exige JS/WAF: bajar PDFs vía mirror o prensa; el salario mínimo (MINTRAB, acuerdos gubernativos) hay que confirmarlo en investigación."
     },
     {
@@ -503,9 +503,9 @@
         "actualidad": 5,
         "total": 12
       },
-      "estado": "pendiente",
-      "hilo_id": null,
-      "actualizada": "2026-10-23",
+      "estado": "hecha",
+      "hilo_id": "2026-10-25-igss-record-afiliados-informalidad",
+      "actualizada": "2026-10-25",
       "nota": "Riesgo: denominadores distintos (PEA vs ocupados). Definir uno solo en el encuadre."
     },
     {

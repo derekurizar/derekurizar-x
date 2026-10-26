@@ -2,17 +2,12 @@
 
 Generado por `scripts/ideas.py`: no editar a mano. Nuevas ideas con `/ideas`; producir una con `/hilo idea:<id>` (o `/hilo` sin tema toma la primera pendiente).
 
-2 pendientes · 0 en curso · 10 hechas · 3 descartadas
-
-## Pendientes
-
-| Puntaje | id | Idea | Área | Fuentes |
-|---|---|---|---|---|
-| 12 (5·3·4) | `canasta-basica-salario-minimo-2019-2026` | ¿Cuántos salarios mínimos cuesta la canasta básica? De 2019 a 2026 | economia | Banco de Guatemala, INE Guatemala |
-| 12 (4·3·5) | `igss-record-afiliados-informalidad` | IGSS bate récord con 1.81 millones de cotizantes: ¿y los demás trabajadores? | poblacion | IGSS, INE Guatemala |
+0 pendientes · 0 en curso · 12 hechas · 3 descartadas
 
 ## Hechas
 
+- `canasta-basica-salario-minimo-2019-2026` — ¿Cuántos salarios mínimos cuesta la canasta básica? De 2019 a 2026 → [2026-10-25-canasta-basica-salario-minimo-2019-2026](../hilos/2026-10-25-canasta-basica-salario-minimo-2019-2026/hilo.html)
+- `igss-record-afiliados-informalidad` — IGSS bate récord con 1.81 millones de cotizantes: ¿y los demás trabajadores? → [2026-10-25-igss-record-afiliados-informalidad](../hilos/2026-10-25-igss-record-afiliados-informalidad/hilo.html)
 - `evaluacion-graduandos-mitad-sin-competencias` — Evaluación de Graduandos: la mitad sale del diversificado sin lo mínimo en lectura y mate → [2026-10-11-graduandos-lectura-matematica-logro](../hilos/2026-10-11-graduandos-lectura-matematica-logro/hilo.html)
 - `matricula-record-2026-deserccion-por-nivel` — Más de 3.3 millones en las aulas: la matrícula sube, pero ¿quién abandona en básico y diversificado? → [2026-10-11-matricula-desercion-basico-diversificado](../hilos/2026-10-11-matricula-desercion-basico-diversificado/hilo.html)
 - `tarifa-electrica-estable-por-region` — Q1.51 en la capital, Q2.12 en Occidente: por qué el kWh cuesta distinto según dónde vive → [2026-10-06-tarifa-electrica-brecha-regional](../hilos/2026-10-06-tarifa-electrica-brecha-regional/hilo.html)

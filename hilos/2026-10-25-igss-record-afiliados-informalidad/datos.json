@@ -1,0 +1,1790 @@
+{
+  "slug": "igss-record-afiliados-informalidad",
+  "fecha": "2026-10-25",
+  "tesis": "El IGSS alcanzó un récord de 1,814,143 cotizantes en julio de 2026, pero sus cotizantes equivalen a solo 21.69 de cada 100 ocupados (promedio 2025 sobre la ENEIC T2 2025), frente a 18.57 en 2019: la cobertura sube despacio y casi dos de cada tres ocupados siguen en el sector informal.",
+  "ancla_id": "cob-c03",
+  "paleta": "cielo",
+  "hook_tipo": "escala_humana",
+  "cifras": [
+    {
+      "id": "afi-c01",
+      "concepto": "Trabajadores afiliados cotizantes al IGSS, promedio anual (media de los 12 meses), 2014–2025",
+      "unidad": "trabajadores (promedio anual)",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "IGSS — Boletín Estadístico de Afiliación 2023 (Tabla 27/66, 2014–2023); Informe Anual de Labores 2024 (Cuadro 1/6, 2020–2024); Resumen del Informe Anual de Labores 2025",
+      "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.pdf",
+      "periodo": "2014–2025",
+      "n_puntos": 12,
+      "valor": 1742810,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "IGSS Informe Anual 2024 (1,659,137 y +6.7 % sobre 1,554,663) y Resumen 2025; cotejo con la primaria",
+      "evidencia": {
+        "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.pdf",
+        "cita": "Tabla 27: 2014 1,237,262 · 2019 1,350,821 · 2020 1,289,882 · 2023 1,554,663 (Tabla 66: «el número de trabajadores afiliados cotizantes por mes y la media anual»)",
+        "archivo_local": "sesiones/_descargas/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.txt"
+      },
+      "serie": [
+        {
+          "p": "2014",
+          "v": 1237262
+        },
+        {
+          "p": "2015",
+          "v": 1267429
+        },
+        {
+          "p": "2016",
+          "v": 1300001
+        },
+        {
+          "p": "2017",
+          "v": 1313017
+        },
+        {
+          "p": "2018",
+          "v": 1325537
+        },
+        {
+          "p": "2019",
+          "v": 1350821
+        },
+        {
+          "p": "2020",
+          "v": 1289882
+        },
+        {
+          "p": "2021",
+          "v": 1388248
+        },
+        {
+          "p": "2022",
+          "v": 1479603
+        },
+        {
+          "p": "2023",
+          "v": 1554663
+        },
+        {
+          "p": "2024",
+          "v": 1659137
+        },
+        {
+          "p": "2025",
+          "v": 1742810
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_6.png",
+        "tuit_8.png"
+      ]
+    },
+    {
+      "id": "afi-c02",
+      "concepto": "Afiliados cotizantes al IGSS en julio de 2026 (récord mensual)",
+      "unidad": "trabajadores (dato mensual)",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "AGN con datos del IGSS (Departamento Actuarial y Estadístico)",
+      "url": "https://agn.gt/igss-alcanza-record-de-1-8-millones-de-afiliados-en-julio/",
+      "periodo": "julio 2026",
+      "n_puntos": 1,
+      "valor": 1814143,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Busqueda de segunda fuente: solo AGN reproduce el dato; sin comunicado IGSS ni Flashlights 2026",
+      "evidencia": {
+        "url": "https://agn.gt/igss-alcanza-record-de-1-8-millones-de-afiliados-en-julio/",
+        "cita": "registró en julio una cifra récord de un millón 814 mil 143 afiliados, un aumento de 71 mil 333 respecto del millón 742 mil 810 cotizantes reportados al cierre de 2025",
+        "archivo_local": "sesiones/_descargas/html/agn_igss_record_julio_2026.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "afi-c03",
+      "concepto": "Afiliados cotizantes al IGSS por mes, enero 2019 – diciembre 2024",
+      "unidad": "trabajadores (dato mensual)",
+      "anio": 2024,
+      "tipo": "serie",
+      "fuente": "IGSS — Boletín Estadístico de Afiliación 2023 (Tabla 66) e IGSS en cifras 2024 (C11.6)",
+      "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.pdf",
+      "periodo": "2019-01 a 2024-12",
+      "n_puntos": 72,
+      "valor": 1712755,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Banguat, Resultados macroeconomicos 2025 (copia FUNDESA) con datos del IGSS; coincide con Tabla 66 e IGSS en cifras 2024",
+      "evidencia": {
+        "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.pdf",
+        "cita": "Tabla 66 (2019 / 2020): Junio 1,342,393 1,230,894 · Octubre 1,392,154 1,290,555 · Diciembre 1,389,068 1,347,205",
+        "archivo_local": "sesiones/_descargas/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.txt"
+      },
+      "serie": [
+        {
+          "p": "2019-01",
+          "v": 1320813
+        },
+        {
+          "p": "2019-02",
+          "v": 1346974
+        },
+        {
+          "p": "2019-03",
+          "v": 1350045
+        },
+        {
+          "p": "2019-04",
+          "v": 1367313
+        },
+        {
+          "p": "2019-05",
+          "v": 1337515
+        },
+        {
+          "p": "2019-06",
+          "v": 1342393
+        },
+        {
+          "p": "2019-07",
+          "v": 1340161
+        },
+        {
+          "p": "2019-08",
+          "v": 1332812
+        },
+        {
+          "p": "2019-09",
+          "v": 1332677
+        },
+        {
+          "p": "2019-10",
+          "v": 1392154
+        },
+        {
+          "p": "2019-11",
+          "v": 1357919
+        },
+        {
+          "p": "2019-12",
+          "v": 1389068
+        },
+        {
+          "p": "2020-01",
+          "v": 1349864
+        },
+        {
+          "p": "2020-02",
+          "v": 1322370
+        },
+        {
+          "p": "2020-03",
+          "v": 1319529
+        },
+        {
+          "p": "2020-04",
+          "v": 1265302
+        },
+        {
+          "p": "2020-05",
+          "v": 1253019
+        },
+        {
+          "p": "2020-06",
+          "v": 1230894
+        },
+        {
+          "p": "2020-07",
+          "v": 1242252
+        },
+        {
+          "p": "2020-08",
+          "v": 1263060
+        },
+        {
+          "p": "2020-09",
+          "v": 1271798
+        },
+        {
+          "p": "2020-10",
+          "v": 1290555
+        },
+        {
+          "p": "2020-11",
+          "v": 1322727
+        },
+        {
+          "p": "2020-12",
+          "v": 1347205
+        },
+        {
+          "p": "2021-01",
+          "v": 1306334
+        },
+        {
+          "p": "2021-02",
+          "v": 1368090
+        },
+        {
+          "p": "2021-03",
+          "v": 1382397
+        },
+        {
+          "p": "2021-04",
+          "v": 1386576
+        },
+        {
+          "p": "2021-05",
+          "v": 1391178
+        },
+        {
+          "p": "2021-06",
+          "v": 1377686
+        },
+        {
+          "p": "2021-07",
+          "v": 1382176
+        },
+        {
+          "p": "2021-08",
+          "v": 1387640
+        },
+        {
+          "p": "2021-09",
+          "v": 1390419
+        },
+        {
+          "p": "2021-10",
+          "v": 1402079
+        },
+        {
+          "p": "2021-11",
+          "v": 1436783
+        },
+        {
+          "p": "2021-12",
+          "v": 1447618
+        },
+        {
+          "p": "2022-01",
+          "v": 1415150
+        },
+        {
+          "p": "2022-02",
+          "v": 1453957
+        },
+        {
+          "p": "2022-03",
+          "v": 1472520
+        },
+        {
+          "p": "2022-04",
+          "v": 1479522
+        },
+        {
+          "p": "2022-05",
+          "v": 1511033
+        },
+        {
+          "p": "2022-06",
+          "v": 1480059
+        },
+        {
+          "p": "2022-07",
+          "v": 1478383
+        },
+        {
+          "p": "2022-08",
+          "v": 1480231
+        },
+        {
+          "p": "2022-09",
+          "v": 1461960
+        },
+        {
+          "p": "2022-10",
+          "v": 1484357
+        },
+        {
+          "p": "2022-11",
+          "v": 1510278
+        },
+        {
+          "p": "2022-12",
+          "v": 1527787
+        },
+        {
+          "p": "2023-01",
+          "v": 1479348
+        },
+        {
+          "p": "2023-02",
+          "v": 1529636
+        },
+        {
+          "p": "2023-03",
+          "v": 1550184
+        },
+        {
+          "p": "2023-04",
+          "v": 1559964
+        },
+        {
+          "p": "2023-05",
+          "v": 1544476
+        },
+        {
+          "p": "2023-06",
+          "v": 1548607
+        },
+        {
+          "p": "2023-07",
+          "v": 1557239
+        },
+        {
+          "p": "2023-08",
+          "v": 1563896
+        },
+        {
+          "p": "2023-09",
+          "v": 1552630
+        },
+        {
+          "p": "2023-10",
+          "v": 1563008
+        },
+        {
+          "p": "2023-11",
+          "v": 1600626
+        },
+        {
+          "p": "2023-12",
+          "v": 1606347
+        },
+        {
+          "p": "2024-01",
+          "v": 1594262
+        },
+        {
+          "p": "2024-02",
+          "v": 1620934
+        },
+        {
+          "p": "2024-03",
+          "v": 1635046
+        },
+        {
+          "p": "2024-04",
+          "v": 1655647
+        },
+        {
+          "p": "2024-05",
+          "v": 1662779
+        },
+        {
+          "p": "2024-06",
+          "v": 1655656
+        },
+        {
+          "p": "2024-07",
+          "v": 1667302
+        },
+        {
+          "p": "2024-08",
+          "v": 1667162
+        },
+        {
+          "p": "2024-09",
+          "v": 1670509
+        },
+        {
+          "p": "2024-10",
+          "v": 1676214
+        },
+        {
+          "p": "2024-11",
+          "v": 1691377
+        },
+        {
+          "p": "2024-12",
+          "v": 1712755
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "afi-c04",
+      "concepto": "Caída mensual de cotizantes en la pandemia: diciembre 2019 → junio 2020",
+      "unidad": "trabajadores",
+      "anio": 2020,
+      "tipo": "puntual",
+      "fuente": "IGSS — Boletín Estadístico de Afiliación 2023, Tabla 66",
+      "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.pdf",
+      "periodo": "dic 2019 – jun 2020",
+      "n_puntos": 1,
+      "valor": -158174,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (Tabla 66, archivo local)",
+      "evidencia": {
+        "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.pdf",
+        "cita": "Junio ... 1,342,393 1,230,894 ... Diciembre ... 1,389,068 1,347,205 (Tabla 66, columnas 2019 y 2020)",
+        "archivo_local": "sesiones/_descargas/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.txt"
+      },
+      "usada": false,
+      "aparece_en": [
+        "T2"
+      ]
+    },
+    {
+      "id": "afi-c05",
+      "concepto": "Caída del promedio anual de cotizantes en 2020 frente a 2019",
+      "unidad": "trabajadores (promedio anual)",
+      "anio": 2020,
+      "tipo": "puntual",
+      "fuente": "IGSS — Boletín Estadístico de Afiliación 2023, Tabla 27; Informe Anual 2024, Cuadro 6",
+      "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.pdf",
+      "periodo": "2019–2020",
+      "n_puntos": 1,
+      "valor": -60939,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "IGSS Informe Anual 2024 (Total 1,289,882 ... variacion -4.5 %) y AGN ('cerca de 60 mil plazas')",
+      "evidencia": {
+        "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.pdf",
+        "cita": "2019 1,350,821 ... 2020 1,289,882 (Tabla 27, total de trabajadores afiliados cotizantes)",
+        "archivo_local": "sesiones/_descargas/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "afi-c06",
+      "concepto": "Variación neta anual del promedio de cotizantes al IGSS, 2015–2025",
+      "unidad": "trabajadores (diferencia de promedios anuales)",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Cálculo propio sobre IGSS (Boletín 2023, Informe Anual 2024, Resumen 2025)",
+      "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.pdf",
+      "periodo": "2015–2025",
+      "n_puntos": 11,
+      "valor": 83673,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "IGSS Informe Anual 2024 (1,659,137) y Resumen 2025 (1,742,810); AGN da +71 mil sobre otro corte, no comparable",
+      "evidencia": {
+        "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Resumen-informe-anual-de-labores-2025-IGSS.pdf",
+        "cita": "Afiliados cotizantes 1,742,810 46,1%",
+        "archivo_local": "sesiones/_descargas/Resumen-informe-anual-de-labores-2025-IGSS.txt"
+      },
+      "serie": [
+        {
+          "p": "2015",
+          "v": 30167
+        },
+        {
+          "p": "2016",
+          "v": 32572
+        },
+        {
+          "p": "2017",
+          "v": 13016
+        },
+        {
+          "p": "2018",
+          "v": 12520
+        },
+        {
+          "p": "2019",
+          "v": 25284
+        },
+        {
+          "p": "2020",
+          "v": -60939
+        },
+        {
+          "p": "2021",
+          "v": 98366
+        },
+        {
+          "p": "2022",
+          "v": 91355
+        },
+        {
+          "p": "2023",
+          "v": 75060
+        },
+        {
+          "p": "2024",
+          "v": 104474
+        },
+        {
+          "p": "2025",
+          "v": 83673
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_3.png"
+      ]
+    },
+    {
+      "id": "afi-c07",
+      "concepto": "Cotizantes netos sumados entre julio de 2019 y julio de 2026 (mismo mes)",
+      "unidad": "trabajadores",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Cálculo propio: IGSS Boletín 2023 Tabla 66 (julio 2019) y AGN/IGSS (julio 2026)",
+      "url": "https://agn.gt/igss-alcanza-record-de-1-8-millones-de-afiliados-en-julio/",
+      "periodo": "jul 2019 – jul 2026",
+      "n_puntos": 1,
+      "valor": 473982,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria: Tabla 66 julio 2019 (1,340,161) y AGN julio 2026",
+      "evidencia": {
+        "url": "https://agn.gt/igss-alcanza-record-de-1-8-millones-de-afiliados-en-julio/",
+        "cita": "registró en julio una cifra récord de un millón 814 mil 143 afiliados",
+        "archivo_local": "sesiones/_descargas/html/agn_igss_record_julio_2026.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "afi-c08",
+      "concepto": "Afiliados cotizantes en el mes de julio, 2014–2024 y 2026",
+      "unidad": "trabajadores (dato mensual de julio)",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "IGSS — Boletín 2023 Tabla 66 (2014–2023), IGSS en cifras 2024 C11.6 (2024), AGN/IGSS (2026)",
+      "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.pdf",
+      "periodo": "julio 2014–2024 y julio 2026 (falta 2025)",
+      "n_puntos": 12,
+      "valor": 1814143,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Tabla 66 (2014-2021) e IGSS en cifras 2024 C11.6 (julio 2024 1,667,302) y AGN",
+      "evidencia": {
+        "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.pdf",
+        "cita": "Julio 1,219,639 1,245,398 1,284,460 1,302,490 1,318,505 1,340,161 1,242,252 1,382,176 1,478,383 1,557,239",
+        "archivo_local": "sesiones/_descargas/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.txt"
+      },
+      "serie": [
+        {
+          "p": "2014",
+          "v": 1219639
+        },
+        {
+          "p": "2015",
+          "v": 1245398
+        },
+        {
+          "p": "2016",
+          "v": 1284460
+        },
+        {
+          "p": "2017",
+          "v": 1302490
+        },
+        {
+          "p": "2018",
+          "v": 1318505
+        },
+        {
+          "p": "2019",
+          "v": 1340161
+        },
+        {
+          "p": "2020",
+          "v": 1242252
+        },
+        {
+          "p": "2021",
+          "v": 1382176
+        },
+        {
+          "p": "2022",
+          "v": 1478383
+        },
+        {
+          "p": "2023",
+          "v": 1557239
+        },
+        {
+          "p": "2024",
+          "v": 1667302
+        },
+        {
+          "p": "2026",
+          "v": 1814143
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_2.png"
+      ]
+    },
+    {
+      "id": "afi-c09",
+      "concepto": "Afiliados cotizantes por departamento, 2024 (22 departamentos)",
+      "unidad": "trabajadores (promedio anual 2024)",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "IGSS — Informe Anual de Labores 2024, Gráfica 6",
+      "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Informe-Anual-de-Labores-2024-IGSS.pdf",
+      "periodo": "2024",
+      "n_puntos": 22,
+      "valor": 910278,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (Informe Anual 2024, Grafica 6)",
+      "evidencia": {
+        "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Informe-Anual-de-Labores-2024-IGSS.pdf",
+        "cita": "El departamento con la mayor concentración es Guatemala con 910,278; le siguen Escuintla con 150,925, Quetzaltenango con 70,618, Izabal con 44,297",
+        "archivo_local": "sesiones/_descargas/Informe-Anual-de-Labores-2024-IGSS.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Guatemala",
+          "valor": 910278
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 150925
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 70618
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 44297
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 43926
+        },
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 42987
+        },
+        {
+          "nombre": "San Marcos",
+          "valor": 40747
+        },
+        {
+          "nombre": "Petén",
+          "valor": 38081
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 37783
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 33946
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 33872
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 32428
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 28061
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 25908
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 21157
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 19899
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 19860
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 15312
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 13360
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 13312
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 11395
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 10985
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "afi-c10",
+      "concepto": "Afiliados cotizantes por actividad económica, 2024",
+      "unidad": "trabajadores (promedio anual 2024)",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "IGSS — Informe Anual de Labores 2024, Cuadro 6",
+      "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Informe-Anual-de-Labores-2024-IGSS.pdf",
+      "periodo": "2024",
+      "n_puntos": 17,
+      "valor": 372151,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (Informe Anual 2024, Cuadro 6)",
+      "evidencia": {
+        "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Informe-Anual-de-Labores-2024-IGSS.pdf",
+        "cita": "Agricultura, ganadería, caza y sil- 91,526 91,532 93,705 98,120 103,979 6.3% ... Administración pública y defensa; 320,775 333,342 343,776 354,246 372,151 22.4%",
+        "archivo_local": "sesiones/_descargas/Informe-Anual-de-Labores-2024-IGSS.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Administración pública y defensa; seguridad social obligatoria",
+          "valor": 372151
+        },
+        {
+          "nombre": "Comercio al por mayor y al por menor",
+          "valor": 261821
+        },
+        {
+          "nombre": "Industrias manufactureras",
+          "valor": 232705
+        },
+        {
+          "nombre": "Actividades inmobiliarias, empresariales y de alquiler",
+          "valor": 211979
+        },
+        {
+          "nombre": "Otras actividades de servicios comunitarios, sociales y personales",
+          "valor": 156188
+        },
+        {
+          "nombre": "Agricultura, ganadería, caza y silvicultura",
+          "valor": 103979
+        },
+        {
+          "nombre": "Intermediación financiera",
+          "valor": 80188
+        },
+        {
+          "nombre": "Transporte, almacenamiento y comunicaciones",
+          "valor": 64824
+        },
+        {
+          "nombre": "Hoteles y restaurantes",
+          "valor": 58252
+        },
+        {
+          "nombre": "Enseñanza",
+          "valor": 49661
+        },
+        {
+          "nombre": "Servicios sociales y de salud",
+          "valor": 28479
+        },
+        {
+          "nombre": "Construcción",
+          "valor": 20530
+        },
+        {
+          "nombre": "Suministro de electricidad, gas y agua",
+          "valor": 12356
+        },
+        {
+          "nombre": "Explotación de minas y canteras",
+          "valor": 2099
+        },
+        {
+          "nombre": "Actividades de hogares privados como empleadores",
+          "valor": 1578
+        },
+        {
+          "nombre": "Organizaciones y órganos extraterritoriales",
+          "valor": 1021
+        },
+        {
+          "nombre": "Pesca",
+          "valor": 48
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "afi-c11",
+      "concepto": "Afiliados cotizantes por tipo de patrono, 2025",
+      "unidad": "trabajadores",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "IGSS — Resumen del Informe Anual de Labores 2025",
+      "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Resumen-informe-anual-de-labores-2025-IGSS.pdf",
+      "periodo": "2025",
+      "n_puntos": 3,
+      "valor": 1322365,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Flashlights IGSS mayo 2025: sector privado 1,325,741 de 1,743,239",
+      "evidencia": {
+        "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Resumen-informe-anual-de-labores-2025-IGSS.pdf",
+        "cita": "Organismo Ejecutivo Resto Sector Público 170,459 249,986 9.8% 14,3% Patronos Particulares 1,322,365 75,9% TOTAL 1,742,810",
+        "archivo_local": "sesiones/_descargas/Resumen-informe-anual-de-labores-2025-IGSS.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Patronos particulares",
+          "valor": 1322365
+        },
+        {
+          "nombre": "Organismo Ejecutivo",
+          "valor": 249986
+        },
+        {
+          "nombre": "Resto del sector público",
+          "valor": 170459
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "afi-c12",
+      "concepto": "Cotizantes al IGSS en octubre de 2025 según Banguat (empleo formal)",
+      "unidad": "trabajadores (dato mensual)",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "Banguat, Resultados macroeconómicos 2025 y perspectivas 2026 (copia FUNDESA), con datos del IGSS",
+      "url": "https://www.fundesa.org.gt/content/files/publicaciones/BANGUAT_2026_Resultados_macroeconmicos_2025_y_Perspectivas.pdf",
+      "periodo": "octubre 2025",
+      "n_puntos": 1,
+      "valor": 1781301,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Flashlights IGSS mayo 2025 (1,743,239) como contexto de nivel; primaria Banguat/FUNDESA",
+      "evidencia": {
+        "url": "https://www.fundesa.org.gt/content/files/publicaciones/BANGUAT_2026_Resultados_macroeconmicos_2025_y_Perspectivas.pdf",
+        "cita": "Empleo Formal (número de cotizantes al IGSS) ... A noviembre de 2025, el empleo registró un crecimiento interanual de 5.3% ... 1,781,301 [oct-25]",
+        "archivo_local": "sesiones/_descargas/BANGUAT_2026_Resultados_macroeconmicos_2025_y_Perspectivas.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "cob-c01",
+      "concepto": "Población económicamente activa (PEA) de Guatemala, ENEIC abril-junio 2025",
+      "unidad": "personas",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "INE, Boletín Estadístico ENEIC 2024-2025 (Edición 1, nov. 2025)",
+      "url": "https://www.ine.gob.gt/wp-content/uploads/2025/11/Boletin-ENEIC.pdf",
+      "periodo": "abril-junio 2025 (T2)",
+      "n_puntos": 1,
+      "valor": 8217059,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AGN (nota de la ENEIC T2 2025) reproduce la cifra del INE; cotejo con la primaria (archivo local): 8.2 M PEA",
+      "evidencia": {
+        "url": "https://www.ine.gob.gt/wp-content/uploads/2025/11/Boletin-ENEIC.pdf",
+        "cita": "En el segundo trimestre de 2025, la población económicamente activa (PEA) en Guatemala se estimó en 8,217,059 personas.",
+        "archivo_local": "sesiones/_descargas/Boletin-ENEIC.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "cob-c02",
+      "concepto": "Población ocupada de Guatemala, ENEIC abril-junio 2025",
+      "unidad": "personas",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "INE, Boletín Estadístico ENEIC 2024-2025",
+      "url": "https://www.ine.gob.gt/wp-content/uploads/2025/11/Boletin-ENEIC.pdf",
+      "periodo": "abril-junio 2025 (T2)",
+      "n_puntos": 1,
+      "valor": 8036086,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AGN (nota de la ENEIC T2 2025) reproduce la cifra del INE; cotejo con la primaria (archivo local): 8.0 M ocupados",
+      "evidencia": {
+        "url": "https://www.ine.gob.gt/wp-content/uploads/2025/11/Boletin-ENEIC.pdf",
+        "cita": "En el segundo trimestre de 2025, la población ocupada en Guatemala se estimó en 8,036,086 personas.",
+        "archivo_local": "sesiones/_descargas/Boletin-ENEIC.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_8.png"
+      ]
+    },
+    {
+      "id": "cob-c03",
+      "concepto": "Cobertura del IGSS: afiliados cotizantes (cierre 2025) por cada 100 personas ocupadas (ENEIC T2 2025)",
+      "unidad": "% de la población ocupada",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "Cálculo propio: IGSS, Resumen del Informe Anual de Labores 2025 / INE, Boletín ENEIC",
+      "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Resumen-informe-anual-de-labores-2025-IGSS.pdf",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 21.69,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Cotejo de ambos insumos con sus primarias: IGSS Resumen 2025 (1,742,810) e INE ENEIC (8,036,086)",
+      "evidencia": {
+        "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Resumen-informe-anual-de-labores-2025-IGSS.pdf",
+        "cita": "Afiliados cotizantes 1,742,810 (IGSS, Resumen 2025) | Población ocupada (PO) 8,036,086 (INE, ENEIC abril-junio 2025)",
+        "archivo_local": "sesiones/_descargas/Resumen-informe-anual-de-labores-2025-IGSS.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_1.png",
+        "tuit_5.png",
+        "T11"
+      ]
+    },
+    {
+      "id": "cob-c04",
+      "concepto": "Personas ocupadas que no cotizan al IGSS (ocupados ENEIC T2 2025 menos afiliados cotizantes al cierre de 2025)",
+      "unidad": "personas",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "Cálculo propio: INE ENEIC / IGSS",
+      "url": "https://www.ine.gob.gt/wp-content/uploads/2025/11/Boletin-ENEIC.pdf",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 6293276,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Resta recalculada con ambas primarias (IGSS Resumen 2025 e INE ENEIC)",
+      "evidencia": {
+        "url": "https://www.ine.gob.gt/wp-content/uploads/2025/11/Boletin-ENEIC.pdf",
+        "cita": "Población ocupada (PO) 8,036,086 (INE, ENEIC T2 2025) | Afiliados cotizantes 1,742,810 (IGSS, Resumen 2025)",
+        "archivo_local": "sesiones/_descargas/Boletin-ENEIC.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_6.png"
+      ]
+    },
+    {
+      "id": "cob-c05",
+      "concepto": "Cobertura del IGSS por ronda de encuesta: afiliados cotizantes por cada 100 ocupados (2018, 2019, 2021, 2025)",
+      "unidad": "% de la población ocupada",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Cálculo propio: IGSS (Boletín Estadístico de Afiliación 2023, Tabla 121; Resumen 2025) / INE (microdatos ENEI 2-2018, 2-2019, 2021; Boletín ENEIC)",
+      "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.pdf",
+      "periodo": "2018–2025 (rondas con encuesta; sin ENEI en 2020)",
+      "n_puntos": 4,
+      "valor": 21.69,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recalculo desde microdatos ENEI del INE (2018, 2019, 2021) y Tabla 121 del IGSS; 2025 con boletin ENEIC",
+      "evidencia": {
+        "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.pdf",
+        "cita": "2018 3,182,031 1,325,537 ... 2019 3,031,898 1,350,821 ... 2021 3,055,604 1,388,248 (Tabla 121, columna Afiliados)",
+        "archivo_local": "sesiones/_descargas/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.txt"
+      },
+      "partes": [
+        {
+          "nombre": "2018",
+          "valor": 18.93
+        },
+        {
+          "nombre": "2019",
+          "valor": 18.57
+        },
+        {
+          "nombre": "2021",
+          "valor": 19.17
+        },
+        {
+          "nombre": "2025",
+          "valor": 21.69
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_4.png",
+        "T11"
+      ]
+    },
+    {
+      "id": "cob-c06",
+      "concepto": "Población ocupada (15+) por ronda de encuesta del INE, denominador de la cobertura",
+      "unidad": "personas",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "INE: microdatos ENEI 2-2018, 2-2019 y 2021 (datos.ine.gob.gt) y Boletín ENEIC 2025",
+      "url": "https://www.ine.gob.gt/wp-content/uploads/2025/11/Boletin-ENEIC.pdf",
+      "periodo": "2018, 2019, 2021, 2025 (T2)",
+      "n_puntos": 4,
+      "valor": 8036086,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa Libre (ENEI 2021: 7.2 M ocupados) y URL (TGP 60.9, 59.1, 63.0) validan el recalculo de microdatos",
+      "evidencia": {
+        "url": "https://www.ine.gob.gt/wp-content/uploads/2025/11/Boletin-ENEIC.pdf",
+        "cita": "Población ocupada (PO) 8,036,086",
+        "archivo_local": "sesiones/_descargas/Boletin-ENEIC.txt"
+      },
+      "partes": [
+        {
+          "nombre": "2018",
+          "valor": 7003398
+        },
+        {
+          "nombre": "2019",
+          "valor": 7274114
+        },
+        {
+          "nombre": "2021",
+          "valor": 7242822
+        },
+        {
+          "nombre": "2025",
+          "valor": 8036086
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "cob-c07",
+      "concepto": "Cobertura que publica el IGSS: afiliados cotizantes sobre la PEA de la ENCOVI 2023",
+      "unidad": "% de la PEA",
+      "anio": 2023,
+      "tipo": "puntual",
+      "fuente": "IGSS, Boletín Estadístico de Afiliación 2023 (sección 1.1)",
+      "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.pdf",
+      "periodo": "31-dic-2023",
+      "n_puntos": 1,
+      "valor": 23.1,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Cotejo con la primaria (IGSS Boletin 2023, archivo local)",
+      "evidencia": {
+        "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.pdf",
+        "cita": "la Población Económicamente Activa (PEA) se estimó en 6,737,744 personas. ... otorgó cobertura a 1,554,663 afiliados cotizantes, lo que representa el 23.1 % de la PEA total",
+        "archivo_local": "sesiones/_descargas/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "cob-c08",
+      "concepto": "Embudo del IGSS 2023: PEA (ENCOVI), PEA ocupada en sector formal (grupo objetivo) y afiliados cotizantes",
+      "unidad": "personas",
+      "anio": 2023,
+      "tipo": "desglose",
+      "fuente": "IGSS, Boletín Estadístico de Afiliación 2023, con datos de INE ENCOVI 2023 (p. 65)",
+      "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.pdf",
+      "periodo": "2023",
+      "n_puntos": 3,
+      "valor": 1554663,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Cotejo con la primaria (IGSS Boletin 2023, archivo local)",
+      "evidencia": {
+        "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.pdf",
+        "cita": "el 29.7 % de la PEA ocupada se encuentra en el sector formal, equivalente a 2,001,110 personas ... el IGSS brindó cobertura al 77.7 % de dicha población",
+        "archivo_local": "sesiones/_descargas/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.txt"
+      },
+      "partes": [
+        {
+          "nombre": "PEA (ENCOVI 2023)",
+          "valor": 6737744
+        },
+        {
+          "nombre": "PEA ocupada en sector formal (29.7 %)",
+          "valor": 2001110
+        },
+        {
+          "nombre": "Afiliados cotizantes al 31-dic-2023",
+          "valor": 1554663
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "cob-c10",
+      "concepto": "Afiliados cotizantes (cierre 2025) por cada 100 personas de la PEA (ENEIC T2 2025)",
+      "unidad": "% de la PEA",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "Cálculo propio: IGSS Resumen 2025 / INE Boletín ENEIC",
+      "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Resumen-informe-anual-de-labores-2025-IGSS.pdf",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 21.21,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recalculo con IGSS Resumen 2025 e INE ENEIC (PEA 8,217,059)",
+      "evidencia": {
+        "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Resumen-informe-anual-de-labores-2025-IGSS.pdf",
+        "cita": "Afiliados cotizantes 1,742,810 (IGSS, Resumen 2025) | PEA 8,217,059 personas (INE, ENEIC abril-junio 2025)",
+        "archivo_local": "sesiones/_descargas/Resumen-informe-anual-de-labores-2025-IGSS.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "cob-c11",
+      "concepto": "De cada 100 ocupados nuevos entre la ENEI 2021 y la ENEIC 2025, cuántos se sumaron como cotizantes del IGSS",
+      "unidad": "cotizantes nuevos por cada 100 ocupados nuevos",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "Cálculo propio: IGSS (Tabla 121; Resumen 2025) / INE (microdatos ENEI 2021; Boletín ENEIC)",
+      "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.pdf",
+      "periodo": "2021–2025",
+      "n_puntos": 1,
+      "valor": 44.7,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recalculo con Tabla 121 IGSS, microdatos ENEI 2021 y boletin ENEIC",
+      "evidencia": {
+        "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.pdf",
+        "cita": "2021 3,055,604 1,388,248 (Tabla 121) | Afiliados cotizantes 1,742,810 (Resumen 2025) | PO 8,036,086 (ENEIC T2 2025)",
+        "archivo_local": "sesiones/_descargas/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_5.png"
+      ]
+    },
+    {
+      "id": "cob-c12",
+      "concepto": "Afiliados cotizantes (cierre 2025) como porcentaje de los ocupados en el sector formal según el INE (ENEIC T2 2025)",
+      "unidad": "% de los ocupados formales",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "Cálculo propio: IGSS Resumen 2025 / INE Boletín ENEIC (tasa de informalidad 66.2 %)",
+      "url": "https://www.ine.gob.gt/wp-content/uploads/2025/11/Boletin-ENEIC.pdf",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 64.16,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AGN (nota de la ENEIC T2 2025) reproduce la cifra del INE; cotejo con la primaria (archivo local): sector formal 2.7 M (34 %), informalidad 66.2 %",
+      "evidencia": {
+        "url": "https://www.ine.gob.gt/wp-content/uploads/2025/11/Boletin-ENEIC.pdf",
+        "cita": "Tasa de informalidad (INFORMAL / PO) 66.7 ... 66.1 ... 66.2 | Población ocupada (PO) 8,036,086",
+        "archivo_local": "sesiones/_descargas/Boletin-ENEIC.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "inf-c01",
+      "concepto": "Tasa de informalidad de la población ocupada (sector informal, criterio INE/CIET-15) por ronda de encuesta",
+      "unidad": "% de la población ocupada",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "INE Guatemala — ENEI (2018–2022) y ENEIC (oct-2024 a jun-2025)",
+      "url": "https://www.ine.gob.gt/wp-content/uploads/2025/11/Boletin-ENEIC.pdf",
+      "periodo": "2018–T2 2025 (por ronda; no hay ENEI 2020)",
+      "n_puntos": 7,
+      "valor": 66.2,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "IIES-USAC Economia al dia No. 2 (feb. 2026): 66.2 % de ocupados (5.3 millones) en informalidad, citando INE 2025a",
+      "evidencia": {
+        "url": "https://www.ine.gob.gt/wp-content/uploads/2025/11/Boletin-ENEIC.pdf",
+        "cita": "la tasa de informalidad se redujo de 66.7% a 66.1% entre los primeros dos trimestres, para luego registrar un leve incremento en el segundo trimestre, con 66.2%",
+        "archivo_local": "sesiones/_descargas/Boletin-ENEIC.txt"
+      },
+      "serie": [
+        {
+          "p": "2018",
+          "v": 69.5
+        },
+        {
+          "p": "2019",
+          "v": 65.3
+        },
+        {
+          "p": "2021",
+          "v": 70.8
+        },
+        {
+          "p": "2022",
+          "v": 71.1
+        },
+        {
+          "p": "T4 2024",
+          "v": 66.7
+        },
+        {
+          "p": "T1 2025",
+          "v": 66.1
+        },
+        {
+          "p": "T2 2025",
+          "v": 66.2
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_7.png"
+      ]
+    },
+    {
+      "id": "inf-c02",
+      "concepto": "Ocupados en el sector informal, abril–junio 2025 (ENEIC T2)",
+      "unidad": "personas",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "INE — Boletín ENEIC 2025 (población ocupada y tasa de informalidad); cálculo propio",
+      "url": "https://www.ine.gob.gt/wp-content/uploads/2025/11/Boletin-ENEIC.pdf",
+      "periodo": "T2 2025",
+      "n_puntos": 1,
+      "valor": 5319889,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://www.ine.gob.gt/wp-content/uploads/2025/11/Boletin-ENEIC.pdf",
+        "cita": "Población ocupada (PO) 8,036,086 ... Tasa de informalidad (INFORMAL / PO) ... 66.2",
+        "archivo_local": "sesiones/_descargas/Boletin-ENEIC.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "inf-c03",
+      "concepto": "Tasa de informalidad por dominio de estudio, abril–junio 2025",
+      "unidad": "% de la población ocupada",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "INE — Boletín ENEIC 2025, pág. 11",
+      "url": "https://www.ine.gob.gt/wp-content/uploads/2025/11/Boletin-ENEIC.pdf",
+      "periodo": "T2 2025",
+      "n_puntos": 4,
+      "valor": 77.8,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://www.ine.gob.gt/wp-content/uploads/2025/11/Boletin-ENEIC.pdf",
+        "cita": "En la zona urbano metropolitano disminuyó de 48.8% a 46.1% en el primer trimestre y continuó descendiendo a 45.2% en el segundo.",
+        "archivo_local": "sesiones/_descargas/Boletin-ENEIC.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Rural nacional",
+          "valor": 77.8
+        },
+        {
+          "nombre": "Resto urbano",
+          "valor": 65.4
+        },
+        {
+          "nombre": "Urbano metropolitano",
+          "valor": 45.2
+        },
+        {
+          "nombre": "Nacional",
+          "valor": 66.2
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_9.png"
+      ]
+    },
+    {
+      "id": "inf-c04",
+      "concepto": "Tasa de informalidad por sexo, ENEI 2021",
+      "unidad": "% de la población ocupada de 15+ años",
+      "anio": 2021,
+      "tipo": "desglose",
+      "fuente": "INE — microdatos ENEI 2021 (base de personas); cálculo propio",
+      "url": "https://datos.ine.gob.gt/dataset/28c3154c-3c79-48ff-af32-795322d8388d/resource/2f08fbb1-cfce-48f2-b422-be82d58ef1ee/download/enei-2021-base-de-personas.csv",
+      "periodo": "2021 (sep–oct)",
+      "n_puntos": 3,
+      "valor": 75.74,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recalculo desde microdatos ENEI 2021 (csv local de calculos); la primaria es la misma base INE",
+      "evidencia": {
+        "url": "https://datos.ine.gob.gt/dataset/28c3154c-3c79-48ff-af32-795322d8388d/resource/2f08fbb1-cfce-48f2-b422-be82d58ef1ee/download/enei-2021-base-de-personas.csv",
+        "cita": "sexo,2,1998144,639996,75.74 | sexo,1,3129888,1474794,67.97 | nacional,total,5128032,2114790,70.80",
+        "archivo_local": "sesiones/igss-record-afiliados-informalidad/calculos/informalidad_enei-2021.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Mujeres",
+          "valor": 75.74
+        },
+        {
+          "nombre": "Hombres",
+          "valor": 67.97
+        },
+        {
+          "nombre": "Nacional",
+          "valor": 70.8
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "inf-c05",
+      "concepto": "Tasa de informalidad por pueblo (maya / no maya), ENEI 2021",
+      "unidad": "% de la población ocupada de 15+ años",
+      "anio": 2021,
+      "tipo": "desglose",
+      "fuente": "INE — microdatos ENEI 2021 (base de personas); cálculo propio",
+      "url": "https://datos.ine.gob.gt/dataset/28c3154c-3c79-48ff-af32-795322d8388d/resource/2f08fbb1-cfce-48f2-b422-be82d58ef1ee/download/enei-2021-base-de-personas.csv",
+      "periodo": "2021 (sep–oct)",
+      "n_puntos": 3,
+      "valor": 85.11,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recalculo desde microdatos ENEI 2021 (csv local de calculos); la primaria es la misma base INE",
+      "evidencia": {
+        "url": "https://datos.ine.gob.gt/dataset/28c3154c-3c79-48ff-af32-795322d8388d/resource/2f08fbb1-cfce-48f2-b422-be82d58ef1ee/download/enei-2021-base-de-personas.csv",
+        "cita": "pueblo,maya,2327152,407296,85.11 | pueblo,no_maya,2800880,1707494,62.13",
+        "archivo_local": "sesiones/igss-record-afiliados-informalidad/calculos/informalidad_enei-2021.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Maya",
+          "valor": 85.11
+        },
+        {
+          "nombre": "No maya (ladino, xinka, garífuna, extranjero)",
+          "valor": 62.13
+        },
+        {
+          "nombre": "Nacional",
+          "valor": 70.8
+        }
+      ],
+      "usada": false,
+      "aparece_en": [
+        "T9"
+      ]
+    },
+    {
+      "id": "inf-c06",
+      "concepto": "Tasa de informalidad por grupo de edad, ENEI 2021",
+      "unidad": "% de la población ocupada de 15+ años",
+      "anio": 2021,
+      "tipo": "desglose",
+      "fuente": "INE — microdatos ENEI 2021 (base de personas); cálculo propio",
+      "url": "https://datos.ine.gob.gt/dataset/28c3154c-3c79-48ff-af32-795322d8388d/resource/2f08fbb1-cfce-48f2-b422-be82d58ef1ee/download/enei-2021-base-de-personas.csv",
+      "periodo": "2021 (sep–oct)",
+      "n_puntos": 3,
+      "valor": 74.72,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recalculo desde microdatos ENEI 2021 (csv local de calculos); la primaria es la misma base INE",
+      "evidencia": {
+        "url": "https://datos.ine.gob.gt/dataset/28c3154c-3c79-48ff-af32-795322d8388d/resource/2f08fbb1-cfce-48f2-b422-be82d58ef1ee/download/enei-2021-base-de-personas.csv",
+        "cita": "edad,15-24,1346737,455682,74.72 | edad,25+,3781295,1659108,69.50",
+        "archivo_local": "sesiones/igss-record-afiliados-informalidad/calculos/informalidad_enei-2021.csv"
+      },
+      "partes": [
+        {
+          "nombre": "15 a 24 años",
+          "valor": 74.72
+        },
+        {
+          "nombre": "25 años y más",
+          "valor": 69.5
+        },
+        {
+          "nombre": "Nacional",
+          "valor": 70.8
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "inf-c07",
+      "concepto": "Composición del sector informal por actividad económica, ENEI 2022",
+      "unidad": "% de los ocupados en el sector informal",
+      "anio": 2022,
+      "tipo": "desglose",
+      "fuente": "INE — Principales resultados ENEI 2022 (feb. 2023), sección 6.5",
+      "url": "https://www.ine.gob.gt/sistema/uploads/2023/03/23/202303232142069Odm3oxU9mTY58hkborwzylm7MJop05q.pdf",
+      "periodo": "2022",
+      "n_puntos": 10,
+      "valor": 34.2,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://www.ine.gob.gt/sistema/uploads/2023/03/23/202303232142069Odm3oxU9mTY58hkborwzylm7MJop05q.pdf",
+        "cita": "Las tres actividades predominantes a nivel nacional en el sector informal son agricultura con un 34.2%, seguido de comercio con un 28.2%, e industrias manufactureras con un 12.9%.",
+        "archivo_local": "sesiones/_descargas/202303232142069Odm3oxU9mTY58hkborwzylm7MJop05q.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Agricultura",
+          "valor": 34.2
+        },
+        {
+          "nombre": "Comercio",
+          "valor": 28.2
+        },
+        {
+          "nombre": "Industrias manufactureras",
+          "valor": 12.9
+        },
+        {
+          "nombre": "Otras de servicios",
+          "valor": 12.6
+        },
+        {
+          "nombre": "Construcción",
+          "valor": 8.6
+        },
+        {
+          "nombre": "Profesionales",
+          "valor": 1.8
+        },
+        {
+          "nombre": "Administración pública",
+          "valor": 1.2
+        },
+        {
+          "nombre": "Inmobiliarias",
+          "valor": 0.3
+        },
+        {
+          "nombre": "Financieras y de seguros",
+          "valor": 0.2
+        },
+        {
+          "nombre": "Comunicaciones",
+          "valor": 0.1
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "inf-c08",
+      "concepto": "Ingreso laboral mensual mediano de la población ocupada, abril–junio 2025",
+      "unidad": "quetzales por mes",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "IIES-USAC — Boletín Economía al día No. 2 (feb. 2026), con microdatos ENEIC T2 2025 del INE",
+      "url": "https://iies.usac.edu.gt/wp-content/uploads/2026/03/Boletin-Economia-al-dia-No.-2-febrero-2026.pdf",
+      "periodo": "T2 2025",
+      "n_puntos": 1,
+      "valor": 2300,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Cotejo con la primaria (IIES-USAC, procesa microdatos INE ENEIC T2 2025); no se encontro replica independiente",
+      "evidencia": {
+        "url": "https://iies.usac.edu.gt/wp-content/uploads/2026/03/Boletin-Economia-al-dia-No.-2-febrero-2026.pdf",
+        "cita": "en Guatemala la mitad de la población ocupada tiene ingresos mensuales inferiores o iguales a Q 2,300.00, un monto muy por debajo de cualquier salario mínimo legal",
+        "archivo_local": "sesiones/_descargas/Boletin-Economia-al-dia-No.-2-febrero-2026.txt"
+      },
+      "usada": false,
+      "aparece_en": [
+        "T10"
+      ]
+    },
+    {
+      "id": "inf-c09",
+      "concepto": "Ingreso laboral mensual mediano según sector formal o informal, abril–junio 2025",
+      "unidad": "quetzales por mes",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "IIES-USAC — Boletín Economía al día No. 2 (feb. 2026), con microdatos ENEIC T2 2025",
+      "url": "https://iies.usac.edu.gt/wp-content/uploads/2026/03/Boletin-Economia-al-dia-No.-2-febrero-2026.pdf",
+      "periodo": "T2 2025",
+      "n_puntos": 2,
+      "valor": 1500,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Cotejo con la primaria (IIES-USAC, Figura 2); no se encontro replica independiente",
+      "evidencia": {
+        "url": "https://iies.usac.edu.gt/wp-content/uploads/2026/03/Boletin-Economia-al-dia-No.-2-febrero-2026.pdf",
+        "cita": "la mediana ofrece una imagen más precisa con Q 3,600.00 en el sector formal frente a Q 1,500.00 en el informal (Figura 2).",
+        "archivo_local": "sesiones/_descargas/Boletin-Economia-al-dia-No.-2-febrero-2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Sector informal",
+          "valor": 1500
+        },
+        {
+          "nombre": "Sector formal",
+          "valor": 3600
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_10.png"
+      ]
+    },
+    {
+      "id": "inf-c10",
+      "concepto": "Salario mínimo mensual 2026 por actividad y circunscripción económica (sin bonificación incentivo)",
+      "unidad": "quetzales por mes",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "MINTRAB — Acuerdo Gubernativo 256-2025 (salarios mínimos 2026)",
+      "url": "https://mintrabajo.gob.gt/wp-content/uploads/2026/06/Acuerdo-Gubernativo-Numero-256-2025-Salario-Minino.pdf",
+      "periodo": "2026",
+      "n_puntos": 6,
+      "valor": 3816.9,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AGN, Asi quedan los montos del salario minimo para el 2026 / EY Centroamerica alerta salario minimo 2026 (reproducen el Acuerdo 256-2025)",
+      "evidencia": {
+        "url": "https://mintrabajo.gob.gt/wp-content/uploads/2026/06/Acuerdo-Gubernativo-Numero-256-2025-Salario-Minino.pdf",
+        "cita": "actividades no agrícolas de la circunscripción económica dos, en adelante CE2, en CIENTO ... TRES MIL OCHOCIENTOS DIECISEIS QUETZALES CON NOVENTA CENTAVOS (Q. 3,816.90) mensuales",
+        "archivo_local": "sesiones/_descargas/Acuerdo-Gubernativo-Numero-256-2025-Salario-Minino.ocr.txt"
+      },
+      "partes": [
+        {
+          "nombre": "No agrícola CE1 (depto. Guatemala)",
+          "valor": 4002.28
+        },
+        {
+          "nombre": "Agrícola CE1",
+          "valor": 3791.2
+        },
+        {
+          "nombre": "Exportadora y maquila CE1",
+          "valor": 3409.73
+        },
+        {
+          "nombre": "No agrícola CE2 (resto del país)",
+          "valor": 3816.9
+        },
+        {
+          "nombre": "Agrícola CE2",
+          "valor": 3625.89
+        },
+        {
+          "nombre": "Exportadora y maquila CE2",
+          "valor": 3221.1
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_10.png"
+      ]
+    },
+    {
+      "id": "inf-c11",
+      "concepto": "Mediana del ingreso informal como porcentaje del salario mínimo agrícola CE2 2026 (el más bajo fuera de maquila)",
+      "unidad": "%",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Cálculo propio: IIES-USAC (mediana ENEIC T2 2025) y Acuerdo Gubernativo 256-2025",
+      "url": "https://iies.usac.edu.gt/wp-content/uploads/2026/03/Boletin-Economia-al-dia-No.-2-febrero-2026.pdf",
+      "periodo": "ingreso T2 2025 vs mínimo 2026",
+      "n_puntos": 1,
+      "valor": 41.4,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recalculo desde dos primarias: IIES-USAC (mediana informal Q1,500) y Acuerdo 256-2025 (agricola CE2 Q3,625.89)",
+      "evidencia": {
+        "url": "https://iies.usac.edu.gt/wp-content/uploads/2026/03/Boletin-Economia-al-dia-No.-2-febrero-2026.pdf",
+        "cita": "una imagen más precisa con Q 3,600.00 en el sector formal frente a Q 1,500.00 en el informal (Figura 2).",
+        "archivo_local": "sesiones/_descargas/Boletin-Economia-al-dia-No.-2-febrero-2026.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "inf-c12",
+      "concepto": "Ocupados en el sector formal, abril–junio 2025 (ENEIC T2)",
+      "unidad": "personas",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "INE — Boletín ENEIC 2025; cálculo propio",
+      "url": "https://www.ine.gob.gt/wp-content/uploads/2025/11/Boletin-ENEIC.pdf",
+      "periodo": "T2 2025",
+      "n_puntos": 1,
+      "valor": 2716197,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://www.ine.gob.gt/wp-content/uploads/2025/11/Boletin-ENEIC.pdf",
+        "cita": "Población ocupada (PO) 8,036,086 ... Tasa de informalidad (INFORMAL / PO) ... 66.2",
+        "archivo_local": "sesiones/_descargas/Boletin-ENEIC.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_8.png"
+      ]
+    }
+  ],
+  "fuentes": [
+    {
+      "nombre": "IGSS — Boletín Estadístico de Afiliación 2023 (ed. 2024)",
+      "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "IGSS — Informe Anual de Labores 2024",
+      "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Informe-Anual-de-Labores-2024-IGSS.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "IGSS — Resumen del Informe Anual de Labores 2025",
+      "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Resumen-informe-anual-de-labores-2025-IGSS.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "IGSS — IGSS en cifras 2024 (Departamento Actuarial y Estadístico)",
+      "url": "https://www.igssgt.org/wp-content/uploads/2026/09/IGSS-en-cifras-2024.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "IGSS — Flashlights cuantitativos, mayo 2025",
+      "url": "https://www.igssgt.org/wp-content/uploads/2026/09/DAE2025-Flashlights-mes-mayo-de-2025-2025.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Banguat — Resultados macroeconómicos 2025 y perspectivas 2026 (copia FUNDESA)",
+      "url": "https://www.fundesa.org.gt/content/files/publicaciones/BANGUAT_2026_Resultados_macroeconmicos_2025_y_Perspectivas.pdf",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "AGN — IGSS alcanza récord de 1.8 millones de afiliados en julio (12-oct-2026)",
+      "url": "https://agn.gt/igss-alcanza-record-de-1-8-millones-de-afiliados-en-julio/",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "INE — Boletín Estadístico ENEIC 2024-2025 (Edición 1, noviembre 2025)",
+      "url": "https://www.ine.gob.gt/wp-content/uploads/2025/11/Boletin-ENEIC.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "INE — Microdatos ENEI 2-2018, 2-2019 y 2021 (datos abiertos CKAN)",
+      "url": "https://datos.ine.gob.gt/dataset/enei-2019",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "INE — Principales resultados ENEI 2022 (feb. 2023; copia alojada en elearning.url.edu.gt)",
+      "url": "https://elearning.url.edu.gt/pluginfile.php/776508/mod_label/intro/202303232142069Odm3oxU9mTY58hkborwzylm7MJop05q.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "IGSS — Boletín Estadístico de Afiliación 2023",
+      "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Boletin-EstadIstico-de-Afiliacion-2023-IGSS.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "URL — Boletín Icesh 9 (2024)",
+      "url": "https://sie.url.edu.gt/wp-content/uploads/ve/bol_elect/bol_icesh/2024/Boletin-Icesh-9.pdf",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "AGN — Presentan principales resultados del trabajo de la ENEIC en Santa Rosa",
+      "url": "https://agn.gt/presentan-principales-resultados-del-trabajo-de-la-eneic-en-santa-rosa/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Prensa Libre — resultados ENEI 2021",
+      "url": "https://www.prensalibre.com/?p=11203844",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "INE — Boletín Estadístico ENEIC 2024-2025, Edición 1 (nov. 2025)",
+      "url": "https://www.ine.gob.gt/wp-content/uploads/2025/11/Boletin-ENEIC.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "INE — Principales resultados ENEI 2022 (feb. 2023)",
+      "url": "https://www.ine.gob.gt/sistema/uploads/2023/03/23/202303232142069Odm3oxU9mTY58hkborwzylm7MJop05q.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "INE — Microdatos ENEI 2021, base de personas (datos.ine.gob.gt)",
+      "url": "https://datos.ine.gob.gt/dataset/28c3154c-3c79-48ff-af32-795322d8388d/resource/2f08fbb1-cfce-48f2-b422-be82d58ef1ee/download/enei-2021-base-de-personas.csv",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "INE — Microdatos ENEI 2-2019, base de personas",
+      "url": "https://datos.ine.gob.gt/dataset/cfd5724a-5665-4e3f-89d9-a74de49ab89f/resource/2f02aaa2-6af4-4906-bf73-f89403f511ea/download/enei-2-2019-base-de-personas.csv",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "INE — Microdatos ENEI 1-2019, base de personas",
+      "url": "https://datos.ine.gob.gt/dataset/cfd5724a-5665-4e3f-89d9-a74de49ab89f/resource/3ee9f98b-5991-450d-8432-1840935cd61f/download/enei-1-2019-base-de-personas.csv",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "MINTRAB — Acuerdo Gubernativo 256-2025, salarios mínimos 2026",
+      "url": "https://mintrabajo.gob.gt/wp-content/uploads/2026/06/Acuerdo-Gubernativo-Numero-256-2025-Salario-Minino.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "IIES-USAC — Boletín Economía al día No. 2, febrero 2026 (ENEIC T2 2025)",
+      "url": "https://iies.usac.edu.gt/wp-content/uploads/2026/03/Boletin-Economia-al-dia-No.-2-febrero-2026.pdf",
+      "nivel": "secundaria (cálculo académico con microdatos INE)"
+    },
+    {
+      "nombre": "Prensa Libre — «Efecto pandemia en el mercado laboral…» (15-feb-2022), cifras INE ENEI 2018/2019/2021",
+      "url": "https://www.prensalibre.com/?p=11203844",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "AGN — Segeplan: informalidad ENEI 2019 65.3 % (1-feb-2021)",
+      "url": "https://agn.gt/guatemala-redujo-la-tasa-de-informalidad-en-el-empleo-en-6-puntos-porcentuales/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Icesh-URL — Boletín 9 (2024): subempleo, informalidad y pobreza laboral",
+      "url": "https://sie.url.edu.gt/wp-content/uploads/ve/bol_elect/bol_icesh/2024/Boletin-Icesh-9.pdf",
+      "nivel": "secundaria"
+    }
+  ],
+  "no_afirma": [
+    "No afirma que la informalidad haya bajado de 71.1 % (2022) a 66.2 % (2025): la ENEI y la ENEIC no tienen empalme oficial y parte del cambio puede ser metodológico.",
+    "No afirma que los cotizantes sean un subconjunto exacto del sector formal de la encuesta: son registro administrativo e INE, con periodos distintos.",
+    "No afirma que los bajos ingresos causen la falta de cotización: la tarjeta de ingresos describe, no explica.",
+    "No afirma que la cobertura del IGSS sea la única medida válida: el IGSS publica 23.1 % de la PEA en 2023 con otro denominador (ENCOVI).",
+    "No afirma qué pasó con la cobertura en 2026: el récord de julio de 2026 no tiene denominador de encuesta del mismo periodo."
+  ],
+  "incertidumbre": [
+    "Todas las cifras usadas tienen segunda fuente no independiente (reproduce la primaria), incluida la ancla cob-c03; es un cálculo propio con IGSS (Resumen 2025) e INE (ENEIC T2 2025).",
+    "cob-c03: numerador = promedio anual 2025 de cotizantes (registro administrativo del IGSS) y denominador = ocupados de la ENEIC abril–junio 2025 (encuesta): periodos y universos distintos; se lee como 'cerca de 2 de cada 10', no como cifra exacta. No es la cobertura que publica el IGSS (23.1 % de la PEA 2023, otra base).",
+    "afi-c08: el punto de julio de 2026 (1,814,143) depende de una sola nota de AGN que cita al IGSS; no se halló comunicado ni boletín del IGSS que lo confirme. Se atribuye 'según el IGSS, vía AGN' y julio de 2025 no está publicado (hueco en la línea de T2).",
+    "cob-c04: resta de un promedio anual administrativo y un trimestre de encuesta: 'unos 6.3 millones'; no equivale a los informales del INE (5.3 millones, otra definición) ni a 'sin protección'; parte de los cotizantes puede no estar entre los ocupados de la encuesta.",
+    "cob-c05: mismos matices que cob-c03; la serie 2018–2021 usa microdatos ENEI recalculados y 2025 la ENEIC continua (marcos muestrales y meses distintos): discontinuidad metodológica, la tendencia al alza es indicativa.",
+    "cob-c11: cociente de incrementos con denominadores de la ENEI 2021 y la ENEIC 2025 (método y estacionalidad distintos); con 2019 como base daría 51.4. Se dice 'menos de la mitad' y no una cifra exacta.",
+    "El 1,742,810 del Resumen 2025 se trata como promedio anual (el IGSS no lo declara; AGN lo llama cierre de 2025).",
+    "El punto 2018 de informalidad (69.5 %) viene de prensa citando al INE; las brechas por pueblo son de la ENEI 2021, no de 2025.",
+    "El salario mínimo es de 2026 y las medianas de ingreso de abril–junio 2025."
+  ],
+  "descartadas": [
+    {
+      "id": "cob-c09",
+      "por": "no_confirmada"
+    }
+  ]
+}

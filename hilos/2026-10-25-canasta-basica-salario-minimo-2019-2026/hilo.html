@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hilo · vista previa</title>
+<!-- Vista previa del hilo: la abre el usuario en su navegador. La rellena scripts/ensamblar.py (HILO_JSON). -->
+<style>
+  :root { --papel:#F6F2E8; --tinta:#0C1520; --gris:#5c6470; --linea:rgba(12,21,32,.14); --acento:#4B92DB; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--papel); color: var(--tinta); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 40px 20px 80px; }
+  header h1 { font: 700 30px/1.15 Georgia, "Times New Roman", serif; margin: 0 0 8px; }
+  header .meta { color: var(--gris); font-size: 14px; display: flex; flex-wrap: wrap; gap: 10px 18px; }
+  .chip { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; background: var(--tinta); color: var(--papel); }
+  .tesis { margin: 18px 0 0; padding: 14px 18px; border-left: 4px solid var(--acento); background: rgba(75,146,219,.08); font-size: 17px; }
+  .contacto { margin-top: 18px; }
+  .contacto a { display: inline-block; margin-bottom: 8px; font-size: 14px; font-weight: 600; color: var(--acento); }
+  .contacto img { width: 100%; max-width: 760px; display: block; border-radius: 12px; box-shadow: 0 2px 14px rgba(0,0,0,.12); }
+  .tuit { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--linea); }
+  .tuit .cab { display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--gris); }
+  .tuit .cab .n { font-weight: 800; font-size: 15px; color: var(--tinta); }
+  .texto { position: relative; margin-top: 12px; padding: 14px 16px; background: #fff; border: 1px solid var(--linea); border-radius: 10px; white-space: pre-wrap; font-size: 17px; }
+  .texto.vacio { color: var(--gris); font-style: italic; }
+  .fila { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; font-size: 13px; color: var(--gris); }
+  .fila .cnt.alerta { color: #B23A26; font-weight: 700; }
+  button { font: 600 13px/1 system-ui, sans-serif; padding: 7px 12px; border-radius: 8px; border: 1px solid var(--linea); background: #fff; color: var(--tinta); cursor: pointer; }
+  button:hover { background: var(--tinta); color: var(--papel); }
+  .img { margin-top: 14px; }
+  .img img { width: 100%; max-width: 560px; display: block; border-radius: 12px; box-shadow: 0 2px 14px rgba(0,0,0,.12); }
+  .alt { margin-top: 10px; font-size: 14px; color: var(--gris); }
+  .alt b { color: var(--tinta); }
+  .fuente { margin-top: 6px; font-size: 13px; color: var(--gris); }
+  section.extra { margin-top: 44px; padding-top: 24px; border-top: 2px solid var(--tinta); }
+  section.extra h2 { font: 700 18px/1.2 system-ui, sans-serif; margin: 22px 0 8px; }
+  section.extra ul { margin: 0; padding-left: 20px; }
+  .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--tinta); color: var(--papel); padding: 10px 16px; border-radius: 8px; font-size: 14px; opacity: 0; transition: opacity .2s; pointer-events: none; }
+  .toast.on { opacity: 1; }
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<div class="toast" id="toast">Copiado</div>
+<script id="hilo-json" type="application/json">{"slug": "canasta-basica-salario-minimo-2019-2026", "fecha": "2026-10-25", "tema": "¿Cuántos salarios mínimos cuesta la canasta básica? De 2019 a 2026", "tesis": "En septiembre de 2026 la canasta básica urbana de un hogar cuesta 0.95 salarios mínimos no agrícolas (1.19 en enero de 2019), pero parte de esa mejora es de método, el mínimo agrícola perdió 1.45% real y la mitad de los ocupados gana menos de Q2,300, por debajo de cualquier mínimo.", "paleta": "maiz", "hook_tipo": "giro_inversion", "modo": "hilo", "pregunta": "¿Cuántos salarios mínimos hacen falta para pagar la canasta básica de un hogar, y cómo cambió esa relación de 2019 a 2026?", "n_tuits": 9, "estado": "listo", "tuits": [{"n": 1, "beat": "gancho", "texto": "En 2019, la comida de una familia costaba más que el salario mínimo. Hoy cabe en él.\n\nPero la mitad de quienes trabajan en Guatemala gana Q2,300 al mes o menos, y comer no se abarató. 🧵", "caracteres": 186, "alt_text": "Tarjeta de cifra: la Canasta Básica Alimentaria urbana de un hogar costó 0.95 salarios mínimos no agrícolas del departamento de Guatemala en septiembre de 2026. Una barra de comparación muestra 1.19 salarios mínimos en enero de 2019, con la metodología anterior del INE. Fuente: INE (canasta vía SESAN) y Mintrab (Acuerdo Gubernativo 256-2025).", "imagen": "tuit_1.png", "plantilla": "cifra", "fuente": "INE (canasta, vía SESAN) · Mintrab (AG 256-2025)", "cifra_ids": ["sal-c11", "sal-c09"]}, {"n": 2, "beat": "contexto", "texto": "Hubo un año en que el mínimo no agrícola no subió ni un centavo; el agrícola se quedó quieto dos años seguidos.", "caracteres": 111, "alt_text": "Gráfico de líneas del salario mínimo mensual con bonificación incentivo, 2019 a 2026, en quetzales corrientes. No agrícola: de 2,992.37 en 2019 a 4,252.28 en 2026. Agrícola: de 2,992.37 en 2019 a 3,875.89 en 2026. Desde 2023 el no agrícola es el del departamento de Guatemala y el agrícola el del resto del país. Fuente: Mintrab, Acuerdos Gubernativos 2019–2026.", "imagen": "tuit_2.png", "plantilla": "linea", "fuente": "Mintrab · Acuerdos Gubernativos 2019–2026", "cifra_ids": ["sal-c01", "sal-c02"]}, {"n": 3, "beat": "contexto", "texto": "En ese lapso los precios subieron 31.43%. El mínimo del campo subió menos que eso.", "caracteres": 82, "alt_text": "Barras divergentes de la variación real del salario mínimo total entre 2019 y 2026, descontada la inflación del IPC: no agrícola del departamento de Guatemala, más 8.13%; agrícola del resto del país, menos 1.45%. Fuente: Mintrab (Acuerdos Gubernativos) e IPC del INE publicado por Banguat; cálculo propio.", "imagen": "tuit_3.png", "plantilla": "divergente", "fuente": "Mintrab · IPC del INE (Banguat) · cálculo propio", "cifra_ids": ["sal-c07", "sal-c08", "sal-c06"]}, {"n": 4, "beat": "contexto", "texto": "Y comparar la canasta de 2019 con la de hoy pide cuidado: no es el mismo método ni el mismo hogar de referencia.", "caracteres": 112, "alt_text": "Gráfico de barras del costo mensual de la Canasta Básica Alimentaria de un hogar, en quetzales. Método anterior, hogar de 4.77 personas: diciembre 2019, 3,584.91; diciembre 2020, 2,989.38; diciembre 2021, 3,097.23; diciembre 2022, 3,634.18; diciembre 2023, 3,904.98. Método 2024, canasta urbana familiar: diciembre 2025, 3,858.30; septiembre 2026, 4,021.60. Se destaca la baja de 2020, cuando el INE cambió el método (−610.16 quetzales de noviembre a diciembre). Fuente: INE vía IIES-USAC y SESAN.", "imagen": "tuit_4.png", "plantilla": "barras-v", "fuente": "INE (vía IIES-USAC y SESAN)", "cifra_ids": ["can-c01", "can-c05", "can-c09", "can-c08"]}, {"n": 5, "beat": "contexto", "texto": "En la ciudad, comer cuesta 29.47% más por persona que en el campo.", "caracteres": 66, "alt_text": "Gráfico de pendiente de la Canasta Básica Alimentaria por persona, metodología 2024 del INE, en quetzales al mes. Urbana: de 846.30 en enero de 2024 a 930.52 en marzo de 2026. Rural: de 654.30 a 718.69 en el mismo periodo. Fuente: INE, reproducido por EFE y Soy502.", "imagen": "tuit_5.png", "plantilla": "pendiente", "fuente": "INE (vía EFE y Soy502)", "cifra_ids": ["can-c06", "can-c07", "can-c12"]}, {"n": 6, "beat": "giro", "texto": "La raya es el mínimo agrícola de 2025 fuera de la capital. La mediana del sector informal no llega ni a la mitad.", "caracteres": 113, "alt_text": "Gráfico de bullet del ingreso laboral mensual mediano en abril a junio de 2025, en quetzales, frente al salario mínimo agrícola fuera del departamento de Guatemala de 2025 (3,686.86 con bonificación). Sector informal: 1,500. Todos los ocupados: 2,300. Asalariados privados y jornaleros: 3,500. Sector formal: 3,600. Ninguna mediana alcanza el mínimo. Fuente: INE, ENEIC 2025, vía IIES-USAC, y Mintrab.", "imagen": "tuit_6.png", "plantilla": "bullet", "fuente": "INE · ENEIC 2025 (vía IIES-USAC) · Mintrab", "cifra_ids": ["ing-c07", "ing-c05", "sal-c02"]}, {"n": 7, "beat": "impacto", "texto": "Son 5.3 millones de personas. Y solo el 21.7% de los ocupados cotiza al IGSS.", "caracteres": 77, "alt_text": "Gráfico de waffle de 100 cuadros: 66.2% de la población ocupada trabaja en la informalidad, según la ENEIC de abril a junio de 2025. En el área rural la tasa es 77.8%. Fuente: INE, ENEIC abril a junio de 2025.", "imagen": "tuit_7.png", "plantilla": "waffle", "fuente": "INE · ENEIC abril-junio 2025", "cifra_ids": ["ing-c03", "ing-c04", "ing-c10"]}, {"n": 8, "beat": "impacto", "texto": "En 2019, la ampliada de un hogar costaba 2.76 salarios mínimos. Su valor por hogar en 2026 no aparece en lo publicado que hallamos.", "caracteres": 131, "alt_text": "Tarjeta de cifra: la Canasta Ampliada urbana por persona costó 2,252.79 quetzales al mes en marzo de 2026. Una barra de comparación muestra el salario mínimo no agrícola del departamento de Guatemala de 2026, 4,252.28 quetzales: una sola persona necesita más de la mitad del mínimo. Fuente: INE vía EFE y Mintrab.", "imagen": "tuit_8.png", "plantilla": "cifra", "fuente": "INE (vía EFE) · Mintrab (AG 256-2025)", "cifra_ids": ["can-c11", "sal-c01", "sal-c10"]}, {"n": 9, "beat": "cierre", "texto": "En el papel, la comida de un hogar ya cabe en un salario mínimo. Pero parte de esa mejora es de método, el mínimo del campo perdió ante la inflación y la mitad de los ocupados gana menos que cualquier mínimo.\n\nFuentes: INE, SESAN, Mintrab, Banguat, IGSS, IIES-USAC, EFE y Soy502.", "caracteres": 279, "alt_text": "Tuit de cierre sin imagen: resume la tesis y lista las fuentes INE, SESAN, Mintrab, Banguat, IIES-USAC, EFE y Soy502.", "imagen": null, "plantilla": null, "fuente": null, "cifra_ids": []}], "no_afirma": ["No afirma que comer cueste menos que en 2019: las canastas de 2019 y 2026 usan métodos y hogares de referencia distintos, sin empalme oficial.", "No afirma cuánto de la mejora en la razón canasta/salario se debe al cambio de método y cuánto al alza del mínimo.", "No afirma el porcentaje exacto de ocupados que gana menos del mínimo: solo que la mediana (Q2,300) está por debajo de todos los mínimos de 2025.", "No afirma que la informalidad o el bajo ingreso los cause el salario mínimo.", "No afirma cuántos salarios mínimos cuesta la canasta ampliada de un hogar en 2026."], "incertidumbre": ["Ancla sal-c11 (0.95 = 4,021.6 / 4,252.28): la aritmética es correcta, pero el numerador (can-c08, canasta urbana familiar de septiembre de 2026) sale de un solo boletín SESAN 010-2026, sin comunicado del INE ni medio independiente; la segunda fuente es un agregador que copia a SESAN/INE. Es la cifra familiar según SESAN, con hogar de referencia no confirmado, y por ser el mes más reciente puede revisarse.", "Comparación sal-c09 (1.19, enero de 2019) frente a sal-c11 (0.95, 2026) mezcla definiciones: 2019 usa el método viejo del INE (hogar de 4.77 personas, comer fuera del hogar al 28.2%, reducido a 9.6% en dic. 2020) y 2026 el método 2024 (por persona, base ENIGH 2022-2023, canasta urbana). El cambio de método se declara en la nota de T1 y en T4; la independencia de la fuente de sal-c09 es baja.", "can-c01 (3,904.98, dic. 2023) coincide en reproducciones del INE (Prensa Latina, IIES-USAC) que copian la misma cifra, y varios puntos de la serie de T4 vienen de prensa. Hay dos rupturas de método (dic. 2020 y ene. 2024): 2019 no es comparable con 2020-2023 ni estos con 2024 en adelante; T4 muestra puntos por método, no una tendencia continua.", "can-c05 (−610.16 = 3,599.54 − 2,989.38, nov. a dic. 2020): la resta es correcta, pero la caída es un ajuste metodológico (comer fuera del hogar de 28.2% a 9.6%), no de precios; fuente única (AGN citando al INE) sin archivo local. T4 la presenta solo como ajuste de método.", "Todas las cifras usadas tienen segunda fuente NO independiente (reproduce la primaria), incluida la ancla sal-c11 y su comparación sal-c09: verifican el número, no lo respaldan de forma independiente.", "Los boletines PDF del INE no se pudieron descargar (WAF): las canastas salen de copias en SESAN/SIINSAN, IIES-USAC, AGN, EFE y Soy502; diciembres 2019, 2022 y 2023 vienen de extractos.", "Tamaño del hogar urbano de referencia no confirmado: el boletín SESAN 010-2026 dice 4.11 integrantes, pero sus cifras cuadran con 4.16; por eso la nota de T1 no lo nombra y no se derivan cifras por persona de can-c08.", "Los mínimos mensuales 2019-2022 son cálculo (diario × 365 / 12) y los de 2025 vienen de AGN (el AG 264-2024 no está en la página de Mintrab).", "La referencia de T6 es el mínimo agrícola fuera del depto. de Guatemala; el de maquila es más bajo, pero la mediana (Q2,300) queda por debajo de todos.", "T4 mezcla en un mismo gráfico dos métodos (hogar de 4.77 y canasta urbana familiar 2024), separados con periodos y declarados en la nota."], "fuentes": ["INE (canasta, vía SESAN) · Mintrab (AG 256-2025)", "Mintrab · Acuerdos Gubernativos 2019–2026", "Mintrab · IPC del INE (Banguat) · cálculo propio", "INE (vía IIES-USAC y SESAN)", "INE (vía EFE y Soy502)", "INE · ENEIC 2025 (vía IIES-USAC) · Mintrab", "INE · ENEIC abril-junio 2025", "INE (vía EFE) · Mintrab (AG 256-2025)"], "fuentes_cifras": ["Calculo propio: AG 242-2018 y 256-2025 (Mintrab), IPC SR005 (INE/Banguat)", "Cálculo propio con datos INE vía EFE/Emisoras Unidas", "Cálculo propio: IGSS, Resumen del Informe Anual de Labores 2025 (afiliados cotizantes) / INE ENEIC T2-2025 (población ocupada)", "IIES-USAC — Boletín Economía al día No. 2, feb. 2026 (cálculos con microdatos ENEIC T2-2025 del INE)", "INE (CBA septiembre 2026, reproducida por SESAN, boletin de alerta temprana 010-2026) y AG 256-2025", "INE (boletin CBA enero 2019, copia SIINSAN) y AG 242-2018", "INE Guatemala (reproducido por Soy502 y EFE/Emisoras Unidas)", "INE Guatemala vía Agencia Guatemalteca de Noticias (AGN)", "INE Guatemala vía EFE / Emisoras Unidas", "INE Guatemala, boletín mensual CBA (reproducido por IIES-USAC, La Hora, AGN, Bloomberg Línea)", "INE — Boletín ENEIC 2024-2025 (Encuesta Nacional de Empleo e Ingresos Continua), ed. 1, nov. 2025", "INE, publicado por Banguat (SR005); calculo propio", "Mintrab, Acuerdos Gubernativos de salario minimo 2019-2026", "Mintrab, Acuerdos Gubernativos de salario minimo 2019-2026 (242-2018, 320-2019, 250-2020, 278-2021, 353-2022, 307-2023, 264-2024, 256-2025)", "SESAN, Boletín de alerta temprana SAN No. 001-2026 (enero), con datos INE CBA ene-2024 a dic-2025", "SESAN, Boletín de alerta temprana SAN No. 010-2026 (con datos INE, CBA septiembre 2026)"], "gate_mecanico": "ok", "contacto": "contacto.png"}</script>
+<script>
+/* Peso según X: copia literal de scripts/contar_x.js (pesoX). No editar aquí; regenerar desde el script. */
+function pesoX(texto) {
+  // Reglas: NFC; cada URL pesa 23; puntos de código en 0–4351, 8192–8205,
+  // 8208–8223 y 8242–8247 pesan 1; el resto 2; los emoji compuestos
+  // (FE0F, ZWJ+siguiente, tono 1F3FB–1F3FF, keycap 20E3, par regional) son uno y pesan 2.
+  var t = String(texto == null ? "" : texto).normalize("NFC");
+  var reUrl = /https?:\/\/\S+|www\.\S+|(?<![\p{L}\p{N}\p{M}_])[a-z0-9-]+(\.[a-z0-9-]+)*\.(com|gt|org|net|io|edu|gov|mx|sv|hn|es|info|co)(\/\S*)?/giu;
+  var rangos1 = [[0, 4351], [8192, 8205], [8208, 8223], [8242, 8247]];
+  var pesoCp = function (cp) {
+    for (var k = 0; k < rangos1.length; k++) if (cp >= rangos1[k][0] && cp <= rangos1[k][1]) return 1;
+    return 2;
+  };
+  var esTono = function (cp) { return cp >= 0x1f3fb && cp <= 0x1f3ff; };
+  var esRegional = function (cp) { return cp >= 0x1f1e6 && cp <= 0x1f1ff; };
+  var pesoPlano = function (s) {
+    var cps = Array.from(s, function (c) { return c.codePointAt(0); });
+    var i = 0, n = cps.length, total = 0;
+    while (i < n) {
+      var j = i + 1;
+      if (esRegional(cps[i]) && j < n && esRegional(cps[j])) j += 1; // bandera
+      while (j < n) {
+        if (cps[j] === 0xfe0f || cps[j] === 0x20e3 || esTono(cps[j])) j += 1;
+        else if (cps[j] === 0x200d && j + 1 < n) j += 2; // ZWJ + siguiente
+        else break;
+      }
+      total += j - i > 1 ? 2 : pesoCp(cps[i]);
+      i = j;
+    }
+    return total;
+  };
+  var total = 0, pos = 0, m;
+  while ((m = reUrl.exec(t)) !== null) {
+    total += pesoPlano(t.slice(pos, m.index)) + 23;
+    pos = m.index + m[0].length;
+    if (m[0].length === 0) reUrl.lastIndex++;
+  }
+  return total + pesoPlano(t.slice(pos));
+}
+</script>
+<script>
+(() => {
+  const H = JSON.parse(document.getElementById("hilo-json").textContent);
+  const app = document.getElementById("app");
+  const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const toast = (m) => { const t = document.getElementById("toast"); t.textContent = m; t.classList.add("on"); setTimeout(() => t.classList.remove("on"), 1400); };
+  const copiar = async (txt) => {
+    try { await navigator.clipboard.writeText(txt); toast("Copiado"); return; } catch (e) { /* fallback */ }
+    const ta = document.createElement("textarea"); ta.value = txt; document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); toast("Copiado"); } catch (e) { toast("No se pudo copiar"); }
+    ta.remove();
+  };
+  if (!H) { app.innerHTML = "<p>Sin datos: este archivo lo genera scripts/ensamblar.py.</p>"; return; }
+
+  let html = `<header>
+    <h1>${esc(H.tema)}</h1>
+    <div class="meta"><span class="chip">${esc(H.paleta)}</span><span>${esc(H.fecha)}</span>${H.modo && H.modo !== "hilo" ? `<span class="chip" style="background:#e9e3d6;color:#0C1520">modo: ${esc(H.modo)}</span>` : ""}<span>${H.n_tuits} tuits · ${H.tuits.filter((t) => t.imagen).length} imágenes</span><span>gate mecánico: ${esc(H.gate_mecanico)}</span></div>
+    ${H.tesis ? `<p class="tesis"><b>Tesis:</b> ${esc(H.tesis)}</p>` : ""}
+    ${H.modo && H.modo !== "hilo" && H[H.modo] ? `<div class="meta" style="margin-top:8px;display:block"><b>modo ${esc(H.modo)}:</b> ${Object.entries(H[H.modo]).map(([k, v]) => Array.isArray(v) && v.length && typeof v[0] === "object" ? `<div>${esc(k)}: ${v.map((x) => Object.values(x).map(esc).join(" · ")).join(" | ")}</div>` : `<span style="margin-right:14px">${esc(k)}: ${esc(Array.isArray(v) ? v.join(", ") : v)}</span>`).join("")}</div>` : ""}
+  </header>
+  <div class="contacto" id="contacto" hidden>
+    <a href="contacto.png" target="_blank" rel="noopener">Ver hoja de contacto</a>
+    <img src="contacto.png" alt="Hoja de contacto: todas las tarjetas del hilo" onload="this.parentNode.hidden=false" onerror="this.parentNode.remove()">
+  </div>`;
+  for (const t of H.tuits) {
+    const vacio = !t.texto.trim();
+    const peso = pesoX(t.texto);
+    html += `<article class="tuit" id="t${t.n}">
+      <div class="cab"><span class="n">Tuit ${t.n}/${H.n_tuits}</span><span class="chip" style="background:#e9e3d6;color:#0C1520">${esc(t.beat || "")}</span>${t.plantilla ? `<span>tarjeta: ${esc(t.plantilla)}</span>` : "<span>sin imagen</span>"}</div>
+      <div class="texto${vacio ? " vacio" : ""}">${vacio ? "(sin texto: la imagen lo dice)" : esc(t.texto)}</div>
+      <div class="fila"><span class="cnt${peso > 280 ? " alerta" : ""}">${peso}/280 (peso X${peso !== t.caracteres ? `, ${t.caracteres} caracteres` : ""})</span>${vacio ? "" : `<button data-copy="${esc(t.texto)}">Copiar texto</button>`}</div>
+      ${t.imagen ? `<div class="img"><img src="${esc(t.imagen)}" alt="${esc(t.alt_text)}"></div>
+      <div class="alt"><b>Alt:</b> ${esc(t.alt_text)} <button data-copy="${esc(t.alt_text)}">Copiar alt</button></div>
+      <div class="fuente">Fuente en el pie: ${esc(t.fuente || "")} · cifras: ${esc((t.cifra_ids || []).join(", "))}</div>` : ""}
+    </article>`;
+  }
+  html += `<section class="extra">
+    <h2>Lo que este hilo NO afirma</h2><ul>${(H.no_afirma || []).map((x) => `<li>${esc(x)}</li>`).join("") || "<li>(nada declarado)</li>"}</ul>
+    <h2>Incertidumbre declarada</h2><ul>${(H.incertidumbre || []).map((x) => `<li>${esc(x)}</li>`).join("") || "<li>(nada declarado)</li>"}</ul>
+    <h2>Fuentes</h2><ul>${(H.fuentes || []).map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
+    <p style="color:var(--gris);font-size:13px">Detalle de cifras y veredictos en <code>datos.json</code>; texto listo para pegar en <code>post.md</code>.</p>
+  </section>`;
+  app.innerHTML = html;
+  app.addEventListener("click", (e) => { const b = e.target.closest("button[data-copy]"); if (b) copiar(b.getAttribute("data-copy")); });
+})();
+</script>
+</body>
+</html>

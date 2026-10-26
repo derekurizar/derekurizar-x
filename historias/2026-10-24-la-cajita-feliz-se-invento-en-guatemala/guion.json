@@ -37,8 +37,8 @@
   "idioma": "es"
  },
  "velocidad": 1.1,
- "creditos_voz": 2347.0,
- "duracion_s": 161.0,
+ "creditos_voz": 2775.0,
+ "duracion_s": 157.2,
  "critica": {
   "veredicto": "pasa",
   "vuelta": 2,
@@ -191,13 +191,7 @@
    "hechos": [
     "eua-h01"
    ],
-   "fotos": [
-    {
-     "credito": "Foto: Joshuald · CC BY-SA 3.0",
-     "origen": "commons",
-     "licencia": "CC BY-SA 3.0"
-    }
-   ],
+   "fotos": [],
    "animacion": null,
    "mecanismo": null
   },
@@ -205,8 +199,8 @@
    "n": 11,
    "tipo": "tarjeta",
    "pantalla": "Y según CNN, la probaron en 1977 en Kansas City. En 1979 costaba 1.15 dólares en todo Estados Unidos, en cajas de circo.",
-   "voz": "Y según CNN, la probaron en mil novecientos setenta y siete en Kansas City. En mil novecientos setenta y nueve costaba uno punto quince dólares en todo Estados Unidos, en cajas de circo.",
-   "dur": 13.924,
+   "voz": "Y según CNN, la probaron en mil novecientos setenta y siete en Kansas City. En mil novecientos setenta y nueve costaba un dólar con quince centavos en todo Estados Unidos, en cajas de circo.",
+   "dur": 14.305,
    "hechos": [
     "eua-h03",
     "eua-h04"
@@ -228,7 +222,7 @@
    ],
    "fotos": [],
    "animacion": "cadena",
-   "mecanismo": null
+   "mecanismo": "cadena"
   },
   {
    "n": 13,
@@ -288,9 +282,9 @@
   {
    "n": 17,
    "tipo": "foto",
-   "pantalla": "En 2019 abrió en Miraflores el Museo de la Cajita Feliz. Yolanda dijo: Nunca me imaginé que iba a ser algo de tantos años.",
-   "voz": "En dos mil diecinueve abrió en Miraflores el Museo de la Cajita Feliz. Yolanda dijo: Nunca me imaginé que iba a ser algo de tantos años.",
-   "dur": 9.829,
+   "pantalla": "En 2019 abrió en Miraflores el Museo de la Cajita Feliz.",
+   "voz": "En dos mil diecinueve abrió en Miraflores el Museo de la Cajita Feliz.",
+   "dur": 5.051,
    "hechos": [
     "rec-h10"
    ],
@@ -301,9 +295,9 @@
   {
    "n": 18,
    "tipo": "cierre",
-   "pantalla": "Quedan dos historias con papeles: el Menú de Ronald de Yolanda y la Happy Meal de Bernstein. Y los guatemaltecos todavía escuchan decir que la Cajita Feliz nació aquí.",
-   "voz": "Quedan dos historias con papeles: el Menú de Ronald de Yolanda y la Happy Meal de Bernstein. Y los guatemaltecos todavía escuchan decir que la Cajita Feliz nació aquí.",
-   "dur": 13.658,
+   "pantalla": "Quedan dos historias con papeles: el Menú de Ronald de Yolanda y la Happy Meal de Bernstein. Ella nunca imaginó que duraría tantos años. Y los niños la siguen abriendo.",
+   "voz": "Quedan dos historias con papeles: el Menú de Ronald de Yolanda y la Happy Meal de Bernstein. Ella nunca imaginó que duraría tantos años. Y los niños la siguen abriendo.",
+   "dur": 14.34,
    "hechos": [],
    "fotos": [],
    "animacion": null,
@@ -317,14 +311,14 @@
    "Bernstein, la Happy Meal de EE. UU.",
    "El crédito oficial: Bob Bernstein"
   ],
-  "texto": "Quedan dos historias con papeles: el Menú de Ronald de Yolanda y la Happy Meal de Bernstein. Y los guatemaltecos todavía escuchan decir que la Cajita Feliz nació aquí.",
+  "texto": "Quedan dos historias con papeles: el Menú de Ronald de Yolanda y la Happy Meal de Bernstein. Ella nunca imaginó que duraría tantos años. Y los niños la siguen abriendo.",
   "tipo": "remate",
   "forma": "consecuencia",
-  "final": "Y los guatemaltecos todavía escuchan decir que la Cajita Feliz nació aquí.",
+  "final": "Ella nunca imaginó que duraría tantos años. Y los niños la siguen abriendo.",
   "consecuencia": {
    "mecanismo": "despues",
-   "quien": "guatemaltecos",
-   "verbo": "escuchan"
+   "quien": "niños",
+   "verbo": "siguen"
   }
  },
  "caption": {

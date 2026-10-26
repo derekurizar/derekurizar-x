@@ -245,6 +245,34 @@
       "estado": "listo",
       "hook_tipo": "escala_humana",
       "modo": "hilo"
+    },
+    {
+      "id": "2026-10-25-canasta-basica-salario-minimo-2019-2026",
+      "fecha": "2026-10-25",
+      "slug": "canasta-basica-salario-minimo-2019-2026",
+      "tema": "¿Cuántos salarios mínimos cuesta la canasta básica? De 2019 a 2026",
+      "tesis": "En septiembre de 2026 la canasta básica urbana de un hogar cuesta 0.95 salarios mínimos no agrícolas (1.19 en enero de 2019), pero parte de esa mejora es de método, el mínimo agrícola perdió 1.45% real y la mitad de los ocupados gana menos de Q2,300, por debajo de cualquier mínimo.",
+      "paleta": "maiz",
+      "n_tuits": 9,
+      "ruta": "hilos/2026-10-25-canasta-basica-salario-minimo-2019-2026",
+      "estado": "listo",
+      "hook_tipo": "giro_inversion",
+      "modo": "hilo",
+      "idea_id": "canasta-basica-salario-minimo-2019-2026"
+    },
+    {
+      "id": "2026-10-25-igss-record-afiliados-informalidad",
+      "fecha": "2026-10-25",
+      "slug": "igss-record-afiliados-informalidad",
+      "tema": "IGSS bate récord con 1.81 millones de cotizantes: ¿y los demás trabajadores?",
+      "tesis": "El IGSS alcanzó un récord de 1,814,143 cotizantes en julio de 2026, pero sus cotizantes equivalen a solo 21.69 de cada 100 ocupados (promedio 2025 sobre la ENEIC T2 2025), frente a 18.57 en 2019: la cobertura sube despacio y casi dos de cada tres ocupados siguen en el sector informal.",
+      "paleta": "cielo",
+      "n_tuits": 11,
+      "ruta": "hilos/2026-10-25-igss-record-afiliados-informalidad",
+      "estado": "listo",
+      "hook_tipo": "escala_humana",
+      "modo": "hilo",
+      "idea_id": "igss-record-afiliados-informalidad"
     }
   ]
 }

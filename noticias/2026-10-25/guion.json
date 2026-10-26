@@ -1,0 +1,174 @@
+{
+ "id": "2026-10-25",
+ "tipo": "noticias",
+ "fecha": "2026-10-25",
+ "paleta": "jade",
+ "musica": "jade-2",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 863.0,
+ "duracion_s": 61.3,
+ "critica": {
+  "veredicto": "pasa",
+  "vuelta": 2,
+  "puntajes": {
+   "gancho": 4,
+   "claridad": 4,
+   "ritmo": 4,
+   "precision": 4,
+   "tono": 4,
+   "cierre": 4
+  }
+ },
+ "contexto_superior": "Guatemala · 25 oct 2026",
+ "gancho": {
+  "noticia": "eco-1",
+  "pantalla": "Sube otra vez el gas propano",
+  "texto": "El cilindro de gas sube a Q126."
+ },
+ "noticias": [
+  {
+   "id": "eco-1",
+   "seccion": "Economía",
+   "titular": "Cilindro de 25 libras queda en Q126",
+   "fuente": "Expendedores · La Hora",
+   "estado": "en_desarrollo",
+   "breve": false,
+   "cifra": {
+    "texto": "Q126",
+    "etiqueta": "cilindro de 25 libras"
+   },
+   "foto": {
+    "credito": "Foto de referencia: Kullatan Kin, CC0",
+    "origen": "referencia"
+   },
+   "urls": [
+    "https://lahora.gt/nacionales/diego/2026/10/25/gas-propano-vuelve-a-subir-estos-son-los-nuevos-precios-a-partir-del-25-de-octubre-now/"
+   ]
+  },
+  {
+   "id": "seg-1",
+   "seccion": "Prensa",
+   "titular": "SIP alerta por violencia contra periodistas",
+   "fuente": "SIP · Prensa Libre (EFE)",
+   "estado": "en_desarrollo",
+   "breve": false,
+   "cifra": {
+    "texto": "73",
+    "etiqueta": "agresiones a la prensa"
+   },
+   "foto": {
+    "credito": "Foto: Prensa Libre (EFE)",
+    "origen": "medio"
+   },
+   "urls": [
+    "https://www.prensalibre.com/guatemala/justicia/sip-alerta-por-violencia-criminal-en-guatemala-tras-asesinatos-de-periodistas-y-solorzano-foppa-breaking/"
+   ]
+  },
+  {
+   "id": "pol-1",
+   "seccion": "Política",
+   "titular": "Congreso podría reelegir a Luis Contreras",
+   "fuente": "Prensa Libre · Publinews",
+   "estado": "confirmada",
+   "breve": false,
+   "cifra": null,
+   "foto": {
+    "credito": "Foto de referencia: Prensa Libre",
+    "origen": "referencia"
+   },
+   "urls": [
+    "https://www.prensalibre.com/guatemala/politica/congreso-podria-reelegir-a-luis-contreras-el-martes-con-una-junta-directiva-casi-identica-a-la-actual/",
+    "https://www.publinews.gt/noticias/2026/10/23/diputado-luis-contreras-busca-reelegirse-en-la-presidencia-del-congreso/"
+   ]
+  },
+  {
+   "id": "pol-2",
+   "seccion": "Justicia",
+   "titular": "Siete policías declaran el lunes",
+   "fuente": "Prensa Libre",
+   "estado": "en_desarrollo",
+   "breve": true,
+   "cifra": null,
+   "foto": {
+    "credito": "Foto: Prensa Libre",
+    "origen": "medio"
+   },
+   "urls": [
+    "https://www.prensalibre.com/guatemala/justicia/crimen-contra-solorzano-foppa-agentes-capturados-senalan-intereses-politicos-y-al-crimen-organizado-breaking/"
+   ]
+  }
+ ],
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "titular",
+   "noticia": "eco-1",
+   "pantalla": "El cilindro de gas sube a Q126.",
+   "voz": "El cilindro de gas sube a ciento veintiséis quetzales.",
+   "dur": 4.25
+  },
+  {
+   "n": 2,
+   "tipo": "noticia",
+   "noticia": "eco-1",
+   "pantalla": "Desde este domingo, el cilindro de gas propano de 25 libras cuesta Q126, según los expendedores. Son Q4 más, y es el cilindro que más usan los hogares.",
+   "voz": "Desde este domingo, el cilindro de gas propano de veinticinco libras cuesta ciento veintiséis quetzales, según los expendedores. Son cuatro quetzales más, y es el cilindro que más usan los hogares.",
+   "dur": 13.075
+  },
+  {
+   "n": 3,
+   "tipo": "noticia",
+   "noticia": "seg-1",
+   "pantalla": "Además, la SIP contó 73 agresiones contra periodistas y medios, según su informe presentado en Bogotá. Cita los asesinatos de dos periodistas y del exfiscal Solórzano Foppa, asesinado el 17 de octubre.",
+   "voz": "Además, la SIP contó setenta y tres agresiones contra periodistas y medios, según su informe presentado en Bogotá. Cita los asesinatos de dos periodistas y del exfiscal Solórzano Foppa, asesinado el diecisiete de octubre.",
+   "dur": 15.655
+  },
+  {
+   "n": 4,
+   "tipo": "noticia",
+   "noticia": "pol-1",
+   "pantalla": "En política, el Congreso elegiría el martes 27 de octubre su nueva Junta Directiva, si hay consensos. Hay una sola planilla, encabezada por el presidente del Congreso, Luis Contreras, que busca reelegirse.",
+   "voz": "En política, el Congreso elegiría el martes veintisiete de octubre su nueva Junta Directiva, si hay consensos. Hay una sola planilla, encabezada por el presidente del Congreso, Luis Contreras, que busca reelegirse.",
+   "dur": 14.426
+  },
+  {
+   "n": 5,
+   "tipo": "noticia",
+   "noticia": "pol-2",
+   "pantalla": "Y, según Prensa Libre, siete policías señalados de irregularidades al detener a los Choc Toz declaran el lunes.",
+   "voz": "Y, según Prensa Libre, siete policías señalados de irregularidades al detener a los Choc Toz declaran el lunes.",
+   "dur": 7.745
+  },
+  {
+   "n": 6,
+   "tipo": "cierre",
+   "noticia": null,
+   "pantalla": "Eso fue lo más importante de hoy. Mañana seguimos con lo que pase.",
+   "voz": "Eso fue lo más importante de hoy. Mañana seguimos con lo que pase.",
+   "dur": 7.273
+  }
+ ],
+ "cierre": {
+  "rotulo": "Hoy en Guatemala",
+  "resumen": [
+   "Gas de 25 libras: Q126",
+   "SIP: 73 agresiones a la prensa",
+   "Junta del Congreso, el martes",
+   "7 policías declaran el lunes"
+  ],
+  "texto": "Eso fue lo más importante de hoy. Mañana seguimos con lo que pase.",
+  "final": "Mañana seguimos con lo que pase."
+ },
+ "caption": {
+  "tiktok": "Las noticias de hoy en Guatemala en un minuto: el gas propano sube a Q126, la SIP alerta por violencia contra la prensa, el Congreso elige directiva y siete policías van a declarar. #Guatemala #Noticias",
+  "instagram": "Lo más importante de hoy en Guatemala, verificado y con fuente: el cilindro de 25 libras queda en Q126, la SIP cuenta 73 agresiones contra la prensa y el Congreso elige su Junta Directiva el martes. #Guatemala #NoticiasGuatemala",
+  "facebook": "Las noticias de hoy en Guatemala en un minuto: gas propano a Q126, informe de la SIP, elección en el Congreso y siete policías ante el juez. Fuentes en el primer comentario.",
+  "shorts": "Noticias de Guatemala hoy: gas a Q126, la SIP y el Congreso #Shorts\nLo más importante del día, con fuente."
+ }
+}

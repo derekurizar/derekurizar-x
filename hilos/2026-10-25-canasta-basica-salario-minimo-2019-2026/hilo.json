@@ -1,0 +1,193 @@
+{
+  "slug": "canasta-basica-salario-minimo-2019-2026",
+  "fecha": "2026-10-25",
+  "tema": "¿Cuántos salarios mínimos cuesta la canasta básica? De 2019 a 2026",
+  "tesis": "En septiembre de 2026 la canasta básica urbana de un hogar cuesta 0.95 salarios mínimos no agrícolas (1.19 en enero de 2019), pero parte de esa mejora es de método, el mínimo agrícola perdió 1.45% real y la mitad de los ocupados gana menos de Q2,300, por debajo de cualquier mínimo.",
+  "paleta": "maiz",
+  "hook_tipo": "giro_inversion",
+  "modo": "hilo",
+  "pregunta": "¿Cuántos salarios mínimos hacen falta para pagar la canasta básica de un hogar, y cómo cambió esa relación de 2019 a 2026?",
+  "n_tuits": 9,
+  "estado": "listo",
+  "tuits": [
+    {
+      "n": 1,
+      "beat": "gancho",
+      "texto": "En 2019, la comida de una familia costaba más que el salario mínimo. Hoy cabe en él.\n\nPero la mitad de quienes trabajan en Guatemala gana Q2,300 al mes o menos, y comer no se abarató. 🧵",
+      "caracteres": 186,
+      "alt_text": "Tarjeta de cifra: la Canasta Básica Alimentaria urbana de un hogar costó 0.95 salarios mínimos no agrícolas del departamento de Guatemala en septiembre de 2026. Una barra de comparación muestra 1.19 salarios mínimos en enero de 2019, con la metodología anterior del INE. Fuente: INE (canasta vía SESAN) y Mintrab (Acuerdo Gubernativo 256-2025).",
+      "imagen": "tuit_1.png",
+      "plantilla": "cifra",
+      "fuente": "INE (canasta, vía SESAN) · Mintrab (AG 256-2025)",
+      "cifra_ids": [
+        "sal-c11",
+        "sal-c09"
+      ]
+    },
+    {
+      "n": 2,
+      "beat": "contexto",
+      "texto": "Hubo un año en que el mínimo no agrícola no subió ni un centavo; el agrícola se quedó quieto dos años seguidos.",
+      "caracteres": 111,
+      "alt_text": "Gráfico de líneas del salario mínimo mensual con bonificación incentivo, 2019 a 2026, en quetzales corrientes. No agrícola: de 2,992.37 en 2019 a 4,252.28 en 2026. Agrícola: de 2,992.37 en 2019 a 3,875.89 en 2026. Desde 2023 el no agrícola es el del departamento de Guatemala y el agrícola el del resto del país. Fuente: Mintrab, Acuerdos Gubernativos 2019–2026.",
+      "imagen": "tuit_2.png",
+      "plantilla": "linea",
+      "fuente": "Mintrab · Acuerdos Gubernativos 2019–2026",
+      "cifra_ids": [
+        "sal-c01",
+        "sal-c02"
+      ]
+    },
+    {
+      "n": 3,
+      "beat": "contexto",
+      "texto": "En ese lapso los precios subieron 31.43%. El mínimo del campo subió menos que eso.",
+      "caracteres": 82,
+      "alt_text": "Barras divergentes de la variación real del salario mínimo total entre 2019 y 2026, descontada la inflación del IPC: no agrícola del departamento de Guatemala, más 8.13%; agrícola del resto del país, menos 1.45%. Fuente: Mintrab (Acuerdos Gubernativos) e IPC del INE publicado por Banguat; cálculo propio.",
+      "imagen": "tuit_3.png",
+      "plantilla": "divergente",
+      "fuente": "Mintrab · IPC del INE (Banguat) · cálculo propio",
+      "cifra_ids": [
+        "sal-c07",
+        "sal-c08",
+        "sal-c06"
+      ]
+    },
+    {
+      "n": 4,
+      "beat": "contexto",
+      "texto": "Y comparar la canasta de 2019 con la de hoy pide cuidado: no es el mismo método ni el mismo hogar de referencia.",
+      "caracteres": 112,
+      "alt_text": "Gráfico de barras del costo mensual de la Canasta Básica Alimentaria de un hogar, en quetzales. Método anterior, hogar de 4.77 personas: diciembre 2019, 3,584.91; diciembre 2020, 2,989.38; diciembre 2021, 3,097.23; diciembre 2022, 3,634.18; diciembre 2023, 3,904.98. Método 2024, canasta urbana familiar: diciembre 2025, 3,858.30; septiembre 2026, 4,021.60. Se destaca la baja de 2020, cuando el INE cambió el método (−610.16 quetzales de noviembre a diciembre). Fuente: INE vía IIES-USAC y SESAN.",
+      "imagen": "tuit_4.png",
+      "plantilla": "barras-v",
+      "fuente": "INE (vía IIES-USAC y SESAN)",
+      "cifra_ids": [
+        "can-c01",
+        "can-c05",
+        "can-c09",
+        "can-c08"
+      ]
+    },
+    {
+      "n": 5,
+      "beat": "contexto",
+      "texto": "En la ciudad, comer cuesta 29.47% más por persona que en el campo.",
+      "caracteres": 66,
+      "alt_text": "Gráfico de pendiente de la Canasta Básica Alimentaria por persona, metodología 2024 del INE, en quetzales al mes. Urbana: de 846.30 en enero de 2024 a 930.52 en marzo de 2026. Rural: de 654.30 a 718.69 en el mismo periodo. Fuente: INE, reproducido por EFE y Soy502.",
+      "imagen": "tuit_5.png",
+      "plantilla": "pendiente",
+      "fuente": "INE (vía EFE y Soy502)",
+      "cifra_ids": [
+        "can-c06",
+        "can-c07",
+        "can-c12"
+      ]
+    },
+    {
+      "n": 6,
+      "beat": "giro",
+      "texto": "La raya es el mínimo agrícola de 2025 fuera de la capital. La mediana del sector informal no llega ni a la mitad.",
+      "caracteres": 113,
+      "alt_text": "Gráfico de bullet del ingreso laboral mensual mediano en abril a junio de 2025, en quetzales, frente al salario mínimo agrícola fuera del departamento de Guatemala de 2025 (3,686.86 con bonificación). Sector informal: 1,500. Todos los ocupados: 2,300. Asalariados privados y jornaleros: 3,500. Sector formal: 3,600. Ninguna mediana alcanza el mínimo. Fuente: INE, ENEIC 2025, vía IIES-USAC, y Mintrab.",
+      "imagen": "tuit_6.png",
+      "plantilla": "bullet",
+      "fuente": "INE · ENEIC 2025 (vía IIES-USAC) · Mintrab",
+      "cifra_ids": [
+        "ing-c07",
+        "ing-c05",
+        "sal-c02"
+      ]
+    },
+    {
+      "n": 7,
+      "beat": "impacto",
+      "texto": "Son 5.3 millones de personas. Y solo el 21.7% de los ocupados cotiza al IGSS.",
+      "caracteres": 77,
+      "alt_text": "Gráfico de waffle de 100 cuadros: 66.2% de la población ocupada trabaja en la informalidad, según la ENEIC de abril a junio de 2025. En el área rural la tasa es 77.8%. Fuente: INE, ENEIC abril a junio de 2025.",
+      "imagen": "tuit_7.png",
+      "plantilla": "waffle",
+      "fuente": "INE · ENEIC abril-junio 2025",
+      "cifra_ids": [
+        "ing-c03",
+        "ing-c04",
+        "ing-c10"
+      ]
+    },
+    {
+      "n": 8,
+      "beat": "impacto",
+      "texto": "En 2019, la ampliada de un hogar costaba 2.76 salarios mínimos. Su valor por hogar en 2026 no aparece en lo publicado que hallamos.",
+      "caracteres": 131,
+      "alt_text": "Tarjeta de cifra: la Canasta Ampliada urbana por persona costó 2,252.79 quetzales al mes en marzo de 2026. Una barra de comparación muestra el salario mínimo no agrícola del departamento de Guatemala de 2026, 4,252.28 quetzales: una sola persona necesita más de la mitad del mínimo. Fuente: INE vía EFE y Mintrab.",
+      "imagen": "tuit_8.png",
+      "plantilla": "cifra",
+      "fuente": "INE (vía EFE) · Mintrab (AG 256-2025)",
+      "cifra_ids": [
+        "can-c11",
+        "sal-c01",
+        "sal-c10"
+      ]
+    },
+    {
+      "n": 9,
+      "beat": "cierre",
+      "texto": "En el papel, la comida de un hogar ya cabe en un salario mínimo. Pero parte de esa mejora es de método, el mínimo del campo perdió ante la inflación y la mitad de los ocupados gana menos que cualquier mínimo.\n\nFuentes: INE, SESAN, Mintrab, Banguat, IGSS, IIES-USAC, EFE y Soy502.",
+      "caracteres": 279,
+      "alt_text": "Tuit de cierre sin imagen: resume la tesis y lista las fuentes INE, SESAN, Mintrab, Banguat, IIES-USAC, EFE y Soy502.",
+      "imagen": null,
+      "plantilla": null,
+      "fuente": null,
+      "cifra_ids": []
+    }
+  ],
+  "no_afirma": [
+    "No afirma que comer cueste menos que en 2019: las canastas de 2019 y 2026 usan métodos y hogares de referencia distintos, sin empalme oficial.",
+    "No afirma cuánto de la mejora en la razón canasta/salario se debe al cambio de método y cuánto al alza del mínimo.",
+    "No afirma el porcentaje exacto de ocupados que gana menos del mínimo: solo que la mediana (Q2,300) está por debajo de todos los mínimos de 2025.",
+    "No afirma que la informalidad o el bajo ingreso los cause el salario mínimo.",
+    "No afirma cuántos salarios mínimos cuesta la canasta ampliada de un hogar en 2026."
+  ],
+  "incertidumbre": [
+    "Ancla sal-c11 (0.95 = 4,021.6 / 4,252.28): la aritmética es correcta, pero el numerador (can-c08, canasta urbana familiar de septiembre de 2026) sale de un solo boletín SESAN 010-2026, sin comunicado del INE ni medio independiente; la segunda fuente es un agregador que copia a SESAN/INE. Es la cifra familiar según SESAN, con hogar de referencia no confirmado, y por ser el mes más reciente puede revisarse.",
+    "Comparación sal-c09 (1.19, enero de 2019) frente a sal-c11 (0.95, 2026) mezcla definiciones: 2019 usa el método viejo del INE (hogar de 4.77 personas, comer fuera del hogar al 28.2%, reducido a 9.6% en dic. 2020) y 2026 el método 2024 (por persona, base ENIGH 2022-2023, canasta urbana). El cambio de método se declara en la nota de T1 y en T4; la independencia de la fuente de sal-c09 es baja.",
+    "can-c01 (3,904.98, dic. 2023) coincide en reproducciones del INE (Prensa Latina, IIES-USAC) que copian la misma cifra, y varios puntos de la serie de T4 vienen de prensa. Hay dos rupturas de método (dic. 2020 y ene. 2024): 2019 no es comparable con 2020-2023 ni estos con 2024 en adelante; T4 muestra puntos por método, no una tendencia continua.",
+    "can-c05 (−610.16 = 3,599.54 − 2,989.38, nov. a dic. 2020): la resta es correcta, pero la caída es un ajuste metodológico (comer fuera del hogar de 28.2% a 9.6%), no de precios; fuente única (AGN citando al INE) sin archivo local. T4 la presenta solo como ajuste de método.",
+    "Todas las cifras usadas tienen segunda fuente NO independiente (reproduce la primaria), incluida la ancla sal-c11 y su comparación sal-c09: verifican el número, no lo respaldan de forma independiente.",
+    "Los boletines PDF del INE no se pudieron descargar (WAF): las canastas salen de copias en SESAN/SIINSAN, IIES-USAC, AGN, EFE y Soy502; diciembres 2019, 2022 y 2023 vienen de extractos.",
+    "Tamaño del hogar urbano de referencia no confirmado: el boletín SESAN 010-2026 dice 4.11 integrantes, pero sus cifras cuadran con 4.16; por eso la nota de T1 no lo nombra y no se derivan cifras por persona de can-c08.",
+    "Los mínimos mensuales 2019-2022 son cálculo (diario × 365 / 12) y los de 2025 vienen de AGN (el AG 264-2024 no está en la página de Mintrab).",
+    "La referencia de T6 es el mínimo agrícola fuera del depto. de Guatemala; el de maquila es más bajo, pero la mediana (Q2,300) queda por debajo de todos.",
+    "T4 mezcla en un mismo gráfico dos métodos (hogar de 4.77 y canasta urbana familiar 2024), separados con periodos y declarados en la nota."
+  ],
+  "fuentes": [
+    "INE (canasta, vía SESAN) · Mintrab (AG 256-2025)",
+    "Mintrab · Acuerdos Gubernativos 2019–2026",
+    "Mintrab · IPC del INE (Banguat) · cálculo propio",
+    "INE (vía IIES-USAC y SESAN)",
+    "INE (vía EFE y Soy502)",
+    "INE · ENEIC 2025 (vía IIES-USAC) · Mintrab",
+    "INE · ENEIC abril-junio 2025",
+    "INE (vía EFE) · Mintrab (AG 256-2025)"
+  ],
+  "fuentes_cifras": [
+    "Calculo propio: AG 242-2018 y 256-2025 (Mintrab), IPC SR005 (INE/Banguat)",
+    "Cálculo propio con datos INE vía EFE/Emisoras Unidas",
+    "Cálculo propio: IGSS, Resumen del Informe Anual de Labores 2025 (afiliados cotizantes) / INE ENEIC T2-2025 (población ocupada)",
+    "IIES-USAC — Boletín Economía al día No. 2, feb. 2026 (cálculos con microdatos ENEIC T2-2025 del INE)",
+    "INE (CBA septiembre 2026, reproducida por SESAN, boletin de alerta temprana 010-2026) y AG 256-2025",
+    "INE (boletin CBA enero 2019, copia SIINSAN) y AG 242-2018",
+    "INE Guatemala (reproducido por Soy502 y EFE/Emisoras Unidas)",
+    "INE Guatemala vía Agencia Guatemalteca de Noticias (AGN)",
+    "INE Guatemala vía EFE / Emisoras Unidas",
+    "INE Guatemala, boletín mensual CBA (reproducido por IIES-USAC, La Hora, AGN, Bloomberg Línea)",
+    "INE — Boletín ENEIC 2024-2025 (Encuesta Nacional de Empleo e Ingresos Continua), ed. 1, nov. 2025",
+    "INE, publicado por Banguat (SR005); calculo propio",
+    "Mintrab, Acuerdos Gubernativos de salario minimo 2019-2026",
+    "Mintrab, Acuerdos Gubernativos de salario minimo 2019-2026 (242-2018, 320-2019, 250-2020, 278-2021, 353-2022, 307-2023, 264-2024, 256-2025)",
+    "SESAN, Boletín de alerta temprana SAN No. 001-2026 (enero), con datos INE CBA ene-2024 a dic-2025",
+    "SESAN, Boletín de alerta temprana SAN No. 010-2026 (con datos INE, CBA septiembre 2026)"
+  ],
+  "gate_mecanico": "ok",
+  "contacto": "contacto.png"
+}
