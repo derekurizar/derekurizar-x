@@ -46,6 +46,53 @@
           "cadena"
         ]
       }
+    },
+    {
+      "id": "2026-10-26-incaparina",
+      "slug": "incaparina",
+      "tema": "la creación de la Incaparina en Guatemala y su historia, muy bien explicada",
+      "fecha": "2026-10-26",
+      "ruta": "historias/2026-10-26-incaparina",
+      "arco": "origen científico con salto al mercado: un problema médico (niños que enfermaban al dejar el pecho), una solución de laboratorio que hay que explicar (por qué dos harinas pobres juntas dan una proteína buena), la decisión de venderla en vez de regalarla, sus cambios de fórmula y de fabricante, y lo que queda hoy; la historia explica el mecanismo y documenta cada paso, sin vender la bebida como la cura de la desnutrición",
+      "paleta": "cielo",
+      "musica": "cielo-1",
+      "duracion_s": 172.3,
+      "creditos_voz": 8157.0,
+      "estado": "listo",
+      "frases": {
+        "promesa": "El último capítulo cuenta hasta dónde llegó su bebida.",
+        "gancho": "Al dejar el pecho, un niño debería crecer.",
+        "aperturas": [
+          "Mil novecientos cuarenta y",
+          "En septiembre, el INCAP",
+          "Y siete años después,",
+          "Mediados de los cincuenta.",
+          "Pero ¿por qué enfermaban?",
+          "El INCAP salió a",
+          "Por eso una de",
+          "Scrimshaw lo explicó: The",
+          "Los sesenta. La Incaparina",
+          "Desde mil novecientos sesenta",
+          "Pero varios informes decían",
+          "Mil novecientos setenta y",
+          "Según el boletín, ese",
+          "Pero un año después",
+          "Hoy. La taza que",
+          "Pero no desapareció. En",
+          "La tradicional de hoy",
+          "Nació para niños que"
+        ],
+        "pregunta": "Quienes la tomaron de niños hoy se la dan a hijos y nietos.",
+        "cierre": "Quienes la tomaron de niños hoy se la dan a hijos y nietos.",
+        "cierre_tipo": "remate",
+        "cierre_forma": "legado",
+        "cierre_mecanismo": null,
+        "familia": "contraste",
+        "visual": "foto",
+        "animaciones": [
+          "nivel-umbral"
+        ]
+      }
     }
   ]
 }

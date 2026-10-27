@@ -4,7 +4,8 @@
  "promesa": {
   "texto": "Al final vas a ver qué quedó de sus 25 sucursales.",
   "en": 2,
-  "pago": 12
+  "pago": 12,
+  "revela": 2
  },
  "escenas": [
   {
@@ -16,9 +17,9 @@
     "etiqueta": "Quetzaltenango · 1977"
    },
    "pantalla": "Bajo una carpa",
-   "linea": "Una panadería reabrió tras el terremoto",
+   "linea": "La Espiga reabrió tras el terremoto",
    "verbo": "reabrió",
-   "texto": "Una panadería reabrió bajo una carpa. Fue en Guatemala, tras el terremoto de 1976."
+   "texto": "La Espiga reabrió bajo una carpa. Fue en Guatemala, tras el terremoto de 1976."
   },
   {
    "tipo": "foto",
@@ -176,10 +177,9 @@
   ],
   "texto": "La Espiga nació con un horno de leña y llegó a tener 25 sucursales. En Xela, sus trabajadores aún encienden los dos hornos.",
   "tipo": "remate",
-  "forma": "consecuencia",
+  "forma": "legado",
   "final": "En Xela, sus trabajadores aún encienden los dos hornos.",
   "consecuencia": {
-   "mecanismo": "despues",
    "quien": "trabajadores",
    "verbo": "encienden"
   }

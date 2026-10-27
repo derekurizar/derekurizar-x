@@ -6,26 +6,26 @@
   "g1": {
    "silencio": 4,
    "brecha": 4,
-   "referente": 3,
-   "evidencia": 4
+   "evidencia": 4,
+   "reserva": 3
   },
   "g2": {
    "silencio": 4,
    "brecha": 4,
-   "referente": 3,
-   "evidencia": 4
+   "evidencia": 4,
+   "reserva": 3
   },
   "g3": {
    "silencio": 4,
    "brecha": 4,
-   "referente": 3,
-   "evidencia": 4
+   "evidencia": 4,
+   "reserva": 3
   },
   "g4": {
    "silencio": 4,
    "brecha": 4,
-   "referente": 3,
-   "evidencia": 4
+   "evidencia": 4,
+   "reserva": 3
   }
  }
 }

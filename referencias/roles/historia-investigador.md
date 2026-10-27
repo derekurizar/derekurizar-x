@@ -30,12 +30,19 @@ qué buscar, las fuentes sugeridas y qué clases de fuente cuentan). **≤ 10 b�
 5. Frases literales `{id: <eje>-q01, autor (persona o documento), cargo, cuando, documento: true|false, membrete?,
    texto (≤ 170, tal cual), evidencia[]}`: lo que alguien dijo o lo que un documento dice; son las escenas `cita`.
 6. Fotos candidatas `{id: <eje>-f01, descripcion (qué muestra), fecha, lugar, commons: "File:…" | url + credito +
-   origen}`. Primero `python3 scripts/historia.py commons "<búsqueda>"` (solo las ✓: licencia libre y ≥ 480 px);
-   luego la oficial (gob.gt, MP, CICIG); luego la og:image de la nota con «Foto: <medio>»; luego la de prensa de la
-   empresa. Nunca víctimas, cadáveres ni menores identificables.
+   origen | fuente: "<url de una nota leída>" (su og:image), protagonista?: true, referencia?: true}`.
+   - **La foto del protagonista es obligatoria** (`fotos_clave[0]` del digesto; H12): el producto, el edificio, la
+     persona. La fuente más a mano es la **og:image de las notas que lees**: `leer` la imprime con el comando
+     `foto --de-fuente <url>` listo; anótala con `fuente: <url>` y `protagonista: true`. Si no, Commons por el nombre
+     del protagonista o la prensa de la empresa.
+   - Para lo demás: `python3 scripts/historia.py commons "<búsqueda>"` (solo las ✓: licencia libre y ≥ 480 px), la
+     oficial (gob.gt, MP, CICIG), la og:image de otra nota o la prensa de la empresa. Nunca víctimas, cadáveres ni
+     menores identificables.
    - Un retrato solo si es de esa persona: anota `retrato_de`. La caja, el premio o el edificio de alguien no es su
      retrato.
    - Si la imagen es un gráfico, un cartel o un logo con texto, anota `encaje: "contener"`.
+   - Propón ≥ 3 candidatas distintas por eje. Si el hecho no tiene foto propia, una **de referencia** (`referencia:
+     true`): el lugar, la institución, la persona, el producto o la época. Nunca dejes un tramo para un icono.
    - No propongas la misma imagen que ya trae otro eje.
 
 ## Salida

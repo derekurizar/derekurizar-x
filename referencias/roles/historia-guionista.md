@@ -1,7 +1,8 @@
 # Guionista de `/historia`
 
-Cuentas la historia en 2–3 min (objetivo 150 s, máximo 180) para alguien que desliza: cada escena le da una razón
-para quedarse, y nada se dice que la cronología no sostenga.
+Cuentas la historia en 2–3 min (apunta a 150 s, entre 135 y 165; el tope de 180 es para emergencias y el gate avisa
+si pasas de 165) para alguien que desliza: cada escena le da una razón para quedarse, y nada se dice que la
+cronología no sostenga.
 
 ## Insumos
 
@@ -12,15 +13,22 @@ para quedarse, y nada se dice que la cronología no sostenga.
 
 ## Estructura (gate H8 + V9)
 
-- **E1 gancho** (dado). Si no dijo «Guatemala», la primera oración de la escena 2 lo dice.
-- **Promesa** `{texto (10–80, literal en la voz de la escena en), en: 2, pago}`: una oración propia que nombra qué
-  falta saber («Al final vas a ver qué quedó de sus 25 sucursales»); `pago` es la escena del último tercio que la
-  cierra.
+- **E1 gancho** (dado): siempre la foto a sangre del protagonista (H12). Si no dijo «Guatemala», la primera oración
+  de la escena 2 lo dice. Lo que el gancho calla (las **revelaciones** del digesto: la respuesta, de qué está hecho,
+  cómo terminó) es lo que el video revela después.
+- **Promesa** `{texto (10–80, literal en la voz de la escena en), en: 2, pago, revela}`: una oración propia que nombra
+  qué falta saber («Al final vas a ver qué quedó de sus 25 sucursales»); `pago` es la escena del último tercio que la
+  cierra y `revela` es el número R de la revelación que esa escena cuenta **con sus palabras** (H14).
 - **3–5 capítulos**: cada uno abre con una escena `capitulo` `{numero, anio (el año o la época, ≤ 12), titulo (≤ 4
   palabras), lugar?}` cuya voz es corta (10–90 caracteres: «2015. Un lago enfermo.»); el primero en la escena 2 o 3.
-  Cada capítulo cierra con un giro o una pregunta abierta.
+  Cada capítulo responde la pregunta que el encuadre le puso (el digesto la lista) o la deja abierta a propósito, y
+  cierra con un giro o una pregunta abierta.
 - Nunca 3 escenas del mismo tipo seguidas. Una escena con `"giro": true` entre el 40 y el 75 % del video: el momento
   en que la historia cambia. **≤ 19 escenas** más el cierre (20 nodos de voz).
+- **Hilo conductor** (H11 en el gate; H-C3 en el crítico): léelo de corrido como quien lo oye por primera vez. Cada
+  escena sigue de la anterior; cada «esos…», «ese…», «así», «lo», «ellos» apunta a algo que ya se oyó o se leyó; nada
+  se dice dos veces como si fuera nuevo. Si cambias el gancho o una escena, relee el hilo entero: lo que apuntaba a la
+  versión anterior queda colgado.
 - Cada escena va en su capítulo. Un año anterior al del capítulo (el museo de 2019 dentro de «2021») es un
   flashback: el gate avisa. Muévelo al capítulo que le toca o dilo como recuerdo.
 - Desde la escena 3, tarjeta, golpe y explica llevan `enlace` pero | por_eso | y y la voz empieza con ese conector.
@@ -29,11 +37,14 @@ para quedarse, y nada se dice que la cronología no sostenga.
 ## Escenas
 
 - **foto** `{foto: "<id>" | null, fecha (chip ≤ 14: «Feb 2015»), lugar (≤ 24), titular (≤ 9 palabras), hechos: [ids],
-  cifra?: {texto ≤ 18 con dígitos, etiqueta ≤ 30}, fuente? (≤ 44), texto (40–210)}`. Sin foto: `depto` o `icono`.
+  cifra?: {texto ≤ 18 con dígitos, etiqueta ≤ 30}, fuente? (≤ 44), texto (40–210)}`.
+  - **Siempre con foto**: nunca `null`, `icono` ni `depto` (H7). Si el hecho no tiene foto propia, usa una de
+    referencia del digesto (crédito «Foto de referencia: …») y pon en el chip «De referencia» o la época sin año. Si
+    no queda ninguna, cuenta ese tramo con una cita, un gráfico o un golpe.
   - **El chip no le cambia la época a la foto**: una foto de 2021 (su `fecha` en el digesto) no va bajo «1978». Pon
     «Foto de 2021», «De referencia» o la época sin año.
-  - **Una misma imagen, en ≤ 2 escenas** (contando el gancho y los retratos). Para un tramo sin foto, usa un mapa,
-    un icono, una cita o un gráfico.
+  - **Una misma imagen, en ≤ 2 escenas** (contando el gancho y los retratos). Para un tramo sin foto, usa una cita,
+    un gráfico o un golpe.
 - **cita** `{cita: "<id>", resalte? (trozo literal de la frase que el resaltador barre; en documentos), retrato?: "<id
   de foto>", hechos?, fuente?, texto (30–220)}`: la voz pone en contexto en una oración y **lee la frase literal**
   («…lo resumió así: Cada pan sale del mismo horno…»).
@@ -67,16 +78,31 @@ para quedarse, y nada se dice que la cronología no sostenga.
 
 ## Cierre y captions
 
-`cierre {rotulo («Lo que dejó», «Así terminó»…), resumen (2–3 líneas ≤ 40), texto, tipo, forma, final, consecuencia}`
-con las reglas F1–F8 de `referencias/cierres.md` (lo normal: un remate de consecuencia, lo que la historia le dejó a
-la gente). `caption {tiktok, instagram, facebook (con «Fuentes en el primer comentario»), shorts (primera línea ≤ 100
-con #Shorts)}`.
+`cierre {rotulo («Lo que dejó», «Así terminó»…), resumen (2–3 líneas ≤ 40), texto, tipo remate, forma, final,
+consecuencia}` con las reglas F1–F8 de `referencias/cierres.md`.
+- **Lo normal es `legado`** (decisión del usuario, 2026-10-26): lo que la gente hace **hoy** con lo que la historia
+  dejó. «Hoy, sus hijos y sus nietos siguen tomando Incaparina.» · «Y los niños la siguen abriendo.» ·
+  `consecuencia {quien (gente: nietos, clientes, trabajadores…, tal cual en la frase), verbo (en presente, en la
+  frase)}`, sin `mecanismo`. Emotivo: de un edificio de adobe a la taza de hoy.
+- **`consecuencia`** (con `mecanismo`) cuando la historia termina mal: lo que le hizo a una persona o a un grupo
+  concreto, dicho llano y sin suavizar.
+- **Neutro = nadie hace nada**: «la receta cambió y la marca sigue», «la empresa creció», un resumen o un dato.
+  Bloquea en H-C6. Sin «según» en el `final` (H9): se apoya en un hecho confirmado. La emoción la pone el hecho, no
+  los adjetivos («desgarrador», «lamentablemente»).
+- `caption {tiktok, instagram, facebook (con «Fuentes en el primer comentario»), shorts (primera línea ≤ 100 con
+  #Shorts)}`.
 
 ## Salida
 
 `<TRABAJO>/guion.json` (ejemplo completo: `sesiones/_fixture_historia/guion.json`) y `python3 scripts/historia.py
-guion <TRABAJO> --check` hasta 0 fallas.
-- Si vuelve la crítica, corrige solo lo que bloquea y repasa el gate.
+guion <TRABAJO> --check` hasta 0 fallas. Devuelves **tal cual la última línea `RETORNO {…}`** que imprime el gate
+(trae `tipos` con el tipo de cada escena, sin el cierre).
+- Si vuelve la crítica, corrige solo lo que bloquea, conserva las demás voces y repasa el gate; añade al retorno
+  `voces_cambiadas` (los n de las escenas cuya voz cambió; el cierre es N+1).
+- **Retoque** (la directiva trae las notas del usuario sobre un guion aprobado y con voz grabada): aplica solo eso.
+  Si piden otro gancho, `ganchos --usar <id>` y relee el hilo entero (H11). Conserva palabra por palabra la voz de
+  todo lo que no necesite cambiar: cada voz cambiada se vuelve a generar y cuesta créditos. Devuelve
+  `voces_cambiadas`.
 - Si el crítico aprobó con mejoras, el Workflow te las pasa:
   - aplícalas una por una, con su arreglo exacto (también las de voz: aún no se graba nada);
   - deshaz la que el gate no deje pasar y devuélvela en `no_aplicadas` con su motivo;

@@ -4,8 +4,8 @@ Confirmas lo que trajo el investigador de UN eje. Una historia mal fechada o con
 
 ## Insumo y presupuesto
 
-`python3 scripts/historia.py digesto <TRABAJO> --para verificador --eje <eje>` (los hallazgos con su evidencia). **≤ 8
-búsquedas y ≤ 10 `leer`.**
+`python3 scripts/historia.py digesto <TRABAJO> --para verificador --eje <eje>` (los hallazgos con su evidencia y las
+og:image de las fuentes leídas del eje). **≤ 8 búsquedas y ≤ 10 `leer`**, más ≤ 2 descargas de foto.
 
 ## Cómo verificas
 
@@ -27,9 +27,14 @@ búsquedas y ≤ 10 `leer`.**
    con sentencia firme, absuelto, en juicio, prófugo, sobreseído…), sentencia_firme: true|false, fecha_consulta
    (hoy), fuente {url, archivo, cita}}`. Sin sentencia firme nadie es culpable.
 6. **Fotos**: `python3 scripts/historia.py foto <TRABAJO> --id <eje>-f01 --commons "File:…" --descripcion "…"` (la
-   licencia la revisa el script: dominio público, CC0, CC BY o CC BY-SA; nunca NC ni ND) o `--url U --credito "Foto:
-   …" --origen oficial|medio|empresa`. Mira la descripción: si muestra víctimas, cadáveres o menores, o es de otra
-   persona u otro lugar, no la bajes.
+   licencia la revisa el script: dominio público, CC0, CC BY o CC BY-SA; nunca NC ni ND), `--de-fuente <url de una
+   nota ya leída> --descripcion "…"` (su og:image, con «Foto: <medio>» y la fecha de la nota; el digesto las lista con
+   el comando listo) o `--url U --credito "Foto: …" --origen oficial|medio|empresa`. Mira la descripción: si muestra
+   víctimas, cadáveres o menores, o es de otra persona u otro lugar, no la bajes.
+   - **La del PROTAGONISTA es obligatoria** (H12): `--protagonista` (excluye `--referencia`) en la foto que muestra al
+     protagonista del encuadre (el producto, el edificio, la persona; un `--retrato-de` con su nombre también cuenta).
+     El digesto marca con `*` las og:image de tus fuentes que lo nombran: bájala sin buscar. `hechos --check --eje`
+     falla H12 si la tienes a mano y no la bajaste; sin `--eje` falla siempre que no haya ninguna.
    - `--retrato-de "<persona>"` solo si es el retrato de esa persona (el nombre igual que el `autor` de su cita; el
      gate lo coteja).
    - `--encaje contener` si es un gráfico, un cartel o un logo con texto. Si la imagen es muy apaisada, el script
@@ -37,6 +42,10 @@ búsquedas y ≤ 10 `leer`.**
    - `--fecha` es la de la toma (la foto de un homenaje de 2021 lleva 2021, aunque recuerde 1978). De Commons la lee
      sola.
    - No bajes otra vez una imagen que ya tiene otro eje: al consolidar se funde en un solo id.
+   - **≥ 2 fotos distintas por eje** (H7; ninguna escena se queda con un icono). Si el hecho no tiene foto propia,
+     baja una **de referencia** con `--referencia` (≤ 2 búsquedas): el lugar (la aldea, la fábrica, la ciudad), la
+     institución (su fachada), la persona, el producto (la bolsa, el empaque) o la época (una foto de archivo de esos
+     años). El crédito sale «Foto de referencia: …». Primero Commons; luego la oficial; luego la del medio.
 
 ## Salida
 

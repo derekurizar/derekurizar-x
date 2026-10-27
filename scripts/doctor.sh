@@ -66,7 +66,7 @@ for f in scripts/video.py scripts/numeros_es.py scripts/video_grabar.js scripts/
 done
 # /historia: script, página de escena, agentes, workflow, comando, guías y maqueta (usa la voz, la música, los efectos, las
 # tarjetas y la biblioteca de animaciones de /video); pdftotext para leer fuentes en PDF
-for f in scripts/historia.py video/historia.html video/animaciones/cronologia.js .claude/agents/historia-editor.md .claude/agents/historia-investigador.md .claude/agents/historia-verificador.md .claude/agents/historia-guionista.md .claude/workflows/historia.js .claude/commands/historia.md referencias/flujo-historia.md referencias/roles/historia-editor.md referencias/roles/historia-investigador.md referencias/roles/historia-verificador.md referencias/roles/historia-guionista.md sesiones/_fixture_historia/guion.json sesiones/_fixture_historia/encuadre.json; do
+for f in scripts/historia.py video/historia.html video/animaciones/cronologia.js .claude/agents/historia-editor.md .claude/agents/historia-investigador.md .claude/agents/historia-verificador.md .claude/agents/historia-guionista.md .claude/agents/historia-oyente.md .claude/workflows/historia.js .claude/commands/historia.md referencias/flujo-historia.md referencias/roles/historia-editor.md referencias/roles/historia-investigador.md referencias/roles/historia-verificador.md referencias/roles/historia-guionista.md referencias/roles/historia-oyente.md sesiones/_fixture_historia/guion.json sesiones/_fixture_historia/encuadre.json; do
   [[ -s "$f" ]] || aviso "falta $f (/historia no estará disponible)"
 done
 command -v pdftotext >/dev/null || aviso "falta pdftotext (brew install poppler): /historia no podrá leer fuentes en PDF"

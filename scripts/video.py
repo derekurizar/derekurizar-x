@@ -12,7 +12,7 @@ Subcomandos (TRABAJO = sesiones/<slug>/video):
   ganchos TRABAJO --check      candidatos del agente video-gancho (ganchos.json): 4–5 familias distintas, R1–R10 cada uno
   ganchos TRABAJO --usar [ID] [--segundo ID]   el elegido (de seleccion.json si no se da) → escena 1 de guion.json
   guion TRABAJO --check        gate V1–V5 + V9 (estructura de retención, gancho R2–R10) sobre guion.json v2 → locucion.json
-  voz TRABAJO                  imprime JSON con la voz y el texto de cada nodo TTS
+  voz TRABAJO [--pendientes | --solo N,N]   imprime JSON con la voz y el texto de cada nodo TTS (--pendientes: solo los que faltan o cambiaron)
   variante TRABAJO [--cerrar]  versión B con el segundo gancho: variante_b/ con la voz y los clips de las demás escenas;
         imprime solo el nodo de voz de la escena 1; --cerrar copia su video a salida/video_b.mp4
   descargar TRABAJO --estado ESTADO.json [...]   el JSON guardado de creative_get_flow_run_status (voz y Scribe) →
@@ -104,16 +104,18 @@ RE_GUATEMALA = re.compile(r"\bguatemal\w*|\bchap[ií]n\w*", re.I)
 # cierre (referencias/cierres.md): lo normal es un REMATE de CONSECUENCIA (lo que la cifra le hace a la gente: «34 familias
 # ya enterraron a un hijo»; el dato va en las conclusiones, no en la frase final); a veces lo pendiente o quién decide; A
 # VECES una PREGUNTA (nunca dos videos seguidos). Decisiones del usuario, 2026-10-23 y 2026-10-24 («terminar con un dato
-# no es un buen punch, la consecuencia de un dato sí»): los remates de dato (bucle, cuenta, escala) salen del catálogo
-CIERRE_FORMAS = {"remate": ("consecuencia", "pendiente", "quien_decide"),
+# no es un buen punch, la consecuencia de un dato sí»): los remates de dato (bucle, cuenta, escala) salen del catálogo.
+# En /historia lo normal es el LEGADO: lo que la gente hace hoy con lo que la historia dejó («sus hijos y sus nietos siguen
+# tomando Incaparina»; decisión del usuario, 2026-10-26); solo /historia lo usa
+CIERRE_FORMAS = {"remate": ("consecuencia", "legado", "pendiente", "quien_decide"),
                  "pregunta": ("elegir", "prediccion", "decidir", "lugar", "porque", "dato_faltante", "experiencia")}
 CIERRE_TIPOS = tuple(CIERRE_FORMAS)          # espejo en video.js (W10)
 # el mecanismo de la consecuencia: quién lo vive · lo que pierde · el reloj (mientras pasa el video, al día) · lo que
 # sigue después para ellos · lo que esperan y no llega
 MECANISMOS = ("quien", "perdida", "reloj", "despues", "espera")
 FINAL_PALABRAS, FINAL_CARACTERES = 14, 90    # la frase final se lee sola en grande (pantalla B del cierre)
-ROTACION_CIERRES = 2                         # F7: la forma no repite la de los últimos 2 videos (salvo consecuencia,
-                                             # que es la normal: rota su mecanismo, que no repite el del último video)
+ROTACION_CIERRES = 2                         # F7: la forma no repite la de los últimos 2 videos (salvo consecuencia y
+                                             # legado, las normales; la consecuencia rota su mecanismo, que no repite el del último)
 # F6: el sujeto de la consecuencia es gente (o lo suyo: su casa, su escuela, su milpa), no una tasa ni una institución
 HUMANO = re.compile(r"\b(?:familias?|hogar(?:es)?|ni[ñn][oa]s?|beb[eé]s?|hij[oa]s?|madres?|padres?|mam[aá]s?|pap[aá]s?|"
                     r"mujer(?:es)?|hombres?|j[oó]venes|adolescentes?|personas?|gente|vecin[oa]s?|comunidad(?:es)?|pueblos?|"
@@ -121,7 +123,10 @@ HUMANO = re.compile(r"\b(?:familias?|hogar(?:es)?|ni[ñn][oa]s?|beb[eé]s?|hij[o
                     r"campesin[oa]s?|productor(?:a|as|es)?|pacientes?|enferm[oa]s?|conductor(?:a|as|es)?|pasajer[oa]s?|"
                     r"pres[oa]s?|reos?|v[ií]ctimas?|migrantes?|abuel[oa]s?|ancian[oa]s?|guatemaltec[oa]s?|chapines|"
                     r"usuari[oa]s?|clientes?|vendedor(?:a|as|es)?|comerciantes?|due[ñn][oa]s?|inquilin[oa]s?|"
-                    r"m[eé]dicos?|enfermer[oa]s?|polic[ií]as?|agentes?|jornaler[oa]s?|cada (?:uno|una|d[ií]a|hora))\b", re.I)
+                    r"m[eé]dicos?|enfermer[oa]s?|polic[ií]as?|agentes?|jornaler[oa]s?|cada (?:uno|una|d[ií]a|hora)|"
+                    r"niet[oa]s?|generaci[oó]n(?:es)?|lector(?:a|as|es)?|fieles|descendientes?|hereder[oa]s?|seguidor(?:a|as|es)?|"
+                    r"consumidor(?:a|as|es)?|comprador(?:a|as|es)?|alumnado|emplead[oa]s?|obrer[oa]s?|panader[oa]s?)\b", re.I)
+PASADO = re.compile(r"(?:o|aron|ieron|aba|aban|ia|ian)$")   # F6 legado: el verbo va en presente («siguen», «abren»), no «abrieron»
 # F8: un remate no afirma lo que el hilo no dice: ni fatalismo («no hay nada que hacer») ni el futuro de una pérdida
 FATALISMO = re.compile(r"no hay nada que|nada que (?:se )?(?:pueda|puede) hacer|nada que hacer|nadie (?:hace|har[aá]|hizo) "
                        r"nada|no tiene soluci[oó]n|sin soluci[oó]n|nunca va a cambiar|nunca cambiar[aá]|es inevitable|"
@@ -639,6 +644,8 @@ def reglas_cierre(cierre, st, hilo, tarjetas, numeros_gancho, cifras=None):
         return ["F1 cierre.tipo «%s» no es remate|pregunta (lo normal es remate; a veces, pregunta)" % tipo]
     if forma not in CIERRE_FORMAS[tipo]:
         f.append("F1 cierre.forma «%s» no es una forma de %s (%s)" % (forma, tipo, "|".join(CIERRE_FORMAS[tipo])))
+    if forma == "legado" and (hilo or {}).get("modo") != "historia":
+        f.append("F1 la forma «legado» es de /historia (lo que la gente hace hoy con lo que la historia dejó); un video de datos cierra con consecuencia")
     if not fin:
         return f + ["F1 falta cierre.final (la frase con que termina la voz)"]
     if palabras(fin) > FINAL_PALABRAS or len(fin) > FINAL_CARACTERES:
@@ -675,8 +682,8 @@ def reglas_cierre(cierre, st, hilo, tarjetas, numeros_gancho, cifras=None):
         if repetidas:
             f.append("F6 el remate repite la cifra del gancho (%s): eso es volver al dato; di su consecuencia (quién lo vive, "
                      "qué pierde, qué le sigue)" % ", ".join(clave(v) for v in repetidas))
-    if forma == "consecuencia":
-        if con.get("mecanismo") not in MECANISMOS:
+    if forma in ("consecuencia", "legado"):
+        if forma == "consecuencia" and con.get("mecanismo") not in MECANISMOS:
             f.append("F6 cierre.consecuencia.mecanismo «%s» no es uno de %s" % (con.get("mecanismo"), "|".join(MECANISMOS)))
         quien, verbo = (con.get("quien") or "").strip(), (con.get("verbo") or "").strip()
         if not quien or _plano(quien) not in _plano(fin):
@@ -686,6 +693,9 @@ def reglas_cierre(cierre, st, hilo, tarjetas, numeros_gancho, cifras=None):
                      "consecuencia le pasa a personas, no a una tasa ni a una institución" % quien)
         if not verbo or not re.search(r"\b%s\b" % re.escape(_plano(verbo)), _plano(fin)):
             f.append("F6 cierre.consecuencia.verbo «%s» tiene que estar en la frase final (lo que les pasa, conjugado)" % verbo)
+        elif forma == "legado" and PASADO.search(_plano(verbo)):
+            f.append("F6 legado: el verbo «%s» no está en presente; el legado es lo que hacen HOY con lo que dejó la historia "
+                     "(siguen, abren, toman, encienden)" % verbo)
     if tipo == "remate":
         m = FATALISMO.search(" ".join((fin, cierre.get("texto") or "")))
         if m:
@@ -698,7 +708,7 @@ def reglas_cierre(cierre, st, hilo, tarjetas, numeros_gancho, cifras=None):
     rec = st.get("cierres_recientes") or {}
     if tipo == "pregunta" and "pregunta" in (rec.get("tipos") or []):
         f.append("F7 el video anterior cerró con una pregunta: la pregunta va solo a veces; este cierra con un remate")
-    if forma != "consecuencia" and forma in (rec.get("formas") or []):
+    if forma not in ("consecuencia", "legado") and forma in (rec.get("formas") or []):
         f.append("F7 la forma «%s» cerró uno de los últimos %d videos (%s): usa otra" % (forma, ROTACION_CIERRES, ", ".join(rec["formas"])))
     if forma == "consecuencia" and con.get("mecanismo") in (rec.get("mecanismos") or []):
         f.append("F7 el mecanismo «%s» cerró el último video: usa otro (%s)"
@@ -1029,7 +1039,7 @@ def cmd_preparar(a):
                ", ".join(x for x in cierres["formas"] if x != "consecuencia") or "ninguna",
                ", ".join(cierres.get("mecanismos") or []) or "ninguno",
                " · **este video cierra con un remate**" if "pregunta" in cierres["tipos"] else "")),
-           "- Remates: %s (consecuencia: %s) · preguntas: %s" % (", ".join(CIERRE_FORMAS["remate"]), "|".join(MECANISMOS),
+           "- Remates: %s (consecuencia: %s) · preguntas: %s" % (", ".join(x for x in CIERRE_FORMAS["remate"] if x != "legado"), "|".join(MECANISMOS),
                                                                ", ".join(CIERRE_FORMAS["pregunta"])),
            "", "## Frases ya usadas (no las repitas: C11 del crítico)"] + frases_usadas(hilo["slug"]) + [
            "", "## Sugerencia de tarjetas (no obligatoria)",
@@ -1944,6 +1954,9 @@ def cmd_ganchos(a):
         guion = leer(rg) if os.path.exists(rg) else {"escenas": []}
         esc = guion.get("escenas") or []
         if esc and esc[0].get("tipo") == "gancho":
+            if len(esc) > 1 and texto_llano(esc[0].get("texto")) != texto_llano(escena.get("texto")):
+                print("AVISO el guion ya tenía otro gancho: relee el hilo desde la escena 2 (lo que apuntaba al gancho "
+                      "anterior queda colgado) y vuelve a pasar la crítica antes de grabar")
             esc[0] = escena
         else:
             esc.insert(0, escena)
@@ -2005,11 +2018,35 @@ def cmd_variante(a):
 
 
 # ---------- voz ----------
+def nodos_pendientes(trabajo, loc):
+    """Las escenas que hay que (re)generar: sin audio/voz_N.mp3 o palabras_N.json, o cuya locución ya no es lo que Scribe
+    alineó (la voz cambió en un retoque)."""
+    out = []
+    for e in loc["escenas"]:
+        n, pw = e["n"], os.path.join(trabajo, "audio", "palabras_%d.json" % e["n"])
+        if not os.path.exists(os.path.join(trabajo, "audio", "voz_%d.mp3" % n)) or not os.path.exists(pw) or \
+                texto_llano(" ".join(w.get("text", "") for w in leer(pw))) != texto_llano(e["voz"]):
+            out.append(n)
+    return out
+
+
 def cmd_voz(a):
-    loc = leer(os.path.join(a.trabajo, "locucion.json"))
+    """El JSON con la voz y el prompt de cada nodo TTS; --pendientes (solo lo que cambió o falta: las retomas) y --solo."""
+    trabajo = os.path.abspath(a.trabajo)
+    loc = leer(os.path.join(trabajo, "locucion.json"))
+    escenas = loc["escenas"]
+    if getattr(a, "solo", None):
+        solo = {int(x) for x in a.solo.split(",")}
+        escenas = [e for e in escenas if e["n"] in solo]
+    if getattr(a, "pendientes", False):
+        pend = set(nodos_pendientes(trabajo, loc))
+        escenas = [e for e in escenas if e["n"] in pend]
+        print("%d escena(s) sin cambio; %d por generar (≈ %d créditos)" % (len(loc["escenas"]) - len(pend), len(escenas),
+              sum(len(e["voz"]) for e in escenas)), file=sys.stderr)   # a stderr: el JSON de stdout sigue limpio
+    parcial = bool(getattr(a, "solo", None) or getattr(a, "pendientes", False))
     print(json.dumps({"voz": loc["voz"], "model_parameters": {"language_code": loc["voz"]["idioma"]},
-                      "caracteres": loc["caracteres"],
-                      "nodos": [{"n": e["n"], "prompt": e.get("prompt") or e["voz"]} for e in loc["escenas"]]},
+                      "caracteres": sum(len(e["voz"]) for e in escenas) if parcial else loc["caracteres"],
+                      "nodos": [{"n": e["n"], "prompt": e.get("prompt") or e["voz"]} for e in escenas]},
                      ensure_ascii=False, indent=1))
     return 0
 
@@ -2953,23 +2990,32 @@ def tokens_escucha(texto, oido=False):
     return [re.sub(r"cientas$", "cientos", _GENERO.get(w, w)) for w in re.findall(r"[a-z0-9]+", t)]
 
 
-def comparar_escucha(segmentos, oido):
+def comparar_escucha(segmentos, oido, omitir=None):
     """Compara la locución (los `segmentos` p/v/num de locucion.json) con lo que whisper oyó → (faltas, avisos,
-    % de palabras distintas). Un tramo distinto que toca una palabra numérica es falta; el resto, aviso."""
+    % de palabras distintas). Un tramo distinto que toca una palabra numérica es falta; el resto, aviso. `omitir`: una
+    cita en otro idioma (whisper corre con -l es y no la transcribe): sus palabras no se comparan ni cuentan."""
     esperado, numerico = [], []
     for sg in segmentos:
         toks = tokens_escucha(sg["v"])
         esperado += toks
         numerico += [bool(sg.get("num"))] * len(toks)
+    om, fuera = (tokens_escucha(omitir) if omitir else []), [False] * len(esperado)
+    for k in (range(len(esperado) - len(om) + 1) if om else []):
+        if esperado[k:k + len(om)] == om:
+            fuera[k:k + len(om)] = [True] * len(om)
+            break
     oidos = tokens_escucha(oido, oido=True)
     faltas, avisos, distintos = [], [], 0
     for op, i1, i2, j1, j2 in difflib.SequenceMatcher(None, esperado, oidos, autojunk=False).get_opcodes():
         if op == "equal":
             continue
-        distintos += max(i2 - i1, j2 - j1)
-        msg = "esperaba «%s», oyó «%s»" % (" ".join(esperado[i1:i2]) or "—", " ".join(oidos[j1:j2]) or "—")
-        (faltas if any(numerico[i1:i2]) else avisos).append(msg)
-    return faltas, avisos, round(100.0 * distintos / max(1, len(esperado)), 1)
+        resto = [i for i in range(i1, i2) if not fuera[i]]
+        if (i2 > i1 and not resto) or (i1 == i2 and any(fuera[max(0, i1 - 1):i1 + 1])):
+            continue   # el tramo es la cita en otro idioma (o lo que whisper oyó en su lugar): no se compara
+        distintos += max(len(resto), j2 - j1) if resto else 0
+        msg = "esperaba «%s», oyó «%s»" % (" ".join(esperado[i] for i in resto) or "—", " ".join(oidos[j1:j2]) or "—")
+        (faltas if any(numerico[i] for i in resto) else avisos).append(msg)
+    return faltas, avisos, round(100.0 * distintos / max(1, len(esperado) - sum(fuera)), 1)
 
 
 def cmd_whisper(a):
@@ -3022,14 +3068,15 @@ def cmd_escuchar(a):
         if r.returncode or not os.path.exists(base + ".json"):
             return falla("whisper-cli falló en E%d: %s" % (n, (r.stderr or r.stdout).strip()[-300:]))
         oido = " ".join(x.get("text", "") for x in leer(base + ".json").get("transcription") or []).strip()
-        faltas, avisos, pct = comparar_escucha(e.get("segmentos") or [{"v": e["voz"], "num": False}], oido)
+        faltas, avisos, pct = comparar_escucha(e.get("segmentos") or [{"v": e["voz"], "num": False}], oido, e.get("escucha_omitir"))
         informe["escenas"][str(n)] = {"oido": oido, "faltas": faltas, "avisos": avisos, "distinto_pct": pct}
         if faltas:
             con_faltas.append(n)
             for f in faltas:
                 print("E%-2d FALLA V11: %s" % (n, f))
         else:
-            print("E%-2d ok · %.0f %% de palabras distintas%s" % (n, pct, " · aviso: " + " · ".join(avisos) if avisos else ""))
+            print("E%-2d ok · %.0f %% de palabras distintas%s%s" % (n, pct, " · aviso: " + " · ".join(avisos) if avisos else "",
+                                                               " · (cita en otro idioma: no se compara)" if e.get("escucha_omitir") else ""))
     escribir(ruta, informe)
     if con_faltas:
         return falla("V11: rehaz la voz de %s (una retoma por escena) o escúchala tú" % ", ".join("E%d" % n for n in con_faltas))
@@ -3266,7 +3313,11 @@ def main():
     p = sub.add_parser("variante", help="versión B del gancho (el segundo lugar): solo la voz de la escena 1")
     p.add_argument("trabajo")
     p.add_argument("--cerrar", action="store_true", help="copia variante_b/salida/video.mp4 → salida/video_b.mp4")
-    for nombre in ("voz", "voz-falsa", "tiempos"):
+    p = sub.add_parser("voz", help="JSON con la voz y el prompt de cada nodo TTS")
+    p.add_argument("trabajo")
+    p.add_argument("--pendientes", action="store_true", help="solo las escenas sin audio o cuya voz cambió desde la última descarga (retomas)")
+    p.add_argument("--solo", help="escenas, p. ej. 2,5")
+    for nombre in ("voz-falsa", "tiempos"):
         sub.add_parser(nombre).add_argument("trabajo")
     p = sub.add_parser("revisar")
     p.add_argument("trabajo")

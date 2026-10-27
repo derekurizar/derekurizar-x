@@ -78,6 +78,7 @@ Los otros remates, a veces:
 
 | forma | Qué hace | Ejemplo (cárceles) |
 |---|---|---|
+| `legado` | **solo `/historia`, y ahí es lo normal**: lo que la gente hace hoy con lo que la historia dejó; `consecuencia {quien, verbo en presente}`, sin `mecanismo` | «Hoy, sus hijos y sus nietos siguen tomando Incaparina.» · «Y los niños la siguen abriendo.» |
 | `pendiente` | deja lo que no se sabe o lo que sigue sin resolver (del hilo, nunca inventado) | «Y nadie sabe cuántos metros mide un espacio.» |
 | `quien_decide` | dice en quién está la decisión, con lo que el hilo afirma | «Los Q226 millones son para remozar, no para abrir espacios.» |
 
@@ -105,8 +106,8 @@ contenido va en las conclusiones.
 | F3 | **Anclada al tema**: la frase final nombra el fenómeno del video (una palabra del tema, de los titulares o del concepto de una cifra del hilo). Nada de analogías de otro ámbito (la casa por la cárcel); si compara con la vida del espectador, la misma unidad y la misma definición | gate (la palabra) + crítico (la analogía) |
 | F4 | **Sin cebo**: ni «comenta», «etiqueta», «comparte», «escribe sí», «te leo», en la voz ni en pantalla | gate |
 | F5 | **No expone**: en un tema sensible (cárcel, violencia, delito, salud sexual o reproductiva, migración) la pregunta no es de `experiencia` ni toca la casa, la familia o «alguna vez» del espectador; el grupo vulnerable nunca es blanco («¿merecen…?», «¿qué harías con ellos?») | gate + crítico |
-| F6 | **Un remate no es un dato**: a lo más una cifra (cuántos lo viven) y nunca la del gancho. La `consecuencia` declara `mecanismo` (quien, perdida, reloj, despues, espera), `quien` (gente: familias, niños, conductores, presos…, tal cual en la frase) y `verbo` (lo que les pasa, conjugado, en la frase) | gate |
-| F7 | **Rotación**: una pregunta nunca sigue a otra (si el video anterior cerró con pregunta, este cierra con remate); la `forma`, salvo `consecuencia` (que es la normal), no repite la de los últimos 2 videos, y el `mecanismo` de consecuencia no repite el del último (`memoria/videos.json`; el digesto los lista en «Cierres recientes») | gate |
+| F6 | **Un remate no es un dato**: a lo más una cifra (cuántos lo viven) y nunca la del gancho. La `consecuencia` y el `legado` declaran `quien` (gente: familias, niños, nietos, conductores, presos…, tal cual en la frase) y `verbo` (lo que les pasa, conjugado, en la frase; en el legado, en presente); solo la consecuencia lleva `mecanismo` (quien, perdida, reloj, despues, espera) | gate |
+| F7 | **Rotación**: una pregunta nunca sigue a otra (si el video anterior cerró con pregunta, este cierra con remate); la `forma`, salvo `consecuencia` y `legado` (las normales), no repite la de los últimos 2 videos, y el `mecanismo` de consecuencia no repite el del último (`memoria/videos.json`; el digesto los lista en «Cierres recientes») | gate |
 | F8 | **No afirma de más**: sin fatalismo («no hay nada que hacer», «nadie hace nada», «no tiene solución») y sin futuro de una pérdida («perderán», «morirán») salvo que `consecuencia.proyeccion` dé el id de una cifra que proyecte; lo que ya pasó va en pasado o presente («ya», «este año van») | gate |
 
 Además, para el crítico (C8):
@@ -126,6 +127,13 @@ Cómo escribir la consecuencia (de la evidencia de §1):
 5. **Sin culpa ni fatalismo**: si hay responsable, es el sistema («no llegó el programa»), nunca la familia; nada de «no
    hay remedio». Tampoco suena a «haz algo ya»: la gente se protege y deja de sentir.
 6. **La prueba**: ¿la firmaría la fuente y la aceptaría la familia?
+
+**En `/historia`** (decisiones del usuario, 2026-10-26): lo normal es el **`legado`**, lo que la gente hace hoy con lo
+que la historia dejó («de un edificio de adobe a la taza que hoy toman sus nietos»): es emotivo sin ser duro. La
+`consecuencia` queda para la historia que termina mal (un caso, una caída): lo que le hizo a una persona o a un grupo
+concreto, dicho llano. Lo que no vale es lo **neutro**, donde nadie hace nada («la receta cambió y la marca sigue»,
+«la empresa creció»), ni una atribución en el final («según…», H9); las reglas de arriba siguen valiendo (la emoción la
+pone el hecho, no los adjetivos).
 
 ## 4. Cierres reales de referencia (forma, no texto)
 

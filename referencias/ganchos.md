@@ -107,7 +107,8 @@ basta; gana el que mejor contesta **¿qué ve el pulgar en el segundo 1 y por qu
    la cifra sola, y pasa `python3 scripts/video.py ganchos <TRABAJO> --check`.
 2. `video-critico` (modo selección) los mira **en silencio** (pantalla, línea y visual) y luego con la voz; puntúa
    `silencio, referente, tension, alineacion, honestidad, novedad` (1–5) y aplica R11; escribe `seleccion.json` con el
-   ganador y el segundo.
+   ganador y el segundo. En `/historia`, `reserva` (no regala una revelación del encuadre) sustituye a `referente`
+   (ver «Modo historia» de `referencias/roles/video-critico.md`).
 3. Si el crítico dejó arreglos para el ganador o el segundo, `video-gancho` los aplica (mismo id, familia y visual) y
    vuelve a pasar el gate: el guionista no puede tocar la escena 1.
 4. El guionista corre `video.py ganchos <TRABAJO> --usar` (el ganador pasa a la escena 1) y escribe el resto sin tocar el

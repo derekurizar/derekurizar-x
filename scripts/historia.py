@@ -16,28 +16,36 @@ Subcomandos (TRABAJO = sesiones/historia-<slug>/):
         (--fixture copia la maqueta de sesiones/_fixture_historia y dibuja sus fotos)
   leer URL [--buscar CITA] [--otra-vez]   guarda el texto de una fuente (HTML, PDF o su copia en Wayback) en sesiones/_descargas/historia/
   commons BUSQUEDA                lista fotos de Wikimedia Commons con su licencia (✓ libre / ✗ no se usa)
-  foto TRABAJO --id ID (--commons "File:…" | --url U --credito "Foto: …" --origen oficial|medio|empresa) --descripcion D
-        [--fecha F] [--lugar L] [--retrato-de PERSONA] [--encaje contener] [--extmetadata JSON]
+  foto TRABAJO --id ID (--commons "File:…" | --de-fuente URL | --url U --credito "Foto: …" --origen oficial|medio|empresa) --descripcion D
+        [--referencia | --protagonista] [--fecha F] [--lugar L] [--retrato-de PERSONA] [--encaje contener] [--extmetadata JSON]
+        (--de-fuente: la og:image de una fuente ya leída, con «Foto: <medio>» y la fecha de la nota; --protagonista: la foto
+        muestra al protagonista del encuadre, H12 la exige en el gancho)
         baja la foto, comprueba lado y licencia (H7) → fotos/<id>.jpg + .json (con su sha1; un gráfico o cartel con
         texto va con --encaje contener: márgenes del color de su borde para que el marco no lo recorte)
-  hechos TRABAJO --check [--eje E]   H1–H3 sobre verificacion_<eje>.json (citas en el texto guardado, fechas, independencia)
+  hechos TRABAJO --check [--eje E]   H1–H3 + H7 + H12 sobre verificacion_<eje>.json (citas en el texto guardado, fechas,
+        independencia, fotos; sin --eje exige una foto del protagonista e imprime las og:image candidatas de las fuentes leídas)
   consolidar TRABAJO           verificaciones + fotos → historia.json, base/ (hilo.json, datos.json) y la paleta del encuadre
-  digesto TRABAJO --para investigador|verificador --eje E | gancho | guionista | critico
+  digesto TRABAJO --para investigador|verificador --eje E | gancho | guionista | critico | oyente
+        (oyente: solo la voz en orden y lo que hay en pantalla, sin cronología ni ids: el oyente ingenuo)
   ganchos TRABAJO --check | --usar [ID] [--segundo ID]   → video.py ganchos con las familias y el visual foto de historia
   tarjetas TRABAJO             las escenas con gráfico → base/tuit_N.html (materializar.py, R1–R6) y video.json.tarjetas
-  guion TRABAJO --check        H4–H8 + (tarjetas) + video.py guion (V1–V5, V9, F1–F8) → locucion.json
+  guion TRABAJO --check        H4–H14 + (tarjetas) + video.py guion (V1–V5, V9, F1–F8) → locucion.json; la última línea
+        RETORNO {...} es lo que el guionista devuelve al Workflow (tipos de cada escena, sin el cierre)
   tiempos TRABAJO              video.py tiempos con los constructores de foto, cita y capitulo → escenas.json
   fotos-contacto TRABAJO       fotos/contacto.png con todas las fotos (QA de contenido)
   entregar TRABAJO [--salida DIR]   → historias/<fecha>-<slug>/ (video, 4:5, caption, fuentes.md, cronologia.md, guion.json)
-  voz | voz-falsa | descargar | escuchar | grabar | montar | revisar TRABAJO [...]   → video.py (mismos argumentos)
+  voz [--pendientes | --solo N,N] | voz-falsa | descargar | escuchar | grabar | montar | revisar TRABAJO [...]   → video.py
+        (voz --pendientes: solo las escenas sin audio o cuya voz cambió desde la última descarga: las retomas)
 
 Exit: 0 ok · 1 gate o paso fallido · 2 uso incorrecto.
 """
 import argparse
+import contextlib
 import datetime
 import glob
 import hashlib
 import html
+import io
 import json
 import os
 import re
@@ -57,6 +65,7 @@ import video as VD  # noqa: E402
 
 # ---- formato (decisiones del usuario, 2026-10-24) ----
 OBJETIVO_S, DURACION_MAX_S = 150, 180       # «regularmente 2 o 3 minutos»; 180 s es el tope de YouTube Shorts
+OBJETIVO_MIN_S, OBJETIVO_AVISO_S = 135, 165  # «apunta a 150 (135–165)»: el gate avisa (H5) si pasa de 165; 180 es para emergencias
 VD.DURACIONES["historia"] = {"s": OBJETIVO_S, "tarjetas": (0, 6), "golpes": (0, 10), "tol": 0.2}   # V4: 120–180 s
 TIPOS_PROPIOS = ("foto", "cita", "capitulo")
 CARACTERES = {"foto": (40, 210), "cita": (30, 220), "capitulo": (10, 90)}   # voz ya en palabras (≈ 15.5 car/s)
@@ -69,20 +78,26 @@ CITA_FRASE_CARACTERES, CREDITO_CARACTERES, ETIQUETA_GANCHO = 170, 60, 30
 TRADUCCION_CARACTERES = 140                           # la traducción de una cita en otro idioma (renglón bajo la frase)
 ESCENAS_MAX = 19          # + el cierre = 20 nodos: el tope de creative_run_flow_nodes (y de una llamada de estado sin Scribe)
 FOTO_USOS_MAX = 2         # una misma imagen (por sha1) en ≤ 2 escenas, contando el gancho y los retratos
+# H11 hilo: un demostrativo («esos 40 niños», «ese alimento») apunta a algo que ya se dijo antes en el video; si la
+# cifra o la palabra no salió en ninguna escena anterior (ni antes en la misma), la escena quedó colgada (p. ej. tras
+# cambiar el gancho). Las de tiempo («ese año», «esos años») y las que no son sustantivo no cuentan.
+RE_DEMOSTRATIVO = re.compile(r"\b(es[oa]s|ese|esa|aquel(?:l[oa]s?)?|dich[oa]s?)\s+(?:(\d[\d.,]*)\s+)?([a-záéíóúñü]{3,})", re.I)
+HILO_LIBRES = {"año", "años", "epoca", "época", "épocas", "momento", "momentos", "vez", "veces", "fecha", "fechas", "dia",
+               "día", "días", "tiempo", "tiempos", "decada", "década", "décadas", "mes", "meses", "siglo", "entonces",
+               "fue", "era", "eran", "son", "sería", "que", "mismo", "misma", "mismos", "mismas", "otra", "otro", "otras",
+               "otros", "sola", "solo", "parte", "forma", "manera", "idea"}
 # palabras vacías para notar una cita que no está en español (lleva `traduccion`)
 VACIAS_EN = {"the", "and", "they", "we", "you", "is", "are", "was", "were", "to", "of", "with", "while", "what", "when",
              "want", "something", "it", "that", "this", "for", "have", "has", "our", "their", "be", "will", "would", "i"}
 VACIAS_ES = {"de", "la", "que", "el", "en", "y", "los", "se", "las", "un", "una", "por", "con", "no", "su", "para", "es",
              "lo", "como", "me", "mi", "al", "del", "nos", "ya"}
-# ganchos de historia (referencias/flujo-historia.md): el mecanismo que frena el scroll en una historia; «foto» es la foto
-# de la historia a sangre con el titular entero desde el cuadro 0 (video/noticia.html en modo titular)
+# ganchos de historia (referencias/flujo-historia.md): el mecanismo que frena el scroll en una historia. Toda historia
+# abre con «foto»: la foto de la historia a sangre con el titular entero desde el cuadro 0 (video/noticia.html en modo
+# titular); decisión del usuario, 2026-10-26. El gancho cuenta el momento de la historia, no la respuesta que paga el video
 FAMILIAS = ("resultado", "paradoja", "contraste", "misterio", "personaje", "lugar", "pregunta", "escala")
-VISUALES = ("foto",) + VD.VISUALES
-VISUALES_DE = {"resultado": ("foto", "cifra", "pareja"), "paradoja": ("foto", "pareja", "cifra"),
-               "contraste": ("pareja", "foto", "llenado", "cifra"), "misterio": ("foto", "cifra"),
-               "personaje": ("foto", "cifra"), "lugar": ("lugar", "foto"), "pregunta": ("foto", "cifra", "pareja"),
-               "escala": ("figuras", "llenado", "pareja")}
-ROTACION_FAMILIAS, ROTACION_VISUALES = 2, 1
+VISUALES = ("foto",)
+VISUALES_DE = {fam: ("foto",) for fam in FAMILIAS}
+ROTACION_FAMILIAS = 2
 APERTURAS = re.compile(r"^[¿¡«\s]*(?:esta es la historia|la historia de|(?:te|les) (?:cuento|voy a contar)|hab[ií]a una vez|"
                        r"en el a[nñ]o\b|corr[ií]a el a[nñ]o|hoy (?:te|les) (?:hablo|cuento))", re.I)
 PUNTAJES = ("gancho", "tension", "claridad", "ritmo", "precision", "cierre")   # critica.json en modo historia (W12)
@@ -129,7 +144,14 @@ AGENCIAS = (("ap", r"\(AP\)|" + FIRMA + r"(?:Associated Press|AP)\b"), ("efe", r
             ("reuters", r"\(Reuters\)|" + FIRMA + r"Reuters\b"),
             ("afp", r"\(AFP\)|" + FIRMA + r"(?:AFP|Agence France-Presse)\b"))
 AGENCIA_CARACTERES = 2500   # la firma de la agencia va arriba (byline o entradilla)
-DESCARGAS = os.path.join(RAIZ, "sesiones", "_descargas", "historia")
+DESCARGAS = os.environ.get("HISTORIA_DESCARGAS") or os.path.join(RAIZ, "sesiones", "_descargas", "historia")   # la variable: pruebas
+# el nombre del medio para el crédito de una og:image (foto --de-fuente); lo que no está aquí sale con su dominio
+NOMBRES_MEDIOS = {"prensalibre.com": "Prensa Libre", "guatevision.com": "Guatevisión", "soy502.com": "Soy502", "republica.gt": "República",
+                  "lahora.gt": "La Hora", "plazapublica.com.gt": "Plaza Pública", "emisorasunidas.com": "Emisoras Unidas",
+                  "publinews.gt": "Publinews", "elperiodico.com.gt": "elPeriódico", "revistaeyn.com": "Estrategia & Negocios",
+                  "estrategiaynegocios.net": "Estrategia & Negocios", "aprende.guatemala.com": "Guatemala.com", "nomada.gt": "Nómada",
+                  "elfaro.net": "El Faro", "forbes.com.mx": "Forbes México", "forbescentroamerica.com": "Forbes Centroamérica",
+                  "bloomberglinea.com": "Bloomberg Línea", "eleconomista.net": "El Economista", "chapinlandia.com": "Chapinlandia"}
 # ---- fotos ----
 FOTO_LADO_MIN, FOTO_LADO_AVISO = 480, 600     # material de archivo: 480 vale con aviso
 # --encaje contener: el marco de noticia.html (object-fit: cover) mide ≈ 1.11 de ancho por alto en 9:16 y ≈ 0.93 en
@@ -137,6 +159,9 @@ FOTO_LADO_MIN, FOTO_LADO_AVISO = 480, 600     # material de archivo: 480 vale co
 ENCAJE_MARGEN, MARCO_ANCHO, MARCO_ANGOSTO = 1.18, 1.15, 0.9
 PROPORCION_GRAFICO = 1.45     # más apaisada que esto y sin --encaje: aviso (¿es un gráfico o un cartel con texto?)
 ORIGENES_FOTO = ("commons", "oficial", "medio", "empresa")
+# una foto que no es del hecho (el lugar, la institución, la persona, el producto o la época) va como en /noticias: su
+# crédito dice «Foto de referencia: …» para que nadie la tome por la del momento; cada eje trae ≥ FOTOS_POR_EJE fotos
+CREDITO_FOTO, CREDITO_REFERENCIA, FOTOS_POR_EJE = "Foto: ", "Foto de referencia: ", 2
 COMMONS_API = "https://commons.wikimedia.org/w/api.php"
 COMMONS_UA = "HilosDerekUrizar/1.0 (https://x.com/DerekUrizar; datos de Guatemala) python-urllib"
 LICENCIA_LIBRE = re.compile(r"^(?:public domain|dominio p[uú]blico|pd(?:[- ][\w.-]+)?|cc0(?: 1\.0)?|cc[ -]by(?:[ -]sa)?(?:[ -]\d(?:\.\d)?)?"
@@ -201,8 +226,7 @@ def animaciones_recientes(slug_actual):
 
 def recientes(slug_actual):
     fr = [h.get("frases") or {} for h in historias_registradas(slug_actual)]
-    return ({"familias": [x["familia"] for x in fr[-ROTACION_FAMILIAS:] if x.get("familia")],
-             "visuales": [x.get("visual") or "cifra" for x in fr[-ROTACION_VISUALES:]]},
+    return ({"familias": [x["familia"] for x in fr[-ROTACION_FAMILIAS:] if x.get("familia")], "visuales": []},
             {"tipos": [x.get("cierre_tipo") or "remate" for x in fr[-1:]],
              "formas": [x.get("cierre_forma") for x in fr[-VD.ROTACION_CIERRES:] if x.get("cierre_forma")],
              "mecanismos": [x["cierre_mecanismo"] for x in fr[-1:] if x.get("cierre_mecanismo")]})
@@ -329,10 +353,53 @@ def clasificar_dominio(url, propios=()):
     return None, d
 
 
+def ruta_fuente(url):
+    """La base (sin extensión) de lo que `leer` guarda para esa url: <dominio-con-guiones>-<sha1[:10]>."""
+    return os.path.join(DESCARGAS, "%s-%s" % (re.sub(r"[^a-z0-9]+", "-", NT.dominio(url)), hashlib.sha1(url.encode()).hexdigest()[:10]))
+
+
+def nombre_medio(url):
+    d = NT.dominio(url)
+    return next((v for k, v in NOMBRES_MEDIOS.items() if d == k or d.endswith("." + k)), None) or NT.OFICIALES.get(d) or OTROS_OFICIALES.get(d) or d
+
+
+def protagonistas(trabajo):
+    """Los nombres del protagonista del encuadre, planos (H10, H12)."""
+    return [VD._plano(x) for x in encuadre(trabajo).get("protagonista") or [] if (x or "").strip()]
+
+
+def es_protagonista(rec, prot):
+    """H12: la foto muestra al protagonista (foto … --protagonista) o es su retrato (--retrato-de con uno de sus nombres)."""
+    return rec.get("muestra") == "protagonista" or (bool(rec.get("retrato_de")) and VD._plano(rec["retrato_de"]) in prot)
+
+
+def og_candidatas(trabajo, urls=None):
+    """[(meta, clase, nombra_al_protagonista)]: las fuentes leídas con og:image que valen como foto (medio, oficial o la
+    empresa del encuadre); con `urls`, solo esas (las de un eje)."""
+    enc, prot, out = encuadre(trabajo), protagonistas(trabajo), []
+    bases = {os.path.basename(ruta_fuente(u)) for u in urls if u} if urls is not None else None
+    for r in sorted(glob.glob(os.path.join(DESCARGAS, "*.json"))):
+        if bases is not None and os.path.basename(r)[:-5] not in bases:
+            continue
+        m = leer(r)
+        if not isinstance(m, dict) or not m.get("og_image") or not m.get("url"):
+            continue
+        clase = clasificar(m["url"], enc.get("dominios_propios") or [], m.get("archivo"))[0]
+        if clase in ("medio", "oficial", "empresa"):
+            out.append((m, clase, any(p in VD._plano(" ".join((m.get("titulo") or "", m["url"]))) for p in prot)))
+    return out
+
+
+def linea_de_fuente(trabajo, m, prot):
+    """El comando listo para bajar la og:image de una fuente leída."""
+    return "→ python3 scripts/historia.py foto %s --id <eje>-fNN --de-fuente %s --descripcion \"…\"%s   (og:image de %s · %s · «%s»)" % (
+        VD.rel(trabajo), m["url"], " --protagonista" if prot else "", m.get("dominio"), m.get("fecha") or "s. f.", (m.get("titulo") or "")[:70])
+
+
 def leer_url(url, otra_vez=False):
     """Baja la fuente (o su última copia en Wayback si ya no responde), guarda su texto y metadatos y devuelve meta."""
     os.makedirs(DESCARGAS, exist_ok=True)
-    base = os.path.join(DESCARGAS, "%s-%s" % (re.sub(r"[^a-z0-9]+", "-", NT.dominio(url)), hashlib.sha1(url.encode()).hexdigest()[:10]))
+    base = ruta_fuente(url)
     if os.path.exists(base + ".json") and not otra_vez:
         return leer(base + ".json")
     origen, error = url, None
@@ -383,6 +450,12 @@ def cmd_leer(a):
     elif meta.get("agencia"):
         print("cuenta como la agencia «%s» (firma en el texto), no como %s" % (meta["agencia"], meta["dominio"]))
     print(json.dumps(meta, ensure_ascii=False, indent=1))
+    if meta.get("og_image") and meta["clase"] in ("medio", "oficial", "empresa"):
+        print("FOTO: og:image %s → python3 scripts/historia.py foto <TRABAJO> --id <eje>-fNN --de-fuente %s --descripcion \"…\" "
+              "[--protagonista si muestra al protagonista: el producto, el edificio, la persona]" % (meta["og_image"], a.url))
+    elif meta.get("og_image") and meta["clase"] is None:
+        print("FOTO: og:image %s (vale solo si el encuadre declara %s en dominios_propios: foto --de-fuente la baja como «empresa»)"
+              % (meta["og_image"], meta["dominio"]))
     if a.buscar:
         t = plano(open(os.path.join(RAIZ, meta["archivo"]), encoding="utf-8", errors="replace").read())
         print("cita %s en el texto" % ("SÍ está" if plano(a.buscar) in t else "NO está"))
@@ -452,7 +525,7 @@ def cmd_foto(a):
         print("--id va como <eje>-fNN (ori-f01)", file=sys.stderr)
         return 2
     rec = {"id": a.id, "descripcion": (a.descripcion or "").strip(), "fecha": a.fecha, "lugar": a.lugar,
-           "retrato_de": (a.retrato_de or "").strip() or None, "encaje": a.encaje}
+           "retrato_de": (a.retrato_de or "").strip() or None, "encaje": a.encaje, "muestra": None}
     if not rec["descripcion"]:
         print("--descripcion: qué muestra la foto (para el QA y para que el guionista la elija)", file=sys.stderr)
         return 2
@@ -481,6 +554,23 @@ def cmd_foto(a):
         if not rec["fecha"]:   # la fecha de la toma, si Commons la trae («2004-07-24 12:00» → «2004-07-24»)
             m = re.search(r"\b(1[89]\d\d|20\d\d)(?:[-:](\d\d)(?:[-:](\d\d))?)?", sin_html(((ii.get("extmetadata") or {}).get("DateTimeOriginal") or {}).get("value")))
             rec["fecha"] = "-".join(x for x in m.groups() if x) if m else None
+    elif a.de_fuente:
+        ruta_m = ruta_fuente(a.de_fuente) + ".json"
+        if not os.path.exists(ruta_m):
+            return falla("la fuente %s no está leída: python3 scripts/historia.py leer <url> primero" % a.de_fuente)
+        meta = leer(ruta_m)
+        if not meta.get("og_image"):
+            return falla("la fuente %s no trae og:image: pasa la foto de la nota con --url o usa Commons" % meta.get("dominio"))
+        clase = clasificar(a.de_fuente, encuadre(trabajo).get("dominios_propios") or [], meta.get("archivo"))[0]
+        if clase not in ("medio", "oficial", "empresa"):
+            return falla("H7 %s es %s: su og:image no lleva crédito de medio, oficial ni empresa (declara el dominio en dominios_propios "
+                         "del encuadre o usa Commons)" % (meta.get("dominio"), clase or "una fuente que no cuenta"))
+        url, origen, credito = meta["og_image"], clase, a.credito or CREDITO_FOTO + nombre_medio(a.de_fuente)
+        if not credito.startswith(CREDITO_FOTO):
+            print("--credito va «Foto: <medio>»", file=sys.stderr)
+            return 2
+        rec.update(licencia="© %s (crédito en pantalla)" % credito[len(CREDITO_FOTO):], autor=credito[len(CREDITO_FOTO):],
+                   fuente=a.de_fuente, fecha=rec["fecha"] or meta.get("fecha"))
     elif a.url:
         if a.origen not in ("oficial", "medio", "empresa") or not (a.credito or "").startswith("Foto: "):
             print("--url pide --origen oficial|medio|empresa y --credito \"Foto: <institución o medio>\"", file=sys.stderr)
@@ -488,7 +578,7 @@ def cmd_foto(a):
         url, credito, origen = a.url, a.credito, a.origen
         rec.update(licencia="© %s (crédito en pantalla)" % a.credito[6:], autor=a.credito[6:])
     else:
-        print("--commons \"File:…\" o --url U --credito C --origen O", file=sys.stderr)
+        print("--commons \"File:…\", --de-fuente URL (una fuente leída) o --url U --credito C --origen O", file=sys.stderr)
         return 2
     os.makedirs(os.path.join(DESCARGAS, "fotos"), exist_ok=True)
     crudo = os.path.join(DESCARGAS, "fotos", hashlib.sha1(url.encode()).hexdigest()[:12])
@@ -514,10 +604,14 @@ def cmd_foto(a):
     elif w / h > PROPORCION_GRAFICO:
         print("AVISO %s: %d×%d es muy apaisada; si es un gráfico, un cartel o un logo con texto, repite con --encaje "
               "contener (el marco recortaría los lados)" % (a.id, w, h))
+    if a.referencia:
+        credito = CREDITO_REFERENCIA + credito[len(CREDITO_FOTO):]
+    if a.protagonista or (rec["retrato_de"] and VD._plano(rec["retrato_de"]) in protagonistas(trabajo)):
+        rec["muestra"] = "protagonista"   # H12: la foto con la que abre el gancho
     rec.update(archivo=dst, credito=credito[:CREDITO_CARACTERES], origen=origen, url=url, tamano=[w, h],
-               sha1=sha1_de(os.path.join(trabajo, dst)))
+               sha1=sha1_de(os.path.join(trabajo, dst)), referencia=bool(a.referencia))
     escribir(os.path.join(trabajo, "fotos", a.id + ".json"), rec)
-    print("foto %s · %d×%d · %s (%s) → %s" % (a.id, w, h, rec["credito"], origen, dst))
+    print("foto %s · %d×%d · %s (%s)%s → %s" % (a.id, w, h, rec["credito"], origen, " · PROTAGONISTA" if rec["muestra"] else "", dst))
     return 0
 
 
@@ -676,14 +770,16 @@ def revisar_foto(rec, trabajo):
     fid = rec.get("id") or "?"
     if not rec.get("archivo") or not os.path.exists(os.path.join(trabajo, rec["archivo"])):
         f.append("H7 %s: sin archivo en fotos/ (python3 scripts/historia.py foto …)" % fid)
-    if not (rec.get("credito") or "").startswith("Foto: "):
-        f.append("H7 %s: el crédito va «Foto: …»" % fid)
+    if not (rec.get("credito") or "").startswith(CREDITO_REFERENCIA if rec.get("referencia") else CREDITO_FOTO):
+        f.append("H7 %s: el crédito va «%s…»" % (fid, CREDITO_REFERENCIA if rec.get("referencia") else CREDITO_FOTO))
     if rec.get("origen") not in ORIGENES_FOTO:
         f.append("H7 %s: origen %s" % (fid, "|".join(ORIGENES_FOTO)))
     if rec.get("origen") == "commons" and not (LICENCIA_LIBRE.match(rec.get("licencia") or "") and not LICENCIA_NO.search(rec.get("licencia") or "")):
         f.append("H7 %s: licencia de Commons «%s» no libre" % (fid, rec.get("licencia")))
     if min(rec.get("tamano") or [0]) < FOTO_LADO_MIN:
         f.append("H7 %s: lado corto < %d px" % (fid, FOTO_LADO_MIN))
+    if rec.get("muestra") not in (None, "protagonista"):
+        f.append("H12 %s: «muestra» va protagonista o nada (foto … --protagonista)" % fid)
     return f
 
 
@@ -692,17 +788,22 @@ def cmd_hechos(a):
     enc = encuadre(trabajo)
     propios = enc.get("dominios_propios") or []
     rutas = [os.path.join(trabajo, "verificacion_%s.json" % a.eje)] if a.eje else sorted(glob.glob(os.path.join(trabajo, "verificacion_*.json")))
-    fallas, avisos, n, casos = [], [], 0, 0
+    fallas, avisos, n, casos, vs = [], [], 0, 0, []
     for r in rutas:
         if not os.path.exists(r):
             fallas.append("H1 falta %s" % VD.rel(r))
             continue
         v = leer(r)
+        vs.append(v)
         f, av = revisar_eje(v, trabajo, propios)
         fallas += f
         avisos += av
         casos += len(v.get("casos") or [])
         n += sum(1 for h in v.get("hechos") or [] if h.get("estado") in PUBLICABLES)
+        if len(set(v.get("fotos") or [])) < FOTOS_POR_EJE:
+            fallas.append("H7 eje %s: %d foto(s); cada eje trae ≥ %d (la del hecho o, si no hay, una de referencia del lugar, "
+                          "la institución, la persona, el producto o la época: historia.py foto … --referencia)"
+                          % (v.get("eje") or os.path.basename(r)[13:-5], len(set(v.get("fotos") or [])), FOTOS_POR_EJE))
         for fid in v.get("fotos") or []:
             ruta_f = os.path.join(trabajo, "fotos", "%s.json" % fid)
             if not os.path.exists(ruta_f):
@@ -712,12 +813,31 @@ def cmd_hechos(a):
     if not a.eje and (enc.get("sensibles") or {}).get("justicia") and not casos:
         fallas.append("H3 historia de justicia: cada persona señalada lleva su estado del caso a la fecha de la consulta (casos[] "
                       "en la verificación de su eje)")
+    # H12: una foto del protagonista (la del gancho). Sin --eje falla; con --eje falla solo si la tiene a mano (la og:image de
+    # una fuente que ya leyó y lo nombra: 0 búsquedas), si no avisa
+    prot, sugerencias = protagonistas(trabajo), []
+    recs = [leer(r) for r in sorted(glob.glob(os.path.join(trabajo, "fotos", "*.json")))]
+    con_prot = [r["id"] for r in recs if es_protagonista(r, prot)]
+    if prot and not con_prot:
+        urls = {f.get("url") for v in vs for k in ("hechos", "cifras", "citas") for x in v.get(k) or [] for f in x.get("fuentes") or []} if a.eje else None
+        a_mano = [c for c in og_candidatas(trabajo, urls) if c[2]]
+        if not a.eje or a_mano:
+            fallas.append("H12 ninguna foto muestra al protagonista (%s): el gancho abre con ella (foto … --protagonista)%s"
+                          % (" / ".join(enc.get("protagonista")), "; abajo, las og:image de fuentes ya leídas que lo nombran (sin buscar)" if a_mano
+                             else "; busca en Commons «%s», la prensa de la empresa o la og:image de una nota" % enc["protagonista"][0]))
+            sugerencias = [linea_de_fuente(trabajo, m, True) for m, _, _ in a_mano]
+        else:
+            avisos.append("H12 todavía ninguna foto muestra al protagonista (%s): si tu eje lo cubre, baja una con --protagonista"
+                          % " / ".join(enc.get("protagonista")))
     for x in avisos:
         print("AVISO", x)
     for x in fallas:
         print("FALLA", x)
+    for x in sugerencias:
+        print(x)
     if not fallas:
-        print("H1–H3 ok · %d hecho(s) publicables en %d eje(s)" % (n, len(rutas)))
+        print("H1–H3 ok · %d hecho(s) publicables en %d eje(s)%s" % (n, len(rutas), " · H12 foto(s) del protagonista: %s" % ", ".join(con_prot)
+                                                                     if con_prot and not a.eje else ""))
     return 1 if fallas else 0
 
 
@@ -738,6 +858,8 @@ def fundir_fotos(trabajo, recs):
         prev = vistos.get(clave) or vistos.get(rec.get("url"))
         if prev:
             fotos[prev].setdefault("alias", []).append(rec["id"])
+            if rec.get("muestra") == "protagonista":
+                fotos[prev]["muestra"] = "protagonista"   # la marca H12 no se pierde al fundir
             print("AVISO %s es la misma imagen que %s: queda %s" % (rec["id"], prev, prev))
             continue
         fotos[rec["id"]] = dict(rec, sha1=clave)
@@ -754,6 +876,7 @@ def consolidar(trabajo):
     fotos = fundir_fotos(trabajo, [leer(r) for r in sorted(glob.glob(os.path.join(trabajo, "fotos", "*.json")))])
     H = {"tema": st.get("tema"), "slug": st["slug"], "pregunta": enc.get("pregunta"), "arco": enc.get("arco"),
          "capitulos": enc.get("capitulos") or [], "no_afirma": enc.get("no_afirma") or [],
+         "protagonista": enc.get("protagonista") or [], "revelaciones": enc.get("revelaciones") or [],
          "hechos": [], "cifras": [], "citas": [], "casos": [], "descartados": [], "fotos": fotos}
     for v in ejes:
         for k in ("hechos", "cifras", "citas"):
@@ -810,6 +933,10 @@ def cmd_consolidar(a):
     print("→ %s · base %s · paleta %s · música %s" % (VD.rel(os.path.join(trabajo, "historia.json")), st["hilo"], st["paleta"], st["musica"]))
     if len(H["hechos"]) < HECHOS_MIN:
         return falla("H1 solo %d hechos publicables (van ≥ %d para contar una historia de 2–3 min)" % (len(H["hechos"]), HECHOS_MIN))
+    prot = protagonistas(trabajo)
+    if prot and not any(es_protagonista(r, prot) for r in H["fotos"].values()):
+        return falla("H12 ninguna foto muestra al protagonista: python3 scripts/historia.py hechos %s --check imprime las candidatas "
+                     "(og:image de fuentes leídas) y el comando foto --de-fuente … --protagonista" % VD.rel(trabajo))
     return 0
 
 
@@ -858,8 +985,14 @@ def visual_del_gancho(e, cifras, valores):
         return ORIGINALES["visual"](e, cifras, valores)
     d = e.get("visual_datos") or {}
     fo, f = fotos_h().get(d.get("foto")), []
+    prot = protagonistas(TRABAJO_ACTUAL) if TRABAJO_ACTUAL else []
     if not fo:
         f.append("visual foto: «foto» «%s» no es una foto verificada (historia.json → fotos)" % d.get("foto"))
+    elif prot and not es_protagonista(fo, prot):
+        con = [k for k, r in fotos_h().items() if es_protagonista(r, prot)]
+        f.append("H12 la foto del gancho «%s» no muestra al protagonista (%s): la primera imagen dice de qué va la historia; usa %s"
+                 % (d.get("foto"), " / ".join(encuadre(TRABAJO_ACTUAL).get("protagonista")),
+                    ", ".join(con) if con else "una foto bajada con --protagonista (hechos --check imprime las candidatas)"))
     et = (d.get("etiqueta") or "").strip()
     if len(et) > ETIQUETA_GANCHO:
         f.append("visual foto: «etiqueta» de ≤ %d caracteres (la época y el lugar: «Amatitlán · 2015»)" % ETIQUETA_GANCHO)
@@ -875,14 +1008,30 @@ def reglas_gancho(e, voz_p, ctx):
     V_ = ctx.get("visual") or {}
     if fam not in FAMILIAS:
         return ["familia «%s» no es una familia de historia (%s)" % (fam, "|".join(FAMILIAS))], av
-    if vis not in VISUALES_DE[fam]:
-        f.append("el visual «%s» no va con la familia %s (admite %s)" % (vis, fam, ", ".join(VISUALES_DE[fam])))
+    if vis != "foto":
+        f.append("H7 el gancho de una historia abre con una foto a sangre (visual «foto» con una foto verificada), "
+                 "no con «%s»" % vis)
     if e.get("icono") and vis != "cifra":
         f.append("el icono va solo con el visual cifra")
     silencio = " ".join((pant, lin))
     if vis == "cifra" and VD.numeros_sin_anios(silencio) and len(set(VD.numeros_sin_anios(silencio))) < 2 and not (
             VD.RE_DE_CADA.search(silencio) or re.search(r"×\s?\d|\d\s*veces\b|\bde\s+\d[\d,]*\b|\bpor\s+(?:cada\s+)?\w+", silencio, re.I)):
         f.append("R2 la cifra va sola en pantalla («%s»): dale un referente o usa la foto" % silencio.strip())
+    prot = [x for x in (encuadre(TRABAJO_ACTUAL).get("protagonista") or []) if (x or "").strip()] if TRABAJO_ACTUAL else []
+    if not prot:
+        f.append("H10 el encuadre no trae «protagonista» (los nombres de quien protagoniza la historia: la marca, la "
+                 "persona, la empresa…): el editor lo añade")
+    elif not any(VD._plano(x) in VD._plano(" ".join((pant, lin, texto))) for x in prot):
+        f.append("H10 el gancho no nombra al protagonista de la historia (%s): dilo en la pantalla, la línea o la voz"
+                 % " / ".join(prot))
+    # H13 reserva: lo que el video revela (encuadre.revelaciones) no se adelanta en el gancho. Lo mecánico son sus números:
+    # ningún dígito escrito en una revelación aparece en la pantalla, la línea ni la voz. Sin números, lo juzga el crítico
+    revs = (encuadre(TRABAJO_ACTUAL).get("revelaciones") or []) if TRABAJO_ACTUAL else []
+    for k, rev in enumerate(revs, 1):
+        tok = next((t for t in RE_NUMERO.findall(rev) if VD.escribe_numero(float(t.replace(",", "")), [pant, lin, texto])), None)
+        if tok:
+            f.append("H13 el gancho adelanta la revelación R%d («%s»): escribe «%s», que el video paga después; cuenta el momento, "
+                     "no la respuesta" % (k, rev[:60], tok))
     if VD.APERTURAS_PROHIBIDAS.match(texto) or APERTURAS.match(texto):
         f.append("R3 la voz abre con contexto o con el anuncio de la historia («%s…»): abre con el momento más fuerte"
                  % " ".join(texto.split()[:4]))
@@ -911,8 +1060,6 @@ def reglas_gancho(e, voz_p, ctx):
     rec = ctx.get("recientes") or {}
     if fam in (rec.get("familias") or []):
         f.append("R9 la familia «%s» ya abrió una de las últimas %d historias (%s): usa otra" % (fam, ROTACION_FAMILIAS, ", ".join(rec["familias"])))
-    if vis in (rec.get("visuales") or []):
-        f.append("R9 el visual «%s» abrió la historia anterior: usa otro" % vis)
     return f, av
 
 
@@ -967,8 +1114,10 @@ def estructura(g, st, dur, tarjetas):
             fid = e.get("foto")
             if fid is not None and fid not in fotos:
                 f.append("H7 escena %d: la foto «%s» no está verificada (fotos/<id>.json)" % (i, fid))
-            if fid is None and not (e.get("icono") or NT.depto_id(e.get("depto"))):
-                f.append("H7 escena %d: sin foto, pon depto o icono para la tarjeta tipográfica" % i)
+            if fid is None or e.get("icono") or e.get("depto"):
+                f.append("H7 escena %d: la escena foto lleva una foto verificada, nunca un icono ni un mapa: si no hay "
+                         "del hecho, una de referencia (el lugar, la institución, la persona, el producto o la época: "
+                         "historia.py foto … --referencia); si no hay ninguna, cuéntala con otra escena" % i)
             if fid in fotos:
                 f += fecha_contra_foto(i, e.get("fecha") or "", fotos[fid])
             tit = (e.get("titular") or "").strip()
@@ -1015,8 +1164,60 @@ def estructura(g, st, dur, tarjetas):
             if not isinstance(gr.get("datos"), dict):
                 f.append("H6 escena %d: «grafico.datos» (el contrato DATA de la plantilla: referencias/diseno/graficos.md)" % i)
     f += usos_de_fotos(escenas, fotos)
+    f += hilo_referencias(escenas)
+    f += pago_revelacion(g, escenas)
+    final = ((g.get("cierre") or {}).get("final") or "").strip()
+    if re.search(r"\bseg[uú]n\b", final, re.I):
+        f.append("H9 el final del cierre no lleva «según»: es lo último que se oye y tiene que doler o conmover; apóyalo en un "
+                 "hecho confirmado (lo que la historia le hizo a una persona o a un grupo concreto) y deja la atribución "
+                 "en el resumen o en una escena anterior")
     avisar_flashbacks(escenas)
     return f
+
+
+def hilo_referencias(escenas):
+    """H11: cada «esos 40 niños», «ese alimento», «esa línea» tiene su antecedente en lo que ya se oyó o se leyó antes:
+    la cifra y la palabra salen en una escena anterior (voz, pantalla, línea, titular) o antes en la misma voz."""
+    f, dicho = [], ""
+    llano = lambda t: VD._plano(re.sub(r"\{([\d.,]+):\w+\}", r"\1", t or ""))  # noqa: E731
+    for i, e in enumerate(escenas, 1):
+        voz = e.get("texto") or ""
+        for m in RE_DEMOSTRATIVO.finditer(voz):
+            num, pal = m.group(2), m.group(3).lower()
+            if pal in HILO_LIBRES or VD._plano(pal) in HILO_LIBRES:
+                continue
+            antes = dicho + " " + llano(voz[:m.start()])
+            raiz = VD._plano(pal[:-1] if pal.endswith("s") and len(pal) > 4 else pal)
+            falta = [x for x, ok in ((num, not num or re.search(r"\b%s\b" % re.escape(llano(num)), antes)),
+                                     (pal, re.search(r"\b%s" % re.escape(raiz), antes))) if x and not ok]
+            if falta:
+                f.append("H11 escena %d: «%s» apunta a algo que no se dijo antes (%s no sale en ninguna escena "
+                         "anterior): di qué es aquí o cámbialo; si cambiaste el gancho u otra escena, relee el hilo "
+                         "entero" % (i, m.group(0), " ni ".join("«%s»" % x for x in falta)))
+        dicho += " " + llano(" ".join(str(e.get(k) or "") for k in ("pantalla", "linea", "titular", "golpe", "titulo", "texto")))
+    return f
+
+
+def pago_revelacion(g, escenas):
+    """H14: la promesa declara qué revelación del encuadre paga (`promesa.revela`, R1, R2…) y la escena `promesa.pago` la
+    cuenta: una raíz de 5 letras de la revelación (sin vacías) está en su voz o en su pantalla (como F3 del cierre)."""
+    revs = (encuadre(TRABAJO_ACTUAL).get("revelaciones") or []) if TRABAJO_ACTUAL else []
+    p = g.get("promesa") or {}
+    if not revs:
+        return []
+    k = p.get("revela")
+    if not isinstance(k, int) or isinstance(k, bool) or not 1 <= k <= len(revs):
+        return ["H14 promesa.revela: el número (1–%d) de la revelación del encuadre que la promesa paga (el digesto las lista R1, R2…)" % len(revs)]
+    pago = p.get("pago")
+    if not isinstance(pago, int) or not 1 <= pago <= len(escenas):
+        return []   # V9 ya lo señala
+    e = escenas[pago - 1]
+    dicho = VD._plano(" ".join(str(e.get(c) or "") for c in ("texto", "pantalla", "linea", "titular", "golpe", "titulo")))
+    raices = {w[:5] for w in VD._plano(revs[k - 1]).split() if len(w) >= 5 and w not in VD.STOP and w not in VD.GENERICAS and not w.isdigit()}
+    if raices and not any(re.search(r"\b" + re.escape(r), dicho) for r in raices):
+        return ["H14 la escena %d (promesa.pago) no cuenta la revelación R%d («%s»): la promesa se paga ahí, con sus palabras, "
+                "o mueve el pago a la escena que la cuenta" % (pago, k, revs[k - 1][:70])]
+    return []
 
 
 def usos_de_fotos(escenas, fotos):
@@ -1195,17 +1396,59 @@ def cmd_guion(a):
     aplicar_extension(trabajo)
     valores, _, _ = VD.valores_respaldo(VD.estado(trabajo)["hilo"])
     fallas += revisar_verdad(g, H, valores)
-    rc = VD.cmd_guion(argparse.Namespace(trabajo=trabajo, check=True))
+    buf = io.StringIO()
+    with contextlib.redirect_stdout(buf):   # las FALLA de video.py (V1–V5, V9, F1–F8, H8–H14) van también al RETORNO
+        rc = VD.cmd_guion(argparse.Namespace(trabajo=trabajo, check=True))
+    salida = buf.getvalue()
+    print(salida, end="")
     for x in fallas:
         print("FALLA", x)
-    if fallas:
-        loc = os.path.join(trabajo, "locucion.json")
-        if rc == 0 and os.path.exists(loc):
-            os.remove(loc)   # una locución que no pasó H3–H8 no se graba
-        return 1
-    if rc == 0:
-        print("H3–H8 ok")
-    return rc
+    todas = fallas + [l[len("FALLA "):] for l in salida.splitlines() if l.startswith("FALLA ")]
+    loc = os.path.join(trabajo, "locucion.json")
+    if fallas and rc == 0 and os.path.exists(loc):
+        os.remove(loc)   # una locución que no pasó H3–H14 no se graba
+    ok = rc == 0 and not fallas
+    if ok:
+        marcar_citas_sin_escucha(loc, g, H)
+        print("H3–H14 ok")
+        av = aviso_duracion(leer(loc)["estimado_s"])
+        if av:
+            print(av)
+    print("RETORNO " + json.dumps(retorno_guion(trabajo, g, ok, todas), ensure_ascii=False))
+    return 0 if ok else 1
+
+
+def aviso_duracion(estimado_s):
+    """AVISO H5 (no gate): el objetivo es 150 s (135–165); el tope de 180 queda para emergencias."""
+    if estimado_s <= OBJETIVO_AVISO_S:
+        return None
+    return ("AVISO H5 %.0f s estimados: apunta a %d s (%d–%d); el tope de %d s es para emergencias. Recorta una escena o una "
+            "oración por escena antes de la crítica" % (estimado_s, OBJETIVO_S, OBJETIVO_MIN_S, OBJETIVO_AVISO_S, DURACION_MAX_S))
+
+
+def retorno_guion(trabajo, g, ok, fallas):
+    """La última línea de `guion --check`: lo que el guionista devuelve TAL CUAL al Workflow (S.guion). `tipos` trae el tipo
+    de cada escena en orden, sin el cierre (que no está en TIPOS)."""
+    es = g.get("escenas") or []
+    loc = os.path.join(trabajo, "locucion.json")
+    est = leer(loc)["estimado_s"] if ok and os.path.exists(loc) else round(
+        sum(len(e.get("texto") or "") for e in es + [g.get("cierre") or {}]) / VD.CPS + VD.COLA * len(es) + VD.COLA_CIERRE, 1)
+    return {"archivo": VD.rel(os.path.join(trabajo, "guion.json")), "gate": "ok" if ok else "falla", "fallas": fallas,
+            "escenas": len(es), "tipos": [e.get("tipo") for e in es], "capitulos": sum(e.get("tipo") == "capitulo" for e in es),
+            "estimado_s": est, "explica_sin_animacion": [i for i, e in enumerate(es, 1) if e.get("tipo") == "explica" and not e.get("animacion")]}
+
+
+def marcar_citas_sin_escucha(ruta_loc, g, H):
+    """V11: la frase de una cita en otro idioma no se coteja con whisper (corre con -l es): locucion.json →
+    escenas[].escucha_omitir, que video.py escuchar deja fuera de la comparación."""
+    loc = leer(ruta_loc)
+    citas, cambio = {q["id"]: q for q in H.get("citas") or []}, False
+    for e, le in zip(g.get("escenas") or [], loc["escenas"]):   # mismo orden; el cierre queda fuera del zip
+        q = citas.get(e.get("cita")) if e.get("tipo") == "cita" else None
+        if q and otro_idioma(q.get("texto")):
+            le["escucha_omitir"], cambio = q["texto"], True
+    if cambio:
+        escribir(ruta_loc, loc)
 
 
 def cmd_ganchos(a):
@@ -1405,6 +1648,11 @@ def cmd_digesto(a):
                "- Qué buscar: %s" % "; ".join(eje.get("preguntas") or []),
                "- Fuentes sugeridas: %s" % "; ".join(eje.get("fuentes") or []),
                "- Dominios de la empresa o institución protagonista (cuentan como fuente propia): %s" % ", ".join(enc.get("dominios_propios") or []) or "—",
+               "- Protagonista: %s" % (" / ".join(enc.get("protagonista") or []) or "FALTA en el encuadre"),
+               "- Fotos que hacen falta (encuadre.fotos_clave; la PRIMERA es la del protagonista y es obligatoria, H12): %s"
+               % ("; ".join(enc.get("fotos_clave") or []) or "la imagen del protagonista (%s)" % " / ".join(enc.get("protagonista") or [])),
+               "- Candidatas de foto: la og:image de las notas que leas (leer la imprime con el comando foto --de-fuente listo), Commons por el "
+               "nombre del protagonista, la prensa de la empresa; nunca un icono en lugar de una foto",
                "- No afirma: %s" % "; ".join(enc.get("no_afirma") or []),
                "- Sensible: %s" % json.dumps(enc.get("sensibles") or {}, ensure_ascii=False), ""]
         if a.para == "verificador":
@@ -1417,7 +1665,15 @@ def cmd_digesto(a):
                 for x in hz.get(k) or []:
                     out.append("- %s · %s · %s — %s" % (x.get("id"), x.get("fecha") or x.get("cuando") or x.get("anio") or "", (x.get("texto") or "")[:200],
                                " | ".join("%s «%s»" % (ev.get("url"), (ev.get("cita") or "")[:140]) for ev in x.get("evidencia") or x.get("fuentes") or [])))
-            out += ["- foto candidata %s · %s · %s" % (x.get("id"), x.get("descripcion"), x.get("commons") or x.get("url")) for x in hz.get("fotos") or []]
+            out += ["- foto candidata %s · %s · %s%s" % (x.get("id"), x.get("descripcion"), x.get("commons") or x.get("url"),
+                                                     " · PROTAGONISTA" if x.get("protagonista") else "") for x in hz.get("fotos") or []]
+            urls = {ev.get("url") for k in ("hechos", "cifras", "citas") for x in hz.get(k) or [] for ev in x.get("evidencia") or x.get("fuentes") or []}
+            cands = og_candidatas(trabajo, urls)
+            if cands:
+                out += ["", "## og:image de las fuentes leídas en este eje (* = nombra al protagonista: bájala con --protagonista, H12)"]
+                for m, clase, pr in cands:
+                    out += ["- %s%s · %s · «%s» · %s" % ("* " if pr else "", m["dominio"], m.get("fecha") or "s. f.", (m.get("titulo") or "")[:80], m["og_image"]),
+                            "  " + linea_de_fuente(trabajo, m, pr)]
         out += ["", "## Clases de fuente que cuentan", "- oficial: *.gob.gt, %s, %s" % (", ".join(sorted(NT.OFICIALES)), ", ".join(sorted(OTROS_OFICIALES))),
                 "- medio (dominio → grupo): %s" % ", ".join("%s→%s" % kv for kv in sorted({**NT.MEDIOS, **INTERNACIONALES}.items())),
                 "- academica: *.edu, %s · archivo: %s (Wayback cuenta como su original)" % (", ".join(sorted(ACADEMICAS)), ", ".join(sorted(ARCHIVOS))),
@@ -1425,54 +1681,121 @@ def cmd_digesto(a):
         print("\n".join(out))
         return 0
     H = historia_de(trabajo)
+    if a.para == "oyente":
+        return digesto_oyente(trabajo, H)
     rec_g = st.get("ganchos_recientes") or {}
+    prot = protagonistas(trabajo)
     base = ["# Historia · %s (paleta %s, música %s)" % (st.get("tema"), st["paleta"], st["musica"]), "",
             "- Pregunta: %s · arco: %s" % (H.get("pregunta"), H.get("arco")),
-            "- Capítulos del encuadre: %s" % " · ".join("%s. %s (%s)" % (c.get("n"), c.get("titulo"), c.get("periodo")) for c in H.get("capitulos") or []),
-            "- No afirma: %s" % "; ".join(H.get("no_afirma") or []), "", "## Cronología verificada (id · fecha · estado — hecho [fuentes])"] + \
+            "- Protagonista: %s" % (" / ".join(H.get("protagonista") or encuadre(trabajo).get("protagonista") or []) or "FALTA en el encuadre"),
+            "- Capítulos del encuadre (cada uno responde su pregunta o la deja abierta a propósito):"] + \
+        ["  %s. %s (%s) — %s" % (c.get("n"), c.get("titulo"), c.get("periodo"), c.get("pregunta") or "sin pregunta") for c in H.get("capitulos") or []] + \
+        ["- Revelaciones (lo que el video PAGA: el gancho no las adelanta —H13 veta sus números—, la promesa paga una "
+         "(promesa.revela: 1, 2…) y la escena del pago la cuenta con sus palabras (H14)):"] + \
+        (["  R%d. %s" % (k, r) for k, r in enumerate(H.get("revelaciones") or encuadre(trabajo).get("revelaciones") or [], 1)]
+         or ["  (el encuadre no trae revelaciones: H13 y H14 no corren)"]) + \
+        ["- No afirma: %s" % "; ".join(H.get("no_afirma") or []), "", "## Cronología verificada (id · fecha · estado — hecho [fuentes])"] + \
         lineas_hechos(H) + (["", "## Conflictos de fecha"] + ["- %s y %s" % tuple(x) for x in H["conflictos"]] if H.get("conflictos") else []) + \
         ["", "## Cifras (id · texto · valor)"] + ["- %s · %s · %s %s (%s)" % (c["id"], c.get("texto"), c["valor"], c.get("unidad", ""), c.get("anio") or "")
                                                 for c in H.get("cifras") or []] + \
         ["", "## Citas literales (id · quién · cuándo — frase)"] + ["- %s · %s%s · %s%s — «%s»" % (q["id"], q.get("autor"), ", " + q["cargo"] if q.get("cargo") else "",
                                                                     q.get("cuando"), " · documento" if q.get("documento") else "", q.get("texto"))
                                                                     for q in H.get("citas") or []] + \
-        ["", "## Fotos verificadas (id · qué muestra · crédito · origen)"] + ["- %s · %s · %s (%s)%s" % (k, f.get("descripcion"), f.get("credito"), f.get("origen"),
-                                                                              " · %s %s" % (f.get("fecha") or "", f.get("lugar") or "") if f.get("fecha") or f.get("lugar") else "")
-                                                                              for k, f in sorted((H.get("fotos") or {}).items())] + \
+        ["", "## Fotos verificadas (id · qué muestra · crédito · origen; PROTAGONISTA = la que puede abrir el gancho, H12)"] + \
+        ["- %s · %s · %s (%s)%s%s" % (k, f.get("descripcion"), f.get("credito"), f.get("origen"),
+                                      " · %s %s" % (f.get("fecha") or "", f.get("lugar") or "") if f.get("fecha") or f.get("lugar") else "",
+                                      " · PROTAGONISTA" if es_protagonista(f, prot) else "")
+         for k, f in sorted((H.get("fotos") or {}).items())] + \
         (["", "## Casos (estado a la fecha de consulta)"] + ["- %s: %s (consultado %s)%s" % (x.get("persona"), x.get("estado_actual"), x.get("fecha_consulta"),
                                                             " · sentencia firme" if x.get("sentencia_firme") else "") for x in H.get("casos") or []]
          if H.get("casos") else [])
     if a.para == "gancho":
-        out = base + ["", "## Ganchos de historia (4–5 candidatos de familias distintas; ≥ 2 con visual que no sea la cifra)",
+        out = base + ["", "## Ganchos de historia (4–5 candidatos de familias distintas, todos con la foto a sangre)",
                       "- Familias: %s" % ", ".join(FAMILIAS),
-                      "- Visuales por familia: %s" % " · ".join("%s → %s" % (k, "|".join(v)) for k, v in VISUALES_DE.items()),
-                      "- Visual foto: `visual_datos: {\"foto\": \"<id de foto>\", \"etiqueta\": \"<lugar · año>\" (≤ %d)}`: la foto a sangre, "
-                      "`pantalla` en el chip y `linea` entera desde el cuadro 0, que se enciende cuando la voz la dice." % ETIQUETA_GANCHO,
-                      "- Bloqueadas por rotación: familias %s · visual %s" % (", ".join(rec_g.get("familias") or []) or "ninguna",
-                                                                        ", ".join(rec_g.get("visuales") or []) or "ninguno"),
-                      "- Sin cifra obligatoria (una historia puede abrir con el hecho), pero cada número dicho tiene respaldo. Cada año dicho está en un hecho.",
+                      "- Visual: SIEMPRE foto. `visual_datos: {\"foto\": \"<id de foto>\", \"etiqueta\": \"<lugar · año>\" (≤ %d)}`: la foto a sangre "
+                      "cubre toda la pantalla, `pantalla` en el chip y `linea` entera desde el cuadro 0, que se enciende cuando la voz la dice. "
+                      "La foto del gancho MUESTRA AL PROTAGONISTA (H12; las marcadas PROTAGONISTA arriba: %s). Entre ellas, la más fuerte "
+                      "(el producto, la persona, el lugar)." % (ETIQUETA_GANCHO, ", ".join(k for k, f in sorted((H.get("fotos") or {}).items())
+                                                                                       if es_protagonista(f, prot)) or "NINGUNA: hechos --check H12"),
+                      "- Qué cuenta: el momento de la historia (el problema que la hizo nacer, la persona, la decisión, lo que estaba en juego). "
+                      "NUNCA una revelación de la lista de arriba ni su número: H13 falla si el gancho escribe un número que está en una "
+                      "revelación; el crítico puntúa «reserva» y un candidato que regala una revelación no gana.",
+                      "- El gancho nombra al protagonista en la pantalla, la línea o la voz (H10).",
+                      "- Bloqueadas por rotación: familias %s" % (", ".join(rec_g.get("familias") or []) or "ninguna"),
+                      "- Sin cifra obligatoria (una historia abre con el hecho), pero cada número dicho tiene respaldo. Cada año dicho está en un hecho.",
                       "- La voz no abre con «Esta es la historia de…», «Te cuento…», «En el año…» ni con contexto: abre con el momento más fuerte."]
         print("\n".join(out))
         return 0
-    out = base + ["", "## Límites del guion (historia.py guion --check: H3–H8 + V1–V5, V9, F1–F8 de video.py)",
-                  "- Duración %d s ±20 %% (máximo %d s, el tope de Shorts); voz por escena: gancho %d–%d · foto %d–%d · cita %d–%d · capitulo %d–%d · "
+    out = base + ["", "## Límites del guion (historia.py guion --check: H3–H14 + V1–V5, V9, F1–F8 de video.py; devuelve TAL CUAL su línea RETORNO)",
+                  "- Duración: apunta a %d s (%d–%d); el tope de %d s es para emergencias (V4 acepta 120–180; el gate avisa si pasas de %d). "
+                  "Voz por escena: gancho %d–%d · foto %d–%d · cita %d–%d · capitulo %d–%d · "
                   "tarjeta %d–%d · golpe %d–%d · explica %d–%d · cierre %d–%d caracteres (ya en palabras; %.1f car/s)"
-                  % (OBJETIVO_S, DURACION_MAX_S, *VD.CARACTERES["gancho"], *CARACTERES["foto"], *CARACTERES["cita"], *CARACTERES["capitulo"],
-                     *VD.CARACTERES["tarjeta"], *VD.CARACTERES["golpe"], *VD.CARACTERES["explica"], *VD.CARACTERES["cierre"], VD.CPS),
+                  % (OBJETIVO_S, OBJETIVO_MIN_S, OBJETIVO_AVISO_S, DURACION_MAX_S, OBJETIVO_AVISO_S, *VD.CARACTERES["gancho"], *CARACTERES["foto"],
+                     *CARACTERES["cita"], *CARACTERES["capitulo"], *VD.CARACTERES["tarjeta"], *VD.CARACTERES["golpe"], *VD.CARACTERES["explica"],
+                     *VD.CARACTERES["cierre"], VD.CPS),
+                  "- promesa {texto (10–80, literal en la voz de la escena en), en: 2, pago, revela}: revela es el número R de la revelación que la "
+                  "escena pago cuenta con sus palabras (H14); cada capítulo responde la pregunta que el encuadre le puso o la deja abierta a propósito",
                   "- %d–%d capítulos (escena capitulo: numero, anio ≤ %d, titulo ≤ %d palabras, lugar); el primero en la escena 2 o 3"
                   % (*CAPITULOS, CAP_ANIO_CARACTERES, CAP_TITULO_PALABRAS),
                   "- Nunca %d escenas del mismo tipo seguidas; una escena con giro: true entre el %d y el %d %%"
                   % (SEGUIDAS_MAX + 1, GIRO_ENTRE[0] * 100, GIRO_ENTRE[1] * 100),
-                  "- foto: foto (id) o null con depto/icono, fecha (chip ≤ %d), lugar ≤ %d, titular ≤ %d palabras, hechos [ids], cifra? {texto, etiqueta}, fuente? ≤ %d"
+                  "- foto: foto (id de una foto verificada; nunca null, icono ni mapa: si no hay del hecho, una de referencia), fecha (chip ≤ %d; «De referencia» si la foto no es del hecho), lugar ≤ %d, titular ≤ %d palabras, hechos [ids], cifra? {texto, etiqueta}, fuente? ≤ %d"
                   % (CHIP_CARACTERES, LUGAR_CARACTERES, TITULAR_PALABRAS, FUENTE_CARACTERES),
                   "- cita: cita (id), la voz la lee literal; resalte? (trozo literal), retrato? (id de foto), fuente?",
                   "- tarjeta/mapa/ranking/tiempo: tuit (1, 2…), golpe ≤ %d palabras, grafico {plantilla de templates/graficos/, kicker, titular, nota, fuente, datos}"
                   % VD.GOLPE_PALABRAS,
                   *VD.lineas_animaciones(st.get("animaciones_recientes") or []),
-                  "- Cierre: rotulo («Lo que dejó»…), resumen %d–%d líneas ≤ %d, texto, tipo, forma, final, consecuencia (F1–F8)"
+                  "- Cierre: rotulo («Lo que dejó»…), resumen %d–%d líneas ≤ %d, texto, tipo remate, forma LEGADO (lo normal): lo que la gente hace "
+                  "HOY con lo que la historia dejó («Hoy, sus hijos y sus nietos siguen tomando Incaparina»); consecuencia {quien (gente: nietos, "
+                  "clientes, trabajadores…), verbo (en presente)}, ≤ 1 cifra, sin «según» (H9). Forma consecuencia (con mecanismo) si la historia "
+                  "termina mal. NEUTRO = nadie hace nada («la marca sigue», «la receta cambió», un resumen): bloquea en H-C6. La emoción la pone "
+                  "el hecho, no los adjetivos"
                   % (*VD.RESUMEN_LINEAS, VD.RESUMEN_CARACTERES), "", "## Frases ya usadas (C11)"] + VD.frases_usadas(st["slug"]) + frases_historias(st["slug"])
     print("\n".join(out))
     return 0
+
+
+def digesto_oyente(trabajo, H):
+    """Solo lo que un espectador oye y lee, en orden: la voz en palabras (locucion.json) y lo que hay en pantalla por escena.
+    Sin cronología, sin encuadre, sin fuentes ni ids: el oyente ingenuo no sabe nada más."""
+    ruta = os.path.join(trabajo, "locucion.json")
+    if not os.path.exists(ruta):
+        return falla("falta locucion.json: corre python3 scripts/historia.py guion %s --check" % VD.rel(trabajo))
+    loc, g = leer(ruta), leer(os.path.join(trabajo, "guion.json"))
+    es, citas = g.get("escenas") or [], {q["id"]: q for q in H.get("citas") or []}
+    out = ["# Lo que se oye y se lee, en orden (%d escenas + cierre, ≈ %.0f s)" % (len(es), loc["estimado_s"]), ""]
+    for L in loc["escenas"]:
+        e = es[L["n"] - 1] if L["n"] - 1 < len(es) else dict(g.get("cierre") or {}, tipo="cierre")
+        pant = pantalla_de(e, citas)
+        out += ["E%d · %s%s" % (L["n"], L["tipo"], " · PANTALLA: %s" % pant if pant else ""), "   VOZ: %s" % L["voz"]]
+    print("\n".join(out))
+    return 0
+
+
+def pantalla_de(e, citas):
+    """Lo que se LEE en una escena (sin ids ni fuentes)."""
+    t = e.get("tipo")
+    if t == "gancho":
+        partes = [e.get("pantalla"), e.get("linea"), (e.get("visual_datos") or {}).get("etiqueta")]
+    elif t == "foto":
+        c = e.get("cifra") or {}
+        partes = [e.get("fecha"), e.get("lugar"), e.get("titular"), c.get("texto"), c.get("etiqueta")]
+    elif t == "cita":
+        q = citas.get(e.get("cita")) or {}
+        partes = ["«%s»" % q.get("texto", ""), q.get("autor"), q.get("cargo"), e.get("traduccion")]
+    elif t == "capitulo":
+        partes = ["Capítulo %s" % e.get("numero"), e.get("anio"), e.get("titulo"), e.get("lugar")]
+    elif t in VD.CON_TUIT or t == "escala":
+        gr = e.get("grafico") or {}
+        tit = gr.get("titular")
+        partes = [e.get("golpe"), gr.get("kicker"), " ".join(tit) if isinstance(tit, list) else tit, e.get("etiqueta")]
+    elif t == "explica":
+        partes = [e.get("titulo")] + [str(p) for p in e.get("pasos") or []]
+    elif t == "cierre":
+        partes = [e.get("rotulo")] + list(e.get("resumen") or []) + [e.get("final")]
+    else:   # golpe, definicion, adivina
+        partes = [e.get("pantalla"), e.get("linea"), e.get("termino"), e.get("definicion"), e.get("pregunta")] + list(e.get("opciones") or [])
+    return " · ".join(str(x).strip() for x in partes if x and str(x).strip())
 
 
 # ---------- fotos-contacto y reenvío ----------
@@ -1578,7 +1901,9 @@ def fuentes_md(st, escenas, H):
         ids += [x for x in fotos_de_escena(e) if x in fotos and x not in ids]
     if ids:
         L += ["## Fotos", ""]
-        L += ["- %s · %s · %s" % (fotos[x].get("credito"), fotos[x].get("licencia"), fotos[x].get("pagina") or fotos[x].get("url")) for x in ids]
+        for x in ids:   # el crédito de Commons ya trae la licencia («Foto: autor · CC BY-SA 4.0»): no se repite
+            cred, lic = fotos[x].get("credito") or "", fotos[x].get("licencia") or ""
+            L.append("- %s · %s" % (cred if lic in cred else "%s · %s" % (cred, lic), fotos[x].get("pagina") or fotos[x].get("url")))
         L.append("")
     L.append("Sígueme: %s" % " · ".join("%s %s" % (r["nombre"], r["handle"]) for r in VD.REDES))
     return "\n".join(L) + "\n"
@@ -1622,6 +1947,7 @@ def main():
     q.add_argument("--id", required=True)
     q.add_argument("--commons")
     q.add_argument("--url")
+    q.add_argument("--de-fuente", metavar="URL", help="la og:image de una fuente ya leída: crédito «Foto: <medio>», origen por su clase, fecha de la nota")
     q.add_argument("--credito")
     q.add_argument("--origen", choices=["oficial", "medio", "empresa"])
     q.add_argument("--descripcion")
@@ -1629,6 +1955,11 @@ def main():
     q.add_argument("--lugar")
     q.add_argument("--retrato-de", help="si es el retrato de una persona, su nombre (el de la cita); un objeto o un lugar no lo lleva")
     q.add_argument("--encaje", choices=["contener"], help="gráfico, cartel o logo con texto: márgenes para que el marco no lo recorte")
+    x = q.add_mutually_exclusive_group()
+    x.add_argument("--referencia", action="store_true", help="la foto no es del hecho sino de referencia (el lugar, la institución, la persona, "
+                   "el producto o la época): el crédito dice «Foto de referencia: …»")
+    x.add_argument("--protagonista", action="store_true", help="la foto muestra al protagonista del encuadre (el producto, el edificio, la persona): "
+                   "H12 la exige en el gancho")
     q.add_argument("--extmetadata", help="pruebas: extmetadata de Commons guardado (solo comprueba la licencia, sin red)")
     q = sub.add_parser("hechos")
     q.add_argument("trabajo")
@@ -1637,7 +1968,7 @@ def main():
     sub.add_parser("consolidar").add_argument("trabajo")
     q = sub.add_parser("digesto")
     q.add_argument("trabajo")
-    q.add_argument("--para", choices=["investigador", "verificador", "gancho", "guionista", "critico"], default="guionista")
+    q.add_argument("--para", choices=["investigador", "verificador", "gancho", "guionista", "critico", "oyente"], default="guionista")
     q.add_argument("--eje")
     q = sub.add_parser("ganchos")
     q.add_argument("trabajo")

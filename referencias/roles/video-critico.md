@@ -286,26 +286,42 @@ todos los puntajes ≥ 3.
 
 ## Modo historia (`/historia`)
 
-Dos momentos, como en `/video`: **selección del gancho** (igual que «Modo selección de gancho», con
-`python3 scripts/historia.py digesto <TRABAJO> --para gancho` en lugar de `digesto.md`) y **crítica del guion**. En la
-crítica lees `<TRABAJO>/guion.json`, `<TRABAJO>/locucion.json` y `python3 scripts/historia.py digesto <TRABAJO> --para
-guionista` (la cronología verificada). Sin web; 3 lecturas y ese Bash. Es una **historia de 2–3 min**: la pregunta
-en cada escena es «¿por qué seguiría viendo?» y «¿esto lo dice la cronología?».
+Dos momentos, como en `/video`: **selección del gancho** y **crítica del guion**.
+
+**Selección**: igual que «Modo selección de gancho», con `python3 scripts/historia.py digesto <TRABAJO> --para gancho`
+en lugar de `digesto.md`, y con una fila distinta: **`reserva` sustituye a `referente`** (una historia no abre con
+una cifra con referente; abre sin regalar lo que paga). El digesto lista las **revelaciones** del encuadre (R1, R2…).
+
+| Puntaje | 5 | 3 | ≤ 2 |
+|---|---|---|---|
+| `reserva` | no adelanta ninguna revelación y cuenta el momento, la persona o el problema | roza una revelación sin su dato | dice una revelación (su número, su ingrediente, su final): no puede ganar |
+
+La foto del gancho muestra al protagonista (H12, lo comprueba el gate) y `silencio` pide que la foto y la pantalla
+solas digan de qué historia se trata.
+
+**Crítica**: lees `<TRABAJO>/guion.json`, `<TRABAJO>/locucion.json`, `<TRABAJO>/oyente.json` (lo que el **oyente
+ingenuo** —que solo oyó la voz y leyó la pantalla— no entendió) y `python3 scripts/historia.py digesto <TRABAJO>
+--para critico` (la cronología verificada, las preguntas de cada capítulo y las revelaciones). Sin web; 4 lecturas y
+ese Bash. Es una **historia de 2–3 min**: la pregunta en cada escena es «¿por qué seguiría viendo?» y «¿esto lo dice
+la cronología?».
 
 | Regla | Qué revisas |
 |---|---|
-| H-C1 gancho | la pantalla y la foto (o el visual) solas, en 1 s, dicen de qué historia se trata; la voz abre con el momento más fuerte, no con «esta es la historia de» |
-| H-C2 tensión | la promesa nombra algo concreto y se paga; cada capítulo deja una pregunta o un giro; el giro llega a mitad y cambia la historia; nada se estira |
-| H-C3 claridad | se entiende quién es quién, cuándo y dónde sin haber leído nada; las fechas avanzan sin saltos que confundan; sin siglas ni jerga sin explicar |
+| H-C1 gancho | la foto a sangre y la pantalla solas, en 1 s, dicen de qué historia se trata; la voz abre con el momento más fuerte, no con «esta es la historia de»; cuenta el momento de la historia (el problema, la persona, la decisión) **nombra al protagonista** (la marca, la persona: H10) y **no regala la respuesta** que el video paga ni el detalle técnico que explica después (de qué está hecho, cómo terminó) |
+| H-C2 tensión | la promesa nombra algo concreto y la escena `promesa.pago` cuenta la revelación `promesa.revela` con sus palabras; cada capítulo responde la pregunta que el encuadre le puso (o la deja abierta a propósito) y deja una pregunta o un giro; el giro llega a mitad y cambia la historia; nada se estira |
+| H-C3 claridad e hilo | se entiende quién es quién, cuándo y dónde sin haber leído nada; las fechas avanzan sin saltos que confundan; sin siglas ni jerga sin explicar. **Hilo conductor**: lee el guion de corrido, escena por escena, y en cada una pregúntate «¿esto sigue de lo anterior?». Cada referencia («esos 40 niños», «ese alimento», «así», «lo», «ellos») tiene su antecedente antes; ninguna escena repite lo que otra ya dijo como si fuera nuevo; cada enlace «pero / por eso / y» es lógico con la escena de antes; nada queda suelto entre un tema y el siguiente. **`oyente.json`**: cada confusión y cada salto del oyente se resuelve (falta `bloquea` de H-C3, o H-C2 si es la promesa, con su arreglo exacto) o se justifica en `critica.json → oyente_descartadas[]{escena, motivo}`; sus repeticiones y preguntas sin responder las juzgas tú |
 | H-C4 ritmo y variedad | escenas cortas, foto, cita, gráfico y texto alternados; los capítulos marcan el tiempo; ninguna escena es un párrafo leído sobre una imagen quieta |
 | H-C5 precisión | cada hecho, fecha y número está en la cronología del digesto; lo `en_disputa` va atribuido; nada de `no_afirma`; nada de los descartados; las citas son literales |
-| H-C6 cierre y tono | el remate dice lo que la historia dejó (consecuencia), sin moraleja ni cebo; presunción de inocencia; un tema sensible sin morbo |
+| H-C6 cierre y tono | lo normal es **`legado`**: gente haciendo algo **hoy** con lo que la historia dejó («sus hijos y sus nietos siguen tomando Incaparina»); eso NO es neutro. `consecuencia` si la historia terminó mal (lo que le hizo a una persona o a un grupo concreto, llano). **Neutro = nadie hace nada** («la marca sigue», «la receta cambió», un resumen o un dato): bloquea. Sin «según» en el final, sin moraleja ni cebo; presunción de inocencia; un tema sensible sin morbo. Un `final` que propongas cumple F2: **cuenta sus palabras (≤ 14) y sus caracteres (≤ 90)** antes de exigirlo literal; si no cabe, propón uno que quepa |
 
 Puntajes 1–5: `gancho` (H-C1), `tension` (H-C2), `claridad` (H-C3), `ritmo` (H-C4), `precision` (H-C5), `cierre`
 (H-C6); un puntaje ≤ 2 exige una falta `bloquea` de su regla. **Bloquea**: un gancho que no se entiende en silencio;
-una promesa que no se paga; un hecho, fecha o número fuera de la cronología; un hecho en disputa sin atribución; un
+un hilo roto (una escena que apunta a algo que no se dijo, que repite otra como si fuera nueva o que no sigue de la
+anterior); una confusión o un salto del oyente sin resolver ni justificar; un gancho que dice una revelación; un final
+neutro (nadie hace nada: un resumen, «la marca sigue»); una promesa que no se paga; un hecho, fecha o número fuera de la cronología; un hecho en disputa sin atribución; un
 adjetivo que acusa sin sentencia; cualquier puntaje ≤ 2. Lo demás es mejora. El arreglo: escena, campo y texto
 exacto, con las cifras y los años tal como están en el digesto.
 
-Escribes `<TRABAJO>/critica.json` con la forma de «Salida» (los puntajes de esta tabla) y devuelves `{archivo,
-vuelta, veredicto, puntajes, bloqueantes, mejoras, faltas[]}`.
+Escribes `<TRABAJO>/critica.json` con la forma de «Salida» (los puntajes de esta tabla, más `oyente_descartadas[]`
+si justificas algo del oyente) y devuelves `{archivo, vuelta, veredicto, puntajes, bloqueantes, mejoras, faltas[],
+oyente_descartadas[]}`.

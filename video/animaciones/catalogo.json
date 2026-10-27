@@ -145,6 +145,38 @@
       }
     },
     {
+      "id": "nivel-umbral",
+      "origen": "historia-incaparina",
+      "usos": [
+        "historia-incaparina"
+      ],
+      "descripcion": "un nivel cae bajo una línea límite y luego la vuelve a cruzar: al cruzarla cambia de estado y de color",
+      "mecanismo": "umbral",
+      "temas": [
+        "límite",
+        "umbral",
+        "déficit",
+        "necesidad",
+        "nutrición",
+        "mínimo",
+        "recuperación",
+        "nivel"
+      ],
+      "pasos": [
+        2,
+        6
+      ],
+      "ejemplo": {
+        "titulo": "¿Por qué se seca el pozo?",
+        "pasos": [
+          "Baja el agua del pozo",
+          "Ya no alcanza la bomba",
+          "Llegan las lluvias",
+          "El pozo vuelve a dar agua"
+        ]
+      }
+    },
+    {
       "id": "onda-frenado",
       "origen": "semilla",
       "usos": [],

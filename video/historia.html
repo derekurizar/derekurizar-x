@@ -29,8 +29,12 @@ body.cita #cita { display: flex; }
 #frase { font: 400 76px/1.06 'Instrument Serif', serif; letter-spacing: -.015em; }
 #frase span { display: inline-block; margin-right: .2em; opacity: .28; }
 #frase span.dicha { opacity: 1; }
+/* resaltador: la marca invertida del subtítulo activo (--resalte-bg / --resalte-ink de la paleta), a casi toda la
+   altura, que barre palabra por palabra; con la tinta de la paleta encima una barra oscura tapaba las letras */
 #frase span.resalte { background-image: linear-gradient(var(--resalte-bg), var(--resalte-bg)); background-repeat: no-repeat;
-  background-position: 0 88%; background-size: var(--barrido, 0%) 42%; }
+  background-position: 0 58%; background-size: var(--barra, 0%) 96%; border-radius: 8px; padding: 0 .1em; margin-right: 0; }
+#frase span.resalte.marcada { color: var(--resalte-ink); opacity: 1 !important; }
+#frase span.resalte + span:not(.resalte) { margin-left: .2em; }
 #firma { display: flex; align-items: center; gap: 26px; }
 #retrato { width: 132px; height: 132px; border-radius: 50%; overflow: hidden; flex: none; display: none;
   background: color-mix(in srgb, var(--ink) 10%, var(--bg)); }
@@ -160,7 +164,10 @@ window.seek = (t) => {
       s.classList.toggle('dicha', q >= 0.5);
       s.style.opacity = (0.28 + 0.72 * q).toFixed(3);
     });
-    if (H.resalte) document.getElementById('frase').style.setProperty('--barrido', (100 * prog(t, H.resalte_t, H.resalte_t + 0.8)).toFixed(1) + '%');
+    if (H.resalte) {
+      const marcas = [...document.querySelectorAll('#frase span.resalte')], av = prog(t, H.resalte_t, H.resalte_t + 0.8) * marcas.length;
+      marcas.forEach((s, j) => { const l = clamp(av - j); s.style.setProperty('--barra', (100 * l).toFixed(1) + '%'); s.classList.toggle('marcada', l >= 0.5); });
+    }
     // las comillas (o la hoja del documento) laten al empezar cada oración de la voz
     const late = (H.latidos || []).reduce((m, x) => Math.max(m, Math.sin(Math.PI * clamp((t - x) / 0.5))), 0);
     document.getElementById(H.documento ? 'hoja' : 'comillas').style.transform = `scale(${(1 + 0.05 * late).toFixed(4)})`;

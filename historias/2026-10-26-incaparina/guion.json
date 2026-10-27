@@ -1,0 +1,386 @@
+{
+ "id": "2026-10-26-incaparina",
+ "tipo": "historia",
+ "slug": "incaparina",
+ "tema": "la creación de la Incaparina en Guatemala y su historia, muy bien explicada",
+ "fecha": "2026-10-26",
+ "pregunta": "¿Cómo convirtió un instituto de nutrición en Guatemala el maíz y la semilla de algodón en una bebida contra la desnutrición infantil, y cómo llegó de su laboratorio a las tiendas del país?",
+ "arco": "origen científico con salto al mercado: un problema médico (niños que enfermaban al dejar el pecho), una solución de laboratorio que hay que explicar (por qué dos harinas pobres juntas dan una proteína buena), la decisión de venderla en vez de regalarla, sus cambios de fórmula y de fabricante, y lo que queda hoy; la historia explica el mecanismo y documenta cada paso, sin vender la bebida como la cura de la desnutrición",
+ "capitulos": [
+  {
+   "numero": 1,
+   "anio": "1949",
+   "titulo": "Un instituto de adobe"
+  },
+  {
+   "numero": 2,
+   "anio": "Años 50",
+   "titulo": "Maíz con algodón"
+  },
+  {
+   "numero": 3,
+   "anio": "Años 60",
+   "titulo": "Incaparina, a la tienda"
+  },
+  {
+   "numero": 4,
+   "anio": "1976",
+   "titulo": "¿A quién le llegaba?"
+  },
+  {
+   "numero": 5,
+   "anio": "Hoy",
+   "titulo": "La taza que quedó"
+  }
+ ],
+ "paleta": "cielo",
+ "musica": "cielo-1",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 8157.0,
+ "duracion_s": 172.3,
+ "critica": {
+  "veredicto": "corregir",
+  "vuelta": 2,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 4,
+   "claridad": 3,
+   "ritmo": 3,
+   "precision": 4,
+   "cierre": 3
+  }
+ },
+ "gancho": {
+  "familia": "contraste",
+  "visual": "foto",
+  "pantalla": "Al dejar el pecho",
+  "linea": "los niños enfermaban más. Nació la Incaparina"
+ },
+ "promesa": {
+  "texto": "El último capítulo cuenta hasta dónde llegó su bebida.",
+  "en": 2,
+  "pago": 18,
+  "revela": 4
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "Al dejar el pecho, un niño debería crecer. En Guatemala, un científico lo vio enfermar. Por eso nació la Incaparina.",
+   "voz": "Al dejar el pecho, un niño debería crecer. En Guatemala, un científico lo vio enfermar. Por eso nació la Incaparina.",
+   "dur": 8.39,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Estrategia & Negocios",
+     "origen": "medio",
+     "licencia": "© Estrategia & Negocios (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "Detrás estuvo un instituto de nutrición en Guatemala, el INCAP. El último capítulo cuenta hasta dónde llegó su bebida.",
+   "voz": "Detrás estuvo un instituto de nutrición en Guatemala, el INCAP. El último capítulo cuenta hasta dónde llegó su bebida.",
+   "dur": 8.01,
+   "hechos": [
+    "mer-h02"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Fabian Hanneforth · CC BY 2.5",
+     "origen": "commons",
+     "licencia": "CC BY 2.5"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "capitulo",
+   "pantalla": "1949. Un instituto de adobe.",
+   "voz": "Mil novecientos cuarenta y nueve. Un instituto de adobe.",
+   "dur": 4.549,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "foto",
+   "pantalla": "En septiembre, el INCAP abrió en un edificio de adobe del Jardín Botánico. Lo dirigía Nevin Scrimshaw.",
+   "voz": "En septiembre, el INCAP abrió en un edificio de adobe del Jardín Botánico. Lo dirigía Nevin Scrimshaw.",
+   "dur": 7.452,
+   "hechos": [
+    "ori-h01",
+    "cie-h02"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: AdmWikiINC · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "tarjeta",
+   "pantalla": "Y siete años después, en cuatro aldeas, murieron 222 niños en dos años. El INCAP revisó cada muerte: según Scrimshaw, 40 tenían desnutrición grave, y el registro oficial anotó solo 1 por desnutrición.",
+   "voz": "Y siete años después, en cuatro aldeas, murieron doscientos veintidós niños en dos años. El INCAP revisó cada muerte: según Scrimshaw, cuarenta tenían desnutrición grave, y el registro oficial anotó solo una por desnutrición.",
+   "dur": 16.205,
+   "hechos": [
+    "ori-h06"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "capitulo",
+   "pantalla": "Mediados de los cincuenta. Maíz con algodón.",
+   "voz": "Mediados de los cincuenta. Maíz con algodón.",
+   "dur": 3.969,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "explica",
+   "pantalla": "Pero ¿por qué enfermaban? Según Scrimshaw, al dejar el pecho, la leche ya no les daba toda la proteína que necesitaban. Faltaba un alimento que la diera.",
+   "voz": "Pero ¿por qué enfermaban? Según Scrimshaw, al dejar el pecho, la leche ya no les daba toda la proteína que necesitaban. Faltaba un alimento que la diera.",
+   "dur": 10.546,
+   "hechos": [
+    "ori-h05"
+   ],
+   "fotos": [],
+   "animacion": "nivel-umbral",
+   "mecanismo": "umbral"
+  },
+  {
+   "n": 8,
+   "tipo": "foto",
+   "pantalla": "El INCAP salió a buscarlo: con Ricardo Bressani y su equipo, probó semilla de algodón con maíz.",
+   "voz": "El INCAP salió a buscarlo: con Ricardo Bressani y su equipo, probó semilla de algodón con maíz.",
+   "dur": 6.703,
+   "hechos": [
+    "mer-h02",
+    "mer-h08"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Steve Hurst · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "tarjeta",
+   "pantalla": "Por eso una de las fórmulas de la Incaparina llevaba 38 % de semilla de algodón, y maíz y sorgo a partes iguales. Daba 27.5 % de proteína: más de la cuarta parte.",
+   "voz": "Por eso una de las fórmulas de la Incaparina llevaba treinta y ocho por ciento de semilla de algodón, y maíz y sorgo a partes iguales. Daba veintisiete punto cinco por ciento de proteína: más de la cuarta parte.",
+   "dur": 14.731,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "cita",
+   "pantalla": "Scrimshaw lo explicó: The objective, then, was to provide a beverage with the nutritional equivalent of milk in a culturally acceptable form. Una bebida que nutriera como la leche, en una forma que su cultura aceptara.",
+   "voz": "Scrimshaw lo explicó: The objective, then, was to provide a beverage with the nutritional equivalent of milk in a culturally acceptable form. Una bebida que nutriera como la leche, en una forma que su cultura aceptara.",
+   "dur": 14.929,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "capitulo",
+   "pantalla": "Los sesenta. La Incaparina llega a la tienda.",
+   "voz": "Los sesenta. La Incaparina llega a la tienda.",
+   "dur": 4.118,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "foto",
+   "pantalla": "Desde 1961, según un boletín científico, la fabricaba con contrato exclusivo una cervecería: la Centroamericana.",
+   "voz": "Desde mil novecientos sesenta y uno, según un boletín científico, la fabricaba con contrato exclusivo una cervecería: la Centroamericana.",
+   "dur": 9.827,
+   "hechos": [
+    "mer-h01",
+    "cie-h05"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Manuelacarvajal · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 13,
+   "tipo": "golpe",
+   "pantalla": "Pero varios informes decían que desaparecería. Aun así, según Scrimshaw, se vendía más cada año.",
+   "voz": "Pero varios informes decían que desaparecería. Aun así, según Scrimshaw, se vendía más cada año.",
+   "dur": 7.387,
+   "hechos": [
+    "mer-h05"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 14,
+   "tipo": "capitulo",
+   "pantalla": "1976. Las ventas subían, pero ¿a quién le llegaba?",
+   "voz": "Mil novecientos setenta y seis. Las ventas subían, pero ¿a quién le llegaba?",
+   "dur": 5.987,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 15,
+   "tipo": "foto",
+   "pantalla": "Según el boletín, ese año un centro de salud de San Martín Jilotepeque la regalaba a niños desnutridos y a embarazadas. Luego, el programa se terminó.",
+   "voz": "Según el boletín, ese año un centro de salud de San Martín Jilotepeque la regalaba a niños desnutridos y a embarazadas. Luego, el programa se terminó.",
+   "dur": 10.121,
+   "hechos": [
+    "mer-h07"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Movicw2526 · CC0",
+     "origen": "commons",
+     "licencia": "CC0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 16,
+   "tipo": "golpe",
+   "pantalla": "Pero un año después tocaba a 1.2 libras de Incaparina por persona: una décima de libra al mes.",
+   "voz": "Pero un año después tocaba a uno punto dos libras de Incaparina por persona: una décima de libra al mes.",
+   "dur": 7.717,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 17,
+   "tipo": "capitulo",
+   "pantalla": "Hoy. La taza que quedó.",
+   "voz": "Hoy. La taza que quedó.",
+   "dur": 2.573,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 18,
+   "tipo": "foto",
+   "pantalla": "Pero no desapareció. En 2019 la vendía otra empresa, Alimentos, S.A., y según ella llegaba hasta El Salvador y Honduras y pasaba de generación en generación.",
+   "voz": "Pero no desapareció. En dos mil diecinueve la vendía otra empresa, Alimentos, S.A., y según ella llegaba hasta El Salvador y Honduras y pasaba de generación en generación.",
+   "dur": 12.656,
+   "hechos": [
+    "mer-h10"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Shasu · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 19,
+   "tipo": "foto",
+   "pantalla": "La tradicional de hoy es de maíz y soya: para Scrimshaw, nunca fue una sola fórmula. En 2026 salió la Express, de dos minutos, con avena molida.",
+   "voz": "La tradicional de hoy es de maíz y soya: para Scrimshaw, nunca fue una sola fórmula. En dos mil veintiséis salió la Express, de dos minutos, con avena molida.",
+   "dur": 11.937,
+   "hechos": [
+    "mer-h11"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Estrategia & Negocios",
+     "origen": "medio",
+     "licencia": "© Estrategia & Negocios (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 20,
+   "tipo": "cierre",
+   "pantalla": "Nació para niños que enfermaban al dejar el pecho. Quienes la tomaron de niños hoy se la dan a hijos y nietos.",
+   "voz": "Nació para niños que enfermaban al dejar el pecho. Quienes la tomaron de niños hoy se la dan a hijos y nietos.",
+   "dur": 9.729,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Lo que dejó",
+  "resumen": [
+   "1949: nace el INCAP, en adobe",
+   "1961: la fabrica una cervecería",
+   "2026: sale una versión de 2 minutos"
+  ],
+  "texto": "Nació para niños que enfermaban al dejar el pecho. Quienes la tomaron de niños hoy se la dan a hijos y nietos.",
+  "tipo": "remate",
+  "forma": "legado",
+  "final": "Quienes la tomaron de niños hoy se la dan a hijos y nietos.",
+  "consecuencia": {
+   "quien": "quienes la tomaron de niños",
+   "verbo": "dan"
+  }
+ },
+ "caption": {
+  "tiktok": "En cuatro aldeas de Guatemala morían niños y el registro no anotaba su hambre. De ahí salió la Incaparina, del INCAP. #Guatemala #Incaparina #Historia",
+  "instagram": "Cómo un instituto de nutrición abierto en Guatemala en 1949, el INCAP, creó la Incaparina para niños que enfermaban al dejar el pecho, y hasta dónde llegó. #Guatemala #Incaparina",
+  "facebook": "La historia de la Incaparina: niños que morían sin aparecer en el registro, un instituto de adobe en 1949, una mezcla de semilla de algodón y maíz, una bebida que salió a la venta y una taza que sigue en las casas. Fuentes en el primer comentario.",
+  "shorts": "Así se creó la Incaparina en Guatemala #Shorts\nNació por niños que morían sin que el registro anotara su hambre."
+ }
+}

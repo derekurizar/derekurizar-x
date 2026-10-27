@@ -72,9 +72,19 @@ igual). Lo que cambia:
 - **Familias de historia**: `resultado` (el final primero: «El químico que iba a salvar el lago era agua con sal»),
   `paradoja`, `contraste` (antes / después), `misterio` (lo que nadie sabía), `personaje` (una persona y un objeto
   concretos), `lugar`, `pregunta`, `escala`. El digesto dice qué visuales admite cada una.
-- **Visual `foto`**: la foto de la historia a sangre, oscurecida, con `pantalla` en el chip y `linea` entera desde el
-  cuadro 0, que se enciende cuando la voz la dice. `visual_datos: {"foto": "<id de foto verificada>", "etiqueta":
-  "<lugar · año> (≤ 30)"}`. Los visuales de `/video` (cifra, pareja, llenado, figuras, lugar) siguen disponibles.
+- **Visual `foto`, siempre** (H7): la foto de la historia a sangre cubre toda la pantalla, oscurecida, con
+  `pantalla` en el chip y `linea` entera desde el cuadro 0, que se enciende cuando la voz la dice. `visual_datos:
+  {"foto": "<id de foto verificada>", "etiqueta": "<lugar · año> (≤ 30)"}`. **La foto muestra al protagonista**
+  (H12; el digesto marca PROTAGONISTA las que sirven): entre ellas, la más fuerte (el producto, la persona, el lugar).
+  Cifra, pareja, llenado, figuras y lugar no abren una historia; una foto «de referencia» tampoco.
+- **El gancho nombra al protagonista** (H10; `protagonista` del encuadre, en el digesto): la Incaparina, Pollo Campero,
+  Yolanda Fernández. En la pantalla, la línea o la voz: quien desliza tiene que saber de qué historia se trata.
+- **El gancho cuenta el momento de la historia, no su respuesta**: el problema que la hizo nacer, la persona, la
+  decisión, lo que estaba en juego. Nunca adelanta lo que el video paga ni el detalle técnico que explica después (de
+  qué está hecho, cómo funciona, cómo terminó): quien ve tiene que quedarse para saberlo. «La Incaparina llevaba más
+  semilla de algodón que maíz» regala la respuesta; «En Guatemala, los niños morían al dejar el pecho. La Incaparina se
+  inventó para salvarlos» abre la historia y nombra a su protagonista. El digesto lista las **revelaciones** del
+  encuadre (R1, R2…): ninguna va en el gancho; H13 veta sus números y el crítico puntúa `reserva`.
 - **Sin cifra obligatoria** (no hay R10): una historia puede abrir con el hecho. Pero cada número dicho tiene
   respaldo, cada **año** está en un hecho del digesto y R7 prohíbe «hoy / ahora» en el gancho de una historia.
 - La voz no abre con «Esta es la historia de…», «Te cuento…», «En el año…»: abre con el momento más fuerte.

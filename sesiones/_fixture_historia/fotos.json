@@ -13,7 +13,8 @@
     1600,
     1200
    ],
-   "retrato_de": null
+   "retrato_de": null,
+   "muestra": "protagonista"
   },
   {
    "id": "ori-f02",
@@ -28,7 +29,8 @@
     1600,
     1200
    ],
-   "retrato_de": null
+   "retrato_de": null,
+   "muestra": "protagonista"
   },
   {
    "id": "ori-f03",
@@ -54,6 +56,23 @@
    "licencia": "© Soy502 (crédito en pantalla)",
    "autor": "Soy502",
    "credito": "Foto: Soy502 (maqueta)",
+   "tamano": [
+    1600,
+    1200
+   ],
+   "retrato_de": null,
+   "muestra": "protagonista"
+  },
+  {
+   "id": "cas-f02",
+   "descripcion": "Sacos de harina en una bodega (foto de referencia de ejemplo)",
+   "fecha": null,
+   "lugar": "Guatemala",
+   "origen": "commons",
+   "licencia": "CC0",
+   "autor": "Maqueta",
+   "credito": "Foto de referencia: Maqueta · CC0",
+   "referencia": true,
    "tamano": [
     1600,
     1200

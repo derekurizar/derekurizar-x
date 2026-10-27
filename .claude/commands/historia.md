@@ -28,7 +28,11 @@ La guía es `referencias/flujo-historia.md`. Nunca publiques. Nunca generes mús
      `args.permitir_fallback: true`.
    - Si falla por pocos hechos publicables, muestra lo descartado (`historia.json → descartados`) y pregunta si se
      cambia el ángulo.
-   - Al volver, lee `veredicto`, `puntajes`, `faltas_pendientes` y `mejoras_no_aplicadas`. Si `veredicto` no es
+   - Si avisa «sigue sin foto del protagonista» (H12), baja una tú (`python3 scripts/historia.py hechos <TRABAJO>
+     --check` imprime las og:image candidatas con el comando `foto --de-fuente … --protagonista` listo) y relanza con
+     `resumeFromRunId`.
+   - Al volver, lee `veredicto`, `puntajes`, `faltas_pendientes`, `mejoras_no_aplicadas` y `oyente` (lo que un oyente
+     que solo oyó la voz no entendió; el crítico lo resolvió o lo justificó). Si `veredicto` no es
      `"pasa"`, muestra las faltas y **pregunta al usuario** si sigue así o corrige a mano. Si pasa, el Workflow ya hizo
      que el guionista aplicara las mejoras del crítico (también las de voz) y repasara el gate; las que no pudo aplicar
      (`mejoras_no_aplicadas`, con su motivo) van al reporte: no las apliques a mano.
@@ -36,11 +40,16 @@ La guía es `referencias/flujo-historia.md`. Nunca publiques. Nunca generes mús
 3. **QA DE FOTOS**
    - `python3 scripts/historia.py fotos-contacto <TRABAJO>` y lee **una vez** `<TRABAJO>/fotos/contacto.png`. Si una
      foto muestra víctimas, cadáveres o menores identificables, es de otra persona u otro lugar que el que dice su
-     descripción, o es un logo genérico: quítala de las escenas en `guion.json` (`"foto": null` con `depto` o
-     `icono`, o cambia el gancho por el segundo de `seleccion.json` con `ganchos --usar <id>`) y repasa `guion --check`.
+     descripción, o es un logo genérico: cámbiala en `guion.json` por otra foto verificada (o una de referencia con
+     `foto … --referencia`; nunca un icono ni un mapa, H7), o cambia el gancho por el segundo de `seleccion.json` con
+     `ganchos --usar <id>`, y repasa `guion --check`.
+   - Comprueba también que la foto del gancho muestra al protagonista (H12; el gate lo exige).
+   - **Cualquier cambio después de la crítica** (otro gancho, otra foto, una escena, el cierre) va por **RETOQUES**
+     (paso 9), nunca editando `guion.json` a mano.
 4. **VOZ** (con `sin-voz`: `python3 scripts/historia.py voz-falsa <TRABAJO>` y salta al paso 5)
    - Di al usuario los caracteres de voz (`locucion.json → caracteres`) antes de gastar.
-   - `python3 scripts/historia.py voz <TRABAJO>` imprime la voz y un `prompt` por escena.
+   - `python3 scripts/historia.py voz <TRABAJO>` imprime la voz y un `prompt` por escena; en una retoma,
+     `voz <TRABAJO> --pendientes` imprime solo los nodos cuya voz cambió o falta (y los créditos aproximados).
    - `creative_create_flow` «Historia · <tema corto>»; un `creative_add_flow_node` por escena (`node_type: "tts"`,
      `model_id: "eleven_multilingual_v2"`, el `voice_id` de la salida, `model_parameters: {"language_code": "es"}`, el
      `prompt` **exacto**); `creative_run_flow_nodes` con todos y **`generations_count: 1`**; sondea solo los
@@ -77,6 +86,16 @@ La guía es `referencias/flujo-historia.md`. Nunca publiques. Nunca generes mús
    - Las animaciones reutilizadas o creadas (quedan en la biblioteca).
    - Los créditos de voz (`audio/creditos.json`) y V11; los avisos (H5, V10, V12, V15, flashback).
    - La carpeta de entrega y el registro en `memoria/historias.json`.
+9. **RETOQUES** (cuando el usuario pida un cambio tras aprobar o grabar: otro gancho, otra foto, reescribir una
+   escena, otro cierre, quitar una cita)
+   - NO edites `guion.json` a mano. Lanza el Workflow `historia` con `args: {"trabajo": "<TRABAJO>", "tema": "<tema>",
+     "desde": "retoque", "notas": "<lo que pidió el usuario, literal>"}`: el guionista aplica solo eso y conserva las
+     demás voces → gate → oyente → crítico (1 vuelta) → mejoras → animación. Lee `veredicto` y `voces_cambiadas`; si no
+     pasa, pregunta. Si las voces que cambian cuestan créditos que el usuario no pidió, dilo antes de generarlas.
+   - `python3 scripts/historia.py voz <TRABAJO> --pendientes` (solo las escenas cuya voz difiere de
+     `audio/palabras_N.json` o sin audio) → genera SOLO esas en el MCP (paso 4) → `descargar --estado`.
+   - `tiempos` → `escuchar` → `grabar <TRABAJO> --solo <n,…>` (y `--formato 4:5`) → `montar` → `revisar` → `entregar`
+     → `memoria.py --historia` (reemplaza el registro del mismo slug) → `make validate`.
 
 Reglas:
 - Solo hechos `confirmado` o `en_disputa` (atribuidos); cada número y cada año con su cita guardada.

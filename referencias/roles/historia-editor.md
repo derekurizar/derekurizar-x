@@ -30,13 +30,27 @@ se volvió exportador de algo, un caso de justicia desde que se descubrió hasta
 - **`sensibles`**: `{justicia: true|false, personas: [señaladas en un caso, vivas]}`. Con `justicia: true`, los
   verificadores deben traer el **estado actual del caso** de cada persona señalada.
 
+- **`protagonista`**: 1–3 nombres con que se nombra a quien protagoniza la historia (la marca, la persona, la empresa,
+  la institución): `["Incaparina"]`, `["Yolanda Fernández", "Yolanda"]`. El gancho tiene que nombrarlo (H10) y abrir
+  con su foto (H12).
+- **`revelaciones`** (3–5 frases): lo que el video **paga** y el gancho NO puede decir: la respuesta a la pregunta, de
+  qué está hecho, quién lo hizo, cómo terminó. Con sus números tal cual («38 % de semilla de algodón»): el gate veta
+  esos dígitos en el gancho (H13) y una de ellas es la que paga la promesa (H14). Los digestos del gancho, del
+  guionista y del crítico las listan R1, R2…
+- **`fotos_clave`** (2–4 frases): las imágenes que la historia necesita; la PRIMERA es siempre la del protagonista (la
+  bolsa o el vaso, el edificio, la persona) y es obligatoria (H12). Los investigadores y verificadores las buscan.
+- `dominios_propios` incluye también el sitio de la marca (`incaparina.com`), no solo el de la institución: su prensa
+  cuenta como foto «empresa».
+
 ## Salida
 
 `<TRABAJO>/encuadre.json` (ejemplo completo: `sesiones/_fixture_historia/encuadre.json`):
 
 ```json
-{"tema": "…", "slug": "…", "pregunta": "…", "resumen": "la historia en una oración", "arco": "caso",
- "paleta": "atitlan", "dominios_propios": [],
+{"tema": "…", "slug": "…", "pregunta": "…", "protagonista": ["La Espiga"],
+ "revelaciones": ["La inspección encontró 40 sacos de harina vencida", "Cerró la última sucursal en 2010", "…"],
+ "fotos_clave": ["la panadería La Espiga: su horno, su local o su pan", "Marta Pérez"],
+ "resumen": "la historia en una oración", "arco": "caso", "paleta": "atitlan", "dominios_propios": [],
  "capitulos": [{"n": 1, "titulo": "Un lago enfermo", "periodo": "2015", "pregunta": "…"}],
  "ejes": [{"id": "exp", "nombre": "el contrato", "capitulos": [1, 2], "preguntas": ["…"], "fuentes": ["MP", "CICIG"]}],
  "sensibles": {"justicia": true, "personas": ["…"]}, "no_afirma": ["…"]}

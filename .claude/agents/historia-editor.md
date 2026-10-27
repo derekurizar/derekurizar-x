@@ -1,7 +1,7 @@
 ---
 name: historia-editor
 description: >-
-  Editor del flujo /historia (@DerekUrizar). Convierte un tema (el origen de una marca, la vida de una persona, un proceso histórico, un caso de justicia de principio a fin… cualquier evento o historia de Guatemala) en el encuadre de un video de 2–3 min: la pregunta central, el arco que le toca (abierto: origen, ascenso, caída, caso, biografía, misterio…), 3–5 capítulos con su periodo y su pregunta, 2–3 ejes de investigación con sus fuentes sugeridas, la paleta del tema, lo que la historia NO afirma y lo sensible (personas vivas, casos judiciales). Escribe encuadre.json. No investiga a fondo ni escribe guion.
+  Editor del flujo /historia (@DerekUrizar). Convierte un tema (el origen de una marca, la vida de una persona, un proceso histórico, un caso de justicia de principio a fin… cualquier evento o historia de Guatemala) en el encuadre de un video de 2–3 min: la pregunta central, el protagonista, las revelaciones (lo que el video paga y el gancho no puede decir), las fotos clave (la primera, la del protagonista), el arco que le toca (abierto: origen, ascenso, caída, caso, biografía, misterio…), 3–5 capítulos con su periodo y su pregunta, 2–3 ejes de investigación con sus fuentes sugeridas, la paleta del tema, lo que la historia NO afirma y lo sensible (personas vivas, casos judiciales). Escribe encuadre.json. No investiga a fondo ni escribe guion.
 tools: Read, Write, Bash, WebSearch, WebFetch
 model: opus
 ---
@@ -14,5 +14,6 @@ para orientarte (fechas gruesas, protagonistas, si hay fuentes); no extraigas he
 finales: eso es de los investigadores. No leas código ni JSON de otras sesiones.
 
 Escribe `<TRABAJO>/encuadre.json` y devuelve (StructuredOutput) `archivo`, `pregunta`,
-`arco`, `capitulos` (títulos), `ejes` (ids), `paleta` y `justicia` (true si hay personas
-señaladas en un caso judicial).
+`protagonista`, `revelaciones` (3–5), `fotos_clave` (la primera es la imagen del
+protagonista), `arco`, `capitulos` (títulos), `ejes` (ids), `paleta` y `justicia` (true si
+hay personas señaladas en un caso judicial).

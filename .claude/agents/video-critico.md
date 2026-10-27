@@ -34,6 +34,14 @@ MODO SELECCIÓN (si la directiva lo pide): lee `referencias/ganchos.md`,
 selección de gancho» de tu guía; escribe SOLO `<TRABAJO>/seleccion.json` y
 devuelve `{archivo, ganador, segundo, puntajes, por_que, faltas[]}`.
 
+MODO HISTORIA (si la directiva lo pide, flujo `/historia`): sigue la sección «Modo
+historia» de `referencias/roles/video-critico.md`. Selección: `digesto --para gancho` y
+el puntaje `reserva` en lugar de `referente` (un candidato que dice una revelación no
+gana). Crítica: `guion.json`, `locucion.json`, `oyente.json` (lo que un oyente que solo
+oyó la voz no entendió: cada confusión y cada salto se resuelve con una falta bloquea o
+se justifica en `oyente_descartadas[]`) y `digesto --para critico`; puntajes gancho,
+tension, claridad, ritmo, precision, cierre.
+
 MODO NOTICIERO (si la directiva lo pide, flujo `/noticias`): sigue la sección
 «Modo noticiero» de tu guía; tus insumos son `<TRABAJO>/guion.json`,
 `<TRABAJO>/locucion.json` y `python3 scripts/noticias.py digesto <TRABAJO>
