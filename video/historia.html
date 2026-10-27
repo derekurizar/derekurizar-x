@@ -147,16 +147,21 @@ window.__listo = (async () => {
     const a = document.getElementById('anio'), col = document.getElementById('cap').clientWidth;
     for (let fs = F45 ? 210 : 270; fs > 90 && a.scrollWidth > col; fs -= 10) a.style.fontSize = fs + 'px';
   }
+  await V.pintarActo(S);   // rótulo de acto (S.R): solo en una `cita`; la escena `capitulo` nunca lo lleva
 })();
 const subtitulos = (t) => V.subtitulos(t, S, TROZOS, { ocultar: (tr) => tr.every((x) => EN_PANTALLA.has(normal(x.text))) });
 const esAnio = (x) => /^\d{3,4}$/.test(String(x));
 window.seek = (t) => {
   V.seekProgreso(t, n, S.dur);
-  const ch = eo((t - 0.1) / 0.4), chip = document.getElementById('chip');
+  V.seekActo(t, S);
+  // el chip y la caja entran tras el rótulo de acto si lo hay (V.desfase) y más rápido si la escena sigue a otra de la
+  // misma secuencia de voz (S.seguida); lo que depende de la voz (frase, firma, fuente) ya llega desplazado de python
+  const D = V.desfase(S), K = S.seguida ? 0.6 : 1;
+  const ch = eo((t - D - 0.1) / (0.4 * K)), chip = document.getElementById('chip');
   chip.style.opacity = ch; chip.style.transform = `translateX(${((1 - ch) * -40).toFixed(1)}px)`;
   if (S.tipo === 'cita') {
     const caja = document.getElementById('cita');
-    const ap = eo((t - 0.15) / 0.5);
+    const ap = eo((t - D - 0.15) / (0.5 * K));
     caja.style.opacity = ap;
     caja.style.transform = `translateY(${((1 - ap) * 30).toFixed(1)}px) scale(${(1 + 0.02 * clamp(t / S.dur)).toFixed(4)})`;
     [...document.querySelectorAll('#frase span')].forEach((s, i) => {

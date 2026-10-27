@@ -82,24 +82,34 @@ window.__listo = (async () => {
       BASE.ty = -Math.min(48, Math.max(0, baja));
     }
   }
-  // focos: la caja de cada valor que dice la voz, leída del DOM final (antes del primer seek)
+  // focos: la caja de cada valor que dice la voz, leída del DOM final (antes del primer seek); T.foco === false (el
+  // guion pidió `foco: false`) los apaga
   if (S.T.foco !== false && S.T.valores && typeof fr.contentWindow.__caja === 'function') {
     for (const [k, [a, b]] of Object.entries(S.T.valores)) {
       const c = fr.contentWindow.__caja(k);
-      if (!c || c[2] > 0.7 * 1080 || c[3] > 0.7 * 1080) continue;
+      if (!c || c[2] > 0.92 * 1080 || c[3] > 0.92 * 1080) continue;
       const [x, y, bw, bh] = c;
       // zoom que se note: 1.25–1.45 según el ancho de la caja, centrada en la pantalla (dentro del recorte del
-      // teléfono y de la ventana); el resto de la tarjeta puede salirse de cuadro
-      const s = Math.min(1.45, Math.max(1.25, 420 / bw));
+      // teléfono y de la ventana); el resto de la tarjeta puede salirse de cuadro. Una caja ancha (> 0.7×1080: una
+      // fila de barras entera con su nombre) lleva un FOCO SUAVE: 1.15, o lo que quepa en el recorte, solo centrada
+      const suave = bw > 0.7 * 1080 || bh > 0.7 * 1080;
       const cl = (v, lo, hi) => (lo > hi ? (lo + hi) / 2 : Math.max(lo, Math.min(hi, v)));
-      const ty = cl(VH / 2 - s * (y + bh / 2), 16 - s * y, VH - 16 - s * (y + bh));
-      // si la caja enfocada queda por debajo de y≈1070, su borde derecho no entra en la columna de íconos
-      const derecha = VT + ty + s * (y + bh) > ZONA.iconosY ? Math.min(CORTE[1], ZONA.iconosX - 12) : CORTE[1];
+      let s = suave ? Math.min(1.15, (CORTE[1] - CORTE[0] - 8) / bw, (VH - 32) / bh) : Math.min(1.45, Math.max(1.25, 420 / bw));
+      let ty, derecha;
+      for (let paso = 0; paso < 2; paso++) {
+        ty = cl(VH / 2 - s * (y + bh / 2), 16 - s * y, VH - 16 - s * (y + bh));
+        // si la caja enfocada queda por debajo de y≈1070, su borde derecho no entra en la columna de íconos
+        derecha = VT + ty + s * (y + bh) > ZONA.iconosY ? Math.min(CORTE[1], ZONA.iconosX - 12) : CORTE[1];
+        if (!suave || s * bw <= derecha - CORTE[0] - 8) break;
+        s = (derecha - CORTE[0] - 8) / bw;   // la fila ancha se achica hasta caber a la derecha de los íconos
+      }
+      if (s < 1) continue;   // un foco nunca aleja la tarjeta
       const tx = cl(540 - s * (x + bw / 2), CORTE[0] - s * x, derecha - s * (x + bw));
       FOCOS.push({ k, a, b: b + 0.8, s, tx, ty, caja: c });
     }
   }
   if (DEBUG) FOCOS.forEach((f) => { const d = document.createElement('div'); d.className = 'caja'; d.dataset.k = f.k; document.getElementById('ventana').appendChild(d); });
+  await V.pintarActo(S);   // rótulo de acto (/historia, S.R); sus focos y golpe ya llegan desplazados de python
 })();
 // transform de #marco en t: deriva lenta (escala 1 → 1.035, −12/−8 px a lo largo de la escena) fuera de los focos;
 // dentro, mezcla ponderada de los focos activos (entrada 0.45 s, sostenido hasta `hasta` + 0.8, salida 0.6 s)
@@ -117,6 +127,7 @@ const marco = (t) => {
 window.seek = (t) => {
   V.seekGolpe(t, S);
   V.seekProgreso(t, n, S.dur);
+  V.seekActo(t, S);
   const m = marco(t);
   document.getElementById('marco').style.transform = `translate(${m.tx.toFixed(2)}px, ${m.ty.toFixed(2)}px) scale(${m.s.toFixed(4)})`;
   // V13: con un foco puesto, la caja enfocada (en coordenadas de página) es lo único que tiene que estar en la zona

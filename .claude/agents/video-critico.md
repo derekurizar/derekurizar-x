@@ -39,8 +39,11 @@ historia» de `referencias/roles/video-critico.md`. Selección: `digesto --para 
 el puntaje `reserva` en lugar de `referente` (un candidato que dice una revelación no
 gana). Crítica: `guion.json`, `locucion.json`, `oyente.json` (lo que un oyente que solo
 oyó la voz no entendió: cada confusión y cada salto se resuelve con una falta bloquea o
-se justifica en `oyente_descartadas[]`) y `digesto --para critico`; puntajes gancho,
-tension, claridad, ritmo, precision, cierre.
+se justifica en `oyente_descartadas[]`; cada `pregunta_sin_responder` se atiende con una
+falta H-C3 con `escena: null` o se descarta con la `pregunta` literal) y `digesto --para
+critico` (la narración de corrido por acto, la espina, los hilos y la cronología); lees
+primero la narración como un texto (H-C4 flujo: una sola voz, no tarjetas leídas);
+puntajes gancho, tension, claridad, flujo, precision, cierre.
 
 MODO NOTICIERO (si la directiva lo pide, flujo `/noticias`): sigue la sección
 «Modo noticiero» de tu guía; tus insumos son `<TRABAJO>/guion.json`,

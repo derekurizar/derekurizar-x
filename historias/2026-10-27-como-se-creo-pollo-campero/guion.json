@@ -1,0 +1,411 @@
+{
+ "id": "2026-10-27-como-se-creo-pollo-campero",
+ "tipo": "historia",
+ "slug": "como-se-creo-pollo-campero",
+ "tema": "como se creo pollo campero",
+ "fecha": "2026-10-27",
+ "pregunta": "¿Cómo nació Pollo Campero y cómo terminó viajando en la maleta de los guatemaltecos?",
+ "arco": "origen y ascenso, con una tragedia a medio camino: de un pago en pollos a una marca que viaja con la diáspora",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "1972",
+   "titulo": "El avión a Honduras",
+   "escena": 6
+  },
+  {
+   "numero": 3,
+   "anio": "2002",
+   "titulo": "La caja que viaja",
+   "escena": 12
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "Juan Bautista Gutiérrez, un español, molía trigo en Guatemala. De su molino, su familia sacó Pollo Campero. Décadas después, la marca llegaría a Estados Unidos, donde ya la esperaban. Un día, un criador no pudo pagarle el trigo, y Forbes cuenta que le entregó 1,000 gallinas. Juan Bautista las engordó, y en 1967 abrió un restaurante de pollo frito. Aún no era Campero: faltaba el sabor. Lo buscó Francisco Pérez de Antón, empresario español y futuro cofundador, que le dijo a la BBC: Probé con distintas mezclas de harina con especias hasta que encontré un sabor que me parecía sería del gusto de los guatemaltecos. La fórmula nunca se publicó, pero funcionó: en abril de 1971, Dionisio Gutiérrez, hijo de Juan Bautista, encabezó a un grupo de empresarios que puso Q2,000 y abrió el primer Pollo Campero, en la Ciudad de Guatemala."
+  },
+  {
+   "acto": 2,
+   "texto": "Un año después, Campero ya abría en El Salvador. Pero en octubre de 1974, Dionisio y su cuñado Alfonso Bosch volaban a Honduras con medicinas para los damnificados del huracán Fifí. El avión se estrelló, y los dos murieron. Tras el accidente, según la BBC, dos hijos jóvenes, uno de cada familia, cubrieron el vacío que dejaron sus padres. En 1982, Pérez de Antón invitó a Juan José Gutiérrez, primogénito de Dionisio, a presidir Campero. Para 1987, la cadena probó suerte en Miami, pero al año tuvo que cerrar. Aun sin local en Estados Unidos, su pollo llegaba allá: Campero aseguraba que en los aeropuertos de La Aurora y San Salvador vendía más de 3 millones de pedidos para llevar al año. Mucho de ese pollo iba en cajas que los viajeros subían al avión. El diario Los Angeles Times sostiene que lo hacían por las guerras de Guatemala y El Salvador: cientos de miles emigraron, muchos a Los Ángeles, y la caja los siguió."
+  },
+  {
+   "acto": 3,
+   "texto": "Quince años después de Miami, Campero volvió a Estados Unidos: en abril de 2002 abrió en Los Ángeles, donde vivían muchos de los que emigraron, y lo esperaban en filas de 6 a 8 horas. Ya no hacía falta llevarlo, pero la caja siguió viajando: el mismo diario de Los Ángeles estimó que aún se vendían cerca de 400,000 pedidos al año en La Aurora y San Salvador antes de la pandemia. Hoy Campero pasa de 415 restaurantes, y en febrero de 2026 abrió en California su local 150 en Estados Unidos. Todo empezó con unas gallinas que pagaron una deuda de trigo. Las familias aún suben al avión con una caja para los que se fueron."
+  }
+ ],
+ "hilos": [
+  {
+   "id": "h1",
+   "escena": 3
+  },
+  {
+   "id": "h2",
+   "escena": 5
+  },
+  {
+   "id": "h3",
+   "escena": 8
+  },
+  {
+   "id": "h5",
+   "escena": 9
+  },
+  {
+   "id": "h4",
+   "escena": 10
+  },
+  {
+   "id": "h6",
+   "escena": 14
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3
+  ],
+  [
+   4,
+   5
+  ],
+  [
+   6,
+   7
+  ],
+  [
+   8,
+   9
+  ],
+  [
+   10,
+   11
+  ],
+  [
+   12,
+   13,
+   14
+  ]
+ ],
+ "paleta": "maiz",
+ "musica": "maiz-2",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2585.0,
+ "duracion_s": 172.5,
+ "critica": {
+  "veredicto": "pasa",
+  "vuelta": 1,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 4,
+   "claridad": 4,
+   "flujo": 4,
+   "precision": 5,
+   "cierre": 4
+  }
+ },
+ "gancho": {
+  "familia": "personaje",
+  "visual": "foto",
+  "pantalla": "Molía trigo, no pollo",
+  "linea": "Juan Bautista Gutiérrez y su molino"
+ },
+ "promesa": {
+  "texto": "Décadas después, la marca llegaría a Estados Unidos, donde ya la esperaban.",
+  "en": 2,
+  "pago": 12,
+  "revela": 5
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "Juan Bautista Gutiérrez, un español, molía trigo en Guatemala. De su molino, su familia sacó Pollo Campero.",
+   "voz": "Juan Bautista Gutiérrez, un español, molía trigo en Guatemala. De su molino, su familia sacó Pollo Campero.",
+   "dur": 7.641,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Estrategia & Negocios",
+     "origen": "medio",
+     "licencia": "© Estrategia & Negocios (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "Décadas después, la marca llegaría a Estados Unidos, donde ya la esperaban.",
+   "voz": "Décadas después, la marca llegaría a Estados Unidos, donde ya la esperaban.",
+   "dur": 5.024,
+   "hechos": [
+    "ori-h14"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Estrategia & Negocios",
+     "origen": "medio",
+     "licencia": "© Estrategia & Negocios (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "foto",
+   "pantalla": "Un día, un criador no pudo pagarle el trigo, y Forbes cuenta que le entregó 1,000 gallinas. Juan Bautista las engordó, y en 1967 abrió un restaurante de pollo frito.",
+   "voz": "Un día, un criador no pudo pagarle el trigo, y Forbes cuenta que le entregó mil gallinas. Juan Bautista las engordó, y en mil novecientos sesenta y siete abrió un restaurante de pollo frito.",
+   "dur": 13.385,
+   "hechos": [
+    "ori-h01",
+    "ori-h04"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: alejandro jofré · CC BY 2.0",
+     "origen": "commons",
+     "licencia": "CC BY 2.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "cita",
+   "pantalla": "Aún no era Campero: faltaba el sabor. Lo buscó Francisco Pérez de Antón, empresario español y futuro cofundador, que le dijo a la BBC: Probé con distintas mezclas de harina con especias hasta que encontré un sabor que me parecía sería del gusto de los guatemaltecos.",
+   "voz": "Aún no era Campero: faltaba el sabor. Lo buscó Francisco Pérez de Antón, empresario español y futuro cofundador, que le dijo a la BBC: Probé con distintas mezclas de harina con especias hasta que encontré un sabor que me parecía sería del gusto de los guatemaltecos.",
+   "dur": 17.949,
+   "hechos": [
+    "ori-h09"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "foto",
+   "pantalla": "La fórmula nunca se publicó, pero funcionó: en abril de 1971, Dionisio Gutiérrez, hijo de Juan Bautista, encabezó a un grupo de empresarios que puso Q2,000 y abrió el primer Pollo Campero, en la Ciudad de Guatemala.",
+   "voz": "La fórmula nunca se publicó, pero funcionó: en abril de mil novecientos setenta y uno, Dionisio Gutiérrez, hijo de Juan Bautista, encabezó a un grupo de empresarios que puso dos mil quetzales y abrió el primer Pollo Campero, en la Ciudad de Guatemala.",
+   "dur": 17.011,
+   "hechos": [
+    "ori-h07",
+    "glo-h13"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Estrategia & Negocios",
+     "origen": "medio",
+     "licencia": "© Estrategia & Negocios (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "foto",
+   "pantalla": "Un año después, Campero ya abría en El Salvador. Pero en octubre de 1974, Dionisio y su cuñado Alfonso Bosch volaban a Honduras con medicinas para los damnificados del huracán Fifí.",
+   "voz": "Un año después, Campero ya abría en El Salvador. Pero en octubre de mil novecientos setenta y cuatro, Dionisio y su cuñado Alfonso Bosch volaban a Honduras con medicinas para los damnificados del huracán Fifí.",
+   "dur": 13.273,
+   "hechos": [
+    "cre-h06",
+    "cre-h01",
+    "cre-h02"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Ll1324 · CC0",
+     "origen": "commons",
+     "licencia": "CC0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "golpe",
+   "pantalla": "El avión se estrelló, y los dos murieron.",
+   "voz": "El avión se estrelló, y los dos murieron.",
+   "dur": 3.991,
+   "hechos": [
+    "cre-h01"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "foto",
+   "pantalla": "Tras el accidente, según la BBC, dos hijos jóvenes, uno de cada familia, cubrieron el vacío que dejaron sus padres. En 1982, Pérez de Antón invitó a Juan José Gutiérrez, primogénito de Dionisio, a presidir Campero.",
+   "voz": "Tras el accidente, según la BBC, dos hijos jóvenes, uno de cada familia, cubrieron el vacío que dejaron sus padres. En mil novecientos ochenta y dos, Pérez de Antón invitó a Juan José Gutiérrez, primogénito de Dionisio, a presidir Campero.",
+   "dur": 16.241,
+   "hechos": [
+    "cre-h03",
+    "cre-h04"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Forbes México",
+     "origen": "medio",
+     "licencia": "© Forbes México (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "foto",
+   "pantalla": "Para 1987, la cadena probó suerte en Miami, pero al año tuvo que cerrar.",
+   "voz": "Para mil novecientos ochenta y siete, la cadena probó suerte en Miami, pero al año tuvo que cerrar.",
+   "dur": 7.109,
+   "hechos": [
+    "glo-h01"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Paul Lowry · CC BY 4.0",
+     "origen": "commons",
+     "licencia": "CC BY 4.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "foto",
+   "pantalla": "Aun sin local en Estados Unidos, su pollo llegaba allá: Campero aseguraba que en los aeropuertos de La Aurora y San Salvador vendía más de 3 millones de pedidos para llevar al año.",
+   "voz": "Aun sin local en Estados Unidos, su pollo llegaba allá: Campero aseguraba que en los aeropuertos de La Aurora y San Salvador vendía más de tres millones de pedidos para llevar al año.",
+   "dur": 11.589,
+   "hechos": [
+    "cre-h12"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: MHernandezp05 · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "explica",
+   "pantalla": "Mucho de ese pollo iba en cajas que los viajeros subían al avión. El diario Los Angeles Times sostiene que lo hacían por las guerras de Guatemala y El Salvador: cientos de miles emigraron, muchos a Los Ángeles, y la caja los siguió.",
+   "voz": "Mucho de ese pollo iba en cajas que los viajeros subían al avión. El diario Los Angeles Times sostiene que lo hacían por las guerras de Guatemala y El Salvador: cientos de miles emigraron, muchos a Los Ángeles, y la caja los siguió.",
+   "dur": 15.645,
+   "hechos": [
+    "cre-h13",
+    "cre-h14"
+   ],
+   "fotos": [],
+   "animacion": "arco-viaje",
+   "mecanismo": "onda"
+  },
+  {
+   "n": 12,
+   "tipo": "foto",
+   "pantalla": "Quince años después de Miami, Campero volvió a Estados Unidos: en abril de 2002 abrió en Los Ángeles, donde vivían muchos de los que emigraron, y lo esperaban en filas de 6 a 8 horas.",
+   "voz": "Quince años después de Miami, Campero volvió a Estados Unidos: en abril de dos mil dos abrió en Los Ángeles, donde vivían muchos de los que emigraron, y lo esperaban en filas de seis a ocho horas.",
+   "dur": 12.734,
+   "hechos": [
+    "glo-h02",
+    "glo-h03"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: latimes.com",
+     "origen": "medio",
+     "licencia": "© latimes.com (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 13,
+   "tipo": "tarjeta",
+   "pantalla": "Ya no hacía falta llevarlo, pero la caja siguió viajando: el mismo diario de Los Ángeles estimó que aún se vendían cerca de 400,000 pedidos al año en La Aurora y San Salvador antes de la pandemia.",
+   "voz": "Ya no hacía falta llevarlo, pero la caja siguió viajando: el mismo diario de Los Ángeles estimó que aún se vendían cerca de cuatrocientos mil pedidos al año en La Aurora y San Salvador antes de la pandemia.",
+   "dur": 13.859,
+   "hechos": [
+    "cre-h12",
+    "glo-h06",
+    "glo-h12"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 14,
+   "tipo": "foto",
+   "pantalla": "Hoy Campero pasa de 415 restaurantes, y en febrero de 2026 abrió en California su local 150 en Estados Unidos.",
+   "voz": "Hoy Campero pasa de cuatrocientos quince restaurantes, y en febrero de dos mil veintiséis abrió en California su local ciento cincuenta en Estados Unidos.",
+   "dur": 10.41,
+   "hechos": [
+    "glo-h10",
+    "glo-h09"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Estrategia & Negocios",
+     "origen": "medio",
+     "licencia": "© Estrategia & Negocios (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 15,
+   "tipo": "cierre",
+   "pantalla": "Todo empezó con unas gallinas que pagaron una deuda de trigo. Las familias aún suben al avión con una caja para los que se fueron.",
+   "voz": "Todo empezó con unas gallinas que pagaron una deuda de trigo. Las familias aún suben al avión con una caja para los que se fueron.",
+   "dur": 10.493,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Lo que dejó",
+  "resumen": [
+   "Nació de un pago en gallinas",
+   "Abrió en Guatemala en 1971",
+   "Aún sube a los vuelos al norte"
+  ],
+  "texto": "Todo empezó con unas gallinas que pagaron una deuda de trigo. Las familias aún suben al avión con una caja para los que se fueron.",
+  "tipo": "remate",
+  "forma": "legado",
+  "final": "Las familias aún suben al avión con una caja para los que se fueron.",
+  "consecuencia": {
+   "quien": "familias",
+   "verbo": "suben"
+  }
+ },
+ "caption": {
+  "tiktok": "Pollo Campero nació de un pago: un criador no pudo pagar el trigo y entregó gallinas. De ahí, a 1971, a un avión a Honduras y a las filas de Los Ángeles. #Guatemala #PolloCampero #Historia",
+  "instagram": "Cómo nació Pollo Campero: de un molino de trigo en Guatemala a la caja que viaja en los vuelos al norte. #Guatemala #PolloCampero",
+  "facebook": "La historia de Pollo Campero: un pago en gallinas, el primer restaurante en 1971, la tragedia de 1974 y la caja que viaja con la diáspora. Fuentes en el primer comentario.",
+  "shorts": "Cómo nació Pollo Campero en Guatemala #Shorts\nDe un pago en gallinas a la caja que sube a los aviones."
+ }
+}

@@ -1,0 +1,392 @@
+{
+ "id": "2026-10-27-el-caso-del-lago-de-amatitlan-el-quimico-que-resulto-ser-agu",
+ "tipo": "historia",
+ "slug": "el-caso-del-lago-de-amatitlan-el-quimico-que-resulto-ser-agu",
+ "tema": "El caso del lago de Amatitlán: el químico que resultó ser agua con sal",
+ "fecha": "2026-10-27",
+ "pregunta": "¿Qué era en realidad el líquido milagroso por el que el gobierno pagó millones para limpiar el lago de Amatitlán, y quién respondió por él?",
+ "arco": "caso: un lago enfermo, una promesa de rescate en tiempo récord, el engaño que destapa un análisis de laboratorio y una justicia que condena pero que años después aún no cierra; mientras tanto el lago sigue verde",
+ "capitulos": [
+  {
+   "numero": 1,
+   "anio": "2013",
+   "titulo": "Un lago enfermo"
+  },
+  {
+   "numero": 2,
+   "anio": "2014",
+   "titulo": "La fórmula milagrosa"
+  },
+  {
+   "numero": 3,
+   "anio": "2015",
+   "titulo": "El laboratorio"
+  },
+  {
+   "numero": 4,
+   "anio": "2018",
+   "titulo": "El juicio"
+  },
+  {
+   "numero": 5,
+   "anio": "2025–2026",
+   "titulo": "Lo que quedó"
+  }
+ ],
+ "paleta": "jade",
+ "musica": "jade-1",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2462.0,
+ "duracion_s": 172.5,
+ "critica": {
+  "veredicto": "pasa",
+  "vuelta": 1,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 4,
+   "claridad": 3,
+   "ritmo": 3,
+   "precision": 4,
+   "cierre": 4
+  }
+ },
+ "gancho": {
+  "familia": "misterio",
+  "visual": "foto",
+  "pantalla": "Líquido para el lago",
+  "linea": "una sustancia que nadie conocía"
+ },
+ "promesa": {
+  "texto": "Al final sabrás si la justicia ya cerró el caso de ese líquido.",
+  "en": 2,
+  "pago": 19,
+  "revela": 5
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "Guatemala compró un líquido para salvar el lago de Amatitlán. Era una sustancia que nadie conocía.",
+   "voz": "Guatemala compró un líquido para salvar el lago de Amatitlán. Era una sustancia que nadie conocía.",
+   "dur": 6.911,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: La Hora",
+     "origen": "medio",
+     "licencia": "© La Hora (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "Un lago enfermo y una fórmula que prometía salvarlo. Al final sabrás si la justicia ya cerró el caso de ese líquido.",
+   "voz": "Un lago enfermo y una fórmula que prometía salvarlo. Al final sabrás si la justicia ya cerró el caso de ese líquido.",
+   "dur": 8.134,
+   "hechos": [
+    "lago-h01"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Rene Hernandez · CC BY-SA 2.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 2.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "capitulo",
+   "pantalla": "2013. Un lago enfermo.",
+   "voz": "Dos mil trece. Un lago enfermo.",
+   "dur": 3.404,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "foto",
+   "pantalla": "Según AMSA, la autoridad del lago, el 86 por ciento del agua que le entraba eran aguas residuales.",
+   "voz": "Según AMSA, la autoridad del lago, el ochenta y seis por ciento del agua que le entraba eran aguas residuales.",
+   "dur": 7.415,
+   "hechos": [
+    "lago-h03"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Simon Burchell · CC BY-SA 3.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 3.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "cita",
+   "pantalla": "Según Prensa Libre, en 2013 el director de AMSA advirtió: El lago tenía una profundidad de 33 metros, y ahora tiene unos 18 metros y cada año se pierde más o menos uno de profundidad.",
+   "voz": "Según Prensa Libre, en dos mil trece el director de AMSA advirtió: El lago tenía una profundidad de treinta y tres metros, y ahora tiene unos dieciocho metros y cada año se pierde más o menos uno de profundidad.",
+   "dur": 14.299,
+   "hechos": [
+    "lago-h02"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "capitulo",
+   "pantalla": "2014. Llega una fórmula milagrosa.",
+   "voz": "Dos mil catorce. Llega una fórmula milagrosa.",
+   "dur": 3.786,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "tarjeta",
+   "pantalla": "Por eso AMSA contrató a la empresa israelí M. Tarcic y su líquido: un contrato de Q137.8 millones.",
+   "voz": "Por eso AMSA contrató a la empresa israelí M. Tarcic y su líquido: un contrato de ciento treinta y siete punto ocho millones de quetzales.",
+   "dur": 9.994,
+   "hechos": [
+    "cas-h16"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "foto",
+   "pantalla": "En marzo de 2015, según Prensa Libre, la vicepresidenta Roxana Baldetti recorrió el lago en lancha para supervisar la limpieza.",
+   "voz": "En marzo de dos mil quince, según Prensa Libre, la vicepresidenta Roxana Baldetti recorrió el lago en lancha para supervisar la limpieza.",
+   "dur": 8.769,
+   "hechos": [
+    "ctr-h05"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "cita",
+   "pantalla": "Ese mes, según Prensa Libre, la organización Acción Ciudadana la acusó de tráfico de influencias por ese contrato. Y ella respondió: No se está perdiendo el dinero. Aquí hay un lago completamente contaminado.",
+   "voz": "Ese mes, según Prensa Libre, la organización Acción Ciudadana la acusó de tráfico de influencias por ese contrato. Y ella respondió: No se está perdiendo el dinero. Aquí hay un lago completamente contaminado.",
+   "dur": 13.766,
+   "hechos": [
+    "ctr-h07"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Gobierno de Guatemala · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "golpe",
+   "pantalla": "Pero, según Prensa Libre, 38 científicos guatemaltecos pidieron no echar ese líquido al lago.",
+   "voz": "Pero, según Prensa Libre, treinta y ocho científicos guatemaltecos pidieron no echar ese líquido al lago.",
+   "dur": 7.036,
+   "hechos": [
+    "ctr-h08"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "capitulo",
+   "pantalla": "2015. El laboratorio responde.",
+   "voz": "Dos mil quince. El laboratorio responde.",
+   "dur": 3.997,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "golpe",
+   "pantalla": "Pero, según Prensa Libre, el Ministerio de Salud analizó la fórmula milagrosa: era agua con sal.",
+   "voz": "Pero, según Prensa Libre, el Ministerio de Salud analizó la fórmula milagrosa: era agua con sal.",
+   "dur": 7.591,
+   "hechos": [
+    "ctr-h09",
+    "cas-h04"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 13,
+   "tipo": "tarjeta",
+   "pantalla": "Y el dinero ya había salido: Q22.8 millones por 23 mil litros del líquido. Aplicarlo costaría otros Q115 millones.",
+   "voz": "Y el dinero ya había salido: veintidós punto ocho millones de quetzales por veintitrés mil litros del líquido. Aplicarlo costaría otros ciento quince millones de quetzales.",
+   "dur": 11.606,
+   "hechos": [
+    "cas-h05"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 14,
+   "tipo": "explica",
+   "pantalla": "Por eso, según la CICIG, la comisión contra la impunidad, la investigación partió de ese dinero. En febrero de 2016 capturan al representante de M. Tarcic y a Mario Baldetti, hermano de Roxana.",
+   "voz": "Por eso, según la CICIG, la comisión contra la impunidad, la investigación partió de ese dinero. En febrero de dos mil dieciséis capturan al representante de M. Tarcic y a Mario Baldetti, hermano de Roxana.",
+   "dur": 13.625,
+   "hechos": [
+    "ctr-h14",
+    "ctr-h15"
+   ],
+   "fotos": [],
+   "animacion": "cronologia",
+   "mecanismo": "cronologia"
+  },
+  {
+   "n": 15,
+   "tipo": "capitulo",
+   "pantalla": "2018. Llega el juicio.",
+   "voz": "Dos mil dieciocho. Llega el juicio.",
+   "dur": 3.713,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 16,
+   "tipo": "cita",
+   "pantalla": "Según La Hora, el tribunal calificó el contrato del lago como actos grotescos, caros e innecesarios, con el propósito de defraudar al Estado de Guatemala.",
+   "voz": "Según La Hora, el tribunal calificó el contrato del lago como actos grotescos, caros e innecesarios, con el propósito de defraudar al Estado de Guatemala.",
+   "dur": 9.981,
+   "hechos": [
+    "cas-h10"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 17,
+   "tipo": "foto",
+   "pantalla": "Condenaron a Roxana Baldetti a 15 años y 6 meses, y a su hermano Mario. ¿Su papel? Según el fallo, sin ser funcionario, mandaba en AMSA.",
+   "voz": "Condenaron a Roxana Baldetti a quince años y seis meses, y a su hermano Mario. ¿Su papel? Según el fallo, sin ser funcionario, mandaba en AMSA.",
+   "dur": 10.837,
+   "hechos": [
+    "cas-h02",
+    "cas-h06"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: CICIG",
+     "origen": "oficial",
+     "licencia": "© CICIG (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 18,
+   "tipo": "capitulo",
+   "pantalla": "2025 y 2026. Lo que quedó.",
+   "voz": "Dos mil veinticinco y dos mil veintiséis. Lo que quedó.",
+   "dur": 4.545,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 19,
+   "tipo": "foto",
+   "pantalla": "La condena aún no estaba firme: la casación, su recurso ante la Corte Suprema, seguía pendiente. Mientras esperaba, en septiembre de 2026, Baldetti pasó a arresto domiciliario.",
+   "voz": "La condena aún no estaba firme: la casación, su recurso ante la Corte Suprema, seguía pendiente. Mientras esperaba, en septiembre de dos mil veintiséis, Baldetti pasó a arresto domiciliario.",
+   "dur": 13.764,
+   "hechos": [
+    "cas-h12",
+    "cas-h14"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: La Hora",
+     "origen": "medio",
+     "licencia": "© La Hora (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 20,
+   "tipo": "cierre",
+   "pantalla": "Mientras tanto, el lago siguió enfermo: en abril de 2025, AMSA alertó por cianobacterias, unas algas tóxicas. Y a la gente le pidió no nadar ni pescar en él.",
+   "voz": "Mientras tanto, el lago siguió enfermo: en abril de dos mil veinticinco, AMSA alertó por cianobacterias, unas algas tóxicas. Y a la gente le pidió no nadar ni pescar en él.",
+   "dur": 14.667,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Así terminó",
+  "resumen": [
+   "El líquido era agua con sal",
+   "Baldetti, condenada en 2018",
+   "La condena aún no es firme"
+  ],
+  "texto": "Mientras tanto, el lago siguió enfermo: en abril de 2025, AMSA alertó por cianobacterias, unas algas tóxicas. Y a la gente le pidió no nadar ni pescar en él.",
+  "tipo": "remate",
+  "forma": "consecuencia",
+  "final": "Y a la gente le pidió no nadar ni pescar en él.",
+  "consecuencia": {
+   "mecanismo": "despues",
+   "quien": "gente",
+   "verbo": "pidió"
+  },
+  "hechos": [
+   "cas-h15",
+   "lago-h09"
+  ]
+ },
+ "caption": {
+  "tiktok": "Guatemala compró un líquido para salvar el lago de Amatitlán. ¿Qué era en realidad y quién respondió por él? La historia completa en el video.\n#Guatemala #DatosGT #LagoDeAmatitlan #Historia",
+  "instagram": "Un lago enfermo, una fórmula que prometía salvarlo y un tribunal. ¿Ya cerró la justicia el caso de ese líquido?\nGuárdalo para cuando alguien te hable del lago de Amatitlán.\n#Guatemala #DatosGT #LagoDeAmatitlan #Amatitlan #Historia",
+  "facebook": "Guatemala compró un líquido para salvar el lago de Amatitlán. Era una sustancia que nadie conocía.\n▸ Contrato de Q137.8 millones con M. Tarcic Engineering, según la acusación\n▸ Según un informe del Ministerio de Salud, era agua con sal\n▸ Se pagaron Q22.8 millones por 23 mil litros, según el fallo\n▸ En 2018, Roxana Baldetti fue condenada a 15 años y 6 meses; la condena aún no es firme\nFuentes en el primer comentario.",
+  "shorts": "El líquido de Q137.8 millones para salvar el lago de Amatitlán #Shorts\nUn lago enfermo, una fórmula desconocida y un tribunal en Guatemala.\n#Guatemala #DatosGT"
+ }
+}

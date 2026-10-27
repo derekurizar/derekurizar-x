@@ -64,11 +64,13 @@ window.__listo = (async () => {
   if (S.T.pildora) document.getElementById('pildora').textContent = S.T.pildora.texto;
   await document.fonts.ready;
   V.ajustarGolpe(S, F45 ? 250 : 430);
+  await V.pintarActo(S);   // rótulo de acto (/historia, S.R)
 })();
 
 window.seek = (t) => {
   V.seekGolpe(t, S);
   V.seekProgreso(t, n, S.dur);
+  V.seekActo(t, S);
   const T = S.T, ini = T.ini;
   document.getElementById('kicker').style.opacity = prog(t, ini - 0.3, ini + 0.2);
   document.getElementById('fuente').style.opacity = prog(t, ini + 0.3, ini + 0.8);

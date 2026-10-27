@@ -62,8 +62,8 @@
    "texto": "La Espiga cerró su última sucursal en la capital y quedaron dos hornos en Xela",
    "actores": [],
    "lugar": "Guatemala",
-   "estado": "en_disputa",
-   "nota": "solo Soy502 lo reporta: la voz lo atribuye",
+   "estado": "una_fuente",
+   "nota": "solo Soy502 lo reporta",
    "fuentes": [
     {
      "medio": "Soy502 (maqueta)",
@@ -71,6 +71,29 @@
      "archivo": "sesiones/_fixture_historia/fuentes/cas-2.txt",
      "fecha": "2010-11-05",
      "cita": "En 2010 La Espiga cerró su última sucursal en la capital; solo quedaron dos hornos en Xela"
+    }
+   ],
+   "tipo_hecho": "acto"
+  },
+  {
+   "id": "cas-h04",
+   "fecha": "2011",
+   "precision": "anio",
+   "texto": "La familia sitúa el cierre de la última sucursal en 2011",
+   "actores": [
+    "la familia"
+   ],
+   "lugar": "Guatemala",
+   "tipo_hecho": "alegato",
+   "estado": "en_disputa",
+   "nota": "Soy502 fecha el cierre en 2010; la familia dice que fue en 2011",
+   "fuentes": [
+    {
+     "medio": "Soy502 (maqueta)",
+     "url": "https://www.soy502.com/maqueta/la-espiga-2010",
+     "archivo": "sesiones/_fixture_historia/fuentes/cas-2.txt",
+     "fecha": "2010-11-05",
+     "cita": "La familia dice que el cierre fue en 2011"
     }
    ]
   }

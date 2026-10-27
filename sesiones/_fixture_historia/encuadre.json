@@ -19,7 +19,91 @@
  "arco": "ascenso y caída",
  "paleta": "terracota",
  "dominios_propios": [],
- "capitulos": [
+ "actos": [
+  {
+   "n": 1,
+   "nombre": "planteamiento",
+   "titulo": "El primer horno",
+   "periodo": "1952–1990",
+   "que_cuenta": "una panadería de un horno de leña que sobrevive al terremoto y crece hasta 25 sucursales",
+   "termina_en": "la sucursal número 25, la primera en la capital"
+  },
+  {
+   "n": 2,
+   "nombre": "nudo",
+   "titulo": "La inspección",
+   "periodo": "2004",
+   "que_cuenta": "una inspección de Salud encuentra harina vencida y llega la multa",
+   "termina_en": "la multa de Q85,000"
+  },
+  {
+   "n": 3,
+   "nombre": "desenlace",
+   "titulo": "La caída",
+   "periodo": "2004–2010",
+   "que_cuenta": "la caída en cadena hasta cerrar la última sucursal; quedan dos hornos",
+   "termina_en": "dos hornos encendidos en Xela"
+  }
+ ],
+ "espina": {
+  "detonante": {
+   "frase": "El terremoto de 1976 destruye el local y La Espiga reabre bajo una carpa",
+   "acto": 1,
+   "ejes": [
+    "ori"
+   ]
+  },
+  "punto_medio": {
+   "frase": "La inspección de 2004 encuentra 40 sacos de harina vencida",
+   "acto": 2,
+   "ejes": [
+    "cas"
+   ]
+  },
+  "climax": {
+   "frase": "La multa de Q85,000 y la caída en cadena",
+   "acto": 3,
+   "ejes": [
+    "cas"
+   ]
+  },
+  "resolucion": {
+   "frase": "Cierra la última sucursal en 2010; quedan dos hornos en Xela",
+   "acto": 3,
+   "ejes": [
+    "cas"
+   ]
+  }
+ },
+ "hilos": [
+  {
+   "id": "h1",
+   "pregunta": "¿Por qué cerró?",
+   "eje": "cas"
+  },
+  {
+   "id": "h2",
+   "pregunta": "¿Qué fue de Marta Pérez?",
+   "eje": "ori"
+  }
+ ],
+ "personajes": [
+  {
+   "nombre": "Marta Pérez",
+   "alias": [
+    "Marta"
+   ],
+   "presentacion": "la fundadora de La Espiga"
+  },
+  {
+   "nombre": "Ministerio de Salud",
+   "alias": [
+    "Salud"
+   ],
+   "presentacion": "la autoridad sanitaria"
+  }
+ ],
+ "periodos": [
   {
    "n": 1,
    "titulo": "El primer horno",
@@ -43,7 +127,7 @@
   {
    "id": "ori",
    "nombre": "origen y crecimiento",
-   "capitulos": [
+   "periodos": [
     1,
     2
    ],
@@ -58,7 +142,7 @@
   {
    "id": "cas",
    "nombre": "la inspección y el cierre",
-   "capitulos": [
+   "periodos": [
     3
    ],
    "preguntas": [

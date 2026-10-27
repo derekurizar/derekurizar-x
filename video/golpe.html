@@ -123,6 +123,7 @@ window.__listo = (async () => {
     cifra.style.fontSize = fs0 + 'px';
     for (let fs = fs0; fs > 96 && cifra.offsetHeight > 2.1 * fs; fs -= 6) cifra.style.fontSize = fs + 'px';
   }
+  await V.pintarActo(S);   // rótulo de acto (/historia, S.R): solo en un golpe, nunca en gancho ni adivina
 })();
 // sin subtítulo antes de que aterrice la cifra ni mientras solo repite lo que ya está en pantalla
 const subtitulos = (t) => V.subtitulos(t, S, TROZOS, { ocultar: (tr, t) => t < T_CIFRA + 0.3 || tr.every((x) => EN_PANTALLA.has(normal(x.text))) });
@@ -147,6 +148,7 @@ const seekAdivina = (t) => {
 };
 window.seek = (t) => {
   V.seekProgreso(t, n, S.dur);
+  V.seekActo(t, S);
   if (S.tipo === 'adivina') { seekAdivina(t); subtitulos(t); return; }
   const cifra = document.getElementById('cifra'), P = S.T.pant;
   const p = prog(t, P.desde, P.hasta);

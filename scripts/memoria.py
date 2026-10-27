@@ -497,10 +497,15 @@ def frases_video(g):
         return re.split(r"(?<=[.?!])\s+", (t or "").strip())[0] if t else ""
     esc = g.get("escenas") or []
     voz = [e.get("voz") or e.get("texto") or "" for e in esc]
+    re_segun = re.compile(r"\b(?:seg[uú]n|de acuerdo con)\b", re.I)
+    re_apertura = re.compile(r"^[¿¡«\s]*(?:(?:pero|y|por eso|así que|entonces)[,\s]+)?(?:seg[uú]n|de acuerdo con)\b", re.I)
     return {
         "promesa": (g.get("promesa") or {}).get("texto", ""),
         "gancho": primera(voz[0]) if voz else "",
         "aperturas": [" ".join(v.split()[:4]) for v in voz[2:] if v.strip()],
+        # /historia v3 (H19): cuántas veces la voz atribuye y cuántas escenas abren con una atribución
+        "segun": sum(len(re_segun.findall(v)) for v in voz),
+        "aperturas_atribuidas": sum(1 for v in voz[1:] if re_apertura.match(v.strip())),
         # el cierre: la frase final (remate o pregunta), su tipo y su forma (F7 de /video: rotan entre videos)
         "pregunta": (g.get("cierre") or {}).get("final") or (g.get("cierre") or {}).get("pregunta", ""),
         "cierre": (g.get("cierre") or {}).get("final") or (g.get("cierre") or {}).get("pregunta", ""),
@@ -602,6 +607,8 @@ def registrar_historia(d, estado, dry_run=False):
     fr = reg["frases"]
     print("historia %s · %.0f s · gancho %s/%s · cierre %s · %s" % (reg["id"], reg["duracion_s"], fr.get("familia"),
                                                                    fr.get("visual"), fr.get("cierre_forma"), reg["estado"]))
+    if (fr.get("aperturas_atribuidas") or 0) >= 2:
+        print("AVISO %d escenas abren con una atribución («Según…»): la fuente va en pantalla y la voz narra (H16, H19)" % fr["aperturas_atribuidas"])
     if dry_run:
         print("[dry-run] no se escribió nada")
         return 0

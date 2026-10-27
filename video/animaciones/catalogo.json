@@ -1,6 +1,37 @@
 {
   "animaciones": [
     {
+      "id": "arco-viaje",
+      "origen": "historia-como-se-creo-pollo-campero",
+      "usos": [
+        "historia-como-se-creo-pollo-campero"
+      ],
+      "descripcion": "ruta en arco: el origen emite ondas, figuras viajan al destino y se juntan, y luego algo las sigue por la misma ruta",
+      "mecanismo": "onda",
+      "temas": [
+        "migracion",
+        "ruta",
+        "viaje",
+        "expansion",
+        "difusion",
+        "producto",
+        "diaspora"
+      ],
+      "pasos": [
+        2,
+        6
+      ],
+      "ejemplo": {
+        "titulo": "La comida sigue a la gente",
+        "pasos": [
+          "Falta trabajo en casa",
+          "Muchos se van",
+          "Llegan a otra ciudad",
+          "Su comida los sigue"
+        ]
+      }
+    },
+    {
       "id": "cadena",
       "origen": "semilla",
       "usos": [

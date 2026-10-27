@@ -5,8 +5,9 @@ completas: si la fuente no dice el día, la fecha va con el año y `precision: a
 
 ## Insumo y presupuesto
 
-`python3 scripts/historia.py digesto <TRABAJO> --para investigador --eje <eje>` (la pregunta, los capítulos de tu eje,
-qué buscar, las fuentes sugeridas y qué clases de fuente cuentan). **≤ 10 búsquedas y ≤ 12 `leer`.**
+`python3 scripts/historia.py digesto <TRABAJO> --para investigador --eje <eje>` (la pregunta, los periodos de tu eje,
+los hilos y los personajes que te tocan, qué buscar, las fuentes sugeridas y qué clases de fuente cuentan). **≤ 10
+búsquedas y ≤ 12 `leer`.**
 
 ## Método (SIFT)
 
@@ -23,10 +24,13 @@ qué buscar, las fuentes sugeridas y qué clases de fuente cuentan). **≤ 10 b�
    - Una nota de **agencia** (AP, EFE, Reuters, AFP) publicada por otro diario cuenta como la agencia si su texto lleva
      la firma («(AP)», «Por Associated Press»). `leer` lo dice («cuenta como la agencia ap»).
 3. Cada hecho: `{id: <eje>-h01, fecha: YYYY[-MM[-DD]], precision: dia|mes|anio|aprox, texto (≤ 240: qué pasó, quién,
-   dónde), actores[], lugar, evidencia: [{medio, url, archivo, cita, fecha}]}`. La **cita** es literal del texto
-   guardado (≥ 20 caracteres) y contiene el **año** (o la fuente se publicó ese año) y cada **número** del texto.
+   dónde), actores[], lugar, tipo_hecho?, evidencia: [{medio, url, archivo, cita, fecha}]}`. La **cita** es literal
+   del texto guardado (≥ 20 caracteres) y contiene el **año** (o la fuente se publicó ese año) y cada **número** del
+   texto. Propón `tipo_hecho`: `acto` (un acto público verificable: un contrato, una captura, una sentencia, un
+   informe; es el valor por defecto), `alegato` (acusación, señalamiento, promesa o declaración de parte),
+   `estimacion` (cifra no oficial) u `opinion`. El verificador lo confirma; lo que no es `acto` la voz lo atribuye.
 4. Cifras `{id: <eje>-c01, texto («Q137.8 millones»), concepto, valor (en la unidad de la fuente), unidad, anio,
-   evidencia[]}`.
+   tipo_hecho? (acto | estimacion), evidencia[]}`.
 5. Frases literales `{id: <eje>-q01, autor (persona o documento), cargo, cuando, documento: true|false, membrete?,
    texto (≤ 170, tal cual), evidencia[]}`: lo que alguien dijo o lo que un documento dice; son las escenas `cita`.
 6. Fotos candidatas `{id: <eje>-f01, descripcion (qué muestra), fecha, lugar, commons: "File:…" | url + credito +
@@ -44,6 +48,10 @@ qué buscar, las fuentes sugeridas y qué clases de fuente cuentan). **≤ 10 b�
    - Propón ≥ 3 candidatas distintas por eje. Si el hecho no tiene foto propia, una **de referencia** (`referencia:
      true`): el lugar, la institución, la persona, el producto o la época. Nunca dejes un tramo para un icono.
    - No propongas la misma imagen que ya trae otro eje.
+7. **Hilos y personajes del digesto**: busca la respuesta a cada hilo de tu eje (la pregunta que la historia abre y
+   el guion tiene que pagar); si no existe en ninguna fuente que cuente, dilo en `huecos` para que el guionista lo
+   declare «nunca se supo». Para cada personaje que te toca, trae un hecho con su cargo y su relación con el
+   protagonista (lo que permite presentarlo en ≤ 8 palabras).
 
 ## Salida
 

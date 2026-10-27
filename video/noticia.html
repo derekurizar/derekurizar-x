@@ -172,6 +172,7 @@ window.__listo = (async () => {
     const c = document.querySelector('#cifra .v'), col = document.getElementById('col').clientWidth;
     if (c) for (let fs = F45 ? 88 : 112; fs > 60 && document.getElementById('cifra').scrollWidth > col; fs -= 6) c.style.fontSize = fs + 'px';
   }
+  await V.pintarActo(S);   // rótulo de acto (/historia, S.R): solo en la escena `foto`, nunca en el gancho
 })();
 const subtitulos = (t) => V.subtitulos(t, S, TROZOS, { ocultar: (tr) => tr.every((x) => EN_PANTALLA.has(normal(x.text))) });
 // Ken Burns: zoom y paneo lentos, función de t
@@ -183,6 +184,7 @@ const kenBurns = (img, t) => {
 };
 window.seek = (t) => {
   V.seekProgreso(t, n, S.dur);
+  V.seekActo(t, S);
   kenBurns(KB, t);
   if (MODO === 'titular') {
     // entero desde el cuadro 0 (miniatura y vuelta del bucle); cada palabra que la voz dice se enciende al decirla
@@ -197,11 +199,14 @@ window.seek = (t) => {
     subtitulos(t);
     return;
   }
-  // la noticia entra: chip y foto al principio; el titular con la voz; la cifra cuando la voz la dice; la fuente al final
-  const ch = eo((t - 0.1) / 0.4), chip = document.getElementById('chip');
+  // la noticia entra: chip y foto al principio (tras el rótulo de acto si lo hay, V.desfase; más rápido si la escena
+  // sigue a otra de la misma secuencia de voz, S.seguida); el titular con la voz; la cifra cuando la voz la dice; la
+  // fuente al final
+  const D = V.desfase(S), K = S.seguida ? 0.6 : 1;
+  const ch = eo((t - D - 0.1) / (0.4 * K)), chip = document.getElementById('chip');
   chip.style.opacity = ch; chip.style.transform = `translateX(${((1 - ch) * -40).toFixed(1)}px)`;
   // la foto entra y late al empezar cada oración nueva (un evento visual cada pocos segundos: V10)
-  const fo = eo((t - 0.05) / 0.5), caja = document.getElementById('foto');
+  const fo = eo((t - D - 0.05) / (0.5 * K)), caja = document.getElementById('foto');
   const late = (N.oraciones || []).reduce((m, x) => Math.max(m, Math.sin(Math.PI * clamp((t - x) / 0.5))), 0);
   caja.style.opacity = fo; caja.style.transform = `scale(${((0.96 + 0.04 * fo) * (1 + 0.025 * late)).toFixed(4)})`;
   [...document.querySelectorAll('#titular span')].forEach((s, i) => {

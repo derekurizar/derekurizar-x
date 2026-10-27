@@ -42,11 +42,13 @@ window.__listo = (async () => {
   V.ajustarGolpe(S, F45 ? 250 : 430);
   const lienzo = document.getElementById('lienzo');
   M.pintar(lienzo, S.P, { colores: todo.colores, F45, ancho: lienzo.clientWidth, alto: lienzo.clientHeight, V });
+  await V.pintarActo(S);   // rótulo de acto (/historia, S.R); sus pasos ya llegan desplazados de python
 })();
 
 window.seek = (t) => {
   V.seekGolpe(t, S);
   V.seekProgreso(t, n, S.dur);
+  V.seekActo(t, S);
   M.seek(t, S.T);
   // deriva lenta del lienzo durante la escena (nunca quieto)
   document.getElementById('lienzo').style.transform = `scale(${(1 + 0.025 * clamp(t / S.dur)).toFixed(4)})`;

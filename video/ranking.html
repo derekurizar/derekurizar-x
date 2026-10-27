@@ -75,11 +75,13 @@ window.__listo = (async () => {
     }
   }
   fu.style.top = Math.ceil(lista.offsetTop + lista.offsetHeight * (1 + DERIVA) + 14) + 'px';
+  await V.pintarActo(S);   // rótulo de acto (/historia, S.R)
 })();
 
 window.seek = (t) => {
   V.seekGolpe(t, S);
   V.seekProgreso(t, n, S.dur);
+  V.seekActo(t, S);
   const T = S.T, ini = T.ini;
   document.getElementById('kicker').style.opacity = prog(t, ini - 0.3, ini + 0.2);
   document.getElementById('fuente').style.opacity = prog(t, ini + 0.3, ini + 0.8);

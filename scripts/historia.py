@@ -24,18 +24,25 @@ Subcomandos (TRABAJO = sesiones/historia-<slug>/):
         texto va con --encaje contener: márgenes del color de su borde para que el marco no lo recorte)
   hechos TRABAJO --check [--eje E]   H1–H3 + H7 + H12 sobre verificacion_<eje>.json (citas en el texto guardado, fechas,
         independencia, fotos; sin --eje exige una foto del protagonista e imprime las og:image candidatas de las fuentes leídas)
+  hechos TRABAJO --reclasificar [--aplicar]   los en_disputa de un solo grupo sin discrepancia en la nota → una_fuente (v3)
+  encuadre TRABAJO --check     la estructura por actos del encuadre (actos, espina, hilos, personajes, periodos)
   consolidar TRABAJO           verificaciones + fotos → historia.json, base/ (hilo.json, datos.json) y la paleta del encuadre
-  digesto TRABAJO --para investigador|verificador --eje E | gancho | guionista | critico | oyente
-        (oyente: solo la voz en orden y lo que hay en pantalla, sin cronología ni ids: el oyente ingenuo)
+  digesto TRABAJO --para investigador|verificador --eje E | gancho | guionista | critico | oyente | editor
+        (oyente: la narración de corrido y luego la voz con lo que hay en pantalla, sin cronología ni ids; editor: re-encuadre)
   ganchos TRABAJO --check | --usar [ID] [--segundo ID]   → video.py ganchos con las familias y el visual foto de historia
+  narracion TRABAJO [--check]  mide guion.narracion (palabras, segundos, conectores, «según», personajes, hilos) ANTES de
+        repartirla en escenas; --check falla con H16–H19 sobre la narración sola
   tarjetas TRABAJO             las escenas con gráfico → base/tuit_N.html (materializar.py, R1–R6) y video.json.tarjetas
-  guion TRABAJO --check        H4–H14 + (tarjetas) + video.py guion (V1–V5, V9, F1–F8) → locucion.json; la última línea
-        RETORNO {...} es lo que el guionista devuelve al Workflow (tipos de cada escena, sin el cierre)
-  tiempos TRABAJO              video.py tiempos con los constructores de foto, cita y capitulo → escenas.json
+  guion TRABAJO --check        H4–H20 + (tarjetas) + video.py guion (V1–V5, V9, F1–F8) → locucion.json; la última línea
+        RETORNO {...} es lo que el guionista devuelve al Workflow (tipos de cada escena, sin el cierre); deriva las
+        secuencias de voz si el guion no las trae
+  tiempos TRABAJO              video.py tiempos con los constructores de foto, cita y capitulo (y el rótulo de acto) → escenas.json
   fotos-contacto TRABAJO       fotos/contacto.png con todas las fotos (QA de contenido)
   entregar TRABAJO [--salida DIR]   → historias/<fecha>-<slug>/ (video, 4:5, caption, fuentes.md, cronologia.md, guion.json)
-  voz [--pendientes | --solo N,N] | voz-falsa | descargar | escuchar | grabar | montar | revisar TRABAJO [...]   → video.py
-        (voz --pendientes: solo las escenas sin audio o cuya voz cambió desde la última descarga: las retomas)
+  voz [--pendientes [--sueltas] | --solo N,N] | voz-falsa | descargar | partir | escuchar | grabar | montar | revisar TRABAJO [...]   → video.py
+        (voz: un nodo por secuencia de 2–5 escenas (la voz de corrido) más las sueltas; --pendientes: solo lo que cambió o
+        falta, la secuencia entera si cambió una escena; --sueltas: solo esas escenas como nodos propios; descargar --estado
+        corta cada secuencia en sus escenas; partir rehace el corte)
 
 Exit: 0 ok · 1 gate o paso fallido · 2 uso incorrecto.
 """
@@ -67,9 +74,27 @@ import video as VD  # noqa: E402
 OBJETIVO_S, DURACION_MAX_S = 150, 180       # «regularmente 2 o 3 minutos»; 180 s es el tope de YouTube Shorts
 OBJETIVO_MIN_S, OBJETIVO_AVISO_S = 135, 165  # «apunta a 150 (135–165)»: el gate avisa (H5) si pasa de 165; 180 es para emergencias
 VD.DURACIONES["historia"] = {"s": OBJETIVO_S, "tarjetas": (0, 6), "golpes": (0, 10), "tol": 0.2}   # V4: 120–180 s
+# la narración de corrido (v3, 2026-10-27): la voz real va a ≈ 145 palabras por minuto (medido: 416 palabras en 172 s),
+# así que 150 s son ≈ 360 palabras; PALABRAS orienta (aviso fuera), PALABRAS_DURO falla
+PALABRAS, PALABRAS_DURO = (320, 400), (280, 430)
 TIPOS_PROPIOS = ("foto", "cita", "capitulo")
-CARACTERES = {"foto": (40, 210), "cita": (30, 220), "capitulo": (10, 90)}   # voz ya en palabras (≈ 15.5 car/s)
-CAPITULOS, SEGUIDAS_MAX, GIRO_ENTRE = (3, 5), 2, (0.40, 0.75)
+CARACTERES = {"foto": (40, 280), "cita": (30, 280), "capitulo": (10, 90)}   # voz ya en palabras (≈ 15.5 car/s)
+# en historia una tarjeta o un golpe pueden sostener un tramo más largo de narración que en /video
+CARACTERES_VIDEO_EN_HISTORIA = {"tarjeta": (40, 260), "mapa": (40, 260), "ranking": (40, 260), "tiempo": (40, 260),
+                                "explica": (40, 260), "golpe": (20, 130)}
+# estructura por ACTOS (v3): tres actos fijos; los actos 2 y 3 se marcan con un rótulo sobre la primera escena del acto
+# (sin detener la voz); la escena capitulo con voz propia queda como excepción (0–2, el gate avisa)
+ACTOS = (("planteamiento", 1), ("nudo", 2), ("desenlace", 3))
+PUNTOS_ESPINA = ("detonante", "punto_medio", "climax", "resolucion")
+PERIODOS, HILOS, PERSONAJES_MAX, PRESENTACION_PALABRAS = (2, 5), (2, 6), 8, 8
+CAPITULOS, ROTULOS, SEGUIDAS_MAX, GIRO_ENTRE = (0, 2), (2, 3), 3, (0.40, 0.75)
+ROTULO_TIPOS = ("foto", "cita", "tarjeta", "mapa", "ranking", "tiempo", "golpe", "explica")
+ROTULO_S, ROTULO_CUENTA, DESFASE_ROTULO = 2.3, (0.35, 1.45), 2.3 - VD.TRANSICION   # el rótulo dura 2.3 s; lo propio entra después
+# flujo (H16): la narración se oye de corrido; cortes por minuto, conectores por acto y aperturas con atribución
+CORTES_MAX_POR_MIN, CONECTORES_MIN_POR_ACTO, APERTURAS_ATRIBUIDAS_MAX = 6.5, 2, 1
+# presupuesto de «según» en voz (H19): lo corroborado se narra llano con la fuente en pantalla
+SEGUN_MAX_VIDEO, SEGUN_MAX_ACTO = 4, 2
+SECUENCIA = (2, 5)        # escenas consecutivas del mismo acto cuya voz se graba de corrido (H20; video.py SECUENCIA_MAX)
 TITULAR_PALABRAS, TITULAR_CARACTERES = 9, 60          # el titular de una escena foto
 CHIP_CARACTERES, LUGAR_CARACTERES, FUENTE_CARACTERES = 14, 24, 44
 CIFRA_CARACTERES, ETIQUETA_CARACTERES = 18, 30
@@ -100,10 +125,27 @@ VISUALES_DE = {fam: ("foto",) for fam in FAMILIAS}
 ROTACION_FAMILIAS = 2
 APERTURAS = re.compile(r"^[¿¡«\s]*(?:esta es la historia|la historia de|(?:te|les) (?:cuento|voy a contar)|hab[ií]a una vez|"
                        r"en el a[nñ]o\b|corr[ií]a el a[nñ]o|hoy (?:te|les) (?:hablo|cuento))", re.I)
-PUNTAJES = ("gancho", "tension", "claridad", "ritmo", "precision", "cierre")   # critica.json en modo historia (W12)
+PUNTAJES = ("gancho", "tension", "claridad", "flujo", "precision", "cierre")   # critica.json en modo historia (W12)
 # ---- verdad ----
-ESTADOS = ("confirmado", "en_disputa", "no_confirmado")
-PUBLICABLES = ("confirmado", "en_disputa")
+# una_fuente = UNA fuente seria sin nada que la contradiga: se narra llano con la fuente en pantalla; en_disputa = las
+# fuentes difieren (la voz atribuye o matiza). tipo_hecho: lo que no es un acto público verificable (una acusación, una
+# promesa de parte, una cifra no oficial, una opinión) se atribuye en voz aunque tenga una sola fuente (criterio BBC:
+# se atribuye lo que no puede corroborarse o es de parte)
+ESTADOS = ("confirmado", "una_fuente", "en_disputa", "no_confirmado")
+PUBLICABLES = ("confirmado", "una_fuente", "en_disputa")
+TIPOS_HECHO, ATRIBUIR_SIEMPRE = ("acto", "alegato", "estimacion", "opinion"), ("alegato", "estimacion", "opinion")
+RE_SEGUN = re.compile(r"\b(?:seg[uú]n|de acuerdo con)\b", re.I)
+RE_SEGUN_FUENTE = re.compile(r"\b(?:[Ss]eg[uú]n|[Dd]e acuerdo con)\s+(?:la |el |los |las |un |una )?((?:[A-ZÁÉÍÓÚÑ][\w.&-]*)(?:\s+(?:de |del |la |y )?[A-ZÁÉÍÓÚÑ][\w.&-]*)*)")
+APERTURA_ATRIBUIDA = re.compile(r"^[¿¡«\s]*(?:(?:pero|y|por eso|así que|asi que|entonces)[,\s]+)?(?:seg[uú]n|de acuerdo con)\b", re.I)
+# conectores causales y temporales que hacen que la narración siga de corrido (H16: ≥ 2 por acto)
+CONECTORES_NARRACION = re.compile(
+    r"\b(?:pero|sin embargo|aun así|en cambio|por eso|así que|asi que|entonces|hasta que|mientras tanto|porque|"
+    r"(?:\d+|un|una|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|doce|quince|veinte) (?:años?|meses|semanas|d[ií]as) (?:después|antes|más tarde|mas tarde)|"
+    r"(?:ese|esa) (?:mismo |misma )?(?:d[ií]a|mes|año|semana|noche|tarde|mañana)|al d[ií]a siguiente|al año siguiente|"
+    r"(?:poco|meses|años|semanas|décadas|decadas) después)\b", re.I)
+# hechos --reclasificar: una nota de en_disputa que describe una discrepancia real (no «solo X lo dice»)
+RE_DISCREPANCIA = re.compile(r"difier|no coincid|choca|contradic|distint|otra fecha|otro (?:año|monto|n[uú]mero)|ambas|las dos|"
+                             r"\b(?:1[5-9]|20)\d\d\b.*\b(?:1[5-9]|20)\d\d\b", re.I)
 PRECISIONES = ("dia", "mes", "anio", "aprox")
 CITA_MIN, HECHO_CARACTERES, HECHOS_MIN = 20, 240, 6
 RE_FECHA = re.compile(r"^\d{4}(?:-\d{2}(?:-\d{2})?)?$")
@@ -694,8 +736,10 @@ def revisar_eje(v, trabajo, propios):
         if not re.fullmatch(r"%s-h\d{2}" % re.escape(eje), hid):
             fallas.append("H1 %s: id «%s» (va %s-h01, %s-h02…)" % (eje, hid, eje, eje))
         if est not in ESTADOS:
-            fallas.append("H1 %s: estado confirmado | en_disputa | no_confirmado" % hid)
+            fallas.append("H1 %s: estado %s" % (hid, " | ".join(ESTADOS)))
             continue
+        if h.get("tipo_hecho") not in (None,) + TIPOS_HECHO:
+            fallas.append("H1 %s: tipo_hecho %s (acto = un acto público verificable; lo demás se atribuye en voz)" % (hid, " | ".join(TIPOS_HECHO)))
         if est == "no_confirmado":
             continue
         if not RE_FECHA.match(str(h.get("fecha") or "")) or h.get("precision") not in PRECISIONES:
@@ -704,11 +748,22 @@ def revisar_eje(v, trabajo, propios):
             fallas.append("H1 %s: texto de 10–%d caracteres (qué pasó, quién, dónde)" % (hid, HECHO_CARACTERES))
         validas, _ = revisar_fuentes(h, propios, fallas, avisos, hid)
         grupos = {g for _, g, _ in validas}
+        nota = (h.get("nota") or "").strip()
         if est == "confirmado" and len(grupos) < 2:
             fallas.append("H2 %s: confirmado pide 2 fuentes independientes (grupos distintos: un documento oficial, la "
                           "empresa o la academia y otra que lo respalde); tiene %s" % (hid, ", ".join(sorted(grupos)) or "ninguna válida"))
-        if est == "en_disputa" and (not validas or len((h.get("nota") or "").strip()) < 10):
-            fallas.append("H2 %s: en_disputa pide ≥ 1 fuente válida y una nota con la diferencia (la voz la atribuye o matiza)" % hid)
+        if est == "una_fuente":
+            if not validas:
+                fallas.append("H2 %s: una_fuente pide 1 fuente válida (oficial, medio de la lista, academia, archivo o la empresa)" % hid)
+            elif len(grupos) >= 2:
+                fallas.append("H2 %s: tiene fuentes de %d grupos (%s): es confirmado, o en_disputa si difieren"
+                              % (hid, len(grupos), ", ".join(sorted(grupos))))
+        if est == "en_disputa":
+            if not validas or len(nota) < 10:
+                fallas.append("H2 %s: en_disputa pide ≥ 1 fuente válida y una nota con la diferencia (la voz la atribuye o matiza)" % hid)
+            elif len(grupos) == 1 and not RE_DISCREPANCIA.search(nota):
+                avisos.append("H2 %s: en_disputa con un solo grupo y la nota no describe una discrepancia («%s»): ¿es una_fuente? "
+                              "(hechos --reclasificar lo propone)" % (hid, nota[:60]))
         anio = str(h.get("fecha") or "")[:4]
         citas = " ".join(plano(f.get("cita")) for _, _, f in validas)
         de_anio = [f for _, _, f in validas if anio and (anio in plano(f.get("cita")) or str(f.get("fecha") or "").startswith(anio))]
@@ -723,8 +778,10 @@ def revisar_eje(v, trabajo, propios):
         if not re.fullmatch(r"%s-c\d{2}" % re.escape(eje), cid):
             fallas.append("H1 %s: id «%s» (va %s-c01…)" % (eje, cid, eje))
         if est not in ESTADOS:
-            fallas.append("H1 %s: estado confirmado | en_disputa | no_confirmado" % cid)
+            fallas.append("H1 %s: estado %s" % (cid, " | ".join(ESTADOS)))
             continue
+        if c.get("tipo_hecho") not in (None,) + TIPOS_HECHO:
+            fallas.append("H1 %s: tipo_hecho %s" % (cid, " | ".join(TIPOS_HECHO)))
         if est == "no_confirmado":
             continue
         if not isinstance(c.get("valor"), (int, float)) or isinstance(c.get("valor"), bool):
@@ -734,8 +791,8 @@ def revisar_eje(v, trabajo, propios):
         grupos, clases = {g for _, g, _ in validas}, {k for k, _, _ in validas}
         if est == "confirmado" and len(grupos) < 2 and not clases & {"oficial", "academica"}:
             fallas.append("H2 %s: una cifra confirmada pide 2 fuentes independientes o una oficial o académica" % cid)
-        if est == "en_disputa" and not validas:
-            fallas.append("H2 %s: en_disputa pide ≥ 1 fuente válida" % cid)
+        if est in ("una_fuente", "en_disputa") and not validas:
+            fallas.append("H2 %s: %s pide ≥ 1 fuente válida" % (cid, est))
         nums = [(round(float(m.group().replace(",", "")), 6), None) for _, _, f in validas for m in RE_NUMERO.finditer(f.get("cita") or "")]
         if NT.sueltos(c.get("texto") or "", [(round(float(c["valor"]), 6), VM.factor_unidad(c.get("unidad"))), (round(float(c["valor"]), 6), None)]):
             fallas.append("H2 %s: «%s» no es su valor %s" % (cid, c.get("texto"), c["valor"]))
@@ -783,8 +840,46 @@ def revisar_foto(rec, trabajo):
     return f
 
 
+def reclasificar(trabajo, eje=None, aplicar=False):
+    """hechos --reclasificar: cada hecho, cifra o cita `en_disputa` con las fuentes de UN solo grupo y una nota que no
+    describe una discrepancia es en realidad `una_fuente` (así quedaron las sesiones anteriores a v3, donde «en disputa»
+    significaba «una sola fuente»). Imprime los candidatos; con --aplicar los escribe (la nota se conserva)."""
+    enc = encuadre(trabajo)
+    propios = enc.get("dominios_propios") or []
+    rutas = [os.path.join(trabajo, "verificacion_%s.json" % eje)] if eje else sorted(glob.glob(os.path.join(trabajo, "verificacion_*.json")))
+    n_c = 0
+    for r in rutas:
+        if not os.path.exists(r):
+            continue
+        v, cambia = leer(r), False
+        for k in ("hechos", "cifras", "citas"):
+            for x in v.get(k) or []:
+                if x.get("estado") != "en_disputa":
+                    continue
+                validas, _ = revisar_fuentes(x, propios, [], [], x.get("id") or "?")
+                grupos = {g for _, g, _ in validas}
+                nota = (x.get("nota") or "").strip()
+                if len(grupos) == 1 and not RE_DISCREPANCIA.search(nota):
+                    n_c += 1
+                    print("%s %-10s %s → una_fuente [%s] · nota: «%s»" % ("CAMBIA" if aplicar else "CANDIDATO", x["id"], (x.get("texto") or "")[:60],
+                                                                          ", ".join(sorted(grupos)), nota[:50]))
+                    if aplicar:
+                        x["estado"], cambia = "una_fuente", True
+        if cambia:
+            escribir(r, v)
+    print("%d en_disputa de un solo grupo sin discrepancia%s" % (n_c, " → una_fuente (escrito)" if aplicar else "; con --aplicar se reclasifican"))
+    return 0
+
+
 def cmd_hechos(a):
     trabajo = os.path.abspath(a.trabajo)
+    if getattr(a, "reclasificar", False):
+        rc = reclasificar(trabajo, a.eje, a.aplicar)
+        if not a.aplicar or rc:
+            return rc
+        a.check = True
+    if not a.check:
+        return falla("hechos: --check o --reclasificar")
     enc = encuadre(trabajo)
     propios = enc.get("dominios_propios") or []
     rutas = [os.path.join(trabajo, "verificacion_%s.json" % a.eje)] if a.eje else sorted(glob.glob(os.path.join(trabajo, "verificacion_*.json")))
@@ -874,8 +969,11 @@ def consolidar(trabajo):
     enc = encuadre(trabajo)
     ejes = [leer(r) for r in sorted(glob.glob(os.path.join(trabajo, "verificacion_*.json")))]
     fotos = fundir_fotos(trabajo, [leer(r) for r in sorted(glob.glob(os.path.join(trabajo, "fotos", "*.json")))])
+    periodos = enc.get("periodos") or enc.get("capitulos") or []   # «capitulos» es el nombre viejo (v2): solo reparten ejes
     H = {"tema": st.get("tema"), "slug": st["slug"], "pregunta": enc.get("pregunta"), "arco": enc.get("arco"),
-         "capitulos": enc.get("capitulos") or [], "no_afirma": enc.get("no_afirma") or [],
+         "actos": enc.get("actos") or [], "espina": enc.get("espina") or {}, "hilos": enc.get("hilos") or [],
+         "personajes": enc.get("personajes") or [], "periodos": periodos, "capitulos": periodos,
+         "no_afirma": enc.get("no_afirma") or [],
          "protagonista": enc.get("protagonista") or [], "revelaciones": enc.get("revelaciones") or [],
          "hechos": [], "cifras": [], "citas": [], "casos": [], "descartados": [], "fotos": fotos}
     for v in ejes:
@@ -922,6 +1020,12 @@ def consolidar(trabajo):
 
 def cmd_consolidar(a):
     trabajo = os.path.abspath(a.trabajo)
+    f = revisar_encuadre(encuadre(trabajo))
+    if f:
+        for x in f:
+            print("FALLA", x)
+        return falla("el encuadre no tiene la estructura por actos (v3): el editor lo re-encuadra (Workflow historia con desde: "
+                     "encuadre) y historia.py encuadre %s --check lo comprueba" % VD.rel(trabajo))
     H = consolidar(trabajo)
     for h in H["hechos"]:
         print("%-9s %-11s %-10s %s" % (h["id"], h["estado"], h.get("fecha"), h.get("texto")))
@@ -958,7 +1062,9 @@ def aplicar_extension(trabajo):
     ORIGINALES.update(visual=VD.visual_del_gancho, reglas=VD.reglas_gancho, estructura=VD.validar_estructura, colores=VD.colores)
     VD.TIPOS = VD.TIPOS + tuple(t for t in TIPOS_PROPIOS if t not in VD.TIPOS)
     VD.CARACTERES.update(CARACTERES)
+    VD.CARACTERES.update(CARACTERES_VIDEO_EN_HISTORIA)
     VD.SIN_HUECO = VD.SIN_HUECO + TIPOS_PROPIOS
+    VD.POST_CONSTRUCTORES.append(post_historia)
     VD.ICONO_TIPOS = VD.ICONO_TIPOS + ("foto",)   # la foto sin imagen va con su icono (o el mapa)
     VD.visual_del_gancho = visual_del_gancho
     VD.reglas_gancho = reglas_gancho
@@ -1063,10 +1169,64 @@ def reglas_gancho(e, voz_p, ctx):
     return f, av
 
 
+def rotulo_de(e):
+    """El rótulo de acto de una escena: su campo `rotulo` {anio, titulo, lugar?, numero?} dibujado sobre la escena sin
+    detener la voz o, en una escena capitulo (la excepción, v2), sus propios anio y titulo. None si no marca un acto."""
+    if e.get("tipo") == "capitulo":
+        return {"anio": str(e.get("anio") or "").strip(), "titulo": (e.get("titulo") or "").strip(), "lugar": e.get("lugar") or "",
+                "numero": e.get("numero"), "capitulo": True}
+    r = e.get("rotulo")
+    if not isinstance(r, dict):
+        return None
+    return {"anio": str(r.get("anio") or "").strip(), "titulo": (r.get("titulo") or "").strip(), "lugar": r.get("lugar") or "",
+            "numero": r.get("numero"), "capitulo": False}
+
+
+def acto_de(e, i):
+    """El acto de la escena i: el gancho (escena 1) es el acto 1 (ganchos --usar lo reescribe sin el campo)."""
+    return 1 if i == 1 else e.get("acto")
+
+
+def V9_de_video(x):
+    """Las líneas V9 de /video que historia no hereda: la voz ya no tiene que EMPEZAR con «pero / por eso» (la causalidad
+    vive en la narración, H16) y «y» no se cuenta (el enlace solo decide el efecto de sonido)."""
+    if x.startswith(("V9 la escena 2 debe ser la tarjeta T1", "V9 escena 2: la primera tarjeta")):
+        return True
+    if x.startswith("V9 escena ") and ("falta enlace" in x or "no empieza con un conector" in x):
+        return True
+    return x.startswith("V9 ") and "enlaces «y» de" in x
+
+
+def secuencias_por_defecto(g):
+    """Las secuencias de voz (H20) cuando el guion no las trae: tramos de escenas consecutivas del mismo acto, de 2 a
+    SECUENCIA[1], que se cortan antes de un giro o de un rótulo (abren una secuencia); el gancho y el cierre van solos."""
+    es = g.get("escenas") or []
+    tramos, actual = [], []
+    for i, e in enumerate(es, 1):
+        if i == 1:
+            continue
+        rompe = not actual or acto_de(e, i) != acto_de(es[actual[-1] - 1], actual[-1]) or e.get("giro") or rotulo_de(e)
+        if rompe and actual:
+            tramos.append(actual)
+            actual = []
+        actual.append(i)
+    if actual:
+        tramos.append(actual)
+    out = []
+    for t in tramos:
+        while len(t) > SECUENCIA[1]:
+            corte = SECUENCIA[1] if len(t) - SECUENCIA[1] != 1 else SECUENCIA[1] - 1
+            out.append(t[:corte])
+            t = t[corte:]
+        if len(t) >= SECUENCIA[0]:
+            out.append(t)
+    return out
+
+
 def estructura(g, st, dur, tarjetas):
-    """V1/V9 de /video sin «la escena 2 es T1» + H8 (capítulos, variedad, giro) y las escenas propias."""
-    f = [x for x in ORIGINALES["estructura"](g, st, dur, tarjetas)
-         if not x.startswith(("V9 la escena 2 debe ser la tarjeta T1", "V9 escena 2: la primera tarjeta"))]
+    """V1/V9 de /video sin lo que historia no hereda + H8 (actos, rótulos, variedad, giro), H20 (secuencias) y las
+    escenas propias."""
+    f = [x for x in ORIGINALES["estructura"](g, st, dur, tarjetas) if not V9_de_video(x)]
     escenas = g.get("escenas") or []
     H = H_ACTUAL or {}
     hechos = {h["id"]: h for h in H.get("hechos") or []}
@@ -1075,24 +1235,61 @@ def estructura(g, st, dur, tarjetas):
     tipos = [e.get("tipo") for e in escenas]
     if len(escenas) > ESCENAS_MAX:
         f.append("H8 %d escenas: van ≤ %d (más el cierre son los 20 nodos que ElevenLabs genera de una vez)" % (len(escenas), ESCENAS_MAX))
-    caps = [k for k, t in enumerate(tipos) if t == "capitulo"]
-    if not CAPITULOS[0] <= len(caps) <= CAPITULOS[1]:
-        f.append("H8 %d capítulos; van %d–%d (cada uno abre con una escena capitulo)" % (len(caps), *CAPITULOS))
-    if caps and caps[0] not in (1, 2):
-        f.append("H8 el primer capítulo empieza en la escena 2 o 3 (tras el gancho y, si va, la promesa)")
+    for i, e in enumerate(escenas, 1):
+        if e.get("enlace") not in (None, "") and e.get("enlace") not in VD.ENLACES:
+            f.append("H8 escena %d: enlace «%s» no es pero|por_eso|y (es opcional: solo decide el efecto de sonido)" % (i, e.get("enlace")))
+    # H8 actos: cada escena (menos el gancho) declara su acto 1–3, en orden y los tres presentes
+    actos = [acto_de(e, i) for i, e in enumerate(escenas, 1)]
+    for i, ac in enumerate(actos, 1):
+        if i > 1 and ac not in (1, 2, 3):
+            f.append("H8 escena %d: «acto» 1, 2 o 3 (planteamiento, nudo, desenlace)" % i)
+    validos = [a for a in actos if a in (1, 2, 3)]
+    if validos != sorted(validos):
+        f.append("H8 los actos van en orden (1 → 2 → 3): una escena vuelve a un acto anterior")
+    if validos and set(validos) != {1, 2, 3}:
+        f.append("H8 faltan actos: %s (van los tres)" % ", ".join(str(a) for a in (1, 2, 3) if a not in validos))
+    primeras = {}
+    for i, ac in enumerate(actos, 1):
+        if ac in (1, 2, 3) and ac not in primeras:
+            primeras[ac] = i
+    # H8 rótulos: los actos 2 y 3 abren con un rótulo sobre su primera escena (o con una escena capitulo, la excepción)
+    rotulos, caps = [], []
+    for i, e in enumerate(escenas, 1):
+        r = rotulo_de(e)
+        if r is None:
+            continue
+        (caps if r["capitulo"] else rotulos).append(i)
+        ac = actos[i - 1]
+        if not r["capitulo"] and e.get("tipo") not in ROTULO_TIPOS:
+            f.append("H8 escena %d: el rótulo va sobre una escena %s, no en %s" % (i, "|".join(ROTULO_TIPOS), e.get("tipo")))
+        if r["capitulo"] and isinstance(e.get("rotulo"), dict):
+            f.append("H8 escena %d: una escena capitulo no lleva además «rotulo»" % i)
+        if ac in (2, 3) and primeras.get(ac) != i:
+            f.append("H8 escena %d: el rótulo marca la PRIMERA escena de su acto (el acto %d empieza en la escena %s)" % (i, ac, primeras.get(ac)))
+        elif ac == 1 and i != 2:
+            f.append("H8 escena %d: en el acto 1 el rótulo solo cabe en la escena 2 (el gancho abre el acto)" % i)
+        if not r["anio"] or len(r["anio"]) > CAP_ANIO_CARACTERES:
+            f.append("H8 escena %d: rótulo «anio» (el año o la época, ≤ %d caracteres)" % (i, CAP_ANIO_CARACTERES))
+        if not r["titulo"] or VD.palabras(r["titulo"]) > CAP_TITULO_PALABRAS or len(r["titulo"]) > CAP_TITULO_CARACTERES:
+            f.append("H8 escena %d: rótulo «titulo» de 1–%d palabras y ≤ %d caracteres" % (i, CAP_TITULO_PALABRAS, CAP_TITULO_CARACTERES))
+        if len(r["lugar"] or "") > LUGAR_CARACTERES:
+            f.append("H8 escena %d: «lugar» de ≤ %d caracteres" % (i, LUGAR_CARACTERES))
+    for ac in (2, 3):
+        i = primeras.get(ac)
+        if i and i not in rotulos and i not in caps:
+            f.append("H8 el acto %d empieza en la escena %d sin rótulo: rotulo {anio, titulo, lugar?} en esa escena (año y ≤ %d "
+                     "palabras sobre la imagen, la voz sigue)" % (ac, i, CAP_TITULO_PALABRAS))
+    if len(caps) > CAPITULOS[1]:
+        f.append("H8 %d escenas capitulo; van ≤ %d (una tarjeta con voz propia detiene la narración: prefiere rotulo)" % (len(caps), CAPITULOS[1]))
+    elif caps:
+        print("AVISO H8 %d escena(s) capitulo detienen la voz (escena%s %s): prefiere rotulo sobre la primera escena del acto"
+              % (len(caps), "s" if len(caps) > 1 else "", ", ".join(map(str, caps))))
     for j, k in enumerate(caps, 1):
-        e = escenas[k]
+        e = escenas[k - 1]
         if e.get("numero") != j:
-            f.append("H8 escena %d: capitulo numero %s (van 1, 2, 3… en orden)" % (k + 1, e.get("numero")))
-        if k + 1 >= len(escenas) or tipos[k + 1] == "capitulo":
-            f.append("H8 escena %d: un capítulo lleva al menos una escena después" % (k + 1))
-        anio, tit = str(e.get("anio") or "").strip(), (e.get("titulo") or "").strip()
-        if not anio or len(anio) > CAP_ANIO_CARACTERES:
-            f.append("H8 escena %d: capitulo «anio» (el año o la época, ≤ %d caracteres)" % (k + 1, CAP_ANIO_CARACTERES))
-        if not tit or VD.palabras(tit) > CAP_TITULO_PALABRAS or len(tit) > CAP_TITULO_CARACTERES:
-            f.append("H8 escena %d: capitulo «titulo» de 1–%d palabras y ≤ %d caracteres" % (k + 1, CAP_TITULO_PALABRAS, CAP_TITULO_CARACTERES))
-        if len(e.get("lugar") or "") > LUGAR_CARACTERES:
-            f.append("H8 escena %d: «lugar» de ≤ %d caracteres" % (k + 1, LUGAR_CARACTERES))
+            f.append("H8 escena %d: capitulo numero %s (van 1, 2, 3… en orden)" % (k, e.get("numero")))
+        if k >= len(escenas) or tipos[k] == "capitulo":
+            f.append("H8 escena %d: un capítulo lleva al menos una escena después" % k)
     for k in range(SEGUIDAS_MAX, len(tipos)):
         if len(set(tipos[k - SEGUIDAS_MAX:k + 1])) == 1:
             f.append("H8 escenas %d–%d: %d escenas %s seguidas (máximo %d): alterna foto, cita, gráfico, golpe y explica"
@@ -1103,8 +1300,27 @@ def estructura(g, st, dur, tarjetas):
     elif not GIRO_ENTRE[0] <= giros[0] / max(1, len(escenas) - 1) <= GIRO_ENTRE[1] or tipos[giros[0]] == "capitulo":
         f.append("H8 el giro (escena %d) va entre el %d y el %d %% del video y no en un capítulo"
                  % (giros[0] + 1, GIRO_ENTRE[0] * 100, GIRO_ENTRE[1] * 100))
+    elif validos and actos[giros[0]] != 2:
+        f.append("H8 el giro (escena %d) va en el acto 2, el nudo (está en el acto %s)" % (giros[0] + 1, actos[giros[0]]))
     if not any(t in ("foto", "cita") for t in tipos):
         f.append("H8 una historia lleva al menos una escena foto o cita")
+    # H20 secuencias de voz: forma en video.py (V9); aquí lo semántico
+    secs = g.get("secuencias") or []
+    if g.get("voz_continua") and not secs:
+        f.append("H20 voz_continua exige «secuencias» (grupos de %d–%d escenas consecutivas del mismo acto)" % SECUENCIA)
+    en_sec = set()
+    for k, grupo in enumerate(secs if isinstance(secs, list) else [], 1):
+        if not (isinstance(grupo, list) and all(isinstance(n, int) and not isinstance(n, bool) and 1 <= n <= len(escenas) for n in grupo)):
+            continue   # V9 (video.py) lo señala
+        en_sec |= set(grupo)
+        if len({actos[n - 1] for n in grupo}) > 1:
+            f.append("H20 secuencia %d (escenas %s): cruza actos; una secuencia vive dentro de un acto" % (k, ", ".join(map(str, grupo))))
+        for n in grupo[1:]:
+            if escenas[n - 1].get("giro") or rotulo_de(escenas[n - 1]):
+                f.append("H20 secuencia %d: la escena %d (giro o rótulo) solo puede ABRIR una secuencia" % (k, n))
+    for i in range(2, len(escenas)):
+        if i not in en_sec and i - 1 in en_sec and i + 1 in en_sec and actos[i - 2] == actos[i - 1] == actos[i]:
+            print("AVISO H20 la escena %d queda fuera de toda secuencia entre dos del mismo acto: su voz se graba aparte" % i)
     for i, e in enumerate(escenas, 1):
         tipo = e.get("tipo")
         for hid in e.get("hechos") or []:
@@ -1249,13 +1465,16 @@ def fecha_contra_foto(i, chip, foto):
 
 
 def avisar_flashbacks(escenas):
-    """Aviso: un año anterior al del capítulo en que va la escena (el museo de 2019 dentro de «2021»)."""
+    """Aviso: un año anterior al del acto en que va la escena (el museo de 2019 dentro de «2021»); el año del acto es el
+    del rótulo (o del capitulo) que lo abre."""
     cap = None
     for i, e in enumerate(escenas, 1):
-        if e.get("tipo") == "capitulo":
-            m = RE_ANIO.search(str(e.get("anio") or ""))
+        r = rotulo_de(e)
+        if r:
+            m = RE_ANIO.search(r["anio"])
             cap = int(m.group()) if m else None
-            continue
+            if r["capitulo"]:
+                continue
         if cap:
             antes = sorted({y for y in RE_ANIO.findall(" ".join(str(e.get(k) or "") for k in ("texto", "fecha"))) if int(y) < cap})
             if antes:
@@ -1285,18 +1504,71 @@ def anios_respaldados(H):
     return out
 
 
+def medio_de(h):
+    """El nombre de la primera fuente de un hecho (sin el paréntesis «(maqueta)»), para cotejarlo con la pantalla."""
+    fs = h.get("fuentes") or []
+    if not fs:
+        return ""
+    m = (fs[0].get("medio") or "").split("(")[0].strip()
+    return m or nombre_medio(fs[0].get("url") or "")
+
+
+def fuente_en_pantalla(e):
+    """Lo que la escena escribe como fuente: «fuente» (foto, cita) o grafico.fuente (tarjetas), plano."""
+    gr = e.get("grafico") if isinstance(e.get("grafico"), dict) else {}
+    return VD._plano(" ".join(filter(None, (e.get("fuente"), gr.get("fuente")))))
+
+
 def revisar_verdad(g, H, valores):
+    """H3 y H4: años y números con respaldo; presunción de inocencia; ATRIBUCIÓN (v3): la voz atribuye o matiza solo lo
+    `en_disputa` y lo de parte (`tipo_hecho` alegato | estimacion | opinion) y dice quién habla antes de leer una cita;
+    lo `una_fuente` se narra llano con la fuente en pantalla (o ya nombrada en el mismo acto)."""
     f = []
     anios = anios_respaldados(H)
     hechos = {h["id"]: h for h in H.get("hechos") or []}
+    citas = {q["id"]: q for q in H.get("citas") or []}
     casos_firmes = {x.get("persona") for x in H.get("casos") or [] if x.get("sentencia_firme")}
     escenas = g.get("escenas") or []
     cierre = g.get("cierre") or {}
+    nombradas, voz_previa = {}, ""
     for i, e in enumerate(escenas + [dict(cierre, tipo="cierre")], 1):
         textos = [e.get(k) or "" for k in ("texto", "pantalla", "linea", "golpe", "titular", "titulo", "fecha", "lugar", "fuente")]
         textos += [str(e.get("anio") or "")] + [(e.get("cifra") or {}).get(k) or "" for k in ("texto", "etiqueta")]
         textos += [" ".join(map(str, e.get("pasos") or [])), " ".join(e.get("resumen") or [])]
+        r = rotulo_de(e)
+        if r:
+            textos += [r["anio"], r["titulo"], r["lugar"]]
         todo = " ".join(textos)
+        voz = VD.sin_pausas(e.get("texto") or "")
+        ac = acto_de(e, i) if i <= len(escenas) else 3
+        vistos = nombradas.setdefault(ac, set())
+        hs = [hechos[h] for h in e.get("hechos") or [] if h in hechos]
+        de_parte = [h for h in hs if h.get("estado") == "en_disputa" or h.get("tipo_hecho") in ATRIBUIR_SIEMPRE]
+        if de_parte and not ATRIBUCION.search(voz):
+            f.append("H4 escena %d: cuenta un hecho en disputa o de parte (%s) y la voz no atribuye ni matiza («según…», «dijo», "
+                     "«acusó», «a inicios de…»)" % (i, ", ".join("%s %s" % (h["id"], h.get("tipo_hecho") or h["estado"]) for h in de_parte)))
+        en_pantalla = fuente_en_pantalla(e)
+        for h in [h for h in hs if h.get("estado") == "una_fuente"]:
+            mp = VD._plano(medio_de(h))
+            if not mp:
+                continue
+            if mp in en_pantalla or mp in VD._plano(voz) or any(mp in v or v in mp for v in vistos):
+                vistos.add(mp)
+            else:
+                f.append("H4 escena %d: cuenta un hecho de una sola fuente (%s: %s) y la fuente no está en pantalla ni se nombró "
+                         "antes en este acto: ponla en «fuente» (o grafico.fuente) o nómbrala una vez; la voz no necesita «según»"
+                         % (i, h["id"], medio_de(h)))
+        vistos |= {VD._plano(x) for x in re.split(r"[·,/]", (e.get("fuente") or "") + "·" + ((e.get("grafico") or {}).get("fuente") or "")) if x.strip()}
+        if e.get("tipo") == "cita" and citas.get(e.get("cita")):
+            q = citas[e["cita"]]
+            pv, pq = VD._plano(voz), VD._plano(q.get("texto"))
+            pos = pv.find(pq)
+            antes = (VD._plano(voz_previa) + " " + (pv[:pos] if pos >= 0 else pv)).strip()
+            raices = {w[:5] for w in VD._plano(q.get("autor") or "").split() if len(w) >= 4 and w not in VD.STOP}
+            if raices and not any(ra in antes for ra in raices):
+                f.append("H4 escena %d: la voz no dice quién lo dijo (%s) antes de leer la cita; preséntalo en esta voz o en la "
+                         "anterior" % (i, q.get("autor")))
+        voz_previa = voz
         for y in sorted(set(RE_ANIO.findall(todo)) - anios):
             f.append("H4 escena %d: el año %s no está en ningún hecho, cita o cifra verificada" % (i, y))
         for campo in ("titular", "fecha", "lugar"):
@@ -1307,8 +1579,6 @@ def revisar_verdad(g, H, valores):
             sin = VD.sin_respaldo(e["cifra"].get("texto") or "", valores)
             if sin:
                 f.append("H4 escena %d: la cifra «%s» no tiene respaldo en las cifras ni en los hechos" % (i, e["cifra"].get("texto")))
-        if any((hechos.get(h) or {}).get("estado") == "en_disputa" for h in e.get("hechos") or []) and not ATRIBUCION.search(e.get("texto") or ""):
-            f.append("H4 escena %d: cuenta un hecho en disputa y la voz no atribuye ni matiza («según…», «a inicios de…»)" % i)
         m = NT.VETADAS.search(todo)
         if m and not (e.get("caso") and e["caso"] in casos_firmes):
             f.append("H3 escena %d: «%s» sin sentencia firme (presunción de inocencia: señalado, acusado, sindicado; con "
@@ -1319,6 +1589,297 @@ def revisar_verdad(g, H, valores):
     if NT.VETADAS.search(cap):
         f.append("H3 caption: «%s» sin sentencia firme" % NT.VETADAS.search(cap).group())
     return f
+
+
+# ---------- la narración (v3): el texto corrido que se escribe ANTES de repartirlo en escenas ----------
+def narracion_de(g):
+    """[(acto, texto)] de guion.narracion (3 entradas {acto, texto}); [] si no viene."""
+    return [(x.get("acto"), (x.get("texto") or "").strip()) for x in g.get("narracion") or [] if isinstance(x, dict)]
+
+
+def plano_voz(t):
+    return VD._plano(VD.sin_pausas(t or ""))
+
+
+def raices_de(texto):
+    """Las raíces de 5 letras de las palabras con peso de un texto (como F3 del cierre y H14)."""
+    return {w[:5] for w in VD._plano(texto).split() if len(w) >= 5 and w not in VD.STOP and w not in VD.GENERICAS and not w.isdigit()}
+
+
+def estimado_s(g):
+    """Segundos estimados del guion sin locución (dígitos sin convertir): lo bastante para contar cortes por minuto."""
+    es = g.get("escenas") or []
+    return sum(len(VD.sin_pausas(e.get("texto") or "")) for e in es + [g.get("cierre") or {}]) / VD.CPS + VD.COLA * len(es) + VD.COLA_CIERRE
+
+
+def revisar_narracion(g, H, enc):
+    """H15 (la narración es la suma exacta de las voces), H16 (flujo), H17 (hilos), H18 (primera mención) y H19
+    (presupuesto de «según»). Sin escenas (el guionista mide el texto antes de repartirlo: `narracion --check`), las
+    unidades son los tres actos y H15 solo cuenta palabras."""
+    f = []
+    escenas = g.get("escenas") or []
+    cierre = g.get("cierre") or {}
+    actos = [acto_de(e, i) for i, e in enumerate(escenas, 1)]
+    narr = narracion_de(g)
+    solo_narr = not escenas
+    if not narr or [a for a, _ in narr] != [1, 2, 3] or not all(t for _, t in narr):
+        f.append("H15 «narracion»: 3 entradas {acto: 1|2|3, texto} con el texto corrido de cada acto (se escribe ANTES de "
+                 "repartirlo en escenas; cada escena toma un tramo sin cambiar una palabra)")
+        narr = []
+    for ac, texto in narr:
+        if solo_narr:
+            break
+        voces = [e.get("texto") or "" for e, a in zip(escenas, actos) if a == ac]
+        if ac == 3:
+            voces.append(cierre.get("texto") or "")
+        esperado, dado = plano_voz(" ".join(voces)), plano_voz(texto)
+        if esperado != dado:
+            k = next((j for j, (x, y) in enumerate(zip(esperado, dado)) if x != y), min(len(esperado), len(dado)))
+            f.append("H15 acto %d: la narración no es la suma de las voces de sus escenas%s; difieren desde «…%s» (narración) frente a "
+                     "«…%s» (voces): reparte el texto tal cual o corrige la narración" % (ac, " y el cierre" if ac == 3 else "",
+                                                                                        dado[max(0, k - 20):k + 25], esperado[max(0, k - 20):k + 25]))
+    if narr:
+        total = sum(VD.palabras(t) for _, t in narr)
+        if not PALABRAS_DURO[0] <= total <= PALABRAS_DURO[1]:
+            f.append("H15 %d palabras de narración; van %d–%d (≈ %d s a 145 palabras por minuto)" % (total, *PALABRAS, OBJETIVO_S))
+        elif not PALABRAS[0] <= total <= PALABRAS[1]:
+            print("AVISO H15 %d palabras de narración: apunta a %d–%d (≈ %d s)" % (total, *PALABRAS, OBJETIVO_S))
+    # H16 flujo: conectores por acto, aperturas con atribución, aperturas repetidas y cortes por minuto
+    for ac, texto in narr:
+        n_c = len(CONECTORES_NARRACION.findall(VD.sin_pausas(texto)))
+        if n_c < CONECTORES_MIN_POR_ACTO:
+            f.append("H16 acto %d: %d conector(es) causal o temporal («pero», «por eso», «entonces», «dos años después», «mientras "
+                     "tanto»…); van ≥ %d: cada oración sigue de la anterior, nunca «y luego»" % (ac, n_c, CONECTORES_MIN_POR_ACTO))
+    unidades = [VD.sin_pausas(e.get("texto") or "").strip() for e in escenas] + [VD.sin_pausas(cierre.get("texto") or "").strip()] \
+        if not solo_narr else [t for _, t in narr]
+    etiqueta = (lambda k: "escena %d" % (k + 1)) if not solo_narr else (lambda k: "acto %d" % (k + 1))  # noqa: E731
+    if not solo_narr:
+        ap = [i for i, u in enumerate(unidades[:-1], 1) if i >= 2 and APERTURA_ATRIBUIDA.match(u)]
+        if len(ap) > APERTURAS_ATRIBUIDAS_MAX:
+            f.append("H16 %d escenas abren con una atribución («Según…», «Pero, según…»: escenas %s); va ≤ %d: la fuente en pantalla "
+                     "y la voz narra" % (len(ap), ", ".join(map(str, ap)), APERTURAS_ATRIBUIDAS_MAX))
+        dos = [" ".join(plano_voz(u).split()[:2]) for u in unidades[:-1]]
+        for i in range(1, len(dos)):
+            if dos[i] and dos[i] == dos[i - 1]:
+                f.append("H16 escenas %d y %d abren con las mismas palabras («%s»): varía la apertura" % (i, i + 1, dos[i]))
+        primeras = {}
+        for u in unidades[1:-1]:
+            w = (plano_voz(u).split() or [""])[0]
+            primeras[w] = primeras.get(w, 0) + 1
+        for w, n in primeras.items():
+            if n > 3 and w:
+                print("AVISO H16 %d escenas abren con «%s»: varía la apertura" % (n, w))
+        est = estimado_s(g)
+        cpm = (len(escenas) + 1) / max(1.0, est / 60)
+        if cpm > CORTES_MAX_POR_MIN:
+            f.append("H16 %.1f cortes por minuto (%d escenas más el cierre en %.0f s); van ≤ %.1f: una escena puede sostener un tramo "
+                     "más largo de narración" % (cpm, len(escenas), est, CORTES_MAX_POR_MIN))
+    # H17 hilos: lo que la historia abre se paga en una escena o se declara sin respuesta en la narración del acto 3
+    hilos_enc = [h for h in enc.get("hilos") or [] if isinstance(h, dict) and (h.get("id") or "").strip()]
+    if hilos_enc:
+        decl = {h.get("id"): h for h in g.get("hilos") or [] if isinstance(h, dict)}
+        narr3 = plano_voz(" ".join([t for a, t in narr if a == 3] + [cierre.get("texto") or ""]))
+        for h in hilos_enc:
+            d = decl.get(h["id"])
+            if not d:
+                f.append("H17 el hilo %s («%s») no está en guion.hilos: {id, escena: N (la que lo paga, con paga: [id])} o "
+                         "{id, sin_respuesta: «nunca se supo…»}" % (h["id"], (h.get("pregunta") or "")[:60]))
+            elif d.get("escena") is not None:
+                n = d["escena"]
+                if solo_narr:
+                    continue
+                if not isinstance(n, int) or isinstance(n, bool) or not 3 <= n <= len(escenas):
+                    f.append("H17 hilo %s: escena %s no existe (3–%d)" % (h["id"], n, len(escenas)))
+                elif h["id"] not in (escenas[n - 1].get("paga") or []):
+                    f.append("H17 hilo %s: la escena %d no lo declara en «paga»: [\"%s\"]" % (h["id"], n, h["id"]))
+            elif (d.get("sin_respuesta") or "").strip():
+                raices = raices_de(d["sin_respuesta"])
+                if raices and not any(re.search(r"\b" + re.escape(ra), narr3) for ra in raices):
+                    f.append("H17 hilo %s: la narración del acto 3 (o el cierre) no dice que quedó sin respuesta («%s»)"
+                             % (h["id"], d["sin_respuesta"][:60]))
+            else:
+                f.append("H17 hilo %s: «escena» (la que lo paga) o «sin_respuesta» (la frase que lo declara)" % h["id"])
+        ids = {h["id"] for h in hilos_enc}
+        for i, e in enumerate(escenas, 1):
+            for hid in e.get("paga") or []:
+                if hid not in ids:
+                    f.append("H17 escena %d: «paga» cita un hilo que no existe en el encuadre (%s)" % (i, hid))
+    # H18 primera mención: cada personaje llega presentado la primera vez que la voz lo nombra
+    prot = [VD._plano(x) for x in enc.get("protagonista") or [] if (x or "").strip()]
+    personajes = [p for p in enc.get("personajes") or [] if isinstance(p, dict) and (p.get("nombre") or "").strip()]
+    citas = {q["id"]: q for q in H.get("citas") or []}
+    pantallas = [VD._plano(pantalla_de(e, citas)) for e in escenas] if not solo_narr else [""] * 3
+    voces_p = [plano_voz(u) for u in unidades]
+    nombres = {VD._plano(p["nombre"]): p for p in personajes}
+    for p in personajes:
+        nom = VD._plano(p["nombre"])
+        if nom in prot:
+            continue
+        claves = [nom] + [VD._plano(a) for a in p.get("alias") or [] if (a or "").strip()]
+        otros = [o for o in nombres if o != nom]
+        k = None
+        for j, v in enumerate(voces_p):
+            for c in claves:
+                if re.search(r"\b%s\b" % re.escape(c), v) and not (c != nom and any(c in o and re.search(r"\b%s\b" % re.escape(o), v) for o in otros)):
+                    k = j
+                    break
+            if k is not None:
+                break
+        if k is None:
+            continue
+        raices = raices_de(p.get("presentacion") or "")
+        if not raices or VD.palabras(p.get("presentacion") or "") > PRESENTACION_PALABRAS:
+            f.append("H18 personaje %s: «presentacion» de 1–%d palabras que diga quién es («hermano de la vicepresidenta»)" % (p["nombre"], PRESENTACION_PALABRAS))
+            continue
+        dicho = " ".join(filter(None, [voces_p[k], pantallas[k] if k < len(pantallas) else "", voces_p[k - 1] if k > 0 else ""]))
+        if not any(re.search(r"\b" + re.escape(ra), dicho) for ra in raices):
+            f.append("H18 %s: «%s» aparece por primera vez sin presentación («%s»): dilo en esa voz (o en la anterior) con una "
+                     "aposición" % (etiqueta(k), p["nombre"], p.get("presentacion")))
+    # H19 «según»: ≤ 4 por video, ≤ 2 por acto, nunca en dos escenas seguidas, nunca la misma fuente dos veces en voz
+    segs = [len(RE_SEGUN.findall(u)) for u in unidades]
+    if sum(segs) > SEGUN_MAX_VIDEO:
+        f.append("H19 %d «según» en la voz; van ≤ %d: lo corroborado se narra llano con la fuente en pantalla; varía con una "
+                 "aposición («AMSA, la autoridad del lago, …») o el verbo de la fuente («el tribunal calificó…»)" % (sum(segs), SEGUN_MAX_VIDEO))
+    por_acto = {}
+    for k, n in enumerate(segs):
+        ac = (k + 1) if solo_narr else (actos[k] if k < len(actos) else 3)
+        por_acto[ac] = por_acto.get(ac, 0) + n
+    for ac, n in sorted(por_acto.items(), key=lambda kv: str(kv[0])):
+        if n > SEGUN_MAX_ACTO:
+            f.append("H19 acto %s: %d «según»; van ≤ %d por acto" % (ac, n, SEGUN_MAX_ACTO))
+    if not solo_narr:
+        for i in range(1, len(segs)):
+            if segs[i - 1] and segs[i]:
+                f.append("H19 escenas %d y %d: «según» en dos escenas seguidas; la segunda fuente va solo en pantalla" % (i, i + 1))
+    fuentes_voz = {}
+    for k, u in enumerate(unidades):
+        for m in RE_SEGUN_FUENTE.finditer(u):
+            fuentes_voz.setdefault(VD._plano(m.group(1)), []).append(etiqueta(k))
+    for fu, ns in fuentes_voz.items():
+        if len(ns) > 1:
+            f.append("H19 «según %s» %d veces en voz (%s): la segunda vez va solo en pantalla" % (fu, len(ns), ", ".join(ns)))
+    return f
+
+
+def revisar_encuadre(enc):
+    """La estructura v3 del encuadre: 3 actos, la espina (4 puntos en su acto), 2–6 hilos, ≤ 8 personajes presentados y
+    2–5 periodos (el reparto de los ejes). → fallas H8."""
+    f = []
+    actos = enc.get("actos") if isinstance(enc.get("actos"), list) else []
+    if [(a.get("nombre"), a.get("n")) for a in actos if isinstance(a, dict)] != list(ACTOS) or len(actos) != 3:
+        f.append("H8 encuadre: «actos» son exactamente 3 en orden: %s (n 1–3), cada uno con titulo (≤ %d palabras), periodo, "
+                 "que_cuenta y termina_en" % (", ".join("%s (%d)" % x for x in ACTOS), CAP_TITULO_PALABRAS))
+    else:
+        for a in actos:
+            for k in ("titulo", "periodo", "que_cuenta", "termina_en"):
+                if not (a.get(k) or "").strip():
+                    f.append("H8 encuadre: acto %s sin «%s»" % (a.get("n"), k))
+            tit = (a.get("titulo") or "").strip()
+            if tit and (VD.palabras(tit) > CAP_TITULO_PALABRAS or len(tit) > CAP_TITULO_CARACTERES):
+                f.append("H8 encuadre: acto %s: titulo de 1–%d palabras y ≤ %d caracteres (es el rótulo)" % (a.get("n"), CAP_TITULO_PALABRAS, CAP_TITULO_CARACTERES))
+    ejes = {x.get("id") for x in enc.get("ejes") or [] if isinstance(x, dict)}
+    esp = enc.get("espina") if isinstance(enc.get("espina"), dict) else {}
+    for k, en in zip(PUNTOS_ESPINA, ((1,), (2,), (2, 3), (3,))):
+        p = esp.get(k)
+        if not isinstance(p, dict) or not (p.get("frase") or "").strip():
+            f.append("H8 encuadre: espina.%s {frase, acto, ejes} (los cuatro puntos: detonante, punto_medio, climax, resolucion)" % k)
+            continue
+        if p.get("acto") not in en:
+            f.append("H8 encuadre: espina.%s va en el acto %s" % (k, " o ".join(map(str, en))))
+        if any(x not in ejes for x in p.get("ejes") or []):
+            f.append("H8 encuadre: espina.%s cita un eje que no existe (%s)" % (k, ", ".join(sorted(ejes))))
+    hilos = enc.get("hilos") if isinstance(enc.get("hilos"), list) else []
+    if not HILOS[0] <= len(hilos) <= HILOS[1]:
+        f.append("H8 encuadre: %d hilos; van %d–%d (las preguntas que la historia abre y debe pagar o declarar sin respuesta)" % (len(hilos), *HILOS))
+    ids = []
+    for h in hilos:
+        if not isinstance(h, dict) or not re.fullmatch(r"h\d+", str(h.get("id") or "")) or not (h.get("pregunta") or "").strip():
+            f.append("H8 encuadre: cada hilo {id: h1, h2…, pregunta, eje}")
+            continue
+        ids.append(h["id"])
+        if h.get("eje") and h["eje"] not in ejes:
+            f.append("H8 encuadre: hilo %s cita el eje «%s», que no existe" % (h["id"], h["eje"]))
+    if len(ids) != len(set(ids)):
+        f.append("H8 encuadre: ids de hilo repetidos")
+    prot = {VD._plano(x) for x in enc.get("protagonista") or []}
+    pers = enc.get("personajes") if isinstance(enc.get("personajes"), list) else []
+    if len(pers) > PERSONAJES_MAX:
+        f.append("H8 encuadre: %d personajes; van ≤ %d" % (len(pers), PERSONAJES_MAX))
+    for p in pers:
+        if not isinstance(p, dict) or not (p.get("nombre") or "").strip():
+            f.append("H8 encuadre: cada personaje {nombre, alias[], presentacion}")
+            continue
+        pr = (p.get("presentacion") or "").strip()
+        if not pr or VD.palabras(pr) > PRESENTACION_PALABRAS:
+            f.append("H8 encuadre: personaje %s: presentacion de 1–%d palabras (quién es: «hermano de la vicepresidenta»)" % (p["nombre"], PRESENTACION_PALABRAS))
+        if VD._plano(p["nombre"]) in prot:
+            f.append("H8 encuadre: %s es el protagonista: no va en personajes (lo presenta el gancho)" % p["nombre"])
+    periodos = enc.get("periodos") if isinstance(enc.get("periodos"), list) else (enc.get("capitulos") if isinstance(enc.get("capitulos"), list) else [])
+    if not PERIODOS[0] <= len(periodos) <= PERIODOS[1]:
+        f.append("H8 encuadre: %d periodos; van %d–%d (el reparto de los ejes entre investigadores: {n, titulo, periodo, pregunta})" % (len(periodos), *PERIODOS))
+    return f
+
+
+def cmd_encuadre(a):
+    trabajo = os.path.abspath(a.trabajo)
+    enc = encuadre(trabajo)
+    if not enc:
+        return falla("falta %s/encuadre.json" % VD.rel(trabajo))
+    f = revisar_encuadre(enc)
+    for x in f:
+        print("FALLA", x)
+    if not f:
+        print("encuadre ok · actos %s · espina %s · %d hilos · %d personajes · %d periodos"
+              % (" / ".join(a_.get("titulo") or "" for a_ in enc["actos"]), ", ".join("%s (acto %s)" % (k, enc["espina"][k].get("acto")) for k in PUNTOS_ESPINA),
+                 len(enc.get("hilos") or []), len(enc.get("personajes") or []), len(enc.get("periodos") or enc.get("capitulos") or [])))
+    return 1 if f else 0
+
+
+def cmd_narracion(a):
+    """La herramienta del guionista para escribir el texto corrido ANTES de repartirlo: por acto, palabras, segundos a 145 ppm,
+    conectores, «según» (y a qué fuente), la primera mención de cada personaje y los hilos; --check falla con H16–H19
+    (sobre la narración sola) y con la cuenta de palabras."""
+    trabajo = os.path.abspath(a.trabajo)
+    g = leer(os.path.join(trabajo, "guion.json"))
+    H, enc = historia_de(trabajo), encuadre(trabajo)
+    narr = narracion_de(g)
+    if not narr:
+        return falla("guion.json sin «narracion»: [{acto: 1, texto}, {acto: 2, texto}, {acto: 3, texto}]")
+    total = 0
+    for ac, texto in narr:
+        n_p = VD.palabras(texto)
+        total += n_p
+        NE.AVISOS.clear()
+        try:
+            car = len(NE.convertir(VD.sin_pausas(texto))[1])
+        except ValueError:
+            car = len(texto)
+        NE.AVISOS.clear()
+        con = CONECTORES_NARRACION.findall(VD.sin_pausas(texto))
+        seg = [m.group(1) for m in RE_SEGUN_FUENTE.finditer(texto)]
+        print("acto %d · %d palabras · ≈ %.0f s de voz · conectores %d (%s) · «según» %d%s" % (
+            ac, n_p, car / VD.CPS, len(con), ", ".join(con[:6]) or "ninguno", len(RE_SEGUN.findall(texto)), " (" + ", ".join(seg) + ")" if seg else ""))
+    colas = VD.COLA * max(0, len(g.get("escenas") or []) or 12) + VD.COLA_CIERRE
+    print("total %d palabras (objetivo %d–%d) · ≈ %.0f s con las colas de %d escenas (objetivo %d s)"
+          % (total, *PALABRAS, total / 145 * 60 + colas, len(g.get("escenas") or []) or 12, OBJETIVO_S))
+    texto_todo = plano_voz(" ".join(t for _, t in narr))
+    for p in enc.get("personajes") or []:
+        nom = VD._plano(p.get("nombre") or "")
+        if nom and re.search(r"\b%s\b" % re.escape(nom), texto_todo):
+            ok = any(re.search(r"\b" + re.escape(ra), texto_todo) for ra in raices_de(p.get("presentacion") or ""))
+            print("personaje %s: nombrado%s" % (p["nombre"], " y presentado" if ok else " SIN presentación («%s»)" % p.get("presentacion")))
+    decl = {h.get("id"): h for h in g.get("hilos") or [] if isinstance(h, dict)}
+    for h in enc.get("hilos") or []:
+        d = decl.get(h.get("id")) or {}
+        print("hilo %s («%s»): %s" % (h.get("id"), (h.get("pregunta") or "")[:50], "paga la escena %s" % d["escena"] if d.get("escena") is not None
+                                      else "sin respuesta: «%s»" % d["sin_respuesta"][:50] if d.get("sin_respuesta") else "SIN declarar en guion.hilos"))
+    if not getattr(a, "check", False):
+        return 0
+    f = revisar_narracion({"narracion": g.get("narracion"), "hilos": g.get("hilos"), "cierre": g.get("cierre")}, H, enc)
+    for x in f:
+        print("FALLA", x)
+    print("narracion %s" % ("ok" if not f else "con %d falla(s)" % len(f)))
+    return 1 if f else 0
 
 
 # ---------- tarjetas: las escenas con gráfico → base/tuit_N.html ----------
@@ -1392,10 +1953,20 @@ def cmd_guion(a):
         return falla("guion.json ilegible: %s" % ex)
     st = VD.estado(trabajo)
     H = historia_de(trabajo)
+    # secuencias de voz (H20): si el guion no las trae, el script las deriva de los actos y las escribe (voz_continua por
+    # defecto en historia: la voz se graba de corrido por secuencia)
+    if g.get("voz_continua", True) and not g.get("secuencias") and g.get("escenas"):
+        g["secuencias"], g["voz_continua"] = secuencias_por_defecto(g), True
+        escribir(os.path.join(trabajo, "guion.json"), g)
+        print("secuencias por defecto (voz de corrido): %s" % " · ".join("–".join(map(str, (s[0], s[-1]))) for s in g["secuencias"]))
+    elif g.get("secuencias") and "voz_continua" not in g:
+        g["voz_continua"] = True
+        escribir(os.path.join(trabajo, "guion.json"), g)
     fallas = construir_tarjetas(trabajo, g, st)
     aplicar_extension(trabajo)
     valores, _, _ = VD.valores_respaldo(VD.estado(trabajo)["hilo"])
     fallas += revisar_verdad(g, H, valores)
+    fallas += revisar_narracion(g, H, encuadre(trabajo))
     buf = io.StringIO()
     with contextlib.redirect_stdout(buf):   # las FALLA de video.py (V1–V5, V9, F1–F8, H8–H14) van también al RETORNO
         rc = VD.cmd_guion(argparse.Namespace(trabajo=trabajo, check=True))
@@ -1431,10 +2002,17 @@ def retorno_guion(trabajo, g, ok, fallas):
     de cada escena en orden, sin el cierre (que no está en TIPOS)."""
     es = g.get("escenas") or []
     loc = os.path.join(trabajo, "locucion.json")
-    est = leer(loc)["estimado_s"] if ok and os.path.exists(loc) else round(
-        sum(len(e.get("texto") or "") for e in es + [g.get("cierre") or {}]) / VD.CPS + VD.COLA * len(es) + VD.COLA_CIERRE, 1)
+    est = leer(loc)["estimado_s"] if ok and os.path.exists(loc) else round(estimado_s(g), 1)
+    hilos_g = [h for h in g.get("hilos") or [] if isinstance(h, dict)]
     return {"archivo": VD.rel(os.path.join(trabajo, "guion.json")), "gate": "ok" if ok else "falla", "fallas": fallas,
             "escenas": len(es), "tipos": [e.get("tipo") for e in es], "capitulos": sum(e.get("tipo") == "capitulo" for e in es),
+            "actos": len({acto_de(e, i) for i, e in enumerate(es, 1)} & {1, 2, 3}),
+            "rotulos": sum(1 for e in es if rotulo_de(e) and not rotulo_de(e)["capitulo"]),
+            "palabras": sum(VD.palabras(t) for _, t in narracion_de(g)),
+            "segun": sum(len(RE_SEGUN.findall(VD.sin_pausas(e.get("texto") or ""))) for e in es + [g.get("cierre") or {}]),
+            "hilos_pagados": sum(1 for h in hilos_g if h.get("escena") is not None),
+            "hilos_sin_respuesta": sum(1 for h in hilos_g if (h.get("sin_respuesta") or "").strip()),
+            "secuencias": len(g.get("secuencias") or []),
             "estimado_s": est, "explica_sin_animacion": [i for i, e in enumerate(es, 1) if e.get("tipo") == "explica" and not e.get("animacion")]}
 
 
@@ -1496,19 +2074,77 @@ def rellenar_huecos(latidos, ev, pal, dur, maximo=4.5):
         latidos.add(min(cands, key=lambda t: (t not in tras_coma, abs(t - (a + b) / 2))))
 
 
+def entrada_sfx(S, e, esc):
+    """El efecto de entrada de una escena de historia (presupuesto v3): un «pero» en la voz o el giro llevan «grave»; la
+    primera escena de una secuencia, una sin secuencia o una con rótulo, «whoosh»; dentro de una secuencia (la voz sigue
+    de corrido) no hay efecto de entrada."""
+    if VD.RE_ENLACE["pero"].match(VD.sin_pausas(e.get("voz") or "").strip()) or esc.get("giro"):
+        return [(0.0, "grave")]
+    if S.get("seguida") and not rotulo_de(esc):
+        return []
+    return [(0.0, "whoosh")]
+
+
+def t_fuente(esc, pal, t_ult, fin_voz, dur):
+    """Cuándo entra el chip «Fuente: …»: en la primera palabra de la voz que nombre esa fuente; si la voz no la nombra, a
+    mitad de la escena. Ya no depende de que la voz diga «según» (la fuente en pantalla es la norma, H4)."""
+    ws = [VD._plano(w["text"]) for w in pal]
+    k = None
+    for medio in re.split(r"[·,/]", esc.get("fuente") or ""):
+        toks = VD._plano(medio).split()
+        for j in range(len(ws) - len(toks) + 1) if toks else []:
+            if ws[j:j + len(toks)] == toks:
+                k = j if k is None else min(k, j)
+                break
+    t_f = pal[k]["start"] if k is not None else max(t_ult + 1.0, 0.45 * fin_voz)
+    return min(t_f, dur - 1.0)
+
+
+def armar_rotulo(S, esc, ps, g, R):
+    """El rótulo de acto sobre la primera escena del acto (S.R, lo dibuja V.pintarActo): el año cuenta desde el del
+    rótulo anterior (si la voz dice el año antes de 2 s, termina ahí), el título entra palabra a palabra y todo se
+    desvanece en ROTULO_S; la voz sigue narrando debajo."""
+    es = g.get("escenas") or []
+    previos = [rotulo_de(x) for i, x in enumerate(es, 1) if i < S["n"] and rotulo_de(x)]
+    t0 = ROTULO_CUENTA[0]
+    k = next((j for j, p in enumerate(ps) if p.get("seg") and p["seg"].get("num") and R["anio"] and R["anio"] in (p["seg"].get("p") or "")
+              and p["end"] <= 2.0), None)
+    t1 = max(t0 + 0.9, ps[k]["end"]) if k is not None else ROTULO_CUENTA[1]
+    titulo = VD.repartir(R["titulo"].split(), t1, t1 + 0.5, minimo=0.1)
+    return {"numero": R.get("numero") or acto_de(esc, S["n"]) or len(previos) + 1, "total": len(ACTOS),
+            "desde": previos[-1]["anio"] if previos else None, "hasta": R["anio"], "titulo": titulo,
+            "lugar": R.get("lugar") or None, "cuenta": [round(t0, 3), round(t1, 3)], "fin": ROTULO_S}
+
+
+def eventos_rotulo(S):
+    r = S["R"]
+    return [(0.1, "acto"), (r["cuenta"][1], "acto_cuenta_fin"), (r["fin"], "acto_fin")], [(r["cuenta"][1], "resolucion")]
+
+
 def t_foto(S, e, ps, pal, fin_voz, dur, g):
     """La escena foto: video/noticia.html en modo noticia (chip con la fecha y el lugar, la foto con Ken Burns y su
-    crédito, el titular, la cifra si la hay y la fuente)."""
+    crédito, el titular, la cifra si la hay y la fuente). Con rótulo de acto, lo propio entra cuando el rótulo se va;
+    dentro de una secuencia, el titular entra con la primera oración de la voz."""
     esc = escena_guion(S, g)
     fo = fotos_h().get(esc.get("foto")) or {}
-    t0 = VD.TRANSICION + 0.05
+    R = rotulo_de(esc)
+    t0 = VD.TRANSICION + 0.05 + (DESFASE_ROTULO if R else 0.0)
+    if S.get("seguida") and not R:
+        t0 = 0.05
     N = {"modo": "noticia", "chip": {"b": esc.get("fecha") or "", "s": esc.get("lugar") or ""}, "foto": fo.get("archivo"),
          "credito": fo.get("credito"), "icono": esc.get("icono"), "depto": NT.depto_id(esc.get("depto")),
          "lugar": esc.get("lugar") if not fo.get("archivo") else None, "kb": NT.KEN_BURNS[(S["n"] - 1) % len(NT.KEN_BURNS)],
          "cifra": None, "fuente": None}
-    N["titular"] = VD.repartir((esc.get("titular") or "").split(), t0 + 0.1, t0 + 1.2, minimo=0.08)
-    ev = [(0.1, "entrada")] + [(w["start"], "titular") for w in N["titular"]]
-    sfx = [(0.0, "grave" if S.get("enlace") == "pero" else "whoosh")]
+    tit_ws = (esc.get("titular") or "").split()
+    if S.get("seguida") and not R:
+        fin_1 = VD.fin_oracion_desde(pal, 0)
+        N["titular"], _ = VD.alinear_linea(tit_ws, pal, t0 + 0.05, max(t0 + 0.9, min(fin_1, fin_voz - 0.3)))
+        if not any(w.get("dicha") for w in N["titular"]):
+            N["titular"] = VD.repartir(tit_ws, t0 + 0.1, t0 + 0.9, minimo=0.08)
+    else:
+        N["titular"] = VD.repartir(tit_ws, t0 + 0.1, t0 + 1.2, minimo=0.08)
+    ev = [(0.1 + (DESFASE_ROTULO if R else 0.0), "entrada")] + [(w["start"], "titular") for w in N["titular"]]
+    sfx = entrada_sfx(S, e, esc)
     t_ult = N["titular"][-1]["start"] if N["titular"] else t0
     c = esc.get("cifra")
     if c:
@@ -1520,14 +2156,11 @@ def t_foto(S, e, ps, pal, fin_voz, dur, g):
         ev += [(start, "cifra"), (start + 0.9, "cifra_fin")]
         sfx.append((start, "tic"))
     if esc.get("fuente"):
-        k_s = next((k for k, x in enumerate(pal) if NT.SEGUN.fullmatch(VD._plano(x["text"]) or "")), None)
-        t_f = pal[k_s]["start"] if k_s is not None else max(t_ult + 1.0, 0.55 * fin_voz)
+        t_f = t_fuente(esc, pal, t_ult, fin_voz, dur)
         if N["cifra"]:
-            t_f = max(t_f, N["cifra"]["start"] + 1.2)
-        t_f = min(t_f, dur - 1.0)
+            t_f = min(max(t_f, N["cifra"]["start"] + 1.2), dur - 1.0)
         N["fuente"] = {"texto": "Fuente: " + esc["fuente"], "start": round(t_f, 3)}
         ev.append((t_f, "fuente"))
-        sfx.append((t_f, "pulso"))
     cifra_t = N["cifra"]["pulso"][0] if N["cifra"] and N["cifra"]["pulso"] else None
     latidos = {round(pal[k + 1]["start"], 3) for k, x in enumerate(pal[:-1]) if x["text"].endswith((".", "?", "!", ":"))} | \
         {round(x["start"], 3) for x in pal if x.get("clave") and x["start"] != cifra_t}
@@ -1535,6 +2168,11 @@ def t_foto(S, e, ps, pal, fin_voz, dur, g):
     N["oraciones"] = sorted(latidos)
     ev += [(x, "oracion") for x in N["oraciones"]]
     S["pagina"], S["N"], S["T"] = "noticia", N, {"tit": round(t0, 3)}
+    if R:
+        S["R"] = armar_rotulo(S, esc, ps, g, R)
+        ev_r, sfx_r = eventos_rotulo(S)
+        ev += ev_r
+        sfx += sfx_r
     return ev, sfx
 
 
@@ -1544,7 +2182,10 @@ def t_cita(S, e, ps, pal, fin_voz, dur, g):
     esc = escena_guion(S, g)
     q = next((x for x in (H_ACTUAL or {}).get("citas") or [] if x["id"] == esc.get("cita")), {})
     ws = (q.get("texto") or "").split()
-    t0 = VD.TRANSICION + 0.1
+    R = rotulo_de(esc)
+    t0 = VD.TRANSICION + 0.1 + (DESFASE_ROTULO if R else 0.0)
+    if S.get("seguida") and not R:
+        t0 = 0.1
     texto, _ = VD.alinear_linea(ws, pal, t0, max(t0 + 0.4, fin_voz - 0.3))
     resalte, resalte_t = None, None
     rw = [VD._norm(w) for w in (esc.get("resalte") or "").split()]
@@ -1554,8 +2195,8 @@ def t_cita(S, e, ps, pal, fin_voz, dur, g):
             resalte, resalte_t = [k, k + len(rw) - 1], round(texto[k]["start"], 3)
             break
     ret = fotos_h().get(esc.get("retrato")) or {}
-    entra = 0.6
-    fuente = {"texto": "Fuente: " + esc["fuente"], "start": round(min(max(2.0, 0.6 * fin_voz), dur - 1.0), 3)} if esc.get("fuente") else None
+    entra = round(t0 + 0.25, 3) if (S.get("seguida") and not R) else round(0.6 + (DESFASE_ROTULO if R else 0.0), 3)
+    fuente = {"texto": "Fuente: " + esc["fuente"], "start": round(max(t_fuente(esc, pal, t0, fin_voz, dur), min(2.0, dur - 1.0)), 3)} if esc.get("fuente") else None
     S["pagina"] = "historia"
     S["H"] = {"texto": texto, "autor": q.get("autor"), "cargo": q.get("cargo"), "cuando": q.get("cuando"),
               "retrato": ret.get("archivo"), "credito": ret.get("credito"), "documento": bool(q.get("documento")),
@@ -1566,8 +2207,13 @@ def t_cita(S, e, ps, pal, fin_voz, dur, g):
         t_tr = next((w["start"] for w in pal if w["start"] > fin_q + 0.05), max(fin_q + 0.4, fin_voz - 1.2))
         S["H"]["traduccion"] = {"texto": esc["traduccion"].strip(), "start": round(t_tr, 3)}
     S["T"] = {"ini": round(t0, 3)}
-    ev = [(0.1, "entrada"), (entra, "firma")] + [(w["start"], "palabra") for w in texto if w.get("dicha")]
-    sfx = [(0.0, "grave" if S.get("enlace") == "pero" else "whoosh")]
+    ev = [(0.1 + (DESFASE_ROTULO if R else 0.0), "entrada"), (entra, "firma")] + [(w["start"], "palabra") for w in texto if w.get("dicha")]
+    sfx = entrada_sfx(S, e, esc)
+    if R:
+        S["R"] = armar_rotulo(S, esc, ps, g, R)
+        ev_r, sfx_r = eventos_rotulo(S)
+        ev += ev_r
+        sfx += sfx_r
     if resalte_t is not None:
         ev += [(resalte_t, "resalte"), (resalte_t + 0.8, "resalte_fin")]
         sfx.append((resalte_t, "pulso"))
@@ -1606,6 +2252,52 @@ def t_capitulo(S, e, ps, pal, fin_voz, dur, g):
     return ev, [(0.0, "whoosh"), (t1, "resolucion")]
 
 
+ENTRADAS_ROTULO = ("entra", "golpe_arriba", "cifra", "cifra_fin", "linea", "linea_fin", "linea_dicha", "lienzo", "paso", "foco",
+                   "conteo_fin", "nota", "anio", "anio_fin", "item", "punto", "figuras", "destacadas", "etiqueta", "pildora")
+
+
+def post_historia(S, e, ps, pal, fin_voz, dur, g, ev, sfx):
+    """Tras el constructor de cualquier escena (VD.POST_CONSTRUCTORES): el rótulo de acto sobre las escenas de video.py
+    (tarjeta, golpe, explica…: lo propio espera a que el rótulo se vaya), el presupuesto de efectos dentro de una
+    secuencia, y la transición de entrada (fundido dentro de una secuencia; la del giro manda)."""
+    esc = escena_guion(S, g)
+    tipo = S.get("tipo")
+    if tipo not in TIPOS_PROPIOS + ("gancho", "cierre"):
+        R = rotulo_de(esc)
+        if R:
+            for w in S.get("arriba") or []:
+                w["start"] = round(w["start"] + DESFASE_ROTULO, 3)
+            T = S.get("T") or {}
+            for k in ("tit", "ini"):
+                if isinstance(T.get(k), (int, float)):
+                    T[k] = round(T[k] + DESFASE_ROTULO, 3)
+            if isinstance(T.get("pant"), dict):
+                for k in ("desde", "hasta"):
+                    if isinstance(T["pant"].get(k), (int, float)):
+                        T["pant"][k] = round(T["pant"][k] + DESFASE_ROTULO, 3)
+            for lista in (T.get("linea") or [], T.get("pasos") or [], T.get("items") or [], T.get("puntos") or []):
+                for w in lista:
+                    w["start"] = round(max(w["start"], ROTULO_S), 3)
+            for v in (T.get("valores") or {}).values():
+                v[0] = round(max(v[0], ROTULO_S), 3)
+            for k in ("nota", "figuras", "destacadas", "etiqueta_t"):
+                if isinstance(T.get(k), (int, float)):
+                    T[k] = round(max(T[k], ROTULO_S + (1.0 if k == "nota" else 0.0)), 3)
+            ev = [(max(t, ROTULO_S) if k in ENTRADAS_ROTULO else t, k) for t, k in ev]
+            S["R"] = armar_rotulo(S, esc, ps, g, R)
+            ev_r, sfx_r = eventos_rotulo(S)
+            sfx = [(t, k) for t, k in sfx if not (t <= VD.TRANSICION + 0.1 and k in ("whoosh", "impacto"))] + [(0.0, "whoosh")] + sfx_r
+            ev += ev_r
+        elif S.get("seguida") and not esc.get("giro"):
+            sfx = [(t, k) for t, k in sfx if not (t <= VD.TRANSICION + 0.1 and k in ("whoosh", "impacto"))]
+    if S.get("transicion") and tipo != "cierre":
+        if esc.get("giro"):
+            S["transicion"] = VD.TRANSICIONES["giro"]
+        elif S.get("seguida") and not rotulo_de(esc):
+            S["transicion"] = VD.TRANSICIONES["seguida"]
+    return ev, sfx
+
+
 def cmd_tiempos(a):
     trabajo = os.path.abspath(a.trabajo)
     aplicar_extension(trabajo)
@@ -1625,11 +2317,36 @@ def cmd_tiempos(a):
 
 # ---------- digestos ----------
 def lineas_hechos(H, con_citas=True):
+    """Un hecho por línea: `una_fuente [medio]` se narra llano con la fuente en pantalla; `en_disputa (nota)` y
+    `· ALEGATO|ESTIMACIÓN|OPINIÓN` se atribuyen en voz (H4)."""
     out = []
     for h in H.get("hechos") or []:
         fs = " · ".join("%s" % (f.get("medio") or NT.dominio(f.get("url"))) for f in h.get("fuentes") or [])
-        out.append("- %s · %s (%s) · %s%s — %s [%s]" % (h["id"], h.get("fecha"), h.get("precision"), h["estado"],
-                   " (" + h["nota"] + ")" if h["estado"] == "en_disputa" and h.get("nota") else "", h.get("texto"), fs))
+        th = h.get("tipo_hecho")
+        out.append("- %s · %s (%s) · %s%s%s — %s [%s]" % (h["id"], h.get("fecha"), h.get("precision"), h["estado"],
+                   " (" + h["nota"] + ")" if h["estado"] == "en_disputa" and h.get("nota") else "",
+                   " · %s" % {"alegato": "ALEGATO", "estimacion": "ESTIMACIÓN", "opinion": "OPINIÓN"}[th] if th in ATRIBUIR_SIEMPRE else "",
+                   h.get("texto"), fs))
+    return out
+
+
+def lineas_encuadre(H, enc):
+    """Actos, espina, hilos y personajes del encuadre (v3), para el gancho, el guionista y el crítico."""
+    actos = H.get("actos") or enc.get("actos") or []
+    esp = H.get("espina") or enc.get("espina") or {}
+    out = ["- Actos (tres; los actos 2 y 3 abren con un rótulo sobre su primera escena, la voz sigue):"]
+    out += ["  %s. %s · «%s» (%s) — %s; termina en: %s" % (a.get("n"), a.get("nombre"), a.get("titulo"), a.get("periodo"), a.get("que_cuenta"), a.get("termina_en"))
+            for a in actos] or ["  (el encuadre no trae actos: historia.py encuadre --check)"]
+    out += ["- Espina (en este orden; el guionista cuelga las escenas de aquí):"]
+    out += ["  %s (acto %s%s): %s" % (k, (esp.get(k) or {}).get("acto"), " · " + ", ".join((esp.get(k) or {}).get("ejes") or []) if (esp.get(k) or {}).get("ejes") else "",
+                                       (esp.get(k) or {}).get("frase")) for k in PUNTOS_ESPINA if esp.get(k)]
+    hilos = H.get("hilos") or enc.get("hilos") or []
+    out += ["- Hilos (lo que la historia abre: cada uno se paga en una escena (paga: [id]) o se declara sin respuesta en la narración "
+            "del acto 3; H17):"] + ["  %s · %s%s" % (h.get("id"), h.get("pregunta"), " (eje %s)" % h["eje"] if h.get("eje") else "") for h in hilos]
+    pers = H.get("personajes") or enc.get("personajes") or []
+    if pers:
+        out += ["- Personajes (la primera vez que la voz los nombra van presentados con ≤ %d palabras; H18):" % PRESENTACION_PALABRAS]
+        out += ["  %s%s — %s" % (p.get("nombre"), " (%s)" % ", ".join(p.get("alias") or []) if p.get("alias") else "", p.get("presentacion")) for p in pers]
     return out
 
 
@@ -1637,14 +2354,33 @@ def cmd_digesto(a):
     trabajo = os.path.abspath(a.trabajo)
     st = VD.estado(trabajo)
     enc = encuadre(trabajo)
+    if a.para == "editor":
+        H = historia_de(trabajo)
+        out = ["# Re-encuadre · %s (la cronología ya está verificada: añade actos, espina, hilos y personajes; conserva lo demás)" % st.get("tema"), "",
+               "- Pregunta: %s · arco: %s" % (H.get("pregunta"), H.get("arco")),
+               "- Protagonista: %s" % " / ".join(H.get("protagonista") or []),
+               "- Revelaciones:"] + ["  R%d. %s" % (k, r) for k, r in enumerate(H.get("revelaciones") or [], 1)] + \
+              ["- No afirma: %s" % "; ".join(H.get("no_afirma") or []), "", "## Cronología verificada (id · fecha · estado — hecho [fuentes])"] + lineas_hechos(H) + \
+              ["", "## Citas literales"] + ["- %s · %s · %s — «%s»" % (q["id"], q.get("autor"), q.get("cuando"), q.get("texto")) for q in H.get("citas") or []] + \
+              (["", "## Casos"] + ["- %s: %s" % (x.get("persona"), x.get("estado_actual")) for x in H.get("casos") or []] if H.get("casos") else []) + \
+              ["", "## Encuadre actual (encuadre.json)", "```json", json.dumps(enc, ensure_ascii=False, indent=1), "```"]
+        print("\n".join(out))
+        return 0
     if a.para in ("investigador", "verificador"):
         eje = next((x for x in enc.get("ejes") or [] if x.get("id") == a.eje), None)
         if not eje:
             return falla("el encuadre no tiene el eje «%s»" % a.eje)
+        periodos = enc.get("periodos") or enc.get("capitulos") or []
+        de_eje = eje.get("periodos") or eje.get("capitulos") or []
+        hilos_eje = [h for h in enc.get("hilos") or [] if not h.get("eje") or h.get("eje") == a.eje]
         out = ["# %s · eje %s (%s)" % (st.get("tema"), eje["id"], eje.get("nombre")), "",
                "- Pregunta de la historia: %s" % enc.get("pregunta"), "- Arco: %s" % enc.get("arco"),
-               "- Capítulos del eje: %s" % ", ".join("%s (%s)" % (c.get("titulo"), c.get("periodo")) for c in enc.get("capitulos") or []
-                                                    if c.get("n") in (eje.get("capitulos") or [])),
+               "- Periodos del eje: %s" % ", ".join("%s (%s)" % (c.get("titulo"), c.get("periodo")) for c in periodos if c.get("n") in de_eje),
+               "- Hilos de tu eje (busca su respuesta; si no existe, dilo en huecos): %s" % ("; ".join("%s %s" % (h.get("id"), h.get("pregunta")) for h in hilos_eje) or "—"),
+               "- Personajes (trae el cargo y la relación con que se presentan): %s" % ("; ".join("%s — %s" % (p.get("nombre"), p.get("presentacion")) for p in enc.get("personajes") or []) or "—"),
+               "- Estados: confirmado (2 grupos) · una_fuente (1 fuente seria sin contradicción: se narra llano con la fuente en pantalla) · "
+               "en_disputa (las fuentes difieren: nota con las dos versiones) · no_confirmado. tipo_hecho: acto | alegato | estimacion | opinion "
+               "(lo que no es acto se atribuye en voz)",
                "- Qué buscar: %s" % "; ".join(eje.get("preguntas") or []),
                "- Fuentes sugeridas: %s" % "; ".join(eje.get("fuentes") or []),
                "- Dominios de la empresa o institución protagonista (cuentan como fuente propia): %s" % ", ".join(enc.get("dominios_propios") or []) or "—",
@@ -1687,9 +2423,8 @@ def cmd_digesto(a):
     prot = protagonistas(trabajo)
     base = ["# Historia · %s (paleta %s, música %s)" % (st.get("tema"), st["paleta"], st["musica"]), "",
             "- Pregunta: %s · arco: %s" % (H.get("pregunta"), H.get("arco")),
-            "- Protagonista: %s" % (" / ".join(H.get("protagonista") or encuadre(trabajo).get("protagonista") or []) or "FALTA en el encuadre"),
-            "- Capítulos del encuadre (cada uno responde su pregunta o la deja abierta a propósito):"] + \
-        ["  %s. %s (%s) — %s" % (c.get("n"), c.get("titulo"), c.get("periodo"), c.get("pregunta") or "sin pregunta") for c in H.get("capitulos") or []] + \
+            "- Protagonista: %s" % (" / ".join(H.get("protagonista") or encuadre(trabajo).get("protagonista") or []) or "FALTA en el encuadre")] + \
+        lineas_encuadre(H, enc) + \
         ["- Revelaciones (lo que el video PAGA: el gancho no las adelanta —H13 veta sus números—, la promesa paga una "
          "(promesa.revela: 1, 2…) y la escena del pago la cuenta con sus palabras (H14)):"] + \
         (["  R%d. %s" % (k, r) for k, r in enumerate(H.get("revelaciones") or encuadre(trabajo).get("revelaciones") or [], 1)]
@@ -1726,23 +2461,44 @@ def cmd_digesto(a):
                       "- La voz no abre con «Esta es la historia de…», «Te cuento…», «En el año…» ni con contexto: abre con el momento más fuerte."]
         print("\n".join(out))
         return 0
-    out = base + ["", "## Límites del guion (historia.py guion --check: H3–H14 + V1–V5, V9, F1–F8 de video.py; devuelve TAL CUAL su línea RETORNO)",
+    if a.para == "critico":
+        base += lineas_narracion(trabajo, g_actual(trabajo))
+    out = base + ["", "## Límites del guion (historia.py guion --check: H3–H20 + V1–V5, V9, F1–F8 de video.py; devuelve TAL CUAL su línea RETORNO)",
+                  "- PRIMERO la narración: guion.narracion = [{acto: 1, texto}, {acto: 2, texto}, {acto: 3, texto}], el texto corrido de cada acto "
+                  "como lo diría una sola voz (%d–%d palabras en total ≈ %d s a 145 por minuto; con dígitos). Mídela con python3 scripts/historia.py "
+                  "narracion <TRABAJO> --check (conectores, «según», personajes presentados, hilos). DESPUÉS repártela en escenas SIN cambiar una "
+                  "palabra: la suma de las voces de cada acto (más el cierre en el 3) es la narración (H15)" % (*PALABRAS, OBJETIVO_S),
+                  "- Flujo (H16): ≥ %d conectores causales o temporales por acto («pero», «por eso», «entonces», «dos años después», «mientras "
+                  "tanto»); ≤ %d escena abre con «Según…»; dos escenas seguidas no abren igual; ≤ %.1f cortes por minuto (una escena puede "
+                  "sostener un tramo largo). La voz NO tiene que empezar con «pero / por eso» (enlace es opcional: solo decide el efecto de sonido)"
+                  % (CONECTORES_MIN_POR_ACTO, APERTURAS_ATRIBUIDAS_MAX, CORTES_MAX_POR_MIN),
+                  "- Atribución (H4, H19): la voz atribuye o matiza SOLO lo en_disputa, los ALEGATO/ESTIMACIÓN/OPINIÓN y las citas (dice quién "
+                  "habla antes de leerla); lo una_fuente se narra llano con la fuente en pantalla («fuente» en foto/cita, grafico.fuente en "
+                  "tarjetas) o ya nombrada antes en el mismo acto. ≤ %d «según» por video, ≤ %d por acto, nunca en dos escenas seguidas, nunca la "
+                  "misma fuente dos veces en voz. Varía: aposición («AMSA, la autoridad del lago, …»), verbo de la fuente («el tribunal calificó…»)"
+                  % (SEGUN_MAX_VIDEO, SEGUN_MAX_ACTO),
                   "- Duración: apunta a %d s (%d–%d); el tope de %d s es para emergencias (V4 acepta 120–180; el gate avisa si pasas de %d). "
                   "Voz por escena: gancho %d–%d · foto %d–%d · cita %d–%d · capitulo %d–%d · "
                   "tarjeta %d–%d · golpe %d–%d · explica %d–%d · cierre %d–%d caracteres (ya en palabras; %.1f car/s)"
                   % (OBJETIVO_S, OBJETIVO_MIN_S, OBJETIVO_AVISO_S, DURACION_MAX_S, OBJETIVO_AVISO_S, *VD.CARACTERES["gancho"], *CARACTERES["foto"],
-                     *CARACTERES["cita"], *CARACTERES["capitulo"], *VD.CARACTERES["tarjeta"], *VD.CARACTERES["golpe"], *VD.CARACTERES["explica"],
-                     *VD.CARACTERES["cierre"], VD.CPS),
+                     *CARACTERES["cita"], *CARACTERES["capitulo"], *CARACTERES_VIDEO_EN_HISTORIA["tarjeta"], *CARACTERES_VIDEO_EN_HISTORIA["golpe"],
+                     *CARACTERES_VIDEO_EN_HISTORIA["explica"], *VD.CARACTERES["cierre"], VD.CPS),
                   "- promesa {texto (10–80, literal en la voz de la escena en), en: 2, pago, revela}: revela es el número R de la revelación que la "
-                  "escena pago cuenta con sus palabras (H14); cada capítulo responde la pregunta que el encuadre le puso o la deja abierta a propósito",
-                  "- %d–%d capítulos (escena capitulo: numero, anio ≤ %d, titulo ≤ %d palabras, lugar); el primero en la escena 2 o 3"
-                  % (*CAPITULOS, CAP_ANIO_CARACTERES, CAP_TITULO_PALABRAS),
-                  "- Nunca %d escenas del mismo tipo seguidas; una escena con giro: true entre el %d y el %d %%"
-                  % (SEGUIDAS_MAX + 1, GIRO_ENTRE[0] * 100, GIRO_ENTRE[1] * 100),
-                  "- foto: foto (id de una foto verificada; nunca null, icono ni mapa: si no hay del hecho, una de referencia), fecha (chip ≤ %d; «De referencia» si la foto no es del hecho), lugar ≤ %d, titular ≤ %d palabras, hechos [ids], cifra? {texto, etiqueta}, fuente? ≤ %d"
+                  "escena pago cuenta con sus palabras (H14)",
+                  "- Tres actos (H8): «acto»: 1|2|3 en cada escena (el gancho es el 1); la primera escena de los actos 2 y 3 lleva rotulo {anio ≤ %d, "
+                  "titulo ≤ %d palabras, lugar?} dibujado sobre la imagen mientras la voz sigue (en foto, cita, tarjeta, golpe o explica; opcional "
+                  "en la escena 2 para el acto 1); una escena capitulo con voz propia es la excepción (≤ %d, el gate avisa). El giro (giro: true) "
+                  "va en el acto 2, entre el %d y el %d %%. Nunca %d escenas del mismo tipo seguidas; ≤ %d escenas"
+                  % (CAP_ANIO_CARACTERES, CAP_TITULO_PALABRAS, CAPITULOS[1], GIRO_ENTRE[0] * 100, GIRO_ENTRE[1] * 100, SEGUIDAS_MAX + 1, ESCENAS_MAX),
+                  "- Hilos (H17): guion.hilos = [{id, escena: N} (la escena que lo paga lleva paga: [id]) | {id, sin_respuesta: «nunca se supo…»} "
+                  "(la frase va en la narración del acto 3 o el cierre)]. Personajes (H18): la primera voz que los nombra los presenta",
+                  "- Secuencias (H20): «secuencias»: [[2,3],[4,5,6],…] grupos de %d–%d escenas consecutivas del mismo acto (sin el gancho ni el "
+                  "cierre; un giro o un rótulo solo abren una secuencia): su voz se graba de corrido. Si no las escribes, el gate las deriva"
+                  % SECUENCIA,
+                  "- foto: foto (id de una foto verificada; nunca null, icono ni mapa: si no hay del hecho, una de referencia), fecha (chip ≤ %d; «De referencia» si la foto no es del hecho), lugar ≤ %d, titular ≤ %d palabras, hechos [ids], cifra? {texto, etiqueta}, fuente ≤ %d (obligatoria si cita un hecho una_fuente o en_disputa cuya fuente no se mostró ni se nombró antes en el acto)"
                   % (CHIP_CARACTERES, LUGAR_CARACTERES, TITULAR_PALABRAS, FUENTE_CARACTERES),
-                  "- cita: cita (id), la voz la lee literal; resalte? (trozo literal), retrato? (id de foto), fuente?",
-                  "- tarjeta/mapa/ranking/tiempo: tuit (1, 2…), golpe ≤ %d palabras, grafico {plantilla de templates/graficos/, kicker, titular, nota, fuente, datos}"
+                  "- cita: cita (id), la voz dice quién habla y la lee literal; resalte? (trozo literal), retrato? (id de foto), fuente?",
+                  "- tarjeta/mapa/ranking/tiempo: tuit (1, 2…), golpe ≤ %d palabras, grafico {plantilla de templates/graficos/, kicker, titular, nota, fuente, datos}; foco: false si el zoom a la cifra estorba"
                   % VD.GOLPE_PALABRAS,
                   *VD.lineas_animaciones(st.get("animaciones_recientes") or []),
                   "- Cierre: rotulo («Lo que dejó»…), resumen %d–%d líneas ≤ %d, texto, tipo remate, forma LEGADO (lo normal): lo que la gente hace "
@@ -1755,15 +2511,53 @@ def cmd_digesto(a):
     return 0
 
 
+def g_actual(trabajo):
+    ruta = os.path.join(trabajo, "guion.json")
+    return leer(ruta) if os.path.exists(ruta) else {}
+
+
+def narracion_corrida(trabajo, g):
+    """La voz de corrido por acto, en palabras (locucion.json) si ya pasó el gate; si no, guion.narracion."""
+    ruta = os.path.join(trabajo, "locucion.json")
+    es = g.get("escenas") or []
+    if os.path.exists(ruta) and es:
+        loc = leer(ruta)
+        por_acto = {}
+        for L in loc["escenas"]:
+            ac = acto_de(es[L["n"] - 1], L["n"]) if L["n"] - 1 < len(es) else 3
+            por_acto.setdefault(ac, []).append(L["voz"])
+        return [(ac, " ".join(por_acto[ac])) for ac in sorted(por_acto, key=str)]
+    return narracion_de(g)
+
+
+def lineas_narracion(trabajo, g):
+    """«## Narración (de corrido)» + la duración y el presupuesto, para el crítico."""
+    narr = narracion_corrida(trabajo, g)
+    if not narr:
+        return []
+    ruta = os.path.join(trabajo, "locucion.json")
+    est = leer(ruta)["estimado_s"] if os.path.exists(ruta) else estimado_s(g)
+    es = g.get("escenas") or []
+    segun = sum(len(RE_SEGUN.findall(VD.sin_pausas(e.get("texto") or ""))) for e in es + [g.get("cierre") or {}])
+    return ["", "## Narración (de corrido): léela como un texto, como quien oye un documental con los ojos cerrados (H-C4 flujo)"] + \
+        ["- Acto %s: %s" % (ac, t) for ac, t in narr] + \
+        ["- Duración objetivo %d s (%d–%d) · estimado %.0f s · %d palabras · %d «según» en voz (≤ %d)"
+         % (OBJETIVO_S, OBJETIVO_MIN_S, OBJETIVO_AVISO_S, est, sum(VD.palabras(t) for _, t in narracion_de(g)) or sum(VD.palabras(t) for _, t in narr), segun, SEGUN_MAX_VIDEO)]
+
+
 def digesto_oyente(trabajo, H):
-    """Solo lo que un espectador oye y lee, en orden: la voz en palabras (locucion.json) y lo que hay en pantalla por escena.
-    Sin cronología, sin encuadre, sin fuentes ni ids: el oyente ingenuo no sabe nada más."""
+    """Solo lo que un espectador oye y lee, en orden: primero la narración de corrido (para oírla como un documental) y
+    luego la voz en palabras (locucion.json) con lo que hay en pantalla por escena. Sin cronología, sin encuadre, sin
+    fuentes ni ids: el oyente ingenuo no sabe nada más."""
     ruta = os.path.join(trabajo, "locucion.json")
     if not os.path.exists(ruta):
         return falla("falta locucion.json: corre python3 scripts/historia.py guion %s --check" % VD.rel(trabajo))
     loc, g = leer(ruta), leer(os.path.join(trabajo, "guion.json"))
     es, citas = g.get("escenas") or [], {q["id"]: q for q in H.get("citas") or []}
-    out = ["# Lo que se oye y se lee, en orden (%d escenas + cierre, ≈ %.0f s)" % (len(es), loc["estimado_s"]), ""]
+    out = ["# Lo que se oye y se lee, en orden (%d escenas + cierre, ≈ %.0f s)" % (len(es), loc["estimado_s"]), "",
+           "## La narración de corrido (óyela primero, de principio a fin, sin pantalla)", ""]
+    out += ["%s" % t for _, t in narracion_corrida(trabajo, g)]
+    out += ["", "## Escena por escena (lo que se lee en pantalla y lo que dice la voz)", ""]
     for L in loc["escenas"]:
         e = es[L["n"] - 1] if L["n"] - 1 < len(es) else dict(g.get("cierre") or {}, tipo="cierre")
         pant = pantalla_de(e, citas)
@@ -1775,6 +2569,9 @@ def digesto_oyente(trabajo, H):
 def pantalla_de(e, citas):
     """Lo que se LEE en una escena (sin ids ni fuentes)."""
     t = e.get("tipo")
+    r = rotulo_de(e)
+    # el rótulo de acto en pantalla: año grande, título y lugar (sin «Acto N de M»: decisión del usuario, 2026-10-27)
+    rot = ["%s · %s · %s" % (r["anio"], r["titulo"], r["lugar"])] if r and not r["capitulo"] else []
     if t == "gancho":
         partes = [e.get("pantalla"), e.get("linea"), (e.get("visual_datos") or {}).get("etiqueta")]
     elif t == "foto":
@@ -1795,7 +2592,7 @@ def pantalla_de(e, citas):
         partes = [e.get("rotulo")] + list(e.get("resumen") or []) + [e.get("final")]
     else:   # golpe, definicion, adivina
         partes = [e.get("pantalla"), e.get("linea"), e.get("termino"), e.get("definicion"), e.get("pregunta")] + list(e.get("opciones") or [])
-    return " · ".join(str(x).strip() for x in partes if x and str(x).strip())
+    return " · ".join(str(x).strip() for x in rot + partes if x and str(x).strip())
 
 
 # ---------- fotos-contacto y reenvío ----------
@@ -1852,7 +2649,10 @@ def cmd_entregar(a):
     entrega = {
         "id": "%s-%s" % (st["fecha"], st["slug"]), "tipo": "historia", "slug": st["slug"], "tema": st.get("tema"),
         "fecha": st["fecha"], "pregunta": H.get("pregunta"), "arco": H.get("arco"),
+        "actos": [{"numero": rotulo_de(e).get("numero") or acto_de(e, i), "anio": rotulo_de(e)["anio"], "titulo": rotulo_de(e)["titulo"],
+                   "escena": i} for i, e in enumerate(escenas_g, 1) if rotulo_de(e)],
         "capitulos": [{"numero": e.get("numero"), "anio": e.get("anio"), "titulo": e.get("titulo")} for e in escenas_g if e.get("tipo") == "capitulo"],
+        "narracion": g.get("narracion"), "hilos": g.get("hilos"), "secuencias": g.get("secuencias"),
         "paleta": st["paleta"], "musica": st["musica"], "voz": loc["voz"], "velocidad": VD.VELOCIDAD,
         "creditos_voz": leer(ruta_cred)["total"] if os.path.exists(ruta_cred) else None,
         "duracion_s": round(VD.ffprobe_dur(os.path.join(destino, "video.mp4")), 1), "critica": critica,
@@ -1869,13 +2669,28 @@ def cmd_entregar(a):
     return 0
 
 
+def etiqueta_estado(x):
+    if x.get("estado") == "confirmado":
+        return ""
+    if x.get("estado") == "una_fuente":
+        return " *(una fuente: %s)*" % (medio_de(x) or "?")
+    return " *(en disputa)*"
+
+
 def usados(escenas, H):
-    """Los hechos y las citas que cuenta el guion, por capítulo: [(rótulo del capítulo, [hechos y citas])]."""
+    """Los hechos y las citas que cuenta el guion, por acto: [(rótulo del acto, [hechos y citas])]."""
     hechos = {x["id"]: x for x in (H.get("hechos") or []) + (H.get("citas") or [])}
-    bloques, vistos = [("Gancho y promesa", [])], set()
-    for e in escenas:
-        if e.get("tipo") == "capitulo":
-            bloques.append(("Capítulo %s · %s · %s" % (e.get("numero"), e.get("anio"), e.get("titulo")), []))
+    nombres = {a.get("n"): a for a in H.get("actos") or [] if isinstance(a, dict)}
+    bloques, vistos, acto_abierto = [("Gancho y promesa", [])], set(), None
+    for i, e in enumerate(escenas, 1):
+        r, ac = rotulo_de(e), acto_de(e, i)
+        if r:
+            bloques.append(("%s %s · %s · %s" % ("Capítulo" if r["capitulo"] else "Acto", r.get("numero") or ac or "", r["anio"], r["titulo"]), []))
+            acto_abierto = ac
+        elif ac and ac != acto_abierto and i > 1:
+            a = nombres.get(ac) or {}
+            bloques.append(("Acto %s · %s" % (ac, a.get("titulo") or a.get("nombre") or ""), []))
+            acto_abierto = ac
         for hid in (e.get("hechos") or []) + ([e["cita"]] if e.get("cita") else []):
             if hid in hechos and hid not in vistos:
                 vistos.add(hid)
@@ -1886,11 +2701,11 @@ def usados(escenas, H):
 def fuentes_md(st, escenas, H):
     L = ["# Fuentes · %s" % st.get("tema"), "",
          "Para la descripción o el primer comentario. Cada hecho que cuenta el video con las fuentes que lo respaldan; "
-         "lo que está «en disputa» la voz lo atribuye.", ""]
+         "lo de una sola fuente se narra con esa fuente en pantalla; lo que está «en disputa» la voz lo atribuye.", ""]
     for rotulo, xs in usados(escenas, H):
         L += ["## %s" % rotulo, ""]
         for x in xs:
-            L.append("- %s%s" % (x.get("texto"), "" if x.get("estado") == "confirmado" else " *(en disputa)*"))
+            L.append("- %s%s" % (x.get("texto"), etiqueta_estado(x)))
             urls = dict.fromkeys(f["url"] for f in x.get("fuentes") or [] if f.get("url"))
             medio = {f["url"]: f.get("medio") or NT.dominio(f["url"]) for f in x.get("fuentes") or [] if f.get("url")}
             L += ["  - %s: %s" % (medio[u], u) for u in urls]
@@ -1915,14 +2730,15 @@ def cronologia_md(st, escenas, H):
     for x in xs:
         medios = ", ".join(dict.fromkeys(f.get("medio") or NT.dominio(f.get("url")) for f in x.get("fuentes") or []))
         quien = "%s: «%s»" % (x.get("autor"), x.get("texto")) if x.get("autor") else x.get("texto")
-        estado = "confirmado" if x.get("estado") == "confirmado" else "en disputa%s" % (" — %s" % x["nota"] if x.get("nota") else "")
+        estado = "confirmado" if x.get("estado") == "confirmado" else "una fuente (%s)" % (medio_de(x) or "?") if x.get("estado") == "una_fuente" \
+            else "en disputa%s" % (" — %s" % x["nota"] if x.get("nota") else "")
         L.append("- **%s** · %s · %s · %s" % (x.get("fecha") or x.get("cuando") or "s. f.", quien, estado, medios))
     if H.get("conflictos"):
         L += ["", "## Fechas en conflicto", ""] + ["- %s y %s: el mismo hecho con años distintos" % tuple(c) for c in H["conflictos"]]
     return "\n".join(L) + "\n"
 
 
-REENVIO = ("voz", "voz-falsa", "descargar", "escuchar", "grabar", "montar", "revisar")
+REENVIO = ("voz", "voz-falsa", "descargar", "partir", "escuchar", "grabar", "montar", "revisar")
 
 
 def main():
@@ -1963,12 +2779,20 @@ def main():
     q.add_argument("--extmetadata", help="pruebas: extmetadata de Commons guardado (solo comprueba la licencia, sin red)")
     q = sub.add_parser("hechos")
     q.add_argument("trabajo")
-    q.add_argument("--check", action="store_true", required=True)
+    q.add_argument("--check", action="store_true")
+    q.add_argument("--reclasificar", action="store_true", help="propone una_fuente para cada en_disputa de un solo grupo sin discrepancia en la nota")
+    q.add_argument("--aplicar", action="store_true", help="con --reclasificar: escribe los cambios y repite el check")
     q.add_argument("--eje")
     sub.add_parser("consolidar").add_argument("trabajo")
+    q = sub.add_parser("encuadre", help="la estructura v3 del encuadre: actos, espina, hilos, personajes, periodos")
+    q.add_argument("trabajo")
+    q.add_argument("--check", action="store_true", required=True)
+    q = sub.add_parser("narracion", help="mide la narración de corrido (guion.narracion) antes de repartirla en escenas")
+    q.add_argument("trabajo")
+    q.add_argument("--check", action="store_true", help="falla con H16–H19 sobre la narración sola")
     q = sub.add_parser("digesto")
     q.add_argument("trabajo")
-    q.add_argument("--para", choices=["investigador", "verificador", "gancho", "guionista", "critico", "oyente"], default="guionista")
+    q.add_argument("--para", choices=["investigador", "verificador", "gancho", "guionista", "critico", "oyente", "editor"], default="guionista")
     q.add_argument("--eje")
     q = sub.add_parser("ganchos")
     q.add_argument("trabajo")
@@ -1989,8 +2813,9 @@ def main():
         sub.add_parser(nombre, help="→ scripts/video.py %s" % nombre)
     a = p.parse_args()
     return {"preparar": cmd_preparar, "leer": cmd_leer, "commons": cmd_commons, "foto": cmd_foto, "hechos": cmd_hechos,
-            "consolidar": cmd_consolidar, "digesto": cmd_digesto, "ganchos": cmd_ganchos, "tarjetas": cmd_tarjetas,
-            "guion": cmd_guion, "tiempos": cmd_tiempos, "fotos-contacto": cmd_fotos_contacto, "entregar": cmd_entregar}[a.cmd](a)
+            "consolidar": cmd_consolidar, "encuadre": cmd_encuadre, "narracion": cmd_narracion, "digesto": cmd_digesto,
+            "ganchos": cmd_ganchos, "tarjetas": cmd_tarjetas, "guion": cmd_guion, "tiempos": cmd_tiempos,
+            "fotos-contacto": cmd_fotos_contacto, "entregar": cmd_entregar}[a.cmd](a)
 
 
 if __name__ == "__main__":

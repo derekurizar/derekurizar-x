@@ -301,27 +301,33 @@ solas digan de qué historia se trata.
 
 **Crítica**: lees `<TRABAJO>/guion.json`, `<TRABAJO>/locucion.json`, `<TRABAJO>/oyente.json` (lo que el **oyente
 ingenuo** —que solo oyó la voz y leyó la pantalla— no entendió) y `python3 scripts/historia.py digesto <TRABAJO>
---para critico` (la cronología verificada, las preguntas de cada capítulo y las revelaciones). Sin web; 4 lecturas y
-ese Bash. Es una **historia de 2–3 min**: la pregunta en cada escena es «¿por qué seguiría viendo?» y «¿esto lo dice
-la cronología?».
+--para critico`: trae primero «## Narración (de corrido)» por acto, la «Espina» del encuadre (detonante, punto
+medio, clímax, resolución), los «Hilos» (las preguntas que la historia abre y cómo las paga el guion), la cronología
+verificada, las revelaciones y «Duración objetivo 150 s (135–165) · estimado · palabras · según». Sin web; 4 lecturas
+y ese Bash. Es una **historia de 2–3 min** contada como un mini documental: la pregunta en cada escena es «¿por qué
+seguiría viendo?» y «¿esto lo dice la cronología?»; la pregunta sobre el conjunto es «¿se oye como una sola voz?».
 
 | Regla | Qué revisas |
 |---|---|
 | H-C1 gancho | la foto a sangre y la pantalla solas, en 1 s, dicen de qué historia se trata; la voz abre con el momento más fuerte, no con «esta es la historia de»; cuenta el momento de la historia (el problema, la persona, la decisión) **nombra al protagonista** (la marca, la persona: H10) y **no regala la respuesta** que el video paga ni el detalle técnico que explica después (de qué está hecho, cómo terminó) |
-| H-C2 tensión | la promesa nombra algo concreto y la escena `promesa.pago` cuenta la revelación `promesa.revela` con sus palabras; cada capítulo responde la pregunta que el encuadre le puso (o la deja abierta a propósito) y deja una pregunta o un giro; el giro llega a mitad y cambia la historia; nada se estira |
-| H-C3 claridad e hilo | se entiende quién es quién, cuándo y dónde sin haber leído nada; las fechas avanzan sin saltos que confundan; sin siglas ni jerga sin explicar. **Hilo conductor**: lee el guion de corrido, escena por escena, y en cada una pregúntate «¿esto sigue de lo anterior?». Cada referencia («esos 40 niños», «ese alimento», «así», «lo», «ellos») tiene su antecedente antes; ninguna escena repite lo que otra ya dijo como si fuera nuevo; cada enlace «pero / por eso / y» es lógico con la escena de antes; nada queda suelto entre un tema y el siguiente. **`oyente.json`**: cada confusión y cada salto del oyente se resuelve (falta `bloquea` de H-C3, o H-C2 si es la promesa, con su arreglo exacto) o se justifica en `critica.json → oyente_descartadas[]{escena, motivo}`; sus repeticiones y preguntas sin responder las juzgas tú |
-| H-C4 ritmo y variedad | escenas cortas, foto, cita, gráfico y texto alternados; los capítulos marcan el tiempo; ninguna escena es un párrafo leído sobre una imagen quieta |
-| H-C5 precisión | cada hecho, fecha y número está en la cronología del digesto; lo `en_disputa` va atribuido; nada de `no_afirma`; nada de los descartados; las citas son literales |
+| H-C2 tensión | la promesa nombra algo concreto y `promesa.pago` cuenta `promesa.revela` con sus palabras. **La espina está entera y en orden**: el detonante cierra el acto 1, el punto medio cambia la comprensión a mitad, el clímax llega en el acto 3 y la resolución dice qué quedó; el giro vive en el nudo. Cada acto termina en lo que hace querer el siguiente; nada se estira |
+| H-C3 claridad e hilo | se entiende quién es quién, cuándo y dónde sin haber leído nada: cada persona u organización llega **presentada** la primera vez (≤ 8 palabras) y las fechas avanzan con sus transiciones dichas; sin siglas ni jerga sin explicar. **Hilo conductor**: lee el guion de corrido y en cada escena pregúntate «¿esto sigue de lo anterior?»; cada referencia («esos 40 niños», «ese alimento», «así», «lo», «ellos») tiene su antecedente antes; ninguna escena repite lo que otra ya dijo como si fuera nuevo. **Hilos**: cada pregunta que la historia abre —las del encuadre y las que el oyente anota en `pregunta_sin_responder`— se paga en una escena o se declara sin respuesta en la narración («nunca se supo…»); una pregunta del oyente que coincide con un hilo del encuadre y no está pagada ni declarada **bloquea**. **`oyente.json`**: cada confusión y cada salto del oyente se resuelve (falta `bloquea` de H-C3, o H-C2 si es la promesa, con su arreglo exacto) o se justifica en `critica.json → oyente_descartadas[]{escena, motivo}`; cada `pregunta_sin_responder` se atiende con una falta H-C3 con `escena: null` que la cite o se descarta en `oyente_descartadas[]{escena: null, pregunta (literal), motivo}`; sus repeticiones las juzgas tú |
+| H-C4 flujo | lee la **narración de corrido** del digesto como un texto: ¿se oye como una sola voz que cuenta, o como tarjetas leídas una tras otra? Bloquea si una escena arranca con un conector hueco («Pero, según…», «Por eso, según…»), si la narración salta de tiempo o de tema sin decirlo, si una escena repite la apertura de la anterior o si hay más de 6.5 cortes por minuto. La variedad visual (foto, cita, gráfico, texto) sirve a la narración, no al revés: una foto puede durar 15 s si la voz la sostiene; un rótulo marca el acto sin detener la voz. Puntúa 5 cuando podrías cerrar los ojos y seguir la historia sin perderte, y 1 cuando cada escena vuelve a empezar |
+| H-C5 precisión | cada hecho, fecha y número está en la cronología del digesto; lo `en_disputa`, los alegatos, las estimaciones, las opiniones y las citas van atribuidos en voz; lo `una_fuente` se narra llano con su fuente en pantalla; nada de `no_afirma`; nada de los descartados; las citas son literales |
 | H-C6 cierre y tono | lo normal es **`legado`**: gente haciendo algo **hoy** con lo que la historia dejó («sus hijos y sus nietos siguen tomando Incaparina»); eso NO es neutro. `consecuencia` si la historia terminó mal (lo que le hizo a una persona o a un grupo concreto, llano). **Neutro = nadie hace nada** («la marca sigue», «la receta cambió», un resumen o un dato): bloquea. Sin «según» en el final, sin moraleja ni cebo; presunción de inocencia; un tema sensible sin morbo. Un `final` que propongas cumple F2: **cuenta sus palabras (≤ 14) y sus caracteres (≤ 90)** antes de exigirlo literal; si no cabe, propón uno que quepa |
 
-Puntajes 1–5: `gancho` (H-C1), `tension` (H-C2), `claridad` (H-C3), `ritmo` (H-C4), `precision` (H-C5), `cierre`
+Puntajes 1–5: `gancho` (H-C1), `tension` (H-C2), `claridad` (H-C3), `flujo` (H-C4), `precision` (H-C5), `cierre`
 (H-C6); un puntaje ≤ 2 exige una falta `bloquea` de su regla. **Bloquea**: un gancho que no se entiende en silencio;
 un hilo roto (una escena que apunta a algo que no se dijo, que repite otra como si fuera nueva o que no sigue de la
-anterior); una confusión o un salto del oyente sin resolver ni justificar; un gancho que dice una revelación; un final
-neutro (nadie hace nada: un resumen, «la marca sigue»); una promesa que no se paga; un hecho, fecha o número fuera de la cronología; un hecho en disputa sin atribución; un
-adjetivo que acusa sin sentencia; cualquier puntaje ≤ 2. Lo demás es mejora. El arreglo: escena, campo y texto
-exacto, con las cifras y los años tal como están en el digesto.
+anterior); una confusión o un salto del oyente sin resolver ni justificar; una espina fuera de orden o incompleta;
+un hilo del encuadre abierto sin pagar ni declarar; más de 4 «según» en voz; una escena que arranca con un conector
+hueco; un gancho que dice una revelación; un final neutro (nadie hace nada: un resumen, «la marca sigue»); una
+promesa que no se paga; un hecho, fecha o número fuera de la cronología; un hecho en disputa, un alegato o una cita
+sin atribución; un adjetivo que acusa sin sentencia; cualquier puntaje ≤ 2. Lo demás es mejora. El arreglo: escena,
+campo y texto exacto, con las cifras y los años tal como están en el digesto (una falta sobre la narración o un hilo
+sin escena concreta lleva `escena: null`).
 
 Escribes `<TRABAJO>/critica.json` con la forma de «Salida» (los puntajes de esta tabla, más `oyente_descartadas[]`
 si justificas algo del oyente) y devuelves `{archivo, vuelta, veredicto, puntajes, bloqueantes, mejoras, faltas[],
-oyente_descartadas[]}`.
+oyente_descartadas[]{escena: int|null, pregunta?, motivo}}`. Si tus mejoras cambian voces, el oyente las vuelve a
+oír: una confusión nueva las revierte todas.

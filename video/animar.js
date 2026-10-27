@@ -87,17 +87,23 @@
       E.barras = qa("#grafico svg rect").map((r) => ({ r, y: r.getAttribute("y"), h: r.getAttribute("height") }));
       E.vals = qa("#grafico svg text.t-val").map((t) => ({ t, y: t.getAttribute("y"), txt: t.textContent }));
       E.ejes = ejesX(DATA.etiquetas);
+      // el nombre de cada barra es su rótulo del eje x (centrado bajo ella), para que el foco lo encuadre
+      E.barras.forEach((b) => { const cx = attr(b.r, "x") + attr(b.r, "width") / 2;
+        const lab = E.ejes.find((l) => l && cerca(attr(l.t, "x"), cx)); b.nombre = lab ? lab.t : null; });
     } else if (plantilla === "linea") {
       E.lineas = qa("#grafico svg path").filter((p) => p.getAttribute("fill") === "none")
         .map((p) => ({ p, L: p.getTotalLength() }));
       E.puntos = qa("#grafico svg circle");
       E.ejes = ejesX(DATA.etiquetasX);
     } else if (plantilla === "barras-h") {
-      // un rect y un t-val por item, en el orden dibujado (desc o «dado», como la plantilla)
+      // un rect y un t-val por item, en el orden dibujado (desc o «dado», como la plantilla); el nombre va en x = 0 a
+      // la altura del valor (la barra, 12 px más abajo)
       const D = DATA, items = D.orden === "dado" ? D.items.slice() : D.items.slice().sort((a, b) => b.valor - a.valor);
       const vals = qa("#grafico svg text.t-val");
+      const noms = qa("#grafico svg text").filter((t) => !t.classList.contains("t-val") && !t.classList.contains("t-eje") && attr(t, "x") === 0);
       E.barras = qa("#grafico svg rect").map((r, i) => ({ r, w: r.getAttribute("width"), v: (items[i] || {}).valor,
-        t: vals[i], txt: vals[i] ? vals[i].textContent : "" }));
+        t: vals[i], txt: vals[i] ? vals[i].textContent : "",
+        nombre: noms.find((t) => cerca(attr(t, "y"), attr(r, "y") - 12)) || noms[i] || null }));
     } else if (plantilla === "waffle") {
       E.on = qa(".wf-celdas span.on");
       E.num = q(".wf-texto .num"); E.txt = E.num ? E.num.textContent : "";
@@ -169,10 +175,10 @@
     } else if (plantilla === "agrupadas") {
       const D = DATA, m = D.series.length, ts = qa("#grafico svg text");
       const labs = ts.filter((t) => !t.classList.contains("t-eje") && +t.getAttribute("x") > 0);
+      E.etiquetas = ts.filter((t) => !t.classList.contains("t-eje") && +t.getAttribute("x") === 0);   // una por categoría, en x = 0
       E.barras = qa("#grafico svg rect").map((r, k) => { const y = +r.getAttribute("y"), h = +r.getAttribute("height"), i = Math.floor(k / m), j = k % m;
         const t = labs.find((l) => Math.abs(+l.getAttribute("y") - (y + h / 2 + 7)) < 1.5) || null;
-        return { r, ws: r.getAttribute("width"), i, v: (D.series[j].valores || [])[i], t, txt: t ? t.textContent : "" }; });
-      E.etiquetas = ts.filter((t) => !t.classList.contains("t-eje") && +t.getAttribute("x") === 0);
+        return { r, ws: r.getAttribute("width"), i, v: (D.series[j].valores || [])[i], t, txt: t ? t.textContent : "", nombre: E.etiquetas[i] || null }; });
       E.ref = qa("#grafico svg line").find((l) => l.getAttribute("stroke-dasharray")) || null;
       E.refT = E.ref ? ts.find((t) => t.classList.contains("t-eje") && +t.getAttribute("y") === 16) || null : null;
     } else if (plantilla === "treemap") {
@@ -605,8 +611,9 @@
     const q = (s) => document.querySelector(s), qa = (s) => [...document.querySelectorAll(s)];
     if (plantilla === "antes-despues") return E.cols.filter((c) => ck(D[c.k].valor) || num(c.num)).map((c) => c.num);
     if (plantilla === "cifra") return ck(D.cifra.valor) || num(E.num) ? [E.num] : [];
-    if (plantilla === "barras-v") return E.barras.flatMap((bar, i) => (ck(D.valores[i]) || (E.vals[i] && num(E.vals[i].t))) ? [bar.r, E.vals[i] && E.vals[i].t] : []);
-    if (plantilla === "barras-h") return E.barras.flatMap((bar) => (ck(bar.v) || num(bar.t)) ? [bar.r, bar.t] : []);
+    // barras: el foco encuadra nombre + barra + valor (si la fila no cabe, __caja prueba sin el nombre)
+    if (plantilla === "barras-v") return E.barras.flatMap((bar, i) => (ck(D.valores[i]) || (E.vals[i] && num(E.vals[i].t))) ? [bar.nombre, bar.r, E.vals[i] && E.vals[i].t].filter(Boolean) : []);
+    if (plantilla === "barras-h") return E.barras.flatMap((bar) => (ck(bar.v) || num(bar.t)) ? [bar.nombre, bar.r, bar.t].filter(Boolean) : []);
     if (plantilla === "waffle") return E.num && (ck(D.cifra && D.cifra.valor) || ck(D.porcentaje) || num(E.num)) ? [E.num] : [];
     if (plantilla === "dona") {
       if (num(E.v)) return [E.v];
@@ -618,9 +625,9 @@
     if (plantilla === "pesas" || plantilla === "pendiente") {
       return E.items.flatMap((it) => (ck(it.b) || num(it.lb)) ? [it.nombre, it.cb, it.lb] : (ck(it.a) || num(it.la)) ? [it.nombre, it.ca, it.la] : []);
     }
-    if (plantilla === "divergente" || plantilla === "embudo") return E.items.flatMap((it) => (ck(it.v) || num(it.t)) ? [it.r, it.t] : []);
+    if (plantilla === "divergente" || plantilla === "embudo") return E.items.flatMap((it) => (ck(it.v) || num(it.t)) ? [it.nombre, it.r, it.t].filter(Boolean) : []);
     if (plantilla === "bullet") return E.items.flatMap((it) => (ck(it.v) || num(it.t)) ? [it.barra, it.t] : []);
-    if (plantilla === "agrupadas") return E.barras.flatMap((b) => (ck(b.v) || num(b.t)) ? [b.r, b.t] : []);
+    if (plantilla === "agrupadas") return E.barras.flatMap((b) => (ck(b.v) || num(b.t)) ? [b.nombre, b.r, b.t].filter(Boolean) : []);
     if (plantilla === "apilada") {
       const tot = E.totales.find((x) => num(x.t));
       if (tot) return [tot.t];
@@ -688,14 +695,28 @@
     const x1 = Math.max(...rs.map((r) => r.right)), y1 = Math.max(...rs.map((r) => r.bottom));
     return [Math.round(x0 * 10) / 10, Math.round(y0 * 10) / 10, Math.round((x1 - x0) * 10) / 10, Math.round((y1 - y0) * 10) / 10];
   };
+  // los nombres de barra que elementos() añade en las plantillas de barras (barras-v, barras-h, agrupadas, divergente,
+  // embudo): si la fila entera no cabe en un foco, __caja la prueba primero sin ellos
+  const CON_NOMBRE = ["barras-v", "barras-h", "agrupadas", "divergente", "embudo"];
+  const nombres = () => {
+    if (!E.__nombres) { E.__nombres = new Set(); if (CON_NOMBRE.includes(plantilla)) (E.barras || E.items || []).forEach((x) => { if (x.nombre) E.__nombres.add(x.nombre); }); }
+    return E.__nombres;
+  };
   window.__caja = (k) => {
     try {
       if (!E) leer();
       const els = elementos(String(k)).filter(Boolean);
       if (!els.length) return null;
+      const grande = (c) => c[2] > 0.7 * 1080 || c[3] > 0.7 * 1080;
       let c = union(els);
-      // si la unión (p. ej. barra + rótulo) es demasiado grande para un foco, se queda solo con los textos
-      if (c && (c[2] > 0.7 * 1080 || c[3] > 0.7 * 1080)) {
+      // si la unión (p. ej. nombre + barra + rótulo) es demasiado grande para un foco: primero sin el nombre de la
+      // barra; si sigue grande, solo los textos (una fila de barras-h entera, nombre a la izquierda y valor a la
+      // derecha, queda ancha: escena.html le da un foco suave)
+      if (c && grande(c)) {
+        const sinNombre = els.filter((el) => !nombres().has(el));
+        if (sinNombre.length && sinNombre.length < els.length) { const c2 = union(sinNombre); if (c2 && !grande(c2)) c = c2; }
+      }
+      if (c && grande(c)) {
         const textos = els.filter((el) => el.tagName === "text" || el.tagName === "tspan" || (!el.ownerSVGElement && !el.children.length));
         if (textos.length && textos.length < els.length) c = union(textos) || c;
       }

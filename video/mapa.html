@@ -159,11 +159,13 @@ window.__listo = (async () => {
   await document.fonts.ready;
   dibujar();
   V.ajustarGolpe(S, F45 ? 250 : 430);
+  await V.pintarActo(S);   // rótulo de acto (/historia, S.R)
 })();
 
 window.seek = (t) => {
   V.seekGolpe(t, S);
   V.seekProgreso(t, n, S.dur);
+  V.seekActo(t, S);
   const T = S.T, ini = T.ini;
   document.getElementById('kicker').style.opacity = prog(t, ini - 0.3, ini + 0.2);
   // el país entra completo en tono neutro (0.4 s) y cada departamento toma su color de menor a mayor valor en 1.6 s,

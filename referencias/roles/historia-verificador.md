@@ -16,12 +16,19 @@ og:image de las fuentes leídas del eje). **≤ 8 búsquedas y ≤ 10 `leer`**, 
    diario, y dos diarios con el mismo cable son UNA fuente. `hechos --check` lo calcula con el texto guardado.
    - Antes de descartar por «fuente fuera de la lista», mira qué dice `leer` sobre ella.
    - Si es un medio serio o un museo que falta en la lista, dilo en `nota` (para ampliarla). No la cuentes.
-3. Veredicto por hecho, cifra y frase:
+3. Veredicto por hecho, cifra y frase (`estado`, cuatro valores):
    - `confirmado`: 2 fuentes de grupos distintos que coinciden (una cifra: también 1 oficial o académica).
-   - `en_disputa`: 1 fuente válida, o las fuentes difieren en el año o un detalle. Escribe la diferencia en `nota`:
-     el guionista atribuye o matiza («según la empresa», «a inicios de los setenta»).
-   - `no_confirmado`: sin fuente válida, rumor, o fuentes que se contradicen en lo esencial. Va a `descartados`
-     con su motivo.
+   - `una_fuente`: **una** fuente válida y seria, sin nada que la contradiga (la voz la contará llano y la pantalla
+     dirá la fuente). Con dos grupos que coinciden es `confirmado`: el gate falla si lo dejas en `una_fuente`.
+   - `en_disputa`: las fuentes **difieren** en el año, el monto o un detalle: escribe las dos versiones en `nota`
+     (el guionista atribuye o matiza: «según la empresa», «a inicios de los setenta»). Con un solo grupo y una nota
+     que no describe la discrepancia, el gate avisa «¿es una_fuente?».
+   - `no_confirmado`: sin fuente válida, rumor o contradicción en lo esencial. Va a `descartados` con su motivo.
+
+   Marca además `tipo_hecho` (también en cifras; por defecto `acto`): `acto` (un acto público verificable: un
+   contrato, una captura, una sentencia, un informe), `alegato` (acusación, señalamiento, promesa o declaración de
+   parte), `estimacion` (cifra no oficial) u `opinion`: lo que no es `acto` se atribuye en voz aunque tenga una sola
+   fuente. El investigador lo propone; tú lo confirmas o lo cambias.
 4. **Fechas en conflicto**: si dos fuentes dan años distintos, no escojas: `en_disputa` con las dos en la nota.
 5. **Casos de justicia** (`sensibles.justicia`): por persona señalada, `casos[]: {persona, estado_actual (condenado
    con sentencia firme, absuelto, en juicio, prófugo, sobreseído…), sentencia_firme: true|false, fecha_consulta
@@ -54,8 +61,12 @@ og:image de las fuentes leídas del eje). **≤ 8 búsquedas y ≤ 10 `leer`**, 
 ```json
 {"eje": "ori",
  "hechos": [{"id": "ori-h01", "fecha": "1952", "precision": "anio", "texto": "…", "actores": [], "lugar": "…",
-             "estado": "confirmado", "nota": "", "fuentes": [{"medio", "url", "archivo", "cita", "fecha"}]}],
- "cifras": [{"id": "ori-c01", "texto": "4,500 panes", "valor": 4500, "unidad": "…", "anio": 1968, "estado": "…", "fuentes": []}],
+             "estado": "confirmado", "tipo_hecho": "acto", "nota": "",
+             "fuentes": [{"medio", "url", "archivo", "cita", "fecha"}]},
+            {"id": "ori-h02", "fecha": "2011", "precision": "anio", "texto": "…", "estado": "una_fuente",
+             "tipo_hecho": "alegato", "nota": "", "fuentes": [{"…"}]}],
+ "cifras": [{"id": "ori-c01", "texto": "4,500 panes", "valor": 4500, "unidad": "…", "anio": 1968, "estado": "…",
+             "tipo_hecho": "estimacion", "fuentes": []}],
  "citas": [{"id": "ori-q01", "autor": "…", "cargo": "…", "cuando": "1968", "documento": false, "texto": "…", "estado": "…", "fuentes": []}],
  "fotos": ["ori-f01"], "casos": [], "descartados": [{"texto": "…", "motivo": "…"}]}
 ```

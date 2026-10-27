@@ -262,6 +262,15 @@ def historia_workflow():
             err("W12 historia.js: no se encontró `const %s = [...]`" % nombre)
         elif js != py:
             err("W12 historia.js %s %s ≠ historia.py %s" % (nombre, js, py))
+    # escalares de la narración (v3): el workflow valida el RETORNO del guionista con los mismos números que el gate
+    escalares = {"PALABRAS_MIN": HI.PALABRAS[0], "PALABRAS_MAX": HI.PALABRAS[1], "SEGUN_MAX": HI.SEGUN_MAX_VIDEO,
+                 "ACTOS": len(HI.ACTOS), "HILOS_MIN": HI.HILOS[0], "HILOS_MAX": HI.HILOS[1], "PERSONAJES_MAX": HI.PERSONAJES_MAX}
+    for nombre, py in escalares.items():
+        m = re.search(r"\b%s = (\d+)" % nombre, src)
+        if not m:
+            err("W12 historia.js: no se encontró `%s = N`" % nombre)
+        elif int(m.group(1)) != py:
+            err("W12 historia.js %s = %s ≠ historia.py %s" % (nombre, m.group(1), py))
 
 
 def graficos_informe(catalogo):

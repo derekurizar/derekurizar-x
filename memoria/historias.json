@@ -93,6 +93,97 @@
           "nivel-umbral"
         ]
       }
+    },
+    {
+      "id": "2026-10-27-como-se-creo-pollo-campero",
+      "slug": "como-se-creo-pollo-campero",
+      "tema": "como se creo pollo campero",
+      "fecha": "2026-10-27",
+      "ruta": "historias/2026-10-27-como-se-creo-pollo-campero",
+      "arco": "origen y ascenso, con una tragedia a medio camino: de un pago en pollos a una marca que viaja con la diáspora",
+      "paleta": "maiz",
+      "musica": "maiz-2",
+      "duracion_s": 172.5,
+      "creditos_voz": 2585.0,
+      "estado": "listo",
+      "frases": {
+        "promesa": "Décadas después, la marca llegaría a Estados Unidos, donde ya la esperaban.",
+        "gancho": "Juan Bautista Gutiérrez, un español, molía trigo en Guatemala.",
+        "aperturas": [
+          "Un día, un criador",
+          "Aún no era Campero:",
+          "La fórmula nunca se",
+          "Un año después, Campero",
+          "El avión se estrelló,",
+          "Tras el accidente, según",
+          "Para mil novecientos ochenta",
+          "Aun sin local en",
+          "Mucho de ese pollo",
+          "Quince años después de",
+          "Ya no hacía falta",
+          "Hoy Campero pasa de",
+          "Todo empezó con unas"
+        ],
+        "segun": 1,
+        "aperturas_atribuidas": 0,
+        "pregunta": "Las familias aún suben al avión con una caja para los que se fueron.",
+        "cierre": "Las familias aún suben al avión con una caja para los que se fueron.",
+        "cierre_tipo": "remate",
+        "cierre_forma": "legado",
+        "cierre_mecanismo": null,
+        "familia": "personaje",
+        "visual": "foto",
+        "animaciones": [
+          "arco-viaje"
+        ]
+      }
+    },
+    {
+      "id": "2026-10-27-el-caso-del-lago-de-amatitlan-el-quimico-que-resulto-ser-agu",
+      "slug": "el-caso-del-lago-de-amatitlan-el-quimico-que-resulto-ser-agu",
+      "tema": "El caso del lago de Amatitlán: el químico que resultó ser agua con sal",
+      "fecha": "2026-10-27",
+      "ruta": "historias/2026-10-27-el-caso-del-lago-de-amatitlan-el-quimico-que-resulto-ser-agu",
+      "arco": "caso: un lago enfermo, una promesa de rescate en tiempo récord, el engaño que destapa un análisis de laboratorio y una justicia que condena pero que años después aún no cierra; mientras tanto el lago sigue verde",
+      "paleta": "jade",
+      "musica": "jade-1",
+      "duracion_s": 172.5,
+      "creditos_voz": 2462.0,
+      "estado": "listo",
+      "frases": {
+        "promesa": "Al final sabrás si la justicia ya cerró el caso de ese líquido.",
+        "gancho": "Guatemala compró un líquido para salvar el lago de Amatitlán.",
+        "aperturas": [
+          "Dos mil trece. Un",
+          "Según AMSA, la autoridad",
+          "Según Prensa Libre, en",
+          "Dos mil catorce. Llega",
+          "Por eso AMSA contrató",
+          "En marzo de dos",
+          "Ese mes, según Prensa",
+          "Pero, según Prensa Libre,",
+          "Dos mil quince. El",
+          "Pero, según Prensa Libre,",
+          "Y el dinero ya",
+          "Por eso, según la",
+          "Dos mil dieciocho. Llega",
+          "Según La Hora, el",
+          "Condenaron a Roxana Baldetti",
+          "Dos mil veinticinco y",
+          "La condena aún no",
+          "Mientras tanto, el lago"
+        ],
+        "pregunta": "Y a la gente le pidió no nadar ni pescar en él.",
+        "cierre": "Y a la gente le pidió no nadar ni pescar en él.",
+        "cierre_tipo": "remate",
+        "cierre_forma": "consecuencia",
+        "cierre_mecanismo": "despues",
+        "familia": "misterio",
+        "visual": "foto",
+        "animaciones": [
+          "cronologia"
+        ]
+      }
     }
   ]
 }

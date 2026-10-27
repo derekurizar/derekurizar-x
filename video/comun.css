@@ -25,6 +25,25 @@ body { width: 1080px; height: 1920px; overflow: hidden; background: var(--bg); c
 #subs .no { opacity: .38; }
 #subs .cifra { font-size: 60px; font-weight: 800; letter-spacing: -.01em; }
 #subs .ahora { color: var(--resalte-ink); background: var(--resalte-bg); border-radius: 10px; padding: 0 .12em; }
+/* rótulo de acto (V.pintarActo, S.R de /historia): el velo a sangre sobre la escena (data-fuera-de-zona: V13 no lo
+   mide) y la columna con el año grande, el título, el lugar y el riel (un punto por acto, sin numerarlos: el
+   espectador no sabe qué acto es); va antes de #subs en el DOM, así los subtítulos siguen encima. Mismas reglas que
+   #anio/#titulo/#riel de video/historia.html */
+#acto { position: absolute; inset: 0; pointer-events: none; }
+#acto .velo { position: absolute; inset: 0; background: color-mix(in srgb, var(--bg) 78%, transparent); }
+#acto .col { position: absolute; top: 470px; left: var(--izq); right: var(--der); display: flex; flex-direction: column; gap: 30px; }
+#acto .anio { font: 400 230px/.86 'Instrument Serif', serif; letter-spacing: -.03em; color: var(--acento, var(--a1)); white-space: nowrap; transform-origin: 0 70%; }
+#acto .titulo { font: 700 66px/1.06 Archivo, sans-serif; letter-spacing: -.01em; }
+#acto .titulo span { display: inline-block; margin-right: .24em; }
+#acto .lugar { font: 600 24px/1 'JetBrains Mono', monospace; letter-spacing: .12em; text-transform: uppercase; opacity: .7; }
+#acto .lugar:empty { display: none; }
+#acto .riel { position: relative; height: 26px; margin-top: 18px; }
+#acto .riel .linea { position: absolute; left: 0; right: 0; top: 12px; height: 3px; background: color-mix(in srgb, var(--ink) 25%, transparent); }
+#acto .riel .lleno { position: absolute; left: 0; top: 12px; height: 3px; background: var(--ink); }
+#acto .riel .punto { position: absolute; top: 4px; width: 19px; height: 19px; margin-left: -9px; border-radius: 50%;
+  background: var(--bg); border: 3px solid color-mix(in srgb, var(--ink) 40%, transparent); box-sizing: border-box; }
+#acto .riel .punto.ya { background: var(--ink); border-color: var(--ink); }
+#acto .riel .punto.hoy { background: var(--acento, var(--a1)); border-color: var(--acento, var(--a1)); }
 /* portada (&portada=1): el cuadro limpio para la miniatura, sin subtítulos ni barra de progreso */
 html.portada #subs, html.portada #progreso { visibility: hidden; }
 /* formato 4:5 (1080×1350) para el feed: sin zona segura de teléfono */
@@ -32,3 +51,6 @@ html.f45 { --izq: 85px; --der: 85px; --corte: 0px; --sup: 0px; --fin: 1090px; --
 html.f45 body { height: 1350px; }
 html.f45 #arriba { top: 70px; }
 html.f45 #subs { top: 1120px; }
+html.f45 #acto .col { top: 200px; gap: 22px; }
+html.f45 #acto .anio { font-size: 180px; }
+html.f45 #acto .titulo { font-size: 54px; }

@@ -1,16 +1,16 @@
 export const meta = {
   name: 'historia',
-  description: 'Historia narrada para /historia: historia-editor (encuadre: pregunta, protagonista, revelaciones, fotos_clave, arco, 3–5 capítulos, 2–3 ejes) → un historia-investigador por eje ⇢ su historia-verificador (pipeline; segunda fuente por hecho, fechas, estado de los casos, fotos con licencia y la del protagonista; gate H1–H3, H7, H12) → consolidar (cronología y base) → video-gancho en modo historia (4–5 candidatos con la foto del protagonista; gate R1–R9, H10, H12, H13) → video-critico elige (reserva: no regala una revelación) → historia-guionista (gate H3–H14 + V1–V5, V9, F1–F8) → historia-oyente (oyente ingenuo: solo la voz y la pantalla) → crítico en modo historia (resuelve o justifica cada confusión del oyente; ≤ 2 vueltas; con «pasa», el guionista aplica sus mejoras) → video-animador por escena explica sin animación. 0 créditos de ElevenLabs.',
-  whenToUse: 'Invocado por /historia <tema> DESPUÉS de `python3 scripts/historia.py preparar "<tema>"`. args: {trabajo, tema, permitir_fallback, desde, notas}. trabajo = sesiones/historia-<slug> (lo imprime preparar). Produce y aprueba <trabajo>/encuadre.json, hallazgos_*.json, verificacion_*.json, fotos/, historia.json, base/, ganchos.json, seleccion.json, guion.json, locucion.json, oyente.json y critica.json; la voz (o la voz falsa), los tiempos, la grabación y el montaje los hace la sesión principal después. Si el crítico sigue en «corregir» tras 2 vueltas, el workflow NO falla: devuelve veredicto corregir + faltas_pendientes y el comando pregunta al usuario. desde: "retoque" + notas (lo que pidió el usuario) = guion.json ya aprobado y con voz: salta a Guion (RETOQUE: aplica solo las notas y conserva las voces que no cambian) → gate → oyente → crítica (1 vuelta) → mejoras → animación; devuelve voces_cambiadas para regrabar solo esas.',
+  description: 'Historia narrada para /historia (v3, mini documental): historia-editor (encuadre: pregunta, protagonista, revelaciones, fotos_clave, arco, tres actos con la espina (detonante, punto medio, clímax, resolución), hilos, personajes, 2–5 periodos, 2–3 ejes) → un historia-investigador por eje ⇢ su historia-verificador (pipeline; segunda fuente por hecho, cuatro veredictos confirmado | una_fuente | en_disputa | no_confirmado con tipo_hecho, fechas, estado de los casos, fotos con licencia y la del protagonista; gate H1–H3, H7, H12) → consolidar (cronología y base) → video-gancho en modo historia (4–5 candidatos con la foto del protagonista; gate R1–R9, H10, H12, H13) → video-critico elige (reserva: no regala una revelación) → historia-guionista (PRIMERO la narración de corrido por acto, 320–400 palabras, narracion --check; DESPUÉS la reparte en escenas sin cambiar una palabra, con rótulos de acto sobre la imagen y secuencias de voz; gate H3–H20 + V1–V5, V9, F1–F8) → historia-oyente (oyente ingenuo: la narración de corrido y luego la pantalla) → crítico en modo historia (flujo en vez de ritmo; resuelve o justifica cada confusión, salto y pregunta sin responder del oyente; ≤ 2 vueltas; con «pasa», el guionista aplica sus mejoras y el oyente las vuelve a oír) → video-animador por escena explica sin animación. 0 créditos de ElevenLabs.',
+  whenToUse: 'Invocado por /historia <tema> DESPUÉS de `python3 scripts/historia.py preparar "<tema>"`. args: {trabajo, tema, permitir_fallback, desde, notas}. trabajo = sesiones/historia-<slug> (lo imprime preparar). Produce y aprueba <trabajo>/encuadre.json, hallazgos_*.json, verificacion_*.json, fotos/, historia.json, base/, ganchos.json, seleccion.json, guion.json, locucion.json, oyente.json y critica.json; la voz (o la voz falsa), los tiempos, la grabación y el montaje los hace la sesión principal después. Si el crítico sigue en «corregir» tras 2 vueltas, el workflow NO falla: devuelve veredicto corregir + faltas_pendientes y el comando pregunta al usuario. desde: "encuadre" = la cronología ya está verificada (historia.json, ganchos.json, seleccion.json): el editor re-encuadra por actos y salta a Guion; desde: "guion" = salta directo a Guion; desde: "retoque" + notas (lo que pidió el usuario) = guion.json ya aprobado y con voz: salta a Guion (RETOQUE: aplica solo las notas y conserva las voces que no cambian) → gate → oyente → crítica (1 vuelta) → mejoras → animación; devuelve voces_cambiadas para regrabar solo esas (con voz de corrido, voz --pendientes regraba la secuencia entera; --sueltas solo esas escenas).',
   phases: [
-    { title: 'Encuadre', detail: 'historia-editor: encuadre.json con la pregunta central, el protagonista, las revelaciones (lo que el video paga y el gancho no dice), fotos_clave (la primera es la imagen del protagonista), el arco, 3–5 capítulos con su pregunta, 2–3 ejes de investigación, paleta, no_afirma y lo sensible (justicia)' },
+    { title: 'Encuadre', detail: 'historia-editor: encuadre.json con la pregunta central, el protagonista, las revelaciones (lo que el video paga y el gancho no dice), fotos_clave (la primera es la imagen del protagonista), el arco, tres actos (planteamiento, nudo, desenlace) con la espina (detonante, punto medio, clímax, resolución), 2–6 hilos (lo que la historia abre), personajes con su presentación, 2–5 periodos que reparten 2–3 ejes de investigación, paleta, no_afirma y lo sensible (justicia); gate historia.py encuadre --check. En desde: encuadre, re-encuadra una cronología ya verificada' },
     { title: 'Investigación', detail: 'un historia-investigador por eje en paralelo: hechos con fecha y cita literal del texto guardado (historia.py leer: HTML, PDF o Wayback), cifras, frases literales y fotos candidatas → hallazgos_<eje>.json' },
-    { title: 'Verificación', detail: 'un historia-verificador por eje en cuanto su investigador termina: segunda fuente independiente por hecho, fechas en conflicto, estado actual de los casos, fotos con licencia (historia.py foto; la og:image de las notas leídas con --de-fuente; la del protagonista con --protagonista) → verificacion_<eje>.json; gate historia.py hechos --check (H1–H3, H7, H12); si ninguna muestra al protagonista, un verificador la baja antes de los ganchos' },
+    { title: 'Verificación', detail: 'un historia-verificador por eje en cuanto su investigador termina: segunda fuente independiente por hecho; cuatro veredictos (confirmado | una_fuente | en_disputa | no_confirmado) y tipo_hecho (acto | alegato | estimacion | opinion); fechas en conflicto, estado actual de los casos, fotos con licencia (historia.py foto; la og:image de las notas leídas con --de-fuente; la del protagonista con --protagonista) → verificacion_<eje>.json; gate historia.py hechos --check (H1–H3, H7, H12); si ninguna muestra al protagonista, un verificador la baja antes de los ganchos' },
     { title: 'Ganchos', detail: 'video-gancho en modo historia: consolidar (cronología y base) y 4–5 candidatos de familias de historia (resultado, paradoja, contraste, misterio, personaje, lugar, pregunta, escala), todos con la foto del protagonista a sangre y sin adelantar una revelación; gate historia.py ganchos --check (R1–R9, H10, H12, H13)' },
     { title: 'Selección', detail: 'video-critico en modo selección: en silencio y con la voz; puntúa silencio, reserva (no regala una revelación), tension, alineacion, honestidad, novedad; ganador y segundo en seleccion.json; si ninguno llega a 3, video-gancho rehace una vez' },
-    { title: 'Guion', detail: 'historia-guionista: ganchos --usar → guion.json (promesa con revela, capítulos que responden su pregunta, foto, cita, tarjeta, golpe, explica, giro, cierre legado, captions); gate historia.py guion --check (H3–H14 + V1–V5, V9, F1–F8) y su línea RETORNO; en retoque aplica las notas del usuario y conserva las voces' },
-    { title: 'Oyente', detail: 'historia-oyente (sonnet): solo la voz en orden y lo que hay en pantalla (digesto --para oyente); oyente.json con de qué es la historia, qué prometió y qué dio, confusiones, saltos, repeticiones y preguntas sin responder; vuelve a correr tras cada corrección' },
-    { title: 'Crítica', detail: 'video-critico en modo historia: gancho, tensión, claridad e hilo, ritmo, precisión, cierre; resuelve (bloquea) o justifica cada confusión y salto del oyente; lo que bloquea vuelve al guionista, ≤ 2 vueltas (1 en retoque); con «pasa», el guionista aplica las mejoras (también las de voz) y repasa el gate, sin otra crítica' },
+    { title: 'Guion', detail: 'historia-guionista: ganchos --usar → PRIMERO guion.narracion (el texto corrido de cada acto, 320–400 palabras ≈ 150 s; historia.py narracion --check: conectores, ≤ 4 «según», personajes presentados, hilos pagados o declarados) → DESPUÉS las escenas sin cambiar una palabra (acto en cada una, rótulo en la primera de los actos 2 y 3, secuencias de voz, foto, cita, tarjeta, golpe, explica, giro en el nudo, cierre legado, captions); gate historia.py guion --check (H3–H20 + V1–V5, V9, F1–F8) y su línea RETORNO; en retoque aplica las notas del usuario y conserva las voces' },
+    { title: 'Oyente', detail: 'historia-oyente (sonnet): primero la narración de corrido (como quien oye un documental con los ojos cerrados) y luego la voz escena por escena con lo que hay en pantalla (digesto --para oyente); oyente.json con de qué es la historia, qué prometió y qué dio, confusiones, saltos, repeticiones y preguntas sin responder; vuelve a correr tras cada corrección y tras las mejoras' },
+    { title: 'Crítica', detail: 'video-critico en modo historia: gancho, tensión (la espina entera y en orden), claridad e hilo (personajes presentados, hilos pagados o declarados), flujo (la narración de corrido se oye como una sola voz, no como tarjetas leídas), precisión (lo una_fuente con la fuente en pantalla, ≤ 4 «según»), cierre; resuelve (bloquea) o justifica cada confusión, salto y pregunta sin responder del oyente; lo que bloquea vuelve al guionista, ≤ 2 vueltas (1 en retoque); con «pasa», el guionista aplica las mejoras (también las de voz), repasa el gate y el oyente las vuelve a oír (si confunden, se revierten)' },
     { title: 'Animación', detail: 'video-animador por cada escena explica con animacion null (solo si el crítico aprueba): reusa del catálogo o escribe video/animaciones/<id>.js, --check, --registrar y --asignar' },
   ],
 }
@@ -25,9 +25,11 @@ export const meta = {
 const TIPOS = ['gancho', 'tarjeta', 'golpe', 'definicion', 'adivina', 'mapa', 'ranking', 'escala', 'tiempo', 'explica', 'foto', 'cita', 'capitulo']
 const FAMILIAS = ['resultado', 'paradoja', 'contraste', 'misterio', 'personaje', 'lugar', 'pregunta', 'escala']
 const VISUALES = ['foto']
-const PUNTAJES = ['gancho', 'tension', 'claridad', 'ritmo', 'precision', 'cierre']
-const REGLA_DE = { gancho: 'H-C1', tension: 'H-C2', claridad: 'H-C3', ritmo: 'H-C4', precision: 'H-C5', cierre: 'H-C6' }
-const EJES_MIN = 2, EJES_MAX = 3, CAPITULOS_MIN = 3, CAPITULOS_MAX = 5, HECHOS_MIN = 6
+const PUNTAJES = ['gancho', 'tension', 'claridad', 'flujo', 'precision', 'cierre']
+const REGLA_DE = { gancho: 'H-C1', tension: 'H-C2', claridad: 'H-C3', flujo: 'H-C4', precision: 'H-C5', cierre: 'H-C6' }
+const EJES_MIN = 2, EJES_MAX = 3, HECHOS_MIN = 6
+const ACTOS = 3, PERIODOS_MIN = 2, PERIODOS_MAX = 5, HILOS_MIN = 2, HILOS_MAX = 6, PERSONAJES_MAX = 8
+const PALABRAS_MIN = 320, PALABRAS_MAX = 400, SEGUN_MAX = 4   // W12: PALABRAS y SEGUN_MAX_VIDEO de historia.py
 const CANDIDATOS_MIN = 4, CANDIDATOS_MAX = 5, DURACION_MAX_S = 180
 const VUELTAS_CRITICA = 2, PUNTAJE_MIN = 3
 
@@ -37,9 +39,12 @@ const trabajo = String(A.trabajo || '').replace(/\/+$/, '')
 if (!/^sesiones\/(historia-[a-z0-9-]+|_fixture_historia\/[a-z0-9_-]+)$/.test(trabajo)) throw new Error('args.trabajo debe ser sesiones/historia-<slug> (la última línea que imprime `python3 scripts/historia.py preparar "<tema>"`).')
 const tema = String(A.tema || '').trim()
 if (!tema) throw new Error('args.tema: el tema de la historia, tal como lo dio el usuario.')
-const RETOQUE = String(A.desde || '') === 'retoque'
+// desde: "" (todo) · "encuadre" (re-encuadre por actos de una cronología ya verificada → Guion) · "guion" (salta a Guion) ·
+// "retoque" (guion aprobado y con voz: aplica args.notas conservando las voces)
+const DESDE = String(A.desde || '')
+if (!['', 'encuadre', 'guion', 'retoque'].includes(DESDE)) throw new Error('args.desde: "encuadre" (re-encuadrar por actos una cronología verificada), "guion" (saltar al guion) o "retoque" (guion.json aprobado en TRABAJO + args.notas con lo que pidió el usuario).')
+const RETOQUE = DESDE === 'retoque', REENCUADRE = DESDE === 'encuadre', DESDE_GUION = DESDE === 'guion'
 const notas = String(A.notas || '').trim()
-if (A.desde && !RETOQUE) throw new Error('args.desde: solo "retoque" (guion.json aprobado en TRABAJO + args.notas con lo que pidió el usuario).')
 if (RETOQUE && !notas) throw new Error('args.notas: en modo retoque, lo que pidió el usuario (cambiar el gancho por g3, reescribir la escena 7, otro cierre, quitar la cita de la 10…).')
 const VUELTAS = RETOQUE ? 1 : VUELTAS_CRITICA
 
@@ -123,12 +128,17 @@ async function conReparacion(etiqueta, invocar, validar, max = 2) {
 const S = {
   rechequeo: { type: 'object', properties: { items: { type: 'array' } } },   // lo pide el bloque común; aquí no se usa
   encuadre: {
-    type: 'object', required: ['archivo', 'pregunta', 'protagonista', 'revelaciones', 'fotos_clave', 'arco', 'capitulos', 'ejes', 'paleta', 'justicia'],
+    type: 'object', required: ['archivo', 'pregunta', 'protagonista', 'revelaciones', 'fotos_clave', 'arco', 'actos', 'espina', 'hilos', 'personajes', 'periodos', 'ejes', 'paleta', 'justicia'],
     properties: {
       archivo: { type: 'string', pattern: 'encuadre\\.json$' }, pregunta: { type: 'string' }, arco: { type: 'string' },
       protagonista: { type: 'array', items: { type: 'string' } },
       revelaciones: { type: 'array', items: { type: 'string' } }, fotos_clave: { type: 'array', items: { type: 'string' } },
-      capitulos: { type: 'array', items: { type: 'string' } }, ejes: { type: 'array', items: { type: 'string', pattern: '^[a-z]{2,6}$' } },
+      actos: { type: 'array', items: { type: 'string' } },                      // los 3 títulos, en orden
+      espina: { type: 'object', required: ['detonante', 'punto_medio', 'climax', 'resolucion'],
+        properties: { detonante: { type: 'string' }, punto_medio: { type: 'string' }, climax: { type: 'string' }, resolucion: { type: 'string' } } },
+      hilos: { type: 'array', items: { type: 'string', pattern: '^h\\d+$' } },   // los ids
+      personajes: { type: 'array', items: { type: 'string' } },                 // los nombres
+      periodos: { type: 'array', items: { type: 'string' } }, ejes: { type: 'array', items: { type: 'string', pattern: '^[a-z]{2,6}$' } },
       paleta: { type: 'string' }, justicia: { type: 'boolean' },
     },
   },
@@ -141,11 +151,11 @@ const S = {
     },
   },
   verificacion: {
-    type: 'object', required: ['eje', 'archivo', 'gate', 'confirmados', 'en_disputa', 'descartados', 'fotos'],
+    type: 'object', required: ['eje', 'archivo', 'gate', 'confirmados', 'una_fuente', 'en_disputa', 'descartados', 'fotos'],
     properties: {
       eje: { type: 'string' }, archivo: { type: 'string', pattern: 'verificacion_[a-z]+\\.json$' },
       gate: { type: 'string', enum: ['ok', 'falla'] }, fallas: { type: 'array', items: { type: 'string' } },
-      confirmados: { type: 'integer' }, en_disputa: { type: 'integer' }, descartados: { type: 'integer' },
+      confirmados: { type: 'integer' }, una_fuente: { type: 'integer' }, en_disputa: { type: 'integer' }, descartados: { type: 'integer' },
       fotos: { type: 'integer' }, casos: { type: 'integer' }, protagonista: { type: 'integer' },
     },
   },
@@ -172,21 +182,25 @@ const S = {
     },
   },
   guion: {
-    type: 'object', required: ['archivo', 'gate', 'escenas', 'tipos', 'capitulos', 'estimado_s', 'explica_sin_animacion'],
+    type: 'object', required: ['archivo', 'gate', 'escenas', 'tipos', 'actos', 'rotulos', 'palabras', 'segun', 'hilos_pagados', 'hilos_sin_respuesta', 'estimado_s', 'explica_sin_animacion'],
     properties: {
       archivo: { type: 'string', pattern: 'guion\\.json$' }, gate: { type: 'string', enum: ['ok', 'falla'] },
       fallas: { type: 'array', items: { type: 'string' } }, escenas: { type: 'integer' },
       tipos: { type: 'array', items: { type: 'string', enum: TIPOS } }, capitulos: { type: 'integer' }, estimado_s: { type: 'number' },
+      actos: { type: 'integer' }, rotulos: { type: 'integer' }, palabras: { type: 'integer' }, segun: { type: 'integer' },
+      hilos_pagados: { type: 'integer' }, hilos_sin_respuesta: { type: 'integer' }, secuencias: { type: 'integer' },
       explica_sin_animacion: { type: 'array', items: { type: 'integer' } },
       voces_cambiadas: { type: 'array', items: { type: 'integer' } },
     },
   },
   mejoras: {
-    type: 'object', required: ['archivo', 'gate', 'escenas', 'tipos', 'capitulos', 'estimado_s', 'explica_sin_animacion', 'aplicadas', 'no_aplicadas'],
+    type: 'object', required: ['archivo', 'gate', 'escenas', 'tipos', 'actos', 'palabras', 'segun', 'estimado_s', 'explica_sin_animacion', 'aplicadas', 'no_aplicadas'],
     properties: {
       archivo: { type: 'string', pattern: 'guion\\.json$' }, gate: { type: 'string', enum: ['ok', 'falla'] },
       fallas: { type: 'array', items: { type: 'string' } }, escenas: { type: 'integer' },
       tipos: { type: 'array', items: { type: 'string', enum: TIPOS } }, capitulos: { type: 'integer' }, estimado_s: { type: 'number' },
+      actos: { type: 'integer' }, rotulos: { type: 'integer' }, palabras: { type: 'integer' }, segun: { type: 'integer' },
+      hilos_pagados: { type: 'integer' }, hilos_sin_respuesta: { type: 'integer' }, secuencias: { type: 'integer' },
       explica_sin_animacion: { type: 'array', items: { type: 'integer' } },
       voces_cambiadas: { type: 'array', items: { type: 'integer' } },
       aplicadas: { type: 'array', items: { type: 'integer' } },
@@ -201,7 +215,8 @@ const S = {
       bloqueantes: { type: 'integer' }, mejoras: { type: 'integer' },
       faltas: { type: 'array', items: { type: 'object', required: ['regla', 'gravedad', 'problema', 'arreglo'],
         properties: { n: { type: 'integer' }, escena: { type: ['integer', 'null'] }, regla: { type: 'string', pattern: '^H-C[1-6]$' }, gravedad: { type: 'string', enum: ['bloquea', 'mejora'] }, problema: { type: 'string' }, arreglo: { type: 'string' } } } },
-      oyente_descartadas: { type: 'array', items: { type: 'object', required: ['escena', 'motivo'], properties: { escena: { type: ['integer', 'null'] }, motivo: { type: 'string' } } } },
+      // escena: null + pregunta = una pregunta_sin_responder del oyente descartada con motivo
+      oyente_descartadas: { type: 'array', items: { type: 'object', required: ['escena', 'motivo'], properties: { escena: { type: ['integer', 'null'] }, pregunta: { type: 'string' }, motivo: { type: 'string' } } } },
     },
   },
   oyente: {
@@ -228,28 +243,43 @@ const S = {
 const rel = (p) => String(p || '').replace(/^\.\//, '').replace(/^.*?\/(?=sesiones\/)/, '')
 const fallasDe = (r, gate) => (r.fallas && r.fallas.length) ? r.fallas : [`el gate \`${gate}\` falló sin detalle: córrelo y copia sus líneas FALLA`]
 
-// En retoque las fases 1–5 no corren: el gancho ya está en guion.json y la cronología en historia.json
-let ENC = null, ver = [], K = { candidatos: [] }, SEL = { ganador: null, segundo: null, por_que: 'retoque: el gancho ya estaba elegido', faltas: [] }
-if (!RETOQUE) {
+// En retoque y en desde: guion las fases 1–5 no corren (el gancho ya está en guion.json o en seleccion.json y la cronología
+// en historia.json); en desde: encuadre corre solo la fase 1 en modo re-encuadre
+let ENC = null, ver = [], K = { candidatos: [] }, SEL = { ganador: null, segundo: null, por_que: `${DESDE}: el gancho ya estaba elegido (seleccion.json)`, faltas: [] }
+const directivaEncuadre = REENCUADRE
+  ? `RE-ENCUADRE (lee «Re-encuadre» en referencias/roles/historia-editor.md): ${trabajo}/encuadre.json ya existe y la cronología está verificada: lee SOLO python3 scripts/historia.py digesto ${trabajo} --para editor. ` +
+    `Conserva tema, slug, pregunta, protagonista, revelaciones, fotos_clave, arco, ejes, paleta, dominios_propios, sensibles y no_afirma; renombra capitulos → periodos (y ejes[].capitulos → ejes[].periodos) y AÑADE actos, espina, hilos y personajes. `
+  : `Escribe ${trabajo}/encuadre.json: pregunta central, protagonista (1–3 nombres con que se nombra a quien protagoniza: la marca, la persona, la empresa; el gancho lo nombra), ` +
+    `revelaciones (3–5 frases: lo que el video revela y el gancho NO puede decir —la respuesta a la pregunta, de qué está hecho, quién lo hizo, cómo terminó— con sus números tal cual: el gate veta esos dígitos en el gancho), ` +
+    `fotos_clave (2–4 imágenes que la historia necesita; la PRIMERA es siempre la del protagonista: el producto, el edificio, la persona), arco (el que le toca a ESTA historia; abierto), ` +
+    `${PERIODOS_MIN}–${PERIODOS_MAX} periodos (el reparto de los ejes entre investigadores, cada uno con su pregunta), ${EJES_MIN}–${EJES_MAX} ejes con id de 2–6 letras y sus periodos, paleta del tema, dominios_propios (también el sitio de la marca), no_afirma y sensibles. `
+const directivaActos = `ACTOS (la espina del documental): actos = exactamente ${ACTOS} {n, nombre: planteamiento | nudo | desenlace, titulo (≤ 4 palabras: es el rótulo), periodo, que_cuenta, termina_en}; ` +
+  `espina = {detonante (acto 1), punto_medio (acto 2), climax (acto 2 o 3), resolucion (acto 3)} cada uno {frase, acto, ejes}; hilos = ${HILOS_MIN}–${HILOS_MAX} preguntas que la historia abre y debe pagar o declarar sin respuesta {id: h1…, pregunta, eje}; ` +
+  `personajes = ≤ ${PERSONAJES_MAX} {nombre, alias[], presentacion (≤ 8 palabras: quién es)} sin el protagonista. Corre python3 scripts/historia.py encuadre ${trabajo} --check hasta 0 fallas. ` +
+  `Retorno: actos (los 3 títulos), espina (las 4 frases), hilos (los ids), personajes (los nombres), periodos (los títulos).`
+if (!RETOQUE && !DESDE_GUION) {
 // ── 1. Encuadre ──────────────────────────────────────────────────────────────
 phase('Encuadre')
 ENC = await conReparacion('Encuadre', (fallos) => agentRol(
-  `Eres el editor de /historia (lee referencias/roles/historia-editor.md). TRABAJO = ${trabajo} · tema: «${tema}». ` +
-    `Escribe ${trabajo}/encuadre.json: pregunta central, protagonista (1–3 nombres con que se nombra a quien protagoniza: la marca, la persona, la empresa; el gancho lo nombra), ` +
-    `revelaciones (3–5 frases: lo que el video revela y el gancho NO puede decir —la respuesta a la pregunta, de qué está hecho, quién lo hizo, cómo terminó— con sus números tal cual: el gate veta esos dígitos en el gancho), ` +
-    `fotos_clave (2–4 imágenes que la historia necesita; la PRIMERA es siempre la del protagonista: el producto, el edificio, la persona), arco (el que le toca a ESTA historia; abierto), ${CAPITULOS_MIN}–${CAPITULOS_MAX} capítulos cada uno con su pregunta, ${EJES_MIN}–${EJES_MAX} ejes con id de 2–6 letras, paleta del tema, dominios_propios (también el sitio de la marca), no_afirma y sensibles.` +
+  `Eres el editor de /historia (lee referencias/roles/historia-editor.md). TRABAJO = ${trabajo} · tema: «${tema}». ` + directivaEncuadre + directivaActos +
     (fallos.length ? ` REPARACIÓN: tu retorno anterior falló: ${fallos.join('; ')}.` : ''),
-  { agentType: 'historia-editor', schema: S.encuadre, phase: 'Encuadre', label: 'editor' }),
+  { agentType: 'historia-editor', schema: S.encuadre, phase: 'Encuadre', label: REENCUADRE ? 'editor-reencuadre' : 'editor' }),
 (r) => [
   ...(rel(r.archivo) !== `${trabajo}/encuadre.json` ? [`archivo debe ser ${trabajo}/encuadre.json`] : []),
-  ...(r.capitulos.length < CAPITULOS_MIN || r.capitulos.length > CAPITULOS_MAX ? [`${r.capitulos.length} capítulos (van ${CAPITULOS_MIN}–${CAPITULOS_MAX})`] : []),
+  ...(r.actos.length !== ACTOS ? [`${r.actos.length} actos (van exactamente ${ACTOS}: planteamiento, nudo, desenlace)`] : []),
+  ...(['detonante', 'punto_medio', 'climax', 'resolucion'].filter((k) => !String(r.espina[k] || '').trim()).map((k) => `espina.${k} vacío`)),
+  ...(r.hilos.length < HILOS_MIN || r.hilos.length > HILOS_MAX ? [`${r.hilos.length} hilos (van ${HILOS_MIN}–${HILOS_MAX})`] : []),
+  ...(r.personajes.length > PERSONAJES_MAX ? [`${r.personajes.length} personajes (van ≤ ${PERSONAJES_MAX})`] : []),
+  ...(r.periodos.length < PERIODOS_MIN || r.periodos.length > PERIODOS_MAX ? [`${r.periodos.length} periodos (van ${PERIODOS_MIN}–${PERIODOS_MAX})`] : []),
   ...(r.ejes.length < EJES_MIN || r.ejes.length > EJES_MAX ? [`${r.ejes.length} ejes (van ${EJES_MIN}–${EJES_MAX})`] : []),
   ...(new Set(r.ejes).size !== r.ejes.length ? ['ids de eje repetidos'] : []),
   ...(!r.protagonista.some((x) => x.trim()) ? ['protagonista vacío (el nombre de la marca, la persona o la empresa)'] : []),
   ...(r.revelaciones.length < 3 || r.revelaciones.length > 5 ? [`${r.revelaciones.length} revelaciones (van 3–5: lo que el video paga y el gancho no dice)`] : []),
   ...(!r.fotos_clave.some((x) => x.trim()) ? ['fotos_clave vacío (la primera es la imagen del protagonista)'] : []),
 ], 1)
-log(`Encuadre: «${ENC.pregunta}» · arco ${ENC.arco} · ${ENC.capitulos.join(' / ')} · ejes ${ENC.ejes.join(', ')} · paleta ${ENC.paleta}${ENC.justicia ? ' · justicia' : ''}`)
+log(`Encuadre: «${ENC.pregunta}» · arco ${ENC.arco} · actos ${ENC.actos.join(' / ')} · espina ${ENC.espina.detonante} → ${ENC.espina.punto_medio} → ${ENC.espina.climax} → ${ENC.espina.resolucion} · hilos ${ENC.hilos.join(', ')} · ejes ${ENC.ejes.join(', ')} · paleta ${ENC.paleta}${ENC.justicia ? ' · justicia' : ''}`)
+}
+if (!RETOQUE && !DESDE_GUION && !REENCUADRE) {
 
 // ── 2–3. Investigación ⇢ Verificación (pipeline por eje) ─────────────────────
 const verificaciones = await pipeline(ENC.ejes,
@@ -264,15 +294,16 @@ const verificaciones = await pipeline(ENC.ejes,
     `Eres el verificador del eje «${eje}» de la historia «${tema}» (lee referencias/roles/historia-verificador.md). TRABAJO = ${trabajo}. ` +
       `Insumo: python3 scripts/historia.py digesto ${trabajo} --para verificador --eje ${eje} (${hz.hechos} hechos, ${hz.cifras} cifras, ${hz.citas} citas, ${hz.fotos} fotos candidatas). ` +
       `${ENC.justicia ? 'Historia de JUSTICIA: cada persona señalada lleva casos[] con su estado a hoy y su fuente. ' : ''}` +
+      `Cuatro veredictos: confirmado (2 grupos) · una_fuente (UNA fuente seria sin nada que la contradiga: se narrará llano con la fuente en pantalla) · en_disputa (las fuentes difieren: nota con las dos versiones) · no_confirmado; y tipo_hecho acto | alegato | estimacion | opinion (lo que no es un acto público se atribuye en voz). ` +
       `Fotos: ≥ 2 por eje con python3 scripts/historia.py foto; la del PROTAGONISTA es obligatoria (H12): el digesto marca con * las og:image de tus fuentes que lo nombran, bájalas con historia.py foto ${trabajo} --id ${eje}-fNN --de-fuente <url> --descripcion "…" --protagonista. ` +
-      `Escribe ${trabajo}/verificacion_${eje}.json (fotos[] con los ids) y corre python3 scripts/historia.py hechos ${trabajo} --check --eje ${eje} hasta 0 fallas. Devuelve también protagonista (cuántas de tus fotos lo muestran).` +
+      `Escribe ${trabajo}/verificacion_${eje}.json (fotos[] con los ids) y corre python3 scripts/historia.py hechos ${trabajo} --check --eje ${eje} hasta 0 fallas. Devuelve también una_fuente (cuántos) y protagonista (cuántas de tus fotos lo muestran).` +
       (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : ''),
     { agentType: 'historia-verificador', schema: S.verificacion, phase: 'Verificación', label: `verifica-${eje}` }),
   (r) => [...(r.eje !== eje ? [`eje ${r.eje} ≠ ${eje}`] : []), ...(r.gate !== 'ok' ? fallasDe(r, `historia.py hechos --check --eje ${eje}`) : [])], 1)
     .catch((e) => { avisar(`AVISO: el eje ${eje} no quedó verificado (${String(e.message).split('\n')[0]}).`); return null }))
 ver = verificaciones.filter(Boolean)
-const publicables = ver.reduce((s, v) => s + v.confirmados + v.en_disputa, 0)
-log(`Verificación: ${ver.map((v) => `${v.eje} ${v.confirmados}✓ ${v.en_disputa}≈ ${v.descartados}✗ · ${v.fotos} fotos · ${v.protagonista || 0} del protagonista`).join(' · ')}`)
+const publicables = ver.reduce((s, v) => s + v.confirmados + (v.una_fuente || 0) + v.en_disputa, 0)
+log(`Verificación: ${ver.map((v) => `${v.eje} ${v.confirmados}✓ ${v.una_fuente || 0}¹ ${v.en_disputa}≈ ${v.descartados}✗ · ${v.fotos} fotos · ${v.protagonista || 0} del protagonista`).join(' · ')}`)
 if (publicables < HECHOS_MIN) fail(`Solo ${publicables} hechos publicables (van ≥ ${HECHOS_MIN}): la historia no se sostiene todavía.`)
 
 // ── 3b. La foto del protagonista (H12): sin ella consolidar fallaría dentro de video-gancho, que no tiene web ──────
@@ -344,17 +375,22 @@ log(`Selección: gana ${SEL.ganador} · segundo ${SEL.segundo || '—'} · ${SEL
 // ── 6. Guion ─────────────────────────────────────────────────────────────────
 phase('Guion')
 const directivaBase = `Eres el guionista de /historia (lee referencias/roles/historia-guionista.md). TRABAJO = ${trabajo} · «${tema}». ` +
+  ((DESDE_GUION || REENCUADRE) ? `PRIMERO corre python3 scripts/historia.py consolidar ${trabajo} (el encuadre cambió: rehace historia.json). ` : '') +
   `Lee SOLO python3 scripts/historia.py digesto ${trabajo} --para guionista. Corre python3 scripts/historia.py guion ${trabajo} --check hasta 0 fallas ` +
   `y devuelve TAL CUAL su última línea RETORNO (tipos trae el tipo de CADA escena en orden, sin el cierre). `
 const directivaGuion = RETOQUE
   ? directivaBase + `RETOQUE: ${trabajo}/guion.json ya existe, aprobado y con voz grabada. Notas del usuario: «${notas}». Aplica SOLO lo que piden ` +
     `(si piden otro gancho: python3 scripts/historia.py ganchos ${trabajo} --usar <id> y relee el hilo entero, H11). Conserva palabra por palabra la voz ` +
-    `(texto) de toda escena que no necesite cambiar: cada voz cambiada se vuelve a generar y cuesta créditos; lo que las notas piden conservar (el cierre, ` +
+    `(texto) de toda escena que no necesite cambiar (y su narracion): cada voz cambiada se vuelve a generar y cuesta créditos (con voz de corrido, la secuencia entera); lo que las notas piden conservar (el cierre, ` +
     `una escena, «ninguna voz») NO se toca ni por una falta del crítico. Si el gate te obliga a cambiar una voz (H11…), el cambio mínimo. Añade al RETORNO ` +
     `voces_cambiadas: [n de cada escena cuya voz cambió; el cierre es la escena N+1, como en locucion.json]. `
-  : directivaBase + `PRIMERO python3 scripts/historia.py ganchos ${trabajo} --usar (el gancho ${SEL.ganador} pasa a la escena 1 y NO lo cambias). ` +
-    `Escribe ${trabajo}/guion.json: promesa con revela (la R que paga), ${CAPITULOS_MIN}–${CAPITULOS_MAX} capítulos que responden su pregunta del encuadre, ` +
-    `escenas foto, cita, tarjeta con grafico, golpe, explica, un giro, cierre legado (o consecuencia si termina mal) y captions; apunta a 150 s (135–165). `
+  : directivaBase + `PRIMERO python3 scripts/historia.py ganchos ${trabajo} --usar (el gancho ${SEL.ganador || 'elegido en seleccion.json'} pasa a la escena 1 y NO lo cambias). ` +
+    `DESPUÉS escribe la NARRACIÓN: guion.narracion = [{acto: 1, texto}, {acto: 2, texto}, {acto: 3, texto}], el texto corrido de cada acto como lo diría una sola voz ` +
+    `(${PALABRAS_MIN}–${PALABRAS_MAX} palabras en total ≈ 150 s a 145 por minuto; empieza con la voz del gancho tal cual; cada oración sigue de la anterior con un porque, un pero o un entonces; ` +
+    `los saltos de tiempo se dicen; cada personaje se presenta la primera vez; cada hilo se paga o se declara sin respuesta; ≤ ${SEGUN_MAX} «según»); mídela con python3 scripts/historia.py narracion ${trabajo} --check hasta 0 fallas. ` +
+    `SOLO ENTONCES repártela en escenas SIN cambiar una palabra (H15): acto en cada escena, rotulo {anio, titulo, lugar?} en la primera escena de los actos 2 y 3, ` +
+    `secuencias de 2–5 escenas consecutivas del mismo acto (la voz se graba de corrido), escenas foto, cita, tarjeta con grafico, golpe, explica, un giro en el acto 2, ` +
+    `guion.hilos (escena que paga o sin_respuesta), promesa con revela (la R que paga), cierre legado (o consecuencia si termina mal) y captions; apunta a 150 s (135–165). `
 const voces = new Set()
 const sumaVoces = (r) => { if (r) (r.voces_cambiadas || []).forEach((n) => voces.add(n)); return r }
 const validarGuion = (r) => {
@@ -362,7 +398,9 @@ const validarGuion = (r) => {
   return [
     ...(rel(r.archivo) !== `${trabajo}/guion.json` ? [`archivo debe ser ${trabajo}/guion.json`] : []),
     ...(r.tipos[0] !== 'gancho' ? ['la escena 1 es el gancho'] : []),
-    ...(r.capitulos < CAPITULOS_MIN || r.capitulos > CAPITULOS_MAX ? [`${r.capitulos} capítulos (van ${CAPITULOS_MIN}–${CAPITULOS_MAX})`] : []),
+    ...(r.actos !== ACTOS ? [`${r.actos} actos (van ${ACTOS})`] : []),
+    ...(r.palabras < PALABRAS_MIN - 40 || r.palabras > PALABRAS_MAX + 30 ? [`${r.palabras} palabras de narración (van ${PALABRAS_MIN}–${PALABRAS_MAX})`] : []),
+    ...(r.segun > SEGUN_MAX ? [`${r.segun} «según» en voz (van ≤ ${SEGUN_MAX})`] : []),
     ...(r.estimado_s > DURACION_MAX_S ? [`${r.estimado_s} s estimados (máximo ${DURACION_MAX_S})`] : []),
     ...(r.tipos.length !== r.escenas ? [`tipos trae ${r.tipos.length} elementos: debe traer el tipo de CADA escena, en orden (${r.escenas})`] : []),
     ...(r.tipos.length === r.escenas ? r.explica_sin_animacion.filter((n) => r.tipos[n - 1] !== 'explica').map((n) => `la escena ${n} no es explica`) : []),
@@ -370,13 +408,13 @@ const validarGuion = (r) => {
 }
 let G = sumaVoces(await conReparacion('Guion', (fallos) => agentRol(directivaGuion + (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : ''),
   { agentType: 'historia-guionista', schema: S.guion, phase: 'Guion', label: 'guionista' }), validarGuion, 2))
-log(`Guion: ${G.escenas} escenas · ${G.capitulos} capítulos · ${G.estimado_s} s estimados${RETOQUE ? ` · voces cambiadas ${[...voces].join(', ') || 'ninguna'}` : ''}`)
+log(`Guion: ${G.escenas} escenas · ${G.actos} actos · ${G.rotulos} rótulos · ${G.palabras} palabras · ${G.segun} «según» · ${G.secuencias || 0} secuencias · ${G.estimado_s} s estimados${RETOQUE ? ` · voces cambiadas ${[...voces].join(', ') || 'ninguna'}` : ''}`)
 
 // ── 6b. Oyente ingenuo: solo oye la voz y lee la pantalla; lo que no entiende va al crítico ─────────────────────────
 const oir = (vuelta) => conReparacion(`oyente ${vuelta}`, (fallos) => agentRol(
   `Eres el OYENTE INGENUO de /historia (lee referencias/roles/historia-oyente.md). TRABAJO = ${trabajo}. ` +
-    `Lee SOLO python3 scripts/historia.py digesto ${trabajo} --para oyente (la voz en orden y lo que hay en pantalla; no sabes nada más de la historia). ` +
-    `Una pasada, en orden, sin volver atrás. Escribe ${trabajo}/oyente.json y devuelve lo mismo.` + (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : ''),
+    `Lee SOLO python3 scripts/historia.py digesto ${trabajo} --para oyente (primero la narración de corrido, como quien oye un documental con los ojos cerrados; luego el desglose por escena con la pantalla; no sabes nada más de la historia). ` +
+    `Dos pasadas (la narración y luego las escenas), sin volver atrás; un salto es donde la narración no fluye. Escribe ${trabajo}/oyente.json y devuelve lo mismo.` + (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : ''),
   { agentType: 'historia-oyente', schema: S.oyente, phase: 'Oyente', label: `oyente-${vuelta}` }),
 (r) => [
   ...(rel(r.archivo) !== `${trabajo}/oyente.json` ? [`archivo debe ser ${trabajo}/oyente.json`] : []),
@@ -394,9 +432,19 @@ const validarCritica = (r, O) => {
   for (const k of PUNTAJES) if (r.puntajes[k] <= 2 && !r.faltas.some((x) => x.gravedad === 'bloquea' && x.regla === REGLA_DE[k])) f.push(`puntaje ${k} = ${r.puntajes[k]} sin falta «bloquea» de ${REGLA_DE[k]}`)
   const bloquea = r.faltas.some((x) => x.gravedad === 'bloquea') || PUNTAJES.some((k) => r.puntajes[k] < PUNTAJE_MIN)
   if ((r.veredicto === 'pasa') === bloquea) f.push(`veredicto ${r.veredicto} incoherente con las faltas y los puntajes`)
-  const atendida = (n) => r.faltas.some((x) => x.escena === n) || (r.oyente_descartadas || []).some((d) => d.escena === n)
+  // una confusión está atendida si una falta o una descartada lleva su escena, o si su texto la nombra («se resuelve en la escena 7… la 6»)
+  const nombra = (x, n) => new RegExp(`\\b(?:escena|escenas|la)\\s+(?:\\d+\\s*(?:,|y|→|-|–)\\s*)*${n}\\b`).test(`${x.problema || ''} ${x.arreglo || ''} ${x.motivo || ''}`)
+  const atendida = (n) => r.faltas.some((x) => x.escena === n || nombra(x, n)) || (r.oyente_descartadas || []).some((d) => d.escena === n || nombra(d, n))
   for (const c of (O ? O.confusiones : [])) if (!atendida(c.escena)) f.push(`la confusión del oyente en la escena ${c.escena} («${c.que_no_entendi}») no tiene falta ni entrada en oyente_descartadas`)
   for (const s of (O ? O.saltos : [])) if (!atendida(s.a)) f.push(`el salto ${s.de}→${s.a} del oyente no tiene falta en la escena ${s.a} ni entrada en oyente_descartadas`)
+  // cada pregunta sin responder del oyente: una falta H-C3 (escena null) que la cite, o una descartada con la pregunta literal
+  const plano = (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim()
+  const cita = (texto, q) => { const p = plano(q); return p.length >= 8 && plano(texto).includes(p.slice(0, Math.min(p.length, 24))) }
+  for (const q of (O ? O.pregunta_sin_responder : [])) {
+    const ok = r.faltas.some((x) => x.escena === null && x.regla === 'H-C3' && cita(x.problema, q)) ||
+      (r.oyente_descartadas || []).some((d) => d.escena === null && d.pregunta && (plano(d.pregunta) === plano(q) || cita(d.pregunta, q) || cita(q, d.pregunta)))
+    if (!ok) f.push(`la pregunta sin responder del oyente («${q}») no tiene una falta H-C3 (escena null, que la cite en problema) ni una entrada en oyente_descartadas con escena null y pregunta`)
+  }
   return f
 }
 let critica = null, previas = []
@@ -406,15 +454,18 @@ for (let vuelta = 1; vuelta <= VUELTAS + 1; vuelta++) {
     `MODO HISTORIA (lee la sección «Modo historia» de referencias/roles/video-critico.md). TRABAJO = ${trabajo}. Vuelta ${vuelta}. ` +
       `Insumos: ${trabajo}/guion.json, ${trabajo}/locucion.json, ` +
       (O ? `${trabajo}/oyente.json (lo que un oyente que SOLO oyó la voz no entendió: cada confusión y cada salto se resuelve con una falta bloquea de H-C3 ` +
-           `—H-C2 si es la promesa— con su arreglo exacto, o se justifica en critica.json → oyente_descartadas[]{escena, motivo}; sus repeticiones y preguntas sin responder las juzgas tú) y ` : '') +
-      `python3 scripts/historia.py digesto ${trabajo} --para critico (cronología, preguntas de los capítulos y revelaciones: en H-C2 comprueba que la escena promesa.pago ` +
-      `cuenta la revelación promesa.revela y que cada capítulo responde su pregunta o la deja abierta a propósito; en H-C6, legado = gente haciendo algo hoy, no es neutro). ` +
+           `—H-C2 si es la promesa— con su arreglo exacto, o se justifica en critica.json → oyente_descartadas[]{escena, motivo}; cada pregunta_sin_responder que coincide con un hilo del encuadre ` +
+           `no pagado ni declarado es una falta bloquea de H-C3 con escena null que la cite; las demás las descartas con {escena: null, pregunta: «la pregunta literal», motivo}; sus repeticiones las juzgas tú) y ` : '') +
+      `python3 scripts/historia.py digesto ${trabajo} --para critico (la NARRACIÓN DE CORRIDO, la espina, los hilos, la cronología y las revelaciones). Duración objetivo 150 s (135–165). ` +
+      `H-C2: la espina está entera y en orden (detonante cierra el acto 1, punto medio en el 2, clímax y resolución en el 3) y la escena promesa.pago cuenta la revelación promesa.revela; ` +
+      `H-C3: cada persona u organización llega presentada y cada hilo se paga o se declara; H-C4 FLUJO (no ritmo): lee la narración de corrido como un texto: ¿una sola voz que cuenta o tarjetas leídas? ` +
+      `(bloquea una escena que arranca con un conector hueco, un salto de tiempo o de tema sin decirlo, aperturas repetidas); H-C5: lo una_fuente va con la fuente en pantalla y solo lo en_disputa o de parte se atribuye en voz (≤ ${SEGUN_MAX} «según»); H-C6, legado = gente haciendo algo hoy, no es neutro. ` +
       (RETOQUE ? `RETOQUE con notas del usuario: «${notas}». Lo que las notas piden conservar (el cierre, una escena, «ninguna voz») el usuario ya lo aprobó: no va como ` +
                  `falta bloquea; si el oyente lo confunde, va en oyente_descartadas con el motivo «lo aprobó el usuario» y, si quieres, como mejora. ` : '') +
       `Escribe ${trabajo}/critica.json.` +
       (previas.length ? ` Faltas de la vuelta anterior (comprueba primero cada una): ${JSON.stringify(previas)}` : '') +
       (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : ''),
-    { agentType: 'video-critico', schema: S.critica, phase: 'Crítica', label: `critica-${vuelta}` }), (r) => validarCritica(r, O), 1)
+    { agentType: 'video-critico', schema: S.critica, phase: 'Crítica', label: `critica-${vuelta}` }), (r) => validarCritica(r, O), 2)
   log(`Crítica ${vuelta}: ${critica.veredicto} · ${PUNTAJES.map((k) => `${k} ${critica.puntajes[k]}`).join(' · ')}`)
   if (critica.veredicto === 'pasa' || vuelta > VUELTAS) break
   previas = critica.faltas.filter((x) => x.gravedad === 'bloquea')
@@ -440,6 +491,23 @@ if (mejorasNoAplicadas.length) {
     G = sumaVoces(M)
     mejorasNoAplicadas = lista.filter((x) => !M.aplicadas.includes(x.n)).map((x) => ({ ...x, motivo: (M.no_aplicadas.find((y) => y.n === x.n) || {}).motivo || 'no aplicada' }))
     log(`Mejoras: ${M.aplicadas.length} aplicadas · ${mejorasNoAplicadas.length} no aplicadas`)
+    // una mejora que cambió la voz vuelve a pasar por el oyente (barato): si confunde donde antes no, se revierte entera
+    if (M.aplicadas.length && (M.voces_cambiadas || []).length) {
+      const O3 = await oir('mejoras')
+      const cambiadas = new Set(M.voces_cambiadas)
+      const antes = new Set([...(O ? O.confusiones.map((c) => c.escena) : []), ...(O ? O.saltos.map((s) => s.a) : [])])
+      const nuevas = O3 ? [...O3.confusiones.map((c) => c.escena), ...O3.saltos.map((s) => s.a)].filter((n) => cambiadas.has(n) && !antes.has(n)) : []
+      if (nuevas.length) {
+        avisar(`AVISO: las mejoras confundieron al oyente en las escenas ${[...new Set(nuevas)].join(', ')}: se revierten (queda el guion aprobado).`)
+        const R = await conReparacion('revertir mejoras', (fallos) => agentRol(directivaGuion +
+          ` REVIERTE: restaura ${trabajo}/guion.previo.json sobre guion.json (las mejoras confundieron al oyente), corre python3 scripts/historia.py guion ${trabajo} --check y devuelve su RETORNO.` +
+          (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : ''),
+        { agentType: 'historia-guionista', schema: S.guion, phase: 'Crítica', label: 'guionista-revierte' }), validarGuion, 1)
+          .catch((e) => { avisar(`AVISO: no se pudo revertir (${String(e.message).split('\n')[0]}); revisa guion.json contra guion.previo.json.`); return null })
+        if (R) { G = R; M.voces_cambiadas.forEach((n) => voces.delete(n)) }
+        mejorasNoAplicadas = lista.map((x) => ({ ...x, motivo: 'confundió al oyente: revertida' }))
+      } else if (O3) { O = O3 }
+    }
   }
 }
 
@@ -464,11 +532,11 @@ return {
   faltas_pendientes: critica.faltas.filter((x) => x.gravedad === 'bloquea'),
   mejoras: critica.faltas.filter((x) => x.gravedad === 'mejora'),
   mejoras_no_aplicadas: mejorasNoAplicadas,
-  encuadre: ENC ? { pregunta: ENC.pregunta, arco: ENC.arco, capitulos: ENC.capitulos, paleta: ENC.paleta, justicia: ENC.justicia, revelaciones: ENC.revelaciones } : null,
-  verificacion: ver.map((v) => ({ eje: v.eje, confirmados: v.confirmados, en_disputa: v.en_disputa, descartados: v.descartados, fotos: v.fotos, protagonista: v.protagonista || 0, casos: v.casos || 0 })),
+  encuadre: ENC ? { pregunta: ENC.pregunta, arco: ENC.arco, actos: ENC.actos, espina: ENC.espina, hilos: ENC.hilos, personajes: ENC.personajes, paleta: ENC.paleta, justicia: ENC.justicia, revelaciones: ENC.revelaciones } : null,
+  verificacion: ver.map((v) => ({ eje: v.eje, confirmados: v.confirmados, una_fuente: v.una_fuente || 0, en_disputa: v.en_disputa, descartados: v.descartados, fotos: v.fotos, protagonista: v.protagonista || 0, casos: v.casos || 0 })),
   gancho: { ganador: SEL.ganador, segundo: SEL.segundo, por_que: SEL.por_que },
-  guion: { escenas: G.escenas, capitulos: G.capitulos, estimado_s: G.estimado_s, explica_sin_animacion: G.explica_sin_animacion },
-  retoque: RETOQUE, voces_cambiadas: [...voces].sort((a, b) => a - b),
+  guion: { escenas: G.escenas, actos: G.actos, rotulos: G.rotulos, palabras: G.palabras, segun: G.segun, secuencias: G.secuencias || 0, hilos_pagados: G.hilos_pagados, hilos_sin_respuesta: G.hilos_sin_respuesta, estimado_s: G.estimado_s, explica_sin_animacion: G.explica_sin_animacion },
+  desde: DESDE, retoque: RETOQUE, voces_cambiadas: [...voces].sort((a, b) => a - b),
   oyente: O ? { de_que: O.de_que, promesa: O.promesa, confusiones: O.confusiones.length, saltos: O.saltos.length, repeticiones: O.repeticiones, pregunta_sin_responder: O.pregunta_sin_responder } : null,
   animaciones, avisos: AVISOS_WF,
 }

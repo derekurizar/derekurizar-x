@@ -62,7 +62,11 @@ SHORTS_MAX_S, SHORTS_TITULO = 180, 100
 VELOCIDAD = 1.1      # la voz se acelera con atempo (sin cambiar el tono); los tiempos de Scribe se dividen igual
 CPS = 15.5           # caracteres de voz por segundo ya acelerada (medido en la prueba del hilo de crimen)
 COLA = 0.7           # aire tras la última palabra de cada escena
+COLA_SEGUIDA = 0.3   # (= TRANSICION) dentro de una secuencia de voz: la voz de la escena siguiente arranca donde acabó esta
 COLA_CIERRE = 2.8    # «Sígueme en» se queda en pantalla tras la pregunta final
+# secuencias de voz (/historia): grupos de 2–SECUENCIA_MAX escenas consecutivas cuya voz se genera en UN nodo TTS (la
+# entonación no se reinicia en cada escena) y se corta después por escena con los tiempos de Scribe (`partir`)
+SECUENCIA_MAX, SECUENCIA_CARACTERES = 5, 1200
 # «En Guatemala» ya no se antepone a la voz del gancho (2026-10-23, decisión del usuario): abrir con contexto frena
 # menos; «Guatemala» se dice o se lee en los primeros 6 s donde funcione mejor (R6, referencias/ganchos.md)
 ANIO = int(os.environ.get("HILOS_ANIO") or datetime.date.today().year)   # R7: «hoy» solo con datos de este año
@@ -232,6 +236,9 @@ ICONO_TIPOS = ("gancho", "golpe", "definicion")        # escenas que admiten `ic
 # constructor de tiempos de cada tipo propio, f(S, e, ps, pal, fin_voz, dur, g) → (eventos, efectos) o None para seguir
 # con el de aquí, y su transición de entrada (clave de TRANSICIONES); SIN_HUECO = tipos sin el hueco estimado de V9
 CONSTRUCTORES, TRANSICION_DE = {}, {}
+# tras el constructor de CUALQUIER escena: f(S, e, ps, pal, fin_voz, dur, g, ev, sfx) → (ev, sfx) (historia: rótulo de
+# acto, presupuesto de efectos y transición dentro de una secuencia)
+POST_CONSTRUCTORES = []
 SIN_HUECO = ("cierre", "explica")
 
 
@@ -325,6 +332,7 @@ TRANSICIONES = {"primera": "smoothleft",  # del gancho a la primera tarjeta (zoo
                 "completa": "circleopen", # entrada a una escena a pantalla completa (mapa, ranking, escala, tiempo)
                 "giro": "slideup",        # la escena del giro (manda sobre el tipo)
                 "cierre": "fade",         # entrada al cierre
+                "seguida": "fade",        # dentro de una secuencia de voz (historia): corte suave, la voz sigue
                 "bucle": "fade"}          # el cuadro final en bucle
 RE_DE_CADA = re.compile(r"\b(\d+)\s+de\s+cada\s+(\d+)\b")
 TRANSICION = 0.3     # deslizamiento entre escenas (xfade); los primeros 0.3 s de cada escena quedan bajo la transición
@@ -1470,6 +1478,28 @@ def validar_estructura(g, st, dur, tarjetas):
         vistos.add(n)
     if not (g.get("contexto_superior") or "").strip() or len(g.get("contexto_superior", "")) > 40:
         f.append("V1 «contexto_superior» vacío o de más de 40 caracteres")
+    # secuencias de voz (forma): listas de 2–SECUENCIA_MAX escenas consecutivas, disjuntas, sin la escena 1
+    secs = g.get("secuencias")
+    if secs is not None:
+        vistas = set()
+        if not isinstance(secs, list):
+            f.append("V9 «secuencias»: lista de grupos de escenas ([[2,3],[4,5,6]…])")
+            secs = []
+        for k, grupo in enumerate(secs, 1):
+            if not isinstance(grupo, list) or not all(isinstance(n, int) and not isinstance(n, bool) for n in grupo):
+                f.append("V9 secuencia %d: lista de números de escena" % k)
+                continue
+            if not 2 <= len(grupo) <= SECUENCIA_MAX:
+                f.append("V9 secuencia %d: %d escenas; van 2–%d" % (k, len(grupo), SECUENCIA_MAX))
+            if grupo != list(range(grupo[0], grupo[0] + len(grupo))) if grupo else False:
+                f.append("V9 secuencia %d: escenas consecutivas (%s)" % (k, grupo))
+            if any(n < 2 or n > len(escenas) for n in grupo):
+                f.append("V9 secuencia %d: escenas entre 2 y %d (el gancho y el cierre van solos)" % (k, len(escenas)))
+            if vistas & set(grupo):
+                f.append("V9 secuencia %d: escenas repetidas en otra secuencia" % k)
+            vistas |= set(grupo)
+    if g.get("voz_continua") and not secs:
+        f.append("V9 voz_continua exige «secuencias»")
     cierre = g.get("cierre") or {}
     for k in ("texto", "tipo", "forma", "final"):
         if not (cierre.get(k) or "").strip():
@@ -1647,6 +1677,8 @@ def cmd_guion(a):
     # V2, V3, V4 y ritmo por escena (escenas + cierre)
     valores, titulares, cifras = valores_respaldo(st["hilo"])
     loc, avisos, n_pausas, numeros_gancho = [], [], 0, []
+    secuencia_de = {n: k for k, grupo in enumerate(g.get("secuencias") or [] if isinstance(g.get("secuencias"), list) else [], 1)
+                    for n in (grupo if isinstance(grupo, list) else [])}
     for i, e in enumerate(escenas + [{"tipo": "cierre", "tuit": None, "texto": ct}], 1):
         tipo = e.get("tipo") if e.get("tipo") in TIPOS else "cierre"
         texto = e.get("texto", "")
@@ -1783,7 +1815,10 @@ def cmd_guion(a):
             fallas.append("V9 escena %d: %.1f s sin evento entre «…%s» y «%s…» (máximo %.0f s): acorta o mueve la cifra"
                           % (i, hueco, antes, despues, RITMO_MAX_S))
         plantilla = tarjetas[e["tuit"]]["plantilla"] if tipo in CON_TUIT and e.get("tuit") in tarjetas else tipo
+        cola = cola_de(tipo, secuencia_de.get(i), secuencia_de.get(i + 1))
         loc.append({"n": i, "tipo": tipo, "tuit": e.get("tuit") if tipo in CON_TUIT else None, "plantilla": plantilla,
+                    "acto": e.get("acto") if tipo != "cierre" else None, "secuencia": secuencia_de.get(i), "cola": cola,
+                    "foco": e.get("foco") if tipo in CON_TUIT else None,
                     "enlace": e.get("enlace") if i >= 2 else None, "golpe": e.get("golpe") if tipo in CON_TUIT or tipo == "escala" else None,
                     "top": e.get("top", RANKING_TOP_DEFECTO) if tipo == "ranking" else None, "orden": e.get("orden") if tipo == "ranking" else None,
                     "escala": {"de_cada": e.get("de_cada"), "etiqueta": (e.get("etiqueta") or "").strip()} if tipo == "escala" else None,
@@ -1798,7 +1833,7 @@ def cmd_guion(a):
                     "icono": e.get("icono") if tipo in ICONO_TIPOS else None,
                     "calculo": e.get("calculo"), "valor_calculo": valor_calculo,
                     "pantalla": pantalla, "voz": voz, "prompt": prompt, "segmentos": segs,
-                    "estimado_s": round(len(voz) / CPS + (COLA_CIERRE if tipo == "cierre" else COLA), 2),
+                    "estimado_s": round(len(voz) / CPS + cola, 2),
                     "hueco_max_s": round(hueco, 2)})
     for etiqueta, txt in (("resumen", " ".join(cierre.get("resumen") or [])),
                           ("caption", json.dumps(g.get("caption") or {}, ensure_ascii=False))):
@@ -1811,9 +1846,22 @@ def cmd_guion(a):
     fallas.extend(reglas_cierre(cierre, st, hilo, st["tarjetas"], numeros_gancho, cifras))
     if n_pausas > PAUSAS_MAX_VIDEO:
         fallas.append("V9 %d pausas en el video (máximo %d: el exceso de <break> ensucia la voz)" % (n_pausas, PAUSAS_MAX_VIDEO))
+    # las secuencias de voz: un prompt por grupo (las voces seguidas, cada una con su puntuación final)
+    secuencias, por_sec = [], {}
+    for x in loc:
+        if x.get("secuencia"):
+            por_sec.setdefault(x["secuencia"], []).append(x)
+    for k in sorted(por_sec):
+        xs = por_sec[k]
+        prompt_sec = " ".join(p if p.rstrip().endswith((".", "?", "!", "…", ">")) else p.rstrip() + "." for p in (x.get("prompt") or x["voz"] for x in xs))
+        car = sum(len(x["voz"]) for x in xs)
+        if car > SECUENCIA_CARACTERES:
+            fallas.append("V9 secuencia %d (escenas %s): %d caracteres de voz; van ≤ %d por nodo (parte la secuencia)"
+                          % (k, ", ".join(str(x["n"]) for x in xs), car, SECUENCIA_CARACTERES))
+        secuencias.append({"k": k, "escenas": [x["n"] for x in xs], "prompt": prompt_sec, "caracteres": car})
     # V4 presupuesto
     chars = sum(len(x["voz"]) for x in loc)
-    estimado = chars / CPS + COLA * (len(loc) - 1) + COLA_CIERRE
+    estimado = chars / CPS + sum(x["cola"] for x in loc)
     tol = dur.get("tol", TOLERANCIA)
     lo, hi = dur["s"] * (1 - tol), dur["s"] * (1 + tol)
     if not lo <= estimado <= hi:
@@ -1832,9 +1880,21 @@ def cmd_guion(a):
         return 1
     escribir(os.path.join(trabajo, "locucion.json"),
              {"voz": VOZ, "caracteres": chars, "estimado_s": round(estimado, 1), "duracion": st["duracion"],
-              "objetivo_s": dur["s"], "n_escenas": len(escenas), "promesa": g.get("promesa"), "escenas": loc})
-    print("→ %s · V1–V5, V9 ok" % rel(os.path.join(trabajo, "locucion.json")))
+              "objetivo_s": dur["s"], "n_escenas": len(escenas), "promesa": g.get("promesa"),
+              "voz_continua": bool(g.get("voz_continua")) and bool(secuencias), "secuencias": secuencias, "escenas": loc})
+    print("→ %s · V1–V5, V9 ok%s" % (rel(os.path.join(trabajo, "locucion.json")),
+                                     " · voz de corrido en %d secuencia(s)" % len(secuencias) if g.get("voz_continua") and secuencias else ""))
     return 0
+
+
+def cola_de(tipo, secuencia, secuencia_siguiente):
+    """El aire tras la voz de una escena: el del cierre; dentro de una secuencia de voz (la siguiente es de la misma),
+    solo la transición; si no, COLA."""
+    if tipo == "cierre":
+        return COLA_CIERRE
+    if secuencia and secuencia == secuencia_siguiente:
+        return COLA_SEGUIDA
+    return COLA
 
 
 # ---------- ganchos (candidatos del agente video-gancho → elección del crítico → escena 1) ----------
@@ -2031,23 +2091,47 @@ def nodos_pendientes(trabajo, loc):
 
 
 def cmd_voz(a):
-    """El JSON con la voz y el prompt de cada nodo TTS; --pendientes (solo lo que cambió o falta: las retomas) y --solo."""
+    """El JSON con la voz y el prompt de cada nodo TTS: con voz de corrido (locucion.voz_continua), un nodo por secuencia
+    («s3», sus escenas seguidas) más las escenas sueltas; --pendientes (solo lo que cambió o falta: las retomas; una
+    secuencia entera si cambió una de sus escenas), --sueltas (las escenas pendientes como nodos propios, retoma barata
+    con costura) y --solo."""
     trabajo = os.path.abspath(a.trabajo)
     loc = leer(os.path.join(trabajo, "locucion.json"))
     escenas = loc["escenas"]
+    sueltas = bool(getattr(a, "sueltas", False) or getattr(a, "solo", None))
     if getattr(a, "solo", None):
         solo = {int(x) for x in a.solo.split(",")}
         escenas = [e for e in escenas if e["n"] in solo]
-    if getattr(a, "pendientes", False):
-        pend = set(nodos_pendientes(trabajo, loc))
+    pend = set(nodos_pendientes(trabajo, loc)) if getattr(a, "pendientes", False) else None
+    if pend is not None:
         escenas = [e for e in escenas if e["n"] in pend]
-        print("%d escena(s) sin cambio; %d por generar (≈ %d créditos)" % (len(loc["escenas"]) - len(pend), len(escenas),
-              sum(len(e["voz"]) for e in escenas)), file=sys.stderr)   # a stderr: el JSON de stdout sigue limpio
-    parcial = bool(getattr(a, "solo", None) or getattr(a, "pendientes", False))
+    parcial = pend is not None or bool(getattr(a, "solo", None))
+    nodos = []
+    if loc.get("voz_continua") and not sueltas:
+        en_sec = {}
+        for s in loc.get("secuencias") or []:
+            for n in s["escenas"]:
+                en_sec[n] = s
+        vistas = set()
+        for e in escenas:
+            s = en_sec.get(e["n"])
+            if s is None:
+                nodos.append({"n": e["n"], "prompt": e.get("prompt") or e["voz"]})
+            elif s["k"] not in vistas:
+                vistas.add(s["k"])
+                nodos.append({"n": "s%d" % s["k"], "escenas": s["escenas"], "prompt": s["prompt"], "caracteres": s["caracteres"]})
+                if pend is not None:
+                    cambiadas = [n for n in s["escenas"] if n in pend]
+                    print("secuencia s%d (E%d–E%d): ≈ %d créditos; cambió E%s" % (s["k"], s["escenas"][0], s["escenas"][-1], s["caracteres"],
+                                                                                 ", E".join(map(str, cambiadas))), file=sys.stderr)
+    else:
+        nodos = [{"n": e["n"], "prompt": e.get("prompt") or e["voz"]} for e in escenas]
+    creditos = sum(x.get("caracteres") or len(x["prompt"]) for x in nodos) if parcial else loc["caracteres"]
+    if pend is not None:
+        print("%d escena(s) sin cambio; %d por generar en %d nodo(s) (≈ %d créditos)" % (len(loc["escenas"]) - len(pend), len(escenas),
+              len(nodos), creditos), file=sys.stderr)   # a stderr: el JSON de stdout sigue limpio
     print(json.dumps({"voz": loc["voz"], "model_parameters": {"language_code": loc["voz"]["idioma"]},
-                      "caracteres": sum(len(e["voz"]) for e in escenas) if parcial else loc["caracteres"],
-                      "nodos": [{"n": e["n"], "prompt": e.get("prompt") or e["voz"]} for e in escenas]},
-                     ensure_ascii=False, indent=1))
+                      "caracteres": creditos, "nodos": nodos}, ensure_ascii=False, indent=1))
     return 0
 
 
@@ -2088,7 +2172,16 @@ def descargar_estado(trabajo, archivos):
     archivos). Los créditos cobrados van a audio/creditos.json por id de generación: una retoma suma, repetir el
     mismo archivo no."""
     loc = leer(os.path.join(trabajo, "locucion.json"))
+    # cada voz se reconoce por su prompt: una escena (n) o una secuencia («sec_K», las voces seguidas)
     por_voz = {texto_llano(e["voz"]): e["n"] for e in loc["escenas"]}
+    secs = {s["k"]: s for s in loc.get("secuencias") or []}
+    por_escena = {e["n"]: e for e in loc["escenas"]}
+    largo = {}   # caracteres de voz por nodo, para deshacer un prefijo ambiguo con la duración del audio
+    for s in secs.values():
+        por_voz[texto_llano(" ".join(por_escena[n]["voz"] for n in s["escenas"]))] = "sec_%d" % s["k"]
+        largo["sec_%d" % s["k"]] = s["caracteres"]
+    for e in loc["escenas"]:
+        largo[e["n"]] = len(e["voz"])
     gens, trans, prompt_media = [], [], {}
     for f in archivos:
         d = leer(f)
@@ -2098,9 +2191,10 @@ def descargar_estado(trabajo, archivos):
             if m.get("generation_id") and m.get("prompt"):
                 prompt_media[m["generation_id"]] = m["prompt"]
 
-    def escena_por_prompt(p):
+    def escena_por_prompt(p, dur_s=None):
         """El MCP recorta `generations[].prompt` a 200 caracteres (`media[].prompt` viene entero): si no casa entero,
-        vale como prefijo cuando solo una escena empieza así."""
+        vale como prefijo cuando solo una escena empieza así; si una escena y su secuencia empiezan igual, decide la
+        duración del audio (la voz cruda va a ≈ CPS/VELOCIDAD caracteres por segundo)."""
         if not p:
             return None
         ll = texto_llano(p)
@@ -2110,6 +2204,8 @@ def descargar_estado(trabajo, archivos):
             hits = [n for v, n in por_voz.items() if v.startswith(ll)]
             if len(hits) == 1:
                 return hits[0]
+            if hits and dur_s:
+                return min(hits, key=lambda n: abs(dur_s - largo[n] / (CPS / VELOCIDAD)))
         return None
     ruta_cred = os.path.join(trabajo, "audio", "creditos.json")
     cred = leer(ruta_cred) if os.path.exists(ruta_cred) else {"generaciones": {}, "total": 0}
@@ -2117,11 +2213,11 @@ def descargar_estado(trabajo, archivos):
     for g in gens:
         if g.get("modality") != "audio" or g.get("status") != "completed" or not g.get("content_url"):
             continue
-        n = escena_por_prompt(prompt_media.get(g.get("id")))
+        n = escena_por_prompt(prompt_media.get(g.get("id")), g.get("duration_secs"))
         if n is None:
-            n = escena_por_prompt(g.get("prompt"))
+            n = escena_por_prompt(g.get("prompt"), g.get("duration_secs"))
         if n is None:
-            print("AVISO generación %s: su prompt no es la voz de ninguna escena" % g.get("id"))
+            print("AVISO generación %s: su prompt no es la voz de ninguna escena ni secuencia" % g.get("id"))
             continue
         escena_de_gen[g.get("id")] = n
         if n not in voces or (g.get("created_at_unix_ms") or 0) >= (voces[n].get("created_at_unix_ms") or 0):
@@ -2135,13 +2231,21 @@ def descargar_estado(trabajo, archivos):
             print("AVISO transcripción %s: no sé de qué escena es" % tr.get("generation_id"))
             continue
         palabras[n] = tr["words_download_url"]
-    for n in sorted(voces):
+    orden = lambda n: (0, n) if isinstance(n, int) else (1, int(n[4:]))  # noqa: E731
+    for n in sorted(voces, key=orden):
         bajar_voz(trabajo, n, voces[n]["content_url"])
         c = (voces[n].get("price") or {}).get("credits")
         if c is not None:
             cred["generaciones"][voces[n].get("id")] = {"n": n, "creditos": round(c, 2)}
-    for n in sorted(palabras):
+    for n in sorted(palabras, key=orden):
         bajar_palabras(trabajo, n, palabras[n])
+    for n in sorted(set(voces) | set(palabras), key=orden):   # las secuencias se cortan en sus escenas
+        if isinstance(n, str) and n.startswith("sec_"):
+            k = int(n[4:])
+            if os.path.exists(os.path.join(trabajo, "audio", "voz_sec_%d.mp3" % k)) and os.path.exists(os.path.join(trabajo, "audio", "palabras_sec_%d.json" % k)):
+                rc = partir_secuencia(trabajo, k, loc)
+                if rc:
+                    return rc
     if cred["generaciones"]:
         cred["total"] = round(sum(x["creditos"] for x in cred["generaciones"].values()), 2)
         escribir(ruta_cred, cred)
@@ -2164,25 +2268,115 @@ def cmd_descargar(a):
     return 0
 
 
-def cmd_voz_falsa(a):
-    """Fixture: un tono corto por palabra (para que el ducking y los efectos se prueben) con la duración que tendría
-    la voz, y palabras repartidas por longitud."""
-    trabajo = os.path.abspath(a.trabajo)
-    loc = leer(os.path.join(trabajo, "locucion.json"))
+def tono_falso(textos, salida_mp3, salida_json, pausa=0.0):
+    """Fixture: un tono corto por palabra (para que el ducking y los efectos se prueben) con la duración que tendría la
+    voz, y palabras repartidas por longitud; varios textos seguidos (una secuencia) llevan `pausa` s entre ellos."""
     cps_crudo = CPS / VELOCIDAD
-    for e in loc["escenas"]:
-        palabras_ = e["voz"].split()
-        total = len(e["voz"]) / cps_crudo
-        t, ws = 0.0, []
-        for w in palabras_:
+    t, ws = 0.0, []
+    for j, texto in enumerate(textos):
+        if j:
+            t += pausa
+        for w in texto.split():
             d = (len(w) + 1) / cps_crudo
             ws.append({"text": w, "start": round(t, 3), "end": round(t + d * 0.85, 3)})
             t += d
-        puerta = "+".join("between(t,%.3f,%.3f)" % (w["start"], w["end"]) for w in ws)
-        ff("-f", "lavfi", "-i", "aevalsrc=exprs='0.28*sin(2*PI*165*t)*(%s)':s=44100:d=%.3f" % (puerta, total),
-           "-c:a", "libmp3lame", "-b:a", "64k", os.path.join(trabajo, "audio", "voz_%d.mp3" % e["n"]))
-        escribir(os.path.join(trabajo, "audio", "palabras_%d.json" % e["n"]), ws)
-    print("voz falsa: %d escenas" % len(loc["escenas"]))
+    puerta = "+".join("between(t,%.3f,%.3f)" % (w["start"], w["end"]) for w in ws)
+    ff("-f", "lavfi", "-i", "aevalsrc=exprs='0.28*sin(2*PI*165*t)*(%s)':s=44100:d=%.3f" % (puerta, t),
+       "-c:a", "libmp3lame", "-b:a", "64k", salida_mp3)
+    escribir(salida_json, ws)
+
+
+def cmd_voz_falsa(a):
+    """Fixture: voz falsa por escena; con voz de corrido (locucion.voz_continua), por secuencia y luego `partir` la corta
+    en sus escenas: la maqueta ejercita el corte sin créditos."""
+    trabajo = os.path.abspath(a.trabajo)
+    loc = leer(os.path.join(trabajo, "locucion.json"))
+    audio = os.path.join(trabajo, "audio")
+    en_sec = {n for s in (loc.get("secuencias") or []) if loc.get("voz_continua") for n in s["escenas"]}
+    for e in loc["escenas"]:
+        if e["n"] in en_sec:
+            continue
+        tono_falso([e["voz"]], os.path.join(audio, "voz_%d.mp3" % e["n"]), os.path.join(audio, "palabras_%d.json" % e["n"]))
+    por_escena = {e["n"]: e for e in loc["escenas"]}
+    for s in (loc.get("secuencias") or []) if loc.get("voz_continua") else []:
+        tono_falso([por_escena[n]["voz"] for n in s["escenas"]], os.path.join(audio, "voz_sec_%d.mp3" % s["k"]),
+                   os.path.join(audio, "palabras_sec_%d.json" % s["k"]), pausa=0.35)
+        rc = partir_secuencia(trabajo, s["k"], loc)
+        if rc:
+            return rc
+    print("voz falsa: %d escenas%s" % (len(loc["escenas"]), " (%d secuencia(s) de corrido, cortadas)" % len(loc.get("secuencias") or []) if en_sec else ""))
+    return 0
+
+
+def partir_secuencia(trabajo, k, loc):
+    """Corta la voz de una secuencia (audio/voz_sec_K.mp3 + palabras_sec_K.json de Scribe) en voz_N.mp3 y palabras_N.json
+    por escena: asigna las palabras de Scribe a cada escena en orden (criterio de V6; repara un token fundido o partido en
+    la frontera) y corta a mitad del silencio entre la última palabra de una escena y la primera de la siguiente, con un
+    wav intermedio (el corte exacto, sin cuadros de mp3). → 0 ok · 1 falla V6 (rehaz la secuencia o `voz --sueltas`)."""
+    audio = os.path.join(trabajo, "audio")
+    s = next((x for x in loc.get("secuencias") or [] if x["k"] == k), None)
+    if not s:
+        return falla("locucion.json no tiene la secuencia %d" % k)
+    por_escena = {e["n"]: e for e in loc["escenas"]}
+    ws = sin_etiquetas(leer(os.path.join(audio, "palabras_sec_%d.json" % k)))
+    # las palabras del guion de toda la secuencia, en orden, con su escena: un token fundido o partido por Scribe puede
+    # caer justo en la frontera entre dos escenas
+    toks = [(n, tok) for n in s["escenas"] for tok in re.findall(r"\S+", por_escena[n]["voz"])]
+    mios, j = {n: [] for n in s["escenas"]}, 0
+    for i, (n, tok) in enumerate(toks):
+        if j >= len(ws):
+            return falla("V6 secuencia s%d (E%d): Scribe se quedó sin palabras en «%s» · rehaz la secuencia (o voz --sueltas)" % (k, n, tok))
+        a, b = _norm(tok), _norm(ws[j]["text"])
+        if a == b:
+            mios[n].append(ws[j])
+            j += 1
+        elif i + 1 < len(toks) and b == a + _norm(toks[i + 1][1]):   # Scribe fundió dos palabras («residuales.Según»)
+            w, p = ws[j], len(a) / max(1, len(b))
+            corte = w["start"] + (w["end"] - w["start"]) * p
+            mios[n].append({"text": tok, "start": w["start"], "end": round(corte, 3)})
+            ws[j] = {"text": toks[i + 1][1], "start": round(corte, 3), "end": w["end"]}
+        elif j + 1 < len(ws) and a == b + _norm(ws[j + 1]["text"]):   # Scribe partió una palabra
+            mios[n].append({"text": tok, "start": ws[j]["start"], "end": ws[j + 1]["end"]})
+            j += 2
+        else:
+            return falla("V6 secuencia s%d (E%d): «%s» en el guion, «%s» en Scribe (t=%.2f) · rehaz la secuencia (o voz --sueltas)"
+                         % (k, n, tok, ws[j]["text"], ws[j]["start"]))
+    if j < len(ws):
+        return falla("V6 secuencia s%d: Scribe oyó %d palabra(s) de más al final («%s»)" % (k, len(ws) - j, ws[j]["text"]))
+    escenas_ws = [(n, mios[n]) for n in s["escenas"]]
+    if any(not m for _, m in escenas_ws):
+        return falla("V6 secuencia s%d: una escena quedó sin palabras" % k)
+    src = os.path.join(audio, "voz_sec_%d.mp3" % k)
+    wav = os.path.join(audio, "voz_sec_%d.wav" % k)
+    ff("-i", src, "-ar", "44100", "-ac", "1", wav)
+    total = ffprobe_dur(wav)
+    cortes = [0.0]
+    for (_, a_ws), (_, b_ws) in zip(escenas_ws, escenas_ws[1:]):
+        cortes.append(round((a_ws[-1]["end"] + b_ws[0]["start"]) / 2, 3))
+    cortes.append(round(total, 3))
+    for (n, mios), a, b in zip(escenas_ws, cortes, cortes[1:]):
+        ff("-i", wav, "-af", "atrim=start=%.3f:end=%.3f,asetpts=PTS-STARTPTS,afade=t=in:st=0:d=0.004,afade=t=out:st=%.3f:d=0.004" % (a, b, max(0.0, b - a - 0.004)),
+           "-c:a", "libmp3lame", "-b:a", "192k", os.path.join(audio, "voz_%d.mp3" % n))
+        escribir(os.path.join(audio, "palabras_%d.json" % n), [{"text": w["text"], "start": round(w["start"] - a, 3), "end": round(w["end"] - a, 3)} for w in mios])
+    ruta = os.path.join(audio, "secuencias.json")
+    reg = leer(ruta) if os.path.exists(ruta) else {}
+    reg[str(k)] = {"escenas": s["escenas"], "cortes_s": cortes}
+    escribir(ruta, reg)
+    print("secuencia s%d → %s (cortes en %s s)" % (k, ", ".join("voz_%d.mp3" % n for n in s["escenas"]), ", ".join("%.2f" % c for c in cortes[1:-1])))
+    return 0
+
+
+def cmd_partir(a):
+    """Rehace el corte de una secuencia (o de todas) sin volver a bajar nada."""
+    trabajo = os.path.abspath(a.trabajo)
+    loc = leer(os.path.join(trabajo, "locucion.json"))
+    ks = [a.secuencia] if a.secuencia else [s["k"] for s in loc.get("secuencias") or []]
+    for k in ks:
+        if not os.path.exists(os.path.join(trabajo, "audio", "voz_sec_%d.mp3" % k)):
+            return falla("falta audio/voz_sec_%d.mp3" % k)
+        rc = partir_secuencia(trabajo, k, loc)
+        if rc:
+            return rc
     return 0
 
 
@@ -2378,7 +2572,10 @@ def cmd_tiempos(a):
             return falla("V6 %s · rehaz la voz de esa escena" % ex)
         cierre = tipo == "cierre"
         fin_voz = ps[-1]["end"]
-        dur = round(ffprobe_dur(dst) + (COLA_CIERRE if cierre else COLA), 3)
+        k_e = loc["escenas"].index(e)
+        sec = e.get("secuencia")
+        cola = e.get("cola") if isinstance(e.get("cola"), (int, float)) else (COLA_CIERRE if cierre else COLA)
+        dur = round(ffprobe_dur(dst) + cola, 3)
         pal = []
         for k, p in enumerate(ps):
             w = {"text": p["text"], "start": round(p["start"], 3), "end": round(p["end"], 3)}
@@ -2389,7 +2586,11 @@ def cmd_tiempos(a):
                     w["clave"] = clave(valor_de(seg["p"]))
             pal.append(w)
         S = {"n": n, "tipo": tipo, "tuit": e.get("tuit"), "plantilla": e["plantilla"], "enlace": e.get("enlace"),
-             "icono": e.get("icono"), "dur": dur, "fin_voz": round(fin_voz, 3), "palabras": pal, "arriba": None}
+             "icono": e.get("icono"), "dur": dur, "fin_voz": round(fin_voz, 3), "palabras": pal, "arriba": None,
+             "acto": e.get("acto"), "secuencia": sec, "cola": cola,
+             # seguida: la anterior es de la misma secuencia (la voz viene de corrido); sigue: la siguiente lo es
+             "seguida": bool(sec) and k_e > 0 and loc["escenas"][k_e - 1].get("secuencia") == sec,
+             "sigue": bool(sec) and k_e + 1 < len(loc["escenas"]) and loc["escenas"][k_e + 1].get("secuencia") == sec}
         ev, sfx = [], []
         propio = CONSTRUCTORES.get(tipo)
         hecho = propio(S, e, ps, pal, fin_voz, dur, g) if propio else None
@@ -2532,7 +2733,8 @@ def cmd_tiempos(a):
                 for esc in (1e3, 1e6):
                     con_alias.setdefault(clave(float(k) * esc), w)
             S["T"] = {"tit": round(tit, 3), "ini": round(ini, 3), "valores": con_alias, "anios": anios,
-                      "nota": round(min(max(fin_vals + 0.4, fin_oracion), dur - 1.2), 3), "linea_fin": round(fin_voz - 1.0, 3), "foco": True}
+                      "nota": round(min(max(fin_vals + 0.4, fin_oracion), dur - 1.2), 3), "linea_fin": round(fin_voz - 1.0, 3),
+                      "foco": e.get("foco") is not False}   # foco: false en el guion = sin zoom a la cifra
             ev = ([(0.0, "golpe_arriba")] if golpe else []) + [(tit, "entra")]
             sfx = [(tit, "whoosh")]
             ultimo_tic = -9
@@ -2628,6 +2830,8 @@ def cmd_tiempos(a):
             "giro" if n == giro_n else TRANSICION_DE[tipo] if tipo in TRANSICION_DE else "cierre" if tipo == "cierre" else "primera" if len(escenas) == 1 else
             "texto" if tipo in ("golpe", "definicion") else "adivina" if tipo == "adivina" else
             "completa" if tipo in PANTALLA_COMPLETA + ("explica",) else "tarjeta"]
+        for post in POST_CONSTRUCTORES:
+            ev, sfx = post(S, e, ps, pal, fin_voz, dur, g, ev, sfx)
         ev.append((dur, "fin"))
         S["eventos"] = [{"t": round(t, 3), "tipo": k} for t, k in sorted(ev, key=lambda x: x[0])]
         S["sfx"] = [{"t": round(t, 3), "id": k} for t, k in sorted(sfx, key=lambda x: x[0])]
@@ -2951,7 +3155,7 @@ def cuadros_de(e):
         ts_ = [(primero("pildora") or ultimo("punto") or e["dur"] * 0.6) + 0.5]
     elif tipo == "escala":
         ts_ = [(primero("destacadas") or e["dur"] * 0.5) + 1.0]
-    elif tipo in ("titular", "noticia"):   # /noticias: el titular entero, la cifra contada (o la fuente)
+    elif tipo in ("titular", "noticia", "foto"):   # /noticias y la foto de /historia: el titular entero, la cifra contada (o la fuente)
         ts_ = [(ultimo("titular") or 0.8) + 0.4] + ([primero("cifra") + 1.1] if primero("cifra") is not None else
                                                     [(primero("fuente") or e["dur"] * 0.6) + 0.5])
     elif tipo == "explica":
@@ -2960,6 +3164,9 @@ def cuadros_de(e):
     else:
         f, c = primero("foco"), ultimo("conteo_fin")
         ts_ = ([f + 0.6] if f is not None else []) + [(c + 0.3) if c is not None else e["dur"] * 0.5]
+    rot = primero("acto_cuenta_fin")   # el rótulo de acto (historia): el año ya contado, el título entero
+    if rot is not None:
+        ts_.insert(0, rot + 0.3)
     ts_.append(e["dur"] - 0.35)
     return [min(t, e["dur"] - 0.35) for t in ts_]
 
@@ -3316,9 +3523,13 @@ def main():
     p = sub.add_parser("voz", help="JSON con la voz y el prompt de cada nodo TTS")
     p.add_argument("trabajo")
     p.add_argument("--pendientes", action="store_true", help="solo las escenas sin audio o cuya voz cambió desde la última descarga (retomas)")
+    p.add_argument("--sueltas", action="store_true", help="con voz de corrido: las escenas pendientes como nodos propios (sin regrabar la secuencia)")
     p.add_argument("--solo", help="escenas, p. ej. 2,5")
     for nombre in ("voz-falsa", "tiempos"):
         sub.add_parser(nombre).add_argument("trabajo")
+    p = sub.add_parser("partir", help="corta la voz de una secuencia (audio/voz_sec_K.mp3 + Scribe) en sus escenas")
+    p.add_argument("trabajo")
+    p.add_argument("--secuencia", type=int, help="solo esa (por defecto todas)")
     p = sub.add_parser("revisar")
     p.add_argument("trabajo")
     p.add_argument("--formato", choices=("9:16", "4:5"), default="9:16")
@@ -3355,7 +3566,7 @@ def main():
     if a.cmd == "ganchos" and a.check:
         a.usar = None
     return {"preparar": cmd_preparar, "ganchos": cmd_ganchos, "guion": cmd_guion, "variante": cmd_variante, "voz": cmd_voz, "descargar": cmd_descargar,
-            "voz-falsa": cmd_voz_falsa, "tiempos": cmd_tiempos, "grabar": cmd_grabar, "montar": cmd_montar,
+            "voz-falsa": cmd_voz_falsa, "partir": cmd_partir, "tiempos": cmd_tiempos, "grabar": cmd_grabar, "montar": cmd_montar,
             "revisar": cmd_revisar, "entregar": cmd_entregar, "musica": cmd_musica, "escuchar": cmd_escuchar,
             "whisper": cmd_whisper}[a.cmd](a)
 

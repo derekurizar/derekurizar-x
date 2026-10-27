@@ -11,7 +11,8 @@ catálogos fijos, barra de progreso, subtítulos, zona segura (V13), 9:16 + 4:5,
 ```
 preparar (historia.py: TRABAJO = sesiones/historia-<slug>/, paleta provisional y música)
 → Workflow historia [historia-editor → encuadre.json (pregunta, protagonista, revelaciones, fotos_clave, arco,
-                       3–5 capítulos con su pregunta, 2–3 ejes, paleta, sensibles)
+                       tres actos y la espina (detonante, punto medio, clímax, resolución), 2–6 hilos, personajes
+                       con su presentación, 2–5 periodos que reparten 2–3 ejes, paleta, sensibles)
                      → historia-investigador por eje (en paralelo) → hallazgos_<eje>.json
                      ⇢ historia-verificador por eje (pipeline: verifica en cuanto su investigador termina): segunda
                        fuente por hecho, fechas en conflicto, estado actual de los casos, fotos con licencia
@@ -21,15 +22,20 @@ preparar (historia.py: TRABAJO = sesiones/historia-<slug>/, paleta provisional y
                      → consolidar → historia.json (cronología) + base/ (hilo.json, datos.json) + la paleta del encuadre
                      → video-gancho en modo historia (4–5 candidatos con la foto del protagonista) → gate ganchos --check
                        (R1–R9, H10, H12, H13) → video-critico elige (reserva: no regala una revelación)
-                     → historia-guionista (ganchos --usar → guion.json) → gate guion --check (H3–H14 + V1–V5, V9, F1–F8)
-                       y su línea RETORNO
-                     → historia-oyente (oyente ingenuo: solo la voz en orden y la pantalla → oyente.json)
-                     → video-critico en modo historia (resuelve o justifica cada confusión del oyente; ≤ 2 vueltas con
-                       el guionista; con «pasa», el guionista aplica sus mejoras, también las de voz, y repasa el gate)
+                     → historia-guionista (ganchos --usar → la narración de corrido por acto → gate narracion --check
+                       (H16–H19) → la reparte en escenas con acto, rótulos y secuencias → guion.json) → gate guion
+                       --check (H3–H20 + V1–V5, V9, F1–F8) y su línea RETORNO
+                     → historia-oyente (oyente ingenuo: primero la narración de corrido, luego la pantalla por escena
+                       → oyente.json)
+                     → video-critico en modo historia (espina, hilos y flujo; resuelve o justifica cada confusión y
+                       cada pregunta sin responder del oyente; ≤ 2 vueltas con el guionista; con «pasa», el guionista
+                       aplica sus mejoras, también las de voz, y el oyente las vuelve a oír)
                      → video-animador por cada escena explica sin animación (reusa o crea y registra en la biblioteca)]
-   Retoque: Workflow historia con desde: "retoque" + notas → salta a Guion (el guionista aplica las notas y conserva las
-   voces) → oyente → crítica (1 vuelta) → mejoras → animación; devuelve voces_cambiadas
+   desde: "encuadre" → el editor re-encuadra (actos, espina, hilos, personajes sobre la cronología verificada) y salta
+   a Guion · desde: "guion" → salta a Guion · desde: "retoque" + notas → salta a Guion (el guionista aplica las notas y
+   conserva las voces) → oyente → crítica (1 vuelta) → mejoras → animación; devuelve voces_cambiadas
 → QA de fotos (historia.py fotos-contacto) → [sin-voz: voz-falsa] | voz (MCP ElevenLabs, como /noticias)
+   (un nodo por secuencia de 2–5 escenas; descargar --estado corta cada secuencia en sus escenas)
 → tiempos (V6, V10) → escuchar (V11) → grabar (V7, V13) → montar (V8) → revisar (9:16 y 4:5)
 → entregar (historias/<fecha>-<slug>/) → memoria.py --historia (memoria/historias.json) → make validate (M10)
 ```
@@ -40,30 +46,60 @@ hechos verificados, y las tarjetas `tuit_N.html` materializadas con `scripts/mat
 cada escena), así el gate del guion, los ganchos, los tiempos y el render salen de `scripts/video.py`, con las escenas
 propias enchufadas por sus extensiones (`CONSTRUCTORES`, `TRANSICION_DE`, `SIN_HUECO`). Las páginas son
 `video/noticia.html` (gancho con foto y escena `foto`), `video/historia.html` (`cita` y `capitulo`) y las de `/video`
-para el resto.
+para el resto; el **rótulo de acto** lo dibuja `video/comun.js` sobre cualquiera de ellas mientras la voz sigue.
 
-## Formato (decisiones del usuario, 2026-10-24)
+## Formato (decisiones del usuario, 2026-10-24 y 2026-10-27)
+
+Una historia se cuenta en **tres actos**, no en capítulos por año. El **planteamiento** presenta el mundo y al
+protagonista y termina en el **detonante** (lo que lo cambia todo). El **nudo** sube la apuesta: el **punto medio**
+cambia lo que el espectador creía saber y el **giro** (`giro: true`) va aquí. El **desenlace** trae el **clímax** y
+la **resolución**: qué quedó, y qué nunca se supo. Los actos 2 y 3 se marcan con un **rótulo** (año y ≤ 4 palabras)
+dibujado sobre la primera escena del acto mientras la voz sigue; una tarjeta de capítulo que detiene la voz es la
+excepción. El editor escribe la espina (detonante, punto medio, clímax, resolución) con los ejes que la sostienen; el
+guionista cuelga las escenas de esa espina. Y antes de colgar nada escribe la **narración de corrido** (320–400
+palabras ≈ 150 s a 145 palabras por minuto): las escenas la reparten sin cambiar una palabra (H15).
 
 | Bloque | Qué | Gate |
 |---|---|---|
 | E1 gancho (≤ 7.5 s) | **siempre una foto a sangre del protagonista** que cubre toda la pantalla (visual `foto`, como la Cajita Feliz; H12); el momento más fuerte de la historia (el problema que la hizo nacer, la persona, la decisión), **nombra al protagonista** (la marca, la persona: `protagonista` del encuadre), en medias res, **nunca una revelación** del encuadre (lo que el video paga: de qué está hecho, cómo terminó; H13 veta sus números, el crítico puntúa `reserva`); se lee en silencio; «Guatemala» en ≤ 6 s; sin «Esta es la historia de…» | `ganchos --check` (R1–R9, R11–R12; sin R10; H7 visual foto; H10, H12, H13) |
 | promesa | una oración propia en la escena 2 que nombra qué falta saber; `revela` dice qué revelación paga y la escena `pago` (último tercio) la cuenta con sus palabras | V9 · H14 |
-| 3–5 capítulos | cada uno abre con `capitulo` (el año grande que cuenta desde el anterior + ≤ 4 palabras) y trae 1–4 escenas; termina en un giro o una pregunta | H8 |
-| giro | una escena con `giro: true` entre el 40 y el 75 % | H8 |
+| narración | `narracion[3]` `{acto, texto}`: el texto corrido por acto, 320–400 palabras; cada voz de escena es un tramo literal; ≥ 2 conectores causales o temporales por acto; ≤ 1 escena que abra con atribución; ≤ 6.5 cortes por minuto | H15 · H16 |
+| tres actos | `acto` 1–3 en cada escena, no decreciente; el detonante cierra el 1, el punto medio y el giro van en el 2, el clímax y la resolución en el 3 | H8 · crítico (H-C2) |
+| rótulo de acto | `rotulo {anio ≤ 12, titulo ≤ 4 palabras, lugar?}` en la primera escena de los actos 2 y 3 (opcional en la escena 2), sobre foto, cita, tarjeta, mapa, ranking, tiempo, golpe o explica (nunca gancho, adivina ni cierre); una escena `capitulo` con voz propia solo como excepción (0–2, aviso) | H8 |
+| giro | una escena con `giro: true` en el acto 2, entre el 40 y el 75 % | H8 |
+| hilos y personajes | cada hilo del encuadre se paga en una escena (`paga: [id]`) o se declara sin respuesta en la narración; cada personaje llega presentado en su primera mención (≤ 8 palabras) | H17 · H18 |
+| secuencias de voz | `secuencias`: grupos de 2–5 escenas consecutivas del mismo acto (sin el gancho ni el cierre; giro o rótulo solo al inicio) cuya voz se graba de corrido en un nodo; sin ellas, el script las deriva | H20 |
 | cierre | `cierre.html` en dos pantallas (rótulo «Lo que dejó» + 2–3 líneas, luego el remate) y «Sígueme en». **Lo normal es el legado**: lo que la gente hace hoy con lo que la historia dejó («sus hijos y sus nietos siguen tomando Incaparina»); `consecuencia` si termina mal; nunca neutro (nadie hace nada: «la marca sigue»); sin «según» | F1–F8 (`legado`) · H9 · crítico (H-C6) |
 
 **Escenas**: `foto` (la foto de archivo en marco con Ken Burns, chip con fecha y lugar, titular, cifra opcional,
 fuente y «Foto: autor · licencia»), `cita` (la frase literal de una persona, o de un documento con su membrete y un
-resaltador; una cita en otro idioma lleva `traduccion`, en pantalla bajo la frase y dicha por la voz), `capitulo`, `tarjeta`/`mapa`/`ranking`/`tiempo` (un gráfico de las 26 plantillas de
-`templates/graficos/` con su `DATA`), `golpe`, `definicion`, `escala`, `explica` (una animación de la biblioteca
-`video/animaciones/`: `cadena`, `cronologia`, y las que el animador vaya creando) y `cierre`. Nunca tres seguidas del
-mismo tipo. ≤ 19 escenas más el cierre (20 nodos de voz: el tope de ElevenLabs por llamada).
+resaltador; una cita en otro idioma lleva `traduccion`, en pantalla bajo la frase y dicha por la voz), `capitulo`
+(solo como excepción), `tarjeta`/`mapa`/`ranking`/`tiempo` (un gráfico de las 26 plantillas de `templates/graficos/`
+con su `DATA`; `foco: false` deja la tarjeta sin zoom a la cifra), `golpe`, `definicion`, `escala`, `explica` (una
+animación de la biblioteca `video/animaciones/`: `cadena`, `cronologia`, y las que el animador vaya creando) y
+`cierre`. ≤ 3 seguidas del mismo tipo. ≤ 19 escenas más el cierre. `enlace` (pero | por_eso | y) es opcional y solo
+decide el efecto de la entrada: la voz no tiene que empezar con el conector (la causalidad vive en la narración).
+Topes de voz: foto 40–280, cita 30–280, tarjeta/mapa/ranking/tiempo/explica 40–260, golpe 20–130, capitulo 10–90.
 
 ## Reglas de verdad
 
-- Solo hechos `confirmado` (dos fuentes de grupos distintos: un documento oficial, la academia, el archivo o la
-  empresa para su propia historia, y otra que lo respalde) o `en_disputa` (una fuente o fuentes que difieren en un
-  detalle: la voz **atribuye o matiza**). Una cifra confirmada vale también con una fuente oficial o académica.
+- Cuatro estados. Solo se cuentan hechos `confirmado` (dos fuentes de grupos distintos: un documento oficial, la
+  academia, el archivo o la empresa para su propia historia, y otra que lo respalde; una cifra vale también con una
+  fuente oficial o académica), `una_fuente` (una fuente válida y seria sin nada que la contradiga) o `en_disputa` (las
+  fuentes **difieren** en el año, el monto o un detalle: las dos versiones en `nota`). `no_confirmado` no se cuenta.
+  Cada hecho y cada cifra lleva `tipo_hecho`: `acto` (un acto público verificable: contrato, captura, sentencia,
+  informe), `alegato` (acusación, señalamiento, promesa o declaración de parte), `estimacion` (cifra no oficial) u
+  `opinion`.
+- **Atribución**. Se atribuye en voz lo que **no está corroborado o es de parte**: un hecho `en_disputa` (las fuentes
+  difieren: se atribuye o se matiza), un **alegato** (acusación, promesa, declaración de parte), una **estimación** no
+  oficial, una **opinión** y toda **cita** (la voz dice quién lo dijo). Un hecho `una_fuente` —una fuente seria sobre
+  un acto público: un contrato, una captura, una sentencia, un informe— se **narra llano**, con la fuente **en
+  pantalla** («Fuente: Prensa Libre»); si esa fuente ya se mostró o se nombró en el mismo acto, basta el chip.
+  Presupuesto hablado: **≤ 4 «según» por video, ≤ 2 por acto, nunca en dos escenas seguidas, nunca la misma fuente
+  dos veces en voz** (la segunda vez va solo en pantalla). Varía la forma: la **aposición** («AMSA, la autoridad del
+  lago, calculó…»), el **verbo de la fuente como acción** («el tribunal calificó…», «el Ministerio de Salud
+  analizó…»), la **primera mención** que nombra y después solo el chip. El `final` del cierre nunca lleva «según»
+  (H9). El chip «Fuente:» de la escena ya no depende de que la voz diga «según».
 - Cada fuente con su texto guardado (`historia.py leer`: HTML, PDF o Wayback) y la cita literal dentro; la cita de un
   hecho trae su **año** y cada número del texto. **Wikipedia no cuenta**: es el mapa para llegar a sus referencias.
 - **Qué fuentes cuentan** (`clasificar`, lista cerrada; `leer` avisa «NO CUENTA» al guardar):
@@ -106,10 +142,10 @@ mismo tipo. ≤ 19 escenas más el cierre (20 nodos de voz: el tope de ElevenLab
 | Gate | Dónde | Qué exige |
 |---|---|---|
 | H1 forma | `hechos --check` | ids `<eje>-hNN/cNN/qNN`, fecha `YYYY[-MM[-DD]]` y precisión, texto ≤ 240, estado; ≥ 6 hechos publicables al consolidar |
-| H2 evidencia | `hechos --check` | cita ≥ 20 caracteres en el texto guardado; independencia (confirmado / en disputa); año en la cita; números del texto en las citas; la frase literal de cada cita en su fuente |
+| H2 evidencia | `hechos --check` | cita ≥ 20 caracteres en el texto guardado; año en la cita; números del texto en las citas; la frase literal de cada cita en su fuente; cuatro estados: `confirmado` = 2 grupos que coinciden; `una_fuente` = 1 fuente válida sin contradicción (FALLA si tiene 2 grupos); `en_disputa` = ≥ 1 válida + nota con la diferencia (AVISO si un solo grupo y la nota no describe discrepancia: «¿es una_fuente?»); `tipo_hecho` válido |
 | H3 justicia | `hechos --check` · `guion --check` | `casos[]` con estado actual, fecha de consulta y fuente si el encuadre es de justicia; vetadas sin sentencia firme |
-| H4 respaldo | `guion --check` | años y números de voz, pantalla, pasos, resumen y captions en la cronología; atribución en lo `en_disputa`; los `hechos` citados existen |
-| H5 duración | `guion --check` (V4 ±20 % de 150 s) · `tiempos` | 120–180 s estimados; aviso si el estimado pasa de 165 s (apunta a 150, 135–165) y si la real pasa de 180 s |
+| H4 respaldo y atribución | `guion --check` | años y números de voz, pantalla, pasos, resumen y captions en la cronología; los `hechos` citados existen; la voz atribuye o matiza solo si la escena cita un hecho `en_disputa` o con `tipo_hecho` `alegato`, `estimacion` u `opinion`; un hecho `una_fuente` pide `fuente` en pantalla (o `grafico.fuente`) salvo que esa fuente ya se mostró o se nombró en el mismo acto; en una `cita`, la voz dice el autor antes de la frase |
+| H5 duración | `guion --check` (V4 ±20 % de 150 s) · `tiempos` | 120–180 s estimados; aviso si el estimado pasa de 165 s (apunta a 150, 135–165) y si la real pasa de 180 s; 320–400 palabras orientan (AVISO fuera; FALLA fuera de 280–430) |
 | H6 pantalla | `guion --check` | titular ≤ 9 palabras, chip ≤ 14, lugar ≤ 24, fuente ≤ 44, cifra ≤ 18 con etiqueta ≤ 30, `grafico` con plantilla y `datos`; tarjetas por `materializar.py` (R1–R6); cita en otro idioma con `traduccion` ≤ 140 que la voz dice |
 | H7 fotos | `foto` · `hechos --check` · `guion --check` · `ganchos --check` | archivo, crédito «Foto: …» (o «Foto de referencia: …»), origen, licencia libre de Commons, lado ≥ 480 px; ≥ 2 fotos por eje; el gancho con visual `foto`; cada escena foto con una foto verificada (nunca icono ni mapa); retrato con `retrato_de` = autor de la cita; una imagen en ≤ 2 escenas; chip sin un año anterior a la foto |
 | H10 protagonista | `ganchos --check` · `guion --check` | el encuadre trae `protagonista` y el gancho lo nombra (pantalla, línea o voz) |
@@ -118,42 +154,78 @@ mismo tipo. ≤ 19 escenas más el cierre (20 nodos de voz: el tope de ElevenLab
 | H14 pago | `guion --check` | `promesa.revela` (1–n) y la escena `promesa.pago` dice esa revelación (una raíz de 5 letras, en voz o pantalla) |
 | H11 hilo | `guion --check` · crítico (H-C3) | cada demostrativo con cifra o sustantivo («esos 40 niños», «ese alimento») tiene su antecedente en una escena anterior; `ganchos --usar` sobre un guion ya escrito avisa que se relea el hilo y se vuelva a pedir la crítica |
 | H9 cierre | `guion --check` | el `final` del cierre sin «según»: lo último que se oye se apoya en un hecho confirmado |
-| H8 estructura | `guion --check` | 3–5 capítulos numerados (el primero en la escena 2 o 3), ≤ 2 escenas seguidas del mismo tipo, un giro entre el 40 y el 75 %, al menos una foto o cita, ≤ 19 escenas; aviso si una escena cuenta un año anterior al de su capítulo (flashback) |
+| H8 estructura | `guion --check` | `acto` 1–3 en cada escena, no decreciente y los tres presentes; `rotulo` válido en la primera escena de los actos 2 y 3 (o `capitulo` con AVISO «prefiere rotulo»); `rotulo` en otra escena o en un tipo vetado → FALLA; `capitulo` 0–2; giro en el acto 2 entre el 40 y el 75 %; ≤ 3 escenas seguidas del mismo tipo; al menos una foto o cita; ≤ 19 escenas; aviso si una escena cuenta un año anterior al del rótulo de su acto (flashback) |
+| H15 narración | `guion --check` | `narracion` con 3 entradas `{acto, texto}`; por acto, el texto sin tildes ni signos es igual a las voces de sus escenas (el acto 3 incluye el cierre); imprime el primer punto de divergencia; palabras en rango |
+| H16 flujo | `narracion --check` · `guion --check` | ≥ 2 conectores causales o temporales por acto; ≤ 1 escena desde la 2 que abra con atribución («Según…»); dos escenas seguidas no abren con las mismas dos palabras; ≤ 6.5 cortes por minuto |
+| H17 hilos | `narracion --check` · `guion --check` | cada `encuadre.hilos[].id` está en `guion.hilos` con `escena` (≥ 3, cuyo `paga` lo incluye) o con `sin_respuesta` (una raíz de 5 letras en la narración del acto 3 o en el cierre) |
+| H18 primera mención | `narracion --check` · `guion --check` | cada personaje del encuadre (no el protagonista) lleva ≥ 1 raíz de su `presentacion` en la voz de su primera mención o en la escena anterior |
+| H19 «según» | `narracion --check` · `guion --check` | ≤ 4 «según» por video, ≤ 2 por acto, nunca en dos escenas seguidas, nunca la misma fuente dos veces en voz |
+| H20 secuencias | `guion --check` | `secuencias` de 2–5 escenas consecutivas, disjuntas, sin la escena 1 ni el cierre, del mismo acto, giro o rótulo solo al inicio; `voz_continua` exige `secuencias`; prompt de cada secuencia ≤ 1,200 caracteres; AVISO si una escena queda fuera de toda secuencia entre dos del mismo acto |
 
-Además corren los de `/video`: V1–V5 y V9 (sin «la escena 2 es T1»), F1–F8, V6, V7, V8, V10, V11, V12, V13 y V15.
+Además corren los de `/video`: V1–V5 y V9 (sin «la escena 2 es T1»; en historia tampoco exige que la voz empiece con
+el conector ni que haya `enlace`), F1–F8, V6 (por secuencia: las palabras de Scribe se reparten entre sus escenas; si
+no casan, FALLA «rehaz la secuencia (o `voz --sueltas`)»), V7, V8, V10, V11, V12, V13 y V15.
 
 ## Voz y costos
 
-Como `/noticias`: un nodo TTS por escena, 1 toma, Scribe por nodo y la llamada de estado que lee `historia.py descargar
---estado`. Las herramientas aceptan ≤ 20 ids por llamada: el estado final va en lotes (cada voz con su Scribe) y
-`descargar --estado A B …` recibe todos. Las cifras con dinero van con prefijo (`US$1.15`, `Q2.50`; también se entiende
-«1.15 dólares»): la voz dice «un dólar con quince centavos». ≈ 1 crédito por carácter: **≈ 1,800–2,600** en una historia de 2–3 min (`locucion.json →
-caracteres`). Una retoma es por escena: `voz --pendientes` imprime solo lo que cambió o falta. El Workflow cuesta 0
-créditos (≈ 13–18 agentes, 20–40 min).
+Como `/noticias`, pero por **nodo**: una secuencia de 2–5 escenas o una escena suelta; 1 toma, Scribe por nodo y la
+llamada de estado que lee `historia.py descargar --estado`. Las herramientas aceptan ≤ 20 ids por llamada: el estado
+final va en lotes (cada voz con su Scribe) y `descargar --estado A B …` recibe todos. Las cifras con dinero van con
+prefijo (`US$1.15`, `Q2.50`; también se entiende «1.15 dólares»): la voz dice «un dólar con quince centavos». ≈ 1
+crédito por carácter: **≈ 1,800–2,600** en una historia de 2–3 min (`locucion.json → caracteres`). El Workflow cuesta
+0 créditos (≈ 13–18 agentes, 20–40 min).
+
+### Voz por secuencias
+
+- Un nodo TTS por secuencia (`locucion.json → secuencias[{k, escenas, prompt, caracteres}]`; `voz_continua: true` por
+  defecto en historia): la entonación no se reinicia en cada escena. `voz <TRABAJO>` imprime un `prompt` por nodo
+  (las voces de la secuencia unidas, cada una con su puntuación final; ≤ 1,200 caracteres).
+- `descargar --estado` reconoce el prompt de cada secuencia, baja `audio/voz_sec_K.mp3` + `palabras_sec_K.json` y la
+  **corta en sus escenas** con los tiempos de Scribe (a mitad del silencio entre la última palabra de una y la primera
+  de la siguiente): `voz_N.mp3` y `palabras_N.json` de siempre, más `audio/secuencias.json {K: {escenas, cortes_s,
+  generacion_id}}`. Con un prefijo de prompt ambiguo exige `media[].prompt` entero. `partir <TRABAJO> [--secuencia K]`
+  repite el corte.
+- Dentro de una secuencia la cola entre escenas es 0.3 s (0.7 en la frontera), la transición es `fade`, los
+  subtítulos siguen y los efectos van solo en la frontera, el giro y los golpes (≈ 17 por video, no 45).
+- Retomas: `voz --pendientes` marca la **secuencia entera** si cambió una de sus escenas (e imprime sus créditos);
+  `voz --sueltas` emite solo las escenas cambiadas como nodos propios (el retroceso si V6 no casa en la frontera).
+  Mismos créditos por carácter.
 
 ## Archivos del trabajo
 
-`encuadre.json` (editor) · `hallazgos_<eje>.json` (investigadores) · `verificacion_<eje>.json` y `fotos/<id>.jpg|json`
-(verificadores) · `historia.json` (`consolidar`: hechos ordenados, cifras, citas, fotos, casos, descartados,
-conflictos) · `base/` (hilo base) · `ganchos.json`, `seleccion.json` · `guion.json` · `oyente.json` (oyente ingenuo)
-· `critica.json` · luego lo de `/video`: `locucion.json`, `audio/`, `escenas.json`, `clips/`, `salida/`, `revision/`.
+`encuadre.json` (editor: actos, espina, hilos, personajes, periodos, ejes) · `hallazgos_<eje>.json` (investigadores)
+· `verificacion_<eje>.json` y `fotos/<id>.jpg|json` (verificadores) · `historia.json` (`consolidar`: hechos ordenados
+con estado y `tipo_hecho`, cifras, citas, fotos, casos, descartados, conflictos, más actos, espina, hilos y
+personajes) · `base/` (hilo base) · `ganchos.json`, `seleccion.json` · `guion.json` (`narracion`, `hilos`,
+`secuencias`, escenas con `acto`) · `oyente.json` (oyente ingenuo) · `critica.json` · luego lo de `/video`:
+`locucion.json` (con `secuencia` y `cola` por escena), `audio/` (con `voz_sec_K.mp3` y `secuencias.json`),
+`escenas.json`, `clips/`, `salida/`, `revision/`.
 
 ## Retoques
 
 Cuando el usuario pide un cambio después de la crítica o de la voz (otro gancho, reescribir una escena, otro cierre,
 quitar una cita), nadie edita `guion.json` a mano: el Workflow `historia` con `args {trabajo, tema, desde: "retoque",
-notas: "<lo que pidió>"}` salta a Guion, el guionista aplica solo eso conservando las voces grabadas, y vuelven a
-correr el gate, el oyente, la crítica (1 vuelta), las mejoras y la animación; devuelve `voces_cambiadas`. Después,
-`historia.py voz <TRABAJO> --pendientes` imprime solo los nodos cuya voz cambió o falta (y los créditos aproximados):
-se generan esos, `descargar --estado`, `tiempos`, `escuchar`, `grabar --solo n,…` (9:16 y 4:5), `montar`, `revisar`,
+notas: "<lo que pidió>"}` salta a Guion, el guionista aplica solo eso conservando las voces grabadas (y el mismo tramo
+de la narración, H15), y vuelven a correr los gates, el oyente, la crítica (1 vuelta), las mejoras y la animación;
+devuelve `voces_cambiadas`. Después, `historia.py voz <TRABAJO> --pendientes` imprime las **secuencias enteras** que
+hay que regrabar (y los créditos aproximados) o, con `--sueltas`, solo las escenas cambiadas como nodos propios: se
+generan esos, `descargar --estado`, `tiempos`, `escuchar`, `grabar --solo n,…` (9:16 y 4:5), `montar`, `revisar`,
 `entregar` y `memoria.py --historia` (reemplaza el registro del mismo slug).
+
+Otros dos puntos de entrada: `desde: "encuadre"` vuelve a contar por actos una cronología ya verificada (el editor
+re-encuadra con `digesto --para editor`: conserva tema, slug, protagonista, revelaciones, fotos_clave, ejes,
+periodos, paleta, sensibles y no_afirma, y añade actos, espina, hilos y personajes; luego salta a Guion) y
+`desde: "guion"` salta directo a Guion. Los dos exigen `historia.json`, `ganchos.json` y `seleccion.json`.
+`hechos --reclasificar [--aplicar]` propone pasar a `una_fuente` cada `en_disputa` de un solo grupo cuya nota no
+describe discrepancia (para rehacer una historia vieja sin créditos).
 
 ## Entrega y registro
 
 - `historia.py entregar TRABAJO` → `historias/<fecha>-<slug>/`:
   - `video.mp4` (TikTok, Reels, Shorts), `video_4x5.mp4` (feed), `caption.md`, `subtitulos.srt`, portadas y hojas de
     contacto;
-  - `fuentes.md`: por capítulo, cada hecho con sus urls, más las fotos con crédito y licencia;
+  - `fuentes.md`: por acto, cada hecho con sus urls (etiquetas *(una fuente: X)* y *(en disputa)*), más las fotos con
+    crédito y licencia;
   - `cronologia.md`: la línea de tiempo de lo que cuenta el video, con su estado;
   - el `guion.json` de entrega.
   

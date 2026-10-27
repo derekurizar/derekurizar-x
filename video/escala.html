@@ -66,11 +66,13 @@ window.__listo = (async () => {
   const mejor = opciones.reduce((a, b) => (b.celda > a.celda ? b : a));
   fig.style.gap = mejor.gap + 'px';
   fig.style.gridTemplateColumns = `repeat(${mejor.cols}, ${mejor.celda}px)`;
+  await V.pintarActo(S);   // rótulo de acto (/historia, S.R)
 })();
 
 window.seek = (t) => {
   V.seekGolpe(t, S);
   V.seekProgreso(t, n, S.dur);
+  V.seekActo(t, S);
   const T = S.T, N = T.n, K = T.k;
   // «K de cada N» entra con la escena; las figuras aparecen escalonadas desde T.figuras; las K primeras se encienden
   // una tras otra desde T.destacadas (cuando la voz dice K)

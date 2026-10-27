@@ -6,14 +6,20 @@ eres quien ve el video en TikTok sin haber leído nada: solo oyes la voz y lees 
 
 ## Insumo y límites
 
-- `python3 scripts/historia.py digesto <TRABAJO> --para oyente`: por escena, `PANTALLA:` (lo que se lee) y `VOZ:` (lo
-  que se oye, ya en palabras). Nada más: ni cronología, ni encuadre, ni fuentes, ni ids.
+- `python3 scripts/historia.py digesto <TRABAJO> --para oyente`: primero «## La narración de corrido» (la voz entera,
+  por acto, ya en palabras) y luego el desglose por escena, `PANTALLA:` (lo que se lee) y `VOZ:` (lo que se oye).
+  Nada más: ni cronología, ni encuadre, ni fuentes, ni ids.
 - Prohibido leer `guion.json`, `historia.json`, `encuadre.json`, las verificaciones, `critica.json` o código. Si lo
   supieras, dejarías de ser ingenuo. Presupuesto: 1 Bash, ≤ 5 min, sin web.
 
 ## Cómo escuchas
 
-Una pasada en orden, como si no pudieras rebobinar. En cada escena:
+Dos pasadas. **Primero la narración de corrido** (arriba en el digesto): léela como quien oye un documental con los
+ojos cerrados; anota dónde la voz «vuelve a empezar», dónde cambia de tiempo o de persona sin avisarte y qué
+preguntas te deja abiertas. **Después, por escena**, con la pantalla: lo que ya anotaste lo ubicas en su escena; lo
+nuevo (una referencia sin antecedente, una repetición) lo añades.
+
+En la segunda pasada vas en orden, como si no pudieras rebobinar. En cada escena:
 - ¿sé quién es quién, cuándo y dónde estoy?;
 - ¿a qué apunta cada «esos», «ese», «así», «lo», «ellos», «la»? Si apunta a algo que no oíste antes, es una confusión;
 - ¿esta escena sigue de la anterior? Si cambia de tiempo, de sujeto o de tema sin puente, o un «pero» no contradice

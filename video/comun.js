@@ -1,5 +1,6 @@
 // Módulo común de las páginas de escena de /video (video/*.html), objeto global V: parámetros de la URL (?n=, ?f=45,
-// ?portada=1), curvas, carga de escenas.json, DATA de una tarjeta, golpe de arriba, barra de progreso y subtítulos.
+// ?portada=1), curvas, carga de escenas.json, DATA de una tarjeta, golpe de arriba, barra de progreso, subtítulos y el
+// rótulo de acto de /historia (S.R: pintarActo, seekActo, desfase).
 // Cada página lo carga antes de su script y usa V.*; lo propio de la escena (cifra, mapa, filas…) sigue en la página.
 // Todo es función de t (seek), sin relojes: los clips salen idénticos en serie y en paralelo. Lo sirve
 // scripts/video_grabar.js; la hoja común es video/comun.css.
@@ -59,12 +60,14 @@ const V = (() => {
   };
 
   // subtítulos: el trozo que suena (se oculta tras la voz, o cuando `ocultar(trozo, t)` lo pide); la palabra que se
-  // dice resaltada, las ya dichas normales, las que vienen apagadas
+  // dice resaltada, las ya dichas normales, las que vienen apagadas. Con S.sigue (la escena siguiente continúa la
+  // misma secuencia de voz, /historia) el último trozo se queda hasta el final del clip: subtítulos continuos
   const palabras = (ps, t) => ps.map((p) => `<span class="${t >= p.start && t < p.end + 0.08 ? 'ahora' : t >= p.end ? '' : 'no'}${p.num ? ' cifra' : ''}">${esc(p.text)}</span>`).join(' ');
+  const finSubs = (S) => S.fin_voz + (S.sigue ? 1e9 : 0.4);
   const subtitulos = (t, S, trozos, o = {}) => {
     const k = trozos.findIndex((c, j) => t >= c[0].start - 0.05 && t < ((trozos[j + 1] || [{ start: 1e9 }])[0].start - 0.05));
     const tr = trozos[k];
-    const oculto = !tr || t > S.fin_voz + 0.4 || (o.ocultar && o.ocultar(tr, t));
+    const oculto = !tr || t > finSubs(S) || (o.ocultar && o.ocultar(tr, t));
     document.getElementById('subs').innerHTML = oculto ? '' : palabras(tr, t);
   };
   // variante del cierre: una ventana de 5 palabras alrededor de la que suena
@@ -72,7 +75,62 @@ const V = (() => {
     const ini = S.palabras.findIndex((p) => t < p.end + 0.08);
     const k = ini < 0 ? S.palabras.length - 1 : ini;
     const ventana = S.palabras.slice(Math.max(0, k - 2), k + 3);
-    document.getElementById('subs').innerHTML = t > S.fin_voz + 0.4 ? '' : palabras(ventana, t);
+    document.getElementById('subs').innerHTML = t > finSubs(S) ? '' : palabras(ventana, t);
+  };
+
+  // RÓTULO DE ACTO (S.R, lo escribe scripts/historia.py en la primera escena de cada acto): un velo a sangre sobre la
+  // escena (data-fuera-de-zona: V13 no lo mide) y una columna con el año grande (cuenta de `desde` a `hasta` entre
+  // cuenta[0] y cuenta[1] si los dos son años de 4 cifras; si no, `hasta` tal cual), el título palabra a palabra en
+  // sus `start`, el lugar y el riel (un punto por acto; el del acto se enciende al terminar la cuenta). El número de
+  // acto NO se escribe: «Acto 2 de 3» es vocabulario del guion, no del espectador; numero/total solo mueven el riel.
+  // Está desde el cuadro 0 y se desvanece 0.4 s antes de S.R.fin; los subtítulos siguen debajo (#subs va después en el
+  // DOM). Las páginas lo pintan en __listo (pintarActo, tras sus propias medidas) y lo mueven en seek (seekActo);
+  // desfase(S) es cuánto retrasan sus entradas fijas (chip, foto, caja) para que ocurran después del rótulo: las que
+  // dependen de tiempos de la voz ya llegan desplazadas de python. Sin S.R las tres no hacen nada.
+  const desfase = (S) => (S && S.R ? S.R.fin - 0.3 : 0);
+  const esAnio4 = (x) => /^\d{4}$/.test(String(x ?? ''));
+  async function pintarActo(S) {
+    if (!S || !S.R || document.getElementById('acto')) return;
+    const R = S.R, subs = document.getElementById('subs'), total = Math.max(1, R.total | 0);
+    const el = document.createElement('div'); el.id = 'acto';
+    el.innerHTML = '<div class="velo" data-fuera-de-zona></div><div class="col">' +
+      `<div class="anio">${esc(R.hasta)}</div>` +
+      `<div class="titulo">${(R.titulo || []).map((w) => `<span>${esc(w.text)}</span>`).join('')}</div>` +
+      `<div class="lugar">${esc(R.lugar || '')}</div>` +
+      '<div class="riel"><div class="linea"></div><div class="lleno"></div>' +
+      Array.from({ length: total }, (_, k) => `<div class="punto" style="left:${total > 1 ? (100 * k / (total - 1)).toFixed(2) : 0}%"></div>`).join('') +
+      '</div></div>';
+    (subs ? subs.parentNode : document.body).insertBefore(el, subs);
+    // las fuentes del rótulo pueden no estar cargadas aún (la página quizá no las usa): se piden antes de medir
+    await Promise.all(["400 230px 'Instrument Serif'", "600 24px 'JetBrains Mono'", '700 66px Archivo'].map((f) => document.fonts.load(f)));
+    await document.fonts.ready;
+    // el año grande: desde 230 px (180 en 4:5) hacia abajo hasta que quepa en la columna («Los sesenta» cabe)
+    const a = el.querySelector('.anio'), col = el.querySelector('.col').clientWidth;
+    for (let fs = F45 ? 180 : 230; fs > 90 && a.scrollWidth > col; fs -= 10) a.style.fontSize = fs + 'px';
+  }
+  const seekActo = (t, S) => {
+    const el = document.getElementById('acto');
+    if (!S || !S.R || !el) return;
+    const R = S.R, [c0, c1] = R.cuenta || [0, 0], titulo = R.titulo || [];
+    const op = eo((t + 0.1) / 0.3) * (1 - eo((t - (R.fin - 0.4)) / 0.4));
+    el.style.opacity = op.toFixed(3); el.style.visibility = op > 0.001 ? '' : 'hidden';
+    // el año cuenta desde el del acto anterior hasta el suyo (si los dos son años); entra creciendo y late al llegar
+    const p = prog(t, c0, c1), a = el.querySelector('.anio');
+    a.textContent = esAnio4(R.desde) && esAnio4(R.hasta) ? String(Math.round(+R.desde + (+R.hasta - +R.desde) * p)) : String(R.hasta);
+    const ap = eo((t - c0 + 0.2) / 0.35);
+    a.style.opacity = ap.toFixed(3);
+    a.style.transform = `scale(${((0.92 + 0.08 * ap) * (1 + 0.04 * Math.sin(Math.PI * clamp((t - c1) / 0.5)))).toFixed(4)})`;
+    [...el.querySelectorAll('.titulo span')].forEach((s, i) => {
+      const w = eo((t - titulo[i].start + 0.15) / 0.3); s.style.opacity = w.toFixed(3); s.style.transform = `translateY(${((1 - w) * 26).toFixed(1)}px)`; });
+    const lg = eo((t - (titulo.length ? titulo[titulo.length - 1].start : c1) - 0.2) / 0.4);
+    el.querySelector('.lugar').style.opacity = (0.7 * lg).toFixed(3);
+    // el riel: los actos anteriores llenos, el actual se enciende al terminar la cuenta
+    const total = Math.max(1, R.total | 0), k = R.numero - 1, frac = total > 1 ? 1 / (total - 1) : 0;
+    el.querySelector('.riel .lleno').style.width = (total > 1 ? 100 * frac * (Math.max(0, k - 1) + (k > 0 ? p : 0)) : 0).toFixed(2) + '%';
+    [...el.querySelectorAll('.riel .punto')].forEach((d, i) => {
+      d.classList.toggle('ya', i < k); d.classList.toggle('hoy', i === k && t >= c1);
+      d.style.transform = i === k ? `scale(${(1 + 0.35 * Math.sin(Math.PI * clamp((t - c1) / 0.5))).toFixed(3)})` : '';
+    });
   };
 
   // ZONA SEGURA (variables de comun.css): x en [corte, ancho − corte]; desde iconosY, x ≤ iconosX; y en [sup, fin], con
@@ -87,7 +145,8 @@ const V = (() => {
   // gate V13: lo visible (texto, SVG, imágenes y cajas con fondo o borde; también dentro de la tarjeta del iframe,
   // con su transform) fuera de la zona. Cuenta lo que se ve al menos a media opacidad (lo que entra o sale
   // deslizándose, más tenue, es movimiento). Fuera de la medición: subtítulos, barra de progreso, lo marcado con
-  // data-fuera-de-zona (fondos a sangre) y la tarjeta durante un foco (#ventana[data-foco]: solo la caja enfocada;
+  // data-fuera-de-zona (fondos a sangre, el velo del rótulo de acto; su columna de texto sí se mide) y la tarjeta
+  // durante un foco (#ventana[data-foco]: solo la caja enfocada;
   // «mov» = la cámara pasa de un foco a otro). Devuelve [{que, caja: [x0, y0, x1, y1], regla}].
   const medirZona = () => {
     const Z = zona(), fallas = [], TOL = 2;
@@ -152,5 +211,5 @@ const V = (() => {
   };
 
   return { n, F45, portada, clamp, eo, prog, esc, normal, trocear, cargar, tarjeta, pintarGolpe, ajustarGolpe, seekGolpe,
-    pintarProgreso, seekProgreso, subtitulos, subtitulosVentana, zona, medirZona };
+    pintarProgreso, seekProgreso, subtitulos, subtitulosVentana, desfase, pintarActo, seekActo, zona, medirZona };
 })();
