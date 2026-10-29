@@ -48,11 +48,18 @@ function render(D) {
   let yPie = 0;   // borde inferior de la última pista: ahí va el rótulo de la meta común
   const sx = H.escala([0, max], [0, W]);
 
+  // Barras: la del item clave en a1; las demás a plena tinta. Noche (la crema plena queda para texto y contornos):
+  // las demás en a2 (crema atenuada) y el rayado del exceso en el color de su barra.
+  const noche = H.estilo() === "noche", resto = noche ? H.color.a2 : ink;
   // Rayado para el tramo que excede la meta (hacinamiento, sobregiro).
   const defs = H.svgEl("defs", {}, svg);
-  const pat = H.svgEl("pattern", { id: "bl-exceso", width: 12, height: 12, patternUnits: "userSpaceOnUse", patternTransform: "rotate(45)" }, defs);
-  H.svgEl("rect", { width: 12, height: 12, fill: H.color.inkA(.25) }, pat);
-  H.svgEl("rect", { width: 6, height: 12, fill: ink }, pat);
+  const rayado = (id, c) => {
+    const pat = H.svgEl("pattern", { id, width: 12, height: 12, patternUnits: "userSpaceOnUse", patternTransform: "rotate(45)" }, defs);
+    H.svgEl("rect", { width: 12, height: 12, fill: H.color.inkA(.25) }, pat);
+    H.svgEl("rect", { width: 6, height: 12, fill: c }, pat);
+  };
+  rayado("bl-exceso", resto);
+  if (noche) rayado("bl-exceso-hi", a1);
 
   items.forEach((it, i) => {
     const esHi = i === hi, top = i * filaH + (filaH - (28 + 12 + pistaH)) / 2;
@@ -68,8 +75,8 @@ function render(D) {
     H.svgEl("rect", { x: 0, y: yP, width: W, height: pistaH, fill: H.color.inkA(.16) }, svg);
     const barH = Math.round(pistaH * 0.56), yB = yP + (pistaH - barH) / 2;
     const xv = sx(it.valor), xm = sx(it.meta);
-    H.svgEl("rect", { x: 0, y: yB, width: Math.max(4, Math.min(xv, xm)), height: barH, fill: esHi ? a1 : ink }, svg);
-    if (it.valor > it.meta) H.svgEl("rect", { x: xm, y: yB, width: xv - xm, height: barH, fill: "url(#bl-exceso)" }, svg);
+    H.svgEl("rect", { x: 0, y: yB, width: Math.max(4, Math.min(xv, xm)), height: barH, fill: esHi ? a1 : resto }, svg);
+    if (it.valor > it.meta) H.svgEl("rect", { x: xm, y: yB, width: xv - xm, height: barH, fill: "url(#bl-exceso" + (noche && esHi ? "-hi" : "") + ")" }, svg);
     H.svgEl("rect", { x: Math.min(W - 6, xm - 3), y: yP - 8, width: 6, height: pistaH + 16, fill: ink }, svg);
     yPie = yP + pistaH + 8;
   });

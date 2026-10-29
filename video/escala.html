@@ -6,20 +6,23 @@
      columna de íconos, deriva incluida; gate V13); las K primeras se encienden con el acento cuando la voz dice K
      (S.T.destacadas), una tras otra; debajo, la etiqueta («personas en Fase 3+»).
      Arriba el golpe (si lo hay) y la barra de progreso; abajo los subtítulos. Los tiempos vienen en S.T
-     (video.py tiempos). La graba scripts/video_grabar.js llamando a seek(t). -->
+     (video.py tiempos). Estilo Noche (video/comun.css): «K de cada N» en Archivo condensado 900 y mayúsculas, con K
+     en el acento (lo único que destaca, como las figuras encendidas); la etiqueta en crema, Archivo 800.
+     La graba scripts/video_grabar.js llamando a seek(t). -->
 <link rel="stylesheet" href="comun.css">
 <style>
 #cuerpo { position: absolute; top: 500px; left: var(--izq); right: var(--der); transform-origin: 0 0; will-change: transform; }
-#cifra { font: 400 190px/1 'Instrument Serif', serif; letter-spacing: -.03em; white-space: nowrap; }
-#cifra b { font-weight: 400; color: var(--acento, var(--ink)); }
+/* el shorthand `font` resetea font-stretch, que va después; se achica hasta caber en la columna (__listo) */
+#cifra { font: 900 210px/.86 Archivo, sans-serif; font-stretch: 62.5%; text-transform: uppercase; white-space: nowrap; }
+#cifra b { font-weight: 900; color: var(--acento, var(--ink)); }
 #figuras { margin-top: 48px; display: grid; justify-content: start; }
 #figuras svg { width: 100%; height: auto; display: block; opacity: 0; }
 #figuras svg * { fill: color-mix(in srgb, var(--ink) 26%, transparent); }
 #figuras svg.si * { fill: var(--acento, var(--ink)); }
-#etiqueta { margin-top: 44px; font: 700 52px/1.15 Archivo, sans-serif; }
+#etiqueta { margin-top: 44px; font: 800 50px/1.15 Archivo, sans-serif; letter-spacing: -.01em; }
 /* formato 4:5 (1080×1350) para el feed */
 html.f45 #cuerpo { top: 300px; }
-html.f45 #cifra { font-size: 150px; }
+html.f45 #cifra { font-size: 170px; }
 html.f45 #figuras { margin-top: 32px; }
 html.f45 #etiqueta { margin-top: 30px; font-size: 44px; }
 </style>
@@ -49,6 +52,9 @@ window.__listo = (async () => {
   document.getElementById('etiqueta').textContent = T.etiqueta || '';
   await document.fonts.ready;
   V.ajustarGolpe(S, F45 ? 250 : 430);
+  // «K de cada N» en una línea: se achica hasta caber en la columna (con la deriva)
+  const ci = document.getElementById('cifra'), col = document.getElementById('cuerpo').clientWidth / (1 + DERIVA);
+  for (let fs = F45 ? 170 : 210; fs > 100 && ci.scrollWidth > col; fs -= 6) ci.style.fontSize = fs + 'px';
   // la cuadrícula cabe en la zona segura con la deriva (DERIVA) y el pulso de las destacadas: alto disponible entre
   // la cifra y la etiqueta; ancho hasta la columna de íconos. Se elige el número de columnas que da la figura mayor.
   const Z = V.zona(), cuerpo = document.getElementById('cuerpo'), et = document.getElementById('etiqueta');

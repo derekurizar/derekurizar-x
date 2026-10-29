@@ -28,6 +28,13 @@ Desde aquí eres el ÚNICO que escribe `guion.json`.
    - C8 FUENTES: el cierre nombra las fuentes de todas las tarjetas (G8 lo
      comprueba mecánicamente). Si la cifra ancla lleva `independencia: "baja"`
      (post.md la marca «2ª fuente no indep.»), `incertidumbre` lo declara.
+   - NOCHE (en la misma lectura de `contacto.png`; `referencias/diseno/sistema.md`):
+     todas las tarjetas con el fondo oscuro y el grano del mismo tinte (una
+     clara o en serif salió clásica: re-materialízala); **una sola cosa en
+     acento** por tarjeta y la del T1 es la cifra ancla; texto crema; nada
+     ilegible sobre el fondo (ejes, valores, nota, fuente). Se corrige con
+     `destacar` o la plantilla en `guion.json`; si persiste, va en `avisos`
+     (no vuelve `incompleto` el hilo).
    Cada corrección pasa por `guion.json` → materializar → ensamblar. Máximo 3
    vueltas; si en la tercera falla C1, C2, C4, C5 o C7 → `coherencia:
    "incompleto"` y `estado: "incompleto"` (se entrega igual, marcado).
@@ -67,7 +74,10 @@ redactor escribe el informe entre ambas.
 queda en `<sesion>/salida/`); y **no corras memoria.py** todavía:
 `registro_id: "pendiente"`. En el gate de coherencia, C1 incluye que cada
 tarjeta se sostiene sola (irá en el anexo del informe) y C8 que el cierre
-lleva `[ENLACE AL INFORME]` (G8 lo comprueba).
+lleva `[ENLACE AL INFORME]` (G8 lo comprueba). Las tarjetas de este hilo son
+**clásicas** (fondo plano de la paleta, Instrument Serif: `materializar.py` lo
+elige por `modo`): el check NOCHE no aplica; una tarjeta oscura aquí es la que
+está mal.
 
 **Cierre.** El redactor dejó `<sesion>/informe.json` y su staging en
 `<sesion>/informe/`.

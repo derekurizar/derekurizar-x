@@ -3,6 +3,8 @@
 // con una flecha doble que respira; en el paso de cruce entran granos desde arriba, el nivel sube, cruza la línea y
 // cambia de color; el último paso marca que quedó cerca de donde estaba al principio. Los pasos se leen en una lista
 // debajo del recipiente. Siempre se mueve la superficie (ola) y suben burbujas. seek puro: todo es función de t.
+// Estilo Noche: recipiente, línea y granos en crema; bajo la línea el líquido es crema tenue y lo único en acento es el
+// líquido cuando vuelve a cruzarla (el cambio de estado).
 ANIM.registrar('nivel-umbral', {
   meta: {
     descripcion: 'un nivel cae bajo una línea límite y luego la vuelve a cruzar: al cruzarla cambia de estado y de color',
@@ -23,10 +25,10 @@ ANIM.registrar('nivel-umbral', {
     lista.style.cssText = 'position:absolute;left:0;right:0;bottom:0;display:flex;flex-direction:column;gap:12px;';
     this.items = P.pasos.map((txt, i) => {
       const el = document.createElement('div');
-      el.style.cssText = `position:relative;padding-left:62px;font:700 ${fs}px/1.12 Archivo,sans-serif;color:var(--ink);` +
-        'transform-origin:0 50%;';
-      el.innerHTML = `<span style="position:absolute;left:0;top:.12em;width:40px;height:40px;border-radius:50%;box-sizing:border-box;` +
-        `border:5px solid var(--ink);display:flex;align-items:center;justify-content:center;font:500 22px/1 'JetBrains Mono',monospace">${i + 1}</span>`;
+      el.style.cssText = `position:relative;padding-left:72px;font:800 ${fs}px/1.12 Archivo,sans-serif;letter-spacing:-.01em;` +
+        'color:var(--ink);transform-origin:0 50%;';
+      el.innerHTML = `<span style="position:absolute;left:0;top:calc(.56em - 26px);width:52px;height:52px;border-radius:50%;box-sizing:border-box;` +
+        `border:5px solid var(--ink);display:flex;align-items:center;justify-content:center;font:600 36px/1 'JetBrains Mono',monospace">${i + 1}</span>`;
       el.appendChild(document.createTextNode(txt));
       lista.appendChild(el);
       return { el, dot: el.firstChild };
@@ -73,13 +75,13 @@ ANIM.registrar('nivel-umbral', {
     [['x1', tx - 26], ['x2', tx + tw + 26], ['y1', this.yLinea], ['y2', this.yLinea], ['stroke', 'var(--bg)'], ['stroke-width', 7], ['stroke-dasharray', '24 14'], ['stroke-linecap', 'round']].forEach(([k, v]) => this.lineaIn.setAttribute(k, v));
     g2.appendChild(this.lineaIn);
     const rot = mk('text', { x: tx + tw + 34, y: this.yLinea + 12, fill: 'var(--ink)' });
-    rot.style.font = "500 36px 'JetBrains Mono',monospace"; rot.textContent = 'LÍMITE';
+    rot.style.font = "600 36px 'JetBrains Mono',monospace"; rot.textContent = 'LÍMITE';
     this.rot = rot;
     // granos que entran desde arriba en el paso de cruce
     this.granos = Array.from({ length: 16 }, (_, i) => {
       const e = document.createElementNS(NS, 'circle');
-      e.setAttribute('r', 8 + (i % 3) * 3); e.setAttribute('fill', ['var(--a1)', 'var(--a2)', 'var(--a3)'][i % 3]);
-      e.setAttribute('stroke', 'var(--ink)'); e.setAttribute('stroke-width', 3);
+      // granos en crema y crema atenuada (el acento queda para el líquido que cruza)
+      e.setAttribute('r', 8 + (i % 3) * 3); e.setAttribute('fill', ['var(--ink)', 'var(--a2)'][i % 2]);
       e.setAttribute('cx', ix + 50 + (((i * 37) % 11) / 10) * (iw - 100));
       svg.appendChild(e);
       return { e, d: ((i * 7) % 16) / 16 * 1.3 };
@@ -143,7 +145,7 @@ ANIM.registrar('nivel-umbral', {
     });
     // lista de pasos
     this.items.forEach(({ el, dot }, i) => {
-      const s = ps[i].start, entra = eo(clamp((t - s) / 0.45)), fantasma = 0.16 * eo(clamp((t - T.ini) / 0.5));
+      const s = ps[i].start, entra = eo(clamp((t - s) / 0.45)), fantasma = 0.28 * eo(clamp((t - T.ini) / 0.5));
       const respira = i === activo ? 1 + 0.012 * Math.sin(2 * Math.PI * (t - s) / 1.6) : 1;
       el.style.opacity = Math.max(fantasma, entra * (i < activo ? 0.5 : 1)).toFixed(3);
       el.style.transform = `translateX(${((1 - entra) * -30).toFixed(1)}px) scale(${respira.toFixed(4)})`;

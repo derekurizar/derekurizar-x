@@ -3,7 +3,8 @@
 // ella viajan figuras de personas; al llegar al destino (penúltimo paso) se junta un grupo de figuras; el último paso
 // manda por la misma ruta lo que las sigue (cajas de color) y cada llegada hace latir el destino. Sirve para
 // migración, rutas de un producto, difusión de una costumbre o cualquier «algo sigue a la gente».
-// Todo es función de t (seek puro, sin azar ni reloj).
+// Estilo Noche: ruta y figuras en crema; lo único en acento es el nodo del paso que suena y, con el último paso, lo
+// que sigue a la gente (cajas, su marca y el latido del destino). Todo es función de t (seek puro, sin azar ni reloj).
 ANIM.registrar('arco-viaje', {
   meta: {
     descripcion: 'ruta en arco: el origen emite ondas, figuras viajan al destino y se juntan, y luego algo las sigue por la misma ruta',
@@ -76,7 +77,7 @@ ANIM.registrar('arco-viaje', {
       const el = document.createElement('div');
       const left = x + sep;
       el.style.cssText = `position:absolute;left:${left}px;top:${y}px;max-width:${W - left - 10}px;transform:translateY(-50%);` +
-        `font:700 ${fs}px/1.12 Archivo,sans-serif;color:var(--ink);display:flex;align-items:center;`;
+        `font:800 ${fs}px/1.12 Archivo,sans-serif;letter-spacing:-.01em;color:var(--ink);display:flex;align-items:center;`;
       el.innerHTML = html;
       lienzo.appendChild(el); return el;
     };
@@ -125,9 +126,12 @@ ANIM.registrar('arco-viaje', {
       const resp = nd.paso === activo ? 1 + 0.12 * Math.sin(2 * Math.PI * (t - s(nd.paso)) / 1.6) : 1;
       nd.el.style.opacity = Math.max(0.25 * base, e).toFixed(3);
       nd.el.setAttribute('r', ((14 + 5 * e) * resp).toFixed(1));
-      nd.el.setAttribute('fill', e > 0.5 ? 'var(--ink)' : 'var(--bg)');
+      // el nodo del paso que suena, en acento; los ya dichos, en crema
+      const color = nd.paso === activo ? 'var(--acento)' : 'var(--ink)';
+      nd.el.setAttribute('fill', e > 0.5 ? color : 'var(--bg)');
+      nd.el.setAttribute('stroke', e > 0.5 ? color : 'var(--ink)');
       if (nd.rot) {
-        nd.rot.style.opacity = (e * (nd.paso < activo ? 0.72 : 1)).toFixed(3);
+        nd.rot.style.opacity = (e * (nd.paso < activo ? 0.5 : 1)).toFixed(3);
         nd.rot.style.transform = `translateY(-50%) translateX(${((1 - e) * 28).toFixed(1)}px)`;
       }
     });

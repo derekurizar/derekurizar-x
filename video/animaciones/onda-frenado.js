@@ -4,8 +4,9 @@
 // en el acento y la onda de frenado viaja HACIA ATRÁS de carro en carro, más rápido de lo que avanzan los carros; al
 // final la fila queda casi quieta, apretada y toda en rojo: la cola. Con 2–6 pasos las fases se reparten entre los
 // pasos (el primero siempre densifica, el último siempre deja la cola formada). Los pasos van como rótulos debajo
-// del carril: el activo pleno, los anteriores atenuados. Todo es función de t (seek puro, sin azar ni reloj): la
-// distancia recorrida (rayas del carril y giro de las ruedas) se integra con paso fijo desde t = 0.
+// del carril: el activo pleno, los anteriores atenuados. Estilo Noche: carros, carril y rótulos en crema; lo único en
+// acento es el frenazo (luces, carrocería frenada, la onda y la llave de la cola). Todo es función de t (seek puro, sin
+// azar ni reloj): la distancia recorrida (rayas del carril y giro de las ruedas) se integra con paso fijo desde t = 0.
 //
 // Contrato (referencias/roles/video-animador.md): ANIM.registrar(id, { meta, pintar(lienzo, P, ctx), seek(t, T) })
 //   P   = { titulo, pasos: [texto] }
@@ -64,10 +65,10 @@
         this.filas = P.pasos.map((txt) => {
           const f = document.createElement('div');
           f.style.cssText = `position:relative;padding-left:30px;margin-bottom:${Math.round(fs * 0.32)}px;` +
-            `font:700 ${fs}px/1.12 Archivo,sans-serif;color:var(--ink);transform-origin:0 50%`;
+            `font:800 ${fs}px/1.12 Archivo,sans-serif;letter-spacing:-.01em;color:var(--ink);transform-origin:0 50%`;
           const barra = document.createElement('div');
           barra.style.cssText = `position:absolute;left:0;top:${Math.round(fs * 0.1)}px;width:9px;height:${Math.round(fs * 0.95)}px;` +
-            'border-radius:5px;background:var(--acento)';
+            'border-radius:5px;background:var(--ink)';   // el acento es del frenazo
           const tx = document.createElement('span');
           tx.textContent = txt;
           f.appendChild(barra); f.appendChild(tx);
@@ -260,7 +261,7 @@
       const chico = Math.max(38 / this.fs, 0.8);
       this.filas.forEach((fila, i) => {
         if (i >= ps.length) { fila.style.opacity = 0; return; }
-        const entra = eo((t - ps[i].start) / 0.45), fantasma = 0.14 * eo((t - T.ini) / 0.5);
+        const entra = eo((t - ps[i].start) / 0.45), fantasma = 0.28 * eo((t - T.ini) / 0.5);
         const es = i === activo ? 1 : 0;
         const op = i <= activo ? (es ? lerp(0.45, 1, entra) : 0.45) : fantasma;
         fila.style.opacity = Math.max(fantasma, op).toFixed(3);

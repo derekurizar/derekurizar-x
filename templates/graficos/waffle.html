@@ -4,7 +4,8 @@
 .wf-celdas { display: grid; gap: 8px; }
 .wf-celdas span { display: block; background: var(--ink); opacity: .32; }
 .wf-celdas span.on { background: var(--a1); opacity: 1; }
-.wf-texto .num { font: 400 132px/.86 'Instrument Serif', Georgia, serif; letter-spacing: -.02em; color: var(--a1); white-space: nowrap; }
+.wf-texto .num { font-size: 132px; line-height: .86; letter-spacing: -.02em; color: var(--a1); white-space: nowrap; }   /* familia y peso: .cifra-heroe */
+body[data-estilo="noche"] .wf-texto .num { letter-spacing: 0; }
 .wf-texto .t { font: 600 26px/1.25 Archivo, sans-serif; margin-top: 16px; }
 .wf-ley { display: flex; flex-direction: column; gap: 12px; margin-top: 36px; }
 .wf-ley .it { display: flex; align-items: center; gap: 12px; font: 600 20px/1 Archivo, sans-serif; }
@@ -42,7 +43,10 @@ function render(D) {
     s.style.width = celda + "px"; s.style.height = celda + "px";
   }
   const t = H.el("div", "wf-texto", grid);
-  H.el("div", "num", t, H.esc(H.num(D.cifra.valor, D.formato)));
+  const num = H.el("div", "num cifra-heroe", t, H.esc(H.num(D.cifra.valor, D.formato)));
+  // Auto-ajuste: la cifra cabe en la columna que dejan las celdas (la condensada de Noche es más ancha que la serif).
+  const colW = 920 - 56 - (10 * celda + 9 * 8);
+  for (let px = 132; px >= 72; px -= 8) { num.style.fontSize = px + "px"; if (num.scrollWidth <= colW) break; }
   H.el("div", "t", t, H.esc(D.cifra.texto));
   const ley = H.el("div", "wf-ley", t);
   const it1 = H.el("div", "it", ley); H.el("span", "sw on", it1); H.el("span", null, it1, H.esc(D.etiqueta_dentro || ""));

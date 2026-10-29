@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="es"><head><meta charset="utf-8">
 <!-- Escena «mapa» de /video (?n=N): la tarjeta de mapa del hilo (tuit N) dibujada a pantalla completa, sin columna:
-     los 22 departamentos a ~820 px de alto: el país entra completo en un tono neutro y cada departamento toma su color
-     de menor a mayor valor (el más alto llega al final); el destacado entra con su contorno y su rótulo (nombre ·
-     valor) junto al departamento; cuando la voz dice el valor de otro departamento (redondeado como lo dice: «152» es
-     152.42), ese brilla y muestra el suyo, y el rótulo escribe la cifra como la dice la voz. Si la voz dice la
-     referencia nacional (D.referencia {etiqueta, valor} o «Tasa nacional: X» en la nota), aparece su píldora. Debajo, la leyenda en una fila y la fuente; arriba el golpe y la
+     los 22 departamentos a ~820 px de alto como un MAPA DE LUCES (estilo Noche): el país entra completo en un tono
+     neutro y cada departamento se enciende con el acento de menor a mayor valor, más opaco cuanto más alta su clase
+     (el más alto llega al final); el destacado queda en el acento pleno con un resplandor (trazos anchos y tenues, sin
+     filter) y su rótulo (nombre · valor, en condensado) junto al departamento; cuando la voz dice el valor de otro
+     departamento (redondeado como lo dice: «152» es 152.42), ese se enciende entero y muestra el suyo, y el rótulo
+     escribe la cifra como la dice la voz. Los rótulos buscan sitio fuera del país (el mar y los vecinos) si lo hay.
+     Si la voz dice la referencia nacional (D.referencia {etiqueta, valor} o «Tasa nacional: X» en la nota), aparece su píldora. Debajo, la leyenda en una fila y la fuente; arriba el golpe y la
      barra de progreso; abajo los subtítulos. Lee los DATA de tarjeta_N.html (los sirve scripts/video_grabar.js, que
      también sirve h.js = bloque H de templates/base.html y geometria.js = GEOMETRIA de templates/graficos/mapa.html).
      Zona segura (V.zona, gate V13): el mapa termina en x ≤ 890 (los íconos de la app cubren x ≥ 900 desde y≈1070) y
@@ -13,24 +15,25 @@
      scripts/video_grabar.js llamando a seek(t). -->
 <link rel="stylesheet" href="comun.css">
 <style>
-#kicker { position: absolute; top: 440px; left: var(--izq); font: 500 24px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; }
-#mapa { position: absolute; top: 474px; left: var(--izq); width: 805px; height: 770px; transform-origin: 50% 50%; will-change: transform; }
+#kicker { position: absolute; top: 440px; left: var(--izq); font: 600 24px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; }
+/* sin will-change: con la capa compuesta en la GPU, el mapa (SVG grande que escala con la deriva) se rasterizaba distinto
+   al grabar en serie y en paralelo; sin ella los cuadros salen idénticos */
+#mapa { position: absolute; top: 474px; left: var(--izq); width: 805px; height: 770px; transform-origin: 50% 50%; }
 #mapa svg { width: 100%; height: 100%; display: block; }
 #mapa path { stroke: var(--bg); stroke-width: 2; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
-#mapa path.halo { fill: none; stroke: var(--bg); stroke-width: 9; }
-#mapa path.borde { fill: none; stroke: var(--a1); stroke-width: 4.5; }
-#mapa .rotulo rect { fill: var(--bg); stroke: var(--ink); stroke-width: 3; }
-#mapa .rotulo text { font: 800 30px Archivo, sans-serif; fill: var(--ink); }
-#mapa .rotulo text.v { font: 700 30px 'JetBrains Mono', monospace; }
-#mapa .rotulo line { stroke: var(--ink); stroke-width: 3; }
-#ref { position: absolute; top: 500px; left: var(--izq); padding: 10px 18px; border: 3px solid var(--ink); border-radius: 12px;
-       background: var(--bg); font: 800 30px/1.2 Archivo, sans-serif; opacity: 0; }
-#ref span { font: 700 30px 'JetBrains Mono', monospace; margin-left: 14px; }
+/* resplandor del destacado: trazos del acento, anchos y tenues, debajo de su relleno */
+#mapa .resplandor path { fill: none; stroke: var(--acento, var(--a1)); stroke-linejoin: round; }
+#mapa .rotulo rect { fill: var(--bg); stroke: color-mix(in srgb, var(--ink) 50%, transparent); stroke-width: 2.5; }
+#mapa .rotulo text { font: 900 38px Archivo, sans-serif; font-stretch: 62.5%; text-transform: uppercase; fill: var(--ink); }
+#mapa .rotulo line { stroke: color-mix(in srgb, var(--ink) 60%, transparent); stroke-width: 2.5; }
+#ref { position: absolute; top: 500px; left: var(--izq); padding: 10px 18px 8px; border: 2.5px solid color-mix(in srgb, var(--ink) 50%, transparent);
+       border-radius: 12px; background: var(--bg); font: 800 30px/1.2 Archivo, sans-serif; opacity: 0; }
+#ref span { font: 900 38px/1 Archivo, sans-serif; font-stretch: 62.5%; text-transform: uppercase; margin-left: 14px; }
 #pie { position: absolute; top: 1268px; left: var(--izq); right: var(--der); }
-#leyenda { display: flex; flex-wrap: wrap; gap: 10px 26px; font: 500 22px/1 'JetBrains Mono', monospace; }
+#leyenda { display: flex; flex-wrap: wrap; gap: 10px 26px; font: 600 22px/1 'JetBrains Mono', monospace; }
 #leyenda span { display: inline-flex; align-items: center; gap: 10px; }
-#leyenda i { width: 24px; height: 24px; display: inline-block; }
-#fuente { margin-top: 12px; font: 500 20px/1.2 'JetBrains Mono', monospace; opacity: .75; }
+#leyenda i { width: 24px; height: 24px; display: inline-block; border-radius: 4px; }
+#fuente { margin-top: 12px; font: 600 20px/1.2 'JetBrains Mono', monospace; opacity: .75; }
 /* formato 4:5 (1080×1350) para el feed */
 html.f45 #kicker { top: 250px; }
 html.f45 #mapa { top: 290px; width: 910px; height: 640px; }
@@ -55,7 +58,14 @@ const clave = (v) => String(Number(v));
 const NS = 'http://www.w3.org/2000/svg';
 const el = (tag, attrs, padre) => { const e = document.createElementNS(NS, tag); for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v); padre.appendChild(e); return e; };
 
-// el mapa: clases, colores y rótulos con los mismos helpers que la tarjeta (H.cortes, H.claseDe, H.rampa, H.num)
+// el mapa: clases y rótulos con los mismos helpers que la tarjeta (H.cortes, H.claseDe, H.num); los colores son el
+// acento con la opacidad de la clase sobre un neutro de crema (mapa de luces, solo variables: luz(op))
+const NEUTRO = 'color-mix(in srgb, var(--ink) 10%, transparent)';
+const ACENTO = 'var(--acento, var(--a1))';
+const luz = (op) => op <= 0 ? NEUTRO : op >= 1 ? ACENTO : `color-mix(in srgb, ${ACENTO} ${(100 * op).toFixed(1)}%, ${NEUTRO})`;
+// opacidad del acento por clase: de 0.2 (la más baja) a 0.64 (la más alta); el acento pleno queda para el destacado y
+// para lo que dice la voz
+const alfaDe = (k, nc) => 0.2 + 0.44 * k / Math.max(1, nc - 1);
 function dibujar() {
   const NOMBRES = H.NOMBRES, ids = Object.keys(NOMBRES), idDe = H.idDepto;
   const val = {};
@@ -66,17 +76,17 @@ function dibujar() {
   const vals = con.map((id) => val[id]).sort((a, b) => a - b);
   const min = vals[0], max = vals[vals.length - 1];
   const cortes = H.cortes(vals, { cortes: D.cortes, clases: D.clases, metodo: D.metodo, redondear: D.redondear });
-  const nc = cortes.length + 1, claseDe = (v) => H.claseDe(v, cortes), colores = H.rampa(nc);
+  const nc = cortes.length + 1, claseDe = (v) => H.claseDe(v, cortes);
   const svg = el('svg', { viewBox: GEOMETRIA.viewBox, preserveAspectRatio: 'xMidYMid meet' }, document.getElementById('mapa'));
   const defs = el('defs', {}, svg);
   const pat = el('pattern', { id: 'sinDato', width: 12, height: 12, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)' }, defs);
-  el('rect', { width: 12, height: 12, fill: H.color.inkA(.10) }, pat);
-  el('line', { x1: 0, y1: 0, x2: 0, y2: 12, stroke: H.color.inkA(.35), 'stroke-width': 2 }, pat);
-  M = { deptos: [], porValor: {}, dest: [], hi: null, f, ref: null, neutro: H.mezcla(H.color.bg, H.color.ink, 0.22) };
+  el('rect', { width: 12, height: 12, fill: 'color-mix(in srgb, var(--ink) 8%, transparent)' }, pat);
+  el('line', { x1: 0, y1: 0, x2: 0, y2: 12, stroke: 'color-mix(in srgb, var(--ink) 30%, transparent)', 'stroke-width': 2 }, pat);
+  M = { deptos: [], porValor: {}, dest: null, hi: null, f, ref: null };
   for (const id of ids) {
     const geo = GEOMETRIA.deptos[id];
-    const p = el('path', { d: geo.d, fill: id in val ? colores[claseDe(val[id])] : 'url(#sinDato)' }, svg);
-    const d = { id, path: p, v: val[id], rotulo: null, dicho: null, color: id in val ? colores[claseDe(val[id])] : null };
+    const p = el('path', { d: geo.d, fill: id in val ? NEUTRO : 'url(#sinDato)' }, svg);
+    const d = { id, path: p, v: val[id], rotulo: null, dicho: null, alfa: id in val ? alfaDe(claseDe(val[id]), nc) : null };
     M.deptos.push(d);
   }
   // los valores que dice la voz (S.T.valores) se casan con los departamentos redondeados como los dice: «220» es 219.69
@@ -101,15 +111,43 @@ function dibujar() {
       M.ref = { k, el: r };
     }
   }
+  // el destacado: su resplandor (debajo de su relleno, encima de los vecinos) y su relleno al final del dibujo
   if (hi) {
-    M.dest.push(el('path', { d: GEOMETRIA.deptos[hi].d, class: 'halo' }, svg));
-    M.dest.push(el('path', { d: GEOMETRIA.deptos[hi].d, class: 'borde' }, svg));
     M.hi = M.deptos.find((d) => d.id === hi);
+    M.dest = el('g', { class: 'resplandor' }, svg);
+    for (const [w, o] of [[34, 0.07], [20, 0.12], [10, 0.22]])   // el ancho va en style: #mapa path fija stroke-width
+      el('path', { d: GEOMETRIA.deptos[hi].d, style: `stroke-width:${w}px`, 'stroke-opacity': o }, M.dest);
+    svg.appendChild(M.hi.path);
   }
-  // rótulo «nombre · valor» de cada departamento con valor, junto a su centro: a la derecha si cabe, si no a la
-  // izquierda, y si choca con un rótulo que se ve a la vez (el del destacado, siempre visible, o el de otro
-  // departamento con el mismo valor, que se enciende con la misma palabra) prueba debajo, arriba o centrado
+  // dónde hay tierra: una rejilla de PASO unidades del viewBox; una celda es tierra si su centro cae dentro de algún
+  // departamento (isPointInFill, con la caja de cada uno como filtro). Los rótulos buscan sitio sobre el mar y los
+  // vecinos (fuera del país) antes que sobre otro departamento
   const VB = GEOMETRIA.viewBox.split(' ').map(Number), xMax = VB[0] + VB[2], yMax = VB[1] + VB[3];
+  const PASO = 10, CX = Math.ceil(VB[2] / PASO), CY = Math.ceil(VB[3] / PASO), tierra = new Uint8Array(CX * CY);
+  const pt = svg.createSVGPoint();
+  for (const d of M.deptos) {
+    const bb = d.path.getBBox();
+    for (let j = Math.max(0, Math.floor((bb.y - VB[1]) / PASO)); j <= Math.min(CY - 1, Math.floor((bb.y + bb.height - VB[1]) / PASO)); j++)
+      for (let i = Math.max(0, Math.floor((bb.x - VB[0]) / PASO)); i <= Math.min(CX - 1, Math.floor((bb.x + bb.width - VB[0]) / PASO)); i++) {
+        if (tierra[j * CX + i]) continue;
+        pt.x = VB[0] + (i + 0.5) * PASO; pt.y = VB[1] + (j + 0.5) * PASO;
+        if (d.path.isPointInFill(pt)) tierra[j * CX + i] = 1;
+      }
+  }
+  const pisa = (x, y, w, h) => { let n = 0;
+    for (let j = Math.max(0, Math.floor((y - VB[1]) / PASO)); j <= Math.min(CY - 1, Math.floor((y + h - VB[1]) / PASO)); j++)
+      for (let i = Math.max(0, Math.floor((x - VB[0]) / PASO)); i <= Math.min(CX - 1, Math.floor((x + w - VB[0]) / PASO)); i++) n += tierra[j * CX + i];
+    return n; };
+  // rótulo «nombre · valor» de cada departamento con valor, cerca de su centro. Se prueba alrededor (derecha,
+  // izquierda, arriba, abajo y en diagonal, a distancias crecientes) y gana el sitio que menos tierra pisa —sobre el
+  // mar si se puede— y, a igual tierra, el más cercano; nunca uno que choque con un rótulo que se ve a la vez: el del
+  // destacado (desde que el mapa está completo) o el de otro departamento cuya ventana de voz se cruza con la suya
+  // (el mismo valor, o dos valores dichos seguidos)
+  const T = S.T, ventanas = new Map();
+  for (const [k, [a, b]] of Object.entries(T.valores || {}))
+    for (const d of M.porValor[k] || []) ventanas.set(d, [...(ventanas.get(d) || []), [a - 0.1, b + 1.0]]);
+  if (M.hi) ventanas.set(M.hi, [...(ventanas.get(M.hi) || []), [T.ini + 2.1, 1e9]]);
+  const aLaVez = (d1, d2) => (ventanas.get(d1) || []).some(([a, b]) => (ventanas.get(d2) || []).some(([c, e]) => a < e && c < b));
   const puestos = [];
   const choca = (x, y, w, h, otros) => otros.some((r) => x < r.x + r.w + 8 && x + w + 8 > r.x && y < r.y + r.h + 8 && y + h + 8 > r.y);
   const orden = M.deptos.filter((d) => d.id in val).sort((a, b) => (a === M.hi ? -1 : b === M.hi ? 1 : 0));
@@ -118,22 +156,28 @@ function dibujar() {
     const g = el('g', { class: 'rotulo' }, svg);
     const t1 = el('text', { x: 0, y: 0 }, g); t1.textContent = NOMBRES[d.id];
     const t2 = el('text', { x: 0, y: 0, class: 'v' }, g); t2.textContent = d.dicho ? fDicho(d.dicho) : f(val[d.id]);
-    const w1 = t1.getBBox().width, w2 = t2.getBBox().width, w = w1 + 18 + w2 + 32, h = 52;
-    const otros = puestos.filter((r) => r.d === M.hi || clave(r.d.v) === clave(d.v));
-    const cands = [[cx + 70, cy - 80], [cx - 70 - w, cy - 80], [cx + 70, cy + 30], [cx - 70 - w, cy + 30],
-                   [cx - w / 2, cy - 150], [cx - w / 2, cy + 80]];
-    let x = null, y = null;
-    for (const [px, py] of cands) {
-      const xx = Math.min(Math.max(px, VB[0] + 6), xMax - w - 6), yy = Math.min(Math.max(VB[1] + 6, py), yMax - h - 6);
-      if (x === null) { x = xx; y = yy; }   // la primera posición vale si ninguna queda libre
-      if (!choca(xx, yy, w, h, otros)) { x = xx; y = yy; break; }
+    const w1 = t1.getBBox().width, w2 = t2.getBBox().width, w = w1 + 18 + w2 + 32, h = 54;
+    const otros = puestos.filter((r) => r.d === M.hi || clave(r.d.v) === clave(d.v) || aLaVez(r.d, d));
+    let mejor = null;
+    for (const r of [70, 130, 200, 280]) {
+      const cands = [[cx + r, cy - h / 2], [cx - r - w, cy - h / 2], [cx - w / 2, cy - r - h], [cx - w / 2, cy + r],
+                     [cx + 0.7 * r, cy - 0.7 * r - h], [cx - 0.7 * r - w, cy - 0.7 * r - h], [cx + 0.7 * r, cy + 0.7 * r], [cx - 0.7 * r - w, cy + 0.7 * r]];
+      for (const [px, py] of cands) {
+        const x = Math.min(Math.max(px, VB[0] + 6), xMax - w - 6), y = Math.min(Math.max(VB[1] + 6, py), yMax - h - 6);
+        if (choca(x, y, w, h, otros)) continue;
+        const q = pisa(x, y, w, h);
+        if (!mejor || q < mejor.q) mejor = { x, y, q };
+      }
+      if (mejor && mejor.q === 0) break;   // sobre el mar: no hace falta ir más lejos
     }
+    // si todo choca, la primera posición (a la derecha) vale
+    const { x, y } = mejor || { x: Math.min(Math.max(cx + 70, VB[0] + 6), xMax - w - 6), y: Math.min(Math.max(VB[1] + 6, cy - h / 2), yMax - h - 6) };
     puestos.push({ d, x, y, w, h });
-    const linea = el('line', { x1: cx, y1: cy, x2: Math.min(Math.max(cx, x), x + w), y2: y + h / 2 }, g);
+    const linea = el('line', { x1: cx, y1: cy, x2: Math.min(Math.max(cx, x), x + w), y2: Math.min(Math.max(cy, y), y + h) }, g);
     const rect = el('rect', { x, y, width: w, height: h, rx: 12 }, g);
     g.insertBefore(rect, t1); g.insertBefore(linea, rect);  // línea guía, píldora y, encima, los textos
-    t1.setAttribute('x', x + 16); t1.setAttribute('y', y + 36);
-    t2.setAttribute('x', x + 16 + w1 + 18); t2.setAttribute('y', y + 36);
+    t1.setAttribute('x', x + 16); t1.setAttribute('y', y + 40);
+    t2.setAttribute('x', x + 16 + w1 + 18); t2.setAttribute('y', y + 40);
     g.style.opacity = 0;
     d.rotulo = g;
   }
@@ -141,17 +185,15 @@ function dibujar() {
   const ley = document.getElementById('leyenda');
   for (let i = nc - 1; i >= 0; i--) {
     const lo = i === 0 ? min : cortes[i - 1], hiV = i === nc - 1 ? max : cortes[i];
-    ley.insertAdjacentHTML('beforeend', `<span><i style="background:${colores[i]}"></i>${esc(f(lo))} – ${esc(f(hiV))}</span>`);
+    ley.insertAdjacentHTML('beforeend', `<span><i style="background:${luz(alfaDe(i, nc))}"></i>${esc(f(lo))} – ${esc(f(hiV))}</span>`);
   }
-  if (con.length < ids.length) ley.insertAdjacentHTML('beforeend', `<span><i style="background:${H.color.inkA(.18)}"></i>Sin dato</span>`);
+  if (con.length < ids.length) ley.insertAdjacentHTML('beforeend', '<span><i style="background:color-mix(in srgb, var(--ink) 18%, transparent)"></i>Sin dato</span>');
   document.getElementById('fuente').textContent = D.fuente ? 'Fuente: ' + D.fuente : '';
   document.getElementById('kicker').textContent = D.kicker || '';
 }
 
 window.__listo = (async () => {
   const C = await V.cargar(), todo = C.todo; S = C.S; TROZOS = C.trozos;
-  const rgb = (h) => (h.replace('#', '').match(/../g) || []).map((x) => parseInt(x, 16)).join(',');
-  document.documentElement.style.setProperty('--ink-rgb', rgb(todo.colores.ink));
   S.arriba = S.arriba || [];
   V.pintarGolpe(S);
   V.pintarProgreso(todo);
@@ -168,29 +210,32 @@ window.seek = (t) => {
   V.seekActo(t, S);
   const T = S.T, ini = T.ini;
   document.getElementById('kicker').style.opacity = prog(t, ini - 0.3, ini + 0.2);
-  // el país entra completo en tono neutro (0.4 s) y cada departamento toma su color de menor a mayor valor en 1.6 s,
-  // con un brillo al llegar (antes cada uno aparecía solo en el orden de la geometría: el mapa se armaba a pedazos)
+  // el país entra completo en tono neutro (0.4 s) y cada departamento se enciende con el acento de su clase, de menor
+  // a mayor valor en 1.6 s, con un destello al llegar (antes cada uno aparecía solo en el orden de la geometría)
   const nD = M.orden.length, base = prog(t, ini, ini + 0.4);
   M.orden.forEach((d, k) => {
-    const a = ini + 0.3 + 1.6 * k / nD, p = prog(t, a, a + 0.4);
+    const a = ini + 0.3 + 1.6 * k / nD;
     d.path.style.opacity = base;
-    d.tono = d.color ? (p < 1 ? H.mezcla(M.neutro, d.color, p) : d.color) : null;
-    d.brillo = 0.3 * Math.sin(Math.PI * p);
+    d.p = prog(t, a, a + 0.4);
+    d.destello = 0.25 * Math.sin(Math.PI * d.p);
   });
-  // el destacado: contorno y rótulo cuando el mapa está completo
+  // el destacado: sube al acento pleno con su resplandor y su rótulo cuando el mapa está completo
   const pd = prog(t, ini + 2.1, ini + 2.6);
-  M.dest.forEach((e) => (e.style.opacity = pd));
-  // los valores que dice la voz: su departamento brilla y enseña su rótulo mientras dura la ventana
+  if (M.dest) M.dest.style.opacity = pd;
+  // los valores que dice la voz: su departamento se enciende entero y enseña su rótulo mientras dura la ventana
   const activos = new Map();
   for (const [k, [a, b]] of Object.entries(T.valores || {})) {
     const w = prog(t, a - 0.1, a + 0.3) * (1 - prog(t, b + 0.6, b + 1.0));
     for (const d of M.porValor[k] || []) activos.set(d, Math.max(activos.get(d) || 0, w));
   }
   for (const d of M.deptos) {
-    const w = activos.get(d) || 0, b = d.brillo + 0.3 * w;
-    // el brillo es un color calculado (mezcla hacia blanco), no un filter: el filter cambia el antialiasing de toda la
-    // página de una grabación a otra y los clips dejan de ser deterministas
-    if (d.tono) d.path.setAttribute('fill', b > 0.01 ? H.mezcla(d.tono, '#FFFFFF', Math.min(0.6, b)) : d.tono);
+    const w = activos.get(d) || 0;
+    // la luz es una mezcla calculada del acento (color-mix con variables), no un filter: el filter cambia el
+    // antialiasing de toda la página de una grabación a otra y los clips dejan de ser deterministas
+    if (d.alfa !== null) {
+      const alfa = d === M.hi ? d.alfa + (1 - d.alfa) * pd : d.alfa;
+      d.path.setAttribute('fill', luz(Math.min(1, alfa * d.p + d.destello + (1 - alfa) * w)));
+    }
     if (d.rotulo) { const o = d === M.hi ? Math.max(pd, w) : w; d.rotulo.style.opacity = o; d.rotulo.style.transform = `translateY(${((1 - o) * 14).toFixed(1)}px)`; }
   }
   if (M.ref) {

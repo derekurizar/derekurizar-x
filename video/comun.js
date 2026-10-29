@@ -16,10 +16,15 @@ const V = (() => {
   const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;');
   // palabra comparable: minúsculas, sin tildes ni puntuación
   const normal = (w) => (w || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]/g, '');
-  // subtítulos en trozos de ≤ 26 caracteres (caben en la columna segura); corta también tras puntuación fuerte
+  // palabras vacías: un trozo de subtítulo no termina en ellas y no cuentan al comparar con la pantalla
+  const VACIAS = new Set(['a', 'al', 'con', 'de', 'del', 'e', 'el', 'en', 'es', 'la', 'las', 'lo', 'los', 'o', 'para', 'por', 'que', 'se', 'su', 'sus', 'u', 'un', 'una', 'y']);
+  // subtítulos en trozos de ≤ 26 caracteres (caben en la columna segura); corta también tras puntuación fuerte, y si el
+  // corte por largo deja al final una palabra vacía («el», «de», «y»), esa pasa al trozo siguiente
   const trocear = (ps) => { const out = []; let cur = [];
     for (const p of ps) { const largo = cur.map((x) => x.text).join(' ').length + p.text.length + 1;
-      if (cur.length && largo > 26) { out.push(cur); cur = []; }
+      if (cur.length && largo > 26) {
+        const lleva = cur.length > 1 && VACIAS.has(normal(cur[cur.length - 1].text)) ? [cur.pop()] : [];
+        out.push(cur); cur = lleva; }
       cur.push(p); if (/[.?:;…]$/.test(p.text)) { out.push(cur); cur = []; } }
     if (cur.length) out.push(cur); return out; };
 
@@ -29,6 +34,8 @@ const V = (() => {
     const todo = await (await fetch('escenas.json')).json();
     for (const [k, v] of Object.entries(todo.colores)) document.documentElement.style.setProperty('--' + k.replace('_', '-'), v);
     const S = todo.escenas.find(buscar || ((e) => e.n === n));
+    // Noche: el acto 2 de /historia (el nudo) baja el fondo a fondo_acto2; la escena lo hereda entera (cuerpo y velos)
+    if (S && S.acto === 2 && todo.colores.fondo_acto2) document.documentElement.style.setProperty('--bg', todo.colores.fondo_acto2);
     return { todo, S, trozos: trocear(S.palabras) };
   }
   // el objeto DATA de tarjeta_N.html (el tuit_N.html del hilo)
@@ -41,10 +48,24 @@ const V = (() => {
 
   // golpe de arriba (S.arriba, palabras con start): se pinta, se achica hasta que golpe + barra terminen antes de
   // `limite` (y de página) y entra deslizándose desde la izquierda, cada palabra subiendo
-  const pintarGolpe = (S) => { document.getElementById('golpe').innerHTML = S.arriba.map((w) => `<span>${esc(w.text)}</span>`).join(''); };
+  // la palabra del titular que va en el acento (una sola): la primera con cifra («220», «6», «Q126»); si no hay cifra, la
+  // primera palabra de cantidad («menos», «más», «casi»…); si no hay ninguna, nada. → índice o -1. Un titular solo de
+  // cifras y signos («26 → 46.1») va entero en el acento (todos: true)
+  const CANTIDAD = new Set(['mas', 'menos', 'mayor', 'menor', 'doble', 'triple', 'mitad', 'casi', 'solo', 'ningun', 'ninguna',
+    'ninguno', 'nadie', 'todos', 'todas', 'cero', 'record', 'maximo', 'minimo', 'nunca', 'siempre']);
+  const acentoDe = (palabras) => {
+    const ws = palabras.map((w) => String(w));
+    if (!ws.some((w) => /\p{L}/u.test(w))) return { k: -1, todos: true };
+    const k = ws.findIndex((w) => /\d/.test(w));
+    return { k: k >= 0 ? k : ws.findIndex((w) => CANTIDAD.has(normal(w))), todos: false };
+  };
+  const pintarGolpe = (S) => {
+    const a = acentoDe(S.arriba.map((w) => w.text));
+    document.getElementById('golpe').innerHTML = S.arriba.map((w, i) => `<span${a.todos || i === a.k ? ' class="acento"' : ''}>${esc(w.text)}</span>`).join('');
+  };
   const ajustarGolpe = (S, limite) => {
     const g = document.getElementById('golpe'), arriba = document.getElementById('arriba');
-    for (let fs = 72; S.arriba.length && fs > 48 && arriba.offsetTop + arriba.offsetHeight > limite - 16; fs -= 4) g.style.fontSize = fs + 'px';
+    for (let fs = 96; S.arriba.length && fs > 60 && arriba.offsetTop + arriba.offsetHeight > limite - 16; fs -= 6) g.style.fontSize = fs + 'px';
   };
   const seekGolpe = (t, S) => {
     const pg = eo((t - (S.arriba.length ? S.arriba[0].start : 0) + 0.15) / 0.4);
@@ -53,21 +74,60 @@ const V = (() => {
       const p = eo((t - S.arriba[i].start + 0.15) / 0.3); s.style.opacity = p; s.style.transform = `translateY(${(1 - p) * 16}px)`; });
   };
 
-  // barra de progreso: escenas anteriores llenas, la actual (k) avanza con el tiempo, las siguientes vacías
-  const pintarProgreso = (todo) => { document.getElementById('progreso').innerHTML = todo.escenas.map(() => '<i><b></b></i>').join(''); };
+  // barra de progreso: un tramo por grupo, de largo proporcional a su duración. /historia agrupa por acto (S.acto),
+  // /noticias por noticia (S.N.indice) y /video va por escena. Una escena sin grupo toma el de la anterior (el cierre) o,
+  // al principio, el de la siguiente (el gancho). Los grupos anteriores llenos, el actual avanza con el tiempo.
+  let GRUPOS = null;
+  const grupos = (todo) => {
+    const es = todo.escenas, ks = es.map((e) => (e.acto != null ? 'a' + e.acto : e.N && e.N.indice != null ? 'n' + e.N.indice : null));
+    if (!ks.some((x) => x !== null)) return es.map((e) => ({ ns: [e.n], durs: [e.dur || 1] }));
+    for (let i = 0; i < ks.length; i++) if (ks[i] === null) ks[i] = i > 0 ? ks[i - 1] : ks.find((x) => x !== null);
+    const out = [];
+    ks.forEach((k, i) => { if (!out.length || out[out.length - 1].k !== k) out.push({ k, ns: [], durs: [] });
+      out[out.length - 1].ns.push(es[i].n); out[out.length - 1].durs.push(es[i].dur || 1); });
+    return out;
+  };
+  const pintarProgreso = (todo) => {
+    GRUPOS = grupos(todo);
+    document.getElementById('progreso').innerHTML = GRUPOS.map((g) => `<i style="flex:${g.durs.reduce((a, b) => a + b, 0).toFixed(2)}"><b></b></i>`).join('');
+  };
   const seekProgreso = (t, k, dur) => {
-    [...document.querySelectorAll('#progreso b')].forEach((b, i) => { b.style.width = (i + 1 < k ? 100 : i + 1 === k ? 100 * clamp(t / dur) : 0) + '%'; });
+    const gi = GRUPOS.findIndex((g) => g.ns.includes(k)), g = GRUPOS[gi] || { ns: [k], durs: [dur] };
+    const j = g.ns.indexOf(k), antes = g.durs.slice(0, j).reduce((a, b) => a + b, 0), total = g.durs.reduce((a, b) => a + b, 0);
+    const avance = clamp((antes + Math.max(0, Math.min(t, dur)) * (g.durs[j] || dur) / Math.max(0.001, dur)) / Math.max(0.001, total));
+    [...document.querySelectorAll('#progreso b')].forEach((b, i) => { b.style.width = (i < gi ? 100 : i === gi ? 100 * avance : 0) + '%'; });
   };
 
   // subtítulos: el trozo que suena (se oculta tras la voz, o cuando `ocultar(trozo, t)` lo pide); la palabra que se
   // dice resaltada, las ya dichas normales, las que vienen apagadas. Con S.sigue (la escena siguiente continúa la
   // misma secuencia de voz, /historia) el último trozo se queda hasta el final del clip: subtítulos continuos
-  const palabras = (ps, t) => ps.map((p) => `<span class="${t >= p.start && t < p.end + 0.08 ? 'ahora' : t >= p.end ? '' : 'no'}${p.num ? ' cifra' : ''}">${esc(p.text)}</span>`).join(' ');
+  // una sola palabra resaltada a la vez: la última que empezó (la cola de 0.08 s de la anterior no la duplica)
+  const palabras = (ps, t) => {
+    let k = -1; ps.forEach((p, i) => { if (t >= p.start && t < p.end + 0.08) k = i; });
+    return ps.map((p, i) => `<span class="${i === k ? 'ahora' : t >= p.start ? '' : 'no'}${p.num ? ' cifra' : ''}">${esc(p.text)}</span>`).join(' ');
+  };
+  // sin subtítulo doble: si ≥ 60 % de las palabras con contenido del trozo ya se leen en pantalla (texto visible fuera de
+  // #subs y #progreso: la cita, el golpe, el titular, la frase final), el trozo no se muestra
+  const enPantalla = () => {
+    const s = new Set(), w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    for (let nd = w.nextNode(); nd; nd = w.nextNode()) {
+      const el = nd.parentElement;
+      if (!el || el.closest('#subs, #progreso, script, style') || !el.checkVisibility({ opacityProperty: true, visibilityProperty: true })) continue;
+      for (const x of nd.textContent.split(/\s+/)) { const k = normal(x); if (k) s.add(k); }
+    }
+    return s;
+  };
+  const doble = (ps) => {
+    const ks = ps.map((p) => normal(p.text)).filter((k) => k && !VACIAS.has(k));
+    if (ks.length < 2) return false;
+    const vis = enPantalla();
+    return ks.filter((k) => vis.has(k)).length / ks.length >= 0.6;
+  };
   const finSubs = (S) => S.fin_voz + (S.sigue ? 1e9 : 0.4);
   const subtitulos = (t, S, trozos, o = {}) => {
     const k = trozos.findIndex((c, j) => t >= c[0].start - 0.05 && t < ((trozos[j + 1] || [{ start: 1e9 }])[0].start - 0.05));
     const tr = trozos[k];
-    const oculto = !tr || t > finSubs(S) || (o.ocultar && o.ocultar(tr, t));
+    const oculto = !tr || t > finSubs(S) || (o.ocultar && o.ocultar(tr, t)) || doble(tr);
     document.getElementById('subs').innerHTML = oculto ? '' : palabras(tr, t);
   };
   // variante del cierre: una ventana de 5 palabras alrededor de la que suena
@@ -75,7 +135,7 @@ const V = (() => {
     const ini = S.palabras.findIndex((p) => t < p.end + 0.08);
     const k = ini < 0 ? S.palabras.length - 1 : ini;
     const ventana = S.palabras.slice(Math.max(0, k - 2), k + 3);
-    document.getElementById('subs').innerHTML = t > finSubs(S) ? '' : palabras(ventana, t);
+    document.getElementById('subs').innerHTML = t > finSubs(S) || doble(ventana) ? '' : palabras(ventana, t);
   };
 
   // RÓTULO DE ACTO (S.R, lo escribe scripts/historia.py en la primera escena de cada acto): un velo a sangre sobre la
@@ -102,7 +162,7 @@ const V = (() => {
       '</div></div>';
     (subs ? subs.parentNode : document.body).insertBefore(el, subs);
     // las fuentes del rótulo pueden no estar cargadas aún (la página quizá no las usa): se piden antes de medir
-    await Promise.all(["400 230px 'Instrument Serif'", "600 24px 'JetBrains Mono'", '700 66px Archivo'].map((f) => document.fonts.load(f)));
+    await Promise.all(['extra-condensed 900 230px Archivo', "600 24px 'JetBrains Mono'", '800 66px Archivo'].map((f) => document.fonts.load(f)));
     await document.fonts.ready;
     // el año grande: desde 230 px (180 en 4:5) hacia abajo hasta que quepa en la columna («Los sesenta» cabe)
     const a = el.querySelector('.anio'), col = el.querySelector('.col').clientWidth;
@@ -210,6 +270,6 @@ const V = (() => {
     return fallas;
   };
 
-  return { n, F45, portada, clamp, eo, prog, esc, normal, trocear, cargar, tarjeta, pintarGolpe, ajustarGolpe, seekGolpe,
+  return { n, F45, portada, clamp, eo, prog, esc, normal, trocear, cargar, tarjeta, acentoDe, pintarGolpe, ajustarGolpe, seekGolpe,
     pintarProgreso, seekProgreso, subtitulos, subtitulosVentana, desfase, pintarActo, seekActo, zona, medirZona };
 })();

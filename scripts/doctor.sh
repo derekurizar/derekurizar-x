@@ -38,10 +38,10 @@ fi
 
 # tipografías
 FALTAN=""
-for f in archivo-var.woff2 instrument-serif-400.woff2 instrument-serif-400i.woff2 jetbrains-mono-var.woff2; do
+for f in archivo-var.woff2 archivo-wdth.woff2 instrument-serif-400.woff2 instrument-serif-400i.woff2 jetbrains-mono-var.woff2; do
   [[ -s "design/fonts/$f" ]] || FALTAN="$FALTAN $f"
 done
-if [[ -z "$FALTAN" ]]; then ok "design/fonts/: los 4 woff2 presentes"; else error "design/fonts/: faltan$FALTAN"; fi
+if [[ -z "$FALTAN" ]]; then ok "design/fonts/: los 5 woff2 presentes"; else error "design/fonts/: faltan$FALTAN"; fi
 
 # render de prueba (plantilla cifra + checks R1–R6)
 if [[ $ERRORES -eq 0 ]]; then

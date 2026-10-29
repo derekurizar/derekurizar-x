@@ -529,19 +529,60 @@ def contraste(c1, c2):
 
 
 def colores(paleta):
-    p = leer(os.path.join(RAIZ, "design", "tokens.json"))["paletas"][paleta]
-    # resaltado del subtítulo activo: a3 de fondo con a1 de texto si se lee bien; si no, ink sobre bg invertido
-    if contraste(p["a3"], p["a1"]) >= 4.5:
-        rbg, rink = p["a3"], p["a1"]
-    else:
-        rbg, rink = p["ink"], p["bg"]
-    return {"bg": p["bg"], "ink": p["ink"], "a1": p["a1"], "a2": p["a2"], "a3": p["a3"],
-            "resalte_bg": rbg, "resalte_ink": rink,
-            "pregunta": p["a3"] if contraste(p["a3"], p["bg"]) >= 3 else p["ink"],
-            "acento": p["a1"] if contraste(p["a1"], p["bg"]) >= 3 else p["ink"],  # la cifra grande del gancho/golpe
-            # lo que el visual del gancho destaca (el desborde, el bloque que crece, las figuras encendidas): una forma, no
-            # texto, así que basta 2.5:1; si ningún acento llega, la tinta
-            "grafico": next((p[c] for c in ("a1", "a3", "a2") if contraste(p[c], p["bg"]) >= 2.5), p["ink"])}
+    """Colores de las escenas, estilo Noche (design/tokens.json · noche, los mismos roles que la tarjeta): fondo oscuro de
+    la paleta, texto crema y el acento del tema para lo único que destaca en cada escena (la cifra, la palabra que suena,
+    las figuras encendidas, la palabra que suena en el subtítulo). a2/a3 son la serie atenuada (crema y acento, ≥ 3.2:1). fondo_acto2 oscurece el acto 2 de
+    /historia y fondo_golpe el golpe trágico; tinta_acento es el texto sobre el acento (subtítulo activo, píldoras)."""
+    tk = leer(os.path.join(RAIZ, "design", "tokens.json"))
+    n, q = tk["noche"], tk["noche"]["paletas"][paleta]
+    return {"bg": q["fondo"], "ink": n["texto"], "a1": q["acento"], "a2": q["serie"][2], "a3": q["serie"][3],
+            "fondo_acto2": q["fondo_acto2"], "fondo_golpe": q["fondo_golpe"], "tinta_acento": n["tinta_sobre_acento"],
+            # la palabra que suena va en una caja del acento con tinta oscura (como el diseño del lienzo)
+            "resalte_bg": q["acento"], "resalte_ink": n["tinta_sobre_acento"],
+            "pregunta": q["acento"], "acento": q["acento"], "grafico": q["acento"]}
+
+
+RE_CABECERA_VISUAL = re.compile(r"<!-- plantilla: ([\w-]+) · paleta: (\w+)")
+RE_DATA_VISUAL = re.compile(r"const DATA = \{.*?\n\};\n", re.S)
+
+
+def rebasar_tarjetas(hilo_dir, trabajo):
+    """Rearma en TRABAJO/tarjetas/ cada tuit_N.html del hilo con la base de hoy y en estilo Noche (plantilla, paleta y
+    DATA de su cabecera): un hilo entregado antes de Noche trae tarjetas de fondo plano que no casan con el fondo oscuro
+    del video. La grabación y V7 usan esta carpeta (tarjetas_dir). Devuelve los avisos."""
+    import nuevo_visual
+    tk, avisos = nuevo_visual.tokens(), []
+    dest = os.path.join(trabajo, "tarjetas")
+    os.makedirs(dest, exist_ok=True)
+    for html in sorted(glob.glob(os.path.join(hilo_dir, "tuit_*.html"))):
+        src = open(html, encoding="utf-8").read()
+        salida = os.path.join(dest, os.path.basename(html))
+        cab, dat = RE_CABECERA_VISUAL.search(src), RE_DATA_VISUAL.search(src)
+        if not cab or not dat:
+            shutil.copyfile(html, salida)
+            avisos.append("%s sin cabecera o DATA: se usa tal cual" % os.path.basename(html))
+            continue
+        ok, msg = nuevo_visual.ensamblar(cab.group(1), salida, cab.group(2), tk, "noche")
+        if not ok:
+            shutil.copyfile(html, salida)
+            avisos.append("%s: %s (se usa tal cual)" % (os.path.basename(html), msg))
+            continue
+        base = open(salida, encoding="utf-8").read()
+        nuevo, k = RE_DATA_VISUAL.subn(lambda _m: dat.group(0), base, count=1)
+        if k != 1:
+            shutil.copyfile(html, salida)
+            avisos.append("%s: la plantilla no tiene un bloque DATA reconocible (se usa tal cual)" % os.path.basename(html))
+            continue
+        open(salida, "w", encoding="utf-8").write(nuevo)
+    return avisos
+
+
+def tarjetas_dir(trabajo, st):
+    """Carpeta de las tarjetas que se graban: TRABAJO/tarjetas/ (rearmadas en Noche por preparar) o la del hilo."""
+    propia = os.path.join(trabajo, "tarjetas")
+    if os.path.isdir(propia) and glob.glob(os.path.join(propia, "tuit_*.html")):
+        return propia
+    return os.path.join(RAIZ, st["hilo"]) if st.get("hilo") else None
 
 
 def palabras(s):
@@ -958,6 +999,8 @@ def cmd_preparar(a):
           "ganchos_recientes": recientes, "cierres_recientes": cierres, "animaciones_recientes": anim_rec,
           "tarjetas": tarjetas, "sugeridas": sugeridas}
     escribir(os.path.join(trabajo, "video.json"), st)
+    for aviso in rebasar_tarjetas(hilo_dir, trabajo):
+        print("AVISO tarjetas: " + aviso, file=sys.stderr)
 
     giros = [x["n"] for x in tarjetas if x["beat"] == "giro"]
     impactos = [x["n"] for x in tarjetas if x["beat"] == "impacto"]
@@ -2872,7 +2915,7 @@ def cmd_tiempos(a):
 def cmd_grabar(a):
     trabajo = os.path.abspath(a.trabajo)
     st = estado(trabajo)
-    hilo_dir = os.path.join(RAIZ, st["hilo"]) if st.get("hilo") else None   # /noticias no tiene hilo ni tarjetas
+    hilo_dir = tarjetas_dir(trabajo, st)   # /noticias no tiene hilo ni tarjetas; las de /video, rearmadas en Noche
     args = ["node", os.path.join(RAIZ, "scripts", "video_grabar.js"), "--dir", trabajo, *(["--hilo", hilo_dir] if hilo_dir else []),
             "--fps", str(a.fps), "--formato", a.formato]
     if a.solo:
@@ -3121,7 +3164,7 @@ def cmd_montar(a):
         portadas.append({"nombre": "texto", "pagina": "portada", "archivo": os.path.join(sal, "portada_texto.png")})
     escribir(os.path.join(segs, "portadas.json"), portadas)
     st = estado(trabajo)
-    if subprocess.run(["node", os.path.join(RAIZ, "scripts", "video_grabar.js"), "--dir", trabajo, *(["--hilo", os.path.join(RAIZ, st["hilo"])] if st.get("hilo") else []),
+    if subprocess.run(["node", os.path.join(RAIZ, "scripts", "video_grabar.js"), "--dir", trabajo, *(["--hilo", tarjetas_dir(trabajo, st)] if st.get("hilo") else []),
                        "--portadas", os.path.join(segs, "portadas.json")], cwd=RAIZ, stdout=subprocess.DEVNULL).returncode:
         return falla("las portadas no se dibujaron")
     print("video %.1f s · %.1f LUFS · %.1f dBTP · %d subtítulos · efectos %d · música %.2f con ducking → %s"
@@ -3291,11 +3334,23 @@ def cmd_escuchar(a):
 
 
 def movimiento_de(clip, fps=QUIETUD_FPS):
-    """Diferencia media de luma (0–255) entre cuadros consecutivos, muestreados a `fps` y a 270 px de ancho."""
+    """Diferencia media de luma (0–255) entre cuadros consecutivos, muestreados a `fps` y a 270 px de ancho. La media
+    sale del plano Y crudo de los cuadros de diferencia, no de signalstats: con el grano fijo de Noche, x264 retoca unos
+    pocos píxeles en ±1 entre cuadros de una pantalla congelada y signalstats da YAVG de 1.5–7.7 en esos cuadros casi
+    negros (la media real es < 0.001), así que V12 no veía la pantalla quieta. Con movimiento, las dos medidas coinciden."""
+    r = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width,height",
+                        "-of", "csv=p=0", clip], capture_output=True, text=True)
+    try:
+        ancho, alto = (int(x) for x in r.stdout.strip().split(",")[:2])
+    except ValueError:
+        return []
+    w, h = 270, max(2, 2 * round(270 * alto / ancho / 2))   # alto par: yuv420p
     r = subprocess.run(["ffmpeg", "-v", "error", "-nostats", "-i", clip, "-vf",
-                        "fps=%d,scale=270:-1,tblend=all_mode=difference,signalstats,metadata=print:key=lavfi.signalstats.YAVG:file=-" % fps,
-                        "-f", "null", "-"], capture_output=True, text=True)
-    return [float(x) for x in re.findall(r"YAVG=([0-9.]+)", r.stdout)]
+                        "fps=%d,scale=%d:%d,tblend=all_mode=difference,format=yuv420p" % (fps, w, h), "-f", "rawvideo", "-"],
+                       capture_output=True)
+    n, b = w * h, r.stdout
+    paso = n * 3 // 2   # cada cuadro yuv420p: el plano Y (n bytes) y luego U y V a un cuarto
+    return [sum(b[i:i + n]) / n for i in range(0, len(b) - paso + 1, paso)]
 
 
 def ventanas_quietas(vals, fps=QUIETUD_FPS, minimo=QUIETUD_S, umbral=QUIETUD_UMBRAL, saltar=TRANSICION):

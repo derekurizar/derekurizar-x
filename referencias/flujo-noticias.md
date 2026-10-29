@@ -30,8 +30,8 @@ cierre, `video/cierre.html` con el rótulo «Hoy en Guatemala».
 
 | Escena | Tiempo | Voz (≈ 15.5 car/s a 1.1×) | Pantalla |
 |---|---|---|---|
-| E1 `titular` (gancho) | 0–4 s | 25–62 caracteres, una oración con verbo | la foto de la noticia 1 a sangre, oscurecida; su titular entero desde el cuadro 0 (las palabras que la voz dice se encienden con `realce`); «Hoy · 23 oct» y «4 noticias» |
-| E2–E4 `noticia` | ~10–16 s c/u | 140–235 caracteres | chip «2/4 · Sección»; foto en marco con Ken Burns y «Foto: …»; titular con la voz; la cifra que cuenta y late cuando la voz la dice; «Fuente: …» |
+| E1 `titular` (gancho) | 0–4 s | 25–62 caracteres, una oración con verbo | la foto de la noticia 1 a sangre, oscurecida; su titular entero desde el cuadro 0 en crema (las palabras que la voz dice se encienden en `realce`, el acento); «Hoy · 23 oct» y «4 noticias» |
+| E2–E4 `noticia` | ~10–16 s c/u | 140–235 caracteres | chip «2/4 · Sección»; foto **a sangre** con Ken Burns y «Foto: …»; titular con la voz; la cifra que cuenta, condensada en el acento, que late cuando la voz la dice; «Fuente: …» |
 | E5 `noticia` breve (opcional) | ~5–8 s | 60–115 caracteres | igual, sin cifra obligatoria |
 | E6 cierre | ~5–8 s | 30–85 caracteres | «Hoy en Guatemala» con 3–4 titulares cortos → la frase final → «Sígueme en» (5 redes, solo en pantalla) |
 
@@ -46,7 +46,18 @@ cierre, `video/cierre.html` con el rótulo «Hoy en Guatemala».
   deportes); el editor prioriza las que traen una cifra verificable y la pone en pantalla, pero una noticia grande sin
   cifra también entra.
 - **Una paleta por día**: el ciclo de las 8 paletas por fecha (`PALETAS_CICLO`; dos días seguidos nunca repiten), la
-  música va con la paleta y el gancho usa `realce` (el primer color claro de la paleta que se lee sobre la foto oscurecida).
+  música va con la paleta y `realce` es el acento Noche del tema (≥ 7:1 sobre el fondo: se lee sobre la foto
+  oscurecida).
+- **Estilo Noche** (`referencias/diseno/sistema.md`, como `/video`): fondo de la paleta casi negro con grano fijo;
+  **foto a sangre** en todas las escenas (ya no en marco), brillo 0.45–0.6, con una sombra del color del fondo arriba
+  (bajo la barra) y abajo (bajo los subtítulos), capa con `data-fuera-de-zona` (V13 mide solo lo que se lee); el
+  acento en **una sola cosa** por escena (la cifra o la palabra que suena); titulares en Archivo 800 crema, cifras en
+  Archivo condensado 900, chip, «Fuente: …» y «Foto: …» en JetBrains Mono 600; nada en Instrument Serif. Subtítulos de
+  60 px, y **sin subtítulo doble** cuando la pantalla ya dice la voz. La barra de progreso va **por noticia** (el
+  gancho entra en la primera; el cierre, en la última). En la escena de noticia la foto ocupa una lámina de 1080×1200
+  arriba (igual en 9:16 y 4:5), a brillo 0.55 (0.45 si se agranda más de 2×, como una og:image de 1200×630), y el
+  texto va abajo en la columna segura: chips (sección y, si está `en_desarrollo`, «En desarrollo»), titular, cifra,
+  «Fuente: …» y «Foto: …».
 - **Conectores** entre noticias («Además», «En economía», «Mientras tanto»), no «pero / por eso».
 - **Cierre siempre con «Sígueme en»**; la voz del cierre no dice fuentes ni «sígueme».
 - Sin cara; sin música ni efectos generados (catálogos fijos de `/video`).

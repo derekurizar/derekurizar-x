@@ -4,13 +4,22 @@
 .dona-aro { width: 380px; height: 380px; border-radius: 50%; position: relative; }
 .dona-aro::after { content: ""; position: absolute; inset: 86px; border-radius: 50%; background: var(--bg); }
 .dona-centro { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1; text-align: center; }
-.dona-centro .v { font: 400 92px/.9 'Instrument Serif', Georgia, serif; letter-spacing: -.02em; }
+.dona-centro .v { font-size: 92px; line-height: .9; letter-spacing: -.02em; }   /* familia y peso: .cifra-heroe */
 .dona-centro .t { font: 600 19px/1.2 Archivo, sans-serif; margin-top: 10px; max-width: 180px; }
 .dona-lista { display: flex; flex-direction: column; gap: 22px; }
 .dona-item { display: flex; align-items: center; gap: 16px; }
 .dona-item .sw { width: 22px; height: 22px; flex: none; }
 .dona-item .n { font: 600 24px/1.15 Archivo, sans-serif; flex: 1; }
 .dona-item .p { font: 700 36px/1 'JetBrains Mono', monospace; }
+/* Noche: el agujero es hueco de verdad (se ve el grano del fondo, no un disco plano de --bg). El aro sigue llevando su
+   conic-gradient en style.background (animar.js lo lee y lo barre), pero no lo pinta: lo hereda ::before, recortado
+   en anillo con una máscara radial (86 px de grosor, como el inset del clásico). */
+body[data-estilo="noche"] .dona-aro { background-size: 0 0 !important; }
+body[data-estilo="noche"] .dona-aro::before { content: ""; position: absolute; inset: 0; border-radius: 50%; background: inherit; background-size: auto;
+  -webkit-mask: radial-gradient(closest-side, transparent calc(100% - 86.5px), var(--ink) calc(100% - 85.5px));
+          mask: radial-gradient(closest-side, transparent calc(100% - 86.5px), var(--ink) calc(100% - 85.5px)); }
+body[data-estilo="noche"] .dona-aro::after { content: none; }
+body[data-estilo="noche"] .dona-centro .v { letter-spacing: 0; }
 </style>
 <script>
 // CIFRAS DE EJEMPLO · verificar antes de publicar
@@ -39,7 +48,8 @@ function render(D) {
   H.assert(total > 0, "la suma de las partes es 0");
   const hi = ((D.destacar || 0) % D.partes.length + D.partes.length) % D.partes.length;
   const ink = H.color.ink;
-  const ROL = [ink, H.color.a2, H.color.a3, H.color.inkA(.45)];
+  // Las demás partes: ink, a2, a3 por ese orden; la quinta, crema al 45 % (en Noche al 28 %: a2 ya es la crema al 55 %).
+  const ROL = [ink, H.color.a2, H.color.a3, H.color.inkA(H.estilo() === "noche" ? .28 : .45)];
 
   const alto = H.espacio(420, 380);
   const g = document.getElementById("grafico");
@@ -52,7 +62,7 @@ function render(D) {
   aro.style.background = "conic-gradient(" + stops.join(",") + ")";
   const centro = H.el("div", "dona-centro", aro);
   const c = D.centro || { valor: Math.round((D.partes[hi].valor / total) * 100), texto: D.partes[hi].nombre };
-  H.el("div", "v", centro, H.esc(typeof c.valor === "number" ? H.pct(c.valor) : String(c.valor)));
+  H.el("div", "v cifra-heroe", centro, H.esc(typeof c.valor === "number" ? H.pct(c.valor) : String(c.valor)));
   H.el("div", "t", centro, H.esc(c.texto || ""));
 
   const lista = H.el("div", "dona-lista", grid);

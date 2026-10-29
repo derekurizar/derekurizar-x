@@ -7,9 +7,12 @@ es un HTML autocontenido (salvo las fuentes, que scripts/render.js sirve desde
 design/fonts/). El visualista solo edita el objeto DATA del archivo ensamblado.
 
 Uso:
-  python3 scripts/nuevo_visual.py <plantilla> <destino.html> [--paleta cielo]
+  python3 scripts/nuevo_visual.py <plantilla> <destino.html> [--paleta cielo] [--estilo noche|clasico]
   python3 scripts/nuevo_visual.py --listar
-  python3 scripts/nuevo_visual.py --galeria templates/.galeria [--paletas cielo,jade|todas]
+  python3 scripts/nuevo_visual.py --galeria templates/.galeria [--paletas cielo,jade|todas] [--estilo noche|clasico]
+
+--estilo: «noche» (el de siempre: fondo oscuro de la paleta, acento, crema, Archivo condensado) o «clasico»
+(las paletas planas de siempre; solo /investigacion y sus figuras: el informe se queda en papel).
 Salida: 0 ok · 1 error · 2 uso incorrecto
 """
 import argparse
@@ -25,6 +28,7 @@ DIR_PLANTILLAS = os.path.join(RAIZ, "templates", "graficos")
 DIR_PRUEBAS = os.path.join(RAIZ, "templates", ".pruebas")
 TOKENS = os.path.join(RAIZ, "design", "tokens.json")
 MARCADOR = "<!-- T:PLANTILLA -->"
+ESTILOS = ("noche", "clasico")
 
 
 def tokens():
@@ -47,7 +51,7 @@ def ruta_plantilla(nombre):
     return None
 
 
-def _sustituir_paleta(html, paleta):
+def _sustituir_paleta(html, paleta, estilo="noche"):
     cierre = html.lower().find("</head>")
     desde = cierre + len("</head>") if cierre != -1 else 0
     m = re.search(r"<body\b([^>]*)>", html[desde:], re.I)
@@ -58,17 +62,23 @@ def _sustituir_paleta(html, paleta):
         attrs = re.sub(r'(\bdata-paleta\s*=\s*)"[^"]*"', r'\1"%s"' % paleta, attrs)
     else:
         attrs = attrs.rstrip() + ' data-paleta="%s"' % paleta
+    if re.search(r'\bdata-estilo\s*=\s*"[^"]*"', attrs):
+        attrs = re.sub(r'(\bdata-estilo\s*=\s*)"[^"]*"', r'\1"%s"' % estilo, attrs)
+    else:
+        attrs = attrs.rstrip() + ' data-estilo="%s"' % estilo
     ini, fin = desde + m.start(), desde + m.end()
     return html[:ini] + "<body" + attrs + ">" + html[fin:]
 
 
-def ensamblar(nombre, destino, paleta, tk):
+def ensamblar(nombre, destino, paleta, tk, estilo="noche"):
     fuente = ruta_plantilla(nombre)
     if not fuente:
         return False, "no existe la plantilla %r (hay: %s)" % (
             nombre, ", ".join(os.path.splitext(os.path.basename(p))[0] for p in plantillas()))
     if paleta not in tk["paletas"]:
         return False, "paleta %r no existe en design/tokens.json (hay: %s)" % (paleta, ", ".join(tk["paletas"]))
+    if estilo not in ESTILOS:
+        return False, "estilo %r no existe (hay: %s)" % (estilo, ", ".join(ESTILOS))
     with open(BASE, encoding="utf-8") as fh:
         base = fh.read()
     with open(fuente, encoding="utf-8") as fh:
@@ -79,13 +89,13 @@ def ensamblar(nombre, destino, paleta, tk):
         return False, "%s debe definir `const DATA = {...}` y `function render(D)`" % os.path.relpath(fuente, RAIZ)
     if re.search(r"https?://", frag):
         return False, "%s contiene una URL: las tarjetas no admiten recursos externos" % os.path.relpath(fuente, RAIZ)
-    cabecera = "<!-- plantilla: %s · paleta: %s · ensamblado por scripts/nuevo_visual.py -->\n" % (nombre, paleta)
+    cabecera = "<!-- plantilla: %s · paleta: %s · estilo: %s · ensamblado por scripts/nuevo_visual.py -->\n" % (nombre, paleta, estilo)
     html = base.replace(MARCADOR, cabecera + frag.strip() + "\n")
-    html = _sustituir_paleta(html, paleta)
+    html = _sustituir_paleta(html, paleta, estilo)
     os.makedirs(os.path.dirname(os.path.abspath(destino)) or ".", exist_ok=True)
     with open(destino, "w", encoding="utf-8") as fh:
         fh.write(html)
-    return True, "%s (%s) -> %s" % (nombre, paleta, os.path.relpath(destino, os.getcwd()))
+    return True, "%s (%s, %s) -> %s" % (nombre, paleta, estilo, os.path.relpath(destino, os.getcwd()))
 
 
 def main():
@@ -93,6 +103,7 @@ def main():
     p.add_argument("plantilla", nargs="?")
     p.add_argument("destino", nargs="?")
     p.add_argument("--paleta", default="cielo")
+    p.add_argument("--estilo", default="noche", choices=ESTILOS)
     p.add_argument("--listar", action="store_true")
     p.add_argument("--galeria", metavar="DIR", help="ensambla todas las plantillas (y .pruebas/) en DIR")
     p.add_argument("--paletas", default="cielo", help="para --galeria: lista separada por comas o 'todas'")
@@ -116,7 +127,7 @@ def main():
                 png = os.path.splitext(destino)[0] + ".png"
                 if os.path.exists(png):
                     os.remove(png)
-                ok, msg = ensamblar(nombre, destino, pal, tk)
+                ok, msg = ensamblar(nombre, destino, pal, tk, a.estilo)
                 n += ok
                 if not ok:
                     fallos += 1
@@ -126,7 +137,7 @@ def main():
 
     if not a.plantilla or not a.destino:
         p.error("hacen falta <plantilla> y <destino.html> (o --listar / --galeria DIR)")
-    ok, msg = ensamblar(a.plantilla, a.destino, a.paleta, tk)
+    ok, msg = ensamblar(a.plantilla, a.destino, a.paleta, tk, a.estilo)
     print(("OK   " if ok else "ERROR: ") + msg, file=sys.stdout if ok else sys.stderr)
     return 0 if ok else 1
 

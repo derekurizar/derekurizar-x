@@ -7,7 +7,7 @@ referencias/roles/video-animador.md); catalogo.json lo escribe SOLO este script.
 Uso:
   python3 scripts/animaciones.py --lista                             las animaciones del catálogo, por mecanismo
   python3 scripts/animaciones.py --check ID [--paleta P] [--salida D] lint + node --check + meta + grabación doble a
-                                                                     10 fps (framemd5 igual) + 4:5 + quietud V12 +
+                                                                     10 fps (iguales; ≥ 50 dB) + 4:5 + quietud V12 +
                                                                      hojas de contacto (una por paso) en D
   python3 scripts/animaciones.py --registrar ID [--video SLUG]       lo agrega al catálogo (o suma un uso)
   python3 scripts/animaciones.py --asignar TRABAJO --escena N --id ID   pone `animacion: ID` en la escena explica N de
@@ -33,15 +33,20 @@ RE_ID = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 MAX_BYTES = 40000
 SVG_NS = "http://www.w3.org/2000/svg"   # el único «enlace» permitido: el espacio de nombres de createElementNS
 # lo que una animación NO puede hacer: el estado es solo seek(t) (clips idénticos en serie y en paralelo), sin red ni
-# colores fijos (la paleta del hilo llega como variables CSS: var(--bg), var(--ink), var(--a1)…)
+# colores fijos (la paleta del hilo llega como variables CSS, estilo Noche: var(--bg), var(--ink), var(--acento),
+# var(--tinta-acento), var(--a2), var(--a3)…; cualquier var(--x) vale) ni tipos fuera de Noche
 PROHIBIDO = [
     (r"Math\.random", "azar (Math.random): el cuadro debe ser función de t"),
     (r"\bDate\b|performance\.now", "reloj (Date, performance.now): el cuadro debe ser función de t"),
     (r"requestAnimationFrame|setTimeout|setInterval", "temporizadores: la grabadora llama a seek(t) cuadro a cuadro"),
     (r"\bfetch\b|XMLHttpRequest|import\s*\(|\bimportScripts\b", "red o módulos: cero dependencias externas"),
     (r"https?://", "enlace externo"),
-    (r"#[0-9a-fA-F]{3,8}\b", "color fijo en hexadecimal: usa var(--ink), var(--bg), var(--a1)…"),
+    (r"#[0-9a-fA-F]{3,8}\b", "color fijo en hexadecimal: usa var(--ink), var(--bg), var(--acento)…"),
     (r"\brgba?\s*\(|\bhsla?\s*\(", "color fijo: usa las variables de la paleta (color-mix si hace falta transparencia)"),
+    (r"Instrument\s+Serif", "Instrument Serif no va en el video (Noche): Archivo 800 en textos y Archivo 900 condensado "
+                            "(font-stretch: 62.5%) en cifras, nombres y años"),
+    (r"font-stretch\s*:[^;`'\"]*;[^`'\"]*?\bfont\s*:", "font-stretch antes del atajo font: (el atajo lo devuelve a normal): "
+                                                     "pon font-stretch después de font:"),
 ]
 
 
@@ -167,6 +172,25 @@ def framemd5(clip):
     return [ln.split(",")[-1].strip() for ln in r.stdout.splitlines() if ln and not ln.startswith("#")]
 
 
+# Dos grabaciones de un seek(t) puro dan los mismos cuadros salvo ruido de rasterizado de Chromium (unos píxeles de
+# texto o de un borde con 1–70 niveles; medido ≥ 55 dB de PSNR); un seek impuro (estado que se acumula) da mucho menos.
+PSNR_MIN = 50
+
+
+def peor_psnr(a, b):
+    """(PSNR más bajo cuadro a cuadro entre dos clips, su cuadro); inf si todos son idénticos."""
+    r = subprocess.run(["ffmpeg", "-v", "error", "-i", a, "-i", b, "-lavfi", "psnr=stats_file=-", "-f", "null", "-"],
+                       capture_output=True, text=True)
+    peor = (float("inf"), None)
+    for ln in r.stdout.splitlines():
+        m = re.search(r"n:(\d+).*psnr_avg:(\S+)", ln)
+        if m:
+            v = float("inf") if m.group(2) == "inf" else float(m.group(2))
+            if v < peor[0]:
+                peor = (v, int(m.group(1)))
+    return peor
+
+
 def contacto(clip, tiempos, out, alto):
     import video as VID
     tmp = out + "_cuadros"
@@ -213,7 +237,10 @@ def cmd_check(a):
         print("FALLA %s: la segunda grabación falló: %s" % (aid, err))
         return 1
     if framemd5(clip) != md5a:
-        fallas.append("dos grabaciones dan cuadros distintos: seek(t) no es puro (¿estado que se acumula entre cuadros?)")
+        psnr, cuadro = peor_psnr(os.path.join(sal, "primera.mp4"), clip)
+        if psnr < PSNR_MIN:
+            fallas.append("dos grabaciones dan cuadros distintos (cuadro %s: %.1f dB < %d): seek(t) no es puro (¿estado que "
+                          "se acumula entre cuadros?)" % (cuadro, psnr, PSNR_MIN))
     os.remove(os.path.join(sal, "primera.mp4"))
     err = grabar(sal, "4:5")
     if err:

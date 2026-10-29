@@ -5,6 +5,8 @@
 // (2) las casillas quedan fijas: un marco con candado las encierra, intentan crecer y se frenan; (3) unas pocas figuras
 // salen del numerador; (4) el medidor baja apenas y sigue muy por encima de la marca. Con 2–6 pasos se reparten esas
 // fases (el primero arma la división, el último muestra el medidor casi igual). Sin cifras propias. seek puro.
+// Estilo Noche: figuras, raya, casillas, marco y candado en crema; lo único en acento es lo que el medidor pasa de la
+// marca de «lleno» (el exceso, la idea de la escena).
 //
 // Contrato (referencias/roles/video-animador.md): ANIM.registrar(id, { meta, pintar(lienzo, P, ctx), seek(t, T) })
 //   P   = { titulo, pasos: [texto] }
@@ -80,7 +82,7 @@ ANIM.registrar('fraccion-espacios', {
     this.fantasma = el('rect', { y: yCas.toFixed(1), height: b.toFixed(1), rx: (0.1 * c).toFixed(1), fill: 'none',
       stroke: 'color-mix(in srgb, var(--ink) 55%, transparent)', 'stroke-width': 5, 'stroke-dasharray': '10 8' });
     this.marco = el('rect', { x: (bx - 0.04 * c).toFixed(1), y: (yCas - 0.14 * c).toFixed(1),
-      height: (b + 0.28 * c).toFixed(1), rx: (0.16 * c).toFixed(1), fill: 'none', stroke: 'var(--a1)',
+      height: (b + 0.28 * c).toFixed(1), rx: (0.16 * c).toFixed(1), fill: 'none', stroke: 'var(--ink)',
       'stroke-width': 7 });
     this.marcoY = yCas + b / 2;
     // candado
@@ -88,9 +90,9 @@ ANIM.registrar('fraccion-espacios', {
     const cw = 0.5 * c, ch = 0.4 * c;
     el('path', { d: `M ${(-0.15 * c).toFixed(1)} ${(-ch / 2 + 2).toFixed(1)} v ${(-0.1 * c).toFixed(1)} ` +
       `a ${(0.15 * c).toFixed(1)} ${(0.15 * c).toFixed(1)} 0 0 1 ${(0.3 * c).toFixed(1)} 0 v ${(0.1 * c).toFixed(1)}`,
-      fill: 'none', stroke: 'var(--a1)', 'stroke-width': 6, 'stroke-linecap': 'round' }, this.candado);
+      fill: 'none', stroke: 'var(--ink)', 'stroke-width': 6, 'stroke-linecap': 'round' }, this.candado);
     el('rect', { x: (-cw / 2).toFixed(1), y: (-ch / 2).toFixed(1), width: cw.toFixed(1), height: ch.toFixed(1),
-      rx: (0.07 * c).toFixed(1), fill: 'var(--a1)' }, this.candado);
+      rx: (0.07 * c).toFixed(1), fill: 'var(--ink)' }, this.candado);
     el('circle', { cx: 0, cy: 0, r: (0.05 * c).toFixed(1), fill: 'var(--bg)' }, this.candado);
 
     // --- medidor vertical
@@ -110,7 +112,7 @@ ANIM.registrar('fraccion-espacios', {
     this.lleno = document.createElement('div');
     this.lleno.textContent = 'lleno';
     this.lleno.style.cssText = `position:absolute;left:${mx}px;width:${mw}px;top:${(this.med.marca + 8).toFixed(1)}px;` +
-      "text-align:center;font:600 36px/1 Archivo,sans-serif;letter-spacing:-.01em";
+      "text-align:center;font:800 36px/1 Archivo,sans-serif;letter-spacing:-.01em";
     lienzo.appendChild(this.lleno);
 
     // --- rótulos de los pasos (abajo)
@@ -122,7 +124,7 @@ ANIM.registrar('fraccion-espacios', {
       const marca = document.createElement('div');
       marca.style.cssText = 'width:10px;height:38px;border-radius:5px;flex:none';
       const tx = document.createElement('div');
-      tx.style.cssText = `font:600 ${fsL}px/1.05 Archivo,sans-serif;color:var(--ink);white-space:nowrap;` +
+      tx.style.cssText = `font:800 ${fsL}px/1.05 Archivo,sans-serif;letter-spacing:-.01em;color:var(--ink);white-space:nowrap;` +
         'overflow:hidden;text-overflow:ellipsis;min-width:0;transform-origin:0 50%';
       tx.textContent = txt;
       fila.appendChild(marca); fila.appendChild(tx);
@@ -224,12 +226,13 @@ ANIM.registrar('fraccion-espacios', {
     let activo = -1;
     ps.forEach((p, i) => { if (t >= p.start) activo = i; });
     this.rotulos.forEach((ro, i) => {
-      const entra = eo((t - ps[i].start) / 0.45), fant = 0.22 * eo((t - T.ini) / 0.5);
+      const entra = eo((t - ps[i].start) / 0.45), fant = 0.28 * eo((t - T.ini) / 0.5);
       const on = i === activo;
       ro.fila.style.opacity = Math.max(fant, entra * (on ? 1 : 0.5)).toFixed(3);
-      ro.tx.style.fontWeight = on ? '700' : '500';
+      ro.tx.style.fontWeight = on ? '800' : '600';
       ro.tx.style.transform = `translateX(${((1 - entra) * -24).toFixed(1)}px)`;
-      ro.marca.style.background = on ? 'var(--acento)' : 'color-mix(in srgb, var(--ink) 35%, transparent)';
+      // el acento es del medidor: la marca del paso activo va en crema plena
+      ro.marca.style.background = on ? 'var(--ink)' : 'color-mix(in srgb, var(--ink) 35%, transparent)';
     });
   },
 });

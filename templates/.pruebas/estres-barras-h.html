@@ -15,6 +15,7 @@ const DATA = {
   ],
   destacar: 0, orden: "desc"
 };
+
 function render(D) {
   H.assert(Array.isArray(D.items) && D.items.length >= 2 && D.items.length <= 8, "barras-h admite de 2 a 8 items");
   D.items.forEach((it) => H.assert(it && typeof it.nombre === "string" && typeof it.valor === "number", "cada item necesita nombre y valor numérico"));
@@ -28,6 +29,8 @@ function render(D) {
   const labPx = n > 6 ? 21 : 23, hiPx = n > 6 ? 24 : 26;
   const max = Math.max(...items.map((it) => Math.abs(it.valor))) || 1;
   const ink = H.color.ink;
+  // Noche: las barras que no son el destacado, en crema atenuada (el acento es una sola cosa); en clásico, tinta.
+  const resto = H.estilo() === "noche" ? H.color.inkA(.5) : ink;
 
   items.forEach((it, i) => {
     const esHi = i === hi;
@@ -35,7 +38,7 @@ function render(D) {
     H.texto(svg, 0, y, it.nombre, { style: "font:" + (esHi ? "800 " + hiPx : "600 " + labPx) + "px Archivo,sans-serif;fill:" + ink });
     H.texto(svg, W, y, it.valor_texto || H.num(it.valor, D.formato), { class: "t-val", "text-anchor": "end", style: esHi ? "font-size:24px" : "" });
     const w = Math.max(4, (Math.abs(it.valor) / max) * W);
-    H.svgEl("rect", { x: 0, y: y + 12, width: w, height: barH, fill: esHi ? H.color.a1 : ink }, svg);
+    H.svgEl("rect", { x: 0, y: y + 12, width: w, height: barH, fill: esHi ? H.color.a1 : resto }, svg);
   });
 }
 </script>

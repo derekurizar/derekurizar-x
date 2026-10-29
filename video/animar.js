@@ -116,7 +116,7 @@
       const D = DATA, items = D.orden === "desc" ? D.items.slice().sort((x, y) => y.b - x.b) : D.items.slice();
       const conect = qa("#grafico svg line").filter((l) => l.getAttribute("stroke-linecap") === "round");
       const circ = qa("#grafico svg circle");
-      const labs = qa("#grafico svg text").filter((t) => /700 22px 'JetBrains Mono'/.test(t.getAttribute("style") || ""));
+      const labs = rotulosValor(items);
       E.items = items.map((it, i) => ({ a: it.a, b: it.b, l: conect[i], x2: conect[i].getAttribute("x2"),
         ca: circ[2 * i], cb: circ[2 * i + 1], cx: circ[2 * i + 1].getAttribute("cx"),
         la: labs[2 * i], lat: labs[2 * i].textContent, lb: labs[2 * i + 1], lbt: labs[2 * i + 1].textContent }));
@@ -127,7 +127,7 @@
       const orden = D.items.map((_, i) => i).sort((a, b) => (a === hi) - (b === hi));
       const lineas = qa("#grafico svg line").filter((l) => l.getAttribute("stroke-linecap") === "round");
       const circ = qa("#grafico svg circle");
-      const labs = qa("#grafico svg text").filter((t) => /700 26px 'JetBrains Mono'/.test(t.getAttribute("style") || ""));
+      const labs = rotulosValor(orden.map((k) => D.items[k]));
       E.items = orden.map((k, j) => ({ a: D.items[k].a, b: D.items[k].b, l: lineas[j],
         x1: +lineas[j].getAttribute("x1"), y1: +lineas[j].getAttribute("y1"),
         x2: lineas[j].getAttribute("x2"), y2: lineas[j].getAttribute("y2"),
@@ -222,7 +222,9 @@
           nombre: ts.find((x_) => attr(x_, "x") === 0 && cerca(attr(x_, "y"), cy + 8, 3)) || null, t, txt: t ? t.textContent : "", c: conect[k] || null }; });
     } else if (plantilla === "combinado") {
       // barras (rect fuera de la leyenda), línea (path fill none), puntos (circle), rótulos por columna
-      const rects = qa("#grafico svg rect").filter((r) => attr(r, "y") > 30), ts = qa("#grafico svg text");
+      // la franja de un valor más ancho que su barra (rect[data-franja]) no es una barra: aparece cuando terminan de crecer
+      const rects = qa("#grafico svg rect").filter((r) => attr(r, "y") > 30 && !r.hasAttribute("data-franja")), ts = qa("#grafico svg text");
+      E.franjas = qa("#grafico svg rect[data-franja]");
       E.barras = rects.map((r) => { const x = attr(r, "x"), w = attr(r, "width"), cx = x + w / 2;
         const t = ts.find((x_) => !x_.classList.contains("t-eje") && cerca(attr(x_, "x"), cx, 2) && /18px/.test(x_.getAttribute("style") || "")) || null;
         return { r, ys: r.getAttribute("y"), hs: r.getAttribute("height"), cx, t, txt: t ? t.textContent : "" }; });
@@ -297,6 +299,21 @@
       const cy = casilla ? +casilla.getAttribute("y") + +casilla.getAttribute("height") / 2 : null;
       E.dest = casilla ? { rect: casilla, textos: E.textos.filter((x) => Math.abs(+x.t.getAttribute("y") - cy) <= 20).map((x) => x.t) } : null;
     }
+  }
+
+  // pesas y pendiente: los rótulos de valor (a y b de cada fila, en el orden de dibujo) por su TEXTO, el número con el
+  // formato de la tarjeta (H.num): no dependen de la fuente, que cambia entre el estilo clásico (JetBrains Mono) y
+  // Noche. Las fechas centradas bajo el eje (pendiente) no cuentan; cada texto se usa una sola vez y en orden de
+  // documento, así dos filas con el mismo valor no se cruzan. Lo que no se encuentre por su texto cae al rótulo libre
+  // siguiente (el orden de dibujo es a, b por fila en las dos plantillas).
+  function rotulosValor(items) {
+    const fechas = (DATA.fechas || []).map(String);
+    const libres = [...document.querySelectorAll("#grafico svg text")].filter((t) => !t.classList.contains("t-eje")
+      && !(t.getAttribute("text-anchor") === "middle" && fechas.includes(t.textContent)));
+    const usados = new Set(), f = (v) => H.num(v, DATA.formato);
+    const tomar = (cumple) => { const t = libres.find((x) => !usados.has(x) && cumple(x)); if (t) usados.add(t); return t || null; };
+    return items.flatMap((it) => [f(it.a), f(it.b)].map((s) => tomar((x) => x.textContent === s)))
+      .map((t) => t || tomar(() => true));
   }
 
   // pesas y pendiente: el texto del nombre de cada fila (a la altura del punto a, a su izquierda), para que el foco
@@ -513,6 +530,7 @@
         if (bar.t) { contar(bar.t, bar.txt, p); opacar(bar.t, prog(t, a, a + 0.25)); }
       });
       const fb = Math.max(T.ini + 0.8, ...E.barras.map((bar, i) => { const n = numTexto(bar.txt); return ventanaDe(T, [n && n.v], i)[1]; }));
+      E.franjas.forEach((f) => opacar(f, prog(t, fb - 0.2, fb + 0.1)));
       const la = fb, lb = Math.max(la + 0.8, T.linea_fin || la + 1.5), pl = prog(t, la, lb);
       if (E.linea) { E.linea.style.strokeDasharray = pl >= 1 ? "" : E.L; E.linea.style.strokeDashoffset = pl >= 1 ? "" : E.L * (1 - pl); opacar(E.linea, prog(t, la - 0.1, la + 0.1)); }
       E.puntos.forEach((c, i) => opacar(c, prog(t, la + (lb - la) * (i / Math.max(1, E.puntos.length - 1)) - 0.05, la + (lb - la) * (i / Math.max(1, E.puntos.length - 1)) + 0.2)));

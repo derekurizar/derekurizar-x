@@ -4,6 +4,7 @@
 SHELL := /bin/bash
 GALERIA := templates/.galeria
 PALETAS ?= cielo
+ESTILO ?= noche
 PALETA ?= cielo
 
 .PHONY: help nuevo render visual catalogo validate tabla pdf ensamblar limpiar test doctor costo contacto digesto fuentes ideas calendario informe informe-ejemplo informe-catalogo informe-fixture verificacion auditoria-rehacer podar video-fixture video-fixture-4x5 noticias-fixture historia-fixture musica whisper iconos
@@ -12,7 +13,7 @@ help:
 	@echo "make nuevo T=<plantilla> OUT=<ruta.html> [PALETA=cielo]  ensambla una tarjeta (base + plantilla)"
 	@echo "make render FILE=<ruta.html> [OUT=<ruta.png>]            HTML -> PNG 1080x1080 @2x, sin checks"
 	@echo "make visual FILE=<ruta.html> [OUT=<ruta.png>]            GATE: render + checks R1-R6 (exit 0 = pasa)"
-	@echo "make catalogo [PALETAS=cielo|todas|a,b]                  ensambla y renderiza TODAS las plantillas en $(GALERIA)/"
+	@echo "make catalogo [PALETAS=cielo|todas|a,b] [ESTILO=clasico]  ensambla y renderiza TODAS las plantillas en $(GALERIA)/ (Noche; clasico = /investigacion)"
 	@echo "make ensamblar SESION=sesiones/<slug> [OUT=dir] [CHECK=1] sesion -> carpeta de hilo (hilos/) o de dato (datos/) segun guion.tipo"
 	@echo "make validate                                            valida memoria/*.json y la integridad de hilos/ y datos/"
 	@echo "make tabla URL=<xlsx|html|csv> [OUT=ruta]                descarga y convierte a CSV (sesiones/_descargas/)"
@@ -51,7 +52,7 @@ visual:
 
 catalogo:
 	rm -rf $(GALERIA) && mkdir -p $(GALERIA)
-	python3 scripts/nuevo_visual.py --galeria $(GALERIA) --paletas $(PALETAS)
+	python3 scripts/nuevo_visual.py --galeria $(GALERIA) --paletas $(PALETAS) --estilo $(ESTILO)
 	node scripts/render.js $(GALERIA)/*.html --check
 
 ensamblar:

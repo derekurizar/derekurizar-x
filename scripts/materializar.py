@@ -74,15 +74,22 @@ def con_ajuste(sesion, tuit):
     return v
 
 
+def estilo_de(guion):
+    """Noche para todo; /investigacion (modo de hilo) se queda en el estilo clásico: sus tarjetas son figuras del informe."""
+    return "clasico" if guion.get("modo") == "investigacion" else "noche"
+
+
 def materializar_uno(sesion, guion, tuit, render=True, plantilla_forzada=None):
     v = con_ajuste(sesion, tuit)
     n = tuit["n"]
     plantilla = plantilla_forzada or v.get("plantilla_final") or v["plantilla"]
     paleta = guion.get("paleta", "cielo")
+    estilo = estilo_de(guion)
     vis_dir = os.path.join(sesion, "visuales")
     os.makedirs(vis_dir, exist_ok=True)
     html = os.path.join(vis_dir, "tuit_%d.html" % n)
-    r = subprocess.run([sys.executable, os.path.join(RAIZ, "scripts", "nuevo_visual.py"), plantilla, html, "--paleta", paleta],
+    r = subprocess.run([sys.executable, os.path.join(RAIZ, "scripts", "nuevo_visual.py"), plantilla, html, "--paleta", paleta,
+                        "--estilo", estilo],
                        capture_output=True, text=True)
     if r.returncode != 0:
         return False, "T%d: %s" % (n, (r.stderr or r.stdout).strip())

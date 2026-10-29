@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="es"><head><meta charset="utf-8">
-<!-- Escenas propias de /historia (?n=N), sobre video/comun.js y comun.css:
-     · `cita`: la frase literal de una persona o de un documento. Comillas grandes; la frase entera desde el principio,
-       apagada, y cada palabra se enciende cuando la voz la dice. Abajo quién y cuándo (con retrato en círculo si hay
-       foto, y su crédito). Con `documento`, la frase va en una hoja con su membrete y un resaltador barre la parte
-       clave cuando la voz la dice. Una cita en otro idioma lleva su traducción en un renglón debajo, que entra
-       cuando la voz la dice.
-     · `capitulo`: el separador de capítulo. «Capítulo 2 de 4», el año grande que cuenta desde el del capítulo anterior
-       hasta el suyo, el título que entra con la voz y la línea de capítulos con el actual encendido.
+<!-- Escenas propias de /historia (?n=N), sobre video/comun.js y comun.css (estilo Noche):
+     · `cita`: la frase literal de una persona o de un documento, entera desde el principio: lo que falta al 26 %, la
+       palabra que la voz dice en el acento y lo ya dicho en crema; la parte clave se subraya en el acento cuando la voz
+       la dice. Detrás, la comilla grande en el acento a baja opacidad (atmósfera, fuera de la zona). Abajo quién (el
+       nombre condensado) y cuándo, con retrato en círculo si hay foto, y su crédito. Con `documento`, la frase va en una
+       hoja con su membrete. Una cita en otro idioma lleva su traducción en un renglón debajo, que entra cuando la voz la
+       dice. Mientras la voz lee la cita no hay subtítulo: la frase en pantalla ya lo es.
+     · `capitulo`: el separador de capítulo. «Capítulo 2 de 4», el año grande (condensado, en el acento) que cuenta
+       desde el del capítulo anterior hasta el suyo, el título que entra con la voz y la línea de capítulos con el
+       actual encendido.
      S.H (video.py tiempos, desde scripts/historia.py):
        cita     { texto: [{text, start, dicha}], autor, cargo, cuando, retrato, credito, documento, membrete,
                   resalte: [i0, i1] | null, resalte_t, fuente: {texto, start} | null, entra, latidos: [t],
@@ -17,49 +19,55 @@
 <link rel="stylesheet" href="comun.css">
 <style>
 #progreso { margin-top: 0; }
-#chip { display: flex; align-items: center; gap: 18px; margin-top: 22px; font: 600 26px/1 'JetBrains Mono', monospace;
+/* chips neutros: el acento es de la palabra que suena */
+#chip { display: flex; align-items: center; gap: 16px; margin-top: 22px; font: 600 24px/1 'JetBrains Mono', monospace;
   letter-spacing: .12em; text-transform: uppercase; }
-#chip b { background: var(--acento); color: var(--bg); border-radius: 10px; padding: 8px 14px 9px; font-weight: 700; }
-#chip span { opacity: .85; }
-/* cita: la columna con comillas, frase y firma; termina antes de los subtítulos */
+#chip b { background: color-mix(in srgb, var(--ink) 16%, transparent); border-radius: 10px; padding: 9px 14px 10px; font-weight: 700; }
+#chip span { opacity: .9; }
+/* atmósfera de la cita: la comilla grande en el acento, casi transparente, a sangre (V13 no la mide) */
+#atmos { position: absolute; inset: 0; overflow: hidden; display: none; pointer-events: none; }
+body.cita:not(.documento) #atmos { display: block; }
+#comillas { position: absolute; left: 22px; top: 250px; font: 900 900px/1 Archivo, sans-serif; font-stretch: 62.5%; color: var(--acento);
+  opacity: .13; transform-origin: 20% 30%; }
+/* cita: la columna con frase y firma; termina antes de los subtítulos */
 #cita { position: absolute; top: 380px; bottom: calc(1920px - var(--fin) + 10px); left: var(--izq); right: var(--der);
   display: none; flex-direction: column; justify-content: center; gap: 34px; transform-origin: 50% 50%; }
 body.cita #cita { display: flex; }
-#comillas { font: 400 300px/.6 'Instrument Serif', serif; color: var(--acento); height: 130px; margin-left: -10px; transform-origin: 0 50%; }
-#frase { font: 400 76px/1.06 'Instrument Serif', serif; letter-spacing: -.015em; }
-#frase span { display: inline-block; margin-right: .2em; opacity: .28; }
-#frase span.dicha { opacity: 1; }
-/* resaltador: la marca invertida del subtítulo activo (--resalte-bg / --resalte-ink de la paleta), a casi toda la
-   altura, que barre palabra por palabra; con la tinta de la paleta encima una barra oscura tapaba las letras */
-#frase span.resalte { background-image: linear-gradient(var(--resalte-bg), var(--resalte-bg)); background-repeat: no-repeat;
-  background-position: 0 58%; background-size: var(--barra, 0%) 96%; border-radius: 8px; padding: 0 .1em; margin-right: 0; }
-#frase span.resalte.marcada { color: var(--resalte-ink); opacity: 1 !important; }
-#frase span.resalte + span:not(.resalte) { margin-left: .2em; }
+#frase { font: 800 70px/1.08 Archivo, sans-serif; letter-spacing: -.015em; }
+#frase span { display: inline-block; margin-right: .2em; opacity: .26; }
+#frase span.suena { color: var(--acento); }
+/* la parte clave: subrayado en el acento que barre palabra por palabra cuando la voz la dice (la palabra no cambia de
+   color: el acento en el texto es solo para la que suena) */
+#frase span.resalte { background-image: linear-gradient(var(--acento), var(--acento)); background-repeat: no-repeat;
+  background-position: 0 96%; background-size: var(--barra, 0%) .085em; margin-right: 0; padding-right: .2em; }
+#frase span.resalte.ult { padding-right: 0; margin-right: .2em; }
 #firma { display: flex; align-items: center; gap: 26px; }
 #retrato { width: 132px; height: 132px; border-radius: 50%; overflow: hidden; flex: none; display: none;
   background: color-mix(in srgb, var(--ink) 10%, var(--bg)); }
 #retrato img { width: 100%; height: 100%; object-fit: cover; }
-#quien b { display: block; font: 700 40px/1.1 Archivo, sans-serif; }
-#quien span { display: block; margin-top: 8px; font: 500 26px/1.2 Archivo, sans-serif; opacity: .8; }
-#quien i { display: block; margin-top: 10px; font: 500 19px/1 'JetBrains Mono', monospace; font-style: normal; letter-spacing: .05em; opacity: .62; }
-#traduccion { font: italic 500 38px/1.2 Archivo, sans-serif; opacity: 0; }
+#quien b { display: block; font-size: 50px; line-height: 1; letter-spacing: .005em; }
+#quien span { display: block; margin-top: 8px; font: 600 26px/1.2 Archivo, sans-serif; opacity: .85; }
+/* el crédito del retrato: como el «Foto: …» de noticia.html (Mono 600 20 px, crema al 85 %) */
+#quien i { display: block; margin-top: 10px; font: 600 20px/1.1 'JetBrains Mono', monospace; font-style: normal; letter-spacing: .05em; opacity: .85; }
+#traduccion { font: italic 600 38px/1.2 Archivo, sans-serif; opacity: 0; }
 #traduccion:empty { display: none; }
-#fuente { font: 600 22px/1 'JetBrains Mono', monospace; letter-spacing: .1em; text-transform: uppercase; opacity: .8; }
+#fuente { font: 600 22px/1.25 'JetBrains Mono', monospace; letter-spacing: .1em; text-transform: uppercase; opacity: .9; }
 /* documento: la frase en una hoja con su membrete */
-body.documento #comillas { display: none; }
 #hoja { display: contents; }
 body.documento #hoja { display: block; transform-origin: 50% 50%; background: color-mix(in srgb, var(--ink) 7%, var(--bg)); border-radius: 22px;
   padding: 40px 44px 46px; border: 2px solid color-mix(in srgb, var(--ink) 16%, transparent); }
 #membrete { display: none; font: 600 22px/1.2 'JetBrains Mono', monospace; letter-spacing: .1em; text-transform: uppercase;
-  opacity: .7; margin-bottom: 26px; padding-bottom: 20px; border-bottom: 2px solid color-mix(in srgb, var(--ink) 16%, transparent); }
+  opacity: .75; margin-bottom: 26px; padding-bottom: 20px; border-bottom: 2px solid color-mix(in srgb, var(--ink) 16%, transparent); }
 body.documento #membrete { display: block; }
 body.documento #frase { font: 500 54px/1.22 Archivo, sans-serif; letter-spacing: -.005em; }
-/* capítulo: el año grande en el centro, el título y la línea de capítulos */
+/* capítulo: el año grande en el centro, el título y la línea de capítulos (mismas reglas que el rótulo de acto,
+   #acto en comun.css) */
 #cap { position: absolute; top: 420px; bottom: calc(1920px - var(--fin) + 10px); left: var(--izq); right: var(--der);
   display: none; flex-direction: column; justify-content: center; gap: 30px; transform-origin: 50% 50%; }
 body.capitulo #cap { display: flex; }
-#anio { font: 400 270px/.86 'Instrument Serif', serif; letter-spacing: -.03em; color: var(--acento); white-space: nowrap; }
-#titulo { font: 700 66px/1.06 Archivo, sans-serif; letter-spacing: -.01em; }
+#anio { font-size: 270px; line-height: .84; letter-spacing: -.01em; color: var(--acento); white-space: nowrap;
+  text-shadow: 0 0 60px color-mix(in srgb, var(--acento) 45%, transparent); }
+#titulo { font: 800 66px/1.06 Archivo, sans-serif; letter-spacing: -.01em; }
 #titulo span { display: inline-block; margin-right: .24em; }
 #lugar { font: 600 24px/1 'JetBrains Mono', monospace; letter-spacing: .12em; text-transform: uppercase; opacity: .7; }
 #riel { position: relative; height: 26px; margin-top: 18px; }
@@ -70,29 +78,29 @@ body.capitulo #cap { display: flex; }
 #riel .punto.ya { background: var(--ink); border-color: var(--ink); }
 #riel .punto.hoy { background: var(--acento); border-color: var(--acento); }
 /* formato 4:5 (1080×1350) para el feed */
-html.f45 #chip { margin-top: 16px; font-size: 22px; }
+html.f45 #chip { margin-top: 16px; font-size: 21px; }
+html.f45 #comillas { top: 60px; font-size: 700px; }
 html.f45 #cita { top: 170px; bottom: calc(1350px - var(--fin) + 10px); gap: 22px; }
-html.f45 #comillas { font-size: 220px; height: 90px; }
-html.f45 #frase { font-size: 60px; }
+html.f45 #frase { font-size: 56px; }
 html.f45.documento #frase { font-size: 44px; }
 html.f45 #traduccion { font-size: 30px; }
 html.f45 #retrato { width: 104px; height: 104px; }
-html.f45 #quien b { font-size: 34px; }
+html.f45 #quien b { font-size: 42px; }
 html.f45 #cap { top: 180px; bottom: calc(1350px - var(--fin) + 10px); gap: 22px; }
 html.f45 #anio { font-size: 210px; }
 html.f45 #titulo { font-size: 54px; }
 </style></head>
 <body>
+<div id="atmos" data-fuera-de-zona><div id="comillas">“</div></div>
 <div id="arriba"><div id="progreso"></div><div id="chip"></div></div>
 <div id="cita">
-  <div id="comillas">“</div>
   <div id="hoja"><div id="membrete"></div><div id="frase"></div></div>
   <div id="traduccion"></div>
   <div id="firma"><div id="retrato"></div><div id="quien"></div></div>
   <div id="fuente"></div>
 </div>
 <div id="cap">
-  <div id="anio"></div>
+  <div id="anio" class="condensada"></div>
   <div id="titulo"></div>
   <div id="lugar"></div>
   <div id="riel"></div>
@@ -101,7 +109,14 @@ html.f45 #titulo { font-size: 54px; }
 <script src="comun.js"></script>
 <script>
 const n = V.n, F45 = V.F45, { clamp, eo, prog, esc, normal } = V;
-let S, H, TROZOS, EN_PANTALLA = new Set();
+let S, H, TROZOS, FIN_T = [], LEIDA = null, EN_PANTALLA = new Set();
+// cuándo deja de sonar cada palabra de la frase: el fin de la palabra de la voz que la dice (si se encuentra) o el
+// comienzo de la siguiente (≤ 0.5 s)
+const finesDe = (ws) => ws.map((w, i) => {
+  const p = w.dicha && S.palabras.find((x) => Math.abs(x.start - 0.05 - w.start) < 0.08 && normal(x.text) === normal(w.text));
+  const sig = ws[i + 1] ? ws[i + 1].start : w.start + 0.5;
+  return p ? Math.max(p.end, w.start + 0.15) : Math.max(w.start + 0.15, Math.min(sig, w.start + 0.5));
+});
 window.__listo = (async () => {
   const C = await V.cargar(), todo = C.todo; S = C.S; TROZOS = C.trozos; H = S.H;
   document.body.classList.add(S.tipo);
@@ -112,8 +127,11 @@ window.__listo = (async () => {
     document.getElementById('chip').innerHTML = `<b>${esc(H.documento ? 'Documento' : 'Cita')}</b><span>${esc(H.cuando || '')}</span>`;
     document.getElementById('membrete').textContent = H.membrete || '';
     document.getElementById('frase').innerHTML = palabras(H.texto);
-    if (H.resalte) [...document.querySelectorAll('#frase span')].forEach((s, i) => { if (i >= H.resalte[0] && i <= H.resalte[1]) s.classList.add('resalte'); });
-    document.getElementById('quien').innerHTML = `<b>${esc(H.autor || '')}</b>${H.cargo ? `<span>${esc(H.cargo)}</span>` : ''}` +
+    if (H.resalte) [...document.querySelectorAll('#frase span')].forEach((s, i) => {
+      if (i >= H.resalte[0] && i <= H.resalte[1]) s.classList.add('resalte');
+      if (i === H.resalte[1]) s.classList.add('ult');
+    });
+    document.getElementById('quien').innerHTML = `<b class="condensada">${esc(H.autor || '')}</b>${H.cargo ? `<span>${esc(H.cargo)}</span>` : ''}` +
       (H.retrato && H.credito ? `<i>${esc(H.credito)}</i>` : '');
     if (H.retrato) {
       const img = new Image(); img.src = H.retrato;
@@ -125,8 +143,12 @@ window.__listo = (async () => {
       document.getElementById('traduccion').textContent = H.traduccion.texto;
       H.traduccion.texto.split(/\s+/).forEach((w) => { const k = normal(w); if (k) EN_PANTALLA.add(k); });
     }
-    // la voz dice la frase que ya está en pantalla: el subtítulo se oculta mientras solo la repite
+    // la voz dice la frase que ya está en pantalla: sin subtítulo mientras la lee (de la primera a la última palabra
+    // dicha) ni cuando el trozo solo repite palabras de la pantalla
     H.texto.forEach((w) => { const k = normal(w.text); if (k) EN_PANTALLA.add(k); });
+    FIN_T = finesDe(H.texto);
+    const dichas = H.texto.map((w, i) => (w.dicha ? i : -1)).filter((i) => i >= 0);
+    if (dichas.length) LEIDA = [H.texto[dichas[0]].start - 0.05, FIN_T[dichas[dichas.length - 1]] + 0.1];
   } else {
     document.getElementById('chip').innerHTML = `<b>${esc('Capítulo ' + H.numero)}</b><span>${esc('de ' + H.total)}</span>`;
     document.getElementById('anio').textContent = String(H.hasta);
@@ -138,10 +160,11 @@ window.__listo = (async () => {
     H.titulo.forEach((w) => { const k = normal(w.text); if (k) EN_PANTALLA.add(k); });
     String(H.hasta).split(/\s+/).forEach((w) => { const k = normal(w); if (k) EN_PANTALLA.add(k); });
   }
+  await Promise.all(['extra-condensed 900 270px Archivo', '800 70px Archivo'].map((f) => document.fonts.load(f)));
   await document.fonts.ready;
   if (S.tipo === 'cita') {   // la frase: hasta el alto que deja la firma, sin bajar de un tamaño legible
     const f = document.getElementById('frase'), col = document.getElementById('cita');
-    const base = H.documento ? (F45 ? 44 : 54) : (F45 ? 60 : 76), min = H.documento ? 34 : 46;
+    const base = H.documento ? (F45 ? 44 : 54) : (F45 ? 56 : 70), min = H.documento ? 34 : 44;
     for (let fs = base; fs > min && col.scrollHeight > col.clientHeight + 2; fs -= 2) f.style.fontSize = fs + 'px';
   } else {
     const a = document.getElementById('anio'), col = document.getElementById('cap').clientWidth;
@@ -149,7 +172,10 @@ window.__listo = (async () => {
   }
   await V.pintarActo(S);   // rótulo de acto (S.R): solo en una `cita`; la escena `capitulo` nunca lo lleva
 })();
-const subtitulos = (t) => V.subtitulos(t, S, TROZOS, { ocultar: (tr) => tr.every((x) => EN_PANTALLA.has(normal(x.text))) });
+// un trozo de subtítulo se oculta si solo repite la pantalla o si cae, en su mayoría, mientras la voz lee la cita
+const leido = (x) => LEIDA && x.start >= LEIDA[0] && x.start <= LEIDA[1] && EN_PANTALLA.has(normal(x.text));
+const subtitulos = (t) => V.subtitulos(t, S, TROZOS, { ocultar: (tr) => tr.every((x) => EN_PANTALLA.has(normal(x.text)))
+  || tr.filter(leido).length * 2 >= tr.length });
 const esAnio = (x) => /^\d{3,4}$/.test(String(x));
 window.seek = (t) => {
   V.seekProgreso(t, n, S.dur);
@@ -164,18 +190,21 @@ window.seek = (t) => {
     const ap = eo((t - D - 0.15) / (0.5 * K));
     caja.style.opacity = ap;
     caja.style.transform = `translateY(${((1 - ap) * 30).toFixed(1)}px) scale(${(1 + 0.02 * clamp(t / S.dur)).toFixed(4)})`;
+    // cada palabra: al 26 % hasta que la voz la dice; en el acento mientras suena; luego crema
     [...document.querySelectorAll('#frase span')].forEach((s, i) => {
-      const w = H.texto[i], q = w.dicha ? eo((t - w.start + 0.05) / 0.25) : eo((t - w.start) / 0.4);
-      s.classList.toggle('dicha', q >= 0.5);
-      s.style.opacity = (0.28 + 0.72 * q).toFixed(3);
+      const w = H.texto[i], q = w.dicha ? eo((t - w.start + 0.05) / 0.2) : eo((t - w.start) / 0.4);
+      s.classList.toggle('suena', !!w.dicha && t >= w.start && t < FIN_T[i]);
+      s.style.opacity = (0.26 + 0.74 * q).toFixed(3);
     });
     if (H.resalte) {
       const marcas = [...document.querySelectorAll('#frase span.resalte')], av = prog(t, H.resalte_t, H.resalte_t + 0.8) * marcas.length;
-      marcas.forEach((s, j) => { const l = clamp(av - j); s.style.setProperty('--barra', (100 * l).toFixed(1) + '%'); s.classList.toggle('marcada', l >= 0.5); });
+      marcas.forEach((s, j) => s.style.setProperty('--barra', (100 * clamp(av - j)).toFixed(1) + '%'));
     }
-    // las comillas (o la hoja del documento) laten al empezar cada oración de la voz
+    // la comilla (o la hoja del documento) late al empezar cada oración de la voz
     const late = (H.latidos || []).reduce((m, x) => Math.max(m, Math.sin(Math.PI * clamp((t - x) / 0.5))), 0);
-    document.getElementById(H.documento ? 'hoja' : 'comillas').style.transform = `scale(${(1 + 0.05 * late).toFixed(4)})`;
+    const com = document.getElementById('comillas');
+    com.style.opacity = (0.13 * ap).toFixed(3);
+    document.getElementById(H.documento ? 'hoja' : 'comillas').style.transform = `scale(${(1 + (H.documento ? 0.05 : 0.04) * late).toFixed(4)})`;
     const fi = eo((t - H.entra) / 0.4), firma = document.getElementById('firma');
     firma.style.opacity = fi; firma.style.transform = `translateX(${((1 - fi) * -30).toFixed(1)}px)`;
     if (H.traduccion) {
@@ -184,7 +213,7 @@ window.seek = (t) => {
     }
     if (H.fuente) {
       const f = eo((t - H.fuente.start) / 0.4), el = document.getElementById('fuente');
-      el.style.opacity = 0.8 * f;
+      el.style.opacity = 0.9 * f;
     }
   } else {
     const caja = document.getElementById('cap');

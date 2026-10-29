@@ -71,7 +71,7 @@ palabras ≈ 150 s a 145 palabras por minuto): las escenas la reparten sin cambi
 | secuencias de voz | `secuencias`: grupos de 2–5 escenas consecutivas del mismo acto (sin el gancho ni el cierre; giro o rótulo solo al inicio) cuya voz se graba de corrido en un nodo; sin ellas, el script las deriva | H20 |
 | cierre | `cierre.html` en dos pantallas (rótulo «Lo que dejó» + 2–3 líneas, luego el remate) y «Sígueme en». **Lo normal es el legado**: lo que la gente hace hoy con lo que la historia dejó («sus hijos y sus nietos siguen tomando Incaparina»); `consecuencia` si termina mal; nunca neutro (nadie hace nada: «la marca sigue»); sin «según» | F1–F8 (`legado`) · H9 · crítico (H-C6) |
 
-**Escenas**: `foto` (la foto de archivo en marco con Ken Burns, chip con fecha y lugar, titular, cifra opcional,
+**Escenas**: `foto` (la foto de archivo a sangre con Ken Burns, chip con fecha y lugar, titular, cifra opcional,
 fuente y «Foto: autor · licencia»), `cita` (la frase literal de una persona, o de un documento con su membrete y un
 resaltador; una cita en otro idioma lleva `traduccion`, en pantalla bajo la frase y dicha por la voz), `capitulo`
 (solo como excepción), `tarjeta`/`mapa`/`ranking`/`tiempo` (un gráfico de las 26 plantillas de `templates/graficos/`
@@ -80,6 +80,24 @@ animación de la biblioteca `video/animaciones/`: `cadena`, `cronologia`, y las 
 `cierre`. ≤ 3 seguidas del mismo tipo. ≤ 19 escenas más el cierre. `enlace` (pero | por_eso | y) es opcional y solo
 decide el efecto de la entrada: la voz no tiene que empezar con el conector (la causalidad vive en la narración).
 Topes de voz: foto 40–280, cita 30–280, tarjeta/mapa/ranking/tiempo/explica 40–260, golpe 20–130, capitulo 10–90.
+
+**Cómo se ve** (estilo Noche, `referencias/diseno/sistema.md`; lo mismo que `/video` y `/noticias`):
+- Fondo de la paleta casi negro con grano fijo; en el **acto 2** (el nudo) toda la escena baja a `fondo_acto2`
+  (fondo × 0.5), cuerpo y velos incluidos: el nudo se ve más oscuro sin que la voz lo diga.
+- **Fotos a sangre** (gancho y `foto`), brillo 0.45–0.6, con una sombra del color del fondo arriba (bajo la barra) y
+  abajo (bajo los subtítulos); la capa a sangre lleva `data-fuera-de-zona` y lo que se lee queda en la zona segura (V13).
+  En la escena `foto` la imagen ocupa una lámina de 1080×1200 arriba (proporción 0.9); con `foto --encaje contener`
+  el gráfico entra entero en ella y la página lo muestra a brillo 0.7 y casi sin Ken Burns.
+- **Acento en una sola cosa** por escena: el nombre del protagonista, el año, la cifra o la palabra que suena. Nombres,
+  años y cifras en Archivo condensado 900 en mayúsculas; titulares y subtítulos en Archivo 800 crema; chip, fuente y
+  crédito en JetBrains Mono 600; nada en Instrument Serif.
+- **Rótulo de acto**: el año grande condensado en el acento, el título en Archivo 800 y el lugar en Mono, sobre un velo
+  del fondo, mientras la voz sigue.
+- **Cita**: la frase está entera en pantalla y **se enciende al ritmo de la voz** que la lee; mientras la lee no hay
+  subtítulo (sin subtítulo doble). El subtítulo vuelve para lo que la pantalla no dice (el autor, lo que sigue). La
+  frase clave va subrayada en el acento y la comilla grande es atmósfera en el acento al 13 %, fuera de la zona.
+- **Barra de progreso por acto** (tres tramos de largo proporcional a su duración; el gancho entra en el primero y el
+  cierre en el último).
 
 ## Reglas de verdad
 
@@ -132,7 +150,8 @@ Topes de voz: foto 40–280, cita 30–280, tarjeta/mapa/ranking/tiempo/explica 
   - Cada eje trae **≥ 2 fotos** distintas (H7 en `hechos --check`).
   - **Retrato** (`foto --retrato-de "<persona>"`): solo si es de esa persona. Un objeto o un lugar va como foto de
     escena, nunca como retrato de una cita.
-  - **Gráfico, cartel o logo con texto**: `foto --encaje contener`, para que el marco no lo recorte.
+  - **Gráfico, cartel o logo con texto**: `foto --encaje contener`, para que el corte a sangre no lo recorte (se ve
+    entero sobre el fondo).
   - **Sin repetir**: la misma imagen (sha1) se funde en un id al consolidar y sale en ≤ 2 escenas.
   - **El chip no inventa época**: una foto de 2021 no va bajo «1978»; el chip dice «Foto de 2021», «De referencia» o
     la época sin año.

@@ -2,7 +2,7 @@
 <style>
 .ad-grid { display: grid; grid-template-columns: 1fr 120px 1fr; align-items: end; column-gap: 20px; }
 .ad-col .lab { font: 700 18px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; }
-.ad-col .num { font: 400 120px/.88 'Instrument Serif', Georgia, serif; letter-spacing: -.02em; margin-top: 22px; white-space: nowrap; }
+.ad-col .num { font-size: 120px; line-height: .88; letter-spacing: -.02em; margin-top: 22px; white-space: nowrap; }   /* familia y peso: .cifra-heroe */
 .ad-col.despues .num { color: var(--a1); }
 .ad-col .sub { font: 600 22px/1.2 Archivo, sans-serif; margin-top: 16px; }
 .ad-col .barra { height: 22px; margin-top: 26px; background: var(--ink); }
@@ -11,6 +11,11 @@
 .ad-flecha::after { content: ""; position: absolute; right: -2px; top: -11px; width: 20px; height: 20px; border-top: 6px solid var(--ink); border-right: 6px solid var(--ink); transform: rotate(45deg); box-sizing: border-box; }
 .ad-pildora { display: inline-flex; align-self: flex-start; margin-top: 44px; padding: 12px 22px; background: var(--ink); color: var(--x-fg); font: 700 28px/1 Archivo, sans-serif; }
 .ad-bloque { display: flex; flex-direction: column; justify-content: flex-end; height: 100%; }
+/* Noche: el acento es solo «después»; «antes», su barra y la flecha en crema atenuada (cifra grande: 55 %). */
+body[data-estilo="noche"] .ad-col .num { letter-spacing: 0; }
+body[data-estilo="noche"] .ad-col.antes .num { color: rgba(var(--ink-rgb), .55); }
+body[data-estilo="noche"] .ad-col.antes .barra, body[data-estilo="noche"] .ad-flecha { background: var(--a2); }
+body[data-estilo="noche"] .ad-flecha::after { border-color: var(--a2); }
 </style>
 <script>
 // CIFRAS DE EJEMPLO (imagen 4 del brief: diésel en Guatemala 2026) · verificar antes de publicar
@@ -40,7 +45,7 @@ function render(D) {
   const col = (cls, d) => {
     const c = H.el("div", "ad-col " + cls, grid);
     H.el("div", "lab", c, H.esc(d.etiqueta));
-    const num = H.el("div", "num", c, H.esc(H.num(d.valor, D.formato)));
+    const num = H.el("div", "num cifra-heroe", c, H.esc(H.num(d.valor, D.formato)));
     for (let px = 120; px >= 72; px -= 8) { num.style.fontSize = px + "px"; if (num.scrollWidth <= 400) break; }
     if (d.sub) H.el("div", "sub", c, H.esc(d.sub));
     const b = H.el("div", "barra", c);

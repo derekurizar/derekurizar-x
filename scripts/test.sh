@@ -3,7 +3,9 @@
 #
 # Uso: bash scripts/test.sh          # completa (incluye make catalogo)
 #      RAPIDO=1 bash scripts/test.sh # salta el catálogo
-# Pasos: validate · catálogo · contar_x (py + js) · fixture (materializar + ensamblar --check)
+# Pasos: validate (y M3 Noche sobre una copia de tokens.json) · fuentes (Archivo de ancho variable) · catálogo
+#        · contar_x (py + js) · fixture (materializar + ensamblar --check)
+#        · estilo: Noche en tarjetas y video, clásico en /investigacion (materializar, nuevo_visual, copiar_tarjeta del informe)
 #        · fixture del informe (sesiones/_fixture/informe.json sobre la salida del fixture: I1–I7 + P1–P5,
 #          digesto --para redactor, memoria.py --informe en dry-run, --informes)
 #        · fixture dato (una tarjeta, modo dato de ensamblar) · negativos del gate G1–G8 sobre copias
@@ -63,6 +65,27 @@ mut() { printf '%s%s%s' "$MUT_PREFIJO" "$1" "$MUT_SUFIJO"; }
 
 echo "== validate / catálogo / contar_x"
 paso "validate.py" python3 scripts/validate.py
+noche_m3() {  # M3 Noche sobre una copia de tokens.json: intacta pasa; un acento o una serie que no contrasta con el fondo, falla
+  local R="$TMP/m3"; rm -rf "$R"; mkdir -p "$R/design"
+  python3 - "$R" <<'PY'
+import json, sys; sys.path.insert(0, "scripts"); import validate as V
+R = sys.argv[1]; V.RAIZ = R
+tk = json.load(open("design/tokens.json", encoding="utf-8"))
+guardar = lambda: json.dump(tk, open(R + "/design/tokens.json", "w", encoding="utf-8"), ensure_ascii=False)
+guardar(); V.validar_tokens(); assert not [e for e in V.ERRORES if "noche" in e], V.ERRORES
+k = sorted(tk["noche"]["paletas"])[0]; q = tk["noche"]["paletas"][k]
+q["acento"] = "#3A3A3A"; q["serie"][3] = "#2A2A2A"   # gris sobre un fondo casi negro: < 4.5:1 y < 3:1
+guardar(); del V.ERRORES[:]; V.validar_tokens(); e = " | ".join(V.ERRORES)
+for f in ("fondo", "fondo_acto2"):
+    assert "tokens: noche %s acento/%s" % (k, f) in e and "tokens: noche %s serie[3]/%s" % (k, f) in e, e
+del tk["noche"]["paletas"][k]; guardar(); del V.ERRORES[:]; V.validar_tokens()
+assert "tokens: paleta %s sin bloque noche" % k in V.ERRORES, V.ERRORES
+PY
+}
+paso "validate.py M3 Noche: acento y serie que no contrastan con el fondo (y el acto 2) fallan; una paleta sin bloque noche, también" noche_m3
+paso "fuentes: los 5 woff2 de design/fonts (archivo-wdth.woff2 con el eje de ancho) y su @font-face con font-stretch 62% 125% en la tarjeta y el video" bash -c '
+set -e; for f in archivo-var archivo-wdth instrument-serif-400 instrument-serif-400i jetbrains-mono-var; do test -s "design/fonts/$f.woff2" || { echo "falta design/fonts/$f.woff2"; exit 1; }; done
+for f in templates/base.html video/comun.css; do grep -q "font-family: .Archivo.;.*font-stretch: 62% 125%; src: url(fonts/archivo-wdth.woff2)" "$f" || { echo "$f sin la Archivo de ancho variable"; exit 1; }; done'
 if [[ "$RAPIDO" == "1" ]]; then echo "SKIP   make catalogo (RAPIDO=1)"; else paso "make catalogo" make catalogo; fi
 paso "contar_x.py --vectores" python3 scripts/contar_x.py --vectores
 paso "contar_x.js --vectores" node scripts/contar_x.js --vectores
@@ -247,6 +270,20 @@ positivo_hilo_investigacion() {
   python3 scripts/memoria.py --registrar "$S" --ruta sesiones/_fixture/salida --informe sesiones/_fixture --dry-run 2>/dev/null | grep -q "modo investigacion"
 }
 paso "modo investigacion válido (smoke, bloque y marcador): ensambla, post.md lo lleva y memoria.py --informe dice modo investigacion" positivo_hilo_investigacion
+estilo_investigacion() {  # Noche para todo salvo /investigacion: sus tarjetas son figuras del informe y se quedan clásicas
+  local S="$TMP/estilo" f; rm -rf "$S"; mkdir -p "$S/sesion"; cp -R sesiones/_fixture/. "$S/sesion/"; rm -rf "$S/sesion/salida" "$S/sesion/informe" "$S/sesion"/visuales/tuit_*.html
+  python3 scripts/materializar.py "$S/sesion" --sin-render >"$S/m1.log" 2>&1 || { tail -3 "$S/m1.log"; return 1; }
+  for f in "$S/sesion"/visuales/tuit_*.html; do grep -q '<body[^>]*data-estilo="noche"' "$f" || { echo "modo hilo: $f no quedó Noche"; return 1; }; done
+  python3 -c "$(mut 'g["modo"]="investigacion"')" "$S/sesion/guion.json" || return 1
+  python3 scripts/materializar.py "$S/sesion" --sin-render >"$S/m2.log" 2>&1 || { tail -3 "$S/m2.log"; return 1; }
+  for f in "$S/sesion"/visuales/tuit_*.html; do grep -q '<body[^>]*data-estilo="clasico"' "$f" || { echo "modo investigacion: $f no quedó clásico"; return 1; }; done
+  [[ "$(ls "$S/sesion"/visuales/tuit_*.html | wc -l | tr -d ' ')" -eq 3 ]] || { echo "se esperaban 3 tuit_N.html"; return 1; }
+  python3 scripts/nuevo_visual.py cifra "$S/c.html" --paleta cielo --estilo clasico >/dev/null && grep -q '<body[^>]*data-estilo="clasico"' "$S/c.html" || { echo "nuevo_visual --estilo clasico no lo marca"; return 1; }
+  grep -q '· estilo: clasico ·' "$S/c.html" || { echo "la cabecera no dice el estilo"; return 1; }
+  python3 scripts/nuevo_visual.py cifra "$S/n.html" --paleta cielo >/dev/null && grep -q '<body[^>]*data-estilo="noche"' "$S/n.html" || { echo "nuevo_visual sin --estilo no da Noche"; return 1; }
+  python3 scripts/nuevo_visual.py cifra "$S/x.html" --estilo raro >/dev/null 2>&1; [[ $? -eq 2 && ! -e "$S/x.html" ]] || { echo "--estilo raro debería salir 2 sin escribir"; return 1; }
+}
+paso "estilo: materializar deja Noche en un hilo y clásico en modo investigacion (data-estilo del body); nuevo_visual --estilo clasico|noche|raro" estilo_investigacion
 
 echo "== negativos de render.js"
 render_neg_url() {
@@ -450,6 +487,37 @@ json.dump(R, open(p,"w",encoding="utf-8"), ensure_ascii=False)' "$D" || return 1
   python3 scripts/informe.py "$D" --salida "$D/salida" --sin-pdf >/dev/null 2>"$TMP/pos.err" || { cat "$TMP/pos.err"; return 1; }
 }
 paso "informe.py admite grafico.tipo en kebab y coteja una tarjeta con cifra_ids (I2 por contrato)" pos_informe
+tarjeta_noche_informe() {  # informe.py copiar_tarjeta: el informe se queda clásico aunque la tarjeta del hilo sea Noche
+  local D="$TMP/tarjeta_noche"; rm -rf "$D"; mkdir -p "$D"
+  python3 - "$D" <<'PY'
+import json, re, sys; sys.path.insert(0, "scripts")
+import informe as I, materializar as M, nuevo_visual as NV
+D = sys.argv[1]; tk = NV.tokens(); err = []
+g = json.load(open("sesiones/_fixture/guion.json", encoding="utf-8")); v = g["tuits"][0]["visual"]; pal = g.get("paleta", "cielo")
+datos = "const DATA = " + json.dumps(M.data_de(v, "@DerekUrizar"), ensure_ascii=False, indent=2) + ";\n"
+def tarjeta(n, estilo, png):   # tuit_N.html como lo deja materializar (plantilla, paleta, estilo y DATA) y su PNG
+    ok, msg = NV.ensamblar(v["plantilla"], "%s/tuit_%d.html" % (D, n), pal, tk, estilo); assert ok, msg
+    src = open("%s/tuit_%d.html" % (D, n), encoding="utf-8").read()
+    open("%s/tuit_%d.html" % (D, n), "w", encoding="utf-8").write(M.RE_DATA.sub(lambda _m: datos, src, count=1))
+    open("%s/tuit_%d.png" % (D, n), "wb").write(png)
+# Noche: se rearma clásica desde su HTML (misma plantilla, paleta y DATA) y el PNG Noche no llega al informe
+tarjeta(1, "noche", b"png noche")
+assert I.copiar_tarjeta(D + "/tuit_1.png", D + "/fig_01.png", tk, err, "tarjeta 1"), err
+h = open(D + "/fig_01.html", encoding="utf-8").read()
+cuerpo = lambda html: re.search(r"<body\b[^>]*>", html).group(0)   # el estilo va en el <body> (base.html nombra los dos en su CSS)
+assert 'data-estilo="clasico"' in cuerpo(h), ("no se rearmó clásica", cuerpo(h))
+assert M.RE_DATA.search(h).group(0) == datos, "la DATA de la tarjeta no pasó al informe"
+assert open(D + "/fig_01.png", "rb").read(8) == b"\x89PNG\r\n\x1a\n", "falta el PNG clásico (render.js)"
+# clásica: se copia tal cual
+tarjeta(2, "clasico", b"png clasico")
+assert I.copiar_tarjeta(D + "/tuit_2.png", D + "/fig_02.png", tk, err, "tarjeta 2"), err
+assert open(D + "/fig_02.png", "rb").read() == b"png clasico", "una clásica se rearmó en vez de copiarse (¿data-estilo buscado fuera del <body>?)"
+# Noche sin cabecera ni DATA: no se puede rearmar, falla con su motivo
+open(D + "/tuit_3.html", "w").write('<body data-estilo="noche"></body>'); open(D + "/tuit_3.png", "wb").write(b"x")
+assert not I.copiar_tarjeta(D + "/tuit_3.png", D + "/fig_03.png", tk, err, "tarjeta 3") and "no se puede rearmar" in err[-1], err
+PY
+}
+paso "informe.py copiar_tarjeta: una tarjeta Noche se rearma clásica con su DATA; una clásica se copia tal cual; sin cabecera falla" tarjeta_noche_informe
 paso "catalogo_informe.py → informe.json + datos.json sintético (26 tipos)" bash -c 'python3 scripts/catalogo_informe.py --dir "$0" --tarjeta ninguna | grep -q "26 tipos · sin G: ninguna"' "$TMP/catalogo"
 paso "informe.py catálogo --check (los 26 G.* en papel y a media página: I1–I7 + P1–P5)" python3 scripts/informe.py "$TMP/catalogo" --salida "$TMP/catalogo/salida" --check
 tarjetas_partidas() {  # dos páginas tarjetas: la segunda no pisa las imágenes de la primera
@@ -881,17 +949,21 @@ paso "video gate: explica con la animación del video anterior → V9 (rotación
 paso "video gate: explica con un paso que la voz no dice → V9" video_neg "la voz no dice el paso «Cierran gasolineras»" "import json; G[\"escenas\"][3] = json.loads('$EXPLICA'); G[\"escenas\"][3][\"pasos\"][2] = \"Cierran gasolineras\""
 paso "video gate: explica con un solo paso → V9" video_neg "«pasos»: 2–6 cadenas" "import json; G[\"escenas\"][3] = json.loads('$EXPLICA'); G[\"escenas\"][3][\"pasos\"] = [\"Sube el barril\"]"
 paso "video gate: dos explica seguidas → V1" video_neg "V1 dos escenas explica seguidas" "import json; G[\"escenas\"][3] = json.loads('$EXPLICA'); G[\"escenas\"].insert(4, dict(json.loads('$EXPLICA'), enlace=\"y\", texto=\"Y la cadena sigue: sube el barril, sube el diésel y pagas más.\"))"
-paso "animaciones: el lint rechaza azar, reloj y colores fijos; K4 avisa de un módulo fuera del catálogo" bash -c '
+paso "animaciones: el lint rechaza azar, reloj, colores fijos, Instrument Serif y font-stretch antes de font:; las de la biblioteca pasan; K4 avisa de un módulo fuera del catálogo" bash -c '
 set -e; d="$1/anim_neg"; rm -rf "$d"; mkdir -p "$d"
-sed "s/const { clamp, eo } = this.V, ps = T.pasos;/const { clamp, eo } = this.V, ps = T.pasos; const r = Math.random() + Date.now(); const c = \"#ff0000\";/" video/animaciones/cadena.js > "$d/cadena.js"
-grep -q "Math.random" "$d/cadena.js"
+cp video/animaciones/cadena.js "$d/cadena.js"
+cat >> "$d/cadena.js" <<JS
+const r = Math.random() + Date.now(); const c = "#ff0000";
+const tipo = "font-stretch:62.5%;text-transform:uppercase;font:900 40px/1 Archivo,sans-serif"; const vieja = "Instrument Serif";
+JS
 python3 - "$d" <<PY
 import os, shutil, sys
 sys.path.insert(0, "scripts")
 import animaciones as A
 f = A.lint("cadena", os.path.join(sys.argv[1], "cadena.js"))
 assert any("Math.random" in x for x in f) and any("Date" in x for x in f) and any("hexadecimal" in x for x in f), f
-assert A.lint("cadena") == [], A.lint("cadena")
+assert any("Instrument Serif" in x for x in f) and any("font-stretch antes" in x for x in f), f
+assert all(A.lint(x["id"]) == [] for x in A.catalogo()["animaciones"]), {x["id"]: A.lint(x["id"]) for x in A.catalogo()["animaciones"]}
 lib = os.path.join(sys.argv[1], "lib"); os.makedirs(lib)
 shutil.copy(A.CATALOGO, lib); shutil.copy(A.ruta("cadena"), lib); open(os.path.join(lib, "suelta.js"), "w").write("// sin registrar\n")
 A.DIR, A.CATALOGO = lib, os.path.join(lib, "catalogo.json")
@@ -935,8 +1007,9 @@ test -s sesiones/_fixture_video/salida/portada_cierre.png && test -s sesiones/_f
   paso "escenas.json v2 (tipos, eventos, efectos del catálogo, hueco real ≤ 6 s)" python3 -c '
 import json
 E = json.load(open("sesiones/_fixture_video/trabajo/escenas.json", encoding="utf-8"))
+G = json.load(open("sesiones/_fixture_video/guion.json", encoding="utf-8"))
 cat = {x["id"] for x in json.load(open("design/sfx/catalogo.json", encoding="utf-8"))["efectos"]}
-assert E["version"] == 2 and E["escenas"][0]["tipo"] == "gancho" and E["gancho"]["pantalla"] == "102 dólares"
+assert E["version"] == 2 and E["escenas"][0]["tipo"] == "gancho" and E["gancho"]["pantalla"] == G["escenas"][0]["pantalla"], E["gancho"]
 assert E["transicion_s"] == 0.3 and E["escenas"][0]["transicion"] is None and E["escenas"][1]["transicion"] == "smoothleft"
 import os; assert os.path.exists("sesiones/_fixture_video/trabajo/revision/linea_tiempo.png")
 assert all(e.get("eventos") for e in E["escenas"]) and all(s["id"] in cat for e in E["escenas"] for s in e["sfx"])
@@ -1047,28 +1120,44 @@ FAKE_WHISPER="$B/palabra.json" python3 scripts/video.py escuchar "$T" --modelo "
 python3 -c "import json,sys; d=json.load(open(sys.argv[1])); assert d[\"escenas\"][\"1\"][\"avisos\"] and not d[\"escenas\"][\"1\"][\"faltas\"]" "$T/audio/escucha.json"
 rm -f "$T"/audio/escucha*' _ "$TMP"
   paso "escuchar sin whisper-cli: avisa y sale 0" bash -c 'PATH="/usr/bin:/bin" python3 scripts/video.py escuchar sesiones/_fixture_video/trabajo --modelo /no/existe.bin | grep -q "^AVISO V11"'
-  paso "V12 quietud: un clip fijo de 3 s da un tramo quieto; los clips del fixture, ninguno (revision/quietud.json)" bash -c '
+  paso "V12 quietud: un clip fijo de 3 s (la portada con su grano, en x264 crf 16 como grabar) da un tramo quieto; los clips del fixture, ninguno (revision/quietud.json)" bash -c '
 set -e; Q="$1/quietud"; rm -rf "$Q"; mkdir -p "$Q"
-ffmpeg -y -v error -loop 1 -framerate 30 -i sesiones/_fixture_video/salida/portada.png -t 3 -r 30 -c:v libx264 -pix_fmt yuv420p -qp 0 "$Q/fijo.mp4"
+# crf 16 y no -qp 0: con el grano fijo de Noche x264 retoca unos píxeles en ±1 entre cuadros iguales (signalstats daba
+# YAVG de 1.5–7.7 en esos cuadros y V12 no veía la pantalla congelada)
+ffmpeg -y -v error -loop 1 -framerate 30 -i sesiones/_fixture_video/salida/portada.png -t 3 -r 30 -c:v libx264 -pix_fmt yuv420p -crf 16 -preset medium "$Q/fijo.mp4"
 python3 - "$Q/fijo.mp4" <<PY
 import sys, json, glob; sys.path.insert(0, "scripts"); import video as V
-t = V.ventanas_quietas(V.movimiento_de(sys.argv[1])); assert t and t[0][1] >= 2.0, t
+m = V.movimiento_de(sys.argv[1]); assert len(m) >= 10 and max(m) < V.QUIETUD_UMBRAL, m
+t = V.ventanas_quietas(m); assert t and t[0][1] >= 2.0, t
 assert V.ventanas_quietas([0.0] * 20) == [(0.25, 4.75)] and V.ventanas_quietas([0.0, 0.0, 1.0] * 10) == []
 q = json.load(open("sesiones/_fixture_video/trabajo/revision/quietud.json"))
 assert q["umbral"] == V.QUIETUD_UMBRAL and all(not e["quieto"] for e in q["escenas"].values()), {n: e["quieto"] for n, e in q["escenas"].items() if e["quieto"]}
 assert all(len(e["movimiento"]) > 4 for e in q["escenas"].values())
 PY' _ "$TMP"
+  paso "V15 primer cuadro: un fondo vacío con el grano de la portada da 0 % dibujado (9:16 y 4:5); el gancho del fixture pasa el mínimo" bash -c '
+set -e; Q="$1/v15"; rm -rf "$Q"; mkdir -p "$Q"
+# la franja sin subtítulos de la portada (y 1385–1475) repetida hasta llenar el cuadro: solo fondo y grano
+ffmpeg -y -v error -i sesiones/_fixture_video/salida/portada.png -vf "crop=1080:90:0:1385,loop=loop=21:size=1:start=0,tile=1x22,crop=1080:1920:0:0" -frames:v 1 "$Q/vacio.png"
+for f in "1080:1920 vacio" "1080:1350 vacio_4x5"; do set -- $f
+  ffmpeg -y -v error -loop 1 -framerate 10 -i "$Q/vacio.png" -t 1 -vf "crop=$1:0:0" -c:v libx264 -pix_fmt yuv420p -crf 16 -preset medium "$Q/$2.mp4"; done
+python3 - "$Q" <<PY
+import sys; sys.path.insert(0, "scripts"); import video as V
+Q = sys.argv[1]
+assert V.llenado_primer_cuadro(Q + "/vacio.mp4") == 0 and V.llenado_primer_cuadro(Q + "/vacio_4x5.mp4", f45=True) == 0, "el grano cuenta como dibujo"
+assert V.llenado_primer_cuadro("sesiones/_fixture_video/trabajo/clips/e1.mp4") >= V.PRIMER_CUADRO_MIN
+PY' _ "$TMP"
   paso "grabar --paralelo 1 da los mismos cuadros que la grabación en paralelo del fixture (framemd5 de e1 y e2)" bash -c '
 set -e; T=sesiones/_fixture_video/trabajo; P="$1/paralelo"; rm -rf "$P"; cp -R "$T" "$P"; rm -f "$P"/clips/*.mp4
 python3 scripts/video.py grabar "$P" --fps 10 --solo 1,2 --paralelo 1 > /dev/null
 for n in 1 2; do a=$(ffmpeg -v error -i "$T/clips/e$n.mp4" -f framemd5 - | grep -v "^#"); b=$(ffmpeg -v error -i "$P/clips/e$n.mp4" -f framemd5 - | grep -v "^#"); [[ -n "$a" && "$a" == "$b" ]] || { echo "e$n difiere entre serie y paralelo"; exit 1; }; done' _ "$TMP"
-  paso "portadas limpias: sin subtítulos ni barra (franja lisa en y 1385–1475), portada_texto.png de 1080×1920 y las alternativas" bash -c '
+  paso "portadas limpias: sin subtítulos ni barra (franja lisa en y 1385–1475 tras desenfocar: el grano no cuenta), portada_texto.png de 1080×1920 y las alternativas" bash -c '
 set -e; S=sesiones/_fixture_video/salida
 for f in portada.png portada_texto.png portada_cierre.png portada_giro.png; do test -s "$S/$f" || { echo "falta $f"; exit 1; }; done
 [[ "$(ffprobe -v error -show_entries stream=width,height -of csv=p=0 "$S/portada_texto.png")" == "1080,1920" ]]
+# el grano fijo de Noche da 17–20 niveles de luma en la franja vacía; tras boxblur=12, 1–2; un subtítulo, 70 o más
 for f in portada.png portada_cierre.png; do
-  r=$(ffmpeg -v error -i "$S/$f" -vf "crop=1080:90:0:1385,signalstats,metadata=print:file=-" -f null - 2>/dev/null | grep -o "YM[AI][XN]=[0-9.]*" | tr "\n" " ")
-  python3 -c "import re,sys; d=dict(x.split(\"=\") for x in sys.argv[1].split()); assert float(d[\"YMAX\"]) - float(d[\"YMIN\"]) < 3, (sys.argv[2], d)" "$r" "$f"
+  r=$(ffmpeg -v error -i "$S/$f" -vf "crop=1080:90:0:1385,boxblur=12:1,signalstats,metadata=print:file=-" -f null - 2>/dev/null | grep -o "YM[AI][XN]=[0-9.]*" | tr "\n" " ")
+  python3 -c "import re,sys; d=dict(x.split(\"=\") for x in sys.argv[1].split()); assert float(d[\"YMAX\"]) - float(d[\"YMIN\"]) < 6, (sys.argv[2], d)" "$r" "$f"
 done'
   paso "transiciones: el fixture usa el catálogo (smoothleft en E2 y en la definición, fade en el cierre); cada una encadena dos clips; una ajena → V8" bash -c '
 set -e; T=sesiones/_fixture_video/trabajo; X="$1/xfade"; rm -rf "$X"; mkdir -p "$X"
@@ -1091,12 +1180,23 @@ PY
 cp -R "$T" "$X/trabajo"; python3 -c "
 import json, sys; p=sys.argv[1]; E=json.load(open(p)); E[\"escenas\"][1][\"transicion\"]=\"nada\"; json.dump(E, open(p, \"w\"))" "$X/trabajo/escenas.json"
 ! python3 scripts/video.py montar "$X/trabajo" --sin-bucle > "$X/montar.out" 2>&1; grep -q "V8 E2: transición «nada»" "$X/montar.out"' _ "$TMP"
-  paso "icono del gancho del fixture: escenas.json lo lleva y el cuadro de E1 a 1.5 s lo dibuja sobre la cifra" bash -c '
-set -e; T=sesiones/_fixture_video/trabajo; I="$1/icono"; rm -rf "$I"; mkdir -p "$I"
-python3 -c "import json,sys; E=json.load(open(sys.argv[1]))[\"escenas\"]; assert E[0][\"icono\"] == \"droplets\" and not E[1].get(\"icono\"), E[0].get(\"icono\")" "$T/escenas.json"
-ffmpeg -y -v error -ss 1.5 -i "$T/clips/e1.mp4" -frames:v 1 "$I/e1.png"
-r=$(ffmpeg -v error -i "$I/e1.png" -vf "crop=200:150:85:560,signalstats,metadata=print:file=-" -f null - 2>/dev/null | grep -o "YM[AI][XN]=[0-9.]*" | tr "\n" " ")
-python3 -c "import sys; d=dict(x.split(\"=\") for x in sys.argv[1].split()); assert float(d[\"YMAX\"]) - float(d[\"YMIN\"]) > 20, d" "$r"' _ "$TMP"
+  paso "icono (una copia: el golpe lleva «droplets»): escenas.json lo lleva solo ahí y el cuadro de E4 a 1.5 s lo dibuja sobre la cifra (franja desenfocada: el grano no cuenta)" bash -c '
+set -e; T=sesiones/_fixture_video/trabajo; C="$1/video_icono"; rm -rf "$C"; cp -R "$T" "$C"; rm -f "$C"/clips/*.mp4
+python3 -c "
+import json, sys; p = sys.argv[1]; g = json.load(open(p))
+assert g[\"escenas\"][3][\"tipo\"] == \"golpe\" and not g[\"escenas\"][0].get(\"icono\"), g[\"escenas\"][3][\"tipo\"]
+g[\"escenas\"][3][\"icono\"] = \"droplets\"
+json.dump(g, open(p, \"w\"), ensure_ascii=False)" "$C/guion.json"
+python3 scripts/video.py guion "$C" --check > /dev/null; python3 scripts/video.py voz-falsa "$C" > /dev/null; python3 scripts/video.py tiempos "$C" > /dev/null
+python3 -c "import json,sys; E=json.load(open(sys.argv[1]))[\"escenas\"]; assert [e.get(\"icono\") for e in E] == [None, None, None, \"droplets\", None, None, None], [e.get(\"icono\") for e in E]" "$C/escenas.json"
+python3 scripts/video.py grabar "$C" --solo 4 --fps 10 > /dev/null
+ffmpeg -y -v error -ss 1.5 -i "$C/clips/e4.mp4" -frames:v 1 "$C/e4.png"
+# el icono va arriba de la cifra (x 85–285, y 560–710); a su derecha (x 600–800) queda fondo con grano. Tras boxblur=2 el
+# grano da ~3 niveles de luma y el trazo crema del icono ~170
+rango() { ffmpeg -v error -i "$C/e4.png" -vf "crop=200:150:$1:560,boxblur=2:1,signalstats,metadata=print:file=-" -f null - 2>/dev/null | grep -o "YM[AI][XN]=[0-9.]*" | tr "\n" " "; }
+python3 -c "
+import sys; r = lambda s: (lambda d: float(d[\"YMAX\"]) - float(d[\"YMIN\"]))(dict(x.split(\"=\") for x in s.split()))
+assert r(sys.argv[1]) > 40, (\"icono\", sys.argv[1]); assert r(sys.argv[2]) < 10, (\"fondo\", sys.argv[2])" "$(rango 85)" "$(rango 600)"' _ "$TMP"
   paso "ranking del fixture (T3 barras-h, top 4): los puestos dichos entran al decirlos, los demás antes y en orden; sfx resolucion en el primero" bash -c '
 python3 - <<PY
 import json
@@ -1136,7 +1236,7 @@ assert [x["tipo"] for x in e["eventos"] if x["tipo"] in ("figuras", "destacadas"
 assert sum(1 for x in e["sfx"] if x["id"] == "tic") >= 10 and any(x["id"] == "resolucion" for x in e["sfx"]), e["sfx"]
 PY
 python3 scripts/video.py grabar "$C" --solo 4 --fps 10 > /dev/null; test -s "$C/clips/e4.mp4"' _ "$TMP"
-  paso "gancho en 3 s: cifra desde 0.15, línea en sincronía con la voz (palabras dichas ancladas, el resto como frase, antes del fin de la 1.ª oración), evento promesa" bash -c '
+  paso "gancho en 3 s: cifra desde 0.15, línea en sincronía con la voz (palabras dichas ancladas, o al entrar la línea si la voz ya las dijo; el resto como frase, antes del fin de la 1.ª oración), evento promesa en su escena" bash -c '
 python3 - <<PY
 import json
 E = json.load(open("sesiones/_fixture_video/trabajo/escenas.json"))["escenas"]; e = E[0]; T = e["T"]
@@ -1144,24 +1244,34 @@ assert T["pant"]["desde"] == 0.15 and T["pant"]["pulso"], T["pant"]
 norm = lambda s: s.lower().strip(".,;:?¿!¡")
 voz = [(norm(w["text"]), w["start"]) for w in e["palabras"]]
 dichas = [w for w in T["linea"] if w.get("dicha")]; assert dichas, T["linea"]
-for w in dichas: assert any(txt == norm(w["text"]) and abs(w["start"] - max(1.2, t - 0.05)) < 0.02 for txt, t in voz), (w, voz)
+# cada palabra dicha entra 0.05 s antes de que la voz la diga, nunca antes de que entre la línea (1.2 s); si la voz ya la
+# dijo antes, se ancla ahí y solo el espacio mínimo de 0.12 s entre palabras la corre (alinear_linea)
+L = T["linea"]
+for i, w in enumerate(L):
+    if not w.get("dicha"): continue
+    prev = L[i - 1]["start"] + 0.12 if i else 0
+    assert any(txt == norm(w["text"]) and (abs(w["start"] - max(1.2, t - 0.05)) < 0.02 or (w["start"] > max(1.2, t - 0.05) and abs(w["start"] - prev) < 0.02)) for txt, t in voz), (w, voz)
 fin1 = next(w["end"] for w in e["palabras"] if w["text"].endswith((".", "?", "!")))
 assert all(w["start"] <= max(fin1, max(x["start"] for x in dichas)) + 0.12 * len(T["linea"]) for w in T["linea"]), (T["linea"], fin1)
 starts = [w["start"] for w in T["linea"]]; assert starts == sorted(starts) and all(b - a >= 0.119 for a, b in zip(starts, starts[1:])), starts
-ev = [x["tipo"] for x in e["eventos"]]; assert "promesa" in ev and "linea_fin" in ev, ev
-tp = next(x["t"] for x in e["eventos"] if x["tipo"] == "promesa"); assert any(txt == "un" and abs(tp - t) < 0.01 for txt, t in voz), (tp, voz)
-assert any(x["id"] == "tic" and abs(x["t"] - tp) < 0.01 for x in e["sfx"])
+ev = [x["tipo"] for x in e["eventos"]]; assert "linea_fin" in ev, ev
+# la promesa va en la escena que dice el guion (promesa.en): evento y «tic» en su primera palabra
+G = json.load(open("sesiones/_fixture_video/guion.json")); P = G["promesa"]; ep = E[P["en"] - 1]
+vp = [(norm(w["text"]), w["start"]) for w in ep["palabras"]]
+tp = next(x["t"] for x in ep["eventos"] if x["tipo"] == "promesa"); assert any(txt == norm(P["texto"].split()[0]) and abs(tp - t) < 0.01 for txt, t in vp), (tp, vp)
+assert any(x["id"] == "tic" and abs(x["t"] - tp) < 0.01 for x in ep["sfx"]), ep["sfx"]
 g = E[3]; assert g["T"]["linea"][-1]["start"] <= g["fin_voz"], g["T"]["linea"]
 PY'
-  paso "subtítulos del gancho: ocultos antes de la cifra (0.3 s) y mientras repiten la pantalla («En septiembre el barril»); visibles en la promesa" bash -c '
+  paso "subtítulos del gancho (tu · llenado): ocultos antes de la cifra (0.3 s) y mientras repiten la pantalla («26 quetzales»); visibles en «En septiembre, Guatemala pagó» (franja desenfocada: el grano no cuenta)" bash -c '
 set -e; T=sesiones/_fixture_video/trabajo
-tp=$(python3 -c "import json,sys; e=json.load(open(sys.argv[1]))[\"escenas\"][0]; print(next(x[\"t\"] for x in e[\"eventos\"] if x[\"tipo\"]==\"promesa\") + 0.6)" "$T/escenas.json")
-tb=$(python3 -c "import json,sys; e=json.load(open(sys.argv[1]))[\"escenas\"][0]; print(next(w[\"start\"] for w in e[\"palabras\"] if w[\"text\"]==\"barril\") - 0.3)" "$T/escenas.json")
-franja() { ffmpeg -v error -ss "$1" -i "$T/clips/e1.mp4" -frames:v 1 -vf "crop=1080:90:0:1385,signalstats,metadata=print:file=-" -f null - 2>/dev/null | grep -o "YM[AI][XN]=[0-9.]*" | tr "\n" " "; }
-lisa() { python3 -c "import sys; d=dict(x.split(\"=\") for x in sys.argv[1].split()); r=float(d[\"YMAX\"]) - float(d[\"YMIN\"]); assert (r < 3) == (sys.argv[2] == \"si\"), (sys.argv[3], d)" "$1" "$2" "$3"; }
+dicha() { python3 -c "import json,sys; e=json.load(open(sys.argv[1]))[\"escenas\"][0]; print(next(w[\"start\"] for w in e[\"palabras\"] if w[\"text\"].strip(\".,\")==sys.argv[2]) + 0.25)" "$T/escenas.json" "$1"; }
+trep=$(dicha 26); tvis=$(dicha septiembre)
+# el grano fijo de Noche da 17–20 niveles de luma en la franja vacía; tras boxblur=12, 1–2; un subtítulo, 70 o más
+franja() { ffmpeg -v error -ss "$1" -i "$T/clips/e1.mp4" -frames:v 1 -vf "crop=1080:90:0:1385,boxblur=12:1,signalstats,metadata=print:file=-" -f null - 2>/dev/null | grep -o "YM[AI][XN]=[0-9.]*" | tr "\n" " "; }
+lisa() { python3 -c "import sys; d=dict(x.split(\"=\") for x in sys.argv[1].split()); r=float(d[\"YMAX\"]) - float(d[\"YMIN\"]); assert (r < 6) == (sys.argv[2] == \"si\"), (sys.argv[3], d)" "$1" "$2" "$3"; }
 lisa "$(franja 0.3)" si "subtítulo antes de que aterrice la cifra"
-lisa "$(franja $tb)" si "subtítulo que repite la pantalla (En septiembre el barril)"
-lisa "$(franja $tp)" no "falta el subtítulo de la promesa"' _ "$TMP"
+lisa "$(franja $trep)" si "subtítulo que repite la pantalla (26 quetzales)"
+lisa "$(franja $tvis)" no "falta el subtítulo de «En septiembre, Guatemala pagó»"' _ "$TMP"
   paso "animadores de las 16 plantillas restantes (divergente … treemap y area-apilada … piramide): V7 y cuadro intermedio distinto del final" bash -c '
   set -e; test -d templates/.galeria || { echo "sin templates/.galeria: corre make catalogo"; exit 1; }; M="$1/medio"; rm -rf "$M"; mkdir -p "$M"
   N=(); for t in divergente apilada embudo bullet agrupadas treemap area-apilada calor cascada combinado dispersion hemiciclo linea-tiempo multiples pictograma piramide; do if [ -f "templates/.galeria/estres-$t.html" ]; then N+=("estres-$t"); else N+=("$t"); fi; done
@@ -1211,7 +1321,7 @@ test -s "$d/clips/e4.mp4"' _ "$TMP" "$EXPLICA"
   paso "animaciones.py --check cadena: lint, meta, dos grabaciones iguales, 4:5, sin quietud y hojas de contacto" bash -c '
 python3 scripts/animaciones.py --check cadena --salida "$1/anim_cadena" >/dev/null && test -s "$1/anim_cadena/contacto.png" && test -s "$1/anim_cadena/contacto_4x5.png"' _ "$TMP"
   paso "make video-fixture-4x5 (formato 1080×1350 para el feed: clips_4x5, video_4x5.mp4, contacto_4x5.png, entrega)" bash -c 'make video-fixture-4x5 >/dev/null && ffprobe -v error -show_entries stream=codec_type,width,height -of csv=p=0 sesiones/_fixture_video/salida/video_4x5.mp4 | grep -q "video,1080,1350" && test -s sesiones/_fixture_video/salida/contacto_4x5.png && test -s sesiones/_fixture_video/trabajo/revision/linea_tiempo_4x5.png'
-  paso "V13 zona segura: el fixture (9:16 y 4:5), una escala de 100 figuras con etiqueta de dos líneas y un ranking de 6 caben; con el fin de zona en y 900 el gate falla (exit 3) y escribe zona.json" bash -c '
+  paso "V13 zona segura: el fixture (9:16 y 4:5), una escala de 100 figuras con etiqueta de dos líneas y un ranking de 6 caben; con el fin de zona en y 850 el gate falla (exit 3) y escribe zona.json" bash -c '
 set -e; W="$1/zona"; rm -rf "$W"; mkdir -p "$W"; cp sesiones/_fixture_video/trabajo/escenas.json "$W/"
 python3 - "$W/escenas.json" <<PY
 import json, sys, copy
@@ -1229,8 +1339,8 @@ H=sesiones/_fixture/salida
 node scripts/video_grabar.js --dir "$W" --hilo "$H" --zona >/dev/null
 node scripts/video_grabar.js --dir "$W" --hilo "$H" --zona --formato 4:5 >/dev/null
 node scripts/video_grabar.js --dir sesiones/_fixture_video/trabajo --hilo "$H" --zona >/dev/null
-set +e; node scripts/video_grabar.js --dir "$W" --hilo "$H" --zona --zona-fin 900 2>"$W/err"; rc=$?; set -e
-test "$rc" = 3 && grep -q "FALLA V13 e90 (escala" "$W/err" && grep -q "baja de y 900" "$W/err" && test -s "$W/revision/zona.json"' _ "$TMP"
+set +e; node scripts/video_grabar.js --dir "$W" --hilo "$H" --zona --zona-fin 850 2>"$W/err"; rc=$?; set -e
+test "$rc" = 3 && grep -q "FALLA V13 e90 (escala" "$W/err" && grep -q "baja de y 850" "$W/err" && test -s "$W/revision/zona.json"' _ "$TMP"
   paso "entrega para cuatro plataformas: caption.md con TikTok, Instagram, Facebook y Shorts; sin video_4x5.mp4, entregar falla" bash -c '
 set -e; C=sesiones/_fixture_video/salida/caption.md
 for x in "## TikTok" "## Instagram Reels" "## Facebook Reels" "## YouTube Shorts" "#Shorts"; do grep -q "$x" "$C"; done

@@ -30,6 +30,9 @@ function render(D) {
   const fmt = Object.assign({ signo: true }, D.formato);
   const f = (v) => H.num(v, fmt);
   const ink = H.color.ink, a1 = H.color.a1;
+  // Noche: las demás barras en crema atenuada (suben al 55 %, bajan al 30 %); en clásico, tinta y tinta al 55 %.
+  const noche = H.estilo() === "noche";
+  const cSube = noche ? H.color.inkA(.55) : ink, cBaja = H.color.inkA(noche ? .3 : .55);
 
   const W = 920, alto = H.espacio(Math.max(240, Math.min(560, 20 + n * 72)), Math.max(220, 20 + n * 44));
   const svg = H.lienzo(W, alto);
@@ -50,7 +53,7 @@ function render(D) {
     H.svgEl("line", { x1: colIzq, x2: W, y1: cy, y2: cy, stroke: H.color.inkA(.1), "stroke-width": 1 }, svg);
     H.texto(svg, 0, cy + 8, it.nombre, { style: "font:" + (esHi ? "800 " + hiPx : "600 " + px) + "px Archivo,sans-serif;fill:" + ink });
     const xv = sx(it.valor), neg = it.valor < 0;
-    const relleno = esHi ? a1 : neg ? H.color.inkA(.55) : ink;
+    const relleno = esHi ? a1 : neg ? cBaja : cSube;
     H.svgEl("rect", { x: Math.min(x0, xv), y: cy - barH / 2, width: Math.max(3, Math.abs(xv - x0)), height: barH, fill: relleno }, svg);
     H.texto(svg, neg ? xv - 10 : Math.max(xv, x0 + 3) + 10, cy + 8, f(it.valor), { "text-anchor": neg ? "end" : "start", style: "font:" + fontV + ";fill:" + ink + (esHi ? ";font-size:24px" : "") });
   });

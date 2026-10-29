@@ -80,7 +80,11 @@ SECCIONES = {"pol": "política, justicia, Congreso y gobierno", "seg": "segurida
              "eco": "economía, salud, clima, educación y deportes"}
 CANDIDATAS_MAX, QUE_PASO_CARACTERES, CITA_MIN = 5, 200, 20
 VENTANA_DIAS = 1                 # una noticia del día cuenta si se publicó hoy o ayer
-FOTO_LADO_MIN = 600              # la og:image típica es 1200×630: alcanza para el marco de la noticia
+# la foto va a sangre en la lámina de video/noticia.html (1080×1200 arriba, en 9:16 y 4:5; cover, Ken Burns ≤ 1.15):
+# una og:image típica de 1200×630 se recorta a los lados y se agranda ≈ 1.9× (2.2× con el Ken Burns); la página la
+# oscurece un poco más cuando pasa de 2× y le pone el grano encima. Por debajo de 600 px el aumento pasa de 2.3× y se
+# ve en bloques: mejor una de referencia
+FOTO_LADO_MIN = 600
 DESCARGAS = os.path.join(RAIZ, "sesiones", "_descargas", "noticias")
 AGENTE = "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
 # medios que cuentan como fuente (dominio → grupo: dos medios del mismo grupo no son independientes entre sí) y
@@ -130,13 +134,9 @@ def musica_del_dia(paleta, fecha, forzada=None):
 
 
 def colores(paleta):
-    """Los colores de /video más `realce`: el del gancho, cuyo texto blanco va sobre la foto oscurecida. Es el primero
-    de la paleta que se lee sobre oscuro (≥ 4.5:1) y se distingue del blanco (≥ 1.5:1): el acento de maíz o
-    terracota es casi negro y ahí se perdía."""
+    """Los colores de /video (estilo Noche) más `realce`, el del gancho sobre la foto oscurecida: el acento del tema."""
     c = VD.colores(paleta)
-    p = leer(os.path.join(RAIZ, "design", "tokens.json"))["paletas"][paleta]
-    c["realce"] = next((p[k] for k in ("a1", "bg", "a3", "a2")
-                        if VD.contraste(p[k], "#141414") >= 4.5 and VD.contraste(p[k], "#FFFFFF") >= 1.5), "#F6F2E8")
+    c["realce"] = c["acento"]   # Noche: el acento del tema ya se lee sobre la foto oscurecida (≥ 5.2:1 sobre el fondo)
     return c
 
 
@@ -825,6 +825,8 @@ def cmd_tiempos(a):
     por_id = {x["id"]: x for x in g["noticias"]}
     total_n = len(g["noticias"])
     fecha = fecha_corta(st["fecha"])
+    ruta_b = os.path.join(trabajo, "noticias.json")   # el estado de cada noticia: «En desarrollo» va en un chip
+    estados = {x.get("id"): x.get("estado") for x in leer(ruta_b).get("noticias") or []} if os.path.exists(ruta_b) else {}
     escenas, avisos = [], []
     for e in loc["escenas"]:
         n, tipo = e["n"], e["tipo"]
@@ -867,7 +869,8 @@ def cmd_tiempos(a):
             N = {"indice": list(por_id).index(e["noticia"]) + 1, "total": total_n, "seccion": nt.get("seccion"),
                  "foto": foto.get("archivo"), "credito": foto.get("credito"), "icono": nt.get("icono"),
                  "depto": depto_id(nt.get("depto")), "lugar": nt.get("depto") if not foto.get("archivo") else None,
-                 "kb": KEN_BURNS[(n - 1) % len(KEN_BURNS)], "cifra": None, "fuente": None}
+                 "kb": KEN_BURNS[(n - 1) % len(KEN_BURNS)], "cifra": None, "fuente": None,
+                 "estado": estados.get(e["noticia"])}
             fin_1 = VD.fin_oracion_desde(pal)
             if tipo == "titular":
                 palabras_t = (g["gancho"].get("pantalla") or "").split()

@@ -3,42 +3,47 @@
 <!-- Cierre de /video en dos pantallas con una sola voz. A · Conclusiones (hasta T.preg): rótulo, eco de la cifra del
      gancho (si la hay) y el resumen en 2–3 líneas que entran en T.r. B · Frase final (desde T.preg): A sale hacia arriba
      y queda la frase final sola (un remate o, a veces, una pregunta al espectador; referencias/cierres.md), y luego «Sígueme en» (TikTok, Instagram y X) solo en pantalla, sin logo ni
-     fuentes. Colores de la paleta del hilo (escenas.json); subtítulos con las cifras en grande. -->
+     fuentes. Estilo Noche (video/comun.css): una sola cosa en el acento por pantalla. En A, el eco (la cifra del
+     gancho); el resumen en crema, Archivo 800, con sus números en crema y peso 900 (destacan sin color: con 2–3 líneas
+     serían 4–5 acentos). En B, la palabra que suena de la frase final (crema, Archivo 800), que se enciende palabra a
+     palabra con la voz (lo que falta al 35 %) y, como la pantalla ya dice la voz, sin subtítulo debajo (en A sí: el
+     resumen no es la locución).
+     Todo dentro de la zona segura (V.zona: termina 30 px antes de los subtítulos de comun.css, y = 1400). -->
 <link rel="stylesheet" href="comun.css">
 <style>
-#contexto { font: 500 26px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; }
+#contexto { font: 600 26px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; }
 /* zona segura de TikTok: ver escena.html; cada pantalla apila lo suyo en la columna */
-.pant { position: absolute; top: 380px; left: var(--izq); right: var(--der); display: flex; flex-direction: column; gap: 70px; }
-#pantB { gap: 110px; }
-#rotulo { font: 600 30px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; color: var(--acento, var(--ink)); margin-bottom: -30px; }
-#eco { font: 400 96px/1 'Instrument Serif', serif; letter-spacing: -.02em; color: var(--acento, var(--ink)); display: none; }
+.pant { position: absolute; top: 380px; left: var(--izq); right: var(--der); display: flex; flex-direction: column; gap: 64px; }
+#pantB { gap: 100px; }
+#rotulo { font: 600 30px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; margin-bottom: -26px; }
+/* el eco: la cifra del gancho, Archivo 900 condensado en mayúsculas (el shorthand `font` resetea font-stretch) */
+#eco { font: 900 150px/.84 Archivo, sans-serif; font-stretch: 62.5%; text-transform: uppercase; color: var(--acento, var(--ink)); display: none; white-space: nowrap; }
 #eco.si { display: block; }
-#resumen { font: 400 76px/1.04 'Instrument Serif', serif; letter-spacing: -.015em; display: flex; flex-direction: column; gap: 28px; }
+#resumen { font: 800 64px/1.06 Archivo, sans-serif; letter-spacing: -.015em; display: flex; flex-direction: column; gap: 26px; }
 #resumen span { display: block; }
-#pregunta { font: 400 112px/1.0 'Instrument Serif', serif; letter-spacing: -.015em; color: var(--pregunta); }
+#resumen b { font-weight: 900; color: var(--ink); }   /* las cifras en crema: el acento de A es solo el eco */
+#pregunta { font: 800 96px/1.02 Archivo, sans-serif; letter-spacing: -.02em; }
+#pregunta span { display: inline-block; margin-right: .24em; }
+#pregunta span.ahora { color: var(--acento, var(--ink)); }
 #sigue { }
-#sigue .t { font: 500 28px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 30px; }
+#sigue .t { font: 600 28px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 30px; }
 #sigue .c { display: flex; align-items: center; gap: 22px; margin-top: 22px; }
 #sigue .i { width: 64px; height: 64px; border-radius: 14px; background: var(--ink); display: flex; align-items: center; justify-content: center; }
 #sigue .i svg { width: 36px; height: 36px; fill: var(--bg); stroke: var(--bg); }
-#sigue .h { font: 700 54px/1 Archivo, sans-serif; letter-spacing: .01em; }
-#subs { position: absolute; top: 1500px; left: var(--izq); right: var(--der); text-align: center; font: 700 46px/1.25 Archivo, sans-serif; }
-#subs span { margin: 0; }
-#subs .cifra { font-size: 58px; font-weight: 800; letter-spacing: -.01em; }
+#sigue .h { font: 800 52px/1 Archivo, sans-serif; letter-spacing: -.005em; }
 /* formato 4:5 (1080×1350) para el feed: más compacto, «Sígueme en» en una fila */
-html.f45 .pant { top: 230px; gap: 44px; }
-html.f45 #pantB { gap: 70px; }
-html.f45 #rotulo { font-size: 26px; margin-bottom: -18px; }
-html.f45 #eco { font-size: 76px; }
-html.f45 #resumen { font-size: 60px; gap: 20px; }
-html.f45 #pregunta { font-size: 88px; }
+html.f45 .pant { top: 230px; gap: 42px; }
+html.f45 #pantB { gap: 64px; }
+html.f45 #rotulo { font-size: 26px; margin-bottom: -16px; }
+html.f45 #eco { font-size: 120px; }
+html.f45 #resumen { font-size: 54px; gap: 18px; }
+html.f45 #pregunta { font-size: 78px; }
 html.f45 #sigue { display: flex; flex-wrap: wrap; align-items: center; column-gap: 40px; }
 html.f45 #sigue .t { width: 100%; margin-bottom: 8px; }
 html.f45 #sigue .c { gap: 14px; margin-top: 12px; }
 html.f45 #sigue .i { width: 48px; height: 48px; }
 html.f45 #sigue .i svg { width: 28px; height: 28px; }
 html.f45 #sigue .h { font-size: 38px; }
-html.f45 #subs { top: 1130px; }
 </style></head>
 <body>
 <div id="arriba"><div id="contexto"></div><div id="progreso"></div></div>
@@ -63,8 +68,11 @@ const ICONOS = {
   youtube: '<path fill-rule="evenodd" d="M23.5 7.2a3 3 0 0 0-2.1-2.1C19.5 4.6 12 4.6 12 4.6s-7.5 0-9.4.5A3 3 0 0 0 .5 7.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-4.8zM9.6 15.6V8.4l6.2 3.6z"/>',
   x: '<path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/>',
 };
-const { clamp, eo, esc } = V;
-let S, N, ECO = false;
+const { clamp, eo, esc, normal } = V;
+const APAGADA = 0.35;   // lo que la voz aún no dice de la frase final (texto grande)
+// cifras del resumen (en crema y peso 900), con su prefijo o su unidad pegada («US$5.90», «×1.8», «46.1 %»)
+const RE_CIFRA = /(?:US\$|Q|\$|×)?[-−]?\d[\d,]*(?:\.\d+)?(?:\s?%)?/g;
+let S, N, ECO = false, FINAL = [];
 const ap = (el, p, dy = 30) => { el.style.opacity = p; el.style.transform = `translateY(${(1 - p) * dy}px)`; };
 const apx = (el, p, dx = -40) => { el.style.opacity = p; el.style.transform = `translateX(${(1 - p) * dx}px)`; };  // entra desde la izquierda
 window.__listo = (async () => {
@@ -74,28 +82,51 @@ window.__listo = (async () => {
   if (todo.gancho && /\d/.test(todo.gancho.pantalla || '')) { ECO = true; const e = document.getElementById('eco'); e.textContent = todo.gancho.pantalla; e.classList.add('si'); }
   V.pintarProgreso(todo);
   if (todo.cierre.rotulo) document.getElementById('rotulo').textContent = todo.cierre.rotulo;   // /noticias: «Hoy en Guatemala»
-  document.getElementById('resumen').innerHTML = todo.cierre.resumen.map((r) => `<span>${esc(r)}</span>`).join('');
-  document.getElementById('pregunta').textContent = todo.cierre.final || todo.cierre.pregunta;   // remate o pregunta
+  document.getElementById('resumen').innerHTML = todo.cierre.resumen.map((r) => `<span>${esc(r).replace(RE_CIFRA, (m) => `<b>${m}</b>`)}</span>`).join('');
+  // la frase final (remate o pregunta) palabra a palabra: el texto del cierre termina con ella (gate V5), así que sus
+  // palabras son las últimas de la voz; si no casan (≥ 80 %), se encienden repartidas entre T.preg y el fin de la voz
+  const final = String(todo.cierre.final || todo.cierre.pregunta || '').split(/\s+/).filter(Boolean);
+  const P = document.getElementById('pregunta');
+  P.innerHTML = final.map((w) => `<span>${esc(w)}</span>`).join('');
+  const ps = S.palabras || [], cola = ps.slice(Math.max(0, ps.length - final.length));
+  const casan = cola.length === final.length && cola.filter((p, i) => normal(p.text) === normal(final[i])).length >= 0.8 * final.length;
+  const t0 = S.T.preg + 0.1, t1 = Math.max(t0 + 0.3, S.fin_voz || t0 + 0.3), paso = (t1 - t0) / Math.max(1, final.length);
+  FINAL = [...P.querySelectorAll('span')].map((el, i) => casan ? { el, start: cola[i].start, end: cola[i].end } : { el, start: t0 + i * paso, end: t0 + (i + 1) * paso });
   document.getElementById('sigue').insertAdjacentHTML('beforeend', todo.redes.map((r) =>
     `<div class="c"><div class="i"><svg viewBox="0 0 24 24">${ICONOS[r.red]}</svg></div><span class="h">${esc(r.handle)}</span></div>`).join(''));
   await document.fonts.ready;
+  // zona segura (V.zona, gate V13): cada pantalla termina antes de los subtítulos; se achican el eco, el resumen y la
+  // frase final hasta caber (el eco, además, en una línea)
+  const Z = V.zona(), cabe = (el) => el.offsetTop + el.offsetHeight <= Z.fin - 6;
+  const eco = document.getElementById('eco'), col = eco.parentElement.clientWidth, A = document.getElementById('pantA'), B = document.getElementById('pantB');
+  for (let fs = V.F45 ? 120 : 150; ECO && fs > 70 && eco.scrollWidth > col; fs -= 6) eco.style.fontSize = fs + 'px';
+  for (let fs = V.F45 ? 54 : 64; fs > 40 && !cabe(A); fs -= 2) document.getElementById('resumen').style.fontSize = fs + 'px';
+  for (let fs = V.F45 ? 78 : 96; fs > 52 && !cabe(B); fs -= 4) P.style.fontSize = fs + 'px';
 })();
 window.seek = (t) => {
   V.seekProgreso(t, N, S.dur);
   // A · conclusiones: rótulo, eco y las líneas del resumen en T.r (con eco, la primera espera un poco)
   const R = S.T.r || [0.1, S.T.r2];
-  ap(document.getElementById('rotulo'), eo((t - 0.05) / 0.4), 16);
+  const rot = document.getElementById('rotulo'), pr = eo((t - 0.05) / 0.4);
+  ap(rot, pr, 16); rot.style.opacity = (0.7 * pr).toFixed(3);   // el rótulo, en crema atenuada
   if (ECO) ap(document.getElementById('eco'), eo((t - 0.1) / 0.5), 24);
   [...document.querySelectorAll('#resumen span')].forEach((s, i) => {
     const ti = i === 0 && ECO ? Math.max(0.3, (R[1] ?? 0.8) - 0.4) : (R[i] ?? R[R.length - 1]);
     apx(s, eo((t - ti) / 0.5));
   });
-  // al llegar la pregunta, A sale hacia arriba y entra B
+  // al llegar la frase final, A sale hacia arriba y entra B; cada palabra se enciende cuando la voz la dice y la que
+  // suena va en el acento (en la portada, la frase entera encendida)
   const sale = eo((t - S.T.preg) / 0.4), A = document.getElementById('pantA');
   A.style.opacity = 1 - sale; A.style.transform = `translateY(${(-90 * sale).toFixed(1)}px)`;
   apx(document.getElementById('pregunta'), eo((t - S.T.preg - 0.15) / 0.6), -40);
+  FINAL.forEach((x) => {
+    const w = V.portada ? 1 : eo((t - x.start + 0.1) / 0.25);
+    x.el.style.opacity = (APAGADA + (1 - APAGADA) * w).toFixed(3);
+    x.el.classList.toggle('ahora', !V.portada && t >= x.start - 0.05 && t < x.end + 0.08);
+  });
   [...document.querySelectorAll('#sigue > div')].forEach((el, i) => ap(el, eo((t - S.T.sigue - 0.15 * i) / 0.5), 20));
-  V.subtitulosVentana(t, S);
+  // subtítulos solo en A (el resumen no es la locución); en B la pantalla ya dice la voz
+  if (t < S.T.preg) V.subtitulosVentana(t, S); else document.getElementById('subs').innerHTML = '';
 };
 </script>
 </body></html>

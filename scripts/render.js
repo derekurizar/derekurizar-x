@@ -31,7 +31,11 @@ const { rutaFuentes } = require("./fuentes_ruta");
 
 const RAIZ = path.dirname(__dirname);
 const TOKENS = JSON.parse(fs.readFileSync(path.join(RAIZ, "design", "tokens.json"), "utf8"));
-const FAMILIAS = ["400 88px 'Instrument Serif'", "500 20px 'JetBrains Mono'", "600 24px Archivo"];
+// Tipografías que tienen que estar cargadas, según el estilo de la tarjeta (body[data-estilo], nuevo_visual.py).
+const FAMILIAS = {
+  noche: ["500 20px 'JetBrains Mono'", "800 64px Archivo", "extra-condensed 900 120px Archivo"],
+  clasico: ["400 88px 'Instrument Serif'", "500 20px 'JetBrains Mono'", "600 24px Archivo"],
+};
 
 function parseArgs(argv) {
   const o = { out: null, check: false, dsf: TOKENS.canvas.dsf || 2, inputs: [] };
@@ -138,7 +142,8 @@ async function main() {
       try { await page.waitForSelector("body[data-listo]", { timeout: 8000, state: "attached" }); }
       catch { listo = false; }
       const errorDATA = await page.evaluate(() => document.body.dataset.error || null);
-      const fuentesOk = await page.evaluate((fams) => fams.map((f) => [f, document.fonts.check(f)]), FAMILIAS);
+      const fuentesOk = await page.evaluate((fams) => (fams[document.body.dataset.estilo === "noche" ? "noche" : "clasico"])
+        .map((f) => [f, document.fonts.check(f)]), FAMILIAS);
 
       if (fuentesFaltantes.length) { huboFallos = true; console.error(`ERROR fuentes ausentes en design/fonts/: ${[...new Set(fuentesFaltantes)].join(", ")}`); }
       for (const [f, ok] of fuentesOk) if (!ok) { huboFallos = true; console.error(`ERROR tipografía no cargada: ${f}`); }

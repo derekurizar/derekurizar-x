@@ -60,10 +60,14 @@ function render(D) {
     const rIn = r0 - 1.2 * rPunto;                       // radio libre del hueco central
     const etiqueta = "mayoría " + D.mayoria, fontE = "600 19px Archivo";
     let px = Math.min(76, Math.floor(rIn * 0.66)), yNum = cy - Math.round(rIn * 0.36);
-    const cabe = () => { const w = H.medir(String(m), "400 " + px + "px 'Instrument Serif'"), dy = cy - (yNum - 0.72 * px); const semi = dy < rIn ? Math.sqrt(rIn * rIn - dy * dy) : 0; return w / 2 <= semi - 6; };
+    const cabe = () => { const w = H.medirCifra(String(m), px), dy = cy - (yNum - 0.72 * px); const semi = dy < rIn ? Math.sqrt(rIn * rIn - dy * dy) : 0; return w / 2 <= semi - 6; };
     while (px > 40 && !cabe()) px -= 4;
     H.assert(px >= 40, "el número de la mayoría no cabe en el hueco: acorta el titular");
-    H.texto(svg, cx, yNum, String(m), { "text-anchor": "middle", style: "font:400 " + px + "px 'Instrument Serif',serif;fill:" + ink });
+    // La cifra de la mayoría con la fuente del estilo (la de .cifra-heroe): Archivo condensado 900 en Noche, serif en clásico.
+    const fuenteNum = H.estilo() === "noche"
+      ? "font-family:Archivo,sans-serif;font-weight:900;font-size:" + px + "px;font-stretch:62.5%;text-transform:uppercase"
+      : "font:400 " + px + "px 'Instrument Serif',serif";
+    H.texto(svg, cx, yNum, String(m), { "text-anchor": "middle", style: fuenteNum + ";fill:" + ink });
     H.assert(H.medir(etiqueta, fontE) <= 2 * Math.sqrt(Math.max(0, rIn * rIn - 20 * 20)) - 8, "«" + etiqueta + "» no cabe en el hueco");
     H.texto(svg, cx, cy - 6, etiqueta, { "text-anchor": "middle", style: "font:" + fontE + ",sans-serif;fill:" + ink });
   }

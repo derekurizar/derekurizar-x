@@ -30,6 +30,9 @@ function render(D) {
   const items = D.orden === "desc" ? D.items.slice().sort((x, y) => y.b - x.b) : D.items.slice();
   const n = items.length, hi = ((D.destacar || 0) % n + n) % n;
   const ink = H.color.ink, a1 = H.color.a1;
+  // Barra que une los dos puntos: en a1 (clásico). Noche: el acento es una sola cosa, los puntos de la fecha
+  // reciente; la barra va en a3 (el acento atenuado, ≥ 3.2:1 sobre el fondo).
+  const union = H.estilo() === "noche" ? H.color.a3 : a1;
   H.leyenda([{ nombre: String(D.fechas[0]), color: ink, forma: "punto" }, { nombre: String(D.fechas[1]), color: a1, forma: "punto" }]);
 
   const W = 920, colIzq = 230, x0 = colIzq, x1 = W - 16, ejeH = 44;
@@ -80,7 +83,7 @@ function render(D) {
     const fnCabe = H.medir(it.nombre, fn) <= colIzq - 16 ? fn : (fontN.slice(2).find((s) => H.medir(it.nombre, s) <= colIzq - 16) || fontN[3]);
     H.texto(svg, 0, cy + 8, it.nombre, { style: "font:" + fnCabe + ";fill:" + ink });
     H.svgEl("line", { x1: x0, x2: x1, y1: cy, y2: cy, stroke: H.color.inkA(.14), "stroke-width": 2 }, svg);
-    H.svgEl("line", { x1: p.xa, x2: p.xb, y1: cy, y2: cy, stroke: a1, "stroke-width": 8, "stroke-linecap": "round" }, svg);
+    H.svgEl("line", { x1: p.xa, x2: p.xb, y1: cy, y2: cy, stroke: union, "stroke-width": 8, "stroke-linecap": "round" }, svg);
     H.svgEl("circle", { cx: p.xa, cy, r, fill: ink }, svg);
     H.svgEl("circle", { cx: p.xb, cy, r, fill: a1 }, svg);
     const estilo = "font:" + fontV + ";fill:" + ink;

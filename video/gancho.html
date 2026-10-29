@@ -8,25 +8,30 @@
      - pareja: dos bloques con área proporcional; el primero entero, el segundo (contorno desde el cuadro 0) crece al decirlo.
      - figuras: N personas apagadas; las K primeras se encienden al decir «K de cada N».
      - lugar: los 22 departamentos; al nombrar el lugar cae el pin, el departamento se enciende y la cámara se acerca.
+     Estilo Noche (video/comun.css): la pantalla en Archivo condensado 900 y mayúsculas, sola en --acento; la línea en
+     crema (lo que la voz aún no dice, apagado); en el visual el acento es lo que cuenta (el desborde, el segundo bloque,
+     las figuras encendidas, el lugar con su resplandor) y el resto va en crema atenuada. Solo variables de color.
      La graba scripts/video_grabar.js llamando a seek(t). -->
 <link rel="stylesheet" href="comun.css">
 <style>
 #progreso { margin-top: 0; }
-#contexto { font: 500 22px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; margin-top: 18px; opacity: .85; }
+#contexto { font: 600 22px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; margin-top: 18px; opacity: .85; }
 #cuerpo { position: absolute; top: 380px; left: var(--izq); right: var(--der); transform-origin: 0 0; }
-#cifra { font: 400 128px/.95 'Instrument Serif', serif; letter-spacing: -.02em; color: var(--acento, var(--ink)); }
-#linea { font: 700 52px/1.1 Archivo, sans-serif; margin-top: 22px; }
+/* la pantalla: Archivo 900 condensado en mayúsculas (el shorthand `font` resetea font-stretch, que va después) */
+#cifra { font: 900 156px/.86 Archivo, sans-serif; font-stretch: 62.5%; text-transform: uppercase; letter-spacing: -.005em;
+  color: var(--ink); }
+#linea { font: 800 50px/1.1 Archivo, sans-serif; letter-spacing: -.01em; margin-top: 22px; }
 #linea span { display: inline-block; margin-right: .25em; }
 #visual { position: absolute; left: var(--izq); right: var(--der); overflow: hidden; transform-origin: 50% 50%; }
 #visual svg { width: 100%; height: 100%; display: block; }
 #visual .mono { font: 600 26px 'JetBrains Mono', monospace; letter-spacing: .06em; fill: var(--ink); }
-#visual .serif { font: 400 76px 'Instrument Serif', serif; fill: var(--ink); }
-#visual .bold { font: 700 34px Archivo, sans-serif; fill: var(--ink); }
-#rotulo { position: absolute; padding: 10px 18px; background: var(--bg); border: 3px solid var(--ink); border-radius: 12px;
-  font: 800 30px/1 Archivo, sans-serif; white-space: nowrap; opacity: 0; }
+#visual .cond { font: 900 92px Archivo, sans-serif; font-stretch: 62.5%; text-transform: uppercase; fill: var(--ink); }
+#visual .bold { font: 800 34px Archivo, sans-serif; fill: var(--ink); }
+#rotulo { position: absolute; padding: 10px 18px 8px; background: var(--bg); border: 3px solid var(--ink); border-radius: 12px;
+  font: 900 42px/1 Archivo, sans-serif; font-stretch: 62.5%; text-transform: uppercase; white-space: nowrap; opacity: 0; }
 /* formato 4:5 (1080×1350) para el feed */
 html.f45 #cuerpo { top: 190px; }
-html.f45 #cifra { font-size: 104px; }
+html.f45 #cifra { font-size: 128px; }
 html.f45 #linea { font-size: 44px; margin-top: 16px; }
 </style></head>
 <body>
@@ -69,14 +74,15 @@ const VISUAL = {
       R.puntos = [];
       for (let i = 0; i < P; i++) {
         const cx = x0 + (i % cols + 0.5) * c, cy = y0 + (Math.floor(i / cols) + 0.5) * c;
-        const p = el('circle', { cx: cx.toFixed(1), cy: cy.toFixed(1), r: (c * 0.36).toFixed(1), fill: i < D ? 'var(--ink)' : 'var(--grafico)' }, svg);
+        const p = el('circle', { cx: cx.toFixed(1), cy: cy.toFixed(1), r: (c * 0.36).toFixed(1),
+          fill: i < D ? 'color-mix(in srgb, var(--ink) 62%, transparent)' : 'var(--grafico)' }, svg);
         p.style.transformBox = 'fill-box'; p.style.transformOrigin = 'center';
         R.puntos.push(p);
       }
       const yl = y0 + filas * c + 28;
       const ley = el('text', { x: x0, y: yl + 30, class: 'mono' }, svg);
       ley.textContent = VV.unidad.toUpperCase() + ' · ● = ' + miles(VV.u);
-      R.cuenta = el('text', { x: x0 + cols * c, y: yl + 62, class: 'serif', 'text-anchor': 'end', fill: 'var(--acento)' }, svg);
+      R.cuenta = el('text', { x: x0 + cols * c, y: yl + 70, class: 'cond', 'text-anchor': 'end', fill: 'var(--acento)' }, svg);
       R.D = D;
     },
     seek(t) {
@@ -104,7 +110,7 @@ const VISUAL = {
       const bloque = (x, s, v, et, color, clase) => {
         const g = el('g', {}, svg);
         const r = el('rect', { x, y: base - s, width: s, height: s, fill: color, rx: 6 }, g);
-        const tv = el('text', { x, y: base - s - 62, class: 'serif' }, g); tv.textContent = cuenta(v, v);
+        const tv = el('text', { x, y: base - s - 62, class: 'cond' }, g); tv.textContent = cuenta(v, v);
         const te = el('text', { x, y: base - s - 18, class: 'bold' }, g); te.textContent = et;
         return { g, r, tv, te, x, s };
       };
@@ -162,12 +168,18 @@ const VISUAL = {
       R.zoom = el('g', {}, svg);
       R.paths = {};
       for (const [id, geo] of Object.entries(GEOMETRIA.deptos)) {
-        R.paths[id] = el('path', { d: geo.d, fill: 'color-mix(in srgb, var(--ink) 20%, transparent)', stroke: 'var(--bg)', 'stroke-width': 2,
+        R.paths[id] = el('path', { d: geo.d, fill: 'color-mix(in srgb, var(--ink) 16%, transparent)', stroke: 'var(--bg)', 'stroke-width': 2,
           'vector-effect': 'non-scaling-stroke', 'stroke-linejoin': 'round' }, R.zoom);
       }
       const p = R.paths[VV.depto];
       if (!p) throw new Error('lugar: departamento «' + VV.depto + '» sin geometría');
-      R.borde = el('path', { d: GEOMETRIA.deptos[VV.depto].d, fill: 'none', stroke: 'var(--ink)', 'stroke-width': 5, 'vector-effect': 'non-scaling-stroke' }, R.zoom);
+      // mapa de luces: el lugar se enciende en el acento con un resplandor de trazos anchos y tenues (sin filter, que
+      // cambia el antialiasing entre grabaciones) y su borde nítido encima
+      R.halo = el('g', { fill: 'none', stroke: 'var(--acento, var(--a1))', 'stroke-linejoin': 'round' }, R.zoom);
+      for (const [w, o] of [[34, 0.07], [20, 0.12], [10, 0.22]])
+        el('path', { d: GEOMETRIA.deptos[VV.depto].d, 'stroke-width': w, 'stroke-opacity': o, 'vector-effect': 'non-scaling-stroke' }, R.halo);
+      R.zoom.appendChild(p);   // el lugar, encima del resplandor
+      R.borde = el('path', { d: GEOMETRIA.deptos[VV.depto].d, fill: 'none', stroke: 'var(--acento, var(--a1))', 'stroke-width': 3, 'vector-effect': 'non-scaling-stroke' }, R.zoom);
       const bb = p.getBBox();
       R.c = [bb.x + bb.width / 2, bb.y + bb.height / 2];
       R.pin = el('g', {}, R.zoom);
@@ -178,8 +190,8 @@ const VISUAL = {
     },
     seek(t) {
       const q = prog(t, VV.pin, VV.pin + 0.6), z = 1 + 0.35 * prog(t, VV.pin, VV.pin + 1.4);
-      R.paths[VV.depto].setAttribute('fill', q > 0.4 ? 'var(--grafico)' : 'color-mix(in srgb, var(--ink) 34%, transparent)');
-      R.borde.style.opacity = q;
+      R.paths[VV.depto].setAttribute('fill', q > 0.4 ? 'var(--grafico)' : 'color-mix(in srgb, var(--ink) 30%, transparent)');
+      R.borde.style.opacity = q; R.halo.style.opacity = q;
       R.pin.style.opacity = q;
       R.pin.setAttribute('transform', `translate(0 ${((1 - q) * -40).toFixed(1)})`);
       // la cámara se acerca al departamento (el recorte de #visual corta lo que sale)
@@ -205,11 +217,13 @@ window.__listo = (async () => {
     .forEach((s) => String(s).split(/\s+/).forEach((w) => { const k = normal(w); if (k) EN_PANTALLA.add(k); }));
   T_CIFRA = S.T.pant.desde;
   const cifra = document.getElementById('cifra'), P = S.T.pant;
-  cifra.textContent = P.texto;
+  // la pantalla en crema y su cifra (o su palabra de cantidad) en el acento; solo cifras y signos, entera en el acento
+  const pw = String(P.texto).split(/\s+/), ac = V.acentoDe(pw);
+  cifra.innerHTML = pw.map((w, i) => `<span${ac.todos || i === ac.k ? ' class="acento"' : ''}>${esc(w)}</span>`).join(' ');
   document.getElementById('linea').innerHTML = (S.T.linea || []).map((w) => `<span>${esc(w.text)}</span>`).join('');
   await document.fonts.ready;
-  const cuerpo = document.getElementById('cuerpo'), ancho = cuerpo.clientWidth, fs0 = F45 ? 104 : 128;
-  for (let fs = fs0; fs > 76 && (cifra.scrollWidth > ancho || cifra.offsetHeight > 2.1 * fs); fs -= 6) cifra.style.fontSize = fs + 'px';
+  const cuerpo = document.getElementById('cuerpo'), ancho = cuerpo.clientWidth, fs0 = F45 ? 128 : 156;
+  for (let fs = fs0; fs > 84 && (cifra.scrollWidth > ancho || cifra.offsetHeight > 2 * fs); fs -= 6) cifra.style.fontSize = fs + 'px';
   // el visual ocupa de debajo de la línea al fin de la zona segura (con la deriva)
   const Z = V.zona(), vis = document.getElementById('visual');
   const top = cuerpo.offsetTop + cuerpo.offsetHeight + (F45 ? 26 : 40);
@@ -229,7 +243,11 @@ window.__listo = (async () => {
   }
 })();
 
-const subtitulos = (t) => V.subtitulos(t, S, TROZOS, { ocultar: (tr, t) => t < T_CIFRA + 0.3 || tr.every((x) => EN_PANTALLA.has(normal(x.text))) });
+// sin subtítulo doble: un trozo cuyas palabras ya están en pantalla no se repite debajo; las de enlace («o», «y»,
+// «de»…) no cuentan («¿67, 90 o 102?» con las opciones a la vista)
+const ENLACE = new Set(['o', 'u', 'y', 'e', 'a', 'al', 'de', 'del', 'el', 'la', 'los', 'las', 'en', 'un', 'una', 'que', 'por']);
+const repite = (tr) => tr.some((x) => EN_PANTALLA.has(normal(x.text))) && tr.every((x) => EN_PANTALLA.has(normal(x.text)) || ENLACE.has(normal(x.text)));
+const subtitulos = (t) => V.subtitulos(t, S, TROZOS, { ocultar: (tr, t) => t < T_CIFRA + 0.3 || repite(tr) });
 window.seek = (t) => {
   V.seekProgreso(t, n, S.dur);
   const cifra = document.getElementById('cifra'), P = S.T.pant;
@@ -238,8 +256,11 @@ window.seek = (t) => {
   let escala = 1;
   if (P.pulso) escala *= 1 + 0.05 * Math.sin(Math.PI * clamp((t - P.pulso[0]) / Math.max(0.001, P.pulso[1] - P.pulso[0])));
   cifra.style.transform = `scale(${escala.toFixed(4)})`; cifra.style.transformOrigin = '0 60%';
+  // la línea está entera desde el cuadro 0, apagada (35 %), y cada palabra se enciende cuando la voz la dice (en la
+  // portada, entera)
   [...document.querySelectorAll('#linea span')].forEach((s, i) => {
-    const w = eo((t - S.T.linea[i].start + 0.15) / 0.3); s.style.opacity = w; s.style.transform = `translateY(${(1 - w) * 24}px)`; });
+    const w = V.portada ? 1 : eo((t - S.T.linea[i].start + 0.15) / 0.3);
+    s.style.opacity = (0.35 + 0.65 * w).toFixed(3); s.style.transform = `translateY(${((1 - w) * 8).toFixed(1)}px)`; });
   VISUAL[VV.tipo].seek(t);
   document.getElementById('visual').style.transform = `scale(${(1 + DERIVA * clamp(t / S.dur)).toFixed(4)})`;
   subtitulos(t);

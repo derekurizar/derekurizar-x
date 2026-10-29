@@ -928,6 +928,7 @@ if (!desde) {
     `Eres un visualista (lee referencias/roles/visualista.md y referencias/diseno/graficos.md «Flujo del visualista» y «Checklist de QA visual»). ` +
     `Sesión: ${enc.sesion_dir} (guion.json es de solo lectura). Tus tuits: ${lote.map((t) => `T${t.n} (${t.visual.plantilla})`).join(', ')}. ` +
     `Para cada uno: python3 scripts/materializar.py ${enc.sesion_dir} --tuit N (exit 0), UN Read del PNG, checklist; correcciones SOLO en ${enc.sesion_dir}/visuales/tuit_N.ajuste.json y re-materializar. ` +
+    `Aquí las tarjetas van en estilo clásico, como el informe (fondo plano de la paleta, Instrument Serif; materializar.py lo pone solo por modo investigacion): el punto 11 de la checklist (Noche) no aplica y una tarjeta de fondo oscuro es un error. ` +
     `Las tarjetas se imprimen además a 156 px en el anexo del informe: nada de rótulos que solo se entiendan a 1080. Máximo ${smoke ? 1 : 3} iteraciones por visual.` + (reparar ? ` REPARACIÓN: estos tuits fallaron antes: ${reparar}.` : '')
   const producidos = new Map()
   let pendientes = conVisual

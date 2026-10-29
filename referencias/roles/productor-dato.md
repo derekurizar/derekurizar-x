@@ -40,6 +40,11 @@ Hay una sola tarjeta y no hay visualistas: el QA visual lo haces tú. Eres el
      marca «2ª fuente no indep.»), `incertidumbre` lo declara.
    - ALT: el `alt_text` describe lo que el PNG muestra (tipo, cifra con unidad
      y periodo, fuente).
+   - NOCHE (`referencias/diseno/sistema.md`): fondo oscuro con grano del tinte
+     de la paleta, **una sola cosa en acento** (la cifra del dato; en `vs`,
+     Guatemala; en `mapa`, el extremo que cuenta el titular), texto crema y nada
+     ilegible sobre el fondo. Se corrige como el QA visual (paso 1); si persiste,
+     va en `avisos` (no vuelve `incompleto` el dato).
    Cada corrección pasa por `guion.json` → materializar → ensamblar. Máximo 3
    vueltas; si en la tercera falla C1, C5, C7, INDEP o ALT → `coherencia:
    "incompleto"` y `estado: "incompleto"`.

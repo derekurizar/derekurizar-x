@@ -16,7 +16,8 @@ const DATA = {
   ],
   yDesdeCero: false, ejeY: true, valoresBajoEje: null, rotularFin: true, hitos: [{ i: 5, texto: "pandemia" }]
 };
-function renderLinea(D) {
+
+function render(D) {
   H.assert(Array.isArray(D.etiquetasX) && D.etiquetasX.length >= 3, "etiquetasX necesita ≥3 puntos");
   H.assert(Array.isArray(D.series) && D.series.length >= 1 && D.series.length <= 4, "linea admite de 1 a 4 series");
   const n = D.etiquetasX.length;
@@ -29,7 +30,9 @@ function renderLinea(D) {
   const P = H.validarPeriodos(D.periodos, n);
   const ink = H.color.ink;
   const ROL = [H.color.a1, ink, H.color.a2, H.color.a3];
-  // Colores: la destacada en a1; el resto en ink, a2, a3 por orden.
+  // Colores: la destacada en a1; el resto en ink, a2, a3 por orden. En Noche a3 es el acento atenuado (mismo tono
+  // que a1): la destacada va más gruesa y las demás más finas para que el acento siga siendo una sola cosa.
+  const grosor = H.estilo() === "noche" ? [7, 4.5] : [6, 5];
   let k = 1;
   const colorDe = D.series.map((s) => (s.destacar ? ROL[0] : ROL[Math.min(k++, 3)]));
   if (!D.series.some((s) => s.destacar)) { colorDe[0] = ROL[0]; }
@@ -93,7 +96,7 @@ function renderLinea(D) {
       if (v === null) { abierto = false; return; }
       d += (abierto ? " L" : " M") + sx(j).toFixed(1) + " " + sy(v).toFixed(1); abierto = true;
     });
-    H.svgEl("path", { d: d.trim(), fill: "none", stroke: c, "stroke-width": hi ? 6 : 5, "stroke-linejoin": "round", "stroke-linecap": "round" }, svg);
+    H.svgEl("path", { d: d.trim(), fill: "none", stroke: c, "stroke-width": hi ? grosor[0] : grosor[1], "stroke-linejoin": "round", "stroke-linecap": "round" }, svg);
     let ult = n - 1; while (ult >= 0 && s.valores[ult] === null) ult--;
     H.svgEl("circle", { cx: sx(ult), cy: sy(s.valores[ult]), r: hi ? 10 : 8, fill: c }, svg);
     fines.push({ i, y: sy(s.valores[ult]), x: sx(ult), v: s.valores[ult], c });
@@ -103,5 +106,4 @@ function renderLinea(D) {
     for (const p of fines) H.texto(svg, x1 + 18, p.y + 8, f(p.v), { class: "t-val", fill: p.c });
   }
 }
-function render(D) { return renderLinea(D); }
 </script>

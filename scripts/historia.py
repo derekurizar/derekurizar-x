@@ -21,7 +21,7 @@ Subcomandos (TRABAJO = sesiones/historia-<slug>/):
         (--de-fuente: la og:image de una fuente ya leída, con «Foto: <medio>» y la fecha de la nota; --protagonista: la foto
         muestra al protagonista del encuadre, H12 la exige en el gancho)
         baja la foto, comprueba lado y licencia (H7) → fotos/<id>.jpg + .json (con su sha1; un gráfico o cartel con
-        texto va con --encaje contener: márgenes del color de su borde para que el marco no lo recorte)
+        texto va con --encaje contener: márgenes del color de su borde para que la foto a sangre no lo recorte)
   hechos TRABAJO --check [--eje E]   H1–H3 + H7 + H12 sobre verificacion_<eje>.json (citas en el texto guardado, fechas,
         independencia, fotos; sin --eje exige una foto del protagonista e imprime las og:image candidatas de las fuentes leídas)
   hechos TRABAJO --reclasificar [--aplicar]   los en_disputa de un solo grupo sin discrepancia en la nota → una_fuente (v3)
@@ -195,9 +195,14 @@ NOMBRES_MEDIOS = {"prensalibre.com": "Prensa Libre", "guatevision.com": "Guatevi
                   "elfaro.net": "El Faro", "forbes.com.mx": "Forbes México", "forbescentroamerica.com": "Forbes Centroamérica",
                   "bloomberglinea.com": "Bloomberg Línea", "eleconomista.net": "El Economista", "chapinlandia.com": "Chapinlandia"}
 # ---- fotos ----
-FOTO_LADO_MIN, FOTO_LADO_AVISO = 480, 600     # material de archivo: 480 vale con aviso
-# --encaje contener: el marco de noticia.html (object-fit: cover) mide ≈ 1.11 de ancho por alto en 9:16 y ≈ 0.93 en
-# 4:5, y el Ken Burns acerca hasta 1.15: el lienzo deja la imagen entera dentro de los dos con ese margen
+# La foto va a sangre (estilo Noche) en la lámina de video/noticia.html: 1080×1200 arriba, la misma en 9:16 y en 4:5
+# (proporción 0.9, object-fit: cover, Ken Burns hasta 1.15). Una apaisada se escala a lo alto y se recorta a los lados:
+# una og:image de 1200×630 queda en ≈ 1.9× (2.2× con el Ken Burns) y la página la oscurece un poco más (brillo 0.45
+# en vez de 0.55) y le pone el grano encima para que el aumento no se vea en bloques
+FOTO_LADO_MIN, FOTO_LADO_AVISO = 480, 600     # material de archivo: 480 vale con aviso (a 480 px de alto, ≈ 2.9×)
+# --encaje contener: el lienzo deja la imagen entera, con el margen del Ken Burns, en cualquier lámina de proporción
+# 0.9 (MARCO_ANGOSTO: la de noticia.html) a 1.15 (MARCO_ANCHO); la página la muestra más clara y casi sin Ken Burns,
+# para que se lea entera
 ENCAJE_MARGEN, MARCO_ANCHO, MARCO_ANGOSTO = 1.18, 1.15, 0.9
 PROPORCION_GRAFICO = 1.45     # más apaisada que esto y sin --encaje: aviso (¿es un gráfico o un cartel con texto?)
 ORIGENES_FOTO = ("commons", "oficial", "medio", "empresa")
@@ -637,7 +642,8 @@ def cmd_foto(a):
     if min(w, h) < FOTO_LADO_MIN:
         return falla("H7 %s: %d×%d (lado corto < %d px): busca otra" % (url, w, h, FOTO_LADO_MIN))
     if min(w, h) < FOTO_LADO_AVISO:
-        print("AVISO %s: %d×%d, por debajo de %d px: se verá blanda en el marco" % (a.id, w, h, FOTO_LADO_AVISO))
+        print("AVISO %s: %d×%d, por debajo de %d px: a sangre se verá blanda (la página la oscurece un poco más)"
+              % (a.id, w, h, FOTO_LADO_AVISO))
     os.makedirs(os.path.join(trabajo, "fotos"), exist_ok=True)
     dst = "fotos/%s.jpg" % a.id
     VD.ff("-i", crudo, "-frames:v", "1", "-vf", "scale='min(1600,iw)':-2", "-q:v", "3", os.path.join(trabajo, dst))
@@ -645,7 +651,7 @@ def cmd_foto(a):
         encajar(os.path.join(trabajo, dst))
     elif w / h > PROPORCION_GRAFICO:
         print("AVISO %s: %d×%d es muy apaisada; si es un gráfico, un cartel o un logo con texto, repite con --encaje "
-              "contener (el marco recortaría los lados)" % (a.id, w, h))
+              "contener (a sangre se recortan los lados: de una 16:9 se ve cerca de la mitad del ancho)" % (a.id, w, h))
     if a.referencia:
         credito = CREDITO_REFERENCIA + credito[len(CREDITO_FOTO):]
     if a.protagonista or (rec["retrato_de"] and VD._plano(rec["retrato_de"]) in protagonistas(trabajo)):
@@ -663,7 +669,8 @@ def sha1_de(ruta):
 
 def encajar(ruta):
     """--encaje contener: rellena la imagen con el color de su esquina para que quepa entera, con el margen del Ken
-    Burns, en el marco de 9:16 (≈ 1.11 de proporción) y en el de 4:5 (≈ 0.93). Sustituye el archivo."""
+    Burns, en la lámina a sangre de video/noticia.html (1080×1200, proporción 0.9, en 9:16 y en 4:5) y en cualquiera de
+    hasta 1.15 de proporción. Sustituye el archivo."""
     w, h = (int(x) for x in subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries",
                                             "stream=width,height", "-of", "csv=p=0:s=x", ruta],
                                            capture_output=True, text=True).stdout.strip().split("x")[:2])
@@ -1076,9 +1083,7 @@ def aplicar_extension(trabajo):
 
 def colores_con_realce(paleta):
     c = ORIGINALES["colores"](paleta)
-    p = leer(os.path.join(RAIZ, "design", "tokens.json"))["paletas"][paleta]
-    c["realce"] = next((p[k] for k in ("a1", "bg", "a3", "a2")
-                        if VD.contraste(p[k], "#141414") >= 4.5 and VD.contraste(p[k], "#FFFFFF") >= 1.5), "#F6F2E8")
+    c["realce"] = c["acento"]   # Noche: el acento del tema ya se lee sobre la foto oscurecida (≥ 5.2:1 sobre el fondo)
     return c
 
 
@@ -2053,8 +2058,10 @@ def t_gancho(S, e, ps, pal, fin_voz, dur, g):
     fin_1 = VD.fin_oracion_desde(pal, 0)
     linea, _ = VD.alinear_linea((cin.get("linea") or "").split(), pal, 0.0, max(0.4, fin_1))
     S["pagina"] = "noticia"
+    fo = next((r for r in fotos_h().values() if vis.get("foto") and r.get("archivo") == vis.get("foto")), {})
     S["N"] = {"modo": "titular", "foto": vis.get("foto"), "credito": vis.get("credito"), "fecha": cin.get("pantalla") or "",
-              "conteo": vis.get("etiqueta") or "", "titular": linea, "kb": NT.KEN_BURNS[0], "depto": None, "icono": None}
+              "conteo": vis.get("etiqueta") or "", "titular": linea, "kb": NT.KEN_BURNS[0], "depto": None, "icono": None,
+              "encaje": fo.get("encaje")}   # «contener»: la página la muestra entera (más clara y casi sin Ken Burns)
     S["T"] = {"pant": {"texto": cin.get("pantalla"), "v": None, "desde": 0.0, "hasta": 0.4, "pulso": None}, "linea": linea,
               "fin": round(fin_voz, 3)}
     ev = [(0.0, "titular"), (0.4, "cifra_fin")] + [(w["start"], "linea_dicha") for w in linea if w.get("dicha")]
@@ -2122,8 +2129,8 @@ def eventos_rotulo(S):
 
 
 def t_foto(S, e, ps, pal, fin_voz, dur, g):
-    """La escena foto: video/noticia.html en modo noticia (chip con la fecha y el lugar, la foto con Ken Burns y su
-    crédito, el titular, la cifra si la hay y la fuente). Con rótulo de acto, lo propio entra cuando el rótulo se va;
+    """La escena foto: video/noticia.html en modo noticia (chip con la fecha y el lugar, la foto a sangre con Ken Burns
+    y, en la columna, el titular, la cifra si la hay, la fuente y el crédito de la foto). Con rótulo de acto, lo propio entra cuando el rótulo se va;
     dentro de una secuencia, el titular entra con la primera oración de la voz."""
     esc = escena_guion(S, g)
     fo = fotos_h().get(esc.get("foto")) or {}
@@ -2134,7 +2141,7 @@ def t_foto(S, e, ps, pal, fin_voz, dur, g):
     N = {"modo": "noticia", "chip": {"b": esc.get("fecha") or "", "s": esc.get("lugar") or ""}, "foto": fo.get("archivo"),
          "credito": fo.get("credito"), "icono": esc.get("icono"), "depto": NT.depto_id(esc.get("depto")),
          "lugar": esc.get("lugar") if not fo.get("archivo") else None, "kb": NT.KEN_BURNS[(S["n"] - 1) % len(NT.KEN_BURNS)],
-         "cifra": None, "fuente": None}
+         "encaje": fo.get("encaje"), "cifra": None, "fuente": None}
     tit_ws = (esc.get("titular") or "").split()
     if S.get("seguida") and not R:
         fin_1 = VD.fin_oracion_desde(pal, 0)
@@ -2177,8 +2184,8 @@ def t_foto(S, e, ps, pal, fin_voz, dur, g):
 
 
 def t_cita(S, e, ps, pal, fin_voz, dur, g):
-    """La escena cita: video/historia.html (la frase entera apagada que se enciende con la voz; quién y cuándo; en un
-    documento, el resaltador barre la parte clave)."""
+    """La escena cita: video/historia.html (la frase entera apagada que se enciende con la voz, sin subtítulo mientras
+    la lee; quién y cuándo; la parte clave se subraya en el acento cuando la voz la dice)."""
     esc = escena_guion(S, g)
     q = next((x for x in (H_ACTUAL or {}).get("citas") or [] if x["id"] == esc.get("cita")), {})
     ws = (q.get("texto") or "").split()
@@ -2770,7 +2777,7 @@ def main():
     q.add_argument("--fecha")
     q.add_argument("--lugar")
     q.add_argument("--retrato-de", help="si es el retrato de una persona, su nombre (el de la cita); un objeto o un lugar no lo lleva")
-    q.add_argument("--encaje", choices=["contener"], help="gráfico, cartel o logo con texto: márgenes para que el marco no lo recorte")
+    q.add_argument("--encaje", choices=["contener"], help="gráfico, cartel o logo con texto: márgenes para que la foto a sangre no lo recorte")
     x = q.add_mutually_exclusive_group()
     x.add_argument("--referencia", action="store_true", help="la foto no es del hecho sino de referencia (el lugar, la institución, la persona, "
                    "el producto o la época): el crédito dice «Foto de referencia: …»")

@@ -102,7 +102,8 @@ cuadros, `critica.json`).
   la escena 1 (si no, `en: 2`) y voz del gancho ≤ 7.5 s. La promesa es un evento (`promesa`, con `tic`). En las
   escenas de texto el subtítulo se oculta mientras solo repite lo que ya está en pantalla (y hasta que aterriza
   la cifra): aparece para lo que no está (la promesa, la respuesta de la adivina, la explicación).
-- **Barra de progreso** arriba en todas las escenas, un tramo por escena (cierre incluido).
+- **Barra de progreso** arriba en todas las escenas, un tramo por escena (cierre incluido) de largo proporcional a su
+  duración (`V.pintarProgreso`; `/noticias` agrupa por noticia y `/historia` por acto).
 - **«Guatemala» en los primeros 6 s** (R6), donde funcione mejor: en la voz o la pantalla del gancho o en la
   primera oración de T1. Desde 2026-10-23 el script **ya no antepone «En Guatemala»** y la voz del gancho no abre con
   contexto (R3): los cinco primeros videos abrían igual y abrir con contexto frena menos (usuario, 2026-10-23).
@@ -136,7 +137,31 @@ cuadros, `critica.json`).
   del hilo usada hace más tiempo), con **ducking** bajo la voz (sidechain). **Efectos** solo del catálogo fijo
   `design/sfx/catalogo.json` (8 WAV: whoosh, tic, pulso, impacto, grave, riser, resolucion, foco), disparados
   por los eventos de cada escena. **`/video` nunca genera música ni efectos.**
-- Colores de la paleta del hilo (`design/tokens.json`).
+- **Estilo Noche** (decisión del usuario, 2026-10-28; reglas y tokens en `referencias/diseno/sistema.md`), el mismo de
+  las tarjetas de X:
+  - **Fondo** = el color del tema llevado casi a negro (`noche.paletas.<p>.fondo`; `video.py colores()` →
+    `escenas.json → colores`), con un **grano fijo** en el fondo del `body` (no depende de t: los cuadros salen
+    idénticos en serie y en paralelo, y los oscuros no se parten en bandas al comprimir).
+  - **Acento = una sola cosa por escena**: la cifra, el nombre o la palabra que suena (`--acento`, `--grafico`,
+    `--pregunta` y la caja del subtítulo activo son el mismo tono). Texto **crema**; lo ya dicho o lo que falta, al
+    26–55 %, solo en tamaños grandes.
+  - **Tipos**: Archivo condensado 900 en mayúsculas (`.condensada`) para cifras, nombres y años; Archivo 800 para el
+    golpe de arriba (68 px), los titulares y los subtítulos; JetBrains Mono 600 para kicker, fuente y crédito.
+    **Instrument Serif no entra en ninguna escena** (la condensada se declara con su eje de ancho en `comun.css`;
+    `font-stretch` va después del shorthand `font:`, que lo resetea).
+  - **Golpe de arriba** (tarjeta, mapa, ranking, escala, tiempo, explica): la barra de progreso va primero y el golpe
+    debajo, como titular, en Archivo condensado 900 en mayúsculas (96 px, se achica hasta 60) y en crema, con **una**
+    palabra en el acento: la primera con cifra («220 frente a 86»), si no la primera de cantidad («Menos niños
+    diagnosticados»); un titular solo de cifras va entero en el acento (`V.acentoDe` en `comun.js`; la pantalla del
+    gancho usa la misma regla).
+  - **Subtítulos** Archivo 800 a 60 px (y=1400), una sola palabra activa a la vez en una caja del acento
+    con tinta oscura (#1A1208) y las que faltan al 38 %; un trozo no termina en «el», «de», «y»;
+    **sin subtítulo doble**: si ≥ 60 % de las palabras del trozo ya se leen en pantalla, el subtítulo se calla.
+  - **Colores solo por variables**: `--bg`, `--ink`, `--a1`, `--a2`, `--a3`, `--acento`, `--grafico`, `--pregunta`,
+    `--resalte-bg`, `--resalte-ink`, `--tinta-acento` y `--fondo-golpe` (el fondo más oscuro, para el golpe que tiene
+    que pesar); ningún hex en páginas de escena ni animaciones.
+  - Las tarjetas del hilo se graban en Noche aunque el hilo sea de antes: `preparar` las rearma en `TRABAJO/tarjetas/`
+    (plantilla, paleta y `DATA` de cada `tuit_N.html`) y `grabar` y V7 usan esa carpeta.
 - **Zona segura** (medida en un iPhone con la app; vale para TikTok, Reels y Shorts, ver «Plataformas»): el video
   se escala para llenar el alto y pierde ~57 px por lado; la barra de pestañas tapa hasta y≈215, los íconos de la
   derecha x ≥ 900 desde y≈1070 y el nombre y el texto empiezan en y≈1645. Golpe y barra desde y=250 en la columna
@@ -221,8 +246,8 @@ Puntajes 1–5: gancho, bucle, ritmo, escala_humana, pago, cierre. `pasa` = sin 
   visual llenado, pareja, figuras o lugar, sincronizado con la voz por `tiempos_visual`) · `video/escena.html` (tarjeta con
   golpe arriba, foco y subtítulos con `.cifra`) · `video/mapa.html` (la tarjeta de mapa a pantalla completa) · `video/ranking.html` · `video/escala.html` · `video/tiempo.html` (escenas a pantalla completa) ·
   `video/cierre.html` · `video/animar.js` (animador propio para las 26 plantillas: estado = f(t), en p = 1 el DOM queda igual que el render, V7; `__caja` para el foco).
-- `video/comun.css` y `video/comun.js` (módulo común `V`): fuentes, lienzo, golpe de arriba, barra de progreso,
-  subtítulos, portada limpia y base 4:5; parámetros de la URL, curvas (`V.eo`, `V.prog`), `V.cargar` (escenas.json y
+- `video/comun.css` y `video/comun.js` (módulo común `V`): fuentes, lienzo con el fondo Noche y su grano, `.condensada`,
+  golpe de arriba, barra de progreso por grupos, subtítulos, rótulo de acto, portada limpia y base 4:5; parámetros de la URL, curvas (`V.eo`, `V.prog`), `V.cargar` (escenas.json y
   paleta), `V.tarjeta` (los `DATA` de una tarjeta), `V.subtitulos`. **Una escena nueva** enlaza `comun.css` antes de su
   `<style>`, carga `comun.js` antes de su script, usa `V.*` y escribe solo lo propio; su `seek(t)` sigue siendo
   función pura de t (sin relojes ni animaciones CSS), y `video_grabar.js` la añade a su lista blanca.

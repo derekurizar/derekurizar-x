@@ -31,8 +31,21 @@ function render(D) {
   if (R) H.assert(typeof R.valor === "number" && isFinite(R.valor) && typeof R.texto === "string" && R.texto.trim(), "referencia necesita valor numérico y texto");
   const ink = H.color.ink, a1 = H.color.a1, bg = H.color.bg;
   // Colores: la destacada en a1; las demás en tinta y en un tono medio de la tinta sobre el fondo.
+  // Noche (fondo oscuro, acento claro): tonos de crema del más claro al más oscuro, separados entre sí (≥ 1.7:1)
+  // y del acento (≥ 1.25:1) para que ninguna serie se confunda con otra; todos ≥ 1.6:1 sobre el fondo.
+  const tonosNoche = (n, paso = 1.35) => {
+    const out = [];
+    for (let t = 1; t > 0.05 && out.length < n; t -= 0.01) {
+      const c = H.mezcla(bg, ink, t);
+      if (H.contraste(c, bg) < 1.6) break;
+      if (H.contraste(c, a1) >= 1.25 && (!out.length || H.contraste(c, out[out.length - 1]) >= paso)) out.push(c);
+    }
+    H.assert(out.length === n, "no hay " + n + " tonos distinguibles sobre el fondo");
+    return out;
+  };
+  const neutros = H.estilo() === "noche" ? tonosNoche(2, 1.7) : [ink, H.mezcla(bg, ink, .5)];
   let k = 0;
-  const colorDe = D.series.map((_, j) => (j === hi ? a1 : [ink, H.mezcla(bg, ink, .5)][Math.min(k++, 1)]));
+  const colorDe = D.series.map((_, j) => (j === hi ? a1 : neutros[Math.min(k++, 1)]));
   H.leyenda(D.series.map((s, j) => ({ nombre: s.nombre, color: colorDe[j], forma: "cuadro" })));
 
   const W = 920, ejeH = 30, arriba = R ? 26 : 0;

@@ -2,7 +2,8 @@
 // angosta que la anterior. Un flujo continuo de partículas cae desde arriba. Mientras una etapa no se enciende, las
 // partículas se acumulan tenues en ella; cuando la voz dice el paso i, su banda se enciende y desde ese momento la etapa
 // descarta una parte (salen por los lados y se desvanecen) y deja bajar al resto. Por la boca salen pocas, en acento.
-// Todo es función de t: cada partícula k nace en un instante fijo y su recorrido (dónde espera, si se descarta) sale de
+// Estilo Noche: partículas y contornos en crema; en acento solo la etapa que suena (trazo y velo) y las pocas que
+// salen por la boca; las etapas ya dichas quedan en crema atenuada. Todo es función de t: cada partícula k nace en un instante fijo y su recorrido (dónde espera, si se descarta) sale de
 // un hash fijo de k y de la etapa, nunca de la ejecución.
 //
 // Contrato (referencias/roles/video-animador.md): ANIM.registrar(id, { meta, pintar(lienzo, P, ctx), seek(t, T) })
@@ -150,7 +151,7 @@ ANIM.registrar('embudo-filtro', {
       const b = this.bandas[i], izq = cx + this.hw(b.y0) + 26;
       const d = document.createElement('div');
       d.style.cssText = `position:absolute;left:${izq.toFixed(1)}px;width:${(W - izq - 6).toFixed(1)}px;top:${((b.y0 + b.y1) / 2).toFixed(1)}px;` +
-        `font:700 ${base}px/1.08 Archivo,sans-serif;color:var(--ink);letter-spacing:-.01em;opacity:0`;
+        `font:800 ${base}px/1.08 Archivo,sans-serif;color:var(--ink);letter-spacing:-.01em;opacity:0`;
       d.textContent = txt;
       lienzo.appendChild(d);
       let fs = base;
@@ -175,16 +176,20 @@ ANIM.registrar('embudo-filtro', {
       const st = ps[i] ? ps[i].start : T.fin, on = eo((t - st) / 0.5);
       const late = i === activo ? Math.sin(Math.PI * clamp((t - st) / 0.6)) : 0;
       const resp = i === activo ? 0.5 + 0.5 * Math.sin(2.2 * (t - st)) : 0;
-      const relleno = Math.round(on * (i === activo ? 30 + 6 * resp : 18));
-      pg.setAttribute('fill', relleno > 0 ? `color-mix(in srgb, var(--a1) ${relleno}%, transparent)` : 'transparent');
-      const trazo = Math.round(14 + 16 * entra + 60 * on * (i === activo ? 1 : 0.6));
-      pg.setAttribute('stroke', `color-mix(in srgb, var(--ink) ${trazo}%, transparent)`);
+      // la etapa que suena: velo y trazo en acento; las ya dichas: velo crema leve y trazo crema atenuado
+      const es = i === activo;
+      const relleno = Math.round(on * (es ? 24 + 6 * resp : 8));
+      pg.setAttribute('fill', relleno > 0 ? `color-mix(in srgb, var(${es ? '--acento' : '--ink'}) ${relleno}%, transparent)` : 'transparent');
+      const trazo = Math.round(14 + 16 * entra + 60 * on * (es ? 1 : 0.4));
+      pg.setAttribute('stroke', es && on > 0.01
+        ? `color-mix(in srgb, var(--acento) ${Math.round(100 * on)}%, color-mix(in srgb, var(--ink) ${trazo}%, transparent))`
+        : `color-mix(in srgb, var(--ink) ${trazo}%, transparent)`);
       pg.setAttribute('stroke-width', (5 + 2 * late + (i === activo ? 1.2 * resp : 0)).toFixed(2));
     });
     this.cuelloEl.style.opacity = entra.toFixed(3);
     this.textos.forEach((d, i) => {
       const st = ps[i] ? ps[i].start : T.fin, e = eo((t - st) / 0.45);
-      d.style.opacity = (e * (i < activo ? 0.6 : 1)).toFixed(3);
+      d.style.opacity = (e * (i < activo ? 0.5 : 1)).toFixed(3);
       d.style.transform = `translateX(${((1 - e) * 24).toFixed(1)}px)`;
     });
     // partículas
@@ -198,8 +203,6 @@ ANIM.registrar('embudo-filtro', {
       c.setAttribute('cx', e.x.toFixed(1)); c.setAttribute('cy', e.y.toFixed(1));
       c.setAttribute('r', e.r.toFixed(2));
       c.setAttribute('fill', e.acento ? 'var(--acento)' : 'var(--ink)');
-      c.setAttribute('stroke', e.acento ? 'var(--bg)' : 'none');
-      c.setAttribute('stroke-width', e.acento ? 3 : 0);
       c.setAttribute('opacity', e.o.toFixed(3));
     }
     usados.forEach((u, i) => { if (!u) this.circ[i].style.display = 'none'; });

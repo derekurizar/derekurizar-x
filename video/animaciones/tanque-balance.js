@@ -6,7 +6,8 @@
 //   baja     (paso 2 si n≥4) el nivel baja de forma continua mientras la voz sigue
 //   final    (último paso)   el tanque queda bajo, la marca del nivel de antes tenue arriba, el líquido en acento
 // Con 2–3 pasos las fases se juntan (la bajada empieza con la salida). Los pasos se leen abajo como lista, el activo
-// destacado. Todo es función de t (seek puro, sin azar ni reloj).
+// destacado. Estilo Noche: tanque, tubos y partículas en crema, el líquido en crema tenue; lo único en acento es el
+// líquido del final (el tanque que quedó bajo). Todo es función de t (seek puro, sin azar ni reloj).
 //
 // Contrato (referencias/roles/video-animador.md): ANIM.registrar(id, { meta, pintar(lienzo, P, ctx), seek(t, T) })
 //   P   = { titulo, pasos: [texto] }
@@ -30,7 +31,8 @@ ANIM.registrar('tanque-balance', {
       padre.appendChild(e);
       return e;
     };
-    const TINTE = 'color-mix(in srgb, var(--a1) 35%, var(--bg))';
+    const TINTE = 'color-mix(in srgb, var(--ink) 18%, var(--bg))';   // el interior de los tubos y el chorro
+    this.TINTE = TINTE;
 
     // --- lista de pasos (abajo): se mide primero para saber cuánto alto le queda al tanque ---
     const lista = document.createElement('div');
@@ -42,7 +44,7 @@ ANIM.registrar('tanque-balance', {
       const punto = document.createElement('i');
       punto.style.cssText = 'flex:none;width:18px;height:18px;border-radius:50%;border:5px solid var(--ink);box-sizing:content-box';
       const texto = document.createElement('span');
-      texto.style.cssText = 'font-family:Archivo,sans-serif;font-weight:700;line-height:1.12;color:var(--ink)';
+      texto.style.cssText = 'font-family:Archivo,sans-serif;font-weight:800;line-height:1.12;letter-spacing:-.01em;color:var(--ink)';
       texto.textContent = txt;
       fila.appendChild(punto); fila.appendChild(texto);
       lista.appendChild(fila);
@@ -70,8 +72,8 @@ ANIM.registrar('tanque-balance', {
     const yOut = Math.round(iB - wW / 2 - 12);
     Object.assign(this, { W, Ht, yIn, xm, yM, iL, iR, iB, Hin, tankR, wN, wW, yOut });
 
-    // líquido: dos capas (a1 y acento) que se funden al final
-    this.liq = el('path', { fill: 'var(--a1)' }, svg);
+    // líquido: dos capas (crema tenue y acento) que se funden al final
+    this.liq = el('path', { fill: 'color-mix(in srgb, var(--ink) 30%, var(--bg))' }, svg);
     this.liqF = el('path', { fill: 'var(--acento)', opacity: 0 }, svg);
     // marca del nivel de antes (tenue, punteada)
     this.marca = el('line', { x1: iL + 4, x2: iR - 4, y1: 0, y2: 0, stroke: 'var(--ink)', 'stroke-width': 5,
@@ -92,13 +94,13 @@ ANIM.registrar('tanque-balance', {
     this.tuboOutB = el('path', { d: recto, fill: 'none', stroke: TINTE, 'stroke-width': wN }, svg);
 
     // partículas
-    this.pIn = Array.from({ length: 12 }, () => el('circle', { r: 7, fill: 'var(--a2)', opacity: 0 }, svg));
-    this.pOut = [-1, 0, 1].map(() => Array.from({ length: 6 }, () => el('circle', { r: 8, fill: 'var(--a2)', opacity: 0 }, svg)));
+    this.pIn = Array.from({ length: 12 }, () => el('circle', { r: 7, fill: 'var(--ink)', opacity: 0 }, svg));
+    this.pOut = [-1, 0, 1].map(() => Array.from({ length: 6 }, () => el('circle', { r: 8, fill: 'var(--ink)', opacity: 0 }, svg)));
 
     // rótulos cortos junto a los tubos
     const rotulo = (txt, css) => {
       const d = document.createElement('div');
-      d.style.cssText = "position:absolute;font:500 36px/1 'JetBrains Mono',monospace;color:var(--ink);white-space:nowrap;opacity:0;" + css;
+      d.style.cssText = "position:absolute;font:600 36px/1 'JetBrains Mono',monospace;color:var(--ink);white-space:nowrap;opacity:0;" + css;
       d.textContent = txt;
       lienzo.appendChild(d);
       return d;
@@ -154,7 +156,7 @@ ANIM.registrar('tanque-balance', {
     this.rAntes.style.opacity = final.toFixed(3);
 
     // entrada: tubo lleno, chorro y partículas
-    this.tuboIn.setAttribute('stroke', abre > 0.01 ? 'color-mix(in srgb, var(--a1) 35%, var(--bg))' : 'var(--bg)');
+    this.tuboIn.setAttribute('stroke', abre > 0.01 ? this.TINTE : 'var(--bg)');
     const yS = ola(xm);
     this.chorro.setAttribute('height', Math.max(0, yS - yM).toFixed(1));
     this.chorro.setAttribute('opacity', (0.9 * abre).toFixed(3));
@@ -165,6 +167,8 @@ ANIM.registrar('tanque-balance', {
       if (s < 0.55) { x = 8 + (xm - 8) * (s / 0.55); y = yIn; }
       else if (s < 0.62) { x = xm; y = yIn + (yM - yIn) * ((s - 0.55) / 0.07); }
       else { x = xm + ((i * 37) % 7) - 3; y = yM + (yS - 8 - yM) * ((s - 0.62) / 0.38); }
+      // antes de abrir no existen (display:none: una partícula invisible que se mueve deja ruido de rasterizado)
+      c.style.display = abre > 0 ? '' : 'none';
       c.setAttribute('cx', x.toFixed(1)); c.setAttribute('cy', y.toFixed(1));
       c.setAttribute('opacity', (abre * Math.min(1, s / 0.05, (1 - s) / 0.05)).toFixed(3));
     });
@@ -181,6 +185,7 @@ ANIM.registrar('tanque-balance', {
       const vis = r === 1 ? abre : ancho;
       fila.forEach((c, i) => {
         const s = frac(fase + i / fila.length + r * 0.31);
+        c.style.display = vis > 0 ? '' : 'none';
         c.setAttribute('cx', (x0 + (x1 - x0) * s).toFixed(1));
         c.setAttribute('cy', (yOut + off).toFixed(1));
         c.setAttribute('opacity', (vis * Math.min(1, s / 0.08, (1 - s) / 0.08)).toFixed(3));
@@ -192,13 +197,14 @@ ANIM.registrar('tanque-balance', {
     let activo = -1;
     ps.forEach((p, i) => { if (t >= p.start) activo = i; });
     this.filas.forEach((f, i) => {
-      const entra = eo((t - ps[i].start) / 0.45), fantasma = 0.22 * eo((t - T.ini) / 0.5);
+      const entra = eo((t - ps[i].start) / 0.45), fantasma = 0.28 * eo((t - T.ini) / 0.5);
       const op = Math.max(fantasma, entra * (i < activo ? 0.5 : 1));
       f.fila.style.opacity = op.toFixed(3);
       const late = i === activo ? 0.03 * Math.sin(t * 3) : 0;
       f.fila.style.transform = `translateX(${((1 - entra) * -24).toFixed(1)}px) scale(${(1 + late).toFixed(4)})`;
-      f.punto.style.background = i === activo ? 'var(--acento)' : (i < activo ? 'var(--ink)' : 'transparent');
-      f.punto.style.borderColor = i === activo ? 'var(--acento)' : 'var(--ink)';
+      // el acento es del líquido: el punto activo va lleno en crema, los ya dichos a medias
+      f.punto.style.background = i === activo ? 'var(--ink)' : (i < activo ? 'color-mix(in srgb, var(--ink) 45%, transparent)' : 'transparent');
+      f.punto.style.borderColor = 'var(--ink)';
     });
   },
 });

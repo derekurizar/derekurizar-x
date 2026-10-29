@@ -48,6 +48,12 @@ llega en tu directiva. Guía narrativa: `referencias/narrativa.md`, «Dato únic
      año ni por una cifra sola («2026 sube 45%» no dice de qué). El kicker solo
      precisa tema, unidad y periodo. Si el sujeto no cabe en 3 × 26, acorta el
      resto, no el sujeto.
+   - La tarjeta sale en estilo Noche (`referencias/diseno/sistema.md`): fondo
+     casi negro de la paleta, titular en Archivo 800 (caja normal, nunca en
+     mayúsculas) y **una sola cosa en acento**: la cifra del dato (en `vs`,
+     Guatemala; en `mapa`, el departamento que nombra el titular). La cifra
+     protagonista sale condensada y en mayúsculas (un sufijo « mil» se ve
+     «MIL»): todo se escribe en caja normal y la plantilla pone la caja.
    - `visual` obligatorio: `cifra` por defecto (`cifra.valor`, `cifra.texto`,
      `contexto` ≤ 60 cuya aritmética sale de `cifra.valor` y
      `comparacion.valor`, `tendencia`, `comparacion` opcional). Cambia de

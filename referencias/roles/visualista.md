@@ -8,7 +8,8 @@ Por cada tuit N de tu lote:
 1. `python3 scripts/materializar.py <sesion> --tuit N` → exit 0 = pasa el gate
    de render (R1–R6, fuentes, cero externos). El mensaje de error dice qué falló.
 2. **Un solo `Read`** de `<sesion>/visuales/tuit_N.png` por iteración y aplica
-   la checklist.
+   la checklist (con el punto 11, Noche: fondo oscuro, una sola cosa en
+   acento, texto crema, nada ilegible sobre el fondo).
 3. Correcciones SOLO en `<sesion>/visuales/tuit_N.ajuste.json` (claves del
    `visual` a sustituir; `datos` se fusiona por claves) y vuelve al paso 1.
    Cambio de tipo: `--forzar-plantilla <otra>`.
@@ -24,6 +25,9 @@ fuente_en_pie, iteraciones, dudoso, nota}` y `omitidos[]`.
 En `/dato` no hay visualistas: este mismo flujo lo ejecuta el productor sobre
 `tuit_1` (ver `referencias/roles/productor-dato.md`).
 
-En `/investigacion` el flujo es el mismo; las tarjetas se imprimen además a
-156 px en el anexo del informe, así que nada de texto diminuto (R1 ya lo cubre)
-ni rótulos que solo se entienden a 1080.
+En `/investigacion` el flujo es el mismo, pero **las tarjetas van en estilo
+clásico** (fondo plano de la paleta, Instrument Serif: `materializar.py` lo
+elige por `guion.modo`), como el informe del que son figuras: el punto 11 de
+la checklist no aplica. Se imprimen además a 156 px en el anexo del informe,
+así que nada de texto diminuto (R1 ya lo cubre) ni rótulos que solo se
+entienden a 1080.

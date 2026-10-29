@@ -11,16 +11,20 @@
      y≈1070; abajo el nombre y el texto empiezan en y≈1645 (variables en comun.css, V.zona). El golpe va en la
      columna x 85–876; la tarjeta a escala 1 ocupa x 80–1000 (por encima de y≈1070 todo el ancho es seguro; la nota
      y el pie, que caen debajo, terminan en x 870: vertical.css); los subtítulos en y=1400. Durante un foco el resto
-     de la tarjeta sale de cuadro a propósito: #ventana[data-foco] le dice al gate V13 que mida solo la caja enfocada.
+     de la tarjeta sale de cuadro a propósito (sus textos se apagan antes de cortarse contra el borde: TEXTO QUE EL FOCO
+     CORTARÍA, abajo): #ventana[data-foco] le dice al gate V13 que mida solo la caja enfocada.
      El foco y la deriva viven en el transform de #marco (fuera del iframe): el estado final de la tarjeta lo
-     comprueba V7 (video_animar.js) con la misma hoja vertical. ?debug=1 dibuja las cajas de los focos. -->
+     comprueba V7 (video_animar.js) con la misma hoja vertical. Estilo Noche: la tarjeta (ya en Noche: preparar la
+     rearma) no pinta fondo propio dentro del video (html.en-video, vertical.css): se ve el del video, con su grano
+     continuo bajo el foco y la deriva; en el acto 2 de /historia (S.acto 2) su --bg baja a fondo_acto2 como el de la
+     página, para que no quede una franja. ?debug=1 dibuja las cajas de los focos. -->
 <link rel="stylesheet" href="comun.css">
 <style>
 /* la tarjeta a escala 1 bajo el golpe; la ventana recorta lo que el foco saca de cuadro */
 #ventana { position: absolute; top: 420px; left: 0; width: 1080px; height: 800px; overflow: hidden; }
 #marco { width: 1080px; height: 1080px; transform-origin: 0 0; will-change: transform; }
 #marco iframe { width: 1080px; height: 1080px; border: 0; display: block; }
-#ventana .caja { position: absolute; border: 3px dotted #ff3b30; box-sizing: border-box; pointer-events: none; }
+#ventana .caja { position: absolute; border: 3px dotted var(--acento, var(--a1)); box-sizing: border-box; pointer-events: none; }
 /* formato 4:5 (1080×1350) para el feed: sin zona segura de teléfono, todo más junto */
 html.f45 #ventana { top: 250px; height: 840px; }
 </style></head>
@@ -37,7 +41,62 @@ const CORTE = F45 ? [0, 1080] : [57, 1023];         // recorte lateral del telé
 let ZONA;                                            // V.zona(): columna de íconos (x ≤ iconosX desde iconosY)
 let BASE = { s: 1, tx: 0, ty: 0 };                          // encaje de la tarjeta en reposo: solo cambia si lo dibujado desborda
 const DERIVA = { s: 0.025, tx: -14, ty: -8 };  // movimiento lento sin foco; la tarjeta (x 80–1010) queda en el recorte (57–1023)
-let S, TROZOS, FOCOS = [];
+let S, TROZOS, FOCOS = [], PIEZAS = [];
+// TEXTO QUE EL FOCO CORTARÍA: el zoom saca de cuadro parte de la tarjeta y un kicker, una nota o un pie a medias contra
+// el borde («…EN GUATEMALA · QUETZ») no se lee. Cada texto es una PIEZA (el kicker, la leyenda, la nota y el pie
+// enteros, el pie con su línea; en el gráfico, cada <text> o elemento con texto; y los trazos finos sueltos, como la
+// flecha de antes-despues). La cámara es una función de t (marco), así que al cargar se recorre la escena a 60 cuadros/s
+// y cada pieza guarda sus TRAMOS FUERA: cuando no queda entera, con MARGEN, en el recorte del teléfono y en la ventana,
+// o cae bajo los íconos con un foco puesto (nunca se exige más margen del que la pieza tiene en reposo; lo enfocado por
+// un foco activo, solo que no toque el borde; un trazo fino, además, se apaga durante cualquier foco que no lo encuadre:
+// sin la cifra de la que sale, la flecha «entra desde fuera»). En cada tramo la pieza se apaga en los ANTES s previos
+// y vuelve VUELTA s después, cuando ya está entera otra vez: nunca se ve cortada. Durante
+// un foco, una red de seguridad apaga además lo que toque el borde (una etiqueta que mueve animar.js). La opacidad que
+// pone animar.js se respeta: cada cuadro se le devuelve la suya antes de __seek y esta la multiplica después (V7 no ve
+// nada de esto: es solo del video).
+const MARGEN = 12, ANTES = 0.3, VUELTA = 0.3;
+const suave = (x) => { x = clamp(x); return x * x * (3 - 2 * x); };
+const dentro = (b, c, m = 0) => b[0] >= c[0] - m && b[1] >= c[1] - m && b[2] <= c[2] + m && b[3] <= c[3] + m;
+// la caja b (px de la tarjeta) con el encuadre m ({s, tx, ty}): ¿cae bajo la columna de íconos?
+const bajoIconos = (b, m) => m.tx + m.s * b[2] > ZONA.iconosX && VT + m.ty + m.s * b[3] > ZONA.iconosY;
+// margen (px de página) de la caja b al borde del cuadro (recorte y ventana; < 0: cortada)
+const margen = (b, m) => Math.min(m.tx + m.s * b[0] - CORTE[0], CORTE[1] - m.tx - m.s * b[2], m.ty + m.s * b[1], VH - m.ty - m.s * b[3]);
+const piezas = (d) => {
+  const BLOQUE = '.kicker, .leyenda, .nota, .pie', P = new Map();
+  const pieza = (el) => { if (!P.has(el)) P.set(el, { el, rect: null }); return P.get(el); };
+  const w = d.createTreeWalker(d.body, NodeFilter.SHOW_TEXT);
+  for (let t = w.nextNode(); t; t = w.nextNode()) {
+    const p = t.parentElement;
+    if (!t.textContent.trim() || !p || p.closest('script, style')) continue;
+    pieza(p.closest(BLOQUE) || p.closest('text') || p);
+  }
+  for (const el of d.querySelectorAll('.pie')) if (P.has(el)) P.get(el).rect = 0;   // su línea de arriba también se corta
+  for (const el of d.querySelectorAll('#grafico *')) {   // trazos finos de HTML (la flecha: 6 px de alto, su punta ±12 px)
+    if (el.firstElementChild || el.textContent.trim() || el.closest('svg')) continue;
+    const r = el.getBoundingClientRect();
+    if (r.width && r.height && Math.min(r.width, r.height) <= 12 && Math.max(r.width, r.height) <= 400) Object.assign(pieza(el), { rect: 12, trazo: true });
+  }
+  // un elemento dentro de otro cuenta como el de fuera (una sola opacidad por texto)
+  for (const p of [...P.values()]) {
+    let fuera = null;
+    for (let x = p.el.parentElement; x && x !== d.body; x = x.parentElement) if (P.has(x)) fuera = P.get(x);
+    if (fuera) { if (p.rect !== null) (fuera.extra = fuera.extra || []).push(p); P.delete(p.el); }
+  }
+  const lista = [...P.values()];
+  lista.forEach((p) => { p.b = medir(p); });
+  return lista.filter((p) => p.b);
+};
+// caja actual de una pieza (px de la tarjeta): sus textos (leídos cada vez: animar.js reescribe las cifras que cuenta)
+// y, si cuenta su rectángulo (el pie, un trazo), este ampliado `rect` px (la punta de la flecha sale del elemento)
+const medir = (p) => {
+  let b = null;
+  const une = (r, e = 0) => { if (!r.width && !r.height) return; const c = [r.left - e, r.top - e, r.right + e, r.bottom + e];
+    b = b ? [Math.min(b[0], c[0]), Math.min(b[1], c[1]), Math.max(b[2], c[2]), Math.max(b[3], c[3])] : c; };
+  const d = p.el.ownerDocument, w = d.createTreeWalker(p.el, NodeFilter.SHOW_TEXT);
+  for (let t = w.nextNode(); t; t = w.nextNode()) if (t.textContent.trim()) { const r = d.createRange(); r.selectNodeContents(t); une(r.getBoundingClientRect()); }
+  for (const q of [p, ...(p.extra || [])]) if (q.rect !== null) une(q.el.getBoundingClientRect(), q.rect);
+  return b;
+};
 window.__listo = (async () => {
   const C = await V.cargar(), todo = C.todo; S = C.S; TROZOS = C.trozos;
   // el golpe (v2: S.arriba) o, en un escenas.json v1, el gancho de la escena 1
@@ -55,19 +114,27 @@ window.__listo = (async () => {
     else if (Date.now() - t0 > 15000) { clearInterval(i); x(new Error('la tarjeta no terminó de dibujarse')); } }, 50); });
   // modo vertical: se inyecta DESPUÉS de dibujar (las plantillas ya midieron su espacio); V7 hace lo mismo
   const st = fr.contentDocument.createElement('style'); st.textContent = css; fr.contentDocument.head.appendChild(st);
+  // dentro del video la tarjeta Noche no pinta su fondo (vertical.css · html.en-video): se ve el de la página; en el
+  // acto 2 de /historia su --bg (lo que la tarjeta pinta «del color del fondo»: el agujero de la dona) es fondo_acto2
+  fr.contentDocument.documentElement.classList.add('en-video');
+  if (S.acto === 2 && todo.colores.fondo_acto2) fr.contentDocument.body.style.setProperty('--bg', todo.colores.fondo_acto2);
   fr.contentDocument.body.getBoundingClientRect();  // fuerza el reflow antes de medir las cajas
-  // encaje: algunas plantillas dibujan etiquetas fuera de su margen (un «ago 2026» hasta x 1045); con la deriva, lo
-  // dibujado tiene que quedar dentro del recorte del teléfono (gate V13). Si no cabe, la tarjeta se achica o se corre
-  // lo justo; si cabe (lo normal: x 80–1000), BASE queda en {1, 0}.
+  // encaje: algunas plantillas dibujan etiquetas fuera de su margen (un «ago 2026» hasta x 1045) y algunas bajan más
+  // de lo que muestra la ventana (un pie en y≈860 de la tarjeta); con la deriva, lo dibujado tiene que quedar dentro
+  // del recorte del teléfono (gate V13) y de la ventana, sin cortar la línea del pie. Si no cabe, la tarjeta se achica
+  // o se corre lo justo; si cabe (lo normal: x 80–1000, y 60–790), BASE queda en {1, 0, 0}.
   {
-    const d = fr.contentDocument, xs = [];
+    const d = fr.contentDocument, xs = [], ys = [];
+    const pon = (b) => { if (b.width && b.height) { xs.push(b.left, b.right); ys.push(b.top, b.bottom); } };
     const w = d.createTreeWalker(d.body, NodeFilter.SHOW_TEXT);
-    for (let t = w.nextNode(); t; t = w.nextNode()) if (t.textContent.trim()) { const r = d.createRange(); r.selectNodeContents(t);
-      const b = r.getBoundingClientRect(); if (b.width) xs.push(b.left, b.right); }
-    for (const e of d.querySelectorAll('svg, img, canvas')) { const b = e.getBoundingClientRect(); if (b.width) xs.push(b.left, b.right); }
+    for (let t = w.nextNode(); t; t = w.nextNode()) if (t.textContent.trim()) { const r = d.createRange(); r.selectNodeContents(t); pon(r.getBoundingClientRect()); }
+    for (const e of d.querySelectorAll('svg, img, canvas, .pie')) pon(e.getBoundingClientRect());
     if (xs.length) {
-      const x0 = Math.min(...xs), x1 = Math.max(...xs), l0 = CORTE[0] + 4, l1 = CORTE[1] - 4, k = 1 + DERIVA.s;
-      const s = Math.min(1, (l1 - l0) / ((x1 - x0) * k)), s1 = s * k;
+      const x0 = Math.min(...xs), x1 = Math.max(...xs), l0 = CORTE[0] + 8, l1 = CORTE[1] - 8, k = 1 + DERIVA.s;   // 8 px del borde
+      // en vertical, la deriva (escala ×k, ty → DERIVA.ty) en sus dos extremos: y0–y1 entre v0 y v1 de la ventana
+      const y0 = Math.min(...ys), y1 = Math.max(...ys), v0 = 6, v1 = VH - 6, dt = DERIVA.ty;
+      const s = Math.min(1, (l1 - l0) / ((x1 - x0) * k), (v1 - v0) / ((y1 - y0) * k),
+        (v1 - v0 - dt) / Math.max(1, k * y1 - y0), (v1 - v0 + dt) / Math.max(1, y1 - k * y0)), s1 = s * k;
       const lo = Math.max(l0 - x0 * s, l0 - x0 * s1 - DERIVA.tx), hi = Math.min(l1 - x1 * s, l1 - x1 * s1 - DERIVA.tx);
       BASE = { s, tx: lo > hi ? (lo + hi) / 2 : Math.max(lo, Math.min(hi, 0)), ty: 0 };
       // lo dibujado a la derecha que cae por debajo de y≈1070 queda bajo los íconos: la tarjeta sube lo justo (≤ 48 px;
@@ -79,7 +146,8 @@ window.__listo = (async () => {
         for (const [ss, tt, dy] of [[s, BASE.tx, 0], [s * k, BASE.tx + DERIVA.tx, DERIVA.ty]])
           if (b.right * ss + tt > ZONA.iconosX - 2) baja = Math.max(baja, VT + b.bottom * ss + dy - (ZONA.iconosY - 4));
       }
-      BASE.ty = -Math.min(48, Math.max(0, baja));
+      const vlo = Math.max(v0 - s * y0, v0 - dt - s1 * y0), vhi = Math.min(v1 - s * y1, v1 - dt - s1 * y1);
+      BASE.ty = Math.max(vlo, Math.min(vhi, -Math.min(48, Math.max(0, baja))));
     }
   }
   // focos: la caja de cada valor que dice la voz, leída del DOM final (antes del primer seek); T.foco === false (el
@@ -94,30 +162,65 @@ window.__listo = (async () => {
       // fila de barras entera con su nombre) lleva un FOCO SUAVE: 1.15, o lo que quepa en el recorte, solo centrada
       const suave = bw > 0.7 * 1080 || bh > 0.7 * 1080;
       const cl = (v, lo, hi) => (lo > hi ? (lo + hi) / 2 : Math.max(lo, Math.min(hi, v)));
-      let s = suave ? Math.min(1.15, (CORTE[1] - CORTE[0] - 8) / bw, (VH - 32) / bh) : Math.min(1.45, Math.max(1.25, 420 / bw));
+      let s = suave ? Math.min(1.15, (CORTE[1] - CORTE[0] - 2 * MARGEN) / bw, (VH - 32) / bh) : Math.min(1.45, Math.max(1.25, 420 / bw));
       let ty, derecha;
       for (let paso = 0; paso < 2; paso++) {
         ty = cl(VH / 2 - s * (y + bh / 2), 16 - s * y, VH - 16 - s * (y + bh));
         // si la caja enfocada queda por debajo de y≈1070, su borde derecho no entra en la columna de íconos
         derecha = VT + ty + s * (y + bh) > ZONA.iconosY ? Math.min(CORTE[1], ZONA.iconosX - 12) : CORTE[1];
-        if (!suave || s * bw <= derecha - CORTE[0] - 8) break;
-        s = (derecha - CORTE[0] - 8) / bw;   // la fila ancha se achica hasta caber a la derecha de los íconos
+        if (!suave || s * bw <= derecha - CORTE[0] - 2 * MARGEN) break;
+        s = (derecha - CORTE[0] - 2 * MARGEN) / bw;   // la fila ancha se achica hasta caber a la derecha de los íconos
       }
       if (s < 1) continue;   // un foco nunca aleja la tarjeta
-      const tx = cl(540 - s * (x + bw / 2), CORTE[0] - s * x, derecha - s * (x + bw));
+      const tx = cl(540 - s * (x + bw / 2), CORTE[0] + MARGEN - s * x, derecha - MARGEN - s * (x + bw));   // ni la caja enfocada pegada al borde
       FOCOS.push({ k, a, b: b + 0.8, s, tx, ty, caja: c });
     }
   }
+  // un foco suelta la cámara cuando empieza el siguiente: sin esto, el sostenido (+0.8 s) del anterior y la entrada del
+  // nuevo dejaban la cámara a medio camino entre las dos cifras más de un segundo, sin encuadrar ninguna
+  const orden = [...FOCOS].sort((p, q) => p.a - q.a);
+  orden.forEach((f, i) => { const sig = orden.slice(i + 1).find((g) => g.a > f.a + 0.05); if (sig && sig.a < f.b) f.b = Math.max(f.a + 0.45, sig.a); });
+  // tramos fuera de cada pieza a lo largo de la trayectoria de la cámara (ver TEXTO QUE EL FOCO CORTARÍA)
+  PIEZAS = piezas(fr.contentDocument);
+  for (const f of FOCOS) {
+    const c = [f.caja[0], f.caja[1], f.caja[0] + f.caja[2], f.caja[1] + f.caja[3]];
+    f.propias = new Set(PIEZAS.filter((p) => dentro(p.b, c, 2) || dentro(c, p.b)));   // lo enfocado (o lo que lo contiene)
+  }
+  // Un tramo empieza cuando la pieza queda a menos del margen exigido (MARGEN, o el que tiene en reposo si es menor:
+  // la deriva siempre vale; lo enfocado por un foco activo, 1 px) y solo cuenta si en él la pieza llega a cortarse o la
+  // cámara se queda en el foco (peso ≥ 0.9) con la pieza pegada al borde; termina en cuanto deja de estarlo: al volver
+  // la cámara, el texto reaparece apenas está entero, sin esperar al margen completo.
+  const PASO = 1 / 60, abierto = new Map(), fin = Math.ceil(S.dur / PASO);
+  for (const p of PIEZAS) p.tramos = [];
+  for (let i = 0; i <= fin; i++) {
+    const t = i * PASO, m = marco(t), r = reposo(t), act = FOCOS.filter((f) => peso(f, t) > 0.001);
+    const quieta = FOCOS.reduce((acc, f) => acc + peso(f, t), 0) >= 0.9;
+    for (const p of PIEZAS) {
+      const suya = act.some((f) => f.propias.has(p)), umbral = suya ? 1 : Math.min(MARGEN, Math.max(1, margen(p.b, r) - 1));
+      const mg = margen(p.b, m), corta = mg < 1 || (act.length && bajoIconos(p.b, m)) || (p.trazo && act.some((f) => !f.propias.has(p)));
+      const cerca = corta || mg < umbral, malo = corta || (cerca && quieta);
+      if (cerca) { const x = abierto.get(p) || { t0: t, u: null }; if (malo) x.u = t; abierto.set(p, x); }
+      else if (abierto.has(p)) { const x = abierto.get(p); if (x.u !== null) p.tramos.push([x.t0, x.u + PASO]); abierto.delete(p); }
+    }
+  }
+  for (const [p, x] of abierto) if (x.u !== null) p.tramos.push([x.t0, x.u >= fin * PASO ? S.dur + 1 : x.u + PASO]);
+  // dos tramos casi seguidos se funden: la pieza no se asoma un instante entre ellos
+  for (const p of PIEZAS) p.tramos = p.tramos.reduce((acc, x) => { const u = acc[acc.length - 1];
+    if (u && x[0] - u[1] < ANTES + VUELTA) u[1] = x[1]; else acc.push(x); return acc; }, []);
   if (DEBUG) FOCOS.forEach((f) => { const d = document.createElement('div'); d.className = 'caja'; d.dataset.k = f.k; document.getElementById('ventana').appendChild(d); });
   await V.pintarActo(S);   // rótulo de acto (/historia, S.R); sus focos y golpe ya llegan desplazados de python
 })();
+// peso de un foco en t: entrada 0.45 s desde `desde`, sostenido hasta f.b (`hasta` + 0.8, o el inicio del siguiente), salida 0.6 s
+const peso = (f, t) => eo((t - f.a) / 0.45) * (1 - eo((t - f.b) / 0.6));
 // transform de #marco en t: deriva lenta (escala 1 → 1.035, −12/−8 px a lo largo de la escena) fuera de los focos;
-// dentro, mezcla ponderada de los focos activos (entrada 0.45 s, sostenido hasta `hasta` + 0.8, salida 0.6 s)
+// dentro, mezcla ponderada de los focos activos (entrada 0.45 s, sostenido hasta `hasta` + 0.8 o hasta que empieza el
+// foco siguiente, salida 0.6 s)
+const reposo = (t) => { const u = clamp(t / S.dur); return { tx: BASE.tx + DERIVA.tx * u, ty: BASE.ty + DERIVA.ty * u, s: BASE.s * (1 + DERIVA.s * u) }; };
 const marco = (t) => {
-  const u = clamp(t / S.dur), d = { tx: BASE.tx + DERIVA.tx * u, ty: BASE.ty + DERIVA.ty * u, s: BASE.s * (1 + DERIVA.s * u) };
+  const d = reposo(t);
   let sw = 0, stx = 0, sty = 0, ss = 0;
   for (const f of FOCOS) {
-    const w = eo((t - f.a) / 0.45) * (1 - eo((t - f.b) / 0.6));
+    const w = peso(f, t);
     sw += w; stx += w * f.tx; sty += w * f.ty; ss += w * f.s;
   }
   if (sw <= 0) return d;
@@ -132,13 +235,26 @@ window.seek = (t) => {
   document.getElementById('marco').style.transform = `translate(${m.tx.toFixed(2)}px, ${m.ty.toFixed(2)}px) scale(${m.s.toFixed(4)})`;
   // V13: con un foco puesto, la caja enfocada (en coordenadas de página) es lo único que tiene que estar en la zona
   //      con dos focos activos la cámara va de uno a otro: «mov» (no se mide ese tránsito)
-  const activos = FOCOS.map((f) => ({ f, w: eo((t - f.a) / 0.45) * (1 - eo((t - f.b) / 0.6)) })).filter((x) => x.w > 0.001);
+  const activos = FOCOS.map((f) => ({ f, w: peso(f, t) })).filter((x) => x.w > 0.001);
   const fa = activos.length === 1 ? activos[0].f : null;
   document.getElementById('ventana').dataset.foco = activos.length > 1 ? 'mov' : fa ? JSON.stringify([m.tx + m.s * fa.caja[0], VT + m.ty + m.s * fa.caja[1],
     m.tx + m.s * (fa.caja[0] + fa.caja[2]), VT + m.ty + m.s * (fa.caja[1] + fa.caja[3])].map((v) => Math.round(v))) : '';
   if (DEBUG) [...document.querySelectorAll('#ventana .caja')].forEach((d, i) => { const [x, y, bw, bh] = FOCOS[i].caja;
     d.style.left = (m.tx + m.s * x) + 'px'; d.style.top = (m.ty + m.s * y) + 'px'; d.style.width = (m.s * bw) + 'px'; d.style.height = (m.s * bh) + 'px'; });
-  document.getElementById('tarjeta').contentWindow.__seek(t, S.T);
+  const fr = document.getElementById('tarjeta'), win = fr.contentWindow;
+  for (const p of PIEZAS) if (p.tocada) { p.el.style.opacity = p.prev; p.tocada = false; }   // la opacidad de animar.js
+  win.__seek(t, S.T);
+  // cada pieza se apaga ANTES s antes de cada tramo fuera y vuelve VUELTA s después; durante un foco, además, la red de
+  // seguridad: lo que toque el borde (2 px de rampa)
+  for (const p of PIEZAS) {
+    let op = 1;
+    for (const [t0, t1] of p.tramos) op *= 1 - suave((t - t0 + ANTES) / ANTES) * (1 - suave((t - t1) / VUELTA));
+    if (op > 0 && m.w > 0.001) { const b = medir(p); if (b) op *= clamp(margen(b, m) / 2); }
+    if (op < 0.999) {
+      p.prev = p.el.style.opacity; p.tocada = true;
+      p.el.style.opacity = ((p.prev !== '' ? +p.prev : +win.getComputedStyle(p.el).opacity) * op).toFixed(3);
+    }
+  }
   V.subtitulos(t, S, TROZOS);
 };
 </script>

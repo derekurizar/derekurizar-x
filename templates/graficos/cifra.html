@@ -4,13 +4,18 @@
 .cifra-bloque.centrado { justify-content: center; }
 .cifra-ctx { display: flex; align-items: center; gap: 14px; font: 500 22px/1 'JetBrains Mono', monospace; }
 .cifra-ctx .flecha { font: 400 26px/1 Archivo, sans-serif; }
-.cifra-num { font: 400 220px/.88 'Instrument Serif', Georgia, serif; letter-spacing: -.02em; color: var(--a1); margin-top: 22px; white-space: nowrap; }
+/* La familia, el peso, el ancho y la caja de la cifra los pone .cifra-heroe (base.html) según el estilo; aquí, solo tamaño e interlínea. */
+.cifra-num { font-size: 220px; line-height: .88; letter-spacing: -.02em; color: var(--a1); margin-top: 22px; white-space: nowrap; }
 .cifra-txt { font: 600 28px/1.25 Archivo, sans-serif; margin-top: 18px; max-width: 900px; }
 .cifra-comp { margin-top: 44px; display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
 .cifra-comp .col .lab { font: 700 18px/1 'JetBrains Mono', monospace; letter-spacing: .12em; text-transform: uppercase; }
 .cifra-comp .col .val { font: 700 26px/1 'JetBrains Mono', monospace; margin-top: 12px; }
 .cifra-comp .col .barra { height: 22px; margin-top: 14px; background: var(--ink); }
 .cifra-comp .col.hero .barra { background: var(--a1); }
+/* Noche: interlínea de tokens (noche.tipografia.cifra), sin tracking negativo en el condensado; la barra de comparación
+   en crema atenuada (el acento es la cifra y su barra, una sola cosa). */
+body[data-estilo="noche"] .cifra-num { line-height: .84; letter-spacing: 0; }
+body[data-estilo="noche"] .cifra-comp .col:not(.hero) .barra { background: var(--a2); }
 </style>
 <script>
 // CIFRAS DE EJEMPLO (brief, imagen 2: crudo Brent 2026) · verificar antes de publicar
@@ -41,7 +46,7 @@ function render(D) {
     if (D.tendencia) H.el("span", "flecha", ctx, D.tendencia === "baja" ? "&#9660;" : "&#9650;");
     if (D.contexto) H.el("span", null, ctx, H.esc(D.contexto));
   }
-  const num = H.el("div", "cifra-num", b, H.esc(H.num(D.cifra.valor, D.formato)));
+  const num = H.el("div", "cifra-num cifra-heroe", b, H.esc(H.num(D.cifra.valor, D.formato)));
   // Auto-ajuste: baja el cuerpo hasta que la cifra quepa en los 920 px útiles.
   for (let px = 220; px >= 120; px -= 10) {
     num.style.fontSize = px + "px";

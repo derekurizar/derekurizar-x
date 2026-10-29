@@ -16,6 +16,7 @@ const DATA = {
   mayoria: "calificada",
   destacar: 6
 };
+
 function render(D) {
   H.assert(Number.isInteger(D.total) && D.total >= 10 && D.total <= 300, "total debe ser un entero entre 10 y 300");
   H.assert(Array.isArray(D.bloques) && D.bloques.length >= 2 && D.bloques.length <= 8, "hemiciclo admite de 2 a 8 bloques");
@@ -30,29 +31,11 @@ function render(D) {
   const W = 920, alto = H.espacio(520, 300);
   const svg = H.lienzo(W, alto);
 
-  // ---- Geometría del arco: filas concéntricas cuya capacidad cubra `total` ----
+  // ---- Geometría del arco (H.asientos, compartido con el informe): filas concéntricas cuya capacidad cubra `total` ----
   const cx = 310, cy = alto - 8, R = Math.min(296, alto - 30), r0 = 0.42 * R;
-  let s = 40, filas = [];
-  const capacidad = (paso) => {
-    const out = [];
-    const k = Math.floor((R - r0) / paso) + 1;
-    for (let i = 0; i < k; i++) { const r = R - i * paso; out.push({ r, cap: Math.floor(Math.PI * r / paso) }); }
-    return out;
-  };
-  for (; s >= 18; s--) { filas = capacidad(s); if (filas.reduce((t, x) => t + x.cap, 0) >= D.total) break; }
-  const capTotal = filas.reduce((t, x) => t + x.cap, 0);
-  H.assert(capTotal >= D.total, "no caben " + D.total + " curules en el arco: acorta el titular o la nota");
-  const rPunto = 0.36 * s;
-  // Reparto por fila proporcional a la capacidad (restos mayores), sin pasar la capacidad.
-  const cuota = filas.map((x) => D.total * x.cap / capTotal);
-  const porFila = cuota.map((q) => Math.floor(q));
-  let resto = D.total - porFila.reduce((t, x) => t + x, 0);
-  cuota.map((q, i) => ({ i, fr: q - Math.floor(q) })).sort((a, b) => b.fr - a.fr).forEach((o) => { if (resto > 0 && porFila[o.i] < filas[o.i].cap) { porFila[o.i]++; resto--; } });
-  for (let i = 0; resto > 0 && i < filas.length; i++) { const d = Math.min(resto, filas[i].cap - porFila[i]); porFila[i] += d; resto -= d; }
-  // Asientos ordenados de izquierda a derecha (ángulo π → 0): los bloques van en cuñas contiguas.
-  const asientos = [];
-  filas.forEach((x, i) => { for (let j = 0; j < porFila[i]; j++) { const th = Math.PI - Math.PI * (j + 0.5) / porFila[i]; asientos.push({ th, x: cx + x.r * Math.cos(th), y: cy - x.r * Math.sin(th) }); } });
-  asientos.sort((a, b) => b.th - a.th);
+  const arco = H.asientos(D.total, R, r0, cx, cy);
+  H.assert(arco, "no caben " + D.total + " curules en el arco: acorta el titular o la nota");
+  const s = arco.s, asientos = arco.asientos, rPunto = 0.36 * s;
 
   // Colores: destacado en a1; el resto en la rampa fondo→tinta, de más a menos contraste.
   const otros = D.bloques.filter((_, i) => i !== hi).length;
@@ -64,17 +47,21 @@ function render(D) {
 
   // ---- Mayoría: marcador radial entre el asiento m−1 y m, y el número en el hueco ----
   if (D.mayoria) {
-    const m = D.mayoria === "simple" ? Math.floor(D.total / 2) + 1 : Math.ceil(2 * D.total / 3);
+    const m = H.mayoria(D.total, D.mayoria);
     const th = m < asientos.length ? (asientos[m - 1].th + asientos[m].th) / 2 : asientos[asientos.length - 1].th;
     const ra = r0 - s / 2, rb = R + 0.8 * s;
     H.svgEl("line", { x1: (cx + ra * Math.cos(th)).toFixed(1), y1: (cy - ra * Math.sin(th)).toFixed(1), x2: (cx + rb * Math.cos(th)).toFixed(1), y2: (cy - rb * Math.sin(th)).toFixed(1), stroke: H.color.inkA(.7), "stroke-width": 2.5, "stroke-dasharray": "6 6" }, svg);
     const rIn = r0 - 1.2 * rPunto;                       // radio libre del hueco central
     const etiqueta = "mayoría " + D.mayoria, fontE = "600 19px Archivo";
     let px = Math.min(76, Math.floor(rIn * 0.66)), yNum = cy - Math.round(rIn * 0.36);
-    const cabe = () => { const w = H.medir(String(m), "400 " + px + "px 'Instrument Serif'"), dy = cy - (yNum - 0.72 * px); const semi = dy < rIn ? Math.sqrt(rIn * rIn - dy * dy) : 0; return w / 2 <= semi - 6; };
+    const cabe = () => { const w = H.medirCifra(String(m), px), dy = cy - (yNum - 0.72 * px); const semi = dy < rIn ? Math.sqrt(rIn * rIn - dy * dy) : 0; return w / 2 <= semi - 6; };
     while (px > 40 && !cabe()) px -= 4;
     H.assert(px >= 40, "el número de la mayoría no cabe en el hueco: acorta el titular");
-    H.texto(svg, cx, yNum, String(m), { "text-anchor": "middle", style: "font:400 " + px + "px 'Instrument Serif',serif;fill:" + ink });
+    // La cifra de la mayoría con la fuente del estilo (la de .cifra-heroe): Archivo condensado 900 en Noche, serif en clásico.
+    const fuenteNum = H.estilo() === "noche"
+      ? "font-family:Archivo,sans-serif;font-weight:900;font-size:" + px + "px;font-stretch:62.5%;text-transform:uppercase"
+      : "font:400 " + px + "px 'Instrument Serif',serif";
+    H.texto(svg, cx, yNum, String(m), { "text-anchor": "middle", style: fuenteNum + ";fill:" + ink });
     H.assert(H.medir(etiqueta, fontE) <= 2 * Math.sqrt(Math.max(0, rIn * rIn - 20 * 20)) - 8, "«" + etiqueta + "» no cabe en el hueco");
     H.texto(svg, cx, cy - 6, etiqueta, { "text-anchor": "middle", style: "font:" + fontE + ",sans-serif;fill:" + ink });
   }

@@ -6,10 +6,12 @@
      dice (o cuando el marcador lo alcanza); el último (o el destacado) va con el acento y en grande; en antes-despues
      la píldora (×1.77 o +77 %) aparece al final. Arriba el golpe y la barra de progreso; debajo el kicker y la
      fuente; abajo los subtítulos. Los puntos y sus tiempos vienen en S.T (video.py tiempos); el formato se lee de
-     los DATA de tarjeta_N.html (h.js). La graba scripts/video_grabar.js llamando a seek(t). -->
+     los DATA de tarjeta_N.html (h.js). Estilo Noche (video/comun.css): valores y etiquetas (años, meses) en Archivo
+     condensado 900 y mayúsculas, en crema; el último (o el destacado) en el acento, que es lo único que destaca: la
+     píldora va en crema con el texto del fondo. La graba scripts/video_grabar.js llamando a seek(t). -->
 <link rel="stylesheet" href="comun.css">
 <style>
-#kicker { position: absolute; top: 440px; left: var(--izq); right: var(--der); font: 500 24px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; }
+#kicker { position: absolute; top: 440px; left: var(--izq); right: var(--der); font: 600 24px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; }
 #cuerpo { position: absolute; top: 520px; left: var(--izq); right: var(--der); height: 760px; transform-origin: 50% 50%; will-change: transform; }
 #riel { position: absolute; top: 420px; left: 0; right: 0; height: 10px; border-radius: 5px; background: color-mix(in srgb, var(--ink) 22%, transparent); }
 #riel b { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: var(--ink); border-radius: 5px; }
@@ -17,19 +19,20 @@
 .punto { position: absolute; top: 425px; width: 0; }
 .punto i { position: absolute; left: -13px; top: -13px; width: 26px; height: 26px; border-radius: 50%; background: var(--ink); transform: scale(0); }
 .punto.si i { left: -19px; top: -19px; width: 38px; height: 38px; background: var(--acento, var(--ink)); }
-.punto .et { position: absolute; top: 44px; left: 0; transform: translateX(-50%); font: 600 28px/1 'JetBrains Mono', monospace; white-space: nowrap; letter-spacing: .02em; }
-.punto .v { position: absolute; bottom: 40px; left: 0; transform: translateX(-50%); font: 700 48px/1 'JetBrains Mono', monospace; letter-spacing: -.02em; white-space: nowrap; opacity: 0; }
-.punto.si .v { font-size: 72px; color: var(--acento, var(--ink)); bottom: 48px; }
-.punto .sub { position: absolute; top: 84px; left: 0; transform: translateX(-50%); font: 500 22px/1.2 Archivo, sans-serif; white-space: nowrap; opacity: .75; }
-#pildora { position: absolute; top: 600px; left: 50%; transform: translateX(-50%); padding: 18px 40px; border-radius: 999px; background: var(--acento, var(--ink)); color: var(--bg); font: 800 64px/1 Archivo, sans-serif; letter-spacing: -.02em; opacity: 0; white-space: nowrap; }
-#fuente { position: absolute; top: 1340px; left: var(--izq); right: var(--der); font: 500 20px/1.2 'JetBrains Mono', monospace; opacity: .75; }
+/* años, etiquetas y valores: Archivo 900 condensado en mayúsculas (el shorthand `font` resetea font-stretch, que va después) */
+.punto .et { position: absolute; top: 40px; left: 0; transform: translateX(-50%); font: 900 38px/1 Archivo, sans-serif; font-stretch: 62.5%; text-transform: uppercase; white-space: nowrap; letter-spacing: .01em; }
+.punto .v { position: absolute; bottom: 40px; left: 0; transform: translateX(-50%); font: 900 64px/1 Archivo, sans-serif; font-stretch: 62.5%; text-transform: uppercase; white-space: nowrap; opacity: 0; }
+.punto.si .v { font-size: 104px; color: var(--acento, var(--ink)); bottom: 46px; }
+.punto .sub { position: absolute; top: 86px; left: 0; transform: translateX(-50%); font: 600 22px/1.2 Archivo, sans-serif; white-space: nowrap; opacity: .75; }
+#pildora { position: absolute; top: 600px; left: 50%; transform: translateX(-50%); padding: 14px 40px 12px; border-radius: 999px; background: var(--ink); color: var(--bg); font: 900 78px/1 Archivo, sans-serif; font-stretch: 62.5%; text-transform: uppercase; opacity: 0; white-space: nowrap; }
+#fuente { position: absolute; top: 1340px; left: var(--izq); right: var(--der); font: 600 20px/1.2 'JetBrains Mono', monospace; opacity: .75; }
 /* formato 4:5 (1080×1350) para el feed */
 html.f45 #kicker { top: 250px; }
 html.f45 #cuerpo { top: 300px; height: 620px; }
 html.f45 #riel { top: 330px; }
 html.f45 #marcador { top: 314px; }
 html.f45 .punto { top: 335px; }
-html.f45 #pildora { top: 490px; font-size: 54px; }
+html.f45 #pildora { top: 490px; font-size: 66px; }
 html.f45 #fuente { top: 1000px; }
 </style>
 <script src="h.js"></script>

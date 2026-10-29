@@ -4,7 +4,10 @@
 // su nodo se enciende y la flecha que llega a él se dibuja. Al encenderse el último se dibuja, en acento, la flecha de
 // regreso al primero (la que cierra el ciclo) y desde ahí un pulso da vueltas al anillo; cada vuelta completa refuerza
 // el anillo (trazo más grueso, más acento, halo más visible), con tope a las tres vueltas. Los nodos se iluminan cuando
-// el pulso pasa por ellos. Todo es función de t (seek puro: las vueltas se calculan desde t, sin estado).
+// el pulso pasa por ellos. Estilo Noche: el nodo del paso que suena se llena de acento con el texto en --tinta-acento
+// (en el lazo, el que toca el pulso se marca con borde y texto en acento); los demás, contorno y texto crema (lo ya
+// dicho al 50 %).
+// Todo es función de t (seek puro: las vueltas se calculan desde t, sin estado).
 //
 // Contrato (referencias/roles/video-animador.md): ANIM.registrar(id, { meta, pintar(lienzo, P, ctx), seek(t, T) })
 //   P   = { titulo, pasos: [texto] }
@@ -38,7 +41,7 @@ ANIM.registrar('ciclo-vicioso', {
     const estilo = () => this.nodos.forEach((el) => {
       el.style.cssText = `position:absolute;left:0;top:0;width:${pw}px;box-sizing:border-box;padding:16px 20px;` +
         `border-radius:26px;border:5px solid transparent;text-align:center;overflow-wrap:break-word;` +
-        `font:700 ${fs}px/1.12 Archivo,sans-serif;color:var(--ink);transform-origin:50% 50%`;
+        `font:800 ${fs}px/1.12 Archivo,sans-serif;letter-spacing:-.01em;color:var(--ink);transform-origin:50% 50%`;
     });
     const medir = () => {
       estilo();
@@ -186,12 +189,17 @@ ANIM.registrar('ciclo-vicioso', {
         : (i === activo ? 0.022 * Math.sin(2 * Math.PI * (t - s(i)) / 2.4) * on : 0);
       const esc = 0.95 + 0.05 * on + respira + 0.035 * cerca;
       el.style.transform = `scale(${esc.toFixed(4)})`;
-      el.style.opacity = Math.max(0.35 * fant, on).toFixed(3);
-      const fondo = 4 + 26 * on * (i === activo || enLazo ? 1 : 0.7) + 22 * cerca + 8 * ref * on;
-      el.style.background = `color-mix(in srgb, var(--a1) ${Math.min(60, fondo).toFixed(1)}%, var(--bg))`;
-      const borde = enLazo ? `color-mix(in srgb, var(--acento) ${(30 + 70 * Math.max(cerca, ref)).toFixed(1)}%, var(--ink))`
-        : `color-mix(in srgb, var(--ink) ${(30 + 70 * on).toFixed(1)}%, transparent)`;
-      el.style.borderColor = borde;
+      // relleno de acento (0–1) solo para el paso que suena; el último lo conserva un momento ya en el lazo y se apaga
+      // rápido (sin medios tonos largos). En el lazo, el nodo que toca el pulso se marca con borde y texto en acento.
+      const lleno = enLazo ? (i === n - 1 ? 1 - eo((u - 0.35) / 0.12) : 0) : (i === activo ? on : 0);
+      const marca = Math.max(lleno, cerca);
+      el.style.opacity = (enLazo ? 0.55 + 0.45 * marca : Math.max(0.35 * fant, on * (i < activo ? 0.5 : 1))).toFixed(3);
+      el.style.background = `color-mix(in srgb, var(--acento) ${(100 * lleno).toFixed(1)}%, var(--bg))`;
+      el.style.color = lleno > 0.5 ? 'var(--tinta-acento, var(--bg))'
+        : `color-mix(in srgb, var(--acento) ${(100 * cerca).toFixed(1)}%, var(--ink))`;
+      const tenue = enLazo ? 45 + 30 * ref : 30 + 45 * on;
+      el.style.borderColor = `color-mix(in srgb, var(--acento) ${(100 * marca).toFixed(1)}%, ` +
+        `color-mix(in srgb, var(--ink) ${tenue.toFixed(1)}%, transparent))`;
     });
   },
 });

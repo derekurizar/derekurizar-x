@@ -69,6 +69,21 @@ el id de la cifra (`"pen-c02.partes[1]"`) o una expresión `calculo`; un literal
 El visual y la pantalla van juntos: con un visual, la pantalla es corta («Hecha para 960») y el visual cuenta el resto.
 El icono (`icono`) va solo con el visual `cifra`.
 
+**Cómo se ven** (estilo Noche, `referencias/diseno/sistema.md`; las mismas reglas en `golpe.html`, `gancho.html` y
+`noticia.html`):
+- Fondo casi negro de la paleta con grano fijo; el visual está entero desde el cuadro 0 (R12) y lo que la voz aún no
+  dice espera en crema al 26–55 %, nunca invisible.
+- **El acento es el dato del gancho, y solo él**: la cifra de la pantalla y la parte del visual que la cuenta son la
+  misma cosa (en `cifra`, la cifra; en `llenado`, lo que desborda; en `pareja`, el bloque que crece; en `figuras`, las
+  K encendidas; en `lugar`, el departamento del pin). Contenedor, el otro bloque, las demás figuras y el mapa van en
+  crema.
+- Cifras, nombres y años en Archivo condensado 900 en mayúsculas; la línea, en Archivo 800 crema, entra palabra a
+  palabra con la voz; etiquetas y crédito en JetBrains Mono 600. Nada en Instrument Serif. Se escriben en caja normal:
+  la página pone la caja.
+- `foto` (`/historia`, y el gancho de `/noticias`): la foto **a sangre** con brillo 0.45–0.6 y una sombra del color
+  del fondo arriba y abajo; la línea se enciende en el acento (`realce`) cuando la voz la dice.
+- Mientras la pantalla dice lo mismo que la voz, no hay subtítulo (sin subtítulo doble).
+
 ## 4. Reglas
 
 | # | Regla | Dónde |

@@ -49,9 +49,16 @@ ANIM.registrar('<id>', {
 - Sin `Math.random`, `Date`, `performance.now`, `requestAnimationFrame`, `setTimeout`, `setInterval`, `fetch`, ni
   `https://` (el espacio de nombres SVG `http://www.w3.org/2000/svg` sí vale). ¿Necesitas «azar»? Usa una función fija
   de `i` (`(i * 37) % 11`), nunca de la ejecución.
-- **Colores solo de la paleta**: `var(--bg)`, `var(--ink)`, `var(--a1)`, `var(--a2)`, `var(--a3)`, `var(--acento)`;
-  transparencia con `color-mix(in srgb, var(--ink) 30%, transparent)`. Nada de hexadecimales ni `rgb()`.
-- **Tipografía del sistema**: `Archivo` (texto), `Instrument Serif` (titulares), `'JetBrains Mono'` (rótulos).
+- **Colores solo por variables** (estilo Noche, `referencias/diseno/sistema.md`): `var(--bg)` es el fondo casi negro
+  del tema (el grano ya va en el `body`: no pintes un fondo encima), `var(--ink)` la crema del texto y las formas,
+  `var(--acento)` (= `var(--a1)`) **una sola cosa a la vez**: el paso que la voz dice o el elemento activo;
+  `var(--a2)` y `var(--a3)` (crema y acento atenuados) para lo secundario y `var(--tinta-acento)` para texto sobre una
+  caja de acento. Lo inactivo o lo que falta, crema al 26–55 % con `color-mix(in srgb, var(--ink) 40%, transparent)`,
+  solo en elementos grandes. Nada de hexadecimales ni `rgb()`.
+- **Tipografía Noche**: Archivo 800 para el texto de los pasos; Archivo condensado 900 en mayúsculas para cifras, años
+  y nombres (la clase `.condensada` de `video/comun.css`, o `font-weight: 900; font-stretch: 62.5%; text-transform:
+  uppercase` escrito **después** del shorthand `font:`, que resetea el ancho); `'JetBrains Mono'` 600 para rótulos
+  pequeños. **Instrument Serif no** (salió de todo el video).
 - **Texto en el lienzo**: solo los `pasos` (o una palabra de ellos) y rótulos de ≤ 3 palabras; **cifras solo si están
   en los pasos** (ya pasaron V2). Nada de títulos propios: el título ya va arriba.
 - **Zona segura**: todo dentro del lienzo (no salgas de sus bordes); en 4:5 el lienzo es más bajo: usa `ctx.alto`.

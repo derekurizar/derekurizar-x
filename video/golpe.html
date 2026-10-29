@@ -2,39 +2,47 @@
 <html lang="es"><head><meta charset="utf-8">
 <!-- Escena de texto cinético de /video (?n=N), para el gancho (escena 1) y los golpes: la cifra enorme que cuenta
      (o ≤ 4 palabras que entran de golpe), la línea que la explica palabra a palabra, la barra de progreso con el
-     contexto pequeño debajo y los subtítulos. Sin tarjeta. Colores de la paleta del hilo (escenas.json); la cifra
-     va en --acento. Zona segura de TikTok: columna x 85–876, arriba desde y=250, subtítulos en y=1500 (ver
-     escena.html). La graba scripts/video_grabar.js llamando a seek(t).
+     contexto pequeño debajo y los subtítulos. Sin tarjeta. Estilo Noche (video/comun.css): la cifra (o las palabras,
+     o el término) en Archivo condensado 900 y mayúsculas, sola en --acento; la línea, la pregunta y las opciones en
+     crema, Archivo 800; el texto sobre el acento con --tinta-acento. Zona segura de TikTok: columna x 85–876, arriba
+     desde y=250, subtítulos en y=1400 (V.zona, ver escena.html). La graba scripts/video_grabar.js llamando a seek(t).
      T = { pant: { texto, v, desde, hasta, pulso }, linea: [{ text, start }], fin } -->
 <link rel="stylesheet" href="comun.css">
 <style>
 #progreso { margin-top: 0; }
-#contexto { font: 500 22px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; margin-top: 18px; opacity: .85; }
+#contexto { font: 600 22px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; margin-top: 18px; opacity: .85; }
 #cuerpo { position: absolute; top: 560px; left: var(--izq); right: var(--der); transform-origin: 0 40%; will-change: transform; }
 #icono { height: 0; margin-bottom: 0; color: var(--ink); }
 #icono svg { width: 140px; height: 140px; stroke-width: 1.5; display: block; }
 body.con-icono #icono { height: 140px; margin-bottom: 28px; }
 html.f45 #icono svg { width: 110px; height: 110px; }
 html.f45 body.con-icono #icono { height: 110px; margin-bottom: 20px; }
-#cifra { font: 400 300px/.9 'Instrument Serif', serif; letter-spacing: -.03em; color: var(--acento, var(--ink)); white-space: nowrap; transform-origin: 0 60%; }
-#cifra.texto { font-size: 150px; line-height: 1; letter-spacing: -.015em; white-space: normal; }
-#linea { font: 700 64px/1.1 Archivo, sans-serif; margin-top: 48px; }
+/* la cifra: Archivo 900 condensado en mayúsculas (más angosto que el serif de antes: arranca más grande y se achica
+   hasta caber); el shorthand `font` resetea font-stretch, que va después */
+#cifra { font: 900 360px/.84 Archivo, sans-serif; font-stretch: 62.5%; text-transform: uppercase; letter-spacing: -.005em;
+  color: var(--acento, var(--ink)); white-space: nowrap; transform-origin: 0 60%; }
+#cifra.texto { font-size: 190px; line-height: .88; white-space: normal; }
+#linea { font: 800 62px/1.1 Archivo, sans-serif; letter-spacing: -.01em; margin-top: 44px; }
+#cifra.baja { margin-bottom: .19em; }
 #linea span { display: inline-block; margin-right: .25em; }
-/* definición: el rótulo «Para entender» avisa que viene un concepto; el término como texto (no cuenta) y la definición
-   en hasta tres líneas */
+/* definición: el rótulo «Para entender» (en crema: el acento es solo del término) avisa que viene un concepto; el
+   término como texto (no cuenta) y la definición en hasta tres líneas */
 #rotulo { display: none; font: 600 30px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase;
-  color: var(--acento, var(--ink)); margin-bottom: 26px; opacity: 0; }
+  margin-bottom: 26px; opacity: 0; }
 body.definicion #rotulo { display: block; }
 html.f45 #rotulo { font-size: 26px; margin-bottom: 20px; }
 body.definicion #linea { font-size: 56px; line-height: 1.15; margin-top: 40px; }
-/* adivina: la pregunta y tres opciones que entran una a una; al revelar, la correcta se rellena y las otras se apagan */
+/* adivina: la pregunta y tres opciones que entran una a una; al revelar, la correcta se rellena con el acento (texto
+   en --tinta-acento) y las otras se apagan. Las opciones son cifras: condensado 900; la letra, en mono */
 body.adivina #cuerpo { top: 470px; }
-#pregunta { font: 400 76px/1.05 'Instrument Serif', serif; letter-spacing: -.015em; }
+#pregunta { font: 800 74px/1.06 Archivo, sans-serif; letter-spacing: -.015em; }
 #pregunta span { display: inline-block; margin-right: .22em; }
-#opciones { margin-top: 44px; display: flex; flex-direction: column; gap: 22px; align-items: flex-start; }
-.op { font: 700 58px/1 'JetBrains Mono', monospace; padding: 22px 34px; border: 4px solid var(--ink); border-radius: 22px; transform-origin: 0 50%; opacity: 0; }
-.op b { font-weight: 500; opacity: .6; margin-right: .5em; }
-.op.si { background: var(--acento, var(--ink)); color: var(--bg); border-color: var(--acento, var(--ink)); }
+#opciones { margin-top: 48px; display: flex; flex-direction: column; gap: 22px; align-items: flex-start; }
+.op { font: 900 76px/1 Archivo, sans-serif; font-stretch: 62.5%; text-transform: uppercase; padding: 16px 34px 18px;
+  border: 4px solid color-mix(in srgb, var(--ink) 55%, transparent); border-radius: 22px; transform-origin: 0 50%; opacity: 0;
+  display: flex; align-items: center; }
+.op b { font: 600 34px/1 'JetBrains Mono', monospace; opacity: .6; margin-right: .9em; }
+.op.si { background: var(--acento, var(--ink)); color: var(--tinta-acento, var(--bg)); border-color: var(--acento, var(--ink)); }
 .op.si b { opacity: .8; }
 /* «pausa y responde»: entra cuando la voz lo pide; la barra de abajo se vacía hasta el revelado */
 #pausa { position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: 20px; margin-top: 52px; padding: 18px 34px 22px 26px;
@@ -46,8 +54,9 @@ body.adivina #cuerpo { top: 470px; }
 html.f45 #cuerpo { top: 330px; }
 html.f45 #linea { font-size: 56px; margin-top: 36px; }
 html.f45 body.adivina #cuerpo { top: 290px; }
-html.f45 #pregunta { font-size: 64px; }
-html.f45 .op { font-size: 50px; padding: 18px 28px; }
+html.f45 #pregunta { font-size: 62px; }
+html.f45 .op { font-size: 64px; padding: 12px 28px 14px; }
+html.f45 .op b { font-size: 28px; }
 html.f45 #opciones { margin-top: 32px; gap: 16px; }
 html.f45 #pausa { margin-top: 34px; font-size: 36px; padding: 14px 28px 18px 22px; }
 </style></head>
@@ -59,6 +68,7 @@ html.f45 #pausa { margin-top: 34px; font-size: 36px; padding: 14px 28px 18px 22p
 <script>
 const n = V.n, F45 = V.F45, { clamp, eo, prog, esc, normal } = V;
 let S, TROZOS, NUM = null, TRAZOS = [], EN_PANTALLA = new Set(), T_CIFRA = 0;
+const APAGADA = 0.35;   // Noche: lo que la voz aún no dice de la línea (o de la pregunta) se ve al 35 % (texto grande)
 // número dentro de un texto formateado («US$5.90», «1,596.2 kg»): se cuenta con el mismo formato (copiado de animar.js)
 const RE_NUM = /([-−]?)(\d{1,3}(?:,\d{3})+|\d+)(?:\.(\d+))?/;
 function numTexto(s) {
@@ -96,6 +106,8 @@ window.__listo = (async () => {
   }
   const cifra = document.getElementById('cifra'), P = S.T.pant;
   cifra.textContent = P.texto;
+  // la coma, el punto y coma, los paréntesis y la Q bajan del renglón (interlínea .84): más aire antes de la línea
+  cifra.classList.toggle('baja', /[,;()Q]/i.test(P.texto));
   if (S.icono) {  // acento de la biblioteca fija (design/iconos/): se dibuja trazo a trazo al entrar la cifra
     const r = await fetch('iconos/' + S.icono + '.svg');
     if (!r.ok) throw new Error('icono «' + S.icono + '» no está en design/iconos/');
@@ -110,27 +122,34 @@ window.__listo = (async () => {
   document.getElementById('linea').innerHTML = (S.T.linea || []).map((w) => `<span>${esc(w.text)}</span>`).join('');
   await document.fonts.ready;
   const ancho = document.getElementById('cuerpo').clientWidth;
-  if (NUM) {  // una línea: se achica hasta caber en la columna; si ni a 160 px cabe («8,402 kg de cocaína»), dos líneas
-    if (F45) cifra.style.fontSize = '240px';
-    for (let fs = F45 ? 240 : 300; fs > 160 && cifra.scrollWidth > ancho; fs -= 10) cifra.style.fontSize = fs + 'px';
+  if (NUM) {  // una línea: se achica hasta caber en la columna; si ni a 190 px cabe («8,402 kg de cocaína»), dos líneas
+    if (F45) cifra.style.fontSize = '300px';
+    for (let fs = F45 ? 300 : 360; fs > 190 && cifra.scrollWidth > ancho; fs -= 10) cifra.style.fontSize = fs + 'px';
     if (cifra.scrollWidth > ancho) {
-      cifra.style.whiteSpace = 'normal'; cifra.style.lineHeight = '.95';
-      for (let fs = 160; fs > 100 && (cifra.scrollWidth > ancho || cifra.offsetHeight > 2.1 * fs); fs -= 8) cifra.style.fontSize = fs + 'px';
+      cifra.style.whiteSpace = 'normal'; cifra.style.lineHeight = '.88';
+      for (let fs = 190; fs > 110 && (cifra.scrollWidth > ancho || cifra.offsetHeight > 2 * fs); fs -= 8) cifra.style.fontSize = fs + 'px';
     }
-  } else {    // texto: hasta dos líneas (el término de una definición arranca más chico)
+  } else {    // texto: hasta dos líneas y sin palabra que se salga de la columna (el término de una definición arranca más chico)
     cifra.classList.add('texto');
-    const fs0 = S.tipo === 'definicion' ? (F45 ? 96 : 110) : (F45 ? 130 : 150);
+    const fs0 = S.tipo === 'definicion' ? (F45 ? 124 : 144) : (F45 ? 160 : 190);
     cifra.style.fontSize = fs0 + 'px';
-    for (let fs = fs0; fs > 96 && cifra.offsetHeight > 2.1 * fs; fs -= 6) cifra.style.fontSize = fs + 'px';
+    for (let fs = fs0; fs > 100 && (cifra.offsetHeight > 2 * fs || cifra.scrollWidth > ancho); fs -= 6) cifra.style.fontSize = fs + 'px';
   }
   await V.pintarActo(S);   // rótulo de acto (/historia, S.R): solo en un golpe, nunca en gancho ni adivina
 })();
-// sin subtítulo antes de que aterrice la cifra ni mientras solo repite lo que ya está en pantalla
-const subtitulos = (t) => V.subtitulos(t, S, TROZOS, { ocultar: (tr, t) => t < T_CIFRA + 0.3 || tr.every((x) => EN_PANTALLA.has(normal(x.text))) });
+// sin subtítulo antes de que aterrice la cifra ni doble: un trozo cuyas palabras ya están en pantalla no se repite
+// debajo; las de enlace («o», «y», «de»…) no cuentan («¿67, 90 o 102?» con las opciones a la vista)
+const ENLACE = new Set(['o', 'u', 'y', 'e', 'a', 'al', 'de', 'del', 'el', 'la', 'los', 'las', 'en', 'un', 'una', 'que', 'por']);
+const repite = (tr) => tr.some((x) => EN_PANTALLA.has(normal(x.text))) && tr.every((x) => EN_PANTALLA.has(normal(x.text)) || ENLACE.has(normal(x.text)));
+const subtitulos = (t) => V.subtitulos(t, S, TROZOS, { ocultar: (tr, t) => t < T_CIFRA + 0.3 || repite(tr) });
 const seekAdivina = (t) => {
   const T = S.T, rev = eo((t - T.revelado) / 0.35);
+  // la pregunta aparece entera y apagada justo antes de que la voz la diga; cada palabra se enciende al decirla (en
+  // la portada, entera)
+  const p0 = T.pregunta.length ? prog(t, T.pregunta[0].start - 0.45, T.pregunta[0].start - 0.1) : 1;
   [...document.querySelectorAll('#pregunta span')].forEach((s, i) => {
-    const w = eo((t - T.pregunta[i].start + 0.15) / 0.3); s.style.opacity = w; s.style.transform = `translateY(${(1 - w) * 30}px)`; });
+    const w = V.portada ? 1 : eo((t - T.pregunta[i].start + 0.15) / 0.3);
+    s.style.opacity = (p0 * (APAGADA + (1 - APAGADA) * w)).toFixed(3); s.style.transform = `translateY(${((1 - w) * 8).toFixed(1)}px)`; });
   [...document.querySelectorAll('#opciones .op')].forEach((el, i) => {
     const w = eo((t - T.opciones[i].start) / 0.35), si = i === T.correcta;
     el.style.opacity = w * (1 - (si ? 0 : 0.65) * rev);
@@ -179,8 +198,12 @@ window.seek = (t) => {
   }
   // deriva lenta de todo el cuerpo durante la escena (nunca quieto)
   document.getElementById('cuerpo').style.transform = `scale(${(1 + 0.03 * clamp(t / S.dur)).toFixed(4)})`;
+  // la línea aparece entera y apagada con la cifra (en el gancho, desde el cuadro 0: es la miniatura) y cada palabra
+  // se enciende cuando la voz la dice (en la portada, entera)
+  const base = gancho ? 1 : prog(t, P.desde - 0.15, P.desde + 0.25);
   [...document.querySelectorAll('#linea span')].forEach((s, i) => {
-    const w = eo((t - S.T.linea[i].start + 0.15) / 0.3); s.style.opacity = w; s.style.transform = `translateY(${(1 - w) * 30}px)`; });
+    const w = V.portada ? 1 : eo((t - S.T.linea[i].start + 0.15) / 0.3);
+    s.style.opacity = (base * (APAGADA + (1 - APAGADA) * w)).toFixed(3); s.style.transform = `translateY(${((1 - w) * 8).toFixed(1)}px)`; });
   subtitulos(t);
 };
 </script>

@@ -59,6 +59,11 @@ verificador, guionista, visualista y productor; el redactor tiene guía propia.
 - Narrativa del hilo de investigación: `referencias/narrativa.md`, «Hilo de investigación»
 - Contrato de `informe.json`, tipos de página y gráficos del documento: `referencias/diseno/informe.md`
 - Catálogo de gráficos (mismo contrato en tarjeta y documento): `referencias/diseno/graficos.md`
+- **Estilo**: el informe y las tarjetas de su hilo se quedan en el **estilo clásico** (papel, paletas planas,
+  Instrument Serif; apéndice de `referencias/diseno/sistema.md`), aunque las tarjetas de `/hilo` y `/dato` y los
+  videos vayan en Noche. `materializar.py` lo elige solo por `guion.modo = "investigacion"`; `informe.py` arma
+  clásicas sus figuras y rearma clásica cualquier tarjeta Noche que copie (`desde:<slug>` sobre un `/hilo`
+  entregado: el hilo de `hilos/` se queda Noche, sus figuras en el PDF salen clásicas)
 - Prueba sin agentes: `make informe-fixture` (tras el fixture de hilo) y `make informe-catalogo`
 
 ## Variante auditoría (`args.auditoria`)

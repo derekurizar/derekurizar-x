@@ -34,8 +34,21 @@ function render(D) {
   const bg = H.color.bg, ink = H.color.ink, a1 = H.color.a1;
   // Colores sólidos: la destacada en a1, el resto en tonos de la tinta sobre el fondo (como apilada).
   const tonos = [1, 0.66, 0.42, 0.24];
+  // Noche (fondo oscuro, acento claro): tonos de crema del más claro al más oscuro, separados entre sí (≥ 1.35:1)
+  // y del acento (≥ 1.25:1) para que ninguna banda se confunda con su vecina; todos ≥ 1.6:1 sobre el fondo.
+  const tonosNoche = (n, paso = 1.35) => {
+    const out = [];
+    for (let t = 1; t > 0.05 && out.length < n; t -= 0.01) {
+      const c = H.mezcla(bg, ink, t);
+      if (H.contraste(c, bg) < 1.6) break;
+      if (H.contraste(c, a1) >= 1.25 && (!out.length || H.contraste(c, out[out.length - 1]) >= paso)) out.push(c);
+    }
+    H.assert(out.length === n, "no hay " + n + " tonos distinguibles sobre el fondo");
+    return out;
+  };
+  const neutros = H.estilo() === "noche" ? tonosNoche(m - 1) : tonos.map((t) => H.mezcla(bg, ink, t));
   let k = 0;
-  const colorDe = D.partes.map((_, j) => (j === hi ? a1 : H.mezcla(bg, ink, tonos[Math.min(k++, 3)])));
+  const colorDe = D.partes.map((_, j) => (j === hi ? a1 : neutros[Math.min(k++, 3)]));
   // Acumulado por punto: fracción del total si normaliza, absoluto si no. partes[0] va abajo.
   const acum = D.etiquetasX.map((_, c) => { let s = 0; return D.partes.map((p) => (s += p.valores[c])); });
   const altura = (c, j) => (j < 0 ? 0 : norm ? acum[c][j] / totales[c] : acum[c][j]);

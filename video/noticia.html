@@ -1,88 +1,110 @@
 <!DOCTYPE html>
 <html lang="es"><head><meta charset="utf-8">
 <!-- Escena de /noticias (?n=N) para el gancho (`titular`: la noticia más fuerte con su foto a sangre, oscurecida, y su
-     titular entero desde el cuadro 0, que se enciende palabra a palabra cuando la voz lo dice) y cada `noticia` (chip
-     «2/4 · Sección» bajo la barra de progreso; foto en marco redondeado con Ken Burns lento y «Foto: …»; titular que
-     entra con la voz; píldora de la cifra que cuenta y late cuando la voz la dice; «Fuente: …»; subtítulos). Sin foto,
-     el marco lleva el mapa de los 22 departamentos con el de la noticia encendido y su pin (o el icono de la noticia).
-     Paleta del noticiero (escenas.json). Todo es función de t (seek): lo graba scripts/video_grabar.js.
-     S.N = { indice, total, seccion, titular: [{text, start, dicha?}], foto, credito, icono, depto, lugar,
-             cifra: { texto, etiqueta, start, pulso } | null, fuente: { texto, start }, oraciones: [t] (la foto late), kb: { z: [z0, z1], x: [x0, x1],
-             y: [y0, y1] }, fecha, conteo }
+     titular entero desde el cuadro 0; la palabra que la voz dice se enciende en el realce al decirla) y cada `noticia`
+     (estilo Noche: la foto a sangre arriba, oscurecida, con Ken Burns lento y la sombra del fondo arriba y abajo; encima,
+     en la columna segura, los chips «2/4 · Sección» (y «En desarrollo») bajo la barra de progreso, el titular que entra
+     con la voz, la cifra condensada en el acento que cuenta y late cuando la voz la dice, «Fuente: …» y «Foto: …»;
+     subtítulos). Sin foto, la columna lleva el mapa de los 22 departamentos con el de la noticia encendido y su pin (o
+     el icono de la noticia). Paleta del noticiero (escenas.json). Todo es función de t (seek): lo graba
+     scripts/video_grabar.js.
+     S.N = { indice, total, seccion, estado?, titular: [{text, start, dicha?}], foto, credito, encaje?, icono, depto,
+             lugar, cifra: { texto, etiqueta, start, pulso } | null, fuente: { texto, start }, oraciones: [t] (la foto
+             late), kb: { z: [z0, z1], x: [x0, x1], y: [y0, y1] }, fecha, conteo }
      /historia la usa con S.N.modo («titular»: el gancho con foto; «noticia»: la escena `foto`) y S.N.chip = { b, s } en
-     lugar de «indice/total · sección» (la fecha o la época y el lugar: «1971 · Escuintla»). -->
+     lugar de «indice/total · sección» (la fecha o la época y el lugar: «1971 · Escuintla»). S.N.encaje = «contener»
+     (un gráfico, un cartel o un logo con texto, ya con márgenes de scripts/historia.py encajar): más clara y casi sin
+     Ken Burns, para que se lea entera. -->
 <link rel="stylesheet" href="comun.css">
 <style>
 #progreso { margin-top: 0; }
-#chip { display: flex; align-items: center; gap: 18px; margin-top: 22px; font: 600 26px/1 'JetBrains Mono', monospace;
+/* chips: neutros (el acento es de la cifra o de la palabra que suena) */
+#chip { display: flex; align-items: center; flex-wrap: wrap; gap: 14px 16px; margin-top: 22px; font: 600 24px/1 'JetBrains Mono', monospace;
   letter-spacing: .12em; text-transform: uppercase; }
-#chip b { background: var(--acento); color: var(--bg); border-radius: 10px; padding: 8px 14px 9px; font-weight: 700; }
-#chip span { opacity: .85; }
-/* la columna: foto (se ajusta al alto que deje el texto) → titular → cifra → fuente; termina antes de los subtítulos */
+#chip b { background: color-mix(in srgb, var(--ink) 16%, transparent); border-radius: 10px; padding: 9px 14px 10px; font-weight: 700; }
+#chip span { opacity: .9; }
+#chip em { font-style: normal; border: 2px solid color-mix(in srgb, var(--ink) 45%, transparent); border-radius: 10px; padding: 7px 12px 8px; }
+/* la foto a sangre (fuera de la zona a propósito): una lámina de 1080×1200 arriba, la misma en 9:16 y en 4:5
+   (proporción 0.9: scripts/historia.py encajar cuenta con ella), oscurecida (--brillo: 0.55; 0.45 si la foto se
+   agranda más de 2×, una og:image apaisada típica; 0.7 con encaje «contener», que se tiene que leer), con la sombra
+   del fondo arriba (la barra y los chips) y abajo (el texto y los subtítulos). El grano fijo de comun.css (body::before,
+   debajo de la lámina) se copia encima de la foto (.grano) para que el aumento no se vea en bloques y para que el
+   borde de abajo de la lámina (el velo termina en --bg) case con el fondo con grano: sin él queda una costura en
+   y = 1200. Casa con el del fondo porque la lámina empieza en 0, 0 */
+#sangre { position: absolute; left: 0; top: 0; width: 1080px; height: 1200px; overflow: hidden; }
+#sangre img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform-origin: 50% 40%;
+  will-change: transform; filter: brightness(var(--brillo, .55)); }
+#sangre .velo { position: absolute; inset: 0; background: linear-gradient(180deg, color-mix(in srgb, var(--bg) 88%, transparent) 0%,
+  color-mix(in srgb, var(--bg) 35%, transparent) 21%, transparent 34%, transparent 46%, color-mix(in srgb, var(--bg) 62%, transparent) 64%,
+  color-mix(in srgb, var(--bg) 92%, transparent) 84%, var(--bg) 100%); }
+#sangre .grano { position: absolute; inset: 0; background-size: 180px 180px; }
+#sangre svg.mapa { position: absolute; left: 12%; top: 21%; width: 68%; height: 40%; }
+#sangre .icono { position: absolute; left: 50%; top: 40%; width: 240px; height: 240px; margin: -120px 0 0 -120px; color: var(--ink); opacity: .9; }
+#sangre .icono svg, #figura .icono svg { width: 100%; height: 100%; stroke-width: 1.4; }
+/* la columna segura: (sin foto, el mapa o el icono) → titular → cifra → fuente y crédito; abajo, antes de los subtítulos */
 #col { position: absolute; top: 352px; bottom: calc(1920px - var(--fin) + 10px); left: var(--izq); right: var(--der);
-  display: flex; flex-direction: column; gap: 26px; }
-#foto { position: relative; flex: 1 1 auto; min-height: 380px; border-radius: 28px; overflow: hidden;
-  background: color-mix(in srgb, var(--ink) 9%, var(--bg)); }
-#foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform-origin: 50% 50%; will-change: transform; }
-#foto svg.mapa { position: absolute; inset: 7% 10%; width: 80%; height: 86%; }
-#foto .icono { position: absolute; left: 50%; top: 50%; width: 220px; height: 220px; margin: -110px 0 0 -110px; color: var(--ink); opacity: .9; }
-#foto .icono svg { width: 100%; height: 100%; stroke-width: 1.4; }
-#foto .lugar { position: absolute; left: 26px; top: 24px; font: 600 26px/1 'JetBrains Mono', monospace; letter-spacing: .1em;
-  text-transform: uppercase; background: var(--bg); padding: 10px 14px; border-radius: 10px; }
-#credito { position: absolute; left: 18px; bottom: 16px; font: 500 20px/1 'JetBrains Mono', monospace; letter-spacing: .06em;
-  color: #fff; background: rgba(0, 0, 0, .58); padding: 8px 12px; border-radius: 8px; }
-#titular { font: 700 56px/1.08 Archivo, sans-serif; letter-spacing: -.01em; }
-#titular span { display: inline-block; margin-right: .24em; }
-#cifra { display: flex; align-items: baseline; gap: 22px; transform-origin: 0 70%; }
-#cifra .v { font: 400 112px/.9 'Instrument Serif', serif; letter-spacing: -.02em; color: var(--acento); white-space: nowrap; }
-#cifra .e { font: 600 32px/1.1 Archivo, sans-serif; opacity: .85; }
-#fuente { font: 600 22px/1 'JetBrains Mono', monospace; letter-spacing: .1em; text-transform: uppercase; opacity: .8; }
-/* gancho: la foto a sangre (fuera de la zona a propósito), un degradado que deja leer y el titular grande abajo */
+  display: flex; flex-direction: column; justify-content: flex-end; gap: 22px; }
+#figura { position: relative; flex: 1 1 auto; min-height: 0; }
+#figura svg.mapa { position: absolute; inset: 2% 4%; width: 92%; height: 96%; }
+#figura .icono { position: absolute; left: 50%; top: 50%; width: 220px; height: 220px; margin: -110px 0 0 -110px; color: var(--ink); opacity: .9; }
+#figura .lugar { position: absolute; left: 0; top: 0; font: 600 24px/1 'JetBrains Mono', monospace; letter-spacing: .1em;
+  text-transform: uppercase; border: 2px solid color-mix(in srgb, var(--ink) 45%, transparent); padding: 8px 12px; border-radius: 10px; }
+#titular { font: 800 66px/1.04 Archivo, sans-serif; letter-spacing: -.015em; text-shadow: 0 2px 22px color-mix(in srgb, var(--bg) 70%, transparent); }
+#titular span { display: inline-block; margin-right: .22em; }
+#cifra { display: flex; flex-direction: column; gap: 6px; transform-origin: 0 80%; }
+#cifra .v { align-self: flex-start; font-size: 190px; line-height: .84; letter-spacing: -.005em; color: var(--acento); white-space: nowrap; }
+/* con line-height .84 la caja termina a .086em bajo el renglón base; la coma (.19em), los paréntesis (.16em) y la cola
+   de la Q (.13em) bajan de ella y pisarían la etiqueta: con ellos, .19em más deja ≥ .12em de aire entre la tinta de la
+   cifra y la de la etiqueta (medido: «1,200» .14em; las cifras sin esos signos ya lo tienen, «35 %» .14em) */
+#cifra .v.baja { margin-bottom: .19em; }
+#cifra .e { font: 700 30px/1.15 Archivo, sans-serif; opacity: .88; }
+#cifra .e:empty { display: none; }
+#pie { display: flex; flex-direction: column; gap: 10px; }
+#fuente { font: 600 22px/1.25 'JetBrains Mono', monospace; letter-spacing: .1em; text-transform: uppercase; }
+/* el crédito de la foto: Mono 600 20 px, crema al 85 % (seek lo apaga con la foto, sin bajar de ahí) */
+#credito { font: 600 20px/1.25 'JetBrains Mono', monospace; letter-spacing: .06em; opacity: .85; }
+#fuente:empty, #credito:empty { display: none; }
+/* gancho: la misma lámina; el titular grande abajo, entero desde el cuadro 0 */
 body.titular #col { display: none; }
-#sangre { position: absolute; inset: 0; overflow: hidden; display: none; }
-body.titular #sangre { display: block; }
-#sangre img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform-origin: 50% 40%; }
-#sangre .velo { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.62) 0%, rgba(0,0,0,.18) 30%,
-  rgba(0,0,0,.25) 50%, rgba(0,0,0,.86) 74%, rgba(0,0,0,.92) 100%); }
-#sangre svg.mapa { position: absolute; left: 12%; top: 16%; width: 76%; height: 44%; }
 #gancho { position: absolute; left: var(--izq); right: var(--der); bottom: calc(1920px - var(--fin) + 10px); display: none; }
 body.titular #gancho { display: block; }
-body.titular { color: #fff; }
-#hoy { display: flex; align-items: center; gap: 18px; font: 700 28px/1 'JetBrains Mono', monospace; letter-spacing: .12em;
-  text-transform: uppercase; margin-bottom: 30px; }
-#hoy b { background: var(--realce); color: #141414; border-radius: 10px; padding: 9px 15px 10px; }
-#gtit { font: 400 104px/.98 'Instrument Serif', serif; letter-spacing: -.02em; }
+#hoy { display: flex; align-items: center; gap: 18px; font: 700 26px/1 'JetBrains Mono', monospace; letter-spacing: .12em;
+  text-transform: uppercase; margin-bottom: 28px; }
+/* la ficha («HOY · 23 OCT», la pantalla del gancho de /historia): neutra como #chip b; el acento es de la palabra que suena */
+#hoy b { background: color-mix(in srgb, var(--ink) 16%, transparent); border-radius: 10px; padding: 9px 15px 10px; }
+#hoy span:empty { display: none; }
+#gtit { font: 800 96px/1 Archivo, sans-serif; letter-spacing: -.025em; text-shadow: 0 2px 26px color-mix(in srgb, var(--bg) 70%, transparent); }
 #gtit span { display: inline-block; margin-right: .2em; }
-#gtit span.dicha { color: var(--realce); }
-#gcred { margin-top: 26px; font: 500 20px/1 'JetBrains Mono', monospace; letter-spacing: .06em; opacity: .75; }
-body.titular #progreso i { background: rgba(255, 255, 255, .3); }
-body.titular #progreso i b { background: #fff; }
-/* formato 4:5 (1080×1350) para el feed */
-html.f45 #chip { margin-top: 16px; font-size: 22px; }
-html.f45 #col { top: 150px; bottom: calc(1350px - var(--fin) + 10px); gap: 18px; }
+#gtit span.suena { color: var(--realce); }
+#gcred { margin-top: 24px; font: 600 20px/1.25 'JetBrains Mono', monospace; letter-spacing: .06em; opacity: .85; }
+/* formato 4:5 (1080×1350) para el feed: la misma lámina; la sombra de abajo empieza antes (el texto sube) */
+html.f45 #chip { margin-top: 16px; font-size: 21px; }
+html.f45 #col { top: 150px; bottom: calc(1350px - var(--fin) + 10px); gap: 16px; }
 html.f45 #gancho { bottom: calc(1350px - var(--fin) + 10px); }
-html.f45 #foto { min-height: 300px; }
-html.f45 #titular { font-size: 46px; }
-html.f45 #cifra .v { font-size: 88px; }
-html.f45 #cifra .e { font-size: 28px; }
-html.f45 #gtit { font-size: 84px; }
-html.f45 #hoy { font-size: 24px; margin-bottom: 22px; }
+html.f45 #sangre .velo { background: linear-gradient(180deg, color-mix(in srgb, var(--bg) 80%, transparent) 0%, transparent 18%,
+  transparent 32%, color-mix(in srgb, var(--bg) 66%, transparent) 52%, color-mix(in srgb, var(--bg) 90%, transparent) 72%, var(--bg) 92%); }
+html.f45 #titular { font-size: 52px; }
+html.f45 #cifra .v { font-size: 150px; }
+html.f45 #cifra .e { font-size: 26px; }
+html.f45 #gtit { font-size: 80px; }
+html.f45 #hoy { font-size: 22px; margin-bottom: 20px; }
 </style></head>
 <body>
-<div id="sangre" data-fuera-de-zona><div class="velo"></div></div>
+<div id="sangre" data-fuera-de-zona><div class="velo"></div><div class="grano"></div></div>
 <div id="arriba"><div id="progreso"></div><div id="chip"></div></div>
 <div id="col">
-  <div id="foto"></div>
+  <div id="figura"></div>
   <div id="titular"></div>
   <div id="cifra"></div>
-  <div id="fuente"></div>
+  <div id="pie"><div id="fuente"></div><div id="credito"></div></div>
 </div>
 <div id="gancho"><div id="hoy"></div><div id="gtit"></div><div id="gcred"></div></div>
 <div id="subs"></div>
 <script src="comun.js"></script>
 <script>
 const n = V.n, F45 = V.F45, { clamp, eo, prog, esc, normal } = V;
-let S, N, MODO, TROZOS, NUM = null, KB = null, EN_PANTALLA = new Set();
+let S, N, MODO, TROZOS, NUM = null, KB = null, KB_PASO = null, FIN_T = [], EN_PANTALLA = new Set();
+const LAMINA = { ancho: 1080, alto: 1200 };   // la lámina de la foto (#sangre), igual en 9:16 y 4:5
 const RE_NUM = /([-−]?)(\d{1,3}(?:,\d{3})+|\d+)(?:\.(\d+))?/;   // número dentro de un texto formateado (como golpe.html)
 function numTexto(s) {
   const m = (s || '').match(RE_NUM);
@@ -101,7 +123,8 @@ const svgEl = (tag, at, padre) => { const e = document.createElementNS('http://w
   for (const [k, v] of Object.entries(at)) e.setAttribute(k, v); padre.appendChild(e); return e; };
 const cargarScript = (src) => new Promise((ok, mal) => { const s = document.createElement('script'); s.src = src; s.onload = ok;
   s.onerror = () => mal(new Error('no carga ' + src)); document.head.appendChild(s); });
-// sin foto: el mapa con el departamento encendido y su pin, o el icono de la noticia
+// sin foto: el mapa con el departamento encendido y su pin, o el icono de la noticia (en la lámina en el gancho, en la
+// columna en la noticia)
 async function tipografica(caja) {
   if (N.depto) {
     await cargarScript('geometria.js');
@@ -123,38 +146,64 @@ async function tipografica(caja) {
     if (!r.ok) throw new Error('icono «' + N.icono + '» no está en design/iconos/');
     caja.insertAdjacentHTML('beforeend', `<div class="icono">${await r.text()}</div>`);
   }
-  if (N.lugar && caja.id === 'foto') caja.insertAdjacentHTML('beforeend', `<div class="lugar">${esc(N.lugar)}</div>`);
+  if (N.lugar && caja.id === 'figura') caja.insertAdjacentHTML('beforeend', `<div class="lugar">${esc(N.lugar)}</div>`);
 }
+// la foto a sangre en la lámina, antes del velo; el brillo según cuánto se agranda (cover × el zoom mayor del Ken Burns)
 async function foto(caja) {
   const img = new Image();
   img.src = N.foto;
   await img.decode().catch(() => { throw new Error('no carga la foto ' + N.foto); });
-  caja.appendChild(img);
+  caja.insertBefore(img, caja.firstChild);
+  const k = Math.max(LAMINA.ancho / img.naturalWidth, LAMINA.alto / img.naturalHeight) * Math.max(...KB_PASO.z);
+  caja.style.setProperty('--brillo', N.encaje === 'contener' ? '.7' : k > 2 ? '.45' : '.55');
   return img;
 }
+// cuándo deja de sonar cada palabra de una línea alineada con la voz: el fin de la palabra de la voz que la dice (si se
+// encuentra) o el comienzo de la siguiente (≤ 0.5 s)
+const finesDe = (ws) => ws.map((w, i) => {
+  const p = w.dicha && S.palabras.find((x) => Math.abs(x.start - 0.05 - w.start) < 0.08 && normal(x.text) === normal(w.text));
+  const sig = ws[i + 1] ? ws[i + 1].start : w.start + 0.5;
+  return p ? Math.max(p.end, w.start + 0.15) : Math.max(w.start + 0.15, Math.min(sig, w.start + 0.5));
+});
 window.__listo = (async () => {
   const C = await V.cargar(), todo = C.todo; S = C.S; TROZOS = C.trozos; N = S.N;
   MODO = N.modo || S.tipo;
   document.body.classList.add(MODO);
   V.pintarProgreso(todo);
+  // el Ken Burns de la escena; un gráfico o un cartel (encaje «contener») casi quieto, para que se lea entero
+  KB_PASO = N.encaje === 'contener' ? { z: [1.0, 1.04], x: [0, 0], y: [0, 0] } : N.kb || { z: [1.06, 1.14], x: [0, -2], y: [0, -1.2] };
+  // el grano fijo del fondo (comun.css: vive en body::before, debajo de la lámina) también encima de la foto; sin él,
+  // el pie de la lámina queda más oscuro que el fondo y se ve una costura en y = 1200
+  const grano = getComputedStyle(document.body, '::before').backgroundImage;
+  if (!grano || grano === 'none') throw new Error('sin grano en body::before (video/comun.css)');
+  document.querySelector('#sangre .grano').style.backgroundImage = grano;
   const palabras = (ws, cls) => ws.map((w) => `<span${cls ? ` class="${cls}"` : ''}>${esc(w.text)}</span>`).join('');
+  const sangre = document.getElementById('sangre');
   if (MODO === 'titular') {
-    const caja = document.getElementById('sangre');
-    if (N.foto) KB = await foto(caja); else await tipografica(caja);
-    caja.appendChild(caja.querySelector('.velo'));   // el velo encima de la foto
+    if (N.foto) KB = await foto(sangre); else await tipografica(sangre);
+    sangre.appendChild(sangre.querySelector('.velo'));    // el velo y el grano encima de la foto o del mapa
+    sangre.appendChild(sangre.querySelector('.grano'));
     document.getElementById('hoy').innerHTML = `<b>${esc(N.fecha)}</b><span>${esc(N.conteo || '')}</span>`;
     document.getElementById('gtit').innerHTML = palabras(N.titular);
     document.getElementById('gcred').textContent = N.foto ? N.credito || '' : '';
     document.getElementById('chip').textContent = todo.contexto_superior || '';
+    FIN_T = finesDe(N.titular);
   } else {
-    document.getElementById('chip').innerHTML = N.chip ? `<b>${esc(N.chip.b)}</b><span>${esc(N.chip.s || '')}</span>`
-      : `<b>${N.indice}/${N.total}</b><span>${esc(N.seccion)}</span>`;
-    const caja = document.getElementById('foto');
-    if (N.foto) { KB = await foto(caja); caja.insertAdjacentHTML('beforeend', `<div id="credito">${esc(N.credito || '')}</div>`); }
-    else await tipografica(caja);
+    const estado = N.estado === 'en_desarrollo' ? '<em>En desarrollo</em>' : '';
+    document.getElementById('chip').innerHTML = (N.chip ? `<b>${esc(N.chip.b)}</b>${N.chip.s ? `<span>${esc(N.chip.s)}</span>` : ''}`
+      : `<b>${N.indice}/${N.total}</b><span>${esc(N.seccion)}</span>`) + estado;
+    if (N.foto) {
+      KB = await foto(sangre);
+      document.getElementById('credito').textContent = N.credito || '';
+    } else {
+      sangre.style.display = 'none';
+      await tipografica(document.getElementById('figura'));
+    }
     document.getElementById('titular').innerHTML = palabras(N.titular);
     if (N.cifra) {
-      document.getElementById('cifra').innerHTML = `<span class="v">${esc(N.cifra.texto)}</span><span class="e">${esc(N.cifra.etiqueta || '')}</span>`;
+      // `baja`: la cifra lleva un signo que baja del renglón (coma, punto y coma, paréntesis, la Q de quetzales)
+      const baja = /[,;()Q]/i.test(N.cifra.texto) && !!(N.cifra.etiqueta || '').trim();
+      document.getElementById('cifra').innerHTML = `<span class="v condensada${baja ? ' baja' : ''}">${esc(N.cifra.texto)}</span><span class="e">${esc(N.cifra.etiqueta || '')}</span>`;
       const nt = numTexto(N.cifra.texto);
       NUM = nt && (Math.abs(nt.v) >= 2 || nt.dec > 0) ? nt : null;
     } else document.getElementById('cifra').style.display = 'none';
@@ -162,53 +211,64 @@ window.__listo = (async () => {
   }
   // el subtítulo se oculta mientras solo repite el titular que ya está en pantalla
   N.titular.forEach((w) => { const k = normal(w.text); if (k) EN_PANTALLA.add(k); });
+  await document.fonts.load("extra-condensed 900 190px Archivo");
   await document.fonts.ready;
   if (MODO === 'titular') {   // el titular del gancho: hasta 4 líneas sin pasar del alto disponible
     const t = document.getElementById('gtit');
-    for (let fs = F45 ? 84 : 104; fs > 64 && t.offsetHeight > 4.1 * fs * 0.98; fs -= 4) t.style.fontSize = fs + 'px';
-  } else {                      // el titular de la noticia: hasta 3 líneas
+    for (let fs = F45 ? 80 : 96; fs > 60 && t.offsetHeight > 4.1 * fs; fs -= 4) t.style.fontSize = fs + 'px';
+  } else {                      // el titular de la noticia: hasta 3 líneas; la cifra, en una sola línea de la columna
     const t = document.getElementById('titular');
-    for (let fs = F45 ? 46 : 56; fs > 40 && t.offsetHeight > 3.1 * fs * 1.08; fs -= 2) t.style.fontSize = fs + 'px';
-    const c = document.querySelector('#cifra .v'), col = document.getElementById('col').clientWidth;
-    if (c) for (let fs = F45 ? 88 : 112; fs > 60 && document.getElementById('cifra').scrollWidth > col; fs -= 6) c.style.fontSize = fs + 'px';
+    for (let fs = F45 ? 52 : 66; fs > 40 && t.offsetHeight > 3.1 * fs * 1.04; fs -= 2) t.style.fontSize = fs + 'px';
+    // la cifra late hasta 1.07× hacia la derecha (transform-origin a la izquierda): cabe con ese margen (V13)
+    const c = document.querySelector('#cifra .v'), col = document.getElementById('col').clientWidth / 1.08;
+    if (c) for (let fs = F45 ? 150 : 190; fs > 70 && c.scrollWidth > col; fs -= 6) c.style.fontSize = fs + 'px';
   }
   await V.pintarActo(S);   // rótulo de acto (/historia, S.R): solo en la escena `foto`, nunca en el gancho
 })();
 const subtitulos = (t) => V.subtitulos(t, S, TROZOS, { ocultar: (tr) => tr.every((x) => EN_PANTALLA.has(normal(x.text))) });
-// Ken Burns: zoom y paneo lentos, función de t
-const kenBurns = (img, t) => {
+// Ken Burns: zoom y paneo lentos, función de t; `late` (0–1) suma un empujón breve al empezar cada oración
+const kenBurns = (img, t, late = 0) => {
   if (!img) return;
-  const k = N.kb || { z: [1.0, 1.08], x: [0, -2], y: [0, -1.5] }, p = clamp(t / S.dur);
-  const z = k.z[0] + (k.z[1] - k.z[0]) * p, x = k.x[0] + (k.x[1] - k.x[0]) * p, y = k.y[0] + (k.y[1] - k.y[0]) * p;
+  const k = KB_PASO, p = clamp(t / S.dur);
+  const z = (k.z[0] + (k.z[1] - k.z[0]) * p) * (1 + 0.012 * late), x = k.x[0] + (k.x[1] - k.x[0]) * p, y = k.y[0] + (k.y[1] - k.y[0]) * p;
   img.style.transform = `translate(${x.toFixed(3)}%, ${y.toFixed(3)}%) scale(${z.toFixed(4)})`;
 };
+const moverPin = (t) => { const pin = document.getElementById('pin');
+  if (pin) pin.style.transform = `translateY(${(-8 * Math.sin(Math.PI * 2 * t / 1.6)).toFixed(2)}px)`; };
 window.seek = (t) => {
   V.seekProgreso(t, n, S.dur);
   V.seekActo(t, S);
-  kenBurns(KB, t);
   if (MODO === 'titular') {
-    // entero desde el cuadro 0 (miniatura y vuelta del bucle); cada palabra que la voz dice se enciende al decirla
+    kenBurns(KB, t);
+    // entero desde el cuadro 0 (miniatura y vuelta del bucle); la palabra que la voz dice, en el realce mientras suena
     [...document.querySelectorAll('#gtit span')].forEach((s, i) => {
-      const w = N.titular[i], on = w.dicha && t >= w.start;
-      s.classList.toggle('dicha', !!on);
+      const w = N.titular[i], on = w.dicha && t >= w.start && t < FIN_T[i];
+      s.classList.toggle('suena', !!on);
       const q = w.dicha ? eo((t - w.start) / 0.25) : 0;
       s.style.transform = `translateY(${(-6 * Math.sin(Math.PI * clamp(q))).toFixed(2)}px)`;
     });
-    const pin = document.getElementById('pin');
-    if (pin) pin.style.transform = `translateY(${(-8 * Math.sin(Math.PI * 2 * t / 1.6)).toFixed(2)}px)`;
+    moverPin(t);
     subtitulos(t);
     return;
   }
-  // la noticia entra: chip y foto al principio (tras el rótulo de acto si lo hay, V.desfase; más rápido si la escena
+  // la noticia entra: chips y foto al principio (tras el rótulo de acto si lo hay, V.desfase; más rápido si la escena
   // sigue a otra de la misma secuencia de voz, S.seguida); el titular con la voz; la cifra cuando la voz la dice; la
   // fuente al final
   const D = V.desfase(S), K = S.seguida ? 0.6 : 1;
   const ch = eo((t - D - 0.1) / (0.4 * K)), chip = document.getElementById('chip');
   chip.style.opacity = ch; chip.style.transform = `translateX(${((1 - ch) * -40).toFixed(1)}px)`;
-  // la foto entra y late al empezar cada oración nueva (un evento visual cada pocos segundos: V10)
-  const fo = eo((t - D - 0.05) / (0.5 * K)), caja = document.getElementById('foto');
+  // la foto (o el mapa) entra desde el fondo y late al empezar cada oración nueva (un evento visual cada pocos
+  // segundos: V10)
+  const fo = eo((t - D - 0.05) / (0.5 * K));
   const late = (N.oraciones || []).reduce((m, x) => Math.max(m, Math.sin(Math.PI * clamp((t - x) / 0.5))), 0);
-  caja.style.opacity = fo; caja.style.transform = `scale(${((0.96 + 0.04 * fo) * (1 + 0.025 * late)).toFixed(4)})`;
+  if (KB) {
+    document.getElementById('sangre').style.opacity = fo.toFixed(3);
+    kenBurns(KB, t, late);
+    document.getElementById('credito').style.opacity = (0.85 * fo).toFixed(3);
+  } else {
+    const fig = document.getElementById('figura');
+    fig.style.opacity = fo.toFixed(3); fig.style.transform = `scale(${((0.96 + 0.04 * fo) * (1 + 0.025 * late)).toFixed(4)})`;
+  }
   [...document.querySelectorAll('#titular span')].forEach((s, i) => {
     const w = eo((t - N.titular[i].start + 0.15) / 0.3); s.style.opacity = w; s.style.transform = `translateY(${((1 - w) * 26).toFixed(1)}px)`; });
   if (N.cifra) {
@@ -221,10 +281,9 @@ window.seek = (t) => {
   }
   if (N.fuente) {
     const f = eo((t - N.fuente.start) / 0.4), el = document.getElementById('fuente');
-    el.style.opacity = 0.8 * f; el.style.transform = `translateX(${((1 - f) * -30).toFixed(1)}px)`;
+    el.style.opacity = (0.9 * f).toFixed(3); el.style.transform = `translateX(${((1 - f) * -30).toFixed(1)}px)`;
   }
-  const pin = document.getElementById('pin');
-  if (pin) pin.style.transform = `translateY(${(-8 * Math.sin(Math.PI * 2 * t / 1.6)).toFixed(2)}px)`;
+  moverPin(t);
   subtitulos(t);
 };
 </script>

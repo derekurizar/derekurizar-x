@@ -35,22 +35,9 @@ function render(D) {
   if (fin) H.assert(typeof fin.nombre === "string" && fin.nombre.trim() && (fin.valor == null || (typeof fin.valor === "number" && isFinite(fin.valor))), "fin necesita nombre (y valor numérico si va)");
   const f = (v, extra) => H.num(v, Object.assign({}, D.formato, extra || {}));
 
-  // Acumulados: los calcula la plantilla; fin.valor, si va, solo se coteja (magnitud) contra lo calculado.
-  let acc = ini ? ini.valor : 0;
-  const filas = [];
-  if (ini) filas.push({ tipo: "inicio", nombre: ini.nombre, desde: 0, hasta: ini.valor, rotulo: f(ini.valor) });
-  D.pasos.forEach((p, i) => {
-    const delta = p.efecto === "suma" ? p.valor : -p.valor, desde = acc;
-    acc += delta;
-    filas.push({ tipo: "paso", i, nombre: p.nombre, desde, hasta: acc, rotulo: f(delta, { signo: true }) });
-  });
-  if (fin) {
-    if (typeof fin.valor === "number") {
-      const tol = Math.max(0.5 * Math.pow(10, -(D.formato.decimales || 0)), Math.abs(fin.valor) * 0.001);
-      H.assert(Math.abs(Math.abs(acc) - Math.abs(fin.valor)) <= tol, "los pasos no cuadran con fin.valor (" + f(fin.valor) + "): calculado " + f(acc));
-    } else H.anotar(fin.nombre + " calculado desde los pasos.");
-    filas.push({ tipo: "fin", nombre: fin.nombre, desde: 0, hasta: acc, rotulo: f(acc) });
-  }
+  // Acumulados: los calcula H.cascada (compartido con el informe); fin.valor, si va, solo se coteja (magnitud) contra lo calculado.
+  const { filas, calculado } = H.cascada(ini, D.pasos, fin, D.formato);
+  if (calculado) H.anotar(fin.nombre + " calculado desde los pasos.");
   const n = filas.length;
   H.assert(n <= 10, "cascada: como máximo 10 filas (inicio + pasos + fin)");
   const dft = fin ? "fin" : D.pasos.length - 1;
@@ -59,6 +46,9 @@ function render(D) {
   H.assert(filas.some(esHi), "destacar debe ser \"inicio\", \"fin\" o el índice de un paso");
 
   const ink = H.color.ink, a1 = H.color.a1, W = 920;
+  // Noche: lo que no es el destacado en crema atenuada (totales y sumas al 55 %, restas al 30 %); en clásico, tinta.
+  const noche = H.estilo() === "noche";
+  const cLleno = noche ? H.color.inkA(.55) : ink, cResta = H.color.inkA(noche ? .3 : .45);
   const fontN = ["600 21px Archivo,sans-serif", "600 19px Archivo,sans-serif", "600 17px Archivo,sans-serif"];
   const fontNH = ["800 23px Archivo,sans-serif", "800 21px Archivo,sans-serif", "800 19px Archivo,sans-serif"];
   const fontV = "700 20px 'JetBrains Mono',monospace", fontVH = "700 22px 'JetBrains Mono',monospace";
@@ -83,7 +73,7 @@ function render(D) {
     const cy = k * filaH + filaH / 2, hi = esHi(r);
     H.texto(svg, 0, cy + 8, r.nombre, { style: "font:" + r.fn + ";fill:" + ink });
     const xa = sx(r.desde), xb = sx(r.hasta), x = Math.min(xa, xb), w = Math.max(3, Math.abs(xb - xa));
-    const fill = hi ? a1 : r.tipo !== "paso" ? ink : r.hasta >= r.desde ? ink : H.color.inkA(.45);
+    const fill = hi ? a1 : r.tipo !== "paso" ? cLleno : r.hasta >= r.desde ? cLleno : cResta;
     H.svgEl("rect", { x, y: cy - barH / 2, width: w, height: barH, fill, opacity: hi || r.tipo !== "paso" || r.hasta < r.desde ? 1 : .85 }, svg);
     const estilo = "font:" + (hi ? fontVH : fontV) + ";fill:" + ink + ";" + H.halo();
     // El rótulo nunca cruza el eje cero: si lo pisa, pasa al otro extremo de la barra (si cabe).

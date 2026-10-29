@@ -72,8 +72,9 @@ igual). Lo que cambia:
 - **Familias de historia**: `resultado` (el final primero: «El químico que iba a salvar el lago era agua con sal»),
   `paradoja`, `contraste` (antes / después), `misterio` (lo que nadie sabía), `personaje` (una persona y un objeto
   concretos), `lugar`, `pregunta`, `escala`. El digesto dice qué visuales admite cada una.
-- **Visual `foto`, siempre** (H7): la foto de la historia a sangre cubre toda la pantalla, oscurecida, con
-  `pantalla` en el chip y `linea` entera desde el cuadro 0, que se enciende cuando la voz la dice. `visual_datos:
+- **Visual `foto`, siempre** (H7): la foto de la historia a sangre cubre toda la pantalla, oscurecida (estilo Noche:
+  brillo 0.45–0.6, sombra del fondo arriba y abajo; `referencias/ganchos.md` §3), con
+  `pantalla` en el chip y `linea` entera desde el cuadro 0, que se enciende en el acento cuando la voz la dice. `visual_datos:
   {"foto": "<id de foto verificada>", "etiqueta": "<lugar · año> (≤ 30)"}`. **La foto muestra al protagonista**
   (H12; el digesto marca PROTAGONISTA las que sirven): entre ellas, la más fuerte (el producto, la persona, el lugar).
   Cifra, pareja, llenado, figuras y lugar no abren una historia; una foto «de referencia» tampoco.

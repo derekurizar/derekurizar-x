@@ -2,7 +2,9 @@
 // eventos. Cada paso es «fecha · qué pasó» («1952 · Abre el primer horno»): la fecha va grande a la izquierda del texto y
 // el punto del riel se enciende cuando la voz dice ese paso; el riel se llena del evento anterior al siguiente mientras
 // la voz avanza y el punto activo late. Al entrar la escena se ven tenues todos los eventos (el espectador ve cuánto
-// falta). Todo es función de t (seek puro, sin azar ni reloj).
+// falta). Estilo Noche: la fecha va en Archivo condensado 900 en mayúsculas y el evento en Archivo 800; lo único en
+// acento es el evento activo (su fecha, su punto y la marca del riel), lo ya dicho queda en crema atenuada.
+// Todo es función de t (seek puro, sin azar ni reloj).
 //
 // Contrato (referencias/roles/video-animador.md): ANIM.registrar(id, { meta, pintar(lienzo, P, ctx), seek(t, T) })
 //   P   = { titulo, pasos: [texto] }                         (del guion; «fecha · evento» o solo el evento)
@@ -35,7 +37,7 @@ ANIM.registrar('cronologia', {
     linea(this.ys[0], this.ys[n - 1], 'color-mix(in srgb, var(--ink) 22%, transparent)', 6);
     this.lleno = linea(this.ys[0], this.ys[0], 'var(--ink)', 6);
     this.marca = document.createElementNS(NS, 'circle');
-    this.marca.setAttribute('r', 7); this.marca.setAttribute('cx', x); this.marca.setAttribute('fill', 'var(--acento)');
+    this.marca.setAttribute('r', 9); this.marca.setAttribute('cx', x); this.marca.setAttribute('fill', 'var(--acento)');
     this.puntos = this.ys.map((y) => {
       const c = document.createElementNS(NS, 'circle');
       c.setAttribute('cx', x); c.setAttribute('cy', y); c.setAttribute('r', ctx.F45 ? 16 : 18);
@@ -52,14 +54,17 @@ ANIM.registrar('cronologia', {
       el.style.cssText = `position:absolute;left:${x + 52}px;right:0;top:${this.ys[i]}px;transform-origin:0 50%;` +
         'display:flex;align-items:baseline;gap:22px;white-space:nowrap;overflow:hidden';
       const fecha = document.createElement('span');
-      fecha.style.cssText = `font:400 ${fsF}px/1 'Instrument Serif',serif;color:var(--acento);letter-spacing:-.02em`;
+      // el shorthand font resetea font-stretch: el ancho condensado va después
+      fecha.style.cssText = `font:900 ${fsF}px/1 Archivo,sans-serif;font-stretch:62.5%;text-transform:uppercase;` +
+        'letter-spacing:-.01em;color:var(--ink)';
       fecha.textContent = m ? m[1] : '';
       const texto = document.createElement('span');
-      texto.style.cssText = `font:700 ${fs}px/1.1 Archivo,sans-serif;color:var(--ink);white-space:normal`;
+      texto.style.cssText = `font:800 ${fs}px/1.1 Archivo,sans-serif;letter-spacing:-.01em;color:var(--ink);white-space:normal`;
       texto.textContent = m ? m[2] : txt;
       el.appendChild(fecha); el.appendChild(texto);
       lienzo.appendChild(el);
       el.style.marginTop = -(el.offsetHeight / 2) + 'px';
+      el._fecha = fecha;
       return el;
     });
   },
@@ -79,14 +84,17 @@ ANIM.registrar('cronologia', {
     this.marca.style.opacity = activo >= 0 ? 1 : 0;
     this.puntos.forEach((c, i) => {
       const on = i <= activo, late = i === activo ? Math.sin(Math.PI * clamp((t - ps[i].start) / 0.5)) : 0;
-      c.setAttribute('fill', on ? 'var(--ink)' : 'var(--bg)');
-      c.setAttribute('stroke', on ? 'var(--ink)' : 'color-mix(in srgb, var(--ink) 35%, transparent)');
+      const color = i === activo ? 'var(--acento)' : 'var(--ink)';
+      c.setAttribute('fill', on ? color : 'var(--bg)');
+      c.setAttribute('stroke', on ? color : 'color-mix(in srgb, var(--ink) 35%, transparent)');
       c.setAttribute('r', ((this.puntos.length > 4 ? 16 : 18) * (1 + 0.35 * late)).toFixed(2));
     });
+    // lo que falta, tenue; lo ya dicho, al 50 %; la fecha del activo en acento
     this.filas.forEach((el, i) => {
-      const entra = eo((t - ps[i].start) / 0.45), fantasma = 0.2 * eo((t - T.ini) / 0.5);
-      el.style.opacity = Math.max(fantasma, entra * (i < activo ? 0.6 : 1)).toFixed(3);
+      const entra = eo((t - ps[i].start) / 0.45), fantasma = 0.28 * eo((t - T.ini) / 0.5);
+      el.style.opacity = Math.max(fantasma, entra * (i < activo ? 0.5 : 1)).toFixed(3);
       el.style.transform = `translateX(${((1 - entra) * -30).toFixed(1)}px)`;
+      el._fecha.style.color = i === activo ? 'var(--acento)' : 'var(--ink)';
     });
   },
 });

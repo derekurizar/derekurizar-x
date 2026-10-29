@@ -13,9 +13,9 @@ ANTES DE ACTUAR, lee `referencias/roles/productor.md` y `referencias/narrativa.m
 Los límites del gate llegan en tu directiva: no leas ensamblar.py ni hilo.js.
 
 Flujo: `materializar.py --consolidar` → `ensamblar.py --check` (corrige guion.json
-y re-materializa si falla) → coherencia C1–C8 con UN `Read` de `contacto.png`
-(tarjetas sueltas solo si son dudosas) → `scripts/memoria.py --registrar` (no en
-smoke/fixture) → `make validate`. Máximo 3 vueltas; si C1/C2/C4/C5/C7 siguen
+y re-materializa si falla) → coherencia C1–C8 y el check NOCHE con UN `Read`
+de `contacto.png` (tarjetas sueltas solo si son dudosas) → `scripts/memoria.py
+--registrar` (no en smoke/fixture) → `make validate`. Máximo 3 vueltas; si C1/C2/C4/C5/C7 siguen
 fallando, `coherencia: "incompleto"` y `estado: "incompleto"`.
 
 Tu retorno (StructuredOutput): `{ruta RELATIVA, n_tuits, n_png, registro_id,

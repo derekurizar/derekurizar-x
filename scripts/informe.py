@@ -620,6 +620,39 @@ def resolver(R, cifras, g):
 
 
 # ---------------------------------------------------------------- figuras PNG
+RE_CABECERA_VISUAL = re.compile(r"<!-- plantilla: ([\w-]+) · paleta: (\w+)")
+
+
+def copiar_tarjeta(origen, destino, tk, errores, etiqueta):
+    """Copia el PNG de una tarjeta para el informe. El informe se queda en el estilo clásico: si la tarjeta es Noche
+    (un /hilo entregado, `desde:<slug>`), se rearma clásica desde su tuit_N.html (plantilla, paleta y DATA)."""
+    html_origen = os.path.splitext(origen)[0] + ".html"
+    src = open(html_origen, encoding="utf-8").read() if os.path.exists(html_origen) else ""
+    if not re.search(r'<body\b[^>]*\bdata-estilo="noche"', src):
+        shutil.copyfile(origen, destino)
+        return True
+    cab, dat = RE_CABECERA_VISUAL.search(src), materializar.RE_DATA.search(src)
+    if not cab or not dat:
+        errores.append("%s: %s es Noche y no se puede rearmar clásica (sin cabecera o DATA)" % (etiqueta, os.path.relpath(html_origen, RAIZ)))
+        return False
+    html = os.path.splitext(destino)[0] + ".html"
+    ok, msg = nuevo_visual.ensamblar(cab.group(1), html, cab.group(2), tk, "clasico")
+    if not ok:
+        errores.append("%s: %s" % (etiqueta, msg))
+        return False
+    base = open(html, encoding="utf-8").read()
+    nuevo, n = materializar.RE_DATA.subn(lambda _m: dat.group(0), base, count=1)
+    if n != 1:
+        errores.append("%s: la plantilla %s no tiene un bloque DATA reconocible" % (etiqueta, cab.group(1)))
+        return False
+    open(html, "w", encoding="utf-8").write(nuevo)
+    r = subprocess.run(["node", os.path.join(RAIZ, "scripts", "render.js"), html, "--check"], capture_output=True, text=True)
+    if r.returncode != 0:
+        errores.append("%s (%s, clásica) no pasa el gate de tarjeta:\n%s" % (etiqueta, cab.group(1), (r.stdout + r.stderr).strip()))
+        return False
+    return True
+
+
 def preparar_figuras(R, salida, paleta, handle, errores):
     dfig = os.path.join(salida, "figuras")
     os.makedirs(dfig, exist_ok=True)
@@ -636,11 +669,11 @@ def preparar_figuras(R, salida, paleta, handle, errores):
                     errores.append("figura %s: no existe %s" % (f["_n"], f["desde"]))
                     continue
                 destino = os.path.join(dfig, "fig_%02d.png" % k)
-                shutil.copyfile(origen, destino)
-                f["_src"] = "figuras/" + os.path.basename(destino)
+                if copiar_tarjeta(origen, destino, tk, errores, "figura %s" % f["_n"]):
+                    f["_src"] = "figuras/" + os.path.basename(destino)
                 continue
             html = os.path.join(dfig, "fig_%02d.html" % k)
-            ok, msg = nuevo_visual.ensamblar(f["plantilla"], html, paleta, tk)
+            ok, msg = nuevo_visual.ensamblar(f["plantilla"], html, paleta, tk, "clasico")
             if not ok:
                 errores.append("figura %s: %s" % (f["_n"], msg))
                 continue
@@ -662,8 +695,8 @@ def preparar_figuras(R, salida, paleta, handle, errores):
             for it in P["items"]:
                 j += 1
                 destino = os.path.join(dfig, "tarjeta_%02d.png" % j)
-                shutil.copyfile(os.path.join(RAIZ, it["desde"]), destino)
-                it["_src"] = "figuras/" + os.path.basename(destino)
+                if copiar_tarjeta(os.path.join(RAIZ, it["desde"]), destino, tk, errores, "tarjeta %d" % j):
+                    it["_src"] = "figuras/" + os.path.basename(destino)
 
 
 # ---------------------------------------------------------------- ensamblado

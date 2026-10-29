@@ -6,7 +6,8 @@ Comprueba:
      y de `series` (nombre, fuente, url, formato, unidad, frecuencia)
   M2 memoria/hilos.json: schema de cada hilo (id, fecha, slug, tema, tesis, paleta,
      n_tuits, ruta, estado) · ids únicos · paleta ∈ design/tokens.json · modo (opcional) ∈ ensamblar.MODOS["hilo"]
-  M3 design/tokens.json: contraste WCAG ink/bg ≥ 4.5 (error) y a1/bg ≥ 3 (aviso)
+  M3 design/tokens.json: contraste WCAG ink/bg ≥ 4.5 (error) y a1/bg ≥ 3 (aviso); bloque noche: texto y acento ≥ 4.5 y
+     cada color de la serie ≥ 3 sobre fondo y fondo_acto2 (error)
   H1 cada hilos/*/ tiene hilo.json, post.md, datos.json, hilo.html y los PNG que
      hilo.json declara; y está registrado en memoria/hilos.json (aviso si no)
   H2 en hilo.json: T1 con texto ≤ 280 y sin enlace, ningún texto > 280, paleta única, modo conocido
@@ -123,6 +124,26 @@ def validar_tokens():
                     err("tokens: paleta %s papel_tinta/papel %.2f:1 < 4.5" % (k, c))
             except (KeyError, ValueError):
                 pass
+    noche = tk.get("noche") or {}
+    if noche:  # estilo Noche (tarjetas y video): texto ≥ 4.5 y acento ≥ 4.5 en los dos fondos, serie ≥ 3
+        texto = noche.get("texto", "")
+        if not re.fullmatch(r"#[0-9A-Fa-f]{6}", texto):
+            err("tokens: noche sin texto válido")
+        for k in tk.get("paletas", {}):
+            n = (noche.get("paletas") or {}).get(k)
+            if not n:
+                err("tokens: paleta %s sin bloque noche" % k)
+                continue
+            campos = [n.get(c, "") for c in ("fondo", "fondo_acto2", "fondo_golpe", "acento")] + list(n.get("serie") or [])
+            if len(n.get("serie") or []) != 4 or not all(re.fullmatch(r"#[0-9A-Fa-f]{6}", c) for c in campos):
+                err("tokens: noche %s con colores inválidos (fondo, fondo_acto2, fondo_golpe, acento, serie×4)" % k)
+                continue
+            for fondo in ("fondo", "fondo_acto2"):
+                for nombre, color, piso in [("texto", texto, 4.5), ("acento", n["acento"], 4.5)] + \
+                        [("serie[%d]" % i, c, 3) for i, c in enumerate(n["serie"])]:
+                    c = contraste(n[fondo], color)
+                    if c < piso:
+                        err("tokens: noche %s %s/%s %.2f:1 < %s" % (k, nombre, fondo, c, piso))
     if a1_bajas:  # esperado y documentado en referencias/diseno/sistema.md: a1 nunca va en texto pequeño
         warn("tokens: a1/bg < 3:1 en %d paleta(s) (%s): a1 solo en cifras grandes y marcas (sistema.md)" % (len(a1_bajas), ", ".join(a1_bajas)))
     return set(tk.get("paletas", {}))

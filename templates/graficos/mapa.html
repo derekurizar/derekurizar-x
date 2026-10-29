@@ -40,6 +40,12 @@ function render(D) {
   const rotular = D.rotular === "ninguno" ? "ninguno" : "extremos";
   const f = (v) => H.num(v, D.formato);
   const ink = H.color.ink, bg = H.color.bg, a1 = H.color.a1;
+  // Noche: el destacado suele caer en crema (clase alta) y el acento claro apenas contrasta con ella: contorno más
+  // grueso con más halo; y las casillas de la columna llevan un filete de crema para que la clase más baja (≈ 1.5:1
+  // con el fondo oscuro) no se pierda. En clásico, como siempre.
+  const noche = H.estilo() === "noche";
+  const contorno = noche ? [12, 6] : [9, 4.5];
+  const filete = noche ? { stroke: H.color.inkA(.35), "stroke-width": 1 } : {};
 
   // ---- Clases: cortes dados, o cuantiles (`metodo: "iguales"` = intervalos iguales); los calcula H.cortes (compartido con el informe) ----
   const vals = con.map((id) => val[id]).sort((a, b) => a - b);
@@ -67,8 +73,8 @@ function render(D) {
                       "stroke-linejoin": "round", "vector-effect": "non-scaling-stroke" }, g);
   }
   if (hi) {  // contorno del destacado: halo en bg (separa de los vecinos) + a1 encima
-    H.svgEl("path", { d: GEOMETRIA.deptos[hi].d, fill: "none", stroke: bg, "stroke-width": 9, "stroke-linejoin": "round", "vector-effect": "non-scaling-stroke" }, g);
-    H.svgEl("path", { d: GEOMETRIA.deptos[hi].d, fill: "none", stroke: a1, "stroke-width": 4.5, "stroke-linejoin": "round", "vector-effect": "non-scaling-stroke" }, g);
+    H.svgEl("path", { d: GEOMETRIA.deptos[hi].d, fill: "none", stroke: bg, "stroke-width": contorno[0], "stroke-linejoin": "round", "vector-effect": "non-scaling-stroke" }, g);
+    H.svgEl("path", { d: GEOMETRIA.deptos[hi].d, fill: "none", stroke: a1, "stroke-width": contorno[1], "stroke-linejoin": "round", "vector-effect": "non-scaling-stroke" }, g);
   }
   const bb = g.getBBox();
   const esc = Math.min(mapaW / bb.width, mapaH / bb.height);
@@ -85,7 +91,7 @@ function render(D) {
   let y = 0;
   for (let i = nc - 1; i >= 0; i--) {
     const lo = i === 0 ? min : cortes[i - 1], hiV = i === nc - 1 ? max : cortes[i];
-    H.svgEl("rect", { x: colX, y: y + (sec.ley - 26) / 2, width: 26, height: 26, fill: colores[i] }, svg);
+    H.svgEl("rect", Object.assign({ x: colX, y: y + (sec.ley - 26) / 2, width: 26, height: 26, fill: colores[i] }, filete), svg);
     H.texto(svg, colX + 40, y + sec.ley / 2 + 7, f(lo) + " – " + f(hiV), { style: "font:" + fontLey + ";fill:" + ink });
     y += sec.ley;
   }
@@ -116,7 +122,7 @@ function render(D) {
       for (const id of arr) {
         const yBase = y + sec.fila / 2 + 7;
         if (id === hi) H.svgEl("rect", { x: colX + 6, y: yBase - 14, width: 14, height: 14, fill: colores[claseDe(val[id])], stroke: a1, "stroke-width": 3 }, svg);
-        else H.svgEl("rect", { x: colX + 8, y: yBase - 12, width: 10, height: 10, fill: colores[claseDe(val[id])] }, svg);
+        else H.svgEl("rect", Object.assign({ x: colX + 8, y: yBase - 12, width: 10, height: 10, fill: colores[claseDe(val[id])] }, filete), svg);
         filaNombreValor(id, yBase, id === hi ? "800" : "600", 21);
         y += sec.fila;
       }

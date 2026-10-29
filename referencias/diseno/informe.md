@@ -7,7 +7,13 @@ Las plantillas viven en `investigacion/`; ensambla `scripts/informe.py` y render
 
 ## Sistema: de la tarjeta al documento
 
-| Rol | Tarjeta 1080 | Informe Letter (816×1056 px) |
+**El informe se queda en el estilo clásico** (`sistema.md`, apéndice «Estilo clásico»): papel, paletas planas e
+Instrument Serif. Las tarjetas y los videos pasaron a Noche; el informe no, y las tarjetas de su hilo tampoco
+(`materializar.py` las arma clásicas con `guion.modo = "investigacion"`). `informe.py` arma clásicas sus figuras
+`tarjeta` y rearma clásica cualquier tarjeta Noche que copie (`desde`, `tarjetas`/`desde_hilo` sobre un `/hilo`
+entregado): el documento nunca mezcla un fondo casi negro con el papel.
+
+| Rol | Tarjeta 1080 (clásica) | Informe Letter (816×1056 px) |
 |---|---|---|
 | Kicker | 20 px Mono 500, .16em | 12 px Mono 500, .16em, mayúsculas, en `papel_tinta` |
 | Titular | 88 px Instrument Serif | portada 104 · h1 72 · h2 56 · apertura 80 · h3 36 |
@@ -22,7 +28,7 @@ Las plantillas viven en `investigacion/`; ensambla `scripts/informe.py` y render
 - El acento solo aparece en kickers, cifras, la marca destacada y los rótulos de figura:
   - `papel_tinta` para texto (≥ 4.5:1 sobre papel, lo comprueba `validate.py`);
   - `papel_barra` para marcas.
-- Portada, aperturas, página destacada y contraportada van a sangre con el `bg/ink/a1` de la tarjeta. Es la tarjeta hecha página.
+- Portada, aperturas, página destacada y contraportada van a sangre con el `bg/ink/a1` de la tarjeta clásica. Es la tarjeta hecha página.
 
 **Márgenes y numeración:**
 - Margen de 72 px a los lados; arriba 56 y abajo 48.
@@ -68,7 +74,7 @@ Las plantillas viven en `investigacion/`; ensambla `scripts/informe.py` y render
 | `metodo` | **cifras** `[{id, concepto, valor, aparece}]`. El veredicto sale de `datos.json`; las fuentes, de `meta.fuentes`. pasos (por defecto los tres del flujo; `[]` los omite), `fuentes: false` omite la lista (segunda página), nota |
 | `glosario` | **terminos** `[{t, d}]`, siglas `[{s, d}]`, corte (cuántos términos van en la columna izquierda) |
 | `anexo` | **titulo**, **bloques**, seccion («Anexo A»), lead |
-| `tarjetas` | **titulo**, **items** `[{desde: "hilos/…/tuit_N.png", n, beat, titulo, alt}]`, lead, tuit `{gancho, texto, publicado}`. Con `desde_hilo: "<carpeta del hilo>"` `informe.py` llena `items` y `tuit` desde su `hilo.json` (y el `DATA` de cada `tuit_N.html`); `tuits: [n…]` elige un subconjunto para partir en dos páginas; la caja `tuit` se omite sola con más de 8 tarjetas y más de 12 es I1 |
+| `tarjetas` | **titulo**, **items** `[{desde: "hilos/…/tuit_N.png", n, beat, titulo, alt}]`, lead, tuit `{gancho, texto, publicado}`. Con `desde_hilo: "<carpeta del hilo>"` `informe.py` llena `items` y `tuit` desde su `hilo.json` (y el `DATA` de cada `tuit_N.html`); `tuits: [n…]` elige un subconjunto para partir en dos páginas; la caja `tuit` se omite sola con más de 8 tarjetas y más de 12 es I1. Una tarjeta Noche se imprime rearmada clásica |
 | `contraportada` | **lema**, ficha `[[clave, valor], …]` (`{paleta}` se sustituye por el nombre de la paleta) |
 
 ## Bloques (`cuerpo`, `anexo`, `capitulo` banda)
@@ -99,7 +105,7 @@ Campos comunes:
 |---|---|
 | `panel` | La anatomía de la tarjeta a escala de página: fondo de paleta, kicker, titular, gráfico con `ink`/`a1`, nota y pie con «Fuente:» y handle |
 | `papel` | El gráfico sobre papel: regla superior, kicker en acento, marca destacada en `papel_barra`, el resto en tinta al 20 % |
-| `tarjeta` | Una tarjeta 1080 como PNG. Con `plantilla` + `datos` (contrato de `graficos.md`), se arma con `templates/graficos/` en la paleta del informe, pasa el gate de tarjeta R1–R6 y, con `cifra_ids`, I2 coteja sus números. Con `desde`, copia un PNG ya publicado |
+| `tarjeta` | Una tarjeta 1080 como PNG. Con `plantilla` + `datos` (contrato de `graficos.md`), se arma con `templates/graficos/` en la paleta del informe, pasa el gate de tarjeta R1–R6 y, con `cifra_ids`, I2 coteja sus números. Con `desde`, copia un PNG ya publicado; si es Noche, lo rearma clásico desde su `tuit_N.html` (plantilla, paleta y `DATA` de la cabecera) y repasa R1–R6 |
 
 Gráficos del documento (`grafico.tipo`): **el mismo contrato que la tarjeta**. `tipo` admite el nombre de la
 plantilla (`barras-v`) o su forma snake (`barras_v`); los campos y límites son los de `graficos.md`, con las

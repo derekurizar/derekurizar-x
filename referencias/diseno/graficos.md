@@ -121,6 +121,34 @@ total → `cascada` (en `/explica`); reparto que cambia en ≥ 5 periodos →
 Ejemplo completo de cada bloque: el `const DATA` de cada archivo en
 `templates/graficos/` (son las tarjetas del brief).
 
+## Color por plantilla en Noche
+
+Las tarjetas salen en estilo **Noche** (`referencias/diseno/sistema.md`); las de `/investigacion`, en clásico. Los
+roles no cambian de plantilla a plantilla ni de estilo a estilo: lo que la tabla de arriba pinta en `a1` sigue en
+`a1`, que en Noche es el **acento claro del tema** sobre el fondo casi negro; la tinta (`ink`) es la crema. Lo único
+que hay que cuidar es que el acento sea **una sola cosa**.
+
+| Plantillas | En acento (`a1`) | En crema (`ink`) y atenuados |
+|---|---|---|
+| `cifra` · `antes-despues` · `waffle` · `pictograma` | la cifra protagonista (`.cifra-heroe`: Archivo 900 condensado, mayúsculas) y, si las hay, sus K unidades o celdas (es el mismo dato); en `antes-despues`, solo «después» | texto, contexto, «antes», la barra de comparación y las celdas o unidades del resto, en crema (entera o atenuada) |
+| `barras-v` · `barras-h` · `divergente` · `bullet` · `embudo` · `cascada` · `linea-tiempo` | la barra, etapa, paso o hito `destacar` (la última etapa en `embudo`) | las demás marcas en crema con opacidad (en `bullet` y `embudo`, en `a2`; el exceso rayado, del color de su barra), ejes, valores y rótulos |
+| `linea` · `pendiente` · `pesas` · `multiples` · `dispersion` · `combinado` | la serie, el punto o el panel destacado (`b` en `pesas`, la línea en `combinado`) | las demás series en `ink`, `a2`, `a3` por ese orden; barras de `combinado` en tonos bajos de crema (la clave, la más clara; nunca crema plena); en `dispersion`, rótulo y guía del destacado en `a1` |
+| `dona` | la parte destacada | las otras en `ink`, `a2`, `a3` y la quinta en crema al 28 %; el aro es hueco (deja ver el grano) |
+| `apilada` · `area-apilada` · `piramide` · `agrupadas` | la parte, el bloque, el grupo o la serie destacada | las otras partes en tonos de crema (`H.mezcla`) separados entre sí ≥ 1.35:1 y del acento ≥ 1.25:1; el texto dentro de una caja con `H.textoSobre` |
+| `treemap` | la parte destacada | tonos bajos de crema con texto crema (≥ 4.6:1); «Todo lo demás», el más bajo |
+| `hemiciclo` | el bloque o la mayoría destacada | los otros bloques con la rampa `H.rampa` |
+| `mapa` · `calor` | el departamento o la celda destacada (en `mapa`, contorno `a1` de 6 px con halo de 12) | la rampa `H.rampa`, del fondo oscuro a la crema (el escalón más bajo ≥ 2:1 con el fondo en Noche); sin dato, rayado; en `mapa` las casillas de la columna llevan un filete de crema al 35 % |
+
+- `a2` (crema atenuado, ≥ 4.5:1) sirve para texto secundario; `a3` (acento atenuado, ≥ 3.2:1) solo para marcas y
+  texto grande, nunca para ejes ni valores.
+- Opacidades de la crema por debajo del 55 % solo en marcas o textos grandes; ejes, valores, nota y fuente se quedan
+  como los pone la base. Niveles usados: `barras-h` 50 %; `barras-v` de 30 % (la más vieja) a 55 % (la más reciente) y
+  la línea de referencia en crema; `divergente` 55 % las que suben y 30 % las que bajan; `cascada` 55 % totales y
+  sumas, 30 % restas; `pendiente` las demás en `a2`.
+- Ningún hex en la plantilla: solo `var(--bg|--ink|--a1|--a2|--a3)`, `H.color.*`, `H.mezcla`, `H.rampa` y
+  `H.textoSobre`. La cifra protagonista usa `.cifra-heroe` (o `H.fuenteCifra` / `H.medirCifra` en el lienzo), nunca
+  una familia escrita a mano: así la misma plantilla sale Noche o clásica.
+
 ## Flujo del visualista (sin editar HTML a mano)
 
 1. `python3 scripts/materializar.py sesiones/<slug> --tuit N` → ensambla la
@@ -158,3 +186,15 @@ Ejemplo completo de cada bloque: el `const DATA` de cada archivo en
    `pictograma` con más de 100 unidades se vuelve textura (mejor `waffle`).
 10. **Coherencia con el guion**: los números del PNG son los del `visual.datos`
    (el gate mecánico lo comprueba, pero mira que el redondeo no engañe).
+11. **Noche** (todas las tarjetas salvo `/investigacion`):
+    - **Fondo oscuro** con grano, del tinte del tema. Un fondo plano y claro es una tarjeta clásica: fuera de
+      `/investigacion` es un error (dilo en `nota`; no lo arregles en el HTML).
+    - **Una sola cosa en acento**: la cifra, la barra, la serie o el departamento de la tesis. Si el ojo salta a
+      dos sitios en acento, sobra uno (`destacar` en otro elemento o ninguno).
+    - **Texto crema**: titular en Archivo 800, cifra protagonista en Archivo condensado en mayúsculas (el sufijo
+      « mil» sale «MIL»), nada en serif.
+    - **Nada ilegible sobre el fondo**: ejes, valores, nota y fuente se leen a 400 px; ninguna marca de la rampa se
+      confunde con el fondo; el texto sobre una caja de acento va en tinta oscura.
+
+En `/investigacion` la tarjeta es clásica (fondo plano de la paleta, Instrument Serif) y el punto 11 no aplica:
+se juzga con 1–10, como siempre.

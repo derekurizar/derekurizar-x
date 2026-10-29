@@ -26,6 +26,11 @@ para `datos`, usa `python3 scripts/digesto.py <sesion> --serie <id>`.
    del catálogo, `kicker` ≤ 45, `titular` 1–3 líneas ≤ 26 (es el hallazgo),
    `nota` ≤ 150 o `""`, `fuente` 1–70 sin «Fuente:», `cifra_ids` ⊆ verificadas,
    `datos` con **números crudos** de esas cifras y `formato`. Sin URLs.
+   Las tarjetas salen en estilo Noche (`referencias/diseno/sistema.md`): el
+   titular en Archivo 800 a 64 px (26 caracteres en caja normal caben justo;
+   no lo escribas en mayúsculas) y **una sola cosa en acento**, la de
+   `destacar`: que sea la cifra de la tesis de ese tuit. En `/investigacion`
+   son clásicas; los límites no cambian.
    `antes-despues` no lleva el ×N (lo calcula la plantilla). Límites: `linea`
    ≥ 5 puntos y ≤ 4 series; `dona` 2–5 partes; `barras-h` ≤ 8; `barras-v` ≤ 12;
    `pendiente` 2 fechas y 2–6 items; `mapa` ≥ 12 departamentos; `pesas` 2–8;

@@ -97,7 +97,21 @@ function render(D) {
   const hi = partes.findIndex((p) => p.nombre === nombreHi);
   let k = 0;
   const nO = partes.filter((p, i) => i !== hi && !p.resto).length;
-  const colorDe = partes.map((p, i) => (i === hi ? a1 : p.resto ? H.mezcla(bg, ink, 0.22) : H.mezcla(bg, ink, 0.92 - 0.55 * (k++ / Math.max(1, nO - 1)))));
+  // Rampa de tonos de la tinta sobre el fondo (0.92 → 0.37; «Todo lo demás» 0.22). Noche (fondo oscuro, acento claro;
+  // la crema plena queda para texto y contornos): tonos bajos de crema, de mayor a menor, entre el más claro con la
+  // crema aún legible encima (≥ 4.6:1, y lejos del acento) y el que aún se aparta del fondo (≥ 2:1); «Todo lo demás»,
+  // más abajo (≥ 1.45:1). Así solo la parte destacada (a1) brilla.
+  const noche = H.estilo() === "noche";
+  const tonoT = (t) => H.mezcla(bg, ink, t);
+  let tAlto = 0.16, tBajo = 0.07, tResto = 0.04;
+  if (noche) {
+    for (let t = 0.45; t > 0.05; t -= 0.005) if (H.contraste(tonoT(t), ink) >= 4.6 && H.contraste(tonoT(t), a1) >= 1.5) { tAlto = t; break; }
+    for (let t = 0.02; t < tAlto; t += 0.005) if (H.contraste(tonoT(t), bg) >= 2) { tBajo = t; break; }
+    for (let t = 0.01; t < tBajo; t += 0.005) if (H.contraste(tonoT(t), bg) >= 1.45) { tResto = t; break; }
+  }
+  const tonoRampa = (q) => (noche ? tAlto - (tAlto - tBajo) * q : 0.92 - 0.55 * q);
+  const tonoResto = () => (noche ? tResto : 0.22);
+  const colorDe = partes.map((p, i) => (i === hi ? a1 : p.resto ? H.mezcla(bg, ink, tonoResto()) : H.mezcla(bg, ink, tonoRampa(k++ / Math.max(1, nO - 1)))));
   for (const r of rects) {
     const p = partes[r.i], c = colorDe[r.i], col = H.textoSobre(c), lab = rotulo(r, p, r.i === hi);
     const x = r.x + G / 2, y = r.y + G / 2;

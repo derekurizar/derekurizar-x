@@ -4,8 +4,10 @@
      datos. Arriba el título como golpe y la barra de progreso; en medio el lienzo donde se dibuja la animación de la
      biblioteca video/animaciones/<id>.js (S.animacion), que se registra con ANIM.registrar(id, {meta, pintar, seek});
      abajo los subtítulos. Los pasos y sus tiempos (cuando la voz dice cada uno) vienen en S.T (video.py tiempos) y sus
-     textos en S.P. La página añade una deriva lenta al lienzo (nunca quieto). La graba scripts/video_grabar.js llamando
-     a seek(t). -->
+     textos en S.P. La página añade una deriva lenta al lienzo (nunca quieto). Estilo Noche (video/comun.css): fondo
+     oscuro con grano, título en Archivo 800, la animación en crema con una sola cosa en acento; sin subtítulo doble: un
+     trozo cuyas palabras ya están todas en pantalla (el título o un paso) no se subtitula. La graba
+     scripts/video_grabar.js llamando a seek(t). -->
 <link rel="stylesheet" href="comun.css">
 <style>
 #lienzo { position: absolute; top: 450px; left: var(--izq); right: var(--der); height: 900px; transform-origin: 50% 50%; will-change: transform; }
@@ -21,8 +23,8 @@ html.f45 #lienzo { top: 260px; height: 800px; }   /* con la deriva (1.025) termi
 <script>
 // registro de animaciones: cada video/animaciones/<id>.js llama ANIM.registrar('<id>', { meta, pintar, seek })
 const ANIM = { _m: {}, registrar(id, m) { this._m[id] = m; } };
-const n = V.n, F45 = V.F45, { clamp } = V;
-let S, TROZOS, M;
+const n = V.n, F45 = V.F45, { clamp, normal } = V;
+let S, TROZOS, M, EN_PANTALLA = new Set();
 const cargarScript = (src) => new Promise((ok, mal) => {
   const s = document.createElement('script');
   s.src = src; s.onload = ok; s.onerror = () => mal(new Error('no existe ' + src));
@@ -34,6 +36,8 @@ window.__listo = (async () => {
   S.arriba = S.arriba || [];
   V.pintarGolpe(S);
   V.pintarProgreso(todo);
+  // palabras que la pantalla ya dice (título y pasos): un trozo de subtítulo hecho solo de ellas no se repite abajo
+  [S.P && S.P.titulo, ...((S.P && S.P.pasos) || [])].forEach((s) => String(s || '').split(/\s+/).forEach((w) => { const k = normal(w); if (k) EN_PANTALLA.add(k); }));
   if (!/^[a-z0-9-]+$/.test(S.animacion || '')) throw new Error('escena explica sin animación válida: «' + S.animacion + '»');
   await cargarScript('animaciones/' + S.animacion + '.js');
   M = ANIM._m[S.animacion];
@@ -52,7 +56,7 @@ window.seek = (t) => {
   M.seek(t, S.T);
   // deriva lenta del lienzo durante la escena (nunca quieto)
   document.getElementById('lienzo').style.transform = `scale(${(1 + 0.025 * clamp(t / S.dur)).toFixed(4)})`;
-  V.subtitulos(t, S, TROZOS);
+  V.subtitulos(t, S, TROZOS, { ocultar: (tr) => tr.every((x) => EN_PANTALLA.has(normal(x.text))) });
 };
 </script>
 </body></html>

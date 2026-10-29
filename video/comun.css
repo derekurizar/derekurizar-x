@@ -1,8 +1,9 @@
 /* Hoja común de las páginas de escena de /video (video/*.html): fuentes locales, lienzo 1080×1920, golpe de arriba,
-   barra de progreso, subtítulos, portada limpia y la base del formato 4:5. Cada página la enlaza ANTES de su <style>,
+   barra de progreso, subtítulos, portada limpia y la base del formato 4:5. Estilo Noche (design/tokens.json · noche):
+   fondo oscuro de la paleta con grano fijo, texto crema, el acento del tema para lo único que destaca, Archivo 800 en
+   títulos y subtítulos y Archivo condensado 900 (.condensada) en cifras, nombres y años. Cada página la enlaza ANTES de su <style>,
    que conserva solo lo propio y las excepciones (misma especificidad: gana la página). La sirve scripts/video_grabar.js. */
-@font-face { font-family: 'Instrument Serif'; font-weight: 400; src: url(fonts/instrument-serif-400.woff2) format('woff2'); }
-@font-face { font-family: 'Archivo'; font-weight: 100 900; src: url(fonts/archivo-var.woff2) format('woff2'); }
+@font-face { font-family: 'Archivo'; font-weight: 100 900; font-stretch: 62% 125%; src: url(fonts/archivo-wdth.woff2) format('woff2'); }
 @font-face { font-family: 'JetBrains Mono'; font-weight: 100 800; src: url(fonts/jetbrains-mono-var.woff2) format('woff2'); }
 html, body { margin: 0; }
 /* ZONA SEGURA (medida en la app, 2026-10; ver referencias/flujo-video.md «Plataformas»). Una sola para TikTok, Reels y
@@ -11,20 +12,35 @@ html, body { margin: 0; }
    subtítulos (--fin; en una página con #subs se usa su top − 30) y abajo el texto de la app empieza en y≈1645.
    La columna de diseño es x 85–876 (--izq, --der). V.zona la expone a las páginas y V.medirZona() es el gate V13. */
 :root { --izq: 85px; --der: 204px; --corte: 57px; --sup: 215px; --fin: 1370px; --iconos-x: 900px; --iconos-y: 1070px; }
-body { width: 1080px; height: 1920px; overflow: hidden; background: var(--bg); color: var(--ink); position: relative; font-family: Archivo, sans-serif; }
-#arriba { position: absolute; top: 250px; left: var(--izq); right: var(--der); }
-#golpe { font: 400 72px/1.0 'Instrument Serif', serif; letter-spacing: -.015em; }
+/* el grano es fijo (no depende de t) y va en su propia capa (body::before con will-change: se compone una vez y los
+   cuadros salen idénticos en serie y en paralelo); V13 no mide pseudoelementos. Ayuda a que los degradados oscuros no
+   se partan en bandas al comprimir */
+body { width: 1080px; height: 1920px; overflow: hidden; color: var(--ink); position: relative; font-family: Archivo, sans-serif;
+  background: var(--bg); }
+body::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; will-change: transform;
+  background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27180%27%20height%3D%27180%27%3E%3Cfilter%20id%3D%27n%27%3E%3CfeTurbulence%20type%3D%27fractalNoise%27%20baseFrequency%3D%27.85%27%20numOctaves%3D%272%27%20stitchTiles%3D%27stitch%27%2F%3E%3CfeColorMatrix%20values%3D%270%200%200%200%201%200%200%200%200%201%200%200%200%200%201%200%200%200%20.12%200%27%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D%27180%27%20height%3D%27180%27%20filter%3D%27url%28%23n%29%27%2F%3E%3C%2Fsvg%3E") 0 0 / 180px 180px repeat; }
+/* cifras, nombres y años: Archivo 900 condensado en mayúsculas (la fuente se declara arriba con su eje de ancho) */
+.condensada { font-family: Archivo, sans-serif; font-weight: 900; font-stretch: 62.5%; text-transform: uppercase; }
+#arriba { position: absolute; top: 222px; left: var(--izq); right: var(--der); }
+/* la barra va primero y el golpe debajo, como titular de la escena (las páginas que escriben #golpe antes de #progreso
+   se reordenan aquí; las que ya llevan la barra primero no cambian) */
+#arriba:has(> #progreso:not(:first-child)) { display: flex; flex-direction: column; }
+#arriba > #progreso:not(:first-child) { order: -1; margin: 0 0 24px; }
+#golpe { font: 900 96px/.9 Archivo, sans-serif; font-stretch: 62.5%; text-transform: uppercase; letter-spacing: -.005em; }
+/* la cifra o la palabra de cantidad del titular (V.acentoDe) va en el acento; el resto, crema */
+#golpe span.acento, #cifra .acento { color: var(--acento); }
 #golpe span { display: inline-block; margin-right: .22em; }
-/* barra de progreso: un tramo por escena */
+/* barra de progreso: un tramo por escena (/video), por acto (/historia) o por noticia (/noticias); V.pintarProgreso */
 #progreso { display: flex; gap: 10px; margin-top: 26px; }
 #progreso i { flex: 1; height: 6px; background: color-mix(in srgb, var(--ink) 28%, transparent); border-radius: 3px; overflow: hidden; }
 #progreso i b { display: block; height: 100%; width: 0; background: var(--ink); }
 /* subtítulos: la palabra activa resaltada, las que faltan apagadas, las cifras en grande */
-#subs { position: absolute; top: 1400px; left: var(--izq); right: var(--der); text-align: center; font: 700 48px/1.25 Archivo, sans-serif; }
-#subs span { margin: 0 .1em; }
+#subs { position: absolute; top: 1400px; left: var(--izq); right: var(--der); text-align: center; font: 800 60px/1.24 Archivo, sans-serif;
+  letter-spacing: -.01em; text-shadow: 0 2px 18px rgba(0,0,0,.45); }
+#subs span { margin: 0 .08em; }
 #subs .no { opacity: .38; }
-#subs .cifra { font-size: 60px; font-weight: 800; letter-spacing: -.01em; }
-#subs .ahora { color: var(--resalte-ink); background: var(--resalte-bg); border-radius: 10px; padding: 0 .12em; }
+#subs .cifra { font-weight: 900; }
+#subs .ahora { color: var(--resalte-ink); background: var(--resalte-bg); border-radius: 12px; padding: 0 .14em; text-shadow: none; }
 /* rótulo de acto (V.pintarActo, S.R de /historia): el velo a sangre sobre la escena (data-fuera-de-zona: V13 no lo
    mide) y la columna con el año grande, el título, el lugar y el riel (un punto por acto, sin numerarlos: el
    espectador no sabe qué acto es); va antes de #subs en el DOM, así los subtítulos siguen encima. Mismas reglas que
@@ -32,8 +48,9 @@ body { width: 1080px; height: 1920px; overflow: hidden; background: var(--bg); c
 #acto { position: absolute; inset: 0; pointer-events: none; }
 #acto .velo { position: absolute; inset: 0; background: color-mix(in srgb, var(--bg) 78%, transparent); }
 #acto .col { position: absolute; top: 470px; left: var(--izq); right: var(--der); display: flex; flex-direction: column; gap: 30px; }
-#acto .anio { font: 400 230px/.86 'Instrument Serif', serif; letter-spacing: -.03em; color: var(--acento, var(--a1)); white-space: nowrap; transform-origin: 0 70%; }
-#acto .titulo { font: 700 66px/1.06 Archivo, sans-serif; letter-spacing: -.01em; }
+#acto .anio { font: 900 230px/.84 Archivo, sans-serif; font-stretch: 62.5%; text-transform: uppercase; letter-spacing: -.01em; color: var(--acento, var(--a1));
+  text-shadow: 0 0 60px color-mix(in srgb, var(--acento, var(--a1)) 45%, transparent); white-space: nowrap; transform-origin: 0 70%; }
+#acto .titulo { font: 800 66px/1.06 Archivo, sans-serif; letter-spacing: -.01em; }
 #acto .titulo span { display: inline-block; margin-right: .24em; }
 #acto .lugar { font: 600 24px/1 'JetBrains Mono', monospace; letter-spacing: .12em; text-transform: uppercase; opacity: .7; }
 #acto .lugar:empty { display: none; }

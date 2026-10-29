@@ -17,6 +17,7 @@ const DATA = {
   ],
   normalizar: false, destacar: 4, rotular: "todas"
 };
+
 function render(D) {
   H.assert(Array.isArray(D.etiquetas) && D.etiquetas.length >= 2 && D.etiquetas.length <= 8, "apilada admite de 2 a 8 filas (etiquetas)");
   H.assert(Array.isArray(D.partes) && D.partes.length >= 2 && D.partes.length <= 5, "apilada admite de 2 a 5 partes");
@@ -33,8 +34,21 @@ function render(D) {
   // Colores sólidos: la destacada en a1, el resto en tonos de la tinta sobre el fondo.
   const bg = H.color.bg, ink = H.color.ink, a1 = H.color.a1;
   const tonos = [1, 0.66, 0.42, 0.24];
+  // Noche (fondo oscuro, acento claro): tonos de crema del más claro al más oscuro, separados entre sí (≥ 1.35:1)
+  // y del acento (≥ 1.25:1) para que ningún segmento se confunda con su vecino; todos ≥ 1.6:1 sobre el fondo.
+  const tonosNoche = (n, paso = 1.35) => {
+    const out = [];
+    for (let t = 1; t > 0.05 && out.length < n; t -= 0.01) {
+      const c = H.mezcla(bg, ink, t);
+      if (H.contraste(c, bg) < 1.6) break;
+      if (H.contraste(c, a1) >= 1.25 && (!out.length || H.contraste(c, out[out.length - 1]) >= paso)) out.push(c);
+    }
+    H.assert(out.length === n, "no hay " + n + " tonos distinguibles sobre el fondo");
+    return out;
+  };
+  const neutros = H.estilo() === "noche" ? tonosNoche(m - 1) : tonos.map((t) => H.mezcla(bg, ink, t));
   let k = 0;
-  const colorDe = D.partes.map((_, j) => (j === hi ? a1 : H.mezcla(bg, ink, tonos[Math.min(k++, 3)])));
+  const colorDe = D.partes.map((_, j) => (j === hi ? a1 : neutros[Math.min(k++, 3)]));
   H.leyenda(D.partes.map((p, j) => ({ nombre: p.nombre, color: colorDe[j], forma: "cuadro" })));
 
   const pct = (r, j) => (D.partes[j].valores[r] / totales[r]) * 100;

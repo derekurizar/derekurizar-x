@@ -12,6 +12,7 @@ const DATA = {
   destacar: -1, rotular: "destacada",
   referencia: { valor: 175000, texto: "meta" }
 };
+
 function render(D) {
   H.assert(Array.isArray(D.etiquetas) && Array.isArray(D.valores) && D.etiquetas.length === D.valores.length, "etiquetas y valores deben tener la misma longitud");
   const n = D.valores.length;
@@ -33,6 +34,7 @@ function render(D) {
   const sy = H.escala(dom, [y1, y0]);
   const yz = sy(0);   // la base de las barras es el cero, no el borde inferior (negativos)
   const ink = H.color.ink;
+  const noche = H.estilo() === "noche";
   const gap = n > 8 ? 12 : 22;
   const bw = (x1 - x0 - gap * (n - 1)) / n;
 
@@ -49,7 +51,9 @@ function render(D) {
   D.valores.forEach((v, i) => {
     const x = x0 + i * (bw + gap), yv = sy(v);
     const esHi = i === hi;
-    const op = esHi ? 1 : (0.45 + 0.43 * (n > 1 ? i / (n - 1) : 1)).toFixed(2);
+    // Las demás barras, de la más vieja (tenue) a la más reciente; en Noche la crema va del 30 al 55 %.
+    const fr = n > 1 ? i / (n - 1) : 1;
+    const op = esHi ? 1 : (noche ? 0.3 + 0.25 * fr : 0.45 + 0.43 * fr).toFixed(2);
     H.svgEl("rect", { x, y: Math.min(yv, yz), width: bw, height: Math.abs(yz - yv), fill: esHi ? H.color.a1 : ink, opacity: op }, svg);
     if (D.rotular !== "destacada" || esHi)
       H.texto(svg, x + bw / 2, v < 0 ? yv + 30 : yv - 12, H.num(v, D.formato), { class: "t-val", "text-anchor": "middle", style: esHi ? "font-size:24px" : "" });
@@ -59,9 +63,10 @@ function render(D) {
   H.svgEl("line", { x1: x0, x2: x1, y1: yz, y2: yz, stroke: ink, "stroke-width": 3 }, svg);
 
   if (D.referencia) {
-    const y = sy(D.referencia.valor);
-    H.svgEl("line", { x1: x0, x2: x1, y1: y, y2: y, stroke: H.color.a1, "stroke-width": 3, "stroke-dasharray": "8 8" }, svg);
-    H.texto(svg, x1, y - 10, D.referencia.texto + " · " + H.num(D.referencia.valor, D.formato), { class: "t-rot", "text-anchor": "end", fill: H.color.a1 });
+    // Noche: la referencia va en crema (el acento ya es la barra destacada); en clásico, a1.
+    const y = sy(D.referencia.valor), cRef = noche ? ink : H.color.a1;
+    H.svgEl("line", { x1: x0, x2: x1, y1: y, y2: y, stroke: cRef, "stroke-width": 3, "stroke-dasharray": "8 8" }, svg);
+    H.texto(svg, x1, y - 10, D.referencia.texto + " · " + H.num(D.referencia.valor, D.formato), { class: "t-rot", "text-anchor": "end", fill: cRef });
   }
 }
 </script>

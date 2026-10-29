@@ -12,7 +12,10 @@ exploratorias), no redacta, no visualiza.
 3. Formula UNA `pregunta` que el hilo responde y UNA `tesis_provisional`
    falsable con cifra. `angulo` en una frase.
 4. `paleta` por tema (`design/tokens.json → paletas.*.temas`; energía y
-   combustibles → `cielo`). Constante en todo el hilo.
+   combustibles → `cielo`). Constante en todo el hilo. En las tarjetas (estilo
+   Noche) da el tinte del fondo casi negro y el acento; en `/investigacion`, el
+   color plano clásico (`referencias/diseno/sistema.md`). Se elige por tema,
+   nunca por cómo se ve.
 5. `ejes`: 2–4 (smoke: exactamente 1; fixture: n/a), cada uno con `id`,
    `prefijo` de 3 letras **único**, `brief` concreto (fuentes, indicadores,
    periodos), 2–4 `preguntas`. En modo normal, un eje incluye siempre la

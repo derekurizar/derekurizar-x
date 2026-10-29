@@ -6,28 +6,31 @@
      proporcional; el primero (o el destacado de la tarjeta) entra el último con el acento. Arriba el golpe y la
      barra de progreso; debajo el kicker y la fuente de la tarjeta; abajo los subtítulos. Los puestos y sus tiempos
      vienen en S.T.items (los calcula video.py tiempos con los DATA de la tarjeta); el formato de los valores se lee
-     de los DATA de tarjeta_N.html (h.js = bloque H de templates/base.html). La graba scripts/video_grabar.js. -->
+     de los DATA de tarjeta_N.html (h.js = bloque H de templates/base.html). Estilo Noche (video/comun.css): puestos,
+     nombres y valores en Archivo condensado 900 y mayúsculas, en crema; el primero (o el destacado) con su puesto y
+     su barra en el acento. La graba scripts/video_grabar.js. -->
 <link rel="stylesheet" href="comun.css">
 <style>
-#kicker { position: absolute; top: 440px; left: var(--izq); right: var(--der); font: 500 24px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; }
+#kicker { position: absolute; top: 440px; left: var(--izq); right: var(--der); font: 600 24px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; }
 #lista { position: absolute; top: 500px; left: var(--izq); right: var(--der); transform-origin: 0 0; will-change: transform; }
 .fila { display: grid; grid-template-columns: 130px 1fr auto; grid-template-rows: auto 16px; column-gap: 20px; row-gap: 14px; align-items: end; height: 150px; margin-bottom: 10px; opacity: 0; }
-.puesto { grid-row: 1 / 3; font: 400 120px/1 'Instrument Serif', serif; letter-spacing: -.03em; opacity: .55; align-self: center; }
-.nombre { font: 700 50px/1.05 Archivo, sans-serif; }
-.valor { font: 700 56px/1 'JetBrains Mono', monospace; letter-spacing: -.02em; text-align: right; }
+/* cifras y nombres: Archivo 900 condensado en mayúsculas (el shorthand `font` resetea font-stretch, que va después) */
+.puesto, .nombre, .valor { text-transform: uppercase; }
+.puesto { grid-row: 1 / 3; font: 900 128px/.84 Archivo, sans-serif; font-stretch: 62.5%; opacity: .45; align-self: center; }
+.nombre { font: 900 62px/1 Archivo, sans-serif; font-stretch: 62.5%; letter-spacing: .005em; }
+.valor { font: 900 68px/1 Archivo, sans-serif; font-stretch: 62.5%; text-align: right; }
 .barra { grid-column: 2 / 4; height: 16px; border-radius: 8px; background: color-mix(in srgb, var(--ink) 22%, transparent); overflow: hidden; }
 .barra b { display: block; height: 100%; width: 0; background: var(--ink); border-radius: 8px; }
 .fila.si .puesto { opacity: 1; color: var(--acento, var(--ink)); }
-.fila.si .nombre { font-weight: 800; }
 .fila.si .barra b { background: var(--acento, var(--ink)); }
-#fuente { position: absolute; top: 1340px; left: var(--izq); right: var(--der); font: 500 20px/1.2 'JetBrains Mono', monospace; opacity: .75; }
+#fuente { position: absolute; top: 1340px; left: var(--izq); right: var(--der); font: 600 20px/1.2 'JetBrains Mono', monospace; opacity: .75; }
 /* formato 4:5 (1080×1350) para el feed */
 html.f45 #kicker { top: 250px; }
 html.f45 #lista { top: 300px; }
 html.f45 .fila { height: 118px; margin-bottom: 8px; }
-html.f45 .puesto { font-size: 96px; }
-html.f45 .nombre { font-size: 42px; }
-html.f45 .valor { font-size: 48px; }
+html.f45 .puesto { font-size: 104px; }
+html.f45 .nombre { font-size: 52px; }
+html.f45 .valor { font-size: 58px; }
 html.f45 #fuente { top: 1000px; }
 </style>
 <script src="h.js"></script>
@@ -70,7 +73,7 @@ window.__listo = (async () => {
     const k = cabe / base;
     for (const x of FILAS) {
       x.el.style.height = cabe + 'px';
-      for (const [sel, px] of [['.puesto', F45 ? 96 : 120], ['.nombre', F45 ? 42 : 50], ['.valor', F45 ? 48 : 56]])
+      for (const [sel, px] of [['.puesto', F45 ? 104 : 128], ['.nombre', F45 ? 52 : 62], ['.valor', F45 ? 58 : 68]])
         x.el.querySelector(sel).style.fontSize = Math.round(px * Math.max(0.7, k)) + 'px';
     }
   }

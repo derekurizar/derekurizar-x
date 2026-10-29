@@ -79,6 +79,14 @@ de hilos]`, `fuente?` (≤ 44; en pantalla, obligatoria cuando la escena cita un
 fuente no se mostró ni se nombró antes en el mismo acto). Topes de voz: foto 40–280, cita 30–280, tarjeta, mapa,
 ranking, tiempo y explica 40–260, golpe 20–130, capitulo 10–90; gancho y cierre como en `/video`.
 
+**Cómo se ve** (estilo Noche; «Cómo se ve» en `referencias/flujo-historia.md`): fondo casi negro de la paleta (más
+oscuro en todo el acto 2), fotos **a sangre** y oscurecidas, **una sola cosa en acento** por escena (el nombre, el año,
+la cifra o la palabra que suena), titulares en Archivo 800 crema y nombres, años y cifras en Archivo condensado en
+mayúsculas. Lo que eso le pide al guion: escribe todo en caja normal (la página pone la caja); en una `cita` la frase
+en pantalla se enciende mientras la voz la lee y en ese tramo no hay subtítulo, por eso la voz la dice **literal** y
+el resto de la voz (quién habla, lo que sigue) va antes o después de la frase, no en medio; en una tarjeta,
+`grafico.datos.destacar` apunta a lo que la voz cuenta (es lo único en acento).
+
 - **foto** `{foto: "<id>" | null, fecha (chip ≤ 14: «Feb 2015»), lugar (≤ 24), titular (≤ 9 palabras), hechos: [ids],
   cifra?: {texto ≤ 18 con dígitos, etiqueta ≤ 30}, fuente? (≤ 44), texto (40–280)}`.
   - **Siempre con foto**: nunca `null`, `icono` ni `depto` (H7). Si el hecho no tiene foto propia, usa una de

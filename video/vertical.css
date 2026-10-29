@@ -3,7 +3,12 @@
    siempre (H.espacio) y el gráfico conserva su tamaño; después el titular y el handle desaparecen (la voz y el
    golpe ya dicen el hallazgo) y el gráfico sube bajo el kicker, seguido de la nota y la fuente. Lo inyectan
    video/escena.html (en el iframe) y scripts/video_animar.js (V7 compara vertical contra vertical). La tarjeta
-   sigue midiendo 1080×1080: lo que sobra abajo es fondo del mismo color. */
+   sigue midiendo 1080×1080: lo que sobra abajo es fondo del mismo color.
+   Estilo Noche: la tarjeta ya llega en Noche (video.py preparar la rearma) y dentro del video (html.en-video, que
+   pone escena.html; V7 no lo pone y compara la tarjeta con su fondo) no pinta fondo: se ve el de la página, con el
+   grano continuo bajo el foco y la deriva y, en el acto 2 de /historia, fondo_acto2. Una tarjeta clásica que llegue
+   tal cual conserva el suyo. */
+html.en-video body[data-estilo="noche"] { background: transparent; }
 .tarjeta { padding: 60px 80px; justify-content: flex-start; }
 .kicker { font-size: 24px; }
 h1.titular { display: none !important; }
@@ -15,3 +20,18 @@ h1.titular { display: none !important; }
 .pie { margin-top: 26px; padding-top: 18px; margin-right: 130px; }
 .pie .autor { display: none !important; }
 .pie .fuente { font-size: 22px; }
+/* en el teléfono la tarjeta se ve a ~1/3: los rótulos chicos crecen. Los ejes (17 px) ×1.25 y los rótulos de
+   antes-despues y de la cifra comparada («ENERO», «AHORA»: 18 px) a 22; las leyendas de waffle y pictograma (20) a
+   24, como .leyenda, y el texto del centro de la dona (19) a 22. Valores (.t-val, 22 px) y categorías (.t-cat, 23)
+   ya pasan de 22 y no crecen: medido en la galería y sus pruebas de estrés, ×1.12–1.25 los saca de su píldora
+   (barras-v con negativos) o los monta sobre el rótulo de al lado (bullet); .t-rot (la meta de barras-v, 20) tampoco:
+   a 22 entra en la barra vecina. La plantilla ya midió su espacio con los tamaños de siempre (H.espacio): todo esto
+   se comprobó sin solapes nuevos ni desbordes. Las plantillas de la galería ponen las suyas en <body>: `body` les
+   gana. */
+.t-eje { font-size: 21.25px; }
+body .ad-col .lab, body .cifra-comp .col .lab { font-size: 22px; }
+body .wf-ley .it, body .pg-ley .it { font-size: 24px; }
+body .dona-centro .t { font-size: 22px; }
+/* las cifras grandes cuentan (animar.js) con dígitos tabulares: su ancho no cambia mientras cuentan y el foco de
+   escena.html, medido con la cifra final, no las corta contra el borde */
+.cifra-heroe { font-variant-numeric: tabular-nums; }

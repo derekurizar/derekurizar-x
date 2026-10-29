@@ -23,6 +23,7 @@ const DATA = {
   rotular: ["Guatemala", "Huehuetenango", "Quiché", "Sololá"], destacar: "Alta Verapaz",
   guias: { x: 2900, y: 5.6, texto: "promedio nacional" }, desdeCero: false
 };
+
 function render(D) {
   H.assert(Array.isArray(D.puntos) && D.puntos.length >= 8 && D.puntos.length <= 22, "dispersion admite de 8 a 22 puntos");
   D.puntos.forEach((p) => H.assert(p && typeof p.nombre === "string" && typeof p.x === "number" && typeof p.y === "number", "cada punto necesita nombre, x e y numéricos"));
@@ -78,24 +79,71 @@ function render(D) {
   }
   // Colocación voraz: el destacado primero; cada rótulo prueba 14 posiciones (derecha/izquierda ×
   // 7 alturas) y se queda con la que menos pisa puntos y rótulos ya puestos, con poco desplazamiento.
+  // Esquina apiñada: si la mejor de esas pisa otro rótulo, prueba también más lejos (±120 y ±150, con guía).
+  // Sin cruces: la línea guía de un rótulo no corta otro rótulo ni otra línea guía, ningún rótulo tapa una línea
+  // guía ya puesta y el del destacado no queda sobre las guías de referencia. El destacado prueba además a correrse
+  // de lado (hasta 120 px, con su línea guía) para quedar cerca de su punto en vez de subir o bajar lejos; los demás,
+  // solo si aún pisan o cruzan. Si alguno sigue pisando o cruzando, se prueban los otros órdenes de colocación.
   const solape = (a, b) => Math.max(0, Math.min(a[2], b[2]) - Math.max(a[0], b[0])) * Math.max(0, Math.min(a[3], b[3]) - Math.max(a[1], b[1]));
-  const circulos = D.puntos.map((q) => ({ q, c: [sx(q.x) - 13, sy(q.y) - 13, sx(q.x) + 13, sy(q.y) + 13] }));
-  const puestas = [];
-  etiquetas.sort((a, b) => (b.hi ? 1 : 0) - (a.hi ? 1 : 0));
-  for (const e of etiquetas) {
-    const w = H.medir(e.t, e.font);
-    let mejor = null;
-    for (const dy of [0, -30, 30, -60, 60, -90, 90]) for (const sgn of [1, -1]) {
-      const x = e.cx + sgn * (e.r + 9), y = e.cy + 7 + dy;
-      const caja = sgn > 0 ? [x, y - 19, x + w, y + 5] : [x - w, y - 19, x, y + 5];
-      let costo = Math.abs(dy) * 4 + (sgn < 0 ? 15 : 0);
-      if (caja[0] < x0 + 4 || caja[2] > x1 || caja[1] < y0 || caja[3] > y1 - 4) costo += 1e6;
-      for (const k of circulos) if (k.q !== e.p) costo += solape(caja, k.c) * (rot.includes(k.q.nombre) ? 30 : 2);
-      for (const o of puestas) costo += solape(caja, o) * 20;
-      if (!mejor || costo < mejor.costo) mejor = { costo, x, y, anc: sgn > 0 ? "start" : "end", caja, dy };
+  const cruzaCaja = (p, q, c) => {   // ¿el segmento p→q toca la caja c = [x0, y0, x1, y1]? (Liang–Barsky)
+    let t0 = 0, t1 = 1;
+    const dx = q[0] - p[0], dy = q[1] - p[1];
+    for (const [pp, qq] of [[-dx, p[0] - c[0]], [dx, c[2] - p[0]], [-dy, p[1] - c[1]], [dy, c[3] - p[1]]]) {
+      if (pp === 0) { if (qq < 0) return false; continue; }
+      const r = qq / pp;
+      if (pp < 0) { if (r > t1) return false; if (r > t0) t0 = r; } else { if (r < t0) return false; if (r < t1) t1 = r; }
     }
-    Object.assign(e, mejor); puestas.push(mejor.caja);
+    return true;
+  };
+  const giro = (a, b, c) => Math.sign((b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0]));
+  const cruzan = (s1, s2) => giro(s1[0], s1[1], s2[0]) * giro(s1[0], s1[1], s2[1]) < 0 && giro(s2[0], s2[1], s1[0]) * giro(s2[0], s2[1], s1[1]) < 0;
+  const circulos = D.puntos.map((q) => ({ q, c: [sx(q.x) - 13, sy(q.y) - 13, sx(q.x) + 13, sy(q.y) + 13] }));
+  const referencias = [];   // las guías de referencia (son dato)
+  if (g && typeof g.x === "number") referencias.push([[sx(g.x), y0], [sx(g.x), y1]]);
+  if (g && typeof g.y === "number") referencias.push([[x0, sy(g.y)], [x1, sy(g.y)]]);
+  // Línea guía de un rótulo desplazado: del borde del punto al borde del rótulo.
+  const lider = (e, x, y, sgn, dy, dx) => (dy || dx ? [[e.cx + sgn * e.r * 0.7, e.cy + Math.sign(dy) * e.r * 0.7], [x - sgn * 2, y - 7]] : null);
+  const colocar = (lista) => {
+    const puestas = [], lideres = [], res = [];
+    for (const e of lista) {
+      const w = H.medir(e.t, e.font);
+      let mejor = null;
+      const probar = (alturas, lados = [0]) => { for (const dx of lados) for (const dy of alturas) for (const sgn of [1, -1]) {
+        const x = e.cx + sgn * (e.r + 9 + dx), y = e.cy + 7 + dy;
+        const caja = sgn > 0 ? [x, y - 19, x + w, y + 5] : [x - w, y - 19, x, y + 5];
+        let costo = Math.abs(dy) * 4 + dx * 3 + (sgn < 0 ? 15 : 0), pisa = 0, cruces = 0;
+        if (caja[0] < x0 + 4 || caja[2] > x1 || caja[1] < y0 || caja[3] > y1 - 4) costo += 1e6;
+        for (const k of circulos) if (k.q !== e.p) costo += solape(caja, k.c) * (rot.includes(k.q.nombre) ? 30 : 2);
+        for (const o of puestas) pisa += solape(caja, o);
+        costo += pisa * 20;
+        const l = lider(e, x, y, sgn, dy, dx);
+        for (const m of lideres) if (cruzaCaja(m[0], m[1], caja) || (l && cruzan(l, m))) cruces++;
+        if (l) {
+          for (const o of puestas) if (cruzaCaja(l[0], l[1], o)) cruces++;
+          for (const k of circulos) if (k.q !== e.p && rot.includes(k.q.nombre) && cruzaCaja(l[0], l[1], k.c)) cruces++;
+        }
+        if (e.hi) for (const r of referencias) if (cruzaCaja(r[0], r[1], caja)) cruces++;
+        costo += cruces * 3000;
+        if (!mejor || costo < mejor.costo) mejor = { costo, x, y, anc: sgn > 0 ? "start" : "end", caja, dy, dx, pisa: pisa + cruces, l };
+      } };
+      probar([0, -30, 30, -60, 60, -90, 90]);
+      if (mejor.pisa > 0) probar([-120, 120, -150, 150]);
+      // De lado (hasta 120 px, con línea guía): el destacado si quedó lejos de su punto; los demás si aún pisan o cruzan.
+      if (e.hi ? mejor.dy || mejor.pisa > 0 : mejor.pisa > 0) probar([0, -10, 10, -20, 20, -30, 30, -45, 45, -60, 60], [30, 60, 90, 120]);
+      res.push([e, mejor]); puestas.push(mejor.caja);
+      if (mejor.l) lideres.push(mejor.l);
+    }
+    return { res, costo: res.reduce((s, r) => s + r[1].costo, 0), malos: res.filter((r) => r[1].pisa > 0).length };
+  };
+  etiquetas.sort((a, b) => (b.hi ? 1 : 0) - (a.hi ? 1 : 0));
+  let plan = colocar(etiquetas);
+  // Si algún rótulo pisa o cruza a otro, prueba los demás órdenes (el destacado siempre primero; ≤ 24) y se queda con el más barato.
+  if (plan.malos) {
+    const fijo = etiquetas[0].hi ? [etiquetas[0]] : [], libres = etiquetas.slice(fijo.length);
+    const perms = (a) => (a.length <= 1 ? [a] : a.flatMap((x, i) => perms(a.slice(0, i).concat(a.slice(i + 1))).map((q) => [x].concat(q))));
+    for (const q of perms(libres)) { const otro = colocar(fijo.concat(q)); if (otro.costo < plan.costo) plan = otro; }
   }
+  for (const [e, m] of plan.res) Object.assign(e, m);
 
   // Guías (líneas punteadas): su rótulo va al extremo con menos puntos y rótulos encima.
   if (g) {
@@ -123,12 +171,11 @@ function render(D) {
     }
   }
   // Rótulo desplazado: línea guía desde el borde del punto. Halo del color del fondo para leer sobre los puntos.
+  // Noche: el rótulo del destacado y su línea guía en a1 (el acento sí va en texto); en clásico, a tinta.
   for (const e of etiquetas) {
-    if (e.dy) {
-      const sgn = e.anc === "start" ? 1 : -1;
-      H.svgEl("line", { x1: e.cx + sgn * e.r * 0.7, y1: e.cy + Math.sign(e.dy) * e.r * 0.7, x2: e.x - sgn * 2, y2: e.y - 7, stroke: ink, "stroke-width": 2 }, svg);
-    }
-    H.texto(svg, e.x, e.y, e.t, { "text-anchor": e.anc, style: "font:" + e.font + ",sans-serif;fill:" + ink + ";paint-order:stroke;stroke:" + H.color.bg + ";stroke-width:6px;stroke-linejoin:round" });
+    const c = e.hi && H.estilo() === "noche" ? a1 : ink;
+    if (e.l) H.svgEl("line", { x1: e.l[0][0], y1: e.l[0][1], x2: e.l[1][0], y2: e.l[1][1], stroke: c, "stroke-width": 2 }, svg);
+    H.texto(svg, e.x, e.y, e.t, { "text-anchor": e.anc, style: "font:" + e.font + ",sans-serif;fill:" + c + ";paint-order:stroke;stroke:" + H.color.bg + ";stroke-width:6px;stroke-linejoin:round" });
   }
   // Puntos rotulados encima de todo (ningún halo los tapa); el destacado al final.
   for (const e of etiquetas.slice().reverse())

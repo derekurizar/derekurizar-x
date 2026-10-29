@@ -31,7 +31,7 @@ function render(D) {
   if (!D.misma_cohorte) H.anotar("Etapas del mismo periodo, no de los mismos casos.");
 
   const E = D.etapas, n = E.length, base = E[0].valor;
-  const ink = H.color.ink, a1 = H.color.a1, bg = H.color.bg;
+  const ink = H.color.ink, a1 = H.color.a1, bg = H.color.bg, noche = H.estilo() === "noche";
   // «N de cada 100» (o de cada 1,000 si no llega a 1): lo calcula H.etiquetaEmbudo (compartido con el informe); el guionista nunca lo escribe.
   const etiqueta = (i) => H.etiquetaEmbudo(E, i, modo);
 
@@ -46,13 +46,15 @@ function render(D) {
     const yTxt = top + 24, yB = top + 28 + 10;
     H.texto(svg, 0, yTxt, e.nombre, { style: "font:" + (ult ? "800 25px" : "600 23px") + " Archivo,sans-serif;fill:" + ink });
     H.texto(svg, W, yTxt, H.num(e.valor, D.formato), { class: "t-val", "text-anchor": "end", style: ult ? "font-size:24px" : "" });
-    const w = Math.max(6, (e.valor / base) * W), relleno = ult ? a1 : ink;
-    H.svgEl("rect", { x: 0, y: yB, width: w, height: barH, fill: relleno, opacity: ult ? 1 : (1 - 0.25 * i / (n - 1)).toFixed(2) }, svg);
+    // La última etapa en a1; las demás a tinta, cada vez más tenue. Noche (la crema plena queda para texto y
+    // contornos): las demás en a2 (crema atenuada), del tono pleno al 85 % sobre el fondo.
+    const w = Math.max(6, (e.valor / base) * W), relleno = ult ? a1 : noche ? H.mezcla(bg, H.color.a2, 1 - 0.15 * i / (n - 1)) : ink;
+    H.svgEl("rect", { x: 0, y: yB, width: w, height: barH, fill: relleno, opacity: ult || noche ? 1 : (1 - 0.25 * i / (n - 1)).toFixed(2) }, svg);
     const t = etiqueta(i);
     if (!t) return;
     const tw = H.medir(t, fontP), yT = yB + barH / 2 + 7;
     if (w + 14 + tw <= W) H.texto(svg, w + 14, yT, t, { style: "font:" + fontP + ";fill:" + ink });
-    else H.texto(svg, w - 14, yT, t, { "text-anchor": "end", style: "font:" + fontP + ";fill:" + (ult ? H.textoSobre(a1) : bg) });
+    else H.texto(svg, w - 14, yT, t, { "text-anchor": "end", style: "font:" + fontP + ";fill:" + (ult || noche ? H.textoSobre(relleno) : bg) });
   });
 }
 </script>

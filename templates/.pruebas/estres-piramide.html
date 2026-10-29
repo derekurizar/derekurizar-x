@@ -12,6 +12,7 @@ const DATA = {
   derecha: { nombre: "Rural", valores: [80000, 65000, 90000, 110000, 140000, 190000, 240000, 300000, 690000, 990000, 1340000, 1410000] },
   destacar: 11, rotular: null
 };
+
 function render(D) {
   H.assert(Array.isArray(D.grupos) && D.grupos.length >= 4 && D.grupos.length <= 12, "piramide admite de 4 a 12 grupos");
   const n = D.grupos.length;
@@ -22,7 +23,18 @@ function render(D) {
   }
   const hi = D.destacar == null ? -1 : ((D.destacar % n) + n) % n;
   const rotTodos = D.rotular ? D.rotular === "todos" : n <= 8;
-  const ink = H.color.ink, a1 = H.color.a1, der = H.mezcla(H.color.bg, ink, 0.55);
+  const ink = H.color.ink, a1 = H.color.a1, bg = H.color.bg;
+  // Lado derecho en un tono medio de la tinta. Noche (fondo oscuro, acento claro): el tono se aparta de la crema
+  // (≥ 1.7:1) y del acento (≥ 1.25:1), que pinta la fila destacada; siempre ≥ 1.6:1 sobre el fondo.
+  const tonoNoche = () => {
+    for (let t = 1; t > 0.05; t -= 0.01) {
+      const c = H.mezcla(bg, ink, t);
+      if (H.contraste(c, bg) < 1.6) break;
+      if (H.contraste(c, a1) >= 1.25 && H.contraste(c, ink) >= 1.7) return c;
+    }
+    return H.mezcla(bg, ink, 0.55);
+  };
+  const der = H.estilo() === "noche" ? tonoNoche() : H.mezcla(bg, ink, 0.55);
   H.leyenda([{ nombre: D.izquierda.nombre, color: ink, forma: "cuadro" }, { nombre: D.derecha.nombre, color: der, forma: "cuadro" }]);
 
   const W = 920, alto = H.espacio(Math.max(260, Math.min(540, n * 60)), Math.max(220, n * 34));

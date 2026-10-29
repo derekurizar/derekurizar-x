@@ -23,6 +23,11 @@ function render(D) {
   D.items.forEach((it) => H.assert(it && it.nombre && typeof it.a === "number" && typeof it.b === "number", "cada item necesita nombre, a y b numéricos"));
   const n = D.items.length, hi = ((D.destacar || 0) % n + n) % n;
   const ink = H.color.ink;
+  // Noche: las demás líneas en crema atenuada (a2) y sus rótulos en crema. Cada línea lleva su nombre en los dos
+  // extremos, así que no hace falta un color por línea; con ink, a2, a3 por orden, de la tercera en adelante todas
+  // saldrían en a3 (acento atenuado) y el acento dejaría de ser una sola cosa. En clásico, todas en tinta.
+  const resto = H.estilo() === "noche" ? H.color.a2 : ink;
+  const marcaDe = D.items.map((_, i) => (i === hi ? H.color.a1 : resto));
 
   const W = 920, alto = H.espacio(470, 320);
   const svg = H.lienzo(W, alto);
@@ -44,10 +49,10 @@ function render(D) {
   H.antiSolape(der, { minGap: 30, min: y0 + 10, max: y1 - 4 });
   const orden = D.items.map((_, i) => i).sort((a, b) => (a === hi) - (b === hi));
   for (const i of orden) {
-    const it = D.items[i], esHi = i === hi, c = esHi ? H.color.a1 : ink;
-    H.svgEl("line", { x1: x0, y1: sy(it.a), x2: x1, y2: sy(it.b), stroke: c, "stroke-width": esHi ? 8 : 5, "stroke-linecap": "round" }, svg);
-    H.svgEl("circle", { cx: x0, cy: sy(it.a), r: esHi ? 10 : 8, fill: c }, svg);
-    H.svgEl("circle", { cx: x1, cy: sy(it.b), r: esHi ? 10 : 8, fill: c }, svg);
+    const it = D.items[i], esHi = i === hi, c = esHi ? H.color.a1 : ink, cm = marcaDe[i];
+    H.svgEl("line", { x1: x0, y1: sy(it.a), x2: x1, y2: sy(it.b), stroke: cm, "stroke-width": esHi ? 8 : 5, "stroke-linecap": "round" }, svg);
+    H.svgEl("circle", { cx: x0, cy: sy(it.a), r: esHi ? 10 : 8, fill: cm }, svg);
+    H.svgEl("circle", { cx: x1, cy: sy(it.b), r: esHi ? 10 : 8, fill: cm }, svg);
     const li = izq.find((p) => p.i === i), ld = der.find((p) => p.i === i);
     H.texto(svg, x0 - 22, li.y - 10, it.nombre, { "text-anchor": "end", style: "font:700 22px Archivo,sans-serif;fill:" + c });
     H.texto(svg, x0 - 22, li.y + 20, f(it.a), { "text-anchor": "end", style: "font:700 26px 'JetBrains Mono',monospace;fill:" + c });

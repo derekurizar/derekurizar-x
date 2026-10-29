@@ -13,6 +13,7 @@ const DATA = {
   destacar: 5,
   rotular: "todas"
 };
+
 function render(D) {
   H.assert(Array.isArray(D.etiquetas) && D.etiquetas.length >= 3 && D.etiquetas.length <= 12, "combinado admite de 3 a 12 periodos");
   const n = D.etiquetas.length;
@@ -30,12 +31,31 @@ function render(D) {
   const domB = H.dominio(D.barras.valores, true), domL = H.dominio(D.linea.valores, desdeCero);
   const tkB = H.ticks(domB[0], domB[1], 4), tkL = H.ticks(domL[0], domL[1], 4);
   const fEjeB = H.formatoEje(fB, tkB), fEjeL = H.formatoEje(fL, tkL);
+  // Barras: la del periodo clave a plena tinta; las demás atenuadas (tinta al 55 %). Noche (fondo oscuro, acento
+  // claro; la crema plena queda para texto y contornos): la clave en el tono de crema más claro que aún se aparta
+  // del acento (≥ 1.5:1), para que la línea se lea encima; las demás en un tono bajo (≥ 1.6:1 frente a la clave,
+  // ≥ 2:1 sobre el fondo y con la crema legible encima). El rótulo de dentro sale de H.textoSobre con su tono.
+  const noche = H.estilo() === "noche";
+  const tono = (desde, ok, fallo) => {
+    for (let t = desde; t > 0.03; t -= 0.01) {
+      const c = H.mezcla(bg, ink, t);
+      if (H.contraste(c, bg) < 2) break;
+      if (ok(c)) return c;
+    }
+    return H.mezcla(bg, ink, fallo);
+  };
+  const tonoHi = noche ? tono(0.45, (c) => H.contraste(c, a1) >= 1.5, 0.3) : null;
+  const tenue = noche ? tono(0.3, (c) => H.contraste(c, tonoHi) >= 1.6 && H.contraste(c, ink) >= 4.6, 0.14) : null;
+  const muestraB = noche ? tenue : H.color.inkA(.55);
+  // Color de cada barra tal como se ve (clásico: tinta al 55 % compuesta sobre el fondo, como la pinta el navegador).
+  const sobreFondo = (t) => "#" + [1, 3, 5].map((k) => Math.round(parseInt(bg.slice(k, k + 2), 16) * (1 - t) + parseInt(ink.slice(k, k + 2), 16) * t).toString(16).padStart(2, "0")).join("");
+  const rellenoB = (esHi) => (noche ? (esHi ? tonoHi : tenue) : esHi ? ink : sobreFondo(.55));
 
   // Títulos de eje dentro del SVG; si no caben en una línea, van a la leyenda.
   const fontT = "700 19px Archivo";
   const wTL = H.medir(D.barras.nombre, fontT), wTR = H.medir(D.linea.nombre, fontT);
   const titulosDentro = 26 + wTL + 24 + 36 + 10 + wTR <= 920;
-  if (!titulosDentro) H.leyenda([{ nombre: D.barras.nombre, color: H.color.inkA(.55), forma: "cuadro" }, { nombre: D.linea.nombre, color: a1 }]);
+  if (!titulosDentro) H.leyenda([{ nombre: D.barras.nombre, color: muestraB, forma: "cuadro" }, { nombre: D.linea.nombre, color: a1 }]);
   H.anotar("Dos escalas: barras (izq.) desde cero; línea (der.) desde " + (desdeCero ? "cero" : H.num(domL[0], fEjeL)) + ".");
 
   const W = 920, alto = H.espacio(500, 320);
@@ -45,7 +65,7 @@ function render(D) {
   const y0 = (titulosDentro ? 48 : 24) + 26, y1 = alto - 44, x0 = izq, x1 = W - der;   // +26: sitio para el rótulo sobre el punto más alto
   const syB = H.escala(domB, [y1, y0]), syL = H.escala(domL, [y1, y0]);
   if (titulosDentro) {
-    H.svgEl("rect", { x: 0, y: 6, width: 18, height: 18, fill: H.color.inkA(.55) }, svg);
+    H.svgEl("rect", { x: 0, y: 6, width: 18, height: 18, fill: muestraB }, svg);
     H.texto(svg, 26, 21, D.barras.nombre, { style: "font:" + fontT + ",sans-serif;fill:" + ink });
     H.svgEl("rect", { x: W - wTR - 10 - 36, y: 12, width: 36, height: 6, fill: a1 }, svg);
     H.texto(svg, W, 21, D.linea.nombre, { "text-anchor": "end", style: "font:" + fontT + ",sans-serif;fill:" + ink });
@@ -68,37 +88,102 @@ function render(D) {
   const fontB = "700 18px 'JetBrains Mono'", fontL = "700 19px 'JetBrains Mono'";
   D.barras.valores.forEach((v, i) => {
     const x = x0 + i * (bw + gap), yv = syB(v), esHi = i === hi;
-    H.svgEl("rect", { x, y: yv, width: bw, height: Math.max(0, y1 - yv), fill: ink, opacity: esHi ? 1 : .55 }, svg);
+    H.svgEl("rect", { x, y: yv, width: bw, height: Math.max(0, y1 - yv), fill: noche ? rellenoB(esHi) : ink, opacity: esHi || noche ? 1 : .55 }, svg);
     H.texto(svg, xc(i), alto - 10, String(D.etiquetas[i]), { "text-anchor": "middle", style: "font:" + (esHi ? "800" : "600") + " " + (n > 8 ? 18 : 20) + "px Archivo,sans-serif;fill:" + ink });
   });
   // Línea en a1 con puntos
   const d = D.linea.valores.map((v, i) => (i ? "L" : "M") + xc(i).toFixed(1) + " " + syL(v).toFixed(1)).join(" ");
-  H.svgEl("path", { d, fill: "none", stroke: a1, "stroke-width": 5, "stroke-linejoin": "round", "stroke-linecap": "round" }, svg);
+  const trazo = H.svgEl("path", { d, fill: "none", stroke: a1, "stroke-width": 5, "stroke-linejoin": "round", "stroke-linecap": "round" }, svg);
   D.linea.valores.forEach((v, i) => H.svgEl("circle", { cx: xc(i), cy: syL(v), r: i === hi ? 9 : 7, fill: a1, stroke: bg, "stroke-width": 2 }, svg));
-  // Rótulos por columna: barra (dentro o encima) y línea (encima del punto; si choca, debajo; si pisa la barra, cae el rótulo de la barra)
+  // Rótulos por columna: línea encima del punto (si choca con el de la barra, debajo; si pisa un tramo o un punto,
+  // debajo o a un lado) y barra dentro o encima. El de la barra esquiva los tramos, los puntos y los rótulos ya
+  // puestos: busca el sitio libre más cercano dentro de la barra o encima; si no hay, va dentro de la barra
+  // (H.textoSobre) donde menos pisa. Un rótulo más ancho que la barra lleva debajo una franja del color de la barra.
   const solapan = (a, b) => a[0] < b[1] && b[0] < a[1];
-  D.barras.valores.forEach((v, i) => {
-    if (!rotulada(i)) return;
+  const pisaCaja = (a, b, aire = 0) => a[0] < b[2] + aire && b[0] < a[2] + aire && a[1] < b[3] + aire && b[1] < a[3] + aire;
+  const cruzaCaja = (p, q, c) => {   // ¿el tramo p→q toca la caja c = [x0, y0, x1, y1]? (Liang–Barsky)
+    let t0 = 0, t1 = 1;
+    const dx = q[0] - p[0], dy = q[1] - p[1];
+    for (const [pp, qq] of [[-dx, p[0] - c[0]], [dx, c[2] - p[0]], [-dy, p[1] - c[1]], [dy, c[3] - p[1]]]) {
+      if (pp === 0) { if (qq < 0) return false; continue; }
+      const r = qq / pp;
+      if (pp < 0) { if (r > t1) return false; if (r > t0) t0 = r; } else { if (r < t0) return false; if (r < t1) t1 = r; }
+    }
+    return true;
+  };
+  const puntos = D.linea.valores.map((v, i) => ({ x: xc(i), y: syL(v), r: (i === hi ? 9 : 7) + 2 }));
+  const tramos = puntos.slice(1).map((p, i) => [[puntos[i].x, puntos[i].y], [p.x, p.y]]);
+  // Choques de una caja (la del trazo de las cifras) con la línea: tramos (medio trazo + 1.5 de aire) y puntos.
+  const pisaLinea = (c, aire = 4) => tramos.filter((t) => cruzaCaja(t[0], t[1], [c[0] - aire, c[1] - aire, c[2] + aire, c[3] + aire])).length
+    + puntos.filter((p) => { const dx = Math.max(c[0] - p.x, 0, p.x - c[2]), dy = Math.max(c[1] - p.y, 0, p.y - c[3]); return dx * dx + dy * dy < (p.r + 1) * (p.r + 1); }).length;
+  const barrasR = D.barras.valores.map((v, i) => [x0 + i * (bw + gap), syB(v), x0 + i * (bw + gap) + bw, y1]);
+  const anchoCol = bw + gap - 6, yTope = titulosDentro ? 30 : 0;
+  const enX = (a, x, w) => (a === "start" ? [x, x + w] : a === "end" ? [x - w, x] : [x - w / 2, x + w / 2]);
+  const trazoL = (a, x, w, y) => { const [lx0, lx1] = enX(a, x, w); return [lx0, y - 15, lx1, y + 2]; };   // cifras de 19 px (con «$»)
+  // Un rótulo más ancho que la barra se pega al borde interior en la primera y la última columna (no invade los ejes).
+  const ancla = (i, w) => (w <= bw ? ["middle", xc(i)] : i === 0 ? ["start", x0 + i * (bw + gap)] : i === n - 1 ? ["end", x0 + i * (bw + gap) + bw] : ["middle", xc(i)]);
+  const col = D.barras.valores.map((v, i) => {
+    if (!rotulada(i)) return null;
     const esHi = i === hi, vb = D.linea.valores[i], yb = syB(v), yl = syL(vb);
     const dentro = y1 - yb >= 34;
     let yB = dentro ? yb + 24 : yb - 10;                 // línea base del rótulo de la barra
     if (dentro && Math.abs(yl - (yB - 7)) < 24 && y1 - (yB + 26) >= 12) yB += 26;   // el punto de la línea pisa el rótulo: bájalo dentro de la barra
-    let cajaB = [yB - 18, yB + 4];
+    const cajaB = [yB - 18, yB + 4];
     let yTxtL = yl - 16, cajaL = [yTxtL - 19, yTxtL + 2];
     // Rótulos más anchos que la columna solo en la barra clave, la primera y la última (evita solapes horizontales).
-    const anchoCol = bw + gap - 6, clave = esHi || i === 0 || i === n - 1;
-    let pintarB = clave || H.medir(H.num(v, fB), fontB) <= anchoCol;
-    const pintarL = clave || H.medir(H.num(vb, fL), fontL) <= anchoCol;
+    const clave = esHi || i === 0 || i === n - 1;
+    const tB = H.num(v, fB), tL = H.num(vb, fL), wB = H.medir(tB, fontB), wL = H.medir(tL, fontL);
+    const pintarB = clave || wB <= anchoCol;
+    const pintarL = clave || wL <= anchoCol;
     if (pintarB && solapan(cajaB, cajaL)) {
       const abajo = yl + 32, cajaAbajo = [abajo - 19, abajo + 2];
-      if (abajo + 2 <= y1 + 4 && !solapan(cajaB, cajaAbajo)) { yTxtL = abajo; cajaL = cajaAbajo; }
-      else pintarB = false;   // la línea gana (lleva el acento): cae el rótulo de la barra
+      if (abajo + 2 <= y1 + 4 && !solapan(cajaB, cajaAbajo)) yTxtL = abajo;
     }
-    // Un rótulo más ancho que la barra se pega al borde interior en la primera y la última columna (no invade los ejes).
-    const ancla = (w) => (w <= bw ? ["middle", xc(i)] : i === 0 ? ["start", x0 + i * (bw + gap)] : i === n - 1 ? ["end", x0 + i * (bw + gap) + bw] : ["middle", xc(i)]);
-    const [aB, xB] = ancla(H.medir(H.num(v, fB), fontB)), [aL, xL] = ancla(H.medir(H.num(vb, fL), fontL));
-    if (pintarB) H.texto(svg, xB, yB, H.num(v, fB), { "text-anchor": aB, style: "font:" + fontB + ",monospace;fill:" + (dentro ? H.textoSobre(esHi ? ink : H.mezcla(bg, ink, .55)) : ink) });
-    if (pintarL) H.texto(svg, xL, yTxtL, H.num(vb, fL), { "text-anchor": aL, style: "font:" + fontL + ",monospace;fill:" + ink + ";" + H.halo() });
+    const [aL, xL] = ancla(i, wL);
+    return { i, esHi, yb, dentro, yB, tB, tL, wB, wL, aL, xL, yTxtL, pintarB, pintarL, cajaL: pintarL ? trazoL(aL, xL, wL, yTxtL) : null };
   });
+  // A los lados, el rótulo puede bajar hasta el eje (un punto en el mínimo de la escala queda sobre él); nunca a los periodos.
+  const libreL = (c, caja, suelo = y1 - 2) => !pisaLinea(caja) && caja[0] >= x0 && caja[2] <= x1 && caja[1] >= yTope && caja[3] <= suelo
+    && !col.some((o) => o && o !== c && o.cajaL && pisaCaja(caja, o.cajaL, 4));
+  for (const c of col) {
+    if (!c || !c.pintarL || libreL(c, c.cajaL)) continue;
+    const { x: xp, y: yp, r } = puntos[c.i];
+    for (const [a, x, y, suelo] of [[c.aL, c.xL, yp - 16], [c.aL, c.xL, yp + 32], ["start", xp + r + 5, yp + 7, y1 + 12], ["end", xp - r - 5, yp + 7, y1 + 12]]) {
+      const caja = trazoL(a, x, c.wL, y);
+      if (libreL(c, caja, suelo)) { Object.assign(c, { aL: a, xL: x, yTxtL: y, cajaL: caja }); break; }
+    }
+  }
+  const puestas = col.filter((c) => c && c.cajaL).map((c) => c.cajaL);
+  for (const c of col) {
+    if (!c) continue;
+    const { i, esHi } = c;
+    if (c.pintarB) {
+      const [aB, xB] = ancla(i, c.wB), [bx0, bx1] = enX(aB, xB, c.wB);
+      const ancha = c.wB > bw - 4;
+      // Caja de las cifras (18 px; la coma baja) o, con franja, la franja entera.
+      const caja = (y, dentro) => (dentro && ancha ? [bx0 - 5, y - 19, bx1 + 5, y + 7] : [bx0 - 1, y - 14, bx1 + 1, y + 3]);
+      const choques = (k) => { const cj = caja(k.y, k.dentro); let m = pisaLinea(cj, k.dentro && ancha ? 2.5 : 4);
+        for (const o of puestas) if (pisaCaja(cj, o, 4)) m++;   // 4 px de aire entre rótulos
+        if (!k.dentro) for (const b of barrasR) if (pisaCaja(cj, b)) m++;
+        return m; };
+      // Candidatos: el sitio de siempre primero; luego dentro de la barra (si cabe) y encima, del más cercano al más lejano.
+      const cands = [{ y: c.yB, dentro: c.dentro, d: 0 }];
+      if (y1 - c.yb >= 34) for (let y = c.yb + 24; y + 4 <= y1 - 4; y += 3) cands.push({ y, dentro: true, d: Math.abs(y - c.yB) + (ancha ? 20 : 0) });
+      for (let y = c.yb - 10; y - 18 >= yTope; y -= 3) cands.push({ y, dentro: false, d: Math.abs(y - c.yB) + (c.dentro ? 8 : 0) });
+      cands.sort((a, b) => a.d - b.d);
+      let elegido = cands.find((k) => !choques(k));
+      if (!elegido) {   // sin sitio libre: dentro de la barra, donde menos pisa (si la barra es muy baja, el rótulo cae)
+        const dentroK = cands.filter((k) => k.dentro);
+        if (dentroK.length) elegido = dentroK.reduce((m, k) => (choques(k) < choques(m) ? k : m));
+      }
+      if (elegido) {
+        // La franja va debajo de la línea: si el rótulo tuvo que pisarla, la línea no se corta.
+        if (elegido.dentro && ancha) svg.insertBefore(H.svgEl("rect", { x: bx0 - 5, y: elegido.y - 19, width: c.wB + 10, height: 26, fill: rellenoB(esHi), "data-franja": "" }), trazo);
+        H.texto(svg, xB, elegido.y, c.tB, { "text-anchor": aB, style: "font:" + fontB + ",monospace;fill:" + (elegido.dentro ? H.textoSobre(esHi ? (noche ? tonoHi : ink) : noche ? tenue : H.mezcla(bg, ink, .55)) : ink) });
+        puestas.push(caja(elegido.y, elegido.dentro));
+      }
+    }
+    if (c.pintarL) H.texto(svg, c.xL, c.yTxtL, c.tL, { "text-anchor": c.aL, style: "font:" + fontL + ",monospace;fill:" + ink + ";" + H.halo() });
+  }
 }
 </script>

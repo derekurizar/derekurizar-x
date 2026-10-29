@@ -10,7 +10,8 @@
 .pg-f.persona span::before { content: ""; position: absolute; left: 29%; top: 0; width: 42%; height: 29%; border-radius: 50%; background: var(--ink); opacity: .32; }
 .pg-f.persona span::after { content: ""; position: absolute; left: 0; bottom: 0; width: 100%; height: 64%; border-radius: 50% 50% 4px 4px / 38% 38% 4px 4px; background: var(--ink); opacity: .32; }
 .pg-f.persona span.on::before, .pg-f.persona span.on::after { background: var(--a1); opacity: 1; }
-.pg-texto .num { font: 400 132px/.86 'Instrument Serif', Georgia, serif; letter-spacing: -.02em; color: var(--a1); white-space: nowrap; }
+.pg-texto .num { font-size: 132px; line-height: .86; letter-spacing: -.02em; color: var(--a1); white-space: nowrap; }   /* familia y peso: .cifra-heroe */
+body[data-estilo="noche"] .pg-texto .num { letter-spacing: 0; }
 .pg-texto .t { font: 600 26px/1.25 Archivo, sans-serif; margin-top: 16px; }
 .pg-ley { display: flex; flex-direction: column; gap: 12px; margin-top: 36px; }
 .pg-ley .it { display: flex; align-items: center; gap: 12px; font: 600 20px/1 Archivo, sans-serif; }
@@ -67,7 +68,7 @@ function render(D) {
   }
   const colW = 920 - 56 - (c * celda + (c - 1) * G);
   const t = H.el("div", "pg-texto", grid);
-  const num = H.el("div", "num", t, H.esc(H.num(D.destacado, D.formato)));
+  const num = H.el("div", "num cifra-heroe", t, H.esc(H.num(D.destacado, D.formato)));
   for (let px = 132; px >= 72; px -= 8) { num.style.fontSize = px + "px"; if (num.scrollWidth <= colW) break; }
   H.el("div", "t", t, H.esc("de " + H.num(D.total, D.formato) + " " + D.texto.trim()));
   const ley = H.el("div", "pg-ley", t);

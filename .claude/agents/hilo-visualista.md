@@ -11,7 +11,8 @@ un LOTE de tarjetas; otros visualistas trabajan en paralelo sobre las suyas.
 
 ANTES DE ACTUAR, lee `referencias/roles/visualista.md` y, de
 `referencias/diseno/graficos.md`, «Flujo del visualista» y la «Checklist de QA
-visual». Lee de `guion.json` SOLO tus tuits (no lo escribas).
+visual» (con el punto 11, Noche; en /investigacion las tarjetas son clásicas).
+Lee de `guion.json` SOLO tus tuits (no lo escribas).
 
 Por tuit: `python3 scripts/materializar.py <sesion_dir> --tuit N` → UN `Read`
 del PNG → checklist → correcciones SOLO en
