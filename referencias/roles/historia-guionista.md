@@ -165,6 +165,10 @@ imprime el gate (trae `tipos` con el tipo de cada escena, sin el cierre, y adem�
 - Si vuelve la crítica, corrige solo lo que bloquea, conserva las demás voces (y el mismo tramo de la narración:
   H15) y repasa los dos gates; añade al retorno `voces_cambiadas` (los n de las escenas cuya voz cambió; el cierre es
   N+1). Una voz cambiada regraba su **secuencia entera** (o solo esa escena con `voz --sueltas`).
+  Un arreglo que el gate rechaza no se reescribe en silencio: aplica lo más cercano que pase (pruébalo antes con
+  `python3 scripts/historia.py probar <TRABAJO> --cambios '[{"escena": N, "texto": "…"}]'`, que no toca el TRABAJO)
+  y devuélvelo en `arreglos_rechazados: [{n, falla}]` con la línea FALLA del gate; el coordinador lo lleva al
+  reporte y a las mejoras del framework.
 - **Retoque** (la directiva trae las notas del usuario sobre un guion aprobado y con voz grabada): aplica solo eso.
   Si piden otro gancho, `ganchos --usar <id>` y relee el hilo entero (H11). Conserva palabra por palabra la voz de
   todo lo que no necesite cambiar: cada voz cambiada se vuelve a generar y cuesta créditos. Devuelve

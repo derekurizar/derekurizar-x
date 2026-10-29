@@ -82,6 +82,13 @@ La guía es `referencias/flujo-noticias.md`. Nunca publiques. Nunca generes mús
    - Los puntajes del crítico, las vueltas y las mejoras no aplicadas (`<TRABAJO>/critica.json`).
    - Los créditos de voz gastados (`audio/creditos.json`, retomas incluidas) y el resultado de V11.
    - Los avisos (N5, V10, V12, V15) y la ruta de `fuentes.md` (los enlaces para el primer comentario).
+   - **Mejoras al framework** (siempre el último punto; «ninguna» si no hubo): lo que en esta corrida se trabó o se
+     resolvió a mano —una falla o un aviso que se repite entre corridas, un gate con falso positivo o negativo, un
+     paso que hubo que hacer a mano, uno lento o frágil, un recorte V16 que se repite—, cada una con el archivo y el
+     cambio propuesto. Regístralas con `python3 scripts/memoria.py --mejoras <TRABAJO>/mejoras.json` (`{"flujo":
+     "noticias", "pieza": "<carpeta de entrega>", "mejoras": [{"area", "archivo", "problema", "propuesta"}]}`) y no
+     las apliques sin que el usuario lo pida; las que ya quedaron arregladas van con `"estado": "hecha"`. Con
+     `sin-voz` o `fixture` se listan, no se registran.
 
 Reglas:
 - Solo noticias `confirmada` o `en_desarrollo` (con atribución); cada número con su cita guardada.

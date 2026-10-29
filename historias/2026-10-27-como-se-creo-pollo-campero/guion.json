@@ -98,7 +98,7 @@
  },
  "velocidad": 1.1,
  "creditos_voz": 2585.0,
- "duracion_s": 172.5,
+ "duracion_s": 172.2,
  "critica": {
   "veredicto": "pasa",
   "vuelta": 1,
@@ -165,7 +165,7 @@
    "tipo": "foto",
    "pantalla": "Un día, un criador no pudo pagarle el trigo, y Forbes cuenta que le entregó 1,000 gallinas. Juan Bautista las engordó, y en 1967 abrió un restaurante de pollo frito.",
    "voz": "Un día, un criador no pudo pagarle el trigo, y Forbes cuenta que le entregó mil gallinas. Juan Bautista las engordó, y en mil novecientos sesenta y siete abrió un restaurante de pollo frito.",
-   "dur": 13.385,
+   "dur": 13.387,
    "hechos": [
     "ori-h01",
     "ori-h04"
@@ -185,7 +185,7 @@
    "tipo": "cita",
    "pantalla": "Aún no era Campero: faltaba el sabor. Lo buscó Francisco Pérez de Antón, empresario español y futuro cofundador, que le dijo a la BBC: Probé con distintas mezclas de harina con especias hasta que encontré un sabor que me parecía sería del gusto de los guatemaltecos.",
    "voz": "Aún no era Campero: faltaba el sabor. Lo buscó Francisco Pérez de Antón, empresario español y futuro cofundador, que le dijo a la BBC: Probé con distintas mezclas de harina con especias hasta que encontré un sabor que me parecía sería del gusto de los guatemaltecos.",
-   "dur": 17.949,
+   "dur": 17.744,
    "hechos": [
     "ori-h09"
    ],
@@ -239,7 +239,7 @@
    "tipo": "golpe",
    "pantalla": "El avión se estrelló, y los dos murieron.",
    "voz": "El avión se estrelló, y los dos murieron.",
-   "dur": 3.991,
+   "dur": 3.989,
    "hechos": [
     "cre-h01"
    ],
@@ -252,7 +252,7 @@
    "tipo": "foto",
    "pantalla": "Tras el accidente, según la BBC, dos hijos jóvenes, uno de cada familia, cubrieron el vacío que dejaron sus padres. En 1982, Pérez de Antón invitó a Juan José Gutiérrez, primogénito de Dionisio, a presidir Campero.",
    "voz": "Tras el accidente, según la BBC, dos hijos jóvenes, uno de cada familia, cubrieron el vacío que dejaron sus padres. En mil novecientos ochenta y dos, Pérez de Antón invitó a Juan José Gutiérrez, primogénito de Dionisio, a presidir Campero.",
-   "dur": 16.241,
+   "dur": 16.243,
    "hechos": [
     "cre-h03",
     "cre-h04"
@@ -272,7 +272,7 @@
    "tipo": "foto",
    "pantalla": "Para 1987, la cadena probó suerte en Miami, pero al año tuvo que cerrar.",
    "voz": "Para mil novecientos ochenta y siete, la cadena probó suerte en Miami, pero al año tuvo que cerrar.",
-   "dur": 7.109,
+   "dur": 7.107,
    "hechos": [
     "glo-h01"
    ],
@@ -291,7 +291,7 @@
    "tipo": "foto",
    "pantalla": "Aun sin local en Estados Unidos, su pollo llegaba allá: Campero aseguraba que en los aeropuertos de La Aurora y San Salvador vendía más de 3 millones de pedidos para llevar al año.",
    "voz": "Aun sin local en Estados Unidos, su pollo llegaba allá: Campero aseguraba que en los aeropuertos de La Aurora y San Salvador vendía más de tres millones de pedidos para llevar al año.",
-   "dur": 11.589,
+   "dur": 11.587,
    "hechos": [
     "cre-h12"
    ],
@@ -310,7 +310,7 @@
    "tipo": "explica",
    "pantalla": "Mucho de ese pollo iba en cajas que los viajeros subían al avión. El diario Los Angeles Times sostiene que lo hacían por las guerras de Guatemala y El Salvador: cientos de miles emigraron, muchos a Los Ángeles, y la caja los siguió.",
    "voz": "Mucho de ese pollo iba en cajas que los viajeros subían al avión. El diario Los Angeles Times sostiene que lo hacían por las guerras de Guatemala y El Salvador: cientos de miles emigraron, muchos a Los Ángeles, y la caja los siguió.",
-   "dur": 15.645,
+   "dur": 15.646,
    "hechos": [
     "cre-h13",
     "cre-h14"
@@ -324,7 +324,7 @@
    "tipo": "foto",
    "pantalla": "Quince años después de Miami, Campero volvió a Estados Unidos: en abril de 2002 abrió en Los Ángeles, donde vivían muchos de los que emigraron, y lo esperaban en filas de 6 a 8 horas.",
    "voz": "Quince años después de Miami, Campero volvió a Estados Unidos: en abril de dos mil dos abrió en Los Ángeles, donde vivían muchos de los que emigraron, y lo esperaban en filas de seis a ocho horas.",
-   "dur": 12.734,
+   "dur": 12.648,
    "hechos": [
     "glo-h02",
     "glo-h03"
@@ -359,7 +359,7 @@
    "tipo": "foto",
    "pantalla": "Hoy Campero pasa de 415 restaurantes, y en febrero de 2026 abrió en California su local 150 en Estados Unidos.",
    "voz": "Hoy Campero pasa de cuatrocientos quince restaurantes, y en febrero de dos mil veintiséis abrió en California su local ciento cincuenta en Estados Unidos.",
-   "dur": 10.41,
+   "dur": 10.35,
    "hechos": [
     "glo-h10",
     "glo-h09"

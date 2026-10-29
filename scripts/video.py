@@ -2588,6 +2588,127 @@ def tiempos_visual(vis, pal, fin_1, fin_voz):
     return V_, ev, sfx
 
 
+# ---------- V16: la voz no se corta dentro de un nombre ni de una cifra ----------
+APRETAR_DB, APRETAR_MIN_S, APRETAR_DEJA_S = -35, 0.06, 0.03   # silencio que cuenta; lo que queda tras apretarlo
+# desde cuánto se aprieta: dentro de una palabra, más que el cierre de una oclusiva («p», «t»: ≤ 0.1 s); entre dos
+# palabras de la misma cifra o el mismo nombre, más que la juntura normal del habla de corrido
+APRETAR_DENTRO_S, APRETAR_ENTRE_S = 0.10, 0.08
+NEXOS_NOMBRE = {"de", "del", "la", "las", "los"}               # «Pérez de Antón», «Los Angeles Times»
+
+
+def silencios(ruta):
+    """Intervalos (s) de silencio de un audio con silencedetect."""
+    r = subprocess.run(["ffmpeg", "-hide_banner", "-nostats", "-i", ruta, "-af",
+                        "silencedetect=noise=%ddB:d=%.2f" % (APRETAR_DB, APRETAR_MIN_S), "-f", "null", "-"],
+                       capture_output=True, text=True)
+    ini, out = None, []
+    for m in re.finditer(r"silence_(start|end): (-?[\d.]+)", r.stderr):
+        if m.group(1) == "start":
+            ini = max(0.0, float(m.group(2)))
+        elif ini is not None:
+            fin = float(m.group(2))
+            if out and ini - out[-1][1] < 0.02:   # silencedetect parte un mismo silencio en tramos pegados
+                out[-1] = (out[-1][0], fin)
+            else:
+                out.append((ini, fin))
+            ini = None
+    return out
+
+
+def unidades_continuas(e, ws):
+    """Por palabra de Scribe, la unidad que se dice de corrido (o None): cada cifra (segmento con num o p ≠ v, como
+    `alinear`) y cada nombre propio (palabras seguidas con mayúscula o siglas, unidas por de/del/la/las/los; la corrida
+    acaba en coma, punto o dos puntos)."""
+    segs = e.get("segmentos") or [{"p": e.get("voz") or "", "v": e.get("voz") or "", "num": False}]
+    voz, dueno = "", []
+    for k, s in enumerate(segs):
+        voz += s["v"]
+        dueno += [k if (s["num"] or s["p"] != s["v"]) else None] * len(s["v"])
+    toks = list(re.finditer(r"\S+", voz))
+    if len(toks) != len(ws):
+        return [None] * len(ws)   # V6 lo dirá en alinear; sin alineación no se aprieta nada
+    def limpio(m):
+        return m.group().strip("¿¡«»\"'()")
+
+    uni, nombre, en_nombre = [], 0, False
+    for i, m in enumerate(toks):
+        cifra = next((dueno[c] for c in range(m.start(), m.end()) if dueno[c] is not None), None)
+        if cifra is not None:
+            uni.append(("c", cifra))
+            en_nombre = False
+            continue
+        cap = limpio(m)[:1].isupper()
+        nexo = en_nombre and limpio(m).lower() in NEXOS_NOMBRE and i + 1 < len(toks) and limpio(toks[i + 1])[:1].isupper()
+        if cap or nexo:
+            if not en_nombre:
+                nombre += 1
+            uni.append(("n", nombre))
+            en_nombre = not re.search(r"[,.;:?!…»]$", m.group())
+        else:
+            uni.append(None)
+            en_nombre = False
+    return uni
+
+
+def apretar_voz(src, ws, e, dst_wav):
+    """V16: quita el silencio que la voz metió DENTRO de una palabra («B…BC») o entre dos palabras de la misma cifra o
+    del mismo nombre («dos mil… dos»): lo deja en APRETAR_DEJA_S. Escribe dst_wav (sin tocar src) y devuelve las
+    palabras con sus tiempos movidos, lo recortado [{palabra, quitado_s}] y los avisos de palabra alargada sin silencio."""
+    uni = unidades_continuas(e, ws)
+    cortes, recortes = [], []
+    for a, b in silencios(src):
+        dentro = next((w for w in ws if a >= w["start"] + 0.03 and b <= w["end"] - 0.05), None) if b - a >= APRETAR_DENTRO_S else None
+        entre = next((i for i in range(len(ws) - 1) if uni[i] and uni[i] == uni[i + 1]
+                      and ws[i]["end"] - 0.05 <= (a + b) / 2 <= ws[i + 1]["start"] + 0.05), None) if b - a >= APRETAR_ENTRE_S else None
+        if dentro is None and entre is None:
+            continue
+        x0, x1 = a + APRETAR_DEJA_S / 2, b - APRETAR_DEJA_S / 2
+        cortes.append((x0, x1))
+        palabra = dentro["text"] if dentro is not None else "%s %s" % (ws[entre]["text"], ws[entre + 1]["text"])
+        recortes.append({"palabra": palabra.strip(",.;:"), "quitado_s": round(x1 - x0, 3)})
+
+    def mover(t):
+        return t - sum(min(max(t - x0, 0.0), x1 - x0) for x0, x1 in cortes)
+
+    if cortes:
+        sel = "+".join("between(t,%.4f,%.4f)" % c for c in cortes)
+        ff("-i", src, "-af", "aselect='not(%s)',asetpts=N/SR/TB" % sel, "-ar", "44100", dst_wav)
+    else:
+        ff("-i", src, "-ar", "44100", dst_wav)
+    movidas = [dict(w, start=round(mover(w["start"]), 3), end=round(mover(w["end"]), 3)) for w in ws]
+    # alargada sin silencio: una palabra de cifra o de nombre que dura mucho más de lo que pide su largo
+    sil = silencios(dst_wav) if cortes else silencios(src)
+    avisos = []
+    for w, u in zip(movidas, uni):
+        if not u:
+            continue
+        limpio = re.sub(r"[^\wáéíóúñü]", "", w["text"])
+        sigla = limpio.isupper() and 2 <= len(limpio) <= 5
+        esperado = 0.3 * len(limpio) if sigla else 0.085 * len(limpio) + 0.1
+        dur = (w["end"] - w["start"]) - sum(max(0.0, min(b, w["end"]) - max(a, w["start"])) for a, b in sil)
+        if dur > 0.5 and dur > 1.6 * esperado:
+            avisos.append("«%s» dura %.2f s (esperado ≈ %.2f s)" % (limpio, dur, esperado))
+    return movidas, recortes, avisos
+
+
+def voz_de_escena(trabajo, e):
+    """V16 + atempo: aprieta la voz de la escena (voz_N.mp3 queda intacto) y la acelera a VELOCIDAD en voz_N_r.mp3.
+    Devuelve las palabras habladas en el tiempo final, lo recortado y los avisos (lo comparten /video, /noticias y
+    /historia)."""
+    n = e["n"]
+    audio = os.path.join(trabajo, "audio")
+    src, wav, dst = [os.path.join(audio, x % n) for x in ("voz_%d.mp3", "voz_%d_apretada.wav", "voz_%d_r.mp3")]
+    ws = sin_etiquetas(leer(os.path.join(audio, "palabras_%d.json" % n)))
+    ws, recortes, avisos = apretar_voz(src, ws, e, wav)
+    ff("-i", wav, "-af", "atempo=%s" % VELOCIDAD, "-c:a", "libmp3lame", "-b:a", "192k", dst)
+    os.remove(wav)
+    for r in recortes:
+        print("V16 E%d «%s» −%.2f s de silencio dentro del nombre o la cifra (apretado)" % (n, r["palabra"], r["quitado_s"]))
+    habladas = [dict(w, start=w["start"] / VELOCIDAD, end=w["end"] / VELOCIDAD) for w in ws]
+    return habladas, recortes, ["V16 E%d %s: suena alargada sin silencio · retoma esa escena (voz --sueltas %d)" % (n, x, n)
+                                for x in avisos]
+
+
 def cmd_tiempos(a):
     trabajo = os.path.abspath(a.trabajo)
     st, loc = estado(trabajo), leer(os.path.join(trabajo, "locucion.json"))
@@ -2605,10 +2726,9 @@ def cmd_tiempos(a):
     escenas, avisos = [], []
     for e in loc["escenas"]:
         n, tipo = e["n"], e.get("tipo") or ("cierre" if e["plantilla"] == "cierre" else "tarjeta")
-        src, dst = [os.path.join(trabajo, "audio", x % n) for x in ("voz_%d.mp3", "voz_%d_r.mp3")]
-        ff("-i", src, "-af", "atempo=%s" % VELOCIDAD, "-c:a", "libmp3lame", "-b:a", "192k", dst)
-        habladas = [dict(w, start=w["start"] / VELOCIDAD, end=w["end"] / VELOCIDAD)
-                    for w in sin_etiquetas(leer(os.path.join(trabajo, "audio", "palabras_%d.json" % n)))]
+        dst = os.path.join(trabajo, "audio", "voz_%d_r.mp3" % n)
+        habladas, apretado, av16 = voz_de_escena(trabajo, e)
+        avisos += av16
         try:
             ps = alinear(e, habladas)
         except ValueError as ex:
@@ -2630,7 +2750,7 @@ def cmd_tiempos(a):
             pal.append(w)
         S = {"n": n, "tipo": tipo, "tuit": e.get("tuit"), "plantilla": e["plantilla"], "enlace": e.get("enlace"),
              "icono": e.get("icono"), "dur": dur, "fin_voz": round(fin_voz, 3), "palabras": pal, "arriba": None,
-             "acto": e.get("acto"), "secuencia": sec, "cola": cola,
+             "acto": e.get("acto"), "secuencia": sec, "cola": cola, "apretado": apretado,
              # seguida: la anterior es de la misma secuencia (la voz viene de corrido); sigue: la siguiente lo es
              "seguida": bool(sec) and k_e > 0 and loc["escenas"][k_e - 1].get("secuencia") == sec,
              "sigue": bool(sec) and k_e + 1 < len(loc["escenas"]) and loc["escenas"][k_e + 1].get("secuencia") == sec}

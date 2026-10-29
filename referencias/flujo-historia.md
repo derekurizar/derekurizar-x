@@ -36,7 +36,7 @@ preparar (historia.py: TRABAJO = sesiones/historia-<slug>/, paleta provisional y
    conserva las voces) → oyente → crítica (1 vuelta) → mejoras → animación; devuelve voces_cambiadas
 → QA de fotos (historia.py fotos-contacto) → [sin-voz: voz-falsa] | voz (MCP ElevenLabs, como /noticias)
    (un nodo por secuencia de 2–5 escenas; descargar --estado corta cada secuencia en sus escenas)
-→ tiempos (V6, V10) → escuchar (V11) → grabar (V7, V13) → montar (V8) → revisar (9:16 y 4:5)
+→ tiempos (V16, V6, V10) → escuchar (V11) → grabar (V7, V13) → montar (V8) → revisar (9:16 y 4:5)
 → entregar (historias/<fecha>-<slug>/) → memoria.py --historia (memoria/historias.json) → make validate (M10)
 ```
 
@@ -183,7 +183,12 @@ Topes de voz: foto 40–280, cita 30–280, tarjeta/mapa/ranking/tiempo/explica 
 
 Además corren los de `/video`: V1–V5 y V9 (sin «la escena 2 es T1»; en historia tampoco exige que la voz empiece con
 el conector ni que haya `enlace`), F1–F8, V6 (por secuencia: las palabras de Scribe se reparten entre sus escenas; si
-no casan, FALLA «rehaz la secuencia (o `voz --sueltas`)»), V7, V8, V10, V11, V12, V13 y V15.
+no casan, FALLA «rehaz la secuencia (o `voz --sueltas`)»), V7, V8, V10, V11, V12, V13, V15 y V16 (la voz se aprieta
+donde ElevenLabs la cortó dentro de un nombre o una cifra).
+
+El crítico prueba cada arreglo de texto antes de escribirlo con `historia.py probar <TRABAJO> --cambios …` (una copia
+sin audio: narracion + guion --check); un arreglo que el gate rechaza va como mejora con la falla, nunca como falta que
+bloquea (`probado: false` vuelve al crítico). El guionista devuelve en `arreglos_rechazados` lo que no pudo aplicar.
 
 ## Voz y costos
 

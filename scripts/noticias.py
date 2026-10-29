@@ -830,10 +830,9 @@ def cmd_tiempos(a):
     escenas, avisos = [], []
     for e in loc["escenas"]:
         n, tipo = e["n"], e["tipo"]
-        src, dst = [os.path.join(trabajo, "audio", x % n) for x in ("voz_%d.mp3", "voz_%d_r.mp3")]
-        VD.ff("-i", src, "-af", "atempo=%s" % VD.VELOCIDAD, "-c:a", "libmp3lame", "-b:a", "192k", dst)
-        habladas = [dict(w, start=w["start"] / VD.VELOCIDAD, end=w["end"] / VD.VELOCIDAD)
-                    for w in VD.sin_etiquetas(leer(os.path.join(trabajo, "audio", "palabras_%d.json" % n)))]
+        dst = os.path.join(trabajo, "audio", "voz_%d_r.mp3" % n)
+        habladas, apretado, av16 = VD.voz_de_escena(trabajo, e)   # V16 + atempo, como /video
+        avisos += av16
         try:
             ps = VD.alinear(e, habladas)
         except ValueError as ex:
@@ -850,7 +849,7 @@ def cmd_tiempos(a):
                     w["clave"] = VD.clave(VD.valor_de(p["seg"]["p"]))
             pal.append(w)
         S = {"n": n, "tipo": tipo, "tuit": None, "plantilla": e["plantilla"], "enlace": None, "icono": None,
-             "dur": dur, "fin_voz": round(fin_voz, 3), "palabras": pal, "arriba": None}
+             "dur": dur, "fin_voz": round(fin_voz, 3), "palabras": pal, "arriba": None, "apretado": apretado}
         ev, sfx = [], []
         if cierre:
             k_fin = VD.indice_frase(ps, (g.get("cierre") or {}).get("final"))

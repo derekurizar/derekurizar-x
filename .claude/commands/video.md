@@ -146,6 +146,13 @@ decisión del usuario.**
      `caption.md` (una sección por plataforma).
    - El resultado de la escucha (V11): escenas cotejadas por whisper, % de palabras distintas y avisos; si se saltó,
      **pide al usuario escuchar las cifras** (Scribe alinea el guion, no es una escucha independiente).
+   - **Mejoras al framework** (siempre el último punto; «ninguna» si no hubo): lo que en esta corrida se trabó o se
+     resolvió a mano (un arreglo del crítico que el gate rechazó) —una falla o un aviso que se repite entre corridas,
+     un gate con falso positivo o negativo, un paso que hubo que hacer a mano, uno lento o frágil, un recorte V16 que
+     se repite—, cada una con el archivo y el cambio propuesto. Regístralas con `python3 scripts/memoria.py --mejoras
+     <TRABAJO>/mejoras.json` (`{"flujo": "video", "pieza": "<carpeta de entrega>", "mejoras": [{"area", "archivo",
+     "problema", "propuesta"}]}`) y no las apliques sin que el usuario lo pida; las que ya quedaron arregladas van con
+     `"estado": "hecha"`. Con `fixture` se listan, no se registran.
 
 Reglas:
 - Solo cifras del hilo o derivadas con `calculo`, que pasan V2 y V9.

@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "_comentario": "Mejoras al framework que encontró cada corrida de /video, /noticias y /historia (el reporte final las lista). Lo escribe SOLO scripts/memoria.py --mejoras <archivo.json>; se consultan con --ver-mejoras y se cierran con --marcar-mejora ID --como hecha|descartada. estado: pendiente | hecha | descartada.",
+  "mejoras": [
+    {
+      "id": "m001",
+      "fecha": "2026-10-27",
+      "flujo": "historia",
+      "pieza": "historias/2026-10-27-como-se-creo-pollo-campero",
+      "area": "crítico",
+      "archivo": "referencias/roles/video-critico.md",
+      "problema": "El crítico propuso arreglos literales que el gate rechaza (5 de 11: H4, H18, V9) y el guionista y el crítico se trabaron dos vueltas",
+      "propuesta": "historia.py probar en una copia antes de escribir cada arreglo; probado: false en un bloquea vuelve al crítico; arreglos_rechazados en el retorno del guionista",
+      "estado": "hecha"
+    },
+    {
+      "id": "m002",
+      "fecha": "2026-10-27",
+      "flujo": "historia",
+      "pieza": "historias/2026-10-27-como-se-creo-pollo-campero",
+      "area": "gate H4",
+      "archivo": "scripts/historia.py",
+      "problema": "ATRIBUCION no reconocía «calculaba» ni «estimaba» como atribución de una ESTIMACIÓN",
+      "propuesta": "Añadir calcul\\w+ y estim\\w+ al regex ATRIBUCION",
+      "estado": "hecha"
+    },
+    {
+      "id": "m003",
+      "fecha": "2026-10-27",
+      "flujo": "historia",
+      "pieza": "historias/2026-10-27-como-se-creo-pollo-campero",
+      "area": "voz",
+      "archivo": "scripts/video.py",
+      "problema": "ElevenLabs metió silencios dentro de nombres y cifras («B…BC», «dos mil… dos») y nada lo detectaba",
+      "propuesta": "V16 en tiempos: apretar_voz recorta el silencio dentro de una palabra o entre palabras de la misma cifra o nombre (0 créditos)",
+      "estado": "hecha"
+    },
+    {
+      "id": "m004",
+      "fecha": "2026-10-27",
+      "flujo": "historia",
+      "pieza": "historias/2026-10-27-como-se-creo-pollo-campero",
+      "area": "tarjeta antes-despues",
+      "archivo": "video/escena.html",
+      "problema": "En el pico del zoom a la cifra de E13, la cifra izquierda (3,000,000) sale cortada («00») un instante",
+      "propuesta": "Que el foco de antes-despues encuadre las dos cifras o que la deriva no saque de cuadro la izquierda (V13 solo mide la caja enfocada)",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m005",
+      "fecha": "2026-10-27",
+      "flujo": "historia",
+      "pieza": "historias/2026-10-27-como-se-creo-pollo-campero",
+      "area": "chip de foto",
+      "archivo": "scripts/historia.py",
+      "problema": "E9 usa de referencia un local de Nueva York con el chip «De referencia · Miami»: el lugar del chip es el del hecho, no el de la foto",
+      "propuesta": "En una foto de referencia, el chip usa el lugar de la foto (fotos/<id>.json → lugar) o lo omite; o un gate que avise si difieren",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m006",
+      "fecha": "2026-10-27",
+      "flujo": "historia",
+      "pieza": "historias/2026-10-27-como-se-creo-pollo-campero",
+      "area": "golpe de año",
+      "archivo": "video/golpe.html",
+      "problema": "El golpe «1974» cuenta hacia arriba y muestra años absurdos en tránsito («795»)",
+      "propuesta": "Un año (es_anio_o_fecha) entra entero, sin conteo; el conteo solo para cantidades",
+      "estado": "pendiente"
+    }
+  ]
+}

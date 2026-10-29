@@ -99,6 +99,13 @@ La guía es `referencias/flujo-historia.md`. Nunca publiques. Nunca generes mús
    - Las animaciones reutilizadas o creadas (quedan en la biblioteca).
    - Los créditos de voz (`audio/creditos.json`) y V11; los avisos (H5, V10, V12, V15, flashback).
    - La carpeta de entrega y el registro en `memoria/historias.json`.
+   - **Mejoras al framework** (siempre el último punto; «ninguna» si no hubo): lo que en esta corrida se trabó o se
+     resolvió a mano (un arreglo del crítico que el gate rechazó: `arreglos_rechazados`) —una falla o un aviso que se
+     repite entre corridas, un gate con falso positivo o negativo, un paso que hubo que hacer a mano, uno lento o
+     frágil, un recorte V16 que se repite—, cada una con el archivo y el cambio propuesto. Regístralas con `python3
+     scripts/memoria.py --mejoras <TRABAJO>/mejoras.json` (`{"flujo": "historia", "pieza": "<carpeta de entrega>",
+     "mejoras": [{"area", "archivo", "problema", "propuesta"}]}`) y no las apliques sin que el usuario lo pida; las
+     que ya quedaron arregladas van con `"estado": "hecha"`. Con `sin-voz` o `fixture` se listan, no se registran.
 9. **RETOQUES** (cuando el usuario pida un cambio tras aprobar o grabar: otro gancho, otra foto, reescribir una
    escena, otro cierre, quitar una cita)
    - NO edites `guion.json` a mano. Lanza el Workflow `historia` con `args: {"trabajo": "<TRABAJO>", "tema": "<tema>",

@@ -191,6 +191,8 @@ const S = {
       hilos_pagados: { type: 'integer' }, hilos_sin_respuesta: { type: 'integer' }, secuencias: { type: 'integer' },
       explica_sin_animacion: { type: 'array', items: { type: 'integer' } },
       voces_cambiadas: { type: 'array', items: { type: 'integer' } },
+      // un arreglo del crítico que el gate rechaza: se aplica lo más cercano que pasa y se devuelve aquí (no en silencio)
+      arreglos_rechazados: { type: 'array', items: { type: 'object', required: ['n', 'falla'], properties: { n: { type: 'integer' }, falla: { type: 'string' } } } },
     },
   },
   mejoras: {
@@ -214,7 +216,9 @@ const S = {
       puntajes: { type: 'object', required: PUNTAJES, properties: Object.fromEntries(PUNTAJES.map((k) => [k, { type: 'integer', minimum: 1, maximum: 5 }])) },
       bloqueantes: { type: 'integer' }, mejoras: { type: 'integer' },
       faltas: { type: 'array', items: { type: 'object', required: ['regla', 'gravedad', 'problema', 'arreglo'],
-        properties: { n: { type: 'integer' }, escena: { type: ['integer', 'null'] }, regla: { type: 'string', pattern: '^H-C[1-6]$' }, gravedad: { type: 'string', enum: ['bloquea', 'mejora'] }, problema: { type: 'string' }, arreglo: { type: 'string' } } } },
+        properties: { n: { type: 'integer' }, escena: { type: ['integer', 'null'] }, regla: { type: 'string', pattern: '^H-C[1-6]$' }, gravedad: { type: 'string', enum: ['bloquea', 'mejora'] }, problema: { type: 'string' }, arreglo: { type: 'string' },
+          // el arreglo de texto ya pasó por historia.py probar (narracion + guion --check); false = el gate lo rechaza
+          probado: { type: 'boolean' } } } },
       // escena: null + pregunta = una pregunta_sin_responder del oyente descartada con motivo
       oyente_descartadas: { type: 'array', items: { type: 'object', required: ['escena', 'motivo'], properties: { escena: { type: ['integer', 'null'] }, pregunta: { type: 'string' }, motivo: { type: 'string' } } } },
     },
@@ -432,6 +436,7 @@ const validarCritica = (r, O) => {
   for (const k of PUNTAJES) if (r.puntajes[k] <= 2 && !r.faltas.some((x) => x.gravedad === 'bloquea' && x.regla === REGLA_DE[k])) f.push(`puntaje ${k} = ${r.puntajes[k]} sin falta «bloquea» de ${REGLA_DE[k]}`)
   const bloquea = r.faltas.some((x) => x.gravedad === 'bloquea') || PUNTAJES.some((k) => r.puntajes[k] < PUNTAJE_MIN)
   if ((r.veredicto === 'pasa') === bloquea) f.push(`veredicto ${r.veredicto} incoherente con las faltas y los puntajes`)
+  for (const x of r.faltas) if (x.gravedad === 'bloquea' && x.probado === false) f.push(`la falta ${x.n ?? ''} (escena ${x.escena}) bloquea con un arreglo que el gate rechaza: ajústalo con historia.py probar hasta que pase, o dala como mejora con la falla del gate en problema`)
   // una confusión está atendida si una falta o una descartada lleva su escena, o si su texto la nombra («se resuelve en la escena 7… la 6»)
   const nombra = (x, n) => new RegExp(`\\b(?:escena|escenas|la)\\s+(?:\\d+\\s*(?:,|y|→|-|–)\\s*)*${n}\\b`).test(`${x.problema || ''} ${x.arreglo || ''} ${x.motivo || ''}`)
   const atendida = (n) => r.faltas.some((x) => x.escena === n || nombra(x, n)) || (r.oyente_descartadas || []).some((d) => d.escena === n || nombra(d, n))
@@ -447,7 +452,7 @@ const validarCritica = (r, O) => {
   }
   return f
 }
-let critica = null, previas = []
+let critica = null, previas = [], arreglosRechazados = []
 for (let vuelta = 1; vuelta <= VUELTAS + 1; vuelta++) {
   if (vuelta > 1) O = await oir(vuelta)   // la corrección cambió la voz: el oyente vuelve a oírla
   critica = await conReparacion(`crítica ${vuelta}`, (fallos) => agentRol(
@@ -462,6 +467,9 @@ for (let vuelta = 1; vuelta <= VUELTAS + 1; vuelta++) {
       `(bloquea una escena que arranca con un conector hueco, un salto de tiempo o de tema sin decirlo, aperturas repetidas); H-C5: lo una_fuente va con la fuente en pantalla y solo lo en_disputa o de parte se atribuye en voz (≤ ${SEGUN_MAX} «según»); H-C6, legado = gente haciendo algo hoy, no es neutro. ` +
       (RETOQUE ? `RETOQUE con notas del usuario: «${notas}». Lo que las notas piden conservar (el cierre, una escena, «ninguna voz») el usuario ya lo aprobó: no va como ` +
                  `falta bloquea; si el oyente lo confunde, va en oyente_descartadas con el motivo «lo aprobó el usuario» y, si quieres, como mejora. ` : '') +
+      `ARREGLOS PROBADOS: antes de escribir cada arreglo que cambia texto (texto de una escena, chip, promesa, cierre), pruébalo con ` +
+      `python3 scripts/historia.py probar ${trabajo} --cambios '[{"escena": N, "texto": "…"}]' (también {"escena": N, "campo": "fecha", "valor": "…"}, {"promesa": "…"}, {"cierre": "…"}); ` +
+      `con exit 1 ajústalo hasta que pase; si ninguna versión pasa, va como mejora con la falla del gate en problema. Marca probado: true|false en cada falta. ` +
       `Escribe ${trabajo}/critica.json.` +
       (previas.length ? ` Faltas de la vuelta anterior (comprueba primero cada una): ${JSON.stringify(previas)}` : '') +
       (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : ''),
@@ -470,9 +478,14 @@ for (let vuelta = 1; vuelta <= VUELTAS + 1; vuelta++) {
   if (critica.veredicto === 'pasa' || vuelta > VUELTAS) break
   previas = critica.faltas.filter((x) => x.gravedad === 'bloquea')
   G = sumaVoces(await conReparacion(`corrección ${vuelta}`, (fallos) => agentRol(directivaGuion +
-    ` CORRECCIÓN ${vuelta}: guion.json ya existe; corrige SOLO lo que bloquea (con el arreglo exacto), conserva las demás voces y repasa el gate: ${JSON.stringify(previas)}` +
+    ` CORRECCIÓN ${vuelta}: guion.json ya existe; corrige SOLO lo que bloquea (con el arreglo exacto), conserva las demás voces y repasa el gate: ${JSON.stringify(previas)}. ` +
+    `Un arreglo que el gate rechaza no lo reescribas en silencio: aplica lo más cercano que pase (pruébalo con python3 scripts/historia.py probar ${trabajo} --cambios …) y devuélvelo en arreglos_rechazados [{n, falla: la línea FALLA del gate}].` +
     (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : ''),
   { agentType: 'historia-guionista', schema: S.guion, phase: 'Crítica', label: `guionista-corrige-${vuelta}` }), validarGuion, 1))
+  for (const x of G.arreglos_rechazados || []) {
+    arreglosRechazados.push({ ...x, vuelta })
+    avisar(`AVISO: el gate rechazó el arreglo ${x.n} de la crítica ${vuelta} (${x.falla}); el guionista aplicó lo más cercano que pasa.`)
+  }
 }
 
 // ── 7b. Mejoras: con «pasa», el guionista aplica las mejoras del crítico antes de gastar voz (sin otra crítica) ──
@@ -531,7 +544,7 @@ return {
   trabajo, tema, veredicto: critica.veredicto, puntajes: critica.puntajes,
   faltas_pendientes: critica.faltas.filter((x) => x.gravedad === 'bloquea'),
   mejoras: critica.faltas.filter((x) => x.gravedad === 'mejora'),
-  mejoras_no_aplicadas: mejorasNoAplicadas,
+  mejoras_no_aplicadas: mejorasNoAplicadas, arreglos_rechazados: arreglosRechazados,
   encuadre: ENC ? { pregunta: ENC.pregunta, arco: ENC.arco, actos: ENC.actos, espina: ENC.espina, hilos: ENC.hilos, personajes: ENC.personajes, paleta: ENC.paleta, justicia: ENC.justicia, revelaciones: ENC.revelaciones } : null,
   verificacion: ver.map((v) => ({ eje: v.eje, confirmados: v.confirmados, una_fuente: v.una_fuente || 0, en_disputa: v.en_disputa, descartados: v.descartados, fotos: v.fotos, protagonista: v.protagonista || 0, casos: v.casos || 0 })),
   gancho: { ganador: SEL.ganador, segundo: SEL.segundo, por_que: SEL.por_que },

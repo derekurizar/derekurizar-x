@@ -17,7 +17,7 @@ preparar (noticias.py: TRABAJO = sesiones/noticias-<fecha>/, paleta del día y s
                      → video-critico en modo noticiero (≤ 2 vueltas con el editor)]
 → QA de fotos (noticias.py fotos-contacto: sin víctimas, cadáveres ni menores identificables)
 → [sin-voz: voz-falsa] | voz (MCP ElevenLabs: un nodo TTS por escena, 1 toma, Scribe, descargar --estado)
-→ tiempos (V6) → escuchar (V11) → grabar (V13) → montar (V8) → revisar (9:16 y 4:5)
+→ tiempos (V16, V6) → escuchar (V11) → grabar (V13) → montar (V8) → revisar (9:16 y 4:5)
 → entregar (noticias/<fecha>/) → memoria.py --noticias → make validate
 ```
 
@@ -87,7 +87,7 @@ cierre, `video/cierre.html` con el rótulo «Hoy en Guatemala».
 | N8 cierre | `guion --check` | rótulo, 3–4 líneas ≤ 32 caracteres, `final` ≤ 10 palabras = la última frase de la voz, sin cebo ni «sígueme» en la voz |
 
 Además corren los de `/video`: V6 (alineación), V8 (salida), V10 (ritmo, aviso), V11 (escucha), V12 (quietud), V13
-(zona segura) y V15 (primer cuadro).
+(zona segura), V15 (primer cuadro) y V16 (la voz se aprieta donde se cortó dentro de un nombre o una cifra).
 
 ## Voz, entrega y registro
 

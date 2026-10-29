@@ -40,6 +40,8 @@ Comprueba:
      ruta con guion.json, fuentes.md y caption.md (el mp4 fuera de git: aviso) · cada noticia con titular y urls
   M10 memoria/historias.json (si existe; registro de /historia): campos, ids y slugs únicos, estado, paleta y música
      conocidas, ruta con guion.json (tipo historia), fuentes.md, cronologia.md y caption.md (el mp4 fuera de git: aviso)
+  M11 memoria/mejoras.json (si existe; mejoras al framework de cada video): campos, ids únicos mNNN, flujo conocido,
+     estado pendiente|hecha|descartada, archivo relativo a la raíz
   K1 design/musica/catalogo.json: cada pista existe, ids únicos, paleta conocida y ≥ 2 pistas por paleta
   N1 cada investigacion/<YYYY-MM-DD>-*/ (entregable de /investigacion) tiene informe.json,
      salida/informe.pdf y salida/informe.html; aviso si no está en memoria/informes.json (corrida
@@ -623,6 +625,27 @@ def validar_historias(paletas):
             warn("M10 historias[%d] %s/video.mp4 no está (fuera de git: se regenera con /historia)" % (i, r))
 
 
+def validar_mejoras():
+    """M11 memoria/mejoras.json (las mejoras al framework que lista el reporte de cada video)."""
+    rel_mem = "memoria/mejoras.json"
+    if not os.path.exists(os.path.join(RAIZ, rel_mem)):  # ausente = ok: memoria.py --mejoras lo crea
+        return
+    ids = set()
+    for i, m in enumerate((cargar(rel_mem) or {}).get("mejoras", [])):
+        for campo in ("id", "fecha", "flujo", "area", "archivo", "problema", "propuesta", "estado"):
+            if not m.get(campo):
+                err("M11 mejoras[%d] sin %s" % (i, campo))
+        if not re.match(r"^m\d{3,}$", str(m.get("id"))) or m.get("id") in ids:
+            err("M11 mejoras[%d] id %r inválido o repetido" % (i, m.get("id")))
+        ids.add(m.get("id"))
+        if m.get("flujo") not in ("video", "noticias", "historia"):
+            err("M11 mejoras[%d] flujo %r (video|noticias|historia)" % (i, m.get("flujo")))
+        if m.get("estado") not in ("pendiente", "hecha", "descartada"):
+            err("M11 mejoras[%d] estado %r" % (i, m.get("estado")))
+        if os.path.isabs(str(m.get("archivo", ""))):
+            err("M11 mejoras[%d] el archivo debe ser relativo a la raíz" % i)
+
+
 def validar_noticias(paletas):
     """M9 memoria/noticias.json (registro de /noticias)."""
     rel_mem = "memoria/noticias.json"
@@ -672,6 +695,7 @@ def main():
     validar_videos(paletas)
     validar_noticias(paletas)
     validar_historias(paletas)
+    validar_mejoras()
     for a in AVISOS:
         print("AVISO  " + a)
     for e in ERRORES:

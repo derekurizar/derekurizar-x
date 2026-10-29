@@ -52,6 +52,15 @@
   repetido se actualiza (conserva su fecha). video.py lo lee para rotar
   la música de cada paleta.
 
+--mejoras ARCHIVO.json [--dry-run]
+  Las mejoras al framework que encontró una corrida de /video, /noticias o /historia (las lista el reporte final) →
+  memoria/mejoras.json → mejoras[] {id (mNNN), fecha, flujo, pieza, area, archivo, problema, propuesta, estado}.
+  ARCHIVO: {"flujo": "historia", "pieza": "historias/<fecha>-<slug>", "mejoras": [{"area", "archivo", "problema",
+  "propuesta", "estado"?}]}; estado pendiente (por defecto) | hecha | descartada. Una pendiente con el mismo archivo y
+  problema no se repite.
+--ver-mejoras [ESTADO]   lista las mejoras (con ESTADO, solo esas; por defecto todas, las pendientes primero)
+--marcar-mejora ID --como hecha|descartada|pendiente   cambia el estado de una mejora
+
 --series "tema"   mismo filtro que scripts/fuentes.py --series
 --informes ["tema"] lista los informes registrados (del más reciente al más antiguo; con tema, filtrados) y
                   termina con «siguiente N.º NN» (lo usa /investigacion para numerar)
@@ -101,6 +110,13 @@ VACIO_HISTORIAS = {
     "_comentario": "Registro de historias narradas producidas por /historia. Lo escribe SOLO scripts/memoria.py --historia <historias/<fecha>-<slug>>; scripts/historia.py lo lee para no repetir una historia, rotar ganchos, cierres, animaciones y música, y para las frases ya usadas (C11). estado: listo | publicado | incompleto.",
     "historias": [],
 }
+MEJORAS = os.path.join(RAIZ, "memoria", "mejoras.json")
+VACIO_MEJORAS = {
+    "version": 1,
+    "_comentario": "Mejoras al framework que encontró cada corrida de /video, /noticias y /historia (el reporte final las lista). Lo escribe SOLO scripts/memoria.py --mejoras <archivo.json>; se consultan con --ver-mejoras y se cierran con --marcar-mejora ID --como hecha|descartada. estado: pendiente | hecha | descartada.",
+    "mejoras": [],
+}
+ESTADOS_MEJORA = ("pendiente", "hecha", "descartada")
 FUENTES = os.path.join(RAIZ, "memoria", "fuentes.json")
 VACIO_DATOS = {
     "version": 1,
@@ -617,6 +633,62 @@ def registrar_historia(d, estado, dry_run=False):
     return 0
 
 
+def registrar_mejoras(archivo, dry_run=False):
+    """--mejoras ARCHIVO: añade las mejoras al framework de una corrida a memoria/mejoras.json (sin repetir una pendiente)."""
+    d = leer(archivo, obligatorio=False)
+    if not isinstance(d, dict) or not isinstance(d.get("mejoras"), list) or not d.get("flujo"):
+        print("ERROR: %s debe ser {flujo, pieza, mejoras: [{area, archivo, problema, propuesta, estado?}]}" % archivo, file=sys.stderr)
+        return 2
+    mm = leer(MEJORAS, obligatorio=False) or json.loads(json.dumps(VACIO_MEJORAS))
+    n_max = max([int(m["id"][1:]) for m in mm["mejoras"] if re.match(r"^m\d+$", str(m.get("id")))] or [0])
+    nuevas = 0
+    for x in d["mejoras"]:
+        falta = [k for k in ("area", "archivo", "problema", "propuesta") if not str(x.get(k) or "").strip()]
+        estado = x.get("estado") or "pendiente"
+        if falta or estado not in ESTADOS_MEJORA or os.path.isabs(str(x.get("archivo"))):
+            print("ERROR: mejora %s: %s" % (json.dumps(x, ensure_ascii=False)[:80], "sin " + ", ".join(falta) if falta else
+                  "estado %r o archivo absoluto" % estado), file=sys.stderr)
+            return 2
+        if any(m["estado"] == "pendiente" and m["archivo"] == x["archivo"] and m["problema"] == x["problema"] for m in mm["mejoras"]):
+            print("ya pendiente: %s · %s" % (x["archivo"], x["problema"][:70]))
+            continue
+        n_max += 1
+        mm["mejoras"].append({"id": "m%03d" % n_max, "fecha": time.strftime("%Y-%m-%d"), "flujo": d["flujo"],
+                              "pieza": d.get("pieza") or "", "area": x["area"], "archivo": x["archivo"],
+                              "problema": x["problema"], "propuesta": x["propuesta"], "estado": estado})
+        nuevas += 1
+        print("m%03d · %s · %s · %s" % (n_max, estado, x["archivo"], x["problema"][:70]))
+    if dry_run:
+        print("[dry-run] no se escribió nada")
+        return 0
+    escribir(MEJORAS, mm)
+    print("escrito memoria/mejoras.json (%d nuevas · %d pendientes en total)" % (nuevas, sum(m["estado"] == "pendiente" for m in mm["mejoras"])))
+    return 0
+
+
+def ver_mejoras(estado):
+    mm = leer(MEJORAS, obligatorio=False) or VACIO_MEJORAS
+    ms = [m for m in mm["mejoras"] if not estado or m["estado"] == estado]
+    ms.sort(key=lambda m: (ESTADOS_MEJORA.index(m["estado"]), m["fecha"], m["id"]))
+    for m in ms:
+        print("%s · %s · %s · %s · %s\n    %s\n    → %s" % (m["id"], m["estado"], m["fecha"], m["flujo"], m["archivo"], m["problema"], m["propuesta"]))
+    print("[mejoras] %d%s" % (len(ms), " %s" % estado if estado else " (%d pendientes)" % sum(m["estado"] == "pendiente" for m in ms)))
+    return 0
+
+
+def marcar_mejora(mid, como, dry_run=False):
+    mm = leer(MEJORAS, obligatorio=False) or json.loads(json.dumps(VACIO_MEJORAS))
+    m = next((x for x in mm["mejoras"] if x["id"] == mid), None)
+    if not m:
+        print("ERROR: no hay mejora %s en memoria/mejoras.json" % mid, file=sys.stderr)
+        return 1
+    m["estado"] = como
+    print("%s → %s · %s" % (mid, como, m["problema"][:70]))
+    if not dry_run:
+        escribir(MEJORAS, mm)
+    return 0
+
+
 def conciliar_modos(dry_run=False):
     """Registros viejos sin «modo»: lo toma del hilo.json / dato.json de su entrega (o el del tipo)."""
     n = 0
@@ -649,14 +721,28 @@ def main():
     g.add_argument("--noticias", metavar="DIR", help="registra el noticiero de /noticias entregado en DIR (noticias/<fecha>) en memoria/noticias.json")
     g.add_argument("--video", metavar="DIR", help="registra el video de /video entregado en DIR (hilos/<fecha>-<slug>/video) en memoria/videos.json")
     g.add_argument("--historia", metavar="DIR", help="registra la historia de /historia entregada en DIR (historias/<fecha>-<slug>) en memoria/historias.json")
+    g.add_argument("--mejoras", metavar="ARCHIVO", help="añade las mejoras al framework de una corrida (JSON {flujo, pieza, mejoras[]}) a memoria/mejoras.json")
+    g.add_argument("--ver-mejoras", nargs="?", const="", metavar="ESTADO", help="lista las mejoras de memoria/mejoras.json (con ESTADO: pendiente|hecha|descartada)")
+    g.add_argument("--marcar-mejora", metavar="ID", help="cambia el estado de una mejora (con --como)")
     p.add_argument("--ruta", help="carpeta de entrega, relativa a la raíz (hilos/<fecha>-<slug>, datos/<fecha>-<slug> o investigacion/<fecha>-<slug>/hilo)")
     p.add_argument("--informe", metavar="DIR", help="con --registrar: carpeta del informe (investigacion/<fecha>-<slug>, con informe.json) → memoria/informes.json")
     p.add_argument("--solo-informe", action="store_true", help="con --informe: registra solo el informe; el hilo ya está en hilos.json (flujo desde:<slug>)")
     p.add_argument("--estado", choices=["listo", "incompleto"], default="listo")
     p.add_argument("--hook", choices=HOOKS, metavar="<hook_tipo>", help="nombre del gancho (por defecto, guion.hook_tipo): " + "|".join(HOOKS))
+    p.add_argument("--como", choices=ESTADOS_MEJORA, help="con --marcar-mejora: el nuevo estado")
     p.add_argument("--dry-run", action="store_true")
     p.add_argument("--max", type=int, default=12)
     a = p.parse_args()
+    if a.mejoras:
+        return registrar_mejoras(a.mejoras, a.dry_run)
+    if a.ver_mejoras is not None:
+        if a.ver_mejoras and a.ver_mejoras not in ESTADOS_MEJORA:
+            p.error("--ver-mejoras: %s" % "|".join(ESTADOS_MEJORA))
+        return ver_mejoras(a.ver_mejoras)
+    if a.marcar_mejora:
+        if not a.como:
+            p.error("--marcar-mejora exige --como hecha|descartada|pendiente")
+        return marcar_mejora(a.marcar_mejora, a.como, a.dry_run)
     if a.conciliar_modos:
         return conciliar_modos(a.dry_run)
     if a.video:

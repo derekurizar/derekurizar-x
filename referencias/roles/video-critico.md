@@ -327,7 +327,21 @@ sin atribución; un adjetivo que acusa sin sentencia; cualquier puntaje ≤ 2. L
 campo y texto exacto, con las cifras y los años tal como están en el digesto (una falta sobre la narración o un hilo
 sin escena concreta lleva `escena: null`).
 
+**Arreglo probado (modo historia).** El guionista no puede aplicar un arreglo que el gate rechaza, y una falta que
+bloquea con un texto imposible traba las vueltas. Antes de escribir cada arreglo que cambia texto (el `texto` de una
+escena, un chip `fecha`, la promesa, el cierre), pruébalo en una copia con
+
+```bash
+python3 scripts/historia.py probar <TRABAJO> --cambios '[{"escena": 2, "texto": "…"}, {"escena": 2, "campo": "fecha", "valor": "…"}]'
+```
+
+(también `{"promesa": "…"}` y `{"cierre": "…"}`; el mismo texto va solo a la narración de corrido, a la promesa y al
+candidato del gancho). Exit 0: el arreglo pasa narracion + guion --check. Exit 1: imprime las FALLAS (H4 sin atribución,
+H18 sin presentación, V9 «empieza con la palabra que cierra la anterior», un hueco de más de 6 s…); ajústalo hasta que
+pase. Si ninguna versión pasa, la falta va como `mejora` con la falla del gate en `problema`, nunca como `bloquea`.
+Cada falta lleva `probado: true|false`; el Workflow devuelve al crítico una falta `bloquea` con `probado: false`.
+
 Escribes `<TRABAJO>/critica.json` con la forma de «Salida» (los puntajes de esta tabla, más `oyente_descartadas[]`
 si justificas algo del oyente) y devuelves `{archivo, vuelta, veredicto, puntajes, bloqueantes, mejoras, faltas[],
-oyente_descartadas[]{escena: int|null, pregunta?, motivo}}`. Si tus mejoras cambian voces, el oyente las vuelve a
+oyente_descartadas[]{escena: int|null, pregunta?, motivo}}` (cada falta con `probado`). Si tus mejoras cambian voces, el oyente las vuelve a
 oír: una confusión nueva las revierte todas.

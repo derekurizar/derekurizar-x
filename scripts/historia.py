@@ -36,7 +36,11 @@ Subcomandos (TRABAJO = sesiones/historia-<slug>/):
   guion TRABAJO --check        H4–H20 + (tarjetas) + video.py guion (V1–V5, V9, F1–F8) → locucion.json; la última línea
         RETORNO {...} es lo que el guionista devuelve al Workflow (tipos de cada escena, sin el cierre); deriva las
         secuencias de voz si el guion no las trae
-  tiempos TRABAJO              video.py tiempos con los constructores de foto, cita y capitulo (y el rótulo de acto) → escenas.json
+  probar TRABAJO --cambios JSON|ARCHIVO   el crítico prueba un arreglo ANTES de escribirlo: lo aplica a una copia (con el
+        mismo texto en la narración, la promesa y el candidato del gancho) y corre narracion --check y guion --check;
+        el TRABAJO no se toca (0 pasa · 1 el gate lo rechaza · 2 cambio mal dado)
+  tiempos TRABAJO              video.py tiempos con los constructores de foto, cita y capitulo (y el rótulo de acto), con
+        V16 (la voz se aprieta donde se cortó dentro de un nombre o una cifra) → escenas.json
   fotos-contacto TRABAJO       fotos/contacto.png con todas las fotos (QA de contenido)
   entregar TRABAJO [--salida DIR]   → historias/<fecha>-<slug>/ (video, 4:5, caption, fuentes.md, cronologia.md, guion.json)
   voz [--pendientes [--sueltas] | --solo N,N] | voz-falsa | descargar | partir | escuchar | grabar | montar | revisar TRABAJO [...]   → video.py
@@ -154,7 +158,8 @@ RE_NUMERO = re.compile(r"\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?")
 # en disputa = la voz atribuye o matiza
 ATRIBUCION = re.compile(r"\bseg[uú]n\b|\bde acuerdo con\b|\bafirm\w+|\bdijo\b|\bdice\b|\bsostien\w+|\bhabr[ií]a\w*|"
                         r"\bcerca de\b|\balrededor de\b|\ba (?:inicios|principios|mediados|finales) de\b|\baproximadamente\b|"
-                        r"\bversi[oó]n\b|\bcuenta(?:n)?\b|\brecuerda\w*|\basegur\w+|\bnarr\w+", re.I)
+                        r"\bversi[oó]n\b|\bcuenta(?:n)?\b|\brecuerda\w*|\basegur\w+|\bnarr\w+|"
+                        r"\bcalcul\w+|\bestim\w+", re.I)   # una ESTIMACIÓN se atribuye con «calculaba», «estimó»
 # fuentes que cuentan además de las de /noticias: organismos, academia, archivo y prensa internacional. Wikipedia es un
 # mapa, nunca evidencia: se cita su referencia, no la página
 OTROS_OFICIALES = {"cicig.org": "CICIG", "un.org": "ONU", "oas.org": "OEA", "worldbank.org": "Banco Mundial",
@@ -2305,6 +2310,73 @@ def post_historia(S, e, ps, pal, fin_voz, dur, g, ev, sfx):
     return ev, sfx
 
 
+def cmd_probar(a):
+    """El crítico prueba un arreglo ANTES de escribirlo: aplica los cambios a una copia del TRABAJO (sin audio ni video),
+    con el mismo texto en la narración de corrido, la promesa y el candidato del gancho, y corre narracion --check y
+    guion --check. El TRABAJO real no se toca. → 0 pasa · 1 el gate lo rechaza (imprime las fallas) · 2 cambio mal dado."""
+    trabajo = os.path.abspath(a.trabajo)
+    try:
+        cambios = json.loads(a.cambios) if a.cambios.lstrip()[:1] in "[{" else leer(a.cambios)
+    except (OSError, ValueError) as ex:
+        print("FALLA --cambios ilegible: %s" % ex)
+        return 2
+    cambios = [cambios] if isinstance(cambios, dict) else cambios
+    tmp = os.path.join(RAIZ, "sesiones", "_probar-%s-%d" % (os.path.basename(trabajo), os.getpid()))
+    shutil.copytree(trabajo, tmp, ignore=shutil.ignore_patterns("audio", "salida", "revision", "clips*", "segs*"))
+    try:
+        g = leer(os.path.join(tmp, "guion.json"))
+        ruta_g = os.path.join(tmp, "ganchos.json")
+        gan = leer(ruta_g) if os.path.exists(ruta_g) else None
+        textos = []   # (viejo, nuevo): el mismo cambio va a la narración, la promesa y el candidato del gancho
+        for c in cambios:
+            if "promesa" in c:
+                textos.append((g["promesa"]["texto"], c["promesa"]))
+                g["promesa"]["texto"] = c["promesa"]
+                continue
+            n = c.get("escena")
+            cierre = "cierre" in c or n == len(g["escenas"]) + 1
+            campo = c.get("campo") or "texto"
+            nuevo = c.get("cierre", c.get("valor", c.get("texto")))
+            if nuevo is None or (not cierre and not (isinstance(n, int) and 1 <= n <= len(g["escenas"]))):
+                print("FALLA cambio %s: da {escena: N, texto} · {escena: N, campo, valor} · {promesa} · {cierre}" % json.dumps(c, ensure_ascii=False))
+                return 2
+            dueno = g["cierre"] if cierre else g["escenas"][n - 1]
+            viejo = dueno.get(campo)
+            dueno[campo] = nuevo
+            if campo == "texto":
+                textos.append((viejo, nuevo))
+        prom = g.get("promesa") or {}
+        for viejo, nuevo in textos:
+            if prom.get("texto") == viejo:
+                prom["texto"] = nuevo
+            for cand in (gan or {}).get("candidatos") or []:
+                if cand.get("texto") == viejo:
+                    cand["texto"] = nuevo
+            hallado = False
+            for parte in g.get("narracion") or []:
+                if viejo and viejo in parte.get("texto", ""):
+                    parte["texto"] = parte["texto"].replace(viejo, nuevo, 1)
+                    hallado = True
+            if g.get("narracion") and viejo and not hallado:
+                print("FALLA el texto de antes («%s…») no está literal en guion.narracion: el arreglo no se puede repartir sin "
+                      "cambiar la narración de corrido" % viejo[:50])
+                return 1
+        escribir(os.path.join(tmp, "guion.json"), g)
+        if gan is not None:
+            escribir(ruta_g, gan)
+        rc = 0
+        for cmd in ("narracion", "guion"):
+            r = subprocess.run([sys.executable, os.path.abspath(__file__), cmd, tmp, "--check"], capture_output=True, text=True, cwd=RAIZ)
+            for linea in (r.stdout + r.stderr).splitlines():
+                if linea.startswith(("FALLA", "AVISO")):
+                    print("%s · %s" % (cmd, linea))
+            rc = rc or (1 if r.returncode else 0)
+        print("probar: %s" % ("pasa el gate (narracion + guion)" if rc == 0 else "el gate lo rechaza: ajusta el arreglo o dalo como mejora con esta falla"))
+        return rc
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
 def cmd_tiempos(a):
     trabajo = os.path.abspath(a.trabajo)
     aplicar_extension(trabajo)
@@ -2811,6 +2883,10 @@ def main():
     q = sub.add_parser("guion")
     q.add_argument("trabajo")
     q.add_argument("--check", action="store_true", required=True)
+    q = sub.add_parser("probar", help="el crítico prueba un arreglo contra el gate en una copia, sin tocar el TRABAJO")
+    q.add_argument("trabajo")
+    q.add_argument("--cambios", required=True, help='JSON o archivo: [{"escena": N, "texto": "…"}, {"escena": N, "campo": "fecha", '
+                   '"valor": "…"}, {"promesa": "…"}, {"cierre": "…"}]')
     sub.add_parser("tiempos").add_argument("trabajo")
     sub.add_parser("fotos-contacto").add_argument("trabajo")
     q = sub.add_parser("entregar")
@@ -2821,7 +2897,7 @@ def main():
     a = p.parse_args()
     return {"preparar": cmd_preparar, "leer": cmd_leer, "commons": cmd_commons, "foto": cmd_foto, "hechos": cmd_hechos,
             "consolidar": cmd_consolidar, "encuadre": cmd_encuadre, "narracion": cmd_narracion, "digesto": cmd_digesto,
-            "ganchos": cmd_ganchos, "tarjetas": cmd_tarjetas, "guion": cmd_guion, "tiempos": cmd_tiempos,
+            "ganchos": cmd_ganchos, "tarjetas": cmd_tarjetas, "guion": cmd_guion, "probar": cmd_probar, "tiempos": cmd_tiempos,
             "fotos-contacto": cmd_fotos_contacto, "entregar": cmd_entregar}[a.cmd](a)
 
 
