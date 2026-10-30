@@ -62,8 +62,17 @@ function render(D) {
   aro.style.background = "conic-gradient(" + stops.join(",") + ")";
   const centro = H.el("div", "dona-centro", aro);
   const c = D.centro || { valor: Math.round((D.partes[hi].valor / total) * 100), texto: D.partes[hi].nombre };
-  H.el("div", "v cifra-heroe", centro, H.esc(typeof c.valor === "number" ? H.pct(c.valor) : String(c.valor)));
-  H.el("div", "t", centro, H.esc(c.texto || ""));
+  const vtxt = typeof c.valor === "number" ? H.pct(c.valor) : String(c.valor);
+  const vEl = H.el("div", "v cifra-heroe", centro, H.esc(vtxt));
+  const tEl = H.el("div", "t", centro, H.esc(c.texto || ""));
+  // La cifra cabe en el agujero (radio 104 px) a la altura de su borde superior, como en hemiciclo: baja de 92 px
+  // hasta que su ancho entra en la cuerda del círculo a esa altura (un «43.5%» a 92 px pisaba el aro).
+  const rIn = 190 - 86, tH = c.texto ? tEl.offsetHeight + 10 : 0;
+  let px = 92;
+  const cabe = () => { const dy = (0.9 * px + tH) / 2 - 0.05 * px; const semi = dy < rIn ? Math.sqrt(rIn * rIn - dy * dy) : 0; return H.medirCifra(vtxt, px) / 2 <= semi - 6; };
+  while (px > 48 && !cabe()) px -= 2;
+  H.assert(cabe(), "la cifra del centro («" + vtxt + "») no cabe en el agujero de la dona: acórtala");
+  vEl.style.fontSize = px + "px";
 
   const lista = H.el("div", "dona-lista", grid);
   D.partes.forEach((p, i) => {

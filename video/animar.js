@@ -627,7 +627,9 @@
     const D = DATA, ck = (v) => coincide(v, k);
     const num = (el) => { const n = el && numTexto(el.textContent); return !!n && coincide(n.v, k); };
     const q = (s) => document.querySelector(s), qa = (s) => [...document.querySelectorAll(s)];
-    if (plantilla === "antes-despues") return E.cols.filter((c) => ck(D[c.k].valor) || num(c.num)).map((c) => c.num);
+    // antes-despues: la voz dice una cifra, pero el foco encuadra las dos (la comparación es el dato; centrar una sola
+    // sacaba de cuadro la otra en el pico del zoom). Juntas pasan de 0.7 del ancho: escena.html aplica el foco suave
+    if (plantilla === "antes-despues") return E.cols.some((c) => ck(D[c.k].valor) || num(c.num)) ? E.cols.map((c) => c.num) : [];
     if (plantilla === "cifra") return ck(D.cifra.valor) || num(E.num) ? [E.num] : [];
     // barras: el foco encuadra nombre + barra + valor (si la fila no cabe, __caja prueba sin el nombre)
     if (plantilla === "barras-v") return E.barras.flatMap((bar, i) => (ck(D.valores[i]) || (E.vals[i] && num(E.vals[i].t))) ? [bar.nombre, bar.r, E.vals[i] && E.vals[i].t].filter(Boolean) : []);

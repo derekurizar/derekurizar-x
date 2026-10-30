@@ -1,0 +1,127 @@
+{
+  "id": "sabias-lago-atitlan-nivel",
+  "slug": "lago-atitlan-nivel",
+  "hilo": "sesiones/lago-atitlan-nivel/sabias/base",
+  "paleta": "jade",
+  "duracion": "sabias",
+  "duracion_s": 26.3,
+  "n_escenas": 3,
+  "musica": "jade-2",
+  "voz": {
+    "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+    "nombre": "El Faraon 4",
+    "modelo": "eleven_multilingual_v2",
+    "idioma": "es"
+  },
+  "velocidad": 1.1,
+  "creditos_voz": 488,
+  "contexto_superior": "Lago de Atitlán · 2025",
+  "gancho": {
+    "familia": "sabias",
+    "visual": "lugar",
+    "pantalla": "¿Sabías que…?",
+    "linea": "Atitlán bajó 3 metros desde 2014"
+  },
+  "ganchos": null,
+  "promesa": null,
+  "critica": {
+    "veredicto": "pasa",
+    "vuelta": 2,
+    "puntajes": {
+      "gancho": 4,
+      "bucle": null,
+      "ritmo": 4,
+      "flujo": null,
+      "escala_humana": 4,
+      "pago": null,
+      "cierre": 4
+    }
+  },
+  "escenas": [
+    {
+      "n": 1,
+      "tipo": "gancho",
+      "tuit": null,
+      "plantilla": "gancho",
+      "enlace": null,
+      "golpe": null,
+      "cinetico": {
+        "pantalla": "¿Sabías que…?",
+        "linea": "Atitlán bajó 3 metros desde 2014"
+      },
+      "adivina": null,
+      "icono": null,
+      "pantalla": "¿Sabías que el lago de Atitlán, en Guatemala, bajó 3 metros desde 2014?",
+      "voz": "¿Sabías que el lago de Atitlán, en Guatemala, bajó tres metros desde dos mil catorce?",
+      "dur": 5.939
+    },
+    {
+      "n": 2,
+      "tipo": "tarjeta",
+      "tuit": 1,
+      "plantilla": "cifra",
+      "enlace": null,
+      "golpe": "Ni la lluvia lo repone",
+      "cinetico": null,
+      "adivina": null,
+      "icono": null,
+      "pantalla": "Es lo que dice la medición oficial: 3 metros menos en octubre de 2025, y ni la lluvia se los devolvió.",
+      "voz": "Es lo que dice la medición oficial: tres metros menos en octubre de dos mil veinticinco, y ni la lluvia se los devolvió.",
+      "dur": 7.972
+    },
+    {
+      "n": 3,
+      "tipo": "golpe",
+      "tuit": null,
+      "plantilla": "golpe",
+      "enlace": null,
+      "golpe": null,
+      "cinetico": {
+        "pantalla": "Fuera del agua",
+        "linea": "la regla de medición, en 2019"
+      },
+      "adivina": null,
+      "icono": null,
+      "pantalla": "Ya en 2019 bajó tanto que la regla de medición quedó fuera del agua.",
+      "voz": "Ya en dos mil diecinueve bajó tanto que la regla de medición quedó fuera del agua.",
+      "dur": 5.677
+    },
+    {
+      "n": 4,
+      "tipo": "cierre",
+      "tuit": null,
+      "plantilla": "cierre",
+      "enlace": null,
+      "golpe": null,
+      "cinetico": null,
+      "adivina": null,
+      "icono": null,
+      "pantalla": "Los pueblos de Atitlán ya tienen la orilla más lejos que en 2014.",
+      "voz": "Los pueblos de Atitlán ya tienen la orilla más lejos que en dos mil catorce.",
+      "dur": 7.198
+    }
+  ],
+  "cierre": {
+    "texto": "Los pueblos de Atitlán ya tienen la orilla más lejos que en 2014.",
+    "final": "Los pueblos de Atitlán ya tienen la orilla más lejos que en 2014.",
+    "resumen": [],
+    "tipo": "remate",
+    "forma": "consecuencia",
+    "consecuencia": {
+      "mecanismo": "perdida",
+      "quien": "Los pueblos de Atitlán",
+      "verbo": "tienen"
+    }
+  },
+  "caption": {
+    "tiktok": "El lago de Atitlán quedó 3 metros más bajo que en 2014, según la medición de AMSCLAE de octubre de 2025. #Guatemala #Atitlán #SabiasQue",
+    "instagram": "¿Sabías que el lago de Atitlán está 3 metros más bajo que en 2014? Medición de octubre de 2025, al final de la lluvia.\n#Guatemala #Atitlán #DatosGT #SabiasQue",
+    "facebook": "¿Sabías que el lago de Atitlán está 3 metros más bajo que cuando empezó a medirse en Panajachel, en 2014? Es la medición de AMSCLAE de octubre de 2025.",
+    "shorts": "Atitlán está 3 metros más bajo que en 2014\nMedición de AMSCLAE, octubre de 2025. #Shorts #Guatemala"
+  },
+  "tipo": "sabias",
+  "fecha": "2026-10-29",
+  "tema": "El lago de Atitlán está 3 metros más bajo que en 2014",
+  "dato": "datos/2026-10-11-lago-atitlan-nivel",
+  "apoyo": "golpe"
+}

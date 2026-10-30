@@ -184,6 +184,51 @@
           "cronologia"
         ]
       }
+    },
+    {
+      "id": "2026-10-28-como-nacio-la-cerveza-gallo",
+      "slug": "como-nacio-la-cerveza-gallo",
+      "tema": "cómo nació la cerveza Gallo",
+      "fecha": "2026-10-28",
+      "ruta": "historias/2026-10-28-como-nacio-la-cerveza-gallo",
+      "arco": "origen de una marca: de una lager sin nombre propio a la cerveza que el país bautizó, y su prueba ante un rival de afuera",
+      "paleta": "maiz",
+      "musica": "maiz-1",
+      "duracion_s": 168.4,
+      "creditos_voz": 2412.0,
+      "estado": "listo",
+      "frases": {
+        "promesa": "Más de un siglo después, un rival de afuera vendría a pelearle el mercado.",
+        "gancho": "La cerveza Gallo lleva su gallo desde la primera etiqueta.",
+        "aperturas": [
+          "Primero llegaron las gaseosas:",
+          "Después, otros dos hermanos,",
+          "En mil ochocientos noventa",
+          "Con la receta, en",
+          "Pero aún no se",
+          "Estrategia y Negocios cuenta",
+          "Así, dice la marca,",
+          "Eso pasó en mil",
+          "Y en dos mil",
+          "Doce años después, la",
+          "Juan Monge, vicepresidente de",
+          "Entonces, ¿cuánto le quitó",
+          "En plena guerra, Monge",
+          "Sus botellas siguen llevando"
+        ],
+        "segun": 0,
+        "aperturas_atribuidas": 0,
+        "pregunta": "Hoy sus clientes todavía la piden igual: deme una Gallo.",
+        "cierre": "Hoy sus clientes todavía la piden igual: deme una Gallo.",
+        "cierre_tipo": "remate",
+        "cierre_forma": "legado",
+        "cierre_mecanismo": null,
+        "familia": "resultado",
+        "visual": "foto",
+        "animaciones": [
+          "boca-a-boca"
+        ]
+      }
     }
   ]
 }

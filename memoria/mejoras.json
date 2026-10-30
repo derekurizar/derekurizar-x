@@ -44,7 +44,7 @@
       "archivo": "video/escena.html",
       "problema": "En el pico del zoom a la cifra de E13, la cifra izquierda (3,000,000) sale cortada («00») un instante",
       "propuesta": "Que el foco de antes-despues encuadre las dos cifras o que la deriva no saque de cuadro la izquierda (V13 solo mide la caja enfocada)",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m005",
@@ -55,7 +55,7 @@
       "archivo": "scripts/historia.py",
       "problema": "E9 usa de referencia un local de Nueva York con el chip «De referencia · Miami»: el lugar del chip es el del hecho, no el de la foto",
       "propuesta": "En una foto de referencia, el chip usa el lugar de la foto (fotos/<id>.json → lugar) o lo omite; o un gate que avise si difieren",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m006",
@@ -66,6 +66,149 @@
       "archivo": "video/golpe.html",
       "problema": "El golpe «1974» cuenta hacia arriba y muestra años absurdos en tránsito («795»)",
       "propuesta": "Un año (es_anio_o_fecha) entra entero, sin conteo; el conteo solo para cantidades",
+      "estado": "hecha"
+    },
+    {
+      "id": "m007",
+      "fecha": "2026-10-28",
+      "flujo": "historia",
+      "pieza": "historias/2026-10-28-como-nacio-la-cerveza-gallo",
+      "area": "crítica",
+      "archivo": ".claude/workflows/historia.js",
+      "problema": "El guion necesitó 4 corridas (la principal + 3 retoques) para pasar: en cada vuelta el crítico devolvía «corregir» con faltas ya probadas (probado: true, exit 0) y el oyente encontraba confusiones nuevas (9 → 7 → 14 → 12) que no convergen. El usuario tuvo que decidir 3 veces y relanzar a mano con las faltas copiadas como notas.",
+      "propuesta": "Cuando todas las faltas_pendientes vienen con probado: true, que el Workflow las aplique solo (guionista en modo retoque con esas faltas como notas) y dé una vuelta más del crítico antes de devolver «corregir»; en retoque, el crítico bloquea solo confusiones en las escenas que cambiaron (las demás van como mejora).",
+      "estado": "hecha"
+    },
+    {
+      "id": "m008",
+      "fecha": "2026-10-28",
+      "flujo": "historia",
+      "pieza": "historias/2026-10-28-como-nacio-la-cerveza-gallo",
+      "area": "crítica",
+      "archivo": ".claude/workflows/historia.js",
+      "problema": "Con «pasa», el oyente revirtió las dos mejoras juntas («confundió al oyente: revertida»), también la de precisión H-C5 de la E12 («calculó Forbes México» → «estimó»), así que el video dice «calculó» aunque la cronología marca el 96 % como estimación reportada.",
+      "propuesta": "Revertir por escena, solo la mejora que confundió al oyente, y no revertir las de precisión (H-C5) por una confusión de flujo; si una de precisión confunde, que vuelva al crítico como falta.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m009",
+      "fecha": "2026-10-28",
+      "flujo": "historia",
+      "pieza": "historias/2026-10-28-como-nacio-la-cerveza-gallo",
+      "area": "fotos",
+      "archivo": "scripts/historia.py",
+      "problema": "La misma imagen quedó bajada con 3 ids (sha1 81d90c38: marca-f01, ori-f01, rival-f01) y otra con 2 (b63353ea), y la descripción de marca-f01 dice «botella» aunque la foto es la pared de latas; consolidar no las fundió y la hoja de fotos muestra duplicados.",
+      "propuesta": "En foto, avisar si el sha1 ya existe en fotos/ y devolver el id existente; en consolidar, fundir por sha1 conservando la descripción que coincide con la imagen (o la del verificador del eje que la usa en el guion).",
+      "estado": "hecha"
+    },
+    {
+      "id": "m010",
+      "fecha": "2026-10-28",
+      "flujo": "historia",
+      "pieza": "historias/2026-10-28-como-nacio-la-cerveza-gallo",
+      "area": "fuentes",
+      "archivo": "scripts/historia.py",
+      "problema": "Se descartaron 3 hechos del eje rival (los primos Castillo que se fueron a CABCORP en 2003, la estrategia de precios de 10 años según JPMorgan, la cuota 84.5 % / 70 %) solo porque The World (PRI/GBH, theworld.org) no está en la lista cerrada de prensa internacional.",
+      "propuesta": "Añadir theworld.org (PRI/GBH) a la lista cerrada de prensa internacional de leer.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m011",
+      "fecha": "2026-10-28",
+      "flujo": "historia",
+      "pieza": "historias/2026-10-28-como-nacio-la-cerveza-gallo",
+      "area": "escucha",
+      "archivo": "scripts/video.py",
+      "problema": "V11 da avisos falsos por homófonos en nombres propios: Córdova/Córdoba, Brahva/brava, Monge/monje, Centro Americana/centroamericana, Lager Bier/lagerbjerg.",
+      "propuesta": "En escuchar, normalizar b/v, g/j ante e/i y espacios dentro de nombres propios antes de comparar, y no avisar cuando la palabra esperada es un nombre del guion y la oída solo difiere en eso.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m012",
+      "fecha": "2026-10-29",
+      "flujo": "video",
+      "pieza": "hilos/2026-10-06-madres-ninas-adolescentes-2026/video",
+      "area": "gancho pareja",
+      "archivo": "video/gancho.html",
+      "problema": "En el visual pareja, la etiqueta del bloque chico («personas condenadas») arrancaba en su borde y se salía del ancho del visual (overflow hidden): se leía «personas co».",
+      "propuesta": "La etiqueta y la cifra de cada bloque se corren a la izquierda lo justo para caber en el ancho (aplicado en esta corrida).",
+      "estado": "hecha"
+    },
+    {
+      "id": "m013",
+      "fecha": "2026-10-29",
+      "flujo": "video",
+      "pieza": "hilos/2026-10-06-madres-ninas-adolescentes-2026/video",
+      "area": "zona segura",
+      "archivo": "video/comun.js",
+      "problema": "V13 no vio la etiqueta cortada: el texto quedaba recortado por el overflow del contenedor, no fuera de la zona, así que la medición lo daba por bueno.",
+      "propuesta": "En V.medirZona(), marcar como falla un <text> SVG o un elemento con texto cuyo bbox exceda el del contenedor con overflow hidden más cercano (texto recortado), además de la zona.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m014",
+      "fecha": "2026-10-29",
+      "flujo": "video",
+      "pieza": "hilos/2026-10-06-madres-ninas-adolescentes-2026/video",
+      "area": "oyente",
+      "archivo": ".claude/workflows/video.js",
+      "problema": "El oyente oye solo el primer guion (vuelta 1): sus 8 confusiones del reporte son de un borrador que el crítico ya corrigió (la unidad de 46.9, el salto a 2024), y no se sabe cuáles siguen.",
+      "propuesta": "Tras la última crítica aprobada, una pasada más del oyente (sonnet, barata) solo para el reporte, sin reabrir la crítica.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m015",
+      "fecha": "2026-10-29",
+      "flujo": "video",
+      "pieza": "hilos/2026-10-06-madres-ninas-adolescentes-2026/video",
+      "area": "narración",
+      "archivo": "scripts/video.py",
+      "problema": "El guionista necesitó 8 intentos con el gate en tres vueltas (presupuesto 3): con V17 cada arreglo de voz exige cambiar el mismo tramo de guion.narracion a mano, y es fácil que no casen.",
+      "propuesta": "Un `video.py aplicar` como el de /historia (el mismo cambio a la escena y a su tramo de la narración, con gate y restauración), y que el crítico de /video entregue `cambios` probados.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m016",
+      "fecha": "2026-10-29",
+      "flujo": "sabias",
+      "pieza": "datos/2026-10-11-lago-atitlan-nivel/video",
+      "area": "gate",
+      "archivo": "scripts/sabias.py",
+      "problema": "La tarjeta del dato quedaba ~5 s casi vacía: la cifra se anima cuando la voz la dice y la escena 2 la decía al final (hubo que regrabar esa escena, 120 créditos).",
+      "propuesta": "S1: la voz de la escena 2 dice la cifra en sus primeros 2.5 s (CIFRA_TARJETA_S); aplicado en esta corrida.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m017",
+      "fecha": "2026-10-29",
+      "flujo": "sabias",
+      "pieza": "datos/2026-10-11-lago-atitlan-nivel/video",
+      "area": "voz",
+      "archivo": "scripts/numeros_es.py",
+      "problema": "«1.5 veces» se lee «una punto cinco veces» (género femenino por «veces»).",
+      "propuesta": "Con decimales, la parte entera va en masculino: «uno punto cinco veces».",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m018",
+      "fecha": "2026-10-29",
+      "flujo": "sabias",
+      "pieza": "datos/2026-10-11-lago-atitlan-nivel/video",
+      "area": "descarga de voz",
+      "archivo": ".claude/commands/sabias.md",
+      "problema": "La respuesta de creative_get_flow_run_status no quedó guardada en un archivo: hubo que copiar a mano las URL firmadas a un JSON para `descargar --estado`.",
+      "propuesta": "Que `video.py descargar` acepte las transcripciones con `words` en línea (sin words_download_url) y el comando diga cómo guardar el estado cuando el MCP no lo guarda.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m019",
+      "fecha": "2026-10-29",
+      "flujo": "sabias",
+      "pieza": "datos/2026-10-11-lago-atitlan-nivel/video",
+      "area": "digesto",
+      "archivo": "scripts/sabias.py",
+      "problema": "Un gancho que termina en la unidad de la cifra («tres metros desde 2014») choca con abrir la escena 2 con la cifra: la regla de eco de /video rechaza «metros» en sus primeras 7 palabras.",
+      "propuesta": "En el digesto: abrir la escena 2 con su fuente o con un marco corto («Es lo que dice la medición oficial: 3 metros…») o terminar el gancho con el año, no con la unidad.",
       "estado": "pendiente"
     }
   ]

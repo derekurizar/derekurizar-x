@@ -40,6 +40,10 @@ Comprueba:
      ruta con guion.json, fuentes.md y caption.md (el mp4 fuera de git: aviso) · cada noticia con titular y urls
   M10 memoria/historias.json (si existe; registro de /historia): campos, ids y slugs únicos, estado, paleta y música
      conocidas, ruta con guion.json (tipo historia), fuentes.md, cronologia.md y caption.md (el mp4 fuera de git: aviso)
+  M12 memoria/explicaciones.json (si existe; registro de /explica): campos, ids y slugs únicos, estado, paleta y música
+     conocidas, ruta con guion.json (tipo explica), fuentes.md, ejemplos.md y caption.md (el mp4 fuera de git: aviso)
+  M13 memoria/sabias.json (si existe; registro de /sabias): campos, ids y slugs únicos, estado, paleta y música
+     conocidas, ruta con guion.json (tipo sabias) y caption.md (el mp4 fuera de git: aviso)
   M11 memoria/mejoras.json (si existe; mejoras al framework de cada video): campos, ids únicos mNNN, flujo conocido,
      estado pendiente|hecha|descartada, archivo relativo a la raíz
   K1 design/musica/catalogo.json: cada pista existe, ids únicos, paleta conocida y ≥ 2 pistas por paleta
@@ -625,6 +629,78 @@ def validar_historias(paletas):
             warn("M10 historias[%d] %s/video.mp4 no está (fuera de git: se regenera con /historia)" % (i, r))
 
 
+def validar_sabias(paletas):
+    """M13 memoria/sabias.json (registro de /sabias)."""
+    rel_mem = "memoria/sabias.json"
+    if not os.path.exists(os.path.join(RAIZ, rel_mem)):  # ausente = ok: memoria.py lo crea con el primero
+        return
+    d = cargar(rel_mem) or {}
+    musica = {p.get("id") for p in (cargar("design/musica/catalogo.json") or {}).get("pistas", [])}
+    ids, slugs = set(), set()
+    for i, v in enumerate(d.get("sabias", [])):
+        for campo in ("id", "slug", "fecha", "ruta", "dato", "paleta", "musica", "duracion_s", "estado", "frases"):
+            if campo not in v:
+                err("M13 sabias[%d] sin %s" % (i, campo))
+        for clave, vistos in (("id", ids), ("slug", slugs)):
+            if v.get(clave) in vistos:
+                err("M13 sabias: %s repetido %s" % (clave, v.get(clave)))
+            vistos.add(v.get(clave))
+        if v.get("estado") not in ("listo", "publicado", "incompleto"):
+            err("M13 sabias[%d] estado %r" % (i, v.get("estado")))
+        if paletas and v.get("paleta") not in paletas:
+            err("M13 sabias[%d] paleta %r desconocida" % (i, v.get("paleta")))
+        if v.get("musica") not in musica:
+            err("M13 sabias[%d] música %r no está en el catálogo" % (i, v.get("musica")))
+        r = str(v.get("ruta", ""))
+        if os.path.isabs(r):
+            err("M13 sabias[%d] la ruta debe ser relativa a la raíz" % i)
+            continue
+        for f in ("guion.json", "caption.md"):
+            if not os.path.exists(os.path.join(RAIZ, r, f)):
+                err("M13 sabias[%d] %s sin %s" % (i, r, f))
+        g = cargar(os.path.join(r, "guion.json")) if os.path.exists(os.path.join(RAIZ, r, "guion.json")) else {}
+        if g and g.get("tipo") != "sabias":
+            err("M13 sabias[%d] %s/guion.json no es de /sabias (tipo %r)" % (i, r, g.get("tipo")))
+        if not os.path.exists(os.path.join(RAIZ, r, "video.mp4")):
+            warn("M13 sabias[%d] %s/video.mp4 no está (fuera de git: se regenera con /sabias)" % (i, r))
+
+
+def validar_explicaciones(paletas):
+    """M12 memoria/explicaciones.json (registro de /explica)."""
+    rel_mem = "memoria/explicaciones.json"
+    if not os.path.exists(os.path.join(RAIZ, rel_mem)):  # ausente = ok: memoria.py --explica lo crea con la primera
+        return
+    d = cargar(rel_mem) or {}
+    musica = {p.get("id") for p in (cargar("design/musica/catalogo.json") or {}).get("pistas", [])}
+    ids, slugs = set(), set()
+    for i, v in enumerate(d.get("explicaciones", [])):
+        for campo in ("id", "slug", "fecha", "ruta", "paleta", "musica", "duracion_s", "estado", "frases"):
+            if campo not in v:
+                err("M12 explicaciones[%d] sin %s" % (i, campo))
+        for clave, vistos in (("id", ids), ("slug", slugs)):
+            if v.get(clave) in vistos:
+                err("M12 explicaciones: %s repetido %s" % (clave, v.get(clave)))
+            vistos.add(v.get(clave))
+        if v.get("estado") not in ("listo", "publicado", "incompleto"):
+            err("M12 explicaciones[%d] estado %r" % (i, v.get("estado")))
+        if paletas and v.get("paleta") not in paletas:
+            err("M12 explicaciones[%d] paleta %r desconocida" % (i, v.get("paleta")))
+        if v.get("musica") not in musica:
+            err("M12 explicaciones[%d] música %r no está en el catálogo" % (i, v.get("musica")))
+        r = str(v.get("ruta", ""))
+        if os.path.isabs(r):
+            err("M12 explicaciones[%d] la ruta debe ser relativa a la raíz" % i)
+            continue
+        for f in ("guion.json", "fuentes.md", "ejemplos.md", "caption.md"):
+            if not os.path.exists(os.path.join(RAIZ, r, f)):
+                err("M12 explicaciones[%d] %s sin %s" % (i, r, f))
+        g = cargar(os.path.join(r, "guion.json")) if os.path.exists(os.path.join(RAIZ, r, "guion.json")) else {}
+        if g and g.get("tipo") != "explica":
+            err("M12 explicaciones[%d] %s/guion.json no es de /explica (tipo %r)" % (i, r, g.get("tipo")))
+        if not os.path.exists(os.path.join(RAIZ, r, "video.mp4")):
+            warn("M12 explicaciones[%d] %s/video.mp4 no está (fuera de git: se regenera con /explica)" % (i, r))
+
+
 def validar_mejoras():
     """M11 memoria/mejoras.json (las mejoras al framework que lista el reporte de cada video)."""
     rel_mem = "memoria/mejoras.json"
@@ -638,7 +714,7 @@ def validar_mejoras():
         if not re.match(r"^m\d{3,}$", str(m.get("id"))) or m.get("id") in ids:
             err("M11 mejoras[%d] id %r inválido o repetido" % (i, m.get("id")))
         ids.add(m.get("id"))
-        if m.get("flujo") not in ("video", "noticias", "historia"):
+        if m.get("flujo") not in ("video", "noticias", "historia", "explica", "sabias"):
             err("M11 mejoras[%d] flujo %r (video|noticias|historia)" % (i, m.get("flujo")))
         if m.get("estado") not in ("pendiente", "hecha", "descartada"):
             err("M11 mejoras[%d] estado %r" % (i, m.get("estado")))
@@ -695,6 +771,8 @@ def main():
     validar_videos(paletas)
     validar_noticias(paletas)
     validar_historias(paletas)
+    validar_explicaciones(paletas)
+    validar_sabias(paletas)
     validar_mejoras()
     for a in AVISOS:
         print("AVISO  " + a)

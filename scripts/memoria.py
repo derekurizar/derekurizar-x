@@ -52,6 +52,18 @@
   repetido se actualiza (conserva su fecha). video.py lo lee para rotar
   la música de cada paleta.
 
+--explica <explicaciones/<fecha>-<slug>> [--estado listo|incompleto] [--dry-run]
+  memoria/explicaciones.json → explicaciones[] {id (= <fecha>-<slug>), slug, tema, fecha, ruta, mecanismo, duracion,
+  paleta, musica, duracion_s, creditos_voz, estado, frases {… como en --video}}; registrar el mismo slug reemplaza.
+  explica.py lo lee para avisar si el tema ya se explicó, rotar gancho, cierre, animaciones y música, y para las frases
+  ya usadas (C11).
+
+--sabias <datos/<fecha>-<slug>/video> [--estado listo|incompleto] [--dry-run]
+  memoria/sabias.json → sabias[] {id (= sabias-<slug>), slug, tema, fecha, ruta, dato, paleta, musica, duracion_s,
+  creditos_voz, estado, frases {gancho, cierre, cierre_tipo, cierre_forma, cierre_mecanismo, visual, apoyo}}; registrar
+  el mismo dato reemplaza. sabias.py lo lee para rotar el visual del gancho, el apoyo, el cierre y la música, y para las
+  frases ya usadas. No toca memoria/videos.json (la rotación de /video sigue siendo suya).
+
 --mejoras ARCHIVO.json [--dry-run]
   Las mejoras al framework que encontró una corrida de /video, /noticias o /historia (las lista el reporte final) →
   memoria/mejoras.json → mejoras[] {id (mNNN), fecha, flujo, pieza, area, archivo, problema, propuesta, estado}.
@@ -109,6 +121,18 @@ VACIO_HISTORIAS = {
     "version": 1,
     "_comentario": "Registro de historias narradas producidas por /historia. Lo escribe SOLO scripts/memoria.py --historia <historias/<fecha>-<slug>>; scripts/historia.py lo lee para no repetir una historia, rotar ganchos, cierres, animaciones y música, y para las frases ya usadas (C11). estado: listo | publicado | incompleto.",
     "historias": [],
+}
+EXPLICACIONES = os.path.join(RAIZ, "memoria", "explicaciones.json")
+VACIO_EXPLICACIONES = {
+    "version": 1,
+    "_comentario": "Registro de videos explicativos producidos por /explica. Lo escribe SOLO scripts/memoria.py --explica <explicaciones/<fecha>-<slug>>; scripts/explica.py lo lee para no repetir un tema, rotar ganchos, cierres, animaciones y música, y para las frases ya usadas (C11). estado: listo | publicado | incompleto.",
+    "explicaciones": [],
+}
+SABIAS = os.path.join(RAIZ, "memoria", "sabias.json")
+VACIO_SABIAS = {
+    "version": 1,
+    "_comentario": "Registro de videos «¿Sabías que…?» producidos por /sabias desde un dato de datos/. Lo escribe SOLO scripts/memoria.py --sabias <datos/<fecha>-<slug>/video>; scripts/sabias.py lo lee para rotar el visual del gancho, el apoyo, el cierre y la música, y para las frases ya usadas. estado: listo | publicado | incompleto.",
+    "sabias": [],
 }
 MEJORAS = os.path.join(RAIZ, "memoria", "mejoras.json")
 VACIO_MEJORAS = {
@@ -633,6 +657,70 @@ def registrar_historia(d, estado, dry_run=False):
     return 0
 
 
+def registrar_explica(d, estado, dry_run=False):
+    """--explica DIR: registra en memoria/explicaciones.json el video de /explica entregado en DIR
+    (explicaciones/<fecha>-<slug>, con guion.json de entrega)."""
+    ruta = os.path.normpath(d)
+    g = leer(os.path.join(RAIZ, ruta, "guion.json"), obligatorio=False)
+    if not g or g.get("tipo") != "explica" or not g.get("id"):
+        print("ERROR: %s no tiene guion.json de entrega de /explica (scripts/explica.py entregar)" % ruta, file=sys.stderr)
+        return 1
+    reg = {"id": g["id"], "slug": g["slug"], "tema": g.get("tema", ""), "fecha": g["fecha"], "ruta": ruta,
+           "mecanismo": g.get("mecanismo"), "duracion": g.get("duracion"), "paleta": g["paleta"], "musica": g["musica"],
+           "duracion_s": g["duracion_s"], "creditos_voz": g.get("creditos_voz"), "estado": estado, "frases": frases_video(g)}
+    me = leer(EXPLICACIONES, obligatorio=False) or json.loads(json.dumps(VACIO_EXPLICACIONES))
+    previos = [i for i, v in enumerate(me["explicaciones"]) if v.get("slug") == reg["slug"]]
+    if previos:  # volver a registrar la misma explicación reemplaza (y conserva «publicado»)
+        if me["explicaciones"][previos[0]].get("estado") == "publicado" and estado == "listo":
+            reg["estado"] = "publicado"
+        me["explicaciones"][previos[0]] = reg
+    else:
+        me["explicaciones"].append(reg)
+    me["explicaciones"].sort(key=lambda v: (v["fecha"], v["id"]))
+    fr = reg["frases"]
+    print("explicación %s · %.0f s · gancho %s/%s · cierre %s · %s" % (reg["id"], reg["duracion_s"], fr.get("familia"),
+                                                                     fr.get("visual"), fr.get("cierre_forma"), reg["estado"]))
+    if dry_run:
+        print("[dry-run] no se escribió nada")
+        return 0
+    escribir(EXPLICACIONES, me)
+    print("escrito memoria/explicaciones.json (%d explicaciones)" % len(me["explicaciones"]))
+    return 0
+
+
+def registrar_sabias(d, estado, dry_run=False):
+    """--sabias DIR: registra en memoria/sabias.json el «¿Sabías que…?» entregado en DIR (datos/<fecha>-<slug>/video, con
+    guion.json de entrega)."""
+    ruta = os.path.normpath(d)
+    g = leer(os.path.join(RAIZ, ruta, "guion.json"), obligatorio=False)
+    if not g or g.get("tipo") != "sabias" or not g.get("id"):
+        print("ERROR: %s no tiene guion.json de entrega de /sabias (scripts/sabias.py entregar)" % ruta, file=sys.stderr)
+        return 1
+    fv = frases_video(g)
+    frases = {k: fv.get(k) for k in ("gancho", "cierre", "cierre_tipo", "cierre_forma", "cierre_mecanismo", "visual")}
+    frases["apoyo"] = g.get("apoyo")
+    reg = {"id": g["id"], "slug": g["slug"], "tema": g.get("tema", ""), "fecha": g["fecha"], "ruta": ruta, "dato": g.get("dato"),
+           "paleta": g["paleta"], "musica": g["musica"], "duracion_s": g["duracion_s"], "creditos_voz": g.get("creditos_voz"),
+           "estado": estado, "frases": frases}
+    ms = leer(SABIAS, obligatorio=False) or json.loads(json.dumps(VACIO_SABIAS))
+    previos = [i for i, v in enumerate(ms["sabias"]) if v.get("slug") == reg["slug"]]
+    if previos:  # volver a registrar el mismo dato reemplaza (y conserva «publicado»)
+        if ms["sabias"][previos[0]].get("estado") == "publicado" and estado == "listo":
+            reg["estado"] = "publicado"
+        ms["sabias"][previos[0]] = reg
+    else:
+        ms["sabias"].append(reg)
+    ms["sabias"].sort(key=lambda v: (v["fecha"], v["id"]))
+    print("sabías %s · %.0f s · gancho %s · apoyo %s · cierre %s · %s" % (reg["id"], reg["duracion_s"], frases["visual"],
+                                                                        frases["apoyo"] or "ninguno", frases["cierre_forma"], reg["estado"]))
+    if dry_run:
+        print("[dry-run] no se escribió nada")
+        return 0
+    escribir(SABIAS, ms)
+    print("escrito memoria/sabias.json (%d)" % len(ms["sabias"]))
+    return 0
+
+
 def registrar_mejoras(archivo, dry_run=False):
     """--mejoras ARCHIVO: añade las mejoras al framework de una corrida a memoria/mejoras.json (sin repetir una pendiente)."""
     d = leer(archivo, obligatorio=False)
@@ -720,7 +808,9 @@ def main():
     g.add_argument("--informes", nargs="?", const="", metavar="TEMA", help="lista los informes de memoria/informes.json (/investigacion) y el siguiente N.º; con TEMA filtra")
     g.add_argument("--noticias", metavar="DIR", help="registra el noticiero de /noticias entregado en DIR (noticias/<fecha>) en memoria/noticias.json")
     g.add_argument("--video", metavar="DIR", help="registra el video de /video entregado en DIR (hilos/<fecha>-<slug>/video) en memoria/videos.json")
+    g.add_argument("--sabias", metavar="DIR", help="registra el «¿Sabías que…?» de /sabias entregado en DIR (datos/<fecha>-<slug>/video) en memoria/sabias.json")
     g.add_argument("--historia", metavar="DIR", help="registra la historia de /historia entregada en DIR (historias/<fecha>-<slug>) en memoria/historias.json")
+    g.add_argument("--explica", metavar="DIR", help="registra el video de /explica entregado en DIR (explicaciones/<fecha>-<slug>) en memoria/explicaciones.json")
     g.add_argument("--mejoras", metavar="ARCHIVO", help="añade las mejoras al framework de una corrida (JSON {flujo, pieza, mejoras[]}) a memoria/mejoras.json")
     g.add_argument("--ver-mejoras", nargs="?", const="", metavar="ESTADO", help="lista las mejoras de memoria/mejoras.json (con ESTADO: pendiente|hecha|descartada)")
     g.add_argument("--marcar-mejora", metavar="ID", help="cambia el estado de una mejora (con --como)")
@@ -749,8 +839,12 @@ def main():
         return registrar_video(a.video, a.estado, a.dry_run)
     if a.noticias:
         return registrar_noticias(a.noticias, a.estado, a.dry_run)
+    if a.sabias:
+        return registrar_sabias(a.sabias, a.estado, a.dry_run)
     if a.historia:
         return registrar_historia(a.historia, a.estado, a.dry_run)
+    if a.explica:
+        return registrar_explica(a.explica, a.estado, a.dry_run)
     if a.datos is not None:
         return listar_datos(a.datos, a.max)
     if a.informes is not None:

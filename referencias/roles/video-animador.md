@@ -34,7 +34,7 @@ ANIM.registrar('<id>', {
 - **id**: minúsculas y guiones, por lo que la animación HACE, no por el video (`cola-anillo`, `tanque-balance`,
   `ciclo-vicioso`, `ola-calor`), para que sirva a otros temas. El archivo es `video/animaciones/<id>.js`.
 - **meta**: `descripcion` (10–160 caracteres, qué muestra), `mecanismo` (uno de `cadena|ciclo|balance|onda|embudo|
-  proporcion|umbral|cronologia`, el de la escena: con él la encuentra el próximo guionista), `temas` (palabras para encontrarla), `pasos` [mín, máx]
+  proporcion|umbral|cronologia|exponencial`, el de la escena: con él la encuentra el próximo guionista), `temas` (palabras para encontrarla), `pasos` [mín, máx]
   dentro de 2–6, y `ejemplo` con un título y pasos reales: con ese ejemplo se prueba en `--check`.
 - **`pintar(lienzo, P, ctx)`**: `lienzo` es un `div` de `ctx.ancho` × `ctx.alto` px (≈ 791 × 900 en 9:16; ≈ 910 × 800
   en 4:5) entre el título de arriba y los subtítulos; `P = {titulo, pasos}` (textos del guion); `ctx = {colores, F45,
@@ -103,3 +103,18 @@ ruta que siguió el producto, por qué una decisión llevó a la siguiente), y e
 (`--asignar` corre `historia.py guion --check`, que también exige que cada año y número de los pasos esté en la
 cronología). Registra con `--video <slug de la historia>`. Antes de escribir una nueva, revisa `cronologia` (una línea
 de eventos con fecha) y `cadena` en el catálogo.
+
+## Modo explica (`/explica`)
+
+Igual, con tres diferencias:
+- La animación es el **corazón del acto 2**: muestra el mecanismo que la voz explica (cómo el interés gana sobre lo
+  ganado, cómo se reparte una tarifa, cómo un voto se vuelve un escaño), no los datos.
+- Respeta la **leyenda de color del encuadre**: el concepto en acento de la escena (`acento`) es lo ÚNICO en acento,
+  y es el mismo que va en acento en la pizarra y en las tarjetas. Lo demás, en crema y crema tenue.
+- Los números de los pasos son de ejemplo (ids `ej-cNN`) o reales con respaldo; el guion es el de `/explica`
+  (`--asignar` corre `explica.py guion --check`).
+
+Para lo que crece sobre sí mismo, usa el mecanismo `exponencial`; su semilla es `bola-nieve` (columnas en tres capas
+con la de acento que engorda). Si el video pide otra forma del mismo mecanismo (la regla del 72 como un cuadro que se
+parte en 2, 4, 8, 16; un contagio que se duplica), escríbela: queda en la biblioteca. Registra con
+`--video explica-<slug>`.

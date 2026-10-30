@@ -30,6 +30,7 @@ Subcomandos (TRABAJO = sesiones/<slug>/video):
 Exit: 0 ok · 1 gate o paso fallido · 2 uso incorrecto.
 """
 import argparse
+import array
 import datetime
 import difflib
 import glob
@@ -42,6 +43,7 @@ import subprocess
 import sys
 import unicodedata
 import urllib.request
+import wave
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(RAIZ, "scripts"))
@@ -67,6 +69,14 @@ COLA_CIERRE = 2.8    # «Sígueme en» se queda en pantalla tras la pregunta fin
 # secuencias de voz (/historia): grupos de 2–SECUENCIA_MAX escenas consecutivas cuya voz se genera en UN nodo TTS (la
 # entonación no se reinicia en cada escena) y se corta después por escena con los tiempos de Scribe (`partir`)
 SECUENCIA_MAX, SECUENCIA_CARACTERES = 5, 1200
+# narración de corrido (V17–V18; las mismas reglas que H15, H16, H11 y H19 de /historia): el guion trae guion.narracion,
+# 3 actos de texto corrido, y cada escena reparte un tramo sin cambiar una palabra; la causalidad vive en el texto
+NARRACION_VIDEO = True             # historia.aplicar_extension lo apaga: /historia trae su propio gate (H15–H19)
+CONECTORES_MIN_ACTO = {"corto": 1, "prueba": 1}   # conectores causales o temporales por acto; 2 en medio y largo
+CONECTORES_MIN_ACTO_DEF = 2
+SEGUN_MAX_DATO, SEGUN_MAX_ACTO_DATO = 3, 2
+CORTES_MAX_POR_MIN, APERTURAS_ATRIBUIDAS_MAX = 6.5, 1
+SIN_SECUENCIA = ()                 # tipos cuya voz se graba sola (la pausa de la adivina es un <break> de su prompt: entra)
 # «En Guatemala» ya no se antepone a la voz del gancho (2026-10-23, decisión del usuario): abrir con contexto frena
 # menos; «Guatemala» se dice o se lee en los primeros 6 s donde funcione mejor (R6, referencias/ganchos.md)
 ANIO = int(os.environ.get("HILOS_ANIO") or datetime.date.today().year)   # R7: «hoy» solo con datos de este año
@@ -186,7 +196,7 @@ BREAK = '<break time="%.1fs" />'
 PAUSAS_MAX_ESCENA, PAUSAS_MAX_VIDEO = 1, 3
 RE_CIFRA_ID = re.compile(r"\b([a-z]{2,6}-c\d{2,3})(?:\.(serie|partes)\[(-?\d+)\])?")
 CONSTANTES_CALCULO = {7, 12, 24, 30, 31, 52, 100, 365, 1000, 1000000}
-PUNTAJES = ("gancho", "bucle", "ritmo", "escala_humana", "pago", "cierre")   # critica.json (W10 lo coteja con video.js)
+PUNTAJES = ("gancho", "bucle", "ritmo", "flujo", "escala_humana", "pago", "cierre")   # critica.json (W10 lo coteja con video.js)
 TOLERANCIA = 0.10    # V4 (estimada) · V6 avisa con 0.15 sobre la real
 MUSICA_VOLUMEN = 0.22  # antes del ducking: bajo la voz queda ≈ 0.075
 VOZ_LUFS = -18.0       # la voz se nivela antes de usarla como llave del sidechain
@@ -228,6 +238,7 @@ MECANISMOS_EXPLICA = {
     "proporcion": "una división: si el denominador no crece, el cociente apenas cambia",
     "umbral": "se acumula hasta cruzar un límite y entonces cambia de estado",
     "cronologia": "eventos con fecha, uno tras otro en el tiempo",
+    "exponencial": "crece sobre lo acumulado: cada vuelta suma un porcentaje de todo lo que ya hay (interés compuesto, contagio)",
 }
 ROTACION_ANIMACIONES = 2   # una animación no repite la de los últimos 2 videos (memoria/videos.json → frases.animaciones)
 ICONOS_DIR = os.path.join(RAIZ, "design", "iconos")   # biblioteca FIJA de iconos (scripts/iconos.py --importar, K3)
@@ -1033,6 +1044,17 @@ def cmd_preparar(a):
            "- «Guatemala» se dice o se lee en los primeros 6 s (R6): en la voz o la pantalla del gancho, o en la primera oración "
            "de T1. El script ya no antepone «En Guatemala» y la voz no abre con contexto (R3).",
            "- Música: %s (%s)" % (musica["id"], musica.get("ambiente", "")),
+           "", "## Narración (V17–V18: las reglas de narración de /historia)",
+           "- PRIMERO escribe `narracion`: 3 actos de texto corrido que cuentan el hilo como una historia, en una sola voz: acto 1 "
+           "= el gancho tal cual, T1 y quién vive la cifra (la gente, el lugar) hasta la promesa; acto 2 = el nudo (el giro); "
+           "acto 3 = el impacto, el pago y el cierre. Cada oración sigue de la anterior con un porque, un pero o un entonces "
+           "(≥ %d conectores causales o temporales por acto, nunca «y luego»); los saltos de tiempo y de lugar se dicen; cada "
+           "institución se presenta la primera vez; las cifras van dentro de oraciones que cuentan algo, nunca «X: cifra, cifra»; "
+           "«esos N…» solo si ya se dijo; «según» ≤ %d. Mídela: `python3 scripts/video.py narracion TRABAJO --check`."
+           % (CONECTORES_MIN_ACTO.get(a.duracion, CONECTORES_MIN_ACTO_DEF), SEGUN_MAX_DATO),
+           "- DESPUÉS repártela en escenas SIN cambiar una palabra (cada escena con su `acto`; cada acto es la suma literal de "
+           "sus voces y, en el 3, del cierre). El gate agrupa las escenas seguidas de un acto en secuencias de voz grabadas de "
+           "una vez.",
            "", "## Estructura (la comprueba el gate V9)",
            "1. Escena 1 = **gancho**: lo escribe el agente `video-gancho` (4–5 candidatos en ganchos.json) y lo elige el crítico; "
            "el guionista lo copia con `video.py ganchos TRABAJO --usar` y no lo cambia. `familia` (%s), `visual` (%s), "
@@ -1040,9 +1062,8 @@ def cmd_preparar(a):
            "**en silencio**; la voz es una oración con `verbo`. Reglas R1–R12 en referencias/ganchos.md."
            % (" | ".join(FAMILIAS), " | ".join(VISUALES), PANTALLA_PALABRAS, PANTALLA_CARACTERES, LINEA_PALABRAS, LINEA_CARACTERES),
            "2. Escena 2 = la **tarjeta T1**, sin enlace. Luego tarjetas y golpes en el orden del arco.",
-           "3. Desde la escena 3, `enlace` pero | por_eso | y, y la voz EMPIEZA con ese conector (pero / sin embargo / aunque / "
-           "solo que / en cambio / aun así · por eso / así que / entonces / el resultado / de ahí que / la consecuencia · y / además / "
-           "también / encima / más aún). «y» como máximo en un tercio de los enlaces; nunca «y luego».",
+           "3. `enlace` (pero | por_eso | y) es opcional desde la escena 3: solo elige el efecto de sonido. La causalidad va en "
+           "la narración (un «pero» o un «por eso» puede ir en medio de la oración); marca el giro con `enlace: \"pero\"`.",
            "4. Cada tarjeta lleva `golpe` (≤ %d palabras, ≤ %d caracteres): el re-gancho que va arriba, en lenguaje llano, con la "
            "cifra si cabe; nunca el titular de la tarjeta." % (GOLPE_PALABRAS, GOLPE_CARACTERES),
            "5. Las escenas `golpe` (texto a pantalla completa) llevan `pantalla` + `linea` + `verbo`; nunca dos seguidas ni en la escena 2; "
@@ -1576,23 +1597,13 @@ def validar_estructura(g, st, dur, tarjetas):
         f.append("V9 la escena 2 debe ser la tarjeta T1 (el gancho se paga con la primera tarjeta)")
     elif escenas[1].get("enlace"):
         f.append("V9 escena 2: la primera tarjeta no lleva enlace")
-    # V9: enlaces, golpes y escenas golpe
-    n_y, n_enl = 0, 0
-    ejemplos = {"pero": "«Pero …», «Sin embargo …»", "por_eso": "«Por eso …», «Así que …»", "y": "«Y …», «Además …»"}
+    # V9: enlaces (opcionales: solo eligen el efecto de sonido; la causalidad vive en la narración, V18), golpes y
+    # escenas golpe
     for i, e in enumerate(escenas, 1):
         tipo = e.get("tipo")
-        if i >= 3 and tipo in CON_TUIT + ESCENAS_TEXTO + ("explica",):
-            enl = e.get("enlace")
-            if not enl:
-                f.append("V9 escena %d: falta enlace (pero|por_eso|y)" % i)
-            elif enl not in ENLACES:
-                f.append("V9 escena %d: enlace «%s» no es pero|por_eso|y" % (i, enl))
-            else:
-                n_enl += 1
-                n_y += enl == "y"
-                if not RE_ENLACE[enl].match(sin_pausas(e.get("texto") or "").strip()):
-                    f.append("V9 escena %d: la voz no empieza con un conector de tipo «%s» (p. ej. %s): «%s…»"
-                             % (i, enl, ejemplos[enl], (e.get("texto") or "")[:40]))
+        enl = e.get("enlace")
+        if i >= 3 and tipo in CON_TUIT + ESCENAS_TEXTO + ("explica",) and enl and enl not in ENLACES:
+            f.append("V9 escena %d: enlace «%s» no es pero|por_eso|y" % (i, enl))
         if tipo in CON_TUIT:
             golpe = (e.get("golpe") or "").strip()
             if not golpe:
@@ -1631,8 +1642,6 @@ def validar_estructura(g, st, dur, tarjetas):
                 f.append("V9 escena %d (explica): %s" % (i, motivo))
         if tipo in ESCENAS_TEXTO and i >= 2 and escenas[i - 2].get("tipo") in ESCENAS_TEXTO:
             f.append("V9 escena %d: dos golpes seguidos (golpe, definición y adivina son escenas de texto: entre dos va una tarjeta)" % i)
-    if n_enl and n_y > n_enl // 3:
-        f.append("V9 %d enlaces «y» de %d; máximo %d (encadena con «pero» o «por eso»)" % (n_y, n_enl, n_enl // 3))
     # V9: promesa y pago
     p = g.get("promesa")
     n = len(escenas)
@@ -1669,7 +1678,13 @@ def cmd_guion(a):
     tarjetas = {t["n"]: t for t in st["tarjetas"]}
     escenas = g.get("escenas") or []
     cierre = g.get("cierre") or {}
+    if NARRACION_VIDEO and escenas and g.get("secuencias") is None and g.get("narracion"):
+        # la voz de corrido: tramos del mismo acto grabados de una vez (la adivina, con su pausa, va sola)
+        g["secuencias"] = secuencias_por_defecto(g, sueltas=SIN_SECUENCIA)
+        g["voz_continua"] = bool(g["secuencias"])
     fallas = validar_estructura(g, st, dur, tarjetas)
+    if NARRACION_VIDEO:
+        fallas += revisar_narracion_video(g, st)
 
     # V5 reglas
     textos = [e.get("texto", "") for e in escenas] + [cierre.get("texto", "")]
@@ -1925,8 +1940,312 @@ def cmd_guion(a):
              {"voz": VOZ, "caracteres": chars, "estimado_s": round(estimado, 1), "duracion": st["duracion"],
               "objetivo_s": dur["s"], "n_escenas": len(escenas), "promesa": g.get("promesa"),
               "voz_continua": bool(g.get("voz_continua")) and bool(secuencias), "secuencias": secuencias, "escenas": loc})
-    print("→ %s · V1–V5, V9 ok%s" % (rel(os.path.join(trabajo, "locucion.json")),
+    print("→ %s · V1–V5, V9%s ok%s" % (rel(os.path.join(trabajo, "locucion.json")), ", V17–V18" if NARRACION_VIDEO else "",
                                      " · voz de corrido en %d secuencia(s)" % len(secuencias) if g.get("voz_continua") and secuencias else ""))
+    return 0
+
+
+# ---------- narración de corrido (compartida con /historia) ----------
+RE_SEGUN = re.compile(r"\b(?:seg[uú]n|de acuerdo con)\b", re.I)
+RE_SEGUN_FUENTE = re.compile(r"\b(?:[Ss]eg[uú]n|[Dd]e acuerdo con)\s+(?:la |el |los |las |un |una )?((?:[A-ZÁÉÍÓÚÑ][\w.&-]*)(?:\s+(?:de |del |la |y )?[A-ZÁÉÍÓÚÑ][\w.&-]*)*)")
+APERTURA_ATRIBUIDA = re.compile(r"^[¿¡«\s]*(?:(?:pero|y|por eso|así que|asi que|entonces)[,\s]+)?(?:seg[uú]n|de acuerdo con)\b", re.I)
+# conectores causales y temporales que hacen que la narración siga de corrido
+CONECTORES_NARRACION = re.compile(
+    r"\b(?:pero|sin embargo|aun así|en cambio|por eso|así que|asi que|entonces|hasta que|mientras tanto|porque|"
+    r"(?:\d+|un|una|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|doce|quince|veinte) (?:años?|meses|semanas|d[ií]as) (?:después|antes|más tarde|mas tarde)|"
+    r"(?:ese|esa) (?:mismo |misma )?(?:d[ií]a|mes|año|semana|noche|tarde|mañana)|al d[ií]a siguiente|al año siguiente|"
+    r"(?:poco|meses|años|semanas|décadas|decadas) después)\b", re.I)
+# un demostrativo («esos 40 niños», «ese alimento») apunta a algo que ya se dijo o se leyó antes; los de tiempo no cuentan
+RE_DEMOSTRATIVO = re.compile(r"\b(es[oa]s|ese|esa|aquel(?:l[oa]s?)?|dich[oa]s?)\s+(?:(\d[\d.,]*)\s+)?([a-záéíóúñü]{3,})", re.I)
+HILO_LIBRES = {"año", "años", "epoca", "época", "épocas", "momento", "momentos", "vez", "veces", "fecha", "fechas", "dia",
+               "día", "días", "tiempo", "tiempos", "decada", "década", "décadas", "mes", "meses", "siglo", "entonces",
+               "fue", "era", "eran", "son", "sería", "que", "mismo", "misma", "mismos", "mismas", "otra", "otro", "otras",
+               "otros", "sola", "solo", "parte", "forma", "manera", "idea"}
+
+
+def acto_de(e, i):
+    """El acto de la escena i: el gancho (escena 1) es el acto 1 (ganchos --usar lo reescribe sin el campo)."""
+    return 1 if i == 1 else e.get("acto")
+
+
+def narracion_de(g):
+    """[(acto, texto)] de guion.narracion (3 entradas {acto, texto}); [] si no viene."""
+    return [(x.get("acto"), (x.get("texto") or "").strip()) for x in g.get("narracion") or [] if isinstance(x, dict)]
+
+
+def plano_voz(t):
+    return _plano(sin_pausas(t or ""))
+
+
+def estimado_guion_s(g):
+    """Segundos estimados del guion sin locución (dígitos sin convertir): lo bastante para contar cortes por minuto."""
+    es = g.get("escenas") or []
+    return sum(len(sin_pausas(e.get("texto") or "")) for e in es + [g.get("cierre") or {}]) / CPS + COLA * len(es) + COLA_CIERRE
+
+
+def revisar_reparto(g, cod="V17"):
+    """La narración de corrido: 3 entradas {acto 1|2|3, texto} y, con escenas, cada acto es la suma EXACTA de las voces
+    de sus escenas (el cierre, en el acto 3): el texto se escribe primero y se reparte sin cambiar una palabra."""
+    f = []
+    escenas, cierre = g.get("escenas") or [], g.get("cierre") or {}
+    narr = narracion_de(g)
+    if not narr or [a for a, _ in narr] != [1, 2, 3] or not all(t for _, t in narr):
+        return ["%s «narracion»: 3 entradas {acto: 1|2|3, texto} con el texto corrido de cada acto (se escribe ANTES de "
+                "repartirlo en escenas; cada escena toma un tramo sin cambiar una palabra)" % cod]
+    actos = [acto_de(e, i) for i, e in enumerate(escenas, 1)]
+    for ac, texto in (narr if escenas else []):
+        voces = [e.get("texto") or "" for e, a in zip(escenas, actos) if a == ac]
+        if ac == 3:
+            voces.append(cierre.get("texto") or "")
+        esperado, dado = plano_voz(" ".join(voces)), plano_voz(texto)
+        if esperado != dado:
+            k = next((j for j, (x, y) in enumerate(zip(esperado, dado)) if x != y), min(len(esperado), len(dado)))
+            f.append("%s acto %d: la narración no es la suma de las voces de sus escenas%s; difieren desde «…%s» (narración) frente a "
+                     "«…%s» (voces): reparte el texto tal cual o corrige la narración" % (cod, ac, " y el cierre" if ac == 3 else "",
+                                                                                        dado[max(0, k - 20):k + 25], esperado[max(0, k - 20):k + 25]))
+    return f
+
+
+def revisar_hilo_voz(g, cod="V18", conectores_min=CONECTORES_MIN_ACTO_DEF, cortes_falla=True):
+    """Flujo de la voz: ≥ conectores_min conectores causales o temporales por acto, ≤ 1 escena que abre con una
+    atribución, dos escenas seguidas que no abren igual y ≤ 6.5 cortes por minuto (falla en /historia; en /video, cuyo
+    ritmo cambia de escena cada pocos segundos, aviso). Sin escenas, solo los conectores."""
+    f = []
+    escenas, cierre = g.get("escenas") or [], g.get("cierre") or {}
+    narr = narracion_de(g)
+    for ac, texto in narr:
+        n_c = len(CONECTORES_NARRACION.findall(sin_pausas(texto)))
+        if n_c < conectores_min:
+            f.append("%s acto %d: %d conector(es) causal o temporal («pero», «por eso», «entonces», «dos años después», «mientras "
+                     "tanto»…); van ≥ %d: cada oración sigue de la anterior, nunca «y luego»" % (cod, ac, n_c, conectores_min))
+    if not escenas:
+        return f
+    unidades = [sin_pausas(e.get("texto") or "").strip() for e in escenas] + [sin_pausas(cierre.get("texto") or "").strip()]
+    ap = [i for i, u in enumerate(unidades[:-1], 1) if i >= 2 and APERTURA_ATRIBUIDA.match(u)]
+    if len(ap) > APERTURAS_ATRIBUIDAS_MAX:
+        f.append("%s %d escenas abren con una atribución («Según…», «Pero, según…»: escenas %s); va ≤ %d: la fuente en pantalla "
+                 "y la voz narra" % (cod, len(ap), ", ".join(map(str, ap)), APERTURAS_ATRIBUIDAS_MAX))
+    dos = [" ".join(plano_voz(u).split()[:2]) for u in unidades[:-1]]
+    for i in range(1, len(dos)):
+        if dos[i] and dos[i] == dos[i - 1]:
+            f.append("%s escenas %d y %d abren con las mismas palabras («%s»): varía la apertura" % (cod, i, i + 1, dos[i]))
+    primeras = {}
+    for u in unidades[1:-1]:
+        w = (plano_voz(u).split() or [""])[0]
+        primeras[w] = primeras.get(w, 0) + 1
+    for w, n in primeras.items():
+        if n > 3 and w:
+            print("AVISO %s %d escenas abren con «%s»: varía la apertura" % (cod, n, w))
+    est = estimado_guion_s(g)
+    cpm = (len(escenas) + 1) / max(1.0, est / 60)
+    if cpm > CORTES_MAX_POR_MIN:
+        msg = ("%s %.1f cortes por minuto (%d escenas más el cierre en %.0f s); van ≤ %.1f: una escena puede sostener un tramo "
+               "más largo de narración" % (cod, cpm, len(escenas), est, CORTES_MAX_POR_MIN))
+        if cortes_falla:
+            f.append(msg)
+        else:
+            print("AVISO", msg)
+    return f
+
+
+def revisar_segun(g, cod="V18", maximo=SEGUN_MAX_DATO, por_acto_max=SEGUN_MAX_ACTO_DATO):
+    """«Según» con medida: ≤ maximo en la voz, ≤ por_acto_max por acto, nunca en dos escenas seguidas, nunca la misma
+    fuente dos veces en voz. Sin escenas, las unidades son los actos de la narración."""
+    f = []
+    escenas, cierre = g.get("escenas") or [], g.get("cierre") or {}
+    narr = narracion_de(g)
+    solo_narr = not escenas
+    unidades = [t for _, t in narr] if solo_narr else \
+        [sin_pausas(e.get("texto") or "").strip() for e in escenas] + [sin_pausas(cierre.get("texto") or "").strip()]
+    actos = [acto_de(e, i) for i, e in enumerate(escenas, 1)]
+    etiqueta = (lambda k: "acto %d" % (k + 1)) if solo_narr else (lambda k: "escena %d" % (k + 1))  # noqa: E731
+    segs = [len(RE_SEGUN.findall(u)) for u in unidades]
+    if sum(segs) > maximo:
+        f.append("%s %d «según» en la voz; van ≤ %d: lo corroborado se narra llano con la fuente en pantalla; varía con una "
+                 "aposición («AMSA, la autoridad del lago, …») o el verbo de la fuente («el tribunal calificó…»)" % (cod, sum(segs), maximo))
+    por_acto = {}
+    for k, n in enumerate(segs):
+        ac = (k + 1) if solo_narr else (actos[k] if k < len(actos) else 3)
+        por_acto[ac] = por_acto.get(ac, 0) + n
+    for ac, n in sorted(por_acto.items(), key=lambda kv: str(kv[0])):
+        if n > por_acto_max:
+            f.append("%s acto %s: %d «según»; van ≤ %d por acto" % (cod, ac, n, por_acto_max))
+    if not solo_narr:
+        for i in range(1, len(segs)):
+            if segs[i - 1] and segs[i]:
+                f.append("%s escenas %d y %d: «según» en dos escenas seguidas; la segunda fuente va solo en pantalla" % (cod, i, i + 1))
+    fuentes_voz = {}
+    for k, u in enumerate(unidades):
+        for m in RE_SEGUN_FUENTE.finditer(u):
+            fuentes_voz.setdefault(_plano(m.group(1)), []).append(etiqueta(k))
+    for fu, ns in fuentes_voz.items():
+        if len(ns) > 1:
+            f.append("%s «según %s» %d veces en voz (%s): la segunda vez va solo en pantalla" % (cod, fu, len(ns), ", ".join(ns)))
+    return f
+
+
+def hilo_referencias(escenas, cod="V18"):
+    """Cada «esos 40 niños», «ese alimento», «esa línea» tiene su antecedente en lo que ya se oyó o se leyó antes: la cifra
+    y la palabra salen en una escena anterior (voz, pantalla, línea, titular, golpe) o antes en la misma voz."""
+    f, dicho = [], ""
+    llano = lambda t: _plano(re.sub(r"\{([\d.,]+):\w+\}", r"\1", t or ""))  # noqa: E731
+    for i, e in enumerate(escenas, 1):
+        voz = e.get("texto") or ""
+        for m in RE_DEMOSTRATIVO.finditer(voz):
+            num, pal = m.group(2), m.group(3).lower()
+            if pal in HILO_LIBRES or _plano(pal) in HILO_LIBRES:
+                continue
+            antes = dicho + " " + llano(voz[:m.start()])
+            raiz = _plano(pal[:-1] if pal.endswith("s") and len(pal) > 4 else pal)
+            falta = [x for x, ok in ((num, not num or re.search(r"\b%s\b" % re.escape(llano(num)), antes)),
+                                     (pal, re.search(r"\b%s" % re.escape(raiz), antes))) if x and not ok]
+            if falta:
+                f.append("%s escena %d: «%s» apunta a algo que no se dijo antes (%s no sale en ninguna escena "
+                         "anterior): di qué es aquí o cámbialo; si cambiaste el gancho u otra escena, relee el hilo "
+                         "entero" % (cod, i, m.group(0), " ni ".join("«%s»" % x for x in falta)))
+        dicho += " " + llano(" ".join(str(e.get(k) or "") for k in ("pantalla", "linea", "titular", "golpe", "titulo", "texto")))
+    return f
+
+
+def revisar_actos(g):
+    """V17 /video: cada escena lleva su `acto` (1–3) y no baja; el gancho es del 1, y los actos 1, 2 y 3 tienen escenas
+    propias (el cierre cierra el 3)."""
+    f, escenas = [], g.get("escenas") or []
+    actos = [acto_de(e, i) for i, e in enumerate(escenas, 1)]
+    malos = [i for i, a in enumerate(actos, 1) if a not in (1, 2, 3)]
+    if malos:
+        return ["V17 escenas %s sin «acto» (1, 2 o 3: planteamiento, nudo, desenlace)" % ", ".join(map(str, malos))]
+    if any(b < a for a, b in zip(actos, actos[1:])):
+        f.append("V17 los actos no bajan: %s" % actos)
+    if not {2, 3} <= set(actos[1:]):
+        f.append("V17 los actos 2 y 3 llevan al menos una escena cada uno (el cierre no basta para el 3)")
+    return f
+
+
+def secuencias_por_defecto(g, rompe=None, sueltas=()):
+    """Las secuencias de voz cuando el guion no las trae: tramos de escenas consecutivas del mismo acto, de 2 a
+    SECUENCIA_MAX, que se cortan donde `rompe(e)` (un giro o un rótulo en /historia); el gancho, el cierre y los tipos
+    de `sueltas` (la adivina, con su pausa) van solos."""
+    es = g.get("escenas") or []
+    tramos, actual = [], []
+    for i, e in enumerate(es, 1):
+        if i == 1:
+            continue
+        if e.get("tipo") in sueltas:
+            if actual:
+                tramos.append(actual)
+            actual = []
+            continue
+        corta = not actual or acto_de(e, i) != acto_de(es[actual[-1] - 1], actual[-1]) or (rompe and rompe(e))
+        if corta and actual:
+            tramos.append(actual)
+            actual = []
+        actual.append(i)
+    if actual:
+        tramos.append(actual)
+    out = []
+    for t in tramos:
+        while len(t) > SECUENCIA_MAX:
+            corte = SECUENCIA_MAX if len(t) - SECUENCIA_MAX != 1 else SECUENCIA_MAX - 1
+            out.append(t[:corte])
+            t = t[corte:]
+        if len(t) >= 2:
+            out.append(t)
+    return out
+
+
+def narracion_corrida(g, loc=None):
+    """[(acto, texto)]: la voz de corrido por acto, en palabras (locucion.json) si ya pasó el gate; si no, guion.narracion.
+    Ordena por acto (el gancho es del 1, el cierre del 3) y, dentro, por escena."""
+    es = g.get("escenas") or []
+    if loc and es:
+        por_acto = {}
+        for L in sorted(loc["escenas"], key=lambda x: x["n"]):
+            ac = acto_de(es[L["n"] - 1], L["n"]) if L["n"] - 1 < len(es) else 3
+            por_acto.setdefault(ac if ac in (1, 2, 3) else 2, []).append(L["voz"])
+        return [(ac, " ".join(por_acto[ac])) for ac in sorted(por_acto)]
+    return narracion_de(g)
+
+
+def lineas_oyente(g, loc, pantalla_de):
+    """El digesto del oyente ingenuo: primero la narración de corrido (para oírla como un documental, sin pantalla) y
+    luego, por escena, lo que se lee (pantalla_de(e)) y lo que dice la voz. Sin fuentes, sin ids, sin datos de más."""
+    es = g.get("escenas") or []
+    out = ["# Lo que se oye y se lee, en orden (%d escenas + cierre, ≈ %.0f s)" % (len(es), loc["estimado_s"]), "",
+           "## La narración de corrido (óyela primero, de principio a fin, sin pantalla)", ""]
+    out += ["%s" % t for _, t in narracion_corrida(g, loc)]
+    out += ["", "## Escena por escena (lo que se lee en pantalla y lo que dice la voz)", ""]
+    for L in loc["escenas"]:
+        e = es[L["n"] - 1] if L["n"] - 1 < len(es) else dict(g.get("cierre") or {}, tipo="cierre")
+        pant = pantalla_de(e)
+        out += ["E%d · %s%s" % (L["n"], L["tipo"], " · PANTALLA: %s" % pant if pant else ""), "   VOZ: %s" % L["voz"]]
+    return out
+
+
+def pantalla_video(e, tarjetas):
+    """Lo que se LEE en una escena de /video (sin ids ni fuentes): el golpe y el titular de su tarjeta."""
+    t = e.get("tipo")
+    if t == "gancho":
+        partes = [e.get("pantalla"), e.get("linea"), (e.get("visual_datos") or {}).get("etiqueta")]
+    elif t in CON_TUIT or t == "escala":
+        tj = tarjetas.get(e.get("tuit")) or {}
+        tit = (tj.get("datos") or {}).get("titular") or tj.get("titular")
+        partes = [e.get("golpe"), (tj.get("datos") or {}).get("kicker"), " ".join(tit) if isinstance(tit, list) else tit, e.get("etiqueta")]
+    elif t == "explica":
+        partes = [e.get("titulo")] + [str(p) for p in e.get("pasos") or []]
+    elif t == "cierre":
+        partes = list(e.get("resumen") or []) + [e.get("final")]
+    else:   # golpe, definicion, adivina
+        partes = [e.get("pantalla"), e.get("linea"), e.get("termino"), e.get("definicion"), e.get("pregunta")] + list(e.get("opciones") or [])
+    return " · ".join(str(x).strip() for x in partes if x and str(x).strip())
+
+
+def revisar_narracion_video(g, st):
+    """V17 (actos y reparto literal) + V18 (conectores por acto, aperturas, cortes, referencias y «según») de /video."""
+    conectores = CONECTORES_MIN_ACTO.get(st.get("duracion"), CONECTORES_MIN_ACTO_DEF)
+    f = revisar_reparto(g) + revisar_hilo_voz(g, conectores_min=conectores, cortes_falla=False) + revisar_segun(g)
+    if g.get("escenas"):
+        f = revisar_actos(g) + f + hilo_referencias(g["escenas"])
+    return f
+
+
+def cmd_narracion(a):
+    """Mide la narración de corrido (guion.narracion) ANTES de repartirla: palabras, segundos, conectores y «según» por
+    acto; --check falla con V17–V18 sobre la narración sola (sin escenas)."""
+    trabajo = os.path.abspath(a.trabajo)
+    st = estado(trabajo)
+    g = leer(os.path.join(trabajo, "guion.json"))
+    narr = narracion_de(g)
+    if not narr:
+        return falla("guion.json sin «narracion»: escribe primero [{acto: 1, texto}, {acto: 2, texto}, {acto: 3, texto}]")
+    total_p, total_s = 0, 0.0
+    for ac, t in narr:
+        pal, seg = palabras(t), len(sin_pausas(NE.convertir(t)[1])) / CPS
+        con = CONECTORES_NARRACION.findall(sin_pausas(t))
+        total_p, total_s = total_p + pal, total_s + seg
+        print("acto %s · %d palabras · %.0f s · %d conector(es)%s · %d «según»"
+              % (ac, pal, seg, len(con), (" (%s)" % ", ".join(c.lower() for c in con[:6])) if con else "", len(RE_SEGUN.findall(t))))
+    dur = DURACIONES[st["duracion"]]
+    print("total %d palabras · %.0f s de voz · «%s» pide ≈ %d s con las colas" % (total_p, total_s, st["duracion"], dur["s"]))
+    if not getattr(a, "check", False):
+        return 0
+    f = revisar_reparto(dict(g, escenas=[])) + revisar_hilo_voz(dict(g, escenas=[]), conectores_min=CONECTORES_MIN_ACTO.get(
+        st["duracion"], CONECTORES_MIN_ACTO_DEF)) + revisar_segun(dict(g, escenas=[]))
+    for x in f:
+        print("FALLA", x)
+    print("narracion %s" % ("ok" if not f else "con %d falla(s)" % len(f)))
+    return 1 if f else 0
+
+
+def cmd_oyente(a):
+    """El digesto del oyente ingenuo de /video (lo que se oye y se lee, en orden): necesita locucion.json."""
+    trabajo = os.path.abspath(a.trabajo)
+    ruta = os.path.join(trabajo, "locucion.json")
+    if not os.path.exists(ruta):
+        return falla("falta locucion.json: corre python3 scripts/video.py guion %s --check" % rel(trabajo))
+    st = estado(trabajo)
+    tarjetas = {t["n"]: t for t in st["tarjetas"]}
+    print("\n".join(lineas_oyente(leer(os.path.join(trabajo, "guion.json")), leer(ruta), lambda e: pantalla_video(e, tarjetas))))
     return 0
 
 
@@ -2100,7 +2419,11 @@ def cmd_variante(a):
     g = leer(os.path.join(trabajo, "guion.json"))
     pr = g.get("promesa") or {}
     texto = seg["texto"] + (" " + pr["texto"] if pr.get("en") == 1 and pr.get("texto") else "")
+    viejo = (g["escenas"][0].get("texto") or "").strip()
     g["escenas"][0] = {"tipo": "gancho", **{k: seg[k] for k in CAMPOS_GANCHO if seg.get(k) is not None}, "texto": texto}
+    for parte in g.get("narracion") or []:   # la narración de corrido abre con la voz del gancho: cambia con ella
+        if viejo and parte.get("acto") == 1 and viejo in (parte.get("texto") or ""):
+            parte["texto"] = parte["texto"].replace(viejo, texto, 1)
     escribir(os.path.join(vb, "guion.json"), g)
     escribir(os.path.join(vb, "ganchos.json"), dict(G, elegido=seg["id"], segundo=G.get("elegido")))
     if cmd_guion(argparse.Namespace(trabajo=vb)):
@@ -2323,9 +2646,21 @@ def tono_falso(textos, salida_mp3, salida_json, pausa=0.0):
             d = (len(w) + 1) / cps_crudo
             ws.append({"text": w, "start": round(t, 3), "end": round(t + d * 0.85, 3)})
             t += d
-    puerta = "+".join("between(t,%.3f,%.3f)" % (w["start"], w["end"]) for w in ws)
-    ff("-f", "lavfi", "-i", "aevalsrc=exprs='0.28*sin(2*PI*165*t)*(%s)':s=44100:d=%.3f" % (puerta, t),
-       "-c:a", "libmp3lame", "-b:a", "64k", salida_mp3)
+    # el tono se escribe en un WAV con la stdlib (un aevalsrc con un between() por palabra no cabe en ffmpeg cuando la
+    # secuencia pasa de ~40 s) y ffmpeg solo lo codifica
+    sr = 44100
+    muestras = array.array("h", bytes(2 * int(math.ceil(t * sr))))
+    for w in ws:
+        for i in range(int(w["start"] * sr), min(len(muestras), int(w["end"] * sr))):
+            muestras[i] = int(0.28 * 32767 * math.sin(2 * math.pi * 165 * i / sr))
+    wav = salida_mp3[:-4] + ".tono.wav"
+    with wave.open(wav, "wb") as f:
+        f.setnchannels(1)
+        f.setsampwidth(2)
+        f.setframerate(sr)
+        f.writeframes(muestras.tobytes())
+    ff("-i", wav, "-c:a", "libmp3lame", "-b:a", "64k", salida_mp3)
+    os.remove(wav)
     escribir(salida_json, ws)
 
 
@@ -2722,7 +3057,7 @@ def cmd_tiempos(a):
     # el giro: la escena «pero» cuyo tuit tiene beat giro; si no hay, el primer «pero»
     peros = [e["n"] for e in loc["escenas"] if e.get("enlace") == "pero"]
     giro_n = next((e["n"] for e in loc["escenas"] if e.get("enlace") == "pero" and beats.get(e.get("tuit")) == "giro"),
-                  peros[0] if peros else None)
+                  next((e["n"] for e in loc["escenas"] if e["n"] > 2 and beats.get(e.get("tuit")) == "giro"), peros[0] if peros else None))
     escenas, avisos = [], []
     for e in loc["escenas"]:
         n, tipo = e["n"], e.get("tipo") or ("cierre" if e["plantilla"] == "cierre" else "tarjeta")
@@ -2989,10 +3324,16 @@ def cmd_tiempos(a):
             sfx.append((-2.0, "riser"))
         # transición de entrada (xfade en montar) del catálogo TRANSICIONES: por papel (giro, primera tarjeta, cierre)
         # y, si no, por tipo (texto, adivina, pantalla completa, tarjeta)
-        S["transicion"] = None if n == 1 else TRANSICIONES[
+        clave_tr = None if n == 1 else (
             "giro" if n == giro_n else TRANSICION_DE[tipo] if tipo in TRANSICION_DE else "cierre" if tipo == "cierre" else "primera" if len(escenas) == 1 else
             "texto" if tipo in ("golpe", "definicion") else "adivina" if tipo == "adivina" else
-            "completa" if tipo in PANTALLA_COMPLETA + ("explica",) else "tarjeta"]
+            "completa" if tipo in PANTALLA_COMPLETA + ("explica",) else "tarjeta")
+        S["transicion"] = TRANSICIONES[clave_tr] if clave_tr else None
+        if S["seguida"] and clave_tr in ("tarjeta", "texto"):
+            # dentro de una secuencia la voz viene de corrido: la tarjeta o el texto se funden y no entran con golpe de
+            # efecto (el giro, el cierre, la adivina y lo que va a pantalla completa conservan su transición)
+            S["transicion"] = TRANSICIONES["seguida"]
+            sfx = [(t, k) for t, k in sfx if not (t <= TRANSICION + 0.1 and k in ("whoosh", "impacto"))]
         for post in POST_CONSTRUCTORES:
             ev, sfx = post(S, e, ps, pal, fin_voz, dur, g, ev, sfx)
         ev.append((dur, "fin"))
@@ -3339,6 +3680,29 @@ def modelo_whisper():
 
 
 _GENERO = {"uno": "un", "una": "un", "veintiuno": "veintiun", "veintiuna": "veintiun"}
+_ROMANOS = {"I": 1, "V": 5, "X": 10}
+
+
+def romano_a_entero(r):
+    """«XIX» → 19 (solo I, V y X: los siglos y los ordinales que whisper escribe en romanos); None si no es válido."""
+    total = 0
+    for k, c in enumerate(r):
+        v = _ROMANOS[c]
+        total += -v if k + 1 < len(r) and _ROMANOS[r[k + 1]] > v else v
+    return total if 0 < total < 40 else None
+
+
+def clave_fonetica(texto):
+    """Lo que suena igual en español, igual: sin espacios ni h muda, v → b, g ante e/i → j, ll → y, z y c ante e/i → s,
+    qu → k, sin letras dobles ni s final. V11 no avisa cuando lo esperado y lo oído tienen la misma clave (Córdova y
+    Córdoba, Brahva y brava, Monge y monje, «Centro Americana» y «centroamericana», «a la Gallo» y «al agallo»)."""
+    t = re.sub(r"[^a-z]", "", texto.lower())
+    t = re.sub(r"(?<![cs])h", "", t)
+    t = t.replace("v", "b").replace("ll", "y").replace("qu", "k")
+    t = re.sub(r"g(?=[ei])", "j", t)
+    t = re.sub(r"c(?=[ei])", "s", t).replace("z", "s")
+    t = re.sub(r"(.)\1+", r"\1", t)
+    return re.sub(r"s$", "", t)
 
 
 def tokens_escucha(texto, oido=False):
@@ -3347,6 +3711,8 @@ def tokens_escucha(texto, oido=False):
     decimal («1,8») pasa a punto y los dígitos a palabras con numeros_es, igual que la locución."""
     t = texto or ""
     if oido:
+        # whisper escribe en romanos los siglos y los ordinales («siglo XIX»): a dígitos, y luego a palabras
+        t = re.sub(r"\b[IVX]{2,}\b", lambda m: str(romano_a_entero(m.group(0)) or m.group(0)), t)
         t = re.sub(r"(?<![\d.])\d{1,3}(?:\.\d{3})+(?![.,]?\d)", lambda m: m.group(0).replace(".", ""), t)
         t = re.sub(r"(?<=\d),(?=\d{1,2}(?!\d))", ".", t)
         NE.AVISOS.clear()
@@ -3382,9 +3748,12 @@ def comparar_escucha(segmentos, oido, omitir=None):
         resto = [i for i in range(i1, i2) if not fuera[i]]
         if (i2 > i1 and not resto) or (i1 == i2 and any(fuera[max(0, i1 - 1):i1 + 1])):
             continue   # el tramo es la cita en otro idioma (o lo que whisper oyó en su lugar): no se compara
+        num = any(numerico[i] for i in resto)
+        if not num and resto and j2 > j1 and clave_fonetica("".join(esperado[i] for i in resto)) == clave_fonetica("".join(oidos[j1:j2])):
+            continue   # suena igual (homófonos, palabras juntas o separadas): whisper lo escribió distinto, la voz lo dijo bien
         distintos += max(len(resto), j2 - j1) if resto else 0
         msg = "esperaba «%s», oyó «%s»" % (" ".join(esperado[i] for i in resto) or "—", " ".join(oidos[j1:j2]) or "—")
-        (faltas if any(numerico[i] for i in resto) else avisos).append(msg)
+        (faltas if num else avisos).append(msg)
     return faltas, avisos, round(100.0 * distintos / max(1, len(esperado) - sum(fuera)), 1)
 
 
@@ -3692,6 +4061,10 @@ def main():
     p = sub.add_parser("guion")
     p.add_argument("trabajo")
     p.add_argument("--check", action="store_true", required=True)
+    p = sub.add_parser("narracion", help="mide la narración de corrido (guion.narracion) antes de repartirla en escenas (V17–V18)")
+    p.add_argument("trabajo")
+    p.add_argument("--check", action="store_true")
+    sub.add_parser("oyente", help="el digesto del oyente ingenuo: la narración de corrido y luego voz y pantalla por escena").add_argument("trabajo")
     p = sub.add_parser("variante", help="versión B del gancho (el segundo lugar): solo la voz de la escena 1")
     p.add_argument("trabajo")
     p.add_argument("--cerrar", action="store_true", help="copia variante_b/salida/video.mp4 → salida/video_b.mp4")
@@ -3740,7 +4113,7 @@ def main():
         return 2
     if a.cmd == "ganchos" and a.check:
         a.usar = None
-    return {"preparar": cmd_preparar, "ganchos": cmd_ganchos, "guion": cmd_guion, "variante": cmd_variante, "voz": cmd_voz, "descargar": cmd_descargar,
+    return {"preparar": cmd_preparar, "ganchos": cmd_ganchos, "guion": cmd_guion, "narracion": cmd_narracion, "oyente": cmd_oyente, "variante": cmd_variante, "voz": cmd_voz, "descargar": cmd_descargar,
             "voz-falsa": cmd_voz_falsa, "partir": cmd_partir, "tiempos": cmd_tiempos, "grabar": cmd_grabar, "montar": cmd_montar,
             "revisar": cmd_revisar, "entregar": cmd_entregar, "musica": cmd_musica, "escuchar": cmd_escuchar,
             "whisper": cmd_whisper}[a.cmd](a)

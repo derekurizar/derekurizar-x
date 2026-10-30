@@ -59,10 +59,11 @@ h1.titular { font: 400 88px/.98 'Instrument Serif', Georgia, serif; margin: 18px
 /* Cifra protagonista: las plantillas usan .cifra-heroe (o H.fuenteCifra en el lienzo) y ponen solo tamaño e interlínea. */
 body { --cifra-familia: 'Instrument Serif', Georgia, serif; --cifra-peso: 400; --cifra-ancho: normal; --cifra-caja: none; }
 .cifra-heroe { font-family: var(--cifra-familia); font-weight: var(--cifra-peso); font-stretch: var(--cifra-ancho); text-transform: var(--cifra-caja); }
-/* Noche: fondo oscuro con grano fijo (no cambia entre renders), titular Archivo 800, cifras en Archivo condensado 900. */
+/* Noche: fondo oscuro con grano fijo (no cambia entre renders), titular Archivo 800, cifras en Archivo condensado 900.
+   La cifra conserva la caja de su formato: en mayúsculas «3.00 m» se leería «3.00 M» (millones). */
 body[data-estilo="noche"] {
   background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27180%27%20height%3D%27180%27%3E%3Cfilter%20id%3D%27n%27%3E%3CfeTurbulence%20type%3D%27fractalNoise%27%20baseFrequency%3D%27.85%27%20numOctaves%3D%272%27%20stitchTiles%3D%27stitch%27%2F%3E%3CfeColorMatrix%20values%3D%270%200%200%200%201%200%200%200%200%201%200%200%200%200%201%200%200%200%20.12%200%27%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D%27180%27%20height%3D%27180%27%20filter%3D%27url%28%23n%29%27%2F%3E%3C%2Fsvg%3E") 0 0 / 180px 180px repeat, var(--bg);
-  --cifra-familia: Archivo, sans-serif; --cifra-peso: 900; --cifra-ancho: 62.5%; --cifra-caja: uppercase;
+  --cifra-familia: Archivo, sans-serif; --cifra-peso: 900; --cifra-ancho: 62.5%; --cifra-caja: none;
 }
 body[data-estilo="noche"] .kicker { font-weight: 600; color: rgba(var(--ink-rgb), .85); }
 body[data-estilo="noche"] h1.titular { font: 800 64px/1.04 Archivo, sans-serif; margin-top: 20px; letter-spacing: -.01em; }
@@ -218,7 +219,7 @@ const H = (() => {
   // Fuente de la cifra protagonista (la misma que .cifra-heroe) para medirla o usarla en el lienzo:
   // noche → Archivo 900 condensado y en mayúsculas; clásico → Instrument Serif 400.
   const fuenteCifra = (px) => (estilo() === "noche" ? "900 " + px + "px Archivo" : "400 " + px + "px 'Instrument Serif'");
-  const medirCifra = (str, px) => (estilo() === "noche" ? medir(String(str).toUpperCase(), fuenteCifra(px), "extra-condensed") : medir(str, fuenteCifra(px)));
+  const medirCifra = (str, px) => (estilo() === "noche" ? medir(String(str), fuenteCifra(px), "extra-condensed") : medir(str, fuenteCifra(px)));
   // Alto disponible para #grafico entre la cabecera y el pie (margin-top:auto
   // absorbe el hueco). Devuelve min(max, libre) y falla si no hay sitio.
   const espacio = (max = 520, min = 240) => {

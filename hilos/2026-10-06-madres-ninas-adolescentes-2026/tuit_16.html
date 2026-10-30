@@ -18,7 +18,7 @@
 <style>
 @font-face { font-family: 'Instrument Serif'; font-style: normal; font-weight: 400; src: url(fonts/instrument-serif-400.woff2) format('woff2'); }
 @font-face { font-family: 'Instrument Serif'; font-style: italic; font-weight: 400; src: url(fonts/instrument-serif-400i.woff2) format('woff2'); }
-@font-face { font-family: 'Archivo'; font-style: normal; font-weight: 100 900; src: url(fonts/archivo-var.woff2) format('woff2'); }
+@font-face { font-family: 'Archivo'; font-style: normal; font-weight: 100 900; font-stretch: 62% 125%; src: url(fonts/archivo-wdth.woff2) format('woff2'); }
 @font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 100 800; src: url(fonts/jetbrains-mono-var.woff2) format('woff2'); }
 
 /* ---- Paletas (design/tokens.json · brief 6a). Una por hilo. ---- */
@@ -31,6 +31,19 @@ body[data-paleta="jacaranda"] { --bg:#6B4E96; --ink:#F6F2E8; --a1:#1F1530; --a2:
 body[data-paleta="atitlan"]   { --bg:#3FA3A0; --ink:#0C1520; --a1:#F6F2E8; --a2:#7CC3C0; --a3:#1D5E5C; --ink-rgb:12,21,32;    --x-fg:#3FA3A0; }
 body[data-paleta="obsidiana"] { --bg:#16181D; --ink:#F6F2E8; --a1:#F08A4B; --a2:#8C8F96; --a3:#3A3D44; --ink-rgb:246,242,232; --x-fg:#16181D; }
 
+/* ---- Estilo Noche (design/tokens.json · noche). Lo pone nuevo_visual.py --estilo noche (el de siempre);
+   /investigacion ensambla --estilo clasico y usa las paletas de arriba. Mismos roles, otros valores:
+   --bg = fondo (bg × 0.2) · --ink = texto crema · --a1 = acento (una sola cosa por tarjeta) ·
+   --a2/--a3 = serie[2]/serie[3] (crema y acento atenuados, ≥ 3.2:1 sobre el fondo). ---- */
+body[data-estilo="noche"][data-paleta="cielo"]     { --bg:#0F1D2C; --ink:#F6F2E8; --a1:#8FB8E6; --a2:#8E9293; --a3:#557292; --ink-rgb:246,242,232; --x-fg:#0F1D2C; }
+body[data-estilo="noche"][data-paleta="jade"]      { --bg:#061512; --ink:#F6F2E8; --a1:#9FD4BF; --a2:#8A8F88; --a3:#5A7E71; --ink-rgb:246,242,232; --x-fg:#061512; }
+body[data-estilo="noche"][data-paleta="maiz"]      { --bg:#2D210C; --ink:#F6F2E8; --a1:#E0A33C; --a2:#9C9485; --a3:#916A27; --ink-rgb:246,242,232; --x-fg:#2D210C; }
+body[data-estilo="noche"][data-paleta="terracota"] { --bg:#240C08; --ink:#F6F2E8; --a1:#E8836F; --a2:#988A83; --a3:#985245; --ink-rgb:246,242,232; --x-fg:#240C08; }
+body[data-estilo="noche"][data-paleta="cacao"]     { --bg:#1E130E; --ink:#F6F2E8; --a1:#D9A66B; --a2:#958E86; --a3:#856441; --ink-rgb:246,242,232; --x-fg:#1E130E; }
+body[data-estilo="noche"][data-paleta="jacaranda"] { --bg:#15101E; --ink:#F6F2E8; --a1:#B9A3DB; --a2:#918C8D; --a3:#6F6186; --ink-rgb:246,242,232; --x-fg:#15101E; }
+body[data-estilo="noche"][data-paleta="atitlan"]   { --bg:#0D2120; --ink:#F6F2E8; --a1:#7CC3C0; --a2:#8D948E; --a3:#4A7A78; --ink-rgb:246,242,232; --x-fg:#0D2120; }
+body[data-estilo="noche"][data-paleta="obsidiana"] { --bg:#16181D; --ink:#F6F2E8; --a1:#F08A4B; --a2:#91908D; --a3:#975B38; --ink-rgb:246,242,232; --x-fg:#16181D; }
+
 /* ---- Anatomía de la tarjeta (brief 2b) ---- */
 html, body { margin: 0; padding: 0; }
 body {
@@ -41,8 +54,19 @@ body {
 }
 .tarjeta { width: 1080px; height: 1080px; padding: 76px 80px; box-sizing: border-box; display: flex; flex-direction: column; }
 .kicker { font: 500 20px/1 'JetBrains Mono', monospace; letter-spacing: .16em; text-transform: uppercase; white-space: nowrap; }
-body[data-paleta="obsidiana"] .kicker { color: var(--a1); }
+body:not([data-estilo="noche"])[data-paleta="obsidiana"] .kicker { color: var(--a1); }
 h1.titular { font: 400 88px/.98 'Instrument Serif', Georgia, serif; margin: 18px 0 0; letter-spacing: -.015em; }
+/* Cifra protagonista: las plantillas usan .cifra-heroe (o H.fuenteCifra en el lienzo) y ponen solo tamaño e interlínea. */
+body { --cifra-familia: 'Instrument Serif', Georgia, serif; --cifra-peso: 400; --cifra-ancho: normal; --cifra-caja: none; }
+.cifra-heroe { font-family: var(--cifra-familia); font-weight: var(--cifra-peso); font-stretch: var(--cifra-ancho); text-transform: var(--cifra-caja); }
+/* Noche: fondo oscuro con grano fijo (no cambia entre renders), titular Archivo 800, cifras en Archivo condensado 900. */
+body[data-estilo="noche"] {
+  background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27180%27%20height%3D%27180%27%3E%3Cfilter%20id%3D%27n%27%3E%3CfeTurbulence%20type%3D%27fractalNoise%27%20baseFrequency%3D%27.85%27%20numOctaves%3D%272%27%20stitchTiles%3D%27stitch%27%2F%3E%3CfeColorMatrix%20values%3D%270%200%200%200%201%200%200%200%200%201%200%200%200%200%201%200%200%200%20.12%200%27%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D%27180%27%20height%3D%27180%27%20filter%3D%27url%28%23n%29%27%2F%3E%3C%2Fsvg%3E") 0 0 / 180px 180px repeat, var(--bg);
+  --cifra-familia: Archivo, sans-serif; --cifra-peso: 900; --cifra-ancho: 62.5%; --cifra-caja: uppercase;
+}
+body[data-estilo="noche"] .kicker { font-weight: 600; color: rgba(var(--ink-rgb), .85); }
+body[data-estilo="noche"] h1.titular { font: 800 64px/1.04 Archivo, sans-serif; margin-top: 20px; letter-spacing: -.01em; }
+body[data-estilo="noche"] .pie .fuente { font-weight: 500; color: rgba(var(--ink-rgb), .8); }
 .leyenda { display: flex; flex-wrap: wrap; gap: 14px 36px; margin-top: 28px; }
 .leyenda .item { display: flex; align-items: center; gap: 12px; font: 600 24px/1 Archivo, sans-serif; white-space: nowrap; }
 .leyenda .sw { width: 36px; height: 6px; background: var(--ink); flex: none; }
@@ -66,7 +90,7 @@ h1.titular { font: 400 88px/.98 'Instrument Serif', Georgia, serif; margin: 18px
 /* T:CSS */
 </style>
 </head>
-<body data-paleta="jacaranda">
+<body data-paleta="jacaranda" data-estilo="noche">
 <div class="tarjeta">
   <div class="kicker" id="kicker"></div>
   <h1 class="titular" id="titular"></h1>
@@ -82,6 +106,7 @@ h1.titular { font: 400 88px/.98 'Instrument Serif', Georgia, serif; margin: 18px
 // =====================================================================
 // H · helpers compartidos. Las plantillas solo llaman a H.*; nada externo.
 // =====================================================================
+// H:INICIO · scripts/informe.py extrae este bloque para los informes de investigacion/
 const H = (() => {
   const MENOS = "−";
   const assert = (cond, msg) => { if (!cond) throw new Error("DATA: " + msg); };
@@ -181,11 +206,19 @@ const H = (() => {
     if (orden.length && orden[0].y < lim0) orden[0].y = lim0;
     return items;
   };
-  // Ancho de un texto con una fuente dada (para decidir rótulos).
-  const medir = (str, font) => {
+  // Ancho de un texto con una fuente dada (para decidir rótulos). `ancho`: keyword de font-stretch del
+  // lienzo ("extra-condensed" = 62.5 %); el shorthand de ctx.font no admite porcentajes.
+  const medir = (str, font, ancho = "normal") => {
     const c = medir._c || (medir._c = document.createElement("canvas").getContext("2d"));
-    c.font = font; return c.measureText(str).width;
+    c.font = font; c.fontStretch = ancho; return c.measureText(str).width;
   };
+  // Estilo de la tarjeta: «noche» (el de siempre) o «clasico» (/investigacion). Lo fija nuevo_visual.py en <body>.
+  const estilo = () => (document.body.dataset.estilo === "noche" ? "noche" : "clasico");
+  const TITULAR_PX = { noche: 64, clasico: 88 };
+  // Fuente de la cifra protagonista (la misma que .cifra-heroe) para medirla o usarla en el lienzo:
+  // noche → Archivo 900 condensado y en mayúsculas; clásico → Instrument Serif 400.
+  const fuenteCifra = (px) => (estilo() === "noche" ? "900 " + px + "px Archivo" : "400 " + px + "px 'Instrument Serif'");
+  const medirCifra = (str, px) => (estilo() === "noche" ? medir(String(str).toUpperCase(), fuenteCifra(px), "extra-condensed") : medir(str, fuenteCifra(px)));
   // Alto disponible para #grafico entre la cabecera y el pie (margin-top:auto
   // absorbe el hueco). Devuelve min(max, libre) y falla si no hay sitio.
   const espacio = (max = 520, min = 240) => {
@@ -223,7 +256,9 @@ const H = (() => {
     n = Math.max(2, Math.min(9, Math.round(n)));
     const lb = linealizar(rgbDe(color.bg)), li = linealizar(rgbDe(color.ink));
     const yb = luminancia(lb), yi = luminancia(li), haciaClaro = yi > yb;
-    let y0 = haciaClaro ? RAMPA_MIN_CONTRASTE * (yb + 0.05) - 0.05 : (yb + 0.05) / RAMPA_MIN_CONTRASTE - 0.05;
+    // en Noche el fondo es casi negro: el escalón más bajo se aleja hasta 2:1 para no confundirse con él
+    const minC = estilo() === "noche" ? 2 : RAMPA_MIN_CONTRASTE;
+    let y0 = haciaClaro ? minC * (yb + 0.05) - 0.05 : (yb + 0.05) / minC - 0.05;
     y0 = haciaClaro ? Math.min(y0, yi) : Math.max(y0, yi);
     const L0 = Lstar(y0), L1 = Lstar(yi), out = [];
     for (let k = 0; k < n; k++) {
@@ -286,6 +321,11 @@ const H = (() => {
     assert(!/https?:\/\//i.test(JSON.stringify(D)), "no van URLs dentro de la tarjeta");
     document.getElementById("kicker").textContent = D.kicker;
     document.getElementById("titular").innerHTML = D.titular.map(esc).join("<br>");
+    // titular_escala (1–1.5, opcional): titular más grande en tarjetas de titular corto (p. ej. el nombre de una sección).
+    if (D.titular_escala != null) {
+      assert(typeof D.titular_escala === "number" && D.titular_escala >= 1 && D.titular_escala <= 1.5, "titular_escala debe ser un número entre 1 y 1.5");
+      document.getElementById("titular").style.fontSize = Math.round(TITULAR_PX[estilo()] * D.titular_escala) + "px";
+    }
     const nota = document.getElementById("nota");
     if (D.nota && D.nota.trim()) { nota.textContent = D.nota; nota.hidden = false; } else nota.hidden = true;
     document.getElementById("fuente").textContent = "Fuente: " + D.fuente;
@@ -310,11 +350,22 @@ const H = (() => {
   };
   const esc = (s) => String(s).replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
 
+  // ---- Utilidades de rotulado compartidas ----
+  // Formato de eje: los decimales que de verdad necesitan los ticks (0 si todos son enteros).
+  const formatoEje = (f, tk) => Object.assign({}, f || {}, { decimales: decimalesDe(tk.map((t) => t / ((f && f.escala) || 1)), (f && f.decimales) || 0) });
+  // Primera fuente de la lista en la que `str` cabe en maxW (null si ninguna): para encoger nombres 23→21→19→17.
+  const encajar = (str, fuentes, maxW) => fuentes.find((fn) => medir(str, fn) <= maxW) || null;
+  // Halo del color del fondo para texto que pisa barras o líneas (paint-order).
+  const halo = () => "paint-order:stroke;stroke:" + color.bg + ";stroke-width:6px;stroke-linejoin:round";
+
   // ---- Verificación final: lo que ningún check de píxeles ve a tiempo ----
   const verificar = (D) => {
     const util = 920;
+    const px = Math.round(TITULAR_PX[estilo()] * (D.titular_escala || 1));
     for (const linea of D.titular) {
-      const w = medir(linea, "400 88px 'Instrument Serif'") * 0.985; // letter-spacing -.015em
+      const w = estilo() === "noche"
+        ? medir(linea, "800 " + px + "px Archivo") * 0.99 // letter-spacing -.01em
+        : medir(linea, "400 " + px + "px 'Instrument Serif'") * 0.985; // letter-spacing -.015em
       assert(w <= util, "titular no cabe en una línea (" + Math.round(w) + "px > " + util + "): «" + linea + "»");
     }
     assert(medir(D.kicker.toUpperCase(), "500 20px 'JetBrains Mono'") * 1.16 <= util, "kicker demasiado largo");
@@ -334,10 +385,177 @@ const H = (() => {
     document.fonts.load("700 22px 'JetBrains Mono'"),
     document.fonts.load("600 24px Archivo"),
     document.fonts.load("800 19px Archivo"),
+    document.fonts.load("800 64px Archivo"),
+    document.fonts.load("extra-condensed 900 120px Archivo"),
   ]);
 
-  return { assert, num, pct, decimalesDe, color, svgEl, lienzo, texto, leyenda, el, escala, ticks, dominio, antiSolape, medir, espacio, rampa, rampaColor, mezcla, contraste, textoSobre, validarPeriodos, periodos, anotar, cabecera, verificar, fuentesListas, esc, MENOS };
+
+  // ---- Aritmética compartida con el informe (investigacion/graficos/): la tarjeta y el documento
+  // calculan EL MISMO número y el guionista nunca lo escribe (píldora, «N de cada 100», acumulados,
+  // mayoría, cortes del mapa, squarified, asientos del hemiciclo). Son funciones puras: nada del DOM. ----
+  // Departamentos: nombres oficiales (INE). scripts/build_mapa.py --check los coteja con el svg.
+  const NOMBRES = {
+    GT01: "Guatemala", GT02: "El Progreso", GT03: "Sacatepéquez", GT04: "Chimaltenango",
+    GT05: "Escuintla", GT06: "Santa Rosa", GT07: "Sololá", GT08: "Totonicapán",
+    GT09: "Quetzaltenango", GT10: "Suchitepéquez", GT11: "Retalhuleu", GT12: "San Marcos",
+    GT13: "Huehuetenango", GT14: "Quiché", GT15: "Baja Verapaz", GT16: "Alta Verapaz",
+    GT17: "Petén", GT18: "Izabal", GT19: "Zacapa", GT20: "Chiquimula",
+    GT21: "Jalapa", GT22: "Jutiapa"
+  };
+  const normDepto = (s) => String(s).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z]/g, "");
+  const DEPTO_POR_NOMBRE = {};
+  Object.keys(NOMBRES).forEach((id) => { DEPTO_POR_NOMBRE[normDepto(NOMBRES[id])] = id; });
+  // H.idDepto("Petén") → "GT17"; acepta el id o el nombre oficial; falla si no es un departamento.
+  const idDepto = (k) => {
+    const s = String(k).trim().toUpperCase();
+    if (NOMBRES[s]) return s;
+    const id = DEPTO_POR_NOMBRE[normDepto(k)];
+    assert(id, "«" + k + "» no es un departamento: usa GT01–GT22 o el nombre oficial");
+    return id;
+  };
+  // H.cortes(valores, {cortes, clases, metodo, redondear}) → límites internos de las clases (mapa, calor):
+  // cortes dados (2–5), o cuantiles con `clases` (`metodo: "iguales"` = intervalos iguales). Con `redondear`
+  // (por defecto) los cortes se llevan a pasos «bonitos» (1·2·5·10 × 10ⁿ) sin dejar clases vacías:
+  //   1) cuantiles redondeados al paso más grueso que conserve ≥ k−2 cortes distintos;
+  //   2) si se apelotonan, intervalos iguales al mismo paso, salvo que una clase acapare > 50 %;
+  //   3) datos sesgados: cada cuantil al paso del hueco mínimo entre cortes.
+  const cortes = (valores, o = {}) => {
+    const v = valores.slice().sort((a, b) => a - b), min = v[0], max = v[v.length - 1];
+    let cs;
+    if (Array.isArray(o.cortes) && o.cortes.length) {
+      cs = o.cortes.slice().sort((a, b) => a - b);
+      assert(cs.length >= 2 && cs.length <= 5 && cs.every((c) => typeof c === "number" && isFinite(c)), "cortes: de 2 a 5 límites numéricos");
+    } else {
+      const k = Math.max(3, Math.min(6, Math.round(o.clases || 5)));
+      cs = [];
+      for (let i = 1; i < k; i++) {
+        if (o.metodo === "iguales") { cs.push(min + (max - min) * i / k); continue; }
+        const p = (v.length - 1) * i / k, lo = Math.floor(p), t = p - lo;
+        cs.push(v[lo] + (v[Math.min(lo + 1, v.length - 1)] - v[lo]) * t);
+      }
+      if (o.redondear !== false && max > min) {
+        const enRango = (a) => a.filter((c, i) => c > min && c < max && (i === 0 || c > a[i - 1]));
+        const redondea = (a, paso) => enRango(a.map((c) => +(Math.round(c / paso) * paso).toFixed(10)));
+        const conteo = (a) => { const n = new Array(a.length + 1).fill(0); v.forEach((x) => { let j = 0; while (j < a.length && x >= a[j]) j++; n[j]++; }); return n; };
+        const nice = (x, ms) => { const e = Math.pow(10, Math.floor(Math.log10(x))); return ms.map((m) => m * e); };
+        const iguales = Array.from({ length: k - 1 }, (_, i) => min + (max - min) * (i + 1) / k);
+        let mejor = null;
+        for (const paso of nice((max - min) / k, [10, 5, 2, 1])) {
+          const q = redondea(cs, paso), g = redondea(iguales, paso);
+          if (q.length >= k - 2) { mejor = q; break; }
+          if (g.length >= k - 1 && Math.max(...conteo(g)) / v.length <= 0.5) { mejor = g; break; }
+        }
+        if (!mejor) {
+          const huecos = cs.slice(1).map((c, i) => c - cs[i]).filter((h) => h > 0);
+          if (huecos.length) { const h = Math.min(...huecos); mejor = redondea(cs, nice(h, [5, 2, 1]).find((p) => p <= h)); }
+        }
+        if (mejor && mejor.length >= 2) { const n = conteo(mejor); cs = mejor.filter((c, i) => n[i + 1] > 0); }
+      }
+      cs = cs.filter((c, i) => c > min && c < max && (i === 0 || c > cs[i - 1]));  // empates → menos clases
+    }
+    return cs;
+  };
+  // Índice de clase de un valor según los cortes (0 = la más baja).
+  const claseDe = (v, cs) => { let k = 0; while (k < cs.length && v >= cs[k]) k++; return k; };
+  // H.pildora(antes, despues, "factor"|"porcentaje"|"ninguna", decimales) → "×1.77" | "+77%" | null.
+  const pildora = (antes, despues, modo = "factor", dec) => {
+    if (modo === "ninguna") return null;
+    assert(antes !== 0, "la píldora no se puede calcular con antes.valor = 0");
+    const d = dec == null ? 2 : dec, factor = despues / antes;
+    if (modo === "factor") return "×" + factor.toFixed(d);
+    const p = (factor - 1) * 100;
+    return (p < 0 ? MENOS : "+") + Math.abs(p).toFixed(d > 1 ? 0 : d) + "%";
+  };
+  // «N de cada 100» (o de cada 1,000 si no llega a 1). Por debajo de 10 lleva un decimal:
+  // redondear 1.7 a «2» contradiría «menos de 2».
+  const deCada = (v, ref) => {
+    const corto = (x) => num(x, { decimales: x < 10 && Math.abs(x - Math.round(x)) >= 0.05 ? 1 : 0 });
+    const p = (v / ref) * 100;
+    if (p >= 1 || p === 0) return corto(p) + " de cada 100";
+    if (p >= 0.1) return corto(p * 10) + " de cada 1,000";
+    return "menos de 1 de cada 1,000";
+  };
+  // Etiqueta de la etapa i de un embudo según `porcentaje`: inicio | anterior | ninguno.
+  const etiquetaEmbudo = (E, i, modo = "inicio") => {
+    if (!i || modo === "ninguno") return "";
+    if (modo === "inicio") return deCada(E[i].valor, E[0].valor);
+    const prev = E[i - 1].valor;
+    return prev ? pct((E[i].valor / prev) * 100, E[i].valor / prev < 0.1 ? 1 : 0) + " de la anterior" : "";
+  };
+  // Curules para la mayoría: simple ⌊t/2⌋+1 · calificada ⌈2t/3⌉.
+  const mayoria = (total, modo) => (modo === "simple" ? Math.floor(total / 2) + 1 : Math.ceil(2 * total / 3));
+  // Filas de una cascada: acumulados calculados; fin.valor, si va, solo se coteja (magnitud) contra lo
+  // calculado. Devuelve { filas[{tipo, i, nombre, desde, hasta, rotulo}], acc, calculado } (calculado =
+  // fin sin valor: el gráfico lo anota).
+  const cascada = (ini, pasos, fin, formato) => {
+    const f = (v, extra) => num(v, Object.assign({}, formato || {}, extra || {}));
+    let acc = ini ? ini.valor : 0;
+    const filas = [];
+    if (ini) filas.push({ tipo: "inicio", nombre: ini.nombre, desde: 0, hasta: ini.valor, rotulo: f(ini.valor) });
+    pasos.forEach((p, i) => {
+      const delta = p.efecto === "suma" ? p.valor : -p.valor, desde = acc;
+      acc += delta;
+      filas.push({ tipo: "paso", i, nombre: p.nombre, desde, hasta: acc, rotulo: f(delta, { signo: true }) });
+    });
+    let calculado = false;
+    if (fin) {
+      if (typeof fin.valor === "number") {
+        const tol = Math.max(0.5 * Math.pow(10, -((formato && formato.decimales) || 0)), Math.abs(fin.valor) * 0.001);
+        assert(Math.abs(Math.abs(acc) - Math.abs(fin.valor)) <= tol, "los pasos no cuadran con fin.valor (" + f(fin.valor) + "): calculado " + f(acc));
+      } else calculado = true;
+      filas.push({ tipo: "fin", nombre: fin.nombre, desde: 0, hasta: acc, rotulo: f(acc) });
+    }
+    return { filas, acc, calculado };
+  };
+  // Squarified (Bruls et al.): rects [{i, x, y, w, h}] de `partes` (ordenadas de mayor a menor) en W×alto.
+  const squarify = (partes, total, W, alto) => {
+    const area = W * alto, rects = [];
+    let caja = { x: 0, y: 0, w: W, h: alto }, fila = [];
+    const resto = partes.map((p, i) => ({ i, a: (p.valor / total) * area }));
+    const peor = (f, lado) => { const s = f.reduce((t, r) => t + r.a, 0); return Math.max(...f.map((r) => Math.max((lado * lado * r.a) / (s * s), (s * s) / (lado * lado * r.a)))); };
+    const colocar = (f) => {
+      const s = f.reduce((t, r) => t + r.a, 0), horiz = caja.w >= caja.h;
+      const grosor = s / (horiz ? caja.h : caja.w);
+      let off = 0;
+      for (const r of f) {
+        const largo = r.a / grosor;
+        rects.push(horiz ? { i: r.i, x: caja.x, y: caja.y + off, w: grosor, h: largo } : { i: r.i, x: caja.x + off, y: caja.y, w: largo, h: grosor });
+        off += largo;
+      }
+      caja = horiz ? { x: caja.x + grosor, y: caja.y, w: caja.w - grosor, h: caja.h } : { x: caja.x, y: caja.y + grosor, w: caja.w, h: caja.h - grosor };
+    };
+    while (resto.length) {
+      const lado = Math.min(caja.w, caja.h), r = resto[0];
+      if (!fila.length || peor(fila.concat(r), lado) <= peor(fila, lado)) { fila.push(r); resto.shift(); }
+      else { colocar(fila); fila = []; }
+    }
+    if (fila.length) colocar(fila);
+    return rects;
+  };
+  // Asientos de un hemiciclo: filas concéntricas entre R y r0 con paso s (de sMax a sMin) hasta que
+  // quepa `total`; reparto por fila proporcional a la capacidad (restos mayores); asientos ordenados
+  // de izquierda a derecha (ángulo π → 0). null si no caben.
+  const asientos = (total, R, r0, cx, cy, sMax = 40, sMin = 18) => {
+    let s = sMax, filas = [];
+    const capacidad = (paso) => { const out = []; const k = Math.floor((R - r0) / paso) + 1; for (let i = 0; i < k; i++) { const r = R - i * paso; out.push({ r, cap: Math.floor(Math.PI * r / paso) }); } return out; };
+    for (; s >= sMin; s--) { filas = capacidad(s); if (filas.reduce((t, x) => t + x.cap, 0) >= total) break; }
+    const capTotal = filas.reduce((t, x) => t + x.cap, 0);
+    if (capTotal < total) return null;
+    const cuota = filas.map((x) => total * x.cap / capTotal);
+    const porFila = cuota.map((q) => Math.floor(q));
+    let resto = total - porFila.reduce((t, x) => t + x, 0);
+    cuota.map((q, i) => ({ i, fr: q - Math.floor(q) })).sort((a, b) => b.fr - a.fr).forEach((o) => { if (resto > 0 && porFila[o.i] < filas[o.i].cap) { porFila[o.i]++; resto--; } });
+    for (let i = 0; resto > 0 && i < filas.length; i++) { const d = Math.min(resto, filas[i].cap - porFila[i]); porFila[i] += d; resto -= d; }
+    const pts = [];
+    filas.forEach((x, i) => { for (let j = 0; j < porFila[i]; j++) { const th = Math.PI - Math.PI * (j + 0.5) / porFila[i]; pts.push({ th, x: cx + x.r * Math.cos(th), y: cy - x.r * Math.sin(th) }); } });
+    pts.sort((a, b) => b.th - a.th);
+    return { s, asientos: pts, capTotal };
+  };
+
+  return { assert, num, pct, decimalesDe, color, svgEl, lienzo, texto, leyenda, el, escala, ticks, dominio, antiSolape, medir, estilo, fuenteCifra, medirCifra, espacio, rampa, rampaColor, mezcla, contraste, textoSobre, validarPeriodos, periodos, anotar, cabecera, verificar, fuentesListas, esc, formatoEje, encajar, halo, MENOS,
+           NOMBRES, idDepto, cortes, claseDe, pildora, deCada, etiquetaEmbudo, mayoria, cascada, squarify, asientos };
 })();
+// H:FIN
 
 // =====================================================================
 // Arranque: fuentes → cabecera → render(DATA) → verificar → data-listo.
@@ -358,14 +576,15 @@ window.addEventListener("load", async () => {
   }
 });
 </script>
-<!-- plantilla: waffle · paleta: jacaranda · ensamblado por scripts/nuevo_visual.py -->
+<!-- plantilla: waffle · paleta: jacaranda · estilo: noche · ensamblado por scripts/nuevo_visual.py -->
 <!-- waffle · proporción de 100 (brief 4d). Contrato: referencias/diseno/graficos.md -->
 <style>
 .wf-grid { display: grid; grid-template-columns: auto 1fr; column-gap: 56px; align-items: end; height: 100%; }
 .wf-celdas { display: grid; gap: 8px; }
 .wf-celdas span { display: block; background: var(--ink); opacity: .32; }
 .wf-celdas span.on { background: var(--a1); opacity: 1; }
-.wf-texto .num { font: 400 132px/.86 'Instrument Serif', Georgia, serif; letter-spacing: -.02em; color: var(--a1); white-space: nowrap; }
+.wf-texto .num { font-size: 132px; line-height: .86; letter-spacing: -.02em; color: var(--a1); white-space: nowrap; }   /* familia y peso: .cifra-heroe */
+body[data-estilo="noche"] .wf-texto .num { letter-spacing: 0; }
 .wf-texto .t { font: 600 26px/1.25 Archivo, sans-serif; margin-top: 16px; }
 .wf-ley { display: flex; flex-direction: column; gap: 12px; margin-top: 36px; }
 .wf-ley .it { display: flex; align-items: center; gap: 12px; font: 600 20px/1 Archivo, sans-serif; }
@@ -416,7 +635,10 @@ function render(D) {
     s.style.width = celda + "px"; s.style.height = celda + "px";
   }
   const t = H.el("div", "wf-texto", grid);
-  H.el("div", "num", t, H.esc(H.num(D.cifra.valor, D.formato)));
+  const num = H.el("div", "num cifra-heroe", t, H.esc(H.num(D.cifra.valor, D.formato)));
+  // Auto-ajuste: la cifra cabe en la columna que dejan las celdas (la condensada de Noche es más ancha que la serif).
+  const colW = 920 - 56 - (10 * celda + 9 * 8);
+  for (let px = 132; px >= 72; px -= 8) { num.style.fontSize = px + "px"; if (num.scrollWidth <= colW) break; }
   H.el("div", "t", t, H.esc(D.cifra.texto));
   const ley = H.el("div", "wf-ley", t);
   const it1 = H.el("div", "it", ley); H.el("span", "sw on", it1); H.el("span", null, it1, H.esc(D.etiqueta_dentro || ""));

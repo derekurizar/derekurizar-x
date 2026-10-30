@@ -1,0 +1,159 @@
+{
+  "slug": "combustibles-subsidio-exoneracion-2026",
+  "fecha": "2026-10-29",
+  "tema": "Combustibles en Guatemala 2026: diésel en máximo histórico, subsidio del Decreto 11-2026 (abril–julio) y exoneración del IDP y el IVA del Decreto 22-2026 (1 oct–31 dic): cuánto le cuestan al fisco y cuánto bajó de verdad el precio en la bomba",
+  "tesis": "En 2026 el Estado destina cerca de Q5,250 millones a abaratar el combustible (subsidio ejecutado del Decreto 11, cerca de Q1,930 M, más la recaudación de IDP e IVA que SAT y Minfin estiman no percibir por el Decreto 22), una suma de gasto y estimación mayor que todo el IDP de 2025; aun así, el diésel en su primer día sin impuestos (alrededor de Q42, 1-oct) quedó más caro que con el subsidio en abril (Q34.32), en paralelo a una referencia internacional que subió 131% de enero a septiembre.",
+  "paleta": "cielo",
+  "hook_tipo": "giro_inversion",
+  "modo": "hilo",
+  "pregunta": "¿Cuánto le cuesta al Estado abaratar el combustible en 2026 y cuánto de ese alivio se ve en el precio por galón?",
+  "n_tuits": 7,
+  "estado": "listo",
+  "tuits": [
+    {
+      "n": 1,
+      "beat": "gancho",
+      "texto": "En 2026, abaratar combustibles le cuesta al Estado unos Q5 mil 250 millones.\nEntre gasto y lo que prevé no cobrar, cerca del 4% de lo que la SAT planea recaudar.\n\nPero el 1 de octubre, ya sin IDP ni IVA, el galón de diésel amaneció más caro que en abril. 🧵",
+      "caracteres": 257,
+      "alt_text": "Tarjeta de cifra: el subsidio del Decreto 11-2026 (cerca de 1,930 millones de quetzales ejecutados) más la exoneración de IDP e IVA del Decreto 22-2026 (3,318 millones que SAT y Minfin estiman no percibir) suman unos 5,250 millones de quetzales en 2026, entre gasto y estimación. Una barra de comparación muestra que supera los 4,839 millones de quetzales que rindió el IDP en todo 2025. Fuente: MEM, SAT y Minfin, cálculo propio.",
+      "imagen": "tuit_1.png",
+      "plantilla": "cifra",
+      "fuente": "Cálculo propio · MEM, SAT y Minfin · 2026",
+      "cifra_ids": [
+        "fis-c10",
+        "fis-c05",
+        "fis-c03",
+        "fis-c01",
+        "fis-c11"
+      ]
+    },
+    {
+      "n": 2,
+      "beat": "contexto",
+      "texto": "Primera medida, el Decreto 11-2026: Q8 por galón de diésel y Q5 por galón de gasolina desde el 28 de abril. Debía durar tres meses; el fondo se agotó el 2 de julio con cerca de Q1 mil 930 millones.",
+      "caracteres": 197,
+      "alt_text": "Gráfico de dona: pagos aproximados del subsidio del Decreto 11-2026 por combustible. Diésel, 1,132.7 millones de quetzales, la mayor parte; gasolina regular, 432.6 millones; gasolina superior, 357 millones. Fuente: MEM vía La Hora, agosto de 2026.",
+      "imagen": "tuit_2.png",
+      "plantilla": "dona",
+      "fuente": "MEM · pagos del subsidio vía La Hora · 2026",
+      "cifra_ids": [
+        "fis-c04",
+        "bol-c07",
+        "fis-c03"
+      ]
+    },
+    {
+      "n": 3,
+      "beat": "contexto",
+      "texto": "Segunda medida, el Decreto 22-2026: del 1 de octubre al 31 de diciembre no se cobran IDP ni IVA. SAT y Finanzas estiman que el fisco dejará de percibir Q3 mil 318 millones.",
+      "caracteres": 172,
+      "alt_text": "Gráfico de barras horizontales: ahorro estimado por galón al quitar IDP e IVA desde el 1 de octubre de 2026. Gasolina superior, 9.05 quetzales; regular, 8.33; diésel, 6.45, el menor de los tres. Fuente: MEM vía AGN.",
+      "imagen": "tuit_3.png",
+      "plantilla": "barras-h",
+      "fuente": "MEM · ahorro estimado vía AGN · octubre 2026",
+      "cifra_ids": [
+        "prc-c06",
+        "fis-c01"
+      ]
+    },
+    {
+      "n": 4,
+      "beat": "giro",
+      "texto": "Entre el 1 de julio y el 24 de agosto, ya sin subsidio, el diésel subió Q18.08 por galón: más del doble que las gasolinas.",
+      "caracteres": 122,
+      "alt_text": "Gráfico de barras verticales: precio del galón de diésel en la capital, autoservicio, en cuatro fechas de 2026. 28 de abril, con subsidio: 34.32 quetzales. 1 de julio, con subsidio: 27.25. 24 de agosto, sin subsidio: 45.33. 1 de octubre, primer día sin IDP ni IVA: 42.62 (otras mediciones dan alrededor de 42), más que en abril. Fuente: MEM-DGH vía SESAN y Prensa Libre.",
+      "imagen": "tuit_4.png",
+      "plantilla": "barras-v",
+      "fuente": "MEM-DGH · vía SESAN y Prensa Libre · 2026",
+      "cifra_ids": [
+        "prc-c04",
+        "prc-c05"
+      ]
+    },
+    {
+      "n": 5,
+      "beat": "contexto",
+      "texto": "Mientras tanto, afuera: de enero a septiembre, el diésel de referencia del Golfo de EE. UU. subió 131%. La exoneración quita impuestos; ese precio no lo toca.",
+      "caracteres": 158,
+      "alt_text": "Gráfico de línea: precio spot mensual del diésel ULSD en la Costa del Golfo de EE. UU., de enero de 2024 a septiembre de 2026. Osciló entre 2 y 2.7 dólares por galón hasta febrero de 2026, saltó a 3.83 en marzo y llegó a 4.89 dólares en septiembre de 2026. Una banda marca los meses del subsidio en Guatemala. Fuente: EIA.",
+      "imagen": "tuit_5.png",
+      "plantilla": "linea",
+      "fuente": "EIA · diésel ULSD Costa del Golfo · 2024–2026",
+      "cifra_ids": [
+        "prc-c01",
+        "prc-c03"
+      ]
+    },
+    {
+      "n": 6,
+      "beat": "impacto",
+      "texto": "En la otra cuenta, el subsidio de abril a julio equivalió a Q105.50 por guatemalteco. El costo real de la exoneración aún no se puede medir: la SAT no publica la recaudación de octubre.",
+      "caracteres": 185,
+      "alt_text": "Gráfico de barras agrupadas: ahorro al llenar un tanque de 15 galones, por combustible y medida. Diésel: 120 quetzales con el subsidio y 96.75 con la exoneración. Regular: 75 con el subsidio y 124.95 con la exoneración. Superior: 75 con el subsidio y 135.75 con la exoneración. El tanque de 15 galones es un supuesto. Fuente: cálculo propio con MEM y Decreto 11-2026.",
+      "imagen": "tuit_6.png",
+      "plantilla": "agrupadas",
+      "fuente": "Cálculo propio · MEM y Decreto 11-2026",
+      "cifra_ids": [
+        "bol-c10",
+        "bol-c02",
+        "bol-c07",
+        "prc-c06"
+      ]
+    },
+    {
+      "n": 7,
+      "beat": "cierre",
+      "texto": "Unos Q5 mil 250 millones, entre gasto y recaudación que se prevé no cobrar, y el diésel no volvió al precio de abril, mientras su referencia internacional más que se duplicó.\n\nFuentes: MEM-DGH, SAT, Minfin, EIA e INE (vía SESAN, Prensa Libre, La Hora y AGN). Cálculo propio.",
+      "caracteres": 274,
+      "alt_text": "Tuit de cierre sin imagen: resume que 5,250 millones de quetzales en subsidio y exoneración no devolvieron el diésel al precio de abril de 2026 y lista las fuentes.",
+      "imagen": null,
+      "plantilla": null,
+      "fuente": null,
+      "cifra_ids": []
+    }
+  ],
+  "no_afirma": [
+    "Que los Q5,250 millones sean todo gasto observado: Q3,318 M son una estimación ex ante de SAT y Minfin de lo que no se recaudará en oct–dic, no recaudación perdida medida.",
+    "Que el alza del diésel en Guatemala se deba solo al precio internacional: no se separó con tipo de cambio el efecto fiscal del internacional.",
+    "Que las gasolineras no trasladaran la rebaja: solo se comparan precios de referencia en fechas sueltas.",
+    "Que el precio del 1 de octubre sea exacto, el de fin de octubre ni el máximo del año: las mediciones de esa fecha varían (alrededor de Q42).",
+    "Que un tanque de 15 galones sea el típico: es un supuesto para el cálculo."
+  ],
+  "incertidumbre": [
+    "Todas las cifras usadas tienen segunda fuente no independiente (reproduce la primaria), incluida la ancla fis-c10: valen como verificación del número, no como respaldo independiente.",
+    "fis-c01 (Q3,318 M) es una estimación ex ante (oct–dic) de SAT y Minfin que solo circula como nota de EFE replicada; no se halló el comunicado de SAT o Minfin. Se presenta como estimación de lo que no se percibirá, no como recaudación perdida observada.",
+    "fis-c03 (Q1,932.3 M) es derivada: techo de Q2,000 M menos el saldo pendiente de Q67.7 M (confirmado por La Hora/MEM, 97 %). La suma por producto da unos Q1,922 M (≈Q10 M de diferencia); por eso el texto dice «cerca de Q1,930 millones». Una sola fuente. IIES-USAC estimó una ejecución menor (Q1,580.2 M).",
+    "fis-c10 (ancla, Q5,250.3 M) es cálculo propio que suma dos cosas de naturaleza distinta: un gasto ejecutado (subsidio, abr–jul, fis-c03) y una recaudación estimada no percibida (exoneración, oct–dic, fis-c01). Hereda la fragilidad de ambas; se presenta como «unos Q5 mil 250 millones» entre gasto y lo que se prevé no cobrar.",
+    "fis-c11 (4.41 %) hereda la fragilidad de fis-c10 y se calcula sobre la meta de recaudación 2026 (programación, no recaudación observada); el texto dice «cerca del 4 %».",
+    "prc-c04: la serie de precios del diésel en Guatemala son cuatro fechas de fuentes y mediciones distintas (MEM vía SESAN y Prensa Libre), no una tabla semanal oficial; mem.gob.gt no fue accesible. Para el 1 de octubre, Emisoras Unidas reporta ~Q41.69 (monitoreo metropolitano) y Q42.69 el 14 de octubre; por eso el texto habla de «alrededor de Q42» y la tarjeta lo advierte.",
+    "prc-c06: el ahorro de Q9.05 por galón es de la gasolina superior según el MEM; el del diésel es Q6.45, y así se usa en las tarjetas 3 y 6.",
+    "La comparación con el IDP de 2025 es de escala: la exoneración incluye IVA, no solo IDP.",
+    "El ahorro por tanque (bol-c10) usa 15 galones como supuesto declarado y el ahorro por galón estimado del MEM, no el precio observado."
+  ],
+  "fuentes": [
+    "Cálculo propio · MEM, SAT y Minfin · 2026",
+    "MEM · pagos del subsidio vía La Hora · 2026",
+    "MEM · ahorro estimado vía AGN · octubre 2026",
+    "MEM-DGH · vía SESAN y Prensa Libre · 2026",
+    "EIA · diésel ULSD Costa del Golfo · 2024–2026",
+    "Cálculo propio · MEM y Decreto 11-2026"
+  ],
+  "fuentes_cifras": [
+    "Cálculo propio con Decreto 11-2026 (IIES-USAC) y MEM (Decreto 22-2026, vía AGN)",
+    "Cálculo propio con MEM (vía La Hora) y SAT/Minfin (vía EFE)",
+    "Cálculo propio con datos de la EIA",
+    "Cálculo propio con fis-c10 y SAT (programación 2026)",
+    "IIES-USAC, Efectos del fin del subsidio a los combustibles (julio 2026), sobre el Decreto 11-2026",
+    "MEM vía La Hora (4-ago-2026)",
+    "MEM, reporte de ejecución semanal publicado en agosto, vía La Hora (4-ago-2026)",
+    "MEM-DGH (reproducido por SESAN y Prensa Libre)",
+    "Ministerio de Energía y Minas (vía AGN)",
+    "Prensa Libre con datos oficiales (ejecución Q1,932 millones) · INE (población 2026)",
+    "SAT y Ministerio de Finanzas Públicas, citados por Agencia EFE (30-sep-2026)",
+    "SAT, Recaudación de Ingresos Tributarios (rimpa.xlsx)",
+    "SESAN/SIINSAN, Boletín de alerta temprana SAN No. 008-2026",
+    "U.S. Energy Information Administration (EIA)"
+  ],
+  "gate_mecanico": "ok",
+  "contacto": "contacto.png"
+}

@@ -5,6 +5,8 @@ escena de gancho a pantalla completa, las tarjetas del hilo animadas y golpes de
 voz contando por qué importa cada cifra. Lo ve alguien que **no leyó el hilo**, deslizando en TikTok: la
 curva de retención se decide en los segundos 1–3 (ahí se va la mitad si no hay razón para quedarse) y
 después cada escena tiene que ganarse la siguiente. Sin cara: la pantalla la llevan las cifras y el texto.
+La voz **cuenta el hilo como una historia** (las reglas de narración de `/historia`): primero escribes la narración
+de corrido y después la repartes en escenas; nunca una tarjeta leída tras otra («Pero X: cifra. Y Y: cifra.»).
 
 ## Insumo y salida
 
@@ -22,18 +24,23 @@ después cada escena tiene que ganarse la siguiente. Sin cara: la pantalla la ll
 {
  "contexto_superior": "Crimen organizado · Guatemala 2026",
  "promesa": {"texto": "Quédate: hay un dato que lo cambia todo.", "en": 1, "pago": 5},
+ "narracion": [
+  {"acto": 1, "texto": "<la voz del gancho tal cual> <la de T1> (el acto 1 de corrido)"},
+  {"acto": 2, "texto": "<las voces del nudo, de corrido>"},
+  {"acto": 3, "texto": "<las voces del desenlace> <cierre.texto>"}
+ ],
  "escenas": [
   {"tipo": "gancho", "familia": "contraste", "visual": "pareja",
    "visual_datos": {"a": {"valor": "nar-c02.partes[0]", "etiqueta": "2025"}, "b": {"valor": "nar-c02.partes[1]", "etiqueta": "2026"}},
-   "pantalla": "1,596 → 8,402 kg", "linea": "de cocaína decomisada en Guatemala", "verbo": "decomisaron",
+   "acto": 1, "pantalla": "1,596 → 8,402 kg", "linea": "de cocaína decomisada en Guatemala", "verbo": "decomisaron",
    "texto": "En seis meses decomisaron 8,402 kg de cocaína en Guatemala. Quédate: hay un dato que lo cambia todo."},
-  {"tipo": "tarjeta", "tuit": 1, "enlace": null, "golpe": "Cinco veces más cocaína", "calculo": "nar-c02.partes[1]/nar-c02.partes[0]",
+  {"tipo": "tarjeta", "tuit": 1, "acto": 1, "enlace": null, "golpe": "Cinco veces más cocaína", "calculo": "nar-c02.partes[1]/nar-c02.partes[0]",
    "texto": "En el primer semestre de 2025 se decomisaron {1,596.2:m}. En el de 2026, 8,402.4 kg: cinco veces más."},
-  {"tipo": "golpe", "enlace": "por_eso", "pantalla": "2 de cada 3", "linea": "kilos salieron de un solo barco", "calculo": "100/nar-c04", "verbo": "salió",
+  {"tipo": "golpe", "acto": 2, "enlace": "por_eso", "pantalla": "2 de cada 3", "linea": "kilos salieron de un solo barco", "calculo": "100/nar-c04", "verbo": "salió",
    "texto": "Así que ojo: el 66.7% de esa cocaína salió de un solo cargamento, el de Puerto Quetzal."},
-  {"tipo": "tarjeta", "tuit": 12, "enlace": "pero", "golpe": "El doble de policías asesinados",
+  {"tipo": "tarjeta", "tuit": 12, "acto": 2, "enlace": "pero", "golpe": "El doble de policías asesinados",
    "texto": "Pero mientras suben los decomisos, los policías asesinados pasaron de {10:m} a {20:m} en un año."},
-  {"tipo": "tarjeta", "tuit": 13, "enlace": "por_eso", "golpe": "Solo 4 de cada 100 con sentencia",
+  {"tipo": "tarjeta", "tuit": 13, "acto": 3, "enlace": "por_eso", "golpe": "Solo 4 de cada 100 con sentencia",
    "texto": "Por eso el dato que cambia todo: el 61.3% de los homicidios de 2025 sigue sin una sola persona condenada."}
  ],
  "cierre": {
@@ -47,9 +54,44 @@ después cada escena tiene que ganarse la siguiente. Sin cara: la pantalla la ll
 }
 ```
 
-Gate: `python3 scripts/video.py guion <TRABAJO> --check` (V1–V5 y V9, `referencias/flujo-video.md`). Si falla,
-corrige **solo** lo que dice cada línea FALLA (≤ 3 intentos). El `gancho` de texto suelto del formato viejo
-ya no existe: la escena 1 ES el gancho.
+Gate: `python3 scripts/video.py guion <TRABAJO> --check` (V1–V5, V9 y V17–V18, `referencias/flujo-video.md`). Si
+falla, corrige **solo** lo que dice cada línea FALLA (≤ 3 intentos); si cambias una voz, cambia el mismo tramo de
+`narracion`. El `gancho` de texto suelto del formato viejo ya no existe: la escena 1 ES el gancho.
+
+## Narrar el hilo (primero la narración)
+
+El método es el de `/historia` (`referencias/roles/historia-guionista.md`), con los datos como materia:
+
+1. **Escribe primero `narracion`**: tres actos de texto corrido, como lo diría una sola voz que cuenta.
+   - **Acto 1 (planteamiento)**: la voz del gancho **tal cual** (ya la copió `ganchos --usar`), T1 que la paga y,
+     antes de la promesa, **quién vive la cifra**: la gente, el lugar, el momento («En Suchitepéquez, las familias
+     de la costa…»). Un dato sin nadie que lo viva es una tabla.
+   - **Acto 2 (nudo)**: el giro del hilo (beat `giro`), lo que cambia la comprensión.
+   - **Acto 3 (desenlace)**: el impacto, el pago de la promesa y el cierre (`cierre.texto` es el final del acto 3).
+2. **Mídela**: `python3 scripts/video.py narracion <TRABAJO> --check` (palabras, segundos, conectores y «según» por
+   acto; V17–V18 sobre el texto solo). Léela en voz alta: si puedes cerrar los ojos y seguirla, va.
+3. **Repártela** en escenas **sin cambiar una palabra** (V17): cada escena toma un tramo y lleva su `acto`; las
+   voces de un acto, en orden, son su narración (en el 3, más el cierre). El gate agrupa las escenas seguidas de un
+   mismo acto en **secuencias de voz** (2–5 escenas grabadas de una vez, sin cortes en la voz).
+
+Principios (los revisa V18 y el crítico en C12, puntaje `flujo`):
+
+- **Una sola voz** de principio a fin: las escenas sirven a la narración, no al revés. Ninguna escena vuelve a
+  empezar («Y X: cifra»); la plantilla «X: cifra, cifra» en varias escenas es lo que el crítico bloquea.
+- **Cada oración sigue de la anterior** con un porque, un pero o un entonces: ≥ 2 conectores causales o temporales
+  por acto (≥ 1 en `corto`), nunca «y luego». La causalidad vive en el texto; `enlace` solo elige el efecto.
+- **Las cifras van dentro de oraciones que cuentan algo**: «Este año murieron 34 niños, los mismos que a esta altura
+  de 2025» y no «Muertes: 34». Un número por idea, a escala humana (regla 5).
+- **Los saltos se dicen**: de tiempo («un año después», «esa misma semana»), de lugar («en la costa, en cambio…») y
+  de tema («mientras tanto»).
+- **Cada institución o grupo se presenta la primera vez** con una aposición de ≤ 8 palabras («el MSPAS, el
+  ministerio de Salud, …»).
+- **Toda referencia tiene antecedente**: «esos 34 niños» solo si ya se dijo 34 niños (V18 lo comprueba).
+- **«Según» con medida**: ≤ 3 por video, ≤ 2 por acto, nunca en dos escenas seguidas ni la misma fuente dos veces;
+  lo del hilo se narra llano (la fuente ya está en la tarjeta). Ninguna escena abre con «Pero, según…».
+- **Dos escenas seguidas no abren igual** (las dos primeras palabras).
+- Lo que se queda de la retención: el gancho elegido, T1 en la escena 2, la promesa y su pago, los golpes ≤ 6
+  palabras en pantalla, la cifra pronto en cada tarjeta y ≤ 6 s sin un evento.
 
 ## Reglas
 
@@ -77,11 +119,10 @@ ya no existe: la escena 1 ES el gancho.
    responderá («¿Y cuántos terminan en condena? Espera al final.»). Mira la promesa de los videos anteriores en
    «Frases ya usadas» y usa otra forma. `pago` es la escena del último tercio (⌈2n/3⌉ … n, ≠ `en`) cuyo golpe o
    pantalla **cierra exactamente esa brecha**.
-3. **Escena 2 = T1** (`enlace` nulo). Desde la escena 3, cada escena lleva `enlace` y su voz **empieza** con
-   el conector: `pero` (pero, sin embargo, aunque, solo que, en cambio, aun así), `por_eso` (por eso, así que,
-   entonces, el resultado, de ahí que, la consecuencia) o `y` (y, además, también, encima, más aún). Nunca
-   «y luego»; `y` como máximo en un tercio de los enlaces. El **giro** del hilo (beat `giro` en el digesto) es
-   tu «pero» mayor.
+3. **Escena 2 = T1** (`enlace` nulo). Desde la escena 3, `enlace` (`pero` | `por_eso` | `y`) es **opcional**: solo
+   elige el efecto de sonido de la entrada. La causalidad no se pega al inicio de cada escena: vive en la narración
+   («Narrar el hilo»), donde un «pero» o un «por eso» puede ir en medio de la oración. El **giro** del hilo (beat
+   `giro` en el digesto) es tu «pero» mayor; márcalo con `enlace: "pero"`.
    **Un `por_eso` respeta el tiempo**: la causa ocurre antes (o a la vez) que la consecuencia. «El Niño calentó
    el océano de junio a agosto» → «así que faltó lluvia de **enero a junio**» es falso (el efecto va antes que la
    causa) y el crítico lo bloquea. Mira los periodos de las dos tarjetas: si no encajan, reordena las escenas o usa `y`.
@@ -165,8 +206,9 @@ ya no existe: la escena 1 ES el gancho.
    `(1-est-c05.partes[1]/est-c05.partes[0])*100` → «39% menos denuncias»; `nar-c02/1000` → «8.4 toneladas».
    El digesto sugiere las traducciones posibles por cifra: úsalas.
 6. **Ritmo.** Tarjetas de 40–230 caracteres de voz (≤ 15 s), golpes de 20–110, gancho de 30–130, cierre de
-   40–200. La cifra va en la primera oración de cada tarjeta; el gate (V9) rechaza más de 6 s estimados sin
-   un evento (inicio, fin de la primera oración, cada cifra, fin): acorta o mueve la cifra. Tus cifras y
+   40–200. La cifra llega pronto en cada tarjeta (en su primera o segunda oración: antes puede ir quién la vive o
+   el lugar); el gate (V9) rechaza más de 6 s estimados sin un evento (inicio, fin de la primera oración, cada
+   cifra, fin): acorta o mueve la cifra. Tus cifras y
    golpes son los cambios visuales que sostienen la atención. Si la tarjeta tiene años en su eje (el digesto
    los lista como serie o partes), nombrarlos en la voz también mueve la pantalla: esa columna late. Para un
    silencio que ayude (el giro del gancho: «…de su historia. [pausa] Pero con el hambre…»; antes de la cifra del
@@ -224,12 +266,14 @@ ya no existe: la escena 1 ES el gancho.
 | `corto` | 60 s ±10 % | gancho + 3–4 tarjetas + 1–2 golpes | ≈ 810 caracteres |
 | `medio` (por defecto) | 120 s ±10 % | gancho + 6–8 tarjetas + 2–4 golpes | ≈ 1,675 |
 | `largo` | 240 s ±10 % | gancho + 11–15 tarjetas + 3–6 golpes | ≈ 3,437 |
-| `prueba` (fixture) | 45 s ±10 % | gancho + 2–3 tarjetas + 0–1 golpes | ≈ 599 |
+| `prueba` (fixture) | 55 s ±10 % | gancho + 2–3 tarjetas + 0–2 golpes | ≈ 744 |
 
 La voz total (con cifras en palabras, ≈ 1.4× el texto en dígitos) debe caer en ±10 % del objetivo; el gate
 (V4) imprime la duración estimada. Si te pasas, quita una tarjeta o acorta frases; no aceleres a costa de la
-claridad. V9 comprueba: escena 1 = el gancho elegido (familia, visual y R1–R10 de `referencias/ganchos.md`); escena 2 = T1; enlaces desde la 3
-con su conector al inicio y `y` ≤ ⌊n/3⌋; golpe en cada tarjeta, ≤ 6 palabras y distinto del titular; nunca
+claridad. V17 comprueba la narración (3 actos; cada acto es la suma literal de las voces de sus escenas; `acto` en
+cada escena, sin bajar, con escenas propias en el 2 y el 3); V18 su hilo (conectores por acto, aperturas, «según»,
+referencias con antecedente; más de 6.5 cortes por minuto es aviso). V9 comprueba: escena 1 = el gancho elegido
+(familia, visual y R1–R10 de `referencias/ganchos.md`); escena 2 = T1; un `enlace`, si va, es pero|por_eso|y; golpe en cada tarjeta, ≤ 6 palabras y distinto del titular; nunca
 dos golpes seguidos; `verbo` del gancho y de cada golpe dentro de la oración que dice su pantalla; promesa literal en 1–2 y pago en el último tercio; `calculo` legible que da el número
 escrito; ritmo ≤ 6 s. Si la directiva trae faltas del crítico o fallos del workflow, corrige **solo** eso y
 vuelve a pasar el gate.

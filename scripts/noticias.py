@@ -563,10 +563,21 @@ def cmd_digesto(a):
     return 0
 
 
-def cmd_fotos_contacto(a):
-    """Hoja con todas las fotos del trabajo (para el QA de contenido del coordinador: sin víctimas ni menores)."""
+def cmd_fotos_contacto(a, sin_repetidas=False):
+    """Hoja con todas las fotos del trabajo (para el QA de contenido del coordinador: sin víctimas ni menores).
+    sin_repetidas: una imagen bajada con dos ids (mismo contenido) sale una sola vez (/historia)."""
     trabajo = os.path.abspath(a.trabajo)
     fotos = sorted(glob.glob(os.path.join(trabajo, "fotos", "*.jpg")))
+    if sin_repetidas:
+        vistos, unicas = set(), []
+        for f in fotos:
+            h = hashlib.sha1(open(f, "rb").read()).hexdigest()
+            if h not in vistos:
+                vistos.add(h)
+                unicas.append(f)
+        if len(unicas) < len(fotos):
+            print("AVISO %d foto(s) repetida(s) (la misma imagen con otro id): salen una vez" % (len(fotos) - len(unicas)))
+        fotos = unicas
     if not fotos:
         print("sin fotos")
         return 0

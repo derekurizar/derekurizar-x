@@ -37,8 +37,11 @@ La guía es `referencias/flujo-historia.md`. Nunca publiques. Nunca generes mús
      `resumeFromRunId`.
    - Al volver, lee `veredicto`, `puntajes` (con `flujo`), `faltas_pendientes`, `mejoras_no_aplicadas`, `oyente` (lo
      que un oyente que solo oyó la voz no entendió; el crítico lo resolvió o lo justificó) y, del guion, `actos`,
-     `palabras` (320–400), `segun` (≤ 4) e `hilos` (pagados y sin respuesta). Si `veredicto` no es
-     `"pasa"`, muestra las faltas y **pregunta al usuario** si sigue así o corrige a mano. Si pasa, el Workflow ya hizo
+     `palabras` (320–400), `segun` (≤ 4) e `hilos` (pagados y sin respuesta). `aprobado_por: "arreglos_probados"`
+     quiere decir que la última crítica solo bloqueaba con arreglos ya probados y el Workflow los aplicó
+     (`aplicadas_al_cierre`): dilo en el reporte. Si `veredicto` no es `"pasa"`, muestra las faltas y **pregunta al
+     usuario** si sigue así o lanza un retoque con ellas (paso 9; las que traen `cambios` se aplican tal cual con
+     `historia.py aplicar`); nunca edites `guion.json` a mano. Si pasa, el Workflow ya hizo
      que el guionista aplicara las mejoras del crítico (también las de voz) y repasara el gate; las que no pudo aplicar
      (`mejoras_no_aplicadas`, con su motivo) van al reporte: no las apliques a mano.
    - Corre tú `python3 scripts/historia.py guion <TRABAJO> --check` (exit 0: confirma `locucion.json`).

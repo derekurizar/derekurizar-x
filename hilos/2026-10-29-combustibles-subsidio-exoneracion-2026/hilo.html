@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hilo · vista previa</title>
+<!-- Vista previa del hilo: la abre el usuario en su navegador. La rellena scripts/ensamblar.py (HILO_JSON). -->
+<style>
+  :root { --papel:#F6F2E8; --tinta:#0C1520; --gris:#5c6470; --linea:rgba(12,21,32,.14); --acento:#4B92DB; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--papel); color: var(--tinta); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 40px 20px 80px; }
+  header h1 { font: 700 30px/1.15 Georgia, "Times New Roman", serif; margin: 0 0 8px; }
+  header .meta { color: var(--gris); font-size: 14px; display: flex; flex-wrap: wrap; gap: 10px 18px; }
+  .chip { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; background: var(--tinta); color: var(--papel); }
+  .tesis { margin: 18px 0 0; padding: 14px 18px; border-left: 4px solid var(--acento); background: rgba(75,146,219,.08); font-size: 17px; }
+  .contacto { margin-top: 18px; }
+  .contacto a { display: inline-block; margin-bottom: 8px; font-size: 14px; font-weight: 600; color: var(--acento); }
+  .contacto img { width: 100%; max-width: 760px; display: block; border-radius: 12px; box-shadow: 0 2px 14px rgba(0,0,0,.12); }
+  .tuit { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--linea); }
+  .tuit .cab { display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--gris); }
+  .tuit .cab .n { font-weight: 800; font-size: 15px; color: var(--tinta); }
+  .texto { position: relative; margin-top: 12px; padding: 14px 16px; background: #fff; border: 1px solid var(--linea); border-radius: 10px; white-space: pre-wrap; font-size: 17px; }
+  .texto.vacio { color: var(--gris); font-style: italic; }
+  .fila { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; font-size: 13px; color: var(--gris); }
+  .fila .cnt.alerta { color: #B23A26; font-weight: 700; }
+  button { font: 600 13px/1 system-ui, sans-serif; padding: 7px 12px; border-radius: 8px; border: 1px solid var(--linea); background: #fff; color: var(--tinta); cursor: pointer; }
+  button:hover { background: var(--tinta); color: var(--papel); }
+  .img { margin-top: 14px; }
+  .img img { width: 100%; max-width: 560px; display: block; border-radius: 12px; box-shadow: 0 2px 14px rgba(0,0,0,.12); }
+  .alt { margin-top: 10px; font-size: 14px; color: var(--gris); }
+  .alt b { color: var(--tinta); }
+  .fuente { margin-top: 6px; font-size: 13px; color: var(--gris); }
+  section.extra { margin-top: 44px; padding-top: 24px; border-top: 2px solid var(--tinta); }
+  section.extra h2 { font: 700 18px/1.2 system-ui, sans-serif; margin: 22px 0 8px; }
+  section.extra ul { margin: 0; padding-left: 20px; }
+  .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--tinta); color: var(--papel); padding: 10px 16px; border-radius: 8px; font-size: 14px; opacity: 0; transition: opacity .2s; pointer-events: none; }
+  .toast.on { opacity: 1; }
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<div class="toast" id="toast">Copiado</div>
+<script id="hilo-json" type="application/json">{"slug": "combustibles-subsidio-exoneracion-2026", "fecha": "2026-10-29", "tema": "Combustibles en Guatemala 2026: diésel en máximo histórico, subsidio del Decreto 11-2026 (abril–julio) y exoneración del IDP y el IVA del Decreto 22-2026 (1 oct–31 dic): cuánto le cuestan al fisco y cuánto bajó de verdad el precio en la bomba", "tesis": "En 2026 el Estado destina cerca de Q5,250 millones a abaratar el combustible (subsidio ejecutado del Decreto 11, cerca de Q1,930 M, más la recaudación de IDP e IVA que SAT y Minfin estiman no percibir por el Decreto 22), una suma de gasto y estimación mayor que todo el IDP de 2025; aun así, el diésel en su primer día sin impuestos (alrededor de Q42, 1-oct) quedó más caro que con el subsidio en abril (Q34.32), en paralelo a una referencia internacional que subió 131% de enero a septiembre.", "paleta": "cielo", "hook_tipo": "giro_inversion", "modo": "hilo", "pregunta": "¿Cuánto le cuesta al Estado abaratar el combustible en 2026 y cuánto de ese alivio se ve en el precio por galón?", "n_tuits": 7, "estado": "listo", "tuits": [{"n": 1, "beat": "gancho", "texto": "En 2026, abaratar combustibles le cuesta al Estado unos Q5 mil 250 millones.\nEntre gasto y lo que prevé no cobrar, cerca del 4% de lo que la SAT planea recaudar.\n\nPero el 1 de octubre, ya sin IDP ni IVA, el galón de diésel amaneció más caro que en abril. 🧵", "caracteres": 257, "alt_text": "Tarjeta de cifra: el subsidio del Decreto 11-2026 (cerca de 1,930 millones de quetzales ejecutados) más la exoneración de IDP e IVA del Decreto 22-2026 (3,318 millones que SAT y Minfin estiman no percibir) suman unos 5,250 millones de quetzales en 2026, entre gasto y estimación. Una barra de comparación muestra que supera los 4,839 millones de quetzales que rindió el IDP en todo 2025. Fuente: MEM, SAT y Minfin, cálculo propio.", "imagen": "tuit_1.png", "plantilla": "cifra", "fuente": "Cálculo propio · MEM, SAT y Minfin · 2026", "cifra_ids": ["fis-c10", "fis-c05", "fis-c03", "fis-c01", "fis-c11"]}, {"n": 2, "beat": "contexto", "texto": "Primera medida, el Decreto 11-2026: Q8 por galón de diésel y Q5 por galón de gasolina desde el 28 de abril. Debía durar tres meses; el fondo se agotó el 2 de julio con cerca de Q1 mil 930 millones.", "caracteres": 197, "alt_text": "Gráfico de dona: pagos aproximados del subsidio del Decreto 11-2026 por combustible. Diésel, 1,132.7 millones de quetzales, la mayor parte; gasolina regular, 432.6 millones; gasolina superior, 357 millones. Fuente: MEM vía La Hora, agosto de 2026.", "imagen": "tuit_2.png", "plantilla": "dona", "fuente": "MEM · pagos del subsidio vía La Hora · 2026", "cifra_ids": ["fis-c04", "bol-c07", "fis-c03"]}, {"n": 3, "beat": "contexto", "texto": "Segunda medida, el Decreto 22-2026: del 1 de octubre al 31 de diciembre no se cobran IDP ni IVA. SAT y Finanzas estiman que el fisco dejará de percibir Q3 mil 318 millones.", "caracteres": 172, "alt_text": "Gráfico de barras horizontales: ahorro estimado por galón al quitar IDP e IVA desde el 1 de octubre de 2026. Gasolina superior, 9.05 quetzales; regular, 8.33; diésel, 6.45, el menor de los tres. Fuente: MEM vía AGN.", "imagen": "tuit_3.png", "plantilla": "barras-h", "fuente": "MEM · ahorro estimado vía AGN · octubre 2026", "cifra_ids": ["prc-c06", "fis-c01"]}, {"n": 4, "beat": "giro", "texto": "Entre el 1 de julio y el 24 de agosto, ya sin subsidio, el diésel subió Q18.08 por galón: más del doble que las gasolinas.", "caracteres": 122, "alt_text": "Gráfico de barras verticales: precio del galón de diésel en la capital, autoservicio, en cuatro fechas de 2026. 28 de abril, con subsidio: 34.32 quetzales. 1 de julio, con subsidio: 27.25. 24 de agosto, sin subsidio: 45.33. 1 de octubre, primer día sin IDP ni IVA: 42.62 (otras mediciones dan alrededor de 42), más que en abril. Fuente: MEM-DGH vía SESAN y Prensa Libre.", "imagen": "tuit_4.png", "plantilla": "barras-v", "fuente": "MEM-DGH · vía SESAN y Prensa Libre · 2026", "cifra_ids": ["prc-c04", "prc-c05"]}, {"n": 5, "beat": "contexto", "texto": "Mientras tanto, afuera: de enero a septiembre, el diésel de referencia del Golfo de EE. UU. subió 131%. La exoneración quita impuestos; ese precio no lo toca.", "caracteres": 158, "alt_text": "Gráfico de línea: precio spot mensual del diésel ULSD en la Costa del Golfo de EE. UU., de enero de 2024 a septiembre de 2026. Osciló entre 2 y 2.7 dólares por galón hasta febrero de 2026, saltó a 3.83 en marzo y llegó a 4.89 dólares en septiembre de 2026. Una banda marca los meses del subsidio en Guatemala. Fuente: EIA.", "imagen": "tuit_5.png", "plantilla": "linea", "fuente": "EIA · diésel ULSD Costa del Golfo · 2024–2026", "cifra_ids": ["prc-c01", "prc-c03"]}, {"n": 6, "beat": "impacto", "texto": "En la otra cuenta, el subsidio de abril a julio equivalió a Q105.50 por guatemalteco. El costo real de la exoneración aún no se puede medir: la SAT no publica la recaudación de octubre.", "caracteres": 185, "alt_text": "Gráfico de barras agrupadas: ahorro al llenar un tanque de 15 galones, por combustible y medida. Diésel: 120 quetzales con el subsidio y 96.75 con la exoneración. Regular: 75 con el subsidio y 124.95 con la exoneración. Superior: 75 con el subsidio y 135.75 con la exoneración. El tanque de 15 galones es un supuesto. Fuente: cálculo propio con MEM y Decreto 11-2026.", "imagen": "tuit_6.png", "plantilla": "agrupadas", "fuente": "Cálculo propio · MEM y Decreto 11-2026", "cifra_ids": ["bol-c10", "bol-c02", "bol-c07", "prc-c06"]}, {"n": 7, "beat": "cierre", "texto": "Unos Q5 mil 250 millones, entre gasto y recaudación que se prevé no cobrar, y el diésel no volvió al precio de abril, mientras su referencia internacional más que se duplicó.\n\nFuentes: MEM-DGH, SAT, Minfin, EIA e INE (vía SESAN, Prensa Libre, La Hora y AGN). Cálculo propio.", "caracteres": 274, "alt_text": "Tuit de cierre sin imagen: resume que 5,250 millones de quetzales en subsidio y exoneración no devolvieron el diésel al precio de abril de 2026 y lista las fuentes.", "imagen": null, "plantilla": null, "fuente": null, "cifra_ids": []}], "no_afirma": ["Que los Q5,250 millones sean todo gasto observado: Q3,318 M son una estimación ex ante de SAT y Minfin de lo que no se recaudará en oct–dic, no recaudación perdida medida.", "Que el alza del diésel en Guatemala se deba solo al precio internacional: no se separó con tipo de cambio el efecto fiscal del internacional.", "Que las gasolineras no trasladaran la rebaja: solo se comparan precios de referencia en fechas sueltas.", "Que el precio del 1 de octubre sea exacto, el de fin de octubre ni el máximo del año: las mediciones de esa fecha varían (alrededor de Q42).", "Que un tanque de 15 galones sea el típico: es un supuesto para el cálculo."], "incertidumbre": ["Todas las cifras usadas tienen segunda fuente no independiente (reproduce la primaria), incluida la ancla fis-c10: valen como verificación del número, no como respaldo independiente.", "fis-c01 (Q3,318 M) es una estimación ex ante (oct–dic) de SAT y Minfin que solo circula como nota de EFE replicada; no se halló el comunicado de SAT o Minfin. Se presenta como estimación de lo que no se percibirá, no como recaudación perdida observada.", "fis-c03 (Q1,932.3 M) es derivada: techo de Q2,000 M menos el saldo pendiente de Q67.7 M (confirmado por La Hora/MEM, 97 %). La suma por producto da unos Q1,922 M (≈Q10 M de diferencia); por eso el texto dice «cerca de Q1,930 millones». Una sola fuente. IIES-USAC estimó una ejecución menor (Q1,580.2 M).", "fis-c10 (ancla, Q5,250.3 M) es cálculo propio que suma dos cosas de naturaleza distinta: un gasto ejecutado (subsidio, abr–jul, fis-c03) y una recaudación estimada no percibida (exoneración, oct–dic, fis-c01). Hereda la fragilidad de ambas; se presenta como «unos Q5 mil 250 millones» entre gasto y lo que se prevé no cobrar.", "fis-c11 (4.41 %) hereda la fragilidad de fis-c10 y se calcula sobre la meta de recaudación 2026 (programación, no recaudación observada); el texto dice «cerca del 4 %».", "prc-c04: la serie de precios del diésel en Guatemala son cuatro fechas de fuentes y mediciones distintas (MEM vía SESAN y Prensa Libre), no una tabla semanal oficial; mem.gob.gt no fue accesible. Para el 1 de octubre, Emisoras Unidas reporta ~Q41.69 (monitoreo metropolitano) y Q42.69 el 14 de octubre; por eso el texto habla de «alrededor de Q42» y la tarjeta lo advierte.", "prc-c06: el ahorro de Q9.05 por galón es de la gasolina superior según el MEM; el del diésel es Q6.45, y así se usa en las tarjetas 3 y 6.", "La comparación con el IDP de 2025 es de escala: la exoneración incluye IVA, no solo IDP.", "El ahorro por tanque (bol-c10) usa 15 galones como supuesto declarado y el ahorro por galón estimado del MEM, no el precio observado."], "fuentes": ["Cálculo propio · MEM, SAT y Minfin · 2026", "MEM · pagos del subsidio vía La Hora · 2026", "MEM · ahorro estimado vía AGN · octubre 2026", "MEM-DGH · vía SESAN y Prensa Libre · 2026", "EIA · diésel ULSD Costa del Golfo · 2024–2026", "Cálculo propio · MEM y Decreto 11-2026"], "fuentes_cifras": ["Cálculo propio con Decreto 11-2026 (IIES-USAC) y MEM (Decreto 22-2026, vía AGN)", "Cálculo propio con MEM (vía La Hora) y SAT/Minfin (vía EFE)", "Cálculo propio con datos de la EIA", "Cálculo propio con fis-c10 y SAT (programación 2026)", "IIES-USAC, Efectos del fin del subsidio a los combustibles (julio 2026), sobre el Decreto 11-2026", "MEM vía La Hora (4-ago-2026)", "MEM, reporte de ejecución semanal publicado en agosto, vía La Hora (4-ago-2026)", "MEM-DGH (reproducido por SESAN y Prensa Libre)", "Ministerio de Energía y Minas (vía AGN)", "Prensa Libre con datos oficiales (ejecución Q1,932 millones) · INE (población 2026)", "SAT y Ministerio de Finanzas Públicas, citados por Agencia EFE (30-sep-2026)", "SAT, Recaudación de Ingresos Tributarios (rimpa.xlsx)", "SESAN/SIINSAN, Boletín de alerta temprana SAN No. 008-2026", "U.S. Energy Information Administration (EIA)"], "gate_mecanico": "ok", "contacto": "contacto.png"}</script>
+<script>
+/* Peso según X: copia literal de scripts/contar_x.js (pesoX). No editar aquí; regenerar desde el script. */
+function pesoX(texto) {
+  // Reglas: NFC; cada URL pesa 23; puntos de código en 0–4351, 8192–8205,
+  // 8208–8223 y 8242–8247 pesan 1; el resto 2; los emoji compuestos
+  // (FE0F, ZWJ+siguiente, tono 1F3FB–1F3FF, keycap 20E3, par regional) son uno y pesan 2.
+  var t = String(texto == null ? "" : texto).normalize("NFC");
+  var reUrl = /https?:\/\/\S+|www\.\S+|(?<![\p{L}\p{N}\p{M}_])[a-z0-9-]+(\.[a-z0-9-]+)*\.(com|gt|org|net|io|edu|gov|mx|sv|hn|es|info|co)(\/\S*)?/giu;
+  var rangos1 = [[0, 4351], [8192, 8205], [8208, 8223], [8242, 8247]];
+  var pesoCp = function (cp) {
+    for (var k = 0; k < rangos1.length; k++) if (cp >= rangos1[k][0] && cp <= rangos1[k][1]) return 1;
+    return 2;
+  };
+  var esTono = function (cp) { return cp >= 0x1f3fb && cp <= 0x1f3ff; };
+  var esRegional = function (cp) { return cp >= 0x1f1e6 && cp <= 0x1f1ff; };
+  var pesoPlano = function (s) {
+    var cps = Array.from(s, function (c) { return c.codePointAt(0); });
+    var i = 0, n = cps.length, total = 0;
+    while (i < n) {
+      var j = i + 1;
+      if (esRegional(cps[i]) && j < n && esRegional(cps[j])) j += 1; // bandera
+      while (j < n) {
+        if (cps[j] === 0xfe0f || cps[j] === 0x20e3 || esTono(cps[j])) j += 1;
+        else if (cps[j] === 0x200d && j + 1 < n) j += 2; // ZWJ + siguiente
+        else break;
+      }
+      total += j - i > 1 ? 2 : pesoCp(cps[i]);
+      i = j;
+    }
+    return total;
+  };
+  var total = 0, pos = 0, m;
+  while ((m = reUrl.exec(t)) !== null) {
+    total += pesoPlano(t.slice(pos, m.index)) + 23;
+    pos = m.index + m[0].length;
+    if (m[0].length === 0) reUrl.lastIndex++;
+  }
+  return total + pesoPlano(t.slice(pos));
+}
+</script>
+<script>
+(() => {
+  const H = JSON.parse(document.getElementById("hilo-json").textContent);
+  const app = document.getElementById("app");
+  const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const toast = (m) => { const t = document.getElementById("toast"); t.textContent = m; t.classList.add("on"); setTimeout(() => t.classList.remove("on"), 1400); };
+  const copiar = async (txt) => {
+    try { await navigator.clipboard.writeText(txt); toast("Copiado"); return; } catch (e) { /* fallback */ }
+    const ta = document.createElement("textarea"); ta.value = txt; document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); toast("Copiado"); } catch (e) { toast("No se pudo copiar"); }
+    ta.remove();
+  };
+  if (!H) { app.innerHTML = "<p>Sin datos: este archivo lo genera scripts/ensamblar.py.</p>"; return; }
+
+  let html = `<header>
+    <h1>${esc(H.tema)}</h1>
+    <div class="meta"><span class="chip">${esc(H.paleta)}</span><span>${esc(H.fecha)}</span>${H.modo && H.modo !== "hilo" ? `<span class="chip" style="background:#e9e3d6;color:#0C1520">modo: ${esc(H.modo)}</span>` : ""}<span>${H.n_tuits} tuits · ${H.tuits.filter((t) => t.imagen).length} imágenes</span><span>gate mecánico: ${esc(H.gate_mecanico)}</span></div>
+    ${H.tesis ? `<p class="tesis"><b>Tesis:</b> ${esc(H.tesis)}</p>` : ""}
+    ${H.modo && H.modo !== "hilo" && H[H.modo] ? `<div class="meta" style="margin-top:8px;display:block"><b>modo ${esc(H.modo)}:</b> ${Object.entries(H[H.modo]).map(([k, v]) => Array.isArray(v) && v.length && typeof v[0] === "object" ? `<div>${esc(k)}: ${v.map((x) => Object.values(x).map(esc).join(" · ")).join(" | ")}</div>` : `<span style="margin-right:14px">${esc(k)}: ${esc(Array.isArray(v) ? v.join(", ") : v)}</span>`).join("")}</div>` : ""}
+  </header>
+  <div class="contacto" id="contacto" hidden>
+    <a href="contacto.png" target="_blank" rel="noopener">Ver hoja de contacto</a>
+    <img src="contacto.png" alt="Hoja de contacto: todas las tarjetas del hilo" onload="this.parentNode.hidden=false" onerror="this.parentNode.remove()">
+  </div>`;
+  for (const t of H.tuits) {
+    const vacio = !t.texto.trim();
+    const peso = pesoX(t.texto);
+    html += `<article class="tuit" id="t${t.n}">
+      <div class="cab"><span class="n">Tuit ${t.n}/${H.n_tuits}</span><span class="chip" style="background:#e9e3d6;color:#0C1520">${esc(t.beat || "")}</span>${t.plantilla ? `<span>tarjeta: ${esc(t.plantilla)}</span>` : "<span>sin imagen</span>"}</div>
+      <div class="texto${vacio ? " vacio" : ""}">${vacio ? "(sin texto: la imagen lo dice)" : esc(t.texto)}</div>
+      <div class="fila"><span class="cnt${peso > 280 ? " alerta" : ""}">${peso}/280 (peso X${peso !== t.caracteres ? `, ${t.caracteres} caracteres` : ""})</span>${vacio ? "" : `<button data-copy="${esc(t.texto)}">Copiar texto</button>`}</div>
+      ${t.imagen ? `<div class="img"><img src="${esc(t.imagen)}" alt="${esc(t.alt_text)}"></div>
+      <div class="alt"><b>Alt:</b> ${esc(t.alt_text)} <button data-copy="${esc(t.alt_text)}">Copiar alt</button></div>
+      <div class="fuente">Fuente en el pie: ${esc(t.fuente || "")} · cifras: ${esc((t.cifra_ids || []).join(", "))}</div>` : ""}
+    </article>`;
+  }
+  html += `<section class="extra">
+    <h2>Lo que este hilo NO afirma</h2><ul>${(H.no_afirma || []).map((x) => `<li>${esc(x)}</li>`).join("") || "<li>(nada declarado)</li>"}</ul>
+    <h2>Incertidumbre declarada</h2><ul>${(H.incertidumbre || []).map((x) => `<li>${esc(x)}</li>`).join("") || "<li>(nada declarado)</li>"}</ul>
+    <h2>Fuentes</h2><ul>${(H.fuentes || []).map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
+    <p style="color:var(--gris);font-size:13px">Detalle de cifras y veredictos en <code>datos.json</code>; texto listo para pegar en <code>post.md</code>.</p>
+  </section>`;
+  app.innerHTML = html;
+  app.addEventListener("click", (e) => { const b = e.target.closest("button[data-copy]"); if (b) copiar(b.getAttribute("data-copy")); });
+})();
+</script>
+</body>
+</html>

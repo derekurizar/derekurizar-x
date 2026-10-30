@@ -1,12 +1,13 @@
 export const meta = {
   name: 'video',
-  description: 'Guion de retención para /video: video-gancho propone 4–5 ganchos de familias distintas (R1–R10 en código) → el crítico elige en silencio ganador y segundo → guionista (el gancho elegido → promesa → tarjetas y golpes encadenados con «pero» / «por eso» → pago → cierre con un remate o, a veces, una pregunta) → gate V1–V5 + V9 en código → crítico de retención (lee el guion como espectador) → el guionista corrige lo que bloquea (≤ 2 vueltas). 0 créditos de ElevenLabs.',
-  whenToUse: 'Invocado por /video <slug|ultimo> [corto|medio|largo] DESPUÉS de `python3 scripts/video.py preparar`. args: {trabajo, duracion, slug, fixture, permitir_fallback}. trabajo = sesiones/<slug>/video (lo imprime preparar); duracion = corto (por defecto) | medio | largo | prueba. Solo produce y aprueba <trabajo>/ganchos.json, seleccion.json, guion.json, locucion.json y critica.json; si el crítico no aprueba ningún gancho tras una vuelta, devuelve veredicto corregir con las faltas de la selección y sin guion; la voz (MCP ElevenLabs), tiempos, grabación, montaje y entrega los hace la sesión principal después. Si el crítico sigue en «corregir» tras 2 vueltas, el workflow NO falla: devuelve veredicto corregir + faltas_pendientes y el comando pregunta al usuario antes de gastar créditos.',
+  description: 'Guion de retención para /video: video-gancho propone 4–5 ganchos de familias distintas (R1–R10 en código) → el crítico elige en silencio ganador y segundo → guionista (PRIMERO la narración de corrido en 3 actos que cuenta el hilo como una historia, con sus conectores dentro del texto; DESPUÉS la reparte sin cambiar una palabra: el gancho elegido → promesa → tarjetas y golpes → pago → cierre con un remate o, a veces, una pregunta) → gate V1–V5, V9, V17–V18 en código → oyente ingenuo (oye la narración y lee la pantalla) → crítico de retención (lee el guion como espectador; puntúa también el flujo) → el guionista corrige lo que bloquea (≤ 2 vueltas). 0 créditos de ElevenLabs.',
+  whenToUse: 'Invocado por /video <slug|ultimo> [corto|medio|largo] DESPUÉS de `python3 scripts/video.py preparar`. args: {trabajo, duracion, slug, fixture, permitir_fallback}. trabajo = sesiones/<slug>/video (lo imprime preparar); duracion = medio (por defecto) | corto | largo | prueba. Solo produce y aprueba <trabajo>/ganchos.json, seleccion.json, guion.json, locucion.json, oyente.json y critica.json; si el crítico no aprueba ningún gancho tras una vuelta, devuelve veredicto corregir con las faltas de la selección y sin guion; la voz (MCP ElevenLabs), tiempos, grabación, montaje y entrega los hace la sesión principal después. Si el crítico sigue en «corregir» tras 2 vueltas, el workflow NO falla: devuelve veredicto corregir + faltas_pendientes y el comando pregunta al usuario antes de gastar créditos.',
   phases: [
     { title: 'Ganchos', detail: 'video-gancho: ganchos.json con 4–5 candidatos de familias distintas (≥ 2 con visual), referencias/ganchos.md; gate python3 scripts/video.py ganchos --check (R1–R10, rotación R9); ≤ 3 autoreparaciones' },
     { title: 'Selección', detail: 'video-critico en modo selección: mira cada candidato en silencio y luego con la voz, puntúa silencio, referente, tensión, alineación, honestidad y novedad, aplica R11 y escribe seleccion.json (ganador y segundo para la versión B); si ninguno llega a 3, video-gancho rehace una vez' },
-    { title: 'Guion', detail: 'video-guionista: guion.json v2 (gancho, promesa, tarjetas y golpes con enlace, cierre, captions); gate python3 scripts/video.py guion --check (V1–V5, V9); ≤ 3 autoreparaciones' },
-    { title: 'Crítica', detail: 'video-critico: lee guion.json, locucion.json y digesto.md como espectador (C1–C11); puntajes 1–5 y faltas bloquea|mejora con arreglo; lo que bloquea vuelve al guionista, ≤ 2 vueltas' },
+    { title: 'Guion', detail: 'video-guionista: PRIMERO guion.narracion (3 actos de texto corrido que cuentan el hilo como una historia; video.py narracion --check) y DESPUÉS las escenas sin cambiar una palabra (gancho, promesa, tarjetas y golpes, cierre, captions); gate python3 scripts/video.py guion --check (V1–V5, V9, V17–V18; secuencias de voz por acto); ≤ 3 autoreparaciones' },
+    { title: 'Oyente', detail: 'historia-oyente: oye la narración de corrido y lee la pantalla (video.py oyente) sin saber nada del hilo; oyente.json con lo que no entendió, los saltos y las preguntas abiertas (insumo del crítico, no gate)' },
+    { title: 'Crítica', detail: 'video-critico: lee guion.json, locucion.json, la narración (video.py narracion), oyente.json y digesto.md como espectador (C1–C12; flujo = C10 + C12); puntajes 1–5 y faltas bloquea|mejora con arreglo; lo que bloquea vuelve al guionista, ≤ 2 vueltas' },
     { title: 'Animación', detail: 'video-animador (solo si el crítico aprueba y hay una escena explica con animacion null): escribe video/animaciones/<id>.js desde el brief, pasa scripts/animaciones.py --check, la registra en la biblioteca y la asigna a la escena' },
   ],
 }
@@ -24,21 +25,21 @@ const DURACIONES = ['corto', 'medio', 'largo', 'prueba']
 const TIPOS = ['gancho', 'tarjeta', 'golpe', 'definicion', 'adivina', 'mapa', 'ranking', 'escala', 'tiempo', 'explica']
 const FAMILIAS = ['contraste', 'paradoja', 'lugar', 'escala', 'tu', 'pregunta', 'ranking', 'resultado']
 const VISUALES = ['cifra', 'llenado', 'pareja', 'figuras', 'lugar']
-const MECANISMOS_EXPLICA = ['cadena', 'ciclo', 'balance', 'onda', 'embudo', 'proporcion', 'umbral', 'cronologia']
+const MECANISMOS_EXPLICA = ['cadena', 'ciclo', 'balance', 'onda', 'embudo', 'proporcion', 'umbral', 'cronologia', 'exponencial']
 const CIERRE_TIPOS = ['remate', 'pregunta']
 const CANDIDATOS_MIN = 4, CANDIDATOS_MAX = 5
 const ENLACES = ['pero', 'por_eso', 'y']
-const PUNTAJES = ['gancho', 'bucle', 'ritmo', 'escala_humana', 'pago', 'cierre']
+const PUNTAJES = ['gancho', 'bucle', 'ritmo', 'flujo', 'escala_humana', 'pago', 'cierre']
 const VUELTAS_CRITICA = 2
 const PUNTAJE_MIN = 3
-// Qué regla del crítico (C1–C11) sostiene cada puntaje: un puntaje ≤ 2 exige una falta «bloquea» de su regla.
-const REGLA_DE = { gancho: ['C1'], bucle: ['C2', 'C4', 'C11'], ritmo: ['C3', 'C7', 'C10'], escala_humana: ['C5'], pago: ['C6'], cierre: ['C8', 'C11'] }
+// Qué regla del crítico (C1–C12) sostiene cada puntaje: un puntaje ≤ 2 exige una falta «bloquea» de su regla.
+const REGLA_DE = { gancho: ['C1'], bucle: ['C2', 'C4', 'C11'], ritmo: ['C3', 'C7'], flujo: ['C10', 'C12'], escala_humana: ['C5'], pago: ['C6'], cierre: ['C8', 'C11'] }
 
 // ── Argumentos ───────────────────────────────────────────────────────────────
 const A = typeof args === 'string' ? { trabajo: args } : (args || {})
 const trabajo = String(A.trabajo || '').replace(/\/+$/, '')
 if (!/^sesiones\/[a-z0-9_-]+\/(video|trabajo)$/.test(trabajo)) throw new Error('args.trabajo debe ser sesiones/<slug>/video (la última línea que imprime `python3 scripts/video.py preparar`).')
-const duracion = String(A.duracion || 'corto')
+const duracion = String(A.duracion || 'medio')
 if (!DURACIONES.includes(duracion)) throw new Error(`args.duracion "${A.duracion}" desconocida (${DURACIONES.join('|')}).`)
 const slug = String(A.slug || trabajo.split('/')[1])
 const fixture = !!A.fixture || duracion === 'prueba'
@@ -155,9 +156,11 @@ const S = {
   },
   guion: {
     type: 'object',
-    required: ['archivo', 'gate', 'n_escenas', 'tipos', 'estimado_s', 'promesa', 'gancho', 'cierre', 'intentos', 'animaciones_nuevas'],
+    required: ['archivo', 'gate', 'n_escenas', 'tipos', 'estimado_s', 'promesa', 'gancho', 'cierre', 'intentos', 'animaciones_nuevas', 'actos', 'palabras'],
     properties: {
       archivo: { type: 'string', pattern: 'guion\\.json$' },
+      // la narración de corrido: 3 actos (guion.narracion) y sus palabras; las secuencias de voz que derivó el gate
+      actos: { type: 'integer' }, palabras: { type: 'integer' }, secuencias: { type: 'integer' },
       gate: { type: 'string', enum: ['ok', 'falla'] },
       fallas: { type: 'array', items: { type: 'string' } },
       n_escenas: { type: 'integer' },
@@ -175,6 +178,18 @@ const S = {
           properties: { escena: { type: 'integer' }, mecanismo: { type: 'string', enum: MECANISMOS_EXPLICA }, brief: { type: 'string' }, titulo: { type: 'string' }, pasos: { type: 'array', items: { type: 'string' } } },
         },
       },
+    },
+  },
+  oyente: {
+    type: 'object', required: ['archivo', 'de_que', 'promesa', 'confusiones', 'saltos', 'repeticiones', 'pregunta_sin_responder'],
+    properties: {
+      archivo: { type: 'string', pattern: 'oyente\\.json$' }, de_que: { type: 'string' },
+      promesa: { type: 'object', required: ['me_prometio', 'me_dio'], properties: { me_prometio: { type: 'string' }, me_dio: { type: 'string' } } },
+      confusiones: { type: 'array', items: { type: 'object', required: ['escena', 'cita_de_la_voz', 'que_no_entendi'],
+        properties: { escena: { type: 'integer' }, cita_de_la_voz: { type: 'string' }, que_no_entendi: { type: 'string' } } } },
+      saltos: { type: 'array', items: { type: 'object', required: ['de', 'a', 'por_que'], properties: { de: { type: 'integer' }, a: { type: 'integer' }, por_que: { type: 'string' } } } },
+      repeticiones: { type: 'array', items: { type: 'string' } },
+      pregunta_sin_responder: { type: 'array', items: { type: 'string' } },
     },
   },
   animacion: {
@@ -207,7 +222,7 @@ const S = {
           type: 'object', required: ['regla', 'gravedad', 'problema', 'arreglo'],
           properties: {
             n: { type: 'integer' }, escena: { type: ['integer', 'null'] },
-            regla: { type: 'string', pattern: '^C(1[01]|[1-9])$' },
+            regla: { type: 'string', pattern: '^C(1[0-2]|[1-9])$' },
             gravedad: { type: 'string', enum: ['bloquea', 'mejora'] },
             problema: { type: 'string' }, arreglo: { type: 'string' },
           },
@@ -249,6 +264,7 @@ const validarGuion = (r) => {
   if (!Array.isArray(r.tipos) || r.tipos.length !== n) F.push(`tipos[] tiene ${(r.tipos || []).length} entradas y n_escenas es ${n} (una por escena, sin contar el cierre)`)
   if (r.tipos && r.tipos[0] !== 'gancho') F.push('la escena 1 debe ser de tipo gancho')
   if (r.tipos && r.tipos[1] !== 'tarjeta') F.push('la escena 2 debe ser la tarjeta T1')
+  if (r.actos !== 3) F.push(`guion.narracion trae ${r.actos} actos (van 3: planteamiento, nudo, desenlace)`)
   const p = r.promesa || {}
   if (![1, 2].includes(p.en)) F.push(`promesa.en debe ser 1 o 2 (llegó ${p.en})`)
   if (!(p.pago >= Math.ceil((2 * n) / 3) && p.pago <= n) || p.pago === p.en) F.push(`promesa.pago = ${p.pago} debe estar en el último tercio (escenas ${Math.ceil((2 * n) / 3)}–${n}) y ser distinto de promesa.en`)
@@ -355,14 +371,36 @@ let G = null
 const invocarGuionista = (fallos) =>
   agentRol(
     `Eres el guionista de video (lee referencias/roles/video-guionista.md). TRABAJO = ${trabajo} · hilo ${slug} · duración ${duracion}${fixture ? ' (FIXTURE: sin créditos, voz falsa)' : ''}.\n` +
-      `PRIMERO corre python3 scripts/video.py ganchos ${trabajo} --usar: el gancho que eligió el crítico (${SEL.ganador}) pasa a la escena 1 de ${trabajo}/guion.json y NO lo cambias (el gate lo comprueba; si el crítico de guion bloquea el gancho y propone otro candidato, cámbialo con --usar <id> --segundo <otro>). Lee SOLO ${trabajo}/digesto.md y, de ${trabajo}/ganchos.json, la promesa_sugerida del elegido (NO hilo.json, datos.json, HTML ni código). Completa ${trabajo}/guion.json v2: contexto_superior, promesa{texto, en, pago} (en: 2 lo normal), escenas[] (la 1 es el gancho elegido; la 2 la tarjeta T1, que lo paga y, si el gancho no dijo «Guatemala», lo dice en su primera oración; luego tarjetas y golpes con enlace pero|por_eso|y, golpe ≤ 6 palabras, calculo cuando traduzcas una cifra; las escenas golpe con pantalla/linea/verbo; opcionales, como dice el digesto: UNA escena definicion {termino, definicion}, UNA adivina {pregunta, opciones[3], correcta}, UNA escena explica {mecanismo (cadena|ciclo|balance|onda|embudo|proporcion|umbral|cronologia: lo que HACE el fenómeno), brief (siempre), animacion (id del digesto con ESE mecanismo y no bloqueada) o null (lo normal si no hay una de ese mecanismo: el animador la escribe y queda como plantilla), titulo, pasos[]} que explique el mecanismo del fenómeno y, si el hilo tiene tarjeta de mapa, UNA escena mapa {tuit, golpe} en su lugar). La pantalla puede ser titular, la voz NO: la oración que dice la pantalla lleva verbo conjugado («Nacen casi 168 bebés al día…», nunca «Casi 168 bebés al día…»), cierre{texto, resumen[2–3], tipo, forma, final, consecuencia{mecanismo, quien, verbo}} (las cifras van en las conclusiones; la frase final NO es un dato sino su CONSECUENCIA: lo normal un remate forma consecuencia, lo que la cifra le hace a quien la vive, con gente como sujeto y un verbo en pasado o presente («Este año, 34 familias ya enterraron a un hijo por desnutrición.»), sin repetir la cifra del gancho, sin fatalismo ni futuro que la fuente no proyecta; a veces pendiente o quien_decide; a veces una PREGUNTA, nunca si el video anterior cerró con pregunta; referencias/cierres.md F1–F8: la frase final nombra el fenómeno del video, sin analogías de otro ámbito, sin cebo y, en un tema sensible, sin tocar la vida del espectador) y caption{tiktok, instagram, facebook, shorts}. La promesa, el gancho, cómo abres cada escena y la frase final del cierre NO repiten las de «Frases ya usadas» ni «Cierres recientes» del digesto (los ejemplos de las guías son forma, no texto).\n` +
-      `Corre python3 scripts/video.py guion ${trabajo} --check hasta exit 0 (≤ 3 intentos; corrige SOLO las líneas FALLA).\n` +
+      `PRIMERO corre python3 scripts/video.py ganchos ${trabajo} --usar: el gancho que eligió el crítico (${SEL.ganador}) pasa a la escena 1 de ${trabajo}/guion.json y NO lo cambias (el gate lo comprueba; si el crítico de guion bloquea el gancho y propone otro candidato, cámbialo con --usar <id> --segundo <otro>). Lee SOLO ${trabajo}/digesto.md y, de ${trabajo}/ganchos.json, la promesa_sugerida del elegido (NO hilo.json, datos.json, HTML ni código).\n` +
+      `PRIMERO LA NARRACIÓN («Narrar el hilo» en tu guía): escribe guion.narracion = [{acto: 1, texto}, {acto: 2, texto}, {acto: 3, texto}], el hilo contado como una historia por UNA sola voz, de corrido: acto 1 = el gancho TAL CUAL, quién vive la cifra (la gente, el lugar) y el contexto hasta la promesa; acto 2 = el nudo (el giro del hilo); acto 3 = el impacto y el cierre (termina con cierre.texto). Cada oración sigue de la anterior con un porque, un pero o un entonces (≥ ${duracion === 'corto' || duracion === 'prueba' ? 1 : 2} conectores por acto, nunca «y luego»); los saltos de tiempo y de lugar se dicen; cada institución se presenta la primera vez; las cifras van DENTRO de oraciones que cuentan algo, nunca la plantilla «X: cifra, cifra»; «esos N…» solo si ya se dijo. Mídela con python3 scripts/video.py narracion ${trabajo} --check hasta 0 fallas.\n` +
+      `SOLO ENTONCES repártela en escenas SIN cambiar una palabra (V17: cada acto es la suma literal de las voces de sus escenas y, en el 3, del cierre), con \`acto\` en cada escena. Completa ${trabajo}/guion.json v2: contexto_superior, promesa{texto, en, pago} (en: 2 lo normal), escenas[] (la 1 es el gancho elegido; la 2 la tarjeta T1, que lo paga y, si el gancho no dijo «Guatemala», lo dice en su primera oración; luego tarjetas y golpes (enlace opcional: solo elige el efecto de sonido; la causalidad ya está en la narración), golpe ≤ 6 palabras, calculo cuando traduzcas una cifra; las escenas golpe con pantalla/linea/verbo; opcionales, como dice el digesto: UNA escena definicion {termino, definicion}, UNA adivina {pregunta, opciones[3], correcta}, UNA escena explica {mecanismo (cadena|ciclo|balance|onda|embudo|proporcion|umbral|cronologia|exponencial: lo que HACE el fenómeno), brief (siempre), animacion (id del digesto con ESE mecanismo y no bloqueada) o null (lo normal si no hay una de ese mecanismo: el animador la escribe y queda como plantilla), titulo, pasos[]} que explique el mecanismo del fenómeno y, si el hilo tiene tarjeta de mapa, UNA escena mapa {tuit, golpe} en su lugar). La pantalla puede ser titular, la voz NO: la oración que dice la pantalla lleva verbo conjugado («Nacen casi 168 bebés al día…», nunca «Casi 168 bebés al día…»), cierre{texto, resumen[2–3], tipo, forma, final, consecuencia{mecanismo, quien, verbo}} (las cifras van en las conclusiones; la frase final NO es un dato sino su CONSECUENCIA: lo normal un remate forma consecuencia, lo que la cifra le hace a quien la vive, con gente como sujeto y un verbo en pasado o presente («Este año, 34 familias ya enterraron a un hijo por desnutrición.»), sin repetir la cifra del gancho, sin fatalismo ni futuro que la fuente no proyecta; a veces pendiente o quien_decide; a veces una PREGUNTA, nunca si el video anterior cerró con pregunta; referencias/cierres.md F1–F8: la frase final nombra el fenómeno del video, sin analogías de otro ámbito, sin cebo y, en un tema sensible, sin tocar la vida del espectador) y caption{tiktok, instagram, facebook, shorts}. La promesa, el gancho, cómo abres cada escena y la frase final del cierre NO repiten las de «Frases ya usadas» ni «Cierres recientes» del digesto (los ejemplos de las guías son forma, no texto).\n` +
+      `Corre python3 scripts/video.py guion ${trabajo} --check hasta exit 0 (≤ 3 intentos; corrige SOLO las líneas FALLA; si cambias una voz, cambia el mismo tramo de la narración). El gate agrupa la voz de corrido en secuencias por acto (se graba de una vez).\n` +
       (fallos.length ? `TU GUION FUE RECHAZADO; corrige SOLO esto, no toques lo que ya pasó, y vuelve a pasar el gate:\n - ${fallos.join('\n - ')}\n` : '') +
-      'Retorno: {archivo, gate: ok|falla, fallas[], n_escenas (sin el cierre), tipos[] (uno por escena), estimado_s, promesa{texto, en, pago}, gancho{familia, visual, pantalla, linea}, cierre{tipo, forma, final, mecanismo}, intentos, animaciones_nuevas[]{escena, mecanismo, brief, titulo, pasos} (las escenas explica con animacion null; [] si no hay)}.',
+      'Retorno: {archivo, gate: ok|falla, fallas[], n_escenas (sin el cierre), tipos[] (uno por escena), estimado_s, promesa{texto, en, pago}, gancho{familia, visual, pantalla, linea}, cierre{tipo, forma, final, mecanismo}, actos (los de guion.narracion: 3), palabras (las de la narración, de video.py narracion), secuencias (las que imprime el gate), intentos, animaciones_nuevas[]{escena, mecanismo, brief, titulo, pasos} (las escenas explica con animacion null; [] si no hay)}.',
     { agentType: 'video-guionista', schema: S.guion, label: fallos.length ? 'guionista-reparacion' : 'guionista' }
   )
 G = await conReparacion('Guion', invocarGuionista, validarGuion, 2)
-avisar(`Guion: ${G.n_escenas} escenas (${G.tipos.map((t) => t[0].toUpperCase()).join('')}) + cierre · ${G.estimado_s} s estimados · gancho ${G.gancho.familia}/${G.gancho.visual} «${G.gancho.pantalla}» · promesa en E${G.promesa.en} → pago E${G.promesa.pago} · ${G.intentos} intento(s)`)
+avisar(`Guion: ${G.n_escenas} escenas (${G.tipos.map((t) => t[0].toUpperCase()).join('')}) + cierre · ${G.palabras} palabras de narración en ${G.actos} actos · ${G.secuencias ?? '?'} secuencia(s) de voz · ${G.estimado_s} s estimados · gancho ${G.gancho.familia}/${G.gancho.visual} «${G.gancho.pantalla}» · promesa en E${G.promesa.en} → pago E${G.promesa.pago} · ${G.intentos} intento(s)`)
+
+// ── FASE 3b: OYENTE (oyente ingenuo: solo la voz y la pantalla; insumo del crítico, no gate) ─────────
+phase('Oyente')
+const O = await conReparacion(
+  'Oyente',
+  (fallos) =>
+    agentRol(
+      `Eres el OYENTE INGENUO (lee referencias/roles/historia-oyente.md; aquí oyes un VIDEO DE DATOS de /video). TRABAJO = ${trabajo}. ` +
+        `Lee SOLO python3 scripts/video.py oyente ${trabajo} (primero la narración de corrido, como quien la oye con los ojos cerrados; luego el desglose por escena con la pantalla; no sabes nada más del tema). ` +
+        `Dos pasadas (la narración y luego las escenas), sin volver atrás; un salto es donde la narración no fluye. Escribe ${trabajo}/oyente.json y devuelve lo mismo.` +
+        (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : ''),
+      { agentType: 'historia-oyente', schema: S.oyente, label: 'oyente' }
+    ),
+  (r) => [
+    ...(rel(r.archivo) !== `${trabajo}/oyente.json` ? [`archivo debe ser ${trabajo}/oyente.json`] : []),
+    ...(!String(r.de_que || '').trim() ? ['de_que: una oración'] : []),
+  ],
+  1
+).catch((e) => { avisar(`AVISO: el oyente no terminó (${String(e.message).split('\n')[0]}); la crítica va sin oyente.json.`); return null })
+if (O) avisar(`Oyente: «${O.de_que}» · ${O.confusiones.length} confusiones · ${O.saltos.length} saltos · ${O.pregunta_sin_responder.length} sin responder`)
 
 // ── FASE 4: CRÍTICA (crítico de retención → el guionista corrige lo que bloquea) ─
 phase('Crítica')
@@ -373,11 +411,13 @@ const criticar = (vuelta, previas) =>
     (fallos) =>
       agentRol(
         `Eres el crítico de retención (lee referencias/roles/video-critico.md). TRABAJO = ${trabajo} · vuelta ${vuelta}/${VUELTAS_CRITICA + 1} · duración ${duracion}${fixture ? ' (FIXTURE)' : ''}.\n` +
-          `Lee SOLO ${trabajo}/guion.json, ${trabajo}/locucion.json y ${trabajo}/digesto.md (con su sección «Frases ya usadas», para C11). Léelo como alguien que desliza en TikTok y no leyó el hilo: primero los 3 primeros segundos EN SILENCIO (solo pantalla y línea del gancho), luego escena por escena «¿por qué seguiría viendo?».\n` +
-          `Comprueba C1–C11; una falta por problema; el arreglo lleva el texto exacto y SOLO cifras del digesto (si hace falta un derivado, escribe su calculo). Escribe ${trabajo}/critica.json.\n` +
+          `Lee SOLO ${trabajo}/guion.json, ${trabajo}/locucion.json, ${trabajo}/digesto.md (con su sección «Frases ya usadas», para C11), python3 scripts/video.py narracion ${trabajo} (la narración de corrido por acto)` +
+          (O && vuelta === 1 ? ` y ${trabajo}/oyente.json (lo que un oyente que solo oyó la voz y leyó la pantalla no entendió: insumo de C10 y C12; lo atiendes si de verdad confunde, no por regla)` : '') +
+          `. Léelo como alguien que desliza en TikTok y no leyó el hilo: primero los 3 primeros segundos EN SILENCIO (solo pantalla y línea del gancho), luego escena por escena «¿por qué seguiría viendo?», y la narración entera como UN texto: ¿una voz que cuenta el dato como una historia, o tarjetas leídas una tras otra? (C12, puntaje flujo).\n` +
+          `Comprueba C1–C12; una falta por problema; el arreglo lleva el texto exacto y SOLO cifras del digesto (si hace falta un derivado, escribe su calculo). Escribe ${trabajo}/critica.json.\n` +
           (previas && previas.length ? `FALTAS DE LA VUELTA ANTERIOR (comprueba primero cada una; omite las resueltas):\n - ${fmtFaltas(previas).join('\n - ')}\n` : '') +
           (fallos.length ? `TU RETORNO ANTERIOR FUE RECHAZADO; corrige:\n - ${fallos.join('\n - ')}\n` : '') +
-          'Retorno: {archivo, vuelta, veredicto: pasa|corregir, puntajes{gancho, bucle, ritmo, escala_humana, pago, cierre} (1–5), bloqueantes, mejoras, faltas[]{n, escena (null = global), regla C1–C11, gravedad bloquea|mejora, problema, arreglo}}.',
+          'Retorno: {archivo, vuelta, veredicto: pasa|corregir, puntajes{gancho, bucle, ritmo, flujo, escala_humana, pago, cierre} (1–5), bloqueantes, mejoras, faltas[]{n, escena (null = global), regla C1–C12, gravedad bloquea|mejora, problema, arreglo}}.',
         { agentType: 'video-critico', schema: S.critica, label: `critico-${vuelta}` }
       ),
     validarCritica,
@@ -455,6 +495,8 @@ return {
   n_escenas: G.n_escenas,
   tipos: G.tipos,
   estimado_s: G.estimado_s,
+  narracion: { actos: G.actos, palabras: G.palabras, secuencias: G.secuencias ?? null },
+  oyente: O ? { de_que: O.de_que, promesa: O.promesa, confusiones: O.confusiones.length, saltos: O.saltos.length, repeticiones: O.repeticiones, pregunta_sin_responder: O.pregunta_sin_responder } : null,
   promesa: G.promesa,
   gancho: G.gancho,
   cierre: G.cierre,

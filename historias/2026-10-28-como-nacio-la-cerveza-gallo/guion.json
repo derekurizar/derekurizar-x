@@ -1,0 +1,397 @@
+{
+ "id": "2026-10-28-como-nacio-la-cerveza-gallo",
+ "tipo": "historia",
+ "slug": "como-nacio-la-cerveza-gallo",
+ "tema": "cómo nació la cerveza Gallo",
+ "fecha": "2026-10-28",
+ "pregunta": "¿Cómo nació la cerveza Gallo y quién le puso el nombre?",
+ "arco": "origen de una marca: de una lager sin nombre propio a la cerveza que el país bautizó, y su prueba ante un rival de afuera",
+ "actos": [
+  {
+   "numero": 1,
+   "anio": "Siglo XIX",
+   "titulo": "Los hermanos Castillo",
+   "escena": 2
+  },
+  {
+   "numero": 2,
+   "anio": "1896",
+   "titulo": "Deme una Gallo",
+   "escena": 8
+  },
+  {
+   "numero": 3,
+   "anio": "2003",
+   "titulo": "La guerra cervecera",
+   "escena": 11
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "La cerveza Gallo lleva su gallo desde la primera etiqueta. En Guatemala nunca se aclaró por qué lo eligieron. Más de un siglo después, un rival de afuera vendría a pelearle el mercado a la Gallo. Pero la historia arranca con los Castillo Córdova, una familia capitalina, a fines del siglo diecinueve. Primero llegaron las gaseosas: Enrique Castillo Córdova, uno de los hermanos, fundó la embotelladora La Centro Americana. Después, otros dos hermanos, Mariano y Rafael, abrieron con el mismo nombre la Cervecería Centro Americana. La propia cervecería dice que en 1886 abrió sus puertas. En 1895 llegó de Alemania su primer maestro cervecero. La empresa dice que la fórmula la creó Guillermo Spitz, de tradición alemana; si fue él quien llegó, no se sabe. Con la receta, en 1896 la cervecería sacó la Gallo, a diez años de abrir. Pero aún no se llamaba Gallo: la etiqueta, con su gallo de colores, decía Lager Bier."
+  },
+  {
+   "acto": 2,
+   "texto": "Estrategia y Negocios cuenta qué pasó con Lager Bier: por ser difícil de pronunciar su nombre, los consumidores la pedían diciendo: Yo quiero una Gallo, Deme una Gallo. Así, dice la marca, se corrió la voz de pedido en pedido, hasta que la cervecería adoptó el nombre. Eso pasó en 1926, treinta años después: el nombre Gallo llegó a la etiqueta."
+  },
+  {
+   "acto": 3,
+   "texto": "Y en 2003, con la Gallo ya centenaria, le llegó un rival: Brahva, la cerveza de Ambev, una cervecera brasileña. Doce años después, la Centro Americana y Ambev tenían juntas el 96% del mercado, calculó Forbes México. Euromonitor, una consultora, habló de guerra de precios. Juan Monge, vicepresidente de la Centro Americana, dijo de sus rivales: es una manera de estar bajando precios a niveles que ya son verdaderamente ridículos, es una estrategia que han usado en otros países. Entonces, ¿cuánto le quitó Brahva a la Gallo? Ambev afirmaba tener bastante más del 20%, y la Centro Americana, el 80%: juntas se pasaban del total. Cuánto perdió de verdad, y quién ganó, nunca se supo. En plena guerra, Monge también dijo: el nombre que hoy lleva nuestra marca principal se lo puso el consumidor. No fue una idea nuestra. Por qué los Castillo eligieron un gallo, eso tampoco se supo nunca. Sus botellas siguen llevando el gallo del principio. Hoy sus clientes todavía la piden igual: deme una Gallo."
+  }
+ ],
+ "hilos": [
+  {
+   "id": "h1",
+   "sin_respuesta": "Por qué los Castillo eligieron un gallo, eso tampoco se supo nunca"
+  },
+  {
+   "id": "h2",
+   "escena": 10
+  },
+  {
+   "id": "h3",
+   "escena": 5
+  },
+  {
+   "id": "h4",
+   "escena": 6
+  },
+  {
+   "id": "h5",
+   "sin_respuesta": "Cuánto perdió de verdad, y quién ganó, nunca se supo"
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3,
+   4
+  ],
+  [
+   5,
+   6,
+   7
+  ],
+  [
+   8,
+   9,
+   10
+  ],
+  [
+   11,
+   12
+  ],
+  [
+   13,
+   14,
+   15
+  ]
+ ],
+ "paleta": "maiz",
+ "musica": "maiz-1",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2412.0,
+ "duracion_s": 168.4,
+ "critica": {
+  "veredicto": "pasa",
+  "vuelta": 1,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 4,
+   "claridad": 4,
+   "flujo": 4,
+   "precision": 4,
+   "cierre": 4
+  }
+ },
+ "gancho": {
+  "familia": "resultado",
+  "visual": "foto",
+  "pantalla": "El gallo de Gallo",
+  "linea": "nunca se aclaró por qué lo eligieron"
+ },
+ "promesa": {
+  "texto": "Más de un siglo después, un rival de afuera vendría a pelearle el mercado.",
+  "en": 2,
+  "pago": 12,
+  "revela": 4
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "La cerveza Gallo lleva su gallo desde la primera etiqueta. En Guatemala nunca se aclaró por qué lo eligieron.",
+   "voz": "La cerveza Gallo lleva su gallo desde la primera etiqueta. En Guatemala nunca se aclaró por qué lo eligieron.",
+   "dur": 7.157,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Forbes México",
+     "origen": "medio",
+     "licencia": "© Forbes México (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "Más de un siglo después, un rival de afuera vendría a pelearle el mercado a la Gallo. Pero la historia arranca con los Castillo Córdova, una familia capitalina, a fines del siglo diecinueve.",
+   "voz": "Más de un siglo después, un rival de afuera vendría a pelearle el mercado a la Gallo. Pero la historia arranca con los Castillo Córdova, una familia capitalina, a fines del siglo diecinueve.",
+   "dur": 11.752,
+   "hechos": [
+    "rival-h12"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Manuelacarvajal · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "golpe",
+   "pantalla": "Primero llegaron las gaseosas: Enrique Castillo Córdova, uno de los hermanos, fundó la embotelladora La Centro Americana.",
+   "voz": "Primero llegaron las gaseosas: Enrique Castillo Córdova, uno de los hermanos, fundó la embotelladora La Centro Americana.",
+   "dur": 8.467,
+   "hechos": [
+    "ori-h02"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "foto",
+   "pantalla": "Después, otros dos hermanos, Mariano y Rafael, abrieron con el mismo nombre la Cervecería Centro Americana. La propia cervecería dice que en 1886 abrió sus puertas.",
+   "voz": "Después, otros dos hermanos, Mariano y Rafael, abrieron con el mismo nombre la Cervecería Centro Americana. La propia cervecería dice que en mil ochocientos ochenta y seis abrió sus puertas.",
+   "dur": 14.459,
+   "hechos": [
+    "ori-h01",
+    "marca-h07"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Manuelacarvajal · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "foto",
+   "pantalla": "En 1895 llegó de Alemania su primer maestro cervecero. La empresa dice que la fórmula la creó Guillermo Spitz, de tradición alemana; si fue él quien llegó, no se sabe.",
+   "voz": "En mil ochocientos noventa y cinco llegó de Alemania su primer maestro cervecero. La empresa dice que la fórmula la creó Guillermo Spitz, de tradición alemana; si fue él quien llegó, no se sabe.",
+   "dur": 13.226,
+   "hechos": [
+    "ori-h03",
+    "marca-h06"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Manuelacarvajal · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "tarjeta",
+   "pantalla": "Con la receta, en 1896 la cervecería sacó la Gallo, a diez años de abrir.",
+   "voz": "Con la receta, en mil ochocientos noventa y seis la cervecería sacó la Gallo, a diez años de abrir.",
+   "dur": 7.2,
+   "hechos": [
+    "marca-h01",
+    "ori-h05"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "golpe",
+   "pantalla": "Pero aún no se llamaba Gallo: la etiqueta, con su gallo de colores, decía Lager Bier.",
+   "voz": "Pero aún no se llamaba Gallo: la etiqueta, con su gallo de colores, decía Lager Bier.",
+   "dur": 7.16,
+   "hechos": [
+    "marca-h02"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "cita",
+   "pantalla": "Estrategia y Negocios cuenta qué pasó con Lager Bier: por ser difícil de pronunciar su nombre, los consumidores la pedían diciendo: Yo quiero una Gallo, Deme una Gallo.",
+   "voz": "Estrategia y Negocios cuenta qué pasó con Lager Bier: por ser difícil de pronunciar su nombre, los consumidores la pedían diciendo: Yo quiero una Gallo, Deme una Gallo.",
+   "dur": 12.357,
+   "hechos": [
+    "marca-h03",
+    "ori-h06"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "explica",
+   "pantalla": "Así, dice la marca, se corrió la voz de pedido en pedido, hasta que la cervecería adoptó el nombre.",
+   "voz": "Así, dice la marca, se corrió la voz de pedido en pedido, hasta que la cervecería adoptó el nombre.",
+   "dur": 6.801,
+   "hechos": [
+    "marca-h03"
+   ],
+   "fotos": [],
+   "animacion": "boca-a-boca",
+   "mecanismo": "onda"
+  },
+  {
+   "n": 10,
+   "tipo": "foto",
+   "pantalla": "Eso pasó en 1926, treinta años después: el nombre Gallo llegó a la etiqueta.",
+   "voz": "Eso pasó en mil novecientos veintiséis, treinta años después: el nombre Gallo llegó a la etiqueta.",
+   "dur": 8.019,
+   "hechos": [
+    "marca-h04",
+    "ori-h07"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Estrategia & Negocios",
+     "origen": "medio",
+     "licencia": "© Estrategia & Negocios (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "foto",
+   "pantalla": "Y en 2003, con la Gallo ya centenaria, le llegó un rival: Brahva, la cerveza de Ambev, una cervecera brasileña.",
+   "voz": "Y en dos mil tres, con la Gallo ya centenaria, le llegó un rival: Brahva, la cerveza de Ambev, una cervecera brasileña.",
+   "dur": 9.098,
+   "hechos": [
+    "rival-h01"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Forbes México",
+     "origen": "medio",
+     "licencia": "© Forbes México (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "tarjeta",
+   "pantalla": "Doce años después, la Centro Americana y Ambev tenían juntas el 96% del mercado, calculó Forbes México. Euromonitor, una consultora, habló de guerra de precios.",
+   "voz": "Doce años después, la Centro Americana y Ambev tenían juntas el noventa y seis por ciento del mercado, calculó Forbes México. Euromonitor, una consultora, habló de guerra de precios.",
+   "dur": 12.822,
+   "hechos": [
+    "rival-h02",
+    "rival-h03"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 13,
+   "tipo": "cita",
+   "pantalla": "Juan Monge, vicepresidente de la Centro Americana, dijo de sus rivales: es una manera de estar bajando precios a niveles que ya son verdaderamente ridículos, es una estrategia que han usado en otros países.",
+   "voz": "Juan Monge, vicepresidente de la Centro Americana, dijo de sus rivales: es una manera de estar bajando precios a niveles que ya son verdaderamente ridículos, es una estrategia que han usado en otros países.",
+   "dur": 13.382,
+   "hechos": [
+    "rival-h06"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 14,
+   "tipo": "tarjeta",
+   "pantalla": "Entonces, ¿cuánto le quitó Brahva a la Gallo? Ambev afirmaba tener bastante más del 20%, y la Centro Americana, el 80%: juntas se pasaban del total. Cuánto perdió de verdad, y quién ganó, nunca se supo.",
+   "voz": "Entonces, ¿cuánto le quitó Brahva a la Gallo? Ambev afirmaba tener bastante más del veinte por ciento, y la Centro Americana, el ochenta por ciento: juntas se pasaban del total. Cuánto perdió de verdad, y quién ganó, nunca se supo.",
+   "dur": 16.179,
+   "hechos": [
+    "rival-h04"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 15,
+   "tipo": "cita",
+   "pantalla": "En plena guerra, Monge también dijo: el nombre que hoy lleva nuestra marca principal se lo puso el consumidor. No fue una idea nuestra. Por qué los Castillo eligieron un gallo, eso tampoco se supo nunca.",
+   "voz": "En plena guerra, Monge también dijo: el nombre que hoy lleva nuestra marca principal se lo puso el consumidor. No fue una idea nuestra. Por qué los Castillo eligieron un gallo, eso tampoco se supo nunca.",
+   "dur": 13.996,
+   "hechos": [
+    "ori-h06"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 16,
+   "tipo": "cierre",
+   "pantalla": "Sus botellas siguen llevando el gallo del principio. Hoy sus clientes todavía la piden igual: deme una Gallo.",
+   "voz": "Sus botellas siguen llevando el gallo del principio. Hoy sus clientes todavía la piden igual: deme una Gallo.",
+   "dur": 10.318,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Lo que dejó",
+  "resumen": [
+   "Una lager con un gallo, de 1896",
+   "El nombre se lo puso la gente",
+   "Sigue en pie frente a Brahva"
+  ],
+  "texto": "Sus botellas siguen llevando el gallo del principio. Hoy sus clientes todavía la piden igual: deme una Gallo.",
+  "tipo": "remate",
+  "forma": "legado",
+  "final": "Hoy sus clientes todavía la piden igual: deme una Gallo.",
+  "consecuencia": {
+   "quien": "clientes",
+   "verbo": "piden"
+  }
+ },
+ "caption": {
+  "tiktok": "La primera etiqueta de la Gallo no decía Gallo: decía Lager Bier. El nombre se lo pusieron los clientes. Así nació la cerveza de Guatemala. #Guatemala #historia #cervezagallo",
+  "instagram": "Cómo nació la cerveza Gallo: los hermanos Castillo Córdova, una lager de 1896 con un gallo en la etiqueta y unos clientes que no sabían decir «Lager Bier». #Guatemala #historia",
+  "facebook": "La cerveza Gallo salió en 1896 como «Lager Bier». Los clientes la pedían por el dibujo y el nombre se quedó. Esta es su historia, de los hermanos Castillo a la guerra con Brahva. Fuentes en el primer comentario.",
+  "shorts": "La Gallo no se llamaba Gallo: el nombre se lo puso la gente #Shorts\nLa historia de la cerveza de Guatemala, desde 1896."
+ }
+}

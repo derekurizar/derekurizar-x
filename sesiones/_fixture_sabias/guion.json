@@ -1,0 +1,58 @@
+{
+  "_comentario": "Guion fijo del fixture de /sabias (make sabias-fixture): dato sesiones/_fixture_dato/salida, voz falsa. gancho «¿Sabías que…?» (pareja) → T1 (tarjeta con zoom) → golpe con calculo → cierre de una pantalla.",
+  "contexto_superior": "Petróleo · 2026",
+  "escenas": [
+    {
+      "tipo": "gancho",
+      "familia": "sabias",
+      "visual": "pareja",
+      "visual_datos": {
+        "a": {
+          "valor": "dat-c01.serie[0]",
+          "etiqueta": "Enero"
+        },
+        "b": {
+          "valor": "dat-c01",
+          "etiqueta": "Septiembre"
+        }
+      },
+      "pantalla": "¿Sabías que…?",
+      "linea": "el barril pasó de 67 a 102 dólares",
+      "verbo": "pasó",
+      "texto": "¿Sabías que el barril que compra Guatemala pasó de 67 a 102 dólares?"
+    },
+    {
+      "tipo": "tarjeta",
+      "tuit": 1,
+      "golpe": "52% más que en enero",
+      "calculo": "(dat-c01/dat-c01.serie[0]-1)*100",
+      "texto": "Frente a enero, es un 52% más: el promedio de septiembre."
+    },
+    {
+      "tipo": "golpe",
+      "pantalla": "1.5 veces",
+      "linea": "lo de enero",
+      "calculo": "dat-c01/dat-c01.serie[0]",
+      "verbo": "cuesta",
+      "texto": "Cada barril cuesta 1.5 veces lo de enero."
+    }
+  ],
+  "cierre": {
+    "texto": "Los conductores pagan ese crudo en cada viaje.",
+    "final": "Los conductores pagan ese crudo en cada viaje.",
+    "resumen": [],
+    "tipo": "remate",
+    "forma": "consecuencia",
+    "consecuencia": {
+      "mecanismo": "perdida",
+      "quien": "Los conductores",
+      "verbo": "pagan"
+    }
+  },
+  "caption": {
+    "tiktok": "El barril pasó de 67 a 102 dólares en 2026. #Guatemala #DatosGT #SabiasQue",
+    "instagram": "¿Sabías que el barril pasó de 67 a 102 dólares? Promedio de septiembre de 2026.\n#Guatemala #DatosGT #SabiasQue",
+    "facebook": "¿Sabías que el barril de petróleo pasó de 67 a 102 dólares entre enero y septiembre de 2026?",
+    "shorts": "El barril pasó de 67 a 102 dólares\nPromedio de septiembre de 2026. #Shorts #Guatemala"
+  }
+}

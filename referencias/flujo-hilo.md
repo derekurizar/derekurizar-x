@@ -17,7 +17,7 @@ Los gates viven en el JS y en `scripts/ensamblar.py --check`; lo que se gatea
 viaja en los retornos. Ninguna cifra `no_confirmada` llega al hilo.
 
 **Modos** (`args.modo`, tabla `MODOS` en `hilo.js`; espejo mínimo en
-`ensamblar.py`; alias `/explica`, `/perfil`): mismos agentes y entregable;
+`ensamblar.py`; alias `/perfil`; el modo explica se pide como `/hilo explica`): mismos agentes y entregable;
 cambian el arco y los gates, y el guion lleva un bloque del modo.
 
 | modo | qué publica | arco | gate propio |

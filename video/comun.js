@@ -36,6 +36,10 @@ const V = (() => {
     const S = todo.escenas.find(buscar || ((e) => e.n === n));
     // Noche: el acto 2 de /historia (el nudo) baja el fondo a fondo_acto2; la escena lo hereda entera (cuerpo y velos)
     if (S && S.acto === 2 && todo.colores.fondo_acto2) document.documentElement.style.setProperty('--bg', todo.colores.fondo_acto2);
+    // /explica: una escena con números de ejemplo (ilustrativos, calculados por scripts/explica.py) lleva el chip «Ejemplo»
+    // fijo arriba a la derecha, fuera de la columna del golpe y dentro de la zona segura
+    if (S && S.ejemplo && !document.getElementById('ejemplo')) {
+      const chip = document.createElement('div'); chip.id = 'ejemplo'; chip.textContent = 'Ejemplo'; document.body.appendChild(chip); }
     return { todo, S, trozos: trocear(S.palabras) };
   }
   // el objeto DATA de tarjeta_N.html (el tuit_N.html del hilo)

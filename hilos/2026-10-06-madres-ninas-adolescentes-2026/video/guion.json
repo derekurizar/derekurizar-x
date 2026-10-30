@@ -4,9 +4,9 @@
  "hilo": "hilos/2026-10-06-madres-ninas-adolescentes-2026",
  "paleta": "jacaranda",
  "duracion": "medio",
- "duracion_s": 132.2,
- "n_escenas": 11,
- "musica": "jacaranda-1",
+ "duracion_s": 127.4,
+ "n_escenas": 10,
+ "musica": "jacaranda-2",
  "voz": {
   "voice_id": "8mBRP99B2Ng2QwsJMFQl",
   "nombre": "El Faraon 4",
@@ -14,25 +14,106 @@
   "idioma": "es"
  },
  "velocidad": 1.1,
- "creditos_voz": 1862,
+ "creditos_voz": 1873.0,
  "contexto_superior": "Madres adolescentes · Guatemala 2026",
  "gancho": {
-  "formula": "cifra",
-  "pantalla": "Casi 168 al día",
-  "linea": "bebés de madres de 10 a 19 años"
+  "familia": "contraste",
+  "visual": "pareja",
+  "pantalla": "Solo 102 condenados",
+  "linea": "1,911 casos de niñas embarazadas, 2018–2023"
+ },
+ "ganchos": {
+  "elegido": "g2",
+  "segundo": "g3",
+  "candidatos": [
+   {
+    "id": "g1",
+    "familia": "lugar",
+    "visual": "lugar",
+    "pantalla": "Alta Verapaz encabeza"
+   },
+   {
+    "id": "g2",
+    "familia": "contraste",
+    "visual": "pareja",
+    "pantalla": "Solo 102 condenados"
+   },
+   {
+    "id": "g3",
+    "familia": "paradoja",
+    "visual": "pareja",
+    "pantalla": "Más cesáreas en niñas"
+   },
+   {
+    "id": "g4",
+    "familia": "tu",
+    "visual": "cifra",
+    "pantalla": "5.6 al día"
+   },
+   {
+    "id": "g5",
+    "familia": "ranking",
+    "visual": "cifra",
+    "pantalla": "Petén: ×2.2 el país"
+   }
+  ],
+  "puntajes": {
+   "g1": {
+    "silencio": 3,
+    "referente": 4,
+    "tension": 3,
+    "alineacion": 4,
+    "honestidad": 3,
+    "novedad": 3
+   },
+   "g2": {
+    "silencio": 5,
+    "referente": 5,
+    "tension": 5,
+    "alineacion": 5,
+    "honestidad": 3,
+    "novedad": 4
+   },
+   "g3": {
+    "silencio": 4,
+    "referente": 5,
+    "tension": 3,
+    "alineacion": 5,
+    "honestidad": 4,
+    "novedad": 4
+   },
+   "g4": {
+    "silencio": 4,
+    "referente": 3,
+    "tension": 4,
+    "alineacion": 4,
+    "honestidad": 3,
+    "novedad": 4
+   },
+   "g5": {
+    "silencio": 4,
+    "referente": 5,
+    "tension": 3,
+    "alineacion": 4,
+    "honestidad": 4,
+    "novedad": 4
+   }
+  },
+  "version_b": false
  },
  "promesa": {
-  "texto": "Y al final te digo cuántas condenas hubo.",
-  "en": 1,
-  "pago": 11
+  "texto": "Algunas de esas madres tenían 12 años o menos: la cifra viene después.",
+  "en": 2,
+  "pago": 8
  },
  "critica": {
   "veredicto": "pasa",
-  "vuelta": 4,
+  "vuelta": 3,
   "puntajes": {
    "gancho": 4,
    "bucle": 4,
    "ritmo": 4,
+   "flujo": 4,
    "escala_humana": 4,
    "pago": 5,
    "cierre": 4
@@ -47,12 +128,14 @@
    "enlace": null,
    "golpe": null,
    "cinetico": {
-    "pantalla": "Casi 168 al día",
-    "linea": "bebés de madres de 10 a 19 años"
+    "pantalla": "Solo 102 condenados",
+    "linea": "1,911 casos de niñas embarazadas, 2018–2023"
    },
-   "pantalla": "En Guatemala nacen casi 168 bebés al día de madres de 10 a 19 años. Y al final te digo cuántas condenas hubo.",
-   "voz": "En Guatemala nacen casi ciento sesenta y ocho bebés al día de madres de diez a diecinueve años. Y al final te digo cuántas condenas hubo.",
-   "dur": 10.573
+   "adivina": null,
+   "icono": null,
+   "pantalla": "Hubo 1,911 casos de niñas embarazadas. Pero en Guatemala solo hubo 102 condenados.",
+   "voz": "Hubo mil novecientos once casos de niñas embarazadas. Pero en Guatemala solo hubo ciento dos condenados.",
+   "dur": 8.385
   },
   {
    "n": 2,
@@ -60,11 +143,13 @@
    "tuit": 1,
    "plantilla": "cifra",
    "enlace": null,
-   "golpe": "7.5% más inscripciones al día",
+   "golpe": "167.6 bebés al día",
    "cinetico": null,
-   "pantalla": "En 2025 se inscribían casi 156 al día; en 2026, hasta agosto, un 7.5% más. Ojo: cuenta cuándo se registra al bebé, no cuándo nace.",
-   "voz": "En dos mil veinticinco se inscribían casi ciento cincuenta y seis al día; en dos mil veintiséis, hasta agosto, un siete punto cinco por ciento más. Ojo: cuenta cuándo se registra al bebé, no cuándo nace.",
-   "dur": 15.904
+   "adivina": null,
+   "icono": null,
+   "pantalla": "La fiscalía contó casos, pero el registro civil cuenta bebés: 167.6 al día este año, de madres de 10 a 19 años. Algunas de esas madres tenían 12 años o menos: la cifra viene después.",
+   "voz": "La fiscalía contó casos, pero el registro civil cuenta bebés: ciento sesenta y siete punto seis al día este año, de madres de diez a diecinueve años. Algunas de esas madres tenían doce años o menos: la cifra viene después.",
+   "dur": 15.938
   },
   {
    "n": 3,
@@ -72,38 +157,46 @@
    "tuit": 7,
    "plantilla": "barras-h",
    "enlace": "y",
-   "golpe": "7,187 en un solo departamento",
+   "golpe": "Primero, el depto. de Guatemala",
    "cinetico": null,
-   "pantalla": "Además, en números manda el departamento de Guatemala: 7,187 nacimientos inscritos en ocho meses, más de 1 de cada 6 del país.",
-   "voz": "Además, en números manda el departamento de Guatemala: siete mil ciento ochenta y siete nacimientos inscritos en ocho meses, más de uno de cada seis del país.",
-   "dur": 11.549
+   "adivina": null,
+   "icono": null,
+   "pantalla": "Con 7,187 bebés inscritos desde enero, el departamento de Guatemala es el primero en número.",
+   "voz": "Con siete mil ciento ochenta y siete bebés inscritos desde enero, el departamento de Guatemala es el primero en número.",
+   "dur": 7.932
   },
   {
    "n": 4,
-   "tipo": "tarjeta",
+   "tipo": "mapa",
    "tuit": 8,
    "plantilla": "mapa",
    "enlace": "pero",
-   "golpe": "46.9 por cada 1,000 muchachas",
+   "golpe": "El norte pasa al frente",
    "cinetico": null,
-   "pantalla": "Pero contar casos premia a los más poblados. En 2025, por cada 1,000 mujeres de 10 a 19 años, Alta Verapaz tiene 46.9 y el departamento de Guatemala, octavo, 32.8.",
-   "voz": "Pero contar casos premia a los más poblados. En dos mil veinticinco, por cada mil mujeres de diez a diecinueve años, Alta Verapaz tiene cuarenta y seis punto nueve y el departamento de Guatemala, octavo, treinta y dos punto ocho.",
-   "dur": 14.808
+   "adivina": null,
+   "icono": null,
+   "pantalla": "Pero contar bebés premia a los más poblados. En 2025, Alta Verapaz va primero, con 46.9 por cada mil mujeres jóvenes, y el de Guatemala cae al octavo, con 32.8.",
+   "voz": "Pero contar bebés premia a los más poblados. En dos mil veinticinco, Alta Verapaz va primero, con cuarenta y seis punto nueve por cada mil mujeres jóvenes, y el de Guatemala cae al octavo, con treinta y dos punto ocho.",
+   "dur": 14.187
   },
   {
    "n": 5,
-   "tipo": "golpe",
+   "tipo": "explica",
    "tuit": null,
-   "plantilla": "golpe",
+   "plantilla": "explica",
    "enlace": "por_eso",
    "golpe": null,
    "cinetico": {
-    "pantalla": "2.6 veces",
-    "linea": "Alta Verapaz frente a Sololá"
+    "pantalla": "Por qué cambia el orden",
+    "linea": "Arriba, los bebés inscritos · Abajo, las jóvenes del lugar · Cada bebé pesa más"
    },
-   "pantalla": "Así que la tasa de Alta Verapaz es 2.6 veces la de Sololá, la más baja.",
-   "voz": "Así que la tasa de Alta Verapaz es dos punto seis veces la de Sololá, la más baja.",
-   "dur": 6.531
+   "adivina": null,
+   "icono": null,
+   "pantalla": "¿Por qué cambia el orden? Porque una tasa es una división: arriba, los bebés inscritos; abajo, las jóvenes. El de Guatemala tiene 1.9 veces las jóvenes de Alta Verapaz: por eso en Alta Verapaz cada bebé pesa más.",
+   "voz": "¿Por qué cambia el orden? Porque una tasa es una división: arriba, los bebés inscritos; abajo, las jóvenes. El de Guatemala tiene uno punto nueve veces las jóvenes de Alta Verapaz: por eso en Alta Verapaz cada bebé pesa más.",
+   "animacion": "dos-fracciones",
+   "mecanismo": "proporcion",
+   "dur": 15.87
   },
   {
    "n": 6,
@@ -111,98 +204,108 @@
    "tuit": 9,
    "plantilla": "cifra",
    "enlace": "y",
-   "golpe": "39 niñas madres por semana",
+   "golpe": "1,355 niñas madres este año",
    "cinetico": null,
-   "pantalla": "Y se pone peor: entre las más pequeñas, 5.6 nacimientos al día de madres de 10 a 14 años: 39 por semana.",
-   "voz": "Y se pone peor: entre las más pequeñas, cinco punto seis nacimientos al día de madres de diez a catorce años: treinta y nueve por semana.",
-   "dur": 9.829
+   "adivina": null,
+   "icono": null,
+   "pantalla": "Este año, entre las más pequeñas, de 10 a 14 años, se inscriben 5.6 bebés al día: 1,355 de enero a agosto.",
+   "voz": "Este año, entre las más pequeñas, de diez a catorce años, se inscriben cinco punto seis bebés al día: mil trescientos cincuenta y cinco de enero a agosto.",
+   "dur": 10.998
   },
   {
    "n": 7,
-   "tipo": "tarjeta",
-   "tuit": 10,
-   "plantilla": "barras-v",
-   "enlace": "pero",
-   "golpe": "Tres de apenas diez años",
-   "cinetico": null,
-   "pantalla": "Aunque la mayoría estaba por cumplir quince años, hay 51 madres de 12 años o menos. Y 3 tenían apenas 10.",
-   "voz": "Aunque la mayoría estaba por cumplir quince años, hay cincuenta y una madres de doce años o menos. Y tres tenían apenas diez.",
-   "dur": 8.685
-  },
-  {
-   "n": 8,
-   "tipo": "tarjeta",
-   "tuit": 12,
-   "plantilla": "barras-h",
-   "enlace": "y",
-   "golpe": "Más de la mitad, por cesárea",
-   "cinetico": null,
-   "pantalla": "Encima, en 2024 el 56.7% de los partos de estas niñas fue por cesárea: más de la mitad, por encima de cualquier otro grupo.",
-   "voz": "Encima, en dos mil veinticuatro el cincuenta y seis punto siete por ciento de los partos de estas niñas fue por cesárea: más de la mitad, por encima de cualquier otro grupo.",
-   "dur": 11.213
-  },
-  {
-   "n": 9,
-   "tipo": "tarjeta",
-   "tuit": 13,
-   "plantilla": "dona",
-   "enlace": "pero",
-   "golpe": "944 sin padre en el registro",
-   "cinetico": null,
-   "pantalla": "Pero ese mismo registro muchas veces no anota al padre: en 2024, 944 de sus bebés sin padre registrado. Cuando sí consta, casi 3 de cada 4 veces era mayor de edad.",
-   "voz": "Pero ese mismo registro muchas veces no anota al padre: en dos mil veinticuatro, novecientos cuarenta y cuatro de sus bebés sin padre registrado. Cuando sí consta, casi tres de cada cuatro veces era mayor de edad.",
-   "dur": 14.799
-  },
-  {
-   "n": 10,
    "tipo": "golpe",
    "tuit": null,
    "plantilla": "golpe",
    "enlace": "por_eso",
    "golpe": null,
    "cinetico": {
-    "pantalla": "¿Y la justicia?",
-    "linea": "menor de 14: la ley lo llama violación"
+    "pantalla": "Menor de 14 años",
+    "linea": "para la ley, es violación"
    },
-   "pantalla": "Por eso importa la justicia: la ley llama violación a cualquier relación sexual con una menor de 14 años.",
-   "voz": "Por eso importa la justicia: la ley llama violación a cualquier relación sexual con una menor de catorce años.",
-   "dur": 7.886
+   "adivina": null,
+   "icono": "scale",
+   "pantalla": "Para la ley guatemalteca, cualquier relación sexual con una niña menor de 14 años es violación.",
+   "voz": "Para la ley guatemalteca, cualquier relación sexual con una niña menor de catorce años es violación.",
+   "dur": 6.53
   },
   {
-   "n": 11,
+   "n": 8,
+   "tipo": "tarjeta",
+   "tuit": 10,
+   "plantilla": "barras-v",
+   "enlace": "y",
+   "golpe": "La respuesta: 51 niñas",
+   "cinetico": null,
+   "adivina": null,
+   "icono": null,
+   "pantalla": "De esas 1,355 madres, 51 tenían 12 años o menos, y 3 tenían 10 años.",
+   "voz": "De esas mil trescientas cincuenta y cinco madres, cincuenta y una tenían doce años o menos, y tres tenían diez años.",
+   "dur": 8.073
+  },
+  {
+   "n": 9,
+   "tipo": "tarjeta",
+   "tuit": 13,
+   "plantilla": "dona",
+   "enlace": "y",
+   "golpe": "Casi 3 de cada 4, adultos",
+   "cinetico": null,
+   "adivina": null,
+   "icono": null,
+   "pantalla": "Dos años antes, en 2024, de 1,745 bebés de niñas, 944 no tenían padre en el registro. Cuando el padre aparecía, casi 3 de cada 4 eran mayores de edad.",
+   "voz": "Dos años antes, en dos mil veinticuatro, de mil setecientos cuarenta y cinco bebés de niñas, novecientos cuarenta y cuatro no tenían padre en el registro. Cuando el padre aparecía, casi tres de cada cuatro eran mayores de edad.",
+   "dur": 15.02
+  },
+  {
+   "n": 10,
    "tipo": "tarjeta",
    "tuit": 14,
    "plantilla": "embudo",
    "enlace": "pero",
-   "golpe": "Solo 102 personas condenadas",
+   "golpe": "Solo 136 ligados a proceso",
    "cinetico": null,
-   "pantalla": "Pero de 2018 a 2023, la condena casi nunca llega. En el Ministerio Público, 1,911 casos de niñas embarazadas y solo 102 personas condenadas.",
-   "voz": "Pero de dos mil dieciocho a dos mil veintitrés, la condena casi nunca llega. En el Ministerio Público, mil novecientos once casos de niñas embarazadas y solo ciento dos personas condenadas.",
-   "dur": 13.326
+   "adivina": null,
+   "icono": null,
+   "pantalla": "Pero de 2018 a 2023, solo 136 veces un juez ligó a alguien a proceso, y hubo 102 condenados, frente a 1,911 casos de niñas embarazadas.",
+   "voz": "Pero de dos mil dieciocho a dos mil veintitrés, solo ciento treinta y seis veces un juez ligó a alguien a proceso, y hubo ciento dos condenados, frente a mil novecientos once casos de niñas embarazadas.",
+   "dur": 14.098
   },
   {
-   "n": 12,
+   "n": 11,
    "tipo": "cierre",
    "tuit": null,
    "plantilla": "cierre",
    "enlace": null,
    "golpe": null,
    "cinetico": null,
-   "pantalla": "Madres desde los 10 años, el norte por delante y muy pocas condenas. Y tú, ¿a qué edad fue mamá tu mamá?",
-   "voz": "Madres desde los diez años, el norte por delante y muy pocas condenas. Y tú, ¿a qué edad fue mamá tu mamá?",
-   "dur": 10.365
+   "adivina": null,
+   "icono": null,
+   "pantalla": "Son 167.6 bebés al día de madres adolescentes, y Alta Verapaz encabeza por tasa. Tres niñas de diez años ya pasaron por un parto en Guatemala.",
+   "voz": "Son ciento sesenta y siete punto seis bebés al día de madres adolescentes, y Alta Verapaz encabeza por tasa. Tres niñas de diez años ya pasaron por un parto en Guatemala.",
+   "dur": 12.983
   }
  ],
  "cierre": {
-  "texto": "Madres desde los 10 años, el norte por delante y muy pocas condenas. Y tú, ¿a qué edad fue mamá tu mamá?",
+  "texto": "Son 167.6 bebés al día de madres adolescentes, y Alta Verapaz encabeza por tasa. Tres niñas de diez años ya pasaron por un parto en Guatemala.",
   "resumen": [
-   "Más peso en el norte que en la capital.",
-   "Muchos casos, muy pocas condenas."
+   "167.6 bebés al día de madres de 10 a 19",
+   "Por tasa, Alta Verapaz va primero",
+   "1,911 casos y solo 102 condenados"
   ],
-  "pregunta": "Y tú, ¿a qué edad fue mamá tu mamá?"
+  "tipo": "remate",
+  "forma": "consecuencia",
+  "final": "Tres niñas de diez años ya pasaron por un parto en Guatemala.",
+  "consecuencia": {
+   "mecanismo": "despues",
+   "quien": "tres niñas de diez años",
+   "verbo": "pasaron"
+  }
  },
  "caption": {
-  "tiktok": "Casi 168 bebés al día de madres de 10 a 19 años en Guatemala. Algunas, de apenas 10.\nEntre 2018 y 2023, el MP registró 1,911 casos de niñas embarazadas menores de 14 años; personas condenadas: 102.\n#Guatemala #DatosGT #EmbarazoAdolescente",
-  "facebook": "Casi 168 bebés al día de madres de 10 a 19 años se inscriben en Guatemala.\n▸ 167.6 nacimientos inscritos al día de enero a agosto de 2026, frente a 155.9 en 2025 (por fecha de inscripción).\n▸ El departamento de Guatemala pone más casos (7,187), pero por cada mil jóvenes lidera Alta Verapaz con 46.9.\n▸ 5.6 nacimientos al día de niñas de 10 a 14 años: 1,355 de enero a agosto de 2026.\n▸ En 2024, el 56.7% de los partos de niñas de 10 a 14 años fue por cesárea.\n▸ Entre 2018 y 2023, el Ministerio Público registró 1,911 casos de niñas embarazadas menores de 14 años; personas condenadas: 102.\nFuentes: OSAR con datos de RENAP; INE, Estadísticas Vitales y proyección de población 2024; Human Rights Watch con datos del MP."
+  "tiktok": "Hubo 1,911 casos de niñas embarazadas en el Ministerio Público y solo 102 condenados. ¿Cuántas madres tenían 12 años o menos? Míralo completo.\n#Guatemala #DatosGT #EmbarazoAdolescente",
+  "instagram": "1,911 casos de niñas embarazadas y solo 102 condenados en Guatemala. Cada día se inscriben 167.6 bebés de madres de 10 a 19 años.\nGuárdalo para tener los datos a mano.\n#Guatemala #DatosGT #EmbarazoAdolescente #Niñez",
+  "facebook": "Hubo 1,911 casos de niñas embarazadas en el Ministerio Público y solo 102 personas condenadas.\n▸ 167.6 bebés al día de madres de 10 a 19 años, enero a agosto de 2026\n▸ Por tasa, Alta Verapaz 46.9 y el departamento de Guatemala, octavo con 32.8\n▸ 1,355 bebés de niñas de 10 a 14 años este año, y una edad que pocos imaginan\n▸ En 2024, en 591 casos el padre registrado era mayor de edad\n▸ 1,911 casos, 136 autos de procesamiento y 102 condenados, 2018 a 2023\nFuentes: OSAR con datos de RENAP; INE, Estadísticas Vitales; Human Rights Watch con datos del MP.",
+  "shorts": "Guatemala: 1,911 casos de niñas embarazadas y solo 102 condenados\nCuántas niñas se vuelven madres cada día y dónde pesa más. #Shorts #Guatemala #DatosGT"
  }
 }

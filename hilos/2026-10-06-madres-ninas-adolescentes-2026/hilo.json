@@ -5,6 +5,7 @@
   "tesis": "Entre enero y agosto de 2026 RENAP inscribió 167.6 nacimientos al día de madres de 10 a 19 años (155.9 en 2025); el departamento de Guatemala pone más casos, pero por cada 1,000 jóvenes lidera Alta Verapaz (46.9) y la capital queda octava.",
   "paleta": "jacaranda",
   "hook_tipo": "escala_humana",
+  "modo": "hilo",
   "pregunta": "¿Cuántas niñas y adolescentes de 10 a 19 años han sido madres en lo que va de 2026, y en qué departamentos se concentra cuando se mide por tasa y no solo en números absolutos?",
   "n_tuits": 17,
   "estado": "listo",
@@ -229,8 +230,8 @@
     {
       "n": 17,
       "beat": "cierre",
-      "texto": "En suma: el registro de madres adolescentes no baja en 2026, por tasa pesa más en el norte y, en el INE, los partos de niñas son los que menos caen. No mide embarazos ni causas.\n\nFuentes: OSAR con datos de RENAP e INE, Banco Mundial, Human Rights Watch con datos del MP, ODHAG.",
-      "caracteres": 277,
+      "texto": "El registro de madres adolescentes no baja en 2026, por tasa pesa más en el norte y, en el INE, los partos de niñas son los que menos caen. No mide embarazos ni causas.\n\nFuentes: OSAR con datos de RENAP e INE, Banco Mundial, Human Rights Watch con datos del MP, ODHAG.",
+      "caracteres": 268,
       "alt_text": "Tuit de cierre sin imagen: resume que el registro de nacimientos de madres adolescentes no baja en 2026, que por tasa pesa más en el norte y que, según el INE, los nacimientos de madres de 10 a 14 años son los que menos caen; lista las fuentes OSAR/RENAP, INE, Banco Mundial, HRW/MP y ODHAG.",
       "imagen": null,
       "plantilla": null,

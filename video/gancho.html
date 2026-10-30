@@ -112,6 +112,9 @@ const VISUAL = {
         const r = el('rect', { x, y: base - s, width: s, height: s, fill: color, rx: 6 }, g);
         const tv = el('text', { x, y: base - s - 62, class: 'cond' }, g); tv.textContent = cuenta(v, v);
         const te = el('text', { x, y: base - s - 18, class: 'bold' }, g); te.textContent = et;
+        // la etiqueta (y la cifra) arrancan en el borde del bloque; si no caben en el ancho del visual, se corren a la
+        // izquierda lo justo (el bloque chico de la derecha cortaba «personas condenadas»)
+        for (const t of [te, tv]) { const L = t.getComputedTextLength(); if (x + L > W - 4) t.setAttribute('x', Math.max(0, W - 4 - L).toFixed(1)); }
         return { g, r, tv, te, x, s };
       };
       R.a = bloque(x0, sa, va, VV.a.etiqueta, 'color-mix(in srgb, var(--ink) 38%, transparent)');

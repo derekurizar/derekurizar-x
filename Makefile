@@ -7,7 +7,7 @@ PALETAS ?= cielo
 ESTILO ?= noche
 PALETA ?= cielo
 
-.PHONY: help nuevo render visual catalogo validate tabla pdf ensamblar limpiar test doctor costo contacto digesto fuentes ideas calendario informe informe-ejemplo informe-catalogo informe-fixture verificacion auditoria-rehacer podar video-fixture video-fixture-4x5 noticias-fixture historia-fixture musica whisper iconos
+.PHONY: help nuevo render visual catalogo validate tabla pdf ensamblar limpiar test doctor costo contacto digesto fuentes ideas calendario informe informe-ejemplo informe-catalogo informe-fixture verificacion auditoria-rehacer podar video-fixture video-fixture-4x5 noticias-fixture historia-fixture explica-fixture sabias-fixture musica whisper iconos
 
 help:
 	@echo "make nuevo T=<plantilla> OUT=<ruta.html> [PALETA=cielo]  ensambla una tarjeta (base + plantilla)"
@@ -33,6 +33,8 @@ help:
 	@echo "make video-fixture [FPS=10]                              /video de prueba sin créditos (voz falsa) sobre sesiones/_fixture/salida → sesiones/_fixture_video/salida"
 	@echo "make noticias-fixture [FPS=10]                           /noticias de prueba (maqueta: noticias de ejemplo, voz falsa, 0 créditos) → sesiones/_fixture_noticias/trabajo/salida"
 	@echo "make historia-fixture [FPS=10]                           /historia de prueba (maqueta: una panadería inventada, voz falsa, 0 créditos) → sesiones/_fixture_historia/trabajo/salida"
+	@echo "make explica-fixture [FPS=10]                            /explica de prueba (maqueta: el interés compuesto con fuentes de ejemplo, voz falsa, 0 créditos) → sesiones/_fixture_explica/salida"
+	@echo "make sabias-fixture [FPS=10]                             /sabias de prueba (el dato de sesiones/_fixture_dato, voz falsa, 0 créditos) → sesiones/_fixture_sabias/salida"
 	@echo "make musica                                              catálogo fijo de música de /video (design/musica/) y sus usos"
 	@echo "make whisper                                             baja una vez el modelo ggml-small de whisper.cpp (escucha V11 de /video; antes: brew install whisper-cpp)"
 	@echo "make iconos                                              biblioteca FIJA de iconos de /video (design/iconos/, Lucide; se baja UNA vez) y su check K3"
@@ -202,6 +204,45 @@ historia-fixture:   # maqueta de /historia: hechos verificados de ejemplo, fotos
 	python3 scripts/historia.py grabar $(HF)/trabajo --fps $(FPS) --formato 4:5
 	python3 scripts/historia.py montar $(HF)/trabajo --formato 4:5
 	python3 scripts/historia.py revisar $(HF)/trabajo --formato 4:5
+
+EF := sesiones/_fixture_explica
+explica-fixture:   # maqueta de /explica: el interés compuesto con fuentes de ejemplo, ejemplos calculados, voz falsa, 9:16 y 4:5
+	rm -rf $(EF)/trabajo $(EF)/salida
+	python3 scripts/explica.py preparar "Interés compuesto (maqueta)" --slug interes-compuesto-maqueta --trabajo $(EF)/trabajo --fixture
+	python3 scripts/explica.py encuadre $(EF)/trabajo --check
+	python3 scripts/explica.py afirmaciones $(EF)/trabajo --check
+	python3 scripts/explica.py consolidar $(EF)/trabajo
+	python3 scripts/explica.py ganchos $(EF)/trabajo --check
+	python3 scripts/explica.py ganchos $(EF)/trabajo --usar
+	python3 scripts/explica.py narracion $(EF)/trabajo --check
+	python3 scripts/explica.py guion $(EF)/trabajo --check
+	python3 scripts/explica.py voz-falsa $(EF)/trabajo
+	python3 scripts/explica.py tiempos $(EF)/trabajo
+	python3 scripts/explica.py grabar $(EF)/trabajo --fps $(FPS)
+	python3 scripts/explica.py montar $(EF)/trabajo
+	python3 scripts/explica.py revisar $(EF)/trabajo
+	python3 scripts/explica.py grabar $(EF)/trabajo --fps $(FPS) --formato 4:5
+	python3 scripts/explica.py montar $(EF)/trabajo --formato 4:5
+	python3 scripts/explica.py revisar $(EF)/trabajo --formato 4:5
+	python3 scripts/explica.py entregar $(EF)/trabajo --salida $(EF)/salida
+
+SF := sesiones/_fixture_sabias
+sabias-fixture:   # maqueta de /sabias: el dato de prueba de /dato, guion fijo, voz falsa, 9:16 y 4:5
+	rm -rf $(SF)/trabajo $(SF)/salida
+	python3 scripts/materializar.py sesiones/_fixture_dato > /dev/null
+	python3 scripts/ensamblar.py sesiones/_fixture_dato --check > /dev/null
+	python3 scripts/sabias.py preparar sesiones/_fixture_dato/salida --trabajo $(SF)/trabajo --fixture > /dev/null
+	cp $(SF)/guion.json $(SF)/trabajo/
+	python3 scripts/sabias.py guion $(SF)/trabajo --check
+	python3 scripts/sabias.py voz-falsa $(SF)/trabajo
+	python3 scripts/sabias.py tiempos $(SF)/trabajo
+	python3 scripts/sabias.py grabar $(SF)/trabajo --fps $(FPS)
+	python3 scripts/sabias.py montar $(SF)/trabajo
+	python3 scripts/sabias.py revisar $(SF)/trabajo
+	python3 scripts/sabias.py grabar $(SF)/trabajo --fps $(FPS) --formato 4:5
+	python3 scripts/sabias.py montar $(SF)/trabajo --formato 4:5
+	python3 scripts/sabias.py revisar $(SF)/trabajo --formato 4:5
+	python3 scripts/sabias.py entregar $(SF)/trabajo --salida $(SF)/salida
 
 musica:
 	@python3 scripts/video.py musica

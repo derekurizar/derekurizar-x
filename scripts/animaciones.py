@@ -301,9 +301,10 @@ def cmd_asignar(a):
     es[a.escena - 1]["animacion"] = a.id
     escribir(p, g)
     print("escena %d → animacion «%s»" % (a.escena, a.id))
-    # el gate del guion es el del flujo del TRABAJO: /historia tiene el suyo (que llama al de /video con sus escenas)
+    # el gate del guion es el del flujo del TRABAJO: /historia y /explica tienen el suyo (que llama al de /video con sus escenas)
     st = os.path.join(trabajo, "video.json")
-    script = "historia.py" if os.path.exists(st) and leer(st).get("tipo") == "historia" else "video.py"
+    tipo = leer(st).get("tipo") if os.path.exists(st) else None
+    script = {"historia": "historia.py", "explica": "explica.py"}.get(tipo, "video.py")
     return subprocess.run([sys.executable, os.path.join(RAIZ, "scripts", script), "guion", trabajo, "--check"]).returncode
 
 

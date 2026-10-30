@@ -28,8 +28,12 @@ preparar (historia.py: TRABAJO = sesiones/historia-<slug>/, paleta provisional y
                      → historia-oyente (oyente ingenuo: primero la narración de corrido, luego la pantalla por escena
                        → oyente.json)
                      → video-critico en modo historia (espina, hilos y flujo; resuelve o justifica cada confusión y
-                       cada pregunta sin responder del oyente; ≤ 2 vueltas con el guionista; con «pasa», el guionista
-                       aplica sus mejoras, también las de voz, y el oyente las vuelve a oír)
+                       cada pregunta sin responder del oyente; ≤ 2 vueltas con el guionista, desde la 2 ACOTADAS: solo
+                       bloquea lo que cambió, lo pendiente, H-C5 o un puntaje ≤ 2; cada arreglo probado trae sus
+                       `cambios` y el guionista los aplica tal cual con `historia.py aplicar`; si la última vuelta
+                       solo bloquea con arreglos probados, se aplican y queda aprobado (`aprobado_por:
+                       arreglos_probados`); con «pasa», el guionista aplica sus mejoras, también las de voz, y el
+                       oyente las vuelve a oír: se revierte solo la escena que confunde, nunca una de precisión)
                      → video-animador por cada escena explica sin animación (reusa o crea y registra en la biblioteca)]
    desde: "encuadre" → el editor re-encuadra (actos, espina, hilos, personajes sobre la cronología verificada) y salta
    a Guion · desde: "guion" → salta a Guion · desde: "retoque" + notas → salta a Guion (el guionista aplica las notas y
@@ -230,7 +234,8 @@ personajes) · `base/` (hilo base) · `ganchos.json`, `seleccion.json` · `guion
 Cuando el usuario pide un cambio después de la crítica o de la voz (otro gancho, reescribir una escena, otro cierre,
 quitar una cita), nadie edita `guion.json` a mano: el Workflow `historia` con `args {trabajo, tema, desde: "retoque",
 notas: "<lo que pidió>"}` salta a Guion, el guionista aplica solo eso conservando las voces grabadas (y el mismo tramo
-de la narración, H15), y vuelven a correr los gates, el oyente, la crítica (1 vuelta), las mejoras y la animación;
+de la narración, H15), y vuelven a correr los gates, el oyente, la crítica (1 vuelta, acotada a las escenas que
+cambiaron: lo demás que el oyente encuentre va como mejora), las mejoras y la animación;
 devuelve `voces_cambiadas`. Después, `historia.py voz <TRABAJO> --pendientes` imprime las **secuencias enteras** que
 hay que regrabar (y los créditos aproximados) o, con `--sueltas`, solo las escenas cambiadas como nodos propios: se
 generan esos, `descargar --estado`, `tiempos`, `escuchar`, `grabar --solo n,…` (9:16 y 4:5), `montar`, `revisar`,

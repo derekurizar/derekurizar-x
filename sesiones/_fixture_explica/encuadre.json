@@ -1,0 +1,168 @@
+{
+ "tema": "Interés compuesto (maqueta)",
+ "slug": "interes-compuesto-maqueta",
+ "pregunta": "¿Por qué el dinero guardado crece cada vez más rápido, y por qué una deuda también?",
+ "intuicion": "El interés suma lo mismo cada año: el 10 % de mil son cien por año, siempre.",
+ "mecanismo": "exponencial",
+ "mecanismo_frase": "El interés se calcula sobre todo lo acumulado, incluido el interés anterior, así que cada año se gana más que el anterior; con una deuda pasa igual, en contra.",
+ "paleta": "cielo",
+ "leyenda": [
+  {
+   "concepto": "capital",
+   "papel": "tenue"
+  },
+  {
+   "concepto": "interés simple",
+   "papel": "ink"
+  },
+  {
+   "concepto": "interés sobre interés",
+   "papel": "acento"
+  },
+  {
+   "concepto": "deuda",
+   "papel": "acento"
+  }
+ ],
+ "glosario": [
+  {
+   "termino": "interés compuesto",
+   "definicion": "ganar interés también sobre el interés que ya ganaste"
+  },
+  {
+   "termino": "regla del 72",
+   "definicion": "dividir 72 entre la tasa da los años para duplicar un monto"
+  }
+ ],
+ "personajes": [
+  {
+   "nombre": "Ana",
+   "presentacion": "empezó a ahorrar diez años antes"
+  },
+  {
+   "nombre": "Luis",
+   "presentacion": "guardó lo mismo, diez años después"
+  }
+ ],
+ "ejemplos": [
+  {
+   "id": "ana",
+   "modelo": "compuesto",
+   "descripcion": "Ana: Q1,000 al 10 % por 40 años",
+   "parametros": {
+    "capital": {
+     "valor": 1000,
+     "ilustrativo": true
+    },
+    "tasa": {
+     "valor": 10,
+     "ilustrativo": true
+    },
+    "periodos": {
+     "valor": 40,
+     "ilustrativo": true
+    }
+   }
+  },
+  {
+   "id": "luis",
+   "modelo": "compuesto",
+   "descripcion": "Luis: Q1,000 al 10 % por 30 años",
+   "parametros": {
+    "capital": 1000,
+    "tasa": 10,
+    "periodos": 30
+   }
+  },
+  {
+   "id": "simple",
+   "modelo": "simple",
+   "descripcion": "la cuenta lineal: Q1,000 al 10 % simple por 30 años",
+   "parametros": {
+    "capital": 1000,
+    "tasa": 10,
+    "periodos": 30
+   }
+  },
+  {
+   "id": "r72",
+   "modelo": "regla72",
+   "descripcion": "regla del 72 al 10 %",
+   "parametros": {
+    "tasa": 10
+   }
+  },
+  {
+   "id": "r72_ahorro",
+   "modelo": "regla72",
+   "descripcion": "regla del 72 con la tasa pasiva",
+   "parametros": {
+    "tasa": {
+     "cifra": "gt-c01"
+    }
+   }
+  },
+  {
+   "id": "r72_tarjeta",
+   "modelo": "regla72",
+   "descripcion": "regla del 72 con la tasa de tarjetas",
+   "parametros": {
+    "tasa": {
+     "cifra": "gt-c03"
+    }
+   }
+  }
+ ],
+ "anclas": [
+  {
+   "concepto": "tasa de interés pasiva promedio ponderado",
+   "fuente_sugerida": "Banguat"
+  },
+  {
+   "concepto": "ritmo inflacionario",
+   "fuente_sugerida": "INE"
+  },
+  {
+   "concepto": "tasa de tarjetas de crédito en quetzales",
+   "fuente_sugerida": "SIB"
+  }
+ ],
+ "revelaciones": [
+  "Una deuda de tarjeta usa el mismo motor y se duplica mucho más rápido que un ahorro"
+ ],
+ "ejes": [
+  {
+   "id": "con",
+   "nombre": "el concepto",
+   "preguntas": [
+    "definición de interés compuesto",
+    "regla del 72 y su margen",
+    "cómo capitaliza una tarjeta"
+   ],
+   "fuentes": [
+    "Banguat educación financiera",
+    "SIB usuario financiero",
+    "academia .edu"
+   ]
+  },
+  {
+   "id": "gt",
+   "nombre": "Guatemala hoy",
+   "preguntas": [
+    "tasa pasiva promedio",
+    "inflación interanual",
+    "tasa de tarjetas en quetzales"
+   ],
+   "fuentes": [
+    "Banguat",
+    "INE",
+    "SIB"
+   ]
+  }
+ ],
+ "no_afirma": [
+  "que convenga ahorrar en un banco u otro",
+  "rendimientos futuros"
+ ],
+ "sensible": "financiero"
+}

@@ -1,11 +1,12 @@
 ---
-description: Hilo de X con datos de Guatemala sobre UN tema — investigación multi-agente, tarjetas 1080×1080 y vista previa hilo.html (uso — /hilo [explica|perfil] [tema|idea:<id>] [smoke|fixture]; sin tema toma la mejor idea pendiente de ideas/banco.json; el modo opcional cambia el género — explica: el tema explicado con sus números sin giro, perfil: retrato de un departamento o grupo frente al país — y tiene alias /explica y /perfil)
+description: Hilo de X con datos de Guatemala sobre UN tema — investigación multi-agente, tarjetas 1080×1080 y vista previa hilo.html (uso — /hilo [explica|perfil] [tema|idea:<id>] [smoke|fixture]; sin tema toma la mejor idea pendiente de ideas/banco.json; el modo opcional cambia el género — explica: el tema explicado con sus números sin giro, perfil: retrato de un departamento o grupo frente al país — el modo perfil tiene alias /perfil; /explica es otro flujo: el video explicativo)
 ---
 
 Eres el coordinador del flujo **/hilo** de @DerekUrizar. El usuario quiere un
 hilo de X con datos: "$ARGUMENTS" (puede venir vacío). Si la **primera
 palabra** es `explica` o `perfil`, es el **modo** del post y se quita del tema
-(los alias `/explica` y `/perfil` llegan con el modo ya fijado; sin modo es un
+(el alias `/perfil` llega con el modo ya fijado; `/explica` ya no es alias: es el
+video explicativo, y el modo se pide como `/hilo explica`; sin modo es un
 hilo con historia y giro, `modo = "hilo"`). En `perfil` el resto es el
 **sujeto** (un departamento o un grupo: «Alta Verapaz», «los jóvenes»). Si
 contiene `smoke` es una corrida corta con web (1 eje, 3 tuits); si contiene

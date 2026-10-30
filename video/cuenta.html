@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<!-- Escena «cuenta» de /explica (?n=N): la pizarra. Una operación que se escribe al ritmo de la voz: arriba el golpe y la
+     barra de progreso; en medio 2–5 renglones «a op b = r» (S.T.renglones de scripts/explica.py): cada renglón entra
+     cuando la voz dice su primer número y el resultado «cae» con un rebote corto cuando la voz lo dice; los renglones
+     viejos bajan a media luz. Un solo renglón puede llevar `resalta` (a | b | r): esa celda es lo ÚNICO en acento, con un
+     subrayado que se dibuja y su `etiqueta` debajo («interés sobre interés»). Con S.T.saldo, el último resultado en
+     grande abajo, contando hacia arriba; con S.T.fuente, el pie «Fuente: …». Estilo Noche (video/comun.css): cifras en
+     Archivo condensado 900, notas en JetBrains Mono, crema sobre el fondo con grano. Deriva lenta del conjunto (nunca
+     quieto). Sin subtítulo doble (V.subtitulos ya oculta el trozo que la pantalla dice). La graba
+     scripts/video_grabar.js llamando a seek(t). -->
+<link rel="stylesheet" href="comun.css">
+<style>
+#pizarra { position: absolute; top: 470px; left: var(--izq); right: var(--der); height: 860px; transform-origin: 50% 40%; will-change: transform;
+  display: flex; flex-direction: column; justify-content: flex-start; gap: 34px; }
+.renglon { position: relative; }
+.renglon .nota { font: 600 26px/1 'JetBrains Mono', monospace; letter-spacing: .12em; text-transform: uppercase; opacity: .62; margin-bottom: 12px; }
+.renglon .nota:empty { display: none; }
+.renglon .op { display: flex; align-items: baseline; gap: .28em; white-space: nowrap; font-size: 92px; line-height: .95; }
+.renglon .op span { display: inline-block; position: relative; }
+.renglon .op .s { font-weight: 800; font-family: Archivo, sans-serif; opacity: .55; }
+.renglon .op .r { color: var(--ink); }
+.renglon .op .hi { color: var(--acento); }
+.renglon .op .hi::after { content: ""; position: absolute; left: 0; right: 0; bottom: -.08em; height: .07em; background: var(--acento);
+  transform: scaleX(var(--sub, 0)); transform-origin: 0 50%; }
+.renglon .etiqueta { font: 600 28px/1.1 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; color: var(--acento); margin-top: 18px; }
+#saldo { position: absolute; left: 0; right: 0; bottom: 0; font-size: 210px; line-height: .86; white-space: nowrap; }
+#saldo:empty { display: none; }
+#pie { position: absolute; left: 0; right: 0; bottom: 0; font: 600 24px/1 'JetBrains Mono', monospace; letter-spacing: .06em; opacity: .62; }
+#pie:empty { display: none; }
+#pie:not(:empty) ~ #saldo, #saldo:has(~ #pie:not(:empty)) { bottom: 50px; }
+/* formato 4:5 (1080×1350) para el feed: la pizarra más baja (con la deriva termina antes de y 1090, gate V13) */
+html.f45 #pizarra { top: 270px; height: 720px; gap: 24px; }
+html.f45 .renglon .op { font-size: 78px; }
+html.f45 #saldo { font-size: 170px; }
+</style>
+</head>
+<body>
+<div id="arriba"><div id="golpe"></div><div id="progreso"></div></div>
+<div id="pizarra"><div id="filas"></div><div id="saldo" class="condensada"></div><div id="pie"></div></div>
+<div id="subs"></div>
+<script src="comun.js"></script>
+<script>
+const n = V.n, F45 = V.F45, { clamp, eo, esc } = V;
+let S, TROZOS, FILAS = [], SALDO = null;
+// «Q1,331» → { pre: "Q", v: 1331, dec: 0, suf: "" }: el saldo cuenta con el formato con que se escribió
+const partes = (s) => { const m = String(s || '').match(/^(\D*?)(-?\d{1,3}(?:,\d{3})+(?:\.\d+)?|-?\d+(?:\.\d+)?)(.*)$/);
+  if (!m) return null; const dec = (m[2].split('.')[1] || '').length;
+  return { pre: m[1], v: parseFloat(m[2].replace(/,/g, '')), dec, suf: m[3], miles: m[2].includes(',') }; };
+const formato = (p, v) => p.pre + v.toLocaleString('en-US', { minimumFractionDigits: p.dec, maximumFractionDigits: p.dec, useGrouping: p.miles || Math.abs(v) >= 10000 }) + p.suf;
+
+window.__listo = (async () => {
+  const C = await V.cargar(), todo = C.todo; S = C.S; TROZOS = C.trozos;
+  S.arriba = S.arriba || [];
+  V.pintarGolpe(S);
+  V.pintarProgreso(todo);
+  const T = S.T;
+  document.getElementById('filas').innerHTML = T.renglones.map((x) => {
+    const cel = (k, cls) => `<span class="condensada ${cls}${x.resalta === k ? ' hi' : ''}">${esc(x[k])}</span>`;
+    return `<div class="renglon"><div class="nota">${esc(x.nota || '')}</div><div class="op">` +
+      `${cel('a', 'a')}<span class="s">${esc(x.op)}</span>${cel('b', 'b')}<span class="s">=</span>${cel('r', 'r')}</div>` +
+      (x.resalta ? `<div class="etiqueta">${esc(x.etiqueta || '')}</div>` : '') + '</div>';
+  }).join('');
+  FILAS = [...document.querySelectorAll('.renglon')];
+  if (T.fuente) document.getElementById('pie').textContent = 'Fuente: ' + T.fuente;
+  // sin saldo, los renglones van al centro de la pizarra (no pegados arriba con el vacío debajo)
+  if (!T.saldo) document.getElementById('pizarra').style.justifyContent = 'center';
+  await document.fonts.ready;
+  V.ajustarGolpe(S, F45 ? 250 : 450);
+  // todas las operaciones con el mismo tamaño: el de la más ancha que cabe en la columna
+  const piz = document.getElementById('pizarra'), ancho = piz.clientWidth;
+  const ops = [...document.querySelectorAll('.renglon .op')];
+  for (let fs = F45 ? 78 : 92; fs > 44 && ops.some((o) => o.scrollWidth > ancho); fs -= 4) ops.forEach((o) => { o.style.fontSize = fs + 'px'; });
+  if (T.saldo) {
+    SALDO = T.renglones.map((x) => partes(x.r));
+    const saldo = document.getElementById('saldo');
+    saldo.textContent = T.renglones[T.renglones.length - 1].r;
+    for (let fs = F45 ? 170 : 210; fs > 90 && saldo.scrollWidth > ancho; fs -= 10) saldo.style.fontSize = fs + 'px';
+    // si los renglones y el saldo no caben juntos, los renglones se achican
+    const filas = document.getElementById('filas');
+    for (let fs = parseFloat(ops[0].style.fontSize || (F45 ? 78 : 92)); fs > 44 && filas.offsetHeight + saldo.offsetHeight + 40 > piz.clientHeight; fs -= 4)
+      ops.forEach((o) => { o.style.fontSize = fs + 'px'; });
+  }
+  await V.pintarActo(S);   // rótulo de acto (S.R): los renglones ya llegan desplazados de python
+})();
+
+window.seek = (t) => {
+  V.seekGolpe(t, S);
+  V.seekProgreso(t, n, S.dur);
+  V.seekActo(t, S);
+  const R = S.T.renglones;
+  FILAS.forEach((f, k) => {
+    const x = R[k], sig = R[k + 1];
+    const e = eo((t - x.start + 0.1) / 0.35);
+    const viejo = sig ? eo((t - sig.start) / 0.4) : 0;   // al entrar el siguiente, este baja a media luz
+    f.style.opacity = (e * (1 - 0.58 * viejo)).toFixed(3);
+    f.style.transform = `translateY(${((1 - e) * 26).toFixed(1)}px)`;
+    // el resultado cae con un rebote corto cuando la voz lo dice
+    const rr = f.querySelector('.r'), pr = clamp((t - x.tr + 0.05) / 0.32);
+    rr.style.opacity = eo(pr).toFixed(3);
+    rr.style.transform = `translateY(${((1 - eo(pr)) * -34).toFixed(1)}px) scale(${(1 + 0.12 * Math.sin(Math.PI * pr)).toFixed(3)})`;
+    const hi = f.querySelector('.hi');
+    if (hi) {   // el resaltado: subrayado que se dibuja y la etiqueta, tras el resultado; no baja a media luz
+      const ph = eo((t - x.tr - 0.35) / 0.45);
+      hi.style.setProperty('--sub', ph.toFixed(3));
+      if (x.resalta !== 'r') hi.style.transform = `scale(${(1 + 0.08 * Math.sin(Math.PI * clamp((t - x.tr - 0.35) / 0.5))).toFixed(3)})`;
+      const et = f.querySelector('.etiqueta');
+      if (et) { et.style.opacity = ph.toFixed(3); et.style.transform = `translateY(${((1 - ph) * 14).toFixed(1)}px)`; }
+      f.style.opacity = e.toFixed(3);
+    }
+  });
+  if (SALDO) {   // el saldo cuenta hacia el resultado del último renglón que ya cayó
+    const k = R.reduce((acc, x, i) => (t >= x.tr ? i : acc), -1), el = document.getElementById('saldo');
+    if (k < 0 || !SALDO[k]) { el.style.opacity = '0'; } else {
+      const p = SALDO[k], antes = k > 0 && SALDO[k - 1] ? SALDO[k - 1].v : 0, q = eo((t - R[k].tr) / 0.5);
+      el.textContent = formato(p, antes + (p.v - antes) * q);
+      el.style.opacity = eo((t - R[0].tr) / 0.3).toFixed(3);
+    }
+  }
+  const pie = document.getElementById('pie');
+  if (pie.textContent) pie.style.opacity = (0.62 * eo((t - R[0].start - 0.4) / 0.4)).toFixed(3);
+  // deriva lenta de la pizarra durante la escena (nunca quieta)
+  document.getElementById('pizarra').style.transform = `scale(${(1 + 0.022 * clamp(t / S.dur)).toFixed(4)})`;
+  V.subtitulos(t, S, TROZOS);
+};
+</script>
+</body></html>

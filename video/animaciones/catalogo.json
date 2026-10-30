@@ -32,6 +32,66 @@
       }
     },
     {
+      "id": "boca-a-boca",
+      "origen": "historia-como-nacio-la-cerveza-gallo",
+      "usos": [
+        "historia-como-nacio-la-cerveza-gallo"
+      ],
+      "descripcion": "boca a boca: la voz sale de un punto, salta de casa en casa en ondas y, al llegar arriba, la etiqueta cambia",
+      "mecanismo": "onda",
+      "temas": [
+        "boca a boca",
+        "rumor",
+        "contagio",
+        "nombre",
+        "marca",
+        "difusión",
+        "adopción"
+      ],
+      "pasos": [
+        2,
+        6
+      ],
+      "ejemplo": {
+        "titulo": "¿Cómo se volvió costumbre?",
+        "pasos": [
+          "Un vecino lo pidió",
+          "Se corrió de casa en casa",
+          "La fábrica lo adoptó"
+        ]
+      }
+    },
+    {
+      "id": "bola-nieve",
+      "origen": "semilla",
+      "usos": [],
+      "descripcion": "columnas por periodo en tres capas: capital igual, interés en línea recta y el interés sobre lo ganado que engorda hasta mandar",
+      "mecanismo": "exponencial",
+      "temas": [
+        "interés compuesto",
+        "ahorro",
+        "deuda",
+        "crecimiento",
+        "exponencial",
+        "acumulación",
+        "bola de nieve",
+        "inflación"
+      ],
+      "pasos": [
+        2,
+        6
+      ],
+      "ejemplo": {
+        "titulo": "Cómo crece solo",
+        "pasos": [
+          "El capital no cambia",
+          "El interés se suma",
+          "Lo sumado también gana",
+          "Al final manda el interés"
+        ]
+      }
+    },
+    {
       "id": "cadena",
       "origen": "semilla",
       "usos": [
@@ -116,6 +176,37 @@
         ]
       },
       "mecanismo": "cronologia"
+    },
+    {
+      "id": "dos-fracciones",
+      "origen": "madres-ninas-adolescentes-2026",
+      "usos": [
+        "madres-ninas-adolescentes-2026"
+      ],
+      "descripcion": "dos fracciones lado a lado: más casos sobre una base mucho mayor dan una tasa menor; menos casos sobre una base chica la superan",
+      "mecanismo": "proporcion",
+      "temas": [
+        "tasa",
+        "proporción",
+        "denominador",
+        "per cápita",
+        "ranking",
+        "comparación",
+        "población",
+        "nacimientos"
+      ],
+      "pasos": [
+        2,
+        6
+      ],
+      "ejemplo": {
+        "titulo": "Por qué cambia el orden",
+        "pasos": [
+          "Arriba, los casos",
+          "Abajo, la población",
+          "Cada caso pesa más"
+        ]
+      }
     },
     {
       "id": "embudo-filtro",

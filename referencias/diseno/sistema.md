@@ -37,7 +37,7 @@ original: `referencias/diseno/brief/Graficos Guatemala.dc.html` (no se edita; an
 5. **Grano fijo**: ruido SVG en mosaico de 180 px sobre `var(--bg)` en el fondo del `body`. No depende de t ni del
    render: dos renders dan el mismo PNG y los cuadros de video salen iguales en serie y en paralelo; además ayuda a
    que los oscuros no se partan en bandas al comprimir.
-6. **Tipos**: Archivo condensado 900 en mayúsculas para cifras, nombres, años y el golpe de arriba de las escenas de
+6. **Tipos**: Archivo condensado 900 para cifras (en la caja de su unidad: «m», «mm», «min» no se suben), en mayúsculas para nombres, años y el golpe de arriba de las escenas de
    video; Archivo 800 para titulares de tarjeta y subtítulos; JetBrains Mono 600 para kicker, fuente y crédito. **Instrument Serif no entra** en tarjetas Noche ni en
    ninguna escena de video (sigue en el clásico).
 7. **Sin subtítulo doble**: si la pantalla ya dice lo que dice la voz (golpe, cita, titular que se enciende), el
@@ -113,7 +113,7 @@ nombre, el año, la palabra que suena), a diferencia del `a1` clásico.
 |---|---|---|
 | Kicker | `600 20px/1 'JetBrains Mono'; letter-spacing:.16em; uppercase`, crema al 85 % | ≤ 45 caracteres · «TEMA · UNIDAD» |
 | Titular `h1` | `800 64px/1.04 Archivo; letter-spacing:-.01em` (margen 20 px) | 1–3 líneas · ≤ 26 caracteres por línea · la base mide el ancho real y falla si excede 920 px |
-| Cifra protagonista | `.cifra-heroe`: Archivo 900, `font-stretch: 62.5%`, mayúsculas (la base pone familia, peso, ancho y caja; la plantilla, solo tamaño e interlínea) | auto-ajuste si no cabe |
+| Cifra protagonista | `.cifra-heroe`: Archivo 900, `font-stretch: 62.5%`, en la caja de su formato, sin mayúsculas forzadas: «3.00 m» o «12 mm» en mayúsculas se leen como millones (la base pone familia, peso, ancho y caja; la plantilla, solo tamaño e interlínea) | auto-ajuste si no cabe |
 | Lead · leyenda · ejes · valores · categorías · nota | como en el clásico (Archivo y JetBrains Mono, mismos tamaños; piso 17 px) | |
 | Pie | `Fuente: …` `500 18px 'JetBrains Mono'`, crema al 80 % · badge «X» 34×34 crema · `@DerekUrizar` `600 21px Archivo` | fuente 1–70 caracteres, sin el prefijo «Fuente:» |
 

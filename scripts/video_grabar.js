@@ -15,7 +15,8 @@
  * templates/base.html) y geometria.js (GEOMETRIA de templates/graficos/mapa.html), video/explica.html con
  * video/animaciones/<id>.js (la biblioteca de animaciones de la escena explica), design/fonts/*.woff2,
  * TRABAJO/escenas.json y tarjeta_N.html = el tuit_N.html del hilo con animar.js inyectado; para /noticias,
- * video/noticia.html y TRABAJO/fotos/*.jpg|png|webp (sin --hilo); para /historia, además video/historia.html. La
+ * video/noticia.html y TRABAJO/fotos/*.jpg|png|webp (sin --hilo); para /historia, además video/historia.html; para
+ * /explica, video/cuenta.html (la pizarra). La
  * plantilla de cada escena la decide su `pagina` si la trae (/historia) o, si no, su `tipo`
  * (gancho|tarjeta|golpe|definicion|adivina|mapa|ranking|escala|tiempo|explica|titular|noticia|cierre).
  * Cualquier otra petición se aborta (cero dependencias externas, como las tarjetas).
@@ -85,7 +86,7 @@ function servir(o, ruta) {
   else if (/^iconos\/[a-z0-9-]+\.svg$/.test(nombre)) archivo = path.join(RAIZ, "design", nombre);   // biblioteca fija de iconos
   else if (/^animaciones\/[a-z0-9-]+\.js$/.test(nombre)) archivo = path.join(RAIZ, "video", nombre);   // animaciones de la escena explica
   else if (/^fotos\/[a-z0-9_-]+\.(jpg|png|webp)$/.test(nombre)) archivo = path.join(o.dir, nombre);   // fotos de /noticias y /historia (TRABAJO/fotos/)
-  else if (["escena.html", "golpe.html", "gancho.html", "cierre.html", "mapa.html", "ranking.html", "escala.html", "tiempo.html", "portada.html", "explica.html", "noticia.html", "historia.html", "comun.js", "comun.css", "animar.js", "vertical.css"].includes(nombre)) archivo = path.join(RAIZ, "video", nombre);
+  else if (["escena.html", "golpe.html", "gancho.html", "cierre.html", "mapa.html", "ranking.html", "escala.html", "tiempo.html", "portada.html", "explica.html", "noticia.html", "historia.html", "cuenta.html", "comun.js", "comun.css", "animar.js", "vertical.css"].includes(nombre)) archivo = path.join(RAIZ, "video", nombre);
   else if (nombre === "escenas.json") archivo = path.join(o.dir, nombre);
   if (!archivo || !fs.existsSync(archivo)) return null;
   return { tipo: TIPOS[path.extname(archivo)] || "application/octet-stream", cuerpo: fs.readFileSync(archivo) };

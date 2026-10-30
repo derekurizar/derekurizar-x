@@ -1,0 +1,67 @@
+{
+ "candidatos": [
+  {
+   "id": "g1",
+   "familia": "contraste",
+   "visual": "pareja",
+   "visual_datos": {
+    "a": {
+     "valor": "ej-c14",
+     "etiqueta": "Luis"
+    },
+    "b": {
+     "valor": "ej-c01",
+     "etiqueta": "Ana"
+    }
+   },
+   "pantalla": "Q45,259 vs Q17,449",
+   "linea": "Los mismos Q1,000, diez años antes",
+   "texto": "Imagina: Ana y Luis guardan los mismos 1,000 quetzales. Ana empezó diez años antes y terminó con más del doble.",
+   "verbo": "guardan",
+   "promesa_sugerida": "vas a ver por qué el mismo motor también puede jugar en tu contra",
+   "por_que": "contraste: la misma plata y un final muy distinto; el referente es la otra persona"
+  },
+  {
+   "id": "g2",
+   "familia": "pregunta",
+   "visual": "cifra",
+   "pantalla": "Q1,000 por 30 años",
+   "linea": "¿Cuánto hay al final?",
+   "texto": "Guardas 1,000 quetzales por 30 años. ¿Cuánto hay al final? {17,449:m}.",
+   "verbo": "guardas",
+   "promesa_sugerida": "al final vas a saber por qué casi nadie acierta esa cuenta",
+   "por_que": "pregunta con predicción: casi todos dicen 4,000 y la respuesta lo rompe en el mismo gancho"
+  },
+  {
+   "id": "g3",
+   "familia": "tu",
+   "visual": "figuras",
+   "visual_datos": {
+    "de_cada": [
+     77,
+     100
+    ],
+    "etiqueta": "quetzales que nunca pusiste",
+    "calculo": "ej-c17/ej-c14*100"
+   },
+   "pantalla": "77 de cada 100",
+   "linea": "quetzales que nunca pusiste",
+   "texto": "77 de cada 100 quetzales no los pusiste tú. Así termina un ahorro de 30 años.",
+   "verbo": "pusiste",
+   "promesa_sugerida": "vas a ver de dónde salen y por qué también corren en tu contra",
+   "por_que": "el espectador es el protagonista y la escala humana se lee en figuras"
+  },
+  {
+   "id": "g4",
+   "familia": "resultado",
+   "visual": "cifra",
+   "pantalla": "×17",
+   "linea": "Sin poner un quetzal más",
+   "calculo": "ej-c14/ej-c24",
+   "texto": "1,000 quetzales se multiplican por 17. Solo hay que esperar 30 años, sin poner un quetzal más.",
+   "verbo": "multiplican",
+   "promesa_sugerida": "vas a ver el motor que lo hace y cuándo juega en tu contra",
+   "por_que": "el final primero: el factor sorprende y se lee en un segundo"
+  }
+ ]
+}

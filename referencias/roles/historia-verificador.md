@@ -37,7 +37,10 @@ og:image de las fuentes leídas del eje). **≤ 8 búsquedas y ≤ 10 `leer`**, 
    licencia la revisa el script: dominio público, CC0, CC BY o CC BY-SA; nunca NC ni ND), `--de-fuente <url de una
    nota ya leída> --descripcion "…"` (su og:image, con «Foto: <medio>» y la fecha de la nota; el digesto las lista con
    el comando listo) o `--url U --credito "Foto: …" --origen oficial|medio|empresa`. Mira la descripción: si muestra
-   víctimas, cadáveres o menores, o es de otra persona u otro lugar, no la bajes.
+   víctimas, cadáveres o menores, o es de otra persona u otro lugar, no la bajes. Si otro eje ya bajó la misma imagen
+   (mismo sha1 o misma url), `foto` no la duplica: imprime «es la misma imagen que <id>» y su `RETORNO {"id": …}`; usa
+   ese id en tu verificación. Una foto `--referencia` lleva `--lugar` (dónde es la foto): el chip de la escena muestra
+   ese lugar, no el del hecho.
    - **La del PROTAGONISTA es obligatoria** (H12): `--protagonista` (excluye `--referencia`) en la foto que muestra al
      protagonista del encuadre (el producto, el edificio, la persona; un `--retrato-de` con su nombre también cuenta).
      El digesto marca con `*` las og:image de tus fuentes que lo nombran: bájala sin buscar. `hechos --check --eje`

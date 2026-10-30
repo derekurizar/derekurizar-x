@@ -273,6 +273,19 @@
       "hook_tipo": "escala_humana",
       "modo": "hilo",
       "idea_id": "igss-record-afiliados-informalidad"
+    },
+    {
+      "id": "2026-10-29-combustibles-subsidio-exoneracion-2026",
+      "fecha": "2026-10-29",
+      "slug": "combustibles-subsidio-exoneracion-2026",
+      "tema": "Combustibles en Guatemala 2026: diésel en máximo histórico, subsidio del Decreto 11-2026 (abril–julio) y exoneración del IDP y el IVA del Decreto 22-2026 (1 oct–31 dic): cuánto le cuestan al fisco y cuánto bajó de verdad el precio en la bomba",
+      "tesis": "En 2026 el Estado destina cerca de Q5,250 millones a abaratar el combustible (subsidio ejecutado del Decreto 11, cerca de Q1,930 M, más la recaudación de IDP e IVA que SAT y Minfin estiman no percibir por el Decreto 22), una suma de gasto y estimación mayor que todo el IDP de 2025; aun así, el diésel en su primer día sin impuestos (alrededor de Q42, 1-oct) quedó más caro que con el subsidio en abril (Q34.32), en paralelo a una referencia internacional que subió 131% de enero a septiembre.",
+      "paleta": "cielo",
+      "n_tuits": 7,
+      "ruta": "hilos/2026-10-29-combustibles-subsidio-exoneracion-2026",
+      "estado": "listo",
+      "hook_tipo": "giro_inversion",
+      "modo": "hilo"
     }
   ]
 }

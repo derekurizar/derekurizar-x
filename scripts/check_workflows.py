@@ -25,6 +25,8 @@ El sandbox del Workflow no importa módulos, así que hilo.js, dato.js e ideas.j
   W11 noticias.js: SECCIONES es espejo literal de noticias.SECCIONES (los prefijos de los rastreadores)
   W12 historia.js: TIPOS (los de video.py más foto, cita y capitulo), FAMILIAS, VISUALES y PUNTAJES son espejos literales de
       scripts/historia.py
+  W13 explica.js: TIPOS (los de video.py más cuenta), FAMILIAS, VISUALES, PUNTAJES y MODELOS son espejos literales de
+      scripts/explica.py, y SEGUN_MAX es su SEGUN_MAX_VIDEO
 
 Uso: python3 scripts/check_workflows.py [--quiet]   · salida 0 ok · 1 diferencias
 """
@@ -193,6 +195,7 @@ def main():
     video_workflow()
     noticias_workflow()
     historia_workflow()
+    explica_workflow()
     return fin(quiet)
 
 
@@ -271,6 +274,29 @@ def historia_workflow():
             err("W12 historia.js: no se encontró `%s = N`" % nombre)
         elif int(m.group(1)) != py:
             err("W12 historia.js %s = %s ≠ historia.py %s" % (nombre, m.group(1), py))
+
+
+def explica_workflow():
+    """W13: explica.js refleja las listas de scripts/explica.py."""
+    src = fuente("explica.js", opcional=True)
+    if not src:
+        return
+    try:
+        import explica as EX
+    except Exception as ex:  # noqa: BLE001
+        err("W13 no se pudo importar scripts/explica.py: %s" % ex)
+        return
+    esperado = {"TIPOS": list(EX.TIPOS), "FAMILIAS": list(EX.FAMILIAS), "VISUALES": list(EX.VISUALES),
+                "PUNTAJES": list(EX.PUNTAJES), "MODELOS": list(EX.MODELOS)}
+    for nombre, py in esperado.items():
+        js = lista(src, nombre)
+        if js is None:
+            err("W13 explica.js: no se encontró `const %s = [...]`" % nombre)
+        elif js != py:
+            err("W13 explica.js %s %s ≠ explica.py %s" % (nombre, js, py))
+    m = re.search(r"\bSEGUN_MAX = (\d+)", src)
+    if not m or int(m.group(1)) != EX.SEGUN_MAX_VIDEO:
+        err("W13 explica.js SEGUN_MAX = %s ≠ explica.py SEGUN_MAX_VIDEO %s" % (m.group(1) if m else "?", EX.SEGUN_MAX_VIDEO))
 
 
 def graficos_informe(catalogo):

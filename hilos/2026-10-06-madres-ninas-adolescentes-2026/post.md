@@ -107,9 +107,9 @@ Para varias, ese bebé no fue el primero. El dato cuenta nacimientos, no mujeres
 
 [📸 tuit_16.png — Gráfico de waffle de 10 por 10: en 2024, 19.9% de los nacimientos de madres de 15 a 19 años (con número de hijos conocido) fueron de madres que ya tenían uno o más hijos; el waffle muestra 20 cuadros destacados. Por año de ocurrencia. Fuente: INE, Estadísticas Vitales, cálculo propio sobre microdatos.]
 
-## Tuit 17/17 — cierre (277 de peso X)
+## Tuit 17/17 — cierre (268 de peso X)
 
-En suma: el registro de madres adolescentes no baja en 2026, por tasa pesa más en el norte y, en el INE, los partos de niñas son los que menos caen. No mide embarazos ni causas.
+El registro de madres adolescentes no baja en 2026, por tasa pesa más en el norte y, en el INE, los partos de niñas son los que menos caen. No mide embarazos ni causas.
 
 Fuentes: OSAR con datos de RENAP e INE, Banco Mundial, Human Rights Watch con datos del MP, ODHAG.
 

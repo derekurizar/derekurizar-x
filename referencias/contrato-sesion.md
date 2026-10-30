@@ -39,7 +39,7 @@ Reglas del contrato:
   `<sesion>/salida/`, sin tocar `memoria/`. Modo `fixture`: se copia
   `sesiones/_fixture` y se saltan investigación y verificación.
 
-**Modos de hilo** (`/hilo explica|perfil`, alias `/explica`, `/perfil`): el
+**Modos de hilo** (`/hilo explica|perfil`, alias `/perfil`; `/explica` es el video explicativo): el
 workflow pasa `args.modo`; `tipo` sigue siendo `hilo`. `explica`: 3–6 tuits,
 sin giro ni impacto, intermedios con beat `paso` (uno por paso del bloque) y
 texto no vacío. `perfil`: 5–8 tuits, sin giro ni impacto, intermedios con beat

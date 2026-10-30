@@ -1,7 +1,7 @@
 export const meta = {
   name: 'historia',
-  description: 'Historia narrada para /historia (v3, mini documental): historia-editor (encuadre: pregunta, protagonista, revelaciones, fotos_clave, arco, tres actos con la espina (detonante, punto medio, clímax, resolución), hilos, personajes, 2–5 periodos, 2–3 ejes) → un historia-investigador por eje ⇢ su historia-verificador (pipeline; segunda fuente por hecho, cuatro veredictos confirmado | una_fuente | en_disputa | no_confirmado con tipo_hecho, fechas, estado de los casos, fotos con licencia y la del protagonista; gate H1–H3, H7, H12) → consolidar (cronología y base) → video-gancho en modo historia (4–5 candidatos con la foto del protagonista; gate R1–R9, H10, H12, H13) → video-critico elige (reserva: no regala una revelación) → historia-guionista (PRIMERO la narración de corrido por acto, 320–400 palabras, narracion --check; DESPUÉS la reparte en escenas sin cambiar una palabra, con rótulos de acto sobre la imagen y secuencias de voz; gate H3–H20 + V1–V5, V9, F1–F8) → historia-oyente (oyente ingenuo: la narración de corrido y luego la pantalla) → crítico en modo historia (flujo en vez de ritmo; resuelve o justifica cada confusión, salto y pregunta sin responder del oyente; ≤ 2 vueltas; con «pasa», el guionista aplica sus mejoras y el oyente las vuelve a oír) → video-animador por escena explica sin animación. 0 créditos de ElevenLabs.',
-  whenToUse: 'Invocado por /historia <tema> DESPUÉS de `python3 scripts/historia.py preparar "<tema>"`. args: {trabajo, tema, permitir_fallback, desde, notas}. trabajo = sesiones/historia-<slug> (lo imprime preparar). Produce y aprueba <trabajo>/encuadre.json, hallazgos_*.json, verificacion_*.json, fotos/, historia.json, base/, ganchos.json, seleccion.json, guion.json, locucion.json, oyente.json y critica.json; la voz (o la voz falsa), los tiempos, la grabación y el montaje los hace la sesión principal después. Si el crítico sigue en «corregir» tras 2 vueltas, el workflow NO falla: devuelve veredicto corregir + faltas_pendientes y el comando pregunta al usuario. desde: "encuadre" = la cronología ya está verificada (historia.json, ganchos.json, seleccion.json): el editor re-encuadra por actos y salta a Guion; desde: "guion" = salta directo a Guion; desde: "retoque" + notas (lo que pidió el usuario) = guion.json ya aprobado y con voz: salta a Guion (RETOQUE: aplica solo las notas y conserva las voces que no cambian) → gate → oyente → crítica (1 vuelta) → mejoras → animación; devuelve voces_cambiadas para regrabar solo esas (con voz de corrido, voz --pendientes regraba la secuencia entera; --sueltas solo esas escenas).',
+  description: 'Historia narrada para /historia (v3, mini documental): historia-editor (encuadre: pregunta, protagonista, revelaciones, fotos_clave, arco, tres actos con la espina (detonante, punto medio, clímax, resolución), hilos, personajes, 2–5 periodos, 2–3 ejes) → un historia-investigador por eje ⇢ su historia-verificador (pipeline; segunda fuente por hecho, cuatro veredictos confirmado | una_fuente | en_disputa | no_confirmado con tipo_hecho, fechas, estado de los casos, fotos con licencia y la del protagonista; gate H1–H3, H7, H12) → consolidar (cronología y base) → video-gancho en modo historia (4–5 candidatos con la foto del protagonista; gate R1–R9, H10, H12, H13) → video-critico elige (reserva: no regala una revelación) → historia-guionista (PRIMERO la narración de corrido por acto, 320–400 palabras, narracion --check; DESPUÉS la reparte en escenas sin cambiar una palabra, con rótulos de acto sobre la imagen y secuencias de voz; gate H3–H20 + V1–V5, V9, F1–F8) → historia-oyente (oyente ingenuo: la narración de corrido y luego la pantalla) → crítico en modo historia (flujo en vez de ritmo; resuelve o justifica cada confusión, salto y pregunta sin responder del oyente; ≤ 2 vueltas, desde la 2 acotadas a lo que cambió; cada arreglo probado lleva sus cambios y el guionista los aplica tal cual con historia.py aplicar; si la última crítica solo bloquea con arreglos probados, se aplican y el guion queda aprobado; con «pasa», el guionista aplica sus mejoras y el oyente las vuelve a oír: se revierte solo la escena que confunde, nunca una de precisión) → video-animador por escena explica sin animación. 0 créditos de ElevenLabs.',
+  whenToUse: 'Invocado por /historia <tema> DESPUÉS de `python3 scripts/historia.py preparar "<tema>"`. args: {trabajo, tema, permitir_fallback, desde, notas}. trabajo = sesiones/historia-<slug> (lo imprime preparar). Produce y aprueba <trabajo>/encuadre.json, hallazgos_*.json, verificacion_*.json, fotos/, historia.json, base/, ganchos.json, seleccion.json, guion.json, locucion.json, oyente.json y critica.json; la voz (o la voz falsa), los tiempos, la grabación y el montaje los hace la sesión principal después. Si el crítico sigue en «corregir» tras 2 vueltas y sus faltas traen arreglos probados, se aplican (historia.py aplicar) y devuelve pasa con aprobado_por: arreglos_probados; si no, el workflow NO falla: devuelve veredicto corregir + faltas_pendientes y el comando pregunta al usuario. desde: "encuadre" = la cronología ya está verificada (historia.json, ganchos.json, seleccion.json): el editor re-encuadra por actos y salta a Guion; desde: "guion" = salta directo a Guion; desde: "retoque" + notas (lo que pidió el usuario) = guion.json ya aprobado y con voz: salta a Guion (RETOQUE: aplica solo las notas y conserva las voces que no cambian) → gate → oyente → crítica (1 vuelta) → mejoras → animación; devuelve voces_cambiadas para regrabar solo esas (con voz de corrido, voz --pendientes regraba la secuencia entera; --sueltas solo esas escenas).',
   phases: [
     { title: 'Encuadre', detail: 'historia-editor: encuadre.json con la pregunta central, el protagonista, las revelaciones (lo que el video paga y el gancho no dice), fotos_clave (la primera es la imagen del protagonista), el arco, tres actos (planteamiento, nudo, desenlace) con la espina (detonante, punto medio, clímax, resolución), 2–6 hilos (lo que la historia abre), personajes con su presentación, 2–5 periodos que reparten 2–3 ejes de investigación, paleta, no_afirma y lo sensible (justicia); gate historia.py encuadre --check. En desde: encuadre, re-encuadra una cronología ya verificada' },
     { title: 'Investigación', detail: 'un historia-investigador por eje en paralelo: hechos con fecha y cita literal del texto guardado (historia.py leer: HTML, PDF o Wayback), cifras, frases literales y fotos candidatas → hallazgos_<eje>.json' },
@@ -10,7 +10,7 @@ export const meta = {
     { title: 'Selección', detail: 'video-critico en modo selección: en silencio y con la voz; puntúa silencio, reserva (no regala una revelación), tension, alineacion, honestidad, novedad; ganador y segundo en seleccion.json; si ninguno llega a 3, video-gancho rehace una vez' },
     { title: 'Guion', detail: 'historia-guionista: ganchos --usar → PRIMERO guion.narracion (el texto corrido de cada acto, 320–400 palabras ≈ 150 s; historia.py narracion --check: conectores, ≤ 4 «según», personajes presentados, hilos pagados o declarados) → DESPUÉS las escenas sin cambiar una palabra (acto en cada una, rótulo en la primera de los actos 2 y 3, secuencias de voz, foto, cita, tarjeta, golpe, explica, giro en el nudo, cierre legado, captions); gate historia.py guion --check (H3–H20 + V1–V5, V9, F1–F8) y su línea RETORNO; en retoque aplica las notas del usuario y conserva las voces' },
     { title: 'Oyente', detail: 'historia-oyente (sonnet): primero la narración de corrido (como quien oye un documental con los ojos cerrados) y luego la voz escena por escena con lo que hay en pantalla (digesto --para oyente); oyente.json con de qué es la historia, qué prometió y qué dio, confusiones, saltos, repeticiones y preguntas sin responder; vuelve a correr tras cada corrección y tras las mejoras' },
-    { title: 'Crítica', detail: 'video-critico en modo historia: gancho, tensión (la espina entera y en orden), claridad e hilo (personajes presentados, hilos pagados o declarados), flujo (la narración de corrido se oye como una sola voz, no como tarjetas leídas), precisión (lo una_fuente con la fuente en pantalla, ≤ 4 «según»), cierre; resuelve (bloquea) o justifica cada confusión, salto y pregunta sin responder del oyente; lo que bloquea vuelve al guionista, ≤ 2 vueltas (1 en retoque); con «pasa», el guionista aplica las mejoras (también las de voz), repasa el gate y el oyente las vuelve a oír (si confunden, se revierten)' },
+    { title: 'Crítica', detail: 'video-critico en modo historia: gancho, tensión (la espina entera y en orden), claridad e hilo (personajes presentados, hilos pagados o declarados), flujo (la narración de corrido se oye como una sola voz, no como tarjetas leídas), precisión (lo una_fuente con la fuente en pantalla, ≤ 4 «según»), cierre; resuelve (bloquea) o justifica cada confusión, salto y pregunta sin responder del oyente; lo que bloquea vuelve al guionista (los arreglos probados, tal cual con historia.py aplicar), ≤ 2 vueltas (1 en retoque), desde la 2 y en retoque ACOTADAS (solo bloquea lo que cambió, lo pendiente, H-C5 o un puntaje ≤ 2); si la última solo bloquea con arreglos probados, se aplican y queda aprobado (aprobado_por: arreglos_probados); con «pasa», el guionista aplica las mejoras (también las de voz), repasa el gate y el oyente las vuelve a oír (se revierte solo la escena que confunde; una de precisión se queda)' },
     { title: 'Animación', detail: 'video-animador por cada escena explica con animacion null (solo si el crítico aprueba): reusa del catálogo o escribe video/animaciones/<id>.js, --check, --registrar y --asignar' },
   ],
 }
@@ -218,7 +218,9 @@ const S = {
       faltas: { type: 'array', items: { type: 'object', required: ['regla', 'gravedad', 'problema', 'arreglo'],
         properties: { n: { type: 'integer' }, escena: { type: ['integer', 'null'] }, regla: { type: 'string', pattern: '^H-C[1-6]$' }, gravedad: { type: 'string', enum: ['bloquea', 'mejora'] }, problema: { type: 'string' }, arreglo: { type: 'string' },
           // el arreglo de texto ya pasó por historia.py probar (narracion + guion --check); false = el gate lo rechaza
-          probado: { type: 'boolean' } } } },
+          probado: { type: 'boolean' },
+          // los mismos cambios que pasó a probar: el guionista los aplica tal cual con historia.py aplicar
+          cambios: { type: 'array', items: { type: 'object' } } } } },
       // escena: null + pregunta = una pregunta_sin_responder del oyente descartada con motivo
       oyente_descartadas: { type: 'array', items: { type: 'object', required: ['escena', 'motivo'], properties: { escena: { type: ['integer', 'null'] }, pregunta: { type: 'string' }, motivo: { type: 'string' } } } },
     },
@@ -430,22 +432,36 @@ let O = await oir(1)
 if (O) log(`Oyente: «${O.de_que}» · ${O.confusiones.length} confusiones · ${O.saltos.length} saltos · ${O.repeticiones.length} repeticiones · ${O.pregunta_sin_responder.length} sin responder`)
 
 // ── 7. Crítica (≤ 2 vueltas; 1 en retoque) ───────────────────────────────────
+// Vueltas ACOTADAS (desde la 2 y en todo el retoque): el oyente vuelve a oír el guion entero y encuentra confusiones
+// nuevas donde nada cambió; si cada una bloquease, las vueltas no convergen. En una vuelta acotada solo bloquea lo que
+// cambió (cambiadas), lo que la vuelta anterior dejó sin resolver, la precisión (H-C5) o un puntaje ≤ 2; lo demás es mejora.
 phase('Crítica')
-const validarCritica = (r, O) => {
+const validarCritica = (r, O, cambiadas = null, previas = []) => {
   const f = []
+  const acotada = cambiadas !== null
   for (const k of PUNTAJES) if (r.puntajes[k] <= 2 && !r.faltas.some((x) => x.gravedad === 'bloquea' && x.regla === REGLA_DE[k])) f.push(`puntaje ${k} = ${r.puntajes[k]} sin falta «bloquea» de ${REGLA_DE[k]}`)
   const bloquea = r.faltas.some((x) => x.gravedad === 'bloquea') || PUNTAJES.some((k) => r.puntajes[k] < PUNTAJE_MIN)
   if ((r.veredicto === 'pasa') === bloquea) f.push(`veredicto ${r.veredicto} incoherente con las faltas y los puntajes`)
   for (const x of r.faltas) if (x.gravedad === 'bloquea' && x.probado === false) f.push(`la falta ${x.n ?? ''} (escena ${x.escena}) bloquea con un arreglo que el gate rechaza: ajústalo con historia.py probar hasta que pase, o dala como mejora con la falla del gate en problema`)
+  for (const x of r.faltas) if (x.probado === true && !(x.cambios || []).length) f.push(`la falta ${x.n ?? ''} (escena ${x.escena}) trae probado: true sin cambios: copia en cambios el JSON exacto que pasaste a historia.py probar (el guionista lo aplica tal cual)`)
+  if (acotada) {
+    const deRegla = (x) => PUNTAJES.some((k) => REGLA_DE[k] === x.regla && r.puntajes[k] <= 2)
+    for (const x of r.faltas.filter((y) => y.gravedad === 'bloquea')) {
+      const vale = cambiadas.has(x.escena) || previas.some((p) => p.escena === x.escena && p.regla === x.regla) || x.regla === 'H-C5' || deRegla(x)
+      if (!vale) f.push(`la falta ${x.n ?? ''} (escena ${x.escena}, ${x.regla}) bloquea en una vuelta acotada: solo bloquea lo que cambió (escenas ${[...cambiadas].join(', ') || 'ninguna'}), lo que la vuelta anterior dejó sin resolver o un error de precisión (H-C5); dala como mejora`)
+    }
+  }
   // una confusión está atendida si una falta o una descartada lleva su escena, o si su texto la nombra («se resuelve en la escena 7… la 6»)
   const nombra = (x, n) => new RegExp(`\\b(?:escena|escenas|la)\\s+(?:\\d+\\s*(?:,|y|→|-|–)\\s*)*${n}\\b`).test(`${x.problema || ''} ${x.arreglo || ''} ${x.motivo || ''}`)
   const atendida = (n) => r.faltas.some((x) => x.escena === n || nombra(x, n)) || (r.oyente_descartadas || []).some((d) => d.escena === n || nombra(d, n))
-  for (const c of (O ? O.confusiones : [])) if (!atendida(c.escena)) f.push(`la confusión del oyente en la escena ${c.escena} («${c.que_no_entendi}») no tiene falta ni entrada en oyente_descartadas`)
-  for (const s of (O ? O.saltos : [])) if (!atendida(s.a)) f.push(`el salto ${s.de}→${s.a} del oyente no tiene falta en la escena ${s.a} ni entrada en oyente_descartadas`)
+  // en una vuelta acotada solo se atiende lo que el oyente encontró en las escenas que cambiaron
+  const toca = (n) => !acotada || cambiadas.has(n)
+  for (const c of (O ? O.confusiones : [])) if (toca(c.escena) && !atendida(c.escena)) f.push(`la confusión del oyente en la escena ${c.escena} («${c.que_no_entendi}») no tiene falta ni entrada en oyente_descartadas`)
+  for (const s of (O ? O.saltos : [])) if (toca(s.a) && !atendida(s.a)) f.push(`el salto ${s.de}→${s.a} del oyente no tiene falta en la escena ${s.a} ni entrada en oyente_descartadas`)
   // cada pregunta sin responder del oyente: una falta H-C3 (escena null) que la cite, o una descartada con la pregunta literal
   const plano = (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim()
   const cita = (texto, q) => { const p = plano(q); return p.length >= 8 && plano(texto).includes(p.slice(0, Math.min(p.length, 24))) }
-  for (const q of (O ? O.pregunta_sin_responder : [])) {
+  for (const q of (O && !acotada ? O.pregunta_sin_responder : [])) {
     const ok = r.faltas.some((x) => x.escena === null && x.regla === 'H-C3' && cita(x.problema, q)) ||
       (r.oyente_descartadas || []).some((d) => d.escena === null && d.pregunta && (plano(d.pregunta) === plano(q) || cita(d.pregunta, q) || cita(q, d.pregunta)))
     if (!ok) f.push(`la pregunta sin responder del oyente («${q}») no tiene una falta H-C3 (escena null, que la cite en problema) ni una entrada en oyente_descartadas con escena null y pregunta`)
@@ -453,8 +469,15 @@ const validarCritica = (r, O) => {
   return f
 }
 let critica = null, previas = [], arreglosRechazados = []
+// cambiadas = escenas cuya voz cambió en el paso anterior (null = vuelta completa: la primera de una corrida nueva)
+let cambiadas = RETOQUE ? new Set(G.voces_cambiadas || []) : null
+const conCambios = (lista) => lista.filter((x) => (x.cambios || []).length)
+const aplicarDirectiva = (lista) => `Las que traen cambios se aplican TAL CUAL, sin reescribirlas: python3 scripts/historia.py aplicar ${trabajo} --cambios '<sus cambios>' ` +
+  `(los cambios de varias faltas juntos en una sola llamada, como los probó el crítico: ${JSON.stringify(conCambios(lista).flatMap((x) => x.cambios))}); ` +
+  `las que no traen cambios las redactas tú con su arreglo. `
 for (let vuelta = 1; vuelta <= VUELTAS + 1; vuelta++) {
   if (vuelta > 1) O = await oir(vuelta)   // la corrección cambió la voz: el oyente vuelve a oírla
+  const acotada = cambiadas !== null
   critica = await conReparacion(`crítica ${vuelta}`, (fallos) => agentRol(
     `MODO HISTORIA (lee la sección «Modo historia» de referencias/roles/video-critico.md). TRABAJO = ${trabajo}. Vuelta ${vuelta}. ` +
       `Insumos: ${trabajo}/guion.json, ${trabajo}/locucion.json, ` +
@@ -465,26 +488,56 @@ for (let vuelta = 1; vuelta <= VUELTAS + 1; vuelta++) {
       `H-C2: la espina está entera y en orden (detonante cierra el acto 1, punto medio en el 2, clímax y resolución en el 3) y la escena promesa.pago cuenta la revelación promesa.revela; ` +
       `H-C3: cada persona u organización llega presentada y cada hilo se paga o se declara; H-C4 FLUJO (no ritmo): lee la narración de corrido como un texto: ¿una sola voz que cuenta o tarjetas leídas? ` +
       `(bloquea una escena que arranca con un conector hueco, un salto de tiempo o de tema sin decirlo, aperturas repetidas); H-C5: lo una_fuente va con la fuente en pantalla y solo lo en_disputa o de parte se atribuye en voz (≤ ${SEGUN_MAX} «según»); H-C6, legado = gente haciendo algo hoy, no es neutro. ` +
+      (acotada ? `VUELTA ACOTADA (lee «Vueltas acotadas» en tu guía): cambiaron las escenas ${[...cambiadas].join(', ') || 'ninguna'}. Solo BLOQUEA lo que cambió, lo que la vuelta anterior ` +
+                 `dejó sin resolver, un error de precisión (H-C5) o un puntaje ≤ 2; del oyente atiendes solo las confusiones y saltos de esas escenas; todo lo demás va como mejora. ` : '') +
       (RETOQUE ? `RETOQUE con notas del usuario: «${notas}». Lo que las notas piden conservar (el cierre, una escena, «ninguna voz») el usuario ya lo aprobó: no va como ` +
                  `falta bloquea; si el oyente lo confunde, va en oyente_descartadas con el motivo «lo aprobó el usuario» y, si quieres, como mejora. ` : '') +
       `ARREGLOS PROBADOS: antes de escribir cada arreglo que cambia texto (texto de una escena, chip, promesa, cierre), pruébalo con ` +
       `python3 scripts/historia.py probar ${trabajo} --cambios '[{"escena": N, "texto": "…"}]' (también {"escena": N, "campo": "fecha", "valor": "…"}, {"promesa": "…"}, {"cierre": "…"}); ` +
-      `con exit 1 ajústalo hasta que pase; si ninguna versión pasa, va como mejora con la falla del gate en problema. Marca probado: true|false en cada falta. ` +
+      `con exit 1 ajústalo hasta que pase; si ninguna versión pasa, va como mejora con la falla del gate en problema. Marca probado: true|false en cada falta y, con true, copia en cambios ` +
+      `el JSON exacto que pasó (prueba juntas las faltas que se aplican juntas): el guionista lo aplica tal cual con historia.py aplicar. ` +
       `Escribe ${trabajo}/critica.json.` +
       (previas.length ? ` Faltas de la vuelta anterior (comprueba primero cada una): ${JSON.stringify(previas)}` : '') +
       (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : ''),
-    { agentType: 'video-critico', schema: S.critica, phase: 'Crítica', label: `critica-${vuelta}` }), (r) => validarCritica(r, O), 2)
-  log(`Crítica ${vuelta}: ${critica.veredicto} · ${PUNTAJES.map((k) => `${k} ${critica.puntajes[k]}`).join(' · ')}`)
+    { agentType: 'video-critico', schema: S.critica, phase: 'Crítica', label: `critica-${vuelta}` }), (r) => validarCritica(r, O, cambiadas, previas), 2)
+  log(`Crítica ${vuelta}${acotada ? ' (acotada)' : ''}: ${critica.veredicto} · ${PUNTAJES.map((k) => `${k} ${critica.puntajes[k]}`).join(' · ')}`)
   if (critica.veredicto === 'pasa' || vuelta > VUELTAS) break
   previas = critica.faltas.filter((x) => x.gravedad === 'bloquea')
   G = sumaVoces(await conReparacion(`corrección ${vuelta}`, (fallos) => agentRol(directivaGuion +
     ` CORRECCIÓN ${vuelta}: guion.json ya existe; corrige SOLO lo que bloquea (con el arreglo exacto), conserva las demás voces y repasa el gate: ${JSON.stringify(previas)}. ` +
-    `Un arreglo que el gate rechaza no lo reescribas en silencio: aplica lo más cercano que pase (pruébalo con python3 scripts/historia.py probar ${trabajo} --cambios …) y devuélvelo en arreglos_rechazados [{n, falla: la línea FALLA del gate}].` +
+    aplicarDirectiva(previas) +
+    `Un arreglo que el gate rechaza no lo reescribas en silencio: aplica lo más cercano que pase (pruébalo con python3 scripts/historia.py probar ${trabajo} --cambios …) y devuélvelo en arreglos_rechazados [{n, falla: la línea FALLA del gate}]. ` +
+    `Añade al RETORNO voces_cambiadas: [n de cada escena cuya voz cambió; el cierre es la escena N+1].` +
     (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : ''),
   { agentType: 'historia-guionista', schema: S.guion, phase: 'Crítica', label: `guionista-corrige-${vuelta}` }), validarGuion, 1))
+  // la vuelta siguiente es acotada a lo que esta corrección tocó (lo que el guionista dice, más las escenas de las faltas)
+  cambiadas = new Set([...(G.voces_cambiadas || []), ...previas.map((x) => x.escena).filter((n) => Number.isInteger(n))])
   for (const x of G.arreglos_rechazados || []) {
     arreglosRechazados.push({ ...x, vuelta })
     avisar(`AVISO: el gate rechazó el arreglo ${x.n} de la crítica ${vuelta} (${x.falla}); el guionista aplicó lo más cercano que pasa.`)
+  }
+}
+
+// ── 7a. Cierre con arreglos probados: si la última crítica solo bloquea con arreglos que ya pasaron probar, se aplican
+// (historia.py aplicar) y el guion queda aprobado sin otra vuelta; si el gate los rechaza, queda «corregir» como antes ──
+let aprobadoPor = critica.veredicto === 'pasa' ? 'critico' : null, aplicadasAlCierre = []
+const pendientes = critica.faltas.filter((x) => x.gravedad === 'bloquea')
+if (critica.veredicto !== 'pasa' && pendientes.length && pendientes.every((x) => x.probado === true && (x.cambios || []).length) &&
+    PUNTAJES.every((k) => critica.puntajes[k] > 2)) {
+  const C = await conReparacion('cierre con arreglos probados', (fallos) => agentRol(directivaGuion +
+    ` CIERRE CON ARREGLOS PROBADOS: el crítico ya probó cada arreglo; aplícalos TODOS juntos y sin reescribirlos con UNA llamada: ` +
+    `python3 scripts/historia.py aplicar ${trabajo} --cambios '${JSON.stringify(pendientes.flatMap((x) => x.cambios)).replace(/'/g, "'\\''")}'. ` +
+    `Si sale 1 (el gate los rechaza), NO lo arregles: devuelve gate: "falla" con sus líneas FALLA. Con exit 0 corre python3 scripts/historia.py guion ${trabajo} --check ` +
+    `y devuelve su RETORNO con voces_cambiadas (las escenas_cambiadas de aplicar).` + (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : ''),
+  { agentType: 'historia-guionista', schema: S.guion, phase: 'Crítica', label: 'guionista-cierre' }), validarGuion, 0)
+    .catch((e) => { avisar(`AVISO: los arreglos probados no pasaron el gate juntos (${String(e.message).split('\n')[0]}); queda «corregir».`); return null })
+  if (C) {
+    G = sumaVoces(C)
+    aplicadasAlCierre = pendientes
+    aprobadoPor = 'arreglos_probados'
+    critica = { ...critica, veredicto: 'pasa', faltas: critica.faltas.filter((x) => x.gravedad !== 'bloquea') }
+    avisar(`AVISO: la última crítica solo bloqueaba con arreglos probados: se aplicaron ${pendientes.length} (historia.py aplicar) y el guion queda aprobado sin otra vuelta.`)
+    O = (await oir('cierre')) || O
   }
 }
 
@@ -494,9 +547,11 @@ if (mejorasNoAplicadas.length) {
   const lista = mejorasNoAplicadas
   const M = await conReparacion('mejoras', (fallos) => agentRol(directivaGuion +
     ` MEJORAS: el crítico aprobó el guion; aplica estas mejoras (también las de voz: aún no se graba nada) con su arreglo exacto, sin tocar nada más: ${JSON.stringify(lista)}. ` +
-    `ANTES copia ${trabajo}/guion.json a ${trabajo}/guion.previo.json. Aplica una por una y corre python3 scripts/historia.py guion ${trabajo} --check; ` +
+    `ANTES copia ${trabajo}/guion.json a ${trabajo}/guion.aprobado.json. Aplica una por una: la que trae cambios, tal cual con python3 scripts/historia.py aplicar ${trabajo} --cambios '<sus cambios>' ` +
+    `(si sale 1, el gate la rechaza: va en no_aplicadas con su FALLA); la que no, a mano y corre python3 scripts/historia.py guion ${trabajo} --check; ` +
     `una mejora que el gate no deja pasar (ni con un ajuste mínimo) la deshaces y va en no_aplicadas con su motivo. Si al final el gate no llega a 0 fallas, ` +
-    `restaura guion.previo.json, vuelve a correr el gate (locucion.json debe corresponder al guion final) y devuelve aplicadas: []. Devuelve aplicadas (los n de las mejoras) y no_aplicadas.` +
+    `restaura guion.aprobado.json, vuelve a correr el gate (locucion.json debe corresponder al guion final) y devuelve aplicadas: []. Devuelve aplicadas (los n de las mejoras), no_aplicadas ` +
+    `y voces_cambiadas (n de cada escena cuya voz cambió; el cierre es N+1).` +
     (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : ''),
   { agentType: 'historia-guionista', schema: S.mejoras, phase: 'Crítica', label: 'guionista-mejoras' }), validarGuion, 1)
     .catch((e) => { avisar(`AVISO: las mejoras no se aplicaron (${String(e.message).split('\n')[0]}); queda el guion aprobado.`); return null })
@@ -504,22 +559,30 @@ if (mejorasNoAplicadas.length) {
     G = sumaVoces(M)
     mejorasNoAplicadas = lista.filter((x) => !M.aplicadas.includes(x.n)).map((x) => ({ ...x, motivo: (M.no_aplicadas.find((y) => y.n === x.n) || {}).motivo || 'no aplicada' }))
     log(`Mejoras: ${M.aplicadas.length} aplicadas · ${mejorasNoAplicadas.length} no aplicadas`)
-    // una mejora que cambió la voz vuelve a pasar por el oyente (barato): si confunde donde antes no, se revierte entera
+    // una mejora que cambió la voz vuelve a pasar por el oyente (barato): si confunde donde antes no, se revierte SOLO esa
+    // escena; una de precisión (H-C5) se queda aunque confunda (la precisión manda sobre el flujo)
     if (M.aplicadas.length && (M.voces_cambiadas || []).length) {
       const O3 = await oir('mejoras')
-      const cambiadas = new Set(M.voces_cambiadas)
+      const cambiadasM = new Set(M.voces_cambiadas)
       const antes = new Set([...(O ? O.confusiones.map((c) => c.escena) : []), ...(O ? O.saltos.map((s) => s.a) : [])])
-      const nuevas = O3 ? [...O3.confusiones.map((c) => c.escena), ...O3.saltos.map((s) => s.a)].filter((n) => cambiadas.has(n) && !antes.has(n)) : []
-      if (nuevas.length) {
-        avisar(`AVISO: las mejoras confundieron al oyente en las escenas ${[...new Set(nuevas)].join(', ')}: se revierten (queda el guion aprobado).`)
+      const nuevas = new Set(O3 ? [...O3.confusiones.map((c) => c.escena), ...O3.saltos.map((s) => s.a)].filter((n) => cambiadasM.has(n) && !antes.has(n)) : [])
+      const aplicadas = lista.filter((x) => M.aplicadas.includes(x.n) && nuevas.has(x.escena))
+      const revertir = aplicadas.filter((x) => x.regla !== 'H-C5')
+      for (const x of aplicadas.filter((y) => y.regla === 'H-C5')) avisar(`AVISO: la mejora de precisión ${x.n} (escena ${x.escena}) confundió al oyente; se queda (la precisión manda sobre el flujo).`)
+      if (revertir.length) {
+        const escenas = [...new Set(revertir.map((x) => x.escena))]
+        avisar(`AVISO: las mejoras ${revertir.map((x) => x.n).join(', ')} confundieron al oyente en las escenas ${escenas.join(', ')}: se revierten solo esas escenas.`)
         const R = await conReparacion('revertir mejoras', (fallos) => agentRol(directivaGuion +
-          ` REVIERTE: restaura ${trabajo}/guion.previo.json sobre guion.json (las mejoras confundieron al oyente), corre python3 scripts/historia.py guion ${trabajo} --check y devuelve su RETORNO.` +
+          ` REVIERTE SOLO las escenas ${escenas.join(', ')} (sus mejoras confundieron al oyente): toma el texto de cada una de ${trabajo}/guion.aprobado.json y aplícalo con ` +
+          `python3 scripts/historia.py aplicar ${trabajo} --cambios '[{"escena": N, "texto": "<texto de guion.aprobado.json>"}, …]' (el cierre es la escena N+1, con {"cierre": "…"}); ` +
+          `las demás mejoras se quedan. Corre python3 scripts/historia.py guion ${trabajo} --check y devuelve su RETORNO.` +
           (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : ''),
         { agentType: 'historia-guionista', schema: S.guion, phase: 'Crítica', label: 'guionista-revierte' }), validarGuion, 1)
-          .catch((e) => { avisar(`AVISO: no se pudo revertir (${String(e.message).split('\n')[0]}); revisa guion.json contra guion.previo.json.`); return null })
-        if (R) { G = R; M.voces_cambiadas.forEach((n) => voces.delete(n)) }
-        mejorasNoAplicadas = lista.map((x) => ({ ...x, motivo: 'confundió al oyente: revertida' }))
-      } else if (O3) { O = O3 }
+          .catch((e) => { avisar(`AVISO: no se pudo revertir (${String(e.message).split('\n')[0]}); revisa guion.json contra guion.aprobado.json.`); return null })
+        if (R) { G = R; escenas.forEach((n) => voces.delete(n)) }
+        mejorasNoAplicadas = [...mejorasNoAplicadas, ...revertir.map((x) => ({ ...x, motivo: 'confundió al oyente: revertida esa escena' }))]
+      }
+      if (O3) O = O3
     }
   }
 }
@@ -542,6 +605,7 @@ if (critica.veredicto === 'pasa') {
 
 return {
   trabajo, tema, veredicto: critica.veredicto, puntajes: critica.puntajes,
+  aprobado_por: aprobadoPor, aplicadas_al_cierre: aplicadasAlCierre,
   faltas_pendientes: critica.faltas.filter((x) => x.gravedad === 'bloquea'),
   mejoras: critica.faltas.filter((x) => x.gravedad === 'mejora'),
   mejoras_no_aplicadas: mejorasNoAplicadas, arreglos_rechazados: arreglosRechazados,

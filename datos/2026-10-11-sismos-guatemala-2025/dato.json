@@ -4,6 +4,7 @@
   "tema": "Sismos registrados en Guatemala en 2025",
   "pista": null,
   "tipo": "dato",
+  "modo": "dato",
   "dato": "Guatemala registró 11,811 sismos en 2025, 2.6 veces los 4,486 de 2024",
   "cifra_id": "dat-c01",
   "por_que_impacta": "Son unos 32 sismos al día, más de uno por hora, y el salto no se explica por más sensores: la red tuvo 93, tres menos que en 2024.",

@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "_comentario": "Registro de videos «¿Sabías que…?» producidos por /sabias desde un dato de datos/. Lo escribe SOLO scripts/memoria.py --sabias <datos/<fecha>-<slug>/video>; scripts/sabias.py lo lee para rotar el visual del gancho, el apoyo, el cierre y la música, y para las frases ya usadas. estado: listo | publicado | incompleto.",
+  "sabias": [
+    {
+      "id": "sabias-lago-atitlan-nivel",
+      "slug": "lago-atitlan-nivel",
+      "tema": "El lago de Atitlán está 3 metros más bajo que en 2014",
+      "fecha": "2026-10-29",
+      "ruta": "datos/2026-10-11-lago-atitlan-nivel/video",
+      "dato": "datos/2026-10-11-lago-atitlan-nivel",
+      "paleta": "jade",
+      "musica": "jade-2",
+      "duracion_s": 26.3,
+      "creditos_voz": 488,
+      "estado": "listo",
+      "frases": {
+        "gancho": "¿Sabías que el lago de Atitlán, en Guatemala, bajó tres metros desde dos mil catorce?",
+        "cierre": "Los pueblos de Atitlán ya tienen la orilla más lejos que en 2014.",
+        "cierre_tipo": "remate",
+        "cierre_forma": "consecuencia",
+        "cierre_mecanismo": "perdida",
+        "visual": "lugar",
+        "apoyo": "golpe"
+      }
+    }
+  ]
+}

@@ -1,0 +1,1614 @@
+{
+  "slug": "combustibles-subsidio-exoneracion-2026",
+  "fecha": "2026-10-29",
+  "tesis": "En 2026 el Estado destina cerca de Q5,250 millones a abaratar el combustible (subsidio ejecutado del Decreto 11, cerca de Q1,930 M, más la recaudación de IDP e IVA que SAT y Minfin estiman no percibir por el Decreto 22), una suma de gasto y estimación mayor que todo el IDP de 2025; aun así, el diésel en su primer día sin impuestos (alrededor de Q42, 1-oct) quedó más caro que con el subsidio en abril (Q34.32), en paralelo a una referencia internacional que subió 131% de enero a septiembre.",
+  "ancla_id": "fis-c10",
+  "paleta": "cielo",
+  "hook_tipo": "giro_inversion",
+  "cifras": [
+    {
+      "id": "bol-c01",
+      "concepto": "Población proyectada de Guatemala en 2026 (INE, revisión 2019)",
+      "unidad": "personas",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "INE — Estimaciones y proyecciones nacionales de población 1950-2050, revisión 2019",
+      "url": "https://prensalibre.com/wp-content/uploads/2024/09/01-Metodologia-Nacional.pdf",
+      "periodo": "2026",
+      "n_puntos": 1,
+      "valor": 18312373,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://prensalibre.com/wp-content/uploads/2024/09/01-Metodologia-Nacional.pdf",
+        "cita": "2026        18,312,373        9,007,032         9,305,341",
+        "archivo_local": "sesiones/_descargas/01-Metodologia-Nacional.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "bol-c02",
+      "concepto": "Subsidio ejecutado del Decreto 11-2026 por habitante",
+      "unidad": "quetzales por persona",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Prensa Libre con datos oficiales (ejecución Q1,932 millones) · INE (población 2026)",
+      "url": "https://www.prensalibre.com/economia/factura-petrolera-para-guatemala-por-importacion-de-hidrocarburos-sube-40-8-hasta-julio-del-2026/",
+      "periodo": "28-abr a 2-jul-2026",
+      "n_puntos": 1,
+      "valor": 105.5,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Cotejo con Prensa Libre (archivo local); búsqueda web no halló segunda fuente del Q1,932 M",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/economia/factura-petrolera-para-guatemala-por-importacion-de-hidrocarburos-sube-40-8-hasta-julio-del-2026/",
+        "cita": "El monto aprobado fue de Q2 mil millones y se ejecutó Q1 mil 932 millones. | INE: 2026 18,312,373",
+        "archivo_local": "sesiones/combustibles-subsidio-exoneracion-2026/fuentes_bol/pl-factura-jul2026.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_6.png"
+      ]
+    },
+    {
+      "id": "bol-c03",
+      "concepto": "Volumen importado de combustibles por producto, enero–julio 2026 (MEM)",
+      "unidad": "millones de galones",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "MEM-DGH, estadísticas de importación (vía Prensa Libre)",
+      "url": "https://www.prensalibre.com/economia/factura-petrolera-para-guatemala-por-importacion-de-hidrocarburos-sube-40-8-hasta-julio-del-2026/",
+      "periodo": "enero–julio 2026",
+      "n_puntos": 3,
+      "valor": 437.1,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/economia/factura-petrolera-para-guatemala-por-importacion-de-hidrocarburos-sube-40-8-hasta-julio-del-2026/",
+        "cita": "diésel creció 4.49%, con lo cual llegó a 10.4 millones de barriles (437.1 millones de galones) … regular … (unos 260.3 millones de galones) … superior … (alrededor de 225.78 millones de galones)",
+        "archivo_local": "sesiones/combustibles-subsidio-exoneracion-2026/fuentes_bol/pl-factura-jul2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Diésel",
+          "valor": 437.1
+        },
+        {
+          "nombre": "Gasolina regular",
+          "valor": 260.3
+        },
+        {
+          "nombre": "Gasolina superior",
+          "valor": 225.78
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "bol-c04",
+      "concepto": "Consumo nacional de diésel y gasolinas en 2024 (DGH-MEM)",
+      "unidad": "millones de barriles",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "MEM — Dirección General de Hidrocarburos (vía Prensa Libre)",
+      "url": "https://www.prensalibre.com/economia/el-consumo-de-gasolinas-y-diesel-crecio-en-el-2024-atribuido-a-dos-factores-que-influyeron-en-ese-comportamiento/",
+      "periodo": "2024",
+      "n_puntos": 2,
+      "valor": 34.5,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/economia/el-consumo-de-gasolinas-y-diesel-crecio-en-el-2024-atribuido-a-dos-factores-que-influyeron-en-ese-comportamiento/",
+        "cita": "El consumo de diésel subió 7% y alcanzó 15.9 millones de barriles y las gasolinas (regular y super) 18.5 millones de galones",
+        "archivo_local": "sesiones/combustibles-subsidio-exoneracion-2026/fuentes_bol/pl-consumo-2024.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Diésel",
+          "valor": 15.9
+        },
+        {
+          "nombre": "Gasolinas (regular y superior)",
+          "valor": 18.5
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "bol-c05",
+      "concepto": "Consumo total de diésel y gasolinas, serie anual",
+      "unidad": "millones de barriles",
+      "anio": 2024,
+      "tipo": "serie",
+      "fuente": "MEM — Dirección General de Hidrocarburos (vía Prensa Libre)",
+      "url": "https://www.prensalibre.com/economia/el-consumo-de-gasolinas-y-diesel-crecio-en-el-2024-atribuido-a-dos-factores-que-influyeron-en-ese-comportamiento/",
+      "periodo": "2022–2024",
+      "n_puntos": 3,
+      "valor": 34.5,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/economia/el-consumo-de-gasolinas-y-diesel-crecio-en-el-2024-atribuido-a-dos-factores-que-influyeron-en-ese-comportamiento/",
+        "cita": "El total de consumo de ambos productos fue de 34.5 millones de barriles en 2024; para 2023 32 millones y 2022, fue de 30.3 millones, según la serie.",
+        "archivo_local": "sesiones/combustibles-subsidio-exoneracion-2026/fuentes_bol/pl-consumo-2024.txt"
+      },
+      "serie": [
+        {
+          "p": "2022",
+          "v": 30.3
+        },
+        {
+          "p": "2023",
+          "v": 32
+        },
+        {
+          "p": "2024",
+          "v": 34.5
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "bol-c06",
+      "concepto": "Ahorro estimado por galón con la exoneración de IDP e IVA (Decreto 22-2026), según el MEM",
+      "unidad": "quetzales por galón",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Ministerio de Energía y Minas (vía AGN)",
+      "url": "https://agn.gt/mem-confirma-rebaja-de-hasta-q9-por-galon-en-combustibles/",
+      "periodo": "precios de referencia al 1-oct-2026",
+      "n_puntos": 3,
+      "valor": 9.05,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Emisoras Unidas, 30-sep-2026: reproduce los ahorros del MEM",
+      "evidencia": {
+        "url": "https://agn.gt/mem-confirma-rebaja-de-hasta-q9-por-galon-en-combustibles/",
+        "cita": "el ahorro estimado por galón es de Q9.05 en gasolina superior, Q8.33 en regular y Q6.45 en diésel.",
+        "archivo_local": "sesiones/combustibles-subsidio-exoneracion-2026/fuentes_bol/agn-mem-rebaja-q9.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Gasolina superior",
+          "valor": 9.05
+        },
+        {
+          "nombre": "Gasolina regular",
+          "valor": 8.33
+        },
+        {
+          "nombre": "Diésel",
+          "valor": 6.45
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "bol-c07",
+      "concepto": "Subsidio por galón del Decreto 11-2026",
+      "unidad": "quetzales por galón",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "IIES-USAC, Efectos del fin del subsidio a los combustibles (julio 2026), sobre el Decreto 11-2026",
+      "url": "https://iies.usac.edu.gt/wp-content/uploads/2026/07/semana1_subsidio.pdf",
+      "periodo": "28-abr a 2-jul-2026",
+      "n_puntos": 3,
+      "valor": 8,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://iies.usac.edu.gt/wp-content/uploads/2026/07/semana1_subsidio.pdf",
+        "cita": "El apoyo temporal de Q 5.00 por galón de superior y regular y de Q 8.00 por galón al diésel",
+        "archivo_local": "sesiones/_descargas/semana1_subsidio.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Diésel",
+          "valor": 8
+        },
+        {
+          "nombre": "Gasolina superior",
+          "valor": 5
+        },
+        {
+          "nombre": "Gasolina regular",
+          "valor": 5
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_2.png",
+        "T2",
+        "tuit_6.png"
+      ]
+    },
+    {
+      "id": "bol-c08",
+      "concepto": "Consumo mensual estimado de diésel y gasolina regular (exposición de motivos de la iniciativa de julio 2026)",
+      "unidad": "millones de galones al mes",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Iniciativa de Ley de Apoyo Temporal de Emergencia (exposición de motivos), vía AGN",
+      "url": "https://agn.gt/por-que-la-ley-de-apoyo-economico-a-los-combustibles-prioriza-al-diesel-sobre-la-gasolina/",
+      "periodo": "2026 (estimación mensual)",
+      "n_puntos": 2,
+      "valor": 65,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://agn.gt/por-que-la-ley-de-apoyo-economico-a-los-combustibles-prioriza-al-diesel-sobre-la-gasolina/",
+        "cita": "Guatemala consume alrededor de 65 millones de galones de diésel según estimaciones de consumo, y 38 millones de galones de gasolina regular.",
+        "archivo_local": "sesiones/combustibles-subsidio-exoneracion-2026/fuentes_bol/agn-prioriza-diesel.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Diésel",
+          "valor": 65
+        },
+        {
+          "nombre": "Gasolina regular",
+          "valor": 38
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "bol-c09",
+      "concepto": "Costo mensual estimado de la exoneración: galones del mes por ahorro por galón (cálculo propio)",
+      "unidad": "millones de quetzales al mes",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Cálculo propio con MEM (volumen ene–jul 2026, vía Prensa Libre) y MEM (ahorro por galón al 1-oct, vía AGN)",
+      "url": "https://www.prensalibre.com/economia/factura-petrolera-para-guatemala-por-importacion-de-hidrocarburos-sube-40-8-hasta-julio-del-2026/",
+      "periodo": "oct–dic 2026 (estimación)",
+      "n_puntos": 1,
+      "valor": 1004.4,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/economia/factura-petrolera-para-guatemala-por-importacion-de-hidrocarburos-sube-40-8-hasta-julio-del-2026/",
+        "cita": "diésel … (437.1 millones de galones) … regular … (unos 260.3 millones de galones) … superior … (alrededor de 225.78 millones de galones) | MEM: Q9.05 superior, Q8.33 regular y Q6.45 diésel",
+        "archivo_local": "sesiones/combustibles-subsidio-exoneracion-2026/fuentes_bol/pl-factura-jul2026.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "bol-c10",
+      "concepto": "Ahorro al llenar un tanque de referencia de 15 galones, por medida y combustible (cálculo propio)",
+      "unidad": "quetzales por tanque",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Cálculo propio con Decreto 11-2026 (IIES-USAC) y MEM (Decreto 22-2026, vía AGN)",
+      "url": "https://agn.gt/mem-confirma-rebaja-de-hasta-q9-por-galon-en-combustibles/",
+      "periodo": "2026",
+      "n_puntos": 6,
+      "valor": 135.75,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://agn.gt/mem-confirma-rebaja-de-hasta-q9-por-galon-en-combustibles/",
+        "cita": "Q9.05 en gasolina superior, Q8.33 en regular y Q6.45 en diésel | IIES: Q 5.00 por galón de superior y regular y de Q 8.00 por galón al diésel",
+        "archivo_local": "sesiones/combustibles-subsidio-exoneracion-2026/fuentes_bol/agn-mem-rebaja-q9.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Diésel · subsidio Dto. 11",
+          "valor": 120
+        },
+        {
+          "nombre": "Diésel · exoneración Dto. 22",
+          "valor": 96.75
+        },
+        {
+          "nombre": "Regular · subsidio Dto. 11",
+          "valor": 75
+        },
+        {
+          "nombre": "Regular · exoneración Dto. 22",
+          "valor": 124.95
+        },
+        {
+          "nombre": "Superior · subsidio Dto. 11",
+          "valor": 75
+        },
+        {
+          "nombre": "Superior · exoneración Dto. 22",
+          "valor": 135.75
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_6.png"
+      ]
+    },
+    {
+      "id": "bol-c11",
+      "concepto": "Precio observado por galón el 1-oct-2026 en el área metropolitana, primer día de la exoneración",
+      "unidad": "quetzales por galón",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Emisoras Unidas, monitoreo en expendios del área metropolitana (1-oct-2026)",
+      "url": "https://emisorasunidas.com/nacional/2026/10/01/precios-bajan-combustibles-ley-impuestos-guatemala/",
+      "periodo": "1-oct-2026",
+      "n_puntos": 3,
+      "valor": 41.69,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://emisorasunidas.com/nacional/2026/10/01/precios-bajan-combustibles-ley-impuestos-guatemala/",
+        "cita": "los precios por galón que se observan en los expendios son de aproximadamente: Regular Q34.89 Súper Q36.19 Diésel Q41.69",
+        "archivo_local": "sesiones/combustibles-subsidio-exoneracion-2026/fuentes_bol/eu-precios-bajan-1oct.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Diésel",
+          "valor": 41.69
+        },
+        {
+          "nombre": "Gasolina regular",
+          "valor": 34.89
+        },
+        {
+          "nombre": "Gasolina superior",
+          "valor": 36.19
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "bol-c12",
+      "concepto": "Pasaje extraurbano Antigua Guatemala–Ciudad de Guatemala, antes y después del alza por combustibles",
+      "unidad": "quetzales por viaje",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Gremial de Transportistas Extraurbanos de Sacatepéquez (vía Emisoras Unidas)",
+      "url": "https://emisorasunidas.com/nacional/2026/09/24/sacatepequez-transporte-extraurbano-incrementa-tarifa-pasaje/",
+      "periodo": "antes vs desde 26-sep-2026",
+      "n_puntos": 2,
+      "valor": 25,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Búsqueda web: solo Emisoras Unidas reporta la alza (sin segunda fuente ni confirmación oficial)",
+      "evidencia": {
+        "url": "https://emisorasunidas.com/nacional/2026/09/24/sacatepequez-transporte-extraurbano-incrementa-tarifa-pasaje/",
+        "cita": "Antigua-Guatemala = Q.25.00 (antes Q20)",
+        "archivo_local": "sesiones/combustibles-subsidio-exoneracion-2026/fuentes_bol/eu-pasaje-sacatepequez.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Antes",
+          "valor": 20
+        },
+        {
+          "nombre": "Desde 26-sep-2026",
+          "valor": 25
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "fis-c01",
+      "concepto": "Recaudación que el fisco dejará de percibir por la exención de IDP e IVA a gasolinas y diésel (Decreto 22-2026), 1-oct a 31-dic-2026, según análisis de SAT y Minfin",
+      "unidad": "millones de quetzales",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "SAT y Ministerio de Finanzas Públicas, citados por Agencia EFE (30-sep-2026)",
+      "url": "https://www.laprensa.hn/mundo/guatemala-suspende-tres-meses-impuestos-combustible-bajar-precio-MD32201049",
+      "periodo": "oct-dic 2026",
+      "n_puntos": 1,
+      "valor": 3318,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Emisoras Unidas (23-sep-2026): Estrada estima que podría superar Q3,000 M en tres meses (cota inferior coherente); la cifra exacta solo la publica EFE y sus réplicas",
+      "evidencia": {
+        "url": "https://www.laprensa.hn/mundo/guatemala-suspende-tres-meses-impuestos-combustible-bajar-precio-MD32201049",
+        "cita": "el fisco dejará de percibir unos 3,318 millones de quetzales (434,8 millones de dólares) durante el último trimestre del año, según los análisis de la SAT y del Ministerio de Finanzas Públicas",
+        "archivo_local": "sesiones/_descargas/fiscal2026/laprensahn_efe_suspende_2026-10.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_1.png",
+        "tuit_3.png"
+      ]
+    },
+    {
+      "id": "fis-c02",
+      "concepto": "Pagos semanales del subsidio del Decreto 11-2026 (Q8/galón diésel, Q5/galón gasolinas), MEM",
+      "unidad": "millones de quetzales por semana",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "Ministerio de Energía y Minas (MEM), tabla de ejecución de montos, vía AGN (3-jul-2026)",
+      "url": "https://agn.gt/asi-se-ejecuto-el-subsidio-a-los-combustibles-que-mitigo-los-precios-nacionales/",
+      "periodo": "28-abr a 28-jun-2026 (semanal)",
+      "n_puntos": 9,
+      "valor": 203.828812,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://agn.gt/asi-se-ejecuto-el-subsidio-a-los-combustibles-que-mitigo-los-precios-nacionales/",
+        "cita": "Del 28 de abril al 3 de mayo: Q175 millones 533 mil 515 [...] Del 22 al 28 de junio: Q203 millones 828 mil 812",
+        "archivo_local": "sesiones/_descargas/fiscal2026/agn_asi_se_ejecuto_subsidio.txt"
+      },
+      "serie": [
+        {
+          "p": "28 abr-3 may",
+          "v": 175.533515
+        },
+        {
+          "p": "4-10 may",
+          "v": 215.090599
+        },
+        {
+          "p": "11-17 may",
+          "v": 213.820978
+        },
+        {
+          "p": "18-24 may",
+          "v": 206.750019
+        },
+        {
+          "p": "25-31 may",
+          "v": 189.20802
+        },
+        {
+          "p": "1-7 jun",
+          "v": 205.086722
+        },
+        {
+          "p": "8-14 jun",
+          "v": 188.972121
+        },
+        {
+          "p": "15-21 jun",
+          "v": 185.773411
+        },
+        {
+          "p": "22-28 jun",
+          "v": 203.828812
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "fis-c03",
+      "concepto": "Monto ejecutado del subsidio del Decreto 11-2026 al cierre (2-jul-2026): fondo de Q2,000 M menos saldo pendiente de Q67.7 M (97% de avance)",
+      "unidad": "millones de quetzales",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "MEM, reporte de ejecución semanal publicado en agosto, vía La Hora (4-ago-2026)",
+      "url": "https://lahora.gt/lh-economia/jveliz/2026/08/04/tras-cuestionamientos-en-el-congreso-mem-publica-ejecucion-de-q2-mil-millones-del-subsidio/",
+      "periodo": "28-abr a 2-jul-2026",
+      "n_puntos": 1,
+      "valor": 1932.3,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AGN/La Hora: avance 97% y 10 semanas con 3% disponible, coherente con 2000-67.7; el monto exacto de Q1,932.3 M es derivado del saldo pendiente",
+      "evidencia": {
+        "url": "https://lahora.gt/lh-economia/jveliz/2026/08/04/tras-cuestionamientos-en-el-congreso-mem-publica-ejecucion-de-q2-mil-millones-del-subsidio/",
+        "cita": "al cierre del programa, entre el 29 de junio y el 2 de julio, el avance acumulado alcanzó el 97%, dejando pendientes Q67.7 millones",
+        "archivo_local": "sesiones/_descargas/fiscal2026/lahora_ejecucion_subsidio_2026-08-04.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_1.png",
+        "tuit_2.png"
+      ]
+    },
+    {
+      "id": "fis-c04",
+      "concepto": "Subsidio del Decreto 11-2026 por combustible: pagos aproximados en 10 semanas",
+      "unidad": "millones de quetzales",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "MEM vía La Hora (4-ago-2026)",
+      "url": "https://lahora.gt/lh-economia/jveliz/2026/08/04/tras-cuestionamientos-en-el-congreso-mem-publica-ejecucion-de-q2-mil-millones-del-subsidio/",
+      "periodo": "28-abr a 2-jul-2026",
+      "n_puntos": 3,
+      "valor": 1132.7,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://lahora.gt/lh-economia/jveliz/2026/08/04/tras-cuestionamientos-en-el-congreso-mem-publica-ejecucion-de-q2-mil-millones-del-subsidio/",
+        "cita": "141.6 millones de galones de diésel, lo que representó pagos cercanos a Q1 mil 132.7 millones [...] regular [...] Q432.6 millones [...] superior [...] Q357 millones",
+        "archivo_local": "sesiones/_descargas/fiscal2026/lahora_ejecucion_subsidio_2026-08-04.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Diésel",
+          "valor": 1132.7
+        },
+        {
+          "nombre": "Gasolina regular",
+          "valor": 432.6
+        },
+        {
+          "nombre": "Gasolina superior",
+          "valor": 357
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_2.png"
+      ]
+    },
+    {
+      "id": "fis-c05",
+      "concepto": "Recaudación anual del Impuesto a la Distribución de Petróleo y Derivados (IDP)",
+      "unidad": "millones de quetzales",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "SAT, Recaudación de Ingresos Tributarios (rimpa.xlsx)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/5151/rimpa.xlsx",
+      "periodo": "2016-2025",
+      "n_puntos": 10,
+      "valor": 4839.129275,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/5151/rimpa.xlsx",
+        "cita": "Sobre Distribución de Petróleo y Derivados [...] 2016: 3195.3102363699995 [...] 2024: 4533.3046693200004, 2025: 4839.1292747200005",
+        "archivo_local": "sesiones/_descargas/sat202610/rimpa_hoja1.csv"
+      },
+      "serie": [
+        {
+          "p": "2016",
+          "v": 3195.3102363699995
+        },
+        {
+          "p": "2017",
+          "v": 3296.4373124
+        },
+        {
+          "p": "2018",
+          "v": 3417.3704203599996
+        },
+        {
+          "p": "2019",
+          "v": 3743.4446092700005
+        },
+        {
+          "p": "2020",
+          "v": 3484.74364815
+        },
+        {
+          "p": "2021",
+          "v": 4066.29465057
+        },
+        {
+          "p": "2022",
+          "v": 4038.87009421
+        },
+        {
+          "p": "2023",
+          "v": 4270.25463418
+        },
+        {
+          "p": "2024",
+          "v": 4533.30466932
+        },
+        {
+          "p": "2025",
+          "v": 4839.1292747200005
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_1.png"
+      ]
+    },
+    {
+      "id": "fis-c06",
+      "concepto": "Recaudación del IDP enero-septiembre de 2026",
+      "unidad": "millones de quetzales",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "SAT, rimpa.xlsx (columna 2026, '1/ Datos a septiembre')",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/5151/rimpa.xlsx",
+      "periodo": "ene-sep 2026",
+      "n_puntos": 1,
+      "valor": 3718.685933,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/5151/rimpa.xlsx",
+        "cita": "Sobre Distribución de Petróleo y Derivados [...] 20261/: 3718.6859328299997 · 1/ Datos a septiembre.",
+        "archivo_local": "sesiones/_descargas/sat202610/rimpa_hoja1.csv"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "fis-c07",
+      "concepto": "Recaudación del IDP en 2025 por producto",
+      "unidad": "millones de quetzales",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "SAT, Boletín Estadístico, hoja 'Histórico de la Recaudación ... Clasificado por impuesto'",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+      "periodo": "2025",
+      "n_puntos": 4,
+      "valor": 2030.816549,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+        "cita": "Sobre Distribución de Petróleo y Derivados 4839.1292747200005 · Gasolina Superior 1799.4562624100001 · Gasolina Regular 2030.8165490199999 · Diesel y Gas Oíl 938.42227713",
+        "archivo_local": "sesiones/_descargas/boletinestadisticosat_hoja14.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Gasolina regular",
+          "valor": 2030.81654902
+        },
+        {
+          "nombre": "Gasolina superior",
+          "valor": 1799.45626241
+        },
+        {
+          "nombre": "Diésel y gas oíl",
+          "valor": 938.42227713
+        },
+        {
+          "nombre": "Otros (GLP, kerosina, aviación, crudo y otros)",
+          "valor": 70.43418616
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "fis-c08",
+      "concepto": "IDP programado por la SAT para octubre-diciembre de 2026 (meses que cubre la exención)",
+      "unidad": "millones de quetzales",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "SAT, Boletín Estadístico, 'Programación de Ingresos Tributarios, año 2026'",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+      "periodo": "oct-dic 2026",
+      "n_puntos": 3,
+      "valor": 1351.762738,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+        "cita": "Sobre Distribución de Petróleo y Derivados,5261,[...] Oct 498.76932003000002, Nov 413.66932023999999, Dic 439.32409751",
+        "archivo_local": "sesiones/_descargas/boletinestadisticosat_hoja2.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Octubre",
+          "valor": 498.76932003
+        },
+        {
+          "nombre": "Noviembre",
+          "valor": 413.66932024
+        },
+        {
+          "nombre": "Diciembre",
+          "valor": 439.32409751
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "fis-c09",
+      "concepto": "Programación (meta) de ingresos tributarios netos 2026 de la SAT",
+      "unidad": "millones de quetzales",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "SAT, Boletín Estadístico, 'Programación de Ingresos Tributarios, año 2026'",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+      "periodo": "2026",
+      "n_puntos": 1,
+      "valor": 119161.7,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+        "cita": "Programación de Ingresos Tributarios, año 2026 [...] TOTAL DE INGRESOS NETOS,119161.70000000001",
+        "archivo_local": "sesiones/_descargas/boletinestadisticosat_hoja2.csv"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "fis-c10",
+      "concepto": "Costo fiscal conjunto de ambas medidas de 2026: subsidio ejecutado del Decreto 11-2026 más recaudación estimada que se deja de percibir por el Decreto 22-2026",
+      "unidad": "millones de quetzales",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Cálculo propio con MEM (vía La Hora) y SAT/Minfin (vía EFE)",
+      "url": "https://lahora.gt/lh-economia/jveliz/2026/08/04/tras-cuestionamientos-en-el-congreso-mem-publica-ejecucion-de-q2-mil-millones-del-subsidio/",
+      "periodo": "2026",
+      "n_puntos": 1,
+      "valor": 5250.3,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo desde fis-c03 y fis-c01 (ambas con cita y archivo local); mezcla gasto ejecutado y recaudación no percibida estimada",
+      "evidencia": {
+        "url": "https://lahora.gt/lh-economia/jveliz/2026/08/04/tras-cuestionamientos-en-el-congreso-mem-publica-ejecucion-de-q2-mil-millones-del-subsidio/",
+        "cita": "dejando pendientes Q67.7 millones [fondo Q2 mil millones] + 'el fisco dejará de percibir unos 3,318 millones de quetzales' (EFE)",
+        "archivo_local": "sesiones/_descargas/fiscal2026/lahora_ejecucion_subsidio_2026-08-04.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_1.png"
+      ]
+    },
+    {
+      "id": "fis-c11",
+      "concepto": "Costo conjunto de ambas medidas como porcentaje de la meta de ingresos tributarios netos 2026",
+      "unidad": "%",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Cálculo propio con fis-c10 y SAT (programación 2026)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+      "periodo": "2026",
+      "n_puntos": 1,
+      "valor": 4.41,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo desde fis-c10 y meta SAT 2026 (fis-c09)",
+      "evidencia": {
+        "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+        "cita": "TOTAL DE INGRESOS NETOS,119161.70000000001 (programación 2026)",
+        "archivo_local": "sesiones/_descargas/boletinestadisticosat_hoja2.csv"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_1.png"
+      ]
+    },
+    {
+      "id": "fis-c12",
+      "concepto": "Costo fiscal de la exención estimado por el presidente de la Comisión de Finanzas del Congreso, Julio Héctor Estrada: podría superar Q3,000 M en tres meses",
+      "unidad": "millones de quetzales",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Emisoras Unidas (23-sep-2026), declaraciones de Julio Héctor Estrada",
+      "url": "https://emisorasunidas.com/nacional/2026/09/23/diputado-finanzas-julio-estrada-congreso-ley-impuestos-combustibles/",
+      "periodo": "oct-dic 2026",
+      "n_puntos": 1,
+      "valor": 3000,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Cotejo con fis-c01: estimación SAT/Minfin Q3,318 M vía EFE es coherente con la cota inferior 'podría superar' Q3,000 M",
+      "evidencia": {
+        "url": "https://emisorasunidas.com/nacional/2026/09/23/diputado-finanzas-julio-estrada-congreso-ley-impuestos-combustibles/",
+        "cita": "alertó sobre el alto costo fiscal de la medida, estimando que podría superar los tres mil millones de quetzales en apenas tres meses",
+        "archivo_local": "sesiones/_descargas/fiscal2026/emisoras_estrada_2026-09-23.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "prc-c01",
+      "concepto": "Precio spot del diésel ULSD en la Costa del Golfo de EE. UU., promedio mensual (referencia internacional del diésel que importa Guatemala)",
+      "unidad": "US$ por galón",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "U.S. Energy Information Administration (EIA)",
+      "url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=EER_EPD2DXL0_PF4_RGC_DPG&f=M",
+      "periodo": "2024-01 a 2026-09 (mensual)",
+      "n_puntos": 33,
+      "valor": 4.886,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=EER_EPD2DXL0_PF4_RGC_DPG&f=M",
+        "cita": "U.S. Gulf Coast Ultra-Low Sulfur No 2 Diesel Spot Price (Dollars per Gallon) ... 2026,2.111,2.302,3.832,3.915,3.862,3.357,3.873,4.208,4.886",
+        "archivo_local": "sesiones/_descargas/prc/eia_ulsd_golfo_mensual_tabla2.csv"
+      },
+      "serie": [
+        {
+          "p": "2024-01",
+          "v": 2.569
+        },
+        {
+          "p": "2024-02",
+          "v": 2.707
+        },
+        {
+          "p": "2024-03",
+          "v": 2.598
+        },
+        {
+          "p": "2024-04",
+          "v": 2.562
+        },
+        {
+          "p": "2024-05",
+          "v": 2.372
+        },
+        {
+          "p": "2024-06",
+          "v": 2.385
+        },
+        {
+          "p": "2024-07",
+          "v": 2.415
+        },
+        {
+          "p": "2024-08",
+          "v": 2.237
+        },
+        {
+          "p": "2024-09",
+          "v": 2.072
+        },
+        {
+          "p": "2024-10",
+          "v": 2.165
+        },
+        {
+          "p": "2024-11",
+          "v": 2.156
+        },
+        {
+          "p": "2024-12",
+          "v": 2.141
+        },
+        {
+          "p": "2025-01",
+          "v": 2.401
+        },
+        {
+          "p": "2025-02",
+          "v": 2.359
+        },
+        {
+          "p": "2025-03",
+          "v": 2.177
+        },
+        {
+          "p": "2025-04",
+          "v": 2.069
+        },
+        {
+          "p": "2025-05",
+          "v": 2.015
+        },
+        {
+          "p": "2025-06",
+          "v": 2.209
+        },
+        {
+          "p": "2025-07",
+          "v": 2.359
+        },
+        {
+          "p": "2025-08",
+          "v": 2.2
+        },
+        {
+          "p": "2025-09",
+          "v": 2.275
+        },
+        {
+          "p": "2025-10",
+          "v": 2.209
+        },
+        {
+          "p": "2025-11",
+          "v": 2.366
+        },
+        {
+          "p": "2025-12",
+          "v": 2.072
+        },
+        {
+          "p": "2026-01",
+          "v": 2.111
+        },
+        {
+          "p": "2026-02",
+          "v": 2.302
+        },
+        {
+          "p": "2026-03",
+          "v": 3.832
+        },
+        {
+          "p": "2026-04",
+          "v": 3.915
+        },
+        {
+          "p": "2026-05",
+          "v": 3.862
+        },
+        {
+          "p": "2026-06",
+          "v": 3.357
+        },
+        {
+          "p": "2026-07",
+          "v": 3.873
+        },
+        {
+          "p": "2026-08",
+          "v": 4.208
+        },
+        {
+          "p": "2026-09",
+          "v": 4.886
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_5.png"
+      ]
+    },
+    {
+      "id": "prc-c02",
+      "concepto": "Precio spot del crudo Brent (FOB Europa), promedio mensual",
+      "unidad": "US$ por barril",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "U.S. Energy Information Administration (EIA)",
+      "url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=RBRTE&f=M",
+      "periodo": "2024-01 a 2026-09 (mensual)",
+      "n_puntos": 33,
+      "valor": 114.16,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Rigzone/EIA STEO oct-2026: Brent de septiembre promedió ~US$114/bbl",
+      "evidencia": {
+        "url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=RBRTE&f=M",
+        "cita": "Europe Brent Spot Price FOB (Dollars per Barrel) ... 2026,66.60,70.89,103.13,117.29,107.14,85.40,83.76,91.08,114.16",
+        "archivo_local": "sesiones/_descargas/prc/eia_brent_mensual_tabla2.csv"
+      },
+      "serie": [
+        {
+          "p": "2024-01",
+          "v": 80.12
+        },
+        {
+          "p": "2024-02",
+          "v": 83.48
+        },
+        {
+          "p": "2024-03",
+          "v": 85.41
+        },
+        {
+          "p": "2024-04",
+          "v": 89.94
+        },
+        {
+          "p": "2024-05",
+          "v": 81.75
+        },
+        {
+          "p": "2024-06",
+          "v": 82.25
+        },
+        {
+          "p": "2024-07",
+          "v": 85.15
+        },
+        {
+          "p": "2024-08",
+          "v": 80.36
+        },
+        {
+          "p": "2024-09",
+          "v": 74.02
+        },
+        {
+          "p": "2024-10",
+          "v": 75.63
+        },
+        {
+          "p": "2024-11",
+          "v": 74.35
+        },
+        {
+          "p": "2024-12",
+          "v": 73.86
+        },
+        {
+          "p": "2025-01",
+          "v": 79.27
+        },
+        {
+          "p": "2025-02",
+          "v": 75.44
+        },
+        {
+          "p": "2025-03",
+          "v": 72.73
+        },
+        {
+          "p": "2025-04",
+          "v": 68.13
+        },
+        {
+          "p": "2025-05",
+          "v": 64.45
+        },
+        {
+          "p": "2025-06",
+          "v": 71.44
+        },
+        {
+          "p": "2025-07",
+          "v": 71.04
+        },
+        {
+          "p": "2025-08",
+          "v": 67.87
+        },
+        {
+          "p": "2025-09",
+          "v": 67.99
+        },
+        {
+          "p": "2025-10",
+          "v": 64.54
+        },
+        {
+          "p": "2025-11",
+          "v": 63.8
+        },
+        {
+          "p": "2025-12",
+          "v": 62.54
+        },
+        {
+          "p": "2026-01",
+          "v": 66.6
+        },
+        {
+          "p": "2026-02",
+          "v": 70.89
+        },
+        {
+          "p": "2026-03",
+          "v": 103.13
+        },
+        {
+          "p": "2026-04",
+          "v": 117.29
+        },
+        {
+          "p": "2026-05",
+          "v": 107.14
+        },
+        {
+          "p": "2026-06",
+          "v": 85.4
+        },
+        {
+          "p": "2026-07",
+          "v": 83.76
+        },
+        {
+          "p": "2026-08",
+          "v": 91.08
+        },
+        {
+          "p": "2026-09",
+          "v": 114.16
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "prc-c03",
+      "concepto": "Variación del diésel ULSD Golfo (EIA) de enero a septiembre de 2026",
+      "unidad": "% (variación)",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Cálculo propio con datos de la EIA",
+      "url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=EER_EPD2DXL0_PF4_RGC_DPG&f=M",
+      "periodo": "2026-01 a 2026-09",
+      "n_puntos": 1,
+      "valor": 131.45,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=EER_EPD2DXL0_PF4_RGC_DPG&f=M",
+        "cita": "2026,2.111,2.302,3.832,3.915,3.862,3.357,3.873,4.208,4.886",
+        "archivo_local": "sesiones/_descargas/prc/eia_ulsd_golfo_mensual_tabla2.csv"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_5.png"
+      ]
+    },
+    {
+      "id": "prc-c04",
+      "concepto": "Precio por galón del diésel en Guatemala en fechas clave de 2026 (autoservicio, área metropolitana/capital)",
+      "unidad": "Q por galón",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "MEM-DGH (reproducido por SESAN y Prensa Libre)",
+      "url": "https://www.prensalibre.com/economia/precios-de-combustibles-en-guatemala-suben-entre-el-12-y-15-de-octubre-que-se-preve-para-los-proximos-dias/",
+      "periodo": "2026-04-28 a 2026-10-01 (puntos sueltos)",
+      "n_puntos": 4,
+      "valor": 42.62,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/economia/precios-de-combustibles-en-guatemala-suben-entre-el-12-y-15-de-octubre-que-se-preve-para-los-proximos-dias/",
+        "cita": "1 de octubre del 2026. Ese día, en la modalidad de autoservicio, el galón de gasolina superior se reportó en Q37.05, el de regular en Q35.53 y el de diésel en Q42.62.",
+        "archivo_local": "sesiones/_descargas/prc/pl_combustibles_12_15_oct_2026.txt"
+      },
+      "serie": [
+        {
+          "p": "2026-04-28",
+          "v": 34.32
+        },
+        {
+          "p": "2026-07-01",
+          "v": 27.25
+        },
+        {
+          "p": "2026-08-24",
+          "v": 45.33
+        },
+        {
+          "p": "2026-10-01",
+          "v": 42.62
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_4.png"
+      ]
+    },
+    {
+      "id": "prc-c05",
+      "concepto": "Aumento del precio por galón entre el 1 de julio y el 24 de agosto de 2026, tras el fin del subsidio, por combustible",
+      "unidad": "Q por galón",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "SESAN/SIINSAN, Boletín de alerta temprana SAN No. 008-2026",
+      "url": "https://portal.siinsan.gob.gt/wp-content/uploads/20260908-01-Boletin-Alerta-Temprana-SAN-008_2026.pdf",
+      "periodo": "2026-07-01 a 2026-08-24",
+      "n_puntos": 3,
+      "valor": 18.08,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://portal.siinsan.gob.gt/wp-content/uploads/20260908-01-Boletin-Alerta-Temprana-SAN-008_2026.pdf",
+        "cita": "diésel es de Q 45.33, aumentó Q 18.08 (66.35%), el precio por galón de la gasolina súper es de Q 40.56, aumentó Q 8.51 (26.55%) ... regular es de Q 39.23, aumentó Q 8.18 (26.34%)",
+        "archivo_local": "sesiones/_descargas/20260908-01-Boletin-Alerta-Temprana-SAN-008_2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Diésel",
+          "valor": 18.08
+        },
+        {
+          "nombre": "Gasolina superior",
+          "valor": 8.51
+        },
+        {
+          "nombre": "Gasolina regular",
+          "valor": 8.18
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_4.png",
+        "T4"
+      ]
+    },
+    {
+      "id": "prc-c06",
+      "concepto": "Ahorro estimado por galón con la exoneración de IDP e IVA (Decreto 22-2026), según precios de referencia del MEM al 1 de octubre de 2026",
+      "unidad": "Q por galón",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Ministerio de Energía y Minas (vía AGN)",
+      "url": "https://agn.gt/mem-confirma-rebaja-de-hasta-q9-por-galon-en-combustibles/",
+      "periodo": "2026-10-01",
+      "n_puntos": 3,
+      "valor": 9.05,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AGN (resumen de búsqueda) repite Q9.05 / Q8.33 / Q6.45 sin comunicado directo del MEM",
+      "evidencia": {
+        "url": "https://agn.gt/mem-confirma-rebaja-de-hasta-q9-por-galon-en-combustibles/",
+        "cita": "Según los precios de referencia del Ministerio de Energía y Minas ( ) del 1 de octubre, el ahorro estimado por galón es de Q9.05 en gasolina superior, Q8.33 en regular y Q6.45 en diésel.",
+        "archivo_local": "sesiones/_descargas/prc/agn_mem_rebaja_q9.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Gasolina superior",
+          "valor": 9.05
+        },
+        {
+          "nombre": "Gasolina regular",
+          "valor": 8.33
+        },
+        {
+          "nombre": "Diésel",
+          "valor": 6.45
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_3.png",
+        "tuit_6.png"
+      ]
+    },
+    {
+      "id": "prc-c07",
+      "concepto": "Precio por galón estimado por el Gobierno para el 1 de octubre de 2026 con la exoneración (autoservicio)",
+      "unidad": "Q por galón",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "MEM (tabla reproducida por Prensa Libre)",
+      "url": "https://www.prensalibre.com/economia/precios-de-combustibles-en-guatemala-suben-entre-el-12-y-15-de-octubre-que-se-preve-para-los-proximos-dias/",
+      "periodo": "2026-10-01",
+      "n_puntos": 3,
+      "valor": 42.94,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/economia/precios-de-combustibles-en-guatemala-suben-entre-el-12-y-15-de-octubre-que-se-preve-para-los-proximos-dias/",
+        "cita": "Precio estimado por el Gobierno el 1 de octubre (autoservicio) ... Gasolina superior Q36.24 ... Gasolina regular Q34.96 ... Diésel Q42.94",
+        "archivo_local": "sesiones/_descargas/prc/pl_combustibles_12_15_oct_2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Gasolina superior",
+          "valor": 36.24
+        },
+        {
+          "nombre": "Gasolina regular",
+          "valor": 34.96
+        },
+        {
+          "nombre": "Diésel",
+          "valor": 42.94
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "prc-c08",
+      "concepto": "Precio implícito del diésel antes de la exoneración (estimación oficial con exoneración + ahorro estimado por el MEM)",
+      "unidad": "Q por galón",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Cálculo propio con datos del MEM (Prensa Libre y AGN)",
+      "url": "https://www.prensalibre.com/economia/precios-de-combustibles-en-guatemala-suben-entre-el-12-y-15-de-octubre-que-se-preve-para-los-proximos-dias/",
+      "periodo": "2026-10-01 (referencia previa a la exoneración)",
+      "n_puntos": 1,
+      "valor": 49.39,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/economia/precios-de-combustibles-en-guatemala-suben-entre-el-12-y-15-de-octubre-que-se-preve-para-los-proximos-dias/",
+        "cita": "Diésel Q42.94 (precio estimado por el Gobierno el 1 de octubre, autoservicio); ahorro estimado por galón ... Q6.45 en diésel (AGN)",
+        "archivo_local": "sesiones/_descargas/prc/pl_combustibles_12_15_oct_2026.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "prc-c09",
+      "concepto": "Precio por galón observado el 1 de octubre de 2026, primer día de la exoneración (autoservicio)",
+      "unidad": "Q por galón",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "MEM, reporte diario (vía Prensa Libre)",
+      "url": "https://www.prensalibre.com/economia/precios-de-combustibles-en-guatemala-suben-entre-el-12-y-15-de-octubre-que-se-preve-para-los-proximos-dias/",
+      "periodo": "2026-10-01",
+      "n_puntos": 3,
+      "valor": 42.62,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/economia/precios-de-combustibles-en-guatemala-suben-entre-el-12-y-15-de-octubre-que-se-preve-para-los-proximos-dias/",
+        "cita": "1 de octubre del 2026. Ese día, en la modalidad de autoservicio, el galón de gasolina superior se reportó en Q37.05, el de regular en Q35.53 y el de diésel en Q42.62.",
+        "archivo_local": "sesiones/_descargas/prc/pl_combustibles_12_15_oct_2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Gasolina superior",
+          "valor": 37.05
+        },
+        {
+          "nombre": "Gasolina regular",
+          "valor": 35.53
+        },
+        {
+          "nombre": "Diésel",
+          "valor": 42.62
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "prc-c10",
+      "concepto": "Precio por galón en estaciones monitoreadas de la Ciudad de Guatemala el 14 de octubre de 2026 (autoservicio)",
+      "unidad": "Q por galón",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Emisoras Unidas (monitoreo propio, prensa)",
+      "url": "https://emisorasunidas.com/nacional/2026/10/14/aumento-precio-diesel-combustibles-octubre-2026/",
+      "periodo": "2026-10-14",
+      "n_puntos": 3,
+      "valor": 42.69,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://emisorasunidas.com/nacional/2026/10/14/aumento-precio-diesel-combustibles-octubre-2026/",
+        "cita": "Gasolina regular: Q34.89 por galón. Gasolina superior: Q36.19 por galón. Diésel: Q42.69 por galón.",
+        "archivo_local": "sesiones/_descargas/prc/eu_diesel_20261014.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Gasolina superior",
+          "valor": 36.19
+        },
+        {
+          "nombre": "Gasolina regular",
+          "valor": 34.89
+        },
+        {
+          "nombre": "Diésel",
+          "valor": 42.69
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "prc-c11",
+      "concepto": "Precio por galón el 28 de abril de 2026, primer día del subsidio del Decreto 11-2026 (Q8 diésel, Q5 gasolinas)",
+      "unidad": "Q por galón",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Prensa Libre, con tabla de precios de referencia del MEM (Acuerdo 189-2026)",
+      "url": "https://www.prensalibre.com/economia/entra-en-vigor-el-subsidio-al-combustible-en-guatemala-esta-es-la-tabla-oficial-de-precios-de-referencia-breaking/",
+      "periodo": "2026-04-28",
+      "n_puntos": 3,
+      "valor": 34.32,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/economia/entra-en-vigor-el-subsidio-al-combustible-en-guatemala-esta-es-la-tabla-oficial-de-precios-de-referencia-breaking/",
+        "cita": "En algunas gasolineras, el precio del galón de diésel amaneció a Q34.32, mientras que el de gasolina regular, a Q35.76, y el de superior, a Q36.76.",
+        "archivo_local": "sesiones/_descargas/prc/pl_subsidio_tabla_20260428.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Gasolina superior",
+          "valor": 36.76
+        },
+        {
+          "nombre": "Gasolina regular",
+          "valor": 35.76
+        },
+        {
+          "nombre": "Diésel",
+          "valor": 34.32
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "prc-c12",
+      "concepto": "Incidencia mensual de la división Transporte en el IPC de julio de 2026 (la mayor de las 13 divisiones)",
+      "unidad": "puntos porcentuales de incidencia mensual",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "SESAN/SIINSAN con datos del INE (IPC julio 2026)",
+      "url": "https://portal.siinsan.gob.gt/wp-content/uploads/20260908-01-Boletin-Alerta-Temprana-SAN-008_2026.pdf",
+      "periodo": "2026-07",
+      "n_puntos": 1,
+      "valor": 0.5601,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://portal.siinsan.gob.gt/wp-content/uploads/20260908-01-Boletin-Alerta-Temprana-SAN-008_2026.pdf",
+        "cita": "En cuanto a las trece divisiones de gasto que integran el IPC, las de Transporte (0.5601%) y Restaurantes (0.0256%) presentaron la mayor incidencia mensual positiva.",
+        "archivo_local": "sesiones/_descargas/20260908-01-Boletin-Alerta-Temprana-SAN-008_2026.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    }
+  ],
+  "fuentes": [
+    {
+      "nombre": "INE — Estimaciones y proyecciones nacionales de población, revisión 2019",
+      "url": "https://prensalibre.com/wp-content/uploads/2024/09/01-Metodologia-Nacional.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "MEM-DGH — estadísticas de importación 2026 (vía Prensa Libre)",
+      "url": "https://www.prensalibre.com/economia/factura-petrolera-para-guatemala-por-importacion-de-hidrocarburos-sube-40-8-hasta-julio-del-2026/",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "MEM-DGH — consumo 2022–2024 (vía Prensa Libre)",
+      "url": "https://www.prensalibre.com/economia/el-consumo-de-gasolinas-y-diesel-crecio-en-el-2024-atribuido-a-dos-factores-que-influyeron-en-ese-comportamiento/",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "MEM — ahorro por galón Decreto 22-2026 (vía AGN, agencia oficial)",
+      "url": "https://agn.gt/mem-confirma-rebaja-de-hasta-q9-por-galon-en-combustibles/",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "Iniciativa de ley de apoyo (exposición de motivos), vía AGN",
+      "url": "https://agn.gt/por-que-la-ley-de-apoyo-economico-a-los-combustibles-prioriza-al-diesel-sobre-la-gasolina/",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "IIES-USAC — Efectos del fin del subsidio (jul-2026)",
+      "url": "https://iies.usac.edu.gt/wp-content/uploads/2026/07/semana1_subsidio.pdf",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "IIES-USAC — Crisis del transporte público (jul-2026)",
+      "url": "https://iies.usac.edu.gt/wp-content/uploads/2026/07/Semana-2_Transporte-publico.pdf",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "Emisoras Unidas — precios 30-sep y 1-oct-2026",
+      "url": "https://emisorasunidas.com/nacional/2026/10/01/precios-bajan-combustibles-ley-impuestos-guatemala/",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "Emisoras Unidas — pasajes Sacatepéquez",
+      "url": "https://emisorasunidas.com/nacional/2026/09/24/sacatepequez-transporte-extraurbano-incrementa-tarifa-pasaje/",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "SAT — Recaudación de ingresos tributarios anual (rimpa.xlsx)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/5151/rimpa.xlsx",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "SAT — Recaudación mensual por impuesto (rim.xlsx)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/5462/rim.xlsx",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "SAT — Boletín Estadístico (programación 2026, IDP por producto)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/11673/boletinestadisticosat.xlsx",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "AGN — Así se ejecutó el subsidio (tabla MEM, 3-jul-2026)",
+      "url": "https://agn.gt/asi-se-ejecuto-el-subsidio-a-los-combustibles-que-mitigo-los-precios-nacionales/",
+      "nivel": "oficial_secundaria"
+    },
+    {
+      "nombre": "La Hora — MEM publica ejecución de Q2 mil millones del subsidio (4-ago-2026)",
+      "url": "https://lahora.gt/lh-economia/jveliz/2026/08/04/tras-cuestionamientos-en-el-congreso-mem-publica-ejecucion-de-q2-mil-millones-del-subsidio/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Agencia EFE vía La Prensa HN — costo de la exención según SAT y Minfin (30-sep-2026)",
+      "url": "https://www.laprensa.hn/mundo/guatemala-suspende-tres-meses-impuestos-combustible-bajar-precio-MD32201049",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Emisoras Unidas — Julio Héctor Estrada sobre la exención (23-sep-2026)",
+      "url": "https://emisorasunidas.com/nacional/2026/09/23/diputado-finanzas-julio-estrada-congreso-ley-impuestos-combustibles/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "AGN — Inicia Decreto 22-2026, ahorro por galón (1-oct-2026)",
+      "url": "https://agn.gt/?p=574058",
+      "nivel": "oficial_secundaria"
+    },
+    {
+      "nombre": "AGN — Publican ley de exención, tarifas IDP (30-sep-2026)",
+      "url": "https://agn.gt/?p=573906",
+      "nivel": "oficial_secundaria"
+    },
+    {
+      "nombre": "U.S. EIA — Gulf Coast ULSD No 2 Diesel Spot Price, mensual",
+      "url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=EER_EPD2DXL0_PF4_RGC_DPG&f=M",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "U.S. EIA — Europe Brent Spot Price FOB, mensual",
+      "url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=RBRTE&f=M",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "SESAN/SIINSAN — Boletín de alerta temprana SAN No. 008-2026 (IPC INE julio 2026 y precios de combustibles)",
+      "url": "https://portal.siinsan.gob.gt/wp-content/uploads/20260908-01-Boletin-Alerta-Temprana-SAN-008_2026.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "AGN — MEM confirma rebaja de hasta Q9 por galón en combustibles (1-oct-2026)",
+      "url": "https://agn.gt/mem-confirma-rebaja-de-hasta-q9-por-galon-en-combustibles/",
+      "nivel": "oficial_secundaria"
+    },
+    {
+      "nombre": "Prensa Libre — Precios de combustibles suben entre el 12 y 15 de octubre (tablas del MEM)",
+      "url": "https://www.prensalibre.com/economia/precios-de-combustibles-en-guatemala-suben-entre-el-12-y-15-de-octubre-que-se-preve-para-los-proximos-dias/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Prensa Libre — Entra en vigor el subsidio: tabla oficial de precios de referencia (28-abr-2026)",
+      "url": "https://www.prensalibre.com/economia/entra-en-vigor-el-subsidio-al-combustible-en-guatemala-esta-es-la-tabla-oficial-de-precios-de-referencia-breaking/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Emisoras Unidas — Sube precio del galón de diésel, 14-oct-2026 (monitoreo propio)",
+      "url": "https://emisorasunidas.com/nacional/2026/10/14/aumento-precio-diesel-combustibles-octubre-2026/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Emisoras Unidas — El diésel alcanza su precio más alto en Guatemala, 3-sep-2026 (monitoreo propio)",
+      "url": "https://emisorasunidas.com/nacional/2026/09/03/el-diesel-alcanza-su-precio-mas-alto-en-guatemala/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "IIES-USAC — Inflación al 2.70%: los combustibles vuelven a presionar (ago-2026)",
+      "url": "https://iies.usac.edu.gt/wp-content/uploads/2026/08/Semana5_Inflacionjulio.pdf",
+      "nivel": "academica"
+    }
+  ],
+  "no_afirma": [
+    "Que los Q5,250 millones sean todo gasto observado: Q3,318 M son una estimación ex ante de SAT y Minfin de lo que no se recaudará en oct–dic, no recaudación perdida medida.",
+    "Que el alza del diésel en Guatemala se deba solo al precio internacional: no se separó con tipo de cambio el efecto fiscal del internacional.",
+    "Que las gasolineras no trasladaran la rebaja: solo se comparan precios de referencia en fechas sueltas.",
+    "Que el precio del 1 de octubre sea exacto, el de fin de octubre ni el máximo del año: las mediciones de esa fecha varían (alrededor de Q42).",
+    "Que un tanque de 15 galones sea el típico: es un supuesto para el cálculo."
+  ],
+  "incertidumbre": [
+    "Todas las cifras usadas tienen segunda fuente no independiente (reproduce la primaria), incluida la ancla fis-c10: valen como verificación del número, no como respaldo independiente.",
+    "fis-c01 (Q3,318 M) es una estimación ex ante (oct–dic) de SAT y Minfin que solo circula como nota de EFE replicada; no se halló el comunicado de SAT o Minfin. Se presenta como estimación de lo que no se percibirá, no como recaudación perdida observada.",
+    "fis-c03 (Q1,932.3 M) es derivada: techo de Q2,000 M menos el saldo pendiente de Q67.7 M (confirmado por La Hora/MEM, 97 %). La suma por producto da unos Q1,922 M (≈Q10 M de diferencia); por eso el texto dice «cerca de Q1,930 millones». Una sola fuente. IIES-USAC estimó una ejecución menor (Q1,580.2 M).",
+    "fis-c10 (ancla, Q5,250.3 M) es cálculo propio que suma dos cosas de naturaleza distinta: un gasto ejecutado (subsidio, abr–jul, fis-c03) y una recaudación estimada no percibida (exoneración, oct–dic, fis-c01). Hereda la fragilidad de ambas; se presenta como «unos Q5 mil 250 millones» entre gasto y lo que se prevé no cobrar.",
+    "fis-c11 (4.41 %) hereda la fragilidad de fis-c10 y se calcula sobre la meta de recaudación 2026 (programación, no recaudación observada); el texto dice «cerca del 4 %».",
+    "prc-c04: la serie de precios del diésel en Guatemala son cuatro fechas de fuentes y mediciones distintas (MEM vía SESAN y Prensa Libre), no una tabla semanal oficial; mem.gob.gt no fue accesible. Para el 1 de octubre, Emisoras Unidas reporta ~Q41.69 (monitoreo metropolitano) y Q42.69 el 14 de octubre; por eso el texto habla de «alrededor de Q42» y la tarjeta lo advierte.",
+    "prc-c06: el ahorro de Q9.05 por galón es de la gasolina superior según el MEM; el del diésel es Q6.45, y así se usa en las tarjetas 3 y 6.",
+    "La comparación con el IDP de 2025 es de escala: la exoneración incluye IVA, no solo IDP.",
+    "El ahorro por tanque (bol-c10) usa 15 galones como supuesto declarado y el ahorro por galón estimado del MEM, no el precio observado."
+  ],
+  "descartadas": []
+}

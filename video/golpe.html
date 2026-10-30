@@ -84,6 +84,8 @@ function numTexto(s) {
   };
   return { v, dec, fmt };
 }
+// un año suelto («1974», «En 1886») entra entero: contarlo muestra años absurdos en tránsito («795»)
+const esAnio = (s, nt) => !!nt && nt.dec === 0 && nt.v >= 1000 && nt.v <= 2100 && /^[^\d]*\b\d{4}[\s.:,;!?»"]*$/.test(s || '');
 window.__listo = (async () => {
   const C = await V.cargar(), todo = C.todo; S = C.S; TROZOS = C.trozos;
   document.body.classList.add(S.tipo || 'golpe');
@@ -119,6 +121,7 @@ window.__listo = (async () => {
   // cuenta solo si es una cifra con algo que contar (≥ 2 o con decimales); «1 de cada 3» o «Menos denuncias» entran de golpe
   const nt = P.v != null ? numTexto(P.texto) : null;
   NUM = nt && (Math.abs(nt.v) >= 2 || nt.dec > 0) && !/\bde cada\b/i.test(P.texto) ? nt : null;
+  if (NUM) NUM.anio = esAnio(P.texto, NUM);
   document.getElementById('linea').innerHTML = (S.T.linea || []).map((w) => `<span>${esc(w.text)}</span>`).join('');
   await document.fonts.ready;
   const ancho = document.getElementById('cuerpo').clientWidth;
@@ -180,7 +183,7 @@ window.seek = (t) => {
     cifra.style.opacity = 1;
     if (P.pulso) escala *= 1 + 0.06 * Math.sin(Math.PI * clamp((t - P.pulso[0]) / Math.max(0.001, P.pulso[1] - P.pulso[0])));
   } else if (NUM) {
-    cifra.textContent = p >= 1 ? P.texto : NUM.fmt(NUM.v * p);
+    cifra.textContent = p >= 1 || NUM.anio ? P.texto : NUM.fmt(NUM.v * p);
     cifra.style.opacity = prog(t, P.desde - 0.15, P.desde + 0.1);
     if (P.pulso) escala *= 1 + 0.06 * Math.sin(Math.PI * clamp((t - P.pulso[0]) / Math.max(0.001, P.pulso[1] - P.pulso[0])));
   } else {

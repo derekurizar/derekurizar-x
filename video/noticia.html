@@ -206,6 +206,8 @@ window.__listo = (async () => {
       document.getElementById('cifra').innerHTML = `<span class="v condensada${baja ? ' baja' : ''}">${esc(N.cifra.texto)}</span><span class="e">${esc(N.cifra.etiqueta || '')}</span>`;
       const nt = numTexto(N.cifra.texto);
       NUM = nt && (Math.abs(nt.v) >= 2 || nt.dec > 0) ? nt : null;
+      // un año suelto («1974») entra entero: contarlo muestra años absurdos en tránsito
+      if (NUM && NUM.dec === 0 && NUM.v >= 1000 && NUM.v <= 2100 && /^[^\d]*\b\d{4}[\s.:,;!?»"]*$/.test(N.cifra.texto)) NUM = null;
     } else document.getElementById('cifra').style.display = 'none';
     document.getElementById('fuente').textContent = N.fuente ? N.fuente.texto : '';
   }

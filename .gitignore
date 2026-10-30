@@ -13,6 +13,12 @@ sesiones/_fixture_video/salida/
 sesiones/_fixture_noticias/trabajo/
 !sesiones/_fixture_historia/
 sesiones/_fixture_historia/trabajo/
+!sesiones/_fixture_sabias/
+sesiones/_fixture_sabias/trabajo/
+sesiones/_fixture_sabias/salida/
+!sesiones/_fixture_explica/
+sesiones/_fixture_explica/trabajo/
+sesiones/_fixture_explica/salida/
 *.log
 sesiones/_descargas/
 .playwright-mcp/
@@ -34,3 +40,7 @@ hilos/*/video/*.mp4
 noticias/*/*.mp4
 # /historia: igual, los mp4 de la historia quedan fuera de git (las fotos ni siquiera se copian: son de terceros)
 historias/*/*.mp4
+# /explica: igual, los mp4 del video explicativo quedan fuera de git
+explicaciones/*/*.mp4
+# /sabias: igual, el mp4 del «¿Sabías que…?» queda fuera de git (guion, srt, caption y PNG sí se versionan)
+datos/*/video/*.mp4

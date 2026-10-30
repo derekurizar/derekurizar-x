@@ -99,7 +99,7 @@ que el gate comprueba.
   gancho es `antes_despues` («En 2006, X. Hoy, Y.»); el texto lee el cambio o
   lo que no cambió. «Récord» solo con serie ≥ 10 puntos, como siempre.
 
-## Explicador (`/explica`)
+## Explicador (`/hilo explica`; el video explicativo es `/explica`, referencias/flujo-explica.md)
 
 Un explicador no prueba una tesis: enseña cómo funciona o cómo se calcula algo
 con sus números («¿Cómo se calcula tu tarifa de luz?», «¿A dónde va cada

@@ -3,7 +3,7 @@
 
 El sandbox de Workflow no importa módulos: agentRol, conReparacion, avisar, la verificación mecánica
 (FORMA_ITEM, cierreVer, conMecanico) y el rechequeo viven una sola vez en workflow_comun.js y este script los
-replica en hilo.js, dato.js, investigacion.js, video.js, noticias.js e historia.js. check_workflows.py (W9) falla si una copia difiere de la fuente.
+replica en hilo.js, dato.js, investigacion.js, video.js, noticias.js, historia.js y explica.js. check_workflows.py (W9) falla si una copia difiere de la fuente.
 
 Uso:
   python3 scripts/armar_workflows.py            reescribe los bloques de los workflows
@@ -16,7 +16,7 @@ import sys
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FUENTE = os.path.join(RAIZ, "scripts", "workflow_comun.js")
-WORKFLOWS = ["hilo.js", "dato.js", "investigacion.js", "video.js", "noticias.js", "historia.js"]
+WORKFLOWS = ["hilo.js", "dato.js", "investigacion.js", "video.js", "noticias.js", "historia.js", "explica.js"]
 INI, FIN = "// <comun>", "// </comun>"
 
 

@@ -25,7 +25,7 @@
         "cuentas nacionales",
         "economía"
       ],
-      "nota": "[2026-09-29] RIN último dato 2026 (semanal/mensual) no descargado: presupuesto de fetch agotado; la página banguat.gob.gt/page/reservas-monetarias-internacionales-netas-banco-de-guatemala lo publica · [2026-09-29] Serie de IED Banguat 2016-2023 en tabla (solo xlsx por año flujo_IED_YYYY.xlsx; se usó WDI para la serie y Banguat solo para 2024p-2025p) · [2026-09-29] Exportaciones ene-ago 2026 (Banguat publica mensual en 'exportaciones-e-importaciones-mensuales-por-producto'; prensa DCA reporta +5.5 % a mayo 2026, no descargado) · [2026-09-29] Remesas % PIB 2025 con PIB nominal Banguat (se calculó con PIB US$ del Banco Mundial) · [2026-09-29] Calificaciones 2016–2020 (Morales y primeros años de Giammattei) sin fuente descargada; fecha exacta del alza de S&P de BB- a BB no confirmada; mayo vs junio 2025 para S&P BB+ discrepan (Banguat vs BM · [2026-09-29] Deuda 2025: 26.9 % (Banguat ene-2026, preliminar) vs 26.8 % (MINFIN vía Prensa Latina/Prensa Libre, mar-2026) sin archivo local de la segunda. · [2026-10-06] Déficit 2026 en quetzales (aprobado o estimado) para completar la serie def-c01; serie % PIB de 2026 tiene dos valores (3.5 aprobado Banguat vs 3.8 previsto MINFIN). · [2026-10-06] Balanza de pagos (cuenta Viajes, crédito/débito) de Banguat no consultada: sería la segunda fuente natural y cubre canales fuera del Mercado Institucional de Divisas. · [2026-10-06] Déficit 2026 en millones de Q (solo % PIB leído de gráfico); pim25 de Banguat en caché no revisado para 2026. · [2026-10-11] Remesas en quetzales no las publica Banguat: la conversión con TC mensual es cálculo propio (el verificador puede replicarla con los dos archivos locales). · [2026-10-11] Volumen (kg) exportado de banano según Banguat no descargado; el volumen sale del lado de EE.UU. (Comtrade). · [2026-10-11] Remesas como % del PIB 2025: no halle cifra oficial de Banguat (un resultado de busqueda decia 20.7% sin fuente verificable); no se registra. · [2026-10-11] Octubre 2026 aun no publicado: no se puede comparar el anual 2026 con 2025; solo la proyeccion Banguat (26,806.7, +5.0%). · [2026-10-13] Tabla oficial de Minfin de deuda del Gobierno Central en % del PIB: no se descargó; se usa el gráfico de Banguat (Minfin) y el ministro citó 26.8 % para 2025 (prensa). · [2026-10-13] Banguat pim22–pim24 no traen gasto de capital del Gobierno Central reciente (pim24 llega a 1997); no hay segunda medición oficial de inversión en % del PIB para 2023–2025 descargable. · [2026-10-13] Cifra oficial de cierre 2025 de la deuda del Gobierno Central en una tabla del Minfin: no localizada; el ministro dio 26.8 % preliminar (prensa) y Banguat 26.9 %. Se usa Banguat. · [2026-10-13] S8-02, revisión: sin rastro de institución o producto financiero para migrantes en 2024-2026 tras buscar CHN, Junta Monetaria/Banguat, Mineco y Plan Retorno al Hogar, y leer los Informes Presidenciale · [2026-10-21] Importaciones de motocicletas: la tabla I6 de la SAT las excluye; no busqué Banguat/Aduanas en US$. · [2026-10-25] Meses de 2025 incompletos: solo mayo (1,743,239, Flashlights) y octubre (1,781,301, Banguat); falta diciembre 2025 y julio 2025 para la comparación interanual del récord."
+      "nota": "[2026-09-29] RIN último dato 2026 (semanal/mensual) no descargado: presupuesto de fetch agotado; la página banguat.gob.gt/page/reservas-monetarias-internacionales-netas-banco-de-guatemala lo publica · [2026-09-29] Serie de IED Banguat 2016-2023 en tabla (solo xlsx por año flujo_IED_YYYY.xlsx; se usó WDI para la serie y Banguat solo para 2024p-2025p) · [2026-09-29] Exportaciones ene-ago 2026 (Banguat publica mensual en 'exportaciones-e-importaciones-mensuales-por-producto'; prensa DCA reporta +5.5 % a mayo 2026, no descargado) · [2026-09-29] Remesas % PIB 2025 con PIB nominal Banguat (se calculó con PIB US$ del Banco Mundial) · [2026-09-29] Calificaciones 2016–2020 (Morales y primeros años de Giammattei) sin fuente descargada; fecha exacta del alza de S&P de BB- a BB no confirmada; mayo vs junio 2025 para S&P BB+ discrepan (Banguat vs BM · [2026-09-29] Deuda 2025: 26.9 % (Banguat ene-2026, preliminar) vs 26.8 % (MINFIN vía Prensa Latina/Prensa Libre, mar-2026) sin archivo local de la segunda. · [2026-10-06] Déficit 2026 en quetzales (aprobado o estimado) para completar la serie def-c01; serie % PIB de 2026 tiene dos valores (3.5 aprobado Banguat vs 3.8 previsto MINFIN). · [2026-10-06] Balanza de pagos (cuenta Viajes, crédito/débito) de Banguat no consultada: sería la segunda fuente natural y cubre canales fuera del Mercado Institucional de Divisas. · [2026-10-06] Déficit 2026 en millones de Q (solo % PIB leído de gráfico); pim25 de Banguat en caché no revisado para 2026. · [2026-10-11] Remesas en quetzales no las publica Banguat: la conversión con TC mensual es cálculo propio (el verificador puede replicarla con los dos archivos locales). · [2026-10-11] Volumen (kg) exportado de banano según Banguat no descargado; el volumen sale del lado de EE.UU. (Comtrade). · [2026-10-11] Remesas como % del PIB 2025: no halle cifra oficial de Banguat (un resultado de busqueda decia 20.7% sin fuente verificable); no se registra. · [2026-10-11] Octubre 2026 aun no publicado: no se puede comparar el anual 2026 con 2025; solo la proyeccion Banguat (26,806.7, +5.0%). · [2026-10-13] Tabla oficial de Minfin de deuda del Gobierno Central en % del PIB: no se descargó; se usa el gráfico de Banguat (Minfin) y el ministro citó 26.8 % para 2025 (prensa). · [2026-10-13] Banguat pim22–pim24 no traen gasto de capital del Gobierno Central reciente (pim24 llega a 1997); no hay segunda medición oficial de inversión en % del PIB para 2023–2025 descargable. · [2026-10-13] Cifra oficial de cierre 2025 de la deuda del Gobierno Central en una tabla del Minfin: no localizada; el ministro dio 26.8 % preliminar (prensa) y Banguat 26.9 %. Se usa Banguat. · [2026-10-13] S8-02, revisión: sin rastro de institución o producto financiero para migrantes en 2024-2026 tras buscar CHN, Junta Monetaria/Banguat, Mineco y Plan Retorno al Hogar, y leer los Informes Presidenciale · [2026-10-21] Importaciones de motocicletas: la tabla I6 de la SAT las excluye; no busqué Banguat/Aduanas en US$. · [2026-10-25] Meses de 2025 incompletos: solo mayo (1,743,239, Flashlights) y octubre (1,781,301, Banguat); falta diciembre 2025 y julio 2025 para la comparación interanual del récord. · [2026-10-29] Tipo de cambio de referencia Banguat 2026 para convertir ULSD/Brent a Q/galón: no descargado (presupuesto). · [2026-10-29] IPC INE de septiembre 2026 (total y división transporte) y declaración de Banguat atribuyendo la contención de la inflación al subsidio: no confirmados con fuente primaria; IPC agosto 3.37 % solo vía "
     },
     {
       "nombre": "INE Guatemala",
@@ -127,7 +127,7 @@
         "tributario",
         "aduanas"
       ],
-      "nota": "[2026-10-06] La cifra del tema 'Q75 mil millones en nueve meses' no se confirma: a julio Q73,340.0 M, a agosto Q81,584.6 M (concepto SAT). · [2026-10-06] No se encontró revisión formal de la meta SAT 2026: Q119,762.8 M es el total presupuestario de ingresos tributarios (incluye Q601.1 M de otras instituciones), no una meta nueva. · [2026-10-06] Metas revisadas (convenio Minfin–SAT tras ampliaciones) de 2016–2023: solo se confirmó la de 2024 (Q99,201.6 M). Un resultado de búsqueda citaba meta 2023 = Q86,247.6 M (vs programación 85,765.03) sin · [2026-10-06] Altas brutas anuales de motos (no solo las que siguen activas): la SAT no publica la serie histórica de inscripciones; el archivo es parque activo por año de alta, así que no sostiene «récord». · [2026-10-06] Archivos SAT de diciembre de años anteriores a 2025 no están en la página (solo 2025-01 a 2026-08). · [2026-10-11] Recaudación SAT enero-agosto 2025 no extraída: el cociente ene-ago 2026 (dat-c05) no tiene su par comparable de 2025. · [2026-10-13] Evaluación formal del sistema tributario (FMI-FAD/TADAT/Minfin) 2024–2026: no hallada; solo estimaciones anuales de evasión de la SAT (titulares). · [2026-10-21] Comunicado AGN/SAT de julio 2026 (6,773,536 activos; 3,474,069 motos) no localizado; el boletín SAT da 6,829,492 y 3,502,653 a jul-2026 y los microdatos 6,891,249 a sep-2026: difieren por corte. · [2026-10-21] Parque vehicular exacto SAT al 31 dic 2017: se usó el aproximado del PDV (3,500,000); el eje parque puede aportar el corte exacto."
+      "nota": "[2026-10-06] La cifra del tema 'Q75 mil millones en nueve meses' no se confirma: a julio Q73,340.0 M, a agosto Q81,584.6 M (concepto SAT). · [2026-10-06] No se encontró revisión formal de la meta SAT 2026: Q119,762.8 M es el total presupuestario de ingresos tributarios (incluye Q601.1 M de otras instituciones), no una meta nueva. · [2026-10-06] Metas revisadas (convenio Minfin–SAT tras ampliaciones) de 2016–2023: solo se confirmó la de 2024 (Q99,201.6 M). Un resultado de búsqueda citaba meta 2023 = Q86,247.6 M (vs programación 85,765.03) sin · [2026-10-06] Altas brutas anuales de motos (no solo las que siguen activas): la SAT no publica la serie histórica de inscripciones; el archivo es parque activo por año de alta, así que no sostiene «récord». · [2026-10-06] Archivos SAT de diciembre de años anteriores a 2025 no están en la página (solo 2025-01 a 2026-08). · [2026-10-11] Recaudación SAT enero-agosto 2025 no extraída: el cociente ene-ago 2026 (dat-c05) no tiene su par comparable de 2025. · [2026-10-13] Evaluación formal del sistema tributario (FMI-FAD/TADAT/Minfin) 2024–2026: no hallada; solo estimaciones anuales de evasión de la SAT (titulares). · [2026-10-21] Comunicado AGN/SAT de julio 2026 (6,773,536 activos; 3,474,069 motos) no localizado; el boletín SAT da 6,829,492 y 3,502,653 a jul-2026 y los microdatos 6,891,249 a sep-2026: difieren por corte. · [2026-10-21] Parque vehicular exacto SAT al 31 dic 2017: se usó el aproximado del PDV (3,500,000); el eje parque puede aportar el corte exacto. · [2026-10-29] Estimación oficial (SAT/MINFIN) del costo de la exoneración del Decreto 22-2026: no hallada; bol-c09 es cálculo propio. Sin ella, el costo por habitante de AMBAS medidas no es oficial (con la estimaci · [2026-10-29] Comunicado original de SAT/Minfin con los Q3,318 M de la exención: solo la nota de EFE (varias réplicas de la misma agencia); sin desglose IDP/IVA ni por mes. · [2026-10-29] Recaudación observada de octubre 2026 (efecto real de la exención): SAT aún no la publica (rim.xlsx mensual llega a julio; rimpa a septiembre)."
     },
     {
       "nombre": "CONADI — Estadísticas de Discapacidad",
@@ -299,7 +299,7 @@
       "url": "mem.gob.gt",
       "categoria": "energia",
       "rating": 10,
-      "nota": "mem.gob.gt devuelve HTTP 403 a curl/WebFetch (WAF): los PDF de precios de combustibles se consiguen via el mirror de Prensa Libre (prensalibre.com/wp-content/uploads/...) o via notas de AGN. Los PDF también se listan con `fetch_tabla.py --enlaces '\\.pdf$' <url>`. · [2026-10-06] Capacidad solar instalada total (MW) del SNI en 2026: no hallada en fuente oficial (MEM con WAF; búsqueda solo dio plantas sueltas: El Carrizo 74.7 MWp, San Patricio 66.1 MWp). · [2026-10-13] S1-26: no se obtuvo el devengado consolidado 2024–2026 de vivienda, agua, saneamiento y electrificación (CIV/Fopavi, Infom, MEM/INDE, Codedes): Sicoin web es consulta interactiva y Minfin no publica e · [2026-10-13] Índice de cobertura eléctrica: el PDF anual del MEM no se pudo descargar; la serie 2015–2023 viene de un documento del BID que cita al MEM, y 2024–2025 de AGN e Informe Presidencial; no se obtuvo desg",
+      "nota": "mem.gob.gt devuelve HTTP 403 a curl/WebFetch (WAF): los PDF de precios de combustibles se consiguen via el mirror de Prensa Libre (prensalibre.com/wp-content/uploads/...) o via notas de AGN. Los PDF también se listan con `fetch_tabla.py --enlaces '\\.pdf$' <url>`. · [2026-10-06] Capacidad solar instalada total (MW) del SNI en 2026: no hallada en fuente oficial (MEM con WAF; búsqueda solo dio plantas sueltas: El Carrizo 74.7 MWp, San Patricio 66.1 MWp). · [2026-10-13] S1-26: no se obtuvo el devengado consolidado 2024–2026 de vivienda, agua, saneamiento y electrificación (CIV/Fopavi, Infom, MEM/INDE, Codedes): Sicoin web es consulta interactiva y Minfin no publica e · [2026-10-13] Índice de cobertura eléctrica: el PDF anual del MEM no se pudo descargar; la serie 2015–2023 viene de un documento del BID que cita al MEM, y 2024–2025 de AGN e Informe Presidencial; no se obtuvo desg · [2026-10-29] Consumo/ventas nacionales 2025 por producto (DGH-MEM): mem.gob.gt sin acceso (404/403); solo 2022–2024 vía prensa y la importación ene–jul 2026. · [2026-10-29] Monto final oficial del subsidio del Decreto 11-2026 en un documento del MEM o Minfin (SICOIN): solo el saldo pendiente (Q67.7 M, 97%) vía La Hora; fis-c03 es derivado. · [2026-10-29] Máximo histórico OFICIAL del diésel en septiembre de 2026: solo monitoreo de prensa (Emisoras Unidas, 3-sep: 'el galón llegó a superar los Q46 y, en algunos establecimientos, alcanzó los Q47'; Q45.39 ",
       "alias": [
         "MEM",
         "DGH"
@@ -668,7 +668,7 @@
       "url": "mem.gob.gt/precios-de-combustibles/",
       "categoria": "energia",
       "rating": 10,
-      "nota": "Precio de referencia SEMANAL (superior, regular, diésel) en Q/galón por cabecera departamental; y precio promedio nacional. mem.gob.gt responde 403 a WebFetch/curl (WAF): usar las notas de AGN (agn.gt) o el mirror de Prensa Libre para los PDF, o `make pdf URL=` con UA de navegador. Distinguir precio de REFERENCIA (MEM) del precio de BOMBA observado por prensa.",
+      "nota": "Precio de referencia SEMANAL (superior, regular, diésel) en Q/galón por cabecera departamental; y precio promedio nacional. mem.gob.gt responde 403 a WebFetch/curl (WAF): usar las notas de AGN (agn.gt) o el mirror de Prensa Libre para los PDF, o `make pdf URL=` con UA de navegador. Distinguir precio de REFERENCIA (MEM) del precio de BOMBA observado por prensa. · [2026-10-29] Serie semanal oficial MEM-DGH (ene-2024 a oct-2026): mem.gob.gt responde con desafío Cloudflare (403 a curl y WebFetch); no se halló réplica PDF en AGN/Prensa Libre. La serie del diésel en Guatemala (",
       "alias": [
         "MEM-DGH",
         "DGH"
@@ -4495,6 +4495,50 @@
       "hasta": "T2 2025",
       "frecuencia": "otra",
       "nota": "registrada desde hilo 2026-10-25-igss-record-afiliados-informalidad"
+    },
+    {
+      "nombre": "Pagos semanales del subsidio del Decreto 11-2026 (Q8/galón diésel, Q5/galón gasolinas), MEM",
+      "fuente": "Ministerio de Energía y Minas (MEM), tabla de ejecución de montos, vía AGN (3-jul-2026)",
+      "url": "https://agn.gt/asi-se-ejecuto-el-subsidio-a-los-combustibles-que-mitigo-los-precios-nacionales/",
+      "formato": "html",
+      "unidad": "millones de quetzales por semana",
+      "desde": "28 abr-3 may",
+      "hasta": "22-28 jun",
+      "frecuencia": "otra",
+      "nota": "registrada desde hilo 2026-10-29-combustibles-subsidio-exoneracion-2026"
+    },
+    {
+      "nombre": "Recaudación anual del Impuesto a la Distribución de Petróleo y Derivados (IDP)",
+      "fuente": "SAT, Recaudación de Ingresos Tributarios (rimpa.xlsx)",
+      "url": "https://portal.sat.gob.gt/portal/descarga/1741/estadisticas-tributarias/5151/rimpa.xlsx",
+      "formato": "xlsx",
+      "unidad": "millones de quetzales",
+      "desde": "2016",
+      "hasta": "2025",
+      "frecuencia": "anual",
+      "nota": "registrada desde hilo 2026-10-29-combustibles-subsidio-exoneracion-2026"
+    },
+    {
+      "nombre": "Precio spot del diésel ULSD en la Costa del Golfo de EE. UU., promedio mensual (referencia internacional del diésel que importa Guatemala)",
+      "fuente": "U.S. Energy Information Administration (EIA)",
+      "url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=EER_EPD2DXL0_PF4_RGC_DPG&f=M",
+      "formato": "html",
+      "unidad": "US$ por galón",
+      "desde": "2024-01",
+      "hasta": "2026-09",
+      "frecuencia": "mensual",
+      "nota": "registrada desde hilo 2026-10-29-combustibles-subsidio-exoneracion-2026"
+    },
+    {
+      "nombre": "Precio spot del crudo Brent (FOB Europa), promedio mensual",
+      "fuente": "U.S. Energy Information Administration (EIA)",
+      "url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=RBRTE&f=M",
+      "formato": "html",
+      "unidad": "US$ por barril",
+      "desde": "2024-01",
+      "hasta": "2026-09",
+      "frecuencia": "mensual",
+      "nota": "registrada desde hilo 2026-10-29-combustibles-subsidio-exoneracion-2026"
     }
   ]
 }

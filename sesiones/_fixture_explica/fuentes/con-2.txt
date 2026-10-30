@@ -1,0 +1,3 @@
+Texto de ejemplo para la maqueta de /explica (no es la publicación real).
+Universidad Francisco Marroquín · Finanzas personales · Nota de clase
+La regla del 72 estima los años que tarda en duplicarse un monto: se divide 72 entre la tasa de interés anual. Es una aproximación que funciona bien para tasas entre 5 y 15 por ciento.

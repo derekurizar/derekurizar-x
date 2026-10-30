@@ -42,29 +42,39 @@
       "tema": "30 mil nacimientos de madres de 10 a 19 años en seis meses: dónde ocurren",
       "paleta": "jacaranda",
       "duracion": "medio",
-      "duracion_s": 132.2,
-      "n_escenas": 11,
-      "musica": "jacaranda-1",
-      "creditos_voz": 1862,
+      "duracion_s": 127.4,
+      "n_escenas": 10,
+      "musica": "jacaranda-2",
+      "creditos_voz": 1873.0,
       "ruta_video": "hilos/2026-10-06-madres-ninas-adolescentes-2026/video",
       "ruta_hilo": "hilos/2026-10-06-madres-ninas-adolescentes-2026",
       "estado": "listo",
       "frases": {
-        "promesa": "Y al final te digo cuántas condenas hubo.",
-        "gancho": "En Guatemala nacen casi ciento sesenta y ocho bebés al día de madres de diez a diecinueve años.",
+        "promesa": "Algunas de esas madres tenían 12 años o menos: la cifra viene después.",
+        "gancho": "Hubo mil novecientos once casos de niñas embarazadas.",
         "aperturas": [
-          "Además, en números manda",
-          "Pero contar casos premia",
-          "Así que la tasa",
-          "Y se pone peor:",
-          "Aunque la mayoría estaba",
-          "Encima, en dos mil",
-          "Pero ese mismo registro",
-          "Por eso importa la",
+          "Con siete mil ciento",
+          "Pero contar bebés premia",
+          "¿Por qué cambia el",
+          "Este año, entre las",
+          "Para la ley guatemalteca,",
+          "De esas mil trescientas",
+          "Dos años antes, en",
           "Pero de dos mil",
-          "Madres desde los diez"
+          "Son ciento sesenta y"
         ],
-        "pregunta": "Y tú, ¿a qué edad fue mamá tu mamá?"
+        "segun": 0,
+        "aperturas_atribuidas": 0,
+        "pregunta": "Tres niñas de diez años ya pasaron por un parto en Guatemala.",
+        "cierre": "Tres niñas de diez años ya pasaron por un parto en Guatemala.",
+        "cierre_tipo": "remate",
+        "cierre_forma": "consecuencia",
+        "cierre_mecanismo": "despues",
+        "familia": "contraste",
+        "visual": "pareja",
+        "animaciones": [
+          "dos-fracciones"
+        ]
       }
     },
     {

@@ -83,6 +83,9 @@ window.__listo = (async () => {
   V.pintarProgreso(todo);
   if (todo.cierre.rotulo) document.getElementById('rotulo').textContent = todo.cierre.rotulo;   // /noticias: «Hoy en Guatemala»
   document.getElementById('resumen').innerHTML = todo.cierre.resumen.map((r) => `<span>${esc(r).replace(RE_CIFRA, (m) => `<b>${m}</b>`)}</span>`).join('');
+  // sin resumen (/sabias), el cierre es una sola pantalla: la frase final y «Sígueme en», sin conclusiones
+  // (y la frase entra con la transición, sin esperar a que salga una pantalla A que no hay)
+  if (!todo.cierre.resumen.length) { document.getElementById('pantA').style.display = 'none'; S.T.preg = Math.min(S.T.preg, -0.45); }
   // la frase final (remate o pregunta) palabra a palabra: el texto del cierre termina con ella (gate V5), así que sus
   // palabras son las últimas de la voz; si no casan (≥ 80 %), se encienden repartidas entre T.preg y el fin de la voz
   const final = String(todo.cierre.final || todo.cierre.pregunta || '').split(/\s+/).filter(Boolean);

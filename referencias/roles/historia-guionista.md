@@ -91,7 +91,9 @@ el resto de la voz (quién habla, lo que sigue) va antes o después de la frase,
   cifra?: {texto ≤ 18 con dígitos, etiqueta ≤ 30}, fuente? (≤ 44), texto (40–280)}`.
   - **Siempre con foto**: nunca `null`, `icono` ni `depto` (H7). Si el hecho no tiene foto propia, usa una de
     referencia del digesto (crédito «Foto de referencia: …») y pon en el chip «De referencia» o la época sin año. Si
-    no queda ninguna, cuenta ese tramo con una cita, un gráfico o un golpe.
+    no queda ninguna, cuenta ese tramo con una cita, un gráfico o un golpe. En una foto de referencia, el `lugar` del
+    chip es **el de la foto** (su `lugar` en el digesto), no el del hecho: un local de Nueva York no va bajo «Miami»
+    (sin `lugar` en la foto, el chip lo omite).
   - **El chip no le cambia la época a la foto**: una foto de 2021 (su `fecha` en el digesto) no va bajo «1978». Pon
     «Foto de 2021», «De referencia» o la época sin año.
   - **Una misma imagen, en ≤ 2 escenas** (contando el gancho y los retratos). Para un tramo sin foto, usa una cita,
@@ -165,6 +167,10 @@ imprime el gate (trae `tipos` con el tipo de cada escena, sin el cierre, y adem�
 - Si vuelve la crítica, corrige solo lo que bloquea, conserva las demás voces (y el mismo tramo de la narración:
   H15) y repasa los dos gates; añade al retorno `voces_cambiadas` (los n de las escenas cuya voz cambió; el cierre es
   N+1). Una voz cambiada regraba su **secuencia entera** (o solo esa escena con `voz --sueltas`).
+  Una falta que trae **`cambios`** (el crítico ya la probó) se aplica **tal cual**, sin reescribirla:
+  `python3 scripts/historia.py aplicar <TRABAJO> --cambios '<sus cambios>'` (el mismo texto va a la escena, la
+  narración, la promesa y el candidato del gancho; si el gate la rechaza, sale 1 y deja `guion.json` como estaba;
+  con 0, su `RETORNO {"escenas_cambiadas": […]}`). Las faltas que se probaron juntas, en una sola llamada.
   Un arreglo que el gate rechaza no se reescribe en silencio: aplica lo más cercano que pase (pruébalo antes con
   `python3 scripts/historia.py probar <TRABAJO> --cambios '[{"escena": N, "texto": "…"}]'`, que no toca el TRABAJO)
   y devuélvelo en `arreglos_rechazados: [{n, falla}]` con la línea FALLA del gate; el coordinador lo lleva al
@@ -174,8 +180,10 @@ imprime el gate (trae `tipos` con el tipo de cada escena, sin el cierre, y adem�
   todo lo que no necesite cambiar: cada voz cambiada se vuelve a generar y cuesta créditos. Devuelve
   `voces_cambiadas`.
 - Si el crítico aprobó con mejoras, el Workflow te las pasa:
-  - aplícalas una por una, con su arreglo exacto (también las de voz: aún no se graba nada);
+  - copia antes `guion.json` a `guion.aprobado.json` (`aplicar` reescribe `guion.previo.json` en cada llamada);
+  - aplícalas una por una, con su arreglo exacto (también las de voz: aún no se graba nada); la que trae `cambios`,
+    con `historia.py aplicar`;
   - deshaz la que el gate no deje pasar y devuélvela en `no_aplicadas` con su motivo;
-  - copia antes `guion.previo.json` para volver atrás si el gate no cierra;
-  - si cambiaron voces, el oyente las vuelve a oír: una confusión o un salto nuevo en esas escenas restaura
-    `guion.previo.json` y todas las mejoras van a `no_aplicadas` («confundió al oyente»).
+  - devuelve `voces_cambiadas`: si cambiaron voces, el oyente las vuelve a oír, y una confusión o un salto nuevo en
+    una escena revierte **solo esa escena** (su texto de `guion.aprobado.json`, con `aplicar`); una mejora de
+    precisión (H-C5) se queda aunque confunda.

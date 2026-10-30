@@ -20,7 +20,7 @@ decisión del usuario.**
 1. **PREFLIGHT**
    - Corre `make doctor` (exit 0; ffmpeg y ffprobe deben estar; `design/sfx/` completo).
    - Corre `python3 scripts/video.py preparar <hilo> --duracion <d> [--musica <id>]` (sin `--duracion` es
-     `corto`). Si sale ≠ 0, muestra el error y DETENTE (hilo no encontrado, borrador, pocas tarjetas para la
+     `medio`). Si sale ≠ 0, muestra el error y DETENTE (hilo no encontrado, borrador, pocas tarjetas para la
      duración).
    - Anota `TRABAJO` (la última línea; es `sesiones/<slug>/video`).
    - Lee en la salida de `make doctor` si hay `whisper-cli` con modelo (escucha V11) y `design/iconos/` (iconos):
@@ -40,15 +40,18 @@ decisión del usuario.**
      (los mira en silencio y elige ganador y segundo en `seleccion.json`; si ninguno llega a 3, el agente de ganchos
      rehace una vez). Si aun así no hay ganador, vuelve `veredicto: "corregir"` con las faltas de la selección:
      muéstralas y **pregunta al usuario**. Después corre al `video-guionista` (copia el ganador con `ganchos --usar`,
-     guion v2 + gate `guion --check`, V1–V5 y V9) y al
-     `video-critico` (C1–C10, puntajes 1–5, faltas con arreglo); lo que bloquea vuelve al guionista, y si
+     PRIMERO la narración de corrido en 3 actos que cuenta el hilo como una historia, `narracion --check`;
+     DESPUÉS la reparte en escenas sin cambiar una palabra: guion v2 + gate `guion --check`, V1–V5, V9 y V17–V18, que
+     agrupa la voz en secuencias por acto), al oyente ingenuo (`historia-oyente` con `video.py oyente`: lo que no
+     entendió, insumo del crítico) y al `video-critico` (C1–C12, puntajes 1–5 con `flujo`, faltas con arreglo); lo que bloquea vuelve al guionista, y si
      aprueba con algún puntaje de 3 dejando mejoras, el guionista las pule; en total ≤ 2
      vueltas. Si el guion aprobado tiene una escena `explica` con `animacion: null`, corre además al
      `video-animador`: escribe `video/animaciones/<id>.js` desde el `brief`, pasa `animaciones.py --check`, la
      registra en la biblioteca y la asigna a la escena. No gasta créditos.
    - Si falla con «no está registrado», pide al usuario reiniciar Claude Code (los agentes y el workflow se
      cargan al arrancar). Solo si lo autoriza, relanza con `args.permitir_fallback: true`.
-   - Al volver, lee `veredicto`, `puntajes` y `faltas_pendientes`. Si `veredicto` no es `"pasa"`, muestra las
+   - Al volver, lee `veredicto`, `puntajes` (con `flujo`), `faltas_pendientes`, `narracion` (actos, palabras,
+     secuencias de voz) y `oyente`. Si `veredicto` no es `"pasa"`, muestra las
      faltas pendientes y **pregunta al usuario** si sigue así o corrige a mano; no gastes créditos sin su
      respuesta.
    - Si `veredicto` es `"pasa"` y quedan `mejoras`, aplica tú las que solo cambien `golpe`, `pantalla`, `linea`
@@ -63,10 +66,12 @@ decisión del usuario.**
    - Corre tú `python3 scripts/video.py guion <TRABAJO> --check` (exit 0) para confirmar `locucion.json`.
    - Avisa al usuario qué gancho ganó (familia, visual, pantalla y voz), el segundo y por qué (`seleccion.json`).
 3. **VOZ (MCP)**
-   - `python3 scripts/video.py voz <TRABAJO>` imprime la voz y un `prompt` por escena (gancho, tarjetas,
-     golpes y cierre).
+   - `python3 scripts/video.py voz <TRABAJO>` imprime la voz y un `prompt` por **nodo**: una secuencia de 2–5
+     escenas del mismo acto grabada de corrido (`locucion.json → secuencias`) o una escena suelta (el gancho, el
+     cierre, las que no caben en ninguna). `descargar --estado` corta cada secuencia en sus escenas con
+     los tiempos de Scribe.
    - `creative_create_flow` con el nombre «Video · <slug>».
-   - Por cada escena, `creative_add_flow_node`: `node_type: "tts"`, `model_id: "eleven_multilingual_v2"`,
+   - Por cada nodo, `creative_add_flow_node`: `node_type: "tts"`, `model_id: "eleven_multilingual_v2"`,
      `voice_id` de la salida, `model_parameters: {"language_code": "es"}` y `prompt` **exacto**.
    - `creative_run_flow_nodes` con TODOS los nodos y **`generations_count: 1`**: la locución es determinista y
      el usuario eligió esta voz; no pidas variaciones.
@@ -135,7 +140,9 @@ decisión del usuario.**
    - El **gancho**: los candidatos (familia · visual · pantalla), el ganador y el segundo con sus puntajes de selección
      y el porqué (`seleccion.json`); si hay `video_b.mp4`, cuál es A y cuál B, y que se compara en «Visto frente a
      deslizado» (YouTube Studio) o la retención a 3 s (TikTok).
-   - Los **puntajes del crítico** (gancho, bucle, ritmo, escala_humana, pago, cierre), las vueltas y las
+   - La **narración**: palabras por acto, conectores, secuencias de voz (cuántas y qué escenas) y lo que el oyente
+     no entendió (`oyente`).
+   - Los **puntajes del crítico** (gancho, bucle, ritmo, flujo, escala_humana, pago, cierre), las vueltas y las
      mejoras no aplicadas (`<TRABAJO>/critica.json`).
    - Las animaciones de las escenas `explica`: id, si es nueva (queda en `video/animaciones/` para otros videos) o
      reutilizada, y la ruta de su hoja de contacto.
@@ -159,4 +166,5 @@ Reglas:
 - El guion que el crítico rechaza no se graba sin decisión del usuario.
 - El mp4 no se commitea (`.gitignore`).
 - `sesiones/<slug>/video/` queda como memoria de trabajo.
-- Una retoma de voz se hace por escena, nunca del video entero.
+- Una retoma de voz se hace por nodo: la secuencia entera si cambió una de sus escenas (`voz --pendientes`) o solo
+  esas escenas como nodos propios (`voz --sueltas`), nunca del video entero.
