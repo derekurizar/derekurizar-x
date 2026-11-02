@@ -1,0 +1,401 @@
+{
+ "id": "2026-11-01-volcan-de-fuego-hora-a-hora",
+ "tipo": "historia",
+ "slug": "volcan-de-fuego-hora-a-hora",
+ "tema": "La erupción del volcán de Fuego de 2018",
+ "fecha": "2026-11-01",
+ "pregunta": "¿Cómo pasó, hora por hora, que el volcán de Fuego sepultara San Miguel Los Lotes el 3 de junio de 2018 si hubo alertas desde la mañana?",
+ "arco": "crónica hora por hora de un desastre y de sus cuentas pendientes: el mecanismo del volcán, las alertas que no se tradujeron en evacuación y las cifras y culpas que nunca cerraron",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "2018",
+   "titulo": "La tarde del flujo",
+   "escena": 6
+  },
+  {
+   "numero": 3,
+   "anio": "2018–2020",
+   "titulo": "Las cuentas pendientes",
+   "escena": 11
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "El Fuego dejó {430:m} muertos y desaparecidos. Fue en una tarde, en Guatemala. Esta es la historia. Pero cuánta gente quedó bajo la ceniza es una cuenta que nunca cerró. Al pie del volcán vivían familias de dos aldeas: San Miguel Los Lotes y El Rodeo. El 3 de junio de 2018, a las 6, el INSIVUMEH, el instituto que vigila los volcanes, avisó que el Fuego entraba en erupción, con posibles flujos piroclásticos. A las 10 y 5, otro boletín advirtió que podían bajar flujos por cualquier barranca. Pero a las 11, la Conred, la coordinadora nacional para desastres, escribió: Por el momento no es necesario realizar evacuaciones. Nadie ordenó sacar a la gente. Entonces, poco antes de las 2 de la tarde, el INSIVUMEH reportó flujos por 6 barrancas, entre ellas Las Lajas."
+  },
+  {
+   "acto": 2,
+   "texto": "Por esa barranca bajaba un flujo piroclástico: gases, ceniza y roca ardiente, a gran velocidad. La prensa estimó 700 grados. Un estudio de 2023 sostiene que el flujo bajó en oleadas desde la ladera sureste: la barranca lo encajonó y su ceniza fina lo hizo resbalar con menos fricción. Por eso llegó tan lejos: unos 50 millones de metros cúbicos recorrieron más de 12 kilómetros. Pasadas las 3 de la tarde, según Prensa Libre, el flujo sobrepasó la barranca y cayó sobre El Rodeo y San Miguel Los Lotes. Enterró casas hasta el techo. A las 3 y 7, la Conred recomendó a los vecinos evacuar «si se indica»: no era una orden. La erupción cedió hacia las 10 de la noche, pero nadie sabía cuántos quedaron bajo la ceniza."
+  },
+  {
+   "acto": 3,
+   "texto": "Tres días después, en el Congreso, Eddy Sánchez, el director del INSIVUMEH, dijo que avisó desde las 6. Sergio Cabañas, el secretario de la Conred, respondió que los boletines estaban muy pobres para tomar una decisión. Pero al instituto le tocaba informar; a la Conred, ordenar evacuar. La fiscalía investigó si hubo negligencia. En 2020, el juzgado no halló mérito para procesar a Cabañas ni a otros 12 investigados: nadie fue condenado. Y la cuenta de víctimas tampoco cerró. Un año después, la Conred contaba 201 fallecidos y 229 desaparecidos. Los voluntarios estimaron 2,900 desaparecidos, sin confirmar. A los sobrevivientes, el gobierno les entregó casas en La Dignidad, una colonia en Escuintla. Pero una familia no se mudó: volvió a Los Lotes a buscar a sus desaparecidos. Hoy, cientos de familias damnificadas viven en La Dignidad."
+  }
+ ],
+ "hilos": [
+  {
+   "id": "h1",
+   "escena": 12
+  },
+  {
+   "id": "h2",
+   "escena": 9
+  },
+  {
+   "id": "h3",
+   "escena": 7
+  },
+  {
+   "id": "h4",
+   "escena": 13
+  },
+  {
+   "id": "h5",
+   "escena": 12
+  },
+  {
+   "id": "h6",
+   "escena": 14
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3,
+   4,
+   5
+  ],
+  [
+   6,
+   7,
+   8
+  ],
+  [
+   9,
+   10
+  ],
+  [
+   11,
+   12
+  ],
+  [
+   13,
+   14
+  ]
+ ],
+ "paleta": "terracota",
+ "musica": "terracota-2",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2467.0,
+ "duracion_s": 168.3,
+ "critica": {
+  "veredicto": "pasa",
+  "vuelta": 2,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 4,
+   "claridad": 3,
+   "flujo": 4,
+   "precision": 4,
+   "cierre": 4
+  }
+ },
+ "gancho": {
+  "familia": "resultado",
+  "visual": "foto",
+  "pantalla": "430",
+  "linea": "muertos y desaparecidos en una tarde"
+ },
+ "promesa": {
+  "texto": "cuánta gente quedó bajo la ceniza es una cuenta que nunca cerró",
+  "en": 2,
+  "pago": 13,
+  "revela": 3
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "El Fuego dejó 430 muertos y desaparecidos. Fue en una tarde, en Guatemala. Esta es la historia.",
+   "voz": "El Fuego dejó cuatrocientos treinta muertos y desaparecidos. Fue en una tarde, en Guatemala. Esta es la historia.",
+   "dur": 8.568,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Estrategia & Negocios",
+     "origen": "medio",
+     "licencia": "© Estrategia & Negocios (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "Pero cuánta gente quedó bajo la ceniza es una cuenta que nunca cerró. Al pie del volcán vivían familias de dos aldeas: San Miguel Los Lotes y El Rodeo.",
+   "voz": "Pero cuánta gente quedó bajo la ceniza es una cuenta que nunca cerró. Al pie del volcán vivían familias de dos aldeas: San Miguel Los Lotes y El Rodeo.",
+   "dur": 10.492,
+   "hechos": [
+    "cuen-h01",
+    "dia-h12"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "foto",
+   "pantalla": "El 3 de junio de 2018, a las 6, el INSIVUMEH, el instituto que vigila los volcanes, avisó que el Fuego entraba en erupción, con posibles flujos piroclásticos. A las 10 y 5, otro boletín advirtió que podían bajar flujos por cualquier barranca.",
+   "voz": "El tres de junio de dos mil dieciocho, a las seis, el INSIVUMEH, el instituto que vigila los volcanes, avisó que el Fuego entraba en erupción, con posibles flujos piroclásticos. A las diez y cinco, otro boletín advirtió que podían bajar flujos por cualquier barranca.",
+   "dur": 17.302,
+   "hechos": [
+    "dia-h02",
+    "volc-h02",
+    "dia-h03"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: NASA · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "cita",
+   "pantalla": "Pero a las 11, la Conred, la coordinadora nacional para desastres, escribió: Por el momento no es necesario realizar evacuaciones.",
+   "voz": "Pero a las once, la Conred, la coordinadora nacional para desastres, escribió: Por el momento no es necesario realizar evacuaciones.",
+   "dur": 9.322,
+   "hechos": [
+    "dia-h04"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "foto",
+   "pantalla": "Nadie ordenó sacar a la gente. Entonces, poco antes de las 2 de la tarde, el INSIVUMEH reportó flujos por 6 barrancas, entre ellas Las Lajas.",
+   "voz": "Nadie ordenó sacar a la gente. Entonces, poco antes de las dos de la tarde, el INSIVUMEH reportó flujos por seis barrancas, entre ellas Las Lajas.",
+   "dur": 10.239,
+   "hechos": [
+    "cuen-h11",
+    "volc-h04"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: The NOAA National Environmental Satel… · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "foto",
+   "pantalla": "Por esa barranca bajaba un flujo piroclástico: gases, ceniza y roca ardiente, a gran velocidad. La prensa estimó 700 grados.",
+   "voz": "Por esa barranca bajaba un flujo piroclástico: gases, ceniza y roca ardiente, a gran velocidad. La prensa estimó setecientos grados.",
+   "dur": 9.914,
+   "hechos": [
+    "volc-h15"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Estrategia & Negocios",
+     "origen": "medio",
+     "licencia": "© Estrategia & Negocios (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "explica",
+   "pantalla": "Un estudio de 2023 sostiene que el flujo bajó en oleadas desde la ladera sureste: la barranca lo encajonó y su ceniza fina lo hizo resbalar con menos fricción.",
+   "voz": "Un estudio de dos mil veintitrés sostiene que el flujo bajó en oleadas desde la ladera sureste: la barranca lo encajonó y su ceniza fina lo hizo resbalar con menos fricción.",
+   "dur": 11.176,
+   "hechos": [],
+   "fotos": [],
+   "animacion": "oleadas-cauce",
+   "mecanismo": "onda"
+  },
+  {
+   "n": 8,
+   "tipo": "golpe",
+   "pantalla": "Por eso llegó tan lejos: unos 50 millones de metros cúbicos recorrieron más de 12 kilómetros.",
+   "voz": "Por eso llegó tan lejos: unos cincuenta millones de metros cúbicos recorrieron más de doce kilómetros.",
+   "dur": 8.049,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "foto",
+   "pantalla": "Pasadas las 3 de la tarde, según Prensa Libre, el flujo sobrepasó la barranca y cayó sobre El Rodeo y San Miguel Los Lotes. Enterró casas hasta el techo.",
+   "voz": "Pasadas las tres de la tarde, según Prensa Libre, el flujo sobrepasó la barranca y cayó sobre El Rodeo y San Miguel Los Lotes. Enterró casas hasta el techo.",
+   "dur": 9.806,
+   "hechos": [
+    "dia-h15",
+    "dia-h12"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: npr.org",
+     "origen": "medio",
+     "licencia": "© npr.org (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "foto",
+   "pantalla": "A las 3 y 7, la Conred recomendó a los vecinos evacuar «si se indica»: no era una orden. La erupción cedió hacia las 10 de la noche, pero nadie sabía cuántos quedaron bajo la ceniza.",
+   "voz": "A las tres y siete, la Conred recomendó a los vecinos evacuar «si se indica»: no era una orden. La erupción cedió hacia las diez de la noche, pero nadie sabía cuántos quedaron bajo la ceniza.",
+   "dur": 13.577,
+   "hechos": [
+    "dia-h06",
+    "volc-h11"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Capt. Bombero · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "cita",
+   "pantalla": "Tres días después, en el Congreso, Eddy Sánchez, el director del INSIVUMEH, dijo que avisó desde las 6. Sergio Cabañas, el secretario de la Conred, respondió que los boletines estaban muy pobres para tomar una decisión.",
+   "voz": "Tres días después, en el Congreso, Eddy Sánchez, el director del INSIVUMEH, dijo que avisó desde las seis. Sergio Cabañas, el secretario de la Conred, respondió que los boletines estaban muy pobres para tomar una decisión.",
+   "dur": 13.904,
+   "hechos": [
+    "dia-h08",
+    "cuen-h02",
+    "cuen-h04"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "foto",
+   "pantalla": "Pero al instituto le tocaba informar; a la Conred, ordenar evacuar. La fiscalía investigó si hubo negligencia. En 2020, el juzgado no halló mérito para procesar a Cabañas ni a otros 12 investigados: nadie fue condenado.",
+   "voz": "Pero al instituto le tocaba informar; a la Conred, ordenar evacuar. La fiscalía investigó si hubo negligencia. En dos mil veinte, el juzgado no halló mérito para procesar a Cabañas ni a otros doce investigados: nadie fue condenado.",
+   "dur": 16.46,
+   "hechos": [
+    "cuen-h05",
+    "cuen-h06",
+    "cuen-h19"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: vozdeamerica.com",
+     "origen": "medio",
+     "licencia": "© vozdeamerica.com (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 13,
+   "tipo": "tarjeta",
+   "pantalla": "Y la cuenta de víctimas tampoco cerró. Un año después, la Conred contaba 201 fallecidos y 229 desaparecidos. Los voluntarios estimaron 2,900 desaparecidos, sin confirmar.",
+   "voz": "Y la cuenta de víctimas tampoco cerró. Un año después, la Conred contaba doscientos un fallecidos y doscientos veintinueve desaparecidos. Los voluntarios estimaron dos mil novecientos desaparecidos, sin confirmar.",
+   "dur": 14.407,
+   "hechos": [
+    "cuen-h13",
+    "cuen-h10"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 14,
+   "tipo": "foto",
+   "pantalla": "A los sobrevivientes, el gobierno les entregó casas en La Dignidad, una colonia en Escuintla.",
+   "voz": "A los sobrevivientes, el gobierno les entregó casas en La Dignidad, una colonia en Escuintla.",
+   "dur": 6.701,
+   "hechos": [
+    "cuen-h14",
+    "cuen-h16"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 15,
+   "tipo": "cierre",
+   "pantalla": "Pero una familia no se mudó: volvió a Los Lotes a buscar a sus desaparecidos. Hoy, cientos de familias damnificadas viven en La Dignidad.",
+   "voz": "Pero una familia no se mudó: volvió a Los Lotes a buscar a sus desaparecidos. Hoy, cientos de familias damnificadas viven en La Dignidad.",
+   "dur": 12.224,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Lo que quedó",
+  "resumen": [
+   "Avisos desde la mañana",
+   "Ninguna orden de evacuar",
+   "Una cuenta que nunca cerró"
+  ],
+  "texto": "Pero una familia no se mudó: volvió a Los Lotes a buscar a sus desaparecidos. Hoy, cientos de familias damnificadas viven en La Dignidad.",
+  "tipo": "remate",
+  "forma": "legado",
+  "final": "Hoy, cientos de familias damnificadas viven en La Dignidad.",
+  "consecuencia": {
+   "quien": "familias",
+   "verbo": "viven"
+  }
+ },
+ "caption": {
+  "tiktok": "El 3 de junio de 2018 el volcán de Fuego sepultó San Miguel Los Lotes. Hubo avisos desde las 6 de la mañana. Esta es la tarde, hora por hora. #Guatemala #VolcanDeFuego",
+  "instagram": "Volcán de Fuego, 3 de junio de 2018: los avisos de la mañana, el flujo de la tarde y una cuenta de víctimas que nunca cerró.",
+  "facebook": "El volcán de Fuego, hora por hora: los boletines del INSIVUMEH, la evacuación que nadie ordenó y las cifras que no cuadran. Fuentes en el primer comentario.",
+  "shorts": "Volcán de Fuego 2018: la tarde, hora por hora #Shorts\nAvisos desde las 6, ninguna orden de evacuar."
+ }
+}

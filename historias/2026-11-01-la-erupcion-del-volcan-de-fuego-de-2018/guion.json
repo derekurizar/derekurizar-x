@@ -1,0 +1,400 @@
+{
+ "id": "2026-11-01-la-erupcion-del-volcan-de-fuego-de-2018",
+ "tipo": "historia",
+ "slug": "la-erupcion-del-volcan-de-fuego-de-2018",
+ "tema": "La erupción del volcán de Fuego de 2018",
+ "fecha": "2026-11-01",
+ "pregunta": "¿Por qué nadie sacó a tiempo a la gente de San Miguel Los Lotes antes de que el volcán de Fuego la sepultara?",
+ "arco": "tragedia anunciada y rendición de cuentas pendiente: el día, la disputa por la alerta y lo que quedó",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "2018",
+   "titulo": "La alerta perdida",
+   "escena": 6
+  },
+  {
+   "numero": 3,
+   "anio": "2018–2026",
+   "titulo": "Sin sentencia",
+   "escena": 12
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "En febrero evacuaron a 2,880 vecinos. En junio, Los Lotes no salió a tiempo del Fuego. Se trata de un volcán de Guatemala que erupciona con vigor desde 2002. Falta saber si alguien respondió ante un juez por la orden que no llegó. Porque aquel junio nadie ordenó evacuar a tiempo el pueblo de Los Lotes. Estaba a 10 kilómetros de la cumbre, al pie de la barranca Las Lajas. Entonces, el 3 de junio de 2018, el volcán explotó, y un flujo piroclástico bajó por la barranca y destruyó por completo el pueblo. Edwin Ramiro Hernández, agricultor de Los Lotes, lo recuerda así: Solo vi que venía una nube negra y corrí. No imaginé que abandonaría mi siembra para siempre."
+  },
+  {
+   "acto": 2,
+   "texto": "Las cifras nunca cuadraron: un año después, la Conred, la coordinadora nacional de desastres, contaba 201 muertos y 229 desaparecidos, pero Antigua al Rescate, un grupo de voluntarios, calculó al menos {2,900:m} entre muertos y desaparecidos. ¿Por qué no salió Los Lotes? Un funcionario dijo a CBS que aquel 3 de junio el INSIVUMEH, el instituto que vigila los volcanes, alertó a las 6, a las 10 y a la {1:f} de la tarde; la Conred pidió una evacuación solo voluntaria más de 3 horas después. El INSIVUMEH dijo que avisó a tiempo; la Conred, que nunca recibió algo que le permitiera decidir. Por eso, unos diputados denunciaron ante el MP, la fiscalía, a Sergio García Cabañas, secretario ejecutivo de la Conred. Uno de ellos, Enrique Álvarez, afirmó: ya existían varias alertas del Insivumeh y estas fueron omitidas por la Conred. García Cabañas respondió: Nosotros estamos tranquilos de los procedimientos y protocolos que están establecidos."
+  },
+  {
+   "acto": 3,
+   "texto": "En 2020, el MP llevó a García Cabañas y a otras 12 personas ante un juez de Sacatepéquez, que les dio falta de mérito: no vio indicios suficientes para procesarlos. El MP apeló, y en 2022 la apelación ya estaba rechazada, sin una sola sentencia. Para entonces, Los Lotes llevaba casi cuatro años como zona inhabitable. Cuántos murieron allí, nunca se supo: en 2021, el INACIF, el instituto forense, aún tenía 137 fragmentos sin identificar. Los vivos, en cambio, recibieron del gobierno 1,000 casas en La Dignidad, aunque unas 200 familias ya se fueron, dijo una dirigente vecinal. El Fuego no paró: en junio de 2025, la Conred sí evacuó a 594 personas. Los desaparecidos de Los Lotes siguen bajo la ceniza. Hoy, muchas de sus familias rehacen su vida en La Dignidad."
+  }
+ ],
+ "hilos": [
+  {
+   "id": "h1",
+   "escena": 9
+  },
+  {
+   "id": "h2",
+   "sin_respuesta": "Cuántos murieron allí, nunca se supo"
+  },
+  {
+   "id": "h3",
+   "escena": 12
+  },
+  {
+   "id": "h4",
+   "escena": 14
+  },
+  {
+   "id": "h5",
+   "escena": 15
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3
+  ],
+  [
+   4,
+   5
+  ],
+  [
+   6,
+   7
+  ],
+  [
+   8,
+   9
+  ],
+  [
+   10,
+   11
+  ],
+  [
+   12,
+   13
+  ],
+  [
+   14,
+   15
+  ]
+ ],
+ "paleta": "obsidiana",
+ "musica": "obsidiana-1",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2567.0,
+ "duracion_s": 178.6,
+ "critica": {
+  "veredicto": "pasa",
+  "vuelta": 2,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 3,
+   "claridad": 3,
+   "flujo": 3,
+   "precision": 4,
+   "cierre": 4
+  }
+ },
+ "gancho": {
+  "familia": "contraste",
+  "visual": "foto",
+  "pantalla": "Febrero: 2,880 evacuados",
+  "linea": "en junio, Los Lotes no salió a tiempo"
+ },
+ "promesa": {
+  "texto": "Falta saber si alguien respondió ante un juez por la orden que no llegó.",
+  "en": 2,
+  "pago": 12,
+  "revela": 3
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "En febrero evacuaron a 2,880 vecinos. En junio, Los Lotes no salió a tiempo del Fuego.",
+   "voz": "En febrero evacuaron a dos mil ochocientos ochenta vecinos. En junio, Los Lotes no salió a tiempo del Fuego.",
+   "dur": 7.706,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "Se trata de un volcán de Guatemala que erupciona con vigor desde 2002. Falta saber si alguien respondió ante un juez por la orden que no llegó. Porque aquel junio nadie ordenó evacuar a tiempo el pueblo de Los Lotes.",
+   "voz": "Se trata de un volcán de Guatemala que erupciona con vigor desde dos mil dos. Falta saber si alguien respondió ante un juez por la orden que no llegó. Porque aquel junio nadie ordenó evacuar a tiempo el pueblo de Los Lotes.",
+   "dur": 14.13,
+   "hechos": [
+    "erup-h01",
+    "vict-h09"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Jose Hernandez · CC BY-SA 2.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 2.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "golpe",
+   "pantalla": "Estaba a 10 kilómetros de la cumbre, al pie de la barranca Las Lajas.",
+   "voz": "Estaba a diez kilómetros de la cumbre, al pie de la barranca Las Lajas.",
+   "dur": 5.501,
+   "hechos": [
+    "erup-h04"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "foto",
+   "pantalla": "Entonces, el 3 de junio de 2018, el volcán explotó, y un flujo piroclástico bajó por la barranca y destruyó por completo el pueblo.",
+   "voz": "Entonces, el tres de junio de dos mil dieciocho, el volcán explotó, y un flujo piroclástico bajó por la barranca y destruyó por completo el pueblo.",
+   "dur": 9.755,
+   "hechos": [
+    "erup-h03",
+    "erup-h04",
+    "vict-h01"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "cita",
+   "pantalla": "Edwin Ramiro Hernández, agricultor de Los Lotes, lo recuerda así: Solo vi que venía una nube negra y corrí. No imaginé que abandonaría mi siembra para siempre.",
+   "voz": "Edwin Ramiro Hernández, agricultor de Los Lotes, lo recuerda así: Solo vi que venía una nube negra y corrí. No imaginé que abandonaría mi siembra para siempre.",
+   "dur": 11.744,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "tarjeta",
+   "pantalla": "Las cifras nunca cuadraron: un año después, la Conred, la coordinadora nacional de desastres, contaba 201 muertos y 229 desaparecidos,",
+   "voz": "Las cifras nunca cuadraron: un año después, la Conred, la coordinadora nacional de desastres, contaba doscientos un muertos y doscientos veintinueve desaparecidos,",
+   "dur": 11.339,
+   "hechos": [
+    "vict-h16"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "golpe",
+   "pantalla": "pero Antigua al Rescate, un grupo de voluntarios, calculó al menos 2,900 entre muertos y desaparecidos.",
+   "voz": "Pero Antigua al Rescate, un grupo de voluntarios, calculó al menos dos mil novecientos entre muertos y desaparecidos.",
+   "dur": 8.578,
+   "hechos": [
+    "vict-h08"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "explica",
+   "pantalla": "¿Por qué no salió Los Lotes? Un funcionario dijo a CBS que aquel 3 de junio el INSIVUMEH, el instituto que vigila los volcanes, alertó a las 6, a las 10 y a la 1 de la tarde; la Conred pidió una evacuación solo voluntaria más de 3 horas después.",
+   "voz": "¿Por qué no salió Los Lotes? Un funcionario dijo a CBS que aquel tres de junio el INSIVUMEH, el instituto que vigila los volcanes, alertó a las seis, a las diez y a la una de la tarde; la Conred pidió una evacuación solo voluntaria más de tres horas después.",
+   "dur": 18.205,
+   "hechos": [
+    "erup-h21",
+    "cas-h02"
+   ],
+   "fotos": [],
+   "animacion": "cronologia",
+   "mecanismo": "cronologia"
+  },
+  {
+   "n": 9,
+   "tipo": "foto",
+   "pantalla": "El INSIVUMEH dijo que avisó a tiempo; la Conred, que nunca recibió algo que le permitiera decidir.",
+   "voz": "El INSIVUMEH dijo que avisó a tiempo; la Conred, que nunca recibió algo que le permitiera decidir.",
+   "dur": 7.548,
+   "hechos": [
+    "cas-h17",
+    "vict-h09"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: NASA · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "cita",
+   "pantalla": "Por eso, unos diputados denunciaron ante el MP, la fiscalía, a Sergio García Cabañas, secretario ejecutivo de la Conred. Uno de ellos, Enrique Álvarez, afirmó: ya existían varias alertas del Insivumeh y estas fueron omitidas por la Conred.",
+   "voz": "Por eso, unos diputados denunciaron ante el MP, la fiscalía, a Sergio García Cabañas, secretario ejecutivo de la Conred. Uno de ellos, Enrique Álvarez, afirmó: ya existían varias alertas del Insivumeh y estas fueron omitidas por la Conred.",
+   "dur": 16.793,
+   "hechos": [
+    "cas-h04"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "cita",
+   "pantalla": "García Cabañas respondió: Nosotros estamos tranquilos de los procedimientos y protocolos que están establecidos.",
+   "voz": "García Cabañas respondió: Nosotros estamos tranquilos de los procedimientos y protocolos que están establecidos.",
+   "dur": 7.91,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "foto",
+   "pantalla": "En 2020, el MP llevó a García Cabañas y a otras 12 personas ante un juez de Sacatepéquez, que les dio falta de mérito: no vio indicios suficientes para procesarlos. El MP apeló, y en 2022 la apelación ya estaba rechazada, sin una sola sentencia.",
+   "voz": "En dos mil veinte, el MP llevó a García Cabañas y a otras doce personas ante un juez de Sacatepéquez, que les dio falta de mérito: no vio indicios suficientes para procesarlos. El MP apeló, y en dos mil veintidós la apelación ya estaba rechazada, sin una sola sentencia.",
+   "dur": 19.054,
+   "hechos": [
+    "erup-h11",
+    "cas-h13",
+    "erup-h12"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 13,
+   "tipo": "foto",
+   "pantalla": "Para entonces, Los Lotes llevaba casi cuatro años como zona inhabitable. Cuántos murieron allí, nunca se supo: en 2021, el INACIF, el instituto forense, aún tenía 137 fragmentos sin identificar.",
+   "voz": "Para entonces, Los Lotes llevaba casi cuatro años como zona inhabitable. Cuántos murieron allí, nunca se supo: en dos mil veintiuno, el INACIF, el instituto forense, aún tenía ciento treinta y siete fragmentos sin identificar.",
+   "dur": 16.152,
+   "hechos": [
+    "vict-h04",
+    "vict-h21"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Capt. Bombero · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 14,
+   "tipo": "foto",
+   "pantalla": "Los vivos, en cambio, recibieron del gobierno 1,000 casas en La Dignidad, aunque unas 200 familias ya se fueron, dijo una dirigente vecinal.",
+   "voz": "Los vivos, en cambio, recibieron del gobierno mil casas en La Dignidad, aunque unas doscientas familias ya se fueron, dijo una dirigente vecinal.",
+   "dur": 9.795,
+   "hechos": [
+    "vict-h23",
+    "vict-h25"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 15,
+   "tipo": "golpe",
+   "pantalla": "El Fuego no paró: en junio de 2025, la Conred sí evacuó a 594 personas.",
+   "voz": "El Fuego no paró: en junio de dos mil veinticinco, la Conred sí evacuó a quinientas noventa y cuatro personas.",
+   "dur": 8.775,
+   "hechos": [
+    "erup-h18"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 16,
+   "tipo": "cierre",
+   "pantalla": "Los desaparecidos de Los Lotes siguen bajo la ceniza. Hoy, muchas de sus familias rehacen su vida en La Dignidad.",
+   "voz": "Los desaparecidos de Los Lotes siguen bajo la ceniza. Hoy, muchas de sus familias rehacen su vida en La Dignidad.",
+   "dur": 9.696,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Lo que dejó",
+  "resumen": [
+   "Los Lotes, sepultado en 2018",
+   "La evacuación, sin sentencia",
+   "1,000 casas en La Dignidad"
+  ],
+  "texto": "Los desaparecidos de Los Lotes siguen bajo la ceniza. Hoy, muchas de sus familias rehacen su vida en La Dignidad.",
+  "tipo": "remate",
+  "forma": "legado",
+  "final": "Hoy, muchas de sus familias rehacen su vida en La Dignidad.",
+  "consecuencia": {
+   "quien": "familias",
+   "verbo": "rehacen"
+  }
+ },
+ "caption": {
+  "tiktok": "El 3 de junio de 2018, el volcán de Fuego sepultó San Miguel Los Lotes. Hubo alertas, nadie ordenó evacuar y el caso sigue sin sentencia. #Guatemala #VolcanDeFuego #Historia",
+  "instagram": "Volcán de Fuego, 2018: las alertas, la evacuación que no llegó a Los Lotes, el caso sin sentencia y la vida en La Dignidad. #Guatemala #VolcanDeFuego",
+  "facebook": "El volcán de Fuego sepultó San Miguel Los Lotes el 3 de junio de 2018. ¿Por qué nadie ordenó evacuar? Fuentes en el primer comentario.",
+  "shorts": "Volcán de Fuego 2018: la orden que no llegó a Los Lotes #Shorts\nAlertas, culpas cruzadas y un caso sin sentencia."
+ }
+}

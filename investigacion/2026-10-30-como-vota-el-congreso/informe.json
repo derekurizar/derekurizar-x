@@ -1,0 +1,2126 @@
+{
+ "meta": {
+  "titulo": "Cómo vota el Congreso de Guatemala",
+  "corrido": "Cómo vota el Congreso · Informe de datos",
+  "corto": "Cómo vota el Congreso",
+  "pie": "Informe N.º 03 · Octubre 2026",
+  "numero_largo": "Informe de datos · N.º 03",
+  "fecha": "Octubre 2026",
+  "handle": "@DerekUrizar",
+  "paleta": "cacao",
+  "numero": "03",
+  "datos": [
+   "investigacion/2026-10-30-como-vota-el-congreso/hilo/datos.json"
+  ],
+  "fuentes": [
+   "Congreso de la República de Guatemala. Votaciones nominales del pleno (xlsx por votación), 14-ene-2024 a 29-oct-2026; cálculo propio."
+  ]
+ },
+ "paginas": [
+  {
+   "tipo": "portada",
+   "kicker_izq": "Informe de datos · Congreso",
+   "kicker_der": "N.º 03 · Octubre 2026",
+   "titulo": "Cómo vota el Congreso de Guatemala",
+   "lead": "En 2,672 votaciones nominales del pleno, de enero de 2024 a octubre de 2026, Semilla quedó del lado perdedor en 60.2 % de las divididas en que tomó posición. Lo que más divide al pleno es el trámite, no la ley final.",
+   "cifra": {
+    "id": "coa-c08",
+    "valor": "60.2%",
+    "etiqueta": "Semilla · lado perdedor",
+    "texto": "de las votaciones divididas en que tomó posición, 2024–2026"
+   },
+   "fuentes": "Congreso de la República, votaciones nominales del pleno"
+  },
+  {
+   "tipo": "indice",
+   "titulo": "Contenido"
+  },
+  {
+   "tipo": "resumen",
+   "id": "resumen",
+   "tesis": "En las votaciones divididas de enero 2024 a octubre 2026, Semilla, la bancada más cohesionada, quedó del lado perdedor en 60.2 % de las que tomó posición. Las veinticuatro etiquetas se reducen a cinco bloques de voto, y *lo que divide al pleno es el trámite y la elección de cortes, no la ley final.*",
+   "cifras": [
+    {
+     "id": "coa-c08",
+     "kicker": "Semilla · lado perdedor",
+     "valor": "60.2%",
+     "texto": "de las votaciones divididas en que tomó posición: no reunió los 81 votos de ley",
+     "fuente": "Congreso, votaciones nominales"
+    },
+    {
+     "id": "ban-c12",
+     "kicker": "Bloques de voto",
+     "valor": "106",
+     "texto": "diputados en el mayor de cinco bloques de voto, en un agrupamiento exploratorio",
+     "fuente": "Congreso, votaciones nominales"
+    },
+    {
+     "id": "tip-c02",
+     "kicker": "Actas",
+     "valor": "78.1%",
+     "texto": "de las votaciones de actas se dividieron; del tercer o único debate, 11.1%",
+     "fuente": "Congreso, votaciones nominales"
+    },
+    {
+     "id": "ele-c02",
+     "kicker": "Corte de Constitucionalidad",
+     "valor": "2.2%",
+     "texto": "de los votos de Semilla fueron para los electos; las otras bancadas, 93.7%",
+     "fuente": "Congreso, votaciones nominales"
+    }
+   ],
+   "no_afirma": [
+    "Que votar juntos implique pactos: el dato mide coincidencia, no motivos.",
+    "Que una ausencia sea deliberada: el registro no dice por qué se faltó.",
+    "Una causa para la caída de Semilla en el último semestre."
+   ]
+  },
+  {
+   "tipo": "tablero",
+   "id": "cifras",
+   "titulo": "Cifras clave",
+   "subtitulo": "Las series van por semestre; la barra en color es el último semestre, que llega al 29 de octubre de 2026.",
+   "cifras": [
+    {
+     "kicker": "Cohesión de Semilla · divididas",
+     "valor": "52.4",
+     "contexto": "en 2026-S2; 87.7 en 2024-S1 (índice de Rice)",
+     "fuente": "Congreso, votaciones nominales (cálculo propio)",
+     "grafico": {
+      "tipo": "chispa",
+      "id": "ban-c09",
+      "etiquetas": [
+       "2024-S1",
+       "2024-S2",
+       "2025-S1",
+       "2025-S2",
+       "2026-S1",
+       "2026-S2"
+      ],
+      "valores": [
+       87.7,
+       90.2,
+       79.8,
+       77.0,
+       70.4,
+       52.4
+      ],
+      "aria": "Cohesión de Semilla por semestre, 2024 a 2026."
+     }
+    },
+    {
+     "kicker": "Cohesión de Vamos · divididas",
+     "valor": "42.3",
+     "contexto": "en 2026-S2; 60.4 en 2024-S1 (índice de Rice)",
+     "fuente": "Congreso, votaciones nominales (cálculo propio)",
+     "grafico": {
+      "tipo": "chispa",
+      "id": "ban-c08",
+      "etiquetas": [
+       "2024-S1",
+       "2024-S2",
+       "2025-S1",
+       "2025-S2",
+       "2026-S1",
+       "2026-S2"
+      ],
+      "valores": [
+       60.4,
+       59.0,
+       43.1,
+       52.0,
+       38.0,
+       42.3
+      ],
+      "aria": "Cohesión de Vamos por semestre, 2024 a 2026."
+     }
+    },
+    {
+     "kicker": "Semilla del lado ganador",
+     "valor": "15.9%",
+     "contexto": "de las divididas en 2026-S2; 59.6% en 2024-S1",
+     "fuente": "Congreso, votaciones nominales (cálculo propio)",
+     "grafico": {
+      "tipo": "chispa",
+      "id": "coa-c07",
+      "etiquetas": [
+       "2024-S1",
+       "2024-S2",
+       "2025-S1",
+       "2025-S2",
+       "2026-S1",
+       "2026-S2"
+      ],
+      "valores": [
+       59.6,
+       31.2,
+       49.4,
+       43.7,
+       41.5,
+       15.9
+      ],
+      "aria": "Porcentaje de divididas en que Semilla quedó del lado ganador, por semestre."
+     }
+    },
+    {
+     "kicker": "Vamos coincide con Semilla",
+     "valor": "35.5%",
+     "contexto": "de las divididas en 2026-S2; 24.8% en 2024-S1",
+     "fuente": "Congreso, votaciones nominales (cálculo propio)",
+     "grafico": {
+      "tipo": "chispa",
+      "id": "coa-c01",
+      "etiquetas": [
+       "2024-S1",
+       "2024-S2",
+       "2025-S1",
+       "2025-S2",
+       "2026-S1",
+       "2026-S2"
+      ],
+      "valores": [
+       24.8,
+       17.1,
+       26.3,
+       39.5,
+       25.0,
+       35.5
+      ],
+      "aria": "Coincidencia de Vamos con Semilla en las divididas, por semestre."
+     }
+    },
+    {
+     "kicker": "Divididas por tipo",
+     "valor": "78.1%",
+     "contexto": "de las actas; 11.1% del tercer o único debate",
+     "fuente": "Congreso, votaciones nominales (cálculo propio)",
+     "grafico": {
+      "tipo": "comparacion",
+      "items": [
+       {
+        "nombre": "Actas",
+        "valor": 78.1,
+        "destacar": true
+       },
+       {
+        "nombre": "3.er debate",
+        "valor": 11.1
+       }
+      ]
+     }
+    },
+    {
+     "kicker": "Corte de Constitucionalidad, 2026",
+     "valor": "2.2%",
+     "contexto": "de los votos de Semilla, a los electos; otras, 93.7%",
+     "fuente": "Congreso, votaciones nominales (cálculo propio)",
+     "grafico": {
+      "tipo": "comparacion",
+      "items": [
+       {
+        "nombre": "Semilla",
+        "valor": 2.2,
+        "destacar": true
+       },
+       {
+        "nombre": "Otras siete",
+        "valor": 93.7
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "tipo": "capitulo",
+   "id": "cap1",
+   "variante": "banda",
+   "numero": "01",
+   "kicker": "Capítulo 01 · Bancadas",
+   "titulo": "Veinticuatro etiquetas, cinco bloques",
+   "titulo_corto": "Cinco bloques",
+   "descripcion": "Cohesión de las bancadas y bloques reales de voto",
+   "lead": "El sistema del Congreso registra a los 160 diputados bajo veinticuatro etiquetas. Agrupados por cómo votan cuando el pleno se divide, forman cinco bloques, y el mayor reúne 106 diputados.",
+   "bloques": [
+    {
+     "b": "texto",
+     "capitular": true,
+     "parrafos": [
+      "Este informe cuenta las 2,672 votaciones nominales del pleno entre el 14 de enero de 2024 y el 29 de octubre de 2026: 427,505 registros de un diputado en una votación. En la última, Vamos tenía 38 diputados; Semilla, 23; UNE, 22, y Cabal, 18. Ninguna bancada se acerca a los 81 votos que exige la ley.",
+      "Los de Semilla figuran como independientes: un juez suspendió al partido y la Corte de Constitucionalidad confirmó, el 30 de enero de 2024, que no pueden actuar como bancada (Emisoras Unidas; Diario de Centro América). El sistema los agrupa como «INDP - SEMILLA», y así se cuentan aquí.",
+      "Un tercio de las votaciones, 32.9 %, fue dividida. En ellas se mide la disciplina de cada bancada."
+     ],
+     "margen": [
+      {
+       "termino": "Dividida",
+       "texto": "la minoría reúne 20% o más de los votos emitidos: 879 votaciones (32.9% × 2,672, cálculo propio)."
+      },
+      {
+       "termino": "Etiquetas",
+       "texto": "siete bancadas de seis o más diputados (Vamos 38, Semilla 23, UNE 22, Cabal 18, Valor 10, Viva 8 y Todos 6) y otras 17 etiquetas, según la exportación de octubre de 2026. Las ocho bancadas grandes de este informe son esas siete y los independientes ex UNE."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "01 · Cinco bloques",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "Semilla vota en bloque; Vamos, no"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "En las votaciones divididas, Semilla tiene un índice de cohesión de 80.2 sobre 100, el más alto de las ocho bancadas grandes ({fig:cohesion}). Vamos, la más grande, queda al final con 51.5; Cabal y UNE, con 53.2 y 55.2, poco arriba.",
+      "Todas pierden cohesión cuando el pleno se divide: Semilla baja de 86.8 en todas las votaciones a 80.2 en las divididas, y Vamos, de 68.9 a 51.5 ({tabla:cohesion-tabla})."
+     ]
+    },
+    {
+     "b": "figura",
+     "id": "cohesion",
+     "tipo": "panel",
+     "kicker": "Cohesión en divididas · índice de Rice",
+     "titular": "Semilla es la bancada que más vota en bloque",
+     "indice": "Cohesión por bancada, divididas",
+     "grafico": {
+      "tipo": "barras_h",
+      "id": "ban-c06",
+      "orden": "desc",
+      "destacar": 0,
+      "formato": {
+       "decimales": 1
+      },
+      "items": [
+       {
+        "nombre": "Semilla (ind.)",
+        "valor": 80.2
+       },
+       {
+        "nombre": "Valor",
+        "valor": 72.4
+       },
+       {
+        "nombre": "Todos",
+        "valor": 71.5
+       },
+       {
+        "nombre": "Ind. ex UNE",
+        "valor": 69.6
+       },
+       {
+        "nombre": "Viva",
+        "valor": 64.6
+       },
+       {
+        "nombre": "UNE",
+        "valor": 55.2
+       },
+       {
+        "nombre": "Cabal",
+        "valor": 53.2
+       },
+       {
+        "nombre": "Vamos",
+        "valor": 51.5
+       }
+      ],
+      "aria": "Barras horizontales: cohesión de las ocho bancadas con seis diputados o más en las votaciones divididas; Semilla destacada."
+     },
+     "nota": "Rice × 100: 100 = todos los que emitieron voto votaron igual; 0 = mitad y mitad.",
+     "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+     "pie": "Cohesión media en las votaciones divididas, enero 2024 – octubre 2026. La segunda fuente reproduce la primaria."
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "01 · Cinco bloques",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "La etiqueta no es el bloque"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "{Fig:tarjeta-bancadas} reparte las 160 curules por la etiqueta con que el sistema registra a cada diputado. {Fig:tarjeta-bloques} agrupa a los mismos diputados por cómo votan en las divididas: un gran bloque de 106, uno oficialista de 27, en torno a Semilla, uno bisagra de 16, ocho disidentes de Vamos y el bloque Vos, de tres.",
+      "El agrupamiento es exploratorio: los tamaños cambian con el corte, el umbral de dividida y los diputados que entran."
+     ]
+    },
+    {
+     "b": "figuras",
+     "items": [
+      {
+       "id": "tarjeta-bancadas",
+       "tipo": "tarjeta",
+       "desde": "investigacion/2026-10-30-como-vota-el-congreso/hilo/tuit_2.png",
+       "indice": false,
+       "alt": "Hemiciclo de 160 curules con los diputados por bancada el 29 de octubre de 2026: Vamos 38, Semilla 23, UNE 22, Cabal 18 y otras etiquetas.",
+       "fuente": "Congreso, votaciones nominales (cálculo propio)",
+       "pie": "Tuit 2: diputados por bancada, 29-oct-2026. La segunda fuente reproduce la primaria.",
+       "cifra_ids": [
+        "ban-c04"
+       ]
+      },
+      {
+       "id": "tarjeta-bloques",
+       "tipo": "tarjeta",
+       "desde": "investigacion/2026-10-30-como-vota-el-congreso/hilo/tuit_3.png",
+       "indice": false,
+       "alt": "Hemiciclo de 160 curules con los cinco bloques de voto del agrupamiento exploratorio: 106, 27, 16, 8 y 3 diputados.",
+       "fuente": "Congreso, votaciones nominales (cálculo propio)",
+       "pie": "Tuit 3: bloques de voto, exploratorio. La segunda fuente reproduce la primaria.",
+       "cifra_ids": [
+        "ban-c12",
+        "ban-c04"
+       ]
+      }
+     ]
+    },
+    {
+     "b": "cita",
+     "etiqueta": "En una frase",
+     "texto": "La etiqueta no predice el voto."
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "01 · Cinco bloques",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "Quién se aparta de su bancada"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "{Tabla:cohesion-tabla} detalla la cohesión; en {tabla:disidentes}, seis de los ocho diputados que más se apartan de su bancada son de Vamos."
+     ]
+    },
+    {
+     "b": "tabla",
+     "id": "cohesion-tabla",
+     "indice": "Cohesión por bancada",
+     "columnas": [
+      {
+       "t": "Bancada"
+      },
+      {
+       "t": "Rice\ntodas",
+       "num": true
+      },
+      {
+       "t": "Rice\ndivididas",
+       "num": true
+      },
+      {
+       "t": "%\nunánime",
+       "num": true
+      }
+     ],
+     "filas": [
+      {
+       "c": [
+        "Semilla (ind.)",
+        "86.8",
+        "80.2",
+        "51.3"
+       ],
+       "dest": true
+      },
+      {
+       "c": [
+        "Valor",
+        "84.5",
+        "72.4",
+        "61.8"
+       ]
+      },
+      {
+       "c": [
+        "Ind. ex UNE",
+        "81.4",
+        "69.6",
+        "64.2"
+       ]
+      },
+      {
+       "c": [
+        "Todos",
+        "81.4",
+        "71.5",
+        "67.8"
+       ]
+      },
+      {
+       "c": [
+        "Viva",
+        "79.5",
+        "64.6",
+        "56.2"
+       ]
+      },
+      {
+       "c": [
+        "UNE",
+        "76.0",
+        "55.2",
+        "30.8"
+       ]
+      },
+      {
+       "c": [
+        "Cabal",
+        "73.3",
+        "53.2",
+        "27.1"
+       ]
+      },
+      {
+       "c": [
+        "Vamos",
+        "68.9",
+        "51.5",
+        "14.6"
+       ]
+      }
+     ],
+     "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+     "pie": "Índice de Rice × 100. % unánime: votaciones en que toda la bancada que emitió voto votó igual. La segunda fuente reproduce la primaria."
+    },
+    {
+     "b": "tabla",
+     "id": "disidentes",
+     "indice": false,
+     "columnas": [
+      {
+       "t": "Diputado"
+      },
+      {
+       "t": "Bancada"
+      },
+      {
+       "t": "% contra",
+       "num": true
+      }
+     ],
+     "filas": [
+      {
+       "c": [
+        "Allan Estuardo Rodríguez Reyes",
+        "Vamos",
+        "25.1"
+       ],
+       "dest": true
+      },
+      {
+       "c": [
+        "Thelma Elizabeth Ramírez Retana",
+        "Vamos",
+        "24.9"
+       ]
+      },
+      {
+       "c": [
+        "Julio Héctor Estrada Dominguez",
+        "Cabal",
+        "23.5"
+       ]
+      },
+      {
+       "c": [
+        "Boris Roberto España Cáceres",
+        "Vamos",
+        "23.4"
+       ]
+      },
+      {
+       "c": [
+        "César Augusto Amézquita Del Valle",
+        "Viva",
+        "23.1"
+       ]
+      },
+      {
+       "c": [
+        "José Carlo Solano",
+        "Vamos",
+        "23.0"
+       ]
+      },
+      {
+       "c": [
+        "Juan Ramon Rivas García",
+        "Vamos",
+        "21.2"
+       ]
+      },
+      {
+       "c": [
+        "Guillermo Alberto Cifuentes Barragán",
+        "Vamos",
+        "21.0"
+       ]
+      }
+     ],
+     "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+     "pie": "% de sus votos emitidos contra la posición del resto de su bancada (bancadas de 3 o más; 300 votos o más). La segunda fuente reproduce la primaria."
+    }
+   ]
+  },
+  {
+   "tipo": "capitulo",
+   "id": "cap2",
+   "variante": "banda",
+   "numero": "02",
+   "kicker": "Capítulo 02 · Diputados",
+   "titulo": "Quién vota con quién",
+   "titulo_corto": "Quién con quién",
+   "descripcion": "Afinidad entre diputados, el eje del voto y ausencias",
+   "lead": "Hay diputados que votan igual en 97.5 % de las divididas y pares de partidos distintos que coinciden en 85.4 %. Un solo eje, con Semilla en un extremo y el polo de Vamos en el otro, ordena más de la mitad del voto dividido.",
+   "bloques": [
+    {
+     "b": "texto",
+     "capitular": true,
+     "parrafos": [
+      "El acuerdo de un par es el porcentaje de votaciones en que ambos diputados emitieron voto y votaron igual. En las divididas, el par más afín es el de Elena Sofía Motta Kolleff y Luis Antonio Cáceres Gamarro, con 97.5 %. Motta, de Semilla, es también la diputada que menos se aparta de su bancada: 1.9 % de sus votos.",
+      "Entre partidos distintos, el par más afín es el de Bequer Neftali Chocooj De La Cruz (Cabal) y Duay Antoni Martinez Salazar (Vamos), con 85.4 %. Dentro de Vamos, en cambio, hay dos diputados que solo coinciden en 38.1 % de las divididas.",
+      "Los pares más opuestos cruzan Semilla y Vamos: David Mauricio Illescas Sandoval y Luis Alberto Rodríguez Reyes votan igual en 12.7 %."
+     ],
+     "margen": [
+      {
+       "termino": "Acuerdo",
+       "texto": "pares con 500 votos comunes o más y 150 divididas o más."
+      },
+      {
+       "termino": "Eje",
+       "texto": "escalamiento multidimensional; solo importan el orden y la distancia."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "02 · Quién con quién",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "Semilla, sola en un extremo"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "El mapa del voto coloca a cada diputado según su acuerdo con los demás. Su primer eje explica más de la mitad de la variación del voto dividido, 55.5 %. En la {fig:eje}, Semilla queda en −44.9; la etiqueta más cercana, Vos, en −16.4. En el otro extremo están Vamos (19.9) y Unionista (24.0). Entre ambos extremos, Creo (−12.4) y Azul (−8.7) quedan del lado de Semilla; UNE (2.1) y Cabal (4.0), cerca del centro, y Valor (16.1) y Todos (16.9), junto a Vamos."
+     ]
+    },
+    {
+     "b": "figura",
+     "id": "eje",
+     "tipo": "panel",
+     "kicker": "Posición media en el eje del voto dividido",
+     "titular": "Semilla queda sola en un extremo del eje",
+     "indice": "Posición de cada bancada en el eje",
+     "grafico": {
+      "tipo": "divergente",
+      "id": "dip-c07",
+      "orden": "dado",
+      "destacar": 0,
+      "formato": {
+       "signo": true,
+       "decimales": 1
+      },
+      "items": [
+       {
+        "nombre": "Semilla (ind.)",
+        "valor": -44.9
+       },
+       {
+        "nombre": "Vos",
+        "valor": -16.4
+       },
+       {
+        "nombre": "Creo",
+        "valor": -12.4
+       },
+       {
+        "nombre": "Azul",
+        "valor": -8.7
+       },
+       {
+        "nombre": "UNE",
+        "valor": 2.1
+       },
+       {
+        "nombre": "Cabal",
+        "valor": 4.0
+       },
+       {
+        "nombre": "Valor",
+        "valor": 16.1
+       },
+       {
+        "nombre": "Todos",
+        "valor": 16.9
+       },
+       {
+        "nombre": "Vamos",
+        "valor": 19.9
+       },
+       {
+        "nombre": "Unionista",
+        "valor": 24.0
+       }
+      ],
+      "aria": "Barras divergentes: posición media de diez bancadas en el primer eje del mapa del voto; Semilla destacada en el extremo negativo."
+     },
+     "nota": "Escala relativa: negativo hacia Semilla, positivo hacia el polo de Vamos.",
+     "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+     "pie": "Diez de las 17 etiquetas. Las demás: Bien −15.6, Ind. ex Nosotros −13.9, Victoria −12.7, Ind. ex Viva −3.4, Ind. ex UNE 2.2, Viva 3.3 y Elefante 15.0. La segunda fuente reproduce la primaria."
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "02 · Quién con quién",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "Los dos polos, menos unidos"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "{Fig:tarjeta-cohesion} sigue la cohesión de los dos polos en las divididas, por semestre: Semilla pasó de 87.7 en el primer semestre de 2024 a 52.4 en el segundo de 2026, que llega al 29 de octubre, y Vamos, de 60.4 a 42.3. El nivel del último semestre cambia con el umbral de dividida; lo estable es que ambos votan menos unidos que en 2024.",
+      "{Fig:tarjeta-eje} es la versión publicada de la {fig:eje}."
+     ]
+    },
+    {
+     "b": "figuras",
+     "items": [
+      {
+       "id": "tarjeta-cohesion",
+       "tipo": "tarjeta",
+       "desde": "investigacion/2026-10-30-como-vota-el-congreso/hilo/tuit_4.png",
+       "indice": false,
+       "alt": "Líneas con la cohesión de Semilla y Vamos en las divididas por semestre: Semilla de 87.7 a 52.4 y Vamos de 60.4 a 42.3.",
+       "fuente": "Congreso, votaciones nominales (cálculo propio)",
+       "pie": "Tuit 4: cohesión de Semilla y Vamos por semestre. La segunda fuente reproduce la primaria.",
+       "cifra_ids": [
+        "ban-c09",
+        "ban-c08"
+       ]
+      },
+      {
+       "id": "tarjeta-eje",
+       "tipo": "tarjeta",
+       "desde": "investigacion/2026-10-30-como-vota-el-congreso/hilo/tuit_5.png",
+       "indice": false,
+       "alt": "Barras divergentes con la posición media de diez bancadas en el eje del voto dividido; Semilla en −44.9.",
+       "fuente": "Congreso, votaciones nominales (cálculo propio)",
+       "pie": "Tuit 5: posición en el eje del voto. La segunda fuente reproduce la primaria.",
+       "cifra_ids": [
+        "dip-c07",
+        "dip-c06"
+       ]
+      }
+     ]
+    },
+    {
+     "b": "cita",
+     "etiqueta": "Lo que no dice",
+     "texto": "El dato no dice por qué se aflojaron."
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "02 · Quién con quién",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "Afinidades cruzadas y ausencias"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "{Tabla:pares-cruzados} lista los pares más afines de partidos distintos; {tabla:ausencias}, a quienes más votaciones dejaron sin votar."
+     ]
+    },
+    {
+     "b": "tabla",
+     "id": "pares-cruzados",
+     "indice": "Pares afines de distinto partido",
+     "columnas": [
+      {
+       "t": "Diputado"
+      },
+      {
+       "t": "Diputado"
+      },
+      {
+       "t": "%",
+       "num": true,
+       "ancho": 56
+      }
+     ],
+     "filas": [
+      {
+       "c": [
+        "Bequer Neftali Chocooj De La Cruz (Cabal)",
+        "Duay Antoni Martinez Salazar (Vamos)",
+        "85.4"
+       ],
+       "dest": true
+      },
+      {
+       "c": [
+        "Carlos Napoleon Rojas Alarcón (Vamos)",
+        "Elmer Josué Palencia Reyes (Valor)",
+        "84.0"
+       ]
+      },
+      {
+       "c": [
+        "Allan Estuardo Rodríguez Reyes (Vamos)",
+        "Alvaro Enrique Arzú Escobar (Unionista)",
+        "83.6"
+       ]
+      },
+      {
+       "c": [
+        "Guillermo Alberto Cifuentes Barragán (Vamos)",
+        "Sandra Erica Jovel Polanco (Valor)",
+        "83.4"
+       ]
+      },
+      {
+       "c": [
+        "Gladis Carolina Cifuentes Barragán (Vamos)",
+        "Sandra Erica Jovel Polanco (Valor)",
+        "83.1"
+       ]
+      },
+      {
+       "c": [
+        "Jaime Octavio Augusto Lucero Vásquez (Vamos)",
+        "Sherol Ivanisse Arévalo Avila (Valor)",
+        "83.1"
+       ]
+      },
+      {
+       "c": [
+        "Alvaro Enrique Arzú Escobar (Unionista)",
+        "Gladis Carolina Cifuentes Barragán (Vamos)",
+        "83.1"
+       ]
+      },
+      {
+       "c": [
+        "Carlos Napoleon Rojas Alarcón (Vamos)",
+        "Jorge Estuardo Ayala Marroquin (Valor)",
+        "83.0"
+       ]
+      }
+     ],
+     "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+     "pie": "Acuerdo en las votaciones divididas. Un independiente ex X cuenta como X. La segunda fuente reproduce la primaria."
+    },
+    {
+     "b": "tabla",
+     "id": "ausencias",
+     "indice": false,
+     "columnas": [
+      {
+       "t": "Diputado"
+      },
+      {
+       "t": "Bancada"
+      },
+      {
+       "t": "% sin votar",
+       "num": true
+      }
+     ],
+     "filas": [
+      {
+       "c": [
+        "Shirley Joanna Rivera Zaldaña",
+        "Vamos",
+        "50.0"
+       ],
+       "dest": true
+      },
+      {
+       "c": [
+        "Juán Ignacio Quijada Heredia",
+        "UNE",
+        "48.4"
+       ]
+      },
+      {
+       "c": [
+        "Jorge Mario Cabrera Ordóñez",
+        "Ind. ex Vamos",
+        "47.1"
+       ]
+      },
+      {
+       "c": [
+        "Esduín Jerson Javier Javier",
+        "Cambio",
+        "46.8"
+       ]
+      },
+      {
+       "c": [
+        "Ana Lucrecia Marroquín Godoy De Palomo",
+        "Unionista",
+        "42.9"
+       ]
+      },
+      {
+       "c": [
+        "Vivian Beatriz Preciado Navarijo",
+        "Ind. ex Nosotros",
+        "39.0"
+       ]
+      },
+      {
+       "c": [
+        "Duay Antoni Martinez Salazar",
+        "Vamos",
+        "36.8"
+       ]
+      },
+      {
+       "c": [
+        "Boris Roberto España Cáceres",
+        "Vamos",
+        "36.7"
+       ]
+      }
+     ],
+     "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+     "pie": "Ausente + licencia, % de las votaciones en que estaba en lista. «Ausente» incluye a quien estaba y no marcó su voto. La segunda fuente reproduce la primaria."
+    }
+   ]
+  },
+  {
+   "tipo": "capitulo",
+   "id": "cap3",
+   "variante": "banda",
+   "numero": "03",
+   "kicker": "Capítulo 03 · Coaliciones",
+   "titulo": "El oficialismo en minoría",
+   "titulo_corto": "En minoría",
+   "descripcion": "Lado ganador y coincidencia con Semilla",
+   "lead": "Cuando el pleno se divide, Semilla queda del lado perdedor en 60.2 % de las votaciones en que toma posición. Las otras siete bancadas grandes quedan del lado ganador en 69.0 % o más.",
+   "bloques": [
+    {
+     "b": "texto",
+     "capitular": true,
+     "parrafos": [
+      "Una propuesta se aprueba con el voto a favor de la mitad más uno del total de diputados, 81, no de los presentes; hacen falta dos tercios en urgencia nacional, dispensa de dictamen y algunas elecciones (Ley Orgánica del Organismo Legislativo, art. 99).",
+      "Una bancada gana si votó a favor y se reunieron los votos, o si votó en contra y no se reunieron. Como quien no vota no suma, una propuesta con más votos a favor que en contra puede caer: le pasó a 325 votaciones del periodo (capítulo 04).",
+      "Si en lugar del umbral legal se mira hacia dónde se inclinaron los votos emitidos, Semilla acompañó a la mayoría en 57.5 % de las divididas, y UNE, en 88.4 % ({tabla:coincidencias})."
+     ],
+     "margen": [
+      {
+       "termino": "Posición",
+       "texto": "el sentido con más votos emitidos entre los miembros de la bancada."
+      },
+      {
+       "termino": "Perdedor",
+       "texto": "votó a favor y no se reunieron los votos, o votó en contra y sí."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "03 · En minoría",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "Siete bancadas ganan; Semilla, no"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "{Fig:ganador} compara el lado ganador de las ocho bancadas grandes en las votaciones divididas. Todos encabeza con 73.7 %; Semilla, con 39.8 %, es la única por debajo de la mitad.",
+      "Ese 39.8 % es el complemento del 60.2 % de la portada: en cada dividida en que tomó posición, Semilla quedó de un lado o del otro."
+     ]
+    },
+    {
+     "b": "figura",
+     "id": "ganador",
+     "tipo": "panel",
+     "kicker": "Lado ganador en votaciones divididas · %",
+     "titular": "Semilla, la única por debajo de la mitad",
+     "indice": "Lado ganador por bancada",
+     "grafico": {
+      "tipo": "barras_h",
+      "id": "coa-c09",
+      "orden": "desc",
+      "destacar": 7,
+      "formato": {
+       "sufijo": "%",
+       "decimales": 1
+      },
+      "items": [
+       {
+        "nombre": "Todos",
+        "valor": 73.7
+       },
+       {
+        "nombre": "Ind. ex UNE",
+        "valor": 73.6
+       },
+       {
+        "nombre": "UNE",
+        "valor": 70.9
+       },
+       {
+        "nombre": "Vamos",
+        "valor": 70.5
+       },
+       {
+        "nombre": "Viva",
+        "valor": 69.6
+       },
+       {
+        "nombre": "Cabal",
+        "valor": 69.0
+       },
+       {
+        "nombre": "Valor",
+        "valor": 69.0
+       },
+       {
+        "nombre": "Semilla (ind.)",
+        "valor": 39.8
+       }
+      ],
+      "aria": "Barras horizontales: porcentaje de votaciones divididas en que cada bancada quedó del lado ganador; Semilla destacada al final."
+     },
+     "nota": "Ganador: votó a favor y se reunieron 81 votos (107 si exige dos tercios), o votó en contra y no.",
+     "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+     "pie": "Divididas en que la bancada quedó del lado ganador (votó a favor y se reunieron 81 votos, o 107 en dos tercios; o votó en contra y no se reunieron) ÷ divididas en que tomó posición, enero 2024 – octubre 2026 (cálculo propio). Los mismos valores, en la columna «Lado ganador» de la {tabla:coincidencias}. La segunda fuente reproduce la primaria."
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "03 · En minoría",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "Más coincidencia, menos victorias"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "{Fig:tarjeta-ganador} sigue a Semilla por semestre: quedó del lado ganador en 59.6 % de las divididas del primer semestre de 2024 y en 15.9 % de las del segundo de 2026. {Fig:tarjeta-pesas} muestra que, del primer al segundo año legislativo, todas las bancadas grandes coincidieron más con Semilla: UNE, de 42.7 % a 64.4 %.",
+      "El dato no permite atribuir la caída del último semestre a ninguna causa."
+     ]
+    },
+    {
+     "b": "figuras",
+     "items": [
+      {
+       "id": "tarjeta-ganador",
+       "tipo": "tarjeta",
+       "desde": "investigacion/2026-10-30-como-vota-el-congreso/hilo/tuit_6.png",
+       "indice": false,
+       "alt": "Barras verticales con el porcentaje de divididas en que Semilla quedó del lado ganador por semestre, de 59.6% a 15.9%.",
+       "fuente": "Congreso, votaciones nominales (cálculo propio)",
+       "pie": "Tuit 6: Semilla del lado ganador, por semestre. La segunda fuente reproduce la primaria.",
+       "cifra_ids": [
+        "coa-c07"
+       ]
+      },
+      {
+       "id": "tarjeta-pesas",
+       "tipo": "tarjeta",
+       "desde": "investigacion/2026-10-30-como-vota-el-congreso/hilo/tuit_7.png",
+       "indice": false,
+       "alt": "Pesas con la coincidencia de siete bancadas con Semilla en las divididas, 2024-25 frente a 2025-26; todas suben.",
+       "fuente": "Congreso, votaciones nominales (cálculo propio)",
+       "pie": "Tuit 7: coincidencia con Semilla por año. La segunda fuente reproduce la primaria.",
+       "cifra_ids": [
+        "coa-c13",
+        "coa-c14"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "03 · En minoría",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "Con quién coinciden Vamos y Semilla"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "En las divididas, Vamos coincide con Todos en 72.9 % y con Valor en 72.3 %, pero con Semilla en 26.2 %. Semilla no pasa de 52.9 % con ninguna bancada: ese es su máximo, con UNE y con los independientes ex UNE ({tabla:coincidencias}).",
+      "La tabla junta cuatro medidas por bancada: el lado ganador según la regla legal, la coincidencia con el sentido que tuvo más votos emitidos y la coincidencia con cada polo. La serie por semestre está en la {tabla:a2}."
+     ]
+    },
+    {
+     "b": "tabla",
+     "id": "coincidencias",
+     "indice": "Ganador y coincidencias",
+     "columnas": [
+      {
+       "t": "Bancada"
+      },
+      {
+       "t": "Lado\nganador",
+       "num": true
+      },
+      {
+       "t": "Con más\nvotos",
+       "num": true
+      },
+      {
+       "t": "Con\nVamos",
+       "num": true
+      },
+      {
+       "t": "Con\nSemilla",
+       "num": true
+      }
+     ],
+     "filas": [
+      {
+       "c": [
+        "Todos",
+        "73.7",
+        "74.8",
+        "72.9",
+        "34.8"
+       ]
+      },
+      {
+       "c": [
+        "Ind. ex UNE",
+        "73.6",
+        "81.8",
+        "61.9",
+        "52.9"
+       ]
+      },
+      {
+       "c": [
+        "UNE",
+        "70.9",
+        "88.4",
+        "64.6",
+        "52.9"
+       ]
+      },
+      {
+       "c": [
+        "Vamos",
+        "70.5",
+        "66.7",
+        "—",
+        "26.2"
+       ]
+      },
+      {
+       "c": [
+        "Viva",
+        "69.6",
+        "81.6",
+        "65.8",
+        "48.1"
+       ]
+      },
+      {
+       "c": [
+        "Cabal",
+        "69.0",
+        "81.1",
+        "66.1",
+        "48.2"
+       ]
+      },
+      {
+       "c": [
+        "Valor",
+        "69.0",
+        "83.0",
+        "72.3",
+        "41.7"
+       ]
+      },
+      {
+       "c": [
+        "Semilla (ind.)",
+        "39.8",
+        "57.5",
+        "26.2",
+        "—"
+       ],
+       "dest": true
+      }
+     ],
+     "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+     "pie": "% de las votaciones divididas. Con más votos: votó con el sentido que tuvo más votos emitidos. La segunda fuente reproduce la primaria."
+    },
+    {
+     "b": "cita",
+     "etiqueta": "Lo que no dice",
+     "texto": "Coincidir no es pactar: mide votos, no motivos."
+    }
+   ]
+  },
+  {
+   "tipo": "capitulo",
+   "id": "cap4",
+   "variante": "banda",
+   "numero": "04",
+   "kicker": "Capítulo 04 · Tipos de votación",
+   "titulo": "La pelea no es por las leyes",
+   "titulo_corto": "No es por leyes",
+   "descripcion": "Qué divide al pleno y qué cae por ausencia",
+   "lead": "Las actas, la agenda y las mociones dividen al pleno; el debate final de las leyes, casi nunca. Y 325 votaciones con más votos a favor que en contra no llegaron a los votos que exige la ley.",
+   "bloques": [
+    {
+     "b": "texto",
+     "capitular": true,
+     "parrafos": [
+      "Cada votación se clasificó por el texto de su pregunta. Las más numerosas son las elecciones de segundo grado, 668; siguen artículos y capítulos, 596, y enmiendas, 428. El tercer o único debate de una iniciativa suma 99.",
+      "El orden del día y las actas son votaciones de procedimiento, y ahí es donde menos se llega a 81: de 182 votaciones del orden del día, 43 reunieron esos votos; de 151 de actas, 44. En cambio, 95 de los 99 terceros o únicos debates los reunieron.",
+      "En las votaciones del orden del día se emitieron en promedio 79.3 votos: menos de los 81 que hacen falta, aunque todos votaran a favor."
+     ],
+     "margen": [
+      {
+       "termino": "Clasificación",
+       "texto": "por el texto de la pregunta de cada votación; ver Método."
+      },
+      {
+       "termino": "81 votos",
+       "texto": "mitad más uno de 160, no de los presentes (Ley Orgánica, art. 99)."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "04 · No es por leyes",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "Se dividen por el trámite"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "{Fig:tarjeta-tipos} ordena los tipos por la proporción de votaciones divididas: 78.1 % de las actas, 64.9 % de las mociones y 64.3 % del orden del día, frente a 11.1 % del tercer o único debate. {Fig:tarjeta-umbral} cuenta las 325 votaciones con más votos a favor que en contra que no reunieron los votos de ley: 135 del orden del día, 105 de actas y 63 de mociones.",
+      "En esas 325 votaciones, Vamos tuvo sin votar a 62.2 % de sus diputados en lista; Semilla, a 42.0 %. «Ausente» incluye a quien estaba en el hemiciclo y no marcó su voto."
+     ]
+    },
+    {
+     "b": "figuras",
+     "items": [
+      {
+       "id": "tarjeta-tipos",
+       "tipo": "tarjeta",
+       "desde": "investigacion/2026-10-30-como-vota-el-congreso/hilo/tuit_8.png",
+       "indice": false,
+       "alt": "Barras horizontales con el porcentaje de votaciones divididas por tipo: actas 78.1%, mociones 64.9%, orden del día 64.3% y tercer debate 11.1%.",
+       "fuente": "Congreso, votaciones nominales (cálculo propio)",
+       "pie": "Tuit 8: % de votaciones divididas por tipo. La segunda fuente reproduce la primaria.",
+       "cifra_ids": [
+        "tip-c02"
+       ]
+      },
+      {
+       "id": "tarjeta-umbral",
+       "tipo": "tarjeta",
+       "desde": "investigacion/2026-10-30-como-vota-el-congreso/hilo/tuit_9.png",
+       "indice": false,
+       "alt": "Tarjeta de cifra: 325 votaciones con más votos a favor que en contra no reunieron los votos que exige la ley, de 2,672.",
+       "fuente": "Congreso, votaciones nominales (cálculo propio)",
+       "pie": "Tuit 9: mayoría a favor, sin los votos de ley. La segunda fuente reproduce la primaria.",
+       "cifra_ids": [
+        "tip-c15",
+        "ban-c01"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "04 · No es por leyes",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "Las leyes más disputadas"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "Entre los terceros o únicos debates, los más divididos fueron las reformas al Código de Trabajo, con 70 votos a favor; la subvención educativa vía entidades educativas, con 48, y la comisión nacional tripartita, con 59. Ninguna de las tres reunió 81 en esa votación ({fig:leyes}). Las otras cinco sí reunieron 81: la nueva Ley de la Policía Nacional Civil, 96; la iniciativa 5378, 82; la derogación del Impuesto sobre Herencias, 90; la ampliación al Presupuesto 2025, 109, y la segunda ampliación al Presupuesto 2024, 103."
+     ]
+    },
+    {
+     "b": "figura",
+     "id": "leyes",
+     "tipo": "papel",
+     "kicker": "Tercer o único debate · votos a favor",
+     "titular": "Tres de las ocho no reunieron 81 votos",
+     "indice": "Leyes con el debate más dividido",
+     "cifra_ids": [
+      "tip-c12"
+     ],
+     "grafico": {
+      "tipo": "barras_h",
+      "orden": "dado",
+      "destacar": 0,
+      "formato": {
+       "decimales": 0
+      },
+      "items": [
+       {
+        "nombre": "Reformas al Código de Trabajo",
+        "valor": 70
+       },
+       {
+        "nombre": "Subvención educativa",
+        "valor": 48
+       },
+       {
+        "nombre": "Comisión nacional tripartita",
+        "valor": 59
+       },
+       {
+        "nombre": "Nueva Ley de la PNC",
+        "valor": 96
+       },
+       {
+        "nombre": "Iniciativa 5378",
+        "valor": 82
+       },
+       {
+        "nombre": "Derogación del Impuesto sobre Herencias",
+        "valor": 90
+       },
+       {
+        "nombre": "Ampliación Presupuesto 2025",
+        "valor": 109
+       },
+       {
+        "nombre": "2.ª ampliación Presupuesto 2024",
+        "valor": 103
+       }
+      ],
+      "aria": "Barras horizontales: votos a favor en el tercer o único debate de las ocho iniciativas con el debate final más dividido.",
+      "alto": 176
+     },
+     "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+     "pie": "Votos a favor en el tercer o único debate de las ocho iniciativas cuya votación final fue la más dividida, enero 2024 – octubre 2026; hacen falta 81. La iniciativa 5378 no tiene título en la base. La segunda fuente reproduce la primaria."
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "Por tema, las votaciones sobre iniciativas de presupuesto y finanzas son las que más se dividen, 26.9 %; las de educación, 6.5 % (% de las votaciones de cada tema que fueron divididas; el tema se asignó por el título de cada iniciativa y las iniciativas sin título quedan fuera). Entre ellas están el Presupuesto 2025, aprobado la madrugada del 27-nov-2024, y el de 2026, que la CC suspendió el 30-dic-2025 (La Hora; Prensa Libre)."
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "capitulo",
+   "id": "cap5",
+   "variante": "banda",
+   "numero": "05",
+   "kicker": "Capítulo 05 · Elecciones",
+   "titulo": "Cortes y tribunales: el bloque se cierra",
+   "titulo_corto": "Cortes y TSE",
+   "descripcion": "Elecciones de segundo grado, bancada por bancada",
+   "lead": "Al elegir cortes, TSE y Contralor, las otras siete bancadas grandes votaron casi siempre por los electos. En la Corte de Constitucionalidad, Semilla se quedó sola.",
+   "bloques": [
+    {
+     "b": "texto",
+     "capitular": true,
+     "parrafos": [
+      "En este periodo el Congreso eligió la Corte Suprema de Justicia y la Corte de Apelaciones (2024), y la Corte de Constitucionalidad, el Tribunal Supremo Electoral y el Contralor General (2026). Fueron 668 votaciones nominales, una de cada cuatro del periodo; solo la Corte de Apelaciones tomó 468, el 8 de octubre de 2024.",
+      "Para la Corte Suprema, el 3 de octubre de 2024, 13 candidatos reunieron al menos 81 votos. La elección que más separó a Semilla del resto fue la de la Corte de Constitucionalidad, en marzo de 2026.",
+      "Entre las 22:00 y las 6:00 se hicieron 279 votaciones del periodo; 120 fueron de elecciones."
+     ],
+     "margen": [
+      {
+       "termino": "Una de cuatro",
+       "texto": "668 ÷ 2,672 = 25.0%, cálculo propio."
+      },
+      {
+       "termino": "Electos",
+       "texto": "81 votos o más; dos tercios en el TSE; en la CC, el más votado."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "05 · Cortes y TSE",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "En la CC, Semilla se quedó sola"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "{Fig:tarjeta-elecciones} compara el apoyo a los electos: 61.2 % de los votos de Semilla en la Corte Suprema, 74.8 % en Apelaciones, 85.7 % en el TSE y 95.7 % para Contralor, pero 2.2 % en la CC. Las otras siete bancadas grandes, en promedio, no bajaron de 93.7 %.",
+      "{Fig:votaciones-eleccion} reparte las 668 votaciones de elección por proceso: 468 de la Corte de Apelaciones, 78 de la Corte de Constitucionalidad, 35 del TSE, 26 de la Corte Suprema y 6 del Contralor; las otras 55 son elecciones de segundo grado fuera de esos cinco procesos. En las elecciones divididas, Semilla y Vamos coincidieron en 11.7 %."
+     ]
+    },
+    {
+     "b": "figuras",
+     "items": [
+      {
+       "id": "tarjeta-elecciones",
+       "tipo": "tarjeta",
+       "desde": "investigacion/2026-10-30-como-vota-el-congreso/hilo/tuit_10.png",
+       "indice": false,
+       "alt": "Barras agrupadas con el porcentaje de votos a favor de los electos por elección, Semilla frente al promedio de las otras siete bancadas grandes; en la CC, 2.2% frente a 93.7%.",
+       "fuente": "Congreso, votaciones nominales (cálculo propio)",
+       "pie": "Tuit 10. La segunda fuente reproduce la primaria.",
+       "cifra_ids": [
+        "ele-c02",
+        "ele-c03"
+       ]
+      },
+      {
+       "id": "votaciones-eleccion",
+       "tipo": "papel",
+       "kicker": "Votaciones por elección",
+       "titular": "Apelaciones tomó 468",
+       "indice": false,
+       "cifra_ids": [
+        "ele-c01"
+       ],
+       "grafico": {
+        "tipo": "barras_h",
+        "orden": "dado",
+        "destacar": 1,
+        "formato": {
+         "decimales": 0
+        },
+        "items": [
+         {
+          "nombre": "CSJ 2024",
+          "valor": 26
+         },
+         {
+          "nombre": "Apelaciones",
+          "valor": 468
+         },
+         {
+          "nombre": "CC 2026",
+          "valor": 78
+         },
+         {
+          "nombre": "TSE 2026",
+          "valor": 35
+         },
+         {
+          "nombre": "Contralor",
+          "valor": 6
+         },
+         {
+          "nombre": "Otras",
+          "valor": 55
+         }
+        ],
+        "aria": "Barras horizontales: votaciones nominales por elección de segundo grado; Apelaciones destacada.",
+        "alto": 156
+       },
+       "fuente": "Congreso, votaciones nominales (cálculo propio)",
+       "pie": "Votaciones nominales de elección por proceso; suman 668. CSJ y Apelaciones 2024; CC, TSE y Contralor 2026. La segunda fuente reproduce la primaria."
+      }
+     ]
+    },
+    {
+     "b": "cita",
+     "etiqueta": "Lo que no dice",
+     "texto": "El dato mide votos, no las razones del voto."
+    }
+   ]
+  },
+  {
+   "tipo": "cuerpo",
+   "seccion": "05 · Cortes y TSE",
+   "bloques": [
+    {
+     "b": "titulo",
+     "texto": "Molina Barreto: 100 votos, ninguno de Semilla"
+    },
+    {
+     "b": "texto",
+     "parrafos": [
+      "Roberto Molina Barreto obtuvo 100 votos a favor como magistrado titular de la Corte de Constitucionalidad el 6 de marzo de 2026, pasada la medianoche. Ningún diputado de Semilla votó a favor. Vamos aportó 33 votos; UNE, 17; Valor, 10; Cabal, 8; Todos, 6; Viva, 5, y los independientes ex UNE, 4 ({fig:molina}). El resto de los 100 votos vino de diputados de otras etiquetas, que la figura no muestra.",
+      "Luis Alfonso Rosales Marroquín obtuvo 117 votos como magistrado suplente."
+     ]
+    },
+    {
+     "b": "figura",
+     "id": "molina",
+     "tipo": "panel",
+     "kicker": "Votos a favor de Molina Barreto · CC 2026",
+     "titular": "Ninguno de los 100 votos vino de Semilla",
+     "indice": "Votos por Molina Barreto",
+     "derivado": true,
+     "grafico": {
+      "tipo": "barras_h",
+      "id": "ele-c05",
+      "orden": "desc",
+      "destacar": 7,
+      "formato": {
+       "decimales": 0
+      },
+      "items": [
+       {
+        "nombre": "Vamos",
+        "valor": 33
+       },
+       {
+        "nombre": "UNE",
+        "valor": 17
+       },
+       {
+        "nombre": "Valor",
+        "valor": 10
+       },
+       {
+        "nombre": "Cabal",
+        "valor": 8
+       },
+       {
+        "nombre": "Todos",
+        "valor": 6
+       },
+       {
+        "nombre": "Viva",
+        "valor": 5
+       },
+       {
+        "nombre": "Ind. ex UNE",
+        "valor": 4
+       },
+       {
+        "nombre": "Semilla (ind.)",
+        "valor": 0
+       }
+      ],
+      "aria": "Barras horizontales: votos a favor de Roberto Molina Barreto por bancada; Semilla, con cero, destacada."
+     },
+     "nota": "Estas ocho bancadas suman 83; los otros 17 votos vienen de las demás etiquetas (100 − 83, cálculo propio).",
+     "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+     "pie": "Votos a favor en la elección de magistrado titular de la CC, 6-mar-2026. El resto de los 100 votos vino de diputados de otras etiquetas, que la figura no muestra. La segunda fuente reproduce la primaria."
+    }
+   ]
+  },
+  {
+   "tipo": "conclusiones",
+   "id": "conclusiones",
+   "indice": {
+    "titulo": "Conclusiones",
+    "clase": "anexo"
+   },
+   "titulo": "Conclusiones",
+   "hallazgos": [
+    {
+     "titulo": "Semilla pierde en las divididas.",
+     "texto": "Perdió en 60.2 % de las divididas en que tomó posición; las otras siete grandes ganaron 69.0 % o más.",
+     "ref": "{fign:ganador} · {fign:tarjeta-ganador}"
+    },
+    {
+     "titulo": "Cinco bloques y un eje.",
+     "texto": "Los 160 diputados forman cinco bloques de voto, el mayor de 106; un eje con Semilla sola en −44.9 explica 55.5 % de la variación del voto dividido.",
+     "ref": "{fign:tarjeta-bloques} · {fign:eje}"
+    },
+    {
+     "titulo": "La pelea es por el trámite.",
+     "texto": "Se dividió 78.1 % de las actas y 11.1 % de los debates finales; 325 votaciones con más votos a favor que en contra no pasaron.",
+     "ref": "{fign:tarjeta-tipos} · {fign:tarjeta-umbral}"
+    },
+    {
+     "titulo": "En la CC, Semilla se quedó sola.",
+     "texto": "Dio 2.2 % de sus votos a los electos de la CC; las otras siete grandes, 93.7 % en promedio.",
+     "ref": "{fign:tarjeta-elecciones} · {fign:molina}"
+    }
+   ],
+   "no_afirma": [
+    "Que votar juntos sea pactar: mide coincidencia.",
+    "Que una ausencia sea deliberada.",
+    "Que una bancada sea «oposición» por definición.",
+    "Una causa para la caída de Semilla."
+   ],
+   "limites": [
+    "Una sola base: el recálculo no es independiente.",
+    "El 60.2 % depende de la regla de 81 y del umbral.",
+    "Bloques y eje son exploratorios.",
+    "Bancada según la exportación de oct. 2026."
+   ],
+   "cierre": "El pleno se divide por el trámite y las cortes, no por la ley final."
+  },
+  {
+   "tipo": "metodo",
+   "id": "metodo",
+   "indice": {
+    "titulo": "Método y fuentes",
+    "clase": "anexo"
+   },
+   "pasos": [
+    {
+     "titulo": "La base",
+     "texto": "2,672 votaciones nominales (un xlsx por votación), 14-ene-2024 a 29-oct-2026: 427,505 registros. Falta 1 archivo."
+    },
+    {
+     "titulo": "Las definiciones",
+     "texto": "Voto emitido, dividida, cohesión, lado ganador (81 o dos tercios), acuerdo, eje y bloques: en el glosario."
+    },
+    {
+     "titulo": "La verificación",
+     "texto": "Cada cifra se recalculó con un script propio desde los mismos archivos, salvo los cinco bloques de voto y la variación que explica el eje, que no se recalcularon en el rechequeo; solo entran verificadas o ajustadas."
+    }
+   ],
+   "cifras": [
+    {
+     "id": "coa-c08",
+     "concepto": "Semilla del lado perdedor, divididas",
+     "valor": "60.2%",
+     "aparece": "Portada · Resumen"
+    },
+    {
+     "id": "ban-c01",
+     "concepto": "Votaciones nominales analizadas",
+     "valor": "2,672",
+     "aparece": "Cap. 01 · {fign:tarjeta-umbral}"
+    },
+    {
+     "id": "ban-c04",
+     "concepto": "Diputados por bloque, 29-oct-2026",
+     "valor": "160",
+     "aparece": "{fign:tarjeta-bancadas}"
+    },
+    {
+     "id": "ban-c12",
+     "concepto": "Diputados en el mayor bloque de voto",
+     "valor": "106",
+     "aparece": "{fign:tarjeta-bloques}"
+    },
+    {
+     "id": "ban-c06",
+     "concepto": "Cohesión de Semilla en divididas",
+     "valor": "80.2",
+     "aparece": "{fign:cohesion}"
+    },
+    {
+     "id": "ban-c05",
+     "concepto": "Cohesión de Semilla, todas",
+     "valor": "86.8",
+     "aparece": "{Tabla:cohesion-tabla}"
+    },
+    {
+     "id": "ban-c07",
+     "concepto": "Semilla unánime, % de votaciones",
+     "valor": "51.3%",
+     "aparece": "{Tabla:cohesion-tabla}"
+    },
+    {
+     "id": "ban-c09",
+     "concepto": "Cohesión de Semilla, 2026-S2",
+     "valor": "52.4",
+     "aparece": "Tablero · {fign:tarjeta-cohesion}"
+    }
+   ],
+   "nota": "Independencia baja (la segunda fuente reproduce la primaria), salvo tres cifras con segunda fuente independiente: los 100 votos de Molina Barreto, los 117 de Rosales Marroquín y los 13 candidatos electos a la Corte Suprema."
+  },
+  {
+   "tipo": "metodo",
+   "id": "metodo-cont",
+   "titulo": "Cifras usadas (cont.)",
+   "pasos": [],
+   "fuentes": false,
+   "cifras": [
+    {
+     "id": "ban-c08",
+     "concepto": "Cohesión de Vamos, 2026-S2",
+     "valor": "42.3",
+     "aparece": "Tablero · {fign:tarjeta-cohesion}"
+    },
+    {
+     "id": "ban-c10",
+     "concepto": "Diputado que más se aparta",
+     "valor": "25.1%",
+     "aparece": "{Tabla:disidentes}"
+    },
+    {
+     "id": "dip-c07",
+     "concepto": "Posición media de Semilla en el eje",
+     "valor": "-44.9",
+     "aparece": "{fign:eje}"
+    },
+    {
+     "id": "dip-c06",
+     "concepto": "Variación que explica el eje",
+     "valor": "55.5%",
+     "aparece": "{fign:tarjeta-eje}"
+    },
+    {
+     "id": "dip-c02",
+     "concepto": "Par más afín de distinto partido",
+     "valor": "85.4%",
+     "aparece": "{Tabla:pares-cruzados}"
+    },
+    {
+     "id": "dip-c10",
+     "concepto": "Más votaciones sin votar",
+     "valor": "50%",
+     "aparece": "{Tabla:ausencias}"
+    },
+    {
+     "id": "coa-c09",
+     "concepto": "Todos, del lado ganador",
+     "valor": "73.7%",
+     "aparece": "{fign:ganador}"
+    },
+    {
+     "id": "coa-c10",
+     "concepto": "UNE, con la mayoría emitida",
+     "valor": "88.4%",
+     "aparece": "{Tabla:coincidencias}"
+    },
+    {
+     "id": "coa-c11",
+     "concepto": "Vamos coincide con Todos",
+     "valor": "72.9%",
+     "aparece": "{Tabla:coincidencias}"
+    },
+    {
+     "id": "coa-c12",
+     "concepto": "Semilla coincide con UNE",
+     "valor": "52.9%",
+     "aparece": "{Tabla:coincidencias}"
+    },
+    {
+     "id": "coa-c07",
+     "concepto": "Semilla del lado ganador, 2026-S2",
+     "valor": "15.9%",
+     "aparece": "Tablero · {fign:tarjeta-ganador}"
+    },
+    {
+     "id": "coa-c13",
+     "concepto": "UNE coincide con Semilla, 2024-25",
+     "valor": "42.7%",
+     "aparece": "{fign:tarjeta-pesas}"
+    },
+    {
+     "id": "coa-c14",
+     "concepto": "UNE coincide con Semilla, 2025-26",
+     "valor": "64.4%",
+     "aparece": "{fign:tarjeta-pesas}"
+    },
+    {
+     "id": "coa-c01",
+     "concepto": "Vamos coincide con Semilla, 2026-S2",
+     "valor": "35.5%",
+     "aparece": "Tablero · {Tabla:a2}"
+    }
+   ],
+   "nota": "Independencia baja (la segunda fuente reproduce la primaria), salvo tres cifras con segunda fuente independiente: los 100 votos de Molina Barreto, los 117 de Rosales Marroquín y los 13 candidatos electos a la Corte Suprema."
+  },
+  {
+   "tipo": "metodo",
+   "id": "metodo-cont2",
+   "titulo": "Cifras usadas (cont.)",
+   "pasos": [],
+   "fuentes": false,
+   "cifras": [
+    {
+     "id": "tip-c02",
+     "concepto": "Actas divididas",
+     "valor": "78.1%",
+     "aparece": "Resumen · {fign:tarjeta-tipos}"
+    },
+    {
+     "id": "tip-c15",
+     "concepto": "Mayoría a favor sin votos de ley",
+     "valor": "325",
+     "aparece": "{fign:tarjeta-umbral}"
+    },
+    {
+     "id": "tip-c12",
+     "concepto": "A favor, reformas al Código de Trabajo",
+     "valor": "70",
+     "aparece": "{fign:leyes}"
+    },
+    {
+     "id": "ele-c01",
+     "concepto": "Votaciones de elecciones de 2.º grado",
+     "valor": "668",
+     "aparece": "{fign:votaciones-eleccion}"
+    },
+    {
+     "id": "ele-c02",
+     "concepto": "Votos de Semilla a electos de la CC",
+     "valor": "2.2%",
+     "aparece": "Resumen · {fign:tarjeta-elecciones}"
+    },
+    {
+     "id": "ele-c03",
+     "concepto": "Otras bancadas a electos de la CC",
+     "valor": "93.7%",
+     "aparece": "{fign:tarjeta-elecciones}"
+    },
+    {
+     "id": "ele-c05",
+     "concepto": "Votos a favor de Molina Barreto",
+     "valor": "100",
+     "aparece": "{fign:molina}"
+    }
+   ],
+   "nota": "Independencia baja (la segunda fuente reproduce la primaria), salvo tres cifras con segunda fuente independiente: los 100 votos de Molina Barreto, los 117 de Rosales Marroquín y los 13 candidatos electos a la Corte Suprema."
+  },
+  {
+   "tipo": "glosario",
+   "id": "glosario",
+   "indice": {
+    "titulo": "Glosario",
+    "clase": "anexo"
+   },
+   "corte": 7,
+   "terminos": [
+    {
+     "t": "Votación dividida",
+     "d": "Votación en la que el lado minoritario reúne al menos 20% de los votos emitidos. Voto emitido: a favor o en contra."
+    },
+    {
+     "t": "Ausente",
+     "d": "Quien no emitió voto, aunque estuviera en el hemiciclo (art. 94 de la Ley Orgánica). La licencia lo tiene por presente."
+    },
+    {
+     "t": "Cohesión (índice de Rice)",
+     "d": "|favor − contra| ÷ (favor + contra) entre los miembros de una bancada, × 100. 100 = todos votan igual; 0 = mitad y mitad."
+    },
+    {
+     "t": "Lado ganador",
+     "d": "La bancada votó a favor y se reunieron 81 votos (107 en dos tercios), o votó en contra y no se reunieron."
+    },
+    {
+     "t": "Coincidencia",
+     "d": "% de votaciones divididas en que dos bancadas toman la misma posición: el sentido con más votos emitidos entre sus miembros."
+    },
+    {
+     "t": "Acuerdo de un par",
+     "d": "% de votaciones en que dos diputados emitieron voto y votaron igual. Solo pares con 500 votos comunes y 150 divididas o más."
+    },
+    {
+     "t": "Bancadas grandes",
+     "d": "Las siete de seis o más diputados y los independientes ex UNE."
+    },
+    {
+     "t": "Mapa del voto",
+     "d": "Escalamiento multidimensional clásico sobre 1 − acuerdo en divididas: coloca a cada diputado en un eje de escala relativa."
+    },
+    {
+     "t": "Bloques de voto",
+     "d": "Agrupamiento jerárquico de enlace promedio sobre la misma distancia, cortado en cinco grupos. Es exploratorio."
+    },
+    {
+     "t": "Oficialismo",
+     "d": "En este informe, Semilla, el partido del presidente Bernardo Arévalo. El nombre de un bloque de voto («oficialista», «bisagra») describe con quién coincide, no un pacto."
+    },
+    {
+     "t": "Veredicto",
+     "d": "Resultado de verificar una cifra: verificada, ajustada o no confirmada; aquí solo las dos primeras."
+    }
+   ],
+   "siglas": [
+    {
+     "s": "CC",
+     "d": "Corte de Constitucionalidad"
+    },
+    {
+     "s": "CSJ",
+     "d": "Corte Suprema de Justicia"
+    },
+    {
+     "s": "PNC",
+     "d": "Policía Nacional Civil"
+    },
+    {
+     "s": "TSE",
+     "d": "Tribunal Supremo Electoral"
+    },
+    {
+     "s": "UNE",
+     "d": "Unidad Nacional de la Esperanza"
+    }
+   ]
+  },
+  {
+   "tipo": "anexo",
+   "id": "anexo-a",
+   "indice": {
+    "titulo": "Anexo A",
+    "clase": "anexo"
+   },
+   "seccion": "Anexo A",
+   "titulo": "Series por semestre",
+   "lead": "Las series por semestre del informe, completas y en la unidad del cálculo.",
+   "bloques": [
+    {
+     "b": "tabla",
+     "id": "a1",
+     "numero": "A1",
+     "titulo": "Cohesión y lado ganador, votaciones divididas",
+     "indice": false,
+     "columnas": [
+      {
+       "t": "Semestre"
+      },
+      {
+       "t": "Cohesión\nSemilla",
+       "num": true
+      },
+      {
+       "t": "Cohesión\nVamos",
+       "num": true
+      },
+      {
+       "t": "Semilla\nganador %",
+       "num": true
+      }
+     ],
+     "filas": [
+      {
+       "c": [
+        "2024-S1",
+        "87.7",
+        "60.4",
+        "59.6"
+       ]
+      },
+      {
+       "c": [
+        "2024-S2",
+        "90.2",
+        "59.0",
+        "31.2"
+       ]
+      },
+      {
+       "c": [
+        "2025-S1",
+        "79.8",
+        "43.1",
+        "49.4"
+       ]
+      },
+      {
+       "c": [
+        "2025-S2",
+        "77.0",
+        "52.0",
+        "43.7"
+       ]
+      },
+      {
+       "c": [
+        "2026-S1",
+        "70.4",
+        "38.0",
+        "41.5"
+       ]
+      },
+      {
+       "c": [
+        "2026-S2 a",
+        "52.4",
+        "42.3",
+        "15.9"
+       ],
+       "dest": true
+      }
+     ],
+     "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+     "pie": "Cohesión: índice de Rice × 100. Ganador: % de las divididas en que Semilla tomó posición. La segunda fuente reproduce la primaria."
+    },
+    {
+     "b": "tabla",
+     "id": "a2",
+     "numero": "A2",
+     "titulo": "Coincidencia con Semilla, % de las divididas",
+     "indice": false,
+     "columnas": [
+      {
+       "t": "Semestre"
+      },
+      {
+       "t": "Vamos",
+       "num": true
+      },
+      {
+       "t": "UNE",
+       "num": true
+      },
+      {
+       "t": "Cabal",
+       "num": true
+      },
+      {
+       "t": "Valor",
+       "num": true
+      },
+      {
+       "t": "Viva",
+       "num": true
+      },
+      {
+       "t": "Todos",
+       "num": true
+      }
+     ],
+     "filas": [
+      {
+       "c": [
+        "2024-S1",
+        "24.8",
+        "61.8",
+        "54.1",
+        "45.0",
+        "64.0",
+        "26.4"
+       ]
+      },
+      {
+       "c": [
+        "2024-S2",
+        "17.1",
+        "35.3",
+        "31.4",
+        "21.6",
+        "32.4",
+        "22.3"
+       ]
+      },
+      {
+       "c": [
+        "2025-S1",
+        "26.3",
+        "70.4",
+        "62.5",
+        "66.7",
+        "55.7",
+        "59.7"
+       ]
+      },
+      {
+       "c": [
+        "2025-S2",
+        "39.5",
+        "61.8",
+        "60.0",
+        "55.9",
+        "57.3",
+        "48.4"
+       ]
+      },
+      {
+       "c": [
+        "2026-S1",
+        "25.0",
+        "59.7",
+        "52.2",
+        "47.8",
+        "53.7",
+        "35.2"
+       ]
+      },
+      {
+       "c": [
+        "2026-S2 a",
+        "35.5",
+        "55.4",
+        "53.4",
+        "46.4",
+        "42.0",
+        "38.1"
+       ],
+       "dest": true
+      }
+     ],
+     "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+     "pie": "Votaciones divididas en que cada bancada tomó la misma posición que Semilla. La segunda fuente reproduce la primaria.",
+     "notas": [
+      {
+       "m": "a",
+       "texto": "2026-S2 llega al 29 de octubre de 2026."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tipo": "tarjetas",
+   "id": "tarjetas",
+   "indice": {
+    "titulo": "Anexo B",
+    "clase": "anexo"
+   },
+   "seccion": "Anexo B",
+   "titulo": "Las tarjetas del hilo",
+   "desde_hilo": "investigacion/2026-10-30-como-vota-el-congreso/hilo"
+  },
+  {
+   "tipo": "contraportada",
+   "lema": "El voto de cada diputado, contado uno por uno.",
+   "ficha": [
+    [
+     "Tema",
+     "Votaciones del pleno del Congreso"
+    ],
+    [
+     "Corte de datos",
+     "14-ene-2024 a 29-oct-2026"
+    ],
+    [
+     "Fuente",
+     "Congreso de la República"
+    ],
+    [
+     "Paleta",
+     "{paleta}"
+    ],
+    [
+     "Cifras",
+     "Solo verificadas o ajustadas"
+    ],
+    [
+     "Hilo en X",
+     "[ENLACE AL HILO]"
+    ]
+   ]
+  }
+ ]
+}

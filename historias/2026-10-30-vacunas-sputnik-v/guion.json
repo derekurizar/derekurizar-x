@@ -1,0 +1,419 @@
+{
+ "id": "2026-10-30-vacunas-sputnik-v",
+ "tipo": "historia",
+ "slug": "vacunas-sputnik-v",
+ "tema": "Vacunas Sputnik V (2021): la compra de vacunas rusas durante la pandemia generó controversia por los anticipos, las entregas, la intermediación y la transparencia del contrato",
+ "fecha": "2026-10-30",
+ "pregunta": "¿Qué recibió Guatemala por el dinero que adelantó por la Sputnik V, y quién responde hoy por ese contrato?",
+ "arco": "caso: una compra de emergencia que se vuelve escándalo (la promesa, el pago adelantado, la espera, la renegociación, las bodegas y la fiscalía)",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "2021",
+   "titulo": "Pagadas y sin llegar",
+   "escena": 6
+  },
+  {
+   "numero": 3,
+   "anio": "2022–2026",
+   "titulo": "Bodegas y fiscalía",
+   "escena": 12
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "Guatemala le apostó a la Sputnik en plena pandemia. ¿Qué recibió a cambio? La respuesta tardó años. A finales de marzo de 2021, miles de guatemaltecos habían muerto por covid-19. Entonces el Gobierno cerró una compra de vacunas rusas. Vas a ver dónde terminaron muchas de esas vacunas. El 30 de marzo, Amelia Flores, ministra de Salud, firmó por 16 millones de dosis con Human Vaccine, filial del Fondo Ruso de Inversión Directa, el fondo estatal que vendía la vacuna. Días después, el Gobierno pagó la mitad por adelantado: Q614.5 millones, sin una sola dosis en el país. Mientras tanto, el contrato quedó en secreto: la ministra usó una cláusula de confidencialidad para no mostrarlo."
+  },
+  {
+   "acto": 2,
+   "texto": "Más de un mes después, el 5 de mayo, aterrizó el primer lote: 50 mil dosis. Mientras tanto, el Ministerio Público abrió una investigación: dijo dudar de que la filial existiera de forma lícita y la llamó intermediaria. Flores respondió: Nosotros nunca negociamos con un intermediario, sino directamente con el Fondo Ruso de Inversión. Para fin de junio, el pago adelantado cubría 8 millones de dosis, la mitad del contrato, y solo habían llegado 150 mil. Entonces la ministra dijo ante el Congreso, bajo juramento, que había pedido al fondo ruso devolver el dinero. Al día siguiente, el fondo negó que se lo hubieran pedido, y Orlando Blanco, diputado de la UNE, la acusó de mentir. Un mes después, Guatemala renegoció: en vez de recuperar el dinero, aceptó que ese año llegaran 8 millones de dosis, no 16 millones: solo las que ya había pagado. Las entregas se completaron el 30 de diciembre de 2021."
+  },
+  {
+   "acto": 3,
+   "texto": "Dos meses después, el 28 de febrero de 2022, más de un millón de esas 8 millones de dosis se vencieron sin ponerse, guardadas en bodegas del Ministerio de Salud. En 2024, ya con Bernardo Arévalo de presidente, el Gobierno denunció a la exministra Flores, y la FECI, la fiscalía del MP que lleva el caso, allanó el Ministerio de Salud. En marzo de 2026, la FECI dijo que un juez autorizó capturar a Flores y a otras exautoridades; en abril, ella se puso a disposición. El MP la señala de falsedad ideológica, abuso de autoridad, incumplimiento de deberes y malversación, pero no hay sentencia. Nunca se explicó por qué se pagó por adelantado ni por qué el contrato fue secreto. Al final, la compra terminó en bodegas y en un juzgado. Los guatemaltecos pagaron más de un millón de dosis que nunca se pusieron."
+  }
+ ],
+ "hilos": [
+  {
+   "id": "h1",
+   "sin_respuesta": "Nunca se explicó por qué se pagó por adelantado ni por qué el contrato fue secreto"
+  },
+  {
+   "id": "h2",
+   "escena": 3
+  },
+  {
+   "id": "h3",
+   "escena": 10
+  },
+  {
+   "id": "h4",
+   "escena": 12
+  },
+  {
+   "id": "h5",
+   "escena": 14
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3
+  ],
+  [
+   4,
+   5
+  ],
+  [
+   6,
+   7
+  ],
+  [
+   8,
+   9
+  ],
+  [
+   10,
+   11
+  ],
+  [
+   12,
+   13
+  ],
+  [
+   14,
+   15
+  ]
+ ],
+ "paleta": "cielo",
+ "musica": "cielo-2",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2669.0,
+ "duracion_s": 172.2,
+ "critica": {
+  "veredicto": "pasa",
+  "vuelta": 1,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 4,
+   "claridad": 4,
+   "flujo": 4,
+   "precision": 4,
+   "cierre": 4
+  }
+ },
+ "gancho": {
+  "familia": "pregunta",
+  "visual": "foto",
+  "pantalla": "¿Qué recibió Guatemala?",
+  "linea": "le apostó a la Sputnik V en pandemia"
+ },
+ "promesa": {
+  "texto": "Vas a ver dónde terminaron muchas de esas vacunas.",
+  "en": 2,
+  "pago": 12,
+  "revela": 4
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "Guatemala le apostó a la Sputnik en plena pandemia. ¿Qué recibió a cambio? La respuesta tardó años.",
+   "voz": "Guatemala le apostó a la Sputnik en plena pandemia. ¿Qué recibió a cambio? La respuesta tardó años.",
+   "dur": 7.754,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: AGN",
+     "origen": "oficial",
+     "licencia": "© AGN (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "A finales de marzo de 2021, miles de guatemaltecos habían muerto por covid-19. Entonces el Gobierno cerró una compra de vacunas rusas. Vas a ver dónde terminaron muchas de esas vacunas.",
+   "voz": "A finales de marzo de dos mil veintiuno, miles de guatemaltecos habían muerto por covid-diecinueve. Entonces el Gobierno cerró una compra de vacunas rusas. Vas a ver dónde terminaron muchas de esas vacunas.",
+   "dur": 12.642,
+   "hechos": [
+    "comp-h22"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Gobierno de Guatemala · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "foto",
+   "pantalla": "El 30 de marzo, Amelia Flores, ministra de Salud, firmó por 16 millones de dosis con Human Vaccine, filial del Fondo Ruso de Inversión Directa, el fondo estatal que vendía la vacuna.",
+   "voz": "El treinta de marzo, Amelia Flores, ministra de Salud, firmó por dieciséis millones de dosis con Human Vaccine, filial del Fondo Ruso de Inversión Directa, el fondo estatal que vendía la vacuna.",
+   "dur": 12.408,
+   "hechos": [
+    "caso-h19",
+    "caso-h20",
+    "comp-h05"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "tarjeta",
+   "pantalla": "Días después, el Gobierno pagó la mitad por adelantado: Q614.5 millones, sin una sola dosis en el país.",
+   "voz": "Días después, el Gobierno pagó la mitad por adelantado: seiscientos catorce punto cinco millones de quetzales, sin una sola dosis en el país.",
+   "dur": 10.052,
+   "hechos": [
+    "comp-h02"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "golpe",
+   "pantalla": "Mientras tanto, el contrato quedó en secreto: la ministra usó una cláusula de confidencialidad para no mostrarlo.",
+   "voz": "Mientras tanto, el contrato quedó en secreto: la ministra usó una cláusula de confidencialidad para no mostrarlo.",
+   "dur": 8.426,
+   "hechos": [
+    "comp-h03"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "foto",
+   "pantalla": "Más de un mes después, el 5 de mayo, aterrizó el primer lote: 50 mil dosis.",
+   "voz": "Más de un mes después, el cinco de mayo, aterrizó el primer lote: cincuenta mil dosis.",
+   "dur": 6.893,
+   "hechos": [
+    "comp-h08",
+    "entr-h01"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "cita",
+   "pantalla": "Mientras tanto, el Ministerio Público abrió una investigación: dijo dudar de que la filial existiera de forma lícita y la llamó intermediaria. Flores respondió: Nosotros nunca negociamos con un intermediario, sino directamente con el Fondo Ruso de Inversión.",
+   "voz": "Mientras tanto, el Ministerio Público abrió una investigación: dijo dudar de que la filial existiera de forma lícita y la llamó intermediaria. Flores respondió: Nosotros nunca negociamos con un intermediario, sino directamente con el Fondo Ruso de Inversión.",
+   "dur": 17.962,
+   "hechos": [
+    "caso-h01",
+    "caso-h02",
+    "comp-h04",
+    "comp-h05"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "tarjeta",
+   "pantalla": "Para fin de junio, el pago adelantado cubría 8 millones de dosis, la mitad del contrato, y solo habían llegado 150 mil.",
+   "voz": "Para fin de junio, el pago adelantado cubría ocho millones de dosis, la mitad del contrato, y solo habían llegado ciento cincuenta mil.",
+   "dur": 8.992,
+   "hechos": [
+    "comp-h10"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "foto",
+   "pantalla": "Entonces la ministra dijo ante el Congreso, bajo juramento, que había pedido al fondo ruso devolver el dinero. Al día siguiente, el fondo negó que se lo hubieran pedido, y Orlando Blanco, diputado de la UNE, la acusó de mentir.",
+   "voz": "Entonces la ministra dijo ante el Congreso, bajo juramento, que había pedido al fondo ruso devolver el dinero. Al día siguiente, el fondo negó que se lo hubieran pedido, y Orlando Blanco, diputado de la UNE, la acusó de mentir.",
+   "dur": 15.193,
+   "hechos": [
+    "comp-h11",
+    "entr-h02",
+    "entr-h03",
+    "entr-h04"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "tarjeta",
+   "pantalla": "Un mes después, Guatemala renegoció: en vez de recuperar el dinero, aceptó que ese año llegaran 8 millones de dosis, no 16 millones: solo las que ya había pagado.",
+   "voz": "Un mes después, Guatemala renegoció: en vez de recuperar el dinero, aceptó que ese año llegaran ocho millones de dosis, no dieciséis millones: solo las que ya había pagado.",
+   "dur": 11.672,
+   "hechos": [
+    "comp-h12",
+    "entr-h05"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "foto",
+   "pantalla": "Las entregas se completaron el 30 de diciembre de 2021.",
+   "voz": "Las entregas se completaron el treinta de diciembre de dos mil veintiuno.",
+   "dur": 5.727,
+   "hechos": [
+    "entr-h09",
+    "comp-h13"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "explica",
+   "pantalla": "Dos meses después, el 28 de febrero de 2022, más de un millón de esas 8 millones de dosis se vencieron sin ponerse, guardadas en bodegas del Ministerio de Salud.",
+   "voz": "Dos meses después, el veintiocho de febrero de dos mil veintidós, más de un millón de esas ocho millones de dosis se vencieron sin ponerse, guardadas en bodegas del Ministerio de Salud.",
+   "dur": 11.801,
+   "hechos": [
+    "entr-h11"
+   ],
+   "fotos": [],
+   "animacion": "plazo-vencido",
+   "mecanismo": "umbral"
+  },
+  {
+   "n": 13,
+   "tipo": "foto",
+   "pantalla": "En 2024, ya con Bernardo Arévalo de presidente, el Gobierno denunció a la exministra Flores, y la FECI, la fiscalía del MP que lleva el caso, allanó el Ministerio de Salud.",
+   "voz": "En dos mil veinticuatro, ya con Bernardo Arévalo de presidente, el Gobierno denunció a la exministra Flores, y la FECI, la fiscalía del MP que lleva el caso, allanó el Ministerio de Salud.",
+   "dur": 12.309,
+   "hechos": [
+    "caso-h05",
+    "caso-h09",
+    "comp-h19"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 14,
+   "tipo": "foto",
+   "pantalla": "En marzo de 2026, la FECI dijo que un juez autorizó capturar a Flores y a otras exautoridades; en abril, ella se puso a disposición. El MP la señala de falsedad ideológica, abuso de autoridad, incumplimiento de deberes y malversación, pero no hay sentencia.",
+   "voz": "En marzo de dos mil veintiséis, la FECI dijo que un juez autorizó capturar a Flores y a otras exautoridades; en abril, ella se puso a disposición. El MP la señala de falsedad ideológica, abuso de autoridad, incumplimiento de deberes y malversación, pero no hay sentencia.",
+   "dur": 18.088,
+   "hechos": [
+    "caso-h10",
+    "caso-h11",
+    "caso-h12",
+    "caso-h17"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 15,
+   "tipo": "golpe",
+   "pantalla": "Nunca se explicó por qué se pagó por adelantado ni por qué el contrato fue secreto.",
+   "voz": "Nunca se explicó por qué se pagó por adelantado ni por qué el contrato fue secreto.",
+   "dur": 5.785,
+   "hechos": [
+    "comp-h03",
+    "comp-h02"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 16,
+   "tipo": "cierre",
+   "pantalla": "Al final, la compra terminó en bodegas y en un juzgado. Los guatemaltecos pagaron más de un millón de dosis que nunca se pusieron.",
+   "voz": "Al final, la compra terminó en bodegas y en un juzgado. Los guatemaltecos pagaron más de un millón de dosis que nunca se pusieron.",
+   "dur": 10.527,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Así terminó",
+  "resumen": [
+   "Pagó Q614.5 millones por adelantado",
+   "Recibió 8 millones de dosis",
+   "Parte se venció en bodegas"
+  ],
+  "texto": "Al final, la compra terminó en bodegas y en un juzgado. Los guatemaltecos pagaron más de un millón de dosis que nunca se pusieron.",
+  "tipo": "remate",
+  "forma": "consecuencia",
+  "final": "Los guatemaltecos pagaron más de un millón de dosis que nunca se pusieron.",
+  "consecuencia": {
+   "mecanismo": "perdida",
+   "quien": "guatemaltecos",
+   "verbo": "pagaron"
+  }
+ },
+ "caption": {
+  "tiktok": "Guatemala pagó Q614.5 millones por adelantado por la Sputnik V en 2021. Esto es lo que recibió, lo que se venció y dónde está hoy el caso. #Guatemala #SputnikV #historia",
+  "instagram": "La compra de la Sputnik V: un contrato confidencial, la mitad pagada por adelantado, entregas que tardaron meses, dosis vencidas en bodegas y un caso penal abierto sin sentencia. #Guatemala #SputnikV",
+  "facebook": "Guatemala compró 16 millones de dosis de Sputnik V en 2021, pagó la mitad por adelantado y recibió 8 millones. Parte se venció en bodegas y el caso sigue abierto, sin sentencia. Fuentes en el primer comentario.",
+  "shorts": "Guatemala pagó por adelantado la Sputnik V: ¿qué recibió? #Shorts\nEl contrato, las entregas, las dosis vencidas y el caso penal, de 2021 a 2026."
+ }
+}

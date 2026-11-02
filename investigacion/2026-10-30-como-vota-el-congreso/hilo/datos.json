@@ -1,0 +1,2910 @@
+{
+  "slug": "como-vota-el-congreso",
+  "fecha": "2026-10-30",
+  "tesis": "En las votaciones divididas del pleno (enero 2024 – octubre 2026), Semilla, la bancada más cohesionada, quedó del lado perdedor (el que no reúne los 81 votos que exige la ley) en 60.2 % de las que tomó posición; las veinticuatro etiquetas de bancada se reducen, en un agrupamiento exploratorio, a cinco bloques de voto, y lo que divide al pleno son las actas, la agenda, las mociones y la elección de cortes, no el debate final de las leyes.",
+  "ancla_id": "coa-c08",
+  "paleta": "cacao",
+  "hook_tipo": "pregunta_directa",
+  "cifras": [
+    {
+      "id": "ban-c01",
+      "concepto": "Votaciones nominales del pleno analizadas (14-ene-2024 a 29-oct-2026)",
+      "unidad": "votaciones",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 1,
+      "valor": 2672,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Se analizaron 2,672 votaciones nominales del pleno en 180 sesiones, del 14 de enero de 2024 al 29 de octubre de 2026.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "T1",
+        "tuit_9.png"
+      ]
+    },
+    {
+      "id": "ban-c02",
+      "concepto": "Registros de voto individuales, por sentido",
+      "unidad": "registros",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 4,
+      "valor": 427505,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "427,505 registros de voto: 250,617 a favor, 95,957 en contra, 61,666 ausente y 19,265 con licencia o excusa.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "A favor",
+          "valor": 250617
+        },
+        {
+          "nombre": "En contra",
+          "valor": 95957
+        },
+        {
+          "nombre": "Ausente",
+          "valor": 61666
+        },
+        {
+          "nombre": "Licencia o excusa",
+          "valor": 19265
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ban-c03",
+      "concepto": "Votaciones divididas (el lado minoritario reúne ≥ 20 % de los votos emitidos)",
+      "unidad": "% de las votaciones",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 1,
+      "valor": 32.9,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "879 de 2,672 votaciones (32.9 %) fueron divididas: el lado minoritario reunió al menos 20 % de los votos emitidos.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ban-c04",
+      "concepto": "Diputados por bloque en la última votación (29-oct-2026)",
+      "unidad": "diputados",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 8,
+      "valor": 160,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "En la última votación (29-oct-2026) los 160 diputados aparecen en 24 etiquetas de bloque: Vamos 38, Semilla (ind.) 23, UNE 22, Cabal 18, Valor 10, Viva 8, Todos 6, Otras 17 etiquetas 35.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Vamos",
+          "valor": 38
+        },
+        {
+          "nombre": "Semilla (ind.)",
+          "valor": 23
+        },
+        {
+          "nombre": "UNE",
+          "valor": 22
+        },
+        {
+          "nombre": "Cabal",
+          "valor": 18
+        },
+        {
+          "nombre": "Valor",
+          "valor": 10
+        },
+        {
+          "nombre": "Viva",
+          "valor": 8
+        },
+        {
+          "nombre": "Todos",
+          "valor": 6
+        },
+        {
+          "nombre": "Otras 17 etiquetas",
+          "valor": 35
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_2.png",
+        "tuit_3.png"
+      ]
+    },
+    {
+      "id": "ban-c05",
+      "concepto": "Cohesión de las ocho bancadas con ≥ 6 diputados (índice de Rice × 100, todas las votaciones)",
+      "unidad": "índice 0–100",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 8,
+      "valor": 86.8,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Cohesión (Rice × 100, todas las votaciones): Semilla (ind.) 86.8, Valor 84.5, Ind. ex UNE 81.4, Todos 81.4, Viva 79.5, UNE 76.0, Cabal 73.3, Vamos 68.9.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Semilla (ind.)",
+          "valor": 86.8
+        },
+        {
+          "nombre": "Valor",
+          "valor": 84.5
+        },
+        {
+          "nombre": "Ind. ex UNE",
+          "valor": 81.4
+        },
+        {
+          "nombre": "Todos",
+          "valor": 81.4
+        },
+        {
+          "nombre": "Viva",
+          "valor": 79.5
+        },
+        {
+          "nombre": "UNE",
+          "valor": 76.0
+        },
+        {
+          "nombre": "Cabal",
+          "valor": 73.3
+        },
+        {
+          "nombre": "Vamos",
+          "valor": 68.9
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ban-c06",
+      "concepto": "Cohesión de las bancadas en las votaciones divididas (Rice × 100)",
+      "unidad": "índice 0–100",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 8,
+      "valor": 80.2,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "En las 879 votaciones divididas la cohesión baja: Semilla (ind.) 80.2, Valor 72.4, Todos 71.5, Ind. ex UNE 69.6, Viva 64.6, UNE 55.2, Cabal 53.2, Vamos 51.5.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Semilla (ind.)",
+          "valor": 80.2
+        },
+        {
+          "nombre": "Valor",
+          "valor": 72.4
+        },
+        {
+          "nombre": "Todos",
+          "valor": 71.5
+        },
+        {
+          "nombre": "Ind. ex UNE",
+          "valor": 69.6
+        },
+        {
+          "nombre": "Viva",
+          "valor": 64.6
+        },
+        {
+          "nombre": "UNE",
+          "valor": 55.2
+        },
+        {
+          "nombre": "Cabal",
+          "valor": 53.2
+        },
+        {
+          "nombre": "Vamos",
+          "valor": 51.5
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ban-c07",
+      "concepto": "Votaciones en que toda la bancada que emitió voto votó igual",
+      "unidad": "% de las votaciones",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 8,
+      "valor": 51.3,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Votaciones en que toda la bancada votó igual: Todos 67.8 %, Ind. ex UNE 64.2 %, Valor 61.8 %, Viva 56.2 %, Semilla (ind.) 51.3 %, UNE 30.8 %, Cabal 27.1 %, Vamos 14.6 %.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Todos",
+          "valor": 67.8
+        },
+        {
+          "nombre": "Ind. ex UNE",
+          "valor": 64.2
+        },
+        {
+          "nombre": "Valor",
+          "valor": 61.8
+        },
+        {
+          "nombre": "Viva",
+          "valor": 56.2
+        },
+        {
+          "nombre": "Semilla (ind.)",
+          "valor": 51.3
+        },
+        {
+          "nombre": "UNE",
+          "valor": 30.8
+        },
+        {
+          "nombre": "Cabal",
+          "valor": 27.1
+        },
+        {
+          "nombre": "Vamos",
+          "valor": 14.6
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ban-c08",
+      "concepto": "Cohesión de Vamos en las votaciones divididas, por semestre (Rice × 100)",
+      "unidad": "índice 0–100",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 6,
+      "valor": 42.3,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Cohesión de Vamos en votaciones divididas por semestre: 2024-S1 60.4, 2024-S2 59.0, 2025-S1 43.1, 2025-S2 52.0, 2026-S1 38.0, 2026-S2 42.3.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "serie": [
+        {
+          "p": "2024-S1",
+          "v": 60.4
+        },
+        {
+          "p": "2024-S2",
+          "v": 59.0
+        },
+        {
+          "p": "2025-S1",
+          "v": 43.1
+        },
+        {
+          "p": "2025-S2",
+          "v": 52.0
+        },
+        {
+          "p": "2026-S1",
+          "v": 38.0
+        },
+        {
+          "p": "2026-S2",
+          "v": 42.3
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_4.png"
+      ]
+    },
+    {
+      "id": "ban-c09",
+      "concepto": "Cohesión de Semilla (ind.) en las votaciones divididas, por semestre (Rice × 100)",
+      "unidad": "índice 0–100",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 6,
+      "valor": 52.4,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Cohesión de Semilla (ind.) en votaciones divididas por semestre: 2024-S1 87.7, 2024-S2 90.2, 2025-S1 79.8, 2025-S2 77.0, 2026-S1 70.4, 2026-S2 52.4.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "serie": [
+        {
+          "p": "2024-S1",
+          "v": 87.7
+        },
+        {
+          "p": "2024-S2",
+          "v": 90.2
+        },
+        {
+          "p": "2025-S1",
+          "v": 79.8
+        },
+        {
+          "p": "2025-S2",
+          "v": 77.0
+        },
+        {
+          "p": "2026-S1",
+          "v": 70.4
+        },
+        {
+          "p": "2026-S2",
+          "v": 52.4
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_4.png"
+      ]
+    },
+    {
+      "id": "ban-c10",
+      "concepto": "Diputados que más votan contra la posición del resto de su bancada (% de sus votos emitidos)",
+      "unidad": "% de sus votos emitidos",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 8,
+      "valor": 25.1,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Más disidentes (votos contra la posición del resto de su bancada): Allan Estuardo Rodríguez Reyes (Vamos) 25.1 %, Thelma Elizabeth Ramírez Retana (Vamos) 24.9 %, Julio Héctor Estrada Dominguez (Cabal)",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Allan Estuardo Rodríguez Reyes (Vamos)",
+          "valor": 25.1
+        },
+        {
+          "nombre": "Thelma Elizabeth Ramírez Retana (Vamos)",
+          "valor": 24.9
+        },
+        {
+          "nombre": "Julio Héctor Estrada Dominguez (Cabal)",
+          "valor": 23.5
+        },
+        {
+          "nombre": "Boris Roberto España Cáceres (Vamos)",
+          "valor": 23.4
+        },
+        {
+          "nombre": "César Augusto Amézquita Del Valle (Viva)",
+          "valor": 23.1
+        },
+        {
+          "nombre": "José Carlo Solano (Vamos)",
+          "valor": 23.0
+        },
+        {
+          "nombre": "Juan Ramon Rivas García (Vamos)",
+          "valor": 21.2
+        },
+        {
+          "nombre": "Guillermo Alberto Cifuentes Barragán (Vamos)",
+          "valor": 21.0
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ban-c11",
+      "concepto": "Diputada que menos se aparta de su bancada: Elena Sofía Motta Kolleff (Semilla (ind.))",
+      "unidad": "% de sus votos emitidos",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 1,
+      "valor": 1.9,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Elena Sofía Motta Kolleff (Semilla (ind.)) votó contra la posición del resto de su bancada en 1.9 % de sus 2,311 votos emitidos, el mínimo del Congreso.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ban-c12",
+      "concepto": "Bloques reales: grupos de diputados que votan juntos en las votaciones divididas (agrupamiento jerárquico, 5 grupos)",
+      "unidad": "diputados",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 5,
+      "valor": 106,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Agrupando a 160 diputados por su acuerdo en votaciones divididas salen 5 bloques reales: Gran bloque 106 (Vamos 32, UNE 22, Cabal 10, Valor 10, Viva 7, Todos 6, Ind. ex UNE 6, Ind. ex Viva 3, Elefante",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Gran bloque",
+          "valor": 106
+        },
+        {
+          "nombre": "Bloque oficialista",
+          "valor": 27
+        },
+        {
+          "nombre": "Bloque bisagra",
+          "valor": 16
+        },
+        {
+          "nombre": "Disidentes de Vamos",
+          "valor": 8
+        },
+        {
+          "nombre": "Bloque Vos",
+          "valor": 3
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_3.png"
+      ]
+    },
+    {
+      "id": "ban-c13",
+      "concepto": "Acuerdo más bajo entre dos diputados de Vamos en votaciones divididas",
+      "unidad": "% de acuerdo",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 1,
+      "valor": 38.1,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Dentro de Vamos, Guillermo Alberto Cifuentes Barragán y Thelma Elizabeth Ramírez Retana votaron igual solo en 38.1 % de sus 454 votaciones divididas en común.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "coa-c01",
+      "concepto": "Coincidencia de Vamos con Semilla (ind.) en las votaciones divididas, por semestre",
+      "unidad": "% de las votaciones divididas",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 6,
+      "valor": 35.5,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Vamos tomó la misma posición que Semilla (ind.) en 26.2 % de 850 votaciones divididas; por semestre: 2024-S1 24.8 %, 2024-S2 17.1 %, 2025-S1 26.3 %, 2025-S2 39.5 %, 2026-S1 25.0 %, 2026-S2 35.5 %.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "serie": [
+        {
+          "p": "2024-S1",
+          "v": 24.8
+        },
+        {
+          "p": "2024-S2",
+          "v": 17.1
+        },
+        {
+          "p": "2025-S1",
+          "v": 26.3
+        },
+        {
+          "p": "2025-S2",
+          "v": 39.5
+        },
+        {
+          "p": "2026-S1",
+          "v": 25.0
+        },
+        {
+          "p": "2026-S2",
+          "v": 35.5
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "coa-c02",
+      "concepto": "Coincidencia de UNE con Semilla (ind.) en las votaciones divididas, por semestre",
+      "unidad": "% de las votaciones divididas",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 6,
+      "valor": 55.4,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "UNE tomó la misma posición que Semilla (ind.) en 52.9 % de 842 votaciones divididas; por semestre: 2024-S1 61.8 %, 2024-S2 35.3 %, 2025-S1 70.4 %, 2025-S2 61.8 %, 2026-S1 59.7 %, 2026-S2 55.4 %.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "serie": [
+        {
+          "p": "2024-S1",
+          "v": 61.8
+        },
+        {
+          "p": "2024-S2",
+          "v": 35.3
+        },
+        {
+          "p": "2025-S1",
+          "v": 70.4
+        },
+        {
+          "p": "2025-S2",
+          "v": 61.8
+        },
+        {
+          "p": "2026-S1",
+          "v": 59.7
+        },
+        {
+          "p": "2026-S2",
+          "v": 55.4
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "coa-c03",
+      "concepto": "Coincidencia de Cabal con Semilla (ind.) en las votaciones divididas, por semestre",
+      "unidad": "% de las votaciones divididas",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 6,
+      "valor": 53.4,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Cabal tomó la misma posición que Semilla (ind.) en 48.2 % de 828 votaciones divididas; por semestre: 2024-S1 54.1 %, 2024-S2 31.4 %, 2025-S1 62.5 %, 2025-S2 60.0 %, 2026-S1 52.2 %, 2026-S2 53.4 %.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "serie": [
+        {
+          "p": "2024-S1",
+          "v": 54.1
+        },
+        {
+          "p": "2024-S2",
+          "v": 31.4
+        },
+        {
+          "p": "2025-S1",
+          "v": 62.5
+        },
+        {
+          "p": "2025-S2",
+          "v": 60.0
+        },
+        {
+          "p": "2026-S1",
+          "v": 52.2
+        },
+        {
+          "p": "2026-S2",
+          "v": 53.4
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "coa-c04",
+      "concepto": "Coincidencia de Valor con Semilla (ind.) en las votaciones divididas, por semestre",
+      "unidad": "% de las votaciones divididas",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 6,
+      "valor": 46.4,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Valor tomó la misma posición que Semilla (ind.) en 41.7 % de 829 votaciones divididas; por semestre: 2024-S1 45.0 %, 2024-S2 21.6 %, 2025-S1 66.7 %, 2025-S2 55.9 %, 2026-S1 47.8 %, 2026-S2 46.4 %.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "serie": [
+        {
+          "p": "2024-S1",
+          "v": 45.0
+        },
+        {
+          "p": "2024-S2",
+          "v": 21.6
+        },
+        {
+          "p": "2025-S1",
+          "v": 66.7
+        },
+        {
+          "p": "2025-S2",
+          "v": 55.9
+        },
+        {
+          "p": "2026-S1",
+          "v": 47.8
+        },
+        {
+          "p": "2026-S2",
+          "v": 46.4
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "coa-c05",
+      "concepto": "Coincidencia de Viva con Semilla (ind.) en las votaciones divididas, por semestre",
+      "unidad": "% de las votaciones divididas",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 6,
+      "valor": 42.0,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Viva tomó la misma posición que Semilla (ind.) en 48.1 % de 811 votaciones divididas; por semestre: 2024-S1 64.0 %, 2024-S2 32.4 %, 2025-S1 55.7 %, 2025-S2 57.3 %, 2026-S1 53.7 %, 2026-S2 42.0 %.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "serie": [
+        {
+          "p": "2024-S1",
+          "v": 64.0
+        },
+        {
+          "p": "2024-S2",
+          "v": 32.4
+        },
+        {
+          "p": "2025-S1",
+          "v": 55.7
+        },
+        {
+          "p": "2025-S2",
+          "v": 57.3
+        },
+        {
+          "p": "2026-S1",
+          "v": 53.7
+        },
+        {
+          "p": "2026-S2",
+          "v": 42.0
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "coa-c06",
+      "concepto": "Coincidencia de Todos con Semilla (ind.) en las votaciones divididas, por semestre",
+      "unidad": "% de las votaciones divididas",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 6,
+      "valor": 38.1,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Todos tomó la misma posición que Semilla (ind.) en 34.8 % de 755 votaciones divididas; por semestre: 2024-S1 26.4 %, 2024-S2 22.3 %, 2025-S1 59.7 %, 2025-S2 48.4 %, 2026-S1 35.2 %, 2026-S2 38.1 %.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "serie": [
+        {
+          "p": "2024-S1",
+          "v": 26.4
+        },
+        {
+          "p": "2024-S2",
+          "v": 22.3
+        },
+        {
+          "p": "2025-S1",
+          "v": 59.7
+        },
+        {
+          "p": "2025-S2",
+          "v": 48.4
+        },
+        {
+          "p": "2026-S1",
+          "v": 35.2
+        },
+        {
+          "p": "2026-S2",
+          "v": 38.1
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "coa-c07",
+      "concepto": "Votaciones divididas en que Semilla (ind.) quedó del lado ganador, por semestre",
+      "unidad": "% de las votaciones divididas",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 6,
+      "valor": 15.9,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Semilla (ind.) quedó del lado ganador en 39.8 % de 874 votaciones divididas; por semestre: 2024-S1 59.6 %, 2024-S2 31.2 %, 2025-S1 49.4 %, 2025-S2 43.7 %, 2026-S1 41.5 %, 2026-S2 15.9 %.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "serie": [
+        {
+          "p": "2024-S1",
+          "v": 59.6
+        },
+        {
+          "p": "2024-S2",
+          "v": 31.2
+        },
+        {
+          "p": "2025-S1",
+          "v": 49.4
+        },
+        {
+          "p": "2025-S2",
+          "v": 43.7
+        },
+        {
+          "p": "2026-S1",
+          "v": 41.5
+        },
+        {
+          "p": "2026-S2",
+          "v": 15.9
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_6.png"
+      ]
+    },
+    {
+      "id": "coa-c08",
+      "concepto": "Votaciones divididas en que Semilla (ind.) quedó del lado perdedor",
+      "unidad": "% de las votaciones divididas",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 1,
+      "valor": 60.2,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "En 60.2 % de las 874 votaciones divididas en que tomó posición, Semilla (ind.) quedó del lado perdedor: es la única bancada grande que pierde más de lo que gana.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_1.png"
+      ]
+    },
+    {
+      "id": "coa-c09",
+      "concepto": "Votaciones divididas en que cada bancada quedó del lado ganador",
+      "unidad": "% de las votaciones divididas",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 8,
+      "valor": 73.7,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Del lado ganador en votaciones divididas: Todos 73.7 %, Ind. ex UNE 73.6 %, UNE 70.9 %, Vamos 70.5 %, Viva 69.6 %, Cabal 69.0 %, Valor 69.0 %, Semilla (ind.) 39.8 %.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Todos",
+          "valor": 73.7
+        },
+        {
+          "nombre": "Ind. ex UNE",
+          "valor": 73.6
+        },
+        {
+          "nombre": "UNE",
+          "valor": 70.9
+        },
+        {
+          "nombre": "Vamos",
+          "valor": 70.5
+        },
+        {
+          "nombre": "Viva",
+          "valor": 69.6
+        },
+        {
+          "nombre": "Cabal",
+          "valor": 69.0
+        },
+        {
+          "nombre": "Valor",
+          "valor": 69.0
+        },
+        {
+          "nombre": "Semilla (ind.)",
+          "valor": 39.8
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "coa-c10",
+      "concepto": "Votaciones divididas en que cada bancada votó con el sentido que tuvo más votos emitidos",
+      "unidad": "% de las votaciones divididas",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 8,
+      "valor": 88.4,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Con el sentido de más votos emitidos (sin contar ausencias): UNE 88.4 %, Valor 83.0 %, Ind. ex UNE 81.8 %, Viva 81.6 %, Cabal 81.1 %, Todos 74.8 %, Vamos 66.7 %, Semilla (ind.) 57.5 %. UNE es la banca",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "UNE",
+          "valor": 88.4
+        },
+        {
+          "nombre": "Valor",
+          "valor": 83.0
+        },
+        {
+          "nombre": "Ind. ex UNE",
+          "valor": 81.8
+        },
+        {
+          "nombre": "Viva",
+          "valor": 81.6
+        },
+        {
+          "nombre": "Cabal",
+          "valor": 81.1
+        },
+        {
+          "nombre": "Todos",
+          "valor": 74.8
+        },
+        {
+          "nombre": "Vamos",
+          "valor": 66.7
+        },
+        {
+          "nombre": "Semilla (ind.)",
+          "valor": 57.5
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "coa-c11",
+      "concepto": "Coincidencia de Vamos con cada bancada en las votaciones divididas",
+      "unidad": "% de las votaciones divididas",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 7,
+      "valor": 72.9,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Vamos coincide en votaciones divididas con: Todos 72.9 %, Valor 72.3 %, Cabal 66.1 %, Viva 65.8 %, UNE 64.6 %, Ind. ex UNE 61.9 %, Semilla (ind.) 26.2 %.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Todos",
+          "valor": 72.9
+        },
+        {
+          "nombre": "Valor",
+          "valor": 72.3
+        },
+        {
+          "nombre": "Cabal",
+          "valor": 66.1
+        },
+        {
+          "nombre": "Viva",
+          "valor": 65.8
+        },
+        {
+          "nombre": "UNE",
+          "valor": 64.6
+        },
+        {
+          "nombre": "Ind. ex UNE",
+          "valor": 61.9
+        },
+        {
+          "nombre": "Semilla (ind.)",
+          "valor": 26.2
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "coa-c12",
+      "concepto": "Coincidencia de Semilla (ind.) con cada bancada en las votaciones divididas",
+      "unidad": "% de las votaciones divididas",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 7,
+      "valor": 52.9,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Semilla (ind.) coincide en votaciones divididas con: Ind. ex UNE 52.9 %, UNE 52.9 %, Cabal 48.2 %, Viva 48.1 %, Valor 41.7 %, Todos 34.8 %, Vamos 26.2 %.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Ind. ex UNE",
+          "valor": 52.9
+        },
+        {
+          "nombre": "UNE",
+          "valor": 52.9
+        },
+        {
+          "nombre": "Cabal",
+          "valor": 48.2
+        },
+        {
+          "nombre": "Viva",
+          "valor": 48.1
+        },
+        {
+          "nombre": "Valor",
+          "valor": 41.7
+        },
+        {
+          "nombre": "Todos",
+          "valor": 34.8
+        },
+        {
+          "nombre": "Vamos",
+          "valor": 26.2
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "coa-c13",
+      "concepto": "Coincidencia con Semilla (ind.) en votaciones divididas: primer año legislativo (2024-25)",
+      "unidad": "% de las votaciones divididas",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2025-01-13",
+      "n_puntos": 7,
+      "valor": 42.7,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Primer año legislativo (14-ene-2024 a 13-ene-2025), coincidencia con Semilla: Vamos 19.2 %, UNE 42.7 %, Cabal 37.9 %, Valor 28.1 %, Viva 41.5 %, Todos 23.5 %, Ind. ex UNE 44.3 %.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Vamos",
+          "valor": 19.2
+        },
+        {
+          "nombre": "UNE",
+          "valor": 42.7
+        },
+        {
+          "nombre": "Cabal",
+          "valor": 37.9
+        },
+        {
+          "nombre": "Valor",
+          "valor": 28.1
+        },
+        {
+          "nombre": "Viva",
+          "valor": 41.5
+        },
+        {
+          "nombre": "Todos",
+          "valor": 23.5
+        },
+        {
+          "nombre": "Ind. ex UNE",
+          "valor": 44.3
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_7.png"
+      ]
+    },
+    {
+      "id": "coa-c14",
+      "concepto": "Coincidencia con Semilla (ind.) en votaciones divididas: segundo año legislativo (2025-26)",
+      "unidad": "% de las votaciones divididas",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2025-01-14/2026-01-13",
+      "n_puntos": 7,
+      "valor": 64.4,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Segundo año legislativo (14-ene-2025 a 13-ene-2026), coincidencia con Semilla: Vamos 35.4 %, UNE 64.4 %, Cabal 60.9 %, Valor 59.3 %, Viva 56.6 %, Todos 51.8 %, Ind. ex UNE 65.5 %.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Vamos",
+          "valor": 35.4
+        },
+        {
+          "nombre": "UNE",
+          "valor": 64.4
+        },
+        {
+          "nombre": "Cabal",
+          "valor": 60.9
+        },
+        {
+          "nombre": "Valor",
+          "valor": 59.3
+        },
+        {
+          "nombre": "Viva",
+          "valor": 56.6
+        },
+        {
+          "nombre": "Todos",
+          "valor": 51.8
+        },
+        {
+          "nombre": "Ind. ex UNE",
+          "valor": 65.5
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_7.png"
+      ]
+    },
+    {
+      "id": "dip-c01",
+      "concepto": "Los ocho pares de diputados con más acuerdo en las votaciones divididas",
+      "unidad": "% de acuerdo",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 8,
+      "valor": 97.5,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Pares con más acuerdo en votaciones divididas: Elena Sofía Motta Kolleff y Luis Antonio Cáceres Gamarro 97.5 %, Andrea Beatríz Villagrán Antón de Pantoja y Luis Antonio Cáceres Gamarro 96.0 %, Elena S",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Elena Sofía Motta Kolleff · Luis Antonio Cáceres Gamarro",
+          "valor": 97.5
+        },
+        {
+          "nombre": "Andrea Beatríz Villagrán Antón de Pantoja · Luis Antonio Cáceres Gamarro",
+          "valor": 96.0
+        },
+        {
+          "nombre": "Elena Sofía Motta Kolleff · Mercedes Del Rosario Monzón Escobedo",
+          "valor": 96.0
+        },
+        {
+          "nombre": "Andrea Beatríz Villagrán Antón de Pantoja · Elena Sofía Motta Kolleff",
+          "valor": 95.8
+        },
+        {
+          "nombre": "Andrea María Reyes Zeceña · Elena Sofía Motta Kolleff",
+          "valor": 95.4
+        },
+        {
+          "nombre": "Andrea María Reyes Zeceña · Luis Antonio Cáceres Gamarro",
+          "valor": 95.4
+        },
+        {
+          "nombre": "Luis Antonio Cáceres Gamarro · Ronalth Ivan Ochaeta Aguilar",
+          "valor": 95.2
+        },
+        {
+          "nombre": "Luis Antonio Cáceres Gamarro · Mercedes Del Rosario Monzón Escobedo",
+          "valor": 94.9
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dip-c02",
+      "concepto": "Los ocho pares de diputados de distinto partido de origen con más acuerdo en las votaciones divididas",
+      "unidad": "% de acuerdo",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 8,
+      "valor": 85.4,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Pares de distinto partido con más acuerdo en votaciones divididas: Bequer Neftali Chocooj De La Cruz (Cabal) y Duay Antoni Martinez Salazar (Vamos) 85.4 %, Carlos Napoleon Rojas Alarcón (Vamos) y Elme",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Bequer Neftali Chocooj De La Cruz (Cabal) · Duay Antoni Martinez Salazar (Vamos)",
+          "valor": 85.4
+        },
+        {
+          "nombre": "Carlos Napoleon Rojas Alarcón (Vamos) · Elmer Josué Palencia Reyes (Valor)",
+          "valor": 84.0
+        },
+        {
+          "nombre": "Allan Estuardo Rodríguez Reyes (Vamos) · Alvaro Enrique Arzú Escobar (Unionista)",
+          "valor": 83.6
+        },
+        {
+          "nombre": "Guillermo Alberto Cifuentes Barragán (Vamos) · Sandra Erica Jovel Polanco (Valor)",
+          "valor": 83.4
+        },
+        {
+          "nombre": "Gladis Carolina Cifuentes Barragán (Vamos) · Sandra Erica Jovel Polanco (Valor)",
+          "valor": 83.1
+        },
+        {
+          "nombre": "Jaime Octavio Augusto Lucero Vásquez (Vamos) · Sherol Ivanisse Arévalo Avila (Valor)",
+          "valor": 83.1
+        },
+        {
+          "nombre": "Alvaro Enrique Arzú Escobar (Unionista) · Gladis Carolina Cifuentes Barragán (Vamos)",
+          "valor": 83.1
+        },
+        {
+          "nombre": "Carlos Napoleon Rojas Alarcón (Vamos) · Jorge Estuardo Ayala Marroquin (Valor)",
+          "valor": 83.0
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dip-c03",
+      "concepto": "Pares de distinto partido con el registro más idéntico (mismo favor, contra, ausente o licencia en cada votación)",
+      "unidad": "% de las votaciones",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 6,
+      "valor": 82.4,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Registro idéntico en todas las votaciones, distinto partido: Marco Aurelio Mejía Alfaro (UNE) y Maynor Estuardo Castillo Y Castillo (Vamos) 82.4 %, Ernesto Bran Colindres (Valor) y Marvin Adrián Zeped",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Marco Aurelio Mejía Alfaro (UNE) · Maynor Estuardo Castillo Y Castillo (Vamos)",
+          "valor": 82.4
+        },
+        {
+          "nombre": "Ernesto Bran Colindres (Valor) · Marvin Adrián Zepeda Zepeda (Todos)",
+          "valor": 80.5
+        },
+        {
+          "nombre": "Gerson Geovanny Barragán Morales (Viva) · Marco Aurelio Mejía Alfaro (UNE)",
+          "valor": 80.1
+        },
+        {
+          "nombre": "Marco Aurelio Mejía Alfaro (UNE) · Marvin Adrián Zepeda Zepeda (Todos)",
+          "valor": 79.8
+        },
+        {
+          "nombre": "Marco Aurelio Mejía Alfaro (UNE) · Rodrigo Antonio Pellecer Rodríguez (Elefante)",
+          "valor": 79.5
+        },
+        {
+          "nombre": "Marvin Adrián Zepeda Zepeda (Todos) · Maynor Estuardo Castillo Y Castillo (Vamos)",
+          "valor": 79.3
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dip-c04",
+      "concepto": "Acuerdo más alto entre dos diputados en todas sus votaciones comunes",
+      "unidad": "% de acuerdo",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 1,
+      "valor": 97.1,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Ningún par vota siempre igual (0 pares con 100 %): el máximo es Elena Sofía Motta Kolleff y Luis Antonio Cáceres Gamarro, 97.1 % de 2,183 votos comunes; 24 pares superan 95 %.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dip-c05",
+      "concepto": "Los pares más opuestos en las votaciones divididas",
+      "unidad": "% de acuerdo",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 6,
+      "valor": 12.7,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Pares más opuestos en votaciones divididas: David Mauricio Illescas Sandoval (Semilla (ind.)) y Luis Alberto Rodríguez Reyes (Vamos) 12.7 %, Allan Estuardo Rodríguez Reyes (Vamos) y David Mauricio Ill",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "David Mauricio Illescas Sandoval (Semilla (ind.)) · Luis Alberto Rodríguez Reyes (Vamos)",
+          "valor": 12.7
+        },
+        {
+          "nombre": "Allan Estuardo Rodríguez Reyes (Vamos) · David Mauricio Illescas Sandoval (Semilla (ind.))",
+          "valor": 13.6
+        },
+        {
+          "nombre": "Andrea María Reyes Zeceña (Semilla (ind.)) · Luis Alberto Rodríguez Reyes (Vamos)",
+          "valor": 13.8
+        },
+        {
+          "nombre": "Andrea Beatríz Villagrán Antón de Pantoja (Semilla (ind.)) · Luis Alberto Rodríguez Reyes (Vamos)",
+          "valor": 14.3
+        },
+        {
+          "nombre": "José Diego Toledo Cruz (Semilla (ind.)) · Luis Alberto Rodríguez Reyes (Vamos)",
+          "valor": 14.5
+        },
+        {
+          "nombre": "Luis Alberto Rodríguez Reyes (Vamos) · Samuel Andrés Pérez Alvarez (Semilla (ind.))",
+          "valor": 14.5
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dip-c06",
+      "concepto": "Variación del voto dividido que explica el primer eje del mapa de votaciones",
+      "unidad": "% de la variación",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 1,
+      "valor": 55.5,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Un solo eje explica 55.5 % de la variación del voto dividido (el segundo, 9.3 %): el Congreso vota en una sola línea, de Semilla (ind.) a un polo de Vamos.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_5.png"
+      ]
+    },
+    {
+      "id": "dip-c07",
+      "concepto": "Posición media de cada bancada en el eje del voto dividido (−: Semilla; +: polo de Vamos)",
+      "unidad": "posición en el eje",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 17,
+      "valor": -44.9,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Posición media en el eje (x100): Semilla (ind.) -44.9, Vos -16.4, Bien -15.6, Ind. ex Nosotros -13.9, Victoria -12.7, Creo -12.4, Azul -8.7, Ind. ex Viva -3.4, UNE +2.1, Ind. ex UNE +2.2, Viva +3.3, C",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Semilla (ind.)",
+          "valor": -44.9
+        },
+        {
+          "nombre": "Vos",
+          "valor": -16.4
+        },
+        {
+          "nombre": "Bien",
+          "valor": -15.6
+        },
+        {
+          "nombre": "Ind. ex Nosotros",
+          "valor": -13.9
+        },
+        {
+          "nombre": "Victoria",
+          "valor": -12.7
+        },
+        {
+          "nombre": "Creo",
+          "valor": -12.4
+        },
+        {
+          "nombre": "Azul",
+          "valor": -8.7
+        },
+        {
+          "nombre": "Ind. ex Viva",
+          "valor": -3.4
+        },
+        {
+          "nombre": "UNE",
+          "valor": 2.1
+        },
+        {
+          "nombre": "Ind. ex UNE",
+          "valor": 2.2
+        },
+        {
+          "nombre": "Viva",
+          "valor": 3.3
+        },
+        {
+          "nombre": "Cabal",
+          "valor": 4.0
+        },
+        {
+          "nombre": "Elefante",
+          "valor": 15.0
+        },
+        {
+          "nombre": "Valor",
+          "valor": 16.1
+        },
+        {
+          "nombre": "Todos",
+          "valor": 16.9
+        },
+        {
+          "nombre": "Vamos",
+          "valor": 19.9
+        },
+        {
+          "nombre": "Unionista",
+          "valor": 24.0
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_5.png"
+      ]
+    },
+    {
+      "id": "dip-c08",
+      "concepto": "Los ocho diputados fuera de Semilla más cercanos a Semilla en el eje",
+      "unidad": "posición en el eje",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 8,
+      "valor": -32.8,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Semilla (ind.) se ubica entre -47.8 y -38.9. Fuera de Semilla, los más cercanos: Sonia Marina Gutierrez Raguay (Winaq-URNG) -32.8, Juan Carlos Rivera Estevez (Victoria) -26.4, José Alberto Chic Cardon",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Sonia Marina Gutierrez Raguay (Winaq-URNG)",
+          "valor": -32.8
+        },
+        {
+          "nombre": "Juan Carlos Rivera Estevez (Victoria)",
+          "valor": -26.4
+        },
+        {
+          "nombre": "José Alberto Chic Cardona (Vos)",
+          "valor": -25.7
+        },
+        {
+          "nombre": "Karina Alexandra Paz Rosales (Ind. ex Vos)",
+          "valor": -23.4
+        },
+        {
+          "nombre": "Nery Abilio Ramos Y Ramos (Azul)",
+          "valor": -23.0
+        },
+        {
+          "nombre": "Julio Héctor Estrada Dominguez (Cabal)",
+          "valor": -18.6
+        },
+        {
+          "nombre": "Thelma Elizabeth Ramírez Retana (Vamos)",
+          "valor": -18.5
+        },
+        {
+          "nombre": "Fidel Reyes Lee (Bien)",
+          "valor": -18.0
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dip-c09",
+      "concepto": "Los ocho diputados del extremo opuesto a Semilla en el eje",
+      "unidad": "posición en el eje",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 8,
+      "valor": 37.5,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Extremo opuesto a Semilla: Luis Alberto Rodríguez Reyes (Vamos) +37.5, Allan Estuardo Rodríguez Reyes (Vamos) +36.3, Jorge Mario Cabrera Ordóñez (Ind. ex Vamos) +35.6, Guillermo Alberto Cifuentes Barr",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Luis Alberto Rodríguez Reyes (Vamos)",
+          "valor": 37.5
+        },
+        {
+          "nombre": "Allan Estuardo Rodríguez Reyes (Vamos)",
+          "valor": 36.3
+        },
+        {
+          "nombre": "Jorge Mario Cabrera Ordóñez (Ind. ex Vamos)",
+          "valor": 35.6
+        },
+        {
+          "nombre": "Guillermo Alberto Cifuentes Barragán (Vamos)",
+          "valor": 35.1
+        },
+        {
+          "nombre": "Erick José Mario Tzún De León (Vamos)",
+          "valor": 34.6
+        },
+        {
+          "nombre": "Gladis Carolina Cifuentes Barragán (Vamos)",
+          "valor": 34.5
+        },
+        {
+          "nombre": "Héctor Adolfo Aldana Reyes (Vamos)",
+          "valor": 34.2
+        },
+        {
+          "nombre": "Victor Alfredo Valenzuela Argueta (Vamos)",
+          "valor": 33.3
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dip-c10",
+      "concepto": "Los ocho diputados que más votaciones no votaron (ausente + licencia, % de las votaciones en que estaban en lista)",
+      "unidad": "% de las votaciones",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 8,
+      "valor": 50.0,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Más votaciones sin votar (ausente + licencia): Shirley Joanna Rivera Zaldaña (Vamos) 50.0 % (35.3 ausente), Juán Ignacio Quijada Heredia (UNE) 48.4 % (13.0 ausente), Jorge Mario Cabrera Ordóñez (Ind. ",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Shirley Joanna Rivera Zaldaña (Vamos)",
+          "valor": 50.0
+        },
+        {
+          "nombre": "Juán Ignacio Quijada Heredia (UNE)",
+          "valor": 48.4
+        },
+        {
+          "nombre": "Jorge Mario Cabrera Ordóñez (Ind. ex Vamos)",
+          "valor": 47.1
+        },
+        {
+          "nombre": "Esduín Jerson Javier Javier (Cambio)",
+          "valor": 46.8
+        },
+        {
+          "nombre": "Ana Lucrecia Marroquín Godoy De Palomo (Unionista)",
+          "valor": 42.9
+        },
+        {
+          "nombre": "Vivian Beatriz Preciado Navarijo (Ind. ex Nosotros)",
+          "valor": 39.0
+        },
+        {
+          "nombre": "Duay Antoni Martinez Salazar (Vamos)",
+          "valor": 36.8
+        },
+        {
+          "nombre": "Boris Roberto España Cáceres (Vamos)",
+          "valor": 36.7
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dip-c11",
+      "concepto": "Los cinco diputados que menos votaciones dejaron de votar",
+      "unidad": "% de las votaciones",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 5,
+      "valor": 2.9,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Los que menos dejaron de votar: Raúl Amilcar Barrera Robles (Semilla (ind.)) 2.9 %, Marco Aurelio Mejía Alfaro (UNE) 5.1 %, Jairo Danilo Orellana Sandoval (Cabal) 5.4 %, Mirna Victoria Godoy Palala (S",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Raúl Amilcar Barrera Robles (Semilla (ind.))",
+          "valor": 2.9
+        },
+        {
+          "nombre": "Marco Aurelio Mejía Alfaro (UNE)",
+          "valor": 5.1
+        },
+        {
+          "nombre": "Jairo Danilo Orellana Sandoval (Cabal)",
+          "valor": 5.4
+        },
+        {
+          "nombre": "Mirna Victoria Godoy Palala (Semilla (ind.))",
+          "valor": 5.7
+        },
+        {
+          "nombre": "Olga Isabel Villalta Pereira (Semilla (ind.))",
+          "valor": 6.6
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "dip-c12",
+      "concepto": "Los seis diputados con menos votos a favor entre sus votos emitidos",
+      "unidad": "% a favor de sus votos emitidos",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 6,
+      "valor": 47.6,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "El Congreso vota a favor en 72.3 % de los votos emitidos; los que menos: Orlando Joaquín Blanco Lapola (Vos) 47.6 %, Ana Lucrecia Marroquín Godoy De Palomo (Unionista) 52.6 %, Allan Estuardo Rodríguez",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Orlando Joaquín Blanco Lapola (Vos)",
+          "valor": 47.6
+        },
+        {
+          "nombre": "Ana Lucrecia Marroquín Godoy De Palomo (Unionista)",
+          "valor": 52.6
+        },
+        {
+          "nombre": "Allan Estuardo Rodríguez Reyes (Vamos)",
+          "valor": 52.8
+        },
+        {
+          "nombre": "Alvaro Enrique Arzú Escobar (Unionista)",
+          "valor": 54.0
+        },
+        {
+          "nombre": "Guillermo Alberto Cifuentes Barragán (Vamos)",
+          "valor": 59.2
+        },
+        {
+          "nombre": "Jorge Mario Cabrera Ordóñez (Ind. ex Vamos)",
+          "valor": 59.9
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ele-c01",
+      "concepto": "Votaciones nominales por elección de segundo grado",
+      "unidad": "votaciones",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 6,
+      "valor": 668,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "De 668 votaciones de elección, las de cortes y órganos de control: Corte Suprema 2024 26, Corte de Apelaciones 2024 468, Corte de Constitucionalidad 2026 78, Tribunal Supremo Electoral 2026 35, Contra",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Corte Suprema 2024",
+          "valor": 26
+        },
+        {
+          "nombre": "Corte de Apelaciones 2024",
+          "valor": 468
+        },
+        {
+          "nombre": "Corte de Constitucionalidad 2026",
+          "valor": 78
+        },
+        {
+          "nombre": "Tribunal Supremo Electoral 2026",
+          "valor": 35
+        },
+        {
+          "nombre": "Contralor General 2026",
+          "valor": 6
+        },
+        {
+          "nombre": "Otras elecciones",
+          "valor": 55
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ele-c02",
+      "concepto": "Votos de Semilla (ind.) a favor de los candidatos que alcanzaron la mayoría, por elección",
+      "unidad": "% de los votos emitidos de la bancada",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 5,
+      "valor": 2.2,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "De los votos que Semilla (ind.) emitió sobre los candidatos que llegaron a la mayoría, a favor: Corte Suprema 2024 61.2 %, Corte de Apelaciones 2024 74.8 %, Corte de Constitucionalidad 2026 2.2 %, Tri",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Corte Suprema 2024",
+          "valor": 61.2
+        },
+        {
+          "nombre": "Corte de Apelaciones 2024",
+          "valor": 74.8
+        },
+        {
+          "nombre": "Corte de Constitucionalidad 2026",
+          "valor": 2.2
+        },
+        {
+          "nombre": "Tribunal Supremo Electoral 2026",
+          "valor": 85.7
+        },
+        {
+          "nombre": "Contralor General 2026",
+          "valor": 95.7
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_10.png"
+      ]
+    },
+    {
+      "id": "ele-c03",
+      "concepto": "Votos de las otras siete bancadas grandes a favor de los candidatos que alcanzaron la mayoría (promedio de bancadas)",
+      "unidad": "% de los votos emitidos",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 5,
+      "valor": 93.7,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Promedio de las otras siete bancadas grandes, a favor de esos candidatos: Corte Suprema 2024 96.3 %, Corte de Apelaciones 2024 94.8 %, Corte de Constitucionalidad 2026 93.7 %, Tribunal Supremo Elector",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Corte Suprema 2024",
+          "valor": 96.3
+        },
+        {
+          "nombre": "Corte de Apelaciones 2024",
+          "valor": 94.8
+        },
+        {
+          "nombre": "Corte de Constitucionalidad 2026",
+          "valor": 93.7
+        },
+        {
+          "nombre": "Tribunal Supremo Electoral 2026",
+          "valor": 98.7
+        },
+        {
+          "nombre": "Contralor General 2026",
+          "valor": 100.0
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_10.png"
+      ]
+    },
+    {
+      "id": "ele-c04",
+      "concepto": "Votos a favor de Roberto Molina Barreto como magistrado titular de la Corte de Constitucionalidad (6-mar-2026)",
+      "unidad": "votos a favor",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2026-03-06",
+      "n_puntos": 1,
+      "valor": 100,
+      "veredicto": "verificada",
+      "independencia": "alta",
+      "fuente_2": "Prensa: La Hora y Emisoras Unidas (reelección de Molina Barreto, 100 votos a favor, 6-mar-2026); conteo de ausentes 16 = 6+10 del xlsx",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Roberto Molina Barreto recibió 100 votos a favor y 44 en contra como magistrado titular de la CC (6-mar-2026); de Semilla (ind.), 0 a favor y 23 en contra.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "usada": false,
+      "aparece_en": [
+        "T10"
+      ]
+    },
+    {
+      "id": "ele-c05",
+      "concepto": "Votos a favor de Molina Barreto por bancada",
+      "unidad": "votos a favor",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2026-03-06",
+      "n_puntos": 8,
+      "valor": 100,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Votos a favor y en contra de Molina Barreto por bancada: Semilla (ind.) 0–23, Vamos 33–5, UNE 17–2, Cabal 8–3, Valor 10–0, Viva 5–3, Todos 6–0, Ind. ex UNE 4–0. Total 100–44.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Semilla (ind.)",
+          "valor": 0
+        },
+        {
+          "nombre": "Vamos",
+          "valor": 33
+        },
+        {
+          "nombre": "UNE",
+          "valor": 17
+        },
+        {
+          "nombre": "Cabal",
+          "valor": 8
+        },
+        {
+          "nombre": "Valor",
+          "valor": 10
+        },
+        {
+          "nombre": "Viva",
+          "valor": 5
+        },
+        {
+          "nombre": "Todos",
+          "valor": 6
+        },
+        {
+          "nombre": "Ind. ex UNE",
+          "valor": 4
+        }
+      ],
+      "usada": false,
+      "aparece_en": [
+        "T10"
+      ]
+    },
+    {
+      "id": "ele-c06",
+      "concepto": "Votos a favor de Luis Alfonso Rosales Marroquín como magistrado suplente de la Corte de Constitucionalidad",
+      "unidad": "votos a favor",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2026-03-06",
+      "n_puntos": 1,
+      "valor": 117,
+      "veredicto": "verificada",
+      "independencia": "alta",
+      "fuente_2": "Prensa: Revista Estrategia y Negocios (suplente Luis Rosales, 117 votos), cobertura de la elección CC de marzo 2026",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Luis Alfonso Rosales Marroquín recibió 117 votos a favor y 27 en contra como magistrado suplente de la CC; Semilla (ind.) 1–22.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ele-c07",
+      "concepto": "Votaciones nominales para la Corte de Apelaciones el 8 de octubre de 2024",
+      "unidad": "votaciones",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-10-08",
+      "n_puntos": 1,
+      "valor": 468,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "El 8 de octubre de 2024 el pleno hizo 468 votaciones nominales para magistrados de la Corte de Apelaciones: 156 titulares y 105 suplentes reunieron al menos 81 votos.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ele-c08",
+      "concepto": "Coincidencia de Semilla (ind.) y Vamos en las elecciones divididas",
+      "unidad": "% de las votaciones divididas",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 1,
+      "valor": 11.7,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "En las 230 votaciones de elección divididas en que ambas bancadas tomaron posición, Semilla (ind.) y Vamos coincidieron en 11.7 %.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "usada": false,
+      "aparece_en": [
+        "T10"
+      ]
+    },
+    {
+      "id": "ele-c09",
+      "concepto": "Candidatos a la Corte Suprema de Justicia que reunieron al menos 81 votos (3-oct-2024)",
+      "unidad": "candidatos",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-10-03",
+      "n_puntos": 1,
+      "valor": 13,
+      "veredicto": "verificada",
+      "independencia": "alta",
+      "fuente_2": "Prensa: Emisoras Unidas, Congreso juramenta magistrados electos CSJ (3-oct-2024); 13 titulares",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "El 3 de octubre de 2024 se votó a 26 candidatos a la CSJ; 13 reunieron al menos 81 votos (12 de ellos, 107 o más).",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ele-c10",
+      "concepto": "Votaciones realizadas entre las 22:00 y las 6:00, por tipo",
+      "unidad": "votaciones",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 4,
+      "valor": 279,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "279 de 2,672 votaciones (10.4 %) ocurrieron entre las 22:00 y las 6:00: Elecciones 120, Enmiendas 61, Artículos y capítulos 48, Mociones y trámite 16, Redacción final 13, Tercer o único debate 7, Urge",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Elecciones",
+          "valor": 120
+        },
+        {
+          "nombre": "Enmiendas",
+          "valor": 61
+        },
+        {
+          "nombre": "Artículos y capítulos",
+          "valor": 48
+        },
+        {
+          "nombre": "Otros tipos",
+          "valor": 50
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "tip-c01",
+      "concepto": "Votaciones por tipo (clasificadas por el texto de la pregunta)",
+      "unidad": "votaciones",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 8,
+      "valor": 668,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Votaciones por tipo: Elecciones 668, Artículos y capítulos 596, Enmiendas 428, Mociones y trámite 282, Orden del día 182, Actas 151, Tercer o único debate 99, Redacción final 86, Acuerdos y puntos res",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Elecciones",
+          "valor": 668
+        },
+        {
+          "nombre": "Artículos y capítulos",
+          "valor": 596
+        },
+        {
+          "nombre": "Enmiendas",
+          "valor": 428
+        },
+        {
+          "nombre": "Mociones y trámite",
+          "valor": 282
+        },
+        {
+          "nombre": "Orden del día",
+          "valor": 182
+        },
+        {
+          "nombre": "Actas",
+          "valor": 151
+        },
+        {
+          "nombre": "Tercer o único debate",
+          "valor": 99
+        },
+        {
+          "nombre": "Otros tipos",
+          "valor": 266
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "tip-c02",
+      "concepto": "Votaciones divididas según el tipo de votación",
+      "unidad": "% de las votaciones del tipo",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 8,
+      "valor": 78.1,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Votaciones divididas por tipo: Actas 78.1 %, Mociones y trámite 64.9 %, Orden del día 64.3 %, Objeciones y vetos 62.5 %, Estados de excepción 47.4 %, Elecciones 34.7 %, Dictámenes 31.2 %, Acuerdos y p",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Actas",
+          "valor": 78.1
+        },
+        {
+          "nombre": "Mociones y trámite",
+          "valor": 64.9
+        },
+        {
+          "nombre": "Orden del día",
+          "valor": 64.3
+        },
+        {
+          "nombre": "Elecciones",
+          "valor": 34.7
+        },
+        {
+          "nombre": "Acuerdos y puntos resolutivos",
+          "valor": 21.2
+        },
+        {
+          "nombre": "Enmiendas",
+          "valor": 16.8
+        },
+        {
+          "nombre": "Artículos y capítulos",
+          "valor": 15.6
+        },
+        {
+          "nombre": "Tercer o único debate",
+          "valor": 11.1
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_8.png"
+      ]
+    },
+    {
+      "id": "tip-c03",
+      "concepto": "Votaciones de tercer o único debate que reunieron al menos 81 votos a favor",
+      "unidad": "votaciones",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 1,
+      "valor": 95,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "De 99 votaciones de tercer o único debate, 95 reunieron al menos 81 votos a favor y solo 11.1 % fueron divididas.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "usada": false,
+      "aparece_en": [
+        "T8"
+      ]
+    },
+    {
+      "id": "tip-c04",
+      "concepto": "Votaciones del orden del día que reunieron al menos 81 votos a favor",
+      "unidad": "votaciones",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 1,
+      "valor": 43,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "De 182 votaciones del orden del día, solo 43 reunieron al menos 81 votos a favor; en promedio se emitieron 79.3 votos, frente a 131.2 en los artículos de ley.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "tip-c05",
+      "concepto": "Votos emitidos en promedio en las votaciones del orden del día",
+      "unidad": "votos emitidos",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 1,
+      "valor": 79.3,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "En las votaciones del orden del día se emitieron en promedio 79.3 votos (a favor + en contra) de 160 posibles.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "usada": false,
+      "aparece_en": [
+        "T9"
+      ]
+    },
+    {
+      "id": "tip-c06",
+      "concepto": "Votaciones de aprobación de actas que reunieron al menos 81 votos a favor",
+      "unidad": "votaciones",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 1,
+      "valor": 44,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "De 151 votaciones para aprobar actas de sesiones anteriores, 44 reunieron al menos 81 votos a favor; 78.1 % fueron divididas.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "tip-c07",
+      "concepto": "Coincidencia de Semilla (ind.) y Vamos en las votaciones divididas, según el tipo",
+      "unidad": "% de las votaciones divididas del tipo",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 6,
+      "valor": 11.7,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Semilla y Vamos coinciden en votaciones divididas de: Orden del día 54.7 % (de 106), Artículos y capítulos 48.9 % (de 92), Actas 23.9 % (de 113), Mociones y trámite 22.9 % (de 179), Enmiendas 20.6 % (",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Orden del día",
+          "valor": 54.7
+        },
+        {
+          "nombre": "Artículos y capítulos",
+          "valor": 48.9
+        },
+        {
+          "nombre": "Actas",
+          "valor": 23.9
+        },
+        {
+          "nombre": "Mociones y trámite",
+          "valor": 22.9
+        },
+        {
+          "nombre": "Enmiendas",
+          "valor": 20.6
+        },
+        {
+          "nombre": "Elecciones",
+          "valor": 11.7
+        }
+      ],
+      "usada": false,
+      "aparece_en": [
+        "T10"
+      ]
+    },
+    {
+      "id": "tip-c08",
+      "concepto": "Cohesión de Semilla (ind.) según el tipo de votación (Rice × 100)",
+      "unidad": "índice 0–100",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 8,
+      "valor": 93.4,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Cohesión de Semilla (ind.) por tipo: Actas 69.3, Mociones y trámite 84.9, Orden del día 69.8, Elecciones 93.4, Acuerdos y puntos resolutivos 90.2, Enmiendas 88.6, Artículos y capítulos 86.4, Tercer o ",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Actas",
+          "valor": 69.3
+        },
+        {
+          "nombre": "Mociones y trámite",
+          "valor": 84.9
+        },
+        {
+          "nombre": "Orden del día",
+          "valor": 69.8
+        },
+        {
+          "nombre": "Elecciones",
+          "valor": 93.4
+        },
+        {
+          "nombre": "Acuerdos y puntos resolutivos",
+          "valor": 90.2
+        },
+        {
+          "nombre": "Enmiendas",
+          "valor": 88.6
+        },
+        {
+          "nombre": "Artículos y capítulos",
+          "valor": 86.4
+        },
+        {
+          "nombre": "Tercer o único debate",
+          "valor": 86.9
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "tip-c09",
+      "concepto": "Cohesión de Vamos según el tipo de votación (Rice × 100)",
+      "unidad": "índice 0–100",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 8,
+      "valor": 77.7,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Cohesión de Vamos por tipo: Actas 39.2, Mociones y trámite 64.9, Orden del día 43.6, Elecciones 77.7, Acuerdos y puntos resolutivos 79.4, Enmiendas 72.2, Artículos y capítulos 69.8, Tercer o único deb",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Actas",
+          "valor": 39.2
+        },
+        {
+          "nombre": "Mociones y trámite",
+          "valor": 64.9
+        },
+        {
+          "nombre": "Orden del día",
+          "valor": 43.6
+        },
+        {
+          "nombre": "Elecciones",
+          "valor": 77.7
+        },
+        {
+          "nombre": "Acuerdos y puntos resolutivos",
+          "valor": 79.4
+        },
+        {
+          "nombre": "Enmiendas",
+          "valor": 72.2
+        },
+        {
+          "nombre": "Artículos y capítulos",
+          "valor": 69.8
+        },
+        {
+          "nombre": "Tercer o único debate",
+          "valor": 74.8
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "tip-c10",
+      "concepto": "Iniciativas de ley con votación nominal en el pleno",
+      "unidad": "iniciativas",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 1,
+      "valor": 117,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Las votaciones mencionan 117 iniciativas de ley distintas; 99 llegaron a votarse en tercer o único debate.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "tip-c11",
+      "concepto": "Votaciones divididas sobre iniciativas de ley, por tema de la iniciativa",
+      "unidad": "% de las votaciones del tema",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 8,
+      "valor": 26.9,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Votaciones divididas por tema de la ley: Presupuesto y finanzas 26.9 % (13 iniciativas, 186 votaciones), Social y trabajo 21.6 % (10 iniciativas, 74 votaciones), Justicia y seguridad 15.8 % (12 inicia",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Presupuesto y finanzas",
+          "valor": 26.9
+        },
+        {
+          "nombre": "Social y trabajo",
+          "valor": 21.6
+        },
+        {
+          "nombre": "Justicia y seguridad",
+          "valor": 15.8
+        },
+        {
+          "nombre": "Agro, ambiente y energía",
+          "valor": 14.1
+        },
+        {
+          "nombre": "Infraestructura",
+          "valor": 13.4
+        },
+        {
+          "nombre": "Salud",
+          "valor": 8.7
+        },
+        {
+          "nombre": "Economía y comercio",
+          "valor": 8.5
+        },
+        {
+          "nombre": "Educación",
+          "valor": 6.5
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "tip-c12",
+      "concepto": "Las leyes con el tercer o único debate más dividido (votos a favor)",
+      "unidad": "votos a favor",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 8,
+      "valor": 70,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Terceros o únicos debates más divididos: iniciativa 6452 («Reformas al Código de Trabajo») (2025-09-30) 70 a favor y 64 en contra, iniciativa 6671 («Subvención educativa vía entidades educativa») (202",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "6452 · Reformas al Código de Trabajo",
+          "valor": 70
+        },
+        {
+          "nombre": "6671 · Subvención educativa vía entidades educativa",
+          "valor": 48
+        },
+        {
+          "nombre": "5508 · Comisión nacional tripartita de relaciones l",
+          "valor": 59
+        },
+        {
+          "nombre": "6483 · Nueva Ley de la Policía Nacional Civil",
+          "valor": 96
+        },
+        {
+          "nombre": "Iniciativa 5378",
+          "valor": 82
+        },
+        {
+          "nombre": "6376 · Derogación del Impuesto sobre Herencias, Leg",
+          "valor": 90
+        },
+        {
+          "nombre": "6504 · Ampliación al Presupuesto 2025 (Q4,166 millo",
+          "valor": 109
+        },
+        {
+          "nombre": "6439 · Segunda ampliación al Presupuesto 2024",
+          "valor": 103
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "tip-c13",
+      "concepto": "Votaciones sobre estados de excepción (decretos gubernativos)",
+      "unidad": "votaciones",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 1,
+      "valor": 19,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Hubo 19 votaciones sobre decretos gubernativos de estado de excepción; en las 9 divididas, Semilla (ind.) y Vamos coincidieron en 0.0 %.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "tip-c14",
+      "concepto": "Votaciones para aprobar objeciones a decretos ya aprobados",
+      "unidad": "votaciones",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 1,
+      "valor": 8,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Hubo 8 votaciones para aprobar objeciones (de diputados o del Ejecutivo) a decretos ya aprobados; ninguna reunió 81 votos a favor (promedio 24.6).",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "tip-c15",
+      "concepto": "Votaciones con más votos a favor que en contra que no alcanzaron los votos que exige la ley",
+      "unidad": "votaciones",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 5,
+      "valor": 325,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "En 325 de 2,672 votaciones hubo más votos a favor que en contra y aun así no se alcanzó el umbral legal (81, o 107): Orden del día 135, Actas 105, Mociones y trámite 63, Enmiendas 9, Urgencia nacional",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Orden del día",
+          "valor": 135
+        },
+        {
+          "nombre": "Actas",
+          "valor": 105
+        },
+        {
+          "nombre": "Mociones y trámite",
+          "valor": 63
+        },
+        {
+          "nombre": "Enmiendas",
+          "valor": 9
+        },
+        {
+          "nombre": "Otros tipos",
+          "valor": 13
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_9.png"
+      ]
+    },
+    {
+      "id": "tip-c16",
+      "concepto": "Ausencia de cada bancada en las votaciones que no alcanzaron el umbral pese a tener más votos a favor que en contra",
+      "unidad": "% de sus diputados en lista",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 8,
+      "valor": 62.2,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Ausencia (ausente + licencia) en esas votaciones: Vamos 62.2 %, Todos 61.7 %, Ind. ex UNE 56.3 %, Viva 50.0 %, UNE 49.2 %, Valor 45.3 %, Cabal 42.5 %, Semilla (ind.) 42.0 %.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Vamos",
+          "valor": 62.2
+        },
+        {
+          "nombre": "Todos",
+          "valor": 61.7
+        },
+        {
+          "nombre": "Ind. ex UNE",
+          "valor": 56.3
+        },
+        {
+          "nombre": "Viva",
+          "valor": 50.0
+        },
+        {
+          "nombre": "UNE",
+          "valor": 49.2
+        },
+        {
+          "nombre": "Valor",
+          "valor": 45.3
+        },
+        {
+          "nombre": "Cabal",
+          "valor": 42.5
+        },
+        {
+          "nombre": "Semilla (ind.)",
+          "valor": 42.0
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "tip-c17",
+      "concepto": "Mociones de urgencia nacional que reunieron al menos 107 votos a favor",
+      "unidad": "votaciones",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2024-01-14/2026-10-29",
+      "n_puntos": 1,
+      "valor": 36,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo independiente desde las votaciones nominales (script propio)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "De 40 mociones de urgencia nacional, 36 reunieron al menos 107 votos a favor (dos tercios); Semilla (ind.) tuvo cohesión 96.9 en ellas.",
+        "archivo_local": "sesiones/como-vota-el-congreso/base/analisis/resumen.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    }
+  ],
+  "fuentes": [
+    {
+      "nombre": "Congreso de la República de Guatemala — votaciones nominales del pleno (xlsx por votación)",
+      "url": "https://www.congreso.gob.gt",
+      "nivel": "primaria"
+    }
+  ],
+  "no_afirma": [
+    "Que votar juntos implique acuerdos ilícitos o pactos: el dato mide coincidencia, no motivos.",
+    "Que una ausencia sea deliberada: el registro no dice por qué faltó un diputado ni distingue a quien estaba y no marcó su voto.",
+    "Que una bancada sea «oposición» u «oficialismo» por definición: se describe con quién coincide.",
+    "Que la salida de Raíces o el cambio de Junta Directiva causaran la caída de Semilla: solo coinciden en el tiempo.",
+    "Que la bancada de cada diputado sea la que tenía en cada votación: es la de la exportación de octubre de 2026."
+  ],
+  "incertidumbre": [
+    "Todas las cifras del hilo, incluida la ancla coa-c08, salen de una sola base primaria (las votaciones nominales del Congreso, datos propios); su segunda fuente la reproduce (independencia baja). No hay fuente externa independiente para el lado ganador ni para la cohesión.",
+    "El lado ganador aplica la regla de 81 o 107 votos por tipo de votación; vetos y juntas directivas se tratan aparte.",
+    "Falta 1 archivo del índice (votación 5244); los diputados con pocas votaciones no entran en el análisis por pares.",
+    "coa-c08 (ancla, 60.2 %, n=874) depende de definir «perdedor» como no reunir los 81 votos a favor que exige la ley (ausentes cuentan como no). Con dividida al 10 % da 41.2 %; al 25 %, 63.8 %. Si ganador es el lado con más votos emitidos, da 42.7 % al 20 % y 29.1 % al 10 %. Umbral 81 frente a 107 no cambia nada; sin suplentes de menos de 500 votaciones, 60.1 %. Que Semilla «pierde más de lo que gana» solo vale con la definición de 81 votos; el hilo la fija en la nota de T1.",
+    "ban-c08 (cohesión de Vamos) reproduce la serie al 20 %, pero al 10 % el último semestre sube a 57.4 en vez de 42.3 y al 25 % da 34.5: el nivel y la tendencia de 2026-S2 dependen del umbral. Lo robusto es que Vamos está menos cohesionado desde 2025 que en 2024; el hilo no dice que «sigue cayendo».",
+    "ban-c12 (cinco bloques) es un agrupamiento exploratorio (enlace promedio cortado en 5 grupos sobre el acuerdo en divididas al 20 %), no recalculado en el rechequeo: los tamaños dependen del corte, del umbral de dividida y de la elegibilidad. Es coherente con Rice y con el eje, pero es un resultado de método.",
+    "dip-c06 (55.5 % de la variación en el eje principal) no se recalculó: depende de imputar 0.5 a los pares sin dato, del umbral y de los elegibles. Se redacta como «más de la mitad» con el método declarado; la escala del eje es relativa."
+  ],
+  "descartadas": []
+}

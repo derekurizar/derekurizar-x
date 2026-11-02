@@ -299,6 +299,39 @@
       }
     },
     {
+      "id": "oleadas-cauce",
+      "origen": "historia-volcan-de-fuego-hora-a-hora",
+      "usos": [
+        "historia-volcan-de-fuego-hora-a-hora"
+      ],
+      "descripcion": "oleadas por un cauce: una masa en la ladera baja en pulsos, el cauce la encaja y llega más lejos hasta desbordarse al pie",
+      "mecanismo": "onda",
+      "temas": [
+        "volcán",
+        "lahar",
+        "flujo piroclástico",
+        "deslave",
+        "crecida",
+        "barranca",
+        "río",
+        "inundación",
+        "avalancha"
+      ],
+      "pasos": [
+        2,
+        6
+      ],
+      "ejemplo": {
+        "titulo": "¿Por qué llegó tan lejos?",
+        "pasos": [
+          "Material en la ladera",
+          "Baja en oleadas",
+          "Encajonado en el cauce",
+          "Ceniza fina: resbala"
+        ]
+      }
+    },
+    {
       "id": "onda-frenado",
       "origen": "semilla",
       "usos": [],
@@ -323,6 +356,68 @@
           "Menos espacio entre ellos",
           "Un frenazo se contagia",
           "Se forma la cola"
+        ]
+      }
+    },
+    {
+      "id": "plazo-vencido",
+      "origen": "historia-vacunas-sputnik-v",
+      "usos": [
+        "historia-vacunas-sputnik-v"
+      ],
+      "descripcion": "un cursor de tiempo avanza hasta una fecha límite; al cruzarla, las cajas guardadas cambian de estado a vencidas y se quedan",
+      "mecanismo": "umbral",
+      "temas": [
+        "caducidad",
+        "vencimiento",
+        "plazo",
+        "fecha límite",
+        "bodega",
+        "inventario",
+        "medicinas",
+        "vacunas",
+        "desperdicio"
+      ],
+      "pasos": [
+        2,
+        5
+      ],
+      "ejemplo": {
+        "titulo": "¿Por qué se tiró la medicina?",
+        "pasos": [
+          "Vence el 15 de marzo",
+          "Nadie la entregó a tiempo",
+          "Se quedó en la bodega"
+        ]
+      }
+    },
+    {
+      "id": "proceso-transforma",
+      "origen": "historia-el-guatemalteco-que-desarrollo-el-cafe-soluble",
+      "usos": [
+        "historia-el-guatemalteco-que-desarrollo-el-cafe-soluble"
+      ],
+      "descripcion": "proceso por etapas: un material baja por estaciones y cambia de forma en cada una, de una gota líquida a escamas y a polvo fino",
+      "mecanismo": "cadena",
+      "temas": [
+        "proceso",
+        "fabricación",
+        "transformación",
+        "industria",
+        "invento",
+        "producto"
+      ],
+      "pasos": [
+        2,
+        6
+      ],
+      "ejemplo": {
+        "titulo": "¿Cómo se vuelve polvo?",
+        "pasos": [
+          "Esencia de café",
+          "Cilindros calientes",
+          "Secado al vacío",
+          "Escamas molidas"
         ]
       }
     },

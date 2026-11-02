@@ -4539,6 +4539,105 @@
       "hasta": "2026-09",
       "frecuencia": "mensual",
       "nota": "registrada desde hilo 2026-10-29-combustibles-subsidio-exoneracion-2026"
+    },
+    {
+      "nombre": "Cohesión de Vamos en las votaciones divididas, por semestre (Rice × 100)",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "formato": "html",
+      "unidad": "índice 0–100",
+      "desde": "2024-S1",
+      "hasta": "2026-S2",
+      "frecuencia": "otra",
+      "nota": "registrada desde hilo 2026-10-30-como-vota-el-congreso"
+    },
+    {
+      "nombre": "Cohesión de Semilla (ind.) en las votaciones divididas, por semestre (Rice × 100)",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "formato": "html",
+      "unidad": "índice 0–100",
+      "desde": "2024-S1",
+      "hasta": "2026-S2",
+      "frecuencia": "otra",
+      "nota": "registrada desde hilo 2026-10-30-como-vota-el-congreso"
+    },
+    {
+      "nombre": "Coincidencia de Vamos con Semilla (ind.) en las votaciones divididas, por semestre",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "formato": "html",
+      "unidad": "% de las votaciones divididas",
+      "desde": "2024-S1",
+      "hasta": "2026-S2",
+      "frecuencia": "otra",
+      "nota": "registrada desde hilo 2026-10-30-como-vota-el-congreso"
+    },
+    {
+      "nombre": "Coincidencia de UNE con Semilla (ind.) en las votaciones divididas, por semestre",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "formato": "html",
+      "unidad": "% de las votaciones divididas",
+      "desde": "2024-S1",
+      "hasta": "2026-S2",
+      "frecuencia": "otra",
+      "nota": "registrada desde hilo 2026-10-30-como-vota-el-congreso"
+    },
+    {
+      "nombre": "Coincidencia de Cabal con Semilla (ind.) en las votaciones divididas, por semestre",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "formato": "html",
+      "unidad": "% de las votaciones divididas",
+      "desde": "2024-S1",
+      "hasta": "2026-S2",
+      "frecuencia": "otra",
+      "nota": "registrada desde hilo 2026-10-30-como-vota-el-congreso"
+    },
+    {
+      "nombre": "Coincidencia de Valor con Semilla (ind.) en las votaciones divididas, por semestre",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "formato": "html",
+      "unidad": "% de las votaciones divididas",
+      "desde": "2024-S1",
+      "hasta": "2026-S2",
+      "frecuencia": "otra",
+      "nota": "registrada desde hilo 2026-10-30-como-vota-el-congreso"
+    },
+    {
+      "nombre": "Coincidencia de Viva con Semilla (ind.) en las votaciones divididas, por semestre",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "formato": "html",
+      "unidad": "% de las votaciones divididas",
+      "desde": "2024-S1",
+      "hasta": "2026-S2",
+      "frecuencia": "otra",
+      "nota": "registrada desde hilo 2026-10-30-como-vota-el-congreso"
+    },
+    {
+      "nombre": "Coincidencia de Todos con Semilla (ind.) en las votaciones divididas, por semestre",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "formato": "html",
+      "unidad": "% de las votaciones divididas",
+      "desde": "2024-S1",
+      "hasta": "2026-S2",
+      "frecuencia": "otra",
+      "nota": "registrada desde hilo 2026-10-30-como-vota-el-congreso"
+    },
+    {
+      "nombre": "Votaciones divididas en que Semilla (ind.) quedó del lado ganador, por semestre",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (cálculo propio)",
+      "url": "https://www.congreso.gob.gt",
+      "formato": "html",
+      "unidad": "% de las votaciones divididas",
+      "desde": "2024-S1",
+      "hasta": "2026-S2",
+      "frecuencia": "otra",
+      "nota": "registrada desde hilo 2026-10-30-como-vota-el-congreso"
     }
   ]
 }

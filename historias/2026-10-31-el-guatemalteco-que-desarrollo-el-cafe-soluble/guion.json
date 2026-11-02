@@ -1,0 +1,396 @@
+{
+ "id": "2026-10-31-el-guatemalteco-que-desarrollo-el-cafe-soluble",
+ "tipo": "historia",
+ "slug": "el-guatemalteco-que-desarrollo-el-cafe-soluble",
+ "tema": "el guatemalteco que desarrollo el cafe soluble",
+ "fecha": "2026-10-31",
+ "pregunta": "¿Fue de verdad un guatemalteco quien inventó el café soluble, y por qué su nombre no quedó en ningún frasco?",
+ "arco": "origen disputado: un invento con varios padres y la carrera entre quien lo descubre y quien lo vende; termina en olvido y reclamo",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "1890–1906",
+   "titulo": "Muchos padres",
+   "escena": 5
+  },
+  {
+   "numero": 3,
+   "anio": "1910–1938",
+   "titulo": "El nombre del frasco",
+   "escena": 11
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "Un médico de Guatemala quiso un café que se disolviera. Se llamaba Federico Lehnhoff. Se formó como médico en Alemania, pero no lo recuerdan por la medicina. Aprende Guatemala cuenta que encontró una taza de café olvidada, hecha un polvo que se disolvía en agua caliente. Al final vas a ver qué nombre quedó en el frasco. Entonces buscó cómo repetir ese polvo. Prensa Libre narra la técnica que ideó: verter la esencia del café sobre cilindros calientes, secarla al vacío y moler las escamas. Una enciclopedia de Oxford estima que tuvo su café en polvo hacia 1906. Pero no era el único que lo intentaba."
+  },
+  {
+   "acto": 2,
+   "texto": "El invento tuvo muchos padres. Mucho antes, en 1890 el neozelandés David Strang ya había pedido la patente de un café en polvo. En 1901, Satori Kato, un químico japonés de Chicago, mostró el suyo en Buffalo. Y en San Luis, Misuri, el tostador Cyrus Blanke sacó otro; el Smithsonian cuenta que fue en 1906, casi a la vez que Lehnhoff. Pero el rival más cercano vivía en su misma ciudad. Se llamaba George Washington, como el presidente, pero era un inventor belga, y también hacía café soluble en Ciudad de Guatemala. Y el historiador William Ukers afirmó en 1922 que Lehnhoff era el médico de la familia Washington, y que Washington le había hablado de su trabajo. ¿Quién aprendió de quién? Entonces eran dos hombres, en una ciudad, con el mismo invento. ¿Quién lo iba a vender?"
+  },
+  {
+   "acto": 3,
+   "texto": "En 1910, Washington fundó su compañía en Brooklyn, Nueva York. En Guatemala, cerca de ese año, Lehnhoff y su amigo Eduardo Cabarrús fundaron una empresa y lanzaron la marca Café Soluble. Patentaron solo el nombre, no el proceso. En 1913 ganaron una medalla de oro en Gante. Para vender en Europa, abrieron una fábrica en Francia; la Primera Guerra la paró. En 1918, Estados Unidos hacía 6,000 libras diarias; su ejército pedía 37,000. Washington producía en masa: su café fue el de los soldados. Lehnhoff murió cerca de París en 1932. Seis años después, Nestlé, la empresa suiza de alimentos, sacó Nescafé y dominó el mercado. Ese nombre quedó en el frasco; el de Lehnhoff, en ninguna etiqueta. Nunca se supo si Washington aprendió de Lehnhoff o al revés. Hoy, en Guatemala, las familias todavía disuelven café soluble en agua caliente."
+  }
+ ],
+ "hilos": [
+  {
+   "id": "h1",
+   "escena": 3
+  },
+  {
+   "id": "h2",
+   "escena": 12
+  },
+  {
+   "id": "h3",
+   "sin_respuesta": "Nunca se supo si Washington aprendió de Lehnhoff o al revés"
+  },
+  {
+   "id": "h4",
+   "escena": 5
+  },
+  {
+   "id": "h5",
+   "escena": 15
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3,
+   4
+  ],
+  [
+   5,
+   6
+  ],
+  [
+   7,
+   8
+  ],
+  [
+   9,
+   10
+  ],
+  [
+   11,
+   12,
+   13
+  ],
+  [
+   14,
+   15
+  ]
+ ],
+ "paleta": "cacao",
+ "musica": "cacao-1",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2394.0,
+ "duracion_s": 165.4,
+ "critica": {
+  "veredicto": "corregir",
+  "vuelta": 3,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 4,
+   "claridad": 3,
+   "flujo": 4,
+   "precision": 4,
+   "cierre": 3
+  }
+ },
+ "gancho": {
+  "familia": "personaje",
+  "visual": "foto",
+  "pantalla": "El médico del café",
+  "linea": "Federico Lehnhoff, el médico del café"
+ },
+ "promesa": {
+  "texto": "Al final vas a ver qué nombre quedó en el frasco.",
+  "en": 2,
+  "pago": 15,
+  "revela": 5
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "Un médico de Guatemala quiso un café que se disolviera. Se llamaba Federico Lehnhoff.",
+   "voz": "Un médico de Guatemala quiso un café que se disolviera. Se llamaba Federico Lehnhoff.",
+   "dur": 6.612,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "Se formó como médico en Alemania, pero no lo recuerdan por la medicina. Aprende Guatemala cuenta que encontró una taza de café olvidada, hecha un polvo que se disolvía en agua caliente. Al final vas a ver qué nombre quedó en el frasco.",
+   "voz": "Se formó como médico en Alemania, pero no lo recuerdan por la medicina. Aprende Guatemala cuenta que encontró una taza de café olvidada, hecha un polvo que se disolvía en agua caliente. Al final vas a ver qué nombre quedó en el frasco.",
+   "dur": 14.605,
+   "hechos": [
+    "ori-h02",
+    "ori-h04"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Forbes México",
+     "origen": "medio",
+     "licencia": "© Forbes México (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "explica",
+   "pantalla": "Entonces buscó cómo repetir ese polvo. Prensa Libre narra la técnica que ideó: verter la esencia del café sobre cilindros calientes, secarla al vacío y moler las escamas.",
+   "voz": "Entonces buscó cómo repetir ese polvo. Prensa Libre narra la técnica que ideó: verter la esencia del café sobre cilindros calientes, secarla al vacío y moler las escamas.",
+   "dur": 12.465,
+   "hechos": [
+    "ori-h05"
+   ],
+   "fotos": [],
+   "animacion": "proceso-transforma",
+   "mecanismo": "cadena"
+  },
+  {
+   "n": 4,
+   "tipo": "golpe",
+   "pantalla": "Una enciclopedia de Oxford estima que tuvo su café en polvo hacia 1906. Pero no era el único que lo intentaba.",
+   "voz": "Una enciclopedia de Oxford estima que tuvo su café en polvo hacia mil novecientos seis. Pero no era el único que lo intentaba.",
+   "dur": 8.975,
+   "hechos": [
+    "ori-h03"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "foto",
+   "pantalla": "El invento tuvo muchos padres. Mucho antes, en 1890 el neozelandés David Strang ya había pedido la patente de un café en polvo.",
+   "voz": "El invento tuvo muchos padres. Mucho antes, en mil ochocientos noventa el neozelandés David Strang ya había pedido la patente de un café en polvo.",
+   "dur": 10.191,
+   "hechos": [
+    "riv-h01"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: SouthlandInfo · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "foto",
+   "pantalla": "En 1901, Satori Kato, un químico japonés de Chicago, mostró el suyo en Buffalo. Y en San Luis, Misuri, el tostador Cyrus Blanke sacó otro; el Smithsonian cuenta que fue en 1906, casi a la vez que Lehnhoff.",
+   "voz": "En mil novecientos uno, Satori Kato, un químico japonés de Chicago, mostró el suyo en Buffalo. Y en San Luis, Misuri, el tostador Cyrus Blanke sacó otro; el Smithsonian cuenta que fue en mil novecientos seis, casi a la vez que Lehnhoff.",
+   "dur": 16.535,
+   "hechos": [
+    "riv-h02",
+    "riv-h04"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: C. D. Arnold · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "golpe",
+   "pantalla": "Pero el rival más cercano vivía en su misma ciudad.",
+   "voz": "Pero el rival más cercano vivía en su misma ciudad.",
+   "dur": 3.642,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "foto",
+   "pantalla": "Se llamaba George Washington, como el presidente, pero era un inventor belga, y también hacía café soluble en Ciudad de Guatemala.",
+   "voz": "Se llamaba George Washington, como el presidente, pero era un inventor belga, y también hacía café soluble en Ciudad de Guatemala.",
+   "dur": 9.235,
+   "hechos": [
+    "riv-h06"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Varios · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "foto",
+   "pantalla": "Y el historiador William Ukers afirmó en 1922 que Lehnhoff era el médico de la familia Washington, y que Washington le había hablado de su trabajo. ¿Quién aprendió de quién?",
+   "voz": "Y el historiador William Ukers afirmó en mil novecientos veintidós que Lehnhoff era el médico de la familia Washington, y que Washington le había hablado de su trabajo. ¿Quién aprendió de quién?",
+   "dur": 12.344,
+   "hechos": [
+    "riv-h08"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "golpe",
+   "pantalla": "Entonces eran dos hombres, en una ciudad, con el mismo invento. ¿Quién lo iba a vender?",
+   "voz": "Entonces eran dos hombres, en una ciudad, con el mismo invento. ¿Quién lo iba a vender?",
+   "dur": 6.801,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "foto",
+   "pantalla": "En 1910, Washington fundó su compañía en Brooklyn, Nueva York. En Guatemala, cerca de ese año, Lehnhoff y su amigo Eduardo Cabarrús fundaron una empresa y lanzaron la marca Café Soluble.",
+   "voz": "En mil novecientos diez, Washington fundó su compañía en Brooklyn, Nueva York. En Guatemala, cerca de ese año, Lehnhoff y su amigo Eduardo Cabarrús fundaron una empresa y lanzaron la marca Café Soluble.",
+   "dur": 13.698,
+   "hechos": [
+    "riv-h07",
+    "ori-h06"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: New York Tribune · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "golpe",
+   "pantalla": "Patentaron solo el nombre, no el proceso. En 1913 ganaron una medalla de oro en Gante.",
+   "voz": "Patentaron solo el nombre, no el proceso. En mil novecientos trece ganaron una medalla de oro en Gante.",
+   "dur": 7.891,
+   "hechos": [
+    "leg-h03",
+    "leg-h04"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 13,
+   "tipo": "tarjeta",
+   "pantalla": "Para vender en Europa, abrieron una fábrica en Francia; la Primera Guerra la paró. En 1918, Estados Unidos hacía 6,000 libras diarias; su ejército pedía 37,000. Washington producía en masa: su café fue el de los soldados.",
+   "voz": "Para vender en Europa, abrieron una fábrica en Francia; la Primera Guerra la paró. En mil novecientos dieciocho, Estados Unidos hacía seis mil libras diarias; su ejército pedía treinta y siete mil. Washington producía en masa: su café fue el de los soldados.",
+   "dur": 17.977,
+   "hechos": [
+    "ori-h10",
+    "leg-h09",
+    "leg-h08"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 14,
+   "tipo": "golpe",
+   "pantalla": "Lehnhoff murió cerca de París en 1932.",
+   "voz": "Lehnhoff murió cerca de París en mil novecientos treinta y dos.",
+   "dur": 4.675,
+   "hechos": [
+    "ori-h11"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 15,
+   "tipo": "tarjeta",
+   "pantalla": "Seis años después, Nestlé, la empresa suiza de alimentos, sacó Nescafé y dominó el mercado. Ese nombre quedó en el frasco; el de Lehnhoff, en ninguna etiqueta.",
+   "voz": "Seis años después, Nestlé, la empresa suiza de alimentos, sacó Nescafé y dominó el mercado. Ese nombre quedó en el frasco; el de Lehnhoff, en ninguna etiqueta.",
+   "dur": 11.927,
+   "hechos": [
+    "riv-h10",
+    "leg-h11"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 16,
+   "tipo": "cierre",
+   "pantalla": "Nunca se supo si Washington aprendió de Lehnhoff o al revés. Hoy, en Guatemala, las familias todavía disuelven café soluble en agua caliente.",
+   "voz": "Nunca se supo si Washington aprendió de Lehnhoff o al revés. Hoy, en Guatemala, las familias todavía disuelven café soluble en agua caliente.",
+   "dur": 11.969,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Lo que dejó",
+  "resumen": [
+   "Hacia 1906, un café que se disolvía",
+   "Washington lo vendió en la guerra",
+   "Nescafé llegó en 1938"
+  ],
+  "texto": "Nunca se supo si Washington aprendió de Lehnhoff o al revés. Hoy, en Guatemala, las familias todavía disuelven café soluble en agua caliente.",
+  "tipo": "remate",
+  "forma": "legado",
+  "final": "Hoy, en Guatemala, las familias todavía disuelven café soluble en agua caliente.",
+  "consecuencia": {
+   "quien": "familias",
+   "verbo": "disuelven"
+  }
+ },
+ "caption": {
+  "tiktok": "Un médico guatemalteco, Federico Lehnhoff, hizo café soluble hacia 1906. Pero el nombre que quedó en el frasco fue otro. #Guatemala #historia #cafe",
+  "instagram": "Federico Lehnhoff, médico guatemalteco, buscó un café que se disolviera en agua. Otros lo intentaban a la vez, y uno vivía en su misma ciudad. #Guatemala #historia #cafe",
+  "facebook": "La historia de Federico Lehnhoff, el médico guatemalteco que desarrolló un café soluble, y de la carrera con otros inventores hasta que llegó Nescafé en 1938. Fuentes en el primer comentario.",
+  "shorts": "El médico de Guatemala que hizo café soluble #Shorts\nFederico Lehnhoff, la carrera del café en polvo y el nombre que quedó en el frasco."
+ }
+}

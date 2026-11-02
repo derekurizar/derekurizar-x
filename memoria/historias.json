@@ -229,6 +229,185 @@
           "boca-a-boca"
         ]
       }
+    },
+    {
+      "id": "2026-10-30-vacunas-sputnik-v",
+      "slug": "vacunas-sputnik-v",
+      "tema": "Vacunas Sputnik V (2021): la compra de vacunas rusas durante la pandemia generó controversia por los anticipos, las entregas, la intermediación y la transparencia del contrato",
+      "fecha": "2026-10-30",
+      "ruta": "historias/2026-10-30-vacunas-sputnik-v",
+      "arco": "caso: una compra de emergencia que se vuelve escándalo (la promesa, el pago adelantado, la espera, la renegociación, las bodegas y la fiscalía)",
+      "paleta": "cielo",
+      "musica": "cielo-2",
+      "duracion_s": 172.2,
+      "creditos_voz": 2669.0,
+      "estado": "listo",
+      "frases": {
+        "promesa": "Vas a ver dónde terminaron muchas de esas vacunas.",
+        "gancho": "Guatemala le apostó a la Sputnik en plena pandemia.",
+        "aperturas": [
+          "El treinta de marzo,",
+          "Días después, el Gobierno",
+          "Mientras tanto, el contrato",
+          "Más de un mes",
+          "Mientras tanto, el Ministerio",
+          "Para fin de junio,",
+          "Entonces la ministra dijo",
+          "Un mes después, Guatemala",
+          "Las entregas se completaron",
+          "Dos meses después, el",
+          "En dos mil veinticuatro,",
+          "En marzo de dos",
+          "Nunca se explicó por",
+          "Al final, la compra"
+        ],
+        "segun": 0,
+        "aperturas_atribuidas": 0,
+        "pregunta": "Los guatemaltecos pagaron más de un millón de dosis que nunca se pusieron.",
+        "cierre": "Los guatemaltecos pagaron más de un millón de dosis que nunca se pusieron.",
+        "cierre_tipo": "remate",
+        "cierre_forma": "consecuencia",
+        "cierre_mecanismo": "perdida",
+        "familia": "pregunta",
+        "visual": "foto",
+        "animaciones": [
+          "plazo-vencido"
+        ]
+      }
+    },
+    {
+      "id": "2026-10-31-el-guatemalteco-que-desarrollo-el-cafe-soluble",
+      "slug": "el-guatemalteco-que-desarrollo-el-cafe-soluble",
+      "tema": "el guatemalteco que desarrollo el cafe soluble",
+      "fecha": "2026-10-31",
+      "ruta": "historias/2026-10-31-el-guatemalteco-que-desarrollo-el-cafe-soluble",
+      "arco": "origen disputado: un invento con varios padres y la carrera entre quien lo descubre y quien lo vende; termina en olvido y reclamo",
+      "paleta": "cacao",
+      "musica": "cacao-1",
+      "duracion_s": 165.4,
+      "creditos_voz": 2394.0,
+      "estado": "listo",
+      "frases": {
+        "promesa": "Al final vas a ver qué nombre quedó en el frasco.",
+        "gancho": "Un médico de Guatemala quiso un café que se disolviera.",
+        "aperturas": [
+          "Entonces buscó cómo repetir",
+          "Una enciclopedia de Oxford",
+          "El invento tuvo muchos",
+          "En mil novecientos uno,",
+          "Pero el rival más",
+          "Se llamaba George Washington,",
+          "Y el historiador William",
+          "Entonces eran dos hombres,",
+          "En mil novecientos diez,",
+          "Patentaron solo el nombre,",
+          "Para vender en Europa,",
+          "Lehnhoff murió cerca de",
+          "Seis años después, Nestlé,",
+          "Nunca se supo si"
+        ],
+        "segun": 0,
+        "aperturas_atribuidas": 0,
+        "pregunta": "Hoy, en Guatemala, las familias todavía disuelven café soluble en agua caliente.",
+        "cierre": "Hoy, en Guatemala, las familias todavía disuelven café soluble en agua caliente.",
+        "cierre_tipo": "remate",
+        "cierre_forma": "legado",
+        "cierre_mecanismo": null,
+        "familia": "personaje",
+        "visual": "foto",
+        "animaciones": [
+          "proceso-transforma"
+        ]
+      }
+    },
+    {
+      "id": "2026-11-01-la-erupcion-del-volcan-de-fuego-de-2018",
+      "slug": "la-erupcion-del-volcan-de-fuego-de-2018",
+      "tema": "La erupción del volcán de Fuego de 2018",
+      "fecha": "2026-11-01",
+      "ruta": "historias/2026-11-01-la-erupcion-del-volcan-de-fuego-de-2018",
+      "arco": "tragedia anunciada y rendición de cuentas pendiente: el día, la disputa por la alerta y lo que quedó",
+      "paleta": "obsidiana",
+      "musica": "obsidiana-1",
+      "duracion_s": 178.6,
+      "creditos_voz": 2567.0,
+      "estado": "listo",
+      "frases": {
+        "promesa": "Falta saber si alguien respondió ante un juez por la orden que no llegó.",
+        "gancho": "En febrero evacuaron a dos mil ochocientos ochenta vecinos.",
+        "aperturas": [
+          "Estaba a diez kilómetros",
+          "Entonces, el tres de",
+          "Edwin Ramiro Hernández, agricultor",
+          "Las cifras nunca cuadraron:",
+          "Pero Antigua al Rescate,",
+          "¿Por qué no salió",
+          "El INSIVUMEH dijo que",
+          "Por eso, unos diputados",
+          "García Cabañas respondió: Nosotros",
+          "En dos mil veinte,",
+          "Para entonces, Los Lotes",
+          "Los vivos, en cambio,",
+          "El Fuego no paró:",
+          "Los desaparecidos de Los"
+        ],
+        "segun": 0,
+        "aperturas_atribuidas": 0,
+        "pregunta": "Hoy, muchas de sus familias rehacen su vida en La Dignidad.",
+        "cierre": "Hoy, muchas de sus familias rehacen su vida en La Dignidad.",
+        "cierre_tipo": "remate",
+        "cierre_forma": "legado",
+        "cierre_mecanismo": null,
+        "familia": "contraste",
+        "visual": "foto",
+        "animaciones": [
+          "cronologia"
+        ]
+      }
+    },
+    {
+      "id": "2026-11-01-volcan-de-fuego-hora-a-hora",
+      "slug": "volcan-de-fuego-hora-a-hora",
+      "tema": "La erupción del volcán de Fuego de 2018",
+      "fecha": "2026-11-01",
+      "ruta": "historias/2026-11-01-volcan-de-fuego-hora-a-hora",
+      "arco": "crónica hora por hora de un desastre y de sus cuentas pendientes: el mecanismo del volcán, las alertas que no se tradujeron en evacuación y las cifras y culpas que nunca cerraron",
+      "paleta": "terracota",
+      "musica": "terracota-2",
+      "duracion_s": 168.3,
+      "creditos_voz": 2467.0,
+      "estado": "listo",
+      "frases": {
+        "promesa": "cuánta gente quedó bajo la ceniza es una cuenta que nunca cerró",
+        "gancho": "El Fuego dejó cuatrocientos treinta muertos y desaparecidos.",
+        "aperturas": [
+          "El tres de junio",
+          "Pero a las once,",
+          "Nadie ordenó sacar a",
+          "Por esa barranca bajaba",
+          "Un estudio de dos",
+          "Por eso llegó tan",
+          "Pasadas las tres de",
+          "A las tres y",
+          "Tres días después, en",
+          "Pero al instituto le",
+          "Y la cuenta de",
+          "A los sobrevivientes, el",
+          "Pero una familia no"
+        ],
+        "segun": 1,
+        "aperturas_atribuidas": 0,
+        "pregunta": "Hoy, cientos de familias damnificadas viven en La Dignidad.",
+        "cierre": "Hoy, cientos de familias damnificadas viven en La Dignidad.",
+        "cierre_tipo": "remate",
+        "cierre_forma": "legado",
+        "cierre_mecanismo": null,
+        "familia": "resultado",
+        "visual": "foto",
+        "animaciones": [
+          "oleadas-cauce"
+        ]
+      }
     }
   ]
 }

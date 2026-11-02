@@ -33,6 +33,22 @@
       "hilo_id": "2026-10-13-cumplimiento-plan-semilla",
       "estado": "listo",
       "modo": "investigacion"
+    },
+    {
+      "id": "2026-10-30-como-vota-el-congreso",
+      "fecha": "2026-10-30",
+      "slug": "como-vota-el-congreso",
+      "tema": "Cómo vota el Congreso de Guatemala: bancadas, diputados, coaliciones y tipos de votación (enero 2024 – octubre 2026)",
+      "tesis": "En las votaciones divididas del pleno (enero 2024 – octubre 2026), Semilla, la bancada más cohesionada, quedó del lado perdedor (el que no reúne los 81 votos que exige la ley) en 60.2 % de las que tomó posición; las veinticuatro etiquetas de bancada se reducen, en un agrupamiento exploratorio, a cinco bloques de voto, y lo que divide al pleno son las actas, la agenda, las mociones y la elección de cortes, no el debate final de las leyes.",
+      "paleta": "cacao",
+      "numero": "03",
+      "n_paginas": 30,
+      "n_figuras": 15,
+      "ruta_informe": "investigacion/2026-10-30-como-vota-el-congreso",
+      "ruta_hilo": "investigacion/2026-10-30-como-vota-el-congreso/hilo",
+      "hilo_id": "2026-10-30-como-vota-el-congreso",
+      "estado": "listo",
+      "modo": "investigacion"
     }
   ]
 }

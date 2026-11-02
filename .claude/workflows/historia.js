@@ -1,7 +1,7 @@
 export const meta = {
   name: 'historia',
   description: 'Historia narrada para /historia (v3, mini documental): historia-editor (encuadre: pregunta, protagonista, revelaciones, fotos_clave, arco, tres actos con la espina (detonante, punto medio, clímax, resolución), hilos, personajes, 2–5 periodos, 2–3 ejes) → un historia-investigador por eje ⇢ su historia-verificador (pipeline; segunda fuente por hecho, cuatro veredictos confirmado | una_fuente | en_disputa | no_confirmado con tipo_hecho, fechas, estado de los casos, fotos con licencia y la del protagonista; gate H1–H3, H7, H12) → consolidar (cronología y base) → video-gancho en modo historia (4–5 candidatos con la foto del protagonista; gate R1–R9, H10, H12, H13) → video-critico elige (reserva: no regala una revelación) → historia-guionista (PRIMERO la narración de corrido por acto, 320–400 palabras, narracion --check; DESPUÉS la reparte en escenas sin cambiar una palabra, con rótulos de acto sobre la imagen y secuencias de voz; gate H3–H20 + V1–V5, V9, F1–F8) → historia-oyente (oyente ingenuo: la narración de corrido y luego la pantalla) → crítico en modo historia (flujo en vez de ritmo; resuelve o justifica cada confusión, salto y pregunta sin responder del oyente; ≤ 2 vueltas, desde la 2 acotadas a lo que cambió; cada arreglo probado lleva sus cambios y el guionista los aplica tal cual con historia.py aplicar; si la última crítica solo bloquea con arreglos probados, se aplican y el guion queda aprobado; con «pasa», el guionista aplica sus mejoras y el oyente las vuelve a oír: se revierte solo la escena que confunde, nunca una de precisión) → video-animador por escena explica sin animación. 0 créditos de ElevenLabs.',
-  whenToUse: 'Invocado por /historia <tema> DESPUÉS de `python3 scripts/historia.py preparar "<tema>"`. args: {trabajo, tema, permitir_fallback, desde, notas}. trabajo = sesiones/historia-<slug> (lo imprime preparar). Produce y aprueba <trabajo>/encuadre.json, hallazgos_*.json, verificacion_*.json, fotos/, historia.json, base/, ganchos.json, seleccion.json, guion.json, locucion.json, oyente.json y critica.json; la voz (o la voz falsa), los tiempos, la grabación y el montaje los hace la sesión principal después. Si el crítico sigue en «corregir» tras 2 vueltas y sus faltas traen arreglos probados, se aplican (historia.py aplicar) y devuelve pasa con aprobado_por: arreglos_probados; si no, el workflow NO falla: devuelve veredicto corregir + faltas_pendientes y el comando pregunta al usuario. desde: "encuadre" = la cronología ya está verificada (historia.json, ganchos.json, seleccion.json): el editor re-encuadra por actos y salta a Guion; desde: "guion" = salta directo a Guion; desde: "retoque" + notas (lo que pidió el usuario) = guion.json ya aprobado y con voz: salta a Guion (RETOQUE: aplica solo las notas y conserva las voces que no cambian) → gate → oyente → crítica (1 vuelta) → mejoras → animación; devuelve voces_cambiadas para regrabar solo esas (con voz de corrido, voz --pendientes regraba la secuencia entera; --sueltas solo esas escenas).',
+  whenToUse: 'Invocado por /historia <tema> DESPUÉS de `python3 scripts/historia.py preparar "<tema>"`. args: {trabajo, tema, permitir_fallback, desde, notas, angulo}. angulo = el ángulo y los pedidos del usuario para una corrida completa (qué contar, qué gancho quiere): va en las directivas del editor, investigadores, verificadores, ganchos, selección, guionista y crítica. trabajo = sesiones/historia-<slug> (lo imprime preparar). Produce y aprueba <trabajo>/encuadre.json, hallazgos_*.json, verificacion_*.json, fotos/, historia.json, base/, ganchos.json, seleccion.json, guion.json, locucion.json, oyente.json y critica.json; la voz (o la voz falsa), los tiempos, la grabación y el montaje los hace la sesión principal después. Si el crítico sigue en «corregir» tras 2 vueltas y sus faltas traen arreglos probados, se aplican (historia.py aplicar) y devuelve pasa con aprobado_por: arreglos_probados; si no, el workflow NO falla: devuelve veredicto corregir + faltas_pendientes y el comando pregunta al usuario. desde: "encuadre" = la cronología ya está verificada (historia.json, ganchos.json, seleccion.json): el editor re-encuadra por actos y salta a Guion; desde: "guion" = salta directo a Guion; desde: "retoque" + notas (lo que pidió el usuario) = guion.json ya aprobado y con voz: salta a Guion (RETOQUE: aplica solo las notas y conserva las voces que no cambian) → gate → oyente → crítica (1 vuelta) → mejoras → animación; devuelve voces_cambiadas para regrabar solo esas (con voz de corrido, voz --pendientes regraba la secuencia entera; --sueltas solo esas escenas).',
   phases: [
     { title: 'Encuadre', detail: 'historia-editor: encuadre.json con la pregunta central, el protagonista, las revelaciones (lo que el video paga y el gancho no dice), fotos_clave (la primera es la imagen del protagonista), el arco, tres actos (planteamiento, nudo, desenlace) con la espina (detonante, punto medio, clímax, resolución), 2–6 hilos (lo que la historia abre), personajes con su presentación, 2–5 periodos que reparten 2–3 ejes de investigación, paleta, no_afirma y lo sensible (justicia); gate historia.py encuadre --check. En desde: encuadre, re-encuadra una cronología ya verificada' },
     { title: 'Investigación', detail: 'un historia-investigador por eje en paralelo: hechos con fecha y cita literal del texto guardado (historia.py leer: HTML, PDF o Wayback), cifras, frases literales y fotos candidatas → hallazgos_<eje>.json' },
@@ -45,6 +45,9 @@ const DESDE = String(A.desde || '')
 if (!['', 'encuadre', 'guion', 'retoque'].includes(DESDE)) throw new Error('args.desde: "encuadre" (re-encuadrar por actos una cronología verificada), "guion" (saltar al guion) o "retoque" (guion.json aprobado en TRABAJO + args.notas con lo que pidió el usuario).')
 const RETOQUE = DESDE === 'retoque', REENCUADRE = DESDE === 'encuadre', DESDE_GUION = DESDE === 'guion'
 const notas = String(A.notas || '').trim()
+// angulo: lo que el usuario pidió para esta historia (el enfoque, el gancho); manda sobre el criterio de cada agente
+const angulo = String(A.angulo || '').trim()
+const ANGULO = angulo ? ` ÁNGULO Y PEDIDOS DEL USUARIO (mandan sobre tu criterio): «${angulo}».` : ''
 if (RETOQUE && !notas) throw new Error('args.notas: en modo retoque, lo que pidió el usuario (cambiar el gancho por g3, reescribir la escena 7, otro cierre, quitar la cita de la 10…).')
 const VUELTAS = RETOQUE ? 1 : VUELTAS_CRITICA
 
@@ -255,7 +258,8 @@ let ENC = null, ver = [], K = { candidatos: [] }, SEL = { ganador: null, segundo
 const directivaEncuadre = REENCUADRE
   ? `RE-ENCUADRE (lee «Re-encuadre» en referencias/roles/historia-editor.md): ${trabajo}/encuadre.json ya existe y la cronología está verificada: lee SOLO python3 scripts/historia.py digesto ${trabajo} --para editor. ` +
     `Conserva tema, slug, pregunta, protagonista, revelaciones, fotos_clave, arco, ejes, paleta, dominios_propios, sensibles y no_afirma; renombra capitulos → periodos (y ejes[].capitulos → ejes[].periodos) y AÑADE actos, espina, hilos y personajes. `
-  : `Escribe ${trabajo}/encuadre.json: pregunta central, protagonista (1–3 nombres con que se nombra a quien protagoniza: la marca, la persona, la empresa; el gancho lo nombra), ` +
+  : (angulo ? `${ANGULO} El encuadre (pregunta, actos, ejes, revelaciones) sigue ese ángulo; una cifra que el usuario pide para el gancho NO va en revelaciones (H13 vetaría sus dígitos). ` : '') +
+    `Escribe ${trabajo}/encuadre.json: pregunta central, protagonista (1–3 nombres con que se nombra a quien protagoniza: la marca, la persona, la empresa; el gancho lo nombra), ` +
     `revelaciones (3–5 frases: lo que el video revela y el gancho NO puede decir —la respuesta a la pregunta, de qué está hecho, quién lo hizo, cómo terminó— con sus números tal cual: el gate veta esos dígitos en el gancho), ` +
     `fotos_clave (2–4 imágenes que la historia necesita; la PRIMERA es siempre la del protagonista: el producto, el edificio, la persona), arco (el que le toca a ESTA historia; abierto), ` +
     `${PERIODOS_MIN}–${PERIODOS_MAX} periodos (el reparto de los ejes entre investigadores, cada uno con su pregunta), ${EJES_MIN}–${EJES_MAX} ejes con id de 2–6 letras y sus periodos, paleta del tema, dominios_propios (también el sitio de la marca), no_afirma y sensibles. `
@@ -290,14 +294,14 @@ if (!RETOQUE && !DESDE_GUION && !REENCUADRE) {
 // ── 2–3. Investigación ⇢ Verificación (pipeline por eje) ─────────────────────
 const verificaciones = await pipeline(ENC.ejes,
   (eje) => conReparacion(`investigación ${eje}`, (fallos) => agentRol(
-    `Eres el investigador del eje «${eje}» de la historia «${tema}» (lee referencias/roles/historia-investigador.md). TRABAJO = ${trabajo}. ` +
+    `Eres el investigador del eje «${eje}» de la historia «${tema}» (lee referencias/roles/historia-investigador.md). TRABAJO = ${trabajo}.${ANGULO} ` +
       `Insumo: python3 scripts/historia.py digesto ${trabajo} --para investigador --eje ${eje}. Guarda cada fuente con python3 scripts/historia.py leer <url>; ` +
       `escribe ${trabajo}/hallazgos_${eje}.json (ids ${eje}-h01, ${eje}-c01, ${eje}-q01, ${eje}-f01).` +
       (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : ''),
     { agentType: 'historia-investigador', schema: S.hallazgos, phase: 'Investigación', label: `investiga-${eje}` }),
   (r) => [...(r.eje !== eje ? [`eje ${r.eje} ≠ ${eje}`] : []), ...(r.hechos < 2 ? [`solo ${r.hechos} hechos: busca más (≥ 2 por eje)`] : [])], 1),
   (hz, eje) => conReparacion(`verificación ${eje}`, (fallos) => agentRol(
-    `Eres el verificador del eje «${eje}» de la historia «${tema}» (lee referencias/roles/historia-verificador.md). TRABAJO = ${trabajo}. ` +
+    `Eres el verificador del eje «${eje}» de la historia «${tema}» (lee referencias/roles/historia-verificador.md). TRABAJO = ${trabajo}.${ANGULO} ` +
       `Insumo: python3 scripts/historia.py digesto ${trabajo} --para verificador --eje ${eje} (${hz.hechos} hechos, ${hz.cifras} cifras, ${hz.citas} citas, ${hz.fotos} fotos candidatas). ` +
       `${ENC.justicia ? 'Historia de JUSTICIA: cada persona señalada lleva casos[] con su estado a hoy y su fuente. ' : ''}` +
       `Cuatro veredictos: confirmado (2 grupos) · una_fuente (UNA fuente seria sin nada que la contradiga: se narrará llano con la fuente en pantalla) · en_disputa (las fuentes difieren: nota con las dos versiones) · no_confirmado; y tipo_hecho acto | alegato | estimacion | opinion (lo que no es un acto público se atribuye en voz). ` +
@@ -328,7 +332,7 @@ if (ver.reduce((s, v) => s + (v.protagonista || 0), 0) === 0) {
 // ── 4. Ganchos (consolidar + candidatos) ─────────────────────────────────────
 phase('Ganchos')
 const invocarGanchos = (fallos, faltasSel) => agentRol(
-  `MODO HISTORIA (lee referencias/ganchos.md y la sección «Modo historia» de referencias/roles/video-gancho.md). TRABAJO = ${trabajo} · «${tema}».\n` +
+  `MODO HISTORIA (lee referencias/ganchos.md y la sección «Modo historia» de referencias/roles/video-gancho.md). TRABAJO = ${trabajo} · «${tema}».${ANGULO}\n` +
     `PRIMERO corre python3 scripts/historia.py consolidar ${trabajo} (cronología y base; exit 1 = pocos hechos: devuélvelo en fallas). ` +
     `Lee SOLO python3 scripts/historia.py digesto ${trabajo} --para gancho. Escribe ${trabajo}/ganchos.json con ${CANDIDATOS_MIN}–${CANDIDATOS_MAX} candidatos de FAMILIAS DISTINTAS (${FAMILIAS.join(', ')}), TODOS con visual foto (la foto verificada a sangre que cubre la pantalla), TODOS nombrando al protagonista del encuadre (H10), cada uno con el momento de la historia (el problema que la hizo nacer, la persona, la decisión) y NUNCA la respuesta que el video paga ni el detalle técnico que explica después (de qué está hecho, cómo terminó), sin lo que bloquea la rotación. ` +
     `Corre python3 scripts/historia.py ganchos ${trabajo} --check hasta exit 0 (≤ 3 intentos).\n` +
@@ -352,7 +356,7 @@ log(`Ganchos: ${K.candidatos.map((c) => `${c.id} ${c.familia}/${c.visual} «${c.
 // ── 5. Selección ─────────────────────────────────────────────────────────────
 phase('Selección')
 const seleccionar = (vuelta) => conReparacion('Selección', (fallos) => agentRol(
-  `MODO SELECCIÓN DE GANCHO de una HISTORIA (lee «Modo selección de gancho» y «Modo historia» de referencias/roles/video-critico.md). TRABAJO = ${trabajo} · vuelta ${vuelta}. ` +
+  `MODO SELECCIÓN DE GANCHO de una HISTORIA (lee «Modo selección de gancho» y «Modo historia» de referencias/roles/video-critico.md). TRABAJO = ${trabajo} · vuelta ${vuelta}.${ANGULO} ` +
     `Lee SOLO referencias/ganchos.md, ${trabajo}/ganchos.json y python3 scripts/historia.py digesto ${trabajo} --para gancho. Cada candidato primero en silencio y luego con la voz; puntúa silencio, reserva (no regala ninguna revelación del digesto: cuenta el momento, la persona, el problema; un candidato que dice una revelación tiene reserva ≤ 2 y no puede ganar), tension, alineacion, honestidad y novedad; ganador (ninguno ≤ 2) y segundo de otra familia, o ganador null con faltas. Escribe ${trabajo}/seleccion.json.` +
     (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : ''),
   { agentType: 'video-critico', schema: S.seleccion, phase: 'Selección', label: `seleccion-${vuelta}` }),
@@ -380,7 +384,7 @@ log(`Selección: gana ${SEL.ganador} · segundo ${SEL.segundo || '—'} · ${SEL
 
 // ── 6. Guion ─────────────────────────────────────────────────────────────────
 phase('Guion')
-const directivaBase = `Eres el guionista de /historia (lee referencias/roles/historia-guionista.md). TRABAJO = ${trabajo} · «${tema}». ` +
+const directivaBase = `Eres el guionista de /historia (lee referencias/roles/historia-guionista.md). TRABAJO = ${trabajo} · «${tema}».${ANGULO} ` +
   ((DESDE_GUION || REENCUADRE) ? `PRIMERO corre python3 scripts/historia.py consolidar ${trabajo} (el encuadre cambió: rehace historia.json). ` : '') +
   `Lee SOLO python3 scripts/historia.py digesto ${trabajo} --para guionista. Corre python3 scripts/historia.py guion ${trabajo} --check hasta 0 fallas ` +
   `y devuelve TAL CUAL su última línea RETORNO (tipos trae el tipo de CADA escena en orden, sin el cierre). `
@@ -479,7 +483,7 @@ for (let vuelta = 1; vuelta <= VUELTAS + 1; vuelta++) {
   if (vuelta > 1) O = await oir(vuelta)   // la corrección cambió la voz: el oyente vuelve a oírla
   const acotada = cambiadas !== null
   critica = await conReparacion(`crítica ${vuelta}`, (fallos) => agentRol(
-    `MODO HISTORIA (lee la sección «Modo historia» de referencias/roles/video-critico.md). TRABAJO = ${trabajo}. Vuelta ${vuelta}. ` +
+    `MODO HISTORIA (lee la sección «Modo historia» de referencias/roles/video-critico.md). TRABAJO = ${trabajo}. Vuelta ${vuelta}.${ANGULO} ` +
       `Insumos: ${trabajo}/guion.json, ${trabajo}/locucion.json, ` +
       (O ? `${trabajo}/oyente.json (lo que un oyente que SOLO oyó la voz no entendió: cada confusión y cada salto se resuelve con una falta bloquea de H-C3 ` +
            `—H-C2 si es la promesa— con su arreglo exacto, o se justifica en critica.json → oyente_descartadas[]{escena, motivo}; cada pregunta_sin_responder que coincide con un hilo del encuadre ` +
