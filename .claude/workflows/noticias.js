@@ -1,7 +1,7 @@
 export const meta = {
   name: 'noticias',
-  description: 'Noticias del día para /noticias: 3 rastreadores (pol · seg · eco) proponen candidatas (gate N1) → preselección en código (6 mejores, ≥ 2 secciones) → un verificador por noticia (segunda fuente, citas en el texto guardado, foto; gate N2 + N7) → editor (elige 3–4 y escribe el guion de ≤ 70 s; gate N3–N6, N8) → crítico en modo noticiero (≤ 2 vueltas). 0 créditos de ElevenLabs.',
-  whenToUse: 'Invocado por /noticias [hoy|YYYY-MM-DD] DESPUÉS de `python3 scripts/noticias.py preparar`. args: {trabajo, fecha, permitir_fallback}. trabajo = sesiones/noticias-<fecha> (lo imprime preparar). Produce y aprueba <trabajo>/candidatas_*.json, verificacion_*.json, fotos/, noticias.json, guion.json, locucion.json y critica.json; la voz (o la voz falsa), los tiempos, la grabación, el montaje y la entrega los hace la sesión principal después. Si el crítico sigue en «corregir» tras 2 vueltas, el workflow NO falla: devuelve veredicto corregir + faltas_pendientes y el comando pregunta al usuario.',
+  description: 'Dos modos. diario (/noticias): noticias del día: 3 rastreadores (pol · seg · eco) proponen candidatas (gate N1) → preselección en código (6 mejores, ≥ 2 secciones) → un verificador por noticia (segunda fuente, citas en el texto guardado, foto; gate N2 + N7) → editor (elige 3–4 y escribe el guion de ≤ 70 s; gate N3–N6, N8) → crítico en modo noticiero (≤ 2 vueltas). semana (/semana, «Las 5 cifras de la semana»): la cosecha de los diarios ya verificada (semana.py cosechar) + 2 rastreadores (ofi: datos oficiales nuevos; sem: lo que no contaron los diarios) → verificación solo de lo nuevo (confirmada o dato oficial) → editor (5 cifras 5→1, SM1–SM11) → crítico en modo semana. 0 créditos de ElevenLabs.',
+  whenToUse: 'Invocado por /noticias [hoy|YYYY-MM-DD] DESPUÉS de `python3 scripts/noticias.py preparar`, o por /semana [YYYY-MM-DD] después de `python3 scripts/semana.py preparar` y `cosechar`. args: {trabajo, fecha, modo?: diario|semana (por defecto, semana si trabajo es sesiones/semana-<domingo>), cosecha?: [{id, seccion, titular}] (semana), permitir_fallback}. trabajo = sesiones/noticias-<fecha> (lo imprime preparar). Produce y aprueba <trabajo>/candidatas_*.json, verificacion_*.json, fotos/, noticias.json, guion.json, locucion.json y critica.json; la voz (o la voz falsa), los tiempos, la grabación, el montaje y la entrega los hace la sesión principal después. Si el crítico sigue en «corregir» tras 2 vueltas, el workflow NO falla: devuelve veredicto corregir + faltas_pendientes y el comando pregunta al usuario.',
   phases: [
     { title: 'Rastreo', detail: '3 noticias-rastreador en paralelo (pol, seg, eco): candidatas_<sec>.json con ≤ 5 noticias de hoy o ayer, guardadas con noticias.py leer; gate noticias.py candidatas --check (N1)' },
     { title: 'Verificación', detail: 'un noticias-verificador por preseleccionada (las 6 mejores por puntaje, ≥ 2 secciones, sin duplicadas): segunda fuente independiente u oficial, hechos y cifras con cita literal, foto (noticias.py foto); gate noticias.py verificacion --check (N2 + N7); si quedan < 3 publicables, una segunda ronda con las siguientes' },
@@ -15,20 +15,47 @@ export const meta = {
 // devuelven aquí un resumen validado por schema; los gates de contenido viven en scripts/noticias.py (N1–N8). SECCIONES
 // es espejo literal de noticias.SECCIONES (lo vigila scripts/check_workflows.py, W11).
 
-const SECCIONES = ['pol', 'seg', 'eco']
+// Modos (W11: MODOS.diario.secciones es espejo de noticias.SECCIONES; MODOS.semana.secciones, puntajes y cifras, de
+// semana.SECCIONES, semana.PUNTAJES y semana.CIFRAS). diario = /noticias; semana = /semana («Las 5 cifras de la semana»:
+// la cosecha de los diarios ya verificada la hace semana.py antes del workflow; aquí solo se rastrea y verifica lo nuevo).
+const MODOS = {
+  diario: {
+    secciones: ['pol', 'seg', 'eco'],
+    puntajes: ['gancho', 'claridad', 'ritmo', 'precision', 'tono', 'cierre'],
+    cifras: 0,
+  },
+  semana: {
+    secciones: ['ofi', 'sem'],
+    puntajes: ['gancho', 'orden', 'claridad', 'escala', 'tono', 'cierre'],
+    cifras: 5,
+  },
+}
+const TODAS_SECCIONES = [...new Set(Object.values(MODOS).flatMap((m) => m.secciones))]
 const ESTADOS = ['confirmada', 'en_desarrollo', 'no_confirmada']
-const PUNTAJES = ['gancho', 'claridad', 'ritmo', 'precision', 'tono', 'cierre']
 const PRESELECCION = 6, NOTICIAS_MIN = 3, SECCIONES_MIN = 2, RONDA_EXTRA = 3
+const PRESELECCION_SEMANA = 4, DURACION_MAX = { diario: 70, semana: 90 }
 const VUELTAS_CRITICA = 2
 const PUNTAJE_MIN = 3
-const REGLA_DE = { gancho: 'N-C1', claridad: 'N-C2', ritmo: 'N-C3', precision: 'N-C4', tono: 'N-C5', cierre: 'N-C6' }
+const REGLA_DE = {
+  diario: { gancho: 'N-C1', claridad: 'N-C2', ritmo: 'N-C3', precision: 'N-C4', tono: 'N-C5', cierre: 'N-C6' },
+  semana: { gancho: 'SM-C1', orden: 'SM-C2', claridad: 'SM-C3', escala: 'SM-C4', tono: 'SM-C5', cierre: 'SM-C6' },
+}
 
 // ── Argumentos ───────────────────────────────────────────────────────────────
 const A = typeof args === 'string' ? { trabajo: args } : (args || {})
 const trabajo = String(A.trabajo || '').replace(/\/+$/, '')
-if (!/^sesiones\/(noticias-\d{4}-\d{2}-\d{2}|_fixture_noticias\/[a-z0-9_-]+)$/.test(trabajo)) throw new Error('args.trabajo debe ser sesiones/noticias-<fecha> (la última línea que imprime `python3 scripts/noticias.py preparar`).')
+if (!/^sesiones\/(noticias-\d{4}-\d{2}-\d{2}|semana-\d{4}-\d{2}-\d{2}|_fixture_noticias\/[a-z0-9_-]+|_fixture_semana\/[a-z0-9_-]+)$/.test(trabajo)) throw new Error('args.trabajo debe ser sesiones/noticias-<fecha> o sesiones/semana-<domingo> (la última línea que imprime `python3 scripts/noticias.py preparar` o `python3 scripts/semana.py preparar`).')
+const MODO = String(A.modo || (/semana/.test(trabajo) ? 'semana' : 'diario'))
+if (!MODOS[MODO]) throw new Error(`args.modo: ${Object.keys(MODOS).join(' | ')} (semana = /semana).`)
+const MD = MODOS[MODO], SEMANA = MODO === 'semana'
+const SECCIONES = MD.secciones, PUNTAJES = MD.puntajes
+const SCRIPT = SEMANA ? 'scripts/semana.py' : 'scripts/noticias.py'
 const fecha = String(A.fecha || (trabajo.match(/\d{4}-\d{2}-\d{2}/) || [''])[0])
 if (!/^\d{4}-\d{2}-\d{2}$/.test(fecha)) throw new Error('args.fecha va como YYYY-MM-DD.')
+// /semana: lo que ya trae la cosecha de los diarios (semana.py cosechar; el comando lo pasa): [{id, seccion, titular}]
+const COSECHA = SEMANA ? (Array.isArray(A.cosecha) ? A.cosecha : []) : []
+const QUE = SEMANA ? `la semana que termina el ${fecha} (lunes a domingo)` : `el noticiero del ${fecha}`
+const MODO_ROL = SEMANA ? ' Sigue la sección «Modo semana» de tu guía.' : ""
 
 // <comun> generado por scripts/armar_workflows.py desde scripts/workflow_comun.js: no editar aquí
 // Código común de los workflows hilo.js, dato.js, investigacion.js y video.js (el sandbox de Workflow no importa módulos).
@@ -113,8 +140,8 @@ const S = {
     type: 'object',
     required: ['seccion', 'archivo', 'gate', 'candidatas'],
     properties: {
-      seccion: { type: 'string', enum: SECCIONES },
-      archivo: { type: 'string', pattern: 'candidatas_(pol|seg|eco)\\.json$' },
+      seccion: { type: 'string', enum: TODAS_SECCIONES },
+      archivo: { type: 'string', pattern: 'candidatas_(pol|seg|eco|ofi|sem)\\.json$' },
       gate: { type: 'string', enum: ['ok', 'falla'] },
       candidatas: {
         type: 'array',
@@ -173,70 +200,80 @@ const parecidas = (a, b) => { const x = palabras(a), y = palabras(b); if (!x.siz
 // ── 1. Rastreo ───────────────────────────────────────────────────────────────
 phase('Rastreo')
 const rastreos = await parallel(SECCIONES.map((sec) => () => conReparacion(`rastreo ${sec}`, (fallos) => agentRol(
-  `Eres el rastreador de la sección «${sec}» del noticiero del ${fecha}. TRABAJO: ${trabajo}. Lee referencias/roles/noticias-rastreador.md; ` +
-    `insumo: python3 scripts/noticias.py digesto ${trabajo} --para rastreador. Escribe ${trabajo}/candidatas_${sec}.json (≤ 5, ids ${sec}-1, ${sec}-2…) ` +
-    `y corre python3 scripts/noticias.py candidatas ${trabajo} --check --seccion ${sec} hasta 0 fallas.` +
+  `Eres el rastreador de la sección «${sec}» para ${QUE}. TRABAJO: ${trabajo}. Lee referencias/roles/noticias-rastreador.md.${MODO_ROL} ` +
+    `Insumo: python3 ${SCRIPT} digesto ${trabajo} --para rastreador. Escribe ${trabajo}/candidatas_${sec}.json (≤ 5, ids ${sec}-1, ${sec}-2…) ` +
+    `y corre python3 ${SCRIPT} candidatas ${trabajo} --check --seccion ${sec} hasta 0 fallas.` +
     (fallos.length ? ` REPARACIÓN: tu retorno anterior falló: ${fallos.join('; ')}. Corrige el archivo y vuelve a correr el gate.` : ''),
   { agentType: 'noticias-rastreador', schema: S.rastreo, phase: 'Rastreo', label: `rastreo-${sec}` }),
 (r) => [
   ...(r.gate !== 'ok' ? ['el gate N1 no quedó en ok'] : []),
   ...(r.seccion !== sec ? [`seccion ${r.seccion} ≠ ${sec}`] : []),
-  ...(!r.candidatas.length ? ['ninguna candidata'] : []),
+  ...(!r.candidatas.length && !SEMANA ? ['ninguna candidata'] : []),
   ...r.candidatas.filter((c) => !c.id.startsWith(sec + '-')).map((c) => `id ${c.id} sin el prefijo ${sec}-`),
 ], 1)))
 const candidatas = rastreos.filter(Boolean).flatMap((r) => r.candidatas.map((c) => ({ ...c, sec: r.seccion })))
 if (rastreos.some((r) => !r)) avisar(`AVISO: ${SECCIONES.filter((_, k) => !rastreos[k]).join(', ')} sin candidatas (el rastreador no terminó).`)
-if (candidatas.length < NOTICIAS_MIN) fail(`Solo ${candidatas.length} candidatas en total: no alcanza para un noticiero.`)
+const MINIMO = SEMANA ? MD.cifras : NOTICIAS_MIN
+if (candidatas.length + COSECHA.length < MINIMO) fail(`Solo ${candidatas.length} candidatas${SEMANA ? ` + ${COSECHA.length} cosechadas` : ''} en total: no alcanza (van ≥ ${MINIMO}).`)
 
-// ── 2. Preselección (código): las mejores por peso, sin duplicadas entre secciones, ≥ 2 secciones ─────────────
+// ── 2. Preselección (código): las mejores por peso, sin duplicadas entre secciones (ni con la cosecha, en semana) ──
 const orden = [...candidatas].sort((a, b) => peso(b) - peso(a) || a.id.localeCompare(b.id))
 const unicas = []
 for (const c of orden) {
-  const dup = unicas.find((u) => parecidas(u.titular, c.titular))
+  const dup = unicas.find((u) => parecidas(u.titular, c.titular)) || COSECHA.find((u) => parecidas(u.titular, c.titular))
   if (dup) { avisar(`${c.id} parece la misma noticia que ${dup.id} («${c.titular}»): se descarta.`); continue }
   unicas.push(c)
 }
-let pre = unicas.slice(0, PRESELECCION)
+let pre = unicas.slice(0, SEMANA ? PRESELECCION_SEMANA : PRESELECCION)
 const secs = new Set(pre.map((c) => c.sec))
-if (secs.size < SECCIONES_MIN) {
+if (!SEMANA && secs.size < SECCIONES_MIN) {
   const otra = unicas.find((c) => !secs.has(c.sec))
   if (otra) pre = [...pre.slice(0, PRESELECCION - 1), otra]
 }
 const resto = unicas.filter((c) => !pre.includes(c))
-log(`Preselección: ${pre.map((c) => `${c.id} (${peso(c)})`).join(', ')}${resto.length ? ` · fuera: ${resto.map((c) => c.id).join(', ')}` : ''}`)
+log(`Preselección: ${pre.map((c) => `${c.id} (${peso(c)})`).join(', ') || 'ninguna nueva'}${resto.length ? ` · fuera: ${resto.map((c) => c.id).join(', ')}` : ''}${SEMANA ? ` · cosecha: ${COSECHA.length}` : ''}`)
 
-// ── 3. Verificación (un verificador por noticia, en paralelo) ────────────────
+// ── 3. Verificación (un verificador por noticia NUEVA, en paralelo; lo cosechado ya está verificado) ──────────
 phase('Verificación')
 const verificar = (c) => conReparacion(`verificación ${c.id}`, (fallos) => agentRol(
-  `Eres el verificador de la noticia ${c.id} («${c.titular}») del noticiero del ${fecha}. TRABAJO: ${trabajo}. Lee referencias/roles/noticias-verificador.md; ` +
-    `insumo: python3 scripts/noticias.py digesto ${trabajo} --para verificador --id ${c.id}. Escribe ${trabajo}/verificacion_${c.id}.json, ` +
-    `corre python3 scripts/noticias.py foto ${trabajo} --id ${c.id} (cada noticia lleva foto: si sale SIN FOTO, una de referencia de la institución, el lugar o la persona con --origen referencia) y luego python3 scripts/noticias.py verificacion ${trabajo} --check --id ${c.id} hasta 0 fallas ` +
+  `Eres el verificador de la noticia ${c.id} («${c.titular}») para ${QUE}. TRABAJO: ${trabajo}. Lee referencias/roles/noticias-verificador.md.${MODO_ROL} ` +
+    `Insumo: python3 ${SCRIPT} digesto ${trabajo} --para verificador --id ${c.id}. Escribe ${trabajo}/verificacion_${c.id}.json, ` +
+    `corre python3 ${SCRIPT} foto ${trabajo} --id ${c.id} (cada noticia lleva foto: si sale SIN FOTO, una de referencia de la institución, el lugar o la persona con --origen referencia) y luego python3 ${SCRIPT} verificacion ${trabajo} --check --id ${c.id} hasta 0 fallas ` +
     '(o márcala no_confirmada si no se sostiene).' +
     (fallos.length ? ` REPARACIÓN: tu retorno anterior falló: ${fallos.join('; ')}. Corrige el archivo y vuelve a correr el gate.` : ''),
   { agentType: 'noticias-verificador', schema: S.verificacion, phase: 'Verificación', label: `verifica-${c.id}` }),
 (r) => [...(r.id !== c.id ? [`id ${r.id} ≠ ${c.id}`] : []), ...(r.gate !== 'ok' ? ['el gate N2 no quedó en ok'] : [])], 1).catch((e) => { avisar(`AVISO: ${c.id} sin verificar (${String(e.message).split('\n')[0]}).`); return null })
 let verificadas = (await parallel(pre.map((c) => () => verificar(c)))).filter(Boolean)
-const publicables = () => verificadas.filter((v) => v.estado !== 'no_confirmada')
-if (publicables().length < NOTICIAS_MIN && resto.length) {
+// en semana solo cuenta lo confirmado (en_desarrollo nunca entra); en el diario, todo lo que no es no_confirmada
+const publicables = () => verificadas.filter((v) => (SEMANA ? v.estado === 'confirmada' : v.estado !== 'no_confirmada'))
+const total = () => publicables().length + COSECHA.length
+if (total() < MINIMO && resto.length) {
   const extra = resto.slice(0, RONDA_EXTRA)
-  avisar(`Solo ${publicables().length} publicables: segunda ronda con ${extra.map((c) => c.id).join(', ')}.`)
+  avisar(`Solo ${total()} publicables: segunda ronda con ${extra.map((c) => c.id).join(', ')}.`)
   verificadas = verificadas.concat((await parallel(extra.map((c) => () => verificar(c)))).filter(Boolean))
 }
-const descartadas = verificadas.filter((v) => v.estado === 'no_confirmada').map((v) => ({ id: v.id, motivo: v.motivo || '' }))
-log(`Verificación: ${verificadas.map((v) => `${v.id} ${v.estado}${v.foto ? ' · foto ' + v.foto : ''}`).join(' · ')}`)
-if (publicables().length < NOTICIAS_MIN) fail(`Solo ${publicables().length} noticias publicables (van ≥ ${NOTICIAS_MIN}). Descartadas: ${descartadas.map((d) => `${d.id} (${d.motivo})`).join('; ')}`)
+const descartadas = verificadas.filter((v) => !publicables().includes(v)).map((v) => ({ id: v.id, estado: v.estado, motivo: v.motivo || '' }))
+log(`Verificación: ${verificadas.map((v) => `${v.id} ${v.estado}${v.foto ? ' · foto ' + v.foto : ''}`).join(' · ') || 'ninguna nueva'}`)
+if (total() < MINIMO) fail(`Solo ${total()} noticias publicables (van ≥ ${MINIMO}). Descartadas: ${descartadas.map((d) => `${d.id} (${d.estado}: ${d.motivo})`).join('; ')}`)
 
 // ── 4. Edición ───────────────────────────────────────────────────────────────
 phase('Edición')
-const ids = new Set(publicables().map((v) => v.id))
-const directivaEditor = `Eres el editor del noticiero del ${fecha}. TRABAJO: ${trabajo}. Lee referencias/roles/noticias-editor.md. ` +
-  `Corre python3 scripts/noticias.py consolidar ${trabajo} y lee python3 scripts/noticias.py digesto ${trabajo} --para editor. ` +
-  `Publicables: ${[...ids].join(', ')}. Escribe ${trabajo}/guion.json y corre python3 scripts/noticias.py guion ${trabajo} --check hasta 0 fallas.`
+const ids = new Set([...publicables().map((v) => v.id), ...COSECHA.map((c) => c.id)])
+const directivaEditor = (SEMANA
+  ? `Eres el editor de «Las 5 cifras de la semana» (${QUE}). TRABAJO: ${trabajo}. Lee referencias/roles/noticias-editor.md, sección «Modo semana». ` +
+    `Corre python3 ${SCRIPT} consolidar ${trabajo} y lee python3 ${SCRIPT} digesto ${trabajo} --para editor. ` +
+    `Noticias disponibles (cosecha + nuevas confirmadas): ${[...ids].join(', ')}. Escribe ${trabajo}/guion.json (5 cifras, puestos 5→1) y corre python3 ${SCRIPT} guion ${trabajo} --check hasta 0 fallas (SM1–SM11). ` +
+    'En el retorno, `noticias` = los ids de noticia de las 5 cifras en el orden de la cuenta.'
+  : `Eres el editor del noticiero del ${fecha}. TRABAJO: ${trabajo}. Lee referencias/roles/noticias-editor.md. ` +
+    `Corre python3 ${SCRIPT} consolidar ${trabajo} y lee python3 ${SCRIPT} digesto ${trabajo} --para editor. ` +
+    `Publicables: ${[...ids].join(', ')}. Escribe ${trabajo}/guion.json y corre python3 ${SCRIPT} guion ${trabajo} --check hasta 0 fallas.`)
 const validarEdicion = (r) => [
   ...(r.gate !== 'ok' ? ['el gate del guion no quedó en ok' + (r.fallas && r.fallas.length ? ': ' + r.fallas.join('; ') : '')] : []),
-  ...(r.noticias.length < NOTICIAS_MIN || r.noticias.length > 4 ? [`${r.noticias.length} noticias (van ${NOTICIAS_MIN}–4)`] : []),
+  ...(SEMANA
+    ? (r.noticias.length !== MD.cifras ? [`${r.noticias.length} cifras (van ${MD.cifras}, una por noticia)`] : [])
+    : (r.noticias.length < NOTICIAS_MIN || r.noticias.length > 4 ? [`${r.noticias.length} noticias (van ${NOTICIAS_MIN}–4)`] : [])),
   ...r.noticias.filter((x) => !ids.has(x)).map((x) => `${x} no es publicable`),
-  ...(r.estimado_s > 70 ? [`${r.estimado_s} s estimados (máximo 70)`] : []),
+  ...(r.estimado_s > DURACION_MAX[MODO] ? [`${r.estimado_s} s estimados (máximo ${DURACION_MAX[MODO]})`] : []),
 ]
 let edicion = await conReparacion('edición', (fallos) => agentRol(directivaEditor +
   (fallos.length ? ` REPARACIÓN: tu retorno anterior falló: ${fallos.join('; ')}.` : ''),
@@ -246,16 +283,18 @@ let edicion = await conReparacion('edición', (fallos) => agentRol(directivaEdit
 phase('Crítica')
 const validarCritica = (r) => {
   const f = []
-  for (const k of PUNTAJES) if (r.puntajes[k] <= 2 && !r.faltas.some((x) => x.gravedad === 'bloquea' && x.regla === REGLA_DE[k])) f.push(`puntaje ${k} = ${r.puntajes[k]} sin falta «bloquea» de ${REGLA_DE[k]}`)
+  for (const k of PUNTAJES) if (r.puntajes[k] <= 2 && !r.faltas.some((x) => x.gravedad === 'bloquea' && x.regla === REGLA_DE[MODO][k])) f.push(`puntaje ${k} = ${r.puntajes[k]} sin falta «bloquea» de ${REGLA_DE[MODO][k]}`)
   const bloquea = r.faltas.some((x) => x.gravedad === 'bloquea') || PUNTAJES.some((k) => r.puntajes[k] < PUNTAJE_MIN)
   if ((r.veredicto === 'pasa') === bloquea) f.push(`veredicto ${r.veredicto} incoherente con las faltas y los puntajes`)
   return f
 }
+const MODO_CRITICO = SEMANA ? 'MODO SEMANA (lee la sección «Modo semana» de referencias/roles/video-critico.md; puntajes ' + PUNTAJES.join(', ') + ')'
+  : 'MODO NOTICIERO (lee la sección «Modo noticiero» de referencias/roles/video-critico.md)'
 let critica = null, previas = []
 for (let vuelta = 1; vuelta <= VUELTAS_CRITICA + 1; vuelta++) {
   critica = await conReparacion(`crítica ${vuelta}`, (fallos) => agentRol(
-    `MODO NOTICIERO (lee la sección «Modo noticiero» de referencias/roles/video-critico.md). TRABAJO: ${trabajo}. Vuelta ${vuelta}. ` +
-      `Insumos: ${trabajo}/guion.json, ${trabajo}/locucion.json y python3 scripts/noticias.py digesto ${trabajo} --para editor. Escribe ${trabajo}/critica.json.` +
+    `${MODO_CRITICO}. TRABAJO: ${trabajo}. Vuelta ${vuelta}. ` +
+      `Insumos: ${trabajo}/guion.json, ${trabajo}/locucion.json y python3 ${SCRIPT} digesto ${trabajo} --para editor. Escribe ${trabajo}/critica.json.` +
       (previas.length ? ` Faltas de la vuelta anterior (comprueba primero cada una y omite las resueltas): ${JSON.stringify(previas)}` : '') +
       (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : ''),
     { agentType: 'video-critico', schema: S.critica, phase: 'Crítica', label: `critica-${vuelta}` }), validarCritica, 1)
@@ -269,10 +308,10 @@ for (let vuelta = 1; vuelta <= VUELTAS_CRITICA + 1; vuelta++) {
 }
 
 return {
-  trabajo, fecha, veredicto: critica.veredicto, puntajes: critica.puntajes,
+  trabajo, fecha, modo: MODO, veredicto: critica.veredicto, puntajes: critica.puntajes,
   faltas_pendientes: critica.faltas.filter((x) => x.gravedad === 'bloquea'),
   mejoras: critica.faltas.filter((x) => x.gravedad === 'mejora'),
   noticias: edicion.noticias, gancho: edicion.gancho, estimado_s: edicion.estimado_s,
   verificadas: verificadas.map((v) => ({ id: v.id, estado: v.estado, foto: v.foto || null })), descartadas,
-  candidatas: candidatas.length, avisos: AVISOS_WF,
+  candidatas: candidatas.length, cosechadas: COSECHA.length, avisos: AVISOS_WF,
 }

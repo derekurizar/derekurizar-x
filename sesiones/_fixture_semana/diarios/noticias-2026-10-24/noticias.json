@@ -1,0 +1,124 @@
+{
+ "fecha": "2026-10-24",
+ "noticias": [
+  {
+   "id": "n1",
+   "seccion": "Política",
+   "titular": "Congreso aprueba el presupuesto 2027",
+   "resumen": "Ejemplo: presupuesto aprobado.",
+   "depto": "Guatemala",
+   "icono": "landmark",
+   "estado": "confirmada",
+   "motivo": "maqueta",
+   "sentencia": false,
+   "novedad": null,
+   "fuentes": [
+    {
+     "medio": "Congreso",
+     "tipo": "oficial",
+     "url": "https://www.congreso.gob.gt/ejemplo/presupuesto-2027",
+     "fecha": "2026-10-24",
+     "archivo": "sesiones/_fixture_semana/descargas/congreso-gob-gt-c94e2fa9ad.txt",
+     "cita": "aprobó un presupuesto de Q148,500 millones para 2027"
+    },
+    {
+     "medio": "República",
+     "tipo": "medio",
+     "url": "https://republica.gt/ejemplo/presupuesto-2027",
+     "fecha": "2026-10-24",
+     "archivo": "sesiones/_fixture_semana/descargas/republica-gt-daa1b12254.txt",
+     "cita": "el presupuesto de 2027 asciende a Q148,500 millones"
+    }
+   ],
+   "hechos": [
+    {
+     "texto": "Presupuesto aprobado",
+     "cita": "un presupuesto de Q148,500 millones para 2027",
+     "url": "https://www.congreso.gob.gt/ejemplo/presupuesto-2027"
+    },
+    {
+     "texto": "Aumento",
+     "cita": "Q6,200 millones más que el vigente",
+     "url": "https://www.congreso.gob.gt/ejemplo/presupuesto-2027"
+    },
+    {
+     "texto": "Salud",
+     "cita": "La mayor parte va a salud y educación",
+     "url": "https://www.congreso.gob.gt/ejemplo/presupuesto-2027"
+    }
+   ],
+   "foto": {
+    "archivo": "fotos/n1.jpg",
+    "credito": "Foto: ejemplo (maqueta)",
+    "origen": "medio"
+   },
+   "cifras": [
+    {
+     "texto": "Q148,500 millones",
+     "valor": 148500,
+     "unidad": "millones de quetzales",
+     "cita": "presupuesto de Q148,500 millones",
+     "url": "https://www.congreso.gob.gt/ejemplo/presupuesto-2027",
+     "id": "n1-c1"
+    }
+   ]
+  },
+  {
+   "id": "n2",
+   "seccion": "Educación",
+   "titular": "Mineduc entrega 450,000 libros",
+   "resumen": "Ejemplo: libros de texto.",
+   "depto": null,
+   "icono": "book-open",
+   "estado": "confirmada",
+   "motivo": "maqueta",
+   "sentencia": false,
+   "novedad": null,
+   "fuentes": [
+    {
+     "medio": "Mineduc",
+     "tipo": "oficial",
+     "url": "https://www.mineduc.gob.gt/ejemplo/libros",
+     "fecha": "2026-10-23",
+     "archivo": "sesiones/_fixture_semana/descargas/mineduc-gob-gt-b3b1a36e2a.txt",
+     "cita": "el Mineduc entregó 450,000 libros de texto a escuelas públicas"
+    },
+    {
+     "medio": "Publinews",
+     "tipo": "medio",
+     "url": "https://www.publinews.gt/ejemplo/libros",
+     "fecha": "2026-10-24",
+     "archivo": "sesiones/_fixture_semana/descargas/publinews-gt-52c9363f0a.txt",
+     "cita": "Educación reparte 450,000 libros de texto"
+    }
+   ],
+   "hechos": [
+    {
+     "texto": "Libros entregados",
+     "cita": "entregó 450,000 libros de texto",
+     "url": "https://www.mineduc.gob.gt/ejemplo/libros"
+    },
+    {
+     "texto": "Cobertura",
+     "cita": "escuelas públicas de los 22 departamentos",
+     "url": "https://www.mineduc.gob.gt/ejemplo/libros"
+    }
+   ],
+   "foto": {
+    "archivo": "fotos/n2.jpg",
+    "credito": "Foto: ejemplo (maqueta)",
+    "origen": "oficial"
+   },
+   "cifras": [
+    {
+     "texto": "450,000 libros",
+     "valor": 450000,
+     "unidad": "libros",
+     "cita": "entregó 450,000 libros de texto",
+     "url": "https://www.mineduc.gob.gt/ejemplo/libros",
+     "id": "n2-c1"
+    }
+   ]
+  }
+ ]
+}

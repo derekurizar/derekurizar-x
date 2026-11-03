@@ -20,7 +20,7 @@ preparar (historia.py: TRABAJO = sesiones/historia-<slug>/, paleta provisional y
                        verificacion_<eje>.json → gate hechos --check (H1–H3, H7, H12; sin foto del protagonista, un
                        verificador la baja antes de seguir)
                      → consolidar → historia.json (cronología) + base/ (hilo.json, datos.json) + la paleta del encuadre
-                     → video-gancho en modo historia (4–5 candidatos con la foto del protagonista) → gate ganchos --check
+                     → video-gancho en modo historia (5 candidatos con la foto del protagonista) → gate ganchos --check
                        (R1–R9, H10, H12, H13) → video-critico elige (reserva: no regala una revelación)
                      → historia-guionista (ganchos --usar → la narración de corrido por acto → gate narracion --check
                        (H16–H19) → la reparte en escenas con acto, rótulos y secuencias → guion.json) → gate guion
@@ -169,7 +169,7 @@ Topes de voz: foto 40–280, cita 30–280, tarjeta/mapa/ranking/tiempo/explica 
 | H2 evidencia | `hechos --check` | cita ≥ 20 caracteres en el texto guardado; año en la cita; números del texto en las citas; la frase literal de cada cita en su fuente; cuatro estados: `confirmado` = 2 grupos que coinciden; `una_fuente` = 1 fuente válida sin contradicción (FALLA si tiene 2 grupos); `en_disputa` = ≥ 1 válida + nota con la diferencia (AVISO si un solo grupo y la nota no describe discrepancia: «¿es una_fuente?»); `tipo_hecho` válido |
 | H3 justicia | `hechos --check` · `guion --check` | `casos[]` con estado actual, fecha de consulta y fuente si el encuadre es de justicia; vetadas sin sentencia firme |
 | H4 respaldo y atribución | `guion --check` | años y números de voz, pantalla, pasos, resumen y captions en la cronología; los `hechos` citados existen; la voz atribuye o matiza solo si la escena cita un hecho `en_disputa` o con `tipo_hecho` `alegato`, `estimacion` u `opinion`; un hecho `una_fuente` pide `fuente` en pantalla (o `grafico.fuente`) salvo que esa fuente ya se mostró o se nombró en el mismo acto; en una `cita`, la voz dice el autor antes de la frase |
-| H5 duración | `guion --check` (V4 ±20 % de 150 s) · `tiempos` | 120–180 s estimados; aviso si el estimado pasa de 165 s (apunta a 150, 135–165) y si la real pasa de 180 s; 320–400 palabras orientan (AVISO fuera; FALLA fuera de 280–430) |
+| H5 duración | `guion --check` (V4 ±20 % de 150 s) · `tiempos` | apunta a 150 s (135–165): aviso entre 165 y 170 s estimados, **FALLA por encima de 170 s** (también en `aplicar` y en los retoques: un lote de arreglos que alarga el video no pasa; m052) y aviso si la real pasa de 180 s; 320–400 palabras orientan (AVISO fuera; FALLA fuera de 280–410) |
 | H6 pantalla | `guion --check` | titular ≤ 9 palabras, chip ≤ 14, lugar ≤ 24, fuente ≤ 44, cifra ≤ 18 con etiqueta ≤ 30, `grafico` con plantilla y `datos`; tarjetas por `materializar.py` (R1–R6); cita en otro idioma con `traduccion` ≤ 140 que la voz dice |
 | H7 fotos | `foto` · `hechos --check` · `guion --check` · `ganchos --check` | archivo, crédito «Foto: …» (o «Foto de referencia: …»), origen, licencia libre de Commons, lado ≥ 480 px; ≥ 2 fotos por eje; el gancho con visual `foto`; cada escena foto con una foto verificada (nunca icono ni mapa); retrato con `retrato_de` = autor de la cita; una imagen en ≤ 2 escenas; chip sin un año anterior a la foto |
 | H10 protagonista | `ganchos --check` · `guion --check` | el encuadre trae `protagonista` y el gancho lo nombra (pantalla, línea o voz) |

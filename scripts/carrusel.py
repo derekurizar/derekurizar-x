@@ -10,8 +10,9 @@ fuente (menos el cierre) y el handle. Guía: referencias/flujo-carrusel.md.
 
 Subcomandos (TRABAJO = sesiones/<slug>/carrusel):
   preparar <slug|ultimo|carpeta> [--trabajo DIR] [--fixture]
-        resuelve el original (hilos/<fecha>-<slug>/ o datos/<fecha>-<slug>/; «ultimo» = el más reciente listo o
-        publicado de los dos), exige estado listo|publicado (--fixture admite un borrador), copia lo que se lee a
+        resuelve el original (hilos/<fecha>-<slug>/, datos/<fecha>-<slug>/ o una semana de /semana, semanas/<domingo>/:
+        sus 5 cifras como un hilo sin imágenes, láminas `texto`, lo arma semana.base_carrusel; «ultimo» = el más
+        reciente listo o publicado de hilos y datos), exige estado listo|publicado (--fixture admite un borrador), copia lo que se lee a
         TRABAJO/base/, rearma las tarjetas en Noche (TRABAJO/tarjetas/) y escribe digesto.md (también lo imprime)
   digesto TRABAJO              vuelve a imprimir digesto.md
   guion TRABAJO --check        CA1–CA8 sobre TRABAJO/carrusel.json (CA8 solo avisa)
@@ -107,6 +108,8 @@ def resolver(arg):
                     cands.append((r.get("fecha", ""), r.get("id", ""), tipo, os.path.join(RAIZ, r["ruta"])))
         return (sorted(cands)[-1][2], sorted(cands)[-1][3]) if cands else (None, None)
     for cand in (arg, os.path.join(RAIZ, arg)):
+        if os.path.isfile(os.path.join(cand, "guion.json")) and leer(os.path.join(cand, "guion.json")).get("tipo") == "semana":
+            return "semana", os.path.abspath(cand)   # /semana: semanas/<domingo>/ (o su TRABAJO)
         if os.path.isfile(os.path.join(cand, "hilo.json")):
             return "hilo", os.path.abspath(cand)
         if os.path.isfile(os.path.join(cand, "dato.json")):
@@ -145,15 +148,24 @@ def cmd_preparar(a):
     tipo, orig = resolver(a.original)
     if not orig:
         return falla("no encuentro «%s» (slug de hilos/ o datos/, carpeta con hilo.json o dato.json, o «ultimo»)" % a.original)
-    meta = leer(os.path.join(orig, "hilo.json" if tipo == "hilo" else "dato.json"))
+    if tipo == "semana":   # las 5 cifras como un hilo sin imágenes (láminas `texto`): semana.base_carrusel
+        import semana as SM
+        trabajo0 = os.path.abspath(a.trabajo or os.path.join(RAIZ, "sesiones", "semana-%s" % leer(os.path.join(orig, "guion.json"))["fecha"], "carrusel"))
+        shutil.rmtree(os.path.join(trabajo0, "base"), ignore_errors=True)
+        SM.base_carrusel(orig, os.path.join(trabajo0, "base"))
+        meta = leer(os.path.join(trabajo0, "base", "hilo.json"))
+    else:
+        meta = leer(os.path.join(orig, "hilo.json" if tipo == "hilo" else "dato.json"))
     if meta.get("estado") not in ("listo", "publicado") and not a.fixture:
         return falla("el %s está «%s»: /carrusel solo convierte piezas listas o publicadas" % (tipo, meta.get("estado")))
     trabajo = os.path.abspath(a.trabajo or os.path.join(RAIZ, "sesiones", meta["slug"], "carrusel"))
     base = os.path.join(trabajo, "base")
-    if os.path.isdir(base):
+    if os.path.isdir(base) and tipo != "semana":
         shutil.rmtree(base)
     shutil.rmtree(os.path.join(trabajo, "tarjetas"), ignore_errors=True)
-    if tipo == "hilo":
+    if tipo == "semana":
+        pass   # base/ ya armada arriba
+    elif tipo == "hilo":
         base_de_hilo(orig, base)
     else:
         SB.hilo_base(orig, base)

@@ -1,0 +1,397 @@
+{
+ "id": "2026-11-03-por-que-en-la-ciudad-capital-hay-tanto-trafico",
+ "tipo": "historia",
+ "slug": "por-que-en-la-ciudad-capital-hay-tanto-trafico",
+ "tema": "por qué en la ciudad capital hay tanto tráfico",
+ "fecha": "2026-11-03",
+ "pregunta": "¿Cómo llegó la Ciudad de Guatemala a quedar trabada en tráfico todos los días?",
+ "arco": "proceso: una ciudad que se desborda, la respuesta del carro y los parches, y la promesa de un tren que todavía no llega",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "1960–2024",
+   "titulo": "Más carros que calles",
+   "escena": 6
+  },
+  {
+   "numero": 3,
+   "anio": "2026",
+   "titulo": "El tren prometido",
+   "escena": 12
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "En la Calzada Roosevelt pusieron pasos a desnivel. Era para que la capital de Guatemala fluyera. Pero cada mañana la cola vuelve. ¿Por qué una ciudad que levanta puentes sigue trabada todos los días? La respuesta empieza en Mixco, el municipio vecino al poniente: tenía 11,785 habitantes en 1950 y más de {400,000:m} en 2002. Villa Nueva, el municipio vecino al sur, también se llenó de colonias. Para 2002, los municipios del sur ya sumaban más gente que la capital. Pero el trabajo se quedó en la capital: en 2012, Prensa Libre calculó que cada día hábil entraban 2 millones de personas."
+  },
+  {
+   "acto": 2,
+   "texto": "Para llegar quedaba el bus. En 2006, los urbanistas del CEUR, en la Universidad de San Carlos, lo escribieron así: El servicio de transporte colectivo en la ciudad de Guatemala desde su surgimiento ha ido paralelo a la falta de ordenamiento urbano de la ciudad. En 2007 llegó el Transmetro, el bus municipal con carril exclusivo. Aun así, quien pudo se compró carro o moto. Para mayo de 2024, el país tenía 5.5 millones de vehículos, y ya más motos que carros. Ya en 2017, la Municipalidad capitalina había autorizado 13 pasos a desnivel. La apuesta era que, con cada puente, la cola se iba a acabar. Pero el arquitecto Alfonso Yurrita lo dijo así: En lugar de ser una solución, generan más problemas de tránsito. Por eso llegaron los carriles reversibles: en 2018, Mixco calculó 200,000 vehículos diarios hacia la capital y abrió 32 carriles. En 2024, la capital abrió 45, y aun así el tránsito colapsó al empezar las clases."
+  },
+  {
+   "acto": 3,
+   "texto": "Los carros siguieron sumando: este año, Emetra, el tránsito capitalino, calculó 3 millones en el departamento de Guatemala. Mientras tanto, el Gobierno impulsa el Metro Riel, un tren ligero de norte a sur. En febrero de 2026, el Ministerio de Finanzas pidió más estudios. Víctor Martínez, concejal capitalino, respondió: El Metro Riel está estudiado. Podemos estudiarlo más, por supuesto. Ocho meses después, el Congreso aprobó su ley con 134 votos. Aun así, nadie ha publicado cuándo empezaría a operar. La ciudad creció hacia Mixco y Villa Nueva y todavía espera su tren. Mientras tanto, los guatemaltecos pasan tiempo en el tráfico y no con sus familias."
+  }
+ ],
+ "hilos": [
+  {
+   "id": "h1",
+   "escena": 5
+  },
+  {
+   "id": "h2",
+   "escena": 6
+  },
+  {
+   "id": "h3",
+   "escena": 10
+  },
+  {
+   "id": "h4",
+   "escena": 13
+  },
+  {
+   "id": "h5",
+   "sin_respuesta": "nadie ha publicado cuándo empezaría a operar"
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3
+  ],
+  [
+   4,
+   5
+  ],
+  [
+   6,
+   7,
+   8,
+   9
+  ],
+  [
+   10,
+   11
+  ],
+  [
+   12,
+   13,
+   14
+  ]
+ ],
+ "paleta": "maiz",
+ "musica": "maiz-2",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2526.0,
+ "duracion_s": 162.5,
+ "critica": {
+  "veredicto": "pasa",
+  "vuelta": 2,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 4,
+   "claridad": 3,
+   "flujo": 3,
+   "precision": 5,
+   "cierre": 4
+  }
+ },
+ "gancho": {
+  "familia": "lugar",
+  "visual": "foto",
+  "pantalla": "Calzada Roosevelt",
+  "linea": "pasos a desnivel para que fluyera"
+ },
+ "promesa": {
+  "texto": "¿Por qué una ciudad que levanta puentes sigue trabada todos los días?",
+  "forma": "pregunta",
+  "en": 2,
+  "pago": 11,
+  "revela": 1
+ },
+ "bisagra": {
+  "texto": "La apuesta era que, con cada puente, la cola se iba a acabar.",
+  "forma": "apuesta",
+  "en": 9,
+  "pago": 10
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "En la Calzada Roosevelt pusieron pasos a desnivel. Era para que la capital de Guatemala fluyera.",
+   "voz": "En la Calzada Roosevelt pusieron pasos a desnivel. Era para que la capital de Guatemala fluyera.",
+   "dur": 6.368,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Gobierno de Guatemala · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "Pero cada mañana la cola vuelve. ¿Por qué una ciudad que levanta puentes sigue trabada todos los días?",
+   "voz": "Pero cada mañana la cola vuelve. ¿Por qué una ciudad que levanta puentes sigue trabada todos los días?",
+   "dur": 7.039,
+   "hechos": [
+    "veh-h09"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Rene Hernandez · CC BY-SA 2.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 2.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "tarjeta",
+   "pantalla": "La respuesta empieza en Mixco, el municipio vecino al poniente: tenía 11,785 habitantes en 1950 y más de 400,000 en 2002.",
+   "voz": "La respuesta empieza en Mixco, el municipio vecino al poniente: tenía once mil setecientos ochenta y cinco habitantes en mil novecientos cincuenta y más de cuatrocientos mil en dos mil dos.",
+   "dur": 13.346,
+   "hechos": [
+    "exp-h01",
+    "exp-h02",
+    "exp-h03",
+    "exp-h04"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "foto",
+   "pantalla": "Villa Nueva, el municipio vecino al sur, también se llenó de colonias. Para 2002, los municipios del sur ya sumaban más gente que la capital.",
+   "voz": "Villa Nueva, el municipio vecino al sur, también se llenó de colonias. Para dos mil dos, los municipios del sur ya sumaban más gente que la capital.",
+   "dur": 9.935,
+   "hechos": [
+    "exp-h11",
+    "exp-h12"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Rene Hernandez · CC BY-SA 2.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 2.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "foto",
+   "pantalla": "Pero el trabajo se quedó en la capital: en 2012, Prensa Libre calculó que cada día hábil entraban 2 millones de personas.",
+   "voz": "Pero el trabajo se quedó en la capital: en dos mil doce, Prensa Libre calculó que cada día hábil entraban dos millones de personas.",
+   "dur": 10.047,
+   "hechos": [
+    "exp-h14"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Mixqueñojorge · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "cita",
+   "pantalla": "Para llegar quedaba el bus. En 2006, los urbanistas del CEUR, en la Universidad de San Carlos, lo escribieron así: El servicio de transporte colectivo en la ciudad de Guatemala desde su surgimiento ha ido paralelo a la falta de ordenamiento urbano de la ciudad.",
+   "voz": "Para llegar quedaba el bus. En dos mil seis, los urbanistas del CEUR, en la Universidad de San Carlos, lo escribieron así: El servicio de transporte colectivo en la ciudad de Guatemala desde su surgimiento ha ido paralelo a la falta de ordenamiento urbano de la ciudad.",
+   "dur": 17.364,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "foto",
+   "pantalla": "En 2007 llegó el Transmetro, el bus municipal con carril exclusivo. Aun así, quien pudo se compró carro o moto.",
+   "voz": "En dos mil siete llegó el Transmetro, el bus municipal con carril exclusivo. Aun así, quien pudo se compró carro o moto.",
+   "dur": 9.012,
+   "hechos": [
+    "veh-h01"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Julio Fernando Lorenzana · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "tarjeta",
+   "pantalla": "Para mayo de 2024, el país tenía 5.5 millones de vehículos, y ya más motos que carros.",
+   "voz": "Para mayo de dos mil veinticuatro, el país tenía cinco punto cinco millones de vehículos, y ya más motos que carros.",
+   "dur": 8.201,
+   "hechos": [
+    "veh-h05",
+    "veh-h13"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "foto",
+   "pantalla": "Ya en 2017, la Municipalidad capitalina había autorizado 13 pasos a desnivel. La apuesta era que, con cada puente, la cola se iba a acabar.",
+   "voz": "Ya en dos mil diecisiete, la Municipalidad capitalina había autorizado trece pasos a desnivel. La apuesta era que, con cada puente, la cola se iba a acabar.",
+   "dur": 11.046,
+   "hechos": [
+    "veh-h09"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Gobierno de Guatemala · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "cita",
+   "pantalla": "Pero el arquitecto Alfonso Yurrita lo dijo así: En lugar de ser una solución, generan más problemas de tránsito.",
+   "voz": "Pero el arquitecto Alfonso Yurrita lo dijo así: En lugar de ser una solución, generan más problemas de tránsito.",
+   "dur": 7.348,
+   "hechos": [
+    "veh-h10"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "foto",
+   "pantalla": "Por eso llegaron los carriles reversibles: en 2018, Mixco calculó 200,000 vehículos diarios hacia la capital y abrió 32 carriles. En 2024, la capital abrió 45, y aun así el tránsito colapsó al empezar las clases.",
+   "voz": "Por eso llegaron los carriles reversibles: en dos mil dieciocho, Mixco calculó doscientos mil vehículos diarios hacia la capital y abrió treinta y dos carriles. En dos mil veinticuatro, la capital abrió cuarenta y cinco, y aun así el tránsito colapsó al empezar las clases.",
+   "dur": 18.259,
+   "hechos": [
+    "veh-h07",
+    "veh-h06",
+    "veh-h12"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Rene Hernandez · CC BY-SA 2.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 2.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "foto",
+   "pantalla": "Los carros siguieron sumando: este año, Emetra, el tránsito capitalino, calculó 3 millones en el departamento de Guatemala. Mientras tanto, el Gobierno impulsa el Metro Riel, un tren ligero de norte a sur.",
+   "voz": "Los carros siguieron sumando: este año, Emetra, el tránsito capitalino, calculó tres millones en el departamento de Guatemala. Mientras tanto, el Gobierno impulsa el Metro Riel, un tren ligero de norte a sur.",
+   "dur": 13.232,
+   "hechos": [
+    "veh-h15"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 13,
+   "tipo": "cita",
+   "pantalla": "En febrero de 2026, el Ministerio de Finanzas pidió más estudios. Víctor Martínez, concejal capitalino, respondió: El Metro Riel está estudiado. Podemos estudiarlo más, por supuesto.",
+   "voz": "En febrero de dos mil veintiséis, el Ministerio de Finanzas pidió más estudios. Víctor Martínez, concejal capitalino, respondió: El Metro Riel está estudiado. Podemos estudiarlo más, por supuesto.",
+   "dur": 13.428,
+   "hechos": [
+    "plan-h08"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 14,
+   "tipo": "tarjeta",
+   "pantalla": "Ocho meses después, el Congreso aprobó su ley con 134 votos. Aun así, nadie ha publicado cuándo empezaría a operar.",
+   "voz": "Ocho meses después, el Congreso aprobó su ley con ciento treinta y cuatro votos. Aun así, nadie ha publicado cuándo empezaría a operar.",
+   "dur": 9.787,
+   "hechos": [
+    "plan-h01",
+    "plan-h02"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 15,
+   "tipo": "cierre",
+   "pantalla": "La ciudad creció hacia Mixco y Villa Nueva y todavía espera su tren. Mientras tanto, los guatemaltecos pasan tiempo en el tráfico y no con sus familias.",
+   "voz": "La ciudad creció hacia Mixco y Villa Nueva y todavía espera su tren. Mientras tanto, los guatemaltecos pasan tiempo en el tráfico y no con sus familias.",
+   "dur": 11.938,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Lo que dejó",
+  "resumen": [
+   "Se desbordó hacia Mixco y Villa Nueva",
+   "Apostó por puentes y reversibles",
+   "El tren sigue sin fecha"
+  ],
+  "texto": "La ciudad creció hacia Mixco y Villa Nueva y todavía espera su tren. Mientras tanto, los guatemaltecos pasan tiempo en el tráfico y no con sus familias.",
+  "tipo": "remate",
+  "forma": "consecuencia",
+  "final": "Mientras tanto, los guatemaltecos pasan tiempo en el tráfico y no con sus familias.",
+  "consecuencia": {
+   "mecanismo": "perdida",
+   "quien": "guatemaltecos",
+   "verbo": "pasan"
+  }
+ },
+ "caption": {
+  "tiktok": "¿Por qué la capital de Guatemala se traba todos los días? Una ciudad que se desbordó hacia Mixco y Villa Nueva, puentes, reversibles y un tren que sigue sin fecha. #Guatemala #tráfico #historia",
+  "instagram": "La Ciudad de Guatemala se desbordó hacia Mixco y Villa Nueva, apostó por pasos a desnivel y reversibles, y el Metro Riel sigue sin fecha de operación. Así se armó el tráfico de cada mañana. #Guatemala #tráfico",
+  "facebook": "Cómo llegó la capital de Guatemala a quedar trabada en tráfico todos los días: de Mixco en 1950 a la ley del Metroriel en 2026. Fuentes en el primer comentario.",
+  "shorts": "Por qué la capital de Guatemala se traba todos los días #Shorts\nDe las ciudades dormitorio a un tren sin fecha."
+ }
+}

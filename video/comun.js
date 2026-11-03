@@ -240,7 +240,9 @@ const V = (() => {
   // deslizándose, más tenue, es movimiento). Fuera de la medición: subtítulos, barra de progreso, lo marcado con
   // data-fuera-de-zona (fondos a sangre, el velo del rótulo de acto; su columna de texto sí se mide) y la tarjeta
   // durante un foco (#ventana[data-foco]: solo la caja enfocada;
-  // «mov» = la cámara pasa de un foco a otro). Devuelve [{que, caja: [x0, y0, x1, y1], regla}].
+  // «mov» = la cámara pasa de un foco a otro). También falla el texto recortado (m013): un texto HTML o un <text> SVG
+  // cuya caja se sale de la del ancestro más cercano con overflow hidden/clip (o del lienzo de su <svg>) queda dentro de
+  // la zona, pero cortado. Devuelve [{que, caja: [x0, y0, x1, y1], regla}].
   const medirZona = () => {
     const Z = zona(), fallas = [], TOL = 2;
     const fuera = (el) => el.closest && el.closest('#subs, #progreso, [data-fuera-de-zona]');
@@ -252,6 +254,58 @@ const V = (() => {
       const b = x.getBoundingClientRect(); r = [Math.max(r[0], b.left), Math.max(r[1], b.top), Math.min(r[2], b.right), Math.min(r[3], b.bottom)];
       if (r[0] >= r[2] || r[1] >= r[3]) return null; }
       return r; };
+    // texto recortado: el ancestro más cercano que recorta (overflow distinto de visible en algún eje; el <svg> recorta su
+    // lienzo por defecto) y cuánto se sale el texto de él en ese eje → la regla o null. html y body no cuentan: lo que
+    // sale de la página ya lo marca la zona
+    const cortado = (el, win, b) => {
+      for (let x = el; x && x.nodeType === 1; x = x.parentElement) {
+        const tag = x.tagName.toLowerCase();
+        if (tag === 'body' || tag === 'html') return null;
+        const c = win.getComputedStyle(x), cx = c.overflowX !== 'visible', cy = c.overflowY !== 'visible';
+        if (!cx && !cy) continue;
+        const a = x.getBoundingClientRect();
+        if (a.width < 1 || a.height < 1) return null;
+        const sale = Math.max(cx ? Math.max(a.left - b[0], b[2] - a.right) : 0, cy ? Math.max(a.top - b[1], b[3] - a.bottom) : 0);
+        return sale > TOL + 1 ? 'texto recortado por <' + tag + (x.id ? '#' + x.id : '') + '> (overflow ' + (cx ? c.overflowX : c.overflowY)
+          + '; sale ' + Math.round(sale) + ' px)' : null;
+      }
+      return null;
+    };
+    // la caja de TINTA de un texto (no la de su fuente: la cifra pegada al borde de su <svg> deja fuera el hueco del
+    // descendente sin cortar nada): las cajas de línea del rango ajustadas con measureText (canvas) en la fuente, el
+    // espaciado y la caja del texto; arriba la primera línea, abajo la última y a los lados solo si es una y de ancho
+    // normal (el canvas no casa bien la cara condensada de Archivo: sus métricas verticales son las mismas, las de ancho
+    // no, y a los lados queda la caja de avance)
+    const CTX = document.createElement('canvas').getContext('2d');
+    const tinta = (nodo, win, rg, b) => {
+      const el = nodo.parentElement, svg = el instanceof win.SVGGraphicsElement && typeof el.getBBox === 'function';
+      // un texto SVG: su caja en unidades del usuario (getBBox) llevada a la pantalla con getScreenCTM (los rectángulos de
+      // un rango dentro de un SVG no son fiables en Chromium: salen corridos cuando un ancestro HTML tiene transform)
+      const ls = svg ? [] : [...rg.getClientRects()].filter((q) => q.width > 0 && q.height > 0);
+      if (!svg && !ls.length) return b;
+      const c = win.getComputedStyle(el);
+      CTX.font = [c.fontStyle, c.fontWeight, c.fontSize, c.fontFamily].join(' ');
+      CTX.letterSpacing = c.letterSpacing === 'normal' ? '0px' : c.letterSpacing;
+      let txt = nodo.textContent.trim();
+      if (c.textTransform === 'uppercase') txt = txt.toUpperCase(); else if (c.textTransform === 'lowercase') txt = txt.toLowerCase();
+      const m = CTX.measureText(txt), alto = m.fontBoundingBoxAscent + m.fontBoundingBoxDescent, lados = parseFloat(c.fontStretch) === 100;
+      if (!(alto > 0)) return b;
+      if (svg) {
+        const bx = el.getBBox(), M = el.getScreenCTM();
+        if (!M || !(bx.height > 0)) return b;
+        const k = bx.height / alto;
+        const u = [bx.x - m.actualBoundingBoxLeft * k, bx.y + (m.fontBoundingBoxAscent - m.actualBoundingBoxAscent) * k,
+          bx.x + m.actualBoundingBoxRight * k, bx.y + (m.fontBoundingBoxAscent + m.actualBoundingBoxDescent) * k];
+        if (!lados || txt.length !== el.textContent.trim().length || el.querySelector('tspan')) { u[0] = bx.x; u[2] = bx.x + bx.width; }
+        const P = [[u[0], u[1]], [u[2], u[1]], [u[0], u[3]], [u[2], u[3]]].map(([x, y]) => [M.a * x + M.c * y + M.e, M.b * x + M.d * y + M.f]);
+        return [Math.min(...P.map((q) => q[0])), Math.min(...P.map((q) => q[1])), Math.max(...P.map((q) => q[0])), Math.max(...P.map((q) => q[1]))];
+      }
+      const k = ls[0].height / alto, u = ls[ls.length - 1];
+      const r = [b[0], ls[0].top + (m.fontBoundingBoxAscent - m.actualBoundingBoxAscent) * k, b[2],
+        u.top + (m.fontBoundingBoxAscent + m.actualBoundingBoxDescent) * k];
+      if (ls.length === 1 && lados) { r[0] = ls[0].left - m.actualBoundingBoxLeft * k; r[2] = ls[0].left + m.actualBoundingBoxRight * k; }
+      return r;
+    };
     const conFondo = (c) => { const m = c.backgroundColor.match(/[\d.]+/g); return (m && (m.length < 4 || +m[3] > 0.05) && c.backgroundColor !== 'transparent')
       || parseFloat(c.borderTopWidth) + parseFloat(c.borderBottomWidth) + parseFloat(c.borderLeftWidth) + parseFloat(c.borderRightWidth) > 0; };
     const revisar = (que, r) => {
@@ -274,8 +328,16 @@ const V = (() => {
         if (nodo.nodeType === 3) {
           if (!nodo.textContent.trim() || fuera(nodo.parentElement) || !visible(nodo.parentElement, win)) continue;
           const rg = doc.createRange(); rg.selectNodeContents(nodo); const b = rg.getBoundingClientRect();
-          let r = recorte(nodo, win, [b.left, b.top, b.right, b.bottom]);   // el texto se recorta desde su propio padre
-          if (r && (r = corta(r))) revisar(nodo.textContent.trim(), r);
+          const bb = [b.left, b.top, b.right, b.bottom];
+          let r = recorte(nodo, win, bb);   // el texto se recorta desde su propio padre
+          if (r && (r = corta(r))) {
+            revisar(nodo.textContent.trim(), r);
+            // el SVG cuenta entero (abajo), salvo su texto: un <text> que se sale del lienzo o del recorte queda cortado
+            if ((b.right - b.left) * (b.bottom - b.top) >= 6 && !nodo.parentElement.closest('[data-foco]:not([data-foco=""])')) {
+              const ti = tinta(nodo, win, rg, bb), corte = cortado(nodo.parentElement, win, ti);
+              if (corte) fallas.push({ que: nodo.textContent.trim().slice(0, 40), caja: map(ti).map((v) => Math.round(v)), regla: corte });
+            }
+          }
           continue;
         }
         const el = nodo, tag = el.tagName.toLowerCase();

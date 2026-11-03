@@ -1,0 +1,153 @@
+{
+ "fecha": "2026-10-20",
+ "noticias": [
+  {
+   "id": "n1",
+   "seccion": "Economía",
+   "titular": "Remesas suben a US$2,150 millones",
+   "resumen": "Ejemplo: remesas de septiembre.",
+   "depto": null,
+   "icono": "banknote",
+   "estado": "confirmada",
+   "motivo": "maqueta",
+   "sentencia": false,
+   "novedad": null,
+   "fuentes": [
+    {
+     "medio": "Banguat",
+     "tipo": "oficial",
+     "url": "https://www.banguat.gob.gt/ejemplo/remesas-septiembre",
+     "fecha": "2026-10-20",
+     "archivo": "sesiones/_fixture_semana/descargas/banguat-gob-gt-efd2458ba1.txt",
+     "cita": "el ingreso de divisas por remesas familiares sumó US$2,150 millones"
+    },
+    {
+     "medio": "Prensa Libre",
+     "tipo": "medio",
+     "url": "https://www.prensalibre.com/ejemplo/remesas-septiembre",
+     "fecha": "2026-10-20",
+     "archivo": "sesiones/_fixture_semana/descargas/prensalibre-com-b40c6cb8ce.txt",
+     "cita": "las remesas de septiembre llegaron a US$2,150 millones"
+    }
+   ],
+   "hechos": [
+    {
+     "texto": "Remesas de septiembre",
+     "cita": "remesas familiares sumó US$2,150 millones",
+     "url": "https://www.banguat.gob.gt/ejemplo/remesas-septiembre"
+    }
+   ],
+   "foto": {
+    "archivo": "fotos/n1.jpg",
+    "credito": "Foto: ejemplo (maqueta)",
+    "origen": "oficial"
+   },
+   "cifras": [
+    {
+     "texto": "US$2,150 millones",
+     "valor": 2150,
+     "unidad": "millones de dólares",
+     "cita": "sumó US$2,150 millones",
+     "url": "https://www.banguat.gob.gt/ejemplo/remesas-septiembre",
+     "id": "n1-c1"
+    }
+   ]
+  },
+  {
+   "id": "n2",
+   "seccion": "Seguridad",
+   "titular": "PNC detiene a 12 en operativo",
+   "resumen": "Ejemplo en desarrollo.",
+   "depto": null,
+   "icono": "shield",
+   "estado": "en_desarrollo",
+   "motivo": "maqueta",
+   "sentencia": false,
+   "novedad": null,
+   "fuentes": [
+    {
+     "medio": "Soy502",
+     "tipo": "medio",
+     "url": "https://www.soy502.com/ejemplo/operativo",
+     "fecha": "2026-10-20",
+     "archivo": "sesiones/_fixture_semana/descargas/soy502-com-3b6078d622.txt",
+     "cita": "la PNC detuvo a 12 personas en un operativo"
+    }
+   ],
+   "hechos": [
+    {
+     "texto": "Detenidos en operativo",
+     "cita": "la PNC detuvo a 12 personas",
+     "url": "https://www.soy502.com/ejemplo/operativo"
+    }
+   ],
+   "foto": {
+    "archivo": "fotos/n2.jpg",
+    "credito": "Foto: ejemplo (maqueta)",
+    "origen": "oficial"
+   },
+   "cifras": [
+    {
+     "texto": "12 detenidos",
+     "valor": 12,
+     "unidad": "personas",
+     "cita": "detuvo a 12 personas",
+     "url": "https://www.soy502.com/ejemplo/operativo",
+     "id": "n2-c1"
+    }
+   ]
+  },
+  {
+   "id": "n3",
+   "seccion": "Deportes",
+   "titular": "Municipal gana el clásico 3 a 1",
+   "resumen": "Ejemplo fuera de la semana.",
+   "depto": null,
+   "icono": "flag",
+   "estado": "confirmada",
+   "motivo": "maqueta",
+   "sentencia": false,
+   "novedad": null,
+   "fuentes": [
+    {
+     "medio": "Soy502",
+     "tipo": "medio",
+     "url": "https://www.soy502.com/ejemplo/clasico",
+     "fecha": "2026-10-17",
+     "archivo": "sesiones/_fixture_semana/descargas/soy502-com-27a8a5bde0.txt",
+     "cita": "Municipal ganó el clásico 3 a 1 ante 24,000 aficionados"
+    },
+    {
+     "medio": "Publinews",
+     "tipo": "medio",
+     "url": "https://www.publinews.gt/ejemplo/clasico",
+     "fecha": "2026-10-18",
+     "archivo": "sesiones/_fixture_semana/descargas/publinews-gt-65639d9703.txt",
+     "cita": "con 24,000 aficionados en las gradas"
+    }
+   ],
+   "hechos": [
+    {
+     "texto": "Clásico",
+     "cita": "Municipal ganó el clásico 3 a 1",
+     "url": "https://www.soy502.com/ejemplo/clasico"
+    }
+   ],
+   "foto": {
+    "archivo": "fotos/n3.jpg",
+    "credito": "Foto: ejemplo (maqueta)",
+    "origen": "medio"
+   },
+   "cifras": [
+    {
+     "texto": "24,000 aficionados",
+     "valor": 24000,
+     "unidad": "personas",
+     "cita": "ante 24,000 aficionados",
+     "url": "https://www.soy502.com/ejemplo/clasico",
+     "id": "n3-c1"
+    }
+   ]
+  }
+ ]
+}

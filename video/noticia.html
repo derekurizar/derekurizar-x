@@ -11,6 +11,8 @@
      S.N = { indice, total, seccion, estado?, titular: [{text, start, dicha?}], foto, credito, encaje?, icono, depto,
              lugar, cifra: { texto, etiqueta, start, pulso } | null, fuente: { texto, start }, oraciones: [t] (la foto
              late), kb: { z: [z0, z1], x: [x0, x1], y: [y0, y1] }, fecha, conteo }
+     /semana añade S.N.puesto (5→1: el numeral grande de la cuenta regresiva sobre el titular), S.N.humana = { texto,
+     start } (la cifra a escala humana bajo la cifra) y S.N.chip = { b: sección, s: día }.
      /historia la usa con S.N.modo («titular»: el gancho con foto; «noticia»: la escena `foto`) y S.N.chip = { b, s } en
      lugar de «indice/total · sección» (la fecha o la época y el lugar: «1971 · Escuintla»). S.N.encaje = «contener»
      (un gráfico, un cartel o un logo con texto, ya con márgenes de scripts/historia.py encajar): más clara y casi sin
@@ -64,6 +66,11 @@
 /* el crédito de la foto: Mono 600 20 px, crema al 85 % (seek lo apaga con la foto, sin bajar de ahí) */
 #credito { font: 600 20px/1.25 'JetBrains Mono', monospace; letter-spacing: .06em; opacity: .85; }
 #fuente:empty, #credito:empty { display: none; }
+/* /semana: el numeral del puesto de la cuenta regresiva (crema condensada, grande, sobre el titular) y la línea a
+   escala humana bajo la cifra (crema, Archivo 700; el acento sigue siendo solo la cifra) */
+#puesto { font-size: 210px; line-height: .8; letter-spacing: -.01em; margin-bottom: -6px; transform-origin: 0 100%; }
+#puesto:empty, #humana:empty { display: none; }
+#humana { font: 700 38px/1.18 Archivo, sans-serif; border-left: 6px solid color-mix(in srgb, var(--ink) 55%, transparent); padding-left: 18px; }
 /* gancho: la misma lámina; el titular grande abajo, entero desde el cuadro 0 */
 body.titular #col { display: none; }
 #gancho { position: absolute; left: var(--izq); right: var(--der); bottom: calc(1920px - var(--fin) + 10px); display: none; }
@@ -76,6 +83,16 @@ body.titular #gancho { display: block; }
 #gtit { font: 800 96px/1 Archivo, sans-serif; letter-spacing: -.025em; text-shadow: 0 2px 26px color-mix(in srgb, var(--bg) 70%, transparent); }
 #gtit span { display: inline-block; margin-right: .2em; }
 #gtit span.suena { color: var(--realce); }
+/* gancho con pantalla numérica (familia resultado o escala con cifra, o la pantalla es esencialmente un número: «430»):
+   la cifra héroe grande sobre la foto (Archivo condensado 900 en el acento, conserva su caja: «3.00 m» no es «3.00 M»),
+   la etiqueta queda en la ficha y la línea baja a subtítulo debajo de la cifra */
+#gcifra { display: none; font-size: 300px; line-height: .84; letter-spacing: -.01em; color: var(--acento); text-transform: none;
+  white-space: nowrap; width: fit-content; margin-bottom: 26px; transform-origin: 0 80%;
+  text-shadow: 0 2px 30px color-mix(in srgb, var(--bg) 70%, transparent); }
+body.gcifra #gcifra { display: block; }
+body.gcifra #gtit { font-size: 62px; line-height: 1.06; letter-spacing: -.015em; }
+html.f45 #gcifra { font-size: 230px; margin-bottom: 18px; }
+html.f45 body.gcifra #gtit { font-size: 50px; }
 #gcred { margin-top: 24px; font: 600 20px/1.25 'JetBrains Mono', monospace; letter-spacing: .06em; opacity: .85; }
 /* formato 4:5 (1080×1350) para el feed: la misma lámina; la sombra de abajo empieza antes (el texto sube) */
 html.f45 #chip { margin-top: 16px; font-size: 21px; }
@@ -87,6 +104,8 @@ html.f45 #titular { font-size: 52px; }
 html.f45 #cifra .v { font-size: 150px; }
 html.f45 #cifra .e { font-size: 26px; }
 html.f45 #gtit { font-size: 80px; }
+html.f45 #puesto { font-size: 150px; }
+html.f45 #humana { font-size: 30px; }
 html.f45 #hoy { font-size: 22px; margin-bottom: 20px; }
 </style></head>
 <body>
@@ -94,11 +113,13 @@ html.f45 #hoy { font-size: 22px; margin-bottom: 20px; }
 <div id="arriba"><div id="progreso"></div><div id="chip"></div></div>
 <div id="col">
   <div id="figura"></div>
+  <div id="puesto" class="condensada"></div>
   <div id="titular"></div>
   <div id="cifra"></div>
+  <div id="humana"></div>
   <div id="pie"><div id="fuente"></div><div id="credito"></div></div>
 </div>
-<div id="gancho"><div id="hoy"></div><div id="gtit"></div><div id="gcred"></div></div>
+<div id="gancho"><div id="hoy"></div><div id="gcifra" class="cifra-heroe condensada"></div><div id="gtit"></div><div id="gcred"></div></div>
 <div id="subs"></div>
 <script src="comun.js"></script>
 <script>
@@ -158,6 +179,16 @@ async function foto(caja) {
   caja.style.setProperty('--brillo', N.encaje === 'contener' ? '.7' : k > 2 ? '.45' : '.55');
   return img;
 }
+// el gancho lleva su pantalla como cifra héroe cuando la pantalla es una cifra: esencialmente un número («430», «Q1,200»,
+// «35 %», «1976»: dígitos y a lo más 3 letras de unidad o moneda) o, en un gancho de familia resultado o escala
+// (S.familia o N.familia, si el script la pasa), una pantalla corta con cifra. El resto sigue en la ficha
+const FAMILIAS_CIFRA = new Set(['resultado', 'escala']);
+function pantallaCifra(txt, familia) {
+  const s = String(txt || '').trim();
+  if (!/\d/.test(s) || s.length > 18) return false;
+  const letras = (s.match(/\p{L}/gu) || []).length;
+  return letras <= 3 || (FAMILIAS_CIFRA.has(familia) && s.split(/\s+/).length <= 3);
+}
 // cuándo deja de sonar cada palabra de una línea alineada con la voz: el fin de la palabra de la voz que la dice (si se
 // encuentra) o el comienzo de la siguiente (≤ 0.5 s)
 const finesDe = (ws) => ws.map((w, i) => {
@@ -183,7 +214,11 @@ window.__listo = (async () => {
     if (N.foto) KB = await foto(sangre); else await tipografica(sangre);
     sangre.appendChild(sangre.querySelector('.velo'));    // el velo y el grano encima de la foto o del mapa
     sangre.appendChild(sangre.querySelector('.grano'));
-    document.getElementById('hoy').innerHTML = `<b>${esc(N.fecha)}</b><span>${esc(N.conteo || '')}</span>`;
+    if (pantallaCifra(N.fecha, S.familia || N.familia)) {   // la pantalla es la cifra héroe; la etiqueta, en la ficha
+      document.body.classList.add('gcifra');
+      document.getElementById('gcifra').textContent = N.fecha;
+      document.getElementById('hoy').innerHTML = N.conteo ? `<b>${esc(N.conteo)}</b>` : '';
+    } else document.getElementById('hoy').innerHTML = `<b>${esc(N.fecha)}</b><span>${esc(N.conteo || '')}</span>`;
     document.getElementById('gtit').innerHTML = palabras(N.titular);
     document.getElementById('gcred').textContent = N.foto ? N.credito || '' : '';
     document.getElementById('chip').textContent = todo.contexto_superior || '';
@@ -210,6 +245,8 @@ window.__listo = (async () => {
       if (NUM && NUM.dec === 0 && NUM.v >= 1000 && NUM.v <= 2100 && /^[^\d]*\b\d{4}[\s.:,;!?»"]*$/.test(N.cifra.texto)) NUM = null;
     } else document.getElementById('cifra').style.display = 'none';
     document.getElementById('fuente').textContent = N.fuente ? N.fuente.texto : '';
+    if (N.puesto) document.getElementById('puesto').textContent = '#' + N.puesto;   // /semana: la cuenta regresiva
+    if (N.humana) document.getElementById('humana').textContent = N.humana.texto;   // /semana: la cifra a escala humana
   }
   // el subtítulo se oculta mientras solo repite el titular que ya está en pantalla
   N.titular.forEach((w) => { const k = normal(w.text); if (k) EN_PANTALLA.add(k); });
@@ -217,13 +254,30 @@ window.__listo = (async () => {
   await document.fonts.ready;
   if (MODO === 'titular') {   // el titular del gancho: hasta 4 líneas sin pasar del alto disponible
     const t = document.getElementById('gtit');
-    for (let fs = F45 ? 80 : 96; fs > 60 && t.offsetHeight > 4.1 * fs; fs -= 4) t.style.fontSize = fs + 'px';
+    if (document.body.classList.contains('gcifra')) {
+      // la cifra en una línea del ancho de la columna (late hasta 1.05×) y el gancho entero bajo la barra y la ficha de
+      // arriba (y ≥ 360 en 9:16, 170 en 4:5); la línea, subtítulo de hasta 3 líneas
+      const c = document.getElementById('gcifra'), g = document.getElementById('gancho'), ancho = g.clientWidth / 1.06;
+      const tope = F45 ? 170 : 360;
+      for (let fs = F45 ? 50 : 62; fs > 40 && t.offsetHeight > 3.2 * fs * 1.06; fs -= 2) t.style.fontSize = fs + 'px';
+      for (let fs = F45 ? 230 : 300; fs > 110 && (c.scrollWidth > ancho || g.getBoundingClientRect().top < tope); fs -= 10) c.style.fontSize = fs + 'px';
+    } else for (let fs = F45 ? 80 : 96; fs > 60 && t.offsetHeight > 4.1 * fs; fs -= 4) t.style.fontSize = fs + 'px';
   } else {                      // el titular de la noticia: hasta 3 líneas; la cifra, en una sola línea de la columna
     const t = document.getElementById('titular');
     for (let fs = F45 ? 52 : 66; fs > 40 && t.offsetHeight > 3.1 * fs * 1.04; fs -= 2) t.style.fontSize = fs + 'px';
     // la cifra late hasta 1.07× hacia la derecha (transform-origin a la izquierda): cabe con ese margen (V13)
     const c = document.querySelector('#cifra .v'), col = document.getElementById('col').clientWidth / 1.08;
     if (c) for (let fs = F45 ? 150 : 190; fs > 70 && c.scrollWidth > col; fs -= 6) c.style.fontSize = fs + 'px';
+    // /semana: con el numeral y la línea humana, la columna puede pasar del alto disponible (V13): se achican el
+    // numeral, la línea humana y el titular, en ese orden, hasta caber (la figura sin foto cede primero: flex)
+    const C = document.getElementById('col'), gap = parseFloat(getComputedStyle(C).rowGap) || 0;
+    const alto = () => [...C.children].filter((x) => x.id !== 'figura' && x.offsetHeight).reduce((m, x) => m + x.offsetHeight + gap, -gap);
+    const achicar = (el, de, a, paso) => { for (let fs = de; el && el.textContent && fs >= a && alto() > C.clientHeight; fs -= paso) el.style.fontSize = fs + 'px'; };
+    if (N.puesto || N.humana) {
+      achicar(document.getElementById('puesto'), F45 ? 150 : 210, 100, 10);
+      achicar(document.getElementById('humana'), F45 ? 30 : 38, 26, 2);
+      achicar(t, parseFloat(t.style.fontSize) || (F45 ? 52 : 66), 38, 2);
+    }
   }
   await V.pintarActo(S);   // rótulo de acto (/historia, S.R): solo en la escena `foto`, nunca en el gancho
 })();
@@ -249,6 +303,12 @@ window.seek = (t) => {
       const q = w.dicha ? eo((t - w.start) / 0.25) : 0;
       s.style.transform = `translateY(${(-6 * Math.sin(Math.PI * clamp(q))).toFixed(2)}px)`;
     });
+    // la cifra héroe, entera desde el cuadro 0, con un latido breve al empezar (el impacto)
+    const gc = document.getElementById('gcifra');
+    if (gc && document.body.classList.contains('gcifra')) {
+      const lat = (a) => Math.sin(Math.PI * clamp((t - a) / 0.45));
+      gc.style.transform = `scale(${(1 + 0.05 * Math.max(0, lat(0.05))).toFixed(4)})`;
+    }
     moverPin(t);
     subtitulos(t);
     return;
@@ -280,6 +340,14 @@ window.seek = (t) => {
     let esc_ = 0.9 + 0.1 * ap;
     if (C.pulso) esc_ *= 1 + 0.07 * Math.sin(Math.PI * clamp((t - C.pulso[0]) / Math.max(0.001, C.pulso[1] - C.pulso[0])));
     cifra.style.opacity = ap; cifra.style.transform = `scale(${esc_.toFixed(4)})`;
+  }
+  if (N.puesto) {   // el numeral entra primero y queda quieto (el que late es la cifra)
+    const q = eo((t - D - 0.05) / (0.35 * K)), el = document.getElementById('puesto');
+    el.style.opacity = q.toFixed(3); el.style.transform = `scale(${(0.8 + 0.2 * q).toFixed(4)})`;
+  }
+  if (N.humana) {
+    const h = eo((t - N.humana.start) / 0.4), el = document.getElementById('humana');
+    el.style.opacity = h.toFixed(3); el.style.transform = `translateY(${((1 - h) * 20).toFixed(1)}px)`;
   }
   if (N.fuente) {
     const f = eo((t - N.fuente.start) / 0.4), el = document.getElementById('fuente');

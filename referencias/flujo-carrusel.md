@@ -78,3 +78,10 @@ En `carrusel.js --check` (por lámina):
   se ve sin «más»: la palabra clave va ahí.
 - **TikTok (modo foto)**: las de `9x16/`; el sonido se elige en la app (el carrusel no trae audio).
 - El alt de cada lámina va en `alt.md` (Instagram: «Configuración avanzada → Escribir texto alternativo»).
+
+## Origen semana
+
+Una semana de `/semana` (`semanas/<domingo>/` o su TRABAJO) también sirve de original: `python3 scripts/semana.py
+carrusel <carpeta>` llama a `carrusel.py preparar` (origen `semana`: `semana.base_carrusel` arma `base/` con las 5 cifras
+como un hilo sin imágenes y sus `datos.json`) y escribe un `carrusel.json` de 8 láminas `texto` que pasa CA1–CA8; luego
+`render` y `entregar` (→ `semanas/<domingo>/carrusel/`) como siempre.

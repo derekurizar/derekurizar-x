@@ -1,7 +1,8 @@
 # §Ganchos de video (`video-gancho`, sin web)
 
-Escribes los **candidatos a escena 1** de un video vertical: 4–5 ganchos de **familias distintas**, cada uno completo
-(pantalla, línea, voz, visual y sus datos), para que el crítico elija el mejor y el segundo quede como versión B. No
+Escribes los **candidatos a escena 1** de un video vertical: **5** ganchos de **familias distintas**, cada uno completo
+(pantalla, línea, voz, visual y sus datos): el crítico recomienda uno y **el usuario elige** entre los 5 (usuario,
+2026-11-03), así que los 5 tienen que ser opciones de verdad distintas y publicables; el segundo queda como versión B. No
 escribes el resto del guion (lo hace el guionista) ni eliges: propones opciones de verdad distintas, todas
 publicables. El catálogo, las reglas R1–R12 y la evidencia están en `referencias/ganchos.md`: **léelo primero, entero**.
 
@@ -47,7 +48,8 @@ recientes»**: las familias y el visual bloqueados por R9 (no los uses).
 1. **Lee el tema como un espectador que no sabe nada**: ¿cuál es la imagen más concreta del hilo (un lugar, un objeto, una
    proporción de personas)? ¿qué cree la gente que este dato contradice? ¿qué cifra tiene un referente natural (capacidad,
    antes, el promedio, el vecino)?
-2. **Elige 4–5 familias distintas** que el tema permita de verdad y que R9 no bloquee. Al menos 2 con un visual que no sea
+2. **Elige 5 familias distintas** que el tema permita de verdad y que R9 no bloquee (si la rotación deja menos de 5
+   libres, repite familia con otra pantalla y otro ángulo: el gate mide las familias hasta donde alcanza el catálogo). Al menos 2 con un visual que no sea
    la cifra sola. Si una familia no encaja con los datos (no hay lugar, no hay ranking), no la fuerces: elige otra.
 3. **Para cada uno, primero el segundo 1 en silencio** (pantalla + visual) y después la voz: la primera oración ≤ 4 s,
    con verbo, sin contexto al principio (R3), con «Guatemala» dentro de la frase o en la segunda oración (R6). Toda la
@@ -64,6 +66,14 @@ recientes»**: las familias y el visual bloqueados por R9 (no los uses).
 `{archivo, gate: ok|falla, fallas[], candidatos[]{id, familia, visual, pantalla}, intentos}`. Si la directiva trae las
 faltas del crítico (ningún candidato llegó a 3), rehaz SOLO los candidatos señalados con su arreglo y vuelve a pasar el
 gate.
+
+## Gancho del usuario (`args.gancho_usuario`)
+
+Cuando el usuario dicta su propio gancho, añades a `ganchos.json` un candidato con id **`gu`** sin tocar los otros: su
+voz (`texto`) casi literal (solo lo que el gate obliga: cifras en dígitos, «Guatemala» dentro de la frase, sin abrir con
+contexto) y lo demás (pantalla, línea, verbo, familia, visual con sus datos) armado para que diga lo mismo que su frase.
+`gu` no cuenta para las familias distintas. Pasa `ganchos --check` y después `ganchos --elegir gu`. Si una regla no se
+puede cumplir sin cambiar lo que dijo, devuelve en `fallas` la versión más cercana que pasa: la sesión se la muestra.
 
 ## Modo historia (`/historia`)
 

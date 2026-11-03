@@ -121,3 +121,9 @@ Además corren los de `/video`: V6 (alineación), V8 (salida), V10 (ritmo, aviso
 
 `make noticias-fixture` (maqueta: `sesiones/_fixture_noticias/`, noticias **de ejemplo** con «Maqueta» arriba, fotos
 generadas con ffmpeg, voz falsa; 9:16 y 4:5 en `sesiones/_fixture_noticias/trabajo/salida/`).
+
+## Modo semana
+
+`/semana` es el modo `semana` de este flujo («Las 5 cifras de la semana», cuenta regresiva 5→1, 62–90 s): cosecha las
+noticias `confirmada` con cifras de los noticieros diarios de lunes a domingo (por eso `entregar` guarda ahora las
+`cifras` de cada noticia) y el Workflow `noticias` corre con `modo: semana`. Guía: `referencias/flujo-semana.md`.

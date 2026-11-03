@@ -35,9 +35,9 @@ decisión del usuario.**
    - Lanza el Workflow con `name: "video"` y `args: {"trabajo": "<TRABAJO>", "duracion": "<d>", "slug":
      "<slug>", "fixture": false}`. Si editaste `.claude/workflows/video.js` en esta sesión, pásalo con
      `scriptPath: ".claude/workflows/video.js"`. Para reanudar una corrida interrumpida, `resumeFromRunId`.
-   - El Workflow corre primero al `video-gancho` (4–5 candidatos de familias distintas en `ganchos.json`, gate
+   - El Workflow corre primero al `video-gancho` (5 candidatos de familias distintas en `ganchos.json`, gate
      `ganchos --check` con R1–R10 y la rotación; `referencias/ganchos.md`) y al `video-critico` en **modo selección**
-     (los mira en silencio y elige ganador y segundo en `seleccion.json`; si ninguno llega a 3, el agente de ganchos
+     (los mira en silencio y recomienda ganador y segundo en `seleccion.json`; el usuario elige; si ninguno llega a 3, el agente de ganchos
      rehace una vez). Si aun así no hay ganador, vuelve `veredicto: "corregir"` con las faltas de la selección:
      muéstralas y **pregunta al usuario**. Después corre al `video-guionista` (copia el ganador con `ganchos --usar`,
      PRIMERO la narración de corrido en 3 actos que cuenta el hilo como una historia, `narracion --check`;
@@ -48,6 +48,22 @@ decisión del usuario.**
      vueltas. Si el guion aprobado tiene una escena `explica` con `animacion: null`, corre además al
      `video-animador`: escribe `video/animaciones/<id>.js` desde el `brief`, pasa `animaciones.py --check`, la
      registra en la biblioteca y la asigna a la escena. No gasta créditos.
+   - **El usuario elige el gancho** (usuario, 2026-11-03: «siempre me pones a escoger entre 5 opciones»): sin
+     `args.gancho`, el Workflow se detiene tras la Selección con `veredicto: "elegir_gancho"` (los 5 candidatos y el
+     recomendado del crítico). Corre `python3 scripts/video.py ganchos <TRABAJO> --opciones` y pregunta con AskUserQuestion:
+     4 botones con la pantalla y la voz de cada opción (la recomendada primero, con «(Recomendado)»), la quinta escrita en
+     el texto de la pregunta («o escribe 5 en Otro»); en «Otro» también puede dictar su propio gancho. Con un id:
+     `python3 scripts/video.py ganchos <TRABAJO> --elegir <id>` y relanza el Workflow con `resumeFromRunId` y los mismos args
+     más `"gancho": "<id>"` (lo ya hecho vuelve de la caché); con su texto, los mismos args más `"gancho_usuario": "<su
+     texto literal>"` (el agente de ganchos lo arma como candidato `gu` y lo elige). Si ya no se puede reanudar (otra
+     sesión), vuelve a lanzar el Workflow completo (0 créditos) y repite la elección. `"auto": true` deja la recomendación del crítico (solo si el usuario lo pide).
+   - **El usuario elige el cierre**: con el guion aprobado, el Workflow devuelve `cierres` (5 opciones en
+     `cierres.json`; `c1` es la del guion). ANTES de la voz, `python3 scripts/video.py cierres <TRABAJO> --opciones` y
+     pregunta igual (`c1` primero). Con otro id: `python3 scripts/video.py cierres <TRABAJO> --usar <id>`; con su texto:
+     `--propio "<su texto>"` con `--forma`, `--mecanismo`, `--quien` y `--verbo` que casen con su frase
+     (`referencias/cierres.md`; si dicta solo la frase final, se queda la oración del guion que la prepara). Después corre `python3 scripts/video.py narracion <TRABAJO> --check` y `guion <TRABAJO> --check` (si fallan, `guion.previo.json` tiene el de antes).
+     Si el gate la rechaza, muéstrale la falla y propón la versión más cercana que pasa; nunca edites `guion.json` a
+     mano. Si `cierres` viene `null` (el agente no pudo), pregunta con el cierre del guion o el suyo (`--propio`).
    - Si falla con «no está registrado», pide al usuario reiniciar Claude Code (los agentes y el workflow se
      cargan al arrancar). Solo si lo autoriza, relanza con `args.permitir_fallback: true`.
    - Al volver, lee `veredicto`, `puntajes` (con `flujo`), `faltas_pendientes`, `narracion` (actos, palabras,
@@ -64,12 +80,15 @@ decisión del usuario.**
      de la fase Animación de `video.js`); si tampoco sale, propón al usuario cambiar esa escena `explica` por otra.
      Lee una vez `sesiones/_animaciones/<id>/contacto.png` de cada animación nueva antes de gastar créditos.
    - Corre tú `python3 scripts/video.py guion <TRABAJO> --check` (exit 0) para confirmar `locucion.json`.
-   - Avisa al usuario qué gancho ganó (familia, visual, pantalla y voz), el segundo y por qué (`seleccion.json`).
+   - En el reporte, qué gancho y qué cierre eligió el usuario y cuáles recomendaba el crítico (`seleccion.json`, `cierres.json`).
 3. **VOZ (MCP)**
    - `python3 scripts/video.py voz <TRABAJO>` imprime la voz y un `prompt` por **nodo**: una secuencia de 2–5
      escenas del mismo acto grabada de corrido (`locucion.json → secuencias`) o una escena suelta (el gancho, el
      cierre, las que no caben en ninguna). `descargar --estado` corta cada secuencia en sus escenas con
      los tiempos de Scribe.
+   - **El estado en línea** (m045, m047): si `creative_get_flow_run_status` devuelve la respuesta en el chat y no en un archivo
+     (pasa con pocas sesiones), escríbela TAL CUAL a `<TRABAJO>/audio/estado.json` y pásale ese archivo a `descargar --estado`;
+     valen las `words` en línea de Scribe. `descargar` falla si una transcripción no casa con ninguna escena.
    - `creative_create_flow` con el nombre «Video · <slug>».
    - Por cada nodo, `creative_add_flow_node`: `node_type: "tts"`, `model_id: "eleven_multilingual_v2"`,
      `voice_id` de la salida, `model_parameters: {"language_code": "es"}` y `prompt` **exacto**.

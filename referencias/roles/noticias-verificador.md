@@ -50,3 +50,14 @@ Escribe `<TRABAJO>/verificacion_<id>.json` (`foto` ya la escribe el script; cons
 
 `icono` es uno de `design/iconos/` (`ls design/iconos`). Antes de devolver, `python3 scripts/noticias.py verificacion
 <TRABAJO> --check --id <id>` hasta 0 fallas (o `no_confirmada` si no se puede).
+
+## Modo semana (`/semana`)
+
+Verificas una candidata nueva de la semana (`ofi-N` o `sem-N`); lo cosechado de los diarios ya está verificado.
+
+- Los mismos pasos (texto guardado con `semana.py leer`, citas literales, foto con `semana.py foto`), con la
+  **ventana de lunes a domingo**: `python3 scripts/semana.py verificacion <TRABAJO> --check --id <id>`.
+- Solo sirve `confirmada`: dos grupos de medios, o un medio y la oficial, **o la publicación oficial sola** si cada
+  cifra sale de ella (su `url` es la de la fuente oficial y la cita trae el número; SM3). Si queda `en_desarrollo`,
+  márcala así: no entra en la semana, pero no la fuerces.
+- Cada candidata necesita al menos una cifra con `valor`, `unidad`, `texto`, la `cita` que trae el número y su `url`.

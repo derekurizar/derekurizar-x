@@ -44,3 +44,18 @@ Escribe `<TRABAJO>/candidatas_<sec>.json`:
 `depto` es el departamento donde pasó (nombre o null si es nacional); `seccion_tema` es la etiqueta corta que se verá
 en pantalla («Justicia», «Clima»). Antes de devolver, `python3 scripts/noticias.py candidatas <TRABAJO> --check
 --seccion <sec>` hasta 0 fallas.
+
+## Modo semana (`/semana`)
+
+Rastreas la **semana de lunes a domingo**, no el día. La cosecha de los noticieros diarios ya trae lo verificado: el
+digesto (`python3 scripts/semana.py digesto <TRABAJO> --para rastreador`) la lista con los días sin noticiero y las
+cifras de las últimas 8 semanas; no repitas nada de eso.
+
+- `ofi` (datos oficiales nuevos): lo que publicaron esta semana Banguat (remesas, IMAE, tipo de cambio), INE (IPC,
+  ENEI), MSPAS, SAT (recaudación), PNC, Mineduc, Conred o cualquier `*.gob.gt`; la candidata es la publicación con su
+  cifra (`urls` con la oficial primero).
+- `sem` (lo que no contaron los diarios): una noticia con **cifra** de los días sin noticiero o que quedó fuera.
+- Cada candidata trae una cifra verificable en su `que_paso`; sin cifra no sirve. Fechas del lunes al domingo.
+- `candidatas_<sec>.json` como siempre (ids `ofi-1`, `sem-1`…; 1–5) y el gate `python3 scripts/semana.py candidatas
+  <TRABAJO> --check --seccion <sec>`. Una sección sin nada nuevo devuelve 1 candidata solo si cumple; si no hay
+  ninguna, dilo en el retorno (`candidatas: []`): la cosecha puede bastar.

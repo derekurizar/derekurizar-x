@@ -5,6 +5,11 @@ El cierre es la última pantalla: primero las **Conclusiones** (el `resumen` mie
 (`referencias/roles/video-guionista.md`, regla 9) y la juzga el crítico (C8). Las reglas que se pueden medir viven en
 `scripts/video.py guion --check` (F1–F8).
 
+**El usuario elige el cierre** (2026-11-03): con el guion aprobado, el guionista escribe 5 opciones en `cierres.json`
+(`c1` = la del guion; las otras con otra frase final y otra forma o mecanismo) y la sesión pregunta antes de la voz
+(`cierres --opciones`, `--usar <id>` o `--propio "<texto>"`, id `cu`). Su referencia: «Y mientras tanto, los
+guatemaltecos pasan tiempo en el tráfico y no con sus familias» (la consecuencia humana para quien vive el tema).
+
 **Por qué existe** (2026-10-23): los cinco primeros videos cerraron con el mismo molde, una pregunta sobre la vida del
 espectador:
 

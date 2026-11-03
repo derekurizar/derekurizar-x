@@ -57,3 +57,34 @@ Escribe `<TRABAJO>/guion.json` (ejemplo completo en `sesiones/_fixture_noticias/
 
 Antes de devolver, `python3 scripts/noticias.py guion <TRABAJO> --check` hasta 0 fallas (≤ 4 intentos). Si vuelve la
 crítica, corrige SOLO lo que bloquea y repasa el gate.
+
+## Modo semana (`/semana`)
+
+Escribes «Las 5 cifras de la semana en Guatemala» (62–90 s, cuenta regresiva 5→1) con las noticias de la semana ya
+verificadas: la cosecha de los noticieros diarios y lo que confirmaron los verificadores `ofi` y `sem`.
+
+- Insumos: `python3 scripts/semana.py consolidar <TRABAJO>` y `python3 scripts/semana.py digesto <TRABAJO> --para
+  editor` (cada noticia con sus cifras `sm-cNN`, su valor, su cita y su fecha; las cifras ya contadas en las últimas 8
+  semanas). No leas `noticias.json` entero.
+- **Eliges 5 cifras de 5 noticias distintas**, de ≥ 3 secciones y ≤ 2 por sección; ninguna de las ya contadas (SM6).
+  Solo `confirmada` (o un dato oficial): `en_desarrollo` no existe aquí. La **#1** es la que más pesa para la gente (no
+  la más rara); de la #5 a la #2, de menos a más, alternando secciones.
+- `guion.json` (ejemplo completo en `sesiones/_fixture_semana/guion.json`): `tipo: "semana"`, `fecha` (el domingo),
+  `ventana`, `contexto_superior` con «Guatemala» y «semana» («Guatemala · semana del 19 al 25 oct»), `gancho {pantalla,
+  texto}` (la pantalla «Las 5 cifras de la semana»; la voz, 40–115 caracteres en palabras, dice «Guatemala» y «semana»
+  en sus primeros 6 s y **no** dice ni sugiere la #1), `cifras[]` en orden 5, 4, 3, 2, 1, cada una `{puesto, noticia,
+  cifra_id, seccion, titular, texto, cifra {texto, etiqueta}, humana?, calculo?, fuente, publicada}`, `cierre {rotulo,
+  resumen[5], texto, final}` y `caption` de las cuatro plataformas.
+- **Cada cifra**: 110–205 caracteres de voz (≈ 8–13 s); abre con su puesto en palabras o dígitos («En el número 4,…»;
+  la #1 «Y en el número uno,…»: el 1 suelto es ambiguo para la voz), dice la cifra en dígitos tal como la trae la cita,
+  de dónde sale y qué significa. `cifra.texto` es su valor (`Q148,500 M`, `3.8 %`); `publicada` es la del digesto.
+- **Escala humana** (`humana`, ≤ 40 caracteres, en ≥ 3 cifras): la cifra para una persona o un hogar, con números de la
+  cita o un `calculo` sobre los ids (`"sm-c06 * 10"` → «Q38 más por cada Q1,000»).
+- `fuente` (≤ 44) nombra el medio o el organismo de la noticia («INE», «Conred · Prensa Libre»). La foto la pone el
+  script desde la noticia.
+- **Cierre**: `rotulo` «La semana en Guatemala»; `resumen` con 5 líneas ≤ 26 caracteres, una por cifra en el orden de
+  la cuenta y cada una con su cifra; `final` ≤ 12 palabras, última frase de `texto`, que cita al domingo que viene; sin
+  «comenta», «comparte» ni «sígueme».
+- **Captions**: la 1.ª línea de `tiktok` y de `shorts` dice «Guatemala» y «semana» (SM11); `shorts` ≤ 100 con `#Shorts`.
+- Antes de devolver, `python3 scripts/semana.py guion <TRABAJO> --check` hasta 0 fallas (SM1–SM11). En el retorno,
+  `noticias` = los 5 ids de noticia en el orden de la cuenta.

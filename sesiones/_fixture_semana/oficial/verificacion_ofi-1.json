@@ -1,0 +1,44 @@
+{
+ "id": "ofi-1",
+ "seccion": "Economía",
+ "titular": "Inflación de septiembre: 3.8 %",
+ "resumen": "Ejemplo: dato oficial del INE.",
+ "depto": null,
+ "icono": "percent",
+ "estado": "confirmada",
+ "motivo": "maqueta",
+ "sentencia": false,
+ "novedad": null,
+ "fuentes": [
+  {
+   "medio": "INE",
+   "tipo": "oficial",
+   "url": "https://www.ine.gob.gt/ejemplo/ipc-septiembre",
+   "fecha": "2026-10-23",
+   "archivo": "sesiones/_fixture_semana/descargas/ine-gob-gt-7088321eaa.txt",
+   "cita": "el ritmo inflacionario interanual a septiembre de 2026 se ubicó en 3.8 %"
+  }
+ ],
+ "hechos": [
+  {
+   "texto": "Inflación interanual",
+   "cita": "se ubicó en 3.8 %",
+   "url": "https://www.ine.gob.gt/ejemplo/ipc-septiembre"
+  }
+ ],
+ "foto": {
+  "archivo": "fotos/ofi-1.jpg",
+  "credito": "Foto de referencia: ejemplo (maqueta)",
+  "origen": "referencia"
+ },
+ "cifras": [
+  {
+   "texto": "3.8 %",
+   "valor": 3.8,
+   "unidad": "%",
+   "cita": "se ubicó en 3.8 %",
+   "url": "https://www.ine.gob.gt/ejemplo/ipc-septiembre",
+   "id": "ofi-1-c1"
+  }
+ ]
+}

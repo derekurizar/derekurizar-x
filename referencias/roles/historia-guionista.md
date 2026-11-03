@@ -167,6 +167,19 @@ consecuencia}` con las reglas F1–F8 de `referencias/cierres.md`.
 - `caption {tiktok, instagram, facebook (con «Fuentes en el primer comentario»), shorts (primera línea ≤ 100 con
   #Shorts)}`.
 
+## Cierres para el usuario (fase Cierres del workflow)
+
+Con el guion ya aprobado, el usuario elige el cierre entre 5 (usuario, 2026-11-03: «siempre me pones a escoger entre 5
+opciones de hooks y cierres»). Escribes `<TRABAJO>/cierres.json` = `{"candidatos": [...]}` **sin tocar `guion.json`**:
+- `c1` es `guion.cierre` tal cual (texto, final, tipo, forma, consecuencia).
+- `c2`–`c5`: cada uno con otra frase final y otra forma o mecanismo (`referencias/cierres.md`: consecuencia
+  quien|perdida|reloj|despues|espera, legado, pendiente, quien_decide; a lo más una pregunta). Al usuario le gusta la
+  consecuencia humana para quien vive el tema, dicha llano («Y mientras tanto, los guatemaltecos pasan tiempo en el
+  tráfico y no con sus familias»): su tiempo, su familia, su bolsillo, lo que espera.
+- Cada uno: `id`, `texto` (una oración que prepara, ≥ 3 s de voz, y la frase final), `final` (≤ 14 palabras),
+  `tipo`, `forma`, `consecuencia {mecanismo?, quien, verbo}` si es consecuencia o legado, y `por_que` (una línea).
+- Solo lo que el guion y sus cifras sostienen (F6, F8). Pasa `<script> cierres <TRABAJO> --check` hasta 0 fallas.
+
 ## Salida
 
 `<TRABAJO>/guion.json` (ejemplo completo: `sesiones/_fixture_historia/guion.json`). Primero `python3

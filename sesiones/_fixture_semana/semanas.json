@@ -1,0 +1,33 @@
+{
+ "version": 1,
+ "_comentario": "Maqueta de memoria/semanas.json para SM6 (una semana anterior).",
+ "semanas": [
+  {
+   "id": "2026-W42",
+   "fecha": "2026-10-18",
+   "ventana": [
+    "2026-10-12",
+    "2026-10-18"
+   ],
+   "ruta": "semanas/2026-10-18",
+   "paleta": "cielo",
+   "musica": "cielo-2",
+   "duracion_s": 72.0,
+   "creditos_voz": null,
+   "estado": "listo",
+   "cifras": [
+    {
+     "puesto": 1,
+     "cifra_id": "sm-c03",
+     "id_original": "n1-c1",
+     "valor": 2150,
+     "unidad": "millones de dólares",
+     "texto": "US$2,150 millones",
+     "titular": "Remesas suben a US$2,150 millones",
+     "url": "https://www.banguat.gob.gt/ejemplo/remesas-septiembre",
+     "noticia": "d16-n1"
+    }
+   ]
+  }
+ ]
+}

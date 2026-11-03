@@ -7,7 +7,7 @@ PALETAS ?= cielo
 ESTILO ?= noche
 PALETA ?= cielo
 
-.PHONY: help nuevo render visual catalogo validate tabla pdf ensamblar limpiar test doctor costo contacto digesto fuentes ideas calendario informe informe-ejemplo informe-catalogo informe-fixture verificacion auditoria-rehacer podar video-fixture video-fixture-4x5 noticias-fixture historia-fixture explica-fixture mito-fixture sabias-fixture carrusel-fixture departamento-fixture musica whisper iconos
+.PHONY: help nuevo render visual catalogo validate tabla pdf ensamblar limpiar test doctor costo contacto digesto fuentes ideas calendario informe informe-ejemplo informe-catalogo informe-fixture verificacion auditoria-rehacer podar video-fixture video-fixture-4x5 noticias-fixture semana-fixture historia-fixture explica-fixture mito-fixture sabias-fixture carrusel-fixture departamento-fixture musica whisper iconos
 
 help:
 	@echo "make nuevo T=<plantilla> OUT=<ruta.html> [PALETA=cielo]  ensambla una tarjeta (base + plantilla)"
@@ -32,6 +32,7 @@ help:
 	@echo "make informe-fixture                                     informe de prueba (8 páginas) sobre sesiones/_fixture/salida, sin agentes (requiere el fixture ensamblado)"
 	@echo "make video-fixture [FPS=10]                              /video de prueba sin créditos (voz falsa) sobre sesiones/_fixture/salida → sesiones/_fixture_video/salida"
 	@echo "make noticias-fixture [FPS=10]                           /noticias de prueba (maqueta: noticias de ejemplo, voz falsa, 0 créditos) → sesiones/_fixture_noticias/trabajo/salida"
+	@echo "make semana-fixture [FPS=10]                             /semana de prueba (3 diarios de ejemplo + un dato oficial, voz falsa, 0 créditos) → sesiones/_fixture_semana/salida"
 	@echo "make historia-fixture [FPS=10]                           /historia de prueba (maqueta: una panadería inventada, voz falsa, 0 créditos) → sesiones/_fixture_historia/trabajo/salida"
 	@echo "make explica-fixture [FPS=10]                            /explica de prueba (maqueta: el interés compuesto con fuentes de ejemplo, voz falsa, 0 créditos) → sesiones/_fixture_explica/salida"
 	@echo "make mito-fixture [FPS=10]                               /mito de prueba (modo mito de /explica: «la remesa promedio es de $$1,000» → MITO, voz falsa, 0 créditos) → sesiones/_fixture_mito/salida"
@@ -189,6 +190,21 @@ noticias-fixture:   # maqueta de /noticias: noticias de ejemplo con fotos genera
 	python3 scripts/noticias.py grabar $(NF)/trabajo --fps $(FPS) --formato 4:5
 	python3 scripts/noticias.py montar $(NF)/trabajo --formato 4:5
 	python3 scripts/noticias.py revisar $(NF)/trabajo --formato 4:5
+
+SMF := sesiones/_fixture_semana
+semana-fixture:   # maqueta de /semana: 3 diarios de ejemplo + un dato oficial → 5 cifras en cuenta regresiva, voz falsa, 9:16 y 4:5 (≥ 61 s)
+	rm -rf $(SMF)/trabajo $(SMF)/salida
+	python3 scripts/semana.py preparar --fecha 2026-10-25 --trabajo $(SMF)/trabajo --fixture
+	python3 scripts/semana.py guion $(SMF)/trabajo --check
+	python3 scripts/semana.py voz-falsa $(SMF)/trabajo
+	python3 scripts/semana.py tiempos $(SMF)/trabajo
+	python3 scripts/semana.py grabar $(SMF)/trabajo --fps $(FPS)
+	python3 scripts/semana.py montar $(SMF)/trabajo
+	python3 scripts/semana.py revisar $(SMF)/trabajo
+	python3 scripts/semana.py grabar $(SMF)/trabajo --fps $(FPS) --formato 4:5
+	python3 scripts/semana.py montar $(SMF)/trabajo --formato 4:5
+	python3 scripts/semana.py revisar $(SMF)/trabajo --formato 4:5
+	python3 scripts/semana.py entregar $(SMF)/trabajo --salida $(SMF)/salida
 
 HF := sesiones/_fixture_historia
 historia-fixture:   # maqueta de /historia: hechos verificados de ejemplo, fotos generadas, voz falsa, 9:16 y 4:5

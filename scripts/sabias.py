@@ -220,7 +220,9 @@ def digesto(trabajo, st, d, musica, fixture):
         "Guatemala…?», «¿Sabías que el lago más visitado de Guatemala…?»)."
         % (PANTALLA_GANCHO, VD.LINEA_PALABRAS, VD.LINEA_CARACTERES, "|".join(VD.VISUALES)),
         "2. **El dato** (`tipo` %s, `tuit: 1`, `golpe` ≤ %d palabras que no repite el titular): la voz dice la cifra con su "
-        "referente (el año, el antes, el de cada) y de dónde sale." % (" | ".join(TARJETA_TIPOS), VD.GOLPE_PALABRAS),
+        "referente (el año, el antes, el de cada) y de dónde sale. Si el gancho termina en la unidad de la cifra («tres "
+        "metros»), la escena 2 abre con su fuente o un marco corto («Es lo que dice la medición oficial: …») o el gancho termina "
+        "con el año: la regla de eco rechaza la unidad en sus primeras 7 palabras." % (" | ".join(TARJETA_TIPOS), VD.GOLPE_PALABRAS),
         "3. **Apoyo** (opcional, ≤ 1): `golpe` (la cifra a escala humana con `calculo`), `escala` (`de_cada: [K, N]`, `calculo`) "
         "o `explica` (una animación YA hecha de la biblioteca con el `mecanismo` del fenómeno; aquí no se escriben nuevas). "
         "Sin «pero» suelto: si la escena gira, `enlace: \"pero\"`.",

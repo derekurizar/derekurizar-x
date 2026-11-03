@@ -1,0 +1,144 @@
+{
+ "fecha": "2026-10-22",
+ "noticias": [
+  {
+   "id": "n1",
+   "seccion": "Salud",
+   "titular": "Casos de dengue bajan 35 %",
+   "resumen": "Ejemplo: dengue a la baja.",
+   "depto": "Guatemala",
+   "icono": "heart-pulse",
+   "estado": "confirmada",
+   "motivo": "maqueta",
+   "sentencia": false,
+   "novedad": null,
+   "fuentes": [
+    {
+     "medio": "MSPAS",
+     "tipo": "oficial",
+     "url": "https://www.mspas.gob.gt/ejemplo/dengue",
+     "fecha": "2026-10-22",
+     "archivo": "sesiones/_fixture_semana/descargas/mspas-gob-gt-b824959554.txt",
+     "cita": "los casos de dengue bajaron 35 % frente al mismo periodo de 2025"
+    },
+    {
+     "medio": "La Hora",
+     "tipo": "medio",
+     "url": "https://lahora.gt/ejemplo/dengue",
+     "fecha": "2026-10-22",
+     "archivo": "sesiones/_fixture_semana/descargas/lahora-gt-6c8488137b.txt",
+     "cita": "los casos de dengue bajaron 35 % en comparación con 2025"
+    }
+   ],
+   "hechos": [
+    {
+     "texto": "Dengue a la baja",
+     "cita": "los casos de dengue bajaron 35 %",
+     "url": "https://www.mspas.gob.gt/ejemplo/dengue"
+    },
+    {
+     "texto": "La capital con más casos",
+     "cita": "La capital concentra la mayoría",
+     "url": "https://www.mspas.gob.gt/ejemplo/dengue"
+    }
+   ],
+   "foto": {
+    "archivo": "fotos/n1.jpg",
+    "credito": "Foto de referencia: ejemplo (maqueta)",
+    "origen": "referencia"
+   },
+   "cifras": [
+    {
+     "texto": "35 %",
+     "valor": 35,
+     "unidad": "%",
+     "cita": "bajaron 35 % frente al mismo periodo",
+     "url": "https://www.mspas.gob.gt/ejemplo/dengue",
+     "id": "n1-c1"
+    }
+   ]
+  },
+  {
+   "id": "n2",
+   "seccion": "Clima",
+   "titular": "Lluvias afectan a 1,200 familias",
+   "resumen": "Ejemplo: lluvias en Escuintla.",
+   "depto": "Escuintla",
+   "icono": "cloud-rain",
+   "estado": "confirmada",
+   "motivo": "maqueta",
+   "sentencia": false,
+   "novedad": null,
+   "fuentes": [
+    {
+     "medio": "Conred",
+     "tipo": "oficial",
+     "url": "https://conred.gob.gt/ejemplo/lluvias",
+     "fecha": "2026-10-21",
+     "archivo": "sesiones/_fixture_semana/descargas/conred-gob-gt-58bded33f3.txt",
+     "cita": "las lluvias de la semana dejaron 1,200 familias afectadas en Escuintla"
+    },
+    {
+     "medio": "Prensa Libre",
+     "tipo": "medio",
+     "url": "https://www.prensalibre.com/ejemplo/lluvias-escuintla",
+     "fecha": "2026-10-22",
+     "archivo": "sesiones/_fixture_semana/descargas/prensalibre-com-b066ad3e32.txt",
+     "cita": "Conred contabiliza 1,200 familias afectadas"
+    }
+   ],
+   "hechos": [
+    {
+     "texto": "Familias afectadas",
+     "cita": "dejaron 1,200 familias afectadas en Escuintla",
+     "url": "https://conred.gob.gt/ejemplo/lluvias"
+    },
+    {
+     "texto": "Albergues",
+     "cita": "Hay 14 albergues abiertos",
+     "url": "https://conred.gob.gt/ejemplo/lluvias"
+    }
+   ],
+   "foto": {
+    "archivo": "fotos/n2.jpg",
+    "credito": "Foto: ejemplo (maqueta)",
+    "origen": "oficial"
+   },
+   "cifras": [
+    {
+     "texto": "1,200 familias",
+     "valor": 1200,
+     "unidad": "familias",
+     "cita": "dejaron 1,200 familias afectadas",
+     "url": "https://conred.gob.gt/ejemplo/lluvias",
+     "id": "n2-c1"
+    }
+   ]
+  },
+  {
+   "id": "n3",
+   "seccion": "Justicia",
+   "titular": "Caso de ejemplo sin confirmar",
+   "resumen": "Ejemplo no confirmado.",
+   "depto": null,
+   "icono": "gavel",
+   "estado": "no_confirmada",
+   "motivo": "maqueta",
+   "sentencia": false,
+   "novedad": null,
+   "fuentes": [
+    {
+     "medio": "Soy502",
+     "tipo": "medio",
+     "url": "https://www.soy502.com/ejemplo/rumor",
+     "fecha": "2026-10-22",
+     "archivo": "sesiones/_fixture_semana/descargas/soy502-com-0ffc93c6a3.txt",
+     "cita": "un rumor sin confirmar sobre 40 plazas"
+    }
+   ],
+   "hechos": [],
+   "foto": null,
+   "cifras": []
+  }
+ ]
+}

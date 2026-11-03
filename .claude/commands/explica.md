@@ -34,6 +34,22 @@ La guía es `referencias/flujo-explica.md`. Nunca publiques. Nunca generes músi
      `.claude/workflows/explica.js` o los agentes en esta sesión, pásalo con `scriptPath: ".claude/workflows/explica.js"`;
      para reanudar, `resumeFromRunId`. `desde: "guion"` salta directo a Guion (con `explicacion.json`, `ganchos.json` y
      `seleccion.json`); `desde: "retoque"` es el paso 9.
+   - **El usuario elige el gancho** (usuario, 2026-11-03: «siempre me pones a escoger entre 5 opciones»): sin
+     `args.gancho`, el Workflow se detiene tras la Selección con `veredicto: "elegir_gancho"` (los 5 candidatos y el
+     recomendado del crítico). Corre `python3 scripts/explica.py ganchos <TRABAJO> --opciones` y pregunta con AskUserQuestion:
+     4 botones con la pantalla y la voz de cada opción (la recomendada primero, con «(Recomendado)»), la quinta escrita en
+     el texto de la pregunta («o escribe 5 en Otro»); en «Otro» también puede dictar su propio gancho. Con un id:
+     `python3 scripts/explica.py ganchos <TRABAJO> --elegir <id>` y relanza el Workflow con `resumeFromRunId` y los mismos args
+     más `"gancho": "<id>"` (lo ya hecho vuelve de la caché); con su texto, los mismos args más `"gancho_usuario": "<su
+     texto literal>"` (el agente de ganchos lo arma como candidato `gu` y lo elige). Si ya no se puede reanudar (otra
+     sesión), escribe la elección con `ganchos --elegir <id>` y lanza con `"desde": "guion"`. `"auto": true` deja la recomendación del crítico (solo si el usuario lo pide).
+   - **El usuario elige el cierre**: con el guion aprobado, el Workflow devuelve `cierres` (5 opciones en
+     `cierres.json`; `c1` es la del guion). ANTES de la voz, `python3 scripts/explica.py cierres <TRABAJO> --opciones` y
+     pregunta igual (`c1` primero). Con otro id: `python3 scripts/explica.py cierres <TRABAJO> --usar <id>`; con su texto:
+     `--propio "<su texto>"` con `--forma`, `--mecanismo`, `--quien` y `--verbo` que casen con su frase
+     (`referencias/cierres.md`; si dicta solo la frase final, se queda la oración del guion que la prepara). El script repasa narracion y guion: si fallan, deja el guion como estaba.
+     Si el gate la rechaza, muéstrale la falla y propón la versión más cercana que pasa; nunca edites `guion.json` a
+     mano. Si `cierres` viene `null` (el agente no pudo), pregunta con el cierre del guion o el suyo (`--propio`).
    - Si falla con «no está registrado», pide al usuario reiniciar Claude Code; solo si lo autoriza, relanza con
      `args.permitir_fallback: true`.
    - Al volver, lee `veredicto`, `puntajes` (con `claridad` e `intuicion`), `oyente.explicacion_devuelta` (cómo un
@@ -57,6 +73,9 @@ La guía es `referencias/flujo-explica.md`. Nunca publiques. Nunca generes músi
      `creative_get_flow_run_status` con voz y Scribe y `python3 scripts/explica.py descargar <TRABAJO> --estado <ese
      archivo>` (corta cada secuencia en sus escenas). **Límite de 20 ids** por llamada: con más de 10 nodos, el estado
      va en lotes y `descargar --estado A B …` recibe todos.
+   - **El estado en línea** (m045, m047): si `creative_get_flow_run_status` devuelve la respuesta en el chat y no en un archivo
+     (pasa con pocas sesiones), escríbela TAL CUAL a `<TRABAJO>/audio/estado.json` y pásale ese archivo a `descargar --estado`;
+     valen las `words` en línea de Scribe. `descargar` falla si una transcripción no casa con ninguna escena.
 5. **TIEMPOS Y ESCUCHA**
    - `python3 scripts/explica.py tiempos <TRABAJO>` (V6, V10, V16; cada renglón de la pizarra cae cuando la voz dice su
      resultado). Si una escena no se alinea, rehaz SOLO ese nodo y repite.

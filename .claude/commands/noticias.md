@@ -56,6 +56,9 @@ La guía es `referencias/flujo-noticias.md`. Nunca publiques. Nunca generes mús
      guardada en un archivo) y `python3 scripts/noticias.py descargar <TRABAJO> --estado <ese archivo>` (baja
      `voz_N.mp3`, `palabras_N.json` y `audio/creditos.json`; exit 1 lista lo que falte). La llamada acepta ≤ 20
      sesiones: con más de 10 escenas, en lotes (cada voz con su Scribe) y `descargar --estado A B …` con todos.
+   - **El estado en línea** (m045, m047): si `creative_get_flow_run_status` devuelve la respuesta en el chat y no en un archivo
+     (pasa con pocas sesiones), escríbela TAL CUAL a `<TRABAJO>/audio/estado.json` y pásale ese archivo a `descargar --estado`;
+     valen las `words` en línea de Scribe. `descargar` falla si una transcripción no casa con ninguna escena.
 5. **TIEMPOS Y ESCUCHA**
    - `python3 scripts/noticias.py tiempos <TRABAJO>` (V6 alineación; N5 y V10, avisos). Si una escena no se alinea,
      rehaz SOLO ese nodo (1 toma), transcríbelo, pide el estado de esas dos sesiones y pásalo a `descargar --estado`;

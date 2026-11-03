@@ -229,6 +229,11 @@ derivado («1 de cada 3», «5 veces»), incluye su `calculo` con ids del digest
 fecha: si el material no existe, el arreglo es «quita la afirmación» o
 «di que no hay dato».
 
+En **/video** (m015), como en /historia, un arreglo de voz lleva sus `cambios` probados: córrelo antes con
+`python3 scripts/video.py probar <TRABAJO> --cambios '[{"escena": N, "texto": "…"}]'` (lo aplica a una copia con el mismo
+texto en la escena y en su tramo de la narración, y corre los gates) y marca `probado: true` con el JSON exacto que pasó;
+el guionista lo aplica tal cual con `video.py aplicar`. El cierre va con `{"cierre": {"texto", "final", …}}` (los dos juntos).
+
 ## Salida
 
 Escribe `<TRABAJO>/critica.json`:
@@ -254,7 +259,7 @@ mover el pago).
 ## Modo selección de gancho
 
 Lo corres ANTES del guion. Lees `referencias/ganchos.md`, `<TRABAJO>/ganchos.json`
-(4–5 candidatos que ya pasaron `video.py ganchos --check`, R1–R10) y
+(5 candidatos que ya pasaron `video.py ganchos --check`, R1–R10) y
 `<TRABAJO>/digesto.md` (tema, `no_afirma`, «Ganchos recientes», «Frases ya
 usadas»). Presupuesto: 3 lecturas, sin Bash, sin web, ≤ 5 min. Escribes solo
 `<TRABAJO>/seleccion.json`.
@@ -287,6 +292,15 @@ uno con su arreglo exacto (el agente de ganchos rehace esos).
 
 Retorno (StructuredOutput): `{archivo, ganador, segundo, puntajes, por_que, faltas[]}`.
 
+> **La elección es del usuario** (2026-11-03): tu `ganador` es una **recomendación**. El workflow se detiene con los 5
+> candidatos y tu recomendación, y el usuario elige (o dicta el suyo). Ordena bien: `ganador` y `segundo` son los dos
+> que recomiendas, `por_que` dice en una línea por qué cada uno de los otros quedó atrás (la sesión se lo muestra), y los
+> `puntajes` de los 5 ordenan la lista de opciones.
+
+En la selección de /historia puedes sugerir otra foto para un candidato que gana por su texto pero no por su imagen
+(m032): `seleccion.json` → `"foto_sugerida": {"<id>": "<foto id verificada>"}`; `ganchos --usar` la pone en el gancho y
+el gate repasa H12 (tiene que mostrar al protagonista).
+
 ## Modo noticiero (`/noticias`)
 
 Lo pide el Workflow `noticias` tras el gate del editor. Lees `<TRABAJO>/guion.json`, `<TRABAJO>/locucion.json` (la
@@ -313,6 +327,27 @@ texto exacto, con las cifras tal como están en el digesto.
 Escribes `<TRABAJO>/critica.json` con la forma de «Salida» (los puntajes de esta tabla) y devuelves `{archivo,
 vuelta, veredicto, puntajes, bloqueantes, mejoras, faltas[]}`; `veredicto` es `pasa` solo sin faltas `bloquea` y con
 todos los puntajes ≥ 3.
+
+## Modo semana (`/semana`, modo semana de /noticias)
+
+Lo pide el Workflow `noticias` con `modo: semana` tras el gate del editor (SM1–SM11). Lees `<TRABAJO>/guion.json`,
+`<TRABAJO>/locucion.json` y `python3 scripts/semana.py digesto <TRABAJO> --para editor` (las cifras de la semana con su
+cita). Sin web; presupuesto: 3 lecturas y ese Bash. Es una **cuenta regresiva de 62–90 s**: cinco cifras de cinco
+noticias, de la #5 a la #1; tu pregunta en cada escena es «¿por qué esperaría a la siguiente?».
+
+| Regla | Qué revisas |
+|---|---|
+| SM-C1 gancho | la pantalla sola dice que vienen las 5 cifras de la semana; la voz dice «Guatemala» y «semana» en ≤ 6 s; no adelanta la #1 (ni su número, ni su foto, ni su tema) |
+| SM-C2 orden | la cuenta sube: la #1 es la que más pesa para la gente (alcance, impacto, novedad), no la más llamativa; ninguna #5 más fuerte que la #2; secciones alternadas |
+| SM-C3 claridad | cada cifra se entiende en una pasada: qué mide, de dónde y de cuándo; la cifra en pantalla es la que dice la voz, con su unidad |
+| SM-C4 escala | ≥ 3 cifras con su `humana` (a escala de una persona o un hogar), respaldada por la cita o un `calculo`; nada de equivalencias forzadas |
+| SM-C5 tono | sin «ganamos / perdemos», sin sensacionalismo; presunción de inocencia; un dato oficial suena oficial («según el INE») |
+| SM-C6 cierre | las 5 líneas del resumen se leen de un vistazo (una por cifra, en el orden de la cuenta); la frase final cierra la semana y cita al domingo que viene, sin cebo |
+
+Puntajes 1–5: `gancho` (SM-C1), `orden` (SM-C2), `claridad` (SM-C3), `escala` (SM-C4), `tono` (SM-C5), `cierre`
+(SM-C6); un puntaje ≤ 2 exige una falta `bloquea` de su regla. **Bloquea**: un gancho que revela la #1; una cifra que no
+se entiende; una afirmación sin cita; un orden que deja lo más fuerte en medio; cualquier puntaje ≤ 2. Lo demás es
+mejora. `critica.json` y el retorno, como en el modo noticiero.
 
 ## Modo historia (`/historia`)
 

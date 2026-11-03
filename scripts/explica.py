@@ -27,7 +27,9 @@ Subcomandos (TRABAJO = sesiones/explica-<slug>/):
         ejemplos (los modelos del encuadre → ejemplos.json y las cifras ej-cNN en base/datos.json)
   ejemplos TRABAJO             solo la calculadora: imprime cada ejemplo y su tabla (y la vuelve a escribir)
   digesto TRABAJO --para investigador|verificador --eje E | gancho | guionista | critico | oyente | cuadro (mito: MI10)
-  ganchos TRABAJO --check | --usar [ID] [--segundo ID]   → video.py ganchos con las familias y visuales de /explica
+  ganchos TRABAJO --check | --opciones | --elegir ID | --usar [ID] [--segundo ID]   → video.py ganchos con las familias y visuales de /explica
+  cierres TRABAJO --check | --opciones | --usar ID | --propio TEXTO [--forma --mecanismo --quien --verbo]   → video.py
+        cierres (5 cierres para que el usuario elija) y, al cambiar, narracion --check + guion --check
   narracion TRABAJO [--check]  mide guion.narracion antes de repartirla (E9: palabras, conectores, «según»)
   tarjetas TRABAJO             las escenas con gráfico → base/tuit_N.html (materializar.py, R1–R6)
   guion TRABAJO --check        E3–E12 + video.py guion (V1–V5, V9, F1–F8) → locucion.json; última línea RETORNO {...}
@@ -1584,6 +1586,24 @@ def retorno_guion(trabajo, g, ok, fallas, ilustrativas):
             **({"modo": "mito", "veredicto": mito_de(trabajo).get("veredicto"), "creencia": mito_de(trabajo).get("creencia")} if es_mito() else {})}
 
 
+
+def cmd_cierres(a):
+    """cierres.json → video.py cierres (5 opciones para el usuario); con --usar o --propio pasa el cierre al guion y corre
+    narracion --check y guion --check: si el gate lo rechaza, guion.json vuelve a guion.previo.json."""
+    trabajo = os.path.abspath(a.trabajo)
+    aplicar_extension(trabajo)
+    cambia = bool(a.usar or a.propio)
+    rc = VD.cmd_cierres(a)
+    if rc or not cambia:
+        return rc
+    if correr_gates(trabajo):
+        shutil.copyfile(os.path.join(trabajo, "guion.previo.json"), os.path.join(trabajo, "guion.json"))
+        correr_gates(trabajo)   # locucion.json vuelve a corresponder al guion restaurado
+        print("cierres: el gate rechaza ese cierre; guion.json queda como estaba")
+        return 1
+    print("cierres: %s en el guion · gate ok (la voz del cierre cambió: voz --pendientes)" % a.usar)
+    return 0
+
 def cmd_ganchos(a):
     trabajo = os.path.abspath(a.trabajo)
     aplicar_extension(trabajo)
@@ -2175,7 +2195,12 @@ def main():
     x = q.add_mutually_exclusive_group(required=True)
     x.add_argument("--check", action="store_true")
     x.add_argument("--usar", nargs="?", const="")
+    x.add_argument("--opciones", action="store_true")
+    x.add_argument("--elegir")
     q.add_argument("--segundo")
+    q = sub.add_parser("cierres")
+    q.add_argument("trabajo")
+    VD.agregar_args_cierres(q)
     q = sub.add_parser("narracion")
     q.add_argument("trabajo")
     q.add_argument("--check", action="store_true")
@@ -2196,7 +2221,7 @@ def main():
         sub.add_parser(nombre, help="→ scripts/video.py %s" % nombre)
     a = p.parse_args()
     return {"preparar": cmd_preparar, "encuadre": cmd_encuadre, "mito": cmd_mito, "afirmaciones": cmd_afirmaciones, "consolidar": cmd_consolidar,
-            "ejemplos": cmd_ejemplos, "digesto": cmd_digesto, "ganchos": cmd_ganchos, "narracion": cmd_narracion,
+            "ejemplos": cmd_ejemplos, "digesto": cmd_digesto, "ganchos": cmd_ganchos, "cierres": cmd_cierres, "narracion": cmd_narracion,
             "tarjetas": cmd_tarjetas, "guion": cmd_guion, "probar": cmd_probar, "aplicar": cmd_aplicar, "tiempos": cmd_tiempos,
             "entregar": cmd_entregar}[a.cmd](a)
 

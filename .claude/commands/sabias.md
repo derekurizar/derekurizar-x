@@ -26,6 +26,11 @@ La guía es `referencias/flujo-sabias.md`. Nunca publiques. Nunca generes músic
      que en Guatemala…?»; la escena del dato con su referente; a lo más un apoyo (golpe a escala humana con `calculo`,
      escala o una explica de la biblioteca; no el bloqueado); el cierre de una pantalla con la consecuencia; captions
      de las cuatro plataformas. Cifras en dígitos (el script las pasa a palabras), solo las del digesto.
+   - **El usuario elige gancho y cierre** (usuario, 2026-11-03): antes de escribir el guion final, propón 5 ganchos
+     distintos («¿Sabías que en Guatemala…?» con otra cifra a la vista, otro visual u otro ángulo; ninguno bloqueado
+     por S3) y, con el guion armado, 5 cierres de una pantalla (otra consecuencia: quién lo vive, qué pierde, qué
+     espera…; `referencias/cierres.md`). Pregunta con AskUserQuestion (4 botones, la quinta en el texto de la pregunta;
+     en «Otro» puede dictar el suyo, que va casi literal) y escribe en `guion.json` lo que elija.
    - `python3 scripts/sabias.py guion <TRABAJO> --check` hasta exit 0 (S1–S3, V1–V5, V9, F1–F8; la tabla da los
      segundos estimados: 20–30 s).
 3. **CRÍTICA** (0 créditos)
@@ -43,6 +48,9 @@ La guía es `referencias/flujo-sabias.md`. Nunca publiques. Nunca generes músic
      `creative_transcribe_audio` por nodo (`eleven_scribe_v1`, `connect_from: [nodo]`), luego **una sola**
      `creative_get_flow_run_status` con las sesiones de voz y Scribe (queda guardada en un archivo) y
      `python3 scripts/sabias.py descargar <TRABAJO> --estado <ese archivo>`.
+   - **El estado en línea** (m045, m047): si `creative_get_flow_run_status` devuelve la respuesta en el chat y no en un archivo
+     (pasa con pocas sesiones), escríbela TAL CUAL a `<TRABAJO>/audio/estado.json` y pásale ese archivo a `descargar --estado`;
+     valen las `words` en línea de Scribe. `descargar` falla si una transcripción no casa con ninguna escena.
 5. **TIEMPOS Y ESCUCHA**
    - `python3 scripts/sabias.py tiempos <TRABAJO>` (V6, V10, V16). Si una escena no se alinea, rehaz SOLO ese nodo
      (1 toma), transcríbelo, `descargar --estado` con esas dos sesiones y repite `tiempos`.

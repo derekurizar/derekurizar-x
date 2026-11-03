@@ -17,6 +17,9 @@
 #        · /video: numeros_es, gate V1–V5+V9 con sus negativos, K2 (efectos fijos), make video-fixture (V6–V8, V10,
 #          ducking medido) · node --check de hilo.js, ideas.js, dato.js, investigacion.js, video.js, noticias.js, historia.js y explica.js · check_workflows.py (W1–W13)
 #        · /noticias: gates N1–N8 sobre la maqueta (negativos) y make noticias-fixture.
+#        · /semana: cosecha (descartes), SM1–SM11 con un negativo por gate, el dato oficial (SM3), W11 con MODOS.semana,
+#          M15, semana.py carrusel → carrusel.py guion --check, make semana-fixture (4:5 1080×1350, ≥ 60 s), entregar
+#          sin voz se niega y memoria.py --semana --dry-run.
 #        · /historia: gates H1–H14 sobre la maqueta (negativos: también foto repetida, retrato, chip, cita en otro idioma,
 #          20 escenas), fotos fundidas y encaje, licencias de Commons, clases de fuente y agencias, M10, make
 #          historia-fixture, entregar y memoria.py --historia.
@@ -1554,6 +1557,51 @@ if [[ "$RAPIDO" == "1" ]]; then echo "SKIP   make noticias-fixture y entregar (R
     python3 scripts/memoria.py --noticias "$D" --dry-run | grep -q "4 noticias"
   }
   paso "noticias.py entregar (sin voz real se niega; --salida: 9:16, 4:5, caption, fuentes.md, sin fotos) + memoria.py --noticias --dry-run" entregar_noticias
+fi
+
+echo "== /semana (cosecha, gates SM1–SM11 sobre la maqueta, W11, M15, carrusel; sin web ni créditos)"
+SMT="$TMP/semana"
+paso "semana.py preparar --fixture (cosecha de 3 diarios + dato oficial, consolidar) + guion --check" bash -c "python3 scripts/semana.py preparar --fecha 2026-10-25 --trabajo '$SMT' --fixture >/dev/null && python3 scripts/semana.py guion '$SMT' --check >/dev/null"
+paso "semana.py cosechar descarta en_desarrollo, fuera de ventana y no_confirmada; consolida 6 noticias con sm-c01…sm-c06" python3 - "$SMT" <<'PY'
+import json, sys
+d = sys.argv[1]
+c = json.load(open(d + "/cosecha.json")); b = json.load(open(d + "/noticias.json"))
+desc = {x["id"]: x["motivo"] for x in c["descartadas"]}
+assert "en_desarrollo" in desc["d20-n2"] and "N2" in desc["d20-n3"] and "no_confirmada" in desc["d22-n3"], desc
+assert len(c["noticias"]) == 5 and c["sin_noticiero"] == ["2026-10-19", "2026-10-21", "2026-10-23", "2026-10-25"], c["sin_noticiero"]
+ids = [x["id"] for v in b["noticias"] for x in v["cifras"]]
+assert ids == ["sm-c%02d" % k for k in range(1, 7)], ids
+PY
+paso "semana: domingo_de (sin fecha → el domingo más reciente; una fecha entre semana → su domingo)" python3 -c 'import sys, datetime as D; sys.path.insert(0,"scripts"); import semana as S; assert S.domingo_de("2026-10-21").isoformat()=="2026-10-25" and S.domingo_de("2026-10-25").isoformat()=="2026-10-25" and S.ventana("2026-10-25")==("2026-10-19","2026-10-25"); d=S.domingo_de(); assert d.weekday()==6 and 0 <= (D.date.today()-d).days <= 6'
+paso "semana.py verificacion: el dato oficial con su sola fuente oficial pasa (SM3); con una cifra de otra url, no" bash -c "python3 scripts/semana.py verificacion '$SMT' --check --id ofi-1 >/dev/null && S='$TMP/sem_ofi'; rm -rf \"\$S\"; cp -R '$SMT' \"\$S\"; python3 -c 'import json,sys; p=sys.argv[1]+\"/verificacion_ofi-1.json\"; v=json.load(open(p)); v[\"cifras\"][0][\"url\"]=\"https://www.prensalibre.com/x\"; json.dump(v,open(p,\"w\"))' \"\$S\"; python3 scripts/semana.py verificacion \"\$S\" --check --id ofi-1 | grep -q 'confirmada pide 2 fuentes'"
+# neg_semana "nombre" "texto de la falla" "python que muta g (guion.json) o b (noticias.json)"
+neg_semana() {
+  N=$((N+1)); local nombre="$1" gate="$2" mut="$3" S; S="$(mktemp -d "$TMP/negsm.XXXXXX")"
+  cp -R "$SMT/." "$S/"
+  python3 -c 'import json,sys; d=sys.argv[1]; g=json.load(open(d+"/guion.json")); b=json.load(open(d+"/noticias.json")); C=g["cifras"]; exec(sys.argv[2]); json.dump(g, open(d+"/guion.json","w"), ensure_ascii=False); json.dump(b, open(d+"/noticias.json","w"), ensure_ascii=False)' "$S" "$mut"
+  python3 scripts/semana.py guion "$S" --check >"$TMP/negsm.out" 2>&1; local rc=$?
+  if [[ $rc -eq 1 ]] && grep -q "$gate" "$TMP/negsm.out"; then printf 'OK     %s → %s\n' "$nombre" "$gate"
+  else FALLOS=$((FALLOS+1)); printf 'FALLO  %s: esperaba exit 1 con %s (exit %s)\n' "$nombre" "$gate" "$rc"; grep -E "FALLA|Error" "$TMP/negsm.out" | sed 's/^/       /' | tail -6; fi
+}
+neg_semana "4 cifras" "FALLA SM1 4 cifras" 'del C[0]'
+neg_semana "cifras desordenadas" "FALLA SM1 los puestos" 'C[0]["puesto"], C[1]["puesto"] = 4, 5'
+neg_semana "el gancho dice la #1" "FALLA SM1 el gancho" 'g["gancho"]["texto"] += " La primera: Q148,500 millones."'
+neg_semana "publicada hace 9 días" "FALLA SM2" 'C[0]["publicada"] = "2026-10-16"'
+neg_semana "noticia en desarrollo" "FALLA SM3" '[v.update(estado="en_desarrollo") for v in b["noticias"] if v["id"] == "d22-n2"]'
+neg_semana "2 secciones" "FALLA SM4" '[c.update(seccion=("Clima" if k % 2 else "Salud")) for k, c in enumerate(C)]'
+neg_semana "guion de 50 s" "FALLA SM5 duración estimada" '[c.update(texto=c["texto"].split(".")[0] + ".") for c in C]'
+neg_semana "cifra repetida de una semana anterior" "FALLA SM6" 'C[3].update(noticia="d20-n1", cifra_id="sm-c01", titular="Remesas suben a US$2,150 millones", cifra={"texto": "US$2,150 M", "etiqueta": "remesas"}, publicada="2026-10-20", fuente="Banguat"); C[3].pop("calculo"); C[3].pop("humana")'
+neg_semana "fuente vacía" "FALLA SM7" 'C[2]["fuente"] = ""'
+neg_semana "humana en solo 2 cifras" "FALLA SM8 2 cifras" '[C[k].pop("humana") for k in (0, 1, 2)]'
+neg_semana "cierre de 4 líneas" "FALLA SM10" 'g["cierre"]["resumen"] = g["cierre"]["resumen"][:4]'
+neg_semana "caption de TikTok sin «semana»" "FALLA SM11 caption.tiktok" 'g["caption"]["tiktok"] = "MAQUETA · Las 5 cifras de Guatemala.\n#Guatemala"'
+paso "check_workflows W11: noticias.js MODOS.semana frente a semana.SECCIONES (una sección de más falla)" python3 -c 'import sys; sys.path.insert(0,"scripts"); import check_workflows as CW, semana as S; CW.noticias_workflow(); assert not CW.ERRORES, CW.ERRORES; S.SECCIONES = dict(S.SECCIONES, zzz="x"); CW.noticias_workflow(); assert any("W11" in e and "semana.secciones" in e for e in CW.ERRORES), CW.ERRORES'
+paso "semana.py carrusel sobre la maqueta → TRABAJO de /carrusel (origen semana, 8 láminas) que pasa carrusel.py guion --check" bash -c "python3 scripts/semana.py carrusel '$SMT' --trabajo '$TMP/semana_carrusel' --fixture >/dev/null && python3 scripts/carrusel.py guion '$TMP/semana_carrusel' --check | grep -q '8 láminas' && python3 -c 'import json,sys; e=json.load(open(sys.argv[1]+\"/estado.json\")); assert e[\"origen\"][\"tipo\"]==\"semana\", e' '$TMP/semana_carrusel'"
+paso "validate.py M15: un registro de /semana roto falla" bash -c "R='$TMP/m15'; rm -rf \"\$R\"; mkdir -p \"\$R/memoria\"; printf '{\"semanas\": [{\"id\": \"2026-W43\", \"fecha\": \"2026-10-25\", \"ventana\": [\"2026-10-19\", \"2026-10-25\"], \"ruta\": \"semanas/no-existe\", \"paleta\": \"cielo\", \"musica\": \"cielo-2\", \"duracion_s\": 70, \"estado\": \"listo\", \"cifras\": [{\"puesto\": 1}]}, {\"id\": \"2026-W43\", \"estado\": \"raro\"}]}' > \"\$R/memoria/semanas.json\"; python3 -c 'import sys; sys.path.insert(0,\"scripts\"); import validate as V; V.RAIZ=sys.argv[1]; V.validar_semanas({\"cielo\"}); e=\" | \".join(V.ERRORES); assert \"M15 semanas[1] sin ruta\" in e and \"id repetido\" in e and \"puestos\" in e and \"sin guion.json\" in e and \"estado\" in e and \"sin valor\" in e, e' \"\$R\""
+if [[ "$RAPIDO" == "1" ]]; then echo "SKIP   make semana-fixture y entregar (RAPIDO=1)"; else
+  paso "make semana-fixture (9:16 y 4:5 ≥ 61 s, V13, V8, SM5 real, entrega con --salida)" bash -c 'make semana-fixture >/dev/null && ffprobe -v error -show_entries stream=codec_type,width,height -of csv=p=0 sesiones/_fixture_semana/salida/video_4x5.mp4 | grep -q "video,1080,1350" && python3 -c "import json,subprocess; d=float(subprocess.check_output([\"ffprobe\",\"-v\",\"error\",\"-show_entries\",\"format=duration\",\"-of\",\"csv=p=0\",\"sesiones/_fixture_semana/salida/video.mp4\"])); g=json.load(open(\"sesiones/_fixture_semana/salida/guion.json\")); assert d >= 60 and g[\"tipo\"]==\"semana\" and [c[\"puesto\"] for c in g[\"cifras\"]]==[5,4,3,2,1] and all(c[\"cita\"] and c[\"url\"] for c in g[\"cifras\"]), (d, g.get(\"tipo\"))" && test -s sesiones/_fixture_semana/salida/fuentes.md'
+  paso "semana.py entregar sin voz real se niega (sin --salida)" bash -c 'python3 scripts/semana.py entregar sesiones/_fixture_semana/trabajo 2>&1 | grep -q "creditos.json"'
+  paso "memoria.py --semana --dry-run sobre la entrega de la maqueta (y sin --dry-run no registra un fixture)" bash -c "python3 scripts/memoria.py --semana sesiones/_fixture_semana/salida --dry-run | grep -q '2026-W43' && ! python3 scripts/memoria.py --semana sesiones/_fixture_semana/salida >/dev/null 2>&1"
 fi
 
 echo "== /historia (gates H1–H8 sobre la maqueta; sin web ni créditos)"

@@ -143,7 +143,7 @@
       "archivo": "video/comun.js",
       "problema": "V13 no vio la etiqueta cortada: el texto quedaba recortado por el overflow del contenedor, no fuera de la zona, así que la medición lo daba por bueno.",
       "propuesta": "En V.medirZona(), marcar como falla un <text> SVG o un elemento con texto cuyo bbox exceda el del contenedor con overflow hidden más cercano (texto recortado), además de la zona.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m014",
@@ -154,7 +154,7 @@
       "archivo": ".claude/workflows/video.js",
       "problema": "El oyente oye solo el primer guion (vuelta 1): sus 8 confusiones del reporte son de un borrador que el crítico ya corrigió (la unidad de 46.9, el salto a 2024), y no se sabe cuáles siguen.",
       "propuesta": "Tras la última crítica aprobada, una pasada más del oyente (sonnet, barata) solo para el reporte, sin reabrir la crítica.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m015",
@@ -165,7 +165,7 @@
       "archivo": "scripts/video.py",
       "problema": "El guionista necesitó 8 intentos con el gate en tres vueltas (presupuesto 3): con V17 cada arreglo de voz exige cambiar el mismo tramo de guion.narracion a mano, y es fácil que no casen.",
       "propuesta": "Un `video.py aplicar` como el de /historia (el mismo cambio a la escena y a su tramo de la narración, con gate y restauración), y que el crítico de /video entregue `cambios` probados.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m016",
@@ -187,7 +187,7 @@
       "archivo": "scripts/numeros_es.py",
       "problema": "«1.5 veces» se lee «una punto cinco veces» (género femenino por «veces»).",
       "propuesta": "Con decimales, la parte entera va en masculino: «uno punto cinco veces».",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m018",
@@ -198,7 +198,7 @@
       "archivo": ".claude/commands/sabias.md",
       "problema": "La respuesta de creative_get_flow_run_status no quedó guardada en un archivo: hubo que copiar a mano las URL firmadas a un JSON para `descargar --estado`.",
       "propuesta": "Que `video.py descargar` acepte las transcripciones con `words` en línea (sin words_download_url) y el comando diga cómo guardar el estado cuando el MCP no lo guarda.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m019",
@@ -209,7 +209,7 @@
       "archivo": "scripts/sabias.py",
       "problema": "Un gancho que termina en la unidad de la cifra («tres metros desde 2014») choca con abrir la escena 2 con la cifra: la regla de eco de /video rechaza «metros» en sus primeras 7 palabras.",
       "propuesta": "En el digesto: abrir la escena 2 con su fuente o con un marco corto («Es lo que dice la medición oficial: 3 metros…») o terminar el gancho con el año, no con la unidad.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m020",
@@ -220,7 +220,7 @@
       "archivo": "scripts/historia.py (probar, aplicar)",
       "problema": "El crítico no pudo probar un arreglo del cierre porque probar no cambia cierre.final (V5 exige que cierre.texto termine con cierre.final); la mejora quedó sin aplicar y hubo que pedir un retoque aparte.",
       "propuesta": "Que probar/aplicar acepten {\"cierre\": {\"texto\", \"final\"}} y cambien los dos campos juntos (o que derive final de la última oración de texto).",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m021",
@@ -231,7 +231,7 @@
       "archivo": "scripts/numeros_es.py",
       "problema": "«aceptó que en 2021 llegaran» se convertía en «en dos mil veintiún llegaran»: aplica el apócope de cantidad a un año delante de un verbo. El crítico lo detectó y hubo que reescribir la escena con «ese año».",
       "propuesta": "Tras «en/de/del» + año de 4 cifras, no aplicar apócope (siempre «veintiuno»); añadir el caso a --prueba.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m022",
@@ -242,7 +242,7 @@
       "archivo": "scripts/historia.py (narracion --check)",
       "problema": "Pasó «más de un millón de esas 8 millones de dosis»: el determinante concuerda con «dosis» y no con «millones» (debía ser «esos 8 millones»). Se grabó así.",
       "propuesta": "Aviso en narracion --check cuando un determinante femenino (esas, las, estas) precede a «N millones de».",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m023",
@@ -253,7 +253,7 @@
       "archivo": "referencias/roles/historia-guionista.md · scripts/historia.py (H15/H5)",
       "problema": "El guion salió con 418 palabras y 177 s (objetivo 320–400 palabras y 150 s) y así se quedó: H5/H15 son avisos y los recortes del crítico quedaron fuera porque los retoques decían «no cambies nada más». Video final de 172 s.",
       "propuesta": "Volver H15 > 400 palabras una falla en la primera vuelta del guionista (no en retoques), o que el crítico pruebe y aplique un recorte H-C2 como arreglo cuando el estimado pasa de 165 s.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m024",
@@ -264,7 +264,7 @@
       "archivo": "scripts/historia.py (hechos --check H7)",
       "problema": "Pasó H7 una ilustración (caso-f01, «Representación de la vacuna Sputnik V», render CC BY-SA de un virus) y el guionista la usó en E2; la detectó el QA de fotos y costó un retoque.",
       "propuesta": "Rechazar o avisar en H7 las fotos cuya descripción dice «representación», «ilustración», «render» o «gráfico», y las de Commons en categorías de ilustraciones.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m025",
@@ -275,7 +275,7 @@
       "archivo": "scripts/historia.py (voz --sueltas)",
       "problema": "Tras el retoque del gancho, `voz --sueltas` imprimió las 16 escenas como nodos (≈ 2,561 caracteres) en vez de solo la cambiada; `--pendientes` sí dio 1 nodo de 99 créditos. Si se sigue la salida de --sueltas, se regraba todo.",
       "propuesta": "Que --sueltas filtre igual que --pendientes (solo escenas cuya voz difiere de audio/palabras_N.json o sin audio) y que imprima el resumen «N sin cambio; M por generar».",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m026",
@@ -286,7 +286,7 @@
       "archivo": "scripts/video.py (descargar --estado)",
       "problema": "Con un solo nodo el estado del MCP cabe en la respuesta y no se guarda en archivo; hubo que escribirlo a mano y, sin `words_download_url`, descargar avisó «no sé de qué escena es» y dejó palabras_1.json viejo sin fallar.",
       "propuesta": "Que descargar falle (exit 1) cuando una transcripción no casa o no trae words_download_url, y que acepte las `words` en línea del transcript cuando falta la URL.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m027",
@@ -297,7 +297,7 @@
       "archivo": "scripts/numeros_es.py · referencias/roles/historia-guionista.md",
       "problema": "«Sputnik V» en la voz se oía mal («hunto» según whisper); el usuario pidió quitar la V de la voz en un retoque (99 créditos más).",
       "propuesta": "En la conversión de la voz, decir «Sputnik V» como «Sputnik uve» o dejar solo «Sputnik» (lista de nombres con letra suelta), y avisar en el gate cuando una letra mayúscula suelta sigue a un nombre propio.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m028",
@@ -308,7 +308,7 @@
       "archivo": "referencias/roles/historia-verificador.md · scripts/historia.py (hechos --check)",
       "problema": "ori-h10 dice «fábrica en Francia; la Primera Guerra puso fin a la producción», pero su única cita (Prensa Libre) solo respalda la fábrica. La parte de la guerra estaba en un texto guardado de la Embajada de Guatemala que no se adjuntó. Además, el mismo hecho salió en `descartados` desde otro eje (fuente 100libroslibres), y el guion lo usa en la escena 13 tras un arreglo del crítico. Hubo que comprobarlo a mano.",
       "propuesta": "Regla del verificador: un hecho compuesto (cláusulas con «;» o «y») lleva una cita por cláusula. En `hechos --check`, avisar cuando una cláusula del texto no tiene ninguna palabra clave en ninguna cita. En `consolidar`, avisar cuando un hecho publicable se parece a uno descartado en otro eje, para cruzar las fuentes.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m029",
@@ -319,7 +319,7 @@
       "archivo": "scripts/historia.py (fotos-contacto) · referencias/roles/historia-verificador.md",
       "problema": "La descripción de ori-f03 es «Cafetales de Centroamérica», pero la foto muestra granos tostados en una taza. El chip en pantalla dice «Centroamérica». La hoja de contacto no muestra las descripciones, así que el QA no puede cotejarlas de un vistazo.",
       "propuesta": "Que `fotos-contacto` imprima debajo de cada foto su id, su descripción y el texto del chip. Regla del verificador: la descripción dice lo que se ve en la imagen, no el tema de la nota de donde salió.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m030",
@@ -330,7 +330,7 @@
       "archivo": ".claude/workflows/historia.js",
       "problema": "El resultado trae `guion.explica_sin_animacion: [3]` aunque el animador ya creó y asignó `proceso-transforma`. El dato se tomó antes de la fase de animación, y `guion --check` después devuelve [].",
       "propuesta": "Volver a leer el RETORNO de `guion --check` después de la fase Animación y usar ese en `guion` del resultado.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m031",
@@ -341,7 +341,7 @@
       "archivo": "scripts/historia.py (voz / armado de secuencias en locucion.json)",
       "problema": "Al unir escenas de una secuencia, si la anterior termina en coma se añade un punto: el prompt de s3 salió «…desaparecidos,. Pero Antigua al Rescate…», lo que parte en dos una oración que se dice de corrido y mete una pausa antes del contraste.",
       "propuesta": "Si la escena anterior termina en coma (o punto y coma), unir con un espacio, sin punto, y pasar a minúscula la primera palabra de la siguiente.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m032",
@@ -352,7 +352,7 @@
       "archivo": ".claude/workflows/historia.js + referencias/roles/video-critico.md (modo selección)",
       "problema": "En la selección, el crítico dijo que la foto del ganador (cas-f03, volcán tranquilo con una turista; parece el volcán de Agua) no transmitía la tragedia y que erup-f01 se entendía en 1 s, pero el gancho se grabó con cas-f03 y hubo que hacer un retoque solo para cambiarla.",
       "propuesta": "Que seleccion.json admita foto_sugerida y que ganchos --usar la aplique al copiar el ganador (repasando H12), así el cambio no espera al QA de fotos.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m033",
@@ -363,7 +363,7 @@
       "archivo": "scripts/historia.py (aplicar) y historia.js (cierre por arreglos_probados)",
       "problema": "Los arreglos probados que se aplicaron al cierre subieron la narración de 393 a 409 palabras: el estimado quedó en 176 s y la voz real en 178.6 s, al filo del tope de 180 s. El recorte que propuso el crítico no estaba probado y no se aplicó.",
       "propuesta": "Que aplicar rechace (o pida recortar) un lote de arreglos que deje la narración por encima de 400 palabras (H15) o el estimado por encima de 170 s, y que el crítico pruebe el recorte junto con los arreglos.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m034",
@@ -374,7 +374,7 @@
       "archivo": "scripts/historia.py (guion --check, escena cita)",
       "problema": "La firma de la cita de la E11 dice «SERGIO CABAÑAS», pero el personaje es Sergio García Cabañas (en Guatemala el apellido es doble). El gate no lo detectó.",
       "propuesta": "Que guion --check compare la firma de cada cita con el nombre del personaje o de la fuente en la cronología y avise si falta un apellido.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m035",
@@ -396,7 +396,7 @@
       "archivo": "scripts/video.py (V2) y scripts/historia.py (ganchos --check)",
       "problema": "El usuario pidió «más de 400 muertos y desaparecidos». V2 rechazó el «400» aunque el calculo declarado da 430, y la primera oración pasaba los 4 s de V9. Hubo que dejar «430».",
       "propuesta": "Que V2 acepte «más de N» y «al menos N» cuando N ≤ el valor de una cifra o un calculo con respaldo, y «menos de N» cuando N ≥ ese valor.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m037",
@@ -407,7 +407,7 @@
       "archivo": "scripts/video.py (R3) y referencias/ganchos.md",
       "problema": "El gancho literal del usuario abría con «En Guatemala…» y R3 lo bloquea sin excepción. No hay forma de respetar un gancho que dicta el usuario.",
       "propuesta": "Un campo gancho.dictado_por_usuario (o args.gancho en el Workflow) que baje R3 a aviso solo para ese gancho y lo deje registrado en memoria/historias.json para la rotación.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m038",
@@ -418,7 +418,7 @@
       "archivo": "scripts/video.py (escuchar, V11)",
       "problema": "Whisper transcribió «a las diez y cinco» como «a las 15», porque «diez y cinco» es la forma antigua de «quince», y V11 marcó FALLA en una voz correcta. El usuario tuvo que oírla.",
       "propuesta": "Antes de comparar, normalizar las horas «las N y M» del texto esperado a dígitos con dos puntos (10:05), y aceptar que whisper oiga N+M cuando el texto dice «las N y M».",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m039",
@@ -429,7 +429,7 @@
       "archivo": "video/noticia.html (gancho con visual foto)",
       "problema": "En el gancho con foto, la cifra de la pantalla («430») sale como un chip pequeño junto a la etiqueta, y el titular es lo que domina. En una familia resultado, la cifra es el gancho y casi no se ve.",
       "propuesta": "Si la pantalla es una cifra (familia resultado o escala), dibujarla en grande (cifra-heroe) sobre la foto y dejar la línea como subtítulo.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m040",
@@ -451,7 +451,7 @@
       "archivo": "scripts/historia.py",
       "problema": "La cita E5 («Gasté 1,200 dólares…») dice un monto que el encuadre pone en no_afirma y que historia.json tiene en descartados; ni el gate ni el crítico lo señalaron.",
       "propuesta": "En guion --check, aviso cuando una cita o la voz contiene un número que coincide con un descartado o con una cláusula de no_afirma, para que el crítico decida si la atribución basta.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m042",
@@ -462,7 +462,7 @@
       "archivo": ".claude/commands/historia.md",
       "problema": "grabar + montar + revisar del 9:16 (14 escenas, 165 s) pasó los 600 s del Bash en primer plano y quedó en segundo plano a mitad.",
       "propuesta": "En el paso 6, indicar correr grabar/montar/revisar con run_in_background (o `grabar --paralelo N`) desde el inicio.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m043",
@@ -484,7 +484,7 @@
       "archivo": "scripts/historia.py ganchos --usar",
       "problema": "El arreglo del crítico en la selección del gancho («En la Ciudad de Guatemala…», falta R11 de seleccion.json) no llegó al guion: --usar copia el candidato tal cual.",
       "propuesta": "Que ganchos --usar aplique los arreglos de seleccion.json → faltas del ganador (o que el gate avise si el ganador tiene faltas sin aplicar).",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m045",
@@ -495,7 +495,7 @@
       "archivo": ".claude/commands/historia.md",
       "problema": "Con pocas sesiones, creative_get_flow_run_status devuelve el estado en línea y no en archivo, y descargar --estado necesita un archivo; hubo que pedir el estado de nuevo con más sesiones para forzar el archivo.",
       "propuesta": "Que descargar acepte el JSON por stdin, o documentar pedir el estado junto con las sesiones conservadas en un retoque.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m046",
@@ -506,7 +506,7 @@
       "archivo": "scripts/numeros_es.py",
       "problema": "«379,021 motos» se leía «trescientos … veintiún»: «motos» no estaba en FEMENINOS (ya corregido en esta corrida, junto con moto, motocicleta y motocicletas)",
       "propuesta": "Derivar el género del sustantivo siguiente con una regla (-a/-as femenino, salvo excepciones) en vez de una lista cerrada, o avisar en guion --check cuando el sustantivo tras una cifra no está en ninguna lista",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m047",
@@ -517,7 +517,7 @@
       "archivo": ".claude/commands/sabias.md",
       "problema": "El paso 4 dice que la última creative_get_flow_run_status «queda guardada en un archivo», pero si la respuesta cabe en el contexto no se guarda; hubo que sacarla del transcript de la sesión",
       "propuesta": "Que descargar acepte las sesiones y lea el estado por su cuenta, o indicar en el comando que la sesión escriba la respuesta a <TRABAJO>/audio/estado.json",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m048",
@@ -528,7 +528,51 @@
       "archivo": "scripts/sabias.py",
       "problema": "La razón «127 por cada 100» del dato (texto del tuit) no se puede decir en voz: el 100 no tiene respaldo y el digesto no ofrece ese calculo",
       "propuesta": "Que el digesto ofrezca «K por cada 100» con su calculo (partes[0]/partes[1]*100) y que V2 acepte el 100 como base de un «por cada N» declarado",
-      "estado": "pendiente"
+      "estado": "hecha"
+    },
+    {
+      "id": "m049",
+      "fecha": "2026-11-03",
+      "flujo": "historia",
+      "pieza": "historias/2026-11-03-por-que-en-la-ciudad-capital-hay-tanto-trafico",
+      "area": "gancho y cierre",
+      "archivo": ".claude/workflows/{video,historia,explica}.js · scripts/video.py (ganchos --opciones|--elegir, cierres) · comandos",
+      "problema": "El usuario rechazó el cierre aprobado por el crítico y pidió elegir siempre entre 5 ganchos y 5 cierres (o dictar el suyo): «he corregido muchas veces».",
+      "propuesta": "Pausa tras la Selección (veredicto elegir_gancho, ganchos --elegir, args.gancho/gancho_usuario con resumeFromRunId) y fase Cierres (cierres.json con 5, cierres --usar/--propio) antes de la voz.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m050",
+      "fecha": "2026-11-03",
+      "flujo": "historia",
+      "pieza": "historias/2026-11-03-por-que-en-la-ciudad-capital-hay-tanto-trafico",
+      "area": "montaje",
+      "archivo": "scripts/video.py (cmd_montar, V8)",
+      "problema": "Con la voz nueva del cierre, el loudnorm lineal dejó el pico real en -0.6 dBTP y V8 falló (tope -1).",
+      "propuesta": "Si el pico pasa el tope, segunda pasada con alimiter (limit 0.79) antes de fallar.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m051",
+      "fecha": "2026-11-03",
+      "flujo": "historia",
+      "pieza": "historias/2026-11-03-por-que-en-la-ciudad-capital-hay-tanto-trafico",
+      "area": "voz",
+      "archivo": "scripts/video.py (cmd_descargar)",
+      "problema": "Una respuesta pequeña de creative_get_flow_run_status llega en línea y hubo que escribir el JSON a mano; sin words_download_url, descargar no asigna la transcripción («no sé de qué escena es»).",
+      "propuesta": "Si la transcripción trae `words` en línea y no trae words_download_url, escribir palabras_N.json con esas palabras.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m052",
+      "fecha": "2026-11-03",
+      "flujo": "historia",
+      "pieza": "historias/2026-11-03-por-que-en-la-ciudad-capital-hay-tanto-trafico",
+      "area": "duración",
+      "archivo": ".claude/workflows/historia.js (crítica) · scripts/historia.py (H5)",
+      "problema": "El primer guion se aprobó con 176 s (objetivo 135–165) y hubo que lanzar un retoque solo para recortar; la mejora de recorte del crítico quedó sin probar.",
+      "propuesta": "Que H5 por encima de 165 s sea falta que bloquea en la crítica (con el recorte probado), no un aviso.",
+      "estado": "hecha"
     }
   ]
 }

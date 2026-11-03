@@ -21,7 +21,7 @@ Subcomandos (TRABAJO = sesiones/noticias-<fecha>/):
   digesto TRABAJO --para rastreador | verificador --id ID | editor   insumo compacto de cada agente
   fotos-contacto TRABAJO       fotos/contacto.png con todas las fotos (QA de contenido)
   entregar TRABAJO [--salida DIR]   copia a noticias/<fecha>/ el 9:16, el 4:5, caption.md, subtítulos, portadas, guion.json
-        de entrega y fuentes.md (las fotos no: son de terceros); exige la voz de ElevenLabs (audio/creditos.json) salvo con --salida
+        de entrega (con las cifras verificadas de cada noticia: id, valor, unidad, texto, cita, url) y fuentes.md (las fotos no: son de terceros); exige la voz de ElevenLabs (audio/creditos.json) salvo con --salida
   voz | voz-falsa | descargar | escuchar | grabar | montar | revisar TRABAJO [...]   → video.py (mismos argumentos)
 
 Exit: 0 ok · 1 gate o paso fallido · 2 uso incorrecto.
@@ -63,6 +63,7 @@ SECCION_CARACTERES, FUENTE_CARACTERES, CREDITO_CARACTERES = 18, 44, 44
 # institución, el lugar o la persona, que en pantalla dice que lo es
 CREDITO_PREFIJO = {"oficial": "Foto: ", "medio": "Foto: ", "referencia": "Foto de referencia: "}
 CIFRA_CARACTERES, ETIQUETA_CARACTERES = 18, 30
+CAMPOS_CIFRA = ("id", "valor", "unidad", "texto", "cita", "url")   # lo que la entrega guarda de cada cifra verificada
 RESUMEN_LINEAS, RESUMEN_CARACTERES, FINAL_PALABRAS = (3, 4), 32, 10
 ESTADOS_PUBLICABLES = ("confirmada", "en_desarrollo")
 # presunción de inocencia: sin sentencia firme no se dice que alguien cometió el delito
@@ -79,7 +80,7 @@ KEN_BURNS = ({"z": [1.06, 1.14], "x": [0, -2], "y": [0, -1.2]}, {"z": [1.14, 1.0
 SECCIONES = {"pol": "política, justicia, Congreso y gobierno", "seg": "seguridad, sociedad, migración y sucesos",
              "eco": "economía, salud, clima, educación y deportes"}
 CANDIDATAS_MAX, QUE_PASO_CARACTERES, CITA_MIN = 5, 200, 20
-VENTANA_DIAS = 1                 # una noticia del día cuenta si se publicó hoy o ayer
+VENTANA_DIAS = 1                 # una noticia del día cuenta si se publicó hoy o ayer (/semana: `ventana_dias` en video.json)
 # la foto va a sangre en la lámina de video/noticia.html (1080×1200 arriba, en 9:16 y 4:5; cover, Ken Burns ≤ 1.15):
 # una og:image típica de 1200×630 se recorta a los lados y se agranda ≈ 1.9× (2.2× con el Ken Burns); la página la
 # oscurece un poco más cuando pasa de 2× y le pone el grano encima. Por debajo de 600 px el aumento pasa de 2.3× y se
@@ -325,18 +326,25 @@ def fecha_trabajo(trabajo):
     return VD.estado(trabajo)["fecha"]
 
 
-def en_ventana(f, fecha):
+def ventana_de(trabajo):
+    """Días hacia atrás que cuentan como «de hoy»: VENTANA_DIAS (hoy o ayer) o el `ventana_dias` de video.json (/semana:
+    6, de lunes a domingo)."""
+    return int(VD.estado(trabajo).get("ventana_dias", VENTANA_DIAS))
+
+
+def en_ventana(f, fecha, dias=None):
+    """La fecha f cae en los `dias` (VENTANA_DIAS por defecto) que terminan en `fecha`, ambos incluidos."""
     try:
         d = (datetime.date.fromisoformat(fecha) - datetime.date.fromisoformat(f)).days
     except (TypeError, ValueError):
         return False
-    return 0 <= d <= VENTANA_DIAS
+    return 0 <= d <= (VENTANA_DIAS if dias is None else dias)
 
 
 def cmd_candidatas(a):
     """N1: candidatas_<sec>.json de los rastreadores."""
     trabajo = os.path.abspath(a.trabajo)
-    fecha = fecha_trabajo(trabajo)
+    fecha, dias = fecha_trabajo(trabajo), ventana_de(trabajo)
     secs = [a.seccion] if a.seccion else list(SECCIONES)
     fallas, n = [], 0
     for sec in secs:
@@ -357,8 +365,9 @@ def cmd_candidatas(a):
             urls = c.get("urls") or []
             if not any(clasificar(u.get("url"))[0] for u in urls):
                 fallas.append("N1 %s: ninguna url de un medio de la lista o de una fuente oficial (MEDIOS, OFICIALES, *.gob.gt)" % cid)
-            if not any(en_ventana(u.get("fecha"), fecha) for u in urls):
-                fallas.append("N1 %s: ninguna url publicada el %s o el día anterior (fecha YYYY-MM-DD)" % (cid, fecha))
+            if not any(en_ventana(u.get("fecha"), fecha, dias) for u in urls):
+                fallas.append("N1 %s: ninguna url publicada el %s o %s (fecha YYYY-MM-DD)"
+                              % (cid, fecha, "el día anterior" if dias == 1 else "los %d días anteriores" % dias))
             pt = c.get("puntaje") or {}
             if not all(isinstance(pt.get(k), int) and 1 <= pt[k] <= 5 for k in ("impacto", "alcance", "novedad")):
                 fallas.append("N1 %s: puntaje {impacto, alcance, novedad} de 1 a 5" % cid)
@@ -374,8 +383,8 @@ def texto_de(archivo):
     return plano_cita(open(ruta, encoding="utf-8").read()) if archivo and os.path.isfile(ruta) else None
 
 
-def revisar_verificacion(v, fecha, trabajo):
-    """N2 sobre verificacion_<id>.json → (fallas, avisos)."""
+def revisar_verificacion(v, fecha, trabajo, dias=None):
+    """N2 sobre verificacion_<id>.json → (fallas, avisos). `dias`: la ventana (VENTANA_DIAS; /semana, 6)."""
     fallas, avisos, cid = [], [], v.get("id") or "?"
     est = v.get("estado")
     if est not in ("confirmada", "en_desarrollo", "no_confirmada"):
@@ -398,9 +407,10 @@ def revisar_verificacion(v, fecha, trabajo):
             continue
         if f.get("tipo") and f["tipo"] != clase:
             avisos.append("%s: %s es «%s» en la lista (dice «%s»)" % (cid, dominio(f["url"]), clase, f["tipo"]))
-        clases.append((clase, grupo, en_ventana(f.get("fecha"), fecha)))
+        clases.append((clase, grupo, en_ventana(f.get("fecha"), fecha, dias)))
     if not any(x[2] for x in clases):
-        fallas.append("N2 %s: ninguna fuente válida publicada el %s o el día anterior" % (cid, fecha))
+        fallas.append("N2 %s: ninguna fuente válida publicada el %s o %s" % (
+            cid, fecha, "el día anterior" if (dias or VENTANA_DIAS) == 1 else "los %d días anteriores" % dias))
     grupos = {g for _, g, _ in clases}
     oficial, medio = any(c == "oficial" for c, _, _ in clases), any(c == "medio" for c, _, _ in clases)
     if est == "confirmada" and not (len(grupos) >= 2 and (medio or oficial)) :
@@ -437,14 +447,14 @@ def revisar_verificacion(v, fecha, trabajo):
 
 def cmd_verificacion(a):
     trabajo = os.path.abspath(a.trabajo)
-    fecha = fecha_trabajo(trabajo)
+    fecha, dias = fecha_trabajo(trabajo), ventana_de(trabajo)
     rutas = [os.path.join(trabajo, "verificacion_%s.json" % a.id)] if a.id else sorted(glob.glob(os.path.join(trabajo, "verificacion_*.json")))
     fallas, avisos = [], []
     for r in rutas:
         if not os.path.exists(r):
             fallas.append("N2 falta %s" % VD.rel(r))
             continue
-        f, av = revisar_verificacion(leer(r), fecha, trabajo)
+        f, av = revisar_verificacion(leer(r), fecha, trabajo, dias)
         fallas += f
         avisos += av
     for x in avisos:
@@ -597,6 +607,15 @@ def cmd_fotos_contacto(a, sin_repetidas=False):
     else:
         VD.ff(*entradas, "-filter_complex", fc, "-map", "[o]", "-frames:v", "1", out)
     print("hoja de fotos (%d, en orden: %s) → %s" % (len([f for f in fotos if f]), ", ".join(os.path.basename(f)[:-4] for f in fotos if f), VD.rel(out)))
+    # m029: lo que dice cada foto, en el orden de la hoja, para cotejar la descripción y el chip con lo que se ve
+    for k, f in enumerate(fotos):
+        if not f:
+            continue
+        meta = f[:-4] + ".json"
+        d = json.load(open(meta, encoding="utf-8")) if os.path.exists(meta) else {}
+        chip = " · ".join(x for x in (d.get("lugar"), str(d.get("fecha") or "")[:4]) if x)
+        print("  fila %d col %d · %-9s · %s%s · %s" % (k // cols + 1, k % cols + 1, os.path.basename(f)[:-4],
+              (d.get("descripcion") or "sin descripción")[:80], " · chip «%s»" % chip if chip else "", d.get("credito") or ""))
     return 0
 
 
@@ -829,10 +848,14 @@ def repetida(nt, recientes):
 
 
 # ---------- tiempos ----------
-def cmd_tiempos(a):
+def cmd_tiempos(a, g=None):
+    """Tiempos de cada escena → escenas.json. `g`: el guion en la forma de /noticias ({gancho, noticias, cierre}); por
+    defecto TRABAJO/guion.json. /semana pasa el suyo adaptado: cada noticia con `chip` {b, s}, `puesto` (el numeral
+    grande de la cuenta regresiva) y `humana` (la línea a escala humana bajo la cifra), y el gancho con `ficha` y
+    `conteo` («Semana · 19–25 oct», «5 cifras»)."""
     trabajo = os.path.abspath(a.trabajo)
     st, loc = VD.estado(trabajo), leer(os.path.join(trabajo, "locucion.json"))
-    g = leer(os.path.join(trabajo, "guion.json"))
+    g = g or leer(os.path.join(trabajo, "guion.json"))
     por_id = {x["id"]: x for x in g["noticias"]}
     total_n = len(g["noticias"])
     fecha = fecha_corta(st["fecha"])
@@ -880,12 +903,13 @@ def cmd_tiempos(a):
                  "foto": foto.get("archivo"), "credito": foto.get("credito"), "icono": nt.get("icono"),
                  "depto": depto_id(nt.get("depto")), "lugar": nt.get("depto") if not foto.get("archivo") else None,
                  "kb": KEN_BURNS[(n - 1) % len(KEN_BURNS)], "cifra": None, "fuente": None,
-                 "estado": estados.get(e["noticia"])}
+                 "estado": estados.get(e["noticia"]), "chip": nt.get("chip"), "puesto": nt.get("puesto"), "humana": None}
             fin_1 = VD.fin_oracion_desde(pal)
             if tipo == "titular":
                 palabras_t = (g["gancho"].get("pantalla") or "").split()
                 N["titular"], _ = VD.alinear_linea(palabras_t, pal, 0.0, max(0.4, fin_1))
-                N.update(fecha="Hoy · " + fecha, conteo="%d noticias" % total_n)
+                N.update(fecha=g["gancho"].get("ficha") or "Hoy · " + fecha, conteo=g["gancho"].get("conteo") or "%d noticias" % total_n,
+                         chip=None, puesto=None)
                 S["T"] = {"tit": 0.0}   # la portada (montar) se toma en T.tit + 1.2: el titular ya está entero
                 ev = [(0.0, "titular")] + [(w["start"], "titular") for w in N["titular"] if w.get("dicha")]
                 sfx = [(0.0, "impacto")]
@@ -905,11 +929,22 @@ def cmd_tiempos(a):
                                   "start": round(start, 3), "pulso": [round(w["start"], 3), round(w["end"] + 0.2, 3)] if w else None}
                     ev += [(start, "cifra"), (start + 0.9, "cifra_fin")]
                     sfx.append((start, "tic"))
+                # /semana: la línea a escala humana bajo la cifra entra con la oración que sigue a la de la cifra (o
+                # 1.6 s después de la cifra)
+                if nt.get("humana"):
+                    t_c = N["cifra"]["start"] if N["cifra"] else t_ult
+                    k_c = next((k for k, x in enumerate(pal) if x["start"] >= t_c), 0)
+                    sig = next((pal[k + 1]["start"] for k in range(k_c, len(pal) - 1) if pal[k]["text"].endswith((".", "?", "!", ";", ":"))), None)
+                    t_h = min(max(t_c + 1.2, sig - 0.05 if sig else t_c + 1.6), dur - 1.6)
+                    N["humana"] = {"texto": nt["humana"], "start": round(t_h, 3)}
+                    ev.append((t_h, "humana"))
                 # la fuente entra cuando la voz atribuye («según…»); si no, pasada la mitad de la voz
                 k_s = next((k for k, x in enumerate(pal) if SEGUN.fullmatch(VD._plano(x["text"]) or "")), None)
                 t_f = pal[k_s]["start"] if k_s is not None else max(t_ult + 1.0, 0.55 * fin_voz)
                 if N["cifra"]:
                     t_f = max(t_f, N["cifra"]["start"] + 1.2)
+                if N["humana"]:
+                    t_f = max(t_f, N["humana"]["start"] + 0.8)
                 t_f = min(t_f, dur - 1.0)
                 N["fuente"] = {"texto": "Fuente: " + nt["fuente"], "start": round(t_f, 3)}
                 ev.append((t_f, "fuente"))
@@ -928,8 +963,9 @@ def cmd_tiempos(a):
         escenas.append(S)
         print("E%-2d %-8s %6.2f s  eventos=%d" % (n, tipo, dur, len(S["eventos"])))
     total = sum(s["dur"] for s in escenas) - VD.TRANSICION * (len(escenas) - 1)
-    if total + VD.BUCLE_S > DURACION_MAX_S:
-        avisos.append("N5 duración real %.1f s: pasa de %d s" % (total + VD.BUCLE_S, DURACION_MAX_S))
+    dmax, objetivo = st.get("duracion_max_s", DURACION_MAX_S), st.get("objetivo_s", OBJETIVO_S)   # /semana: 90 y 75
+    if total + VD.BUCLE_S > dmax:
+        avisos.append("N5 duración real %.1f s: pasa de %d s" % (total + VD.BUCLE_S, dmax))
     linea_t, off = [], 0.0
     for s in escenas:
         linea_t += [(off + x["t"], x["tipo"], s["n"]) for x in s["eventos"]]
@@ -950,7 +986,7 @@ def cmd_tiempos(a):
     for x in avisos:
         print("AVISO", x)
     print("total %.1f s + %.1f s de bucle (objetivo %d s, máximo %d) · hueco máximo %.1f s → %s"
-          % (total, VD.BUCLE_S, OBJETIVO_S, DURACION_MAX_S, (peor[1][0] - peor[0][0]) if peor else 0,
+          % (total, VD.BUCLE_S, objetivo, dmax, (peor[1][0] - peor[0][0]) if peor else 0,
              VD.rel(os.path.join(trabajo, "escenas.json"))))
     return 0
 
@@ -993,7 +1029,9 @@ def cmd_entregar(a):
         noticias.append({"id": x["id"], "seccion": x.get("seccion"), "titular": x.get("titular"), "fuente": x.get("fuente"),
                          "estado": b.get("estado"), "breve": bool(x.get("breve")), "cifra": x.get("cifra"),
                          "foto": {k: (x.get("foto") or {}).get(k) for k in ("credito", "origen")} if x.get("foto") else None,
-                         "urls": [f.get("url") for f in b.get("fuentes") or [] if f.get("url")]})
+                         "urls": [f.get("url") for f in b.get("fuentes") or [] if f.get("url")],
+                         # las cifras verificadas con su cita: sobreviven en git (sesiones/ no) y /semana las cosecha
+                         "cifras": [{k: c.get(k) for k in CAMPOS_CIFRA} for c in b.get("cifras") or []]})
     entrega = {
         "id": st["fecha"], "tipo": "noticias", "fecha": st["fecha"], "paleta": st["paleta"], "musica": st["musica"],
         "voz": loc["voz"], "velocidad": VD.VELOCIDAD,

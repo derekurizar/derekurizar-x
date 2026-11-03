@@ -39,8 +39,46 @@ FEMENINOS = {"personas", "persona", "denuncias", "denuncia", "víctimas", "víct
              "detenciones", "detención", "operaciones", "quejas", "queja", "jornadas", "madres", "madre", "pruebas",
              "prueba", "plantas", "planta", "obras", "obra", "becas", "beca", "multas", "multa",
              "motos", "moto", "motocicletas", "motocicleta"}
+# Género del sustantivo que sigue a la cifra (m046): manda FEMENINOS (lista de arriba), luego MASCULINOS; si no
+# está en ninguna, la regla general: -a/-as femenino (salvo palabras con mayúscula: nombres propios o inicio de
+# oración), -ción/-sión/-dad/-tad/-tud/-umbre femenino, y lo demás masculino.
+MASCULINOS = {"día", "días", "mapa", "mapas", "problema", "problemas", "programa", "programas", "sistema", "sistemas",
+              "tema", "temas", "idioma", "idiomas", "clima", "climas", "planeta", "planetas", "poema", "poemas",
+              "esquema", "esquemas", "dilema", "dilemas", "drama", "dramas", "diploma", "diplomas", "síntoma", "síntomas",
+              "trauma", "traumas", "fantasma", "fantasmas", "aroma", "aromas", "lema", "lemas", "enigma", "enigmas",
+              "diagrama", "diagramas", "telegrama", "telegramas", "crucigrama", "crucigramas", "cometa", "cometas",
+              "tranvía", "tranvías", "sofá", "sofás", "policía", "policías", "atleta", "atletas", "colega", "colegas",
+              "homicida", "homicidas", "pediatra", "pediatras", "psiquiatra", "psiquiatras", "astronauta", "astronautas",
+              "pirata", "piratas", "guía", "guías", "km", "kg", "pp", "ha",
+              "aviones", "avión", "camiones", "camión", "embriones", "embrión",
+              # palabras de función que acaban en -a (no son sustantivos; antes ya iban en masculino)
+              "para", "hasta", "contra", "hacia", "nunca", "ya", "ahora", "cada", "entonces", "fuera", "afuera",
+              "arriba", "abajo", "encima", "apenas", "mientras", "otra", "otras", "esta", "estas", "esa", "esas",
+              "era", "eran", "estaba", "estaban", "toda", "todas"}
+FEMENINOS_EXTRA = {"mano", "manos", "foto", "fotos", "fotografías", "radio", "radios", "flor", "flores", "crisis",
+                   "tesis", "hipótesis", "ley", "leyes", "noche", "noches", "tarde", "tardes", "calle", "calles",
+                   "clase", "clases", "parte", "partes", "fuente", "fuentes", "imagen", "imágenes", "razón", "razones",
+                   "red", "redes", "sede", "sedes", "llave", "llaves", "nave", "naves", "muerte", "orden", "sangre"}
+SUFIJOS_FEMENINOS = ("ción", "ciones", "sión", "siones", "xión", "xiones", "dad", "dades", "tad", "tades", "tud", "tudes",
+                     "umbre", "umbres")
 UNIDADES_ABREV = {"kg": "kilogramos", "km²": "kilómetros cuadrados", "km": "kilómetros", "kWh": "kilovatios hora",
                   "ha": "hectáreas", "pp": "puntos porcentuales"}
+
+
+def genero_de(palabra):
+    """'f' o 'm' según el sustantivo que sigue a la cifra (FEMENINOS manda; luego MASCULINOS; luego la regla)."""
+    w = palabra.lower()
+    if not w:
+        return "m"
+    if w in FEMENINOS or w in FEMENINOS_EXTRA:
+        return "f"
+    if w in MASCULINOS:
+        return "m"
+    if palabra[0].isupper():  # nombre propio o inicio de oración: no se adivina
+        return "m"
+    if w.endswith(("a", "as")) or w.endswith(SUFIJOS_FEMENINOS):
+        return "f"
+    return "m"
 
 
 def _menor_cien(n, genero, apocope):
@@ -90,7 +128,8 @@ def entero_a_palabras(n, genero="m", apocope=False):
 
 
 def decimal_a_palabras(entero, decimales, genero="m", apocope=False):
-    txt = entero_a_palabras(entero, genero, apocope and not decimales)
+    # con decimales la parte entera va en masculino: «1.5 veces» → «uno punto cinco veces» (m017)
+    txt = entero_a_palabras(entero, "m" if decimales else genero, apocope and not decimales)
     if decimales:
         if decimales.startswith("0"):
             txt += " punto " + " ".join(UNIDADES[int(c)] for c in decimales)
@@ -145,6 +184,8 @@ RE_MONEDA_TRAS = re.compile(r"\s+(dólares|dólar|quetzales|quetzal)\b")   # «1
 RE_UNIDAD = re.compile(r"\s*(%s)(?![\w²])" % "|".join(re.escape(u) for u in sorted(UNIDADES_ABREV, key=len, reverse=True)))
 NO_SUSTANTIVO = {"de", "a", "y", "en", "frente", "por", "con", "o", "al", "del", "mil", "millones", "millón"}
 AVISOS = []  # cifras cuyo género cambia la lectura y no tienen sustantivo ni marca
+NOTAS = []   # cambios de la voz que no bloquean el gate (letra suelta dicha por su nombre)
+RE_ANTES_ANIO = re.compile(r"\b(en|de|del|desde|hasta)\s+$", re.I)
 
 
 def _numero(bruto, genero, apocope):
@@ -175,17 +216,50 @@ def _dinero(bruto, moneda, escala):
 
 # abreviaturas sueltas (sin cifra delante): «por kWh» → «por kilovatio hora»
 ABREV_SUELTAS = {"kWh": ("kilovatio hora", "kilovatios hora")}
-RE_SUELTA = re.compile(r"(?<![\w])(%s)(?![\w])" % "|".join(ABREV_SUELTAS))
+# letra mayúscula suelta tras una palabra con mayúscula: «Sputnik V» → «Sputnik uve», «Plan B» → «Plan be» (m027)
+NOMBRES_LETRA = {"B": "be", "C": "ce", "D": "de", "F": "efe", "G": "ge", "H": "hache", "J": "jota", "K": "ka",
+                 "L": "ele", "M": "eme", "N": "ene", "Ñ": "eñe", "P": "pe", "Q": "cu", "R": "erre", "S": "ese",
+                 "T": "te", "V": "uve", "W": "uve doble", "X": "equis", "Z": "zeta"}
+# (las vocales y la Y quedan fuera: se leen como suenan o son la conjunción de una oración)
+# tras estos nombres la letra es un número romano de rey, papa o siglo: «Carlos V», «León X»
+REGIOS = {"carlos", "felipe", "fernando", "juan", "pablo", "pío", "pio", "benedicto", "león", "leon", "luis", "enrique",
+          "isabel", "alfonso", "jorge", "eduardo", "gregorio", "clemente", "inocencio", "urbano", "bonifacio",
+          "alejandro", "sixto", "pedro", "jaime", "sancho", "ramiro", "enrique", "guillermo", "federico", "napoleón",
+          "siglo", "siglos", "capítulo", "tomo", "fase"}
+RE_SUELTA = re.compile(r"(?<![\w])(%s)(?![\w])|(?<=\w )([%s])(?![\w'’-]|\.\w)" % (
+    "|".join(ABREV_SUELTAS), "".join(NOMBRES_LETRA)))
+RE_PREVIA = re.compile(r"([A-ZÁÉÍÓÚÑ][\wáéíóúñü]*) $")
+
+
+def _letra_suelta(t, m):
+    """(palabra previa, nombre en español de la letra) si la letra sigue a una palabra con mayúscula y no es un
+    número romano tras un nombre regio; si no, None."""
+    previa = RE_PREVIA.search(t[:m.start()])
+    if not previa:
+        return None
+    letra = m.group(2)
+    if letra in "IVXLCDM" and previa.group(1).lower() in REGIOS:
+        return None
+    return previa.group(1), NOMBRES_LETRA[letra]
 
 
 def _texto(t):
     """Segmentos de texto sin cifras; las abreviaturas sueltas son segmentos propios (p ≠ v)."""
     out, pos = [], 0
     for m in RE_SUELTA.finditer(t):
+        if m.group(2):
+            letra = _letra_suelta(t, m)
+            if letra is None:
+                continue
         if m.start() > pos:
             out.append({"p": t[pos:m.start()], "v": t[pos:m.start()], "num": False})
-        sing, plur = ABREV_SUELTAS[m.group(1)]
-        out.append({"p": m.group(1), "v": sing if re.search(r"\bpor\s*$", t[:m.start()]) else plur, "num": False})
+        if m.group(2):
+            previa, dicho = letra
+            out.append({"p": m.group(2), "v": dicho, "num": False})
+            NOTAS.append("letra suelta: «%s %s» se dice «%s %s»" % (previa, m.group(2), previa, dicho))
+        else:
+            sing, plur = ABREV_SUELTAS[m.group(1)]
+            out.append({"p": m.group(1), "v": sing if re.search(r"\bpor\s*$", t[:m.start()]) else plur, "num": False})
         pos = m.end()
     if pos < len(t):
         out.append({"p": t[pos:], "v": t[pos:], "num": False})
@@ -222,13 +296,18 @@ def segmentos(texto):
             dicho = "primero"
         else:
             sig = RE_SIGUE.match(resto[rango.end():] if rango else resto)
-            siguiente = sig.group(1).lower() if sig else ""
-            genero = genero_forzado or ("f" if siguiente in FEMENINOS else "m")
-            # un año (4 cifras sin coma) nunca se apocopa: «en 2021 subió» → «dos mil veintiuno subió»
-            es_anio = "," not in bruto and not dec and 1900 <= entero <= 2100
+            siguiente_orig = sig.group(1) if sig else ""
+            siguiente = siguiente_orig.lower()
+            # un año (4 cifras sin coma) nunca se apocopa: «en 2021 subió» → «dos mil veintiuno subió»; tras
+            # «en/de/del/desde/hasta» también los anteriores a 1900: «en 1821 llegaron» → «… veintiuno …» (m021)
+            es_anio = "," not in bruto and not dec and (
+                1900 <= entero <= 2100
+                or (len(entero_txt) == 4 and 1000 <= entero < 1900 and siguiente not in FEMENINOS
+                    and RE_ANTES_ANIO.search(texto[:m.start()]) is not None))
+            genero = genero_forzado or ("m" if es_anio else genero_de(siguiente_orig))
             sustantivo = bool(siguiente) and not es_pct and not es_fecha and not es_anio and siguiente not in NO_SUSTANTIVO
             dicho = _numero(bruto, genero, sustantivo and not rango)
-            anio = 1900 <= entero <= 2100 and not dec
+            anio = es_anio or (1900 <= entero <= 2100 and not dec)
             if not genero_forzado and not sustantivo and not es_pct and not anio \
                     and decimal_a_palabras(entero, dec, "f") != decimal_a_palabras(entero, dec, "m"):
                 AVISOS.append("género ambiguo: «%s» sin sustantivo detrás; márcalo {%s:f} o {%s:m}" % (bruto, bruto, bruto))
@@ -291,6 +370,28 @@ CASOS = [
     ("de 2016–2026", "de dos mil dieciséis a dos mil veintiséis"),
     ("3.3 millones de estudiantes", "tres punto tres millones de estudiantes"),
     ("subió 5.2 pp en un año", "subió cinco punto dos puntos porcentuales en un año"),
+    # m017: con decimales, la parte entera en masculino
+    ("1.5 veces más", "uno punto cinco veces más"),
+    ("21.3 toneladas", "veintiuno punto tres toneladas"),
+    # m021: año tras «en/de/del» sin apócope
+    ("aceptó que en 2021 llegaran", "aceptó que en dos mil veintiuno llegaran"),
+    ("en 1821 llegaron", "en mil ochocientos veintiuno llegaron"),
+    ("del 2031 al 2041", "del dos mil treinta y uno al dos mil cuarenta y uno"),
+    ("en 2021 Guatemala", "en dos mil veintiuno Guatemala"),
+    # m046: género por regla (-a/-as femenino) con excepciones
+    ("379,021 motos", "trescientas setenta y nueve mil veintiuna motos"),
+    ("21 bicicletas", "veintiuna bicicletas"),
+    ("21 días", "veintiún días"),
+    ("201 programas", "doscientos un programas"),
+    ("21 manos", "veintiuna manos"),
+    ("21 instituciones", "veintiuna instituciones"),
+    ("21 policías", "veintiún policías"),
+    ("21 camiones", "veintiún camiones"),
+    # m027: letra mayúscula suelta tras nombre propio
+    ("la vacuna Sputnik V llegó", "la vacuna Sputnik uve llegó"),
+    ("el Plan B.", "el Plan be."),
+    ("Carlos V reinó", "Carlos V reinó"),
+    ("Pollo Campero S.A.", "Pollo Campero S.A."),
 ]
 
 
@@ -315,6 +416,7 @@ def main():
         ap.print_usage()
         return 2
     AVISOS.clear()
+    NOTAS.clear()
     pantalla, voz, conv = convertir(a.texto)
     print("PANTALLA:", pantalla)
     print("VOZ:     ", voz)
@@ -322,6 +424,8 @@ def main():
         print("  %s → %s" % (b, d))
     for x in AVISOS:
         print("AVISO:", x)
+    for x in NOTAS:
+        print("NOTA: ", x)
     return 1 if AVISOS else 0
 
 

@@ -454,6 +454,51 @@
           "oleadas-cauce"
         ]
       }
+    },
+    {
+      "id": "2026-11-03-por-que-en-la-ciudad-capital-hay-tanto-trafico",
+      "slug": "por-que-en-la-ciudad-capital-hay-tanto-trafico",
+      "tema": "por qué en la ciudad capital hay tanto tráfico",
+      "fecha": "2026-11-03",
+      "ruta": "historias/2026-11-03-por-que-en-la-ciudad-capital-hay-tanto-trafico",
+      "arco": "proceso: una ciudad que se desborda, la respuesta del carro y los parches, y la promesa de un tren que todavía no llega",
+      "paleta": "maiz",
+      "musica": "maiz-2",
+      "duracion_s": 162.5,
+      "creditos_voz": 2526.0,
+      "estado": "listo",
+      "frases": {
+        "promesa": "¿Por qué una ciudad que levanta puentes sigue trabada todos los días?",
+        "promesa_forma": "pregunta",
+        "bisagra": "La apuesta era que, con cada puente, la cola se iba a acabar.",
+        "bisagra_forma": "apuesta",
+        "gancho": "En la Calzada Roosevelt pusieron pasos a desnivel.",
+        "aperturas": [
+          "La respuesta empieza en",
+          "Villa Nueva, el municipio",
+          "Pero el trabajo se",
+          "Para llegar quedaba el",
+          "En dos mil siete",
+          "Para mayo de dos",
+          "Ya en dos mil",
+          "Pero el arquitecto Alfonso",
+          "Por eso llegaron los",
+          "Los carros siguieron sumando:",
+          "En febrero de dos",
+          "Ocho meses después, el",
+          "La ciudad creció hacia"
+        ],
+        "segun": 0,
+        "aperturas_atribuidas": 0,
+        "pregunta": "Mientras tanto, los guatemaltecos pasan tiempo en el tráfico y no con sus familias.",
+        "cierre": "Mientras tanto, los guatemaltecos pasan tiempo en el tráfico y no con sus familias.",
+        "cierre_tipo": "remate",
+        "cierre_forma": "consecuencia",
+        "cierre_mecanismo": "perdida",
+        "familia": "lugar",
+        "visual": "foto",
+        "animaciones": []
+      }
     }
   ]
 }

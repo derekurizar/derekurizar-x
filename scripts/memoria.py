@@ -43,7 +43,8 @@
   musica, creditos_voz, ruta_video, ruta_hilo, estado, frases {promesa, gancho, aperturas[], pregunta, cierre, cierre_tipo, cierre_forma, cierre_mecanismo, familia, visual, animaciones[]}}; un id
 --noticias <noticias/<fecha>> [--estado listo|incompleto] [--dry-run]
   memoria/noticias.json → noticieros[] {id (= fecha), fecha, ruta, paleta, musica, duracion_s, creditos_voz, estado,
-  noticias[] {id, seccion, titular, urls[]}}; registrar el mismo día reemplaza. noticias.py lo lee para no repetir.
+  noticias[] {id, seccion, titular, urls[], cifras[] {id, valor, unidad, texto, cita, url}}}; registrar el mismo día
+  reemplaza. noticias.py lo lee para no repetir.
 --historia <historias/<fecha>-<slug>> [--estado listo|incompleto] [--dry-run]
   memoria/historias.json → historias[] {id (= <fecha>-<slug>), slug, tema, fecha, ruta, arco, paleta, musica,
   duracion_s, creditos_voz, estado, frases {… como en --video}}; registrar el mismo slug reemplaza. historia.py lo lee
@@ -70,6 +71,12 @@
   palabra_clave, portada_forma, n_laminas, formatos, estado}; un carrusel por original: registrar el mismo original
   reemplaza. carrusel.py lo lee para avisar si el original ya tiene carrusel y para la rotación de la portada (CA8).
   Un carrusel de prueba (fixture) no se registra (solo --dry-run).
+
+--semana <semanas/<domingo>> [--estado listo|incompleto] [--dry-run]
+  memoria/semanas.json → semanas[] {id (= semana ISO AAAA-Wnn), fecha (el domingo), ventana [lunes, domingo], ruta,
+  paleta, musica, duracion_s, creditos_voz, estado, cifras[] {puesto, cifra_id, id_original, noticia, noticia_original,
+  seccion, titular, texto, valor, unidad, url}}; registrar la misma semana reemplaza. semana.py lo lee para no repetir
+  una cifra de las últimas 8 semanas (SM6). Una semana de prueba (fixture) no se registra (solo --dry-run).
 
 --mejoras ARCHIVO.json [--dry-run]
   Las mejoras al framework que encontró una corrida de /video, /noticias o /historia (las lista el reporte final) →
@@ -146,6 +153,12 @@ VACIO_CARRUSELES = {
     "version": 1,
     "_comentario": "Registro de carruseles (láminas 4:5 y 9:16) producidos por /carrusel desde un hilo o un dato entregados. Lo escribe SOLO scripts/memoria.py --carrusel <<original>/carrusel>; scripts/carrusel.py lo lee para avisar si el original ya tiene carrusel y rotar la forma de la portada (CA8). Un carrusel por original. estado: listo | publicado | incompleto.",
     "carruseles": [],
+}
+SEMANAS = os.path.join(RAIZ, "memoria", "semanas.json")
+VACIO_SEMANAS = {
+    "version": 1,
+    "_comentario": "Registro de «Las 5 cifras de la semana» producidas por /semana (modo semana de /noticias). Lo escribe SOLO scripts/memoria.py --semana <semanas/<domingo>>; scripts/semana.py lo lee para no repetir una cifra de las últimas 8 semanas (SM6). id = semana ISO (AAAA-Wnn). estado: listo | publicado | incompleto.",
+    "semanas": [],
 }
 MEJORAS = os.path.join(RAIZ, "memoria", "mejoras.json")
 VACIO_MEJORAS = {
@@ -629,7 +642,8 @@ def registrar_noticias(d, estado, dry_run=False):
         return 1
     reg = {"id": g["id"], "fecha": g["fecha"], "ruta": ruta, "paleta": g["paleta"], "musica": g["musica"],
            "duracion_s": g["duracion_s"], "creditos_voz": g.get("creditos_voz"), "estado": estado,
-           "noticias": [{"id": x["id"], "seccion": x.get("seccion"), "titular": x.get("titular"), "urls": x.get("urls") or []}
+           "noticias": [{"id": x["id"], "seccion": x.get("seccion"), "titular": x.get("titular"), "urls": x.get("urls") or [],
+                         "cifras": x.get("cifras") or []}
                         for x in g.get("noticias") or []]}
     mn = leer(NOTICIAS, obligatorio=False) or json.loads(json.dumps(VACIO_NOTICIAS))
     previos = [i for i, v in enumerate(mn["noticieros"]) if v.get("id") == reg["id"]]
@@ -789,6 +803,40 @@ def registrar_carrusel(d, estado, dry_run=False):
     return 0
 
 
+def registrar_semana(d, estado, dry_run=False):
+    """--semana DIR: registra en memoria/semanas.json la semana entregada en DIR (semanas/<domingo>, con el guion.json de
+    entrega de scripts/semana.py entregar). Una de prueba (fixture) no se registra (solo --dry-run)."""
+    ruta = os.path.normpath(os.path.relpath(os.path.abspath(d), RAIZ)) if os.path.isabs(d) else os.path.normpath(d)
+    g = leer(os.path.join(RAIZ, ruta, "guion.json"), obligatorio=False)
+    if not g or g.get("tipo") != "semana" or not g.get("id"):
+        print("ERROR: %s no tiene guion.json de entrega de /semana (scripts/semana.py entregar)" % ruta, file=sys.stderr)
+        return 1
+    reg = {"id": g["id"], "fecha": g["fecha"], "ventana": g["ventana"], "ruta": ruta, "paleta": g["paleta"],
+           "musica": g["musica"], "duracion_s": g["duracion_s"], "creditos_voz": g.get("creditos_voz"), "estado": estado,
+           "cifras": [{k: c.get(k) for k in ("puesto", "cifra_id", "id_original", "noticia", "noticia_original", "seccion",
+                                              "titular", "texto", "valor", "unidad", "url")} for c in g.get("cifras") or []]}
+    print("semana %s (%s → %s) · %.0f s · %s · %s" % (reg["id"], reg["ventana"][0], reg["ventana"][1], reg["duracion_s"],
+                                                     " · ".join("#%s %s" % (c["puesto"], c["texto"]) for c in reg["cifras"]), estado))
+    if dry_run:
+        print("[dry-run] no se escribió nada")
+        return 0
+    if g.get("fixture"):
+        print("ERROR: %s es una semana de prueba (fixture): no se registra" % ruta, file=sys.stderr)
+        return 1
+    ms = leer(SEMANAS, obligatorio=False) or json.loads(json.dumps(VACIO_SEMANAS))
+    previos = [i for i, v in enumerate(ms["semanas"]) if v.get("id") == reg["id"]]
+    if previos:  # volver a registrar la misma semana reemplaza (y conserva «publicado»)
+        if ms["semanas"][previos[0]].get("estado") == "publicado" and estado == "listo":
+            reg["estado"] = "publicado"
+        ms["semanas"][previos[0]] = reg
+    else:
+        ms["semanas"].append(reg)
+    ms["semanas"].sort(key=lambda v: v["fecha"])
+    escribir(SEMANAS, ms)
+    print("escrito memoria/semanas.json (%d semanas)" % len(ms["semanas"]))
+    return 0
+
+
 def registrar_mejoras(archivo, dry_run=False):
     """--mejoras ARCHIVO: añade las mejoras al framework de una corrida a memoria/mejoras.json (sin repetir una pendiente)."""
     d = leer(archivo, obligatorio=False)
@@ -880,6 +928,7 @@ def main():
     g.add_argument("--historia", metavar="DIR", help="registra la historia de /historia entregada en DIR (historias/<fecha>-<slug>) en memoria/historias.json")
     g.add_argument("--explica", metavar="DIR", help="registra el video de /explica entregado en DIR (explicaciones/<fecha>-<slug>) en memoria/explicaciones.json")
     g.add_argument("--carrusel", metavar="DIR", help="registra el carrusel de /carrusel entregado en DIR (<original>/carrusel) en memoria/carruseles.json")
+    g.add_argument("--semana", metavar="DIR", help="registra «Las 5 cifras de la semana» de /semana entregada en DIR (semanas/<domingo>) en memoria/semanas.json")
     g.add_argument("--mejoras", metavar="ARCHIVO", help="añade las mejoras al framework de una corrida (JSON {flujo, pieza, mejoras[]}) a memoria/mejoras.json")
     g.add_argument("--ver-mejoras", nargs="?", const="", metavar="ESTADO", help="lista las mejoras de memoria/mejoras.json (con ESTADO: pendiente|hecha|descartada)")
     g.add_argument("--marcar-mejora", metavar="ID", help="cambia el estado de una mejora (con --como)")
@@ -910,6 +959,8 @@ def main():
         return registrar_noticias(a.noticias, a.estado, a.dry_run)
     if a.carrusel:
         return registrar_carrusel(a.carrusel, a.estado, a.dry_run)
+    if a.semana:
+        return registrar_semana(a.semana, a.estado, a.dry_run)
     if a.sabias:
         return registrar_sabias(a.sabias, a.estado, a.dry_run)
     if a.historia:

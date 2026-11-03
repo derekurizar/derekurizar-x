@@ -57,6 +57,16 @@ og:image de las fuentes leídas del eje). **≤ 8 búsquedas y ≤ 10 `leer`**, 
      institución (su fachada), la persona, el producto (la bolsa, el empaque) o la época (una foto de archivo de esos
      años). El crédito sale «Foto de referencia: …». Primero Commons; luego la oficial; luego la del medio.
 
+## Lo que el gate ya avisa (léelo antes de cerrar)
+
+- **Hecho compuesto** (m028): cada cláusula (separada por «;» o «y») lleva su cita. `hechos --check` avisa la cláusula sin
+  respaldo: adjunta la fuente que la dice o parte el hecho. `consolidar` avisa cuando un hecho publicable se parece a uno
+  descartado en otro eje: cruza las fuentes antes de dejarlo.
+- **Una ilustración no es una foto** (m024): «representación», «ilustración», «render», «infografía», «recreación» en la
+  descripción fallan H7 salvo que la marques de referencia. Busca una foto del hecho.
+- **La descripción dice lo que se ve** (m029), no el tema de la nota de donde salió: «granos tostados en una taza», no
+  «cafetales de Centroamérica». `fotos-contacto` imprime cada id con su descripción y su chip para cotejarlas.
+
 ## Salida
 
 `<TRABAJO>/verificacion_<eje>.json` (forma completa en `sesiones/_fixture_historia/verificacion_ori.json`):

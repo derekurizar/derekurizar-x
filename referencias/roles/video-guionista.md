@@ -95,8 +95,8 @@ Principios (los revisa V18 y el crítico en C12, puntaje `flujo`):
 
 ## Reglas
 
-1. **Gancho (escena 1): no lo escribes, lo recibes.** Lo propone el agente `video-gancho` (4–5 candidatos en
-   `ganchos.json`) y lo elige el crítico (`seleccion.json`). **Antes de escribir nada**, corre
+1. **Gancho (escena 1): no lo escribes, lo recibes.** Lo propone el agente `video-gancho` (5 candidatos en
+   `ganchos.json`), el crítico lo recomienda y lo elige el usuario (`seleccion.json`). **Antes de escribir nada**, corre
    `python3 scripts/video.py ganchos <TRABAJO> --usar`: el ganador pasa a la escena 1 de `guion.json` (familia,
    visual, pantalla, línea, verbo y voz) y el segundo queda para la versión B. No cambias esa escena: el gate
    comprueba que sea la elegida (si la promesa va en la escena 1, puedes añadirla al final de su voz; lo normal es
@@ -278,6 +278,25 @@ referencias con antecedente; más de 6.5 cortes por minuto es aviso). V9 comprue
 dos golpes seguidos; `verbo` del gancho y de cada golpe dentro de la oración que dice su pantalla; promesa literal en 1–2 y pago en el último tercio; `calculo` legible que da el número
 escrito; ritmo ≤ 6 s. Si la directiva trae faltas del crítico o fallos del workflow, corrige **solo** eso y
 vuelve a pasar el gate.
+
+## Arreglos del crítico con `cambios` (m015)
+
+Una falta o mejora que trae `cambios` probados se aplica TAL CUAL con
+`python3 scripts/video.py aplicar <TRABAJO> --cambios '<el JSON exacto>'`: cambia la escena y su tramo de
+`guion.narracion` juntos (V17), corre los gates y, si fallan, deja el guion como estaba. No la reescribas a mano.
+
+## Cierres para el usuario (fase Cierres del workflow)
+
+Con el guion ya aprobado, el usuario elige el cierre entre 5 (usuario, 2026-11-03: «siempre me pones a escoger entre 5
+opciones de hooks y cierres»). Escribes `<TRABAJO>/cierres.json` = `{"candidatos": [...]}` **sin tocar `guion.json`**:
+- `c1` es `guion.cierre` tal cual (texto, final, tipo, forma, consecuencia).
+- `c2`–`c5`: cada uno con otra frase final y otra forma o mecanismo (`referencias/cierres.md`: consecuencia
+  quien|perdida|reloj|despues|espera, legado, pendiente, quien_decide; a lo más una pregunta). Al usuario le gusta la
+  consecuencia humana para quien vive el tema, dicha llano («Y mientras tanto, los guatemaltecos pasan tiempo en el
+  tráfico y no con sus familias»): su tiempo, su familia, su bolsillo, lo que espera.
+- Cada uno: `id`, `texto` (una oración que prepara, ≥ 3 s de voz, y la frase final), `final` (≤ 14 palabras),
+  `tipo`, `forma`, `consecuencia {mecanismo?, quien, verbo}` si es consecuencia o legado, y `por_que` (una línea).
+- Solo lo que el guion y sus cifras sostienen (F6, F8). Pasa `<script> cierres <TRABAJO> --check` hasta 0 fallas.
 
 ## Modo departamento (`/departamento`)
 

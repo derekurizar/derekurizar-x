@@ -57,7 +57,7 @@ const VISUAL = {
   llenado: {
     pintar(W, H, svg) {
       // la cuadrícula (P puntos, los D primeros dentro del contenedor) con margen para el borde y la leyenda abajo
-      const P = VV.puntos, D = Math.min(VV.dentro, P), LEY = 124, M = 12, y0 = 46;
+      const P = VV.puntos, D = Math.min(VV.dentro, P), LEY = 160, M = 12, y0 = 46;   // LEY: la leyenda y el contador abajo sin que #visual los recorte (V13)
       let mejor = null;
       for (let cols = 6; cols <= 40; cols++) {
         const filas = Math.ceil(P / cols), c = Math.min((W - 2 * M) / cols, (H - y0 - LEY) / filas);

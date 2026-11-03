@@ -7,7 +7,7 @@
      gancho); el resumen en crema, Archivo 800, con sus números en crema y peso 900 (destacan sin color: con 2–3 líneas
      serían 4–5 acentos). En B, la palabra que suena de la frase final (crema, Archivo 800), que se enciende palabra a
      palabra con la voz (lo que falta al 35 %) y, como la pantalla ya dice la voz, sin subtítulo debajo (en A sí: el
-     resumen no es la locución).
+     resumen no es la locución). Con 5 líneas (/semana) cada una va en un solo renglón y el hueco baja.
      Todo dentro de la zona segura (V.zona: termina 30 px antes de los subtítulos de comun.css, y = 1400). -->
 <link rel="stylesheet" href="comun.css">
 <style>
@@ -103,7 +103,13 @@ window.__listo = (async () => {
   const Z = V.zona(), cabe = (el) => el.offsetTop + el.offsetHeight <= Z.fin - 6;
   const eco = document.getElementById('eco'), col = eco.parentElement.clientWidth, A = document.getElementById('pantA'), B = document.getElementById('pantB');
   for (let fs = V.F45 ? 120 : 150; ECO && fs > 70 && eco.scrollWidth > col; fs -= 6) eco.style.fontSize = fs + 'px';
-  for (let fs = V.F45 ? 54 : 64; fs > 40 && !cabe(A); fs -= 2) document.getElementById('resumen').style.fontSize = fs + 'px';
+  // con 5 líneas (/semana: una por cifra de la cuenta) cada línea va en un solo renglón y el hueco entre ellas baja
+  const RES = document.getElementById('resumen'), lineas = [...RES.querySelectorAll('span')];
+  if (lineas.length >= 5) {
+    RES.style.gap = V.F45 ? '12px' : '18px';
+    for (let fs = V.F45 ? 54 : 64; fs > 36 && lineas.some((x) => x.offsetHeight > 1.3 * fs); fs -= 2) RES.style.fontSize = fs + 'px';
+  }
+  for (let fs = parseFloat(RES.style.fontSize) || (V.F45 ? 54 : 64); fs > 32 && !cabe(A); fs -= 2) RES.style.fontSize = fs + 'px';
   for (let fs = V.F45 ? 78 : 96; fs > 52 && !cabe(B); fs -= 4) P.style.fontSize = fs + 'px';
 })();
 window.seek = (t) => {

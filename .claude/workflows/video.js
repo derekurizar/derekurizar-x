@@ -1,13 +1,14 @@
 export const meta = {
   name: 'video',
-  description: 'Guion de retención para /video: video-gancho propone 4–5 ganchos de familias distintas (R1–R10 en código) → el crítico elige en silencio ganador y segundo → guionista (PRIMERO la narración de corrido en 3 actos que cuenta el hilo como una historia, con sus conectores dentro del texto; DESPUÉS la reparte sin cambiar una palabra: el gancho elegido → promesa → tarjetas y golpes → pago → cierre con un remate o, a veces, una pregunta) → gate V1–V5, V9, V17–V18 en código → oyente ingenuo (oye la narración y lee la pantalla) → crítico de retención (lee el guion como espectador; puntúa también el flujo) → el guionista corrige lo que bloquea (≤ 2 vueltas). 0 créditos de ElevenLabs.',
-  whenToUse: 'Invocado por /video <slug|ultimo> [corto|medio|largo] DESPUÉS de `python3 scripts/video.py preparar`. args: {trabajo, duracion, slug, fixture, permitir_fallback}. trabajo = sesiones/<slug>/video (lo imprime preparar); duracion = medio (por defecto) | corto | largo | prueba. Solo produce y aprueba <trabajo>/ganchos.json, seleccion.json, guion.json, locucion.json, oyente.json y critica.json; si el crítico no aprueba ningún gancho tras una vuelta, devuelve veredicto corregir con las faltas de la selección y sin guion; la voz (MCP ElevenLabs), tiempos, grabación, montaje y entrega los hace la sesión principal después. Si el crítico sigue en «corregir» tras 2 vueltas, el workflow NO falla: devuelve veredicto corregir + faltas_pendientes y el comando pregunta al usuario antes de gastar créditos.',
+  description: 'Guion de retención para /video: video-gancho propone 5 ganchos de familias distintas (R1–R10 en código) → el crítico elige en silencio ganador y segundo → guionista (PRIMERO la narración de corrido en 3 actos que cuenta el hilo como una historia, con sus conectores dentro del texto; DESPUÉS la reparte sin cambiar una palabra: el gancho elegido → promesa → tarjetas y golpes → pago → cierre con un remate o, a veces, una pregunta) → gate V1–V5, V9, V17–V18 en código → oyente ingenuo (oye la narración y lee la pantalla) → crítico de retención (lee el guion como espectador; puntúa también el flujo) → el guionista corrige lo que bloquea (≤ 2 vueltas). 0 créditos de ElevenLabs.',
+  whenToUse: 'EL USUARIO ELIGE GANCHO Y CIERRE: sin args.gancho se detiene tras la Selección con veredicto elegir_gancho (candidatos, recomendado); la sesión pregunta, corre video.py ganchos --elegir <id> y relanza con resumeFromRunId y args.gancho (o args.gancho_usuario con el texto que dictó); con el guion aprobado devuelve cierres (5 opciones, cierres.json) y la sesión aplica la elegida con video.py cierres --usar <id> (o --propio). args.auto (o el fixture) deja la recomendación del crítico. Invocado por /video <slug|ultimo> [corto|medio|largo] DESPUÉS de `python3 scripts/video.py preparar`. args: {trabajo, duracion, slug, fixture, permitir_fallback}. trabajo = sesiones/<slug>/video (lo imprime preparar); duracion = medio (por defecto) | corto | largo | prueba. Solo produce y aprueba <trabajo>/ganchos.json, seleccion.json, guion.json, locucion.json, oyente.json y critica.json; si el crítico no aprueba ningún gancho tras una vuelta, devuelve veredicto corregir con las faltas de la selección y sin guion; la voz (MCP ElevenLabs), tiempos, grabación, montaje y entrega los hace la sesión principal después. Si el crítico sigue en «corregir» tras 2 vueltas, el workflow NO falla: devuelve veredicto corregir + faltas_pendientes y el comando pregunta al usuario antes de gastar créditos.',
   phases: [
-    { title: 'Ganchos', detail: 'video-gancho: ganchos.json con 4–5 candidatos de familias distintas (≥ 2 con visual), referencias/ganchos.md; gate python3 scripts/video.py ganchos --check (R1–R10, rotación R9); ≤ 3 autoreparaciones' },
+    { title: 'Ganchos', detail: 'video-gancho: ganchos.json con 5 candidatos de familias distintas (≥ 2 con visual), referencias/ganchos.md; gate python3 scripts/video.py ganchos --check (R1–R10, rotación R9); ≤ 3 autoreparaciones' },
     { title: 'Selección', detail: 'video-critico en modo selección: mira cada candidato en silencio y luego con la voz, puntúa silencio, referente, tensión, alineación, honestidad y novedad, aplica R11 y escribe seleccion.json (ganador y segundo para la versión B); si ninguno llega a 3, video-gancho rehace una vez' },
     { title: 'Guion', detail: 'video-guionista: PRIMERO guion.narracion (3 actos de texto corrido que cuentan el hilo como una historia; video.py narracion --check) y DESPUÉS las escenas sin cambiar una palabra (gancho, promesa, tarjetas y golpes, cierre, captions); gate python3 scripts/video.py guion --check (V1–V5, V9, V17–V18; secuencias de voz por acto); ≤ 3 autoreparaciones' },
     { title: 'Oyente', detail: 'historia-oyente: oye la narración de corrido y lee la pantalla (video.py oyente) sin saber nada del hilo; oyente.json con lo que no entendió, los saltos y las preguntas abiertas (insumo del crítico, no gate)' },
     { title: 'Crítica', detail: 'video-critico: lee guion.json, locucion.json, la narración (video.py narracion), oyente.json y digesto.md como espectador (C1–C12; flujo = C10 + C12); puntajes 1–5 y faltas bloquea|mejora con arreglo; lo que bloquea vuelve al guionista, ≤ 2 vueltas' },
+    { title: 'Cierres', detail: 'el guionista escribe 5 cierres (cierres.json, F1–F8 con cierres --check; c1 = el del guion aprobado) para que el usuario elija antes de la voz (cierres --usar o --propio)' },
     { title: 'Animación', detail: 'video-animador (solo si el crítico aprueba y hay una escena explica con animacion null): escribe video/animaciones/<id>.js desde el brief, pasa scripts/animaciones.py --check, la registra en la biblioteca y la asigna a la escena' },
   ],
 }
@@ -27,7 +28,7 @@ const FAMILIAS = ['contraste', 'paradoja', 'lugar', 'escala', 'tu', 'pregunta', 
 const VISUALES = ['cifra', 'llenado', 'pareja', 'figuras', 'lugar']
 const MECANISMOS_EXPLICA = ['cadena', 'ciclo', 'balance', 'onda', 'embudo', 'proporcion', 'umbral', 'cronologia', 'exponencial']
 const CIERRE_TIPOS = ['remate', 'pregunta']
-const CANDIDATOS_MIN = 4, CANDIDATOS_MAX = 5
+const CANDIDATOS = 5, CIERRES_N = 5, GANCHO_USUARIO = 'gu'
 const ENLACES = ['pero', 'por_eso', 'y']
 const PUNTAJES = ['gancho', 'bucle', 'ritmo', 'flujo', 'escala_humana', 'pago', 'cierre']
 const VUELTAS_CRITICA = 2
@@ -43,6 +44,8 @@ const duracion = String(A.duracion || 'medio')
 if (!DURACIONES.includes(duracion)) throw new Error(`args.duracion "${A.duracion}" desconocida (${DURACIONES.join('|')}).`)
 const slug = String(A.slug || trabajo.split('/')[1])
 const fixture = !!A.fixture || duracion === 'prueba'
+
+const ELIGE_USUARIO = !(A.auto || fixture)   // sin args.auto, el usuario elige gancho y cierre
 
 // <comun> generado por scripts/armar_workflows.py desde scripts/workflow_comun.js: no editar aquí
 // Código común de los workflows hilo.js, dato.js, investigacion.js y video.js (el sandbox de Workflow no importa módulos).
@@ -122,6 +125,15 @@ async function conReparacion(etiqueta, invocar, validar, max = 2) {
 
 // ── Schemas de retorno ───────────────────────────────────────────────────────
 const S = {
+  cierres: {
+    type: 'object', required: ['archivo', 'gate', 'fallas', 'candidatos'],
+    properties: {
+      archivo: { type: 'string', pattern: 'cierres\\.json$' }, gate: { type: 'string', enum: ['ok', 'falla'] },
+      fallas: { type: 'array', items: { type: 'string' } },
+      candidatos: { type: 'array', items: { type: 'object', required: ['id', 'tipo', 'forma', 'final'],
+        properties: { id: { type: 'string' }, tipo: { type: 'string' }, forma: { type: 'string' }, final: { type: 'string' } } } },
+    },
+  },
   ganchos: {
     type: 'object',
     required: ['archivo', 'gate', 'candidatos', 'intentos'],
@@ -240,8 +252,7 @@ const validarGanchos = (r) => {
   if (rel(r.archivo) !== `${trabajo}/ganchos.json`) F.push(`archivo debe ser ${trabajo}/ganchos.json (llegó ${r.archivo})`)
   if (r.gate !== 'ok') { F.push(...((r.fallas && r.fallas.length) ? r.fallas : ['el gate `python3 scripts/video.py ganchos --check` falló sin detalle: corre el gate y copia sus líneas FALLA'])); return F }
   const cs = r.candidatos || []
-  if (cs.length < CANDIDATOS_MIN || cs.length > CANDIDATOS_MAX) F.push(`${cs.length} candidatos; van ${CANDIDATOS_MIN}–${CANDIDATOS_MAX}`)
-  if (new Set(cs.map((c) => c.familia)).size !== cs.length) F.push('familias repetidas: cada candidato prueba un mecanismo distinto')
+  if (cs.filter((c) => c.id !== GANCHO_USUARIO).length !== CANDIDATOS) F.push(`${cs.length} candidatos; van ${CANDIDATOS} (el usuario elige; + «${GANCHO_USUARIO}» si dicta el suyo)`)
   if (cs.filter((c) => c.visual !== 'cifra').length < 2) F.push('al menos 2 candidatos con un visual que no sea la cifra sola')
   if (r.intentos > 3) avisar(`AVISO: video-gancho necesitó ${r.intentos} intentos con el gate (presupuesto 3).`)
   return F
@@ -309,7 +320,7 @@ let K = null
 const invocarGanchos = (fallos, intento, faltasSel, pulir) =>
   agentRol(
     `Eres el autor de ganchos de video (lee referencias/ganchos.md y referencias/roles/video-gancho.md). TRABAJO = ${trabajo} · hilo ${slug} · duración ${duracion}${fixture ? ' (FIXTURE)' : ''}.\n` +
-      `Lee SOLO ${trabajo}/digesto.md (NO hilo.json, datos.json, HTML ni código). Escribe ${trabajo}/ganchos.json con ${CANDIDATOS_MIN}–${CANDIDATOS_MAX} candidatos a escena 1 de FAMILIAS DISTINTAS (${FAMILIAS.join(', ')}), al menos 2 con un visual que no sea la cifra sola (${VISUALES.join(', ')}), sin las familias ni el visual que «Ganchos recientes» bloquea. Cada uno: id, familia, visual, visual_datos (ids de cifra o calculo), pantalla, linea, verbo, texto (cifras en dígitos), calculo si hace falta, promesa_sugerida (sin anunciar el video: P2), forma_sugerida (de referencias/promesas.md) y por_que. Primero el segundo 1 en silencio, después la voz: sin abrir con contexto, «Guatemala» dentro de la frase, solo lo que el dato dice y con su periodo.\n` +
+      `Lee SOLO ${trabajo}/digesto.md (NO hilo.json, datos.json, HTML ni código). Escribe ${trabajo}/ganchos.json con ${CANDIDATOS} candidatos a escena 1 de FAMILIAS DISTINTAS (si la rotación deja menos de 5 familias libres, repite familia con otra pantalla y otro ángulo: el usuario elige entre los 5; ${FAMILIAS.join(', ')}), al menos 2 con un visual que no sea la cifra sola (${VISUALES.join(', ')}), sin las familias ni el visual que «Ganchos recientes» bloquea. Cada uno: id, familia, visual, visual_datos (ids de cifra o calculo), pantalla, linea, verbo, texto (cifras en dígitos), calculo si hace falta, promesa_sugerida (sin anunciar el video: P2), forma_sugerida (de referencias/promesas.md) y por_que. Primero el segundo 1 en silencio, después la voz: sin abrir con contexto, «Guatemala» dentro de la frase, solo lo que el dato dice y con su periodo.\n` +
       `Corre python3 scripts/video.py ganchos ${trabajo} --check hasta exit 0 (≤ 3 intentos; corrige SOLO las líneas FALLA).\n` +
       (faltasSel && faltasSel.length ? `${pulir ? `EL CRÍTICO ELIGIÓ ${pulir[0]} (ganador)${pulir[1] ? ` y ${pulir[1]} (segundo)` : ''}; aplica SOLO a esos candidatos estos arreglos (mismo id, misma familia y visual; el texto exacto viene en ARREGLO) y vuelve a pasar el gate:` : 'EL CRÍTICO NO APROBÓ NINGÚN CANDIDATO; rehaz los señalados con su arreglo (o cámbialos por otra familia) y vuelve a pasar el gate:'}\n - ${faltasSel.map((f) => `[${f.candidato} · ${f.regla}] ${f.problema} → ARREGLO: ${f.arreglo}`).join('\n - ')}\n` : '') +
       (fallos.length ? `TU RETORNO ANTERIOR FUE RECHAZADO; corrige SOLO esto:\n - ${fallos.join('\n - ')}\n` : '') +
@@ -351,6 +362,30 @@ if (SEL.ganador === null) {
   }
 }
 avisar(`Selección: gana ${SEL.ganador} (${(K.candidatos.find((c) => c.id === SEL.ganador) || {}).familia}) · segundo ${SEL.segundo || '—'} · ${SEL.por_que}`)
+// ── Elección del usuario (2026-11-03: «siempre me pones a escoger entre 5 opciones de hooks y cierres») ─────────
+// Sin args.gancho el workflow se detiene aquí con las opciones: la sesión pregunta, corre `video.py ganchos --elegir <id>`
+// y relanza con resumeFromRunId y args.gancho (o args.gancho_usuario con el texto que dictó). args.auto (o el fixture)
+// sigue con la recomendación del crítico.
+if (ELIGE_USUARIO && !A.gancho && !A.gancho_usuario) {
+  avisar(`Ganchos: el usuario elige entre ${K.candidatos.length} (recomendado ${SEL.ganador}, segundo ${SEL.segundo || '—'}): video.py ganchos --opciones`)
+  return { trabajo, veredicto: 'elegir_gancho', etapa: 'gancho', candidatos: K.candidatos, recomendado: SEL.ganador, segundo: SEL.segundo, por_que: SEL.por_que, avisos: AVISOS_WF }
+}
+if (A.gancho_usuario) {
+  K = await conReparacion('Ganchos (del usuario)', (fallos) => agentRol(
+    `GANCHO DEL USUARIO (lee referencias/roles/video-gancho.md, «Gancho del usuario»). TRABAJO = ${trabajo}. El usuario dictó su gancho: «${A.gancho_usuario}». ` +
+      `Añade a ${trabajo}/ganchos.json (sin tocar los otros candidatos) uno con id «${GANCHO_USUARIO}»: su voz (texto) casi literal (solo lo que el gate obliga: cifras en dígitos, «Guatemala» dentro de la frase), ` +
+      `y su pantalla, línea, verbo, familia, visual y lo demás que piden las reglas, con datos que el digesto respalda. Corre python3 scripts/video.py ganchos ${trabajo} --check hasta 0 fallas ` +
+      `y después python3 scripts/video.py ganchos ${trabajo} --elegir ${GANCHO_USUARIO}. Si una regla no se puede cumplir sin cambiar lo que dijo, devuélvelo en fallas con la versión más cercana que pasa.` +
+      (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : '') +
+      ' Retorno: el mismo de los ganchos (todos los candidatos, también el del usuario).',
+    { agentType: 'video-gancho', schema: S.ganchos, label: 'ganchos-usuario' }),
+  (r) => [...validarGanchos(r), ...((r.candidatos || []).some((c) => c.id === GANCHO_USUARIO) ? [] : [`falta el candidato «${GANCHO_USUARIO}»`])], 1)
+  SEL = { ...SEL, recomendado: SEL.ganador, segundo: SEL.ganador, ganador: GANCHO_USUARIO }
+} else if (A.gancho) {
+  if (!K.candidatos.some((c) => c.id === A.gancho)) fail(`args.gancho «${A.gancho}» no es un candidato de ganchos.json (${K.candidatos.map((c) => c.id).join(', ')}).`)
+  SEL = { ...SEL, recomendado: SEL.ganador, segundo: A.gancho === SEL.ganador ? SEL.segundo : SEL.ganador, ganador: A.gancho }
+}
+avisar(`Gancho: ${SEL.ganador}${SEL.recomendado && SEL.recomendado !== SEL.ganador ? ` (elegido por el usuario; el crítico recomendaba ${SEL.recomendado})` : ''}`)
 // los arreglos que el crítico dejó al ganador y al segundo se aplican ANTES de que el ganador pase al guion (una vuelta;
 // el guionista no puede tocar la escena 1). Mismo id, familia y visual: la elección no cambia
 const elegidos = [SEL.ganador, SEL.segundo].filter(Boolean)
@@ -384,7 +419,7 @@ avisar(`Guion: ${G.n_escenas} escenas (${G.tipos.map((t) => t[0].toUpperCase()).
 
 // ── FASE 3b: OYENTE (oyente ingenuo: solo la voz y la pantalla; insumo del crítico, no gate) ─────────
 phase('Oyente')
-const O = await conReparacion(
+const oir = (etiqueta) => conReparacion(
   'Oyente',
   (fallos) =>
     agentRol(
@@ -392,7 +427,7 @@ const O = await conReparacion(
         `Lee SOLO python3 scripts/video.py oyente ${trabajo} (primero la narración de corrido, como quien la oye con los ojos cerrados; luego el desglose por escena con la pantalla; no sabes nada más del tema). ` +
         `Dos pasadas (la narración y luego las escenas), sin volver atrás; un salto es donde la narración no fluye. Escribe ${trabajo}/oyente.json y devuelve lo mismo.` +
         (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : ''),
-      { agentType: 'historia-oyente', schema: S.oyente, label: 'oyente' }
+      { agentType: 'historia-oyente', schema: S.oyente, label: etiqueta }
     ),
   (r) => [
     ...(rel(r.archivo) !== `${trabajo}/oyente.json` ? [`archivo debe ser ${trabajo}/oyente.json`] : []),
@@ -400,6 +435,7 @@ const O = await conReparacion(
   ],
   1
 ).catch((e) => { avisar(`AVISO: el oyente no terminó (${String(e.message).split('\n')[0]}); la crítica va sin oyente.json.`); return null })
+let O = await oir('oyente')
 if (O) avisar(`Oyente: «${O.de_que}» · ${O.confusiones.length} confusiones · ${O.saltos.length} saltos · ${O.pregunta_sin_responder.length} sin responder`)
 
 // ── FASE 4: CRÍTICA (crítico de retención → el guionista corrige lo que bloquea) ─
@@ -451,6 +487,31 @@ const pendientes = C.faltas.filter((f) => f.gravedad === 'bloquea')
 const mejoras = C.faltas.filter((f) => f.gravedad === 'mejora')
 if (C.veredicto !== 'pasa') avisar(`AVISO: la crítica deja ${pendientes.length} falta(s) que bloquean tras ${VUELTAS_CRITICA} vueltas (${trabajo}/critica.json): no gastes créditos de voz sin decidirlo con el usuario.`)
 else avisar(`Crítica: pasa · puntajes ${PUNTAJES.map((p) => p + ' ' + C.puntajes[p]).join(' · ')} · ${mejoras.length} mejora(s) anotadas`)
+// m014: si el guion cambió tras la primera crítica, el oyente lo vuelve a oír para el reporte (sonnet, barato; no reabre la crítica)
+if (O && C.veredicto === 'pasa' && C.vuelta > 1) {
+  const O2 = await oir('oyente-final')
+  if (O2) { O = O2; avisar(`Oyente (guion final): ${O.confusiones.length} confusiones · ${O.saltos.length} saltos · ${O.pregunta_sin_responder.length} sin responder`) }
+}
+
+// ── Cierres: 5 opciones para que el usuario elija antes de la voz (c1 = el del guion aprobado) ─────────────────
+phase('Cierres')
+let CIERRES = null
+if (C.veredicto === 'pasa' && !false && ELIGE_USUARIO) {
+  CIERRES = await conReparacion('Cierres', (fallos) => agentRol(
+    `CIERRES PARA EL USUARIO (lee «Cierres para el usuario» en referencias/roles/video-guionista.md y referencias/cierres.md). TRABAJO = ${trabajo}. ` +
+      `El guion ya está aprobado: NO cambies guion.json. Escribe ${trabajo}/cierres.json = {"candidatos": [...]} con ${CIERRES_N} cierres: c1 = guion.cierre TAL CUAL ` +
+      `(texto, final, tipo, forma, consecuencia); c2–c${CIERRES_N} distintos entre sí y de c1: otra frase final y otra forma o mecanismo (consecuencia quien|perdida|reloj|despues|espera, legado, pendiente, quien_decide; a lo más una pregunta). ` +
+      `Al usuario le gusta la consecuencia humana para quien vive el tema (su tiempo, su familia, su bolsillo), dicha llano. Cada uno: id, texto (una oración que prepara, ≥ 3 s, y la frase final), final, tipo, forma, ` +
+      `consecuencia {mecanismo?, quien, verbo} si es consecuencia o legado, y por_que. Solo lo que el guion y sus cifras sostienen. Corre python3 scripts/video.py cierres ${trabajo} --check hasta 0 fallas.` +
+      (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : '') +
+      ' Retorno: {archivo, gate: ok|falla, fallas[], candidatos[]{id, tipo, forma, final}}.',
+    { agentType: 'video-guionista', schema: S.cierres, label: 'cierres' }),
+  (r) => [...(rel(r.archivo) !== `${trabajo}/cierres.json` ? [`archivo debe ser ${trabajo}/cierres.json`] : []),
+    ...(r.gate !== 'ok' ? ((r.fallas || []).length ? r.fallas : ['cierres --check falló sin detalle: córrelo y copia sus FALLA']) : []),
+    ...(r.candidatos.length !== CIERRES_N ? [`${r.candidatos.length} cierres; van ${CIERRES_N}`] : [])], 1)
+    .catch((e) => { avisar(`AVISO: no hubo opciones de cierre (${String(e.message).split('\n')[0]}): pregunta al usuario con el cierre del guion o el suyo.`); return null })
+  if (CIERRES) avisar(`Cierres: ${CIERRES.candidatos.map((c) => `${c.id} ${c.forma} «${c.final}»`).join(' · ')} → el usuario elige (video.py cierres --opciones)`)
+}
 
 // ── FASE 5: ANIMACIÓN (solo con el guion aprobado: una animación a medida por escena explica nueva) ─────
 phase('Animación')
@@ -491,7 +552,8 @@ return {
   archivo_ganchos: `${trabajo}/ganchos.json`,
   archivo_seleccion: `${trabajo}/seleccion.json`,
   ganchos: K.candidatos,
-  seleccion: { ganador: SEL.ganador, segundo: SEL.segundo, puntajes: SEL.puntajes, por_que: SEL.por_que },
+  seleccion: { ganador: SEL.ganador, segundo: SEL.segundo, recomendado: SEL.recomendado || SEL.ganador, puntajes: SEL.puntajes, por_que: SEL.por_que },
+  cierres: CIERRES ? CIERRES.candidatos : null,
   n_escenas: G.n_escenas,
   tipos: G.tipos,
   estimado_s: G.estimado_s,

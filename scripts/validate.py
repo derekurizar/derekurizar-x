@@ -46,8 +46,10 @@ Comprueba:
      conocidas, ruta con guion.json (tipo sabias) y caption.md (el mp4 fuera de git: aviso)
   M14 memoria/carruseles.json (si existe; registro de /carrusel): campos, ids únicos, un carrusel por original,
      estado, paleta, origen existente, ruta con carrusel.json (tipo carrusel), caption.md, alt.md y sus n_laminas PNG
-  (reservados, sin código aún: M15 memoria/semanas.json de /semana, M16 memoria/series.json de /serie; cada comando
-   agrega su registro y su check al construirse)
+  M15 memoria/semanas.json (si existe; registro de /semana): campos, ids AAAA-Wnn únicos, estado, paleta y música
+     conocidas, 5 cifras con puestos 5→1, valor y url, ruta con guion.json (tipo semana), fuentes.md y caption.md (el
+     mp4 fuera de git: aviso)
+  (reservado, sin código aún: M16 memoria/series.json de /serie; se agrega al construirse)
   M11 memoria/mejoras.json (si existe; mejoras al framework de cada video): campos, ids únicos mNNN, flujo conocido,
      estado pendiente|hecha|descartada, archivo relativo a la raíz
   K1 design/musica/catalogo.json: cada pista existe, ids únicos, paleta conocida y ≥ 2 pistas por paleta
@@ -708,6 +710,49 @@ def validar_carruseles(paletas):
             err("M14 carruseles[%d] %s/carrusel.json no es de /carrusel (tipo %r)" % (i, r, c.get("tipo")))
 
 
+def validar_semanas(paletas):
+    """M15 memoria/semanas.json (registro de /semana)."""
+    rel_mem = "memoria/semanas.json"
+    if not os.path.exists(os.path.join(RAIZ, rel_mem)):  # ausente = ok: memoria.py --semana lo crea con la primera
+        return
+    d = cargar(rel_mem) or {}
+    musica = {p.get("id") for p in (cargar("design/musica/catalogo.json") or {}).get("pistas", [])}
+    ids = set()
+    for i, v in enumerate(d.get("semanas", [])):
+        for campo in ("id", "fecha", "ventana", "ruta", "paleta", "musica", "duracion_s", "estado", "cifras"):
+            if campo not in v:
+                err("M15 semanas[%d] sin %s" % (i, campo))
+        if v.get("id") in ids:
+            err("M15 semanas: id repetido %s" % v.get("id"))
+        ids.add(v.get("id"))
+        if not re.fullmatch(r"\d{4}-W\d{2}", str(v.get("id"))):
+            err("M15 semanas[%d] id %r (va AAAA-Wnn)" % (i, v.get("id")))
+        if v.get("estado") not in ("listo", "publicado", "incompleto"):
+            err("M15 semanas[%d] estado %r" % (i, v.get("estado")))
+        if paletas and v.get("paleta") not in paletas:
+            err("M15 semanas[%d] paleta %r desconocida" % (i, v.get("paleta")))
+        if v.get("musica") not in musica:
+            err("M15 semanas[%d] música %r no está en el catálogo" % (i, v.get("musica")))
+        cs = v.get("cifras") or []
+        if [c.get("puesto") for c in cs] != [5, 4, 3, 2, 1]:
+            err("M15 semanas[%d] cifras con puestos %s (van 5, 4, 3, 2, 1)" % (i, [c.get("puesto") for c in cs]))
+        for c in cs:
+            if not isinstance(c.get("valor"), (int, float)) or not c.get("url"):
+                err("M15 semanas[%d] cifra #%s sin valor numérico o sin url" % (i, c.get("puesto")))
+        r = str(v.get("ruta", ""))
+        if os.path.isabs(r):
+            err("M15 semanas[%d] la ruta debe ser relativa a la raíz" % i)
+            continue
+        for f in ("guion.json", "fuentes.md", "caption.md"):
+            if not os.path.exists(os.path.join(RAIZ, r, f)):
+                err("M15 semanas[%d] %s sin %s" % (i, r, f))
+        g = cargar(os.path.join(r, "guion.json")) if os.path.exists(os.path.join(RAIZ, r, "guion.json")) else {}
+        if g and g.get("tipo") != "semana":
+            err("M15 semanas[%d] %s/guion.json no es de /semana (tipo %r)" % (i, r, g.get("tipo")))
+        if not os.path.exists(os.path.join(RAIZ, r, "video.mp4")):
+            warn("M15 semanas[%d] %s/video.mp4 no está (fuera de git: se regenera con /semana)" % (i, r))
+
+
 def validar_explicaciones(paletas):
     """M12 memoria/explicaciones.json (registro de /explica)."""
     rel_mem = "memoria/explicaciones.json"
@@ -826,6 +871,7 @@ def main():
     validar_explicaciones(paletas)
     validar_sabias(paletas)
     validar_carruseles(paletas)
+    validar_semanas(paletas)
     validar_mejoras()
     for a in AVISOS:
         print("AVISO  " + a)

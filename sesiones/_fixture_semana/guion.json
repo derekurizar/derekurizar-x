@@ -1,0 +1,109 @@
+{
+  "tipo": "semana",
+  "fecha": "2026-10-25",
+  "ventana": [
+    "2026-10-19",
+    "2026-10-25"
+  ],
+  "contexto_superior": "Guatemala · semana del 19 al 25 oct",
+  "gancho": {
+    "pantalla": "Las 5 cifras de la semana",
+    "texto": "Estas son las 5 cifras de la semana en Guatemala, del 19 al 25 de octubre. Empezamos."
+  },
+  "cifras": [
+    {
+      "puesto": 5,
+      "noticia": "d22-n2",
+      "cifra_id": "sm-c03",
+      "seccion": "Clima",
+      "titular": "Lluvias afectan a 1,200 familias",
+      "texto": "En el número 5, las lluvias de la semana dejaron 1,200 familias afectadas en Escuintla, según Conred. Hay 14 albergues abiertos y el pronóstico anuncia más lluvia.",
+      "cifra": {
+        "texto": "1,200",
+        "etiqueta": "familias afectadas"
+      },
+      "humana": "Con 14 albergues abiertos",
+      "fuente": "Conred · Prensa Libre",
+      "publicada": "2026-10-22"
+    },
+    {
+      "puesto": 4,
+      "noticia": "d24-n2",
+      "cifra_id": "sm-c05",
+      "seccion": "Educación",
+      "titular": "Mineduc entrega 450,000 libros",
+      "texto": "En el número 4, Educación entregó 450,000 libros de texto a escuelas públicas de los 22 departamentos, informó el Mineduc. Llegan antes de clases.",
+      "cifra": {
+        "texto": "450,000",
+        "etiqueta": "libros de texto"
+      },
+      "humana": "En escuelas de los 22 departamentos",
+      "fuente": "Mineduc · Publinews",
+      "publicada": "2026-10-24"
+    },
+    {
+      "puesto": 3,
+      "noticia": "d22-n1",
+      "cifra_id": "sm-c02",
+      "seccion": "Salud",
+      "titular": "Casos de dengue bajan 35 %",
+      "texto": "En el número 3, la salud: los casos de dengue bajaron 35 % frente al mismo periodo de 2025, según el Ministerio de Salud. La capital sigue con más casos.",
+      "cifra": {
+        "texto": "35 %",
+        "etiqueta": "menos casos que en 2025"
+      },
+      "humana": "Más de un tercio de casos menos",
+      "fuente": "MSPAS · La Hora",
+      "publicada": "2026-10-22"
+    },
+    {
+      "puesto": 2,
+      "noticia": "ofi-1",
+      "cifra_id": "sm-c06",
+      "seccion": "Economía",
+      "titular": "Inflación de septiembre: 3.8 %",
+      "texto": "En el número 2, la inflación de septiembre quedó en 3.8 %, según el INE. Es decir, lo que costaba Q1,000 hace un año hoy cuesta Q38 más.",
+      "cifra": {
+        "texto": "3.8 %",
+        "etiqueta": "inflación interanual"
+      },
+      "humana": "Q38 más por cada Q1,000 de compras",
+      "calculo": "sm-c06 * 10",
+      "fuente": "INE",
+      "publicada": "2026-10-23"
+    },
+    {
+      "puesto": 1,
+      "noticia": "d24-n1",
+      "cifra_id": "sm-c04",
+      "seccion": "Política",
+      "titular": "Congreso aprueba el presupuesto 2027",
+      "texto": "Y en el número uno, el Congreso aprobó el presupuesto de 2027: Q148,500 millones. Son Q6,200 millones más que el vigente.",
+      "cifra": {
+        "texto": "Q148,500 M",
+        "etiqueta": "presupuesto 2027"
+      },
+      "humana": "Q6,200 millones más que este año",
+      "fuente": "Congreso · República",
+      "publicada": "2026-10-24"
+    }
+  ],
+  "cierre": {
+    "rotulo": "La semana en Guatemala",
+    "resumen": [
+      "1,200 familias afectadas",
+      "450,000 libros entregados",
+      "Dengue: 35 % menos",
+      "Inflación: 3.8 %",
+      "Q148,500 M de presupuesto"
+    ],
+    "texto": "Esa fue la semana en Guatemala, en cinco números. El domingo que viene, cinco más.",
+    "final": "El domingo que viene, cinco más."
+  },
+  "caption": {
+    "tiktok": "MAQUETA · Las 5 cifras de la semana en Guatemala: lluvias, libros, dengue, inflación y presupuesto.\nCada cifra con su fuente. #Guatemala #Semana",
+    "instagram": "MAQUETA · Las 5 cifras de la semana en Guatemala, con su fuente.\n#Guatemala #NoticiasGuatemala",
+    "facebook": "MAQUETA · Las 5 cifras de la semana en Guatemala, verificadas. Fuentes en el primer comentario.",
+    "shorts": "Las 5 cifras de la semana en Guatemala #Shorts\nMAQUETA · Lluvias, libros, dengue, inflación y presupuesto."
+  }
+}

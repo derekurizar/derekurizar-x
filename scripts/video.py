@@ -9,13 +9,22 @@ música ni efectos).
 Subcomandos (TRABAJO = sesiones/<slug>/video):
   preparar <hilo|ultimo> [--duracion corto|medio|largo] [--musica ID] [--trabajo DIR] [--permitir-borrador] [--sin-rotacion]
         crea TRABAJO, elige la música y escribe digesto.md para el guionista (también lo imprime); medio por defecto
-  ganchos TRABAJO --check      candidatos del agente video-gancho (ganchos.json): 4–5 familias distintas, R1–R10 cada uno
+  ganchos TRABAJO --check      candidatos del agente video-gancho (ganchos.json): 5 de familias distintas (+ «gu», el del
+        usuario), R1–R10 cada uno
+  ganchos TRABAJO --opciones   los candidatos para que el usuario elija (el recomendado del crítico, primero)
+  ganchos TRABAJO --elegir ID  la elección del usuario → seleccion.json (el recomendado del crítico queda de segundo)
   ganchos TRABAJO --usar [ID] [--segundo ID]   el elegido (de seleccion.json si no se da) → escena 1 de guion.json
+  probar | aplicar TRABAJO --cambios JSON|ARCHIVO   un arreglo del crítico en una copia | en el TRABAJO: el mismo texto en la
+        escena y en su tramo de guion.narracion (V17), con narracion --check + guion --check (aplicar restaura si falla)
+  cierres TRABAJO --check | --opciones | --usar ID | --propio TEXTO [--forma F --mecanismo M --quien Q --verbo V]
+        5 cierres candidatos (cierres.json, F1–F8 cada uno) para que el usuario elija; --usar (o --propio, id «cu») lo
+        pasa a guion.cierre y a la narración (guion.previo.json de respaldo); después, guion --check
   guion TRABAJO --check        gate V1–V5 + V9 (estructura de retención, gancho R2–R10) sobre guion.json v2 → locucion.json
   voz TRABAJO [--pendientes | --solo N,N]   imprime JSON con la voz y el texto de cada nodo TTS (--pendientes: solo los que faltan o cambiaron)
   variante TRABAJO [--cerrar]  versión B con el segundo gancho: variante_b/ con la voz y los clips de las demás escenas;
         imprime solo el nodo de voz de la escena 1; --cerrar copia su video a salida/video_b.mp4
-  descargar TRABAJO --estado ESTADO.json [...]   el JSON guardado de creative_get_flow_run_status (voz y Scribe) →
+  descargar TRABAJO --estado ESTADO.json [...]   el JSON de creative_get_flow_run_status (voz y Scribe; si el MCP lo
+        devolvió en línea, la sesión lo escribe tal cual en <TRABAJO>/audio/estado.json; valen las `words` en línea) →
         audio/voz_N.mp3 (por el prompt), palabras_N.json (por el id de generación) y creditos.json (créditos cobrados)
   descargar TRABAJO --voz URLS.json | --palabras URLS.json   respaldo: {"<n>": "<url>"} → voz_N.mp3 | palabras_N.json
   voz-falsa TRABAJO            tono por palabra + tiempos sintéticos (fixture, 0 créditos)
@@ -93,7 +102,8 @@ CON_TUIT = ("tarjeta", "mapa", "ranking", "tiempo")                # escenas que
 ESCENAS_TEXTO = ("golpe", "definicion", "adivina")                 # texto cinético (golpe.html); «golpes» en DURACIONES las cuenta a todas
 FORMULAS = ("cifra", "contradiccion", "pregunta", "resultado")   # fórmulas de los guiones anteriores al catálogo de ganchos
 # catálogo de ganchos (referencias/ganchos.md): la familia es el mecanismo que frena el scroll y el visual lo que se ve
-# en el cuadro 0; los escribe el agente video-gancho (4–5 candidatos de familias distintas) y los elige el crítico
+# en el cuadro 0; los escribe el agente video-gancho (5 candidatos de familias distintas), el crítico recomienda uno y
+# el usuario elige (usuario, 2026-11-03: «siempre me pones a escoger entre 5 opciones de hooks y cierres»)
 FAMILIAS = ("contraste", "paradoja", "lugar", "escala", "tu", "pregunta", "ranking", "resultado")
 FAMILIAS_ALIAS = {"cifra": "resultado", "contradiccion": "contraste"}   # la `formula` de un guion viejo → familia
 VISUALES = ("cifra", "llenado", "pareja", "figuras", "lugar")
@@ -107,7 +117,10 @@ VISUALES_DE = {"contraste": ("llenado", "pareja", "cifra"), "paradoja": ("pareja
 VISUAL_VEREDICTO, VEREDICTO_DE = "veredicto", ("contraste", "resultado", "tu", "escala")
 SELLOS_VEREDICTO = {"mito": "MITO", "realidad": "REALIDAD", "a_medias": "A MEDIAS"}
 CREENCIA_CARACTERES = 120
-CANDIDATOS = (4, 5)            # ganchos.json: candidatos por video, de familias distintas
+CANDIDATOS = (4, 6)            # ganchos.json: el agente escribe 5 (los workflows lo exigen; 4 en sesiones viejas) + «gu»
+GANCHO_USUARIO = "gu"          # id del gancho que dicta el usuario (no cuenta para las familias distintas)
+CIERRES_OPCIONES = 5           # cierres.json: candidatos de cierre que el usuario elige (+ «cu», el que dicta)
+CIERRE_USUARIO = "cu"
 CANDIDATOS_CON_VISUAL = 2      # … y al menos estos con un visual que no sea la cifra sola
 ROTACION_FAMILIAS, ROTACION_VISUALES = 2, 1   # R9: la familia no repite la de los últimos 2 videos; el visual, la del último
 VISUAL_UNIDAD, VISUAL_ETIQUETA, LUGAR_ETIQUETA = 20, 24, 30
@@ -363,6 +376,8 @@ TRANSICIONES = {"primera": "smoothleft",  # del gancho a la primera tarjeta (zoo
                 "seguida": "fade",        # dentro de una secuencia de voz (historia): corte suave, la voz sigue
                 "bucle": "fade"}          # el cuadro final en bucle
 RE_DE_CADA = re.compile(r"\b(\d+)\s+de\s+cada\s+(\d+)\b")
+RE_POR_CADA = re.compile(r"\b(\d[\d,]*(?:\.\d+)?)\s+por\s+cada\s+(\d[\d,]*)\b", re.I)
+RE_COTA = re.compile(r"\b(más\s+de|al\s+menos|por\s+lo\s+menos|menos\s+de)\s+(\d[\d,]*(?:\.\d+)?)(?!\s*(?:%|por\s+ciento))", re.I)
 TRANSICION = 0.3     # deslizamiento entre escenas (xfade); los primeros 0.3 s de cada escena quedan bajo la transición
 BUCLE_S, BUCLE_FUNDIDO = 0.6, 0.25   # cierre en bucle: el primer cuadro del gancho vuelve al final (TikTok repite el video)
 # palabras que no anclan solas la línea de pantalla a la voz (un «de» suelto no basta para fijar su tiempo)
@@ -954,7 +969,8 @@ def escala_humana(cid, c):
     v = c.get("valor")
     if len(partes) >= 2 and partes[0]:
         out.append("×%.1f entre las dos primeras partes (calculo: %s.partes[1]/%s.partes[0]) · %+.0f %% (calculo: (%s.partes[1]/%s.partes[0]-1)*100)"
-                   % (partes[1] / partes[0], cid, cid, (partes[1] / partes[0] - 1) * 100, cid, cid))
+                   " · %.0f por cada 100 (calculo: %s.partes[1]/%s.partes[0]*100; V2 acepta la base del «por cada»)"
+                   % (partes[1] / partes[0], cid, cid, (partes[1] / partes[0] - 1) * 100, cid, cid, partes[1] / partes[0] * 100, cid, cid))
     u = str(c.get("unidad", "")).lower()
     if isinstance(v, (int, float)) and not isinstance(v, bool) and ("%" in u or "porcentaje" in u or "por ciento" in u) and 0 < v < 100:
         out.append("1 de cada %d (calculo: 100/%s)" % (round(100 / v), cid))
@@ -1443,7 +1459,22 @@ def exentar_de_cada(texto, vals):
         if a and any(_coincide(x, b / a, 0.5 / a) or de_cada_pct(x, a, b) for x, f in vals):
             return " "
         return m.group(0)
-    return RE_DE_CADA.sub(de_cada, texto or "")
+
+    def por_cada(m):   # m048: «127 por cada 100»: con K respaldado, la base B es la del «por cada» declarado
+        k, b = float(m.group(1).replace(",", "")), float(m.group(2).replace(",", ""))
+        if any(_coincide(x, k, 0.5) or (k and _coincide(x, k / b, 0.5 / b)) for x, f in vals):
+            return " "
+        return m.group(0)
+
+    def cota(m):   # m036: «más de N» / «al menos N» con un respaldo en [N, 2N); «menos de N» con uno en (N/2, N]
+        n = float(m.group(2).replace(",", ""))
+        menos = m.group(1).lower().startswith("menos")
+        if n and any((n / 2 < x <= n) if menos else (n <= x < 2 * n) for x, f in vals if isinstance(x, (int, float))):
+            return m.group(1) + " "
+        return m.group(0)
+    texto = RE_POR_CADA.sub(por_cada, texto or "")
+    texto = RE_COTA.sub(cota, texto)
+    return RE_DE_CADA.sub(de_cada, texto)
 
 
 def sin_respaldo(texto, valores, extra=()):
@@ -2127,6 +2158,8 @@ def cmd_guion(a):
             r_f, r_av = reglas_gancho(e, pantalla, {"cifras": cifras, "valores": valores, "anio": ANIO,
                                                      "recientes": st.get("ganchos_recientes"), "visual": vis_out,
                                                      "e2": escenas[1].get("texto", "") if len(escenas) > 1 else ""})
+            if e.get("dictado_por_usuario"):
+                r_f, r_av = dictado_por_usuario(r_f, r_av)
             fallas.extend("V9 gancho: " + x for x in r_f)
             avisos.extend("gancho: " + x for x in r_av)
             elegido = gancho_elegido(trabajo)
@@ -2230,7 +2263,7 @@ def cmd_guion(a):
             por_sec.setdefault(x["secuencia"], []).append(x)
     for k in sorted(por_sec):
         xs = por_sec[k]
-        prompt_sec = " ".join(p if p.rstrip().endswith((".", "?", "!", "…", ">")) else p.rstrip() + "." for p in (x.get("prompt") or x["voz"] for x in xs))
+        prompt_sec = unir_secuencia([x.get("prompt") or x["voz"] for x in xs])
         car = sum(len(x["voz"]) for x in xs)
         if car > SECUENCIA_CARACTERES:
             fallas.append("V9 secuencia %d (escenas %s): %d caracteres de voz; van ≤ %d por nodo (parte la secuencia)"
@@ -2441,6 +2474,26 @@ def revisar_actos(g):
     return f
 
 
+def unir_secuencia(voces):
+    """El prompt de una secuencia: las voces seguidas, cada una con su puntuación final. Una voz que termina en coma o
+    punto y coma sigue de corrido con la siguiente (sin «,.», m031), y esa empieza en minúscula salvo un nombre propio."""
+    out = ""
+    for p in voces:
+        p = p.strip()
+        if not out:
+            out = p
+        elif out.endswith((",", ";")):
+            primera = p.split(" ", 1)[0]
+            if primera[:1].isupper() and primera.lower() in STOP | {"pero", "por", "entonces", "aun", "así", "y", "e", "o", "que", "porque", "cuando", "mientras", "ese", "esa", "eso"}:
+                p = p[:1].lower() + p[1:]
+            out += " " + p
+        else:
+            out += " " + p
+        if not out.endswith((".", "?", "!", "…", ">", ",", ";")):
+            out += "."
+    return out[:-1] + "." if out.endswith((",", ";")) else out
+
+
 def secuencias_por_defecto(g, rompe=None, sueltas=()):
     """Las secuencias de voz cuando el guion no las trae: tramos de escenas consecutivas del mismo acto, de 2 a
     SECUENCIA_MAX, que se cortan donde `rompe(e)` (un giro o un rótulo en /historia); el gancho, el cierre y los tipos
@@ -2638,7 +2691,15 @@ def revisar_gancho(e, st, valores, cifras, titulares, e2=None):
         f.append("V1 icono «%s» no está en design/iconos/catalogo.json" % e["icono"])
     rf, ra = reglas_gancho(e, voz_p, {"cifras": cifras, "valores": valores, "anio": ANIO, "visual": vis,
                                       "recientes": st.get("ganchos_recientes"), "e2": e2})
+    if e.get("id") == GANCHO_USUARIO or e.get("dictado_por_usuario"):
+        rf, ra = dictado_por_usuario(rf, ra)
     return f + rf, ra, voz
+
+
+def dictado_por_usuario(fallas, avisos):
+    """m037: el gancho que dicta el usuario no lo bloquea R3 (abrir con contexto, «En Guatemala…»): queda de aviso."""
+    return ([x for x in fallas if not x.startswith("R3 ")],
+            avisos + ["%s (dictado por el usuario: aviso)" % x for x in fallas if x.startswith("R3 ")])
 
 
 def cmd_ganchos(a):
@@ -2655,11 +2716,19 @@ def cmd_ganchos(a):
     valores, titulares, cifras = valores_respaldo(st["hilo"])
     valores = con_puestos(valores, st)
     fallas, por_id = [], {}
-    if not CANDIDATOS[0] <= len(cands) <= CANDIDATOS[1]:
-        fallas.append("G %d candidatos; van %d–%d de familias distintas" % (len(cands), *CANDIDATOS))
-    fams = [c.get("familia") for c in cands]
-    if len(set(fams)) < len(fams):
-        fallas.append("G familias repetidas (%s): cada candidato prueba un mecanismo distinto" % ", ".join(map(str, fams)))
+    if not CANDIDATOS[0] <= len(cands) <= CANDIDATOS[1] or (len(cands) == CANDIDATOS[1] and not any(c.get("id") == GANCHO_USUARIO for c in cands)):
+        fallas.append("G %d candidatos; van 5 de familias distintas (+ «%s», el que dicta el usuario)" % (len(cands), GANCHO_USUARIO))
+    # familias distintas hasta donde alcanza el catálogo: con la rotación (R9), /mito puede quedarse con 2 familias para
+    # 5 candidatos; entonces se repite familia, pero nunca la opción entera (pantalla, línea y voz). El del usuario no cuenta.
+    propios = [c for c in cands if c.get("id") != GANCHO_USUARIO]
+    fams = [c.get("familia") for c in propios]
+    libres = [f for f in FAMILIAS if f not in ((st.get("ganchos_recientes") or {}).get("familias") or [])]
+    if len(set(fams)) < min(len(fams), max(len(libres), 1)):
+        fallas.append("G familias repetidas (%s) con familias libres (%s): cada candidato prueba un mecanismo distinto"
+                      % (", ".join(map(str, fams)), ", ".join(f for f in libres if f not in fams) or "—"))
+    voces = [texto_llano(" ".join(filter(None, (c.get("pantalla"), c.get("linea"), c.get("texto"))))) for c in cands]
+    if len(set(voces)) < len(voces):
+        fallas.append("G opciones repetidas (misma pantalla, línea y voz): cada una tiene que ser distinta para que el usuario elija")
     if sum(1 for c in cands if (c.get("visual") or "cifra") != "cifra") < CANDIDATOS_CON_VISUAL:
         fallas.append("G al menos %d candidatos con un visual que no sea la cifra sola (llenado, pareja, figuras o lugar)" % CANDIDATOS_CON_VISUAL)
     for k, c in enumerate(cands, 1):
@@ -2681,6 +2750,41 @@ def cmd_ganchos(a):
         fallas += ["%s: %s" % (cid, x) for x in f]
         for x in av:
             print("AVISO %s: %s" % (cid, x))
+    ruta_sel = os.path.join(trabajo, "seleccion.json")
+    if getattr(a, "opciones", False):
+        sel = leer(ruta_sel) if os.path.exists(ruta_sel) else {}
+        rec = sel.get("recomendado") or sel.get("ganador")
+        pts = sel.get("puntajes") or {}
+        orden = sorted(cands, key=lambda c: (c.get("id") != rec, -sum(v for v in (pts.get(c.get("id")) or {}).values()
+                                                                        if isinstance(v, (int, float)))))
+        print("OPCIONES DE GANCHO (el usuario elige; recomendado del crítico: %s)" % (rec or "—"))
+        for k, c in enumerate(orden, 1):
+            print("%d. %s%s · %s/%s · pantalla «%s» · línea «%s» · voz «%s»" % (
+                k, c.get("id"), " (recomendado)" if c.get("id") == rec else "", c.get("familia"), c.get("visual") or "cifra",
+                c.get("pantalla") or "", c.get("linea") or "", c.get("texto") or ""))
+        if sel.get("por_que"):
+            print("por qué el crítico recomienda %s: %s" % (rec, sel["por_que"]))
+        for x in fallas:
+            print("FALLA", x)
+        return 1 if fallas else 0
+    if getattr(a, "elegir", None):
+        if fallas:
+            for x in fallas:
+                print("FALLA", x)
+            return falla("ganchos.json no pasa el gate: no se elige un candidato que no cumple las reglas")
+        if a.elegir not in por_id:
+            return falla("--elegir: «%s» no es un candidato de ganchos.json (%s)" % (a.elegir, ", ".join(por_id)))
+        sel = leer(ruta_sel) if os.path.exists(ruta_sel) else {}
+        rec = sel.get("recomendado") or sel.get("ganador")
+        otro = rec if rec and rec != a.elegir else sel.get("segundo")
+        if otro == a.elegir or otro not in por_id:
+            otro = next((i for i in por_id if i != a.elegir and por_id[i].get("familia") != por_id[a.elegir].get("familia")),
+                        next(i for i in por_id if i != a.elegir))
+        sel.update(recomendado=rec, ganador=a.elegir, segundo=otro, elegido_por="usuario")
+        escribir(ruta_sel, sel)
+        print("→ el usuario elige %s (%s · «%s»); recomendado del crítico: %s; segundo para la versión B: %s · %s"
+              % (a.elegir, por_id[a.elegir].get("familia"), por_id[a.elegir].get("pantalla"), rec or "—", otro, rel(ruta_sel)))
+        return 0
     if a.usar is not None:
         if fallas:
             for x in fallas:
@@ -2695,6 +2799,18 @@ def cmd_ganchos(a):
         escribir(ruta, G)
         escena = {"tipo": "gancho", **{k: por_id[gan][k] for k in CAMPOS_GANCHO if por_id[gan].get(k) is not None},
                   "texto": por_id[gan]["texto"]}
+        if gan == GANCHO_USUARIO:
+            escena["dictado_por_usuario"] = True
+        sel = leer(ruta_sel) if os.path.exists(ruta_sel) else {}
+        # m032: la foto que el crítico sugirió en la selección para este candidato (/historia: visual foto)
+        foto = (sel.get("foto_sugerida") or {}).get(gan)
+        if foto and isinstance(escena.get("visual_datos"), dict) and "foto" in escena["visual_datos"]:
+            escena["visual_datos"] = dict(escena["visual_datos"], foto=foto)
+            print("→ foto sugerida por el crítico para %s: %s (repasa guion --check: H12)" % (gan, foto))
+        # m044: un arreglo del crítico que --usar no puede aplicar solo (texto libre) no se pierde en silencio
+        for x in sel.get("faltas") or []:
+            if x.get("candidato") == gan:
+                print("AVISO el crítico dejó a %s un arreglo sin aplicar (%s): %s → %s" % (gan, x.get("regla"), x.get("problema"), x.get("arreglo")))
         rg = os.path.join(trabajo, "guion.json")
         guion = leer(rg) if os.path.exists(rg) else {"escenas": []}
         esc = guion.get("escenas") or []
@@ -2715,6 +2831,259 @@ def cmd_ganchos(a):
     if fallas:
         return 1
     print("→ %s · %d candidatos · R1–R10 ok" % (rel(ruta), len(cands)))
+    return 0
+
+
+def leer_cambios(texto):
+    """--cambios de probar y aplicar: JSON en línea o archivo; un dict suelto vale como lista de uno."""
+    cambios = json.loads(texto) if texto.lstrip()[:1] in "[{" else leer(texto)
+    return [cambios] if isinstance(cambios, dict) else cambios
+
+
+def aplicar_cambios(g, gan, cambios):
+    """Aplica los cambios de un arreglo a guion.json (g) y ganchos.json (gan), en memoria: el mismo texto va a la
+    narración de corrido, la promesa y el candidato del gancho. → (código, mensaje, escenas cambiadas): 0 ok · 1 el texto de
+    antes no está literal en la narración · 2 cambio mal dado. Lo comparten probar (en una copia) y aplicar (en el TRABAJO)."""
+    textos, escenas = [], set()   # (viejo, nuevo): el mismo cambio va a la narración, la promesa y el candidato del gancho
+    for c in cambios:
+        clave = "promesa" if "promesa" in c else "bisagra" if "bisagra" in c else None
+        if clave:   # {"promesa": "…", "forma"?} · {"bisagra": "…", "forma"?, "en"?, "pago"?} (P1–P4)
+            dueno = g.setdefault(clave, {})
+            if dueno.get("texto") and c[clave] is not None:
+                textos.append((dueno["texto"], c[clave]))
+            if c[clave] is not None:
+                dueno["texto"] = c[clave]
+            dueno.update({k: c[k] for k in ("forma", "en", "pago") if k in c})
+            continue
+        if isinstance(c.get("cierre"), dict):   # m020: {"cierre": {"texto", "final", …}} cambia los campos juntos (V5)
+            dueno, nuevo_c = g.setdefault("cierre", {}), c["cierre"]
+            if nuevo_c.get("texto") and nuevo_c["texto"] != dueno.get("texto"):
+                textos.append((dueno.get("texto"), nuevo_c["texto"]))
+                escenas.add(len(g["escenas"]) + 1)
+            dueno.update({k: v for k, v in nuevo_c.items() if k in ("texto", "final", "tipo", "forma", "consecuencia")})
+            continue
+        n = c.get("escena")
+        cierre = "cierre" in c or n == len(g["escenas"]) + 1
+        campo = c.get("campo") or "texto"
+        nuevo = c.get("cierre", c.get("valor", c.get("texto")))
+        if nuevo is None or (not cierre and not (isinstance(n, int) and 1 <= n <= len(g["escenas"]))):
+            return 2, "FALLA cambio %s: da {escena: N, texto} · {escena: N, campo, valor} · {promesa} · {cierre: texto | {texto, final, …}}" % json.dumps(c, ensure_ascii=False), escenas
+        dueno = g["cierre"] if cierre else g["escenas"][n - 1]
+        viejo = dueno.get(campo)
+        dueno[campo] = nuevo
+        if cierre and campo == "texto" and isinstance(nuevo, str) and not texto_llano(nuevo).endswith(texto_llano(dueno.get("final") or "")):
+            # el texto nuevo ya no termina con la frase final de antes: la final es su última oración (V5)
+            dueno["final"] = [x for x in re.split(r"(?<=[.!?])\s+", nuevo.strip()) if x.strip()][-1].strip()
+        if campo == "texto":
+            textos.append((viejo, nuevo))
+            if viejo != nuevo:
+                escenas.add(len(g["escenas"]) + 1 if cierre else n)
+    prom, bis = g.get("promesa") or {}, g.get("bisagra") or {}
+    for viejo, nuevo in textos:
+        if prom.get("texto") == viejo:
+            prom["texto"] = nuevo
+        if bis.get("texto") == viejo:
+            bis["texto"] = nuevo
+        for cand in (gan or {}).get("candidatos") or []:
+            if cand.get("texto") == viejo:
+                cand["texto"] = nuevo
+        hallado = False
+        for parte in g.get("narracion") or []:
+            if viejo and viejo in parte.get("texto", ""):
+                parte["texto"] = parte["texto"].replace(viejo, nuevo, 1)
+                hallado = True
+        if g.get("narracion") and viejo and not hallado:
+            return 1, ("FALLA el texto de antes («%s…») no está literal en guion.narracion: el arreglo no se puede repartir sin "
+                       "cambiar la narración de corrido" % viejo[:50]), escenas
+    return 0, "", escenas
+
+
+def correr_gates(trabajo, script=None):
+    """narracion --check y guion --check sobre un TRABAJO (con el script del flujo): imprime sus FALLA y AVISO → 0 pasa · 1 falla."""
+    rc = 0
+    for cmd in ("narracion", "guion"):
+        r = subprocess.run([sys.executable, script or os.path.abspath(__file__), cmd, trabajo, "--check"], capture_output=True, text=True, cwd=RAIZ)
+        for linea in (r.stdout + r.stderr).splitlines():
+            if linea.startswith(("FALLA", "AVISO")):
+                print("%s · %s" % (cmd, linea))
+        rc = rc or (1 if r.returncode else 0)
+    return rc
+
+
+def cmd_probar(a):
+    """m015: el crítico de /video prueba un arreglo ANTES de escribirlo (como /historia): lo aplica a una copia del TRABAJO,
+    con el mismo texto en la escena y en su tramo de guion.narracion, y corre narracion --check y guion --check."""
+    trabajo = os.path.abspath(a.trabajo)
+    try:
+        cambios = leer_cambios(a.cambios)
+    except (OSError, ValueError) as ex:
+        print("FALLA --cambios ilegible: %s" % ex)
+        return 2
+    tmp = os.path.join(os.path.dirname(trabajo), "_probar-%s-%d" % (os.path.basename(trabajo), os.getpid()))
+    shutil.copytree(trabajo, tmp, ignore=shutil.ignore_patterns("audio", "salida", "revision", "clips*", "segs*", "variante_b"))
+    try:
+        g = leer(os.path.join(tmp, "guion.json"))
+        ruta_g = os.path.join(tmp, "ganchos.json")
+        gan = leer(ruta_g) if os.path.exists(ruta_g) else None
+        rc, msg, _ = aplicar_cambios(g, gan, cambios)
+        if rc:
+            print(msg)
+            return rc
+        escribir(os.path.join(tmp, "guion.json"), g)
+        if gan is not None:
+            escribir(ruta_g, gan)
+        rc = correr_gates(tmp)
+        print("probar: %s" % ("pasa el gate (narracion + guion)" if rc == 0 else "el gate lo rechaza: ajusta el arreglo o dalo como mejora con esta falla"))
+        return rc
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def cmd_aplicar(a):
+    """Aplica en el TRABAJO real un arreglo (los mismos cambios que probar): respaldo en guion.previo.json, narracion
+    --check + guion --check y, si el gate lo rechaza, restaura. → 0 (RETORNO {"escenas_cambiadas"}) · 1 rechazado · 2 mal dado."""
+    trabajo = os.path.abspath(a.trabajo)
+    try:
+        cambios = leer_cambios(a.cambios)
+    except (OSError, ValueError) as ex:
+        print("FALLA --cambios ilegible: %s" % ex)
+        return 2
+    ruta, ruta_g = os.path.join(trabajo, "guion.json"), os.path.join(trabajo, "ganchos.json")
+    g = leer(ruta)
+    gan = leer(ruta_g) if os.path.exists(ruta_g) else None
+    rc, msg, escenas = aplicar_cambios(g, gan, cambios)
+    if rc:
+        print(msg)
+        return rc
+    shutil.copyfile(ruta, os.path.join(trabajo, "guion.previo.json"))
+    if gan is not None:
+        shutil.copyfile(ruta_g, os.path.join(trabajo, "ganchos.previo.json"))
+    escribir(ruta, g)
+    if gan is not None:
+        escribir(ruta_g, gan)
+    if correr_gates(trabajo):
+        shutil.copyfile(os.path.join(trabajo, "guion.previo.json"), ruta)
+        if gan is not None:
+            shutil.copyfile(os.path.join(trabajo, "ganchos.previo.json"), ruta_g)
+        correr_gates(trabajo)
+        print("aplicar: el gate lo rechaza; guion.json queda como estaba")
+        return 1
+    print("aplicar: %d cambio(s) en el TRABAJO · gate ok" % len(cambios))
+    print("RETORNO %s" % json.dumps({"escenas_cambiadas": sorted(escenas)}, ensure_ascii=False))
+    return 0
+
+
+CAMPOS_CIERRE = ("texto", "final", "tipo", "forma", "consecuencia")
+
+
+def agregar_args_cierres(p):
+    """Los argumentos de `cierres` (también los usan historia.py y explica.py)."""
+    x = p.add_mutually_exclusive_group(required=True)
+    x.add_argument("--check", action="store_true")
+    x.add_argument("--opciones", action="store_true")
+    x.add_argument("--usar", help="id del cierre que eligió el usuario")
+    x.add_argument("--propio", help="el cierre que dicta el usuario (texto de la voz; la última oración es la frase final)")
+    p.add_argument("--forma", help="forma del cierre propio (consecuencia por defecto; referencias/cierres.md)")
+    p.add_argument("--mecanismo", help="consecuencia: quien|perdida|reloj|despues|espera")
+    p.add_argument("--quien", help="quién vive la consecuencia, tal cual en la frase final")
+    p.add_argument("--verbo", help="lo que les pasa, conjugado, tal cual en la frase final")
+
+
+def cmd_cierres(a):
+    """cierres.json: 5 cierres candidatos para que el usuario elija (usuario, 2026-11-03). --check (F1–F8 de cada uno,
+    finales distintos) · --opciones (la lista, el del guion aprobado primero) · --usar ID (pasa ese cierre a guion.cierre
+    y su texto a la narración de corrido; guion.previo.json de respaldo) · --propio TEXTO (el que dicta el usuario, id
+    «cu», casi literal; luego --usar cu). Después del --usar, la sesión corre guion --check (y narracion --check)."""
+    trabajo = os.path.abspath(a.trabajo)
+    st = estado(trabajo)
+    ruta, rg = os.path.join(trabajo, "cierres.json"), os.path.join(trabajo, "guion.json")
+    g = leer(rg)
+    C = leer(ruta) if os.path.exists(ruta) else {"candidatos": []}
+    cands = C.get("candidatos") or []
+    if a.propio:
+        texto = a.propio.strip()
+        partes = [x for x in re.split(r"(?<=[.!?])\s+", texto) if x.strip()]
+        actual = g.get("cierre") or {}
+        if len(partes) == 1 and (actual.get("texto") or "").strip().endswith(final_de(actual)) and final_de(actual):
+            # solo dictó la frase final: se queda la oración del guion que la prepara (V9: ≥ 3 s antes del final)
+            previa = actual["texto"].strip()[:-len(final_de(actual))].strip()
+            texto = (previa + " " + texto).strip()
+        cu = {"id": CIERRE_USUARIO, "texto": texto, "final": partes[-1].strip() if partes else texto,
+              "tipo": "pregunta" if texto.rstrip().endswith("?") else "remate", "forma": a.forma or "consecuencia",
+              "por_que": "lo dictó el usuario"}
+        if cu["forma"] in ("consecuencia", "legado"):
+            cu["consecuencia"] = {k: v for k, v in (("mecanismo", a.mecanismo), ("quien", a.quien), ("verbo", a.verbo)) if v}
+        cands = [c for c in cands if c.get("id") != CIERRE_USUARIO] + [cu]
+        C["candidatos"] = cands
+        escribir(ruta, C)
+        a.usar = CIERRE_USUARIO
+    hilo = leer(os.path.join(RAIZ, st["hilo"], "hilo.json"))
+    _, _, cifras = valores_respaldo(st["hilo"])
+    e1 = (g.get("escenas") or [{}])[0]
+    numeros_gancho = numeros_sin_anios(" ".join(filter(None, (e1.get("pantalla"), e1.get("linea"))))) if e1.get("tipo") == "gancho" else []
+    fallas, por_id = [], {}
+    propios = [c for c in cands if c.get("id") != CIERRE_USUARIO]
+    if not a.usar and len(propios) != CIERRES_OPCIONES:
+        fallas.append("C %d cierres; van %d distintos (el del guion aprobado y otros 4)" % (len(propios), CIERRES_OPCIONES))
+    finales = [texto_llano(final_de(c)) for c in cands]
+    if len(set(finales)) < len(finales):
+        fallas.append("C frases finales repetidas: cada opción termina distinto")
+    for k, c in enumerate(cands, 1):
+        cid = c.get("id") or "c%d" % k
+        por_id[cid] = c
+        texto = (c.get("texto") or "").strip()
+        f = reglas_cierre(c, st, hilo, st["tarjetas"], numeros_gancho, cifras)
+        if not texto or not texto_llano(texto).endswith(texto_llano(final_de(c))):
+            f.append("F1 la frase final tiene que ser la última de «texto» (la voz termina con ella)")
+        else:
+            antes = texto[:len(texto) - len(final_de(c))].strip()
+            NE.AVISOS.clear()
+            try:
+                s_antes = len(NE.convertir(sin_pausas(antes))[1]) / CPS
+            except ValueError:
+                s_antes = len(antes) / CPS
+            NE.AVISOS.clear()
+            if s_antes < CIERRE_ANTES_S:
+                f.append("V9 %.1f s de voz antes de la frase final (mínimo %.0f s, una oración que la prepare): las "
+                         "conclusiones necesitan tiempo para leerse" % (s_antes, CIERRE_ANTES_S))
+        fallas += ["%s: %s" % (cid, x) for x in f]
+        if a.check or getattr(a, "opciones", False):
+            print("%s. %s%s · %s/%s · «%s»%s" % (k, cid, " (el del guion aprobado)" if k == 1 and cid != CIERRE_USUARIO else "",
+                                               c.get("tipo"), c.get("forma"), texto, "" if f else "  ✓"))
+    if a.usar:
+        mias = [x for x in fallas if x.startswith(a.usar + ":")]
+        if a.usar not in por_id or mias:
+            for x in mias:
+                print("FALLA", x)
+            return falla("--usar: «%s» no está en cierres.json o no pasa F1–F8 (ajusta el texto o los campos de --propio)" % a.usar)
+        c = por_id[a.usar]
+        cierre = g.setdefault("cierre", {})
+        viejo = (cierre.get("texto") or "").strip()
+        shutil.copyfile(rg, os.path.join(trabajo, "guion.previo.json"))
+        for k in CAMPOS_CIERRE:
+            if c.get(k) is not None:
+                cierre[k] = c[k]
+        if (cierre.get("forma") not in ("consecuencia", "legado")):
+            cierre.pop("consecuencia", None)
+        partes = g.get("narracion") or []
+        if partes and viejo and viejo != cierre["texto"]:
+            ult = next((p for p in reversed(partes) if viejo in p.get("texto", "")), None)
+            if not ult:
+                return falla("el texto del cierre de antes no está literal en guion.narracion: el cierre no se puede cambiar sin "
+                             "rehacer la narración (lanza un retoque)")
+            i = ult["texto"].rfind(viejo)
+            ult["texto"] = ult["texto"][:i] + cierre["texto"] + ult["texto"][i + len(viejo):]
+        C["elegido"] = a.usar
+        escribir(ruta, C)
+        escribir(rg, g)
+        print("→ cierre %s en guion.json («%s»); corre guion --check (respaldo: guion.previo.json)" % (a.usar, cierre.get("final")))
+        return 0
+    for x in fallas:
+        print("FALLA", x)
+    if fallas:
+        return 1
+    if a.check:
+        print("→ %s · %d cierres · F1–F8 ok" % (rel(ruta), len(cands)))
     return 0
 
 
@@ -2791,7 +3160,8 @@ def cmd_voz(a):
     if getattr(a, "solo", None):
         solo = {int(x) for x in a.solo.split(",")}
         escenas = [e for e in escenas if e["n"] in solo]
-    pend = set(nodos_pendientes(trabajo, loc)) if getattr(a, "pendientes", False) else None
+    # m025: --sueltas sin --solo es una retoma: filtra como --pendientes (antes imprimía todas las escenas)
+    pend = set(nodos_pendientes(trabajo, loc)) if getattr(a, "pendientes", False) or (getattr(a, "sueltas", False) and not getattr(a, "solo", None)) else None
     if pend is not None:
         escenas = [e for e in escenas if e["n"] in pend]
     parcial = pend is not None or bool(getattr(a, "solo", None))
@@ -2840,8 +3210,12 @@ def sin_etiquetas(ws):
 
 
 def bajar_palabras(trabajo, n, url):
-    with urllib.request.urlopen(url) as r:
-        d = json.loads(r.read().decode("utf-8"))
+    """`url` es la de words_download_url o, si el estado del MCP trae las palabras en línea, esa lista tal cual."""
+    if isinstance(url, list):
+        d = url
+    else:
+        with urllib.request.urlopen(url) as r:
+            d = json.loads(r.read().decode("utf-8"))
     ws = d["words"] if isinstance(d, dict) else d
     ws = sin_etiquetas([{"text": w["text"], "start": w["start"], "end": w["end"]} for w in ws
                         if w.get("type", "word") == "word" and not w["text"].startswith("[")])
@@ -2911,15 +3285,20 @@ def descargar_estado(trabajo, archivos):
         escena_de_gen[g.get("id")] = n
         if n not in voces or (g.get("created_at_unix_ms") or 0) >= (voces[n].get("created_at_unix_ms") or 0):
             voces[n] = g
+    sin_casar = []
     for tr in trans:
         m = re.search(r"/content_generation/[^/]+/([^/]+)/", (tr.get("source") or {}).get("url") or "")
         n = escena_de_gen.get(m.group(1)) if m else None
         if n is None:
             n = por_voz.get(texto_llano(tr.get("text")))
-        if n is None or not tr.get("words_download_url"):
-            print("AVISO transcripción %s: no sé de qué escena es" % tr.get("generation_id"))
+        if n is None:
+            sin_casar.append(tr.get("generation_id"))
             continue
-        palabras[n] = tr["words_download_url"]
+        # con pocas sesiones el MCP devuelve el estado en línea y la sesión lo guarda a mano: valen las `words` en línea
+        palabras[n] = tr.get("words_download_url") or tr.get("words")
+        if not palabras[n]:
+            sin_casar.append(tr.get("generation_id"))
+            del palabras[n]
     orden = lambda n: (0, n) if isinstance(n, int) else (1, int(n[4:]))  # noqa: E731
     for n in sorted(voces, key=orden):
         bajar_voz(trabajo, n, voces[n]["content_url"])
@@ -2943,6 +3322,10 @@ def descargar_estado(trabajo, archivos):
              ["palabras_%d.json" % e["n"] for e in loc["escenas"] if not os.path.exists(os.path.join(trabajo, "audio", "palabras_%d.json" % e["n"]))]
     if faltan:
         return falla("faltan en audio/: %s (rehaz esos nodos o pasa el estado que los trae)" % ", ".join(faltan))
+    if sin_casar:
+        # un palabras_N.json viejo quedaría junto a una voz nueva: los tiempos saldrían mal sin avisar
+        return falla("transcripción sin escena o sin palabras: %s (el estado tiene que traer la voz de cada Scribe o sus "
+                     "`words`/words_download_url)" % ", ".join(map(str, sin_casar)))
     return 0
 
 
@@ -3931,6 +4314,17 @@ def cmd_montar(a):
         fallas.append("V8 sin audio")
     mf = medir(video)
     lufs, tp = mf["input_i"], mf["input_tp"]
+    if tp > TP_MAX and not (f45 and os.path.exists(v916) and abs(ffprobe_dur(v916) - D) < 0.1):
+        # el loudnorm lineal no limita: si el AAC pasa el pico, otra pasada con limitador (≈ -2 dBFS de muestra)
+        print("AVISO V8 pico %.1f dBTP: se rehace la pista con limitador" % tp)
+        ff("-i", video_solo, "-i", mezcla, "-filter_complex",
+           "[1:a]loudnorm=I=%s:TP=-1.5:LRA=11:measured_I=%.2f:measured_TP=%.2f:measured_LRA=%.2f:measured_thresh=%.2f:offset=%.2f:linear=true,"
+           "alimiter=limit=0.79:level=false[a]"
+           % (LUFS, m1["input_i"], m1["input_tp"], m1["input_lra"], m1["input_thresh"], m1["target_offset"]),
+           "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-ar", "48000",
+           "-movflags", "+faststart", video)
+        mf = medir(video)
+        lufs, tp = mf["input_i"], mf["input_tp"]
     if abs(lufs - LUFS) > LUFS_TOL or tp > TP_MAX:
         fallas.append("V8 sonoridad %.1f LUFS / %.1f dBTP (se espera %.0f ±%.1f, ≤ %.0f)" % (lufs, tp, LUFS, LUFS_TOL, TP_MAX))
 
@@ -4078,6 +4472,25 @@ def tokens_escucha(texto, oido=False):
     return [re.sub(r"cientas$", "cientos", _GENERO.get(w, w)) for w in re.findall(r"[a-z0-9]+", t)]
 
 
+_PEQUENOS = {}
+
+
+def hora_equivalente(esperado, oido):
+    """«diez y cinco» frente a «quince»: whisper suma los dos números de una hora dicha a la antigua (m038)."""
+    if not _PEQUENOS:
+        for k in range(0, 60):
+            try:
+                _PEQUENOS[" ".join(tokens_escucha(NE.convertir(str(k))[1]))] = k
+            except ValueError:
+                pass
+        NE.AVISOS.clear()
+    if len(esperado) < 3 or "y" not in esperado:
+        return False
+    i = esperado.index("y")
+    a, b, o = " ".join(esperado[:i]), " ".join(esperado[i + 1:]), " ".join(oido)
+    return a in _PEQUENOS and b in _PEQUENOS and o in _PEQUENOS and _PEQUENOS[a] + _PEQUENOS[b] == _PEQUENOS[o] and _PEQUENOS[a] <= 12
+
+
 def comparar_escucha(segmentos, oido, omitir=None):
     """Compara la locución (los `segmentos` p/v/num de locucion.json) con lo que whisper oyó → (faltas, avisos,
     % de palabras distintas). Un tramo distinto que toca una palabra numérica es falta; el resto, aviso. `omitir`: una
@@ -4103,6 +4516,8 @@ def comparar_escucha(segmentos, oido, omitir=None):
         num = any(numerico[i] for i in resto)
         if not num and resto and j2 > j1 and clave_fonetica("".join(esperado[i] for i in resto)) == clave_fonetica("".join(oidos[j1:j2])):
             continue   # suena igual (homófonos, palabras juntas o separadas): whisper lo escribió distinto, la voz lo dijo bien
+        if resto and j2 > j1 and hora_equivalente([esperado[i] for i in resto], oidos[j1:j2]):
+            continue   # m038: «las diez y cinco» (la forma antigua de las 10:05) que whisper oye como «las 15»
         distintos += max(len(resto), j2 - j1) if resto else 0
         msg = "esperaba «%s», oyó «%s»" % (" ".join(esperado[i] for i in resto) or "—", " ".join(oidos[j1:j2]) or "—")
         (faltas if num else avisos).append(msg)
@@ -4421,7 +4836,17 @@ def main():
     x = p.add_mutually_exclusive_group(required=True)
     x.add_argument("--check", action="store_true")
     x.add_argument("--usar", nargs="?", const="", help="id del ganador (sin id: el de seleccion.json)")
+    x.add_argument("--opciones", action="store_true", help="los candidatos para que el usuario elija")
+    x.add_argument("--elegir", help="id que eligió el usuario → seleccion.json")
     p.add_argument("--segundo", help="id del segundo lugar (versión B); sin él, el de seleccion.json")
+    for nombre, ayuda in (("probar", "el crítico prueba un arreglo en una copia (escena + narración) con los gates"),
+                          ("aplicar", "aplica un arreglo en el TRABAJO (escena + narración); restaura si el gate lo rechaza")):
+        p = sub.add_parser(nombre, help=ayuda)
+        p.add_argument("trabajo")
+        p.add_argument("--cambios", required=True, help="JSON en línea o archivo: [{escena, texto} | {escena, campo, valor} | {promesa} | {cierre}]")
+    p = sub.add_parser("cierres", help="cierres.json: 5 cierres para que el usuario elija; --usar o --propio → guion.cierre")
+    p.add_argument("trabajo")
+    agregar_args_cierres(p)
     p = sub.add_parser("guion")
     p.add_argument("trabajo")
     p.add_argument("--check", action="store_true", required=True)
@@ -4477,7 +4902,7 @@ def main():
         return 2
     if a.cmd == "ganchos" and a.check:
         a.usar = None
-    return {"preparar": cmd_preparar, "ganchos": cmd_ganchos, "guion": cmd_guion, "narracion": cmd_narracion, "oyente": cmd_oyente, "variante": cmd_variante, "voz": cmd_voz, "descargar": cmd_descargar,
+    return {"preparar": cmd_preparar, "ganchos": cmd_ganchos, "cierres": cmd_cierres, "probar": cmd_probar, "aplicar": cmd_aplicar, "guion": cmd_guion, "narracion": cmd_narracion, "oyente": cmd_oyente, "variante": cmd_variante, "voz": cmd_voz, "descargar": cmd_descargar,
             "voz-falsa": cmd_voz_falsa, "partir": cmd_partir, "tiempos": cmd_tiempos, "grabar": cmd_grabar, "montar": cmd_montar,
             "revisar": cmd_revisar, "entregar": cmd_entregar, "musica": cmd_musica, "escuchar": cmd_escuchar,
             "whisper": cmd_whisper}[a.cmd](a)
