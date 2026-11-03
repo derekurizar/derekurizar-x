@@ -7,7 +7,7 @@ PALETAS ?= cielo
 ESTILO ?= noche
 PALETA ?= cielo
 
-.PHONY: help nuevo render visual catalogo validate tabla pdf ensamblar limpiar test doctor costo contacto digesto fuentes ideas calendario informe informe-ejemplo informe-catalogo informe-fixture verificacion auditoria-rehacer podar video-fixture video-fixture-4x5 noticias-fixture historia-fixture explica-fixture mito-fixture sabias-fixture carrusel-fixture musica whisper iconos
+.PHONY: help nuevo render visual catalogo validate tabla pdf ensamblar limpiar test doctor costo contacto digesto fuentes ideas calendario informe informe-ejemplo informe-catalogo informe-fixture verificacion auditoria-rehacer podar video-fixture video-fixture-4x5 noticias-fixture historia-fixture explica-fixture mito-fixture sabias-fixture carrusel-fixture departamento-fixture musica whisper iconos
 
 help:
 	@echo "make nuevo T=<plantilla> OUT=<ruta.html> [PALETA=cielo]  ensambla una tarjeta (base + plantilla)"
@@ -36,6 +36,7 @@ help:
 	@echo "make explica-fixture [FPS=10]                            /explica de prueba (maqueta: el interés compuesto con fuentes de ejemplo, voz falsa, 0 créditos) → sesiones/_fixture_explica/salida"
 	@echo "make mito-fixture [FPS=10]                               /mito de prueba (modo mito de /explica: «la remesa promedio es de $$1,000» → MITO, voz falsa, 0 créditos) → sesiones/_fixture_mito/salida"
 	@echo "make sabias-fixture [FPS=10]                             /sabias de prueba (el dato de sesiones/_fixture_dato, voz falsa, 0 créditos) → sesiones/_fixture_sabias/salida"
+	@echo "make departamento-fixture [FPS=10]                       /departamento de prueba (perfil de Huehuetenango con cifras de maqueta → video corto con mapa y ranking en ventana, D1–D9, voz falsa) → sesiones/_fixture_departamento/salida"
 	@echo "make carrusel-fixture                                    /carrusel de prueba (hilo y dato de los fixtures: 4:5 y 9:16, CA1–CA12, 0 créditos) → sesiones/_fixture_carrusel/salida[_dato]"
 	@echo "make musica                                              catálogo fijo de música de /video (design/musica/) y sus usos"
 	@echo "make whisper                                             baja una vez el modelo ggml-small de whisper.cpp (escucha V11 de /video; antes: brew install whisper-cpp)"
@@ -284,6 +285,26 @@ carrusel-fixture:   # maqueta de /carrusel: el hilo y el dato de prueba, carruse
 	python3 scripts/carrusel.py guion $(CF)/trabajo_dato --check
 	python3 scripts/carrusel.py render $(CF)/trabajo_dato
 	python3 scripts/carrusel.py entregar $(CF)/trabajo_dato --salida $(CF)/salida_dato
+
+DF := sesiones/_fixture_departamento
+departamento-fixture:   # maqueta de /departamento: hilo perfil de Huehuetenango (cifras de maqueta) → /video corto con D1–D9, 9:16 y 4:5
+	rm -rf $(DF)/trabajo $(DF)/salida sesiones/_fixture_perfil/salida
+	python3 scripts/materializar.py sesiones/_fixture_perfil > /dev/null
+	python3 scripts/ensamblar.py sesiones/_fixture_perfil --check --salida sesiones/_fixture_perfil/salida > /dev/null
+	python3 scripts/video.py preparar sesiones/_fixture_perfil/salida --duracion corto --trabajo $(DF)/trabajo --permitir-borrador --sin-rotacion > /dev/null
+	cp $(DF)/guion.json $(DF)/ganchos.json $(DF)/seleccion.json $(DF)/trabajo/
+	python3 scripts/video.py ganchos $(DF)/trabajo --check
+	python3 scripts/video.py ganchos $(DF)/trabajo --usar
+	python3 scripts/video.py guion $(DF)/trabajo --check
+	python3 scripts/video.py voz-falsa $(DF)/trabajo
+	python3 scripts/video.py tiempos $(DF)/trabajo
+	python3 scripts/video.py grabar $(DF)/trabajo --fps $(FPS)
+	python3 scripts/video.py montar $(DF)/trabajo
+	python3 scripts/video.py revisar $(DF)/trabajo
+	python3 scripts/video.py grabar $(DF)/trabajo --fps $(FPS) --formato 4:5
+	python3 scripts/video.py montar $(DF)/trabajo --formato 4:5
+	python3 scripts/video.py revisar $(DF)/trabajo --formato 4:5
+	python3 scripts/video.py entregar $(DF)/trabajo --salida $(DF)/salida
 
 musica:
 	@python3 scripts/video.py musica

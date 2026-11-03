@@ -25,6 +25,9 @@
 #        · /mito (modo mito de /explica): MI1–MI9 con un negativo por gate (más «sin datos para un veredicto», A MEDIAS sin
 #          depende_de y W13 con la tabla MODOS rota) sobre la maqueta de las remesas y make mito-fixture.
 #        · /sabias: gate S1–S3 sobre el dato de prueba (negativos), M13 y make sabias-fixture.
+#        · /departamento: canon (--check, --resolver, --directiva), --tablero/--siguiente con memoria de prueba, G1 del
+#          perfil de departamento (y el de grupo, que no lo exige), D1–D9 con un negativo por gate sobre la maqueta de
+#          Huehuetenango, ranking en ventana, memoria.py --video con serie y make departamento-fixture.
 #        · /carrusel: gates CA1–CA7 sobre el hilo de prueba (negativos), M14, make carrusel-fixture (PNG 1080×1350 y
 #          1080×1920 leídos de la cabecera) y memoria.py --carrusel --dry-run.
 #        Resumen «N pruebas · M fallos»; exit 1 si hay fallos.
@@ -1947,6 +1950,105 @@ W.explica_workflow()
 assert any("MODOS.mito.familias" in x for x in W.ERRORES), W.ERRORES'
 if [[ "$RAPIDO" == "1" ]]; then echo "SKIP   make mito-fixture (RAPIDO=1)"; else
   paso "make mito-fixture (9:16 y 4:5 ≥ 61 s, sello en el cuadro 0, entrega con veredicto, memoria --explica --dry-run en modo mito)" bash -c 'make mito-fixture FPS=6 >/dev/null && ffprobe -v error -show_entries stream=codec_type,width,height -of csv=p=0 sesiones/_fixture_mito/salida/video_4x5.mp4 | grep -q "video,1080,1350" && python3 -c "import json,subprocess; d=float(subprocess.check_output([\"ffprobe\",\"-v\",\"error\",\"-show_entries\",\"format=duration\",\"-of\",\"csv=p=0\",\"sesiones/_fixture_mito/salida/video.mp4\"])); g=json.load(open(\"sesiones/_fixture_mito/salida/guion.json\")); assert d >= 61 and g[\"modo\"] == \"mito\" and g[\"veredicto\"] == \"mito\", (d, g.get(\"veredicto\"))" && grep -q "^MITO: la remesa promedio" sesiones/_fixture_mito/salida/caption.md && python3 scripts/memoria.py --explica sesiones/_fixture_mito/salida --dry-run | grep -q "modo mito: mito"'
+fi
+
+echo "== /departamento (canon, tablero, G1 del perfil de departamento, gates D1–D9 y ranking en ventana sobre la maqueta de Huehuetenango)"
+paso "departamentos.py --check (canon válido), --resolver Huehue → GT13 y --directiva con las 6 dimensiones" bash -c 'python3 scripts/departamentos.py --check >/dev/null && [[ "$(python3 scripts/departamentos.py --resolver Huehue)" == "GT13 Huehuetenango" ]] && ! python3 scripts/departamentos.py --resolver Narnia 2>/dev/null && python3 scripts/departamentos.py --directiva GT13 | grep -q "canon: migracion"'
+paso "departamentos.py --tablero/--siguiente con una memoria de prueba (hilo y video de Huehuetenango hechos)" bash -c '
+m="$1/mem_dep"; mkdir -p "$m"
+echo "{\"hilos\": [{\"modo\": \"perfil\", \"sujeto\": \"Huehuetenango\", \"ruta\": \"hilos/x\"}]}" > "$m/hilos.json"
+echo "{\"videos\": [{\"serie\": \"departamentos\", \"sujeto\": \"Huehuetenango\", \"codigo\": \"GT13\", \"estado\": \"listo\"}, {\"slug\": \"otro\"}]}" > "$m/videos.json"
+python3 scripts/departamentos.py --tablero --memoria "$m" | grep -E "GT13 +Huehuetenango +hecho +listo" >/dev/null &&
+python3 scripts/departamentos.py --tablero --memoria "$m" | grep -q "1 de 22 con video" &&
+[[ "$(python3 scripts/departamentos.py --siguiente --memoria "$m" --json | python3 -c "import json,sys; print(json.load(sys.stdin)[\"codigo\"])")" == "GT01" ]]' _ "$TMP"
+g1_perfil() {   # $1 = mutación de G (guion.json de la copia); $2 = 1 si debe fallar con G1 departamento
+  local S="$TMP/g1p"; rm -rf "$S"; cp -R sesiones/_fixture_perfil "$S"; rm -rf "$S/salida"
+  python3 - "$S/guion.json" "$1" <<'PY' || return 1
+import json, sys
+G = json.load(open(sys.argv[1], encoding="utf-8")); exec(sys.argv[2])
+json.dump(G, open(sys.argv[1], "w", encoding="utf-8"), ensure_ascii=False)
+PY
+  local out; out="$(python3 scripts/ensamblar.py "$S" --check --salida "$S/salida" --sin-contacto 2>&1)"; local rc=$?
+  if [[ "$2" == 1 ]]; then [[ $rc -ne 0 ]] && grep -q "G1 modo perfil (departamento)" <<<"$out"; else [[ $rc -eq 0 ]]; fi
+}
+SIN_MAPAS='for t in G["tuits"]:
+    v = t.get("visual")
+    if v and v["plantilla"] == "mapa":
+        v["plantilla"] = "barras-h"; v["datos"] = {"formato": v["datos"]["formato"], "items": [{"nombre": "Huehuetenango", "valor": 73.8}, {"nombre": "Guatemala (país)", "valor": 56.0}], "destacar": 0, "orden": "dado"}; v["cifra_ids"] = ["hue-c03", "hue-c04"] if t["n"] == 3 else ["hue-c09", "hue-c10"]
+        if t["n"] == 6: v["datos"]["items"] = [{"nombre": "Huehuetenango", "valor": 6.1}, {"nombre": "Guatemala (país)", "valor": 16.1}]'
+paso "G1: perfil de departamento sin desglose de los 22 en un mapa falla" g1_perfil "$SIN_MAPAS" 1
+paso "G1: perfil de departamento con mapas que no lo destacan falla" g1_perfil 'for t in G["tuits"]:
+    if (t.get("visual") or {}).get("plantilla") == "mapa": t["visual"]["datos"]["destacar"] = "GT16"' 1
+paso "G1: perfil de un grupo sin desglose de los 22 pasa (la regla es solo del departamento)" g1_perfil "$SIN_MAPAS"'
+G["perfil"]["tipo"] = "grupo"' 0
+DT="$TMP/dep"
+paso "departamento: preparar detecta el modo (video.json con departamento, puestos 5 y 17, palabra_clave, piso 61) y el guion fijo pasa D1–D9" bash -c '
+set -e; DT="$1"; PS="$DT.perfil"
+python3 scripts/materializar.py sesiones/_fixture_perfil >/dev/null
+python3 scripts/ensamblar.py sesiones/_fixture_perfil --check --salida "$PS" --sin-contacto >/dev/null
+python3 scripts/video.py preparar "$PS" --duracion corto --trabajo "$DT" --permitir-borrador --sin-rotacion > "$DT.dig"
+grep -q "Modo departamento · Huehuetenango (GT13)" "$DT.dig"
+python3 -c "
+import json, sys; st = json.load(open(sys.argv[1]))
+d = st[\"departamento\"]; assert d[\"codigo\"] == \"GT13\" and d[\"puestos\"][\"hue-c03\"][\"puesto\"] == 5 and d[\"puestos\"][\"hue-c09\"][\"puesto\"] == 17, d
+assert st[\"palabra_clave\"] == [\"Huehuetenango\", \"Huehue\"] and st[\"piso_s\"] == 61 and st[\"serie\"] == \"departamentos\", st" "$DT/video.json"
+cp sesiones/_fixture_departamento/{guion,ganchos,seleccion}.json "$DT/"
+python3 scripts/video.py ganchos "$DT" --check >/dev/null && python3 scripts/video.py ganchos "$DT" --usar >/dev/null
+python3 scripts/video.py guion "$DT" --check >/dev/null' _ "$DT"
+dep_neg() {   # dep_neg "FALLA esperada" "mutación de G (guion.json del trabajo)"
+  local d="$TMP/dep_neg"; rm -rf "$d"; cp -R "$DT" "$d"
+  python3 - "$d/guion.json" "$2" <<'PY' || return 1
+import json, sys
+G = json.load(open(sys.argv[1], encoding="utf-8")); exec(sys.argv[2])
+json.dump(G, open(sys.argv[1], "w", encoding="utf-8"), ensure_ascii=False)
+PY
+  local out; out="$(python3 scripts/video.py guion "$d" --check 2>&1)" && return 1
+  grep -q "FALLA $1" <<<"$out"
+}
+# escenas del guion fijo: [0] gancho (lugar) · [1] T1 · [2] mapa T3 · [3] golpe · [4] ranking en ventana T6
+paso "departamento: el nombre a los 5 s de la voz del gancho → D1" dep_neg "D1 la palabra clave" 'G["escenas"][0]["texto"] = "Con siete de cada diez en pobreza, el quinto es Huehuetenango, en Guatemala."'
+paso "departamento: el nombre fuera de la pantalla del gancho y sin visual lugar → D2" dep_neg "D2 Huehuetenango no se lee" 'G["escenas"][0].update(linea="en pobreza, de los 22", visual="cifra"); G["escenas"][0].pop("visual_datos")'
+paso "departamento: el título de Shorts sin el departamento → D3" dep_neg "D3 caption.shorts" 'G["caption"]["shorts"] = "Más pobre, menos violento\n#Shorts #Guatemala"'
+paso "departamento: ningún caption con «Para alguien de…» → D3" dep_neg "D3 ningún caption" 'G["caption"] = {k: v.replace("Para alguien de Huehuetenango.", "") for k, v in G["caption"].items()}'
+paso "departamento: la voz dice el puesto 16 y el calculado es 17 → D6" dep_neg "D6 escena 5: dice el puesto 16" 'e = G["escenas"][4]; e["texto"] = e["texto"].replace("el puesto 17 de 22", "el puesto 16 de 22")'
+paso "departamento: un ranking sin ventana → D7" dep_neg "D7 falta un .ranking." 'e = G["escenas"][4]; e.pop("ventana"); e.pop("destacar"); e["top"] = 5; e["texto"] = "Escuintla encabeza con 38.1 homicidios por cada cien mil, y Huehuetenango tiene 6.1, el puesto 17 de 22, cuando el país tiene 16.1. Solo cinco tienen menos."'
+paso "departamento: la frase final sin el departamento → D9" dep_neg "D9 la frase final" 'c = G["cierre"]; c["final"] = "Allí, la mayoría de las familias vive con menos de lo básico."; c["texto"] = c["texto"].replace("En Huehuetenango, la mayoría", "Allí, la mayoría"); G["narracion"][-1]["texto"] = G["narracion"][-1]["texto"].replace("En Huehuetenango, la mayoría", "Allí, la mayoría")'
+paso "departamento: D4 (el país de otro año) y D5 (fuente fuera del canon, dimensión faltante, desvío con motivo = aviso) sobre el hilo de la maqueta" python3 - "$DT" <<'PY'
+import json, os, sys
+sys.path.insert(0, "scripts"); import departamentos as DP, video as VD
+d = sys.argv[1]; st = json.load(open(d + "/video.json")); g = json.load(open(d + "/guion.json"))
+base = os.path.join(VD.RAIZ, st["hilo"]); hilo = json.load(open(base + "/hilo.json")); datos = json.load(open(base + "/datos.json"))
+cif = {c["id"]: c for c in datos["cifras"]}
+assert DP.d4(g, st, hilo, cif) == [], DP.d4(g, st, hilo, cif)
+cif["hue-c04"] = dict(cif["hue-c04"], periodo="2019", anio="2019")
+f = DP.d4(g, st, hilo, cif); assert any(x.startswith("D4 escena 2 (T1): hue-c03 es de 2023 y el país (hue-c04) de 2019") for x in f), f
+assert DP.d5(hilo) == ([], []), DP.d5(hilo)
+h = json.loads(json.dumps(hilo)); h["tuits"][3]["fuente"] = "UNICEF (maqueta)"
+f, av = DP.d5(h); assert any(x.startswith("D5 T4 (desnutricion): la fuente") for x in f), f
+h["perfil"]["dimensiones"][2]["motivo"] = "la ENSMI no trae el municipio"
+f, av = DP.d5(h); assert not f and any("D5 T4" in x for x in av), (f, av)
+h["perfil"]["dimensiones"] = h["perfil"]["dimensiones"][:-1]
+f, av = DP.d5(h); assert any(x.startswith("D5 falta la dimensión «migracion»") for x in f), f
+PY
+paso "ranking en ventana: Huehuetenango en el puesto 17 de 22 → los 2 primeros, «…», 16-17-18; en el puesto 5 → «…» y 4-5-6; entre los 4 primeros, corrida" python3 - "$DT" <<'PY'
+import json, sys
+sys.path.insert(0, "scripts"); import video as VD
+st = json.load(open(sys.argv[1] + "/video.json")); T = {t["n"]: t["datos"] for t in st["tarjetas"]}
+filas, k, n = VD.ranking_ventana(T[6], None, "GT13")
+assert [f and f[0] for f in filas] == [1, 2, None, 16, 17, 18] and k == 16 and n == 22, filas
+assert [f and f[0] for f in VD.ranking_ventana(T[3], None, "Huehuetenango")[0]] == [1, 2, None, 4, 5, 6]
+assert [f[0] for f in VD.ranking_ventana(T[3], None, "Alta Verapaz")[0]] == [1, 2]
+assert VD.ranking_ventana(T[3], None, "Narnia") is None
+PY
+paso "memoria.py --video registra sujeto, serie y código de un video de departamento (dry-run sobre la entrega de prueba)" bash -c '
+d="$1/dep_entrega"; mkdir -p "$d"
+python3 -c "
+import json, sys; g = {\"id\": \"x-perfil\", \"slug\": \"perfil-huehuetenango-fixture\", \"hilo\": sys.argv[2], \"paleta\": \"jade\", \"duracion\": \"corto\", \"duracion_s\": 62.0,
+ \"n_escenas\": 5, \"musica\": \"jade-1\", \"serie\": \"departamentos\", \"sujeto\": \"Huehuetenango\", \"departamento\": {\"codigo\": \"GT13\"}, \"escenas\": [], \"cierre\": {}, \"caption\": {}}
+json.dump(g, open(sys.argv[1] + \"/guion.json\", \"w\"))" "$d" "$(python3 -c "import json; print(json.load(open(\"$1/dep/video.json\"))[\"hilo\"])")"
+python3 scripts/memoria.py --video "$(python3 -c "import os; print(os.path.relpath(\"$d\", \"$PWD\"))")" --dry-run | grep -q "serie departamentos: Huehuetenango"' _ "$TMP"
+if [[ "$RAPIDO" == "1" ]]; then echo "SKIP   make departamento-fixture (RAPIDO=1)"; else
+  paso "make departamento-fixture (9:16 y 4:5 ≥ 61 s, D1–D9 y D8 reales, entrega con serie y sujeto)" bash -c 'make departamento-fixture FPS=6 >/dev/null && ffprobe -v error -show_entries stream=codec_type,width,height -of csv=p=0 sesiones/_fixture_departamento/salida/video_4x5.mp4 | grep -q "video,1080,1350" && python3 -c "import json,subprocess; d=float(subprocess.check_output([\"ffprobe\",\"-v\",\"error\",\"-show_entries\",\"format=duration\",\"-of\",\"csv=p=0\",\"sesiones/_fixture_departamento/salida/video.mp4\"])); g=json.load(open(\"sesiones/_fixture_departamento/salida/guion.json\")); assert d >= 61 and g[\"serie\"] == \"departamentos\" and g[\"departamento\"][\"codigo\"] == \"GT13\", (d, g.get(\"serie\"))" && grep -q "Para alguien de Huehuetenango" sesiones/_fixture_departamento/salida/caption.md'
 fi
 
 echo "== sintaxis de los workflows"

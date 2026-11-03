@@ -1,0 +1,411 @@
+{
+ "eje": "perfil",
+ "n_busquedas": 0,
+ "_nota": "FIXTURE de /departamento: perfil de Huehuetenango con cifras INVENTADAS (maqueta), no verificadas: no publicar.",
+ "cifras": [
+  {
+   "id": "hue-c01",
+   "evidencia": {
+    "url": "https://ejemplo.invalid/maqueta",
+    "cita": "Huehuetenango 2026: 1456210 personas (FIXTURE)"
+   },
+   "concepto": "Población proyectada de Huehuetenango 2026 (maqueta)",
+   "valor": 1456210,
+   "unidad": "personas",
+   "anio": "2026",
+   "periodo": "2026",
+   "fuente": "INE · proyecciones de población 2026 (maqueta)",
+   "url": "https://ejemplo.invalid/maqueta",
+   "tipo": "puntual"
+  },
+  {
+   "id": "hue-c02",
+   "evidencia": {
+    "url": "https://ejemplo.invalid/maqueta",
+    "cita": "Total del país 2026: 18690530 personas (FIXTURE)"
+   },
+   "concepto": "Población proyectada del país 2026 (maqueta)",
+   "valor": 18690530,
+   "unidad": "personas",
+   "anio": "2026",
+   "periodo": "2026",
+   "fuente": "INE · proyecciones de población 2026 (maqueta)",
+   "url": "https://ejemplo.invalid/maqueta",
+   "tipo": "puntual"
+  },
+  {
+   "id": "hue-c03",
+   "evidencia": {
+    "url": "https://ejemplo.invalid/maqueta",
+    "cita": "Pobreza total 2023, %: Huehuetenango 73.8 · Guatemala 26.4, El Progreso 52.0, Sacatepéquez 40.1, Chimaltenango 63.2, Escuintla 47.9, Santa Rosa 55.0, Sololá 78.5, Totonicapán 77.0, Quetzaltenango 51.3, Suchitepéquez 61.0, Retalhuleu 54.8, San Marcos 66.9, Huehuetenango 73.8, Quiché 79.2, Baja Verapaz 70.1, Alta Verapaz 83.1, Petén 58.4, Izabal 60.2, Zacapa 52.7, Chiquimula 69.5, Jalapa 66.1, Jutiapa 57.3 (FIXTURE)"
+   },
+   "concepto": "Pobreza total por departamento 2023 (valor: Huehuetenango) (maqueta)",
+   "valor": 73.8,
+   "unidad": "% de la población",
+   "anio": "2023",
+   "periodo": "2023",
+   "fuente": "INE · ENCOVI 2023 (maqueta)",
+   "url": "https://ejemplo.invalid/maqueta",
+   "tipo": "desglose",
+   "n_puntos": 22,
+   "partes": [
+    {
+     "nombre": "Guatemala",
+     "valor": 26.4
+    },
+    {
+     "nombre": "El Progreso",
+     "valor": 52.0
+    },
+    {
+     "nombre": "Sacatepéquez",
+     "valor": 40.1
+    },
+    {
+     "nombre": "Chimaltenango",
+     "valor": 63.2
+    },
+    {
+     "nombre": "Escuintla",
+     "valor": 47.9
+    },
+    {
+     "nombre": "Santa Rosa",
+     "valor": 55.0
+    },
+    {
+     "nombre": "Sololá",
+     "valor": 78.5
+    },
+    {
+     "nombre": "Totonicapán",
+     "valor": 77.0
+    },
+    {
+     "nombre": "Quetzaltenango",
+     "valor": 51.3
+    },
+    {
+     "nombre": "Suchitepéquez",
+     "valor": 61.0
+    },
+    {
+     "nombre": "Retalhuleu",
+     "valor": 54.8
+    },
+    {
+     "nombre": "San Marcos",
+     "valor": 66.9
+    },
+    {
+     "nombre": "Huehuetenango",
+     "valor": 73.8
+    },
+    {
+     "nombre": "Quiché",
+     "valor": 79.2
+    },
+    {
+     "nombre": "Baja Verapaz",
+     "valor": 70.1
+    },
+    {
+     "nombre": "Alta Verapaz",
+     "valor": 83.1
+    },
+    {
+     "nombre": "Petén",
+     "valor": 58.4
+    },
+    {
+     "nombre": "Izabal",
+     "valor": 60.2
+    },
+    {
+     "nombre": "Zacapa",
+     "valor": 52.7
+    },
+    {
+     "nombre": "Chiquimula",
+     "valor": 69.5
+    },
+    {
+     "nombre": "Jalapa",
+     "valor": 66.1
+    },
+    {
+     "nombre": "Jutiapa",
+     "valor": 57.3
+    }
+   ],
+   "candidata_ancla": true
+  },
+  {
+   "id": "hue-c04",
+   "evidencia": {
+    "url": "https://ejemplo.invalid/maqueta",
+    "cita": "Pobreza total del país 2023: 56.0 % (FIXTURE)"
+   },
+   "concepto": "Pobreza total en el país 2023 (maqueta)",
+   "valor": 56.0,
+   "unidad": "% de la población",
+   "anio": "2023",
+   "periodo": "2023",
+   "fuente": "INE · ENCOVI 2023 (maqueta)",
+   "url": "https://ejemplo.invalid/maqueta",
+   "tipo": "puntual"
+  },
+  {
+   "id": "hue-c05",
+   "evidencia": {
+    "url": "https://ejemplo.invalid/maqueta",
+    "cita": "Huehuetenango: 68.2 % (FIXTURE)"
+   },
+   "concepto": "Desnutrición crónica en menores de 5 años, Huehuetenango 2014-2015 (maqueta)",
+   "valor": 68.2,
+   "unidad": "% de menores de 5 años",
+   "anio": "2015",
+   "periodo": "2014-2015",
+   "fuente": "MSPAS/INE · ENSMI 2014-2015 (maqueta)",
+   "url": "https://ejemplo.invalid/maqueta",
+   "tipo": "puntual"
+  },
+  {
+   "id": "hue-c06",
+   "evidencia": {
+    "url": "https://ejemplo.invalid/maqueta",
+    "cita": "Total país: 46.5 % (FIXTURE)"
+   },
+   "concepto": "Desnutrición crónica en menores de 5 años, total del país 2014-2015 (maqueta)",
+   "valor": 46.5,
+   "unidad": "% de menores de 5 años",
+   "anio": "2015",
+   "periodo": "2014-2015",
+   "fuente": "MSPAS/INE · ENSMI 2014-2015 (maqueta)",
+   "url": "https://ejemplo.invalid/maqueta",
+   "tipo": "puntual"
+  },
+  {
+   "id": "hue-c07",
+   "evidencia": {
+    "url": "https://ejemplo.invalid/maqueta",
+    "cita": "Huehuetenango, básico: 38.9 % (FIXTURE)"
+   },
+   "concepto": "Tasa neta de escolaridad del nivel básico, Huehuetenango 2025 (maqueta)",
+   "valor": 38.9,
+   "unidad": "%",
+   "anio": "2025",
+   "periodo": "2025",
+   "fuente": "MINEDUC · Anuario Estadístico 2025 (maqueta)",
+   "url": "https://ejemplo.invalid/maqueta",
+   "tipo": "puntual"
+  },
+  {
+   "id": "hue-c08",
+   "evidencia": {
+    "url": "https://ejemplo.invalid/maqueta",
+    "cita": "República, básico: 46.7 % (FIXTURE)"
+   },
+   "concepto": "Tasa neta de escolaridad del nivel básico, total de la República 2025 (maqueta)",
+   "valor": 46.7,
+   "unidad": "%",
+   "anio": "2025",
+   "periodo": "2025",
+   "fuente": "MINEDUC · Anuario Estadístico 2025 (maqueta)",
+   "url": "https://ejemplo.invalid/maqueta",
+   "tipo": "puntual"
+  },
+  {
+   "id": "hue-c09",
+   "evidencia": {
+    "url": "https://ejemplo.invalid/maqueta",
+    "cita": "Tasa de homicidios 2025: Huehuetenango 6.1 · Guatemala 24.3, El Progreso 14.0, Sacatepéquez 9.2, Chimaltenango 6.0, Escuintla 38.1, Santa Rosa 25.4, Sololá 3.1, Totonicapán 1.9, Quetzaltenango 10.5, Suchitepéquez 18.2, Retalhuleu 20.4, San Marcos 7.0, Huehuetenango 6.1, Quiché 3.0, Baja Verapaz 7.5, Alta Verapaz 4.2, Petén 26.7, Izabal 31.9, Zacapa 33.4, Chiquimula 35.0, Jalapa 19.8, Jutiapa 22.6 (FIXTURE)"
+   },
+   "concepto": "Homicidios por 100,000 habitantes por departamento 2025 (valor: Huehuetenango) (maqueta)",
+   "valor": 6.1,
+   "unidad": "homicidios por 100,000 habitantes",
+   "anio": "2025",
+   "periodo": "2025",
+   "fuente": "PNC · homicidios 2025 y población INE (maqueta)",
+   "url": "https://ejemplo.invalid/maqueta",
+   "tipo": "desglose",
+   "n_puntos": 22,
+   "partes": [
+    {
+     "nombre": "Guatemala",
+     "valor": 24.3
+    },
+    {
+     "nombre": "El Progreso",
+     "valor": 14.0
+    },
+    {
+     "nombre": "Sacatepéquez",
+     "valor": 9.2
+    },
+    {
+     "nombre": "Chimaltenango",
+     "valor": 6.0
+    },
+    {
+     "nombre": "Escuintla",
+     "valor": 38.1
+    },
+    {
+     "nombre": "Santa Rosa",
+     "valor": 25.4
+    },
+    {
+     "nombre": "Sololá",
+     "valor": 3.1
+    },
+    {
+     "nombre": "Totonicapán",
+     "valor": 1.9
+    },
+    {
+     "nombre": "Quetzaltenango",
+     "valor": 10.5
+    },
+    {
+     "nombre": "Suchitepéquez",
+     "valor": 18.2
+    },
+    {
+     "nombre": "Retalhuleu",
+     "valor": 20.4
+    },
+    {
+     "nombre": "San Marcos",
+     "valor": 7.0
+    },
+    {
+     "nombre": "Huehuetenango",
+     "valor": 6.1
+    },
+    {
+     "nombre": "Quiché",
+     "valor": 3.0
+    },
+    {
+     "nombre": "Baja Verapaz",
+     "valor": 7.5
+    },
+    {
+     "nombre": "Alta Verapaz",
+     "valor": 4.2
+    },
+    {
+     "nombre": "Petén",
+     "valor": 26.7
+    },
+    {
+     "nombre": "Izabal",
+     "valor": 31.9
+    },
+    {
+     "nombre": "Zacapa",
+     "valor": 33.4
+    },
+    {
+     "nombre": "Chiquimula",
+     "valor": 35.0
+    },
+    {
+     "nombre": "Jalapa",
+     "valor": 19.8
+    },
+    {
+     "nombre": "Jutiapa",
+     "valor": 22.6
+    }
+   ],
+   "denominador": "población INE (proyección) 2025",
+   "calculo": "89/1456210*100000"
+  },
+  {
+   "id": "hue-c10",
+   "evidencia": {
+    "url": "https://ejemplo.invalid/maqueta",
+    "cita": "Tasa nacional 2025: 16.1 (FIXTURE)"
+   },
+   "concepto": "Homicidios por 100,000 habitantes en el país 2025 (maqueta)",
+   "valor": 16.1,
+   "unidad": "homicidios por 100,000 habitantes",
+   "anio": "2025",
+   "periodo": "2025",
+   "fuente": "PNC · homicidios 2025 y población INE (maqueta)",
+   "url": "https://ejemplo.invalid/maqueta",
+   "tipo": "puntual",
+   "denominador": "población INE (proyección) 2025",
+   "calculo": "3009/18690530*100000"
+  },
+  {
+   "id": "hue-c11",
+   "evidencia": {
+    "url": "https://ejemplo.invalid/maqueta",
+    "cita": "Huehuetenango 2025: 1180.4 (FIXTURE)"
+   },
+   "concepto": "Retornados adultos por 100,000 habitantes de 15 años y más, Huehuetenango 2025 (maqueta)",
+   "valor": 1180.4,
+   "unidad": "retornados por 100,000 habitantes de 15+",
+   "anio": "2025",
+   "periodo": "2025",
+   "fuente": "IGM · retornados 2025 y población INE (maqueta)",
+   "url": "https://ejemplo.invalid/maqueta",
+   "tipo": "puntual",
+   "denominador": "población de 15 años y más, CONALFA/INE proyección 2025",
+   "calculo": "10624/900000*100000"
+  },
+  {
+   "id": "hue-c12",
+   "evidencia": {
+    "url": "https://ejemplo.invalid/maqueta",
+    "cita": "País 2025: 412.5 (FIXTURE)"
+   },
+   "concepto": "Retornados adultos por 100,000 habitantes de 15 años y más en el país 2025 (maqueta)",
+   "valor": 412.5,
+   "unidad": "retornados por 100,000 habitantes de 15+",
+   "anio": "2025",
+   "periodo": "2025",
+   "fuente": "IGM · retornados 2025 y población INE (maqueta)",
+   "url": "https://ejemplo.invalid/maqueta",
+   "tipo": "puntual",
+   "denominador": "población de 15 años y más, CONALFA/INE proyección 2025",
+   "calculo": "51562/12500000*100000"
+  }
+ ],
+ "fuentes": [
+  {
+   "nombre": "INE · proyecciones de población 2026 (maqueta)",
+   "url": "https://ejemplo.invalid/maqueta",
+   "nivel": "primaria"
+  },
+  {
+   "nombre": "INE · ENCOVI 2023 (maqueta)",
+   "url": "https://ejemplo.invalid/maqueta",
+   "nivel": "primaria"
+  },
+  {
+   "nombre": "MSPAS/INE · ENSMI 2014-2015 (maqueta)",
+   "url": "https://ejemplo.invalid/maqueta",
+   "nivel": "primaria"
+  },
+  {
+   "nombre": "MINEDUC · Anuario Estadístico 2025 (maqueta)",
+   "url": "https://ejemplo.invalid/maqueta",
+   "nivel": "primaria"
+  },
+  {
+   "nombre": "PNC · homicidios 2025 y población INE (maqueta)",
+   "url": "https://ejemplo.invalid/maqueta",
+   "nivel": "primaria"
+  },
+  {
+   "nombre": "IGM · retornados 2025 y población INE (maqueta)",
+   "url": "https://ejemplo.invalid/maqueta",
+   "nivel": "primaria"
+  }
+ ],
+ "vacios": []
+}

@@ -66,6 +66,7 @@ import re
 import shutil
 import subprocess
 import sys
+import unicodedata
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(RAIZ, "scripts"))
@@ -81,6 +82,9 @@ HOOKS = ["giro_inversion", "escala_humana", "brecha_territorial", "pregunta_dire
 TIPOS = ["hilo", "dato"]
 MAX_TUITS_AUDITORIA = 20  # espejo de investigacion.js (maxN con args.auditoria)
 MODOS = {"hilo": ["hilo", "explica", "perfil", "investigacion"], "dato": ["dato", "vs", "mapa", "antes"]}
+# Perfil de un departamento (guion.perfil.tipo «departamento», /departamento): ≥ 1 tarjeta mapa con el desglose de los 22 que
+# lo destaca (G1). Espejo de PERFIL_DEPARTAMENTO en hilo.js (W5); minTuitsCanon solo lo aplica el workflow (con args.canon).
+PERFIL_DEPARTAMENTO = {"desglose": 22, "minTuitsCanon": 7}
 # Modo investigacion (/investigacion): el hilo acompaña a un informe PDF; el cierre lleva este marcador literal, que el
 # usuario sustituye por la URL del PDF al publicar (investigacion.js lo copia; check_workflows W6 los compara).
 MARCADOR_INFORME = "[ENLACE AL INFORME]"
@@ -337,6 +341,9 @@ def gate(guion, encuadre, cifras, veredictos, sesion, plantillas, paletas, modo_
                 F.append("G1 debe haber exactamente un beat 'giro' (hay %d)" % len(giros))
             if not smoke and n >= 5 and not any(t.get("beat") == "impacto" for t in tuits):
                 F.append("G1 en modo normal con ≥5 tuits debe haber un beat 'impacto' (escala humana)")
+        pf = guion.get("perfil") if modo_h == "perfil" and isinstance(guion.get("perfil"), dict) else {}
+        if pf.get("tipo") == "departamento":
+            F.extend(faltas_perfil_departamento(pf, tuits))
         if modo_h == "investigacion":
             inv = guion.get("investigacion")
             if not isinstance(inv, dict):
@@ -564,6 +571,22 @@ def aparece_en(tuits, cifras, veredictos, png_de):
     return aparece
 
 
+def faltas_perfil_departamento(pf, tuits):
+    """G1 del perfil de un departamento: ≥ 1 tarjeta mapa con los 22 departamentos que destaca al sujeto (perfil.codigo o
+    su nombre). El perfil de un grupo no lo exige."""
+    nd = PERFIL_DEPARTAMENTO["desglose"]
+    norm = lambda x: re.sub(r"[^a-z0-9]", "", "".join(c for c in unicodedata.normalize("NFD", str(x or "").lower()) if unicodedata.category(c) != "Mn"))  # noqa: E731
+    mapas = [t for t in tuits if (t.get("visual") or {}).get("plantilla") == "mapa"
+             and len(((t["visual"].get("datos") or {}).get("valores") or {})) >= nd]
+    if not mapas:
+        return ["G1 modo perfil (departamento): hace falta ≥ 1 tarjeta mapa con el desglose de los %d departamentos" % nd]
+    cod, suj = str(pf.get("codigo") or "").upper(), norm(pf.get("sujeto"))
+    if not any(str((t["visual"].get("datos") or {}).get("destacar") or "").upper() == cod and cod
+               or norm((t["visual"].get("datos") or {}).get("destacar")) == suj for t in mapas):
+        return ["G1 modo perfil (departamento): ninguna tarjeta mapa destaca a %s (datos.destacar: %r)" % (pf.get("sujeto"), pf.get("codigo") or pf.get("sujeto"))]
+    return []
+
+
 def manifiesto_datos(guion, cifras, veredictos, fuentes, ok_ids, usadas, aparece, slug, fecha, tesis):
     """El dict de datos.json: cifras verificadas con valor final, evidencia, uso y descartadas (igual para hilo y dato)."""
     sin = guion.get("sintesis", {})
@@ -583,7 +606,7 @@ def manifiesto_datos(guion, cifras, veredictos, fuentes, ok_ids, usadas, aparece
         if c not in ok_ids:
             continue
         v = veredictos.get(c, {})
-        entrada = {k: cf.get(k) for k in ("id", "concepto", "unidad", "anio", "tipo", "fuente", "url", "periodo", "n_puntos") if cf.get(k) is not None}
+        entrada = {k: cf.get(k) for k in ("id", "concepto", "unidad", "anio", "tipo", "fuente", "url", "periodo", "n_puntos", "denominador") if cf.get(k) is not None}
         entrada["valor"] = v.get("valor_final", cf.get("valor"))
         if v.get("veredicto") == "ajustada" and cf.get("valor") != v.get("valor_final"):
             entrada["valor_original"] = cf.get("valor")
@@ -592,6 +615,8 @@ def manifiesto_datos(guion, cifras, veredictos, fuentes, ok_ids, usadas, aparece
             entrada["independencia"] = v["independencia"]  # alta | baja (la 2ª fuente reproduce la primaria)
         if v.get("fuente_2"):
             entrada["fuente_2"] = v["fuente_2"]
+        if v.get("calculo") or cf.get("calculo"):
+            entrada["calculo"] = v.get("calculo") or cf.get("calculo")   # tasas por habitante (D6 de /departamento)
         if cf.get("evidencia"):
             entrada["evidencia"] = cf["evidencia"]
         if cf.get("serie"):

@@ -1,7 +1,7 @@
 export const meta = {
   name: 'hilo',
   description: 'Hilo de X con datos de Guatemala: encuadre → investigación ⇢ verificación por eje → guion → visuales → ensamblado',
-  whenToUse: 'Invocado por /hilo [modo] [tema] [smoke|fixture] (y por los alias /explica y /perfil). args: {tema, modo, smoke, fixture, fecha, min_tuits, max_tuits, idea, permitir_fallback} (fecha YYYY-MM-DD obligatoria, la pone el comando con `date +%F`). modo = hilo (defecto, historia con giro) | explica (el tema explicado con sus números en 3–6 tarjetas, sin giro) | perfil (retrato de un departamento o grupo frente al país en 5–8 tarjetas; tema = el sujeto). smoke = corrida corta sin tocar memoria/; fixture = sin web, copia sesiones/_fixture. idea = id de ideas/banco.json (el editor parte de ella; memoria.py la marca hecha al registrar).',
+  whenToUse: 'Invocado por /hilo [modo] [tema] [smoke|fixture] (y por los alias /explica y /perfil). args: {tema, modo, smoke, fixture, fecha, min_tuits, max_tuits, idea, canon, permitir_fallback} (fecha YYYY-MM-DD obligatoria, la pone el comando con `date +%F`). modo = hilo (defecto, historia con giro) | explica (el tema explicado con sus números en 3–6 tarjetas, sin giro) | perfil (retrato de un departamento o grupo frente al país en 5–8 tarjetas; tema = el sujeto). smoke = corrida corta sin tocar memoria/; fixture = sin web, copia sesiones/_fixture. idea = id de ideas/banco.json (el editor parte de ella; memoria.py la marca hecha al registrar). canon = texto de scripts/departamentos.py --directiva (lo pasa /departamento en modo perfil: viaja al editor, al investigador y al guionista y sube el mínimo a 7 tuits).',
   phases: [
     { title: 'Encuadre', detail: 'editor: pregunta, tesis provisional, paleta, ejes con prefijo y fuentes sugeridas' },
     { title: 'Investigación', detail: 'un investigador por eje (SIFT, con presupuesto): cifras con evidencia' },
@@ -46,6 +46,9 @@ const MODOS = {
   perfil:  { beatMedio: 'dimension', min: 5,    max: 8,         giro: 0, impacto: false, minCifras: 5 },
 }
 const RE_PAIS = /guatemala|nacional|pa[ií]s/i
+// Perfil de un departamento (perfil.tipo departamento; /departamento): ≥ 1 desglose de los 22 en una tarjeta mapa que lo
+// destaca (espejo de ensamblar.PERFIL_DEPARTAMENTO, W5) y, si llega args.canon, al menos minTuitsCanon tuits.
+const PERFIL_DEPARTAMENTO = { desglose: 22, minTuitsCanon: 7 }
 const TEMA_SMOKE = { hilo: 'remesas familiares 2025', explica: 'cómo se calcula la tarifa de electricidad en Guatemala', perfil: 'Alta Verapaz' }
 // Instrucciones por modo que viajan en los prompts (el detalle vive en referencias/roles/*.md «Modo explica» y «Modo perfil»).
 const INSTR = {
@@ -166,7 +169,11 @@ const S = {
       },
       perfil: {
         type: 'object', required: ['sujeto', 'tipo', 'dimensiones'],
-        properties: { sujeto: { type: 'string' }, tipo: { type: 'string', enum: ['departamento', 'grupo'] }, dimensiones: { type: 'array', items: { type: 'object', required: ['n', 'nombre', 'anio'], properties: { n: { type: 'integer' }, nombre: { type: 'string' }, anio: { type: 'integer' } } } } },
+        properties: {
+          sujeto: { type: 'string' }, tipo: { type: 'string', enum: ['departamento', 'grupo'] }, codigo: { type: 'string' }, canon_version: { type: 'integer' },
+          dimensiones: { type: 'array', items: { type: 'object', required: ['n', 'nombre', 'anio'], properties: { n: { type: 'integer' }, nombre: { type: 'string' }, anio: { type: 'integer' }, canon: { type: 'string' }, motivo: { type: 'string' } } } },
+          omitidas: { type: 'array', items: { type: 'object', required: ['canon', 'motivo'], properties: { canon: { type: 'string' }, motivo: { type: 'string' } } } },
+        },
       },
       tuits: {
         type: 'array', minItems: 3, maxItems: MAX_TUITS,
@@ -262,7 +269,11 @@ const modoPost = A.modo ? String(A.modo).toLowerCase() : 'hilo'
 if (!MODOS[modoPost]) throw new Error(`args.modo "${A.modo}" desconocido (${Object.keys(MODOS).join('|')}).`)
 const MP = MODOS[modoPost]
 const IM = INSTR[modoPost]
-const minN = smoke ? 3 : (MP.min || minT)
+// Canon de /departamento (texto de departamentos.py --directiva): solo en modo perfil; sube el mínimo de tuits.
+const canonTxt = modoPost === 'perfil' ? String(A.canon || '').trim() : ''
+if (A.canon && modoPost !== 'perfil') throw new Error('args.canon solo va con modo perfil (/departamento).')
+const CANON = canonTxt ? canonTxt + ' ' : ''
+const minN = smoke ? 3 : (canonTxt ? Math.max(PERFIL_DEPARTAMENTO.minTuitsCanon, MP.min || minT) : (MP.min || minT))
 const maxN = smoke ? 4 : Math.min(MP.max, maxT)
 const T = TOPES[largo ? 'largo' : modo]
 // Idea del banco (ideas/banco.json): la resuelve /hilo en el preflight y llega como id.
@@ -351,7 +362,7 @@ const enc = await agentRol(
       `edita el encuadre.json copiado poniendo fixture:true, smoke:true, fecha "${fecha}", sesion_dir "sesiones/fixture-${fecha.replace(/-/g, '')}", y devuélvelo tal cual.`
     : `Eres el editor del flujo /hilo (lee referencias/roles/editor.md y referencias/contrato-sesion.md). ` +
       `${modoPost === 'perfil' ? 'Sujeto del perfil' : 'Tema'}: ${tema ? `"${tema}"` : (modoPost === 'hilo' ? '(no dado: elige uno de actualidad con datos duros)' : `(no dado: usa «${TEMA_SMOKE[modoPost]}»)`)}. Fecha: ${fecha}. ` +
-      `MODO DEL POST: ${modoPost}. ` + IM.editor +
+      `MODO DEL POST: ${modoPost}. ` + IM.editor + CANON +
       (idea ? `IDEA DEL BANCO: corre python3 scripts/ideas.py --ver ${idea} (no abras ideas/banco.json) y parte de su pregunta, ángulo, hook_sugerido, paleta_sugerida y datos (fuentes con evidencia de acceso); pon idea_id: "${idea}" en encuadre.json y en tu retorno. ` : 'idea_id: null. ') +
       `${smoke ? `MODO SMOKE: exactamente 1 eje, smoke:true; sin tema usa «${TEMA_SMOKE[modoPost]}». ` : `Modo normal: ${minT >= 10 ? '3–4 ejes (hilo largo: ≥' + minT + ' tuits, hacen falta series comparables para muchas tarjetas)' : '2–4 ejes'}, smoke:false${MP.impacto ? '; un eje incluye la pregunta de escala humana (beat impacto)' : ''}. `}` +
       `Usa python3 scripts/fuentes.py --tema "…" --series para las fuentes_sugeridas de cada eje (no abras memoria/fuentes.json). Cada eje lleva un prefijo de 3 letras único. ` +
@@ -384,7 +395,7 @@ if (!fixture) {
   const investigar = (eje) =>
     agentRol(
       `Eres el investigador del eje "${eje.id}" (lee referencias/roles/investigador.md y referencias/contrato-sesion.md). Sesión: ${enc.sesion_dir} ` +
-        `(lee encuadre.json: tu brief, preguntas y fuentes_sugeridas). Prefijo de ids: "${prefijoDe(eje)}-cNN". ` + IM.investigador +
+        `(lee encuadre.json: tu brief, preguntas y fuentes_sugeridas). Prefijo de ids: "${prefijoDe(eje)}-cNN". ` + IM.investigador + CANON +
         `PRESUPUESTO: ≤${T.busquedas} búsquedas, ≤${T.fetch} fetch, ≤${T.cifras} cifras, ≤${T.series} series; cada cifra con evidencia {url, cita, archivo_local}. ` +
         (largo ? `HILO LARGO: el guion tendrá ${minN}–${maxN} tuits; reúne cifras variadas (puntuales, series, desgloses por departamento, sexo, edad o tipo) que den cada una una tarjeta distinta, no variantes de la misma. ` : '') +
         `Sin Playwright MCP. Escribe ${enc.sesion_dir}/hallazgos_${eje.id}.json completo y devuelve solo el resumen (ids, tipo, n_puntos).`,
@@ -485,6 +496,18 @@ const validarGuion = (g) => {
         if (!t.visual || t.visual.plantilla === 'mapa') continue
         const rotulos = JSON.stringify(t.visual.datos || {}) + ' ' + (t.visual.kicker || '') + ' ' + (t.visual.titular || []).join(' ')
         if (!RE_PAIS.test(rotulos)) F.push(`modo perfil: T${t.n} no compara con el país (ningún rótulo «Guatemala», «nacional» o «país» en la tarjeta)`)
+      }
+      if (Pf.tipo === 'departamento') {
+        // /departamento: un desglose de los 22 en una tarjeta mapa que destaca al departamento (el mapa y el ranking del video)
+        const sinTilde = (x) => String(x || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim()
+        const destacaSujeto = (d) => !!d && ((!!Pf.codigo && String(d.destacar || '').toUpperCase() === String(Pf.codigo).toUpperCase()) || sinTilde(d.destacar) === sinTilde(suj))
+        const mapas22 = Tt.filter((t) => t.visual && t.visual.plantilla === 'mapa' && Object.keys((t.visual.datos || {}).valores || {}).length >= PERFIL_DEPARTAMENTO.desglose)
+        if (!mapas22.length) F.push(`modo perfil (departamento): hace falta ≥ 1 tarjeta mapa con el desglose de los ${PERFIL_DEPARTAMENTO.desglose} departamentos`)
+        else if (!mapas22.some((t) => destacaSujeto(t.visual.datos))) F.push(`modo perfil (departamento): ninguna tarjeta mapa destaca a ${suj} (datos.destacar: "${Pf.codigo || suj}")`)
+        if (canonTxt) {
+          if (!/^GT\d\d$/.test(String(Pf.codigo || ''))) F.push('modo perfil (departamento): perfil.codigo GTxx (el del canon)')
+          for (const q of Dm) if (!String((q || {}).canon || '').trim()) F.push(`modo perfil (departamento): dimensión ${q && q.n} sin «canon» (el id de la dimensión del canon)`)
+        }
       }
       const anios = [...new Set(Dm.map((q) => q && q.anio).filter(Number.isInteger))]
       if (anios.length > 1) {
@@ -588,7 +611,7 @@ const invocarGuion = (fallos) =>
     agentRol(
       `Eres el guionista (lee referencias/roles/guionista.md, referencias/narrativa.md y referencias/diseno/graficos.md). Sesión: ${enc.sesion_dir}. ` +
         `Lee encuadre.json y corre python3 scripts/digesto.py ${enc.sesion_dir} --para guionista (no leas los hallazgos_*.json ni verificacion_*.json enteros; para copiar puntos de una serie usa --serie <id>). ` +
-        `Paleta: ${enc.paleta}. Fecha: ${fecha}. hook_evitar: ${enc.hook_evitar || 'ninguno'}. MODO DEL POST: ${modoPost}. ` + IM.guionista +
+        `Paleta: ${enc.paleta}. Fecha: ${fecha}. hook_evitar: ${enc.hook_evitar || 'ninguno'}. MODO DEL POST: ${modoPost}. ` + IM.guionista + CANON +
         `ancla_id debe ser una cifra del visual de T1 (T1.visual.cifra_ids la incluye); si T1 va sin visual, la ancla va en su texto. ` +
         (okIds ? `Solo cifras verificada|ajustada con su valor_final: ${[...okIds].join(', ')}. ` : 'MODO FIXTURE: usa las cifras verificadas de la sesión copiada. ') +
         (bajas.length ? `Cifras con segunda fuente NO independiente (reproduce la primaria): ${bajas.join(', ')}: no sostengas la ancla solo en ellas si hay alternativa; si las usas, decláralo en sintesis.incertidumbre. ` : '') +

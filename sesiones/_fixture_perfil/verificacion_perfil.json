@@ -1,0 +1,106 @@
+{
+ "eje": "perfil",
+ "_nota": "FIXTURE: veredictos ficticios.",
+ "items": [
+  {
+   "id": "hue-c01",
+   "veredicto": "verificada",
+   "valor_final": 1456210,
+   "fuente_2": "maqueta",
+   "independencia": "baja",
+   "nota": "maqueta"
+  },
+  {
+   "id": "hue-c02",
+   "veredicto": "verificada",
+   "valor_final": 18690530,
+   "fuente_2": "maqueta",
+   "independencia": "baja",
+   "nota": "maqueta"
+  },
+  {
+   "id": "hue-c03",
+   "veredicto": "verificada",
+   "valor_final": 73.8,
+   "fuente_2": "maqueta",
+   "independencia": "baja",
+   "nota": "maqueta"
+  },
+  {
+   "id": "hue-c04",
+   "veredicto": "verificada",
+   "valor_final": 56.0,
+   "fuente_2": "maqueta",
+   "independencia": "baja",
+   "nota": "maqueta"
+  },
+  {
+   "id": "hue-c05",
+   "veredicto": "verificada",
+   "valor_final": 68.2,
+   "fuente_2": "maqueta",
+   "independencia": "baja",
+   "nota": "maqueta"
+  },
+  {
+   "id": "hue-c06",
+   "veredicto": "verificada",
+   "valor_final": 46.5,
+   "fuente_2": "maqueta",
+   "independencia": "baja",
+   "nota": "maqueta"
+  },
+  {
+   "id": "hue-c07",
+   "veredicto": "verificada",
+   "valor_final": 38.9,
+   "fuente_2": "maqueta",
+   "independencia": "baja",
+   "nota": "maqueta"
+  },
+  {
+   "id": "hue-c08",
+   "veredicto": "verificada",
+   "valor_final": 46.7,
+   "fuente_2": "maqueta",
+   "independencia": "baja",
+   "nota": "maqueta"
+  },
+  {
+   "id": "hue-c09",
+   "veredicto": "verificada",
+   "valor_final": 6.1,
+   "fuente_2": "maqueta",
+   "independencia": "baja",
+   "nota": "maqueta",
+   "calculo": "89/1456210*100000"
+  },
+  {
+   "id": "hue-c10",
+   "veredicto": "verificada",
+   "valor_final": 16.1,
+   "fuente_2": "maqueta",
+   "independencia": "baja",
+   "nota": "maqueta",
+   "calculo": "3009/18690530*100000"
+  },
+  {
+   "id": "hue-c11",
+   "veredicto": "verificada",
+   "valor_final": 1180.4,
+   "fuente_2": "maqueta",
+   "independencia": "baja",
+   "nota": "maqueta",
+   "calculo": "10624/900000*100000"
+  },
+  {
+   "id": "hue-c12",
+   "veredicto": "verificada",
+   "valor_final": 412.5,
+   "fuente_2": "maqueta",
+   "independencia": "baja",
+   "nota": "maqueta",
+   "calculo": "51562/12500000*100000"
+  }
+ ]
+}

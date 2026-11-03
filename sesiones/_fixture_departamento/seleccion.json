@@ -1,0 +1,40 @@
+{
+ "ganador": "g1",
+ "segundo": "g2",
+ "puntajes": {
+  "g1": {
+   "silencio": 4,
+   "referente": 4,
+   "tension": 4,
+   "alineacion": 4,
+   "honestidad": 5,
+   "novedad": 4
+  },
+  "g2": {
+   "silencio": 4,
+   "referente": 4,
+   "tension": 4,
+   "alineacion": 4,
+   "honestidad": 5,
+   "novedad": 4
+  },
+  "g3": {
+   "silencio": 4,
+   "referente": 4,
+   "tension": 4,
+   "alineacion": 4,
+   "honestidad": 5,
+   "novedad": 4
+  },
+  "g4": {
+   "silencio": 4,
+   "referente": 4,
+   "tension": 4,
+   "alineacion": 4,
+   "honestidad": 5,
+   "novedad": 4
+  }
+ },
+ "por_que": "g1: identidad (el nombre en la voz y el mapa lo señala) para la serie de los 22.",
+ "faltas": []
+}

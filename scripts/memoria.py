@@ -591,6 +591,14 @@ def registrar_video(d, estado, dry_run=False):
         "n_escenas": g["n_escenas"], "musica": g["musica"], "creditos_voz": g.get("creditos_voz"),
         "ruta_video": ruta, "ruta_hilo": g["hilo"], "estado": estado, "frases": frases_video(g),
     }
+    # serie /departamento: sujeto, serie y código (del guion de entrega o, si falta, del hilo perfil de departamento)
+    pf = hilo.get("perfil") if isinstance(hilo.get("perfil"), dict) else {}
+    if g.get("serie") or (hilo.get("modo") == "perfil" and pf.get("tipo") == "departamento"):
+        reg["sujeto"] = g.get("sujeto") or pf.get("sujeto")
+        reg["serie"] = g.get("serie") or "departamentos"
+        cod = (g.get("departamento") or {}).get("codigo") or pf.get("codigo")
+        if cod:
+            reg["codigo"] = cod
     mv = leer(VIDEOS, obligatorio=False) or json.loads(json.dumps(VACIO_VIDEOS))
     previos = [i for i, v in enumerate(mv["videos"]) if v.get("id") == reg["id"]]
     if previos:  # volver a registrar conserva la fecha original (y el estado «publicado» si ya lo tenía)
@@ -601,8 +609,9 @@ def registrar_video(d, estado, dry_run=False):
         mv["videos"][previos[0]] = reg
     else:
         mv["videos"].append(reg)
-    print("video %s · %s %.0f s · %d escenas · música %s · %s" % (reg["id"], reg["duracion"], reg["duracion_s"],
-                                                              reg["n_escenas"], reg["musica"], reg["estado"]))
+    print("video %s · %s %.0f s · %d escenas · música %s · %s%s" % (reg["id"], reg["duracion"], reg["duracion_s"],
+                                                                reg["n_escenas"], reg["musica"], reg["estado"],
+                                                                " · serie %s: %s" % (reg["serie"], reg["sujeto"]) if reg.get("serie") else ""))
     if dry_run:
         print("[dry-run] no se escribió nada")
         return 0

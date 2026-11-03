@@ -1,0 +1,25 @@
+{
+ "slug": "perfil-huehuetenango-fixture",
+ "tema": "Huehuetenango (perfil de prueba con cifras de maqueta)",
+ "fecha": "2026-11-03",
+ "pregunta": "¿Cómo está Huehuetenango frente al país?",
+ "tesis_provisional": "Perfil: Huehuetenango en 6 datos",
+ "angulo": "maqueta del canon de /departamento",
+ "paleta": "jade",
+ "modo": "perfil",
+ "necesita_serie": false,
+ "repetido": false,
+ "ejes": [
+  {
+   "id": "perfil",
+   "prefijo": "hue",
+   "brief": "Las seis dimensiones del canon para Huehuetenango y el país.",
+   "preguntas": [],
+   "series_esperadas": []
+  }
+ ],
+ "sesion_dir": "sesiones/_fixture_perfil",
+ "smoke": true,
+ "fixture": true,
+ "_nota": "FIXTURE de /departamento (make departamento-fixture): cifras de MAQUETA, no verificadas contra fuentes reales."
+}

@@ -8,7 +8,8 @@ El sandbox del Workflow no importa módulos, así que hilo.js, dato.js e ideas.j
   W3 HOOKS difiere entre workflows o de ensamblar.HOOKS; BEATS (hilo.js) difiere de ensamblar.BEATS
   W4 REQ, RE_LINK, RE_BAIT, RE_SUPER o pesoX difieren entre hilo.js y dato.js
   W5 las claves de MODOS de dato.js no coinciden con ensamblar.MODOS["dato"]; las de hilo.js ∪ investigacion.js
-     no coinciden con ensamblar.MODOS["hilo"] o se repiten entre ambos (aviso si aún no existen)
+     no coinciden con ensamblar.MODOS["hilo"] o se repiten entre ambos (aviso si aún no existen); PERFIL_DEPARTAMENTO
+     de hilo.js (desglose de los 22 y mínimo de tuits con canon, /departamento) ≠ ensamblar.PERFIL_DEPARTAMENTO
   W6 investigacion.js: TIPOS_PAGINA igual a informe.TIPOS_PAGINA y MARCADOR_INFORME igual al de ensamblar.py
   W7 gráficos del informe: todo G.<tipo> de investigacion/graficos/*.js tiene plantilla de tarjeta (o está en
      informe.SOLO_DOCUMENTO), campos en informe.CAMPOS_GRAFICO y extractor en ensamblar.CLAVES_DATO; ningún
@@ -40,7 +41,7 @@ import sys
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(RAIZ, "scripts"))
-from ensamblar import BEATS, HOOKS, MODOS, CLAVES_DATO, MARCADOR_INFORME  # noqa: E402
+from ensamblar import BEATS, HOOKS, MODOS, CLAVES_DATO, MARCADOR_INFORME, PERFIL_DEPARTAMENTO  # noqa: E402
 import informe  # noqa: E402  (TIPOS_GRAFICO, CAMPOS_GRAFICO, SOLO_DOCUMENTO, plantillas_sin_g, snake)
 
 RE_PROHIBIDO = re.compile(r"\bH\.(color|rampa|rampaColor|halo|periodos|textoSobre|espacio|lienzo|leyenda|anotar|cabecera|verificar)\b|document\.getElementById\(")
@@ -181,6 +182,12 @@ def main():
             err("W5 modos repetidos entre hilo.js e investigacion.js: %s" % sorted(set(kh) & set(ki)))
         if sorted(kh + ki) != sorted(esperado):
             err("W5 hilo.js ∪ investigacion.js MODOS %s ≠ ensamblar.MODOS['hilo'] %s" % (sorted(kh + ki), sorted(esperado)))
+    m = re.search(r"^const PERFIL_DEPARTAMENTO = \{\s*desglose:\s*(\d+),\s*minTuitsCanon:\s*(\d+)\s*\}", hilo, re.M)
+    if not m:
+        err("W5 hilo.js: no se encontró `const PERFIL_DEPARTAMENTO = { desglose: N, minTuitsCanon: N }`")
+    elif {"desglose": int(m.group(1)), "minTuitsCanon": int(m.group(2))} != PERFIL_DEPARTAMENTO:
+        err("W5 hilo.js PERFIL_DEPARTAMENTO {desglose: %s, minTuitsCanon: %s} ≠ ensamblar.PERFIL_DEPARTAMENTO %s"
+            % (m.group(1), m.group(2), PERFIL_DEPARTAMENTO))
     # W6 espejos de investigacion.js
     if inv:
         tp = lista(inv, "TIPOS_PAGINA")

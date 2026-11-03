@@ -53,6 +53,12 @@ tesis que probar en ninguno de los dos.
   educación, seguridad o migración, economía local) repartidas en 2–3 ejes;
   cada brief exige el valor del sujeto **y** el nacional de la misma fuente y
   año (per cápita con proyecciones INE) y anota el año de cada dimensión.
+- **`perfil` con CANON** (`/departamento`: la directiva trae «CANON /departamento…», de
+  `scripts/departamentos.py --directiva`): las dimensiones NO se eligen; son las del canon
+  (`referencias/departamentos.json`), cada una con su fuente y su año (año null = el último que la fuente publique
+  para los 22: decláralo en el brief). Un brief por dimensión del canon, repartidas en 2–3 ejes; al menos dos piden
+  el **desglose de los 22** (el mapa y el ranking en ventana del video). Si una dimensión no tiene datos, dilo en el
+  encuadre (el guionista la declara en `perfil.omitidas` con su motivo); nunca la cambies por otra sin motivo (D5).
 
 ## Modo investigación (`/investigacion`)
 

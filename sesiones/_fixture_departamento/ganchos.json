@@ -1,0 +1,78 @@
+{
+ "candidatos": [
+  {
+   "tipo": "gancho",
+   "familia": "ranking",
+   "visual": "lugar",
+   "visual_datos": {
+    "depto": "GT13",
+    "etiqueta": "N.º 5 de 22 en pobreza"
+   },
+   "pantalla": "N.º 5 de 22",
+   "linea": "en pobreza: Huehuetenango",
+   "verbo": "es",
+   "texto": "Huehuetenango es el quinto en pobreza de Guatemala.",
+   "acto": 1,
+   "id": "g1",
+   "promesa_sugerida": "¿En qué le va mejor que al país?",
+   "forma_sugerida": "pregunta",
+   "por_que": "Identidad: el nombre en la voz y el mapa señala el departamento."
+  },
+  {
+   "id": "g2",
+   "familia": "contraste",
+   "visual": "pareja",
+   "visual_datos": {
+    "a": {
+     "valor": "hue-c04",
+     "etiqueta": "País"
+    },
+    "b": {
+     "valor": "hue-c03",
+     "etiqueta": "Huehuetenango"
+    }
+   },
+   "pantalla": "56% → 73.8%",
+   "linea": "de pobreza: país y Huehuetenango",
+   "verbo": "tiene",
+   "texto": "Guatemala tiene 56% de pobreza. Huehuetenango, 73.8.",
+   "promesa_sugerida": "¿En qué le va mejor que al país?",
+   "forma_sugerida": "pregunta",
+   "por_que": "Contraste con las dos cifras."
+  },
+  {
+   "id": "g3",
+   "familia": "tu",
+   "visual": "cifra",
+   "pantalla": "6.1 contra 16.1",
+   "linea": "homicidios por cada cien mil",
+   "verbo": "vives",
+   "texto": "Si eres de Huehuetenango, vives con 6.1 homicidios. Guatemala tiene 16.1.",
+   "promesa_sugerida": "¿Por qué ahí es más pobre?",
+   "forma_sugerida": "pregunta",
+   "por_que": "Segunda persona con la cifra a favor."
+  },
+  {
+   "id": "g4",
+   "familia": "paradoja",
+   "visual": "pareja",
+   "visual_datos": {
+    "a": {
+     "valor": "hue-c09",
+     "etiqueta": "Huehuetenango"
+    },
+    "b": {
+     "valor": "hue-c10",
+     "etiqueta": "País"
+    }
+   },
+   "pantalla": "Pobre y tranquilo",
+   "linea": "Huehuetenango y Guatemala",
+   "verbo": "tiene",
+   "texto": "Huehuetenango tiene 6.1 homicidios. Guatemala, 16.1: pobre y tranquilo.",
+   "promesa_sugerida": "¿Qué lo hace distinto?",
+   "forma_sugerida": "pregunta",
+   "por_que": "Paradoja pobreza y violencia."
+  }
+ ]
+}

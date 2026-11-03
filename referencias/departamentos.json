@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "estado": "propuesta",
+  "_comentario": "Canon de /departamento (serie de 22 videos: /perfil <depto> → /video). BORRADOR para que lo revise el usuario: cada dimensión está en «propuesta» hasta que la apruebe. Lo leen scripts/departamentos.py (--directiva, --check, D5) y, vía la directiva, el editor y el investigador del modo perfil. Un año null = «el más reciente que la fuente publique para los 22» (el investigador lo fija y lo declara); un año con número es obligatorio (D5). Los códigos y nombres son los de templates/base.html (H.NOMBRES) y design/mapa_geometria.svg. El orden sigue la población (Censo 2018 de memoria, sin cifra verificada a mano: es propuesta).",
+  "orden_estado": "propuesta",
+  "orden_nota": "De mayor a menor población según el Censo 2018 (recuerdo, sin cifra verificada); confirmar con las proyecciones INE del año antes de publicar el primer episodio.",
+  "orden": ["GT01", "GT16", "GT13", "GT12", "GT14", "GT09", "GT05", "GT04", "GT10", "GT17", "GT22", "GT07", "GT08", "GT20", "GT18", "GT06", "GT21", "GT03", "GT11", "GT15", "GT19", "GT02"],
+  "nombres": {
+    "GT01": "Guatemala", "GT02": "El Progreso", "GT03": "Sacatepéquez", "GT04": "Chimaltenango",
+    "GT05": "Escuintla", "GT06": "Santa Rosa", "GT07": "Sololá", "GT08": "Totonicapán",
+    "GT09": "Quetzaltenango", "GT10": "Suchitepéquez", "GT11": "Retalhuleu", "GT12": "San Marcos",
+    "GT13": "Huehuetenango", "GT14": "Quiché", "GT15": "Baja Verapaz", "GT16": "Alta Verapaz",
+    "GT17": "Petén", "GT18": "Izabal", "GT19": "Zacapa", "GT20": "Chiquimula",
+    "GT21": "Jalapa", "GT22": "Jutiapa"
+  },
+  "alias": {
+    "GT01": ["departamento de Guatemala"], "GT02": [], "GT03": ["Sacate"], "GT04": ["Chimal"],
+    "GT05": [], "GT06": [], "GT07": [], "GT08": ["Toto"],
+    "GT09": ["Xela", "Xelajú"], "GT10": ["Suchi"], "GT11": ["Reu"], "GT12": [],
+    "GT13": ["Huehue"], "GT14": ["El Quiché"], "GT15": [], "GT16": [],
+    "GT17": [], "GT18": [], "GT19": [], "GT20": [],
+    "GT21": [], "GT22": []
+  },
+  "dimensiones": [
+    {
+      "id": "poblacion", "nombre": "Población", "fuente_id": "ine-proyecciones",
+      "fuente": "INE · Estimaciones y proyecciones de población (base Censo 2018)", "claves_fuente": ["proyecc"],
+      "indicador": "Población proyectada del departamento y del país", "anio": null, "periodo": null,
+      "unidad": "personas", "per_capita": false, "denominador": null, "desglose_22": true, "estado": "propuesta",
+      "nota": "Año = el del episodio (proyección). Ya se usó la revisión 2019 vía OCHA/HDX COD-PS para 2024 (sesiones/perfil-alta-verapaz). Es también el denominador de las tasas."
+    },
+    {
+      "id": "pobreza", "nombre": "Pobreza", "fuente_id": "ine-encovi",
+      "fuente": "INE · ENCOVI", "claves_fuente": ["ENCOVI"],
+      "indicador": "Incidencia de pobreza total (línea nacional), % de la población", "anio": 2023, "periodo": "2023",
+      "unidad": "% de la población", "per_capita": false, "denominador": null, "desglose_22": null, "estado": "propuesta",
+      "nota": "ENCOVI 2023 verificada para Alta Verapaz y el país vía Banco Mundial (Poverty & Equity Brief, oct. 2024); falta confirmar que el cuadro departamental del INE publique los 22 (desglose_22 null)."
+    },
+    {
+      "id": "desnutricion", "nombre": "Desnutrición crónica", "fuente_id": "mspas-ensmi",
+      "fuente": "MSPAS/INE · ENSMI 2014-2015", "claves_fuente": ["ENSMI"],
+      "indicador": "Desnutrición crónica (talla para la edad < -2 DE), % de menores de 5 años", "anio": 2015, "periodo": "2014-2015",
+      "unidad": "% de menores de 5 años", "per_capita": false, "denominador": null, "desglose_22": true, "estado": "propuesta",
+      "nota": "Informe final 2017, Cuadro 11.1b (verificado para Alta Verapaz). Es la última encuesta con los 22; si sale una ENSMI más reciente con desglose departamental, cambia el año del canon (versión nueva)."
+    },
+    {
+      "id": "educacion", "nombre": "Educación", "fuente_id": "mineduc-anuario",
+      "fuente": "MINEDUC · Anuario Estadístico (SIRE)", "claves_fuente": ["MINEDUC"],
+      "indicador": "Tasa neta de escolaridad del nivel básico, %", "anio": null, "periodo": null,
+      "unidad": "%", "per_capita": false, "denominador": null, "desglose_22": true, "estado": "propuesta",
+      "nota": "El tablero del anuario da la tasa por departamento y la de la República (2025 verificado en sesiones/perfil-alta-verapaz). Año null: el último anuario cerrado; fijarlo para toda la serie al aprobar el canon."
+    },
+    {
+      "id": "homicidios", "nombre": "Seguridad", "fuente_id": "pnc-homicidios",
+      "fuente": "PNC · homicidios por departamento (denominador INE)", "claves_fuente": ["PNC"],
+      "indicador": "Homicidios por cada 100,000 habitantes", "anio": null, "periodo": null,
+      "unidad": "homicidios por 100,000 habitantes", "per_capita": true, "denominador": "población INE (proyección) del mismo año", "desglose_22": true, "estado": "propuesta",
+      "nota": "Sin verificar en este repo: confirmar qué publica la PNC por departamento (o usar INACIF, necropsias por homicidio) y el último año completo. La tasa es cálculo propio con el denominador INE del mismo año (D6)."
+    },
+    {
+      "id": "migracion", "nombre": "Migración", "fuente_id": "igm-retornados",
+      "fuente": "IGM · guatemaltecos retornados (denominador INE)", "claves_fuente": ["IGM"],
+      "indicador": "Retornados adultos por cada 100,000 habitantes de 15 años y más", "anio": 2025, "periodo": "2025",
+      "unidad": "retornados por 100,000 habitantes de 15+", "per_capita": true, "denominador": "población de 15 años y más (CONALFA/INE, proyección 2025)", "desglose_22": true, "estado": "propuesta",
+      "nota": "Base anual del IGM enero–diciembre 2025 con el departamento de origen (verificada en sesiones/perfil-alta-verapaz, cálculo propio)."
+    }
+  ],
+  "alternativas": [
+    {"id": "alfabetismo", "nombre": "Analfabetismo", "fuente": "CONALFA · proyección de población alfabeta y analfabeta por departamento", "anio": 2025, "nota": "Verificado para Alta Verapaz (2025); publica los 22. Candidata si se cambia educación o migración."},
+    {"id": "afiliacion", "nombre": "Empleo formal", "fuente": "IGSS · afiliados cotizantes por departamento (denominador INE)", "anio": null, "nota": "Sin verificar el desglose por departamento."},
+    {"id": "nacimientos", "nombre": "Madres adolescentes", "fuente": "RENAP / INE Estadísticas Vitales · nacimientos de madres de 10–19 años", "anio": null, "nota": "Sin verificar el desglose por departamento del último año."}
+  ]
+}

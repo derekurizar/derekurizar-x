@@ -49,6 +49,7 @@ RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(RAIZ, "scripts"))
 import numeros_es as NE  # noqa: E402
 import verificacion as VM  # noqa: E402
+import departamentos as DP  # noqa: E402  (/departamento: canon, puestos y gates D1–D9)
 
 VOZ = {"voice_id": "8mBRP99B2Ng2QwsJMFQl", "nombre": "El Faraon 4", "modelo": "eleven_multilingual_v2", "idioma": "es"}
 REDES = [{"red": "tiktok", "nombre": "TikTok", "handle": "@derekurizargt"},
@@ -1006,6 +1007,24 @@ def items_de(datos, orden=None):
     return sorted(its, key=lambda x: x[1], reverse=(orden != "asc"))
 
 
+def ranking_ventana(datos, orden, destacar):
+    """/departamento: el ranking completo de una tarjeta (mapa con los 22 o barras-h) visto por una ventana → (filas,
+    índice del destacado en el ranking, total) o None si el destacado no está. filas = [(puesto, nombre, valor)] con None
+    donde va la fila «…»: los 2 primeros, «…», el vecino de arriba, el destacado y el de abajo (si el destacado está
+    entre los 4 primeros, la lista corrida hasta su vecino de abajo)."""
+    todos = items_de(datos, orden)
+    cod = DP.resolver(destacar) if destacar else None
+    nombre = nombres_depto().get(cod, destacar) if cod else destacar
+    idx = next((k for k, (nm, _) in enumerate(todos) if _plano(nm) == _plano(nombre)), None)
+    if idx is None:
+        return None
+    if idx <= 3:
+        ks = list(range(0, min(len(todos), idx + 2)))
+    else:
+        ks = [0, 1, None] + [k for k in (idx - 1, idx, idx + 1) if k < len(todos)]
+    return [None if k is None else (k + 1, todos[k][0], todos[k][1]) for k in ks], idx, len(todos)
+
+
 def puntos_de(datos, guardar_et=(), guardar_v=()):
     """[(etiqueta, valor, sub, destacado)] de una tarjeta antes-despues (2 puntos) o linea (la serie destacada o la
     primera; si tiene más de TIEMPO_PUNTOS, el primero, el último y los que la voz dice (etiquetas `guardar_et` o
@@ -1058,6 +1077,32 @@ def datos_tarjeta(html):
         return json.loads(r.stdout)
     except ValueError:
         return None
+
+
+def lineas_departamento(dep, hilo, tarjetas):
+    """Sección «Modo departamento» del digesto (/departamento, D1–D9; referencias/flujo-departamento.md)."""
+    if not dep:
+        return []
+    nom, cod = dep["nombre"], dep["codigo"]
+    ks = [nom] + list(dep.get("alias") or [])
+    de_tuit = {c: t["n"] for t in hilo.get("tuits") or [] for c in t.get("cifra_ids") or []}
+    mapas = [t["n"] for t in tarjetas if t.get("plantilla") == "mapa" and DP.valores_22(t.get("datos") or {})]
+    pts = ["%s%s: puesto %d de %d (valor %s)" % (k, " (T%d)" % de_tuit[k] if k in de_tuit else "", p["puesto"], p["de"], clave(p["valor"]))
+           for k, p in sorted((dep.get("puestos") or {}).items())]
+    return ["", "## Modo departamento · %s (%s) — serie de los 22 (gates D1–D9, referencias/flujo-departamento.md)" % (nom, cod),
+            "- Gancho de identidad: familia `lugar`, `tu` o `ranking` («Si eres de %s…», «En %s…»). **%s** (o un alias: %s) "
+            "suena en la voz en los primeros %.0f s (D1) y se lee en la pantalla del gancho, o el visual es `lugar` con depto "
+            "%s (D2)." % (nom, nom, nom, ", ".join(ks[1:]) or "—", DP.CLAVE_S, cod),
+            "- Una escena `mapa` con una tarjeta de los 22 que destaca a %s, y un `ranking` con `\"ventana\": true, \"destacar\": "
+            "\"%s\"` sobre OTRA tarjeta de los 22 (D7): los 2 primeros, «…», %s con sus vecinos y «N.º X de 22». La voz dice el "
+            "valor de %s; si dice su puesto, es el calculado (D6). Tarjetas de los 22: %s." % (nom, cod, nom, nom, ", ".join("T%d" % n for n in mapas) or "ninguna"),
+            "- Puestos calculados (orden de mayor a menor; V2 los acepta como respaldo): %s." % ("; ".join(pts) or "—"),
+            "- Cada escena con el valor de %s dice o muestra también el del país, de la misma fuente y periodo (D4)." % nom,
+            "- Duración real ≥ %d s (D8): medio por defecto." % DP.PISO_S,
+            "- Cierre: la frase final nombra %s (D9), sin pedir que compartan, etiqueten ni comenten (F4)." % nom,
+            "- Captions: la 1.ª línea de TikTok, Instagram y Facebook y el título de Shorts nombran %s (D3); algún caption dice "
+            "«Para alguien de %s» (la invitación es implícita: nunca en la voz) y el de TikTok lleva #%s."
+            % (nom, nom, re.sub(r"\s+", "", nom))]
 
 
 def cmd_preparar(a):
@@ -1135,6 +1180,10 @@ def cmd_preparar(a):
           "duracion": a.duracion, "objetivo_s": dur["s"], "musica": musica["id"],
           "ganchos_recientes": recientes, "cierres_recientes": cierres, "animaciones_recientes": anim_rec,
           "promesas_recientes": promesas_rec, "tarjetas": tarjetas, "sugeridas": sugeridas}
+    # /departamento: un perfil de departamento (hilo modo perfil, perfil.tipo departamento) enciende el modo solo
+    dep = DP.estado_video(hilo, datos, tarjetas)
+    if dep:
+        st.update(departamento=dep, palabra_clave=DP.claves(dep["codigo"]), piso_s=DP.PISO_S, serie=DP.SERIE)
     escribir(os.path.join(trabajo, "video.json"), st)
     for aviso in rebasar_tarjetas(hilo_dir, trabajo):
         print("AVISO tarjetas: " + aviso, file=sys.stderr)
@@ -1233,6 +1282,7 @@ def cmd_preparar(a):
            "video anterior cerró con pregunta). `final` (≤ %d palabras) = la última frase de `texto`; nombra el tema del "
            "video, sin cebo y, en un tema sensible, sin preguntar por la vida del espectador. Reglas F1–F8 en "
            "referencias/cierres.md." % ("|".join(MECANISMOS), FINAL_PALABRAS),
+           ] + lineas_departamento(dep, hilo, tarjetas) + [
            "", "## Ganchos recientes (R9: no repitas familia ni visual)"] + lineas_recientes(recientes, a.sin_rotacion) + [
            "", "## Cierres recientes (F7)",
            "- %s" % ("(prueba: sin rotación)" if a.sin_rotacion else "Último cierre: %s · formas bloqueadas: %s · mecanismo de "
@@ -1276,6 +1326,14 @@ def valores_respaldo(hilo_dir):
     titulares = [por_id[i] for t in hilo["tuits"] for i in t.get("cifra_ids") or []
                  if isinstance(por_id.get(i), (int, float))]
     return sorted(valores), titulares, cifras
+
+
+def con_puestos(valores, st):
+    """/departamento (D6): el puesto calculado de cada desglose de los 22 y el total (22) respaldan «N.º 17 de 22» (V2)."""
+    dep = st.get("departamento")
+    if not dep:
+        return valores
+    return sorted(set(valores) | {(float(p["puesto"]), 1.0) for p in (dep.get("puestos") or {}).values()} | {(float(DP.N_DEPTOS), 1.0)})
 
 
 def oracion_de_la_pantalla(texto, pantalla):
@@ -1663,6 +1721,14 @@ def validar_estructura(g, st, dur, tarjetas):
             f.append("V1 escena %d: la escena %s necesita una tarjeta %s (T%s es %s)" % (i, tipo, " o ".join(PLANTILLAS_DE[tipo]), n, tarjetas[n].get("plantilla")))
         elif tipo in ("ranking", "tiempo") and tarjetas[n].get("datos") is None:
             f.append("V1 escena %d: la escena %s necesita los DATA de T%s (video.json sin «datos»: corre preparar de nuevo)" % (i, tipo, n))
+        elif tipo == "ranking" and e.get("ventana"):   # /departamento: la ventana del ranking completo alrededor del destacado
+            dest = e.get("destacar") or (st.get("departamento") or {}).get("codigo")
+            if not dest:
+                f.append("V1 escena %d: un ranking con ventana necesita «destacar» (el código GTxx del departamento)" % i)
+            elif ranking_ventana(tarjetas[n]["datos"], e.get("orden"), dest) is None:
+                f.append("V1 escena %d: T%s no tiene a «%s» entre sus valores (ranking con ventana)" % (i, n, dest))
+            if e.get("orden") not in (None, "desc", "asc"):
+                f.append("V1 escena %d: orden «%s» (desc|asc)" % (i, e.get("orden")))
         elif tipo == "ranking":
             top = e.get("top", RANKING_TOP_DEFECTO)
             its = items_de(tarjetas[n]["datos"], e.get("orden"))
@@ -1752,7 +1818,13 @@ def validar_estructura(g, st, dur, tarjetas):
                 gp = _plano(golpe)
                 if tit and len(gp) >= 8 and (gp in tit or tit in gp):
                     f.append("V9 escena %d: golpe repite el titular de T%s («%s»)" % (i, e.get("tuit"), golpe))
-        if tipo == "ranking" and tarjetas.get(e.get("tuit"), {}).get("datos") is not None:
+        if tipo == "ranking" and e.get("ventana") and tarjetas.get(e.get("tuit"), {}).get("datos") is not None:
+            rv = ranking_ventana(tarjetas[e["tuit"]]["datos"], e.get("orden"), e.get("destacar") or (st.get("departamento") or {}).get("codigo"))
+            if rv:
+                (_, nm, vv) = [x for x in rv[0] if x and x[0] == rv[1] + 1][0]
+                if not escribe_numero(vv, [e.get("texto")]):
+                    f.append("V9 escena %d: la voz no dice el valor del destacado (%s: %s)" % (i, nm, vv))
+        elif tipo == "ranking" and tarjetas.get(e.get("tuit"), {}).get("datos") is not None:
             its = items_de(tarjetas[e["tuit"]]["datos"], e.get("orden"))
             if its and not escribe_numero(its[0][1], [e.get("texto")]):
                 f.append("V9 escena %d: la voz no dice el valor del primer puesto (%s: %s)" % (i, its[0][0], its[0][1]))
@@ -1965,6 +2037,7 @@ def cmd_guion(a):
 
     # V2, V3, V4 y ritmo por escena (escenas + cierre)
     valores, titulares, cifras = valores_respaldo(st["hilo"])
+    valores = con_puestos(valores, st)
     loc, avisos, n_pausas, numeros_gancho = [], [], 0, []
     secuencia_de = {n: k for k, grupo in enumerate(g.get("secuencias") or [] if isinstance(g.get("secuencias"), list) else [], 1)
                     for n in (grupo if isinstance(grupo, list) else [])}
@@ -2110,6 +2183,8 @@ def cmd_guion(a):
                     "foco": e.get("foco") if tipo in CON_TUIT else None,
                     "enlace": e.get("enlace") if i >= 2 else None, "golpe": e.get("golpe") if tipo in CON_TUIT or tipo == "escala" else None,
                     "top": e.get("top", RANKING_TOP_DEFECTO) if tipo == "ranking" else None, "orden": e.get("orden") if tipo == "ranking" else None,
+                    "ventana": bool(e.get("ventana")) if tipo == "ranking" else None,
+                    "destacar": (e.get("destacar") or (st.get("departamento") or {}).get("codigo")) if tipo == "ranking" and e.get("ventana") else None,
                     "escala": {"de_cada": e.get("de_cada"), "etiqueta": (e.get("etiqueta") or "").strip()} if tipo == "escala" else None,
                     "cinetico": cinetico_de(tipo, e),
                     "adivina": {"pregunta": (e.get("pregunta") or "").strip(), "opciones": [o.strip() for o in e.get("opciones") or []],
@@ -2134,8 +2209,14 @@ def cmd_guion(a):
     # V19 (opcional): la palabra clave SEO en la voz de la escena 1 (≤ 3 s estimados), en su pantalla y en la 1.ª línea
     # de los captions; solo si guion.json o video.json declaran `palabra_clave`
     claves = palabras_clave(g.get("palabra_clave") or st.get("palabra_clave"))
-    if claves and escenas and loc:
+    if claves and escenas and loc and not st.get("departamento"):
         fallas.extend(revisar_palabra_clave(claves, loc[0]["voz"], pantalla_escena1(escenas[0]), g.get("caption") or {}))
+    # /departamento: D1–D7 y D9 (D1–D3 son V19 con el nombre del departamento y sus alias; D8 corre en tiempos)
+    if st.get("departamento"):
+        d_f, d_av = DP.validar(g, st, leer(os.path.join(RAIZ, st["hilo"], "datos.json")), leer(os.path.join(RAIZ, st["hilo"], "hilo.json")),
+                               voz1=loc[0]["voz"] if loc else None)
+        fallas.extend(d_f)
+        avisos.extend(d_av)
 
     # F1–F8: la frase final del cierre (remate de consecuencia o, a veces, pregunta; referencias/cierres.md)
     hilo = leer(os.path.join(RAIZ, st["hilo"], "hilo.json"))
@@ -2572,6 +2653,7 @@ def cmd_ganchos(a):
         return falla("ganchos.json ilegible: %s" % e)
     cands = G.get("candidatos") or []
     valores, titulares, cifras = valores_respaldo(st["hilo"])
+    valores = con_puestos(valores, st)
     fallas, por_id = [], {}
     if not CANDIDATOS[0] <= len(cands) <= CANDIDATOS[1]:
         fallas.append("G %d candidatos; van %d–%d de familias distintas" % (len(cands), *CANDIDATOS))
@@ -3504,9 +3586,20 @@ def cmd_tiempos(a):
             dat = datos_t.get(e.get("tuit")) or {}
             dicho_de = lambda v: T["valores"].get(clave(float(v)))  # noqa: E731  [inicio − 0.5, fin] de la palabra que lo dice
             if tipo == "ranking":
-                its = items_de(dat, e.get("orden"))[:(e.get("top") or RANKING_TOP_DEFECTO)]
+                ven = ranking_ventana(dat, e.get("orden"), e.get("destacar")) if e.get("ventana") else None
+                if ven:   # /departamento: los 2 primeros, «…», el destacado y sus vecinos (puestos reales)
+                    filas, k_hi, n_total = ven
+                    sep_en = [j for j, x in enumerate(filas) if x is None]
+                    filas = [x for x in filas if x is not None]
+                    its, puestos_ = [(nm, v) for (_, nm, v) in filas], [p for (p, _, _) in filas]
+                    hi = puestos_.index(k_hi + 1)
+                else:
+                    its = items_de(dat, e.get("orden"))[:(e.get("top") or RANKING_TOP_DEFECTO)]
+                    sep_en, puestos_ = [], list(range(1, len(its) + 1))
+                    hi = None
                 top = len(its)
-                hi = dat.get("destacar") if dat.get("items") and isinstance(dat.get("destacar"), int) and 0 <= dat["destacar"] < top else 0
+                if hi is None:
+                    hi = dat.get("destacar") if dat.get("items") and isinstance(dat.get("destacar"), int) and 0 <= dat["destacar"] < top else 0
                 # la voz manda: cada puesto que la voz dice entra al decirlo; los que no dice entran antes, del último
                 # al primero, repartidos entre el inicio y el primer puesto dicho
                 dichos = {k: dicho_de(valor) for k, (nombre, valor) in enumerate(its)}
@@ -3519,11 +3612,17 @@ def cmd_tiempos(a):
                     d = dichos[k]
                     j = sin_decir.index(k) if k in sin_decir else None
                     start = d[0] + 0.4 if d else a0 + (a1 - a0) * j / max(1, len(sin_decir) - 1)
-                    items.append({"puesto": k + 1, "nombre": nombre, "valor": valor, "hi": k == hi, "start": round(start, 3),
+                    items.append({"puesto": puestos_[k], "nombre": nombre, "valor": valor, "hi": k == hi, "start": round(start, 3),
                                   "dicho": [round(d[0] + 0.5, 3), round(d[1], 3)] if d else None})
+                if ven:
+                    for j in sep_en:   # la fila «…» entra con la primera de las de abajo
+                        items.insert(j, {"sep": True, "start": round(min(x["start"] for x in items[j:]), 3)})
+                    T["ventana"] = {"puesto": k_hi + 1, "de": n_total, "start": round(items[[x.get("hi") for x in items].index(True)]["start"] + 0.6, 3)}
                 T["items"] = items
-                ev += [(it["start"], "item") for it in items]
-                sfx += [(it["start"], "resolucion" if it["hi"] else "tic") for it in items]
+                ev += [(it["start"], "item") for it in items if not it.get("sep")]
+                sfx += [(it["start"], "resolucion" if it["hi"] else "tic") for it in items if not it.get("sep")]
+                if T.get("ventana"):
+                    ev.append((T["ventana"]["start"], "ventana"))
             elif tipo == "tiempo":
                 dichos_v = [float(k) for k in valores]   # los valores que dice la voz (sin los alias ×1000)
                 pts = puntos_de(dat, T["anios"].keys(), dichos_v)
@@ -3611,7 +3710,9 @@ def cmd_tiempos(a):
     # piso de duración (opcional: `piso_s` en video.json) y V19 con los tiempos reales de la voz de la escena 1
     fallas = piso_duracion(total + BUCLE_S, st["piso_s"]) if st.get("piso_s") else []
     claves = palabras_clave(g.get("palabra_clave") or st.get("palabra_clave"))
-    if claves and escenas and g.get("escenas"):
+    if st.get("departamento"):   # /departamento: D8 (el piso) y D1 con la voz real
+        fallas = ["D8 " + x for x in fallas] + (DP.d1_real(st, escenas[0]["palabras"]) if escenas else [])
+    elif claves and escenas and g.get("escenas"):
         fallas += [x for x in revisar_palabra_clave(claves, escenas[0]["palabras"], pantalla_escena1(g["escenas"][0]),
                                                     g.get("caption") or {}) if "voz" in x]
     for x in avisos:
@@ -4229,6 +4330,15 @@ def cmd_entregar(a):
     if not os.path.exists(os.path.join(trabajo, "salida", "video_4x5.mp4")):
         return falla("falta salida/video_4x5.mp4: graba, monta y revisa también --formato 4:5 (el feed de Facebook e "
                      "Instagram) antes de entregar")
+    dep = st.get("departamento")
+    if dep:   # /departamento: D3 sobre los captions finales (los que van a caption.md)
+        d3_f, d3_av = DP.d3(dep["codigo"], g.get("caption") or {})
+        for x in d3_av:
+            print("AVISO", x)
+        if d3_f:
+            for x in d3_f:
+                print("FALLA", x)
+            return 1
     os.makedirs(destino, exist_ok=True)
     for f in ("video.mp4", "subtitulos.srt", "caption.md", "portada.png"):
         shutil.copy2(os.path.join(trabajo, "salida", f), os.path.join(destino, f))
@@ -4267,6 +4377,9 @@ def cmd_entregar(a):
                      "dur": s["dur"]} for e, s in zip(loc["escenas"], E["escenas"])],
         "cierre": g["cierre"], "caption": g["caption"],
     }
+    if dep:   # /departamento: memoria.py --video registra sujeto y serie (el tablero de los 22)
+        entrega.update(serie=DP.SERIE, sujeto=dep["nombre"], departamento={"codigo": dep["codigo"], "nombre": dep["nombre"],
+                                                                         "canon_version": dep.get("canon_version"), "puestos": dep.get("puestos")})
     escribir(os.path.join(destino, "guion.json"), entrega)
     for aid in dict.fromkeys(x["animacion"] for x in entrega["escenas"] if x.get("animacion")):   # usos del catálogo
         r = subprocess.run([sys.executable, os.path.join(RAIZ, "scripts", "animaciones.py"), "--registrar", aid, "--video", st["slug"]],

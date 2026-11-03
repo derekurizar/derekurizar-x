@@ -43,7 +43,11 @@ paso del mecanismo (componentes, tasas, montos) y los desgloses (`partes[]`)
 deben sumar al total, que también se captura; en **`perfil`** cada dimensión
 necesita el valor del sujeto **y** el nacional de la MISMA fuente y año (como
 desglose con `partes [sujeto, nacional]` o como dos cifras) y, para tasas, la
-población INE del sujeto y del país.
+población INE del sujeto y del país. Con **CANON** (`/departamento`) la fuente y el año de cada dimensión vienen
+fijados: captura esa fuente (no otra «parecida») y, donde el canon dice `desglose_22`, el desglose de los 22 como una
+cifra `desglose` con las 22 `partes` y los nombres oficiales del INE (el valor de la cifra = el del departamento) más
+la cifra nacional de la misma fuente y periodo; las tasas por habitante llevan `denominador` (población INE del mismo
+año) y `calculo`.
 
 ## Modo investigación (`/investigacion`)
 

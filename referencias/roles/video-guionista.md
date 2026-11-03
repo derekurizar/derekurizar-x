@@ -278,3 +278,13 @@ referencias con antecedente; más de 6.5 cortes por minuto es aviso). V9 comprue
 dos golpes seguidos; `verbo` del gancho y de cada golpe dentro de la oración que dice su pantalla; promesa literal en 1–2 y pago en el último tercio; `calculo` legible que da el número
 escrito; ritmo ≤ 6 s. Si la directiva trae faltas del crítico o fallos del workflow, corrige **solo** eso y
 vuelve a pasar el gate.
+
+## Modo departamento (`/departamento`)
+
+El digesto trae «Modo departamento» (D1–D9, `referencias/flujo-departamento.md`). El gancho de identidad ya lo eligió el
+crítico. Escenas obligatorias: una `mapa` con una tarjeta de los 22 que destaca al departamento, y un `ranking` con
+`"ventana": true, "destacar": "GTxx"` sobre OTRA tarjeta de los 22 (los 2 primeros, «…», el departamento con sus
+vecinos y «N.º X de 22»): su voz dice el valor del departamento y, si dice el puesto, el calculado del digesto (D6).
+Cada escena con un valor del departamento dice o muestra también el del país (D4). La frase final del cierre nombra el
+departamento (D9) y nunca pide compartir (F4). Captions: la 1.ª línea de TikTok, Instagram y Facebook y el título de
+Shorts lo nombran, y uno dice «Para alguien de <depto>» (D3). Duración real ≥ 61 s (D8): medio por defecto.

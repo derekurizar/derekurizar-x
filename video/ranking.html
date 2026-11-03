@@ -8,7 +8,9 @@
      vienen en S.T.items (los calcula video.py tiempos con los DATA de la tarjeta); el formato de los valores se lee
      de los DATA de tarjeta_N.html (h.js = bloque H de templates/base.html). Estilo Noche (video/comun.css): puestos,
      nombres y valores en Archivo condensado 900 y mayúsculas, en crema; el primero (o el destacado) con su puesto y
-     su barra en el acento. La graba scripts/video_grabar.js. -->
+     su barra en el acento. Con `ventana` (/departamento: S.T.ventana = {puesto, de, start}) la lista es una ventana del
+     ranking completo: los 2 primeros, una fila «…» (S.T.items con sep: true), el departamento destacado con sus vecinos
+     y debajo «N.º X de 22» en el acento. La graba scripts/video_grabar.js. -->
 <link rel="stylesheet" href="comun.css">
 <style>
 #kicker { position: absolute; top: 440px; left: var(--izq); right: var(--der); font: 600 24px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; }
@@ -23,6 +25,11 @@
 .barra b { display: block; height: 100%; width: 0; background: var(--ink); border-radius: 8px; }
 .fila.si .puesto { opacity: 1; color: var(--acento, var(--ink)); }
 .fila.si .barra b { background: var(--acento, var(--ink)); }
+/* ventana (/departamento): la fila «…» entre los primeros y el destacado, y el puesto «N.º X de 22» */
+.fila.sep { grid-template-rows: auto; align-items: center; }
+.fila.sep .nombre { grid-column: 1 / 4; text-align: left; opacity: .55; letter-spacing: .3em; }
+#ventana { position: absolute; left: var(--izq); right: var(--der); font: 900 76px/1 Archivo, sans-serif; font-stretch: 62.5%; text-transform: uppercase; color: var(--acento, var(--ink)); opacity: 0; }
+html.f45 #ventana { font-size: 62px; }
 #fuente { position: absolute; top: 1340px; left: var(--izq); right: var(--der); font: 600 20px/1.2 'JetBrains Mono', monospace; opacity: .75; }
 /* formato 4:5 (1080×1350) para el feed */
 html.f45 #kicker { top: 250px; }
@@ -39,6 +46,7 @@ html.f45 #fuente { top: 1000px; }
 <div id="arriba"><div id="golpe"></div><div id="progreso"></div></div>
 <div id="kicker"></div>
 <div id="lista"></div>
+<div id="ventana"></div>
 <div id="fuente"></div>
 <div id="subs"></div>
 <script src="comun.js"></script>
@@ -56,28 +64,34 @@ window.__listo = (async () => {
   document.getElementById('kicker').textContent = D.kicker || '';
   document.getElementById('fuente').textContent = D.fuente ? 'Fuente: ' + D.fuente : '';
   const f = (v) => H.num(v, D.formato || {});
-  const items = S.T.items || [], max = Math.max(...items.map((x) => Math.abs(x.valor)), 1e-9);
+  const items = S.T.items || [], max = Math.max(...items.filter((x) => !x.sep).map((x) => Math.abs(x.valor)), 1e-9);
   const lista = document.getElementById('lista');
-  lista.innerHTML = items.map((it) => `<div class="fila${it.hi ? ' si' : ''}"><div class="puesto">${it.puesto}</div>` +
+  lista.innerHTML = items.map((it) => it.sep ? '<div class="fila sep"><div class="nombre">…</div></div>' :
+    `<div class="fila${it.hi ? ' si' : ''}"><div class="puesto">${it.puesto}</div>` +
     `<div class="nombre">${esc(it.nombre)}</div><div class="valor"></div><div class="barra"><b></b></div></div>`).join('');
   FILAS = [...lista.querySelectorAll('.fila')].map((el, i) => ({ el, it: items[i], valor: el.querySelector('.valor'), barra: el.querySelector('.barra b'),
-    ancho: 100 * Math.abs(items[i].valor) / max, f }));
-  FILAS.forEach((x) => { x.valor.textContent = f(x.it.valor); });
+    ancho: items[i].sep ? 0 : 100 * Math.abs(items[i].valor) / max, f }));
+  FILAS.forEach((x) => { if (!x.it.sep) x.valor.textContent = f(x.it.valor); });
+  const VEN = S.T.ventana, ven = document.getElementById('ventana');
+  if (VEN) ven.textContent = `N.º ${VEN.puesto} de ${VEN.de}`;
   await document.fonts.ready;
   V.ajustarGolpe(S, F45 ? 250 : 430);
   // zona segura (V.zona, gate V13): las filas y la fuente, con la deriva, terminan antes de los subtítulos. Con top 6
   // las filas se achican (alto y letra en proporción); la fuente va justo debajo de la última fila.
   const Z = V.zona(), fu = document.getElementById('fuente'), base = F45 ? 118 : 150, sep = F45 ? 8 : 10;
-  const cabe = Math.floor((Z.fin - lista.offsetTop - fu.offsetHeight - 14) / (1 + DERIVA) / Math.max(1, FILAS.length)) - sep;
+  const alto_ven = VEN ? ven.offsetHeight + 18 : 0;
+  const cabe = Math.floor((Z.fin - lista.offsetTop - fu.offsetHeight - 14 - alto_ven) / (1 + DERIVA) / Math.max(1, FILAS.length)) - sep;
   if (cabe < base) {
     const k = cabe / base;
     for (const x of FILAS) {
       x.el.style.height = cabe + 'px';
       for (const [sel, px] of [['.puesto', F45 ? 104 : 128], ['.nombre', F45 ? 52 : 62], ['.valor', F45 ? 58 : 68]])
-        x.el.querySelector(sel).style.fontSize = Math.round(px * Math.max(0.7, k)) + 'px';
+        if (x.el.querySelector(sel)) x.el.querySelector(sel).style.fontSize = Math.round(px * Math.max(0.7, k)) + 'px';
     }
   }
-  fu.style.top = Math.ceil(lista.offsetTop + lista.offsetHeight * (1 + DERIVA) + 14) + 'px';
+  const bajo = Math.ceil(lista.offsetTop + lista.offsetHeight * (1 + DERIVA) + 14);
+  if (VEN) ven.style.top = bajo + 'px';
+  fu.style.top = (bajo + alto_ven) + 'px';
   await V.pintarActo(S);   // rótulo de acto (/historia, S.R)
 })();
 
@@ -89,10 +103,12 @@ window.seek = (t) => {
   document.getElementById('kicker').style.opacity = prog(t, ini - 0.3, ini + 0.2);
   document.getElementById('fuente').style.opacity = prog(t, ini + 0.3, ini + 0.8);
   // cada fila entra en su momento (del último puesto al primero): se desliza, su barra crece y su valor cuenta
+  if (T.ventana) document.getElementById('ventana').style.opacity = prog(t, T.ventana.start, T.ventana.start + 0.4);
   for (const x of FILAS) {
     const a = x.it.start, p = prog(t, a, a + 0.4), q = prog(t, a + 0.1, a + 0.7);
     x.el.style.opacity = p;
     x.el.style.transform = `translateX(${((1 - p) * -50).toFixed(1)}px)`;
+    if (x.it.sep) continue;
     x.barra.style.width = (x.ancho * q).toFixed(2) + '%';
     x.valor.textContent = q >= 1 ? x.f(x.it.valor) : x.f(x.it.valor * q);
     // la fila que la voz está diciendo (o el primero al cerrar) late un poco

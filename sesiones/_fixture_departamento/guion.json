@@ -1,0 +1,101 @@
+{
+ "_comentario": "Guion v2 fijo del fixture de /departamento (make departamento-fixture): hilo sesiones/_fixture_perfil/salida (perfil de Huehuetenango, cifras de MAQUETA), duración corto, voz falsa. gancho (lugar) → T1 → mapa (pobreza) → golpe → ranking en ventana (homicidios, puesto 17) → cierre.",
+ "contexto_superior": "Huehuetenango · frente al país",
+ "promesa": {
+  "texto": "¿En qué le va mejor que al país?",
+  "forma": "pregunta",
+  "en": 2,
+  "pago": 5
+ },
+ "bisagra": {
+  "texto": "Aun así, hay una cifra donde sale mejor.",
+  "forma": "contradiccion",
+  "en": 3,
+  "pago": 5
+ },
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "Huehuetenango es el quinto en pobreza de Guatemala. Allí, el 73.8% de la gente vive en pobreza, pero en todo el país es el 56%. ¿En qué le va mejor que al país?"
+  },
+  {
+   "acto": 2,
+   "texto": "Por eso en el mapa se enciende el oeste: Alta Verapaz llega al 83.1% y Quiché al 79.2%, y Huehuetenango queda quinto. Aun así, hay una cifra donde sale mejor. Pero en la violencia, la historia cambia por completo y el mapa se da vuelta de arriba abajo."
+  },
+  {
+   "acto": 3,
+   "texto": "Huehuetenango tiene 6.1 homicidios por cada cien mil habitantes, el puesto 17 de 22, cuando el país tiene 16.1. Solo cinco departamentos tienen menos. Es más pobre que el país, pero mucho menos violento, y esa mezcla no sale en el promedio nacional. En Huehuetenango, la mayoría de las familias vive con menos de lo básico."
+  }
+ ],
+ "escenas": [
+  {
+   "tipo": "gancho",
+   "familia": "ranking",
+   "visual": "lugar",
+   "visual_datos": {
+    "depto": "GT13",
+    "etiqueta": "N.º 5 de 22 en pobreza"
+   },
+   "pantalla": "N.º 5 de 22",
+   "linea": "en pobreza: Huehuetenango",
+   "verbo": "es",
+   "texto": "Huehuetenango es el quinto en pobreza de Guatemala.",
+   "acto": 1
+  },
+  {
+   "tipo": "tarjeta",
+   "tuit": 1,
+   "golpe": "Tres de cada cuatro, pobres",
+   "acto": 1,
+   "texto": "Allí, el 73.8% de la gente vive en pobreza, pero en todo el país es el 56%. ¿En qué le va mejor que al país?"
+  },
+  {
+   "tipo": "mapa",
+   "tuit": 3,
+   "enlace": "por_eso",
+   "golpe": "El oeste y el norte",
+   "acto": 2,
+   "texto": "Por eso en el mapa se enciende el oeste: Alta Verapaz llega al 83.1% y Quiché al 79.2%, y Huehuetenango queda quinto. Aun así, hay una cifra donde sale mejor."
+  },
+  {
+   "tipo": "golpe",
+   "enlace": "pero",
+   "pantalla": "Menos violencia",
+   "linea": "que casi todo el país",
+   "verbo": "cambia",
+   "acto": 2,
+   "texto": "Pero en la violencia, la historia cambia por completo y el mapa se da vuelta de arriba abajo."
+  },
+  {
+   "tipo": "ranking",
+   "tuit": 6,
+   "ventana": true,
+   "destacar": "GT13",
+   "enlace": "y",
+   "golpe": "Puesto 17 de 22",
+   "acto": 3,
+   "texto": "Huehuetenango tiene 6.1 homicidios por cada cien mil habitantes, el puesto 17 de 22, cuando el país tiene 16.1. Solo cinco departamentos tienen menos."
+  }
+ ],
+ "cierre": {
+  "texto": "Es más pobre que el país, pero mucho menos violento, y esa mezcla no sale en el promedio nacional. En Huehuetenango, la mayoría de las familias vive con menos de lo básico.",
+  "resumen": [
+   "Pobreza: N.º 5 de 22",
+   "Homicidios: N.º 17 de 22"
+  ],
+  "tipo": "remate",
+  "forma": "consecuencia",
+  "final": "En Huehuetenango, la mayoría de las familias vive con menos de lo básico.",
+  "consecuencia": {
+   "mecanismo": "quien",
+   "quien": "la mayoría de las familias",
+   "verbo": "vive"
+  }
+ },
+ "caption": {
+  "tiktok": "Huehuetenango: quinto en pobreza y 17 de 22 en homicidios. Para alguien de Huehuetenango. #Huehuetenango #Guatemala #DatosGT",
+  "instagram": "Huehuetenango frente al país: 73.8% en pobreza y 6.1 homicidios por cada cien mil.\nPara alguien de Huehuetenango.\n#Huehuetenango #Guatemala",
+  "facebook": "Huehuetenango frente al país: más pobre (73.8% contra 56%) y menos violento (6.1 contra 16.1 homicidios por cada cien mil). Para alguien de Huehuetenango.",
+  "shorts": "Huehuetenango: más pobre, menos violento\nPara alguien de Huehuetenango. #Shorts #Guatemala"
+ }
+}

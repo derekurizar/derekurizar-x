@@ -1,0 +1,404 @@
+{
+ "slug": "perfil-huehuetenango-fixture",
+ "fecha": "2026-11-03",
+ "modo": "perfil",
+ "paleta": "jade",
+ "smoke": true,
+ "handle": "@DerekUrizar",
+ "hook_tipo": "brecha_territorial",
+ "_comentario": "FIXTURE de /departamento: perfil de Huehuetenango con cifras de MAQUETA (make departamento-fixture).",
+ "perfil": {
+  "sujeto": "Huehuetenango",
+  "tipo": "departamento",
+  "codigo": "GT13",
+  "canon_version": 1,
+  "dimensiones": [
+   {
+    "n": 2,
+    "nombre": "Población",
+    "anio": 2026,
+    "canon": "poblacion"
+   },
+   {
+    "n": 3,
+    "nombre": "Pobreza",
+    "anio": 2023,
+    "canon": "pobreza"
+   },
+   {
+    "n": 4,
+    "nombre": "Desnutrición crónica",
+    "anio": 2015,
+    "canon": "desnutricion"
+   },
+   {
+    "n": 5,
+    "nombre": "Educación",
+    "anio": 2025,
+    "canon": "educacion"
+   },
+   {
+    "n": 6,
+    "nombre": "Seguridad",
+    "anio": 2025,
+    "canon": "homicidios"
+   },
+   {
+    "n": 7,
+    "nombre": "Migración",
+    "anio": 2025,
+    "canon": "migracion"
+   }
+  ]
+ },
+ "sintesis": {
+  "pregunta": "¿Cómo está Huehuetenango frente al país?",
+  "tesis": "Huehuetenango es más pobre que el país (73.8 % frente a 56.0 %) y tiene menos homicidios por habitante (maqueta).",
+  "ancla_id": "hue-c03",
+  "arco": [
+   "gancho",
+   "dimension",
+   "dimension",
+   "dimension",
+   "dimension",
+   "dimension",
+   "dimension",
+   "cierre"
+  ],
+  "no_afirma": [
+   "No afirma que la pobreza explique la migración: se comparan, no se relacionan."
+  ],
+  "incertidumbre": [
+   "Maqueta: todas las cifras son inventadas para la prueba."
+  ],
+  "descartadas": []
+ },
+ "tuits": [
+  {
+   "n": 1,
+   "beat": "gancho",
+   "texto": "Huehuetenango: 3 de cada 4 personas viven en pobreza.\nEn el país son algo más de la mitad. Huehuetenango frente a Guatemala, en seis datos.",
+   "alt_text": "Tarjeta verde: la pobreza total en Huehuetenango es 73.8 % en 2023, frente a 56.0 % en el país (maqueta).",
+   "visual": {
+    "plantilla": "cifra",
+    "kicker": "HUEHUETENANGO · POBREZA TOTAL 2023",
+    "titular": [
+     "Huehuetenango, más",
+     "pobre que el país"
+    ],
+    "nota": "Maqueta: cifras de prueba.",
+    "fuente": "INE · ENCOVI 2023 (maqueta)",
+    "cifra_ids": [
+     "hue-c03",
+     "hue-c04"
+    ],
+    "datos": {
+     "formato": {
+      "prefijo": "",
+      "sufijo": "%",
+      "decimales": 1,
+      "miles": true,
+      "escala": 1
+     },
+     "cifra": {
+      "valor": 73.8,
+      "texto": "de la población, en pobreza"
+     },
+     "contexto": "",
+     "tendencia": null,
+     "comparacion": {
+      "etiqueta": "país",
+      "valor": 56.0,
+      "etiqueta_hero": "Huehuetenango"
+     }
+    }
+   }
+  },
+  {
+   "n": 2,
+   "beat": "dimension",
+   "texto": "",
+   "alt_text": "Tarjeta: Huehuetenango tiene 1,456,210 habitantes proyectados en 2026, de 18,690,530 en el país (maqueta).",
+   "visual": {
+    "plantilla": "cifra",
+    "kicker": "POBLACIÓN 2026 · HUEHUETENANGO Y PAÍS",
+    "titular": [
+     "Uno de los más",
+     "poblados del país"
+    ],
+    "nota": "Proyección INE (maqueta).",
+    "fuente": "INE · proyecciones de población 2026 (maqueta)",
+    "cifra_ids": [
+     "hue-c01",
+     "hue-c02"
+    ],
+    "datos": {
+     "formato": {
+      "prefijo": "",
+      "sufijo": "",
+      "decimales": 0,
+      "miles": true,
+      "escala": 1
+     },
+     "cifra": {
+      "valor": 1456210,
+      "texto": "habitantes en 2026"
+     },
+     "contexto": "",
+     "tendencia": null,
+     "comparacion": {
+      "etiqueta": "país",
+      "valor": 18690530,
+      "etiqueta_hero": "Huehuetenango"
+     }
+    }
+   }
+  },
+  {
+   "n": 3,
+   "beat": "dimension",
+   "texto": "",
+   "alt_text": "Mapa de la pobreza total 2023 en los 22 departamentos; Huehuetenango destacado con 73.8 %; el país, 56.0 % (maqueta).",
+   "visual": {
+    "plantilla": "mapa",
+    "kicker": "POBREZA TOTAL 2023 · % DE LA POBLACIÓN",
+    "titular": [
+     "El norte y el oeste,",
+     "los más pobres"
+    ],
+    "nota": "País: 56.0 %. Maqueta.",
+    "fuente": "INE · ENCOVI 2023 (maqueta)",
+    "cifra_ids": [
+     "hue-c03",
+     "hue-c04"
+    ],
+    "datos": {
+     "formato": {
+      "prefijo": "",
+      "sufijo": "%",
+      "decimales": 0,
+      "miles": true,
+      "escala": 1
+     },
+     "valores": {
+      "GT01": 26.4,
+      "GT02": 52.0,
+      "GT03": 40.1,
+      "GT04": 63.2,
+      "GT05": 47.9,
+      "GT06": 55.0,
+      "GT07": 78.5,
+      "GT08": 77.0,
+      "GT09": 51.3,
+      "GT10": 61.0,
+      "GT11": 54.8,
+      "GT12": 66.9,
+      "GT13": 73.8,
+      "GT14": 79.2,
+      "GT15": 70.1,
+      "GT16": 83.1,
+      "GT17": 58.4,
+      "GT18": 60.2,
+      "GT19": 52.7,
+      "GT20": 69.5,
+      "GT21": 66.1,
+      "GT22": 57.3
+     },
+     "cortes": null,
+     "clases": 5,
+     "redondear": true,
+     "destacar": "GT13",
+     "rotular": "extremos"
+    }
+   }
+  },
+  {
+   "n": 4,
+   "beat": "dimension",
+   "texto": "",
+   "alt_text": "Barras: desnutrición crónica en menores de 5 años, 68.2 % en Huehuetenango y 46.5 % en el país, ENSMI 2014-2015 (maqueta).",
+   "visual": {
+    "plantilla": "barras-h",
+    "kicker": "DESNUTRICIÓN CRÓNICA · MENORES DE 5",
+    "titular": [
+     "Dos de cada tres",
+     "niños, con talla baja"
+    ],
+    "nota": "ENSMI 2014-2015, la última con los 22 (maqueta).",
+    "fuente": "MSPAS/INE · ENSMI 2014-2015 (maqueta)",
+    "cifra_ids": [
+     "hue-c05",
+     "hue-c06"
+    ],
+    "datos": {
+     "formato": {
+      "prefijo": "",
+      "sufijo": "%",
+      "decimales": 1,
+      "miles": true,
+      "escala": 1
+     },
+     "items": [
+      {
+       "nombre": "Huehuetenango",
+       "valor": 68.2
+      },
+      {
+       "nombre": "Guatemala (país)",
+       "valor": 46.5
+      }
+     ],
+     "destacar": 0,
+     "orden": "dado"
+    }
+   }
+  },
+  {
+   "n": 5,
+   "beat": "dimension",
+   "texto": "",
+   "alt_text": "Barras: tasa neta de escolaridad en básico 2025, 38.9 % en Huehuetenango y 46.7 % en el país (maqueta).",
+   "visual": {
+    "plantilla": "barras-h",
+    "kicker": "TASA NETA EN BÁSICO 2025",
+    "titular": [
+     "Menos jóvenes",
+     "en el básico"
+    ],
+    "nota": "Maqueta.",
+    "fuente": "MINEDUC · Anuario Estadístico 2025 (maqueta)",
+    "cifra_ids": [
+     "hue-c07",
+     "hue-c08"
+    ],
+    "datos": {
+     "formato": {
+      "prefijo": "",
+      "sufijo": "%",
+      "decimales": 1,
+      "miles": true,
+      "escala": 1
+     },
+     "items": [
+      {
+       "nombre": "Huehuetenango",
+       "valor": 38.9
+      },
+      {
+       "nombre": "Guatemala (país)",
+       "valor": 46.7
+      }
+     ],
+     "destacar": 0,
+     "orden": "dado"
+    }
+   }
+  },
+  {
+   "n": 6,
+   "beat": "dimension",
+   "texto": "",
+   "alt_text": "Mapa de homicidios por 100,000 habitantes en 2025; Huehuetenango destacado con 6.1, en el puesto 17 de 22; el país, 16.1 (maqueta).",
+   "visual": {
+    "plantilla": "mapa",
+    "kicker": "HOMICIDIOS POR 100,000 HAB. · 2025",
+    "titular": [
+     "Huehuetenango,",
+     "de los más tranquilos"
+    ],
+    "nota": "País: 16.1. Maqueta.",
+    "fuente": "PNC · homicidios 2025 y población INE (maqueta)",
+    "cifra_ids": [
+     "hue-c09",
+     "hue-c10"
+    ],
+    "datos": {
+     "formato": {
+      "prefijo": "",
+      "sufijo": "",
+      "decimales": 1,
+      "miles": true,
+      "escala": 1
+     },
+     "valores": {
+      "GT01": 24.3,
+      "GT02": 14.0,
+      "GT03": 9.2,
+      "GT04": 6.0,
+      "GT05": 38.1,
+      "GT06": 25.4,
+      "GT07": 3.1,
+      "GT08": 1.9,
+      "GT09": 10.5,
+      "GT10": 18.2,
+      "GT11": 20.4,
+      "GT12": 7.0,
+      "GT13": 6.1,
+      "GT14": 3.0,
+      "GT15": 7.5,
+      "GT16": 4.2,
+      "GT17": 26.7,
+      "GT18": 31.9,
+      "GT19": 33.4,
+      "GT20": 35.0,
+      "GT21": 19.8,
+      "GT22": 22.6
+     },
+     "cortes": null,
+     "clases": 5,
+     "redondear": true,
+     "destacar": "GT13",
+     "rotular": "extremos"
+    }
+   }
+  },
+  {
+   "n": 7,
+   "beat": "dimension",
+   "texto": "",
+   "alt_text": "Barras: retornados adultos por 100,000 habitantes de 15 años y más en 2025, 1,180.4 en Huehuetenango y 412.5 en el país (maqueta).",
+   "visual": {
+    "plantilla": "barras-h",
+    "kicker": "RETORNADOS POR 100,000 DE 15+ · 2025",
+    "titular": [
+     "Casi el triple",
+     "de retornados"
+    ],
+    "nota": "Maqueta.",
+    "fuente": "IGM · retornados 2025 y población INE (maqueta)",
+    "cifra_ids": [
+     "hue-c11",
+     "hue-c12"
+    ],
+    "datos": {
+     "formato": {
+      "prefijo": "",
+      "sufijo": "",
+      "decimales": 1,
+      "miles": true,
+      "escala": 1
+     },
+     "items": [
+      {
+       "nombre": "Huehuetenango",
+       "valor": 1180.4
+      },
+      {
+       "nombre": "Guatemala (país)",
+       "valor": 412.5
+      }
+     ],
+     "destacar": 0,
+     "orden": "dado"
+    }
+   }
+  },
+  {
+   "n": 8,
+   "beat": "cierre",
+   "texto": "Huehuetenango es más pobre que el país y retorna casi el triple de migrantes, pero tiene menos homicidios.\n\nAños: 2015, 2023, 2025 y 2026. Fuentes: INE (proyecciones y ENCOVI), MSPAS/INE (ENSMI), MINEDUC, PNC e IGM (maqueta).",
+   "alt_text": "",
+   "visual": null
+  }
+ ]
+}
