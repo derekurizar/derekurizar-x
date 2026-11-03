@@ -44,8 +44,10 @@ Comprueba:
      conocidas, ruta con guion.json (tipo explica), fuentes.md, ejemplos.md y caption.md (el mp4 fuera de git: aviso)
   M13 memoria/sabias.json (si existe; registro de /sabias): campos, ids y slugs únicos, estado, paleta y música
      conocidas, ruta con guion.json (tipo sabias) y caption.md (el mp4 fuera de git: aviso)
-  (reservados, sin código aún: M14 memoria/carruseles.json de /carrusel, M15 memoria/semanas.json de /semana,
-   M16 memoria/series.json de /serie; cada comando agrega su registro y su check al construirse)
+  M14 memoria/carruseles.json (si existe; registro de /carrusel): campos, ids únicos, un carrusel por original,
+     estado, paleta, origen existente, ruta con carrusel.json (tipo carrusel), caption.md, alt.md y sus n_laminas PNG
+  (reservados, sin código aún: M15 memoria/semanas.json de /semana, M16 memoria/series.json de /serie; cada comando
+   agrega su registro y su check al construirse)
   M11 memoria/mejoras.json (si existe; mejoras al framework de cada video): campos, ids únicos mNNN, flujo conocido,
      estado pendiente|hecha|descartada, archivo relativo a la raíz
   K1 design/musica/catalogo.json: cada pista existe, ids únicos, paleta conocida y ≥ 2 pistas por paleta
@@ -667,6 +669,45 @@ def validar_sabias(paletas):
             warn("M13 sabias[%d] %s/video.mp4 no está (fuera de git: se regenera con /sabias)" % (i, r))
 
 
+def validar_carruseles(paletas):
+    """M14 memoria/carruseles.json (registro de /carrusel)."""
+    rel_mem = "memoria/carruseles.json"
+    if not os.path.exists(os.path.join(RAIZ, rel_mem)):  # ausente = ok: memoria.py --carrusel lo crea con el primero
+        return
+    d = cargar(rel_mem) or {}
+    ids, origenes = set(), set()
+    for i, v in enumerate(d.get("carruseles", [])):
+        for campo in ("id", "slug", "fecha", "ruta", "origen", "paleta", "palabra_clave", "portada_forma", "n_laminas", "estado"):
+            if campo not in v:
+                err("M14 carruseles[%d] sin %s" % (i, campo))
+        if v.get("id") in ids:
+            err("M14 carruseles: id repetido %s" % v.get("id"))
+        ids.add(v.get("id"))
+        o = (v.get("origen") or {}).get("ruta")
+        if o in origenes:
+            err("M14 carruseles: dos carruseles del mismo original %s (rehacerlo reemplaza)" % o)
+        origenes.add(o)
+        if v.get("estado") not in ("listo", "publicado", "incompleto"):
+            err("M14 carruseles[%d] estado %r" % (i, v.get("estado")))
+        if paletas and v.get("paleta") not in paletas:
+            err("M14 carruseles[%d] paleta %r desconocida" % (i, v.get("paleta")))
+        r = str(v.get("ruta", ""))
+        if os.path.isabs(r) or (o and os.path.isabs(str(o))):
+            err("M14 carruseles[%d] las rutas deben ser relativas a la raíz" % i)
+            continue
+        if o and not os.path.isdir(os.path.join(RAIZ, str(o))):
+            err("M14 carruseles[%d] el original %s no existe" % (i, o))
+        for f in ("carrusel.json", "caption.md", "alt.md"):
+            if not os.path.exists(os.path.join(RAIZ, r, f)):
+                err("M14 carruseles[%d] %s sin %s" % (i, r, f))
+        for k in range(1, int(v.get("n_laminas") or 0) + 1):
+            if not os.path.exists(os.path.join(RAIZ, r, "lamina_%02d.png" % k)):
+                err("M14 carruseles[%d] %s sin lamina_%02d.png" % (i, r, k))
+        c = cargar(os.path.join(r, "carrusel.json")) if os.path.exists(os.path.join(RAIZ, r, "carrusel.json")) else {}
+        if c and c.get("tipo") != "carrusel":
+            err("M14 carruseles[%d] %s/carrusel.json no es de /carrusel (tipo %r)" % (i, r, c.get("tipo")))
+
+
 def validar_explicaciones(paletas):
     """M12 memoria/explicaciones.json (registro de /explica)."""
     rel_mem = "memoria/explicaciones.json"
@@ -716,8 +757,8 @@ def validar_mejoras():
         if not re.match(r"^m\d{3,}$", str(m.get("id"))) or m.get("id") in ids:
             err("M11 mejoras[%d] id %r inválido o repetido" % (i, m.get("id")))
         ids.add(m.get("id"))
-        if m.get("flujo") not in ("video", "noticias", "historia", "explica", "sabias"):
-            err("M11 mejoras[%d] flujo %r (video|noticias|historia)" % (i, m.get("flujo")))
+        if m.get("flujo") not in ("video", "noticias", "historia", "explica", "sabias", "carrusel"):
+            err("M11 mejoras[%d] flujo %r (video|noticias|historia|explica|sabias|carrusel)" % (i, m.get("flujo")))
         if m.get("estado") not in ("pendiente", "hecha", "descartada"):
             err("M11 mejoras[%d] estado %r" % (i, m.get("estado")))
         if os.path.isabs(str(m.get("archivo", ""))):
@@ -775,6 +816,7 @@ def main():
     validar_historias(paletas)
     validar_explicaciones(paletas)
     validar_sabias(paletas)
+    validar_carruseles(paletas)
     validar_mejoras()
     for a in AVISOS:
         print("AVISO  " + a)

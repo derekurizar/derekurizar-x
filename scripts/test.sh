@@ -23,6 +23,8 @@
 #        · /explica: gates E1–E12 sobre la maqueta del interés compuesto (la calculadora, el chip «Ejemplo» y negativos de
 #          E4, E5, E6, E7, E9, E10 y E11) y make explica-fixture.
 #        · /sabias: gate S1–S3 sobre el dato de prueba (negativos), M13 y make sabias-fixture.
+#        · /carrusel: gates CA1–CA7 sobre el hilo de prueba (negativos), M14, make carrusel-fixture (PNG 1080×1350 y
+#          1080×1920 leídos de la cabecera) y memoria.py --carrusel --dry-run.
 #        Resumen «N pruebas · M fallos»; exit 1 si hay fallos.
 set -u
 RAIZ="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -1801,6 +1803,39 @@ if [[ "$RAPIDO" == "1" ]]; then echo "SKIP   make sabias-fixture (RAPIDO=1)"; el
   paso "make sabias-fixture (9:16 y 4:5 de 20–30 s, V7, V13, V8)" bash -c 'make sabias-fixture >/dev/null && ffprobe -v error -show_entries stream=codec_type,width,height -of csv=p=0 sesiones/_fixture_sabias/salida/video_4x5.mp4 | grep -q "video,1080,1350" && python3 -c "import json; g=json.load(open(\"sesiones/_fixture_sabias/salida/guion.json\")); assert g[\"tipo\"]==\"sabias\" and 20 <= g[\"duracion_s\"] <= 30, g[\"duracion_s\"]"'
   paso "memoria.py --sabias --dry-run sobre la entrega de la maqueta" bash -c "python3 scripts/memoria.py --sabias sesiones/_fixture_sabias/salida --dry-run | grep -q 'gancho pareja · apoyo golpe · cierre consecuencia'"
   paso "sabias.py entregar sin créditos de voz y sin --salida no entrega (voz falsa)" bash -c "! python3 scripts/sabias.py entregar sesiones/_fixture_sabias/trabajo >/dev/null 2>&1"
+fi
+
+echo "== /carrusel (gates CA1–CA8 sobre el hilo de prueba; CA9–CA12 en el render; sin web ni créditos)"
+CT="$TMP/carrusel"
+paso "carrusel.py preparar sobre sesiones/_fixture/salida (base/, tarjetas en Noche, digesto) + guion --check con el carrusel fijo" bash -c "python3 scripts/carrusel.py preparar sesiones/_fixture/salida --trabajo '$CT' --fixture >/dev/null && grep -q 'data-estilo=\"noche\"' '$CT/tarjetas/tuit_1.html' && test -s '$CT/digesto.md' && cp sesiones/_fixture_carrusel/carrusel.json '$CT/' && python3 scripts/carrusel.py guion '$CT' --check >/dev/null"
+paso "carrusel.py preparar rechaza un original en borrador sin --fixture" bash -c "! python3 scripts/carrusel.py preparar sesiones/_fixture/salida --trabajo '$TMP/carrusel_b' >/dev/null 2>&1"
+carrusel_neg() {  # carrusel_neg "código python sobre c" "texto esperado en las FALLA"
+  local S="$TMP/carrusel_neg"; rm -rf "$S"; cp -R "$CT" "$S"
+  python3 -c 'import json,sys; c=json.load(open("sesiones/_fixture_carrusel/carrusel.json")); L=c["laminas"]; exec(sys.argv[1]); json.dump(c, open(sys.argv[2]+"/carrusel.json","w"), ensure_ascii=False)' "$1" "$S" || return 1
+  local out; out="$(python3 scripts/carrusel.py guion "$S" --check 2>&1)" && return 1
+  grep -qF "$2" <<<"$out"
+}
+paso "CA1 rechaza 4 láminas" carrusel_neg 'del L[1:4]' "CA1 4 láminas"
+paso "CA1 rechaza un tuit repetido" carrusel_neg 'L[2]["tuit"]=1' "ya salió en otra lámina"
+paso "CA2 rechaza un título de portada de 12 palabras" carrusel_neg 'L[0]["titulo"]="Llenar el tanque de diésel en Guatemala cuesta mucho más que antes"' "CA2 lámina 1 (portada.titulo): 12 palabras"
+paso "CA3 rechaza una portada sin la palabra clave" carrusel_neg 'L[0]["titulo"]="Llenar el tanque cuesta más"; L[0]["contexto"]="Combustibles · 2026"' "CA3 la palabra clave «diésel» no se lee en la portada"
+paso "CA4 rechaza una cifra inventada" carrusel_neg 'L[3]["cuerpo"]="El crudo subió 61% desde enero."' "CA4 lámina 4 (cuerpo): 61"
+paso "CA5 rechaza una lámina sin fuente" carrusel_neg 'L[5]["fuente"]=""' "CA5 lámina 6 (porque) sin fuente"
+paso "CA6 rechaza «en suma»" carrusel_neg 'L[5]["cuerpo"]="En suma, el diésel mueve los buses."' "CA6 lámina 6 (cuerpo) dice «en suma»"
+paso "CA6 rechaza un enlace" carrusel_neg 'L[3]["cuerpo"]="Más en mem.gob.gt sobre el diésel."' "CA6 lámina 4 (cuerpo) lleva un enlace"
+paso "CA7 rechaza una 1.ª línea de Instagram de 140 caracteres" carrusel_neg 'c["caption"]["instagram"]="Diésel "+"x"*133+"\nresto"' "CA7 caption.instagram: la 1.ª línea tiene 140 caracteres"
+paso "validate.py M14: un registro de /carrusel roto falla" bash -c "R='$TMP/m14'; rm -rf \"\$R\"; mkdir -p \"\$R/memoria\"; printf '{\"carruseles\": [{\"id\": \"a\", \"slug\": \"x\", \"fecha\": \"2026-01-01\", \"ruta\": \"hilos/no-existe/carrusel\", \"origen\": {\"tipo\": \"hilo\", \"ruta\": \"hilos/no-existe\"}, \"paleta\": \"maiz\", \"palabra_clave\": \"x\", \"portada_forma\": \"cifra\", \"n_laminas\": 5, \"estado\": \"listo\"}, {\"id\": \"a\", \"origen\": {\"tipo\": \"hilo\", \"ruta\": \"hilos/no-existe\"}, \"estado\": \"raro\"}]}' > \"\$R/memoria/carruseles.json\"; python3 -c 'import sys; sys.path.insert(0,\"scripts\"); import validate as V; V.RAIZ=sys.argv[1]; V.validar_carruseles({\"maiz\"}); e=\" | \".join(V.ERRORES); assert \"M14 carruseles[1] sin ruta\" in e and \"id repetido a\" in e and \"mismo original\" in e and \"no existe\" in e and \"sin carrusel.json\" in e and \"estado\" in e, e' \"\$R\""
+if [[ "$RAPIDO" == "1" ]]; then echo "SKIP   make carrusel-fixture (RAPIDO=1)"; else
+  paso "make carrusel-fixture (hilo 4:5 + 9:16 y dato 4:5, CA9–CA12, entrega con --salida)" bash -c 'make carrusel-fixture >/dev/null && test -s sesiones/_fixture_carrusel/salida/caption.md && test -s sesiones/_fixture_carrusel/salida/alt.md && test -s sesiones/_fixture_carrusel/salida/contacto.png && test -s sesiones/_fixture_carrusel/salida_dato/lamina_05.png'
+  paso "las láminas miden 1080×1350 (4:5) y 1080×1920 (9:16), leído de la cabecera PNG" python3 -c '
+import glob, struct
+def wh(p):
+    b = open(p, "rb").read(24); assert b[:8] == b"\x89PNG\r\n\x1a\n", p; return struct.unpack(">II", b[16:24])
+a = sorted(glob.glob("sesiones/_fixture_carrusel/salida/lamina_*.png")); v = sorted(glob.glob("sesiones/_fixture_carrusel/salida/9x16/lamina_*.png"))
+assert len(a) == 7 and len(v) == 7, (len(a), len(v))
+assert all(wh(p) == (1080, 1350) for p in a + glob.glob("sesiones/_fixture_carrusel/salida_dato/lamina_*.png")) and all(wh(p) == (1080, 1920) for p in v)'
+  paso "memoria.py --carrusel --dry-run sobre la entrega de la maqueta (y sin --dry-run no registra un fixture)" bash -c "python3 scripts/memoria.py --carrusel sesiones/_fixture_carrusel/salida --dry-run | grep -q '7 láminas (4:5 + 9:16) · portada cifra' && ! python3 scripts/memoria.py --carrusel sesiones/_fixture_carrusel/salida >/dev/null 2>&1"
+  paso "carrusel.py entregar un TRABAJO de prueba sin --salida no entrega" bash -c "! python3 scripts/carrusel.py entregar sesiones/_fixture_carrusel/trabajo >/dev/null 2>&1"
 fi
 
 echo "== /explica (gates E1–E12 sobre la maqueta del interés compuesto; sin web ni créditos)"

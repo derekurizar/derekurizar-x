@@ -96,6 +96,11 @@ for f in .claude/workflows/dato.js .claude/commands/dato.md templates/dato.html 
   if [[ -s "$f" ]]; then ok "$f presente"; else aviso "falta $f (/dato no estará disponible)"; fi
 done
 
+# /carrusel: script, renderizador, plantillas de las láminas, comando y maqueta (sin agentes)
+for f in scripts/carrusel.py scripts/carrusel.js templates/carrusel/lamina.html templates/carrusel/carrusel.css .claude/commands/carrusel.md sesiones/_fixture_carrusel/carrusel.json; do
+  if [[ -s "$f" ]]; then ok "$f presente"; else aviso "falta $f (/carrusel no estará disponible)"; fi
+done
+
 # /fecha: calendario editorial, su script y su comando
 for f in scripts/calendario.py .claude/commands/fecha.md ideas/calendario.json; do
   if [[ -s "$f" ]]; then ok "$f presente"; else aviso "falta $f (/fecha no estará disponible)"; fi

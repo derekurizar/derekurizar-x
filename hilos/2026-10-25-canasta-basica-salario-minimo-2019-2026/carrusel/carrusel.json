@@ -1,0 +1,86 @@
+{
+ "version": 1,
+ "origen": {
+  "tipo": "hilo",
+  "ruta": "hilos/2026-10-25-canasta-basica-salario-minimo-2019-2026"
+ },
+ "slug": "canasta-basica-salario-minimo-2019-2026",
+ "paleta": "maiz",
+ "palabra_clave": "canasta básica",
+ "portada_forma": "cifra",
+ "laminas": [
+  {
+   "tipo": "portada",
+   "contexto": "Canasta básica ÷ salario mínimo · septiembre 2026",
+   "cifra": "0.95",
+   "titulo": "La canasta básica ya cabe en el mínimo",
+   "fuente": "INE (canasta, vía SESAN) · Mintrab (AG 256-2025)",
+   "cifra_ids": [
+    "sal-c11"
+   ]
+  },
+  {
+   "tipo": "tarjeta",
+   "tuit": 1,
+   "golpe": "En 2019 costaba 1.19 salarios mínimos"
+  },
+  {
+   "tipo": "tarjeta",
+   "tuit": 4,
+   "golpe": "Pero parte del cambio es de método"
+  },
+  {
+   "tipo": "tarjeta",
+   "tuit": 3,
+   "golpe": "El mínimo del campo perdió contra la inflación"
+  },
+  {
+   "tipo": "tarjeta",
+   "tuit": 6,
+   "golpe": "La mitad gana Q2,300 o menos"
+  },
+  {
+   "tipo": "tarjeta",
+   "tuit": 7,
+   "golpe": "Y 2 de cada 3 trabajan en la informalidad"
+  },
+  {
+   "tipo": "porque",
+   "cuerpo": "La cifra que mejora es la del salario mínimo. Pero la mitad de quienes trabajan gana Q2,300 o menos, muy lejos de los Q4,021.60 que costó la canasta básica de un hogar en septiembre.",
+   "fuente": "INE · ENEIC 2025 (vía IIES-USAC) · SESAN",
+   "cifra_ids": [
+    "ing-c05",
+    "can-c08"
+   ]
+  },
+  {
+   "tipo": "cierre",
+   "frase": "Para la mitad que gana menos, el papel no llena la mesa."
+  }
+ ],
+ "caption": {
+  "tiktok": "Canasta básica en Guatemala: ya cabe en un salario mínimo, en el papel.\nPero la mitad de quienes trabajan gana Q2,300 o menos. Desliza.\n#Guatemala #canastabasica #salariominimo",
+  "instagram": "Canasta básica en Guatemala: en 2026 ya cabe en un salario mínimo (0.95), en el papel.\n\nEn enero de 2019 costaba 1.19 salarios mínimos. Parte de la mejora es de método: el INE cambió la canasta y el hogar de referencia. El mínimo del campo perdió 1.45% frente a la inflación, y la mitad de quienes trabajan gana Q2,300 al mes o menos.\n\nGuárdalo para cuando hablen del salario mínimo.\nFuentes: INE, SESAN, Mintrab, Banguat, IIES-USAC.\n#Guatemala #canastabasica #salariominimo #economia",
+  "facebook": "Canasta básica en Guatemala: en el papel, la comida de un hogar ya cabe en un salario mínimo (0.95 en septiembre de 2026; 1.19 en enero de 2019).\n\nPero parte de esa mejora es de método, el mínimo del campo perdió ante la inflación y la mitad de quienes trabajan gana Q2,300 al mes o menos. Fuentes: INE, SESAN, Mintrab, Banguat e IIES-USAC."
+ },
+ "alt": {
+  "1": "Portada: canasta básica dividida entre salario mínimo, septiembre de 2026. La cifra 0.95 en grande y el título: la canasta básica ya cabe en el mínimo.",
+  "2": "Tarjeta de cifra: la Canasta Básica Alimentaria urbana de un hogar costó 0.95 salarios mínimos no agrícolas del departamento de Guatemala en septiembre de 2026. Una barra de comparación muestra 1.19 salarios mínimos en enero de 2019, con la metodología anterior del INE. Fuente: INE (canasta vía SESAN) y Mintrab (Acuerdo Gubernativo 256-2025).",
+  "3": "Gráfico de barras del costo mensual de la Canasta Básica Alimentaria de un hogar, en quetzales. Método anterior, hogar de 4.77 personas: diciembre 2019, 3,584.91; diciembre 2020, 2,989.38; diciembre 2021, 3,097.23; diciembre 2022, 3,634.18; diciembre 2023, 3,904.98. Método 2024, canasta urbana familiar: diciembre 2025, 3,858.30; septiembre 2026, 4,021.60. Se destaca la baja de 2020, cuando el INE cambió el método (−610.16 quetzales de noviembre a diciembre). Fuente: INE vía IIES-USAC y SESAN.",
+  "4": "Barras divergentes de la variación real del salario mínimo total entre 2019 y 2026, descontada la inflación del IPC: no agrícola del departamento de Guatemala, más 8.13%; agrícola del resto del país, menos 1.45%. Fuente: Mintrab (Acuerdos Gubernativos) e IPC del INE publicado por Banguat; cálculo propio.",
+  "5": "Gráfico de bullet del ingreso laboral mensual mediano en abril a junio de 2025, en quetzales, frente al salario mínimo agrícola fuera del departamento de Guatemala de 2025 (3,686.86 con bonificación). Sector informal: 1,500. Todos los ocupados: 2,300. Asalariados privados y jornaleros: 3,500. Sector formal: 3,600. Ninguna mediana alcanza el mínimo. Fuente: INE, ENEIC 2025, vía IIES-USAC, y Mintrab.",
+  "6": "Gráfico de waffle de 100 cuadros: 66.2% de la población ocupada trabaja en la informalidad, según la ENEIC de abril a junio de 2025. En el área rural la tasa es 77.8%. Fuente: INE, ENEIC abril a junio de 2025.",
+  "7": "Por qué importa: la cifra que mejora es la del salario mínimo, pero la mitad de quienes trabajan gana Q2,300 o menos, muy lejos de los Q4,021.60 que costó la canasta básica de un hogar en septiembre.",
+  "8": "Cierre: para la mitad que gana menos, el papel no llena la mesa. Guárdalo. Sígueme en TikTok, Instagram, Facebook y X."
+ },
+ "tipo": "carrusel",
+ "id": "carrusel-canasta-basica-salario-minimo-2019-2026",
+ "fecha": "2026-11-03",
+ "tema": "¿Cuántos salarios mínimos cuesta la canasta básica? De 2019 a 2026",
+ "n_laminas": 8,
+ "formatos": [
+  "4:5",
+  "9:16"
+ ],
+ "fixture": false
+}

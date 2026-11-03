@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<!-- Una lámina de /carrusel (?n=K; ?f=916 = 1080×1920 para el modo foto de TikTok, si no 1080×1350). La sirve
+     scripts/carrusel.js desde un origen ficticio (comun.css y vertical.css de video/, carrusel.css de aquí, fuentes
+     de design/fonts/, laminas.json y tarjeta_N.html = la tarjeta N rearmada en Noche); cualquier otra petición se
+     aborta. Tipos: portada (contexto, cifra, contra, título, «Desliza →»), tarjeta (golpe + la tarjeta del original en
+     modo vertical, encajada en su ventana como en video/escena.html), texto (golpe + cuerpo), porque («Por qué
+     importa» + cuerpo) y cierre (frase, «Guárdalo» y «Sígueme en»). Todas con el pie: fuente (menos el cierre), handle
+     y contador n/N. Estática: al terminar pone body[data-listo] (o data-error) y window.__cajaTarjeta (la caja de lo
+     dibujado de la tarjeta, en px de la página) para los checks CA9–CA12 de carrusel.js. -->
+<link rel="stylesheet" href="comun.css">
+<link rel="stylesheet" href="carrusel.css">
+</head>
+<body data-estilo="noche">
+<script>
+(async () => {
+  const q = new URLSearchParams(location.search), n = Number(q.get('n')), F916 = q.get('f') === '916';
+  if (!F916) document.documentElement.classList.add('f45');
+  const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  const todo = await (await fetch('laminas.json')).json();
+  for (const [k, v] of Object.entries(todo.colores)) document.documentElement.style.setProperty('--' + k.replace('_', '-'), v);
+  const L = todo.laminas.find((x) => x.n === n);
+  if (!L) throw new Error('laminas.json no tiene la lámina ' + n);
+  // el golpe: palabra por palabra; la última con cifra (el remate: «de 67 a 102») en el acento (una sola cosa por lámina),
+  // salvo en «2 de cada 3», donde va la primera
+  const golpe = (t) => { const ws = String(t).split(/\s+/).filter(Boolean); let k = ws.map((w) => /\d/.test(w)).lastIndexOf(true);
+    if (k >= 3 && /^de$/i.test(ws[k - 2]) && /^cada$/i.test(ws[k - 1]) && /\d/.test(ws[k - 3])) k -= 3;
+    return ws.map((w, i) => `<span${i === k ? ' class="acento"' : ''}>${esc(w)}</span>`).join(''); };
+  const main = document.createElement('main');
+  main.className = 'lam ' + L.tipo;
+  if (L.tipo === 'portada') {
+    main.innerHTML = (L.contexto ? `<div class="mono tenue contexto">${esc(L.contexto)}</div>` : '')
+      + (L.cifra ? `<div class="condensada cifra acento">${esc(L.cifra)}</div>` : '')
+      + (L.contra ? `<div class="contra tenue">${esc(L.contra)}</div>` : '')
+      + `<div class="titulo">${esc(L.titulo)}</div>`;
+  } else if (L.tipo === 'tarjeta') {
+    main.classList.add('arriba');
+    main.innerHTML = `<div class="condensada golpe">${golpe(L.golpe)}</div>`;
+  } else if (L.tipo === 'texto') {
+    main.innerHTML = `<div class="condensada golpe">${golpe(L.golpe)}</div><div class="cuerpo">${esc(L.cuerpo)}</div>`;
+  } else if (L.tipo === 'porque') {
+    main.innerHTML = `<div class="mono acento">Por qué importa</div><div class="cuerpo">${esc(L.cuerpo)}</div>`;
+  } else if (L.tipo === 'cierre') {
+    // las redes con el mismo handle van juntas («TikTok e Instagram @derekurizargt»)
+    const grupos = [];
+    for (const r of todo.redes) { const g = grupos.find((x) => x.handle === r.handle); if (g) g.nombres.push(r.nombre); else grupos.push({ handle: r.handle, nombres: [r.nombre] }); }
+    const y = (ns) => ns.length > 1 ? ns.slice(0, -1).join(', ') + ' e ' + ns[ns.length - 1] : ns[0];
+    main.innerHTML = `<div class="frase">${esc(L.frase)}</div><div class="guardalo acento">Guárdalo.</div>`
+      + `<div class="redes"><div class="mono tenue">Sígueme en</div>${grupos.map((g) => `<div class="r">${esc(y(g.nombres))} <b>${esc(g.handle)}</b></div>`).join('')}</div>`;
+  }
+  document.body.appendChild(main);
+  if (L.tipo === 'portada') document.body.insertAdjacentHTML('beforeend', '<div class="desliza">Desliza →</div>');
+  document.body.insertAdjacentHTML('beforeend', `<footer id="pie">${L.tipo !== 'cierre' && L.fuente ? `<div class="fuente">Fuente: ${esc(L.fuente)}</div>` : ''}`
+    + `<div class="fila"><span id="handle">${esc(todo.handle)}</span><span id="contador">${L.n}/${L.total}</span></div></footer>`);
+  await Promise.all(["600 30px 'JetBrains Mono'", "800 64px Archivo", "extra-condensed 900 120px Archivo"].map((f) => document.fonts.load(f)));
+  await document.fonts.ready;
+  const css = (v) => parseFloat(getComputedStyle(document.documentElement).getPropertyValue(v));
+  const W = 1080, izq = css('--izq'), der = css('--der'), fin = css('--c-fin');
+  // encajes: la cifra se achica hasta caber en la columna (no baja de 220 px: CA10 lo mide); el golpe, hasta 3 líneas;
+  // el cuerpo o la frase, hasta que la lámina quepa sobre el pie
+  const cifra = main.querySelector('.cifra');
+  for (let fs = 300; cifra && fs > 220 && cifra.scrollWidth > W - izq - der; fs -= 8) cifra.style.fontSize = (fs - 8) + 'px';
+  const g = main.querySelector('.golpe');
+  for (let fs = L.tipo === 'texto' ? 120 : 92; g && fs > 56 && g.offsetHeight > fs * 0.92 * 3 + 4; fs -= 4) g.style.fontSize = (fs - 4) + 'px';
+  const lleno = () => { const cs = [...main.children]; return cs[cs.length - 1].getBoundingClientRect().bottom - cs[0].getBoundingClientRect().top; };
+  for (const el of main.querySelectorAll('.cuerpo, .frase, .titulo')) {
+    const min = el.classList.contains('titulo') ? 96 : 40;
+    for (let fs = parseFloat(getComputedStyle(el).fontSize); fs > min && lleno() > main.clientHeight + 1; fs -= 2) el.style.fontSize = (fs - 2) + 'px';
+  }
+  if (L.tipo === 'tarjeta') {
+    // la tarjeta del original bajo el golpe: se dibuja entera (sin animar), luego modo vertical (sin titular ni
+    // handle: el golpe ya dice el hallazgo) y sin su pie (el de la lámina lleva la fuente); sin fondo propio
+    // (html.en-video): se ve el de la lámina con su grano
+    const top = main.offsetTop + g.offsetTop + g.offsetHeight + 34, alto = css('--c-pie') - 30 - top;
+    document.body.insertAdjacentHTML('beforeend', `<div id="ventana" style="top:${top}px;height:${alto}px"><div id="marco"><iframe id="tarjeta" src="tarjeta_${L.tuit}.html"></iframe></div></div>`);
+    const fr = document.getElementById('tarjeta');
+    const vertical = await (await fetch('vertical.css')).text();
+    await new Promise((r, x) => { const t0 = Date.now(); const i = setInterval(() => { const d = fr.contentDocument;
+      if (d && d.body && d.body.dataset.listo) { clearInterval(i); if (d.body.dataset.error) x(new Error(d.body.dataset.error)); else r(); }
+      else if (Date.now() - t0 > 15000) { clearInterval(i); x(new Error('la tarjeta no terminó de dibujarse')); } }, 50); });
+    const d = fr.contentDocument, st = d.createElement('style');
+    st.textContent = vertical + '\n.pie { display: none !important; }';
+    d.head.appendChild(st);
+    d.documentElement.classList.add('en-video');
+    d.body.getBoundingClientRect();
+    // encaje (como BASE en video/escena.html): la caja de lo dibujado (textos, svg, img, canvas y barras) entra en la columna
+    // y en la ventana; centrada, nunca más de ×1.12
+    const xs = [], ys = [], pon = (b) => { if (b.width && b.height) { xs.push(b.left, b.right); ys.push(b.top, b.bottom); } };
+    const w = d.createTreeWalker(d.body, NodeFilter.SHOW_TEXT);
+    for (let t = w.nextNode(); t; t = w.nextNode()) if (t.textContent.trim() && !t.parentElement.closest('script, style')) { const r = d.createRange(); r.selectNodeContents(t); pon(r.getBoundingClientRect()); }
+    // y las piezas sin hijos que se ven (las barras de antes-despues o de bullet son divs con fondo)
+    for (const e of d.querySelectorAll('svg, img, canvas, #grafico *')) {
+      if (e.closest('svg') && e.tagName.toLowerCase() !== 'svg') continue;
+      const cs = d.defaultView.getComputedStyle(e);
+      if (e.matches('svg, img, canvas') || (!e.firstElementChild && (cs.backgroundColor !== 'rgba(0, 0, 0, 0)' || parseFloat(cs.borderTopWidth) > 0))) pon(e.getBoundingClientRect());
+    }
+    if (!xs.length) throw new Error('la tarjeta ' + L.tuit + ' no dibujó nada');
+    const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
+    const ancho = W - izq - der, s = Math.min(1.12, ancho / (x1 - x0), alto / (y1 - y0));
+    const tx = izq + (ancho - s * (x1 - x0)) / 2 - s * x0, ty = (alto - s * (y1 - y0)) / 2 - s * y0;
+    document.getElementById('marco').style.transform = `translate(${tx.toFixed(1)}px, ${ty.toFixed(1)}px) scale(${s.toFixed(4)})`;
+    window.__cajaTarjeta = [tx + s * x0, top + ty + s * y0, tx + s * x1, top + ty + s * y1].map((v) => Math.round(v));
+  }
+  document.body.dataset.listo = '1';
+})().catch((e) => { document.body.dataset.error = e.message; document.body.dataset.listo = '1'; });
+</script>
+</body></html>

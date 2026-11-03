@@ -3,10 +3,11 @@
  * Hilos · Hoja de contacto: todos los tuit_N.png de una carpeta en una rejilla.
  * ==========================================================================
  * Uso:
- *   node scripts/contacto.js <carpeta> [--out contacto.png] [--celda 540]
+ *   node scripts/contacto.js <carpeta> [--out contacto.png] [--celda 540] [--prefijo tuit_]
  *
- * Toma los tuit_N.png (orden numérico), arma una rejilla (2 columnas si ≤ 4
- * tarjetas, 3 si más) con el número del tuit en una esquina, fondo #F6F2E8, y
+ * Toma los <prefijo>N.png (orden numérico; por defecto tuit_, /carrusel usa lamina_), arma una rejilla (2 columnas
+ * si ≤ 4 imágenes, 3 si más; cada celda de `celda` px de ancho y el alto de la proporción real de la imagen, leída de
+ * su cabecera PNG: 1:1 en las tarjetas, 4:5 o 9:16 en las láminas) con el número en una esquina, fondo #F6F2E8, y
  * hace un screenshot a <carpeta>/contacto.png (deviceScaleFactor 1). Sin
  * peticiones externas: solo file:// (cualquier otra se aborta y el proceso sale 1).
  * Salida: 0 ok · 1 error · 2 uso incorrecto
@@ -18,20 +19,30 @@ const { chromium } = require("playwright");
 const PROTOCOLOS_LOCALES = /^(file|data|blob|about):/;
 
 function parseArgs(argv) {
-  const o = { carpeta: null, out: null, celda: 540 };
+  const o = { carpeta: null, out: null, celda: 540, prefijo: "tuit_" };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === "--out") o.out = argv[++i];
     else if (a === "--celda") o.celda = parseInt(argv[++i], 10);
+    else if (a === "--prefijo") o.prefijo = argv[++i];
     else if (!o.carpeta) o.carpeta = a;
     else { console.error(`ERROR: argumento inesperado ${a}`); process.exit(2); }
   }
   return o;
 }
 
-function tarjetas(carpeta) {
+// proporción alto/ancho de un PNG (cabecera IHDR: ancho y alto en los bytes 16–23)
+function proporcion(archivo) {
+  const b = Buffer.alloc(24), fd = fs.openSync(archivo, "r");
+  try { fs.readSync(fd, b, 0, 24, 0); } finally { fs.closeSync(fd); }
+  const w = b.readUInt32BE(16), h = b.readUInt32BE(20);
+  return w && h ? h / w : 1;
+}
+
+function tarjetas(carpeta, prefijo) {
+  const re = new RegExp("^" + prefijo.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "(\\d+)\\.png$");
   return fs.readdirSync(carpeta)
-    .map((f) => { const m = f.match(/^tuit_(\d+)\.png$/); return m ? { n: parseInt(m[1], 10), f } : null; })
+    .map((f) => { const m = f.match(re); return m ? { n: parseInt(m[1], 10), f, r: proporcion(path.join(carpeta, f)) } : null; })
     .filter(Boolean)
     .sort((a, b) => a.n - b.n);
 }
@@ -41,8 +52,9 @@ function html(items, carpeta, celda) {
   const gap = Math.round(celda * 0.06);
   const marg = Math.round(celda * 0.08);
   const filas = Math.ceil(items.length / cols);
+  const alto = Math.round(celda * Math.max(...items.map((it) => it.r)));   // la celda con la proporción de la más alta
   const w = marg * 2 + cols * celda + (cols - 1) * gap;
-  const h = marg * 2 + filas * celda + (filas - 1) * gap;
+  const h = marg * 2 + filas * alto + (filas - 1) * gap;
   const celdas = items.map((it) => {
     const src = "file://" + path.join(carpeta, it.f);
     return `<div class="c"><img src="${src}" alt="tuit ${it.n}"><span class="n">${it.n}</span></div>`;
@@ -52,9 +64,9 @@ function html(items, carpeta, celda) {
   html, body { margin: 0; background: #F6F2E8; }
   body { width: ${w}px; height: ${h}px; overflow: hidden; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
   .g { display: grid; grid-template-columns: repeat(${cols}, ${celda}px); gap: ${gap}px; padding: ${marg}px; }
-  .c { position: relative; width: ${celda}px; height: ${celda}px; }
+  .c { position: relative; width: ${celda}px; height: ${alto}px; }
   .g { overflow: visible; }
-  .c img { width: ${celda}px; height: ${celda}px; display: block; border-radius: 6px; box-shadow: 0 2px 10px rgba(12,21,32,.14); }
+  .c img { width: ${celda}px; height: auto; display: block; border-radius: 6px; box-shadow: 0 2px 10px rgba(12,21,32,.14); }
   .n { position: absolute; top: -14px; left: -14px; min-width: 44px; height: 44px; padding: 0 12px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border-radius: 22px; background: #0C1520; color: #F6F2E8; font-size: 28px; font-weight: 700; line-height: 1; }
 </style></head><body><div class="g">${celdas}</div></body></html>`;
 }
@@ -62,13 +74,13 @@ function html(items, carpeta, celda) {
 async function main() {
   const o = parseArgs(process.argv.slice(2));
   if (!o.carpeta || !Number.isFinite(o.celda) || o.celda < 100) {
-    console.error("Uso: node scripts/contacto.js <carpeta> [--out contacto.png] [--celda 540]");
+    console.error("Uso: node scripts/contacto.js <carpeta> [--out contacto.png] [--celda 540] [--prefijo tuit_]");
     process.exit(2);
   }
   const carpeta = path.resolve(o.carpeta);
   if (!fs.existsSync(carpeta) || !fs.statSync(carpeta).isDirectory()) { console.error(`ERROR: no existe la carpeta ${o.carpeta}`); process.exit(1); }
-  const items = tarjetas(carpeta);
-  if (!items.length) { console.error(`ERROR: no hay tuit_N.png en ${o.carpeta}`); process.exit(1); }
+  const items = tarjetas(carpeta, o.prefijo);
+  if (!items.length) { console.error(`ERROR: no hay ${o.prefijo}N.png en ${o.carpeta}`); process.exit(1); }
   const out = path.resolve(o.out || path.join(carpeta, "contacto.png"));
   const tmp = path.join(carpeta, ".contacto.html");
   fs.writeFileSync(tmp, html(items, carpeta, o.celda));

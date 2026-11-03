@@ -1,0 +1,54 @@
+/* Láminas de /carrusel (templates/carrusel/lamina.html). Se carga DESPUÉS de video/comun.css, que pone las fuentes
+   locales, el lienzo (1080×1920; html.f45 = 1080×1350), el fondo de la paleta con su grano fijo y .condensada.
+   Estilo Noche (referencias/diseno/sistema.md): texto crema, UNA sola cosa en el acento por lámina (la cifra de la
+   portada, la cifra del golpe, «Por qué importa» o «Guárdalo»; CA11), Archivo 800 en títulos y cuerpos, Archivo
+   condensado 900 en cifras y golpes, JetBrains Mono en contexto, fuente y contador. Solo variables: ningún color
+   escrito aquí (CA11 lo comprueba). Todo texto fuera de la tarjeta ≥ 28 px (CA9: se lee en el teléfono).
+   Columna: x de --izq a 1080 − --der; arriba --c-top y el pie en --c-pie. En 9:16 (modo foto de TikTok) la columna
+   es la de la zona segura de video/comun.css (x 85–876: los íconos de la app ocupan x ≥ 900 desde y≈1070; arriba la
+   barra tapa hasta y≈215; abajo el texto de la app empieza en y≈1645). */
+:root { --c-top: 250px; --c-pie: 1452px; --c-fin: 1430px; }
+html.f45 { --c-top: 84px; --c-pie: 1190px; --c-fin: 1166px; }
+body { color: var(--ink); }
+
+.lam { position: absolute; left: var(--izq); right: var(--der); top: var(--c-top); height: calc(var(--c-fin) - var(--c-top));
+  display: flex; flex-direction: column; justify-content: center; gap: 34px; }
+.lam.arriba { justify-content: flex-start; }
+.lam.portada { height: calc(var(--c-fin) - var(--c-top) - 70px); }   /* «Desliza →» va debajo, sobre el pie */
+
+/* contexto de la portada, kicker del porqué y «Sígueme en»: Mono en mayúsculas */
+.mono { font: 600 30px/1.2 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+.tenue { color: color-mix(in srgb, var(--ink) 72%, transparent); }
+.acento { color: var(--acento); }
+
+/* portada */
+.cifra { font-size: 300px; line-height: .84; letter-spacing: -.01em; white-space: nowrap; }
+.contra { font: 700 46px/1.1 Archivo, sans-serif; }
+.titulo { font: 800 96px/1.02 Archivo, sans-serif; letter-spacing: -.015em; }
+.desliza { position: absolute; right: var(--der); top: calc(var(--c-pie) - 74px); font: 700 36px/1 Archivo, sans-serif; }
+
+/* golpe (tarjeta y texto): condensado en mayúsculas; la palabra con cifra en el acento */
+.golpe { font-size: 92px; line-height: .92; letter-spacing: -.005em; }
+.golpe span { display: inline-block; margin-right: .2em; }
+.cuerpo { font: 600 52px/1.22 Archivo, sans-serif; }
+.porque .cuerpo { font: 700 60px/1.18 Archivo, sans-serif; letter-spacing: -.01em; }
+
+/* la tarjeta del original (1080×1080, en modo vertical: video/vertical.css) en su ventana bajo el golpe */
+#ventana { position: absolute; left: 0; width: 1080px; overflow: hidden; }
+#marco { width: 1080px; height: 1080px; transform-origin: 0 0; }
+#marco iframe { width: 1080px; height: 1080px; border: 0; display: block; }
+
+/* cierre */
+.frase { font: 800 84px/1.05 Archivo, sans-serif; letter-spacing: -.015em; }
+.guardalo { font: 800 52px/1 Archivo, sans-serif; }
+.redes { display: flex; flex-direction: column; gap: 14px; }
+.redes .r { font: 700 40px/1.1 Archivo, sans-serif; }
+.redes .r b { font-weight: 800; }
+
+/* pie: fuente (menos en el cierre), una línea tenue, el handle y el contador n/N (CA12) */
+#pie { position: absolute; left: var(--izq); right: var(--der); top: var(--c-pie); }
+#pie .fuente { font: 500 28px/1.25 'JetBrains Mono', monospace; color: color-mix(in srgb, var(--ink) 80%, transparent);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+#pie .fila { display: flex; justify-content: space-between; align-items: baseline; margin-top: 16px; padding-top: 14px;
+  border-top: 2px solid color-mix(in srgb, var(--ink) 28%, transparent); font: 600 28px/1 'JetBrains Mono', monospace; }
+#pie #contador { letter-spacing: .06em; }

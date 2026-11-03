@@ -1,0 +1,30 @@
+{
+ "version": 1,
+ "origen": {"tipo": "dato", "ruta": "sesiones/_fixture_dato/salida"},
+ "slug": "combustibles-dato-fixture",
+ "paleta": "cielo",
+ "palabra_clave": ["crudo", "barril"],
+ "portada_forma": "pregunta",
+ "laminas": [
+  {"tipo": "portada", "contexto": "Petróleo Brent · 2026", "cifra": "102",
+   "titulo": "¿Cuánto subió el crudo desde enero?", "fuente": "EIA · U.S. Energy Information Administration"},
+  {"tipo": "tarjeta", "tuit": 1, "golpe": "De 67 a 102 dólares el barril"},
+  {"tipo": "texto", "golpe": "52% más en nueve meses",
+   "cuerpo": "El barril tocó 117 dólares en abril y bajó a 84 en julio, pero cerró septiembre muy por encima de enero.",
+   "fuente": "EIA · promedio mensual del Brent", "calculo": "(dat-c01 / dat-c01.serie[0] - 1) * 100"},
+  {"tipo": "porque", "cuerpo": "El barril es la materia prima del combustible: cuando sube afuera, la bomba de cada colonia lo siente después.",
+   "fuente": "EIA · U.S. Energy Information Administration"},
+  {"tipo": "cierre", "frase": "El precio del mundo se paga en la bomba de aquí."}
+ ],
+ "caption": {
+  "tiktok": "El crudo cerró septiembre en 102 dólares el barril, 52% más que en enero.\n#Guatemala #petroleo",
+  "instagram": "El crudo que paga Guatemala: 102 dólares el barril en septiembre.\n\nEn enero costaba 67. Desliza.\n#Guatemala #petroleo #combustibles",
+  "facebook": "El crudo cerró septiembre de 2026 en 102 dólares el barril, 52% más que en enero. Fuente: EIA."
+ },
+ "alt": {
+  "1": "Portada: petróleo Brent en 2026. La cifra 102 en grande y la pregunta: cuánto subió el crudo desde enero.",
+  "3": "Texto: 52% más en nueve meses. El barril tocó 117 dólares en abril, bajó a 84 en julio y cerró septiembre en 102.",
+  "4": "Por qué importa: el barril es la materia prima del combustible; cuando sube afuera, la bomba lo siente después.",
+  "5": "Cierre: el precio del mundo se paga en la bomba de aquí. Guárdalo. Sígueme en TikTok, Instagram, Facebook y X."
+ }
+}

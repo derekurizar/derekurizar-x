@@ -16,6 +16,9 @@ sesiones/_fixture_historia/trabajo/
 !sesiones/_fixture_sabias/
 sesiones/_fixture_sabias/trabajo/
 sesiones/_fixture_sabias/salida/
+!sesiones/_fixture_carrusel/
+sesiones/_fixture_carrusel/trabajo*/
+sesiones/_fixture_carrusel/salida*/
 !sesiones/_fixture_explica/
 sesiones/_fixture_explica/trabajo/
 sesiones/_fixture_explica/salida/

@@ -7,7 +7,7 @@ PALETAS ?= cielo
 ESTILO ?= noche
 PALETA ?= cielo
 
-.PHONY: help nuevo render visual catalogo validate tabla pdf ensamblar limpiar test doctor costo contacto digesto fuentes ideas calendario informe informe-ejemplo informe-catalogo informe-fixture verificacion auditoria-rehacer podar video-fixture video-fixture-4x5 noticias-fixture historia-fixture explica-fixture sabias-fixture musica whisper iconos
+.PHONY: help nuevo render visual catalogo validate tabla pdf ensamblar limpiar test doctor costo contacto digesto fuentes ideas calendario informe informe-ejemplo informe-catalogo informe-fixture verificacion auditoria-rehacer podar video-fixture video-fixture-4x5 noticias-fixture historia-fixture explica-fixture sabias-fixture carrusel-fixture musica whisper iconos
 
 help:
 	@echo "make nuevo T=<plantilla> OUT=<ruta.html> [PALETA=cielo]  ensambla una tarjeta (base + plantilla)"
@@ -35,6 +35,7 @@ help:
 	@echo "make historia-fixture [FPS=10]                           /historia de prueba (maqueta: una panadería inventada, voz falsa, 0 créditos) → sesiones/_fixture_historia/trabajo/salida"
 	@echo "make explica-fixture [FPS=10]                            /explica de prueba (maqueta: el interés compuesto con fuentes de ejemplo, voz falsa, 0 créditos) → sesiones/_fixture_explica/salida"
 	@echo "make sabias-fixture [FPS=10]                             /sabias de prueba (el dato de sesiones/_fixture_dato, voz falsa, 0 créditos) → sesiones/_fixture_sabias/salida"
+	@echo "make carrusel-fixture                                    /carrusel de prueba (hilo y dato de los fixtures: 4:5 y 9:16, CA1–CA12, 0 créditos) → sesiones/_fixture_carrusel/salida[_dato]"
 	@echo "make musica                                              catálogo fijo de música de /video (design/musica/) y sus usos"
 	@echo "make whisper                                             baja una vez el modelo ggml-small de whisper.cpp (escucha V11 de /video; antes: brew install whisper-cpp)"
 	@echo "make iconos                                              biblioteca FIJA de iconos de /video (design/iconos/, Lucide; se baja UNA vez) y su check K3"
@@ -243,6 +244,23 @@ sabias-fixture:   # maqueta de /sabias: el dato de prueba de /dato, guion fijo, 
 	python3 scripts/sabias.py montar $(SF)/trabajo --formato 4:5
 	python3 scripts/sabias.py revisar $(SF)/trabajo --formato 4:5
 	python3 scripts/sabias.py entregar $(SF)/trabajo --salida $(SF)/salida
+
+CF := sesiones/_fixture_carrusel
+carrusel-fixture:   # maqueta de /carrusel: el hilo y el dato de prueba, carrusel.json fijo, 4:5 y 9:16, entrega con --salida
+	rm -rf $(CF)/trabajo $(CF)/trabajo_dato $(CF)/salida $(CF)/salida_dato
+	@test -s sesiones/_fixture/salida/hilo.json || { python3 scripts/materializar.py sesiones/_fixture > /dev/null && python3 scripts/ensamblar.py sesiones/_fixture --check > /dev/null; }
+	@test -s sesiones/_fixture_dato/salida/dato.json || { python3 scripts/materializar.py sesiones/_fixture_dato > /dev/null && python3 scripts/ensamblar.py sesiones/_fixture_dato --check > /dev/null; }
+	python3 scripts/carrusel.py preparar sesiones/_fixture/salida --trabajo $(CF)/trabajo --fixture > /dev/null
+	cp $(CF)/carrusel.json $(CF)/trabajo/
+	python3 scripts/carrusel.py guion $(CF)/trabajo --check
+	python3 scripts/carrusel.py render $(CF)/trabajo
+	python3 scripts/carrusel.py render $(CF)/trabajo --formato 9:16
+	python3 scripts/carrusel.py entregar $(CF)/trabajo --salida $(CF)/salida
+	python3 scripts/carrusel.py preparar sesiones/_fixture_dato/salida --trabajo $(CF)/trabajo_dato --fixture > /dev/null
+	cp $(CF)/carrusel_dato.json $(CF)/trabajo_dato/carrusel.json
+	python3 scripts/carrusel.py guion $(CF)/trabajo_dato --check
+	python3 scripts/carrusel.py render $(CF)/trabajo_dato
+	python3 scripts/carrusel.py entregar $(CF)/trabajo_dato --salida $(CF)/salida_dato
 
 musica:
 	@python3 scripts/video.py musica

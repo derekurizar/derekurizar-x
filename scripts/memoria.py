@@ -64,6 +64,12 @@
   el mismo dato reemplaza. sabias.py lo lee para rotar el visual del gancho, el apoyo, el cierre y la música, y para las
   frases ya usadas. No toca memoria/videos.json (la rotación de /video sigue siendo suya).
 
+--carrusel <<carpeta del original>/carrusel> [--estado listo|incompleto] [--dry-run]
+  memoria/carruseles.json → carruseles[] {id (= carrusel-<slug>), slug, tema, fecha, ruta, origen {tipo, ruta}, paleta,
+  palabra_clave, portada_forma, n_laminas, formatos, estado}; un carrusel por original: registrar el mismo original
+  reemplaza. carrusel.py lo lee para avisar si el original ya tiene carrusel y para la rotación de la portada (CA8).
+  Un carrusel de prueba (fixture) no se registra (solo --dry-run).
+
 --mejoras ARCHIVO.json [--dry-run]
   Las mejoras al framework que encontró una corrida de /video, /noticias o /historia (las lista el reporte final) →
   memoria/mejoras.json → mejoras[] {id (mNNN), fecha, flujo, pieza, area, archivo, problema, propuesta, estado}.
@@ -133,6 +139,12 @@ VACIO_SABIAS = {
     "version": 1,
     "_comentario": "Registro de videos «¿Sabías que…?» producidos por /sabias desde un dato de datos/. Lo escribe SOLO scripts/memoria.py --sabias <datos/<fecha>-<slug>/video>; scripts/sabias.py lo lee para rotar el visual del gancho, el apoyo, el cierre y la música, y para las frases ya usadas. estado: listo | publicado | incompleto.",
     "sabias": [],
+}
+CARRUSELES = os.path.join(RAIZ, "memoria", "carruseles.json")
+VACIO_CARRUSELES = {
+    "version": 1,
+    "_comentario": "Registro de carruseles (láminas 4:5 y 9:16) producidos por /carrusel desde un hilo o un dato entregados. Lo escribe SOLO scripts/memoria.py --carrusel <<original>/carrusel>; scripts/carrusel.py lo lee para avisar si el original ya tiene carrusel y rotar la forma de la portada (CA8). Un carrusel por original. estado: listo | publicado | incompleto.",
+    "carruseles": [],
 }
 MEJORAS = os.path.join(RAIZ, "memoria", "mejoras.json")
 VACIO_MEJORAS = {
@@ -725,6 +737,41 @@ def registrar_sabias(d, estado, dry_run=False):
     return 0
 
 
+def registrar_carrusel(d, estado, dry_run=False):
+    """--carrusel DIR: registra en memoria/carruseles.json el carrusel entregado en DIR (<original>/carrusel, con el
+    carrusel.json de entrega de scripts/carrusel.py entregar)."""
+    ruta = os.path.normpath(os.path.relpath(os.path.abspath(d), RAIZ)) if os.path.isabs(d) else os.path.normpath(d)
+    c = leer(os.path.join(RAIZ, ruta, "carrusel.json"), obligatorio=False)
+    if not c or c.get("tipo") != "carrusel" or not c.get("id"):
+        print("ERROR: %s no tiene carrusel.json de entrega (scripts/carrusel.py entregar)" % ruta, file=sys.stderr)
+        return 1
+    reg = {"id": c["id"], "slug": c["slug"], "tema": c.get("tema", ""), "fecha": c["fecha"], "ruta": ruta,
+           "origen": c["origen"], "paleta": c["paleta"], "palabra_clave": c.get("palabra_clave"),
+           "portada_forma": c.get("portada_forma"), "n_laminas": c.get("n_laminas"), "formatos": c.get("formatos") or [],
+           "estado": estado}
+    print("carrusel %s · %d láminas (%s) · portada %s · clave %s · %s" % (
+        reg["id"], reg["n_laminas"] or 0, " + ".join(reg["formatos"]), reg["portada_forma"],
+        json.dumps(reg["palabra_clave"], ensure_ascii=False), estado))
+    if dry_run:
+        print("[dry-run] no se escribió nada")
+        return 0
+    if c.get("fixture"):
+        print("ERROR: %s es un carrusel de prueba (fixture): no se registra" % ruta, file=sys.stderr)
+        return 1
+    mc = leer(CARRUSELES, obligatorio=False) or json.loads(json.dumps(VACIO_CARRUSELES))
+    previos = [i for i, v in enumerate(mc["carruseles"]) if (v.get("origen") or {}).get("ruta") == reg["origen"]["ruta"]]
+    if previos:  # un carrusel por original: rehacerlo reemplaza (y conserva «publicado»)
+        if mc["carruseles"][previos[0]].get("estado") == "publicado" and estado == "listo":
+            reg["estado"] = "publicado"
+        mc["carruseles"][previos[0]] = reg
+    else:
+        mc["carruseles"].append(reg)
+    mc["carruseles"].sort(key=lambda v: (v["fecha"], v["id"]))
+    escribir(CARRUSELES, mc)
+    print("escrito memoria/carruseles.json (%d)" % len(mc["carruseles"]))
+    return 0
+
+
 def registrar_mejoras(archivo, dry_run=False):
     """--mejoras ARCHIVO: añade las mejoras al framework de una corrida a memoria/mejoras.json (sin repetir una pendiente)."""
     d = leer(archivo, obligatorio=False)
@@ -815,6 +862,7 @@ def main():
     g.add_argument("--sabias", metavar="DIR", help="registra el «¿Sabías que…?» de /sabias entregado en DIR (datos/<fecha>-<slug>/video) en memoria/sabias.json")
     g.add_argument("--historia", metavar="DIR", help="registra la historia de /historia entregada en DIR (historias/<fecha>-<slug>) en memoria/historias.json")
     g.add_argument("--explica", metavar="DIR", help="registra el video de /explica entregado en DIR (explicaciones/<fecha>-<slug>) en memoria/explicaciones.json")
+    g.add_argument("--carrusel", metavar="DIR", help="registra el carrusel de /carrusel entregado en DIR (<original>/carrusel) en memoria/carruseles.json")
     g.add_argument("--mejoras", metavar="ARCHIVO", help="añade las mejoras al framework de una corrida (JSON {flujo, pieza, mejoras[]}) a memoria/mejoras.json")
     g.add_argument("--ver-mejoras", nargs="?", const="", metavar="ESTADO", help="lista las mejoras de memoria/mejoras.json (con ESTADO: pendiente|hecha|descartada)")
     g.add_argument("--marcar-mejora", metavar="ID", help="cambia el estado de una mejora (con --como)")
@@ -843,6 +891,8 @@ def main():
         return registrar_video(a.video, a.estado, a.dry_run)
     if a.noticias:
         return registrar_noticias(a.noticias, a.estado, a.dry_run)
+    if a.carrusel:
+        return registrar_carrusel(a.carrusel, a.estado, a.dry_run)
     if a.sabias:
         return registrar_sabias(a.sabias, a.estado, a.dry_run)
     if a.historia:

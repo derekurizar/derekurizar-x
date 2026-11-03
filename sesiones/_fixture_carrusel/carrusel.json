@@ -1,0 +1,35 @@
+{
+ "version": 1,
+ "origen": {"tipo": "hilo", "ruta": "sesiones/_fixture/salida"},
+ "slug": "combustibles-2026-fixture",
+ "paleta": "cielo",
+ "palabra_clave": "diésel",
+ "portada_forma": "cifra",
+ "laminas": [
+  {"tipo": "portada", "contexto": "Diésel en Guatemala · enero a septiembre de 2026", "cifra": "77%",
+   "titulo": "Llenar el tanque de diésel cuesta más", "fuente": "MEM · Dirección General de Hidrocarburos",
+   "cifra_ids": ["pre-c02", "pre-c03"], "calculo": "(pre-c03 / pre-c02 - 1) * 100"},
+  {"tipo": "tarjeta", "tuit": 1, "golpe": "El barril pasó de 67 a 102 dólares"},
+  {"tipo": "tarjeta", "tuit": 2, "golpe": "El galón de diésel, de Q26 a Q46.10"},
+  {"tipo": "texto", "golpe": "El diésel subió más que el crudo",
+   "cuerpo": "El crudo subió 52% desde enero; el diésel en la bomba, 77%. El golpe llegó más fuerte a Guatemala que al barril.",
+   "fuente": "EIA · MEM", "calculo": ["(pre-c01 / pre-c01.serie[0] - 1) * 100", "(pre-c03 / pre-c02 - 1) * 100"]},
+  {"tipo": "tarjeta", "tuit": 3, "golpe": "Aun así, en México se paga más"},
+  {"tipo": "porque", "cuerpo": "El diésel mueve los buses y los camiones que llevan la comida al mercado. Por eso el precio de la bomba no se queda en la bomba.",
+   "fuente": "MEM · Dirección General de Hidrocarburos"},
+  {"tipo": "cierre", "frase": "Cada viaje al mercado ya cuesta más que en enero."}
+ ],
+ "caption": {
+  "tiktok": "Diésel en Guatemala: 77% más caro que en enero de 2026.\nEl crudo subió 52%; la bomba, más. Desliza y guárdalo.\n#Guatemala #diesel #combustibles",
+  "instagram": "Diésel en Guatemala: llenar el tanque cuesta 77% más que en enero.\n\nEl barril pasó de 67 a 102 dólares y el galón de diésel, de Q26 a Q46.10. Desliza para ver cómo quedamos frente a los vecinos.\n\nFuentes: EIA y MEM.\n#Guatemala #diesel #combustibles #economia",
+  "facebook": "Diésel en Guatemala: llenar el tanque cuesta 77% más que en enero de 2026.\n\nEl crudo subió 52% en el mismo lapso. Las cifras, lámina por lámina. Fuentes: EIA y MEM."
+ },
+ "alt": {
+  "1": "Portada: diésel en Guatemala de enero a septiembre de 2026. La cifra 77% en grande y el título: llenar el tanque de diésel cuesta más.",
+  "2": "Tarjeta: el Brent pasó de 67 dólares por barril en enero a 102 en septiembre de 2026. Fuente: EIA.",
+  "3": "Tarjeta: el diésel en Guatemala pasó de 26.00 quetzales por galón en enero a 46.10 en septiembre. Fuente: MEM.",
+  "4": "Texto: el diésel subió más que el crudo. El crudo subió 52% desde enero y el diésel en la bomba 77%.",
+  "6": "Por qué importa: el diésel mueve los buses y los camiones que llevan la comida al mercado.",
+  "7": "Cierre: cada viaje al mercado ya cuesta más que en enero. Guárdalo. Sígueme en TikTok, Instagram, Facebook y X."
+ }
+}

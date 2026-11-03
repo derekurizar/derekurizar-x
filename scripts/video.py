@@ -1817,16 +1817,20 @@ def palabras_clave(x):
     return [str(c).strip() for c in (x or []) if str(c or "").strip()]
 
 
-def revisar_palabra_clave(clave, voz, pantalla_textos, captions, max_s=PALABRA_CLAVE_S, plataformas=PALABRA_CLAVE_PLATAFORMAS):
+def revisar_palabra_clave(clave, voz, pantalla_textos, captions, max_s=PALABRA_CLAVE_S, plataformas=PALABRA_CLAVE_PLATAFORMAS,
+                          codigo="V19", donde="la pantalla de la escena 1"):
     """V19 (opcional, SEO): la palabra clave (string o lista de alias; sin tildes ni mayúsculas) suena en la voz de la
     escena 1 antes de `max_s`, se lee en algún texto de pantalla de la escena 1 y abre la 1.ª línea del caption de cada
     plataforma pedida (`shorts`: su título, la 1.ª línea). `voz` es el texto hablado de la escena 1 (se estima con CPS:
-    caracteres antes de la clave / CPS) o la lista de palabras con tiempos [{text, start}] (tiempos reales). → faltas."""
+    caracteres antes de la clave / CPS) o la lista de palabras con tiempos [{text, start}] (tiempos reales); `voz=None` no
+    revisa la voz (una pieza sin voz: /carrusel, CA3, con su `codigo` y `donde`). → faltas."""
     claves = palabras_clave(clave)
     if not claves:
         return []
     nombre, f = "«%s»" % "» / «".join(claves), []
-    if isinstance(voz, (list, tuple)):
+    if voz is None:
+        t_clave, como = 0.0, "sin voz"
+    elif isinstance(voz, (list, tuple)):
         ws = [w for w in voz if isinstance(w, dict)]
         toks, idx = [], []
         for j, w in enumerate(ws):
@@ -1845,15 +1849,17 @@ def revisar_palabra_clave(clave, voz, pantalla_textos, captions, max_s=PALABRA_C
         k = _busca_clave(toks, claves)
         t_clave = len(" ".join(palabras_voz[:idx[k]])) / CPS if k is not None else None
         como = "estimado"
-    if t_clave is None:
-        f.append("V19 la voz de la escena 1 no dice la palabra clave %s" % nombre)
+    if voz is None:
+        pass
+    elif t_clave is None:
+        f.append(codigo + " la voz de la escena 1 no dice la palabra clave %s" % nombre)
     elif t_clave > max_s:
-        f.append("V19 la palabra clave %s suena a los %.1f s (%s) en la voz de la escena 1: máximo %.0f s"
+        f.append(codigo + " la palabra clave %s suena a los %.1f s (%s) en la voz de la escena 1: máximo %.0f s"
                  % (nombre, t_clave, como, max_s))
     if isinstance(pantalla_textos, str):
         pantalla_textos = [pantalla_textos]
     if not any(_busca_clave(_tokens_clave(x), claves) is not None for x in pantalla_textos or []):
-        f.append("V19 la palabra clave %s no se lee en la pantalla de la escena 1" % nombre)
+        f.append(codigo + " la palabra clave %s no se lee en %s" % (nombre, donde))
     captions = captions or {}
     for p in plataformas:
         txt = captions.get(p) or ""
@@ -1861,9 +1867,9 @@ def revisar_palabra_clave(clave, voz, pantalla_textos, captions, max_s=PALABRA_C
             txt = titulo_shorts(captions.get("tiktok") or "")
         lineas = [x for x in str(txt).splitlines() if x.strip()]
         if not lineas:
-            f.append("V19 falta caption.%s (la palabra clave %s va en su 1.ª línea)" % (p, nombre))
+            f.append(codigo + " falta caption.%s (la palabra clave %s va en su 1.ª línea)" % (p, nombre))
         elif _busca_clave(_tokens_clave(lineas[0]), claves) is None:
-            f.append("V19 caption.%s: la 1.ª línea%s no lleva la palabra clave %s"
+            f.append(codigo + " caption.%s: la 1.ª línea%s no lleva la palabra clave %s"
                      % (p, " (el título)" if p == "shorts" else "", nombre))
     return f
 
