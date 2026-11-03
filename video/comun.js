@@ -1,6 +1,6 @@
 // Módulo común de las páginas de escena de /video (video/*.html), objeto global V: parámetros de la URL (?n=, ?f=45,
 // ?portada=1), curvas, carga de escenas.json, DATA de una tarjeta, golpe de arriba, barra de progreso, subtítulos y el
-// rótulo de acto de /historia (S.R: pintarActo, seekActo, desfase).
+// rótulo de acto de /historia (S.R: pintarActo, seekActo, desfase) y el chip o sello (S.chip, S.ejemplo: V.chip).
 // Cada página lo carga antes de su script y usa V.*; lo propio de la escena (cifra, mapa, filas…) sigue en la página.
 // Todo es función de t (seek), sin relojes: los clips salen idénticos en serie y en paralelo. Lo sirve
 // scripts/video_grabar.js; la hoja común es video/comun.css.
@@ -28,6 +28,33 @@ const V = (() => {
       cur.push(p); if (/[.?:;…]$/.test(p.text)) { out.push(cur); cur = []; } }
     if (cur.length) out.push(cur); return out; };
 
+  // CHIP o sello en pantalla («Ejemplo», «MITO», «Parte 2 de 4», «#3 · Economía»): chip({texto, tono, desde, pos, id})
+  // · tono: «ink» (crema con borde tenue, el de «Ejemplo»), «acento» (el acento del tema) o «tenue» (apagado)
+  // · pos: «arriba» (a la derecha, sobre la columna de iconos: x ≤ 1023, y ≥ 232) o «abajo» (a la izquierda, sobre los
+  //   subtítulos: termina antes de --fin); varios chips en la misma posición se apilan
+  // · desde: segundo de la escena en que entra (fundido de 0.25 s; antes no se ve ni lo mide V13); 0 = desde el cuadro 0
+  // Va en un contenedor .vchips (sin fondo) y cada chip lleva borde: V13 (medirZona) lo mide como cualquier caja. Solo
+  // colores por variables. Lo pinta V.cargar desde S.chip (y S.ejemplo); las páginas no hacen nada: lo mueve
+  // V.seekProgreso, que todas llaman en su seek. → el elemento.
+  const CHIPS = [];
+  const TONOS = ['ink', 'acento', 'tenue'];
+  function chip(o = {}) {
+    if (o.id && document.getElementById(o.id)) return document.getElementById(o.id);
+    const pos = o.pos === 'abajo' ? 'abajo' : 'arriba';
+    let caja = document.querySelector('.vchips.' + pos);
+    if (!caja) { caja = document.createElement('div'); caja.className = 'vchips ' + pos; document.body.appendChild(caja); }
+    const el = document.createElement('div');
+    if (o.id) el.id = o.id;
+    el.className = 'vchip ' + (TONOS.includes(o.tono) ? o.tono : 'ink');
+    el.textContent = String(o.texto ?? '');
+    caja.appendChild(el);
+    const desde = Math.max(0, Number(o.desde) || 0);
+    CHIPS.push({ el, desde });
+    if (desde > 0) el.style.opacity = '0';
+    return el;
+  }
+  const seekChips = (t) => { for (const c of CHIPS) if (c.desde > 0) c.el.style.opacity = eo((t - c.desde) / 0.25).toFixed(3); };
+
   // escenas.json → { todo, S, trozos }: la paleta como variables CSS (--bg, --ink, --resalte-bg…) y la escena ?n=N
   // (o la que elija `buscar`)
   async function cargar(buscar) {
@@ -37,9 +64,10 @@ const V = (() => {
     // Noche: el acto 2 de /historia (el nudo) baja el fondo a fondo_acto2; la escena lo hereda entera (cuerpo y velos)
     if (S && S.acto === 2 && todo.colores.fondo_acto2) document.documentElement.style.setProperty('--bg', todo.colores.fondo_acto2);
     // /explica: una escena con números de ejemplo (ilustrativos, calculados por scripts/explica.py) lleva el chip «Ejemplo»
-    // fijo arriba a la derecha, fuera de la columna del golpe y dentro de la zona segura
-    if (S && S.ejemplo && !document.getElementById('ejemplo')) {
-      const chip = document.createElement('div'); chip.id = 'ejemplo'; chip.textContent = 'Ejemplo'; document.body.appendChild(chip); }
+    // fijo arriba a la derecha, fuera de la columna del golpe y dentro de la zona segura (S.ejemplo → chip)
+    if (S && S.ejemplo) chip({ texto: 'Ejemplo', tono: 'ink', id: 'ejemplo' });
+    // cualquier escena: el chip o sello que pongan los scripts en escenas.json (S.chip = {texto, tono, desde, pos})
+    if (S && S.chip && S.chip.texto) chip(S.chip);
     return { todo, S, trozos: trocear(S.palabras) };
   }
   // el objeto DATA de tarjeta_N.html (el tuit_N.html del hilo)
@@ -96,6 +124,7 @@ const V = (() => {
     document.getElementById('progreso').innerHTML = GRUPOS.map((g) => `<i style="flex:${g.durs.reduce((a, b) => a + b, 0).toFixed(2)}"><b></b></i>`).join('');
   };
   const seekProgreso = (t, k, dur) => {
+    seekChips(t);   // los chips (V.chip) entran a su segundo: todas las páginas llaman seekProgreso en su seek
     const gi = GRUPOS.findIndex((g) => g.ns.includes(k)), g = GRUPOS[gi] || { ns: [k], durs: [dur] };
     const j = g.ns.indexOf(k), antes = g.durs.slice(0, j).reduce((a, b) => a + b, 0), total = g.durs.reduce((a, b) => a + b, 0);
     const avance = clamp((antes + Math.max(0, Math.min(t, dur)) * (g.durs[j] || dur) / Math.max(0.001, dur)) / Math.max(0.001, total));
@@ -274,6 +303,6 @@ const V = (() => {
     return fallas;
   };
 
-  return { n, F45, portada, clamp, eo, prog, esc, normal, trocear, cargar, tarjeta, acentoDe, pintarGolpe, ajustarGolpe, seekGolpe,
+  return { n, F45, portada, clamp, eo, prog, esc, normal, trocear, cargar, tarjeta, chip, seekChips, acentoDe, pintarGolpe, ajustarGolpe, seekGolpe,
     pintarProgreso, seekProgreso, subtitulos, subtitulosVentana, desfase, pintarActo, seekActo, zona, medirZona };
 })();

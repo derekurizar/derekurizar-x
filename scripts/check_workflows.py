@@ -27,6 +27,8 @@ El sandbox del Workflow no importa módulos, así que hilo.js, dato.js e ideas.j
       scripts/historia.py
   W13 explica.js: TIPOS (los de video.py más cuenta), FAMILIAS, VISUALES, PUNTAJES y MODELOS son espejos literales de
       scripts/explica.py, y SEGUN_MAX es su SEGUN_MAX_VIDEO
+      (reservado: W13 se amplía con la tabla MODOS de explica.js, modo mito, espejo de explica.py; y W11 con el modo
+      semana de noticias.js; los agrega cada comando al construirse)
 
 Uso: python3 scripts/check_workflows.py [--quiet]   · salida 0 ok · 1 diferencias
 """

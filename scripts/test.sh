@@ -727,7 +727,7 @@ assert L[0]["voz"].startswith("Tu galón de diésel costaba veintiséis") and L[
 assert L[0]["visual"] == {"tipo": "llenado", "capacidad": 26.0, "total": 46.1, "unidad": "quetzales"}, L[0]["visual"]
 assert all(e["prompt"] == e["voz"] for e in L), "el guion del fixture no lleva pausas"
 ' "$VT/locucion.json"
-paso "video.py narracion --check sobre el fixture: 0 fallas e imprime palabras, conectores y «según» por acto" bash -c "python3 scripts/video.py narracion '$VT' --check > '$TMP/vnarr.out' && grep -q 'acto 2 · ' '$TMP/vnarr.out' && grep -q 'conector(es) (por eso, así que)' '$TMP/vnarr.out' && grep -q 'narracion ok' '$TMP/vnarr.out'"
+paso "video.py narracion --check sobre el fixture: 0 fallas e imprime palabras, conectores y «según» por acto" bash -c "python3 scripts/video.py narracion '$VT' --check > '$TMP/vnarr.out' && grep -q 'acto 2 · ' '$TMP/vnarr.out' && grep -q 'conector(es) (por eso, aun así, así que)' '$TMP/vnarr.out' && grep -q 'narracion ok' '$TMP/vnarr.out'"
 paso "secuencias de voz por acto: el gate las deriva (sin el gancho ni el cierre) y la locución las graba de corrido" python3 -c '
 import json, sys
 L = json.load(open(sys.argv[1], encoding="utf-8"))
@@ -777,6 +777,40 @@ paso "video gate: remate que proyecta una pérdida al futuro → F8" video_neg "
 paso "video gate: remate con «?» → F2" video_neg "F2 un remate no es una pregunta" 'G["cierre"]["final"] = "¿Tu galón pasó de 26 a 46.1 quetzales?"; G["cierre"]["texto"] = "El barril subió y la bomba lo sintió en todo el país. " + G["cierre"]["final"]'
 paso "video gate: «no tenían 2 años» para una edad → V5" video_neg "V5 «no tenían 2 años» no se entiende" 'G["escenas"][2]["texto"] += " Los conductores no tenían 2 años."'
 paso "video gate: forma de cierre desconocida → F1" video_neg "F1 cierre.forma «moraleja»" 'G["cierre"]["forma"] = "moraleja"'
+# Fase 0 (piezas comunes de /carrusel, /mito, /departamento, /semana y /serie): piso de duración y V19 palabra clave
+paso "video.py piso_duracion: 60 s falla con el piso de 61, 75 s pasa, sin piso no corre" python3 -c '
+import sys; sys.path.insert(0, "scripts"); import video as v
+f = v.piso_duracion(60, minimo=61); assert len(f) == 1 and "60.0 s" in f[0] and "61" in f[0], f
+assert v.piso_duracion(75) == [] and v.piso_duracion(61) == [] and v.piso_duracion(60, minimo=None) == []
+'
+paso "video.py revisar_palabra_clave: alias sin tildes, voz real a los 5 s → V19, caption sin la clave → V19, shorts usa el título, sin clave no corre" python3 -c '
+import sys; sys.path.insert(0, "scripts"); import video as v
+cap = {"tiktok": "El Diésel subió\n#Guatemala", "instagram": "diesel caro hoy", "facebook": "Precio del DIESEL", "shorts": "Diésel: el galón\n#Shorts"}
+assert v.revisar_palabra_clave(["gasoil", "diésel"], "El diesel costaba veintiséis", ["DIÉSEL"], cap) == []
+assert v.revisar_palabra_clave("diesel", "diesel", ["diesel"], cap, plataformas=("shorts",)) == [] and v.revisar_palabra_clave("diesel", "diesel", ["diesel"], {"tiktok": "Diésel caro. Otra cosa"}, plataformas=("shorts",)) == []
+ws = [{"text": "Hoy", "start": 0.0}, {"text": "en", "start": 4.6}, {"text": "Guatemala,", "start": 5.0}]
+f = v.revisar_palabra_clave("guatemala", ws, ["Guatemala"], {"tiktok": "Guatemala", "instagram": "Guatemala", "facebook": "Guatemala"})
+assert len(f) == 1 and f[0].startswith("V19") and "5.0 s (real)" in f[0], f
+f = v.revisar_palabra_clave("diesel", "El diesel", ["diesel"], dict(cap, tiktok="Sube el combustible\nDiésel"))
+assert f == ["V19 caption.tiktok: la 1.ª línea no lleva la palabra clave «diesel»"], f
+f = v.revisar_palabra_clave("diesel", "nada que ver", ["otra cosa"], cap)
+assert [x.split(" ")[0] for x in f] == ["V19", "V19"] and "no dice" in f[0] and "pantalla" in f[1], f
+assert v.revisar_palabra_clave(None, "", [], {}) == [] and v.revisar_palabra_clave([], "", [], {}) == [] and v.revisar_palabra_clave("  ", "", [], {}) == []
+'
+v19_ok() {   # el guion del fixture con palabra_clave «galón» (voz, pantalla y captions la llevan): pasa sin V19
+  local d="$TMP/v19_ok" out; rm -rf "$d"; cp -R "$VT" "$d"
+  python3 - "$d/guion.json" <<'PY' || return 1
+import json, sys
+G = json.load(open(sys.argv[1], encoding="utf-8")); G["palabra_clave"] = ["galon", "galones"]
+json.dump(G, open(sys.argv[1], "w", encoding="utf-8"), ensure_ascii=False)
+PY
+  out="$(python3 scripts/video.py guion "$d" --check 2>&1)" || { grep FALLA <<<"$out"; return 1; }
+  ! grep -q V19 <<<"$out"
+}
+paso "video gate: palabra_clave «galón» declarada (voz, pantalla y captions la llevan) pasa V19" v19_ok
+paso "video gate: palabra_clave ausente del caption de TikTok → V19" video_neg "V19 caption.tiktok" 'G["palabra_clave"] = "galón"; G["caption"]["tiktok"] = "El barril llegó a 102 dólares. #Guatemala"'
+paso "video gate: palabra_clave que la voz dice pasados los 3 s → V19" video_neg "V19 la palabra clave «septiembre» suena a los" 'G["palabra_clave"] = "septiembre"'
+paso "video gate: sin palabra_clave el guion del fixture no corre V19" bash -c "! python3 scripts/video.py guion '$VT' --check 2>&1 | grep -q V19"
 paso "video cierre: F5 (tema sensible: sin experiencia ni «tu casa»), F7 (pregunta tras pregunta, forma y mecanismo repetidos) y F1/F6 (el bucle de dato ya no es remate) en reglas_cierre" python3 -c '
 import sys; sys.path.insert(0, "scripts"); import video as v
 hilo = {"tema": "Hacinamiento en las cárceles", "tesis": "Las cárceles tienen 3.42 presos por espacio"}
@@ -806,9 +840,29 @@ assert fr["cierre"] == "Esta noche, 4,464 presos duermen en Pavón." and fr["cie
 paso "video gate: icono desconocido → V1" video_neg "V1 escena 1: icono «no-existe»" 'G["escenas"][0]["icono"] = "no-existe"'
 paso "video gate: primera oración del gancho de más de 4 s → V9" video_neg "V9 gancho: la primera oración dura" 'G["escenas"][0]["texto"] = "Tu galón de diésel, el que llenas en la bomba de cada esquina de Guatemala, costaba 26 quetzales. En septiembre, 46.1."'
 paso "video gate: promesa de más de 3 s en la escena 1 → V9 (en: 2)" video_neg "V9 gancho: la promesa dura" 'G["promesa"] = {"texto": "Quédate hasta el final y sabrás cuál de nuestros vecinos paga todavía más por cada galón.", "en": 1, "pago": 5}; G["escenas"][0]["texto"] += " " + G["promesa"]["texto"]'
-paso "video gate: promesa con «al final te digo» → V9" video_neg "V9 promesa.texto usa «al final te digo»" 'G["escenas"][1]["texto"] = G["escenas"][1]["texto"].replace("Quédate: hay un vecino que paga todavía más.", "Al final te digo qué vecino paga más."); G["promesa"]["texto"] = "Al final te digo qué vecino paga más."'
-paso "video gate: promesa que empieza con un conector suelto → V9" video_neg "V9 promesa.texto empieza con un conector suelto" 'G["escenas"][1]["texto"] = G["escenas"][1]["texto"].replace("Quédate: hay un vecino que paga todavía más.", "Pero un vecino paga más."); G["promesa"]["texto"] = "Pero un vecino paga más."'
-paso "video gate: caption con «te lo digo al final» → V5" video_neg "V5 caption.tiktok usa" 'G["caption"]["tiktok"] += " ¿Quién paga más? Te lo digo al final."'
+paso "video gate: promesa con «al final te digo» → P2" video_neg "P2 promesa.texto anuncia el video" 'G["escenas"][1]["texto"] = G["escenas"][1]["texto"].replace("Un vecino paga todavía más.", "Al final te digo qué vecino paga más."); G["promesa"]["texto"] = "Al final te digo qué vecino paga más."'
+paso "video gate: promesa «Al final vas a ver…» → P2" video_neg "P2 promesa.texto anuncia el video («Al final»)" 'G["escenas"][1]["texto"] = G["escenas"][1]["texto"].replace("Un vecino paga todavía más.", "Al final vas a ver qué vecino paga más."); G["promesa"]["texto"] = "Al final vas a ver qué vecino paga más."'
+paso "video gate: promesa sin forma del catálogo → P1" video_neg "P1 promesa.forma «anuncio»" 'G["promesa"]["forma"] = "anuncio"'
+paso "video gate: bisagra con la misma forma que la promesa → P1" video_neg "P1 bisagra.forma = promesa.forma" 'G["bisagra"]["forma"] = G["promesa"]["forma"]'
+paso "video gate: sin bisagra → P4" video_neg "P4 falta bisagra" 'G.pop("bisagra")'
+paso "video gate: bisagra lejos del giro → P4" video_neg "P4 bisagra.en = 5" 'G["bisagra"]["en"] = 5'
+paso "video gate: bisagra que anuncia el video → P2" video_neg "P2 bisagra.texto anuncia el video" 'G["escenas"][2]["texto"] = G["escenas"][2]["texto"].replace("¿Quién termina pagando ese barril?", "Quédate: viene lo peor."); G["bisagra"]["texto"] = "Quédate: viene lo peor."'
+paso "video promesa: P3 rota la forma y las piezas viejas que anunciaban el video cuentan como «anuncio»" python3 -c '
+import sys, json; sys.path.insert(0, "scripts"); import video as v, memoria as m
+G = json.load(open("sesiones/_fixture_video/guion.json"))
+f = v.validar_promesa(G, {"promesas_recientes": [G["promesa"]["forma"]]}, [])
+assert any(x.startswith("P3 la forma «%s»" % G["promesa"]["forma"]) for x in f), f
+assert not [x for x in v.validar_promesa(G, {"promesas_recientes": []}, []) if x.startswith("P")], v.validar_promesa(G, {"promesas_recientes": []}, [])
+assert all(x in v.PROMESA_FORMAS + ("anuncio",) for x in v.promesas_recientes("__ninguno__", 50))
+fr = m.frases_video({"promesa": {"texto": "¿Quién paga más?", "forma": "pregunta"}, "bisagra": {"texto": "Nadie lo vio venir.", "forma": "presagio"}, "escenas": []})
+assert fr["promesa_forma"] == "pregunta" and fr["bisagra_forma"] == "presagio" and fr["bisagra"] == "Nadie lo vio venir.", fr
+for t in ("Al final vas a ver qué quedó", "Ese examen va a volver al final", "Antes del cierre verás cuántas", "Quédate hasta el final"):
+    assert v.META_PROMESA.search(t), t
+for t in ("Todavía no sabía que ese examen iba a perseguirlo.", "Hay una esperanza.", "Sin ese papel, no había universidad."):
+    assert not v.META_PROMESA.search(t), t
+'
+paso "video gate: promesa que empieza con un conector suelto → V9" video_neg "V9 promesa.texto empieza con un conector suelto" 'G["escenas"][1]["texto"] = G["escenas"][1]["texto"].replace("Un vecino paga todavía más.", "Pero un vecino paga más."); G["promesa"]["texto"] = "Pero un vecino paga más."'
+paso "video gate: caption con «te lo digo al final» → V5" video_neg "V5 caption.tiktok anuncia el video" 'G["caption"]["tiktok"] += " ¿Quién paga más? Te lo digo al final."'
 paso "video gate: ranking sobre una tarjeta cifra → V1" video_neg "V1 escena 2: la escena ranking necesita una tarjeta barras-h o mapa" 'G["escenas"][1]["tipo"] = "ranking"'
 paso "video gate: ranking con top 7 → V1" video_neg "V1 escena 5: top 7 fuera de 3–6" 'G["escenas"][4]["top"] = 7'
 paso "video gate: ranking cuya voz no dice el primer valor → V9" video_neg "V9 escena 5: la voz no dice el valor del primer puesto" 'G["escenas"][4]["texto"] = "Pero no somos los que más pagan: en Guatemala el galón promedia 4.85 dólares."'
@@ -831,7 +885,7 @@ paso "video gate: escena 2 que no es T1 → V9" video_neg "V9 la escena 2 debe s
 paso "video gate: sin narración de corrido → V17" video_neg "V17 «narracion»: 3 entradas" 'del G["narracion"]'
 paso "video gate: enlace desconocido → V9" video_neg "V9 escena 4: enlace «luego»" 'G["escenas"][3]["enlace"] = "luego"'
 paso "video gate: una voz que no está en la narración → V17" video_neg "V17 acto 2: la narración no es la suma de las voces" 'G["escenas"][2]["texto"] = G["escenas"][2]["texto"].replace("Por eso en", "En")'
-paso "video gate: un acto sin conectores en la narración → V18" video_neg "V18 acto 2: 0 conector" 'exec("for e in G[\"escenas\"][2:4]:\n e[\"texto\"] = e[\"texto\"].replace(\"Por eso en\", \"En\").replace(\"Así que llenar\", \"Llenar\")\nG[\"narracion\"][1][\"texto\"] = \" \".join(e[\"texto\"] for e in G[\"escenas\"][2:4])")'
+paso "video gate: un acto sin conectores en la narración → V18" video_neg "V18 acto 2: 0 conector" 'exec("for e in G[\"escenas\"][2:4]:\n e[\"texto\"] = e[\"texto\"].replace(\"Por eso en\", \"En\").replace(\"Así que llenar\", \"Llenar\").replace(\"Aun así, no es\", \"No es\")\nG[\"narracion\"][1][\"texto\"] = \" \".join(e[\"texto\"] for e in G[\"escenas\"][2:4])")'
 paso "video gate: una referencia sin antecedente → V18" video_neg "V18 escena 3: «esos 7 tanques» apunta a algo que no se dijo antes" 'exec("t = G[\"escenas\"][2][\"texto\"]; n = t.replace(\"Por eso en la bomba\", \"Por eso en esos 7 tanques\")\nG[\"escenas\"][2][\"texto\"] = n; G[\"narracion\"][1][\"texto\"] = G[\"narracion\"][1][\"texto\"].replace(t, n)")'
 paso "video gate: el enlace es opcional (solo elige el efecto de sonido)" bash -c 'd="$1/video_sin_enlace"; rm -rf "$d"; cp -R "$2" "$d"; python3 -c "import json,sys; p=sys.argv[1]; G=json.load(open(p)); [e.pop(\"enlace\", None) for e in G[\"escenas\"]]; json.dump(G, open(p,\"w\"), ensure_ascii=False)" "$d/guion.json" && python3 scripts/video.py guion "$d" --check >/dev/null' _ "$TMP" "$VT"
 paso "video gate: golpe demasiado largo → V9" video_neg "V9 escena 3: golpe «" 'G["escenas"][2]["golpe"] = "El galón de diésel pasó de veintiséis a cuarenta y seis"'
@@ -912,9 +966,12 @@ d="$1/video_adivina"; rm -rf "$d"; cp -R "$2" "$d"
 python3 - "$d/guion.json" "$3" <<PY
 import json, sys
 G = json.load(open(sys.argv[1], encoding="utf-8")); G["escenas"][3] = json.loads(sys.argv[2])
+# la adivina alarga el fixture de 45 s: sale la oración de la bisagra y la bisagra pasa a una frase que ya estaba
+G["escenas"][2]["texto"] = G["escenas"][2]["texto"].replace(" Aun así, no es el precio más alto de la región.", "")
+G["bisagra"]["texto"] = "Por eso en la bomba se nota"
 json.dump(G, open(sys.argv[1], "w", encoding="utf-8"), ensure_ascii=False)
 PY
-rehacer_narracion "$d/guion.json"; python3 scripts/video.py guion "$d" --check >/dev/null && python3 - "$d/locucion.json" <<PY
+rehacer_narracion "$d/guion.json"; { python3 scripts/video.py guion "$d" --check > "$d/guion.out" 2>&1 || { grep FALLA "$d/guion.out"; false; }; } && python3 - "$d/locucion.json" <<PY
 import json, sys
 L = json.load(open(sys.argv[1], encoding="utf-8"))["escenas"]
 e = L[3]
@@ -1010,7 +1067,11 @@ grep -q "\"comun.js\", \"comun.css\"" scripts/video_grabar.js || { echo "video_g
 node -e "global.location = { search: \"?n=3&f=45\" }; const c = new Set(); global.document = { documentElement: { classList: { add: (x) => c.add(x) } } };
 eval(require(\"fs\").readFileSync(\"video/comun.js\", \"utf8\") + \";global.V = V\");
 const t = V.trocear([{ text: \"Hola\" }, { text: \"mundo.\" }, { text: \"otra\" }]);
-if (V.n !== 3 || !V.F45 || !c.has(\"f45\") || t.length !== 2 || V.esc(\"a<b\") !== \"a&lt;b\" || V.esc(null) !== \"\" || V.prog(2, 0, 1) !== 1) process.exit(1);"'
+if (V.n !== 3 || !V.F45 || !c.has(\"f45\") || t.length !== 2 || V.esc(\"a<b\") !== \"a&lt;b\" || V.esc(null) !== \"\" || V.prog(2, 0, 1) !== 1) process.exit(1);
+if (typeof V.chip !== \"function\" || typeof V.seekChips !== \"function\") process.exit(1);"
+grep -q "S.ejemplo) chip({ texto: .Ejemplo., tono: .ink., id: .ejemplo. })" video/comun.js || { echo "S.ejemplo ya no pasa por V.chip"; exit 1; }
+grep -q "S.chip && S.chip.texto) chip(S.chip)" video/comun.js || { echo "V.cargar no pinta S.chip"; exit 1; }
+grep -q "^.vchip.acento" video/comun.css && ! grep -nE "^\.vchip.*#[0-9a-fA-F]{3}" video/comun.css || { echo "comun.css: .vchip sin tonos o con hex"; exit 1; }'
 if [[ "$RAPIDO" == "1" ]]; then echo "SKIP   make video-fixture (RAPIDO=1)"; else
   paso "make video-fixture (voz falsa, V6–V8, V10, 10 fps)" make video-fixture
   paso "fixture de video: 1080×1920 con audio y guion de entrega" bash -c 'ffprobe -v error -show_entries stream=codec_type,width,height -of csv=p=0 sesiones/_fixture_video/salida/video.mp4 | grep -q "video,1080,1920" && test -s sesiones/_fixture_video/salida/guion.json && test -s sesiones/_fixture_video/salida/subtitulos.srt'
@@ -1548,7 +1609,7 @@ capitulo_compat() {
   local S="$TMP/hcap"; rm -rf "$S"; cp -R "$HT" "$S"; rm -f "$S/locucion.json"
   python3 -c 'import json,sys; d=sys.argv[1]; g=json.load(open(d+"/guion.json")); e=g["escenas"]; r=e[5].pop("rotulo")
 e[5:5]=[{"tipo":"capitulo","acto":2,"numero":1,"anio":r["anio"],"titulo":r["titulo"],"lugar":r["lugar"],"texto":"Llega una inspección."}]
-g["promesa"]["pago"]=10; g["hilos"][0]["escena"]=9; g.pop("secuencias")
+g["promesa"]["pago"]=10; g["hilos"][0]["escena"]=9; g["bisagra"].update(en=7, pago=7); g.pop("secuencias")
 exec(sys.argv[2]); json.dump(g, open(d+"/guion.json","w"), ensure_ascii=False)' "$S" "$RN"
   python3 scripts/historia.py guion "$S" --check > "$TMP/hcap.out" 2>&1 || { cat "$TMP/hcap.out"; return 1; }
   grep -q "AVISO H8 1 escena(s) capitulo detienen la voz" "$TMP/hcap.out" || { echo "sin aviso de capitulo"; return 1; }

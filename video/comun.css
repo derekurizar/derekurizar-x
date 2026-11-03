@@ -61,12 +61,20 @@ body::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-e
   background: var(--bg); border: 3px solid color-mix(in srgb, var(--ink) 40%, transparent); box-sizing: border-box; }
 #acto .riel .punto.ya { background: var(--ink); border-color: var(--ink); }
 #acto .riel .punto.hoy { background: var(--acento, var(--a1)); border-color: var(--acento, var(--a1)); }
-/* chip «Ejemplo» (/explica, S.ejemplo): los números de la escena son ilustrativos; arriba a la derecha, fuera de la
-   columna del golpe (x > 876) y dentro de la zona segura (y ≥ 215, x ≤ 1023); en 4:5, sobre la barra */
-#ejemplo { position: absolute; top: 232px; right: 62px; padding: 7px 12px 6px; font: 600 22px/1 'JetBrains Mono', monospace;
-  letter-spacing: .1em; text-transform: uppercase; color: var(--ink); border: 2px solid color-mix(in srgb, var(--ink) 55%, transparent);
-  border-radius: 6px; z-index: 5; }
-html.f45 #ejemplo { top: 18px; right: 85px; }
+/* chip o sello (V.chip: S.chip de escenas.json; S.ejemplo de /explica = chip «Ejemplo» en tono ink). Arriba a la
+   derecha, fuera de la columna del golpe (x > 876) y dentro de la zona segura (y ≥ 215, x ≤ 1023); abajo a la
+   izquierda, sobre los subtítulos (termina antes de --fin = 1370). Varios en la misma posición se apilan. En 4:5, el de
+   arriba va sobre la barra. Tonos: ink (crema, borde tenue), acento (el acento del tema), tenue (apagado). V13 los mide
+   (cada chip tiene borde) */
+.vchips { position: absolute; display: flex; flex-direction: column; gap: 10px; z-index: 5; pointer-events: none; }
+.vchips.arriba { top: 232px; right: 62px; align-items: flex-end; }
+.vchips.abajo { top: 1290px; left: var(--izq); align-items: flex-start; }
+.vchip { padding: 7px 12px 6px; font: 600 22px/1 'JetBrains Mono', monospace; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--ink); border: 2px solid color-mix(in srgb, var(--ink) 55%, transparent); border-radius: 6px; white-space: nowrap; }
+.vchip.acento { color: var(--acento, var(--a1)); border-color: var(--acento, var(--a1)); }
+.vchip.tenue { color: color-mix(in srgb, var(--ink) 62%, transparent); border-color: color-mix(in srgb, var(--ink) 28%, transparent); }
+html.f45 .vchips.arriba { top: 18px; right: 85px; }
+html.f45 .vchips.abajo { top: 1015px; }
 /* portada (&portada=1): el cuadro limpio para la miniatura, sin subtítulos ni barra de progreso */
 html.portada #subs, html.portada #progreso { visibility: hidden; }
 /* formato 4:5 (1080×1350) para el feed: sin zona segura de teléfono */

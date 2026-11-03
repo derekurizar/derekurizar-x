@@ -44,6 +44,8 @@ Comprueba:
      conocidas, ruta con guion.json (tipo explica), fuentes.md, ejemplos.md y caption.md (el mp4 fuera de git: aviso)
   M13 memoria/sabias.json (si existe; registro de /sabias): campos, ids y slugs únicos, estado, paleta y música
      conocidas, ruta con guion.json (tipo sabias) y caption.md (el mp4 fuera de git: aviso)
+  (reservados, sin código aún: M14 memoria/carruseles.json de /carrusel, M15 memoria/semanas.json de /semana,
+   M16 memoria/series.json de /serie; cada comando agrega su registro y su check al construirse)
   M11 memoria/mejoras.json (si existe; mejoras al framework de cada video): campos, ids únicos mNNN, flujo conocido,
      estado pendiente|hecha|descartada, archivo relativo a la raíz
   K1 design/musica/catalogo.json: cada pista existe, ids únicos, paleta conocida y ≥ 2 pistas por paleta

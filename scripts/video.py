@@ -173,10 +173,20 @@ ANUNCIOS_DEFINICION = (r"para entender\w*", r"para explicar\w*", "te explico", r
 PREGUNTA_CARACTERES, OPCION_CARACTERES = 70, 14                           # escena adivina: 3 opciones con cifra
 # la adivina pide al espectador que pause para responder, entre las opciones y la respuesta («Pausa el video y piénsalo.»)
 PAUSA_ADIVINA = (r"pausa\w*", r"deten\w*", r"para el video", r"piensa\w*", r"respond\w*", r"contest\w*")
-# la promesa es una oración propia: no empieza con un conector suelto ni usa la muletilla que se copiaba de las guías
-# («Y al final te digo cuántas…»); vale una familia variada («Quédate hasta el final y sabrás…», «Al final vas a ver…»)
+# la promesa es una oración propia: no empieza con un conector suelto
 PROMESA_CONECTOR = re.compile(r"^[¿¡«\s]*(?:y|e|pero|así que|asi que|entonces|aunque|además|ademas)\b", re.I)
-PROMESA_PROHIBIDA = re.compile(r"al final te (?:lo )?(?:digo|cuento)|te lo (?:digo|cuento) al final", re.I)
+# P1–P4 (referencias/promesas.md): la intriga sale de la historia, nunca de anunciar el video («Al final vas a ver…»,
+# «Quédate hasta el final…», «Ese examen va a volver al final» fueron 12 de 16 promesas); la forma rota entre piezas y
+# una bisagra re-engancha justo antes del giro
+PROMESA_FORMAS = ("pregunta", "presagio", "apuesta", "reloj", "contradiccion", "secreto")
+ROTACION_PROMESAS = 2        # P3: la forma de la promesa no repite la de las últimas 2 piezas (videos, historias, explica)
+BISAGRA_CARACTERES = (10, 90)
+BISAGRA_TRAMO = (0.35, 0.70)  # P4 sin giro: la bisagra cae en este tramo de las escenas
+META_PROMESA = re.compile(
+    r"\b(?:al final|hasta el final|antes del (?:cierre|final)|más adelante|mas adelante|vas a ver|verás|veras|sabrás|"
+    r"sabras|vas a saber|quédate|quedate|no te vayas|espera(?:te)?\b|te (?:lo )?(?:digo|cuento|explico)|en este video|"
+    r"va a volver|(?:viene|llega) después|falta saber|el último capítulo|el ultimo capitulo|sigue viendo|ya verás|ahorita verás)", re.I)
+PROMESA_PROHIBIDA = META_PROMESA   # V5 en los captions: el mismo anuncio del video
 FRASES_USADAS_VIDEOS = 6   # videos anteriores cuyas frases (promesa, gancho, aperturas, pregunta) ve el digesto
 # cierre en dos pantallas: conclusiones (resumen) y luego la pregunta con «Sígueme en»; la voz necesita este tiempo antes
 # de la pregunta para que las conclusiones se lean
@@ -776,6 +786,115 @@ def reglas_cierre(cierre, st, hilo, tarjetas, numeros_gancho, cifras=None):
     return f
 
 
+def promesas_recientes(slug_actual, n=ROTACION_PROMESAS):
+    """P3: las formas de promesa de las últimas n piezas narradas (memoria/videos.json, historias.json y
+    explicaciones.json, por fecha). Una pieza anterior al catálogo sin `promesa_forma` cuya promesa anunciaba el video
+    cuenta como «anuncio» (ya no es forma válida, pero así se ve en el digesto)."""
+    regs = []
+    for archivo, clave in (("videos.json", "videos"), ("historias.json", "historias"), ("explicaciones.json", "explicaciones")):
+        ruta = os.path.join(RAIZ, "memoria", archivo)
+        if not os.path.exists(ruta):
+            continue
+        regs += [r for r in leer(ruta).get(clave) or [] if r.get("slug") != slug_actual and r.get("frases")]
+    out = []
+    for r in sorted(regs, key=lambda r: (r.get("fecha", ""), str(r.get("id", "")))):
+        fr = r["frases"]
+        forma = fr.get("promesa_forma") or ("anuncio" if META_PROMESA.search(fr.get("promesa") or "") else None)
+        if forma:
+            out.append(forma)
+    return out[-n:]
+
+
+def validar_promesa(g, st, tarjetas):
+    """P1–P4: la promesa (V9: texto literal en la escena `en`, pago en el último tercio) con su forma del catálogo, sin
+    anunciar el video, rotando entre piezas; y la bisagra, el segundo enganche justo antes del giro."""
+    f = []
+    escenas = g.get("escenas") or []
+    n = len(escenas)
+    p = g.get("promesa")
+    if not isinstance(p, dict) or not all(k in p for k in ("texto", "en", "pago")):
+        return ["V9 promesa: falta {texto, forma, en, pago} (referencias/promesas.md)"]
+    txt = (p.get("texto") or "").strip()
+    if not 10 <= len(txt) <= 80:
+        f.append("V9 promesa.texto de 10–80 caracteres")
+    if p.get("en") not in (1, 2):
+        f.append("V9 promesa.en debe ser 1 o 2 (llegó %s)" % p.get("en"))
+    elif txt and _plano(txt) not in _plano(escenas[p["en"] - 1].get("texto")):
+        f.append("V9 promesa.texto no aparece literal en la voz de la escena %d" % p["en"])
+    if txt and PROMESA_CONECTOR.match(txt):
+        f.append("V9 promesa.texto empieza con un conector suelto («%s»): la promesa es una oración propia" % txt.split()[0])
+    lo = math.ceil(2 * n / 3)
+    if not isinstance(p.get("pago"), int) or not lo <= p["pago"] <= n or p["pago"] == p.get("en"):
+        f.append("V9 promesa.pago = %s debe estar en el último tercio (escenas %d–%d) y ser distinto de «en»" % (p.get("pago"), lo, n))
+    # P1 forma del catálogo
+    forma = p.get("forma")
+    if forma not in PROMESA_FORMAS:
+        f.append("P1 promesa.forma «%s»: una de %s (referencias/promesas.md)" % (forma, "|".join(PROMESA_FORMAS)))
+    # P2 la promesa no anuncia el video
+    m = META_PROMESA.search(txt)
+    if m:
+        f.append("P2 promesa.texto anuncia el video («%s»): la intriga sale de la historia (una pregunta concreta, lo que "
+                 "el protagonista no sabía, lo que estaba en juego, un plazo, una contradicción, un secreto), nunca de «al "
+                 "final», «vas a ver» o «quédate» (referencias/promesas.md)" % m.group(0))
+    # P3 rotación entre piezas
+    rec = st.get("promesas_recientes")
+    if rec is None:
+        rec = promesas_recientes(st.get("slug"))
+    if forma in PROMESA_FORMAS and forma in rec:
+        f.append("P3 la forma «%s» abrió una de las últimas %d piezas (%s): usa otra" % (forma, ROTACION_PROMESAS, ", ".join(rec)))
+    # P4 bisagra
+    b = g.get("bisagra")
+    if not isinstance(b, dict) or not all(k in b for k in ("texto", "forma", "en", "pago")):
+        f.append("P4 falta bisagra {texto, forma, en, pago}: el segundo enganche, justo antes del giro (referencias/promesas.md)")
+        return f
+    bt = (b.get("texto") or "").strip()
+    if not BISAGRA_CARACTERES[0] <= len(bt) <= BISAGRA_CARACTERES[1]:
+        f.append("P4 bisagra.texto de %d–%d caracteres" % BISAGRA_CARACTERES)
+    if b.get("forma") not in PROMESA_FORMAS:
+        f.append("P1 bisagra.forma «%s»: una de %s" % (b.get("forma"), "|".join(PROMESA_FORMAS)))
+    elif b.get("forma") == forma:
+        f.append("P1 bisagra.forma = promesa.forma («%s»): el segundo enganche usa otro mecanismo" % forma)
+    mb = META_PROMESA.search(bt)
+    if mb:
+        f.append("P2 bisagra.texto anuncia el video («%s»): re-engancha con la historia misma" % mb.group(0))
+    if bt and PROMESA_CONECTOR.match(bt) and not re.match(r"^[¿¡«\s]*pero\b", bt, re.I):
+        f.append("P4 bisagra.texto empieza con un conector suelto («%s»)" % bt.split()[0])
+    en, pago = b.get("en"), b.get("pago")
+    if not isinstance(en, int) or not 2 <= en <= n:
+        f.append("P4 bisagra.en = %s no es una escena del video" % en)
+        return f
+    if bt and _plano(bt) not in _plano(escenas[en - 1].get("texto")):
+        f.append("P4 bisagra.texto no aparece literal en la voz de la escena %d" % en)
+    if en == p.get("en"):
+        f.append("P4 bisagra.en = promesa.en: la bisagra va a mitad del video, no con la promesa")
+    beats = {x.get("n"): x.get("beat") for x in st.get("tarjetas") or [] if isinstance(x, dict)}
+    giro = next((i for i, e in enumerate(escenas, 1) if e.get("giro")), None) or \
+        next((i for i, e in enumerate(escenas, 1) if e.get("enlace") == "pero" and beats.get(e.get("tuit")) == "giro"), None) or \
+        next((i for i, e in enumerate(escenas, 1) if i > 2 and beats.get(e.get("tuit")) == "giro"), None)
+    if giro:
+        if en not in (giro - 1, giro):
+            f.append("P4 bisagra.en = %d: va justo antes del giro (escena %d): en la escena %d o al abrir la del giro"
+                     % (en, giro, giro - 1))
+    else:
+        a, z = math.ceil(BISAGRA_TRAMO[0] * n), math.floor(BISAGRA_TRAMO[1] * n)
+        if not a <= en <= z:
+            f.append("P4 bisagra.en = %d: sin giro, va a mitad del video (escenas %d–%d)" % (en, a, z))
+    # la paga el giro o una escena posterior (si abre la escena del giro, el giro mismo la paga)
+    desde = max(en + (0 if en == giro else 1), giro or 0)
+    if not isinstance(pago, int) or not desde <= pago <= n:
+        f.append("P4 bisagra.pago = %s: la paga el giro o una escena posterior (%d–%d)" % (pago, desde, n))
+    return f
+
+
+def lineas_promesas(rec, sin_rotacion=False):
+    """El bloque del digesto con las formas de promesa recientes (P3) y el catálogo."""
+    return ["- %s" % ("(prueba: sin rotación)" if sin_rotacion else "Formas de las últimas %d piezas (bloqueadas): %s"
+                      % (ROTACION_PROMESAS, ", ".join(rec) or "ninguna")),
+            "- Formas: %s. Ni la promesa ni la bisagra anuncian el video («al final», «vas a ver», «quédate», «más "
+            "adelante»: P2). La bisagra va justo antes del giro con otra forma (P4). Catálogo y ejemplos de forma en "
+            "referencias/promesas.md." % " | ".join(PROMESA_FORMAS)]
+
+
 def lineas_recientes(rec, sin_rotacion=False):
     if sin_rotacion:
         return ["- (prueba: sin rotación)"]
@@ -1002,13 +1121,14 @@ def cmd_preparar(a):
     recientes = {"familias": [], "visuales": []} if a.sin_rotacion else ganchos_recientes(hilo["slug"])
     cierres = {"tipos": [], "formas": []} if a.sin_rotacion else cierres_recientes(hilo["slug"])
     anim_rec = [] if a.sin_rotacion else animaciones_recientes(hilo["slug"])
+    promesas_rec = [] if a.sin_rotacion else promesas_recientes(hilo["slug"])
     n_max = 1 + dur["tarjetas"][1] + dur["golpes"][1]
     caracteres = int((dur["s"] - COLA * n_max - COLA_CIERRE) * CPS)
     sugeridas = sugerir_tarjetas(hilo["tuits"], tarjetas, dur)
     st = {"hilo": rel(hilo_dir), "slug": hilo["slug"], "fecha_hilo": hilo.get("fecha"), "paleta": hilo["paleta"],
           "duracion": a.duracion, "objetivo_s": dur["s"], "musica": musica["id"],
           "ganchos_recientes": recientes, "cierres_recientes": cierres, "animaciones_recientes": anim_rec,
-          "tarjetas": tarjetas, "sugeridas": sugeridas}
+          "promesas_recientes": promesas_rec, "tarjetas": tarjetas, "sugeridas": sugeridas}
     escribir(os.path.join(trabajo, "video.json"), st)
     for aviso in rebasar_tarjetas(hilo_dir, trabajo):
         print("AVISO tarjetas: " + aviso, file=sys.stderr)
@@ -1068,10 +1188,14 @@ def cmd_preparar(a):
            "cifra si cabe; nunca el titular de la tarjeta." % (GOLPE_PALABRAS, GOLPE_CARACTERES),
            "5. Las escenas `golpe` (texto a pantalla completa) llevan `pantalla` + `linea` + `verbo`; nunca dos seguidas ni en la escena 2; "
            "sirven para traducir la cifra anterior a escala humana, pagar la promesa o re-ganchar a mitad.",
-           "6. `promesa`: {texto (10–80 caracteres, LITERAL en la voz de la escena `en` = 1 o 2), en, pago (escena del último tercio "
-           "que cierra exactamente esa brecha)}. Es una oración propia con verbo que nombra qué falta saber: no empieza con «Y», "
-           "«Pero» ni «Así que» suelto y nunca dice «al final te digo» (el gate lo rechaza). Varía la fórmula respecto de «Frases "
-           "ya usadas»: «Quédate hasta el final y sabrás cuántas…», «Al final vas a ver…», «Espera al final: ahí está…».",
+           "6. `promesa`: {texto (10–80 caracteres, LITERAL en la voz de la escena `en` = 1 o 2), forma (%s), en, pago (escena "
+           "del último tercio que cierra exactamente esa brecha)}. Es una oración propia con verbo que abre una pregunta concreta "
+           "del tema: no empieza con «Y», «Pero» ni «Así que» suelto y **nunca anuncia el video** («al final», «vas a ver», "
+           "«quédate», «más adelante»: P2). La forma no repite la de las últimas piezas (P3, «Promesas recientes»). Y "
+           "`bisagra` {texto (%d–%d, LITERAL en la voz de la escena `en`), forma (otra), en (la escena justo antes del giro, o "
+           "la del giro si la anterior es la de la promesa), "
+           "pago}: el segundo enganche a mitad (P4). Catálogo en referencias/promesas.md."
+           % (" | ".join(PROMESA_FORMAS), *BISAGRA_CARACTERES),
            "7. `calculo` (opcional en tarjetas y gancho; obligatorio en un golpe con un número nuevo): ids del digesto (%s), literales de "
            "datos.json, constantes 7/12/24/30/31/52/100/365/1000 y + − × ÷ ( ); su resultado debe aparecer escrito en la escena "
            "(«1 de cada 3», «×5», «52%%»)." % ", ".join(sorted(cifras)[:3] + [sorted(cifras)[0] + ".serie[0]", sorted(cifras)[0] + ".partes[1]"]),
@@ -1113,6 +1237,7 @@ def cmd_preparar(a):
                " · **este video cierra con un remate**" if "pregunta" in cierres["tipos"] else "")),
            "- Remates: %s (consecuencia: %s) · preguntas: %s" % (", ".join(x for x in CIERRE_FORMAS["remate"] if x != "legado"), "|".join(MECANISMOS),
                                                                ", ".join(CIERRE_FORMAS["pregunta"])),
+           "", "## Promesas recientes (P3)"] + lineas_promesas(promesas_rec, a.sin_rotacion) + [
            "", "## Frases ya usadas (no las repitas: C11 del crítico)"] + frases_usadas(hilo["slug"]) + [
            "", "## Sugerencia de tarjetas (no obligatoria)",
            "- Orden sugerido: %s (T1, luego giro e impacto, luego contexto animado). Giro: %s · impacto: %s. Marca el giro como tu "
@@ -1642,29 +1767,114 @@ def validar_estructura(g, st, dur, tarjetas):
                 f.append("V9 escena %d (explica): %s" % (i, motivo))
         if tipo in ESCENAS_TEXTO and i >= 2 and escenas[i - 2].get("tipo") in ESCENAS_TEXTO:
             f.append("V9 escena %d: dos golpes seguidos (golpe, definición y adivina son escenas de texto: entre dos va una tarjeta)" % i)
-    # V9: promesa y pago
-    p = g.get("promesa")
-    n = len(escenas)
-    if not isinstance(p, dict) or not all(k in p for k in ("texto", "en", "pago")):
-        f.append("V9 promesa: falta {texto, en, pago}")
-    else:
-        txt = (p.get("texto") or "").strip()
-        if not 10 <= len(txt) <= 80:
-            f.append("V9 promesa.texto de 10–80 caracteres")
-        if p.get("en") not in (1, 2):
-            f.append("V9 promesa.en debe ser 1 o 2 (llegó %s)" % p.get("en"))
-        elif txt and _plano(txt) not in _plano(escenas[p["en"] - 1].get("texto")):
-            f.append("V9 promesa.texto no aparece literal en la voz de la escena %d" % p["en"])
-        if txt and PROMESA_CONECTOR.match(txt):
-            f.append("V9 promesa.texto empieza con un conector suelto («%s»): la promesa es una oración propia "
-                     "(«Quédate hasta el final y sabrás…», «Al final vas a ver…»)" % txt.split()[0])
-        if txt and PROMESA_PROHIBIDA.search(txt):
-            f.append("V9 promesa.texto usa «al final te digo»: es la muletilla copiada de las guías; varía la fórmula "
-                     "(«Quédate hasta el final y sabrás…», «Al final vas a ver…», «Espera al final: ahí está…»)")
-        lo = math.ceil(2 * n / 3)
-        if not isinstance(p.get("pago"), int) or not lo <= p["pago"] <= n or p["pago"] == p.get("en"):
-            f.append("V9 promesa.pago = %s debe estar en el último tercio (escenas %d–%d) y ser distinto de «en»" % (p.get("pago"), lo, n))
+    # V9: promesa y pago, P1–P4: forma, sin anunciar el video, rotación y bisagra
+    f += validar_promesa(g, st, tarjetas)
     return f
+
+
+# ---------- piezas comunes de los flujos de monetización (Fase 0: /carrusel, /mito, /departamento, /semana, /serie) ----
+PISO_DURACION_S = 61                 # TikTok Creator Rewards solo paga videos ≥ 60 s; 1 s de margen
+PALABRA_CLAVE_S = 3.0                # V19: la palabra clave suena en la voz antes de este segundo
+PALABRA_CLAVE_PLATAFORMAS = ("tiktok", "instagram", "facebook")
+
+
+def piso_duracion(duracion_s, minimo=PISO_DURACION_S):
+    """Piso de duración (TikTok Creator Rewards): → faltas. Un flujo lo activa poniendo `piso_s` en video.json; `tiempos`
+    lo aplica sobre la duración real del mp4 (escenas + bucle) y falla si queda por debajo. Sin `piso_s`, no corre."""
+    if duracion_s is None or minimo is None:
+        return []
+    if float(duracion_s) < float(minimo):
+        return ["PISO duración real %.1f s: debajo del piso de %.0f s (TikTok Creator Rewards paga desde 60 s; alarga la "
+                "voz o añade una escena)" % (float(duracion_s), float(minimo))]
+    return []
+
+
+def _tokens_clave(s):
+    """Palabras comparables: minúsculas, sin tildes ni puntuación."""
+    s = unicodedata.normalize("NFD", str(s or "").lower())
+    s = "".join(ch for ch in s if unicodedata.category(ch) != "Mn")
+    return re.findall(r"[a-z0-9ñ]+", s)
+
+
+def _busca_clave(tokens, claves):
+    """Primer índice de `tokens` donde empieza alguna de las claves (secuencia de palabras), o None."""
+    mejor = None
+    for c in claves:
+        ct = _tokens_clave(c)
+        if not ct:
+            continue
+        for k in range(len(tokens) - len(ct) + 1):
+            if tokens[k:k + len(ct)] == ct:
+                mejor = k if mejor is None else min(mejor, k)
+                break
+    return mejor
+
+
+def palabras_clave(x):
+    """`palabra_clave` del guion o de video.json (string o lista de alias) → lista sin vacíos."""
+    if isinstance(x, str):
+        x = [x]
+    return [str(c).strip() for c in (x or []) if str(c or "").strip()]
+
+
+def revisar_palabra_clave(clave, voz, pantalla_textos, captions, max_s=PALABRA_CLAVE_S, plataformas=PALABRA_CLAVE_PLATAFORMAS):
+    """V19 (opcional, SEO): la palabra clave (string o lista de alias; sin tildes ni mayúsculas) suena en la voz de la
+    escena 1 antes de `max_s`, se lee en algún texto de pantalla de la escena 1 y abre la 1.ª línea del caption de cada
+    plataforma pedida (`shorts`: su título, la 1.ª línea). `voz` es el texto hablado de la escena 1 (se estima con CPS:
+    caracteres antes de la clave / CPS) o la lista de palabras con tiempos [{text, start}] (tiempos reales). → faltas."""
+    claves = palabras_clave(clave)
+    if not claves:
+        return []
+    nombre, f = "«%s»" % "» / «".join(claves), []
+    if isinstance(voz, (list, tuple)):
+        ws = [w for w in voz if isinstance(w, dict)]
+        toks, idx = [], []
+        for j, w in enumerate(ws):
+            for t in _tokens_clave(w.get("text")):
+                toks.append(t)
+                idx.append(j)
+        k = _busca_clave(toks, claves)
+        t_clave, como = (float(ws[idx[k]].get("start") or 0.0) if k is not None else None), "real"
+    else:
+        palabras_voz = str(voz or "").split()
+        toks, idx = [], []
+        for j, w in enumerate(palabras_voz):
+            for t in _tokens_clave(w):
+                toks.append(t)
+                idx.append(j)
+        k = _busca_clave(toks, claves)
+        t_clave = len(" ".join(palabras_voz[:idx[k]])) / CPS if k is not None else None
+        como = "estimado"
+    if t_clave is None:
+        f.append("V19 la voz de la escena 1 no dice la palabra clave %s" % nombre)
+    elif t_clave > max_s:
+        f.append("V19 la palabra clave %s suena a los %.1f s (%s) en la voz de la escena 1: máximo %.0f s"
+                 % (nombre, t_clave, como, max_s))
+    if isinstance(pantalla_textos, str):
+        pantalla_textos = [pantalla_textos]
+    if not any(_busca_clave(_tokens_clave(x), claves) is not None for x in pantalla_textos or []):
+        f.append("V19 la palabra clave %s no se lee en la pantalla de la escena 1" % nombre)
+    captions = captions or {}
+    for p in plataformas:
+        txt = captions.get(p) or ""
+        if p == "shorts" and not txt.strip():
+            txt = titulo_shorts(captions.get("tiktok") or "")
+        lineas = [x for x in str(txt).splitlines() if x.strip()]
+        if not lineas:
+            f.append("V19 falta caption.%s (la palabra clave %s va en su 1.ª línea)" % (p, nombre))
+        elif _busca_clave(_tokens_clave(lineas[0]), claves) is None:
+            f.append("V19 caption.%s: la 1.ª línea%s no lleva la palabra clave %s"
+                     % (p, " (el título)" if p == "shorts" else "", nombre))
+    return f
+
+
+def pantalla_escena1(e):
+    """Los textos que se leen en pantalla en la escena 1 (V19): pantalla, línea, golpe, título, término, pregunta,
+    el titular de una foto y el chip."""
+    out = [e.get(k) for k in ("pantalla", "linea", "golpe", "titulo", "titular", "termino", "pregunta") if isinstance(e.get(k), str)]
+    if isinstance(e.get("chip"), dict):
+        out.append(e["chip"].get("texto") or "")
+    return [x for x in out if x]
 
 
 def cmd_guion(a):
@@ -1730,7 +1940,8 @@ def cmd_guion(a):
             fallas.append("V5 caption.shorts lleva #Shorts")
     for k, v in (g.get("caption") or {}).items():
         if isinstance(v, str) and PROMESA_PROHIBIDA.search(v):
-            fallas.append("V5 caption.%s usa «al final te digo / te lo digo al final»: varía la fórmula" % k)
+            fallas.append("V5 caption.%s anuncia el video («%s»): la intriga sale del tema (referencias/promesas.md)"
+                          % (k, PROMESA_PROHIBIDA.search(v).group(0)))
 
     # V2, V3, V4 y ritmo por escena (escenas + cierre)
     valores, titulares, cifras = valores_respaldo(st["hilo"])
@@ -1889,6 +2100,7 @@ def cmd_guion(a):
                     "familia": e.get("familia") if tipo == "gancho" else None,
                     "visual": {k: v for k, v in vis_out.items() if k != "numeros"} if vis_out else None,
                     "icono": e.get("icono") if tipo in ICONO_TIPOS else None,
+                    "chip": e.get("chip") if isinstance(e.get("chip"), dict) else None,
                     "calculo": e.get("calculo"), "valor_calculo": valor_calculo,
                     "pantalla": pantalla, "voz": voz, "prompt": prompt, "segmentos": segs,
                     "estimado_s": round(len(voz) / CPS + cola, 2),
@@ -1898,6 +2110,12 @@ def cmd_guion(a):
         sin = VM.sueltos(txt, valores, titulares)
         if sin:
             fallas.append("V2 %s: números sin respaldo: %s" % (etiqueta, ", ".join(map(str, sin))))
+
+    # V19 (opcional): la palabra clave SEO en la voz de la escena 1 (≤ 3 s estimados), en su pantalla y en la 1.ª línea
+    # de los captions; solo si guion.json o video.json declaran `palabra_clave`
+    claves = palabras_clave(g.get("palabra_clave") or st.get("palabra_clave"))
+    if claves and escenas and loc:
+        fallas.extend(revisar_palabra_clave(claves, loc[0]["voz"], pantalla_escena1(escenas[0]), g.get("caption") or {}))
 
     # F1–F8: la frase final del cierre (remate de consecuencia o, a veces, pregunta; referencias/cierres.md)
     hilo = leer(os.path.join(RAIZ, st["hilo"], "hilo.json"))
@@ -2349,8 +2567,11 @@ def cmd_ganchos(a):
         por_id[cid] = c
         f, av, voz = revisar_gancho(c, st, valores, cifras, titulares)
         pr = (c.get("promesa_sugerida") or "").strip()
-        if not 10 <= len(pr) <= 80 or PROMESA_CONECTOR.match(pr) or PROMESA_PROHIBIDA.search(pr):
-            f.append("promesa_sugerida de 10–80 caracteres, oración propia, sin conector suelto ni «al final te digo»")
+        if not 10 <= len(pr) <= 80 or PROMESA_CONECTOR.match(pr) or META_PROMESA.search(pr):
+            f.append("promesa_sugerida de 10–80 caracteres, oración propia, sin conector suelto ni anuncio del video "
+                     "(«al final», «vas a ver», «quédate»: P2)")
+        if c.get("forma_sugerida") not in PROMESA_FORMAS:
+            f.append("forma_sugerida «%s»: una de %s (referencias/promesas.md)" % (c.get("forma_sugerida"), "|".join(PROMESA_FORMAS)))
         if not (c.get("por_que") or "").strip():
             f.append("falta «por_que» (mecanismo y evidencia en una línea)")
         print("%-3s %-10s %-8s %-24s · %s%s" % (cid, c.get("familia"), c.get("visual") or "cifra", (c.get("pantalla") or "")[:24], voz,
@@ -3084,7 +3305,7 @@ def cmd_tiempos(a):
                     w["clave"] = clave(valor_de(seg["p"]))
             pal.append(w)
         S = {"n": n, "tipo": tipo, "tuit": e.get("tuit"), "plantilla": e["plantilla"], "enlace": e.get("enlace"),
-             "icono": e.get("icono"), "dur": dur, "fin_voz": round(fin_voz, 3), "palabras": pal, "arriba": None,
+             "icono": e.get("icono"), "chip": e.get("chip"), "dur": dur, "fin_voz": round(fin_voz, 3), "palabras": pal, "arriba": None,
              "acto": e.get("acto"), "secuencia": sec, "cola": cola, "apretado": apretado,
              # seguida: la anterior es de la misma secuencia (la voz viene de corrido); sigue: la siguiente lo es
              "seguida": bool(sec) and k_e > 0 and loc["escenas"][k_e - 1].get("secuencia") == sec,
@@ -3365,11 +3586,19 @@ def cmd_tiempos(a):
         "cierre": {"resumen": g["cierre"]["resumen"], "final": final_de(g["cierre"]), "pregunta": final_de(g["cierre"]),
                    "tipo": g["cierre"].get("tipo") or "pregunta"},
         "transicion_s": TRANSICION, "total_s": round(total, 2), "escenas": escenas})
+    # piso de duración (opcional: `piso_s` en video.json) y V19 con los tiempos reales de la voz de la escena 1
+    fallas = piso_duracion(total + BUCLE_S, st["piso_s"]) if st.get("piso_s") else []
+    claves = palabras_clave(g.get("palabra_clave") or st.get("palabra_clave"))
+    if claves and escenas and g.get("escenas"):
+        fallas += [x for x in revisar_palabra_clave(claves, escenas[0]["palabras"], pantalla_escena1(g["escenas"][0]),
+                                                    g.get("caption") or {}) if "voz" in x]
     for x in avisos:
         print("AVISO", x)
     print("total %.1f s (objetivo %d s) · hueco máximo %.1f s → %s"
           % (total, obj, (peor[1][0] - peor[0][0]) if peor else 0, rel(os.path.join(trabajo, "escenas.json"))))
-    return 0
+    for x in fallas:
+        print("FALLA", x)
+    return 1 if fallas else 0
 
 
 # ---------- grabar (V7) ----------
@@ -4008,7 +4237,7 @@ def cmd_entregar(a):
         "gancho": {"familia": g1.get("familia"), "visual": g1.get("visual") or "cifra", "pantalla": g1.get("pantalla"),
                    "linea": g1.get("linea"), **({"formula": g1["formula"]} if g1.get("formula") else {})},
         "ganchos": resumen_ganchos(trabajo),
-        "promesa": g.get("promesa"), "critica": critica,
+        "promesa": g.get("promesa"), "bisagra": g.get("bisagra"), "critica": critica,
         "escenas": [{"n": e["n"], "tipo": e.get("tipo"), "tuit": e["tuit"], "plantilla": e["plantilla"], "enlace": e.get("enlace"),
                      "golpe": e.get("golpe"), "cinetico": e.get("cinetico"), "adivina": e.get("adivina"), "icono": e.get("icono"), "pantalla": e["pantalla"], "voz": e["voz"],
                      **({"animacion": s.get("animacion"), "mecanismo": (e.get("explica") or {}).get("mecanismo")}
