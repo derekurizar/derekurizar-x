@@ -85,7 +85,7 @@ DURACIONES = {  # objetivo en s · tarjetas y golpes (más el gancho y el cierre
     "corto": {"s": 60, "tarjetas": (3, 4), "golpes": (1, 2)},
     "medio": {"s": 120, "tarjetas": (6, 8), "golpes": (2, 4)},
     "largo": {"s": 240, "tarjetas": (11, 15), "golpes": (3, 6)},
-    "prueba": {"s": 55, "tarjetas": (2, 3), "golpes": (0, 2)},
+    "prueba": {"s": 55, "tarjetas": (2, 3), "golpes": (0, 2), "tol": 0.18},   # holgura: las pruebas de tiempos le suman voz al fixture
 }
 TIPOS = ("gancho", "tarjeta", "golpe", "definicion", "adivina", "mapa", "ranking", "escala", "tiempo", "explica")   # escenas del guion; locucion.json añade "cierre"
 CON_TUIT = ("tarjeta", "mapa", "ranking", "tiempo")                # escenas que llevan una tarjeta del hilo (y su golpe)
