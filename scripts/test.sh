@@ -22,6 +22,8 @@
 #          historia-fixture, entregar y memoria.py --historia.
 #        · /explica: gates E1–E12 sobre la maqueta del interés compuesto (la calculadora, el chip «Ejemplo» y negativos de
 #          E4, E5, E6, E7, E9, E10 y E11) y make explica-fixture.
+#        · /mito (modo mito de /explica): MI1–MI9 con un negativo por gate (más «sin datos para un veredicto», A MEDIAS sin
+#          depende_de y W13 con la tabla MODOS rota) sobre la maqueta de las remesas y make mito-fixture.
 #        · /sabias: gate S1–S3 sobre el dato de prueba (negativos), M13 y make sabias-fixture.
 #        · /carrusel: gates CA1–CA7 sobre el hilo de prueba (negativos), M14, make carrusel-fixture (PNG 1080×1350 y
 #          1080×1920 leídos de la cabecera) y memoria.py --carrusel --dry-run.
@@ -1885,6 +1887,68 @@ if [[ "$RAPIDO" == "1" ]]; then echo "SKIP   make explica-fixture (RAPIDO=1)"; e
   paso "make explica-fixture (maqueta 9:16 y 4:5, pizarra y chip «Ejemplo», V7, V13, V8, entrega)" bash -c 'make explica-fixture FPS=6 >/dev/null && ffprobe -v error -show_entries stream=codec_type,width,height -of csv=p=0 sesiones/_fixture_explica/salida/video_4x5.mp4 | grep -q "video,1080,1350" && test -s sesiones/_fixture_explica/salida/ejemplos.md && python3 scripts/memoria.py --explica sesiones/_fixture_explica/salida --dry-run >/dev/null'
 fi
 
+echo "== /mito (modo mito de /explica: gates MI1–MI10 sobre la maqueta «la remesa promedio es de \$1,000» → MITO; sin web ni créditos)"
+XM="$TMP/mito"
+paso "explica.py preparar --modo mito --fixture + encuadre + afirmaciones + mito --check + consolidar + ganchos --check/--usar + narracion + guion --check (maqueta)" bash -c "python3 scripts/explica.py preparar 'La remesa promedio es de \$1,000 (maqueta)' --slug remesa-promedio-maqueta --trabajo '$XM' --modo mito --fixture >/dev/null && python3 scripts/explica.py encuadre '$XM' --check >/dev/null && python3 scripts/explica.py afirmaciones '$XM' --check >/dev/null && python3 scripts/explica.py mito '$XM' --check >/dev/null && python3 scripts/explica.py consolidar '$XM' >/dev/null && python3 scripts/explica.py ganchos '$XM' --check >/dev/null && python3 scripts/explica.py ganchos '$XM' --usar >/dev/null && python3 scripts/explica.py narracion '$XM' --check >/dev/null && python3 scripts/explica.py guion '$XM' --check >/dev/null"
+paso "mito: el código calcula MITO (512 lejos de 1,000 ±15 %), el sello va en la escena 1 y en la escena «creencia» desde el cuadro 0, el RETORNO trae el veredicto, video.json lleva piso_s 61 y palabra_clave" python3 -c '
+import json, sys
+d = sys.argv[1]
+M = json.load(open(d + "/mito.json"))
+assert M["veredicto"] == "mito" and M["sello"] == "MITO" and not M["pruebas"][0]["cumple"], M
+g = json.load(open(d + "/guion.json"))
+ch = [(i, e.get("chip")) for i, e in enumerate(g["escenas"], 1) if e.get("chip")]
+assert [i for i, _ in ch] == [1, 2] and all(c["texto"] == "MITO" and c["desde"] == 0 for _, c in ch), ch
+L = json.load(open(d + "/locucion.json"))
+assert L["escenas"][0]["visual"]["tipo"] == "veredicto" and L["escenas"][0]["chip"]["texto"] == "MITO", L["escenas"][0].get("visual")
+st = json.load(open(d + "/video.json"))
+assert st["modo"] == "mito" and st["piso_s"] == 61 and st["palabra_clave"] == "remesa promedio", st' "$XM"
+# neg_mito "nombre" "GATE" "python que muta g (guion.json), enc (encuadre.json) o V (verificacion_<eje>.json en el dict V)" [subcomando]
+neg_mito() {
+  local nombre="$1" gate="$2" mut="$3" cmd="${4:-guion}" S="$TMP/mneg"
+  rm -rf "$S"; cp -R "$XM" "$S"; rm -f "$S/locucion.json"
+  python3 -c '
+import json, sys, glob, os
+d = sys.argv[1]
+g = json.load(open(d + "/guion.json")); e = g["escenas"]; enc = json.load(open(d + "/encuadre.json"))
+V = {os.path.basename(p)[13:-5]: json.load(open(p)) for p in glob.glob(d + "/verificacion_*.json")}
+exec(sys.argv[2])
+json.dump(g, open(d + "/guion.json", "w"), ensure_ascii=False); json.dump(enc, open(d + "/encuadre.json", "w"), ensure_ascii=False)
+for k, v in V.items(): json.dump(v, open(d + "/verificacion_%s.json" % k, "w"), ensure_ascii=False)' "$S" "$mut"
+  if [[ "$cmd" == "guion" ]]; then python3 scripts/explica.py guion "$S" --check >"$TMP/negm.out" 2>&1; else python3 scripts/explica.py "$cmd" "$S" --check >"$TMP/negm.out" 2>&1; fi
+  local rc=$?
+  paso "explica.py $cmd --check rechaza (mito): $nombre ($gate)" bash -c "[[ $rc -ne 0 ]] && grep -q 'FALLA $gate' '$TMP/negm.out'"
+}
+neg_mito "una creencia sin prueba" "MI1 «prueba»" 'enc.pop("prueba")' encuadre
+neg_mito "sin el eje cir" "MI1 falta el eje «cir»" 'enc["ejes"] = [x for x in enc["ejes"] if x["id"] != "cir"]' encuadre
+neg_mito "un gancho sin el sello en pantalla" "MI2 la pantalla de la escena 1" 'e[0]["pantalla"] = "Falso"'
+neg_mito "un gancho sin el visual veredicto" "MI2 la escena 1 es un gancho con visual" 'e[0]["visual"] = "cifra"; e[0].pop("visual_datos")'
+neg_mito "el sello que entra tarde (desde > 0)" "MI2 escena 1: el sello entra" 'e[0]["chip"]["desde"] = 1.5'
+neg_mito "la voz del gancho sin el veredicto" "MI2 la voz del gancho dice el veredicto" 'e[0]["texto"] = e[0]["texto"].replace("Mito: la", "La")'
+neg_mito "un golpe con la creencia en pantalla" "MI3 escena 4: la creencia como golpe" 'e[3]["linea"] = "La remesa promedio que llega a Guatemala"'
+neg_mito "el cierre con la creencia" "MI3 el cierre muestra la creencia" 'g["cierre"]["resumen"][2] = "La remesa promedio que llega a Guatemala"'
+neg_mito "un sello que dice REALIDAD" "MI4 escena 2: el sello dice «REALIDAD»" 'e[1]["chip"]["texto"] = "REALIDAD"'
+neg_mito "una pantalla que dice REALIDAD" "MI4 escena 6 dice «REALIDAD»" 'e[5]["linea"] = "REALIDAD: pregunta antes"'
+neg_mito "la prueba sobre una cifra en disputa" "MI4 sin datos para un veredicto" 'V["rem"]["cifras"][0].update(estado="en_disputa", nota="dos fuentes difieren en el promedio")' mito
+neg_mito "sin datos (la prueba usa una cifra que no se verificó)" "MI4 sin datos para un veredicto" 'enc["prueba"][0]["cifra"] = "rem-c09"' mito
+neg_mito "un caption sin el veredicto en su 1.ª línea" "MI5 caption.tiktok" 'g["caption"]["tiktok"] = g["caption"]["tiktok"].replace("MITO: ", "", 1)'
+neg_mito "la circulación en un solo grupo de fuentes" "MI6 la creencia circula en 1 grupo" 'V["cir"]["circulacion"] = V["cir"]["circulacion"][:1]' afirmaciones
+neg_mito "la circulación solo en redes" "MI6 toda la evidencia de circulación es de redes" 'V["cir"]["circulacion"] = [x for x in V["cir"]["circulacion"] if x["tipo"] == "redes"] * 1; V["cir"]["circulacion"].append(dict(V["cir"]["circulacion"][0], id="cir-r04", url="https://www.facebook.com/maqueta/1"))' afirmaciones
+neg_mito "«todos los pandilleros…» con sensible grupo" "MI7 captions" 'enc["sensible"] = "grupo"; g["caption"]["instagram"] += " Todos los pandilleros mandan remesas."'
+neg_mito "un mito de 50 s" "MI8" 'g["escenas"] = e[:4]'
+neg_mito "un ejemplo ilustrativo" "MI8 1 ejemplo" 'enc["ejemplos"].append({"id": "ilus", "modelo": "porcentaje", "parametros": {"base": 1000, "pct": 10}})' encuadre
+neg_mito "el giro sin el origen del error" "MI9 el giro no cuenta el origen" 'e[4]["texto"] = "Porque al juntar el mes da casi 973 dólares. Ese es el 1,000 que se oye: lo de un mes."'
+neg_mito "A MEDIAS sin depende_de" "MI9 A MEDIAS exige «depende_de»" 'enc["prueba"].append({"id": "p2", "dice": "se manda más de una vez al mes", "cifra": "rem-c02", "op": ">", "umbral": 1, "margen_pct": 0})' mito
+paso "W13 rechaza una tabla MODOS de explica.js rota (familias del modo mito)" python3 -c '
+import sys; sys.path.insert(0, "scripts")
+import check_workflows as W
+src = open(".claude/workflows/explica.js", encoding="utf-8").read()
+W.fuente = lambda n, opcional=False: src.replace("familias: [\x27contraste\x27, \x27tu\x27,", "familias: [\x27contraste\x27, \x27paradoja\x27, \x27tu\x27,", 1)
+W.explica_workflow()
+assert any("MODOS.mito.familias" in x for x in W.ERRORES), W.ERRORES'
+if [[ "$RAPIDO" == "1" ]]; then echo "SKIP   make mito-fixture (RAPIDO=1)"; else
+  paso "make mito-fixture (9:16 y 4:5 ≥ 61 s, sello en el cuadro 0, entrega con veredicto, memoria --explica --dry-run en modo mito)" bash -c 'make mito-fixture FPS=6 >/dev/null && ffprobe -v error -show_entries stream=codec_type,width,height -of csv=p=0 sesiones/_fixture_mito/salida/video_4x5.mp4 | grep -q "video,1080,1350" && python3 -c "import json,subprocess; d=float(subprocess.check_output([\"ffprobe\",\"-v\",\"error\",\"-show_entries\",\"format=duration\",\"-of\",\"csv=p=0\",\"sesiones/_fixture_mito/salida/video.mp4\"])); g=json.load(open(\"sesiones/_fixture_mito/salida/guion.json\")); assert d >= 61 and g[\"modo\"] == \"mito\" and g[\"veredicto\"] == \"mito\", (d, g.get(\"veredicto\"))" && grep -q "^MITO: la remesa promedio" sesiones/_fixture_mito/salida/caption.md && python3 scripts/memoria.py --explica sesiones/_fixture_mito/salida --dry-run | grep -q "modo mito: mito"'
+fi
+
 echo "== sintaxis de los workflows"
 check_js() {
   { echo "(async function(){"; sed 's/^export //' ".claude/workflows/$1"; echo "})"; } > "$TMP/check_$1"
@@ -1898,7 +1962,7 @@ paso "node --check video.js (envuelto en async function)" check_js video.js
 paso "node --check noticias.js (envuelto en async function)" check_js noticias.js
 paso "node --check historia.js (envuelto en async function)" check_js historia.js
 paso "node --check explica.js (envuelto en async function)" check_js explica.js
-paso "check_workflows.py (PALETAS, PLANTILLAS, HOOKS, BEATS, REQ, pesoX, MODOS, gráficos del informe W7–W8, bloque común W9, espejos de video.js W10, de noticias.js W11 y de historia.js W12)" python3 scripts/check_workflows.py
+paso "check_workflows.py (PALETAS, PLANTILLAS, HOOKS, BEATS, REQ, pesoX, MODOS, gráficos del informe W7–W8, bloque común W9, espejos de video.js W10, de noticias.js W11, de historia.js W12 y de explica.js con su tabla MODOS W13)" python3 scripts/check_workflows.py
 
 echo
 echo "[test] $N pruebas · $FALLOS fallos"

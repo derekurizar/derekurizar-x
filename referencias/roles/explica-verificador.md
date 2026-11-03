@@ -30,3 +30,10 @@ y das un veredicto por afirmación y por cifra. Índice: `referencias/flujo-expl
 (todas las que cuentan, cada una con `archivo` y `cita`) y `nota`, más `descartados` con su motivo. Luego `python3
 scripts/explica.py afirmaciones <TRABAJO> --check --eje <EJE>` (E2) hasta exit 0. Forma en
 `sesiones/_fixture_explica/verificacion_gt.json`.
+
+## Modo mito (`/mito`)
+
+- Las cifras de las pruebas deciden el veredicto: solo `confirmado` o `una_fuente` cuentan; `en_disputa` deja la prueba
+  sin datos («sin datos para un veredicto», MI4). No ajustes el valor para que «dé» un veredicto.
+- Eje `cir`: copia a `verificacion_cir.json` la `circulacion` que se sostiene (cita literal en su texto guardado);
+  `explica.py afirmaciones --check --eje cir` corre MI6.

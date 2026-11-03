@@ -17,11 +17,20 @@
   color: var(--acento, var(--ink)); white-space: nowrap; }
 #cifra.texto { font-size: 200px; line-height: .88; white-space: normal; }
 #linea { font: 800 74px/1.08 Archivo, sans-serif; letter-spacing: -.015em; margin-top: 52px; }
+/* /mito (S.T.veredicto): la creencia tachada (MITO), subrayada (REALIDAD) o punteada (A MEDIAS) sobre el sello */
+#creencia { display: none; font: 800 64px/1.12 Archivo, sans-serif; letter-spacing: -.012em; margin-bottom: 40px;
+  color: color-mix(in srgb, var(--ink) 58%, transparent); text-decoration-thickness: .09em; text-underline-offset: .16em;
+  text-decoration-color: var(--acento, var(--a1)); text-decoration-skip-ink: none; }
+body.veredicto #creencia { display: block; }
+body.veredicto #cuerpo { top: 450px; }
+#creencia.mito { text-decoration-line: line-through; }
+#creencia.realidad { text-decoration-line: underline; }
+#creencia.a_medias { text-decoration-line: underline; text-decoration-style: dashed; }
 #pie { position: absolute; bottom: 300px; left: var(--izq); right: var(--der); font: 600 30px/1 'JetBrains Mono', monospace; letter-spacing: .06em; opacity: .8; }
 </style></head>
 <body>
 <div id="contexto"></div><div id="regla"></div>
-<div id="cuerpo"><div id="cifra"></div><div id="linea"></div></div>
+<div id="cuerpo"><div id="creencia"></div><div id="cifra"></div><div id="linea"></div></div>
 <div id="pie"></div>
 <script>
 const n = Number(new URLSearchParams(location.search).get('n')) || 1;
@@ -35,6 +44,13 @@ window.__listo = (async () => {
   const cifra = document.getElementById('cifra'), P = (S.T && S.T.pant) || {};
   const texto = P.texto || (S.cinetico && S.cinetico.pantalla) || '';
   cifra.textContent = texto;
+  const VE = S.T && S.T.veredicto;
+  if (VE && VE.creencia) {
+    const cr = document.getElementById('creencia');
+    cr.textContent = '«' + VE.creencia + '»';
+    cr.classList.add(VE.veredicto || 'mito');
+    document.body.classList.add('veredicto');
+  }
   if (P.v === null || P.v === undefined) cifra.classList.add('texto');
   document.getElementById('linea').textContent = ((S.T && S.T.linea) || []).map((w) => w.text).join(' ') || ((S.cinetico && S.cinetico.linea) || '');
   const redes = (todo.redes || []).map((r) => r.handle);

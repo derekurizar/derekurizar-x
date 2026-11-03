@@ -22,6 +22,9 @@ sesiones/_fixture_carrusel/salida*/
 !sesiones/_fixture_explica/
 sesiones/_fixture_explica/trabajo/
 sesiones/_fixture_explica/salida/
+!sesiones/_fixture_mito/
+sesiones/_fixture_mito/trabajo/
+sesiones/_fixture_mito/salida/
 *.log
 sesiones/_descargas/
 .playwright-mcp/

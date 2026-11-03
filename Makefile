@@ -7,7 +7,7 @@ PALETAS ?= cielo
 ESTILO ?= noche
 PALETA ?= cielo
 
-.PHONY: help nuevo render visual catalogo validate tabla pdf ensamblar limpiar test doctor costo contacto digesto fuentes ideas calendario informe informe-ejemplo informe-catalogo informe-fixture verificacion auditoria-rehacer podar video-fixture video-fixture-4x5 noticias-fixture historia-fixture explica-fixture sabias-fixture carrusel-fixture musica whisper iconos
+.PHONY: help nuevo render visual catalogo validate tabla pdf ensamblar limpiar test doctor costo contacto digesto fuentes ideas calendario informe informe-ejemplo informe-catalogo informe-fixture verificacion auditoria-rehacer podar video-fixture video-fixture-4x5 noticias-fixture historia-fixture explica-fixture mito-fixture sabias-fixture carrusel-fixture musica whisper iconos
 
 help:
 	@echo "make nuevo T=<plantilla> OUT=<ruta.html> [PALETA=cielo]  ensambla una tarjeta (base + plantilla)"
@@ -34,6 +34,7 @@ help:
 	@echo "make noticias-fixture [FPS=10]                           /noticias de prueba (maqueta: noticias de ejemplo, voz falsa, 0 créditos) → sesiones/_fixture_noticias/trabajo/salida"
 	@echo "make historia-fixture [FPS=10]                           /historia de prueba (maqueta: una panadería inventada, voz falsa, 0 créditos) → sesiones/_fixture_historia/trabajo/salida"
 	@echo "make explica-fixture [FPS=10]                            /explica de prueba (maqueta: el interés compuesto con fuentes de ejemplo, voz falsa, 0 créditos) → sesiones/_fixture_explica/salida"
+	@echo "make mito-fixture [FPS=10]                               /mito de prueba (modo mito de /explica: «la remesa promedio es de $$1,000» → MITO, voz falsa, 0 créditos) → sesiones/_fixture_mito/salida"
 	@echo "make sabias-fixture [FPS=10]                             /sabias de prueba (el dato de sesiones/_fixture_dato, voz falsa, 0 créditos) → sesiones/_fixture_sabias/salida"
 	@echo "make carrusel-fixture                                    /carrusel de prueba (hilo y dato de los fixtures: 4:5 y 9:16, CA1–CA12, 0 créditos) → sesiones/_fixture_carrusel/salida[_dato]"
 	@echo "make musica                                              catálogo fijo de música de /video (design/musica/) y sus usos"
@@ -226,6 +227,28 @@ explica-fixture:   # maqueta de /explica: el interés compuesto con fuentes de e
 	python3 scripts/explica.py montar $(EF)/trabajo --formato 4:5
 	python3 scripts/explica.py revisar $(EF)/trabajo --formato 4:5
 	python3 scripts/explica.py entregar $(EF)/trabajo --salida $(EF)/salida
+
+MF := sesiones/_fixture_mito
+mito-fixture:   # maqueta de /mito (modo mito de /explica): «la remesa promedio es de $1,000» → MITO, voz falsa, 9:16 y 4:5
+	rm -rf $(MF)/trabajo $(MF)/salida
+	python3 scripts/explica.py preparar 'La remesa promedio es de $$1,000 (maqueta)' --slug remesa-promedio-maqueta --trabajo $(MF)/trabajo --modo mito --fixture
+	python3 scripts/explica.py encuadre $(MF)/trabajo --check
+	python3 scripts/explica.py afirmaciones $(MF)/trabajo --check
+	python3 scripts/explica.py mito $(MF)/trabajo --check
+	python3 scripts/explica.py consolidar $(MF)/trabajo
+	python3 scripts/explica.py ganchos $(MF)/trabajo --check
+	python3 scripts/explica.py ganchos $(MF)/trabajo --usar
+	python3 scripts/explica.py narracion $(MF)/trabajo --check
+	python3 scripts/explica.py guion $(MF)/trabajo --check
+	python3 scripts/explica.py voz-falsa $(MF)/trabajo
+	python3 scripts/explica.py tiempos $(MF)/trabajo
+	python3 scripts/explica.py grabar $(MF)/trabajo --fps $(FPS)
+	python3 scripts/explica.py montar $(MF)/trabajo
+	python3 scripts/explica.py revisar $(MF)/trabajo
+	python3 scripts/explica.py grabar $(MF)/trabajo --fps $(FPS) --formato 4:5
+	python3 scripts/explica.py montar $(MF)/trabajo --formato 4:5
+	python3 scripts/explica.py revisar $(MF)/trabajo --formato 4:5
+	python3 scripts/explica.py entregar $(MF)/trabajo --salida $(MF)/salida
 
 SF := sesiones/_fixture_sabias
 sabias-fixture:   # maqueta de /sabias: el dato de prueba de /dato, guion fijo, voz falsa, 9:16 y 4:5

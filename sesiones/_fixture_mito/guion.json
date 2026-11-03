@@ -1,0 +1,225 @@
+{
+ "contexto_superior": "Mito o realidad · remesas",
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "Mito: la remesa promedio no llega a 1,000 dólares. Cada envío a Guatemala trae 512 dólares. Y suena lógico, porque se repite: en la cola del banco, en la tienda y en redes, cada envío trae 1,000. ¿De dónde sale ese 1,000?"
+  },
+  {
+   "acto": 2,
+   "texto": "Pero los datos del Banco de Guatemala dicen otra cosa: en 2025, cada envío trajo en promedio 512 dólares. Es casi la mitad. Aun así, ese 1,000 no es inventado: tiene un origen. Porque quien manda dinero hace casi 2 envíos al mes: {512:m} por 1.9 da casi 973 dólares. Ese es el 1,000 que se oye: lo de un mes, no lo de un envío."
+  },
+  {
+   "acto": 3,
+   "texto": "Por eso, antes de creer un promedio, pregunta de qué es: por envío, por mes o por hogar. En 2025, por envío llegaron 512 dólares; al mes, casi 973 dólares. Así que la cifra que se repite es la de un mes, no la de un envío. La familia que calcula el doble por envío arma un mes que no alcanza."
+  }
+ ],
+ "promesa": {
+  "texto": "¿De dónde sale ese 1,000?",
+  "en": 2,
+  "pago": 5,
+  "revela": 1,
+  "forma": "pregunta"
+ },
+ "bisagra": {
+  "texto": "Aun así, ese 1,000 no es inventado: tiene un origen.",
+  "forma": "secreto",
+  "en": 4,
+  "pago": 5
+ },
+ "escenas": [
+  {
+   "familia": "contraste",
+   "visual": "veredicto",
+   "visual_datos": {
+    "creencia": "La remesa promedio que llega a Guatemala es de $1,000",
+    "veredicto": "mito"
+   },
+   "pantalla": "MITO",
+   "linea": "Cada envío trae 512 dólares",
+   "texto": "Mito: la remesa promedio no llega a 1,000 dólares. Cada envío a Guatemala trae 512 dólares.",
+   "verbo": "llega",
+   "tipo": "gancho"
+  },
+  {
+   "tipo": "golpe",
+   "acto": 1,
+   "intuicion": true,
+   "pantalla": "Se repite",
+   "linea": "Cola, tienda y redes: ¿de dónde sale?",
+   "verbo": "repite",
+   "texto": "Y suena lógico, porque se repite: en la cola del banco, en la tienda y en redes, cada envío trae 1,000. ¿De dónde sale ese 1,000?"
+  },
+  {
+   "tipo": "tarjeta",
+   "acto": 2,
+   "corrige": true,
+   "tuit": 1,
+   "golpe": "Lo que trae un envío",
+   "acento": "por envío",
+   "rotulo": {
+    "etiqueta": "La prueba",
+    "titulo": "Lo que dice Banguat"
+   },
+   "grafico": {
+    "plantilla": "barras-h",
+    "kicker": "PROMEDIO POR ENVÍO · 2025",
+    "titular": [
+     "Cada envío trae",
+     "casi la mitad"
+    ],
+    "nota": "Remesas familiares, monto promedio por envío (maqueta).",
+    "fuente": "Banguat (maqueta)",
+    "datos": {
+     "kicker": "PROMEDIO POR ENVÍO · 2025",
+     "titular": [
+      "Cada envío trae",
+      "casi la mitad"
+     ],
+     "nota": "Remesas familiares, monto promedio por envío (maqueta).",
+     "fuente": "Banguat (maqueta)",
+     "handle": "@DerekUrizar",
+     "formato": {
+      "prefijo": "US$",
+      "sufijo": "",
+      "decimales": 0,
+      "miles": true,
+      "escala": 1
+     },
+     "items": [
+      {
+       "nombre": "Lo que se repite",
+       "valor": 1000
+      },
+      {
+       "nombre": "Lo que trae un envío",
+       "valor": 512
+      }
+     ],
+     "destacar": 1,
+     "orden": "desc"
+    }
+   },
+   "texto": "Pero los datos del Banco de Guatemala dicen otra cosa: en 2025, cada envío trajo en promedio 512 dólares. Es casi la mitad."
+  },
+  {
+   "tipo": "golpe",
+   "acto": 2,
+   "pantalla": "No es inventado",
+   "linea": "Tiene un origen",
+   "verbo": "tiene",
+   "texto": "Aun así, ese 1,000 no es inventado: tiene un origen."
+  },
+  {
+   "tipo": "cuenta",
+   "acto": 2,
+   "giro": true,
+   "enlace": "pero",
+   "acento": "por envío",
+   "golpe": "Lo que llega al mes",
+   "fuente": "Banguat (maqueta)",
+   "renglones": [
+    {
+     "nota": "Un envío",
+     "a": "512",
+     "op": "×",
+     "b": "1",
+     "r": "512"
+    },
+    {
+     "nota": "Al mes",
+     "a": "512",
+     "op": "×",
+     "b": "1.9",
+     "r": "973",
+     "aprox": true,
+     "resalta": "r",
+     "etiqueta": "el mil"
+    }
+   ],
+   "texto": "Porque quien manda dinero hace casi 2 envíos al mes: {512:m} por 1.9 da casi 973 dólares. Ese es el 1,000 que se oye: lo de un mes, no lo de un envío."
+  },
+  {
+   "tipo": "golpe",
+   "acto": 3,
+   "rotulo": {
+    "etiqueta": "En tu vida",
+    "titulo": "La regla"
+   },
+   "pantalla": "¿De qué es?",
+   "linea": "Pregunta antes de creer un promedio",
+   "verbo": "pregunta",
+   "texto": "Por eso, antes de creer un promedio, pregunta de qué es: por envío, por mes o por hogar."
+  },
+  {
+   "tipo": "tarjeta",
+   "acto": 3,
+   "tuit": 2,
+   "golpe": "Envío contra mes",
+   "acento": "por envío",
+   "grafico": {
+    "plantilla": "barras-h",
+    "kicker": "REMESAS FAMILIARES · 2025",
+    "titular": [
+     "Por envío,",
+     "la mitad del mes"
+    ],
+    "nota": "Promedio por envío y por remitente al mes (maqueta).",
+    "fuente": "Banguat (maqueta)",
+    "datos": {
+     "kicker": "REMESAS FAMILIARES · 2025",
+     "titular": [
+      "Por envío,",
+      "la mitad del mes"
+     ],
+     "nota": "Promedio por envío y por remitente al mes (maqueta).",
+     "fuente": "Banguat (maqueta)",
+     "handle": "@DerekUrizar",
+     "formato": {
+      "prefijo": "US$",
+      "sufijo": "",
+      "decimales": 0,
+      "miles": true,
+      "escala": 1
+     },
+     "items": [
+      {
+       "nombre": "Al mes",
+       "valor": 972.8
+      },
+      {
+       "nombre": "Por envío",
+       "valor": 512
+      }
+     ],
+     "destacar": 1,
+     "orden": "desc"
+    }
+   },
+   "texto": "En 2025, por envío llegaron 512 dólares; al mes, casi 973 dólares."
+  }
+ ],
+ "cierre": {
+  "rotulo": "Lo que te llevas",
+  "tipo": "remate",
+  "forma": "consecuencia",
+  "resumen": [
+   "Por envío: US$512",
+   "Al mes: casi US$973",
+   "Pregunta de qué es el promedio"
+  ],
+  "final": "La familia que calcula el doble por envío arma un mes que no alcanza.",
+  "consecuencia": {
+   "mecanismo": "perdida",
+   "quien": "familia",
+   "verbo": "arma"
+  },
+  "texto": "Así que la cifra que se repite es la de un mes, no la de un envío. La familia que calcula el doble por envío arma un mes que no alcanza."
+ },
+ "caption": {
+  "tiktok": "MITO: la remesa promedio que llega a Guatemala es de $1,000\nCada envío trae en promedio 512 dólares (Banguat, 2025, maqueta). El mil sale de otra cuenta. #remesas #Guatemala #mitoorealidad",
+  "instagram": "MITO: la remesa promedio que llega a Guatemala es de $1,000\nLo que trae cada envío y de dónde sale el mil que se repite. #Guatemala #remesas",
+  "facebook": "MITO: la remesa promedio que llega a Guatemala es de $1,000\n¿Cuánto trae de verdad cada remesa? La respuesta, con el dato del Banguat (maqueta).",
+  "shorts": "MITO: la remesa promedio que llega a Guatemala es de $1,000\nMito o realidad: lo que trae cada envío. #Shorts #Guatemala"
+ }
+}

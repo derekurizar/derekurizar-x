@@ -17,12 +17,16 @@ Subcomandos (TRABAJO = sesiones/explica-<slug>/):
   preparar <tema> [--duracion corto|medio|largo] [--slug S] [--trabajo DIR] [--paleta P] [--musica ID] [--fixture]
         crea TRABAJO y video.json (--fixture copia la maqueta de sesiones/_fixture_explica: el interés compuesto)
   leer URL [--buscar CITA] [--otra-vez]   → historia.py leer (HTML, PDF o Wayback; lista cerrada de fuentes)
+        --modo mito: «mito o realidad» de 62–90 s (/mito <creencia>; --fixture copia sesiones/_fixture_mito)
   encuadre TRABAJO --check     E1: pregunta, intuición, mecanismo y su frase, ejemplos, leyenda, glosario, anclas, ejes
+                               (modo mito: + MI1 creencia, prueba[], regla, origen_hipotesis, palabra_clave, eje cir)
+  mito TRABAJO --check         modo mito: MI1 + MI6 (la creencia circula) + MI4 (el veredicto MITO · REALIDAD · A MEDIAS
+        lo calcula el código desde las pruebas y las cifras confirmado|una_fuente) → mito.json; sin datos se detiene
   afirmaciones TRABAJO --check [--eje E]   E2 sobre verificacion_<eje>.json (afirmaciones y cifras con cita guardada)
   consolidar TRABAJO           verificaciones → explicacion.json + base/ (hilo.json, datos.json) + la paleta, y corre
         ejemplos (los modelos del encuadre → ejemplos.json y las cifras ej-cNN en base/datos.json)
   ejemplos TRABAJO             solo la calculadora: imprime cada ejemplo y su tabla (y la vuelve a escribir)
-  digesto TRABAJO --para investigador|verificador --eje E | gancho | guionista | critico | oyente
+  digesto TRABAJO --para investigador|verificador --eje E | gancho | guionista | critico | oyente | cuadro (mito: MI10)
   ganchos TRABAJO --check | --usar [ID] [--segundo ID]   → video.py ganchos con las familias y visuales de /explica
   narracion TRABAJO [--check]  mide guion.narracion antes de repartirla (E9: palabras, conectores, «según»)
   tarjetas TRABAJO             las escenas con gráfico → base/tuit_N.html (materializar.py, R1–R6)
@@ -58,13 +62,15 @@ import video as VD  # noqa: E402
 # ---- formato (decisión del usuario, 2026-10-29: ~2 min por defecto, 90–150 s) ----
 # duración → (clave en VD.DURACIONES, objetivo s, tolerancia, palabras de narración (aviso), palabras (falla))
 # (≈ 145 palabras por minuto de voz; las colas entre escenas suman ≈ 10 s en medio)
+# «mito» (modo mito, /mito: decisión del usuario 2026-11-03): ≈ 75 s, 62–90 s, con el piso de 61 s (TikTok Creator Rewards)
 FORMATOS = {"corto": ("explica-corto", 60, 0.25, (125, 150), (105, 175)),
             "medio": ("explica", 120, 0.25, (250, 300), (210, 345)),
-            "largo": ("explica-largo", 165, 0.10, (350, 410), (300, 450))}
+            "largo": ("explica-largo", 165, 0.10, (350, 410), (300, 450)),
+            "mito": ("explica-mito", 75, 0.20, (150, 185), (125, 215))}
 DURACION_DEFECTO, DURACION_MAX_S = "medio", 180
 for _d, (_k, _s, _tol, _p, _pd) in FORMATOS.items():
-    VD.DURACIONES[_k] = {"s": _s, "tarjetas": (0, {"corto": 3, "medio": 5, "largo": 7}[_d]),
-                         "golpes": (0, {"corto": 4, "medio": 7, "largo": 9}[_d]), "tol": _tol}
+    VD.DURACIONES[_k] = {"s": _s, "tarjetas": (0, {"corto": 3, "medio": 5, "largo": 7, "mito": 3}[_d]),
+                         "golpes": (0, {"corto": 4, "medio": 7, "largo": 9, "mito": 6}[_d]), "tol": _tol}
 CLAVE_DE = {v[0]: k for k, v in FORMATOS.items()}
 TIPOS_PROPIOS = ("cuenta",)
 TIPOS = VD.TIPOS + TIPOS_PROPIOS   # W13: espejo literal en .claude/workflows/explica.js
@@ -88,6 +94,33 @@ VISUALES_DE = {f: tuple(v for v in VD.VISUALES_DE[f] if v in VISUALES) for f in 
 ROTACION_FAMILIAS = 2
 PUNTAJES = ("gancho", "claridad", "intuicion", "flujo", "precision", "cierre")   # critica.json en modo explica (W13)
 REGLA_DE = {"gancho": "E-C1", "claridad": "E-C2", "intuicion": "E-C3", "flujo": "E-C4", "precision": "E-C5", "cierre": "E-C6"}
+# ---- modo mito (/mito <creencia>: «mito o realidad», 62–90 s; referencias/flujo-explica.md «Modo mito») ----
+# el veredicto en una escala de 3 lo calcula el código (calcular_veredicto) desde las pruebas del encuadre y las cifras
+# verificadas; el gancho es el visual `veredicto` (la creencia marcada y el sello desde el cuadro 0); sin «paradoja» ni
+# «pregunta» (el veredicto va primero); el crítico puntúa `veredicto` en lugar de `intuicion`
+VEREDICTOS_MITO = tuple(VD.SELLOS_VEREDICTO)          # mito · realidad · a_medias
+SELLOS = VD.SELLOS_VEREDICTO
+FAMILIAS_MITO = tuple(f for f in FAMILIAS if f not in ("paradoja", "pregunta"))
+VISUALES_MITO = (VD.VISUAL_VEREDICTO,)
+PUNTAJES_MITO = ("gancho", "claridad", "veredicto", "flujo", "precision", "cierre")
+# tabla de modos (W13: espejo de la tabla MODOS de .claude/workflows/explica.js: familias, visuales, puntajes y ejes)
+MODOS = {"explica": {"familias": FAMILIAS, "visuales": VISUALES, "puntajes": PUNTAJES, "ejes_obligatorios": (), "duracion": None},
+         "mito": {"familias": FAMILIAS_MITO, "visuales": VISUALES_MITO, "puntajes": PUNTAJES_MITO, "ejes_obligatorios": ("cir",),
+                  "duracion": "mito"}}
+MODO_DEFECTO = "explica"
+OPS_MITO = {"≈": "≈", "~": "≈", ">": ">", "<": "<", ">=": ">=", "≥": ">=", "<=": "<=", "≤": "<="}
+CREENCIA_PALABRAS, REGLA_CARACTERES, PALABRA_CLAVE_PALABRAS = (4, 20), (30, 200), 3
+ESTADOS_VEREDICTO = ("confirmado", "una_fuente")       # MI4: solo estas cifras deciden (nunca en_disputa)
+CIRCULACION_TIPOS = ("nota", "encuesta", "declaracion", "busqueda", "redes")
+CIRCULACION_GRUPOS, CIRCULACION_ANIOS = 2, 5
+REDES_DOMINIOS = ("tiktok.com", "facebook.com", "fb.com", "instagram.com", "x.com", "twitter.com", "youtube.com", "youtu.be",
+                  "whatsapp.com", "threads.net", "google.com", "reddit.com")
+MITO_S, MITO_ESCENAS_MAX, CREENCIA_CASA, VEREDICTO_VOZ_S = (62, 90), 12, 0.6, 4.0
+# MI7: en un tema de seguridad o sobre un grupo, nada que generalice a todo el grupo
+RE_GENERALIZA = re.compile(r"\b(?:todos|todas)\s+(?:los|las|esos|esas|estos|estas)\b|\b(?:siempre|jam[aá]s)\b|\bcualquier\b|"
+                           r"\b(?:son|eran) todos\b|\btodo (?:el|un) grupo\b", re.I)
+FIXTURE_MITO = os.path.join(RAIZ, "sesiones", "_fixture_mito")
+MODO = MODO_DEFECTO   # el modo del TRABAJO en curso (video.json «modo»; lo fija fijar_modo)
 # la calculadora de los ejemplos: un catálogo CERRADO de modelos; cada uno con sus parámetros (un id de cifra verificada o
 # un número ilustrativo) y sus salidas, que van a base/datos.json como cifras ej-cNN (W13: claves espejo en explica.js)
 MODELOS = {
@@ -101,13 +134,16 @@ MODELOS = {
     "cuota": ("monto, tasa (% anual), meses", "cuota, total, intereses"),
     "porcentaje": ("base, pct", "valor"),
     "proporcion": ("parte, todo", "pct"),
+    "producto": ("a, b", "valor (a × b: el promedio por envío por los envíos al mes, la tasa por el monto)"),
 }
 PARAMETROS = {"compuesto": ("capital", "tasa", "periodos"), "simple": ("capital", "tasa", "periodos"),
               "aporte_periodico": ("aporte", "tasa", "periodos"), "regla72": ("tasa",), "tasa_real": ("nominal", "inflacion"),
-              "cuota": ("monto", "tasa", "meses"), "porcentaje": ("base", "pct"), "proporcion": ("parte", "todo")}
+              "cuota": ("monto", "tasa", "meses"), "porcentaje": ("base", "pct"), "proporcion": ("parte", "todo"),
+              "producto": ("a", "b")}
 EJEMPLOS_ILUSTRATIVOS_MAX = 4
 LEYENDA_PAPELES = ("tenue", "ink", "acento")
 SENSIBLES = ("financiero", "salud", "legal", "ninguno")
+SENSIBLES_MITO = SENSIBLES + ("seguridad", "grupo")   # modo mito: «seguridad» y «grupo» encienden MI7
 GLOSARIO_MAX, ANCLAS_MIN, EJES = 3, 1, (1, 3)
 INTUICION_PALABRAS, MECANISMO_FRASE = 22, (30, 220)
 # E4: lo ilustrativo se dice como ejemplo («supón», «imagina», «por ejemplo»…)
@@ -155,6 +191,19 @@ def plano(s):
     return VD._plano(s or "")
 
 
+def fijar_modo(trabajo):
+    """El modo del TRABAJO (video.json «modo»: explica | mito) → MODO global. Lo llama cada subcomando."""
+    global MODO
+    ruta = os.path.join(trabajo, "video.json")
+    m = (leer(ruta).get("modo") if os.path.exists(ruta) else None) or MODO_DEFECTO
+    MODO = m if m in MODOS else MODO_DEFECTO
+    return MODO
+
+
+def es_mito():
+    return MODO == "mito"
+
+
 # ---------- registros anteriores (rotación de ganchos y cierres, C11, música, animaciones) ----------
 def explicaciones_registradas(slug_actual=None):
     ruta = os.path.join(RAIZ, "memoria", "explicaciones.json")
@@ -174,8 +223,9 @@ def frases_explicaciones(slug_actual, n=VD.FRASES_USADAS_VIDEOS):
 
 def recientes(slug_actual):
     fr = [h.get("frases") or {} for h in explicaciones_registradas(slug_actual)]
+    # el visual veredicto es el de todo mito: no rota (la familia sí)
     return ({"familias": [x["familia"] for x in fr[-ROTACION_FAMILIAS:] if x.get("familia")],
-             "visuales": [x["visual"] for x in fr[-1:] if x.get("visual")]},
+             "visuales": [x["visual"] for x in fr[-1:] if x.get("visual") and x.get("visual") != VD.VISUAL_VEREDICTO]},
             {"tipos": [x.get("cierre_tipo") or "remate" for x in fr[-1:]],
              "formas": [x.get("cierre_forma") for x in fr[-VD.ROTACION_CIERRES:] if x.get("cierre_forma")],
              "mecanismos": [x["cierre_mecanismo"] for x in fr[-1:] if x.get("cierre_mecanismo")]})
@@ -222,6 +272,12 @@ def cmd_preparar(a):
         pista = elegir_musica(paleta, a.musica)
     except ValueError as ex:
         return falla(str(ex))
+    modo = a.modo or MODO_DEFECTO
+    if modo == "mito":
+        a.duracion = MODOS["mito"]["duracion"]   # un mito dura lo que dura: ≈ 75 s (62–90)
+    elif a.duracion == "mito":
+        print("--duracion mito es solo del modo mito (--modo mito)", file=sys.stderr)
+        return 2
     clave, objetivo = FORMATOS[a.duracion][0], FORMATOS[a.duracion][1]
     rec_g, rec_c = ({"familias": [], "visuales": []}, {"tipos": [], "formas": [], "mecanismos": []}) if a.fixture else recientes(slug)
     ruta = os.path.join(trabajo, "video.json")
@@ -230,36 +286,55 @@ def cmd_preparar(a):
                "hilo": VD.rel(os.path.join(trabajo, "base")), "paleta": paleta, "musica": pista["id"], "musica_forzada": a.musica,
                "duracion": clave, "objetivo_s": objetivo, "ganchos_recientes": rec_g, "cierres_recientes": rec_c,
                "animaciones_recientes": [] if a.fixture else animaciones_recientes(slug),
-               "promesas_recientes": [] if a.fixture else VD.promesas_recientes(slug)})
+               "promesas_recientes": [] if a.fixture else VD.promesas_recientes(slug), "modo": modo})
+    if modo == "mito":
+        st["piso_s"] = VD.PISO_DURACION_S   # tiempos falla si el video real queda bajo 61 s (MI8)
+    else:
+        for k in ("piso_s", "palabra_clave"):
+            st.pop(k, None)
     st.setdefault("tarjetas", [])
     escribir(ruta, st)
     if a.fixture:
+        fx = FIXTURE_MITO if modo == "mito" else FIXTURE
         for f in ["encuadre.json", "ganchos.json", "seleccion.json", "guion.json"] + \
-                [os.path.basename(x) for x in glob.glob(os.path.join(FIXTURE, "verificacion_*.json"))]:
-            shutil.copy(os.path.join(FIXTURE, f), os.path.join(trabajo, f))
+                [os.path.basename(x) for x in glob.glob(os.path.join(fx, "verificacion_*.json"))]:
+            shutil.copy(os.path.join(fx, f), os.path.join(trabajo, f))
         print("maqueta: encuadre, verificaciones (fuentes de ejemplo ya guardadas), ganchos y guion → %s" % VD.rel(trabajo))
-    if any(plano(h.get("tema")) == plano(a.tema) or h.get("slug") == slug for h in previas):
+    if modo == "mito":
+        raices = creencia_raices(a.tema)
+        for h in previas:
+            r = creencia_raices(h.get("creencia") or "")
+            if h.get("creencia") and raices and len(raices & r) >= CREENCIA_CASA * len(raices):
+                print("AVISO esta creencia ya se trató (memoria/explicaciones.json: %s, %s): elige otra o un ángulo nuevo"
+                      % (h.get("id"), SELLOS.get(h.get("veredicto"), h.get("veredicto"))))
+                break
+    elif any(plano(h.get("tema")) == plano(a.tema) or h.get("slug") == slug for h in previas):
         print("AVISO este tema ya se explicó (memoria/explicaciones.json): explícalo solo con un ángulo nuevo")
-    print("explica «%s» · %s (%d s) · paleta provisional %s (el editor elige la del tema) · música %s"
-          % (a.tema, a.duracion, objetivo, paleta, pista["id"]))
+    print("%s «%s» · %s (%d s) · paleta provisional %s (el editor elige la del tema) · música %s"
+          % ("mito" if modo == "mito" else "explica", a.tema, a.duracion, objetivo, paleta, pista["id"]))
     print(VD.rel(trabajo))
     return 0
 
 
 # ---------- E1 encuadre ----------
 def revisar_encuadre(enc):
+    """E1 (y en modo mito, MI1 con revisar_encuadre_mito: la creencia comprobable, las pruebas, la regla y el eje cir).
+    En modo mito la intuición es la creencia (si falta, la toma), el mecanismo es opcional y la frase que el oyente
+    devuelve es la regla."""
     f = []
-    for k in ("tema", "pregunta", "intuicion", "mecanismo_frase"):
+    mito = es_mito()
+    frase = "regla" if mito else "mecanismo_frase"
+    for k in ("tema", "pregunta") + (() if mito else ("intuicion",)) + (frase,):
         if not (enc.get(k) or "").strip():
             f.append("E1 falta «%s»" % k)
     if VD.palabras(enc.get("intuicion") or "") > INTUICION_PALABRAS:
         f.append("E1 «intuicion» de ≤ %d palabras: la idea equivocada en una oración, dicha con justicia" % INTUICION_PALABRAS)
-    if not MECANISMO_FRASE[0] <= len(enc.get("mecanismo_frase") or "") <= MECANISMO_FRASE[1]:
+    if not mito and not MECANISMO_FRASE[0] <= len(enc.get("mecanismo_frase") or "") <= MECANISMO_FRASE[1]:
         f.append("E1 «mecanismo_frase» de %d–%d caracteres: la oración que el oyente tiene que poder devolver" % MECANISMO_FRASE)
-    if enc.get("mecanismo") not in VD.MECANISMOS_EXPLICA:
+    if (not mito or enc.get("mecanismo")) and enc.get("mecanismo") not in VD.MECANISMOS_EXPLICA:
         f.append("E1 «mecanismo» es uno de %s (qué hace el fenómeno)" % "|".join(VD.MECANISMOS_EXPLICA))
-    if enc.get("sensible") not in SENSIBLES:
-        f.append("E1 «sensible»: %s" % "|".join(SENSIBLES))
+    if enc.get("sensible") not in (SENSIBLES_MITO if mito else SENSIBLES):
+        f.append("E1 «sensible»: %s" % "|".join(SENSIBLES_MITO if mito else SENSIBLES))
     ley = enc.get("leyenda") or []
     if not 2 <= len(ley) <= 4 or any(not isinstance(x, dict) or not (x.get("concepto") or "").strip()
                                       or x.get("papel") not in LEYENDA_PAPELES for x in ley):
@@ -288,18 +363,90 @@ def revisar_encuadre(enc):
             if p not in par:
                 f.append("E1 ejemplo %s: falta el parámetro «%s» (%s)" % (x.get("id"), p, MODELOS[x["modelo"]][0]))
         ilus += any(not (isinstance(v, dict) and v.get("cifra")) for v in par.values())
-    if not enc.get("ejemplos"):
+    if not enc.get("ejemplos") and not mito:
         f.append("E1 «ejemplos»: ≥ 1 modelo de la calculadora (%s)" % "|".join(MODELOS))
+    if mito and ilus:
+        f.append("MI8 %d ejemplo(s) ilustrativo(s): un mito se decide con datos reales; la calculadora solo corre con {cifra: id}" % ilus)
     if ilus > EJEMPLOS_ILUSTRATIVOS_MAX:
         f.append("E1 %d ejemplos ilustrativos (≤ %d): un ejemplo conductor, no una lista" % (ilus, EJEMPLOS_ILUSTRATIVOS_MAX))
     revs = enc.get("revelaciones") or []
     if not revs or not all(isinstance(r, str) and r.strip() for r in revs):
         f.append("E1 «revelaciones»: ≥ 1 (lo que el video paga y el gancho no adelanta; la promesa paga una)")
+    if mito:
+        f += revisar_encuadre_mito(enc)
+    return f
+
+
+# ---------- modo mito: MI1 (encuadre), MI6 (circulación), MI4 (veredicto) ----------
+def creencia_raices(texto):
+    """Raíces de la creencia más sus números (MI3, MI6 y el aviso de preparar): «la remesa promedio es de $1,000» →
+    {remes, prome, 1000}."""
+    nums = {VD.clave(float(m.group().replace(",", ""))) for m in re.finditer(r"\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?", texto or "")}
+    return HI.raices_de(texto or "") | nums
+
+
+def casa_creencia(texto, creencia, umbral=CREENCIA_CASA):
+    """True si `texto` lleva ≥ `umbral` de las raíces (y números) de la creencia."""
+    r = creencia_raices(creencia)
+    if not r:
+        return False
+    t = creencia_raices(texto)
+    return len(r & t) >= umbral * len(r)
+
+
+def revisar_encuadre_mito(enc):
+    """MI1: la creencia comprobable (4–20 palabras), ≥ 1 prueba {id, dice, cifra, op, umbral, margen_pct?}, la regla para
+    recordarlo (30–200 caracteres), el origen probable del error, la palabra clave (está en la creencia), lo sensible y el
+    eje `cir` (la evidencia de que la creencia circula)."""
+    f = []
+    cre = (enc.get("creencia") or "").strip()
+    if not CREENCIA_PALABRAS[0] <= VD.palabras(cre) <= CREENCIA_PALABRAS[1]:
+        f.append("MI1 «creencia» de %d–%d palabras: la afirmación tal como circula, comprobable con un número" % CREENCIA_PALABRAS)
+    pruebas = enc.get("prueba") or []
+    if not isinstance(pruebas, list) or not pruebas:
+        f.append("MI1 «prueba»: ≥ 1 {id, dice, cifra (<eje>-cNN), op (≈ | > | < | >= | <=), umbral, margen_pct}: cómo se decide "
+                 "la creencia con un número")
+        pruebas = []
+    ids = set()
+    for p in pruebas:
+        pid = p.get("id") if isinstance(p, dict) else None
+        if not isinstance(p, dict) or not re.fullmatch(r"p\d{1,2}", pid or "") or pid in ids:
+            f.append("MI1 prueba «%s»: id único p1, p2…" % pid)
+            continue
+        ids.add(pid)
+        if not (p.get("dice") or "").strip():
+            f.append("MI1 prueba %s: «dice» (qué afirma la creencia, en una línea)" % pid)
+        if not re.fullmatch(r"[a-z]{2,4}-c\d{2}", p.get("cifra") or ""):
+            f.append("MI1 prueba %s: «cifra» es el id de una cifra de un eje (rem-c01…)" % pid)
+        if OPS_MITO.get(str(p.get("op") or "").strip()) is None:
+            f.append("MI1 prueba %s: «op» ≈ | > | < | >= | <=" % pid)
+        if not isinstance(p.get("umbral"), (int, float)) or isinstance(p.get("umbral"), bool):
+            f.append("MI1 prueba %s: «umbral» numérico (el número de la creencia)" % pid)
+        m = p.get("margen_pct", 0)
+        if not isinstance(m, (int, float)) or isinstance(m, bool) or not 0 <= m <= 50:
+            f.append("MI1 prueba %s: «margen_pct» de 0 a 50 (cuánto se acepta como «casi»)" % pid)
+    if not REGLA_CARACTERES[0] <= len((enc.get("regla") or "").strip()) <= REGLA_CARACTERES[1]:
+        f.append("MI1 «regla» de %d–%d caracteres: la regla práctica para recordarlo (la que el oyente devuelve)" % REGLA_CARACTERES)
+    if not (enc.get("origen_hipotesis") or "").strip():
+        f.append("MI1 «origen_hipotesis»: de dónde sale el error (el giro lo cuenta, MI9)")
+    clave = enc.get("palabra_clave")
+    if not isinstance(clave, str) or not 1 <= VD.palabras(clave) <= PALABRA_CLAVE_PALABRAS or not VD._busca_clave(
+            VD._tokens_clave(cre), [clave]) is not None:
+        f.append("MI1 «palabra_clave» de 1–%d palabras que está en la creencia (V19: la voz, la pantalla y los captions la dicen)"
+                 % PALABRA_CLAVE_PALABRAS)
+    ejes = [x.get("id") for x in enc.get("ejes") or []]
+    for e in MODOS["mito"]["ejes_obligatorios"]:
+        if e not in ejes:
+            f.append("MI1 falta el eje «%s» (la evidencia de que la creencia circula: notas, encuestas, declaraciones)" % e)
+    ejes_cifra = {re.match(r"[a-z]+", p.get("cifra") or "").group() for p in pruebas if isinstance(p, dict) and re.match(r"[a-z]+", p.get("cifra") or "")}
+    for e in sorted(ejes_cifra - set(ejes)):
+        f.append("MI1 una prueba usa una cifra del eje «%s», que no está en «ejes»" % e)
     return f
 
 
 def cmd_encuadre(a):
     trabajo = os.path.abspath(a.trabajo)
+    fijar_modo(trabajo)
     f = revisar_encuadre(encuadre(trabajo))
     for x in f:
         print("FALLA", x)
@@ -314,7 +461,7 @@ def revisar_eje(v, propios=()):
     una fuente oficial o académica; `una_fuente`, una válida sin contradicción. → (fallas, avisos)."""
     fallas, avisos = [], []
     eje = v.get("eje") or "?"
-    if not (v.get("afirmaciones") or v.get("cifras")):
+    if not (v.get("afirmaciones") or v.get("cifras")) and not (es_mito() and eje == "cir"):
         fallas.append("E2 %s: sin afirmaciones ni cifras" % eje)
     for clase, pre in (("afirmaciones", "a"), ("cifras", "c"), ("citas", "q")):
         for x in v.get(clase) or []:
@@ -363,8 +510,167 @@ def revisar_eje(v, propios=()):
     return fallas, avisos
 
 
+def es_red(url, tipo=None):
+    d = NT.dominio(url or "")
+    return tipo in ("busqueda", "redes") or any(d == x or d.endswith("." + x) for x in REDES_DOMINIOS)
+
+
+def revisar_circulacion(v, enc, hoy=None):
+    """MI6 sobre verificacion_cir.json: «circulacion» [{id cir-rNN, tipo nota|encuesta|declaracion|busqueda|redes, medio,
+    url, archivo, fecha YYYY-MM-DD, cita}]: la creencia circula de verdad. Cada cita está literal en su texto guardado y
+    casa con la creencia; ≥ 2 grupos distintos (medio, institución o dominio), ≥ 1 que no sea redes ni una búsqueda y
+    ≥ 1 de los últimos 5 años. Las búsquedas y las redes acompañan; nunca deciden el veredicto. → fallas."""
+    f = []
+    hoy = hoy or datetime.date.today()
+    items = v.get("circulacion") or []
+    cre = enc.get("creencia") or ""
+    grupos, no_redes, recientes_ = set(), 0, 0
+    for x in items:
+        xid = x.get("id") or "?"
+        if not re.fullmatch(r"cir-r\d{2}", xid):
+            f.append("MI6 %s: id cir-r01, cir-r02…" % xid)
+        if x.get("tipo") not in CIRCULACION_TIPOS:
+            f.append("MI6 %s: tipo %s" % (xid, "|".join(CIRCULACION_TIPOS)))
+        t = HI.texto_de(x.get("archivo"))
+        cita = HI.plano(x.get("cita"))
+        if t is None:
+            f.append("MI6 %s: sin texto guardado (python3 scripts/explica.py leer <url>)" % xid)
+            continue
+        if len(cita) < HI.CITA_MIN or cita not in t:
+            f.append("MI6 %s: la cita no está literal en su texto guardado (≥ %d caracteres)" % (xid, HI.CITA_MIN))
+            continue
+        if not casa_creencia(x.get("cita"), cre, 0.5):
+            f.append("MI6 %s: la cita no dice la creencia («%s»): la evidencia de circulación la repite" % (xid, cre))
+            continue
+        clase, grupo = HI.clasificar(x.get("url"), (), x.get("archivo"))
+        grupos.add(grupo or NT.dominio(x.get("url") or ""))
+        if not es_red(x.get("url"), x.get("tipo")):
+            no_redes += 1
+        m = re.match(r"(\d{4})-(\d{2})(?:-(\d{2}))?$", str(x.get("fecha") or ""))
+        if not m:
+            f.append("MI6 %s: fecha YYYY-MM[-DD]" % xid)
+        elif (hoy - datetime.date(int(m.group(1)), int(m.group(2)), int(m.group(3) or 1))).days <= 365.25 * CIRCULACION_ANIOS:
+            recientes_ += 1
+    if len(grupos) < CIRCULACION_GRUPOS:
+        f.append("MI6 la creencia circula en %d grupo(s) de fuentes: van ≥ %d (otro medio, una encuesta, una declaración)"
+                 % (len(grupos), CIRCULACION_GRUPOS))
+    if not no_redes:
+        f.append("MI6 toda la evidencia de circulación es de redes o búsquedas: ≥ 1 nota, encuesta o declaración guardada")
+    if not recientes_:
+        f.append("MI6 ninguna evidencia de los últimos %d años: la creencia tiene que circular hoy" % CIRCULACION_ANIOS)
+    return f
+
+
+def op_cumple(v, op, u):
+    return {"≈": abs(v - u) <= 1e-9, ">": v > u, "<": v < u, ">=": v >= u, "<=": v <= u}[op]
+
+
+def calcular_veredicto(enc, cifras):
+    """MI4: el veredicto en código. Cada prueba compara su cifra (solo confirmado | una_fuente) con el umbral de la
+    creencia: «≈» cumple dentro de margen_pct; >, <, >=, <= cumplen con el signo y quedan «cerca» si fallan por menos de
+    margen_pct. Todas cumplen → realidad; ninguna (y ninguna cerca) → mito; mezcla o cerca → a_medias (exige depende_de).
+    → (veredicto | None, pruebas [{id, cifra, valor, periodo, op, umbral, cumple, cerca}], fallas). Sin cifras
+    suficientes: veredicto None y la falla «sin datos para un veredicto»."""
+    por_id = {c.get("id"): c for c in cifras}
+    out, f = [], []
+    for p in enc.get("prueba") or []:
+        if not isinstance(p, dict):
+            continue
+        op, u, m = OPS_MITO.get(str(p.get("op") or "").strip()), p.get("umbral"), float(p.get("margen_pct") or 0)
+        c = por_id.get(p.get("cifra"))
+        if c is None or c.get("estado") not in ESTADOS_VEREDICTO or not isinstance(c.get("valor"), (int, float)):
+            f.append("MI4 sin datos para un veredicto: la prueba %s usa %s, que %s (solo confirmado o una_fuente deciden)"
+                     % (p.get("id"), p.get("cifra"), "no está verificada" if c is None else "está %s" % c.get("estado")))
+            continue
+        if op is None or not isinstance(u, (int, float)):
+            continue
+        v = float(c["valor"])
+        tol = abs(u) * m / 100.0
+        if op == "≈":
+            cumple, cerca = abs(v - u) <= tol + 1e-9, False
+        else:
+            cumple = op_cumple(v, op, u)
+            cerca = not cumple and abs(v - u) <= tol + 1e-9
+        out.append({"id": p.get("id"), "cifra": c["id"], "valor": c["valor"], "unidad": c.get("unidad") or "",
+                    "periodo": str(c.get("periodo") or c.get("anio") or ""), "op": op, "umbral": u, "margen_pct": m,
+                    "dice": p.get("dice"), "cumple": cumple, "cerca": cerca})
+    if f or not out:
+        if not f:
+            f.append("MI4 sin datos para un veredicto: ninguna prueba se pudo comparar")
+        return None, out, f
+    if all(x["cumple"] for x in out):
+        ver = "realidad"
+    elif not any(x["cumple"] or x["cerca"] for x in out):
+        ver = "mito"
+    else:
+        ver = "a_medias"
+    if ver == "a_medias" and not (enc.get("depende_de") or "").strip():
+        f.append("MI9 A MEDIAS exige «depende_de» en el encuadre: de qué depende que la creencia sea cierta")
+    return ver, out, f
+
+
+def cifras_de_verificaciones(trabajo):
+    """Todas las cifras de los verificacion_<eje>.json (con su estado) para calcular el veredicto."""
+    out = []
+    for r in sorted(glob.glob(os.path.join(trabajo, "verificacion_*.json"))):
+        v = leer(r)
+        out += [dict(c, eje=v.get("eje")) for c in v.get("cifras") or []]
+    return out
+
+
+def armar_mito(trabajo):
+    """mito.json desde el encuadre y las verificaciones → (M | None, fallas MI1, MI4, MI6, MI9)."""
+    enc = encuadre(trabajo)
+    f = revisar_encuadre_mito(enc)
+    ver, pruebas, f4 = calcular_veredicto(enc, cifras_de_verificaciones(trabajo))
+    f += f4
+    ruta = os.path.join(trabajo, "verificacion_cir.json")
+    cir = leer(ruta) if os.path.exists(ruta) else {}
+    if not cir:
+        f.append("MI6 falta verificacion_cir.json (la evidencia de que la creencia circula)")
+    else:
+        f += revisar_circulacion(cir, enc)
+    M = {"creencia": enc.get("creencia"), "veredicto": ver, "sello": SELLOS.get(ver), "pruebas": pruebas,
+         "circulacion": [{k: x.get(k) for k in ("id", "tipo", "medio", "url", "fecha", "cita")} for x in cir.get("circulacion") or []],
+         "origen": {"afirmacion": enc.get("origen_hipotesis"), "texto": enc.get("origen_hipotesis")},
+         "regla": enc.get("regla"), "depende_de": (enc.get("depende_de") or "").strip() or None,
+         "palabra_clave": enc.get("palabra_clave")}
+    return (None if ver is None else M), f
+
+
+def mito_de(trabajo):
+    ruta = os.path.join(trabajo, "mito.json")
+    return leer(ruta) if os.path.exists(ruta) else {}
+
+
+def cmd_mito(a):
+    """mito TRABAJO --check: MI1 + MI6 + MI4 (el veredicto en código) → mito.json. Sin cifras suficientes se detiene:
+    «sin datos para un veredicto» (sin video)."""
+    trabajo = os.path.abspath(a.trabajo)
+    if fijar_modo(trabajo) != "mito":
+        return falla("el TRABAJO no está en modo mito (python3 scripts/explica.py preparar \"<creencia>\" --modo mito)")
+    M, f = armar_mito(trabajo)
+    for x in f:
+        print("FALLA", x)
+    if any("sin datos para un veredicto" in x for x in f):
+        print("SIN DATOS PARA UN VEREDICTO: el flujo se detiene aquí (sin video). Falta una cifra confirmada o de una sola "
+              "fuente para cada prueba del encuadre.")
+    if M and not f:
+        escribir(os.path.join(trabajo, "mito.json"), M)
+        for p in M["pruebas"]:
+            print("%s · %s = %s %s (%s) %s %s%s → %s" % (p["id"], p["cifra"], p["valor"], p["unidad"], p["periodo"], p["op"], p["umbral"],
+                                                       " ±%g %%" % p["margen_pct"] if p["margen_pct"] else "",
+                                                       "cumple" if p["cumple"] else "cerca" if p["cerca"] else "no cumple"))
+        print("VEREDICTO %s · «%s» · %d evidencia(s) de circulación → %s" % (M["sello"], M["creencia"], len(M["circulacion"]),
+                                                                          VD.rel(os.path.join(trabajo, "mito.json"))))
+        return 0
+    print("mito con %d falla(s)" % len(f))
+    return 1
+
+
 def cmd_afirmaciones(a):
     trabajo = os.path.abspath(a.trabajo)
+    fijar_modo(trabajo)
     rutas = sorted(glob.glob(os.path.join(trabajo, "verificacion_%s.json" % (a.eje or "*"))))
     if not rutas:
         return falla("no hay verificacion_%s.json en %s" % (a.eje or "*", VD.rel(trabajo)))
@@ -372,6 +678,8 @@ def cmd_afirmaciones(a):
     for r in rutas:
         v = leer(r)
         f, av = revisar_eje(v, encuadre(trabajo).get("dominios_propios") or ())
+        if es_mito() and v.get("eje") == "cir":
+            f += revisar_circulacion(v, encuadre(trabajo))
         fallas += f
         for x in av:
             print("AVISO", x)
@@ -445,6 +753,8 @@ def modelo(nombre, p):
                 ("intereses", redondo(c * n - P), None, "quetzales", "total − %g" % P)]
     if nombre == "porcentaje":
         return [("valor", redondo(p["base"] * p["pct"] / 100.0), None, "", "%g × %g/100" % (p["base"], p["pct"]))]
+    if nombre == "producto":
+        return [("valor", redondo(p["a"] * p["b"]), None, "", "%g × %g" % (p["a"], p["b"]))]
     if nombre == "proporcion":
         return [("pct", redondo(100.0 * p["parte"] / p["todo"], 1), None, "%", "%g ÷ %g × 100" % (p["parte"], p["todo"]))]
     raise ValueError(nombre)
@@ -533,9 +843,14 @@ def consolidar(trabajo):
     X = {"tema": st.get("tema"), "slug": st["slug"], "pregunta": enc.get("pregunta"), "intuicion": enc.get("intuicion"),
          "mecanismo": enc.get("mecanismo"), "mecanismo_frase": enc.get("mecanismo_frase"), "leyenda": enc.get("leyenda") or [],
          "glosario": enc.get("glosario") or [], "personajes": enc.get("personajes") or [], "revelaciones": enc.get("revelaciones") or [],
-         "no_afirma": enc.get("no_afirma") or [], "sensible": enc.get("sensible"),
+         "no_afirma": enc.get("no_afirma") or [], "sensible": enc.get("sensible"), "modo": MODO,
          "afirmaciones": [], "cifras": [], "citas": [], "descartados": []}
+    if es_mito():
+        X.update(creencia=enc.get("creencia"), regla=enc.get("regla"), origen_hipotesis=enc.get("origen_hipotesis"),
+                 depende_de=enc.get("depende_de"), prueba=enc.get("prueba") or [], circulacion=[])
     for v in ejes:
+        if es_mito():
+            X["circulacion"] += [dict(x, eje=v.get("eje")) for x in v.get("circulacion") or []]
         for k in ("afirmaciones", "cifras", "citas"):
             for x in v.get(k) or []:
                 (X[k] if x.get("estado") in PUBLICABLES else X["descartados"]).append(dict(x, eje=v.get("eje"), clase=k))
@@ -552,6 +867,18 @@ def consolidar(trabajo):
                            "periodo": "", "veredicto": "verificada", "ilustrativo": False})
     ejs, ej_cifras, fallas = calcular_ejemplos(enc, [c for c in cifras if not c["id"].endswith(tuple("-n%d" % i for i in range(1, 30)))])
     X["ejemplos"] = ejs
+    if es_mito():
+        # el número de la creencia («$1,000») se dice y se lee: respaldo como lo que dice la creencia (cre-cNN), nunca
+        # como dato (no cuenta como cifra real para E5 ni como ejemplo para E4)
+        for k, p in enumerate([p for p in enc.get("prueba") or [] if isinstance(p, dict) and isinstance(p.get("umbral"), (int, float))], 1):
+            ej_cifras.append({"id": "cre-c%02d" % k, "concepto": "lo que dice la creencia (%s): no es un dato" % (p.get("dice") or p.get("id")),
+                              "valor": p["umbral"], "unidad": "", "periodo": "", "veredicto": "verificada", "ilustrativo": False,
+                              "creencia": True})
+        M, f_m = armar_mito(trabajo)
+        fallas += f_m
+        if M:
+            escribir(os.path.join(trabajo, "mito.json"), M)
+            X["veredicto"] = M["veredicto"]
     escribir(os.path.join(trabajo, "explicacion.json"), X)
     escribir(os.path.join(trabajo, "ejemplos.json"), {"ejemplos": ejs})
     base = os.path.join(trabajo, "base")
@@ -559,20 +886,27 @@ def consolidar(trabajo):
     paleta = enc.get("paleta") if enc.get("paleta") in HI.paletas() else st["paleta"]
     hilo_b = leer(os.path.join(base, "hilo.json")) if os.path.exists(os.path.join(base, "hilo.json")) else {}
     hilo_b.update({"slug": st["slug"], "fecha": st.get("fecha"), "tema": st.get("tema") or enc.get("tema", ""),
-                   "tesis": enc.get("mecanismo_frase") or enc.get("pregunta") or "", "paleta": paleta, "estado": "listo",
+                   "tesis": enc.get("regla" if es_mito() else "mecanismo_frase") or enc.get("pregunta") or "", "paleta": paleta, "estado": "listo",
                    "modo": "explica", "no_afirma": X["no_afirma"]})
     hilo_b.setdefault("tuits", [])
     escribir(os.path.join(base, "hilo.json"), hilo_b)
     escribir(os.path.join(base, "datos.json"), {"slug": st["slug"], "fecha": st.get("fecha"), "cifras": cifras + ej_cifras})
+    cambia = False
     if paleta != st["paleta"]:
         st["paleta"] = paleta
         st["musica"] = elegir_musica(paleta, st.get("musica_forzada"))["id"]
+        cambia = True
+    if es_mito() and enc.get("palabra_clave") and st.get("palabra_clave") != enc["palabra_clave"]:
+        st["palabra_clave"] = enc["palabra_clave"]   # V19: la voz, la pantalla y los captions la dicen
+        cambia = True
+    if cambia:
         escribir(os.path.join(trabajo, "video.json"), st)
     return X, fallas
 
 
 def cmd_consolidar(a):
     trabajo = os.path.abspath(a.trabajo)
+    fijar_modo(trabajo)
     f = revisar_encuadre(encuadre(trabajo))
     if f:
         for x in f:
@@ -586,6 +920,8 @@ def cmd_consolidar(a):
     print("afirmaciones %d · cifras %d · citas %d · ejemplos %d · descartados %d" % (len(X["afirmaciones"]), len(X["cifras"]), len(X["citas"]),
                                                                                    len(X["ejemplos"]), len(X["descartados"])))
     print("\n".join(lineas_ejemplos(X["ejemplos"])))
+    if es_mito() and X.get("veredicto"):
+        print("VEREDICTO %s · «%s» → mito.json" % (SELLOS[X["veredicto"]], X.get("creencia")))
     for x in f:
         print("FALLA", x)
     st = VD.estado(trabajo)
@@ -599,6 +935,7 @@ def cmd_consolidar(a):
 
 def cmd_ejemplos(a):
     trabajo = os.path.abspath(a.trabajo)
+    fijar_modo(trabajo)
     X, f = consolidar(trabajo)
     print("\n".join(lineas_ejemplos(X["ejemplos"], serie_max=60)))
     for x in f:
@@ -621,6 +958,11 @@ def aplicar_extension(trabajo):
     global TRABAJO_ACTUAL, E_ACTUAL
     TRABAJO_ACTUAL = trabajo
     E_ACTUAL = leer(os.path.join(trabajo, "explicacion.json")) if os.path.exists(os.path.join(trabajo, "explicacion.json")) else {}
+    fijar_modo(trabajo)
+    if es_mito():   # el gancho de un mito es el visual veredicto (MI2), con las familias del modo
+        VD.FAMILIAS = MODOS["mito"]["familias"]
+        VD.VISUALES = VISUALES + VISUALES_MITO
+        VD.VISUALES_DE = dict(VD.VISUALES_DE, **{f: VISUALES_MITO for f in MODOS["mito"]["familias"] if f in VD.VEREDICTO_DE})
     if ORIGINALES:
         return
     ORIGINALES.update(estructura=VD.validar_estructura)
@@ -629,8 +971,9 @@ def aplicar_extension(trabajo):
     VD.CARACTERES.update(CARACTERES)
     VD.CARACTERES.update(CARACTERES_VIDEO_EN_EXPLICA)
     VD.SIN_HUECO = VD.SIN_HUECO + TIPOS_PROPIOS
-    VD.FAMILIAS, VD.VISUALES = FAMILIAS, VISUALES
-    VD.VISUALES_DE = dict(VD.VISUALES_DE, **VISUALES_DE)
+    if not es_mito():
+        VD.FAMILIAS, VD.VISUALES = FAMILIAS, VISUALES
+        VD.VISUALES_DE = dict(VD.VISUALES_DE, **VISUALES_DE)
     VD.ROTACION_FAMILIAS = ROTACION_FAMILIAS
     VD.RE_GUATEMALA = re.compile(r"\bguatemal\w*|\bchap[ií]n\w*|\bquetzal\w*", re.I)
     VD.POST_CONSTRUCTORES.append(post_explica)
@@ -667,6 +1010,8 @@ def estructura(g, st, dur, tarjetas):
     n = len(escenas)
     if n > ESCENAS_MAX:
         f.append("E5 %d escenas: van ≤ %d (más el cierre son los 20 nodos que ElevenLabs genera de una vez)" % (n, ESCENAS_MAX))
+    if es_mito() and n > MITO_ESCENAS_MAX:
+        f.append("MI8 %d escenas: un mito va en ≤ %d (62–90 s)" % (n, MITO_ESCENAS_MAX))
     if tipos.count("explica") > EXPLICA_MAX:
         f.append("E5 %d escenas explica; máximo %d" % (tipos.count("explica"), EXPLICA_MAX))
     if tipos.count("cuenta") > CUENTAS_MAX:
@@ -712,7 +1057,10 @@ def estructura(g, st, dur, tarjetas):
         f.append("E5 una escena del acto 1 (no el gancho) con «intuicion»: true: la que dice la idea equivocada (llegaron %d)" % len(intu))
     if len(corr) != 1 or (validos and actos[corr[0] - 1] != 2) or (intu and corr and corr[0] < intu[0]):
         f.append("E5 una escena del acto 2 con «corrige»: true: la que rompe la idea equivocada, después de la de intuicion (llegaron %d)" % len(corr))
-    if not any(t in ("explica", "cuenta") for t, ac in zip(tipos, actos) if ac == 2):
+    if es_mito():   # en un mito el acto 2 es la prueba: se ve en una tarjeta, una cuenta, una escala o una animación
+        if not any(t in ("explica", "cuenta", "tarjeta", "escala") for t, ac in zip(tipos, actos) if ac == 2):
+            f.append("E5 el acto 2 (la prueba) lleva ≥ 1 escena tarjeta, cuenta, escala o explica: la cifra se ve, no solo se dice")
+    elif not any(t in ("explica", "cuenta") for t, ac in zip(tipos, actos) if ac == 2):
         f.append("E5 el acto 2 (el mecanismo) lleva ≥ 1 escena explica o cuenta: el mecanismo se ve, no solo se dice")
     giros = [k for k, e in enumerate(escenas) if e.get("giro")]
     if len(giros) != 1:
@@ -837,6 +1185,8 @@ def valores_por_clase(trabajo):
     datos = leer(os.path.join(trabajo, "base", "datos.json"))
     reales, ilus = set(), set()
     for c in datos["cifras"]:
+        if c.get("creencia"):   # el número de la creencia (cre-cNN) respalda lo que se dice, pero no es dato ni ejemplo
+            continue
         nums = [c.get("valor")] + [p.get("v") for p in c.get("serie") or []]
         f = VM.factor_unidad(c.get("unidad"))
         destino = ilus if c.get("ilustrativo") else reales
@@ -965,7 +1315,7 @@ def revisar_narracion(g, st):
         elif not pal_av[0] <= total <= pal_av[1]:
             print("AVISO E9 %d palabras de narración: apunta a %d–%d (≈ %d s)" % (total, *pal_av, FORMATOS[d][1]))
     # un explicador cambia de imagen más seguido que una historia: más de 6.5 cortes por minuto es aviso, como en /video
-    f += VD.revisar_hilo_voz(g_narr, cod="E9", conectores_min=1 if d == "corto" else CONECTORES_MIN_POR_ACTO, cortes_falla=False)
+    f += VD.revisar_hilo_voz(g_narr, cod="E9", conectores_min=1 if d in ("corto", "mito") else CONECTORES_MIN_POR_ACTO, cortes_falla=False)
     f += VD.revisar_segun(g_narr, cod="E9", maximo=SEGUN_MAX_VIDEO, por_acto_max=SEGUN_MAX_ACTO)
     if g.get("escenas"):
         f += [x.replace("V17", "E9", 1) for x in VD.revisar_actos(g)]
@@ -974,6 +1324,7 @@ def revisar_narracion(g, st):
 
 def cmd_narracion(a):
     trabajo = os.path.abspath(a.trabajo)
+    fijar_modo(trabajo)
     st = VD.estado(trabajo)
     g = leer(os.path.join(trabajo, "guion.json"))
     narr = VD.narracion_de(g)
@@ -996,6 +1347,174 @@ def cmd_narracion(a):
     return 1 if f else 0
 
 
+# ---------- modo mito: el sello y los gates del guion (MI2, MI3, MI4, MI5, MI7, MI8, MI9) ----------
+def sello_chip(M):
+    return {"texto": SELLOS[M["veredicto"]], "tono": "acento", "desde": 0, "pos": "arriba"}
+
+
+def post_mito(g, M):
+    """Pone el sello del veredicto (chip en el acento desde el cuadro 0, V.chip) en la escena 1 y en toda escena con
+    «creencia»: true; la escena de la intuición (la creencia dicha con justicia) es una escena «creencia». No pisa un chip
+    que ya esté (el gate lo revisa). → True si cambió el guion."""
+    cambio = False
+    for i, e in enumerate(g.get("escenas") or [], 1):
+        if e.get("intuicion") and "creencia" not in e:
+            e["creencia"], cambio = True, True
+        if (i == 1 or e.get("creencia")) and not isinstance(e.get("chip"), dict):
+            e["chip"], cambio = sello_chip(M), True
+    return cambio
+
+
+def textos_pantalla(e):
+    """Lo que se LEE en una escena, sin la voz (MI3): pantalla, línea, golpe, títulos, pasos, opciones, la pizarra, el
+    titular, el kicker y la nota de la tarjeta, el rótulo."""
+    partes = [e.get(k) for k in ("pantalla", "linea", "golpe", "titulo", "pregunta", "termino", "definicion", "etiqueta")]
+    partes += [str(p) for p in e.get("pasos") or []] + [str(o) for o in e.get("opciones") or []]
+    if e.get("tipo") == "cuenta":
+        for x in renglones_de(e):
+            partes += [x["a"], x["b"], x["r"], x["nota"], x["etiqueta"]]
+    gr = e.get("grafico") or {}
+    tit = gr.get("titular")
+    partes += (tit if isinstance(tit, list) else [tit]) + [gr.get("kicker"), gr.get("nota")]
+    r = e.get("rotulo") if isinstance(e.get("rotulo"), dict) else {}
+    partes += [r.get("etiqueta"), r.get("titulo")]
+    return [str(x) for x in partes if x]
+
+
+def estimado_en_palabras(g):
+    """Segundos estimados con las cifras ya en palabras (como locucion.json): la voz, las colas y el cierre."""
+    es = g.get("escenas") or []
+    car = 0
+    for e in es + [g.get("cierre") or {}]:
+        car += len(NE.convertir(VD.sin_pausas(e.get("texto") or ""))[1])
+    NE.AVISOS.clear()
+    return car / VD.CPS + VD.COLA * len(es) + VD.COLA_CIERRE
+
+
+def revisar_mito(g, X, enc, trabajo):
+    """Los gates del guion de un mito → fallas. MI2 el veredicto en el cuadro 0 de la escena 1 (visual veredicto con la
+    creencia, el sello en pantalla y en el chip desde 0) y en la voz en su 1.ª–2.ª oración (≤ 4 s); MI3 la creencia nunca
+    sola (en pantalla solo en escenas «creencia» con el sello; nunca en un golpe ni en el cierre); MI4 el veredicto es el
+    que calcula el código, ninguna pantalla dice otro y la escena «corrige» dice la cifra con su periodo; MI5 la 1.ª línea
+    de cada caption empieza con «MITO:», «REALIDAD:» o «A MEDIAS:» y la creencia; MI7 sensible seguridad|grupo: sin
+    generalizar y con presunción de inocencia; MI8 62–90 s estimados y 0 ejemplos ilustrativos; MI9 el giro cuenta el
+    origen del error y A MEDIAS dice de qué depende."""
+    f = []
+    escenas = g.get("escenas") or []
+    cierre = g.get("cierre") or {}
+    M = mito_de(trabajo)
+    ver, pruebas, f4 = calcular_veredicto(enc, cifras_de_verificaciones(trabajo))
+    if ver is None or not M:
+        return (f4 or ["MI4 sin datos para un veredicto"]) + ["MI4 corre python3 scripts/explica.py mito %s --check (y consolidar)"
+                                                              % VD.rel(trabajo)]
+    if M.get("veredicto") != ver:
+        f.append("MI4 mito.json dice %s y el código calcula %s: vuelve a correr consolidar" % (SELLOS.get(M.get("veredicto")), SELLOS[ver]))
+    f += [x for x in f4 if x.startswith("MI9")]
+    sello, cre = SELLOS[ver], M.get("creencia") or enc.get("creencia") or ""
+    otros = [x for x in SELLOS.values() if x != sello and not (sello == "A MEDIAS" and x == "MITO")]
+    if not escenas:
+        return f + ["MI2 sin escenas"]
+    # MI2 el cuadro 0 y la voz del gancho
+    e1 = escenas[0]
+    vd = e1.get("visual_datos") or {}
+    if e1.get("tipo") != "gancho" or e1.get("visual") != VD.VISUAL_VEREDICTO:
+        f.append("MI2 la escena 1 es un gancho con visual «veredicto» (la creencia marcada y el sello desde el cuadro 0)")
+    else:
+        if vd.get("veredicto") != ver:
+            f.append("MI2 visual_datos.veredicto «%s» ≠ el calculado «%s»" % (vd.get("veredicto"), ver))
+        if not casa_creencia(vd.get("creencia") or "", cre, 0.8):
+            f.append("MI2 visual_datos.creencia «%s» no es la creencia del encuadre («%s»)" % (vd.get("creencia"), cre))
+    if (e1.get("pantalla") or "").strip() != sello:
+        f.append("MI2 la pantalla de la escena 1 es el sello «%s» (llegó «%s»): el veredicto se lee en el cuadro 0" % (sello, e1.get("pantalla")))
+    for i, e in enumerate(escenas, 1):
+        if i == 1 or e.get("creencia"):
+            ch = e.get("chip") if isinstance(e.get("chip"), dict) else {}
+            if (ch.get("texto") or "").strip() != sello:
+                f.append("MI2 escena %d: sin el sello «%s» (chip; lo pone el gate si falta)" % (i, sello) if not ch else
+                         "MI4 escena %d: el sello dice «%s» y el veredicto calculado es %s" % (i, ch.get("texto"), sello))
+            elif float(ch.get("desde") or 0) != 0:
+                f.append("MI2 escena %d: el sello entra a los %s s: va desde el cuadro 0 (chip.desde = 0)" % (i, ch.get("desde")))
+    voz1 = VD.sin_pausas(e1.get("texto") or "").strip()
+    oraciones = [o for o in re.split(r"(?<=[.?!…:])\s+", voz1) if o]
+    clave_v = plano(sello)
+    k = next((j for j, o in enumerate(oraciones[:2]) if re.search(r"\b%s\b" % re.escape(clave_v), plano(o))), None)
+    if k is None:
+        f.append("MI2 la voz del gancho dice el veredicto («%s») en su primera o segunda oración" % sello.capitalize())
+    else:
+        antes = " ".join(oraciones[:k]) + " " + re.split(r"\b%s\b" % re.escape(clave_v), plano(oraciones[k]))[0]
+        t = len(NE.convertir(antes.strip())[1]) / VD.CPS if antes.strip() else 0.0
+        NE.AVISOS.clear()
+        if t > VEREDICTO_VOZ_S:
+            f.append("MI2 la voz dice el veredicto a los %.1f s estimados (máximo %.0f s)" % (t, VEREDICTO_VOZ_S))
+    # MI3 la creencia nunca sola · MI4 ninguna pantalla dice otro veredicto
+    for i, e in enumerate(escenas, 1):
+        pant = textos_pantalla(e)
+        ch = e.get("chip") if isinstance(e.get("chip"), dict) else {}
+        if i > 1 and casa_creencia(" · ".join(pant), cre):
+            if e.get("tipo") == "golpe":
+                f.append("MI3 escena %d: la creencia como golpe (texto grande en el acento) se lee como una afirmación: muéstrala "
+                         "solo en la escena «creencia» con el sello, o di otra cosa en pantalla" % i)
+            elif not e.get("creencia") or (ch.get("texto") or "").strip() != sello:
+                f.append("MI3 escena %d: la creencia en pantalla sin el sello «%s» (creencia: true y chip)" % (i, sello))
+        for x in pant + [ch.get("texto") or ""]:
+            for o in otros:
+                if re.search(r"(?<![A-ZÁÉÍÓÚÑ])%s(?![A-ZÁÉÍÓÚÑ])" % re.escape(o), x):
+                    f.append("MI4 escena %d dice «%s» y el veredicto calculado es %s" % (i, o, sello))
+    pant_cierre = list(cierre.get("resumen") or []) + [cierre.get("final") or "", cierre.get("rotulo") or ""]
+    if casa_creencia(" · ".join(pant_cierre), cre):
+        f.append("MI3 el cierre muestra la creencia: lo último que se lee es la consecuencia, nunca el mito")
+    # MI4 la escena que corrige dice la cifra con su periodo
+    corr = next((e for e in escenas if e.get("corrige")), None)
+    if corr is not None:
+        dicho = textos_de_escena(corr) + textos_pantalla(corr)
+        if not any(VD.escribe_numero(float(p["valor"]), dicho) for p in pruebas):
+            f.append("MI4 la escena «corrige» no dice la cifra que decide (%s)" % ", ".join("%s = %s" % (p["cifra"], p["valor"]) for p in pruebas))
+        anios = {y for p in pruebas for y in re.findall(r"\b(?:19|20)\d{2}\b", p.get("periodo") or "")}
+        if anios and not any(y in " ".join(dicho) for y in anios):
+            f.append("MI4 la escena «corrige» dice la cifra sin su periodo (%s): un dato dice de cuándo es" % ", ".join(sorted(anios)))
+    # MI5 la 1.ª línea de cada caption
+    cap = g.get("caption") or {}
+    for pl in ("tiktok", "instagram", "facebook", "shorts"):
+        txt = cap.get(pl) or (VD.titulo_shorts(cap.get("tiktok") or "") if pl == "shorts" else "")
+        linea = next((x.strip() for x in str(txt).splitlines() if x.strip()), "")
+        if not linea.startswith(sello + ":"):
+            f.append("MI5 caption.%s: la 1.ª línea empieza con «%s:» y la creencia (TikTok indexa la 1.ª línea)" % (pl, sello))
+        elif not casa_creencia(linea[len(sello) + 1:], cre):
+            f.append("MI5 caption.%s: tras «%s:» va la creencia («%s»)" % (pl, sello, cre))
+    # MI7 sensible
+    if enc.get("sensible") in ("seguridad", "grupo"):
+        todo = [(i, " ".join(textos_de_escena(e) + textos_pantalla(e))) for i, e in enumerate(escenas, 1)] + \
+            [(len(escenas) + 1, " ".join([cierre.get("texto") or ""] + pant_cierre)), (0, json.dumps(cap, ensure_ascii=False))]
+        for i, t in todo:
+            donde = "captions" if i == 0 else "escena %d" % i
+            m = RE_GENERALIZA.search(t)
+            if m:
+                f.append("MI7 %s: «%s» generaliza a todo un grupo: di la cifra y a quién se refiere" % (donde, m.group()))
+            m = NT.VETADAS.search(t)
+            if m:
+                f.append("MI7 %s: «%s» sin sentencia firme (presunción de inocencia: señalado, acusado, sindicado)" % (donde, m.group()))
+    # MI8 duración y ejemplos
+    est = estimado_en_palabras(g)
+    if not MITO_S[0] <= est <= MITO_S[1]:
+        f.append("MI8 %.0f s estimados: un mito dura %d–%d s" % (est, *MITO_S))
+    if any(x.get("ilustrativo") for x in X.get("ejemplos") or []):
+        f.append("MI8 hay ejemplos ilustrativos: un mito se decide con datos reales")
+    # MI9 el giro cuenta el origen; A MEDIAS dice de qué depende
+    giro = next((e for e in escenas if e.get("giro")), None)
+    raices = HI.raices_de(M.get("origen", {}).get("texto") or enc.get("origen_hipotesis") or "")
+    if giro is not None and raices:
+        dicho = plano(VD.sin_pausas(giro.get("texto") or ""))
+        tiene = {r for r in raices if re.search(r"\b" + re.escape(r), dicho)}
+        if len(tiene) < max(1, math.ceil(0.3 * len(raices))):
+            f.append("MI9 el giro no cuenta el origen del error («%s»): dilo con sus palabras" % (enc.get("origen_hipotesis") or "")[:80])
+    if ver == "a_medias":
+        dep = HI.raices_de(M.get("depende_de") or "")
+        voces = plano(" ".join(VD.sin_pausas(e.get("texto") or "") for e in escenas + [cierre]))
+        if not dep or len({r for r in dep if re.search(r"\b" + re.escape(r), voces)}) < max(1, math.ceil(0.4 * len(dep))):
+            f.append("MI9 A MEDIAS: la voz dice de qué depende («%s»)" % (M.get("depende_de") or "falta depende_de"))
+    return f
+
+
 # ---------- gate del guion ----------
 def cmd_guion(a):
     trabajo = os.path.abspath(a.trabajo)
@@ -1004,7 +1523,12 @@ def cmd_guion(a):
     except (OSError, ValueError) as ex:
         return falla("guion.json ilegible: %s" % ex)
     st = VD.estado(trabajo)
+    fijar_modo(trabajo)
     X = explicacion_de(trabajo)
+    M = mito_de(trabajo) if es_mito() else {}
+    if es_mito() and M.get("veredicto") and post_mito(g, M):
+        escribir(os.path.join(trabajo, "guion.json"), g)
+        print("sello %s en la escena 1 y en las escenas «creencia» (chip desde el cuadro 0)" % SELLOS[M["veredicto"]])
     if g.get("voz_continua", True) and not g.get("secuencias") and g.get("escenas"):
         g["secuencias"] = VD.secuencias_por_defecto(g, rompe=lambda e: e.get("giro") or rotulo_de(e))
         g["voz_continua"] = bool(g["secuencias"])
@@ -1015,6 +1539,8 @@ def cmd_guion(a):
     aplicar_extension(trabajo)
     f_verdad, ilustrativas = revisar_verdad(g, X, trabajo)
     fallas += f_verdad
+    if es_mito():
+        fallas += revisar_mito(g, X, encuadre(trabajo), trabajo)
     fallas += revisar_narracion(g, VD.estado(trabajo))
     buf = io.StringIO()
     with contextlib.redirect_stdout(buf):   # las FALLA de video.py (V1–V5, V9, F1–F8, E5, E11, E12) van también al RETORNO
@@ -1033,7 +1559,8 @@ def cmd_guion(a):
         for le in L["escenas"]:
             le["ejemplo"] = le["n"] in ilustrativas
         escribir(loc, L)
-        print("E1–E12 ok · escenas con números de ejemplo (chip «Ejemplo»): %s" % (", ".join(map(str, ilustrativas)) or "ninguna"))
+        print("E1–E12 %sok · escenas con números de ejemplo (chip «Ejemplo»): %s" % ("+ MI2–MI9 " if es_mito() else "",
+                                                                               ", ".join(map(str, ilustrativas)) or "ninguna"))
         if L["estimado_s"] > DURACION_MAX_S:
             print("AVISO %.0f s estimados: pasa de %d s (el tope de YouTube Shorts)" % (L["estimado_s"], DURACION_MAX_S))
     print("RETORNO " + json.dumps(retorno_guion(trabajo, g, ok, todas, ilustrativas), ensure_ascii=False))
@@ -1053,7 +1580,8 @@ def retorno_guion(trabajo, g, ok, fallas, ilustrativas):
             "intuicion": next((i for i, e in enumerate(es, 1) if e.get("intuicion")), None),
             "corrige": next((i for i, e in enumerate(es, 1) if e.get("corrige")), None),
             "ilustrativas": ilustrativas, "secuencias": len(g.get("secuencias") or []), "estimado_s": est,
-            "explica_sin_animacion": [i for i, e in enumerate(es, 1) if e.get("tipo") == "explica" and not e.get("animacion")]}
+            "explica_sin_animacion": [i for i, e in enumerate(es, 1) if e.get("tipo") == "explica" and not e.get("animacion")],
+            **({"modo": "mito", "veredicto": mito_de(trabajo).get("veredicto"), "creencia": mito_de(trabajo).get("creencia")} if es_mito() else {})}
 
 
 def cmd_ganchos(a):
@@ -1061,7 +1589,25 @@ def cmd_ganchos(a):
     aplicar_extension(trabajo)
     if a.check:
         a.usar = None
-    return VD.cmd_ganchos(a)
+    rc = VD.cmd_ganchos(a)
+    if not es_mito() or not a.check:
+        return rc
+    # MI2 desde los candidatos: todos abren con el visual veredicto, el sello calculado en pantalla y la creencia
+    M, f = mito_de(trabajo), []
+    if not M.get("veredicto"):
+        f.append("MI4 sin mito.json: corre python3 scripts/explica.py consolidar %s (el veredicto lo calcula el código)" % VD.rel(trabajo))
+    else:
+        for c in (leer(os.path.join(trabajo, "ganchos.json")).get("candidatos") or []):
+            vd = c.get("visual_datos") or {}
+            if c.get("visual") != VD.VISUAL_VEREDICTO or vd.get("veredicto") != M["veredicto"] or not casa_creencia(vd.get("creencia") or "", M["creencia"], 0.8):
+                f.append("MI2 %s: visual «veredicto» con visual_datos {creencia: «%s», veredicto: «%s»}" % (c.get("id"), M["creencia"], M["veredicto"]))
+            if (c.get("pantalla") or "").strip() != SELLOS[M["veredicto"]]:
+                f.append("MI2 %s: la pantalla es el sello «%s»" % (c.get("id"), SELLOS[M["veredicto"]]))
+            if not re.search(r"\b%s\b" % re.escape(plano(SELLOS[M["veredicto"]])), plano(" ".join(re.split(r"(?<=[.?!…:])\s+", VD.sin_pausas(c.get("texto") or ""))[:2]))):
+                f.append("MI2 %s: la voz dice el veredicto en su primera o segunda oración" % c.get("id"))
+    for x in f:
+        print("FALLA", x)
+    return rc or (1 if f else 0)
 
 
 def cmd_tarjetas(a):
@@ -1174,6 +1720,8 @@ def cmd_tiempos(a):
     E["tipo"] = "explica"
     E["cierre"]["rotulo"] = (g.get("cierre") or {}).get("rotulo") or CIERRE_ROTULO
     escribir(ruta, E)
+    if es_mito() and E["total_s"] + VD.BUCLE_S > MITO_S[1]:
+        print("AVISO MI8 duración real %.1f s: un mito dura %d–%d s" % (E["total_s"] + VD.BUCLE_S, *MITO_S))
     if E["total_s"] + VD.BUCLE_S > DURACION_MAX_S:
         print("AVISO duración real %.1f s: pasa de %d s (el tope de YouTube Shorts)" % (E["total_s"] + VD.BUCLE_S, DURACION_MAX_S))
     return 0
@@ -1268,7 +1816,32 @@ def lineas_verificado(X):
     return out
 
 
+def lineas_mito(enc, M=None):
+    M = M or {}
+    out = ["- MODO MITO · creencia: «%s» · palabra clave (V19): «%s»" % (enc.get("creencia"), enc.get("palabra_clave")),
+           "- Pruebas: %s" % "; ".join("%s %s %s %s (±%s %%) — %s" % (p.get("id"), p.get("cifra"), p.get("op"), p.get("umbral"),
+                                                                      p.get("margen_pct", 0), p.get("dice")) for p in enc.get("prueba") or []),
+           "- Origen probable del error (el giro lo cuenta, MI9): %s" % enc.get("origen_hipotesis"),
+           "- Regla para recordarlo (acto 3; lo que el oyente devuelve): %s" % enc.get("regla")]
+    if enc.get("depende_de"):
+        out.append("- Depende de (A MEDIAS lo dice en voz): %s" % enc["depende_de"])
+    if M.get("veredicto"):
+        out.append("- VEREDICTO (calculado por el código, no lo cambias): %s · %s" % (M["sello"], "; ".join(
+            "%s = %s %s (%s) %s %s → %s" % (p["cifra"], p["valor"], p["unidad"], p["periodo"], p["op"], p["umbral"],
+                                           "cumple" if p["cumple"] else "cerca" if p["cerca"] else "no cumple") for p in M.get("pruebas") or [])))
+        out.append("- Circulación (solo prueba que la creencia circula; nunca decide): %s" % "; ".join(
+            "%s %s %s «%s»" % (x.get("id"), x.get("tipo"), x.get("medio"), (x.get("cita") or "")[:90]) for x in M.get("circulacion") or []))
+    return out
+
+
 def lineas_encuadre(enc):
+    if es_mito():
+        return ["- Pregunta: %s" % enc.get("pregunta")] + lineas_mito(enc, mito_de(TRABAJO_ACTUAL) if TRABAJO_ACTUAL else {}) + [
+            "- Leyenda de color (TODO el video): %s" % " · ".join("%s = %s" % (x.get("concepto"), x.get("papel")) for x in enc.get("leyenda") or []),
+            "- Anclas de Guatemala (acto 3): %s" % "; ".join("%s (%s)" % (x.get("concepto"), x.get("fuente_sugerida")) for x in enc.get("anclas") or []),
+            "- Revelaciones (lo que el video PAGA; la promesa paga una con promesa.revela):"] + \
+            ["  R%d. %s" % (k, r) for k, r in enumerate(enc.get("revelaciones") or [], 1)] + \
+            ["- No afirma: %s" % "; ".join(enc.get("no_afirma") or []), "- Sensible: %s" % enc.get("sensible")]
     return ["- Pregunta: %s" % enc.get("pregunta"), "- La idea equivocada (intuicion): %s" % enc.get("intuicion"),
             "- Mecanismo: %s · lo que el oyente tiene que poder devolver: «%s»" % (enc.get("mecanismo"), enc.get("mecanismo_frase")),
             "- Leyenda de color (TODO el video): %s" % " · ".join("%s = %s" % (x.get("concepto"), x.get("papel")) for x in enc.get("leyenda") or []),
@@ -1291,10 +1864,46 @@ def pantalla_de(e, tarjetas):
     return rot + VD.pantalla_video(e, tarjetas)
 
 
+LIMITES_MITO = [
+    "## MODO MITO (MI1–MI10; referencias/flujo-explica.md «Modo mito»)",
+    "- ≈ 75 s (62–90), ≤ %d escenas, 0 ejemplos ilustrativos; los tres actos son: 1 LA CREENCIA (el gancho con el veredicto "
+    "primero, la promesa y la escena «intuicion»: true que dice la creencia con justicia: quién la repite y por qué suena "
+    "lógica), 2 LA PRUEBA (la escena «corrige»: true dice la cifra que decide con su periodo y su fuente en pantalla; el «giro»: "
+    "true cuenta el ORIGEN del error con sus palabras, MI9), 3 LA REGLA (la regla para recordarlo, una cifra real, el cierre de "
+    "consecuencia)" % MITO_ESCENAS_MAX,
+    "- La escena 1 la copia ganchos --usar (visual veredicto: la creencia marcada y el sello desde el cuadro 0); la voz dice el "
+    "veredicto en su 1.ª o 2.ª oración (≤ 4 s) y la palabra clave en ≤ 3 s (V19)",
+    "- MI3 la creencia NUNCA sola: en pantalla solo en una escena «creencia»: true (el gate le pone el sello: chip desde el "
+    "cuadro 0); nunca como golpe ni en el cierre. MI4 ninguna pantalla dice otro veredicto",
+    "- MI5 la 1.ª línea de cada caption (tiktok, instagram, facebook, shorts) empieza con «SELLO:» y la creencia",
+    "- MI7 si «sensible» es seguridad o grupo: nada de «todos los…», «siempre», «cualquier»; presunción de inocencia",
+    "- A MEDIAS: la voz dice de qué depende (depende_de)"]
+
+
 def cmd_digesto(a):
     trabajo = os.path.abspath(a.trabajo)
     st = VD.estado(trabajo)
+    fijar_modo(trabajo)
+    global TRABAJO_ACTUAL
+    TRABAJO_ACTUAL = trabajo
     enc = encuadre(trabajo)
+    if a.para == "cuadro":   # MI10: el oyente ve SOLO el primer cuadro de la escena 1 (sin voz ni nada más)
+        if not es_mito():
+            return falla("--para cuadro es del modo mito")
+        g = leer(os.path.join(trabajo, "guion.json"))
+        e1 = (g.get("escenas") or [{}])[0]
+        vd = e1.get("visual_datos") or {}
+        print("\n".join(["# El primer cuadro de un video (no oíste nada; no sabes nada más)", "",
+                         "- Arriba: %s" % (g.get("contexto_superior") or ""),
+                         "- Texto tenue %s: «%s»" % ({"mito": "tachado", "realidad": "subrayado", "a_medias": "subrayado con rayas"}.get(vd.get("veredicto"), ""),
+                                                     vd.get("creencia") or ""),
+                         "- En grande, en color: %s" % (e1.get("pantalla") or ""),
+                         "- Debajo: %s" % (e1.get("linea") or ""),
+                         "- Sello arriba a la derecha: %s" % ((e1.get("chip") or {}).get("texto") or "—"), "",
+                         "## Responde solo con lo que ves",
+                         "- veredicto_primer_cuadro: mito | realidad | a_medias | no_se (¿qué dice este video de esa frase?)",
+                         "- por_que: una oración"]))
+        return 0
     if a.para in ("investigador", "verificador"):
         eje = next((x for x in enc.get("ejes") or [] if x.get("id") == a.eje), None)
         if not eje:
@@ -1337,6 +1946,19 @@ def cmd_digesto(a):
     d = CLAVE_DE.get(st["duracion"], DURACION_DEFECTO)
     base = ["# Explica · %s (%s, %d s · paleta %s · música %s)" % (st.get("tema"), d, FORMATOS[d][1], st["paleta"], st["musica"]), ""] + \
         lineas_encuadre(enc) + [""] + lineas_verificado(X)
+    if a.para == "gancho" and es_mito():
+        M = mito_de(trabajo)
+        out = base + ["", "## Ganchos de un MITO (4 candidatos, uno por familia: %s)" % ", ".join(MODOS["mito"]["familias"]),
+                      "- TODOS con visual «veredicto» y visual_datos {creencia: «%s», veredicto: «%s»}; pantalla = el sello «%s»; "
+                      "línea (≤ 8 palabras) = la cifra que decide con su referente; la voz ABRE con el veredicto («%s: …») y dice "
+                      "la palabra clave «%s» en ≤ 3 s; la familia cambia el cómo de la segunda oración (el contraste con la cifra, "
+                      "tú como protagonista, la escala humana, el resultado)" % (M.get("creencia"), M.get("veredicto"), M.get("sello"),
+                                                                              (M.get("sello") or "").capitalize(), enc.get("palabra_clave")),
+                      "- El número de la creencia lo respalda cre-c01 (lo que dice la creencia; nunca como dato)",
+                      "- «Guatemala» en la voz o la pantalla (R6). Sin «paradoja» ni «pregunta»: el veredicto va primero",
+                      "- Bloqueadas por rotación: familias %s" % (", ".join(rec_g.get("familias") or []) or "ninguna")]
+        print("\n".join(out))
+        return 0
     if a.para == "gancho":
         out = base + ["", "## Ganchos del explicador (4–5 candidatos de familias distintas; ≥ 2 con visual)",
                       "- Familias: %s · visuales: %s (pareja = dos bloques de área proporcional: el ejemplo conductor frente a frente)"
@@ -1397,6 +2019,8 @@ def cmd_digesto(a):
                   "sin «según», sin consejo" % (CIERRE_ROTULO, *VD.RESUMEN_LINEAS, VD.RESUMEN_CARACTERES),
                   "", "## Promesas recientes (P3)"] + VD.lineas_promesas(st["promesas_recientes"] if "promesas_recientes" in st else VD.promesas_recientes(st["slug"])) + \
                   ["", "## Frases ya usadas (C11)"] + VD.frases_usadas(st["slug"]) + HI.frases_historias(st["slug"]) + frases_explicaciones(st["slug"])
+    if es_mito():
+        out += [""] + LIMITES_MITO
     print("\n".join(out))
     return 0
 
@@ -1407,6 +2031,7 @@ def cmd_entregar(a):
     ejemplos.md (cada número de ejemplo con su fórmula). No vuelve a correr los gates: entrega lo grabado."""
     trabajo = os.path.abspath(a.trabajo)
     st = VD.estado(trabajo)
+    fijar_modo(trabajo)
     sal = os.path.join(trabajo, "salida")
     for f in SALIDA_ENTREGA:
         if not os.path.exists(os.path.join(sal, f)):
@@ -1452,10 +2077,16 @@ def cmd_entregar(a):
         "duracion_s": round(VD.ffprobe_dur(os.path.join(destino, "video.mp4")), 1), "critica": critica,
         "gancho": {k: e1.get(k) for k in ("familia", "visual", "pantalla", "linea")}, "promesa": g.get("promesa"), "bisagra": g.get("bisagra"),
         "ejemplos": [{"id": x["id"], "modelo": x["modelo"], "ilustrativo": x["ilustrativo"]} for x in X.get("ejemplos") or []],
-        "escenas": escenas, "cierre": g.get("cierre"), "caption": g.get("caption")}
+        "escenas": escenas, "cierre": g.get("cierre"), "caption": g.get("caption"), "modo": MODO}
+    if es_mito():   # /mito: el veredicto viaja a la memoria (M12) para no repetir la creencia
+        M = mito_de(trabajo)
+        entrega.update(creencia=M.get("creencia"), veredicto=M.get("veredicto"), sello=M.get("sello"), depende_de=M.get("depende_de"),
+                       regla=M.get("regla"), pruebas=M.get("pruebas"), circulacion=M.get("circulacion"))
     escribir(os.path.join(destino, "guion.json"), entrega)
     open(os.path.join(destino, "fuentes.md"), "w", encoding="utf-8").write(fuentes_md(st, escenas_g, X))
     open(os.path.join(destino, "ejemplos.md"), "w", encoding="utf-8").write(ejemplos_md(st, X))
+    if es_mito():
+        print("veredicto %s · «%s» (portada y 1.ª línea de los captions)" % (entrega.get("sello"), entrega.get("creencia")))
     print("entregado en %s (%.1f s) · video.mp4 (TikTok, Reels, Shorts) + video_4x5.mp4 (feed) · caption.md · fuentes.md · ejemplos.md%s"
           % (VD.rel(destino), entrega["duracion_s"], "" if entrega["creditos_voz"] is None else " · %s créditos de voz" % entrega["creditos_voz"]))
     return 0
@@ -1477,6 +2108,13 @@ def fuentes_md(st, escenas, X):
             for f in x.get("fuentes") or []:
                 if f.get("url"):
                     L.append("  - %s: %s" % (f.get("medio") or NT.dominio(f["url"]), f["url"]))
+        L.append("")
+    if X.get("circulacion"):
+        L += ["## La creencia circula (no decide el veredicto)", ""]
+        for x in X["circulacion"]:
+            L.append("- %s · %s (%s): «%s»" % (x.get("tipo"), x.get("medio") or NT.dominio(x.get("url") or ""), x.get("fecha"), x.get("cita")))
+            if x.get("url"):
+                L.append("  - %s" % x["url"])
         L.append("")
     L.append("Sígueme: %s" % " · ".join("%s %s" % (r["nombre"], r["handle"]) for r in VD.REDES))
     return "\n".join(L) + "\n"
@@ -1513,7 +2151,8 @@ def main():
     q.add_argument("--trabajo")
     q.add_argument("--paleta")
     q.add_argument("--musica")
-    q.add_argument("--fixture", action="store_true", help="la maqueta de sesiones/_fixture_explica (sin web)")
+    q.add_argument("--modo", choices=list(MODOS), default=MODO_DEFECTO, help="mito: «mito o realidad» de 62–90 s (/mito)")
+    q.add_argument("--fixture", action="store_true", help="la maqueta de sesiones/_fixture_explica (o _fixture_mito con --modo mito; sin web)")
     sub.add_parser("leer", help="→ scripts/historia.py leer")
     q = sub.add_parser("encuadre")
     q.add_argument("trabajo")
@@ -1522,11 +2161,14 @@ def main():
     q.add_argument("trabajo")
     q.add_argument("--check", action="store_true", required=True)
     q.add_argument("--eje")
+    q = sub.add_parser("mito")
+    q.add_argument("trabajo")
+    q.add_argument("--check", action="store_true", required=True)
     sub.add_parser("consolidar").add_argument("trabajo")
     sub.add_parser("ejemplos").add_argument("trabajo")
     q = sub.add_parser("digesto")
     q.add_argument("trabajo")
-    q.add_argument("--para", choices=["investigador", "verificador", "gancho", "guionista", "critico", "oyente"], default="guionista")
+    q.add_argument("--para", choices=["investigador", "verificador", "gancho", "guionista", "critico", "oyente", "cuadro"], default="guionista")
     q.add_argument("--eje")
     q = sub.add_parser("ganchos")
     q.add_argument("trabajo")
@@ -1553,7 +2195,7 @@ def main():
     for nombre in REENVIO:
         sub.add_parser(nombre, help="→ scripts/video.py %s" % nombre)
     a = p.parse_args()
-    return {"preparar": cmd_preparar, "encuadre": cmd_encuadre, "afirmaciones": cmd_afirmaciones, "consolidar": cmd_consolidar,
+    return {"preparar": cmd_preparar, "encuadre": cmd_encuadre, "mito": cmd_mito, "afirmaciones": cmd_afirmaciones, "consolidar": cmd_consolidar,
             "ejemplos": cmd_ejemplos, "digesto": cmd_digesto, "ganchos": cmd_ganchos, "narracion": cmd_narracion,
             "tarjetas": cmd_tarjetas, "guion": cmd_guion, "probar": cmd_probar, "aplicar": cmd_aplicar, "tiempos": cmd_tiempos,
             "entregar": cmd_entregar}[a.cmd](a)

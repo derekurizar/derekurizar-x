@@ -1,0 +1,40 @@
+{
+ "ganador": "g1",
+ "segundo": "g3",
+ "modo": "seleccion",
+ "puntajes": {
+  "g1": {
+   "silencio": 5,
+   "tension": 4,
+   "alineacion": 4,
+   "honestidad": 5,
+   "novedad": 4,
+   "reserva": 4
+  },
+  "g2": {
+   "silencio": 5,
+   "tension": 3,
+   "alineacion": 4,
+   "honestidad": 5,
+   "novedad": 4,
+   "reserva": 4
+  },
+  "g3": {
+   "silencio": 5,
+   "tension": 4,
+   "alineacion": 4,
+   "honestidad": 5,
+   "novedad": 4,
+   "reserva": 4
+  },
+  "g4": {
+   "silencio": 5,
+   "tension": 4,
+   "alineacion": 4,
+   "honestidad": 5,
+   "novedad": 3,
+   "reserva": 4
+  }
+ },
+ "razon": "g1 dice el veredicto y la cifra que lo decide en el cuadro 0; g3 de segundo (versión B)"
+}

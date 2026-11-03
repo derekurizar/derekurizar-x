@@ -414,6 +414,14 @@ Escribes `<TRABAJO>/critica.json` con la forma de «Salida» (los puntajes de es
 vuelta, veredicto, puntajes, bloqueantes, mejoras, faltas[]}`; `veredicto` es `pasa` solo sin faltas `bloquea` y con
 todos los puntajes ≥ 3.
 
+## Modo mito (`/mito`, modo de /explica)
+
+Como el modo explica, con el puntaje **`veredicto`** (E-C3) en lugar de `intuicion`: ¿el veredicto se lee en el cuadro 0
+y se oye en ≤ 4 s?, ¿la creencia se dice con justicia y nunca se lee sola?, ¿la cifra que decide trae periodo y fuente?,
+¿el giro explica de dónde sale el error? El veredicto lo calculó el código: nunca propongas otro. **MI10**: si el oyente
+que vio solo el primer cuadro entendió otro veredicto, va una falta «bloquea» E-C1 en la escena 1 con el arreglo (sello,
+creencia marcada, línea). En selección de gancho, R13: el sello y la creencia marcada están en el cuadro 0.
+
 ## Modo explica (`/explica`)
 
 Dos momentos, como en `/historia`.

@@ -26,9 +26,9 @@ El sandbox del Workflow no importa módulos, así que hilo.js, dato.js e ideas.j
   W12 historia.js: TIPOS (los de video.py más foto, cita y capitulo), FAMILIAS, VISUALES y PUNTAJES son espejos literales de
       scripts/historia.py
   W13 explica.js: TIPOS (los de video.py más cuenta), FAMILIAS, VISUALES, PUNTAJES y MODELOS son espejos literales de
-      scripts/explica.py, y SEGUN_MAX es su SEGUN_MAX_VIDEO
-      (reservado: W13 se amplía con la tabla MODOS de explica.js, modo mito, espejo de explica.py; y W11 con el modo
-      semana de noticias.js; los agrega cada comando al construirse)
+      scripts/explica.py, y SEGUN_MAX es su SEGUN_MAX_VIDEO; la tabla MODOS de explica.js (explica, mito) tiene las claves
+      de explica.MODOS y, por modo, las mismas familias, visuales, puntajes y ejes_obligatorios
+      (reservado: W11 se amplía con el modo semana de noticias.js al construirse)
 
 Uso: python3 scripts/check_workflows.py [--quiet]   · salida 0 ok · 1 diferencias
 """
@@ -299,6 +299,37 @@ def explica_workflow():
     m = re.search(r"\bSEGUN_MAX = (\d+)", src)
     if not m or int(m.group(1)) != EX.SEGUN_MAX_VIDEO:
         err("W13 explica.js SEGUN_MAX = %s ≠ explica.py SEGUN_MAX_VIDEO %s" % (m.group(1) if m else "?", EX.SEGUN_MAX_VIDEO))
+    # la tabla MODOS (modo mito, /mito): mismas claves y, por modo, las mismas familias, visuales, puntajes y ejes
+    js_modos = modos_explica(src)
+    if js_modos is None:
+        err("W13 explica.js: no se encontró `const MODOS = {...}`")
+        return
+    if list(js_modos) != list(EX.MODOS):
+        err("W13 explica.js MODOS %s ≠ explica.py MODOS %s" % (list(js_modos), list(EX.MODOS)))
+    for modo, campos in EX.MODOS.items():
+        for campo in ("familias", "visuales", "puntajes", "ejes_obligatorios"):
+            js, py = (js_modos.get(modo) or {}).get(campo), list(campos[campo])
+            if js is None:
+                err("W13 explica.js MODOS.%s sin «%s: [...]»" % (modo, campo))
+            elif js != py:
+                err("W13 explica.js MODOS.%s.%s %s ≠ explica.py %s" % (modo, campo, js, py))
+
+
+def modos_explica(src):
+    """const MODOS = { modo: { campo: ['a', 'b'], … }, … } de explica.js → {modo: {campo: [...]}} (None si no está)."""
+    b = bloque(src, "const MODOS = {")
+    if not b:
+        return None
+    out, actual = {}, None
+    for ln in b.splitlines()[1:]:
+        m = re.match(r"^  (\w+): \{\s*$", ln)
+        if m:
+            actual = out.setdefault(m.group(1), {})
+            continue
+        m = re.match(r"^\s+(\w+): \[(.*?)\],?\s*$", ln)
+        if m and actual is not None:
+            actual[m.group(1)] = re.findall(r"'([^']*)'", m.group(2))
+    return out
 
 
 def graficos_informe(catalogo):

@@ -57,3 +57,12 @@ Wikipedia y los blogs de finanzas personales **no cuentan**: úsalos para llegar
 ```
 
 Lo que no encontraste va en `huecos`: el verificador y el editor deciden. Nunca inventes una cita.
+
+## Modo mito (`/mito`)
+
+- Eje de datos: las cifras que piden las pruebas del encuadre (`prueba[].cifra`), con ESE id, su periodo y la fuente
+  primaria; si no existen, dilo en `huecos` (sin cifra no hay veredicto y el flujo se detiene).
+- Eje **`cir`**: no buscas cifras. Reúnes `circulacion` [{id cir-r01, tipo nota|encuesta|declaracion|busqueda|redes,
+  medio, url, archivo (`explica.py leer`), fecha YYYY-MM-DD, cita literal que repite la creencia}] de ≥ 2 grupos, ≥ 1
+  que no sea redes ni búsqueda y ≥ 1 de los últimos 5 años (MI6). La circulación prueba que la creencia existe; nunca
+  decide el veredicto.

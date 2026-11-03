@@ -95,6 +95,15 @@ igual). Lo que cambia:
 - Un hecho `en_disputa` no va al gancho.
 - Gate: `python3 scripts/historia.py ganchos <TRABAJO> --check` (no el de `video.py`).
 
+## Modo mito (`/mito`, modo de /explica)
+
+4 candidatos, uno por familia (`contraste`, `tu`, `escala`, `resultado`; sin `paradoja` ni `pregunta`: el veredicto va
+primero). TODOS con `visual: "veredicto"` y `visual_datos {creencia, veredicto}` tal como los trae el digesto; `pantalla`
+= el sello («MITO», «REALIDAD» o «A MEDIAS»); la `linea` (≤ 8 palabras) da la cifra que decide; la voz abre con el
+veredicto («Mito: …»), dice la palabra clave en ≤ 3 s y su primera oración lleva el `verbo`. La familia cambia la segunda
+oración. Antes de escribir, `explica.py mito --check`: si dice «sin datos para un veredicto», no escribas ganchos y
+devuelve `sin_datos: true`. R13 de `referencias/ganchos.md`.
+
 ## Modo explica (`/explica`)
 
 Lo pide el Workflow `explica` con las afirmaciones y los datos ya verificados y los ejemplos ya calculados. Insumo:

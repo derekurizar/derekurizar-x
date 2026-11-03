@@ -97,3 +97,20 @@ cambia, cambia también su tramo de la narración. Los arreglos del crítico que
 
 `<TRABAJO>/guion.json`. `python3 scripts/explica.py guion <TRABAJO> --check` hasta exit 0. Devuelve TAL CUAL el objeto
 de su última línea `RETORNO {...}`.
+
+## Modo mito (`/mito`)
+
+≈ 75 s (62–90), ≤ 12 escenas, 0 ejemplos ilustrativos (MI8). El digesto trae el VEREDICTO que calculó el código: no lo
+cambias ni lo matizas.
+
+- **Acto 1**: el gancho (lo copia `ganchos --usar`: visual `veredicto`, pantalla = el sello) abre con el veredicto
+  («Mito: …») y la palabra clave en ≤ 3 s; luego la escena `intuicion` (= `creencia: true`) que dice la creencia con
+  justicia: quién la repite y por qué suena lógica, y la promesa.
+- **Acto 2**: la escena `corrige` dice la cifra que decide con su periodo, y su fuente va en pantalla (MI4); el `giro`
+  cuenta el **origen** del error con las palabras de `origen_hipotesis` (MI9).
+- **Acto 3**: la regla para recordarlo y una cifra real; A MEDIAS dice de qué depende.
+- **MI3**: la creencia nunca se lee sola: en pantalla solo en una escena `creencia: true` (el gate le pone el sello),
+  nunca como golpe ni en el cierre; ninguna pantalla dice otro sello (MI4).
+- **MI5**: la 1.ª línea de cada caption (también `shorts`) empieza con «MITO:», «REALIDAD:» o «A MEDIAS:» y la creencia.
+- **MI7** (`sensible` seguridad|grupo): nada de «todos los…», «siempre», «cualquier»; presunción de inocencia.
+Gate: `explica.py guion --check` (E1–E12 + MI2–MI9); el RETORNO trae `veredicto` y `creencia`.

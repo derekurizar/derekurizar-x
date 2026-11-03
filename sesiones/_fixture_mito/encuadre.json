@@ -1,0 +1,95 @@
+{
+ "tema": "La remesa promedio es de $1,000 (maqueta)",
+ "slug": "remesa-promedio-maqueta",
+ "pregunta": "¿Cuánto trae de verdad cada remesa que llega a Guatemala?",
+ "creencia": "La remesa promedio que llega a Guatemala es de $1,000",
+ "intuicion": "Cada remesa que llega a Guatemala trae unos 1,000 dólares.",
+ "palabra_clave": "remesa promedio",
+ "prueba": [
+  {
+   "id": "p1",
+   "dice": "la remesa promedio por envío ronda los US$1,000",
+   "cifra": "rem-c01",
+   "op": "≈",
+   "umbral": 1000,
+   "margen_pct": 15
+  }
+ ],
+ "regla": "Antes de creer un promedio, pregunta de qué es: por envío, por mes o por hogar.",
+ "origen_hipotesis": "Se confunde lo que un migrante manda en un mes, casi dos envíos, con lo que trae cada envío.",
+ "paleta": "jade",
+ "leyenda": [
+  {
+   "concepto": "la creencia",
+   "papel": "tenue"
+  },
+  {
+   "concepto": "por mes",
+   "papel": "ink"
+  },
+  {
+   "concepto": "por envío",
+   "papel": "acento"
+  }
+ ],
+ "glosario": [],
+ "personajes": [],
+ "ejemplos": [
+  {
+   "id": "mes",
+   "modelo": "producto",
+   "descripcion": "lo que manda un remitente en un mes: promedio por envío × envíos al mes",
+   "parametros": {
+    "a": {
+     "cifra": "rem-c01"
+    },
+    "b": {
+     "cifra": "rem-c02"
+    }
+   }
+  }
+ ],
+ "anclas": [
+  {
+   "concepto": "remesa promedio por envío",
+   "fuente_sugerida": "Banguat"
+  },
+  {
+   "concepto": "envíos al mes por remitente",
+   "fuente_sugerida": "Banguat"
+  }
+ ],
+ "revelaciones": [
+  "El 1,000 existe: es lo que llega en un mes, no en cada envío"
+ ],
+ "ejes": [
+  {
+   "id": "rem",
+   "nombre": "el dato",
+   "preguntas": [
+    "remesa promedio por envío",
+    "envíos al mes por remitente"
+   ],
+   "fuentes": [
+    "Banguat"
+   ]
+  },
+  {
+   "id": "cir",
+   "nombre": "la creencia circula",
+   "preguntas": [
+    "notas, declaraciones y redes que repiten la cifra"
+   ],
+   "fuentes": [
+    "Prensa Libre",
+    "Soy502",
+    "redes"
+   ]
+  }
+ ],
+ "no_afirma": [
+  "cuánto recibe un hogar en particular",
+  "que las remesas suban o bajen"
+ ],
+ "sensible": "financiero"
+}

@@ -41,7 +41,7 @@ Comprueba:
   M10 memoria/historias.json (si existe; registro de /historia): campos, ids y slugs únicos, estado, paleta y música
      conocidas, ruta con guion.json (tipo historia), fuentes.md, cronologia.md y caption.md (el mp4 fuera de git: aviso)
   M12 memoria/explicaciones.json (si existe; registro de /explica): campos, ids y slugs únicos, estado, paleta y música
-     conocidas, ruta con guion.json (tipo explica), fuentes.md, ejemplos.md y caption.md (el mp4 fuera de git: aviso)
+     conocidas, modo explica|mito (un mito con creencia y veredicto mito|realidad|a_medias, el mismo de su guion.json), ruta con guion.json (tipo explica), fuentes.md, ejemplos.md y caption.md (el mp4 fuera de git: aviso)
   M13 memoria/sabias.json (si existe; registro de /sabias): campos, ids y slugs únicos, estado, paleta y música
      conocidas, ruta con guion.json (tipo sabias) y caption.md (el mp4 fuera de git: aviso)
   M14 memoria/carruseles.json (si existe; registro de /carrusel): campos, ids únicos, un carrusel por original,
@@ -740,6 +740,15 @@ def validar_explicaciones(paletas):
         g = cargar(os.path.join(r, "guion.json")) if os.path.exists(os.path.join(RAIZ, r, "guion.json")) else {}
         if g and g.get("tipo") != "explica":
             err("M12 explicaciones[%d] %s/guion.json no es de /explica (tipo %r)" % (i, r, g.get("tipo")))
+        if v.get("modo", "explica") not in ("explica", "mito"):
+            err("M12 explicaciones[%d] modo %r (explica | mito)" % (i, v.get("modo")))
+        if v.get("modo") == "mito":   # /mito: la creencia y el veredicto calculado en la escala de 3
+            if not str(v.get("creencia") or "").strip():
+                err("M12 explicaciones[%d] modo mito sin creencia" % i)
+            if v.get("veredicto") not in ("mito", "realidad", "a_medias"):
+                err("M12 explicaciones[%d] veredicto %r (mito | realidad | a_medias)" % (i, v.get("veredicto")))
+            if g and g.get("veredicto") != v.get("veredicto"):
+                err("M12 explicaciones[%d] el veredicto del registro (%r) no es el de %s/guion.json (%r)" % (i, v.get("veredicto"), r, g.get("veredicto")))
         if not os.path.exists(os.path.join(RAIZ, r, "video.mp4")):
             warn("M12 explicaciones[%d] %s/video.mp4 no está (fuera de git: se regenera con /explica)" % (i, r))
 

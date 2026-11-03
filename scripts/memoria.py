@@ -53,7 +53,8 @@
   la música de cada paleta.
 
 --explica <explicaciones/<fecha>-<slug>> [--estado listo|incompleto] [--dry-run]
-  memoria/explicaciones.json → explicaciones[] {id (= <fecha>-<slug>), slug, tema, fecha, ruta, mecanismo, duracion,
+  memoria/explicaciones.json → explicaciones[] {id (= <fecha>-<slug>), slug, tema, fecha, ruta, mecanismo, duracion, modo
+  (explica | mito; un mito guarda además creencia y veredicto mito | realidad | a_medias),
   paleta, musica, duracion_s, creditos_voz, estado, frases {… como en --video}}; registrar el mismo slug reemplaza.
   explica.py lo lee para avisar si el tema ya se explicó, rotar gancho, cierre, animaciones y música, y para las frases
   ya usadas (C11).
@@ -683,7 +684,13 @@ def registrar_explica(d, estado, dry_run=False):
         return 1
     reg = {"id": g["id"], "slug": g["slug"], "tema": g.get("tema", ""), "fecha": g["fecha"], "ruta": ruta,
            "mecanismo": g.get("mecanismo"), "duracion": g.get("duracion"), "paleta": g["paleta"], "musica": g["musica"],
-           "duracion_s": g["duracion_s"], "creditos_voz": g.get("creditos_voz"), "estado": estado, "frases": frases_video(g)}
+           "duracion_s": g["duracion_s"], "creditos_voz": g.get("creditos_voz"), "estado": estado, "frases": frases_video(g),
+           "modo": g.get("modo") or "explica"}
+    if reg["modo"] == "mito":   # /mito: la creencia y su veredicto (explica.py preparar avisa si la creencia ya se trató)
+        reg.update(creencia=g.get("creencia"), veredicto=g.get("veredicto"))
+        if not reg["creencia"] or reg["veredicto"] not in ("mito", "realidad", "a_medias"):
+            print("ERROR: %s es un mito sin creencia o sin veredicto (mito · realidad · a_medias)" % ruta, file=sys.stderr)
+            return 1
     me = leer(EXPLICACIONES, obligatorio=False) or json.loads(json.dumps(VACIO_EXPLICACIONES))
     previos = [i for i, v in enumerate(me["explicaciones"]) if v.get("slug") == reg["slug"]]
     if previos:  # volver a registrar la misma explicación reemplaza (y conserva «publicado»)
@@ -694,8 +701,9 @@ def registrar_explica(d, estado, dry_run=False):
         me["explicaciones"].append(reg)
     me["explicaciones"].sort(key=lambda v: (v["fecha"], v["id"]))
     fr = reg["frases"]
-    print("explicación %s · %.0f s · gancho %s/%s · cierre %s · %s" % (reg["id"], reg["duracion_s"], fr.get("familia"),
-                                                                     fr.get("visual"), fr.get("cierre_forma"), reg["estado"]))
+    print("explicación %s · %.0f s · gancho %s/%s · cierre %s · %s%s" % (reg["id"], reg["duracion_s"], fr.get("familia"),
+                                                                       fr.get("visual"), fr.get("cierre_forma"), reg["estado"],
+                                                                       " · modo mito: %s «%s»" % (reg["veredicto"], reg["creencia"]) if reg["modo"] == "mito" else ""))
     if dry_run:
         print("[dry-run] no se escribió nada")
         return 0

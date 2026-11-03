@@ -63,6 +63,12 @@ historia. Una lista vacía es una respuesta válida: no busques faltas donde no 
  "pregunta_sin_responder": ["¿por qué dejaron de regalarla?"]}
 ```
 
+## Modo mito · primer cuadro (`/mito`)
+
+Una pasada aparte y corta: lees SOLO `explica.py digesto <TRABAJO> --para cuadro` (lo que se ve en el primer cuadro,
+sin voz) y respondes con lo que ves: `veredicto_primer_cuadro` (mito | realidad | a_medias | no_se) y `por_que` en una
+oración. No adivinas el tema ni lees nada más. Escribe `<TRABAJO>/cuadro.json`.
+
 ## Modo explica (`/explica`)
 
 Insumo: `python3 scripts/explica.py digesto <TRABAJO> --para oyente` (la misma forma: la narración de corrido y luego

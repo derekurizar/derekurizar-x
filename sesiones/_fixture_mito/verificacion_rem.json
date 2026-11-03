@@ -1,0 +1,18 @@
+{
+ "eje": "rem",
+ "afirmaciones": [],
+ "cifras": [
+  {
+   "id": "rem-c01", "concepto": "remesa promedio por envío", "texto": "512 dólares", "valor": 512, "unidad": "US$", "periodo": "2025",
+   "estado": "confirmado",
+   "fuentes": [{"medio": "Banguat (maqueta)", "url": "https://www.banguat.gob.gt/maqueta/remesas", "archivo": "sesiones/_fixture_mito/fuentes/rem-1.txt",
+                "cita": "el monto promedio por envío de remesas familiares fue de 512 dólares"}]
+  },
+  {
+   "id": "rem-c02", "concepto": "envíos al mes por remitente", "texto": "1.9 envíos", "valor": 1.9, "unidad": "envíos", "periodo": "2025",
+   "estado": "confirmado",
+   "fuentes": [{"medio": "Banguat (maqueta)", "url": "https://www.banguat.gob.gt/maqueta/remesas", "archivo": "sesiones/_fixture_mito/fuentes/rem-1.txt",
+                "cita": "Los remitentes hicieron en promedio 1.9 envíos al mes durante 2025"}]
+  }
+ ]
+}

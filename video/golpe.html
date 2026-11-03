@@ -50,6 +50,19 @@ body.adivina #cuerpo { top: 470px; }
 #pausa .barras { display: flex; gap: 8px; }
 #pausa .barras i { width: 11px; height: 36px; border-radius: 3px; background: var(--bg); }
 #pausa b { position: absolute; left: 0; bottom: 0; height: 7px; width: 100%; background: var(--bg); opacity: .6; transform-origin: 0 50%; }
+/* /mito (visual veredicto del gancho, S.T.veredicto): la creencia entre comillas en crema tenue sobre el sello; tachada
+   en el acento si es MITO, subrayada si es REALIDAD, punteada si es A MEDIAS; el sello (#cifra, en el acento) y la
+   creencia están enteros desde el cuadro 0 (miniatura y bucle) */
+#creencia { display: none; font: 800 60px/1.12 Archivo, sans-serif; letter-spacing: -.012em; margin-bottom: 34px;
+  color: color-mix(in srgb, var(--ink) 58%, transparent); text-decoration-thickness: .09em; text-underline-offset: .16em;
+  text-decoration-color: var(--acento, var(--a1)); text-decoration-skip-ink: none; }
+body.veredicto #creencia { display: block; }
+body.veredicto #cuerpo { top: 470px; }
+#creencia.mito { text-decoration-line: line-through; }
+#creencia.realidad { text-decoration-line: underline; }
+#creencia.a_medias { text-decoration-line: underline; text-decoration-style: dashed; }
+html.f45 #creencia { font-size: 50px; margin-bottom: 24px; }
+html.f45 body.veredicto #cuerpo { top: 270px; }
 /* formato 4:5 (1080×1350) para el feed */
 html.f45 #cuerpo { top: 330px; }
 html.f45 #linea { font-size: 56px; margin-top: 36px; }
@@ -62,7 +75,7 @@ html.f45 #pausa { margin-top: 34px; font-size: 36px; padding: 14px 28px 18px 22p
 </style></head>
 <body>
 <div id="arriba"><div id="progreso"></div><div id="contexto"></div></div>
-<div id="cuerpo"><div id="icono"></div><div id="rotulo">Para entender</div><div id="cifra"></div><div id="linea"></div></div>
+<div id="cuerpo"><div id="icono"></div><div id="rotulo">Para entender</div><div id="creencia"></div><div id="cifra"></div><div id="linea"></div></div>
 <div id="subs"></div>
 <script src="comun.js"></script>
 <script>
@@ -108,6 +121,13 @@ window.__listo = (async () => {
   }
   const cifra = document.getElementById('cifra'), P = S.T.pant;
   cifra.textContent = P.texto;
+  if (S.T.veredicto && S.T.veredicto.creencia) {   // /mito: la creencia sobre el sello, marcada según el veredicto
+    const cr = document.getElementById('creencia');
+    cr.textContent = '«' + S.T.veredicto.creencia + '»';
+    cr.classList.add(S.T.veredicto.veredicto || 'mito');
+    document.body.classList.add('veredicto');
+    [S.T.veredicto.creencia].forEach((s) => String(s).split(/\s+/).forEach((w) => { const k = normal(w); if (k) EN_PANTALLA.add(k); }));
+  }
   // la coma, el punto y coma, los paréntesis y la Q bajan del renglón (interlínea .84): más aire antes de la línea
   cifra.classList.toggle('baja', /[,;()Q]/i.test(P.texto));
   if (S.icono) {  // acento de la biblioteca fija (design/iconos/): se dibuja trazo a trazo al entrar la cifra

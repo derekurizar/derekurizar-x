@@ -57,3 +57,15 @@ real, o un solo ejemplo pequeño: el catálogo no es obligatorio de llenar.
 
 `<TRABAJO>/encuadre.json` (forma en `sesiones/_fixture_explica/encuadre.json`), `python3 scripts/explica.py encuadre
 <TRABAJO> --check` en exit 0, y el retorno que pide la directiva.
+
+## Modo mito (`/mito`)
+
+El tema es una **creencia** que circula. Escribe, además de lo de siempre: `creencia` (4–20 palabras, tal como se
+dice), `palabra_clave` (1–3 palabras de la creencia), `prueba` [{id p1, dice, cifra "<eje>-cNN", op ≈|>|<|>=|<=,
+umbral (el número de la creencia), margen_pct (0–50: cuánto vale como «casi»)}] — cómo se decide con un número, sin
+saber todavía el resultado —, `regla` (30–200 caracteres: la regla práctica para recordarlo; es lo que el oyente
+devuelve), `origen_hipotesis` (de dónde sale el error: el giro lo cuenta), `depende_de` si puede quedar A MEDIAS, y el eje
+**`cir`** (dónde circula la creencia). `intuicion` puede ser la creencia dicha con justicia; `mecanismo` es opcional;
+los ejemplos, solo con `{cifra: id}` (0 ilustrativos; `producto` multiplica dos cifras). `sensible` admite además
+`seguridad` y `grupo` (MI7). Gate: `explica.py encuadre --check` (E1 + MI1). Nunca decides el veredicto: lo calcula el
+código.

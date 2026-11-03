@@ -166,3 +166,45 @@ y ≈ 2,400 en `largo`. El Workflow cuesta 0 créditos (≈ 9–12 agentes, 15�
 `make explica-fixture`: la maqueta del interés compuesto (`sesiones/_fixture_explica/`, fuentes de ejemplo guardadas,
 voz falsa). Genera el 9:16 y el 4:5 en `sesiones/_fixture_explica/salida/`. Es también el ejemplo de guion de
 `referencias/roles/explica-guionista.md`.
+
+## Modo mito (`/mito <creencia>`; decisiones del usuario, 2026-11-03)
+
+«Mito o realidad» en 62–90 s (≈ 75 s, `piso_s: 61` en `video.json`), con el motor entero de /explica (editor,
+investigador ⇢ verificador por eje, E2, la calculadora, gancho, guionista, oyente, crítico, `probar`/`aplicar`, voz y
+render). `preparar "<creencia>" --modo mito` fija `video.json → modo: "mito"`; el Workflow recibe `args.modo: "mito"`
+(tabla `MODOS` de `explica.js`, espejo de `explica.MODOS`, W13). Entrega en `explicaciones/<fecha>-<slug>/` con
+`modo: mito`, `creencia` y `veredicto`; sin variante de 3 mitos.
+
+- **Escala de 3**: MITO · REALIDAD · A MEDIAS. El veredicto **lo calcula el código** (`calcular_veredicto`): cada
+  `prueba {id, dice, cifra, op ≈|>|<|>=|<=, umbral, margen_pct}` compara una cifra `confirmado | una_fuente` con el
+  número de la creencia; todas cumplen → REALIDAD, ninguna → MITO, mezcla o «cerca» (dentro de `margen_pct`) → A MEDIAS
+  (exige `depende_de`). Sin cifras suficientes, `explica.py mito --check` falla con **«sin datos para un veredicto»** y
+  el flujo se detiene sin video.
+- **Encuadre** añade `creencia` (4–20 palabras), `palabra_clave` (V19), `prueba[]`, `regla` (30–200 car.: lo que el
+  oyente devuelve), `origen_hipotesis`, `depende_de?` y el eje **`cir`** (la creencia circula: `circulacion[]` de notas,
+  encuestas, declaraciones; búsquedas y redes solo acompañan). `mecanismo` es opcional y los ejemplos solo con
+  `{cifra: id}` (el modelo `producto` multiplica dos cifras). `consolidar` escribe `mito.json` y respalda el número de la
+  creencia como `cre-cNN` (lo que dice la creencia, nunca un dato).
+- **Dramaturgia**: acto 1 el veredicto primero (gancho con visual `veredicto`: la creencia en crema tenue, tachada si
+  MITO, subrayada si REALIDAD, punteada si A MEDIAS, y el sello en el acento desde el cuadro 0) y la escena `intuicion`
+  (= `creencia: true`) que dice la creencia con justicia; acto 2 la escena `corrige` con la cifra, su periodo y su
+  fuente, y el `giro` = el origen del error; acto 3 la regla para recordarlo y una cifra real; cierre de consecuencia con
+  «Sígueme en». El sello es un `chip` (`V.chip`, tono acento, `desde: 0`) que `guion --check` pone en la escena 1 y en
+  toda escena `creencia: true`; la portada de texto lleva la creencia marcada y el sello.
+
+| Gate | Qué comprueba | Dónde |
+|---|---|---|
+| MI1 | creencia 4–20 palabras, ≥ 1 prueba con cifra/op/umbral, regla 30–200 car., origen, palabra clave en la creencia, eje `cir` | `encuadre --check` |
+| MI2 | escena 1 = gancho `veredicto` (creencia y veredicto del código), pantalla = sello, chip sello con `desde: 0`, la voz dice el veredicto en su 1.ª–2.ª oración (≤ 4 s); los candidatos de `ganchos --check` igual | `ganchos --check`, `guion --check` |
+| MI3 | la creencia nunca sola: un texto de pantalla que casa ≥ 60 % de sus raíces y números solo en escenas `creencia: true` con el sello; nunca en un golpe ni en el cierre | `guion --check` |
+| MI4 | el veredicto es el de `calcular_veredicto` (solo `confirmado | una_fuente`), ningún sello ni pantalla dice otro, la escena `corrige` dice la cifra con su periodo | `mito --check`, `guion --check` |
+| MI5 | la 1.ª línea de cada caption (tiktok, instagram, facebook, shorts) empieza con «MITO:», «REALIDAD:» o «A MEDIAS:» y la creencia; la portada lleva el sello | `guion --check` |
+| MI6 | `circulacion` con citas literales que repiten la creencia, ≥ 2 grupos, ≥ 1 que no sea redes ni búsqueda, ≥ 1 de los últimos 5 años | `afirmaciones --check`, `mito --check` |
+| MI7 | `sensible: seguridad | grupo`: nada que generalice (`RE_GENERALIZA`: «todos los…», «siempre», «cualquier») y presunción de inocencia | `guion --check` |
+| MI8 | 62–90 s estimados (y piso real de 61 s en `tiempos`), ≤ 12 escenas, 0 ejemplos ilustrativos | `encuadre`, `guion`, `tiempos` |
+| MI9 | el giro cuenta el origen del error con sus palabras; A MEDIAS dice de qué depende | `mito --check`, `guion --check` |
+| MI10 | un oyente que ve SOLO el primer cuadro (`digesto --para cuadro`) devuelve `veredicto_primer_cuadro`; si no es el del código, el crítico bloquea el gancho (E-C1) | Workflow `explica` |
+
+El crítico puntúa `veredicto` (E-C3) en lugar de `intuicion`; sin las familias `paradoja` ni `pregunta` (el veredicto va
+primero). Prueba sin web ni créditos: `make mito-fixture` (la maqueta «la remesa promedio es de $1,000» → MITO, con
+fuentes de ejemplo en `sesiones/_fixture_mito/`).

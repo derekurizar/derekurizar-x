@@ -45,6 +45,7 @@ penal para 960, el país 23,382 para 6,842 espacios, 16,540 (7 de cada 10) sin l
 | `contraste` | rompe una expectativa que el propio gancho plantea | lo esperado → «pero» → lo real, con las dos cifras | «Hecha para 960» · «Esta cárcel se construyó para 960 personas. Pero en 2025 tenía 4,464.» | llenado, pareja, cifra |
 | `paradoja` | una frase que choca con lo que se cree; las cifras van en pantalla | «hay más X que Y», «X baja y Y sube» | «16,540 contra 6,842» · «En las cárceles de Guatemala hay más presos sin lugar que con lugar.» | pareja, figuras, cifra |
 | `lugar` | señala algo concreto antes de la cifra («Esto es…») | lugar u objeto → la cifra traducida | «Pavón» · «Esto es Pavón, en Fraijanes. Lo hicieron para 960 personas y tenía 4,464.» | lugar, llenado, cifra |
+| `veredicto` | solo `/mito`: la creencia entre comillas en crema tenue (tachada si MITO, subrayada si REALIDAD, punteada si A MEDIAS) sobre el sello en el acento (golpe.html), enteros desde el cuadro 0 | `{creencia, veredicto: mito|realidad|a_medias}` (creencia ≤ 120) | el gancho de todo mito (R13); familias contraste, tu, escala y resultado |
 | `escala` | traduce la cifra a algo que se ve en 1 s | «Donde cabe 1, hay 3», «7 de cada 10» | «7 de cada 10» · «7 de cada 10 presos de Guatemala no tienen un lugar en la cárcel.» | figuras, llenado, pareja |
 | `tu` | segunda persona: el espectador es el protagonista; escala doméstica | «Tu…», «Si tú…», «Imagina…» y la cifra en tu escala | «1 lugar, 3 presos» · «Imagina tu cuarto, hecho para uno, con tres personas adentro: así están las cárceles de Guatemala.» | figuras, llenado, pareja, cifra |
 | `pregunta` | predicción que se contesta enseguida | pregunta específica + respuesta con cifra en el mismo gancho | «Para 960. ¿Cuántos hay?» · «Un penal para 960 personas. ¿Cuántas hay adentro? 4,464.» | cifra, pareja, llenado |
@@ -100,6 +101,7 @@ El icono (`icono`) va solo con el visual `cifra`.
 | R10 | Cada gancho trae al menos un número con respaldo en sus primeros segundos (pantalla, línea, visual o voz) | gate |
 | R11 | **Encuadre**: pérdida y tristeza sí, miedo no; sin morbo, sin deshumanizar («personas presas», no «reos peligrosos»), sin superlativo sin fuente; ninguna palabra que el dato no dice («duermen», «camas», «celdas de 3×3») | crítico |
 | R12 | **Primer cuadro lleno**: la cifra o el visual están desde el cuadro 0 (miniatura del feed y vuelta del bucle) | render + aviso V15 de `revisar` |
+| R13 | **Veredicto en el cuadro 0** (solo `/mito`): visual `veredicto` con la creencia marcada (tachada, subrayada o punteada) y el sello en el acento desde el cuadro 0; la voz dice el veredicto en su 1.ª–2.ª oración (≤ 4 s) | gate MI2 (`explica.py`) + oyente del primer cuadro MI10 |
 
 Fuera de reglas, para elegir entre candidatos: un gancho que funciona en la cuenta de otra persona sobre otro tema no
 basta; gana el que mejor contesta **¿qué ve el pulgar en el segundo 1 y por qué se queda en el 3?**

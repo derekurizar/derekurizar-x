@@ -100,6 +100,12 @@ VISUALES_DE = {"contraste": ("llenado", "pareja", "cifra"), "paradoja": ("pareja
                "lugar": ("lugar", "llenado", "cifra"), "escala": ("figuras", "llenado", "pareja"),
                "tu": ("figuras", "llenado", "pareja", "cifra"), "pregunta": ("cifra", "pareja", "llenado"),
                "ranking": ("cifra", "lugar"), "resultado": ("cifra", "pareja", "figuras")}
+# visual de gancho que solo enciende un modo (no entra en VISUALES ni en video.js): `veredicto` de /mito (modo de /explica,
+# scripts/explica.py): la creencia en crema tenue, tachada (MITO), subrayada (REALIDAD) o punteada (A MEDIAS), y el sello en
+# el acento desde el cuadro 0 (video/golpe.html, S.T.veredicto); familias que lo admiten
+VISUAL_VEREDICTO, VEREDICTO_DE = "veredicto", ("contraste", "resultado", "tu", "escala")
+SELLOS_VEREDICTO = {"mito": "MITO", "realidad": "REALIDAD", "a_medias": "A MEDIAS"}
+CREENCIA_CARACTERES = 120
 CANDIDATOS = (4, 5)            # ganchos.json: candidatos por video, de familias distintas
 CANDIDATOS_CON_VISUAL = 2      # … y al menos estos con un visual que no sea la cifra sola
 ROTACION_FAMILIAS, ROTACION_VISUALES = 2, 1   # R9: la familia no repite la de los últimos 2 videos; el visual, la del último
@@ -1487,6 +1493,12 @@ def visual_del_gancho(e, cifras, valores):
                 f.append("visual figuras: calculo %s da %.4g y no respalda «%d de cada %d»" % (d["calculo"], r, *dc))
             else:
                 nums.append(r)
+    elif vis == VISUAL_VEREDICTO:   # /mito: sin números propios (los dicen la línea y la voz)
+        ver = d.get("veredicto")
+        if ver not in SELLOS_VEREDICTO:
+            f.append("visual veredicto: «veredicto» %s" % "|".join(SELLOS_VEREDICTO))
+        out.update(creencia=etiqueta("creencia", d.get("creencia"), CREENCIA_CARACTERES), veredicto=ver,
+                   sello=SELLOS_VEREDICTO.get(ver))
     elif vis == "lugar":
         dep, nombres = (d.get("depto") or "").strip(), nombres_depto()
         cod = dep if dep in nombres else next((k for k, v in nombres.items() if _plano(v) == _plano(dep)), None)
@@ -1878,6 +1890,8 @@ def pantalla_escena1(e):
     """Los textos que se leen en pantalla en la escena 1 (V19): pantalla, línea, golpe, título, término, pregunta,
     el titular de una foto y el chip."""
     out = [e.get(k) for k in ("pantalla", "linea", "golpe", "titulo", "titular", "termino", "pregunta") if isinstance(e.get(k), str)]
+    if e.get("visual") == VISUAL_VEREDICTO and isinstance((e.get("visual_datos") or {}).get("creencia"), str):
+        out.append(e["visual_datos"]["creencia"])   # /mito: la creencia se lee sobre el sello
     if isinstance(e.get("chip"), dict):
         out.append(e["chip"].get("texto") or "")
     return [x for x in out if x]
@@ -3421,7 +3435,9 @@ def cmd_tiempos(a):
             if tipo == "gancho":
                 sfx = [(0.1, "impacto"), (pulso[1] if pulso else hasta, "pulso")]
                 vis = e.get("visual") or {}
-                if vis.get("tipo") not in (None, "cifra"):   # gancho con visual: página gancho.html (S.V)
+                if vis.get("tipo") == VISUAL_VEREDICTO:   # /mito: golpe.html con la creencia sobre el sello (S.T.veredicto)
+                    S["T"]["veredicto"] = {k: vis.get(k) for k in ("creencia", "veredicto", "sello")}
+                elif vis.get("tipo") not in (None, "cifra"):   # gancho con visual: página gancho.html (S.V)
                     S["V"], ev_v, sfx_v = tiempos_visual(vis, pal, fin_1, fin_voz)
                     ev += ev_v
                     sfx += sfx_v

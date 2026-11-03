@@ -1,0 +1,16 @@
+{
+ "eje": "cir",
+ "afirmaciones": [],
+ "cifras": [],
+ "circulacion": [
+  {"id": "cir-r01", "tipo": "nota", "medio": "Prensa Libre (maqueta)", "url": "https://www.prensalibre.com/maqueta/remesas-mitos",
+   "archivo": "sesiones/_fixture_mito/fuentes/cir-1.txt", "fecha": "2025-06-10",
+   "cita": "se repite que la remesa promedio que llega a Guatemala es de mil dólares"},
+  {"id": "cir-r02", "tipo": "declaracion", "medio": "Soy502 (maqueta)", "url": "https://www.soy502.com/maqueta/remesas-huehuetenango",
+   "archivo": "sesiones/_fixture_mito/fuentes/cir-2.txt", "fecha": "2024-11-20",
+   "cita": "aquí se sabe que la remesa promedio que llega a Guatemala es de mil dólares"},
+  {"id": "cir-r03", "tipo": "redes", "medio": "TikTok (maqueta)", "url": "https://www.tiktok.com/@maqueta/video/1",
+   "archivo": "sesiones/_fixture_mito/fuentes/cir-3.txt", "fecha": "2026-03-02",
+   "cita": "la remesa promedio que llega a Guatemala es de mil dólares"}
+ ]
+}

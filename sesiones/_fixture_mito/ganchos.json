@@ -1,0 +1,68 @@
+{
+ "candidatos": [
+  {
+   "id": "g1",
+   "familia": "contraste",
+   "visual": "veredicto",
+   "visual_datos": {
+    "creencia": "La remesa promedio que llega a Guatemala es de $1,000",
+    "veredicto": "mito"
+   },
+   "pantalla": "MITO",
+   "linea": "Cada envío trae 512 dólares",
+   "texto": "Mito: la remesa promedio no llega a 1,000 dólares. Cada envío a Guatemala trae 512 dólares.",
+   "verbo": "llega",
+   "promesa_sugerida": "¿De dónde sale, entonces, ese 1,000?",
+   "por_que": "contraste: la cifra que se repite frente a la del Banguat",
+   "forma_sugerida": "pregunta"
+  },
+  {
+   "id": "g2",
+   "familia": "tu",
+   "visual": "veredicto",
+   "visual_datos": {
+    "creencia": "La remesa promedio que llega a Guatemala es de $1,000",
+    "veredicto": "mito"
+   },
+   "pantalla": "MITO",
+   "linea": "Lo que te llega: 512 dólares",
+   "texto": "Mito: tu remesa promedio no llega a 1,000 dólares. Lo que te llega a Guatemala por envío son 512 dólares.",
+   "verbo": "llega",
+   "promesa_sugerida": "Ese 1,000 tiene un origen.",
+   "por_que": "el espectador que recibe remesas es el protagonista",
+   "forma_sugerida": "secreto"
+  },
+  {
+   "id": "g3",
+   "familia": "escala",
+   "visual": "veredicto",
+   "visual_datos": {
+    "creencia": "La remesa promedio que llega a Guatemala es de $1,000",
+    "veredicto": "mito"
+   },
+   "pantalla": "MITO",
+   "linea": "Casi la mitad: 512 dólares",
+   "texto": "Mito: la remesa promedio no llega a 1,000 dólares. A Guatemala llega casi la mitad: 512 dólares por envío.",
+   "verbo": "llega",
+   "promesa_sugerida": "¿De dónde sale, entonces, ese 1,000?",
+   "por_que": "la escala: la mitad de lo que se cree",
+   "forma_sugerida": "pregunta"
+  },
+  {
+   "id": "g4",
+   "familia": "resultado",
+   "visual": "veredicto",
+   "visual_datos": {
+    "creencia": "La remesa promedio que llega a Guatemala es de $1,000",
+    "veredicto": "mito"
+   },
+   "pantalla": "MITO",
+   "linea": "512 dólares por envío en 2025",
+   "texto": "Mito: la remesa no llega a 1,000 dólares. En 2025, cada envío a Guatemala trajo {512:m}.",
+   "verbo": "llega",
+   "promesa_sugerida": "Ese 1,000 tiene un origen.",
+   "por_que": "el resultado primero, con su año",
+   "forma_sugerida": "secreto"
+  }
+ ]
+}
