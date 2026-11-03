@@ -2,19 +2,20 @@
  "tipo": "historia",
  "contexto_superior": "Historia · Maqueta",
  "promesa": {
-  "texto": "Al final vas a ver qué quedó de sus 25 sucursales.",
+  "texto": "¿Cómo pasa una panadería de 25 sucursales a ninguna?",
   "en": 2,
   "pago": 9,
-  "revela": 2
+  "revela": 2,
+  "forma": "pregunta"
  },
  "narracion": [
   {
    "acto": 1,
-   "texto": "La Espiga reabrió bajo una carpa. Fue en Guatemala, tras el terremoto de 1976. Esta es la historia de La Espiga, una panadería de Quetzaltenango que nació con un horno de leña, creció hasta llegar a todo el país y se apagó casi sin hacer ruido. Al final vas a ver qué quedó de sus 25 sucursales. Marta Pérez, la fundadora, encendió ese horno en 1952 y abrió La Espiga. Años después, ya famosa en Xela, lo resumió así: Cada pan sale del mismo horno que encendí el primer día. Pero en 1976 un terremoto destruyó el local de la calle Rodolfo Robles. Un año después, en 1977, La Espiga volvió a hornear bajo una carpa, y los clientes hicieron fila en la banqueta. Aun así, el pan de La Espiga se volvió costumbre: en 1968 ya vendía 4,500 panes al día, y en 1990 abrió su sucursal número 25, la primera en la capital."
+   "texto": "La Espiga reabrió bajo una carpa. Fue en Guatemala, tras el terremoto de 1976. Esta es la historia de La Espiga, una panadería de Quetzaltenango que nació con un horno de leña, creció hasta llegar a todo el país y se apagó casi sin hacer ruido. ¿Cómo pasa una panadería de 25 sucursales a ninguna? Marta Pérez, la fundadora, encendió ese horno en 1952 y abrió La Espiga. Años después, ya famosa en Xela, lo resumió así: Cada pan sale del mismo horno que encendí el primer día. Pero en 1976 un terremoto destruyó el local de la calle Rodolfo Robles. Un año después, en 1977, La Espiga volvió a hornear bajo una carpa, y los clientes hicieron fila en la banqueta. Aun así, el pan de La Espiga se volvió costumbre: en 1968 ya vendía 4,500 panes al día, y en 1990 abrió su sucursal número 25, la primera en la capital."
   },
   {
    "acto": 2,
-   "texto": "Entonces, en marzo de 2004, el Ministerio de Salud, la autoridad sanitaria, entró a la planta. Su informe dice que se encontraron 40 sacos de harina con fecha vencida en la planta de La Espiga. Pero lo que más pesó no fue la harina, sino la multa: pagó Q85,000 por la harina vencida."
+   "texto": "Nadie en la familia imaginaba quién tocaría la puerta. Entonces, en marzo de 2004, el Ministerio de Salud, la autoridad sanitaria, entró a la planta. Su informe dice que se encontraron 40 sacos de harina con fecha vencida en la planta de La Espiga. Pero lo que más pesó no fue la harina, sino la multa: pagó Q85,000 por la harina vencida."
   },
   {
    "acto": 3,
@@ -75,7 +76,7 @@
     "ori-h01"
    ],
    "fuente": "Prensa Libre · La Hora",
-   "texto": "Esta es la historia de La Espiga, una panadería de Quetzaltenango que nació con un horno de leña, creció hasta llegar a todo el país y se apagó casi sin hacer ruido. Al final vas a ver qué quedó de sus 25 sucursales."
+   "texto": "Esta es la historia de La Espiga, una panadería de Quetzaltenango que nació con un horno de leña, creció hasta llegar a todo el país y se apagó casi sin hacer ruido. ¿Cómo pasa una panadería de 25 sucursales a ninguna?"
   },
   {
    "tipo": "cita",
@@ -159,7 +160,7 @@
     "cas-h02"
    ],
    "fuente": "MSPAS",
-   "texto": "Entonces, en marzo de 2004, el Ministerio de Salud, la autoridad sanitaria, entró a la planta. Su informe dice que se encontraron 40 sacos de harina con fecha vencida en la planta de La Espiga."
+   "texto": "Nadie en la familia imaginaba quién tocaría la puerta. Entonces, en marzo de 2004, el Ministerio de Salud, la autoridad sanitaria, entró a la planta. Su informe dice que se encontraron 40 sacos de harina con fecha vencida en la planta de La Espiga."
   },
   {
    "tipo": "golpe",
@@ -230,5 +231,11 @@
   "instagram": "MAQUETA · Historia de ejemplo: una panadería de Xela que llegó a 25 sucursales.",
   "facebook": "MAQUETA · Historia de ejemplo de una panadería de Xela. Fuentes en el primer comentario.",
   "shorts": "MAQUETA · La panadería que llegó a 25 sucursales #Shorts\nHistoria de ejemplo."
+ },
+ "bisagra": {
+  "texto": "Nadie en la familia imaginaba quién tocaría la puerta.",
+  "forma": "presagio",
+  "en": 6,
+  "pago": 6
  }
 }

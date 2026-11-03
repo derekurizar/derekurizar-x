@@ -400,7 +400,8 @@ const directivaGuion = RETOQUE
     `los saltos de tiempo se dicen; cada personaje se presenta la primera vez; cada hilo se paga o se declara sin respuesta; ≤ ${SEGUN_MAX} «según»); mídela con python3 scripts/historia.py narracion ${trabajo} --check hasta 0 fallas. ` +
     `SOLO ENTONCES repártela en escenas SIN cambiar una palabra (H15): acto en cada escena, rotulo {anio, titulo, lugar?} en la primera escena de los actos 2 y 3, ` +
     `secuencias de 2–5 escenas consecutivas del mismo acto (la voz se graba de corrido), escenas foto, cita, tarjeta con grafico, golpe, explica, un giro en el acto 2, ` +
-    `guion.hilos (escena que paga o sin_respuesta), promesa con revela (la R que paga), cierre legado (o consecuencia si termina mal) y captions; apunta a 150 s (135–165). `
+    `guion.hilos (escena que paga o sin_respuesta), promesa {texto, forma, en, pago, revela} que abre una pregunta de la historia SIN anunciar el video (nada de «al final», «vas a ver», «quédate», «falta saber»: P2) con una forma de referencias/promesas.md que no repita las «Promesas recientes» (P3), ` +
+    `bisagra {texto, forma (otra), en, pago}: el segundo enganche justo antes del giro, dentro de la narración de corrido (P4), cierre legado (o consecuencia si termina mal) y captions; apunta a 150 s (135–165). `
 const voces = new Set()
 const sumaVoces = (r) => { if (r) (r.voces_cambiadas || []).forEach((n) => voces.add(n)); return r }
 const validarGuion = (r) => {
@@ -497,7 +498,7 @@ for (let vuelta = 1; vuelta <= VUELTAS + 1; vuelta++) {
       (RETOQUE ? `RETOQUE con notas del usuario: «${notas}». Lo que las notas piden conservar (el cierre, una escena, «ninguna voz») el usuario ya lo aprobó: no va como ` +
                  `falta bloquea; si el oyente lo confunde, va en oyente_descartadas con el motivo «lo aprobó el usuario» y, si quieres, como mejora. ` : '') +
       `ARREGLOS PROBADOS: antes de escribir cada arreglo que cambia texto (texto de una escena, chip, promesa, cierre), pruébalo con ` +
-      `python3 scripts/historia.py probar ${trabajo} --cambios '[{"escena": N, "texto": "…"}]' (también {"escena": N, "campo": "fecha", "valor": "…"}, {"promesa": "…"}, {"cierre": "…"}); ` +
+      `python3 scripts/historia.py probar ${trabajo} --cambios '[{"escena": N, "texto": "…"}]' (también {"escena": N, "campo": "fecha", "valor": "…"}, {"promesa": "…", "forma"?}, {"bisagra": "…", "forma"?, "en"?, "pago"?}, {"cierre": "…"}); ` +
       `con exit 1 ajústalo hasta que pase; si ninguna versión pasa, va como mejora con la falla del gate en problema. Marca probado: true|false en cada falta y, con true, copia en cambios ` +
       `el JSON exacto que pasó (prueba juntas las faltas que se aplican juntas): el guionista lo aplica tal cual con historia.py aplicar. ` +
       `Escribe ${trabajo}/critica.json.` +

@@ -49,7 +49,7 @@ explicaron (`explicacion_devuelta`). Si no casa con la `mecanismo_frase` del enc
 
 | Acto | Qué cuenta | Termina en |
 |---|---|---|
-| 1 · **La pregunta** (≈ 25 %) | el gancho, la promesa y **la idea equivocada** que casi todos tienen, dicha con justicia (`intuicion: true`); a veces una `adivina` | el **detonante**: «pero eso no es lo que pasa» |
+| 1 · **La pregunta** (≈ 25 %) | el gancho, la promesa (forma del catálogo de `referencias/promesas.md`, sin anunciar el video) y **la idea equivocada** que casi todos tienen, dicha con justicia (`intuicion: true`); a veces una `adivina` | el **detonante**: «pero eso no es lo que pasa» |
 | 2 · **El mecanismo** (≈ 45 %) | la cuenta con quetzales (`corrige: true`) → la definición → la animación → **el «ajá»** del punto medio | el **giro** (`giro: true`, 40–75 %): la otra cara del mecanismo |
 | 3 · **En tu vida** (≈ 30 %) | el mecanismo con **datos reales de Guatemala** (con su fecha y su fuente), el pago de la promesa y **la regla práctica** | el cierre de **consecuencia**: lo que el mecanismo le hace a quien lo vive |
 
@@ -128,6 +128,7 @@ la cámara que se aleja cuando la capa de acento engorda.
 | E10 no consejo | `guion --check` | sin «deberías», «te recomiendo», «invierte en», «la mejor opción», bancos ni productos en voz, pantalla y captions; en salud, ni dosis ni diagnóstico |
 | E11 cuenta | `guion --check` | 2–5 renglones con op `+ − × ÷`, celdas ≤ 12, `a op b = r` con el redondeo de `r` (`aprox: true`: ±2 %), un solo resaltado con su etiqueta, golpe ≤ 6 palabras; ≤ 3 cuentas, nunca dos seguidas |
 | E12 promesa | `guion --check` | `promesa.revela` y la escena `pago` cuenta esa revelación |
+| P1–P4 promesa y bisagra | `guion --check` (de `video.py`) | forma del catálogo, sin anunciar el video, rotación entre piezas, bisagra antes del giro (`referencias/promesas.md`) |
 
 Además corren los de `/video`:
 - en `guion --check`: V1–V5, V9 (sin «la escena 2 es T1») y F1–F8;

@@ -4,7 +4,8 @@
  "promesa": {
   "texto": "Un vecino paga todavía más.",
   "en": 2,
-  "pago": 5
+  "pago": 5,
+  "forma": "secreto"
  },
  "narracion": [
   {
@@ -13,7 +14,7 @@
   },
   {
    "acto": 2,
-   "texto": "Por eso en la bomba se nota: el galón de diésel pasó de 26.0 a 46.1 quetzales. Así que llenar el tanque cuesta 1.8 veces lo de enero."
+   "texto": "Por eso en la bomba se nota: el galón de diésel pasó de 26.0 a 46.1 quetzales. Aun así, no es el precio más alto de la región. Así que llenar el tanque cuesta 1.8 veces lo de enero."
   },
   {
    "acto": 3,
@@ -50,7 +51,7 @@
    "tuit": 2,
    "enlace": "por_eso",
    "golpe": "El galón, casi el doble",
-   "texto": "Por eso en la bomba se nota: el galón de diésel pasó de 26.0 a 46.1 quetzales.",
+   "texto": "Por eso en la bomba se nota: el galón de diésel pasó de 26.0 a 46.1 quetzales. Aun así, no es el precio más alto de la región.",
    "acto": 2
   },
   {
@@ -101,5 +102,11 @@
   "instagram": "El barril llegó a 102 dólares y el galón pasó de Q26.0 a Q46.1. Guárdalo para la próxima vez que llenes el tanque.\n#Guatemala #DatosGT #Combustibles",
   "facebook": "Precios de combustibles en Guatemala 2026: el barril de petróleo llegó a 102 dólares en septiembre y el galón pasó de Q26.0 a Q46.1. En México el diésel promedia US$5.9 por galón.",
   "shorts": "El galón pasó de Q26.0 a Q46.1 en Guatemala\nEl barril llegó a 102 dólares en septiembre. #Shorts #Guatemala"
+ },
+ "bisagra": {
+  "texto": "Aun así, no es el precio más alto de la región.",
+  "forma": "contradiccion",
+  "en": 3,
+  "pago": 5
  }
 }

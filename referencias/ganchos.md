@@ -107,7 +107,8 @@ basta; gana el que mejor contesta **¿qué ve el pulgar en el segundo 1 y por qu
 ## 5. Frases reales de referencia (forma, no texto)
 
 - El Orden Mundial: «Rusia está dentro de Europa. Y no, no te voy a hablar de la guerra de Ucrania. Te lo explico con un
-  mapa en un minuto.» (afirmación que choca + promesa con plazo)
+  mapa en un minuto.» (afirmación que choca + plazo; el «te lo explico» anuncia el video, y una promesa de este
+  framework ya no lo hace: P2 en `referencias/promesas.md`)
 - VisualPolitik: «Desde 2018 España ha ganado 2,6 millones de habitantes, pero solo ha construido 690.000 viviendas. Casi
   cuatro personas nuevas por cada casa nueva.» (contraste + escala humana en la misma oración)
 - Vox: «Instant ramen… the number one sold item at prison commissaries.» (objeto cotidiano como puerta a la cárcel)

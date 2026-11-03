@@ -38,9 +38,19 @@ la voz no describe lo que ya se ve.
   de la escena 2 lo dice. Lo que el gancho calla (las **revelaciones** del digesto: la respuesta, de qué está hecho,
   cómo terminó) es lo que el video revela después. El gancho es acto 1 (el gate se lo pone: `ganchos --usar` lo
   reescribe).
-- **Promesa** `{texto (10–80, literal en la voz de la escena en), en: 2, pago, revela}`: una oración propia que nombra
-  qué falta saber («Al final vas a ver qué quedó de sus 25 sucursales»); `pago` es la escena del último tercio que la
-  cierra y `revela` es el número R de la revelación que esa escena cuenta **con sus palabras** (H14).
+- **Promesa** `{texto (10–80, literal en la voz de la escena en), forma, en: 2, pago, revela}`: una oración propia que
+  abre una pregunta concreta de la historia **sin anunciar el video** (nada de «al final», «vas a ver», «quédate»,
+  «falta saber», «el último capítulo»: P2). `forma` del catálogo de `referencias/promesas.md`: una `pregunta`
+  dramática («¿Cómo pasa una panadería de 25 sucursales a ninguna?»), un `presagio` (lo que el protagonista todavía
+  no sabía: «Décadas después, la marca llegaría a Estados Unidos, donde ya la esperaban»), lo que estaba en juego
+  (`apuesta`), un plazo (`reloj`), dos hechos que chocan (`contradiccion`) o lo que nunca se supo (`secreto`); no
+  repite la de las últimas piezas (P3). Un presagio adelanta **que** algo pasa, nunca **qué** revela (H13). `pago`
+  es la escena del último tercio que la cierra y `revela` es el número R de la revelación que esa escena cuenta
+  **con sus palabras** (H14).
+- **Bisagra** `{texto (10–90), forma (otra que la promesa), en, pago}` (P4): el segundo enganche, justo antes del
+  giro: la última oración de la escena anterior al giro o la primera de la escena del giro. Va **dentro de la
+  narración de corrido** (H15: literal) y la paga el giro o una escena posterior («Nadie en la familia imaginaba quién
+  tocaría la puerta», y la escena del giro abre con la inspección).
 - **Tres actos** (`acto` 1–3 en cada escena, no decreciente, los tres presentes): el **planteamiento** presenta el
   mundo y al protagonista y termina en el **detonante**; el **nudo** sube la apuesta (el **punto medio** y el giro
   van aquí); el **desenlace** trae el **clímax** y la **resolución** (qué quedó, qué nunca se supo). Los actos y la

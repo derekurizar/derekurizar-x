@@ -276,7 +276,7 @@ def aplicar_extension():
 def de_video_que_no_aplica(x):
     """Las líneas de V1/V9 de /video que /sabias no hereda: la promesa, las conclusiones del cierre y la escena 2 fija
     como `tarjeta` (aquí puede ir a pantalla completa)."""
-    return x.startswith(("V9 promesa", "V1 cierre.resumen", "V9 la escena 2 debe ser la tarjeta T1"))
+    return x.startswith(("V9 promesa", "P1 ", "P2 ", "P3 ", "P4 ", "V1 cierre.resumen", "V9 la escena 2 debe ser la tarjeta T1"))
 
 
 def segundos_hasta_cifra(texto):

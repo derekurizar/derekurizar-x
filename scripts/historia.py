@@ -322,7 +322,8 @@ def cmd_preparar(a):
     st.update({"tipo": "historia", "slug": slug, "tema": a.tema, "fecha": datetime.date.today().isoformat(),
                "hilo": VD.rel(os.path.join(trabajo, "base")), "paleta": paleta, "musica": pista["id"],
                "musica_forzada": a.musica, "duracion": "historia", "objetivo_s": OBJETIVO_S,
-               "ganchos_recientes": rec_g, "cierres_recientes": rec_c, "animaciones_recientes": [] if a.fixture else animaciones_recientes(slug)})
+               "ganchos_recientes": rec_g, "cierres_recientes": rec_c, "animaciones_recientes": [] if a.fixture else animaciones_recientes(slug),
+               "promesas_recientes": [] if a.fixture else VD.promesas_recientes(slug)})
     st.setdefault("tarjetas", [])
     escribir(ruta, st)
     if a.fixture:
@@ -2258,9 +2259,14 @@ def aplicar_cambios(g, gan, cambios):
     antes no está literal en la narración · 2 cambio mal dado. Lo comparten probar (en una copia) y aplicar (en el TRABAJO)."""
     textos, escenas = [], set()   # (viejo, nuevo): el mismo cambio va a la narración, la promesa y el candidato del gancho
     for c in cambios:
-        if "promesa" in c:
-            textos.append((g["promesa"]["texto"], c["promesa"]))
-            g["promesa"]["texto"] = c["promesa"]
+        clave = "promesa" if "promesa" in c else "bisagra" if "bisagra" in c else None
+        if clave:   # {"promesa": "…", "forma"?} · {"bisagra": "…", "forma"?, "en"?, "pago"?} (P1–P4)
+            dueno = g.setdefault(clave, {})
+            if dueno.get("texto") and c[clave] is not None:
+                textos.append((dueno["texto"], c[clave]))
+            if c[clave] is not None:
+                dueno["texto"] = c[clave]
+            dueno.update({k: c[k] for k in ("forma", "en", "pago") if k in c})
             continue
         n = c.get("escena")
         cierre = "cierre" in c or n == len(g["escenas"]) + 1
@@ -2275,10 +2281,12 @@ def aplicar_cambios(g, gan, cambios):
             textos.append((viejo, nuevo))
             if viejo != nuevo:
                 escenas.add(len(g["escenas"]) + 1 if cierre else n)
-    prom = g.get("promesa") or {}
+    prom, bis = g.get("promesa") or {}, g.get("bisagra") or {}
     for viejo, nuevo in textos:
         if prom.get("texto") == viejo:
             prom["texto"] = nuevo
+        if bis.get("texto") == viejo:
+            bis["texto"] = nuevo
         for cand in (gan or {}).get("candidatos") or []:
             if cand.get("texto") == viejo:
                 cand["texto"] = nuevo
@@ -2581,7 +2589,8 @@ def cmd_digesto(a):
                   "clientes, trabajadores…), verbo (en presente)}, ≤ 1 cifra, sin «según» (H9). Forma consecuencia (con mecanismo) si la historia "
                   "termina mal. NEUTRO = nadie hace nada («la marca sigue», «la receta cambió», un resumen): bloquea en H-C6. La emoción la pone "
                   "el hecho, no los adjetivos"
-                  % (*VD.RESUMEN_LINEAS, VD.RESUMEN_CARACTERES), "", "## Frases ya usadas (C11)"] + VD.frases_usadas(st["slug"]) + frases_historias(st["slug"])
+                  % (*VD.RESUMEN_LINEAS, VD.RESUMEN_CARACTERES), "", "## Promesas recientes (P3)"] + VD.lineas_promesas(st["promesas_recientes"] if "promesas_recientes" in st else VD.promesas_recientes(st["slug"])) + \
+                  ["", "## Frases ya usadas (C11)"] + VD.frases_usadas(st["slug"]) + frases_historias(st["slug"])
     print("\n".join(out))
     return 0
 
@@ -2714,7 +2723,7 @@ def cmd_entregar(a):
         "paleta": st["paleta"], "musica": st["musica"], "voz": loc["voz"], "velocidad": VD.VELOCIDAD,
         "creditos_voz": leer(ruta_cred)["total"] if os.path.exists(ruta_cred) else None,
         "duracion_s": round(VD.ffprobe_dur(os.path.join(destino, "video.mp4")), 1), "critica": critica,
-        "gancho": {k: e1.get(k) for k in ("familia", "visual", "pantalla", "linea")}, "promesa": g.get("promesa"),
+        "gancho": {k: e1.get(k) for k in ("familia", "visual", "pantalla", "linea")}, "promesa": g.get("promesa"), "bisagra": g.get("bisagra"),
         "escenas": escenas, "cierre": g.get("cierre"), "caption": g.get("caption")}
     escribir(os.path.join(destino, "guion.json"), entrega)
     open(os.path.join(destino, "fuentes.md"), "w", encoding="utf-8").write(fuentes_md(st, escenas_g, H))
@@ -2865,7 +2874,7 @@ def main():
     q = sub.add_parser("probar", help="el crítico prueba un arreglo contra el gate en una copia, sin tocar el TRABAJO")
     q.add_argument("trabajo")
     q.add_argument("--cambios", required=True, help='JSON o archivo: [{"escena": N, "texto": "…"}, {"escena": N, "campo": "fecha", '
-                   '"valor": "…"}, {"promesa": "…"}, {"cierre": "…"}]')
+                   '"valor": "…"}, {"promesa": "…", "forma"?}, {"bisagra": "…", "forma"?, "en"?, "pago"?}, {"cierre": "…"}]')
     q = sub.add_parser("aplicar", help="aplica en el TRABAJO un arreglo ya probado (los mismos cambios que probar) y corre el gate")
     q.add_argument("trabajo")
     q.add_argument("--cambios", required=True, help="los mismos cambios que probar (JSON o archivo)")

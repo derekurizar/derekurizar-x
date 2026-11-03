@@ -1,0 +1,125 @@
+{
+  "id": "sabias-motos-nuevas-guatemala-2025",
+  "slug": "motos-nuevas-guatemala-2025",
+  "hilo": "sesiones/motos-nuevas-guatemala-2025/sabias/base",
+  "paleta": "atitlan",
+  "duracion": "sabias",
+  "duracion_s": 26.1,
+  "n_escenas": 3,
+  "musica": "atitlan-2",
+  "voz": {
+    "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+    "nombre": "El Faraon 4",
+    "modelo": "eleven_multilingual_v2",
+    "idioma": "es"
+  },
+  "velocidad": 1.1,
+  "creditos_voz": 344.0,
+  "contexto_superior": "Motos y bebés · 2024",
+  "gancho": {
+    "familia": "sabias",
+    "visual": "pareja",
+    "pantalla": "¿Sabías que…?",
+    "linea": "379,021 motos y 299,256 bebés"
+  },
+  "ganchos": null,
+  "promesa": null,
+  "bisagra": null,
+  "critica": {
+    "veredicto": "pasa",
+    "vuelta": 2,
+    "puntajes": {
+      "gancho": 5,
+      "bucle": null,
+      "ritmo": 4,
+      "flujo": null,
+      "escala_humana": 4,
+      "pago": null,
+      "cierre": 4
+    }
+  },
+  "escenas": [
+    {
+      "n": 1,
+      "tipo": "gancho",
+      "tuit": null,
+      "plantilla": "gancho",
+      "enlace": null,
+      "golpe": null,
+      "cinetico": {
+        "pantalla": "¿Sabías que…?",
+        "linea": "379,021 motos y 299,256 bebés"
+      },
+      "adivina": null,
+      "icono": null,
+      "pantalla": "¿Sabías que en 2024 Guatemala sumó más motos nuevas que bebés?",
+      "voz": "¿Sabías que en dos mil veinticuatro Guatemala sumó más motos nuevas que bebés?",
+      "dur": 5.641
+    },
+    {
+      "n": 2,
+      "tipo": "tarjeta",
+      "tuit": 1,
+      "plantilla": "cifra",
+      "enlace": null,
+      "golpe": "Y la cuenta se queda corta",
+      "cinetico": null,
+      "adivina": null,
+      "icono": null,
+      "pantalla": "Fueron 379,021 motos, según la SAT, y eso contando solo las que siguen activas.",
+      "voz": "Fueron trescientas setenta y nueve mil veintiuna motos, según la SAT, y eso contando solo las que siguen activas.",
+      "dur": 8.182
+    },
+    {
+      "n": 3,
+      "tipo": "escala",
+      "tuit": null,
+      "plantilla": "escala",
+      "enlace": null,
+      "golpe": null,
+      "cinetico": null,
+      "adivina": null,
+      "icono": null,
+      "pantalla": "Y hoy, 49 de cada 100 vehículos del país ya son motos.",
+      "voz": "Y hoy, cuarenta y nueve de cada cien vehículos del país ya son motos.",
+      "dur": 5.185
+    },
+    {
+      "n": 4,
+      "tipo": "cierre",
+      "tuit": null,
+      "plantilla": "cierre",
+      "enlace": null,
+      "golpe": null,
+      "cinetico": null,
+      "adivina": null,
+      "icono": null,
+      "pantalla": "Los bebés de 2024 ya crecen en calles donde casi la mitad son motos.",
+      "voz": "Los bebés de dos mil veinticuatro ya crecen en calles donde casi la mitad son motos.",
+      "dur": 7.611
+    }
+  ],
+  "cierre": {
+    "texto": "Los bebés de 2024 ya crecen en calles donde casi la mitad son motos.",
+    "final": "Los bebés de 2024 ya crecen en calles donde casi la mitad son motos.",
+    "resumen": [],
+    "tipo": "remate",
+    "forma": "consecuencia",
+    "consecuencia": {
+      "mecanismo": "quien",
+      "quien": "los bebés de 2024",
+      "verbo": "crecen"
+    }
+  },
+  "caption": {
+    "tiktok": "En 2024 Guatemala inscribió 379,021 motos y registró 299,256 nacimientos. Datos de la SAT y el INE. #Guatemala #Motos #SabiasQue",
+    "instagram": "¿Sabías que en 2024 Guatemala sumó más motos nuevas que bebés? En 2024: 379,021 motos inscritas y 299,256 nacimientos, contando solo las motos que siguen activas en la SAT.\n#Guatemala #Motos #DatosGT #SabiasQue",
+    "facebook": "¿Sabías que en 2024 Guatemala sumó más motos nuevas que bebés? La SAT registra 379,021 motos de ese año aún activas; el INE, 299,256 nacimientos. Hoy casi la mitad de los vehículos del país son motos.",
+    "shorts": "Guatemala sumó más motos que bebés en 2024\nSAT e INE: 379,021 motos y 299,256 nacimientos. #Shorts #Guatemala"
+  },
+  "tipo": "sabias",
+  "fecha": "2026-11-02",
+  "tema": "Guatemala suma más motos nuevas que bebés cada año",
+  "dato": "datos/2026-10-06-motos-nuevas-guatemala-2025",
+  "apoyo": "escala"
+}

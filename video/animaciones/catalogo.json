@@ -238,6 +238,38 @@
       }
     },
     {
+      "id": "escaneo-humano",
+      "origen": "historia-el-inventor-de-duolingo",
+      "usos": [
+        "historia-el-inventor-de-duolingo"
+      ],
+      "descripcion": "lo que la máquina no lee va a una persona: una palabra borrosa sale de la página, se teclea y vuelve; la página queda digital",
+      "mecanismo": "cadena",
+      "temas": [
+        "digitalizar",
+        "escáner",
+        "captcha",
+        "trabajo humano",
+        "libros",
+        "tecnología",
+        "invento",
+        "colaboración"
+      ],
+      "pasos": [
+        3,
+        5
+      ],
+      "ejemplo": {
+        "titulo": "¿Cómo ayudaba cada captcha?",
+        "pasos": [
+          "Palabra de un libro viejo",
+          "La máquina no la lee",
+          "Una persona la escribe",
+          "La página queda digital"
+        ]
+      }
+    },
+    {
       "id": "fraccion-espacios",
       "origen": "semilla",
       "usos": [],

@@ -23,7 +23,8 @@ recientes»**: las familias y el visual bloqueados por R9 (no los uses).
    "visual_datos": {"capacidad": "pen-c02.partes[0]", "total": "pen-c02.partes[1]", "unidad": "personas"},
    "pantalla": "Hecha para 960", "linea": "y en 2025 tenía 4,464", "verbo": "construyó",
    "texto": "Esta cárcel se construyó para 960 personas. Pero en 2025 tenía 4,464.",
-   "promesa_sugerida": "Hay una todavía más llena: está más adelante.",
+   "promesa_sugerida": "Hay una cárcel todavía más llena que esta.",
+   "forma_sugerida": "secreto",
    "por_que": "Contraste esperado → real; el contenedor se desborda en silencio (CHI 2016: cifra con referente)."}
  ]
 }
@@ -35,8 +36,10 @@ recientes»**: las familias y el visual bloqueados por R9 (no los uses).
 - `pantalla`, `linea`, `verbo` y `texto` como en el gancho del guion: las cifras EN DÍGITOS (el script las pasa a palabras),
   `[pausa]` como mucho una vez y tras un punto. `calculo` si la pantalla o la voz traen un derivado («×4.7»).
 - `icono` (opcional) solo con el visual `cifra`.
-- `promesa_sugerida`: la brecha que este gancho deja abierta, como oración propia (10–80, sin «Y»/«Pero» suelto ni «al
-  final te digo»); el guionista la adapta y la dice en T1.
+- `promesa_sugerida`: la brecha que este gancho deja abierta, como oración propia (10–80, sin «Y»/«Pero» suelto y
+  **sin anunciar el video**: nada de «al final», «vas a ver», «quédate», «más adelante»), y `forma_sugerida`, su forma
+  del catálogo de `referencias/promesas.md` (`pregunta`, `presagio`, `apuesta`, `reloj`, `contradiccion`, `secreto`);
+  el guionista la adapta y la dice en T1. El gate (`ganchos --check`) rechaza las dos cosas.
 - `por_que`: una línea con el mecanismo y la evidencia que lo respalda (§1 de `ganchos.md`).
 
 ## Cómo los escribes

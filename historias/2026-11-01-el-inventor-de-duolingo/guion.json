@@ -1,0 +1,390 @@
+{
+ "id": "2026-11-01-el-inventor-de-duolingo",
+ "tipo": "historia",
+ "slug": "el-inventor-de-duolingo",
+ "tema": "el inventor de duolingo",
+ "fecha": "2026-11-01",
+ "pregunta": "¿Cómo un niño de la capital de Guatemala, que tuvo que cruzar la frontera para hacer un examen de inglés, terminó creando la app con la que el mundo aprende idiomas gratis?",
+ "arco": "biografía de origen y ascenso: de una barrera personal (aprender y certificar inglés costaba caro) a una herramienta gratuita para el mundo",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "1996",
+   "titulo": "Las letras torcidas",
+   "escena": 6
+  },
+  {
+   "numero": 3,
+   "anio": "2012",
+   "titulo": "La app gratis",
+   "escena": 10
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "¿Sabías que el cofundador de Duolingo es guatemalteco? Se llama Luis von Ahn, y esta es su historia. Creció en la Ciudad de Guatemala, y para estudiar en Estados Unidos un día le pedirían un examen de inglés. Todavía no sabía que ese examen iba a marcarle la vida. De niño, Luis soñaba con otra cosa, y lo contó así: Cuando tenía 8 años todo lo que quería en mi vida era un Nintendo, pero no me lo compró. En cambio, su madre le regaló una computadora, y con ella aprendió a programar. Pero en 1995, cuando le tocó presentar ese examen de inglés, no había cupo en la Ciudad de Guatemala. Así que voló a San Salvador, y años después Luis lo recordó: Gasté 1,200 dólares para tomar el examen. Fue una locura."
+  },
+  {
+   "acto": 2,
+   "texto": "Al año siguiente se fue a Estados Unidos: estudió matemáticas en Duke y entró al doctorado de Carnegie Mellon, la universidad de Pittsburgh. Ahí, con su profesor Manuel Blum, ayudó a crear los CAPTCHA: letras torcidas que una persona lee y una computadora no. Entonces, en 2007, creó reCAPTCHA: cada palabra torcida venía de un libro viejo que el escáner no podía leer, y quien la escribía ayudaba a digitalizarlo. ¿Quién querría comprar unas letras torcidas? Para 2008 se resolvían {200:m} millones de captchas al día, y en 2009 Google, la empresa del buscador, compró reCAPTCHA y contrató a Luis. Dos años después dejó Google. Dice que creció viendo que aprender inglés era caro, y por eso, con Severin Hacker, su alumno suizo, fundó Duolingo: idiomas gratis, y a cambio, los usuarios traducirían textos de internet al practicar."
+  },
+  {
+   "acto": 3,
+   "texto": "En 2012, Duolingo abrió al público y ofreció a empresas lo que traducían sus usuarios. Pero Luis von Ahn cuenta que solo llegaron dos clientes, CNN y BuzzFeed, y que vender tenía demasiados pasos: Era como una máquina de Rube Goldberg. Hasta 2017, Duolingo casi no ganaba dinero: ese año sumó anuncios y suscripciones. En 2021 subió 36% en su primer día en la bolsa Nasdaq. Para entonces, ya existía el examen de inglés de Duolingo, que se presenta desde casa: lo inspiró aquel examen en El Salvador. En Guatemala, la Universidad del Valle hizo a Luis doctor honoris causa, y él integra la junta de su fundación. De lo que vendió a Google queda un secreto: cuánto pagó por reCAPTCHA nunca se hizo público. Él tuvo que volar a otro país para hacer ese examen. Hoy, un estudiante en Guatemala lo presenta desde su casa."
+  }
+ ],
+ "hilos": [
+  {
+   "id": "h1",
+   "escena": 4
+  },
+  {
+   "id": "h2",
+   "escena": 7
+  },
+  {
+   "id": "h3",
+   "sin_respuesta": "Cuánto pagó Google por reCAPTCHA nunca se hizo público"
+  },
+  {
+   "id": "h4",
+   "escena": 11
+  },
+  {
+   "id": "h5",
+   "escena": 13
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3,
+   4,
+   5
+  ],
+  [
+   6,
+   7
+  ],
+  [
+   8,
+   9
+  ],
+  [
+   10,
+   11,
+   12,
+   13
+  ]
+ ],
+ "paleta": "jade",
+ "musica": "jade-2",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 3607.0,
+ "duracion_s": 167.3,
+ "critica": {
+  "veredicto": "corregir",
+  "vuelta": 2,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 4,
+   "claridad": 3,
+   "flujo": 4,
+   "precision": 4,
+   "cierre": 4
+  }
+ },
+ "gancho": {
+  "familia": "pregunta",
+  "visual": "foto",
+  "pantalla": "¿Sabías que…?",
+  "linea": "el cofundador de Duolingo es guatemalteco"
+ },
+ "promesa": {
+  "texto": "Todavía no sabía que ese examen iba a marcarle la vida.",
+  "forma": "presagio",
+  "en": 2,
+  "pago": 12,
+  "revela": 4
+ },
+ "bisagra": {
+  "texto": "¿Quién querría comprar unas letras torcidas?",
+  "forma": "pregunta",
+  "en": 8,
+  "pago": 8
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "¿Sabías que el cofundador de Duolingo es guatemalteco? Se llama Luis von Ahn, y esta es su historia.",
+   "voz": "¿Sabías que el cofundador de Duolingo es guatemalteco? Se llama Luis von Ahn, y esta es su historia.",
+   "dur": 7.671,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Estrategia & Negocios",
+     "origen": "medio",
+     "licencia": "© Estrategia & Negocios (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "Creció en la Ciudad de Guatemala, y para estudiar en Estados Unidos un día le pedirían un examen de inglés. Todavía no sabía que ese examen iba a marcarle la vida.",
+   "voz": "Creció en la Ciudad de Guatemala, y para estudiar en Estados Unidos un día le pedirían un examen de inglés. Todavía no sabía que ese examen iba a marcarle la vida.",
+   "dur": 10.479,
+   "hechos": [
+    "ori-h03",
+    "duo-h19"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Leonardo Paniagua · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "cita",
+   "pantalla": "De niño, Luis soñaba con otra cosa, y lo contó así: Cuando tenía 8 años todo lo que quería en mi vida era un Nintendo, pero no me lo compró.",
+   "voz": "De niño, Luis soñaba con otra cosa, y lo contó así: Cuando tenía ocho años todo lo que quería en mi vida era un Nintendo, pero no me lo compró.",
+   "dur": 10.183,
+   "hechos": [
+    "ori-h02"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "foto",
+   "pantalla": "En cambio, su madre le regaló una computadora, y con ella aprendió a programar. Pero en 1995, cuando le tocó presentar ese examen de inglés, no había cupo en la Ciudad de Guatemala.",
+   "voz": "En cambio, su madre le regaló una computadora, y con ella aprendió a programar. Pero en mil novecientos noventa y cinco, cuando le tocó presentar ese examen de inglés, no había cupo en la Ciudad de Guatemala.",
+   "dur": 12.877,
+   "hechos": [
+    "ori-h02",
+    "ori-h04",
+    "duo-h19"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Evan-Amos · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "cita",
+   "pantalla": "Así que voló a San Salvador, y años después Luis lo recordó: Gasté 1,200 dólares para tomar el examen. Fue una locura.",
+   "voz": "Así que voló a San Salvador, y años después Luis lo recordó: Gasté mil doscientos dólares para tomar el examen. Fue una locura.",
+   "dur": 9.89,
+   "hechos": [
+    "duo-h19",
+    "ori-h05"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "foto",
+   "pantalla": "Al año siguiente se fue a Estados Unidos: estudió matemáticas en Duke y entró al doctorado de Carnegie Mellon, la universidad de Pittsburgh. Ahí, con su profesor Manuel Blum, ayudó a crear los CAPTCHA: letras torcidas que una persona lee y una computadora no.",
+   "voz": "Al año siguiente se fue a Estados Unidos: estudió matemáticas en Duke y entró al doctorado de Carnegie Mellon, la universidad de Pittsburgh. Ahí, con su profesor Manuel Blum, ayudó a crear los CAPTCHA: letras torcidas que una persona lee y una computadora no.",
+   "dur": 17.228,
+   "hechos": [
+    "ori-h06",
+    "ori-h07",
+    "ori-h08"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Dllu · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "explica",
+   "pantalla": "Entonces, en 2007, creó reCAPTCHA: cada palabra torcida venía de un libro viejo que el escáner no podía leer, y quien la escribía ayudaba a digitalizarlo.",
+   "voz": "Entonces, en dos mil siete, creó reCAPTCHA: cada palabra torcida venía de un libro viejo que el escáner no podía leer, y quien la escribía ayudaba a digitalizarlo.",
+   "dur": 12.119,
+   "hechos": [
+    "duo-h16",
+    "cap-h04"
+   ],
+   "fotos": [],
+   "animacion": "escaneo-humano",
+   "mecanismo": "cadena"
+  },
+  {
+   "n": 8,
+   "tipo": "foto",
+   "pantalla": "¿Quién querría comprar unas letras torcidas? Para 2008 se resolvían 200 millones de captchas al día, y en 2009 Google, la empresa del buscador, compró reCAPTCHA y contrató a Luis.",
+   "voz": "¿Quién querría comprar unas letras torcidas? Para dos mil ocho se resolvían doscientos millones de captchas al día, y en dos mil nueve Google, la empresa del buscador, compró reCAPTCHA y contrató a Luis.",
+   "dur": 12.788,
+   "hechos": [
+    "cap-h01",
+    "duo-h15",
+    "cap-h03"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: ReCAPTCHA · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "foto",
+   "pantalla": "Dos años después dejó Google. Dice que creció viendo que aprender inglés era caro, y por eso, con Severin Hacker, su alumno suizo, fundó Duolingo: idiomas gratis, y a cambio, los usuarios traducirían textos de internet al practicar.",
+   "voz": "Dos años después dejó Google. Dice que creció viendo que aprender inglés era caro, y por eso, con Severin Hacker, su alumno suizo, fundó Duolingo: idiomas gratis, y a cambio, los usuarios traducirían textos de internet al practicar.",
+   "dur": 16.531,
+   "hechos": [
+    "cap-h13",
+    "duo-h20",
+    "duo-h01",
+    "duo-h04"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Jarek Tuszyński · CC BY 4.0",
+     "origen": "commons",
+     "licencia": "CC BY 4.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "cita",
+   "pantalla": "En 2012, Duolingo abrió al público y ofreció a empresas lo que traducían sus usuarios. Pero Luis von Ahn cuenta que solo llegaron dos clientes, CNN y BuzzFeed, y que vender tenía demasiados pasos: Era como una máquina de Rube Goldberg.",
+   "voz": "En dos mil doce, Duolingo abrió al público y ofreció a empresas lo que traducían sus usuarios. Pero Luis von Ahn cuenta que solo llegaron dos clientes, CNN y BuzzFeed, y que vender tenía demasiados pasos: Era como una máquina de Rube Goldberg.",
+   "dur": 16.93,
+   "hechos": [
+    "duo-h03",
+    "duo-h05"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "tarjeta",
+   "pantalla": "Hasta 2017, Duolingo casi no ganaba dinero: ese año sumó anuncios y suscripciones. En 2021 subió 36% en su primer día en la bolsa Nasdaq.",
+   "voz": "Hasta dos mil diecisiete, Duolingo casi no ganaba dinero: ese año sumó anuncios y suscripciones. En dos mil veintiuno subió treinta y seis por ciento en su primer día en la bolsa Nasdaq.",
+   "dur": 12.517,
+   "hechos": [
+    "duo-h11",
+    "duo-h13"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "foto",
+   "pantalla": "Para entonces, ya existía el examen de inglés de Duolingo, que se presenta desde casa: lo inspiró aquel examen en El Salvador.",
+   "voz": "Para entonces, ya existía el examen de inglés de Duolingo, que se presenta desde casa: lo inspiró aquel examen en El Salvador.",
+   "dur": 8.228,
+   "hechos": [
+    "duo-h09",
+    "duo-h19"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Daniel Case · CC BY-SA 3.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 3.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 13,
+   "tipo": "foto",
+   "pantalla": "En Guatemala, la Universidad del Valle hizo a Luis doctor honoris causa, y él integra la junta de su fundación. De lo que vendió a Google queda un secreto: cuánto pagó por reCAPTCHA nunca se hizo público.",
+   "voz": "En Guatemala, la Universidad del Valle hizo a Luis doctor honoris causa, y él integra la junta de su fundación. De lo que vendió a Google queda un secreto: cuánto pagó por reCAPTCHA nunca se hizo público.",
+   "dur": 13.818,
+   "hechos": [
+    "duo-h21",
+    "duo-h24"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Leonardo Paniagua · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 14,
+   "tipo": "cierre",
+   "pantalla": "Él tuvo que volar a otro país para hacer ese examen. Hoy, un estudiante en Guatemala lo presenta desde su casa.",
+   "voz": "Él tuvo que volar a otro país para hacer ese examen. Hoy, un estudiante en Guatemala lo presenta desde su casa.",
+   "dur": 9.475,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Lo que dejó",
+  "resumen": [
+   "Voló a San Salvador por un examen",
+   "Cofundó Duolingo en 2011",
+   "Su examen hoy se hace en casa"
+  ],
+  "texto": "Él tuvo que volar a otro país para hacer ese examen. Hoy, un estudiante en Guatemala lo presenta desde su casa.",
+  "tipo": "remate",
+  "forma": "legado",
+  "final": "Hoy, un estudiante en Guatemala lo presenta desde su casa.",
+  "consecuencia": {
+   "quien": "estudiante",
+   "verbo": "presenta"
+  }
+ },
+ "caption": {
+  "tiktok": "Luis von Ahn tuvo que volar de Guatemala a El Salvador para hacer un examen de inglés. Años después cofundó Duolingo. #Guatemala #Duolingo #historia",
+  "instagram": "De un niño que quería un Nintendo en Guatemala al cofundador de Duolingo: la historia de Luis von Ahn y el examen que lo hizo cruzar la frontera. #Guatemala #Duolingo",
+  "facebook": "Luis von Ahn, guatemalteco, ayudó a crear los CAPTCHA, vendió reCAPTCHA a Google y cofundó Duolingo. Todo empezó con un examen de inglés que no pudo hacer en Guatemala. Fuentes en el primer comentario.",
+  "shorts": "El guatemalteco que cofundó Duolingo #Shorts\nLuis von Ahn voló a El Salvador para hacer un examen de inglés."
+ }
+}

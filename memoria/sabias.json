@@ -23,6 +23,28 @@
         "visual": "lugar",
         "apoyo": "golpe"
       }
+    },
+    {
+      "id": "sabias-motos-nuevas-guatemala-2025",
+      "slug": "motos-nuevas-guatemala-2025",
+      "tema": "Guatemala suma más motos nuevas que bebés cada año",
+      "fecha": "2026-11-02",
+      "ruta": "datos/2026-10-06-motos-nuevas-guatemala-2025/video",
+      "dato": "datos/2026-10-06-motos-nuevas-guatemala-2025",
+      "paleta": "atitlan",
+      "musica": "atitlan-2",
+      "duracion_s": 26.1,
+      "creditos_voz": 344.0,
+      "estado": "listo",
+      "frases": {
+        "gancho": "¿Sabías que en dos mil veinticuatro Guatemala sumó más motos nuevas que bebés?",
+        "cierre": "Los bebés de 2024 ya crecen en calles donde casi la mitad son motos.",
+        "cierre_tipo": "remate",
+        "cierre_forma": "consecuencia",
+        "cierre_mecanismo": "quien",
+        "visual": "pareja",
+        "apoyo": "escala"
+      }
     }
   ]
 }

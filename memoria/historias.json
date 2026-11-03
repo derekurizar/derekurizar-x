@@ -321,6 +321,52 @@
       }
     },
     {
+      "id": "2026-11-01-el-inventor-de-duolingo",
+      "slug": "el-inventor-de-duolingo",
+      "tema": "el inventor de duolingo",
+      "fecha": "2026-11-01",
+      "ruta": "historias/2026-11-01-el-inventor-de-duolingo",
+      "arco": "biografía de origen y ascenso: de una barrera personal (aprender y certificar inglés costaba caro) a una herramienta gratuita para el mundo",
+      "paleta": "jade",
+      "musica": "jade-2",
+      "duracion_s": 167.3,
+      "creditos_voz": 3607.0,
+      "estado": "listo",
+      "frases": {
+        "promesa": "Todavía no sabía que ese examen iba a marcarle la vida.",
+        "promesa_forma": "presagio",
+        "bisagra": "¿Quién querría comprar unas letras torcidas?",
+        "bisagra_forma": "pregunta",
+        "gancho": "¿Sabías que el cofundador de Duolingo es guatemalteco?",
+        "aperturas": [
+          "De niño, Luis soñaba",
+          "En cambio, su madre",
+          "Así que voló a",
+          "Al año siguiente se",
+          "Entonces, en dos mil",
+          "¿Quién querría comprar unas",
+          "Dos años después dejó",
+          "En dos mil doce,",
+          "Hasta dos mil diecisiete,",
+          "Para entonces, ya existía",
+          "En Guatemala, la Universidad",
+          "Él tuvo que volar"
+        ],
+        "segun": 0,
+        "aperturas_atribuidas": 0,
+        "pregunta": "Hoy, un estudiante en Guatemala lo presenta desde su casa.",
+        "cierre": "Hoy, un estudiante en Guatemala lo presenta desde su casa.",
+        "cierre_tipo": "remate",
+        "cierre_forma": "legado",
+        "cierre_mecanismo": null,
+        "familia": "pregunta",
+        "visual": "foto",
+        "animaciones": [
+          "escaneo-humano"
+        ]
+      }
+    },
+    {
       "id": "2026-11-01-la-erupcion-del-volcan-de-fuego-de-2018",
       "slug": "la-erupcion-del-volcan-de-fuego-de-2018",
       "tema": "La erupción del volcán de Fuego de 2018",

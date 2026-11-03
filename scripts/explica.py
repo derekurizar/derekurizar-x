@@ -229,7 +229,8 @@ def cmd_preparar(a):
     st.update({"tipo": "explica", "slug": slug, "tema": a.tema, "fecha": datetime.date.today().isoformat(),
                "hilo": VD.rel(os.path.join(trabajo, "base")), "paleta": paleta, "musica": pista["id"], "musica_forzada": a.musica,
                "duracion": clave, "objetivo_s": objetivo, "ganchos_recientes": rec_g, "cierres_recientes": rec_c,
-               "animaciones_recientes": [] if a.fixture else animaciones_recientes(slug)})
+               "animaciones_recientes": [] if a.fixture else animaciones_recientes(slug),
+               "promesas_recientes": [] if a.fixture else VD.promesas_recientes(slug)})
     st.setdefault("tarjetas", [])
     escribir(ruta, st)
     if a.fixture:
@@ -1394,7 +1395,8 @@ def cmd_digesto(a):
                   "- Cierre: rotulo «%s», resumen %d–%d líneas ≤ %d (lo que el espectador se lleva), texto, tipo remate, forma "
                   "consecuencia (lo que el mecanismo le hace a quien lo vive; mecanismo, quien, verbo), ≤ 1 cifra y nunca la del gancho, "
                   "sin «según», sin consejo" % (CIERRE_ROTULO, *VD.RESUMEN_LINEAS, VD.RESUMEN_CARACTERES),
-                  "", "## Frases ya usadas (C11)"] + VD.frases_usadas(st["slug"]) + HI.frases_historias(st["slug"]) + frases_explicaciones(st["slug"])
+                  "", "## Promesas recientes (P3)"] + VD.lineas_promesas(st["promesas_recientes"] if "promesas_recientes" in st else VD.promesas_recientes(st["slug"])) + \
+                  ["", "## Frases ya usadas (C11)"] + VD.frases_usadas(st["slug"]) + HI.frases_historias(st["slug"]) + frases_explicaciones(st["slug"])
     print("\n".join(out))
     return 0
 
@@ -1448,7 +1450,7 @@ def cmd_entregar(a):
         "narracion": g.get("narracion"), "secuencias": g.get("secuencias"), "paleta": st["paleta"], "musica": st["musica"],
         "voz": loc["voz"], "velocidad": VD.VELOCIDAD, "creditos_voz": leer(ruta_cred)["total"] if os.path.exists(ruta_cred) else None,
         "duracion_s": round(VD.ffprobe_dur(os.path.join(destino, "video.mp4")), 1), "critica": critica,
-        "gancho": {k: e1.get(k) for k in ("familia", "visual", "pantalla", "linea")}, "promesa": g.get("promesa"),
+        "gancho": {k: e1.get(k) for k in ("familia", "visual", "pantalla", "linea")}, "promesa": g.get("promesa"), "bisagra": g.get("bisagra"),
         "ejemplos": [{"id": x["id"], "modelo": x["modelo"], "ilustrativo": x["ilustrativo"]} for x in X.get("ejemplos") or []],
         "escenas": escenas, "cierre": g.get("cierre"), "caption": g.get("caption")}
     escribir(os.path.join(destino, "guion.json"), entrega)
@@ -1543,7 +1545,7 @@ def main():
         q = sub.add_parser(nombre)
         q.add_argument("trabajo")
         q.add_argument("--cambios", required=True, help='JSON o archivo: [{"escena": N, "texto": "…"}, {"escena": N, "campo": "golpe", '
-                       '"valor": "…"}, {"promesa": "…"}, {"cierre": "…"}]')
+                       '"valor": "…"}, {"promesa": "…", "forma"?}, {"bisagra": "…", "forma"?, "en"?, "pago"?}, {"cierre": "…"}]')
     sub.add_parser("tiempos").add_argument("trabajo")
     q = sub.add_parser("entregar")
     q.add_argument("trabajo")

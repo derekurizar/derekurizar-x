@@ -112,13 +112,14 @@ Principios (los revisa V18 y el crítico en C12, puntaje `flujo`):
    (1 o 2; **2 por defecto** en medio y largo: se dice sobre la primera tarjeta, que ya está pagando el gancho; 1
    solo si cabe en 3 s) y abre una brecha específica: dice qué falta saber, nunca «¿qué opinas?» ni «sigue viendo».
    Es **una oración propia con verbo**: no empieza con «Y», «Pero», «Así que» ni «Entonces» suelto (va pegada a
-   lo anterior en la voz, pero se tiene que entender sola) y **nunca dice «al final te digo»** (el gate rechaza
-   las dos cosas). Familia de fórmulas para variar entre videos, sin copiarlas tal cual: invitar a quedarse
-   («Quédate hasta el final y sabrás cuántas…»), anunciar lo que se verá («Al final vas a ver qué departamento…»),
-   señalar la cifra que falta («Quédate: la cifra de condenas llega al final»), plantear la pregunta que se
-   responderá («¿Y cuántos terminan en condena? Espera al final.»). Mira la promesa de los videos anteriores en
-   «Frases ya usadas» y usa otra forma. `pago` es la escena del último tercio (⌈2n/3⌉ … n, ≠ `en`) cuyo golpe o
-   pantalla **cierra exactamente esa brecha**.
+   lo anterior en la voz, pero se tiene que entender sola) y **nunca anuncia el video**: nada de «al final»,
+   «quédate», «vas a ver», «más adelante» ni «viene después» (P2; el gate lo rechaza). La intriga sale del tema:
+   `forma` es una del catálogo de `referencias/promesas.md` (`pregunta`, `presagio`, `apuesta`, `reloj`,
+   `contradiccion`, `secreto`) y no repite la de las últimas piezas («Promesas recientes» del digesto, P3).
+   `pago` es la escena del último tercio (⌈2n/3⌉ … n, ≠ `en`) cuyo golpe o pantalla **cierra exactamente esa
+   brecha**. Y la **bisagra** (P4): `bisagra {texto, forma, en, pago}`, el segundo enganche justo antes del giro (en
+   la tarjeta anterior al giro o al abrir la del giro), con otra forma, literal en la voz y en la narración de
+   corrido, y pagada por el giro o una escena posterior.
 3. **Escena 2 = T1** (`enlace` nulo). Desde la escena 3, `enlace` (`pero` | `por_eso` | `y`) es **opcional**: solo
    elige el efecto de sonido de la entrada. La causalidad no se pega al inicio de cada escena: vive en la narración
    («Narrar el hilo»), donde un «pero» o un «por eso» puede ir en medio de la oración. El **giro** del hilo (beat
@@ -250,8 +251,8 @@ Principios (los revisa V18 y el crítico en C12, puntaje `flujo`):
     la primera línea es el **título de YouTube** (≤ 100 caracteres, con la cifra; se lee en buscadores), luego 1–2
     líneas de descripción y `#Shorts` con 1–2 hashtags más. Sus números también pasan por V2.
     **Los captions no adelantan el pago**: se leen mientras corre el video, así que abren la misma brecha que la
-    promesa («¿Qué año tuvo más hambre? La respuesta llega al final del video.»; nunca «te lo digo al final»: el
-    gate lo rechaza), nunca la respuesta. Las viñetas de Facebook, que
+    promesa con la misma pregunta del tema («¿Qué año tuvo más hambre en el Corredor Seco?»; nunca «te lo digo al
+    final» ni «mira hasta el final»: V5 lo rechaza), nunca la respuesta. Las viñetas de Facebook, que
     se leen tras «ver más», sí pueden darla.
 
 11. **Icono (opcional).** En gancho, golpe y definición puedes poner `icono: "<id>"` de la biblioteca fija

@@ -12,8 +12,9 @@
    "linea": "La Espiga reabrió tras el terremoto",
    "verbo": "reabrió",
    "texto": "La Espiga reabrió bajo una carpa. Fue en Guatemala, tras el terremoto de 1976.",
-   "promesa_sugerida": "Al final vas a ver qué quedó de sus 25 sucursales.",
-   "por_que": "resultado primero: el momento más fuerte de la historia, con la foto de la carpa desde el cuadro 0"
+   "promesa_sugerida": "¿Cómo pasa una panadería de 25 sucursales a ninguna?",
+   "por_que": "resultado primero: el momento más fuerte de la historia, con la foto de la carpa desde el cuadro 0",
+   "forma_sugerida": "pregunta"
   },
   {
    "id": "g2",
@@ -27,8 +28,9 @@
    "linea": "La Espiga vendía 4,500 panes al día",
    "verbo": "pagó",
    "texto": "La Espiga pagó Q85,000 de multa. Vendía 4,500 panes al día, en Guatemala.",
-   "promesa_sugerida": "Quédate y verás por qué se apagó.",
-   "por_que": "paradoja: crecer y terminar pagando una multa; la foto de los sacos a sangre"
+   "promesa_sugerida": "Nadie en Xela imaginaba que el golpe vendría de adentro.",
+   "por_que": "paradoja: crecer y terminar pagando una multa; la foto de los sacos a sangre",
+   "forma_sugerida": "presagio"
   },
   {
    "id": "g3",
@@ -42,8 +44,9 @@
    "linea": "Encendió el horno de La Espiga en 1952",
    "verbo": "encendió",
    "texto": "Marta Pérez encendió el horno de La Espiga. Fue en 1952, en Guatemala.",
-   "promesa_sugerida": "Al final vas a ver qué quedó de ese horno.",
-   "por_que": "personaje: una persona y un objeto concreto"
+   "promesa_sugerida": "Todo lo que la familia tenía estaba en ese horno.",
+   "por_que": "personaje: una persona y un objeto concreto",
+   "forma_sugerida": "apuesta"
   },
   {
    "id": "g4",
@@ -57,8 +60,9 @@
    "linea": "La Espiga llegó a 25 locales",
    "verbo": "llegó",
    "texto": "Desde Quetzaltenango, La Espiga llegó a 25 locales. Todo pasó en Guatemala.",
-   "promesa_sugerida": "Al final verás cuántas quedaron abiertas.",
-   "por_que": "lugar: el horno de Xela a sangre"
+   "promesa_sugerida": "De sus 25 sucursales, una sola sabe cómo terminó.",
+   "por_que": "lugar: el horno de Xela a sangre",
+   "forma_sugerida": "secreto"
   }
  ]
 }

@@ -430,6 +430,105 @@
       "problema": "En el gancho con foto, la cifra de la pantalla («430») sale como un chip pequeño junto a la etiqueta, y el titular es lo que domina. En una familia resultado, la cifra es el gancho y casi no se ve.",
       "propuesta": "Si la pantalla es una cifra (familia resultado o escala), dibujarla en grande (cifra-heroe) sobre la foto y dejar la línea como subtítulo.",
       "estado": "pendiente"
+    },
+    {
+      "id": "m040",
+      "fecha": "2026-11-02",
+      "flujo": "historia",
+      "pieza": "historias/2026-11-01-el-inventor-de-duolingo",
+      "area": "locución",
+      "archivo": "scripts/numeros_es.py",
+      "problema": "Un año seguido de un verbo se apocopaba: «En 2021 subió» → «dos mil veintiún subió»; el gate no lo detectaba.",
+      "propuesta": "Un año (4 cifras sin coma, 1900–2100) nunca se apocopa; caso añadido a --prueba.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m041",
+      "fecha": "2026-11-02",
+      "flujo": "historia",
+      "pieza": "historias/2026-11-01-el-inventor-de-duolingo",
+      "area": "gate",
+      "archivo": "scripts/historia.py",
+      "problema": "La cita E5 («Gasté 1,200 dólares…») dice un monto que el encuadre pone en no_afirma y que historia.json tiene en descartados; ni el gate ni el crítico lo señalaron.",
+      "propuesta": "En guion --check, aviso cuando una cita o la voz contiene un número que coincide con un descartado o con una cláusula de no_afirma, para que el crítico decida si la atribución basta.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m042",
+      "fecha": "2026-11-02",
+      "flujo": "historia",
+      "pieza": "historias/2026-11-01-el-inventor-de-duolingo",
+      "area": "coordinación",
+      "archivo": ".claude/commands/historia.md",
+      "problema": "grabar + montar + revisar del 9:16 (14 escenas, 165 s) pasó los 600 s del Bash en primer plano y quedó en segundo plano a mitad.",
+      "propuesta": "En el paso 6, indicar correr grabar/montar/revisar con run_in_background (o `grabar --paralelo N`) desde el inicio.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m043",
+      "fecha": "2026-11-02",
+      "flujo": "historia",
+      "pieza": "historias/2026-11-01-el-inventor-de-duolingo",
+      "area": "promesa",
+      "archivo": "scripts/video.py · referencias/promesas.md",
+      "problema": "12 de 16 promesas anunciaban el video («al final vas a ver», «va a volver al final»); las guías sugerían esas fórmulas.",
+      "propuesta": "Catálogo de formas que rotan, P2 sin anuncio, bisagra antes del giro (P1–P4).",
+      "estado": "hecha"
+    },
+    {
+      "id": "m044",
+      "fecha": "2026-11-02",
+      "flujo": "historia",
+      "pieza": "historias/2026-11-01-el-inventor-de-duolingo",
+      "area": "gancho",
+      "archivo": "scripts/historia.py ganchos --usar",
+      "problema": "El arreglo del crítico en la selección del gancho («En la Ciudad de Guatemala…», falta R11 de seleccion.json) no llegó al guion: --usar copia el candidato tal cual.",
+      "propuesta": "Que ganchos --usar aplique los arreglos de seleccion.json → faltas del ganador (o que el gate avise si el ganador tiene faltas sin aplicar).",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m045",
+      "fecha": "2026-11-02",
+      "flujo": "historia",
+      "pieza": "historias/2026-11-01-el-inventor-de-duolingo",
+      "area": "voz",
+      "archivo": ".claude/commands/historia.md",
+      "problema": "Con pocas sesiones, creative_get_flow_run_status devuelve el estado en línea y no en archivo, y descargar --estado necesita un archivo; hubo que pedir el estado de nuevo con más sesiones para forzar el archivo.",
+      "propuesta": "Que descargar acepte el JSON por stdin, o documentar pedir el estado junto con las sesiones conservadas en un retoque.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m046",
+      "fecha": "2026-11-02",
+      "flujo": "sabias",
+      "pieza": "datos/2026-10-06-motos-nuevas-guatemala-2025/video",
+      "area": "voz",
+      "archivo": "scripts/numeros_es.py",
+      "problema": "«379,021 motos» se leía «trescientos … veintiún»: «motos» no estaba en FEMENINOS (ya corregido en esta corrida, junto con moto, motocicleta y motocicletas)",
+      "propuesta": "Derivar el género del sustantivo siguiente con una regla (-a/-as femenino, salvo excepciones) en vez de una lista cerrada, o avisar en guion --check cuando el sustantivo tras una cifra no está en ninguna lista",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m047",
+      "fecha": "2026-11-02",
+      "flujo": "sabias",
+      "pieza": "datos/2026-10-06-motos-nuevas-guatemala-2025/video",
+      "area": "voz",
+      "archivo": ".claude/commands/sabias.md",
+      "problema": "El paso 4 dice que la última creative_get_flow_run_status «queda guardada en un archivo», pero si la respuesta cabe en el contexto no se guarda; hubo que sacarla del transcript de la sesión",
+      "propuesta": "Que descargar acepte las sesiones y lea el estado por su cuenta, o indicar en el comando que la sesión escriba la respuesta a <TRABAJO>/audio/estado.json",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m048",
+      "fecha": "2026-11-02",
+      "flujo": "sabias",
+      "pieza": "datos/2026-10-06-motos-nuevas-guatemala-2025/video",
+      "area": "guion",
+      "archivo": "scripts/sabias.py",
+      "problema": "La razón «127 por cada 100» del dato (texto del tuit) no se puede decir en voz: el 100 no tiene respaldo y el digesto no ofrece ese calculo",
+      "propuesta": "Que el digesto ofrezca «K por cada 100» con su calculo (partes[0]/partes[1]*100) y que V2 acepte el 100 como base de un «por cada N» declarado",
+      "estado": "pendiente"
     }
   ]
 }

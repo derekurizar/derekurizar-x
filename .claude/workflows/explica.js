@@ -349,7 +349,8 @@ const directivaGuion = RETOQUE
     `2 EL MECANISMO: la cuenta con quetzales antes de la definición, la animación, el «ajá» del punto medio, el giro = la otra cara del mecanismo; 3 EN TU VIDA: el mecanismo con datos reales de Guatemala con su fecha, la regla práctica, el pago de la promesa), ` +
     `empezando con la voz del gancho tal cual, un ejemplo conductor, cada oración sigue de la anterior, ≤ ${SEGUN_MAX} «según», nada de consejo; mídela con python3 scripts/explica.py narracion ${trabajo} --check hasta 0 fallas. ` +
     `SOLO ENTONCES repártela en escenas SIN cambiar una palabra: acto en cada escena, intuicion: true (acto 1) y corrige: true (acto 2), cuenta (la pizarra) con renglones que el gate rehace, definicion, explica (mecanismo, brief, animacion o null), escala, tarjetas con grafico, ` +
-    `giro: true en el acto 2, rotulo {etiqueta, titulo} en la primera escena de los actos 2 y 3, promesa con revela, cierre de consecuencia y captions. Números de ejemplo solo los ej-cNN, dichos como ejemplo. `
+    `giro: true en el acto 2, rotulo {etiqueta, titulo} en la primera escena de los actos 2 y 3, promesa {texto, forma, en, pago, revela} que abre una pregunta del tema SIN anunciar el video (nada de «al final», «vas a ver», «quédate»: P2) con una forma de referencias/promesas.md que no repita las «Promesas recientes» (P3), ` +
+    `bisagra {texto, forma (otra), en, pago}: el segundo enganche justo antes del giro, dentro de la narración (P4), cierre de consecuencia y captions. Números de ejemplo solo los ej-cNN, dichos como ejemplo. `
 const voces = new Set()
 const sumaVoces = (r) => { if (r) (r.voces_cambiadas || []).forEach((n) => voces.add(n)); return r }
 const validarGuion = (r) => {
@@ -427,7 +428,7 @@ for (let vuelta = 1; vuelta <= VUELTAS + 1; vuelta++) {
       (acotada ? `VUELTA ACOTADA: cambiaron las escenas ${[...cambiadas].join(', ') || 'ninguna'}. Solo BLOQUEA lo que cambió, lo pendiente, la precisión (E-C5) o un puntaje ≤ 2; lo demás va como mejora. ` : '') +
       (RETOQUE ? `RETOQUE con notas del usuario: «${notas}». Lo que las notas piden conservar no va como falta bloquea. ` : '') +
       `ARREGLOS PROBADOS: antes de escribir cada arreglo de texto, pruébalo con python3 scripts/explica.py probar ${trabajo} --cambios '[{"escena": N, "texto": "…"}]' ` +
-      `(también {"escena": N, "campo": "golpe", "valor": "…"}, {"promesa": "…"}, {"cierre": "…"}); marca probado: true|false y, con true, copia en cambios el JSON exacto que pasó. Escribe ${trabajo}/critica.json.` +
+      `(también {"escena": N, "campo": "golpe", "valor": "…"}, {"promesa": "…", "forma"?}, {"bisagra": "…", "forma"?, "en"?, "pago"?}, {"cierre": "…"}); marca probado: true|false y, con true, copia en cambios el JSON exacto que pasó. Escribe ${trabajo}/critica.json.` +
       (previas.length ? ` Faltas de la vuelta anterior (comprueba primero cada una): ${JSON.stringify(previas)}` : '') +
       (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : ''),
     { agentType: 'video-critico', schema: S.critica, phase: 'Crítica', label: `critica-${vuelta}` }), (r) => validarCritica(r, O, cambiadas, previas), 2)

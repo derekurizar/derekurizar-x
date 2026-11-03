@@ -22,8 +22,8 @@ la duración:
 
 | Acto | Qué cuenta | Cómo termina |
 |---|---|---|
-| **1 · La pregunta** (≈ 25 %) | el gancho; la promesa (escena 2); **la idea equivocada** dicha con justicia (la cuenta que todos hacemos); a veces una `adivina` que la pone a prueba | el **detonante**: «pero eso no es lo que pasa» |
-| **2 · El mecanismo** (≈ 45 %) | la cuenta paso a paso (lo concreto) → la definición (el nombre) → la animación (el mecanismo a la vista) → **el «ajá»** del punto medio (lo que cambia cómo se ve el tema: «77 de cada 100 quetzales no los pusiste tú») → la consecuencia en el tiempo | el **giro**: la otra cara del mecanismo («pero el motor no elige de qué lado estás») |
+| **1 · La pregunta** (≈ 25 %) | el gancho; la promesa (escena 2; `forma` del catálogo de `referencias/promesas.md`, nunca anunciando el video: P1–P3); **la idea equivocada** dicha con justicia (la cuenta que todos hacemos); a veces una `adivina` que la pone a prueba | el **detonante**: «pero eso no es lo que pasa» |
+| **2 · El mecanismo** (≈ 45 %) | la cuenta paso a paso (lo concreto) → la definición (el nombre) → la animación (el mecanismo a la vista) → **el «ajá»** del punto medio (lo que cambia cómo se ve el tema: «77 de cada 100 quetzales no los pusiste tú») → la consecuencia en el tiempo → **la bisagra** justo antes del giro (P4: otra forma que la promesa, literal en la narración: «Hay una cuenta que nadie te hace en el banco») | el **giro**: la otra cara del mecanismo («pero el motor no elige de qué lado estás») |
 | **3 · En tu vida** (≈ 30 %) | el mecanismo con **datos reales de Guatemala** (de cuándo son y de quién, en pantalla); paga la promesa; **la regla práctica** que el espectador se lleva | el cierre: la **consecuencia** para quien lo vive |
 
 Reglas de la voz:

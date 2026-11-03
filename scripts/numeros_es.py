@@ -37,7 +37,8 @@ FEMENINOS = {"personas", "persona", "denuncias", "denuncia", "víctimas", "víct
              "consultas", "consulta", "solicitudes", "solicitud", "licencias", "licencia", "fincas", "finca", "libras",
              "libra", "elecciones", "mesas", "mesa", "municipalidades", "municipalidad", "zonas", "zona", "rutas", "ruta",
              "detenciones", "detención", "operaciones", "quejas", "queja", "jornadas", "madres", "madre", "pruebas",
-             "prueba", "plantas", "planta", "obras", "obra", "becas", "beca", "multas", "multa"}
+             "prueba", "plantas", "planta", "obras", "obra", "becas", "beca", "multas", "multa",
+             "motos", "moto", "motocicletas", "motocicleta"}
 UNIDADES_ABREV = {"kg": "kilogramos", "km²": "kilómetros cuadrados", "km": "kilómetros", "kWh": "kilovatios hora",
                   "ha": "hectáreas", "pp": "puntos porcentuales"}
 
@@ -223,7 +224,9 @@ def segmentos(texto):
             sig = RE_SIGUE.match(resto[rango.end():] if rango else resto)
             siguiente = sig.group(1).lower() if sig else ""
             genero = genero_forzado or ("f" if siguiente in FEMENINOS else "m")
-            sustantivo = bool(siguiente) and not es_pct and not es_fecha and siguiente not in NO_SUSTANTIVO
+            # un año (4 cifras sin coma) nunca se apocopa: «en 2021 subió» → «dos mil veintiuno subió»
+            es_anio = "," not in bruto and not dec and 1900 <= entero <= 2100
+            sustantivo = bool(siguiente) and not es_pct and not es_fecha and not es_anio and siguiente not in NO_SUSTANTIVO
             dicho = _numero(bruto, genero, sustantivo and not rango)
             anio = 1900 <= entero <= 2100 and not dec
             if not genero_forzado and not sustantivo and not es_pct and not anio \
@@ -267,6 +270,7 @@ CASOS = [
     ("al 28 de julio", "al veintiocho de julio"),
     ("21 denuncias", "veintiuna denuncias"),
     ("21 casos", "veintiún casos"),
+    ("En 2021 subió", "En dos mil veintiuno subió"),
     ("201 personas", "doscientas una personas"),
     ("100 mil habitantes", "cien mil habitantes"),
     ("2.05 puntos", "dos punto cero cinco puntos"),

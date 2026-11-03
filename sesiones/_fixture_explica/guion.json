@@ -3,11 +3,11 @@
  "narracion": [
   {
    "acto": 1,
-   "texto": "Imagina: Ana y Luis guardan los mismos 1,000 quetzales. Ana empezó diez años antes y terminó con más del doble. Ana no ahorró más: solo empezó antes. Y vas a ver por qué el mismo motor también puede jugar en tu contra. Casi todos hacemos esta cuenta: 100 al año por 30 años, 3,000; con los 1,000 del inicio, 4,000. Pero le falta algo. Pero en 30 años al 10 %, ¿cuánto hay? ¿4,000, 10,000 o {17,449:m}? Pausa y piénsalo. Son {17,449:m}."
+   "texto": "Imagina: Ana y Luis guardan los mismos 1,000 quetzales. Ana empezó diez años antes y terminó con más del doble. Ana no ahorró más: solo empezó antes. El mismo motor también puede jugar en tu contra. Casi todos hacemos esta cuenta: 100 al año por 30 años, 3,000; con los 1,000 del inicio, 4,000. Pero le falta algo. Pero en 30 años al 10 %, ¿cuánto hay? ¿4,000, 10,000 o {17,449:m}? Pausa y piénsalo. Son {17,449:m}."
   },
   {
    "acto": 2,
-   "texto": "Hagamos la cuenta de Ana año por año. El primero gana 100 y junta 1,100. El segundo ya no gana 100: gana 110, porque los intereses también ganan. Para entenderlo, eso tiene nombre: interés compuesto. Ganas interés sobre el interés que ya ganaste. Mira cómo crece: el capital no cambia, el interés se suma y lo sumado también gana. Por eso, al final manda el interés. Luis, que empezó diez años después, junta 17,449 quetzales: 77 de cada 100 no los puso él. Por eso mucha gente se rinde: diez años la curva casi no se separa de la recta. Al año 30, 17,449 contra 4,000. Pero el motor no elige de qué lado estás: con una deuda, también corre."
+   "texto": "Hagamos la cuenta de Ana año por año. El primero gana 100 y junta 1,100. El segundo ya no gana 100: gana 110, porque los intereses también ganan. Para entenderlo, eso tiene nombre: interés compuesto. Ganas interés sobre el interés que ya ganaste. Mira cómo crece: el capital no cambia, el interés se suma y lo sumado también gana. Por eso, al final manda el interés. Luis, que empezó diez años después, junta 17,449 quetzales: 77 de cada 100 no los puso él. Por eso mucha gente se rinde: diez años la curva casi no se separa de la recta. Al año 30, 17,449 contra 4,000. Hay una cuenta que nadie te hace en el banco. Pero el motor no elige de qué lado estás: con una deuda, también corre."
   },
   {
    "acto": 3,
@@ -15,10 +15,11 @@
   }
  ],
  "promesa": {
-  "texto": "vas a ver por qué el mismo motor también puede jugar en tu contra",
+  "texto": "El mismo motor también puede jugar en tu contra.",
   "en": 2,
   "pago": 12,
-  "revela": 1
+  "revela": 1,
+  "forma": "contradiccion"
  },
  "escenas": [
   {
@@ -46,7 +47,7 @@
    "pantalla": "No ahorró más",
    "linea": "Solo empezó antes",
    "verbo": "ahorró",
-   "texto": "Ana no ahorró más: solo empezó antes. Y vas a ver por qué el mismo motor también puede jugar en tu contra."
+   "texto": "Ana no ahorró más: solo empezó antes. El mismo motor también puede jugar en tu contra."
   },
   {
    "tipo": "cuenta",
@@ -238,7 +239,7 @@
      "periodos": null
     }
    },
-   "texto": "Por eso mucha gente se rinde: diez años la curva casi no se separa de la recta. Al año 30, 17,449 contra 4,000."
+   "texto": "Por eso mucha gente se rinde: diez años la curva casi no se separa de la recta. Al año 30, 17,449 contra 4,000. Hay una cuenta que nadie te hace en el banco."
   },
   {
    "tipo": "golpe",
@@ -361,5 +362,11 @@
   "instagram": "El interés compuesto explicado con quetzales: por qué el tiempo pesa más que el monto, y por qué una tarjeta usa el mismo motor. #Guatemala #finanzaspersonales",
   "facebook": "¿Por qué el dinero guardado crece cada vez más rápido? El interés compuesto, explicado con quetzales y con las tasas de Guatemala.",
   "shorts": "El interés compuesto, explicado con quetzales\nMismo dinero, otro final: el tiempo pesa más que el monto. #Shorts #Guatemala"
+ },
+ "bisagra": {
+  "texto": "Hay una cuenta que nadie te hace en el banco.",
+  "forma": "secreto",
+  "en": 9,
+  "pago": 10
  }
 }

@@ -54,11 +54,16 @@ escribes solo `<TRABAJO>/critica.json`.
   1. Siempre: una primera oración de voz > 4 s estimados (`locucion.json`,
   ≈ 62 caracteres en palabras) bloquea; un `icono` decorativo es mejora.
 - **C2 · Razón para quedarse.** `promesa.texto` abre una brecha específica y
-  alcanzable: dice **qué** falta saber (la cifra o el dato concreto que llegará),
-  no «hay más» ni «sigue viendo». Es una oración que se entiende sola: si
-  empieza con «Y», «Pero» o «Así que» y solo tiene sentido pegada a la frase
-  anterior, es falta (el gate rechaza el conector suelto y «al final te digo»;
-  tú, que la fórmula suene natural y no sea la de otro video). Se dice en la
+  alcanzable **desde la historia, no desde el video** (`referencias/promesas.md`):
+  una pregunta concreta, lo que el protagonista todavía no sabía, lo que estaba
+  en juego, un plazo, dos hechos que chocan o un secreto. Puntúa la **emoción**
+  (¿alguien gana, pierde o no sabe algo?) y la especificidad (¿nombra a alguien,
+  un objeto, un lugar, una cifra?), no la fórmula: «hay más», «algo increíble»
+  o «sigue viendo» no abren nada. Anunciar el video («al final», «vas a ver»,
+  «quédate», «más adelante») lo rechaza el gate (P2); si una paráfrasis se le
+  escapa al gate («cuando termine esto entenderás…»), bloquea. Es una oración
+  que se entiende sola: si empieza con «Y», «Pero» o «Así que» y solo tiene
+  sentido pegada a la frase anterior, es falta. Se dice en la
   escena 1 o 2; en la escena 1 dura ≤ 3 s (si no cabe, pide `en: 2`)
   y no repite la línea de pantalla. Una escena `adivina` (pregunta, tres opciones,
   revelado) abre otro bucle a mitad: vale si la pregunta se contesta con una
@@ -88,10 +93,13 @@ escribes solo `<TRABAJO>/critica.json`.
   cuatrocientos dos punto cuatro» cuando el gate lo acepta.
 - **C6 · Pago.** La escena `promesa.pago` cierra **exactamente** la brecha que
   abrió la promesa, con su golpe o pantalla, en el último tercio. No se paga
-  antes ni queda sin pagar ni se paga con otra cosa.
+  antes ni queda sin pagar ni se paga con otra cosa. Lo mismo la **bisagra**
+  (P4): la paga el giro o una escena posterior; una bisagra que el video
+  olvida es falta que bloquea.
 - **C7 · Ritmo y re-gancho.** `hueco_max_s` cerca de 6 es señal de escena
   lenta; la cifra llega pronto en cada tarjeta; en medio y largo hay un
-  re-gancho a mitad («espera, se pone peor»); el cierre no se alarga. La
+  re-gancho a mitad: la bisagra, justo antes del giro, con otra forma que la
+  promesa (un presagio, una apuesta, un plazo; nunca «espera»); el cierre no se alarga. La
   `adivina` cuenta como re-gancho; la `definicion` no (es contexto: corta y
   sin cifra nueva).
 - **C8 · Cierre.** Dos pantallas: primero las conclusiones (el `resumen` de
@@ -155,7 +163,9 @@ escribes solo `<TRABAJO>/critica.json`.
   «El resultado: en 2024…» se oye repetido; el gate lo rechaza): la siguiente
   escena responde, no repite la pregunta.
 - **C11 · Plantilla.** Compara con «Frases ya usadas» y «Ganchos recientes» del
-  digesto: la promesa, la familia, el visual y la primera oración del gancho,
+  digesto: la promesa (su texto **y su forma**: dos promesas con el mismo molde,
+  «¿Cómo pasa X a Y?» en dos piezas seguidas, suenan iguales aunque cambien las
+  palabras), la bisagra, la familia, el visual y la primera oración del gancho,
   cómo abre cada escena (lo que sigue al conector) y la frase final del cierre (con su tipo y forma). Si alguna repite casi literal la de
   otro video («Y al final te digo…», «Y tú, ¿…?», «Entonces, ¿se disparó…?»), es
   falta: quien sigue la cuenta oye la misma fórmula en cada video. También es
@@ -330,7 +340,7 @@ seguiría viendo?» y «¿esto lo dice la cronología?»; la pregunta sobre el c
 | Regla | Qué revisas |
 |---|---|
 | H-C1 gancho | la foto a sangre y la pantalla solas, en 1 s, dicen de qué historia se trata; la voz abre con el momento más fuerte, no con «esta es la historia de»; cuenta el momento de la historia (el problema, la persona, la decisión) **nombra al protagonista** (la marca, la persona: H10) y **no regala la respuesta** que el video paga ni el detalle técnico que explica después (de qué está hecho, cómo terminó) |
-| H-C2 tensión | la promesa nombra algo concreto y `promesa.pago` cuenta `promesa.revela` con sus palabras. **La espina está entera y en orden**: el detonante cierra el acto 1, el punto medio cambia la comprensión a mitad, el clímax llega en el acto 3 y la resolución dice qué quedó; el giro vive en el nudo. Cada acto termina en lo que hace querer el siguiente; nada se estira |
+| H-C2 tensión | la promesa nombra algo concreto de la historia (sin anunciar el video; forma de `referencias/promesas.md`) y `promesa.pago` cuenta `promesa.revela` con sus palabras; la bisagra re-abre el interés antes del giro y el giro la paga. **La espina está entera y en orden**: el detonante cierra el acto 1, el punto medio cambia la comprensión a mitad, el clímax llega en el acto 3 y la resolución dice qué quedó; el giro vive en el nudo. Cada acto termina en lo que hace querer el siguiente; nada se estira |
 | H-C3 claridad e hilo | se entiende quién es quién, cuándo y dónde sin haber leído nada: cada persona u organización llega **presentada** la primera vez (≤ 8 palabras) y las fechas avanzan con sus transiciones dichas; sin siglas ni jerga sin explicar. **Hilo conductor**: lee el guion de corrido y en cada escena pregúntate «¿esto sigue de lo anterior?»; cada referencia («esos 40 niños», «ese alimento», «así», «lo», «ellos») tiene su antecedente antes; ninguna escena repite lo que otra ya dijo como si fuera nuevo. **Hilos**: cada pregunta que la historia abre —las del encuadre y las que el oyente anota en `pregunta_sin_responder`— se paga en una escena o se declara sin respuesta en la narración («nunca se supo…»); una pregunta del oyente que coincide con un hilo del encuadre y no está pagada ni declarada **bloquea**. **`oyente.json`**: cada confusión y cada salto del oyente se resuelve (falta `bloquea` de H-C3, o H-C2 si es la promesa, con su arreglo exacto) o se justifica en `critica.json → oyente_descartadas[]{escena, motivo}`; cada `pregunta_sin_responder` se atiende con una falta H-C3 con `escena: null` que la cite o se descarta en `oyente_descartadas[]{escena: null, pregunta (literal), motivo}`; sus repeticiones las juzgas tú |
 | H-C4 flujo | lee la **narración de corrido** del digesto como un texto: ¿se oye como una sola voz que cuenta, o como tarjetas leídas una tras otra? Bloquea si una escena arranca con un conector hueco («Pero, según…», «Por eso, según…»), si la narración salta de tiempo o de tema sin decirlo, si una escena repite la apertura de la anterior o si hay más de 6.5 cortes por minuto. La variedad visual (foto, cita, gráfico, texto) sirve a la narración, no al revés: una foto puede durar 15 s si la voz la sostiene; un rótulo marca el acto sin detener la voz. Puntúa 5 cuando podrías cerrar los ojos y seguir la historia sin perderte, y 1 cuando cada escena vuelve a empezar |
 | H-C5 precisión | cada hecho, fecha y número está en la cronología del digesto; lo `en_disputa`, los alegatos, las estimaciones, las opiniones y las citas van atribuidos en voz; lo `una_fuente` se narra llano con su fuente en pantalla; nada de `no_afirma`; nada de los descartados; las citas son literales |
@@ -355,8 +365,8 @@ escena, un chip `fecha`, la promesa, el cierre), pruébalo en una copia con
 python3 scripts/historia.py probar <TRABAJO> --cambios '[{"escena": 2, "texto": "…"}, {"escena": 2, "campo": "fecha", "valor": "…"}]'
 ```
 
-(también `{"promesa": "…"}` y `{"cierre": "…"}`; el mismo texto va solo a la narración de corrido, a la promesa y al
-candidato del gancho). Exit 0: el arreglo pasa narracion + guion --check. Exit 1: imprime las FALLAS (H4 sin atribución,
+(también `{"promesa": "…", "forma"?}`, `{"bisagra": "…", "forma"?, "en"?, "pago"?}` y `{"cierre": "…"}`; el mismo
+texto va solo a la narración de corrido, a la promesa, a la bisagra y al candidato del gancho). Exit 0: el arreglo pasa narracion + guion --check. Exit 1: imprime las FALLAS (H4 sin atribución,
 H18 sin presentación, V9 «empieza con la palabra que cierra la anterior», un hueco de más de 6 s…); ajústalo hasta que
 pase. Si ninguna versión pasa, la falta va como `mejora` con la falla del gate en `problema`, nunca como `bloquea`.
 Cada falta lleva `probado: true|false`; el Workflow devuelve al crítico una falta `bloquea` con `probado: false`.
@@ -423,7 +433,7 @@ explicarlo?».
 |---|---|
 | E-C1 gancho | la pantalla y el visual solos plantean la pregunta del video en 1 s; la voz abre con la tensión (el resultado, la paradoja, el espectador), no con «hoy te explico»; no regala el mecanismo ni la revelación |
 | E-C2 claridad | **`explicacion_devuelta` del oyente dice lo mismo que `mecanismo_frase`** (con otras palabras vale): si no, o si dice «no podría explicarlo», bloquea con el arreglo de la escena donde se perdió. Cada término llega explicado; lo concreto (la cuenta con quetzales) va antes de lo abstracto; un solo ejemplo conductor; cada confusión y cada salto del oyente se resuelve (falta `bloquea`) o se justifica en `oyente_descartadas[]` |
-| E-C3 intuición | la idea equivocada se dice con justicia en el acto 1 (no es una tontería: es la cuenta que todos hacemos) y una escena del acto 2 la rompe de forma visible; el «ajá» del punto medio cambia cómo se ve el tema; el giro es la otra cara del mecanismo |
+| E-C3 intuición | la idea equivocada se dice con justicia en el acto 1 (no es una tontería: es la cuenta que todos hacemos) y una escena del acto 2 la rompe de forma visible; el «ajá» del punto medio cambia cómo se ve el tema; el giro es la otra cara del mecanismo. La promesa abre una pregunta del tema sin anunciar el video y la bisagra re-abre el interés antes del giro (`referencias/promesas.md`, C2 y C6) |
 | E-C4 flujo | la narración de corrido se oye como una sola voz que explica, no como tarjetas leídas: cada oración sigue de la anterior; la pizarra y la animación sirven a la voz |
 | E-C5 precisión | cada afirmación y cada dato real están en el digesto; los números de ejemplo son los del script y se dicen como ejemplo; ninguna cifra ilustrativa pasa por dato de Guatemala; las cifras reales dicen de cuándo son; nada de `no_afirma`; nada de consejo, bancos ni productos |
 | E-C6 cierre | `consecuencia`: lo que el mecanismo le hace a quien lo vive (quien ahorra, quien debe), con gente como sujeto; el resumen es lo que el espectador se lleva (la regla práctica), no un repaso de cifras; sin moraleja ni orden («ahorra», «no uses la tarjeta») |

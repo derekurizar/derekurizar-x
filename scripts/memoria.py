@@ -541,6 +541,10 @@ def frases_video(g):
     re_apertura = re.compile(r"^[¿¡«\s]*(?:(?:pero|y|por eso|así que|entonces)[,\s]+)?(?:seg[uú]n|de acuerdo con)\b", re.I)
     return {
         "promesa": (g.get("promesa") or {}).get("texto", ""),
+        # P3 (referencias/promesas.md): la forma de la promesa rota entre piezas; la bisagra re-engancha antes del giro
+        "promesa_forma": (g.get("promesa") or {}).get("forma"),
+        "bisagra": (g.get("bisagra") or {}).get("texto", ""),
+        "bisagra_forma": (g.get("bisagra") or {}).get("forma"),
         "gancho": primera(voz[0]) if voz else "",
         "aperturas": [" ".join(v.split()[:4]) for v in voz[2:] if v.strip()],
         # /historia v3 (H19): cuántas veces la voz atribuye y cuántas escenas abren con una atribución
