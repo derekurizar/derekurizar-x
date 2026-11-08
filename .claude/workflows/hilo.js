@@ -1,7 +1,7 @@
 export const meta = {
   name: 'hilo',
   description: 'Hilo de X con datos de Guatemala: encuadre → investigación ⇢ verificación por eje → guion → visuales → ensamblado',
-  whenToUse: 'Invocado por /hilo [modo] [tema] [smoke|fixture] (y por los alias /explica y /perfil). args: {tema, modo, smoke, fixture, fecha, min_tuits, max_tuits, idea, canon, permitir_fallback} (fecha YYYY-MM-DD obligatoria, la pone el comando con `date +%F`). modo = hilo (defecto, historia con giro) | explica (el tema explicado con sus números en 3–6 tarjetas, sin giro) | perfil (retrato de un departamento o grupo frente al país en 5–8 tarjetas; tema = el sujeto). smoke = corrida corta sin tocar memoria/; fixture = sin web, copia sesiones/_fixture. idea = id de ideas/banco.json (el editor parte de ella; memoria.py la marca hecha al registrar). canon = texto de scripts/departamentos.py --directiva (lo pasa /departamento en modo perfil: viaja al editor, al investigador y al guionista y sube el mínimo a 7 tuits).',
+  whenToUse: 'Invocado por /hilo [modo] [tema] [smoke|fixture] (y por los alias /explica y /perfil). args: {tema, modo, smoke, fixture, fecha, min_tuits, max_tuits, texto_largo, idea, canon, permitir_fallback} (texto_largo: true = hilo explicativo, tuits con imagen hasta 280 de peso) (fecha YYYY-MM-DD obligatoria, la pone el comando con `date +%F`). modo = hilo (defecto, historia con giro) | explica (el tema explicado con sus números en 3–6 tarjetas, sin giro) | perfil (retrato de un departamento o grupo frente al país en 5–8 tarjetas; tema = el sujeto). smoke = corrida corta sin tocar memoria/; fixture = sin web, copia sesiones/_fixture. idea = id de ideas/banco.json (el editor parte de ella; memoria.py la marca hecha al registrar). canon = texto de scripts/departamentos.py --directiva (lo pasa /departamento en modo perfil: viaja al editor, al investigador y al guionista y sube el mínimo a 7 tuits).',
   phases: [
     { title: 'Encuadre', detail: 'editor: pregunta, tesis provisional, paleta, ejes con prefijo y fuentes sugeridas' },
     { title: 'Investigación', detail: 'un investigador por eje (SIFT, con presupuesto): cifras con evidencia' },
@@ -264,6 +264,9 @@ const minT = Math.min(MAX_TUITS, Math.max(4, parseInt(A.min_tuits, 10) || 4))
 // Máximo opcional (max_tuits, nunca por debajo de min_tuits ni por encima de MAX_TUITS).
 const maxT = Math.min(MAX_TUITS, Math.max(minT, parseInt(A.max_tuits, 10) || MAX_TUITS))
 const largo = !smoke && minT >= 10
+// Texto largo (hilo explicativo): los tuits con imagen admiten hasta 280 de peso X; el guion lo declara con texto_largo: true (G2 en ensamblar.py).
+const textoLargo = A.texto_largo === true
+const topeImg = textoLargo ? 280 : 200
 // Modo del post (hilo | explica | perfil): lo fija el comando; desconocido = error, no silencio.
 const modoPost = A.modo ? String(A.modo).toLowerCase() : 'hilo'
 if (!MODOS[modoPost]) throw new Error(`args.modo "${A.modo}" desconocido (${Object.keys(MODOS).join('|')}).`)
@@ -532,7 +535,7 @@ const validarGuion = (g) => {
   Tt.forEach((t, i) => {
     const tx = t.texto || '', p = pesoX(tx)
     if (i > 0 && p > 280) F.push(`T${t.n} pesa ${p} en X (>280)`)
-    if (i > 0 && i < n - 1 && t.visual && p > 200) F.push(`T${t.n} con imagen pesa ${p} (>200): que la tarjeta hable`)
+    if (i > 0 && i < n - 1 && t.visual && p > topeImg) F.push(`T${t.n} con imagen pesa ${p} (>${topeImg}): que la tarjeta hable`)
     if (i > 0 && p > 140 && p <= 200) avisar(`AVISO: T${t.n} pesa ${p} (ideal ≤140 con imagen).`)
     if (RE_BAIT.test(tx)) F.push(`T${t.n} contiene engagement bait`)
     const v = t.visual
@@ -618,6 +621,7 @@ const invocarGuion = (fallos) =>
         `${smoke ? 'MODO SMOKE: 3–4 tuits, smoke:true. ' : `${minN}–${maxN} tuits${MP.impacto ? ' con un beat impacto' : ''}, smoke:false. `}` +
         (largo ? `HILO LARGO: apunta a ${maxN} tuits si el digesto lo sostiene (varios contexto e impacto, un solo giro); cada tarjeta lleva un dato distinto, sin repetir cifra ni gráfico. ` : '') +
         LIMITES + ' ' +
+        (textoLargo ? 'TEXTO LARGO (hilo explicativo): escribe texto_largo: true en guion.json; los tuits con imagen admiten hasta 280 de peso X (no 200): úsalo para dar contexto (fecha, quién, qué decía, qué pasó después), nunca para repetir la tarjeta. ' : '') +
         (fallos.length ? `TU GUION ANTERIOR FUE RECHAZADO; corrige SOLO esto y vuelve a escribir guion.json completo:\n - ${fallos.join('\n - ')}\n` : '') +
         `Escribe ${enc.sesion_dir}/guion.json completo (con modo: "${modoPost}"${modoPost !== 'hilo' ? ` y el bloque ${modoPost}` : ''}) y devuelve el mismo contenido compacto (con modo, visual.datos en números crudos${modoPost !== 'hilo' ? ' y el bloque ' + modoPost : ''}).`,
       { agentType: 'hilo-guionista', schema: S.guion, label: fallos.length ? 'guionista-reparacion' : 'guionista' }

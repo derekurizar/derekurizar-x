@@ -1,0 +1,172 @@
+{
+  "id": "congreso-iniciativa-6347",
+  "slug": "iniciativa-6347",
+  "hilo": "sesiones/congreso-iniciativa-6347/base",
+  "paleta": "obsidiana",
+  "duracion": "congreso",
+  "duracion_s": 49.0,
+  "n_escenas": 5,
+  "musica": "obsidiana-1",
+  "voz": {
+    "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+    "nombre": "El Faraon 4",
+    "modelo": "eleven_multilingual_v2",
+    "idioma": "es"
+  },
+  "velocidad": 1.1,
+  "creditos_voz": 665,
+  "contexto_superior": "Ley de Ciberseguridad · Congreso",
+  "gancho": {
+    "familia": "contraste",
+    "visual": "foto",
+    "pantalla": "Pasó por 2 votos",
+    "linea": "la urgencia de esta ley en el Congreso"
+  },
+  "ganchos": null,
+  "promesa": null,
+  "bisagra": null,
+  "critica": {
+    "veredicto": "pasa",
+    "vuelta": 2,
+    "puntajes": {
+      "gancho": 4,
+      "bucle": null,
+      "ritmo": null,
+      "flujo": 4,
+      "escala_humana": 4,
+      "pago": null,
+      "cierre": null
+    }
+  },
+  "escenas": [
+    {
+      "n": 1,
+      "tipo": "gancho",
+      "tuit": null,
+      "plantilla": "gancho",
+      "enlace": null,
+      "golpe": null,
+      "cinetico": {
+        "pantalla": "Pasó por 2 votos",
+        "linea": "la urgencia de esta ley en el Congreso"
+      },
+      "adivina": null,
+      "icono": null,
+      "pantalla": "En el Congreso, la urgencia de esta ley pasó por 2 votos.",
+      "voz": "En el Congreso, la urgencia de esta ley pasó por dos votos.",
+      "dur": 4.171
+    },
+    {
+      "n": 2,
+      "tipo": "hemiciclo",
+      "tuit": null,
+      "plantilla": "hemiciclo",
+      "enlace": null,
+      "golpe": null,
+      "cinetico": null,
+      "adivina": null,
+      "icono": null,
+      "pantalla": "Es la ley de ciberseguridad de Guatemala. Declararla urgente pedía 107 votos, dos tercios del Congreso. Tuvo 109, y 10 en contra.",
+      "voz": "Es la ley de ciberseguridad de Guatemala. Declararla urgente pedía ciento siete votos, dos tercios del Congreso. Tuvo ciento nueve, y diez en contra.",
+      "dur": 11.389
+    },
+    {
+      "n": 3,
+      "tipo": "golpe",
+      "tuit": null,
+      "plantilla": "golpe",
+      "enlace": null,
+      "golpe": null,
+      "cinetico": {
+        "pantalla": "Fiscalía de ciberdelitos",
+        "linea": "y un consejo que encabeza el presidente"
+      },
+      "adivina": null,
+      "icono": null,
+      "pantalla": "Crea una fiscalía de ciberdelitos y un consejo que encabeza el presidente de la República.",
+      "voz": "Crea una fiscalía de ciberdelitos y un consejo que encabeza el presidente de la República.",
+      "dur": 5.737
+    },
+    {
+      "n": 4,
+      "tipo": "hemiciclo",
+      "tuit": null,
+      "plantilla": "hemiciclo",
+      "enlace": "pero",
+      "golpe": null,
+      "cinetico": null,
+      "adivina": null,
+      "icono": null,
+      "pantalla": "En la votación final bastaban 81 votos. Votaron en contra 10, 7 de Vamos, como Allan Rodríguez. Pero la aprobaron 121 diputados, con el presidente del Congreso, Luis Contreras.",
+      "voz": "En la votación final bastaban ochenta y un votos. Votaron en contra diez, siete de Vamos, como Allan Rodríguez. Pero la aprobaron ciento veintiún diputados, con el presidente del Congreso, Luis Contreras.",
+      "dur": 13.962
+    },
+    {
+      "n": 5,
+      "tipo": "golpe",
+      "tuit": null,
+      "plantilla": "golpe",
+      "enlace": "por_eso",
+      "golpe": null,
+      "cinetico": {
+        "pantalla": "4 a 6 años",
+        "linea": "por entrar sin permiso a un sistema"
+      },
+      "adivina": null,
+      "icono": null,
+      "pantalla": "Por eso, en cuanto rija, entrar sin permiso a un sistema costará de 4 a 6 años de cárcel.",
+      "voz": "Por eso, en cuanto rija, entrar sin permiso a un sistema costará de cuatro a seis años de cárcel.",
+      "dur": 7.206
+    },
+    {
+      "n": 6,
+      "tipo": "cierre",
+      "tuit": null,
+      "plantilla": "cierre",
+      "enlace": null,
+      "golpe": null,
+      "cinetico": null,
+      "adivina": null,
+      "icono": null,
+      "pantalla": "La ley de ciberseguridad ya pasó; su reglamento todavía no existe.",
+      "voz": "La ley de ciberseguridad ya pasó; su reglamento todavía no existe.",
+      "dur": 7.624
+    }
+  ],
+  "cierre": {
+    "texto": "La ley de ciberseguridad ya pasó; su reglamento todavía no existe.",
+    "final": "La ley de ciberseguridad ya pasó; su reglamento todavía no existe.",
+    "resumen": [],
+    "tipo": "remate",
+    "forma": "pendiente"
+  },
+  "caption": {
+    "tiktok": "La Ley de Ciberseguridad necesitaba 107 votos para pasar de urgencia. Tuvo 109. Quién votó a favor y quién en contra, con el registro oficial del Congreso. #Guatemala #Congreso #Ciberseguridad",
+    "instagram": "Ley de Ciberseguridad: 109 votos cuando hacían falta 107 para declararla de urgencia. Así votó el Congreso de Guatemala, según el registro nominal oficial. #Guatemala #Congreso",
+    "facebook": "El Congreso aprobó la Ley Marco de Ciberseguridad con 121 votos. La urgencia nacional pasó con 109, dos más de los 107 que pedía. ¿Qué cambia y quién votó en contra?",
+    "shorts": "Ley de Ciberseguridad: la urgencia pasó por 2 votos\nAsí votó el Congreso de Guatemala la urgencia nacional. #Shorts #Guatemala"
+  },
+  "tipo": "congreso",
+  "fecha": "2026-11-04",
+  "iniciativa": "6347",
+  "ley": "Decreto 26-2026, Ley Marco de Ciberseguridad",
+  "votacion": {
+    "fecha": "2026-11-03 22:44:32",
+    "clase": "redaccion final",
+    "umbral": 81,
+    "favor": 121,
+    "contra": 10,
+    "ausente": 19,
+    "licencia": 10
+  },
+  "nombrados": [
+    {
+      "nombre": "Luis Alberto Contreras Colíndres",
+      "voto": "favor"
+    },
+    {
+      "nombre": "Allan Estuardo Rodríguez Reyes",
+      "voto": "contra"
+    }
+  ]
+}

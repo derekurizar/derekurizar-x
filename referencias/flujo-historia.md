@@ -104,6 +104,63 @@ Topes de voz: foto 40–280, cita 30–280, tarjeta/mapa/ranking/tiempo/explica 
 - **Barra de progreso por acto** (tres tramos de largo proporcional a su duración; el gancho entra en el primero y el
   cierre en el último).
 
+## Tomas de video (decisión del usuario, 2026-11-05; RETIRADAS el 2026-11-06)
+
+**Retiradas**: el tipo `toma` ya no se acepta (TM0). Lo que sigue queda solo como registro de cómo funcionaba.
+
+Las notas de los medios casi siempre traen video. Una **toma** es un tramo corto de ese video, y siempre tiene que ver
+con lo que se narra en su escena:
+- **sin audio** (`mudo`, ≤ 6 s): imagen de contexto (la marcha, la captura, la fachada), con la voz encima, como una foto
+  que se mueve;
+- **con su audio original** (`original`, ≤ 10 s): el sonido es el hecho (alguien declara, se lee una sentencia, se
+  anuncia una votación, la plaza corea). La voz de la escena es solo la entrada («El 21 de agosto, Pérez Molina dijo
+  esto:»); luego suena el clip con sus subtítulos y la música se aparta.
+
+Derechos: cortas y con crédito («Video: <medio>, <fecha>» en pantalla y en `fuentes.md`), todas ≤ 25 % del video, ≤ 2
+con audio, y la toma oficial (MP, Congreso, CICIG, gobierno) antes que la del medio. YouTube, Facebook y TikTok
+detectan solos el material de los noticieros, y con más facilidad el audio.
+
+Pasos (verificador, paso 7 de su rol):
+1. `leer <url>` lista los videos de la nota (`og:video`, iframes de YouTube, JW Player, Brightcove, Vimeo o Facebook,
+   `<video>`, mp4/m3u8, `VideoObject`).
+2. `historia.py video TRABAJO --id <eje>-vNN --de-fuente <url> [--n K]` baja el video con yt-dlp a
+   `sesiones/_descargas/historia/videos/` y deja en `videos/` la ficha, la hoja de contacto (un cuadro cada 2 s) y la
+   transcripción de whisper con su minuto:segundo.
+3. `historia.py toma TRABAJO --video <id> --id <id>-tNN --desde M:SS --hasta M:SS --audio mudo|original --hechos ids
+   [--cita … | --ambiente …]` corta los cuadros a 30 fps (`tomas/<id>/`) y, con audio, el wav nivelado y las palabras
+   del tramo.
+4. `historia.py tomas-contacto TRABAJO` arma la hoja para el QA de la sesión (4 cuadros por toma).
+
+En pantalla, la toma usa la lámina de la foto (`video/noticia.html`): el clip cuadro a cuadro en un canvas. Con
+`encaje: fondo` (por defecto), el clip va entero a todo el ancho sobre sí mismo ampliado, borroso y oscuro; con
+`recorte`, a sangre alrededor de `x`.
+
+## Personas, red y dinamismo (decisión del usuario, 2026-11-06)
+
+**Cada persona tiene cara.** La primera vez que la voz nombra a una persona del encuadre (`personajes[]` con `tipo: persona`, `cargo` ≤ 28 caracteres y `bando`), la escena muestra su **tarjeta**: retrato en círculo, nombre y cargo, bajo la barra de arriba durante 2.2 s. La arma `tiempos` sola (`S.personas`). Si la foto de la escena ya la muestra (una cara marcada con su nombre), solo va la franja del nombre y el sub-plano se acerca a su cara en ese instante.
+
+**Retratos y focos.** El retrato es una foto con `retrato_de`, o una cara marcada en una foto de grupo:
+- `historia.py focos TRABAJO` detecta las caras con Vision de macOS (`scripts/caras.swift`).
+- `historia.py focos TRABAJO --foto ID --cara K --persona "Nombre" --evidencia "pie o categoría"` dice de quién es cada cara.
+- `foto` guarda los focos solo y acepta `--retrato-evidencia`.
+
+**Sub-planos.** En cada foto, la cámara cambia de encuadre cada 3–4.5 s: amplio → cerca de una cara (×1.55) → medio de otra → amplio (`video.planos_foto`, `S.N.planos`). Sin caras, usa los tercios. En las escenas sin foto (golpe, tarjeta, animación) hay un salto de cámara hacia afuera en un inicio de oración (`S.saltos`).
+
+**Escena `red`, el organigrama.** Nodos con retrato o sigla en ≤ 3 niveles: arriba (nivel 0) quien manda, uno o los dos que mandan juntos; los de la misma altura del caso van lado a lado (nunca una fila de uno por nivel); los investigadores que la voz nombra, en su franja de abajo. La relación va en una pastilla al centro de su línea (nunca encima de un nombre o un cargo); la cámara no se mueve: los nodos entran cuando la voz los nombra (2026-11-06). Cada arista sale de un hecho verificado con `relaciones: [{de, a, rel}]`. Los alegatos van punteados, con el chip «Según la acusación» y voz atribuida.
+
+**Más señales en pantalla.**
+- **Documento:** la hoja entra deslizándose y al final cae el sello con la fecha y la fuente (efectos `papel` y `sello`).
+- **Subrayado:** marca el año o la cifra del titular cuando la voz lo dice (`marcador`).
+- **Pantalla dividida:** `dividida: [foto_a, foto_b]`, dos personas frente a frente.
+- **Mini-mapa:** aparece si la escena tiene departamento y foto.
+- **Transiciones con dirección:** empuje a la izquierda cuando el año avanza y a la derecha cuando retrocede; whip en un «pero», como máximo uno cada 4 escenas.
+
+| Gate | Qué pide |
+|---|---|
+| H21 | El retrato de cada persona tiene evidencia (pie, categoría o descripción) que dice su apellido. |
+| H22 | Toda persona que la voz nombra tiene retrato. |
+| H23 | Escena `red`: 3–8 nodos, ≤ 3 niveles, 1–2 en el nivel 0 y nunca una fila de uno por nivel. Cada arista con un hecho publicable que registra esa relación. Los alegatos van con `atribuida: true` y la voz atribuye. Cada nodo suena en la voz y en orden. Una escena `red` por video. |
+
 ## Reglas de verdad
 
 - Cuatro estados. Solo se cuentan hechos `confirmado` (dos fuentes de grupos distintos: un documento oficial, la
@@ -185,6 +242,12 @@ Topes de voz: foto 40–280, cita 30–280, tarjeta/mapa/ranking/tiempo/explica 
 | H17 hilos | `narracion --check` · `guion --check` | cada `encuadre.hilos[].id` está en `guion.hilos` con `escena` (≥ 3, cuyo `paga` lo incluye) o con `sin_respuesta` (una raíz de 5 letras en la narración del acto 3 o en el cierre) |
 | H18 primera mención | `narracion --check` · `guion --check` | cada personaje del encuadre (no el protagonista) lleva ≥ 1 raíz de su `presentacion` en la voz de su primera mención o en la escena anterior |
 | H19 «según» | `narracion --check` · `guion --check` | ≤ 4 «según» por video, ≤ 2 por acto, nunca en dos escenas seguidas, nunca la misma fuente dos veces en voz |
+| TM1 toma | `guion --check` | la toma existe en `historia.json → tomas`; origen medio, oficial o empresa; crédito «Video: …»; sus hechos son publicables y al menos uno es de la escena (la toma tiene que ver con lo que se narra) |
+| TM2 derechos y ritmo | `guion --check` · `toma` | sin audio ≤ 6 s y la voz encima ≤ su duración / 0.7; con audio ≤ 10 s; todas ≤ 25 % de la duración objetivo; ≤ 2 con audio; cada toma una vez; nunca dos con audio seguidas |
+| TM3 toma con audio | `guion --check` · `toma` | cita ≥ 4 palabras que casa ≥ 80 % con la transcripción del tramo (o `ambiente`); la voz de entrada nombra a quien habla (un personaje del encuadre o el `--retrato-de` del video) |
+| TM4 fecha de la toma | `guion --check` | el chip lleva el año de la toma; si el material es más viejo que el hecho, «Video de archivo»; el año de la toma vale en H4 |
+| TM5 secuencia | `guion --check` | una toma con audio cierra su secuencia de voz (las secuencias por defecto se cortan tras ella) |
+| TM6 archivos | `tiempos` | los cuadros (`tomas/<id>/00001.jpg…`) y el audio (`tomas/<id>.wav`, −18 LUFS) existen |
 | H20 secuencias | `guion --check` | `secuencias` de 2–5 escenas consecutivas, disjuntas, sin la escena 1 ni el cierre, del mismo acto, giro o rótulo solo al inicio; `voz_continua` exige `secuencias`; prompt de cada secuencia ≤ 1,200 caracteres; AVISO si una escena queda fuera de toda secuencia entre dos del mismo acto |
 
 Además corren los de `/video`: V1–V5 y V9 (sin «la escena 2 es T1»; en historia tampoco exige que la voz empiece con

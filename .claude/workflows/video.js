@@ -25,7 +25,7 @@ export const meta = {
 const DURACIONES = ['corto', 'medio', 'largo', 'prueba']
 const TIPOS = ['gancho', 'tarjeta', 'golpe', 'definicion', 'adivina', 'mapa', 'ranking', 'escala', 'tiempo', 'explica']
 const FAMILIAS = ['contraste', 'paradoja', 'lugar', 'escala', 'tu', 'pregunta', 'ranking', 'resultado']
-const VISUALES = ['cifra', 'llenado', 'pareja', 'figuras', 'lugar']
+const VISUALES = ['cifra', 'llenado', 'pareja', 'figuras', 'lugar', 'foto']
 const MECANISMOS_EXPLICA = ['cadena', 'ciclo', 'balance', 'onda', 'embudo', 'proporcion', 'umbral', 'cronologia', 'exponencial']
 const CIERRE_TIPOS = ['remate', 'pregunta']
 const CANDIDATOS = 5, CIERRES_N = 5, GANCHO_USUARIO = 'gu'

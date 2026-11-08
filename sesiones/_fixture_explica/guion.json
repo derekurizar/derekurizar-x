@@ -3,7 +3,7 @@
  "narracion": [
   {
    "acto": 1,
-   "texto": "Imagina: Ana y Luis guardan los mismos 1,000 quetzales. Ana empezó diez años antes y terminó con más del doble. Ana no ahorró más: solo empezó antes. El mismo motor también puede jugar en tu contra. Casi todos hacemos esta cuenta: 100 al año por 30 años, 3,000; con los 1,000 del inicio, 4,000. Pero le falta algo. Pero en 30 años al 10 %, ¿cuánto hay? ¿4,000, 10,000 o {17,449:m}? Pausa y piénsalo. Son {17,449:m}."
+   "texto": "Imagina: Ana y Luis guardan los mismos 1,000 quetzales. Ana termina con el doble. Ana no ahorró más: solo empezó antes. El mismo motor también puede jugar en tu contra. Casi todos hacemos esta cuenta: 100 al año por 30 años, 3,000; con los 1,000 del inicio, 4,000. Pero le falta algo. Pero en 30 años al 10 %, ¿cuánto hay? ¿4,000, 10,000 o {17,449:m}? Pausa y piénsalo. Son {17,449:m}."
   },
   {
    "acto": 2,
@@ -35,9 +35,9 @@
      "etiqueta": "Ana"
     }
    },
-   "pantalla": "Q45,259 vs Q17,449",
+   "pantalla": "Ana Q45,259 vs Q17,449",
    "linea": "Los mismos Q1,000, diez años antes",
-   "texto": "Imagina: Ana y Luis guardan los mismos 1,000 quetzales. Ana empezó diez años antes y terminó con más del doble.",
+   "texto": "Imagina: Ana y Luis guardan los mismos 1,000 quetzales. Ana termina con el doble.",
    "verbo": "guardan",
    "tipo": "gancho"
   },

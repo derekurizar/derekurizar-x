@@ -1,0 +1,514 @@
+{
+ "version": 2,
+ "semana": "2026-W45",
+ "desde": "2026-11-04",
+ "hasta": "2026-11-08",
+ "generado": "2026-11-03",
+ "espacios": [
+  {
+   "id": "2026-11-04-A",
+   "fecha": "2026-11-04",
+   "dia": "miércoles",
+   "slot": "A",
+   "hora": "09:00",
+   "formato": "historia",
+   "pieza": {
+    "flujo": "historia",
+    "id": "2026-11-03-el-fiambre-de-donde-viene-el-plato-del-dia-de-todos-los-sant",
+    "ruta": "historias/2026-11-03-el-fiambre-de-donde-viene-el-plato-del-dia-de-todos-los-sant"
+   },
+   "tema": "El fiambre: de dónde viene el plato del Día de Todos los Santos",
+   "comando": "/historia El fiambre: de dónde viene el plato del Día de Todos los Santos",
+   "producir_el": "2026-11-04",
+   "minutos": 45,
+   "creditos": 2200,
+   "plataformas": [
+    "tiktok",
+    "instagram",
+    "facebook",
+    "youtube"
+   ],
+   "estado": "producido",
+   "avisos": [
+    "va tarde: producir HOY (2026-11-04)"
+   ],
+   "publicado": {},
+   "facebook": {
+    "estilo": "historia",
+    "texto": null
+   },
+   "opciones": [
+    {
+     "tema": "El fiambre: de dónde viene el plato del Día de Todos los Santos",
+     "por_que": "lo elegiste tú; todavía es la semana del 1 de noviembre",
+     "formato": "historia"
+    },
+    {
+     "tema": "Los barriletes gigantes de Sumpango y Santiago Sacatepéquez",
+     "por_que": "acaban de volar el 1 de noviembre: imagen reconocible y fresca",
+     "formato": "historia"
+    },
+    {
+     "tema": "La Vuelta Ciclística a Guatemala",
+     "por_que": "terminó el 1 de noviembre en la capital; una tradición de décadas con sus héroes",
+     "formato": "historia"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-04-C",
+   "fecha": "2026-11-04",
+   "dia": "miércoles",
+   "slot": "C",
+   "hora": "13:00",
+   "formato": "carrusel",
+   "pieza": {
+    "flujo": "carrusel",
+    "id": "carrusel-canasta-basica-salario-minimo-2019-2026",
+    "ruta": "hilos/2026-10-25-canasta-basica-salario-minimo-2019-2026/carrusel"
+   },
+   "tema": "¿Cuántos salarios mínimos cuesta la canasta básica? De 2019 a 2026",
+   "comando": null,
+   "producir_el": null,
+   "minutos": 0,
+   "creditos": 0,
+   "plataformas": [
+    "instagram",
+    "facebook",
+    "tiktok"
+   ],
+   "estado": "producido",
+   "avisos": [],
+   "publicado": {}
+  },
+  {
+   "id": "2026-11-04-B",
+   "fecha": "2026-11-04",
+   "dia": "miércoles",
+   "slot": "B",
+   "hora": "19:30",
+   "formato": "sabias",
+   "pieza": null,
+   "tema": "Las remesas de julio de 2026 fueron el mes más alto de la historia del Banguat",
+   "comando": "/sabias Las remesas de julio de 2026 fueron el mes más alto de la historia del Banguat",
+   "producir_el": "2026-11-04",
+   "minutos": 25,
+   "creditos": 400,
+   "plataformas": [
+    "tiktok",
+    "instagram",
+    "facebook",
+    "youtube"
+   ],
+   "estado": "tema",
+   "avisos": [],
+   "publicado": {},
+   "facebook": {
+    "estilo": "historia",
+    "texto": null
+   },
+   "opciones": [
+    {
+     "tema": "Las remesas de julio de 2026 fueron el mes más alto de la historia del Banguat",
+     "por_que": "récord de la serie mensual 2002–2026 (US$2,468.6 millones); dato oficial y reciente",
+     "formato": "sabias"
+    },
+    {
+     "tema": "Las gasolinas bajaron hasta Q3.82 por galón esta semana",
+     "por_que": "precios al 2 de noviembre: toca el bolsillo de todos",
+     "formato": "sabias"
+    },
+    {
+     "tema": "El primer frente frío baja el Altiplano a 2 grados esta semana",
+     "por_que": "pronóstico del INSIVUMEH del 2 al 6 de noviembre",
+     "formato": "sabias"
+    }
+   ],
+   "tema_auto": true
+  },
+  {
+   "id": "2026-11-05-A",
+   "fecha": "2026-11-05",
+   "dia": "jueves",
+   "slot": "A",
+   "hora": "09:00",
+   "formato": "historia",
+   "pieza": {
+    "flujo": "historia",
+    "id": "2026-11-04-ron-zacapa-como-un-ron-guatemalteco-gano-el-mundo",
+    "ruta": "historias/2026-11-04-ron-zacapa-como-un-ron-guatemalteco-gano-el-mundo"
+   },
+   "tema": "Ron Zacapa: cómo un ron guatemalteco ganó el mundo",
+   "comando": "/historia Ron Zacapa: cómo un ron guatemalteco ganó el mundo",
+   "producir_el": "2026-11-04",
+   "minutos": 45,
+   "creditos": 2200,
+   "plataformas": [
+    "tiktok",
+    "instagram",
+    "facebook",
+    "youtube"
+   ],
+   "estado": "producido",
+   "avisos": [],
+   "publicado": {},
+   "facebook": {
+    "estilo": "dato",
+    "texto": null
+   },
+   "opciones": [
+    {
+     "tema": "Ron Zacapa: cómo un ron guatemalteco ganó el mundo",
+     "por_que": "lo elegiste tú; marca que la gente reconoce",
+     "formato": "historia"
+    },
+    {
+     "tema": "Tikal: cómo la ciudad maya salió de la selva",
+     "por_que": "Guatemala preside el Protocolo de Tikal esta semana (3–4 de noviembre)",
+     "formato": "historia"
+    },
+    {
+     "tema": "El zoológico La Aurora: la historia del zoo de la capital",
+     "por_que": "un lugar que todo chapín recuerda",
+     "formato": "historia"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-05-B",
+   "fecha": "2026-11-05",
+   "dia": "jueves",
+   "slot": "B",
+   "hora": "19:30",
+   "formato": "mito",
+   "pieza": null,
+   "tema": "El frío del Altiplano es lo que da la gripe",
+   "comando": "/mito El frío del Altiplano es lo que da la gripe",
+   "producir_el": "2026-11-04",
+   "minutos": 30,
+   "creditos": 1000,
+   "plataformas": [
+    "tiktok",
+    "instagram",
+    "facebook",
+    "youtube"
+   ],
+   "estado": "tema",
+   "avisos": [],
+   "publicado": {},
+   "facebook": {
+    "estilo": "pregunta",
+    "texto": null
+   },
+   "opciones": [
+    {
+     "tema": "Las remesas sostienen la economía de Guatemala",
+     "por_que": "julio fue récord de remesas; la creencia circula siempre (veredicto probable: A MEDIAS)",
+     "formato": "mito"
+    },
+    {
+     "tema": "El frío del Altiplano es lo que da la gripe",
+     "por_que": "llega el primer frente frío; creencia de salud muy extendida",
+     "formato": "mito"
+    },
+    {
+     "tema": "Guatemala es de los países que más impuestos cobra en Centroamérica",
+     "por_que": "el presupuesto 2027 está en el Congreso; la carga tributaria lo decide",
+     "formato": "mito"
+    }
+   ],
+   "tema_auto": false
+  },
+  {
+   "id": "2026-11-06-A",
+   "fecha": "2026-11-06",
+   "dia": "viernes",
+   "slot": "A",
+   "hora": "09:00",
+   "formato": "historia",
+   "pieza": null,
+   "tema": "Tikal: cómo la ciudad maya salió de la selva",
+   "comando": "/historia Tikal: cómo la ciudad maya salió de la selva",
+   "producir_el": "2026-11-05",
+   "minutos": 45,
+   "creditos": 2200,
+   "plataformas": [
+    "tiktok",
+    "instagram",
+    "facebook",
+    "youtube"
+   ],
+   "estado": "tema",
+   "avisos": [],
+   "publicado": {},
+   "facebook": {
+    "estilo": "dato",
+    "texto": null
+   },
+   "opciones": [
+    {
+     "tema": "Tikal: cómo la ciudad maya salió de la selva",
+     "por_que": "Guatemala preside el Protocolo de Tikal esta semana; sujeto que todos reconocen",
+     "formato": "historia"
+    },
+    {
+     "tema": "El Mercado Central: del terremoto de 1976 a la plaza bajo tierra",
+     "por_que": "un lugar reconocible de la capital con un giro histórico",
+     "formato": "historia"
+    },
+    {
+     "tema": "Los barriletes gigantes de Sumpango",
+     "por_que": "todavía en la memoria del 1 de noviembre",
+     "formato": "historia"
+    }
+   ],
+   "tema_auto": true
+  },
+  {
+   "id": "2026-11-06-B",
+   "fecha": "2026-11-06",
+   "dia": "viernes",
+   "slot": "B",
+   "hora": "19:30",
+   "formato": "departamento",
+   "pieza": null,
+   "tema": "Guatemala frente al país",
+   "comando": "/departamento Guatemala",
+   "producir_el": "2026-11-05",
+   "minutos": 60,
+   "creditos": 1000,
+   "plataformas": [
+    "tiktok",
+    "instagram",
+    "facebook",
+    "youtube"
+   ],
+   "estado": "tema",
+   "avisos": [
+    "el canon de /departamento sigue en propuesta: apruébalo (referencias/departamentos.json) antes de producir"
+   ],
+   "publicado": {},
+   "facebook": {
+    "estilo": "lista",
+    "texto": null
+   },
+   "opciones": [
+    {
+     "tema": "Guatemala frente al país",
+     "por_que": "la serie de los 22 (necesita el canon aprobado)",
+     "formato": "departamento"
+    },
+    {
+     "tema": "El presupuesto 2027 propone Q192,045 millones, 13.8 % más que 2026",
+     "por_que": "está en el Congreso ahora; cifra oficial del Minfin",
+     "formato": "sabias"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-07-A",
+   "fecha": "2026-11-07",
+   "dia": "sábado",
+   "slot": "A",
+   "hora": "09:00",
+   "formato": "historia",
+   "pieza": null,
+   "tema": "El zoológico La Aurora: la historia del zoo de la capital",
+   "comando": "/historia El zoológico La Aurora: la historia del zoo de la capital",
+   "producir_el": "2026-11-06",
+   "minutos": 45,
+   "creditos": 2200,
+   "plataformas": [
+    "tiktok",
+    "instagram",
+    "facebook",
+    "youtube"
+   ],
+   "estado": "tema",
+   "avisos": [],
+   "publicado": {},
+   "facebook": {
+    "estilo": "historia",
+    "texto": null
+   },
+   "opciones": [
+    {
+     "tema": "El zoológico La Aurora: la historia del zoo de la capital",
+     "por_que": "lugar querido y reconocible; fin de semana familiar",
+     "formato": "historia"
+    },
+    {
+     "tema": "Los barriletes gigantes de Sumpango",
+     "por_que": "tradición del 1 de noviembre, imagen fuerte para el gancho",
+     "formato": "historia"
+    },
+    {
+     "tema": "Chocolate de Guatemala: por qué dicen que nació aquí",
+     "por_que": "cacao maya y marcas de hoy; sujeto que se busca",
+     "formato": "historia"
+    }
+   ],
+   "tema_auto": true
+  },
+  {
+   "id": "2026-11-07-B",
+   "fecha": "2026-11-07",
+   "dia": "sábado",
+   "slot": "B",
+   "hora": "19:30",
+   "formato": "mito",
+   "pieza": null,
+   "tema": "La gasolina en Guatemala es la más cara de Centroamérica",
+   "comando": "/mito La gasolina en Guatemala es la más cara de Centroamérica",
+   "producir_el": "2026-11-06",
+   "minutos": 30,
+   "creditos": 1000,
+   "plataformas": [
+    "tiktok",
+    "instagram",
+    "facebook",
+    "youtube"
+   ],
+   "estado": "tema",
+   "avisos": [],
+   "publicado": {},
+   "facebook": {
+    "estilo": "pregunta",
+    "texto": null
+   },
+   "opciones": [
+    {
+     "tema": "La gasolina en Guatemala es la más cara de Centroamérica",
+     "por_que": "los precios bajaron esta semana; la comparación regional la decide",
+     "formato": "mito"
+    },
+    {
+     "tema": "El 13 es de mala suerte",
+     "por_que": "creencia que circula; en el mundo maya es el número más alto (sin cifra: solo si hay datos)",
+     "formato": "mito"
+    },
+    {
+     "tema": "En noviembre siempre hace más frío que en diciembre",
+     "por_que": "frente frío de esta semana; los registros del INSIVUMEH lo deciden",
+     "formato": "mito"
+    }
+   ],
+   "tema_auto": true
+  },
+  {
+   "id": "2026-11-08-A",
+   "fecha": "2026-11-08",
+   "dia": "domingo",
+   "slot": "A",
+   "hora": "09:00",
+   "formato": "historia",
+   "pieza": null,
+   "tema": "Cementos Progreso: la empresa que construyó Guatemala",
+   "comando": "/historia Cementos Progreso: la empresa que construyó Guatemala",
+   "producir_el": "2026-11-07",
+   "minutos": 45,
+   "creditos": 2200,
+   "plataformas": [
+    "tiktok",
+    "instagram",
+    "facebook",
+    "youtube"
+   ],
+   "estado": "tema",
+   "avisos": [],
+   "publicado": {},
+   "facebook": {
+    "estilo": "historia",
+    "texto": null
+   },
+   "opciones": [
+    {
+     "tema": "Cementos Progreso: la empresa que construyó Guatemala",
+     "por_que": "lo elegiste tú; empresa reconocible con historia y polémica",
+     "formato": "historia"
+    },
+    {
+     "tema": "La Vuelta Ciclística a Guatemala",
+     "por_que": "tradición deportiva recién terminada",
+     "formato": "historia"
+    },
+    {
+     "tema": "El Mercado Central: del terremoto de 1976 a la plaza bajo tierra",
+     "por_que": "lugar reconocible de la capital",
+     "formato": "historia"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-08-B",
+   "fecha": "2026-11-08",
+   "dia": "domingo",
+   "slot": "B",
+   "hora": "19:30",
+   "formato": "sabias",
+   "pieza": null,
+   "tema": "INE publica el IPC y la inflación del mes anterior",
+   "comando": "/fecha ipc-ine-mensual (→ /dato y /sabias)",
+   "producir_el": "2026-11-08",
+   "minutos": 25,
+   "creditos": 400,
+   "plataformas": [
+    "tiktok",
+    "instagram",
+    "facebook",
+    "youtube"
+   ],
+   "estado": "tema",
+   "avisos": [],
+   "publicado": {},
+   "calendario": "ipc-ine-mensual",
+   "facebook": {
+    "estilo": "pregunta",
+    "texto": null
+   },
+   "opciones": [
+    {
+     "tema": "INE publica el IPC: la inflación de octubre en Guatemala",
+     "por_que": "dato oficial del calendario (días 7–10)",
+     "formato": "sabias"
+    },
+    {
+     "tema": "Las gasolinas bajaron hasta Q3.82 por galón",
+     "por_que": "si el IPC no sale a tiempo",
+     "formato": "sabias"
+    }
+   ]
+  }
+ ],
+ "omitidas": [
+  {
+   "id": "sabias-lago-atitlan-nivel",
+   "motivo": "el usuario no la quiere publicar",
+   "fecha": "2026-11-03"
+  },
+  {
+   "id": "2026-11-01-la-erupcion-del-volcan-de-fuego-de-2018",
+   "motivo": "se parece a volcan-de-fuego-hora-a-hora, ya publicada",
+   "fecha": "2026-11-03"
+  }
+ ],
+ "pospuestas": [
+  {
+   "id": "remesas-banguat-mensual",
+   "fecha": "2026-11-07",
+   "titulo": "Banguat publica las remesas del mes anterior"
+  }
+ ],
+ "incompletas": [
+  {
+   "flujo": "video",
+   "id": "2026-10-19-crimen-organizado-respuesta-estado",
+   "ruta": "hilos/2026-10-19-crimen-organizado-respuesta-estado/video",
+   "faltan": [
+    "instagram",
+    "facebook",
+    "youtube"
+   ]
+  }
+ ]
+}

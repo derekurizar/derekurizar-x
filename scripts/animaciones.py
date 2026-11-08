@@ -7,7 +7,8 @@ referencias/roles/video-animador.md); catalogo.json lo escribe SOLO este script.
 Uso:
   python3 scripts/animaciones.py --lista                             las animaciones del catálogo, por mecanismo
   python3 scripts/animaciones.py --check ID [--paleta P] [--salida D] lint + node --check + meta + grabación doble a
-                                                                     10 fps (iguales; ≥ 50 dB) + 4:5 + quietud V12 +
+                                                                     10 fps (iguales; ≥ 50 dB) + 4:5 + A1 (quieta entre
+                                                                     pasos) + A2 (ningún paso antes de la voz) + V13 +
                                                                      hojas de contacto (una por paso) en D
   python3 scripts/animaciones.py --registrar ID [--video SLUG]       lo agrega al catálogo (o suma un uso)
   python3 scripts/animaciones.py --asignar TRABAJO --escena N --id ID   pone `animacion: ID` en la escena explica N de
@@ -139,8 +140,16 @@ def fallas_meta(meta):
 
 
 # ---------- la prueba de verdad: grabarla ----------
+# A1 (2026-11-07, «mover solo por mover estuvo malísimo»): la animación se mueve cuando entra un paso y luego se queda
+# quieta hasta el siguiente. Nada de adorno continuo (partículas, latidos, punteados que corren, respiración del activo).
+# Se mide en el lienzo (sin barra de progreso ni subtítulos): desde ASENTAR_S después de cada paso hasta el siguiente.
+ASENTAR_S, ESPERA_S, ADORNO_UMBRAL = 1.6, 3.2, 0.06
+LIENZO_916 = (40, 450, 1000, 900)   # x, y, ancho, alto del #lienzo de video/explica.html en 9:16
+
+
 def escena_de_prueba(aid, meta, paleta):
-    """escenas.json mínimo con una sola escena explica: voz falsa que dice cada paso del ejemplo (0.32 s por palabra)."""
+    """escenas.json mínimo con una sola escena explica: voz falsa que dice cada paso del ejemplo (0.32 s por palabra)
+    y deja ESPERA_S de silencio después de cada uno (ahí la animación tiene que quedarse quieta: A1)."""
     import video as VID
     ej = meta["ejemplo"]
     t, pal, pasos = 0.6, [], []
@@ -149,21 +158,26 @@ def escena_de_prueba(aid, meta, paleta):
         for w in (("Luego, " if k else "Primero, ") + paso + ".").split():
             pal.append({"text": w, "start": round(t, 3), "end": round(t + 0.3, 3)})
             t += 0.32
-        t += 0.6
+        t += ESPERA_S
     fin = pal[-1]["end"]
-    dur = round(fin + 1.4, 3)
+    dur = round(fin + ESPERA_S, 3)
     S = {"n": 1, "tipo": "explica", "tuit": None, "plantilla": "explica", "enlace": None, "icono": None, "dur": dur,
          "fin_voz": fin, "palabras": pal, "arriba": [{"text": w, "start": round(0.3 + 0.12 * k, 3)} for k, w in enumerate(ej["titulo"].split())],
          "animacion": aid, "P": {"titulo": ej["titulo"], "pasos": ej["pasos"]},
-         "T": {"ini": 0.6, "pasos": pasos, "fin": fin, "dur": dur}, "transicion": None, "eventos": [], "sfx": []}
+         "T": {"ini": 0.6, "pasos": pasos, "fin": fin, "dur": dur}, "transicion": None, "eventos": [], "sfx": [], "quieta": True}
     return {"version": 2, "colores": VID.colores(paleta), "contexto_superior": "Animaciones · prueba", "redes": [], "escenas": [S]}
+
+
+GATES_GRABAR = []   # las líneas V13/A2 de la última grabación (los clips quedan escritos; la prueba sigue)
 
 
 def grabar(d, formato):
     args = ["node", os.path.join(RAIZ, "scripts", "video_grabar.js"), "--dir", d, "--hilo", d, "--fps", "10", "--paralelo", "1"]
     r = subprocess.run(args + (["--formato", "4:5"] if formato == "4:5" else []), capture_output=True, text=True)
-    if r.returncode == 3:   # V13: algo de la animación sale de la zona segura (lienzo de explica.html, V.zona)
-        return "V13 zona segura: " + " | ".join(ln.split(": ", 1)[-1] for ln in r.stderr.splitlines() if ln.startswith("FALLA V13"))[:600]
+    if r.returncode == 3:   # V13 (algo sale de la zona segura) o A2 (un paso se ve antes de que la voz lo diga)
+        GATES_GRABAR[:] = [("%s: " % formato) + ln[len("FALLA "):] for ln in r.stderr.splitlines() if ln.startswith("FALLA ")]
+        return None
+    GATES_GRABAR.clear()
     return None if r.returncode == 0 else (r.stderr.strip() or r.stdout.strip())[-600:]
 
 
@@ -203,6 +217,39 @@ def contacto(clip, tiempos, out, alto):
     shutil.rmtree(tmp, ignore_errors=True)
 
 
+def adorno(clip, S):
+    """A1: [falla] por cada tramo entre pasos en que el lienzo se sigue moviendo después de ASENTAR_S."""
+    import video as VID
+    fps = VID.QUIETUD_FPS
+    vals = VID.movimiento_de(clip, fps, recorte=LIENZO_916)
+    ps = S["T"]["pasos"]
+    out = []
+    for k, p in enumerate(ps):
+        a, b = p["start"] + ASENTAR_S, (ps[k + 1]["start"] if k + 1 < len(ps) else S["dur"]) - 0.4   # un cuadro de 0.25 s antes del paso siguiente (y de su subtítulo)
+        mov = [(j / fps, v) for j, v in enumerate(vals) if a <= j / fps <= b and v >= ADORNO_UMBRAL]
+        if mov:
+            out.append("A1 adorno: el lienzo se sigue moviendo %.1f s después del paso «%s» (desde %.1f s, diferencia %.2f): "
+                       "quita el movimiento continuo (partículas, latidos, punteados que corren, respiración); solo se mueve "
+                       "lo que entra cuando la voz lo dice" % (mov[0][0] - p["start"], p["texto"], mov[0][0], max(v for _, v in mov)))
+    return out
+
+
+def marcar_pendiente(aid, fallas_a):
+    """Una animación del catálogo que no pasa A1/A2 queda `pendiente` (video.py no deja usarla hasta que se rehaga y
+    --check pase); al pasar, se le quita la marca."""
+    cat = catalogo()
+    ent = next((x for x in cat["animaciones"] if x["id"] == aid), None)
+    if not ent:
+        return
+    antes = ent.get("pendiente")
+    if fallas_a:
+        ent["pendiente"] = "no pasa A1/A2 (2026-11-07: adorno continuo o pasos visibles antes de la voz): rehazla y corre --check"
+    else:
+        ent.pop("pendiente", None)
+    if ent.get("pendiente") != antes:
+        escribir(CATALOGO, cat)
+
+
 def cmd_check(a):
     import video as VID
     aid = a.check
@@ -230,6 +277,7 @@ def cmd_check(a):
     if err:
         print("FALLA %s: la página no grabó: %s" % (aid, err))
         return 1
+    fallas += GATES_GRABAR
     md5a = framemd5(clip)
     shutil.move(clip, os.path.join(sal, "primera.mp4"))
     err = grabar(sal, "9:16")
@@ -243,16 +291,17 @@ def cmd_check(a):
                           "se acumula entre cuadros?)" % (cuadro, psnr, PSNR_MIN))
     os.remove(os.path.join(sal, "primera.mp4"))
     err = grabar(sal, "4:5")
+    fallas += [x for x in GATES_GRABAR if not x.startswith("4:5: A2")]   # A2 ya se midió en 9:16
     if err:
         fallas.append("el formato 4:5 no grabó: %s" % err)
-    tramos = VID.ventanas_quietas(VID.movimiento_de(clip))
-    fallas += ["V12 quietud: %.1f s sin movimiento desde %.1f s (añade movimiento continuo)" % (d, t0) for t0, d in tramos]
+    fallas += adorno(clip, S)
     tiempos = [min(p["start"] + 0.6, S["dur"] - 0.3) for p in S["T"]["pasos"]] + [S["dur"] - 0.3]
     contacto(clip, tiempos, os.path.join(sal, "contacto.png"), 640)
     if os.path.exists(os.path.join(sal, "clips_4x5", "e1.mp4")):
         contacto(os.path.join(sal, "clips_4x5", "e1.mp4"), tiempos, os.path.join(sal, "contacto_4x5.png"), 450)
     for x in fallas:
         print("FALLA %s: %s" % (aid, x))
+    marcar_pendiente(aid, [x for x in fallas if " A1 " in " " + x or " A2 " in x or x.startswith("A1")])
     print("%s %s · %d pasos · %.1f s · paleta %s → %s/contacto.png y contacto_4x5.png (un cuadro por paso y el final)"
           % ("ok   " if not fallas else "MAL  ", aid, len(S["T"]["pasos"]), S["dur"], paleta, os.path.relpath(sal, RAIZ)))
     return 1 if fallas else 0
@@ -359,8 +408,9 @@ def main():
         for m, que in VID.MECANISMOS_EXPLICA.items():
             print("%s — %s" % (m, que))
             for x in [x for x in cat if x.get("mecanismo") == m] or [None]:
-                print("  %s" % ("(ninguna aún: el animador escribe la primera)" if x is None else "%-22s %d–%d pasos · %s · usos: %s" % (
-                    x["id"], *x.get("pasos", [0, 0]), x.get("descripcion", ""), ", ".join(x.get("usos") or []) or "—")))
+                print("  %s" % ("(ninguna aún: el animador escribe la primera)" if x is None else "%-22s %d–%d pasos · %s · usos: %s%s" % (
+                    x["id"], *x.get("pasos", [0, 0]), x.get("descripcion", ""), ", ".join(x.get("usos") or []) or "—",
+                    " · PENDIENTE (no pasa A1/A2)" if x.get("pendiente") else "")))
         for x in [x for x in cat if x.get("mecanismo") not in VID.MECANISMOS_EXPLICA]:
             print("SIN MECANISMO %s (corre --registrar %s)" % (x["id"], x["id"]))
         return 0

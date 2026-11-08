@@ -1,0 +1,290 @@
+{
+ "contexto_superior": "Interés compuesto · explicado",
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "Imagina: Ana y Luis guardan los mismos 1,000 quetzales. Ana termina con el doble. Ana no ahorró más: solo empezó antes. El mismo motor también puede jugar en tu contra. Casi todos hacemos esta cuenta: 100 al año por 30 años, 3,000; con los 1,000 del inicio, 4,000. Pero le falta algo. Pero en 30 años al 10 %, ¿cuánto hay? ¿4,000, 10,000 o {17,449:m}? Pausa y piénsalo. Son {17,449:m}."
+  },
+  {
+   "acto": 2,
+   "texto": "Hagamos la cuenta de Ana año por año. El primero gana 100 y junta 1,100. El segundo ya no gana 100: gana 110, porque los intereses también ganan. Para entenderlo, eso tiene nombre: interés compuesto. Ganas interés sobre el interés que ya ganaste. Mira: el capital no cambia y lo que se suma también gana. Por eso, al final manda el interés. Hay una cuenta que nadie te hace en el banco. Pero el motor no elige de qué lado estás: con una deuda, también corre."
+  },
+  {
+   "acto": 3,
+   "texto": "En Guatemala, un depósito a plazo pagaba 5.3 % al año en septiembre de 2026; los precios subían 1.7 % y una tarjeta cobraba 36 %. Por eso sirve la regla del 72: 72 entre la tasa da los años para duplicar. Un ahorro tarda 13.6 años; una deuda de tarjeta, solo 2. Empezar antes pesa más: Luis guardó lo mismo y nunca alcanzó a Ana. Así que el tiempo pesa más que el monto: ese es el interés compuesto. ¿Y si el dinero que debes crece igual, pero en tu contra?"
+  }
+ ],
+ "promesa": {
+  "texto": "El mismo motor también puede jugar en tu contra.",
+  "en": 2,
+  "pago": 8,
+  "revela": 1,
+  "forma": "contradiccion"
+ },
+ "escenas": [
+  {
+   "familia": "contraste",
+   "visual": "pareja",
+   "visual_datos": {
+    "a": {
+     "valor": "ej-c14",
+     "etiqueta": "Luis"
+    },
+    "b": {
+     "valor": "ej-c01",
+     "etiqueta": "Ana"
+    }
+   },
+   "pantalla": "Ana Q45,259 vs Q17,449",
+   "linea": "Los mismos Q1,000, diez años antes",
+   "texto": "Imagina: Ana y Luis guardan los mismos 1,000 quetzales. Ana termina con el doble.",
+   "verbo": "guardan",
+   "tipo": "gancho"
+  },
+  {
+   "tipo": "golpe",
+   "acto": 1,
+   "pantalla": "No ahorró más",
+   "linea": "Solo empezó antes",
+   "verbo": "ahorró",
+   "texto": "Ana no ahorró más: solo empezó antes. El mismo motor también puede jugar en tu contra."
+  },
+  {
+   "tipo": "cuenta",
+   "acto": 1,
+   "intuicion": true,
+   "golpe": "La cuenta de siempre",
+   "renglones": [
+    {
+     "nota": "Cada año",
+     "a": "1,000",
+     "op": "×",
+     "b": "10 %",
+     "r": "100"
+    },
+    {
+     "nota": "30 años",
+     "a": "100",
+     "op": "×",
+     "b": "30",
+     "r": "3,000"
+    },
+    {
+     "nota": "Total",
+     "a": "1,000",
+     "op": "+",
+     "b": "3,000",
+     "r": "4,000"
+    }
+   ],
+   "texto": "Casi todos hacemos esta cuenta: 100 al año por 30 años, 3,000; con los 1,000 del inicio, 4,000. Pero le falta algo."
+  },
+  {
+   "tipo": "adivina",
+   "acto": 1,
+   "pregunta": "En 30 años al 10 %, ¿cuánto hay?",
+   "opciones": [
+    "Q4,000",
+    "Q10,000",
+    "Q17,449"
+   ],
+   "correcta": 2,
+   "texto": "Pero en 30 años al 10 %, ¿cuánto hay? ¿4,000, 10,000 o {17,449:m}? Pausa y piénsalo. Son {17,449:m}."
+  },
+  {
+   "tipo": "cuenta",
+   "acto": 2,
+   "corrige": true,
+   "acento": "interés sobre interés",
+   "golpe": "Año por año",
+   "rotulo": {
+    "etiqueta": "El motor",
+    "titulo": "Interés sobre interés"
+   },
+   "renglones": [
+    {
+     "nota": "Año 1",
+     "a": "1,000",
+     "op": "+",
+     "b": "100",
+     "r": "1,100"
+    },
+    {
+     "nota": "Año 2",
+     "a": "1,100",
+     "op": "+",
+     "b": "110",
+     "r": "1,210",
+     "resalta": "b",
+     "etiqueta": "10 de más"
+    },
+    {
+     "nota": "Año 3",
+     "a": "1,210",
+     "op": "+",
+     "b": "121",
+     "r": "1,331"
+    }
+   ],
+   "saldo": true,
+   "texto": "Hagamos la cuenta de Ana año por año. El primero gana 100 y junta 1,100. El segundo ya no gana 100: gana 110, porque los intereses también ganan."
+  },
+  {
+   "tipo": "definicion",
+   "acto": 2,
+   "termino": "Interés compuesto",
+   "definicion": "Ganar interés también sobre el interés que ya ganaste.",
+   "texto": "Para entenderlo, eso tiene nombre: interés compuesto. Ganas interés sobre el interés que ya ganaste."
+  },
+  {
+   "tipo": "explica",
+   "acto": 2,
+   "mecanismo": "exponencial",
+   "animacion": "bola-nieve",
+   "acento": "interés sobre interés",
+   "brief": "Columnas por año en tres capas: el capital igual, el interés del capital en escalera recta y el interés sobre lo ganado en acento, que engorda hasta mandar.",
+   "titulo": "Cómo crece solo",
+   "pasos": [
+    "El capital no cambia",
+    "El interés se suma",
+    "Lo sumado también gana",
+    "Al final manda el interés"
+   ],
+   "texto": "Mira: el capital no cambia y lo que se suma también gana. Por eso, al final manda el interés. Hay una cuenta que nadie te hace en el banco."
+  },
+  {
+   "tipo": "golpe",
+   "acto": 2,
+   "giro": true,
+   "enlace": "pero",
+   "pantalla": "Al revés también",
+   "linea": "El motor no elige lado",
+   "verbo": "elige",
+   "texto": "Pero el motor no elige de qué lado estás: con una deuda, también corre."
+  },
+  {
+   "tipo": "tarjeta",
+   "acto": 3,
+   "tuit": 2,
+   "golpe": "Lo que pagan y cobran",
+   "rotulo": {
+    "etiqueta": "En tu vida",
+    "titulo": "Tasas de Guatemala"
+   },
+   "grafico": {
+    "plantilla": "barras-h",
+    "kicker": "TASA ANUAL · SEPTIEMBRE DE 2026",
+    "titular": [
+     "La tarjeta cobra",
+     "casi siete veces más"
+    ],
+    "nota": "Promedios del sistema bancario en quetzales (maqueta).",
+    "fuente": "Banguat, INE y SIB (maqueta)",
+    "datos": {
+     "kicker": "TASA ANUAL · SEPTIEMBRE DE 2026",
+     "titular": [
+      "La tarjeta cobra",
+      "casi siete veces más"
+     ],
+     "nota": "Promedios del sistema bancario en quetzales (maqueta).",
+     "fuente": "Banguat, INE y SIB (maqueta)",
+     "handle": "@DerekUrizar",
+     "formato": {
+      "prefijo": "",
+      "sufijo": " %",
+      "decimales": 1,
+      "miles": true,
+      "escala": 1
+     },
+     "items": [
+      {
+       "nombre": "Tarjeta de crédito",
+       "valor": 36
+      },
+      {
+       "nombre": "Depósito a plazo",
+       "valor": 5.3
+      },
+      {
+       "nombre": "Inflación",
+       "valor": 1.7
+      }
+     ],
+     "destacar": 0,
+     "orden": "desc"
+    }
+   },
+   "texto": "En Guatemala, un depósito a plazo pagaba 5.3 % al año en septiembre de 2026; los precios subían 1.7 % y una tarjeta cobraba 36 %."
+  },
+  {
+   "tipo": "cuenta",
+   "acto": 3,
+   "acento": "deuda",
+   "golpe": "La regla del 72",
+   "fuente": "Banguat y SIB (maqueta)",
+   "renglones": [
+    {
+     "nota": "Ahorro",
+     "a": "72",
+     "op": "÷",
+     "b": "5.3",
+     "r": "13.6"
+    },
+    {
+     "nota": "Tarjeta",
+     "a": "72",
+     "op": "÷",
+     "b": "36",
+     "r": "2",
+     "resalta": "r",
+     "etiqueta": "años para duplicarse"
+    }
+   ],
+   "texto": "Por eso sirve la regla del 72: 72 entre la tasa da los años para duplicar. Un ahorro tarda 13.6 años; una deuda de tarjeta, solo 2."
+  },
+  {
+   "tipo": "golpe",
+   "acto": 3,
+   "pantalla": "Empezar antes",
+   "linea": "Luis nunca alcanzó a Ana",
+   "verbo": "pesa",
+   "texto": "Empezar antes pesa más: Luis guardó lo mismo y nunca alcanzó a Ana."
+  }
+ ],
+ "cierre": {
+  "rotulo": "Lo que te llevas",
+  "tipo": "pregunta",
+  "forma": "puente",
+  "resumen": [
+   "El interés gana sobre lo ya ganado",
+   "El tiempo pesa más que el monto"
+  ],
+  "texto": "Así que el tiempo pesa más que el monto: ese es el interés compuesto. ¿Y si el dinero que debes crece igual, pero en tu contra?",
+  "final": "¿Y si el dinero que debes crece igual, pero en tu contra?",
+  "invitacion": "Sígueme: en la segunda parte, la deuda."
+ },
+ "caption": {
+  "tiktok": "Serie · Parte 1 de 3: El interés que crece\nMismo dinero, otro final: así funciona el interés compuesto. #finanzas #Guatemala",
+  "instagram": "Serie · Parte 1 de 3: El interés que crece\nEl interés compuesto explicado con quetzales. #Guatemala #finanzaspersonales",
+  "facebook": "Serie · Parte 1 de 3: El interés que crece\n¿Por qué el dinero guardado crece cada vez más rápido? El interés compuesto, con quetzales.",
+  "shorts": "El interés que crece (1/3) #Shorts\nEl interés compuesto, explicado con quetzales. #Guatemala"
+ },
+ "bisagra": {
+  "texto": "Hay una cuenta que nadie te hace en el banco.",
+  "forma": "secreto",
+  "en": 7,
+  "pago": 8
+ },
+ "secuencias": [
+  [
+   2,
+   3,
+   4
+  ],
+  [
+   5,
+   6,
+   7
+  ]
+ ]
+}

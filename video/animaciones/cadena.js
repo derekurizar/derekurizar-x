@@ -1,7 +1,7 @@
 // Animación «cadena» de la escena explica (semilla de la biblioteca y ejemplo del contrato): causa → efecto en 2–6
 // pasos apilados. Al entrar la escena se ven los contornos tenues de todas las cajas; cada caja se llena cuando la voz
 // dice su paso (T.pasos[i].start) y la flecha que llega a ella se dibuja justo antes; por el asta de cada flecha ya
-// dibujada baja una gota que se apaga en la punta, y la caja activa respira. Estilo Noche: la caja activa es lo único en acento (texto en
+// dibujada baja una gota (una vez) que se apaga en la punta; entre pasos todo queda quieto. Estilo Noche: la caja activa es lo único en acento (texto en
 // --tinta-acento encima), las ya dichas quedan en crema atenuada. Todo es función de t (seek puro, sin azar ni reloj).
 //
 // Contrato (referencias/roles/video-animador.md): ANIM.registrar(id, { meta, pintar(lienzo, P, ctx), seek(t, T) })
@@ -61,9 +61,9 @@ ANIM.registrar('cadena', {
     ps.forEach((p, i) => { if (t >= p.start) activo = i; });
     this.cajas.forEach((c, i) => {
       const s = ps[i].start, entra = eo((t - s) / 0.45);
-      const respira = i === activo ? 1 + 0.015 * Math.sin(2 * Math.PI * (t - s) / 1.6) : 1;
+      const respira = 1;   // cámara quieta (2026-11-07): nada respira entre pasos (A1)
       // lo que falta, tenue; lo ya dicho, al 50 % (crema atenuada); la activa, llena en acento
-      const fantasma = 0.28 * eo((t - T.ini) / 0.5);
+      const fantasma = 0;   // ningún paso antes de que la voz lo diga (A2)
       c.el.style.opacity = Math.max(fantasma, entra * (i < activo ? 0.5 : 1)).toFixed(3);
       c.el.style.transform = `translateX(${((1 - entra) * -36).toFixed(1)}px) scale(${((0.97 + 0.03 * entra) * respira).toFixed(4)})`;
       const lleno = i === activo && entra > 0.5;
@@ -72,14 +72,14 @@ ANIM.registrar('cadena', {
       c.el.style.color = lleno ? 'var(--tinta-acento, var(--bg))' : 'var(--ink)';
     });
     this.flechas.forEach((f, k) => {
-      const s = ps[k + 1].start, d = clamp((t - (s - 0.4)) / 0.35);
+      const s = ps[k + 1].start, d = clamp((t - (s - 0.15)) / 0.35);
       f.linea.style.strokeDashoffset = (f.L * (1 - d)).toFixed(1);
-      f.linea.style.opacity = Math.max(0.28 * eo((t - T.ini) / 0.5), d).toFixed(3);
+      f.linea.style.opacity = d.toFixed(3);
       // la gota baja por el asta de la flecha ya dibujada (de a al arranque de la punta, b − 14) en ciclos de 1.25 s y
       // nace y se apaga con sin(πu): sin saltos al volver arriba. Antes de la flecha no existe (display:none: una gota
       // invisible que se mueve igual invalida su rectángulo y deja ruido de rasterizado)
-      const u = ((((t - s) * 0.8) % 1) + 1) % 1;
-      f.gota.style.display = d >= 1 ? '' : 'none';
+      const u = clamp((t - s) / 1.0);   // una sola gota al decirse el paso (A1)
+      f.gota.style.display = d >= 1 && u < 1 ? '' : 'none';
       if (d < 1) return;
       f.gota.setAttribute('cy', (f.a + (f.b - 14 - f.a) * u).toFixed(1));
       f.gota.style.opacity = (Math.sin(Math.PI * u) * 0.9).toFixed(3);

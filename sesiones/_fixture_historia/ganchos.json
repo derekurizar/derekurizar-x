@@ -11,7 +11,7 @@
    "pantalla": "Bajo una carpa",
    "linea": "La Espiga reabrió tras el terremoto",
    "verbo": "reabrió",
-   "texto": "La Espiga reabrió bajo una carpa. Fue en Guatemala, tras el terremoto de 1976.",
+   "texto": "La Espiga reabrió bajo una carpa. Fue en Guatemala, tras el terremoto.",
    "promesa_sugerida": "¿Cómo pasa una panadería de 25 sucursales a ninguna?",
    "por_que": "resultado primero: el momento más fuerte de la historia, con la foto de la carpa desde el cuadro 0",
    "forma_sugerida": "pregunta"
@@ -25,9 +25,9 @@
     "etiqueta": "Guatemala · 2010"
    },
    "pantalla": "Q85,000 de multa",
-   "linea": "La Espiga vendía 4,500 panes al día",
+   "linea": "La multa de La Espiga",
    "verbo": "pagó",
-   "texto": "La Espiga pagó Q85,000 de multa. Vendía 4,500 panes al día, en Guatemala.",
+   "texto": "La Espiga pagó Q85,000 de multa.",
    "promesa_sugerida": "Nadie en Xela imaginaba que el golpe vendría de adentro.",
    "por_que": "paradoja: crecer y terminar pagando una multa; la foto de los sacos a sangre",
    "forma_sugerida": "presagio"
@@ -41,9 +41,9 @@
     "etiqueta": "Quetzaltenango · 1952"
    },
    "pantalla": "Marta Pérez",
-   "linea": "Encendió el horno de La Espiga en 1952",
+   "linea": "Encendió el horno de La Espiga",
    "verbo": "encendió",
-   "texto": "Marta Pérez encendió el horno de La Espiga. Fue en 1952, en Guatemala.",
+   "texto": "Marta Pérez encendió el horno de La Espiga en Guatemala.",
    "promesa_sugerida": "Todo lo que la familia tenía estaba en ese horno.",
    "por_que": "personaje: una persona y un objeto concreto",
    "forma_sugerida": "apuesta"

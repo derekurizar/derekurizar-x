@@ -30,6 +30,21 @@ es poco y se usa como regla; lo demás, como criterio.
 | Temas duros: entrar por el espacio o el objeto, no por los cuerpos; exhibir presos, «son animales» o el superlativo sin fuente restan credibilidad | B | críticas a Luisito Comunica en el CECOT ([Publimetro](https://www.publimetro.com.mx/entretenimiento/2024/02/09/luisito-comunica-es-criticado-por-exhibir-a-prisioneros-del-cecot/)); INDH Chile ([The Clinic](https://www.theclinic.cl/2016/10/04/gendarmes-en-picada-contra-programas-de-tv-al-interior-de-la-carcel-la-privacion-de-libertad-no-puede-ser-un-show/)) |
 | Movimiento y sonido en el primer segundo, cortes cada 2–4 s, voz desde el cuadro 0 | C | consenso de guías sin método |
 
+### Lo que mide esta cuenta (`/analyze-improve`, 2026-11-03, 21 piezas)
+
+Fuerza **A** para esta cuenta: son sus propias curvas por segundo de TikTok Studio y el «visto» de YouTube (n pequeño:
+se vuelve a medir en cada análisis; `metricas.py rendimiento` y la sección «Rendimiento real» del digesto).
+
+| Gancho | Retención a 3 s (TikTok) | Tiempo medio | Ejemplos |
+|---|---|---|---|
+| Sujeto que se reconoce + vacío | 62–69 % | 35–49 s | «Dos creadores, una caja» (Cajita Feliz, 39K), «Líquido para el lago» (Amatitlán, 37K), «Molía trigo, no pollo» (Campero, 18K), «El médico del café» |
+| Cifra sola o fórmula genérica | 28–43 % | 6–17 s | «6 de cada 7», «Casi 2 mil», «Solo 102 condenados», «8,402 kg», «430», «¿Sabías que…?» (Duolingo) |
+
+- El primer segundo: con foto a sangre se va el 11–17 %; con la cifra sobre fondo oscuro, el 39–45 %.
+- Por familia: misterio, personaje y paradoja (62–66 %) por encima de contraste, pregunta y escala (37–42 %). Por
+  visual: foto 62 %; llenado, figuras y pareja 33–40 %. Estos números los confunde el tema (marcas frente a datos
+  públicos), así que no prohíben ninguna familia. Lo que sí sale constante es el sujeto, y de ahí nace **R14**.
+
 Lo que **no** está probado y no se usa como regla: «el 71 % decide en 3 s», «≥ 70 % de visto frente a deslizado»,
 «+18 % con un whoosh». Para saber qué funciona con esta cuenta, la **versión B** (§7) compara dos ganchos del mismo video
 en «Visto frente a deslizado» de YouTube Studio.
@@ -43,14 +58,14 @@ penal para 960, el país 23,382 para 6,842 espacios, 16,540 (7 de cada 10) sin l
 | familia | Mecanismo | Plantilla | Ejemplo (pantalla · voz) | Visuales |
 |---|---|---|---|---|
 | `contraste` | rompe una expectativa que el propio gancho plantea | lo esperado → «pero» → lo real, con las dos cifras | «Hecha para 960» · «Esta cárcel se construyó para 960 personas. Pero en 2025 tenía 4,464.» | llenado, pareja, cifra |
-| `paradoja` | una frase que choca con lo que se cree; las cifras van en pantalla | «hay más X que Y», «X baja y Y sube» | «16,540 contra 6,842» · «En las cárceles de Guatemala hay más presos sin lugar que con lugar.» | pareja, figuras, cifra |
+| `paradoja` | una frase que choca con lo que se cree; las cifras van en pantalla | «hay más X que Y», «X baja y Y sube» | «Más presos que lugares» · «En las cárceles de Guatemala hay más presos sin lugar que con lugar.» | pareja, figuras, cifra |
 | `lugar` | señala algo concreto antes de la cifra («Esto es…») | lugar u objeto → la cifra traducida | «Pavón» · «Esto es Pavón, en Fraijanes. Lo hicieron para 960 personas y tenía 4,464.» | lugar, llenado, cifra |
 | `veredicto` | solo `/mito`: la creencia entre comillas en crema tenue (tachada si MITO, subrayada si REALIDAD, punteada si A MEDIAS) sobre el sello en el acento (golpe.html), enteros desde el cuadro 0 | `{creencia, veredicto: mito|realidad|a_medias}` (creencia ≤ 120) | el gancho de todo mito (R13); familias contraste, tu, escala y resultado |
-| `escala` | traduce la cifra a algo que se ve en 1 s | «Donde cabe 1, hay 3», «7 de cada 10» | «7 de cada 10» · «7 de cada 10 presos de Guatemala no tienen un lugar en la cárcel.» | figuras, llenado, pareja |
+| `escala` | traduce la cifra a algo que se ve en 1 s | «Donde cabe 1, hay 3», «7 de cada 10» | «Presos: 7 de 10» · «En las cárceles de Guatemala, 7 de cada 10 presos no tienen un lugar en la cárcel.» | figuras, llenado, pareja |
 | `tu` | segunda persona: el espectador es el protagonista; escala doméstica | «Tu…», «Si tú…», «Imagina…» y la cifra en tu escala | «1 lugar, 3 presos» · «Imagina tu cuarto, hecho para uno, con tres personas adentro: así están las cárceles de Guatemala.» | figuras, llenado, pareja, cifra |
 | `pregunta` | predicción que se contesta enseguida | pregunta específica + respuesta con cifra en el mismo gancho | «Para 960. ¿Cuántos hay?» · «Un penal para 960 personas. ¿Cuántas hay adentro? 4,464.» | cifra, pareja, llenado |
-| `ranking` | comparación social con fuente | «De N, solo K…», «el puesto X de N» | «9 de 209» · «De 209 países, solo 8 tienen cárceles más llenas que Guatemala.» | cifra, lugar |
-| `resultado` | el final primero, luego el cómo | el resultado con su referente | «×4.7» · «Pavón tiene casi cinco presos por cada lugar: así se llegó ahí.» | cifra, pareja, figuras |
+| `ranking` | comparación social con fuente | «De N, solo K…», «el puesto X de N» | «Cárceles: 9 de 209» · «De 209 países, solo 8 tienen cárceles más llenas que Guatemala.» | cifra, lugar |
+| `resultado` | el final primero, luego el cómo | el resultado con su referente | «Pavón ×4.7» · «Pavón tiene casi cinco presos por cada lugar: así se llegó ahí.» | cifra, pareja, figuras |
 
 Una familia no es una frase hecha: la del ejemplo no se copia (el crítico la coteja con «Frases ya usadas», C11).
 
@@ -65,6 +80,7 @@ el id de la cifra (`"pen-c02.partes[1]"`) o una expresión `calculo`; un literal
 | `llenado` | un contenedor con la capacidad ya llena de puntos; al decir el total, los puntos lo desbordan y el contador sube | `{capacidad, total, unidad}` (0 < capacidad < total; `unidad` ≤ 24) | capacidad frente a ocupación, presupuesto frente a gasto, lo previsto frente a lo real |
 | `pareja` | dos bloques de área proporcional; el primero entero, el segundo crece al decirlo | `{a: {valor, etiqueta}, b: {valor, etiqueta}}` (etiquetas ≤ 24) | dos magnitudes comparables: con lugar frente a sin lugar, Guatemala frente a la región |
 | `figuras` | N personas; las K primeras se encienden al decir «K de cada N» | `{de_cada: [K, N], etiqueta, calculo}` (N 2–100; el `calculo` da K/N·100 o N/K) | proporciones de personas |
+| `foto` | una foto a sangre del sujeto (el lugar, el objeto, la gente), con la pantalla en el chip y la línea entera desde el cuadro 0 (video/noticia.html, como en /historia) | `{foto: "gan-f01", etiqueta}` (una foto verificada en `<TRABAJO>/fotos/`, bajada con `historia.py foto`; etiqueta ≤ 30) | siempre que haya una foto con licencia: en esta cuenta retuvo 62 % a los 3 s frente a 33–40 % de los visuales de datos (m055) |
 | `lugar` | los 22 departamentos; al nombrar el lugar cae el pin, el departamento se enciende y la cámara se acerca | `{depto, etiqueta}` (nombre o GTxx; etiqueta ≤ 30, p. ej. «Pavón · Fraijanes») | la familia lugar y los rankings territoriales |
 
 El visual y la pantalla van juntos: con un visual, la pantalla es corta («Hecha para 960») y el visual cuenta el resto.
@@ -93,7 +109,7 @@ El icono (`icono`) va solo con el visual `cifra`.
 | R2 | **Referente**: la cifra nunca va sola. Pantalla y línea traen dos cifras, «K de cada N», «×N», «de 209», «por lugar», o el visual es llenado, pareja o figuras | gate |
 | R3 | **Tensión primero**: la voz no abre con contexto («En Guatemala…», «Según…», «Hoy les cuento», «En este video», «Hablemos», «El Ministerio / La Dirección / El Sistema…») | gate |
 | R4 | **Triple alineación**: la voz dice las palabras clave de la pantalla y los números del visual (o la pantalla los muestra); la oración que dice la pantalla lleva verbo (`verbo`) | gate |
-| R5 | **3 segundos**: primera oración ≤ 4 s (≈ 62 caracteres ya en palabras), voz del gancho ≤ 7.5 s, T1 antes de 6.5 s | gate |
+| R5 | **3 segundos**: primera oración ≤ 4 s (≈ 62 caracteres ya en palabras), voz del gancho ≤ 6 s (bajó de 7.5 s el 2026-11-03: las escenas de gancho de 5.4–5.7 s perdieron 48 puntos, las de 7.7–8.6 s, 75–80), T1 antes de 6.5 s | gate |
 | R6 | **Guatemala en ≤ 6 s**: dicha o leída en el gancho o en la primera oración de T1; el script ya no antepone «En Guatemala» | gate |
 | R7 | **Honestidad temporal**: «hoy / ahora / actualmente» solo con datos del año en curso; si no, el periodo («en 2025 tenía»). El presente sin esas palabras («hay», «así están») con un dato viejo lo marca el crítico | gate + crítico |
 | R8 | La `pregunta` se contesta con una cifra dentro del mismo gancho | gate |
@@ -101,6 +117,7 @@ El icono (`icono`) va solo con el visual `cifra`.
 | R10 | Cada gancho trae al menos un número con respaldo en sus primeros segundos (pantalla, línea, visual o voz) | gate |
 | R11 | **Encuadre**: pérdida y tristeza sí, miedo no; sin morbo, sin deshumanizar («personas presas», no «reos peligrosos»), sin superlativo sin fuente; ninguna palabra que el dato no dice («duermen», «camas», «celdas de 3×3») | crítico |
 | R12 | **Primer cuadro lleno**: la cifra o el visual están desde el cuadro 0 (miniatura del feed y vuelta del bucle) | render + aviso V15 de `revisar` |
+| R14 | **Sujeto reconocible** (medido, §1): la `pantalla` nombra a alguien o algo (la marca, la persona, el lugar, el objeto), nunca es solo una cifra («Penal para 960», no «960»); la primera oración de la voz dice el sujeto antes que la primera cifra («La Cajita Feliz tiene dos creadores», no «Seis de cada siete…»); ni pantalla, ni línea ni voz abren con una fórmula genérica («¿Sabías que…?», «Esta es la historia…», «Datos de…»). `/sabias` exento (su pantalla es fija, S2); en un gancho dictado por el usuario queda de aviso | gate (`video.py`, `historia.py`) + crítico (que el sujeto se reconozca) |
 | R13 | **Veredicto en el cuadro 0** (solo `/mito`): visual `veredicto` con la creencia marcada (tachada, subrayada o punteada) y el sello en el acento desde el cuadro 0; la voz dice el veredicto en su 1.ª–2.ª oración (≤ 4 s) | gate MI2 (`explica.py`) + oyente del primer cuadro MI10 |
 
 Fuera de reglas, para elegir entre candidatos: un gancho que funciona en la cuenta de otra persona sobre otro tema no

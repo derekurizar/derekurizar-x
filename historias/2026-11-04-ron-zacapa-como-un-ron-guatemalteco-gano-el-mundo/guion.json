@@ -1,0 +1,367 @@
+{
+ "id": "2026-11-04-ron-zacapa-como-un-ron-guatemalteco-gano-el-mundo",
+ "tipo": "historia",
+ "slug": "ron-zacapa-como-un-ron-guatemalteco-gano-el-mundo",
+ "tema": "Ron Zacapa: cómo un ron guatemalteco ganó el mundo",
+ "fecha": "2026-11-04",
+ "pregunta": "¿Cómo un ron que nació para celebrar el centenario de un pueblo de oriente terminó en las barras del mundo como uno de los rones premium más premiados?",
+ "arco": "origen y ascenso: de ron de feria local a marca de lujo mundial, con el precio de compartirla",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "1984",
+   "titulo": "Sobre las nubes",
+   "escena": 6
+  },
+  {
+   "numero": 3,
+   "anio": "2008",
+   "titulo": "La mitad al mundo",
+   "escena": 9
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "Hay barras donde ya no piden un ron: piden un Zacapa. Y ese ron nace en Guatemala. En 1939, 5 hermanos Botrán, la familia detrás de ese ron, llegaron desde España. Ellos no sabían que un día tendrían que compartir su ron. Un año después abrieron en Xela el negocio que sería Industrias Licoreras de Guatemala, la empresa guatemalteca que más tarde crearía el ron. Décadas después, en 1976, la ciudad de Zacapa cumplió su primer centenario, y Licoreras creó un ron añejo para celebrarlo, con el nombre de Zacapa. Pero no iba a madurar en la ciudad que le dio su nombre."
+  },
+  {
+   "acto": 2,
+   "texto": "El ron se destila en Tululá, en la costa sur, y se añeja en Quetzaltenango, en Xela. Lorena Vásquez, la maestra mezcladora de Zacapa, dijo por qué: Porque es más frío y, por la altura —dos mil 300 metros sobre el nivel del mar— hay menos oxígeno. Vásquez llegó de Nicaragua, en 1984 entró a la industria del ron y hoy decide cómo sabe cada mezcla. En la altura de Xela, explica ella, el ron madura más lento. Pero un ron tan lento necesitaba quien pagara por esperarlo. Ella cuenta qué mercado pagó esa espera: Ron Zacapa abrió un nuevo nicho de mercado en el mundo, el premium, pues nuestro ron es más envejecido, complejo en aromas y sabores; de calidad."
+  },
+  {
+   "acto": 3,
+   "texto": "En 2008, para crecer, Licoreras eligió como distribuidor a Diageo, la mayor empresa de bebidas del mundo, y Roberto García Botrán, presidente de Licoreras, dijo de la marca: nos dimos cuenta de que necesitábamos dar un nuevo brinco para convertirla en una marca global. Para 2010, dijo García Botrán, los mercados pasaron de 7 a más de 20, y eso que Diageo aún solo lo distribuía. Entonces, en 2011, la británica Diageo compró el 50 % de la marca y el derecho a venderla en el mundo, salvo en Centroamérica. Licoreras se quedó con la otra mitad. Tres años después, el 90 % de Zacapa ya se vendía fuera de Centroamérica. Y Vásquez lo resumía así: En muchos lugares ni siquiera usan la palabra “ron”, sino que piden un Zacapa. Su botella lleva un 23, pero qué edad guarda el 23 de la etiqueta nunca quedó claro. Nació para el centenario de Zacapa y madura en la altura de Xela. Hoy, en barras del mundo, los clientes piden ese ron por su nombre."
+  }
+ ],
+ "hilos": [
+  {
+   "id": "h1",
+   "escena": 6
+  },
+  {
+   "id": "h2",
+   "sin_respuesta": "Qué edad guarda el 23 de la etiqueta nunca quedó claro"
+  },
+  {
+   "id": "h3",
+   "escena": 7
+  },
+  {
+   "id": "h4",
+   "escena": 10
+  },
+  {
+   "id": "h5",
+   "escena": 11
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3
+  ],
+  [
+   4,
+   5
+  ],
+  [
+   6,
+   7
+  ],
+  [
+   9,
+   10
+  ],
+  [
+   11,
+   12,
+   13
+  ]
+ ],
+ "paleta": "cacao",
+ "musica": "cacao-2",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2333.0,
+ "duracion_s": 159.0,
+ "critica": {
+  "veredicto": "corregir",
+  "vuelta": 3,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 3,
+   "claridad": 4,
+   "flujo": 4,
+   "precision": 4,
+   "cierre": 4
+  }
+ },
+ "gancho": {
+  "familia": "paradoja",
+  "visual": "foto",
+  "pantalla": "Piden un Zacapa",
+  "linea": "no un ron: un Zacapa"
+ },
+ "promesa": {
+  "texto": "Ellos no sabían que un día tendrían que compartir su ron.",
+  "forma": "presagio",
+  "en": 2,
+  "pago": 11,
+  "revela": 5
+ },
+ "bisagra": {
+  "texto": "Pero un ron tan lento necesitaba quien pagara por esperarlo.",
+  "forma": "apuesta",
+  "en": 7,
+  "pago": 8
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "Hay barras donde ya no piden un ron: piden un Zacapa. Y ese ron nace en Guatemala.",
+   "voz": "Hay barras donde ya no piden un ron: piden un Zacapa. Y ese ron nace en Guatemala.",
+   "dur": 6.824,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Kjetil2006 · CC BY-SA 3.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 3.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "En 1939, 5 hermanos Botrán, la familia detrás de ese ron, llegaron desde España. Ellos no sabían que un día tendrían que compartir su ron.",
+   "voz": "En mil novecientos treinta y nueve, cinco hermanos Botrán, la familia detrás de ese ron, llegaron desde España. Ellos no sabían que un día tendrían que compartir su ron.",
+   "dur": 10.834,
+   "hechos": [
+    "ori-h01"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: La Hora",
+     "origen": "medio",
+     "licencia": "© La Hora (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "foto",
+   "pantalla": "Un año después abrieron en Xela el negocio que sería Industrias Licoreras de Guatemala, la empresa guatemalteca que más tarde crearía el ron.",
+   "voz": "Un año después abrieron en Xela el negocio que sería Industrias Licoreras de Guatemala, la empresa guatemalteca que más tarde crearía el ron.",
+   "dur": 9.851,
+   "hechos": [
+    "ori-h02"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: CHeitz · CC BY 2.0",
+     "origen": "commons",
+     "licencia": "CC BY 2.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "foto",
+   "pantalla": "Décadas después, en 1976, la ciudad de Zacapa cumplió su primer centenario, y Licoreras creó un ron añejo para celebrarlo, con el nombre de Zacapa.",
+   "voz": "Décadas después, en mil novecientos setenta y seis, la ciudad de Zacapa cumplió su primer centenario, y Licoreras creó un ron añejo para celebrarlo, con el nombre de Zacapa.",
+   "dur": 11.436,
+   "hechos": [
+    "ori-h03",
+    "mez-h01"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Fernando Reyes Palencia · CC BY-SA 2.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 2.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "golpe",
+   "pantalla": "Pero no iba a madurar en la ciudad que le dio su nombre.",
+   "voz": "Pero no iba a madurar en la ciudad que le dio su nombre.",
+   "dur": 4.136,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "cita",
+   "pantalla": "El ron se destila en Tululá, en la costa sur, y se añeja en Quetzaltenango, en Xela. Lorena Vásquez, la maestra mezcladora de Zacapa, dijo por qué: Porque es más frío y, por la altura —dos mil 300 metros sobre el nivel del mar— hay menos oxígeno.",
+   "voz": "El ron se destila en Tululá, en la costa sur, y se añeja en Quetzaltenango, en Xela. Lorena Vásquez, la maestra mezcladora de Zacapa, dijo por qué: Porque es más frío y, por la altura —dos mil trescientos metros sobre el nivel del mar— hay menos oxígeno.",
+   "dur": 17.381,
+   "hechos": [
+    "ori-h05",
+    "mez-h03"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "foto",
+   "pantalla": "Vásquez llegó de Nicaragua, en 1984 entró a la industria del ron y hoy decide cómo sabe cada mezcla. En la altura de Xela, explica ella, el ron madura más lento. Pero un ron tan lento necesitaba quien pagara por esperarlo.",
+   "voz": "Vásquez llegó de Nicaragua, en mil novecientos ochenta y cuatro entró a la industria del ron y hoy decide cómo sabe cada mezcla. En la altura de Xela, explica ella, el ron madura más lento. Pero un ron tan lento necesitaba quien pagara por esperarlo.",
+   "dur": 17.155,
+   "hechos": [
+    "mez-h04",
+    "ori-h07"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: CHeitz · CC BY 2.0",
+     "origen": "commons",
+     "licencia": "CC BY 2.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "cita",
+   "pantalla": "Ella cuenta qué mercado pagó esa espera: Ron Zacapa abrió un nuevo nicho de mercado en el mundo, el premium, pues nuestro ron es más envejecido, complejo en aromas y sabores; de calidad.",
+   "voz": "Ella cuenta qué mercado pagó esa espera: Ron Zacapa abrió un nuevo nicho de mercado en el mundo, el premium, pues nuestro ron es más envejecido, complejo en aromas y sabores; de calidad.",
+   "dur": 13.63,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "cita",
+   "pantalla": "En 2008, para crecer, Licoreras eligió como distribuidor a Diageo, la mayor empresa de bebidas del mundo, y Roberto García Botrán, presidente de Licoreras, dijo de la marca: nos dimos cuenta de que necesitábamos dar un nuevo brinco para convertirla en una marca global.",
+   "voz": "En dos mil ocho, para crecer, Licoreras eligió como distribuidor a Diageo, la mayor empresa de bebidas del mundo, y Roberto García Botrán, presidente de Licoreras, dijo de la marca: nos dimos cuenta de que necesitábamos dar un nuevo brinco para convertirla en una marca global.",
+   "dur": 17.411,
+   "hechos": [
+    "mun-h01"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Estrategia & Negocios",
+     "origen": "medio",
+     "licencia": "© Estrategia & Negocios (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "tarjeta",
+   "pantalla": "Para 2010, dijo García Botrán, los mercados pasaron de 7 a más de 20, y eso que Diageo aún solo lo distribuía.",
+   "voz": "Para dos mil diez, dijo García Botrán, los mercados pasaron de siete a más de veinte, y eso que Diageo aún solo lo distribuía.",
+   "dur": 9.609,
+   "hechos": [
+    "mun-h02"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "foto",
+   "pantalla": "Entonces, en 2011, la británica Diageo compró el 50 % de la marca y el derecho a venderla en el mundo, salvo en Centroamérica. Licoreras se quedó con la otra mitad.",
+   "voz": "Entonces, en dos mil once, la británica Diageo compró el cincuenta por ciento de la marca y el derecho a venderla en el mundo, salvo en Centroamérica. Licoreras se quedó con la otra mitad.",
+   "dur": 12.045,
+   "hechos": [
+    "mun-h04",
+    "mun-h11"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: George Arriola · CC BY-SA 2.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 2.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "tarjeta",
+   "pantalla": "Tres años después, el 90 % de Zacapa ya se vendía fuera de Centroamérica.",
+   "voz": "Tres años después, el noventa por ciento de Zacapa ya se vendía fuera de Centroamérica.",
+   "dur": 5.526,
+   "hechos": [
+    "mun-h07"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 13,
+   "tipo": "cita",
+   "pantalla": "Y Vásquez lo resumía así: En muchos lugares ni siquiera usan la palabra “ron”, sino que piden un Zacapa. Su botella lleva un 23, pero qué edad guarda el 23 de la etiqueta nunca quedó claro.",
+   "voz": "Y Vásquez lo resumía así: En muchos lugares ni siquiera usan la palabra “ron”, sino que piden un Zacapa. Su botella lleva un veintitrés, pero qué edad guarda el veintitrés de la etiqueta nunca quedó claro.",
+   "dur": 15.498,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 14,
+   "tipo": "cierre",
+   "pantalla": "Nació para el centenario de Zacapa y madura en la altura de Xela. Hoy, en barras del mundo, los clientes piden ese ron por su nombre.",
+   "voz": "Nació para el centenario de Zacapa y madura en la altura de Xela. Hoy, en barras del mundo, los clientes piden ese ron por su nombre.",
+   "dur": 11.128,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Lo que dejó",
+  "resumen": [
+   "Nació en 1976 para un centenario",
+   "Madura en la altura de Xela",
+   "Diageo tiene la mitad desde 2011"
+  ],
+  "texto": "Nació para el centenario de Zacapa y madura en la altura de Xela. Hoy, en barras del mundo, los clientes piden ese ron por su nombre.",
+  "tipo": "remate",
+  "forma": "legado",
+  "final": "Hoy, en barras del mundo, los clientes piden ese ron por su nombre.",
+  "consecuencia": {
+   "quien": "clientes",
+   "verbo": "piden"
+  }
+ },
+ "caption": {
+  "tiktok": "Ron Zacapa nació en 1976 para el centenario de un pueblo de oriente y madura a 2,300 metros en Xela. Así llegó a las barras del mundo. #Guatemala #RonZacapa #historia",
+  "instagram": "Ron Zacapa: de un ron para la feria de un pueblo de Guatemala a las barras del mundo, y por qué madura sobre las nubes de Xela. #Guatemala #RonZacapa",
+  "facebook": "¿Sabías que el Ron Zacapa no se añeja en Zacapa? Esta es su historia: los hermanos Botrán, Xela, la maestra mezcladora Lorena Vásquez y el día que Diageo compró la mitad. Fuentes en el primer comentario.",
+  "shorts": "Ron Zacapa: cómo un ron de Guatemala llegó al mundo #Shorts\nNació en 1976 para una feria y madura a 2,300 metros en Xela."
+ }
+}

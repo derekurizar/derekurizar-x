@@ -60,6 +60,7 @@ if command -v pdftotext >/dev/null; then ok "pdftotext ($(pdftotext -v 2>&1 | he
 # /video: ffmpeg/ffprobe, los agentes, el workflow, el comando, las plantillas verticales, la música y los efectos fijos
 if command -v ffmpeg >/dev/null && command -v ffprobe >/dev/null; then ok "ffmpeg y ffprobe ($(ffmpeg -version | head -1 | cut -d' ' -f1-3))"; else aviso "falta ffmpeg (brew install ffmpeg): /video no funcionará"; fi
 if [[ -s design/iconos/catalogo.json ]]; then ok "design/iconos/: biblioteca fija de iconos ($(python3 -c "import json; print(len(json.load(open('design/iconos/catalogo.json'))['iconos']))") iconos)"; else aviso "falta design/iconos/catalogo.json (make iconos): /video no podrá usar iconos"; fi
+if command -v yt-dlp >/dev/null; then ok "yt-dlp $(yt-dlp --version) (videos de las fuentes para las tomas de /historia)"; else aviso "sin yt-dlp (brew install yt-dlp): /historia no podrá bajar videos de YouTube, JW Player, Brightcove o Facebook (los mp4/m3u8 directos sí)"; fi
 if command -v whisper-cli >/dev/null && [[ -s "${HILOS_WHISPER:-sesiones/_descargas/whisper/ggml-small.bin}" ]]; then ok "whisper-cli y su modelo (escucha V11 de /video)"; else aviso "sin whisper-cli o sin modelo (opcional: brew install whisper-cpp · make whisper): /video salta la escucha V11"; fi
 for f in scripts/video.py scripts/numeros_es.py scripts/video_grabar.js scripts/video_animar.js video/escena.html video/cierre.html video/golpe.html video/gancho.html video/comun.css video/comun.js video/explica.html video/animaciones/catalogo.json video/animaciones/cadena.js scripts/animaciones.py video/animar.js .claude/agents/video-gancho.md referencias/roles/video-gancho.md referencias/ganchos.md referencias/cierres.md .claude/agents/video-guionista.md .claude/agents/video-critico.md .claude/agents/video-animador.md referencias/roles/video-animador.md .claude/workflows/video.js .claude/commands/video.md referencias/roles/video-guionista.md referencias/roles/video-critico.md referencias/flujo-video.md design/musica/catalogo.json design/sfx/catalogo.json sesiones/_fixture_video/guion.json sesiones/_fixture_video/ganchos.json sesiones/_fixture_video/seleccion.json; do
   [[ -s "$f" ]] || aviso "falta $f (/video no estará disponible)"
@@ -79,7 +80,13 @@ done
 for f in scripts/noticias.py video/noticia.html .claude/agents/noticias-rastreador.md .claude/agents/noticias-verificador.md .claude/agents/noticias-editor.md .claude/workflows/noticias.js .claude/commands/noticias.md referencias/flujo-noticias.md referencias/roles/noticias-rastreador.md referencias/roles/noticias-verificador.md referencias/roles/noticias-editor.md sesiones/_fixture_noticias/guion.json sesiones/_fixture_noticias/noticias.json; do
   [[ -s "$f" ]] || aviso "falta $f (/noticias no estará disponible)"
 done
-for id in whoosh tic pulso impacto grave riser resolucion foco; do
+# /congreso: script, escena hemiciclo, captura del sitio, padrón, comando, guía y maqueta (sin agentes propios: la sesión
+# captura con Chrome y escribe el guion; usa la voz, la música, los efectos y el render de /video y las escenas de /historia)
+for f in scripts/congreso.py video/hemiciclo.html referencias/congreso/captura.js referencias/congreso/captura.md referencias/congreso/diputados.json .claude/commands/congreso.md referencias/flujo-congreso.md sesiones/_fixture_congreso/guion.json sesiones/_fixture_congreso/votacion.json; do
+  [[ -s "$f" ]] || aviso "falta $f (/congreso no estará disponible)"
+done
+[[ -s sesiones/_congreso/base/votos.csv ]] || aviso "falta sesiones/_congreso/base/votos.csv (la base de votaciones de /congreso: se siembra con la de sesiones/como-vota-el-congreso/base y crece con congreso.py importar)"
+for id in whoosh tic pulso impacto grave riser resolucion foco voto mazo sello; do
   [[ -s "design/sfx/$id.wav" ]] || aviso "falta design/sfx/$id.wav (biblioteca FIJA de efectos: se genera UNA vez con scripts/sfx.py --importar; /video montar no funcionará)"
 done
 

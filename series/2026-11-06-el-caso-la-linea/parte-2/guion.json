@@ -1,0 +1,354 @@
+{
+ "id": "2026-11-06-el-caso-la-linea-parte-2",
+ "tipo": "historia",
+ "slug": "el-caso-la-linea-parte-2",
+ "tema": "el caso La Línea",
+ "fecha": "2026-11-06",
+ "pregunta": "¿Cómo cobraba La Línea a los importadores en las aduanas?",
+ "arco": "caso: descubrimiento, caída y juicio, con un legado que se volteó contra quienes investigaron",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "2014",
+   "titulo": "Un teléfono intervenido",
+   "escena": 5
+  },
+  {
+   "numero": 3,
+   "anio": "2014–2015",
+   "titulo": "El reparto",
+   "escena": 9
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "Un importador marcaba un número: La Línea. Ahí negociaba cuánto impuesto pagaba en Guatemala. Eso dijo después el MP, la fiscalía: quien llamaba pagaba menos al Estado, pero no se ahorraba todo. Antes de La Línea, la red Moreno, de militares y policías, cobraba por devolver contrabando. Lo dijo un informe de 2003. Años después, en abril de 2015, Iván Velásquez, comisionado colombiano al frente de la CICIG, la comisión de la ONU contra la impunidad, dijo que esa red nunca desapareció: un capturado de La Línea había sido el segundo de su jefe, Alfredo Moreno."
+  },
+  {
+   "acto": 2,
+   "texto": "Esa captura salió de una investigación de mayo de 2014: la fiscalía de Juan Francisco Sandoval, fiscal contra la impunidad del MP, intervino el teléfono del importador Erick Miao Miao. En sus llamadas, la fiscalía oyó por primera vez el nombre de la red: La Línea. Casi un año después, la CICIG dijo cómo funcionaba: a través del suministro de un número telefónico conocido como la línea. Pero la llamada escondía otro cobro, uno sin recibo. En el juicio de 2022, el MP dijo que la red cobraba la cola: una cuota por dejar pasar contenedores sin control, con precios de un tarifario. Con ese cobro, al menos 500 contenedores pasaron por la red, estimaron la CICIG y el MP."
+  },
+  {
+   "acto": 3,
+   "texto": "Después venía el reparto. Según las investigaciones, el importador pagaba cerca del 40 % del impuesto, otro 30 % era el soborno para la red y él se ahorraba el 30 % restante. Entonces la red llevaba la cuenta: la CICIG calculó que toda la red ganaba cerca de US$328,000 cada semana, y cada inspector de contenedores, casi US$1,000. En agosto de 2015, Velásquez dijo que la computadora de Salvador Estuardo González, alias Eco, operador de la red según el MP, guardaba las tablas del reparto. El comisionado lo resumió así: Afortunadamente (para la investigación) llevaban muy en orden los pagos. Pero esos pagos no se quedaban en las aduanas: subían más arriba. ¿Para quién cobraba, en realidad, La Línea?"
+  }
+ ],
+ "hilos": [
+  {
+   "id": "p2h3",
+   "escena": 4
+  },
+  {
+   "id": "p2h1",
+   "escena": 7
+  },
+  {
+   "id": "p2h2",
+   "escena": 9
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3,
+   4
+  ],
+  [
+   5,
+   6
+  ],
+  [
+   7,
+   8
+  ],
+  [
+   9,
+   10
+  ],
+  [
+   11,
+   12
+  ]
+ ],
+ "paleta": "cielo",
+ "musica": "cielo-1",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2428.0,
+ "duracion_s": 148.3,
+ "critica": {
+  "veredicto": "corregir",
+  "vuelta": 2,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 4,
+   "claridad": 3,
+   "flujo": 3,
+   "precision": 4,
+   "cierre": 4
+  }
+ },
+ "gancho": {
+  "familia": "personaje",
+  "visual": "foto",
+  "pantalla": "Un importador, un número",
+  "linea": "Marcaba a La Línea y negociaba"
+ },
+ "promesa": {
+  "texto": "quien llamaba pagaba menos al Estado, pero no se ahorraba todo.",
+  "forma": "contradiccion",
+  "en": 2,
+  "pago": 9,
+  "revela": 1
+ },
+ "bisagra": {
+  "texto": "Pero la llamada escondía otro cobro, uno sin recibo.",
+  "forma": "secreto",
+  "en": 7,
+  "pago": 7
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "Un importador marcaba un número: La Línea. Ahí negociaba cuánto impuesto pagaba en Guatemala.",
+   "voz": "Un importador marcaba un número: La Línea. Ahí negociaba cuánto impuesto pagaba en Guatemala.",
+   "dur": 7.629,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "Eso dijo después el MP, la fiscalía: quien llamaba pagaba menos al Estado, pero no se ahorraba todo.",
+   "voz": "Eso dijo después el eme pe, la fiscalía: quien llamaba pagaba menos al Estado, pero no se ahorraba todo.",
+   "dur": 7.72,
+   "hechos": [
+    "des-h18"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "golpe",
+   "pantalla": "Antes de La Línea, la red Moreno, de militares y policías, cobraba por devolver contrabando. Lo dijo un informe de 2003.",
+   "voz": "Antes de La Línea, la red Moreno, de militares y policías, cobraba por devolver contrabando. Lo dijo un informe de dos mil tres.",
+   "dur": 8.722,
+   "hechos": [
+    "red-h19"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "foto",
+   "pantalla": "Años después, en abril de 2015, Iván Velásquez, comisionado colombiano al frente de la CICIG, la comisión de la ONU contra la impunidad, dijo que esa red nunca desapareció: un capturado de La Línea había sido el segundo de su jefe, Alfredo Moreno.",
+   "voz": "Años después, en abril de dos mil quince, Iván Velásquez, comisionado colombiano al frente de la Cicig, la comisión de la Onu contra la impunidad, dijo que esa red nunca desapareció: un capturado de La Línea había sido el segundo de su jefe, Alfredo Moreno.",
+   "dur": 17.492,
+   "hechos": [
+    "des-h12",
+    "red-h18"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: US Embassy in Guatemala · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "foto",
+   "pantalla": "Esa captura salió de una investigación de mayo de 2014: la fiscalía de Juan Francisco Sandoval, fiscal contra la impunidad del MP, intervino el teléfono del importador Erick Miao Miao. En sus llamadas, la fiscalía oyó por primera vez el nombre de la red: La Línea.",
+   "voz": "Esa captura salió de una investigación de mayo de dos mil catorce: la fiscalía de Juan Francisco Sandoval, fiscal contra la impunidad del eme pe, intervino el teléfono del importador Erick Miao Miao. En sus llamadas, la fiscalía oyó por primera vez el nombre de la red: La Línea.",
+   "dur": 18.191,
+   "hechos": [
+    "des-h01",
+    "des-h02",
+    "des-h28"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: US Embassy · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "cita",
+   "pantalla": "Casi un año después, la CICIG dijo cómo funcionaba: a través del suministro de un número telefónico conocido como la línea.",
+   "voz": "Casi un año después, la Cicig dijo cómo funcionaba: a través del suministro de un número telefónico conocido como la línea.",
+   "dur": 9.244,
+   "hechos": [
+    "red-h03",
+    "red-h02"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "explica",
+   "pantalla": "Pero la llamada escondía otro cobro, uno sin recibo. En el juicio de 2022, el MP dijo que la red cobraba la cola: una cuota por dejar pasar contenedores sin control, con precios de un tarifario.",
+   "voz": "Pero la llamada escondía otro cobro, uno sin recibo. En el juicio de dos mil veintidós, el eme pe dijo que la red cobraba la cola: una cuota por dejar pasar contenedores sin control, con precios de un tarifario.",
+   "dur": 14.339,
+   "hechos": [
+    "red-h06"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": "paso-reten",
+   "mecanismo": "cadena"
+  },
+  {
+   "n": 8,
+   "tipo": "tarjeta",
+   "pantalla": "Con ese cobro, al menos 500 contenedores pasaron por la red, estimaron la CICIG y el MP.",
+   "voz": "Con ese cobro, al menos quinientos contenedores pasaron por la red, estimaron la Cicig y el eme pe.",
+   "dur": 7.103,
+   "hechos": [
+    "red-h07"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "tarjeta",
+   "pantalla": "Después venía el reparto. Según las investigaciones, el importador pagaba cerca del 40 % del impuesto, otro 30 % era el soborno para la red y él se ahorraba el 30 % restante.",
+   "voz": "Después venía el reparto. Según las investigaciones, el importador pagaba cerca del cuarenta por ciento del impuesto, otro treinta por ciento era el soborno para la red y él se ahorraba el treinta por ciento restante.",
+   "dur": 13.593,
+   "hechos": [
+    "red-h04"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "tarjeta",
+   "pantalla": "Entonces la red llevaba la cuenta: la CICIG calculó que toda la red ganaba cerca de US$328,000 cada semana, y cada inspector de contenedores, casi US$1,000.",
+   "voz": "Entonces la red llevaba la cuenta: la Cicig calculó que toda la red ganaba cerca de trescientos veintiocho mil dólares cada semana, y cada inspector de contenedores, casi mil dólares.",
+   "dur": 13.203,
+   "hechos": [
+    "red-h37"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "foto",
+   "pantalla": "En agosto de 2015, Velásquez dijo que la computadora de Salvador Estuardo González, alias Eco, operador de la red según el MP, guardaba las tablas del reparto.",
+   "voz": "En agosto de dos mil quince, Velásquez dijo que la computadora de Salvador Estuardo González, alias Eco, operador de la red según el eme pe, guardaba las tablas del reparto.",
+   "dur": 11.631,
+   "hechos": [
+    "red-h29"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: La Hora",
+     "origen": "medio",
+     "licencia": "© La Hora (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "cita",
+   "pantalla": "El comisionado lo resumió así: Afortunadamente (para la investigación) llevaban muy en orden los pagos.",
+   "voz": "El comisionado lo resumió así: Afortunadamente (para la investigación) llevaban muy en orden los pagos.",
+   "dur": 8.335,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: US Embassy Guatemala · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 13,
+   "tipo": "cierre",
+   "pantalla": "Pero esos pagos no se quedaban en las aduanas: subían más arriba. ¿Para quién cobraba, en realidad, La Línea? Sígueme: en la tercera parte te cuento quién era quién en La Línea.",
+   "voz": "Pero esos pagos no se quedaban en las aduanas: subían más arriba. ¿Para quién cobraba, en realidad, La Línea? Sígueme: en la tercera parte te cuento quién era quién en La Línea.",
+   "dur": 14.247,
+   "hechos": [],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Así cobraba",
+  "resumen": [
+   "Un número para negociar",
+   "Una cola con tarifario",
+   "Cuentas por semana"
+  ],
+  "texto": "Pero esos pagos no se quedaban en las aduanas: subían más arriba. ¿Para quién cobraba, en realidad, La Línea?",
+  "forma": "puente",
+  "final": "¿Para quién cobraba, en realidad, La Línea?",
+  "invitacion": "Sígueme: en la tercera parte te cuento quién era quién en La Línea.",
+  "tipo": "pregunta"
+ },
+ "caption": {
+  "tiktok": "Serie · Parte 2 de 7: Cómo cobraba la red\nUn número de teléfono, una «cola» con tarifario y cuentas por semana: así cobraba La Línea en las aduanas de Guatemala. #Guatemala #LaLínea #historia\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.",
+  "instagram": "Serie · Parte 2 de 7: Cómo cobraba la red\nCómo La Línea negociaba impuestos por teléfono y cobraba una «cola» por dejar pasar contenedores sin control. #Guatemala #LaLínea\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.",
+  "facebook": "Serie · Parte 2 de 7: Cómo cobraba la red\nCómo La Línea negociaba impuestos por teléfono y cobraba una «cola» por dejar pasar contenedores sin control en las aduanas de Guatemala. Fuentes en el primer comentario.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.",
+  "shorts": "El caso La Línea: cómo cobraba la red (2/7) #Shorts\nUn número de teléfono, una «cola» con tarifario y cuentas por semana."
+ }
+}

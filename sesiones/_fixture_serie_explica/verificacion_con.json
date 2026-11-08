@@ -1,0 +1,48 @@
+{
+ "eje": "con",
+ "afirmaciones": [
+  {
+   "id": "con-a01",
+   "tipo": "definicion",
+   "estado": "confirmado",
+   "texto": "El interés compuesto se calcula sobre el capital más los intereses ya ganados",
+   "fuentes": [
+    {
+     "medio": "Banguat (maqueta)",
+     "url": "https://www.banguat.gob.gt/maqueta/glosario",
+     "archivo": "sesiones/_fixture_explica/fuentes/con-1.txt",
+     "cita": "es el interés que se calcula sobre el capital más los intereses ya ganados en periodos anteriores"
+    }
+   ]
+  },
+  {
+   "id": "con-a02",
+   "tipo": "regla",
+   "estado": "confirmado",
+   "texto": "La regla del 72: dividir 72 entre la tasa anual estima los años para duplicar un monto",
+   "fuentes": [
+    {
+     "medio": "UFM (maqueta)",
+     "url": "https://educacion.ufm.edu/maqueta-regla-72",
+     "archivo": "sesiones/_fixture_explica/fuentes/con-2.txt",
+     "cita": "se divide 72 entre la tasa de interés anual"
+    }
+   ]
+  },
+  {
+   "id": "con-a03",
+   "tipo": "proceso",
+   "estado": "confirmado",
+   "texto": "En una tarjeta, el interés que no se paga se suma al saldo y genera nuevo interés",
+   "fuentes": [
+    {
+     "medio": "SIB (maqueta)",
+     "url": "https://www.sib.gob.gt/maqueta/tarjetas",
+     "archivo": "sesiones/_fixture_explica/fuentes/con-3.txt",
+     "cita": "los intereses del periodo se suman al saldo adeudado y en el siguiente periodo se cobran intereses sobre ese nuevo saldo"
+    }
+   ]
+  }
+ ],
+ "cifras": []
+}

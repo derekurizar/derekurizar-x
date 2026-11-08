@@ -30,7 +30,7 @@ const V = (() => {
 
   // CHIP o sello en pantalla («Ejemplo», «MITO», «Parte 2 de 4», «#3 · Economía»): chip({texto, tono, desde, pos, id})
   // · tono: «ink» (crema con borde tenue, el de «Ejemplo»), «acento» (el acento del tema) o «tenue» (apagado)
-  // · pos: «arriba» (a la derecha, sobre la columna de iconos: x ≤ 1023, y ≥ 232) o «abajo» (a la izquierda, sobre los
+  // · pos: «arriba» (a la derecha, bajo la barra de progreso y sobre la columna de iconos: x ≤ 1023, y ≥ 272) o «abajo» (a la izquierda, sobre los
   //   subtítulos: termina antes de --fin); varios chips en la misma posición se apilan
   // · desde: segundo de la escena en que entra (fundido de 0.25 s; antes no se ve ni lo mide V13); 0 = desde el cuadro 0
   // Va en un contenedor .vchips (sin fondo) y cada chip lleva borde: V13 (medirZona) lo mide como cualquier caja. Solo
@@ -68,6 +68,13 @@ const V = (() => {
     if (S && S.ejemplo) chip({ texto: 'Ejemplo', tono: 'ink', id: 'ejemplo' });
     // cualquier escena: el chip o sello que pongan los scripts en escenas.json (S.chip = {texto, tono, desde, pos})
     if (S && S.chip && S.chip.texto) chip(S.chip);
+    ACTUAL = S;
+    if (S && (S.personas || []).length) {
+      // A3: una tarjeta de persona nombrada mientras se ve el rótulo de acto entra cuando el rótulo se va (con su misma
+      // duración); antes tapaba el año (La Línea P5 E10, 2026-11-07)
+      const libre = S.R ? S.R.fin : 0;
+      await pintarPersonas(S.personas.map((p) => p.start >= 0 && p.start < libre ? { ...p, start: libre, fin: p.fin + (libre - p.start) } : p));
+    }
     return { todo, S, trozos: trocear(S.palabras) };
   }
   // el objeto DATA de tarjeta_N.html (el tuit_N.html del hilo)
@@ -123,8 +130,58 @@ const V = (() => {
     GRUPOS = grupos(todo);
     document.getElementById('progreso').innerHTML = GRUPOS.map((g) => `<i style="flex:${g.durs.reduce((a, b) => a + b, 0).toFixed(2)}"><b></b></i>`).join('');
   };
+  // saltos de cámara (S.saltos, video.py saltos_escena; V21): en cada salto, corte a un encuadre un poco más cerrado o
+  // más abierto de todo el contenido de la escena (no la barra de arriba ni los subtítulos). Usa la propiedad `scale`
+  // (aparte de `transform`) para no pisar las animaciones propias de cada página
+  let ACTUAL = null;
+  const ESCALAS_SALTO = [1, 0.92, 0.99, 0.915];   // cada salto cambia ≥ 7 % (dos encuadres que se alternan)   // hacia afuera: nunca sale de la zona segura (V13)
+  const seekSaltos = (t) => {
+    const sal = (ACTUAL && ACTUAL.saltos) || [];
+    if (!sal.length) return;
+    let i = 0;
+    while (i < sal.length && t >= sal[i]) i++;
+    const z = portada ? 1 : ESCALAS_SALTO[i % ESCALAS_SALTO.length];
+    [...document.body.children].forEach((el) => {
+      if (el.tagName === 'SCRIPT' || ['arriba', 'subs', 'progreso'].includes(el.id) || el.hasAttribute('data-sin-salto')) return;
+      // la tarjeta (poco dibujo sobre el fondo) necesita un salto mayor para que se note el cambio de plano
+      el.style.scale = String(el.id === 'ventana' ? 1 - 2.2 * (1 - z) : z);
+    });
+  };
+  // tarjetas de persona (S.personas = [{foto, foco, nombre, cargo, start, fin, solo}]): el retrato se recorta del foco de la
+  // cara (background-size/position con el tamaño real de la foto); la fila va bajo la barra de arriba
+  const PERSONAS = [];
+  async function pintarPersonas(P) {
+    const arriba = document.getElementById('arriba');
+    for (const p of P) {
+      const el = document.createElement('div');
+      el.className = 'persona' + (p.solo || !p.foto ? ' solo' : '') + (p.sujeto ? ' sujeto' : ''); el.setAttribute('data-sin-salto', '');
+      el.innerHTML = `<div class="circulo"></div><div><div class="nom">${esc(p.nombre)}</div>${p.cargo ? `<div class="car">${esc(p.cargo)}</div>` : ''}</div>`;
+      document.body.appendChild(el);
+      if (p.foto && !p.solo) {
+        const img = new Image(); img.src = p.foto;
+        await img.decode().catch(() => { throw new Error('no carga el retrato ' + p.foto); });
+        const c = el.querySelector('.circulo'), D = c.offsetWidth || 128, f = p.foco || { x: 0.35, y: 0.2, w: 0.3, h: 0.3 };
+        const k = (0.62 * D) / Math.max(1, f.h * img.naturalHeight), cx = (f.x + f.w / 2) * img.naturalWidth * k, cy = (f.y + f.h / 2) * img.naturalHeight * k;
+        c.style.backgroundImage = `url("${p.foto}")`;
+        c.style.backgroundSize = `${(img.naturalWidth * k).toFixed(1)}px ${(img.naturalHeight * k).toFixed(1)}px`;
+        c.style.backgroundPosition = `${(D / 2 - cx).toFixed(1)}px ${(D / 2 - cy + 0.06 * D).toFixed(1)}px`;
+      }
+      PERSONAS.push({ el, p });
+    }
+    const y0 = arriba ? arriba.offsetTop + arriba.offsetHeight + 36 : 380;
+    PERSONAS.forEach(({ el }) => { el.style.top = Math.max(F45 ? 230 : 360, y0) + 'px'; });
+  }
+  const seekPersonas = (t) => {
+    for (const { el, p } of PERSONAS) {
+      const v = portada ? 0 : Math.min(eo((t - p.start) / 0.3), 1 - eo((t - p.fin) / 0.3));
+      el.style.opacity = Math.max(0, v).toFixed(3);
+      el.style.transform = `translateX(${((1 - Math.max(0, Math.min(1, v))) * -40).toFixed(1)}px)`;
+    }
+  };
   const seekProgreso = (t, k, dur) => {
     seekChips(t);   // los chips (V.chip) entran a su segundo: todas las páginas llaman seekProgreso en su seek
+    seekSaltos(t);
+    seekPersonas(t);
     const gi = GRUPOS.findIndex((g) => g.ns.includes(k)), g = GRUPOS[gi] || { ns: [k], durs: [dur] };
     const j = g.ns.indexOf(k), antes = g.durs.slice(0, j).reduce((a, b) => a + b, 0), total = g.durs.reduce((a, b) => a + b, 0);
     const avance = clamp((antes + Math.max(0, Math.min(t, dur)) * (g.durs[j] || dur) / Math.max(0.001, dur)) / Math.max(0.001, total));
@@ -224,6 +281,36 @@ const V = (() => {
       d.classList.toggle('ya', i < k); d.classList.toggle('hoy', i === k && t >= c1);
       d.style.transform = i === k ? `scale(${(1 + 0.35 * Math.sin(Math.PI * clamp((t - c1) / 0.5))).toFixed(3)})` : '';
     });
+  };
+
+  // A3 (2026-11-07, La Línea P4: el riel del rótulo cruzaba el contorno del medidor): mientras el rótulo de acto se ve
+  // (opacidad ≥ 0.5), nada más de la página se dibuja sobre su columna. Cuenta lo que tiene tinta (texto propio, SVG,
+  // imagen, canvas, caja con fondo o borde) con opacidad efectiva ≥ 0.06 y fuera de #acto, #subs, #progreso y lo
+  // marcado data-fuera-de-zona (la foto a sangre bajo el velo sí puede verse). Devuelve [{que, caja}]; lo mide
+  // video_grabar.js en los cuadros de V13.
+  const medirActo = () => {
+    const A = document.getElementById('acto');
+    if (!A || parseFloat(getComputedStyle(A).opacity) < 0.5 || getComputedStyle(A).visibility === 'hidden') return [];
+    const col = A.querySelector('.col').getBoundingClientRect(), out = [];
+    const opac = (el) => { let o = 1; for (let x = el; x && x.nodeType === 1; x = x.parentElement) {
+      const c = getComputedStyle(x); if (c.display === 'none' || c.visibility === 'hidden') return 0; o *= parseFloat(c.opacity); }
+      return o; };
+    const GRAF = /^(rect|path|line|circle|ellipse|polygon|polyline|text|img|canvas|image|video)$/i;
+    for (const el of document.querySelectorAll('body *')) {
+      if (el.closest('#acto, #subs, #progreso, [data-fuera-de-zona], script, style, defs, clipPath, mask')) continue;
+      const c = getComputedStyle(el);
+      const propio = [...el.childNodes].some((x) => x.nodeType === 3 && x.textContent.trim());
+      const fondo = (() => { const m = c.backgroundColor.match(/[\d.]+/g); return (m && (m.length < 4 || +m[3] > 0.05)) ||
+        parseFloat(c.borderTopWidth) + parseFloat(c.borderLeftWidth) > 0; })();
+      if (!propio && !GRAF.test(el.tagName) && !fondo) continue;
+      if (/^(rect|path|line|circle|ellipse|polygon|polyline)$/i.test(el.tagName) && c.fill === 'none' && c.stroke === 'none') continue;
+      const b = el.getBoundingClientRect();
+      if (b.width * b.height < 6 || b.right <= col.left || b.left >= col.right || b.bottom <= col.top || b.top >= col.bottom) continue;
+      if (opac(el) < 0.06) continue;
+      out.push({ que: (el.id ? '#' + el.id : el.tagName.toLowerCase() + (el.className && el.className.baseVal === undefined && el.className ? '.' + String(el.className).split(' ')[0] : '')) +
+        (propio ? ' «' + el.textContent.trim().slice(0, 30) + '»' : ''), caja: [b.left, b.top, b.right, b.bottom].map(Math.round) });
+    }
+    return out;
   };
 
   // ZONA SEGURA (variables de comun.css): x en [corte, ancho − corte]; desde iconosY, x ≤ iconosX; y en [sup, fin], con
@@ -365,6 +452,6 @@ const V = (() => {
     return fallas;
   };
 
-  return { n, F45, portada, clamp, eo, prog, esc, normal, trocear, cargar, tarjeta, chip, seekChips, acentoDe, pintarGolpe, ajustarGolpe, seekGolpe,
+  return { medirActo, n, F45, portada, clamp, eo, prog, esc, normal, trocear, cargar, tarjeta, chip, seekChips, acentoDe, pintarGolpe, ajustarGolpe, seekGolpe,
     pintarProgreso, seekProgreso, subtitulos, subtitulosVentana, desfase, pintarActo, seekActo, zona, medirZona };
 })();

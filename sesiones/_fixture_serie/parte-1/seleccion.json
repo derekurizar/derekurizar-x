@@ -1,0 +1,39 @@
+{
+ "ganador": "g1",
+ "segundo": "g2",
+ "por_que": "maqueta: el horno a sangre frena el scroll en silencio",
+ "puntajes": {
+  "g1": {
+   "silencio": 4,
+   "reserva": 4,
+   "tension": 4,
+   "alineacion": 4,
+   "honestidad": 4,
+   "novedad": 4
+  },
+  "g2": {
+   "silencio": 4,
+   "reserva": 4,
+   "tension": 4,
+   "alineacion": 4,
+   "honestidad": 4,
+   "novedad": 4
+  },
+  "g3": {
+   "silencio": 4,
+   "reserva": 4,
+   "tension": 4,
+   "alineacion": 4,
+   "honestidad": 4,
+   "novedad": 4
+  },
+  "g4": {
+   "silencio": 4,
+   "reserva": 4,
+   "tension": 4,
+   "alineacion": 4,
+   "honestidad": 4,
+   "novedad": 4
+  }
+ }
+}

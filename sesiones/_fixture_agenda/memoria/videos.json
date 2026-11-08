@@ -1,0 +1,218 @@
+{
+  "version": 1,
+  "_comentario": "Registro de videos verticales producidos por /video a partir de un hilo entregado. Lo escribe SOLO scripts/memoria.py --video <hilos/<fecha>-<slug>/video>; scripts/video.py lo lee para rotar la música de cada paleta. estado: listo | publicado | incompleto · duracion: corto | medio | largo.",
+  "videos": [
+    {
+      "id": "2026-10-19-crimen-organizado-respuesta-estado",
+      "fecha": "2026-10-19",
+      "slug": "crimen-organizado-respuesta-estado",
+      "hilo_id": "2026-10-19-crimen-organizado-respuesta-estado",
+      "tema": "Crimen organizado y violencia en Guatemala hoy: las caras del crimen (violencia letal y su geografía, armas, narcotráfico, extorsión y pandillas, desapariciones, violencia contra mujeres y niñez) y lo que el Estado hace al respecto (estado de sitio y de prevención 2026, Ley Antipandillas, presupuesto y agentes, capturas, decomisos, extradiciones, cárceles) con sus resultados medibles",
+      "paleta": "terracota",
+      "duracion": "medio",
+      "duracion_s": 122.0,
+      "n_escenas": 10,
+      "musica": "terracota-2",
+      "creditos_voz": 1704,
+      "ruta_video": "hilos/2026-10-19-crimen-organizado-respuesta-estado/video",
+      "ruta_hilo": "hilos/2026-10-19-crimen-organizado-respuesta-estado",
+      "estado": "listo",
+      "frases": {
+        "promesa": "Pero, ¿cuántos casos de homicidio terminan en condena?",
+        "gancho": "En Guatemala: en seis meses, más de ocho mil kilos de cocaína decomisada.",
+        "aperturas": [
+          "Pero ojo: dos de",
+          "Aun así, la policía",
+          "Entonces, ¿hay menos crimen?",
+          "Y los homicidios denunciados",
+          "Pero aquí cambia la",
+          "Y hay violencia que",
+          "Aunque la policía captura",
+          "Así que en dos",
+          "Más decomisos y menos"
+        ],
+        "pregunta": "Y tú, ¿has denunciado alguna vez una extorsión?"
+      }
+    },
+    {
+      "id": "2026-10-06-madres-ninas-adolescentes-2026",
+      "fecha": "2026-10-20",
+      "slug": "madres-ninas-adolescentes-2026",
+      "hilo_id": "2026-10-06-madres-ninas-adolescentes-2026",
+      "tema": "30 mil nacimientos de madres de 10 a 19 años en seis meses: dónde ocurren",
+      "paleta": "jacaranda",
+      "duracion": "medio",
+      "duracion_s": 127.4,
+      "n_escenas": 10,
+      "musica": "jacaranda-2",
+      "creditos_voz": 1873.0,
+      "ruta_video": "hilos/2026-10-06-madres-ninas-adolescentes-2026/video",
+      "ruta_hilo": "hilos/2026-10-06-madres-ninas-adolescentes-2026",
+      "estado": "listo",
+      "frases": {
+        "promesa": "Algunas de esas madres tenían 12 años o menos: la cifra viene después.",
+        "gancho": "Hubo mil novecientos once casos de niñas embarazadas.",
+        "aperturas": [
+          "Con siete mil ciento",
+          "Pero contar bebés premia",
+          "¿Por qué cambia el",
+          "Este año, entre las",
+          "Para la ley guatemalteca,",
+          "De esas mil trescientas",
+          "Dos años antes, en",
+          "Pero de dos mil",
+          "Son ciento sesenta y"
+        ],
+        "segun": 0,
+        "aperturas_atribuidas": 0,
+        "pregunta": "Tres niñas de diez años ya pasaron por un parto en Guatemala.",
+        "cierre": "Tres niñas de diez años ya pasaron por un parto en Guatemala.",
+        "cierre_tipo": "remate",
+        "cierre_forma": "consecuencia",
+        "cierre_mecanismo": "despues",
+        "familia": "contraste",
+        "visual": "pareja",
+        "animaciones": [
+          "dos-fracciones"
+        ]
+      }
+    },
+    {
+      "id": "2026-09-29-sequia-guatemala-2026",
+      "fecha": "2026-10-21",
+      "slug": "sequia-guatemala-2026",
+      "hilo_id": "2026-09-29-sequia-guatemala-2026",
+      "tema": "sequia en guatemala 2026",
+      "paleta": "maiz",
+      "duracion": "medio",
+      "duracion_s": 116.6,
+      "n_escenas": 9,
+      "musica": "maiz-2",
+      "creditos_voz": 1803.0,
+      "ruta_video": "hilos/2026-09-29-sequia-guatemala-2026/video",
+      "ruta_hilo": "hilos/2026-09-29-sequia-guatemala-2026",
+      "estado": "listo",
+      "frases": {
+        "promesa": "Al final te digo qué año tuvo más hambre.",
+        "gancho": "En Guatemala llovió menos que nunca en veintitrés lugares.",
+        "aperturas": [
+          "Además, la lluvia ya",
+          "Encima, en Suiza Contenta,",
+          "El resultado: ocho de",
+          "Entonces, ¿se disparó el",
+          "Pero no: el año",
+          "Aun así, el hambre",
+          "En cambio, Chiquimula, el",
+          "El clima rompió récords"
+        ],
+        "pregunta": "Y en tu comunidad, ¿se perdió la milpa este año?"
+      }
+    },
+    {
+      "id": "2026-10-21-trafico-guatemala-2026",
+      "fecha": "2026-10-21",
+      "slug": "trafico-guatemala-2026",
+      "hilo_id": "2026-10-21-trafico-guatemala-2026",
+      "tema": "Tráfico en Guatemala: parque vehicular, red vial, congestión y seguridad vial",
+      "paleta": "atitlan",
+      "duracion": "medio",
+      "duracion_s": 135.8,
+      "n_escenas": 11,
+      "musica": "atitlan-1",
+      "creditos_voz": 2084.0,
+      "ruta_video": "hilos/2026-10-21-trafico-guatemala-2026/video",
+      "ruta_hilo": "hilos/2026-10-21-trafico-guatemala-2026",
+      "estado": "listo",
+      "frases": {
+        "promesa": "Quédate hasta el final y sabrás cuántas vidas cobra el tránsito.",
+        "gancho": "En Guatemala se inscriben casi dos mil vehículos al día.",
+        "aperturas": [
+          "Pero las calles casi",
+          "Entonces, ¿cómo nace una",
+          "Pero con tantos carros,",
+          "Y en la capital,",
+          "Pero una estimación es",
+          "Y según esa fuente,",
+          "Pero lo más caro",
+          "El resultado: en dos",
+          "Y hay un patrón:",
+          "Los vehículos crecen más"
+        ],
+        "pregunta": "¿Cuánto tardas tú en llegar al trabajo?"
+      }
+    },
+    {
+      "id": "2026-10-06-carceles-hacinamiento-por-penal",
+      "fecha": "2026-10-23",
+      "slug": "carceles-hacinamiento-por-penal",
+      "hilo_id": "2026-10-06-carceles-hacinamiento-por-penal",
+      "tema": "Pavón: 4,464 presos en un penal para 960. Mapa del hacinamiento carcelario",
+      "paleta": "obsidiana",
+      "duracion": "medio",
+      "duracion_s": 120.5,
+      "n_escenas": 9,
+      "musica": "obsidiana-2",
+      "creditos_voz": 1686.0,
+      "ruta_video": "hilos/2026-10-06-carceles-hacinamiento-por-penal/video",
+      "ruta_hilo": "hilos/2026-10-06-carceles-hacinamiento-por-penal",
+      "estado": "listo",
+      "frases": {
+        "promesa": "Hay un penal todavía más lleno que Pavón, y vas a ver cuál.",
+        "gancho": "Pavón, en Guatemala, era para novecientos sesenta presos.",
+        "aperturas": [
+          "Pero Pavón no es",
+          "Y fuera del país,",
+          "Y no es nuevo:",
+          "Pero que baje no",
+          "Entonces, la ocupación es",
+          "De ahí que dieciséis",
+          "Pero ese exceso no",
+          "Las cárceles guardan más"
+        ],
+        "pregunta": "En la tabla oficial, la mitad de los penales no dice cuántos lugares tiene.",
+        "cierre": "En la tabla oficial, la mitad de los penales no dice cuántos lugares tiene.",
+        "cierre_tipo": "remate",
+        "cierre_forma": "pendiente",
+        "familia": "pregunta",
+        "visual": "llenado"
+      }
+    },
+    {
+      "id": "2026-10-03-desnutricion-aguda-2026",
+      "fecha": "2026-10-24",
+      "slug": "desnutricion-aguda-2026",
+      "hilo_id": "2026-10-03-desnutricion-aguda-2026",
+      "tema": "desnutrición aguda 2026 semana a semana",
+      "paleta": "terracota",
+      "duracion": "medio",
+      "duracion_s": 109.6,
+      "n_escenas": 9,
+      "musica": "terracota-1",
+      "creditos_voz": 2053.0,
+      "ruta_video": "hilos/2026-10-03-desnutricion-aguda-2026/video",
+      "ruta_hilo": "hilos/2026-10-03-desnutricion-aguda-2026",
+      "estado": "listo",
+      "frases": {
+        "promesa": "Antes del cierre verás cuántas muertes siguen sin dictamen.",
+        "gancho": "Seis de cada siete eran menores de dos años.",
+        "aperturas": [
+          "Pero casi toda la",
+          "Así que en desnutrición",
+          "Y las muertes confirmadas",
+          "Y los casos no",
+          "Pero las muertes no",
+          "Solo que ese conteo",
+          "Por eso el conteo",
+          "Bajan los casos, pero"
+        ],
+        "pregunta": "Este año, 34 familias ya enterraron a un hijo por desnutrición.",
+        "cierre": "Este año, 34 familias ya enterraron a un hijo por desnutrición.",
+        "cierre_tipo": "remate",
+        "cierre_forma": "consecuencia",
+        "cierre_mecanismo": "quien",
+        "familia": "escala",
+        "visual": "figuras"
+      }
+    }
+  ]
+}

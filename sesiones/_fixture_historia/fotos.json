@@ -45,7 +45,19 @@
     1600,
     1200
    ],
-   "retrato_de": "Marta Pérez"
+   "retrato_de": "Marta Pérez",
+   "retrato_evidencia": "Marta Pérez, fundadora de La Espiga (archivo de la empresa, maqueta)",
+   "focos": [
+    {
+     "x": 0.4,
+     "y": 0.22,
+     "w": 0.2,
+     "h": 0.27,
+     "que": "rostro",
+     "persona": "Marta Pérez",
+     "evidencia": "archivo de La Espiga (maqueta)"
+    }
+   ]
   },
   {
    "id": "cas-f01",

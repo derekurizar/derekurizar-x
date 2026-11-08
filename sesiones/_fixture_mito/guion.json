@@ -3,7 +3,7 @@
  "narracion": [
   {
    "acto": 1,
-   "texto": "Mito: la remesa promedio no llega a 1,000 dólares. Cada envío a Guatemala trae 512 dólares. Y suena lógico, porque se repite: en la cola del banco, en la tienda y en redes, cada envío trae 1,000. ¿De dónde sale ese 1,000?"
+   "texto": "Mito: la remesa promedio no llega a 1,000 dólares. A Guatemala llegan {512:m}. Y suena lógico, porque se repite: en la cola del banco, en la tienda y en redes, cada envío trae 1,000. ¿De dónde sale ese 1,000?"
   },
   {
    "acto": 2,
@@ -37,7 +37,7 @@
    },
    "pantalla": "MITO",
    "linea": "Cada envío trae 512 dólares",
-   "texto": "Mito: la remesa promedio no llega a 1,000 dólares. Cada envío a Guatemala trae 512 dólares.",
+   "texto": "Mito: la remesa promedio no llega a 1,000 dólares. A Guatemala llegan {512:m}.",
    "verbo": "llega",
    "tipo": "gancho"
   },

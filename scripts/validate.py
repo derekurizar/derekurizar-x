@@ -10,6 +10,7 @@ Comprueba:
      cada color de la serie ≥ 3 sobre fondo y fondo_acto2 (error)
   H1 cada hilos/*/ tiene hilo.json, post.md, datos.json, hilo.html y los PNG que
      hilo.json declara; y está registrado en memoria/hilos.json (aviso si no)
+  H4 hilos desde 2026-11-04 (o con `redes` en hilo.json): cada tarjeta en redes/4x5/ y redes/9x16/ (scripts/redes.py)
   H2 en hilo.json: T1 con texto ≤ 280 y sin enlace, ningún texto > 280, paleta única, modo conocido
   H3 el estado de hilo.json coincide con el registro: error si la entrega dice
      `borrador` o difieren en `incompleto` (ensamblar.py --solo-estado lo arregla);
@@ -49,7 +50,15 @@ Comprueba:
   M15 memoria/semanas.json (si existe; registro de /semana): campos, ids AAAA-Wnn únicos, estado, paleta y música
      conocidas, 5 cifras con puestos 5→1, valor y url, ruta con guion.json (tipo semana), fuentes.md y caption.md (el
      mp4 fuera de git: aviso)
-  (reservado, sin código aún: M16 memoria/series.json de /serie; se agrega al construirse)
+  M16 memoria/series.json (si existe; registro de /serie): campos, ids únicos, motor historia|explica, carpeta con serie.json
+     que pasa serie.revisar_serie (partes 3–5 en orden, estado conocido, entregada ⇒ guion.json en su ruta)
+  M19 memoria/congreso.json (si existe; /congreso): campos, estado, paleta, música, duración < 60 s, los dos lados (CG4) y
+      los archivos de la entrega (guion.json, caption.md, fuentes.md, votos.csv)
+  M18 agenda/<AAAA-Wnn>/agenda.json (si existe; /agenda): AG1–AG9 de scripts/agenda.py sobre cada semana que aún no
+     terminó (las pasadas son historia: no se revisan)
+  M17 memoria/metricas.json (si existe; métricas de /analyze-improve): esquema de cada publicación (id = <plataforma>-<post_id>,
+     plataforma, vinculo auto|manual|pendiente|ajena, pieza registrada si está vinculada, curva 0–1.5, snapshots fechados);
+     lo revisa scripts/metricas.py (revisar)
   M11 memoria/mejoras.json (si existe; mejoras al framework de cada video): campos, ids únicos mNNN, flujo conocido,
      estado pendiente|hecha|descartada, archivo relativo a la raíz
   K1 design/musica/catalogo.json: cada pista existe, ids únicos, paleta conocida y ≥ 2 pistas por paleta
@@ -257,9 +266,16 @@ def validar_carpeta_hilo(carpeta, rel, registrados, paletas):
             err("%s: paleta %r desconocida" % (rel, h.get("paleta")))
         if h.get("modo") and h["modo"] not in MODOS["hilo"]:
             err("%s: hilo.json modo %r no está en %s" % (rel, h.get("modo"), MODOS["hilo"]))
+        # H4: desde 2026-11-04 cada tarjeta va también en 4:5 y 9:16 (redes/; scripts/redes.py)
+        if h.get("redes") or str(h.get("fecha", "")) >= REDES_DESDE:
+            import redes
+            falta = redes.faltan(carpeta)
+            if falta:
+                err("H4 %s: faltan %d versiones de redes (%s…): corre python3 scripts/redes.py %s" % (rel, len(falta), falta[0], rel))
         return h
 
 
+REDES_DESDE = "2026-11-04"   # H4: los hilos entregados desde aquí llevan redes/
 RE_ENTREGABLE = re.compile(r"^\d{4}-\d{2}-\d{2}-[a-z0-9-]+$")
 
 
@@ -671,6 +687,43 @@ def validar_sabias(paletas):
             warn("M13 sabias[%d] %s/video.mp4 no está (fuera de git: se regenera con /sabias)" % (i, r))
 
 
+def validar_congreso(paletas):
+    """M19 memoria/congreso.json (registro de /congreso)."""
+    rel_mem = "memoria/congreso.json"
+    if not os.path.exists(os.path.join(RAIZ, rel_mem)):  # ausente = ok: memoria.py --congreso lo crea con el primero
+        return
+    d = cargar(rel_mem) or {}
+    musica = {p.get("id") for p in (cargar("design/musica/catalogo.json") or {}).get("pistas", [])}
+    ids = set()
+    for i, v in enumerate(d.get("congreso", [])):
+        for campo in ("id", "slug", "fecha", "ruta", "iniciativa", "votacion", "nombrados", "paleta", "musica", "duracion_s", "estado", "frases"):
+            if campo not in v:
+                err("M19 congreso[%d] sin %s" % (i, campo))
+        if v.get("id") in ids:
+            err("M19 congreso: id repetido %s" % v.get("id"))
+        ids.add(v.get("id"))
+        if v.get("estado") not in ("listo", "publicado", "incompleto"):
+            err("M19 congreso[%d] estado %r" % (i, v.get("estado")))
+        if paletas and v.get("paleta") not in paletas:
+            err("M19 congreso[%d] paleta %r desconocida" % (i, v.get("paleta")))
+        if v.get("musica") not in musica:
+            err("M19 congreso[%d] música %r no está en el catálogo" % (i, v.get("musica")))
+        if isinstance(v.get("duracion_s"), (int, float)) and v["duracion_s"] >= 60:
+            err("M19 congreso[%d] dura %.1f s: /congreso va por debajo del minuto" % (i, v["duracion_s"]))
+        lados = {x.get("voto") for x in v.get("nombrados") or []}
+        if (v.get("votacion") or {}).get("contra") and v.get("nombrados") and not {"favor", "contra"} <= lados:
+            err("M19 congreso[%d] nombra a un solo lado (CG4)" % i)
+        r = str(v.get("ruta", ""))
+        if os.path.isabs(r):
+            err("M19 congreso[%d] la ruta debe ser relativa a la raíz" % i)
+            continue
+        for f in ("guion.json", "caption.md", "fuentes.md", "votos.csv"):
+            if not os.path.exists(os.path.join(RAIZ, r, f)):
+                err("M19 congreso[%d] %s sin %s" % (i, r, f))
+        if not os.path.exists(os.path.join(RAIZ, r, "video.mp4")):
+            warn("M19 congreso[%d] %s/video.mp4 no está (fuera de git: se regenera con /congreso)" % (i, r))
+
+
 def validar_carruseles(paletas):
     """M14 memoria/carruseles.json (registro de /carrusel)."""
     rel_mem = "memoria/carruseles.json"
@@ -798,6 +851,60 @@ def validar_explicaciones(paletas):
             warn("M12 explicaciones[%d] %s/video.mp4 no está (fuera de git: se regenera con /explica)" % (i, r))
 
 
+FLUJOS_MEJORA = ("video", "noticias", "historia", "explica", "sabias", "carrusel", "semana", "analisis", "serie", "congreso")
+
+
+def validar_agendas():
+    """M18 agenda/<AAAA-Wnn>/agenda.json (el plan de publicación de /agenda): AG1–AG9 en las semanas que no terminaron."""
+    import datetime as _dt
+    sys.path.insert(0, os.path.join(RAIZ, "scripts"))
+    import agenda as _ag
+    hoy = _dt.date.today().isoformat()
+    for p in sorted(glob.glob(os.path.join(RAIZ, "agenda", "*", "agenda.json"))):
+        A = cargar(os.path.relpath(p, RAIZ)) or {}
+        if (A.get("hasta") or "") < hoy:
+            continue
+        for x in _ag.revisar(A, os.path.join(RAIZ, A.get("memoria") or "memoria")):
+            err("M18 %s: %s" % (os.path.relpath(p, RAIZ), x))
+
+
+def validar_series():
+    """M16 memoria/series.json (registro de /serie)."""
+    if not os.path.exists(os.path.join(RAIZ, "memoria", "series.json")):  # ausente = ok: memoria.py --serie lo crea
+        return
+    sys.path.insert(0, os.path.join(RAIZ, "scripts"))
+    import serie as _serie
+    ids = set()
+    for i, v in enumerate((cargar("memoria/series.json") or {}).get("series", [])):
+        for campo in ("id", "slug", "tema", "motor", "fecha", "carpeta", "n_partes", "estado", "partes"):
+            if campo not in v:
+                err("M16 series[%d] sin %s" % (i, campo))
+        if v.get("id") in ids:
+            err("M16 series: id repetido %s" % v.get("id"))
+        ids.add(v.get("id"))
+        if v.get("motor") not in _serie.MOTORES:
+            err("M16 series[%d] motor %r" % (i, v.get("motor")))
+        sj = os.path.join(RAIZ, v.get("carpeta") or "", "serie.json")
+        if os.path.isabs(str(v.get("carpeta", ""))) or not os.path.isfile(sj):
+            err("M16 series[%d] %s sin serie.json" % (i, v.get("carpeta")))
+            continue
+        for x in _serie.revisar_serie(cargar(os.path.relpath(sj, RAIZ))):
+            err("%s (%s)" % (x, v.get("carpeta")))
+
+
+def validar_metricas():
+    """M17 memoria/metricas.json (métricas reales de las piezas publicadas, /analyze-improve)."""
+    if not os.path.exists(os.path.join(RAIZ, "memoria", "metricas.json")):  # ausente = ok: metricas.py importar lo crea
+        return
+    sys.path.insert(0, os.path.join(RAIZ, "scripts"))
+    import metricas
+    for x in metricas.revisar(cargar("memoria/metricas.json")):
+        err(x)
+    pend = [p.get("id") for p in (cargar("memoria/metricas.json") or {}).get("publicaciones", []) if p.get("vinculo") == "pendiente"]
+    if pend:
+        warn("M17 %d publicaciones sin vincular (metricas.py vincular --fijar PUB FLUJO:ID o --ajena PUB): %s" % (len(pend), ", ".join(pend[:5])))
+
+
 def validar_mejoras():
     """M11 memoria/mejoras.json (las mejoras al framework que lista el reporte de cada video)."""
     rel_mem = "memoria/mejoras.json"
@@ -811,8 +918,8 @@ def validar_mejoras():
         if not re.match(r"^m\d{3,}$", str(m.get("id"))) or m.get("id") in ids:
             err("M11 mejoras[%d] id %r inválido o repetido" % (i, m.get("id")))
         ids.add(m.get("id"))
-        if m.get("flujo") not in ("video", "noticias", "historia", "explica", "sabias", "carrusel"):
-            err("M11 mejoras[%d] flujo %r (video|noticias|historia|explica|sabias|carrusel)" % (i, m.get("flujo")))
+        if m.get("flujo") not in FLUJOS_MEJORA:
+            err("M11 mejoras[%d] flujo %r (%s)" % (i, m.get("flujo"), "|".join(FLUJOS_MEJORA)))
         if m.get("estado") not in ("pendiente", "hecha", "descartada"):
             err("M11 mejoras[%d] estado %r" % (i, m.get("estado")))
         if os.path.isabs(str(m.get("archivo", ""))):
@@ -870,9 +977,13 @@ def main():
     validar_historias(paletas)
     validar_explicaciones(paletas)
     validar_sabias(paletas)
+    validar_congreso(paletas)
     validar_carruseles(paletas)
     validar_semanas(paletas)
     validar_mejoras()
+    validar_metricas()
+    validar_series()
+    validar_agendas()
     for a in AVISOS:
         print("AVISO  " + a)
     for e in ERRORES:

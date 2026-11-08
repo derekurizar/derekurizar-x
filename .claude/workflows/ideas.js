@@ -49,8 +49,8 @@ const S = {
               },
             },
             puntaje: {
-              type: 'object', required: ['interes', 'datos', 'actualidad'],
-              properties: { interes: { type: 'integer', minimum: 1, maximum: 5 }, datos: { type: 'integer', minimum: 1, maximum: 5 }, actualidad: { type: 'integer', minimum: 1, maximum: 5 } },
+              type: 'object', required: ['interes', 'datos', 'actualidad', 'sujeto'],
+              properties: { interes: { type: 'integer', minimum: 1, maximum: 5 }, datos: { type: 'integer', minimum: 1, maximum: 5 }, actualidad: { type: 'integer', minimum: 1, maximum: 5 }, sujeto: { type: 'integer', minimum: 1, maximum: 5 } },
             },
             nota: { type: 'string' },
           },
@@ -141,7 +141,7 @@ for (const l of lotes) for (const i of l.ideas) {
 }
 const ideas = lotes.flatMap((l) => l.ideas.map((i) => ({
   id: i.id, titulo: i.titulo, area: i.area, grupo: l.grupo, por_que_ahora: i.por_que_ahora,
-  puntaje: i.puntaje.interes + i.puntaje.datos + i.puntaje.actualidad,
+  puntaje: i.puntaje.interes + i.puntaje.datos + i.puntaje.actualidad + (i.puntaje.sujeto || 0),
   fuentes: [...new Set(i.datos.map((d) => `${d.fuente} (${d.acceso})`))],
 })))
 if (!ideas.length) fail('Los exploradores no devolvieron ninguna idea con evidencia de datos.')

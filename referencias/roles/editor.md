@@ -21,7 +21,12 @@ exploratorias), no redacta, no visualiza.
    periodos), 2–4 `preguntas`. En modo normal, un eje incluye siempre la
    pregunta de escala humana («¿cuántos hogares / per cápita / N de cada M?»)
    para que exista el beat `impacto`. `necesita_serie: true` si el arco pide
-   evolución en el tiempo.
+   evolución en el tiempo. **Sujeto reconocible** (m060, medido con
+   /analyze-improve): un hilo que irá a video necesita de quién o de qué se
+   habla (un lugar, una persona, una marca, un objeto: «el penal de Pavón», «el
+   galón de diésel», no «el hacinamiento»). Ponlo en el `angulo` y pide en un
+   eje el dato que lo ancla: en TikTok los /video de indicadores retuvieron
+   28–40 % a los 3 s y los de sujeto reconocible, 62–69 %.
 6. **Idea del banco**: si la directiva trae una idea, corre
    `python3 scripts/ideas.py --ver <id>` (no abras `ideas/banco.json`) y úsala
    como punto de partida: su `pregunta` y `angulo` orientan los tuyos, su

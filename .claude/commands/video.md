@@ -31,6 +31,13 @@ decisión del usuario.**
    - Avisa al usuario de la duración, la música y el costo estimado de la voz (≈ 1 crédito por carácter:
      corto ≈ 850, medio ≈ 1,700, largo ≈ 3,450). El Workflow tarda ~5–10 min sin créditos (~10 más si escribe una
      animación nueva); la voz y el render, otros ~5–10 min.
+   - **Foto para el gancho** (m055, /analyze-improve: con la foto a sangre se va un tercio menos de gente en el primer
+     segundo): busca en Wikimedia Commons 1–3 fotos del sujeto del hilo (el lugar, el objeto o la gente de la que habla:
+     una gasolinera, el penal, el lago; nunca víctimas ni menores identificables) con
+     `python3 scripts/historia.py commons "<búsqueda>"` y baja la mejor con
+     `python3 scripts/historia.py foto <TRABAJO> --id gan-f01 --commons "File:…" --descripcion "<qué muestra>"`
+     (o `--url U --credito "Foto: <institución>" --origen oficial`). `python3 scripts/video.py fotos <TRABAJO>` las
+     lista. Sin una foto con licencia, sigue sin ella (el gate solo pide un candidato con foto si hay fotos).
 2. **GANCHOS, SELECCIÓN, GUION Y CRÍTICA (Workflow `video`)**
    - Lanza el Workflow con `name: "video"` y `args: {"trabajo": "<TRABAJO>", "duracion": "<d>", "slug":
      "<slug>", "fixture": false}`. Si editaste `.claude/workflows/video.js` en esta sesión, pásalo con
@@ -147,6 +154,9 @@ decisión del usuario.**
      `caption.md` (avisa si el video pasa de los 3 min de Shorts).
    - Luego `python3 scripts/memoria.py --video hilos/<fecha>-<slug>/video` y `make validate` (exit 0).
    - Abre `video.mp4` (la versión de TikTok) con `open`.
+   - **Prueba A/B de duración** (m058; solo si el usuario la pide): el corte `corto` en `sesiones/<slug>/video-corto` →
+     `hilos/<fecha>-<slug>/video-corto` (se registra como `<id>-corto`), para TikTok, Reels y Facebook; el principal va
+     a YouTube. Pasos en `referencias/flujo-video.md` («Prueba A/B de duración»).
 7. **REPORTE**
    - Las rutas de `video.mp4` (TikTok, Instagram y Facebook Reels, YouTube Shorts) y `video_4x5.mp4` (feed), y la
      duración frente al objetivo (incluye el medio segundo del cierre en bucle); si pasa de 180 s, que no entra

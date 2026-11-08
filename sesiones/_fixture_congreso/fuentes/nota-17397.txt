@@ -1,0 +1,46 @@
+https://www.congreso.gob.gt/noticias_congreso/17397/2026/4
+NORMATIVA PREVIENE Y PERSIGUE LOS DELITOS DIGITALES
+
+Con el objetivo de establecer una estructura institucional para prevenir, sancionar, atender y responder ante incidentes de ataques cibernéticos a instituciones del Estado, el Congreso aprobó de Urgencia Nacional, con 121 votos a favor, el Decreto 26-2026, Ley Marco de Ciberseguridad. “Esta es una ley más que la X Legislatura deja como legado en seguridad para Guatemala”, manifestó el Presidente del Legislativo, Luis Contreras Colíndres.
+
+El Decreto establece disposiciones administrativas, penales y procesales, así como mecanismos de prevención, investigación y cooperación internacional para enfrentar las amenazas digitales y viene a responder al crecimiento de la transformación digital y a los riesgos asociados con la vulnerabilidad de los sistemas, la exposición de información, la pérdida de privacidad y el uso indebido de datos.
+
+Asimismo, la normativa busca fortalecer las capacidades institucionales para prevenir y perseguir los delitos cibernéticos, proteger los datos y la información, establecer procedimientos para la investigación digital y fomentar la cooperación internacional, bajo disposiciones orientadas al respeto de los derechos y garantías fundamentales
+
+? El Congreso de la República aprobó el Acuerdo Legislativo 24-2026 que establece el presupuesto del Organismo Legislativo para el próximo ejercicio fiscal. Aquí los detalles ⬇️ ?️ ? https://t.co/t90NdaW8ag
+
+La Ley también toma en consideración antecedentes de incidentes cibernéticos registrados en instituciones públicas, entre ellos afectaciones al Ministerio de Relaciones Exteriores en 2022, al Ministerio de Finanzas Públicas en 2023, al Ministerio de Educación en 2024 y casos reportados en abril de 2026 en la Dirección General de Control de Armas y Municiones y el portal Tu Empleo.
+
+Entre sus principales disposiciones contempla la creación del Consejo Nacional de Ciberseguridad (Conciber), instancia estratégica presidida por el Presidente de la República e integrada por ministros y autoridades del ámbito de seguridad e inteligencia. También establece la Dirección Nacional de Ciberseguridad (Diciber), como órgano técnico-operativo adscrito al Ministerio de Gobernación, que será el ente rector sectorial.
+
+Se contempla una fiscalía especializada en el Ministerio Público para investigar los ciberdelitos, una Red 24/7 Guatemala como punto de contacto permanente para facilitar investigaciones y asistencia relacionada con delitos informáticos, una unidad especializada de informática forense en el Instituto Nacional de Ciencias Forenses (Inacif) y órganos jurisdiccionales especializados.
+
+En materia penal, la normativa tipifica conductas como el acceso ilícito, la interceptación ilícita, los ataques a la integridad de datos y sistemas informáticos, la falsificación informática, la apropiación de identidad ajena, el fraude informático y el abuso de dispositivos, estableciendo penas de prisión según la gravedad de cada conducta.
+
+Durante la aprobación, los diputados incorporaron 20 enmiendas y sustituciones de artículos, respaldadas con más de las dos terceras partes de los diputados al Congreso, que fortalecen los mecanismos de prevención, atención e investigación de incidentes cibernéticos.
+
+Entre los cambios destaca la modificación del Artículo 5, sobre la definición de datos de tráfico, relacionado a los datos informáticos relativos a una comunicación realizada mediante un sistema informático, generados por un sistema que forme parte de la cadena de comunicación que indiquen su origen, destino, itinerario (hora, fecha, tamaño, duración o tipo de servicios subyacente) que dan lugar a un delito digital.
+
+Además, la adición de dos párrafos al Artículo 9, relacionados con la confidencialidad y protección de información; la sustitución total del artículo 31, que establece plazos para alertar y reportar incidentes cibernéticos; y la incorporación de un artículo nuevo sobre coordinación con las entidades responsables de prevención de lavado de dinero, de acuerdo con las entidades creadas por la Ley “Antilavado”, Decreto 15-2026, también aprobado por la actual legislatura.
+
+Asimismo, se reformaron los Artículos del 43 al 50, relacionados con la tipificación de los ciberdelitos y sus respectivas penas; se adiciona un artículo sobre agravantes generales, que contempla el aumento de sanciones cuando los delitos afectan infraestructura crítica digital. En consecuencia, el delito por el acceso ilícito a los sistemas digitales la pena será de 4 a 6 años; por interceptación ilícita, de 5 a 8 años de prisión; ataque a la integridad de los datos informáticos, como dañe, borre o suprime ciertos datos, se contempla prisión de 5 a 7 años.
+
+Además, los ataques a la integridad al sistema informático, quien sin autorización obstaculice de propósito el funcionamiento normal, la pena será de 5 a 8 años; por falsificación informática quien introduzca, borre o suprima datos, la pena será de 2 a 6 años. Apropiación de la identidad ajena, siempre en temas digitales, la pena será de 3 a 6 años, entre otras tipificaciones de delito.
+
+También se incorporaron modificaciones a los Artículos 62 y 64, sobre procedimientos para obtener y preservar evidencia digital; al Artículo 70, en materia de cooperación internacional; al Artículo 87, para incluir atribuciones del Ministerio de la Defensa Nacional en ciberdefensa; y al Artículo 88, mediante la incorporación de una disposición sobre gestión de riesgos y defensa civil.
+
+Finalmente, se sustituyó totalmente el artículo 96, que fue declarado de Urgencia Nacional en único debate aprobado por las dos terceras partes del total de diputados que integran el Congreso de la República y entrará en vigencia 30 días después de su publicación, en el diario oficial.
+
+Como parte de las medidas preventivas, el Ministerio de Educación deberá incorporar contenidos de ciberseguridad al Currículo Nacional Base. Además, se impulsarán programas de formación, investigación y cooperación técnica, así como una Mesa Técnica de Ciberseguridad con participación del sector público, privado, la academia y la sociedad civil.
+
+Para la viabilidad de la nueva Ley, el Organismo Ejecutivo, por conducto del Ministerio de Gobernación (Mingob) deberá aprobar el reglamento de la normativa dentro de los seis meses próximos, a partir de la entrada en vigor.
+
+Con la aprobación, la X Legislatura busca establecer un marco institucional que permita fortalecer la seguridad digital del país, desde la prevención y educación hasta la atención de incidentes, la investigación de ciberdelitos, la protección de infraestructura crítica y la cooperación internacional.
+
+Por: Cinthya González, Jéssica Ruano Y Carlos Riquelmy Mejía
+
+Acuerdo 12-2018 de Junta Directiva, que respalda la generación y publicación del contenido de este sitio web del Congreso de la República de Guatemala
+
+El Congreso de la República de Guatemala es el órgano legislativo unicameral de Guatemala. Está conformado por 160 diputados electos democráticamente, de manera directa, para un período de cuatro años con posibilidad de reelección.
+
+© 2026 Todos los derechos reservados Congreso de la República de Guatemala.

@@ -1,0 +1,678 @@
+{
+ "version": 3,
+ "slug": "el-caso-la-linea",
+ "tema": "el caso La Línea",
+ "motor": "historia",
+ "fecha": "2026-11-06",
+ "carpeta": "series/2026-11-06-el-caso-la-linea",
+ "trabajo": "sesiones/serie-el-caso-la-linea-v4",
+ "n_partes": 7,
+ "paleta": "cielo",
+ "musica": "cielo-1",
+ "plan_aprobado": true,
+ "estado": "completa",
+ "partes": [
+  {
+   "n": 1,
+   "titulo": "Las escuchas que lo destaparon",
+   "pregunta": "¿Cómo se descubrió La Línea, la red que cobraba en las aduanas?",
+   "periodo": {
+    "desde": "2014",
+    "hasta": "2015-04"
+   },
+   "mecanismo": null,
+   "ejes": null,
+   "puente": "¿Cómo cobraba La Línea a los importadores en las aduanas?",
+   "hilos": [
+    "p1h1",
+    "p1h2",
+    "p1h3"
+   ],
+   "revelaciones": [
+    "El caso nació del teléfono intervenido de un importador y de una sospecha: la SAT llevaba dos años sin denunciar contrabando",
+    "El 16 de abril de 2015 el MP y la CICIG capturaron a funcionarios de la SAT y de Aduanas"
+   ],
+   "tema": "cómo se descubrió",
+   "hechos": [
+    "des-h01",
+    "des-h06",
+    "des-h28",
+    "des-h02",
+    "des-h03",
+    "des-h04",
+    "des-h05",
+    "des-h14",
+    "red-h41",
+    "des-h07",
+    "des-h09",
+    "pla-h01",
+    "pla-h02",
+    "des-h10",
+    "des-c01",
+    "des-c02",
+    "des-c03",
+    "des-c16",
+    "pla-c13",
+    "des-q02"
+   ],
+   "obligatorio": [
+    "des-h01",
+    "des-h02",
+    "des-q02",
+    "des-h07",
+    "pla-h01",
+    "des-h10"
+   ],
+   "estado": "entregada",
+   "trabajo": "sesiones/serie-el-caso-la-linea-v4/parte-1",
+   "ruta": "series/2026-11-06-el-caso-la-linea/parte-1",
+   "duracion_s": 147.9
+  },
+  {
+   "n": 2,
+   "titulo": "Cómo cobraba la red",
+   "pregunta": "¿Cómo cobraba La Línea a los importadores en las aduanas?",
+   "periodo": {
+    "desde": "1970",
+    "hasta": "2015-04"
+   },
+   "mecanismo": null,
+   "ejes": null,
+   "puente": "¿Quién era quién en la red de La Línea y para quién cobraba?",
+   "hilos": [
+    "p2h1",
+    "p2h2",
+    "p2h3"
+   ],
+   "revelaciones": [
+    "La acusación describió un reparto fijo del dinero de cada contenedor entre operadores, funcionarios y la cúpula",
+    "La red cobraba por semana y llevaba la cuenta de lo que entraba"
+   ],
+   "tema": "cómo cobraban",
+   "hechos": [
+    "red-h19",
+    "des-h12",
+    "des-h13",
+    "red-h03",
+    "des-h18",
+    "red-h06",
+    "red-h04",
+    "red-h37",
+    "red-h07",
+    "red-h05",
+    "des-h16",
+    "red-h29",
+    "jui-h18",
+    "jui-h19",
+    "red-c04",
+    "red-c02",
+    "red-c03",
+    "red-c01",
+    "des-c05",
+    "jui-c08",
+    "jui-c09",
+    "des-q03",
+    "red-q04"
+   ],
+   "obligatorio": [
+    "red-h03",
+    "red-h06",
+    "red-h04",
+    "red-h37",
+    "red-h07"
+   ],
+   "estado": "entregada",
+   "trabajo": "sesiones/serie-el-caso-la-linea-v4/parte-2",
+   "ruta": "series/2026-11-06-el-caso-la-linea/parte-2",
+   "duracion_s": 148.3
+  },
+  {
+   "n": 3,
+   "titulo": "Quién era quién",
+   "pregunta": "¿Quién era quién en la red de La Línea y para quién cobraba?",
+   "periodo": {
+    "desde": "2012",
+    "hasta": "2015-04"
+   },
+   "mecanismo": null,
+   "ejes": null,
+   "puente": "¿Qué hizo la gente cuando el nombre de la vicepresidenta apareció en el caso?",
+   "hilos": [
+    "p3h1",
+    "p3h2",
+    "p3h3"
+   ],
+   "revelaciones": [
+    "Monzón, secretario privado de Baldetti, fue señalado como jefe operativo de la red",
+    "La acusación identificó al «Uno» con Pérez Molina y a la «Dos» con Baldetti"
+   ],
+   "tema": "quién era quién",
+   "hechos": [
+    "red-h36",
+    "jui-h24",
+    "red-h32",
+    "red-h33",
+    "red-h45",
+    "red-h40",
+    "red-h14",
+    "red-h20",
+    "red-h08",
+    "des-h11",
+    "red-h09",
+    "red-h10",
+    "red-h11",
+    "des-h24",
+    "des-h22",
+    "red-h34",
+    "des-c07",
+    "des-c06",
+    "des-c15",
+    "red-q03",
+    "des-q05"
+   ],
+   "obligatorio": [
+    "red-h08",
+    "red-h14",
+    "red-h10",
+    "red-h11",
+    "red-h09"
+   ],
+   "estado": "entregada",
+   "trabajo": "sesiones/serie-el-caso-la-linea-v4/parte-3",
+   "ruta": "series/2026-11-06-el-caso-la-linea/parte-3",
+   "duracion_s": 147.1
+  },
+  {
+   "n": 4,
+   "titulo": "La plaza y la vicepresidenta",
+   "pregunta": "¿Qué hizo la gente cuando el nombre de la vicepresidenta apareció en el caso?",
+   "periodo": {
+    "desde": "2015-04",
+    "hasta": "2015-08"
+   },
+   "mecanismo": null,
+   "ejes": null,
+   "puente": "¿Podía caer también el presidente Otto Pérez Molina?",
+   "hilos": [
+    "p4h1",
+    "p4h2"
+   ],
+   "revelaciones": [
+    "Baldetti renunció a la Vicepresidencia el 8 de mayo de 2015",
+    "La capturaron en agosto de 2015 señalada dentro de La Línea"
+   ],
+   "tema": "la plaza y Baldetti",
+   "hechos": [
+    "pla-h21",
+    "pla-h03",
+    "pla-h17",
+    "red-h21",
+    "pla-h04",
+    "pla-h05",
+    "pla-h06",
+    "pla-h19",
+    "pla-h20",
+    "des-h33",
+    "pla-h08",
+    "pla-h22",
+    "pla-c07",
+    "pla-c14",
+    "pla-q06",
+    "pla-q05",
+    "pla-q08"
+   ],
+   "obligatorio": [
+    "pla-h03",
+    "pla-h06",
+    "pla-h19",
+    "pla-h08"
+   ],
+   "estado": "entregada",
+   "trabajo": "sesiones/serie-el-caso-la-linea-v4/parte-4",
+   "ruta": "series/2026-11-06-el-caso-la-linea/parte-4",
+   "duracion_s": 138.8
+  },
+  {
+   "n": 5,
+   "titulo": "La caída del presidente",
+   "pregunta": "¿Cómo cayó el presidente Otto Pérez Molina?",
+   "periodo": {
+    "desde": "2015-05",
+    "hasta": "2015-10"
+   },
+   "mecanismo": null,
+   "ejes": null,
+   "puente": "¿Quién iba a declarar contra ellos en el juicio?",
+   "hilos": [
+    "p5h1",
+    "p5h2",
+    "p5h3"
+   ],
+   "revelaciones": [
+    "El Congreso le retiró la inmunidad por unanimidad el 1 de septiembre de 2015",
+    "Pérez Molina renunció la noche del 2 al 3 de septiembre de 2015 y quedó en prisión preventiva"
+   ],
+   "tema": "la caída de Pérez Molina",
+   "hechos": [
+    "pla-h07",
+    "des-h23",
+    "pla-h09",
+    "red-h13",
+    "pla-h10",
+    "pla-h11",
+    "pla-h12",
+    "pla-h13",
+    "pla-h14",
+    "pla-h23",
+    "pla-h15",
+    "pla-h16",
+    "pla-h24",
+    "pla-c01",
+    "pla-c02",
+    "pla-c04",
+    "pla-c08",
+    "pla-c09",
+    "des-q01",
+    "red-q05",
+    "pla-q04",
+    "pla-q02",
+    "pla-q03"
+   ],
+   "obligatorio": [
+    "des-h23",
+    "pla-h12",
+    "pla-h13",
+    "pla-h15",
+    "pla-h16"
+   ],
+   "estado": "entregada",
+   "trabajo": "sesiones/serie-el-caso-la-linea-v4/parte-5",
+   "ruta": "series/2026-11-06-el-caso-la-linea/parte-5",
+   "duracion_s": 148.7
+  },
+  {
+   "n": 6,
+   "titulo": "El testigo y la sentencia",
+   "pregunta": "¿Quién declaró contra ellos en el juicio y cómo terminó?",
+   "periodo": {
+    "desde": "2015-09",
+    "hasta": "2022-12"
+   },
+   "mecanismo": null,
+   "ejes": null,
+   "puente": "¿Qué quedó del caso y de quienes lo investigaron?",
+   "hilos": [
+    "p6h1",
+    "p6h2",
+    "p6h3"
+   ],
+   "revelaciones": [
+    "Monzón se volvió colaborador eficaz y declaró contra Pérez Molina y Baldetti",
+    "En diciembre de 2022 el tribunal condenó a Pérez Molina y a Baldetti a 16 años de prisión cada uno"
+   ],
+   "tema": "el testigo y la sentencia",
+   "hechos": [
+    "jui-h04",
+    "red-h42",
+    "jui-h06",
+    "jui-h07",
+    "jui-h05",
+    "red-h27",
+    "jui-h02",
+    "jui-h03",
+    "jui-h09",
+    "jui-h10",
+    "jui-h11",
+    "jui-h12",
+    "jui-h13",
+    "jui-h15",
+    "jui-h16",
+    "jui-h20",
+    "jui-h40",
+    "des-h30",
+    "jui-c11",
+    "jui-c02",
+    "jui-c03",
+    "jui-c04",
+    "jui-c06",
+    "jui-c18",
+    "jui-q05",
+    "jui-q06",
+    "jui-q04",
+    "des-q08"
+   ],
+   "obligatorio": [
+    "jui-h04",
+    "jui-h06",
+    "jui-h02",
+    "jui-h12",
+    "jui-h13",
+    "jui-h16"
+   ],
+   "estado": "entregada",
+   "trabajo": "sesiones/serie-el-caso-la-linea-v4/parte-6",
+   "ruta": "series/2026-11-06-el-caso-la-linea/parte-6",
+   "duracion_s": 142.3
+  },
+  {
+   "n": 7,
+   "titulo": "Lo que quedó",
+   "pregunta": "¿Qué quedó del caso La Línea y de quienes lo investigaron?",
+   "periodo": {
+    "desde": "2016",
+    "hasta": "2026"
+   },
+   "mecanismo": null,
+   "ejes": null,
+   "puente": null,
+   "hilos": [
+    "p7h1",
+    "p7h2",
+    "p7h3"
+   ],
+   "revelaciones": [
+    "En 2024 una Sala de Apelaciones confirmó las condenas de 16 años",
+    "Pérez Molina salió de la cárcel en enero de 2024 a esperar fuera la confirmación de la sentencia",
+    "La fiscal general, el jefe de la FECI y el juez del caso terminaron en el exilio"
+   ],
+   "tema": "lo que quedó",
+   "hechos": [
+    "des-h31",
+    "leg-h08",
+    "leg-h10",
+    "leg-h07",
+    "leg-h15",
+    "leg-h23",
+    "jui-h38",
+    "leg-h17",
+    "leg-h21",
+    "jui-h36",
+    "leg-h18",
+    "jui-h21",
+    "jui-h39",
+    "leg-h03",
+    "leg-h02",
+    "jui-h32",
+    "leg-h14",
+    "leg-h11",
+    "leg-c05",
+    "leg-c07",
+    "leg-c09",
+    "jui-c16",
+    "jui-q01",
+    "jui-q08",
+    "leg-q01",
+    "leg-q03",
+    "des-q04"
+   ],
+   "obligatorio": [
+    "leg-h02",
+    "leg-h15",
+    "leg-h21",
+    "leg-h18",
+    "leg-h03",
+    "jui-h21"
+   ],
+   "estado": "entregada",
+   "trabajo": "sesiones/serie-el-caso-la-linea-v4/parte-7",
+   "ruta": "series/2026-11-06-el-caso-la-linea/parte-7",
+   "duracion_s": 172.7
+  }
+ ],
+ "historial": [
+  {
+   "version": 1,
+   "fecha": "2026-11-06",
+   "nota": "plan nuevo",
+   "partes": [
+    {
+     "n": 1,
+     "titulo": "Las escuchas que lo destaparon",
+     "pregunta": "¿Cómo se descubrió La Línea, la red que cobraba en las aduanas?",
+     "periodo": {
+      "desde": "2014",
+      "hasta": "2015-04"
+     },
+     "mecanismo": null,
+     "puente": "¿Cómo cobraba La Línea a los importadores en las aduanas?"
+    },
+    {
+     "n": 2,
+     "titulo": "Cómo cobraba la red",
+     "pregunta": "¿Cómo cobraba La Línea a los importadores en las aduanas?",
+     "periodo": {
+      "desde": "1970",
+      "hasta": "2015-04"
+     },
+     "mecanismo": null,
+     "puente": "¿Quién era quién en la red de La Línea y para quién cobraba?"
+    },
+    {
+     "n": 3,
+     "titulo": "Quién era quién",
+     "pregunta": "¿Quién era quién en la red de La Línea y para quién cobraba?",
+     "periodo": {
+      "desde": "2012",
+      "hasta": "2015-04"
+     },
+     "mecanismo": null,
+     "puente": "¿Qué hizo la gente cuando el nombre de la vicepresidenta apareció en el caso?"
+    },
+    {
+     "n": 4,
+     "titulo": "La plaza y la vicepresidenta",
+     "pregunta": "¿Qué hizo la gente cuando el nombre de la vicepresidenta apareció en el caso?",
+     "periodo": {
+      "desde": "2015-04",
+      "hasta": "2015-08"
+     },
+     "mecanismo": null,
+     "puente": "¿Podía caer también el presidente Otto Pérez Molina?"
+    },
+    {
+     "n": 5,
+     "titulo": "La caída del presidente",
+     "pregunta": "¿Cómo cayó el presidente Otto Pérez Molina?",
+     "periodo": {
+      "desde": "2015-05",
+      "hasta": "2015-10"
+     },
+     "mecanismo": null,
+     "puente": "¿Quién iba a declarar contra ellos en el juicio?"
+    },
+    {
+     "n": 6,
+     "titulo": "El testigo y la sentencia",
+     "pregunta": "¿Quién declaró contra ellos en el juicio y cómo terminó?",
+     "periodo": {
+      "desde": "2015-09",
+      "hasta": "2022-12"
+     },
+     "mecanismo": null,
+     "puente": "¿Qué quedó del caso y de quienes lo investigaron?"
+    },
+    {
+     "n": 7,
+     "titulo": "Lo que quedó",
+     "pregunta": "¿Qué quedó del caso La Línea y de quienes lo investigaron?",
+     "periodo": {
+      "desde": "2016",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": null
+    }
+   ]
+  },
+  {
+   "version": 2,
+   "fecha": "2026-11-06",
+   "nota": "plan aprobado por el usuario",
+   "partes": [
+    {
+     "n": 1,
+     "titulo": "Las escuchas que lo destaparon",
+     "pregunta": "¿Cómo se descubrió La Línea, la red que cobraba en las aduanas?",
+     "periodo": {
+      "desde": "2014",
+      "hasta": "2015-04"
+     },
+     "mecanismo": null,
+     "puente": "¿Cómo cobraba La Línea a los importadores en las aduanas?"
+    },
+    {
+     "n": 2,
+     "titulo": "Cómo cobraba la red",
+     "pregunta": "¿Cómo cobraba La Línea a los importadores en las aduanas?",
+     "periodo": {
+      "desde": "1970",
+      "hasta": "2015-04"
+     },
+     "mecanismo": null,
+     "puente": "¿Quién era quién en la red de La Línea y para quién cobraba?"
+    },
+    {
+     "n": 3,
+     "titulo": "Quién era quién",
+     "pregunta": "¿Quién era quién en la red de La Línea y para quién cobraba?",
+     "periodo": {
+      "desde": "2012",
+      "hasta": "2015-04"
+     },
+     "mecanismo": null,
+     "puente": "¿Qué hizo la gente cuando el nombre de la vicepresidenta apareció en el caso?"
+    },
+    {
+     "n": 4,
+     "titulo": "La plaza y la vicepresidenta",
+     "pregunta": "¿Qué hizo la gente cuando el nombre de la vicepresidenta apareció en el caso?",
+     "periodo": {
+      "desde": "2015-04",
+      "hasta": "2015-08"
+     },
+     "mecanismo": null,
+     "puente": "¿Podía caer también el presidente Otto Pérez Molina?"
+    },
+    {
+     "n": 5,
+     "titulo": "La caída del presidente",
+     "pregunta": "¿Cómo cayó el presidente Otto Pérez Molina?",
+     "periodo": {
+      "desde": "2015-05",
+      "hasta": "2015-10"
+     },
+     "mecanismo": null,
+     "puente": "¿Quién iba a declarar contra ellos en el juicio?"
+    },
+    {
+     "n": 6,
+     "titulo": "El testigo y la sentencia",
+     "pregunta": "¿Quién declaró contra ellos en el juicio y cómo terminó?",
+     "periodo": {
+      "desde": "2015-09",
+      "hasta": "2022-12"
+     },
+     "mecanismo": null,
+     "puente": "¿Qué quedó del caso y de quienes lo investigaron?"
+    },
+    {
+     "n": 7,
+     "titulo": "Lo que quedó",
+     "pregunta": "¿Qué quedó del caso La Línea y de quienes lo investigaron?",
+     "periodo": {
+      "desde": "2016",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": null
+    }
+   ]
+  },
+  {
+   "version": 3,
+   "fecha": "2026-11-06",
+   "nota": "plan aprobado por el usuario",
+   "partes": [
+    {
+     "n": 1,
+     "titulo": "Las escuchas que lo destaparon",
+     "pregunta": "¿Cómo se descubrió La Línea, la red que cobraba en las aduanas?",
+     "periodo": {
+      "desde": "2014",
+      "hasta": "2015-04"
+     },
+     "mecanismo": null,
+     "puente": "¿Cómo cobraba La Línea a los importadores en las aduanas?"
+    },
+    {
+     "n": 2,
+     "titulo": "Cómo cobraba la red",
+     "pregunta": "¿Cómo cobraba La Línea a los importadores en las aduanas?",
+     "periodo": {
+      "desde": "1970",
+      "hasta": "2015-04"
+     },
+     "mecanismo": null,
+     "puente": "¿Quién era quién en la red de La Línea y para quién cobraba?"
+    },
+    {
+     "n": 3,
+     "titulo": "Quién era quién",
+     "pregunta": "¿Quién era quién en la red de La Línea y para quién cobraba?",
+     "periodo": {
+      "desde": "2012",
+      "hasta": "2015-04"
+     },
+     "mecanismo": null,
+     "puente": "¿Qué hizo la gente cuando el nombre de la vicepresidenta apareció en el caso?"
+    },
+    {
+     "n": 4,
+     "titulo": "La plaza y la vicepresidenta",
+     "pregunta": "¿Qué hizo la gente cuando el nombre de la vicepresidenta apareció en el caso?",
+     "periodo": {
+      "desde": "2015-04",
+      "hasta": "2015-08"
+     },
+     "mecanismo": null,
+     "puente": "¿Podía caer también el presidente Otto Pérez Molina?"
+    },
+    {
+     "n": 5,
+     "titulo": "La caída del presidente",
+     "pregunta": "¿Cómo cayó el presidente Otto Pérez Molina?",
+     "periodo": {
+      "desde": "2015-05",
+      "hasta": "2015-10"
+     },
+     "mecanismo": null,
+     "puente": "¿Quién iba a declarar contra ellos en el juicio?"
+    },
+    {
+     "n": 6,
+     "titulo": "El testigo y la sentencia",
+     "pregunta": "¿Quién declaró contra ellos en el juicio y cómo terminó?",
+     "periodo": {
+      "desde": "2015-09",
+      "hasta": "2022-12"
+     },
+     "mecanismo": null,
+     "puente": "¿Qué quedó del caso y de quienes lo investigaron?"
+    },
+    {
+     "n": 7,
+     "titulo": "Lo que quedó",
+     "pregunta": "¿Qué quedó del caso La Línea y de quienes lo investigaron?",
+     "periodo": {
+      "desde": "2016",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": null
+    }
+   ]
+  }
+ ],
+ "fixture": false,
+ "modo": "caso"
+}

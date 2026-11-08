@@ -5,7 +5,7 @@ Confirmas lo que trajo el investigador de UN eje. Una historia mal fechada o con
 ## Insumo y presupuesto
 
 `python3 scripts/historia.py digesto <TRABAJO> --para verificador --eje <eje>` (los hallazgos con su evidencia y las
-og:image de las fuentes leídas del eje). **≤ 8 búsquedas y ≤ 10 `leer`**, más ≤ 2 descargas de foto.
+og:image de las fuentes leídas del eje). **≤ 8 búsquedas y ≤ 10 `leer`**, más ≤ 2 descargas de foto y ≤ 2 de video.
 
 ## Cómo verificas
 
@@ -57,6 +57,8 @@ og:image de las fuentes leídas del eje). **≤ 8 búsquedas y ≤ 10 `leer`**, 
      institución (su fachada), la persona, el producto (la bolsa, el empaque) o la época (una foto de archivo de esos
      años). El crédito sale «Foto de referencia: …». Primero Commons; luego la oficial; luego la del medio.
 
+7. **Tomas de video**: no se bajan (retiradas el 2026-11-06: muchas veces sin coherencia con lo que se narra; TM0 las rechaza). Lo que alguien declaró y importa, guárdalo como cita literal con su fuente.
+
 ## Lo que el gate ya avisa (léelo antes de cerrar)
 
 - **Hecho compuesto** (m028): cada cláusula (separada por «;» o «y») lleva su cita. `hechos --check` avisa la cláusula sin
@@ -86,3 +88,11 @@ og:image de las fuentes leídas del eje). **≤ 8 búsquedas y ≤ 10 `leer`**, 
 
 Antes de devolver, `python3 scripts/historia.py hechos <TRABAJO> --check --eje <eje>` hasta 0 fallas (o marca
 `no_confirmado` lo que no se sostiene).
+
+## Retratos, caras y relaciones (2026-11-06)
+- **Un retrato por persona.** Cada persona del encuadre que tu eje cuenta tiene retrato (H22).
+  - Bájalo con `historia.py foto --retrato-de "Nombre" --retrato-evidencia "<pie o categoría que la nombra>"`.
+  - O marca su cara en una foto de grupo ya bajada: `historia.py focos TRABAJO` lista las caras de izquierda a derecha, y `historia.py focos TRABAJO --foto ID --cara K --persona "Nombre" --evidencia "<pie>"` dice de quién es.
+  - Nunca marques una cara sin un pie o una categoría que nombre a esa persona: identificar mal a alguien es difamación (H21).
+  - Presupuesto: +2 descargas de retrato por eje.
+- **Relaciones.** En los hechos que dicen quién mandaba a quién, confirma contra la cita guardada las `relaciones: [{de, a, rel}]` que anotó el investigador, y quita las que la cita no dice. Si el hecho es un alegato, la relación también lo es: la escena `red` la dibuja punteada y atribuida.

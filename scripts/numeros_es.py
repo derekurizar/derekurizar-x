@@ -231,6 +231,56 @@ RE_SUELTA = re.compile(r"(?<![\w])(%s)(?![\w])|(?<=\w )([%s])(?![\w'’-]|\.\w)"
 RE_PREVIA = re.compile(r"([A-ZÁÉÍÓÚÑ][\wáéíóúñü]*) $")
 
 
+# siglas: cómo se DICEN (la pantalla y los subtítulos siguen con la sigla). «palabra»: se lee de corrido («la Cicig»);
+# «deletreo»: letra por letra con su nombre. La grafía de voz de una «palabra» es la que probamos con la voz El Faraon 4
+# (2026-11-06: «CICIG» salía deletreada en 5 de 12 menciones de La Línea (0.96–1.07 s en Scribe); «Cicig» probada en
+# 3 tomas, también tras «La … , la comisión de la Onu», salió junta: 0.51, 0.69 y 0.62 s). Solo cambia la voz.
+# V20 (video.py) mide en Scribe que una «palabra» dure lo de una palabra, no lo de un deletreo.
+SIGLAS = {
+    "CICIG": ("palabra", "Cicig"), "FECI": ("palabra", "Feci"), "SAT": ("palabra", "Sat"), "ONU": ("palabra", "Onu"),
+    "CACIF": ("palabra", "Cacif"), "INAB": ("palabra", "Inab"), "CONAP": ("palabra", "Conap"), "INE": ("palabra", "Ine"),
+    "MAGA": ("palabra", "Maga"), "BANGUAT": ("palabra", "Banguat"), "INGUAT": ("palabra", "Inguat"),
+    "INDE": ("palabra", "Inde"), "USAC": ("palabra", "Usac"), "UNE": ("palabra", "Une"), "DEA": ("palabra", "Dea"),
+    "MP": ("deletreo", "eme pe"), "PNC": ("deletreo", "pe ene ce"), "TSE": ("deletreo", "te ese e"),
+    "CC": ("deletreo", "ce ce"), "OJ": ("deletreo", "o jota"), "CSJ": ("deletreo", "ce ese jota"),
+    "PDH": ("deletreo", "pe de hache"), "PGN": ("deletreo", "pe ge ene"), "CGC": ("deletreo", "ce ge ce"),
+    "URNG": ("deletreo", "u erre ene ge"), "FBI": ("deletreo", "efe be i"),
+}
+# también la sigla escrita como nombre propio («Cicig») cuenta como la sigla
+RE_SIGLA = re.compile(r"(?<![\wÁÉÍÓÚÑáéíóúñ])(%s)(?![\wÁÉÍÓÚÑáéíóúñ])" % "|".join(
+    sorted(set(list(SIGLAS) + [k.capitalize() for k, (modo, _) in SIGLAS.items() if modo == "palabra"]), key=len, reverse=True)))
+RE_SIGLA_DESCONOCIDA = re.compile(r"(?<![\wÁÉÍÓÚÑáéíóúñ$])([A-ZÁÉÍÓÚÑ]{2,7})(?![\wÁÉÍÓÚÑáéíóúñ$])")
+
+
+def sigla_de(palabra):
+    """(sigla, modo, voz) si la palabra (sin signos) es una sigla de la tabla, en mayúsculas o como nombre propio."""
+    w = re.sub(r"[^\wÁÉÍÓÚÑáéíóúñ]", "", palabra or "")
+    k = w.upper()
+    if k in SIGLAS and (w == k or (SIGLAS[k][0] == "palabra" and w == k.capitalize())):
+        return k, SIGLAS[k][0], SIGLAS[k][1]
+    return None
+
+
+def _siglas(t):
+    """Segmentos de un tramo sin cifras ni abreviaturas: cada sigla de la tabla es un segmento propio (p ≠ v en las
+    deletreadas y en las que llevan grafía de voz); una sigla desconocida deja una nota (no bloquea)."""
+    out, pos = [], 0
+    for m in RE_SIGLA.finditer(t):
+        k = m.group(1).upper()
+        if m.start() > pos:
+            out.append({"p": t[pos:m.start()], "v": t[pos:m.start()], "num": False})
+        out.append({"p": m.group(1), "v": SIGLAS[k][1], "num": False, "sigla": k})
+        pos = m.end()
+    if pos < len(t):
+        out.append({"p": t[pos:], "v": t[pos:], "num": False})
+    for seg in out:
+        if "sigla" not in seg:
+            for d in RE_SIGLA_DESCONOCIDA.findall(seg["p"]):
+                if d not in SIGLAS and len(set(d)) > 1:
+                    NOTAS.append("sigla sin lectura en SIGLAS (numeros_es.py): «%s»; añádela como palabra o deletreo" % d)
+    return out
+
+
 def _letra_suelta(t, m):
     """(palabra previa, nombre en español de la letra) si la letra sigue a una palabra con mayúscula y no es un
     número romano tras un nombre regio; si no, None."""
@@ -252,7 +302,7 @@ def _texto(t):
             if letra is None:
                 continue
         if m.start() > pos:
-            out.append({"p": t[pos:m.start()], "v": t[pos:m.start()], "num": False})
+            out += _siglas(t[pos:m.start()])
         if m.group(2):
             previa, dicho = letra
             out.append({"p": m.group(2), "v": dicho, "num": False})
@@ -262,7 +312,7 @@ def _texto(t):
             out.append({"p": m.group(1), "v": sing if re.search(r"\bpor\s*$", t[:m.start()]) else plur, "num": False})
         pos = m.end()
     if pos < len(t):
-        out.append({"p": t[pos:], "v": t[pos:], "num": False})
+        out += _siglas(t[pos:])
     return out
 
 
@@ -339,6 +389,10 @@ def convertir(texto):
 
 
 CASOS = [
+    ("la CICIG, comisión de la ONU", "la Cicig, comisión de la Onu"),
+    ("el MP y la FECI acusaron", "el eme pe y la Feci acusaron"),
+    ("la Cicig y el TSE", "la Cicig y el te ese e"),
+    ("las CICIGS no", "las CICIGS no"),
     ("8,402.4 kilogramos", "ocho mil cuatrocientos dos punto cuatro kilogramos"),
     ("8,402.4 kg de cocaína", "ocho mil cuatrocientos dos punto cuatro kilogramos de cocaína"),
     ("1,596.2.", "mil quinientos noventa y seis punto dos."),

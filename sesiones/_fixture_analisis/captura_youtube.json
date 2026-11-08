@@ -1,0 +1,40 @@
+{
+ "plataforma": "youtube",
+ "fecha": "2026-11-03",
+ "publicaciones": [
+  {
+   "post_id": "lBWVGQDI8zg",
+   "url": "https://youtube.com/shorts/lBWVGQDI8zg",
+   "titulo": "La cajita feliz en Guatemala #guatemala #mcdonaldsguatemala",
+   "duracion_s": 158,
+   "fecha_pub": "2026-10-25",
+   "views": "1.306",
+   "comments": "0",
+   "viewed_pct": "55.6%",
+   "avg_s": 89
+  },
+  {
+   "post_id": "Hfy9gCYKLNk",
+   "url": "https://youtube.com/shorts/Hfy9gCYKLNk",
+   "titulo": "Noticias sábado 24 de Octubre en Guatemala #guatemala #noticiasgt",
+   "duracion_s": 62,
+   "fecha_pub": "2026-10-24",
+   "views": "978",
+   "comments": "0",
+   "viewed_pct": "59.3%",
+   "avg_s": 37
+  },
+  {
+   "post_id": "P39JSCAfPuc",
+   "url": "https://youtube.com/shorts/P39JSCAfPuc",
+   "titulo": "Datos de desnutrición en Guatemala #guatemala #desnutricion",
+   "duracion_s": 110,
+   "fecha_pub": "2026-10-24",
+   "views": "1",
+   "comments": "0",
+   "viewed_pct": "40.6%",
+   "avg_s": 18
+  }
+ ],
+ "_comentario": "Fixture de /analyze-improve: 3 piezas reales (Cajita Feliz, desnutrición, noticiero del 24-oct) con una subida de 1 vista en YouTube (AN6) y una errata en Facebook (AN7)."
+}

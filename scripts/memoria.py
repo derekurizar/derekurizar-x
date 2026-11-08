@@ -60,6 +60,9 @@
   explica.py lo lee para avisar si el tema ya se explicó, rotar gancho, cierre, animaciones y música, y para las frases
   ya usadas (C11).
 
+--congreso <congreso/<fecha>-<slug>> [--estado listo|incompleto] [--dry-run]
+  memoria/congreso.json → congreso[] {id (= congreso-<slug>), slug, fecha, ruta, iniciativa, ley, votacion, nombrados,
+  paleta, musica, duracion_s, creditos_voz, estado, frases}; el mismo slug reemplaza (conserva «publicado»).
 --sabias <datos/<fecha>-<slug>/video> [--estado listo|incompleto] [--dry-run]
   memoria/sabias.json → sabias[] {id (= sabias-<slug>), slug, tema, fecha, ruta, dato, paleta, musica, duracion_s,
   creditos_voz, estado, frases {gancho, cierre, cierre_tipo, cierre_forma, cierre_mecanismo, visual, apoyo}}; registrar
@@ -77,6 +80,10 @@
   paleta, musica, duracion_s, creditos_voz, estado, cifras[] {puesto, cifra_id, id_original, noticia, noticia_original,
   seccion, titular, texto, valor, unidad, url}}; registrar la misma semana reemplaza. semana.py lo lee para no repetir
   una cifra de las últimas 8 semanas (SM6). Una semana de prueba (fixture) no se registra (solo --dry-run).
+
+--serie <series/<fecha>-<slug>> [--dry-run]
+  memoria/series.json → series[] {id (= <fecha>-<slug>), slug, tema, motor (historia|explica), fecha, carpeta, n_partes, paleta,
+  musica, version_plan, estado, partes[] {n, titulo, estado, ruta, duracion_s}}; registrar la misma serie reemplaza.
 
 --mejoras ARCHIVO.json [--dry-run]
   Las mejoras al framework que encontró una corrida de /video, /noticias o /historia (las lista el reporte final) →
@@ -148,6 +155,12 @@ VACIO_SABIAS = {
     "_comentario": "Registro de videos «¿Sabías que…?» producidos por /sabias desde un dato de datos/. Lo escribe SOLO scripts/memoria.py --sabias <datos/<fecha>-<slug>/video>; scripts/sabias.py lo lee para rotar el visual del gancho, el apoyo, el cierre y la música, y para las frases ya usadas. estado: listo | publicado | incompleto.",
     "sabias": [],
 }
+CONGRESO = os.path.join(RAIZ, "memoria", "congreso.json")
+VACIO_CONGRESO = {
+    "version": 1,
+    "_comentario": "Registro de videos de /congreso (una ley del Congreso en menos de un minuto). Lo escribe SOLO scripts/memoria.py --congreso <congreso/<fecha>-<slug>>; scripts/congreso.py lo lee para rotar la familia del gancho, el cierre y la paleta. estado: listo | publicado | incompleto.",
+    "congreso": [],
+}
 CARRUSELES = os.path.join(RAIZ, "memoria", "carruseles.json")
 VACIO_CARRUSELES = {
     "version": 1,
@@ -161,6 +174,11 @@ VACIO_SEMANAS = {
     "semanas": [],
 }
 MEJORAS = os.path.join(RAIZ, "memoria", "mejoras.json")
+SERIES = os.path.join(RAIZ, "memoria", "series.json")
+VACIO_SERIES = {
+    "version": 1, "_comentario": "Series de /serie: una por tema, con sus partes. Lo escribe scripts/memoria.py --serie.",
+    "series": [],
+}
 VACIO_MEJORAS = {
     "version": 1,
     "_comentario": "Mejoras al framework que encontró cada corrida de /video, /noticias y /historia (el reporte final las lista). Lo escribe SOLO scripts/memoria.py --mejoras <archivo.json>; se consultan con --ver-mejoras y se cierran con --marcar-mejora ID --como hecha|descartada. estado: pendiente | hecha | descartada.",
@@ -605,6 +623,11 @@ def registrar_video(d, estado, dry_run=False):
         "ruta_video": ruta, "ruta_hilo": g["hilo"], "estado": estado, "frases": frases_video(g),
     }
     # serie /departamento: sujeto, serie y código (del guion de entrega o, si falta, del hilo perfil de departamento)
+    # prueba A/B de duración (m058): una entrega en <hilo>/video-<variante> (p. ej. video-corto, para TikTok, Reels y
+    # Facebook) se registra aparte del video principal; /analyze-improve las distingue por la duración
+    base = os.path.basename(ruta.rstrip("/"))
+    if base.startswith("video-") and len(base) > 6:
+        reg.update(id="%s-%s" % (g["id"], base[6:]), variante=base[6:], corte_de=g["id"])
     pf = hilo.get("perfil") if isinstance(hilo.get("perfil"), dict) else {}
     if g.get("serie") or (hilo.get("modo") == "perfil" and pf.get("tipo") == "departamento"):
         reg["sujeto"] = g.get("sujeto") or pf.get("sujeto")
@@ -768,6 +791,38 @@ def registrar_sabias(d, estado, dry_run=False):
     return 0
 
 
+def registrar_congreso(d, estado, dry_run=False):
+    """--congreso DIR: registra en memoria/congreso.json el video de /congreso entregado en DIR (congreso/<fecha>-<slug>,
+    con el guion.json de entrega de scripts/congreso.py entregar)."""
+    ruta = os.path.normpath(os.path.relpath(os.path.abspath(d), RAIZ)) if os.path.isabs(d) else os.path.normpath(d)
+    g = leer(os.path.join(RAIZ, ruta, "guion.json"), obligatorio=False)
+    if not g or g.get("tipo") != "congreso" or not g.get("id"):
+        print("ERROR: %s no tiene guion.json de entrega de /congreso (scripts/congreso.py entregar)" % ruta, file=sys.stderr)
+        return 1
+    fv = frases_video(g)
+    frases = {k: fv.get(k) for k in ("gancho", "cierre", "cierre_tipo", "cierre_forma", "cierre_mecanismo", "visual", "familia", "aperturas")}
+    reg = {"id": g["id"], "slug": g["slug"], "fecha": g["fecha"], "ruta": ruta, "iniciativa": g.get("iniciativa"), "ley": g.get("ley"),
+           "votacion": g.get("votacion"), "nombrados": g.get("nombrados") or [], "paleta": g["paleta"], "musica": g["musica"],
+           "duracion_s": g["duracion_s"], "creditos_voz": g.get("creditos_voz"), "estado": estado, "frases": frases}
+    ms = leer(CONGRESO, obligatorio=False) or json.loads(json.dumps(VACIO_CONGRESO))
+    previos = [i for i, v in enumerate(ms["congreso"]) if v.get("slug") == reg["slug"]]
+    if previos:
+        if ms["congreso"][previos[0]].get("estado") == "publicado" and estado == "listo":
+            reg["estado"] = "publicado"
+        ms["congreso"][previos[0]] = reg
+    else:
+        ms["congreso"].append(reg)
+    ms["congreso"].sort(key=lambda v: (v["fecha"], v["id"]))
+    print("congreso %s · iniciativa %s · %.0f s · %d nombrados · cierre %s · %s" % (reg["id"], reg["iniciativa"], reg["duracion_s"],
+                                                                                 len(reg["nombrados"]), frases["cierre_forma"], reg["estado"]))
+    if dry_run:
+        print("[dry-run] no se escribió nada")
+        return 0
+    escribir(CONGRESO, ms)
+    print("escrito memoria/congreso.json (%d)" % len(ms["congreso"]))
+    return 0
+
+
 def registrar_carrusel(d, estado, dry_run=False):
     """--carrusel DIR: registra en memoria/carruseles.json el carrusel entregado en DIR (<original>/carrusel, con el
     carrusel.json de entrega de scripts/carrusel.py entregar)."""
@@ -834,6 +889,29 @@ def registrar_semana(d, estado, dry_run=False):
     ms["semanas"].sort(key=lambda v: v["fecha"])
     escribir(SEMANAS, ms)
     print("escrito memoria/semanas.json (%d semanas)" % len(ms["semanas"]))
+    return 0
+
+
+def registrar_serie(d, dry_run=False):
+    """--serie DIR: registra en memoria/series.json la serie de series/<fecha>-<slug> (serie.json de scripts/serie.py)."""
+    ruta = os.path.normpath(d)
+    S = leer(os.path.join(RAIZ, ruta, "serie.json"), obligatorio=False)
+    if not S or not S.get("slug"):
+        print("ERROR: %s no tiene serie.json (scripts/serie.py preparar)" % ruta, file=sys.stderr)
+        return 1
+    reg = {"id": "%s-%s" % (S["fecha"], S["slug"]), "slug": S["slug"], "tema": S.get("tema"), "motor": S.get("motor"),
+           "fecha": S["fecha"], "carpeta": ruta, "n_partes": len(S.get("partes") or []), "paleta": S.get("paleta"),
+           "musica": S.get("musica"), "version_plan": S.get("version"), "estado": S.get("estado"),
+           "partes": [{k: p.get(k) for k in ("n", "titulo", "estado", "ruta", "duracion_s")} for p in S.get("partes") or []]}
+    ms = leer(SERIES, obligatorio=False) or json.loads(json.dumps(VACIO_SERIES))
+    ms["series"] = [x for x in ms["series"] if x.get("id") != reg["id"]] + [reg]
+    print("serie %s · %s · %d partes (%s) · %s" % (reg["id"], reg["motor"], reg["n_partes"],
+                                                 ", ".join("%d %s" % (p["n"], p.get("estado") or "plan") for p in reg["partes"]), reg["estado"]))
+    if dry_run:
+        print("[dry-run] no se escribió nada")
+        return 0
+    escribir(SERIES, ms)
+    print("escrito memoria/series.json (%d series)" % len(ms["series"]))
     return 0
 
 
@@ -924,11 +1002,13 @@ def main():
     g.add_argument("--informes", nargs="?", const="", metavar="TEMA", help="lista los informes de memoria/informes.json (/investigacion) y el siguiente N.º; con TEMA filtra")
     g.add_argument("--noticias", metavar="DIR", help="registra el noticiero de /noticias entregado en DIR (noticias/<fecha>) en memoria/noticias.json")
     g.add_argument("--video", metavar="DIR", help="registra el video de /video entregado en DIR (hilos/<fecha>-<slug>/video) en memoria/videos.json")
+    g.add_argument("--congreso", metavar="DIR", help="registra el video de /congreso entregado en DIR (congreso/<fecha>-<slug>) en memoria/congreso.json")
     g.add_argument("--sabias", metavar="DIR", help="registra el «¿Sabías que…?» de /sabias entregado en DIR (datos/<fecha>-<slug>/video) en memoria/sabias.json")
     g.add_argument("--historia", metavar="DIR", help="registra la historia de /historia entregada en DIR (historias/<fecha>-<slug>) en memoria/historias.json")
     g.add_argument("--explica", metavar="DIR", help="registra el video de /explica entregado en DIR (explicaciones/<fecha>-<slug>) en memoria/explicaciones.json")
     g.add_argument("--carrusel", metavar="DIR", help="registra el carrusel de /carrusel entregado en DIR (<original>/carrusel) en memoria/carruseles.json")
     g.add_argument("--semana", metavar="DIR", help="registra «Las 5 cifras de la semana» de /semana entregada en DIR (semanas/<domingo>) en memoria/semanas.json")
+    g.add_argument("--serie", metavar="DIR", help="registra la serie de /serie (series/<fecha>-<slug>, con serie.json) en memoria/series.json")
     g.add_argument("--mejoras", metavar="ARCHIVO", help="añade las mejoras al framework de una corrida (JSON {flujo, pieza, mejoras[]}) a memoria/mejoras.json")
     g.add_argument("--ver-mejoras", nargs="?", const="", metavar="ESTADO", help="lista las mejoras de memoria/mejoras.json (con ESTADO: pendiente|hecha|descartada)")
     g.add_argument("--marcar-mejora", metavar="ID", help="cambia el estado de una mejora (con --como)")
@@ -959,10 +1039,14 @@ def main():
         return registrar_noticias(a.noticias, a.estado, a.dry_run)
     if a.carrusel:
         return registrar_carrusel(a.carrusel, a.estado, a.dry_run)
+    if a.serie:
+        return registrar_serie(a.serie, a.dry_run)
     if a.semana:
         return registrar_semana(a.semana, a.estado, a.dry_run)
     if a.sabias:
         return registrar_sabias(a.sabias, a.estado, a.dry_run)
+    if a.congreso:
+        return registrar_congreso(a.congreso, a.estado, a.dry_run)
     if a.historia:
         return registrar_historia(a.historia, a.estado, a.dry_run)
     if a.explica:

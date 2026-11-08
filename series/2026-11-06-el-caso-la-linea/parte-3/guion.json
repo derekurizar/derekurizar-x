@@ -1,0 +1,359 @@
+{
+ "id": "2026-11-06-el-caso-la-linea-parte-3",
+ "tipo": "historia",
+ "slug": "el-caso-la-linea-parte-3",
+ "tema": "el caso La Línea",
+ "fecha": "2026-11-06",
+ "pregunta": "¿Quién era quién en la red de La Línea y para quién cobraba?",
+ "arco": "caso: descubrimiento, caída y juicio, con un legado que se volteó contra quienes investigaron",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "2013",
+   "titulo": "La SAT",
+   "escena": 6
+  },
+  {
+   "numero": 3,
+   "anio": "2015",
+   "titulo": "Uno y Dos",
+   "escena": 10
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "La Línea empezaba en el puerto. En Guatemala, el fraude subía de la aduana a la SAT. Abajo cobraban tramitadores y vistas, pero dos claves escondían a quienes daban las órdenes. Los tramitadores obedecían: la CICIG, la comisión de la ONU contra la impunidad, dijo que respondían a un grupo externo a la SAT. Lo encabezaba Osama Ezzat Asis Aranki, condenado en 2022 por asociación ilícita. Y dentro de la SAT, la oficina de impuestos, la CICIG señaló a la jefa de Aduanas: dijo que participaba en la red, aunque la absolvieron. Entonces, ¿y los jefes de la SAT?"
+  },
+  {
+   "acto": 2,
+   "texto": "En 2013, el presidente Otto Pérez Molina juramentó a Carlos Muñoz, el jefe anterior de la SAT, al frente de la oficina. En enero de 2015 lo cambió por un nuevo jefe. Pero la CICIG dijo que la red influyó en ese cambio y que el nuevo jefe era parte de ella. Entonces, el 16 de abril de 2015, la red cayó: detuvieron a Muñoz y al nuevo jefe, absueltos años después. Ese mismo día capturaron a Salvador Estuardo González, alias Eco: según los investigadores, el operador y segundo al mando de la red. Su jefe, en cambio, no trabajaba en ninguna aduana: la CICIG y el Ministerio Público afirmaron que la encabezaba Juan Carlos Monzón, secretario privado de la vicepresidenta Roxana Baldetti."
+  },
+  {
+   "acto": 3,
+   "texto": "En agosto de 2015, la fiscal general Thelma Aldana lo dijo así: Arriba de Juan Carlos Monzón, encontramos en la estructura de La Línea, al señor Presidente y a Roxana Baldetti. Por eso las dos claves, el Uno y la Dos, cobraron sentido: para la acusación eran Pérez Molina y Baldetti, como dijo Iván Velásquez, comisionado de la CICIG. Y Monzón y Eco, dijo Aldana, no eran la cabeza: eran el enlace con esos dos. ¿Y cuántos eran en La Línea? La CICIG calculó en 2015 al menos 64; un perito, en el juicio de 2022, un mínimo de 47. Ninguna fuente explica la diferencia. Entonces, fueran los que fueran, la acusación veía arriba a los mismos dos. ¿Qué hizo la gente cuando oyó el nombre de la vicepresidenta en La Línea?"
+  }
+ ],
+ "hilos": [
+  {
+   "id": "p3h1",
+   "escena": 11
+  },
+  {
+   "id": "p3h2",
+   "escena": 8
+  },
+  {
+   "id": "p3h3",
+   "escena": 12
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3
+  ],
+  [
+   4,
+   5
+  ],
+  [
+   6,
+   7,
+   8
+  ],
+  [
+   10,
+   11,
+   12
+  ]
+ ],
+ "paleta": "cielo",
+ "musica": "cielo-1",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2166.0,
+ "duracion_s": 147.1,
+ "critica": {
+  "veredicto": "pasa",
+  "vuelta": 1,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 4,
+   "claridad": 3,
+   "flujo": 4,
+   "precision": 5,
+   "cierre": 4
+  }
+ },
+ "gancho": {
+  "familia": "contraste",
+  "visual": "foto",
+  "pantalla": "Puerto, aduana, SAT",
+  "linea": "La Línea subía hasta la SAT"
+ },
+ "promesa": {
+  "texto": "dos claves escondían a quienes daban las órdenes.",
+  "forma": "secreto",
+  "en": 2,
+  "pago": 11,
+  "revela": 2
+ },
+ "bisagra": {
+  "texto": "Su jefe, en cambio, no trabajaba en ninguna aduana.",
+  "forma": "contradiccion",
+  "en": 9,
+  "pago": 9
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "La Línea empezaba en el puerto. En Guatemala, el fraude subía de la aduana a la SAT.",
+   "voz": "La Línea empezaba en el puerto. En Guatemala, el fraude subía de la aduana a la Sat.",
+   "dur": 6.046,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "golpe",
+   "pantalla": "Abajo cobraban tramitadores y vistas, pero dos claves escondían a quienes daban las órdenes.",
+   "voz": "Abajo cobraban tramitadores y vistas, pero dos claves escondían a quienes daban las órdenes.",
+   "dur": 5.816,
+   "hechos": [],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "foto",
+   "pantalla": "Los tramitadores obedecían: la CICIG, la comisión de la ONU contra la impunidad, dijo que respondían a un grupo externo a la SAT.",
+   "voz": "Los tramitadores obedecían: la Cicig, la comisión de la Onu contra la impunidad, dijo que respondían a un grupo externo a la Sat.",
+   "dur": 8.53,
+   "hechos": [
+    "red-h36",
+    "red-h07"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: US Embassy Guatemala · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "golpe",
+   "pantalla": "Lo encabezaba Osama Ezzat Asis Aranki, condenado en 2022 por asociación ilícita.",
+   "voz": "Lo encabezaba Osama Ezzat Asis Aranki, condenado en dos mil veintidós por asociación ilícita.",
+   "dur": 7.078,
+   "hechos": [
+    "jui-h24"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "foto",
+   "pantalla": "Y dentro de la SAT, la oficina de impuestos, la CICIG señaló a la jefa de Aduanas: dijo que participaba en la red, aunque la absolvieron. Entonces, ¿y los jefes de la SAT?",
+   "voz": "Y dentro de la Sat, la oficina de impuestos, la Cicig señaló a la jefa de Aduanas: dijo que participaba en la red, aunque la absolvieron. Entonces, ¿y los jefes de la Sat?",
+   "dur": 12.549,
+   "hechos": [
+    "red-h40"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "foto",
+   "pantalla": "En 2013, el presidente Otto Pérez Molina juramentó a Carlos Muñoz, el jefe anterior de la SAT, al frente de la oficina. En enero de 2015 lo cambió por un nuevo jefe.",
+   "voz": "En dos mil trece, el presidente Otto Pérez Molina juramentó a Carlos Muñoz, el jefe anterior de la Sat, al frente de la oficina. En enero de dos mil quince lo cambió por un nuevo jefe.",
+   "dur": 11.581,
+   "hechos": [
+    "red-h32",
+    "red-h33"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: La Hora",
+     "origen": "medio",
+     "licencia": "© La Hora (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "golpe",
+   "pantalla": "Pero la CICIG dijo que la red influyó en ese cambio y que el nuevo jefe era parte de ella.",
+   "voz": "Pero la Cicig dijo que la red influyó en ese cambio y que el nuevo jefe era parte de ella.",
+   "dur": 5.788,
+   "hechos": [
+    "red-h45"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "foto",
+   "pantalla": "Entonces, el 16 de abril de 2015, la red cayó: detuvieron a Muñoz y al nuevo jefe, absueltos años después. Ese mismo día capturaron a Salvador Estuardo González, alias Eco: según los investigadores, el operador y segundo al mando de la red.",
+   "voz": "Entonces, el dieciséis de abril de dos mil quince, la red cayó: detuvieron a Muñoz y al nuevo jefe, absueltos años después. Ese mismo día capturaron a Salvador Estuardo González, alias Eco: según los investigadores, el operador y segundo al mando de la red.",
+   "dur": 18.668,
+   "hechos": [
+    "red-h14",
+    "red-h15"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: La Hora",
+     "origen": "medio",
+     "licencia": "© La Hora (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "foto",
+   "pantalla": "Su jefe, en cambio, no trabajaba en ninguna aduana: la CICIG y el Ministerio Público afirmaron que la encabezaba Juan Carlos Monzón, secretario privado de la vicepresidenta Roxana Baldetti.",
+   "voz": "Su jefe, en cambio, no trabajaba en ninguna aduana: la Cicig y el Ministerio Público afirmaron que la encabezaba Juan Carlos Monzón, secretario privado de la vicepresidenta Roxana Baldetti.",
+   "dur": 12.698,
+   "hechos": [
+    "red-h08",
+    "des-h11"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "cita",
+   "pantalla": "En agosto de 2015, la fiscal general Thelma Aldana lo dijo así: Arriba de Juan Carlos Monzón, encontramos en la estructura de La Línea, al señor Presidente y a Roxana Baldetti.",
+   "voz": "En agosto de dos mil quince, la fiscal general Thelma Aldana lo dijo así: Arriba de Juan Carlos Monzón, encontramos en la estructura de La Línea, al señor Presidente y a Roxana Baldetti.",
+   "dur": 11.98,
+   "hechos": [
+    "red-h11"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: US Embassy Guatemala · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "red",
+   "pantalla": "Por eso las dos claves, el Uno y la Dos, cobraron sentido: para la acusación eran Pérez Molina y Baldetti, como dijo Iván Velásquez, comisionado de la CICIG. Y Monzón y Eco, dijo Aldana, no eran la cabeza: eran el enlace con esos dos.",
+   "voz": "Por eso las dos claves, el Uno y la Dos, cobraron sentido: para la acusación eran Pérez Molina y Baldetti, como dijo Iván Velásquez, comisionado de la Cicig. Y Monzón y Eco, dijo Aldana, no eran la cabeza: eran el enlace con esos dos.",
+   "dur": 17.619,
+   "hechos": [
+    "red-h10",
+    "red-h11",
+    "des-h24"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "tarjeta",
+   "pantalla": "¿Y cuántos eran en La Línea? La CICIG calculó en 2015 al menos 64; un perito, en el juicio de 2022, un mínimo de 47. Ninguna fuente explica la diferencia.",
+   "voz": "¿Y cuántos eran en La Línea? La Cicig calculó en dos mil quince al menos sesenta y cuatro; un perito, en el juicio de dos mil veintidós, un mínimo de cuarenta y siete. Ninguna fuente explica la diferencia.",
+   "dur": 14.177,
+   "hechos": [
+    "red-h09"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 13,
+   "tipo": "cierre",
+   "pantalla": "Entonces, fueran los que fueran, la acusación veía arriba a los mismos dos. ¿Qué hizo la gente cuando oyó el nombre de la vicepresidenta en La Línea? Sígueme: en la cuarta parte te cuento cómo respondió la plaza cuando apareció la vicepresidenta.",
+   "voz": "Entonces, fueran los que fueran, la acusación veía arriba a los mismos dos. ¿Qué hizo la gente cuando oyó el nombre de la vicepresidenta en La Línea? Sígueme: en la cuarta parte te cuento cómo respondió la plaza cuando apareció la vicepresidenta.",
+   "dur": 17.794,
+   "hechos": [],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Lo que quedó abierto",
+  "resumen": [
+   "Abajo cobraban tramitadores y vistas",
+   "Monzón, señalado como jefe operativo",
+   "Arriba, para la acusación: Uno y Dos"
+  ],
+  "texto": "Entonces, fueran los que fueran, la acusación veía arriba a los mismos dos. ¿Qué hizo la gente cuando oyó el nombre de la vicepresidenta en La Línea?",
+  "tipo": "pregunta",
+  "forma": "puente",
+  "final": "¿Qué hizo la gente cuando oyó el nombre de la vicepresidenta en La Línea?",
+  "invitacion": "Sígueme: en la cuarta parte te cuento cómo respondió la plaza cuando apareció la vicepresidenta."
+ },
+ "caption": {
+  "tiktok": "Serie · Parte 3 de 7: Quién era quién\nDe los tramitadores del puerto a la oficina de la vicepresidenta: quién era quién en La Línea, según la acusación.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\n#Guatemala #LaLinea #CICIG",
+  "instagram": "Serie · Parte 3 de 7: Quién era quién\nTramitadores, jefes de la SAT, Eco, Monzón y las claves del Uno y la Dos: así describió la acusación la red de La Línea.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\n#Guatemala #LaLinea",
+  "facebook": "Serie · Parte 3 de 7: Quién era quién\nQuién era quién en la red de La Línea, de las aduanas a la Vicepresidencia, contado con lo que dijeron la CICIG y la fiscalía.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\nFuentes en el primer comentario.",
+  "shorts": "El caso La Línea (3/7): quién era quién en la red #Shorts\nDe las aduanas a la Vicepresidencia, según la acusación."
+ }
+}

@@ -68,11 +68,13 @@ import video as VD  # noqa: E402
 FORMATOS = {"corto": ("explica-corto", 60, 0.25, (125, 150), (105, 175)),
             "medio": ("explica", 120, 0.25, (250, 300), (210, 345)),
             "largo": ("explica-largo", 165, 0.10, (350, 410), (300, 450)),
-            "mito": ("explica-mito", 75, 0.20, (150, 185), (125, 215))}
+            "mito": ("explica-mito", 75, 0.20, (150, 185), (125, 215)),
+            # «serie» (/serie, motor temario): una parte de ≈ 90 s (75–110), con el piso de 61 s (scripts/serie.py)
+            "serie": ("explica-serie", 90, 0.22, (190, 250), (170, 265))}
 DURACION_DEFECTO, DURACION_MAX_S = "medio", 180
 for _d, (_k, _s, _tol, _p, _pd) in FORMATOS.items():
-    VD.DURACIONES[_k] = {"s": _s, "tarjetas": (0, {"corto": 3, "medio": 5, "largo": 7, "mito": 3}[_d]),
-                         "golpes": (0, {"corto": 4, "medio": 7, "largo": 9, "mito": 6}[_d]), "tol": _tol}
+    VD.DURACIONES[_k] = {"s": _s, "tarjetas": (0, {"corto": 3, "medio": 5, "largo": 7, "mito": 3, "serie": 4}[_d]),
+                         "golpes": (0, {"corto": 4, "medio": 7, "largo": 9, "mito": 6, "serie": 6}[_d]), "tol": _tol}
 CLAVE_DE = {v[0]: k for k, v in FORMATOS.items()}
 TIPOS_PROPIOS = ("cuenta",)
 TIPOS = VD.TIPOS + TIPOS_PROPIOS   # W13: espejo literal en .claude/workflows/explica.js
@@ -1005,7 +1007,15 @@ def V9_de_video(x):
 
 def estructura(g, st, dur, tarjetas):
     """V1/V9 de /video sin lo que el explicador no hereda + E5 (tres actos, rótulos, intuición y corrección, giro,
-    variedad), E11 (la cuenta en forma) y las secuencias de voz (H20 de /historia)."""
+    variedad), E11 (la cuenta en forma), las secuencias de voz (H20 de /historia) y, en una parte de /serie, SE4–SE9."""
+    f = estructura_explica(g, st, dur, tarjetas)
+    if VD.serie_de(st).get("parte"):
+        import serie as SR   # noqa: E402  (serie importa explica: aquí, no arriba)
+        f += SR.revisar_parte(g, st, TRABAJO_ACTUAL if "TRABAJO_ACTUAL" in globals() else None)
+    return f
+
+
+def estructura_explica(g, st, dur, tarjetas):
     f = [x for x in ORIGINALES["estructura"](g, st, dur, tarjetas) if not V9_de_video(x)]
     escenas = g.get("escenas") or []
     tipos = [e.get("tipo") for e in escenas]
@@ -1689,6 +1699,9 @@ def post_explica(S, e, ps, pal, fin_voz, dur, g, ev, sfx):
     esc = HI.escena_guion(S, g)
     tipo = S.get("tipo")
     S["ejemplo"] = bool(e.get("ejemplo"))
+    ser = VD.serie_de(VD.estado(TRABAJO_ACTUAL)) if TRABAJO_ACTUAL else {}
+    if tipo == "gancho" and ser.get("parte") and not S.get("chip"):   # /serie: «Parte N de M» desde el cuadro 0 (SE8)
+        S["chip"] = {"texto": "Parte %d de %d" % (ser["parte"], ser.get("de") or ser["parte"]), "tono": "acento", "pos": "arriba", "desde": 0}
     if tipo not in ("gancho", "cierre", "adivina"):
         R = rotulo_de(esc)
         if R:
@@ -1989,7 +2002,8 @@ def cmd_digesto(a):
                       "«supón») y la pantalla lleva el chip «Ejemplo» sola. Nunca «en Guatemala» junto a un número de ejemplo.",
                       "- «Guatemala» o «quetzales» en la voz o la pantalla del gancho (R6).",
                       "- Bloqueadas por rotación: familias %s · visual %s" % (", ".join(rec_g.get("familias") or []) or "ninguna",
-                                                                           ", ".join(rec_g.get("visuales") or []) or "ninguno")]
+                                                                           ", ".join(rec_g.get("visuales") or []) or "ninguno"),
+                      "", "## Rendimiento real (TikTok, YouTube; /analyze-improve)"] + VD.lineas_rendimiento_real()
         print("\n".join(out))
         return 0
     if a.para == "critico":

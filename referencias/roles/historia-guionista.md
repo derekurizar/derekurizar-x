@@ -77,6 +77,10 @@ la voz no describe lo que ya se ve.
   escena sigue de la anterior; cada «esos…», «ese…», «así», «lo», «ellos» apunta a algo que ya se oyó o se leyó; nada
   se dice dos veces como si fuera nuevo. Si cambias el gancho o una escena, relee el hilo entero: lo que apuntaba a la
   versión anterior queda colgado.
+- **El contraste se dice antes del nombre** (La Línea P4, 2026-11-07): si una escena cuenta que alguien escapó, faltó
+  o no cayó, primero el hueco y después quién: «Arrestaron a más de veinte. Entre los detenidos faltaba uno: el
+  secretario, Juan Carlos Monzón». No «Ese secretario era Monzón. Pero ese día estaba en Corea»: el «pero» llega
+  antes de que el oyente sepa qué contradice.
 - Un año anterior al del rótulo de su acto (el museo de 2019 dentro de «2021») es un flashback: el gate avisa.
   Muévelo al acto que le toca o dilo como recuerdo.
 - `enlace` (pero | por_eso | y) es opcional en tarjeta, golpe y explica y solo decide el efecto de sonido de la
@@ -97,6 +101,8 @@ en pantalla se enciende mientras la voz la lee y en ese tramo no hay subtítulo,
 el resto de la voz (quién habla, lo que sigue) va antes o después de la frase, no en medio; en una tarjeta,
 `grafico.datos.destacar` apunta a lo que la voz cuenta (es lo único en acento).
 
+- **toma**: ya no existe (retiradas el 2026-11-06: muchas veces sin coherencia con lo que se narra; TM0 las rechaza). Una declaración que importa va como **cita** con la frase literal leída por la voz; el
+  contexto, con una foto.
 - **foto** `{foto: "<id>" | null, fecha (chip ≤ 14: «Feb 2015»), lugar (≤ 24), titular (≤ 9 palabras), hechos: [ids],
   cifra?: {texto ≤ 18 con dígitos, etiqueta ≤ 30}, fuente? (≤ 44), texto (40–280)}`.
   - **Siempre con foto**: nunca `null`, `icono` ni `depto` (H7). Si el hecho no tiene foto propia, usa una de
@@ -127,7 +133,30 @@ el resto de la voz (quién habla, lo que sigue) va antes o después de la frase,
   lo que HACE la historia en ese tramo), `brief` siempre (40–400 caracteres: qué se ve y cómo se mueve) y
   `animacion` = un id del catálogo **con ese mismo mecanismo** y no bloqueado por los últimos videos, o `null` (la
   escribe el animador y queda en la biblioteca como plantilla). Pedir una nueva es lo normal; `cadena` no es el
-  comodín.
+  comodín. Lo que la animación dibuja tiene nombre (2026-11-07):
+  - `rotulos: {limite, base}` (≤ 18 caracteres): qué es la línea («Renuncia», nunca «límite» a secas) y qué es lo que
+    ya había al empezar («La plaza»).
+  - `sujeto: "<personaje>"`: si el mecanismo le pasa a una persona, su retrato y su nombre quedan fijos sobre el lienzo.
+  - Los `pasos` se escriben como en pantalla (siglas en mayúsculas: «El CACIF», aunque la voz diga «el Cacif»).
+  - **`continua: true`**: si la escena siguiente sigue hablando de lo mismo (una fuente que resume lo que la animación
+    ya mostró), no la cambies por un golpe de texto: hazla otra `explica` con la misma `animacion`, su `titulo` y 1–4
+    pasos nuevos. La pantalla sigue con corte invisible, no cuenta como otra explica (V1) y solo entra lo nuevo.
+
+## La imagen cambia cuando cambia el tema (decisión del usuario, 2026-11-06)
+
+- **Corta las escenas por contenido, no por reloj.** Una escena nueva cuando la voz pasa a otra persona, otro lugar,
+  otro documento u otra fecha clave. Mientras la voz siga en lo mismo, la misma imagen se queda (aunque dure 12 s):
+  partirla solo para «que se mueva» confunde.
+- **La cámara no hace nada por su cuenta**: una foto lleva un solo empuje lento, y a lo más un corte limpio a la cara
+  de la persona que la voz nombra (la tarjeta de persona). Las tarjetas, las animaciones y la red quedan quietas: se
+  mueve lo de adentro. Transiciones limpias (corte o fundido); nada de barridos ni empujes laterales.
+- **Sin tomas de video** (retiradas): una declaración que importa va como **cita** con su frase literal leída por la voz.
+- **En una serie, nada se repite** (SE13): una cita o una frase de ≥ 8 palabras que ya salió en una parte anterior no
+  vuelve a salir; dilo de otra forma o usa otra cita.
+
+- **El organigrama (`red`)**: ≤ 3 niveles; arriba quien manda (uno, o los dos que mandaban juntos: «el Uno» y «la Dos»
+  en el mismo nivel 0); los de la misma altura, lado a lado; nunca una fila de una persona por nivel (H23). Si la voz
+  nombra a quienes investigaron, van como nodos `bando: investigador` en la franja de abajo.
 
 ## Verdad y atribución (H3, H4, H19)
 
@@ -210,3 +239,33 @@ imprime el gate (trae `tipos` con el tipo de cada escena, sin el cierre, y adem�
   - devuelve `voces_cambiadas`: si cambiaron voces, el oyente las vuelve a oír, y una confusión o un salto nuevo en
     una escena revierte **solo esa escena** (su texto de `guion.aprobado.json`, con `aplicar`); una mejora de
     precisión (H-C5) se queda aunque confunda.
+
+## Modo serie (una parte de `/serie`)
+
+La parte dura ≈ 90 s (190–250 palabras; H15 con el formato `historia-serie`) y solo ve los hechos hasta el fin de su
+periodo. Se entiende sola (SE4): quien llega por la parte 3 no vio las otras, así que lo que hace falta lo cuentas en una
+oración, sin «como vimos» ni «en la parte anterior». En las partes 1…M−1 el cierre es `tipo: pregunta` (o remate) con
+`forma: "puente"`: la frase final deja la pregunta del puente del plan, que abre la parte siguiente, sin anunciarla
+(«en la próxima parte» lo rechazan P2 y F9). Después, en `cierre.invitacion` (aparte de `cierre.texto` y de la
+narración), una oración que pide seguir la cuenta y dice qué cuenta la parte siguiente: «Sígueme: en la segunda parte te
+cuento cómo …» (SE9: «Sígueme», la parte en palabras, su tema, ≤ 18 palabras, sin cifras ni revelaciones); un hilo que sigue abierto va `{id, pasa_a: N+1}` (H17). En la última, todos
+los hilos se pagan o se declaran sin respuesta y el cierre es legado o consecuencia. Captions: TikTok, Instagram y
+Facebook abren con «Serie · Parte N de M: <título>»; el título de Shorts lleva «(N/M)»; desde la parte 2, esos tres
+captions llevan una línea que manda al inicio («¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.») (SE8). La
+última parte no lleva invitación. El chip «Parte N de M» y la
+línea «Parte N+1 · título» del cierre los pone el script.
+
+## Escenas nuevas y personas (2026-11-06)
+- **`red`** (≤ 1 por video): cuando hay ≥ 4 actores conectados y la voz cuenta quién mandaba.
+  - Forma: `{tipo: "red", titulo, texto, nodos: [{id, personaje, nivel (0 = quien manda), dice}], aristas: [{de, a, rel, hecho}], atribuida, fuente}`.
+  - Cada arista lleva el id del hecho cuyas `relaciones` la dicen.
+  - Si alguna es un alegato: `atribuida: true` y la voz atribuye («según la fiscalía…»). Gate H23.
+  - Cada `dice` suena en la voz en el orden de los nodos.
+- **`dividida`**: dos personas frente a frente en una escena foto. Escribe `dividida: [foto_a, foto_b]`, con un retrato de cada una.
+- **Cita de un documento:** entra como hoja con sello (fecha y fuente). No hace falta escribir nada más.
+- **Tarjeta de persona:** la primera mención la arma el script sola. Tu trabajo es que la voz diga el nombre completo o su alias la primera vez.
+- **Modo caso:** cita en `hechos` de cada escena los ids que cuentas; la parte debe citar ≥ 60 % de los que se le repartieron (SE12).
+- **Última parte de una serie: el resumen** (SE14). Una escena `resumen_serie: true` en el acto 3, antes de la última cita o
+  del cierre, de 20–30 s de voz: repasa en orden toda la serie (un momento por oración, de ≥ 5 partes, con sus ids en
+  `hechos`) y termina en lo que más pesa. Nada nuevo; los alegatos, atribuidos. Va también en la narración de corrido.
+  Visual: `explica` con `cronologia` (pasos «año · momento» con palabras que la voz dice). Ver `referencias/flujo-serie.md`.

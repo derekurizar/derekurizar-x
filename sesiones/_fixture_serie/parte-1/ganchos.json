@@ -1,0 +1,68 @@
+{
+ "candidatos": [
+  {
+   "id": "g1",
+   "familia": "lugar",
+   "visual": "foto",
+   "visual_datos": {
+    "foto": "ori-f01",
+    "etiqueta": "Quetzaltenango · 1952"
+   },
+   "pantalla": "Un horno de leña",
+   "linea": "Así empezó La Espiga en Xela",
+   "verbo": "empezó",
+   "texto": "Así empezó La Espiga: un horno de leña en Xela, Guatemala.",
+   "promesa_sugerida": "¿Cómo llena una ciudad de pan un solo horno?",
+   "forma_sugerida": "pregunta",
+   "por_que": "el lugar y el objeto primero: el horno a sangre desde el cuadro 0"
+  },
+  {
+   "id": "g2",
+   "familia": "personaje",
+   "visual": "foto",
+   "visual_datos": {
+    "foto": "ori-f04",
+    "etiqueta": "Xela · 1958"
+   },
+   "pantalla": "Marta Pérez",
+   "linea": "encendió el horno de La Espiga",
+   "verbo": "encendió",
+   "texto": "Marta Pérez encendió el horno de La Espiga en Xela, Guatemala.",
+   "promesa_sugerida": "¿Hasta dónde llegaría ese pan?",
+   "forma_sugerida": "presagio",
+   "por_que": "una persona y su decisión"
+  },
+  {
+   "id": "g3",
+   "familia": "misterio",
+   "visual": "foto",
+   "visual_datos": {
+    "foto": "ori-f05",
+    "etiqueta": "Xela · 1968"
+   },
+   "pantalla": "¿Un solo horno?",
+   "linea": "La Espiga empezó con uno en Xela",
+   "verbo": "empezó",
+   "texto": "La Espiga empezó con un solo horno en Xela, Guatemala.",
+   "promesa_sugerida": "¿Cuánto pan cabe en una ciudad?",
+   "forma_sugerida": "apuesta",
+   "por_que": "un vacío: cuánto puede un solo horno"
+  },
+  {
+   "id": "g4",
+   "familia": "resultado",
+   "visual": "foto",
+   "visual_datos": {
+    "foto": "ori-f06",
+    "etiqueta": "Quetzaltenango · 1971"
+   },
+   "pantalla": "Pan para toda Xela",
+   "linea": "La Espiga llenó la ciudad de pan",
+   "verbo": "llenó",
+   "texto": "La Espiga llenó una ciudad de pan, en Guatemala.",
+   "promesa_sugerida": "¿Cómo lo logró sin otra fábrica?",
+   "forma_sugerida": "secreto",
+   "por_que": "el resultado primero, el cómo después"
+  }
+ ]
+}

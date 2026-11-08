@@ -1,0 +1,36 @@
+{
+ "ganador": "g1",
+ "segundo": "g3",
+ "modo": "seleccion",
+ "puntajes": {
+  "g1": {
+   "silencio": 4,
+   "tension": 5,
+   "alineacion": 4,
+   "honestidad": 5,
+   "novedad": 4
+  },
+  "g2": {
+   "silencio": 4,
+   "tension": 4,
+   "alineacion": 4,
+   "honestidad": 5,
+   "novedad": 3
+  },
+  "g3": {
+   "silencio": 5,
+   "tension": 4,
+   "alineacion": 4,
+   "honestidad": 5,
+   "novedad": 4
+  },
+  "g4": {
+   "silencio": 4,
+   "tension": 3,
+   "alineacion": 4,
+   "honestidad": 5,
+   "novedad": 3
+  }
+ },
+ "razon": "g1 plantea la pregunta del video sin dar el mecanismo; g3 de segundo (versión B)"
+}

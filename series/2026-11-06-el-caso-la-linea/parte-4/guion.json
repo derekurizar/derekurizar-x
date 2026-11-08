@@ -1,0 +1,386 @@
+{
+ "id": "2026-11-06-el-caso-la-linea-parte-4",
+ "tipo": "historia",
+ "slug": "el-caso-la-linea-parte-4",
+ "tema": "el caso La Línea",
+ "fecha": "2026-11-06",
+ "pregunta": "¿Qué hizo la gente cuando el nombre de la vicepresidenta apareció en el caso?",
+ "arco": "caso: descubrimiento, caída y juicio, con un legado que se volteó contra quienes investigaron",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "Mayo 2015",
+   "titulo": "La renuncia",
+   "escena": 6
+  },
+  {
+   "numero": 3,
+   "anio": "Agosto 2015",
+   "titulo": "La captura",
+   "escena": 11
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "Las escuchas de La Línea hablaban de «la Señora». Guatemala miró a la vicepresidenta. Era Roxana Baldetti, y presidía la comisión contra el contrabando. La fiscalía afirmó que su propio secretario dirigía una red en las aduanas. La CICIG, una comisión de la ONU, y el Ministerio Público arrestaron a más de 20 sospechosos de esa red, La Línea, el 16 de abril de 2015. Entre los detenidos faltaba uno: el secretario, Juan Carlos Monzón. Ese día estaba con ella en Corea del Sur. Entonces Baldetti dijo que lo había despedido. Nueve días después, más de 30,000 personas llenaron la Plaza de la Constitución para pedir la renuncia de Otto Pérez Molina, el presidente con quien gobernaba."
+  },
+  {
+   "acto": 2,
+   "texto": "El 6 de mayo, la Corte Suprema mandó investigar a la vicepresidenta y le pasó al Congreso el antejuicio, el paso para quitarle la inmunidad. Ese mismo día, el Cacif, la cúpula de los empresarios, pidió que ella renunciara. Plaza Pública, un medio digital, dijo que la cercó una suma de fuerzas: la plaza, la patronal, los jueces y el Congreso. A la vicepresidenta se le acababa el tiempo. El 8 de mayo, Pérez Molina lo anunció así: he sido notificado de la renuncia por parte de la señora vicepresidenta. Y el presidente la elogió: Su decisión es personal, meditada, difícil, valiente. Iván Velásquez, el comisionado colombiano al frente de la CICIG, dijo ese día que no la había implicado. Pero en conversaciones de Monzón aparecían dos apodos: «la Dos» y «la Señora»."
+  },
+  {
+   "acto": 3,
+   "texto": "En agosto, Velásquez dijo que esos apodos eran Baldetti. Y el {21:m}, Thelma Aldana, la fiscal general, señaló que por encima de Monzón estaban el presidente y la exvicepresidenta. Ese mismo día, la capturaron por asociación ilícita y defraudación aduanera. Tres días después, Miguel Ángel Gálvez, el juez que después la mandó a juicio, la procesó. Mientras tanto, la exvicepresidenta estaba detenida y la plaza seguía llena. ¿Cuánto más iba a aguantar el presidente?"
+  }
+ ],
+ "hilos": [
+  {
+   "id": "p4h1",
+   "escena": 7
+  },
+  {
+   "id": "p4h2",
+   "escena": 12
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3
+  ],
+  [
+   4,
+   5
+  ],
+  [
+   6,
+   7
+  ],
+  [
+   9,
+   10
+  ],
+  [
+   11,
+   12,
+   13
+  ]
+ ],
+ "paleta": "cielo",
+ "musica": "cielo-1",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2872.0,
+ "duracion_s": 138.8,
+ "critica": {
+  "veredicto": "pasa",
+  "vuelta": 2,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 4,
+   "claridad": 4,
+   "flujo": 4,
+   "precision": 5,
+   "cierre": 4
+  }
+ },
+ "gancho": {
+  "familia": "misterio",
+  "visual": "foto",
+  "pantalla": "La Línea: «la Señora»",
+  "linea": "En las escuchas hablaban de «la Señora»"
+ },
+ "promesa": {
+  "texto": "La fiscalía afirmó que su propio secretario dirigía una red en las aduanas.",
+  "forma": "contradiccion",
+  "en": 2,
+  "pago": 12,
+  "revela": 2
+ },
+ "bisagra": {
+  "texto": "A la vicepresidenta se le acababa el tiempo.",
+  "forma": "reloj",
+  "en": 8,
+  "pago": 8
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "Las escuchas de La Línea hablaban de «la Señora». Guatemala miró a la vicepresidenta.",
+   "voz": "Las escuchas de La Línea hablaban de «la Señora». Guatemala miró a la vicepresidenta.",
+   "dur": 6.236,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "Era Roxana Baldetti, y presidía la comisión contra el contrabando. La fiscalía afirmó que su propio secretario dirigía una red en las aduanas.",
+   "voz": "Era Roxana Baldetti, y presidía la comisión contra el contrabando. La fiscalía afirmó que su propio secretario dirigía una red en las aduanas.",
+   "dur": 8.979,
+   "hechos": [
+    "pla-h18"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: US Embassy in Guatemala · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "tarjeta",
+   "pantalla": "La CICIG, una comisión de la ONU, y el Ministerio Público arrestaron a más de 20 sospechosos de esa red, La Línea, el 16 de abril de 2015.",
+   "voz": "La Cicig, una comisión de la Onu, y el Ministerio Público arrestaron a más de veinte sospechosos de esa red, La Línea, el dieciséis de abril de dos mil quince.",
+   "dur": 11.628,
+   "hechos": [
+    "pla-h01",
+    "red-h02"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "foto",
+   "pantalla": "Entre los detenidos faltaba uno: el secretario, Juan Carlos Monzón. Ese día estaba con ella en Corea del Sur. Entonces Baldetti dijo que lo había despedido.",
+   "voz": "Entre los detenidos faltaba uno: el secretario, Juan Carlos Monzón. Ese día estaba con ella en Corea del Sur. Entonces Baldetti dijo que lo había despedido.",
+   "dur": 10.955,
+   "hechos": [
+    "pla-h02",
+    "des-h10",
+    "red-h21"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: La Hora",
+     "origen": "medio",
+     "licencia": "© La Hora (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "foto",
+   "pantalla": "Nueve días después, más de 30,000 personas llenaron la Plaza de la Constitución para pedir la renuncia de Otto Pérez Molina, el presidente con quien gobernaba.",
+   "voz": "Nueve días después, más de treinta mil personas llenaron la Plaza de la Constitución para pedir la renuncia de Otto Pérez Molina, el presidente con quien gobernaba.",
+   "dur": 10.188,
+   "hechos": [
+    "pla-h03"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: La Hora",
+     "origen": "medio",
+     "licencia": "© La Hora (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "explica",
+   "pantalla": "El 6 de mayo, la Corte Suprema mandó investigar a la vicepresidenta y le pasó al Congreso el antejuicio, el paso para quitarle la inmunidad. Ese mismo día, el Cacif, la cúpula de los empresarios, pidió que ella renunciara.",
+   "voz": "El seis de mayo, la Corte Suprema mandó investigar a la vicepresidenta y le pasó al Congreso el antejuicio, el paso para quitarle la inmunidad. Ese mismo día, el Cacif, la cúpula de los empresarios, pidió que ella renunciara.",
+   "dur": 14.834,
+   "hechos": [
+    "pla-h04",
+    "pla-h05"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": "presion-limite",
+   "mecanismo": "umbral"
+  },
+  {
+   "n": 7,
+   "tipo": "explica",
+   "pantalla": "Plaza Pública, un medio digital, dijo que la cercó una suma de fuerzas: la plaza, la patronal, los jueces y el Congreso.",
+   "voz": "Plaza Pública, un medio digital, dijo que la cercó una suma de fuerzas: la plaza, la patronal, los jueces y el Congreso.",
+   "dur": 10.152,
+   "hechos": [
+    "pla-h17"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": "presion-limite",
+   "mecanismo": "umbral"
+  },
+  {
+   "n": 8,
+   "tipo": "cita",
+   "pantalla": "A la vicepresidenta se le acababa el tiempo. El 8 de mayo, Pérez Molina lo anunció así: he sido notificado de la renuncia por parte de la señora vicepresidenta.",
+   "voz": "A la vicepresidenta se le acababa el tiempo. El ocho de mayo, Pérez Molina lo anunció así: he sido notificado de la renuncia por parte de la señora vicepresidenta.",
+   "dur": 11.387,
+   "hechos": [
+    "pla-h06"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: World Economic Forum derivative work:… · CC BY-SA 2.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 2.0"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "cita",
+   "pantalla": "Y el presidente la elogió: Su decisión es personal, meditada, difícil, valiente.",
+   "voz": "Y el presidente la elogió: Su decisión es personal, meditada, difícil, valiente.",
+   "dur": 7.071,
+   "hechos": [
+    "pla-h06"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Gobierno de Guatemala · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "foto",
+   "pantalla": "Iván Velásquez, el comisionado colombiano al frente de la CICIG, dijo ese día que no la había implicado. Pero en conversaciones de Monzón aparecían dos apodos: «la Dos» y «la Señora».",
+   "voz": "Iván Velásquez, el comisionado colombiano al frente de la Cicig, dijo ese día que no la había implicado. Pero en conversaciones de Monzón aparecían dos apodos: «la Dos» y «la Señora».",
+   "dur": 12.696,
+   "hechos": [
+    "pla-h19",
+    "pla-h20"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: US Embassy Guatemala · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "foto",
+   "pantalla": "En agosto, Velásquez dijo que esos apodos eran Baldetti. Y el 21, Thelma Aldana, la fiscal general, señaló que por encima de Monzón estaban el presidente y la exvicepresidenta.",
+   "voz": "En agosto, Velásquez dijo que esos apodos eran Baldetti. Y el veintiuno, Thelma Aldana, la fiscal general, señaló que por encima de Monzón estaban el presidente y la exvicepresidenta.",
+   "dur": 11.631,
+   "hechos": [
+    "red-h10",
+    "des-h24"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: US Embassy · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "golpe",
+   "pantalla": "Ese mismo día, la capturaron por asociación ilícita y defraudación aduanera.",
+   "voz": "Ese mismo día, la capturaron por asociación ilícita y defraudación aduanera.",
+   "dur": 5.025,
+   "hechos": [
+    "pla-h08"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 13,
+   "tipo": "foto",
+   "pantalla": "Tres días después, Miguel Ángel Gálvez, el juez que después la mandó a juicio, la procesó.",
+   "voz": "Tres días después, Miguel Ángel Gálvez, el juez que después la mandó a juicio, la procesó.",
+   "dur": 6.282,
+   "hechos": [
+    "pla-h22"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Carlos Sebastián · CC BY 4.0",
+     "origen": "commons",
+     "licencia": "CC BY 4.0"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 14,
+   "tipo": "cierre",
+   "pantalla": "Mientras tanto, la exvicepresidenta estaba detenida y la plaza seguía llena. ¿Cuánto más iba a aguantar el presidente? Sígueme: en la quinta parte te cuento cómo la plaza llegó hasta el presidente.",
+   "voz": "Mientras tanto, la exvicepresidenta estaba detenida y la plaza seguía llena. ¿Cuánto más iba a aguantar el presidente? Sígueme: en la quinta parte te cuento cómo la plaza llegó hasta el presidente.",
+   "dur": 15.215,
+   "hechos": [],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Lo que quedó abierto",
+  "resumen": [
+   "Abril: la plaza se llena",
+   "Mayo: Baldetti renuncia",
+   "Agosto: la capturan"
+  ],
+  "texto": "Mientras tanto, la exvicepresidenta estaba detenida y la plaza seguía llena. ¿Cuánto más iba a aguantar el presidente?",
+  "tipo": "pregunta",
+  "forma": "puente",
+  "final": "¿Cuánto más iba a aguantar el presidente?",
+  "invitacion": "Sígueme: en la quinta parte te cuento cómo la plaza llegó hasta el presidente."
+ },
+ "caption": {
+  "tiktok": "Serie · Parte 4 de 7: La plaza y la vicepresidenta\nEn 2015, el caso La Línea llenó la Plaza de la Constitución y llevó a Roxana Baldetti de la Vicepresidencia a una celda.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\n#Guatemala #LaLínea #historia",
+  "instagram": "Serie · Parte 4 de 7: La plaza y la vicepresidenta\nDe la plaza llena a la renuncia y la captura de la vicepresidenta Roxana Baldetti, abril a agosto de 2015.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\n#Guatemala #LaLínea",
+  "facebook": "Serie · Parte 4 de 7: La plaza y la vicepresidenta\nAbril de 2015: la plaza se llena. Mayo: Roxana Baldetti renuncia. Agosto: la capturan. Así se movió el caso La Línea.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\nFuentes en el primer comentario.",
+  "shorts": "La plaza y la vicepresidenta: el caso La Línea (4/7) #Shorts\nDe la plaza llena a la captura de Roxana Baldetti en 2015."
+ }
+}

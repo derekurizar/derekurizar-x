@@ -10,7 +10,7 @@
  "narracion": [
   {
    "acto": 1,
-   "texto": "Tu galón de diésel costaba 26 quetzales. En septiembre, Guatemala pagó 46.1. El barril costaba 67 dólares en enero, pero en septiembre llegó a 102: un 52% más. Un vecino paga todavía más."
+   "texto": "Tu galón de diésel costaba 26 quetzales. Guatemala pagó 46.1. El barril costaba 67 dólares en enero, pero en septiembre llegó a 102: un 52% más. Un vecino paga todavía más."
   },
   {
    "acto": 2,
@@ -31,10 +31,10 @@
     "total": "pre-c03",
     "unidad": "quetzales"
    },
-   "pantalla": "26 → 46.1",
+   "pantalla": "Diésel 26 → 46.1",
    "linea": "quetzales por tu galón de diésel",
    "verbo": "costaba",
-   "texto": "Tu galón de diésel costaba 26 quetzales. En septiembre, Guatemala pagó 46.1.",
+   "texto": "Tu galón de diésel costaba 26 quetzales. Guatemala pagó 46.1.",
    "acto": 1
   },
   {

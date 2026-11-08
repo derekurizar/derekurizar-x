@@ -22,6 +22,14 @@ Subcomandos (TRABAJO = sesiones/historia-<slug>/):
         muestra al protagonista del encuadre, H12 la exige en el gancho)
         baja la foto, comprueba lado y licencia (H7) → fotos/<id>.jpg + .json (con su sha1; un gráfico o cartel con
         texto va con --encaje contener: márgenes del color de su borde para que la foto a sangre no lo recorte)
+  video TRABAJO --id <eje>-vNN (--de-fuente URL [--n K] | --url U | --archivo F --credito "Video: …" --origen O) --descripcion D
+        [--fecha F] [--lugar L] [--retrato-de PERSONA] [--sin-transcripcion]
+        baja un video de una nota leída (leer los lista: og:video, YouTube, JW Player, Brightcove, Facebook, mp4, m3u8)
+        con yt-dlp a la caché → videos/<id>.json, la hoja de contacto (un cuadro cada 2 s) y la transcripción (whisper)
+  toma TRABAJO --video <id> --id <id>-tNN --desde M:SS --hasta M:SS --audio mudo|original --hechos IDS
+        [--cita "literal" | --ambiente "…"] [--encaje fondo|recorte --x 0.5] [--fecha F] [--lugar L]
+        corta el tramo: tomas/<id>/00001.jpg… (30 fps) y, con audio, tomas/<id>.wav (−18 LUFS) y sus palabras (TM2, TM3)
+  tomas-contacto TRABAJO       hoja con 4 cuadros de cada toma (QA de contenido)
   hechos TRABAJO --check [--eje E]   H1–H3 + H7 + H12 sobre verificacion_<eje>.json (citas en el texto guardado, fechas,
         independencia, fotos; sin --eje exige una foto del protagonista e imprime las og:image candidatas de las fuentes leídas)
   hechos TRABAJO --reclasificar [--aplicar]   los en_disputa de un solo grupo sin discrepancia en la nota → una_fuente (v3)
@@ -87,8 +95,45 @@ VD.DURACIONES["historia"] = {"s": OBJETIVO_S, "tarjetas": (0, 6), "golpes": (0, 
 # la narración de corrido (v3, 2026-10-27): la voz real va a ≈ 145 palabras por minuto (medido: 416 palabras en 172 s),
 # así que 150 s son ≈ 360 palabras; PALABRAS orienta (aviso fuera), PALABRAS_DURO falla
 PALABRAS, PALABRAS_DURO = (320, 400), (280, 410)
-TIPOS_PROPIOS = ("foto", "cita", "capitulo")
-CARACTERES = {"foto": (40, 280), "cita": (30, 280), "capitulo": (10, 90)}   # voz ya en palabras (≈ 15.5 car/s)
+# /serie (scripts/serie.py): la investigación compartida cubre toda la serie (hasta EJES_MAX_SERIE ejes) y cada parte es
+# un video de ≈ 90 s (formato «historia-serie» en video.json): aplicar_formato cambia estos valores al abrir el TRABAJO
+EJES_MAX_SERIE = 5
+PALABRAS_SERIE, PALABRAS_SERIE_DURO = (190, 250), (170, 265)
+FORMATOS = {"historia": {"OBJETIVO_S": 150, "OBJETIVO_MIN_S": 135, "OBJETIVO_AVISO_S": 165, "OBJETIVO_DURO_S": 170,
+                         "PALABRAS": (320, 400), "PALABRAS_DURO": (280, 410), "HECHOS_MIN": 6, "HILOS": (2, 6)},
+            "historia-serie": {"OBJETIVO_S": 90, "OBJETIVO_MIN_S": 75, "OBJETIVO_AVISO_S": 105, "OBJETIVO_DURO_S": 110,
+                               "PALABRAS": PALABRAS_SERIE, "PALABRAS_DURO": PALABRAS_SERIE_DURO, "HECHOS_MIN": 4,
+                               "HILOS": (1, 4)},
+            # /serie en modo caso (2026-11-06): un caso complejo por temas, partes de ≈ 130 s (115–150)
+            "historia-caso": {"OBJETIVO_S": 130, "OBJETIVO_MIN_S": 115, "OBJETIVO_AVISO_S": 145, "OBJETIVO_DURO_S": 150,
+                              "PALABRAS": (290, 350), "PALABRAS_DURO": (260, 365), "HECHOS_MIN": 8, "HILOS": (2, 5)}}
+
+
+RESUMEN_EXTRA_S = 30   # SE14: segundos de más que puede durar la última parte de una serie por su resumen
+
+
+def aplicar_formato(trabajo):
+    """Los objetivos de duración y palabras del TRABAJO (video.json → formato): «historia» (150 s) o «historia-serie»
+    (≈ 90 s, una parte de /serie). Rebinda los globales que leen el gate, la narración y el digesto."""
+    ruta = os.path.join(trabajo or "", "video.json")
+    st = leer(ruta) if trabajo and os.path.exists(ruta) else {}
+    fo = dict(FORMATOS.get(st.get("formato") or "historia", FORMATOS["historia"]))
+    ser = st.get("serie") if isinstance(st.get("serie"), dict) else {}
+    if ser.get("de") and ser.get("parte") == ser.get("de"):
+        # SE14 (decisión del usuario, 2026-11-07): la última parte de una serie lleva el resumen de toda la serie
+        # (20–30 s) y puede durar esos segundos de más; el tope sigue en DURACION_MAX_S (180 s, YouTube Shorts)
+        extra, pal = RESUMEN_EXTRA_S, round(RESUMEN_EXTRA_S * 145 / 60)
+        fo.update({"OBJETIVO_AVISO_S": fo["OBJETIVO_AVISO_S"] + extra,
+                   "OBJETIVO_DURO_S": min(DURACION_MAX_S, fo["OBJETIVO_DURO_S"] + extra),
+                   "PALABRAS": (fo["PALABRAS"][0], fo["PALABRAS"][1] + pal),
+                   "PALABRAS_DURO": (fo["PALABRAS_DURO"][0], fo["PALABRAS_DURO"][1] + pal)})
+    globals().update(fo)
+    VD.DURACIONES["historia"] = {"s": fo["OBJETIVO_S"], "tarjetas": (0, 6), "golpes": (0, 10), "tol": 0.2 if fo["OBJETIVO_S"] >= 150 else 0.22}
+    return st
+TIPOS_PROPIOS = ("foto", "cita", "capitulo", "red")   # «toma» (clips de video) retirada el 2026-11-06: muchas veces sin coherencia; una cita o una foto
+# la toma sin audio lleva la voz encima como una foto; con su audio original, la voz es solo la entrada (quién habla y
+# cuándo: «El 21 de agosto, Pérez Molina dijo esto:»), por eso desde 20 caracteres
+CARACTERES = {"foto": (40, 280), "cita": (30, 280), "capitulo": (10, 90), "toma": (20, 280), "red": (60, 320)}   # voz ya en palabras (≈ 15.5 car/s)
 # en historia una tarjeta o un golpe pueden sostener un tramo más largo de narración que en /video
 CARACTERES_VIDEO_EN_HISTORIA = {"tarjeta": (40, 260), "mapa": (40, 260), "ranking": (40, 260), "tiempo": (40, 260),
                                 "explica": (40, 260), "golpe": (20, 130)}
@@ -96,9 +141,9 @@ CARACTERES_VIDEO_EN_HISTORIA = {"tarjeta": (40, 260), "mapa": (40, 260), "rankin
 # (sin detener la voz); la escena capitulo con voz propia queda como excepción (0–2, el gate avisa)
 ACTOS = (("planteamiento", 1), ("nudo", 2), ("desenlace", 3))
 PUNTOS_ESPINA = ("detonante", "punto_medio", "climax", "resolucion")
-PERIODOS, HILOS, PERSONAJES_MAX, PRESENTACION_PALABRAS = (2, 5), (2, 6), 8, 8
+PERIODOS, HILOS, PERSONAJES_MAX, PRESENTACION_PALABRAS = (2, 5), (2, 6), 12, 8
 CAPITULOS, ROTULOS, SEGUIDAS_MAX, GIRO_ENTRE = (0, 2), (2, 3), 3, (0.40, 0.75)
-ROTULO_TIPOS = ("foto", "cita", "tarjeta", "mapa", "ranking", "tiempo", "golpe", "explica")
+ROTULO_TIPOS = ("foto", "cita", "tarjeta", "mapa", "ranking", "tiempo", "golpe", "explica", "toma", "red")
 ROTULO_S, ROTULO_CUENTA, DESFASE_ROTULO = 2.3, (0.35, 1.45), 2.3 - VD.TRANSICION   # el rótulo dura 2.3 s; lo propio entra después
 # flujo (H16): la narración se oye de corrido; cortes por minuto, conectores por acto y aperturas con atribución
 CORTES_MAX_POR_MIN, CONECTORES_MIN_POR_ACTO, APERTURAS_ATRIBUIDAS_MAX = 6.5, 2, 1
@@ -155,7 +200,7 @@ RE_NUMERO = re.compile(r"\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?")
 ATRIBUCION = re.compile(r"\bseg[uú]n\b|\bde acuerdo con\b|\bafirm\w+|\bdijo\b|\bdice\b|\bsostien\w+|\bhabr[ií]a\w*|"
                         r"\bcerca de\b|\balrededor de\b|\ba (?:inicios|principios|mediados|finales) de\b|\baproximadamente\b|"
                         r"\bversi[oó]n\b|\bcuenta(?:n)?\b|\brecuerda\w*|\basegur\w+|\bnarr\w+|"
-                        r"\bcalcul\w+|\bestim\w+", re.I)   # una ESTIMACIÓN se atribuye con «calculaba», «estimó»
+                        r"\bcalcul\w+|\bestim\w+|\bpara (?:la|el) (?:acusaci[oó]n|fiscal\w*|MP|CICIG|defensa)\b", re.I)   # una ESTIMACIÓN se atribuye con «calculaba», «estimó»
 # fuentes que cuentan además de las de /noticias: organismos, academia, archivo y prensa internacional. Wikipedia es un
 # mapa, nunca evidencia: se cita su referencia, no la página
 OTROS_OFICIALES = {"cicig.org": "CICIG", "un.org": "ONU", "oas.org": "OEA", "worldbank.org": "Banco Mundial",
@@ -349,12 +394,37 @@ def copiar_fixture(trabajo):
     for k, rec in enumerate(leer(os.path.join(FIXTURE, "fotos.json"))["fotos"]):
         rec = dict(rec, archivo="fotos/%s.jpg" % rec["id"], url=None)
         VD.ff("-f", "lavfi", "-i", "mandelbrot=s=1600x1200:start_scale=%.2f:end_scale=0.3:start_x=%.3f:start_y=%.3f:maxiter=600" % (
-            2.2 - 0.3 * k, -0.743 + 0.012 * k, 0.131 - 0.018 * k),
+            2.2 - 0.3 * (k % 4), -0.743 + 0.012 * (k % 4), 0.131 - 0.018 * (k % 4)),   # k % 4: más hondo el fractal queda negro (sin detalle)
             "-vf", "hue=h=%d:s=0.5,eq=brightness=-0.05:saturation=0.75,noise=alls=12:allf=t" % tonos[k % len(tonos)],
             "-frames:v", "1", "-q:v", "3", os.path.join(trabajo, rec["archivo"]))
         escribir(os.path.join(trabajo, "fotos", rec["id"] + ".json"), rec)
-    print("maqueta: fuentes de ejemplo y fotos dibujadas → %s" % VD.rel(trabajo))
-    return 0
+    rc = tomas_fixture(trabajo)
+    print("maqueta: fuentes de ejemplo, fotos dibujadas y un video de prueba con 2 tomas → %s" % VD.rel(trabajo))
+    return rc
+
+
+def tomas_fixture(trabajo):
+    """El video de prueba de la maqueta (barras de color con un tono, 12 s, sin web) y sus dos tomas: una con audio (la
+    fundadora habla del horno; transcripción fija) y una sin audio (el local tras el terremoto)."""
+    if not os.path.exists(os.path.join(FIXTURE, "video_transcripcion.json")):
+        return 0
+    prueba = os.path.join(trabajo, "videos", "_prueba.mp4")
+    os.makedirs(os.path.dirname(prueba), exist_ok=True)
+    VD.ff("-f", "lavfi", "-i", "testsrc2=s=1280x720:r=30:d=12", "-f", "lavfi", "-i", "sine=frequency=330:d=12",
+          "-c:v", "libx264", "-pix_fmt", "yuv420p", "-c:a", "aac", "-shortest", prueba)
+    ns = argparse.Namespace
+    with contextlib.redirect_stdout(io.StringIO()):
+        rc = cmd_video(ns(trabajo=trabajo, id="ori-v01", de_fuente=None, n=None, url=None, archivo=prueba, fuente=None,
+                          credito="Video: Archivo de ejemplo", origen="medio", descripcion="entrevista de ejemplo a la fundadora y tomas del local",
+                          fecha="1998-05-10", lugar="Xela", retrato_de="Marta Pérez", sin_transcripcion=False,
+                          transcripcion=os.path.join(FIXTURE, "video_transcripcion.json")))
+        base = dict(trabajo=trabajo, video="ori-v01", encaje="fondo", x=0.5, lugar=None, fecha=None, ambiente=None, cita=None)
+        rc = rc or cmd_toma(ns(**dict(base, id="ori-v01-t01", desde="2.0", hasta="6.4", audio="original", hechos="ori-h01",
+                                      cita="Cada pan sale del mismo horno que encendí el primer día", descripcion="la fundadora habla del horno")))
+        rc = rc or cmd_toma(ns(**dict(base, id="ori-v01-t02", desde="7.0", hasta="11.5", audio="mudo", hechos="ori-h03",
+                                      fecha="1976-02-04", lugar="Quetzaltenango", descripcion="el local en ruinas tras el terremoto")))
+    os.remove(prueba)
+    return rc
 
 
 # ---------- leer una fuente (HTML, PDF o Wayback) ----------
@@ -469,16 +539,18 @@ def leer_url(url, otra_vez=False):
         if r.returncode:
             raise RuntimeError("pdftotext falló con %s: %s" % (url, r.stderr.strip()[:200]))
         texto = open(base + ".txt", encoding="utf-8", errors="replace").read()
-        meta.update(titulo=os.path.basename(urllib.parse.urlparse(url).path), fecha=None, og_image=None, formato="pdf")
+        meta.update(titulo=os.path.basename(urllib.parse.urlparse(url).path), fecha=None, og_image=None, formato="pdf", videos=[])
     else:
         enc = re.search(r"charset=([\w-]+)", tipo or "") or re.search(rb'charset="?([\w-]+)', datos[:3000])
         enc = (enc.group(1).decode() if isinstance(enc.group(1), bytes) else enc.group(1)) if enc else "utf-8"
         p = NT._Texto()
-        p.feed(datos.decode(enc, "replace"))
+        crudo_html = datos.decode(enc, "replace")
+        p.feed(crudo_html)
         texto = re.sub(r"\n\s*\n+", "\n\n", re.sub(r"[ \t\r\f\v]+", " ", "".join(p.partes))).strip()
         img = p.meta.get("og:image") or p.meta.get("twitter:image") or p.meta.get("twitter:image:src")
         meta.update(titulo=html.unescape(p.meta.get("og:title") or p.titulo).strip(), fecha=NT.fecha_de(p.meta, p.ld),
-                    og_image=urllib.parse.urljoin(url, img) if img else None, formato="html")
+                    og_image=urllib.parse.urljoin(url, img) if img else None, formato="html",
+                    videos=videos_de_html(crudo_html, url, p.meta, p.ld))
         open(base + ".txt", "w", encoding="utf-8").write(texto + "\n")
     meta.update(archivo=VD.rel(base + ".txt"), caracteres=len(texto), agencia=agencia_de(VD.rel(base + ".txt")))
     meta["clase"] = clasificar(url, (), meta["archivo"])[0]
@@ -506,6 +578,10 @@ def cmd_leer(a):
     elif meta.get("og_image") and meta["clase"] is None:
         print("FOTO: og:image %s (vale solo si el encuadre declara %s en dominios_propios: foto --de-fuente la baja como «empresa»)"
               % (meta["og_image"], meta["dominio"]))
+    if meta.get("videos") and meta["clase"] in ("medio", "oficial", "empresa"):
+        for k, v in enumerate(meta["videos"], 1):
+            print("VIDEO %d: %s (%s%s) → python3 scripts/historia.py video <TRABAJO> --id <eje>-vNN --de-fuente %s%s --descripcion \"…\""
+                  % (k, v["url"], v["tipo"], " · " + v["titulo"][:50] if v.get("titulo") else "", a.url, " --n %d" % k if k > 1 else ""))
     if a.buscar:
         t = plano(open(os.path.join(RAIZ, meta["archivo"]), encoding="utf-8", errors="replace").read())
         print("cita %s en el texto" % ("SÍ está" if plano(a.buscar) in t else "NO está"))
@@ -674,8 +750,98 @@ def cmd_foto(a):
     if a.referencia and not a.lugar:
         print("AVISO %s: foto de referencia sin --lugar: el chip de la escena no podrá decir dónde es (y no usará el "
               "lugar del hecho)" % a.id)
+    if getattr(a, "retrato_evidencia", None):
+        rec["retrato_evidencia"] = a.retrato_evidencia.strip()
+    rec["focos"] = focos_de(dst, rec.get("retrato_de"))
     escribir(os.path.join(trabajo, "fotos", a.id + ".json"), rec)
     print("foto %s · %d×%d · %s (%s)%s → %s" % (a.id, w, h, rec["credito"], origen, " · PROTAGONISTA" if rec["muestra"] else "", dst))
+    imprimir_focos(rec)
+    return 0
+
+
+# ---------- focos: dónde están las caras de cada foto (sub-planos, recorte vertical, tarjeta de persona) ----------
+BIN_CARAS = os.path.join(RAIZ, "sesiones", "_descargas", "bin", "caras")
+CARA_CONF_MIN = 0.5
+
+
+def detectar_caras(rutas):
+    """{ruta: [{x, y, w, h, conf}]} con Vision de macOS (scripts/caras.swift, compilado una vez en BIN_CARAS); sin swift
+    o sin macOS devuelve {} y las fotos quedan sin focos (la cámara usa los tercios)."""
+    rutas = [r for r in rutas if r and os.path.exists(r)]
+    if not rutas:
+        return {}
+    fuente = os.path.join(RAIZ, "scripts", "caras.swift")
+    if not os.path.exists(BIN_CARAS) or os.path.getmtime(BIN_CARAS) < os.path.getmtime(fuente):
+        if not shutil.which("swiftc"):
+            return {}
+        os.makedirs(os.path.dirname(BIN_CARAS), exist_ok=True)
+        r = subprocess.run(["swiftc", "-O", fuente, "-o", BIN_CARAS], capture_output=True, text=True)
+        if r.returncode:
+            print("AVISO no compila scripts/caras.swift: %s" % (r.stderr.strip().splitlines() or ["?"])[-1])
+            return {}
+    r = subprocess.run([BIN_CARAS] + rutas, capture_output=True, text=True)
+    try:
+        return json.loads(r.stdout)
+    except ValueError:
+        return {}
+
+
+def focos_de(ruta, retrato_de=None):
+    """Las caras de una foto como focos [{x, y, w, h, que: rostro, persona?}] de izquierda a derecha (las de menos
+    confianza fuera); un retrato con una sola cara la marca como de esa persona."""
+    caras = [c for c in detectar_caras([ruta]).get(ruta, []) if c.get("conf", 0) >= CARA_CONF_MIN]
+    focos = [{"x": round(c["x"], 4), "y": round(c["y"], 4), "w": round(c["w"], 4), "h": round(c["h"], 4), "que": "rostro"}
+             for c in sorted(caras, key=lambda c: c["x"])]
+    if retrato_de and len(focos) == 1:
+        focos[0]["persona"] = retrato_de
+    return focos
+
+
+def imprimir_focos(rec):
+    fs = rec.get("focos") or []
+    if not fs:
+        print("  focos: ninguna cara (la cámara usa los tercios; un objeto o un lugar se marca con historia.py focos --foco)")
+    for k, f in enumerate(fs, 1):
+        print("  cara %d · x %.2f y %.2f · %s" % (k, f["x"] + f["w"] / 2, f["y"] + f["h"] / 2, f.get("persona") or
+              "¿quién? → historia.py focos TRABAJO --foto %s --cara %d --persona \"Nombre\" --evidencia \"pie o categoría\"" % (rec["id"], k)))
+
+
+def cmd_focos(a):
+    """Los focos de las fotos del TRABAJO: sin --foto, detecta las caras de las que no tienen focos (o todas, con
+    --rehacer) y lista cada cara; con --foto y --cara, dice de quién es (--persona, con --evidencia: el pie o la
+    categoría que la nombra) o la quita (--quitar); --foco x,y,w,h agrega un foco a mano (un objeto, un cartel)."""
+    trabajo = os.path.abspath(a.trabajo)
+    rutas = sorted(glob.glob(os.path.join(trabajo, "fotos", "*.json")))
+    if a.foto:
+        rutas = [r for r in rutas if os.path.basename(r)[:-5] == a.foto]
+        if not rutas:
+            return falla("no hay fotos/%s.json" % a.foto)
+    H = leer(os.path.join(trabajo, "historia.json")) if os.path.exists(os.path.join(trabajo, "historia.json")) else None
+    for ruta in rutas:
+        rec = leer(ruta)
+        img = os.path.join(trabajo, rec.get("archivo") or "")
+        if a.rehacer or "focos" not in rec:
+            rec["focos"] = focos_de(img, rec.get("retrato_de"))
+        fs = rec["focos"]
+        if a.foco:
+            x, y, w, h = (float(v) for v in a.foco.split(","))
+            fs.append({"x": x, "y": y, "w": w, "h": h, "que": a.que or "objeto"})
+        if a.cara:
+            if not 1 <= a.cara <= len(fs):
+                return falla("%s tiene %d cara(s)" % (rec["id"], len(fs)))
+            if a.quitar:
+                fs.pop(a.cara - 1)
+            elif a.persona:
+                fs[a.cara - 1]["persona"] = a.persona.strip()
+                if a.evidencia:
+                    fs[a.cara - 1]["evidencia"] = a.evidencia.strip()
+        escribir(ruta, rec)
+        if H and rec["id"] in (H.get("fotos") or {}):
+            H["fotos"][rec["id"]]["focos"] = fs
+        print("foto %s · %s" % (rec["id"], (rec.get("descripcion") or "")[:70]))
+        imprimir_focos(rec)
+    if H:
+        escribir(os.path.join(trabajo, "historia.json"), H)
     return 0
 
 
@@ -709,6 +875,439 @@ def encajar(ruta):
     VD.ff("-i", ruta, "-vf", "pad=%d:%d:(ow-iw)/2:(oh-ih)/2:color=%s" % (ancho, alto, color), "-q:v", "3", tmp)
     os.replace(tmp, ruta)
     return ancho, alto
+
+
+# ---------- videos y tomas (decisión del usuario, 2026-11-05) ----------
+# Una «toma» es un tramo corto de un video de las fuentes (casi siempre el de la nota de un medio): sin audio (mudo, la
+# voz va encima: la marcha, la captura, la fachada) o con su audio original (original: el sonido ES el hecho: alguien
+# declara, se lee una sentencia, la plaza corea). Derechos: cortas y con crédito (≤ 6 s mudas, ≤ 10 s con audio, todas
+# ≤ 25 % del video, ≤ 2 con audio; «Video: <medio>, <fecha>» en pantalla y en fuentes.md; la toma oficial antes que la
+# del medio). El video completo vive en la caché (sesiones/_descargas/historia/videos/); al trabajo van la hoja de
+# contacto y la transcripción (videos/) y, por toma, sus cuadros a 30 fps y su audio nivelado (tomas/).
+CREDITO_VIDEO = "Video: "
+VIDEO_MB, VIDEO_MAX_S, VIDEOS_POR_FUENTE = 400, 60 * 60, 8  # una conferencia entera cabe (720p si el 1080p no)
+TOMA_FPS, TOMA_ANCHO, TOMA_MIN_S = 30, 1080, 1.5
+TOMA_MAX_S = {"mudo": 6.0, "original": 10.0}
+TOMAS_PARTE_MAX, TOMAS_AUDIO_MAX = 0.25, 2
+TOMA_PAUSA = 0.2            # entre la voz de entrada y el clip con audio
+TOMA_CUBRE = 0.7            # sin audio, el clip cubre ≥ 70 % de la voz que va encima (si no, queda un cuadro congelado)
+TOMA_CITA_PALABRAS, TOMA_CITA_PARECIDO = 4, 0.8
+TOMA_LUFS = -18.0           # el audio del clip, nivelado como la voz (VD.VOZ_LUFS)
+ENCAJES_TOMA = ("fondo", "recorte")
+RE_YOUTUBE = re.compile(r"(?:youtube(?:-nocookie)?\.com/(?:embed/|watch\?v=|shorts/|v/)|youtu\.be/)([\w-]{11})")
+RE_JW = re.compile(r"(?:cdn\.jwplayer|content\.jwplatform)\.com/(?:players|videos|v2/media|manifests)/([A-Za-z0-9]{8})")
+RE_BRIGHTCOVE = re.compile(r"https?://players\.brightcove\.net/\d+/[\w-]+/index\.html\?videoId=\d+")
+RE_VIMEO = re.compile(r"player\.vimeo\.com/video/(\d+)")
+RE_FB_PLUGIN = re.compile(r"facebook\.com/plugins/video\.php\?[^\"'\s<>]*?href=([^&\"'\s<>]+)")
+RE_FB_VIDEO = re.compile(r"https?://(?:www\.)?facebook\.com/[\w.-]+/videos/(?:[\w.-]+/)?\d+")
+RE_VIDEO_TAG = re.compile(r"<(?:video|source)\b[^>]*?\bsrc=[\"']([^\"']+)[\"']", re.I)
+RE_ARCHIVO_VIDEO = re.compile(r"https?:[^\"'\s<>\\]+?\.(?:mp4|m3u8|webm)(?:\?[^\"'\s<>\\]*)?", re.I)
+
+
+def videos_de_html(txt, url, meta, ld):
+    """Los videos de una página (og:video, iframes de YouTube, JW Player, Brightcove, Vimeo o Facebook, <video>, archivos
+    mp4/m3u8 y VideoObject de ld+json) → [{url, tipo, titulo?, fecha?, duracion?}] sin repetir, a lo más 8."""
+    vids = []
+
+    def poner(u, tipo, **extra):
+        u = html.unescape(u or "").strip().replace("\\/", "/")
+        if not u or u.startswith("data:") or u.startswith("blob:"):
+            return
+        u = urllib.parse.urljoin(url, "https:" + u if u.startswith("//") else u)
+        if u not in [v["url"] for v in vids]:
+            vids.append(dict({"url": u, "tipo": tipo}, **{k: v for k, v in extra.items() if v}))
+    for x in ld or []:
+        try:
+            raiz = json.loads(x)
+        except ValueError:
+            continue
+        pila = [raiz]
+        while pila:
+            o = pila.pop()
+            if isinstance(o, list):
+                pila += o
+            elif isinstance(o, dict):
+                t = o.get("@type")
+                if t == "VideoObject" or (isinstance(t, list) and "VideoObject" in t):
+                    for k in ("contentUrl", "embedUrl"):
+                        if isinstance(o.get(k), str):
+                            poner(o[k], "ld", titulo=o.get("name"), fecha=str(o.get("uploadDate") or "")[:10] or None,
+                                  duracion=o.get("duration"))
+                            break
+                pila += [v for v in o.values() if isinstance(v, (dict, list))]
+    for k in ("og:video:secure_url", "og:video:url", "og:video", "twitter:player:stream", "twitter:player"):
+        if (meta or {}).get(k):
+            poner(meta[k], "meta")
+    plano_ = (txt or "").replace("\\/", "/")
+    for m in RE_YOUTUBE.finditer(plano_):
+        poner("https://www.youtube.com/watch?v=" + m.group(1), "youtube")
+    for m in RE_JW.finditer(plano_):
+        poner("https://cdn.jwplayer.com/v2/media/" + m.group(1), "jwplayer")
+    for m in RE_BRIGHTCOVE.finditer(plano_):
+        poner(m.group(), "brightcove")
+    for m in RE_VIMEO.finditer(plano_):
+        poner("https://player.vimeo.com/video/" + m.group(1), "vimeo")
+    for m in RE_FB_PLUGIN.finditer(plano_):
+        poner(urllib.parse.unquote(m.group(1)), "facebook")
+    for m in RE_FB_VIDEO.finditer(plano_):
+        poner(m.group(), "facebook")
+    for m in RE_VIDEO_TAG.finditer(plano_):
+        if re.search(r"\.(?:mp4|m3u8|webm)\b", m.group(1), re.I):
+            poner(m.group(1), "archivo")
+    for m in RE_ARCHIVO_VIDEO.finditer(plano_):
+        poner(m.group(), "archivo")
+    return vids[:VIDEOS_POR_FUENTE]
+
+
+def mmss(t):
+    t = max(0.0, float(t))
+    return "%d:%04.1f" % (t // 60, t % 60)
+
+
+def segundos_de(x):
+    """«1:23.5», «83.5» o «01:02:03» → segundos."""
+    partes = [float(p) for p in str(x).strip().split(":")]
+    s = 0.0
+    for p in partes:
+        s = s * 60 + p
+    return s
+
+
+def sondear(ruta):
+    """(duración, ancho, alto, ¿tiene audio?) de un video."""
+    r = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "stream=codec_type,width,height:format=duration", "-of", "json", ruta],
+                       capture_output=True, text=True)
+    j = json.loads(r.stdout or "{}")
+    v = next((x for x in j.get("streams") or [] if x.get("codec_type") == "video"), {})
+    return (float((j.get("format") or {}).get("duration") or 0), int(v.get("width") or 0), int(v.get("height") or 0),
+            any(x.get("codec_type") == "audio" for x in j.get("streams") or []))
+
+
+def bajar_video(url, crudo):
+    """El video completo a la caché: yt-dlp (YouTube, JW Player, Brightcove, Vimeo, Facebook y la mayoría de páginas) o, si
+    es un archivo directo, urllib (mp4/webm) o ffmpeg (m3u8). Hasta VIDEO_MB y VIDEO_MAX_S."""
+    if os.path.exists(crudo):
+        return
+    tmp = crudo + ".part.mp4"
+    if re.search(r"\.(?:mp4|webm)(?:\?|$)", url, re.I):
+        req = urllib.request.Request(url, headers={"User-Agent": NT.AGENTE})
+        with urllib.request.urlopen(req, timeout=60) as r, open(tmp, "wb") as f:
+            f.write(r.read(VIDEO_MB * 1_000_000))
+    elif re.search(r"\.m3u8(?:\?|$)", url, re.I):
+        VD.ff("-user_agent", NT.AGENTE, "-i", url, "-t", str(VIDEO_MAX_S), "-c", "copy", "-bsf:a", "aac_adtstoasc", tmp)
+    else:
+        if not shutil.which("yt-dlp"):
+            raise RuntimeError("falta yt-dlp: brew install yt-dlp")
+        r = subprocess.run(["yt-dlp", "--no-playlist", "--no-progress", "--max-filesize", "%dM" % VIDEO_MB,
+                            # 1080p si el video cabe; si no, 720p o 480p (las conferencias largas pasan del tope en 1080p)
+                            "-f", "/".join("bv*[height<=%d][ext=mp4][filesize<?%dM]+ba[ext=m4a]" % (h, VIDEO_MB * 3 // 4)
+                                           for h in (1080, 720, 480)) + "/b[ext=mp4][height<=720]/bv*[height<=720]+ba/b",
+                            "--merge-output-format", "mp4", "-o", tmp, url], capture_output=True, text=True)
+        if r.returncode or not os.path.exists(tmp):
+            lineas = (r.stderr + "\n" + r.stdout).strip().splitlines()
+            motivo = [l for l in lineas if "ERROR" in l or "max-filesize" in l or "larger than" in l] or lineas[-1:]
+            raise RuntimeError("yt-dlp no pudo bajar %s: %s" % (url, motivo[-1] if motivo else "sin detalle"))
+    if not os.path.exists(tmp) or os.path.getsize(tmp) < 10_000:
+        raise RuntimeError("el video de %s llegó vacío" % url)
+    os.replace(tmp, crudo)
+
+
+def transcribir(video, base):
+    """Las palabras del audio de un video con su tiempo ([{text, start, end}], segundos) con whisper.cpp local (el modelo
+    de make whisper). None si no hay whisper o modelo (aviso)."""
+    modelo = VD.modelo_whisper()
+    if not shutil.which("whisper-cli") or not os.path.exists(modelo):
+        print("AVISO sin whisper (brew install whisper-cpp; make whisper): el video queda sin transcripción y las tomas con "
+              "audio no se pueden cotejar (TM3)")
+        return None
+    VD.ff("-i", video, "-vn", "-ar", "16000", "-ac", "1", "-c:a", "pcm_s16le", base + ".wav")
+    r = subprocess.run(["whisper-cli", "-m", modelo, "-l", "es", "-np", "-ml", "1", "-sow", "-oj", "-of", base,
+                        "-t", str(max(2, (os.cpu_count() or 4) - 2)), "-f", base + ".wav"], capture_output=True, text=True)
+    os.remove(base + ".wav")
+    if r.returncode or not os.path.exists(base + ".json"):
+        print("AVISO whisper falló (%s): sin transcripción" % (r.stderr or "").strip()[-200:])
+        return None
+    j = leer(base + ".json")
+    os.remove(base + ".json")
+    ws = []
+    for x in j.get("transcription") or []:
+        t = (x.get("text") or "").strip()
+        if t and not re.fullmatch(r"\[.*\]|\(.*\)", t):
+            o = x.get("offsets") or {}
+            ws.append({"text": t, "start": round(o.get("from", 0) / 1000, 3), "end": round(o.get("to", 0) / 1000, 3)})
+    return ws
+
+
+def lineas_transcripcion(ws, cada=8.0):
+    """La transcripción legible para el agente: un renglón por frase (o cada ~8 s) con su minuto:segundo."""
+    L, cur, t0 = [], [], None
+    for w in ws or []:
+        if t0 is None:
+            t0 = w["start"]
+        cur.append(w["text"])
+        if w["text"].endswith((".", "?", "!")) or w["end"] - t0 >= cada:
+            L.append("[%s] %s" % (mmss(t0), " ".join(cur)))
+            cur, t0 = [], None
+    if cur:
+        L.append("[%s] %s" % (mmss(t0), " ".join(cur)))
+    return L
+
+
+def hoja_video(video, dur, destino):
+    """Hoja de contacto del video completo: un cuadro cada `paso` s (2 s; más si es largo: ≤ 60 cuadros), 5 por fila, en
+    orden de lectura. Devuelve el paso."""
+    paso = max(2.0, round(dur / 60.0, 1))
+    n = max(1, int(dur // paso))
+    filas = (n + 4) // 5
+    VD.ff("-i", video, "-vf", "fps=1/%s,scale=320:-2,tile=5x%d:padding=4:color=white" % (paso, filas), "-frames:v", "1", destino)
+    return paso
+
+
+def cmd_video(a):
+    """Baja un video de una fuente (o una URL o un archivo local) a la caché y deja en el trabajo su ficha, su hoja de
+    contacto (un cuadro cada 2 s) y su transcripción con tiempos (whisper), para elegir las tomas con historia.py toma."""
+    trabajo = os.path.abspath(a.trabajo)
+    if not re.fullmatch(r"[a-z]{2,6}-v\d{2}", a.id or ""):
+        print("--id va como <eje>-vNN (cas-v01)", file=sys.stderr)
+        return 2
+    if not (a.descripcion or "").strip():
+        print("--descripcion: qué muestra el video (para el QA y para que el guionista lo elija)", file=sys.stderr)
+        return 2
+    rec = {"id": a.id, "descripcion": a.descripcion.strip(), "fecha": a.fecha, "lugar": a.lugar,
+           "retrato_de": (a.retrato_de or "").strip() or None}
+    if a.de_fuente:
+        try:
+            meta = leer_url(a.de_fuente)
+            if "videos" not in meta:   # leída antes de que leer buscara videos
+                meta = leer_url(a.de_fuente, otra_vez=True)
+        except RuntimeError as ex:
+            return falla(str(ex))
+        vids = meta.get("videos") or []
+        if not vids:
+            return falla("la fuente %s no trae video (o lo arma con JavaScript): pasa el enlace del video con --url" % meta.get("dominio"))
+        k = a.n or 1
+        if not 1 <= k <= len(vids):
+            return falla("--n %d: la fuente trae %d video(s)" % (k, len(vids)))
+        clase = clasificar(a.de_fuente, encuadre(trabajo).get("dominios_propios") or [], meta.get("archivo"))[0]
+        if clase not in ("medio", "oficial", "empresa"):
+            return falla("TM1 %s es %s: su video no lleva crédito de medio, oficial ni empresa" % (meta.get("dominio"), clase or "una fuente que no cuenta"))
+        v = vids[k - 1]
+        url, origen = v["url"], clase
+        credito = a.credito or CREDITO_VIDEO + nombre_medio(a.de_fuente)
+        rec.update(fuente=a.de_fuente, fecha=rec["fecha"] or v.get("fecha") or meta.get("fecha"), titulo=v.get("titulo"))
+    elif a.url or a.archivo:
+        if a.origen not in ("oficial", "medio", "empresa") or not (a.credito or "").startswith(CREDITO_VIDEO):
+            print("--url/--archivo piden --origen oficial|medio|empresa y --credito \"Video: <institución o medio>\"", file=sys.stderr)
+            return 2
+        url, origen, credito = a.url or ("archivo:" + os.path.basename(a.archivo)), a.origen, a.credito
+        rec["fuente"] = a.fuente
+    else:
+        print("--de-fuente URL (una fuente leída; --n K si trae varios), --url U o --archivo F, con --credito y --origen", file=sys.stderr)
+        return 2
+    if not credito.startswith(CREDITO_VIDEO):
+        print("--credito va «Video: <medio>»", file=sys.stderr)
+        return 2
+    os.makedirs(os.path.join(DESCARGAS, "videos"), exist_ok=True)
+    crudo = os.path.join(DESCARGAS, "videos", hashlib.sha1(url.encode()).hexdigest()[:12] + ".mp4")
+    try:
+        if a.archivo:
+            if not os.path.exists(crudo):
+                shutil.copyfile(a.archivo, crudo)
+        else:
+            bajar_video(url, crudo)
+    except Exception as ex:  # noqa: BLE001
+        return falla("no se pudo bajar el video %s (%s): prueba otro de la fuente (--n) o la toma oficial" % (url, ex))
+    dur, w, h, con_audio = sondear(crudo)
+    if not dur or not w:
+        return falla("el video %s no se puede leer" % url)
+    if min(w, h) < 360:
+        print("AVISO %s: %d×%d, se verá blando" % (a.id, w, h))
+    os.makedirs(os.path.join(trabajo, "videos"), exist_ok=True)
+    base = os.path.join(trabajo, "videos", a.id)
+    paso = hoja_video(crudo, dur, base + "_contacto.png")
+    if a.transcripcion:   # pruebas: una transcripción fija ({palabras: [{text, start, end}]}), sin whisper
+        ws = leer(a.transcripcion)["palabras"]
+    else:
+        ws = transcribir(crudo, base + "_whisper") if con_audio and not a.sin_transcripcion else None
+    if ws is not None:
+        escribir(base + "_transcripcion.json", {"video": a.id, "palabras": ws})
+    rec.update(archivo=VD.rel(crudo), url=url, origen=origen, credito=credito[:CREDITO_CARACTERES], dur=round(dur, 2), tamano=[w, h],
+               audio=con_audio, transcripcion=VD.rel(base + "_transcripcion.json") if ws is not None else None,
+               contacto=VD.rel(base + "_contacto.png"), paso_contacto=paso)
+    escribir(base + ".json", rec)
+    print("video %s · %s · %d×%d%s · %s (%s) → %s" % (a.id, mmss(dur), w, h, "" if con_audio else " · SIN AUDIO", rec["credito"], origen, VD.rel(base + ".json")))
+    print("hoja de contacto: %s (un cuadro cada %s s, 5 por fila, en orden de lectura: el cuadro k es el segundo k×%s)"
+          % (rec["contacto"], paso, paso))
+    if ws:
+        print("transcripción (whisper; corrige la cita contra lo que se oye):")
+        print("\n".join("  " + x for x in lineas_transcripcion(ws)))
+    print("→ historia.py toma %s --video %s --id %s-t01 --desde M:SS --hasta M:SS --audio mudo|original --hechos <ids> "
+          "--descripcion \"…\" [--cita \"literal\" | --ambiente \"…\"]" % (VD.rel(trabajo), a.id, a.id))
+    return 0
+
+
+def palabras_tramo(ws, desde, hasta):
+    """Las palabras de la transcripción dentro de [desde, hasta], con el tiempo desde el inicio del tramo."""
+    return [{"text": w["text"], "start": round(max(0.0, w["start"] - desde), 3), "end": round(min(hasta, w["end"]) - desde, 3)}
+            for w in ws or [] if w["start"] >= desde - 0.05 and w["end"] <= hasta + 0.15]
+
+
+def parecido(a, b):
+    """Qué tanto se parecen dos textos, palabra por palabra (0–1)."""
+    import difflib
+    x, y = VD._plano(a).split(), VD._plano(b).split()
+    return difflib.SequenceMatcher(None, x, y).ratio() if x and y else 0.0
+
+
+def fundido_final(d, cuadros):
+    """Los medios cierran sus videos con un fundido a negro: si el tramo lo alcanza, borra los cuadros del final que
+    quedan por debajo del 60 % del brillo mediano de la toma (nunca más de la mitad) y devuelve cuántos quitó."""
+    r = subprocess.run(["ffmpeg", "-hide_banner", "-i", os.path.join(d, "%05d.jpg"), "-vf",
+                        "signalstats,metadata=print:key=lavfi.signalstats.YAVG", "-f", "null", "-"],
+                       capture_output=True, text=True)
+    brillo = [float(v) for v in re.findall(r"YAVG=([0-9.]+)", r.stderr)]
+    if len(brillo) != cuadros or cuadros < 10:
+        return 0
+    mediana = sorted(brillo)[len(brillo) // 2]
+    k = cuadros
+    while k > cuadros // 2 and brillo[k - 1] < 0.6 * mediana:
+        k -= 1
+    for i in range(k + 1, cuadros + 1):
+        os.remove(os.path.join(d, "%05d.jpg" % i))
+    return cuadros - k
+
+
+def franjas_negras(crudo, desde, dur):
+    """El recorte de las franjas negras que el medio grabó dentro del video (un 16:9 metido en 4:3, o al revés), con
+    cropdetect sobre el tramo: «crop=w:h:x:y» si quitan ≥ 4 % del alto o del ancho, None si no hay franjas."""
+    r = subprocess.run(["ffmpeg", "-hide_banner", "-ss", "%.3f" % desde, "-i", crudo, "-t", "%.3f" % min(dur, 6.0),
+                        "-vf", "cropdetect=24:2:0", "-f", "null", "-"], capture_output=True, text=True)
+    vistos = re.findall(r"crop=(\d+):(\d+):(\d+):(\d+)", r.stderr)
+    if not vistos:
+        return None
+    w, h, x, y = (int(v) for v in max(set(vistos), key=vistos.count))
+    p = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width,height",
+                        "-of", "csv=p=0", crudo], capture_output=True, text=True).stdout.strip().split(",")
+    try:
+        W, Hh = int(p[0]), int(p[1])
+    except (ValueError, IndexError):
+        return None
+    if w < 0.3 * W or h < 0.3 * Hh or (w >= 0.96 * W and h >= 0.96 * Hh):
+        return None
+    return "crop=%d:%d:%d:%d" % (w, h, x, y)
+
+
+def cmd_toma(a):
+    """Corta un tramo de un video ya bajado (historia.py video) en una toma: sus cuadros a 30 fps (tomas/<id>/00001.jpg) y,
+    con --audio original, su audio nivelado (tomas/<id>.wav) y las palabras del tramo (los subtítulos del clip)."""
+    trabajo = os.path.abspath(a.trabajo)
+    ruta_v = os.path.join(trabajo, "videos", "%s.json" % a.video)
+    if not os.path.exists(ruta_v):
+        return falla("el video %s no está bajado: historia.py video %s --id %s …" % (a.video, VD.rel(trabajo), a.video))
+    vid = leer(ruta_v)
+    if not re.fullmatch(r"[a-z]{2,6}-v\d{2}-t\d{2}", a.id or ""):
+        print("--id va como <id del video>-tNN (%s-t01)" % a.video, file=sys.stderr)
+        return 2
+    desde, hasta = segundos_de(a.desde), segundos_de(a.hasta)
+    dur = round(hasta - desde, 3)
+    if not (0 <= desde < hasta <= vid["dur"] + 0.05):
+        return falla("el tramo %s–%s no está dentro del video (%s)" % (mmss(desde), mmss(hasta), mmss(vid["dur"])))
+    if not TOMA_MIN_S <= dur <= TOMA_MAX_S[a.audio]:
+        return falla("TM2 una toma %s dura %.1f–%.0f s (llegó %.1f s): %s" % (
+            "con audio" if a.audio == "original" else "sin audio", TOMA_MIN_S, TOMA_MAX_S[a.audio], dur,
+            "derechos: cortas y con crédito" if dur > TOMA_MAX_S[a.audio] else "más corta no se alcanza a ver"))
+    if a.audio == "original" and not vid.get("audio"):
+        return falla("el video %s no tiene audio: la toma va --audio mudo" % a.video)
+    hechos = [x for x in (a.hechos or "").replace(",", " ").split() if x]
+    if not hechos:
+        print("--hechos: los ids de los hechos que la toma muestra (la toma siempre tiene que ver con lo que se narra)", file=sys.stderr)
+        return 2
+    ws = leer(os.path.join(RAIZ, vid["transcripcion"]))["palabras"] if vid.get("transcripcion") else None
+    pal = palabras_tramo(ws, desde, hasta) if (ws is not None and a.audio == "original") else []
+    cita, ambiente = (a.cita or "").strip() or None, (a.ambiente or "").strip() or None
+    if a.audio == "original":
+        if not cita and not ambiente:
+            return falla("TM3 una toma con audio lleva --cita (lo que se oye, literal) o --ambiente (qué suena: «la plaza corea "
+                         "¡Renuncia ya!»): el sonido es el hecho")
+        if cita and len(VD._plano(cita).split()) < TOMA_CITA_PALABRAS:
+            return falla("TM3 la cita tiene menos de %d palabras: con tan poco, la toma va muda o con --ambiente" % TOMA_CITA_PALABRAS)
+        if cita and pal:
+            pr = parecido(cita, " ".join(w["text"] for w in pal))
+            print("cita frente a whisper: %.0f %% parecida%s" % (100 * pr, "" if pr >= TOMA_CITA_PARECIDO else
+                  " · AVISO: escucha el tramo; si whisper erró, la cita manda (TM3 pide ≥ %.0f %%: corrige el tramo o la cita)" % (100 * TOMA_CITA_PARECIDO)))
+    d = os.path.join(trabajo, "tomas", a.id)
+    shutil.rmtree(d, ignore_errors=True)
+    os.makedirs(d)
+    crudo = os.path.join(RAIZ, vid["archivo"])
+    recorte = franjas_negras(crudo, desde, dur)
+    if recorte:
+        print("recorta las franjas negras del video: %s" % recorte)
+    VD.ff("-ss", "%.3f" % desde, "-i", crudo, "-t", "%.3f" % dur, "-vf",
+          (recorte + "," if recorte else "") + "fps=%d,scale=%d:-2" % (TOMA_FPS, TOMA_ANCHO),
+          "-q:v", "3", os.path.join(d, "%05d.jpg"))
+    cuadros = len(glob.glob(os.path.join(d, "*.jpg")))
+    if not cuadros:
+        return falla("no salieron cuadros del tramo %s–%s" % (mmss(desde), mmss(hasta)))
+    quitados = fundido_final(d, cuadros)
+    if quitados:
+        cuadros -= quitados
+        print("quita %d cuadros del fundido a negro del final (%.1f s): la pantalla se queda en el último cuadro bueno%s"
+              % (quitados, quitados / TOMA_FPS, "; el audio sigue entero" if a.audio == "original" else ""))
+    wav = None
+    if a.audio == "original":
+        tmp = os.path.join(trabajo, "tomas", a.id + ".tmp.wav")
+        VD.ff("-ss", "%.3f" % desde, "-i", crudo, "-t", "%.3f" % dur, "-vn", "-ac", "2", "-ar", "48000",
+              "-af", "afade=t=in:d=0.08,afade=t=out:st=%.3f:d=0.12" % max(0.0, dur - 0.12), tmp)
+        g = TOMA_LUFS - VD.medir(tmp)["input_i"]
+        wav = "tomas/%s.wav" % a.id
+        VD.ff("-i", tmp, "-af", "volume=%.2fdB,alimiter=limit=0.89" % g, os.path.join(trabajo, wav))
+        os.remove(tmp)
+    rec = {"id": a.id, "video": a.video, "descripcion": (a.descripcion or vid.get("descripcion") or "").strip(),
+           "desde": round(desde, 3), "hasta": round(hasta, 3), "dur": dur, "tramo": "%s–%s" % (mmss(desde), mmss(hasta)),
+           "fps": TOMA_FPS, "cuadros": cuadros, "dir": "tomas/%s" % a.id, "audio": a.audio, "wav": wav, "palabras": pal,
+           "cita": cita, "ambiente": ambiente, "hechos": hechos, "encaje": a.encaje, "x": a.x,
+           "fecha": a.fecha or vid.get("fecha"), "lugar": a.lugar or vid.get("lugar"), "retrato_de": vid.get("retrato_de"),
+           "credito": vid["credito"], "origen": vid["origen"], "url": vid["url"], "fuente": vid.get("fuente"),
+           "tamano": vid.get("tamano"), "archivo_video": vid.get("archivo")}
+    escribir(os.path.join(trabajo, "tomas", a.id + ".json"), rec)
+    print("toma %s · %s (%s) · %.1f s · %d cuadros · %s%s → %s" % (a.id, rec["tramo"], a.video, dur, cuadros,
+                                                                "con audio" if a.audio == "original" else "sin audio",
+                                                                " · «%s»" % (cita or ambiente) if (cita or ambiente) else "", rec["dir"]))
+    return 0
+
+
+def cmd_tomas_contacto(a):
+    """Hoja con 4 cuadros de cada toma (inicio → fin), una fila por toma: el QA de contenido (sin víctimas, cuerpos ni
+    menores; que la toma muestre lo que dice su descripción)."""
+    trabajo = os.path.abspath(a.trabajo)
+    recs = [leer(r) for r in sorted(glob.glob(os.path.join(trabajo, "tomas", "*.json")))]
+    if not recs:
+        print("sin tomas")
+        return 0
+    filas = []
+    for k, r in enumerate(recs):
+        tira = os.path.join(trabajo, "tomas", "_fila_%d.png" % k)
+        paso = max(1, r["cuadros"] // 4)
+        VD.ff("-framerate", str(TOMA_FPS), "-i", os.path.join(trabajo, r["dir"], "%05d.jpg"),
+              "-vf", "select='not(mod(n\\,%d))',scale=360:202:force_original_aspect_ratio=decrease,pad=360:202:(ow-iw)/2:(oh-ih)/2:color=black,"
+              "tile=4x1:padding=4:color=white" % paso, "-frames:v", "1", tira)
+        filas.append(tira)
+        print("fila %d · %s · %s · %.1f s · %s · %s%s" % (k + 1, r["id"], r.get("tramo"), r["dur"], r["audio"], r.get("descripcion"),
+                                                       " · «%s»" % (r.get("cita") or r.get("ambiente")) if r.get("cita") or r.get("ambiente") else ""))
+    out = os.path.join(trabajo, "tomas", "contacto.png")
+    if len(filas) == 1:
+        shutil.copyfile(filas[0], out)
+    else:
+        VD.ff(*sum([["-i", f] for f in filas], []), "-filter_complex", "".join("[%d:v]" % i for i in range(len(filas))) +
+              "vstack=inputs=%d" % len(filas), out)
+    for f in filas:
+        os.remove(f)
+    print("→ %s" % VD.rel(out))
+    return 0
+
+
+def tomas_h():
+    return (H_ACTUAL or {}).get("tomas") or {}
 
 
 # ---------- H1–H3: hechos, cifras, citas, fotos y casos de un eje ----------
@@ -1029,7 +1628,8 @@ def consolidar(trabajo):
          "personajes": enc.get("personajes") or [], "periodos": periodos, "capitulos": periodos,
          "no_afirma": enc.get("no_afirma") or [],
          "protagonista": enc.get("protagonista") or [], "revelaciones": enc.get("revelaciones") or [],
-         "hechos": [], "cifras": [], "citas": [], "casos": [], "descartados": [], "fotos": fotos}
+         "hechos": [], "cifras": [], "citas": [], "casos": [], "descartados": [], "fotos": fotos,
+         "tomas": {r["id"]: r for r in (leer(x) for x in sorted(glob.glob(os.path.join(trabajo, "tomas", "*.json"))))}}
     for v in ejes:
         for k in ("hechos", "cifras", "citas"):
             for x in v.get(k) or []:
@@ -1037,6 +1637,26 @@ def consolidar(trabajo):
         H["casos"] += v.get("casos") or []
         H["descartados"] += [dict(x, eje=v.get("eje")) for x in v.get("descartados") or []]
     H["hechos"].sort(key=lambda h: (str(h.get("fecha")), h.get("id")))
+    # /serie: una parte solo ve lo que pasó hasta el fin de su periodo (lo posterior lo revelan las partes siguientes)
+    ser_st = VD.serie_de(st)
+    hasta = str((ser_st.get("periodo") or {}).get("hasta") or "")
+    reparto, reservar = set(ser_st.get("hechos") or []), set(ser_st.get("reservar") or [])
+    if hasta:
+        def despues(x):
+            # modo caso: lo repartido a esta parte entra aunque se haya revelado después (el mecanismo de la red se
+            # supo en el juicio); lo repartido a una parte siguiente no, aunque sea anterior (no se adelanta)
+            if x.get("id") in reparto:
+                return False
+            if x.get("id") in reservar:
+                return True
+            fe = str(x.get("fecha") or x.get("cuando") or x.get("anio") or "")
+            return bool(re.match(r"\d{4}", fe)) and fe[:len(hasta)] > hasta
+        H["reservados"] = [x["id"] for k in ("hechos", "cifras", "citas") for x in H[k] if despues(x)]
+        for k in ("hechos", "cifras", "citas"):
+            H[k] = [x for x in H[k] if not despues(x)]
+        # una toma grabada después del periodo tampoco entra (la usa la parte que la cuenta)
+        H["reservados"] += [t for t, r in H["tomas"].items() if despues(r)]
+        H["tomas"] = {t: r for t, r in H["tomas"].items() if not despues(r)}
     # conflictos de fecha: el mismo evento con fechas distintas en dos ejes (texto casi igual)
     conflictos = []
     for i, x in enumerate(H["hechos"]):
@@ -1083,8 +1703,13 @@ def cmd_consolidar(a):
     H = consolidar(trabajo)
     for h in H["hechos"]:
         print("%-9s %-11s %-10s %s" % (h["id"], h["estado"], h.get("fecha"), h.get("texto")))
-    print("cifras %d · citas %d · fotos %d · casos %d · descartados %d" % (len(H["cifras"]), len(H["citas"]), len(H["fotos"]),
-                                                                          len(H["casos"]), len(H["descartados"])))
+    print("cifras %d · citas %d · fotos %d · tomas %d · casos %d · descartados %d" % (len(H["cifras"]), len(H["citas"]), len(H["fotos"]),
+                                                                                    len(H["tomas"]), len(H["casos"]), len(H["descartados"])))
+    publicables = {h["id"] for h in H["hechos"]}
+    for t in H["tomas"].values():
+        fuera = [x for x in t.get("hechos") or [] if x not in publicables]
+        if fuera:
+            print("AVISO TM1 la toma %s muestra hechos que no son publicables (%s): el guion no podrá usarla" % (t["id"], ", ".join(fuera)))
     # m028: un hecho publicable que se parece a uno descartado en OTRO eje: cruzar las fuentes antes de usarlo
     for h in H["hechos"]:
         rh = raices_de(h.get("texto"))
@@ -1119,12 +1744,14 @@ def aplicar_extension(trabajo):
     """Enchufa en video.py lo propio de /historia (una vez por proceso): los tipos de escena, su voz, sus tiempos y su
     transición; el gancho con visual foto y sus reglas; la estructura H8 en lugar de la de /video."""
     global TRABAJO_ACTUAL, H_ACTUAL
+    aplicar_formato(trabajo)
     TRABAJO_ACTUAL, H_ACTUAL = trabajo, historia_de(trabajo)
     if ORIGINALES:
         return
     ORIGINALES.update(visual=VD.visual_del_gancho, reglas=VD.reglas_gancho, estructura=VD.validar_estructura, colores=VD.colores)
     VD.NARRACION_VIDEO = False   # la narración de /historia la revisa revisar_narracion (H15–H19), no V17–V18
     VD.TIPOS = VD.TIPOS + tuple(t for t in TIPOS_PROPIOS if t not in VD.TIPOS)
+    VD.FAMILIAS = FAMILIAS   # las familias libres del gate G (con la rotación R9) son las de /historia, no las de /video
     VD.CARACTERES.update(CARACTERES)
     VD.CARACTERES.update(CARACTERES_VIDEO_EN_HISTORIA)
     VD.SIN_HUECO = VD.SIN_HUECO + TIPOS_PROPIOS
@@ -1134,8 +1761,29 @@ def aplicar_extension(trabajo):
     VD.reglas_gancho = reglas_gancho
     VD.validar_estructura = estructura
     VD.colores = colores_con_realce
-    VD.CONSTRUCTORES.update(gancho=t_gancho, foto=t_foto, cita=t_cita, capitulo=t_capitulo)
-    VD.TRANSICION_DE.update(foto="tarjeta", cita="texto", capitulo="completa")
+    VD.CONSTRUCTORES.update(gancho=t_gancho, foto=t_foto, cita=t_cita, capitulo=t_capitulo, toma=t_toma, red=t_red)
+    VD.TRANSICION_DE.update(foto="tarjeta", cita="texto", capitulo="completa", toma="tarjeta", red="completa")
+    VD.SEGUNDOS_EXTRA.append(segundos_toma)
+    VD.EXTRA_OYENTE.append(oyente_toma)
+
+
+def oyente_toma(e):
+    """Para el oyente ingenuo: el clip de la toma (qué se ve) y, si suena, lo que se oye tras la voz."""
+    if e.get("tipo") != "toma":
+        return []
+    t = tomas_h().get(e.get("toma")) or {}
+    L = ["   VIDEO (%.0f s): %s" % (t.get("dur") or 0, t.get("descripcion") or "")]
+    if t.get("audio") == "original":
+        L.append("   DESPUÉS DE LA VOZ SUENA EL CLIP: %s" % ("«%s»" % t["cita"] if t.get("cita") else "(%s)" % t.get("ambiente")))
+    return L
+
+
+def segundos_toma(e):
+    """Lo que suena una toma con su audio original después de la voz de entrada (el estimado de V4, H15 y SE7)."""
+    if e.get("tipo") != "toma":
+        return 0.0
+    t = tomas_h().get(e.get("toma")) or {}
+    return (TOMA_PAUSA + t["dur"]) if t.get("audio") == "original" and t.get("dur") else 0.0
 
 
 def colores_con_realce(paleta):
@@ -1238,6 +1886,7 @@ def reglas_gancho(e, voz_p, ctx):
     rec = ctx.get("recientes") or {}
     if fam in (rec.get("familias") or []):
         f.append("R9 la familia «%s» ya abrió una de las últimas %d historias (%s): usa otra" % (fam, ROTACION_FAMILIAS, ", ".join(rec["familias"])))
+    f += VD.reglas_r14(pant, lin, texto, voz_p)   # R14 sujeto reconocible: ni «430» ni «¿Sabías que…?» en la pantalla
     return f, av
 
 
@@ -1270,12 +1919,129 @@ def V9_de_video(x):
 def secuencias_por_defecto(g):
     """Las secuencias de voz (H20) cuando el guion no las trae: tramos de escenas consecutivas del mismo acto, de 2 a
     SECUENCIA[1], que se cortan antes de un giro o de un rótulo (abren una secuencia); el gancho y el cierre van solos."""
-    return VD.secuencias_por_defecto(g, rompe=lambda e: e.get("giro") or rotulo_de(e))
+    es = g.get("escenas") or []
+
+    def rompe(e):   # un giro o un rótulo abren una secuencia; una toma con audio la cierra (TM5)
+        k = next((i for i, x in enumerate(es) if x is e), 0)
+        previa = es[k - 1] if k else {}
+        con_audio = previa.get("tipo") == "toma" and (tomas_h().get(previa.get("toma")) or {}).get("audio") == "original"
+        return e.get("giro") or rotulo_de(e) or con_audio
+    return VD.secuencias_por_defecto(g, rompe=rompe)
 
 
 def estructura(g, st, dur, tarjetas):
-    """V1/V9 de /video sin lo que historia no hereda + H8 (actos, rótulos, variedad, giro), H20 (secuencias) y las
-    escenas propias."""
+    """V1/V9 de /video sin lo que historia no hereda + H8 (actos, rótulos, variedad, giro), H20 (secuencias), las
+    escenas propias y, en una parte de /serie, SE4–SE9 (scripts/serie.py)."""
+    f = estructura_historia(g, st, dur, tarjetas) + revisar_tomas(g, dur)
+    if TRABAJO_ACTUAL:
+        f += revisar_personas(g, encuadre(TRABAJO_ACTUAL), fotos_h())
+        f += revisar_red(g, H_ACTUAL or {})
+    if VD.serie_de(st).get("parte"):
+        import serie as SR   # noqa: E402  (serie importa historia: aquí, no arriba)
+        f += SR.revisar_parte(g, st, TRABAJO_ACTUAL)
+    return f
+
+
+def revisar_tomas(g, dur):
+    """TM1–TM5: las escenas toma (clips de video de las fuentes) → fallas. TM6 (cuadros y audio) lo revisa t_toma."""
+    f, H = [], H_ACTUAL or {}
+    escenas = g.get("escenas") or []
+    tomas, hechos = tomas_h(), {h["id"]: h for h in H.get("hechos") or []}
+    usadas, total, con_audio, prev_audio = {}, 0.0, [], 0
+    secs = [x for x in (g.get("secuencias") or []) if isinstance(x, list)]
+    voces_nombres = []
+    for p in H.get("personajes") or []:
+        if isinstance(p, dict):
+            for nombre in [p.get("nombre")] + list(p.get("alias") or []):
+                ws = [w for w in VD._plano(nombre or "").split() if len(w) >= 4]
+                if ws:
+                    voces_nombres.append(ws)
+    for i, e in enumerate(escenas, 1):
+        if e.get("tipo") == "toma":   # retirada (decisión del usuario, 2026-11-06)
+            f.append("TM0 escena %d: las tomas de video ya no van en /historia ni /serie: una cita (la frase literal, leída por "
+                     "la voz) o una foto o documento con la misma voz" % i)
+            continue
+        if e.get("tipo") != "toma":
+            prev_audio = 0
+            continue
+        t = tomas.get(e.get("toma"))
+        if not t:
+            f.append("TM1 escena %d: la toma «%s» no está en historia.json → tomas (historia.py toma …; consolidar)" % (i, e.get("toma")))
+            prev_audio = 0
+            continue
+        usadas.setdefault(t["id"], []).append(i)
+        if t.get("origen") not in ("medio", "oficial", "empresa") or not (t.get("credito") or "").startswith(CREDITO_VIDEO):
+            f.append("TM1 escena %d: la toma %s lleva origen medio|oficial|empresa y crédito «Video: <medio>»" % (i, t["id"]))
+        malos = [x for x in t.get("hechos") or [] if x not in hechos]
+        if malos:
+            f.append("TM1 escena %d: la toma %s muestra hechos que no son publicables (%s)" % (i, t["id"], ", ".join(malos)))
+        if not set(t.get("hechos") or []) & set(e.get("hechos") or []):
+            f.append("TM1 escena %d: la toma %s muestra %s y la escena cuenta %s: la toma tiene que ver con lo que se narra "
+                     "(pon en «hechos» el hecho que muestra o usa otra toma)" % (i, t["id"], ", ".join(t.get("hechos") or []) or "nada",
+                                                                               ", ".join(e.get("hechos") or []) or "nada"))
+        lim = TOMA_MAX_S.get(t.get("audio"), 6.0)
+        if t["dur"] > lim + 0.05:
+            f.append("TM2 escena %d: la toma %s dura %.1f s (≤ %.0f s %s)" % (i, t["id"], t["dur"], lim, "con audio" if t.get("audio") == "original" else "sin audio"))
+        total += t["dur"]
+        if t.get("audio") != "original":
+            voz_s = VD.segundos_voz(VD.sin_pausas(e.get("texto") or ""))
+            if voz_s > t["dur"] / TOMA_CUBRE + 0.3:
+                f.append("TM2 escena %d: la voz dura ≈ %.1f s sobre una toma sin audio de %.1f s (el clip cubre ≥ %.0f %% de la voz: "
+                         "≤ %.1f s): parte la escena (la toma con la primera oración; lo demás, con una foto o un gráfico)"
+                         % (i, voz_s, t["dur"], 100 * TOMA_CUBRE, t["dur"] / TOMA_CUBRE))
+        tit = (e.get("titular") or "").strip()
+        if not tit or VD.palabras(tit) > TITULAR_PALABRAS or len(tit) > TITULAR_CARACTERES:
+            f.append("H6 escena %d: «titular» de 1–%d palabras y ≤ %d caracteres" % (i, TITULAR_PALABRAS, TITULAR_CARACTERES))
+        chip = (e.get("fecha") or "").strip()
+        if not chip or len(chip) > CHIP_CARACTERES:
+            f.append("H6 escena %d: «fecha» (la del chip: «Ago 2015», «Video de archivo») de 1–%d caracteres" % (i, CHIP_CARACTERES))
+        if len(e.get("lugar") or "") > LUGAR_CARACTERES or len(e.get("fuente") or "") > FUENTE_CARACTERES:
+            f.append("H6 escena %d: «lugar» ≤ %d y «fuente» ≤ %d caracteres" % (i, LUGAR_CARACTERES, FUENTE_CARACTERES))
+        # TM4 la fecha: el chip es el de la toma; material más viejo que el hecho, «Video de archivo»
+        anio_t = str(t.get("fecha") or "")[:4]
+        archivo = bool(re.search(r"archivo", chip, re.I))
+        anios_h = [str(hechos[x].get("fecha") or "")[:4] for x in e.get("hechos") or [] if x in hechos and re.match(r"\d{4}", str(hechos[x].get("fecha") or ""))]
+        if re.match(r"\d{4}", anio_t):
+            if anios_h and anio_t < min(anios_h) and not archivo:
+                f.append("TM4 escena %d: la toma %s es de %s y el hecho de %s: el chip dice «Video de archivo»" % (i, t["id"], anio_t, min(anios_h)))
+            elif not archivo and re.search(r"\d{4}", chip) and anio_t not in chip:
+                f.append("TM4 escena %d: el chip «%s» no es el año de la toma (%s): pon su fecha o «Video de archivo»" % (i, chip, anio_t))
+        if t.get("audio") == "original":
+            con_audio.append(i)
+            if prev_audio:
+                f.append("TM2 escenas %d y %d: dos tomas con audio seguidas; entre ellas, la voz" % (prev_audio, i))
+            prev_audio = i
+            if not t.get("cita") and not t.get("ambiente"):
+                f.append("TM3 escena %d: la toma con audio lleva su cita literal o su ambiente (historia.py toma --cita | --ambiente)" % i)
+            if t.get("cita"):
+                if len(VD._plano(t["cita"]).split()) < TOMA_CITA_PALABRAS:
+                    f.append("TM3 escena %d: la cita de la toma tiene menos de %d palabras" % (i, TOMA_CITA_PALABRAS))
+                oido = " ".join(w["text"] for w in t.get("palabras") or [])
+                if oido and parecido(t["cita"], oido) < TOMA_CITA_PARECIDO:
+                    f.append("TM3 escena %d: la cita de %s («%s») no casa con lo que se oye en el tramo («%s», %.0f %%): ajusta el "
+                             "tramo o la cita" % (i, t["id"], t["cita"][:50], oido[:50], 100 * parecido(t["cita"], oido)))
+                voz = VD._plano(e.get("texto") or "")
+                quien = [VD._plano(t.get("retrato_de") or "")] if t.get("retrato_de") else []
+                if not any(all(w in voz.split() for w in ws[-1:]) for ws in voces_nombres) and not any(q and q.split()[-1] in voz.split() for q in quien):
+                    f.append("TM3 escena %d: antes de que suene la toma, la voz dice quién habla (un personaje del encuadre: «El 21 de "
+                             "agosto, Pérez Molina dijo esto:»)" % i)
+            for grupo in secs:
+                if i in grupo and grupo[-1] != i:
+                    f.append("TM5 escena %d: una toma con audio cierra su secuencia de voz (va última en %s)" % (i, grupo))
+        else:
+            prev_audio = 0
+    for tid, donde in usadas.items():
+        if len(donde) > 1:
+            f.append("TM2 la toma %s sale en %d escenas (%s): cada toma, una vez" % (tid, len(donde), ", ".join(map(str, donde))))
+    if len(con_audio) > TOMAS_AUDIO_MAX:
+        f.append("TM2 %d tomas con audio (escenas %s): van ≤ %d" % (len(con_audio), ", ".join(map(str, con_audio)), TOMAS_AUDIO_MAX))
+    objetivo = (dur or {}).get("s") or OBJETIVO_S
+    if total > TOMAS_PARTE_MAX * objetivo:
+        f.append("TM2 las tomas suman %.1f s: ≤ %.0f %% del video (%.0f s de %.0f)" % (total, 100 * TOMAS_PARTE_MAX, TOMAS_PARTE_MAX * objetivo, objetivo))
+    return f
+
+
+def estructura_historia(g, st, dur, tarjetas):
     f = [x for x in ORIGINALES["estructura"](g, st, dur, tarjetas) if not V9_de_video(x)]
     escenas = g.get("escenas") or []
     H = H_ACTUAL or {}
@@ -1366,8 +2132,8 @@ def estructura(g, st, dur, tarjetas):
                  % (giros[0] + 1, GIRO_ENTRE[0] * 100, GIRO_ENTRE[1] * 100))
     elif validos and actos[giros[0]] != 2:
         f.append("H8 el giro (escena %d) va en el acto 2, el nudo (está en el acto %s)" % (giros[0] + 1, actos[giros[0]]))
-    if not any(t in ("foto", "cita") for t in tipos):
-        f.append("H8 una historia lleva al menos una escena foto o cita")
+    if not any(t in ("foto", "cita", "toma") for t in tipos):
+        f.append("H8 una historia lleva al menos una escena foto, cita o toma")
     # H20 secuencias de voz: forma en video.py (V9); aquí lo semántico
     secs = g.get("secuencias") or []
     if g.get("voz_continua") and not secs:
@@ -1535,7 +2301,7 @@ def avisar_flashbacks(escenas):
             cap = int(m.group()) if m else None
             if r["capitulo"]:
                 continue
-        if cap:
+        if cap and not e.get("resumen_serie"):   # SE14: el resumen de la serie repasa el pasado a propósito
             antes = sorted({y for y in RE_ANIO.findall(" ".join(str(e.get(k) or "") for k in ("texto", "fecha"))) if int(y) < cap})
             if antes:
                 print("AVISO escena %d: %s es anterior al capítulo de %d (flashback): atribúyelo, dilo como recuerdo o "
@@ -1629,7 +2395,9 @@ def revisar_verdad(g, H, valores):
                 f.append("H4 escena %d: la voz no dice quién lo dijo (%s) antes de leer la cita; preséntalo en esta voz o en la "
                          "anterior" % (i, q.get("autor")))
         voz_previa = voz
-        for y in sorted(set(RE_ANIO.findall(todo)) - anios):
+        # la toma: el año de su chip es el de su video (la fecha de la ficha de la toma), no el de un hecho
+        propio = {str((tomas_h().get(e.get("toma")) or {}).get("fecha") or "")[:4]} if e.get("tipo") == "toma" else set()
+        for y in sorted(set(RE_ANIO.findall(todo)) - anios - propio):
             f.append("H4 escena %d: el año %s no está en ningún hecho, cita o cifra verificada" % (i, y))
         for campo in ("titular", "fecha", "lugar"):
             sin = VD.sin_respaldo(e.get(campo) or "", valores)
@@ -1712,13 +2480,20 @@ def revisar_narracion(g, H, enc):
                     f.append("H17 hilo %s: escena %s no existe (3–%d)" % (h["id"], n, len(escenas)))
                 elif h["id"] not in (escenas[n - 1].get("paga") or []):
                     f.append("H17 hilo %s: la escena %d no lo declara en «paga»: [\"%s\"]" % (h["id"], n, h["id"]))
+            elif d.get("pasa_a") is not None:   # /serie: el hilo sigue abierto y lo abre la parte siguiente
+                ser = VD.serie_de(VD.estado(TRABAJO_ACTUAL)) if TRABAJO_ACTUAL else None
+                if not ser or not ser.get("parte"):
+                    f.append("H17 hilo %s: «pasa_a» es de una parte de /serie" % h["id"])
+                elif d["pasa_a"] != ser["parte"] + 1 or ser["parte"] >= ser.get("de", 0):
+                    f.append("H17 hilo %s: pasa_a = %s; solo pasa a la parte siguiente (%s) y la última los paga todos"
+                             % (h["id"], d["pasa_a"], ser["parte"] + 1 if ser["parte"] < ser.get("de", 0) else "ninguna"))
             elif (d.get("sin_respuesta") or "").strip():
                 raices = raices_de(d["sin_respuesta"])
                 if raices and not any(re.search(r"\b" + re.escape(ra), narr3) for ra in raices):
                     f.append("H17 hilo %s: la narración del acto 3 (o el cierre) no dice que quedó sin respuesta («%s»)"
                              % (h["id"], d["sin_respuesta"][:60]))
             else:
-                f.append("H17 hilo %s: «escena» (la que lo paga) o «sin_respuesta» (la frase que lo declara)" % h["id"])
+                f.append("H17 hilo %s: «escena» (la que lo paga), «sin_respuesta» (la frase que lo declara) o, en /serie, «pasa_a»" % h["id"])
         ids = {h["id"] for h in hilos_enc}
         for i, e in enumerate(escenas, 1):
             for hid in e.get("paga") or []:
@@ -1752,6 +2527,8 @@ def revisar_narracion(g, H, enc):
             f.append("H18 personaje %s: «presentacion» de 1–%d palabras que diga quién es («hermano de la vicepresidenta»)" % (p["nombre"], PRESENTACION_PALABRAS))
             continue
         dicho = " ".join(filter(None, [voces_p[k], pantallas[k] if k < len(pantallas) else "", voces_p[k - 1] if k > 0 else ""]))
+        if k == 0 and not solo_narr and len(voces_p) > 1:
+            dicho += " " + voces_p[1]   # el gancho (elegido por el usuario, va literal) nombra; la escena 2 presenta
         if not any(re.search(r"\b" + re.escape(ra), dicho) for ra in raices):
             f.append("H18 %s: «%s» aparece por primera vez sin presentación («%s»): dilo en esa voz (o en la anterior) con una "
                      "aposición" % (etiqueta(k), p["nombre"], p.get("presentacion")))
@@ -1792,8 +2569,8 @@ def revisar_encuadre(enc):
         f.append("H8 encuadre: %d hilos; van %d–%d (las preguntas que la historia abre y debe pagar o declarar sin respuesta)" % (len(hilos), *HILOS))
     ids = []
     for h in hilos:
-        if not isinstance(h, dict) or not re.fullmatch(r"h\d+", str(h.get("id") or "")) or not (h.get("pregunta") or "").strip():
-            f.append("H8 encuadre: cada hilo {id: h1, h2…, pregunta, eje}")
+        if not isinstance(h, dict) or not re.fullmatch(r"(?:p\d)?h\d+", str(h.get("id") or "")) or not (h.get("pregunta") or "").strip():
+            f.append("H8 encuadre: cada hilo {id: h1, h2… (p1h1… en una parte de /serie), pregunta, eje}")
             continue
         ids.append(h["id"])
         if h.get("eje") and h["eje"] not in ejes:
@@ -1839,6 +2616,7 @@ def cmd_narracion(a):
     conectores, «según» (y a qué fuente), la primera mención de cada personaje y los hilos; --check falla con H16–H19
     (sobre la narración sola) y con la cuenta de palabras."""
     trabajo = os.path.abspath(a.trabajo)
+    aplicar_extension(trabajo)   # H17 en /serie («pasa_a») y el formato de la parte leen el TRABAJO actual
     g = leer(os.path.join(trabajo, "guion.json"))
     H, enc = historia_de(trabajo), encuadre(trabajo)
     narr = narracion_de(g)
@@ -1955,6 +2733,7 @@ def cmd_guion(a):
     # secuencias de voz (H20): si el guion no las trae, el script las deriva de los actos y las escribe (voz_continua por
     # defecto en historia: la voz se graba de corrido por secuencia)
     if g.get("voz_continua", True) and not g.get("secuencias") and g.get("escenas"):
+        aplicar_extension(trabajo)   # las tomas de historia.json: una con audio cierra su secuencia (TM5)
         g["secuencias"], g["voz_continua"] = secuencias_por_defecto(g), True
         escribir(os.path.join(trabajo, "guion.json"), g)
         print("secuencias por defecto (voz de corrido): %s" % " · ".join("–".join(map(str, (s[0], s[-1]))) for s in g["secuencias"]))
@@ -2059,6 +2838,341 @@ def cmd_ganchos(a):
 
 
 # ---------- tiempos: los constructores de las escenas propias ----------
+def t_toma(S, e, ps, pal, fin_voz, dur, g):
+    """La escena toma: la misma lámina que la foto (video/noticia.html en modo noticia: chip, titular, cifra, fuente y
+    crédito «Video: <medio>, <fecha>») con el video en movimiento a sangre. Sin audio, el clip corre desde que entra la
+    escena y la voz va encima (si la voz dura más, queda el último cuadro con un zoom lento). Con su audio original, la
+    voz de entrada dice quién habla; el clip queda en su primer cuadro y arranca TOMA_PAUSA s después de la voz con su
+    sonido (S["toma"]: el wav que mezcla cmd_montar) y sus palabras como subtítulos; la escena dura además el clip."""
+    esc = escena_guion(S, g)
+    t = tomas_h().get(esc.get("toma"))
+    if not t:
+        raise ValueError("TM1 escena %d: la toma «%s» no está en historia.json → tomas" % (S["n"], esc.get("toma")))
+    trabajo = TRABAJO_ACTUAL or ""
+    if not os.path.exists(os.path.join(trabajo, t["dir"], "%05d.jpg" % t["cuadros"])) or \
+            (t.get("wav") and not os.path.exists(os.path.join(trabajo, t["wav"]))):
+        raise ValueError("TM6 escena %d: faltan los cuadros o el audio de la toma %s (rehaz historia.py toma)" % (S["n"], t["id"]))
+    ev, sfx = t_foto(S, e, ps, pal, fin_voz, dur, g)
+    N = S["N"]
+    cred = t.get("credito") or ""
+    if t.get("fecha") and str(t["fecha"])[:4] not in cred:
+        cred += ", " + fecha_corta(t["fecha"])
+    D = (DESFASE_ROTULO if S.get("R") else 0.0)
+    N.update(foto=None, icono=None, depto=None, lugar=None, credito=cred[:CREDITO_CARACTERES + 14],
+             toma={"dir": t["dir"], "cuadros": t["cuadros"], "fps": t.get("fps") or TOMA_FPS, "encaje": t.get("encaje") or "fondo",
+                   "x": t.get("x") if t.get("x") is not None else 0.5, "t0": round(0.05 + D, 3), "audio": t["audio"]})
+    if t["audio"] == "original":
+        t_clip = round(fin_voz + TOMA_PAUSA, 3)
+        N["toma"]["t0"] = t_clip
+        S["toma"] = {"wav": t["wav"], "t": t_clip, "id": t["id"]}
+        clip = [{"text": w["text"], "start": round(t_clip + w["start"], 3), "end": round(t_clip + w["end"], 3), "toma": True}
+                for w in t.get("palabras") or []]
+        S["palabras"] = S["palabras"] + clip
+        fin_clip = t_clip + t["dur"]
+        S["fin_voz"] = round(max(fin_voz, clip[-1]["end"] if clip else fin_clip - 0.3), 3)
+        S["dur"] = round(fin_clip + VD.COLA, 3)
+        ev += [(t_clip, "toma")] + [(t_clip + k, "toma_mueve") for k in range(2, int(t["dur"]), 2)]
+    else:
+        ev += [(N["toma"]["t0"] + k, "toma_mueve") for k in range(2, int(min(t["dur"], dur)), 2)]
+    return ev, sfx
+
+
+def fecha_corta(f):
+    """«2015-08-21» → «21 ago 2015»; «2015-08» → «ago 2015»; un año, tal cual."""
+    m = re.match(r"(\d{4})(?:-(\d{2}))?(?:-(\d{2}))?", str(f or ""))
+    if not m:
+        return str(f or "")
+    meses = "ene feb mar abr may jun jul ago sep oct nov dic".split()
+    a, me, d = m.groups()
+    return " ".join(x for x in (str(int(d)) if d else None, meses[int(me) - 1] if me else None, a) if x)
+
+
+# ---------- personas: el retrato de cada personaje y la tarjeta de su primera mención (H21, H22) ----------
+INSTITUCION = re.compile(r"\b(ministerio|comisi[oó]n|tribunal|congreso|corte|sala|fiscal[ií]a|gobierno|juzgado|polic[ií]a|"
+                         r"contralor[ií]a|superintendencia|organismo|banco|universidad|empresa|partido|ej[eé]rcito|naciones)\b", re.I)
+TARJETA_S, TARJETAS_POR_ESCENA, TARJETA_SEPARA_S, CARGO_MAX = 2.2, 2, 1.2, 28
+
+
+def es_persona(p):
+    """Un personaje es una persona (lleva retrato y tarjeta) si el encuadre lo dice (tipo) o, sin tipo, si su nombre
+    tiene al menos dos palabras con mayúscula, ninguna sigla y nada de institución."""
+    if p.get("tipo"):
+        return p["tipo"] == "persona"
+    nom = (p.get("nombre") or "").strip()
+    pal = nom.split()
+    return len(pal) >= 2 and not INSTITUCION.search(nom) and not any(w.isupper() and len(w) > 1 for w in pal) \
+        and sum(1 for w in pal if w[:1].isupper()) >= 2
+
+
+def claves_personaje(p):
+    return [VD._plano(p["nombre"])] + [VD._plano(a) for a in p.get("alias") or [] if (a or "").strip()]
+
+
+def retrato_de_personaje(p, fotos):
+    """(archivo, foco, foto_id, evidencia) del retrato de un personaje: una cara de una foto marcada con su nombre
+    (historia.py focos --persona) o una foto con su retrato_de (y su única cara); None si no hay."""
+    claves = set(claves_personaje(p))
+    for fid, rec in fotos.items():
+        for f in rec.get("focos") or []:
+            if f.get("persona") and VD._plano(f["persona"]) in claves:
+                return rec.get("archivo"), f, fid, " ".join(filter(None, [f.get("evidencia"), rec.get("descripcion"), rec.get("retrato_evidencia")]))
+    for fid, rec in fotos.items():
+        if rec.get("retrato_de") and VD._plano(rec["retrato_de"]) in claves:
+            fs = rec.get("focos") or []
+            return rec.get("archivo"), (fs[0] if len(fs) == 1 else None), fid, \
+                " ".join(filter(None, [rec.get("retrato_evidencia"), rec.get("descripcion")]))
+    return None
+
+
+def primeras_menciones(g, personajes):
+    """{nombre: número de escena} de la primera vez que la voz nombra a cada personaje (como H18: un alias que es
+    parte del nombre de otro personaje que también suena no cuenta)."""
+    voces = [plano_voz(e.get("texto") or "") for e in g.get("escenas") or []]
+    nombres = [VD._plano(p["nombre"]) for p in personajes]
+    out = {}
+    for p in personajes:
+        nom = VD._plano(p["nombre"])
+        otros = [o for o in nombres if o != nom]
+        for j, v in enumerate(voces, 1):
+            if any(re.search(r"\b%s\b" % re.escape(c), v) and not (c != nom and any(c in o and re.search(r"\b%s\b" % re.escape(o), v) for o in otros))
+                   for c in claves_personaje(p)):
+                out[p["nombre"]] = j
+                break
+    return out
+
+
+def revisar_personas(g, enc, fotos):
+    """H21: cada persona que la voz nombra tiene retrato, y su evidencia (el pie, la categoría o la descripción de la
+    foto) dice su apellido. H22: lo comprueba el gate; la tarjeta la arma `tiempos` sola en la primera mención."""
+    f = []
+    pers = [p for p in enc.get("personajes") or [] if isinstance(p, dict) and (p.get("nombre") or "").strip() and es_persona(p)]
+    prim = primeras_menciones(g, pers)
+    for p in pers:
+        if p["nombre"] not in prim:
+            continue
+        r = retrato_de_personaje(p, fotos)
+        if not r and (p.get("sin_retrato") or "").strip():
+            print("AVISO H22 «%s» va sin retrato (%s): su tarjeta muestra solo nombre y cargo" % (p["nombre"], p["sin_retrato"]))
+            continue
+        if not r:
+            f.append("H22 «%s» suena en la escena %d y no tiene retrato (o, si no hay ninguna con evidencia, «sin_retrato»: motivo en el personaje): baja una foto con historia.py foto --retrato-de \"%s\" "
+                     "--retrato-evidencia \"…\" o marca su cara en una foto de grupo (historia.py focos TRABAJO --foto ID --cara K "
+                     "--persona \"%s\" --evidencia \"…\")" % (p["nombre"], prim[p["nombre"]], p["nombre"], p["nombre"]))
+            continue
+        apellido = VD._plano(p["nombre"]).split()[-1]
+        if apellido not in VD._plano(r[3] or ""):
+            f.append("H21 el retrato de «%s» (%s) no tiene evidencia que lo nombre: --evidencia con el pie o la categoría"
+                     % (p["nombre"], r[2]))
+    # `sujeto` de una escena explica: un personaje del encuadre con retrato (su cara va sobre el lienzo toda la escena)
+    for i, e in enumerate(g.get("escenas") or [], 1):
+        su = (e.get("sujeto") or "").strip() if e.get("tipo") == "explica" else ""
+        if not su:
+            continue
+        p = next((x for x in enc.get("personajes") or [] if isinstance(x, dict) and VD._plano(su) in claves_personaje(x)), None)
+        if not p or not retrato_de_personaje(p, fotos):
+            f.append("H22 escena %d: «sujeto» «%s» es un personaje del encuadre con retrato" % (i, su))
+    return f
+
+
+RED_NODOS, RED_NIVELES, RED_NODO_S = (3, 8), 4, 1.1
+RED_ATRIBUIR = ("alegato", "en_disputa", "estimacion", "opinion")
+
+
+def relaciones_h(H):
+    """[{de, a, rel, hecho, tipo_hecho, estado}] de los hechos publicables que traen `relaciones` (el investigador las
+    anota y el verificador las confirma contra la cita guardada)."""
+    out = []
+    for h in H.get("hechos") or []:
+        for r in h.get("relaciones") or []:
+            if isinstance(r, dict) and r.get("de") and r.get("a"):
+                out.append({"de": r["de"], "a": r["a"], "rel": r.get("rel") or "", "hecho": h["id"],
+                            "tipo_hecho": h.get("tipo_hecho") or "acto", "estado": h.get("estado")})
+    return out
+
+
+def revisar_red(g, H):
+    """H23, la escena `red` (el organigrama del caso): 3–8 nodos, cada uno un personaje del encuadre (persona con
+    retrato o institución), ≤ 3 niveles con 1–2 nodos de nivel 0 (quien manda, arriba; nunca una fila de uno por nivel); cada arista con un `hecho`
+    publicable cuyas `relaciones` unen esos dos extremos; si alguna arista es un alegato, una estimación, una opinión o
+    está en disputa, la escena lleva `atribuida: true` (chip «Según la acusación» y arista punteada) y la voz atribuye
+    («según la fiscalía…»); cada `dice` suena en la voz y en orden; ≤ 1 escena red por video; ≥ 1.1 s por nodo."""
+    es = [e for e in g.get("escenas") or [] if e.get("tipo") == "red"]
+    f = []
+    if len(es) > 1:
+        f.append("H23 %d escenas red: va 1 por video (o parte)" % len(es))
+    if not es:
+        return f
+    enc = encuadre(TRABAJO_ACTUAL) if TRABAJO_ACTUAL else {}
+    pers = {VD._plano(c): p for p in enc.get("personajes") or [] if isinstance(p, dict) and p.get("nombre") for c in claves_personaje(p)}
+    rels = relaciones_h(H)
+    hechos = {h["id"]: h for h in H.get("hechos") or []}
+    fotos = fotos_h()
+    for e in es:
+        i = (g.get("escenas") or []).index(e) + 1
+        nodos, aristas = e.get("nodos") or [], e.get("aristas") or []
+        if not RED_NODOS[0] <= len(nodos) <= RED_NODOS[1]:
+            f.append("H23 escena %d: %d nodos; van %d–%d" % (i, len(nodos), *RED_NODOS))
+        ids = {}
+        for nd in nodos:
+            p = pers.get(VD._plano(nd.get("personaje") or ""))
+            if not p:
+                f.append("H23 escena %d: el nodo «%s» no es un personaje del encuadre" % (i, nd.get("personaje")))
+                continue
+            if es_persona(p) and not retrato_de_personaje(p, fotos):
+                f.append("H23 escena %d: «%s» no tiene retrato (H22)" % (i, p["nombre"]))
+            if not isinstance(nd.get("nivel"), int) or not 0 <= nd["nivel"] < RED_NIVELES:
+                f.append("H23 escena %d: «%s» sin nivel 0–%d" % (i, nd.get("personaje"), RED_NIVELES - 1))
+            ids[nd.get("id")] = p
+        cima = sum(1 for nd in nodos if nd.get("nivel") == 0)
+        if not 1 <= cima <= 2:
+            f.append("H23 escena %d: %d nodos de nivel 0: arriba va quien manda (uno, o los dos que mandan juntos)" % (i, cima))
+        # (2026-11-06) una fila de una persona por nivel no es un organigrama: no se ve quién está al lado de quién
+        acus = [nd for nd in nodos if (ids.get(nd.get("id")) or {}).get("bando") != "investigador"]
+        por_nivel = {}
+        for nd in acus:
+            por_nivel.setdefault(nd.get("nivel"), []).append(nd)
+        if len(por_nivel) > 3:
+            f.append("H23 escena %d: %d niveles; van ≤ 3 (los que están a la misma altura del caso, lado a lado)" % (i, len(por_nivel)))
+        if len(por_nivel) >= 3 and all(len(v) == 1 for v in por_nivel.values()):
+            f.append("H23 escena %d: una persona por nivel es una fila, no un organigrama: pon lado a lado a los de la "
+                     "misma altura (p. ej. el presidente y la vicepresidenta arriba) y suma a los investigadores (bando investigador)" % i)
+        atrib = False
+        for ar in aristas:
+            de, a = ids.get(ar.get("de")), ids.get(ar.get("a"))
+            h = hechos.get(ar.get("hecho"))
+            if not (de and a):
+                f.append("H23 escena %d: la arista %s→%s une nodos que no existen" % (i, ar.get("de"), ar.get("a")))
+                continue
+            if not h:
+                f.append("H23 escena %d: la arista %s→%s no tiene un hecho publicable (`hecho`)" % (i, de["nombre"], a["nombre"]))
+                continue
+            cd, ca = set(claves_personaje(de)), set(claves_personaje(a))
+            if not any(r["hecho"] == h["id"] and {VD._plano(r["de"]), VD._plano(r["a"])} & cd and {VD._plano(r["de"]), VD._plano(r["a"])} & ca
+                       for r in rels):
+                f.append("H23 escena %d: el hecho %s no registra la relación %s–%s (relaciones del hecho, verificadas)"
+                         % (i, h["id"], de["nombre"], a["nombre"]))
+            if (h.get("tipo_hecho") or "acto") in RED_ATRIBUIR or h.get("estado") == "en_disputa":
+                atrib = True
+        if atrib and not e.get("atribuida"):
+            f.append("H23 escena %d: hay relaciones que son alegatos (sin sentencia): «atribuida»: true (chip «Según la "
+                     "acusación», arista punteada) y la voz atribuye" % i)
+        if atrib and not RE_SEGUN_FUENTE.search(e.get("texto") or "") and not re.search(r"\bseg[uú]n\b|\bacus", e.get("texto") or "", re.I):
+            f.append("H23 escena %d: la voz no atribuye la estructura («según la fiscalía…», «la acusación…»)" % i)
+        voz = VD._plano(e.get("texto") or "")
+        pos = -1
+        for nd in nodos:
+            d = VD._plano(nd.get("dice") or nd.get("personaje") or "")
+            k = voz.find(d, pos + 1) if d else -1
+            if k < 0:
+                f.append("H23 escena %d: la voz no dice «%s» (o no en el orden de los nodos)" % (i, nd.get("dice") or nd.get("personaje")))
+            else:
+                pos = k
+    return f
+
+
+def t_red(S, e, ps, pal, fin_voz, dur, g):
+    """La escena red (video/red.html): cada nodo entra con su retrato o su sigla cuando la voz lo dice; la arista hacia
+    él se dibuja al entrar el segundo extremo; las atribuidas, punteadas, con el chip «Según la acusación»."""
+    esc = escena_guion(S, g)
+    enc = encuadre(TRABAJO_ACTUAL) if TRABAJO_ACTUAL else {}
+    pers = {VD._plano(c): p for p in enc.get("personajes") or [] if isinstance(p, dict) and p.get("nombre") for c in claves_personaje(p)}
+    hechos = {h["id"]: h for h in (H_ACTUAL or {}).get("hechos") or []}
+    fotos = fotos_h()
+    ws = [VD._plano(w["text"]) for w in pal]
+    t0 = VD.TRANSICION + 0.25 + (DESFASE_ROTULO if rotulo_de(esc) else 0.0)
+    nodos, ult, k0 = [], t0, 0
+    for nd in esc.get("nodos") or []:
+        p = pers.get(VD._plano(nd.get("personaje") or "")) or {"nombre": nd.get("personaje")}
+        toks = VD._plano(nd.get("dice") or p["nombre"]).split()
+        k = next((j for j in range(k0, len(ws) - len(toks) + 1) if ws[j:j + len(toks)] == toks), None)
+        t = max(ult + 0.5, pal[k]["start"] - 0.1) if k is not None else ult + 0.9
+        k0 = k + len(toks) if k is not None else k0
+        r = retrato_de_personaje(p, fotos) if es_persona(p) else None
+        cargo = (p.get("cargo") or p.get("presentacion") or "").strip()
+        nodos.append({"id": nd.get("id"), "nombre": p["nombre"], "corto": nd.get("corto") or (p.get("alias") or [p["nombre"]])[0],
+                      "cargo": cargo[:CARGO_MAX], "nivel": nd.get("nivel", 1), "bando": p.get("bando") or nd.get("bando") or "acusado",
+                      "foto": r[0] if r else None, "foco": r[1] if r else None, "sigla": None if r else (p.get("nombre") or "")[:8],
+                      "start": round(min(t, dur - 1.0), 3)})
+        ult = t
+    por = {n["id"]: n for n in nodos}
+    aristas = []
+    for ar in esc.get("aristas") or []:
+        a, b = por.get(ar.get("de")), por.get(ar.get("a"))
+        if not (a and b):
+            continue
+        h = hechos.get(ar.get("hecho")) or {}
+        atr = (h.get("tipo_hecho") or "acto") in RED_ATRIBUIR or h.get("estado") == "en_disputa"
+        aristas.append({"de": a["id"], "a": b["id"], "rel": ar.get("rel") or "", "atribuida": atr,
+                        "start": round(max(a["start"], b["start"]) + 0.15, 3)})
+    S["pagina"] = "red"
+    S["G"] = {"titulo": esc.get("titulo") or "", "nodos": nodos, "aristas": aristas, "atribuida": bool(esc.get("atribuida")),
+              "fuente": ("Fuente: " + esc["fuente"]) if esc.get("fuente") else None}
+    if esc.get("atribuida"):
+        S["chip"] = {"texto": "Según la acusación", "tono": "ink", "desde": round(t0, 3), "pos": "arriba"}
+    S["T"] = {"ini": round(t0, 3)}
+    ev = [(0.1, "entrada")] + [(n["start"], "nodo") for n in nodos] + [(x["start"], "arista") for x in aristas]
+    sfx = entrada_sfx(S, e, esc) + [(n["start"], "voto") for n in nodos[::2]]
+    R = rotulo_de(esc)
+    if R:
+        S["R"] = armar_rotulo(S, esc, ps, g, R)
+        ev_r, sfx_r = eventos_rotulo(S)
+        ev += ev_r
+        sfx += sfx_r
+    return ev, sfx
+
+
+def tarjetas_de_escena(S, esc, pal, dur, g):
+    """S.P de una escena: la tarjeta de cada persona que la voz nombra aquí por primera vez en el video (≤ 2, separadas
+    TARJETA_SEPARA_S; en el gancho desde 1.0 s). Si la escena ya muestra a esa persona (una cara de su foto con su
+    nombre), solo la franja del nombre y el sub-plano se acerca a su cara en ese instante."""
+    enc = encuadre(TRABAJO_ACTUAL) if TRABAJO_ACTUAL else {}
+    pers = [p for p in enc.get("personajes") or [] if isinstance(p, dict) and (p.get("nombre") or "").strip() and es_persona(p)]
+    if not pers:
+        return []
+    prim = primeras_menciones(g, pers)
+    fotos = fotos_h()
+    fo = fotos.get(esc.get("foto")) or {}
+    ws = [VD._plano(w["text"]) for w in pal]
+    out = []
+    for p in pers:
+        if prim.get(p["nombre"]) != S["n"] or len(out) >= TARJETAS_POR_ESCENA:
+            continue
+        k = None
+        for c in claves_personaje(p):
+            toks = c.split()
+            k = next((j for j in range(len(ws) - len(toks) + 1) if ws[j:j + len(toks)] == toks), None)
+            if k is not None:
+                break
+        if k is None:
+            continue
+        t = max(pal[k]["start"] - 0.12, 1.0 if S["n"] == 1 else 0.3)
+        if out and t - out[-1]["start"] < TARJETA_SEPARA_S:
+            t = out[-1]["start"] + TARJETA_SEPARA_S
+        if t + 1.0 > dur:
+            continue
+        r = retrato_de_personaje(p, fotos)
+        en_foto = next((i for i, f in enumerate(fo.get("focos") or []) if f.get("persona") and VD._plano(f["persona"]) in claves_personaje(p)), None)
+        cargo = (p.get("cargo") or p.get("presentacion") or "").strip()
+        out.append({"nombre": p["nombre"], "cargo": cargo[:CARGO_MAX + 12] if len(cargo) <= CARGO_MAX + 12 else cargo[:CARGO_MAX].rsplit(" ", 1)[0],
+                    "foto": r[0] if r else None, "foco": r[1] if r else None, "solo": en_foto is not None or not r,
+                    "start": round(t, 3), "fin": round(min(t + TARJETA_S, dur - 0.2), 3), "foco_en_escena": en_foto})
+    return out
+
+
+def sujeto_explica(nombre):
+    """{nombre, cargo, foto, foco} del personaje que una escena explica pone sobre su lienzo (`sujeto`), o None si no es
+    un personaje del encuadre con retrato."""
+    enc = encuadre(TRABAJO_ACTUAL) if TRABAJO_ACTUAL else {}
+    p = next((x for x in enc.get("personajes") or [] if isinstance(x, dict)
+              and VD._plano(nombre) in claves_personaje(x)), None)
+    r = retrato_de_personaje(p, fotos_h()) if p else None
+    if not r or not r[0]:
+        return None
+    cargo = (p.get("cargo") or p.get("presentacion") or "").strip()
+    return {"nombre": p["nombre"], "cargo": cargo if len(cargo) <= CARGO_MAX + 12 else cargo[:CARGO_MAX].rsplit(" ", 1)[0],
+            "foto": r[0], "foco": r[1]}
+
+
 def escena_guion(S, g):
     es = g.get("escenas") or []
     return es[S["n"] - 1] if S["n"] - 1 < len(es) else {}
@@ -2081,6 +3195,10 @@ def t_gancho(S, e, ps, pal, fin_voz, dur, g):
     S["T"] = {"pant": {"texto": cin.get("pantalla"), "v": None, "desde": 0.0, "hasta": 0.4, "pulso": None}, "linea": linea,
               "fin": round(fin_voz, 3)}
     ev = [(0.0, "titular"), (0.4, "cifra_fin")] + [(w["start"], "linea_dicha") for w in linea if w.get("dicha")]
+    if vis.get("foto") and fo.get("encaje") != "contener":   # el gancho: amplio y, a los ~3 s, cerca a la cara
+        cortes = [round(pal[k + 1]["start"], 3) for k, x in enumerate(pal[:-1]) if x["text"].endswith((".", "?", "!", ":"))]
+        S["N"]["planos"], S["N"]["focos"] = VD.planos_foto(fo.get("focos"), dur, cortes, [0.4])
+        ev += [(x["t"], "plano") for x in S["N"]["planos"][1:]]
     return ev, [(0.1, "impacto")]
 
 
@@ -2193,6 +3311,35 @@ def t_foto(S, e, ps, pal, fin_voz, dur, g):
     rellenar_huecos(latidos, ev, pal, dur)
     N["oraciones"] = sorted(latidos)
     ev += [(x, "oracion") for x in N["oraciones"]]
+    # el subrayado: la palabra del titular con un año o una cifra, cuando la voz la dice (señalar lo importante)
+    N["marcas"] = []
+    for k_t, w_t in enumerate(N["titular"]):
+        v_t = VD.valor_de(w_t["text"]) if re.search(r"\d", w_t["text"]) else None
+        w_v = next((x for x in pal if v_t is not None and x.get("clave") == VD.clave(v_t)), None)
+        if w_v and w_v["start"] > (N["titular"][-1]["start"] if N["titular"] else 0) + 0.3 \
+                and abs(w_v["start"] - ((N["cifra"] or {}).get("start") or -9)) > 0.6:
+            N["marcas"].append({"k": k_t, "t": round(w_v["start"], 3)})
+            ev.append((w_v["start"], "marca"))
+            sfx.append((w_v["start"], "marcador"))
+            break
+    if N["foto"] and N["depto"] and not N.get("encaje"):   # el localizador: dónde queda, 1.7 s tras entrar
+        d0 = round(max(t0 + 0.9, (N["titular"][-1]["start"] if N["titular"] else t0) + 0.4), 3)
+        if d0 + 2.0 < dur:
+            N["minimapa"] = {"depto": N["depto"], "desde": d0, "hasta": round(d0 + 1.7, 3)}
+            ev.append((d0, "entrada"))
+    div = [fotos_h().get(x) or {} for x in (esc.get("dividida") or [])[:2]]
+    if len(div) == 2 and all(d.get("archivo") for d in div):   # dos personas frente a frente: una foto por mitad
+        N["dividida"] = [{"foto": d["archivo"], "focos": d.get("focos") or []} for d in div]
+        N["foto"] = div[0]["archivo"]
+        N["credito"] = " · ".join(dict.fromkeys(d.get("credito") or "" for d in div if d.get("credito")))
+        evitar = [x for x in (cifra_t, (N["cifra"] or {}).get("start"), t0 + 0.1) if x is not None]
+        N["planos"], _ = VD.planos_foto([{"x": 0.25, "y": 0.4, "w": 0.1, "h": 0.1}, {"x": 0.75, "y": 0.4, "w": 0.1, "h": 0.1}],
+                                        dur, N["oraciones"], evitar)
+        ev += [(x["t"], "plano") for x in N["planos"][1:]]
+    elif N["foto"] and N.get("encaje") != "contener":   # sub-planos sobre las caras (V21), lejos de la cifra y del titular (V22)
+        evitar = [x for x in (cifra_t, (N["cifra"] or {}).get("start"), t0 + 0.1) if x is not None]
+        N["planos"], N["focos"] = VD.planos_foto(fo.get("focos"), dur, N["oraciones"], evitar)
+        ev += [(x["t"], "plano") for x in N["planos"][1:]]
     S["pagina"], S["N"], S["T"] = "noticia", N, {"tit": round(t0, 3)}
     if R:
         S["R"] = armar_rotulo(S, esc, ps, g, R)
@@ -2252,6 +3399,17 @@ def t_cita(S, e, ps, pal, fin_voz, dur, g):
     rellenar_huecos(latidos, ev, pal, dur)
     S["H"]["latidos"] = sorted(latidos)
     ev += [(x, "oracion") for x in latidos]
+    if S["H"]["documento"]:
+        # el documento entra como una hoja que se desliza sobre el escritorio («papel») y, al terminar la frase, el
+        # sello con su fecha y su fuente («sello»): señala que lo leído está en un papel con fecha (H2: la cita guardada)
+        sfx = [(t, k) for t, k in sfx if not (t <= VD.TRANSICION + 0.1 and k in ("whoosh", "impacto"))] + [(0.1, "papel")]
+        fin_q = max([w["start"] + 0.45 for w in texto if w.get("dicha")] or [fin_voz - 0.6])
+        t_s = round(min(max(fin_q + 0.2, 1.8), dur - 1.0), 3)
+        sello = " · ".join(x for x in ((q.get("cuando") or ""), (esc.get("fuente") or q.get("autor") or "")) if x)
+        if sello:
+            S["H"]["sello"] = {"texto": sello[:40], "t": t_s}
+            ev.append((t_s, "sello"))
+            sfx.append((t_s, "sello"))
     return ev, sfx
 
 
@@ -2288,6 +3446,9 @@ def post_historia(S, e, ps, pal, fin_voz, dur, g, ev, sfx):
     secuencia, y la transición de entrada (fundido dentro de una secuencia; la del giro manda)."""
     esc = escena_guion(S, g)
     tipo = S.get("tipo")
+    ser = VD.serie_de(VD.estado(TRABAJO_ACTUAL)) if TRABAJO_ACTUAL else {}
+    if tipo == "gancho" and ser.get("parte") and not S.get("chip"):   # /serie: «Parte N de M» desde el cuadro 0 (SE8)
+        S["chip"] = {"texto": "Parte %d de %d" % (ser["parte"], ser.get("de") or ser["parte"]), "tono": "acento", "pos": "arriba", "desde": 0}
     if tipo not in TIPOS_PROPIOS + ("gancho", "cierre"):
         R = rotulo_de(esc)
         if R:
@@ -2316,11 +3477,66 @@ def post_historia(S, e, ps, pal, fin_voz, dur, g, ev, sfx):
             ev += ev_r
         elif S.get("seguida") and not esc.get("giro"):
             sfx = [(t, k) for t, k in sfx if not (t <= VD.TRANSICION + 0.1 and k in ("whoosh", "impacto"))]
+    if tipo == "explica" and (esc.get("sujeto") or "").strip():   # sobre quién actúa el mecanismo: su retrato toda la escena
+        su = sujeto_explica(esc["sujeto"])
+        if su:
+            S["sujeto"] = su
+    if tipo != "cierre":   # H22: la tarjeta de persona en la primera mención (y el sub-plano a su cara, un solo evento)
+        P = tarjetas_de_escena(S, esc, pal, dur, g)
+        if S.get("sujeto"):   # el retrato del sujeto ya nombra a esa persona: sin otra tarjeta encima
+            P = [x for x in P if x["nombre"] != S["sujeto"]["nombre"]]
+            # su tarjeta queda fija toda la escena (en una `continua` ya estaba: visible desde el cuadro 0)
+            t0 = -1.0 if S.get("continua") else (S.get("T") or {}).get("ini", 0.3)
+            P = [dict(S["sujeto"], solo=False, sujeto=True, start=round(t0, 3), fin=round(dur + 5, 3), foco_en_escena=None)] + P
+        if P:
+            S["personas"] = P
+            ev += [(x["start"], "persona") for x in P if x["start"] > 0]
+            N = S.get("N") or {}
+            fijos = [(x["start"], x["foco_en_escena"]) for x in P if x["foco_en_escena"] is not None]
+            if fijos and N.get("planos") and N.get("focos") and not N.get("dividida"):
+                evitar = [x for x in ((N.get("cifra") or {}).get("start"),) if x is not None]
+                N["planos"], N["focos"] = VD.planos_foto(N["focos"], dur, N.get("oraciones") or [], evitar, personas=fijos)
+                ev = [(t, k) for t, k in ev if k != "plano"] + [(x["t"], "plano") for x in N["planos"][1:]]
     if S.get("transicion") and tipo != "cierre":
         if esc.get("giro"):
             S["transicion"] = VD.TRANSICIONES["giro"]
         elif S.get("seguida") and not rotulo_de(esc):
             S["transicion"] = VD.TRANSICIONES["seguida"]
+        else:
+            ev, sfx = transicion_con_direccion(S, esc, g, ev, sfx)
+    return ev, sfx
+
+
+ANIO_ESC = re.compile(r"\b(1[5-9]\d\d|20\d\d)\b")
+WHIP_CADA_ESCENAS = 4          # ≤ 1 whip cada ~30 s (unas 4 escenas)
+_ULTIMO_WHIP = {"n": -99}
+
+
+def anio_escena(esc):
+    """El año de una escena: el de su chip (fecha) o el de su rótulo de acto; None si no dice año."""
+    R = rotulo_de(esc) or {}
+    m = ANIO_ESC.search("%s %s" % (esc.get("fecha") or "", R.get("anio") or ""))
+    return int(m.group(1)) if m else None
+
+
+def transicion_con_direccion(S, esc, g, ev, sfx):
+    """La transición de entrada dice hacia dónde va la historia: el año avanza → empuja a la izquierda; retrocede (un
+    flashback) → a la derecha; un «pero» en la voz → whip (barrido borroso rápido con su efecto), a lo más uno cada
+    WHIP_CADA_ESCENAS escenas. Sin año en las dos escenas, queda la del tipo."""
+    if VD.CAMARA_QUIETA:   # transiciones limpias (2026-11-06): ni whip ni empujes laterales por el año
+        return ev, sfx
+    n = S["n"]
+    if n <= 2:
+        _ULTIMO_WHIP["n"] = -99
+    previas = [x for i, x in enumerate(g.get("escenas") or [], 1) if i < n]
+    a1 = anio_escena(esc)
+    a0 = next((anio_escena(x) for x in reversed(previas) if anio_escena(x)), None)
+    if VD.RE_ENLACE["pero"].match(VD.sin_pausas(S.get("voz") or esc.get("texto") or "").strip()) and n - _ULTIMO_WHIP["n"] >= WHIP_CADA_ESCENAS:
+        S["transicion"] = VD.TRANSICIONES["whip"]
+        _ULTIMO_WHIP["n"] = n
+        sfx = [(t, k) for t, k in sfx if not (t <= VD.TRANSICION + 0.1 and k in ("whoosh", "impacto"))] + [(0.0, "whip")]
+    elif a0 and a1 and a1 != a0:
+        S["transicion"] = VD.TRANSICIONES["avanza" if a1 > a0 else "retrocede"]
     return ev, sfx
 
 
@@ -2551,6 +3767,12 @@ def cmd_digesto(a):
                                       " · %s %s" % (f.get("fecha") or "", f.get("lugar") or "") if f.get("fecha") or f.get("lugar") else "",
                                       " · PROTAGONISTA" if es_protagonista(f, prot) else "")
          for k, f in sorted((H.get("fotos") or {}).items())] + \
+        (["", "## Tomas de video (id · sin audio|con audio · s · qué muestra · hechos · crédito, fecha; con audio: lo que se oye)"] +
+         ["- %s · %s · %.1f s · %s · hechos %s · %s%s%s" % (k, "CON AUDIO" if t.get("audio") == "original" else "sin audio", t["dur"],
+                                                          t.get("descripcion"), ", ".join(t.get("hechos") or []), t.get("credito"),
+                                                          ", " + str(t["fecha"]) if t.get("fecha") else "",
+                                                          " — «%s»" % (t.get("cita") or t.get("ambiente")) if t.get("cita") or t.get("ambiente") else "")
+          for k, t in sorted((H.get("tomas") or {}).items())] if H.get("tomas") else []) + \
         (["", "## Casos (estado a la fecha de consulta)"] + ["- %s: %s (consultado %s)%s" % (x.get("persona"), x.get("estado_actual"), x.get("fecha_consulta"),
                                                             " · sentencia firme" if x.get("sentencia_firme") else "") for x in H.get("casos") or []]
          if H.get("casos") else [])
@@ -2568,7 +3790,8 @@ def cmd_digesto(a):
                       "- El gancho nombra al protagonista en la pantalla, la línea o la voz (H10).",
                       "- Bloqueadas por rotación: familias %s" % (", ".join(rec_g.get("familias") or []) or "ninguna"),
                       "- Sin cifra obligatoria (una historia abre con el hecho), pero cada número dicho tiene respaldo. Cada año dicho está en un hecho.",
-                      "- La voz no abre con «Esta es la historia de…», «Te cuento…», «En el año…» ni con contexto: abre con el momento más fuerte."]
+                      "- La voz no abre con «Esta es la historia de…», «Te cuento…», «En el año…» ni con contexto: abre con el momento más fuerte.",
+                      "", "## Rendimiento real (TikTok, YouTube; /analyze-improve)"] + VD.lineas_rendimiento_real()
         print("\n".join(out))
         return 0
     if a.para == "critico":
@@ -2608,6 +3831,12 @@ def cmd_digesto(a):
                   "- foto: foto (id de una foto verificada; nunca null, icono ni mapa: si no hay del hecho, una de referencia), fecha (chip ≤ %d; «De referencia» si la foto no es del hecho), lugar ≤ %d, titular ≤ %d palabras, hechos [ids], cifra? {texto, etiqueta}, fuente ≤ %d (obligatoria si cita un hecho una_fuente o en_disputa cuya fuente no se mostró ni se nombró antes en el acto)"
                   % (CHIP_CARACTERES, LUGAR_CARACTERES, TITULAR_PALABRAS, FUENTE_CARACTERES),
                   "- cita: cita (id), la voz dice quién habla y la lee literal; resalte? (trozo literal), retrato? (id de foto), fuente?",
+                  "- toma: toma (id de «Tomas de video»; cada una UNA vez), fecha (chip: la de la toma, o «Video de archivo» si es más vieja que el "
+                  "hecho), lugar, titular ≤ %d palabras, hechos [ids: incluye uno que la toma muestra]. SIN AUDIO: un clip en movimiento con la "
+                  "voz encima, como una foto (la voz no dura mucho más que el clip). CON AUDIO: el sonido es el hecho; la voz es solo la "
+                  "entrada (20–120 caracteres) y dice quién habla y cuándo («El 21 de agosto, Pérez Molina dijo esto:»); luego suena el clip "
+                  "con su audio y sus subtítulos; nunca dos seguidas y, en una secuencia de voz, va última. Todas las tomas ≤ %.0f %% del video, "
+                  "≤ %d con audio (TM1–TM5)" % (TITULAR_PALABRAS, 100 * TOMAS_PARTE_MAX, TOMAS_AUDIO_MAX),
                   "- tarjeta/mapa/ranking/tiempo: tuit (1, 2…), golpe ≤ %d palabras, grafico {plantilla de templates/graficos/, kicker, titular, nota, fuente, datos}; foco: false si el zoom a la cifra estorba"
                   % VD.GOLPE_PALABRAS,
                   *VD.lineas_animaciones(st.get("animaciones_recientes") or []),
@@ -2656,6 +3885,7 @@ def digesto_oyente(trabajo, H):
     if not os.path.exists(ruta):
         return falla("falta locucion.json: corre python3 scripts/historia.py guion %s --check" % VD.rel(trabajo))
     citas = {q["id"]: q for q in H.get("citas") or []}
+    aplicar_extension(trabajo)   # la toma: el oyente ve el clip y oye su audio (oyente_toma)
     print("\n".join(VD.lineas_oyente(leer(os.path.join(trabajo, "guion.json")), leer(ruta), lambda e: pantalla_de(e, citas))))
     return 0
 
@@ -2668,7 +3898,7 @@ def pantalla_de(e, citas):
     rot = ["%s · %s · %s" % (r["anio"], r["titulo"], r["lugar"])] if r and not r["capitulo"] else []
     if t == "gancho":
         partes = [e.get("pantalla"), e.get("linea"), (e.get("visual_datos") or {}).get("etiqueta")]
-    elif t == "foto":
+    elif t in ("foto", "toma"):
         c = e.get("cifra") or {}
         partes = [e.get("fecha"), e.get("lugar"), e.get("titular"), c.get("texto"), c.get("etiqueta")]
     elif t == "cita":
@@ -2676,6 +3906,10 @@ def pantalla_de(e, citas):
         partes = ["«%s»" % q.get("texto", ""), q.get("autor"), q.get("cargo"), e.get("traduccion")]
     elif t == "capitulo":
         partes = ["Capítulo %s" % e.get("numero"), e.get("anio"), e.get("titulo"), e.get("lugar")]
+    elif t == "red":
+        partes = [e.get("titulo"), "Según la acusación" if e.get("atribuida") else None] + \
+                 ["%s (nivel %s)" % (nd.get("personaje"), nd.get("nivel")) for nd in e.get("nodos") or []] + \
+                 ["%s %s %s" % (ar.get("de"), ar.get("rel") or "→", ar.get("a")) for ar in e.get("aristas") or []]
     elif t in VD.CON_TUIT or t == "escala":
         gr = e.get("grafico") or {}
         tit = gr.get("titular")
@@ -2699,7 +3933,7 @@ SALIDA_ENTREGA = ("video.mp4", "video_4x5.mp4", "subtitulos.srt", "caption.md", 
 
 
 def fotos_de_escena(e):
-    return [x for x in (e.get("foto"), e.get("retrato"), (e.get("visual_datos") or {}).get("foto")) if x]
+    return [x for x in (e.get("foto"), e.get("retrato"), (e.get("visual_datos") or {}).get("foto")) if x] + list(e.get("dividida") or [])
 
 
 def cmd_entregar(a):
@@ -2738,6 +3972,8 @@ def cmd_entregar(a):
         eg = escenas_g[e["n"] - 1] if e["n"] - 1 < len(escenas_g) else {}
         escenas.append({"n": e["n"], "tipo": e["tipo"], "pantalla": e.get("pantalla"), "voz": e.get("voz"), "dur": s_["dur"],
                         "hechos": eg.get("hechos") or [], "fotos": [credito(x) for x in fotos_de_escena(eg) if credito(x)],
+                        "tomas": [{k: (H.get("tomas") or {})[eg["toma"]].get(k) for k in ("credito", "origen", "url", "tramo", "audio", "fecha")}]
+                        if eg.get("tipo") == "toma" and eg.get("toma") in (H.get("tomas") or {}) else [],
                         "animacion": eg.get("animacion"), "mecanismo": eg.get("mecanismo")})
     e1 = escenas_g[0] if escenas_g else {}
     entrega = {
@@ -2814,6 +4050,15 @@ def fuentes_md(st, escenas, H):
             cred, lic = fotos[x].get("credito") or "", fotos[x].get("licencia") or ""
             L.append("- %s · %s" % (cred if lic in cred else "%s · %s" % (cred, lic), fotos[x].get("pagina") or fotos[x].get("url")))
         L.append("")
+    tomas = H.get("tomas") or {}
+    tids = [e.get("toma") for e in escenas if e.get("tipo") == "toma" and e.get("toma") in tomas]
+    if tids:
+        L += ["## Videos", ""]
+        for x in dict.fromkeys(tids):
+            t = tomas[x]
+            L.append("- %s%s · %s · tramo %s%s" % (t.get("credito") or "", ", %s" % t["fecha"] if t.get("fecha") else "",
+                                                 t.get("url"), t.get("tramo"), " · nota: %s" % t["fuente"] if t.get("fuente") and t["fuente"] != t.get("url") else ""))
+        L.append("")
     L.append("Sígueme: %s" % " · ".join("%s %s" % (r["nombre"], r["handle"]) for r in VD.REDES))
     return "\n".join(L) + "\n"
 
@@ -2865,12 +4110,57 @@ def main():
     q.add_argument("--lugar")
     q.add_argument("--retrato-de", help="si es el retrato de una persona, su nombre (el de la cita); un objeto o un lugar no lo lleva")
     q.add_argument("--encaje", choices=["contener"], help="gráfico, cartel o logo con texto: márgenes para que la foto a sangre no lo recorte")
+    q.add_argument("--retrato-evidencia", help="con --retrato-de: el pie, la categoría de Commons o el título que nombra a la persona (H21)")
     x = q.add_mutually_exclusive_group()
     x.add_argument("--referencia", action="store_true", help="la foto no es del hecho sino de referencia (el lugar, la institución, la persona, "
                    "el producto o la época): el crédito dice «Foto de referencia: …»")
     x.add_argument("--protagonista", action="store_true", help="la foto muestra al protagonista del encuadre (el producto, el edificio, la persona): "
                    "H12 la exige en el gancho")
     q.add_argument("--extmetadata", help="pruebas: extmetadata de Commons guardado (solo comprueba la licencia, sin red)")
+    q = sub.add_parser("video", help="baja un video de una fuente leída (o --url/--archivo): ficha, hoja de contacto y transcripción")
+    q.add_argument("trabajo")
+    q.add_argument("--id", required=True, help="<eje>-vNN")
+    q.add_argument("--de-fuente", metavar="URL", help="una fuente ya leída que trae video (leer los lista): crédito «Video: <medio>»")
+    q.add_argument("--n", type=int, help="cuál de los videos de la fuente (1 por defecto)")
+    q.add_argument("--url", help="el enlace del video (YouTube, JW Player, mp4, m3u8…), con --credito y --origen")
+    q.add_argument("--archivo", help="un video local (pruebas o material entregado por una institución), con --credito y --origen")
+    q.add_argument("--fuente", help="con --url/--archivo: la nota u oficio donde se publicó")
+    q.add_argument("--credito")
+    q.add_argument("--origen", choices=["oficial", "medio", "empresa"])
+    q.add_argument("--descripcion")
+    q.add_argument("--fecha")
+    q.add_argument("--lugar")
+    q.add_argument("--retrato-de", help="si muestra a una persona hablando, su nombre (TM3: la voz de entrada lo nombra)")
+    q.add_argument("--sin-transcripcion", action="store_true", help="no correr whisper (un video sin voz)")
+    q.add_argument("--transcripcion", help="pruebas: una transcripción fija {palabras: [{text, start, end}]} en lugar de whisper")
+    q = sub.add_parser("toma", help="corta un tramo de un video bajado en una toma (cuadros a 30 fps y, con audio, su wav nivelado)")
+    q.add_argument("trabajo")
+    q.add_argument("--video", required=True, help="id del video (historia.py video)")
+    q.add_argument("--id", required=True, help="<id del video>-tNN")
+    q.add_argument("--desde", required=True, help="M:SS(.s) o segundos")
+    q.add_argument("--hasta", required=True)
+    q.add_argument("--audio", choices=["mudo", "original"], required=True,
+                   help="original: el sonido es el hecho (alguien declara, se lee una sentencia, la plaza corea); mudo: imagen de contexto, la voz encima")
+    q.add_argument("--hechos", required=True, help="ids de los hechos que la toma muestra (coma o espacio)")
+    q.add_argument("--cita", help="con audio: lo que se oye, literal (TM3)")
+    q.add_argument("--ambiente", help="con audio sin palabras que citar: qué suena («la plaza corea ¡Renuncia ya!»)")
+    q.add_argument("--descripcion")
+    q.add_argument("--fecha")
+    q.add_argument("--lugar")
+    q.add_argument("--encaje", choices=ENCAJES_TOMA, default="fondo",
+                   help="fondo (por defecto): el clip entero sobre sí mismo borroso; recorte: a sangre, recortado alrededor de --x")
+    q.add_argument("--x", type=float, default=0.5, help="con --encaje recorte: dónde está el sujeto (0 izquierda, 1 derecha)")
+    sub.add_parser("tomas-contacto", help="hoja con 4 cuadros de cada toma (QA)").add_argument("trabajo")
+    q = sub.add_parser("focos", help="las caras de cada foto (Vision de macOS) y de quién es cada una: sub-planos, recorte y tarjeta de persona")
+    q.add_argument("trabajo")
+    q.add_argument("--foto", help="una sola foto (<eje>-fNN)")
+    q.add_argument("--cara", type=int, help="con --foto: la cara N (de izquierda a derecha)")
+    q.add_argument("--persona", help="con --cara: de quién es (el nombre del personaje del encuadre)")
+    q.add_argument("--evidencia", help="con --persona: el pie o la categoría que la nombra")
+    q.add_argument("--quitar", action="store_true", help="con --cara: no es una cara (o no sirve)")
+    q.add_argument("--foco", help="x,y,w,h (0–1): un foco a mano (un objeto, un cartel)")
+    q.add_argument("--que", choices=["rostro", "objeto", "texto"], help="con --foco")
+    q.add_argument("--rehacer", action="store_true", help="vuelve a detectar las caras aunque ya tenga focos")
     q = sub.add_parser("hechos")
     q.add_argument("trabajo")
     q.add_argument("--check", action="store_true")
@@ -2918,10 +4208,13 @@ def main():
     for nombre in REENVIO:
         sub.add_parser(nombre, help="→ scripts/video.py %s" % nombre)
     a = p.parse_args()
+    if getattr(a, "trabajo", None) and a.cmd != "preparar":
+        aplicar_formato(os.path.abspath(a.trabajo))
     return {"preparar": cmd_preparar, "leer": cmd_leer, "commons": cmd_commons, "foto": cmd_foto, "hechos": cmd_hechos,
             "consolidar": cmd_consolidar, "encuadre": cmd_encuadre, "narracion": cmd_narracion, "digesto": cmd_digesto,
             "ganchos": cmd_ganchos, "cierres": cmd_cierres, "tarjetas": cmd_tarjetas, "guion": cmd_guion, "probar": cmd_probar, "aplicar": cmd_aplicar, "tiempos": cmd_tiempos,
-            "fotos-contacto": cmd_fotos_contacto, "entregar": cmd_entregar}[a.cmd](a)
+            "fotos-contacto": cmd_fotos_contacto, "entregar": cmd_entregar, "video": cmd_video, "toma": cmd_toma,
+            "tomas-contacto": cmd_tomas_contacto, "focos": cmd_focos}[a.cmd](a)
 
 
 if __name__ == "__main__":

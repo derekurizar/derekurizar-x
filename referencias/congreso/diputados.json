@@ -1,0 +1,3059 @@
+{
+  "corte": "2026-11-04",
+  "fuente": "https://www.congreso.gob.gt/ (tarjetas de diputados)",
+  "_comentario": "Lo escribe scripts/congreso.py padron. «bancada» es la de la votación más reciente en la base (la del sistema de votación); «bloque_sitio» la de la portada del Congreso. «notoriedad» la llena la sesión (cargo, por qué se le conoce) y ayuda a elegir a quién nombrar.",
+  "diputados": [
+    {
+      "id": "929",
+      "nombre": "Luis Fernando Aguirre Estrada",
+      "nombres": [
+        "Luis",
+        "Fernando"
+      ],
+      "apellidos": [
+        "Aguirre",
+        "Estrada"
+      ],
+      "nombre_listado": "Aguirre Estrada Luis Fernando",
+      "bancada": "CABAL",
+      "bloque_sitio": "CABAL",
+      "distrito": "Lista Nacional",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/293d4-luis-aguirre-estrada-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/929",
+      "notoriedad": ""
+    },
+    {
+      "id": "840",
+      "nombre": "Hellen Magaly Alexándra Ajcip Canel",
+      "nombres": [
+        "Hellen",
+        "Magaly",
+        "Alexándra"
+      ],
+      "apellidos": [
+        "Ajcip",
+        "Canel"
+      ],
+      "nombre_listado": "Ajcip Canel Hellen Magaly Alexándra",
+      "bancada": "ELEFANTE",
+      "bloque_sitio": "ELEFANTE",
+      "distrito": "Guatemala",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/6b1c1-img-20200122-wa0013.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/840",
+      "notoriedad": ""
+    },
+    {
+      "id": "943",
+      "nombre": "Héctor Adolfo Aldana Reyes",
+      "nombres": [
+        "Héctor",
+        "Adolfo"
+      ],
+      "apellidos": [
+        "Aldana",
+        "Reyes"
+      ],
+      "nombre_listado": "Aldana Reyes Héctor Adolfo",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "Lista Nacional",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/2e514-hector-aldana-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/943",
+      "notoriedad": ""
+    },
+    {
+      "id": "2",
+      "nombre": "Felipe Alejos Lorenzana",
+      "nombres": [
+        "Felipe"
+      ],
+      "apellidos": [
+        "Alejos",
+        "Lorenzana"
+      ],
+      "nombre_listado": "Alejos Lorenzana Felipe",
+      "bancada": "TODOS",
+      "bloque_sitio": "TODOS",
+      "distrito": "Lista Nacional",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/bf162-dip-felipe-alejos-.-todos_peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/2",
+      "notoriedad": ""
+    },
+    {
+      "id": "956",
+      "nombre": "Manuel Geovany Alvarado Vásquez",
+      "nombres": [
+        "Manuel",
+        "Geovany"
+      ],
+      "apellidos": [
+        "Alvarado",
+        "Vásquez"
+      ],
+      "nombre_listado": "Alvarado Vásquez Manuel Geovany",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "Quiché",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/6eb5f-manuel-alvarado-vasquez-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/956",
+      "notoriedad": ""
+    },
+    {
+      "id": "851",
+      "nombre": "Cristian Rodolfo Alvarez Y Alvarez",
+      "nombres": [
+        "Cristian",
+        "Rodolfo"
+      ],
+      "apellidos": [
+        "Alvarez",
+        "Y",
+        "Alvarez"
+      ],
+      "nombre_listado": "Alvarez y Alvarez Cristian Rodolfo",
+      "bancada": "CREO",
+      "bloque_sitio": "CREO",
+      "distrito": "Distrito Central",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/74d57-dip.-cristian-rodolfo-alvarez-alvarez-creo_peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/851",
+      "notoriedad": ""
+    },
+    {
+      "id": "948",
+      "nombre": "César Augusto Amézquita Del Valle",
+      "nombres": [
+        "César",
+        "Augusto"
+      ],
+      "apellidos": [
+        "Amézquita",
+        "Del",
+        "Valle"
+      ],
+      "nombre_listado": "Amézquita Del Valle César Augusto",
+      "bancada": "VIVA",
+      "bloque_sitio": "VIVA",
+      "distrito": "Lista Nacional",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/14e15-cesar-amezquita-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/948",
+      "notoriedad": ""
+    },
+    {
+      "id": "772",
+      "nombre": "Sergio David Arana Roca",
+      "nombres": [
+        "Sergio",
+        "David"
+      ],
+      "apellidos": [
+        "Arana",
+        "Roca"
+      ],
+      "nombre_listado": "Arana Roca Sergio David",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "Escuintla",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/377f8-img_0240-sergio-arana-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/772",
+      "notoriedad": ""
+    },
+    {
+      "id": "907",
+      "nombre": "Manuel De Jesús Archila Cordón",
+      "nombres": [
+        "Manuel",
+        "De",
+        "Jesús"
+      ],
+      "apellidos": [
+        "Archila",
+        "Cordón"
+      ],
+      "nombre_listado": "Archila Cordón Manuel de Jesús",
+      "bancada": "CABAL",
+      "bloque_sitio": "CABAL",
+      "distrito": "Guatemala",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/a897c-manuel-archila-peq.jpeg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/907",
+      "notoriedad": ""
+    },
+    {
+      "id": "972",
+      "nombre": "Sherol Ivanisse Arévalo Avila",
+      "nombres": [
+        "Sherol",
+        "Ivanisse"
+      ],
+      "apellidos": [
+        "Arévalo",
+        "Avila"
+      ],
+      "nombre_listado": "Arévalo Avila Sherol Ivanisse",
+      "bancada": "VALOR",
+      "bloque_sitio": "VALOR",
+      "distrito": "Totonicapán",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/357c9-sherol-arevalo-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/972",
+      "notoriedad": ""
+    },
+    {
+      "id": "11",
+      "nombre": "Alvaro Enrique Arzú Escobar",
+      "nombres": [
+        "Alvaro",
+        "Enrique"
+      ],
+      "apellidos": [
+        "Arzú",
+        "Escobar"
+      ],
+      "nombre_listado": "Arzú Escobar Alvaro Enrique",
+      "bancada": "UNIONISTA",
+      "bloque_sitio": "PU",
+      "distrito": "Lista Nacional",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/ae149-web_diputado-arzu.png",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/11",
+      "notoriedad": ""
+    },
+    {
+      "id": "918",
+      "nombre": "Jorge Estuardo Ayala Marroquin",
+      "nombres": [
+        "Jorge",
+        "Estuardo"
+      ],
+      "apellidos": [
+        "Ayala",
+        "Marroquin"
+      ],
+      "nombre_listado": "Ayala Marroquin Jorge Estuardo",
+      "bancada": "VALOR",
+      "bloque_sitio": "VALOR",
+      "distrito": "Guatemala",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/c56e7-jorge-ayala-marroquin-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/918",
+      "notoriedad": ""
+    },
+    {
+      "id": "969",
+      "nombre": "Gerson Geovanny Barragán Morales",
+      "nombres": [
+        "Gerson",
+        "Geovanny"
+      ],
+      "apellidos": [
+        "Barragán",
+        "Morales"
+      ],
+      "nombre_listado": "Barragán Morales Gerson Geovanny",
+      "bancada": "VIVA",
+      "bloque_sitio": "VIVA",
+      "distrito": "Suchitepéquez",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/1b0d2-img_0528-gerson-geovanny-barragan-morales-web-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/969",
+      "notoriedad": ""
+    },
+    {
+      "id": "894",
+      "nombre": "Raúl Amilcar Barrera Robles",
+      "nombres": [
+        "Raúl",
+        "Amilcar"
+      ],
+      "apellidos": [
+        "Barrera",
+        "Robles"
+      ],
+      "nombre_listado": "Barrera Robles Raúl Amilcar",
+      "bancada": "INDP - SEMILLA",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Distrito Central",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/975fd-img_0793-raul-amilcar-barrera-robles-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/894",
+      "notoriedad": ""
+    },
+    {
+      "id": "915",
+      "nombre": "León Felipe Barrera Villanueva",
+      "nombres": [
+        "León",
+        "Felipe"
+      ],
+      "apellidos": [
+        "Barrera",
+        "Villanueva"
+      ],
+      "nombre_listado": "Barrera Villanueva León Felipe",
+      "bancada": "INDP - UNE",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Guatemala",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/2414e-leon-felipe-barrera-villanueva-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/915",
+      "notoriedad": ""
+    },
+    {
+      "id": "18",
+      "nombre": "Orlando Joaquín Blanco Lapola",
+      "nombres": [
+        "Orlando",
+        "Joaquín"
+      ],
+      "apellidos": [
+        "Blanco",
+        "Lapola"
+      ],
+      "nombre_listado": "Blanco Lapola Orlando Joaquín",
+      "bancada": "VOS",
+      "bloque_sitio": "VOS",
+      "distrito": "Lista Nacional",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/3d419-diputado-orlando-blanco-peq.png",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/18",
+      "notoriedad": ""
+    },
+    {
+      "id": "891",
+      "nombre": "Victor Vicente Bonilla González",
+      "nombres": [
+        "Victor",
+        "Vicente"
+      ],
+      "apellidos": [
+        "Bonilla",
+        "González"
+      ],
+      "nombre_listado": "Bonilla González Víctor Vicente",
+      "bancada": "VIVA",
+      "bloque_sitio": "VIVA",
+      "distrito": "Chimaltenango",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/6e8fe-victor-vicente-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/891",
+      "notoriedad": ""
+    },
+    {
+      "id": "979",
+      "nombre": "Ivana Bonilla Oliva",
+      "nombres": [
+        "Ivana"
+      ],
+      "apellidos": [
+        "Bonilla",
+        "Oliva"
+      ],
+      "nombre_listado": "Bonilla Oliva Ivana",
+      "bancada": "UNE",
+      "bloque_sitio": "UNE",
+      "distrito": "Chiquimula",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/c45a8-diputada-ivanna-bonilla.jpg-peq.jpeg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/979",
+      "notoriedad": ""
+    },
+    {
+      "id": "900",
+      "nombre": "Ernesto Bran Colindres",
+      "nombres": [
+        "Ernesto"
+      ],
+      "apellidos": [
+        "Bran",
+        "Colindres"
+      ],
+      "nombre_listado": "Bran Colindres Ernesto",
+      "bancada": "VALOR",
+      "bloque_sitio": "VALOR",
+      "distrito": "El Progreso",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/4c575-ernesto-bran-colindres-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/900",
+      "notoriedad": ""
+    },
+    {
+      "id": "973",
+      "nombre": "Jorge Mario Cabrera Ordóñez",
+      "nombres": [
+        "Jorge",
+        "Mario"
+      ],
+      "apellidos": [
+        "Cabrera",
+        "Ordóñez"
+      ],
+      "nombre_listado": "Cabrera Ordóñez Jorge Mario",
+      "bancada": "INDP - VAMOS",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Totonicapán",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/e2ed6-jorge-mario-cabrera-ordonez-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/973",
+      "notoriedad": ""
+    },
+    {
+      "id": "908",
+      "nombre": "Luis Antonio Cáceres Gamarro",
+      "nombres": [
+        "Luis",
+        "Antonio"
+      ],
+      "apellidos": [
+        "Cáceres",
+        "Gamarro"
+      ],
+      "nombre_listado": "Cáceres Gamarro Luis Antonio",
+      "bancada": "INDP - SEMILLA",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Guatemala",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/13d81-luis-antonio-ca-ceres-gamarro-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/908",
+      "notoriedad": ""
+    },
+    {
+      "id": "774",
+      "nombre": "Carlos Roberto Calderon Galvez",
+      "nombres": [
+        "Carlos",
+        "Roberto"
+      ],
+      "apellidos": [
+        "Calderon",
+        "Galvez"
+      ],
+      "nombre_listado": "Calderon Galvez Carlos Roberto",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "Lista Nacional",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/1f988-img_4416-carlos-roberto-calderon-galvez-web-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/774",
+      "notoriedad": ""
+    },
+    {
+      "id": "791",
+      "nombre": "Karla Betzaida Cardona Arreaga",
+      "nombres": [
+        "Karla",
+        "Betzaida"
+      ],
+      "apellidos": [
+        "Cardona",
+        "Arreaga"
+      ],
+      "nombre_listado": "Cardona Arreaga Karla Betzaida",
+      "bancada": "UNE",
+      "bloque_sitio": "UNE",
+      "distrito": "Huehuetenango",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/7b809-karla-betzaida-cardona-arreaga-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/791",
+      "notoriedad": ""
+    },
+    {
+      "id": "905",
+      "nombre": "Obbed Ediberto Castañasa Mendizábal",
+      "nombres": [
+        "Obbed",
+        "Ediberto"
+      ],
+      "apellidos": [
+        "Castañasa",
+        "Mendizábal"
+      ],
+      "nombre_listado": "Castañasa Mendizábal Obbed Ediberto",
+      "bancada": "VIVA",
+      "bloque_sitio": "VIVA",
+      "distrito": "Escuintla",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/3adc8-obbed-castanasa-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/905",
+      "notoriedad": ""
+    },
+    {
+      "id": "934",
+      "nombre": "Manfredo Duvalier Castañón González",
+      "nombres": [
+        "Manfredo",
+        "Duvalier"
+      ],
+      "apellidos": [
+        "Castañón",
+        "González"
+      ],
+      "nombre_listado": "Castañón González Manfredo Duvalier",
+      "bancada": "INDP - SEMILLA",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Lista Nacional",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/41820-manfredo-duvalier-catanon-gonzales-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/934",
+      "notoriedad": ""
+    },
+    {
+      "id": "831",
+      "nombre": "Román Wilfredo Castellanos Caal",
+      "nombres": [
+        "Román",
+        "Wilfredo"
+      ],
+      "apellidos": [
+        "Castellanos",
+        "Caal"
+      ],
+      "nombre_listado": "Castellanos Caal Román Wilfredo",
+      "bancada": "INDP - SEMILLA",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Distrito Central",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/628b1-dip.-roman-wilfredo-castellanos-caal_semilla_peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/831",
+      "notoriedad": ""
+    },
+    {
+      "id": "30",
+      "nombre": "José Inés Castillo Martínez",
+      "nombres": [
+        "José",
+        "Inés"
+      ],
+      "apellidos": [
+        "Castillo",
+        "Martínez"
+      ],
+      "nombre_listado": "Castillo Martínez José Inés",
+      "bancada": "UNE",
+      "bloque_sitio": "UNE",
+      "distrito": "Santa Rosa",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/affc5-jose-ines-castillo_peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/30",
+      "notoriedad": ""
+    },
+    {
+      "id": "787",
+      "nombre": "Maynor Estuardo Castillo Y Castillo",
+      "nombres": [
+        "Maynor",
+        "Estuardo"
+      ],
+      "apellidos": [
+        "Castillo",
+        "Y",
+        "Castillo"
+      ],
+      "nombre_listado": "Castillo y Castillo Maynor Estuardo",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "Jutiapa",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/60f08-maynor-castillo-peq.jpeg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/787",
+      "notoriedad": ""
+    },
+    {
+      "id": "842",
+      "nombre": "Jorge Romeo Castro Delgado",
+      "nombres": [
+        "Jorge",
+        "Romeo"
+      ],
+      "apellidos": [
+        "Castro",
+        "Delgado"
+      ],
+      "nombre_listado": "Castro Delgado Jorge Romeo",
+      "bancada": "INDP - VIVA",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Lista Nacional",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/ac154-img_0159-jorge-romeo-castro-delgado-web-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/842",
+      "notoriedad": ""
+    },
+    {
+      "id": "31",
+      "nombre": "Sergio Leonel Celis Navas",
+      "nombres": [
+        "Sergio",
+        "Leonel"
+      ],
+      "apellidos": [
+        "Celis",
+        "Navas"
+      ],
+      "nombre_listado": "Celis Navas Sergio Leonel",
+      "bancada": "CABAL",
+      "bloque_sitio": "CABAL",
+      "distrito": "Sacatepéquez",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/2b583-sergio-celis-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/31",
+      "notoriedad": ""
+    },
+    {
+      "id": "939",
+      "nombre": "Dámaris Carolina Cerna Acevedo",
+      "nombres": [
+        "Dámaris",
+        "Carolina"
+      ],
+      "apellidos": [
+        "Cerna",
+        "Acevedo"
+      ],
+      "nombre_listado": "Cerna Acevedo Dámaris Carolina",
+      "bancada": "UNE",
+      "bloque_sitio": "UNE",
+      "distrito": "Lista Nacional",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/13e85-img_0497-damaris-carolina-cerna-acevedo-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/939",
+      "notoriedad": ""
+    },
+    {
+      "id": "899",
+      "nombre": "José Alberto Chic Cardona",
+      "nombres": [
+        "José",
+        "Alberto"
+      ],
+      "apellidos": [
+        "Chic",
+        "Cardona"
+      ],
+      "nombre_listado": "Chic Cardona José Alberto",
+      "bancada": "VOS",
+      "bloque_sitio": "VOS",
+      "distrito": "Distrito Central",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/f16b3-jose-chic-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/899",
+      "notoriedad": ""
+    },
+    {
+      "id": "965",
+      "nombre": "Bequer Neftali Chocooj De La Cruz",
+      "nombres": [
+        "Bequer",
+        "Neftali"
+      ],
+      "apellidos": [
+        "Chocooj",
+        "De",
+        "La",
+        "Cruz"
+      ],
+      "nombre_listado": "Chocooj de la Cruz Bequer Neftali",
+      "bancada": "CABAL",
+      "bloque_sitio": "CABAL",
+      "distrito": "Sololá",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/03edc-bequer-chocooj-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/965",
+      "notoriedad": ""
+    },
+    {
+      "id": "962",
+      "nombre": "Gladis Carolina Cifuentes Barragán",
+      "nombres": [
+        "Gladis",
+        "Carolina"
+      ],
+      "apellidos": [
+        "Cifuentes",
+        "Barragán"
+      ],
+      "nombre_listado": "Cifuentes Barragán Gladis Carolina",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "San Marcos",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/5f0fa-gladis-cifuentes-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/962",
+      "notoriedad": ""
+    },
+    {
+      "id": "776",
+      "nombre": "Guillermo Alberto Cifuentes Barragán",
+      "nombres": [
+        "Guillermo",
+        "Alberto"
+      ],
+      "apellidos": [
+        "Cifuentes",
+        "Barragán"
+      ],
+      "nombre_listado": "Cifuentes Barragán Guillermo Alberto",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "San Marcos",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/4be7d-img_0236-guillermo-alberto-cifuentes-barragan-web-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/776",
+      "notoriedad": ""
+    },
+    {
+      "id": "883",
+      "nombre": "Victor Hugo Cifuentes Delgado",
+      "nombres": [
+        "Victor",
+        "Hugo"
+      ],
+      "apellidos": [
+        "Cifuentes",
+        "Delgado"
+      ],
+      "nombre_listado": "Cifuentes Delgado Victor Hugo",
+      "bancada": "UNE",
+      "bloque_sitio": "UNE",
+      "distrito": "Alta Verapaz",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/22329-_mg_9171-victor-hugo-cifuentes-delgado-web-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/883",
+      "notoriedad": ""
+    },
+    {
+      "id": "961",
+      "nombre": "Gustavo Adolfo Cifuentes Navarro",
+      "nombres": [
+        "Gustavo",
+        "Adolfo"
+      ],
+      "apellidos": [
+        "Cifuentes",
+        "Navarro"
+      ],
+      "nombre_listado": "Cifuentes Navarro Gustavo Adolfo",
+      "bancada": "TODOS",
+      "bloque_sitio": "TODOS",
+      "distrito": "San Marcos",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/461c4-gustavo-adolfo-cifuentes-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/961",
+      "notoriedad": ""
+    },
+    {
+      "id": "888",
+      "nombre": "Pablo Leonel Cifuentes Ovalle",
+      "nombres": [
+        "Pablo",
+        "Leonel"
+      ],
+      "apellidos": [
+        "Cifuentes",
+        "Ovalle"
+      ],
+      "nombre_listado": "Cifuentes Ovalle Pablo Leonel",
+      "bancada": "CABAL",
+      "bloque_sitio": "CABAL",
+      "distrito": "Chimaltenango",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/0f0ca-pablo-cifuentes-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/888",
+      "notoriedad": ""
+    },
+    {
+      "id": "885",
+      "nombre": "Randy Araely Coc Figueroa",
+      "nombres": [
+        "Randy",
+        "Araely"
+      ],
+      "apellidos": [
+        "Coc",
+        "Figueroa"
+      ],
+      "nombre_listado": "Coc Figueroa Randy Araely",
+      "bancada": "VICTORIA",
+      "bloque_sitio": "VICTORIA",
+      "distrito": "Alta Verapaz",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/898d2-randy-coc-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/885",
+      "notoriedad": ""
+    },
+    {
+      "id": "39",
+      "nombre": "Luis Alberto Contreras Colíndres",
+      "nombres": [
+        "Luis",
+        "Alberto"
+      ],
+      "apellidos": [
+        "Contreras",
+        "Colíndres"
+      ],
+      "nombre_listado": "Contreras Colíndres Luis Alberto",
+      "bancada": "CREO",
+      "bloque_sitio": "CREO",
+      "distrito": "San Marcos",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/7ef34-dip.-luis-alberto-contreras-colindres-creo_peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/39",
+      "notoriedad": "presidente del Congreso (2026; nota oficial del 3-nov-2026)"
+    },
+    {
+      "id": "41",
+      "nombre": "Oscar Rolando Corleto Rivera",
+      "nombres": [
+        "Oscar",
+        "Rolando"
+      ],
+      "apellidos": [
+        "Corleto",
+        "Rivera"
+      ],
+      "nombre_listado": "Corleto Rivera Oscar Rolando",
+      "bancada": "UNE",
+      "bloque_sitio": "UNE",
+      "distrito": "Alta Verapaz",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/4d3ec-img_0786-orscar-rolando-corleto-rivera-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/41",
+      "notoriedad": ""
+    },
+    {
+      "id": "826",
+      "nombre": "Gustavo Adolfo Crúz Montoya",
+      "nombres": [
+        "Gustavo",
+        "Adolfo"
+      ],
+      "apellidos": [
+        "Crúz",
+        "Montoya"
+      ],
+      "nombre_listado": "Crúz Montoya Gustavo Adolfo",
+      "bancada": "INDP - VIVA",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Lista Nacional",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/88f2e-gustavo-adolfo-cruz-montoya-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/826",
+      "notoriedad": ""
+    },
+    {
+      "id": "889",
+      "nombre": "Raúl Arnulfo Cuá Tumin",
+      "nombres": [
+        "Raúl",
+        "Arnulfo"
+      ],
+      "apellidos": [
+        "Cuá",
+        "Tumin"
+      ],
+      "nombre_listado": "Cuá Tumín Raúl Arnulfo",
+      "bancada": "INDP - SEMILLA",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Chimaltenango",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/096c9-img_0902-raul-arnulfo-cua-tumin-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/889",
+      "notoriedad": ""
+    },
+    {
+      "id": "906",
+      "nombre": "César Roberto Dávila Córdova",
+      "nombres": [
+        "César",
+        "Roberto"
+      ],
+      "apellidos": [
+        "Dávila",
+        "Córdova"
+      ],
+      "nombre_listado": "Dávila Córdova César Roberto",
+      "bancada": "INDP - BIEN",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Guatemala",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/465e4-cesar-davila-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/906",
+      "notoriedad": ""
+    },
+    {
+      "id": "950",
+      "nombre": "Edín Alexander De Jesús Mejía",
+      "nombres": [
+        "Edín",
+        "Alexander"
+      ],
+      "apellidos": [
+        "De",
+        "Jesús",
+        "Mejía"
+      ],
+      "nombre_listado": "De Jesús Mejía Edin Alexander",
+      "bancada": "VIVA",
+      "bloque_sitio": "VIVA",
+      "distrito": "Petén",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/8d67c-edin-de-jesus-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/950",
+      "notoriedad": ""
+    },
+    {
+      "id": "944",
+      "nombre": "Mynor Alfonso De La Rosa Palacios",
+      "nombres": [
+        "Mynor",
+        "Alfonso"
+      ],
+      "apellidos": [
+        "De",
+        "La",
+        "Rosa",
+        "Palacios"
+      ],
+      "nombre_listado": "De la Rosa Palacios Mynor Alfonso",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "Lista Nacional",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/08c7f-mynor-alfonso-de-la-rosa-palacios-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/944",
+      "notoriedad": ""
+    },
+    {
+      "id": "970",
+      "nombre": "Alberto Eduardo De León Benítez",
+      "nombres": [
+        "Alberto",
+        "Eduardo"
+      ],
+      "apellidos": [
+        "De",
+        "León",
+        "Benítez"
+      ],
+      "nombre_listado": "De León Benítez Alberto Eduardo",
+      "bancada": "CABAL",
+      "bloque_sitio": "CABAL",
+      "distrito": "Totonicapán",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/efbba-diputado-alberto-de-leon-peq.jpeg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/970",
+      "notoriedad": ""
+    },
+    {
+      "id": "777",
+      "nombre": "Greicy Domenica De León De León",
+      "nombres": [
+        "Greicy",
+        "Domenica"
+      ],
+      "apellidos": [
+        "De",
+        "León",
+        "De",
+        "León"
+      ],
+      "nombre_listado": "De León De León Greicy Domenica",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "Quiché",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/6c177-img_1556-greicy-domenica-de-leon-de-leon-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/777",
+      "notoriedad": ""
+    },
+    {
+      "id": "940",
+      "nombre": "Lourdes Teresita De León Torres",
+      "nombres": [
+        "Lourdes",
+        "Teresita"
+      ],
+      "apellidos": [
+        "De",
+        "León",
+        "Torres"
+      ],
+      "nombre_listado": "De León Torres Lourdes Teresita",
+      "bancada": "UNE",
+      "bloque_sitio": "UNE",
+      "distrito": "Lista Nacional",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/037c8-img_0081-lourdes-de-leon-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/940",
+      "notoriedad": ""
+    },
+    {
+      "id": "933",
+      "nombre": "Nadia Lorena De León Torres",
+      "nombres": [
+        "Nadia",
+        "Lorena"
+      ],
+      "apellidos": [
+        "De",
+        "León",
+        "Torres"
+      ],
+      "nombre_listado": "De León Torres Nadia Lorena",
+      "bancada": "NOSOTROS",
+      "bloque_sitio": "NOSOTROS",
+      "distrito": "Lista Nacional",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/11107-2d0a0005-nadia-lorena-de-leon-torres-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/933",
+      "notoriedad": ""
+    },
+    {
+      "id": "818",
+      "nombre": "Gerardín Ariel Díaz Mazariegos",
+      "nombres": [
+        "Gerardín",
+        "Ariel"
+      ],
+      "apellidos": [
+        "Díaz",
+        "Mazariegos"
+      ],
+      "nombre_listado": "Díaz Mazariegos Gerardín Ariel",
+      "bancada": "VALOR",
+      "bloque_sitio": "VALOR",
+      "distrito": "Quetzaltenango",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/4013f-dip.-gerardin-ariel-diaz-mazariegos_peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/818",
+      "notoriedad": ""
+    },
+    {
+      "id": "963",
+      "nombre": "Jeovanni Omar Domínguez Orozco",
+      "nombres": [
+        "Jeovanni",
+        "Omar"
+      ],
+      "apellidos": [
+        "Domínguez",
+        "Orozco"
+      ],
+      "nombre_listado": "Dominguez Orozco Jeovanni Omar",
+      "bancada": "VIVA",
+      "bloque_sitio": "VIVA",
+      "distrito": "San Marcos",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/a278e-dip.-jeovanni-dominguez-peq.jpeg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/963",
+      "notoriedad": ""
+    },
+    {
+      "id": "884",
+      "nombre": "Herman Otoniel Echeverría Casado",
+      "nombres": [
+        "Herman",
+        "Otoniel"
+      ],
+      "apellidos": [
+        "Echeverría",
+        "Casado"
+      ],
+      "nombre_listado": "Echeverría Casado Herman Otoniel",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "Alta Verapaz",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/d3583-hernan-echeverria-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/884",
+      "notoriedad": ""
+    },
+    {
+      "id": "941",
+      "nombre": "Sergio Guillermo Enriquez Garzaro",
+      "nombres": [
+        "Sergio",
+        "Guillermo"
+      ],
+      "apellidos": [
+        "Enriquez",
+        "Garzaro"
+      ],
+      "nombre_listado": "Enriquez Garzaro Sergio Guillermo",
+      "bancada": "UNE",
+      "bloque_sitio": "UNE",
+      "distrito": "Lista Nacional",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/de360-sergio-enriquez-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/941",
+      "notoriedad": ""
+    },
+    {
+      "id": "926",
+      "nombre": "Kevyn Luis Carlo Escobar Castillo",
+      "nombres": [
+        "Kevyn",
+        "Luis",
+        "Carlo"
+      ],
+      "apellidos": [
+        "Escobar",
+        "Castillo"
+      ],
+      "nombre_listado": "Escobar Castillo Kevyn Luis Carlo",
+      "bancada": "CABAL",
+      "bloque_sitio": "CABAL",
+      "distrito": "Jutiapa",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/70cfb-diputado-kevyn-escobar-peq.png",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/926",
+      "notoriedad": ""
+    },
+    {
+      "id": "54",
+      "nombre": "Boris Roberto España Cáceres",
+      "nombres": [
+        "Boris",
+        "Roberto"
+      ],
+      "apellidos": [
+        "España",
+        "Cáceres"
+      ],
+      "nombre_listado": "España Cáceres Boris Roberto",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "Chiquimula",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/43cb8-dip.-boris-roberto-espana-caceres-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/54",
+      "notoriedad": ""
+    },
+    {
+      "id": "930",
+      "nombre": "Julio Héctor Estrada Dominguez",
+      "nombres": [
+        "Julio",
+        "Héctor"
+      ],
+      "apellidos": [
+        "Estrada",
+        "Dominguez"
+      ],
+      "nombre_listado": "Estrada Domínguez Julio Héctor",
+      "bancada": "CABAL",
+      "bloque_sitio": "CABAL",
+      "distrito": "Lista Nacional",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/09f14-julio-estrada-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/930",
+      "notoriedad": ""
+    },
+    {
+      "id": "796",
+      "nombre": "César Augusto Fión Morales",
+      "nombres": [
+        "César",
+        "Augusto"
+      ],
+      "apellidos": [
+        "Fión",
+        "Morales"
+      ],
+      "nombre_listado": "Fión Morales César Augusto",
+      "bancada": "INDP - UNE",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Petén",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/38c38-img_0038-cesar-fion-morales-web-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/796",
+      "notoriedad": ""
+    },
+    {
+      "id": "61",
+      "nombre": "Jairo Joaquín Flores Divas",
+      "nombres": [
+        "Jairo",
+        "Joaquín"
+      ],
+      "apellidos": [
+        "Flores",
+        "Divas"
+      ],
+      "nombre_listado": "Flores Divas Jairo Joaquín",
+      "bancada": "VOS",
+      "bloque_sitio": "VOS",
+      "distrito": "Guatemala",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/aeabf-dip.-jairo-joaquin-flores-divas-une_peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/61",
+      "notoriedad": ""
+    },
+    {
+      "id": "819",
+      "nombre": "José Luis Galindo De León",
+      "nombres": [
+        "José",
+        "Luis"
+      ],
+      "apellidos": [
+        "Galindo",
+        "De",
+        "León"
+      ],
+      "nombre_listado": "Galindo de León José Luis",
+      "bancada": "VALOR",
+      "bloque_sitio": "VALOR",
+      "distrito": "Retalhuleu",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/5c517-dip.-jose-luis-galindo-de-leon-valor_peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/819",
+      "notoriedad": ""
+    },
+    {
+      "id": "920",
+      "nombre": "Manrique Obel Gálvez De León",
+      "nombres": [
+        "Manrique",
+        "Obel"
+      ],
+      "apellidos": [
+        "Gálvez",
+        "De",
+        "León"
+      ],
+      "nombre_listado": "Gálvez De León Manrique Obel",
+      "bancada": "UNE",
+      "bloque_sitio": "UNE",
+      "distrito": "Huehuetenango",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/59b9b-_mg_8991-manrique-obel-galvez-de-leon-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/920",
+      "notoriedad": ""
+    },
+    {
+      "id": "870",
+      "nombre": "Mario Ernesto Gálvez Muñóz",
+      "nombres": [
+        "Mario",
+        "Ernesto"
+      ],
+      "apellidos": [
+        "Gálvez",
+        "Muñóz"
+      ],
+      "nombre_listado": "Gálvez Muñóz Mario Ernesto",
+      "bancada": "UNE",
+      "bloque_sitio": "UNE",
+      "distrito": "San Marcos",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/9cd4b-mario-ernesto-galvez-munoz-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/870",
+      "notoriedad": ""
+    },
+    {
+      "id": "788",
+      "nombre": "José Arnulfo García Barrios",
+      "nombres": [
+        "José",
+        "Arnulfo"
+      ],
+      "apellidos": [
+        "García",
+        "Barrios"
+      ],
+      "nombre_listado": "García Barrios José Arnulfo",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "Suchitepéquez",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/65a70-jose-garcia-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/788",
+      "notoriedad": ""
+    },
+    {
+      "id": "65",
+      "nombre": "Cornelio Gonzalo García García",
+      "nombres": [
+        "Cornelio",
+        "Gonzalo"
+      ],
+      "apellidos": [
+        "García",
+        "García"
+      ],
+      "nombre_listado": "García García Cornelio Gonzalo",
+      "bancada": "TODOS",
+      "bloque_sitio": "TODOS",
+      "distrito": "Huehuetenango",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/b03ed-cornelio-garcia-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/65",
+      "notoriedad": ""
+    },
+    {
+      "id": "909",
+      "nombre": "Mirna Victoria Godoy Palala",
+      "nombres": [
+        "Mirna",
+        "Victoria"
+      ],
+      "apellidos": [
+        "Godoy",
+        "Palala"
+      ],
+      "nombre_listado": "Godoy Palala Mirna Victoria",
+      "bancada": "INDP - SEMILLA",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Guatemala",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/055b0-victoria-palala-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/909",
+      "notoriedad": ""
+    },
+    {
+      "id": "971",
+      "nombre": "Julio Pedro Gómez Gómez",
+      "nombres": [
+        "Julio",
+        "Pedro"
+      ],
+      "apellidos": [
+        "Gómez",
+        "Gómez"
+      ],
+      "nombre_listado": "Gómez Gómez Julio Pedro",
+      "bancada": "UNE",
+      "bloque_sitio": "UNE",
+      "distrito": "Totonicapán",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/ef154-julio-gomez-peq.jpeg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/971",
+      "notoriedad": ""
+    },
+    {
+      "id": "904",
+      "nombre": "Mercedes Cristabel Guardado Linares De Nájera",
+      "nombres": [
+        "Mercedes",
+        "Cristabel"
+      ],
+      "apellidos": [
+        "Guardado",
+        "Linares",
+        "De",
+        "Nájera"
+      ],
+      "nombre_listado": "Guardado Linares de Nájera Mercedes Cristabel",
+      "bancada": "VALOR",
+      "bloque_sitio": "VALOR",
+      "distrito": "Escuintla",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/073d9-mercedes-guardado-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/904",
+      "notoriedad": ""
+    },
+    {
+      "id": "935",
+      "nombre": "Alma Luz Guerrero De La Cruz",
+      "nombres": [
+        "Alma",
+        "Luz"
+      ],
+      "apellidos": [
+        "Guerrero",
+        "De",
+        "La",
+        "Cruz"
+      ],
+      "nombre_listado": "Guerrero de la Cruz Alma Luz",
+      "bancada": "INDP - SEMILLA",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Lista Nacional",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/66014-alma-luz-guerrero-de-la-cruz-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/935",
+      "notoriedad": ""
+    },
+    {
+      "id": "861",
+      "nombre": "Sonia Marina Gutierrez Raguay",
+      "nombres": [
+        "Sonia",
+        "Marina"
+      ],
+      "apellidos": [
+        "Gutierrez",
+        "Raguay"
+      ],
+      "nombre_listado": "Gutierrez Raguay Sonia Marina",
+      "bancada": "WINAQ - URNG",
+      "bloque_sitio": "WINAQ-URNG- MAIZ",
+      "distrito": "Lista Nacional",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/0d468-sonia-gutierrez-peq.jpeg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/861",
+      "notoriedad": ""
+    },
+    {
+      "id": "902",
+      "nombre": "Rolando Guzmán Figueroa",
+      "nombres": [
+        "Rolando"
+      ],
+      "apellidos": [
+        "Guzmán",
+        "Figueroa"
+      ],
+      "nombre_listado": "Guzmán Figueroa Rolando",
+      "bancada": "CABAL",
+      "bloque_sitio": "CABAL",
+      "distrito": "Escuintla",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/e0de1-rolando-guzman-figueroa-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/902",
+      "notoriedad": ""
+    },
+    {
+      "id": "78",
+      "nombre": "Sofía Jeanetth Hernández Herrera",
+      "nombres": [
+        "Sofía",
+        "Jeanetth"
+      ],
+      "apellidos": [
+        "Hernández",
+        "Herrera"
+      ],
+      "nombre_listado": "Hernández Herrera Sofía Jeanetth",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "Huehuetenango",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/cbc50-dip-sofia-hernandez-ucn_peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/78",
+      "notoriedad": ""
+    },
+    {
+      "id": "910",
+      "nombre": "David Mauricio Illescas Sandoval",
+      "nombres": [
+        "David",
+        "Mauricio"
+      ],
+      "apellidos": [
+        "Illescas",
+        "Sandoval"
+      ],
+      "nombre_listado": "Illescas Sandoval David Mauricio",
+      "bancada": "INDP - SEMILLA",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Guatemala",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/e7a5c-dip.-david-illescas-peq.jpeg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/910",
+      "notoriedad": ""
+    },
+    {
+      "id": "949",
+      "nombre": "Benjamin Ipiña Leiva",
+      "nombres": [
+        "Benjamin"
+      ],
+      "apellidos": [
+        "Ipiña",
+        "Leiva"
+      ],
+      "nombre_listado": "Ipiña Leiva Benjamin",
+      "bancada": "UNE",
+      "bloque_sitio": "UNE",
+      "distrito": "Petén",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/81a15-benjamin-ipina-leiva-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/949",
+      "notoriedad": ""
+    },
+    {
+      "id": "892",
+      "nombre": "Esduín Jerson Javier Javier",
+      "nombres": [
+        "Esduín",
+        "Jerson"
+      ],
+      "apellidos": [
+        "Javier",
+        "Javier"
+      ],
+      "nombre_listado": "Javier Javier Esduín Jerson",
+      "bancada": "CAMBIO",
+      "bloque_sitio": "CAMBIO",
+      "distrito": "Chiquimula",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/2008a-esduin-javier-javier-peq.png",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/892",
+      "notoriedad": ""
+    },
+    {
+      "id": "898",
+      "nombre": "Sandra Erica Jovel Polanco",
+      "nombres": [
+        "Sandra",
+        "Erica"
+      ],
+      "apellidos": [
+        "Jovel",
+        "Polanco"
+      ],
+      "nombre_listado": "Jovel Polanco Sandra Erica",
+      "bancada": "VALOR",
+      "bloque_sitio": "VALOR",
+      "distrito": "Distrito Central",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/beba6-sandra-erica-jovel-polanco-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/898",
+      "notoriedad": ""
+    },
+    {
+      "id": "86",
+      "nombre": "Francisco Vitelio Lam Ruano",
+      "nombres": [
+        "Francisco",
+        "Vitelio"
+      ],
+      "apellidos": [
+        "Lam",
+        "Ruano"
+      ],
+      "nombre_listado": "Lam Ruano Francisco Vitelio",
+      "bancada": "UNE",
+      "bloque_sitio": "UNE",
+      "distrito": "Escuintla",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/a0f0d-francisco-vitelo-lam-ruano-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/86",
+      "notoriedad": ""
+    },
+    {
+      "id": "780",
+      "nombre": "Candido Fernando Leal Gómez",
+      "nombres": [
+        "Candido",
+        "Fernando"
+      ],
+      "apellidos": [
+        "Leal",
+        "Gómez"
+      ],
+      "nombre_listado": "Leal Gómez Candido Fernando",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "Guatemala",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/22bcd-dip.-candido-fernando-leal-gomez-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/780",
+      "notoriedad": ""
+    },
+    {
+      "id": "881",
+      "nombre": "Josué Edmundo Lemus Cifuentes",
+      "nombres": [
+        "Josué",
+        "Edmundo"
+      ],
+      "apellidos": [
+        "Lemus",
+        "Cifuentes"
+      ],
+      "nombre_listado": "Lemus Cifuentes Josué Edmundo",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "Quiché",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/85f7e-dip.-josue-edmundo-lemus-cifuentes-vamos_peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/881",
+      "notoriedad": ""
+    },
+    {
+      "id": "247",
+      "nombre": "Fidencio Lima Pop",
+      "nombres": [
+        "Fidencio"
+      ],
+      "apellidos": [
+        "Lima",
+        "Pop"
+      ],
+      "nombre_listado": "Lima Pop Fidencio",
+      "bancada": "VIVA",
+      "bloque_sitio": "VIVA",
+      "distrito": "Alta Verapaz",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/b2c83-fidencio-lima-pop-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/247",
+      "notoriedad": ""
+    },
+    {
+      "id": "942",
+      "nombre": "Luis Javier López Bolaños",
+      "nombres": [
+        "Luis",
+        "Javier"
+      ],
+      "apellidos": [
+        "López",
+        "Bolaños"
+      ],
+      "nombre_listado": "López Bolaños Luis Javier",
+      "bancada": "UNE",
+      "bloque_sitio": "UNE",
+      "distrito": "Lista Nacional",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/bec7c-luis-javier-lopez-bolanos-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/942",
+      "notoriedad": ""
+    },
+    {
+      "id": "789",
+      "nombre": "Julio César López Escobar",
+      "nombres": [
+        "Julio",
+        "César"
+      ],
+      "apellidos": [
+        "López",
+        "Escobar"
+      ],
+      "nombre_listado": "López Escobar Julio César",
+      "bancada": "CABAL",
+      "bloque_sitio": "CABAL",
+      "distrito": "Huehuetenango",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/34947-diputado-julio-cesar-lopez-peq.png",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/789",
+      "notoriedad": ""
+    },
+    {
+      "id": "976",
+      "nombre": "Carlos Enrique López Girón",
+      "nombres": [
+        "Carlos",
+        "Enrique"
+      ],
+      "apellidos": [
+        "López",
+        "Girón"
+      ],
+      "nombre_listado": "López Girón Carlos Enrique",
+      "bancada": "VALOR",
+      "bloque_sitio": "VALOR",
+      "distrito": "Quiché",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/99cc8-carlos-enrique-lopez-giron-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/976",
+      "notoriedad": ""
+    },
+    {
+      "id": "92",
+      "nombre": "Carlos Enrique López Maldonado",
+      "nombres": [
+        "Carlos",
+        "Enrique"
+      ],
+      "apellidos": [
+        "López",
+        "Maldonado"
+      ],
+      "nombre_listado": "López Maldonado Carlos Enrique",
+      "bancada": "CABAL",
+      "bloque_sitio": "CABAL",
+      "distrito": "Quiché",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/b0a55-dip.-carlos-enrique-lopez-maldonado-une-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/92",
+      "notoriedad": ""
+    },
+    {
+      "id": "801",
+      "nombre": "Darwin Alberto Lucas Paz",
+      "nombres": [
+        "Darwin",
+        "Alberto"
+      ],
+      "apellidos": [
+        "Lucas",
+        "Paz"
+      ],
+      "nombre_listado": "Lucas Paz Darwin Alberto",
+      "bancada": "INDP - UNE",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Alta Verapaz",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/6e42a-_mg_9148-darwin-alberto-lucas-paz-web-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/801",
+      "notoriedad": ""
+    },
+    {
+      "id": "93",
+      "nombre": "Jaime Octavio Augusto Lucero Vásquez",
+      "nombres": [
+        "Jaime",
+        "Octavio",
+        "Augusto"
+      ],
+      "apellidos": [
+        "Lucero",
+        "Vásquez"
+      ],
+      "nombre_listado": "Lucero Vásquez Jaime Octavio Augusto",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "Jalapa",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/62f4d-dip.-jaime-octavio-augusto-lucero-vasquez_peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/93",
+      "notoriedad": ""
+    },
+    {
+      "id": "911",
+      "nombre": "Ivanna María Luján Padilla",
+      "nombres": [
+        "Ivanna",
+        "María"
+      ],
+      "apellidos": [
+        "Luján",
+        "Padilla"
+      ],
+      "nombre_listado": "Luján Padilla Ivanna María",
+      "bancada": "INDP - SEMILLA",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Guatemala",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/da60e-ivanna-mari-a-lujan-padilla-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/911",
+      "notoriedad": ""
+    },
+    {
+      "id": "967",
+      "nombre": "Danilo Madrazo Mazariegos",
+      "nombres": [
+        "Danilo"
+      ],
+      "apellidos": [
+        "Madrazo",
+        "Mazariegos"
+      ],
+      "nombre_listado": "Madrazo Mazariegos Danilo",
+      "bancada": "TODOS",
+      "bloque_sitio": "TODOS",
+      "distrito": "Suchitepéquez",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/cf5dd-danilo-madrazo-mazariegos-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/967",
+      "notoriedad": ""
+    },
+    {
+      "id": "802",
+      "nombre": "Vasny Adiel Maldonado Alonzo",
+      "nombres": [
+        "Vasny",
+        "Adiel"
+      ],
+      "apellidos": [
+        "Maldonado",
+        "Alonzo"
+      ],
+      "nombre_listado": "Maldonado Alonzo Vasny Adiel",
+      "bancada": "UNE",
+      "bloque_sitio": "UNE",
+      "distrito": "Suchitepéquez",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/c249e-vasny-adiel-maldonado-alonzo-web-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/802",
+      "notoriedad": ""
+    },
+    {
+      "id": "95",
+      "nombre": "Ervin Adim Maldonado Molina",
+      "nombres": [
+        "Ervin",
+        "Adim"
+      ],
+      "apellidos": [
+        "Maldonado",
+        "Molina"
+      ],
+      "nombre_listado": "Maldonado Molina Ervin Adim",
+      "bancada": "INDP - UNE",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Guatemala",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/46903-diputado_adim_maldonado.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/95",
+      "notoriedad": ""
+    },
+    {
+      "id": "895",
+      "nombre": "Laura Fabiola Marroquín Cordón",
+      "nombres": [
+        "Laura",
+        "Fabiola"
+      ],
+      "apellidos": [
+        "Marroquín",
+        "Cordón"
+      ],
+      "nombre_listado": "Marroquín Cordón Laura Fabiola",
+      "bancada": "INDP - SEMILLA",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Distrito Central",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/2464b-laura-marroquin-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/895",
+      "notoriedad": ""
+    },
+    {
+      "id": "179",
+      "nombre": "Ana Lucrecia Marroquín Godoy De Palomo",
+      "nombres": [
+        "Ana",
+        "Lucrecia"
+      ],
+      "apellidos": [
+        "Marroquín",
+        "Godoy",
+        "De",
+        "Palomo"
+      ],
+      "nombre_listado": "Marroquín Godoy de Palomo Ana Lucrecia",
+      "bancada": "UNIONISTA",
+      "bloque_sitio": "PU",
+      "distrito": "Lista Nacional",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/72f2b-img_0016-lucrecia-de-palomo-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/179",
+      "notoriedad": ""
+    },
+    {
+      "id": "917",
+      "nombre": "Julio Daniel Marroquín Ordoñez",
+      "nombres": [
+        "Julio",
+        "Daniel"
+      ],
+      "apellidos": [
+        "Marroquín",
+        "Ordoñez"
+      ],
+      "nombre_listado": "Marroquín Ordoñez Julio Daniel",
+      "bancada": "UNE",
+      "bloque_sitio": "UNE",
+      "distrito": "Guatemala",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/42bf2-julio-daniel-marroquin-ordonez-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/917",
+      "notoriedad": ""
+    },
+    {
+      "id": "964",
+      "nombre": "Ricardo Leonel Martínez Alarcón",
+      "nombres": [
+        "Ricardo",
+        "Leonel"
+      ],
+      "apellidos": [
+        "Martínez",
+        "Alarcón"
+      ],
+      "nombre_listado": "Martínez Alarcón Ricardo Leonel",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "Santa Rosa",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/0d49c-_mg_9215-ricardo-leonel-martinez-alarcon-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/964",
+      "notoriedad": ""
+    },
+    {
+      "id": "793",
+      "nombre": "Erick Geovany Martínez Hernández",
+      "nombres": [
+        "Erick",
+        "Geovany"
+      ],
+      "apellidos": [
+        "Martínez",
+        "Hernández"
+      ],
+      "nombre_listado": "Martínez Hernández Erick Geovany",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "Huehuetenango",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/9700f-img_0446-erick-geovany-martinez-hernandez-web-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/793",
+      "notoriedad": ""
+    },
+    {
+      "id": "99",
+      "nombre": "Joél Rubén Martínez Herrera",
+      "nombres": [
+        "Joél",
+        "Rubén"
+      ],
+      "apellidos": [
+        "Martínez",
+        "Herrera"
+      ],
+      "nombre_listado": "Martínez Herrera Joél Rubén",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "Huehuetenango",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/0b6e9-dip.-joel-ruben-martinez-herrera-web-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/99",
+      "notoriedad": ""
+    },
+    {
+      "id": "921",
+      "nombre": "Christian Joél Martínez Juárez",
+      "nombres": [
+        "Christian",
+        "Joél"
+      ],
+      "apellidos": [
+        "Martínez",
+        "Juárez"
+      ],
+      "nombre_listado": "Martínez Juárez Christian Joél",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "Huehuetenango",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/5b1be-christian-martinez-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/921",
+      "notoriedad": ""
+    },
+    {
+      "id": "781",
+      "nombre": "Duay Antoni Martinez Salazar",
+      "nombres": [
+        "Duay",
+        "Antoni"
+      ],
+      "apellidos": [
+        "Martinez",
+        "Salazar"
+      ],
+      "nombre_listado": "Martinez Salazar Duay Antoni",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "Quetzaltenango",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/99f44-duay-martinez_peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/781",
+      "notoriedad": ""
+    },
+    {
+      "id": "100",
+      "nombre": "Marleni Lineth Matías Santiago",
+      "nombres": [
+        "Marleni",
+        "Lineth"
+      ],
+      "apellidos": [
+        "Matías",
+        "Santiago"
+      ],
+      "nombre_listado": "Matías Santiago Marleni Lineth",
+      "bancada": "UNE",
+      "bloque_sitio": "UNE",
+      "distrito": "Baja Verapaz",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/16032-img_0108-marleni-matias-web-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/100",
+      "notoriedad": ""
+    },
+    {
+      "id": "845",
+      "nombre": "Nery René Mazariegos López",
+      "nombres": [
+        "Nery",
+        "René"
+      ],
+      "apellidos": [
+        "Mazariegos",
+        "López"
+      ],
+      "nombre_listado": "Mazariegos López Nery René",
+      "bancada": "VIVA",
+      "bloque_sitio": "VIVA",
+      "distrito": "Quetzaltenango",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/0666c-img_0176-nery-rene-mazariegos-lopez-web-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/845",
+      "notoriedad": ""
+    },
+    {
+      "id": "903",
+      "nombre": "Marco Aurelio Mejía Alfaro",
+      "nombres": [
+        "Marco",
+        "Aurelio"
+      ],
+      "apellidos": [
+        "Mejía",
+        "Alfaro"
+      ],
+      "nombre_listado": "Mejía Alfaro Marco Aurelio",
+      "bancada": "UNE",
+      "bloque_sitio": "UNE",
+      "distrito": "Escuintla",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/eb866-marco-mejia-peq.jpeg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/903",
+      "notoriedad": ""
+    },
+    {
+      "id": "896",
+      "nombre": "Brenda Marleny Mejía López",
+      "nombres": [
+        "Brenda",
+        "Marleny"
+      ],
+      "apellidos": [
+        "Mejía",
+        "López"
+      ],
+      "nombre_listado": "Mejía López Brenda Marleny",
+      "bancada": "INDP - SEMILLA",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Distrito Central",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/33c7e-brenda-marleny-mejia-lopez-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/896",
+      "notoriedad": ""
+    },
+    {
+      "id": "782",
+      "nombre": "Maynor Gabriel Mejía Popol",
+      "nombres": [
+        "Maynor",
+        "Gabriel"
+      ],
+      "apellidos": [
+        "Mejía",
+        "Popol"
+      ],
+      "nombre_listado": "Mejía Popol Maynor Gabriel",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "Chimaltenango",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/1436d-img_0074-maynor-gabriel-mejia-popol-web-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/782",
+      "notoriedad": ""
+    },
+    {
+      "id": "893",
+      "nombre": "José Pablo Mendoza Franco",
+      "nombres": [
+        "José",
+        "Pablo"
+      ],
+      "apellidos": [
+        "Mendoza",
+        "Franco"
+      ],
+      "nombre_listado": "Mendoza Franco José Pablo",
+      "bancada": "CREO",
+      "bloque_sitio": "CREO",
+      "distrito": "Distrito Central",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/aab9e-jose-pablo-mendoza-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/893",
+      "notoriedad": ""
+    },
+    {
+      "id": "886",
+      "nombre": "Sandra Yanet Milian Gomez",
+      "nombres": [
+        "Sandra",
+        "Yanet"
+      ],
+      "apellidos": [
+        "Milian",
+        "Gomez"
+      ],
+      "nombre_listado": "Milian Gomez Sandra Yanet",
+      "bancada": "INDP - VICTORIA",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Alta Verapaz",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/89949-sandra-milian-gomez-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/886",
+      "notoriedad": ""
+    },
+    {
+      "id": "959",
+      "nombre": "Mercedes Del Rosario Monzón Escobedo",
+      "nombres": [
+        "Mercedes",
+        "Del",
+        "Rosario"
+      ],
+      "apellidos": [
+        "Monzón",
+        "Escobedo"
+      ],
+      "nombre_listado": "Monzón Escobedo Mercedes del Rosario",
+      "bancada": "INDP - SEMILLA",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Sacatepéquez",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/51310-mercedes-del-rosario-monzon-escobedo-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/959",
+      "notoriedad": ""
+    },
+    {
+      "id": "828",
+      "nombre": "Evelyn Oddeth Morataya Marroquín",
+      "nombres": [
+        "Evelyn",
+        "Oddeth"
+      ],
+      "apellidos": [
+        "Morataya",
+        "Marroquín"
+      ],
+      "nombre_listado": "Morataya Marroquín Evelyn Oddeth",
+      "bancada": "INDP - VIVA",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Lista Nacional",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/5e95b-evelyn-morataya-peq.jpeg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/828",
+      "notoriedad": ""
+    },
+    {
+      "id": "897",
+      "nombre": "Elena Sofía Motta Kolleff",
+      "nombres": [
+        "Elena",
+        "Sofía"
+      ],
+      "apellidos": [
+        "Motta",
+        "Kolleff"
+      ],
+      "nombre_listado": "Motta Kolleff Elena Sofia",
+      "bancada": "INDP - SEMILLA",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Distrito Central",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/23742-elena-sofia-motta-kolleff-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/897",
+      "notoriedad": ""
+    },
+    {
+      "id": "806",
+      "nombre": "Martín Nicolás Segundo",
+      "nombres": [
+        "Martín"
+      ],
+      "apellidos": [
+        "Nicolás",
+        "Segundo"
+      ],
+      "nombre_listado": "Nicolás Segundo Martín",
+      "bancada": "UNE",
+      "bloque_sitio": "UNE",
+      "distrito": "Huehuetenango",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/49894-img_0032-martin-nicolas-web-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/806",
+      "notoriedad": ""
+    },
+    {
+      "id": "937",
+      "nombre": "Byron Alesky Obregón Castañeda",
+      "nombres": [
+        "Byron",
+        "Alesky"
+      ],
+      "apellidos": [
+        "Obregón",
+        "Castañeda"
+      ],
+      "nombre_listado": "Obregón Castañeda Byron Alesky",
+      "bancada": "INDP - SEMILLA",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Lista Nacional",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/51bb4-byron-alesky-obregon-castaneda-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/937",
+      "notoriedad": ""
+    },
+    {
+      "id": "912",
+      "nombre": "Ronalth Ivan Ochaeta Aguilar",
+      "nombres": [
+        "Ronalth",
+        "Ivan"
+      ],
+      "apellidos": [
+        "Ochaeta",
+        "Aguilar"
+      ],
+      "nombre_listado": "Ochaeta Aguilar Ronalth Ivan",
+      "bancada": "INDP - SEMILLA",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Guatemala",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/49bc7-ronalth-ivan-ochaeta-aguilar-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/912",
+      "notoriedad": ""
+    },
+    {
+      "id": "938",
+      "nombre": "Ana Patricia Orantes Thomas",
+      "nombres": [
+        "Ana",
+        "Patricia"
+      ],
+      "apellidos": [
+        "Orantes",
+        "Thomas"
+      ],
+      "nombre_listado": "Orantes Thomas Ana Patricia",
+      "bancada": "INDP - SEMILLA",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Lista Nacional",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/52422-ana-patricia-orantes-thomas-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/938",
+      "notoriedad": ""
+    },
+    {
+      "id": "790",
+      "nombre": "Sandra Carolina Orellana Cruz",
+      "nombres": [
+        "Sandra",
+        "Carolina"
+      ],
+      "apellidos": [
+        "Orellana",
+        "Cruz"
+      ],
+      "nombre_listado": "Orellana Cruz Sandra Carolina",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "Zacapa",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/ccac9-sandra-carolina-orellana-cruz-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/790",
+      "notoriedad": ""
+    },
+    {
+      "id": "923",
+      "nombre": "Jairo Danilo Orellana Sandoval",
+      "nombres": [
+        "Jairo",
+        "Danilo"
+      ],
+      "apellidos": [
+        "Orellana",
+        "Sandoval"
+      ],
+      "nombre_listado": "Orellana Sandoval Jairo Danilo",
+      "bancada": "CABAL",
+      "bloque_sitio": "CABAL",
+      "distrito": "Jalapa",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/260b8-jairo-orellana-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/923",
+      "notoriedad": ""
+    },
+    {
+      "id": "953",
+      "nombre": "Rolando Miguel Ovalle Barrios",
+      "nombres": [
+        "Rolando",
+        "Miguel"
+      ],
+      "apellidos": [
+        "Ovalle",
+        "Barrios"
+      ],
+      "nombre_listado": "Ovalle Barrios Rolando Miguel",
+      "bancada": "UNE",
+      "bloque_sitio": "UNE",
+      "distrito": "Quetzaltenango",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/708dc-rolando-miguel-ovalle-barrios-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/953",
+      "notoriedad": ""
+    },
+    {
+      "id": "919",
+      "nombre": "Elmer Josué Palencia Reyes",
+      "nombres": [
+        "Elmer",
+        "Josué"
+      ],
+      "apellidos": [
+        "Palencia",
+        "Reyes"
+      ],
+      "nombre_listado": "Palencia Reyes Elmer Josué",
+      "bancada": "VALOR",
+      "bloque_sitio": "VALOR",
+      "distrito": "Guatemala",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/e8ae6-elmer-palencia-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/919",
+      "notoriedad": ""
+    },
+    {
+      "id": "160",
+      "nombre": "Karina Alexandra Paz Rosales",
+      "nombres": [
+        "Karina",
+        "Alexandra"
+      ],
+      "apellidos": [
+        "Paz",
+        "Rosales"
+      ],
+      "nombre_listado": "Paz Rosales Karina Alexandra",
+      "bancada": "INDP - VOS",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Guatemala",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/75d24-karina-paz-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/160",
+      "notoriedad": ""
+    },
+    {
+      "id": "932",
+      "nombre": "Rodrigo Antonio Pellecer Rodríguez",
+      "nombres": [
+        "Rodrigo",
+        "Antonio"
+      ],
+      "apellidos": [
+        "Pellecer",
+        "Rodríguez"
+      ],
+      "nombre_listado": "Pellecer Rodriguez Rodrigo Antonio",
+      "bancada": "ELEFANTE",
+      "bloque_sitio": "ELEFANTE",
+      "distrito": "Lista Nacional",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/3b6f3-dip.-rodrigo-pellecer-peq.jpeg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/932",
+      "notoriedad": ""
+    },
+    {
+      "id": "117",
+      "nombre": "Rudy Berner Pereira Delgado",
+      "nombres": [
+        "Rudy",
+        "Berner"
+      ],
+      "apellidos": [
+        "Pereira",
+        "Delgado"
+      ],
+      "nombre_listado": "Pereira Delgado Rudy Berner",
+      "bancada": "INDP - NOSOTROS",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Alta Verapaz",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/9787d-rudy-berner-pereira-delgado-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/117",
+      "notoriedad": ""
+    },
+    {
+      "id": "834",
+      "nombre": "Samuel Andrés Pérez Alvarez",
+      "nombres": [
+        "Samuel",
+        "Andrés"
+      ],
+      "apellidos": [
+        "Pérez",
+        "Alvarez"
+      ],
+      "nombre_listado": "Pérez Alvarez Samuel Andrés",
+      "bancada": "INDP - SEMILLA",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Distrito Central",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/578f0-dip.-samuel-andres-perez-alvarez_peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/834",
+      "notoriedad": ""
+    },
+    {
+      "id": "951",
+      "nombre": "José Orlando Pérez Marroquín",
+      "nombres": [
+        "José",
+        "Orlando"
+      ],
+      "apellidos": [
+        "Pérez",
+        "Marroquín"
+      ],
+      "nombre_listado": "Pérez Marroquín José Orlando",
+      "bancada": "INDP - SEMILLA",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Quetzaltenango",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/22d9b-img_0315-jose-orlando-perez-marroquin-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/951",
+      "notoriedad": ""
+    },
+    {
+      "id": "945",
+      "nombre": "Marco Alejandro Pérez Toribio",
+      "nombres": [
+        "Marco",
+        "Alejandro"
+      ],
+      "apellidos": [
+        "Pérez",
+        "Toribio"
+      ],
+      "nombre_listado": "Pérez Toribio Marco Alejandro",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "Lista Nacional",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/a14e2-marco-perez-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/945",
+      "notoriedad": ""
+    },
+    {
+      "id": "946",
+      "nombre": "Ronald Yomelfy Portillo Cordón",
+      "nombres": [
+        "Ronald",
+        "Yomelfy"
+      ],
+      "apellidos": [
+        "Portillo",
+        "Cordón"
+      ],
+      "nombre_listado": "Portillo Cordón Ronald Yomelfy",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "Lista Nacional",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/68efd-_mg_9218-ronald-yomelfy-portillo-cordon-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/946",
+      "notoriedad": ""
+    },
+    {
+      "id": "974",
+      "nombre": "Julio César Portillo Paz",
+      "nombres": [
+        "Julio",
+        "César"
+      ],
+      "apellidos": [
+        "Portillo",
+        "Paz"
+      ],
+      "nombre_listado": "Portillo Paz Julio César",
+      "bancada": "CABAL",
+      "bloque_sitio": "CABAL",
+      "distrito": "Zacapa",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/138f4-julio-portillo-paz-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/974",
+      "notoriedad": ""
+    },
+    {
+      "id": "122",
+      "nombre": "Vivian Beatriz Preciado Navarijo",
+      "nombres": [
+        "Vivian",
+        "Beatriz"
+      ],
+      "apellidos": [
+        "Preciado",
+        "Navarijo"
+      ],
+      "nombre_listado": "Preciado Navarijo Vivian Beatriz",
+      "bancada": "INDP - NOSOTROS",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "San Marcos",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/de37f-img_2135-dip.-vivian-navarijo-web-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/122",
+      "notoriedad": ""
+    },
+    {
+      "id": "864",
+      "nombre": "José Adolfo Quezada Valdéz",
+      "nombres": [
+        "José",
+        "Adolfo"
+      ],
+      "apellidos": [
+        "Quezada",
+        "Valdéz"
+      ],
+      "nombre_listado": "Quezada Valdéz José Adolfo",
+      "bancada": "INDP - UNE",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Quiché",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/ccf1c-dip.-jose-adolfo-quezada-valdez-prosperidad-ciudadana_peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/864",
+      "notoriedad": ""
+    },
+    {
+      "id": "957",
+      "nombre": "Guillermo Antonio Ralda Conde",
+      "nombres": null,
+      "apellidos": null,
+      "nombre_listado": null,
+      "bancada": "CABAL",
+      "bloque_sitio": "CABAL",
+      "distrito": "Retalhuleu",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/06439-guillermo-ralda-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/957",
+      "notoriedad": ""
+    },
+    {
+      "id": "922",
+      "nombre": "Darwin Edgardo Ramírez Cameros",
+      "nombres": [
+        "Darwin",
+        "Edgardo"
+      ],
+      "apellidos": [
+        "Ramírez",
+        "Cameros"
+      ],
+      "nombre_listado": "Ramírez Cameros Darwin Edgardo",
+      "bancada": "UNE",
+      "bloque_sitio": "UNE",
+      "distrito": "Izabal",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/772d0-darwin-ramirez-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/922",
+      "notoriedad": ""
+    },
+    {
+      "id": "126",
+      "nombre": "Thelma Elizabeth Ramírez Retana",
+      "nombres": [
+        "Thelma",
+        "Elizabeth"
+      ],
+      "apellidos": [
+        "Ramírez",
+        "Retana"
+      ],
+      "nombre_listado": "Ramirez Retana Thelma Elizabeth",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "Izabal",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/d64b9-dip-telma-elizabeth-ramirez-retana_peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/126",
+      "notoriedad": ""
+    },
+    {
+      "id": "925",
+      "nombre": "Nery Abilio Ramos Y Ramos",
+      "nombres": [
+        "Nery",
+        "Abilio"
+      ],
+      "apellidos": [
+        "Ramos",
+        "Y",
+        "Ramos"
+      ],
+      "nombre_listado": "Ramos y Ramos Nery Abilio",
+      "bancada": "AZUL",
+      "bloque_sitio": "AZUL",
+      "distrito": "Jutiapa",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/43386-diputado-nery-ramos-thumb.jpeg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/925",
+      "notoriedad": ""
+    },
+    {
+      "id": "127",
+      "nombre": "Edgar Raúl Reyes Lee",
+      "nombres": [
+        "Edgar",
+        "Raúl"
+      ],
+      "apellidos": [
+        "Reyes",
+        "Lee"
+      ],
+      "nombre_listado": "Reyes Lee Edgar Raúl",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "Petén",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/3876b-_mg_9261-edgar-reyes-lee-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/127",
+      "notoriedad": ""
+    },
+    {
+      "id": "128",
+      "nombre": "Fidel Reyes Lee",
+      "nombres": [
+        "Fidel"
+      ],
+      "apellidos": [
+        "Reyes",
+        "Lee"
+      ],
+      "nombre_listado": "Reyes Lee Fidel",
+      "bancada": "BIEN",
+      "bloque_sitio": "BIEN",
+      "distrito": "Lista Nacional",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/ea3ae-dip.-fidel-reyes-lee-bien_peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/128",
+      "notoriedad": ""
+    },
+    {
+      "id": "913",
+      "nombre": "Andrea María Reyes Zeceña",
+      "nombres": [
+        "Andrea",
+        "María"
+      ],
+      "apellidos": [
+        "Reyes",
+        "Zeceña"
+      ],
+      "nombre_listado": "Reyes Zeceña Andrea María",
+      "bancada": "INDP - SEMILLA",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Guatemala",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/7bb12-andrea-maria-reyes-zecena-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/913",
+      "notoriedad": ""
+    },
+    {
+      "id": "811",
+      "nombre": "Juan Ramon Rivas García",
+      "nombres": [
+        "Juan",
+        "Ramon"
+      ],
+      "apellidos": [
+        "Rivas",
+        "García"
+      ],
+      "nombre_listado": "Rivas García Juan Ramon",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "Izabal",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/bd8b4-juan-ramon-rivas-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/811",
+      "notoriedad": ""
+    },
+    {
+      "id": "857",
+      "nombre": "Juan Carlos Rivera Estevez",
+      "nombres": [
+        "Juan",
+        "Carlos"
+      ],
+      "apellidos": [
+        "Rivera",
+        "Estevez"
+      ],
+      "nombre_listado": "Rivera Estevez Juan Carlos",
+      "bancada": "VICTORIA",
+      "bloque_sitio": "VICTORIA",
+      "distrito": "Lista Nacional",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/20969-dip.-juan-carlos-rivera-estevez_peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/857",
+      "notoriedad": ""
+    },
+    {
+      "id": "890",
+      "nombre": "Mynor Francisco Rivera Salazar",
+      "nombres": [
+        "Mynor",
+        "Francisco"
+      ],
+      "apellidos": [
+        "Rivera",
+        "Salazar"
+      ],
+      "nombre_listado": "Rivera Salazar Mynor Francisco",
+      "bancada": "UNE",
+      "bloque_sitio": "UNE",
+      "distrito": "Chimaltenango",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/42399-_mg_9256-mynor-francisco-rivera-salazar-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/890",
+      "notoriedad": ""
+    },
+    {
+      "id": "785",
+      "nombre": "Shirley Joanna Rivera Zaldaña",
+      "nombres": [
+        "Shirley",
+        "Joanna"
+      ],
+      "apellidos": [
+        "Rivera",
+        "Zaldaña"
+      ],
+      "nombre_listado": "Rivera Zaldaña Shirley Joanna",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "Guatemala",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/e0145-dip.-shirley-joanna-rivera-zaldana-vamos_peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/785",
+      "notoriedad": ""
+    },
+    {
+      "id": "901",
+      "nombre": "César Augusto Rodas Cardona",
+      "nombres": [
+        "César",
+        "Augusto"
+      ],
+      "apellidos": [
+        "Rodas",
+        "Cardona"
+      ],
+      "nombre_listado": "Rodas Cardona César Augusto",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "El Progreso",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/97194-cesar-augusto-rodas-cardona-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/901",
+      "notoriedad": ""
+    },
+    {
+      "id": "931",
+      "nombre": "Nery Mamfredo Rodas Méndez",
+      "nombres": [
+        "Nery",
+        "Mamfredo"
+      ],
+      "apellidos": [
+        "Rodas",
+        "Méndez"
+      ],
+      "nombre_listado": "Rodas Méndez Nery Mamfredo",
+      "bancada": "CABAL",
+      "bloque_sitio": "CABAL",
+      "distrito": "Lista Nacional",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/a3462-nery-mamfredo-rodas-mendez-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/931",
+      "notoriedad": ""
+    },
+    {
+      "id": "952",
+      "nombre": "Byron Bladimiro Rodríguez Palacios",
+      "nombres": [
+        "Byron",
+        "Bladimiro"
+      ],
+      "apellidos": [
+        "Rodríguez",
+        "Palacios"
+      ],
+      "nombre_listado": "Rodríguez Palacios Byron Bladimiro",
+      "bancada": "TODOS",
+      "bloque_sitio": "TODOS",
+      "distrito": "Quetzaltenango",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/d5491-dip.-byron-rodriguez-peq.jpeg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/952",
+      "notoriedad": ""
+    },
+    {
+      "id": "770",
+      "nombre": "Allan Estuardo Rodríguez Reyes",
+      "nombres": [
+        "Allan",
+        "Estuardo"
+      ],
+      "apellidos": [
+        "Rodríguez",
+        "Reyes"
+      ],
+      "nombre_listado": "Rodríguez Reyes Allan Estuardo",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "Sololá",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/34098-dip.-allan-estuardo-rodriguez-reyes-vamos_peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/770",
+      "notoriedad": ""
+    },
+    {
+      "id": "966",
+      "nombre": "Luis Alberto Rodríguez Reyes",
+      "nombres": [
+        "Luis",
+        "Alberto"
+      ],
+      "apellidos": [
+        "Rodríguez",
+        "Reyes"
+      ],
+      "nombre_listado": "Rodríguez Reyes Luis Alberto",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "Sololá",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/eab9b-diputado-luis-rodriguez-peq.jpeg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/966",
+      "notoriedad": ""
+    },
+    {
+      "id": "130",
+      "nombre": "Carlos Napoleon Rojas Alarcón",
+      "nombres": [
+        "Carlos",
+        "Napoleon"
+      ],
+      "apellidos": [
+        "Rojas",
+        "Alarcón"
+      ],
+      "nombre_listado": "Rojas Alarcón Carlos Napoleon",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "Santa Rosa",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/bc316-napoleon.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/130",
+      "notoriedad": ""
+    },
+    {
+      "id": "874",
+      "nombre": "Oswaldo Rosales Polanco",
+      "nombres": [
+        "Oswaldo"
+      ],
+      "apellidos": [
+        "Rosales",
+        "Polanco"
+      ],
+      "nombre_listado": "Rosales Polanco Oswaldo",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "Suchitepéquez",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/d0713-oswaldo-rosales-polanco-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/874",
+      "notoriedad": ""
+    },
+    {
+      "id": "924",
+      "nombre": "Faver Emilio Salazar Cordero",
+      "nombres": [
+        "Faver",
+        "Emilio"
+      ],
+      "apellidos": [
+        "Salazar",
+        "Cordero"
+      ],
+      "nombre_listado": "Salazar Cordero Faver Emilio",
+      "bancada": "VALOR",
+      "bloque_sitio": "VALOR",
+      "distrito": "Jalapa",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/c3678-dip.-faver-salazar-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/924",
+      "notoriedad": ""
+    },
+    {
+      "id": "822",
+      "nombre": "Leopoldo Salazar Samayoa",
+      "nombres": [
+        "Leopoldo"
+      ],
+      "apellidos": [
+        "Salazar",
+        "Samayoa"
+      ],
+      "nombre_listado": "Salazar Samayoa Leopoldo",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "Alta Verapaz",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/87260-dip.-leopoldo-salazar-samayoa_peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/822",
+      "notoriedad": ""
+    },
+    {
+      "id": "135",
+      "nombre": "Lucrecia Carola Samayoa Reyes",
+      "nombres": [
+        "Lucrecia",
+        "Carola"
+      ],
+      "apellidos": [
+        "Samayoa",
+        "Reyes"
+      ],
+      "nombre_listado": "Samayoa Reyes Lucrecia Carola",
+      "bancada": "BIEN",
+      "bloque_sitio": "BIEN",
+      "distrito": "Huehuetenango",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/e3eb0-lucrecia-samayoa-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/135",
+      "notoriedad": ""
+    },
+    {
+      "id": "914",
+      "nombre": "José Carlos Sanabria Arias",
+      "nombres": [
+        "José",
+        "Carlos"
+      ],
+      "apellidos": [
+        "Sanabria",
+        "Arias"
+      ],
+      "nombre_listado": "Sanabria Arias José Carlos",
+      "bancada": "INDP - SEMILLA",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Guatemala",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/be0b4-img_0777-jose-carlos-sanabria-arias-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/914",
+      "notoriedad": ""
+    },
+    {
+      "id": "958",
+      "nombre": "José Carlo Solano",
+      "nombres": [
+        "José",
+        "Carlo"
+      ],
+      "apellidos": [
+        "Solano"
+      ],
+      "nombre_listado": "Solano José Carlo",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "Retalhuleu",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/8f350-_mg_9244-jose-carlo-solano-nueva-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/958",
+      "notoriedad": ""
+    },
+    {
+      "id": "875",
+      "nombre": "Raúl Antonio Solórzano Quevedo",
+      "nombres": [
+        "Raúl",
+        "Antonio"
+      ],
+      "apellidos": [
+        "Solórzano",
+        "Quevedo"
+      ],
+      "nombre_listado": "Solórzano Quevedo Raúl Antonio",
+      "bancada": "INDP - UNE",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Quiché",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/8405e-raul-antonio-solorzano-quevedo-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/875",
+      "notoriedad": ""
+    },
+    {
+      "id": "955",
+      "nombre": "Marcos Eduardo Tebelán Pantzay",
+      "nombres": [
+        "Marcos",
+        "Eduardo"
+      ],
+      "apellidos": [
+        "Tebelán",
+        "Pantzay"
+      ],
+      "nombre_listado": "Tebelán Pantzay Marcos Eduardo",
+      "bancada": "CABAL",
+      "bloque_sitio": "CABAL",
+      "distrito": "Quiché",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/d16ee-eduardo-tebelan-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/955",
+      "notoriedad": ""
+    },
+    {
+      "id": "887",
+      "nombre": "Byron Leonidas Tejeda Marroquín",
+      "nombres": [
+        "Byron",
+        "Leonidas"
+      ],
+      "apellidos": [
+        "Tejeda",
+        "Marroquín"
+      ],
+      "nombre_listado": "Tejeda Marroquín Byron Leonidas",
+      "bancada": "CABAL",
+      "bloque_sitio": "CABAL",
+      "distrito": "Baja Verapaz",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/a65c5-byron-tejeda-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/887",
+      "notoriedad": ""
+    },
+    {
+      "id": "960",
+      "nombre": "José Diego Toledo Cruz",
+      "nombres": [
+        "José",
+        "Diego"
+      ],
+      "apellidos": [
+        "Toledo",
+        "Cruz"
+      ],
+      "nombre_listado": "Toledo Cruz José Diego",
+      "bancada": "INDP - SEMILLA",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Sacatepéquez",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/ef438-_mg_9077-jose-diego-toledo-cruz-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/960",
+      "notoriedad": ""
+    },
+    {
+      "id": "954",
+      "nombre": "Erick José Mario Tzún De León",
+      "nombres": [
+        "Erick",
+        "José",
+        "Mario"
+      ],
+      "apellidos": [
+        "Tzún",
+        "De",
+        "León"
+      ],
+      "nombre_listado": "Tzún De León Erick José Mario",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "Quetzaltenango",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/1b101-erick-tzun-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/954",
+      "notoriedad": ""
+    },
+    {
+      "id": "947",
+      "nombre": "Victor Alfredo Valenzuela Argueta",
+      "nombres": [
+        "Victor",
+        "Alfredo"
+      ],
+      "apellidos": [
+        "Valenzuela",
+        "Argueta"
+      ],
+      "nombre_listado": "Valenzuela Argueta Victor Alfredo",
+      "bancada": "VAMOS",
+      "bloque_sitio": "VAMOS",
+      "distrito": "Lista Nacional",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/14488-_mg_9206-victor-alfredo-valenzuela-argueta-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/947",
+      "notoriedad": ""
+    },
+    {
+      "id": "829",
+      "nombre": "Sabino Sebastián Velásquez Bámaca",
+      "nombres": [
+        "Sabino",
+        "Sebastián"
+      ],
+      "apellidos": [
+        "Velásquez",
+        "Bámaca"
+      ],
+      "nombre_listado": "Velásquez Bámaca Sabino Sebastián",
+      "bancada": "BIEN",
+      "bloque_sitio": "BIEN",
+      "distrito": "San Marcos",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/db7b3-img_0880-sabino-sebastian-velasquez-bamaca-web-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/829",
+      "notoriedad": ""
+    },
+    {
+      "id": "154",
+      "nombre": "Mario Velásquez Pérez",
+      "nombres": [
+        "Mario"
+      ],
+      "apellidos": [
+        "Velásquez",
+        "Pérez"
+      ],
+      "nombre_listado": "Velásquez Pérez Mario",
+      "bancada": "CABAL",
+      "bloque_sitio": "CABAL",
+      "distrito": "San Marcos",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/ae38f-mario-velasquez-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/154",
+      "notoriedad": ""
+    },
+    {
+      "id": "928",
+      "nombre": "Jorge Mario Villagrán Alvarez",
+      "nombres": [
+        "Jorge",
+        "Mario"
+      ],
+      "apellidos": [
+        "Villagrán",
+        "Alvarez"
+      ],
+      "nombre_listado": "Villagrán Alvarez Jorge Mario",
+      "bancada": "AZUL",
+      "bloque_sitio": "AZUL",
+      "distrito": "Lista Nacional",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/43642-jorge-villagran-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/928",
+      "notoriedad": ""
+    },
+    {
+      "id": "155",
+      "nombre": "Andrea Beatríz Villagrán Antón de Pantoja",
+      "nombres": [
+        "Andrea",
+        "Beatríz"
+      ],
+      "apellidos": [
+        "Villagrán",
+        "Antón",
+        "de",
+        "Pantoja"
+      ],
+      "nombre_listado": "Villagrán Antón de Pantoja Andrea Beatríz",
+      "bancada": "INDP - SEMILLA",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Distrito Central",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/1dd60-andrea-villagran-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/155",
+      "notoriedad": ""
+    },
+    {
+      "id": "977",
+      "nombre": "Olga Isabel Villalta Pereira",
+      "nombres": [
+        "Olga",
+        "Isabel"
+      ],
+      "apellidos": [
+        "Villalta",
+        "Pereira"
+      ],
+      "nombre_listado": "Villalta Pereira Olga Isabel",
+      "bancada": "INDP - SEMILLA",
+      "bloque_sitio": "INDEPENDIENTE",
+      "distrito": "Lista Nacional",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/d83c1-img_0014-olga-isabel-villalta-pereira-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/977",
+      "notoriedad": ""
+    },
+    {
+      "id": "927",
+      "nombre": "Marvin Adrián Zepeda Zepeda",
+      "nombres": [
+        "Marvin",
+        "Adrián"
+      ],
+      "apellidos": [
+        "Zepeda",
+        "Zepeda"
+      ],
+      "nombre_listado": "Zepeda Zepeda Marvin Adrián",
+      "bancada": "TODOS",
+      "bloque_sitio": "TODOS",
+      "distrito": "Jutiapa",
+      "miniatura": "https://www.congreso.gob.gt/assets/uploads/diputados/thumbs/0189f-img_0557-marvin-adrian-zepeda-zepeda-peq.jpg",
+      "url": "https://www.congreso.gob.gt/perfil_diputado/927",
+      "notoriedad": ""
+    }
+  ]
+}

@@ -59,6 +59,12 @@ body.documento #hoja { display: block; transform-origin: 50% 50%; background: co
 #membrete { display: none; font: 600 22px/1.2 'JetBrains Mono', monospace; letter-spacing: .1em; text-transform: uppercase;
   opacity: .75; margin-bottom: 26px; padding-bottom: 20px; border-bottom: 2px solid color-mix(in srgb, var(--ink) 16%, transparent); }
 body.documento #membrete { display: block; }
+body.documento #hoja { position: relative; }
+/* el sello del documento (S.H.sello): fecha y fuente, girado, entra golpeando al terminar la frase */
+#sello { position: absolute; right: 26px; bottom: -34px; padding: 12px 18px; border: 4px solid var(--acento, var(--a1));
+  border-radius: 10px; color: var(--acento, var(--a1)); font: 700 24px/1.1 'JetBrains Mono', monospace; letter-spacing: .08em;
+  text-transform: uppercase; transform: rotate(-7deg) scale(0); opacity: 0; background: color-mix(in srgb, var(--bg) 70%, transparent); }
+html.f45 #sello { font-size: 20px; bottom: -28px; }
 body.documento #frase { font: 500 54px/1.22 Archivo, sans-serif; letter-spacing: -.005em; }
 /* capítulo: el año grande en el centro, el título y la línea de capítulos (mismas reglas que el rótulo de acto,
    #acto en comun.css) */
@@ -94,7 +100,7 @@ html.f45 #titulo { font-size: 54px; }
 <div id="atmos" data-fuera-de-zona><div id="comillas">“</div></div>
 <div id="arriba"><div id="progreso"></div><div id="chip"></div></div>
 <div id="cita">
-  <div id="hoja"><div id="membrete"></div><div id="frase"></div></div>
+  <div id="hoja"><div id="membrete"></div><div id="frase"></div><div id="sello"></div></div>
   <div id="traduccion"></div>
   <div id="firma"><div id="retrato"></div><div id="quien"></div></div>
   <div id="fuente"></div>
@@ -126,6 +132,7 @@ window.__listo = (async () => {
     if (H.documento) { document.body.classList.add('documento'); document.documentElement.classList.add('documento'); }
     document.getElementById('chip').innerHTML = `<b>${esc(H.documento ? 'Documento' : 'Cita')}</b><span>${esc(H.cuando || '')}</span>`;
     document.getElementById('membrete').textContent = H.membrete || '';
+    if (H.sello) document.getElementById('sello').textContent = H.sello.texto;
     document.getElementById('frase').innerHTML = palabras(H.texto);
     if (H.resalte) [...document.querySelectorAll('#frase span')].forEach((s, i) => {
       if (i >= H.resalte[0] && i <= H.resalte[1]) s.classList.add('resalte');
@@ -204,7 +211,15 @@ window.seek = (t) => {
     const late = (H.latidos || []).reduce((m, x) => Math.max(m, Math.sin(Math.PI * clamp((t - x) / 0.5))), 0);
     const com = document.getElementById('comillas');
     com.style.opacity = (0.13 * ap).toFixed(3);
-    document.getElementById(H.documento ? 'hoja' : 'comillas').style.transform = `scale(${(1 + (H.documento ? 0.05 : 0.04) * late).toFixed(4)})`;
+    if (H.documento) {   // la hoja entra deslizándose y girando apenas, como un papel que se deja en el escritorio
+      const hp = eo((t - D - 0.1) / (0.55 * K));
+      document.getElementById('hoja').style.transform = `translateX(${((1 - hp) * 140).toFixed(1)}px) rotate(${((1 - hp) * 3.5 - 0.6).toFixed(2)}deg) scale(${(1 + 0.05 * late).toFixed(4)})`;
+      if (H.sello) {
+        const sl = V.portada ? 1 : clamp((t - H.sello.t) / 0.22), el = document.getElementById('sello');
+        el.style.opacity = sl > 0 ? 1 : 0;
+        el.style.transform = `rotate(-7deg) scale(${(sl <= 0 ? 0 : 1.6 - 0.6 * eo(sl)).toFixed(3)})`;
+      }
+    } else document.getElementById('comillas').style.transform = `scale(${(1 + 0.04 * late).toFixed(4)})`;
     const fi = eo((t - H.entra) / 0.4), firma = document.getElementById('firma');
     firma.style.opacity = fi; firma.style.transform = `translateX(${((1 - fi) * -30).toFixed(1)}px)`;
     if (H.traduccion) {

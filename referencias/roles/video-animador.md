@@ -64,17 +64,31 @@ ANIM.registrar('<id>', {
 - **Zona segura**: todo dentro del lienzo (no salgas de sus bordes); en 4:5 el lienzo es más bajo: usa `ctx.alto`.
   `--check` corre el gate **V13**: nada visible puede salir de la zona segura de TikTok, Reels y Shorts (fin antes
   de los subtítulos, columna de íconos a la derecha desde y≈1070); el lienzo ya cabe con su deriva si no te sales.
+- **Todo lo dibujado dice qué es**: una línea de límite dice de qué es el límite (`P.rotulos.limite`: «Renuncia», no
+  «LÍMITE»), lo que ya había al empezar lleva su nombre (`P.rotulos.base`: «La plaza») o no se dibuja. Sin marcas de
+  escala ni ejes sin números: si la animación parece medir algo, tiene que haber un dato (no lo hay: es una metáfora).
+- **Sobre quién**: si el mecanismo le pasa a una persona, la escena lleva `sujeto: "<personaje>"` y la página pone su
+  retrato y su nombre fijos arriba del lienzo (el lienzo es más bajo: usa `ctx.alto`).
+- **Continuación**: una escena explica con `continua: true` y la misma `animacion` que la anterior sigue la misma
+  pantalla (corte invisible): llegan `P.previos` (cuántos pasos ya estaban, dibujados desde el cuadro 0) y `P.total`
+  (los pasos de las dos escenas: reparte el espacio con él para que nada cambie de lugar en el corte). Una animación que
+  no soporta `previos` no se usa con `continua`.
 - ≤ 40 KB. Una animación es UNA idea.
 
 ## Principios de movimiento
 
 1. **Cada paso entra cuando la voz lo dice** (`T.pasos[i].start`): el espectador oye y ve lo mismo a la vez. Antes de
-   que la voz lo diga, el elemento puede insinuarse (contorno tenue), nunca completo.
+   que la voz lo diga, **nada** de ese paso está en pantalla: ni completo, ni en gris tenue, ni «fantasma» (gate **A2**:
+   `video_grabar.js` lo mide en cada grabación con `window.__anticipo` de `video/explica.html`). Un texto que aparece
+   antes de oírlo se lee como un error o como un spoiler (La Línea, Parte 4, 2026-11-07).
 2. **Muestra el mecanismo, no la lista**: si el brief dice «la onda de frenado viaja hacia atrás», que se vea la onda
    viajar; si dice «sale más agua de la que entra», que el nivel baje porque la salida es más gruesa. Una lista de
    cajas es el último recurso (para eso ya está `cadena`).
-3. **Nunca quieto** (V12): siempre algo se mueve: partículas, flujo, respiración del elemento activo. Movimiento
-   continuo pero tranquilo: que no compita con la voz.
+3. **Quieta entre pasos** (gate **A1**, reemplaza al viejo V12 «nunca quieto»; cámara quieta, 2026-11-07): se mueve lo
+   que entra cuando la voz lo dice (≤ 1.6 s) y luego **todo se queda quieto** hasta el paso siguiente. Prohibido el
+   adorno por reloj: partículas que suben, líneas que laten, punteados que corren, flechas que parpadean, el texto
+   activo que «respira», derivas. `--check` deja 3.2 s de silencio después de cada paso y mide el lienzo: si algo se
+   sigue moviendo, falla. Si el mecanismo ES un movimiento (la onda que viaja), que ocurra al entrar su paso.
 4. **Curvas suaves**: entradas con `V.eo` en 0.3–0.6 s; nada de rebotes largos ni parpadeos.
 5. **Legible en un teléfono**: trazos ≥ 5 px, texto ≥ 36 px, pocos elementos grandes. Si no se entiende en la hoja de
    contacto a tamaño reducido, no se entiende en TikTok.
@@ -84,7 +98,8 @@ ANIM.registrar('<id>', {
 ## Bucle de QA
 
 1. Escribe el módulo. `python3 scripts/animaciones.py --check <id>`: lint, `node --check`, `meta`, dos grabaciones a
-   10 fps con framemd5 igual, la versión 4:5, quietud (V12) y la hoja de contacto (un cuadro por paso + el final).
+   10 fps con framemd5 igual, la versión 4:5, A1 (quieta entre pasos), A2 (ningún paso antes de la voz), A3 (con rótulo de acto, el lienzo entra cuando el rótulo se va: `explica.html` lo hace solo; no dibujes nada fuera del lienzo), V13 y la hoja de
+   contacto (un cuadro por paso + el final).
 2. Lee `sesiones/_animaciones/<id>/contacto.png` (una vez por vuelta): ¿se entiende el mecanismo sin sonido?, ¿cada paso
    aparece en su cuadro?, ¿nada se sale ni se encima?, ¿el texto se lee?
 3. Corrige y repite (≤ 3 vueltas). Si al final sigue fallando, devuelve `check: falla` con las líneas FALLA.

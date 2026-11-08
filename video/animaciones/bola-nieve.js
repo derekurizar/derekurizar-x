@@ -93,7 +93,7 @@ ANIM.registrar('bola-nieve', {
       tM = ps[F.manda].start + (F.manda === F.compuesto ? 1.6 : 0);
     const { NC, ancho, total, lineal, base } = this;
     // la capa compuesta crece de izquierda a derecha: cada columna empieza un poco después que la anterior
-    const durC = Math.max(1.8, Math.min(4.5, tM - tC));
+    const durC = 1.3;   // la capa compuesta crece al decirse su paso y se queda (≤ 1.5 s: A1)
     const zoom = eo((t - tC) / durC), escala = this.escalaLin + (this.escala - this.escalaLin) * zoom;
     let punta = null;
     this.cols.forEach((c, k) => {
@@ -108,7 +108,7 @@ ANIM.registrar('bola-nieve', {
       const m = eo((t - tM) / 0.6);
       c.cap.setAttribute('opacity', (1 - 0.5 * m).toFixed(3));
       c.lin.setAttribute('opacity', (0.85 - 0.45 * m).toFixed(3));
-      const late = k === NC - 1 ? 1 + 0.035 * m * Math.sin((t - tM) * 3.2) : 1;
+      const late = 1;   // cámara quieta (2026-11-07): sin latido continuo (A1)
       c.com.setAttribute('transform', late !== 1 ? `translate(${(c.x + ancho / 2).toFixed(1)} ${base}) scale(${late.toFixed(4)}) translate(${(-c.x - ancho / 2).toFixed(1)} ${-base})` : '');
       if (ec > 0.02 || el_ > 0.02) punta = { x: c.x + ancho / 2, y: base - hCap - hLin - hCom };
     });
@@ -117,7 +117,7 @@ ANIM.registrar('bola-nieve', {
       this.bola.style.display = '';
       const rb = parseFloat(this.bola.getAttribute('r'));
       this.bola.setAttribute('cx', punta.x.toFixed(1));
-      this.bola.setAttribute('cy', (punta.y - rb - 6 - 5 * Math.abs(Math.sin(t * 4))).toFixed(1));
+      this.bola.setAttribute('cy', (punta.y - rb - 6 - 0).toFixed(1));
       this.bola.setAttribute('opacity', (0.9 * eo((t - tL) / 0.4)).toFixed(3));
     } else this.bola.style.display = 'none';
 
@@ -125,10 +125,10 @@ ANIM.registrar('bola-nieve', {
     let activo = -1;
     ps.forEach((p, i) => { if (t >= p.start) activo = i; });
     this.filas.forEach((f, i) => {
-      const entra = eo((t - ps[i].start) / 0.45), fantasma = 0.28 * eo((t - T.ini) / 0.5);
+      const entra = eo(clamp((t - ps[i].start) / 0.45)), fantasma = 0;   // nada antes de la voz (A2)
       const op = Math.max(fantasma, entra * (i < activo ? 0.5 : 1));
       f.fila.style.opacity = op.toFixed(3);
-      const latido = i === activo ? 0.03 * Math.sin(t * 3) : 0;
+      const latido = 0;
       f.fila.style.transform = `translateX(${((1 - entra) * -24).toFixed(1)}px) scale(${(1 + latido).toFixed(4)})`;
       f.punto.style.background = i === activo ? 'var(--ink)' : (i < activo ? 'color-mix(in srgb, var(--ink) 45%, transparent)' : 'transparent');
       f.punto.style.borderColor = 'var(--ink)';

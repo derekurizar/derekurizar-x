@@ -189,5 +189,9 @@
     "SESAN, Boletín de alerta temprana SAN No. 010-2026 (con datos INE, CBA septiembre 2026)"
   ],
   "gate_mecanico": "ok",
-  "contacto": "contacto.png"
+  "contacto": "contacto.png",
+  "redes": {
+    "4x5": "redes/4x5",
+    "9x16": "redes/9x16"
+  }
 }

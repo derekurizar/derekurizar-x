@@ -456,6 +456,51 @@
       }
     },
     {
+      "id": "2026-11-03-el-fiambre-de-donde-viene-el-plato-del-dia-de-todos-los-sant",
+      "slug": "el-fiambre-de-donde-viene-el-plato-del-dia-de-todos-los-sant",
+      "tema": "El fiambre: de dónde viene el plato del Día de Todos los Santos",
+      "fecha": "2026-11-03",
+      "ruta": "historias/2026-11-03-el-fiambre-de-donde-viene-el-plato-del-dia-de-todos-los-sant",
+      "arco": "origen y misterio: la leyenda que todos cuentan contra lo que dicen los documentos",
+      "paleta": "jacaranda",
+      "musica": "jacaranda-1",
+      "duracion_s": 155.1,
+      "creditos_voz": 2337.0,
+      "estado": "listo",
+      "frases": {
+        "promesa": "Detrás de cada plato hay un nombre que nadie ha podido escribir.",
+        "promesa_forma": "secreto",
+        "bisagra": "Pero el convento guarda una fecha que no cuadra con la leyenda.",
+        "bisagra_forma": "contradiccion",
+        "gancho": "El fiambre nació, dicen, de una despensa vacía en Guatemala.",
+        "aperturas": [
+          "La versión de siempre",
+          "Otra versión lo pone",
+          "Entonces la pista hay",
+          "Thomas Gage, fraile y",
+          "Celso Lara Figueroa, folclorista",
+          "Pero el convento guarda",
+          "En el siglo XIX,",
+          "Milla cuenta que la",
+          "Mucho después, en dos",
+          "Quién lo inventó nunca",
+          "Pero la monja de"
+        ],
+        "segun": 0,
+        "aperturas_atribuidas": 0,
+        "pregunta": "Y nadie sabe todavía quién armó el primer fiambre.",
+        "cierre": "Y nadie sabe todavía quién armó el primer fiambre.",
+        "cierre_tipo": "remate",
+        "cierre_forma": "pendiente",
+        "cierre_mecanismo": null,
+        "familia": "misterio",
+        "visual": "foto",
+        "animaciones": [
+          "cronologia"
+        ]
+      }
+    },
+    {
       "id": "2026-11-03-por-que-en-la-ciudad-capital-hay-tanto-trafico",
       "slug": "por-que-en-la-ciudad-capital-hay-tanto-trafico",
       "tema": "por qué en la ciudad capital hay tanto tráfico",
@@ -496,6 +541,50 @@
         "cierre_forma": "consecuencia",
         "cierre_mecanismo": "perdida",
         "familia": "lugar",
+        "visual": "foto",
+        "animaciones": []
+      }
+    },
+    {
+      "id": "2026-11-04-ron-zacapa-como-un-ron-guatemalteco-gano-el-mundo",
+      "slug": "ron-zacapa-como-un-ron-guatemalteco-gano-el-mundo",
+      "tema": "Ron Zacapa: cómo un ron guatemalteco ganó el mundo",
+      "fecha": "2026-11-04",
+      "ruta": "historias/2026-11-04-ron-zacapa-como-un-ron-guatemalteco-gano-el-mundo",
+      "arco": "origen y ascenso: de ron de feria local a marca de lujo mundial, con el precio de compartirla",
+      "paleta": "cacao",
+      "musica": "cacao-2",
+      "duracion_s": 159.0,
+      "creditos_voz": 2333.0,
+      "estado": "listo",
+      "frases": {
+        "promesa": "Ellos no sabían que un día tendrían que compartir su ron.",
+        "promesa_forma": "presagio",
+        "bisagra": "Pero un ron tan lento necesitaba quien pagara por esperarlo.",
+        "bisagra_forma": "apuesta",
+        "gancho": "Hay barras donde ya no piden un ron: piden un Zacapa.",
+        "aperturas": [
+          "Un año después abrieron",
+          "Décadas después, en mil",
+          "Pero no iba a",
+          "El ron se destila",
+          "Vásquez llegó de Nicaragua,",
+          "Ella cuenta qué mercado",
+          "En dos mil ocho,",
+          "Para dos mil diez,",
+          "Entonces, en dos mil",
+          "Tres años después, el",
+          "Y Vásquez lo resumía",
+          "Nació para el centenario"
+        ],
+        "segun": 0,
+        "aperturas_atribuidas": 0,
+        "pregunta": "Hoy, en barras del mundo, los clientes piden ese ron por su nombre.",
+        "cierre": "Hoy, en barras del mundo, los clientes piden ese ron por su nombre.",
+        "cierre_tipo": "remate",
+        "cierre_forma": "legado",
+        "cierre_mecanismo": null,
+        "familia": "paradoja",
         "visual": "foto",
         "animaciones": []
       }

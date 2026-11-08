@@ -1,0 +1,132 @@
+{
+ "fotos": [
+  {
+   "id": "ori-f01",
+   "descripcion": "Un horno de leña encendido (foto de ejemplo)",
+   "fecha": "1952",
+   "lugar": "Quetzaltenango",
+   "origen": "commons",
+   "licencia": "CC BY-SA 4.0",
+   "autor": "Maqueta",
+   "credito": "Foto: Maqueta · CC BY-SA 4.0",
+   "tamano": [
+    1600,
+    1200
+   ],
+   "retrato_de": null,
+   "muestra": "protagonista"
+  },
+  {
+   "id": "ori-f02",
+   "descripcion": "Una carpa tras el terremoto (foto de ejemplo)",
+   "fecha": "1977",
+   "lugar": "Quetzaltenango",
+   "origen": "commons",
+   "licencia": "Public domain",
+   "autor": "Maqueta",
+   "credito": "Foto: Maqueta · Public domain",
+   "tamano": [
+    1600,
+    1200
+   ],
+   "retrato_de": null,
+   "muestra": "protagonista"
+  },
+  {
+   "id": "ori-f03",
+   "descripcion": "Retrato de la fundadora (foto de ejemplo)",
+   "fecha": "1968",
+   "lugar": "Quetzaltenango",
+   "origen": "empresa",
+   "licencia": "© La Espiga (crédito en pantalla)",
+   "autor": "La Espiga",
+   "credito": "Foto: La Espiga (maqueta)",
+   "tamano": [
+    1600,
+    1200
+   ],
+   "retrato_de": "Marta Pérez",
+   "retrato_evidencia": "Marta Pérez, fundadora de La Espiga (archivo de la empresa, maqueta)"
+  },
+  {
+   "id": "cas-f01",
+   "descripcion": "La fachada de una sucursal cerrada (foto de ejemplo)",
+   "fecha": "2010",
+   "lugar": "Ciudad de Guatemala",
+   "origen": "medio",
+   "licencia": "© Soy502 (crédito en pantalla)",
+   "autor": "Soy502",
+   "credito": "Foto: Soy502 (maqueta)",
+   "tamano": [
+    1600,
+    1200
+   ],
+   "retrato_de": null,
+   "muestra": "protagonista"
+  },
+  {
+   "id": "cas-f02",
+   "descripcion": "Sacos de harina en una bodega (foto de referencia de ejemplo)",
+   "fecha": null,
+   "lugar": "Guatemala",
+   "origen": "commons",
+   "licencia": "CC0",
+   "autor": "Maqueta",
+   "credito": "Foto de referencia: Maqueta · CC0",
+   "referencia": true,
+   "tamano": [
+    1600,
+    1200
+   ],
+   "retrato_de": null
+  },
+  {
+   "id": "ori-f04",
+   "descripcion": "La primera sucursal en el centro de Xela (foto de ejemplo)",
+   "fecha": "1958",
+   "lugar": "Quetzaltenango",
+   "origen": "commons",
+   "licencia": "CC BY-SA 4.0",
+   "autor": "Maqueta",
+   "credito": "Foto: Maqueta · CC BY-SA 4.0",
+   "tamano": [
+    1600,
+    1200
+   ],
+   "retrato_de": null,
+   "muestra": "protagonista"
+  },
+  {
+   "id": "ori-f05",
+   "descripcion": "Panes en la vitrina de La Espiga (foto de ejemplo)",
+   "fecha": "1968",
+   "lugar": "Quetzaltenango",
+   "origen": "commons",
+   "licencia": "CC BY-SA 4.0",
+   "autor": "Maqueta",
+   "credito": "Foto: Maqueta · CC BY-SA 4.0",
+   "tamano": [
+    1600,
+    1200
+   ],
+   "retrato_de": null,
+   "muestra": "protagonista"
+  },
+  {
+   "id": "ori-f06",
+   "descripcion": "Una sucursal de La Espiga en Quetzaltenango (foto de ejemplo)",
+   "fecha": "1971",
+   "lugar": "Quetzaltenango",
+   "origen": "commons",
+   "licencia": "CC BY-SA 4.0",
+   "autor": "Maqueta",
+   "credito": "Foto: Maqueta · CC BY-SA 4.0",
+   "tamano": [
+    1600,
+    1200
+   ],
+   "retrato_de": null,
+   "muestra": "protagonista"
+  }
+ ]
+}

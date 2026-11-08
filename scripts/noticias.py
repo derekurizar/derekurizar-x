@@ -784,6 +784,9 @@ def cmd_guion(a):
         fallas.append("N8 el cierre pide comentar o compartir («%s»): «Sígueme en» va solo en pantalla" % VD.CEBO.search(ci["texto"]).group())
     if VD.PROHIBIDO_CIERRE.search(ci.get("texto") or ""):
         fallas.append("N8 la voz del cierre no dice fuentes ni «sígueme» (va en pantalla)")
+    if VD.anuncia_fin(ci.get("texto")):
+        fallas.append("N8 el cierre anuncia que se acabó («%s»): remata con lo que hoy le pasa a Guatemala, sin despedirte "
+                      "(F9: la gente se va en cuanto reconoce el final)" % VD.anuncia_fin(ci.get("texto")))
     c = convertir(ci.get("texto") or "", len(escenas) + 1, fallas, "cierre")
     if c:
         loc.append({"n": len(escenas) + 1, "tipo": "cierre", "breve": False, "noticia": None, "tuit": None, "plantilla": "cierre",
@@ -865,6 +868,8 @@ def cmd_tiempos(a, g=None):
     for e in loc["escenas"]:
         n, tipo = e["n"], e["tipo"]
         dst = os.path.join(trabajo, "audio", "voz_%d_r.mp3" % n)
+        if e is loc["escenas"][0]:
+            VD.V20_FALLAS.clear()
         habladas, apretado, av16 = VD.voz_de_escena(trabajo, e)   # V16 + atempo, como /video
         avisos += av16
         try:
@@ -896,6 +901,9 @@ def cmd_tiempos(a, g=None):
             S["T"] = {"r": rs, "r2": rs[1] if len(rs) > 1 else rs[0], "preg": round(t_fin, 3), "sigue": round(fin_voz + 0.1, 3)}
             ev = [(x, "r%d" % (q + 1)) for q, x in enumerate(rs)] + [(S["T"]["preg"], "pregunta"), (S["T"]["sigue"], "sigue")]
             sfx = [(S["T"]["preg"], "resolucion")]
+            e_sg, sfx_sg = VD.tiempos_seguir(S)
+            ev += e_sg
+            sfx += sfx_sg
         else:
             nt = por_id[e["noticia"]]
             foto = nt.get("foto") or {}
@@ -955,6 +963,10 @@ def cmd_tiempos(a, g=None):
                 N["oraciones"] = sorted({round(pal[k + 1]["start"], 3) for k, x in enumerate(pal[:-1]) if x["text"].endswith((".", "?", "!", ":"))}
                                         | {round(x["start"], 3) for x in pal if x.get("clave") and x["start"] != cifra_t})
                 ev += [(x, "oracion") for x in N["oraciones"]]
+                if N["foto"]:   # sub-planos (V21), lejos de la cifra y del titular (V22)
+                    evitar = [x for x in (cifra_t, (N["cifra"] or {}).get("start"), t0 + 0.1) if x is not None]
+                    N["planos"], N["focos"] = VD.planos_foto(foto.get("focos"), dur, N["oraciones"], evitar)
+                    ev += [(x["t"], "plano") for x in N["planos"][1:]]
             S["N"] = N
         S["transicion"] = None if n == 1 else VD.TRANSICIONES["cierre" if cierre else "primera" if n == 2 else "tarjeta"]
         ev.append((dur, "fin"))
@@ -988,7 +1000,9 @@ def cmd_tiempos(a, g=None):
     print("total %.1f s + %.1f s de bucle (objetivo %d s, máximo %d) · hueco máximo %.1f s → %s"
           % (total, VD.BUCLE_S, objetivo, dmax, (peor[1][0] - peor[0][0]) if peor else 0,
              VD.rel(os.path.join(trabajo, "escenas.json"))))
-    return 0
+    for x in VD.V20_FALLAS:
+        print("FALLA", x)
+    return 1 if VD.V20_FALLAS else 0
 
 
 # ---------- entregar ----------

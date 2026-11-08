@@ -69,3 +69,10 @@ devuelve), `origen_hipotesis` (de dónde sale el error: el giro lo cuenta), `dep
 los ejemplos, solo con `{cifra: id}` (0 ilustrativos; `producto` multiplica dos cifras). `sensible` admite además
 `seguridad` y `grupo` (MI7). Gate: `explica.py encuadre --check` (E1 + MI1). Nunca decides el veredicto: lo calcula el
 código.
+
+## Modo serie (temario de `/serie`, `args.serie = {partes: M}`)
+
+Encuadras el tema entero (hasta 5 ejes que cubren todo el temario) y el **plan** en `serie.partes`: M partes, cada una
+con `titulo` (≤ 6 palabras), `pregunta`, `mecanismo` (uno de MECANISMOS_EXPLICA), `mecanismo_frase`, `intuicion` (la idea
+equivocada de esa parte), `ejes` (los ids que la sostienen), `revelaciones` (1–3) y `puente` (la pregunta que abre la
+siguiente; la última, `null`). Corre `python3 scripts/serie.py plan <TRABAJO> --check` hasta 0 fallas (SE1, SE2).

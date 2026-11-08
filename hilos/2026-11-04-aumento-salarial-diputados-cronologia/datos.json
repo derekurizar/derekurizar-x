@@ -1,0 +1,1678 @@
+{
+  "slug": "aumento-salarial-diputados-cronologia",
+  "fecha": "2026-11-04",
+  "tesis": "El ingreso mensual de un diputado pasó de Q29,150 a Q66,300 (+127.4 %) por una enmienda al presupuesto del propio Congreso aprobada 87 a 63 el 26 de noviembre de 2024, y ninguno de los 7 intentos formales por revertirlo lo ha logrado: el último, el 3 de noviembre de 2026, tuvo 41 votos.",
+  "ancla_id": "apr-c09",
+  "paleta": "obsidiana",
+  "hook_tipo": "antes_despues",
+  "cifras": [
+    {
+      "id": "ant-c01",
+      "concepto": "Ingreso mensual de un diputado antes del aumento, por rubro (base, dietas de pleno, dietas de comisión, gastos de representación)",
+      "unidad": "quetzales por mes",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "La Hora (Joel Maldonado), 4-may-2025",
+      "url": "https://lahora.gt/nacionales/jmaldonado/2025/05/04/como-el-incremento-de-sueldo-de-q37-mil-a-los-diputados-dividio-al-congreso/",
+      "periodo": "hasta enero de 2025",
+      "n_puntos": 4,
+      "valor": 29150,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa Libre, columna «La piñata de los diputados»: antes devengaban Q29 mil 150",
+      "calculo": "9550+9600+5000+5000",
+      "evidencia": {
+        "url": "https://lahora.gt/nacionales/jmaldonado/2025/05/04/como-el-incremento-de-sueldo-de-q37-mil-a-los-diputados-dividio-al-congreso/",
+        "cita": "El sueldo de un diputado por años fue de Q29 mil 150, que está compuesto por Q9 mil 550 como base, más Q9 mil 600 de dietas para asistir a plenarias, otros Q5 mil por dietas para",
+        "archivo_local": "sesiones/_descargas/aumento-diputados/lahora_2025-05-04_incremento_q37mil.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Salario base",
+          "valor": 9550
+        },
+        {
+          "nombre": "Dietas por plenarias",
+          "valor": 9600
+        },
+        {
+          "nombre": "Dietas por comisiones",
+          "valor": 5000
+        },
+        {
+          "nombre": "Gastos de representación",
+          "valor": 5000
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_2.png"
+      ]
+    },
+    {
+      "id": "ant-c02",
+      "concepto": "Ingreso mensual de un diputado con el aumento (2025), por rubro",
+      "unidad": "quetzales por mes",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "La Hora (Joel Maldonado), 4-may-2025",
+      "url": "https://lahora.gt/nacionales/jmaldonado/2025/05/04/como-el-incremento-de-sueldo-de-q37-mil-a-los-diputados-dividio-al-congreso/",
+      "periodo": "desde febrero de 2025",
+      "n_puntos": 3,
+      "valor": 66300,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa Libre, columna: ingreso mensual de Q66 mil 300",
+      "calculo": "46700+9600+10000",
+      "evidencia": {
+        "url": "https://lahora.gt/nacionales/jmaldonado/2025/05/04/como-el-incremento-de-sueldo-de-q37-mil-a-los-diputados-dividio-al-congreso/",
+        "cita": "quedó establecido en Q66 mil 300, que es una base de Q46 mil, más los Q9 mil 600 de dietas por plenarias, y Q10 mil por dietas de comisión y de gastos de representación",
+        "archivo_local": "sesiones/_descargas/aumento-diputados/lahora_2025-05-04_incremento_q37mil.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Salario base",
+          "valor": 46000
+        },
+        {
+          "nombre": "Dietas por plenarias",
+          "valor": 9600
+        },
+        {
+          "nombre": "Dietas de comisión y gastos de representación",
+          "valor": 10000
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_2.png",
+        "T13"
+      ]
+    },
+    {
+      "id": "ant-c03",
+      "concepto": "Aumento del ingreso mensual de un diputado (de Q29,150 a Q66,300), en quetzales y porcentaje",
+      "unidad": "quetzales por mes",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "La Hora (Joel Maldonado), 4-may-2025",
+      "url": "https://lahora.gt/nacionales/jmaldonado/2025/05/04/como-el-incremento-de-sueldo-de-q37-mil-a-los-diputados-dividio-al-congreso/",
+      "periodo": "2024→2025",
+      "n_puntos": 1,
+      "valor": 37150,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa Libre, columna: de Q29,150 a Q66,300 (recálculo)",
+      "calculo": "66300-29150",
+      "evidencia": {
+        "url": "https://lahora.gt/nacionales/jmaldonado/2025/05/04/como-el-incremento-de-sueldo-de-q37-mil-a-los-diputados-dividio-al-congreso/",
+        "cita": "Cuyo incremento fue de Q37 mil 150, lo que equivale a 127.4 por ciento.",
+        "archivo_local": "sesiones/_descargas/aumento-diputados/lahora_2025-05-04_incremento_q37mil.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ant-c04",
+      "concepto": "Sueldo de un diputado en julio de 2024 según La Hora (sin dietas de comisión)",
+      "unidad": "quetzales por mes",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "La Hora (Joel Maldonado), 15-jul-2024",
+      "url": "https://lahora.gt/nacionales/jmaldonado/2024/07/15/comision-revisa-salario-de-diputados-propuesta-de-viaticos-genera-rechazo/",
+      "periodo": "julio de 2024",
+      "n_puntos": 3,
+      "valor": 24150,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "calculo": "9550+5000+9600",
+      "evidencia": {
+        "url": "https://lahora.gt/nacionales/jmaldonado/2024/07/15/comision-revisa-salario-de-diputados-propuesta-de-viaticos-genera-rechazo/",
+        "cita": "El sueldo de un diputado es de Q24 mil 150, que se conforma por Q9 mil 550 de salario, más Q5 mil de gastos de representación y Q9 mil 600 de dietas por plenarias.",
+        "archivo_local": "sesiones/_descargas/aumento-diputados/lahora_2024-07-15_comision_salario.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Salario",
+          "valor": 9550
+        },
+        {
+          "nombre": "Gastos de representación",
+          "valor": 5000
+        },
+        {
+          "nombre": "Dietas por plenarias",
+          "valor": 9600
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ant-c05",
+      "concepto": "Salario base mensual de un diputado antes y después del Acuerdo 31-2024",
+      "unidad": "quetzales por mes",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "IIES-USAC, infografía 'Aumento de salarios en el Legislativo', marzo 2025",
+      "url": "https://iies.usac.edu.gt/wp-content/uploads/2025/03/Infografia-salarios2.0.pdf",
+      "periodo": "2024–2025",
+      "n_puntos": 2,
+      "valor": 46700,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa Libre: sueldo base de Q46 mil 700 (coincide con IIES-USAC)",
+      "calculo": "46700",
+      "evidencia": {
+        "url": "https://iies.usac.edu.gt/wp-content/uploads/2025/03/Infografia-salarios2.0.pdf",
+        "cita": "A partir de febrero de este año, el salario base de los diputados pasó de Q9,550 a Q46,700, lo que representa un incremento del 389%.",
+        "archivo_local": "sesiones/_descargas/Infografia-salarios2.0.txt"
+      },
+      "serie": [
+        {
+          "p": "2024",
+          "v": 9550
+        },
+        {
+          "p": "2025",
+          "v": 46700
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_2.png"
+      ]
+    },
+    {
+      "id": "ant-c06",
+      "concepto": "Ponentes nombrados de la iniciativa 6445 (reforma a la Ley Orgánica del Organismo Legislativo), por bancada",
+      "unidad": "diputados",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "La Hora (Joel Maldonado), 9-sep-2024; Dictamen 01-2024 de la Comisión de Apoyo Técnico",
+      "url": "https://lahora.gt/?p=730164",
+      "periodo": "septiembre de 2024",
+      "n_puntos": 3,
+      "valor": 11,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "calculo": "6+3+2",
+      "evidencia": {
+        "url": "https://lahora.gt/?p=730164",
+        "cita": "César Fión, Javier López, Darwin Ramírez, Darwin Lucas, Ignacio Quijada y León Felipe Barrera, de la UNE, y Raúl Barrera, Andrea Villagrán y Mercedes Monzón, del Movimiento Semilla.",
+        "archivo_local": "sesiones/_descargas/aumento-diputados/lahora_2024-09-09_ponentes_6445.txt"
+      },
+      "partes": [
+        {
+          "nombre": "UNE (César Fión, Javier López, Darwin Ramírez, Darwin Lucas, Ignacio Quijada, León Felipe Barrera)",
+          "valor": 6
+        },
+        {
+          "nombre": "Movimiento Semilla (Raúl Barrera, Andrea Villagrán, Mercedes Monzón)",
+          "valor": 3
+        },
+        {
+          "nombre": "Viva (Gustavo Cruz, Evelyn Morataya)",
+          "valor": 2
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_3.png",
+        "tuit_8.png",
+        "T10",
+        "T11"
+      ]
+    },
+    {
+      "id": "ant-c07",
+      "concepto": "Votación del pleno, 11-feb-2025: moción privilegiada para alterar el orden del día y llevar a primer debate la iniciativa 6445",
+      "unidad": "votos a favor",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales del pleno (base local, id_votacion 3994, sesión ordinaria 5)",
+      "url": "https://www.congreso.gob.gt/",
+      "periodo": "2025-02-11",
+      "n_puntos": 4,
+      "valor": 46,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "calculo": "46",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt/",
+        "cita": "3994,4,2025-02-11 17:23:06,APROBACIÓN DE MOCIÓN PRIVILEGIADA PARA ALTERAR EL ORDEN DEL DÍA (PRIMER DEBATE 6445),...,160,46,104,2,8",
+        "archivo_local": "sesiones/_congreso/base/votaciones.csv"
+      },
+      "partes": [
+        {
+          "nombre": "A favor",
+          "valor": 46
+        },
+        {
+          "nombre": "En contra",
+          "valor": 104
+        },
+        {
+          "nombre": "Ausente",
+          "valor": 2
+        },
+        {
+          "nombre": "Licencia",
+          "valor": 8
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_10.png"
+      ]
+    },
+    {
+      "id": "ant-c08",
+      "concepto": "Votos a favor de llevar la 6445 a primer debate (11-feb-2025), por bloque",
+      "unidad": "votos a favor",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales (base local, id_votacion 3994); cálculo propio",
+      "url": "https://www.congreso.gob.gt/",
+      "periodo": "2025-02-11",
+      "n_puntos": 6,
+      "valor": 17,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "calculo": "17",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt/",
+        "cita": "3994,INDP - SEMILLA,Guatemala,...,favor (17 filas favor de INDP - SEMILLA; 46 filas favor en total)",
+        "archivo_local": "sesiones/_congreso/base/votos.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Semilla (independientes)",
+          "valor": 17
+        },
+        {
+          "nombre": "UNE (8) e independientes ex-UNE (6)",
+          "valor": 14
+        },
+        {
+          "nombre": "Vamos",
+          "valor": 7
+        },
+        {
+          "nombre": "Cabal",
+          "valor": 5
+        },
+        {
+          "nombre": "Independientes ex-Nosotros",
+          "valor": 2
+        },
+        {
+          "nombre": "Valor",
+          "valor": 1
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_10.png",
+        "T10"
+      ]
+    },
+    {
+      "id": "ant-c09",
+      "concepto": "Voto de los 11 ponentes nombrados de la 6445 en la enmienda que fijó el aumento (id 3950, 26-nov-2024)",
+      "unidad": "ponentes a favor del aumento",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República, votaciones nominales (base local, id_votacion 3950); cálculo propio",
+      "url": "https://www.congreso.gob.gt/",
+      "periodo": "2024-11-26",
+      "n_puntos": 2,
+      "valor": 7,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "calculo": "6+1",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt/",
+        "cita": "3950 INDP - SEMILLA Raúl Amilcar Barrera Robles contra; 3950 UNE Juán Ignacio Quijada Heredia favor; 3950 INDP - VIVA Gustavo Adolfo Crúz Montoya favor",
+        "archivo_local": "sesiones/_congreso/base/votos.csv"
+      },
+      "partes": [
+        {
+          "nombre": "A favor del aumento (Fión, Lucas, L. F. Barrera, Ramírez, Quijada, López — UNE; Cruz Montoya — Viva)",
+          "valor": 7
+        },
+        {
+          "nombre": "En contra (R. Barrera, Villagrán, Monzón — Semilla; Morataya — Viva)",
+          "valor": 4
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "T1",
+        "tuit_8.png"
+      ]
+    },
+    {
+      "id": "ant-c10",
+      "concepto": "Ingreso de un diputado con el aumento, en salarios mínimos no agrícolas (circunscripción 1)",
+      "unidad": "veces el salario mínimo",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "La Hora (H. Loarca), 1-mar-2025",
+      "url": "https://lahora.gt/nacionales/hloarca/2025/03/01/mas-de-15-salarios-minimos-diputados-ya-ganan-como-magistrados-de-corte-de-apelaciones/",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 16.61,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa Libre, columna: ingreso de Q66 mil frente al mínimo (recálculo)",
+      "calculo": "66000/3973.05",
+      "evidencia": {
+        "url": "https://lahora.gt/nacionales/hloarca/2025/03/01/mas-de-15-salarios-minimos-diputados-ya-ganan-como-magistrados-de-corte-de-apelaciones/",
+        "cita": "cada congresista estaría recibiendo cada mes aproximadamente Q 66 mil. Esto equivale a 16.61 veces el salario mínimo vigente para las actividades no agrícolas en la circunscripción 1",
+        "archivo_local": "sesiones/_descargas/aumento-diputados/lahora_2025-03-01_15_salarios_minimos.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "ant-c11",
+      "concepto": "Años sin revisión actuarial de los salarios de los diputados (según Ronalth Ochaeta, Semilla, julio 2024)",
+      "unidad": "años",
+      "anio": 2024,
+      "tipo": "puntual",
+      "fuente": "La Hora (Joel Maldonado), 15-jul-2024",
+      "url": "https://lahora.gt/nacionales/jmaldonado/2024/07/15/comision-revisa-salario-de-diputados-propuesta-de-viaticos-genera-rechazo/",
+      "periodo": "2004–2024",
+      "n_puntos": 1,
+      "valor": 20,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://lahora.gt/nacionales/jmaldonado/2024/07/15/comision-revisa-salario-de-diputados-propuesta-de-viaticos-genera-rechazo/",
+        "cita": "el oficialista coincidió que no se ha dado una revisión actuarial de salarios de los diputados en los últimos 20 años.",
+        "archivo_local": "sesiones/_descargas/aumento-diputados/lahora_2024-07-15_comision_salario.txt"
+      },
+      "usada": false,
+      "aparece_en": [
+        "T2"
+      ]
+    },
+    {
+      "id": "ant-c12",
+      "concepto": "Firmas de la Comisión de Apoyo Técnico en el dictamen de la iniciativa 6445 (9-sep-2024), que según La Hora eliminó el aumento",
+      "unidad": "diputados",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "La Hora (Joel Maldonado), 9-sep-2024",
+      "url": "https://lahora.gt/?p=730164",
+      "periodo": "2024-09-09",
+      "n_puntos": 3,
+      "valor": 5,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://lahora.gt/?p=730164",
+        "cita": "La iniciativa recibió el respaldo de León Felipe Barrera Villanueva, de la bancada Unidad Nacional de la Esperanza (UNE); Carlos Enrique López Maldonado, de Cabal; José Luis Galindo de León, de Valor; Sandra Yanet Milián, de Victoria y Shirley Rivera de Vamos. Mientras que los diputados que firmaron en contra son Jorge Mario Villagrán, de la bancada Azul y Rodrigo Pellecer Rodríguez, del bloque Comunidad Elefante. Y quien estaba pendiente de firma fue Luis Alberto Contreras Colindres",
+        "archivo_local": "sesiones/_descargas/aumento-diputados/lahora_2024-09-09_ponentes_6445.txt"
+      },
+      "partes": [
+        {
+          "nombre": "A favor",
+          "valor": 5
+        },
+        {
+          "nombre": "En contra",
+          "valor": 2
+        },
+        {
+          "nombre": "Pendiente de firma",
+          "valor": 1
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_4.png"
+      ]
+    },
+    {
+      "id": "apr-c01",
+      "concepto": "Votación de la enmienda por sustitución total del punto tercero del presupuesto del Organismo Legislativo 2025 (la que fijó el aumento): resultado",
+      "unidad": "votos a favor",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República · votaciones nominales del pleno (base local, cálculo propio)",
+      "url": "https://www.congreso.gob.gt (votaciones nominales del pleno, sesión ordinaria 54 del 26-nov-2024; base local sesiones/_congreso/base)",
+      "periodo": "2024-11-26",
+      "n_puntos": 4,
+      "valor": 87,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa Comunitaria (87 diputados respaldaron el art. 3 del Acuerdo 31-2024) y La Hora (enmienda aprobada con 87 votos a favor)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt (votaciones nominales del pleno, sesión ordinaria 54 del 26-nov-2024; base local sesiones/_congreso/base)",
+        "cita": "id_votacion 3950, 2024-11-26 23:44:31: APROBACIÓN DE ENMIENDA POR SUSTITUCIÓN TOTAL DEL PUNTO TERCERO DEL PRO… favor 87, contra 63, ausente 4, licencia 6",
+        "archivo_local": "sesiones/_congreso/base/votaciones.csv"
+      },
+      "partes": [
+        {
+          "nombre": "A favor",
+          "valor": 87
+        },
+        {
+          "nombre": "En contra",
+          "valor": 63
+        },
+        {
+          "nombre": "Ausentes",
+          "valor": 4
+        },
+        {
+          "nombre": "Con licencia",
+          "valor": 6
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_6.png"
+      ]
+    },
+    {
+      "id": "apr-c02",
+      "concepto": "Votos A FAVOR de la enmienda del aumento (id 3950), por bloque",
+      "unidad": "diputados",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República · votaciones nominales del pleno (base local, cálculo propio)",
+      "url": "https://www.congreso.gob.gt (votaciones nominales del pleno, sesión ordinaria 54 del 26-nov-2024; base local sesiones/_congreso/base)",
+      "periodo": "2024-11-26",
+      "n_puntos": 19,
+      "valor": 24,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Cotejo con la primaria (votos.csv id 3950, archivo local); La Hora confirma Semilla 0 a favor",
+      "calculo": "24",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt (votaciones nominales del pleno, sesión ordinaria 54 del 26-nov-2024; base local sesiones/_congreso/base)",
+        "cita": "votos.csv id_votacion 3950: VAMOS favor 24, UNE favor 16, CABAL favor 10, VALOR favor 6, VIVA favor 5, INDP - UNE favor 5, TODOS favor 4 (total favor 87)",
+        "archivo_local": "sesiones/_congreso/base/votos.csv"
+      },
+      "partes": [
+        {
+          "nombre": "VAMOS",
+          "valor": 24
+        },
+        {
+          "nombre": "UNE",
+          "valor": 16
+        },
+        {
+          "nombre": "CABAL",
+          "valor": 10
+        },
+        {
+          "nombre": "VALOR",
+          "valor": 6
+        },
+        {
+          "nombre": "INDP - UNE",
+          "valor": 5
+        },
+        {
+          "nombre": "VIVA",
+          "valor": 5
+        },
+        {
+          "nombre": "TODOS",
+          "valor": 4
+        },
+        {
+          "nombre": "BIEN",
+          "valor": 3
+        },
+        {
+          "nombre": "CREO",
+          "valor": 2
+        },
+        {
+          "nombre": "ELEFANTE",
+          "valor": 2
+        },
+        {
+          "nombre": "INDP - VIVA",
+          "valor": 2
+        },
+        {
+          "nombre": "AZUL",
+          "valor": 1
+        },
+        {
+          "nombre": "CAMBIO",
+          "valor": 1
+        },
+        {
+          "nombre": "INDP - BIEN",
+          "valor": 1
+        },
+        {
+          "nombre": "INDP - NOSOTROS",
+          "valor": 1
+        },
+        {
+          "nombre": "INDP - VAMOS",
+          "valor": 1
+        },
+        {
+          "nombre": "INDP - VICTORIA",
+          "valor": 1
+        },
+        {
+          "nombre": "NOSOTROS",
+          "valor": 1
+        },
+        {
+          "nombre": "VICTORIA",
+          "valor": 1
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_7.png"
+      ]
+    },
+    {
+      "id": "apr-c03",
+      "concepto": "Votos EN CONTRA de la enmienda del aumento (id 3950), por bloque",
+      "unidad": "diputados",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República · votaciones nominales del pleno (base local, cálculo propio)",
+      "url": "https://www.congreso.gob.gt (votaciones nominales del pleno, sesión ordinaria 54 del 26-nov-2024; base local sesiones/_congreso/base)",
+      "periodo": "2024-11-26",
+      "n_puntos": 16,
+      "valor": 23,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Cotejo con la primaria (votos.csv id 3950); La Hora: Semilla 0 a favor y 23 en contra (en la votación del presupuesto)",
+      "calculo": "23",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt (votaciones nominales del pleno, sesión ordinaria 54 del 26-nov-2024; base local sesiones/_congreso/base)",
+        "cita": "votos.csv id_votacion 3950: INDP - SEMILLA contra 23, CABAL contra 8, VAMOS contra 7, UNE contra 6, VALOR contra 4, VOS contra 3 (total contra 63)",
+        "archivo_local": "sesiones/_congreso/base/votos.csv"
+      },
+      "partes": [
+        {
+          "nombre": "INDP - SEMILLA",
+          "valor": 23
+        },
+        {
+          "nombre": "CABAL",
+          "valor": 8
+        },
+        {
+          "nombre": "VAMOS",
+          "valor": 7
+        },
+        {
+          "nombre": "UNE",
+          "valor": 6
+        },
+        {
+          "nombre": "VALOR",
+          "valor": 4
+        },
+        {
+          "nombre": "VOS",
+          "valor": 3
+        },
+        {
+          "nombre": "TODOS",
+          "valor": 2
+        },
+        {
+          "nombre": "UNIONISTA",
+          "valor": 2
+        },
+        {
+          "nombre": "AZUL",
+          "valor": 1
+        },
+        {
+          "nombre": "CREO",
+          "valor": 1
+        },
+        {
+          "nombre": "INDP - NOSOTROS",
+          "valor": 1
+        },
+        {
+          "nombre": "INDP - UNE",
+          "valor": 1
+        },
+        {
+          "nombre": "INDP - VIVA",
+          "valor": 1
+        },
+        {
+          "nombre": "VICTORIA",
+          "valor": 1
+        },
+        {
+          "nombre": "VIVA",
+          "valor": 1
+        },
+        {
+          "nombre": "WINAQ - URNG",
+          "valor": 1
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_7.png",
+        "T7"
+      ]
+    },
+    {
+      "id": "apr-c04",
+      "concepto": "Votación del dictamen y proyecto de acuerdo del presupuesto del Organismo Legislativo 2025 con las enmiendas incorporadas (Acuerdo Legislativo 31-2024)",
+      "unidad": "votos a favor",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República · votaciones nominales del pleno (base local, cálculo propio)",
+      "url": "https://www.congreso.gob.gt (votaciones nominales del pleno, sesión ordinaria 54 del 26-nov-2024; base local sesiones/_congreso/base)",
+      "periodo": "2024-11-26",
+      "n_puntos": 4,
+      "valor": 88,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "La Hora: presupuesto aprobado con 88 votos a favor y 62 en contra",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt (votaciones nominales del pleno, sesión ordinaria 54 del 26-nov-2024; base local sesiones/_congreso/base)",
+        "cita": "id_votacion 3951, 2024-11-26 23:46:21: APROBACIÓN DEL DICTAMEN Y PROYECTO DE ACUERDO QUE DISPONE APROBAR PRES… favor 88, contra 62, ausente 4, licencia 6",
+        "archivo_local": "sesiones/_congreso/base/votaciones.csv"
+      },
+      "partes": [
+        {
+          "nombre": "A favor",
+          "valor": 88
+        },
+        {
+          "nombre": "En contra",
+          "valor": 62
+        },
+        {
+          "nombre": "Ausentes",
+          "valor": 4
+        },
+        {
+          "nombre": "Con licencia",
+          "valor": 6
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_6.png",
+        "tuit_14.png"
+      ]
+    },
+    {
+      "id": "apr-c05",
+      "concepto": "Votación de la enmienda por sustitución parcial (antes del aumento) al presupuesto del Organismo Legislativo 2025",
+      "unidad": "votos a favor",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República · votaciones nominales del pleno (base local, cálculo propio)",
+      "url": "https://www.congreso.gob.gt (votaciones nominales del pleno, sesión ordinaria 54 del 26-nov-2024; base local sesiones/_congreso/base)",
+      "periodo": "2024-11-26",
+      "n_puntos": 4,
+      "valor": 112,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Cotejo con la primaria (votaciones.csv id 3949, archivo local)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt (votaciones nominales del pleno, sesión ordinaria 54 del 26-nov-2024; base local sesiones/_congreso/base)",
+        "cita": "id_votacion 3949, 2024-11-26 23:43:20: APROBACIÓN DE ENMIENDA POR SUSTITUCIÓN PARCIAL AL PROYECTO DE ACUERDO … favor 112, contra 38, ausente 4, licencia 6",
+        "archivo_local": "sesiones/_congreso/base/votaciones.csv"
+      },
+      "partes": [
+        {
+          "nombre": "A favor",
+          "valor": 112
+        },
+        {
+          "nombre": "En contra",
+          "valor": 38
+        },
+        {
+          "nombre": "Ausentes",
+          "valor": 4
+        },
+        {
+          "nombre": "Con licencia",
+          "valor": 6
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "apr-c06",
+      "concepto": "Presupuesto del Organismo Legislativo 2025: dictamen frente a lo aprobado",
+      "unidad": "quetzales",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Prensa Comunitaria (reproduce el Acuerdo Legislativo 31-2024)",
+      "url": "https://prensacomunitaria.org/2024/11/a-medianoche-y-mientras-todos-dormian-los-diputados-se-recetaron-un-aumento-de-salario-e-indemnizacion/",
+      "periodo": "2025",
+      "n_puntos": 2,
+      "valor": 1464605960,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "La Hora: readecuaciones con Q1 mil 464 millones (Acuerdo 31-2024); Prensa Libre: aumento de Q260.4 millones",
+      "evidencia": {
+        "url": "https://prensacomunitaria.org/2024/11/a-medianoche-y-mientras-todos-dormian-los-diputados-se-recetaron-un-aumento-de-salario-e-indemnizacion/",
+        "cita": "el del Legislativo que de Q1 mil 204 millones 205 mil 960 pasó a Q1 mil 464 millones 605 mil 960. Aprobado bajo el Acuerdo Legislativo 31-2024",
+        "archivo_local": "sesiones/_descargas/aumento-diputados/prensacomunitaria-2024-11-medianoche.html"
+      },
+      "partes": [
+        {
+          "nombre": "Dictamen de la Comisión de Finanzas",
+          "valor": 1204205960
+        },
+        {
+          "nombre": "Aprobado (Acuerdo 31-2024)",
+          "valor": 1464605960
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_5.png"
+      ]
+    },
+    {
+      "id": "apr-c07",
+      "concepto": "Aumento del presupuesto del Organismo Legislativo 2025 por enmienda (porcentaje sobre el dictamen)",
+      "unidad": "%",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "Prensa Libre",
+      "url": "https://www.prensalibre.com/guatemala/politica/congreso-publica-presupuesto-2025-y-con-ello-la-aprobacion-del-aumento-salarial-para-diputados-por-casi-q22-mil/",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 21.62,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa Libre (21.62% sobre la cifra original) y recálculo con los montos de apr-c06",
+      "calculo": "(1464605960/1204205960-1)*100",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/guatemala/politica/congreso-publica-presupuesto-2025-y-con-ello-la-aprobacion-del-aumento-salarial-para-diputados-por-casi-q22-mil/",
+        "cita": "aprobaron una enmienda para aumentar el presupuesto en Q260 millones 400 mil, lo que representa un incremento del 21.62% respecto a la cifra original",
+        "archivo_local": "sesiones/_descargas/aumento-diputados/prensalibre-2024-12-09-dca.html"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_5.png"
+      ]
+    },
+    {
+      "id": "apr-c08",
+      "concepto": "Sueldo mensual de un diputado ANTES del aumento, por componente",
+      "unidad": "quetzales al mes",
+      "anio": 2024,
+      "tipo": "desglose",
+      "fuente": "La Hora",
+      "url": "https://lahora.gt/nacionales/jmaldonado/2025/05/04/como-el-incremento-de-sueldo-de-q37-mil-a-los-diputados-dividio-al-congreso/",
+      "periodo": "hasta enero de 2025",
+      "n_puntos": 4,
+      "valor": 29150,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa Libre (9-dic-2024): «Q29 mil 150 que ganan los legisladores»",
+      "evidencia": {
+        "url": "https://lahora.gt/nacionales/jmaldonado/2025/05/04/como-el-incremento-de-sueldo-de-q37-mil-a-los-diputados-dividio-al-congreso/",
+        "cita": "El sueldo de un diputado por años fue de Q29 mil 150, que está compuesto por Q9 mil 550 como base, más Q9 mil 600 de dietas para asistir a plenarias, otros Q5 mil por dietas",
+        "archivo_local": "sesiones/_descargas/aumento-diputados/lahora-2025-05-04-q37mil.html"
+      },
+      "partes": [
+        {
+          "nombre": "Salario base",
+          "valor": 9550
+        },
+        {
+          "nombre": "Dietas por plenarias",
+          "valor": 9600
+        },
+        {
+          "nombre": "Dietas por comisiones",
+          "valor": 5000
+        },
+        {
+          "nombre": "Gastos de representación",
+          "valor": 5000
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_1.png"
+      ]
+    },
+    {
+      "id": "apr-c09",
+      "concepto": "Sueldo mensual de un diputado DESPUÉS del aumento (fijado por la Junta Directiva 2025)",
+      "unidad": "quetzales al mes",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "La Hora",
+      "url": "https://lahora.gt/nacionales/jmaldonado/2025/05/04/como-el-incremento-de-sueldo-de-q37-mil-a-los-diputados-dividio-al-congreso/",
+      "periodo": "desde febrero de 2025",
+      "n_puntos": 1,
+      "valor": 66300,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa Libre cronología: ingreso total hasta Q66 mil 300, base de Q9 mil 550 a Q46 mil 700",
+      "evidencia": {
+        "url": "https://lahora.gt/nacionales/jmaldonado/2025/05/04/como-el-incremento-de-sueldo-de-q37-mil-a-los-diputados-dividio-al-congreso/",
+        "cita": "por decisión de la mayoría de la junta directiva 2025, quedó establecido en Q66 mil 300, que es una base de Q46 mil, más los Q9 mil 600 de dietas por plenarias, y Q10 mil",
+        "archivo_local": "sesiones/_descargas/aumento-diputados/lahora-2025-05-04-q37mil.html"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_1.png",
+        "tuit_2.png",
+        "tuit_13.png",
+        "T13"
+      ]
+    },
+    {
+      "id": "apr-c10",
+      "concepto": "Incremento del sueldo mensual de un diputado (porcentaje)",
+      "unidad": "%",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "La Hora",
+      "url": "https://lahora.gt/nacionales/jmaldonado/2025/05/04/como-el-incremento-de-sueldo-de-q37-mil-a-los-diputados-dividio-al-congreso/",
+      "periodo": "2024→2025",
+      "n_puntos": 1,
+      "valor": 127.4,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo con Q29,150 y Q66,300 (Prensa Libre cronología y Prensa Libre 9-dic)",
+      "calculo": "(66300/29150-1)*100",
+      "evidencia": {
+        "url": "https://lahora.gt/nacionales/jmaldonado/2025/05/04/como-el-incremento-de-sueldo-de-q37-mil-a-los-diputados-dividio-al-congreso/",
+        "cita": "Cuyo incremento fue de Q37 mil 150, lo que equivale a 127.4 por ciento.",
+        "archivo_local": "sesiones/_descargas/aumento-diputados/lahora-2025-05-04-q37mil.html"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_1.png"
+      ]
+    },
+    {
+      "id": "apr-c11",
+      "concepto": "Costo anual adicional del aumento para los 160 diputados (cálculo propio con el sueldo fijado)",
+      "unidad": "quetzales al año",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "Cálculo propio con La Hora (incremento mensual) y 160 diputados",
+      "url": "https://lahora.gt/nacionales/jmaldonado/2025/05/04/como-el-incremento-de-sueldo-de-q37-mil-a-los-diputados-dividio-al-congreso/",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 71328000,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo propio con incremento Q37,150 (La Hora) x 160 x 12; Q66,300 y Q29,150 corroborados por Prensa Libre",
+      "calculo": "37150*160*12",
+      "evidencia": {
+        "url": "https://lahora.gt/nacionales/jmaldonado/2025/05/04/como-el-incremento-de-sueldo-de-q37-mil-a-los-diputados-dividio-al-congreso/",
+        "cita": "Cuyo incremento fue de Q37 mil 150, lo que equivale a 127.4 por ciento.",
+        "archivo_local": "sesiones/_descargas/aumento-diputados/lahora-2025-05-04-q37mil.html"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_16.png"
+      ]
+    },
+    {
+      "id": "apr-c12",
+      "concepto": "Sueldo de un diputado expresado en salarios mínimos mensuales no agrícolas CE1 de 2026",
+      "unidad": "salarios mínimos",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Cálculo propio: La Hora (Q66,300) y AGN (Acuerdo Gubernativo 256-2025)",
+      "url": "https://agn.gt/asi-quedan-los-montos-del-salario-minimo-para-el-2026/",
+      "periodo": "2026",
+      "n_puntos": 1,
+      "valor": 16.57,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo con Q66,300 (Prensa Libre cronología) y salario mínimo no agrícola C1 2026 Q4,002.28 (AGN, Acuerdo Gubernativo 256-2025)",
+      "calculo": "66300/4002.28",
+      "evidencia": {
+        "url": "https://agn.gt/asi-quedan-los-montos-del-salario-minimo-para-el-2026/",
+        "cita": "para las actividades no agrícolas en la circunscripción económica C1 el salario será de 131.58 quetzales diarios. De esa cuenta, la suma mensual será de 4 mil 2.28 quetzales.",
+        "archivo_local": "sesiones/_descargas/aumento-diputados/agn-salario-minimo-2026.html"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_16.png"
+      ]
+    },
+    {
+      "id": "rev-c01",
+      "concepto": "Votación de la enmienda de Raíces (Samuel Pérez) para reducir el salario de los diputados y sacarlos del seguro privado, presupuesto del Congreso 2027 (3-nov-2026): votos a favor",
+      "unidad": "votos",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República · votaciones nominales del pleno (base local)",
+      "url": "https://www.congreso.gob.gt/detalle_de_votacion/51598/41400",
+      "periodo": "2026-11-03",
+      "n_puntos": 4,
+      "valor": 41,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa Libre (3-nov-2026): «solo recibió 41 votos a favor y 50 votos en contra»",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt/detalle_de_votacion/51598/41400",
+        "cita": "51598 · 2026-11-03 16:02:45 · APROBACIÓN DE ENMIENDA POR ADICIÓN DE PUNTO NUEVO AL DICTAMEN Y PROYECTO DE ACUERDO · favor 41 · contra 50 · ausente 59 · licencia 10",
+        "archivo_local": "sesiones/_congreso/base/votaciones.csv"
+      },
+      "partes": [
+        {
+          "nombre": "A favor",
+          "valor": 41
+        },
+        {
+          "nombre": "En contra",
+          "valor": 50
+        },
+        {
+          "nombre": "Ausentes",
+          "valor": 59
+        },
+        {
+          "nombre": "Licencia",
+          "valor": 10
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_15.png"
+      ]
+    },
+    {
+      "id": "rev-c02",
+      "concepto": "Votos a favor de la enmienda para reducir el salario (3-nov-2026), por bloque (cálculo propio sobre la votación nominal 51598)",
+      "unidad": "votos",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República · votaciones nominales del pleno (base local)",
+      "url": "https://www.congreso.gob.gt/detalle_de_votacion/51598/41400",
+      "periodo": "2026-11-03",
+      "n_puntos": 12,
+      "valor": 18,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "calculo": "41-5-5-3-3-1-1-1-1-1-1-1",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt/detalle_de_votacion/51598/41400",
+        "cita": "Votos nominales id_votacion 51598 agrupados por la columna bloque y voto=favor; total 41 a favor, 50 en contra",
+        "archivo_local": "sesiones/_congreso/base/votos.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Independientes electos por Semilla",
+          "valor": 18
+        },
+        {
+          "nombre": "Cabal",
+          "valor": 5
+        },
+        {
+          "nombre": "Valor",
+          "valor": 5
+        },
+        {
+          "nombre": "Vamos",
+          "valor": 3
+        },
+        {
+          "nombre": "Vos",
+          "valor": 3
+        },
+        {
+          "nombre": "Azul",
+          "valor": 1
+        },
+        {
+          "nombre": "UNE",
+          "valor": 1
+        },
+        {
+          "nombre": "Viva",
+          "valor": 1
+        },
+        {
+          "nombre": "Victoria",
+          "valor": 1
+        },
+        {
+          "nombre": "Indp. Bien",
+          "valor": 1
+        },
+        {
+          "nombre": "Indp. Viva",
+          "valor": 1
+        },
+        {
+          "nombre": "Indp. Vos",
+          "valor": 1
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "rev-c03",
+      "concepto": "Votación del dictamen del presupuesto del Organismo Legislativo 2027 (Acuerdo Legislativo 24-2026, 3-nov-2026), que mantiene el sueldo",
+      "unidad": "votos",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República · votaciones nominales del pleno (base local)",
+      "url": "https://www.congreso.gob.gt/detalle_de_votacion/51599/41400",
+      "periodo": "2026-11-03",
+      "n_puntos": 4,
+      "valor": 83,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt/detalle_de_votacion/51599/41400",
+        "cita": "51599 · 2026-11-03 16:03:36 · APROBACIÓN DEL DICTAMEN Y PROYECTO DE ACUERDO (PRESUPUESTO ... ORGANISMO LEGISLATIVO ... DOS MIL VEINTISIETE) · 83 · 31 · 36 · 10",
+        "archivo_local": "sesiones/_congreso/base/votaciones.csv"
+      },
+      "partes": [
+        {
+          "nombre": "A favor",
+          "valor": 83
+        },
+        {
+          "nombre": "En contra",
+          "valor": 31
+        },
+        {
+          "nombre": "Ausentes",
+          "valor": 36
+        },
+        {
+          "nombre": "Licencia",
+          "valor": 10
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_14.png",
+        "tuit_15.png"
+      ]
+    },
+    {
+      "id": "rev-c04",
+      "concepto": "Presupuesto del Congreso para 2027 aprobado el 3-nov-2026 (incluye PDH y Parlacen)",
+      "unidad": "millones de quetzales",
+      "anio": 2027,
+      "tipo": "desglose",
+      "fuente": "Prensa Libre (3-nov-2026) y La Hora (3-nov-2026)",
+      "url": "https://www.prensalibre.com/guatemala/politica/congreso-aprueba-q1-mil-533-millones-para-su-presupuesto-del-2027-y-los-diputados-avalan-continuar-con-aumento-de-sueldo/",
+      "periodo": "2027",
+      "n_puntos": 3,
+      "valor": 1533,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "La Hora (3-nov-2026): «El monto que corresponde al Legislativo es de Q1 mil 275 millones»",
+      "calculo": "1275+245+13",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/guatemala/politica/congreso-aprueba-q1-mil-533-millones-para-su-presupuesto-del-2027-y-los-diputados-avalan-continuar-con-aumento-de-sueldo/",
+        "cita": "fue aprobado por un monto de Q1 mil 533 millones. De esta cantidad se destinarán Q245 millones para la Procuraduría de los Derechos Humanos (PDH) y Q13 millones para el Parlamento Centroamericano",
+        "archivo_local": "sesiones/_descargas/historia/prensalibre-com-4923e4846b.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Organismo Legislativo",
+          "valor": 1275
+        },
+        {
+          "nombre": "Procuraduría de los Derechos Humanos",
+          "valor": 245
+        },
+        {
+          "nombre": "Parlamento Centroamericano",
+          "valor": 13
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "rev-c05",
+      "concepto": "Votación del dictamen del presupuesto del Organismo Legislativo 2026 (25-nov-2025), que aseguró el sueldo de Q66 mil para 2026",
+      "unidad": "votos",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República · votaciones nominales del pleno (base local)",
+      "url": "https://lahora.gt/nacionales/dleon/2025/11/26/diputados-oficialistas-votaron-a-favor-de-mantener-salario-de-q66-mil-oposicion-en-contra/",
+      "periodo": "2025-11-25",
+      "n_puntos": 4,
+      "valor": 132,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Registro nominal votación 4517 (25-nov-2025): favor 132, contra 20",
+      "evidencia": {
+        "url": "https://lahora.gt/nacionales/dleon/2025/11/26/diputados-oficialistas-votaron-a-favor-de-mantener-salario-de-q66-mil-oposicion-en-contra/",
+        "cita": "El marcador del Congreso concluyó con 132 votos a favor de avalar el presupuesto legislativo con el salario, 20 en contra y otros 8",
+        "archivo_local": "sesiones/_descargas/historia/lahora-gt-62a34fe5db.txt"
+      },
+      "partes": [
+        {
+          "nombre": "A favor",
+          "valor": 132
+        },
+        {
+          "nombre": "En contra",
+          "valor": 20
+        },
+        {
+          "nombre": "Ausentes",
+          "valor": 5
+        },
+        {
+          "nombre": "Licencia",
+          "valor": 3
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_13.png",
+        "tuit_14.png"
+      ]
+    },
+    {
+      "id": "rev-c06",
+      "concepto": "Votos en contra del presupuesto del Congreso que trae el aumento, por año de votación",
+      "unidad": "votos en contra",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "Congreso de la República · votaciones nominales del pleno (base local)",
+      "url": "https://www.congreso.gob.gt/detalle_de_votacion/51599/41400",
+      "periodo": "2024–2026",
+      "n_puntos": 3,
+      "valor": 31,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt/detalle_de_votacion/51599/41400",
+        "cita": "3951 (2024-11-26) ... CON LAS ENMIENDAS INCORPORADA 88 62 · 4517 (2025-11-25) ... DOS MIL VEINTISÉIS 132 20 · 51599 (2026-11-03) ... DOS MIL VEINTISIETE 83 31",
+        "archivo_local": "sesiones/_congreso/base/votaciones.csv"
+      },
+      "serie": [
+        {
+          "p": "2024",
+          "v": 62
+        },
+        {
+          "p": "2025",
+          "v": 20
+        },
+        {
+          "p": "2026",
+          "v": 31
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_14.png"
+      ]
+    },
+    {
+      "id": "rev-c08",
+      "concepto": "Sueldo mensual de un diputado antes y después del aumento (base + dietas + gastos de representación)",
+      "unidad": "quetzales al mes",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "La Hora (4-may-2025), con la nómina del Congreso",
+      "url": "https://lahora.gt/nacionales/jmaldonado/2025/05/04/como-el-incremento-de-sueldo-de-q37-mil-a-los-diputados-dividio-al-congreso/",
+      "periodo": "antes de 2025 – 2025",
+      "n_puntos": 2,
+      "valor": 66300,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "La Hora (27-nov-2025): remuneración mensual de Q66,300",
+      "evidencia": {
+        "url": "https://lahora.gt/nacionales/jmaldonado/2025/05/04/como-el-incremento-de-sueldo-de-q37-mil-a-los-diputados-dividio-al-congreso/",
+        "cita": "El sueldo de un diputado por años fue de Q29 mil 150 ... quedó establecido en Q66 mil 300, que es una base de Q46 mil, más los Q9 mil 600 de dietas",
+        "archivo_local": "sesiones/_descargas/historia/lahora-gt-62b1f2530a.txt"
+      },
+      "serie": [
+        {
+          "p": "antes",
+          "v": 29150
+        },
+        {
+          "p": "2025",
+          "v": 66300
+        }
+      ],
+      "usada": false,
+      "aparece_en": [
+        "T13"
+      ]
+    },
+    {
+      "id": "rev-c09",
+      "concepto": "Aumento porcentual del sueldo mensual de un diputado",
+      "unidad": "%",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "La Hora (4-may-2025)",
+      "url": "https://lahora.gt/nacionales/jmaldonado/2025/05/04/como-el-incremento-de-sueldo-de-q37-mil-a-los-diputados-dividio-al-congreso/",
+      "periodo": "2025",
+      "n_puntos": 1,
+      "valor": 127.4,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo desde La Hora: (66300/29150-1)*100",
+      "calculo": "(66300/29150-1)*100",
+      "evidencia": {
+        "url": "https://lahora.gt/nacionales/jmaldonado/2025/05/04/como-el-incremento-de-sueldo-de-q37-mil-a-los-diputados-dividio-al-congreso/",
+        "cita": "Cuyo incremento fue de Q37 mil 150, lo que equivale a 127.4 por ciento.",
+        "archivo_local": "sesiones/_descargas/historia/lahora-gt-62b1f2530a.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "rev-c10",
+      "concepto": "Magistrados de la Corte de Constitucionalidad que el 11-mar-2025 rechazaron la debida ejecutoria de Acción Ciudadana (no hubo amparo provisional contra la frase que autorizó el aumento)",
+      "unidad": "magistrados",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "La Hora (4-may-2025)",
+      "url": "https://lahora.gt/nacionales/jmaldonado/2025/05/04/como-el-incremento-de-sueldo-de-q37-mil-a-los-diputados-dividio-al-congreso/",
+      "periodo": "2025-03-11",
+      "n_puntos": 2,
+      "valor": 3,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://lahora.gt/nacionales/jmaldonado/2025/05/04/como-el-incremento-de-sueldo-de-q37-mil-a-los-diputados-dividio-al-congreso/",
+        "cita": "La decisión tuvo el voto favorable de los magistrados Nester Vásquez Pimentel y Dina Ochoa, el voto concurrente de Roberto Molina Barreto, y el disidente de Héctor Hugo Pérez Aguilera y Leyla Lemus Arriaga.",
+        "archivo_local": "sesiones/_descargas/historia/lahora-gt-62b1f2530a.txt"
+      },
+      "partes": [
+        {
+          "nombre": "A favor de la resolución (Vásquez Pimentel, Ochoa; concurrente Molina Barreto)",
+          "valor": 3
+        },
+        {
+          "nombre": "Disidentes (Pérez Aguilera, Lemus Arriaga)",
+          "valor": 2
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "T3",
+        "tuit_11.png",
+        "T15"
+      ]
+    },
+    {
+      "id": "rev-c11",
+      "concepto": "Intentos formales documentados por revertir o frenar el aumento (dic-2024 a nov-2026), por tipo",
+      "unidad": "intentos",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Cálculo propio sobre La Hora, Prensa Libre, Emisoras Unidas y la base de votaciones",
+      "url": "https://lahora.gt/nacionales/jmaldonado/2025/05/04/como-el-incremento-de-sueldo-de-q37-mil-a-los-diputados-dividio-al-congreso/",
+      "periodo": "2024-12 – 2026-11",
+      "n_puntos": 4,
+      "valor": 7,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa Libre (abril 2025): dos amparos de Acción Ciudadana pendientes y el de Chic; cronología La Hora/Emisoras Unidas",
+      "calculo": "3+2+1+1",
+      "evidencia": {
+        "url": "https://lahora.gt/nacionales/jmaldonado/2025/05/04/como-el-incremento-de-sueldo-de-q37-mil-a-los-diputados-dividio-al-congreso/",
+        "cita": "diputados de distintas bancadas presentaron propuestas legislativas para derogar ese aumento, pero no tienen el respaldo para discutirlo y aprobarlo de una vez",
+        "archivo_local": "sesiones/_descargas/historia/lahora-gt-62b1f2530a.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Acciones ante la CC (2 amparos de Acción Ciudadana y 1 de VOS / José Chic)",
+          "valor": 3
+        },
+        {
+          "nombre": "Propuestas de acuerdo o iniciativas de derogación (Chic, 11-mar-2025; bloque oficialista, 25-mar-2025)",
+          "valor": 2
+        },
+        {
+          "nombre": "Misiva de diputados de Viva para derogar el artículo (dic-2024)",
+          "valor": 1
+        },
+        {
+          "nombre": "Enmienda en el pleno (Raíces, 3-nov-2026)",
+          "valor": 1
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "T1",
+        "tuit_9.png",
+        "tuit_12.png"
+      ]
+    },
+    {
+      "id": "rev-c13",
+      "concepto": "Voto de los independientes electos por Semilla en el dictamen del presupuesto del Organismo Legislativo 2026 (id 4517, 25-nov-2025), que mantuvo el sueldo de Q66,300",
+      "unidad": "diputados",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República · votaciones nominales del pleno (base local)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2025-11-25",
+      "n_puntos": 2,
+      "valor": 23,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "La Hora · Diputados oficialistas votaron a favor de mantener salario de Q66 mil (26-nov-2025)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Votos nominales id_votacion 4517 con bloque «INDP - SEMILLA»: 23 a favor, 0 en contra (incluye a Samuel Andrés Pérez Alvarez, Raúl Amilcar Barrera Robles, Andrea Villagrán y Mercedes Monzón)",
+        "archivo_local": "sesiones/_congreso/base/votos.csv"
+      },
+      "partes": [
+        {
+          "nombre": "A favor",
+          "valor": 23
+        },
+        {
+          "nombre": "En contra",
+          "valor": 0
+        }
+      ],
+      "usada": false,
+      "aparece_en": [
+        "T7"
+      ]
+    },
+    {
+      "id": "rev-c14",
+      "concepto": "Votación del dictamen del presupuesto del Organismo Legislativo 2026 (id 4517, 25-nov-2025), que mantuvo el sueldo de Q66,300: votos a favor por bancada, en contra y ausentes",
+      "unidad": "votos a favor",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Congreso de la República · votaciones nominales del pleno (base local)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2025-11-25",
+      "n_puntos": 7,
+      "valor": 132,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "La Hora (26-nov-2025) y Prensa Libre (24-nov-2025)",
+      "calculo": "29+23+18+17+8+6+6+25",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "Votos nominales id_votacion 4517 agrupados por bloque: favor VAMOS 29, INDP - SEMILLA 23, UNE 18, CABAL 17, VALOR 8, TODOS 6, VIVA 6, INDP - UNE 5, otras 13 con 1 a 3 (total favor 132); contra 20; ausente 5; licencia 3",
+        "archivo_local": "sesiones/_congreso/base/votos.csv"
+      },
+      "partes": [
+        {
+          "nombre": "A favor",
+          "valor": 132
+        },
+        {
+          "nombre": "En contra",
+          "valor": 20
+        },
+        {
+          "nombre": "Ausentes y con licencia",
+          "valor": 8
+        },
+        {
+          "nombre": "Vamos",
+          "valor": 29
+        },
+        {
+          "nombre": "Independientes electos por Semilla",
+          "valor": 23
+        },
+        {
+          "nombre": "UNE",
+          "valor": 18
+        },
+        {
+          "nombre": "Cabal",
+          "valor": 17
+        },
+        {
+          "nombre": "Valor",
+          "valor": 8
+        },
+        {
+          "nombre": "Todos",
+          "valor": 6
+        },
+        {
+          "nombre": "Viva",
+          "valor": 6
+        },
+        {
+          "nombre": "Otras 14 bancadas (a favor)",
+          "valor": 25
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_13.png"
+      ]
+    },
+    {
+      "id": "rev-c15",
+      "concepto": "Diputados del Congreso en la votación 4517 (n_diputados del registro)",
+      "unidad": "diputados",
+      "anio": 2025,
+      "tipo": "puntual",
+      "fuente": "Congreso de la República · votaciones nominales del pleno (base local)",
+      "url": "https://www.congreso.gob.gt",
+      "periodo": "2025-11-25",
+      "n_puntos": 1,
+      "valor": 160,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "La Hora (26-nov-2025)",
+      "evidencia": {
+        "url": "https://www.congreso.gob.gt",
+        "cita": "votaciones.csv, id_votacion 4517: n_diputados 160, favor 132, contra 20, ausente 5, licencia 3",
+        "archivo_local": "sesiones/_congreso/base/votaciones.csv"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_13.png"
+      ]
+    }
+  ],
+  "fuentes": [
+    {
+      "nombre": "Congreso de la República · votaciones nominales del pleno (base local)",
+      "url": "https://www.congreso.gob.gt (votaciones nominales del pleno, sesión ordinaria 54 del 26-nov-2024; base local sesiones/_congreso/base)",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Congreso · Comisión de Apoyo Técnico, Dictamen 01-2024, iniciativa 6445 (copia en soy502.com)",
+      "url": "https://soy502.com/sites/default/files/dictamen_de_la_comision_de_apoyo_tecnico.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "La Hora · ponentes de la 6445 (9-sep-2024)",
+      "url": "https://lahora.gt/?p=730164",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "La Hora · 6445 e incremento salarial (4-sep-2024)",
+      "url": "https://lahora.gt/?p=729125",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "La Hora · Comisión revisa salario; iniciativa 6389 (15-jul-2024)",
+      "url": "https://lahora.gt/nacionales/jmaldonado/2024/07/15/comision-revisa-salario-de-diputados-propuesta-de-viaticos-genera-rechazo/",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "La Hora · incremento de Q37 mil (4-may-2025)",
+      "url": "https://lahora.gt/nacionales/jmaldonado/2025/05/04/como-el-incremento-de-sueldo-de-q37-mil-a-los-diputados-dividio-al-congreso/",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "La Hora · más de 15 salarios mínimos (1-mar-2025)",
+      "url": "https://lahora.gt/nacionales/hloarca/2025/03/01/mas-de-15-salarios-minimos-diputados-ya-ganan-como-magistrados-de-corte-de-apelaciones/",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "IIES-USAC · infografía de salarios (mar-2025)",
+      "url": "https://iies.usac.edu.gt/wp-content/uploads/2025/03/Infografia-salarios2.0.pdf",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "La Hora · Cómo el incremento de sueldo de Q37 mil a los diputados dividió al Congreso (4-may-2025)",
+      "url": "https://lahora.gt/nacionales/jmaldonado/2025/05/04/como-el-incremento-de-sueldo-de-q37-mil-a-los-diputados-dividio-al-congreso/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Prensa Libre · Congreso publica Presupuesto 2025 (9-dic-2024)",
+      "url": "https://www.prensalibre.com/guatemala/politica/congreso-publica-presupuesto-2025-y-con-ello-la-aprobacion-del-aumento-salarial-para-diputados-por-casi-q22-mil/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Prensa Libre · Salario diputados: la cronología (26-mar-2025)",
+      "url": "https://www.prensalibre.com/guatemala/politica/salario-diputados-la-cronologia-de-como-aprobaron-el-aumento-mientras-guatemala-dormia/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Prensa Comunitaria · A medianoche y mientras todos dormían… (nov-2024)",
+      "url": "https://prensacomunitaria.org/2024/11/a-medianoche-y-mientras-todos-dormian-los-diputados-se-recetaron-un-aumento-de-salario-e-indemnizacion/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "La Hora · Q44 millones al año según Congreso Eficiente (8-ene-2025)",
+      "url": "https://lahora.gt/nacionales/jmaldonado/2025/01/08/de-autorizarse-el-aumento-el-salario-a-diputados-se-requeriria-q44-millones-al-ano-segun-congreso-eficiente/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "AGN · Así quedan los montos del salario mínimo para el 2026 (22-dic-2025)",
+      "url": "https://agn.gt/asi-quedan-los-montos-del-salario-minimo-para-el-2026/",
+      "nivel": "oficial"
+    },
+    {
+      "nombre": "SWI swissinfo / EFE · Los diputados de Guatemala se aumentan el salario (27-nov-2024)",
+      "url": "https://www.swissinfo.ch/spa/los-diputados-de-guatemala-se-aumentan-el-salario-a-m%C3%A1s-de-5.000-d%C3%B3lares-mensuales/88355456",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Congreso de la República · votaciones nominales del pleno (base local: votaciones.csv, votos.csv)",
+      "url": "https://www.congreso.gob.gt",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Prensa Libre · presupuesto del Congreso 2027 (3-nov-2026)",
+      "url": "https://www.prensalibre.com/guatemala/politica/congreso-aprueba-q1-mil-533-millones-para-su-presupuesto-del-2027-y-los-diputados-avalan-continuar-con-aumento-de-sueldo/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Prensa Libre · opinión jurídica 45-2025 (abril de 2025)",
+      "url": "https://www.prensalibre.com/guatemala/politica/opinion-juridica-del-congreso-impide-a-la-directiva-suspender-aumento-de-diputados/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "La Hora · Allan Rodríguez y Samuel Pérez (3-nov-2026)",
+      "url": "https://lahora.gt/nacionales/dleon/2026/11/03/ni-nosotros-nos-atrevimos-a-tanto-dice-allan-rodriguez-perez-pide-reducir-salario-pese-a-votar-antes-por-mantenerlo-now/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "La Hora · desmarque de Vamos, UNE, Viva y Valor (3-nov-2026)",
+      "url": "https://lahora.gt/nacionales/dleon/2026/11/03/vamos-une-viva-y-valor-se-desmarcan-de-la-plenaria-momentos-antes-de-conocer-presupuesto-con-fallida-reduccion-de-salarios/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "La Hora · presupuesto 2026 con salario de Q66 mil (26-nov-2025)",
+      "url": "https://lahora.gt/nacionales/dleon/2025/11/26/diputados-oficialistas-votaron-a-favor-de-mantener-salario-de-q66-mil-oposicion-en-contra/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "La Hora · cómo el aumento dividió al Congreso (4-may-2025)",
+      "url": "https://lahora.gt/nacionales/jmaldonado/2025/05/04/como-el-incremento-de-sueldo-de-q37-mil-a-los-diputados-dividio-al-congreso/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "La Hora · Nery Ramos explica la marcha atrás (25-mar-2025)",
+      "url": "https://lahora.gt/nacionales/jmaldonado/2025/03/25/nery-ramos-explica-motivos-de-dar-marcha-atras-del-aumento-salarial-y-lo-que-procedera-en-el-congreso/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Emisoras Unidas · propuesta de José Chic (11-mar-2025)",
+      "url": "https://emisorasunidas.com/nacional/2025/03/11/diputado-jose-chic-acuerdo-aumento-salarial-congreso/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Emisoras Unidas · 48 Cantones de Totonicapán rechazan aumento (6-dic-2024)",
+      "url": "https://emisorasunidas.com/2024/12/06/48-cantones-totonicapan-rechaza-aumento-salario-diputados/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Emisoras Unidas · manifestación frente al Congreso (4-mar-2025)",
+      "url": "https://emisorasunidas.com/nacional/2025/03/04/manifestacion-congreso-aumento-salario-diputados/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Prensa Libre · Presupuesto 2026: se perfila aprobación de urgencia (24-nov-2025)",
+      "url": "https://www.prensalibre.com/?p=24253412",
+      "nivel": "prensa"
+    }
+  ],
+  "no_afirma": [
+    "No afirma que la versión dictaminada de la 6445 conservara el aumento: según La Hora, el dictamen del 9-sep-2024 lo eliminó.",
+    "No nombra a los firmantes de la enmienda del punto tercero ni afirma que Semilla la promoviera: sus 23 independientes votaron en contra.",
+    "No afirma que la votación del 25 de noviembre de 2025 (73 a 74) buscara revertir el aumento.",
+    "No afirma que la CC haya resuelto en definitiva los amparos contra el aumento.",
+    "No afirma que los 59 ausentes del 3 de noviembre de 2026 se opusieran a bajar el sueldo."
+  ],
+  "incertidumbre": [
+    "Todas las cifras tienen segunda fuente no independiente (reproduce la primaria). La ancla apr-c09 (Q66,300) cuadra con la base de IIES-USAC y con Prensa Libre, pero la prensa reproduce la misma fuente (independencia baja); otra nota habla de «más de Q53 mil». Q66,300 es el ingreso bruto mensual total (salario base, dietas y gastos de representación), no el líquido. No hay alternativa independiente.",
+    "El desglose del sueldo nuevo no cuadra en La Hora (base Q46,000 suma Q65,600); IIES-USAC y Prensa Libre dan base Q46,700, que sí cuadra con Q66,300. Por eso el T1 muestra solo el total.",
+    "El conteo de 7 intentos es editorial: deja fuera la suspensión anunciada por la Junta Directiva (25-mar-2025, no formalizada) y la denuncia de VOS en la Contraloría.",
+    "El objeto de la enmienda de Raíces y su ponente salen de la prensa; la base nominal no trae el texto.",
+    "Los 16.57 salarios mínimos usan el mínimo no agrícola 2026 sin bonificación incentivo (con ella, unos 15.6).",
+    "apr-c10 (+127.4 %) es derivado de apr-c08 y apr-c09 y arrastra su independencia baja; compara el ingreso bruto total y no se mezcla con el 389 % de la USAC, que compara solo el salario base.",
+    "ant-c06: la lista de 11 ponentes de la iniciativa 6445 está reconstruida; el dictamen nombra 7 «y compañeros», así que puede estar incompleta: son al menos 11.",
+    "ant-c07: los 46 votos a favor de la moción del 11-feb-2025 vienen solo del registro nominal oficial; no se halló prensa que confirme esa votación. Fuente única.",
+    "ant-c08: los 17 votos de Semilla son recuento propio sobre el registro oficial y dependen de ant-c07; sin segunda fuente independiente.",
+    "ant-c09: 7 de 11 a favor es un cruce propio sobre los ponentes identificados y hereda la posible incompletitud de la lista (ant-c06)."
+  ],
+  "descartadas": [
+    {
+      "id": "rev-c07",
+      "por": "no_confirmada"
+    },
+    {
+      "id": "rev-c12",
+      "por": "no_confirmada: objeto de la votación 4516 sin confirmar"
+    }
+  ]
+}

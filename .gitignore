@@ -17,6 +17,9 @@ sesiones/_fixture_semana/salida/
 sesiones/_fixture_semana/carrusel*/
 !sesiones/_fixture_historia/
 sesiones/_fixture_historia/trabajo/
+!sesiones/_fixture_congreso/
+sesiones/_fixture_congreso/trabajo/
+sesiones/_fixture_congreso/salida/
 !sesiones/_fixture_sabias/
 sesiones/_fixture_sabias/trabajo/
 sesiones/_fixture_sabias/salida/
@@ -62,3 +65,15 @@ historias/*/*.mp4
 explicaciones/*/*.mp4
 # /sabias: igual, el mp4 del «¿Sabías que…?» queda fuera de git (guion, srt, caption y PNG sí se versionan)
 datos/*/video/*.mp4
+!sesiones/_fixture_analisis/
+sesiones/_fixture_analisis/salida/
+series/*/*/*.mp4
+!sesiones/_fixture_serie/
+sesiones/_fixture_serie/trabajo/
+sesiones/_fixture_serie/salida/
+!sesiones/_fixture_serie_explica/
+sesiones/_fixture_serie_explica/trabajo/
+sesiones/_fixture_serie_explica/salida/
+!sesiones/_fixture_agenda/
+sesiones/_fixture_agenda/salida/
+congreso/*/*.mp4

@@ -6,8 +6,10 @@ Desde aquí eres el ÚNICO que escribe `guion.json`.
    `tuit_N.ajuste.json` y re-renderiza; exit 0).
 2. `python3 scripts/ensamblar.py <sesion> --check` → gate mecánico G1–G8 y
    carpeta de entrega (`hilos/<fecha>-<slug>/` o `<sesion>/salida/` en
-   smoke/fixture) con `hilo.html`, `post.md`, `datos.json`, `hilo.json`, PNG y
-   `contacto.png`. Si falla, corrige `guion.json`, re-materializa el tuit
+   smoke/fixture) con `hilo.html`, `post.md`, `datos.json`, `hilo.json`, PNG,
+   `contacto.png` y `redes/` (cada tarjeta en 4:5 y 9:16 para carrusel; si sale
+   el AVISO «no se generó redes/», corre `python3 scripts/redes.py <entrega>`:
+   sin `redes/` el hilo no pasa H4 de `make validate`). Si falla, corrige `guion.json`, re-materializa el tuit
    afectado y repite (máx. 3 vueltas). El resumen de límites llega en tu
    directiva; no leas `ensamblar.py` ni `hilo.js`.
 3. **Gate de coherencia (juicio)** sobre `post.md` (léelo con

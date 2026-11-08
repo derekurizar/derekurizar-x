@@ -278,7 +278,7 @@ def aplicar_extension():
 def de_video_que_no_aplica(x):
     """Las líneas de V1/V9 de /video que /sabias no hereda: la promesa, las conclusiones del cierre y la escena 2 fija
     como `tarjeta` (aquí puede ir a pantalla completa)."""
-    return x.startswith(("V9 promesa", "P1 ", "P2 ", "P3 ", "P4 ", "V1 cierre.resumen", "V9 la escena 2 debe ser la tarjeta T1"))
+    return x.startswith(("V9 promesa", "P1 ", "P2 ", "P3 ", "P4 ", "P5 ", "V1 cierre.resumen", "V9 la escena 2 debe ser la tarjeta T1"))
 
 
 def segundos_hasta_cifra(texto):
@@ -354,7 +354,7 @@ def reglas_gancho(e, voz_p, ctx):
     # las de /video, con una familia que admite el visual (R2 no: el referente es la línea; R6 y R9 son de /sabias)
     fam = next((k for k, vs in VD.VISUALES_DE.items() if vis in vs and k != "pregunta"), "resultado")
     rf, rav = ORIGINALES["reglas"](dict(e, familia=fam), voz_p, dict(ctx, recientes={}))
-    f += [x for x in rf if not x.startswith(("R2 ", "R3 ", "R6 ", "R9 "))]
+    f += [x for x in rf if not x.startswith(("R2 ", "R3 ", "R6 ", "R9 ", "R14 "))]   # R14: la pantalla de /sabias es fija (S2)
     return f, av + rav
 
 

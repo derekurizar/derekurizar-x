@@ -89,6 +89,72 @@
    "prompt_influence": 0.5,
    "generation_id": "7dUiVhhcTXn1pxo8zjkQ",
    "flow_id": "Wl0H0rKpaZFB5bWqsDsM"
+  },
+  {
+   "id": "voto",
+   "archivo": "voto.wav",
+   "duracion_s": 0.127,
+   "uso": "cada tanda de asientos del hemiciclo",
+   "ganancia_db": -20,
+   "prompt": "Single tiny soft UI pop, like a bubble click on a touchscreen, very short, dry, no tail",
+   "prompt_influence": 0.7,
+   "generation_id": "yjBHbj6WECIJNsf0xxMO",
+   "flow_id": "Wl0H0rKpaZFB5bWqsDsM"
+  },
+  {
+   "id": "mazo",
+   "archivo": "mazo.wav",
+   "duracion_s": 2.0,
+   "uso": "resultado de la votación",
+   "ganancia_db": -10,
+   "prompt": "Single wooden gavel strike on a sound block in a large hall, short natural tail",
+   "prompt_influence": 0.7,
+   "generation_id": "GfOhHlxxyrB2Enp60VlT",
+   "flow_id": "Wl0H0rKpaZFB5bWqsDsM"
+  },
+  {
+   "id": "sello",
+   "archivo": "sello.wav",
+   "duracion_s": 0.266,
+   "uso": "sello sobre papel",
+   "ganancia_db": -12,
+   "prompt": "Single rubber stamp pressed firmly on paper on a wooden desk, dry thud, close-mic",
+   "prompt_influence": 0.7,
+   "generation_id": "kRA5ZHYrLqVACzRBtP53",
+   "flow_id": "Wl0H0rKpaZFB5bWqsDsM"
+  },
+  {
+   "id": "whip",
+   "archivo": "whip.wav",
+   "duracion_s": 0.48,
+   "uso": "transición rápida (whip) en un «pero»",
+   "ganancia_db": -18,
+   "prompt": "Very fast short swish whip pan, airy, crisp, dry, no tail, subtle",
+   "prompt_influence": 0.7,
+   "generation_id": "wt0VINqomIn0K0CfQIjJ",
+   "flow_id": "OQlPn6zMZDRbZHgpBSik"
+  },
+  {
+   "id": "papel",
+   "archivo": "papel.wav",
+   "duracion_s": 0.527,
+   "uso": "entrada de un documento o recorte",
+   "ganancia_db": -20,
+   "prompt": "Single sheet of paper slid quickly onto a wooden desk, soft dry rustle, close-mic, short",
+   "prompt_influence": 0.7,
+   "generation_id": "qZaauiAxc4HnrTEfvo9P",
+   "flow_id": "OQlPn6zMZDRbZHgpBSik"
+  },
+  {
+   "id": "marcador",
+   "archivo": "marcador.wav",
+   "duracion_s": 0.48,
+   "uso": "subrayado de una fecha o cifra",
+   "ganancia_db": -24,
+   "prompt": "Quick felt-tip marker stroke on paper, short soft squeak, dry, close-mic",
+   "prompt_influence": 0.7,
+   "generation_id": "VLITFGIZLd5W3lJ09rZx",
+   "flow_id": "OQlPn6zMZDRbZHgpBSik"
   }
  ]
 }

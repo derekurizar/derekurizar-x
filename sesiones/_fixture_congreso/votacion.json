@@ -1,0 +1,3366 @@
+{
+  "iniciativa": "6347",
+  "decisiva": {
+    "id_votacion": "51644",
+    "clase": "redaccion final",
+    "pregunta": "APROBACIÓN DE LA REDACCIÓN FINAL CON EL FONDO DE REVISIÓN INCORPORADO DEL PROYECTO DE DECRETO QUE DISPONE APROBAR LA INICIATIVA DE LEY 6347",
+    "fecha": "2026-11-03 22:44:32",
+    "sesion": "Ordinaria 56",
+    "url": "https://www.congreso.gob.gt/detalle_de_votacion/51644/41400",
+    "umbral": 81,
+    "favor": 121,
+    "contra": 10,
+    "ausente": 19,
+    "licencia": 10,
+    "bancadas": {
+      "VAMOS": {
+        "contra": 7,
+        "ausente": 5,
+        "favor": 23,
+        "licencia": 3
+      },
+      "INDP - SEMILLA": {
+        "favor": 20,
+        "ausente": 2,
+        "licencia": 1
+      },
+      "UNE": {
+        "favor": 16,
+        "licencia": 2,
+        "ausente": 2,
+        "contra": 2
+      },
+      "CABAL": {
+        "favor": 15,
+        "ausente": 1,
+        "licencia": 2
+      },
+      "VALOR": {
+        "favor": 8,
+        "ausente": 2
+      },
+      "VIVA": {
+        "favor": 8
+      },
+      "TODOS": {
+        "favor": 5,
+        "licencia": 1
+      },
+      "INDP - UNE": {
+        "favor": 5,
+        "contra": 1
+      },
+      "CREO": {
+        "favor": 3
+      },
+      "INDP - VIVA": {
+        "favor": 3
+      },
+      "BIEN": {
+        "ausente": 1,
+        "favor": 2
+      },
+      "VOS": {
+        "ausente": 2,
+        "favor": 1
+      },
+      "UNIONISTA": {
+        "ausente": 2
+      },
+      "ELEFANTE": {
+        "favor": 2
+      },
+      "AZUL": {
+        "favor": 2
+      },
+      "VICTORIA": {
+        "favor": 2
+      },
+      "INDP - NOSOTROS": {
+        "favor": 2
+      },
+      "INDP - BIEN": {
+        "favor": 1
+      },
+      "CAMBIO": {
+        "ausente": 1
+      },
+      "INDP - VAMOS": {
+        "ausente": 1
+      },
+      "INDP - VOS": {
+        "favor": 1
+      },
+      "NOSOTROS": {
+        "favor": 1
+      },
+      "INDP - VICTORIA": {
+        "favor": 1
+      },
+      "WINAQ - URNG": {
+        "licencia": 1
+      }
+    },
+    "diputados": [
+      {
+        "nombre": "Alberto Eduardo De León Benítez",
+        "corto": "Alberto De León",
+        "bancada": "CABAL",
+        "bancada_legible": "Cabal",
+        "distrito": "Totonicapán",
+        "voto": "favor",
+        "id": "970"
+      },
+      {
+        "nombre": "Allan Estuardo Rodríguez Reyes",
+        "corto": "Allan Rodríguez",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Sololá",
+        "voto": "contra",
+        "id": "770"
+      },
+      {
+        "nombre": "Alma Luz Guerrero De La Cruz",
+        "corto": "Alma Guerrero",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "935"
+      },
+      {
+        "nombre": "Alvaro Enrique Arzú Escobar",
+        "corto": "Alvaro Arzú",
+        "bancada": "UNIONISTA",
+        "bancada_legible": "Unionista",
+        "distrito": "Listado Nacional",
+        "voto": "ausente",
+        "id": "11"
+      },
+      {
+        "nombre": "Ana Lucrecia Marroquín Godoy De Palomo",
+        "corto": "Ana Marroquín",
+        "bancada": "UNIONISTA",
+        "bancada_legible": "Unionista",
+        "distrito": "Listado Nacional",
+        "voto": "ausente",
+        "id": "179"
+      },
+      {
+        "nombre": "Ana Patricia Orantes Thomas",
+        "corto": "Ana Orantes",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "938"
+      },
+      {
+        "nombre": "Andrea Beatríz Villagrán Antón de Pantoja",
+        "corto": "Andrea Villagrán",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Distrito Central",
+        "voto": "favor",
+        "id": "155"
+      },
+      {
+        "nombre": "Andrea María Reyes Zeceña",
+        "corto": "Andrea Reyes",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Guatemala",
+        "voto": "favor",
+        "id": "913"
+      },
+      {
+        "nombre": "Benjamin Ipiña Leiva",
+        "corto": "Benjamin Ipiña",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Petén",
+        "voto": "favor",
+        "id": "949"
+      },
+      {
+        "nombre": "Bequer Neftali Chocooj De La Cruz",
+        "corto": "Bequer Chocooj",
+        "bancada": "CABAL",
+        "bancada_legible": "Cabal",
+        "distrito": "Sololá",
+        "voto": "favor",
+        "id": "965"
+      },
+      {
+        "nombre": "Boris Roberto España Cáceres",
+        "corto": "Boris España",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Chiquimula",
+        "voto": "ausente",
+        "id": "54"
+      },
+      {
+        "nombre": "Brenda Marleny Mejía López",
+        "corto": "Brenda Mejía",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Distrito Central",
+        "voto": "ausente",
+        "id": "896"
+      },
+      {
+        "nombre": "Byron Alesky Obregón Castañeda",
+        "corto": "Byron Obregón",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Listado Nacional",
+        "voto": "licencia",
+        "id": "937"
+      },
+      {
+        "nombre": "Byron Bladimiro Rodríguez Palacios",
+        "corto": "Byron Rodríguez",
+        "bancada": "TODOS",
+        "bancada_legible": "Todos",
+        "distrito": "Quetzaltenango",
+        "voto": "favor",
+        "id": "952"
+      },
+      {
+        "nombre": "Byron Leonidas Tejeda Marroquín",
+        "corto": "Byron Tejeda",
+        "bancada": "CABAL",
+        "bancada_legible": "Cabal",
+        "distrito": "Baja Verapaz",
+        "voto": "favor",
+        "id": "887"
+      },
+      {
+        "nombre": "Candido Fernando Leal Gómez",
+        "corto": "Candido Leal",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Guatemala",
+        "voto": "favor",
+        "id": "780"
+      },
+      {
+        "nombre": "Carlos Enrique López Girón",
+        "corto": "Carlos López",
+        "bancada": "VALOR",
+        "bancada_legible": "Valor",
+        "distrito": "Quiché",
+        "voto": "favor",
+        "id": "976"
+      },
+      {
+        "nombre": "Carlos Enrique López Maldonado",
+        "corto": "Carlos López",
+        "bancada": "CABAL",
+        "bancada_legible": "Cabal",
+        "distrito": "Quiché",
+        "voto": "favor",
+        "id": "92"
+      },
+      {
+        "nombre": "Carlos Napoleon Rojas Alarcón",
+        "corto": "Carlos Rojas",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Santa Rosa",
+        "voto": "favor",
+        "id": "130"
+      },
+      {
+        "nombre": "Carlos Roberto Calderon Galvez",
+        "corto": "Carlos Calderon",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Listado Nacional",
+        "voto": "licencia",
+        "id": "774"
+      },
+      {
+        "nombre": "Christian Joél Martínez Juárez",
+        "corto": "Christian Martínez",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Huehuetenango",
+        "voto": "ausente",
+        "id": "921"
+      },
+      {
+        "nombre": "Cornelio Gonzalo García García",
+        "corto": "Cornelio García",
+        "bancada": "TODOS",
+        "bancada_legible": "Todos",
+        "distrito": "Huehuetenango",
+        "voto": "favor",
+        "id": "65"
+      },
+      {
+        "nombre": "Cristian Rodolfo Alvarez Y Alvarez",
+        "corto": "Cristian Alvarez",
+        "bancada": "CREO",
+        "bancada_legible": "CREO",
+        "distrito": "Distrito Central",
+        "voto": "favor",
+        "id": "851"
+      },
+      {
+        "nombre": "César Augusto Amézquita Del Valle",
+        "corto": "César Amézquita",
+        "bancada": "VIVA",
+        "bancada_legible": "Viva",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "948"
+      },
+      {
+        "nombre": "César Augusto Fión Morales",
+        "corto": "César Fión",
+        "bancada": "INDP - UNE",
+        "bancada_legible": "independientes ex UNE",
+        "distrito": "Petén",
+        "voto": "favor",
+        "id": "796"
+      },
+      {
+        "nombre": "César Augusto Rodas Cardona",
+        "corto": "César Rodas",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "El Progreso",
+        "voto": "favor",
+        "id": "901"
+      },
+      {
+        "nombre": "César Roberto Dávila Córdova",
+        "corto": "César Dávila",
+        "bancada": "INDP - BIEN",
+        "bancada_legible": "independientes ex Bien",
+        "distrito": "Guatemala",
+        "voto": "favor",
+        "id": "906"
+      },
+      {
+        "nombre": "Danilo Madrazo Mazariegos",
+        "corto": "Danilo Madrazo",
+        "bancada": "TODOS",
+        "bancada_legible": "Todos",
+        "distrito": "Suchitepéquez",
+        "voto": "favor",
+        "id": "967"
+      },
+      {
+        "nombre": "Darwin Alberto Lucas Paz",
+        "corto": "Darwin Lucas",
+        "bancada": "INDP - UNE",
+        "bancada_legible": "independientes ex UNE",
+        "distrito": "Alta Verapaz",
+        "voto": "favor",
+        "id": "801"
+      },
+      {
+        "nombre": "Darwin Edgardo Ramírez Cameros",
+        "corto": "Darwin Ramírez",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Izabal",
+        "voto": "favor",
+        "id": "922"
+      },
+      {
+        "nombre": "David Mauricio Illescas Sandoval",
+        "corto": "David Illescas",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Guatemala",
+        "voto": "ausente",
+        "id": "910"
+      },
+      {
+        "nombre": "Duay Antoni Martinez Salazar",
+        "corto": "Duay Martinez",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Quetzaltenango",
+        "voto": "favor",
+        "id": "781"
+      },
+      {
+        "nombre": "Dámaris Carolina Cerna Acevedo",
+        "corto": "Dámaris Cerna",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Lista Nacional",
+        "voto": "licencia",
+        "id": "939"
+      },
+      {
+        "nombre": "Edgar Raúl Reyes Lee",
+        "corto": "Edgar Reyes",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Petén",
+        "voto": "contra",
+        "id": "127"
+      },
+      {
+        "nombre": "Edín Alexander De Jesús Mejía",
+        "corto": "Edín De Jesús",
+        "bancada": "VIVA",
+        "bancada_legible": "Viva",
+        "distrito": "Petén",
+        "voto": "favor",
+        "id": "950"
+      },
+      {
+        "nombre": "Elena Sofía Motta Kolleff",
+        "corto": "Elena Motta",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Distrito Central",
+        "voto": "favor",
+        "id": "897"
+      },
+      {
+        "nombre": "Elmer Josué Palencia Reyes",
+        "corto": "Elmer Palencia",
+        "bancada": "VALOR",
+        "bancada_legible": "Valor",
+        "distrito": "Guatemala",
+        "voto": "favor",
+        "id": "919"
+      },
+      {
+        "nombre": "Erick Geovany Martínez Hernández",
+        "corto": "Erick Martínez",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Huehuetenango",
+        "voto": "favor",
+        "id": "793"
+      },
+      {
+        "nombre": "Erick José Mario Tzún De León",
+        "corto": "Erick Tzún",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Quetzaltenango",
+        "voto": "licencia",
+        "id": "954"
+      },
+      {
+        "nombre": "Ernesto Bran Colindres",
+        "corto": "Ernesto Bran",
+        "bancada": "VALOR",
+        "bancada_legible": "Valor",
+        "distrito": "El Progreso",
+        "voto": "favor",
+        "id": "900"
+      },
+      {
+        "nombre": "Ervin Adim Maldonado Molina",
+        "corto": "Ervin Maldonado",
+        "bancada": "INDP - UNE",
+        "bancada_legible": "independientes ex UNE",
+        "distrito": "Guatemala",
+        "voto": "favor",
+        "id": "95"
+      },
+      {
+        "nombre": "Esduín Jerson Javier Javier",
+        "corto": "Esduín Javier",
+        "bancada": "CAMBIO",
+        "bancada_legible": "Cambio",
+        "distrito": "Chiquimula",
+        "voto": "ausente",
+        "id": "892"
+      },
+      {
+        "nombre": "Evelyn Oddeth Morataya Marroquín",
+        "corto": "Evelyn Morataya",
+        "bancada": "INDP - VIVA",
+        "bancada_legible": "independientes ex Viva",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "828"
+      },
+      {
+        "nombre": "Faver Emilio Salazar Cordero",
+        "corto": "Faver Salazar",
+        "bancada": "VALOR",
+        "bancada_legible": "Valor",
+        "distrito": "Jalapa",
+        "voto": "favor",
+        "id": "924"
+      },
+      {
+        "nombre": "Felipe Alejos Lorenzana",
+        "corto": "Felipe Alejos",
+        "bancada": "TODOS",
+        "bancada_legible": "Todos",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "2"
+      },
+      {
+        "nombre": "Fidel Reyes Lee",
+        "corto": "Fidel Reyes",
+        "bancada": "BIEN",
+        "bancada_legible": "Bien",
+        "distrito": "Listado Nacional",
+        "voto": "ausente",
+        "id": "128"
+      },
+      {
+        "nombre": "Fidencio Lima Pop",
+        "corto": "Fidencio Lima",
+        "bancada": "VIVA",
+        "bancada_legible": "Viva",
+        "distrito": "Alta Verapaz",
+        "voto": "favor",
+        "id": "247"
+      },
+      {
+        "nombre": "Francisco Vitelio Lam Ruano",
+        "corto": "Francisco Lam",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Escuintla",
+        "voto": "ausente",
+        "id": "86"
+      },
+      {
+        "nombre": "Gerardín Ariel Díaz Mazariegos",
+        "corto": "Gerardín Díaz",
+        "bancada": "VALOR",
+        "bancada_legible": "Valor",
+        "distrito": "Quetzaltenango",
+        "voto": "favor",
+        "id": "818"
+      },
+      {
+        "nombre": "Gerson Geovanny Barragán Morales",
+        "corto": "Gerson Barragán",
+        "bancada": "VIVA",
+        "bancada_legible": "Viva",
+        "distrito": "Suchitepéquez",
+        "voto": "favor",
+        "id": "969"
+      },
+      {
+        "nombre": "Gladis Carolina Cifuentes Barragán",
+        "corto": "Gladis Cifuentes",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "San Marcos",
+        "voto": "contra",
+        "id": "962"
+      },
+      {
+        "nombre": "Greicy Domenica De León De León",
+        "corto": "Greicy De León",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Quiché",
+        "voto": "favor",
+        "id": "777"
+      },
+      {
+        "nombre": "Guillermo Alberto Cifuentes Barragán",
+        "corto": "Guillermo Cifuentes",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "San Marcos",
+        "voto": "contra",
+        "id": "776"
+      },
+      {
+        "nombre": "Guillermo Antonio Ralda Conde",
+        "corto": "Guillermo Antonio",
+        "bancada": "CABAL",
+        "bancada_legible": "Cabal",
+        "distrito": "Retalhuleu",
+        "voto": "favor",
+        "id": "957"
+      },
+      {
+        "nombre": "Gustavo Adolfo Cifuentes Navarro",
+        "corto": "Gustavo Cifuentes",
+        "bancada": "TODOS",
+        "bancada_legible": "Todos",
+        "distrito": "San Marcos",
+        "voto": "favor",
+        "id": "961"
+      },
+      {
+        "nombre": "Gustavo Adolfo Crúz Montoya",
+        "corto": "Gustavo Crúz",
+        "bancada": "INDP - VIVA",
+        "bancada_legible": "independientes ex Viva",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "826"
+      },
+      {
+        "nombre": "Hellen Magaly Alexándra Ajcip Canel",
+        "corto": "Hellen Ajcip",
+        "bancada": "ELEFANTE",
+        "bancada_legible": "Elefante",
+        "distrito": "Guatemala",
+        "voto": "favor",
+        "id": "840"
+      },
+      {
+        "nombre": "Herman Otoniel Echeverría Casado",
+        "corto": "Herman Echeverría",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Alta Verapaz",
+        "voto": "favor",
+        "id": "884"
+      },
+      {
+        "nombre": "Héctor Adolfo Aldana Reyes",
+        "corto": "Héctor Aldana",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "943"
+      },
+      {
+        "nombre": "Ivana Bonilla Oliva",
+        "corto": "Ivana Bonilla",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Chiquimula",
+        "voto": "favor",
+        "id": "979"
+      },
+      {
+        "nombre": "Ivanna María Luján Padilla",
+        "corto": "Ivanna Luján",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Guatemala",
+        "voto": "favor",
+        "id": "911"
+      },
+      {
+        "nombre": "Jaime Octavio Augusto Lucero Vásquez",
+        "corto": "Jaime Lucero",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Jalapa",
+        "voto": "favor",
+        "id": "93"
+      },
+      {
+        "nombre": "Jairo Danilo Orellana Sandoval",
+        "corto": "Jairo Orellana",
+        "bancada": "CABAL",
+        "bancada_legible": "Cabal",
+        "distrito": "Jalapa",
+        "voto": "favor",
+        "id": "923"
+      },
+      {
+        "nombre": "Jairo Joaquín Flores Divas",
+        "corto": "Jairo Flores",
+        "bancada": "VOS",
+        "bancada_legible": "VOS",
+        "distrito": "Guatemala",
+        "voto": "ausente",
+        "id": "61"
+      },
+      {
+        "nombre": "Jeovanni Omar Domínguez Orozco",
+        "corto": "Jeovanni Domínguez",
+        "bancada": "VIVA",
+        "bancada_legible": "Viva",
+        "distrito": "San Marcos",
+        "voto": "favor",
+        "id": "963"
+      },
+      {
+        "nombre": "Jorge Estuardo Ayala Marroquin",
+        "corto": "Jorge Ayala",
+        "bancada": "VALOR",
+        "bancada_legible": "Valor",
+        "distrito": "Guatemala",
+        "voto": "favor",
+        "id": "918"
+      },
+      {
+        "nombre": "Jorge Mario Cabrera Ordóñez",
+        "corto": "Jorge Cabrera",
+        "bancada": "INDP - VAMOS",
+        "bancada_legible": "independientes ex Vamos",
+        "distrito": "Totonicapán",
+        "voto": "ausente",
+        "id": "973"
+      },
+      {
+        "nombre": "Jorge Mario Villagrán Alvarez",
+        "corto": "Jorge Villagrán",
+        "bancada": "AZUL",
+        "bancada_legible": "Azul",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "928"
+      },
+      {
+        "nombre": "Jorge Romeo Castro Delgado",
+        "corto": "Jorge Castro",
+        "bancada": "INDP - VIVA",
+        "bancada_legible": "independientes ex Viva",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "842"
+      },
+      {
+        "nombre": "Josué Edmundo Lemus Cifuentes",
+        "corto": "Josué Lemus",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Quiché",
+        "voto": "favor",
+        "id": "881"
+      },
+      {
+        "nombre": "José Adolfo Quezada Valdéz",
+        "corto": "José Quezada",
+        "bancada": "INDP - UNE",
+        "bancada_legible": "independientes ex UNE",
+        "distrito": "Quiché",
+        "voto": "contra",
+        "id": "864"
+      },
+      {
+        "nombre": "José Alberto Chic Cardona",
+        "corto": "José Chic",
+        "bancada": "VOS",
+        "bancada_legible": "VOS",
+        "distrito": "Distrito Central",
+        "voto": "favor",
+        "id": "899"
+      },
+      {
+        "nombre": "José Arnulfo García Barrios",
+        "corto": "José García",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Suchitepéquez",
+        "voto": "favor",
+        "id": "788"
+      },
+      {
+        "nombre": "José Carlo Solano",
+        "corto": "José Solano",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Retalhuleu",
+        "voto": "favor",
+        "id": "958"
+      },
+      {
+        "nombre": "José Carlos Sanabria Arias",
+        "corto": "José Sanabria",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Guatemala",
+        "voto": "favor",
+        "id": "914"
+      },
+      {
+        "nombre": "José Diego Toledo Cruz",
+        "corto": "José Toledo",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Sacatepéquez",
+        "voto": "favor",
+        "id": "960"
+      },
+      {
+        "nombre": "José Inés Castillo Martínez",
+        "corto": "José Castillo",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Santa Rosa",
+        "voto": "favor",
+        "id": "30"
+      },
+      {
+        "nombre": "José Luis Galindo De León",
+        "corto": "José Galindo",
+        "bancada": "VALOR",
+        "bancada_legible": "Valor",
+        "distrito": "Retalhuleu",
+        "voto": "ausente",
+        "id": "819"
+      },
+      {
+        "nombre": "José Orlando Pérez Marroquín",
+        "corto": "José Pérez",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Quetzaltenango",
+        "voto": "favor",
+        "id": "951"
+      },
+      {
+        "nombre": "José Pablo Mendoza Franco",
+        "corto": "José Mendoza",
+        "bancada": "CREO",
+        "bancada_legible": "CREO",
+        "distrito": "Distrito Central",
+        "voto": "favor",
+        "id": "893"
+      },
+      {
+        "nombre": "Joél Rubén Martínez Herrera",
+        "corto": "Joél Martínez",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Huehuetenango",
+        "voto": "ausente",
+        "id": "99"
+      },
+      {
+        "nombre": "Juan Carlos Rivera Estevez",
+        "corto": "Juan Rivera",
+        "bancada": "VICTORIA",
+        "bancada_legible": "Victoria",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "857"
+      },
+      {
+        "nombre": "Juan Ramon Rivas García",
+        "corto": "Juan Rivas",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Izabal",
+        "voto": "favor",
+        "id": "811"
+      },
+      {
+        "nombre": "Julio César López Escobar",
+        "corto": "Julio López",
+        "bancada": "CABAL",
+        "bancada_legible": "Cabal",
+        "distrito": "Huehuetenango",
+        "voto": "ausente",
+        "id": "789"
+      },
+      {
+        "nombre": "Julio César Portillo Paz",
+        "corto": "Julio Portillo",
+        "bancada": "CABAL",
+        "bancada_legible": "Cabal",
+        "distrito": "Zacapa",
+        "voto": "favor",
+        "id": "974"
+      },
+      {
+        "nombre": "Julio Daniel Marroquín Ordoñez",
+        "corto": "Julio Marroquín",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Guatemala",
+        "voto": "favor",
+        "id": "917"
+      },
+      {
+        "nombre": "Julio Héctor Estrada Dominguez",
+        "corto": "Julio Estrada",
+        "bancada": "CABAL",
+        "bancada_legible": "Cabal",
+        "distrito": "Listado Nacional",
+        "voto": "licencia",
+        "id": "930"
+      },
+      {
+        "nombre": "Julio Pedro Gómez Gómez",
+        "corto": "Julio Gómez",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Totonicapán",
+        "voto": "favor",
+        "id": "971"
+      },
+      {
+        "nombre": "Karina Alexandra Paz Rosales",
+        "corto": "Karina Paz",
+        "bancada": "INDP - VOS",
+        "bancada_legible": "independientes ex VOS",
+        "distrito": "Guatemala",
+        "voto": "favor",
+        "id": "160"
+      },
+      {
+        "nombre": "Karla Betzaida Cardona Arreaga",
+        "corto": "Karla Cardona",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Huehuetenango",
+        "voto": "favor",
+        "id": "791"
+      },
+      {
+        "nombre": "Kevyn Luis Carlo Escobar Castillo",
+        "corto": "Kevyn Escobar",
+        "bancada": "CABAL",
+        "bancada_legible": "Cabal",
+        "distrito": "Jutiapa",
+        "voto": "favor",
+        "id": "926"
+      },
+      {
+        "nombre": "Laura Fabiola Marroquín Cordón",
+        "corto": "Laura Marroquín",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Distrito Central",
+        "voto": "favor",
+        "id": "895"
+      },
+      {
+        "nombre": "Leopoldo Salazar Samayoa",
+        "corto": "Leopoldo Salazar",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Alta Verapaz",
+        "voto": "favor",
+        "id": "822"
+      },
+      {
+        "nombre": "León Felipe Barrera Villanueva",
+        "corto": "León Barrera",
+        "bancada": "INDP - UNE",
+        "bancada_legible": "independientes ex UNE",
+        "distrito": "Guatemala",
+        "voto": "favor",
+        "id": "915"
+      },
+      {
+        "nombre": "Lourdes Teresita De León Torres",
+        "corto": "Lourdes De León",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "940"
+      },
+      {
+        "nombre": "Lucrecia Carola Samayoa Reyes",
+        "corto": "Lucrecia Samayoa",
+        "bancada": "BIEN",
+        "bancada_legible": "Bien",
+        "distrito": "Huehuetenango",
+        "voto": "favor",
+        "id": "135"
+      },
+      {
+        "nombre": "Luis Alberto Contreras Colíndres",
+        "corto": "Luis Contreras",
+        "bancada": "CREO",
+        "bancada_legible": "CREO",
+        "distrito": "San Marcos",
+        "voto": "favor",
+        "id": "39"
+      },
+      {
+        "nombre": "Luis Alberto Rodríguez Reyes",
+        "corto": "Luis Rodríguez",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Sololá",
+        "voto": "contra",
+        "id": "966"
+      },
+      {
+        "nombre": "Luis Antonio Cáceres Gamarro",
+        "corto": "Luis Cáceres",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Guatemala",
+        "voto": "favor",
+        "id": "908"
+      },
+      {
+        "nombre": "Luis Fernando Aguirre Estrada",
+        "corto": "Luis Aguirre",
+        "bancada": "CABAL",
+        "bancada_legible": "Cabal",
+        "distrito": "Listado Nacional",
+        "voto": "licencia",
+        "id": "929"
+      },
+      {
+        "nombre": "Luis Javier López Bolaños",
+        "corto": "Luis López",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "942"
+      },
+      {
+        "nombre": "Manfredo Duvalier Castañón González",
+        "corto": "Manfredo Castañón",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "934"
+      },
+      {
+        "nombre": "Manrique Obel Gálvez De León",
+        "corto": "Manrique Gálvez",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Huehuetenango",
+        "voto": "favor",
+        "id": "920"
+      },
+      {
+        "nombre": "Manuel De Jesús Archila Cordón",
+        "corto": "Manuel Archila",
+        "bancada": "CABAL",
+        "bancada_legible": "Cabal",
+        "distrito": "Guatemala",
+        "voto": "favor",
+        "id": "907"
+      },
+      {
+        "nombre": "Manuel Geovany Alvarado Vásquez",
+        "corto": "Manuel Alvarado",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Quiché",
+        "voto": "favor",
+        "id": "956"
+      },
+      {
+        "nombre": "Marco Alejandro Pérez Toribio",
+        "corto": "Marco Pérez",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "945"
+      },
+      {
+        "nombre": "Marco Aurelio Mejía Alfaro",
+        "corto": "Marco Mejía",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Escuintla",
+        "voto": "ausente",
+        "id": "903"
+      },
+      {
+        "nombre": "Marcos Eduardo Tebelán Pantzay",
+        "corto": "Marcos Tebelán",
+        "bancada": "CABAL",
+        "bancada_legible": "Cabal",
+        "distrito": "Quiché",
+        "voto": "favor",
+        "id": "955"
+      },
+      {
+        "nombre": "Mario Ernesto Gálvez Muñóz",
+        "corto": "Mario Gálvez",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "San Marcos",
+        "voto": "licencia",
+        "id": "870"
+      },
+      {
+        "nombre": "Mario Velásquez Pérez",
+        "corto": "Mario Velásquez",
+        "bancada": "CABAL",
+        "bancada_legible": "Cabal",
+        "distrito": "San Marcos",
+        "voto": "favor",
+        "id": "154"
+      },
+      {
+        "nombre": "Marleni Lineth Matías Santiago",
+        "corto": "Marleni Matías",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Baja Verapaz",
+        "voto": "favor",
+        "id": "100"
+      },
+      {
+        "nombre": "Martín Nicolás Segundo",
+        "corto": "Martín Nicolás",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Huehuetenango",
+        "voto": "contra",
+        "id": "806"
+      },
+      {
+        "nombre": "Marvin Adrián Zepeda Zepeda",
+        "corto": "Marvin Zepeda",
+        "bancada": "TODOS",
+        "bancada_legible": "Todos",
+        "distrito": "Jutiapa",
+        "voto": "licencia",
+        "id": "927"
+      },
+      {
+        "nombre": "Maynor Estuardo Castillo Y Castillo",
+        "corto": "Maynor Castillo",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Jutiapa",
+        "voto": "favor",
+        "id": "787"
+      },
+      {
+        "nombre": "Maynor Gabriel Mejía Popol",
+        "corto": "Maynor Mejía",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Chimaltenango",
+        "voto": "favor",
+        "id": "782"
+      },
+      {
+        "nombre": "Mercedes Cristabel Guardado Linares De Nájera",
+        "corto": "Mercedes Guardado",
+        "bancada": "VALOR",
+        "bancada_legible": "Valor",
+        "distrito": "Escuintla",
+        "voto": "favor",
+        "id": "904"
+      },
+      {
+        "nombre": "Mercedes Del Rosario Monzón Escobedo",
+        "corto": "Mercedes Monzón",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Sacatepéquez",
+        "voto": "favor",
+        "id": "959"
+      },
+      {
+        "nombre": "Mirna Victoria Godoy Palala",
+        "corto": "Mirna Godoy",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Guatemala",
+        "voto": "favor",
+        "id": "909"
+      },
+      {
+        "nombre": "Mynor Alfonso De La Rosa Palacios",
+        "corto": "Mynor De La Rosa",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Listado Nacional",
+        "voto": "ausente",
+        "id": "944"
+      },
+      {
+        "nombre": "Mynor Francisco Rivera Salazar",
+        "corto": "Mynor Rivera",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Chimaltenango",
+        "voto": "favor",
+        "id": "890"
+      },
+      {
+        "nombre": "Nadia Lorena De León Torres",
+        "corto": "Nadia De León",
+        "bancada": "NOSOTROS",
+        "bancada_legible": "Nosotros",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "933"
+      },
+      {
+        "nombre": "Nery Abilio Ramos Y Ramos",
+        "corto": "Nery Ramos",
+        "bancada": "AZUL",
+        "bancada_legible": "Azul",
+        "distrito": "Jutiapa",
+        "voto": "favor",
+        "id": "925"
+      },
+      {
+        "nombre": "Nery Mamfredo Rodas Méndez",
+        "corto": "Nery Rodas",
+        "bancada": "CABAL",
+        "bancada_legible": "Cabal",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "931"
+      },
+      {
+        "nombre": "Nery René Mazariegos López",
+        "corto": "Nery Mazariegos",
+        "bancada": "VIVA",
+        "bancada_legible": "Viva",
+        "distrito": "Quetzaltenango",
+        "voto": "favor",
+        "id": "845"
+      },
+      {
+        "nombre": "Obbed Ediberto Castañasa Mendizábal",
+        "corto": "Obbed Castañasa",
+        "bancada": "VIVA",
+        "bancada_legible": "Viva",
+        "distrito": "Escuintla",
+        "voto": "favor",
+        "id": "905"
+      },
+      {
+        "nombre": "Olga Isabel Villalta Pereira",
+        "corto": "Olga Villalta",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "977"
+      },
+      {
+        "nombre": "Orlando Joaquín Blanco Lapola",
+        "corto": "Orlando Blanco",
+        "bancada": "VOS",
+        "bancada_legible": "VOS",
+        "distrito": "Listado Nacional",
+        "voto": "ausente",
+        "id": "18"
+      },
+      {
+        "nombre": "Oscar Rolando Corleto Rivera",
+        "corto": "Oscar Corleto",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Alta Verapaz",
+        "voto": "favor",
+        "id": "41"
+      },
+      {
+        "nombre": "Oswaldo Rosales Polanco",
+        "corto": "Oswaldo Rosales",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Suchitepéquez",
+        "voto": "contra",
+        "id": "874"
+      },
+      {
+        "nombre": "Pablo Leonel Cifuentes Ovalle",
+        "corto": "Pablo Cifuentes",
+        "bancada": "CABAL",
+        "bancada_legible": "Cabal",
+        "distrito": "Chimaltenango",
+        "voto": "favor",
+        "id": "888"
+      },
+      {
+        "nombre": "Randy Araely Coc Figueroa",
+        "corto": "Randy Coc",
+        "bancada": "VICTORIA",
+        "bancada_legible": "Victoria",
+        "distrito": "Alta Verapaz",
+        "voto": "favor",
+        "id": "885"
+      },
+      {
+        "nombre": "Raúl Amilcar Barrera Robles",
+        "corto": "Raúl Barrera",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Distrito Central",
+        "voto": "favor",
+        "id": "894"
+      },
+      {
+        "nombre": "Raúl Antonio Solórzano Quevedo",
+        "corto": "Raúl Solórzano",
+        "bancada": "INDP - UNE",
+        "bancada_legible": "independientes ex UNE",
+        "distrito": "Quiché",
+        "voto": "favor",
+        "id": "875"
+      },
+      {
+        "nombre": "Raúl Arnulfo Cuá Tumin",
+        "corto": "Raúl Cuá",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Chimaltenango",
+        "voto": "favor",
+        "id": "889"
+      },
+      {
+        "nombre": "Ricardo Leonel Martínez Alarcón",
+        "corto": "Ricardo Martínez",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Santa Rosa",
+        "voto": "favor",
+        "id": "964"
+      },
+      {
+        "nombre": "Rodrigo Antonio Pellecer Rodríguez",
+        "corto": "Rodrigo Pellecer",
+        "bancada": "ELEFANTE",
+        "bancada_legible": "Elefante",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "932"
+      },
+      {
+        "nombre": "Rolando Guzmán Figueroa",
+        "corto": "Rolando Guzmán",
+        "bancada": "CABAL",
+        "bancada_legible": "Cabal",
+        "distrito": "Escuintla",
+        "voto": "favor",
+        "id": "902"
+      },
+      {
+        "nombre": "Rolando Miguel Ovalle Barrios",
+        "corto": "Rolando Ovalle",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Quetzaltenango",
+        "voto": "favor",
+        "id": "953"
+      },
+      {
+        "nombre": "Román Wilfredo Castellanos Caal",
+        "corto": "Román Castellanos",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Distrito Central",
+        "voto": "favor",
+        "id": "831"
+      },
+      {
+        "nombre": "Ronald Yomelfy Portillo Cordón",
+        "corto": "Ronald Portillo",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Listado Nacional",
+        "voto": "contra",
+        "id": "946"
+      },
+      {
+        "nombre": "Ronalth Ivan Ochaeta Aguilar",
+        "corto": "Ronalth Ochaeta",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Guatemala",
+        "voto": "favor",
+        "id": "912"
+      },
+      {
+        "nombre": "Rudy Berner Pereira Delgado",
+        "corto": "Rudy Pereira",
+        "bancada": "INDP - NOSOTROS",
+        "bancada_legible": "independientes ex Nosotros",
+        "distrito": "Alta Verapaz",
+        "voto": "favor",
+        "id": "117"
+      },
+      {
+        "nombre": "Sabino Sebastián Velásquez Bámaca",
+        "corto": "Sabino Velásquez",
+        "bancada": "BIEN",
+        "bancada_legible": "Bien",
+        "distrito": "San Marcos",
+        "voto": "favor",
+        "id": "829"
+      },
+      {
+        "nombre": "Samuel Andrés Pérez Alvarez",
+        "corto": "Samuel Pérez",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Distrito Central",
+        "voto": "favor",
+        "id": "834"
+      },
+      {
+        "nombre": "Sandra Carolina Orellana Cruz",
+        "corto": "Sandra Orellana",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Zacapa",
+        "voto": "licencia",
+        "id": "790"
+      },
+      {
+        "nombre": "Sandra Erica Jovel Polanco",
+        "corto": "Sandra Jovel",
+        "bancada": "VALOR",
+        "bancada_legible": "Valor",
+        "distrito": "Distrito Central",
+        "voto": "ausente",
+        "id": "898"
+      },
+      {
+        "nombre": "Sandra Yanet Milian Gomez",
+        "corto": "Sandra Milian",
+        "bancada": "INDP - VICTORIA",
+        "bancada_legible": "independientes ex Victoria",
+        "distrito": "Alta Verapaz",
+        "voto": "favor",
+        "id": "886"
+      },
+      {
+        "nombre": "Sergio David Arana Roca",
+        "corto": "Sergio Arana",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Escuintla",
+        "voto": "favor",
+        "id": "772"
+      },
+      {
+        "nombre": "Sergio Guillermo Enriquez Garzaro",
+        "corto": "Sergio Enriquez",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "941"
+      },
+      {
+        "nombre": "Sergio Leonel Celis Navas",
+        "corto": "Sergio Celis",
+        "bancada": "CABAL",
+        "bancada_legible": "Cabal",
+        "distrito": "Sacatepéquez",
+        "voto": "favor",
+        "id": "31"
+      },
+      {
+        "nombre": "Sherol Ivanisse Arévalo Avila",
+        "corto": "Sherol Arévalo",
+        "bancada": "VALOR",
+        "bancada_legible": "Valor",
+        "distrito": "Totonicapán",
+        "voto": "favor",
+        "id": "972"
+      },
+      {
+        "nombre": "Shirley Joanna Rivera Zaldaña",
+        "corto": "Shirley Rivera",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Guatemala",
+        "voto": "favor",
+        "id": "785"
+      },
+      {
+        "nombre": "Sofía Jeanetth Hernández Herrera",
+        "corto": "Sofía Hernández",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Huehuetenango",
+        "voto": "favor",
+        "id": "78"
+      },
+      {
+        "nombre": "Sonia Marina Gutierrez Raguay",
+        "corto": "Sonia Gutierrez",
+        "bancada": "WINAQ - URNG",
+        "bancada_legible": "Winaq-URNG",
+        "distrito": "Listado Nacional",
+        "voto": "licencia",
+        "id": "861"
+      },
+      {
+        "nombre": "Thelma Elizabeth Ramírez Retana",
+        "corto": "Thelma Ramírez",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Izabal",
+        "voto": "ausente",
+        "id": "126"
+      },
+      {
+        "nombre": "Vasny Adiel Maldonado Alonzo",
+        "corto": "Vasny Maldonado",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Suchitepéquez",
+        "voto": "favor",
+        "id": "802"
+      },
+      {
+        "nombre": "Victor Alfredo Valenzuela Argueta",
+        "corto": "Victor Valenzuela",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "947"
+      },
+      {
+        "nombre": "Victor Hugo Cifuentes Delgado",
+        "corto": "Victor Cifuentes",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Alta Verapaz",
+        "voto": "contra",
+        "id": "883"
+      },
+      {
+        "nombre": "Victor Vicente Bonilla González",
+        "corto": "Victor Bonilla",
+        "bancada": "VIVA",
+        "bancada_legible": "Viva",
+        "distrito": "Chimaltenango",
+        "voto": "favor",
+        "id": "891"
+      },
+      {
+        "nombre": "Vivian Beatriz Preciado Navarijo",
+        "corto": "Vivian Preciado",
+        "bancada": "INDP - NOSOTROS",
+        "bancada_legible": "independientes ex Nosotros",
+        "distrito": "San Marcos",
+        "voto": "favor",
+        "id": "122"
+      }
+    ]
+  },
+  "urgencia": {
+    "id_votacion": "51600",
+    "clase": "urgencia",
+    "pregunta": "APROBACIÓN DE MOCIÓN PRIVILEGIADA (URGENCIA NACIONAL 6347)",
+    "fecha": "2026-11-03 17:41:47",
+    "sesion": "Ordinaria 56",
+    "url": "https://www.congreso.gob.gt/detalle_de_votacion/51600/41400",
+    "umbral": 107,
+    "favor": 109,
+    "contra": 10,
+    "ausente": 31,
+    "licencia": 10,
+    "bancadas": {
+      "VAMOS": {
+        "contra": 7,
+        "ausente": 4,
+        "favor": 24,
+        "licencia": 3
+      },
+      "INDP - SEMILLA": {
+        "favor": 18,
+        "licencia": 1,
+        "ausente": 4
+      },
+      "UNE": {
+        "favor": 15,
+        "licencia": 2,
+        "ausente": 4,
+        "contra": 1
+      },
+      "CABAL": {
+        "ausente": 6,
+        "favor": 10,
+        "licencia": 2
+      },
+      "VALOR": {
+        "favor": 6,
+        "ausente": 3,
+        "contra": 1
+      },
+      "VIVA": {
+        "favor": 6,
+        "ausente": 2
+      },
+      "TODOS": {
+        "favor": 5,
+        "licencia": 1
+      },
+      "INDP - UNE": {
+        "favor": 5,
+        "ausente": 1
+      },
+      "CREO": {
+        "favor": 3
+      },
+      "INDP - VIVA": {
+        "favor": 2,
+        "ausente": 1
+      },
+      "BIEN": {
+        "ausente": 1,
+        "favor": 2
+      },
+      "VOS": {
+        "favor": 3
+      },
+      "UNIONISTA": {
+        "contra": 1,
+        "ausente": 1
+      },
+      "ELEFANTE": {
+        "favor": 2
+      },
+      "AZUL": {
+        "favor": 2
+      },
+      "VICTORIA": {
+        "favor": 1,
+        "ausente": 1
+      },
+      "INDP - NOSOTROS": {
+        "favor": 2
+      },
+      "INDP - BIEN": {
+        "favor": 1
+      },
+      "CAMBIO": {
+        "ausente": 1
+      },
+      "INDP - VAMOS": {
+        "ausente": 1
+      },
+      "INDP - VOS": {
+        "ausente": 1
+      },
+      "NOSOTROS": {
+        "favor": 1
+      },
+      "INDP - VICTORIA": {
+        "favor": 1
+      },
+      "WINAQ - URNG": {
+        "licencia": 1
+      }
+    },
+    "diputados": [
+      {
+        "nombre": "Alberto Eduardo De León Benítez",
+        "corto": "Alberto De León",
+        "bancada": "CABAL",
+        "bancada_legible": "Cabal",
+        "distrito": "Totonicapán",
+        "voto": "ausente",
+        "id": "970"
+      },
+      {
+        "nombre": "Allan Estuardo Rodríguez Reyes",
+        "corto": "Allan Rodríguez",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Sololá",
+        "voto": "contra",
+        "id": "770"
+      },
+      {
+        "nombre": "Alma Luz Guerrero De La Cruz",
+        "corto": "Alma Guerrero",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "935"
+      },
+      {
+        "nombre": "Alvaro Enrique Arzú Escobar",
+        "corto": "Alvaro Arzú",
+        "bancada": "UNIONISTA",
+        "bancada_legible": "Unionista",
+        "distrito": "Listado Nacional",
+        "voto": "contra",
+        "id": "11"
+      },
+      {
+        "nombre": "Ana Lucrecia Marroquín Godoy De Palomo",
+        "corto": "Ana Marroquín",
+        "bancada": "UNIONISTA",
+        "bancada_legible": "Unionista",
+        "distrito": "Listado Nacional",
+        "voto": "ausente",
+        "id": "179"
+      },
+      {
+        "nombre": "Ana Patricia Orantes Thomas",
+        "corto": "Ana Orantes",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "938"
+      },
+      {
+        "nombre": "Andrea Beatríz Villagrán Antón de Pantoja",
+        "corto": "Andrea Villagrán",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Distrito Central",
+        "voto": "favor",
+        "id": "155"
+      },
+      {
+        "nombre": "Andrea María Reyes Zeceña",
+        "corto": "Andrea Reyes",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Guatemala",
+        "voto": "favor",
+        "id": "913"
+      },
+      {
+        "nombre": "Benjamin Ipiña Leiva",
+        "corto": "Benjamin Ipiña",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Petén",
+        "voto": "favor",
+        "id": "949"
+      },
+      {
+        "nombre": "Bequer Neftali Chocooj De La Cruz",
+        "corto": "Bequer Chocooj",
+        "bancada": "CABAL",
+        "bancada_legible": "Cabal",
+        "distrito": "Sololá",
+        "voto": "favor",
+        "id": "965"
+      },
+      {
+        "nombre": "Boris Roberto España Cáceres",
+        "corto": "Boris España",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Chiquimula",
+        "voto": "ausente",
+        "id": "54"
+      },
+      {
+        "nombre": "Brenda Marleny Mejía López",
+        "corto": "Brenda Mejía",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Distrito Central",
+        "voto": "favor",
+        "id": "896"
+      },
+      {
+        "nombre": "Byron Alesky Obregón Castañeda",
+        "corto": "Byron Obregón",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Listado Nacional",
+        "voto": "licencia",
+        "id": "937"
+      },
+      {
+        "nombre": "Byron Bladimiro Rodríguez Palacios",
+        "corto": "Byron Rodríguez",
+        "bancada": "TODOS",
+        "bancada_legible": "Todos",
+        "distrito": "Quetzaltenango",
+        "voto": "favor",
+        "id": "952"
+      },
+      {
+        "nombre": "Byron Leonidas Tejeda Marroquín",
+        "corto": "Byron Tejeda",
+        "bancada": "CABAL",
+        "bancada_legible": "Cabal",
+        "distrito": "Baja Verapaz",
+        "voto": "ausente",
+        "id": "887"
+      },
+      {
+        "nombre": "Candido Fernando Leal Gómez",
+        "corto": "Candido Leal",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Guatemala",
+        "voto": "favor",
+        "id": "780"
+      },
+      {
+        "nombre": "Carlos Enrique López Girón",
+        "corto": "Carlos López",
+        "bancada": "VALOR",
+        "bancada_legible": "Valor",
+        "distrito": "Quiché",
+        "voto": "favor",
+        "id": "976"
+      },
+      {
+        "nombre": "Carlos Enrique López Maldonado",
+        "corto": "Carlos López",
+        "bancada": "CABAL",
+        "bancada_legible": "Cabal",
+        "distrito": "Quiché",
+        "voto": "favor",
+        "id": "92"
+      },
+      {
+        "nombre": "Carlos Napoleon Rojas Alarcón",
+        "corto": "Carlos Rojas",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Santa Rosa",
+        "voto": "favor",
+        "id": "130"
+      },
+      {
+        "nombre": "Carlos Roberto Calderon Galvez",
+        "corto": "Carlos Calderon",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Listado Nacional",
+        "voto": "licencia",
+        "id": "774"
+      },
+      {
+        "nombre": "Christian Joél Martínez Juárez",
+        "corto": "Christian Martínez",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Huehuetenango",
+        "voto": "favor",
+        "id": "921"
+      },
+      {
+        "nombre": "Cornelio Gonzalo García García",
+        "corto": "Cornelio García",
+        "bancada": "TODOS",
+        "bancada_legible": "Todos",
+        "distrito": "Huehuetenango",
+        "voto": "favor",
+        "id": "65"
+      },
+      {
+        "nombre": "Cristian Rodolfo Alvarez Y Alvarez",
+        "corto": "Cristian Alvarez",
+        "bancada": "CREO",
+        "bancada_legible": "CREO",
+        "distrito": "Distrito Central",
+        "voto": "favor",
+        "id": "851"
+      },
+      {
+        "nombre": "César Augusto Amézquita Del Valle",
+        "corto": "César Amézquita",
+        "bancada": "VIVA",
+        "bancada_legible": "Viva",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "948"
+      },
+      {
+        "nombre": "César Augusto Fión Morales",
+        "corto": "César Fión",
+        "bancada": "INDP - UNE",
+        "bancada_legible": "independientes ex UNE",
+        "distrito": "Petén",
+        "voto": "favor",
+        "id": "796"
+      },
+      {
+        "nombre": "César Augusto Rodas Cardona",
+        "corto": "César Rodas",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "El Progreso",
+        "voto": "ausente",
+        "id": "901"
+      },
+      {
+        "nombre": "César Roberto Dávila Córdova",
+        "corto": "César Dávila",
+        "bancada": "INDP - BIEN",
+        "bancada_legible": "independientes ex Bien",
+        "distrito": "Guatemala",
+        "voto": "favor",
+        "id": "906"
+      },
+      {
+        "nombre": "Danilo Madrazo Mazariegos",
+        "corto": "Danilo Madrazo",
+        "bancada": "TODOS",
+        "bancada_legible": "Todos",
+        "distrito": "Suchitepéquez",
+        "voto": "favor",
+        "id": "967"
+      },
+      {
+        "nombre": "Darwin Alberto Lucas Paz",
+        "corto": "Darwin Lucas",
+        "bancada": "INDP - UNE",
+        "bancada_legible": "independientes ex UNE",
+        "distrito": "Alta Verapaz",
+        "voto": "favor",
+        "id": "801"
+      },
+      {
+        "nombre": "Darwin Edgardo Ramírez Cameros",
+        "corto": "Darwin Ramírez",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Izabal",
+        "voto": "favor",
+        "id": "922"
+      },
+      {
+        "nombre": "David Mauricio Illescas Sandoval",
+        "corto": "David Illescas",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Guatemala",
+        "voto": "ausente",
+        "id": "910"
+      },
+      {
+        "nombre": "Duay Antoni Martinez Salazar",
+        "corto": "Duay Martinez",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Quetzaltenango",
+        "voto": "favor",
+        "id": "781"
+      },
+      {
+        "nombre": "Dámaris Carolina Cerna Acevedo",
+        "corto": "Dámaris Cerna",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Lista Nacional",
+        "voto": "licencia",
+        "id": "939"
+      },
+      {
+        "nombre": "Edgar Raúl Reyes Lee",
+        "corto": "Edgar Reyes",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Petén",
+        "voto": "contra",
+        "id": "127"
+      },
+      {
+        "nombre": "Edín Alexander De Jesús Mejía",
+        "corto": "Edín De Jesús",
+        "bancada": "VIVA",
+        "bancada_legible": "Viva",
+        "distrito": "Petén",
+        "voto": "favor",
+        "id": "950"
+      },
+      {
+        "nombre": "Elena Sofía Motta Kolleff",
+        "corto": "Elena Motta",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Distrito Central",
+        "voto": "ausente",
+        "id": "897"
+      },
+      {
+        "nombre": "Elmer Josué Palencia Reyes",
+        "corto": "Elmer Palencia",
+        "bancada": "VALOR",
+        "bancada_legible": "Valor",
+        "distrito": "Guatemala",
+        "voto": "ausente",
+        "id": "919"
+      },
+      {
+        "nombre": "Erick Geovany Martínez Hernández",
+        "corto": "Erick Martínez",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Huehuetenango",
+        "voto": "favor",
+        "id": "793"
+      },
+      {
+        "nombre": "Erick José Mario Tzún De León",
+        "corto": "Erick Tzún",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Quetzaltenango",
+        "voto": "licencia",
+        "id": "954"
+      },
+      {
+        "nombre": "Ernesto Bran Colindres",
+        "corto": "Ernesto Bran",
+        "bancada": "VALOR",
+        "bancada_legible": "Valor",
+        "distrito": "El Progreso",
+        "voto": "favor",
+        "id": "900"
+      },
+      {
+        "nombre": "Ervin Adim Maldonado Molina",
+        "corto": "Ervin Maldonado",
+        "bancada": "INDP - UNE",
+        "bancada_legible": "independientes ex UNE",
+        "distrito": "Guatemala",
+        "voto": "ausente",
+        "id": "95"
+      },
+      {
+        "nombre": "Esduín Jerson Javier Javier",
+        "corto": "Esduín Javier",
+        "bancada": "CAMBIO",
+        "bancada_legible": "Cambio",
+        "distrito": "Chiquimula",
+        "voto": "ausente",
+        "id": "892"
+      },
+      {
+        "nombre": "Evelyn Oddeth Morataya Marroquín",
+        "corto": "Evelyn Morataya",
+        "bancada": "INDP - VIVA",
+        "bancada_legible": "independientes ex Viva",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "828"
+      },
+      {
+        "nombre": "Faver Emilio Salazar Cordero",
+        "corto": "Faver Salazar",
+        "bancada": "VALOR",
+        "bancada_legible": "Valor",
+        "distrito": "Jalapa",
+        "voto": "favor",
+        "id": "924"
+      },
+      {
+        "nombre": "Felipe Alejos Lorenzana",
+        "corto": "Felipe Alejos",
+        "bancada": "TODOS",
+        "bancada_legible": "Todos",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "2"
+      },
+      {
+        "nombre": "Fidel Reyes Lee",
+        "corto": "Fidel Reyes",
+        "bancada": "BIEN",
+        "bancada_legible": "Bien",
+        "distrito": "Listado Nacional",
+        "voto": "ausente",
+        "id": "128"
+      },
+      {
+        "nombre": "Fidencio Lima Pop",
+        "corto": "Fidencio Lima",
+        "bancada": "VIVA",
+        "bancada_legible": "Viva",
+        "distrito": "Alta Verapaz",
+        "voto": "ausente",
+        "id": "247"
+      },
+      {
+        "nombre": "Francisco Vitelio Lam Ruano",
+        "corto": "Francisco Lam",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Escuintla",
+        "voto": "ausente",
+        "id": "86"
+      },
+      {
+        "nombre": "Gerardín Ariel Díaz Mazariegos",
+        "corto": "Gerardín Díaz",
+        "bancada": "VALOR",
+        "bancada_legible": "Valor",
+        "distrito": "Quetzaltenango",
+        "voto": "favor",
+        "id": "818"
+      },
+      {
+        "nombre": "Gerson Geovanny Barragán Morales",
+        "corto": "Gerson Barragán",
+        "bancada": "VIVA",
+        "bancada_legible": "Viva",
+        "distrito": "Suchitepéquez",
+        "voto": "favor",
+        "id": "969"
+      },
+      {
+        "nombre": "Gladis Carolina Cifuentes Barragán",
+        "corto": "Gladis Cifuentes",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "San Marcos",
+        "voto": "contra",
+        "id": "962"
+      },
+      {
+        "nombre": "Greicy Domenica De León De León",
+        "corto": "Greicy De León",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Quiché",
+        "voto": "favor",
+        "id": "777"
+      },
+      {
+        "nombre": "Guillermo Alberto Cifuentes Barragán",
+        "corto": "Guillermo Cifuentes",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "San Marcos",
+        "voto": "contra",
+        "id": "776"
+      },
+      {
+        "nombre": "Guillermo Antonio Ralda Conde",
+        "corto": "Guillermo Antonio",
+        "bancada": "CABAL",
+        "bancada_legible": "Cabal",
+        "distrito": "Retalhuleu",
+        "voto": "favor",
+        "id": "957"
+      },
+      {
+        "nombre": "Gustavo Adolfo Cifuentes Navarro",
+        "corto": "Gustavo Cifuentes",
+        "bancada": "TODOS",
+        "bancada_legible": "Todos",
+        "distrito": "San Marcos",
+        "voto": "favor",
+        "id": "961"
+      },
+      {
+        "nombre": "Gustavo Adolfo Crúz Montoya",
+        "corto": "Gustavo Crúz",
+        "bancada": "INDP - VIVA",
+        "bancada_legible": "independientes ex Viva",
+        "distrito": "Listado Nacional",
+        "voto": "ausente",
+        "id": "826"
+      },
+      {
+        "nombre": "Hellen Magaly Alexándra Ajcip Canel",
+        "corto": "Hellen Ajcip",
+        "bancada": "ELEFANTE",
+        "bancada_legible": "Elefante",
+        "distrito": "Guatemala",
+        "voto": "favor",
+        "id": "840"
+      },
+      {
+        "nombre": "Herman Otoniel Echeverría Casado",
+        "corto": "Herman Echeverría",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Alta Verapaz",
+        "voto": "favor",
+        "id": "884"
+      },
+      {
+        "nombre": "Héctor Adolfo Aldana Reyes",
+        "corto": "Héctor Aldana",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "943"
+      },
+      {
+        "nombre": "Ivana Bonilla Oliva",
+        "corto": "Ivana Bonilla",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Chiquimula",
+        "voto": "favor",
+        "id": "979"
+      },
+      {
+        "nombre": "Ivanna María Luján Padilla",
+        "corto": "Ivanna Luján",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Guatemala",
+        "voto": "favor",
+        "id": "911"
+      },
+      {
+        "nombre": "Jaime Octavio Augusto Lucero Vásquez",
+        "corto": "Jaime Lucero",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Jalapa",
+        "voto": "favor",
+        "id": "93"
+      },
+      {
+        "nombre": "Jairo Danilo Orellana Sandoval",
+        "corto": "Jairo Orellana",
+        "bancada": "CABAL",
+        "bancada_legible": "Cabal",
+        "distrito": "Jalapa",
+        "voto": "favor",
+        "id": "923"
+      },
+      {
+        "nombre": "Jairo Joaquín Flores Divas",
+        "corto": "Jairo Flores",
+        "bancada": "VOS",
+        "bancada_legible": "VOS",
+        "distrito": "Guatemala",
+        "voto": "favor",
+        "id": "61"
+      },
+      {
+        "nombre": "Jeovanni Omar Domínguez Orozco",
+        "corto": "Jeovanni Domínguez",
+        "bancada": "VIVA",
+        "bancada_legible": "Viva",
+        "distrito": "San Marcos",
+        "voto": "favor",
+        "id": "963"
+      },
+      {
+        "nombre": "Jorge Estuardo Ayala Marroquin",
+        "corto": "Jorge Ayala",
+        "bancada": "VALOR",
+        "bancada_legible": "Valor",
+        "distrito": "Guatemala",
+        "voto": "ausente",
+        "id": "918"
+      },
+      {
+        "nombre": "Jorge Mario Cabrera Ordóñez",
+        "corto": "Jorge Cabrera",
+        "bancada": "INDP - VAMOS",
+        "bancada_legible": "independientes ex Vamos",
+        "distrito": "Totonicapán",
+        "voto": "ausente",
+        "id": "973"
+      },
+      {
+        "nombre": "Jorge Mario Villagrán Alvarez",
+        "corto": "Jorge Villagrán",
+        "bancada": "AZUL",
+        "bancada_legible": "Azul",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "928"
+      },
+      {
+        "nombre": "Jorge Romeo Castro Delgado",
+        "corto": "Jorge Castro",
+        "bancada": "INDP - VIVA",
+        "bancada_legible": "independientes ex Viva",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "842"
+      },
+      {
+        "nombre": "Josué Edmundo Lemus Cifuentes",
+        "corto": "Josué Lemus",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Quiché",
+        "voto": "favor",
+        "id": "881"
+      },
+      {
+        "nombre": "José Adolfo Quezada Valdéz",
+        "corto": "José Quezada",
+        "bancada": "INDP - UNE",
+        "bancada_legible": "independientes ex UNE",
+        "distrito": "Quiché",
+        "voto": "favor",
+        "id": "864"
+      },
+      {
+        "nombre": "José Alberto Chic Cardona",
+        "corto": "José Chic",
+        "bancada": "VOS",
+        "bancada_legible": "VOS",
+        "distrito": "Distrito Central",
+        "voto": "favor",
+        "id": "899"
+      },
+      {
+        "nombre": "José Arnulfo García Barrios",
+        "corto": "José García",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Suchitepéquez",
+        "voto": "favor",
+        "id": "788"
+      },
+      {
+        "nombre": "José Carlo Solano",
+        "corto": "José Solano",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Retalhuleu",
+        "voto": "favor",
+        "id": "958"
+      },
+      {
+        "nombre": "José Carlos Sanabria Arias",
+        "corto": "José Sanabria",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Guatemala",
+        "voto": "favor",
+        "id": "914"
+      },
+      {
+        "nombre": "José Diego Toledo Cruz",
+        "corto": "José Toledo",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Sacatepéquez",
+        "voto": "favor",
+        "id": "960"
+      },
+      {
+        "nombre": "José Inés Castillo Martínez",
+        "corto": "José Castillo",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Santa Rosa",
+        "voto": "favor",
+        "id": "30"
+      },
+      {
+        "nombre": "José Luis Galindo De León",
+        "corto": "José Galindo",
+        "bancada": "VALOR",
+        "bancada_legible": "Valor",
+        "distrito": "Retalhuleu",
+        "voto": "ausente",
+        "id": "819"
+      },
+      {
+        "nombre": "José Orlando Pérez Marroquín",
+        "corto": "José Pérez",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Quetzaltenango",
+        "voto": "favor",
+        "id": "951"
+      },
+      {
+        "nombre": "José Pablo Mendoza Franco",
+        "corto": "José Mendoza",
+        "bancada": "CREO",
+        "bancada_legible": "CREO",
+        "distrito": "Distrito Central",
+        "voto": "favor",
+        "id": "893"
+      },
+      {
+        "nombre": "Joél Rubén Martínez Herrera",
+        "corto": "Joél Martínez",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Huehuetenango",
+        "voto": "ausente",
+        "id": "99"
+      },
+      {
+        "nombre": "Juan Carlos Rivera Estevez",
+        "corto": "Juan Rivera",
+        "bancada": "VICTORIA",
+        "bancada_legible": "Victoria",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "857"
+      },
+      {
+        "nombre": "Juan Ramon Rivas García",
+        "corto": "Juan Rivas",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Izabal",
+        "voto": "favor",
+        "id": "811"
+      },
+      {
+        "nombre": "Julio César López Escobar",
+        "corto": "Julio López",
+        "bancada": "CABAL",
+        "bancada_legible": "Cabal",
+        "distrito": "Huehuetenango",
+        "voto": "ausente",
+        "id": "789"
+      },
+      {
+        "nombre": "Julio César Portillo Paz",
+        "corto": "Julio Portillo",
+        "bancada": "CABAL",
+        "bancada_legible": "Cabal",
+        "distrito": "Zacapa",
+        "voto": "favor",
+        "id": "974"
+      },
+      {
+        "nombre": "Julio Daniel Marroquín Ordoñez",
+        "corto": "Julio Marroquín",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Guatemala",
+        "voto": "favor",
+        "id": "917"
+      },
+      {
+        "nombre": "Julio Héctor Estrada Dominguez",
+        "corto": "Julio Estrada",
+        "bancada": "CABAL",
+        "bancada_legible": "Cabal",
+        "distrito": "Listado Nacional",
+        "voto": "licencia",
+        "id": "930"
+      },
+      {
+        "nombre": "Julio Pedro Gómez Gómez",
+        "corto": "Julio Gómez",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Totonicapán",
+        "voto": "favor",
+        "id": "971"
+      },
+      {
+        "nombre": "Karina Alexandra Paz Rosales",
+        "corto": "Karina Paz",
+        "bancada": "INDP - VOS",
+        "bancada_legible": "independientes ex VOS",
+        "distrito": "Guatemala",
+        "voto": "ausente",
+        "id": "160"
+      },
+      {
+        "nombre": "Karla Betzaida Cardona Arreaga",
+        "corto": "Karla Cardona",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Huehuetenango",
+        "voto": "favor",
+        "id": "791"
+      },
+      {
+        "nombre": "Kevyn Luis Carlo Escobar Castillo",
+        "corto": "Kevyn Escobar",
+        "bancada": "CABAL",
+        "bancada_legible": "Cabal",
+        "distrito": "Jutiapa",
+        "voto": "ausente",
+        "id": "926"
+      },
+      {
+        "nombre": "Laura Fabiola Marroquín Cordón",
+        "corto": "Laura Marroquín",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Distrito Central",
+        "voto": "favor",
+        "id": "895"
+      },
+      {
+        "nombre": "Leopoldo Salazar Samayoa",
+        "corto": "Leopoldo Salazar",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Alta Verapaz",
+        "voto": "favor",
+        "id": "822"
+      },
+      {
+        "nombre": "León Felipe Barrera Villanueva",
+        "corto": "León Barrera",
+        "bancada": "INDP - UNE",
+        "bancada_legible": "independientes ex UNE",
+        "distrito": "Guatemala",
+        "voto": "favor",
+        "id": "915"
+      },
+      {
+        "nombre": "Lourdes Teresita De León Torres",
+        "corto": "Lourdes De León",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "940"
+      },
+      {
+        "nombre": "Lucrecia Carola Samayoa Reyes",
+        "corto": "Lucrecia Samayoa",
+        "bancada": "BIEN",
+        "bancada_legible": "Bien",
+        "distrito": "Huehuetenango",
+        "voto": "favor",
+        "id": "135"
+      },
+      {
+        "nombre": "Luis Alberto Contreras Colíndres",
+        "corto": "Luis Contreras",
+        "bancada": "CREO",
+        "bancada_legible": "CREO",
+        "distrito": "San Marcos",
+        "voto": "favor",
+        "id": "39"
+      },
+      {
+        "nombre": "Luis Alberto Rodríguez Reyes",
+        "corto": "Luis Rodríguez",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Sololá",
+        "voto": "contra",
+        "id": "966"
+      },
+      {
+        "nombre": "Luis Antonio Cáceres Gamarro",
+        "corto": "Luis Cáceres",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Guatemala",
+        "voto": "favor",
+        "id": "908"
+      },
+      {
+        "nombre": "Luis Fernando Aguirre Estrada",
+        "corto": "Luis Aguirre",
+        "bancada": "CABAL",
+        "bancada_legible": "Cabal",
+        "distrito": "Listado Nacional",
+        "voto": "licencia",
+        "id": "929"
+      },
+      {
+        "nombre": "Luis Javier López Bolaños",
+        "corto": "Luis López",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "942"
+      },
+      {
+        "nombre": "Manfredo Duvalier Castañón González",
+        "corto": "Manfredo Castañón",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "934"
+      },
+      {
+        "nombre": "Manrique Obel Gálvez De León",
+        "corto": "Manrique Gálvez",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Huehuetenango",
+        "voto": "favor",
+        "id": "920"
+      },
+      {
+        "nombre": "Manuel De Jesús Archila Cordón",
+        "corto": "Manuel Archila",
+        "bancada": "CABAL",
+        "bancada_legible": "Cabal",
+        "distrito": "Guatemala",
+        "voto": "favor",
+        "id": "907"
+      },
+      {
+        "nombre": "Manuel Geovany Alvarado Vásquez",
+        "corto": "Manuel Alvarado",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Quiché",
+        "voto": "favor",
+        "id": "956"
+      },
+      {
+        "nombre": "Marco Alejandro Pérez Toribio",
+        "corto": "Marco Pérez",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "945"
+      },
+      {
+        "nombre": "Marco Aurelio Mejía Alfaro",
+        "corto": "Marco Mejía",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Escuintla",
+        "voto": "ausente",
+        "id": "903"
+      },
+      {
+        "nombre": "Marcos Eduardo Tebelán Pantzay",
+        "corto": "Marcos Tebelán",
+        "bancada": "CABAL",
+        "bancada_legible": "Cabal",
+        "distrito": "Quiché",
+        "voto": "favor",
+        "id": "955"
+      },
+      {
+        "nombre": "Mario Ernesto Gálvez Muñóz",
+        "corto": "Mario Gálvez",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "San Marcos",
+        "voto": "licencia",
+        "id": "870"
+      },
+      {
+        "nombre": "Mario Velásquez Pérez",
+        "corto": "Mario Velásquez",
+        "bancada": "CABAL",
+        "bancada_legible": "Cabal",
+        "distrito": "San Marcos",
+        "voto": "ausente",
+        "id": "154"
+      },
+      {
+        "nombre": "Marleni Lineth Matías Santiago",
+        "corto": "Marleni Matías",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Baja Verapaz",
+        "voto": "ausente",
+        "id": "100"
+      },
+      {
+        "nombre": "Martín Nicolás Segundo",
+        "corto": "Martín Nicolás",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Huehuetenango",
+        "voto": "favor",
+        "id": "806"
+      },
+      {
+        "nombre": "Marvin Adrián Zepeda Zepeda",
+        "corto": "Marvin Zepeda",
+        "bancada": "TODOS",
+        "bancada_legible": "Todos",
+        "distrito": "Jutiapa",
+        "voto": "licencia",
+        "id": "927"
+      },
+      {
+        "nombre": "Maynor Estuardo Castillo Y Castillo",
+        "corto": "Maynor Castillo",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Jutiapa",
+        "voto": "favor",
+        "id": "787"
+      },
+      {
+        "nombre": "Maynor Gabriel Mejía Popol",
+        "corto": "Maynor Mejía",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Chimaltenango",
+        "voto": "favor",
+        "id": "782"
+      },
+      {
+        "nombre": "Mercedes Cristabel Guardado Linares De Nájera",
+        "corto": "Mercedes Guardado",
+        "bancada": "VALOR",
+        "bancada_legible": "Valor",
+        "distrito": "Escuintla",
+        "voto": "favor",
+        "id": "904"
+      },
+      {
+        "nombre": "Mercedes Del Rosario Monzón Escobedo",
+        "corto": "Mercedes Monzón",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Sacatepéquez",
+        "voto": "favor",
+        "id": "959"
+      },
+      {
+        "nombre": "Mirna Victoria Godoy Palala",
+        "corto": "Mirna Godoy",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Guatemala",
+        "voto": "favor",
+        "id": "909"
+      },
+      {
+        "nombre": "Mynor Alfonso De La Rosa Palacios",
+        "corto": "Mynor De La Rosa",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Listado Nacional",
+        "voto": "contra",
+        "id": "944"
+      },
+      {
+        "nombre": "Mynor Francisco Rivera Salazar",
+        "corto": "Mynor Rivera",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Chimaltenango",
+        "voto": "favor",
+        "id": "890"
+      },
+      {
+        "nombre": "Nadia Lorena De León Torres",
+        "corto": "Nadia De León",
+        "bancada": "NOSOTROS",
+        "bancada_legible": "Nosotros",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "933"
+      },
+      {
+        "nombre": "Nery Abilio Ramos Y Ramos",
+        "corto": "Nery Ramos",
+        "bancada": "AZUL",
+        "bancada_legible": "Azul",
+        "distrito": "Jutiapa",
+        "voto": "favor",
+        "id": "925"
+      },
+      {
+        "nombre": "Nery Mamfredo Rodas Méndez",
+        "corto": "Nery Rodas",
+        "bancada": "CABAL",
+        "bancada_legible": "Cabal",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "931"
+      },
+      {
+        "nombre": "Nery René Mazariegos López",
+        "corto": "Nery Mazariegos",
+        "bancada": "VIVA",
+        "bancada_legible": "Viva",
+        "distrito": "Quetzaltenango",
+        "voto": "ausente",
+        "id": "845"
+      },
+      {
+        "nombre": "Obbed Ediberto Castañasa Mendizábal",
+        "corto": "Obbed Castañasa",
+        "bancada": "VIVA",
+        "bancada_legible": "Viva",
+        "distrito": "Escuintla",
+        "voto": "favor",
+        "id": "905"
+      },
+      {
+        "nombre": "Olga Isabel Villalta Pereira",
+        "corto": "Olga Villalta",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "977"
+      },
+      {
+        "nombre": "Orlando Joaquín Blanco Lapola",
+        "corto": "Orlando Blanco",
+        "bancada": "VOS",
+        "bancada_legible": "VOS",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "18"
+      },
+      {
+        "nombre": "Oscar Rolando Corleto Rivera",
+        "corto": "Oscar Corleto",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Alta Verapaz",
+        "voto": "favor",
+        "id": "41"
+      },
+      {
+        "nombre": "Oswaldo Rosales Polanco",
+        "corto": "Oswaldo Rosales",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Suchitepéquez",
+        "voto": "favor",
+        "id": "874"
+      },
+      {
+        "nombre": "Pablo Leonel Cifuentes Ovalle",
+        "corto": "Pablo Cifuentes",
+        "bancada": "CABAL",
+        "bancada_legible": "Cabal",
+        "distrito": "Chimaltenango",
+        "voto": "favor",
+        "id": "888"
+      },
+      {
+        "nombre": "Randy Araely Coc Figueroa",
+        "corto": "Randy Coc",
+        "bancada": "VICTORIA",
+        "bancada_legible": "Victoria",
+        "distrito": "Alta Verapaz",
+        "voto": "ausente",
+        "id": "885"
+      },
+      {
+        "nombre": "Raúl Amilcar Barrera Robles",
+        "corto": "Raúl Barrera",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Distrito Central",
+        "voto": "favor",
+        "id": "894"
+      },
+      {
+        "nombre": "Raúl Antonio Solórzano Quevedo",
+        "corto": "Raúl Solórzano",
+        "bancada": "INDP - UNE",
+        "bancada_legible": "independientes ex UNE",
+        "distrito": "Quiché",
+        "voto": "favor",
+        "id": "875"
+      },
+      {
+        "nombre": "Raúl Arnulfo Cuá Tumin",
+        "corto": "Raúl Cuá",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Chimaltenango",
+        "voto": "favor",
+        "id": "889"
+      },
+      {
+        "nombre": "Ricardo Leonel Martínez Alarcón",
+        "corto": "Ricardo Martínez",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Santa Rosa",
+        "voto": "ausente",
+        "id": "964"
+      },
+      {
+        "nombre": "Rodrigo Antonio Pellecer Rodríguez",
+        "corto": "Rodrigo Pellecer",
+        "bancada": "ELEFANTE",
+        "bancada_legible": "Elefante",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "932"
+      },
+      {
+        "nombre": "Rolando Guzmán Figueroa",
+        "corto": "Rolando Guzmán",
+        "bancada": "CABAL",
+        "bancada_legible": "Cabal",
+        "distrito": "Escuintla",
+        "voto": "ausente",
+        "id": "902"
+      },
+      {
+        "nombre": "Rolando Miguel Ovalle Barrios",
+        "corto": "Rolando Ovalle",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Quetzaltenango",
+        "voto": "favor",
+        "id": "953"
+      },
+      {
+        "nombre": "Román Wilfredo Castellanos Caal",
+        "corto": "Román Castellanos",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Distrito Central",
+        "voto": "ausente",
+        "id": "831"
+      },
+      {
+        "nombre": "Ronald Yomelfy Portillo Cordón",
+        "corto": "Ronald Portillo",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Listado Nacional",
+        "voto": "contra",
+        "id": "946"
+      },
+      {
+        "nombre": "Ronalth Ivan Ochaeta Aguilar",
+        "corto": "Ronalth Ochaeta",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Guatemala",
+        "voto": "ausente",
+        "id": "912"
+      },
+      {
+        "nombre": "Rudy Berner Pereira Delgado",
+        "corto": "Rudy Pereira",
+        "bancada": "INDP - NOSOTROS",
+        "bancada_legible": "independientes ex Nosotros",
+        "distrito": "Alta Verapaz",
+        "voto": "favor",
+        "id": "117"
+      },
+      {
+        "nombre": "Sabino Sebastián Velásquez Bámaca",
+        "corto": "Sabino Velásquez",
+        "bancada": "BIEN",
+        "bancada_legible": "Bien",
+        "distrito": "San Marcos",
+        "voto": "favor",
+        "id": "829"
+      },
+      {
+        "nombre": "Samuel Andrés Pérez Alvarez",
+        "corto": "Samuel Pérez",
+        "bancada": "INDP - SEMILLA",
+        "bancada_legible": "Semilla (independientes)",
+        "distrito": "Distrito Central",
+        "voto": "favor",
+        "id": "834"
+      },
+      {
+        "nombre": "Sandra Carolina Orellana Cruz",
+        "corto": "Sandra Orellana",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Zacapa",
+        "voto": "licencia",
+        "id": "790"
+      },
+      {
+        "nombre": "Sandra Erica Jovel Polanco",
+        "corto": "Sandra Jovel",
+        "bancada": "VALOR",
+        "bancada_legible": "Valor",
+        "distrito": "Distrito Central",
+        "voto": "contra",
+        "id": "898"
+      },
+      {
+        "nombre": "Sandra Yanet Milian Gomez",
+        "corto": "Sandra Milian",
+        "bancada": "INDP - VICTORIA",
+        "bancada_legible": "independientes ex Victoria",
+        "distrito": "Alta Verapaz",
+        "voto": "favor",
+        "id": "886"
+      },
+      {
+        "nombre": "Sergio David Arana Roca",
+        "corto": "Sergio Arana",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Escuintla",
+        "voto": "favor",
+        "id": "772"
+      },
+      {
+        "nombre": "Sergio Guillermo Enriquez Garzaro",
+        "corto": "Sergio Enriquez",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Listado Nacional",
+        "voto": "ausente",
+        "id": "941"
+      },
+      {
+        "nombre": "Sergio Leonel Celis Navas",
+        "corto": "Sergio Celis",
+        "bancada": "CABAL",
+        "bancada_legible": "Cabal",
+        "distrito": "Sacatepéquez",
+        "voto": "favor",
+        "id": "31"
+      },
+      {
+        "nombre": "Sherol Ivanisse Arévalo Avila",
+        "corto": "Sherol Arévalo",
+        "bancada": "VALOR",
+        "bancada_legible": "Valor",
+        "distrito": "Totonicapán",
+        "voto": "favor",
+        "id": "972"
+      },
+      {
+        "nombre": "Shirley Joanna Rivera Zaldaña",
+        "corto": "Shirley Rivera",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Guatemala",
+        "voto": "favor",
+        "id": "785"
+      },
+      {
+        "nombre": "Sofía Jeanetth Hernández Herrera",
+        "corto": "Sofía Hernández",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Huehuetenango",
+        "voto": "favor",
+        "id": "78"
+      },
+      {
+        "nombre": "Sonia Marina Gutierrez Raguay",
+        "corto": "Sonia Gutierrez",
+        "bancada": "WINAQ - URNG",
+        "bancada_legible": "Winaq-URNG",
+        "distrito": "Listado Nacional",
+        "voto": "licencia",
+        "id": "861"
+      },
+      {
+        "nombre": "Thelma Elizabeth Ramírez Retana",
+        "corto": "Thelma Ramírez",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Izabal",
+        "voto": "favor",
+        "id": "126"
+      },
+      {
+        "nombre": "Vasny Adiel Maldonado Alonzo",
+        "corto": "Vasny Maldonado",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Suchitepéquez",
+        "voto": "contra",
+        "id": "802"
+      },
+      {
+        "nombre": "Victor Alfredo Valenzuela Argueta",
+        "corto": "Victor Valenzuela",
+        "bancada": "VAMOS",
+        "bancada_legible": "Vamos",
+        "distrito": "Listado Nacional",
+        "voto": "favor",
+        "id": "947"
+      },
+      {
+        "nombre": "Victor Hugo Cifuentes Delgado",
+        "corto": "Victor Cifuentes",
+        "bancada": "UNE",
+        "bancada_legible": "UNE",
+        "distrito": "Alta Verapaz",
+        "voto": "favor",
+        "id": "883"
+      },
+      {
+        "nombre": "Victor Vicente Bonilla González",
+        "corto": "Victor Bonilla",
+        "bancada": "VIVA",
+        "bancada_legible": "Viva",
+        "distrito": "Chimaltenango",
+        "voto": "favor",
+        "id": "891"
+      },
+      {
+        "nombre": "Vivian Beatriz Preciado Navarijo",
+        "corto": "Vivian Preciado",
+        "bancada": "INDP - NOSOTROS",
+        "bancada_legible": "independientes ex Nosotros",
+        "distrito": "San Marcos",
+        "voto": "favor",
+        "id": "122"
+      }
+    ]
+  },
+  "votaciones": [
+    {
+      "id": "51600",
+      "fecha": "2026-11-03 17:41:47",
+      "pregunta": "APROBACIÓN DE MOCIÓN PRIVILEGIADA (URGENCIA NACIONAL 6347)",
+      "favor": 109,
+      "contra": 10,
+      "clase": "urgencia"
+    },
+    {
+      "id": "51602",
+      "fecha": "2026-11-03 17:48:03",
+      "pregunta": "APROBACIÓN EN ÚNICO DEBATE DEL PROYECTO DE DECRETO QUE DISPONE APROBAR LA INICIATIVA DE LEY 6347",
+      "favor": 111,
+      "contra": 17,
+      "clase": "unico debate"
+    },
+    {
+      "id": "51616",
+      "fecha": "2026-11-03 18:49:57",
+      "pregunta": "APROBACIÓN DE ENMIENDA POR SUSTITUCIÓN PARCIAL DEL ARTÍCULO 5 DEL PROYECTO DE DECRETO QUE DISPONE APROBAR LA INICIATIVA DE LEY 6347",
+      "favor": 107,
+      "contra": 20,
+      "clase": "parcial"
+    },
+    {
+      "id": "51617",
+      "fecha": "2026-11-03 18:58:22",
+      "pregunta": "APROBACIÓN DEL TÍTULO I QUE CONSTA DE LOS CAPÍTULOS I Y II Y LOS ARTÍCULOS DEL 1 AL 5 INCLUSIVE CON LA ENMIENDA INCORPORADA DEL PROYECTO DE DECRETO QUE DISPONE APROBAR LA INICIATIVA DE LEY 6347",
+      "favor": 123,
+      "contra": 8,
+      "clase": "parcial"
+    },
+    {
+      "id": "51618",
+      "fecha": "2026-11-03 19:32:20",
+      "pregunta": "APROBACIÓN DE ENMIENDA POR ADICIÓN AL ARTÍCULO 9 DEL PROYECTO DE DECRETO QUE DISPONE APROBAR LA INICIATIVA DE LEY 6347",
+      "favor": 122,
+      "contra": 10,
+      "clase": "parcial"
+    },
+    {
+      "id": "51620",
+      "fecha": "2026-11-03 19:34:20",
+      "pregunta": "APROBACIÓN DE ENMIENDA POR SUSTITUCIÓN TOTAL DEL ARTÍCULO 31 DEL PROYECTO DE DECRETO QUE DISPONE APROBAR LA INICIATIVA DE LEY 6347",
+      "favor": 120,
+      "contra": 11,
+      "clase": "parcial"
+    },
+    {
+      "id": "51621",
+      "fecha": "2026-11-03 19:35:42",
+      "pregunta": "APROBACIÓN DE ENMIENDA POR ADICIÓN DE UN ARTÍCULO NUEVO DESPUÉS DEL ARTÍCULO 31 DEL PROYECTO DE DECRETO QUE DISPONE APROBAR LA INICIATIVA DE LEY 6347",
+      "favor": 118,
+      "contra": 13,
+      "clase": "parcial"
+    },
+    {
+      "id": "51619",
+      "fecha": "2026-11-03 19:37:23",
+      "pregunta": "APROBACIÓN DEL TÍTULO II QUE CONSTA DE LOS CAPÍTULOS I AL VI Y LOS ARTÍCULOS DEL 6 AL 33 INCLUSIVE CON LAS ENMIENDAS INCORPORADAS DEL PROYECTO DE DECRETO QUE DISPONE APROBAR LA INICIATIVA DE LEY 6347",
+      "favor": 122,
+      "contra": 9,
+      "clase": "parcial"
+    },
+    {
+      "id": "51605",
+      "fecha": "2026-11-03 19:43:38",
+      "pregunta": "APROBACIÓN DEL TÍTULO III QUE CONSTA DEL CAPÍTULO ÚNICO Y LOS ARTÍCULOS DEL 34 AL 42 INCLUSIVE DEL PROYECTO DE DECRETO QUE DISPONE APROBAR LA INICIATIVA DE LEY 6347",
+      "favor": 120,
+      "contra": 10,
+      "clase": "parcial"
+    },
+    {
+      "id": "51641",
+      "fecha": "2026-11-03 20:10:14",
+      "pregunta": "APROBACIÓN DE ENMIENDA POR SUSTITUCIÓN TOTAL DEL ARTÍCULO 43 DEL PROYECTO DE DECRETO QUE DISPONE APROBAR LA INICIATIVA DE LEY 6347",
+      "favor": 118,
+      "contra": 10,
+      "clase": "parcial"
+    },
+    {
+      "id": "51622",
+      "fecha": "2026-11-03 20:11:58",
+      "pregunta": "APROBACIÓN DE ENMIENDA POR SUSTITUCIÓN TOTAL DEL ARTÍCULO 44 DEL PROYECTO DE DECRETO QUE DISPONE APROBAR LA INICIATIVA DE LEY 6347",
+      "favor": 115,
+      "contra": 14,
+      "clase": "parcial"
+    },
+    {
+      "id": "51623",
+      "fecha": "2026-11-03 20:13:30",
+      "pregunta": "APROBACIÓN DE ENMIENDA POR SUSTITUCIÓN TOTAL DEL ARTÍCULO 45 DEL PROYECTO DE DECRETO QUE DISPONE APROBAR LA INICIATIVA DE LEY 6347",
+      "favor": 116,
+      "contra": 13,
+      "clase": "parcial"
+    },
+    {
+      "id": "51624",
+      "fecha": "2026-11-03 20:15:07",
+      "pregunta": "APROBACIÓN DE ENMIENDA POR SUSTITUCIÓN TOTAL DEL ARTÍCULO 46 DEL PROYECTO DE DECRETO QUE DISPONE APROBAR LA INICIATIVA DE LEY 6347",
+      "favor": 120,
+      "contra": 9,
+      "clase": "parcial"
+    },
+    {
+      "id": "51625",
+      "fecha": "2026-11-03 20:16:32",
+      "pregunta": "APROBACIÓN DE ENMIENDA POR SUSTITUCIÓN TOTAL DEL ARTÍCULO 47 DEL PROYECTO DE DECRETO QUE DISPONE APROBAR LA INICIATIVA DE LEY 6347",
+      "favor": 122,
+      "contra": 8,
+      "clase": "parcial"
+    },
+    {
+      "id": "51626",
+      "fecha": "2026-11-03 20:18:43",
+      "pregunta": "APROBACIÓN DE ENMIENDA POR SUSTITUCIÓN TOTAL DEL ARTÍCULO 48 DEL PROYECTO DE DECRETO QUE DISPONE APROBAR LA INICIATIVA DE LEY 6347",
+      "favor": 119,
+      "contra": 11,
+      "clase": "parcial"
+    },
+    {
+      "id": "51627",
+      "fecha": "2026-11-03 20:20:13",
+      "pregunta": "APROBACIÓN DE ENMIENDA POR SUSTITUCIÓN TOTAL DEL ARTÍCULO 49 DEL PROYECTO DE DECRETO QUE DISPONE APROBAR LA INICIATIVA DE LEY 6347",
+      "favor": 117,
+      "contra": 13,
+      "clase": "parcial"
+    },
+    {
+      "id": "51628",
+      "fecha": "2026-11-03 20:21:49",
+      "pregunta": "APROBACIÓN DE ENMIENDA POR SUSTITUCIÓN TOTAL DEL ARTÍCULO 50 DEL PROYECTO DE DECRETO QUE DISPONE APROBAR LA INICIATIVA DE LEY 6347",
+      "favor": 118,
+      "contra": 11,
+      "clase": "parcial"
+    },
+    {
+      "id": "51629",
+      "fecha": "2026-11-03 20:23:23",
+      "pregunta": "APROBACIÓN DE ENMIENDA POR ADICIÓN DE UN ARTÍCULO NUEVO DESPUES DEL ARTÍCULO 51 DEL PROYECTO DE DECRETO QUE DISPONE APROBAR LA INICIATIVA DE LEY 6347",
+      "favor": 117,
+      "contra": 12,
+      "clase": "parcial"
+    },
+    {
+      "id": "51630",
+      "fecha": "2026-11-03 20:25:14",
+      "pregunta": "APROBACIÓN DE ENMIENDA POR SUPRESIÓN TOTAL DEL ARTÍCULO 52 DEL PROYECTO DE DECRETO QUE DISPONE APROBAR LA INICIATIVA DE LEY 6347",
+      "favor": 113,
+      "contra": 17,
+      "clase": "parcial"
+    },
+    {
+      "id": "51631",
+      "fecha": "2026-11-03 20:27:00",
+      "pregunta": "APROBACIÓN DEL TÍTULO IV QUE CONSTA DE LOS CAPÍTULOS I AL III Y LOS ARTÍCULOS DEL 43 AL 55 INCLUSIVE CON LAS ENMIENDAS INCORPORADAS DEL PROYECTO DE DECRETO QUE DISPONE APROBAR LA INICIATIVA DE LEY 6347",
+      "favor": 116,
+      "contra": 13,
+      "clase": "parcial"
+    },
+    {
+      "id": "51633",
+      "fecha": "2026-11-03 20:42:36",
+      "pregunta": "APROBACIÓN DE ENMIENDA POR ADICIÓN EN EL ARTÍCULO 62 DEL PROYECTO DE DECRETO QUE DISPONE APROBAR LA INICIATIVA DE LEY 6347",
+      "favor": 118,
+      "contra": 10,
+      "clase": "parcial"
+    },
+    {
+      "id": "51634",
+      "fecha": "2026-11-03 20:44:04",
+      "pregunta": "APROBACIÓN DE ENMIENDA POR ADICIÓN EN EL ARTÍCULO 64 DEL PROYECTO DE DECRETO QUE DISPONE APROBAR LA INICIATIVA DE LEY 6347",
+      "favor": 117,
+      "contra": 10,
+      "clase": "parcial"
+    },
+    {
+      "id": "51635",
+      "fecha": "2026-11-03 20:45:26",
+      "pregunta": "APROBACIÓN DE ENMIENDA POR ADICIÓN AL ARTÍCULO 70 DEL PROYECTO DE DECRETO QUE DISPONE APROBAR LA INICIATIVA DE LEY 6347",
+      "favor": 107,
+      "contra": 20,
+      "clase": "parcial"
+    },
+    {
+      "id": "51636",
+      "fecha": "2026-11-03 20:48:46",
+      "pregunta": "APROBACIÓN DEL TÍTULO V QUE CONSTA DE LOS CAPÍTULOS I Y II Y LOS ARTÍCULOS DEL 56 AL 72 INCLUSIVE CON LAS ENMIENDAS INCORPORADAS DEL PROYECTO DE DECRETO QUE DISPONE APROBAR LA INICIATIVA DE LEY 6347",
+      "favor": 107,
+      "contra": 19,
+      "clase": "parcial"
+    },
+    {
+      "id": "51608",
+      "fecha": "2026-11-03 20:57:03",
+      "pregunta": "APROBACIÓN DEL TÍTULO VI QUE CONSTA DEL CAPÍTULO ÚNICO Y LOS ARTÍCULOS DEL 73 AL 82 INCLUSIVE DEL PROYECTO DE DECRETO QUE DISPONE APROBAR LA INICIATIVA DE LEY 6347",
+      "favor": 115,
+      "contra": 12,
+      "clase": "parcial"
+    },
+    {
+      "id": "51637",
+      "fecha": "2026-11-03 21:05:26",
+      "pregunta": "APROBACIÓN DE ENMIENDA POR SUSTITUCIÓN TOTAL DEL ARTÍCULO 87 DEL PROYECTO DE DECRETO QUE DISPONE APROBAR LA INICIATIVA DE LEY 6347",
+      "favor": 120,
+      "contra": 11,
+      "clase": "parcial"
+    },
+    {
+      "id": "51638",
+      "fecha": "2026-11-03 21:06:45",
+      "pregunta": "APROBACIÓN DE ENMIENDA POR ADICIÓN AL ARTÍCULO 88 DEL PROYECTO DE DECRETO QUE DISPONE APROBAR LA INICIATIVA DE LEY 6347",
+      "favor": 121,
+      "contra": 9,
+      "clase": "parcial"
+    },
+    {
+      "id": "51639",
+      "fecha": "2026-11-03 21:08:11",
+      "pregunta": "APROBACIÓN DE ENMIENDA POR SUSTITUCIÓN TOTAL DEL ARTÍCULO 96 DEL PROYECTO DE DECRETO QUE DISPONE APROBAR LA INICIATIVA DE LEY 6347",
+      "favor": 115,
+      "contra": 15,
+      "clase": "parcial"
+    },
+    {
+      "id": "51640",
+      "fecha": "2026-11-03 21:09:41",
+      "pregunta": "APROBACIÓN DEL TÍTULO VII QUE CONSTA DEL CAPÍTULO ÚNICO Y LOS ARTÍCULOS DEL 83 AL 96 INCLUSIVE CON LAS ENMIENDAS INCORPORADAS DEL PROYECTO DE DECRETO QUE DISPONE APROBAR LA INICIATIVA DE LEY 6347",
+      "favor": 119,
+      "contra": 12,
+      "clase": "parcial"
+    },
+    {
+      "id": "51610",
+      "fecha": "2026-11-03 21:13:23",
+      "pregunta": "APROBACIÓN DEL PREÁMBULO DEL PROYECTO DE DECRETO QUE DISPONE APROBAR LA INICIATIVA DE LEY 6347",
+      "favor": 120,
+      "contra": 12,
+      "clase": "parcial"
+    },
+    {
+      "id": "51643",
+      "fecha": "2026-11-03 22:43:20",
+      "pregunta": "APROBACIÓN DE FONDO DE REVISIÓN DEL PROYECTO DE DECRETO QUE DISPONE APROBAR LA INICIATIVA DE LEY 6347",
+      "favor": 121,
+      "contra": 10,
+      "clase": "otra"
+    },
+    {
+      "id": "51644",
+      "fecha": "2026-11-03 22:44:32",
+      "pregunta": "APROBACIÓN DE LA REDACCIÓN FINAL CON EL FONDO DE REVISIÓN INCORPORADO DEL PROYECTO DE DECRETO QUE DISPONE APROBAR LA INICIATIVA DE LEY 6347",
+      "favor": 121,
+      "contra": 10,
+      "clase": "redaccion final"
+    }
+  ],
+  "cifras": {
+    "favor": "cg-c01",
+    "contra": "cg-c02",
+    "ausente": "cg-c03",
+    "licencia": "cg-c04",
+    "total": "cg-c05",
+    "umbral": "cg-c06",
+    "bancadas_favor": "cg-c07",
+    "bancadas_contra": "cg-c08",
+    "urg_favor": "cg-c09",
+    "urg_contra": "cg-c10",
+    "urg_umbral": "cg-c11"
+  }
+}

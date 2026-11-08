@@ -1,0 +1,113 @@
+{
+  "version": 1,
+  "_comentario": "Series de /serie: una por tema, con sus partes. Lo escribe scripts/memoria.py --serie.",
+  "series": [
+    {
+      "id": "2026-11-05-el-caso-la-linea",
+      "slug": "el-caso-la-linea",
+      "tema": "el caso La Línea",
+      "motor": "historia",
+      "fecha": "2026-11-05",
+      "carpeta": "series/2026-11-05-el-caso-la-linea",
+      "n_partes": 4,
+      "paleta": "obsidiana",
+      "musica": "obsidiana-2",
+      "version_plan": 3,
+      "estado": "completa",
+      "partes": [
+        {
+          "n": 1,
+          "titulo": "La red en las aduanas",
+          "estado": "entregada",
+          "ruta": "series/2026-11-05-el-caso-la-linea/parte-1",
+          "duracion_s": 109.7
+        },
+        {
+          "n": 2,
+          "titulo": "La plaza y la renuncia",
+          "estado": "entregada",
+          "ruta": "series/2026-11-05-el-caso-la-linea/parte-2",
+          "duracion_s": 111.7
+        },
+        {
+          "n": 3,
+          "titulo": "Siete años hasta la sentencia",
+          "estado": "entregada",
+          "ruta": "series/2026-11-05-el-caso-la-linea/parte-3",
+          "duracion_s": 108.6
+        },
+        {
+          "n": 4,
+          "titulo": "Lo que quedó",
+          "estado": "entregada",
+          "ruta": "series/2026-11-05-el-caso-la-linea/parte-4",
+          "duracion_s": 108.6
+        }
+      ]
+    },
+    {
+      "id": "2026-11-06-el-caso-la-linea",
+      "slug": "el-caso-la-linea",
+      "tema": "el caso La Línea",
+      "motor": "historia",
+      "fecha": "2026-11-06",
+      "carpeta": "series/2026-11-06-el-caso-la-linea",
+      "n_partes": 7,
+      "paleta": "cielo",
+      "musica": "cielo-1",
+      "version_plan": 3,
+      "estado": "completa",
+      "partes": [
+        {
+          "n": 1,
+          "titulo": "Las escuchas que lo destaparon",
+          "estado": "entregada",
+          "ruta": "series/2026-11-06-el-caso-la-linea/parte-1",
+          "duracion_s": 147.9
+        },
+        {
+          "n": 2,
+          "titulo": "Cómo cobraba la red",
+          "estado": "entregada",
+          "ruta": "series/2026-11-06-el-caso-la-linea/parte-2",
+          "duracion_s": 148.3
+        },
+        {
+          "n": 3,
+          "titulo": "Quién era quién",
+          "estado": "entregada",
+          "ruta": "series/2026-11-06-el-caso-la-linea/parte-3",
+          "duracion_s": 147.1
+        },
+        {
+          "n": 4,
+          "titulo": "La plaza y la vicepresidenta",
+          "estado": "entregada",
+          "ruta": "series/2026-11-06-el-caso-la-linea/parte-4",
+          "duracion_s": 138.8
+        },
+        {
+          "n": 5,
+          "titulo": "La caída del presidente",
+          "estado": "entregada",
+          "ruta": "series/2026-11-06-el-caso-la-linea/parte-5",
+          "duracion_s": 148.7
+        },
+        {
+          "n": 6,
+          "titulo": "El testigo y la sentencia",
+          "estado": "entregada",
+          "ruta": "series/2026-11-06-el-caso-la-linea/parte-6",
+          "duracion_s": 142.3
+        },
+        {
+          "n": 7,
+          "titulo": "Lo que quedó",
+          "estado": "entregada",
+          "ruta": "series/2026-11-06-el-caso-la-linea/parte-7",
+          "duracion_s": 172.7
+        }
+      ]
+    }
+  ]
+}

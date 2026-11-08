@@ -25,6 +25,7 @@
   // salvo en «2 de cada 3», donde va la primera
   const golpe = (t) => { const ws = String(t).split(/\s+/).filter(Boolean); let k = ws.map((w) => /\d/.test(w)).lastIndexOf(true);
     if (k >= 3 && /^de$/i.test(ws[k - 2]) && /^cada$/i.test(ws[k - 1]) && /\d/.test(ws[k - 3])) k -= 3;
+    if (L.sin_acento) k = -1;   // scripts/redes.py: el acento ya lo lleva la tarjeta de abajo
     return ws.map((w, i) => `<span${i === k ? ' class="acento"' : ''}>${esc(w)}</span>`).join(''); };
   const main = document.createElement('main');
   main.className = 'lam ' + L.tipo;

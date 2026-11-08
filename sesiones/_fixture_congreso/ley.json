@@ -1,0 +1,92 @@
+{
+ "iniciativa": "6347",
+ "decreto": "26-2026",
+ "titulo": "Decreto 26-2026, Ley Marco de Ciberseguridad",
+ "nombre_corto": "Ley de Ciberseguridad",
+ "que_busca": [
+  {
+   "texto": "Crea un Consejo Nacional de Ciberseguridad, presidido por el presidente de la República",
+   "url": "https://www.congreso.gob.gt/noticias_congreso/17397/2026/4",
+   "archivo": "sesiones/_fixture_congreso/fuentes/nota-17397.txt",
+   "cita": "contempla la creación del Consejo Nacional de Ciberseguridad (Conciber), instancia estratégica presidida por el Presidente de la República"
+  },
+  {
+   "texto": "Crea una fiscalía especializada del Ministerio Público para investigar los ciberdelitos",
+   "url": "https://www.congreso.gob.gt/noticias_congreso/17397/2026/4",
+   "archivo": "sesiones/_fixture_congreso/fuentes/nota-17397.txt",
+   "cita": "Se contempla una fiscalía especializada en el Ministerio Público para investigar los ciberdelitos"
+  },
+  {
+   "texto": "Castiga con prisión el acceso ilícito a sistemas, la interceptación y el robo de identidad digital",
+   "url": "https://www.congreso.gob.gt/noticias_congreso/17397/2026/4",
+   "archivo": "sesiones/_fixture_congreso/fuentes/nota-17397.txt",
+   "cita": "el delito por el acceso ilícito a los sistemas digitales la pena será de 4 a 6 años"
+  },
+  {
+   "texto": "Responde a ataques a Relaciones Exteriores (2022), Finanzas (2023) y Educación (2024)",
+   "url": "https://www.congreso.gob.gt/noticias_congreso/17397/2026/4",
+   "archivo": "sesiones/_fixture_congreso/fuentes/nota-17397.txt",
+   "cita": "afectaciones al Ministerio de Relaciones Exteriores en 2022, al Ministerio de Finanzas Públicas en 2023, al Ministerio de Educación en 2024"
+  }
+ ],
+ "estado": {
+  "texto": "Entra en vigencia 30 días después de publicarse en el diario oficial",
+  "url": "https://www.congreso.gob.gt/noticias_congreso/17397/2026/4",
+  "archivo": "sesiones/_fixture_congreso/fuentes/nota-17397.txt",
+  "cita": "entrará en vigencia 30 días después de su publicación, en el diario oficial"
+ },
+ "cifras": [
+  {
+   "id": "ley-c01",
+   "concepto": "Pena mínima por acceso ilícito a sistemas digitales (años de prisión)",
+   "valor": 4,
+   "unidad": "años",
+   "periodo": "Decreto 26-2026",
+   "url": "https://www.congreso.gob.gt/noticias_congreso/17397/2026/4",
+   "archivo": "sesiones/_fixture_congreso/fuentes/nota-17397.txt",
+   "cita": "el delito por el acceso ilícito a los sistemas digitales la pena será de 4 a 6 años"
+  },
+  {
+   "id": "ley-c02",
+   "concepto": "Pena máxima por acceso ilícito a sistemas digitales (años de prisión)",
+   "valor": 6,
+   "unidad": "años",
+   "periodo": "Decreto 26-2026",
+   "url": "https://www.congreso.gob.gt/noticias_congreso/17397/2026/4",
+   "archivo": "sesiones/_fixture_congreso/fuentes/nota-17397.txt",
+   "cita": "el delito por el acceso ilícito a los sistemas digitales la pena será de 4 a 6 años"
+  },
+  {
+   "id": "ley-c03",
+   "concepto": "Días para entrar en vigencia tras su publicación",
+   "valor": 30,
+   "unidad": "días",
+   "periodo": "Decreto 26-2026",
+   "url": "https://www.congreso.gob.gt/noticias_congreso/17397/2026/4",
+   "archivo": "sesiones/_fixture_congreso/fuentes/nota-17397.txt",
+   "cita": "entrará en vigencia 30 días después de su publicación"
+  },
+  {
+   "id": "ley-c04",
+   "concepto": "Años de los ataques a ministerios citados (Relaciones Exteriores)",
+   "valor": 2022,
+   "unidad": "año",
+   "periodo": "2022",
+   "url": "https://www.congreso.gob.gt/noticias_congreso/17397/2026/4",
+   "archivo": "sesiones/_fixture_congreso/fuentes/nota-17397.txt",
+   "cita": "afectaciones al Ministerio de Relaciones Exteriores en 2022"
+  }
+ ],
+ "citas": [
+  {
+   "id": "ley-q01",
+   "texto": "Esta es una ley más que la X Legislatura deja como legado en seguridad para Guatemala",
+   "autor": "Luis Contreras Colíndres",
+   "cargo": "presidente del Congreso",
+   "cuando": "3 de noviembre de 2026",
+   "documento": false,
+   "url": "https://www.congreso.gob.gt/noticias_congreso/17397/2026/4",
+   "archivo": "sesiones/_fixture_congreso/fuentes/nota-17397.txt"
+  }
+ ]
+}

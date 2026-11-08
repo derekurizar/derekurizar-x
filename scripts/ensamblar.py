@@ -5,12 +5,13 @@ Entrada:  sesiones/<slug>/  con guion.json (obligatorio), encuadre.json,
           hallazgos_<eje>.json, verificacion_<eje>.json y visuales/tuit_N.{html,png}
 Salida:   hilos/<fecha>-<slug>/ (o --salida DIR; en smoke/fixture <sesion>/salida/) con
           hilo.json · datos.json · post.md · hilo.html · contacto.png · tuit_N.html · tuit_N.png
+          redes/4x5/tuit_N.png · redes/9x16/tuit_N.png (cada tarjeta para carrusel, como en /video: scripts/redes.py)
 
 --check aplica el GATE MECÁNICO antes de escribir (si falla, no escribe y sale 1):
   G1 estructura: 3–21 tuits numerados 1..n; T1 gancho, Tn cierre, un solo giro;
      en modo normal con ≥5 tuits, un beat impacto
   G2 textos (peso X: URL=23, emoji=2): T1 40–280, primera línea ≤ 90, sin enlace;
-     todos ≤ 280; T2..T(n−1) con imagen ≤ 200; sin engagement bait; alt_text 20–1000;
+     todos ≤ 280; T2..T(n−1) con imagen ≤ 200 (≤ 280 con guion.texto_largo: true, hilos explicativos); sin engagement bait; alt_text 20–1000;
      dato héroe: el texto no repite una línea del titular ni ≥2 números de su tarjeta
   G3 visuales: obligatorios en T2..T(n−1); plantilla del catálogo; kicker ≤ 45;
      titular 1–3 líneas de ≤ 26; nota ≤ 150; fuente 1–70 sin «Fuente:»; sin URLs;
@@ -407,8 +408,9 @@ def gate(guion, encuadre, cifras, veredictos, sesion, plantillas, paletas, modo_
             elif 0 < i < n - 1:
                 F.append("G3 T%d no lleva visual (obligatorio en T2..T%d)" % (k, n - 1))
             continue
-        if 0 < i < n - 1 and peso > 200:
-            F.append("G2 T%d con imagen pesa %d (>200): que la tarjeta hable" % (k, peso))
+        tope_img = 280 if guion.get("texto_largo") is True else 200
+        if 0 < i < n - 1 and peso > tope_img:
+            F.append("G2 T%d con imagen pesa %d (>%d): que la tarjeta hable" % (k, peso, tope_img))
         alt = (t.get("alt_text") or "").strip()
         if not 20 <= len(alt) <= 1000:
             F.append("G2 T%d alt_text debe tener 20–1000 caracteres (%d)" % (k, len(alt)))
@@ -658,7 +660,7 @@ def secciones_post(datos, fuentes, fuentes_tarjetas, fuentes_usadas, no_afirma, 
     return L
 
 
-def escribir(guion, encuadre, cifras, veredictos, fuentes, sesion, salida, fallos_gate, con_contacto=True, estado="borrador"):
+def escribir(guion, encuadre, cifras, veredictos, fuentes, sesion, salida, fallos_gate, con_contacto=True, estado="borrador", con_redes=True):
     os.makedirs(salida, exist_ok=True)
     tuits = guion["tuits"]
     n = len(tuits)
@@ -748,6 +750,16 @@ def escribir(guion, encuadre, cifras, veredictos, fuentes, sesion, salida, fallo
 
     json.dump(hilo, open(os.path.join(salida, "hilo.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=2)
     json.dump(datos, open(os.path.join(salida, "datos.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+
+    # redes/: cada tarjeta también en 4:5 y 9:16 (carrusel de Instagram, Facebook y TikTok), en el formato de /video
+    if con_redes and any(t.get("visual") for t in tuits):
+        import redes
+        ok, msg = redes.generar(salida)
+        if ok:
+            hilo["redes"] = {"4x5": "redes/4x5", "9x16": "redes/9x16"}
+            json.dump(hilo, open(os.path.join(salida, "hilo.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+        else:
+            print("AVISO: no se generó redes/ (corre python3 scripts/redes.py %s): %s" % (os.path.relpath(salida, RAIZ), msg), file=sys.stderr)
     escribir_vista_html(hilo, salida)
     return hilo
 
@@ -862,6 +874,7 @@ def main():
     p.add_argument("--fecha", help="YYYY-MM-DD para la carpeta si el guion no la trae")
     p.add_argument("--forzar", action="store_true", help="escribe aunque el gate falle (los fallos quedan en post.md)")
     p.add_argument("--sin-contacto", action="store_true", help="no genera contacto.png (solo hilo; un dato nunca la lleva)")
+    p.add_argument("--sin-redes", action="store_true", help="no genera redes/ (la versión 4:5 y 9:16 de cada tarjeta; --sin-contacto tampoco la genera)")
     p.add_argument("--estado", choices=ESTADOS, help="estado escrito en hilo.json (dato.json), su vista previa y post.md (default borrador)")
     p.add_argument("--solo-estado", action="store_true", help="solo reescribe el estado en la carpeta de entrega existente (exige --estado)")
     a = p.parse_args()
@@ -902,10 +915,11 @@ def main():
         dato = escribir_dato(guion, encuadre, cifras, veredictos, fuentes, sesion, salida, fallos, estado=a.estado or "borrador")
         print("[ensamblar] %s · dato · 1 tarjeta (%s) · gate %s -> %s" % (slug, dato["tuit"]["plantilla"], dato["gate_mecanico"], rel))
         return 1 if fallos else 0
-    hilo = escribir(guion, encuadre, cifras, veredictos, fuentes, sesion, salida, fallos, con_contacto=not a.sin_contacto, estado=a.estado or "borrador")
+    hilo = escribir(guion, encuadre, cifras, veredictos, fuentes, sesion, salida, fallos, con_contacto=not a.sin_contacto, estado=a.estado or "borrador",
+                   con_redes=not (a.sin_redes or a.sin_contacto))
     print("[ensamblar] %s · %d tuits · %d imágenes · gate %s%s -> %s" % (
         slug, hilo["n_tuits"], sum(1 for t in hilo["tuits"] if t["imagen"]), hilo["gate_mecanico"],
-        " · contacto.png" if hilo.get("contacto") else "", rel))
+        (" · contacto.png" if hilo.get("contacto") else "") + (" · redes/ 4x5 + 9x16" if hilo.get("redes") else ""), rel))
     return 1 if fallos else 0
 
 

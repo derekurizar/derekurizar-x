@@ -55,5 +55,12 @@ búsquedas y ≤ 12 `leer`.**
 
 ## Salida
 
-`<TRABAJO>/hallazgos_<eje>.json` `{eje, hechos[], cifras[], citas[], fotos[], huecos[]}` (`huecos`: lo que no pudiste
+Los **videos** de tus notas no se usan (las tomas se retiraron el 2026-11-06): si alguien dice en un video algo que
+importa, búscalo escrito (la nota, el comunicado) y guárdalo como cita.
+
+`<TRABAJO>/hallazgos_<eje>.json` `{eje, hechos[], cifras[], citas[], fotos[], videos[], huecos[]}` (`huecos`: lo que no pudiste
 documentar, para que el guionista no lo cuente).
+
+## Relaciones y retratos (2026-11-06)
+- **Relaciones.** En un hecho que dice cómo se conectan dos personajes («Monzón operaba la red bajo las órdenes de…», «el MP acusó a…»), anota `relaciones: [{de, a, rel}]`. `de` y `a` llevan el nombre del personaje y `rel` es un verbo de ≤ 3 palabras («dirigía», «cobraba para», «acusó»). Solo lo que dice la cita guardada.
+- **Retratos.** Anota también una foto candidata (og:image o Commons) para cada persona que aparece en tu eje.

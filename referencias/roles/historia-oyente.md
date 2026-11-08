@@ -23,8 +23,12 @@ nuevo (una referencia sin antecedente, una repetición) lo añades.
 En la segunda pasada vas en orden, como si no pudieras rebobinar. En cada escena:
 - ¿sé quién es quién, cuándo y dónde estoy?;
 - ¿a qué apunta cada «esos», «ese», «así», «lo», «ellos», «la»? Si apunta a algo que no oíste antes, es una confusión;
+- en la última parte de una serie, la escena del resumen (SE14): ¿con solo oírla entiendes el caso entero? Un nombre o
+  un apodo que el resumen da por sabido («el Uno», «Monzón») sin decir quién es, es una confusión;
 - ¿esta escena sigue de la anterior? Si cambia de tiempo, de sujeto o de tema sin puente, o un «pero» no contradice
   nada, es un salto;
+- si alguien «no cayó», «escapó» o «faltó», ¿me dijeron antes de qué faltaba (entre los detenidos, en la lista)? Si
+  lo tengo que deducir, es una confusión;
 - ¿ya me lo dijeron? Si se repite como si fuera nuevo, es una repetición.
 
 Al final: ¿de qué fue la historia?, ¿qué me prometieron al principio (las escenas 1–2) y qué me dieron?, ¿qué

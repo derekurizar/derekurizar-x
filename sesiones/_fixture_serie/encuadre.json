@@ -1,0 +1,403 @@
+{
+ "tema": "La panadería La Espiga de Xela (serie de ejemplo)",
+ "slug": "la-espiga-serie-maqueta",
+ "pregunta": "¿Cómo una panadería de un solo horno llegó a 25 sucursales y volvió a dos hornos?",
+ "protagonista": [
+  "La Espiga"
+ ],
+ "fotos_clave": [
+  "la panadería La Espiga: su horno, su local o su pan",
+  "Marta Pérez",
+  "la carpa tras el terremoto"
+ ],
+ "revelaciones": [
+  "La inspección de Salud encontró 40 sacos de harina vencida en la planta",
+  "Cerró la última sucursal en la capital en 2010",
+  "Sus trabajadores aún encienden los dos hornos en Xela"
+ ],
+ "resumen": "Cómo una panadería de Xela pasó de un horno de leña a 25 sucursales y volvió a dos hornos.",
+ "arco": "ascenso y caída",
+ "paleta": "terracota",
+ "dominios_propios": [],
+ "actos": [
+  {
+   "n": 1,
+   "nombre": "planteamiento",
+   "titulo": "El primer horno",
+   "periodo": "1952–1990",
+   "que_cuenta": "una panadería de un horno de leña que sobrevive al terremoto y crece hasta 25 sucursales",
+   "termina_en": "la sucursal número 25, la primera en la capital"
+  },
+  {
+   "n": 2,
+   "nombre": "nudo",
+   "titulo": "La inspección",
+   "periodo": "2004",
+   "que_cuenta": "una inspección de Salud encuentra harina vencida y llega la multa",
+   "termina_en": "la multa de Q85,000"
+  },
+  {
+   "n": 3,
+   "nombre": "desenlace",
+   "titulo": "La caída",
+   "periodo": "2004–2010",
+   "que_cuenta": "la caída en cadena hasta cerrar la última sucursal; quedan dos hornos",
+   "termina_en": "dos hornos encendidos en Xela"
+  }
+ ],
+ "espina": {
+  "detonante": {
+   "frase": "El terremoto de 1976 destruye el local y La Espiga reabre bajo una carpa",
+   "acto": 1,
+   "ejes": [
+    "ori"
+   ]
+  },
+  "punto_medio": {
+   "frase": "La inspección de 2004 encuentra 40 sacos de harina vencida",
+   "acto": 2,
+   "ejes": [
+    "cas"
+   ]
+  },
+  "climax": {
+   "frase": "La multa de Q85,000 y la caída en cadena",
+   "acto": 3,
+   "ejes": [
+    "cas"
+   ]
+  },
+  "resolucion": {
+   "frase": "Cierra la última sucursal en 2010; quedan dos hornos en Xela",
+   "acto": 3,
+   "ejes": [
+    "cas"
+   ]
+  }
+ },
+ "hilos": [
+  {
+   "id": "h1",
+   "pregunta": "¿Por qué cerró?",
+   "eje": "cas"
+  },
+  {
+   "id": "h2",
+   "pregunta": "¿Qué fue de Marta Pérez?",
+   "eje": "ori"
+  }
+ ],
+ "personajes": [
+  {
+   "nombre": "Marta Pérez",
+   "alias": [
+    "Marta"
+   ],
+   "presentacion": "la fundadora de La Espiga"
+  },
+  {
+   "nombre": "Ministerio de Salud",
+   "alias": [
+    "Salud"
+   ],
+   "presentacion": "la autoridad sanitaria"
+  }
+ ],
+ "periodos": [
+  {
+   "n": 1,
+   "titulo": "El primer horno",
+   "periodo": "1952–1975",
+   "pregunta": "¿Cómo empezó?"
+  },
+  {
+   "n": 2,
+   "titulo": "El terremoto",
+   "periodo": "1976–1999",
+   "pregunta": "¿Cómo sobrevivió?"
+  },
+  {
+   "n": 3,
+   "titulo": "La caída",
+   "periodo": "2000–2011",
+   "pregunta": "¿Por qué cerró?"
+  }
+ ],
+ "ejes": [
+  {
+   "id": "ori",
+   "nombre": "origen y crecimiento",
+   "periodos": [
+    1,
+    2
+   ],
+   "preguntas": [
+    "fundación",
+    "crecimiento"
+   ],
+   "fuentes": [
+    "hemeroteca"
+   ]
+  },
+  {
+   "id": "cas",
+   "nombre": "la inspección y el cierre",
+   "periodos": [
+    3
+   ],
+   "preguntas": [
+    "inspección",
+    "cierre"
+   ],
+   "fuentes": [
+    "MSPAS"
+   ]
+  }
+ ],
+ "sensibles": {
+  "justicia": false,
+  "personas": []
+ },
+ "no_afirma": [
+  "que la multa fue la única causa del cierre"
+ ],
+ "serie": {
+  "partes": [
+   {
+    "n": 1,
+    "titulo": "El primer horno",
+    "pregunta": "¿Cómo llenó Xela de pan un solo horno?",
+    "periodo": {
+     "desde": "1952",
+     "hasta": "1975"
+    },
+    "actos": [
+     {
+      "n": 1,
+      "nombre": "planteamiento",
+      "titulo": "El horno",
+      "periodo": "1952",
+      "que_cuenta": "Marta Pérez enciende un horno de leña",
+      "termina_en": "La Espiga abre"
+     },
+     {
+      "n": 2,
+      "nombre": "nudo",
+      "titulo": "La primera sucursal",
+      "periodo": "1958–1968",
+      "que_cuenta": "abre la primera sucursal y crece la venta",
+      "termina_en": "4,500 panes al día"
+     },
+     {
+      "n": 3,
+      "nombre": "desenlace",
+      "titulo": "Cinco locales",
+      "periodo": "1971",
+      "que_cuenta": "llega a cinco sucursales",
+      "termina_en": "cinco sucursales en Xela"
+     }
+    ],
+    "espina": {
+     "detonante": {
+      "frase": "En 1952 Marta Pérez enciende un horno de leña",
+      "acto": 1,
+      "ejes": [
+       "ori"
+      ]
+     },
+     "punto_medio": {
+      "frase": "En 1958 abre su primera sucursal",
+      "acto": 2,
+      "ejes": [
+       "ori"
+      ]
+     },
+     "climax": {
+      "frase": "En 1968 vende 4,500 panes al día",
+      "acto": 2,
+      "ejes": [
+       "ori"
+      ]
+     },
+     "resolucion": {
+      "frase": "En 1971 tiene cinco sucursales",
+      "acto": 3,
+      "ejes": [
+       "ori"
+      ]
+     }
+    },
+    "hilos": [
+     {
+      "id": "p1h1",
+      "pregunta": "¿Cómo creció un solo horno?",
+      "eje": "ori"
+     }
+    ],
+    "revelaciones": [
+     "En 1968 vendía 4,500 panes al día",
+     "En 1971 ya tenía cinco sucursales en Xela"
+    ],
+    "puente": "¿Qué le pasaría a La Espiga cuando la tierra tembló?"
+   },
+   {
+    "n": 2,
+    "titulo": "El terremoto",
+    "pregunta": "¿Cómo sobrevivió La Espiga cuando la tierra tembló en 1976?",
+    "periodo": {
+     "desde": "1976",
+     "hasta": "1999"
+    },
+    "actos": [
+     {
+      "n": 1,
+      "nombre": "planteamiento",
+      "titulo": "La carpa",
+      "periodo": "1976–1977",
+      "que_cuenta": "el terremoto destruye el local y reabre en una carpa",
+      "termina_en": "una carpa en la banqueta"
+     },
+     {
+      "n": 2,
+      "nombre": "nudo",
+      "titulo": "Fuera de Xela",
+      "periodo": "1985",
+      "que_cuenta": "abre en Mazatenango",
+      "termina_en": "la primera sucursal fuera de Xela"
+     },
+     {
+      "n": 3,
+      "nombre": "desenlace",
+      "titulo": "La capital",
+      "periodo": "1990–1995",
+      "que_cuenta": "llega a 25 sucursales y abre una planta",
+      "termina_en": "una planta en la capital"
+     }
+    ],
+    "espina": {
+     "detonante": {
+      "frase": "En 1976 el terremoto destruye el local",
+      "acto": 1,
+      "ejes": [
+       "ori",
+       "cas"
+      ]
+     },
+     "punto_medio": {
+      "frase": "En 1985 abre en Mazatenango",
+      "acto": 2,
+      "ejes": [
+       "ori",
+       "cas"
+      ]
+     },
+     "climax": {
+      "frase": "En 1990 llega a 25 sucursales",
+      "acto": 2,
+      "ejes": [
+       "ori",
+       "cas"
+      ]
+     },
+     "resolucion": {
+      "frase": "En 1995 abre una planta en la capital",
+      "acto": 3,
+      "ejes": [
+       "ori",
+       "cas"
+      ]
+     }
+    },
+    "hilos": [
+     {
+      "id": "p2h1",
+      "pregunta": "¿Cómo volvió a hornear?",
+      "eje": "ori"
+     }
+    ],
+    "revelaciones": [
+     "En 1977 reabrió bajo una carpa",
+     "En 1990 tenía 25 sucursales"
+    ],
+    "puente": "¿Por qué una panadería tan grande empezaría a cerrar?"
+   },
+   {
+    "n": 3,
+    "titulo": "La caída",
+    "pregunta": "¿Por qué empezó a cerrar La Espiga?",
+    "periodo": {
+     "desde": "2000",
+     "hasta": "2011"
+    },
+    "actos": [
+     {
+      "n": 1,
+      "nombre": "planteamiento",
+      "titulo": "La inspección",
+      "periodo": "2004",
+      "que_cuenta": "una inspección encuentra harina vencida",
+      "termina_en": "la multa de Q85,000"
+     },
+     {
+      "n": 2,
+      "nombre": "nudo",
+      "titulo": "Doce cierres",
+      "periodo": "2006",
+      "que_cuenta": "cierra 12 de sus 25 sucursales",
+      "termina_en": "12 sucursales cerradas"
+     },
+     {
+      "n": 3,
+      "nombre": "desenlace",
+      "titulo": "Dos hornos",
+      "periodo": "2010–2011",
+      "que_cuenta": "cierra la última sucursal en la capital",
+      "termina_en": "dos hornos en Xela"
+     }
+    ],
+    "espina": {
+     "detonante": {
+      "frase": "En 2004 una inspección encuentra harina vencida",
+      "acto": 1,
+      "ejes": [
+       "cas"
+      ]
+     },
+     "punto_medio": {
+      "frase": "En 2006 ya cerró 12 sucursales",
+      "acto": 2,
+      "ejes": [
+       "cas"
+      ]
+     },
+     "climax": {
+      "frase": "En 2010 cierra la última en la capital",
+      "acto": 2,
+      "ejes": [
+       "cas"
+      ]
+     },
+     "resolucion": {
+      "frase": "Quedan dos hornos en Xela",
+      "acto": 3,
+      "ejes": [
+       "cas"
+      ]
+     }
+    },
+    "hilos": [
+     {
+      "id": "p3h1",
+      "pregunta": "¿Qué fue de Marta Pérez?",
+      "eje": "ori"
+     }
+    ],
+    "revelaciones": [
+     "La inspección encontró 40 sacos de harina vencida",
+     "Cerró la última sucursal en la capital en 2010"
+    ],
+    "puente": null
+   }
+  ]
+ }
+}

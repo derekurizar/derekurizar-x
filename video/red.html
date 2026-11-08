@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<!-- Escena «red» de /historia (?n=N): el organigrama del caso (S.G de scripts/historia.py t_red; gate H23). Arriba el
+     título; quien manda (nivel 0) arriba, los demás en filas por nivel; los investigadores en una franja aparte abajo
+     («Investigaron»). Cada nodo (retrato en círculo recortado del foco de su cara, o la sigla de la institución) entra
+     con un pop cuando la voz lo nombra y su aro va en el acento mientras suena; cada arista se dibuja de un extremo al
+     otro cuando entra el segundo, con su relación en Mono; una arista de un alegato (sin sentencia) va punteada y la
+     escena lleva el chip «Según la acusación». Solo variables del sistema Noche (sin hex). Deriva lenta del conjunto. -->
+<link rel="stylesheet" href="comun.css">
+<style>
+#titulo { position: absolute; top: 360px; left: var(--izq); right: var(--der); font: 800 58px/1.04 Archivo, sans-serif; letter-spacing: -.015em; }
+#lienzo { position: absolute; top: 470px; left: var(--izq); right: var(--der); height: 840px; }
+#lienzo svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+#lienzo line { stroke: color-mix(in srgb, var(--ink) 50%, transparent); stroke-width: 3; stroke-linecap: round; }
+#lienzo line.atr { stroke-dasharray: 10 9; stroke: color-mix(in srgb, var(--a3, var(--ink)) 85%, transparent); }   /* alegato: punteada, pero visible */
+.nodo { position: absolute; width: 270px; margin-left: -135px; display: flex; flex-direction: column; align-items: center; text-align: center; opacity: 0; }
+.nodo .c { width: var(--D); height: var(--D); border-radius: 50%; border: 4px solid color-mix(in srgb, var(--ink) 45%, transparent);
+  background-color: color-mix(in srgb, var(--ink) 12%, var(--bg)); background-repeat: no-repeat; display: flex; align-items: center; justify-content: center;
+  font: 900 30px/1 Archivo, sans-serif; font-stretch: 62.5%; box-sizing: border-box; }
+.nodo.inv .c { border-color: var(--a2, var(--ink)); }
+.nodo.suena .c { border-color: var(--acento, var(--a1)); }
+.nodo .n { margin-top: 8px; font: 800 27px/1.02 Archivo, sans-serif; white-space: nowrap; }
+.nodo .k { margin-top: 4px; max-width: 270px; font: 600 14px/1.15 'JetBrains Mono', monospace; letter-spacing: .04em; text-transform: uppercase;
+  opacity: .7; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rel { position: absolute; transform: translate(-50%, -50%); padding: 3px 10px; border-radius: 999px; background: var(--bg);
+  border: 2px solid color-mix(in srgb, var(--ink) 30%, transparent); font: 600 15px/1.2 'JetBrains Mono', monospace; letter-spacing: .05em;
+  text-transform: uppercase; white-space: nowrap; opacity: 0; }
+.rel.atr { border-style: dashed; }
+#franja { position: absolute; left: 0; right: 0; border-top: 2px dashed color-mix(in srgb, var(--ink) 25%, transparent); opacity: 0; }
+#franja span { position: absolute; top: -14px; left: 0; padding-right: 14px; background: var(--bg); font: 600 18px 'JetBrains Mono', monospace;
+  letter-spacing: .1em; text-transform: uppercase; opacity: .7; }
+#pie { position: absolute; left: var(--izq); right: var(--der); top: 1330px; font: 600 22px/1.2 'JetBrains Mono', monospace; letter-spacing: .06em; opacity: .62; }
+html.f45 #titulo { top: 200px; font-size: 48px; }
+html.f45 #lienzo { top: 290px; height: 720px; }
+html.f45 .nodo .n { font-size: 23px; }
+html.f45 #pie { top: 1030px; }
+</style>
+</head>
+<body>
+<div id="arriba"><div id="progreso"></div></div>
+<div id="titulo"></div>
+<div id="lienzo"><svg id="aristas"></svg><div id="franja"><span>Investigaron</span></div></div>
+<div id="pie"></div>
+<div id="subs"></div>
+<script src="comun.js"></script>
+<script>
+const n = V.n, F45 = V.F45, { clamp, eo, esc } = V;
+let S, G, TROZOS, NODOS = {}, LINEAS = [];
+window.__listo = (async () => {
+  const C = await V.cargar(), todo = C.todo; S = C.S; TROZOS = C.trozos; G = S.G;
+  V.pintarProgreso(todo);
+  document.getElementById('titulo').textContent = G.titulo || '';
+  if (G.fuente) document.getElementById('pie').textContent = G.fuente;
+  const L = document.getElementById('lienzo'), W = L.clientWidth, H = L.clientHeight;
+  // filas: los acusados por nivel (los de un mismo nivel, lado a lado); los investigadores en una franja aparte abajo.
+  // Cada fila tiene el alto de su bloque (círculo, nombre y cargo) y lo que sobra va entre filas: ahí van las relaciones.
+  const inv = G.nodos.filter((x) => x.bando === 'investigador'), acu = G.nodos.filter((x) => x.bando !== 'investigador');
+  const niveles = [...new Set(acu.map((x) => x.nivel))].sort((a, b) => a - b);
+  const filas = niveles.map((nv) => acu.filter((x) => x.nivel === nv)).concat(inv.length ? [inv] : []);
+  const nf = Math.max(1, filas.length), HUECO_MIN = F45 ? 58 : 76;   // entre filas, aire para que la línea y su relación se lean
+  const D = Math.round(Math.max(64, Math.min(F45 ? 104 : 124, (H - (inv.length ? 30 : 0) - (nf - 1) * HUECO_MIN) / nf - 60))), BLOQUE = D + 8 + 30 + 4 + 18;
+  L.style.setProperty('--D', D + 'px');
+  const hueco = Math.max(36, (H - nf * BLOQUE - (inv.length ? 30 : 0)) / Math.max(1, nf - 1));
+  filas.forEach((fila, r) => fila.forEach((x, i) => {
+    const el = document.createElement('div');
+    el.className = 'nodo' + (x.bando === 'investigador' ? ' inv' : '');
+    el.innerHTML = `<div class="c">${x.foto ? '' : esc(x.sigla || '')}</div><div class="n">${esc(x.corto || x.nombre)}</div><div class="k">${esc(x.cargo || '')}</div>`;
+    const cx = W * (i + 1) / (fila.length + 1), top = r * (BLOQUE + hueco) + (inv.length && r === filas.length - 1 ? 30 : 0);
+    el.style.left = cx + 'px'; el.style.top = top + 'px';
+    L.appendChild(el);
+    NODOS[x.id] = { el, x, cx, top, fila: r, cy: top + D / 2 };
+  }));
+  if (inv.length) { const fr = document.getElementById('franja'); fr.style.top = ((filas.length - 1) * (BLOQUE + hueco) + 6) + 'px'; }
+  // retratos recortados del foco de la cara
+  for (const { el, x } of Object.values(NODOS)) {
+    if (!x.foto) continue;
+    const img = new Image(); img.src = x.foto;
+    await img.decode().catch(() => { throw new Error('no carga ' + x.foto); });
+    const c = el.querySelector('.c'), f = x.foco || { x: 0.35, y: 0.18, w: 0.3, h: 0.3 };
+    const k = (0.62 * D) / Math.max(1, f.h * img.naturalHeight);
+    c.style.backgroundImage = `url("${x.foto}")`;
+    c.style.backgroundSize = `${(img.naturalWidth * k).toFixed(1)}px ${(img.naturalHeight * k).toFixed(1)}px`;
+    c.style.backgroundPosition = `${(D / 2 - (f.x + f.w / 2) * img.naturalWidth * k).toFixed(1)}px ${(D / 2 - (f.y + f.h / 2) * img.naturalHeight * k + 0.06 * D).toFixed(1)}px`;
+  }
+  // aristas: entre filas, del pie del bloque de arriba (bajo el cargo) al borde de arriba del círculo de abajo; en la
+  // misma fila, de lado a lado de los círculos. La relación va en una pastilla al centro de la línea (nunca encima de un
+  // nodo: la línea cruza solo el hueco entre filas)
+  const svg = document.getElementById('aristas');
+  LINEAS = G.aristas.map((a) => {
+    let A = NODOS[a.de], B = NODOS[a.a];
+    if (B.fila < A.fila) [A, B] = [B, A];   // siempre de arriba hacia abajo
+    let p1, p2;
+    if (A.fila === B.fila) {
+      const izq = A.cx < B.cx ? A : B, der = izq === A ? B : A;
+      p1 = [izq.cx + D / 2 + 6, izq.cy]; p2 = [der.cx - D / 2 - 6, der.cy];
+    } else {
+      p1 = [A.cx, A.top + BLOQUE + 6]; p2 = [B.cx, B.top - 6];
+    }
+    const ln = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    if (a.atribuida) ln.setAttribute('class', 'atr');
+    svg.appendChild(ln);
+    const tx = document.createElement('div');
+    tx.className = 'rel' + (a.atribuida ? ' atr' : ''); tx.textContent = a.rel || '';
+    tx.style.left = ((p1[0] + p2[0]) / 2).toFixed(1) + 'px'; tx.style.top = ((p1[1] + p2[1]) / 2).toFixed(1) + 'px';
+    if (a.rel) L.appendChild(tx);
+    return { a, p1, p2, ln, tx };
+  });
+  await document.fonts.ready;
+  await V.pintarActo(S);
+})();
+window.seek = (t) => {
+  V.seekProgreso(t, n, S.dur);
+  V.seekActo(t, S);
+  const ti = eo((t - (S.T.ini || 0.3) + 0.2) / 0.4), tit = document.getElementById('titulo');
+  tit.style.opacity = ti; tit.style.transform = `translateY(${((1 - ti) * 24).toFixed(1)}px)`;
+  const fr = document.getElementById('franja'), invs = G.nodos.filter((x) => x.bando === 'investigador');
+  fr.style.opacity = invs.length ? eo((t - Math.min(...invs.map((x) => x.start)) + 0.3) / 0.4).toFixed(3) : 0;
+  for (const { el, x } of Object.values(NODOS)) {
+    const p = V.portada ? 1 : clamp((t - x.start) / 0.35);
+    el.style.opacity = eo(p).toFixed(3);
+    el.style.transform = `translateY(${((1 - eo(p)) * 14).toFixed(1)}px)`;   // entra limpio: sube 14 px y aparece
+    el.classList.toggle('suena', !V.portada && t >= x.start && t < x.start + 1.1);
+  }
+  for (const { a, p1, p2, ln, tx } of LINEAS) {
+    const p = V.portada ? 1 : eo((t - a.start) / 0.6);
+    ln.setAttribute('x1', p1[0]); ln.setAttribute('y1', p1[1]);
+    ln.setAttribute('x2', (p1[0] + (p2[0] - p1[0]) * p).toFixed(1)); ln.setAttribute('y2', (p1[1] + (p2[1] - p1[1]) * p).toFixed(1));
+    ln.style.opacity = p > 0 ? 1 : 0; tx.style.opacity = eo((t - a.start - 0.4) / 0.4).toFixed(3);
+  }
+  const L = document.getElementById('lienzo');
+  if (!S.quieta) L.style.transform = `scale(${(1 + 0.02 * clamp(t / S.dur)).toFixed(4)})`;
+  V.subtitulos(t, S, TROZOS);
+};
+</script>
+</body></html>

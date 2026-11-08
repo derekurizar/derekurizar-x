@@ -1,0 +1,366 @@
+{
+ "id": "2026-11-06-el-caso-la-linea-parte-5",
+ "tipo": "historia",
+ "slug": "el-caso-la-linea-parte-5",
+ "tema": "el caso La Línea",
+ "fecha": "2026-11-06",
+ "pregunta": "¿Cómo cayó el presidente Otto Pérez Molina?",
+ "arco": "caso: descubrimiento, caída y juicio, con un legado que se volteó contra quienes investigaron",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "Agosto 2015",
+   "titulo": "El paro",
+   "escena": 6
+  },
+  {
+   "numero": 3,
+   "anio": "Sept. 2015",
+   "titulo": "La renuncia",
+   "escena": 10
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "La CICIG dijo que el Uno de La Línea era Pérez Molina. Él gobernaba Guatemala. En agosto de 2015, la CICIG, comisión de la ONU, y el MP, la fiscalía, pidieron quitarle la inmunidad. Aseguraron que dirigía la red, pero él seguía siendo el presidente. En abril cayeron más de 20 sospechosos. La acusación afirmaba que esa red de fraude aduanero la dirigía Juan Carlos Monzón, secretario privado de la vicepresidenta Roxana Baldetti. Pero Iván Velásquez, comisionado de la CICIG, lo dijo así: No hay duda que en un nivel superior a Juan Carlos Monzón, está la participación muy lamentable del señor presidente Otto Pérez Molina y la señora Roxana Baldetti. Velásquez dijo que en la oficina de Eco, operador de la red, hallaron un memorándum para el presidente, de tres días antes de que cayeran. El presidente lo negó y, dos días después, juró en cadena nacional que no renunciaría."
+  },
+  {
+   "acto": 2,
+   "texto": "Pero al día siguiente, el MP y la CICIG divulgaron una escucha: el presidente le ordenaba a un ex director de la SAT, la oficina de impuestos, cambiar a un gerente. Los fiscales afirmaron que era ilegal. Entonces, el 27 de agosto, el país paró con 22 bloqueos. Los manifestantes gritaban: ¡Guatemala es tu patrón, y Guatemala te despide, Otto Pérez Molina! Mientras tanto, en el Congreso se jugaba lo único que lo protegía: su inmunidad. El 1 de septiembre, los diputados votaron. Necesitaban 105 votos y hubo 132, ninguno en contra: el Congreso le retiró la inmunidad."
+  },
+  {
+   "acto": 3,
+   "texto": "Al día siguiente, el juez Miguel Ángel Gálvez ordenó su captura. En la noche del 2 al 3 de septiembre, según la prensa, Pérez Molina firmó su renuncia. En la carta escribió: me corresponde continuar con el debido proceso y por lo tanto presentarme ante la justicia. A la mañana siguiente se presentó ante Gálvez. Tres días después, el país votó por su sucesor: el humorista Jimmy Morales iba adelante. Dos días más tarde, Gálvez lo envió a prisión preventiva. Baldetti, exvicepresidenta desde mayo, ya estaba detenida por el mismo caso. ¿Quién declararía contra los dos en el juicio?"
+  }
+ ],
+ "hilos": [
+  {
+   "id": "p5h1",
+   "escena": 6
+  },
+  {
+   "id": "p5h2",
+   "escena": 9
+  },
+  {
+   "id": "p5h3",
+   "escena": 12
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3
+  ],
+  [
+   4,
+   5
+  ],
+  [
+   6,
+   7,
+   8
+  ],
+  [
+   10,
+   11,
+   12
+  ]
+ ],
+ "paleta": "cielo",
+ "musica": "cielo-1",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2189.0,
+ "duracion_s": 148.7,
+ "critica": {
+  "veredicto": "corregir",
+  "vuelta": 3,
+  "puntajes": {
+   "gancho": 3,
+   "tension": 4,
+   "claridad": 3,
+   "flujo": 4,
+   "precision": 4,
+   "cierre": 3
+  }
+ },
+ "gancho": {
+  "familia": "personaje",
+  "visual": "foto",
+  "pantalla": "La Línea: el Uno",
+  "linea": "La CICIG dijo que era Pérez Molina"
+ },
+ "promesa": {
+  "texto": "Aseguraron que dirigía la red, pero él seguía siendo el presidente.",
+  "forma": "contradiccion",
+  "en": 2,
+  "pago": 11,
+  "revela": 2
+ },
+ "bisagra": {
+  "texto": "Mientras tanto, en el Congreso se jugaba lo único que lo protegía: su inmunidad.",
+  "forma": "apuesta",
+  "en": 8,
+  "pago": 9
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "La CICIG dijo que el Uno de La Línea era Pérez Molina. Él gobernaba Guatemala.",
+   "voz": "La Cicig dijo que el Uno de La Línea era Pérez Molina. Él gobernaba Guatemala.",
+   "dur": 6.191,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: La Hora",
+     "origen": "medio",
+     "licencia": "© La Hora (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "En agosto de 2015, la CICIG, comisión de la ONU, y el MP, la fiscalía, pidieron quitarle la inmunidad. Aseguraron que dirigía la red, pero él seguía siendo el presidente.",
+   "voz": "En agosto de dos mil quince, la Cicig, comisión de la Onu, y el eme pe, la fiscalía, pidieron quitarle la inmunidad. Aseguraron que dirigía la red, pero él seguía siendo el presidente.",
+   "dur": 12.565,
+   "hechos": [
+    "des-h23",
+    "pla-h09"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Gobierno de Guatemala · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "foto",
+   "pantalla": "En abril cayeron más de 20 sospechosos. La acusación afirmaba que esa red de fraude aduanero la dirigía Juan Carlos Monzón, secretario privado de la vicepresidenta Roxana Baldetti.",
+   "voz": "En abril cayeron más de veinte sospechosos. La acusación afirmaba que esa red de fraude aduanero la dirigía Juan Carlos Monzón, secretario privado de la vicepresidenta Roxana Baldetti.",
+   "dur": 11.658,
+   "hechos": [
+    "pla-h18"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "cita",
+   "pantalla": "Pero Iván Velásquez, comisionado de la CICIG, lo dijo así: No hay duda que en un nivel superior a Juan Carlos Monzón, está la participación muy lamentable del señor presidente Otto Pérez Molina y la señora Roxana Baldetti.",
+   "voz": "Pero Iván Velásquez, comisionado de la Cicig, lo dijo así: No hay duda que en un nivel superior a Juan Carlos Monzón, está la participación muy lamentable del señor presidente Otto Pérez Molina y la señora Roxana Baldetti.",
+   "dur": 15.287,
+   "hechos": [
+    "des-h23"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: US Embassy Guatemala · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "foto",
+   "pantalla": "Velásquez dijo que en la oficina de Eco, operador de la red, hallaron un memorándum para el presidente, de tres días antes de que cayeran. El presidente lo negó y, dos días después, juró en cadena nacional que no renunciaría.",
+   "voz": "Velásquez dijo que en la oficina de Eco, operador de la red, hallaron un memorándum para el presidente, de tres días antes de que cayeran. El presidente lo negó y, dos días después, juró en cadena nacional que no renunciaría.",
+   "dur": 14.758,
+   "hechos": [
+    "red-h13",
+    "pla-h10"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: La Hora",
+     "origen": "medio",
+     "licencia": "© La Hora (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "foto",
+   "pantalla": "Pero al día siguiente, el MP y la CICIG divulgaron una escucha: el presidente le ordenaba a un ex director de la SAT, la oficina de impuestos, cambiar a un gerente. Los fiscales afirmaron que era ilegal.",
+   "voz": "Pero al día siguiente, el eme pe y la Cicig divulgaron una escucha: el presidente le ordenaba a un ex director de la Sat, la oficina de impuestos, cambiar a un gerente. Los fiscales afirmaron que era ilegal.",
+   "dur": 14.027,
+   "hechos": [
+    "pla-h11"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: World Economic Forum derivative work:… · CC BY-SA 2.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 2.0"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "foto",
+   "pantalla": "Entonces, el 27 de agosto, el país paró con 22 bloqueos.",
+   "voz": "Entonces, el veintisiete de agosto, el país paró con veintidós bloqueos.",
+   "dur": 5.51,
+   "hechos": [
+    "pla-h12"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "cita",
+   "pantalla": "Los manifestantes gritaban: ¡Guatemala es tu patrón, y Guatemala te despide, Otto Pérez Molina! Mientras tanto, en el Congreso se jugaba lo único que lo protegía: su inmunidad.",
+   "voz": "Los manifestantes gritaban: ¡Guatemala es tu patrón, y Guatemala te despide, Otto Pérez Molina! Mientras tanto, en el Congreso se jugaba lo único que lo protegía: su inmunidad.",
+   "dur": 12.913,
+   "hechos": [
+    "pla-h12"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "tarjeta",
+   "pantalla": "El 1 de septiembre, los diputados votaron. Necesitaban 105 votos y hubo 132, ninguno en contra: el Congreso le retiró la inmunidad.",
+   "voz": "El primero de septiembre, los diputados votaron. Necesitaban ciento cinco votos y hubo ciento treinta y dos, ninguno en contra: el Congreso le retiró la inmunidad.",
+   "dur": 10.971,
+   "hechos": [
+    "pla-h13"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "foto",
+   "pantalla": "Al día siguiente, el juez Miguel Ángel Gálvez ordenó su captura.",
+   "voz": "Al día siguiente, el juez Miguel Ángel Gálvez ordenó su captura.",
+   "dur": 3.985,
+   "hechos": [
+    "pla-h23"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Carlos Sebastián · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "cita",
+   "pantalla": "En la noche del 2 al 3 de septiembre, según la prensa, Pérez Molina firmó su renuncia. En la carta escribió: me corresponde continuar con el debido proceso y por lo tanto presentarme ante la justicia.",
+   "voz": "En la noche del dos al tres de septiembre, según la prensa, Pérez Molina firmó su renuncia. En la carta escribió: me corresponde continuar con el debido proceso y por lo tanto presentarme ante la justicia.",
+   "dur": 13.592,
+   "hechos": [
+    "pla-h14"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "explica",
+   "pantalla": "A la mañana siguiente se presentó ante Gálvez. Tres días después, el país votó por su sucesor: el humorista Jimmy Morales iba adelante. Dos días más tarde, Gálvez lo envió a prisión preventiva.",
+   "voz": "A la mañana siguiente se presentó ante Gálvez. Tres días después, el país votó por su sucesor: el humorista Jimmy Morales iba adelante. Dos días más tarde, Gálvez lo envió a prisión preventiva.",
+   "dur": 13.949,
+   "hechos": [
+    "pla-h15",
+    "leg-h05",
+    "pla-h24",
+    "pla-h16"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": "cronologia",
+   "mecanismo": "cronologia"
+  },
+  {
+   "n": 13,
+   "tipo": "cierre",
+   "pantalla": "Baldetti, exvicepresidenta desde mayo, ya estaba detenida por el mismo caso. ¿Quién declararía contra los dos en el juicio? Sígueme: en la sexta parte te cuento quién fue el testigo y cómo terminó la sentencia.",
+   "voz": "Baldetti, exvicepresidenta desde mayo, ya estaba detenida por el mismo caso. ¿Quién declararía contra los dos en el juicio? Sígueme: en la sexta parte te cuento quién fue el testigo y cómo terminó la sentencia.",
+   "dur": 16.487,
+   "hechos": [],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Así cayó",
+  "resumen": [
+   "Inmunidad retirada con 132 votos",
+   "Renunció la noche del 2 al 3",
+   "Prisión preventiva el 8 de septiembre"
+  ],
+  "texto": "Baldetti, exvicepresidenta desde mayo, ya estaba detenida por el mismo caso. ¿Quién declararía contra los dos en el juicio?",
+  "tipo": "pregunta",
+  "forma": "puente",
+  "final": "¿Quién declararía contra los dos en el juicio?",
+  "invitacion": "Sígueme: en la sexta parte te cuento quién fue el testigo y cómo terminó la sentencia."
+ },
+ "caption": {
+  "tiktok": "Serie · Parte 5 de 7: La caída del presidente\nEn 13 días de 2015, Otto Pérez Molina pasó de presidente a preso preventivo por el caso La Línea.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\n#Guatemala #LaLínea #historia",
+  "instagram": "Serie · Parte 5 de 7: La caída del presidente\nDel antejuicio a la renuncia: cómo cayó Otto Pérez Molina en septiembre de 2015.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\n#Guatemala #LaLínea",
+  "facebook": "Serie · Parte 5 de 7: La caída del presidente\nEl antejuicio, el paro nacional, los 132 votos del Congreso y la renuncia de Otto Pérez Molina.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\nFuentes en el primer comentario.",
+  "shorts": "La caída de Pérez Molina por La Línea (5/7) #Shorts\nDel antejuicio a la renuncia, en septiembre de 2015."
+ }
+}

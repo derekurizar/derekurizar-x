@@ -1,0 +1,58 @@
+{
+ "plataforma": "facebook",
+ "fecha": "2026-11-03",
+ "publicaciones": [
+  {
+   "titulo": "La cajita feliz en Guatemala #guatemala #mcdonaldsguatemala",
+   "fecha_pub": "2026-10-25T09:44",
+   "views": "222",
+   "viewers": "196",
+   "likes": "1",
+   "follows": "0",
+   "impresiones": "202",
+   "comments": "0",
+   "distribucion": "-0.3",
+   "watch_s": 1940,
+   "avg_s": 10,
+   "views_3s": "42",
+   "views_1m": "8",
+   "post_id": "202610250944",
+   "url": ""
+  },
+  {
+   "titulo": "Noticias sábado 24 de Octubre en Guatemala #guatemala #noticiasgt",
+   "fecha_pub": "2026-10-24T19:36",
+   "views": "1,243",
+   "viewers": "1,129",
+   "likes": "14",
+   "follows": "3",
+   "impresiones": "1,162",
+   "comments": "0",
+   "distribucion": "+2.3",
+   "watch_s": 10860,
+   "avg_s": 9,
+   "views_3s": "649",
+   "views_1m": "29",
+   "post_id": "202610241936",
+   "url": ""
+  },
+  {
+   "titulo": "Datos de desnutricón en Guatemala #guatemala",
+   "fecha_pub": "2026-10-24T15:15",
+   "views": "163",
+   "viewers": "153",
+   "likes": "0",
+   "follows": "0",
+   "impresiones": "157",
+   "comments": "0",
+   "distribucion": "-4.4",
+   "watch_s": 375,
+   "avg_s": 2,
+   "views_3s": "21",
+   "views_1m": "1",
+   "post_id": "202610241515",
+   "url": ""
+  }
+ ],
+ "_comentario": "Fixture de /analyze-improve: 3 piezas reales (Cajita Feliz, desnutrición, noticiero del 24-oct) con una subida de 1 vista en YouTube (AN6) y una errata en Facebook (AN7)."
+}

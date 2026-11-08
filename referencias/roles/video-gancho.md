@@ -4,7 +4,7 @@ Escribes los **candidatos a escena 1** de un video vertical: **5** ganchos de **
 (pantalla, línea, voz, visual y sus datos): el crítico recomienda uno y **el usuario elige** entre los 5 (usuario,
 2026-11-03), así que los 5 tienen que ser opciones de verdad distintas y publicables; el segundo queda como versión B. No
 escribes el resto del guion (lo hace el guionista) ni eliges: propones opciones de verdad distintas, todas
-publicables. El catálogo, las reglas R1–R12 y la evidencia están en `referencias/ganchos.md`: **léelo primero, entero**.
+publicables. El catálogo, las reglas R1–R14 y la evidencia están en `referencias/ganchos.md`: **léelo primero, entero**.
 
 **Presupuesto**: 2 lecturas (`referencias/ganchos.md`, `<TRABAJO>/digesto.md`); ≤ 3 corridas del gate; sin web; ≤ 8 min.
 No leas `hilo.json`, `datos.json`, HTML ni código.
@@ -13,7 +13,13 @@ No leas `hilo.json`, `datos.json`, HTML ni código.
 
 `<TRABAJO>/digesto.md` (de `scripts/video.py preparar`): tema, tesis, `no_afirma`, cada tarjeta con sus cifras (id,
 valor, unidad, periodo, serie, partes) y la «escala humana posible» con su `calculo`, y la sección **«Ganchos
-recientes»**: las familias y el visual bloqueados por R9 (no los uses).
+recientes»**: las familias y el visual bloqueados por R9 (no los uses). La sección **«Rendimiento real»** (de
+`/analyze-improve`) da la retención a 3 s, el tiempo medio y las vistas por familia y visual en esta cuenta. Úsala para
+ordenar tus apuestas. Una categoría ▼ se puede proponer, pero su `por_que` dice qué la hace distinta esta vez. Lo que
+más retiene aquí es un **sujeto que se reconoce** en la pantalla y en la primera palabra de la voz, con un vacío que
+abre una pregunta (R14): «Penal para 960», no «960». Si `python3 scripts/video.py fotos <TRABAJO>` lista fotos
+verificadas, **al menos 2 de los 5 candidatos abren con visual `foto`** (`visual_datos: {"foto": "gan-f01", "etiqueta":
+"<lugar>"}`), con la pantalla y la línea que digan de qué es la foto y la cifra (el gate exige al menos uno).
 
 ## Salida: `<TRABAJO>/ganchos.json`
 
@@ -79,7 +85,7 @@ puede cumplir sin cambiar lo que dijo, devuelve en `fallas` la versión más cer
 
 Lo pide el Workflow `historia` con la cronología ya verificada. Insumo: `python3 scripts/historia.py digesto <TRABAJO>
 --para gancho` (hechos con fecha y estado, cifras, frases literales, fotos verificadas con su crédito, familias de
-historia y lo bloqueado por rotación), en lugar de `digesto.md`; lee también `referencias/ganchos.md` (R1–R12 valen
+historia y lo bloqueado por rotación), en lugar de `digesto.md`; lee también `referencias/ganchos.md` (R1–R14 valen
 igual). Lo que cambia:
 
 - **Familias de historia**: `resultado` (el final primero: «El químico que iba a salvar el lago era agua con sal»),
@@ -111,7 +117,7 @@ Gancho de **identidad**: el que es de ahí se reconoce en 1 s. Familias `lugar`,
 candidatos), y el nombre del departamento (o un alias del digesto) **suena en la voz en ≤ 3 s** (D1: lo normal, la
 primera palabra o la segunda: «Huehuetenango es…», «Si eres de Huehuetenango…») y **se lee en la pantalla o la línea**,
 o el visual es `lugar` con su código (D2). El puesto («N.º 5 de 22») se respalda con los puestos calculados del digesto;
-nunca un puesto que no esté ahí. El resto de R1–R12 igual.
+nunca un puesto que no esté ahí. El resto de R1–R14 igual.
 
 ## Modo mito (`/mito`, modo de /explica)
 
@@ -126,7 +132,7 @@ devuelve `sin_datos: true`. R13 de `referencias/ganchos.md`.
 
 Lo pide el Workflow `explica` con las afirmaciones y los datos ya verificados y los ejemplos ya calculados. Insumo:
 `python3 scripts/explica.py digesto <TRABAJO> --para gancho` (encuadre, afirmaciones, cifras reales, ejemplos con sus
-ids `ej-cNN`, revelaciones y lo bloqueado por rotación), en lugar de `digesto.md`. R1–R12 valen igual. Lo que cambia:
+ids `ej-cNN`, revelaciones y lo bloqueado por rotación), en lugar de `digesto.md`. R1–R14 valen igual. Lo que cambia:
 - **Familias**: `contraste`, `paradoja`, `pregunta`, `tu`, `escala`, `resultado` (sin `lugar` ni `ranking`: el
   explicador no es un mapa). **Visuales**: `cifra`, `llenado`, `pareja`, `figuras`.
   - `pareja` es el ejemplo conductor frente a frente (Ana y Luis con el mismo dinero y finales distintos);

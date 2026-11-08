@@ -173,7 +173,7 @@ window.__listo = (async () => {
       }
       if (s < 1) continue;   // un foco nunca aleja la tarjeta
       const tx = cl(540 - s * (x + bw / 2), CORTE[0] + MARGEN - s * x, derecha - MARGEN - s * (x + bw));   // ni la caja enfocada pegada al borde
-      FOCOS.push({ k, a, b: b + 0.8, s, tx, ty, caja: c });
+      if (!S.quieta) FOCOS.push({ k, a, b: b + 0.8, s, tx, ty, caja: c });   // quieta: sin zoom a la cifra
     }
   }
   // un foco suelta la cámara cuando empieza el siguiente: sin esto, el sostenido (+0.8 s) del anterior y la entrada del
@@ -217,6 +217,7 @@ const peso = (f, t) => eo((t - f.a) / 0.45) * (1 - eo((t - f.b) / 0.6));
 // foco siguiente, salida 0.6 s)
 const reposo = (t) => { const u = clamp(t / S.dur); return { tx: BASE.tx + DERIVA.tx * u, ty: BASE.ty + DERIVA.ty * u, s: BASE.s * (1 + DERIVA.s * u) }; };
 const marco = (t) => {
+  if (S.quieta) return { tx: BASE.tx, ty: BASE.ty, s: BASE.s };   // la tarjeta quieta: se anima por dentro, sin foco ni deriva
   const d = reposo(t);
   let sw = 0, stx = 0, sty = 0, ss = 0;
   for (const f of FOCOS) {

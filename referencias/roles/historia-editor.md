@@ -91,3 +91,23 @@ hay búsquedas. Conserva tal cual `tema`, `slug`, `protagonista`, `revelaciones`
 `paleta`, `sensibles` y `no_afirma`; añade `actos`, `espina`, `hilos` y `personajes` a partir de lo que la cronología
 ya sostiene (un hilo cuya respuesta no está en los hechos se paga como «nunca se supo»). Nadie vuelve a investigar:
 lo que sigue es el guion.
+
+## Modo serie (`/serie`, `args.serie = {partes: M}` y `hasta: "consolidar"`)
+
+Encuadras el tema ENTERO (pregunta, protagonista, actos y espina de toda la historia, hasta 5 ejes que cubren todas las
+partes) y además el **plan**: `serie.partes` con M partes, cada una con `titulo` (≤ 6 palabras), `pregunta` (la que abre
+esa parte), `periodo {desde, hasta}` (AAAA o AAAA-MM; en orden, sin pisarse), `actos` (3, los de la parte), `espina`,
+`hilos` (1–4, ids `p<N>h<k>`), `revelaciones` (1–3: lo que paga ESA parte) y `puente` (la pregunta que deja abierta y
+abre la parte siguiente; en la última, `null`). El puente pregunta, no responde: ningún número de una revelación
+posterior. Corre `python3 scripts/serie.py plan <TRABAJO> --check` hasta 0 fallas (SE1, SE2). Guía:
+`referencias/flujo-serie.md`.
+
+## Personajes y modo caso (2026-11-06)
+- **Personajes.** Hasta 12. Cada uno lleva `tipo` (persona | institucion), `cargo` (≤ 28 caracteres: va en su tarjeta en pantalla) y `bando` (acusado | investigador | juez | otro).
+- **Toda persona que la voz nombre tendrá su retrato en pantalla (H22).** Por eso incluye a las personas clave del caso (operadores, jefes, testigos, fiscales) aunque aparezcan poco.
+- **Modo caso** (`/serie … caso`): reparte por TEMA.
+  - `serie.columna`: los temas en orden.
+  - En cada parte: `tema`, `hechos` (ids, ≥ 8 hechos) y `obligatorio`.
+  - `serie.fuera`: `{id: motivo}`.
+  - ≥ 85 % de lo publicable repartido (SE10–SE11). Una parte puede contar en su tema algo que se supo años después.
+- **La última parte lleva el resumen de toda la serie** (SE14, 2026-11-07): 20–30 s en su acto 3 que repasan lo que contaron las demás. Dale ese margen en su plan: puede durar hasta 30 s más que las otras.

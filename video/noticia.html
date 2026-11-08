@@ -16,7 +16,12 @@
      /historia la usa con S.N.modo («titular»: el gancho con foto; «noticia»: la escena `foto`) y S.N.chip = { b, s } en
      lugar de «indice/total · sección» (la fecha o la época y el lugar: «1971 · Escuintla»). S.N.encaje = «contener»
      (un gráfico, un cartel o un logo con texto, ya con márgenes de scripts/historia.py encajar): más clara y casi sin
-     Ken Burns, para que se lea entera. -->
+     Ken Burns, para que se lea entera.
+     /historia, escena `toma`: S.N.toma = { dir, cuadros, fps, encaje: fondo|recorte, x, t0, audio } pinta en la lámina,
+     en lugar de la foto, el clip de video cuadro a cuadro (dir/00001.jpg…, 30 fps) en un canvas: corre desde t0 (con
+     audio original, t0 es cuando suena, tras la voz de entrada: antes queda su primer cuadro) y, si la escena dura más,
+     queda el último cuadro con un zoom lento. «fondo»: el clip entero a todo el ancho sobre sí mismo ampliado, borroso y
+     oscuro; «recorte»: el clip a sangre recortado alrededor de x (0–1). seek(t) espera a que el cuadro se decodifique. -->
 <link rel="stylesheet" href="comun.css">
 <style>
 #progreso { margin-top: 0; }
@@ -40,6 +45,7 @@
   color-mix(in srgb, var(--bg) 35%, transparent) 21%, transparent 34%, transparent 46%, color-mix(in srgb, var(--bg) 62%, transparent) 64%,
   color-mix(in srgb, var(--bg) 92%, transparent) 84%, var(--bg) 100%); }
 #sangre .grano { position: absolute; inset: 0; background-size: 180px 180px; }
+#sangre canvas { position: absolute; inset: 0; width: 100%; height: 100%; transform-origin: 50% 42%; will-change: transform; }
 #sangre svg.mapa { position: absolute; left: 12%; top: 21%; width: 68%; height: 40%; }
 #sangre .icono { position: absolute; left: 50%; top: 40%; width: 240px; height: 240px; margin: -120px 0 0 -120px; color: var(--ink); opacity: .9; }
 #sangre .icono svg, #figura .icono svg { width: 100%; height: 100%; stroke-width: 1.4; }
@@ -52,7 +58,10 @@
 #figura .lugar { position: absolute; left: 0; top: 0; font: 600 24px/1 'JetBrains Mono', monospace; letter-spacing: .1em;
   text-transform: uppercase; border: 2px solid color-mix(in srgb, var(--ink) 45%, transparent); padding: 8px 12px; border-radius: 10px; }
 #titular { font: 800 66px/1.04 Archivo, sans-serif; letter-spacing: -.015em; text-shadow: 0 2px 22px color-mix(in srgb, var(--bg) 70%, transparent); }
-#titular span { display: inline-block; margin-right: .22em; }
+#titular span { display: inline-block; margin-right: .22em; position: relative; }
+/* el subrayado (S.N.marcas): un trazo en el acento bajo la fecha o la cifra del titular cuando la voz la dice */
+#titular span .trazo { position: absolute; left: -4px; right: -4px; bottom: -6px; height: 9px; border-radius: 5px;
+  background: var(--acento, var(--a1)); transform-origin: 0 50%; transform: scaleX(0); opacity: .9; }
 #cifra { display: flex; flex-direction: column; gap: 6px; transform-origin: 0 80%; }
 #cifra .v { align-self: flex-start; font-size: 190px; line-height: .84; letter-spacing: -.005em; color: var(--acento); white-space: nowrap; }
 /* con line-height .84 la caja termina a .086em bajo el renglón base; la coma (.19em), los paréntesis (.16em) y la cola
@@ -144,6 +153,26 @@ const svgEl = (tag, at, padre) => { const e = document.createElementNS('http://w
   for (const [k, v] of Object.entries(at)) e.setAttribute(k, v); padre.appendChild(e); return e; };
 const cargarScript = (src) => new Promise((ok, mal) => { const s = document.createElement('script'); s.src = src; s.onload = ok;
   s.onerror = () => mal(new Error('no carga ' + src)); document.head.appendChild(s); });
+// el localizador (S.N.minimapa {depto, desde, hasta}): Guatemala con el departamento encendido, en un recuadro arriba a
+// la derecha de la foto durante ~1.7 s
+async function minimapa(padre) {
+  await cargarScript('geometria.js');
+  const M = N.minimapa, caja = document.createElement('div');
+  caja.id = 'minimapa';
+  caja.style.cssText = 'position:absolute;top:330px;right:110px;width:250px;height:250px;border-radius:24px;padding:16px;box-sizing:border-box;' +
+    'background:color-mix(in srgb, var(--bg) 82%, transparent);border:2px solid color-mix(in srgb, var(--ink) 20%, transparent);opacity:0;';
+  padre.appendChild(caja);
+  const svg = svgEl('svg', { viewBox: GEOMETRIA.viewBox, preserveAspectRatio: 'xMidYMid meet', width: '100%', height: '100%' }, caja);
+  for (const [id, geo] of Object.entries(GEOMETRIA.deptos))
+    svgEl('path', { d: geo.d, fill: id === M.depto ? 'var(--acento)' : 'color-mix(in srgb, var(--ink) 28%, transparent)',
+      stroke: 'var(--bg)', 'stroke-width': 1.5, 'vector-effect': 'non-scaling-stroke' }, svg);
+}
+const seekMinimapa = (t) => {
+  const el = document.getElementById('minimapa'), M = N.minimapa;
+  if (!el || !M) return;
+  const v = V.portada ? 0 : Math.min(eo((t - M.desde) / 0.3), 1 - eo((t - M.hasta) / 0.3));
+  el.style.opacity = Math.max(0, v).toFixed(3); el.style.transform = `scale(${(0.9 + 0.1 * Math.max(0, v)).toFixed(3)})`;
+};
 // sin foto: el mapa con el departamento encendido y su pin, o el icono de la noticia (en la lámina en el gancho, en la
 // columna en la noticia)
 async function tipografica(caja) {
@@ -175,9 +204,145 @@ async function foto(caja) {
   img.src = N.foto;
   await img.decode().catch(() => { throw new Error('no carga la foto ' + N.foto); });
   caja.insertBefore(img, caja.firstChild);
-  const k = Math.max(LAMINA.ancho / img.naturalWidth, LAMINA.alto / img.naturalHeight) * Math.max(...KB_PASO.z);
+  const zmax = N.planos && N.encaje !== 'contener' ? 1.55 : Math.max(...KB_PASO.z);
+  const k = Math.max(LAMINA.ancho / img.naturalWidth, LAMINA.alto / img.naturalHeight) * zmax;
   caja.style.setProperty('--brillo', N.encaje === 'contener' ? '.7' : k > 2 ? '.45' : '.55');
+  if (N.planos && N.encaje !== 'contener') {   // la cámara mueve la foto a mano (camara): sin object-fit
+    img.style.objectFit = 'fill'; img.style.inset = 'auto'; img.style.transformOrigin = '0 0';
+  }
   return img;
+}
+// la pantalla dividida (S.N.dividida: dos fotos, una por persona): cada mitad encuadra la cara de su foto; en cada plano
+// la mitad del foco se acerca (×1.18) y la otra queda; una línea en el acento las separa
+async function dividida(caja) {
+  const W = LAMINA.ancho / 2, H = LAMINA.alto;
+  const mitades = [];
+  for (const [k, d] of N.dividida.entries()) {
+    const m = document.createElement('div');
+    m.className = 'mitad'; m.style.cssText = `position:absolute;top:0;left:${k * W}px;width:${W}px;height:${H}px;overflow:hidden;`;
+    const img = new Image(); img.src = d.foto;
+    await img.decode().catch(() => { throw new Error('no carga la foto ' + d.foto); });
+    img.style.cssText = 'position:absolute;left:0;top:0;transform-origin:0 0;filter:brightness(.6);';
+    m.appendChild(img); caja.insertBefore(m, caja.firstChild);
+    const f = (d.focos || []).find((x) => x.persona) || (d.focos || [])[0];
+    mitades.push({ img, f, W, H });
+  }
+  const linea = document.createElement('div');
+  linea.style.cssText = `position:absolute;top:0;left:${W - 3}px;width:6px;height:${H}px;background:var(--acento, var(--a1));`;
+  caja.insertBefore(linea, caja.querySelector('.velo'));
+  return { mitades };
+}
+function seekDividida(D, t) {
+  const P = N.planos || [{ t: 0, foco: null }];
+  let i = 0;
+  while (i + 1 < P.length && t >= P[i + 1].t) i++;
+  D.mitades.forEach((m, k) => {
+    const w = m.img.naturalWidth, h = m.img.naturalHeight, cover = Math.max(m.W / w, m.H / h);
+    // el plano destaca una mitad: se acerca (×1.3) y la otra se apaga (V21: que el cambio de plano se vea)
+    const zq = (p) => (p && p.foco === k ? 1.3 : 1.0), lu = (p) => (p && p.foco != null && p.foco !== k ? 0.5 : 1.0);
+    const q = i > 0 && !P[i].corte ? eo(clamp((t - P[i].t) / 0.35)) : 1, ant = i > 0 ? P[i - 1] : null;
+    const z = zq(ant) + (zq(P[i]) - zq(ant)) * q;
+    m.img.style.opacity = (lu(ant) + (lu(P[i]) - lu(ant)) * q).toFixed(3);
+    const s = cover * z * (1 + 0.02 * clamp(t / S.dur)), dw = w * s, dh = h * s;
+    const cx = m.f ? m.f.x + m.f.w / 2 : 0.5, cy = m.f ? m.f.y + m.f.h / 2 : 0.4;
+    const left = entre(m.W * 0.5 - cx * dw, m.W - dw, 0), top = entre(m.H * 0.40 - cy * dh, m.H - dh, 0);
+    m.img.style.width = dw.toFixed(1) + 'px'; m.img.style.height = dh.toFixed(1) + 'px';
+    m.img.style.transform = `translate(${left.toFixed(2)}px, ${top.toFixed(2)}px)`;
+  });
+}
+// la cámara de los sub-planos (S.N.planos, video.py planos_foto): cada plano encuadra la foto entera (amplio) o un
+// foco (una cara que detectó historia.py focos, o un tercio) en medio (×1.25) o cerca (×1.55, sin pasar de la
+// resolución de la foto); entre planos, corte seco o un empuje de 0.35 s; dentro de cada plano, una deriva lenta
+const Z_PLANO = { amplio: 1.0, medio: 1.25, cerca: 1.55 };
+const entre = (x, a, b) => Math.max(a, Math.min(b, x));
+function encuadre(img, p) {
+  const W = LAMINA.ancho, H = LAMINA.alto, w = img.naturalWidth, h = img.naturalHeight;
+  const cover = Math.max(W / w, H / h), tope = Math.max(1.0, 1.35 / cover);   // no más de 1.35× los píxeles reales
+  const f = p.foco != null ? (N.focos || [])[p.foco] : null;
+  let s = cover * Math.min(Z_PLANO[p.z] || 1, tope), cx = 0.5, cy = 0.42;
+  if (f) { cx = f.x + f.w / 2; cy = f.y + f.h / 2; }
+  else if ((N.focos || []).length) {   // amplio: centrado en el grupo de caras
+    const xs = N.focos.map((q) => q.x + q.w / 2), ys = N.focos.map((q) => q.y + q.h / 2);
+    cx = (Math.min(...xs) + Math.max(...xs)) / 2; cy = (Math.min(...ys) + Math.max(...ys)) / 2;
+  }
+  const dw = w * s, dh = h * s;
+  if (tope < Z_PLANO.cerca - 0.1) {
+    // la foto no da para acercarse (poca resolución): cerca, medio y amplio quedarían casi iguales y V21 no vería el
+    // plano. El plano cambia de lugar sobre el eje con más foto: cerca en la cara, medio corrido hacia el lado con más
+    // foto y amplio al centro (o al otro lado, si la cara ya está al centro).
+    const f0 = (N.focos || [])[0], hor = dw - W >= dh - H;
+    const c0 = f ? (hor ? cx : cy) : f0 ? (hor ? f0.x + f0.w / 2 : f0.y + f0.h / 2) : 0.5;
+    const lado = c0 < 0.5 ? 1 : -1;
+    let c = hor ? cx : cy;
+    if (p.z === 'medio') {   // hacia el lado que más se aleja de las otras caras (si no, cae en el encuadre de la vecina)
+      const otros = (N.focos || []).filter((q) => q !== f).map((q) => (hor ? q.x + q.w / 2 : q.y + q.h / 2));
+      const lejos = (x) => Math.min(1, ...otros.map((o) => Math.abs(x - o))) - (x < 0 || x > 1 ? 1 : 0);
+      c = [c0 + lado * 0.28, c0 - lado * 0.28].reduce((a, b) => (lejos(b) > lejos(a) + 0.02 ? b : a));
+    }
+    else if (p.z === 'amplio') c = Math.abs(c0 - 0.5) > 0.15 ? 0.5 : c0 - lado * 0.28;
+    if (hor) cx = c; else cy = c;
+  }
+  const left = entre(W * 0.5 - cx * dw, W - dw, 0), top = entre(H * 0.40 - cy * dh, H - dh, 0);
+  return { s, left, top, dw, dh };
+}
+function camara(img, t, late) {
+  const P = N.planos, W = LAMINA.ancho, H = LAMINA.alto;
+  let i = 0;
+  while (i + 1 < P.length && t >= P[i + 1].t) i++;
+  const a = encuadre(img, P[i]), sig = P[i + 1], dur_p = (sig ? sig.t : S.dur) - P[i].t;
+  let e = a;
+  if (i > 0 && !P[i].corte) {   // empuje desde el plano anterior
+    const q = eo(clamp((t - P[i].t) / 0.35)), b = encuadre(img, P[i - 1]);
+    e = { s: b.s + (a.s - b.s) * q, left: b.left + (a.left - b.left) * q, top: b.top + (a.top - b.top) * q };
+  }
+  const d = 1 + (S.quieta ? 0.04 * clamp(t / S.dur) : 0.025 * clamp((t - P[i].t) / Math.max(0.5, dur_p)) + 0.008 * late);   // quieta: un solo empuje lento en toda la escena
+  const dw = img.naturalWidth * e.s * d, dh = img.naturalHeight * e.s * d;
+  const left = entre(e.left - (d - 1) * W * 0.5, W - dw, 0), top = entre(e.top - (d - 1) * H * 0.4, H - dh, 0);
+  img.style.width = dw.toFixed(1) + 'px'; img.style.height = dh.toFixed(1) + 'px';
+  img.style.transform = `translate(${left.toFixed(2)}px, ${top.toFixed(2)}px)`;
+}
+// la toma (/historia): el clip cuadro a cuadro en un canvas de la lámina; cada cuadro se carga y se decodifica cuando
+// seek(t) lo pide (determinista: el grabador espera la promesa de seek)
+const TOMA = { canvas: null, ctx: null, img: null, k: 0, cache: new Map() };
+async function toma(caja) {
+  const c = document.createElement('canvas');
+  c.width = LAMINA.ancho; c.height = LAMINA.alto;
+  caja.insertBefore(c, caja.firstChild);
+  TOMA.canvas = c; TOMA.ctx = c.getContext('2d');
+  caja.style.setProperty('--brillo', '.85');
+  await dibujarToma(0);
+  return c;
+}
+async function cuadroToma(k) {
+  if (TOMA.cache.has(k)) return TOMA.cache.get(k);
+  const img = new Image();
+  img.src = `${N.toma.dir}/${String(k).padStart(5, '0')}.jpg`;
+  await img.decode().catch(() => { throw new Error('no carga el cuadro ' + img.src); });
+  if (TOMA.cache.size > 4) TOMA.cache.delete(TOMA.cache.keys().next().value);
+  TOMA.cache.set(k, img);
+  return img;
+}
+async function dibujarToma(t) {
+  const T = N.toma, k = Math.max(1, Math.min(T.cuadros, 1 + Math.floor(Math.max(0, t - T.t0) * T.fps + 1e-6)));
+  if (k === TOMA.k) return;
+  const img = await cuadroToma(k), ctx = TOMA.ctx, W = LAMINA.ancho, H = LAMINA.alto, w = img.naturalWidth, h = img.naturalHeight;
+  ctx.filter = 'none'; ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--bg') || 'black'; ctx.fillRect(0, 0, W, H);
+  if (T.encaje === 'recorte') {
+    const z = Math.max(W / w, H / h), dw = w * z, dh = h * z, x = clamp(T.x ?? 0.5);
+    ctx.filter = 'brightness(.85)';
+    ctx.drawImage(img, (W - dw) * x, (H - dh) * 0.42, dw, dh);
+  } else {
+    // fondo: el mismo cuadro ampliado, borroso y oscuro, y encima el clip entero a todo el ancho (un poco arriba del
+    // centro: abajo va la columna del titular)
+    const z = Math.max(W / w, H / h) * 1.08;
+    ctx.filter = 'blur(28px) brightness(.38)';
+    ctx.drawImage(img, (W - w * z) / 2, (H - h * z) / 2, w * z, h * z);
+    const zc = W / w, dh = h * zc, y = Math.max(270, Math.min(H - dh, H * 0.40 - dh / 2));
+    ctx.filter = 'brightness(.92)';
+    ctx.drawImage(img, 0, y, W, dh);
+  }
+  ctx.filter = 'none';
+  TOMA.k = k;
 }
 // el gancho lleva su pantalla como cifra héroe cuando la pantalla es una cifra: esencialmente un número («430», «Q1,200»,
 // «35 %», «1976»: dígitos y a lo más 3 letras de unidad o moneda) o, en un gancho de familia resultado o escala
@@ -227,9 +392,16 @@ window.__listo = (async () => {
     const estado = N.estado === 'en_desarrollo' ? '<em>En desarrollo</em>' : '';
     document.getElementById('chip').innerHTML = (N.chip ? `<b>${esc(N.chip.b)}</b>${N.chip.s ? `<span>${esc(N.chip.s)}</span>` : ''}`
       : `<b>${N.indice}/${N.total}</b><span>${esc(N.seccion)}</span>`) + estado;
-    if (N.foto) {
+    if (N.dividida) {
+      KB = await dividida(sangre);
+      document.getElementById('credito').textContent = N.credito || '';
+    } else if (N.toma) {
+      KB = await toma(sangre);
+      document.getElementById('credito').textContent = N.credito || '';
+    } else if (N.foto) {
       KB = await foto(sangre);
       document.getElementById('credito').textContent = N.credito || '';
+      if (N.minimapa) await minimapa(document.body);
     } else {
       sangre.style.display = 'none';
       await tipografica(document.getElementById('figura'));
@@ -285,14 +457,26 @@ const subtitulos = (t) => V.subtitulos(t, S, TROZOS, { ocultar: (tr) => tr.every
 // Ken Burns: zoom y paneo lentos, función de t; `late` (0–1) suma un empujón breve al empezar cada oración
 const kenBurns = (img, t, late = 0) => {
   if (!img) return;
+  if (img.mitades) return seekDividida(img, t);
+  if (N.toma) {   // el clip ya se mueve: solo el empujón de cada oración y, al acabarse, un zoom lento sobre el último cuadro
+    const fin = N.toma.t0 + N.toma.cuadros / N.toma.fps, q = Math.max(0, t - fin);
+    img.style.transform = `scale(${((1 + 0.02 * Math.min(1, q / 4)) * (1 + 0.006 * late)).toFixed(4)})`;
+    return;
+  }
+  if (N.planos && N.encaje !== 'contener' && img.tagName === 'IMG') return camara(img, t, late);
   const k = KB_PASO, p = clamp(t / S.dur);
-  const z = (k.z[0] + (k.z[1] - k.z[0]) * p) * (1 + 0.012 * late), x = k.x[0] + (k.x[1] - k.x[0]) * p, y = k.y[0] + (k.y[1] - k.y[0]) * p;
+  const z = (k.z[0] + (k.z[1] - k.z[0]) * p) * (1 + (S.quieta ? 0 : 0.012 * late)), x = k.x[0] + (k.x[1] - k.x[0]) * p, y = k.y[0] + (k.y[1] - k.y[0]) * p;
   img.style.transform = `translate(${x.toFixed(3)}%, ${y.toFixed(3)}%) scale(${z.toFixed(4)})`;
 };
 const moverPin = (t) => { const pin = document.getElementById('pin');
   if (pin) pin.style.transform = `translateY(${(-8 * Math.sin(Math.PI * 2 * t / 1.6)).toFixed(2)}px)`; };
 window.seek = (t) => {
+  const r = seekSync(t);
+  return N && N.toma ? dibujarToma(t) : r;
+};
+const seekSync = (t) => {
   V.seekProgreso(t, n, S.dur);
+  seekMinimapa(t);
   V.seekActo(t, S);
   if (MODO === 'titular') {
     kenBurns(KB, t);
@@ -331,8 +515,15 @@ window.seek = (t) => {
     const fig = document.getElementById('figura');
     fig.style.opacity = fo.toFixed(3); fig.style.transform = `scale(${((0.96 + 0.04 * fo) * (1 + 0.025 * late)).toFixed(4)})`;
   }
-  [...document.querySelectorAll('#titular span')].forEach((s, i) => {
+  [...document.querySelectorAll('#titular > span')].forEach((s, i) => {
     const w = eo((t - N.titular[i].start + 0.15) / 0.3); s.style.opacity = w; s.style.transform = `translateY(${((1 - w) * 26).toFixed(1)}px)`; });
+  (N.marcas || []).forEach((m) => {
+    const sp = document.querySelectorAll('#titular > span')[m.k];
+    if (!sp) return;
+    let tr = sp.querySelector('.trazo');
+    if (!tr) { tr = document.createElement('i'); tr.className = 'trazo'; sp.appendChild(tr); }
+    tr.style.transform = `scaleX(${(V.portada ? 1 : eo((t - m.t) / 0.3)).toFixed(3)})`;
+  });
   if (N.cifra) {
     const C = N.cifra, cifra = document.getElementById('cifra'), v = cifra.querySelector('.v');
     const p = prog(t, C.start, C.start + 0.9), ap = eo((t - C.start + 0.1) / 0.35);

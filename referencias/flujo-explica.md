@@ -18,7 +18,7 @@ preparar (explica.py: TRABAJO = sesiones/explica-<slug>/, duración, paleta prov
                     → explica-investigador por eje (en paralelo) → hallazgos_<eje>.json
                     ⇢ explica-verificador por eje (pipeline) → verificacion_<eje>.json · gate afirmaciones --check (E2)
                     → consolidar (explicacion.json, base/ y la CALCULADORA: ejemplos.json + cifras ej-cNN)
-                    → video-gancho en modo explica → gate ganchos --check (R1–R12) → video-critico elige
+                    → video-gancho en modo explica → gate ganchos --check (R1–R14) → video-critico elige
                     → explica-guionista (ganchos --usar → narración de corrido → narracion --check (E9) → escenas →
                       guion --check (E1–E12 + V1–V5, V9, F1–F8))
                     → historia-oyente en modo explica (confusiones + explicacion_devuelta)
@@ -132,7 +132,7 @@ la cámara que se aleja cuando la capa de acento engorda.
 
 Además corren los de `/video`:
 - en `guion --check`: V1–V5, V9 (sin «la escena 2 es T1») y F1–F8;
-- R1–R12 en los ganchos (R6 acepta «quetzales»);
+- R1–R14 en los ganchos (R6 acepta «quetzales»);
 - al grabar y montar: V6, V7, V8, V10, V11, V12, V13, V15 y V16.
 
 ## Voz y costos

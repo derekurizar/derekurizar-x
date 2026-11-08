@@ -127,3 +127,11 @@ cambias ni lo matizas.
 - **MI5**: la 1.ª línea de cada caption (también `shorts`) empieza con «MITO:», «REALIDAD:» o «A MEDIAS:» y la creencia.
 - **MI7** (`sensible` seguridad|grupo): nada de «todos los…», «siempre», «cualquier»; presunción de inocencia.
 Gate: `explica.py guion --check` (E1–E12 + MI2–MI9); el RETORNO trae `veredicto` y `creencia`.
+
+## Modo serie (una parte del temario de `/serie`)
+
+Duración `explica-serie`: ≈ 90 s (190–250 palabras), un solo mecanismo, la parte se entiende sola (SE4). En las partes
+1…M−1 el cierre es `forma: "puente"` (la pregunta que abre la parte siguiente, sin anunciarla) y, aparte, en
+`cierre.invitacion`, la oración que pide seguir la cuenta y dice qué explica la siguiente («Sígueme: en la segunda
+parte, por qué …»; SE9); en la última, consecuencia y sin invitación. Captions con «Serie · Parte N de M: <título>» y
+Shorts con «(N/M)»; desde la parte 2, una línea «La Parte 1 está fijada en mi perfil» (SE8).

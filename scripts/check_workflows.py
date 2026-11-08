@@ -24,7 +24,8 @@ El sandbox del Workflow no importa módulos, así que hilo.js, dato.js e ideas.j
      APERTURAS_PROHIBIDAS), que
      viven solo en video.py
   W11 noticias.js: la tabla MODOS refleja noticias.SECCIONES (diario) y semana.SECCIONES, PUNTAJES y CIFRAS (semana)
-  W12 historia.js: TIPOS (los de video.py más foto, cita y capitulo), FAMILIAS, VISUALES y PUNTAJES son espejos literales de
+  W12 historia.js: TIPOS (los de video.py más foto, cita y capitulo), FAMILIAS, VISUALES y PUNTAJES (y los escalares de la
+     narración, también EJES_MAX_SERIE y PALABRAS_SERIE de /serie) son espejos literales de
       scripts/historia.py
   W13 explica.js: TIPOS (los de video.py más cuenta), FAMILIAS, VISUALES, PUNTAJES y MODELOS son espejos literales de
       scripts/explica.py, y SEGUN_MAX es su SEGUN_MAX_VIDEO; la tabla MODOS de explica.js (explica, mito) tiene las claves
@@ -290,7 +291,10 @@ def historia_workflow():
             err("W12 historia.js %s %s ≠ historia.py %s" % (nombre, js, py))
     # escalares de la narración (v3): el workflow valida el RETORNO del guionista con los mismos números que el gate
     escalares = {"PALABRAS_MIN": HI.PALABRAS[0], "PALABRAS_MAX": HI.PALABRAS[1], "SEGUN_MAX": HI.SEGUN_MAX_VIDEO,
-                 "ACTOS": len(HI.ACTOS), "HILOS_MIN": HI.HILOS[0], "HILOS_MAX": HI.HILOS[1], "PERSONAJES_MAX": HI.PERSONAJES_MAX}
+                 "ACTOS": len(HI.ACTOS), "HILOS_MIN": HI.HILOS[0], "HILOS_MAX": HI.HILOS[1], "PERSONAJES_MAX": HI.PERSONAJES_MAX,
+                 # /serie: la investigación compartida (EJES_MAX_SERIE) y la parte de ≈ 90 s (PALABRAS_SERIE)
+                 "EJES_MAX_SERIE": HI.EJES_MAX_SERIE, "PALABRAS_SERIE_MIN": HI.PALABRAS_SERIE[0], "PALABRAS_SERIE_MAX": HI.PALABRAS_SERIE[1],
+                 "PALABRAS_CASO_MIN": HI.FORMATOS["historia-caso"]["PALABRAS"][0], "PALABRAS_CASO_MAX": HI.FORMATOS["historia-caso"]["PALABRAS"][1]}
     for nombre, py in escalares.items():
         m = re.search(r"\b%s = (\d+)" % nombre, src)
         if not m:

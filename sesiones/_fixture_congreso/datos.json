@@ -1,0 +1,255 @@
+{
+ "slug": "iniciativa-6347",
+ "cifras": [
+  {
+   "id": "cg-c01",
+   "concepto": "Votos a favor en la votación de redacción final (2026-11-03) de la iniciativa 6347",
+   "valor": 121,
+   "unidad": "diputados",
+   "periodo": "2026-11-03",
+   "veredicto": "verificada",
+   "valor_final": 121,
+   "evidencia": {
+    "url": "https://www.congreso.gob.gt/detalle_de_votacion/51644/41400",
+    "cita": "121 filas con voto «favor» en el listado nominal de la votación de redacción final (2026-11-03)",
+    "archivo_local": "sesiones/_fixture_congreso/votos_ley.csv"
+   }
+  },
+  {
+   "id": "cg-c02",
+   "concepto": "Votos en contra en la votación de redacción final (2026-11-03) de la iniciativa 6347",
+   "valor": 10,
+   "unidad": "diputados",
+   "periodo": "2026-11-03",
+   "veredicto": "verificada",
+   "valor_final": 10,
+   "evidencia": {
+    "url": "https://www.congreso.gob.gt/detalle_de_votacion/51644/41400",
+    "cita": "10 filas con voto «contra» en el listado nominal de la votación de redacción final (2026-11-03)",
+    "archivo_local": "sesiones/_fixture_congreso/votos_ley.csv"
+   }
+  },
+  {
+   "id": "cg-c03",
+   "concepto": "Diputados ausentes en la votación de redacción final (2026-11-03) de la iniciativa 6347",
+   "valor": 19,
+   "unidad": "diputados",
+   "periodo": "2026-11-03",
+   "veredicto": "verificada",
+   "valor_final": 19,
+   "evidencia": {
+    "url": "https://www.congreso.gob.gt/detalle_de_votacion/51644/41400",
+    "cita": "19 filas con voto «ausente» en el listado nominal de la votación de redacción final (2026-11-03)",
+    "archivo_local": "sesiones/_fixture_congreso/votos_ley.csv"
+   }
+  },
+  {
+   "id": "cg-c04",
+   "concepto": "Diputados con licencia o excusa en la votación de redacción final (2026-11-03) de la iniciativa 6347",
+   "valor": 10,
+   "unidad": "diputados",
+   "periodo": "2026-11-03",
+   "veredicto": "verificada",
+   "valor_final": 10,
+   "evidencia": {
+    "url": "https://www.congreso.gob.gt/detalle_de_votacion/51644/41400",
+    "cita": "10 filas con voto «licencia» en el listado nominal de la votación de redacción final (2026-11-03)",
+    "archivo_local": "sesiones/_fixture_congreso/votos_ley.csv"
+   }
+  },
+  {
+   "id": "cg-c05",
+   "concepto": "Diputados del Congreso",
+   "valor": 160,
+   "unidad": "diputados",
+   "periodo": "2026-11-03",
+   "veredicto": "verificada",
+   "valor_final": 160,
+   "evidencia": {
+    "url": "https://www.congreso.gob.gt/detalle_de_votacion/51644/41400",
+    "cita": "160 filas en el listado nominal",
+    "archivo_local": "sesiones/_fixture_congreso/votos_ley.csv"
+   }
+  },
+  {
+   "id": "cg-c06",
+   "concepto": "Votos para aprobar: mayoría absoluta del total (Ley Orgánica, art. 99)",
+   "valor": 81,
+   "unidad": "votos",
+   "periodo": "vigente",
+   "veredicto": "verificada",
+   "valor_final": 81,
+   "evidencia": {
+    "url": "https://www.oas.org/es/sla/dlc/mesicic/docs/mesicic5_gtm_anexo2.pdf",
+    "cita": "mayoría absoluta del total de diputados que integran el Congreso",
+    "archivo_local": "sesiones/como-vota-el-congreso/base/contexto/fuentes/ley-organica-63-94-oea.txt"
+   }
+  },
+  {
+   "id": "cg-c07",
+   "concepto": "Votos a favor por bancada en la votación de redacción final (2026-11-03)",
+   "valor": 121,
+   "unidad": "diputados",
+   "periodo": "2026-11-03",
+   "veredicto": "verificada",
+   "valor_final": 121,
+   "evidencia": {
+    "url": "https://www.congreso.gob.gt/detalle_de_votacion/51644/41400",
+    "cita": "conteo por bancada del listado nominal",
+    "archivo_local": "sesiones/_fixture_congreso/votos_ley.csv"
+   },
+   "partes": [
+    {
+     "nombre": "Vamos",
+     "valor": 23
+    },
+    {
+     "nombre": "Semilla (independientes)",
+     "valor": 20
+    },
+    {
+     "nombre": "UNE",
+     "valor": 16
+    },
+    {
+     "nombre": "Cabal",
+     "valor": 15
+    },
+    {
+     "nombre": "Valor",
+     "valor": 8
+    },
+    {
+     "nombre": "Viva",
+     "valor": 8
+    },
+    {
+     "nombre": "Todos",
+     "valor": 5
+    },
+    {
+     "nombre": "independientes ex UNE",
+     "valor": 5
+    },
+    {
+     "nombre": "CREO",
+     "valor": 3
+    },
+    {
+     "nombre": "independientes ex Viva",
+     "valor": 3
+    },
+    {
+     "nombre": "Bien",
+     "valor": 2
+    },
+    {
+     "nombre": "VOS",
+     "valor": 1
+    },
+    {
+     "nombre": "Elefante",
+     "valor": 2
+    },
+    {
+     "nombre": "Azul",
+     "valor": 2
+    },
+    {
+     "nombre": "Victoria",
+     "valor": 2
+    },
+    {
+     "nombre": "independientes ex Nosotros",
+     "valor": 2
+    },
+    {
+     "nombre": "independientes ex Bien",
+     "valor": 1
+    },
+    {
+     "nombre": "independientes ex VOS",
+     "valor": 1
+    },
+    {
+     "nombre": "Nosotros",
+     "valor": 1
+    },
+    {
+     "nombre": "independientes ex Victoria",
+     "valor": 1
+    }
+   ]
+  },
+  {
+   "id": "cg-c08",
+   "concepto": "Votos en contra por bancada en la votación de redacción final (2026-11-03)",
+   "valor": 10,
+   "unidad": "diputados",
+   "periodo": "2026-11-03",
+   "veredicto": "verificada",
+   "valor_final": 10,
+   "evidencia": {
+    "url": "https://www.congreso.gob.gt/detalle_de_votacion/51644/41400",
+    "cita": "conteo por bancada del listado nominal",
+    "archivo_local": "sesiones/_fixture_congreso/votos_ley.csv"
+   },
+   "partes": [
+    {
+     "nombre": "Vamos",
+     "valor": 7
+    },
+    {
+     "nombre": "UNE",
+     "valor": 2
+    },
+    {
+     "nombre": "independientes ex UNE",
+     "valor": 1
+    }
+   ]
+  },
+  {
+   "id": "cg-c09",
+   "concepto": "Votos a favor de declarar la iniciativa 6347 de urgencia nacional (2026-11-03)",
+   "valor": 109,
+   "unidad": "diputados",
+   "periodo": "2026-11-03",
+   "veredicto": "verificada",
+   "valor_final": 109,
+   "evidencia": {
+    "url": "https://www.congreso.gob.gt/detalle_de_votacion/51600/41400",
+    "cita": "109 filas con voto «favor» en la moción de urgencia",
+    "archivo_local": "sesiones/_fixture_congreso/votos_ley.csv"
+   }
+  },
+  {
+   "id": "cg-c10",
+   "concepto": "Votos en contra de la urgencia nacional (2026-11-03)",
+   "valor": 10,
+   "unidad": "diputados",
+   "periodo": "2026-11-03",
+   "veredicto": "verificada",
+   "valor_final": 10,
+   "evidencia": {
+    "url": "https://www.congreso.gob.gt/detalle_de_votacion/51600/41400",
+    "cita": "10 filas con voto «contra» en la moción de urgencia",
+    "archivo_local": "sesiones/_fixture_congreso/votos_ley.csv"
+   }
+  },
+  {
+   "id": "cg-c11",
+   "concepto": "Votos para declarar urgencia nacional: dos tercios del total",
+   "valor": 107,
+   "unidad": "votos",
+   "periodo": "vigente",
+   "veredicto": "verificada",
+   "valor_final": 107,
+   "evidencia": {
+    "url": "https://www.oas.org/es/sla/dlc/mesicic/docs/mesicic5_gtm_anexo2.pdf",
+    "cita": "las dos terceras partes del total de diputados",
+    "archivo_local": "sesiones/como-vota-el-congreso/base/contexto/fuentes/ley-organica-63-94-oea.txt"
+   }
+  }
+ ]
+}

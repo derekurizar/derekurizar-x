@@ -66,6 +66,7 @@
       "veredicto": "verificada",
       "independencia": "baja",
       "fuente_2": "Búsqueda: AGN y otras notas citan Q9,016.35 para la CA de dic-2023 (INE)",
+      "calculo": "3904.98/0.4331",
       "evidencia": {
         "url": "https://iies.usac.edu.gt/wp-content/uploads/2022/11/Boletin-Economia-al-dia-No.-12-diciembre-2022.pdf",
         "cita": "2021      Diciembre            238.38                      7,151.30 (Tabla 5 Canasta Ampliada, Fuente: INE)",
@@ -154,6 +155,7 @@
       "veredicto": "verificada",
       "independencia": "baja",
       "fuente_2": "Cotejo con la cita de AGN (cifras 3,599.54 y 2,989.38) y diferencia calculada",
+      "calculo": "3599.54-2989.38",
       "evidencia": {
         "url": "https://agn.gt/costo-de-la-canasta-basica-cerro-con-disminucion-durante-diciembre-de-2020/",
         "cita": "en noviembre ascendió 3 mil 599,54 quetzales; la reducción fue de 610,16 quetzales ... sustituyendo el 28,2 por ciento por 9,6 por ciento"
@@ -399,6 +401,7 @@
       "veredicto": "verificada",
       "independencia": "baja",
       "fuente_2": "Recalculo desde can-c06 y can-c07 (EFE/Emisoras Unidas)",
+      "calculo": "(930.52/718.69-1)*100",
       "evidencia": {
         "url": "https://emisorasunidas.com/nacional/2026/04/08/el-costo-de-vida-se-acelera-en-el-primer-trimestre-de-2026/",
         "cita": "al pasar de 924,35 quetzales a 930,52 quetzales ... 713,40 quetzales en enero a 718,69 quetzales"
@@ -541,6 +544,7 @@
       "veredicto": "verificada",
       "independencia": "baja",
       "fuente_2": "IIES-USAC: 66.2% de ocupados (5.3 millones) en informalidad",
+      "calculo": "8036086*66.2/100/1000000",
       "evidencia": {
         "url": "https://iies.usac.edu.gt/wp-content/uploads/2026/03/Boletin-Economia-al-dia-No.-2-febrero-2026.pdf",
         "cita": "el 66.2 % de ocupados (5.3 millones) trabajan en informalidad (INE, 2025a), quedando al margen del instrumento salarial",
@@ -699,6 +703,7 @@
       "veredicto": "verificada",
       "independencia": "baja",
       "fuente_2": "SESAN boletin 010-2026 (CBAU) y EY Centroamerica (AG 256-2025: Q131.58 diarios no agricola CE1)",
+      "calculo": "4021.6/131.58",
       "evidencia": {
         "url": "https://portal.siinsan.gob.gt/wp-content/uploads/20261022-02-Boletin-Alerta-Temprana-SAN-010_2026.pdf",
         "cita": "En septiembre de 2026, el costo de la CBAU para una familia de 4.11 integrantes fue de Q 4,021.6 [...] la CBAR para una familia de 4.80 integrantes fue de Q 3,607.6",
@@ -735,6 +740,7 @@
       "veredicto": "verificada",
       "independencia": "baja",
       "fuente_2": "IGSS Resumen informe anual 2025 (1,742,810 cotizantes); ocupados INE",
+      "calculo": "1742810/8036086*100",
       "evidencia": {
         "url": "https://www.igssgt.org/wp-content/uploads/2026/09/Resumen-informe-anual-de-labores-2025-IGSS.pdf",
         "cita": "Afiliados cotizantes 1,742,810",
@@ -812,6 +818,7 @@
       "veredicto": "verificada",
       "independencia": "baja",
       "fuente_2": "IIES Tabla 1 (minimo no agricola CE1 2025 Q3,973.05 con bonificacion) e INE ENEIC",
+      "calculo": "2713/3973.05*100",
       "evidencia": {
         "url": "https://iies.usac.edu.gt/wp-content/uploads/2026/03/Boletin-Economia-al-dia-No.-2-febrero-2026.pdf",
         "cita": "El ingreso promedio mensual de la población ocupada fue de Q 2,713.00 [...] 2025 CE1 3,843.55 3,973.05 3,528.59",
@@ -1085,6 +1092,7 @@
       "veredicto": "verificada",
       "independencia": "baja",
       "fuente_2": "cotejo con la primaria (archivo local)",
+      "calculo": "(3723.05/3384.59-1)*100",
       "evidencia": {
         "url": "https://agn.gt/salario-minimo-2025-estos-son-los-montos-oficiales-del-aumento/",
         "cita": "se fijan 122 quetzales con 40 centavos diarios (Q122.40), equivalentes a 3 mil 723 quetzales con 5 centavos mensuales (Q3,723.05)",
@@ -1147,6 +1155,7 @@
       "veredicto": "verificada",
       "independencia": "baja",
       "fuente_2": "cotejo con la primaria (archivo local)",
+      "calculo": "(102.17/77.74-1)*100",
       "evidencia": {
         "url": "https://banguat.gob.gt/sites/default/files/banguat/estaeco/SR/sr005.htm",
         "cita": "2018 … Diciembre,77.74,0.13,2.31 | 2025 … Diciembre,102.17,0.07,1.65",
@@ -1172,6 +1181,7 @@
       "veredicto": "verificada",
       "independencia": "baja",
       "fuente_2": "cotejo con la primaria (archivo local)",
+      "calculo": "(((4002.28+250)/(90.16*365/12+250))/(102.17/77.74)-1)*100",
       "evidencia": {
         "url": "https://mintrabajo.gob.gt/wp-content/uploads/2026/06/Acuerdo-Gubernativo-Numero-256-2025-Salario-Minino.pdf",
         "cita": "(Q. 4,002.28) mensuales [AG 256-2025] … (Q.90.16) DIARIOS [AG 242-2018] … Q250.00 mensuales [Memoria 2021] … Diciembre,77.74 / Diciembre,102.17 [SR005]",
@@ -1201,6 +1211,7 @@
       "veredicto": "verificada",
       "independencia": "baja",
       "fuente_2": "cotejo con la primaria (archivo local)",
+      "calculo": "(1-((3625.89+250)/(90.16*365/12+250))/(102.17/77.74))*100",
       "evidencia": {
         "url": "https://mintrabajo.gob.gt/wp-content/uploads/2026/06/Acuerdo-Gubernativo-Numero-256-2025-Salario-Minino.pdf",
         "cita": "(Q, 3,625.89) mensuales [AG 256-2025, agricola CE2] … (Q.90.16) DIARIOS [AG 242-2018] … Q250.00 mensuales … Diciembre,77.74 / Diciembre,102.17 [SR005]",
@@ -1230,6 +1241,7 @@
       "veredicto": "verificada",
       "independencia": "baja",
       "fuente_2": "cotejo con la primaria (archivo local)",
+      "calculo": "3572.38/(90.16*365/12+250)",
       "evidencia": {
         "url": "https://portal.siinsan.gob.gt/wp-content/uploads/Canasta-Basica-Alimentaria-Enero-de-2019.pdf",
         "cita": "El costo total de la CBA se ha estimado en Q.3,572.38 al mes de enero.",
@@ -1257,6 +1269,7 @@
       "veredicto": "verificada",
       "independencia": "baja",
       "fuente_2": "cotejo con la primaria (archivo local)",
+      "calculo": "8248.40/(90.16*365/12+250)",
       "evidencia": {
         "url": "https://portal.siinsan.gob.gt/wp-content/uploads/Canasta-Basica-Alimentaria-Enero-de-2019.pdf",
         "cita": "El costo de la Canasta Ampliada (CA) al mes de enero fue de Q.8,248.40",
@@ -1285,6 +1298,7 @@
       "veredicto": "verificada",
       "independencia": "baja",
       "fuente_2": "Living in Guatemala, resumen semanal 2026-10-11 (agregador)",
+      "calculo": "4021.6/(4002.28+250)",
       "evidencia": {
         "url": "https://portal.siinsan.gob.gt/wp-content/uploads/20261022-02-Boletin-Alerta-Temprana-SAN-010_2026.pdf",
         "cita": "En septiembre de 2026, el costo de la CBAU para una familia de 4.11 integrantes fue de Q 4,021.6",
@@ -1312,6 +1326,7 @@
       "veredicto": "verificada",
       "independencia": "baja",
       "fuente_2": "cotejo con la primaria (archivo local)",
+      "calculo": "3607.6/(3625.89+250)",
       "evidencia": {
         "url": "https://portal.siinsan.gob.gt/wp-content/uploads/20261022-02-Boletin-Alerta-Temprana-SAN-010_2026.pdf",
         "cita": "el costo de la CBAR para una familia de 4.80 integrantes fue de Q 3,607.6",

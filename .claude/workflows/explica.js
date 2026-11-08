@@ -47,13 +47,14 @@ const MODOS = {
     directiva: 'MODO MITO (lee la sección «Modo mito» de tu guía y de referencias/flujo-explica.md): la creencia se decide con cifras (prueba[] del encuadre); el veredicto MITO · REALIDAD · A MEDIAS lo calcula el código (explica.py mito --check) y nadie lo cambia; la creencia nunca sola en pantalla (MI3); ≈ 75 s (62–90), ≤ 12 escenas, 0 ejemplos ilustrativos. ',
   },
 }
+const EJES_MAX_SERIE = 5   // /serie: la investigación compartida del temario cubre todas las partes
 const EJES_MIN = 1, EJES_MAX = 3, CANDIDATOS = 5, CIERRES_N = 5, GANCHO_USUARIO = 'gu', DURACION_MAX_S = 180
 const VUELTAS_CRITICA = 2, PUNTAJE_MIN = 3, SEGUN_MAX = 2
 
 // ── Argumentos ───────────────────────────────────────────────────────────────
 const A = typeof args === 'string' ? { trabajo: args } : (args || {})
 const trabajo = String(A.trabajo || '').replace(/\/+$/, '')
-if (!/^sesiones\/(explica-[a-z0-9-]+|_fixture_(explica|mito)\/[a-z0-9_-]+)$/.test(trabajo)) throw new Error('args.trabajo debe ser sesiones/explica-<slug> (la última línea que imprime `python3 scripts/explica.py preparar "<tema>"`).')
+if (!/^sesiones\/(explica-[a-z0-9-]+|serie-[a-z0-9-]+(\/parte-[1-8])?|_fixture_(explica|mito)\/[a-z0-9_-]+|_fixture_serie_explica\/[a-z0-9_-]+(\/parte-[1-8])?)$/.test(trabajo)) throw new Error('args.trabajo debe ser sesiones/explica-<slug> (la última línea que imprime `python3 scripts/explica.py preparar "<tema>"`) o, en /serie, sesiones/serie-<slug>[/parte-N].')
 const tema = String(A.tema || '').trim()
 if (!tema) throw new Error('args.tema: el tema del video, tal como lo dio el usuario.')
 const MODO = String(A.modo || 'explica')
@@ -62,8 +63,17 @@ const MD = MODOS[MODO], MITO = MODO === 'mito'
 const PUNTAJES_M = MD.puntajes, FAMILIAS_M = MD.familias, VISUALES_M = MD.visuales
 const REGLA_DE = Object.fromEntries(PUNTAJES_M.map((k) => [k, REGLA_DE_BASE[k]]))
 const DESDE = String(A.desde || '')
-if (!['', 'guion', 'retoque'].includes(DESDE)) throw new Error('args.desde: "guion" (saltar al guion) o "retoque" (guion.json aprobado en TRABAJO + args.notas con lo que pidió el usuario).')
-const RETOQUE = DESDE === 'retoque', DESDE_GUION = DESDE === 'guion'
+if (!['', 'ganchos', 'guion', 'retoque'].includes(DESDE)) throw new Error('args.desde: "ganchos" (/serie: una parte sobre la investigación compartida), "guion" (saltar al guion) o "retoque" (guion.json aprobado en TRABAJO + args.notas con lo que pidió el usuario).')
+const RETOQUE = DESDE === 'retoque', DESDE_GUION = DESDE === 'guion', DESDE_GANCHOS = DESDE === 'ganchos'
+// /serie (motor temario): hasta: "consolidar" = la investigación compartida y se detiene; serie = {partes: M} o {parte, de, titulo, siguiente}
+const HASTA = String(A.hasta || '')
+if (!['', 'consolidar'].includes(HASTA)) throw new Error('args.hasta: "consolidar" (la investigación compartida de /serie) o nada.')
+const SERIE = A.serie && typeof A.serie === 'object' ? A.serie : null
+const PARTE = SERIE && SERIE.parte ? SERIE : null
+if (HASTA && !(SERIE && SERIE.partes)) throw new Error('args.hasta: "consolidar" es de /serie: pasa args.serie = {partes: 3–5}.')
+if (DESDE_GANCHOS && !PARTE) throw new Error('args.desde: "ganchos" es de una parte de /serie: pasa args.serie = {parte, de, titulo, siguiente}.')
+const EJES_MAX_EF = SERIE && SERIE.partes ? EJES_MAX_SERIE : EJES_MAX
+const MODO_SERIE = SERIE ? ` MODO SERIE (lee «Modo serie» en tu guía y referencias/flujo-serie.md): ${PARTE ? `PARTE ${PARTE.parte} de ${PARTE.de} («${PARTE.titulo || ''}»), ≈ 90 s (75–110; explica-serie), un solo mecanismo, contada sola (nada de «como vimos»); ${PARTE.parte < PARTE.de ? `cierre con forma «puente»: la pregunta que abre la parte ${PARTE.parte + 1} («${(PARTE.siguiente || {}).titulo || ''}»), sin anunciarla en la frase final (P2); DESPUÉS, en cierre.invitacion (aparte de cierre.texto y de la narración), una oración que pide seguir la cuenta y dice qué explica la parte ${PARTE.parte + 1}: «Sígueme: en la ${['', '', 'segunda', 'tercera', 'cuarta', 'quinta'][PARTE.parte + 1] || ''} parte, …» (SE9: ≤ 18 palabras, sin cifras)` : 'es la ÚLTIMA: cierra con consecuencia, sin cierre.invitacion'}; captions que abren con «Serie · Parte ${PARTE.parte} de ${PARTE.de}: <título>» y Shorts con «(${PARTE.parte}/${PARTE.de})»${PARTE.parte > 1 ? '; TikTok, Instagram y Facebook llevan además «La Parte 1 está fijada en mi perfil»' : ''} (SE8).` : `la investigación compartida de un temario de ${SERIE.partes} partes.`}` : ''
 const notas = String(A.notas || '').trim()
 if (RETOQUE && !notas) throw new Error('args.notas: en modo retoque, lo que pidió el usuario (otro gancho, reescribir la escena 5, otro cierre…).')
 const VUELTAS = RETOQUE ? 1 : VUELTAS_CRITICA
@@ -278,11 +288,15 @@ const fallasDe = (r, gate) => (r.fallas && r.fallas.length) ? r.fallas : [`el ga
 const sh = (s) => String(s).replace(/'/g, "'\\''")
 
 let ENC = null, ver = [], K = { candidatos: [] }, SEL = { ganador: null, segundo: null, por_que: `${DESDE}: el gancho ya estaba elegido (seleccion.json)`, faltas: [] }
+const directivaPlan = SERIE && SERIE.partes
+  ? ` PLAN DEL TEMARIO (SE1, SE2): además escribe en encuadre.json serie = {partes: [${SERIE.partes} × {n, titulo (≤ 6 palabras), pregunta (la de esa parte), mecanismo (uno de MECANISMOS_EXPLICA), mecanismo_frase, intuicion (la idea equivocada de esa parte), ejes (los ids de eje que la sostienen), revelaciones (1–3), puente (la pregunta que deja y abre la siguiente; la última: null)}]}. Los ejes cubren TODO el temario (hasta ${EJES_MAX_SERIE}). Corre python3 scripts/serie.py plan ${trabajo} --check hasta 0 fallas.`
+  : ''
 if (!RETOQUE && !DESDE_GUION) {
+if (!DESDE_GANCHOS) {   // una parte de /serie usa la investigación compartida (ya verificada)
 // ── 1. Encuadre ──────────────────────────────────────────────────────────────
 phase('Encuadre')
 ENC = await conReparacion('Encuadre', (fallos) => agentRol(
-  `Eres el editor de /explica (lee referencias/roles/explica-editor.md). TRABAJO = ${trabajo} · tema: «${tema}». ` + MD.directiva +
+  `Eres el editor de /explica (lee referencias/roles/explica-editor.md). TRABAJO = ${trabajo} · tema: «${tema}».${MODO_SERIE}${directivaPlan} ` + MD.directiva +
     (MITO ? `El tema ES la creencia: escribe además creencia (4–20 palabras, tal como circula), palabra_clave (1–3 palabras de la creencia), prueba [{id p1, dice, cifra: "<eje>-cNN", op ≈|>|<|>=|<=, umbral, margen_pct}], regla (30–200 caracteres: la regla para recordarlo), origen_hipotesis (de dónde sale el error), depende_de (si puede quedar A MEDIAS) y el eje cir (la evidencia de que la creencia circula: notas, encuestas, declaraciones; redes solo como acompañante); mecanismo es opcional, ejemplos solo con {cifra: id} (0 ilustrativos) y sensible puede ser seguridad|grupo. ` : '') +
     `Escribe ${trabajo}/encuadre.json: pregunta (como la haría alguien en la calle), intuicion (la idea equivocada que casi todos tienen, dicha con justicia, ≤ 22 palabras), ` +
     `mecanismo (de MECANISMOS_EXPLICA: lo que HACE el fenómeno) y mecanismo_frase (la oración que quien vea el video tiene que poder devolver), leyenda (2–4 {concepto, papel: tenue|ink|acento}: el código de color de TODO el video), ` +
@@ -293,7 +307,7 @@ ENC = await conReparacion('Encuadre', (fallos) => agentRol(
   { agentType: 'explica-editor', schema: S.encuadre, phase: 'Encuadre', label: 'editor' }),
 (r) => [
   ...(rel(r.archivo) !== `${trabajo}/encuadre.json` ? [`archivo debe ser ${trabajo}/encuadre.json`] : []),
-  ...(r.ejes.length < EJES_MIN || r.ejes.length > EJES_MAX ? [`${r.ejes.length} ejes (van ${EJES_MIN}–${EJES_MAX})`] : []),
+  ...(r.ejes.length < EJES_MIN || r.ejes.length > EJES_MAX_EF ? [`${r.ejes.length} ejes (van ${EJES_MIN}–${EJES_MAX_EF})`] : []),
   ...(new Set(r.ejes).size !== r.ejes.length ? ['ids de eje repetidos'] : []),
   ...(!MITO && !r.intuicion.trim() ? ['intuicion vacía: la idea equivocada que el video rompe'] : []),
   ...(!MITO && !r.mecanismo_frase.trim() ? ['mecanismo_frase vacía: lo que el oyente tiene que poder devolver'] : []),
@@ -331,11 +345,18 @@ const verificaciones = await pipeline(ENC.ejes,
 ver = verificaciones.filter(Boolean)
 log(`Verificación: ${ver.map((v) => `${v.eje} ${v.confirmados}✓ ${v.una_fuente}¹ ${v.en_disputa}≈ ${v.no_confirmados}✗`).join(' · ')}`)
 if (!ver.length) fail('Ningún eje quedó verificado: el video no se sostiene todavía.')
+// /serie: la investigación compartida se detiene aquí; la sesión corre serie.py cobertura --check (consolidar + SE3)
+if (HASTA === 'consolidar') {
+  return { trabajo, tema, veredicto: 'investigada', etapa: 'consolidar', avisos: AVISOS_WF,
+    encuadre: ENC ? { pregunta: ENC.pregunta, mecanismo: ENC.mecanismo, ejes: ENC.ejes, paleta: ENC.paleta } : null,
+    verificacion: ver.map((v) => ({ eje: v.eje, confirmados: v.confirmados, una_fuente: v.una_fuente, en_disputa: v.en_disputa, no_confirmados: v.no_confirmados })) }
+}
+}
 
 // ── 4. Ganchos (consolidar + calculadora + candidatos) ───────────────────────
 phase('Ganchos')
 const invocarGanchos = (fallos, faltasSel) => agentRol(
-  `MODO EXPLICA (lee referencias/ganchos.md y la sección «Modo explica» de referencias/roles/video-gancho.md). TRABAJO = ${trabajo} · «${tema}».\n` +
+  `MODO EXPLICA (lee referencias/ganchos.md y la sección «Modo explica» de referencias/roles/video-gancho.md). TRABAJO = ${trabajo} · «${tema}».${MODO_SERIE}\n` +
     `PRIMERO corre python3 scripts/explica.py consolidar ${trabajo} (explicacion.json, base/ y la calculadora de los ejemplos; exit 1 = falta una cifra real o un ejemplo no se calcula: devuélvelo en fallas). ` +
     (MITO ? `MODO MITO: ANTES de consolidar corre python3 scripts/explica.py mito ${trabajo} --check; si imprime «SIN DATOS PARA UN VEREDICTO», NO escribas ganchos: devuelve gate "falla", sin_datos: true, veredicto: null, candidatos: [] y sus FALLA en fallas. Si pasa, devuelve veredicto (mito|realidad|a_medias); TODOS los candidatos con visual «veredicto» (lee «Modo mito» de video-gancho.md y R13 de ganchos.md). ` : '') +
     `Lee SOLO python3 scripts/explica.py digesto ${trabajo} --para gancho. Escribe ${trabajo}/ganchos.json con ${CANDIDATOS} candidatos de FAMILIAS DISTINTAS (si la rotación deja menos de 5 familias libres, repite familia con otra pantalla y otro ángulo: el usuario elige entre los 5; ${FAMILIAS_M.join(', ')}), ≥ 2 con visual (${VISUALES_M.filter((v) => v !== 'cifra').join(', ')}), ` +
@@ -418,7 +439,7 @@ avisar(`Gancho: ${SEL.ganador}${SEL.recomendado && SEL.recomendado !== SEL.ganad
 
 // ── 6. Guion ─────────────────────────────────────────────────────────────────
 phase('Guion')
-const directivaBase = `Eres el guionista de /explica (lee referencias/roles/explica-guionista.md). TRABAJO = ${trabajo} · «${tema}». ` + MD.directiva +
+const directivaBase = `Eres el guionista de /explica (lee referencias/roles/explica-guionista.md). TRABAJO = ${trabajo} · «${tema}».${MODO_SERIE} ` + MD.directiva +
   (DESDE_GUION ? `PRIMERO corre python3 scripts/explica.py consolidar ${trabajo}. ` : '') +
   `Lee SOLO python3 scripts/explica.py digesto ${trabajo} --para guionista. Corre python3 scripts/explica.py guion ${trabajo} --check hasta 0 fallas ` +
   `y devuelve TAL CUAL su última línea RETORNO (tipos trae el tipo de CADA escena en orden, sin el cierre). `

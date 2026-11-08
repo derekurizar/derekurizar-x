@@ -26,7 +26,32 @@
 #pregunta span { display: inline-block; margin-right: .24em; }
 #pregunta span.ahora { color: var(--acento, var(--ink)); }
 #sigue { }
-#sigue .t { font: 600 28px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 30px; }
+#sigparte { font: 600 30px/1.2 'JetBrains Mono', monospace; letter-spacing: .1em; text-transform: uppercase; color: var(--a1); margin: 0 0 46px; }
+#sigparte:empty { display: none; }
+html.f45 #sigparte { font-size: 24px; margin-bottom: 20px; }
+/* /serie, partes 2…M: «Empieza por la Parte 1 · fijada en mi perfil»; bajo «Parte N+1 · título» va pegado a ella
+   (.junto descuenta el gap de #pantB y el margen de #sigparte) */
+#inicio { font: 600 26px/1.25 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); opacity: .7; margin: 0 0 46px; }
+#inicio.junto { margin-top: -132px; }
+#inicio:empty { display: none; }
+html.f45 #inicio { font-size: 21px; margin: 0 0 20px; }
+html.f45 #inicio.junto { margin-top: -74px; }
+#sigue .fila { display: flex; align-items: center; gap: 26px; margin-bottom: 8px; }
+#sigue .t { font: 600 28px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; }
+/* el botón «Seguir» propio (no la interfaz de ninguna red): pastilla en el acento → «Siguiendo» con borde; ancho fijo */
+#seguir { position: relative; overflow: hidden; height: 50px; padding: 0 24px; border-radius: 25px; background: var(--acento, var(--a1));
+  border: 3px solid var(--acento, var(--a1)); display: flex; align-items: center; justify-content: center; box-sizing: border-box; }
+#seguir .lbl, #seguir .ya { position: absolute; display: flex; align-items: center; gap: 10px; font: 800 28px/1 Archivo, sans-serif; white-space: nowrap; }
+#seguir .lbl { color: var(--bg); }
+#seguir .ya { color: var(--ink); opacity: 0; }
+#seguir .ya svg { width: 30px; height: 30px; stroke: var(--acento, var(--a1)); fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+#seguir .onda { position: absolute; width: 60px; height: 60px; border-radius: 50%; background: var(--ink); opacity: 0; pointer-events: none; }
+#campana { position: relative; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; transform-origin: 50% 8%; }
+#campana svg { width: 42px; height: 42px; stroke: var(--ink); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+#campana .punto { position: absolute; top: 4px; right: 6px; width: 18px; height: 18px; border-radius: 50%; background: var(--acento, var(--a1));
+  border: 3px solid var(--bg); transform: scale(0); }
+#cursor { position: absolute; left: 0; top: 0; width: 58px; height: 58px; opacity: 0; pointer-events: none; z-index: 5; }
+#cursor svg { width: 58px; height: 58px; stroke: var(--bg); fill: var(--ink); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 #sigue .c { display: flex; align-items: center; gap: 22px; margin-top: 22px; }
 #sigue .i { width: 64px; height: 64px; border-radius: 14px; background: var(--ink); display: flex; align-items: center; justify-content: center; }
 #sigue .i svg { width: 36px; height: 36px; fill: var(--bg); stroke: var(--bg); }
@@ -39,7 +64,13 @@ html.f45 #eco { font-size: 120px; }
 html.f45 #resumen { font-size: 54px; gap: 18px; }
 html.f45 #pregunta { font-size: 78px; }
 html.f45 #sigue { display: flex; flex-wrap: wrap; align-items: center; column-gap: 40px; }
-html.f45 #sigue .t { width: 100%; margin-bottom: 8px; }
+html.f45 #sigue .fila { width: 100%; margin-bottom: 8px; gap: 18px; }
+html.f45 #seguir { height: 50px; padding: 0 20px; }
+html.f45 #seguir .lbl, html.f45 #seguir .ya { font-size: 25px; }
+html.f45 #seguir .ya svg { width: 24px; height: 24px; }
+html.f45 #campana { width: 48px; height: 48px; }
+html.f45 #campana svg { width: 38px; height: 38px; }
+html.f45 #cursor, html.f45 #cursor svg { width: 46px; height: 46px; }
 html.f45 #sigue .c { gap: 14px; margin-top: 12px; }
 html.f45 #sigue .i { width: 48px; height: 48px; }
 html.f45 #sigue .i svg { width: 28px; height: 28px; }
@@ -54,9 +85,18 @@ html.f45 #sigue .h { font-size: 38px; }
 </div>
 <div class="pant" id="pantB">
 <div id="pregunta"></div>
+<!-- /serie: la parte siguiente («Parte N+1 · título»), solo texto, entra con «Sígueme en» -->
+<div id="sigparte"></div>
+<!-- /serie, partes 2…M: «Empieza por la Parte 1 · fijada en mi perfil», solo texto -->
+<div id="inicio"></div>
 <!-- solo texto: la voz no lo dice -->
-<div id="sigue"><div class="t">Sígueme en</div></div>
+<div id="sigue"><div class="fila"><div class="t">Sígueme en</div>
+<div id="seguir"><span class="lbl">Seguir</span><span class="ya"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Siguiendo</span><span class="onda"></span></div>
+<div id="campana"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><span class="punto"></span></div>
+</div></div>
 </div>
+<!-- el cursor que toca «Seguir» (iconos Lucide, ISC: pointer, check y bell, dibujados en el color del sistema) -->
+<div id="cursor"><svg viewBox="0 0 24 24"><path d="M10 9.5V4a2 2 0 0 0-4 0v10l-1.6-1.6a2 2 0 0 0-2.83 2.82l3.6 3.6C6.66 20.3 8.4 22 11.2 22H14a8 8 0 0 0 8-8v-3a2 2 0 0 0-4 0v-1a2 2 0 0 0-4 0V9a2 2 0 0 0-4 0z"/></svg></div>
 <div id="subs"></div>
 <script src="comun.js"></script>
 <script>
@@ -91,13 +131,25 @@ window.__listo = (async () => {
   const final = String(todo.cierre.final || todo.cierre.pregunta || '').split(/\s+/).filter(Boolean);
   const P = document.getElementById('pregunta');
   P.innerHTML = final.map((w) => `<span>${esc(w)}</span>`).join('');
-  const ps = S.palabras || [], cola = ps.slice(Math.max(0, ps.length - final.length));
+  // /serie: tras la frase final la voz dice la invitación (S.n_inv palabras): la frase casa con las de antes
+  const ps = (S.palabras || []).slice(0, (S.palabras || []).length - (S.n_inv || 0)), cola = ps.slice(Math.max(0, ps.length - final.length));
   const casan = cola.length === final.length && cola.filter((p, i) => normal(p.text) === normal(final[i])).length >= 0.8 * final.length;
-  const t0 = S.T.preg + 0.1, t1 = Math.max(t0 + 0.3, S.fin_voz || t0 + 0.3), paso = (t1 - t0) / Math.max(1, final.length);
+  const t0 = S.T.preg + 0.1, t1 = Math.max(t0 + 0.3, S.T.fin_final || S.fin_voz || t0 + 0.3), paso = (t1 - t0) / Math.max(1, final.length);
   FINAL = [...P.querySelectorAll('span')].map((el, i) => casan ? { el, start: cola[i].start, end: cola[i].end } : { el, start: t0 + i * paso, end: t0 + (i + 1) * paso });
+  const SIG = todo.serie && todo.serie.siguiente;   // /serie: «Parte N+1 · título» (la última parte no lo lleva)
+  if (SIG) document.getElementById('sigparte').textContent = `Parte ${SIG.n} · ${SIG.titulo}`;
+  // /serie, partes 2…M: quien llega por aquí no vio el inicio; la Parte 1 va fijada en el perfil (solo texto)
+  if (todo.serie && todo.serie.parte > 1) {
+    const ini = document.getElementById('inicio');
+    ini.textContent = 'Empieza por la Parte 1 · fijada en mi perfil';
+    ini.classList.toggle('junto', !!SIG);
+  }
   document.getElementById('sigue').insertAdjacentHTML('beforeend', todo.redes.map((r) =>
     `<div class="c"><div class="i"><svg viewBox="0 0 24 24">${ICONOS[r.red]}</svg></div><span class="h">${esc(r.handle)}</span></div>`).join(''));
   await document.fonts.ready;
+  // «Seguir» y «Siguiendo» ocupan el mismo ancho (el mayor): el cambio no mueve la fila
+  const SG = document.getElementById('seguir'), lb = SG.querySelector('.lbl'), ya = SG.querySelector('.ya');
+  SG.style.width = Math.ceil(Math.max(lb.offsetWidth, ya.offsetWidth) + (V.F45 ? 44 : 60)) + 'px';
   // zona segura (V.zona, gate V13): cada pantalla termina antes de los subtítulos; se achican el eco, el resumen y la
   // frase final hasta caber (el eco, además, en una línea)
   const Z = V.zona(), cabe = (el) => el.offsetTop + el.offsetHeight <= Z.fin - 6;
@@ -111,7 +163,39 @@ window.__listo = (async () => {
   }
   for (let fs = parseFloat(RES.style.fontSize) || (V.F45 ? 54 : 64); fs > 32 && !cabe(A); fs -= 2) RES.style.fontSize = fs + 'px';
   for (let fs = V.F45 ? 78 : 96; fs > 52 && !cabe(B); fs -= 4) P.style.fontSize = fs + 'px';
+  // una frase final larga en una serie (con «Parte N+1» e «Empieza por la Parte 1»): si aún no cabe, se cierra el hueco
+  for (let g = parseFloat(getComputedStyle(B).rowGap) || 100; g > 32 && !cabe(B); g -= 8) B.style.gap = g + 'px';
 })();
+// el botón «Seguir»: el cursor entra y lo toca (T.clic), una onda, pasa a «Siguiendo» con su check, y la campana suena
+// con su punto (T.campana) y vuelve a sacudirse sola cada 1.6 s; en la portada, el estado final sin cursor
+const bump = (x, d) => (x < 0 || x > d) ? 0 : Math.sin(Math.PI * x / d);
+function seekSeguir(t) {
+  const sig = S.T.sigue, clic = S.T.clic ?? sig + 0.9, camp = S.T.campana ?? clic + 0.5, port = !!V.portada;
+  const SG = document.getElementById('seguir'), lb = SG.querySelector('.lbl'), ya = SG.querySelector('.ya'), onda = SG.querySelector('.onda');
+  const hecho = port ? 1 : eo((t - clic - 0.15) / 0.3);
+  SG.style.transform = `scale(${(1 - 0.06 * bump(t - clic, 0.14)).toFixed(4)})`;
+  SG.style.background = `color-mix(in srgb, var(--acento, var(--a1)) ${(100 * (1 - hecho)).toFixed(1)}%, transparent)`;
+  lb.style.opacity = (1 - hecho).toFixed(3); ya.style.opacity = hecho.toFixed(3);
+  const o = port ? 0 : clamp((t - clic) / 0.45, 0, 1);
+  onda.style.opacity = (o > 0 && o < 1 ? 0.35 * (1 - o) : 0).toFixed(3); onda.style.transform = `scale(${(0.2 + 4.2 * o).toFixed(3)})`;
+  // la campana: el punto aparece con rebote y la campana se sacude (amortiguada); se repite cada 1.6 s, sin sonido
+  const C = document.getElementById('campana'), pt = C.querySelector('.punto');
+  const pp = port ? 1 : clamp((t - camp) / 0.35, 0, 1);
+  pt.style.transform = `scale(${(pp <= 0 ? 0 : pp < 1 ? 1 + 0.35 * Math.sin(Math.PI * pp) * (1 - pp) + (pp - 1) * 0 : 1).toFixed(3)})`;
+  let ang = 0;
+  if (!port && t >= camp) {
+    const desde = t - camp, k = desde < 2.1 ? 0 : Math.floor((desde - 2.1) / 1.6) + 1, x = k === 0 ? desde : desde - 2.1 - 1.6 * (k - 1);
+    if (x < 0.9 && t < S.dur - 0.3) ang = (k === 0 ? 14 : 9) * Math.exp(-3.2 * x) * Math.sin(2 * Math.PI * x / 0.3);
+  }
+  C.style.transform = `rotate(${ang.toFixed(2)}deg)`;
+  // el cursor: entra desde abajo a la derecha, toca el centro del botón y se va
+  const K = document.getElementById('cursor'), r = SG.getBoundingClientRect();
+  const fx = r.left + r.width * 0.55, fy = r.top + r.height * 0.45;
+  const va = eo((t - (sig + 0.35)) / Math.max(0.2, clic - sig - 0.35)), sale = clamp((t - clic - 0.3) / 0.3, 0, 1);
+  K.style.opacity = port ? 0 : (clamp((t - sig - 0.35) / 0.15, 0, 1) * (1 - sale)).toFixed(3);
+  const presion = 1 - 0.12 * bump(t - clic, 0.14);
+  K.style.transform = `translate(${(fx + 150 * (1 - va)).toFixed(1)}px, ${(fy + 190 * (1 - va)).toFixed(1)}px) scale(${presion.toFixed(3)})`;
+}
 window.seek = (t) => {
   V.seekProgreso(t, N, S.dur);
   // A · conclusiones: rótulo, eco y las líneas del resumen en T.r (con eco, la primera espera un poco)
@@ -133,7 +217,14 @@ window.seek = (t) => {
     x.el.style.opacity = (APAGADA + (1 - APAGADA) * w).toFixed(3);
     x.el.classList.toggle('ahora', !V.portada && t >= x.start - 0.05 && t < x.end + 0.08);
   });
+  ap(document.getElementById('sigparte'), eo((t - S.T.sigue + 0.1) / 0.5), 20);
+  const ini = document.getElementById('inicio'), pi = eo((t - S.T.sigue - 0.05) / 0.5);
+  ap(ini, pi, 20); ini.style.opacity = (0.7 * pi).toFixed(3);
   [...document.querySelectorAll('#sigue > div')].forEach((el, i) => ap(el, eo((t - S.T.sigue - 0.15 * i) / 0.5), 20));
+  seekSeguir(t);
+  // B respira despacio hasta el final (la pantalla nunca queda quieta: V12/V21)
+  const deriva = clamp((t - S.T.preg) / Math.max(1, S.dur - S.T.preg), 0, 1), B = document.getElementById('pantB');
+  B.style.transformOrigin = '0 100%'; B.style.transform = `scale(${(1 + 0.015 * deriva).toFixed(4)})`;   // desde abajo: los handles no bajan (V13)
   // subtítulos solo en A (el resumen no es la locución); en B la pantalla ya dice la voz
   if (t < S.T.preg) V.subtitulosVentana(t, S); else document.getElementById('subs').innerHTML = '';
 };

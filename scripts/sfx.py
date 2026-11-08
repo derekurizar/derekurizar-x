@@ -5,7 +5,7 @@ ElevenLabs (eleven_text_to_sound_v2) y queda congelada: /video nunca genera efec
   sfx.py --importar URLS.json   descarga cada efecto ({"whoosh": "<content_url>", …}), lo recorta (silencio inicial),
                                 lo pasa a WAV mono 48 kHz 16-bit con pico común −3 dBFS y escribe/actualiza catalogo.json
                                 (acepta también {"whoosh": {"url": …, "generation_id": …, "flow_id": …}})
-  sfx.py --check                K2: catálogo completo (los 8 ids fijos), archivos presentes, duración coherente
+  sfx.py --check                K2: catálogo completo (los 14 ids fijos), archivos presentes, duración coherente
   sfx.py                        lista el catálogo
 
 Exit: 0 ok · 1 falla · 2 uso incorrecto.
@@ -33,6 +33,14 @@ EFECTOS = {
     "riser": ("2 s antes del pago", 2.0, "Two second tense filtered noise riser building steadily and cutting off cleanly at the end", 0.7, -16),
     "resolucion": ("pregunta del cierre", 1.6, "Soft warm synth pad chord swelling gently and resolving, short, calm", 0.5, -14),
     "foco": ("inicio del zoom", 0.6, "Very subtle soft airy sweep, quiet, like a slow breath, short", 0.5, -22),
+    # /congreso (2026-11-04, aprobado por el usuario): el hemiciclo que se llena, el resultado y el sello
+    "voto": ("cada tanda de asientos del hemiciclo", 0.25, "Single tiny soft UI pop, like a bubble click on a touchscreen, very short, dry, no tail", 0.7, -20),
+    "mazo": ("resultado de la votación", 0.9, "Single wooden gavel strike on a sound block in a large hall, short natural tail", 0.7, -10),
+    "sello": ("sello sobre papel", 0.6, "Single rubber stamp pressed firmly on paper on a wooden desk, dry thud, close-mic", 0.7, -12),
+    # dinamismo (2026-11-06, aprobado por el usuario): transición rápida, entrada de un documento, subrayado
+    "whip": ("transición rápida (whip) en un «pero»", 0.4, "Very fast short swish whip pan, airy, crisp, dry, no tail, subtle", 0.7, -18),
+    "papel": ("entrada de un documento o recorte", 0.6, "Single sheet of paper slid quickly onto a wooden desk, soft dry rustle, close-mic, short", 0.7, -20),
+    "marcador": ("subrayado de una fecha o cifra", 0.5, "Quick felt-tip marker stroke on paper, short soft squeak, dry, close-mic", 0.7, -24),
 }
 IDS = tuple(EFECTOS)
 
@@ -69,10 +77,11 @@ def importar(ruta_urls):
         tmp = os.path.join(DIR, "_%s.tmp.wav" % sid)
         final = os.path.join(DIR, "%s.wav" % sid)
         urllib.request.urlretrieve(url, crudo)
-        # recorte del silencio inicial, 48 kHz mono, fade de salida de 50 ms
+        # recorte del silencio inicial y final, 48 kHz mono, fade de salida de 50 ms
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", crudo, "-af",
                         "silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.02,aresample=48000,"
-                        "areverse,afade=t=in:st=0:d=0.05,areverse", "-ac", "1", "-c:a", "pcm_s16le", tmp], check=True)
+                        "areverse,silenceremove=start_periods=1:start_threshold=-55dB:start_silence=0.05,"
+                        "afade=t=in:st=0:d=0.05,areverse", "-ac", "1", "-c:a", "pcm_s16le", tmp], check=True)
         ajuste = PICO_DB - pico_db(tmp)
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", tmp, "-af", "volume=%.2fdB" % ajuste,
                         "-ac", "1", "-c:a", "pcm_s16le", final], check=True)
@@ -122,8 +131,8 @@ def fallas_k2():
         except (wave.Error, EOFError) as ex:
             out.append("K2 %s: %s no es un WAV válido (%s)" % (sid, e.get("archivo"), ex))
             continue
-        if not 0.2 <= real <= 4.0:
-            out.append("K2 %s: dura %.2f s (se espera 0.2–4 s)" % (sid, real))
+        if not 0.1 <= real <= 4.0:   # 0.1: el pop de un asiento (voto) es más corto que un tic
+            out.append("K2 %s: dura %.2f s (se espera 0.1–4 s)" % (sid, real))
         if abs(real - float(e.get("duracion_s") or 0)) > 0.05:
             out.append("K2 %s: duracion_s %s no coincide con el archivo (%.2f s)" % (sid, e.get("duracion_s"), real))
         if not -40 <= float(e.get("ganancia_db", 1)) <= 0:

@@ -94,6 +94,8 @@ final», «antes del cierre», «más adelante», «vas a ver», «verás», «s
 | **P2** | ni la promesa ni la bisagra anuncian el video; V5 aplica lo mismo a los captions |
 | **P3** | la forma de la promesa no repite la de las últimas 2 piezas narradas (videos, historias y explicaciones juntos). Las piezas viejas sin forma cuya promesa anunciaba el video cuentan como «anuncio», que ya no es forma válida |
 | **P4** | `bisagra {texto, forma, en, pago}`: literal en la voz de `en`; `en` justo antes del giro (o a mitad sin giro) y distinto de `promesa.en`; `pago` en el giro o después |
+| **P2 en /serie** | ni la promesa ni el cierre anuncian «la próxima parte» o «el siguiente video»: el puente es una pregunta de la historia (F9 lo vigila en la voz) |
+| **P5** | la escena 2 (después del gancho) dura ≤ 12 s estimados; si pasa de 8 s es aviso, y la imagen cambia o entra un golpe a los 3–4 s. Medido el 2026-11-03 (/analyze-improve): ahí se pierden 9–24 puntos en 14 de 20 piezas, el doble en las escenas quietas y largas. La web coincide: la caída de 5–15 s se corrige con un re-gancho por beat (`referencias/analisis/benchmarks.md`). `/sabias` está exento |
 
 Además siguen V9 (promesa literal en la escena 1 o 2, pago en el último tercio), H14 en /historia y E12 en /explica
 (la escena del pago cuenta la revelación prometida).

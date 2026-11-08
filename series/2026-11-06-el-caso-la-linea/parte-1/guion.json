@@ -1,0 +1,396 @@
+{
+ "id": "2026-11-06-el-caso-la-linea-parte-1",
+ "tipo": "historia",
+ "slug": "el-caso-la-linea-parte-1",
+ "tema": "el caso La Línea",
+ "fecha": "2026-11-06",
+ "pregunta": "¿Cómo se descubrió La Línea, la red que cobraba en las aduanas?",
+ "arco": "caso: descubrimiento, caída y juicio, con un legado que se volteó contra quienes investigaron",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "2014",
+   "titulo": "Meses de escuchas",
+   "escena": 6
+  },
+  {
+   "numero": 3,
+   "anio": "Abril 2015",
+   "titulo": "Tres días antes",
+   "escena": 8
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "A La Línea no la destapó una denuncia. La destapó una llamada grabada en Guatemala. En mayo de 2014, la fiscalía y la CICIG, la comisión de la ONU contra la impunidad, seguían a una red de fraude en las aduanas. Si alguien adentro se enteraba, la pista moría. Sospechaban porque había un silencio raro: la SAT, la oficina de impuestos, llevaba 2 años sin denunciar contrabando. Entonces Juan Francisco Sandoval, fiscal contra la impunidad, intervino el teléfono de un importador sospechoso de defraudar: Erick Miao Miao. El 8 de mayo, Julio César Aldana Sosa, un tramitador de Puerto Quetzal, le explicó a Miao Miao: La Línea le llaman. Es cuando alguien tiene el control de todo. Así se llamaba la red."
+  },
+  {
+   "acto": 2,
+   "texto": "Entonces, en junio, cuentan los investigadores, vigilaron una fiesta de la red y vieron a Salvador Estuardo González, alias Eco, a quien la fiscalía señala como operador de La Línea. Seguirlo los llevó hasta un hombre muy cerca del poder. En agosto, aseguran, vieron a Juan Carlos Monzón, secretario privado de la vicepresidenta Roxana Baldetti, reunirse con González. El lazo llegaba a la Vicepresidencia. Pero la red se cuidaba, afirman: cambiaba gente y se alertaba de la CICIG."
+  },
+  {
+   "acto": 3,
+   "texto": "El 13 de abril de 2015, Monzón viajó con Baldetti a Corea del Sur, cuenta InSight Crime. Faltaban 3 días para el operativo. El 16 de abril, la CICIG dijo en conferencia cuántas llamadas había interceptado. Más de 66,000. Pero en el juicio, años después, la fiscalía dijo que eran unas 50,000. Ninguna fuente explica la diferencia. Ese 16 de abril, la fiscalía y la CICIG capturaron a más de 20 sospechosos, entre ellos el jefe de la SAT y su antecesor. Pero faltaba un nombre: Monzón no estaba entre los capturados. Baldetti dijo que lo había despedido y que no sabía dónde estaba. Ya tenían el nombre de la red y sus operadores. ¿Cómo cobraba La Línea a los importadores en las aduanas?"
+  }
+ ],
+ "hilos": [
+  {
+   "id": "p1h1",
+   "escena": 4
+  },
+  {
+   "id": "p1h2",
+   "escena": 10
+  },
+  {
+   "id": "p1h3",
+   "escena": 11
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3
+  ],
+  [
+   4,
+   5
+  ],
+  [
+   8,
+   9
+  ],
+  [
+   10,
+   11,
+   12
+  ]
+ ],
+ "paleta": "cielo",
+ "musica": "cielo-1",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2004.0,
+ "duracion_s": 147.9,
+ "critica": {
+  "veredicto": "corregir",
+  "vuelta": 3,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 4,
+   "claridad": 3,
+   "flujo": 4,
+   "precision": 4,
+   "cierre": 4
+  }
+ },
+ "gancho": {
+  "familia": "resultado",
+  "visual": "foto",
+  "pantalla": "La Línea: una llamada",
+  "linea": "No la destapó una denuncia"
+ },
+ "promesa": {
+  "texto": "Si alguien adentro se enteraba, la pista moría.",
+  "forma": "apuesta",
+  "en": 2,
+  "pago": 11,
+  "revela": 2
+ },
+ "bisagra": {
+  "texto": "Seguirlo los llevó hasta un hombre muy cerca del poder.",
+  "forma": "secreto",
+  "en": 6,
+  "pago": 7
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "A La Línea no la destapó una denuncia. La destapó una llamada grabada en Guatemala.",
+   "voz": "A La Línea no la destapó una denuncia. La destapó una llamada grabada en Guatemala.",
+   "dur": 6.356,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "En mayo de 2014, la fiscalía y la CICIG, la comisión de la ONU contra la impunidad, seguían a una red de fraude en las aduanas. Si alguien adentro se enteraba, la pista moría.",
+   "voz": "En mayo de dos mil catorce, la fiscalía y la Cicig, la comisión de la Onu contra la impunidad, seguían a una red de fraude en las aduanas. Si alguien adentro se enteraba, la pista moría.",
+   "dur": 12.374,
+   "hechos": [
+    "red-h01"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: US Embassy Guatemala · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "golpe",
+   "pantalla": "Sospechaban porque había un silencio raro: la SAT, la oficina de impuestos, llevaba 2 años sin denunciar contrabando.",
+   "voz": "Sospechaban porque había un silencio raro: la Sat, la oficina de impuestos, llevaba dos años sin denunciar contrabando.",
+   "dur": 9.044,
+   "hechos": [
+    "des-h06"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "foto",
+   "pantalla": "Entonces Juan Francisco Sandoval, fiscal contra la impunidad, intervino el teléfono de un importador sospechoso de defraudar: Erick Miao Miao.",
+   "voz": "Entonces Juan Francisco Sandoval, fiscal contra la impunidad, intervino el teléfono de un importador sospechoso de defraudar: Erick Miao Miao.",
+   "dur": 9.396,
+   "hechos": [
+    "des-h28",
+    "des-h01"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: US Embassy · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "cita",
+   "pantalla": "El 8 de mayo, Julio César Aldana Sosa, un tramitador de Puerto Quetzal, le explicó a Miao Miao: La Línea le llaman. Es cuando alguien tiene el control de todo. Así se llamaba la red.",
+   "voz": "El ocho de mayo, Julio César Aldana Sosa, un tramitador de Puerto Quetzal, le explicó a Miao Miao: La Línea le llaman. Es cuando alguien tiene el control de todo. Así se llamaba la red.",
+   "dur": 14.304,
+   "hechos": [
+    "des-h02"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "foto",
+   "pantalla": "Entonces, en junio, cuentan los investigadores, vigilaron una fiesta de la red y vieron a Salvador Estuardo González, alias Eco, a quien la fiscalía señala como operador de La Línea. Seguirlo los llevó hasta un hombre muy cerca del poder.",
+   "voz": "Entonces, en junio, cuentan los investigadores, vigilaron una fiesta de la red y vieron a Salvador Estuardo González, alias Eco, a quien la fiscalía señala como operador de La Línea. Seguirlo los llevó hasta un hombre muy cerca del poder.",
+   "dur": 15.781,
+   "hechos": [
+    "des-h03"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: La Hora",
+     "origen": "medio",
+     "licencia": "© La Hora (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "foto",
+   "pantalla": "En agosto, aseguran, vieron a Juan Carlos Monzón, secretario privado de la vicepresidenta Roxana Baldetti, reunirse con González. El lazo llegaba a la Vicepresidencia. Pero la red se cuidaba, afirman: cambiaba gente y se alertaba de la CICIG.",
+   "voz": "En agosto, aseguran, vieron a Juan Carlos Monzón, secretario privado de la vicepresidenta Roxana Baldetti, reunirse con González. El lazo llegaba a la Vicepresidencia. Pero la red se cuidaba, afirman: cambiaba gente y se alertaba de la Cicig.",
+   "dur": 16.492,
+   "hechos": [
+    "des-h04",
+    "des-h05"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    },
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    },
+    {
+     "credito": "Foto: US Embassy in Guatemala · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "foto",
+   "pantalla": "El 13 de abril de 2015, Monzón viajó con Baldetti a Corea del Sur, cuenta InSight Crime. Faltaban 3 días para el operativo.",
+   "voz": "El trece de abril de dos mil quince, Monzón viajó con Baldetti a Corea del Sur, cuenta InSight Crime. Faltaban tres días para el operativo.",
+   "dur": 9.145,
+   "hechos": [
+    "des-h10",
+    "pla-h02"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: US Embassy in Guatemala · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "toma",
+   "pantalla": "El 16 de abril, la CICIG dijo en conferencia cuántas llamadas había interceptado.",
+   "voz": "El dieciséis de abril, la Cicig dijo en conferencia cuántas llamadas había interceptado.",
+   "dur": 16.024,
+   "hechos": [
+    "des-h14"
+   ],
+   "fotos": [],
+   "tomas": [
+    {
+     "credito": "Video: CICIG",
+     "origen": "oficial",
+     "url": "https://www.youtube.com/watch?v=BADI9IMrx6I",
+     "tramo": "28:51.5–29:01.0",
+     "audio": "original",
+     "fecha": "2015-04-16"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "tarjeta",
+   "pantalla": "Más de 66,000. Pero en el juicio, años después, la fiscalía dijo que eran unas 50,000. Ninguna fuente explica la diferencia.",
+   "voz": "Más de sesenta y seis mil. Pero en el juicio, años después, la fiscalía dijo que eran unas cincuenta mil. Ninguna fuente explica la diferencia.",
+   "dur": 9.852,
+   "hechos": [
+    "des-h14",
+    "red-h41"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "foto",
+   "pantalla": "Ese 16 de abril, la fiscalía y la CICIG capturaron a más de 20 sospechosos, entre ellos el jefe de la SAT y su antecesor.",
+   "voz": "Ese dieciséis de abril, la fiscalía y la Cicig capturaron a más de veinte sospechosos, entre ellos el jefe de la Sat y su antecesor.",
+   "dur": 9.316,
+   "hechos": [
+    "pla-h01",
+    "red-h15",
+    "des-h09",
+    "des-h07"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    },
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    },
+    {
+     "credito": "Foto: La Hora",
+     "origen": "medio",
+     "licencia": "© La Hora (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "foto",
+   "pantalla": "Pero faltaba un nombre: Monzón no estaba entre los capturados. Baldetti dijo que lo había despedido y que no sabía dónde estaba.",
+   "voz": "Pero faltaba un nombre: Monzón no estaba entre los capturados. Baldetti dijo que lo había despedido y que no sabía dónde estaba.",
+   "dur": 9.391,
+   "hechos": [
+    "des-h10"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 13,
+   "tipo": "cierre",
+   "pantalla": "Ya tenían el nombre de la red y sus operadores. ¿Cómo cobraba La Línea a los importadores en las aduanas? Sígueme: en la segunda parte te cuento qué pagaban los importadores.",
+   "voz": "Ya tenían el nombre de la red y sus operadores. ¿Cómo cobraba La Línea a los importadores en las aduanas? Sígueme: en la segunda parte te cuento qué pagaban los importadores.",
+   "dur": 13.605,
+   "hechos": [],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Hasta abril de 2015",
+  "resumen": [
+   "Una llamada abrió el caso",
+   "Meses de escuchas y seguimientos",
+   "Más de 20 capturas; Monzón no"
+  ],
+  "texto": "Ya tenían el nombre de la red y sus operadores. ¿Cómo cobraba La Línea a los importadores en las aduanas?",
+  "tipo": "pregunta",
+  "forma": "puente",
+  "final": "¿Cómo cobraba La Línea a los importadores en las aduanas?",
+  "invitacion": "Sígueme: en la segunda parte te cuento qué pagaban los importadores."
+ },
+ "caption": {
+  "tiktok": "Serie · Parte 1 de 7: Las escuchas que lo destaparon\nEl caso La Línea no empezó con una denuncia: empezó con un teléfono intervenido en 2014. #Guatemala #LaLínea #historia",
+  "instagram": "Serie · Parte 1 de 7: Las escuchas que lo destaparon\nCómo un teléfono intervenido en 2014 llevó al caso La Línea y a las capturas del 16 de abril de 2015. #Guatemala #LaLínea",
+  "facebook": "Serie · Parte 1 de 7: Las escuchas que lo destaparon\nCómo un teléfono intervenido en 2014 llevó al caso La Línea y a las capturas del 16 de abril de 2015. Fuentes en el primer comentario.",
+  "shorts": "El caso La Línea: las escuchas que lo destaparon (1/7) #Shorts\nUn teléfono intervenido en 2014 y las capturas del 16 de abril de 2015."
+ }
+}

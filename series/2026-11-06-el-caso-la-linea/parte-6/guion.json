@@ -1,0 +1,394 @@
+{
+ "id": "2026-11-06-el-caso-la-linea-parte-6",
+ "tipo": "historia",
+ "slug": "el-caso-la-linea-parte-6",
+ "tema": "el caso La Línea",
+ "fecha": "2026-11-06",
+ "pregunta": "¿Quién declaró contra ellos en el juicio y cómo terminó?",
+ "arco": "caso: descubrimiento, caída y juicio, con un legado que se volteó contra quienes investigaron",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "2017–2022",
+   "titulo": "Años de espera",
+   "escena": 6
+  },
+  {
+   "numero": 3,
+   "anio": "2022",
+   "titulo": "La sentencia",
+   "escena": 10
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "Monzón estuvo prófugo cuando cayó La Línea. Luego fue testigo, desde fuera de Guatemala. Juan Carlos Monzón, secretario de la vicepresidenta Baldetti, se entregó en octubre de 2015. Lo que él contara podía hundir a quienes gobernaron Guatemala. Había huido en abril, cuando cayó La Línea, la red de sobornos en las aduanas. Miguel Ángel Gálvez, el juez que luego envió el caso a juicio, lo mandó a prisión preventiva. Pero Monzón cambió de lado: se volvió colaborador eficaz, testigo de la fiscalía a cambio de la pena mínima. En abril de 2018, Monzón dijo lo que le llevó al entonces presidente Otto Pérez Molina: Yo le entregué cinco millones de quetzales a Otto Pérez Molina en la casa de la zona 10 en compañía de Roxana Baldetti."
+  },
+  {
+   "acto": 2,
+   "texto": "El juicio contra 30 acusados no quedó previsto hasta enero de 2022, aunque Gálvez lo había enviado en octubre de 2017. Para entonces, según la fiscalía, había 1,516 declaraciones alteradas. Pero el testigo que decía haber llevado el dinero ya no estaba en Guatemala. Salió libre en 2018 como colaborador y, por protección, declaró en junio de 2022 por videoconferencia: dijo que recibía instrucciones directas de Baldetti. En octubre, Gálvez le dio la pena mínima: 10 años por La Línea, suspendidos. Siguió libre."
+  },
+  {
+   "acto": 3,
+   "texto": "El 7 de diciembre de 2022, el tribunal sentenció a 29 acusados, no a 30. Ninguna fuente explica la diferencia. Entonces condenó a Pérez Molina y a Baldetti a 16 años de prisión cada uno, por asociación ilícita y defraudación aduanera. Pero absolvió de todo a Carlos Muñoz, jefe anterior de la SAT, la oficina de impuestos, a su sucesor y a la jefa de Aduanas. Pérez Molina respondió ese mismo día: Este fallo no tiene ningún fundamento. A mí me sorprende que, por un lado, sin pruebas, como ella lo dijo, pero condena a mi persona. Antes de esa sentencia, el juez Gálvez renunció; decía ser víctima de acoso. ¿Qué les pasó a quienes destaparon La Línea?"
+  }
+ ],
+ "hilos": [
+  {
+   "id": "p6h1",
+   "escena": 5
+  },
+  {
+   "id": "p6h2",
+   "escena": 10
+  },
+  {
+   "id": "p6h3",
+   "escena": 12
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3,
+   4,
+   5
+  ],
+  [
+   6,
+   7
+  ],
+  [
+   8,
+   9
+  ],
+  [
+   10,
+   11
+  ],
+  [
+   12,
+   13
+  ]
+ ],
+ "paleta": "cielo",
+ "musica": "cielo-1",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2121.0,
+ "duracion_s": 142.3,
+ "critica": {
+  "veredicto": "corregir",
+  "vuelta": 3,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 4,
+   "claridad": 3,
+   "flujo": 3,
+   "precision": 4,
+   "cierre": 4
+  }
+ },
+ "gancho": {
+  "familia": "contraste",
+  "visual": "foto",
+  "pantalla": "De prófugo a testigo",
+  "linea": "Monzón, testigo de La Línea"
+ },
+ "promesa": {
+  "texto": "Lo que él contara podía hundir a quienes gobernaron Guatemala.",
+  "forma": "apuesta",
+  "en": 2,
+  "pago": 11,
+  "revela": 2
+ },
+ "bisagra": {
+  "texto": "Pero el testigo que decía haber llevado el dinero ya no estaba en Guatemala.",
+  "forma": "contradiccion",
+  "en": 8,
+  "pago": 8
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "Monzón estuvo prófugo cuando cayó La Línea. Luego fue testigo, desde fuera de Guatemala.",
+   "voz": "Monzón estuvo prófugo cuando cayó La Línea. Luego fue testigo, desde fuera de Guatemala.",
+   "dur": 6.446,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "Juan Carlos Monzón, secretario de la vicepresidenta Baldetti, se entregó en octubre de 2015. Lo que él contara podía hundir a quienes gobernaron Guatemala.",
+   "voz": "Juan Carlos Monzón, secretario de la vicepresidenta Baldetti, se entregó en octubre de dos mil quince. Lo que él contara podía hundir a quienes gobernaron Guatemala.",
+   "dur": 10.108,
+   "hechos": [
+    "jui-h04",
+    "red-h25"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: La Hora",
+     "origen": "medio",
+     "licencia": "© La Hora (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "foto",
+   "pantalla": "Había huido en abril, cuando cayó La Línea, la red de sobornos en las aduanas. Miguel Ángel Gálvez, el juez que luego envió el caso a juicio, lo mandó a prisión preventiva.",
+   "voz": "Había huido en abril, cuando cayó La Línea, la red de sobornos en las aduanas. Miguel Ángel Gálvez, el juez que luego envió el caso a juicio, lo mandó a prisión preventiva.",
+   "dur": 11.597,
+   "hechos": [
+    "jui-h04",
+    "red-h25"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: US Embassy · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "golpe",
+   "pantalla": "Pero Monzón cambió de lado: se volvió colaborador eficaz, testigo de la fiscalía a cambio de la pena mínima.",
+   "voz": "Pero Monzón cambió de lado: se volvió colaborador eficaz, testigo de la fiscalía a cambio de la pena mínima.",
+   "dur": 8.208,
+   "hechos": [
+    "red-h42"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "cita",
+   "pantalla": "En abril de 2018, Monzón dijo lo que le llevó al entonces presidente Otto Pérez Molina: Yo le entregué cinco millones de quetzales a Otto Pérez Molina en la casa de la zona 10 en compañía de Roxana Baldetti.",
+   "voz": "En abril de dos mil dieciocho, Monzón dijo lo que le llevó al entonces presidente Otto Pérez Molina: Yo le entregué cinco millones de quetzales a Otto Pérez Molina en la casa de la zona diez en compañía de Roxana Baldetti.",
+   "dur": 14.922,
+   "hechos": [
+    "jui-h06",
+    "jui-h07",
+    "jui-h05"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "foto",
+   "pantalla": "El juicio contra 30 acusados no quedó previsto hasta enero de 2022, aunque Gálvez lo había enviado en octubre de 2017.",
+   "voz": "El juicio contra treinta acusados no quedó previsto hasta enero de dos mil veintidós, aunque Gálvez lo había enviado en octubre de dos mil diecisiete.",
+   "dur": 8.981,
+   "hechos": [
+    "red-h26",
+    "jui-h01"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "tarjeta",
+   "pantalla": "Para entonces, según la fiscalía, había 1,516 declaraciones alteradas.",
+   "voz": "Para entonces, según la fiscalía, había mil quinientas dieciséis declaraciones alteradas.",
+   "dur": 6.543,
+   "hechos": [
+    "des-h16",
+    "red-h23",
+    "des-h15",
+    "red-h41",
+    "jui-h29",
+    "des-h17",
+    "des-h18",
+    "red-h06"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "foto",
+   "pantalla": "Pero el testigo que decía haber llevado el dinero ya no estaba en Guatemala. Salió libre en 2018 como colaborador y, por protección, declaró en junio de 2022 por videoconferencia: dijo que recibía instrucciones directas de Baldetti.",
+   "voz": "Pero el testigo que decía haber llevado el dinero ya no estaba en Guatemala. Salió libre en dos mil dieciocho como colaborador y, por protección, declaró en junio de dos mil veintidós por videoconferencia: dijo que recibía instrucciones directas de Baldetti.",
+   "dur": 15.928,
+   "hechos": [
+    "jui-h02",
+    "jui-h03",
+    "red-h24",
+    "red-h25"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "foto",
+   "pantalla": "En octubre, Gálvez le dio la pena mínima: 10 años por La Línea, suspendidos. Siguió libre.",
+   "voz": "En octubre, Gálvez le dio la pena mínima: diez años por La Línea, suspendidos. Siguió libre.",
+   "dur": 7.636,
+   "hechos": [
+    "jui-h09",
+    "red-h42"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: La Hora",
+     "origen": "medio",
+     "licencia": "© La Hora (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "foto",
+   "pantalla": "El 7 de diciembre de 2022, el tribunal sentenció a 29 acusados, no a 30. Ninguna fuente explica la diferencia.",
+   "voz": "El siete de diciembre de dos mil veintidós, el tribunal sentenció a veintinueve acusados, no a treinta. Ninguna fuente explica la diferencia.",
+   "dur": 9.357,
+   "hechos": [
+    "jui-h10",
+    "jui-h11"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: La Hora",
+     "origen": "medio",
+     "licencia": "© La Hora (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "tarjeta",
+   "pantalla": "Entonces condenó a Pérez Molina y a Baldetti a 16 años de prisión cada uno, por asociación ilícita y defraudación aduanera.",
+   "voz": "Entonces condenó a Pérez Molina y a Baldetti a dieciséis años de prisión cada uno, por asociación ilícita y defraudación aduanera.",
+   "dur": 8.795,
+   "hechos": [
+    "jui-h12",
+    "jui-h13",
+    "jui-h14",
+    "leg-h01"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "explica",
+   "pantalla": "Pero absolvió de todo a Carlos Muñoz, jefe anterior de la SAT, la oficina de impuestos, a su sucesor y a la jefa de Aduanas.",
+   "voz": "Pero absolvió de todo a Carlos Muñoz, jefe anterior de la Sat, la oficina de impuestos, a su sucesor y a la jefa de Aduanas.",
+   "dur": 8.269,
+   "hechos": [
+    "jui-h16",
+    "jui-h17"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": "embudo-filtro",
+   "mecanismo": "embudo"
+  },
+  {
+   "n": 13,
+   "tipo": "cita",
+   "pantalla": "Pérez Molina respondió ese mismo día: Este fallo no tiene ningún fundamento. A mí me sorprende que, por un lado, sin pruebas, como ella lo dijo, pero condena a mi persona.",
+   "voz": "Pérez Molina respondió ese mismo día: Este fallo no tiene ningún fundamento. A mí me sorprende que, por un lado, sin pruebas, como ella lo dijo, pero condena a mi persona.",
+   "dur": 12.796,
+   "hechos": [
+    "jui-h12"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 14,
+   "tipo": "cierre",
+   "pantalla": "Antes de esa sentencia, el juez Gálvez renunció; decía ser víctima de acoso. ¿Qué les pasó a quienes destaparon La Línea? Sígueme: en la séptima parte te cuento qué fue de los fiscales y el juez del caso.",
+   "voz": "Antes de esa sentencia, el juez Gálvez renunció; decía ser víctima de acoso. ¿Qué les pasó a quienes destaparon La Línea? Sígueme: en la séptima parte te cuento qué fue de los fiscales y el juez del caso.",
+   "dur": 16.283,
+   "hechos": [],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Así terminó",
+  "resumen": [
+   "Monzón: de prófugo a testigo",
+   "29 acusados llegaron a sentencia",
+   "Pérez Molina y Baldetti: 16 años"
+  ],
+  "texto": "Antes de esa sentencia, el juez Gálvez renunció; decía ser víctima de acoso. ¿Qué les pasó a quienes destaparon La Línea?",
+  "tipo": "pregunta",
+  "forma": "puente",
+  "final": "¿Qué les pasó a quienes destaparon La Línea?",
+  "invitacion": "Sígueme: en la séptima parte te cuento qué fue de los fiscales y el juez del caso."
+ },
+ "caption": {
+  "tiktok": "Serie · Parte 6 de 7: El testigo y la sentencia\nJuan Carlos Monzón, secretario privado de Baldetti, pasó de prófugo a colaborador eficaz. Años después llegó la sentencia de La Línea.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\n#Guatemala #LaLinea #historia",
+  "instagram": "Serie · Parte 6 de 7: El testigo y la sentencia\nEl secretario privado de la vicepresidenta se entregó, se volvió colaborador eficaz y declaró desde fuera del país. Luego, el tribunal leyó la sentencia del caso La Línea.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\n#Guatemala #LaLinea",
+  "facebook": "Serie · Parte 6 de 7: El testigo y la sentencia\nDe prófugo a testigo: Juan Carlos Monzón, el juicio que tardó años y la sentencia del caso La Línea en Guatemala.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\nFuentes en el primer comentario.",
+  "shorts": "El caso La Línea (6/7): el testigo y la sentencia #Shorts\nDe prófugo a testigo, y la sentencia de 2022 en Guatemala."
+ }
+}

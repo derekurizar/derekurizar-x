@@ -4,14 +4,14 @@
  "promesa": {
   "texto": "¿Cómo pasa una panadería de 25 sucursales a ninguna?",
   "en": 2,
-  "pago": 9,
+  "pago": 10,
   "revela": 2,
   "forma": "pregunta"
  },
  "narracion": [
   {
    "acto": 1,
-   "texto": "La Espiga reabrió bajo una carpa. Fue en Guatemala, tras el terremoto de 1976. Esta es la historia de La Espiga, una panadería de Quetzaltenango que nació con un horno de leña, creció hasta llegar a todo el país y se apagó casi sin hacer ruido. ¿Cómo pasa una panadería de 25 sucursales a ninguna? Marta Pérez, la fundadora, encendió ese horno en 1952 y abrió La Espiga. Años después, ya famosa en Xela, lo resumió así: Cada pan sale del mismo horno que encendí el primer día. Pero en 1976 un terremoto destruyó el local de la calle Rodolfo Robles. Un año después, en 1977, La Espiga volvió a hornear bajo una carpa, y los clientes hicieron fila en la banqueta. Aun así, el pan de La Espiga se volvió costumbre: en 1968 ya vendía 4,500 panes al día, y en 1990 abrió su sucursal número 25, la primera en la capital."
+   "texto": "La Espiga reabrió bajo una carpa. Fue en Guatemala, tras el terremoto. Todo empezó en Quetzaltenango, con un horno de leña, y llegó a todo el país. ¿Cómo pasa una panadería de 25 sucursales a ninguna? Marta Pérez, la fundadora, encendió ese horno en 1952 y abrió La Espiga. Años después, ya famosa en Xela, lo resumió así: Cada pan sale del mismo horno que encendí el primer día. Pero en 1976 un terremoto destruyó el local de la calle Rodolfo Robles. Un año después, en 1977, La Espiga volvió a hornear bajo una carpa, y los clientes hicieron fila en la banqueta. Aun así, el pan de La Espiga se volvió costumbre: en 1968 ya vendía 4,500 panes al día, y en 1990 abrió su sucursal número 25, la primera en la capital."
   },
   {
    "acto": 2,
@@ -25,7 +25,7 @@
  "hilos": [
   {
    "id": "h1",
-   "escena": 8
+   "escena": 9
   },
   {
    "id": "h2",
@@ -39,15 +39,16 @@
   ],
   [
    4,
-   5
+   5,
+   6
   ],
   [
-   6,
-   7
+   7,
+   8
   ],
   [
-   8,
-   9
+   9,
+   10
   ]
  ],
  "voz_continua": true,
@@ -63,7 +64,7 @@
    "pantalla": "Bajo una carpa",
    "linea": "La Espiga reabrió tras el terremoto",
    "verbo": "reabrió",
-   "texto": "La Espiga reabrió bajo una carpa. Fue en Guatemala, tras el terremoto de 1976."
+   "texto": "La Espiga reabrió bajo una carpa. Fue en Guatemala, tras el terremoto."
   },
   {
    "tipo": "foto",
@@ -76,23 +77,33 @@
     "ori-h01"
    ],
    "fuente": "Prensa Libre · La Hora",
-   "texto": "Esta es la historia de La Espiga, una panadería de Quetzaltenango que nació con un horno de leña, creció hasta llegar a todo el país y se apagó casi sin hacer ruido. ¿Cómo pasa una panadería de 25 sucursales a ninguna?"
+   "texto": "Todo empezó en Quetzaltenango, con un horno de leña, y llegó a todo el país. ¿Cómo pasa una panadería de 25 sucursales a ninguna?"
   },
   {
    "tipo": "cita",
    "acto": 1,
    "cita": "ori-q01",
-   "retrato": "ori-f03",
    "hechos": [
     "ori-h01"
    ],
-   "fuente": "Prensa Libre",
+   "fuente": "Prensa de ejemplo",
    "texto": "Marta Pérez, la fundadora, encendió ese horno en 1952 y abrió La Espiga. Años después, ya famosa en Xela, lo resumió así: Cada pan sale del mismo horno que encendí el primer día."
   },
   {
    "tipo": "foto",
    "acto": 1,
-   "foto": "ori-f02",
+   "foto": "ori-f03",
+   "fecha": "1976",
+   "lugar": "Quetzaltenango",
+   "titular": "El terremoto tumbó el local",
+   "hechos": [
+    "ori-h03"
+   ],
+   "texto": "Pero en 1976 un terremoto destruyó el local de la calle Rodolfo Robles."
+  },
+  {
+   "tipo": "foto",
+   "acto": 1,
    "fecha": "1977",
    "lugar": "Quetzaltenango",
    "titular": "Reabrió bajo una carpa",
@@ -100,7 +111,8 @@
     "ori-h03"
    ],
    "fuente": "Prensa Libre · La Hora",
-   "texto": "Pero en 1976 un terremoto destruyó el local de la calle Rodolfo Robles. Un año después, en 1977, La Espiga volvió a hornear bajo una carpa, y los clientes hicieron fila en la banqueta."
+   "texto": "Un año después, en 1977, La Espiga volvió a hornear bajo una carpa, y los clientes hicieron fila en la banqueta.",
+   "foto": "ori-f02"
   },
   {
    "tipo": "tarjeta",
@@ -235,7 +247,7 @@
  "bisagra": {
   "texto": "Nadie en la familia imaginaba quién tocaría la puerta.",
   "forma": "presagio",
-  "en": 6,
-  "pago": 6
+  "en": 7,
+  "pago": 7
  }
 }

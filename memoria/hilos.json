@@ -299,6 +299,19 @@
       "estado": "listo",
       "hook_tipo": "pregunta_directa",
       "modo": "investigacion"
+    },
+    {
+      "id": "2026-11-04-aumento-salarial-diputados-cronologia",
+      "fecha": "2026-11-04",
+      "slug": "aumento-salarial-diputados-cronologia",
+      "tema": "Cronología del aumento salarial de los diputados del Congreso de Guatemala: la propuesta previa que falló (con sus ponentes), las iniciativas y enmiendas que propusieron directamente el aumento (con sus ponentes), su aprobación (Acuerdo Legislativo 31-2024, noviembre de 2024, votos) y todos los intentos posteriores por revertirlo o suspenderlo hasta hoy (con sus ponentes).",
+      "tesis": "El ingreso mensual de un diputado pasó de Q29,150 a Q66,300 (+127.4 %) por una enmienda al presupuesto del propio Congreso aprobada 87 a 63 el 26 de noviembre de 2024, y ninguno de los 7 intentos formales por revertirlo lo ha logrado: el último, el 3 de noviembre de 2026, tuvo 41 votos.",
+      "paleta": "obsidiana",
+      "n_tuits": 12,
+      "ruta": "hilos/2026-11-04-aumento-salarial-diputados-cronologia",
+      "estado": "listo",
+      "hook_tipo": "antes_despues",
+      "modo": "hilo"
     }
   ]
 }

@@ -101,7 +101,7 @@ Principios (los revisa V18 y el crítico en C12, puntaje `flujo`):
    visual, pantalla, línea, verbo y voz) y el segundo queda para la versión B. No cambias esa escena: el gate
    comprueba que sea la elegida (si la promesa va en la escena 1, puedes añadirla al final de su voz; lo normal es
    `en: 2`). Si el gancho te parece mal, dilo en el retorno (`fallas`), no lo reescribas. El catálogo y las reglas
-   R1–R12 están en `referencias/ganchos.md`; lo que te toca a ti:
+   R1–R14 están en `referencias/ganchos.md`; lo que te toca a ti:
    - **T1 paga el gancho**: la escena 2 cierra o profundiza lo que la pantalla dejó abierto y, si el gancho no dijo
      «Guatemala», la **primera oración de T1** lo dice (R6: ya no se antepone «En Guatemala»).
    - La `promesa_sugerida` del candidato elegido es tu punto de partida para `promesa.texto` (adáptala; nunca la de

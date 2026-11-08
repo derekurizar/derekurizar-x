@@ -24,7 +24,7 @@
   },
   {
    "acto": 3,
-   "texto": "Huehuetenango tiene 6.1 homicidios por cada cien mil habitantes, el puesto 17 de 22, cuando el país tiene 16.1. Solo cinco departamentos tienen menos. Es más pobre que el país, pero mucho menos violento, y esa mezcla no sale en el promedio nacional. En Huehuetenango, la mayoría de las familias vive con menos de lo básico."
+   "texto": "Huehuetenango tiene 6.1 homicidios por cada cien mil habitantes, el puesto 17 de 22, cuando el país tiene 16.1. Solo cinco departamentos tienen menos. Es más pobre que el país, pero mucho menos violento: eso no sale en el promedio. En Huehuetenango, la mayoría de las familias vive con menos de lo básico."
   }
  ],
  "escenas": [
@@ -36,7 +36,7 @@
     "depto": "GT13",
     "etiqueta": "N.º 5 de 22 en pobreza"
    },
-   "pantalla": "N.º 5 de 22",
+   "pantalla": "Huehuetenango: 5 de 22",
    "linea": "en pobreza: Huehuetenango",
    "verbo": "es",
    "texto": "Huehuetenango es el quinto en pobreza de Guatemala.",
@@ -78,7 +78,7 @@
   }
  ],
  "cierre": {
-  "texto": "Es más pobre que el país, pero mucho menos violento, y esa mezcla no sale en el promedio nacional. En Huehuetenango, la mayoría de las familias vive con menos de lo básico.",
+  "texto": "Es más pobre que el país, pero mucho menos violento: eso no sale en el promedio. En Huehuetenango, la mayoría de las familias vive con menos de lo básico.",
   "resumen": [
    "Pobreza: N.º 5 de 22",
    "Homicidios: N.º 17 de 22"

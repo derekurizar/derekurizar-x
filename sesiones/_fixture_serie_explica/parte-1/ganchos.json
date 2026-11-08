@@ -1,0 +1,71 @@
+{
+ "candidatos": [
+  {
+   "id": "g1",
+   "familia": "contraste",
+   "visual": "pareja",
+   "visual_datos": {
+    "a": {
+     "valor": "ej-c14",
+     "etiqueta": "Luis"
+    },
+    "b": {
+     "valor": "ej-c01",
+     "etiqueta": "Ana"
+    }
+   },
+   "pantalla": "Ana Q45,259 vs Q17,449",
+   "linea": "Los mismos Q1,000, diez años antes",
+   "texto": "Imagina: Ana y Luis guardan los mismos 1,000 quetzales. Ana termina con el doble.",
+   "verbo": "guardan",
+   "promesa_sugerida": "El mismo motor también puede jugar en tu contra.",
+   "por_que": "contraste: la misma plata y un final muy distinto; el referente es la otra persona",
+   "forma_sugerida": "contradiccion"
+  },
+  {
+   "id": "g2",
+   "familia": "pregunta",
+   "visual": "cifra",
+   "pantalla": "Guardas Q1,000",
+   "linea": "¿Cuánto hay al final?",
+   "texto": "Guardas 1,000 quetzales. ¿Cuánto hay al final? {17,449:m}.",
+   "verbo": "guardas",
+   "promesa_sugerida": "¿Por qué casi nadie acierta esa cuenta?",
+   "por_que": "pregunta con predicción: casi todos dicen 4,000 y la respuesta lo rompe en el mismo gancho",
+   "forma_sugerida": "pregunta"
+  },
+  {
+   "id": "g3",
+   "familia": "tu",
+   "visual": "figuras",
+   "visual_datos": {
+    "de_cada": [
+     77,
+     100
+    ],
+    "etiqueta": "quetzales que nunca pusiste",
+    "calculo": "ej-c17/ej-c14*100"
+   },
+   "pantalla": "Ahorro: 77 de 100",
+   "linea": "de tu ahorro, que nunca pusiste",
+   "texto": "Tu ahorro: 77 de cada 100 no los pusiste. Así terminan 30 años.",
+   "verbo": "pusiste",
+   "promesa_sugerida": "Esos quetzales extra también corren en tu contra.",
+   "por_que": "el espectador es el protagonista y la escala humana se lee en figuras",
+   "forma_sugerida": "contradiccion"
+  },
+  {
+   "id": "g4",
+   "familia": "resultado",
+   "visual": "cifra",
+   "pantalla": "Ahorro ×17",
+   "linea": "Sin poner un quetzal más",
+   "calculo": "ej-c14/ej-c24",
+   "texto": "Un ahorro de 1,000 quetzales se multiplica por 17. Solo hay que esperar 30 años.",
+   "verbo": "multiplica",
+   "promesa_sugerida": "Ese motor tiene otra cara, y casi nadie la ve.",
+   "por_que": "el final primero: el factor sorprende y se lee en un segundo",
+   "forma_sugerida": "secreto"
+  }
+ ]
+}

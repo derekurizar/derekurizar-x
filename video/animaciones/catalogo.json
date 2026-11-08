@@ -29,7 +29,8 @@
           "Llegan a otra ciudad",
           "Su comida los sigue"
         ]
-      }
+      },
+      "pendiente": "no pasa A1/A2 (2026-11-07: adorno continuo o pasos visibles antes de la voz): rehazla y corre --check"
     },
     {
       "id": "boca-a-boca",
@@ -59,7 +60,8 @@
           "Se corrió de casa en casa",
           "La fábrica lo adoptó"
         ]
-      }
+      },
+      "pendiente": "no pasa A1/A2 (2026-11-07: adorno continuo o pasos visibles antes de la voz): rehazla y corre --check"
     },
     {
       "id": "bola-nieve",
@@ -147,7 +149,8 @@
           "Trabajo informal",
           "Hijos con poco ingreso"
         ]
-      }
+      },
+      "pendiente": "no pasa A1/A2 (2026-11-07: adorno continuo o pasos visibles antes de la voz): rehazla y corre --check"
     },
     {
       "id": "cronologia",
@@ -206,7 +209,8 @@
           "Abajo, la población",
           "Cada caso pesa más"
         ]
-      }
+      },
+      "pendiente": "no pasa A1/A2 (2026-11-07: adorno continuo o pasos visibles antes de la voz): rehazla y corre --check"
     },
     {
       "id": "embudo-filtro",
@@ -267,6 +271,36 @@
           "Una persona la escribe",
           "La página queda digital"
         ]
+      },
+      "pendiente": "no pasa A1/A2 (2026-11-07: adorno continuo o pasos visibles antes de la voz): rehazla y corre --check"
+    },
+    {
+      "id": "foco-contagio",
+      "origen": "parte-7",
+      "usos": [
+        "parte-7"
+      ],
+      "descripcion": "onda desde un foco: el centro late y sus ondas encienden, una tras otra, los nodos de alrededor",
+      "mecanismo": "onda",
+      "temas": [
+        "contagio",
+        "propagacion",
+        "casos derivados",
+        "brote",
+        "efecto domino",
+        "investigacion"
+      ],
+      "pasos": [
+        2,
+        6
+      ],
+      "ejemplo": {
+        "titulo": "¿Cómo se contagia un brote?",
+        "pasos": [
+          "Un enfermo",
+          "Toda su familia",
+          "La escuela del barrio"
+        ]
       }
     },
     {
@@ -296,7 +330,8 @@
           "Salgan algunos presos",
           "La ocupación apenas baja"
         ]
-      }
+      },
+      "pendiente": "no pasa A1/A2 (2026-11-07: adorno continuo o pasos visibles antes de la voz): rehazla y corre --check"
     },
     {
       "id": "nivel-umbral",
@@ -328,7 +363,8 @@
           "Llegan las lluvias",
           "El pozo vuelve a dar agua"
         ]
-      }
+      },
+      "pendiente": "no pasa A1/A2 (2026-11-07: adorno continuo o pasos visibles antes de la voz): rehazla y corre --check"
     },
     {
       "id": "oleadas-cauce",
@@ -361,7 +397,8 @@
           "Encajonado en el cauce",
           "Ceniza fina: resbala"
         ]
-      }
+      },
+      "pendiente": "no pasa A1/A2 (2026-11-07: adorno continuo o pasos visibles antes de la voz): rehazla y corre --check"
     },
     {
       "id": "onda-frenado",
@@ -388,6 +425,37 @@
           "Menos espacio entre ellos",
           "Un frenazo se contagia",
           "Se forma la cola"
+        ]
+      },
+      "pendiente": "no pasa A1/A2 (2026-11-07: adorno continuo o pasos visibles antes de la voz): rehazla y corre --check"
+    },
+    {
+      "id": "paso-reten",
+      "origen": "parte-1",
+      "usos": [
+        "parte-1"
+      ],
+      "descripcion": "un bulto llega a un retén: lleva una señal, pasa un paquete a la garita, su etiqueta se encoge y la barrera lo deja pasar",
+      "mecanismo": "cadena",
+      "temas": [
+        "aduana",
+        "soborno",
+        "corrupción",
+        "contrabando",
+        "peaje",
+        "trámite",
+        "retén"
+      ],
+      "pasos": [
+        2,
+        5
+      ],
+      "ejemplo": {
+        "titulo": "¿Cómo cobraba la red?",
+        "pasos": [
+          "Un número: La Línea",
+          "El soborno",
+          "Impuestos rebajados"
         ]
       }
     },
@@ -421,6 +489,40 @@
           "Nadie la entregó a tiempo",
           "Se quedó en la bodega"
         ]
+      },
+      "pendiente": "no pasa A1/A2 (2026-11-07: adorno continuo o pasos visibles antes de la voz): rehazla y corre --check"
+    },
+    {
+      "id": "presion-limite",
+      "origen": "parte-4",
+      "usos": [
+        "parte-4"
+      ],
+      "descripcion": "medidor que ya parte a media altura: cada paso apila un tramo de presión y lo acerca a la línea límite, que late sin cruzarse",
+      "mecanismo": "umbral",
+      "temas": [
+        "presión",
+        "límite",
+        "renuncia",
+        "crisis",
+        "acumulación",
+        "umbral",
+        "tensión",
+        "protesta",
+        "medidor"
+      ],
+      "pasos": [
+        2,
+        5
+      ],
+      "ejemplo": {
+        "titulo": "¿Por qué renunció el ministro?",
+        "pasos": [
+          "Las protestas",
+          "La prensa",
+          "Los diputados",
+          "Su propio partido"
+        ]
       }
     },
     {
@@ -451,7 +553,8 @@
           "Secado al vacío",
           "Escamas molidas"
         ]
-      }
+      },
+      "pendiente": "no pasa A1/A2 (2026-11-07: adorno continuo o pasos visibles antes de la voz): rehazla y corre --check"
     },
     {
       "id": "tanque-balance",
@@ -481,7 +584,8 @@
           "El nivel baja",
           "El lago se encoge"
         ]
-      }
+      },
+      "pendiente": "no pasa A1/A2 (2026-11-07: adorno continuo o pasos visibles antes de la voz): rehazla y corre --check"
     }
   ]
 }

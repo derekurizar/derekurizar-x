@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "_comentario": "Registro de videos de /congreso (una ley del Congreso en menos de un minuto). Lo escribe SOLO scripts/memoria.py --congreso <congreso/<fecha>-<slug>>; scripts/congreso.py lo lee para rotar la familia del gancho, el cierre y la paleta. estado: listo | publicado | incompleto.",
+  "congreso": [
+    {
+      "id": "congreso-iniciativa-6347",
+      "slug": "iniciativa-6347",
+      "fecha": "2026-11-04",
+      "ruta": "congreso/2026-11-04-iniciativa-6347",
+      "iniciativa": "6347",
+      "ley": "Decreto 26-2026, Ley Marco de Ciberseguridad",
+      "votacion": {
+        "fecha": "2026-11-03 22:44:32",
+        "clase": "redaccion final",
+        "umbral": 81,
+        "favor": 121,
+        "contra": 10,
+        "ausente": 19,
+        "licencia": 10
+      },
+      "nombrados": [
+        {
+          "nombre": "Luis Alberto Contreras Colíndres",
+          "voto": "favor"
+        },
+        {
+          "nombre": "Allan Estuardo Rodríguez Reyes",
+          "voto": "contra"
+        }
+      ],
+      "paleta": "obsidiana",
+      "musica": "obsidiana-1",
+      "duracion_s": 49.0,
+      "creditos_voz": 665,
+      "estado": "listo",
+      "frases": {
+        "gancho": "En el Congreso, la urgencia de esta ley pasó por dos votos.",
+        "cierre": "La ley de ciberseguridad ya pasó; su reglamento todavía no existe.",
+        "cierre_tipo": "remate",
+        "cierre_forma": "pendiente",
+        "cierre_mecanismo": null,
+        "visual": "foto",
+        "familia": "contraste",
+        "aperturas": [
+          "Crea una fiscalía de",
+          "En la votación final",
+          "Por eso, en cuanto",
+          "La ley de ciberseguridad"
+        ]
+      }
+    }
+  ]
+}

@@ -3,7 +3,7 @@
 
 Cada idea: {id, creada, area, titulo, pregunta, por_que_ahora, angulo, hook_sugerido,
 paleta_sugerida, datos[]{fuente, indicador, url, formato, periodo, evidencia, acceso},
-puntaje{interes, datos, actualidad, total}, estado, hilo_id, actualizada, nota}.
+puntaje{interes, datos, actualidad, sujeto (opcional en ideas viejas), total}, estado, hilo_id, actualizada, nota}.
 estado: pendiente | en_curso | hecha | descartada. Toda escritura regenera ideas/README.md.
 
 Lo producido = memoria/hilos.json + memoria/datos.json + memoria/informes.json.
@@ -170,7 +170,9 @@ def solapa(a, b, base=None):
 
 
 def total(p):
-    return sum(int(p.get(k) or 0) for k in ("interes", "datos", "actualidad"))
+    # sujeto (m060, /analyze-improve 2026-11-03): marcas, personas, lugares o casos que la gente ya busca distribuyeron
+    # 10–100× más que los temas de datos públicos; opcional en las ideas viejas
+    return sum(int(p.get(k) or 0) for k in ("interes", "datos", "actualidad", "sujeto"))
 
 
 def validar_idea(i, pals):
@@ -197,6 +199,8 @@ def validar_idea(i, pals):
     for k in ("interes", "datos", "actualidad"):
         if not isinstance(p.get(k), int) or not 1 <= p[k] <= 5:
             F.append("puntaje.%s debe ser entero 1–5" % k)
+    if "sujeto" in p and (not isinstance(p["sujeto"], int) or not 1 <= p["sujeto"] <= 5):
+        F.append("puntaje.sujeto debe ser entero 1–5")
     if i.get("estado") and i["estado"] not in ESTADOS:
         F.append("estado %r no está en %s" % (i["estado"], "|".join(ESTADOS)))
     return F

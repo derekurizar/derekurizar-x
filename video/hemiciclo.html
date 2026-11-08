@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<!-- Escena «hemiciclo» de /congreso (?n=N): los 160 asientos del Congreso de Guatemala con el voto de una ley. Los datos
+     y los tiempos vienen en S.T (scripts/congreso.py t_hemiciclo / t_gancho):
+       asientos [{v: f|c|a|l, b}] (160, de izquierda a derecha: a favor por bancada, ausentes, licencia, en contra),
+       cuentas {favor, contra, ausente, licencia}, umbral {n, etiqueta, start}, llenar {favor:[a,b], contra:[a,b],
+       ausente:[a,b]} (o lleno: true), resultado {start, aprobada}, focos [{tipo diputado|bancada, asientos, nombre,
+       bancada, voto, foto, n, start, fin}], barras {start}.
+     Modo «escena»: el hemiciclo se llena asiento por asiento con su contador (cada asiento entra con un pop), la línea
+     del umbral, el sello del resultado; luego los focos (los asientos de una bancada o de un diputado se encienden y el
+     resto se apaga; el diputado lleva su retrato oficial con un aro del color de su voto) y, al final, los asientos
+     vuelan a tres columnas (a favor, en contra, no votaron) con la línea del umbral.
+     Modo «gancho»: la foto a sangre, la pantalla y la línea (encendiéndose con la voz) y el hemiciclo de la votación
+     dentro de un círculo; en T.portal el círculo se abre hacia la escena siguiente (otro hemiciclo): el portal.
+     Estilo Noche: a favor en el acento (lo único en acento), en contra en crema, ausentes y licencia apagados; sin
+     colores de partido. Solo variables de color. La graba scripts/video_grabar.js. -->
+<link rel="stylesheet" href="comun.css">
+<style>
+/* el lienzo del hemiciclo es la columna segura (x 85–876, y 215–1370; en 4:5 y 0–1090) con las coordenadas de la
+   página (viewBox): V13 mide su caja y la de cada asiento */
+svg.hem { position: absolute; left: 85px; top: 215px; width: 791px; height: 1155px; overflow: visible; }
+html.f45 svg.hem { top: 0; height: 1090px; }
+#portal svg.hem { left: 0; top: 0; width: 1080px; height: 1920px; }
+body.gancho #hem, body.gancho #sello, body.gancho #cuentas, body.gancho #ficha, body.gancho #barras-et { display: none; }
+.asiento { transform-box: fill-box; transform-origin: center; }
+#umbral line { stroke: var(--ink); stroke-width: 4; stroke-dasharray: 10 9; }
+#umbral text, #barras-svg text { font: 700 26px 'JetBrains Mono', monospace; letter-spacing: .1em; fill: var(--ink); text-transform: uppercase; }
+#sello { position: absolute; left: var(--izq); right: var(--der); text-align: center; opacity: 0; }
+#sello b { display: inline-block; font: 900 104px/1 Archivo, sans-serif; font-stretch: 62.5%; text-transform: uppercase; letter-spacing: .02em;
+  padding: 10px 26px 4px; border: 7px solid currentColor; border-radius: 14px; color: var(--acento);
+  background: color-mix(in srgb, var(--bg) 84%, transparent); }
+#sello.no b { color: var(--ink); }
+#cuentas { position: absolute; left: var(--izq); right: var(--der); display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; }
+.cuenta .num { font: 900 150px/.86 Archivo, sans-serif; font-stretch: 62.5%; }
+.cuenta .et { font: 700 25px/1.2 'JetBrains Mono', monospace; letter-spacing: .12em; text-transform: uppercase; margin-top: 8px; }
+#c-favor .num { color: var(--acento); }
+#c-contra { text-align: right; }
+#c-fuera { text-align: center; opacity: .62; padding-bottom: 6px; }
+#c-fuera .num { font-size: 76px; }
+#ficha { position: absolute; left: var(--izq); right: var(--der); display: flex; align-items: center; gap: 30px; opacity: 0; }
+#ficha .foto { flex: none; width: 190px; height: 190px; border-radius: 50%; overflow: hidden; border: 8px solid var(--acento); background: color-mix(in srgb, var(--ink) 12%, transparent); }
+#ficha.contra .foto { border-color: var(--ink); }
+#ficha .foto img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; }
+#ficha .nom { font: 800 68px/1 Archivo, sans-serif; letter-spacing: -.015em; }
+#ficha .sub { font: 700 25px/1.25 'JetBrains Mono', monospace; letter-spacing: .1em; text-transform: uppercase; margin-top: 12px; opacity: .8; }
+#ficha .sub em { font-style: normal; color: var(--acento); opacity: 1; }
+#ficha.contra .sub em { color: var(--ink); }
+#ficha.bancada .nom { font: 900 104px/.9 Archivo, sans-serif; font-stretch: 62.5%; text-transform: uppercase; }
+#ficha.bancada .foto { display: none; }
+#cordel { stroke: var(--ink); stroke-width: 3; opacity: 0; }
+.anillo { fill: none; stroke: var(--acento); stroke-width: 4; }
+.anillo.contra { stroke: var(--ink); }
+#barras-et { position: absolute; left: var(--izq); right: var(--der); display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; opacity: 0; }
+#barras-et .num { font: 900 92px/.9 Archivo, sans-serif; font-stretch: 62.5%; }
+#barras-et .et { font: 700 22px/1.2 'JetBrains Mono', monospace; letter-spacing: .1em; text-transform: uppercase; margin-top: 6px; opacity: .8; }
+#barras-et div:first-child .num { color: var(--acento); }
+/* gancho: la foto a sangre, el círculo con el hemiciclo y el texto */
+#sangre { position: absolute; left: 0; top: 0; width: 1080px; height: 1260px; overflow: hidden; display: none; }
+#sangre img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform-origin: 50% 40%; filter: brightness(.5); }
+#sangre .velo { position: absolute; inset: 0; background: linear-gradient(180deg, color-mix(in srgb, var(--bg) 85%, transparent) 0%,
+  color-mix(in srgb, var(--bg) 25%, transparent) 22%, transparent 40%, color-mix(in srgb, var(--bg) 60%, transparent) 66%, var(--bg) 100%); }
+#sangre .grano { position: absolute; inset: 0; background-size: 180px 180px; }
+body.gancho #sangre { display: block; }
+#circulo { position: absolute; border-radius: 50%; overflow: hidden; background: var(--bg); border: 5px solid color-mix(in srgb, var(--ink) 70%, transparent);
+  box-shadow: 0 10px 50px color-mix(in srgb, var(--bg) 80%, transparent); display: none; }
+body.gancho #circulo { display: block; }
+#circulo .num { position: absolute; left: 0; right: 0; text-align: center; font: 900 92px/1 Archivo, sans-serif; font-stretch: 62.5%; color: var(--acento); }
+#credito { position: absolute; font: 600 18px/1.2 'JetBrains Mono', monospace; letter-spacing: .06em; opacity: .7; text-align: center; display: none; }
+body.gancho #credito { display: block; }
+#gtexto { position: absolute; left: var(--izq); right: var(--der); bottom: calc(1920px - var(--fin) + 10px); display: none; }
+body.gancho #gtexto { display: block; }
+#gpant { font: 900 132px/.88 Archivo, sans-serif; font-stretch: 62.5%; text-transform: uppercase; letter-spacing: -.005em; }
+#gpant .acento { color: var(--acento); }
+#glin { font: 800 64px/1.08 Archivo, sans-serif; letter-spacing: -.015em; margin-top: 22px; }
+#glin span { display: inline-block; margin-right: .2em; }
+#glin span.suena { color: var(--acento); }
+#portal { position: absolute; inset: 0; background: var(--bg); display: none; z-index: 1; }
+#arriba, #subs { z-index: 2; }
+body.gancho #portal { display: block; }
+html.f45 #gtexto { bottom: calc(1350px - var(--fin) + 10px); }
+html.f45 #gpant { font-size: 104px; }
+html.f45 #glin { font-size: 52px; }
+html.f45 .cuenta .num { font-size: 120px; }
+html.f45 #c-fuera .num { font-size: 62px; }
+html.f45 #ficha .foto { width: 150px; height: 150px; }
+html.f45 #ficha .nom { font-size: 56px; }
+html.f45 #ficha.bancada .nom { font-size: 86px; }
+html.f45 #sello b { font-size: 84px; }
+</style>
+<script src="h.js"></script>
+</head>
+<body>
+<div id="sangre" data-fuera-de-zona><div class="velo"></div><div class="grano"></div></div>
+<div id="portal" data-fuera-de-zona></div>
+<div id="arriba"><div id="golpe"></div><div id="progreso"></div></div>
+<svg class="hem" id="hem" xmlns="http://www.w3.org/2000/svg"></svg>
+<div id="sello"><b></b></div>
+<div id="cuentas">
+  <div class="cuenta" id="c-favor"><div class="num">0</div><div class="et">a favor</div></div>
+  <div class="cuenta" id="c-fuera"><div class="num">0</div><div class="et">no votaron</div></div>
+  <div class="cuenta" id="c-contra"><div class="num">0</div><div class="et">en contra</div></div>
+</div>
+<div id="ficha"><div class="foto"><img alt=""></div><div><div class="nom"></div><div class="sub"></div></div></div>
+<div id="barras-et">
+  <div><div class="num"></div><div class="et">a favor</div></div>
+  <div><div class="num"></div><div class="et">en contra</div></div>
+  <div><div class="num"></div><div class="et">no votaron</div></div>
+</div>
+<div id="circulo"><svg class="mini" xmlns="http://www.w3.org/2000/svg"></svg><div class="num"></div></div>
+<div id="credito"></div>
+<div id="gtexto"><div id="gpant"></div><div id="glin"></div></div>
+<div id="subs"></div>
+<script src="comun.js"></script>
+<script>
+const n = V.n, F45 = V.F45, { clamp, prog, eo, esc, normal } = V;
+const NS = 'http://www.w3.org/2000/svg';
+let S, T, TROZOS, G, SEATS = [], ORDEN = {}, R_SEAT = 10, LINEA = null, IMG = null, MINI = [], PORTAL = null, GRID = [];
+// geometría: el hemiciclo centrado en la columna segura (x 85–876)
+const L = F45 ? { cx: 480, cy: 690, R: 330 } : { cx: 480, cy: 960, R: 380 };
+const POP = 0.2;   // un asiento entra con un pop de 0.2 s
+
+const svgEl = (tag, attrs, padre) => { const e = document.createElementNS(NS, tag); for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v); if (padre) padre.appendChild(e); return e; };
+const COLOR = { f: 'var(--acento)', c: 'var(--ink)', a: 'color-mix(in srgb, var(--ink) 26%, transparent)', l: 'color-mix(in srgb, var(--ink) 26%, transparent)' };
+const VACIO = 'color-mix(in srgb, var(--ink) 11%, transparent)';
+
+// asientos de un hemiciclo en (cx, cy, R): → { pts (160, de izquierda a derecha), s }
+function geometria(cx, cy, Rr) {
+  // paso entre asientos proporcional al radio (el hemiciclo grande y el del círculo del gancho)
+  const g = H.asientos(T.asientos.length, Rr, 0.42 * Rr, cx, cy, Math.round(Rr / 9), Math.max(4, Math.round(Rr / 40)));
+  if (!g) throw new Error('los asientos no caben en el hemiciclo');
+  return g;
+}
+// el momento en que cada asiento se enciende (o -1: ya encendido desde el principio)
+function tiempos() {
+  const ts = new Array(T.asientos.length).fill(-1);
+  if (T.lleno || !T.llenar) return ts;
+  const grupo = (v) => T.asientos.map((a, k) => (a.v === v ? k : -1)).filter((k) => k >= 0);
+  const reparte = (ks, [a, b]) => ks.forEach((k, j) => { ts[k] = a + (b - a) * j / Math.max(1, ks.length); });
+  reparte(grupo('f'), T.llenar.favor);
+  reparte(grupo('c').reverse(), T.llenar.contra);   // en contra entra desde el extremo derecho
+  reparte(grupo('a').concat(grupo('l')), T.llenar.ausente);
+  return ts;
+}
+
+window.__listo = (async () => {
+  const C = await V.cargar(), todo = C.todo; S = C.S; T = S.T; TROZOS = C.trozos;
+  S.arriba = S.arriba || [];
+  V.pintarGolpe(S);
+  V.pintarProgreso(todo);
+  const gancho = T.modo === 'gancho';
+  if (gancho) document.body.classList.add('gancho');
+  const lienzo = document.getElementById('hem');
+  lienzo.setAttribute('viewBox', F45 ? '85 0 791 1090' : '85 215 791 1155');
+  const hem = svgEl('g', { id: 'lienzo' }, lienzo);   // la deriva escala este grupo, no la caja del svg (V13)
+  const ts = tiempos();
+  if (!gancho) {
+    G = geometria(L.cx, L.cy, L.R);
+    R_SEAT = 0.4 * G.s;
+    SEATS = G.asientos.map((p, k) => ({ p, a: T.asientos[k], t: ts[k], el: svgEl('circle', { class: 'asiento', cx: p.x.toFixed(1), cy: p.y.toFixed(1), r: R_SEAT.toFixed(2) }, hem) }));
+    // la línea del umbral: radial entre el asiento umbral−1 y el umbral (los asientos van ordenados por ángulo)
+    const m = T.umbral.n, th = (G.asientos[m - 1].th + G.asientos[m].th) / 2, r0 = 0.42 * L.R - G.s, r1 = L.R + G.s * 1.1;
+    const gU = svgEl('g', { id: 'umbral' }, hem);
+    svgEl('line', { x1: L.cx + r0 * Math.cos(th), y1: L.cy - r0 * Math.sin(th), x2: L.cx + r1 * Math.cos(th), y2: L.cy - r1 * Math.sin(th) }, gU);
+    // la etiqueta va hacia adentro de la columna: a la izquierda del extremo si la línea cae a la derecha, y al revés
+    const xe = L.cx + r1 * Math.cos(th), ye = L.cy - r1 * Math.sin(th), der = th < Math.PI / 2;
+    const tx = svgEl('text', { x: xe + (der ? -14 : 14), y: ye - 12, 'text-anchor': der ? 'end' : 'start' }, gU);
+    tx.textContent = T.umbral.etiqueta || (m + ' para aprobar');
+    LINEA = gU;
+    // anillos de los focos (uno por asiento enfocado)
+    for (const f of T.focos || []) f.anillos = f.asientos.map((k) => svgEl('circle', { class: 'anillo' + (f.voto === 'contra' ? ' contra' : ''), cx: SEATS[k].p.x, cy: SEATS[k].p.y, r: R_SEAT * 1.9, opacity: 0 }, hem));
+    if (T.focos && T.focos.some((f) => f.tipo === 'diputado')) svgEl('line', { id: 'cordel', x1: 0, y1: 0, x2: 0, y2: 0 }, hem);
+    // barras: la posición de cada asiento en su columna (10 por fila, de abajo arriba)
+    if (T.barras) {
+      // tres columnas de 10 puntos de ancho dentro de la columna segura (x 100–860)
+      const col = { f: 0, c: 1, a: 2, l: 2 }, d = 23, cxs = [L.cx - 265, L.cx, L.cx + 265], base = L.cy + 10, cuenta = [0, 0, 0];
+      SEATS.forEach((x) => { const c = col[x.a.v], j = cuenta[c]++; x.q = { x: cxs[c] + ((j % 10) - 4.5) * d, y: base - Math.floor(j / 10) * d - d / 2 }; });
+      GRID = { d, base, cxs, cuenta };
+      const gB = svgEl('g', { id: 'barras-svg', opacity: 0 }, hem);
+      const yU = base - (T.umbral.n / 10) * d;
+      svgEl('line', { x1: cxs[0] - 5.4 * d, y1: yU, x2: cxs[2] + 5.4 * d, y2: yU, stroke: 'var(--ink)', 'stroke-width': 4, 'stroke-dasharray': '10 9' }, gB);
+      const tb = svgEl('text', { x: cxs[0] - 5.4 * d, y: yU - 14, 'text-anchor': 'start' }, gB); tb.textContent = T.umbral.etiqueta || (T.umbral.n + ' para aprobar');
+      GRID.g = gB;
+      const et = document.getElementById('barras-et'), nums = et.querySelectorAll('.num');
+      nums[0].textContent = T.cuentas.favor; nums[1].textContent = T.cuentas.contra; nums[2].textContent = T.cuentas.ausente + T.cuentas.licencia;
+      et.style.top = (base + 24) + 'px';
+    }
+    // el sello y las cuentas, debajo del hemiciclo
+    const sello = document.getElementById('sello');
+    sello.querySelector('b').textContent = T.resultado && !T.resultado.aprobada ? 'No alcanzó' : 'Aprobada';
+    if (T.resultado && !T.resultado.aprobada) sello.classList.add('no');
+    sello.style.top = (L.cy - 0.62 * L.R) + 'px';   // un sello sobre la banda de asientos, con su fondo
+    document.getElementById('cuentas').style.top = (L.cy + 46) + 'px';
+    document.getElementById('ficha').style.top = (L.cy + 70) + 'px';
+    if (!T.resultado) sello.style.display = 'none';
+  } else {
+    // GANCHO: la foto a sangre (antes del velo), el círculo con el hemiciclo y el texto
+    const sangre = document.getElementById('sangre');
+    const grano = getComputedStyle(document.body, '::before').backgroundImage;
+    sangre.querySelector('.grano').style.backgroundImage = grano;
+    if (T.foto) { IMG = new Image(); IMG.src = T.foto; await IMG.decode().catch(() => { throw new Error('no carga la foto ' + T.foto); }); sangre.insertBefore(IMG, sangre.firstChild); }
+    const C0 = F45 ? { x: 690, y: 330, r: 150 } : { x: 680, y: 520, r: 190 };
+    const circ = document.getElementById('circulo');
+    Object.assign(circ.style, { left: (C0.x - C0.r) + 'px', top: (C0.y - C0.r) + 'px', width: 2 * C0.r + 'px', height: 2 * C0.r + 'px' });
+    const mini = circ.querySelector('svg');
+    mini.setAttribute('width', 2 * C0.r); mini.setAttribute('height', 2 * C0.r);
+    const gm = geometria(C0.r, C0.r * 1.06, C0.r * 0.82);
+    MINI = gm.asientos.map((p, k) => ({ a: T.asientos[k], t: ts[k], el: svgEl('circle', { cx: p.x, cy: p.y, r: 0.42 * gm.s }, mini) }));
+    circ.querySelector('.num').style.top = (C0.r * 1.1) + 'px';
+    const cr = document.getElementById('credito');
+    cr.textContent = T.credito || '';
+    Object.assign(cr.style, { left: (C0.x - 210) + 'px', width: '420px', top: (C0.y + C0.r + 14) + 'px' });
+    document.getElementById('gpant').innerHTML = esc(T.pantalla).replace(/(\d[\d,.]*)/g, '<span class="acento">$1</span>');
+    document.getElementById('glin').innerHTML = (T.linea || []).map((w) => `<span>${esc(w.text)}</span>`).join('');
+    // el portal: el fondo y el hemiciclo de la escena siguiente, recortados por el círculo que se agranda
+    if (T.portal) {
+      const po = document.getElementById('portal'), ps = svgEl('svg', { class: 'hem' }, po);
+      const gp = geometria(L.cx, L.cy, L.R);
+      gp.asientos.forEach((p) => svgEl('circle', { cx: p.x, cy: p.y, r: 0.4 * gp.s, fill: VACIO }, ps));
+      PORTAL = { el: po, c: C0 };
+    }
+    await document.fonts.ready;
+  }
+  // los retratos de los focos, antes de grabar
+  for (const f of T.focos || []) if (f.foto) { f.img = new Image(); f.img.src = f.foto; await f.img.decode().catch(() => { throw new Error('no carga el retrato ' + f.foto); }); }
+  await document.fonts.ready;
+  V.ajustarGolpe(S, F45 ? 300 : 480);
+})();
+
+const subtitulosGancho = (t) => {
+  const vis = new Set([...normal(T.pantalla).split(' '), ...(T.linea || []).map((w) => normal(w.text))].filter(Boolean));
+  V.subtitulos(t, S, TROZOS, { ocultar: (tr) => tr.every((x) => vis.has(normal(x.text))) });
+};
+const pop = (t, a) => (a < 0 ? 1 : t < a ? 0.82 : 1 + 0.55 * (1 - clamp((t - a) / POP)));
+
+function seekGancho(t) {
+  if (IMG) { const p = clamp(t / S.dur); IMG.style.transform = `scale(${(1.05 + 0.08 * p).toFixed(4)}) translate(0, ${(-1.2 * p).toFixed(3)}%)`; }
+  let fav = 0;
+  for (const x of MINI) {
+    const on = x.t < 0 || t >= x.t;
+    x.el.setAttribute('fill', on ? COLOR[x.a.v] : VACIO);
+    if (on && x.a.v === 'f') fav++;
+  }
+  document.querySelector('#circulo .num').textContent = fav;
+  [...document.querySelectorAll('#glin span')].forEach((s, i) => {
+    const w = T.linea[i], dicha = w.dicha && t >= w.start - 0.05 && t < w.start + 0.5;
+    s.classList.toggle('suena', !!dicha);
+  });
+  document.getElementById('circulo').style.transform = `scale(${(0.9 + 0.1 * eo(t / 0.4)).toFixed(4)})`;
+  if (PORTAL && T.portal) {
+    const [a, b] = T.portal, p = prog(t, a, b), r = PORTAL.c.r + p * 2300;
+    PORTAL.el.style.clipPath = t < a ? 'circle(0px at 0 0)' : `circle(${r.toFixed(1)}px at ${PORTAL.c.x}px ${PORTAL.c.y}px)`;
+    const se_va = (1 - prog(t, a, a + 0.25)).toFixed(3);   // el círculo se abre: se vuelve el fondo; el texto del gancho se va con él
+    for (const id of ['circulo', 'gtexto', 'credito']) document.getElementById(id).style.opacity = se_va;
+  }
+  subtitulosGancho(t);
+}
+
+function seekEscena(t) {
+  const enFoco = (T.focos || []).find((f) => t >= f.start && t < f.fin);
+  const bar = T.barras ? prog(t, T.barras.start, T.barras.start + 1.1) : 0;
+  let fav = 0, con = 0, fuera = 0;
+  for (const [k, x] of SEATS.entries()) {
+    const on = x.t < 0 || t >= x.t;
+    if (on) { if (x.a.v === 'f') fav++; else if (x.a.v === 'c') con++; else fuera++; }
+    x.el.setAttribute('fill', on ? COLOR[x.a.v] : VACIO);
+    let op = 1;
+    if (enFoco && !enFoco.asientos.includes(k)) op = 1 - 0.75 * prog(t, enFoco.start, enFoco.start + 0.3);
+    if (bar > 0) {
+      // los asientos vuelan a su columna, escalonados de izquierda a derecha
+      const q = clamp((bar * 1.6) - 0.6 * (k / SEATS.length));
+      const e2 = eo(q), px = x.p.x + (x.q.x - x.p.x) * e2, py = x.p.y + (x.q.y - x.p.y) * e2;
+      x.el.setAttribute('cx', px.toFixed(1)); x.el.setAttribute('cy', py.toFixed(1));
+      x.el.setAttribute('r', (R_SEAT + (0.42 * GRID.d - R_SEAT) * e2).toFixed(2));
+      op = 1;
+    }
+    x.el.setAttribute('opacity', op.toFixed(3));
+    x.el.style.transform = `scale(${pop(t, x.t).toFixed(3)})`;
+  }
+  // la línea del umbral entra cuando la voz dice el número; tras el resultado, late una vez
+  const u = prog(t, T.umbral.start, T.umbral.start + 0.4) * (1 - bar);
+  LINEA.setAttribute('opacity', u.toFixed(3));
+  const sello = document.getElementById('sello');
+  if (T.resultado) {
+    const r = prog(t, T.resultado.start, T.resultado.start + 0.25);
+    sello.style.opacity = (r * (1 - (enFoco ? 1 : 0) * prog(t, enFoco ? enFoco.start : 0, (enFoco ? enFoco.start : 0) + 0.3)) * (1 - bar)).toFixed(3);
+    sello.style.transform = `scale(${(1.35 - 0.35 * r).toFixed(3)}) rotate(-4deg)`;
+  }
+  // las cuentas: suben con los asientos; se apagan en un foco y en las barras
+  const cu = document.getElementById('cuentas');
+  cu.style.opacity = ((1 - (enFoco ? prog(t, enFoco.start, enFoco.start + 0.3) : 0)) * (1 - bar)).toFixed(3);
+  cu.querySelector('#c-favor .num').textContent = fav;
+  cu.querySelector('#c-contra .num').textContent = con;
+  cu.querySelector('#c-fuera .num').textContent = fuera;
+  // el foco: anillos que laten y la ficha (retrato o bancada) unida al asiento por un cordel
+  const ficha = document.getElementById('ficha'), cordel = document.getElementById('cordel');
+  for (const f of T.focos || []) {
+    const a = prog(t, f.start, f.start + 0.3) * (1 - prog(t, f.fin - 0.2, f.fin)), lat = 1 + 0.25 * Math.abs(Math.sin((t - f.start) * 4));
+    f.anillos.forEach((c) => { c.setAttribute('opacity', a.toFixed(3)); c.setAttribute('r', (R_SEAT * 1.9 * lat).toFixed(2)); });
+  }
+  if (enFoco) {
+    if (ficha.dataset.k !== String(T.focos.indexOf(enFoco))) {
+      ficha.dataset.k = String(T.focos.indexOf(enFoco));
+      ficha.className = (enFoco.tipo === 'bancada' ? 'bancada ' : '') + (enFoco.voto === 'contra' ? 'contra' : 'favor');
+      const im = ficha.querySelector('img');
+      if (enFoco.img) im.src = enFoco.img.src;
+      ficha.querySelector('.nom').textContent = enFoco.nombre;
+      ficha.querySelector('.sub').innerHTML = enFoco.tipo === 'bancada'
+        ? `<em>${enFoco.n} ${enFoco.voto === 'contra' ? 'en contra' : 'a favor'}</em>`
+        : `${esc(enFoco.bancada)} · <em>${enFoco.voto === 'contra' ? 'en contra' : 'a favor'}</em>`;
+    }
+    const a = prog(t, enFoco.start + 0.1, enFoco.start + 0.45) * (1 - prog(t, enFoco.fin - 0.2, enFoco.fin));
+    ficha.style.opacity = a.toFixed(3);
+    ficha.style.transform = `translateY(${((1 - a) * 24).toFixed(1)}px)`;
+    if (cordel) {
+      if (enFoco.tipo === 'diputado') {
+        const s = SEATS[enFoco.asientos[0]].p, fr = ficha.querySelector('.foto').getBoundingClientRect();
+        cordel.setAttribute('x1', s.x); cordel.setAttribute('y1', s.y + R_SEAT * 2);
+        cordel.setAttribute('x2', fr.left + fr.width / 2); cordel.setAttribute('y2', fr.top);
+        cordel.style.opacity = (0.7 * a).toFixed(3);
+      } else cordel.style.opacity = 0;
+    }
+  } else {
+    ficha.style.opacity = 0;
+    if (cordel) cordel.style.opacity = 0;
+  }
+  if (GRID.g) {
+    GRID.g.setAttribute('opacity', prog(t, T.barras.start + 0.9, T.barras.start + 1.3).toFixed(3));
+    document.getElementById('barras-et').style.opacity = prog(t, T.barras.start + 1.0, T.barras.start + 1.4).toFixed(3);
+  }
+  // deriva lenta: el hemiciclo nunca queda quieto
+  const k = 1 + 0.018 * clamp(t / S.dur);
+  document.getElementById('lienzo').setAttribute('transform', `translate(${L.cx} ${L.cy}) scale(${k.toFixed(4)}) translate(${-L.cx} ${-L.cy})`);
+  V.subtitulos(t, S, TROZOS);
+}
+
+window.seek = (t) => {
+  V.seekGolpe(t, S);
+  V.seekProgreso(t, n, S.dur);
+  if (T.modo === 'gancho') seekGancho(t); else seekEscena(t);
+};
+</script>
+</body></html>

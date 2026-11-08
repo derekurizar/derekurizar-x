@@ -14,10 +14,10 @@
      "etiqueta": "Septiembre"
     }
    },
-   "pantalla": "De 26 a 46.1",
+   "pantalla": "Diésel: 26 a 46.1",
    "linea": "quetzales por galón de diésel",
    "verbo": "costaba",
-   "texto": "En enero, el diésel costaba 26 quetzales. Pero en septiembre, Guatemala pagó 46.1.",
+   "texto": "El galón de diésel costaba 26 quetzales. Guatemala pagó 46.1.",
    "promesa_sugerida": "Un vecino paga todavía más.",
    "por_que": "Contraste esperado → real con las dos cifras en pantalla y dos bloques que crecen: se entiende en silencio (Kallaway; CHI 2016).",
    "forma_sugerida": "secreto"
@@ -27,7 +27,7 @@
    "familia": "resultado",
    "visual": "cifra",
    "calculo": "pre-c03/pre-c02",
-   "pantalla": "×1.8",
+   "pantalla": "Diésel ×1.8",
    "linea": "lo de enero, por galón de diésel",
    "verbo": "cuesta",
    "texto": "El diésel cuesta 1.8 veces lo de enero. Así quedó Guatemala en septiembre.",
@@ -42,7 +42,7 @@
    "pantalla": "¿Cuánto subió?",
    "linea": "el diésel en Guatemala desde enero",
    "verbo": "subió",
-   "texto": "¿Cuánto subió el diésel en Guatemala desde enero? De 26 a 46.1 quetzales el galón.",
+   "texto": "¿Cuánto subió el diésel en Guatemala desde enero? De 26 a 46.1.",
    "promesa_sugerida": "No somos los que más pagan en la región.",
    "por_que": "Pregunta que se contesta en el mismo gancho: abre la brecha y la cierra antes de 6 s (Brod 2019).",
    "forma_sugerida": "contradiccion"
@@ -56,10 +56,10 @@
     "total": "pre-c03",
     "unidad": "quetzales"
    },
-   "pantalla": "26 → 46.1",
+   "pantalla": "Diésel 26 → 46.1",
    "linea": "quetzales por tu galón de diésel",
    "verbo": "costaba",
-   "texto": "Tu galón de diésel costaba 26 quetzales. En septiembre, Guatemala pagó 46.1.",
+   "texto": "Tu galón de diésel costaba 26 quetzales. Guatemala pagó 46.1.",
    "promesa_sugerida": "Hay un vecino que paga todavía más.",
    "por_que": "Segunda persona con el gasto propio y un contenedor que se desborda: la cifra a escala de tu bolsillo.",
    "forma_sugerida": "secreto"
@@ -79,9 +79,9 @@
     }
    },
    "pantalla": "México cobra más",
-   "linea": "5.9 contra 4.85 dólares el galón",
+   "linea": "5.9 contra 4.85 por galón",
    "verbo": "cobra",
-   "texto": "México cobra más que Guatemala por el diésel. Son 5.9 dólares contra 4.85.",
+   "texto": "México cobra más por el galón. Son 5.9 contra 4.85.",
    "promesa_sugerida": "El promedio esconde lo que paga cada conductor.",
    "por_que": "Choca con lo que se cree (que aquí se paga más) y las dos cifras van en pantalla.",
    "forma_sugerida": "contradiccion"

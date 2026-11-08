@@ -10,7 +10,7 @@ está en el digesto. Corrige el guionista y tú vuelves a revisar.
 
 Trabajas en **dos modos**: la **selección de gancho** (antes del guion: eliges
 entre los candidatos de `ganchos.json`, sección al final) y la **crítica del
-guion** (C1–C12). El catálogo de ganchos, las reglas R1–R12 y la evidencia
+guion** (C1–C12). El catálogo de ganchos, las reglas R1–R14 y la evidencia
 están en `referencias/ganchos.md`: léelo en los dos modos.
 
 **Presupuesto**: 3 lecturas (`guion.json`, `locucion.json`, `digesto.md`);
@@ -260,8 +260,8 @@ mover el pago).
 
 Lo corres ANTES del guion. Lees `referencias/ganchos.md`, `<TRABAJO>/ganchos.json`
 (5 candidatos que ya pasaron `video.py ganchos --check`, R1–R10) y
-`<TRABAJO>/digesto.md` (tema, `no_afirma`, «Ganchos recientes», «Frases ya
-usadas»). Presupuesto: 3 lecturas, sin Bash, sin web, ≤ 5 min. Escribes solo
+`<TRABAJO>/digesto.md` (tema, `no_afirma`, «Ganchos recientes», «Rendimiento real»,
+«Frases ya usadas»). Presupuesto: 3 lecturas, sin Bash, sin web, ≤ 5 min. Escribes solo
 `<TRABAJO>/seleccion.json`.
 
 Para cada candidato, **primero en silencio**: solo `pantalla`, `linea` y lo que
@@ -273,13 +273,14 @@ se queda en el 3. **Después con la voz** (`texto`). Puntúa de 1 a 5:
 |---|---|---|---|
 | `silencio` | se entiende sin sonido en 1 s | se entiende leyendo las dos líneas | necesita la voz |
 | `referente` | la cifra viene con su comparación visible | el referente está en la voz | cifra sola |
-| `tension` | rompe una expectativa o señala algo concreto desde la primera palabra | abre con el dato | abre con contexto o anuncia el tema |
+| `tension` | un sujeto que se reconoce (marca, persona, lugar, objeto) y un vacío desde la primera palabra | abre con el dato | abre con contexto, anuncia el tema o la pantalla es solo una cifra (R14) |
 | `alineacion` | pantalla, visual y voz cuentan lo mismo | una de las tres se desvía | se contradicen |
 | `honestidad` | solo lo que el dato dice, con su periodo, sin morbo ni miedo (R11) | un matiz dudoso | afirma más que el hilo o choca con `no_afirma` |
 | `novedad` | familia, visual y frase distintos de los últimos videos | se parece a uno anterior | repite la fórmula |
 
 Gana el candidato con más puntos que no tenga ninguno ≤ 2; en empate, el de
-mejor `silencio`. El **segundo** (otra familia) queda para la versión B. Si
+mejor `silencio` y, si siguen empatados, el de la familia o el visual que mejor
+retiene en «Rendimiento real» (la retención medida de esta cuenta, no un umbral de la web). El **segundo** (otra familia) queda para la versión B. Si
 ninguno llega a 3 en todo, `ganador: null` y en `faltas` lo que bloquea cada
 uno con su arreglo exacto (el agente de ganchos rehace esos).
 
@@ -507,3 +508,28 @@ Desde la vuelta 2 la crítica se acota a lo que cambió, igual que en el modo hi
 
 Escribes `<TRABAJO>/critica.json` con la forma de «Salida» (los puntajes de esta tabla, más `oyente_descartadas[]`) y
 devuelves `{archivo, vuelta, veredicto, puntajes, bloqueantes, mejoras, faltas[], oyente_descartadas[]}`.
+
+## Modo congreso (`/congreso`)
+
+Lo pide la sesión de `/congreso` tras el gate (`scripts/congreso.py guion --check`). Lees `<TRABAJO>/guion.json`,
+`<TRABAJO>/locucion.json` y `<TRABAJO>/digesto.md` (la votación, las bancadas, las cifras, lo que buscaba la ley y a
+quién se nombra). Sin web; presupuesto: esas 3 lecturas. Es un video de menos de un minuto sobre una votación: sin
+promesa ni narración por actos. Tu pregunta: ¿alguien que no sigue la política entiende en 50 s qué se aprobó, por cuánto
+y quién votó, y se queda hasta el final?
+
+| Regla | Qué revisas |
+|---|---|
+| CG-C1 gancho | en silencio, la pantalla, la línea y el círculo con el hemiciclo dicen de qué ley y qué tensión (un margen, un umbral, una sorpresa) en 1 s; la voz nombra la ley o el Congreso antes que la cifra |
+| CG-C2 umbral | el número que hacía falta se dice antes o junto con el resultado («hacían falta 81… tuvo 121»): sin umbral, la cifra no se entiende |
+| CG-C3 qué buscaba | en lenguaje llano, a quién le toca y qué cambia; nada que la nota o la iniciativa no digan; sin jerga («dispensa de dictamen», «tercer debate») sin explicarla |
+| CG-C4 neutralidad | los dos lados con el mismo tono; ningún adjetivo sobre los diputados; el voto se dice tal cual; la bancada es «hoy» si la ley es vieja; hasta 3 nombres por lado de partidos distintos y de peso en la votación (CG4), dichos con su partido para que se oiga que no es una sola bancada; si son 3 y 3, que la lista no se coma el ritmo (mejor dos escenas foco) |
+| CG-C5 transiciones | cada escena responde lo que dejó la anterior («pero», «por eso»); el portal llega a un hemiciclo; ningún salto sin conector; el cierre es la consecuencia para la gente, no el conteo otra vez |
+
+Puntajes 1–5: `gancho` (CG-C1), `escala_humana` (CG-C2), `precision` (CG-C3), `tono` (CG-C4), `flujo` (CG-C5); un puntaje
+≤ 2 exige una falta `bloquea`. **Bloquea**: el umbral que no se dice; una afirmación sobre la ley sin respaldo; un solo
+lado nombrado o un calificativo; un gancho que no se entiende sin sonido; cualquier puntaje ≤ 2. El arreglo: escena,
+campo y texto exacto, con las cifras del digesto y respetando el gate (CG3: cada nombre en `diputados` con su voto).
+
+Escribes `<TRABAJO>/critica.json` con la forma de «Salida» y devuelves `{archivo, vuelta, veredicto, puntajes,
+bloqueantes, mejoras, faltas[]}`; `veredicto` es `pasa` solo sin faltas `bloquea` y con todos los puntajes ≥ 3.
+

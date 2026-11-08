@@ -1,0 +1,131 @@
+{
+ "contexto_superior": "Ley de Ciberseguridad · Congreso",
+ "escenas": [
+  {
+   "tipo": "gancho",
+   "familia": "contraste",
+   "visual": "foto",
+   "visual_datos": {
+    "foto": "ley-f02",
+    "etiqueta": "Congreso · 3 nov 2026"
+   },
+   "mini": "urgencia",
+   "pantalla": "Pasó por 2 votos",
+   "linea": "la urgencia de esta ley en el Congreso",
+   "verbo": "pasó",
+   "texto": "En el Congreso, la urgencia de esta ley pasó por 2 votos.",
+   "calculo": "cg-c09-cg-c11"
+  },
+  {
+   "tipo": "hemiciclo",
+   "votacion": "urgencia",
+   "fases": [
+    "llenar",
+    "umbral"
+   ],
+   "golpe": "Dos tercios: 107",
+   "texto": "En Guatemala, declarar urgente una ley pide 107 votos, dos tercios del Congreso. Esta tuvo 109, y 10 en contra."
+  },
+  {
+   "tipo": "golpe",
+   "afirma": [
+    0,
+    1
+   ],
+   "pantalla": "Fiscalía de ciberdelitos",
+   "linea": "y un consejo que preside el presidente",
+   "verbo": "crea",
+   "texto": "Crea una fiscalía de ciberdelitos y un consejo que preside el presidente de la República."
+  },
+  {
+   "tipo": "hemiciclo",
+   "votacion": "decisiva",
+   "fases": [
+    "foco"
+   ],
+   "golpe": "Quién votó en contra",
+   "focos": [
+    {
+     "bancada": "VAMOS",
+     "voto": "contra"
+    },
+    {
+     "diputado": "Allan Estuardo Rodríguez Reyes"
+    }
+   ],
+   "diputados": [
+    {
+     "nombre": "Allan Estuardo Rodríguez Reyes",
+     "voto": "contra"
+    },
+    {
+     "nombre": "Martín Nicolás Segundo",
+     "voto": "contra"
+    }
+   ],
+   "texto": "En la votación final bastaban 81 votos. En contra votaron 10: 7 de Vamos, como Allan Rodríguez, y de la UNE, Martín Nicolás."
+  },
+  {
+   "tipo": "hemiciclo",
+   "votacion": "decisiva",
+   "fases": [
+    "foco"
+   ],
+   "golpe": "Quién la aprobó",
+   "focos": [
+    {
+     "diputado": "Luis Alberto Contreras Colíndres"
+    },
+    {
+     "diputado": "Mirna Victoria Godoy Palala"
+    }
+   ],
+   "diputados": [
+    {
+     "nombre": "Luis Alberto Contreras Colíndres",
+     "voto": "favor"
+    },
+    {
+     "nombre": "Mirna Victoria Godoy Palala",
+     "voto": "favor"
+    },
+    {
+     "nombre": "Karla Betzaida Cardona Arreaga",
+     "voto": "favor"
+    }
+   ],
+   "enlace": "pero",
+   "texto": "Pero la aprobaron 121 diputados: el presidente del Congreso, Luis Contreras; Mirna Godoy, de Semilla, y Karla Cardona, de la UNE."
+  },
+  {
+   "tipo": "golpe",
+   "afirma": [
+    2
+   ],
+   "estado": true,
+   "enlace": "por_eso",
+   "pantalla": "4 a 6 años",
+   "linea": "por entrar sin permiso a un sistema",
+   "verbo": "costará",
+   "texto": "Por eso, en cuanto rija, entrar sin permiso a un sistema costará de 4 a 6 años de cárcel."
+  }
+ ],
+ "cierre": {
+  "texto": "Las víctimas de un ciberdelito ya tienen una fiscalía propia.",
+  "final": "Las víctimas de un ciberdelito ya tienen una fiscalía propia.",
+  "resumen": [],
+  "tipo": "remate",
+  "forma": "consecuencia",
+  "consecuencia": {
+   "mecanismo": "quien",
+   "quien": "víctimas",
+   "verbo": "tienen"
+  }
+ },
+ "caption": {
+  "tiktok": "La Ley de Ciberseguridad necesitaba 107 votos para pasar de urgencia. Tuvo 109. Quién votó a favor y quién en contra, con el registro oficial del Congreso. #Guatemala #Congreso #Ciberseguridad",
+  "instagram": "Ley de Ciberseguridad: 109 votos cuando hacían falta 107 para declararla de urgencia. Así votó el Congreso de Guatemala, según el registro nominal oficial. #Guatemala #Congreso",
+  "facebook": "El Congreso aprobó la Ley Marco de Ciberseguridad con 121 votos. La urgencia nacional pasó con 109, dos más de los 107 que pedía. ¿Qué cambia y quién votó en contra?",
+  "shorts": "Ley de Ciberseguridad: pasó por 2 votos\nAsí votó el Congreso de Guatemala la urgencia nacional. #Shorts #Guatemala"
+ }
+}

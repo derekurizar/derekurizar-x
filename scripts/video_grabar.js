@@ -29,7 +29,10 @@
  * `--portadas <json>`: [{nombre, n, t, archivo} | {nombre, pagina: "portada", archivo}] → un PNG por entrada, la escena en t
  * con `&portada=1` (sin subtítulos ni barra de progreso) o video/portada.html (portada de texto). No graba clips.
  *
- * Salida: 0 ok · 1 error de página o de ffmpeg · 2 uso incorrecto · 3 V13 (algo visible fuera de la zona segura).
+ * A2: en esos mismos cuadros, una escena explica no muestra un paso antes de que la voz lo diga (window.__anticipo).
+ * A3: y en cualquier página, nada se dibuja sobre la columna del rótulo de acto mientras se ve (V.medirActo).
+ *
+ * Salida: 0 ok · 1 error de página o de ffmpeg · 2 uso incorrecto · 3 V13, A2 o A3 (fuera de la zona segura; paso adelantado; algo encima del rótulo de acto).
  */
 const path = require("path");
 const fs = require("fs");
@@ -86,7 +89,8 @@ function servir(o, ruta) {
   else if (/^iconos\/[a-z0-9-]+\.svg$/.test(nombre)) archivo = path.join(RAIZ, "design", nombre);   // biblioteca fija de iconos
   else if (/^animaciones\/[a-z0-9-]+\.js$/.test(nombre)) archivo = path.join(RAIZ, "video", nombre);   // animaciones de la escena explica
   else if (/^fotos\/[a-z0-9_-]+\.(jpg|png|webp)$/.test(nombre)) archivo = path.join(o.dir, nombre);   // fotos de /noticias y /historia (TRABAJO/fotos/)
-  else if (["escena.html", "golpe.html", "gancho.html", "cierre.html", "mapa.html", "ranking.html", "escala.html", "tiempo.html", "portada.html", "explica.html", "noticia.html", "historia.html", "cuenta.html", "comun.js", "comun.css", "animar.js", "vertical.css"].includes(nombre)) archivo = path.join(RAIZ, "video", nombre);
+  else if (/^tomas\/[a-z0-9-]+\/\d{5}\.jpg$/.test(nombre)) archivo = path.join(o.dir, nombre);   // cuadros de las tomas de video de /historia (TRABAJO/tomas/<id>/)
+  else if (["escena.html", "golpe.html", "gancho.html", "cierre.html", "mapa.html", "ranking.html", "escala.html", "tiempo.html", "portada.html", "explica.html", "noticia.html", "historia.html", "cuenta.html", "hemiciclo.html", "red.html", "comun.js", "comun.css", "animar.js", "vertical.css"].includes(nombre)) archivo = path.join(RAIZ, "video", nombre);
   else if (nombre === "escenas.json") archivo = path.join(o.dir, nombre);
   if (!archivo || !fs.existsSync(archivo)) return null;
   return { tipo: TIPOS[path.extname(archivo)] || "application/octet-stream", cuerpo: fs.readFileSync(archivo) };
@@ -125,6 +129,18 @@ async function medirZona(page, t, zona) {
     if (!prev) zona.set(k, { ...f, t: +t.toFixed(2) });
     else prev.caja = [Math.min(prev.caja[0], f.caja[0]), Math.min(prev.caja[1], f.caja[1]), Math.max(prev.caja[2], f.caja[2]), Math.max(prev.caja[3], f.caja[3])];
   }
+  // A2 (escena explica): un paso visible antes de que la voz lo diga (video/explica.html, window.__anticipo)
+  for (const a of await page.evaluate((t) => (window.__anticipo ? window.__anticipo(t) : []), t)) {
+    const k = "A2 · " + a.paso;
+    if (!zona.has(k)) zona.set(k, { gate: "A2", que: a.paso, t: +t.toFixed(2), caja: [0, 0, 0, 0],
+      regla: `se ve (opacidad ${a.opacidad}) antes de que la voz lo diga (${a.start} s): ni completo ni fantasma` });
+  }
+  // A3 (toda página con rótulo de acto): nada de la escena se dibuja sobre la columna del rótulo mientras se ve
+  for (const a of await page.evaluate(() => (V.medirActo ? V.medirActo() : []))) {
+    const k = "A3 · " + a.que;
+    if (!zona.has(k)) zona.set(k, { gate: "A3", que: a.que, t: +t.toFixed(2), caja: a.caja,
+      regla: "se dibuja encima del rótulo de acto (el año y su riel): la escena entra cuando el rótulo se va" });
+  }
 }
 
 // graba una escena cuadro a cuadro en la página dada → la línea de resumen, o null si hubo error; mide V13 en `zona`
@@ -145,11 +161,15 @@ async function grabarEscena(page, o, e, F45, CLIPS, errores, zona) {
     "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "16", "-preset", "medium", "-r", String(o.fps), salida],
     { stdio: ["pipe", "inherit", "inherit"] });
   const cerrado = new Promise((r) => ff.on("close", r));
+  try {
   for (let i = 0; i < n; i++) {
     await page.evaluate((t) => window.seek(t), i / o.fps);
     if (i % cada === 0 || i === n - 1) await medirZona(page, i / o.fps, zona);
-    ff.stdin.write(await page.screenshot({ type: "png" }));
+    const t0 = Date.now();
+    ff.stdin.write(await page.screenshot({ type: "png", timeout: 120000 }));   // con la máquina cargada, 30 s no alcanzan
+    if (process.env.GRABAR_DEBUG && Date.now() - t0 > 2000) console.error(`e${e.n} cuadro ${i} (t ${(i / o.fps).toFixed(2)} s): ${Date.now() - t0} ms`);
   }
+  } catch (err) { ff.kill("SIGKILL"); throw err; }   // un cuadro que se cuelga: sin ffmpeg huérfano; el trabajador reintenta
   ff.stdin.end();
   const codigo = await cerrado;
   if (codigo) errores.push(`ffmpeg salió con ${codigo} en e${e.n}`);
@@ -184,12 +204,26 @@ async function grabarEscena(page, o, e, F45, CLIPS, errores, zona) {
   const zonas = new Map(cola.map((e) => [e.n, new Map()]));
   let k = 0;
   // N trabajadores toman escenas de la cola en orden; al primer error, los demás dejan de tomar
+  // una escena que se cuelga (page.screenshot sin respuesta, intermitente con la máquina cargada) se reintenta en una
+  // página nueva hasta REINTENTOS veces; el resultado es el mismo (seek(t) es puro)
+  const REINTENTOS = 2;
   const trabajador = async () => {
-    const page = await prepararPagina(browser, o, F45, errores);
+    let page = await prepararPagina(browser, o, F45, errores);
     while (k < cola.length && !errores.length) {
       const e = cola[k++];
-      const linea = await grabarEscena(page, o, e, F45, CLIPS, errores, zonas.get(e.n));
-      if (linea) lineas.set(e.n, linea);
+      for (let intento = 0; ; intento++) {
+        try {
+          const linea = await grabarEscena(page, o, e, F45, CLIPS, errores, zonas.get(e.n));
+          if (linea) lineas.set(e.n, linea);
+          break;
+        } catch (err) {
+          if (intento >= REINTENTOS) throw err;
+          console.error(`e${e.n}: ${String(err.message || err).split("\n")[0]} · reintento ${intento + 1}/${REINTENTOS}`);
+          await page.close().catch(() => {});
+          zonas.set(e.n, new Map());
+          page = await prepararPagina(browser, o, F45, errores);
+        }
+      }
     }
     await page.close();
   };
@@ -204,7 +238,9 @@ async function grabarEscena(page, o, e, F45, CLIPS, errores, zona) {
   let malas = 0;
   for (const s of informe) for (const f of s.fallas) {
     malas++;
-    console.error(`FALLA V13 e${s.n} (${s.tipo}, t ${f.t} s): «${f.que}» x ${f.caja[0]}–${f.caja[2]}, y ${f.caja[1]}–${f.caja[3]}: ${f.regla}`);
+    if (f.gate === "A2") console.error(`FALLA A2 e${s.n} (${s.tipo}, t ${f.t} s): paso «${f.que}» ${f.regla}`);
+    else if (f.gate === "A3") console.error(`FALLA A3 e${s.n} (${s.tipo}, t ${f.t} s): ${f.que} ${f.regla} [${f.caja}]`);
+    else console.error(`FALLA V13 e${s.n} (${s.tipo}, t ${f.t} s): «${f.que}» x ${f.caja[0]}–${f.caja[2]}, y ${f.caja[1]}–${f.caja[3]}: ${f.regla}`);
   }
   if (malas) process.exit(3);
   console.log(`V13 zona segura ok (${o.formato}, ${cola.length} escenas)`);

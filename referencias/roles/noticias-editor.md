@@ -35,8 +35,9 @@ verificas nada nuevo: solo usas lo que trae el digesto.
   foto (N7); una de referencia (`origen: "referencia"`) se queda con su crédito «Foto de referencia: …» y la voz no la
   describe como si fuera del hecho.
 - **Cierre**: `rotulo` «Hoy en Guatemala», `resumen` con 3–4 líneas ≤ 32 caracteres (una por noticia), `texto` 30–85
-  caracteres que termina en `final` (≤ 10 palabras: un remate que invita a volver mañana, sin «comenta», «comparte»
-  ni «sígueme»: «Sígueme en» va solo en pantalla).
+  caracteres que termina en `final` (≤ 10 palabras: un remate con lo que hoy le pasa a Guatemala, sin despedirte ni anunciar que se acabó
+  («Eso fue lo más importante de hoy», «Mañana te cuento»: N8/F9, ahí se iba la gente), sin «comenta», «comparte» ni
+  «sígueme»: «Sígueme en» va solo en pantalla).
 - **Captions** de las cuatro plataformas (`tiktok`, `instagram`, `facebook`, `shorts`; la primera línea de `shorts`
   ≤ 100 caracteres con `#Shorts`). Sus números también necesitan cita. En facebook, «Fuentes en el primer comentario».
 - Cada número de la voz, la pantalla y los captions está en una cita de esa noticia (N4); nada que el digesto no diga.

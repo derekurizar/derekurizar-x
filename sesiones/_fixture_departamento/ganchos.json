@@ -8,7 +8,7 @@
     "depto": "GT13",
     "etiqueta": "N.º 5 de 22 en pobreza"
    },
-   "pantalla": "N.º 5 de 22",
+   "pantalla": "Huehuetenango: 5 de 22",
    "linea": "en pobreza: Huehuetenango",
    "verbo": "es",
    "texto": "Huehuetenango es el quinto en pobreza de Guatemala.",
@@ -32,10 +32,10 @@
      "etiqueta": "Huehuetenango"
     }
    },
-   "pantalla": "56% → 73.8%",
+   "pantalla": "Pobreza 56% → 73.8%",
    "linea": "de pobreza: país y Huehuetenango",
    "verbo": "tiene",
-   "texto": "Guatemala tiene 56% de pobreza. Huehuetenango, 73.8.",
+   "texto": "El país tiene 56% de pobreza. Huehue, 73.8.",
    "promesa_sugerida": "¿En qué le va mejor que al país?",
    "forma_sugerida": "pregunta",
    "por_que": "Contraste con las dos cifras."
@@ -44,10 +44,10 @@
    "id": "g3",
    "familia": "tu",
    "visual": "cifra",
-   "pantalla": "6.1 contra 16.1",
+   "pantalla": "Homicidios 6.1 y 16.1",
    "linea": "homicidios por cada cien mil",
    "verbo": "vives",
-   "texto": "Si eres de Huehuetenango, vives con 6.1 homicidios. Guatemala tiene 16.1.",
+   "texto": "En Huehuetenango vives con 6.1 homicidios. Guatemala tiene 16.1.",
    "promesa_sugerida": "¿Por qué ahí es más pobre?",
    "forma_sugerida": "pregunta",
    "por_que": "Segunda persona con la cifra a favor."
@@ -69,7 +69,7 @@
    "pantalla": "Pobre y tranquilo",
    "linea": "Huehuetenango y Guatemala",
    "verbo": "tiene",
-   "texto": "Huehuetenango tiene 6.1 homicidios. Guatemala, 16.1: pobre y tranquilo.",
+   "texto": "Huehue, pobre y tranquilo, tiene 6.1 homicidios. Guatemala, 16.1.",
    "promesa_sugerida": "¿Qué lo hace distinto?",
    "forma_sugerida": "pregunta",
    "por_que": "Paradoja pobreza y violencia."

@@ -1,0 +1,344 @@
+{
+ "id": "2026-11-03-el-fiambre-de-donde-viene-el-plato-del-dia-de-todos-los-sant",
+ "tipo": "historia",
+ "slug": "el-fiambre-de-donde-viene-el-plato-del-dia-de-todos-los-sant",
+ "tema": "El fiambre: de dónde viene el plato del Día de Todos los Santos",
+ "fecha": "2026-11-03",
+ "pregunta": "¿De dónde viene el fiambre y cómo se volvió el plato que Guatemala come cada 1 de noviembre?",
+ "arco": "origen y misterio: la leyenda que todos cuentan contra lo que dicen los documentos",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "Siglo XVII",
+   "titulo": "Comida de difuntos",
+   "escena": 5
+  },
+  {
+   "numero": 3,
+   "anio": "Siglo XIX",
+   "titulo": "Plato nacional",
+   "escena": 9
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "El fiambre nació, dicen, de una despensa vacía en Guatemala. La halló una monja. Cada 1 de noviembre, las familias lo arman, a veces con más de 40 ingredientes. Detrás de cada plato hay un nombre que nadie ha podido escribir: el de quien lo inventó. La versión de siempre dice que esa monja era la cocinera de Capuchinas, un convento de monjas en Antigua Guatemala: un 1 de noviembre halló la despensa vacía y por eso mezcló lo que tenía en un plato frío. Otra versión lo pone en el siglo XVIII, tras los terremotos de Santa Marta, cuando la escasez obligó a mezclar lo que había. Pero las dos son tradición oral, y ningún documento sostiene la de la monja."
+  },
+  {
+   "acto": 2,
+   "texto": "Entonces la pista hay que buscarla en las crónicas de la colonia, no en el convento. Thomas Gage, fraile y cronista inglés, recorrió Guatemala y terminó su viaje en 1638. Un estudio de la Universidad de San Carlos dice que en sus escritos aparece un plato frío, aunque no lo llama fiambre. Celso Lara Figueroa, folclorista guatemalteco, sostiene que en tiempos de Gage el fiambre ya era la vianda del Día de Difuntos. Lo explica con una costumbre española: honrar a los muertos con comidas frías. Pero el convento guarda una fecha que no cuadra con la leyenda. Las capuchinas llegaron a Guatemala en 1725, casi un siglo después de Gage. Por eso la comida de difuntos sería más vieja que el convento."
+  },
+  {
+   "acto": 3,
+   "texto": "En el siglo XIX, José Milla y Vidaurre, el escritor costumbrista, ya lo llamaba plato nacional y explicó su nombre así: Fiambre, en buen castellano, es un adjetivo que significa el asado o cocido que se ha dejado enfriar para comerlo así. Milla cuenta que la gente sale del cementerio a comerlo la víspera de difuntos. Y el estudio de San Carlos estima que en ese siglo se afianzó como la comida de los muertos. Mucho después, en 2019, el Ministerio de Cultura y Deportes lo declaró patrimonio de la Nación. Pero no fijó una receta: protege los conocimientos y procesos tradicionales de la elaboración. Quién lo inventó nunca se supo. La chef Mirciny Moliviatis lo resume: cada familia tiene su receta. No hay una receta que sea mala, sino que cada familia aprendió de su abuelita. Pero la monja de Capuchinas sigue sin un solo documento que la nombre. Y nadie sabe todavía quién armó el primer fiambre."
+  }
+ ],
+ "hilos": [
+  {
+   "id": "h1",
+   "escena": 8
+  },
+  {
+   "id": "h2",
+   "escena": 7
+  },
+  {
+   "id": "h3",
+   "escena": 9
+  },
+  {
+   "id": "h4",
+   "escena": 10
+  },
+  {
+   "id": "h5",
+   "escena": 11
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3,
+   4
+  ],
+  [
+   5,
+   6,
+   7
+  ],
+  [
+   9,
+   10,
+   11,
+   12
+  ]
+ ],
+ "paleta": "jacaranda",
+ "musica": "jacaranda-1",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2337.0,
+ "duracion_s": 155.1,
+ "critica": {
+  "veredicto": "pasa",
+  "vuelta": 3,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 4,
+   "claridad": 4,
+   "flujo": 4,
+   "precision": 4,
+   "cierre": 4
+  }
+ },
+ "gancho": {
+  "familia": "misterio",
+  "visual": "foto",
+  "pantalla": "La despensa vacía",
+  "linea": "Así dicen que nació el fiambre"
+ },
+ "promesa": {
+  "texto": "Detrás de cada plato hay un nombre que nadie ha podido escribir.",
+  "forma": "secreto",
+  "en": 2,
+  "pago": 12,
+  "revela": 5
+ },
+ "bisagra": {
+  "texto": "Pero el convento guarda una fecha que no cuadra con la leyenda.",
+  "forma": "contradiccion",
+  "en": 8,
+  "pago": 8
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "El fiambre nació, dicen, de una despensa vacía en Guatemala. La halló una monja.",
+   "voz": "El fiambre nació, dicen, de una despensa vacía en Guatemala. La halló una monja.",
+   "dur": 6.829,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Luisfi · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "tarjeta",
+   "pantalla": "Cada 1 de noviembre, las familias lo arman, a veces con más de 40 ingredientes. Detrás de cada plato hay un nombre que nadie ha podido escribir: el de quien lo inventó.",
+   "voz": "Cada primero de noviembre, las familias lo arman, a veces con más de cuarenta ingredientes. Detrás de cada plato hay un nombre que nadie ha podido escribir: el de quien lo inventó.",
+   "dur": 11.212,
+   "hechos": [
+    "pat-h06"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "foto",
+   "pantalla": "La versión de siempre dice que esa monja era la cocinera de Capuchinas, un convento de monjas en Antigua Guatemala: un 1 de noviembre halló la despensa vacía y por eso mezcló lo que tenía en un plato frío.",
+   "voz": "La versión de siempre dice que esa monja era la cocinera de Capuchinas, un convento de monjas en Antigua Guatemala: un primero de noviembre halló la despensa vacía y por eso mezcló lo que tenía en un plato frío.",
+   "dur": 13.603,
+   "hechos": [
+    "trad-h06",
+    "ori-h04"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Greg Willis from Denver, CO, usa · CC BY-SA 2.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 2.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "foto",
+   "pantalla": "Otra versión lo pone en el siglo XVIII, tras los terremotos de Santa Marta, cuando la escasez obligó a mezclar lo que había. Pero las dos son tradición oral, y ningún documento sostiene la de la monja.",
+   "voz": "Otra versión lo pone en el siglo XVIII, tras los terremotos de Santa Marta, cuando la escasez obligó a mezclar lo que había. Pero las dos son tradición oral, y ningún documento sostiene la de la monja.",
+   "dur": 13.274,
+   "hechos": [
+    "trad-h05",
+    "ori-h06",
+    "ori-h05"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Juan José de Jesús Yas y José Domingo… ·",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "golpe",
+   "pantalla": "Entonces la pista hay que buscarla en las crónicas de la colonia, no en el convento.",
+   "voz": "Entonces la pista hay que buscarla en las crónicas de la colonia, no en el convento.",
+   "dur": 5.256,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "explica",
+   "pantalla": "Thomas Gage, fraile y cronista inglés, recorrió Guatemala y terminó su viaje en 1638. Un estudio de la Universidad de San Carlos dice que en sus escritos aparece un plato frío, aunque no lo llama fiambre.",
+   "voz": "Thomas Gage, fraile y cronista inglés, recorrió Guatemala y terminó su viaje en mil seiscientos treinta y ocho. Un estudio de la Universidad de San Carlos dice que en sus escritos aparece un plato frío, aunque no lo llama fiambre.",
+   "dur": 15.031,
+   "hechos": [
+    "ori-h01",
+    "trad-h01"
+   ],
+   "fotos": [],
+   "animacion": "cronologia",
+   "mecanismo": "cronologia"
+  },
+  {
+   "n": 7,
+   "tipo": "foto",
+   "pantalla": "Celso Lara Figueroa, folclorista guatemalteco, sostiene que en tiempos de Gage el fiambre ya era la vianda del Día de Difuntos. Lo explica con una costumbre española: honrar a los muertos con comidas frías.",
+   "voz": "Celso Lara Figueroa, folclorista guatemalteco, sostiene que en tiempos de Gage el fiambre ya era la vianda del Día de Difuntos. Lo explica con una costumbre española: honrar a los muertos con comidas frías.",
+   "dur": 14.216,
+   "hechos": [
+    "trad-h02",
+    "ori-h08"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Luisfi · CC BY-SA 3.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 3.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "foto",
+   "pantalla": "Pero el convento guarda una fecha que no cuadra con la leyenda. Las capuchinas llegaron a Guatemala en 1725, casi un siglo después de Gage. Por eso la comida de difuntos sería más vieja que el convento.",
+   "voz": "Pero el convento guarda una fecha que no cuadra con la leyenda. Las capuchinas llegaron a Guatemala en mil setecientos veinticinco, casi un siglo después de Gage. Por eso la comida de difuntos sería más vieja que el convento.",
+   "dur": 14.42,
+   "hechos": [
+    "ori-h02"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Arnold Genthe · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "cita",
+   "pantalla": "En el siglo XIX, José Milla y Vidaurre, el escritor costumbrista, ya lo llamaba plato nacional y explicó su nombre así: Fiambre, en buen castellano, es un adjetivo que significa el asado o cocido que se ha dejado enfriar para comerlo así.",
+   "voz": "En el siglo XIX, José Milla y Vidaurre, el escritor costumbrista, ya lo llamaba plato nacional y explicó su nombre así: Fiambre, en buen castellano, es un adjetivo que significa el asado o cocido que se ha dejado enfriar para comerlo así.",
+   "dur": 17.087,
+   "hechos": [
+    "ori-h07"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "foto",
+   "pantalla": "Milla cuenta que la gente sale del cementerio a comerlo la víspera de difuntos. Y el estudio de San Carlos estima que en ese siglo se afianzó como la comida de los muertos.",
+   "voz": "Milla cuenta que la gente sale del cementerio a comerlo la víspera de difuntos. Y el estudio de San Carlos estima que en ese siglo se afianzó como la comida de los muertos.",
+   "dur": 10.397,
+   "hechos": [
+    "trad-h08",
+    "trad-h04"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Bernal Rodríguez Ramírez · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "cita",
+   "pantalla": "Mucho después, en 2019, el Ministerio de Cultura y Deportes lo declaró patrimonio de la Nación. Pero no fijó una receta: protege los conocimientos y procesos tradicionales de la elaboración.",
+   "voz": "Mucho después, en dos mil diecinueve, el Ministerio de Cultura y Deportes lo declaró patrimonio de la Nación. Pero no fijó una receta: protege los conocimientos y procesos tradicionales de la elaboración.",
+   "dur": 13.521,
+   "hechos": [
+    "ori-h09",
+    "pat-h03"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "cita",
+   "pantalla": "Quién lo inventó nunca se supo. La chef Mirciny Moliviatis lo resume: cada familia tiene su receta. No hay una receta que sea mala, sino que cada familia aprendió de su abuelita.",
+   "voz": "Quién lo inventó nunca se supo. La chef Mirciny Moliviatis lo resume: cada familia tiene su receta. No hay una receta que sea mala, sino que cada familia aprendió de su abuelita.",
+   "dur": 13.398,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 13,
+   "tipo": "cierre",
+   "pantalla": "Pero la monja de Capuchinas sigue sin un solo documento que la nombre. Y nadie sabe todavía quién armó el primer fiambre.",
+   "voz": "Pero la monja de Capuchinas sigue sin un solo documento que la nombre. Y nadie sabe todavía quién armó el primer fiambre.",
+   "dur": 10.062,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Lo que dejó",
+  "resumen": [
+   "Una leyenda sin documento",
+   "Plato de muertos desde el XIX",
+   "Patrimonio desde 2019"
+  ],
+  "texto": "Pero la monja de Capuchinas sigue sin un solo documento que la nombre. Y nadie sabe todavía quién armó el primer fiambre.",
+  "tipo": "remate",
+  "forma": "pendiente",
+  "final": "Y nadie sabe todavía quién armó el primer fiambre."
+ },
+ "caption": {
+  "tiktok": "¿Una monja inventó el fiambre? La leyenda de Capuchinas, lo que dicen las crónicas y por qué Guatemala lo come cada 1 de noviembre. #fiambre #Guatemala #DiaDeTodosLosSantos",
+  "instagram": "El fiambre: de la leyenda de la monja de Capuchinas a patrimonio de la Nación en 2019. Lo que sí dicen los documentos sobre el plato del 1 de noviembre. #fiambre #Guatemala",
+  "facebook": "¿De dónde viene el fiambre? La leyenda de la monja de Capuchinas, las crónicas del siglo XVII y la declaratoria de 2019. Fuentes en el primer comentario.",
+  "shorts": "El fiambre: ¿lo inventó una monja? #Shorts\nLa leyenda, las crónicas y el patrimonio de Guatemala."
+ }
+}

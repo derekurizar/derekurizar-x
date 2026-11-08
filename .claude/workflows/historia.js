@@ -6,6 +6,7 @@ export const meta = {
     { title: 'Encuadre', detail: 'historia-editor: encuadre.json con la pregunta central, el protagonista, las revelaciones (lo que el video paga y el gancho no dice), fotos_clave (la primera es la imagen del protagonista), el arco, tres actos (planteamiento, nudo, desenlace) con la espina (detonante, punto medio, clímax, resolución), 2–6 hilos (lo que la historia abre), personajes con su presentación, 2–5 periodos que reparten 2–3 ejes de investigación, paleta, no_afirma y lo sensible (justicia); gate historia.py encuadre --check. En desde: encuadre, re-encuadra una cronología ya verificada' },
     { title: 'Investigación', detail: 'un historia-investigador por eje en paralelo: hechos con fecha y cita literal del texto guardado (historia.py leer: HTML, PDF o Wayback), cifras, frases literales y fotos candidatas → hallazgos_<eje>.json' },
     { title: 'Verificación', detail: 'un historia-verificador por eje en cuanto su investigador termina: segunda fuente independiente por hecho; cuatro veredictos (confirmado | una_fuente | en_disputa | no_confirmado) y tipo_hecho (acto | alegato | estimacion | opinion); fechas en conflicto, estado actual de los casos, fotos con licencia (historia.py foto; la og:image de las notas leídas con --de-fuente; la del protagonista con --protagonista) → verificacion_<eje>.json; gate historia.py hechos --check (H1–H3, H7, H12); si ninguna muestra al protagonista, un verificador la baja antes de los ganchos' },
+    { title: 'Reparto', detail: '/serie modo caso: tras consolidar, el editor reparte los ids de hechos, cifras y citas por parte (serie.columna, partes[].tema/hechos/obligatorio, serie.fuera) y pasa serie.py plan --check (SE10–SE11)' },
     { title: 'Ganchos', detail: 'video-gancho en modo historia: consolidar (cronología y base) y 5 candidatos de familias de historia (resultado, paradoja, contraste, misterio, personaje, lugar, pregunta, escala), todos con la foto del protagonista a sangre y sin adelantar una revelación; gate historia.py ganchos --check (R1–R9, H10, H12, H13)' },
     { title: 'Selección', detail: 'video-critico en modo selección: en silencio y con la voz; puntúa silencio, reserva (no regala una revelación), tension, alineacion, honestidad, novedad; ganador y segundo en seleccion.json; si ninguno llega a 3, video-gancho rehace una vez' },
     { title: 'Guion', detail: 'historia-guionista: ganchos --usar → PRIMERO guion.narracion (el texto corrido de cada acto, 320–400 palabras ≈ 150 s; historia.py narracion --check: conectores, ≤ 4 «según», personajes presentados, hilos pagados o declarados) → DESPUÉS las escenas sin cambiar una palabra (acto en cada una, rótulo en la primera de los actos 2 y 3, secuencias de voz, foto, cita, tarjeta, golpe, explica, giro en el nudo, cierre legado, captions); gate historia.py guion --check (H3–H20 + V1–V5, V9, F1–F8) y su línea RETORNO; en retoque aplica las notas del usuario y conserva las voces' },
@@ -23,28 +24,43 @@ export const meta = {
 // scripts/historia.py (los vigila scripts/check_workflows.py, W12). Modo retoque (args.desde = "retoque" + args.notas): las
 // fases 1–5 se saltan y el guionista aplica las notas del usuario sobre el guion aprobado conservando las voces grabadas.
 
-const TIPOS = ['gancho', 'tarjeta', 'golpe', 'definicion', 'adivina', 'mapa', 'ranking', 'escala', 'tiempo', 'explica', 'foto', 'cita', 'capitulo']
+const TIPOS = ['gancho', 'tarjeta', 'golpe', 'definicion', 'adivina', 'mapa', 'ranking', 'escala', 'tiempo', 'explica', 'foto', 'cita', 'capitulo', 'red']
 const FAMILIAS = ['resultado', 'paradoja', 'contraste', 'misterio', 'personaje', 'lugar', 'pregunta', 'escala']
 const VISUALES = ['foto']
 const PUNTAJES = ['gancho', 'tension', 'claridad', 'flujo', 'precision', 'cierre']
 const REGLA_DE = { gancho: 'H-C1', tension: 'H-C2', claridad: 'H-C3', flujo: 'H-C4', precision: 'H-C5', cierre: 'H-C6' }
 const EJES_MIN = 2, EJES_MAX = 3, HECHOS_MIN = 6
-const ACTOS = 3, PERIODOS_MIN = 2, PERIODOS_MAX = 5, HILOS_MIN = 2, HILOS_MAX = 6, PERSONAJES_MAX = 8
+const ACTOS = 3, PERIODOS_MIN = 2, PERIODOS_MAX = 5, HILOS_MIN = 2, HILOS_MAX = 6, PERSONAJES_MAX = 12
 const PALABRAS_MIN = 320, PALABRAS_MAX = 400, SEGUN_MAX = 4   // W12: PALABRAS y SEGUN_MAX_VIDEO de historia.py
+// /serie (scripts/serie.py): la investigación compartida admite más ejes (toda la serie) y cada parte (≈ 90 s) menos palabras
+const EJES_MAX_SERIE = 5, PALABRAS_SERIE_MIN = 190, PALABRAS_SERIE_MAX = 250   // W12: EJES_MAX_SERIE y PALABRAS_SERIE de historia.py
+const PALABRAS_CASO_MIN = 290, PALABRAS_CASO_MAX = 350   // W12: FORMATOS['historia-caso'].PALABRAS de historia.py
 const CANDIDATOS = 5, CIERRES_N = 5, GANCHO_USUARIO = 'gu', DURACION_MAX_S = 180
 const VUELTAS_CRITICA = 2, PUNTAJE_MIN = 3
 
 // ── Argumentos ───────────────────────────────────────────────────────────────
 const A = typeof args === 'string' ? { trabajo: args } : (args || {})
 const trabajo = String(A.trabajo || '').replace(/\/+$/, '')
-if (!/^sesiones\/(historia-[a-z0-9-]+|_fixture_historia\/[a-z0-9_-]+)$/.test(trabajo)) throw new Error('args.trabajo debe ser sesiones/historia-<slug> (la última línea que imprime `python3 scripts/historia.py preparar "<tema>"`).')
+if (!/^sesiones\/(historia-[a-z0-9-]+|serie-[a-z0-9-]+(\/parte-[1-8])?|_fixture_historia\/[a-z0-9_-]+|_fixture_serie\/[a-z0-9_-]+(\/parte-[1-8])?)$/.test(trabajo)) throw new Error('args.trabajo debe ser sesiones/historia-<slug> (la última línea que imprime `python3 scripts/historia.py preparar "<tema>"`) o, en /serie, sesiones/serie-<slug> (la investigación) o sesiones/serie-<slug>/parte-N (una parte).')
 const tema = String(A.tema || '').trim()
 if (!tema) throw new Error('args.tema: el tema de la historia, tal como lo dio el usuario.')
 // desde: "" (todo) · "encuadre" (re-encuadre por actos de una cronología ya verificada → Guion) · "guion" (salta a Guion) ·
 // "retoque" (guion aprobado y con voz: aplica args.notas conservando las voces)
 const DESDE = String(A.desde || '')
-if (!['', 'encuadre', 'guion', 'retoque'].includes(DESDE)) throw new Error('args.desde: "encuadre" (re-encuadrar por actos una cronología verificada), "guion" (saltar al guion) o "retoque" (guion.json aprobado en TRABAJO + args.notas con lo que pidió el usuario).')
-const RETOQUE = DESDE === 'retoque', REENCUADRE = DESDE === 'encuadre', DESDE_GUION = DESDE === 'guion'
+if (!['', 'encuadre', 'ganchos', 'guion', 'retoque'].includes(DESDE)) throw new Error('args.desde: "encuadre" (re-encuadrar por actos una cronología verificada), "ganchos" (/serie: una parte sobre la investigación compartida, salta a los ganchos), "guion" (saltar al guion) o "retoque" (guion.json aprobado en TRABAJO + args.notas con lo que pidió el usuario).')
+const RETOQUE = DESDE === 'retoque', REENCUADRE = DESDE === 'encuadre', DESDE_GUION = DESDE === 'guion', DESDE_GANCHOS = DESDE === 'ganchos'
+// /serie: hasta: "consolidar" = la investigación compartida (encuadre con el plan de partes + verificación) y se detiene;
+// serie = {partes: M} en la investigación o {parte: N, de: M, titulo, siguiente} en una parte
+const HASTA = String(A.hasta || '')
+if (!['', 'consolidar'].includes(HASTA)) throw new Error('args.hasta: "consolidar" (la investigación compartida de /serie) o nada.')
+const SERIE = A.serie && typeof A.serie === 'object' ? A.serie : null
+const PARTE = SERIE && SERIE.parte ? SERIE : null
+if (HASTA && !(SERIE && SERIE.partes)) throw new Error('args.hasta: "consolidar" es de /serie: pasa args.serie = {partes: 3–5 (3–8 con caso: true)}.')
+if (DESDE_GANCHOS && !PARTE) throw new Error('args.desde: "ganchos" es de una parte de /serie: pasa args.serie = {parte, de, titulo, siguiente}.')
+const P_MIN = PARTE ? (PARTE.caso ? PALABRAS_CASO_MIN : PALABRAS_SERIE_MIN) : PALABRAS_MIN, P_MAX = PARTE ? (PARTE.caso ? PALABRAS_CASO_MAX : PALABRAS_SERIE_MAX) : PALABRAS_MAX
+const OBJ_S = PARTE ? 90 : 150
+const EJES_MAX_EF = SERIE && SERIE.partes ? EJES_MAX_SERIE : EJES_MAX
+const MODO_SERIE = SERIE ? ` MODO SERIE (lee «Modo serie» en tu guía y referencias/flujo-serie.md): ${PARTE ? `esta es la PARTE ${PARTE.parte} de ${PARTE.de} («${PARTE.titulo || ''}»), ${PARTE.caso ? '≈ 130 s (115–150; modo caso: cuenta con detalle los hechos que se le repartieron, ≥ 60 % de ellos citados por id en sus escenas, y nada de lo que se reparte a partes siguientes: SE12)' : '≈ 90 s (75–110)'}, contada sola (nada de «como vimos»), solo lo que su periodo cubre; ${PARTE.parte < PARTE.de ? `cierre con forma «puente»: la pregunta que abre la parte ${PARTE.parte + 1} («${(PARTE.siguiente || {}).titulo || ''}»), sin anunciarla en la frase final («en la próxima parte»: P2); DESPUÉS, en cierre.invitacion (aparte de cierre.texto y de la narración), una oración que pide seguir la cuenta y dice qué cuenta la parte ${PARTE.parte + 1}: «Sígueme: en la ${['', '', 'segunda', 'tercera', 'cuarta', 'quinta', 'sexta', 'séptima', 'octava'][PARTE.parte + 1] || ''} parte te cuento …» (SE9: ≤ 18 palabras, sin cifras ni revelaciones); los hilos que siguen abiertos van con pasa_a: ${PARTE.parte + 1}` : 'es la ÚLTIMA: todos los hilos se pagan o se declaran sin respuesta; sin cierre.invitacion'}; captions que abren con «Serie · Parte ${PARTE.parte} de ${PARTE.de}: <título>» y el título de Shorts con «(${PARTE.parte}/${PARTE.de})»${PARTE.parte > 1 ? '; TikTok, Instagram y Facebook llevan además una línea que manda al inicio («¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.»)' : ''} (SE8).` : `la investigación compartida de una serie de ${SERIE.partes} partes.`}` : ''
 const notas = String(A.notas || '').trim()
 // angulo: lo que el usuario pidió para esta historia (el enfoque, el gancho); manda sobre el criterio de cada agente
 const angulo = String(A.angulo || '').trim()
@@ -275,15 +291,19 @@ const directivaEncuadre = REENCUADRE
     `revelaciones (3–5 frases: lo que el video revela y el gancho NO puede decir —la respuesta a la pregunta, de qué está hecho, quién lo hizo, cómo terminó— con sus números tal cual: el gate veta esos dígitos en el gancho), ` +
     `fotos_clave (2–4 imágenes que la historia necesita; la PRIMERA es siempre la del protagonista: el producto, el edificio, la persona), arco (el que le toca a ESTA historia; abierto), ` +
     `${PERIODOS_MIN}–${PERIODOS_MAX} periodos (el reparto de los ejes entre investigadores, cada uno con su pregunta), ${EJES_MIN}–${EJES_MAX} ejes con id de 2–6 letras y sus periodos, paleta del tema, dominios_propios (también el sitio de la marca), no_afirma y sensibles. `
+const directivaPlan = SERIE && SERIE.partes
+  ? ` PLAN DE LA SERIE (SE1, SE2): además escribe en encuadre.json serie = {partes: [${SERIE.partes} × {n, titulo (≤ 6 palabras), pregunta (la que abre esa parte), periodo {desde, hasta} (AAAA o AAAA-MM: los hechos de esa parte; las partes van en orden y no se pisan), actos (3, como arriba pero de la parte), espina (4 puntos de la parte), hilos (2–4 ids de la parte), revelaciones (2–3 que paga ESA parte), puente (la pregunta que deja abierta y abre la parte siguiente; la última: null)}]}. La parte N+1 abre con el puente de la N. Los ejes cubren TODA la serie (hasta ${EJES_MAX_SERIE}). Corre python3 scripts/serie.py plan ${trabajo} --check hasta 0 fallas.`
+    + (SERIE.caso ? ` MODO CASO (/serie … caso; SE10–SE11; lee «Modo caso» en referencias/flujo-serie.md): las partes van por TEMA, no solo por periodo (los periodos pueden pisarse). serie.columna = los temas del caso en orden (cómo se descubrió, cómo cobraban, quiénes eran, la plaza, la caída, el juicio, lo que quedó…); cada parte lleva tema (uno de la columna) y hechos = [los ids de hechos, cifras y citas que cuenta ESA parte, ≥ 8 hechos; un id en una sola parte] y obligatorio = [los que no pueden faltar]; serie.fuera = {id: motivo} para lo que no entra. ≥ 85 % de lo publicable repartido. Las partes duran ≈ 130 s (115–150).` : '')
+  : ''
 const directivaActos = `ACTOS (la espina del documental): actos = exactamente ${ACTOS} {n, nombre: planteamiento | nudo | desenlace, titulo (≤ 4 palabras: es el rótulo), periodo, que_cuenta, termina_en}; ` +
   `espina = {detonante (acto 1), punto_medio (acto 2), climax (acto 2 o 3), resolucion (acto 3)} cada uno {frase, acto, ejes}; hilos = ${HILOS_MIN}–${HILOS_MAX} preguntas que la historia abre y debe pagar o declarar sin respuesta {id: h1…, pregunta, eje}; ` +
-  `personajes = ≤ ${PERSONAJES_MAX} {nombre, alias[], presentacion (≤ 8 palabras: quién es)} sin el protagonista. Corre python3 scripts/historia.py encuadre ${trabajo} --check hasta 0 fallas. ` +
+  `personajes = ≤ ${PERSONAJES_MAX} {nombre, alias[], presentacion (≤ 8 palabras: quién es), tipo (persona|institucion), cargo (≤ 28 caracteres, va en su tarjeta), bando (acusado|investigador|juez|otro)} sin el protagonista: cada persona que la voz nombra necesita retrato (H22). Corre python3 scripts/historia.py encuadre ${trabajo} --check hasta 0 fallas. ` +
   `Retorno: actos (los 3 títulos), espina (las 4 frases), hilos (los ids), personajes (los nombres), periodos (los títulos).`
-if (!RETOQUE && !DESDE_GUION) {
+if (!RETOQUE && !DESDE_GUION && !DESDE_GANCHOS) {
 // ── 1. Encuadre ──────────────────────────────────────────────────────────────
 phase('Encuadre')
 ENC = await conReparacion('Encuadre', (fallos) => agentRol(
-  `Eres el editor de /historia (lee referencias/roles/historia-editor.md). TRABAJO = ${trabajo} · tema: «${tema}». ` + directivaEncuadre + directivaActos +
+  `Eres el editor de /historia (lee referencias/roles/historia-editor.md). TRABAJO = ${trabajo} · tema: «${tema}».${MODO_SERIE} ` + directivaEncuadre + directivaActos + directivaPlan +
     (fallos.length ? ` REPARACIÓN: tu retorno anterior falló: ${fallos.join('; ')}.` : ''),
   { agentType: 'historia-editor', schema: S.encuadre, phase: 'Encuadre', label: REENCUADRE ? 'editor-reencuadre' : 'editor' }),
 (r) => [
@@ -293,7 +313,7 @@ ENC = await conReparacion('Encuadre', (fallos) => agentRol(
   ...(r.hilos.length < HILOS_MIN || r.hilos.length > HILOS_MAX ? [`${r.hilos.length} hilos (van ${HILOS_MIN}–${HILOS_MAX})`] : []),
   ...(r.personajes.length > PERSONAJES_MAX ? [`${r.personajes.length} personajes (van ≤ ${PERSONAJES_MAX})`] : []),
   ...(r.periodos.length < PERIODOS_MIN || r.periodos.length > PERIODOS_MAX ? [`${r.periodos.length} periodos (van ${PERIODOS_MIN}–${PERIODOS_MAX})`] : []),
-  ...(r.ejes.length < EJES_MIN || r.ejes.length > EJES_MAX ? [`${r.ejes.length} ejes (van ${EJES_MIN}–${EJES_MAX})`] : []),
+  ...(r.ejes.length < EJES_MIN || r.ejes.length > EJES_MAX_EF ? [`${r.ejes.length} ejes (van ${EJES_MIN}–${EJES_MAX_EF})`] : []),
   ...(new Set(r.ejes).size !== r.ejes.length ? ['ids de eje repetidos'] : []),
   ...(!r.protagonista.some((x) => x.trim()) ? ['protagonista vacío (el nombre de la marca, la persona o la empresa)'] : []),
   ...(r.revelaciones.length < 3 || r.revelaciones.length > 5 ? [`${r.revelaciones.length} revelaciones (van 3–5: lo que el video paga y el gancho no dice)`] : []),
@@ -302,6 +322,7 @@ ENC = await conReparacion('Encuadre', (fallos) => agentRol(
 log(`Encuadre: «${ENC.pregunta}» · arco ${ENC.arco} · actos ${ENC.actos.join(' / ')} · espina ${ENC.espina.detonante} → ${ENC.espina.punto_medio} → ${ENC.espina.climax} → ${ENC.espina.resolucion} · hilos ${ENC.hilos.join(', ')} · ejes ${ENC.ejes.join(', ')} · paleta ${ENC.paleta}${ENC.justicia ? ' · justicia' : ''}`)
 }
 if (!RETOQUE && !DESDE_GUION && !REENCUADRE) {
+if (!DESDE_GANCHOS) {   // una parte de /serie usa la investigación compartida (ya verificada)
 
 // ── 2–3. Investigación ⇢ Verificación (pipeline por eje) ─────────────────────
 const verificaciones = await pipeline(ENC.ejes,
@@ -318,6 +339,7 @@ const verificaciones = await pipeline(ENC.ejes,
       `${ENC.justicia ? 'Historia de JUSTICIA: cada persona señalada lleva casos[] con su estado a hoy y su fuente. ' : ''}` +
       `Cuatro veredictos: confirmado (2 grupos) · una_fuente (UNA fuente seria sin nada que la contradiga: se narrará llano con la fuente en pantalla) · en_disputa (las fuentes difieren: nota con las dos versiones) · no_confirmado; y tipo_hecho acto | alegato | estimacion | opinion (lo que no es un acto público se atribuye en voz). ` +
       `Fotos: ≥ 2 por eje con python3 scripts/historia.py foto; la del PROTAGONISTA es obligatoria (H12): el digesto marca con * las og:image de tus fuentes que lo nombran, bájalas con historia.py foto ${trabajo} --id ${eje}-fNN --de-fuente <url> --descripcion "…" --protagonista. ` +
+      `Sin tomas de video (retiradas el 2026-11-06): una declaración que importa va como cita literal guardada; el contexto, con fotos. ` +
       `Escribe ${trabajo}/verificacion_${eje}.json (fotos[] con los ids) y corre python3 scripts/historia.py hechos ${trabajo} --check --eje ${eje} hasta 0 fallas. Devuelve también una_fuente (cuántos) y protagonista (cuántas de tus fotos lo muestran).` +
       (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : ''),
     { agentType: 'historia-verificador', schema: S.verificacion, phase: 'Verificación', label: `verifica-${eje}` }),
@@ -340,11 +362,34 @@ if (ver.reduce((s, v) => s + (v.protagonista || 0), 0) === 0) {
     .catch((e) => { avisar(`AVISO: sigue sin foto del protagonista (${String(e.message).split('\n')[0]}); consolidar fallará H12: bájala tú y relanza.`); return null })
   if (F) log(`Foto del protagonista: ${F.protagonista} (eje ${F.eje})`)
 }
+// /serie modo caso: el REPARTO de los ids por parte va DESPUÉS de consolidar (al encuadrar todavía no existen los ids)
+if (HASTA === 'consolidar' && SERIE && SERIE.caso) {
+  phase('Reparto')
+  const REP = await conReparacion('Reparto', (fallos) => agentRol(
+    `MODO CASO · REPARTO (lee «Personajes y modo caso» en referencias/roles/historia-editor.md y «Modo caso» en referencias/flujo-serie.md). TRABAJO = ${trabajo} · «${tema}» en ${SERIE.partes} partes de ≈ 130 s. ` +
+      `La investigación ya está consolidada; no investigues ni cambies hechos: solo reparte. Con python3 scripts/historia.py digesto ${trabajo} --para editor (y --para guionista para cifras y citas) escribe en encuadre.json → serie: ` +
+      `columna (${SERIE.partes} temas en orden, uno por parte); en cada parte tema (de la columna), hechos (ids de hechos, cifras y citas de ESA parte: ≥ 8 hechos, idealmente 12–20 elementos; un id en una sola parte; puede contar en su tema algo que se reveló después) y obligatorio (3–6 ids); ` +
+      `fuera = {id: motivo} para lo que no entra (≥ 85 % de lo publicable repartido o con motivo). Ajusta títulos, preguntas, puentes y revelaciones si no casan con los temas. ` +
+      `Corre python3 scripts/serie.py plan ${trabajo} --check hasta 0 fallas (no apruebes el plan: lo aprueba el usuario). Retorno: {gate: "ok"|"falla", fallas: [], repartido_pct}.` +
+      (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : ''),
+    { agentType: 'historia-editor', phase: 'Reparto', label: 'editor-reparto',
+      schema: { type: 'object', properties: { gate: { type: 'string', enum: ['ok', 'falla'] }, fallas: { type: 'array', items: { type: 'string' } }, repartido_pct: { type: 'number' } }, required: ['gate', 'fallas'] } }),
+  (r) => (r.gate === 'ok' ? [] : (r.fallas.length ? r.fallas : ['serie.py plan --check no pasó'])), 2)
+    .catch((e) => { avisar(`AVISO: el reparto no pasó plan --check (${String(e.message).split('\n')[0]}): repártelo antes de aprobar el plan.`); return null })
+  if (REP) log(`Reparto: ${REP.repartido_pct ?? '?'} % de lo publicable`)
+}
+// /serie: la investigación compartida se detiene aquí; la sesión corre serie.py cobertura --check (consolidar + SE3)
+if (HASTA === 'consolidar') {
+  return { trabajo, tema, veredicto: 'investigada', etapa: 'consolidar', avisos: AVISOS_WF,
+    encuadre: ENC ? { pregunta: ENC.pregunta, arco: ENC.arco, actos: ENC.actos, hilos: ENC.hilos, paleta: ENC.paleta, revelaciones: ENC.revelaciones } : null,
+    verificacion: ver.map((v) => ({ eje: v.eje, confirmados: v.confirmados, una_fuente: v.una_fuente || 0, en_disputa: v.en_disputa, descartados: v.descartados, fotos: v.fotos, protagonista: v.protagonista || 0 })) }
+}
+}
 
 // ── 4. Ganchos (consolidar + candidatos) ─────────────────────────────────────
 phase('Ganchos')
 const invocarGanchos = (fallos, faltasSel) => agentRol(
-  `MODO HISTORIA (lee referencias/ganchos.md y la sección «Modo historia» de referencias/roles/video-gancho.md). TRABAJO = ${trabajo} · «${tema}».${ANGULO}\n` +
+  `MODO HISTORIA (lee referencias/ganchos.md y la sección «Modo historia» de referencias/roles/video-gancho.md). TRABAJO = ${trabajo} · «${tema}».${ANGULO}${MODO_SERIE}\n` +
     `PRIMERO corre python3 scripts/historia.py consolidar ${trabajo} (cronología y base; exit 1 = pocos hechos: devuélvelo en fallas). ` +
     `Lee SOLO python3 scripts/historia.py digesto ${trabajo} --para gancho. Escribe ${trabajo}/ganchos.json con ${CANDIDATOS} candidatos de FAMILIAS DISTINTAS (si la rotación deja menos de 5 familias libres, repite familia con otra pantalla y otro ángulo: el usuario elige entre los 5; ${FAMILIAS.join(', ')}), TODOS con visual foto (la foto verificada a sangre que cubre la pantalla), TODOS nombrando al protagonista del encuadre (H10), cada uno con el momento de la historia (el problema que la hizo nacer, la persona, la decisión) y NUNCA la respuesta que el video paga ni el detalle técnico que explica después (de qué está hecho, cómo terminó), sin lo que bloquea la rotación. ` +
     `Corre python3 scripts/historia.py ganchos ${trabajo} --check hasta exit 0 (≤ 3 intentos).\n` +
@@ -419,7 +464,7 @@ avisar(`Gancho: ${SEL.ganador}${SEL.recomendado && SEL.recomendado !== SEL.ganad
 
 // ── 6. Guion ─────────────────────────────────────────────────────────────────
 phase('Guion')
-const directivaBase = `Eres el guionista de /historia (lee referencias/roles/historia-guionista.md). TRABAJO = ${trabajo} · «${tema}».${ANGULO} ` +
+const directivaBase = `Eres el guionista de /historia (lee referencias/roles/historia-guionista.md). TRABAJO = ${trabajo} · «${tema}».${ANGULO}${MODO_SERIE} ` +
   ((DESDE_GUION || REENCUADRE) ? `PRIMERO corre python3 scripts/historia.py consolidar ${trabajo} (el encuadre cambió: rehace historia.json). ` : '') +
   `Lee SOLO python3 scripts/historia.py digesto ${trabajo} --para guionista. Corre python3 scripts/historia.py guion ${trabajo} --check hasta 0 fallas ` +
   `y devuelve TAL CUAL su última línea RETORNO (tipos trae el tipo de CADA escena en orden, sin el cierre). `
@@ -431,7 +476,7 @@ const directivaGuion = RETOQUE
     `voces_cambiadas: [n de cada escena cuya voz cambió; el cierre es la escena N+1, como en locucion.json]. `
   : directivaBase + `PRIMERO python3 scripts/historia.py ganchos ${trabajo} --usar (el gancho ${SEL.ganador || 'elegido en seleccion.json'} pasa a la escena 1 y NO lo cambias). ` +
     `DESPUÉS escribe la NARRACIÓN: guion.narracion = [{acto: 1, texto}, {acto: 2, texto}, {acto: 3, texto}], el texto corrido de cada acto como lo diría una sola voz ` +
-    `(${PALABRAS_MIN}–${PALABRAS_MAX} palabras en total ≈ 150 s a 145 por minuto; empieza con la voz del gancho tal cual; cada oración sigue de la anterior con un porque, un pero o un entonces; ` +
+    `(${P_MIN}–${P_MAX} palabras en total ≈ ${OBJ_S} s a 145 por minuto; empieza con la voz del gancho tal cual; cada oración sigue de la anterior con un porque, un pero o un entonces; ` +
     `los saltos de tiempo se dicen; cada personaje se presenta la primera vez; cada hilo se paga o se declara sin respuesta; ≤ ${SEGUN_MAX} «según»); mídela con python3 scripts/historia.py narracion ${trabajo} --check hasta 0 fallas. ` +
     `SOLO ENTONCES repártela en escenas SIN cambiar una palabra (H15): acto en cada escena, rotulo {anio, titulo, lugar?} en la primera escena de los actos 2 y 3, ` +
     `secuencias de 2–5 escenas consecutivas del mismo acto (la voz se graba de corrido), escenas foto, cita, tarjeta con grafico, golpe, explica, un giro en el acto 2, ` +
@@ -445,7 +490,7 @@ const validarGuion = (r) => {
     ...(rel(r.archivo) !== `${trabajo}/guion.json` ? [`archivo debe ser ${trabajo}/guion.json`] : []),
     ...(r.tipos[0] !== 'gancho' ? ['la escena 1 es el gancho'] : []),
     ...(r.actos !== ACTOS ? [`${r.actos} actos (van ${ACTOS})`] : []),
-    ...(r.palabras < PALABRAS_MIN - 40 || r.palabras > PALABRAS_MAX + 30 ? [`${r.palabras} palabras de narración (van ${PALABRAS_MIN}–${PALABRAS_MAX})`] : []),
+    ...(r.palabras < P_MIN - 40 || r.palabras > P_MAX + 30 ? [`${r.palabras} palabras de narración (van ${P_MIN}–${P_MAX})`] : []),
     ...(r.segun > SEGUN_MAX ? [`${r.segun} «según» en voz (van ≤ ${SEGUN_MAX})`] : []),
     ...(r.estimado_s > DURACION_MAX_S ? [`${r.estimado_s} s estimados (máximo ${DURACION_MAX_S})`] : []),
     ...(r.tipos.length !== r.escenas ? [`tipos trae ${r.tipos.length} elementos: debe traer el tipo de CADA escena, en orden (${r.escenas})`] : []),
@@ -524,7 +569,7 @@ for (let vuelta = 1; vuelta <= VUELTAS + 1; vuelta++) {
       (O ? `${trabajo}/oyente.json (lo que un oyente que SOLO oyó la voz no entendió: cada confusión y cada salto se resuelve con una falta bloquea de H-C3 ` +
            `—H-C2 si es la promesa— con su arreglo exacto, o se justifica en critica.json → oyente_descartadas[]{escena, motivo}; cada pregunta_sin_responder que coincide con un hilo del encuadre ` +
            `no pagado ni declarado es una falta bloquea de H-C3 con escena null que la cite; las demás las descartas con {escena: null, pregunta: «la pregunta literal», motivo}; sus repeticiones las juzgas tú) y ` : '') +
-      `python3 scripts/historia.py digesto ${trabajo} --para critico (la NARRACIÓN DE CORRIDO, la espina, los hilos, la cronología y las revelaciones). Duración objetivo 150 s (135–165). ` +
+      `python3 scripts/historia.py digesto ${trabajo} --para critico (la NARRACIÓN DE CORRIDO, la espina, los hilos, la cronología y las revelaciones). Duración objetivo ${PARTE ? (PARTE.caso ? '130 s (115–150)' : '90 s (75–110)') : '150 s (135–165)'}.${MODO_SERIE} ` +
       `H-C2: la espina está entera y en orden (detonante cierra el acto 1, punto medio en el 2, clímax y resolución en el 3) y la escena promesa.pago cuenta la revelación promesa.revela; ` +
       `H-C3: cada persona u organización llega presentada y cada hilo se paga o se declara; H-C4 FLUJO (no ritmo): lee la narración de corrido como un texto: ¿una sola voz que cuenta o tarjetas leídas? ` +
       `(bloquea una escena que arranca con un conector hueco, un salto de tiempo o de tema sin decirlo, aperturas repetidas); H-C5: lo una_fuente va con la fuente en pantalla y solo lo en_disputa o de parte se atribuye en voz (≤ ${SEGUN_MAX} «según»); H-C6, legado = gente haciendo algo hoy, no es neutro. ` +

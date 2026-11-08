@@ -1,7 +1,7 @@
 // Animación «embudo-filtro» (semilla de la biblioteca): un embudo vertical de 2–6 bandas apiladas, cada una más
-// angosta que la anterior. Un flujo continuo de partículas cae desde arriba. Mientras una etapa no se enciende, las
-// partículas se acumulan tenues en ella; cuando la voz dice el paso i, su banda se enciende y desde ese momento la etapa
-// descarta una parte (salen por los lados y se desvanecen) y deja bajar al resto. Por la boca salen pocas, en acento.
+// angosta que la anterior. Las partículas esperan quietas en la primera banda; cuando la voz dice el paso i, su banda
+// se enciende, descarta una parte (salen por los lados y se apagan) y deja bajar al resto a la banda siguiente, donde
+// vuelven a esperar. Por la boca salen pocas, en acento. Entre pasos nada se mueve (A1, cámara quieta 2026-11-07).
 // Estilo Noche: partículas y contornos en crema; en acento solo la etapa que suena (trazo y velo) y las pocas que
 // salen por la boca; las etapas ya dichas quedan en crema atenuada. Todo es función de t: cada partícula k nace en un instante fijo y su recorrido (dónde espera, si se descarta) sale de
 // un hash fijo de k y de la etapa, nunca de la ejecución.
@@ -27,55 +27,41 @@ const EMBUDO_AUX = {
     return (x >>> 0) / 4294967296;
   },
 
-  // estado de la partícula k en t: {x, y, o, r, acento} o null
+  // reposo de la partícula k en la banda j (o en la boca con j = n): un lugar fijo dentro de la banda
+  reposo(k, j) {
+    if (j >= this.n) {
+      const y = this.yBoca + 18 + (this.H - 30 - this.yBoca - 18) * this.h(k, 77);
+      return { x: this.cx + (this.h(k, 78) * 2 - 1) * this.wBot * 0.9, y };
+    }
+    const b = this.bandas[j], y = b.y0 + this.bh * (0.22 + 0.6 * this.h(k, j + 10));
+    return { x: this.cx + (this.h(k, 99) * 2 - 1) * 0.8 * this.hw(y), y };
+  },
+
+  // estado de la partícula k en t: {x, y, o, r, acento} o null. Cámara quieta (2026-11-07): las partículas esperan
+  // quietas en su banda; cuando la voz dice el paso j, las de la banda j se mueven (≤ 1.3 s): unas salen por el lado y
+  // se apagan, las demás bajan a la banda siguiente y vuelven a esperar quietas. Nada se mueve entre pasos (A1).
   particula(k, t, T) {
     const { clamp, eo } = this.V, n = this.n, ps = T.pasos;
-    const s = this.s0 + k * this.dt;
-    if (t < s) return null;
-    const u = (this.h(k, 99) * 2 - 1) * 0.8;
-    const xEn = (y) => this.cx + u * this.hw(y);
-    let y = 2, tau = s;
-    const nace = eo((t - s) / 0.3);
+    const nace = eo(clamp((t - T.ini) / 0.5));
     for (let j = 0; j < n; j++) {
-      const b = this.bandas[j];
-      const yd = b.y0 + this.bh * (0.3 + 0.6 * this.h(k, j + 10));
-      const td = tau + (yd - y) / this.v;
-      const st = ps[j] ? ps[j].start : T.fin;
-      if (t < td) {
-        const yy = y + (t - tau) * this.v;
-        return { x: xEn(yy), y: yy, o: 0.85 * nace, r: 7 };
-      }
-      const espera = st > td;
-      const suelta = espera ? st + 0.9 * this.h(k, j + 30) : td;
-      if (t < suelta) {
-        const q = eo((t - td) / 0.4), fase = k * 1.7 + j;
-        return {
-          x: xEn(yd) + 3 * Math.sin(2.3 * t + fase), y: yd + 2.5 * Math.cos(1.9 * t + fase * 0.7),
-          o: (0.85 - 0.5 * q) * nace, r: 7,
-        };
-      }
-      if (this.h(k, j + 50) < this.tasa) {
-        // descartada: sale por el lado más cercano y se desvanece
-        const p = clamp((t - suelta) / 0.9);
+      const st = (ps[j] ? ps[j].start : T.fin) + 0.35 * this.h(k, j + 30), aqui = this.reposo(k, j);
+      const encendida = t >= (ps[j] ? ps[j].start : T.fin);
+      if (t < st) return { x: aqui.x, y: aqui.y, o: (encendida ? 0.85 : 0.5) * nace, r: 7 };
+      if (this.h(k, j + 50) < this.tasa) {   // descartada: sale por el lado más cercano y se apaga
+        const p = clamp((t - st) / 0.9);
         if (p >= 1) return null;
-        const x0 = xEn(yd), lado = u >= 0 ? 1 : -1;
-        const borde = this.hw(yd) - Math.abs(x0 - this.cx);
-        const extra = lado < 0 ? Math.min(70, this.cx - this.hw(yd) - 12) : 16;
-        const vuelve = espera ? 0.4 : 0.85; // la que esperaba sale desde su opacidad tenue
-        return {
-          x: x0 + lado * (borde + extra) * eo(p / 0.85), y: yd + 46 * p * p,
-          o: vuelve * (1 - p) * nace, r: 7 * (1 - 0.3 * p),
-        };
+        const lado = aqui.x >= this.cx ? 1 : -1, borde = this.hw(aqui.y) - Math.abs(aqui.x - this.cx);
+        return { x: aqui.x + lado * (borde + 40) * eo(p), y: aqui.y + 40 * p * p, o: 0.85 * (1 - p), r: 7 * (1 - 0.3 * p) };
       }
-      y = yd; tau = suelta;
+      const p = eo(clamp((t - st) / 0.85));
+      if (p < 1) {
+        const sig = this.reposo(k, j + 1);
+        return { x: aqui.x + (sig.x - aqui.x) * p, y: aqui.y + (sig.y - aqui.y) * p, o: 0.85, r: 7 + (j === n - 1 ? 3 * p : 0), acento: j === n - 1 && p > 0.6 };
+      }
     }
-    // sobreviviente: baja por el cuello y sale por la boca en acento
-    const yy = y + (t - tau) * this.v * 0.45;
-    const fondo = this.H - 14;
-    if (yy > fondo) return null;
-    const q = eo((t - tau) / 0.35);
-    const o = 1 - clamp((yy - (fondo - 70)) / 70);
-    return { x: xEn(Math.min(yy, this.yBoca)), y: yy, o, r: 7 + 5 * q, acento: true };
+    // sobreviviente: queda quieta bajo la boca, en acento
+    const fin = this.reposo(k, n);
+    return { x: fin.x, y: fin.y, o: 1, r: 10, acento: true };
   },
 };
 
@@ -134,8 +120,8 @@ ANIM.registrar('embudo-filtro', {
       stroke: 'color-mix(in srgb, var(--ink) 30%, transparent)', 'stroke-width': 5, 'stroke-linecap': 'round', fill: 'none',
     });
     gB.appendChild(this.cuelloEl);
-    // reserva de partículas (cada partícula k usa el círculo k % M)
-    this.M = 800;
+    // población fija de partículas (cada una con su círculo)
+    this.M = 90;
     this.circ = [];
     for (let i = 0; i < this.M; i++) {
       const c = el('circle', { r: 7, cx: -50, cy: -50 });
@@ -161,13 +147,10 @@ ANIM.registrar('embudo-filtro', {
     });
     // cuánto descarta cada etapa: al final queda ~1 de cada 7
     this.tasa = 1 - Math.pow(0.14, 1 / n);
-    this.v = F45 ? 250 : 280;       // caída, px/s
-    this.dt = 0.035;                // una partícula nueva cada dt
   },
 
   seek(t, T) {
     const { clamp, eo } = this.V, ps = T.pasos, n = this.n;
-    this.s0 = T.ini - 0.6;
     // bandas: contorno tenue desde la entrada; se encienden cuando la voz dice su paso
     const entra = eo((t - T.ini) / 0.5);
     let activo = -1;
@@ -175,7 +158,7 @@ ANIM.registrar('embudo-filtro', {
     this.polis.forEach((pg, i) => {
       const st = ps[i] ? ps[i].start : T.fin, on = eo((t - st) / 0.5);
       const late = i === activo ? Math.sin(Math.PI * clamp((t - st) / 0.6)) : 0;
-      const resp = i === activo ? 0.5 + 0.5 * Math.sin(2.2 * (t - st)) : 0;
+      const resp = 0;
       // la etapa que suena: velo y trazo en acento; las ya dichas: velo crema leve y trazo crema atenuado
       const es = i === activo;
       const relleno = Math.round(on * (es ? 24 + 6 * resp : 8));
@@ -193,18 +176,14 @@ ANIM.registrar('embudo-filtro', {
       d.style.transform = `translateX(${((1 - e) * 24).toFixed(1)}px)`;
     });
     // partículas
-    const kmax = Math.floor((t - this.s0) / this.dt);
-    const usados = new Array(this.M).fill(false);
-    for (let k = Math.max(0, kmax - this.M + 1); k <= kmax; k++) {
-      const e = this.particula(k, t, T), c = this.circ[k % this.M];
-      if (!e || e.o <= 0.01) continue;
-      usados[k % this.M] = true;
+    for (let k = 0; k < this.M; k++) {
+      const e = this.particula(k, t, T), c = this.circ[k];
+      if (!e || e.o <= 0.01) { c.style.display = 'none'; continue; }
       c.style.display = '';
       c.setAttribute('cx', e.x.toFixed(1)); c.setAttribute('cy', e.y.toFixed(1));
       c.setAttribute('r', e.r.toFixed(2));
       c.setAttribute('fill', e.acento ? 'var(--acento)' : 'var(--ink)');
       c.setAttribute('opacity', e.o.toFixed(3));
     }
-    usados.forEach((u, i) => { if (!u) this.circ[i].style.display = 'none'; });
   },
 });

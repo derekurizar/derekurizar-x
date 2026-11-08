@@ -1,0 +1,57 @@
+{
+ "eje": "gt",
+ "afirmaciones": [],
+ "cifras": [
+  {
+   "id": "gt-c01",
+   "concepto": "tasa de interés pasiva promedio ponderado",
+   "texto": "5.3 por ciento",
+   "valor": 5.3,
+   "unidad": "%",
+   "periodo": "2026-09",
+   "estado": "confirmado",
+   "fuentes": [
+    {
+     "medio": "Banguat (maqueta)",
+     "url": "https://www.banguat.gob.gt/maqueta/tasas",
+     "archivo": "sesiones/_fixture_explica/fuentes/gt-1.txt",
+     "cita": "moneda nacional: 5.3 por ciento anual a septiembre de 2026"
+    }
+   ]
+  },
+  {
+   "id": "gt-c02",
+   "concepto": "ritmo inflacionario interanual",
+   "texto": "1.7 por ciento",
+   "valor": 1.7,
+   "unidad": "%",
+   "periodo": "2026-09",
+   "estado": "confirmado",
+   "fuentes": [
+    {
+     "medio": "INE (maqueta)",
+     "url": "https://www.ine.gob.gt/maqueta/ipc",
+     "archivo": "sesiones/_fixture_explica/fuentes/gt-2.txt",
+     "cita": "El ritmo inflacionario interanual se ubicó en 1.7 por ciento"
+    }
+   ]
+  },
+  {
+   "id": "gt-c03",
+   "concepto": "tasa anual promedio de tarjetas de crédito en quetzales",
+   "texto": "36 por ciento",
+   "valor": 36,
+   "unidad": "%",
+   "periodo": "2026-09",
+   "estado": "confirmado",
+   "fuentes": [
+    {
+     "medio": "SIB (maqueta)",
+     "url": "https://www.sib.gob.gt/maqueta/boletin",
+     "archivo": "sesiones/_fixture_explica/fuentes/gt-3.txt",
+     "cita": "en tarjetas de crédito en moneda nacional fue de 36 por ciento"
+    }
+   ]
+  }
+ ]
+}

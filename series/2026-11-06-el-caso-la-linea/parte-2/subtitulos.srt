@@ -1,0 +1,255 @@
+1
+00:00:00,000 --> 00:00:02,135
+Un importador marcaba un número:
+
+2
+00:00:02,617 --> 00:00:03,485
+La Línea.
+
+3
+00:00:03,884 --> 00:00:06,187
+Ahí negociaba cuánto impuesto pagaba en
+
+4
+00:00:06,069 --> 00:00:07,074
+Guatemala.
+
+5
+00:00:07,333 --> 00:00:10,501
+Eso dijo después el MP, la fiscalía:
+
+6
+00:00:10,648 --> 00:00:13,267
+quien llamaba pagaba menos al Estado, pero
+
+7
+00:00:13,222 --> 00:00:14,649
+no se ahorraba todo.
+
+8
+00:00:14,999 --> 00:00:17,006
+Antes de La Línea, la red Moreno, de
+
+9
+00:00:16,899 --> 00:00:19,540
+militares y policías, cobraba por devolver
+
+10
+00:00:19,442 --> 00:00:20,362
+contrabando.
+
+11
+00:00:20,614 --> 00:00:23,054
+Lo dijo un informe de 2003.
+
+12
+00:00:23,474 --> 00:00:26,474
+Años después, en abril de 2015, Iván
+
+13
+00:00:26,376 --> 00:00:28,384
+Velásquez, comisionado colombiano al
+
+14
+00:00:28,318 --> 00:00:30,844
+frente de la CICIG, la comisión de la ONU
+
+15
+00:00:30,746 --> 00:00:33,123
+contra la impunidad, dijo que esa red
+
+16
+00:00:33,078 --> 00:00:34,548
+nunca desapareció:
+
+17
+00:00:35,136 --> 00:00:37,429
+un capturado de La Línea había sido el
+
+18
+00:00:37,353 --> 00:00:40,131
+segundo de su jefe, Alfredo Moreno.
+
+19
+00:00:40,400 --> 00:00:42,883
+Esa captura salió de una investigación de
+
+20
+00:00:42,795 --> 00:00:44,465
+mayo de 2014:
+
+21
+00:00:44,611 --> 00:00:46,862
+la fiscalía de Juan Francisco Sandoval,
+
+22
+00:00:46,870 --> 00:00:49,434
+fiscal contra la impunidad del MP,
+
+23
+00:00:49,442 --> 00:00:51,904
+intervino el teléfono del importador Erick
+
+24
+00:00:51,859 --> 00:00:52,843
+Miao Miao.
+
+25
+00:00:53,094 --> 00:00:55,217
+En sus llamadas, la fiscalía oyó por
+
+26
+00:00:55,131 --> 00:00:57,149
+primera vez el nombre de la red:
+
+27
+00:00:57,295 --> 00:00:58,173
+La Línea.
+
+28
+00:00:58,532 --> 00:01:01,426
+Casi un año después, la CICIG dijo cómo
+
+29
+00:01:01,318 --> 00:01:02,260
+funcionaba:
+
+30
+00:01:02,659 --> 00:01:04,497
+a través del suministro de un número
+
+31
+00:01:04,390 --> 00:01:06,978
+telefónico conocido como la línea.
+
+32
+00:01:07,233 --> 00:01:09,737
+Pero la llamada escondía otro cobro, uno
+
+33
+00:01:09,660 --> 00:01:10,728
+sin recibo.
+
+34
+00:01:11,212 --> 00:01:14,676
+En el juicio de 2022, el MP dijo que la
+
+35
+00:01:14,632 --> 00:01:16,143
+red cobraba la cola:
+
+36
+00:01:16,341 --> 00:01:18,666
+una cuota por dejar pasar contenedores sin
+
+37
+00:01:18,568 --> 00:01:21,241
+control, con precios de un tarifario.
+
+38
+00:01:21,441 --> 00:01:24,282
+Con ese cobro, al menos 500 contenedores
+
+39
+00:01:24,184 --> 00:01:26,921
+pasaron por la red, estimaron la CICIG y
+
+40
+00:01:26,844 --> 00:01:27,812
+el MP.
+
+41
+00:01:28,067 --> 00:01:29,895
+Después venía el reparto.
+
+42
+00:01:30,093 --> 00:01:32,407
+Según las investigaciones, el importador
+
+43
+00:01:32,310 --> 00:01:35,806
+pagaba cerca del 40 % del impuesto, otro
+
+44
+00:01:35,709 --> 00:01:39,003
+30 % era el soborno para la red y él se
+
+45
+00:01:38,906 --> 00:01:41,347
+ahorraba el 30 % restante.
+
+46
+00:01:41,515 --> 00:01:43,744
+Entonces la red llevaba la cuenta:
+
+47
+00:01:44,143 --> 00:01:47,142
+la CICIG calculó que toda la red ganaba
+
+48
+00:01:47,024 --> 00:01:50,869
+cerca de US$328,000 cada semana, y cada
+
+49
+00:01:50,750 --> 00:01:54,023
+inspector de contenedores, casi US$1,000.
+
+50
+00:01:54,267 --> 00:01:57,066
+En agosto de 2015, Velásquez dijo que la
+
+51
+00:01:56,959 --> 00:01:59,578
+computadora de Salvador Estuardo González,
+
+52
+00:01:59,586 --> 00:02:03,515
+alias Eco, operador de la red según el MP,
+
+53
+00:02:03,502 --> 00:02:05,542
+guardaba las tablas del reparto.
+
+54
+00:02:05,801 --> 00:02:07,893
+El comisionado lo resumió así:
+
+55
+00:02:08,292 --> 00:02:10,880
+Afortunadamente (para la investigación)
+
+56
+00:02:10,835 --> 00:02:13,382
+llevaban muy en orden los pagos.
+
+57
+00:02:13,633 --> 00:02:15,482
+Pero esos pagos no se quedaban en las
+
+58
+00:02:15,406 --> 00:02:16,148
+aduanas:
+
+59
+00:02:16,250 --> 00:02:17,751
+subían más arriba.
+
+60
+00:02:17,897 --> 00:02:19,968
+¿Para quién cobraba, en realidad, La
+
+61
+00:02:19,870 --> 00:02:20,580
+Línea?
+
+62
+00:02:20,895 --> 00:02:21,678
+Sígueme:
+
+63
+00:02:21,718 --> 00:02:23,831
+en la tercera parte te cuento quién era
+
+64
+00:02:23,787 --> 00:02:25,224
+quién en La Línea.

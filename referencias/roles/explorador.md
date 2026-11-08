@@ -49,6 +49,14 @@ Presupuesto: ≤ 6 búsquedas, ≤ 6 fetch, las ideas que fije la directiva (3�
      debate con fecha de los últimos ~45 días; 1 = atemporal. Una cifra de hace
      cinco meses no es «por qué ahora»: `por_que_ahora` cita el hecho reciente
      y su fecha.
+   - `sujeto` (medido con /analyze-improve, 2026-11-03): ¿la pieza tiene un
+     sujeto que la gente reconoce y ya busca? 5 = una marca, una persona, un
+     lugar o un caso conocido (Pollo Campero, el lago de Amatitlán, la Sputnik);
+     3 = un lugar o un grupo concreto (un penal, los conductores de una ruta);
+     1 = un indicador sin cara («la tasa de…»). En esta cuenta, las piezas con
+     sujeto 5 retuvieron 62–69 % a los 3 s y tuvieron 1K–39K vistas; las de
+     indicador, 28–40 % y ~230. Un tema de datos sube a 3+ si `angulo` nombra el
+     lugar, la gente o la marca con que se contará.
 
 Cada idea:
 
@@ -58,7 +66,7 @@ Cada idea:
  "hook_sugerido": "giro_inversion|escala_humana|brecha_territorial|pregunta_directa|curiosity_gap|mito_vs_dato|antes_despues|titular_clasico",
  "paleta_sugerida": "cielo|jade|maiz|terracota|cacao|jacaranda|atitlan|obsidiana",
  "datos": [{"fuente": "…", "indicador": "…", "url": "https://…", "formato": "xlsx|xls|csv|html|pdf|json|api", "periodo": "2016–2026", "evidencia": "lo que viste en esa url", "acceso": "confirmado|serie|prensa|bloqueado"}],
- "puntaje": {"interes": 1, "datos": 1, "actualidad": 1}, "nota": "opcional"}
+ "puntaje": {"interes": 1, "datos": 1, "actualidad": 1, "sujeto": 1}, "nota": "opcional"}
 ```
 
 Escribe `{"grupo": "<grupo>", "ideas": [...]}` en el archivo que indica la
