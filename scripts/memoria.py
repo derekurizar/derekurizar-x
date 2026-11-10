@@ -85,6 +85,11 @@
   memoria/series.json → series[] {id (= <fecha>-<slug>), slug, tema, motor (historia|explica), fecha, carpeta, n_partes, paleta,
   musica, version_plan, estado, partes[] {n, titulo, estado, ruta, duracion_s}}; registrar la misma serie reemplaza.
 
+--youtube <series/<fecha>-<slug>/youtube> [--dry-run]
+  memoria/youtube.json → videos[] {id (= youtube-<slug>), slug, tema, serie, carpeta, fecha, duracion_s, titulo, capitulos[]
+  {numero, titulo, parte, t}, paleta, musica[], creditos_voz, partes[], estado}; registrar el mismo video reemplaza. Un video
+  de prueba (fixture) no se registra (solo --dry-run).
+
 --mejoras ARCHIVO.json [--dry-run]
   Las mejoras al framework que encontró una corrida de /video, /noticias o /historia (las lista el reporte final) →
   memoria/mejoras.json → mejoras[] {id (mNNN), fecha, flujo, pieza, area, archivo, problema, propuesta, estado}.
@@ -178,6 +183,11 @@ SERIES = os.path.join(RAIZ, "memoria", "series.json")
 VACIO_SERIES = {
     "version": 1, "_comentario": "Series de /serie: una por tema, con sus partes. Lo escribe scripts/memoria.py --serie.",
     "series": [],
+}
+YOUTUBE = os.path.join(RAIZ, "memoria", "youtube.json")
+VACIO_YOUTUBE = {
+    "version": 1, "_comentario": "Videos largos de YouTube de /youtube-long (una serie entregada en 16:9). Lo escribe scripts/memoria.py --youtube.",
+    "videos": [],
 }
 VACIO_MEJORAS = {
     "version": 1,
@@ -915,6 +925,34 @@ def registrar_serie(d, dry_run=False):
     return 0
 
 
+def registrar_youtube(d, estado="publicable", dry_run=False):
+    """--youtube DIR: registra en memoria/youtube.json el video largo de series/<fecha>-<slug>/youtube (guion.json de
+    scripts/youtube.py entregar)."""
+    ruta = os.path.normpath(d)
+    g = leer(os.path.join(RAIZ, ruta, "guion.json"), obligatorio=False)
+    if not g or g.get("tipo") != "youtube":
+        print("ERROR: %s no tiene guion.json de tipo youtube (scripts/youtube.py entregar)" % ruta, file=sys.stderr)
+        return 1
+    reg = {"id": g["id"], "slug": g["slug"], "tema": g.get("tema"), "serie": g.get("serie"), "carpeta": ruta, "fecha": g.get("fecha"),
+           "duracion_s": g.get("duracion_s"), "titulo": g.get("titulo"),
+           "capitulos": [{k: c.get(k) for k in ("numero", "titulo", "parte", "t")} for c in g.get("capitulos") or []],
+           "paleta": g.get("paleta"), "musica": g.get("musica"), "creditos_voz": g.get("creditos_voz"), "partes": g.get("partes"),
+           "estado": estado}
+    print("youtube %s · %.1f min · %d capítulos · %s créditos" % (reg["id"], (reg["duracion_s"] or 0) / 60, len(reg["capitulos"]),
+                                                               reg["creditos_voz"]))
+    if dry_run or g.get("fixture"):
+        print("[dry-run] no se escribió nada" if dry_run else "fixture: no se registra")
+        return 0
+    m = leer(YOUTUBE, obligatorio=False) or json.loads(json.dumps(VACIO_YOUTUBE))
+    prev = next((x for x in m["videos"] if x.get("id") == reg["id"]), None)
+    if prev and prev.get("estado") == "publicado":
+        reg["estado"] = "publicado"
+    m["videos"] = [x for x in m["videos"] if x.get("id") != reg["id"]] + [reg]
+    escribir(YOUTUBE, m)
+    print("escrito memoria/youtube.json (%d videos)" % len(m["videos"]))
+    return 0
+
+
 def registrar_mejoras(archivo, dry_run=False):
     """--mejoras ARCHIVO: añade las mejoras al framework de una corrida a memoria/mejoras.json (sin repetir una pendiente)."""
     d = leer(archivo, obligatorio=False)
@@ -1009,6 +1047,7 @@ def main():
     g.add_argument("--carrusel", metavar="DIR", help="registra el carrusel de /carrusel entregado en DIR (<original>/carrusel) en memoria/carruseles.json")
     g.add_argument("--semana", metavar="DIR", help="registra «Las 5 cifras de la semana» de /semana entregada en DIR (semanas/<domingo>) en memoria/semanas.json")
     g.add_argument("--serie", metavar="DIR", help="registra la serie de /serie (series/<fecha>-<slug>, con serie.json) en memoria/series.json")
+    g.add_argument("--youtube", metavar="DIR", help="registra el video largo de /youtube-long (series/<fecha>-<slug>/youtube) en memoria/youtube.json")
     g.add_argument("--mejoras", metavar="ARCHIVO", help="añade las mejoras al framework de una corrida (JSON {flujo, pieza, mejoras[]}) a memoria/mejoras.json")
     g.add_argument("--ver-mejoras", nargs="?", const="", metavar="ESTADO", help="lista las mejoras de memoria/mejoras.json (con ESTADO: pendiente|hecha|descartada)")
     g.add_argument("--marcar-mejora", metavar="ID", help="cambia el estado de una mejora (con --como)")
@@ -1041,6 +1080,8 @@ def main():
         return registrar_carrusel(a.carrusel, a.estado, a.dry_run)
     if a.serie:
         return registrar_serie(a.serie, a.dry_run)
+    if a.youtube:
+        return registrar_youtube(a.youtube, dry_run=a.dry_run)
     if a.semana:
         return registrar_semana(a.semana, a.estado, a.dry_run)
     if a.sabias:

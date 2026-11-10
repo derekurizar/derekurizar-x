@@ -57,3 +57,12 @@ al principio, así que en puntos absolutos toda escena temprana parecería mala.
   categoría ▼ (< 0.8× la mediana, n ≥ 2) se puede elegir, pero su `por_que` dice qué la hace distinta esta vez.
 - La regla **R14** (sujeto reconocible) nació de la primera medición (2026-11-03). Ver `referencias/ganchos.md` §1 y §4.
 - Lo demás entra como mejora en `memoria/mejoras.json` (`flujo: analisis`) y se aplica cuando el usuario lo pide.
+
+## Envíos, deslizados y el paso entre partes (2026-11-10)
+
+- **AN13** compartidos por 1,000 vistas bajo la mitad de la mediana del canal en esa plataforma (≥ 4 piezas con ≥ 300
+  vistas). Instagram dice que los envíos por alcance son una de sus tres señales de Reels.
+- **AN14** YouTube Shorts con «se quedaron viendo» bajo 60 %.
+- `metricas.py rendimiento --por parte`: vistas de la parte N+1 entre las de la N, por serie y plataforma. Es la medida
+  del puente y de la promesa de la serie.
+- Qué sostiene cada regla y con qué nivel de evidencia: `referencias/analisis/investigacion.md`.

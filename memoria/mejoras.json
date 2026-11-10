@@ -770,7 +770,7 @@
       "archivo": "scripts/historia.py entregar · scripts/memoria.py --historia",
       "problema": "Al entregar una pieza que ya era tema de un espacio de /agenda, make validate falla con M18/AG4 (tema repetido) hasta que se corre a mano «agenda.py producido».",
       "propuesta": "Que memoria.py --historia (y los demás --<flujo>) busque en la agenda de la semana un espacio cuyo tema coincida con el slug y lo marque producido con su ruta.",
-      "estado": "pendiente"
+      "estado": "descartada"
     },
     {
       "id": "m071",
@@ -891,7 +891,7 @@
       "archivo": "scripts/historia.py (estimado con tomas)",
       "problema": "La parte 2 dio 112.9 s reales con 109.5 estimados: la cola de cada toma con audio no entra en el estimado y SE7 (≤ 110) quedó corto.",
       "propuesta": "Sumar la cola de escena (COLA) a cada toma con audio en segundos_toma.",
-      "estado": "pendiente"
+      "estado": "descartada"
     },
     {
       "id": "m082",
@@ -913,7 +913,7 @@
       "archivo": ".claude/workflows/historia.js",
       "problema": "El plan de una serie en modo caso no traía reparto de ids por parte (no existen al encuadrar); hubo que correr un editor a mano y luego se agregó la fase Reparto.",
       "propuesta": "Hecho en esta corrida (fase Reparto tras consolidar cuando serie.caso). Falta un fixture de modo caso que la ejercite de punta a punta.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m084",
@@ -924,7 +924,7 @@
       "archivo": ".claude/workflows/historia.js, explica.js",
       "problema": "El check de args.trabajo solo aceptaba parte-[1-5]; la parte 6 falló al lanzar.",
       "propuesta": "Corregido a [1-8] (PARTES_CASO). Que check_workflows.py (W12) compare ese rango con serie.PARTES_CASO.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m085",
@@ -935,7 +935,7 @@
       "archivo": "scripts/serie.py revisar_serie (M16)",
       "problema": "M16 rechazaba una serie de 7 partes en modo caso (rango fijo 3–5).",
       "propuesta": "Corregido: usa PARTES_CASO cuando serie.modo = caso. Agregar un caso negativo y positivo en test.sh.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m086",
@@ -946,7 +946,7 @@
       "archivo": "scripts/historia.py tarjetas_de_escena · video/comun.js",
       "problema": "La tarjeta de persona se guardaba en S.P, la misma clave que usa la escena explica para título y pasos: una escena explica que nombraba a alguien rompía la grabación (TypeError en embudo-filtro).",
       "propuesta": "Corregido: la tarjeta va en S.personas. Agregar una prueba con una escena explica que nombra a un personaje.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m087",
@@ -957,7 +957,7 @@
       "archivo": "scripts/video.py planos_foto · video/noticia.html encuadre",
       "problema": "V21 falló en fotos que no cambiaban de plano: (1) tras la tarjeta de persona el planificador repetía cerca sobre la misma cara; (2) en fotos de poca resolución cerca/medio/amplio daban el mismo zoom; (3) medio sobre una cara caía en el encuadre de la cara vecina; (4) en la pantalla dividida el cambio de plano era invisible.",
       "propuesta": "Corregido los cuatro (nunca el mismo encuadre dos veces; si la foto no da zoom el plano cambia de lugar; medio hacia el lado lejos de las otras caras; la mitad destacada se acerca y la otra se apaga). Falta una prueba de V21 con una foto de 800 px y dos caras.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m088",
@@ -968,7 +968,7 @@
       "archivo": "scripts/video.py revisar (V21)",
       "problema": "V21 no ve un paneo en una foto oscura y de poco contraste (parte 3, E4 en 4:5: el plano sí cambia a ojo).",
       "propuesta": "Sumar al luma-diff un detector de desplazamiento (correlación de fase entre cuadros) o contar los cambios de plano declarados en escenas.json como novedad.",
-      "estado": "pendiente"
+      "estado": "descartada"
     },
     {
       "id": "m089",
@@ -979,7 +979,7 @@
       "archivo": "scripts/video.py siglas_deletreadas (V20)",
       "problema": "V20 marcaba como deletreadas «Sat.» y «Cicig.» al final de una oración (Scribe mete el alargamiento final en la palabra: 0.65–0.91 s).",
       "propuesta": "Corregido con SIGLA_S_FINAL = 0.35 s al final de oración. Agregar el caso a test.sh.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m090",
@@ -990,7 +990,7 @@
       "archivo": "scripts/video_grabar.js",
       "problema": "Con la máquina cargada (load ≈ 11) page.screenshot pasaba de 30 s y la grabación fallaba entera; tres partes se cayeron así.",
       "propuesta": "Subido a 120 s. Además: reintentar la escena que falla en vez de abortar todo, y bajar --paralelo solo si la carga es alta.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m091",
@@ -1001,7 +1001,7 @@
       "archivo": "video/cierre.html",
       "problema": "Una pregunta final larga en una serie (con «Parte N+1» y «Empieza por la Parte 1») sacaba los handles de la zona segura (V13).",
       "propuesta": "Corregido: tras achicar la frase, se cierra el hueco de pantB hasta caber.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m092",
@@ -1023,7 +1023,7 @@
       "archivo": "historia-guionista (cierre de la voz)",
       "problema": "Dos secuencias terminan en «dijo esto:.» antes de una toma o cita (puntuación doble que llega a la voz).",
       "propuesta": "En voz_de_secuencia, normalizar «:.» a «:» antes de mandar el prompt.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m094",
@@ -1034,7 +1034,7 @@
       "archivo": "scripts/video.py planos_foto",
       "problema": "La tarjeta de persona podía caer justo después de un plano cerca sobre la misma cara (parte 6, E3: 5.2 s sin cambio).",
       "propuesta": "Corregido: el plano anterior pasa a medio. Agregar la prueba.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m095",
@@ -1045,7 +1045,7 @@
       "archivo": "scripts/video_grabar.js",
       "problema": "Los cuelgues de page.screenshot eran intermitentes (la misma escena grababa bien sola).",
       "propuesta": "Corregido: la escena se reintenta en una página nueva hasta 2 veces y se mata el ffmpeg huérfano; GRABAR_DEBUG=1 imprime los cuadros lentos.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m096",
@@ -1056,7 +1056,7 @@
       "archivo": "scripts/video.py (CAMARA_QUIETA) · video/noticia.html · escena.html · explica.html · red.html",
       "problema": "Los sub-planos por reloj (cada 3–4.5 s), los saltos de escala en tarjetas y animaciones, el foco a la cifra y los whips movían la imagen sin motivo («mover solo por mover», usuario 2026-11-06).",
       "propuesta": "Hecho: cámara quieta (un empuje lento por foto y a lo más un corte a la cara que la voz nombra; tarjetas, animaciones y red quietas; corte o fundido). Pendiente: un V21 por contenido (la voz cambia de tema y la imagen no) en vez de por segundos.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m097",
@@ -1067,7 +1067,7 @@
       "archivo": "scripts/historia.py (TM0) · roles y workflow historia",
       "problema": "Las tomas de video muchas veces no casaban con lo que se narraba.",
       "propuesta": "Hecho: tipo toma retirado (TM0); las declaraciones van como cita leída por la voz. Quedan historia.py video/toma/tomas-contacto sin uso: decidir si se borran.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m098",
@@ -1078,7 +1078,7 @@
       "archivo": "scripts/serie.py (SE13)",
       "problema": "La misma cita salió en dos partes (des-q02 en 1 y 2; red-q03 en 3 y 4).",
       "propuesta": "Hecho: SE13 rechaza una cita o una frase de ≥ 8 palabras ya dicha en una parte anterior. Falta su prueba en test.sh.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m099",
@@ -1089,7 +1089,7 @@
       "archivo": "video/red.html · scripts/historia.py revisar_red (H23)",
       "problema": "El organigrama era una fila de uno por nivel con las relaciones encimadas sobre los cargos.",
       "propuesta": "Hecho: filas por nivel lado a lado, relación en pastilla al centro de la línea, cargo en una línea, investigadores en su franja; H23 acepta 1–2 en el nivel 0 y rechaza ≤ 3 niveles de uno. Falta un gate que mida que ninguna caja se encime.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m100",
@@ -1100,7 +1100,7 @@
       "archivo": "video/comun.css (.vchips.arriba)",
       "problema": "El chip «Según la acusación» quedaba encima de la barra de progreso en 9:16.",
       "propuesta": "Hecho: el chip baja a y = 272.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m101",
@@ -1155,7 +1155,7 @@
       "archivo": "scripts/video.py",
       "problema": "descargar --estado ignora una generación sin `modality: audio` sin avisar por qué (pasó con un estado escrito a mano: las voces no bajaron y solo se notó por los créditos).",
       "propuesta": "avisar «generación sin modality/status/content_url» en vez de saltarla en silencio.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m106",
@@ -1177,7 +1177,7 @@
       "archivo": "scripts/video_grabar.js",
       "problema": "grabar --solo N reescribe revision/zona.json solo con esas escenas; el informe de zona del video queda parcial.",
       "propuesta": "fundir con el zona.json existente por número de escena.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m108",
@@ -1188,7 +1188,7 @@
       "archivo": "scripts/video.py (aplicar_cambios) · scripts/historia.py (aplicar)",
       "problema": "Insertar una escena en un guion ya grabado (el resumen SE14 de la Parte 7) no se puede con aplicar: se editó guion.json a mano, se renumeraron a mano voz_N, voz_N_r, palabras_N y escucha_N de las escenas siguientes y se sacó la secuencia [12,13] y su voz_sec_5.",
       "propuesta": "Un cambio {insertar: N, escena: {...}, narracion_despues: \"…\"} en aplicar_cambios que inserte la escena, ponga su texto en la narración, renumere los audios de las escenas siguientes y parta la secuencia que corta, conservando las voces.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m109",
@@ -1199,7 +1199,7 @@
       "archivo": "scripts/historia.py (revisar_verdad)",
       "problema": "La clave «resumen» de una escena chocaba con cierre.resumen (lista): revisar_verdad la unía como lista y caía con TypeError en vez de dar una falla legible.",
       "propuesta": "Validar el esquema de cada escena (claves conocidas por tipo) antes de los gates, con una FALLA que nombre la clave.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m110",
@@ -1210,7 +1210,238 @@
       "archivo": "video/animaciones/cronologia.js · scripts/video.py (V10)",
       "problema": "En el resumen, la primera línea («2015 · Las escuchas») queda 6.9 s sola mientras la voz explica la red (aviso V10); cronologia admite 6 pasos como máximo.",
       "propuesta": "Permitir 7–8 pasos en cronologia cuando la escena es resumen_serie (el riel cabe), o un subpaso que cambie el texto del evento activo sin nuevo punto.",
-      "estado": "pendiente"
+      "estado": "hecha"
+    },
+    {
+      "id": "m111",
+      "fecha": "2026-11-09",
+      "flujo": "youtube",
+      "pieza": "series/2026-11-06-el-caso-la-linea/youtube",
+      "area": "voz",
+      "archivo": "scripts/video.py (descargar) · .claude/commands/youtube-long.md",
+      "problema": "creative_get_flow_run_status devolvió el estado en línea (no en un archivo); hubo que reconstruir a mano estado.json (generations, media, transcripts con words_download_url) para que descargar lo leyera.",
+      "propuesta": "Un `video.py estado --desde-texto` que acepte el bloque pegado (o `descargar --flow ID --sesiones ...` que lo pida), y documentar en la guía el formato mínimo de estado.json.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m112",
+      "fecha": "2026-11-09",
+      "flujo": "youtube",
+      "pieza": "series/2026-11-06-el-caso-la-linea/youtube",
+      "area": "voz",
+      "archivo": ".claude/commands/historia.md (paso de voz) · scripts/youtube.py voz",
+      "problema": "Con 9 nodos, ElevenLabs topó el límite de concurrencia: 6 quedaron pendientes y se reintentaron solos; esperar exigió un comando en segundo plano porque sleep en primer plano está bloqueado.",
+      "propuesta": "Que `youtube.py voz` imprima los nodos en lotes de ≤ 3 y la guía diga correr un lote, sondear con get_flow_run_status y seguir.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m113",
+      "fecha": "2026-11-09",
+      "flujo": "youtube",
+      "pieza": "series/2026-11-06-el-caso-la-linea/youtube",
+      "area": "montaje",
+      "archivo": ".claude/workflows/youtube.js",
+      "problema": "Las mejoras ya probadas por el crítico (quitar P6.e3, recortar «y Cooptación del Estado» en P7.e3) no se aplicaron solas; hubo que correr `youtube.py aplicar` a mano tras el Workflow.",
+      "propuesta": "Como en historia.js: si el crítico pasa con mejoras probadas, aplicarlas con `aplicar` y repetir el gate antes de devolver aprobar_montaje.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m114",
+      "fecha": "2026-11-09",
+      "flujo": "youtube",
+      "pieza": "series/2026-11-06-el-caso-la-linea/youtube",
+      "area": "miniatura",
+      "archivo": "video/miniatura.html",
+      "problema": "En fotos horizontales no se usan los focos: en la variante b (Baldetti, des-f04) la cara quedó bajo el velo y el texto.",
+      "propuesta": "Con focos, object-position también en fotos horizontales, y si el foco cae en la columna del texto (x < 0.55) correr la foto a la derecha o pasar al panel.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m115",
+      "fecha": "2026-11-09",
+      "flujo": "youtube",
+      "pieza": "series/2026-11-06-el-caso-la-linea/youtube",
+      "area": "gates",
+      "archivo": "scripts/video.py (V6) · scripts/youtube.py tiempos",
+      "problema": "V6 (duración objetivo 130 s) avisa en `nuevas/` (57 s): las piezas nuevas no son un video y el aviso es ruido.",
+      "propuesta": "Saltar V6 cuando el TRABAJO es `nuevas/` de /youtube-long (marca en video.json).",
+      "estado": "hecha"
+    },
+    {
+      "id": "m116",
+      "fecha": "2026-11-09",
+      "flujo": "youtube",
+      "pieza": "series/2026-11-06-el-caso-la-linea/youtube",
+      "area": "render",
+      "archivo": "scripts/youtube.py armar · video/golpe.html · video/cierre.html",
+      "problema": "En el 16:9 quedó el kicker «Serie · El caso La Línea» en un golpe y en el cierre: es marca del formato corto (YT2).",
+      "propuesta": "Que armar borre `serie` de escenas.json (o que las páginas no pinten el kicker con f=169) y que YT2 lo revise en la hoja de contacto.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m117",
+      "fecha": "2026-11-09",
+      "flujo": "youtube",
+      "pieza": "series/2026-11-06-el-caso-la-linea/youtube",
+      "area": "render",
+      "archivo": "video/escenario.html",
+      "problema": "Las tarjetas 4:5 dentro del escenario (antejuicio, conteos de la red, 500 contenedores) ocupan poco del cuadro 16:9: el texto del gráfico se ve chico en pantalla grande.",
+      "propuesta": "Escalar el iframe 4:5 al alto completo (1080) o dar layout 16:9 propio a `tuit` de barras y línea de tiempo.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m118",
+      "fecha": "2026-11-09",
+      "flujo": "serie",
+      "pieza": "series/2026-11-09-bancafe-y-banco-de-comercio/parte-1",
+      "area": "workflow",
+      "archivo": ".claude/workflows/historia.js",
+      "problema": "La crítica 2 (vuelta acotada) marcó como «bloquea» una falta del cierre con escena null; la validación la rechazó por no estar en una escena cambiada y el workflow falló tras 2 reparaciones, aunque las 5 faltas traían el mismo arreglo probado. Hubo que aplicar los arreglos, los cierres y la animación a mano.",
+      "propuesta": "Contar el cierre como escena N+1 en la lista de escenas cambiadas de la vuelta acotada (o aceptar escena null cuando el cierre cambió), y si la validación sigue fallando con arreglos probados, aplicarlos en vez de lanzar el error.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m119",
+      "fecha": "2026-11-09",
+      "flujo": "serie",
+      "pieza": "series/2026-11-09-bancafe-y-banco-de-comercio/parte-1",
+      "area": "guion",
+      "archivo": "scripts/video.py",
+      "problema": "V1 permite una sola escena definicion por video; en una serie que debe explicar varios conceptos (pedido del usuario: una definición por concepto nuevo) «grupo financiero» quedó como cita de la ley en vez de definición.",
+      "propuesta": "Permitir hasta 2 definiciones en formatos historia-caso / series con conceptos (o cuando el encuadre declara conceptos), manteniendo 1 en los demás.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m120",
+      "fecha": "2026-11-09",
+      "flujo": "serie",
+      "pieza": "series/2026-11-09-bancafe-y-banco-de-comercio/parte-1",
+      "area": "fotos",
+      "archivo": "scripts/historia.py",
+      "problema": "Las fotos de referencia bajadas con `historia.py foto --referencia` en el QA de fotos de una parte no entran a historia.json → fotos; H7 las rechaza como no verificadas y hubo que registrarlas a mano (también en la investigación compartida de la serie).",
+      "propuesta": "Que `foto` registre la foto en historia.json (y en el TRABAJO de la serie si es una parte), como hace consolidar.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m121",
+      "fecha": "2026-11-09",
+      "flujo": "serie",
+      "pieza": "series/2026-11-09-bancafe-y-banco-de-comercio/parte-1",
+      "area": "fotos",
+      "archivo": "scripts/historia.py",
+      "problema": "Al cambiar la foto de una escena con `aplicar`, el chip «Foto de 2017» de la foto anterior se quedó en la escena (fecha) y mentía sobre la nueva.",
+      "propuesta": "Que `aplicar` con campo foto rehaga la fecha del chip desde fotos/<id>.json (o la vacíe y avise).",
+      "estado": "hecha"
+    },
+    {
+      "id": "m122",
+      "fecha": "2026-11-09",
+      "flujo": "serie",
+      "pieza": "series/2026-11-09-bancafe-y-banco-de-comercio/parte-1",
+      "area": "fotos",
+      "archivo": "referencias/roles/historia-guionista.md",
+      "problema": "El guionista puso en escenas sin relación con un procesado (el tamaño del banco, el dinero a Vipasa) una foto de La Hora con un hombre esposado (ref-f02), y en una escena de alegato una foto de cinco hombres en un tribunal: insinúa culpa por imagen.",
+      "propuesta": "Regla y gate: una foto que muestra personas detenidas, esposadas o en audiencia solo puede ir en la escena que cuenta ese proceso y con la persona nombrada; nunca como ilustración genérica.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m123",
+      "fecha": "2026-11-09",
+      "flujo": "serie",
+      "pieza": "series/2026-11-09-bancafe-y-banco-de-comercio/parte-1",
+      "area": "render",
+      "archivo": "video/historia.html",
+      "problema": "El sello del documento (fecha · fuente, cortado a 40 caracteres) partía en dos renglones, salía de la zona segura (V13) bajo la hoja y, movido arriba, pisaba el membrete.",
+      "propuesta": "Hecho en esta corrida: sello arriba de la hoja, en un renglón, y solo la fecha cuando fecha · fuente pasa de 26 caracteres (la fuente ya está en el pie).",
+      "estado": "hecha"
+    },
+    {
+      "id": "m124",
+      "fecha": "2026-11-09",
+      "flujo": "serie",
+      "pieza": "series/2026-11-09-bancafe-y-banco-de-comercio",
+      "area": "serie",
+      "archivo": "scripts/serie.py",
+      "problema": "La revisión de la serie completa (SE17) leía solo la voz: la escena 13 de la Parte 3 siguió mostrando «US$204 millones» en pantalla después de quitarlo de la voz, y la Parte 4 afirmaba en el titular «Q800 mil perdidos» sin atribuir.",
+      "propuesta": "Hecho: serie_completa.md incluye la pantalla (titular, término, golpe, cifra) de cada escena. Falta un gate: una cifra en pantalla que la voz de esa escena ya no dice, y un alegato en pantalla sin «según/dice», fallan.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m125",
+      "fecha": "2026-11-09",
+      "flujo": "serie",
+      "pieza": "series/2026-11-09-bancafe-y-banco-de-comercio",
+      "area": "serie",
+      "archivo": "scripts/serie.py · scripts/historia.py",
+      "problema": "SE17 (todos los guiones antes de la voz) no existía: cada parte se grababa en cuanto tenía guion.",
+      "propuesta": "Hecho: serie.py completa --check/--aprobar (cruces entre todas las partes, cadena real de puentes con la invitación, huella) y historia.py voz bloquea una parte sin la serie aprobada; documentado en serie.md, flujo-serie.md y el «Modo serie completa» del crítico.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m126",
+      "fecha": "2026-11-09",
+      "flujo": "serie",
+      "pieza": "series/2026-11-09-bancafe-y-banco-de-comercio",
+      "area": "workflow",
+      "archivo": ".claude/workflows/historia.js",
+      "problema": "Una falta del cierre con escena null bloqueaba en la vuelta acotada y el workflow fallaba (Parte 1).",
+      "propuesta": "Hecho: la falta del cierre vale si cambió alguna escena (escena null o «cierre»).",
+      "estado": "hecha"
+    },
+    {
+      "id": "m127",
+      "fecha": "2026-11-09",
+      "flujo": "serie",
+      "pieza": "series/2026-11-09-bancafe-y-banco-de-comercio",
+      "area": "historia",
+      "archivo": "scripts/historia.py",
+      "problema": "historia.py aplicar no cambia cierre.invitacion: la invitación de la Parte 3 siguió diciendo «cuál fue el otro banco» y hubo que editar guion.json.",
+      "propuesta": "Que {cierre: {invitacion}} en aplicar cambie la invitación (y pase SE9).",
+      "estado": "hecha"
+    },
+    {
+      "id": "m128",
+      "fecha": "2026-11-09",
+      "flujo": "serie",
+      "pieza": "series/2026-11-09-bancafe-y-banco-de-comercio",
+      "area": "historia",
+      "archivo": "scripts/historia.py",
+      "problema": "aplicar no acepta valor null ({campo, valor: null}) ni cambiar el tipo de una escena con sus campos: quitar la cifra de una escena o pasar una cita a foto exigió editar guion.json a mano.",
+      "propuesta": "Aceptar valor null (borra el campo) y {escena, tipo, …campos} validado por el gate.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m129",
+      "fecha": "2026-11-09",
+      "flujo": "serie",
+      "pieza": "series/2026-11-09-bancafe-y-banco-de-comercio",
+      "area": "voz",
+      "archivo": "referencias/flujo-historia.md",
+      "problema": "Con 5 nodos de voz y 5 de Scribe, creative_get_flow_run_status devuelve el estado en el chat (no en archivo) y descargar necesita un archivo.",
+      "propuesta": "Pedir el estado con las sesiones de dos partes a la vez (pasa de 50k y queda en archivo) y filtrar con un helper historia.py estado --solo-parte, o que descargar ignore generaciones con prompts que no casan.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m130",
+      "fecha": "2026-11-09",
+      "flujo": "serie",
+      "pieza": "series/2026-11-09-bancafe-y-banco-de-comercio",
+      "area": "cierres",
+      "archivo": "scripts/video.py",
+      "problema": "F6 (HUMANO) rechaza «ahorrantes» y «depositantes» como sujeto humano del cierre.",
+      "propuesta": "Agregar ahorrantes?|depositantes?|cuentahabientes? a HUMANO.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m131",
+      "fecha": "2026-11-09",
+      "flujo": "serie",
+      "pieza": "series/2026-11-09-bancafe-y-banco-de-comercio",
+      "area": "serie",
+      "archivo": "referencias/roles/historia-guionista.md",
+      "problema": "Las frases finales de partes seguidas se parecían («¿dónde tenía el dinero de sus ahorrantes?» / «¿qué pasaría con el dinero de sus ahorrantes?»); solo lo vio el crítico de la serie completa.",
+      "propuesta": "SE13 extendido a la frase final: dos partes no cierran con ≥ 4 palabras de contenido en común.",
+      "estado": "hecha"
     }
   ]
 }

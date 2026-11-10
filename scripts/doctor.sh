@@ -71,6 +71,11 @@ for f in scripts/historia.py video/historia.html video/animaciones/cronologia.js
   [[ -s "$f" ]] || aviso "falta $f (/historia no estará disponible)"
 done
 command -v pdftotext >/dev/null || aviso "falta pdftotext (brew install poppler): /historia no podrá leer fuentes en PDF"
+# /youtube-long: script, páginas 16:9 (escenario y miniatura), agente, workflow, comando, guías y maqueta (usa la voz, la
+# música, los efectos y las páginas de escena de /video y /historia)
+for f in scripts/youtube.py video/escenario.html video/miniatura.html .claude/agents/youtube-editor.md .claude/workflows/youtube.js .claude/commands/youtube-long.md referencias/flujo-youtube.md referencias/roles/youtube-editor.md sesiones/_fixture_youtube/montaje.json sesiones/_fixture_youtube/serie/serie.json; do
+  [[ -s "$f" ]] || aviso "falta $f (/youtube-long no estará disponible)"
+done
 # /explica: script, pizarra, semilla de animación, agentes, workflow, comando, guías y maqueta (usa la voz, la música, los
 # efectos, el render y la lectura de fuentes de /video y /historia)
 for f in scripts/explica.py video/cuenta.html video/animaciones/bola-nieve.js .claude/agents/explica-editor.md .claude/agents/explica-investigador.md .claude/agents/explica-verificador.md .claude/agents/explica-guionista.md .claude/workflows/explica.js .claude/commands/explica.md referencias/flujo-explica.md referencias/roles/explica-editor.md referencias/roles/explica-investigador.md referencias/roles/explica-verificador.md referencias/roles/explica-guionista.md sesiones/_fixture_explica/guion.json sesiones/_fixture_explica/encuadre.json; do

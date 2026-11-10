@@ -58,6 +58,9 @@ html.f45 #inicio.junto { margin-top: -74px; }
 #sigue .h { font: 800 52px/1 Archivo, sans-serif; letter-spacing: -.005em; }
 /* formato 4:5 (1080×1350) para el feed: más compacto, «Sígueme en» en una fila */
 html.f45 .pant { top: 230px; gap: 42px; }
+/* 16:9 (video largo de YouTube): la columna a la izquierda; la derecha queda libre para los elementos de la pantalla
+   final de YouTube (video sugerido y suscribirse) */
+html.f169.f45 .pant { top: 120px; left: 96px; right: 900px; }
 html.f45 #pantB { gap: 64px; }
 html.f45 #rotulo { font-size: 26px; margin-bottom: -16px; }
 html.f45 #eco { font-size: 120px; }
@@ -143,6 +146,15 @@ window.__listo = (async () => {
     const ini = document.getElementById('inicio');
     ini.textContent = 'Empieza por la Parte 1 · fijada en mi perfil';
     ini.classList.toggle('junto', !!SIG);
+  }
+  // 16:9 (video largo de YouTube): la pantalla final es de YouTube, así que pide suscribirse ahí (no «Sígueme en» las
+  // otras redes) y señala hacia la derecha, donde YouTube pone el video sugerido y su botón
+  if (V.F169) {
+    document.querySelector('#sigue .t').textContent = 'Suscríbete';
+    document.querySelector('#seguir .lbl').textContent = 'Suscribirme';
+    document.querySelector('#seguir .ya').lastChild.textContent = 'Suscrito';
+    todo.redes = todo.redes.filter((r) => r.red === 'youtube');
+    document.getElementById('sigparte').textContent = 'Sigue viendo →';
   }
   document.getElementById('sigue').insertAdjacentHTML('beforeend', todo.redes.map((r) =>
     `<div class="c"><div class="i"><svg viewBox="0 0 24 24">${ICONOS[r.red]}</svg></div><span class="h">${esc(r.handle)}</span></div>`).join(''));

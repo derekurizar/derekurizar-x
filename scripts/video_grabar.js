@@ -3,7 +3,7 @@
  * Video · graba cada escena cuadro a cuadro (estado = seek(t)) y la pasa a ffmpeg (H.264 1080×1920)
  * =================================================================================================
  * Uso (lo llama `scripts/video.py grabar`):
- *   node scripts/video_grabar.js --dir <TRABAJO> [--hilo <carpeta del hilo>] [--fps 30] [--solo 1,3] [--formato 9:16|4:5] [--paralelo N]
+ *   node scripts/video_grabar.js --dir <TRABAJO> [--hilo <carpeta del hilo>] [--fps 30] [--solo 1,3] [--formato 9:16|4:5|16:9] [--paralelo N]
  *   node scripts/video_grabar.js --dir <TRABAJO> --hilo <carpeta del hilo> --portadas <json>   (solo cuadros sueltos)
  *
  * Lee TRABAJO/escenas.json y escribe TRABAJO/clips/eN.mp4. Las páginas se sirven desde un origen
@@ -42,6 +42,15 @@ const { chromium } = require("playwright");
 
 const RAIZ = path.dirname(__dirname);
 const ORIGEN = "http://video.local/";
+// formatos: lienzo, carpeta de clips, parámetro de la página y archivo del gate de zona. 16:9 = el video largo de
+// YouTube (scripts/youtube.py): las páginas que lo soportan (PAGINAS_169) se dibujan en horizontal; las demás, en 4:5
+// dentro de video/escenario.html (un escenario 16:9 con la escena al centro)
+const FORMATOS = {
+  "9:16": { w: 1080, h: 1920, clips: "clips", q: "", zona: "zona.json" },
+  "4:5": { w: 1080, h: 1350, clips: "clips_4x5", q: "&f=45", zona: "zona_4x5.json" },
+  "16:9": { w: 1920, h: 1080, clips: "clips_16x9", q: "&f=169", zona: "zona_16x9.json" },
+};
+const PAGINAS_169 = ["noticia", "historia", "golpe", "escena", "explica", "red", "tablero", "cierre"];
 const TIPOS = { ".html": "text/html", ".js": "text/javascript", ".json": "application/json", ".woff2": "font/woff2", ".css": "text/css", ".svg": "image/svg+xml", ".jpg": "image/jpeg", ".png": "image/png", ".webp": "image/webp" };
 
 function args(argv) {
@@ -90,15 +99,15 @@ function servir(o, ruta) {
   else if (/^animaciones\/[a-z0-9-]+\.js$/.test(nombre)) archivo = path.join(RAIZ, "video", nombre);   // animaciones de la escena explica
   else if (/^fotos\/[a-z0-9_-]+\.(jpg|png|webp)$/.test(nombre)) archivo = path.join(o.dir, nombre);   // fotos de /noticias y /historia (TRABAJO/fotos/)
   else if (/^tomas\/[a-z0-9-]+\/\d{5}\.jpg$/.test(nombre)) archivo = path.join(o.dir, nombre);   // cuadros de las tomas de video de /historia (TRABAJO/tomas/<id>/)
-  else if (["escena.html", "golpe.html", "gancho.html", "cierre.html", "mapa.html", "ranking.html", "escala.html", "tiempo.html", "portada.html", "explica.html", "noticia.html", "historia.html", "cuenta.html", "hemiciclo.html", "red.html", "comun.js", "comun.css", "animar.js", "vertical.css"].includes(nombre)) archivo = path.join(RAIZ, "video", nombre);
+  else if (["escena.html", "golpe.html", "gancho.html", "cierre.html", "mapa.html", "ranking.html", "escala.html", "tiempo.html", "portada.html", "explica.html", "noticia.html", "historia.html", "cuenta.html", "hemiciclo.html", "red.html", "tablero.html", "escenario.html", "miniatura.html", "teaser.html", "comun.js", "comun.css", "animar.js", "vertical.css"].includes(nombre)) archivo = path.join(RAIZ, "video", nombre);
   else if (nombre === "escenas.json") archivo = path.join(o.dir, nombre);
   if (!archivo || !fs.existsSync(archivo)) return null;
   return { tipo: TIPOS[path.extname(archivo)] || "application/octet-stream", cuerpo: fs.readFileSync(archivo) };
 }
 
 // una página lista para grabar: viewport, captura de errores y el origen ficticio servido con page.route
-async function prepararPagina(browser, o, F45, errores) {
-  const page = await browser.newPage({ viewport: { width: 1080, height: F45 ? 1350 : 1920 }, deviceScaleFactor: 1 });
+async function prepararPagina(browser, o, F, errores) {
+  const page = await browser.newPage({ viewport: { width: F.w, height: F.h }, deviceScaleFactor: 1 });
   page.on("pageerror", (e) => errores.push(e.message));
   if (o.zonaFin) await page.addInitScript((f) => { window.__zonaFin = f; }, o.zonaFin);
   page.on("console", (m) => { if (m.type() === "error") errores.push(m.text()); });
@@ -112,14 +121,16 @@ async function prepararPagina(browser, o, F45, errores) {
   return page;
 }
 
-function urlDe(e, F45) {
+function urlDe(e, F) {
   const tipo = e.tipo || (e.plantilla === "cierre" ? "cierre" : "tarjeta");
   const propia = ["mapa", "ranking", "escala", "tiempo", "explica"].includes(tipo);   // escenas a pantalla completa con página propia
   const pagina = e.pagina ? `${e.pagina}.html?n=${e.n}`   // la escena nombra su página (/historia: foto → noticia, cita y capitulo → historia)
     : tipo === "cierre" ? "cierre.html?" : tipo === "tarjeta" ? `escena.html?n=${e.n}` : propia ? `${tipo}.html?n=${e.n}`
     : ["titular", "noticia"].includes(tipo) ? `noticia.html?n=${e.n}`   // /noticias: el gancho y cada noticia
     : tipo === "gancho" && e.V ? `gancho.html?n=${e.n}` : `golpe.html?n=${e.n}`;   // gancho con visual (llenado, pareja, figuras, lugar)
-  return ORIGEN + pagina + (F45 ? "&f=45" : "");
+  if (F.q === "&f=169" && !PAGINAS_169.includes(pagina.split(".")[0]))   // 16:9 sin layout propio: la escena 4:5 en el escenario
+    return ORIGEN + "escenario.html?n=" + e.n + "&f=169&src=" + encodeURIComponent(pagina + "&f=45");
+  return ORIGEN + pagina + F.q;
 }
 
 // V13: junta las fallas de zona de un cuadro en `zona` (una por elemento y regla, con la caja que más se sale)
@@ -144,8 +155,8 @@ async function medirZona(page, t, zona) {
 }
 
 // graba una escena cuadro a cuadro en la página dada → la línea de resumen, o null si hubo error; mide V13 en `zona`
-async function grabarEscena(page, o, e, F45, CLIPS, errores, zona) {
-  await page.goto(urlDe(e, F45), { waitUntil: "load", timeout: 20000 });
+async function grabarEscena(page, o, e, F, CLIPS, errores, zona) {
+  await page.goto(urlDe(e, F), { waitUntil: "load", timeout: 20000 });
   await page.evaluate(() => window.__listo);
   if (errores.length) return null;
   const n = Math.round(e.dur * o.fps), cada = Math.max(1, Math.round(o.fps / 2));
@@ -178,17 +189,17 @@ async function grabarEscena(page, o, e, F45, CLIPS, errores, zona) {
 
 (async () => {
   const o = args(process.argv.slice(2));
-  if (!["9:16", "4:5"].includes(o.formato)) { console.error("--formato 9:16 | 4:5"); process.exit(2); }
-  const F45 = o.formato === "4:5", CLIPS = F45 ? "clips_4x5" : "clips";   // 4:5 = 1080×1350 para el feed, sin zona segura
+  if (!FORMATOS[o.formato]) { console.error("--formato 9:16 | 4:5 | 16:9"); process.exit(2); }
+  const F = FORMATOS[o.formato], CLIPS = F.clips;   // 4:5 = 1080×1350 para el feed, sin zona segura; 16:9 = el video largo
   const E = JSON.parse(fs.readFileSync(path.join(o.dir, "escenas.json"), "utf8")).escenas;
   const cola = E.filter((e) => !o.solo || o.solo.includes(e.n));
   const browser = await chromium.launch();
   const errores = [], lineas = new Map();
   if (o.portadas) {  // cuadros sueltos sin subtítulos ni barra: las portadas
-    const page = await prepararPagina(browser, o, F45, errores);
+    const page = await prepararPagina(browser, o, F, errores);
     for (const p of JSON.parse(fs.readFileSync(o.portadas, "utf8"))) {
       const e = E.find((x) => x.n === p.n);
-      const url = p.pagina === "portada" ? ORIGEN + "portada.html?n=1&portada=1" : urlDe(e, F45) + "&portada=1";
+      const url = ["portada", "miniatura", "teaser"].includes(p.pagina) ? ORIGEN + p.pagina + ".html?n=1&portada=1" : urlDe(e, F) + "&portada=1";
       await page.goto(url, { waitUntil: "load", timeout: 20000 });
       await page.evaluate(() => window.__listo);
       await page.evaluate((t) => window.seek(t), p.t || 0);
@@ -208,12 +219,12 @@ async function grabarEscena(page, o, e, F45, CLIPS, errores, zona) {
   // página nueva hasta REINTENTOS veces; el resultado es el mismo (seek(t) es puro)
   const REINTENTOS = 2;
   const trabajador = async () => {
-    let page = await prepararPagina(browser, o, F45, errores);
+    let page = await prepararPagina(browser, o, F, errores);
     while (k < cola.length && !errores.length) {
       const e = cola[k++];
       for (let intento = 0; ; intento++) {
         try {
-          const linea = await grabarEscena(page, o, e, F45, CLIPS, errores, zonas.get(e.n));
+          const linea = await grabarEscena(page, o, e, F, CLIPS, errores, zonas.get(e.n));
           if (linea) lineas.set(e.n, linea);
           break;
         } catch (err) {
@@ -221,7 +232,7 @@ async function grabarEscena(page, o, e, F45, CLIPS, errores, zona) {
           console.error(`e${e.n}: ${String(err.message || err).split("\n")[0]} · reintento ${intento + 1}/${REINTENTOS}`);
           await page.close().catch(() => {});
           zonas.set(e.n, new Map());
-          page = await prepararPagina(browser, o, F45, errores);
+          page = await prepararPagina(browser, o, F, errores);
         }
       }
     }
@@ -234,7 +245,14 @@ async function grabarEscena(page, o, e, F45, CLIPS, errores, zona) {
   // V13: zona segura
   const informe = cola.map((e) => ({ n: e.n, tipo: e.tipo || "tarjeta", fallas: [...zonas.get(e.n).values()] }));
   fs.mkdirSync(path.join(o.dir, "revision"), { recursive: true });
-  fs.writeFileSync(path.join(o.dir, "revision", F45 ? "zona_4x5.json" : "zona.json"), JSON.stringify({ formato: o.formato, escenas: informe }, null, 1));
+  // m107: con --solo, el informe se funde con el anterior por número de escena (antes quedaba parcial: solo las regrabadas)
+  const zonaArch = path.join(o.dir, "revision", F.zona), nsVideo = new Set(E.map((e) => e.n));
+  let previas = [];
+  if (o.solo && fs.existsSync(zonaArch)) {
+    try { previas = (JSON.parse(fs.readFileSync(zonaArch, "utf8")).escenas || []).filter((x) => nsVideo.has(x.n) && !informe.some((y) => y.n === x.n)); }
+    catch (_) { previas = []; }
+  }
+  fs.writeFileSync(zonaArch, JSON.stringify({ formato: o.formato, escenas: [...previas, ...informe].sort((a, b) => a.n - b.n) }, null, 1));
   let malas = 0;
   for (const s of informe) for (const f of s.fallas) {
     malas++;

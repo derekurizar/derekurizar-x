@@ -180,7 +180,8 @@
     "revelaciones": [
      "Con una deuda, el mismo motor también corre en tu contra"
     ],
-    "puente": "¿Y si el mismo motor juega en contra de tu deuda?"
+    "puente": "¿Y si el mismo motor juega en contra de tu deuda?",
+    "en_juego": "lo que dejas de ganar al no ahorrar"
    },
    {
     "n": 2,
@@ -196,7 +197,8 @@
     "revelaciones": [
      "La tasa de una tarjeta duplica una deuda en pocos años"
     ],
-    "puente": "¿Cuánto rinde de verdad tu ahorro en Guatemala?"
+    "puente": "¿Cuánto rinde de verdad tu ahorro en Guatemala?",
+    "en_juego": "lo que pagas de más por una deuda"
    },
    {
     "n": 3,
@@ -211,8 +213,12 @@
     "revelaciones": [
      "Con la inflación, la tasa real es mucho menor que la que paga el banco"
     ],
-    "puente": null
+    "puente": null,
+    "en_juego": "lo que la inflación le quita a tu ahorro"
    }
-  ]
+  ],
+  "promesa": {
+   "pregunta": "¿Cuándo el interés trabaja para ti y cuándo en contra?"
+  }
  }
 }

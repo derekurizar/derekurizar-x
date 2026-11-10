@@ -6,11 +6,19 @@
 // scripts/video_grabar.js; la hoja común es video/comun.css.
 const V = (() => {
   const q = new URLSearchParams(location.search);
-  const n = Number(q.get('n')), F45 = q.get('f') === '45', portada = q.get('portada') === '1';
+  // ?f=169: el video largo de YouTube (1920×1080, scripts/youtube.py). Hereda lo compacto del 4:5 (F45, html.f45) y
+  // encima van las reglas html.f169.f45 de cada página: sin subtítulos quemados (van en el .srt) ni barra de progreso
+  const n = Number(q.get('n')), F169 = q.get('f') === '169', F45 = q.get('f') === '45' || F169, portada = q.get('portada') === '1';
   if (F45) document.documentElement.classList.add('f45');
+  if (F169) document.documentElement.classList.add('f169');
   if (portada) document.documentElement.classList.add('portada');
 
   const clamp = (x) => Math.max(0, Math.min(1, x));
+  // DURACIONES (s) de todo lo que entra y sale en las capas comunes, en un solo lugar (2026-11-10; guías de movimiento de
+  // los sistemas de diseño: lo chico rápido, lo grande más lento, la salida más corta que la entrada). Las capas de este
+  // módulo (chips, persona, pregunta, «Sígueme», cuadritos, margen) las usan; una página nueva usa V.D en vez de números.
+  // Cambiar un valor cambia el dibujo: regraba con `armar --todo` / sin --solo.
+  const D = { pop: 0.14, rapida: 0.25, entra: 0.3, sale: 0.25, cambio: 0.4, trazo: 0.7, foco: 2.6 };
   const eo = (x) => 1 - Math.pow(1 - clamp(x), 3);                                  // ease-out cúbica
   const prog = (t, a, b) => (t >= b ? 1 : eo((t - a) / Math.max(0.001, b - a)));    // avance de a a b, con curva
   const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;');
@@ -53,7 +61,7 @@ const V = (() => {
     if (desde > 0) el.style.opacity = '0';
     return el;
   }
-  const seekChips = (t) => { for (const c of CHIPS) if (c.desde > 0) c.el.style.opacity = eo((t - c.desde) / 0.25).toFixed(3); };
+  const seekChips = (t) => { for (const c of CHIPS) if (c.desde > 0) c.el.style.opacity = eo((t - c.desde) / D.rapida).toFixed(3); };
 
   // escenas.json → { todo, S, trozos }: la paleta como variables CSS (--bg, --ink, --resalte-bg…) y la escena ?n=N
   // (o la que elija `buscar`)
@@ -68,8 +76,17 @@ const V = (() => {
     if (S && S.ejemplo) chip({ texto: 'Ejemplo', tono: 'ink', id: 'ejemplo' });
     // cualquier escena: el chip o sello que pongan los scripts en escenas.json (S.chip = {texto, tono, desde, pos})
     if (S && S.chip && S.chip.texto) chip(S.chip);
+    if (S && S.seguir && !portada) pintarSeguir(S.seguir);
+    if (S && S.pregunta && S.pregunta.texto && !portada) pintarPregunta(S.pregunta);
     ACTUAL = S;
-    if (S && (S.personas || []).length) {
+    if (S && S.margen && F169 && !portada) await pintarMargen(S.margen);
+    // 16:9 sin margen o con un margen de 1–2 personas: la última foto del video, borrosa y oscura, llena el fondo
+    if (S && S.fondo && F169) {
+      const f = document.createElement('div'); f.className = 'vfondo'; f.setAttribute('data-fuera-de-zona', ''); f.setAttribute('data-sin-salto', '');
+      const img = new Image(); img.src = S.fondo; await img.decode().catch(() => { throw new Error('no carga el fondo ' + S.fondo); });
+      f.appendChild(img); document.body.insertBefore(f, document.body.firstChild);
+    }
+    if (S && (S.personas || []).length && !(S.margen && F169)) {
       // A3: una tarjeta de persona nombrada mientras se ve el rótulo de acto entra cuando el rótulo se va (con su misma
       // duración); antes tapaba el año (La Línea P5 E10, 2026-11-07)
       const libre = S.R ? S.R.fin : 0;
@@ -169,17 +186,177 @@ const V = (() => {
       PERSONAS.push({ el, p });
     }
     const y0 = arriba ? arriba.offsetTop + arriba.offsetHeight + 36 : 380;
-    PERSONAS.forEach(({ el }) => { el.style.top = Math.max(F45 ? 230 : 360, y0) + 'px'; });
+    PERSONAS.forEach(({ el }) => { el.style.top = (F169 ? 60 : Math.max(F45 ? 230 : 360, y0)) + 'px'; });
   }
   const seekPersonas = (t) => {
     for (const { el, p } of PERSONAS) {
-      const v = portada ? 0 : Math.min(eo((t - p.start) / 0.3), 1 - eo((t - p.fin) / 0.3));
+      const v = portada ? 0 : Math.min(eo((t - p.start) / D.entra), 1 - eo((t - p.fin) / D.sale));
       el.style.opacity = Math.max(0, v).toFixed(3);
       el.style.transform = `translateX(${((1 - Math.max(0, Math.min(1, v))) * -40).toFixed(1)}px)`;
     }
   };
+  // CUADRITOS (el tablero de investigación): cada persona en un cuadrito tipo foto de expediente (retrato recortado al
+  // foco de su cara, apellido debajo), apenas girado. Sin tachas ni marcas: se ILUMINA a quien la voz nombra (p.activo =
+  // [t…]) y el resto queda atenuado; quien aparece por primera vez entra a su segundo (p.start > 0). Con `hilos`
+  // ([[i, j, t]], aristas de hechos verificados, las de la escena `red`) se tiende un hilo en el acento entre dos
+  // cuadritos. Lo usan el margen del 16:9 (V.margen) y el rótulo de capítulo del video largo (historia.html).
+  // cuadritos(caja, personas, {hilos, lado}) → pinta; seekCuadritos(t) → mueve (lo llama seekProgreso)
+  const CUADROS = [];
+  let HILOS = null;
+  const recortarCara = async (c, p, D, alto) => {
+    const img = new Image(); img.src = p.foto;
+    await img.decode().catch(() => { throw new Error('no carga el retrato ' + p.foto); });
+    const f = p.foco || { x: 0.35, y: 0.2, w: 0.3, h: 0.3 };
+    const k = (alto * D) / Math.max(1, f.h * img.naturalHeight), cx = (f.x + f.w / 2) * img.naturalWidth * k, cy = (f.y + f.h / 2) * img.naturalHeight * k;
+    c.style.backgroundImage = `url("${p.foto}")`;
+    c.style.backgroundSize = `${(img.naturalWidth * k).toFixed(1)}px ${(img.naturalHeight * k).toFixed(1)}px`;
+    c.style.backgroundPosition = `${(D / 2 - cx).toFixed(1)}px ${(D / 2 - cy + 0.06 * D).toFixed(1)}px`;
+  };
+  const iniciales = (nom) => String(nom || '').split(/\s+/).filter((w) => /^\p{Lu}/u.test(w)).slice(0, 2).map((w) => w[0]).join('');
+  async function cuadritos(caja, P, o = {}) {
+    caja.classList.add('vcuadros');
+    await document.fonts.ready;
+    const base = CUADROS.length;
+    for (const [i, p] of P.entries()) {
+      const el = document.createElement('div');
+      el.className = 'vcuadro'; el.style.setProperty('--giro', (((i * 37) % 7) - 3) * 0.7 + 'deg');
+      el.innerHTML = `<div class="ft">${p.foto ? '' : `<b>${esc(iniciales(p.nombre))}</b>`}</div><div class="nm">${esc(p.corto || p.nombre)}</div>`;
+      caja.appendChild(el);
+      if (p.foto) await recortarCara(el.querySelector('.ft'), p, el.querySelector('.ft').offsetWidth || 150, 0.58);
+      // el apellido cabe entero en su cuadrito (V13 marca el texto recortado): se achica hasta caber
+      const nm = el.querySelector('.nm'), rg = document.createRange(); rg.selectNodeContents(nm);
+      const sobra = () => rg.getBoundingClientRect().width > nm.getBoundingClientRect().width - 14;   // 14 px de aire: el cuadrito va girado
+      for (let fs = parseFloat(getComputedStyle(nm).fontSize); fs > 10 && sobra(); fs -= 1) nm.style.fontSize = fs + 'px';
+      CUADROS.push({ el, p });
+    }
+    if ((o.hilos || []).length) {
+      const NS = 'http://www.w3.org/2000/svg', svg = document.createElementNS(NS, 'svg'), b = caja.getBoundingClientRect();
+      svg.setAttribute('class', 'vhilos'); svg.setAttribute('width', b.width); svg.setAttribute('height', b.height);
+      svg.setAttribute('data-fuera-de-zona', '');   // su caja es la del tablero; lo que dibuja queda entre los cuadritos
+      const centro = (k) => { const r = CUADROS[base + k].el.querySelector('.ft').getBoundingClientRect(); return [r.left + 14 - b.left, r.top + 12 - b.top]; };   // el alfiler, en la esquina: el hilo no cruza la cara
+      HILOS = [];
+      for (const [i, j, t0] of o.hilos) {
+        if (!CUADROS[base + i] || !CUADROS[base + j]) continue;
+        const [x1, y1] = centro(i), [x2, y2] = centro(j), ln = document.createElementNS(NS, 'path');
+        // el hilo cuelga un poco (una curva), como el de un tablero de corcho
+        ln.setAttribute('d', `M${x1.toFixed(1)},${y1.toFixed(1)} Q${((x1 + x2) / 2).toFixed(1)},${(Math.max(y1, y2) + 22).toFixed(1)} ${x2.toFixed(1)},${y2.toFixed(1)}`);
+        svg.appendChild(ln);
+        const L = ln.getTotalLength(); ln.style.strokeDasharray = L; ln.style.strokeDashoffset = L;
+        HILOS.push({ ln, L, t0: Number(t0) || 0 });
+        for (const [x, y] of [[x1, y1], [x2, y2]]) { const c = document.createElementNS(NS, 'circle');
+          c.setAttribute('cx', x.toFixed(1)); c.setAttribute('cy', y.toFixed(1)); c.setAttribute('r', 7); svg.appendChild(c); HILOS.push({ pin: c, t0: Number(t0) || 0 }); }
+      }
+      caja.appendChild(svg);
+    }
+  }
+  let QUIEN = null, MARGEN = null;
+  const seekCuadritos = (t) => {
+    let dicho = null;
+    for (const { el, p } of CUADROS) {
+      const entra = portada || !(p.start > 0) ? 1 : eo((t - p.start) / D.cambio);
+      const act = (p.activo || []).reduce((m, a) => (t >= a - 0.1 && (m === null || a > m) ? a : m), null);
+      const luz = portada ? (p.nuevo || (p.activo || []).length ? 1 : 0) : Math.max(p.nuevo ? eo((t - (p.start || 0)) / D.cambio) : 0, act !== null ? 1 - 0.75 * clamp((t - act - D.foco) / 0.6) : 0);
+      el.style.opacity = (entra * (0.42 + 0.58 * luz)).toFixed(3);
+      el.classList.toggle('on', luz > 0.5);
+      const pop = act !== null ? Math.sin(Math.PI * clamp((t - act) / 0.4)) : 0;
+      el.style.transform = `rotate(var(--giro)) scale(${((0.8 + 0.2 * entra) * (1 + 0.07 * pop)).toFixed(4)})`;
+      if (act !== null && t < act + 3.2 && (!dicho || act > dicho.act)) dicho = { act, p };
+    }
+    if (MARGEN && MARGEN.libre > 0) MARGEN.el.style.opacity = eo((t - MARGEN.libre) / D.cambio).toFixed(3);
+    for (const h of HILOS || []) {
+      const k = portada ? 1 : eo((t - h.t0) / D.trazo);
+      // sin avance el hilo no se pinta (con la punta redonda, un trazo de largo 0 dejaba un punto suelto)
+      if (h.ln) { h.ln.style.strokeDashoffset = (h.L * (1 - k)).toFixed(1); h.ln.style.opacity = k > 0.01 ? '1' : '0'; } else h.pin.style.opacity = k.toFixed(3);
+    }
+    if (QUIEN) { const x = dicho ? dicho.p : null;
+      if (x && QUIEN.dataset.k !== x.nombre) { QUIEN.dataset.k = x.nombre; QUIEN.innerHTML = `<b>${esc(x.nombre)}</b>${x.cargo ? `<span>${esc(x.cargo)}</span>` : ''}`; }
+      QUIEN.style.opacity = x ? Math.min(eo((t - dicho.act) / D.entra), 1 - clamp((t - dicho.act - D.foco - 0.3) / D.sale)).toFixed(3) : '0'; }
+  };
+  // MARGEN DE EXPEDIENTE (solo 16:9, S.margen; scripts/youtube.py margenes): las escenas que en horizontal dejaban
+  // media pantalla vacía (cita, golpe, tarjeta, explica) corren su contenido a la izquierda (html.conmargen, reglas en
+  // cada página) y a la derecha va el expediente del video: capítulo y título, los cuadritos de las personas ya
+  // nombradas (se ilumina la que la voz dice, con su nombre y su cargo debajo) y la línea de capítulos. Todo lo que
+  // cambia ahí cambia con la voz: la cámara sigue quieta.
+  async function pintarMargen(M) {
+    document.documentElement.classList.add('conmargen');
+    const el = document.createElement('div'); el.className = 'vmargen'; el.setAttribute('data-sin-salto', '');
+    const c = M.capitulo || {};
+    el.innerHTML = `<div class="cab">${c.numero ? `<span>Capítulo ${c.numero} de ${c.total}</span>` : ''}<b>${esc(c.titulo || '')}</b></div>`
+      + '<div class="grid"></div><div class="quien"></div>'
+      + (c.total > 1 ? `<div class="riel"><i class="linea"></i>${Array.from({ length: c.total }, (_, i) =>
+        `<i class="punto${i < c.numero - 1 ? ' ya' : i === c.numero - 1 ? ' hoy' : ''}" style="left:${(100 * i / (c.total - 1)).toFixed(2)}%"></i>`).join('')}</div>` : '');
+    document.body.appendChild(el);
+    QUIEN = el.querySelector('.quien');
+    // A3: mientras se ve el rótulo de acto, el margen espera (entra cuando el rótulo se va)
+    MARGEN = { el, libre: ACTUAL && ACTUAL.R ? ACTUAL.R.fin : 0 };
+    if (MARGEN.libre > 0) el.style.opacity = '0';
+    await cuadritos(el.querySelector('.grid'), M.personas || []);
+  }
+  // LA PREGUNTA DEL VIDEO (P6, S.pregunta = {texto, desde, dur, pagada}; video.py marcar_pregunta): la recompensa de
+  // verlo, en pantalla y no en la voz. Entra cuando la voz dice la promesa, se queda unos segundos y se va; vuelve en la
+  // bisagra y en la escena que la paga, ahí con su check. Va en la pila de chips de arriba a la derecha.
+  let PREGUNTA = null;
+  const pintarPregunta = (o) => {
+    let caja = document.querySelector('.vchips.arriba');
+    if (!caja) { caja = document.createElement('div'); caja.className = 'vchips arriba'; document.body.appendChild(caja); }
+    const el = document.createElement('div');
+    el.className = 'vpregunta' + (o.pagada ? ' pagada' : '');
+    el.innerHTML = `<svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg><span>${esc(o.texto)}</span>`;
+    el.style.opacity = '0';
+    caja.appendChild(el);
+    PREGUNTA = { el, o };
+  };
+  const seekPregunta = (t) => {
+    if (!PREGUNTA) return;
+    const { el, o } = PREGUNTA, x = t - o.desde;
+    const v = portada ? 0 : Math.min(eo(x / D.entra), 1 - eo((x - o.dur) / D.sale));
+    el.style.opacity = Math.max(0, v).toFixed(3);
+    el.style.transform = `translateX(${((1 - eo(x / D.entra)) * 40).toFixed(1)}px)`;
+    if (o.pagada) { const k = eo((x - 0.9) / 0.35); el.classList.toggle('ya', k > 0.5);
+      el.querySelector('svg').style.transform = `scale(${(k <= 0 ? 0 : 1 + 0.4 * Math.sin(Math.PI * k) * (1 - k)).toFixed(3)})`; }
+  };
+  // «SÍGUEME» A MITAD DEL VIDEO (S.seguir = {desde}; lo marca video.py marcar_seguir en la escena que contiene el 50 %):
+  // sin cortar la escena, arriba a la derecha entra el botón «Sígueme» (sin cuenta), el cursor lo toca, pasa a
+  // «Siguiendo» con su check, la campana suena con su punto, y se va (≈ 3.3 s). El mismo gesto que el cierre
+  // (video/cierre.html), en chico. Lo pinta V.cargar y lo mueve V.seekProgreso: las páginas no hacen nada. Gate V25.
+  let SEGUIR = null;
+  const SEGUIR_T = { clic: 0.9, campana: 1.4, sale: 3.0, fin: 3.3 };
+  const pintarSeguir = (o) => {
+    const el = document.createElement('div');
+    el.className = 'vseguir' + (window.parent !== window ? ' enmarco' : ''); el.setAttribute('data-sin-salto', '');
+    el.innerHTML = '<div class="bt"><span class="lbl">Sígueme</span><span class="ya"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Siguiendo</span><span class="onda"></span></div>'
+      + '<div class="cam"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><span class="punto"></span></div>'
+      + '<div class="cur"><svg viewBox="0 0 24 24"><path d="M10 9.5V4a2 2 0 0 0-4 0v10l-1.6-1.6a2 2 0 0 0-2.83 2.82l3.6 3.6C6.66 20.3 8.4 22 11.2 22H14a8 8 0 0 0 8-8v-3a2 2 0 0 0-4 0v-1a2 2 0 0 0-4 0V9a2 2 0 0 0-4 0z"/></svg></div>';
+    el.style.opacity = '0';
+    document.body.appendChild(el);
+    SEGUIR = { el, desde: Math.max(0, Number(o.desde) || 0) };
+  };
+  const bumpS = (x, d) => (x < 0 || x > d ? 0 : Math.sin(Math.PI * x / d));
+  const seekSeguir = (t) => {
+    if (!SEGUIR) return;
+    const x = t - SEGUIR.desde, T = SEGUIR_T, el = SEGUIR.el, q1 = (c) => el.querySelector(c);
+    const v = Math.min(eo(x / D.entra), 1 - eo((x - T.sale) / (T.fin - T.sale)));
+    el.style.opacity = Math.max(0, v).toFixed(3);
+    el.style.transform = `translateX(${((1 - Math.max(0, Math.min(1, eo(x / D.entra)))) * 50).toFixed(1)}px)`;
+    const bt = q1('.bt'), hecho = eo((x - T.clic - 0.15) / 0.3);
+    bt.style.transform = `scale(${(1 - 0.06 * bumpS(x - T.clic, 0.14)).toFixed(4)})`;
+    bt.style.background = `color-mix(in srgb, var(--acento, var(--a1)) ${(100 * (1 - hecho)).toFixed(1)}%, var(--bg))`;
+    q1('.lbl').style.opacity = (1 - hecho).toFixed(3); q1('.ya').style.opacity = hecho.toFixed(3);
+    const o = clamp((x - T.clic) / 0.45), onda = q1('.onda');
+    onda.style.opacity = (o > 0 && o < 1 ? 0.35 * (1 - o) : 0).toFixed(3); onda.style.transform = `scale(${(0.2 + 4.2 * o).toFixed(3)})`;
+    const pp = clamp((x - T.campana) / 0.35), xc = x - T.campana;
+    q1('.punto').style.transform = `scale(${(pp <= 0 ? 0 : pp < 1 ? 1 + 0.35 * Math.sin(Math.PI * pp) * (1 - pp) : 1).toFixed(3)})`;
+    q1('.cam').style.transform = `rotate(${(xc >= 0 && xc < 0.9 ? 14 * Math.exp(-3.2 * xc) * Math.sin(2 * Math.PI * xc / 0.3) : 0).toFixed(2)}deg)`;
+    // el cursor sube desde abajo, toca el botón y se va
+    const cur = q1('.cur'), va = eo((x - 0.35) / (T.clic - 0.35)), sale = clamp((x - T.clic - 0.3) / 0.3);
+    cur.style.opacity = (clamp((x - 0.35) / 0.15) * (1 - sale)).toFixed(3);
+    cur.style.transform = `translate(${(18 * (1 - va)).toFixed(1)}px, ${(84 * (1 - va)).toFixed(1)}px) scale(${(1 - 0.12 * bumpS(x - T.clic, 0.14)).toFixed(3)})`;
+  };
   const seekProgreso = (t, k, dur) => {
-    seekChips(t);   // los chips (V.chip) entran a su segundo: todas las páginas llaman seekProgreso en su seek
+    seekChips(t);
+    seekSeguir(t);
+    seekPregunta(t);
+    seekCuadritos(t);   // los chips (V.chip) entran a su segundo: todas las páginas llaman seekProgreso en su seek
     seekSaltos(t);
     seekPersonas(t);
     const gi = GRUPOS.findIndex((g) => g.ns.includes(k)), g = GRUPOS[gi] || { ns: [k], durs: [dur] };
@@ -317,7 +494,7 @@ const V = (() => {
   // fin = top de #subs − 30 si la página tiene subtítulos. Las páginas que dimensionan en JS la leen con V.zona().
   const zona = () => {
     const cs = getComputedStyle(document.documentElement), px = (k) => parseFloat(cs.getPropertyValue(k)) || 0;
-    const ancho = document.body.clientWidth, alto = document.body.clientHeight, subs = document.getElementById('subs');
+    const ancho = document.body.clientWidth, alto = document.body.clientHeight, subs = F169 ? null : document.getElementById('subs');   // 16:9: sin subtítulos
     const fin = window.__zonaFin || (subs ? Math.min(alto, subs.offsetTop - 30) : px('--fin'));   // __zonaFin: prueba del gate
     return { ancho, alto, izq: px('--izq'), der: ancho - px('--der'), corte: px('--corte'), sup: px('--sup'), fin,
       iconosX: px('--iconos-x'), iconosY: px('--iconos-y') };
@@ -452,6 +629,6 @@ const V = (() => {
     return fallas;
   };
 
-  return { medirActo, n, F45, portada, clamp, eo, prog, esc, normal, trocear, cargar, tarjeta, chip, seekChips, acentoDe, pintarGolpe, ajustarGolpe, seekGolpe,
+  return { medirActo, n, F45, F169, portada, clamp, eo, prog, esc, normal, trocear, D, cargar, tarjeta, chip, seekChips, cuadritos, seekCuadritos, acentoDe, pintarGolpe, ajustarGolpe, seekGolpe,
     pintarProgreso, seekProgreso, subtitulos, subtitulosVentana, desfase, pintarActo, seekActo, zona, medirZona };
 })();

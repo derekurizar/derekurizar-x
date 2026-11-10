@@ -18,7 +18,7 @@ guion que el crítico rechaza no se graba, la voz va por secuencias y el reporte
    - `make doctor` (exit 0).
    - `python3 scripts/serie.py preparar "<tema>" --partes <M> [--motor explica]` → imprime `SERIE` (la carpeta
      `series/<fecha>-<slug>`) y, en la última línea, el `TRABAJO` de la investigación compartida (`sesiones/serie-<slug>`).
-   - Avisa: la investigación tarda ~25–45 min (0 créditos). Cada parte, ~15–25 min y ≈ 1,100–1,400 créditos de voz.
+   - Avisa: la investigación tarda ~25–45 min (0 créditos). Cada parte, ~15–25 min y ≈ 1,100–1,400 créditos de voz (en modo caso, medido en Bancafé: 141–169 s y ≈ 2,100–2,450 créditos por parte).
 2. **PLAN E INVESTIGACIÓN COMPARTIDA** (Workflow del motor, una vez)
    - Workflow `historia` (o `explica`) con `args: {"trabajo": "<TRABAJO>", "tema": "<tema>", "serie": {"partes": M},
      "hasta": "consolidar"}`. El editor escribe el encuadre del tema entero y el plan de partes (`encuadre.serie.partes`,
@@ -29,8 +29,20 @@ guion que el crítico rechaza no se graba, la voz va por secuencias y el reporte
    - **Muéstrale el plan al usuario** (`python3 scripts/serie.py digesto <SERIE>`): títulos, preguntas, periodos o
      mecanismos, lo que revela cada parte y los puentes. Con su visto bueno (o sus cambios: el editor re-encuadra y el
      plan sube de versión), `python3 scripts/serie.py plan <TRABAJO> --check --aprobar`.
-3. **CADA PARTE** (en orden; una parte puede hacerse otro día)
-   - `python3 scripts/serie.py parte <SERIE> <N>` → el TRABAJO de la parte (`<TRABAJO>/parte-N`): la investigación
+3. **LOS GUIONES DE TODAS LAS PARTES** (en orden, sin voz; regla del usuario 2026-11-09, SE17)
+   - Para cada parte: `serie.py parte`, el Workflow con `desde: "ganchos"` (el usuario elige gancho y cierre), el crítico
+     aprueba, `serie.py guion-aprobado`. **No se graba ninguna voz todavía.**
+   - Con TODAS las partes con guion: `python3 scripts/serie.py completa <SERIE> --check` (SE17: faltan guiones, hechos,
+     citas, frases, presentaciones y siglas repetidas entre CUALQUIER par de partes, y la cadena real de puentes) y
+     escribe `<TRABAJO>/serie_completa.md`. Luego un `video-critico` en «modo serie completa» lee ese archivo entero:
+     coherencia del arco, repeticiones, saltos, revelaciones adelantadas o pagadas dos veces, conceptos explicados dos
+     veces o nunca. Sus arreglos van con `historia.py aplicar` en la parte que toca (una parte ya entregada queda fija
+     salvo que el usuario pida tocarla). Repite `completa --check` hasta 0 fallas y `--aprobar`.
+   - **La sesión lee ella misma `serie_completa.md` de principio a fin** (no basta el crítico ni el script): ambigüedades («que lo detuviera»), hechos que el oyente no entiende, cifras que chocan. Lo arregla con `historia.py aplicar` y vuelve a `completa --check --aprobar`.
+   - `historia.py voz` se niega a grabar una parte nueva hasta que la serie completa está aprobada y ningún guion cambió
+     después (huella).
+4. **VOZ Y VIDEO DE CADA PARTE** (en orden; una parte puede hacerse otro día)
+   - (El TRABAJO de la parte ya existe del paso 3.) `python3 scripts/serie.py parte <SERIE> <N>` → el TRABAJO de la parte (`<TRABAJO>/parte-N`): la investigación
      copiada, el encuadre de la parte, formato ≈ 90 s, paleta y música de la serie y la parte siguiente. En /historia la
      parte solo ve los hechos hasta el fin de su periodo (las revelaciones de las partes siguientes no se adelantan).
    - Workflow del motor con `args: {"trabajo": "<TRABAJO>/parte-N", "tema": "<tema> · Parte N: <título>", "desde":
@@ -40,11 +52,11 @@ guion que el crítico rechaza no se graba, la voz va por secuencias y el reporte
    - Con el guion aprobado: `python3 scripts/serie.py guion-aprobado <TRABAJO>/parte-N` (habilita publicar la parte
      anterior).
    - Voz (MCP, por secuencias) o voz falsa con `sin-voz`, `tiempos`, `grabar`, `montar`, `revisar` en 9:16 y 4:5, con
-     los comandos del motor sobre `<TRABAJO>/parte-N`.
+     los comandos del motor sobre `<TRABAJO>/parte-N` (o de una vez: `python3 scripts/historia.py producir <TRABAJO>/parte-N`).
    - `python3 scripts/serie.py entregar-parte <TRABAJO>/parte-N` → `series/<fecha>-<slug>/parte-N/` y `serie.md`.
-4. **CIERRE**
+5. **CIERRE**
    - `python3 scripts/memoria.py --serie <SERIE>` y `make validate` (exit 0) tras cada parte entregada.
-5. **REPORTE**
+6. **REPORTE**
    - La tabla de `serie.md`: cada parte con su estado y si ya se puede publicar (la N, cuando la N+1 tiene guion
      aprobado). Qué fijar en el perfil (la Parte 1) y el nombre de la playlist o lista.
    - Por parte, lo del reporte del motor (gancho, cierre, duración, créditos).

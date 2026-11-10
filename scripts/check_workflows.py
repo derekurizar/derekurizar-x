@@ -30,6 +30,8 @@ El sandbox del Workflow no importa módulos, así que hilo.js, dato.js e ideas.j
   W13 explica.js: TIPOS (los de video.py más cuenta), FAMILIAS, VISUALES, PUNTAJES y MODELOS son espejos literales de
       scripts/explica.py, y SEGUN_MAX es su SEGUN_MAX_VIDEO; la tabla MODOS de explica.js (explica, mito) tiene las claves
       de explica.MODOS y, por modo, las mismas familias, visuales, puntajes y ejes_obligatorios
+  W14 youtube.js: PUNTAJES y los límites del montaje (PUENTE_ORACIONES, PUENTE_CARACTERES, REPRISE_MAX, REVOZAR_MAX,
+      DURACION_MIN/MAX) son espejos literales de scripts/youtube.py
 
 Uso: python3 scripts/check_workflows.py [--quiet]   · salida 0 ok · 1 diferencias
 """
@@ -205,6 +207,7 @@ def main():
     noticias_workflow()
     historia_workflow()
     explica_workflow()
+    youtube_workflow()
     return fin(quiet)
 
 
@@ -301,6 +304,29 @@ def historia_workflow():
             err("W12 historia.js: no se encontró `%s = N`" % nombre)
         elif int(m.group(1)) != py:
             err("W12 historia.js %s = %s ≠ historia.py %s" % (nombre, m.group(1), py))
+
+
+def youtube_workflow():
+    """W14: youtube.js refleja las constantes de scripts/youtube.py."""
+    src = fuente("youtube.js", opcional=True)
+    if not src:
+        return
+    try:
+        import youtube as YT
+    except Exception as ex:  # noqa: BLE001
+        err("W14 no se pudo importar scripts/youtube.py: %s" % ex)
+        return
+    js = lista(src, "PUNTAJES")
+    if js != list(YT.PUNTAJES):
+        err("W14 youtube.js PUNTAJES %s ≠ youtube.py %s" % (js, list(YT.PUNTAJES)))
+    escalares = {"PUENTE_ORACIONES": YT.PUENTE_ORACIONES, "PUENTE_CARACTERES": YT.PUENTE_CARACTERES, "REPRISE_MAX": YT.REPRISE_MAX,
+                 "REVOZAR_MAX": YT.REVOZAR_MAX, "DURACION_MIN": YT.DURACION_S[0], "DURACION_MAX": YT.DURACION_S[1]}
+    for nombre, py in escalares.items():
+        m = re.search(r"\b%s = (\d+)" % nombre, src)
+        if not m:
+            err("W14 youtube.js: no se encontró `%s = N`" % nombre)
+        elif int(m.group(1)) != py:
+            err("W14 youtube.js %s = %s ≠ youtube.py %s" % (nombre, m.group(1), py))
 
 
 def explica_workflow():

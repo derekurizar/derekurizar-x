@@ -1,0 +1,374 @@
+{
+ "id": "2026-11-09-bancafe-y-banco-de-comercio-parte-3",
+ "tipo": "historia",
+ "slug": "bancafe-y-banco-de-comercio-parte-3",
+ "tema": "Bancafé y Banco de Comercio: la caída de dos bancos en Guatemala (2006–2007)",
+ "fecha": "2026-11-09",
+ "pregunta": "¿Qué pasó con los ahorrantes de Bancafé cuando el banco cayó?",
+ "arco": "caso: auge, apuesta, caída en cadena y juicio inconcluso, con los conceptos bancarios explicados en el camino",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "19 oct 2006",
+   "titulo": "La suspensión",
+   "escena": 4
+  },
+  {
+   "numero": 3,
+   "anio": "Oct 2006",
+   "titulo": "Hasta el tope",
+   "escena": 9
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "Fueron a Bancafé por su dinero y hallaron una malla metálica. Así cayó un banco de Guatemala. Era el {21:m} de octubre de 2006, y los clientes llegaban a cajeros y agencias. En juego estaba el dinero de sus ahorrantes. Una fila así es lo que todo banco teme: una corrida bancaria. Muchos ahorrantes sacan su dinero a la vez, y ningún banco lo tiene todo en efectivo, porque lo presta. Entonces el miedo salta a otros bancos."
+  },
+  {
+   "acto": 2,
+   "texto": "Esa malla venía del 19 de octubre: la SIB, el supervisor, avisó a la Junta Monetaria que Bancafé incumplió su plan para ponerse en regla; ya lo había sancionado por pasar el tope del 15 %. Por eso pedía suspenderlo. ¿Qué significa suspender un banco? Deja de operar y lo interviene la autoridad. Faltaban horas para un asueto. Ese mismo día, la Junta suspendió a Bancafé, y por la noche, según La Hora, 50 agentes del supervisor cerraron su sede. Al día siguiente, María Antonieta del Cid de Bonilla, presidenta del Banco de Guatemala, dijo: Esto se realizará ordenadamente, para así proteger el dinero de los ahorrantes. El 23 de octubre, sus cuentas pasaron a Banrural, Bancor y Agromercantil, para que sus clientes las usaran."
+  },
+  {
+   "acto": 3,
+   "texto": "¿Quién garantizaba ese dinero? El Fondo para la Protección del Ahorro, el FOPA: el seguro de depósitos. Su tope, por ley: cubrirá hasta un monto de veinte mil quetzales, o su equivalente en moneda extranjera, por persona individual o jurídica. Lo que pasa del tope, o está en un banco de otro país, queda fuera. Pero con Bancafé se cubrió el 100% de los depósitos: el FOPA puso mil seiscientos millones de quetzales. Por eso los ahorrantes en Guatemala recuperaron su dinero. Pero los de su banco offshore de Barbados quedaron fuera del rescate. En diciembre, el liquidador de la offshore dijo que sus bonos en la corredora Refco ya no eran de sus antiguos dueños: quedaban en sus manos. El FOPA cubrió cada depósito en Guatemala, más allá de su tope. Pero a quien ahorró en la offshore, ese seguro no le devolvió nada."
+  }
+ ],
+ "hilos": [
+  {
+   "id": "p3h1",
+   "escena": 12
+  },
+  {
+   "id": "p3h2",
+   "pasa_a": 4
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3
+  ],
+  [
+   4,
+   5
+  ],
+  [
+   6,
+   7,
+   8
+  ],
+  [
+   9,
+   10
+  ],
+  [
+   11,
+   12,
+   13
+  ]
+ ],
+ "paleta": "cacao",
+ "musica": "corrupcion-colapso",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2101.8,
+ "duracion_s": 142.4,
+ "critica": {
+  "veredicto": "corregir",
+  "vuelta": 3,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 4,
+   "claridad": 3,
+   "flujo": 4,
+   "precision": 4,
+   "cierre": 4
+  }
+ },
+ "gancho": {
+  "familia": "resultado",
+  "visual": "foto",
+  "pantalla": "Bancafé: una malla",
+  "linea": "Fueron por su dinero y hallaron una malla"
+ },
+ "promesa": {
+  "texto": "En juego estaba el dinero de sus ahorrantes",
+  "forma": "apuesta",
+  "en": 2,
+  "pago": 12,
+  "revela": 2
+ },
+ "bisagra": {
+  "texto": "Faltaban horas para un asueto.",
+  "forma": "reloj",
+  "en": 6,
+  "pago": 6
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "Fueron a Bancafé por su dinero y hallaron una malla metálica. Así cayó un banco de Guatemala.",
+   "voz": "Fueron a Bancafé por su dinero y hallaron una malla metálica. Así cayó un banco de Guatemala.",
+   "dur": 7.25,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: La Hora",
+     "origen": "medio",
+     "licencia": "© La Hora (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "Era el 21 de octubre de 2006, y los clientes llegaban a cajeros y agencias. En juego estaba el dinero de sus ahorrantes.",
+   "voz": "Era el veintiuno de octubre de dos mil seis, y los clientes llegaban a cajeros y agencias. En juego estaba el dinero de sus ahorrantes.",
+   "dur": 8.379,
+   "hechos": [
+    "cai-h12",
+    "caf-h19"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "explica",
+   "pantalla": "Una fila así es lo que todo banco teme: una corrida bancaria. Muchos ahorrantes sacan su dinero a la vez, y ningún banco lo tiene todo en efectivo, porque lo presta. Entonces el miedo salta a otros bancos.",
+   "voz": "Una fila así es lo que todo banco teme: una corrida bancaria. Muchos ahorrantes sacan su dinero a la vez, y ningún banco lo tiene todo en efectivo, porque lo presta. Entonces el miedo salta a otros bancos.",
+   "dur": 14.553,
+   "hechos": [
+    "cai-h29"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": "foco-contagio",
+   "mecanismo": "onda"
+  },
+  {
+   "n": 4,
+   "tipo": "foto",
+   "pantalla": "Esa malla venía del 19 de octubre: la SIB, el supervisor, avisó a la Junta Monetaria que Bancafé incumplió su plan para ponerse en regla; ya lo había sancionado por pasar el tope del 15 %.",
+   "voz": "Esa malla venía del diecinueve de octubre: la SIB, el supervisor, avisó a la Junta Monetaria que Bancafé incumplió su plan para ponerse en regla; ya lo había sancionado por pasar el tope del quince por ciento.",
+   "dur": 13.538,
+   "hechos": [
+    "jui-h13"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: UCDWiki · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "definicion",
+   "pantalla": "Por eso pedía suspenderlo. ¿Qué significa suspender un banco? Deja de operar y lo interviene la autoridad.",
+   "voz": "Por eso pedía suspenderlo. ¿Qué significa suspender un banco? Deja de operar y lo interviene la autoridad.",
+   "dur": 8.3,
+   "hechos": [
+    "jui-h13"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "foto",
+   "pantalla": "Faltaban horas para un asueto. Ese mismo día, la Junta suspendió a Bancafé, y por la noche, según La Hora, 50 agentes del supervisor cerraron su sede.",
+   "voz": "Faltaban horas para un asueto. Ese mismo día, la Junta suspendió a Bancafé, y por la noche, según La Hora, cincuenta agentes del supervisor cerraron su sede.",
+   "dur": 10.604,
+   "hechos": [
+    "ref-h12",
+    "ref-h17",
+    "ref-h18"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "cita",
+   "pantalla": "Al día siguiente, María Antonieta del Cid de Bonilla, presidenta del Banco de Guatemala, dijo: Esto se realizará ordenadamente, para así proteger el dinero de los ahorrantes.",
+   "voz": "Al día siguiente, María Antonieta del Cid de Bonilla, presidenta del Banco de Guatemala, dijo: Esto se realizará ordenadamente, para así proteger el dinero de los ahorrantes.",
+   "dur": 11.337,
+   "hechos": [
+    "cai-h11"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "foto",
+   "pantalla": "El 23 de octubre, sus cuentas pasaron a Banrural, Bancor y Agromercantil, para que sus clientes las usaran.",
+   "voz": "El veintitrés de octubre, sus cuentas pasaron a Banrural, Bancor y Agromercantil, para que sus clientes las usaran.",
+   "dur": 8.052,
+   "hechos": [
+    "cai-h14"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Victovic221 · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "cita",
+   "pantalla": "¿Quién garantizaba ese dinero? El Fondo para la Protección del Ahorro, el FOPA: el seguro de depósitos. Su tope, por ley: cubrirá hasta un monto de veinte mil quetzales, o su equivalente en moneda extranjera, por persona individual o jurídica.",
+   "voz": "¿Quién garantizaba ese dinero? El Fondo para la Protección del Ahorro, el FOPA: el seguro de depósitos. Su tope, por ley: cubrirá hasta un monto de veinte mil quetzales, o su equivalente en moneda extranjera, por persona individual o jurídica.",
+   "dur": 16.404,
+   "hechos": [
+    "ref-h23",
+    "caf-h36"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "golpe",
+   "pantalla": "Lo que pasa del tope, o está en un banco de otro país, queda fuera.",
+   "voz": "Lo que pasa del tope, o está en un banco de otro país, queda fuera.",
+   "dur": 5.165,
+   "hechos": [
+    "caf-h36"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "tarjeta",
+   "pantalla": "Pero con Bancafé se cubrió el 100% de los depósitos: el FOPA puso mil seiscientos millones de quetzales.",
+   "voz": "Pero con Bancafé se cubrió el cien por ciento de los depósitos: el FOPA puso mil seiscientos millones de quetzales.",
+   "dur": 7.657,
+   "hechos": [
+    "caf-h20"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "foto",
+   "pantalla": "Por eso los ahorrantes en Guatemala recuperaron su dinero. Pero los de su banco offshore de Barbados quedaron fuera del rescate.",
+   "voz": "Por eso los ahorrantes en Guatemala recuperaron su dinero. Pero los de su banco offshore de Barbados quedaron fuera del rescate.",
+   "dur": 8.055,
+   "hechos": [
+    "cai-h17",
+    "ref-h16"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Gordon Leggett · CC BY 4.0",
+     "origen": "commons",
+     "licencia": "CC BY 4.0"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 13,
+   "tipo": "foto",
+   "pantalla": "En diciembre, el liquidador de la offshore dijo que sus bonos en la corredora Refco ya no eran de sus antiguos dueños: quedaban en sus manos.",
+   "voz": "En diciembre, el liquidador de la offshore dijo que sus bonos en la corredora Refco ya no eran de sus antiguos dueños: quedaban en sus manos.",
+   "dur": 10.023,
+   "hechos": [
+    "caf-h24"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 14,
+   "tipo": "cierre",
+   "pantalla": "El FOPA cubrió cada depósito en Guatemala, más allá de su tope. Pero a quien ahorró en la offshore, ese seguro no le devolvió nada. Sígueme: en la cuarta parte te cuento si hubo otro banco así y qué le pasó.",
+   "voz": "El FOPA cubrió cada depósito en Guatemala, más allá de su tope. Pero a quien ahorró en la offshore, ese seguro no le devolvió nada. Sígueme: en la cuarta parte te cuento si hubo otro banco así y qué le pasó.",
+   "dur": 16.538,
+   "hechos": [],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Así terminó octubre",
+  "resumen": [
+   "Suspendido el 19 de octubre",
+   "El seguro cubrió a los de aquí",
+   "La offshore quedó fuera"
+  ],
+  "texto": "El FOPA cubrió cada depósito en Guatemala, más allá de su tope. Pero a quien ahorró en la offshore, ese seguro no le devolvió nada.",
+  "tipo": "remate",
+  "forma": "puente",
+  "final": "Pero a quien ahorró en la offshore, ese seguro no le devolvió nada.",
+  "invitacion": "Sígueme: en la cuarta parte te cuento si hubo otro banco así y qué le pasó."
+ },
+ "caption": {
+  "tiktok": "Serie · Parte 3 de 5: La caída de octubre\nEl 19 de octubre de 2006, la Junta Monetaria suspendió Bancafé. Qué es una corrida bancaria, qué significa suspender un banco y qué cubre el seguro de depósitos, explicados.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\n#Guatemala #Bancafé #historia",
+  "instagram": "Serie · Parte 3 de 5: La caída de octubre\nClientes frente a una malla, un banco suspendido y un seguro con tope de Q20,000 por persona. Así cayó Bancafé en octubre de 2006.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\n#Guatemala #Bancafé #historia",
+  "facebook": "Serie · Parte 3 de 5: La caída de octubre\nEn octubre de 2006, Bancafé dejó de operar. Sus ahorrantes en Guatemala recuperaron su dinero; los de su offshore en Barbados quedaron fuera del rescate.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\nFuentes en el primer comentario.",
+  "shorts": "La caída de Bancafé en octubre de 2006 (3/5) #Shorts"
+ }
+}

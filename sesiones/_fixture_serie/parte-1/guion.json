@@ -1,7 +1,7 @@
 {
  "tipo": "historia",
  "contexto_superior": "Serie · Maqueta",
- "promesa": {
+ "promesa": {"pregunta": "¿Cómo llenó La Espiga una ciudad de pan?", 
   "texto": "¿Cómo llena una ciudad de pan un solo horno?",
   "en": 2,
   "pago": 7,
@@ -17,15 +17,15 @@
  "narracion": [
   {
    "acto": 1,
-   "texto": "Así empezó La Espiga: un horno de leña en Xela, Guatemala. Fue en 1952, en Quetzaltenango, cuando todo cabía en una sola puerta y un solo fuego. Pero ¿cómo llena una ciudad de pan un solo horno? Marta Pérez, la fundadora, lo encendía con sus propias manos y vendía el pan en la misma puerta, antes de que abrieran las tiendas. Años después lo resumió así: Cada pan sale del mismo horno que encendí el primer día."
+   "texto": "Así empezó La Espiga: un horno de leña en Xela, Guatemala. ¿Cómo llena una ciudad de pan un solo horno? Porque en 1952, en Quetzaltenango, todo cabía en una sola puerta y un solo fuego. Marta Pérez, la fundadora, lo encendía con sus propias manos y vendía el pan en la misma puerta, antes de que abrieran las tiendas. Años después, ya con el negocio crecido, lo resumió así ante un periodista: Cada pan sale del mismo horno que encendí el primer día."
   },
   {
    "acto": 2,
-   "texto": "Por eso, en 1958, La Espiga abrió su primera sucursal en el centro de Xela, y el pan empezó a viajar fuera de aquella puerta. Nadie imaginaba cuánto pan saldría de ahí. Pero el salto grande llegó diez años más tarde: en 1968, La Espiga ya vendía 4,500 panes al día en Xela. Así que de un solo fuego salían 4,500 panes cada día."
+   "texto": "Por eso, en 1958, La Espiga abrió su primera sucursal en el centro de Xela. Nadie imaginaba cuánto pan saldría de ahí. Pero el salto grande llegó diez años más tarde, cuando el barrio entero ya la conocía: en 1968, La Espiga ya vendía 4,500 panes al día en Xela. Así que de un solo fuego salían 4,500 panes cada día."
   },
   {
    "acto": 3,
-   "texto": "Entonces llegó la respuesta: para 1971, La Espiga ya tenía cinco sucursales en Quetzaltenango, y el horno de Marta seguía siendo el corazón de todas, encendido antes de que saliera el sol. Así que del horno de 1952 salieron cinco sucursales en toda Xela. ¿Qué le pasaría a La Espiga cuando la tierra tembló?"
+   "texto": "Entonces llegó la respuesta: para 1971, La Espiga ya tenía cinco sucursales en Quetzaltenango, y el horno de Marta seguía siendo el corazón de todas. Así que del horno de 1952 salieron cinco sucursales en toda Xela. ¿Qué le pasaría a La Espiga cuando la tierra tembló?"
   }
  ],
  "hilos": [
@@ -62,7 +62,7 @@
   {
    "tipo": "foto",
    "acto": 1,
-   "foto": "ori-f01",
+   "foto": "cas-f02",
    "fecha": "1952",
    "lugar": "Quetzaltenango",
    "titular": "Un horno de leña en Xela",
@@ -70,7 +70,7 @@
     "ori-h01"
    ],
    "fuente": "Prensa Libre · La Hora",
-   "texto": "Fue en 1952, en Quetzaltenango, cuando todo cabía en una sola puerta y un solo fuego. Pero ¿cómo llena una ciudad de pan un solo horno?"
+   "texto": "¿Cómo llena una ciudad de pan un solo horno? Porque en 1952, en Quetzaltenango, todo cabía en una sola puerta y un solo fuego."
   },
   {
    "tipo": "cita",
@@ -81,7 +81,7 @@
     "ori-h01"
    ],
    "fuente": "Prensa Libre",
-   "texto": "Marta Pérez, la fundadora, lo encendía con sus propias manos y vendía el pan en la misma puerta, antes de que abrieran las tiendas. Años después lo resumió así: Cada pan sale del mismo horno que encendí el primer día."
+   "texto": "Marta Pérez, la fundadora, lo encendía con sus propias manos y vendía el pan en la misma puerta, antes de que abrieran las tiendas. Años después, ya con el negocio crecido, lo resumió así ante un periodista: Cada pan sale del mismo horno que encendí el primer día."
   },
   {
    "tipo": "foto",
@@ -99,7 +99,7 @@
     "ori-h04"
    ],
    "fuente": "Prensa Libre · La Hora",
-   "texto": "Por eso, en 1958, La Espiga abrió su primera sucursal en el centro de Xela, y el pan empezó a viajar fuera de aquella puerta. Nadie imaginaba cuánto pan saldría de ahí."
+   "texto": "Por eso, en 1958, La Espiga abrió su primera sucursal en el centro de Xela. Nadie imaginaba cuánto pan saldría de ahí."
   },
   {
    "tipo": "foto",
@@ -113,7 +113,7 @@
     "ori-h02"
    ],
    "fuente": "Prensa Libre · La Hora",
-   "texto": "Pero el salto grande llegó diez años más tarde: en 1968, La Espiga ya vendía 4,500 panes al día en Xela."
+   "texto": "Pero el salto grande llegó diez años más tarde, cuando el barrio entero ya la conocía: en 1968, La Espiga ya vendía 4,500 panes al día en Xela."
   },
   {
    "tipo": "golpe",
@@ -143,7 +143,7 @@
     "p1h1"
    ],
    "fuente": "Prensa Libre · La Hora",
-   "texto": "Entonces llegó la respuesta: para 1971, La Espiga ya tenía cinco sucursales en Quetzaltenango, y el horno de Marta seguía siendo el corazón de todas, encendido antes de que saliera el sol."
+   "texto": "Entonces llegó la respuesta: para 1971, La Espiga ya tenía cinco sucursales en Quetzaltenango, y el horno de Marta seguía siendo el corazón de todas."
   }
  ],
  "cierre": {

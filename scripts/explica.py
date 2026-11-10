@@ -96,7 +96,7 @@ FAMILIAS = ("contraste", "paradoja", "pregunta", "tu", "escala", "resultado")
 VISUALES = ("cifra", "llenado", "pareja", "figuras")
 VISUALES_DE = {f: tuple(v for v in VD.VISUALES_DE[f] if v in VISUALES) for f in FAMILIAS}
 ROTACION_FAMILIAS = 2
-PUNTAJES = ("gancho", "claridad", "intuicion", "flujo", "precision", "cierre")   # critica.json en modo explica (W13)
+PUNTAJES = ("gancho", "claridad", "intuicion", "flujo", "precision", "cierre", "recompensa")   # critica.json en modo explica (W13); recompensa = E-C7
 REGLA_DE = {"gancho": "E-C1", "claridad": "E-C2", "intuicion": "E-C3", "flujo": "E-C4", "precision": "E-C5", "cierre": "E-C6"}
 # ---- modo mito (/mito <creencia>: «mito o realidad», 62–90 s; referencias/flujo-explica.md «Modo mito») ----
 # el veredicto en una escala de 3 lo calcula el código (calcular_veredicto) desde las pruebas del encuadre y las cifras
@@ -268,7 +268,8 @@ def cmd_preparar(a):
         os.makedirs(os.path.join(trabajo, d), exist_ok=True)
     previas = explicaciones_registradas(slug)
     pal = HI.paletas()
-    paleta = a.paleta or next((p for p in pal if not previas or p != previas[-1].get("paleta")), pal[0])
+    recientes_p = [] if a.fixture else HI.paletas_recientes(slug)
+    paleta = a.paleta or next((p for p in pal if p not in recientes_p), pal[0])
     if paleta not in pal:
         print("--paleta: una de %s" % ", ".join(pal), file=sys.stderr)
         return 2
@@ -451,7 +452,8 @@ def revisar_encuadre_mito(enc):
 def cmd_encuadre(a):
     trabajo = os.path.abspath(a.trabajo)
     fijar_modo(trabajo)
-    f = revisar_encuadre(encuadre(trabajo))
+    enc_ = encuadre(trabajo)
+    f = revisar_encuadre(enc_) + HI.revisar_paleta(enc_, trabajo)
     for x in f:
         print("FALLA", x)
     print("encuadre %s" % ("ok" if not f else "con %d falla(s)" % len(f)))
@@ -899,6 +901,10 @@ def consolidar(trabajo):
     if paleta != st["paleta"]:
         st["paleta"] = paleta
         st["musica"] = elegir_musica(paleta, st.get("musica_forzada"))["id"]
+        cambia = True
+    pt = None if st.get("musica_forzada") or not enc.get("musica_tema") else VD.elegir_musica_tema(enc["musica_tema"], st.get("slug"))
+    if pt and pt["id"] != st.get("musica") and st.get("musica_tema") != enc["musica_tema"]:
+        st["musica"], st["musica_tema"] = pt["id"], enc["musica_tema"]
         cambia = True
     if es_mito() and enc.get("palabra_clave") and st.get("palabra_clave") != enc["palabra_clave"]:
         st["palabra_clave"] = enc["palabra_clave"]   # V19: la voz, la pantalla y los captions la dicen
@@ -1534,6 +1540,11 @@ def cmd_guion(a):
         g = leer(os.path.join(trabajo, "guion.json"))
     except (OSError, ValueError) as ex:
         return falla("guion.json ilegible: %s" % ex)
+    esquema = VD.revisar_esquema(g)   # V24 (m109): claves y tipos de cada escena antes de los gates
+    if esquema:
+        for x in esquema:
+            print("FALLA", x)
+        return 1
     st = VD.estado(trabajo)
     fijar_modo(trabajo)
     X = explicacion_de(trabajo)
@@ -1826,6 +1837,7 @@ def cmd_aplicar(a):
         correr_gates(trabajo)
         print("aplicar: el gate lo rechaza; guion.json queda como estaba")
         return 1
+    VD.renumerar_audio(trabajo, [c["insertar"] for c in cambios if "insertar" in c])   # m108: las voces siguen a su escena
     print("aplicar: %d cambio(s) en el TRABAJO · gate ok" % len(cambios))
     print("RETORNO %s" % json.dumps({"escenas_cambiadas": sorted(escenas)}, ensure_ascii=False))
     return 0

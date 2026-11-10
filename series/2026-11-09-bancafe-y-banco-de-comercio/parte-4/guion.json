@@ -1,0 +1,349 @@
+{
+ "id": "2026-11-09-bancafe-y-banco-de-comercio-parte-4",
+ "tipo": "historia",
+ "slug": "bancafe-y-banco-de-comercio-parte-4",
+ "tema": "Bancafé y Banco de Comercio: la caída de dos bancos en Guatemala (2006–2007)",
+ "fecha": "2026-11-09",
+ "pregunta": "¿Qué otro banco movía el dinero de sus clientes a una offshore?",
+ "arco": "caso: auge, apuesta, caída en cadena y juicio inconcluso, con los conceptos bancarios explicados en el camino",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "1993-2006",
+   "titulo": "El traslado",
+   "escena": 4
+  },
+  {
+   "numero": 3,
+   "anio": "Ene 2007",
+   "titulo": "Doce de enero",
+   "escena": 9
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "No fue solo Bancafé. En Guatemala cayó otro banco: el Banco de Comercio. Había nacido en 1993 y llegó a tener 120 mil cuentas. Un día, ese mismo banco pidió que lo suspendieran. Pero eso fue años después. Casi desde que nació, dice el Ministerio Público, la fiscalía que acusa, tuvo a su lado una offshore en Panamá: Organizadora de Comercio."
+  },
+  {
+   "acto": 2,
+   "texto": "El cliente llegaba al banco y firmaba un pagaré. Pero, según la Fiscalía, el dinero se acreditaba a nombre de Organizadora, y a cambio recibía un certificado de custodia sin validez. ¿Qué es la banca paralela? Una empresa que no es banco recibe dinero como si lo fuera, lejos del supervisor, la SIB. Por eso, porque no es banco, el seguro de depósitos no la cubre. La ley lo creó para garantizar al depositante en el sistema bancario la recuperación de sus depósitos. Lo que el supervisor castigó en 2006 cabe en una línea. Mayra Véliz, del Ministerio Público, lo dijo así: La SIB sancionó administrativamente al Banco del Comercio, en 2006. Solo por falta de reservas. Una fiscalía del Ministerio Público dice que un préstamo de Q5 millones terminó en Organizadora en noviembre de 2006, y el banco quedó sin liquidez."
+  },
+  {
+   "acto": 3,
+   "texto": "En enero de 2007, el propio banco pidió que lo suspendieran. El 12 de enero, la Junta lo suspendió: el segundo banco por manejos irregulares, tres meses después de Bancafé. Cerrado el banco, el FOPA, ese seguro, cubrió el 100% de lo ahorrado: puso Q371.9 millones. El 15 de enero, la Junta Monetaria lo dejó por escrito: el esquema previsto en la ley vigente, ha permitido resguardar el dinero de los depositantes. Pero los pagarés de Organizadora no eran depósitos, así que el seguro no los cubrió. Óscar Alvarado, jubilado de la Usac, cuenta que perdió Q800,000: su jubilación, sus ahorros y la venta de una casa. El seguro pagó cada depósito, pero no los pagarés. Un jubilado dice que perdió su jubilación y el dinero de su casa."
+  }
+ ],
+ "hilos": [
+  {
+   "id": "p4h2",
+   "escena": 5
+  },
+  {
+   "id": "p4h1",
+   "escena": 7
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3
+  ],
+  [
+   4,
+   5,
+   6
+  ],
+  [
+   7,
+   8
+  ],
+  [
+   9,
+   10,
+   11
+  ],
+  [
+   12,
+   13
+  ]
+ ],
+ "paleta": "cacao",
+ "musica": "corrupcion-colapso",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2126.78,
+ "duracion_s": 144.2,
+ "critica": {
+  "veredicto": "corregir",
+  "vuelta": 3,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 4,
+   "claridad": 3,
+   "flujo": 3,
+   "precision": 4,
+   "cierre": 4
+  }
+ },
+ "gancho": {
+  "familia": "contraste",
+  "visual": "foto",
+  "pantalla": "No fue solo Bancafé",
+  "linea": "cayó también el Banco de Comercio"
+ },
+ "promesa": {
+  "texto": "Un día, ese mismo banco pidió que lo suspendieran.",
+  "forma": "contradiccion",
+  "en": 2,
+  "pago": 10,
+  "revela": 2
+ },
+ "bisagra": {
+  "texto": "Lo que el supervisor castigó en 2006 cabe en una línea.",
+  "forma": "secreto",
+  "en": 7,
+  "pago": 7
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "No fue solo Bancafé. En Guatemala cayó otro banco: el Banco de Comercio.",
+   "voz": "No fue solo Bancafé. En Guatemala cayó otro banco: el Banco de Comercio.",
+   "dur": 6.581,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "tarjeta",
+   "pantalla": "Había nacido en 1993 y llegó a tener 120 mil cuentas. Un día, ese mismo banco pidió que lo suspendieran.",
+   "voz": "Había nacido en mil novecientos noventa y tres y llegó a tener ciento veinte mil cuentas. Un día, ese mismo banco pidió que lo suspendieran.",
+   "dur": 10.016,
+   "hechos": [
+    "com-h02"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "foto",
+   "pantalla": "Pero eso fue años después. Casi desde que nació, dice el Ministerio Público, la fiscalía que acusa, tuvo a su lado una offshore en Panamá: Organizadora de Comercio.",
+   "voz": "Pero eso fue años después. Casi desde que nació, dice el Ministerio Público, la fiscalía que acusa, tuvo a su lado una offshore en Panamá: Organizadora de Comercio.",
+   "dur": 12.11,
+   "hechos": [
+    "com-h09"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Victovic221 · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "explica",
+   "pantalla": "El cliente llegaba al banco y firmaba un pagaré. Pero, según la Fiscalía, el dinero se acreditaba a nombre de Organizadora, y a cambio recibía un certificado de custodia sin validez.",
+   "voz": "El cliente llegaba al banco y firmaba un pagaré. Pero, según la Fiscalía, el dinero se acreditaba a nombre de Organizadora, y a cambio recibía un certificado de custodia sin validez.",
+   "dur": 11.139,
+   "hechos": [
+    "com-h07",
+    "com-h08"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": "desvio-tanque",
+   "mecanismo": "balance"
+  },
+  {
+   "n": 5,
+   "tipo": "definicion",
+   "pantalla": "¿Qué es la banca paralela? Una empresa que no es banco recibe dinero como si lo fuera, lejos del supervisor, la SIB.",
+   "voz": "¿Qué es la banca paralela? Una empresa que no es banco recibe dinero como si lo fuera, lejos del supervisor, la SIB.",
+   "dur": 9.012,
+   "hechos": [],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "cita",
+   "pantalla": "Por eso, porque no es banco, el seguro de depósitos no la cubre. La ley lo creó para garantizar al depositante en el sistema bancario la recuperación de sus depósitos.",
+   "voz": "Por eso, porque no es banco, el seguro de depósitos no la cubre. La ley lo creó para garantizar al depositante en el sistema bancario la recuperación de sus depósitos.",
+   "dur": 11.069,
+   "hechos": [],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "cita",
+   "pantalla": "Lo que el supervisor castigó en 2006 cabe en una línea. Mayra Véliz, del Ministerio Público, lo dijo así: La SIB sancionó administrativamente al Banco del Comercio, en 2006. Solo por falta de reservas.",
+   "voz": "Lo que el supervisor castigó en dos mil seis cabe en una línea. Mayra Véliz, del Ministerio Público, lo dijo así: La SIB sancionó administrativamente al Banco del Comercio, en dos mil seis. Solo por falta de reservas.",
+   "dur": 15.494,
+   "hechos": [
+    "com-h04"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "tarjeta",
+   "pantalla": "Una fiscalía del Ministerio Público dice que un préstamo de Q5 millones terminó en Organizadora en noviembre de 2006, y el banco quedó sin liquidez.",
+   "voz": "Una fiscalía del Ministerio Público dice que un préstamo de cinco millones de quetzales terminó en Organizadora en noviembre de dos mil seis, y el banco quedó sin liquidez.",
+   "dur": 10.6,
+   "hechos": [
+    "com-h13"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "foto",
+   "pantalla": "En enero de 2007, el propio banco pidió que lo suspendieran.",
+   "voz": "En enero de dos mil siete, el propio banco pidió que lo suspendieran.",
+   "dur": 3.999,
+   "hechos": [
+    "com-h02"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: UCDWiki · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "golpe",
+   "pantalla": "El 12 de enero, la Junta lo suspendió: el segundo banco por manejos irregulares, tres meses después de Bancafé.",
+   "voz": "El doce de enero, la Junta lo suspendió: el segundo banco por manejos irregulares, tres meses después de Bancafé.",
+   "dur": 7.648,
+   "hechos": [
+    "com-h01",
+    "com-h03"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "tarjeta",
+   "pantalla": "Cerrado el banco, el FOPA, ese seguro, cubrió el 100% de lo ahorrado: puso Q371.9 millones.",
+   "voz": "Cerrado el banco, el FOPA, ese seguro, cubrió el cien por ciento de lo ahorrado: puso trescientos setenta y uno punto nueve millones de quetzales.",
+   "dur": 10.847,
+   "hechos": [
+    "com-h19"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "cita",
+   "pantalla": "El 15 de enero, la Junta Monetaria lo dejó por escrito: el esquema previsto en la ley vigente, ha permitido resguardar el dinero de los depositantes.",
+   "voz": "El quince de enero, la Junta Monetaria lo dejó por escrito: el esquema previsto en la ley vigente, ha permitido resguardar el dinero de los depositantes.",
+   "dur": 9.109,
+   "hechos": [
+    "com-h03"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 13,
+   "tipo": "foto",
+   "pantalla": "Pero los pagarés de Organizadora no eran depósitos, así que el seguro no los cubrió. Óscar Alvarado, jubilado de la Usac, cuenta que perdió Q800,000: su jubilación, sus ahorros y la venta de una casa.",
+   "voz": "Pero los pagarés de Organizadora no eran depósitos, así que el seguro no los cubrió. Óscar Alvarado, jubilado de la Usac, cuenta que perdió ochocientos mil quetzales: su jubilación, sus ahorros y la venta de una casa.",
+   "dur": 15.429,
+   "hechos": [
+    "com-h16"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 14,
+   "tipo": "cierre",
+   "pantalla": "El seguro pagó cada depósito, pero no los pagarés. Un jubilado dice que perdió su jubilación y el dinero de su casa. Sígueme: en la quinta parte te cuento qué pasó con el dinero que no volvió.",
+   "voz": "El seguro pagó cada depósito, pero no los pagarés. Un jubilado dice que perdió su jubilación y el dinero de su casa. Sígueme: en la quinta parte te cuento qué pasó con el dinero que no volvió.",
+   "dur": 14.753,
+   "hechos": [],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Así cayó el otro banco",
+  "resumen": [
+   "Suspendido el 12 de enero de 2007",
+   "El seguro cubrió los depósitos",
+   "Los pagarés quedaron fuera"
+  ],
+  "texto": "El seguro pagó cada depósito, pero no los pagarés. Un jubilado dice que perdió su jubilación y el dinero de su casa.",
+  "tipo": "remate",
+  "forma": "puente",
+  "final": "Un jubilado dice que perdió su jubilación y el dinero de su casa.",
+  "invitacion": "Sígueme: en la quinta parte te cuento qué pasó con el dinero que no volvió."
+ },
+ "caption": {
+  "tiktok": "Serie · Parte 4 de 5: El otro banco\nBancafé no fue el único. El Banco de Comercio fue suspendido en enero de 2007. Qué es la banca paralela y por qué el seguro de depósitos no la cubre, explicado.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\n#Guatemala #BancodeComercio #historia",
+  "instagram": "Serie · Parte 4 de 5: El otro banco\nUn pagaré firmado en un banco, un dinero acreditado a una offshore en Panamá y un seguro que solo cubría depósitos. Así cayó el Banco de Comercio.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\n#Guatemala #BancodeComercio #historia",
+  "facebook": "Serie · Parte 4 de 5: El otro banco\nTres meses después de Bancafé, la Junta Monetaria suspendió el Banco de Comercio. Sus depósitos se cubrieron; los pagarés de su offshore, no.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\nFuentes en el primer comentario.",
+  "shorts": "El Banco de Comercio: el otro banco que cayó en Guatemala (4/5) #Shorts"
+ }
+}

@@ -36,7 +36,8 @@ se volvió exportador de algo, un caso de justicia desde que se descubrió hasta
   inventadas.
 - **`dominios_propios`**: los dominios de la empresa o institución protagonista (su sitio cuenta como fuente propia
   para su propia historia: fechas de fundación, aperturas), o `[]`.
-- **Paleta** del tema (`design/tokens.json`), distinta de la de la última historia si `preparar` la nombró.
+- **Paleta** por el **tinte del tema** (`design/tokens.json`, regla del usuario 2026-11-09): el color de la marca o la empresa, el del partido o la institución del político, el material o el lugar (café → `cacao`, maíz o pan → `maiz`, un lago → `atitlan`, la selva → `jade`, sangre o fuego → `terracota`). Escríbelo en `paleta_por_que` («Bancafé: el café, marrón y caramelo»). Nunca la de las últimas 2 piezas de video ni el azul `cielo` por inercia: `historia.py encuadre --check` falla con H8p.
+- **`musica_tema`**: la música va por el **tema**, no por el color (regla del usuario 2026-11-09): uno de `video.MUSICA_TEMAS` (`corrupcion`, `politica`, `justicia`, `crimen`, `finanzas`, `economia`, `comercio`, `agro`, `sociedad`, `salud`, `ambiente`, `movimiento`, `desastre`). Un caso de corrupción, una red criminal o la caída de un banco por manejos irregulares va con `corrupcion` (o `finanzas`, `justicia`); la marca que nació en un garaje, con `comercio`. `consolidar` elige la pista de ese tema usada hace más tiempo; `encuadre --check` falla con H8m si falta.
 - **`no_afirma`**: lo que la historia NO dice aunque tiente (una causa única, un culpable sin sentencia, una cifra
   que nadie publicó).
 - **`sensibles`**: `{justicia: true|false, personas: [señaladas en un caso, vivas]}`. Con `justicia: true`, los
@@ -60,7 +61,7 @@ se volvió exportador de algo, un caso de justicia desde que se descubrió hasta
 
 ```json
 {"tema": "…", "slug": "…", "pregunta": "…", "protagonista": ["…"], "revelaciones": ["…"], "fotos_clave": ["…"],
- "resumen": "la historia en una oración", "arco": "caso", "paleta": "jade", "dominios_propios": [],
+ "resumen": "la historia en una oración", "arco": "caso", "paleta": "jade", "paleta_por_que": "la selva de Petén: verde", "dominios_propios": [],
  "actos": [{"n": 1, "nombre": "planteamiento", "titulo": "Un lago enfermo", "periodo": "2013–2015",
             "que_cuenta": "…", "termina_en": "…"},
            {"n": 2, "nombre": "nudo", "titulo": "Agua con sal", "periodo": "2015–2016", "que_cuenta": "…",
@@ -110,4 +111,14 @@ posterior. Corre `python3 scripts/serie.py plan <TRABAJO> --check` hasta 0 falla
   - En cada parte: `tema`, `hechos` (ids, ≥ 8 hechos) y `obligatorio`.
   - `serie.fuera`: `{id: motivo}`.
   - ≥ 85 % de lo publicable repartido (SE10–SE11). Una parte puede contar en su tema algo que se supo años después.
+- **Cada parte cuenta lo nuevo** (SE15–SE16, 2026-11-09): reparte de modo que ninguna parte necesite volver a contar
+  lo de otra para entenderse: si depende de un hecho anterior, lo recuerda en una oración (SE15 deja ≤ 2 ids ya
+  contados). Dos partes nunca se reparten el mismo momento desde dos ángulos (las capturas del 16 de abril, una vez).
 - **La última parte lleva el resumen de toda la serie** (SE14, 2026-11-07): 20–30 s en su acto 3 que repasan lo que contaron las demás. Dale ese margen en su plan: puede durar hasta 30 s más que las otras.
+
+## Lo que está en juego (H8, H25; 2026-11-10)
+
+Cada acto lleva `en_juego`: qué se puede perder ahí y a quién alcanza, en una frase («el ahorro de un millón de
+cuentas»). Sube de acto en acto: del negocio de alguien, a la gente que dependía de él, al país. No se repite. En una
+serie, cada parte del plan lleva también su `en_juego` (mayor que el de la anterior) y el plan lleva
+`serie.promesa.pregunta`: la pregunta que responde la serie entera, no la de una parte.

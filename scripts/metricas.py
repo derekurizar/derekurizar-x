@@ -38,6 +38,7 @@ Detectores (cada uno nombra el archivo del framework que implica):
       animación o tarjeta)                                        AN10 tiempo medio / duración muy distinto entre plataformas
   AN5 completado bajo para su duración (largo)                   AN11 tipo de tema (historia con protagonista vs. datos)
   AN6 plataforma con < 5 % de las vistas de la mediana de la     AN12 hora de publicación (solo con ≥ 10 por franja)
+  AN13 compartidos por 1,000 vistas bajo la mitad de la mediana  AN14 Shorts: «se quedaron viendo» bajo 60 %
       pieza (restricción, reclamo o subida fallida)
 Las referencias de la web viven en referencias/analisis/benchmarks.md; aquí solo la línea base del propio canal.
 
@@ -79,12 +80,14 @@ ARCHIVO = {"gancho": "referencias/ganchos.md", "cuadro0": "referencias/ganchos.m
            "ritmo": "referencias/flujo-video.md", "duracion": "referencias/flujo-video.md",
            "publicacion": "referencias/analisis/publicacion.md", "caption": "referencias/flujo-video.md",
            "cierre": "referencias/cierres.md", "tema": "referencias/roles/explorador.md",
-           "horario": "referencias/analisis/publicacion.md"}
+           "horario": "referencias/analisis/publicacion.md", "envios": "referencias/cierres.md"}
 ARCHIVO_ESCENA = {"tarjeta": "video/escena.html", "foto": "video/noticia.html", "cita": "video/historia.html",
                   "capitulo": "video/historia.html", "golpe": "video/golpe.html", "definicion": "video/golpe.html",
                   "adivina": "video/golpe.html", "mapa": "video/mapa.html", "ranking": "video/ranking.html",
                   "escala": "video/escala.html", "tiempo": "video/tiempo.html", "cuenta": "video/cuenta.html",
                   "noticia": "video/noticia.html", "cierre": "video/cierre.html", "gancho": "video/gancho.html"}
+ENVIOS_MIN_VISTAS, ENVIOS_MIN_PIEZAS = 300, 4   # AN13: una pieza con pocas vistas no dice nada; hace falta una base
+VISTO_MIN = 0.60                              # AN14
 TASA_MINIMA = 0.3   # %/s: piso de la mediana de pérdida por escena (con curvas planas, la mediana ≈ 0 inflaba las razones)
 FALLAS = []
 
@@ -570,6 +573,31 @@ def diagnosticar(M, desde=None):
         if len(rel_) >= 2 and min(rel_.values()) > 0 and max(rel_.values()) / min(rel_.values()) >= 2.5:
             H.append(hallazgo("AN10", "duracion", pid, "tiempo medio / duración: " + ", ".join("%s %.0f%%" % (k, v * 100) for k, v in sorted(rel_.items())),
                               propuesta="El mismo corte no sirve en todas: duración por plataforma."))
+    # AN13 nadie lo envía: compartidos por 1,000 vistas frente a la mediana del canal en esa plataforma (Instagram dice
+    # que los envíos por alcance son una de sus tres señales de Reels; referencias/analisis/investigacion.md §4)
+    for pl in ("instagram", "tiktok", "facebook"):
+        tasas = {}
+        for k, r in R.items():
+            sp = ultimo(r["pubs"][pl]) if pl in r["pubs"] else {}
+            if sp.get("views") and sp["views"] >= ENVIOS_MIN_VISTAS and sp.get("shares") is not None:
+                tasas[k] = 1000.0 * sp["shares"] / sp["views"]
+        if len(tasas) >= ENVIOS_MIN_PIEZAS:
+            med = mediana(list(tasas.values()))
+            for k, v in sorted(tasas.items()):
+                if med and v < 0.5 * med:
+                    H.append(hallazgo("AN13", "envios", "%s:%s" % k, "%s: %.1f compartidos por 1,000 vistas (mediana del canal %.1f, n=%d)"
+                                      % (pl, v, med, len(tasas)),
+                                      propuesta="Un cierre que uno le mandaría a alguien concreto (la consecuencia para una persona, no "
+                                                "el dato); sin pedir que lo envíen (F4)."))
+    # AN14 lo deslizan en el primer cuadro (Shorts): «se quedaron viendo» bajo 60 % casi nunca despega (Galloway 2023,
+    # preliminar; nivel C)
+    for k, r in sorted(R.items()):
+        sp = ultimo(r["pubs"]["youtube"]) if "youtube" in r["pubs"] else {}
+        if sp.get("viewed_pct") is not None and sp["viewed_pct"] < VISTO_MIN and (sp.get("views") or 0) >= ENVIOS_MIN_VISTAS:
+            H.append(hallazgo("AN14", "cuadro0", "%s:%s" % k, "YouTube Shorts: se quedó viendo el %.0f%% (los demás deslizaron); bajo %.0f%% "
+                              "casi ninguno despega" % (sp["viewed_pct"] * 100, VISTO_MIN * 100),
+                              propuesta="El primer cuadro es la miniatura: sujeto reconocible y texto que se lee sin sonido desde "
+                                        "el cuadro 0 (R12, R14)."))
     # AN8 familias
     fams = {}
     for k, h in holds.items():
@@ -719,6 +747,32 @@ def lineas_rendimiento(pors=("familia", "visual")):
     return out or ["- (métricas sin piezas vinculadas todavía)"]
 
 
+def rendimiento_por_parte():
+    """El paso de una parte a la siguiente en cada serie: vistas de N+1 entre vistas de N, por plataforma. Es la única
+    medida de si el puente y la promesa de la serie funcionan (referencias/analisis/investigacion.md §2)."""
+    M = cargar()
+    por = {}
+    for x in M.get("publicaciones") or []:
+        pz = x.get("pieza") or {}
+        m = re.match(r"^(.*)-parte-(\d+)$", str(pz.get("slug") or pz.get("id") or ""))
+        if not m or x.get("vinculo") not in ("auto", "manual"):
+            continue
+        v = ultimo(x).get("views")
+        if v:
+            d = por.setdefault(m.group(1), {}).setdefault(x["plataforma"], {})
+            d[int(m.group(2))] = max(d.get(int(m.group(2)), 0), v)
+    if not por:
+        print("(ninguna parte de serie publicada y medida todavía: vincula las publicaciones con metricas.py vincular)")
+        return 0
+    for serie, pls in sorted(por.items()):
+        print(serie)
+        for pl, d in sorted(pls.items()):
+            ns = sorted(d)
+            pasos = ["P%d %d" % (ns[0], d[ns[0]])] + ["→ P%d %d (%.0f%%)" % (b, d[b], 100.0 * d[b] / d[a_]) for a_, b in zip(ns, ns[1:])]
+            print("  %-10s %s" % (pl, " ".join(pasos)))
+    return 0
+
+
 def cmd_rendimiento(a):
     if a.por == "estilo_fb":
         t = rendimiento_facebook()
@@ -729,6 +783,8 @@ def cmd_rendimiento(a):
                 e, v["n"], int(v["views"] or 0), v["avg_s"] or 0, "%+.1f×" % v["distribucion"] if v["distribucion"] is not None else "—",
                 ", ".join(v["piezas"])[:80]))
         return 0
+    if a.por == "parte":
+        return rendimiento_por_parte()
     if a.md:
         print("\n".join(lineas_rendimiento((a.por,))))
         return 0
@@ -808,7 +864,7 @@ def main():
     s.add_argument("--mejoras", metavar="SALIDA")
     s.add_argument("--json", action="store_true")
     s = sub.add_parser("rendimiento")
-    s.add_argument("--por", choices=("familia", "visual", "cierre", "animacion", "flujo", "estilo_fb"), default="familia")
+    s.add_argument("--por", choices=("familia", "visual", "cierre", "animacion", "flujo", "estilo_fb", "parte"), default="familia")
     s.add_argument("--md", action="store_true")
     a = ap.parse_args()
     if a.metricas:

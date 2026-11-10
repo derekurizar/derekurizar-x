@@ -54,6 +54,8 @@ Comprueba:
      que pasa serie.revisar_serie (partes 3–5 en orden, estado conocido, entregada ⇒ guion.json en su ruta)
   M19 memoria/congreso.json (si existe; /congreso): campos, estado, paleta, música, duración < 60 s, los dos lados (CG4) y
       los archivos de la entrega (guion.json, caption.md, fuentes.md, votos.csv)
+  M20 memoria/youtube.json (si existe; /youtube-long): campos, ids únicos, estado, la serie existe, la entrega (guion.json,
+      caption.md, capitulos.json, miniatura.png) y los capítulos (≥ 3, el primero en 0:00, cada uno ≥ 10 s)
   M18 agenda/<AAAA-Wnn>/agenda.json (si existe; /agenda): AG1–AG9 de scripts/agenda.py sobre cada semana que aún no
      terminó (las pasadas son historia: no se revisan)
   M17 memoria/metricas.json (si existe; métricas de /analyze-improve): esquema de cada publicación (id = <plataforma>-<post_id>,
@@ -61,7 +63,7 @@ Comprueba:
      lo revisa scripts/metricas.py (revisar)
   M11 memoria/mejoras.json (si existe; mejoras al framework de cada video): campos, ids únicos mNNN, flujo conocido,
      estado pendiente|hecha|descartada, archivo relativo a la raíz
-  K1 design/musica/catalogo.json: cada pista existe, ids únicos, paleta conocida y ≥ 2 pistas por paleta
+  K1 design/musica/catalogo.json: cada pista existe, ids únicos, paleta conocida (o null: solo por tema), temas de video.MUSICA_TEMAS y ≥ 2 pistas por paleta
   N1 cada investigacion/<YYYY-MM-DD>-*/ (entregable de /investigacion) tiene informe.json,
      salida/informe.pdf y salida/informe.html; aviso si no está en memoria/informes.json (corrida
      interrumpida: reanuda con resumeFromRunId o borra la carpeta); si no está registrada, tiene hilo/
@@ -551,8 +553,16 @@ def validar_videos(paletas):
             if p.get("id") in ids_musica:
                 err("K1 pista repetida %s" % p.get("id"))
             ids_musica.add(p.get("id"))
-            if paletas and p.get("paleta") not in paletas:
+            if paletas and p.get("paleta") is not None and p.get("paleta") not in paletas:
                 err("K1 pistas[%d] paleta %r desconocida" % (i, p.get("paleta")))
+            try:
+                import video as _vd  # noqa: E402
+                malos = [t for t in (p.get("temas") or []) if t not in _vd.MUSICA_TEMAS]
+                if not p.get("temas") or malos:
+                    err("K1 pistas[%d] %s: «temas» de video.MUSICA_TEMAS (la música va por tema)%s"
+                        % (i, p.get("id"), " · desconocidos: %s" % ", ".join(malos) if malos else ""))
+            except ImportError:
+                pass
             if not os.path.exists(os.path.join(RAIZ, "design", "musica", str(p.get("archivo", "")))):
                 err("K1 pistas[%d] falta design/musica/%s" % (i, p.get("archivo")))
             por_paleta[p.get("paleta")] = por_paleta.get(p.get("paleta"), 0) + 1
@@ -851,7 +861,7 @@ def validar_explicaciones(paletas):
             warn("M12 explicaciones[%d] %s/video.mp4 no está (fuera de git: se regenera con /explica)" % (i, r))
 
 
-FLUJOS_MEJORA = ("video", "noticias", "historia", "explica", "sabias", "carrusel", "semana", "analisis", "serie", "congreso")
+FLUJOS_MEJORA = ("video", "noticias", "historia", "explica", "sabias", "carrusel", "semana", "analisis", "serie", "congreso", "youtube")
 
 
 def validar_agendas():
@@ -890,6 +900,36 @@ def validar_series():
             continue
         for x in _serie.revisar_serie(cargar(os.path.relpath(sj, RAIZ))):
             err("%s (%s)" % (x, v.get("carpeta")))
+
+
+def validar_youtube():
+    """M20 memoria/youtube.json (registro de /youtube-long)."""
+    if not os.path.exists(os.path.join(RAIZ, "memoria", "youtube.json")):  # ausente = ok: memoria.py --youtube lo crea
+        return
+    ids = set()
+    for i, v in enumerate((cargar("memoria/youtube.json") or {}).get("videos", [])):
+        for campo in ("id", "slug", "serie", "carpeta", "fecha", "duracion_s", "titulo", "capitulos", "estado"):
+            if campo not in v:
+                err("M20 youtube[%d] sin %s" % (i, campo))
+        if v.get("id") in ids:
+            err("M20 youtube: id repetido %s" % v.get("id"))
+        ids.add(v.get("id"))
+        if v.get("estado") not in ("publicable", "publicado"):
+            err("M20 youtube[%d] estado %r" % (i, v.get("estado")))
+        if not os.path.isfile(os.path.join(RAIZ, v.get("serie") or "", "")) and not os.path.isfile(os.path.join(RAIZ, str(v.get("serie")))):
+            err("M20 youtube[%d] serie %s no existe" % (i, v.get("serie")))
+        car = os.path.join(RAIZ, v.get("carpeta") or "")
+        for req in ("guion.json", "caption.md", "capitulos.json", "miniatura.png"):
+            if not os.path.isfile(os.path.join(car, req)):
+                err("M20 youtube[%d] %s sin %s" % (i, v.get("carpeta"), req))
+        caps = v.get("capitulos") or []
+        if len(caps) < 3 or (caps and caps[0].get("t") != 0):
+            err("M20 youtube[%d] capítulos: ≥ 3 y el primero en 0:00" % i)
+        for a_, b_ in zip(caps, caps[1:]):
+            if (b_.get("t") or 0) - (a_.get("t") or 0) < 10:
+                err("M20 youtube[%d] el capítulo %s dura < 10 s" % (i, a_.get("numero")))
+        if not os.path.isfile(os.path.join(car, "video.mp4")):
+            print("AVISO M20 youtube[%d] %s sin video.mp4 (fuera de git)" % (i, v.get("carpeta")))
 
 
 def validar_metricas():
@@ -983,6 +1023,7 @@ def main():
     validar_mejoras()
     validar_metricas()
     validar_series()
+    validar_youtube()
     validar_agendas()
     for a in AVISOS:
         print("AVISO  " + a)

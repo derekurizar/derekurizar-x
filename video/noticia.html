@@ -116,6 +116,17 @@ html.f45 #gtit { font-size: 80px; }
 html.f45 #puesto { font-size: 150px; }
 html.f45 #humana { font-size: 30px; }
 html.f45 #hoy { font-size: 22px; margin-bottom: 20px; }
+/* 16:9 (video largo de YouTube): la foto a sangre en todo el cuadro; el velo oscurece la izquierda (la columna del
+   texto) y el pie; el chip arriba y el titular, la cifra y la fuente abajo a la izquierda */
+html.f169.f45 #sangre { width: 1920px; height: 1080px; }
+html.f169.f45 #sangre .velo { background: linear-gradient(90deg, color-mix(in srgb, var(--bg) 90%, transparent) 0%,
+  color-mix(in srgb, var(--bg) 72%, transparent) 30%, transparent 60%), linear-gradient(0deg, color-mix(in srgb, var(--bg) 80%, transparent) 0%,
+  transparent 38%), linear-gradient(180deg, color-mix(in srgb, var(--bg) 70%, transparent) 0%, transparent 16%); }
+html.f169.f45 #arriba { left: 96px; right: auto; width: 1100px; }
+html.f169.f45 #col { top: 170px; bottom: 64px; left: 96px; right: auto; width: 880px; }
+html.f169.f45 #gancho { left: 96px; right: auto; width: 1200px; bottom: 80px; }
+html.f169.f45 #titular { font-size: 60px; }
+html.f169.f45 #gtit { font-size: 92px; }
 </style></head>
 <body>
 <div id="sangre" data-fuera-de-zona><div class="velo"></div><div class="grano"></div></div>
@@ -134,7 +145,7 @@ html.f45 #hoy { font-size: 22px; margin-bottom: 20px; }
 <script>
 const n = V.n, F45 = V.F45, { clamp, eo, prog, esc, normal } = V;
 let S, N, MODO, TROZOS, NUM = null, KB = null, KB_PASO = null, FIN_T = [], EN_PANTALLA = new Set();
-const LAMINA = { ancho: 1080, alto: 1200 };   // la lámina de la foto (#sangre), igual en 9:16 y 4:5
+const LAMINA = V.F169 ? { ancho: 1920, alto: 1080 } : { ancho: 1080, alto: 1200 };   // la lámina de la foto (#sangre), igual en 9:16 y 4:5; a sangre en 16:9
 const RE_NUM = /([-−]?)(\d{1,3}(?:,\d{3})+|\d+)(?:\.(\d+))?/;   // número dentro de un texto formateado (como golpe.html)
 function numTexto(s) {
   const m = (s || '').match(RE_NUM);
@@ -163,15 +174,43 @@ async function minimapa(padre) {
     'background:color-mix(in srgb, var(--bg) 82%, transparent);border:2px solid color-mix(in srgb, var(--ink) 20%, transparent);opacity:0;';
   padre.appendChild(caja);
   const svg = svgEl('svg', { viewBox: GEOMETRIA.viewBox, preserveAspectRatio: 'xMidYMid meet', width: '100%', height: '100%' }, caja);
+  const ruta = M.ruta || [], PS = {};
+  if (ruta.length) { caja.style.width = '340px'; caja.style.height = '340px'; }   // con ruta, más grande: se lee el recorrido
   for (const [id, geo] of Object.entries(GEOMETRIA.deptos))
-    svgEl('path', { d: geo.d, fill: id === M.depto ? 'var(--acento)' : 'color-mix(in srgb, var(--ink) 28%, transparent)',
+    PS[id] = svgEl('path', { d: geo.d, fill: !ruta.length && id === M.depto ? 'var(--acento)' : 'color-mix(in srgb, var(--ink) 28%, transparent)',
       stroke: 'var(--bg)', 'stroke-width': 1.5, 'vector-effect': 'non-scaling-stroke' }, svg);
+  // el mapa con ruta (M.ruta: departamentos en orden): cada uno se enciende a su turno y un trazo va del anterior a él
+  RUTA = [];
+  ruta.forEach((id, k) => {
+    if (!PS[id]) throw new Error('departamento «' + id + '» sin geometría');
+    const b = PS[id].getBBox(), c = [b.x + b.width / 2, b.y + b.height / 2], t = M.desde + 0.5 + 0.9 * k;
+    const seg = k ? svgEl('line', { x1: RUTA[k - 1].c[0], y1: RUTA[k - 1].c[1], x2: c[0], y2: c[1], stroke: 'var(--ink)', 'stroke-width': 4,
+      'stroke-linecap': 'round', 'vector-effect': 'non-scaling-stroke' }, svg) : null;
+    RUTA.push({ id, c, t, p: PS[id], seg, L: seg ? seg.getTotalLength() : 0 });
+  });
+  if (RUTA.length) {   // el mapa se acerca al recorrido (con sus vecinos alrededor): entre departamentos chicos no se veía
+    const bs = RUTA.map((r) => r.p.getBBox()), x0 = Math.min(...bs.map((b) => b.x)), y0 = Math.min(...bs.map((b) => b.y)),
+      x1 = Math.max(...bs.map((b) => b.x + b.width)), y1 = Math.max(...bs.map((b) => b.y + b.height));
+    const lado = Math.max(x1 - x0, y1 - y0) * 1.9, cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
+    svg.setAttribute('viewBox', `${(cx - lado / 2).toFixed(1)} ${(cy - lado / 2).toFixed(1)} ${lado.toFixed(1)} ${lado.toFixed(1)}`);
+    svg.setAttribute('preserveAspectRatio', 'xMidYMid slice'); svg.style.borderRadius = '12px';
+  }
+  RUTA.forEach((r) => { r.pin = svgEl('circle', { cx: r.c[0], cy: r.c[1], r: 0, fill: 'var(--ink)', stroke: 'var(--bg)', 'stroke-width': 2, 'vector-effect': 'non-scaling-stroke' }, svg);
+    r.R = Math.max(4, svg.viewBox.baseVal.width / 60); });
 }
+let RUTA = [];
 const seekMinimapa = (t) => {
   const el = document.getElementById('minimapa'), M = N.minimapa;
   if (!el || !M) return;
   const v = V.portada ? 0 : Math.min(eo((t - M.desde) / 0.3), 1 - eo((t - M.hasta) / 0.3));
   el.style.opacity = Math.max(0, v).toFixed(3); el.style.transform = `scale(${(0.9 + 0.1 * Math.max(0, v)).toFixed(3)})`;
+  for (const r of RUTA) {
+    const k = V.portada ? 1 : eo((t - r.t) / 0.45);
+    r.p.setAttribute('fill', k > 0.5 ? 'var(--acento)' : 'color-mix(in srgb, var(--ink) 28%, transparent)');
+    r.pin.setAttribute('r', (r.R * k).toFixed(2));
+    if (r.seg) { const a = V.portada ? 1 : eo((t - (r.t - 0.7)) / 0.7); r.seg.style.strokeDasharray = r.L; r.seg.style.strokeDashoffset = (r.L * (1 - a)).toFixed(2);
+      r.seg.style.opacity = a > 0.01 ? '1' : '0'; }
+  }
 };
 // sin foto: el mapa con el departamento encendido y su pin, o el icono de la noticia (en la lámina en el gancho, en la
 // columna en la noticia)
@@ -204,9 +243,23 @@ async function foto(caja) {
   img.src = N.foto;
   await img.decode().catch(() => { throw new Error('no carga la foto ' + N.foto); });
   caja.insertBefore(img, caja.firstChild);
+  // 16:9: una foto vertical o casi cuadrada (o un cartel con encaje «contener») no se recorta para llenar el cuadro
+  // (quedaba una corbata en lugar de la cara): va entera en un panel a la derecha sobre su copia ampliada, borrosa y
+  // oscura; la cámara de sub-planos no la mueve, solo un acercamiento lento
+  if (V.F169 && (img.naturalWidth / img.naturalHeight < 1.3 || N.encaje === 'contener')) {
+    const fondo = new Image();
+    fondo.src = N.foto;
+    await fondo.decode().catch(() => {});
+    fondo.style.cssText = 'filter: blur(38px) brightness(.3); transform: scale(1.12);';
+    caja.insertBefore(fondo, caja.firstChild);
+    img.style.cssText = 'inset: auto; left: 1000px; top: 40px; width: 824px; height: 1000px; object-fit: contain; ' +
+      'object-position: 50% 50%; filter: brightness(.95); transform-origin: 50% 50%;';
+    img.dataset.panel = '1';
+    return img;
+  }
   const zmax = N.planos && N.encaje !== 'contener' ? 1.55 : Math.max(...KB_PASO.z);
   const k = Math.max(LAMINA.ancho / img.naturalWidth, LAMINA.alto / img.naturalHeight) * zmax;
-  caja.style.setProperty('--brillo', N.encaje === 'contener' ? '.7' : k > 2 ? '.45' : '.55');
+  caja.style.setProperty('--brillo', N.encaje === 'contener' ? '.7' : V.F169 ? '.66' : k > 2 ? '.45' : '.55');   // 16:9: el velo ya oscurece la columna del texto
   if (N.planos && N.encaje !== 'contener') {   // la cámara mueve la foto a mano (camara): sin object-fit
     img.style.objectFit = 'fill'; img.style.inset = 'auto'; img.style.transformOrigin = '0 0';
   }
@@ -337,7 +390,7 @@ async function dibujarToma(t) {
     const z = Math.max(W / w, H / h) * 1.08;
     ctx.filter = 'blur(28px) brightness(.38)';
     ctx.drawImage(img, (W - w * z) / 2, (H - h * z) / 2, w * z, h * z);
-    const zc = W / w, dh = h * zc, y = Math.max(270, Math.min(H - dh, H * 0.40 - dh / 2));
+    const zc = W / w, dh = h * zc, y = V.F169 ? (H - dh) / 2 : Math.max(270, Math.min(H - dh, H * 0.40 - dh / 2));
     ctx.filter = 'brightness(.92)';
     ctx.drawImage(img, 0, y, W, dh);
   }
@@ -461,6 +514,10 @@ const kenBurns = (img, t, late = 0) => {
   if (N.toma) {   // el clip ya se mueve: solo el empujón de cada oración y, al acabarse, un zoom lento sobre el último cuadro
     const fin = N.toma.t0 + N.toma.cuadros / N.toma.fps, q = Math.max(0, t - fin);
     img.style.transform = `scale(${((1 + 0.02 * Math.min(1, q / 4)) * (1 + 0.006 * late)).toFixed(4)})`;
+    return;
+  }
+  if (img.dataset && img.dataset.panel) {   // 16:9, foto vertical en panel: un acercamiento lento
+    img.style.transform = `scale(${(1 + 0.03 * clamp(t / S.dur)).toFixed(4)})`;
     return;
   }
   if (N.planos && N.encaje !== 'contener' && img.tagName === 'IMG') return camara(img, t, late);

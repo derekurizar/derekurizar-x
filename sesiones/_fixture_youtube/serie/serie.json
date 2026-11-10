@@ -1,0 +1,72 @@
+{
+ "version": 1,
+ "slug": "la-espiga-largo-maqueta",
+ "tema": "La Espiga (video largo de ejemplo)",
+ "motor": "historia",
+ "fecha": "2026-11-08",
+ "carpeta": "sesiones/_fixture_youtube/serie",
+ "trabajo": "sesiones/_fixture_serie/trabajo",
+ "n_partes": 2,
+ "paleta": "terracota",
+ "musica": "terracota-1",
+ "plan_aprobado": true,
+ "estado": "completa",
+ "partes": [
+  {
+   "n": 1,
+   "titulo": "El primer horno",
+   "pregunta": "¿Cómo llenó Xela de pan un solo horno?",
+   "periodo": {
+    "desde": "1952",
+    "hasta": "1975"
+   },
+   "mecanismo": null,
+   "ejes": null,
+   "puente": "¿Qué le pasaría a La Espiga cuando la tierra tembló?",
+   "hilos": [
+    "p1h1"
+   ],
+   "revelaciones": [
+    "En 1968 vendía 4,500 panes al día",
+    "En 1971 ya tenía cinco sucursales en Xela"
+   ],
+   "tema": null,
+   "hechos": [],
+   "obligatorio": [],
+   "estado": "entregada",
+   "trabajo": "sesiones/_fixture_serie/trabajo/parte-1",
+   "ruta": "sesiones/_fixture_serie/salida/parte-1",
+   "duracion_s": 88.4
+  },
+  {
+   "n": 2,
+   "titulo": "La misma historia, otra vez",
+   "pregunta": "¿Cómo llenó Xela de pan un solo horno?",
+   "periodo": {
+    "desde": "1952",
+    "hasta": "1975"
+   },
+   "mecanismo": null,
+   "ejes": null,
+   "puente": "¿Qué le pasaría a La Espiga cuando la tierra tembló?",
+   "hilos": [
+    "p1h1"
+   ],
+   "revelaciones": [
+    "En 1968 vendía 4,500 panes al día",
+    "En 1971 ya tenía cinco sucursales en Xela"
+   ],
+   "tema": null,
+   "hechos": [],
+   "obligatorio": [],
+   "estado": "entregada",
+   "trabajo": "sesiones/_fixture_serie/trabajo/parte-1",
+   "ruta": "sesiones/_fixture_serie/salida/parte-1",
+   "duracion_s": 88.4
+  }
+ ],
+ "historial": [],
+ "fixture": true,
+ "modo": "serie",
+ "_comentario": "Maqueta de /youtube-long: la parte 1 de sesiones/_fixture_serie dos veces (la parte 2 repite todo: ejercita YT4, los cortes y los puentes). La genera a mano el autor de la maqueta; make youtube-fixture la usa."
+}

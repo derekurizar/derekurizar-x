@@ -75,6 +75,36 @@ body::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-e
 .vchip.tenue { color: color-mix(in srgb, var(--ink) 62%, transparent); border-color: color-mix(in srgb, var(--ink) 28%, transparent); }
 html.f45 .vchips.arriba { top: 18px; right: 85px; }
 html.f45 .vchips.abajo { top: 1015px; }
+/* «Sígueme» a mitad del video (V.seguir: S.seguir de escenas.json, gate V25): el botón propio (no la interfaz de ninguna
+   red) sin cuenta, la campana y el cursor, en el hueco del chip de arriba a la derecha; entra, se toca y se va. Solo
+   variables del sistema */
+.vseguir { position: absolute; top: 272px; right: 62px; display: flex; align-items: center; gap: 14px; padding: 8px 12px 8px 8px;
+  border-radius: 40px; background: color-mix(in srgb, var(--bg) 88%, transparent); border: 2px solid color-mix(in srgb, var(--ink) 18%, transparent);
+  z-index: 8; pointer-events: none; opacity: 0; }
+.vseguir .bt { position: relative; overflow: hidden; width: 226px; height: 54px; border-radius: 27px; box-sizing: border-box;
+  background: var(--acento, var(--a1)); border: 3px solid var(--acento, var(--a1)); display: flex; align-items: center; justify-content: center; }
+.vseguir .lbl, .vseguir .ya { position: absolute; display: flex; align-items: center; gap: 8px; font: 800 28px/1 Archivo, sans-serif; white-space: nowrap; }
+.vseguir .lbl { color: var(--bg); }
+.vseguir .ya { color: var(--ink); opacity: 0; }
+.vseguir .ya svg { width: 26px; height: 26px; stroke: var(--acento, var(--a1)); fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.vseguir .onda { position: absolute; width: 60px; height: 60px; border-radius: 50%; background: var(--ink); opacity: 0; }
+.vseguir .cam { position: relative; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; transform-origin: 50% 8%; }
+.vseguir .cam svg { width: 40px; height: 40px; stroke: var(--ink); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.vseguir .cam .punto { position: absolute; top: 3px; right: 5px; width: 16px; height: 16px; border-radius: 50%; background: var(--acento, var(--a1));
+  border: 3px solid var(--bg); transform: scale(0); }
+.vseguir .cur { position: absolute; left: 118px; top: 30px; width: 50px; height: 50px; opacity: 0; }
+.vseguir .cur svg { width: 50px; height: 50px; stroke: var(--bg); fill: var(--ink); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+html.f45 .vseguir { top: 6px; right: 85px; padding: 4px 10px 4px 4px; }
+html.f45 .vseguir.enmarco { top: 74px; }   /* dentro del escenario 16:9 (escala 0.8): bajo el margen de título */
+html.f45 .vseguir .bt { width: 196px; height: 46px; }
+html.f45 .vseguir .lbl, html.f45 .vseguir .ya { font-size: 24px; }
+html.f45 .vseguir .cam { width: 42px; height: 42px; }
+html.f45 .vseguir .cam svg { width: 34px; height: 34px; }
+html.f45 .vseguir .cur { left: 100px; top: 26px; }
+html.f169.f45 .vseguir { top: 60px; right: 96px; padding: 8px 12px 8px 8px; }
+html.f169.f45 .vseguir .bt { width: 226px; height: 54px; }
+html.f169.f45 .vseguir .lbl, html.f169.f45 .vseguir .ya { font-size: 28px; }
+html.portada .vseguir { display: none; }
 /* portada (&portada=1): el cuadro limpio para la miniatura, sin subtítulos ni barra de progreso */
 html.portada #subs, html.portada #progreso { visibility: hidden; }
 /* formato 4:5 (1080×1350) para el feed: sin zona segura de teléfono */
@@ -100,3 +130,61 @@ html.f45 #acto .titulo { font-size: 54px; }
 html.f45 .persona .circulo { width: 100px; height: 100px; }
 html.f45 .persona .nom { font-size: 36px; }
 html.f45 .persona .car { font-size: 19px; }
+/* formato 16:9 (1920×1080) del video largo de YouTube (scripts/youtube.py, ?f=169): hereda html.f45 y lo pisa con
+   html.f169.f45 (más específico, gana también a las reglas f45 de cada página). Sin zona de teléfono: márgenes de
+   título del 5 % (96 px a los lados, 54 arriba y abajo); sin subtítulos quemados (YouTube los lee del .srt) ni barra */
+html.f169.f45 { --izq: 96px; --der: 96px; --corte: 0px; --sup: 54px; --fin: 1026px; --iconos-y: 99999px; }
+html.f169.f45 body { width: 1920px; height: 1080px; }
+html.f169 #subs, html.f169 #progreso { display: none !important; }
+html.f169.f45 #arriba { top: 72px; }
+html.f169.f45 #acto .col { top: 230px; left: 300px; right: 300px; }
+html.f169.f45 #acto .anio { font-size: 200px; }
+html.f169.f45 #acto .titulo { font-size: 60px; }
+html.f169.f45 .vchips.arriba { top: 60px; right: 96px; }
+html.f169.f45 .vchips.abajo { top: 960px; }
+html.f169.f45 .persona { left: 96px; }
+/* CUADRITOS del tablero de investigación (V.cuadritos): la persona en un cuadro tipo foto de expediente, apenas girado,
+   con su apellido; atenuado hasta que la voz la nombra (.on: borde en el acento). Sin tachas. Solo variables */
+.vcuadros { position: relative; display: grid; grid-template-columns: repeat(3, var(--cuadro, 156px)); gap: 22px 26px; align-content: start; }
+.vcuadro { width: var(--cuadro, 156px); padding: 8px 8px 0; box-sizing: border-box; background: color-mix(in srgb, var(--ink) 92%, var(--bg));
+  border: 3px solid transparent; border-radius: 4px; transform: rotate(var(--giro, 0deg)); transform-origin: 50% 40%; opacity: .42;
+  box-shadow: 0 10px 24px color-mix(in srgb, var(--bg) 70%, transparent); }
+.vcuadro.on { border-color: var(--acento, var(--a1)); }
+.vcuadro .ft { width: 100%; aspect-ratio: 1 / 1; background-color: color-mix(in srgb, var(--bg) 80%, var(--ink)); background-repeat: no-repeat;
+  display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.vcuadro .ft b { font: 800 54px/1 Archivo, sans-serif; color: color-mix(in srgb, var(--ink) 70%, transparent); }
+.vcuadro .nm { padding: 7px 0 8px; font: 700 17px/1.05 'JetBrains Mono', monospace; letter-spacing: .02em; text-transform: uppercase;
+  color: var(--bg); text-align: center; white-space: nowrap; }   /* sin recorte: V.cuadritos lo achica hasta caber */
+.vhilos { position: absolute; left: 0; top: 0; pointer-events: none; overflow: visible; z-index: 2; }
+.vhilos path { fill: none; stroke: var(--acento, var(--a1)); stroke-width: 4; stroke-linecap: round; }
+.vhilos circle { fill: var(--acento, var(--a1)); stroke: var(--bg); stroke-width: 3; opacity: 0; }
+/* MARGEN DE EXPEDIENTE (V.margen, solo 16:9): el panel de la derecha de las escenas que dejaban media pantalla vacía */
+.vmargen { position: absolute; top: 150px; right: 96px; width: 520px; bottom: 54px; display: flex; flex-direction: column; gap: 26px;
+  padding-left: 40px; border-left: 2px solid color-mix(in srgb, var(--ink) 16%, transparent); box-sizing: content-box; z-index: 4; }
+.vmargen .cab { display: flex; flex-direction: column; gap: 10px; }
+.vmargen .cab span { font: 600 20px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; opacity: .7; }
+.vmargen .cab b { font: 800 34px/1.05 Archivo, sans-serif; letter-spacing: -.01em; }
+.vmargen .grid { flex: none; }
+.vmargen .quien { min-height: 62px; display: flex; flex-direction: column; gap: 6px; opacity: 0; }
+.vmargen .quien b { font: 800 30px/1 Archivo, sans-serif; color: var(--acento, var(--a1)); }
+.vmargen .quien span { font: 600 18px/1.15 'JetBrains Mono', monospace; letter-spacing: .06em; text-transform: uppercase; opacity: .8; }
+.vmargen .riel { position: relative; height: 22px; margin-top: auto; }
+.vmargen .riel .linea { position: absolute; left: 0; right: 0; top: 10px; height: 3px; background: color-mix(in srgb, var(--ink) 25%, transparent); }
+.vmargen .riel .punto { position: absolute; top: 3px; width: 17px; height: 17px; margin-left: -8px; border-radius: 50%; box-sizing: border-box;
+  background: var(--bg); border: 3px solid color-mix(in srgb, var(--ink) 40%, transparent); }
+.vmargen .riel .punto.ya { background: var(--ink); border-color: var(--ink); }
+.vmargen .riel .punto.hoy { background: var(--acento, var(--a1)); border-color: var(--acento, var(--a1)); }
+/* LA PREGUNTA DEL VIDEO (V.pregunta, P6): en la pila de chips de arriba a la derecha; dos renglones en 9:16 (no llega a la
+   fila del chip de la foto), uno en 4:5 y 16:9. Al pagarse, el check y el borde en el acento */
+.vpregunta { display: flex; align-items: center; gap: 10px; max-width: 400px; padding: 9px 14px 8px; border-radius: 10px; box-sizing: border-box;
+  background: color-mix(in srgb, var(--bg) 88%, transparent); border: 2px solid color-mix(in srgb, var(--ink) 55%, transparent);
+  font: 700 24px/1.16 Archivo, sans-serif; letter-spacing: 0; color: var(--ink); text-align: left; opacity: 0; }
+.vpregunta svg { flex: none; width: 0; height: 26px; stroke: var(--acento, var(--a1)); fill: none; stroke-width: 3.2; stroke-linecap: round;
+  stroke-linejoin: round; transform: scale(0); }
+.vpregunta.pagada svg { width: 26px; }
+.vpregunta.pagada.ya { border-color: var(--acento, var(--a1)); }
+html.f45 .vpregunta { max-width: 900px; white-space: nowrap; padding: 6px 12px 5px; font-size: 20px; }
+html.f169.f45 .vpregunta { max-width: 1100px; white-space: nowrap; padding: 10px 16px 9px; font-size: 26px; }
+/* el fondo del 16:9 sin margen (S.fondo): la última foto, borrosa y oscura, detrás de todo */
+.vfondo { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.vfondo img { width: 100%; height: 100%; object-fit: cover; filter: blur(36px) brightness(.34) saturate(.9); transform: scale(1.12); }
