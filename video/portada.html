@@ -15,7 +15,13 @@
 /* el shorthand `font` resetea font-stretch, que va después */
 #cifra { font: 900 380px/.84 Archivo, sans-serif; font-stretch: 62.5%; text-transform: uppercase; letter-spacing: -.005em;
   color: var(--acento, var(--ink)); white-space: nowrap; }
-#cifra.texto { font-size: 200px; line-height: .88; white-space: normal; }
+#cifra.texto { font-size: 200px; line-height: .96; white-space: normal; }   /* .88 hacía chocar los acentos de una línea con la de arriba */
+/* /serie: «PARTE 3 de 5», grande: las portadas de una serie se distinguen en la cuadrícula del perfil */
+#parte { display: none; position: absolute; top: 410px; left: var(--izq); font: 900 92px/1 Archivo, sans-serif; font-stretch: 62.5%; text-transform: uppercase; }
+#parte b { color: var(--acento, var(--ink)); }
+#parte span { font-size: 54px; opacity: .7; margin-left: 14px; }
+body.serie #parte { display: block; }
+body.serie #cuerpo { top: 600px; }
 #linea { font: 800 74px/1.08 Archivo, sans-serif; letter-spacing: -.015em; margin-top: 52px; }
 /* /mito (S.T.veredicto): la creencia tachada (MITO), subrayada (REALIDAD) o punteada (A MEDIAS) sobre el sello */
 #creencia { display: none; font: 800 64px/1.12 Archivo, sans-serif; letter-spacing: -.012em; margin-bottom: 40px;
@@ -29,7 +35,7 @@ body.veredicto #cuerpo { top: 450px; }
 #pie { position: absolute; bottom: 300px; left: var(--izq); right: var(--der); font: 600 30px/1 'JetBrains Mono', monospace; letter-spacing: .06em; opacity: .8; }
 </style></head>
 <body>
-<div id="contexto"></div><div id="regla"></div>
+<div id="contexto"></div><div id="regla"></div><div id="parte"></div>
 <div id="cuerpo"><div id="creencia"></div><div id="cifra"></div><div id="linea"></div></div>
 <div id="pie"></div>
 <script>
@@ -41,6 +47,10 @@ window.__listo = (async () => {
   for (const [k, v] of Object.entries(todo.colores)) document.documentElement.style.setProperty('--' + k.replace('_', '-'), v);
   const S = todo.escenas.find((e) => e.n === n) || todo.escenas[0];
   document.getElementById('contexto').textContent = todo.contexto_superior || '';
+  if (todo.serie && todo.serie.parte) {
+    document.getElementById('parte').innerHTML = `<b>Parte ${Number(todo.serie.parte)}</b><span>de ${Number(todo.serie.de)}</span>`;
+    document.body.classList.add('serie');
+  }
   const cifra = document.getElementById('cifra'), P = (S.T && S.T.pant) || {};
   const texto = P.texto || (S.cinetico && S.cinetico.pantalla) || '';
   cifra.textContent = texto;
@@ -58,7 +68,7 @@ window.__listo = (async () => {
   await document.fonts.ready;
   // la cifra cabe en la columna: se encoge hasta que cabe (el texto, además, en dos líneas como mucho)
   const ancho = 1080 - 85 - 85, esTexto = cifra.classList.contains('texto');
-  for (let fs = esTexto ? 200 : 380; fs > 120 && (cifra.scrollWidth > ancho || (esTexto && cifra.offsetHeight > 2 * fs)); fs -= 10) cifra.style.fontSize = fs + 'px';
+  for (let fs = esTexto ? 200 : 380; fs > 120 && (cifra.scrollWidth > ancho || (esTexto && cifra.offsetHeight > 2.1 * fs)); fs -= 10) cifra.style.fontSize = fs + 'px';
 })();
 </script>
 </body></html>

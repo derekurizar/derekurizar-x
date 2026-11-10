@@ -27,8 +27,8 @@ export const meta = {
 const TIPOS = ['gancho', 'tarjeta', 'golpe', 'definicion', 'adivina', 'mapa', 'ranking', 'escala', 'tiempo', 'explica', 'foto', 'cita', 'capitulo', 'red']
 const FAMILIAS = ['resultado', 'paradoja', 'contraste', 'misterio', 'personaje', 'lugar', 'pregunta', 'escala']
 const VISUALES = ['foto']
-const PUNTAJES = ['gancho', 'tension', 'claridad', 'flujo', 'precision', 'cierre']
-const REGLA_DE = { gancho: 'H-C1', tension: 'H-C2', claridad: 'H-C3', flujo: 'H-C4', precision: 'H-C5', cierre: 'H-C6' }
+const PUNTAJES = ['gancho', 'tension', 'claridad', 'flujo', 'precision', 'cierre', 'recompensa']
+const REGLA_DE = { gancho: 'H-C1', tension: 'H-C2', claridad: 'H-C3', flujo: 'H-C4', precision: 'H-C5', cierre: 'H-C6', recompensa: 'H-C7' }
 const EJES_MIN = 2, EJES_MAX = 3, HECHOS_MIN = 6
 const ACTOS = 3, PERIODOS_MIN = 2, PERIODOS_MAX = 5, HILOS_MIN = 2, HILOS_MAX = 6, PERSONAJES_MAX = 12
 const PALABRAS_MIN = 320, PALABRAS_MAX = 400, SEGUN_MAX = 4   // W12: PALABRAS y SEGUN_MAX_VIDEO de historia.py
@@ -532,7 +532,7 @@ const validarCritica = (r, O, cambiadas = null, previas = []) => {
   if (acotada) {
     const deRegla = (x) => PUNTAJES.some((k) => REGLA_DE[k] === x.regla && r.puntajes[k] <= 2)
     for (const x of r.faltas.filter((y) => y.gravedad === 'bloquea')) {
-      const vale = cambiadas.has(x.escena) || previas.some((p) => p.escena === x.escena && p.regla === x.regla) || x.regla === 'H-C5' || deRegla(x)
+      const vale = cambiadas.has(x.escena) || ((x.escena == null || x.escena === 'cierre') && cambiadas.size > 0) || previas.some((p) => p.escena === x.escena && p.regla === x.regla) || x.regla === 'H-C5' || deRegla(x)
       if (!vale) f.push(`la falta ${x.n ?? ''} (escena ${x.escena}, ${x.regla}) bloquea en una vuelta acotada: solo bloquea lo que cambió (escenas ${[...cambiadas].join(', ') || 'ninguna'}), lo que la vuelta anterior dejó sin resolver o un error de precisión (H-C5); dala como mejora`)
     }
   }

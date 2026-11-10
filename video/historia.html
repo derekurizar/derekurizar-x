@@ -61,10 +61,10 @@ body.documento #hoja { display: block; transform-origin: 50% 50%; background: co
 body.documento #membrete { display: block; }
 body.documento #hoja { position: relative; }
 /* el sello del documento (S.H.sello): fecha y fuente, girado, entra golpeando al terminar la frase */
-#sello { position: absolute; right: 26px; bottom: -34px; padding: 12px 18px; border: 4px solid var(--acento, var(--a1));
+#sello { position: absolute; right: 26px; top: -70px; white-space: nowrap; padding: 12px 18px; border: 4px solid var(--acento, var(--a1));
   border-radius: 10px; color: var(--acento, var(--a1)); font: 700 24px/1.1 'JetBrains Mono', monospace; letter-spacing: .08em;
   text-transform: uppercase; transform: rotate(-7deg) scale(0); opacity: 0; background: color-mix(in srgb, var(--bg) 70%, transparent); }
-html.f45 #sello { font-size: 20px; bottom: -28px; }
+html.f45 #sello { font-size: 20px; top: -60px; }
 body.documento #frase { font: 500 54px/1.22 Archivo, sans-serif; letter-spacing: -.005em; }
 /* capítulo: el año grande en el centro, el título y la línea de capítulos (mismas reglas que el rótulo de acto,
    #acto en comun.css) */
@@ -95,6 +95,19 @@ html.f45 #quien b { font-size: 42px; }
 html.f45 #cap { top: 180px; bottom: calc(1350px - var(--fin) + 10px); gap: 22px; }
 html.f45 #anio { font-size: 210px; }
 html.f45 #titulo { font-size: 54px; }
+/* 16:9 (video largo de YouTube): la cita y el capítulo en una columna centrada */
+html.f169.f45 #cita { top: 110px; bottom: 80px; left: 300px; right: 300px; }
+html.f169.f45 #cap { top: 140px; bottom: 100px; left: 300px; right: 300px; }
+html.f169.f45 #comillas { left: 120px; top: -60px; font-size: 760px; }
+html.f169.f45 #arriba { left: 300px; right: 300px; }
+/* con el margen de expediente (V.margen): la cita a la izquierda, el expediente a la derecha */
+html.f169.f45.conmargen #cita { left: 96px; right: 760px; }
+html.f169.f45.conmargen #arriba { left: 96px; right: 760px; }
+html.f169.f45.conmargen #comillas { left: 20px; }
+/* el rótulo de capítulo con tablero (S.H.tablero): el año y el título a la izquierda, los cuadritos a la derecha */
+html.f169.f45 body.contablero #cap { left: 96px; right: 1060px; }
+#tablero { position: absolute; display: none; }
+html.f169.f45 body.contablero #tablero { display: grid; left: 940px; top: 130px; --cuadro: 190px; grid-template-columns: repeat(4, 190px); gap: 34px 40px; }
 </style></head>
 <body>
 <div id="atmos" data-fuera-de-zona><div id="comillas">“</div></div>
@@ -111,6 +124,8 @@ html.f45 #titulo { font-size: 54px; }
   <div id="lugar"></div>
   <div id="riel"></div>
 </div>
+<!-- el tablero de investigación del rótulo de capítulo (16:9, S.H.tablero): los cuadritos de V.cuadritos -->
+<div id="tablero"></div>
 <div id="subs"></div>
 <script src="comun.js"></script>
 <script>
@@ -166,6 +181,12 @@ window.__listo = (async () => {
       Array.from({ length: H.total }, (_, k) => `<div class="punto" style="left:${H.total > 1 ? (100 * k / (H.total - 1)).toFixed(2) : 0}%"></div>`).join('');
     H.titulo.forEach((w) => { const k = normal(w.text); if (k) EN_PANTALLA.add(k); });
     String(H.hasta).split(/\s+/).forEach((w) => { const k = normal(w); if (k) EN_PANTALLA.add(k); });
+    // el tablero se va armando de capítulo en capítulo: los ya vistos atenuados, los de este capítulo entran iluminados
+    if (H.tablero && V.F169 && (H.tablero.personas || []).length) {
+      document.body.classList.add('contablero');
+      await document.fonts.ready;
+      await V.cuadritos(document.getElementById('tablero'), H.tablero.personas, { hilos: H.tablero.hilos });
+    }
   }
   await Promise.all(['extra-condensed 900 270px Archivo', '800 70px Archivo'].map((f) => document.fonts.load(f)));
   await document.fonts.ready;

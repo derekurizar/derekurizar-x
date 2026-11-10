@@ -72,6 +72,26 @@ Cómo filtra cada parte: entra lo que se le repartió aunque se haya revelado de
 | SE10 | Inventario: ≥ 85 % de lo publicable repartido o con motivo; ≥ 8 hechos por parte; un id va a una sola parte. |
 | SE11 | Columna: cada parte tiene un tema de la columna y cada tema lo cubre al menos una parte. |
 | SE12 | Densidad: la parte cita ≥ 60 % de sus hechos repartidos y todos los `obligatorio`; no usa lo de las partes siguientes. |
+| SE15 | Novedad: lo que ya contaron las partes anteriores (ids en `hechos`, `cifras`, `cita` de sus guiones) entra como contexto, ≤ 2 ids en ≤ 2 escenas (el gancho cuenta). |
+| SE16 | Sin presentar dos veces: quien ya se presentó entero (≥ 2 raíces de su `presentacion`) vuelve con un recordatorio de una palabra; una sigla ya glosada, con ≤ 4 palabras de glosa o ninguna. |
+
+**Por qué SE15–SE16** (decisión del usuario, 2026-11-09): pegadas en el video largo de `/youtube-long`, las 7 partes de
+La Línea repetían 17 hechos, presentaban a Monzón ×6 y explicaban la Cicig ×6; vistas de seguido en el perfil, cada
+parte gastaba 20–30 s en lo ya contado. Cada parte se sigue entendiendo sola (SE4), pero con una oración de contexto y
+un recordatorio corto, no con el relato otra vez. Los digestos de la parte marcan `[YA CONTADO EN Pk]` y listan
+presentados y siglas (`serie.lineas_ya_contado`). Sobre la serie entregada de La Línea, SE15–SE16 dan 3–5 fallas en
+cada parte de la 2 a la 7.
+
+## La serie completa antes de la voz (SE17, decisión del usuario, 2026-11-09)
+
+«Siempre revisar el guion completo antes de generar todas las partes: solo así hay coherencia y no se repiten hechos.»
+Las partes se escriben y se aprueban una por una, sin voz. Cuando todas tienen guion, `serie.py completa <SERIE> --check`
+cruza TODAS las partes (SE13, SE15 y SE16 entre cualquier par, la cadena real de puentes: la pregunta con que cierra la
+N la abre la N+1 en su gancho o escena 2) y escribe `serie_completa.md`, que lee un `video-critico` en «modo serie
+completa». Con 0 fallas, `--aprobar` guarda la huella de los guiones; `historia.py voz` no graba una parte nueva sin esa
+aprobación ni si un guion cambió después. Una parte ya entregada queda fija. SE13 compara también la **frase final** de
+cada parte con las de las anteriores: ≥ 2 raíces de contenido en común que son la mitad de la frase más corta fallan
+(m131: «¿dónde tenía el dinero de sus ahorrantes?» / «¿qué pasaría con el dinero de sus ahorrantes?»).
 
 ## El resumen de la última parte (SE14, decisión del usuario, 2026-11-07)
 
@@ -79,14 +99,31 @@ La última parte de **toda** serie (caso, historia o explica) lleva un resumen d
 lo que pasó, y con impacto (termina en lo que más pesa).
 
 - **Una escena** con `resumen_serie: true` en el acto 3, antes de la última cita o del cierre. Lo normal es una `explica`
-  con la animación `cronologia`: los momentos se encienden cuando la voz los dice, como «2015 · Las escuchas».
+  con la animación `cronologia`: los momentos se encienden cuando la voz los dice, como «2015 · Las escuchas». En el
+  resumen admite hasta **8 pasos** (no 6; `RESUMEN_SERIE_PASOS` en `video.py`, m110): un momento por oración, para que
+  ninguno quede solo más de ~5 s (V10).
 - **20–30 s de voz** (300–480 caracteres): una oración por momento, en orden, abierta con un conector («Así fue todo.»).
 - **Nada nuevo:** sus `hechos` son ids que ya contó alguna parte (o esta misma), de ≥ 5 partes anteriores (o de todas,
   si hay menos). Los alegatos se atribuyen igual que en el resto del video («para la acusación…», H4).
 - **Fuera de SE13** (repetir es su trabajo), de V1 (no cuenta como explica) y del aviso de flashback.
 - **Duración:** sus segundos se suman al límite de la parte: +30 s en SE7 y en H5/V4, hasta 180 s (el tope de Shorts).
 - Primera vez: La Línea, Parte 7 (147 → 172 s).
+- **Agregarlo a una parte ya grabada:** `historia.py aplicar <TRABAJO> --cambios '{"insertar": N, "escena": {…},
+  "despues_de": "frase literal de la narración"}'` (m108). Inserta la escena y su texto en la narración, corre los audios
+  de las escenas siguientes y saca a `audio/_previo/` la secuencia que la escena parte; solo la escena nueva queda por
+  grabar (`voz --pendientes --sueltas`).
 
+## Promesa de la serie, tensión y variedad (2026-11-10)
+
+- **SE1 `serie.promesa.pregunta`**: la pregunta que responde la serie ENTERA («¿…?», ≤ 12 palabras). La parte 1 la dice;
+  desde la parte 2 se lee en el gancho, bajo «Parte N de M»; **SE18**: la última parte la responde y declara dónde
+  (`guion.responde_serie = N`; ahí vuelve a pantalla con su check).
+- **SE1 `partes[].en_juego`**: qué se puede perder en cada parte y a quién alcanza; no se repite. Que suba de parte en
+  parte lo juzga el crítico en «modo serie completa».
+- **SE19**: una misma foto sale en ≤ 2 partes (en Bancafé, la del edificio de la SIB salió 7 veces).
+- **SE5**: la paleta es la de la serie; la música es de su **familia** (las pistas de `musica_tema`), una distinta por
+  parte (`serie.py parte` la asigna). Sin tema o con una sola pista, la de la serie.
+- Costos reales del modo caso (Bancafé, 5 partes): 141–169 s y ≈ 2,100–2,450 créditos de voz por parte.
 ## En pantalla
 
 - Chip «Parte N de M» en el acento desde el cuadro 0 del gancho (`V.chip`).

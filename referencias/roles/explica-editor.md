@@ -23,7 +23,8 @@ el guionista escribe una lista de datos. Índice del flujo: `referencias/flujo-e
 | `anclas` | ≥ 1 `{concepto, fuente_sugerida}`: el dato real de Guatemala que aterriza el mecanismo en el acto 3 (una tasa, una tarifa, un plazo de ley) |
 | `revelaciones` | lo que el video PAGA y el gancho no puede decir (la promesa paga una: E12) |
 | `ejes` | 1–3 `{id (2–4 letras), nombre, preguntas[], fuentes[]}`: lo típico, `con` (el concepto: definición, regla, proceso, norma) y `gt` (los datos de Guatemala) |
-| `paleta` | una de `design/tokens.json` por el tema (dinero, salud, campo…) |
+| `paleta` | una de `design/tokens.json` por el **tinte del tema** (la marca, la institución, el material: dinero, salud, campo…), con `paleta_por_que`; nunca la de las últimas 2 piezas de video (H8p en `encuadre --check`) |
+| `musica_tema` | el tema de la música, no el color: uno de `video.MUSICA_TEMAS` (`finanzas`, `economia`, `politica`, `corrupcion`…); H8m en `encuadre --check` |
 | `no_afirma` | lo que el video NO dice (que convenga un producto, rendimientos futuros, un diagnóstico) |
 | `sensible` | `financiero` · `salud` · `legal` · `ninguno`: activa el veto de consejo (E10) |
 

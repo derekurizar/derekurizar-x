@@ -1,0 +1,911 @@
+{
+ "version": 10,
+ "slug": "bancafe-y-banco-de-comercio",
+ "tema": "Bancafé y Banco de Comercio: la caída de dos bancos en Guatemala (2006–2007)",
+ "motor": "historia",
+ "fecha": "2026-11-09",
+ "carpeta": "series/2026-11-09-bancafe-y-banco-de-comercio",
+ "trabajo": "sesiones/serie-bancafe-y-banco-de-comercio",
+ "n_partes": 5,
+ "paleta": "cacao",
+ "musica": "corrupcion-colapso",
+ "plan_aprobado": true,
+ "estado": "completa",
+ "partes": [
+  {
+   "n": 1,
+   "titulo": "El banco del café",
+   "pregunta": "¿Cómo se volvió Bancafé uno de los bancos más grandes de Guatemala?",
+   "periodo": {
+    "desde": "1978",
+    "hasta": "2005-09"
+   },
+   "mecanismo": null,
+   "ejes": null,
+   "puente": "¿Dónde tenía Bancafé el dinero de sus ahorrantes cuando todo empezó a fallar?",
+   "hilos": [
+    "p1h1",
+    "p1h2"
+   ],
+   "revelaciones": [
+    "Bancafé llegó a ser el cuarto banco de Guatemala",
+    "En 2002 su offshore puso US$256 millones en Vipasa, más del 60 % de sus activos"
+   ],
+   "tema": "qué era Bancafé y cómo gana un banco",
+   "hechos": [
+    "caf-h01",
+    "caf-h02",
+    "caf-h03",
+    "caf-h04",
+    "caf-h05",
+    "caf-h31",
+    "caf-h32",
+    "ref-h24",
+    "caf-h34",
+    "cai-h26",
+    "caf-h06",
+    "ref-h02",
+    "ref-h03",
+    "com-h17",
+    "caf-c09",
+    "caf-c16",
+    "caf-c15",
+    "jui-q01",
+    "ref-q05"
+   ],
+   "obligatorio": [
+    "caf-h01",
+    "caf-h31",
+    "caf-h06",
+    "ref-h03"
+   ],
+   "estado": "entregada",
+   "trabajo": "sesiones/serie-bancafe-y-banco-de-comercio/parte-1",
+   "ruta": "series/2026-11-09-bancafe-y-banco-de-comercio/parte-1",
+   "duracion_s": 147.1
+  },
+  {
+   "n": 2,
+   "titulo": "La apuesta de Refco",
+   "pregunta": "¿Dónde tenía Bancafé el dinero de sus ahorrantes y qué pasó cuando Refco quebró?",
+   "periodo": {
+    "desde": "2005-10",
+    "hasta": "2006-09"
+   },
+   "mecanismo": null,
+   "ejes": null,
+   "puente": "¿Qué pasó con los ahorrantes cuando el hueco de Bancafé salió a la luz?",
+   "hilos": [
+    "p2h1",
+    "p2h2"
+   ],
+   "revelaciones": [
+    "La offshore de Bancafé tenía US$201.2 millones en riesgo en Refco cuando quebró",
+    "Tres meses después, el superintendente aseguró que Bancafé era sólido"
+   ],
+   "tema": "la apuesta en Refco y la offshore",
+   "hechos": [
+    "ref-h01",
+    "ref-h04",
+    "caf-h33",
+    "caf-h08",
+    "caf-h16",
+    "caf-h09",
+    "ref-h07",
+    "caf-h10",
+    "caf-h22",
+    "caf-h13",
+    "caf-h14",
+    "ref-h11",
+    "caf-h23",
+    "ref-c04",
+    "ref-c02",
+    "caf-c04",
+    "caf-c03",
+    "caf-c08",
+    "caf-c17",
+    "ref-c06",
+    "ref-q01"
+   ],
+   "obligatorio": [
+    "ref-h04",
+    "ref-h07",
+    "caf-h33",
+    "caf-h13"
+   ],
+   "estado": "entregada",
+   "trabajo": "sesiones/serie-bancafe-y-banco-de-comercio/parte-2",
+   "ruta": "series/2026-11-09-bancafe-y-banco-de-comercio/parte-2",
+   "duracion_s": 141.5
+  },
+  {
+   "n": 3,
+   "titulo": "La caída de octubre",
+   "pregunta": "¿Qué pasó con los ahorrantes de Bancafé cuando el banco cayó?",
+   "periodo": {
+    "desde": "2006-10",
+    "hasta": "2006-12"
+   },
+   "mecanismo": null,
+   "ejes": null,
+   "puente": "¿Era Bancafé el único banco que movía el dinero de sus clientes a una offshore?",
+   "hilos": [
+    "p3h1",
+    "p3h2"
+   ],
+   "revelaciones": [
+    "La Junta Monetaria suspendió Bancafé el 19 de octubre de 2006",
+    "El FOPA cubrió los depósitos locales, pero los de la offshore quedaron fuera"
+   ],
+   "tema": "la caída: corrida, suspensión y FOPA",
+   "hechos": [
+    "ref-h17",
+    "jui-h13",
+    "caf-h35",
+    "ref-h12",
+    "ref-h18",
+    "caf-h19",
+    "cai-h11",
+    "cai-h12",
+    "cai-h14",
+    "caf-h36",
+    "cai-h27",
+    "caf-h20",
+    "cai-h29",
+    "cai-h17",
+    "ref-h16",
+    "caf-h24",
+    "caf-c05",
+    "caf-c06",
+    "cai-q01",
+    "cai-q04"
+   ],
+   "obligatorio": [
+    "ref-h12",
+    "caf-h20",
+    "cai-h17",
+    "caf-h36"
+   ],
+   "estado": "entregada",
+   "trabajo": "sesiones/serie-bancafe-y-banco-de-comercio/parte-3",
+   "ruta": "series/2026-11-09-bancafe-y-banco-de-comercio/parte-3",
+   "duracion_s": 142.4
+  },
+  {
+   "n": 4,
+   "titulo": "El otro banco",
+   "pregunta": "¿Qué otro banco movía el dinero de sus clientes a una offshore?",
+   "periodo": {
+    "desde": "1993",
+    "hasta": "2008-12"
+   },
+   "mecanismo": null,
+   "ejes": null,
+   "puente": "¿Quién respondió por el dinero de los dos bancos?",
+   "hilos": [
+    "p4h1",
+    "p4h2"
+   ],
+   "revelaciones": [
+    "Banco de Comercio pasó durante años dinero de sus clientes a la offshore Organizadora de Comercio",
+    "Fue suspendido el 12 de enero de 2007, la segunda vez que la Junta suspendía un banco por manejos irregulares"
+   ],
+   "tema": "Banco de Comercio y su offshore",
+   "hechos": [
+    "com-h09",
+    "com-h07",
+    "com-h08",
+    "com-h04",
+    "com-h13",
+    "com-h02",
+    "com-h01",
+    "com-h19",
+    "com-h03",
+    "com-h21",
+    "com-h16",
+    "com-h05",
+    "com-c13",
+    "com-c14",
+    "com-c15",
+    "com-c11",
+    "com-c12",
+    "com-q01",
+    "com-q02",
+    "com-q05"
+   ],
+   "obligatorio": [
+    "com-h07",
+    "com-h01",
+    "com-h19",
+    "com-h04"
+   ],
+   "estado": "entregada",
+   "trabajo": "sesiones/serie-bancafe-y-banco-de-comercio/parte-4",
+   "ruta": "series/2026-11-09-bancafe-y-banco-de-comercio/parte-4",
+   "duracion_s": 144.2
+  },
+  {
+   "n": 5,
+   "titulo": "El dinero que no volvió",
+   "pregunta": "¿Quién respondió por el dinero de los dos bancos y por qué no volvió?",
+   "periodo": {
+    "desde": "2007",
+    "hasta": "2026"
+   },
+   "mecanismo": null,
+   "ejes": null,
+   "puente": null,
+   "hilos": [
+    "p5h1",
+    "p5h2"
+   ],
+   "revelaciones": [
+    "Años después, los procesos penales siguen abiertos y las autoridades dieron por perdidos los Q1,600 millones del FOPA",
+    "La reforma de 2012 extendió los límites de préstamo a las offshore de los grupos financieros"
+   ],
+   "tema": "los juicios, la quiebra y la regulación",
+   "hechos": [
+    "cai-h20",
+    "jui-h10",
+    "caf-h25",
+    "jui-h02",
+    "cai-h19",
+    "cai-h21",
+    "jui-h05",
+    "ref-h21",
+    "jui-h09",
+    "jui-h06",
+    "jui-h11",
+    "com-h06",
+    "jui-h23",
+    "jui-h22",
+    "caf-c13",
+    "caf-c14",
+    "caf-c11",
+    "caf-c12",
+    "caf-q01",
+    "caf-q05",
+    "com-q04"
+   ],
+   "obligatorio": [
+    "caf-h25",
+    "jui-h06",
+    "ref-h21",
+    "jui-h23"
+   ],
+   "estado": "entregada",
+   "trabajo": "sesiones/serie-bancafe-y-banco-de-comercio/parte-5",
+   "ruta": "series/2026-11-09-bancafe-y-banco-de-comercio/parte-5",
+   "duracion_s": 169.5
+  }
+ ],
+ "historial": [
+  {
+   "version": 1,
+   "fecha": "2026-11-09",
+   "nota": "plan nuevo",
+   "partes": [
+    {
+     "n": 1,
+     "titulo": "El banco del café",
+     "pregunta": "¿Cómo se volvió Bancafé uno de los bancos más grandes de Guatemala?",
+     "periodo": {
+      "desde": "1978",
+      "hasta": "2005-09"
+     },
+     "mecanismo": null,
+     "puente": "¿Dónde tenía Bancafé el dinero de sus ahorrantes cuando todo empezó a fallar?"
+    },
+    {
+     "n": 2,
+     "titulo": "La apuesta de Refco",
+     "pregunta": "¿Dónde tenía Bancafé el dinero de sus ahorrantes y qué pasó cuando Refco quebró?",
+     "periodo": {
+      "desde": "2005-10",
+      "hasta": "2006-09"
+     },
+     "mecanismo": null,
+     "puente": "¿Qué pasó con los ahorrantes cuando el hueco de Bancafé salió a la luz?"
+    },
+    {
+     "n": 3,
+     "titulo": "La caída de octubre",
+     "pregunta": "¿Qué pasó con los ahorrantes de Bancafé cuando el banco cayó?",
+     "periodo": {
+      "desde": "2006-10",
+      "hasta": "2006-12"
+     },
+     "mecanismo": null,
+     "puente": "¿Era Bancafé el único banco que movía el dinero de sus clientes a una offshore?"
+    },
+    {
+     "n": 4,
+     "titulo": "El otro banco",
+     "pregunta": "¿Qué otro banco movía el dinero de sus clientes a una offshore?",
+     "periodo": {
+      "desde": "1993",
+      "hasta": "2008-12"
+     },
+     "mecanismo": null,
+     "puente": "¿Quién respondió por el dinero de los dos bancos?"
+    },
+    {
+     "n": 5,
+     "titulo": "El dinero que no volvió",
+     "pregunta": "¿Quién respondió por el dinero de los dos bancos y por qué no volvió?",
+     "periodo": {
+      "desde": "2007",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": null
+    }
+   ]
+  },
+  {
+   "version": 2,
+   "fecha": "2026-11-09",
+   "nota": "plan aprobado por el usuario",
+   "partes": [
+    {
+     "n": 1,
+     "titulo": "El banco del café",
+     "pregunta": "¿Cómo se volvió Bancafé uno de los bancos más grandes de Guatemala?",
+     "periodo": {
+      "desde": "1978",
+      "hasta": "2005-09"
+     },
+     "mecanismo": null,
+     "puente": "¿Dónde tenía Bancafé el dinero de sus ahorrantes cuando todo empezó a fallar?"
+    },
+    {
+     "n": 2,
+     "titulo": "La apuesta de Refco",
+     "pregunta": "¿Dónde tenía Bancafé el dinero de sus ahorrantes y qué pasó cuando Refco quebró?",
+     "periodo": {
+      "desde": "2005-10",
+      "hasta": "2006-09"
+     },
+     "mecanismo": null,
+     "puente": "¿Qué pasó con los ahorrantes cuando el hueco de Bancafé salió a la luz?"
+    },
+    {
+     "n": 3,
+     "titulo": "La caída de octubre",
+     "pregunta": "¿Qué pasó con los ahorrantes de Bancafé cuando el banco cayó?",
+     "periodo": {
+      "desde": "2006-10",
+      "hasta": "2006-12"
+     },
+     "mecanismo": null,
+     "puente": "¿Era Bancafé el único banco que movía el dinero de sus clientes a una offshore?"
+    },
+    {
+     "n": 4,
+     "titulo": "El otro banco",
+     "pregunta": "¿Qué otro banco movía el dinero de sus clientes a una offshore?",
+     "periodo": {
+      "desde": "1993",
+      "hasta": "2008-12"
+     },
+     "mecanismo": null,
+     "puente": "¿Quién respondió por el dinero de los dos bancos?"
+    },
+    {
+     "n": 5,
+     "titulo": "El dinero que no volvió",
+     "pregunta": "¿Quién respondió por el dinero de los dos bancos y por qué no volvió?",
+     "periodo": {
+      "desde": "2007",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": null
+    }
+   ]
+  },
+  {
+   "version": 3,
+   "fecha": "2026-11-09",
+   "nota": "plan aprobado por el usuario",
+   "partes": [
+    {
+     "n": 1,
+     "titulo": "El banco del café",
+     "pregunta": "¿Cómo se volvió Bancafé uno de los bancos más grandes de Guatemala?",
+     "periodo": {
+      "desde": "1978",
+      "hasta": "2005-09"
+     },
+     "mecanismo": null,
+     "puente": "¿Dónde tenía Bancafé el dinero de sus ahorrantes cuando todo empezó a fallar?"
+    },
+    {
+     "n": 2,
+     "titulo": "La apuesta de Refco",
+     "pregunta": "¿Dónde tenía Bancafé el dinero de sus ahorrantes y qué pasó cuando Refco quebró?",
+     "periodo": {
+      "desde": "2005-10",
+      "hasta": "2006-09"
+     },
+     "mecanismo": null,
+     "puente": "¿Qué pasó con los ahorrantes cuando el hueco de Bancafé salió a la luz?"
+    },
+    {
+     "n": 3,
+     "titulo": "La caída de octubre",
+     "pregunta": "¿Qué pasó con los ahorrantes de Bancafé cuando el banco cayó?",
+     "periodo": {
+      "desde": "2006-10",
+      "hasta": "2006-12"
+     },
+     "mecanismo": null,
+     "puente": "¿Era Bancafé el único banco que movía el dinero de sus clientes a una offshore?"
+    },
+    {
+     "n": 4,
+     "titulo": "El otro banco",
+     "pregunta": "¿Qué otro banco movía el dinero de sus clientes a una offshore?",
+     "periodo": {
+      "desde": "1993",
+      "hasta": "2008-12"
+     },
+     "mecanismo": null,
+     "puente": "¿Quién respondió por el dinero de los dos bancos?"
+    },
+    {
+     "n": 5,
+     "titulo": "El dinero que no volvió",
+     "pregunta": "¿Quién respondió por el dinero de los dos bancos y por qué no volvió?",
+     "periodo": {
+      "desde": "2007",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": null
+    }
+   ]
+  },
+  {
+   "version": 4,
+   "fecha": "2026-11-09",
+   "nota": "serie completa revisada (SE17)",
+   "partes": [
+    {
+     "n": 1,
+     "titulo": "El banco del café",
+     "pregunta": "¿Cómo se volvió Bancafé uno de los bancos más grandes de Guatemala?",
+     "periodo": {
+      "desde": "1978",
+      "hasta": "2005-09"
+     },
+     "mecanismo": null,
+     "puente": "¿Dónde tenía Bancafé el dinero de sus ahorrantes cuando todo empezó a fallar?"
+    },
+    {
+     "n": 2,
+     "titulo": "La apuesta de Refco",
+     "pregunta": "¿Dónde tenía Bancafé el dinero de sus ahorrantes y qué pasó cuando Refco quebró?",
+     "periodo": {
+      "desde": "2005-10",
+      "hasta": "2006-09"
+     },
+     "mecanismo": null,
+     "puente": "¿Qué pasó con los ahorrantes cuando el hueco de Bancafé salió a la luz?"
+    },
+    {
+     "n": 3,
+     "titulo": "La caída de octubre",
+     "pregunta": "¿Qué pasó con los ahorrantes de Bancafé cuando el banco cayó?",
+     "periodo": {
+      "desde": "2006-10",
+      "hasta": "2006-12"
+     },
+     "mecanismo": null,
+     "puente": "¿Era Bancafé el único banco que movía el dinero de sus clientes a una offshore?"
+    },
+    {
+     "n": 4,
+     "titulo": "El otro banco",
+     "pregunta": "¿Qué otro banco movía el dinero de sus clientes a una offshore?",
+     "periodo": {
+      "desde": "1993",
+      "hasta": "2008-12"
+     },
+     "mecanismo": null,
+     "puente": "¿Quién respondió por el dinero de los dos bancos?"
+    },
+    {
+     "n": 5,
+     "titulo": "El dinero que no volvió",
+     "pregunta": "¿Quién respondió por el dinero de los dos bancos y por qué no volvió?",
+     "periodo": {
+      "desde": "2007",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": null
+    }
+   ]
+  },
+  {
+   "version": 5,
+   "fecha": "2026-11-09",
+   "nota": "serie completa revisada (SE17)",
+   "partes": [
+    {
+     "n": 1,
+     "titulo": "El banco del café",
+     "pregunta": "¿Cómo se volvió Bancafé uno de los bancos más grandes de Guatemala?",
+     "periodo": {
+      "desde": "1978",
+      "hasta": "2005-09"
+     },
+     "mecanismo": null,
+     "puente": "¿Dónde tenía Bancafé el dinero de sus ahorrantes cuando todo empezó a fallar?"
+    },
+    {
+     "n": 2,
+     "titulo": "La apuesta de Refco",
+     "pregunta": "¿Dónde tenía Bancafé el dinero de sus ahorrantes y qué pasó cuando Refco quebró?",
+     "periodo": {
+      "desde": "2005-10",
+      "hasta": "2006-09"
+     },
+     "mecanismo": null,
+     "puente": "¿Qué pasó con los ahorrantes cuando el hueco de Bancafé salió a la luz?"
+    },
+    {
+     "n": 3,
+     "titulo": "La caída de octubre",
+     "pregunta": "¿Qué pasó con los ahorrantes de Bancafé cuando el banco cayó?",
+     "periodo": {
+      "desde": "2006-10",
+      "hasta": "2006-12"
+     },
+     "mecanismo": null,
+     "puente": "¿Era Bancafé el único banco que movía el dinero de sus clientes a una offshore?"
+    },
+    {
+     "n": 4,
+     "titulo": "El otro banco",
+     "pregunta": "¿Qué otro banco movía el dinero de sus clientes a una offshore?",
+     "periodo": {
+      "desde": "1993",
+      "hasta": "2008-12"
+     },
+     "mecanismo": null,
+     "puente": "¿Quién respondió por el dinero de los dos bancos?"
+    },
+    {
+     "n": 5,
+     "titulo": "El dinero que no volvió",
+     "pregunta": "¿Quién respondió por el dinero de los dos bancos y por qué no volvió?",
+     "periodo": {
+      "desde": "2007",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": null
+    }
+   ]
+  },
+  {
+   "version": 6,
+   "fecha": "2026-11-09",
+   "nota": "serie completa revisada (SE17)",
+   "partes": [
+    {
+     "n": 1,
+     "titulo": "El banco del café",
+     "pregunta": "¿Cómo se volvió Bancafé uno de los bancos más grandes de Guatemala?",
+     "periodo": {
+      "desde": "1978",
+      "hasta": "2005-09"
+     },
+     "mecanismo": null,
+     "puente": "¿Dónde tenía Bancafé el dinero de sus ahorrantes cuando todo empezó a fallar?"
+    },
+    {
+     "n": 2,
+     "titulo": "La apuesta de Refco",
+     "pregunta": "¿Dónde tenía Bancafé el dinero de sus ahorrantes y qué pasó cuando Refco quebró?",
+     "periodo": {
+      "desde": "2005-10",
+      "hasta": "2006-09"
+     },
+     "mecanismo": null,
+     "puente": "¿Qué pasó con los ahorrantes cuando el hueco de Bancafé salió a la luz?"
+    },
+    {
+     "n": 3,
+     "titulo": "La caída de octubre",
+     "pregunta": "¿Qué pasó con los ahorrantes de Bancafé cuando el banco cayó?",
+     "periodo": {
+      "desde": "2006-10",
+      "hasta": "2006-12"
+     },
+     "mecanismo": null,
+     "puente": "¿Era Bancafé el único banco que movía el dinero de sus clientes a una offshore?"
+    },
+    {
+     "n": 4,
+     "titulo": "El otro banco",
+     "pregunta": "¿Qué otro banco movía el dinero de sus clientes a una offshore?",
+     "periodo": {
+      "desde": "1993",
+      "hasta": "2008-12"
+     },
+     "mecanismo": null,
+     "puente": "¿Quién respondió por el dinero de los dos bancos?"
+    },
+    {
+     "n": 5,
+     "titulo": "El dinero que no volvió",
+     "pregunta": "¿Quién respondió por el dinero de los dos bancos y por qué no volvió?",
+     "periodo": {
+      "desde": "2007",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": null
+    }
+   ]
+  },
+  {
+   "version": 7,
+   "fecha": "2026-11-09",
+   "nota": "serie completa revisada (SE17)",
+   "partes": [
+    {
+     "n": 1,
+     "titulo": "El banco del café",
+     "pregunta": "¿Cómo se volvió Bancafé uno de los bancos más grandes de Guatemala?",
+     "periodo": {
+      "desde": "1978",
+      "hasta": "2005-09"
+     },
+     "mecanismo": null,
+     "puente": "¿Dónde tenía Bancafé el dinero de sus ahorrantes cuando todo empezó a fallar?"
+    },
+    {
+     "n": 2,
+     "titulo": "La apuesta de Refco",
+     "pregunta": "¿Dónde tenía Bancafé el dinero de sus ahorrantes y qué pasó cuando Refco quebró?",
+     "periodo": {
+      "desde": "2005-10",
+      "hasta": "2006-09"
+     },
+     "mecanismo": null,
+     "puente": "¿Qué pasó con los ahorrantes cuando el hueco de Bancafé salió a la luz?"
+    },
+    {
+     "n": 3,
+     "titulo": "La caída de octubre",
+     "pregunta": "¿Qué pasó con los ahorrantes de Bancafé cuando el banco cayó?",
+     "periodo": {
+      "desde": "2006-10",
+      "hasta": "2006-12"
+     },
+     "mecanismo": null,
+     "puente": "¿Era Bancafé el único banco que movía el dinero de sus clientes a una offshore?"
+    },
+    {
+     "n": 4,
+     "titulo": "El otro banco",
+     "pregunta": "¿Qué otro banco movía el dinero de sus clientes a una offshore?",
+     "periodo": {
+      "desde": "1993",
+      "hasta": "2008-12"
+     },
+     "mecanismo": null,
+     "puente": "¿Quién respondió por el dinero de los dos bancos?"
+    },
+    {
+     "n": 5,
+     "titulo": "El dinero que no volvió",
+     "pregunta": "¿Quién respondió por el dinero de los dos bancos y por qué no volvió?",
+     "periodo": {
+      "desde": "2007",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": null
+    }
+   ]
+  },
+  {
+   "version": 8,
+   "fecha": "2026-11-09",
+   "nota": "serie completa revisada (SE17)",
+   "partes": [
+    {
+     "n": 1,
+     "titulo": "El banco del café",
+     "pregunta": "¿Cómo se volvió Bancafé uno de los bancos más grandes de Guatemala?",
+     "periodo": {
+      "desde": "1978",
+      "hasta": "2005-09"
+     },
+     "mecanismo": null,
+     "puente": "¿Dónde tenía Bancafé el dinero de sus ahorrantes cuando todo empezó a fallar?"
+    },
+    {
+     "n": 2,
+     "titulo": "La apuesta de Refco",
+     "pregunta": "¿Dónde tenía Bancafé el dinero de sus ahorrantes y qué pasó cuando Refco quebró?",
+     "periodo": {
+      "desde": "2005-10",
+      "hasta": "2006-09"
+     },
+     "mecanismo": null,
+     "puente": "¿Qué pasó con los ahorrantes cuando el hueco de Bancafé salió a la luz?"
+    },
+    {
+     "n": 3,
+     "titulo": "La caída de octubre",
+     "pregunta": "¿Qué pasó con los ahorrantes de Bancafé cuando el banco cayó?",
+     "periodo": {
+      "desde": "2006-10",
+      "hasta": "2006-12"
+     },
+     "mecanismo": null,
+     "puente": "¿Era Bancafé el único banco que movía el dinero de sus clientes a una offshore?"
+    },
+    {
+     "n": 4,
+     "titulo": "El otro banco",
+     "pregunta": "¿Qué otro banco movía el dinero de sus clientes a una offshore?",
+     "periodo": {
+      "desde": "1993",
+      "hasta": "2008-12"
+     },
+     "mecanismo": null,
+     "puente": "¿Quién respondió por el dinero de los dos bancos?"
+    },
+    {
+     "n": 5,
+     "titulo": "El dinero que no volvió",
+     "pregunta": "¿Quién respondió por el dinero de los dos bancos y por qué no volvió?",
+     "periodo": {
+      "desde": "2007",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": null
+    }
+   ]
+  },
+  {
+   "version": 9,
+   "fecha": "2026-11-09",
+   "nota": "serie completa revisada (SE17)",
+   "partes": [
+    {
+     "n": 1,
+     "titulo": "El banco del café",
+     "pregunta": "¿Cómo se volvió Bancafé uno de los bancos más grandes de Guatemala?",
+     "periodo": {
+      "desde": "1978",
+      "hasta": "2005-09"
+     },
+     "mecanismo": null,
+     "puente": "¿Dónde tenía Bancafé el dinero de sus ahorrantes cuando todo empezó a fallar?"
+    },
+    {
+     "n": 2,
+     "titulo": "La apuesta de Refco",
+     "pregunta": "¿Dónde tenía Bancafé el dinero de sus ahorrantes y qué pasó cuando Refco quebró?",
+     "periodo": {
+      "desde": "2005-10",
+      "hasta": "2006-09"
+     },
+     "mecanismo": null,
+     "puente": "¿Qué pasó con los ahorrantes cuando el hueco de Bancafé salió a la luz?"
+    },
+    {
+     "n": 3,
+     "titulo": "La caída de octubre",
+     "pregunta": "¿Qué pasó con los ahorrantes de Bancafé cuando el banco cayó?",
+     "periodo": {
+      "desde": "2006-10",
+      "hasta": "2006-12"
+     },
+     "mecanismo": null,
+     "puente": "¿Era Bancafé el único banco que movía el dinero de sus clientes a una offshore?"
+    },
+    {
+     "n": 4,
+     "titulo": "El otro banco",
+     "pregunta": "¿Qué otro banco movía el dinero de sus clientes a una offshore?",
+     "periodo": {
+      "desde": "1993",
+      "hasta": "2008-12"
+     },
+     "mecanismo": null,
+     "puente": "¿Quién respondió por el dinero de los dos bancos?"
+    },
+    {
+     "n": 5,
+     "titulo": "El dinero que no volvió",
+     "pregunta": "¿Quién respondió por el dinero de los dos bancos y por qué no volvió?",
+     "periodo": {
+      "desde": "2007",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": null
+    }
+   ]
+  },
+  {
+   "version": 10,
+   "fecha": "2026-11-09",
+   "nota": "serie completa revisada (SE17)",
+   "partes": [
+    {
+     "n": 1,
+     "titulo": "El banco del café",
+     "pregunta": "¿Cómo se volvió Bancafé uno de los bancos más grandes de Guatemala?",
+     "periodo": {
+      "desde": "1978",
+      "hasta": "2005-09"
+     },
+     "mecanismo": null,
+     "puente": "¿Dónde tenía Bancafé el dinero de sus ahorrantes cuando todo empezó a fallar?"
+    },
+    {
+     "n": 2,
+     "titulo": "La apuesta de Refco",
+     "pregunta": "¿Dónde tenía Bancafé el dinero de sus ahorrantes y qué pasó cuando Refco quebró?",
+     "periodo": {
+      "desde": "2005-10",
+      "hasta": "2006-09"
+     },
+     "mecanismo": null,
+     "puente": "¿Qué pasó con los ahorrantes cuando el hueco de Bancafé salió a la luz?"
+    },
+    {
+     "n": 3,
+     "titulo": "La caída de octubre",
+     "pregunta": "¿Qué pasó con los ahorrantes de Bancafé cuando el banco cayó?",
+     "periodo": {
+      "desde": "2006-10",
+      "hasta": "2006-12"
+     },
+     "mecanismo": null,
+     "puente": "¿Era Bancafé el único banco que movía el dinero de sus clientes a una offshore?"
+    },
+    {
+     "n": 4,
+     "titulo": "El otro banco",
+     "pregunta": "¿Qué otro banco movía el dinero de sus clientes a una offshore?",
+     "periodo": {
+      "desde": "1993",
+      "hasta": "2008-12"
+     },
+     "mecanismo": null,
+     "puente": "¿Quién respondió por el dinero de los dos bancos?"
+    },
+    {
+     "n": 5,
+     "titulo": "El dinero que no volvió",
+     "pregunta": "¿Quién respondió por el dinero de los dos bancos y por qué no volvió?",
+     "periodo": {
+      "desde": "2007",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": null
+    }
+   ]
+  }
+ ],
+ "fixture": false,
+ "modo": "caso",
+ "musica_tema": "finanzas",
+ "guiones_revisados": {
+  "fecha": "2026-11-09",
+  "huella": "1f3db351facb"
+ }
+}

@@ -91,6 +91,14 @@ La guía es `referencias/flujo-historia.md`. Nunca publiques. Nunca generes mús
    - **El estado en línea** (m045, m047): si `creative_get_flow_run_status` devuelve la respuesta en el chat y no en un archivo
      (pasa con pocas sesiones), escríbela TAL CUAL a `<TRABAJO>/audio/estado.json` y pásale ese archivo a `descargar --estado`;
      valen las `words` en línea de Scribe. `descargar` falla si una transcripción no casa con ninguna escena.
+     Pegado vale como venga (m111): con texto alrededor, la lista de bloques del MCP o varias respuestas seguidas en un
+     mismo archivo (un estado por lote), o por stdin con `--estado -`. Lo mínimo que se usa: `generations[]` (id,
+     modality, status, content_url, prompt, price), `media[]` (generation_id, prompt) y `transcripts[]` (text, words o
+     words_download_url, source.url). No hace falta reconstruir nada a mano.
+   - **Concurrencia** (m112): ElevenLabs corre pocas generaciones a la vez; con más de 3 nodos, las demás quedan
+     pendientes y se reintentan solas. Corre los nodos en lotes de ≤ 3 (`creative_run_flow_nodes` con ese lote),
+     sondea sus sesiones con `creative_get_flow_run_status` hasta `all_completed` y sigue con el lote siguiente; para
+     esperar, un `sleep` en segundo plano (en primer plano está bloqueado).
 5. **TIEMPOS Y ESCUCHA**
    - `python3 scripts/historia.py tiempos <TRABAJO>` (V6; V10 y H5, avisos). Si una escena no se alinea, rehaz SOLO
      ese nodo y repite; si falla la frontera de una secuencia, regrábala entera o esas escenas con `voz --sueltas`.

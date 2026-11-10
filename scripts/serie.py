@@ -35,7 +35,7 @@ Subcomandos:
 
 Gates de cada parte (los llama historia.py / explica.py en guion --check):
   SE4 cada parte se entiende sola: sin «como vimos», «en la parte anterior», «en el video anterior»
-  SE5 la paleta y la música son las de la serie
+  SE5 la paleta es la de la serie y la música, de su familia (una pista del tema por parte)
   SE6 cierre «puente» en las partes 1…M−1 (la pregunta que abre la siguiente, sin anunciarla); en la última, ningún
       hilo pasa_a y el cierre no es puente
   SE7 75–110 s estimados (< 61 s falla; 61–75 aviso)
@@ -274,6 +274,21 @@ def revisar_plan(enc, motor, M_esperado=None, caso=False):
         return ["SE1 encuadre.serie.partes: %d partes (van %d–%d)" % (len(partes), *rango)], []
     if M_esperado and len(partes) != M_esperado:
         f.append("SE1 el plan trae %d partes y la serie se preparó con %d (serie.py preparar --partes)" % (len(partes), M_esperado))
+    # la promesa de la serie ENTERA (2026-11-10): la pregunta que se responde al terminar las M partes. La parte 1 la
+    # dice, las siguientes la muestran bajo «Parte N de M» y la última la responde (SE18)
+    prom = (enc.get("serie") or {}).get("promesa") or {}
+    q = (prom.get("pregunta") or "").strip() if isinstance(prom, dict) else ""
+    if not (q.startswith("¿") and q.endswith("?")) or VD.palabras(q) > PROMESA_SERIE_PALABRAS:
+        f.append("SE1 encuadre.serie.promesa.pregunta: la pregunta que responde la serie entera («¿…?», ≤ %d palabras, con su "
+                 "sujeto); no la de una parte" % PROMESA_SERIE_PALABRAS)
+    elif VD.META_PROMESA.search(q):
+        f.append("SE1 serie.promesa.pregunta anuncia el video («%s»)" % VD.META_PROMESA.search(q).group(0))
+    en_juego = [VD._plano(p.get("en_juego") or "") for p in partes]
+    if any(not x for x in en_juego):
+        f.append("SE1 cada parte lleva «en_juego» (qué se puede perder en esa parte y a quién alcanza): la tensión sube de "
+                 "parte en parte")
+    elif len(set(en_juego)) != len(en_juego):
+        f.append("SE1 dos partes tienen el mismo «en_juego»: cada parte sube lo que está en juego")
     for k, p in enumerate(partes, 1):
         tag = "SE1 parte %d" % k
         if p.get("n") != k:
@@ -340,7 +355,7 @@ def revisar_plan(enc, motor, M_esperado=None, caso=False):
                      "periodo": p.get("periodo"), "mecanismo": p.get("mecanismo"), "ejes": p.get("ejes"), "puente": p.get("puente") or None,
                      "hilos": [h.get("id") for h in p.get("hilos") or [] if isinstance(h, dict)],
                      "revelaciones": p.get("revelaciones") or [], "tema": p.get("tema"), "hechos": p.get("hechos") or [],
-                     "obligatorio": p.get("obligatorio") or []})
+                     "obligatorio": p.get("obligatorio") or [], "en_juego": (p.get("en_juego") or "").strip() or None})
     return f, norm
 
 
@@ -407,6 +422,7 @@ def cmd_plan(a):
         p.update({k: viejo.get(k) for k in ("estado", "trabajo", "ruta", "duracion_s") if viejo.get(k)})
         p.setdefault("estado", "plan")
     S["partes"] = norm
+    S["promesa"] = (((leer(enc_r).get("serie") or {}).get("promesa") or {}).get("pregunta") or "").strip() or None
     cambio = previo != nuevo
     if cambio and S.get("plan_aprobado") and not a.aprobar:
         S["plan_aprobado"] = False
@@ -502,6 +518,14 @@ def cmd_parte(a):
         os.makedirs(os.path.join(destino, d), exist_ok=True)
     enc = leer(os.path.join(base, "encuadre.json"))
     plan = next(x for x in (enc.get("serie") or {}).get("partes") or [] if x.get("n") == a.n)
+    # la música es de la FAMILIA de la serie (las pistas de su tema), una distinta por parte: la misma pista de 95 s en
+    # bucle en las 5 partes cansa (Bancafé, 2026-11-09). Sin tema o con una sola pista, la de la serie
+    musica_parte = S["musica"]
+    if S.get("musica_tema"):
+        fam = sorted(x["id"] for x in leer(os.path.join(RAIZ, "design", "musica", "catalogo.json"))["pistas"]
+                     if S["musica_tema"] in (x.get("temas") or []))
+        if S["musica"] in fam and len(fam) > 1:
+            musica_parte = fam[(fam.index(S["musica"]) + a.n - 1) % len(fam)]
     M = len(S["partes"])
     sig = next((x for x in S["partes"] if x["n"] == a.n + 1), None)
     enc_p = {k: v for k, v in enc.items() if k != "serie"}
@@ -518,11 +542,12 @@ def cmd_parte(a):
                "formato": "historia-caso" if S.get("modo") == "caso" else FORMATO_DE[S["motor"]],
                "objetivo_s": OBJETIVO_CASO_S if S.get("modo") == "caso" else OBJETIVO_S, "piso_s": PISO_S,
                **({"duracion": "explica-serie"} if S["motor"] == "explica" else {}),
-               "paleta": S["paleta"], "musica": S["musica"], "musica_forzada": S["musica"],
+               "paleta": S["paleta"], "musica": musica_parte, "musica_forzada": musica_parte,
                "serie": {"carpeta": S["carpeta"], "slug": S["slug"], "parte": a.n, "de": M, "titulo": plan.get("titulo"),
                          "periodo": plan.get("periodo"), "mecanismo": plan.get("mecanismo"), "puente": plan.get("puente"),
                          "siguiente": {"n": sig["n"], "titulo": sig["titulo"], "pregunta": sig.get("pregunta")} if sig else None,
-                         "paleta": S["paleta"], "musica": S["musica"], "modo": S.get("modo") or "serie",
+                         "paleta": S["paleta"], "musica": musica_parte, "modo": S.get("modo") or "serie",
+                         "promesa": ((enc.get("serie") or {}).get("promesa") or {}).get("pregunta"), "en_juego": plan.get("en_juego"),
                          # modo caso: lo que cuenta esta parte (sus ids) y lo que no puede adelantar (los de las siguientes)
                          "hechos": plan.get("hechos") or [], "obligatorio": plan.get("obligatorio") or [],
                          "reservar": [i for x in (enc.get("serie") or {}).get("partes") or [] if x.get("n", 0) > a.n
@@ -564,7 +589,7 @@ def revisar_parte(g, st, trabajo):
         f.append("SE4 «%s»: cada parte se entiende sola (quien llega por la parte %d no vio las otras): cuenta en una oración "
                  "lo que hace falta, sin remitir a otra parte" % (m.group(), n))
     if st.get("paleta") != ser.get("paleta") or st.get("musica") != ser.get("musica"):
-        f.append("SE5 paleta %s y música %s; la serie va con %s y %s (las mismas en todas las partes)"
+        f.append("SE5 paleta %s y música %s; la serie va con %s y %s (la paleta de la serie y la pista que le tocó a esta parte)"
                  % (st.get("paleta"), st.get("musica"), ser.get("paleta"), ser.get("musica")))
     hilos_pasan = [h.get("id") for h in g.get("hilos") or [] if isinstance(h, dict) and h.get("pasa_a") is not None]
     if n and M and n < M:
@@ -606,6 +631,12 @@ def revisar_parte(g, st, trabajo):
         adelanta = [i for i in ser.get("reservar") or [] if i in citados]
         if adelanta:
             f.append("SE12 la parte usa %s, que se reparte a una parte siguiente (no la adelantes)" % ", ".join(adelanta))
+    # SE18: la última parte responde la pregunta de la serie entera, y dice en qué escena
+    if ser.get("promesa") and n and n == M:
+        rs = g.get("responde_serie")
+        if not isinstance(rs, int) or isinstance(rs, bool) or not 2 <= rs <= len(g.get("escenas") or []):
+            f.append("SE18 la última parte responde la pregunta de la serie («%s»): guion.responde_serie = N, la escena que la "
+                     "contesta (ahí vuelve a pantalla, con su check)" % ser["promesa"])
     cap = g.get("caption") or {}
     prefijo = "Serie · Parte %d de %d: " % (n or 0, M or 0)
     for k in ("tiktok", "instagram", "facebook"):
@@ -619,6 +650,13 @@ def revisar_parte(g, st, trabajo):
     if "(%d/%d)" % (n or 0, M or 0) not in sh:
         f.append("SE8 el título de Shorts (1.ª línea de caption.shorts) lleva «(%d/%d)»" % (n or 0, M or 0))
     f += citas_repetidas(g, n, trabajo)
+    f19 = fotos_repetidas(g, n, trabajo)
+    if str(st.get("fecha") or VD.P6_DESDE) < VD.P6_DESDE:   # una serie empezada antes de la regla: solo aviso
+        for x in f19:
+            print("AVISO", x)
+    else:
+        f += f19
+    f += revisar_novedad(g, n, trabajo)
     f += revisar_resumen(g, n, M, trabajo)
     return f
 
@@ -673,6 +711,143 @@ def revisar_resumen(g, n, M, trabajo):
     return f
 
 
+# SE15–SE16 (decisión del usuario, 2026-11-09): cada parte trae casi todo NUEVO. Medido en La Línea (7 partes): 17 hechos
+# contados en dos o tres partes, Monzón presentado ×6, la Cicig explicada ×6; pegadas en /youtube-long se oían como
+# repeticiones y sueltas restaban tiempo a lo nuevo. Lo que ya contó una parte anterior entra solo como contexto: ≤ 2
+# ids en ≤ 2 escenas (el gancho puede ser una de ellas). Quien ya se presentó entero vuelve con un recordatorio de una
+# palabra de su presentación («el exsecretario Monzón»); la sigla ya explicada, con ≤ 4 palabras de glosa o ninguna.
+CONTEXTO_IDS, CONTEXTO_ESCENAS = 2, 2
+GLOSA_CORTA_PALABRAS = 4
+
+
+def ids_de_escena(e):
+    cf = e.get("cifra") if isinstance(e.get("cifra"), dict) else {}
+    return {x for x in (e.get("hechos") or []) + (e.get("cifras") or []) + [e.get("cita"), cf.get("id")] if x}
+
+
+def items_voz(g):
+    """La voz de cada escena (y del cierre) como items de youtube.menciones; sin el resumen de SE14."""
+    escenas = g.get("escenas") or []
+    out = []
+    for i, e in enumerate(escenas + [g.get("cierre") or {}], 1):
+        if e.get("resumen_serie"):
+            continue
+        out.append({"n": i if i <= len(escenas) else "cierre", "texto": VD.sin_pausas(e.get("texto") or ""), "ids": ids_de_escena(e)})
+    return out
+
+
+def guiones_previos(trabajo, n):
+    """[(k, guion)] de las partes 1…n−1 que ya tienen guion."""
+    base, out = os.path.dirname(os.path.abspath(trabajo)), []
+    for d in sorted(glob.glob(os.path.join(base, "parte-*"))):
+        try:
+            k = int(d.rsplit("-", 1)[1])
+        except ValueError:
+            continue
+        gp = os.path.join(d, "guion.json")
+        if k < n and os.path.exists(gp):
+            out.append((k, json.load(open(gp, encoding="utf-8"))))
+    return sorted(out, key=lambda x: x[0])
+
+
+def personajes_de(trabajo):
+    try:
+        enc = leer(os.path.join(trabajo, "encuadre.json"))
+    except (OSError, ValueError):
+        return []
+    return [p for p in enc.get("personajes") or [] if isinstance(p, dict) and (p.get("nombre") or "").strip()]
+
+
+def ya_contado(trabajo, n):
+    """Lo que contaron las partes 1…n−1 con guion: {ids: {id: parte}, presentados: {nombre: parte}, glosas: {sigla: parte}}."""
+    import youtube as YT   # noqa: E402  (aquí: youtube no importa serie, pero así no carga si no hace falta)
+    pers = personajes_de(trabajo)
+    out = {"ids": {}, "presentados": {}, "glosas": {}}
+    for k, g in guiones_previos(trabajo, n):
+        its = items_voz(g)
+        for it in its:
+            for i in it["ids"]:
+                out["ids"].setdefault(i, k)
+        for nom, v in YT.menciones(its, pers).items():
+            if any(p for _, _, p in v) and not nom.isupper():
+                out["presentados"].setdefault(nom, k)
+        for s, _, _, _ in YT.glosas(its):
+            out["glosas"].setdefault(s, k)
+    return out
+
+
+def recordatorio(p):
+    """«exsecretario Monzón»: la primera palabra con contenido de la presentación + el apellido."""
+    w = [x for x in re.findall(r"[\wáéíóúüñÁÉÍÓÚÑ]+", p.get("presentacion") or "") if len(x) >= 4 and VD._plano(x) not in VD.STOP]
+    al = [a for a in p.get("alias") or [] if (a or "").strip() and a.split()[0][0].isupper() and len(a.split()) <= 2]
+    ap = al[0] if al else ((p.get("nombre") or "").split() or [""])[-1]
+    return ("%s %s" % (w[0].lower(), ap)).strip() if w else ap
+
+
+def palabras_glosa(txt):
+    return len(re.findall(r"\w+", txt.split(",", 1)[1] if "," in txt else ""))
+
+
+def revisar_novedad(g, n, trabajo):
+    """SE15 (hechos ya contados) y SE16 (presentaciones y glosas repetidas) contra las partes anteriores → fallas."""
+    if not n or n < 2 or not trabajo:
+        return []
+    Y = ya_contado(trabajo, n)
+    if not any(Y.values()):
+        return []
+    import youtube as YT   # noqa: E402
+    its, f = items_voz(g), []
+    rep = {it["n"]: sorted(i for i in it["ids"] if i in Y["ids"]) for it in its}
+    rep = {k: v for k, v in rep.items() if v}
+    todos = sorted({i for v in rep.values() for i in v})
+    if len(todos) > CONTEXTO_IDS or len(rep) > CONTEXTO_ESCENAS:
+        f.append("SE15 la parte vuelve a contar %d hecho(s) que ya contaron las partes anteriores (%s) en %d escena(s) (%s); van ≤ %d "
+                 "en ≤ %d escenas: cada parte trae lo NUEVO. Lo anterior va como contexto en una oración (gancho o escena 2), y "
+                 "las demás escenas cuentan los hechos de tu reparto"
+                 % (len(todos), ", ".join("%s (P%d)" % (i, Y["ids"][i]) for i in todos), len(rep),
+                    ", ".join(str(k) for k in rep), CONTEXTO_IDS, CONTEXTO_ESCENAS))
+    pers = {p["nombre"]: p for p in personajes_de(trabajo)}
+    for nom, v in YT.menciones(its, list(pers.values())).items():
+        k = Y["presentados"].get(nom)
+        if nom.isupper():   # una sigla en personajes (la CICIG): la revisa su glosa, abajo
+            continue
+        esc = [its[i]["n"] for i, _, p in v if p]
+        if k and esc:
+            f.append("SE16 %s ya se presentó entero en la parte %d: aquí un recordatorio de UNA palabra de su presentación "
+                     "(«%s»), no la presentación completa (escena %s)" % (nom, k, recordatorio(pers.get(nom) or {"nombre": nom}),
+                                                                         ", ".join(map(str, esc))))
+    for s, i, _, txt in YT.glosas(its):
+        k = Y["glosas"].get(s)
+        if k and palabras_glosa(txt) > GLOSA_CORTA_PALABRAS:
+            f.append("SE16 la sigla «%s» ya se explicó en la parte %d: aquí ≤ %d palabras de glosa («la Cicig, de la ONU,») o "
+                     "ninguna (escena %s: «%s»)" % (s.upper(), k, GLOSA_CORTA_PALABRAS, its[i]["n"], txt[:70]))
+    return f
+
+
+def lineas_ya_contado(trabajo, n):
+    """Para los digestos de una parte 2…M: lo que ya contaron las partes anteriores (SE15–SE16)."""
+    if not n or n < 2:
+        return []
+    Y = ya_contado(trabajo, n)
+    if not any(Y.values()):
+        return []
+    por = {}
+    for i, k in Y["ids"].items():
+        por.setdefault(k, []).append(i)
+    L = ["", "## Ya contado en las partes anteriores (SE15–SE16: esta parte trae lo NUEVO)",
+         "- Esos hechos, cifras y citas entran solo como contexto: ≤ %d ids en ≤ %d escenas (el gancho cuenta). El gancho abre "
+         "con algo de TU reparto, no con lo que ya se contó." % (CONTEXTO_IDS, CONTEXTO_ESCENAS)]
+    L += ["- Parte %d: %s" % (k, ", ".join(sorted(v))) for k, v in sorted(por.items())]
+    if Y["presentados"]:
+        pers = {p["nombre"]: p for p in personajes_de(trabajo)}
+        L += ["- Ya presentados entero (aquí, un recordatorio de una palabra): %s"
+              % "; ".join("%s (P%d) → «%s»" % (nm, k, recordatorio(pers.get(nm) or {"nombre": nm})) for nm, k in sorted(Y["presentados"].items()))]
+    if Y["glosas"]:
+        L += ["- Siglas ya explicadas (aquí, ≤ %d palabras de glosa o ninguna): %s"
+              % (GLOSA_CORTA_PALABRAS, ", ".join("%s (P%d)" % (s.upper(), k) for s, k in sorted(Y["glosas"].items())))]
+    return L
+
+
 FRASE_REPETIDA_PALABRAS = 8   # SE13: una frase de la voz de ≥ 8 palabras ya dicha en otra parte
 
 
@@ -686,6 +861,30 @@ def _frases_largas(g):
             if len(w) >= FRASE_REPETIDA_PALABRAS:
                 out.add(" ".join(w))
     return out
+
+
+FOTO_PARTES_MAX = 2   # SE19: una misma foto en a lo más 2 partes de la serie
+
+
+def fotos_repetidas(g, n, trabajo):
+    """SE19 (2026-11-10): en Bancafé la misma foto del edificio de la SIB salió 7 veces en las 5 partes. Una foto que ya
+    salió en FOTO_PARTES_MAX partes anteriores no vuelve: el investigador bajó más (el digesto las lista) o se pide otra."""
+    if not n or not trabajo:
+        return []
+    base, usos = os.path.dirname(os.path.abspath(trabajo)), {}
+    fotos_de = lambda gg: {x for e in gg.get("escenas") or [] for x in [e.get("foto")] + list(e.get("dividida") or []) if x}
+    for d in sorted(glob.glob(os.path.join(base, "parte-*"))):
+        try:
+            k = int(d.rsplit("-", 1)[1])
+        except ValueError:
+            continue
+        gp = os.path.join(d, "guion.json")
+        if k >= n or not os.path.exists(gp):
+            continue
+        for x in fotos_de(json.load(open(gp, encoding="utf-8"))):
+            usos.setdefault(x, []).append(k)
+    return ["SE19 la foto %s ya salió en las partes %s: una foto va en ≤ %d partes de la serie (usa otra de las bajadas)"
+            % (x, ", ".join(map(str, usos[x])), FOTO_PARTES_MAX) for x in sorted(fotos_de(g)) if len(usos.get(x, [])) >= FOTO_PARTES_MAX]
 
 
 def citas_repetidas(g, n, trabajo):
@@ -709,7 +908,27 @@ def citas_repetidas(g, n, trabajo):
             f.append("SE13 la cita %s ya sale en la parte %d: usa otra frase o cuéntalo en la voz sin citarla" % (c, k))
         for fr in sorted(mias_f & _frases_largas(otra)):
             f.append("SE13 la voz repite una frase de la parte %d («%s…»): dila distinto o quítala" % (k, fr[:60]))
+        f += finales_parecidas(g, otra, k)
     return f
+
+
+PROMESA_SERIE_PALABRAS = 12   # SE1: la pregunta de la serie entera
+FINAL_PARECIDA_PALABRAS = 2      # m131: dos frases finales con ≥ 2 raíces de contenido en común…
+FINAL_PARECIDA_PROPORCION = 0.5  # …que son al menos la mitad de las de la frase más corta se parecen
+
+
+def finales_parecidas(g, otra, k):
+    """SE13 (m131, 2026-11-09): la frase final de una parte no se parece a la de otra («¿dónde tenía el dinero de sus
+    ahorrantes?» / «¿qué pasaría con el dinero de sus ahorrantes?»): quien ve la serie de corrido oye el mismo remate."""
+    mia, suya = (g.get("cierre") or {}).get("final"), (otra.get("cierre") or {}).get("final")
+    if not mia or not suya:
+        return []
+    a, b = raices(mia), raices(suya)
+    comun = a & b
+    if len(comun) < FINAL_PARECIDA_PALABRAS or len(comun) < FINAL_PARECIDA_PROPORCION * min(len(a), len(b)):
+        return []
+    return ["SE13 la frase final se parece a la de la parte %d («%s»; %d palabras en común: %s): remata con otra imagen"
+            % (k, suya[:70], len(comun), ", ".join(sorted(comun)))]
 
 
 def revisar_invitacion(inv, n, M, ser):
@@ -765,9 +984,29 @@ def cmd_digesto(a):
 def cmd_estado(a):
     ruta, S = cargar_serie(a.serie)
     print("serie «%s» · v%s · %s · plan %s" % (S["tema"], S.get("version"), S.get("estado"), "aprobado" if S.get("plan_aprobado") else "por aprobar"))
+    if S.get("promesa"):
+        print("  promesa de la serie: %s" % S["promesa"])
     for p in S["partes"]:
-        print("  %d/%d %-28s %-10s %s%s" % (p["n"], len(S["partes"]), p["titulo"][:28], p.get("estado") or "plan",
-                                           p.get("trabajo") or "", " · publicar: sí" if publicable(S, p) else ""))
+        # de un vistazo: duración, créditos, música y el veredicto de la última crítica de cada parte
+        extra, t = [], os.path.join(RAIZ, p["trabajo"]) if p.get("trabajo") else None
+        if t and os.path.isdir(t):
+            v = os.path.join(t, "salida", "video.mp4")
+            if os.path.exists(v):
+                extra.append("%.0f s" % VD.ffprobe_dur(v))
+            cr = os.path.join(t, "audio", "creditos.json")
+            if os.path.exists(cr):
+                extra.append("%s créditos" % leer(cr).get("total"))
+            vj = os.path.join(t, "video.json")
+            if os.path.exists(vj):
+                extra.append("música %s" % leer(vj).get("musica"))
+            cj = os.path.join(t, "critica.json")
+            if os.path.exists(cj):
+                c = leer(cj)
+                bloq = sum(1 for x in c.get("faltas") or [] if isinstance(x, dict) and x.get("gravedad") == "bloquea")
+                extra.append("crítica: %s%s" % (c.get("veredicto"), " (%d que bloquean)" % bloq if bloq else ""))
+        print("  %d/%d %-28s %-10s %s%s%s" % (p["n"], len(S["partes"]), p["titulo"][:28], p.get("estado") or "plan",
+                                             p.get("trabajo") or "", " · publicar: sí" if publicable(S, p) else "",
+                                             " · " + " · ".join(extra) if extra else ""))
     return 0
 
 
@@ -804,6 +1043,102 @@ def cmd_entregar_parte(a):
     print("parte %d de %d entregada → %s · %s" % (ser["parte"], ser["de"], rel(destino), "se puede publicar" if publicable(S, p)
                                                  else "NO se publica todavía: espera el guion aprobado de la parte %d" % (ser["parte"] + 1)))
     return 0
+
+
+# ---------- SE17: la serie completa antes de la voz (decisión del usuario, 2026-11-09) ----------
+# «Siempre revisar el guion completo antes de generar todas las partes: solo así hay coherencia y no se repiten hechos.»
+# Las partes se escriben y se aprueban UNA POR UNA (cada una ve las anteriores: SE15, SE16, SE13), pero ninguna parte
+# nueva se graba con voz hasta que TODAS tienen guion y la serie completa pasa esta revisión: la narración entera en orden
+# (serie_completa.md, para el oyente y el crítico en «modo serie completa») y los cruces entre todas las partes.
+def guiones_serie(S):
+    out = []
+    for p in S["partes"]:
+        t = os.path.join(RAIZ, p.get("trabajo") or "", "guion.json") if p.get("trabajo") else None
+        out.append((p, leer(t) if t and os.path.exists(t) else None))
+    return out
+
+
+def huella_guiones(S):
+    import hashlib
+    h = hashlib.sha1()
+    for p, g in guiones_serie(S):
+        h.update(json.dumps([(e.get("texto"), e.get("foto")) for e in (g or {}).get("escenas") or []] + [((g or {}).get("cierre") or {}).get("texto")],
+                            ensure_ascii=False, sort_keys=True).encode())
+    return h.hexdigest()[:12]
+
+
+def revisar_completa(S):
+    """SE17 → (fallas, markdown de la serie entera)."""
+    f, md = [], ["# Serie completa · %s" % S["tema"], ""]
+    gs = guiones_serie(S)
+    faltan = [p["n"] for p, g in gs if not g]
+    if faltan:
+        f.append("SE17 faltan los guiones de las partes %s: escribe y aprueba TODAS antes de grabar la voz de las que faltan"
+                 % ", ".join(map(str, faltan)))
+    for p, g in gs:
+        if not g:
+            continue
+        trabajo = os.path.join(RAIZ, p["trabajo"])
+        md += ["## Parte %d · %s" % (p["n"], p["titulo"]), ""]
+        for i, e in enumerate(g.get("escenas") or [], 1):
+            cf = e.get("cifra") if isinstance(e.get("cifra"), dict) else {}
+            pant = " · ".join(x for x in (e.get("pantalla"), e.get("titular"), e.get("termino"), e.get("titulo"), e.get("golpe"),
+                                          cf.get("texto")) if isinstance(x, str) and x.strip())
+            md.append("%d. [%s] %s%s" % (i, e.get("tipo"), VD.sin_pausas(e.get("texto") or ""), ("  ⟦pantalla: %s⟧" % pant) if pant else ""))
+        c = g.get("cierre") or {}
+        md += ["cierre. %s" % VD.sin_pausas(c.get("texto") or ""), ""]
+        if p["n"] >= 2:   # cada parte contra TODAS las anteriores (con las que llegaron después, el par se cubre igual)
+            f += ["P%d · %s" % (p["n"], x) for x in revisar_novedad(g, p["n"], trabajo) + citas_repetidas(g, p["n"], trabajo)]
+    # la cadena real de puentes: la pregunta con que cierra la parte N la abre la N+1 (gancho o escena 2)
+    for (p, g), (q, h) in zip(gs, gs[1:]):
+        if not (g and h):
+            continue
+        fin = " ".join(x for x in ((g.get("cierre") or {}).get("final"), (g.get("cierre") or {}).get("invitacion")) if x)
+        abre = " ".join(VD.sin_pausas(e.get("texto") or "") for e in (h.get("escenas") or [])[:2])
+        if raices(fin) and not (raices(fin) & raices(abre)):
+            f.append("SE17 el puente de la parte %d (su frase final y su invitación: «%s») no lo abre la parte %d en el gancho "
+                     "ni en la escena 2: que la %d empiece contestando eso" % (p["n"], fin[:90], q["n"], q["n"]))
+    return f, md
+
+
+def cmd_completa(a):
+    ruta, S = cargar_serie(a.serie)
+    f, md = revisar_completa(S)
+    trabajo = os.path.join(RAIZ, S["trabajo"])
+    escribir_txt = os.path.join(trabajo, "serie_completa.md")
+    with open(escribir_txt, "w", encoding="utf-8") as fh:
+        fh.write("\n".join(md) + "\n")
+    for x in f:
+        print("FALLA", x)
+    print("→ %s (la narración de toda la serie en orden: para el oyente y el crítico en «modo serie completa»)" % rel(escribir_txt))
+    if a.aprobar:
+        if f:
+            return falla("SE17 la serie completa no se aprueba con fallas")
+        S["guiones_revisados"] = {"fecha": datetime.date.today().isoformat(), "huella": huella_guiones(S)}
+        guardar_serie(ruta, S, "serie completa revisada (SE17)")
+        print("[serie completa] aprobada · huella %s: ya se pueden grabar las voces que faltan" % S["guiones_revisados"]["huella"])
+    else:
+        print("[serie completa] %s" % ("ok" if not f else "%d falla(s)" % len(f)))
+    return 1 if f else 0
+
+
+def voz_permitida(trabajo):
+    """SE17: una parte nueva no se graba con voz hasta que la serie completa está revisada y sus guiones no cambiaron."""
+    try:
+        ruta, S = cargar_serie(trabajo)
+    except SystemExit:
+        return None
+    n = VD.serie_de(VD.estado(trabajo)).get("parte")
+    p = next((x for x in S["partes"] if x["n"] == n), None)
+    if not p or p.get("estado") == "entregada" or "/_fixture" in rel(trabajo):
+        return None
+    r = S.get("guiones_revisados") or {}
+    if not r:
+        return ("SE17 la serie completa no está revisada: escribe y aprueba los guiones de TODAS las partes y corre "
+                "python3 scripts/serie.py completa %s --check (y el crítico en «modo serie completa»); luego --aprobar" % rel(ruta))
+    if r.get("huella") != huella_guiones(S):
+        return ("SE17 un guion cambió después de la revisión de la serie completa: vuelve a correr serie.py completa %s --check --aprobar" % rel(ruta))
+    return None
 
 
 # ---------- M16 ----------
@@ -864,6 +1199,10 @@ def main():
     sub.add_parser("digesto").add_argument("serie")
     sub.add_parser("estado").add_argument("serie")
     sub.add_parser("guion-aprobado", help="el crítico aprobó el guion de la parte (habilita publicar la anterior)").add_argument("trabajo")
+    q = sub.add_parser("completa", help="SE17: la serie entera antes de la voz (todas las partes con guion, cruces, puentes)")
+    q.add_argument("serie")
+    q.add_argument("--check", action="store_true", required=True)
+    q.add_argument("--aprobar", action="store_true", help="0 fallas y el crítico la aprobó: habilita la voz de las partes")
     q = sub.add_parser("entregar-parte")
     q.add_argument("trabajo")
     q.add_argument("--salida")
@@ -871,7 +1210,7 @@ def main():
     if a.revisar:
         return cmd_check(a)
     fn = {"preparar": cmd_preparar, "plan": cmd_plan, "cobertura": cmd_cobertura, "parte": cmd_parte, "digesto": cmd_digesto,
-          "estado": cmd_estado, "entregar-parte": cmd_entregar_parte,
+          "estado": cmd_estado, "entregar-parte": cmd_entregar_parte, "completa": cmd_completa,
           "guion-aprobado": lambda a: marcar_guion(os.path.abspath(a.trabajo)) or 0}.get(a.cmd)
     if not fn:
         ap.print_help()

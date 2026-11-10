@@ -14,7 +14,7 @@
    "texto": "En Guatemala, un depósito a plazo pagaba 5.3 % al año en septiembre de 2026; los precios subían 1.7 % y una tarjeta cobraba 36 %. Por eso sirve la regla del 72: 72 entre la tasa da los años para duplicar. Un ahorro tarda 13.6 años; una deuda de tarjeta, solo 2. Es la misma fórmula: premia al que espera y castiga al que debe. Así que el tiempo pesa más que el monto, y el mismo motor corre en las deudas. El interés que premia el ahorro cobra cada mes a los clientes de tarjeta."
   }
  ],
- "promesa": {
+ "promesa": {"pregunta": "¿Por qué Ana termina con más que Luis?", 
   "texto": "El mismo motor también puede jugar en tu contra.",
   "en": 2,
   "pago": 12,

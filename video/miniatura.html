@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<!-- Miniatura del video largo de YouTube (scripts/youtube.py miniatura): se dibuja a 1920×1080 y se reduce a 1280×720.
+     escenas.json → miniatura = { texto (≤ 5 palabras), cifra (opcional, en el acento), foto (fotos/<id>.jpg), focos,
+     chip (opcional) }. La foto a sangre a la derecha, centrada en su foco (en panel si es vertical o si la cara cae bajo el texto), el velo oscurece la izquierda;
+     el texto en Archivo condensado 900 en mayúsculas, lo más grande que quepa en la columna. YT10: a 320×180 (la
+     miniatura en la lista de YouTube) el texto mide ≥ 18 px de alto → aquí ≥ 120 px; si no cabe así, la página falla. -->
+<link rel="stylesheet" href="comun.css">
+<style>
+html, body { width: 1920px; height: 1080px; }
+#foto { position: absolute; inset: 0; overflow: hidden; }
+#foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(.7) saturate(1.05); }
+#foto img.panel { inset: auto; left: 900px; top: 0; width: 1020px; height: 1080px; object-fit: cover; filter: brightness(.95); }
+#foto img.fondo { filter: blur(40px) brightness(.32); transform: scale(1.12); }
+#velo { position: absolute; inset: 0; background: linear-gradient(90deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 92%, transparent) 34%,
+  color-mix(in srgb, var(--bg) 30%, transparent) 62%, transparent 80%); }
+#col { position: absolute; left: 96px; top: 96px; bottom: 96px; width: 960px; display: flex; flex-direction: column; justify-content: center; gap: 26px; }
+#chip { align-self: flex-start; font: 700 34px/1 'JetBrains Mono', monospace; letter-spacing: .1em; text-transform: uppercase;
+  background: var(--acento); color: var(--tinta-acento, var(--bg)); padding: 12px 20px 14px; border-radius: 10px; }
+#chip:empty { display: none; }
+#texto { font-size: 220px; line-height: .86; letter-spacing: -.01em; text-shadow: 0 4px 40px color-mix(in srgb, var(--bg) 80%, transparent); }
+#cifra { font-size: 260px; line-height: .84; color: var(--acento); white-space: nowrap; }
+#cifra:empty { display: none; }
+</style></head>
+<body>
+<div id="foto"></div><div id="velo"></div>
+<div id="col"><div id="chip"></div><div id="cifra" class="condensada"></div><div id="texto" class="condensada"></div></div>
+<script src="comun.js"></script>
+<script>
+window.__listo = (async () => {
+  const todo = await (await fetch('escenas.json')).json();
+  for (const [k, v] of Object.entries(todo.colores)) document.documentElement.style.setProperty('--' + k.replace('_', '-'), v);
+  const M = todo.miniatura || {};
+  if (!(M.texto || '').trim()) throw new Error('escenas.json sin miniatura.texto');
+  if (M.texto.trim().split(/\s+/).length > 5) throw new Error('YT10 la miniatura lleva ≤ 5 palabras: «' + M.texto + '»');
+  document.getElementById('texto').textContent = M.texto;
+  document.getElementById('cifra').textContent = M.cifra || '';
+  document.getElementById('chip').textContent = M.chip || '';
+  if (M.foto) {
+    const img = new Image(); img.src = M.foto;
+    await img.decode().catch(() => { throw new Error('no carga la foto ' + M.foto); });
+    const caja = document.getElementById('foto');
+    // m114: el foco (la cara) manda también en las horizontales. Vertical, o horizontal con la cara en la columna del
+    // texto (centro x < 0.55, bajo el velo): panel a la derecha sobre su copia borrosa, centrado en la cara.
+    const fo = (M.focos || [])[0];
+    const cx = fo ? fo.x + fo.w / 2 : null, cy = fo ? fo.y + fo.h / 2 : null;
+    const pos = fo ? `${(cx * 100).toFixed(1)}% ${(cy * 100).toFixed(1)}%` : '';
+    if (img.naturalWidth / img.naturalHeight < 1.3 || (fo && cx < 0.55)) {
+      const f = new Image(); f.src = M.foto; await f.decode().catch(() => {}); f.className = 'fondo'; caja.appendChild(f);
+      img.className = 'panel';
+    }
+    if (pos) img.style.objectPosition = pos;
+    caja.appendChild(img);
+  }
+  await document.fonts.ready;
+  const t = document.getElementById('texto'), c = document.getElementById('cifra'), col = document.getElementById('col');
+  for (let fs = 220; fs >= 120 && (t.scrollWidth > col.clientWidth || col.scrollHeight > col.clientHeight); fs -= 6) t.style.fontSize = fs + 'px';
+  for (let fs = 260; fs >= 140 && c.scrollWidth > col.clientWidth; fs -= 10) c.style.fontSize = fs + 'px';
+  if (t.scrollWidth > col.clientWidth || col.scrollHeight > col.clientHeight || parseFloat(getComputedStyle(t).fontSize) < 120)
+    throw new Error('YT10 el texto de la miniatura no cabe a ≥ 120 px (a 320×180 no se leería): acórtalo');
+})();
+window.seek = () => {};
+</script>
+</body></html>

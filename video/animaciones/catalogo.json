@@ -153,6 +153,42 @@
       "pendiente": "no pasa A1/A2 (2026-11-07: adorno continuo o pasos visibles antes de la voz): rehazla y corre --check"
     },
     {
+      "id": "concentracion-caja",
+      "origen": "parte-2",
+      "usos": [
+        "parte-2"
+      ],
+      "descripcion": "riesgo de concentración: casi todas las monedas ruedan a una sola caja; la caja se agrieta y su parte se apaga, las sueltas quedan",
+      "mecanismo": "proporcion",
+      "temas": [
+        "concentración",
+        "riesgo",
+        "banco",
+        "quiebra",
+        "depósitos",
+        "offshore",
+        "un solo lugar",
+        "diversificar",
+        "dependencia"
+      ],
+      "pasos": [
+        2,
+        3
+      ],
+      "ejemplo": {
+        "titulo": "Riesgo de concentración",
+        "pasos": [
+          "Un solo lugar",
+          "Riesgo de concentración",
+          "Si cae, cae todo"
+        ],
+        "rotulos": {
+          "base": "Los ahorros",
+          "limite": "Un banco"
+        }
+      }
+    },
+    {
       "id": "cronologia",
       "origen": "semilla",
       "usos": [],
@@ -179,6 +215,36 @@
         ]
       },
       "mecanismo": "cronologia"
+    },
+    {
+      "id": "desvio-tanque",
+      "origen": "parte-4",
+      "usos": [
+        "parte-4"
+      ],
+      "descripcion": "desvío: el dinero entra al tanque a la vista pero un tubo lo lleva al tanque a la sombra, que se llena; el visible queda vacío",
+      "mecanismo": "balance",
+      "temas": [
+        "desvío",
+        "fraude",
+        "banco",
+        "dinero",
+        "fuera de balance",
+        "supervisión",
+        "captación"
+      ],
+      "pasos": [
+        2,
+        3
+      ],
+      "ejemplo": {
+        "titulo": "El dinero cambia de tanque",
+        "pasos": [
+          "Firma un pagaré",
+          "A nombre de Organizadora",
+          "Un certificado sin validez"
+        ]
+      }
     },
     {
       "id": "dos-fracciones",
@@ -275,6 +341,38 @@
       "pendiente": "no pasa A1/A2 (2026-11-07: adorno continuo o pasos visibles antes de la voz): rehazla y corre --check"
     },
     {
+      "id": "faltante-seguro",
+      "origen": "parte-5",
+      "usos": [
+        "parte-5"
+      ],
+      "descripcion": "liquidación con respaldo: los bienes pagan casi toda la deuda y un fondo llenado por cuotas cubre el hueco y espera recuperarlo",
+      "mecanismo": "balance",
+      "temas": [
+        "quiebra",
+        "banco",
+        "seguro de depósitos",
+        "fideicomiso",
+        "liquidación",
+        "deuda",
+        "respaldo"
+      ],
+      "pasos": [
+        4,
+        5
+      ],
+      "ejemplo": {
+        "titulo": "Quién cobra en un banco caído",
+        "pasos": [
+          "Bienes al fideicomiso",
+          "Se venden para pagar",
+          "Si no alcanza",
+          "El FOPA pone lo que falta",
+          "Espera recuperarlo"
+        ]
+      }
+    },
+    {
       "id": "foco-contagio",
       "origen": "parte-7",
       "usos": [
@@ -332,6 +430,42 @@
         ]
       },
       "pendiente": "no pasa A1/A2 (2026-11-07: adorno continuo o pasos visibles antes de la voz): rehazla y corre --check"
+    },
+    {
+      "id": "margen-banco",
+      "origen": "parte-1",
+      "usos": [
+        "parte-1"
+      ],
+      "descripcion": "margen de un banco: los depósitos llenan el tanque, salen prestados, vuelve un chorro grueso de interés y sale uno delgado; queda la ganancia",
+      "mecanismo": "balance",
+      "temas": [
+        "banco",
+        "intereses",
+        "préstamos",
+        "ahorro",
+        "depósitos",
+        "ganancia",
+        "margen",
+        "cooperativa",
+        "crédito"
+      ],
+      "pasos": [
+        4,
+        4
+      ],
+      "ejemplo": {
+        "titulo": "¿Cómo gana un banco?",
+        "pasos": [
+          "Tus depósitos",
+          "Los presta",
+          "Más interés",
+          "La diferencia"
+        ],
+        "rotulos": {
+          "limite": "Su ganancia"
+        }
+      }
     },
     {
       "id": "nivel-umbral",

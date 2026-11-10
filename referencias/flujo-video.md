@@ -298,11 +298,43 @@ Puntajes 1–5: gancho, bucle, ritmo, flujo, escala_humana, pago, cierre. `pasa`
 | V20 | Una sigla que se dice como palabra (`SIGLAS` en `numeros_es.py`: CICIG → «Cicig», FECI, SAT…) no dura en Scribe más de 0.12 s por letra + 0.25 s. Si dura más, se oyó deletreada y se retoma la escena. Las deletreadas (MP → «eme pe», TSE…) se escriben así en la voz. Pantalla y subtítulos siguen con la sigla. |
 | V21 | Novedad visual: el cambio de luma contra el cuadro de 1 s antes, dividido por lo que hay dibujado, en el 70 % de arriba del cuadro (umbral 0.18). Más de 4 s sin cambio avisa; más de 5 s falla. Exentos: el gancho, la cita y el cierre; la toma solo avisa. Escribe `revision/novedad.json` con el plano medio (objetivo 3–4.5 s). |
 | V23 | Voz trabada (`tiempos`, sobre Scribe): una palabra átona («la», «y», «de», `ATONAS` en `video.py`) que dura más de 0.45 s sin contar silencios es un titubeo de ElevenLabs («la… la Señora») → falla y retoma de esa escena. Calibrado sobre 608 escenas: 2 casos, los dos reales. El prompt de la voz va sin comillas («» “”): la pantalla las conserva (`sin_comillas`). |
+| V24 | Esquema de escena (`guion --check` de video, historia y explica, antes de todo gate; m109): cada clave de una escena está en `ESCENA_CLAVES` de `video.py` con su tipo (texto, entero, número, bool, lista, objeto; `null` vale como ausente). Una clave desconocida o de otro tipo falla con su nombre y la más parecida («resumen» → ¿«resumen_serie»?), en vez de caer más adelante con un error de Python. Una clave nueva se agrega a la tabla junto con el código que la lee. |
 | A3 | Rótulo de acto solo (`video_grabar.js`, cada 0.5 s como V13, en toda página): mientras el rótulo se ve, nada de la escena se dibuja sobre su columna (el lienzo de `explica.html` y las tarjetas de persona esperan a `S.R.fin`). |
 | V22 | Sobrecarga: ≤ 2 entradas visuales en 0.5 s; ningún cambio de plano a ± 0.4 s de una cifra o una tarjeta; efectos al menos 0.4 s aparte (`ralear_sfx` los ralea) y en promedio uno cada ≤ 2.5 s. El cierre tiene presupuesto propio. |
 
 El cierre anima «Sígueme en» con un botón «Seguir» propio (no la interfaz de ninguna red): un cursor lo toca en `T.clic`, pasa a «Siguiendo ✓» y una campana suena con su punto en `T.campana` (efectos `voto` y `tic`); la pantalla nunca queda quieta. La biblioteca fija de efectos pasa a 14 con `whip`, `papel` y `marcador`.
 
+### «Sígueme» a mitad del video (V25, decisión del usuario, 2026-11-10)
+
+Hacia la mitad de todo video de ≥ 45 s, sin cortar la escena, aparece arriba a la derecha el botón **«Sígueme»** (sin
+cuenta), el cursor lo toca, pasa a «Siguiendo» con su check y suena la campana; a los 3.3 s se va. Es el mismo gesto del
+cierre, en chico (`video/comun.js`: `V.seguir`; las páginas no hacen nada).
+
+- `video.py marcar_seguir` elige la escena que contiene el 50 % (entre el 40 % y el 65 %). Se corre a la más cercana si
+  esa es gancho, cierre, `adivina`, `toma` o rótulo de capítulo, si lleva un chip o la pregunta en ese hueco, o si no
+  caben 3.4 s tras el rótulo de acto.
+- Sonidos `voto` y `tic` solo si no pisan otro efecto (V22).
+- V25: un video de ≥ 45 s sin escena que pueda llevarlo falla en `tiempos`.
+
+**V26 señalización** (aviso en `tiempos`): una cifra que la voz dice sin que nada entre o se resalte en pantalla a
+± 0.6 s. Los años no cuentan. Es el principio con mejor evidencia (`referencias/analisis/investigacion.md` §1). `/sabias` (20–30 s) queda exento.
+- En 16:9 va arriba a la derecha, dentro del margen de título.
+
+### Duraciones de movimiento (`V.D`, 2026-11-10)
+
+Las capas comunes de `video/comun.js` (chips, tarjeta de persona, pregunta, «Sígueme», cuadritos, margen) toman sus
+duraciones de una sola tabla: `V.D = {pop 0.14, rapida 0.25, entra 0.3, sale 0.25, cambio 0.4, trazo 0.7, foco 2.6}`
+(lo chico rápido, lo grande más lento, la salida más corta que la entrada). Una página nueva usa `V.D`; las páginas
+viejas conservan sus números hasta que se toquen. Cambiar un valor cambia el dibujo de todos los clips: se regraba.
+
+### Subtítulos del `.srt`, efectos y avisos (2026-11-10)
+
+- El `.srt` va en bloques de hasta dos líneas de ≤ 42 caracteres, por oración; ningún bloque termina después de que
+  empieza el siguiente y las sobras de 1–2 palabras se unen al vecino (`video.bloques_srt`, `revisar_srt`).
+- Un `tic` suelto suena cada 5 s como mucho (`ralear_tics`); el tren de un conteo se queda.
+- `revisar` guarda sus avisos en `revision/avisos.json` (V12, V15, V21).
+- Un caption no escribe cifras en palabras («mil seiscientos millones»): V5. El Short sin descripción toma el cuerpo
+  del caption de TikTok.
 ## Piezas
 
 - `scripts/video.py` (subcomandos, `--help`) · `scripts/numeros_es.py` (`--prueba`) · `scripts/video_grabar.js`

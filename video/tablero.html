@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<!-- Escena «tablero» de /historia y /serie (?n=N): el tablero de investigación. Es la escena `red` con `estilo:
+     "tablero"`: los mismos datos (S.G de scripts/historia.py t_red) y el mismo gate H23 (cada persona es un personaje
+     del encuadre con retrato; cada hilo, un hecho publicable que registra esa relación). En vez del organigrama por
+     niveles, cada persona va en un cuadrito tipo foto de expediente (V.cuadritos, video/comun.js) que entra cuando la
+     voz la nombra y queda iluminado unos segundos; un hilo en el acento une dos cuadritos cuando ya entraron los dos.
+     SIN tachas ni marcas sobre las caras (decisión del usuario, 2026-11-10): solo se ilumina a quien se nombra. Si
+     algún hilo es un alegato, la escena lleva el chip «Según la acusación» (lo pone t_red). Solo variables Noche. -->
+<link rel="stylesheet" href="comun.css">
+<style>
+#titulo { position: absolute; top: 360px; left: var(--izq); right: var(--der); font: 800 58px/1.04 Archivo, sans-serif; letter-spacing: -.015em; }
+/* 3 × 236 + 2 × 36 = 780 px: termina en x 865, antes de la columna de iconos (x > 900 desde y 1070) */
+#tablero { position: absolute; top: 480px; left: var(--izq); --cuadro: 236px; grid-template-columns: repeat(3, 236px); gap: 40px 36px; }
+#tablero .vcuadro .nm { font-size: 22px; padding: 10px 0 11px; }
+#quien { position: absolute; left: var(--izq); right: var(--der); top: 1250px; min-height: 70px; display: flex; flex-direction: column; gap: 6px; opacity: 0; }
+#quien b { font: 800 40px/1 Archivo, sans-serif; color: var(--acento, var(--a1)); }
+#quien span { font: 600 21px/1.15 'JetBrains Mono', monospace; letter-spacing: .06em; text-transform: uppercase; opacity: .8; }
+#pie { position: absolute; left: var(--izq); right: var(--der); top: 1340px; font: 600 22px/1.2 'JetBrains Mono', monospace; letter-spacing: .06em; opacity: .62; }
+/* 4:5 */
+html.f45 #titulo { top: 190px; font-size: 48px; }
+html.f45 #tablero { top: 280px; --cuadro: 210px; grid-template-columns: repeat(4, 210px); gap: 30px 23px; }
+html.f45 #tablero .vcuadro .nm { font-size: 18px; }
+html.f45 #quien { top: 960px; }
+html.f45 #quien b { font-size: 34px; }
+html.f45 #pie { top: 1050px; }
+/* 16:9: el tablero a lo ancho */
+html.f169.f45 #titulo { top: 70px; left: 96px; right: 96px; }
+html.f169.f45 #tablero { top: 180px; left: 96px; --cuadro: 230px; grid-template-columns: repeat(6, 230px); gap: 44px 69px; }
+html.f169.f45 #quien { top: 880px; left: 96px; }
+html.f169.f45 #pie { top: 990px; left: 96px; }
+</style>
+</head>
+<body>
+<div id="arriba"><div id="progreso"></div></div>
+<div id="titulo"></div>
+<div id="tablero"></div>
+<div id="quien"></div>
+<div id="pie"></div>
+<div id="subs"></div>
+<script src="comun.js"></script>
+<script>
+const n = V.n, { clamp, eo, esc } = V;
+let S, G, TROZOS, QUIEN = [];
+window.__listo = (async () => {
+  const C = await V.cargar(), todo = C.todo; S = C.S; TROZOS = C.trozos; G = S.G;
+  V.pintarProgreso(todo);
+  document.getElementById('titulo').textContent = G.titulo || '';
+  if (G.fuente) document.getElementById('pie').textContent = G.fuente;
+  const idx = Object.fromEntries(G.nodos.map((x, i) => [x.id, i]));
+  // cada persona entra cuando la voz la nombra (start) y queda iluminada unos segundos (activo)
+  const P = G.nodos.map((x) => ({ nombre: x.nombre, corto: x.corto, cargo: x.cargo, foto: x.foto, foco: x.foco, start: x.start, activo: [x.start] }));
+  const hilos = (G.aristas || []).filter((a) => a.de in idx && a.a in idx).map((a) => [idx[a.de], idx[a.a], a.start]);
+  await V.cuadritos(document.getElementById('tablero'), P, { hilos });
+  QUIEN = P.slice().sort((a, b) => a.start - b.start);
+  await V.pintarActo(S);
+})();
+window.seek = (t) => {
+  V.seekProgreso(t, n, S.dur);
+  V.seekActo(t, S);
+  const ti = eo((t - (S.T.ini || 0.3) + 0.2) / V.D.cambio), tit = document.getElementById('titulo');
+  tit.style.opacity = ti; tit.style.transform = `translateY(${((1 - ti) * 18).toFixed(1)}px)`;
+  // quién es la persona que la voz acaba de nombrar: nombre completo y cargo, bajo el tablero
+  const q = document.getElementById('quien'), x = V.portada ? null : QUIEN.filter((p) => t >= p.start - 0.1).pop();
+  if (x && q.dataset.k !== x.nombre) { q.dataset.k = x.nombre; q.innerHTML = `<b>${esc(x.nombre)}</b>${x.cargo ? `<span>${esc(x.cargo)}</span>` : ''}`; }
+  q.style.opacity = x ? Math.min(eo((t - x.start) / V.D.entra), 1 - clamp((t - x.start - 3.0) / V.D.sale)).toFixed(3) : '0';
+  document.getElementById('pie').style.opacity = (0.62 * eo((t - 0.6) / V.D.cambio)).toFixed(3);
+  V.subtitulos(t, S, TROZOS);
+};
+</script>
+</body></html>

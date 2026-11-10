@@ -7,7 +7,7 @@ PALETAS ?= cielo
 ESTILO ?= noche
 PALETA ?= cielo
 
-.PHONY: help nuevo render visual catalogo validate tabla pdf ensamblar limpiar test doctor costo contacto digesto fuentes ideas calendario informe informe-ejemplo informe-catalogo informe-fixture verificacion auditoria-rehacer podar video-fixture video-fixture-4x5 noticias-fixture semana-fixture historia-fixture explica-fixture mito-fixture sabias-fixture congreso-fixture carrusel-fixture departamento-fixture analisis-fixture agenda-fixture serie-fixture serie-explica-fixture musica whisper iconos
+.PHONY: help nuevo render visual catalogo validate tabla pdf ensamblar limpiar test doctor costo contacto digesto fuentes ideas calendario informe informe-ejemplo informe-catalogo informe-fixture verificacion auditoria-rehacer podar video-fixture video-fixture-4x5 noticias-fixture semana-fixture historia-fixture explica-fixture mito-fixture sabias-fixture congreso-fixture carrusel-fixture departamento-fixture analisis-fixture agenda-fixture serie-fixture serie-explica-fixture youtube-fixture musica whisper iconos
 
 help:
 	@echo "make nuevo T=<plantilla> OUT=<ruta.html> [PALETA=cielo]  ensambla una tarjeta (base + plantilla)"
@@ -39,6 +39,7 @@ help:
 	@echo "make congreso-fixture [FPS=10]                           /congreso de prueba (la Ley de Ciberseguridad, iniciativa 6347, voz falsa, 0 créditos) → sesiones/_fixture_congreso/salida"
 	@echo "make sabias-fixture [FPS=10]                             /sabias de prueba (el dato de sesiones/_fixture_dato, voz falsa, 0 créditos) → sesiones/_fixture_sabias/salida"
 	@echo "make departamento-fixture [FPS=10]                       /departamento de prueba (perfil de Huehuetenango con cifras de maqueta → video corto con mapa y ranking en ventana, D1–D9, voz falsa) → sesiones/_fixture_departamento/salida"
+	@echo "make youtube-fixture [FPS=10]                            /youtube-long de prueba: la parte 1 de La Espiga dos veces → montaje fijo (quitar, recortes, puente, promesa) YT1–YT8, voz falsa de lo nuevo, 16:9, miniatura y entrega"
 	@echo "make serie-fixture [FPS=10]                              /serie de prueba (La Espiga en 3 partes, motor /historia): plan SE1–SE2, cobertura SE3, parte 1 con SE4–SE8, voz falsa, 9:16 y 4:5, entrega de la parte"
 	@echo "make serie-explica-fixture [FPS=10]                      /serie de prueba con el motor /explica (temario del interés en 3 partes): lo mismo sobre la parte 1"
 	@echo "make agenda-fixture                                      /agenda de prueba: la semana del 4 al 8 de noviembre sobre una copia fija de los registros (AG1–AG9)"
@@ -333,6 +334,24 @@ serie-fixture:   # maqueta de /serie (motor /historia): plan, investigación com
 	python3 scripts/serie.py entregar-parte $(SER)/trabajo/parte-1
 	python3 scripts/serie.py --revisar $(SER)/salida
 	python3 scripts/memoria.py --serie $(SER)/salida --dry-run > /dev/null
+
+YT := sesiones/_fixture_youtube
+youtube-fixture: serie-fixture   # maqueta de /youtube-long: la parte 1 de la maqueta de /serie dos veces, montaje fijo, voz falsa de lo nuevo, 16:9
+	rm -rf $(YT)/trabajo $(YT)/salida
+	python3 scripts/youtube.py preparar $(YT)/serie --trabajo $(YT)/trabajo --fixture > /dev/null
+	cp $(YT)/montaje.json $(YT)/trabajo/
+	python3 scripts/youtube.py montaje $(YT)/trabajo --check
+	python3 scripts/youtube.py digesto $(YT)/trabajo --para oyente > /dev/null
+	python3 scripts/youtube.py resumen $(YT)/trabajo > /dev/null
+	python3 scripts/youtube.py voz $(YT)/trabajo --falsa
+	python3 scripts/youtube.py tiempos $(YT)/trabajo
+	python3 scripts/youtube.py armar $(YT)/trabajo
+	python3 scripts/youtube.py grabar $(YT)/trabajo --fps $(FPS)
+	python3 scripts/youtube.py montar $(YT)/trabajo
+	python3 scripts/youtube.py miniatura $(YT)/trabajo --texto "Un horno, cinco panaderías" --foto ori-f01 --chip "La Espiga"
+	python3 scripts/youtube.py teaser $(YT)/trabajo
+	python3 scripts/youtube.py entregar $(YT)/trabajo --salida $(YT)/salida
+	python3 scripts/memoria.py --youtube $(YT)/salida --dry-run > /dev/null
 
 SX := sesiones/_fixture_serie_explica
 serie-explica-fixture:   # maqueta de /serie con el motor /explica (temario): plan, cobertura, parte 1 con su guion fijo, voz falsa, 9:16 y 4:5

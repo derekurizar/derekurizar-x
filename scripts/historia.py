@@ -176,7 +176,7 @@ VISUALES_DE = {fam: ("foto",) for fam in FAMILIAS}
 ROTACION_FAMILIAS = 2
 APERTURAS = re.compile(r"^[¿¡«\s]*(?:esta es la historia|la historia de|(?:te|les) (?:cuento|voy a contar)|hab[ií]a una vez|"
                        r"en el a[nñ]o\b|corr[ií]a el a[nñ]o|hoy (?:te|les) (?:hablo|cuento))", re.I)
-PUNTAJES = ("gancho", "tension", "claridad", "flujo", "precision", "cierre")   # critica.json en modo historia (W12)
+PUNTAJES = ("gancho", "tension", "claridad", "flujo", "precision", "cierre", "recompensa")   # critica.json en modo historia (W12); recompensa = H-C7 (2026-11-10)
 # ---- verdad ----
 # una_fuente = UNA fuente seria sin nada que la contradiga: se narra llano con la fuente en pantalla; en_disputa = las
 # fuentes difieren (la voz atribuye o matiza). tipo_hecho: lo que no es un acto público verificable (una acusación, una
@@ -288,6 +288,24 @@ def plano(s):
 
 
 # ---------- registros de historias anteriores (rotación de ganchos y cierres, C11, música) ----------
+PALETA_NO_REPETIR = 2   # el tinte no se repite con las últimas N piezas de video (historias, series, explicaciones, videos)
+
+
+def paletas_recientes(slug_actual=None, n=PALETA_NO_REPETIR):
+    """Las paletas de las últimas n piezas de video de cualquier flujo, la más reciente al final (decisión del usuario,
+    2026-11-09: «otra serie y otra vez el mismo azul»)."""
+    regs = []
+    for archivo, clave in (("historias", "historias"), ("series", "series"), ("explicaciones", "explicaciones"), ("videos", "videos")):
+        ruta = os.path.join(RAIZ, "memoria", archivo + ".json")
+        if not os.path.exists(ruta):
+            continue
+        d = leer(ruta)
+        lista = d if isinstance(d, list) else (d.get(clave) or next((v for v in d.values() if isinstance(v, list)), []))
+        regs += [r for r in lista if isinstance(r, dict) and r.get("paleta") and r.get("slug") != slug_actual]
+    regs.sort(key=lambda r: (r.get("fecha") or "", r.get("id") or ""))
+    return [r["paleta"] for r in regs[-n:]]
+
+
 def historias_registradas(slug_actual=None):
     ruta = os.path.join(RAIZ, "memoria", "historias.json")
     regs = leer(ruta).get("historias") or [] if os.path.exists(ruta) else []
@@ -355,7 +373,8 @@ def cmd_preparar(a):
     for d in ("audio", "salida", "revision", "fotos", "base"):
         os.makedirs(os.path.join(trabajo, d), exist_ok=True)
     previas = historias_registradas(slug)
-    paleta = a.paleta or next((p for p in paletas() if not previas or p != previas[-1].get("paleta")), "obsidiana")
+    recientes_p = [] if a.fixture else paletas_recientes(slug)
+    paleta = a.paleta or next((p for p in paletas() if p not in recientes_p), "obsidiana")
     if paleta not in paletas():
         print("--paleta: una de %s" % ", ".join(paletas()), file=sys.stderr)
         return 2
@@ -753,10 +772,38 @@ def cmd_foto(a):
     if getattr(a, "retrato_evidencia", None):
         rec["retrato_evidencia"] = a.retrato_evidencia.strip()
     rec["focos"] = focos_de(dst, rec.get("retrato_de"))
+    if getattr(a, "proceso", None):   # m122: muestra a alguien detenido, esposado o en audiencia → solo en la escena de su proceso
+        rec["proceso"] = a.proceso.strip()
     escribir(os.path.join(trabajo, "fotos", a.id + ".json"), rec)
+    registrar_foto(trabajo, rec)
     print("foto %s · %d×%d · %s (%s)%s → %s" % (a.id, w, h, rec["credito"], origen, " · PROTAGONISTA" if rec["muestra"] else "", dst))
     imprimir_focos(rec)
     return 0
+
+
+def registrar_foto(trabajo, rec):
+    """m120: una foto bajada después de consolidar (el QA de fotos de una parte, una de referencia) entra a historia.json →
+    fotos, para que H7 la tenga por verificada; en una parte de serie (<TRABAJO>/parte-N) también a la investigación
+    compartida (su fotos/ e historia.json), para que la vean las partes siguientes."""
+    destinos = [trabajo]
+    padre = os.path.dirname(trabajo)
+    if re.fullmatch(r"parte-\d+", os.path.basename(trabajo)) and os.path.exists(os.path.join(padre, "historia.json")):
+        destinos.append(padre)
+    for d in destinos:
+        ruta_h = os.path.join(d, "historia.json")
+        if not os.path.exists(ruta_h):
+            continue
+        if d != trabajo:
+            os.makedirs(os.path.join(d, "fotos"), exist_ok=True)
+            for ext in (".jpg", ".json"):
+                src = os.path.join(trabajo, "fotos", rec["id"] + ext)
+                if os.path.exists(src):
+                    shutil.copyfile(src, os.path.join(d, "fotos", rec["id"] + ext))
+        H = leer(ruta_h)
+        if isinstance(H.get("fotos"), dict):
+            H["fotos"][rec["id"]] = rec
+            escribir(ruta_h, H)
+            print("foto %s registrada en %s" % (rec["id"], VD.rel(ruta_h)))
 
 
 # ---------- focos: dónde están las caras de cada foto (sub-planos, recorte vertical, tarjeta de persona) ----------
@@ -1685,9 +1732,17 @@ def consolidar(trabajo):
     hilo_b.setdefault("tuits", [])
     escribir(os.path.join(base, "hilo.json"), hilo_b)
     escribir(os.path.join(base, "datos.json"), {"slug": st["slug"], "fecha": st.get("fecha"), "cifras": cifras})
+    cambia = False
     if paleta != st["paleta"]:
         st["paleta"] = paleta
         st["musica"] = elegir_musica(paleta, st.get("musica_forzada"))["id"]
+        cambia = True
+    # la música va por el tema del encuadre (musica_tema), no por el color
+    pt = None if st.get("musica_forzada") or not enc.get("musica_tema") else VD.elegir_musica_tema(enc["musica_tema"], st.get("slug"))
+    if pt and pt["id"] != st.get("musica") and st.get("musica_tema") != enc["musica_tema"]:
+        st["musica"], st["musica_tema"] = pt["id"], enc["musica_tema"]
+        cambia = True
+    if cambia:
         escribir(os.path.join(trabajo, "video.json"), st)
     return H
 
@@ -2151,8 +2206,10 @@ def estructura_historia(g, st, dur, tarjetas):
     for i in range(2, len(escenas)):
         if i not in en_sec and i - 1 in en_sec and i + 1 in en_sec and actos[i - 2] == actos[i - 1] == actos[i]:
             print("AVISO H20 la escena %d queda fuera de toda secuencia entre dos del mismo acto: su voz se graba aparte" % i)
+    f += variedad_de_imagen(escenas, encuadre(TRABAJO_ACTUAL) if TRABAJO_ACTUAL else {})   # H26
     for i, e in enumerate(escenas, 1):
         tipo = e.get("tipo")
+        f += pantalla_contra_voz(i, e, hechos)   # H24 (m124)
         for hid in e.get("hechos") or []:
             if hid not in hechos:
                 f.append("H4 escena %d: el hecho «%s» no está entre los publicables de historia.json" % (i, hid))
@@ -2167,6 +2224,7 @@ def estructura_historia(g, st, dur, tarjetas):
             if fid in fotos:
                 f += fecha_contra_foto(i, e.get("fecha") or "", fotos[fid])
                 fo = fotos[fid]
+                f += foto_de_proceso(i, e, fo)   # H7c (m122)
                 if (fo.get("referencia") or re.search(r"referencia", e.get("fecha") or "", re.I)) and (e.get("lugar") or "").strip() \
                         and VD._plano(e["lugar"]) != VD._plano(fo.get("lugar") or "") \
                         and VD._plano(e["lugar"]) not in VD._plano(fo.get("descripcion") or ""):
@@ -2273,8 +2331,120 @@ def usos_de_fotos(escenas, fotos):
         for fid in (e.get("foto"), e.get("retrato"), (e.get("visual_datos") or {}).get("foto")):
             if fid:
                 usos.setdefault(clave.get(fid, fid), []).append((i, fid))
-    return ["H7 la misma foto (%s) sale en %d escenas (%s): van ≤ %d; usa otra, un mapa, un icono o un gráfico"
-            % (u[0][1], len(u), ", ".join(str(i) for i, _ in u), FOTO_USOS_MAX) for u in usos.values() if len(u) > FOTO_USOS_MAX]
+    f = ["H7 la misma foto (%s) sale en %d escenas (%s): van ≤ %d; usa otra, un mapa, un icono o un gráfico"
+         % (u[0][1], len(u), ", ".join(str(i) for i, _ in u), FOTO_USOS_MAX) for u in usos.values() if len(u) > FOTO_USOS_MAX]
+    # H7b (decisión del usuario, 2026-11-09): dos escenas SEGUIDAS nunca muestran la misma imagen (el gancho y la escena 2
+    # incluidos): la imagen nueva es lo que sostiene la atención
+    for u in usos.values():
+        for (a, fa), (b, _) in zip(u, u[1:]):
+            if b == a + 1:
+                f.append("H7b las escenas %d y %d seguidas muestran la misma foto (%s): cada escena, una imagen distinta de la anterior"
+                         % (a, b, fa))
+    return f
+
+
+# H7c (m122, 2026-11-09): una foto que muestra a alguien detenido, esposado o en audiencia insinúa culpa por imagen si
+# ilustra otra cosa. Solo va en la escena cuya voz nombra a esa persona (`proceso` en fotos/<id>.json, historia.py foto
+# --proceso "<nombre>"); una foto así sin marcar (lo dice su descripción) es un aviso para marcarla.
+RE_FOTO_PROCESO = re.compile(r"\b(esposad[oa]s?|detenid[oa]s?|capturad[oa]s?|arrestad[oa]s?|audiencias?|tribunal(?:es)?|"
+                             r"juzgado|banquillo|reos?|reclus[oa]s?|celdas?|prisi[oó]n|c[aá]rcel|sindicad[oa]s?|procesad[oa]s?)\b", re.I)
+
+
+def foto_de_proceso(i, e, fo):
+    quien = (fo.get("proceso") or "").strip()
+    voz = VD._plano(e.get("texto") or "").split()
+    if quien:
+        apellidos = [w for w in VD._plano(quien).split() if len(w) > 3]
+        if not any(w in voz for w in apellidos):
+            return ["H7c escena %d: la foto %s muestra a %s en un proceso (detenido o en audiencia): solo va en la escena cuya "
+                    "voz lo nombra y cuenta ese proceso; aquí ilustra otra cosa (usa una foto del lugar o la institución)" % (i, fo.get("id"), quien)]
+    elif RE_FOTO_PROCESO.search(fo.get("descripcion") or ""):
+        print("AVISO H7c escena %d: la foto %s parece mostrar a alguien detenido o en audiencia («%s»): si es así, márcala con "
+              "historia.py foto … --proceso \"<nombre>\" y úsala solo donde la voz lo nombra" % (i, fo.get("id"), (fo.get("descripcion") or "")[:60]))
+    return []
+
+
+# H24 (m124, 2026-11-09): la pantalla no dice lo que la voz ya no dice. Una cifra en pantalla (cifra.texto; en el titular o
+# el golpe, la que lleva moneda, % o «mil/millones») que la voz de esa escena no dice falla: queda de una versión anterior.
+# Y un alegato, una estimación o una opinión con número en pantalla lleva su atribución también en pantalla («según…»).
+RE_NUM_PANTALLA = re.compile(r"(?:US\$|\$|Q\.?\s?)?\d[\d,.]*\s*(?:%|por ciento|mil(?:lones?)?\b|millones\b)?", re.I)
+RE_ATRIBUYE = re.compile(r"\b(seg[uú]n|dice|dijo|cuenta|acusa|afirma|denuncia|sostiene|calcula|estima)\b", re.I)
+
+
+def _digitos(x):
+    return re.sub(r"\D", "", x)
+
+
+# H26 (2026-11-10): con la cámara quieta, una foto fija de 15 s es un tramo sin nada nuevo (V21 lo marcaba tarde, ya
+# grabado). La imagen cambia con el tema: una escena `foto` larga se reparte en dos, cada una con su imagen. Y las
+# composiciones que ya existen (pantalla dividida, mini-mapa, subrayado, documento, organigrama) se usan.
+FOTO_MAX_S = 12.0
+FOTOS_POR_VARIANTE = 4      # aviso: por cada 4 fotos, al menos una composición distinta
+RED_DESDE_PERSONAJES = 5    # aviso: con tantas personas en el encuadre, la historia pide un organigrama o un tablero
+
+
+def variedad_de_imagen(escenas, enc):
+    f, av = [], []
+    fotos = [(i, e) for i, e in enumerate(escenas, 1) if e.get("tipo") == "foto"]
+    for i, e in fotos:
+        s_ = VD.segundos_voz(e.get("texto"))
+        if s_ > FOTO_MAX_S and not (e.get("dividida") or e.get("marcas") or e.get("subrayado")):
+            f.append("H26 escena %d: una foto fija de %.0f s estimados (máximo %.0f): repártela en dos escenas, cada una con la "
+                     "imagen de lo que cuenta (otra foto, un documento, una cita, una tarjeta)" % (i, s_, FOTO_MAX_S))
+    for i, e in enumerate(escenas, 1):   # el mapa con ruta: 2–4 departamentos que existen
+        if e.get("ruta") is not None:
+            r = e["ruta"] if isinstance(e["ruta"], list) else []
+            if not 2 <= len(r) <= 4 or any(not NT.depto_id(x) for x in r) or len({NT.depto_id(x) for x in r}) != len(r):
+                f.append("H26 escena %d: `ruta` son 2–4 departamentos distintos, en el orden del recorrido (p. ej. [\"Escuintla\", "
+                         "\"Guatemala\"])" % i)
+            elif e.get("tipo") != "foto":
+                f.append("H26 escena %d: `ruta` va en una escena foto (es el localizador con su trazo)" % i)
+    variantes = sum(1 for e in escenas if e.get("dividida") or e.get("minimapa") or e.get("ruta") or e.get("depto") or e.get("marcas") or e.get("subrayado")
+                    or e.get("documento") or e.get("tipo") in ("red", "tablero", "explica", "tarjeta"))
+    if len(fotos) >= FOTOS_POR_VARIANTE and variantes * FOTOS_POR_VARIANTE < len(fotos):
+        av.append("H26 %d escenas de foto con titular y solo %d composiciones distintas (pantalla dividida, mini-mapa, "
+                  "subrayado, documento, tarjeta, animación): van ≥ 1 por cada %d fotos" % (len(fotos), variantes, FOTOS_POR_VARIANTE))
+    pers = [p for p in enc.get("personajes") or [] if isinstance(p, dict) and es_persona(p)]
+    if len(pers) >= RED_DESDE_PERSONAJES and not any(e.get("tipo") in ("red", "tablero") for e in escenas) and not enc.get("serie"):
+        av.append("H26 %d personas en el encuadre y ninguna escena `red`: quien no las conoce se pierde; un organigrama con "
+                  "las relaciones verificadas (H23)" % len(pers))
+    st = VD.estado(TRABAJO_ACTUAL) if TRABAJO_ACTUAL else {}
+    if str(st.get("fecha") or VD.P6_DESDE) < VD.P6_DESDE:
+        av, f = av + f, []
+    for x in av:
+        print("AVISO", x)
+    return f
+
+
+def pantalla_contra_voz(i, e, hechos):
+    voz = e.get("texto") or ""
+    dichos = {_digitos(m.group()) for m in re.finditer(r"\d[\d,.]*", voz)}
+    fallas, en_pantalla = [], []
+    c = e.get("cifra") if isinstance(e.get("cifra"), dict) else {}
+    for m in re.finditer(r"\d[\d,.]*", c.get("texto") or ""):
+        en_pantalla.append((m.group(), "la cifra"))
+    for campo in ("titular", "golpe"):
+        for m in RE_NUM_PANTALLA.finditer(e.get(campo) or ""):
+            t = m.group().strip()
+            if re.search(r"%|por ciento|mil|\$|Q", t, re.I):
+                en_pantalla.append((re.search(r"\d[\d,.]*", t).group(), "el %s" % campo))
+    for num, donde in en_pantalla:
+        d = _digitos(num)
+        if not d or re.fullmatch(r"(1[5-9]|20)\d\d", d) or d in dichos:
+            continue
+        fallas.append("H24 escena %d: %s dice «%s» y la voz de la escena no lo dice: quítalo de la pantalla o dilo" % (i, donde, num))
+    if en_pantalla:
+        tipos_h = {(hechos.get(h) or {}).get("tipo_hecho") for h in e.get("hechos") or []}
+        if tipos_h & {"alegato", "estimacion", "opinion"}:
+            atrib = " ".join(str(x or "") for x in (e.get("titular"), e.get("golpe"), c.get("etiqueta")))
+            if not RE_ATRIBUYE.search(atrib):
+                msg = ("H24 escena %d: la cifra en pantalla sale de un alegato, una estimación o una opinión: atribúyela también "
+                       "en pantalla («según <quién>» en la etiqueta o el titular)" % i)
+                if (e.get("fuente") or "").strip():   # la fuente en pantalla la ata a alguien: aviso, no falla
+                    print("AVISO " + msg + "; ahora solo la sostiene la fuente «%s»" % e["fuente"])
+                else:
+                    fallas.append(msg)
+    return fallas
 
 
 def fecha_contra_foto(i, chip, foto):
@@ -2431,6 +2601,57 @@ def raices_de(texto):
 estimado_s = VD.estimado_guion_s
 
 
+# H25 (2026-11-10, decisión del usuario): la tensión sube. La curiosidad es una escalera: se cierra una pregunta y queda
+# otra abierta. Con lo que el guion ya declara (promesa, bisagra, giro, hilos que se pagan), cada tercio del video tiene
+# al menos un peldaño, los hilos no se pagan todos de golpe y no pasan más de ESCALERA_HUECO_S sin ninguno.
+ESCALERA_HUECO_S = 35.0
+
+
+def escalera(g, enc, escenas):
+    n = len(escenas)
+    if n < 6:
+        return []
+    f, av = [], []
+    pel = {}                                   # escena → qué peldaños tiene
+    p, b = g.get("promesa") or {}, g.get("bisagra") or {}
+    for k, en in (("promesa", p.get("en")), ("pago de la promesa", p.get("pago")), ("bisagra", b.get("en")), ("pago de la bisagra", b.get("pago"))):
+        if isinstance(en, int) and 1 <= en <= n:
+            pel.setdefault(en, []).append(k)
+    pagos = {}
+    for i, e in enumerate(escenas, 1):
+        if e.get("giro"):
+            pel.setdefault(i, []).append("giro")
+        for hid in e.get("paga") or []:
+            pel.setdefault(i, []).append("hilo " + hid)
+            pagos[hid] = i
+    tercios = [(1, n // 3), (n // 3 + 1, 2 * n // 3), (2 * n // 3 + 1, n)]
+    for k, (a, z) in enumerate(tercios, 1):
+        if not any(a <= i <= z for i in pel):
+            f.append("H25 el tercio %d del video (escenas %d–%d) no abre ni paga nada (promesa, bisagra, giro o un hilo en "
+                     "«paga»): la tensión sube por peldaños; mueve ahí el pago de un hilo o la bisagra" % (k, a, z))
+    hilos = [h.get("id") for h in enc.get("hilos") or [] if isinstance(h, dict)]
+    if len(pagos) >= 2 and len(set(pagos.values())) == 1:
+        f.append("H25 todos los hilos se pagan en la escena %d: repártelos; al cerrar uno, que otro siga abierto"
+                 % next(iter(pagos.values())))
+    if len(hilos) >= 2 and pagos and min(pagos.values()) > 2 * n // 3 and not any(d.get("pasa_a") for d in g.get("hilos") or [] if isinstance(d, dict)):
+        av.append("H25 ningún hilo se paga antes del último tercio: paga uno en el nudo (y que otro quede abierto)")
+    # huecos: segundos estimados entre un peldaño y el siguiente
+    t, ts = 0.0, {}
+    for i, e in enumerate(escenas, 1):
+        ts[i] = t
+        t += VD.segundos_voz(e.get("texto"))
+    marcas = sorted(ts[i] for i in pel)
+    for a_, b_ in zip(marcas, marcas[1:]):
+        if b_ - a_ > ESCALERA_HUECO_S:
+            av.append("H25 %.0f s sin abrir ni pagar nada (entre los %.0f y los %.0f s): un peldaño en medio" % (b_ - a_, a_, b_))
+    st = VD.estado(TRABAJO_ACTUAL) if TRABAJO_ACTUAL else {}
+    if str(st.get("fecha") or VD.P6_DESDE) < VD.P6_DESDE:   # un guion aprobado antes de la regla: solo aviso
+        av, f = av + f, []
+    for x in av:
+        print("AVISO", x)
+    return f
+
+
 def revisar_narracion(g, H, enc):
     """H15 (la narración es la suma exacta de las voces), H16 (flujo), H17 (hilos), H18 (primera mención) y H19
     (presupuesto de «según»). Sin escenas (el guionista mide el texto antes de repartirlo: `narracion --check`), las
@@ -2499,6 +2720,8 @@ def revisar_narracion(g, H, enc):
             for hid in e.get("paga") or []:
                 if hid not in ids:
                     f.append("H17 escena %d: «paga» cita un hilo que no existe en el encuadre (%s)" % (i, hid))
+    if not solo_narr:
+        f += escalera(g, enc, escenas)
     # H18 primera mención: cada personaje llega presentado la primera vez que la voz lo nombra
     prot = [VD._plano(x) for x in enc.get("protagonista") or [] if (x or "").strip()]
     personajes = [p for p in enc.get("personajes") or [] if isinstance(p, dict) and (p.get("nombre") or "").strip()]
@@ -2550,9 +2773,15 @@ def revisar_encuadre(enc):
             for k in ("titulo", "periodo", "que_cuenta", "termina_en"):
                 if not (a.get(k) or "").strip():
                     f.append("H8 encuadre: acto %s sin «%s»" % (a.get("n"), k))
+            # H25: lo que está en juego en cada acto (qué se puede perder y a quién alcanza), y que no sea lo mismo
+            if not enc.get("serie") and not (a.get("en_juego") or "").strip():
+                f.append("H8 encuadre: acto %s sin «en_juego» (qué se puede perder ahí y a quién alcanza; sube de acto en acto)" % a.get("n"))
             tit = (a.get("titulo") or "").strip()
             if tit and (VD.palabras(tit) > CAP_TITULO_PALABRAS or len(tit) > CAP_TITULO_CARACTERES):
                 f.append("H8 encuadre: acto %s: titulo de 1–%d palabras y ≤ %d caracteres (es el rótulo)" % (a.get("n"), CAP_TITULO_PALABRAS, CAP_TITULO_CARACTERES))
+    ej = [VD._plano(a.get("en_juego") or "") for a in actos if isinstance(a, dict) and (a.get("en_juego") or "").strip()]
+    if len(ej) != len(set(ej)):
+        f.append("H8 encuadre: dos actos tienen el mismo «en_juego»: cada acto sube lo que está en juego")
     ejes = {x.get("id") for x in enc.get("ejes") or [] if isinstance(x, dict)}
     esp = enc.get("espina") if isinstance(enc.get("espina"), dict) else {}
     for k, en in zip(PUNTOS_ESPINA, ((1,), (2,), (2, 3), (3,))):
@@ -2596,12 +2825,39 @@ def revisar_encuadre(enc):
     return f
 
 
+def revisar_paleta(enc, trabajo):
+    """H8p (decisión del usuario, 2026-11-09): la paleta sale del TINTE del tema (el color de la marca o la empresa, el del
+    partido o la institución, el material: café → cacao, maíz → maiz, lago → atitlan) y lo dice en `paleta_por_que`; no
+    repite la de las últimas PALETA_NO_REPETIR piezas de video. La maqueta (_fixture) queda fuera."""
+    r = VD.rel(trabajo)
+    if "/_fixture" in r or r.startswith(("..", "/")) or (leer(os.path.join(trabajo, "video.json")).get("fixture") if os.path.exists(os.path.join(trabajo, "video.json")) else False):
+        return []   # maquetas y pruebas en carpetas temporales
+    f, pal = [], enc.get("paleta")
+    if pal not in paletas():
+        return ["H8p encuadre: «paleta» es una de %s" % ", ".join(paletas())]
+    if len((enc.get("paleta_por_que") or "").split()) < 3:
+        f.append("H8p encuadre: falta «paleta_por_que»: de qué tinte del tema sale %s (color de la marca, del partido o la "
+                 "institución, el material o el lugar), no el azul por defecto" % pal)
+    st = leer(os.path.join(trabajo, "video.json")) if os.path.exists(os.path.join(trabajo, "video.json")) else {}
+    rec = paletas_recientes(st.get("slug"))
+    if pal in rec:
+        f.append("H8p encuadre: la paleta %s ya la usó una de las últimas %d piezas (%s): elige otra con el tinte del tema"
+                 % (pal, PALETA_NO_REPETIR, ", ".join(rec)))
+    mt = enc.get("musica_tema")
+    if mt not in VD.MUSICA_TEMAS:
+        f.append("H8m encuadre: «musica_tema» es uno de %s: la música va por el TEMA (corrupción, política, justicia…), "
+                 "no por el color" % ", ".join(VD.MUSICA_TEMAS))
+    elif not VD.elegir_musica_tema(mt):
+        f.append("H8m encuadre: el tema de música «%s» no tiene pistas en design/musica/catalogo.json" % mt)
+    return f
+
+
 def cmd_encuadre(a):
     trabajo = os.path.abspath(a.trabajo)
     enc = encuadre(trabajo)
     if not enc:
         return falla("falta %s/encuadre.json" % VD.rel(trabajo))
-    f = revisar_encuadre(enc)
+    f = revisar_encuadre(enc) + revisar_paleta(enc, trabajo)
     for x in f:
         print("FALLA", x)
     if not f:
@@ -2728,6 +2984,11 @@ def cmd_guion(a):
         g = leer(os.path.join(trabajo, "guion.json"))
     except (OSError, ValueError) as ex:
         return falla("guion.json ilegible: %s" % ex)
+    esquema = VD.revisar_esquema(g)   # V24 (m109): claves y tipos de cada escena antes de los gates
+    if esquema:
+        for x in esquema:
+            print("FALLA", x)
+        return 1
     st = VD.estado(trabajo)
     H = historia_de(trabajo)
     # secuencias de voz (H20): si el guion no las trae, el script las deriva de los actos y las escribe (voz_continua por
@@ -2998,6 +3259,9 @@ def revisar_red(g, H):
     («según la fiscalía…»); cada `dice` suena en la voz y en orden; ≤ 1 escena red por video; ≥ 1.1 s por nodo."""
     es = [e for e in g.get("escenas") or [] if e.get("tipo") == "red"]
     f = []
+    for e in es:
+        if e.get("estilo") not in (None, "red", "tablero"):
+            f.append("H23 escena red: estilo «%s» (red = organigrama por niveles · tablero = cuadritos unidos con hilo)" % e.get("estilo"))
     if len(es) > 1:
         f.append("H23 %d escenas red: va 1 por video (o parte)" % len(es))
     if not es:
@@ -3104,7 +3368,9 @@ def t_red(S, e, ps, pal, fin_voz, dur, g):
         atr = (h.get("tipo_hecho") or "acto") in RED_ATRIBUIR or h.get("estado") == "en_disputa"
         aristas.append({"de": a["id"], "a": b["id"], "rel": ar.get("rel") or "", "atribuida": atr,
                         "start": round(max(a["start"], b["start"]) + 0.15, 3)})
-    S["pagina"] = "red"
+    # estilo "tablero": los mismos datos y el mismo gate H23, dibujados como tablero de investigación (cuadritos e hilos,
+    # sin tachas: video/tablero.html) en vez del organigrama por niveles
+    S["pagina"] = "tablero" if esc.get("estilo") == "tablero" else "red"
     S["G"] = {"titulo": esc.get("titulo") or "", "nodos": nodos, "aristas": aristas, "atribuida": bool(esc.get("atribuida")),
               "fuente": ("Fuente: " + esc["fuente"]) if esc.get("fuente") else None}
     if esc.get("atribuida"):
@@ -3322,7 +3588,19 @@ def t_foto(S, e, ps, pal, fin_voz, dur, g):
             ev.append((w_v["start"], "marca"))
             sfx.append((w_v["start"], "marcador"))
             break
-    if N["foto"] and N["depto"] and not N.get("encaje"):   # el localizador: dónde queda, 1.7 s tras entrar
+    # el mapa con ruta (2026-11-10): `ruta` = 2–4 departamentos por los que pasa lo que cuenta la escena (el puerto → la
+    # aduana → la capital). El localizador se queda más y un trazo los une en orden. Cada uno, un lugar de un hecho de la
+    # escena: lo comprueba el gate (H26).
+    ruta = [NT.depto_id(x) for x in esc.get("ruta") or []]
+    ruta = [x for x in ruta if x]
+    if N["foto"] and len(ruta) >= 2 and not N.get("encaje"):
+        largo = 1.4 + 0.9 * (len(ruta) - 1)
+        # tras el titular si cabe; en una escena corta entra antes (nunca antes de que la foto esté puesta)
+        d0 = round(max(t0 + 0.6, min((N["titular"][-1]["start"] if N["titular"] else t0) + 0.4, dur - largo - 0.5)), 3)
+        if d0 + largo + 0.3 < dur:
+            N["minimapa"] = {"depto": ruta[-1], "ruta": ruta, "desde": d0, "hasta": round(d0 + largo, 3)}
+            ev += [(d0, "entrada")] + [(round(d0 + 0.5 + 0.9 * k, 3), "ruta") for k in range(1, len(ruta))]
+    elif N["foto"] and N["depto"] and not N.get("encaje"):   # el localizador: dónde queda, 1.7 s tras entrar
         d0 = round(max(t0 + 0.9, (N["titular"][-1]["start"] if N["titular"] else t0) + 0.4), 3)
         if d0 + 2.0 < dur:
             N["minimapa"] = {"depto": N["depto"], "desde": d0, "hasta": round(d0 + 1.7, 3)}
@@ -3407,7 +3685,9 @@ def t_cita(S, e, ps, pal, fin_voz, dur, g):
         t_s = round(min(max(fin_q + 0.2, 1.8), dur - 1.0), 3)
         sello = " · ".join(x for x in ((q.get("cuando") or ""), (esc.get("fuente") or q.get("autor") or "")) if x)
         if sello:
-            S["H"]["sello"] = {"texto": sello[:40], "t": t_s}
+            if len(sello) > 26:   # un sello largo parte en dos renglones y pisa el membrete o la zona segura (V13): solo la fecha
+                sello = q.get("cuando") or sello[:26]
+            S["H"]["sello"] = {"texto": sello, "t": t_s}
             ev.append((t_s, "sello"))
             sfx.append((t_s, "sello"))
     return ev, sfx
@@ -3541,7 +3821,38 @@ def transicion_con_direccion(S, esc, g, ev, sfx):
 
 
 leer_cambios = VD.leer_cambios
-aplicar_cambios = VD.aplicar_cambios
+
+
+def aplicar_cambios(g, gan, cambios, trabajo=None):
+    """VD.aplicar_cambios + m121: una escena cuya foto cambió (campo foto o cambio de tipo) rehace su chip con la foto
+    nueva, salvo que el mismo arreglo dé la fecha: «De referencia» si la foto es de referencia; si el chip decía un año y la
+    foto es de otro, «Foto de <año de la foto>». Así el chip de la foto anterior no miente sobre la nueva."""
+    rc, msg, escenas = VD.aplicar_cambios(g, gan, cambios)
+    if rc or not trabajo:
+        return rc, msg, escenas
+    for c in cambios:
+        n = c.get("escena")
+        if not isinstance(n, int) or not 1 <= n <= len(g.get("escenas") or []):
+            continue
+        cambia_foto = c.get("campo") == "foto" or ("tipo" in c and "foto" in c and "campo" not in c)
+        da_fecha = c.get("campo") == "fecha" or "fecha" in c or any(x.get("escena") == n and x.get("campo") == "fecha" for x in cambios)
+        e = g["escenas"][n - 1]
+        if not cambia_foto or da_fecha or not e.get("foto"):
+            continue
+        ruta = os.path.join(trabajo, "fotos", "%s.json" % e["foto"])
+        fo = leer(ruta) if os.path.exists(ruta) else {}
+        chip, anio = (e.get("fecha") or "").strip(), str(fo.get("fecha") or "")[:4]
+        nuevo = chip
+        if fo.get("referencia"):
+            nuevo = "De referencia"
+        elif re.search(r"referencia", chip, re.I) and re.fullmatch(r"\d{4}", anio):   # la nueva sí es del hecho
+            nuevo = "Foto de %s" % anio
+        elif re.search(r"\b(1[5-9]|20)\d\d\b", chip) and re.fullmatch(r"\d{4}", anio) and anio not in chip:
+            nuevo = "Foto de %s" % anio
+        if nuevo != chip:
+            e["fecha"] = nuevo
+            print("aplicar: escena %d con la foto %s: el chip «%s» pasa a «%s» (m121)" % (n, e["foto"], chip, nuevo))
+    return rc, msg, escenas
 
 
 def correr_gates(trabajo):
@@ -3572,7 +3883,7 @@ def cmd_probar(a):
         g = leer(os.path.join(tmp, "guion.json"))
         ruta_g = os.path.join(tmp, "ganchos.json")
         gan = leer(ruta_g) if os.path.exists(ruta_g) else None
-        rc, msg, _ = aplicar_cambios(g, gan, cambios)
+        rc, msg, _ = aplicar_cambios(g, gan, cambios, tmp)
         if rc:
             print(msg)
             return rc
@@ -3602,7 +3913,7 @@ def cmd_aplicar(a):
     ruta_g = os.path.join(trabajo, "ganchos.json")
     g = leer(ruta)
     gan = leer(ruta_g) if os.path.exists(ruta_g) else None
-    rc, msg, escenas = aplicar_cambios(g, gan, cambios)
+    rc, msg, escenas = aplicar_cambios(g, gan, cambios, trabajo)
     if rc:
         print(msg)
         return rc
@@ -3619,6 +3930,7 @@ def cmd_aplicar(a):
         correr_gates(trabajo)   # locucion.json vuelve a corresponder al guion restaurado
         print("aplicar: el gate lo rechaza; guion.json queda como estaba")
         return 1
+    VD.renumerar_audio(trabajo, [c["insertar"] for c in cambios if "insertar" in c])   # m108: las voces siguen a su escena
     print("aplicar: %d cambio(s) en el TRABAJO · gate ok" % len(cambios))
     print("RETORNO %s" % json.dumps({"escenas_cambiadas": sorted(escenas)}, ensure_ascii=False))
     return 0
@@ -3776,6 +4088,13 @@ def cmd_digesto(a):
         (["", "## Casos (estado a la fecha de consulta)"] + ["- %s: %s (consultado %s)%s" % (x.get("persona"), x.get("estado_actual"), x.get("fecha_consulta"),
                                                             " · sentencia firme" if x.get("sentencia_firme") else "") for x in H.get("casos") or []]
          if H.get("casos") else [])
+    ser_d = VD.serie_de(st)
+    if (ser_d.get("parte") or 0) > 1:   # SE15–SE16: lo que ya contaron las partes anteriores de la serie
+        import serie as SR   # noqa: E402  (serie importa historia: aquí, no arriba)
+        ya = SR.ya_contado(trabajo, ser_d["parte"])["ids"]
+        base = [re.sub(r"^- ([a-z]{2,4}-[hcq]\d+) · ", lambda m: "- %s · [YA CONTADO EN P%d] " % (m.group(1), ya[m.group(1)])
+                       if m.group(1) in ya else m.group(0), x) for x in base]
+        base += SR.lineas_ya_contado(trabajo, ser_d["parte"])
     if a.para == "gancho":
         out = base + ["", "## Ganchos de historia (4–5 candidatos de familias distintas, todos con la foto a sangre)",
                       "- Familias: %s" % ", ".join(FAMILIAS),
@@ -4080,7 +4399,33 @@ def cronologia_md(st, escenas, H):
 REENVIO = ("voz", "voz-falsa", "descargar", "partir", "escuchar", "grabar", "montar", "revisar")
 
 
+def cmd_producir(a):
+    """La cadena de render que la sesión tecleaba a mano dos veces por pieza: tiempos → escuchar → grabar → montar →
+    revisar en 9:16 y grabar → montar → revisar en 4:5. Para en la primera falla y dice en qué paso."""
+    yo, T = os.path.abspath(__file__), a.trabajo
+    solo = ["--solo", a.solo] if a.solo else []
+    pasos = [["tiempos", T]] + ([] if a.sin_escucha else [["escuchar", T]]) + \
+        [["grabar", T] + solo, ["montar", T], ["revisar", T],
+         ["grabar", T, "--formato", "4:5"] + solo, ["montar", T, "--formato", "4:5"], ["revisar", T, "--formato", "4:5"]]
+    for k, paso in enumerate(pasos, 1):
+        print("── %d/%d · %s" % (k, len(pasos), " ".join(paso[:1] + paso[2:])), flush=True)
+        rc = subprocess.run([sys.executable, yo] + paso, cwd=RAIZ).returncode
+        if rc and paso[0] == "escuchar" and rc == 2:   # sin whisper instalado: la escucha es opcional
+            print("AVISO sin escucha (make whisper)")
+            continue
+        if rc:
+            return falla("producir se detuvo en «%s» (exit %d): corrige y vuelve a correr (o sigue a mano desde ese paso)"
+                         % (" ".join(paso[:1] + paso[2:]), rc))
+    print("producido: 9:16 y 4:5 en %s/salida · falta entregar" % rel(os.path.abspath(T)))
+    return 0
+
+
 def main():
+    if len(sys.argv) > 2 and sys.argv[1] == "voz" and not any(x in sys.argv for x in ("-h", "--help")):
+        import serie as SR   # noqa: E402  SE17: una parte de serie no se graba antes de revisar la serie completa
+        bloqueo = SR.voz_permitida(os.path.abspath(sys.argv[2]))
+        if bloqueo:
+            return falla(bloqueo)
     if len(sys.argv) > 1 and sys.argv[1] in REENVIO:
         return subprocess.run([sys.executable, os.path.join(RAIZ, "scripts", "video.py")] + sys.argv[1:], cwd=RAIZ).returncode
     p = argparse.ArgumentParser(description=__doc__.split("\n")[0], epilog=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -4111,6 +4456,8 @@ def main():
     q.add_argument("--retrato-de", help="si es el retrato de una persona, su nombre (el de la cita); un objeto o un lugar no lo lleva")
     q.add_argument("--encaje", choices=["contener"], help="gráfico, cartel o logo con texto: márgenes para que la foto a sangre no lo recorte")
     q.add_argument("--retrato-evidencia", help="con --retrato-de: el pie, la categoría de Commons o el título que nombra a la persona (H21)")
+    q.add_argument("--proceso", help="m122: la foto muestra a una persona detenida, esposada o en audiencia: su nombre. Solo podrá ir en "
+                   "una escena cuya voz la nombre (H7c)")
     x = q.add_mutually_exclusive_group()
     x.add_argument("--referencia", action="store_true", help="la foto no es del hecho sino de referencia (el lugar, la institución, la persona, "
                    "el producto o la época): el crédito dice «Foto de referencia: …»")
@@ -4205,9 +4552,15 @@ def main():
     q = sub.add_parser("entregar")
     q.add_argument("trabajo")
     q.add_argument("--salida", help="otra carpeta (pruebas, maqueta o voz falsa)")
+    q = sub.add_parser("producir", help="tiempos → escuchar → grabar → montar → revisar en 9:16 y luego en 4:5; para en la primera falla")
+    q.add_argument("trabajo")
+    q.add_argument("--solo", help="regraba solo estas escenas (1,3): un retoque que conserva lo demás")
+    q.add_argument("--sin-escucha", action="store_true", help="salta `escuchar` (whisper)")
     for nombre in REENVIO:
         sub.add_parser(nombre, help="→ scripts/video.py %s" % nombre)
     a = p.parse_args()
+    if a.cmd == "producir":
+        return cmd_producir(a)
     if getattr(a, "trabajo", None) and a.cmd != "preparar":
         aplicar_formato(os.path.abspath(a.trabajo))
     return {"preparar": cmd_preparar, "leer": cmd_leer, "commons": cmd_commons, "foto": cmd_foto, "hechos": cmd_hechos,

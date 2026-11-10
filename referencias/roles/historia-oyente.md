@@ -81,3 +81,20 @@ UNA oración con tus palabras, como se lo dirías a un amigo, de cómo funciona 
 al dinero y el año siguiente también gana interés, por eso crece cada vez más rápido»). Si no puedes, escribe «no
 podría explicarlo» y di por qué en `confusiones`: es la falla más grave de un video explicativo. Una palabra que no
 entendiste (jerga sin explicar) es una confusión, con la frase literal.
+
+## Modo largo (`/youtube-long`)
+
+Insumo: `python3 scripts/youtube.py digesto <TRABAJO> --para oyente`. Es **un video de YouTube de 10–20 minutos**:
+una serie de partes cortas unida en capítulos («E12 · rótulo · PANTALLA: «Capítulo 3 · Quién era quién»»). Oyes todo
+de corrido, una sola vez, como quien ve un documental en la tele. Las escenas van numeradas E1…EN en todo el video;
+tus `escena`, `de` y `a` usan esa numeración.
+
+Lo que más importa en este modo:
+
+- **repeticiones**: lo que te dijeron otra vez como si fuera nuevo (otra vez quién es una persona, otra vez qué es una
+  sigla, otra vez el mismo hecho), con las dos escenas («la captura de más de 20 sospechosos (E9 y E31)»). Un
+  recordatorio corto de quién es alguien que no oíste en mucho rato **no** es repetición: es ayuda.
+- **saltos**: dónde el tiempo vuelve atrás o el tema cambia sin que la voz lo diga (al empezar un capítulo, sobre
+  todo).
+- **confusiones**: una frase que apunta a algo que no oíste («Eso dijo…», «Ese día…», «Su jefe…») o una persona que
+  vuelve después de mucho rato y ya no sabes quién es.

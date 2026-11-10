@@ -1138,6 +1138,75 @@ assert any("nada nuevo" in x for x in f) and any("van ≥ 5" in x for x in f), f
 assert any("dura" in x for x in SR.revisar_resumen({"escenas": [dict(res, texto="Así fue todo.")]}, 7, 7, T))
 assert not SR._frases_largas({"escenas": [dict(res, texto="una frase larga que repite la parte anterior sin ningún cambio 1")]})
 PY
+paso "serie: SE15–SE16 dejan ≤ 2 hechos ya contados en ≤ 2 escenas, un recordatorio corto de quien ya se presentó y la glosa corta" python3 - "$TMP" <<'PY'
+import json, os, sys; sys.path.insert(0, "scripts"); import serie as SR
+base = os.path.join(sys.argv[1], "serie_se15")
+pers = {"personajes": [{"nombre": "Juan Carlos Monzón", "alias": ["Monzón"], "presentacion": "secretario privado de la vicepresidenta"}]}
+for k in (1, 2):
+    os.makedirs(os.path.join(base, "parte-%d" % k), exist_ok=True)
+    json.dump(pers, open(os.path.join(base, "parte-%d" % k, "encuadre.json"), "w"))
+json.dump({"escenas": [{"tipo": "foto", "hechos": ["a-h1", "a-h2", "a-h3"], "texto": "Juan Carlos Monzón, secretario privado de la vicepresidenta, "
+           "manejaba la red. La Cicig, la comisión de la ONU contra la impunidad, lo investigó."}]},
+          open(os.path.join(base, "parte-1", "guion.json"), "w"))
+T = os.path.join(base, "parte-2")
+ok = {"escenas": [{"tipo": "foto", "hechos": ["a-h1"], "texto": "El secretario Monzón cayó. La Cicig, de la ONU, siguió."},
+                  {"tipo": "foto", "hechos": ["b-h1", "b-h2"], "texto": "Lo nuevo."}]}
+assert SR.revisar_novedad(ok, 2, T) == [], SR.revisar_novedad(ok, 2, T)
+assert SR.revisar_novedad(ok, 1, T) == []
+mal = {"escenas": [{"tipo": "foto", "hechos": ["a-h1"], "texto": "Juan Carlos Monzón, secretario privado de la vicepresidenta, cayó."},
+                   {"tipo": "foto", "hechos": ["a-h2"], "texto": "La Cicig, la comisión de la ONU contra la impunidad, siguió."},
+                   {"tipo": "foto", "hechos": ["a-h3"], "texto": "Otra vez."}]}
+f = SR.revisar_novedad(mal, 2, T)
+assert any(x.startswith("SE15") and "a-h3 (P1)" in x for x in f), f
+assert any(x.startswith("SE16 Juan Carlos Monzón") and "«secretario Monzón»" in x for x in f), f
+assert any(x.startswith("SE16 la sigla «CICIG»") for x in f), f
+assert any("YA CONTADO" in x or "Ya contado" in x for x in SR.lineas_ya_contado(T, 2))
+PY
+paso "aplicar insertar (m108): la escena entra en la narración, corre secuencias, promesa y bisagra, y los audios siguen a su escena" python3 - "$TMP" <<'PY'
+import json, os, sys; sys.path.insert(0, "scripts"); import video as VD
+T = os.path.join(sys.argv[1], "m108"); A = os.path.join(T, "audio"); os.makedirs(A, exist_ok=True)
+g = {"escenas": [{"tipo": "foto", "texto": "Uno."}, {"tipo": "foto", "texto": "Dos."}, {"tipo": "foto", "texto": "Tres."},
+                 {"tipo": "foto", "texto": "Cuatro."}, {"tipo": "foto", "texto": "Cinco."}],
+     "narracion": [{"acto": 1, "texto": "Uno. Dos. Tres."}, {"acto": 2, "texto": "Cuatro. Cinco."}],
+     "secuencias": [[2, 3], [4, 5]], "promesa": {"en": 2, "pago": 5}, "bisagra": {"en": 4, "pago": 5}}
+assert VD.insertar_escena(json.loads(json.dumps(g)), {"insertar": 3, "escena": {"tipo": "foto", "texto": "Nueva."}, "despues_de": "No está."})[0] == 1
+assert VD.insertar_escena(g, {"insertar": 1, "escena": {"texto": "x"}, "despues_de": "Dos."})[0] == 2
+assert VD.insertar_escena(g, {"insertar": 3, "escena": {"tipo": "foto", "texto": "Nueva."}, "despues_de": "Dos."}) == (0, "")
+assert [e["texto"] for e in g["escenas"]] == ["Uno.", "Dos.", "Nueva.", "Tres.", "Cuatro.", "Cinco."], g["escenas"]
+assert g["narracion"][0]["texto"] == "Uno. Dos. Nueva. Tres.", g["narracion"]
+assert g["secuencias"] == [[5, 6]] and g["promesa"] == {"en": 2, "pago": 6} and g["bisagra"] == {"en": 5, "pago": 6}, g
+for n in range(1, 7):   # 6 = el cierre
+    for pat in ("voz_%d.mp3", "palabras_%d.json"):
+        open(os.path.join(A, pat % n), "w").write(str(n))
+for k in (1, 2):
+    open(os.path.join(A, "voz_sec_%d.mp3" % k), "w").write("sec%d" % k)
+json.dump({"1": {"escenas": [2, 3], "cortes_s": [0, 1, 2]}, "2": {"escenas": [4, 5], "cortes_s": [0, 1, 2]}}, open(os.path.join(A, "secuencias.json"), "w"))
+json.dump({"escenas": {str(n): {"oido": str(n)} for n in range(1, 7)}}, open(os.path.join(A, "escucha.json"), "w"))
+json.dump({"secuencias": [{"k": 1, "escenas": [5, 6]}]}, open(os.path.join(T, "locucion.json"), "w"))
+VD.renumerar_audio(T, [3])
+leer = lambda f: open(os.path.join(A, f)).read()
+assert not os.path.exists(os.path.join(A, "voz_3.mp3")) and leer("voz_4.mp3") == "3" and leer("voz_7.mp3") == "6" and leer("palabras_2.json") == "2"
+assert leer("voz_sec_1.mp3") == "sec2" and not os.path.exists(os.path.join(A, "voz_sec_2.mp3"))
+assert open(os.path.join(A, "_previo", "voz_sec_1.mp3")).read() == "sec1"
+assert {k: v["escenas"] for k, v in json.load(open(os.path.join(A, "secuencias.json"))).items()} == {"1": [5, 6]}
+assert json.load(open(os.path.join(A, "escucha.json")))["escenas"]["4"]["oido"] == "3"
+PY
+paso "V24 (m109): una clave desconocida o de otro tipo en una escena falla con su nombre antes de los gates" python3 - <<'PY'
+import sys; sys.path.insert(0, "scripts"); import video as VD
+f = VD.revisar_esquema({"escenas": [{"tipo": "foto", "texto": "x", "resumen": ["a"]}, {"tipo": "foto", "acto": "3"}, {"tipo": "foto", "acto": 2, "giro": True}]})
+assert len(f) == 2 and "«resumen»" in f[0] and "¿«resumen_serie»?" in f[0] and "«acto» tiene que ser entero" in f[1], f
+assert VD.revisar_esquema({"escenas": "x"}) and VD.revisar_esquema({"escenas": [3]})
+PY
+paso "cronologia (m110): hasta 8 pasos solo en una escena resumen_serie" python3 - <<'PY'
+import sys; sys.path.insert(0, "scripts"); import video as VD
+cat = {x["id"]: x for x in VD.leer("video/animaciones/catalogo.json")["animaciones"]}
+pasos = ["Las escuchas", "Los sobornos", "La plaza", "El testigo", "La condena", "El exilio", "La cárcel", "La salida"]
+e = {"tipo": "explica", "mecanismo": "cronologia", "animacion": "cronologia", "titulo": "Así fue todo", "brief": "x" * 60,
+     "texto": "Las escuchas, los sobornos, la plaza, el testigo, la condena, el exilio, la cárcel y la salida.", "resumen_serie": True}
+mal = lambda e: [x for x in VD.explica_mal_armada(e, cat) if "pasos" in x]
+assert not mal(dict(e, pasos=pasos)), mal(dict(e, pasos=pasos))
+assert mal(dict(e, pasos=pasos + ["Otra cosa"])) and mal(dict(e, pasos=pasos[:7], resumen_serie=False))
+PY
 paso "animaciones: el lint rechaza azar, reloj, colores fijos, Instrument Serif y font-stretch antes de font:; las de la biblioteca pasan; K4 avisa de un módulo fuera del catálogo" bash -c '
 set -e; d="$1/anim_neg"; rm -rf "$d"; mkdir -p "$d"
 cp video/animaciones/cadena.js "$d/cadena.js"
@@ -1752,7 +1821,7 @@ neg_historia "una cita que la voz no lee literal" "H4" 'e[6]["texto"] = e[6]["te
 neg_historia "la misma foto en 3 escenas (gancho, 5 y 10)" "H7 la misma foto" 'e[9]["foto"] = "ori-f02"'
 neg_historia "un retrato que no es de quien habla" "H7 escena 7: el retrato" 'e[6]["retrato"] = "ori-f01"'
 neg_historia "el chip con un año anterior a la foto" "H7 escena 5: el chip" 'e[4]["fecha"] = "1952"'
-neg_historia "20 escenas (más el cierre pasan de 20 nodos)" "H8 20 escenas" 'e[9:9] = [dict(e[8], giro=False) for _ in range(10)]'
+neg_historia "20 escenas (más el cierre pasan de 20 nodos)" "H8 20 escenas" 'e[9:9] = [dict(e[8], giro=False) for _ in range(9)]'
 neg_historia "una escena foto con icono en lugar de foto" "H7 escena 10: la escena foto lleva una foto" 'e[9].update(foto=None, icono="landmark")'
 neg_historia "una escena que apunta a algo que no se dijo (esos 900 hornos)" "H11 escena 4" 'e[3]["texto"] = "Esos 900 hornos no volvieron. " + e[3]["texto"]'
 neg_historia "«según» en el final del cierre" "H9" 'g["cierre"]["final"] = "Según la prensa, sus trabajadores aún encienden los dos hornos."; g["cierre"]["texto"] = g["cierre"]["texto"].rsplit(".", 2)[0] + ". " + g["cierre"]["final"]'
@@ -1775,7 +1844,9 @@ neg_historia "secuencias solapadas" "V9 secuencia 2: escenas repetidas" 'g["secu
 neg_historia "una secuencia con el gancho" "V9 secuencia 1: escenas entre 2 y" 'g["secuencias"] = [[1, 2]]'
 capitulo_compat() {
   local S="$TMP/hcap"; rm -rf "$S"; cp -R "$HT" "$S"; rm -f "$S/locucion.json"
-  python3 -c 'import json,sys; d=sys.argv[1]; g=json.load(open(d+"/guion.json")); e=g["escenas"]; e[4]["texto"]=e[3]["texto"]+" "+e[4]["texto"]; del e[3]; r=e[5].pop("rotulo")
+  python3 -c 'import json,sys; d=sys.argv[1]; g=json.load(open(d+"/guion.json")); e=g["escenas"]; b=g["bisagra"]["texto"]; e[5]["texto"]=e[5]["texto"].replace(" "+b,""); e[6]["texto"]=b+" "+e[6]["texto"]
+for x in g["narracion"]: x["texto"]=x["texto"].replace(" "+b,"") if x["acto"]==1 else (b+" "+x["texto"] if x["acto"]==2 else x["texto"])
+e[4]["texto"]=e[3]["texto"]+" "+e[4]["texto"]; e[4]["dividida"]=[e[3]["foto"], e[4]["foto"]]; del e[3]; r=e[5].pop("rotulo")
 e[5:5]=[{"tipo":"capitulo","acto":2,"numero":1,"anio":r["anio"],"titulo":r["titulo"],"lugar":r["lugar"],"texto":"Llega una inspección."}]
 g["promesa"]["pago"]=10; g["hilos"][0]["escena"]=9; g["bisagra"].update(en=7, pago=7); g.pop("secuencias")
 exec(sys.argv[2]); json.dump(g, open(d+"/guion.json","w"), ensure_ascii=False)' "$S" "$RN"
@@ -1876,12 +1947,12 @@ seg=[{"v":"Lo dijo así:","num":False},{"v":"Every loaf comes out of the same ov
 f,a,p=V.comparar_escucha(seg,"Lo dijo así: y vendía cuarenta panes",omitir="Every loaf comes out of the same oven"); assert not f and p<10,(f,a,p)
 f,a,p=V.comparar_escucha(seg,"Lo dijo así: y vendía catorce panes",omitir="Every loaf comes out of the same oven"); assert f,(f,a,p)
 f,a,p=V.comparar_escucha(seg,"Lo dijo así: y vendía cuarenta panes"); assert p>30,(f,a,p)'
-paso "historia.py guion --check imprime RETORNO (tipos, actos, rótulos, palabras, según, secuencias, hilos; gate ok)" bash -c "python3 scripts/historia.py guion '$HT' --check | tail -1 | python3 -c 'import json,sys; l=sys.stdin.read(); assert l.startswith(\"RETORNO \"), l; r=json.loads(l[8:]); assert r[\"gate\"]==\"ok\" and r[\"escenas\"]==10 and len(r[\"tipos\"])==10 and \"cierre\" not in r[\"tipos\"] and r[\"tipos\"][0]==\"gancho\" and r[\"capitulos\"]==0 and r[\"actos\"]==3 and r[\"rotulos\"]==2 and r[\"segun\"]==0 and r[\"secuencias\"]==4 and r[\"hilos_pagados\"]==1 and r[\"hilos_sin_respuesta\"]==1 and 280<=r[\"palabras\"]<=430, r'"
+paso "historia.py guion --check imprime RETORNO (tipos, actos, rótulos, palabras, según, secuencias, hilos; gate ok)" bash -c "python3 scripts/historia.py guion '$HT' --check | tail -1 | python3 -c 'import json,sys; l=sys.stdin.read(); assert l.startswith(\"RETORNO \"), l; r=json.loads(l[8:]); assert r[\"gate\"]==\"ok\" and r[\"escenas\"]==11 and len(r[\"tipos\"])==11 and \"cierre\" not in r[\"tipos\"] and r[\"tipos\"][0]==\"gancho\" and r[\"capitulos\"]==0 and r[\"actos\"]==3 and r[\"rotulos\"]==2 and r[\"segun\"]==0 and r[\"secuencias\"]==4 and r[\"hilos_pagados\"]==1 and r[\"hilos_sin_respuesta\"]==1 and 280<=r[\"palabras\"]<=430, r'"
 paso "historia.py guion --check: el RETORNO con gate falla trae las FALLA de video.py" bash -c "S='$TMP/hret'; rm -rf \"\$S\"; cp -R '$HT' \"\$S\"; python3 -c 'import json,sys; d=sys.argv[1]; g=json.load(open(d+\"/guion.json\")); g[\"promesa\"][\"pago\"]=3; json.dump(g, open(d+\"/guion.json\",\"w\"), ensure_ascii=False)' \"\$S\"; python3 scripts/historia.py guion \"\$S\" --check | tail -1 | grep -q '\"gate\": \"falla\".*promesa'"
 paso "historia.py aviso_duracion: avisa sobre 165 s y calla en 150" python3 -c 'import sys; sys.path.insert(0,"scripts"); import historia as H; assert "AVISO H5" in H.aviso_duracion(170) and H.aviso_duracion(150) is None'
 paso "digesto --para gancho y --para guionista listan las revelaciones, la espina, los hilos, los personajes y ALEGATO" bash -c "python3 scripts/historia.py digesto '$HT' --para gancho | grep -q 'R2. Cerró la última sucursal' && python3 scripts/historia.py digesto '$HT' --para guionista > '$TMP/dg.txt' && grep -q 'h1 · ¿Por qué cerró?' '$TMP/dg.txt' && grep -q 'detonante (acto 1' '$TMP/dg.txt' && grep -q 'Marta Pérez (Marta) — la fundadora' '$TMP/dg.txt' && grep -q 'cas-h04.*ALEGATO' '$TMP/dg.txt' && grep -q 'una_fuente' '$TMP/dg.txt' && ! grep -q 'Narración (de corrido)' '$TMP/dg.txt'"
 paso "digesto --para critico trae la narración de corrido, la duración y el presupuesto de «según»; --para editor el re-encuadre" bash -c "python3 scripts/historia.py digesto '$HT' --para critico > '$TMP/dc.txt' && grep -q '## Narración (de corrido)' '$TMP/dc.txt' && grep -q '^- Acto 2: ' '$TMP/dc.txt' && grep -q 'Duración objetivo 150 s' '$TMP/dc.txt' && python3 scripts/historia.py digesto '$HT' --para editor | grep -q '## Encuadre actual'"
-paso "digesto --para oyente: solo voz y pantalla, en orden, sin cronología ni ids" bash -c "python3 scripts/historia.py digesto '$HT' --para oyente > '$TMP/oy.txt' && grep -q '## La narración de corrido' '$TMP/oy.txt' && grep -q '^E7 · cita · PANTALLA: 2004 · La inspección' '$TMP/oy.txt' && grep -q '^E10 · foto · PANTALLA: 2010' '$TMP/oy.txt' && grep -q '^E11 · cierre' '$TMP/oy.txt' && ! grep -q 'Cronología\|ori-h0' '$TMP/oy.txt'"
+paso "digesto --para oyente: solo voz y pantalla, en orden, sin cronología ni ids" bash -c "python3 scripts/historia.py digesto '$HT' --para oyente > '$TMP/oy.txt' && grep -q '## La narración de corrido' '$TMP/oy.txt' && grep -q '^E7 · cita · PANTALLA: 2004 · La inspección' '$TMP/oy.txt' && grep -q '^E10 · foto · PANTALLA: 2010' '$TMP/oy.txt' && grep -q '^E12 · cierre' '$TMP/oy.txt' && ! grep -q 'Cronología\|ori-h0' '$TMP/oy.txt'"
 cita_en_ingles() {
   local S="$TMP/hingles"; rm -rf "$S"; cp -R "$HT" "$S"
   python3 -c 'import json,sys; d=sys.argv[1]; h=json.load(open(d+"/historia.json")); q=next(x for x in h["citas"] if x["id"]=="cas-q01"); q["texto"]="forty bags of expired flour were found"; json.dump(h, open(d+"/historia.json","w"), ensure_ascii=False)
@@ -2074,6 +2145,47 @@ paso "memoria.py --serie --dry-run registra la serie de la maqueta" bash -c "pyt
 if [[ "$RAPIDO" == "1" ]]; then echo "SKIP   make serie-fixture y serie-explica-fixture (RAPIDO=1)"; else
   paso "make serie-fixture (parte 1 de La Espiga: 9:16 y 4:5, chip «Parte 1 de 3», entrega de la parte, M16)" bash -c 'make serie-fixture FPS=6 >/dev/null && ffprobe -v error -show_entries stream=codec_type,width,height -of csv=p=0 sesiones/_fixture_serie/salida/parte-1/video_4x5.mp4 | grep -q "video,1080,1350" && python3 -c "import json; e=json.load(open(\"sesiones/_fixture_serie/trabajo/parte-1/escenas.json\")); assert e[\"escenas\"][0][\"chip\"][\"texto\"]==\"Parte 1 de 3\" and e[\"serie\"][\"siguiente\"][\"titulo\"]==\"El terremoto\", e[\"serie\"]"'
   paso "make serie-explica-fixture (parte 1 del temario: 9:16 y 4:5, entrega de la parte, M16)" bash -c 'make serie-explica-fixture FPS=6 >/dev/null && test -s sesiones/_fixture_serie_explica/salida/parte-1/video.mp4'
+fi
+
+echo "== /youtube-long (montaje YT1–YT8, recortes de audio, 16:9; sin web ni créditos)"
+YF="sesiones/_fixture_youtube"
+if [[ -f sesiones/_fixture_serie/trabajo/parte-1/escenas.json ]]; then
+  YT="$TMP/youtube"
+  paso "youtube.py preparar sobre la maqueta (la parte 1 dos veces): informe de repeticiones con los 4 hechos repetidos" bash -c "python3 scripts/youtube.py preparar $YF/serie --trabajo '$YT' --fixture | grep -q 'hechos repetidos 4'"
+  paso "youtube.py montaje --check: el montaje fijo pasa YT1–YT8 y YT11" bash -c "cp $YF/montaje.json '$YT/' && python3 scripts/youtube.py montaje '$YT' --check >/dev/null"
+  yt_neg() {   # yt_neg "FALLA esperada" "mutación de M (montaje.json)"
+    local d="$TMP/youtube_neg"; rm -rf "$d"; cp -R "$YT" "$d"
+    python3 - "$d/montaje.json" "$2" <<'PY' || return 1
+import json, sys
+M = json.load(open(sys.argv[1], encoding="utf-8")); E = {e["ref"]: e for c in M["capitulos"] for e in c["escenas"]}; exec(sys.argv[2])
+json.dump(M, open(sys.argv[1], "w", encoding="utf-8"), ensure_ascii=False)
+PY
+    local out; out="$(python3 scripts/youtube.py montaje "$d" --check 2>&1)" && return 1
+    grep -q "FALLA $1" <<<"$out"
+  }
+  paso "youtube gate: falta una escena de la parte → YT1" yt_neg "YT1" 'M["capitulos"][1]["escenas"].pop(3)'
+  paso "youtube gate: el gancho de la parte 2 se usa → YT2" yt_neg "YT2" 'E["P2.e1"]["op"] = "usar"'
+  paso "youtube gate: un puente que anuncia («En este capítulo…») → YT2" yt_neg "YT2" 'M["capitulos"][1]["puente"]["texto"] = "En este capítulo te cuento cómo creció la panadería."'
+  paso "youtube gate: un puente de tres oraciones y sin hechos → YT3" yt_neg "YT3" 'M["capitulos"][1]["puente"].update(texto="Pasaron los años. El horno siguió. La ciudad creció.", hechos=[])'
+  paso "youtube gate: un puente con un número sin respaldo → YT3" yt_neg "YT3" 'M["capitulos"][1]["puente"]["texto"] = "Para entonces ya vendía 9,999 panes."'
+  paso "youtube gate: un hecho contado otra vez sin reprise → YT4" yt_neg "YT4" 'E["P2.e4"]["op"] = "usar"; E["P2.e4"].pop("razon", None)'
+  paso "youtube gate: un corte en un silencio corto → YT6" yt_neg "YT6" 'E["P2.e7"]["quitar"] = ["el horno de Marta"]'
+  paso "youtube gate: recortar una cita → YT6" yt_neg "YT6" 'E["P1.e3"]["quitar"] = ["la fundadora,"]'
+  paso "youtube gate: la promesa se paga al principio → YT8" yt_neg "YT8" 'M["promesa"]["pago"] = "P1.e2"'
+  paso "youtube gate: sin título de YouTube → YT11" yt_neg "YT11" 'M["youtube"]["titulo"] = ""'
+  paso "youtube.py probar: un cambio que rompe el gate sale 1 y no escribe" bash -c "! python3 scripts/youtube.py probar '$YT' --cambios '[{\"op\": \"escena\", \"ref\": \"P2.e1\", \"set\": {\"op\": \"usar\"}}]' >/dev/null 2>&1 && python3 scripts/youtube.py montaje '$YT' --check >/dev/null"
+  paso "youtube.py: el recorte corre los tiempos de la escena (palabras, eventos y duración)" python3 -c "
+import sys; sys.path.insert(0,'scripts'); import youtube as Y
+S={'n':1,'dur':10.0,'fin_voz':9.0,'palabras':[{'text':'a','start':1.0,'end':1.5},{'text':'b','start':2.0,'end':2.5},{'text':'c','start':6.0,'end':6.5}],
+   'eventos':[{'t':6.0,'tipo':'oracion'},{'t':10.0,'tipo':'fin'}],'sfx':[{'t':6.0,'id':'tic'}],'N':{'oraciones':[6.0],'titular':[{'text':'x','start':0.4}]}}
+R=Y.recortar_escena(S,[(1.75,4.0)])
+assert [w['text'] for w in R['palabras']]==['a','c'] and R['palabras'][1]['start']==3.75 and R['dur']==7.75 and R['N']['oraciones']==[3.75] and R['eventos'][-1]['t']==7.75, R"
+  paso "W14: un límite de youtube.js distinto del de youtube.py falla en check_workflows" bash -c "cp .claude/workflows/youtube.js '$TMP/yt.js.bak'; sed -i '' 's/PUENTE_CARACTERES = 160/PUENTE_CARACTERES = 150/' .claude/workflows/youtube.js; python3 scripts/check_workflows.py --quiet >/dev/null 2>&1; rc=\$?; cp '$TMP/yt.js.bak' .claude/workflows/youtube.js; [ \$rc -ne 0 ]"
+  if [[ "$RAPIDO" == "1" ]]; then echo "SKIP   make youtube-fixture (RAPIDO=1)"; else
+    paso "make youtube-fixture (16:9 1920×1080, capítulos desde 0:00, sin «Sígueme» en la voz, entrega)" bash -c 'make youtube-fixture FPS=6 >/dev/null && ffprobe -v error -show_entries stream=codec_type,width,height -of csv=p=0 sesiones/_fixture_youtube/salida/video.mp4 | grep -q "video,1920,1080" && grep -q "^0:00 " sesiones/_fixture_youtube/salida/caption.md && ! grep -qi "sígueme: en la" sesiones/_fixture_youtube/salida/subtitulos.srt'
+  fi
+else
+  echo "SKIP   /youtube-long (falta la maqueta de /serie: make serie-fixture)"
 fi
 
 echo "== /analyze-improve (metricas.py: importar, vincular, alinear, AN1–AN12, M17, R14; sin Chrome ni web)"
@@ -2336,6 +2448,7 @@ check_js() {
   { echo "(async function(){"; sed 's/^export //' ".claude/workflows/$1"; echo "})"; } > "$TMP/check_$1"
   node --check "$TMP/check_$1"
 }
+paso "reglas del 2026-11-10 (srt, V25, P6, V5 cifras, tics, H25, H26, SE1, efectos y transiciones del largo)" python3 scripts/pruebas/reglas_2026_11_10.py
 paso "node --check hilo.js (envuelto en async function)" check_js hilo.js
 paso "node --check ideas.js (envuelto en async function)" check_js ideas.js
 paso "node --check dato.js (envuelto en async function)" check_js dato.js
@@ -2344,6 +2457,7 @@ paso "node --check video.js (envuelto en async function)" check_js video.js
 paso "node --check noticias.js (envuelto en async function)" check_js noticias.js
 paso "node --check historia.js (envuelto en async function)" check_js historia.js
 paso "node --check explica.js (envuelto en async function)" check_js explica.js
+paso "node --check youtube.js (envuelto en async function)" check_js youtube.js
 paso "check_workflows.py (PALETAS, PLANTILLAS, HOOKS, BEATS, REQ, pesoX, MODOS, gráficos del informe W7–W8, bloque común W9, espejos de video.js W10, de noticias.js W11, de historia.js W12 y de explica.js con su tabla MODOS W13)" python3 scripts/check_workflows.py
 
 echo

@@ -109,3 +109,21 @@ Además siguen V9 (promesa literal en la escena 1 o 2, pago en el último tercio
 
 `memoria.py` guarda `promesa_forma`, `bisagra` y `bisagra_forma` en `frases`; el digesto los muestra en «Promesas
 recientes (P3)» y en «Frases ya usadas» (C11).
+
+## 5. La recompensa en pantalla (P6, decisión del usuario, 2026-11-10)
+
+Quien llega al segundo 10 tiene que saber **qué va a saber** si se queda. La voz no cambia (P2 sigue: nunca «al final»,
+«vas a ver»), pero la pregunta concreta que el video responde se **lee**:
+
+- `promesa.pregunta`: «¿…?», ≤ 9 palabras, con el sujeto del gancho, sin anunciar el video. Ejemplo: «¿Cómo quebró un
+  banco con un millón de cuentas?». No es la promesa dicha de otro modo: es lo que el espectador podrá contestar al final.
+- **No queda fija.** Entra cuando la voz dice la promesa (≈ 4 s), vuelve en la bisagra (≈ 2.6 s) y en la escena que la
+  paga, ahí con su check (`video/comun.js`: `V.pregunta`; `video.py marcar_pregunta`). Va en la pila de chips de arriba a
+  la derecha.
+- La promesa se oye **antes del segundo 10**: si va en la escena 2, es su primera oración; el contexto viene después.
+- En `/serie`, además, la pregunta de la **serie entera** (`serie.promesa`, SE1): la parte 1 la dice, desde la parte 2
+  aparece en el gancho bajo «Parte N de M», y la última la responde (`guion.responde_serie`, SE18).
+- En `/youtube-long`, `montaje.promesa.pregunta` (YT8): sale con la promesa global, antes del segundo 15, y en su pago.
+
+Vale para `/historia`, `/serie` y `/explica` (el modo mito tiene su veredicto). Los trabajos empezados antes del
+2026-11-10 solo reciben aviso.

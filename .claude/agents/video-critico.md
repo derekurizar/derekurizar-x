@@ -50,3 +50,11 @@ MODO NOTICIERO (si la directiva lo pide, flujo `/noticias`): sigue la sección
 `<TRABAJO>/locucion.json` y `python3 scripts/noticias.py digesto <TRABAJO>
 --para editor`; los puntajes son `gancho, claridad, ritmo, precision, tono,
 cierre`. Escribes `<TRABAJO>/critica.json`.
+
+MODO LARGO (si la directiva lo pide, flujo `/youtube-long`): sigue la sección «Modo largo» de
+`referencias/roles/video-critico.md`. Criticas el MONTAJE de un video de YouTube de 10–20 min
+hecho con las partes de una serie: si se oye como un solo documental (repetición, continuidad,
+uniones que no anuncian, ritmo por capítulo, promesa global, claridad de quién es quién). Insumos:
+`youtube.py digesto <TRABAJO> --para critico`, `oyente.json` y `youtube.py resumen`. Pruebas cada
+arreglo con `youtube.py probar` y escribes `critica.json` con los puntajes `repeticion,
+continuidad, uniones, ritmo, promesa, claridad`.

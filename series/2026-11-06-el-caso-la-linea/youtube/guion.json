@@ -1,0 +1,94 @@
+{
+ "tipo": "youtube",
+ "id": "youtube-el-caso-la-linea",
+ "slug": "el-caso-la-linea",
+ "tema": "el caso La Línea",
+ "serie": "series/2026-11-06-el-caso-la-linea/serie.json",
+ "fecha": "2026-11-09",
+ "duracion_s": 745.3,
+ "titulo": "El caso La Línea: la llamada grabada que llevó a Otto Pérez Molina y Roxana Baldetti a juicio",
+ "descripcion": "En mayo de 2014, una escucha a un importador reveló el nombre de una red que cobraba sobornos en las aduanas de Guatemala: La Línea. De las fiestas vigiladas y las tablas de pagos a la plaza llena, el antejuicio y el juicio, esta es la historia completa del caso que tumbó a un gobierno. Y de lo que les pasó a quienes lo investigaron.",
+ "capitulos": [
+  {
+   "numero": 1,
+   "titulo": "Las escuchas que lo destaparon",
+   "parte": 1,
+   "t": 0.0,
+   "dur": 141.2
+  },
+  {
+   "numero": 2,
+   "titulo": "Cómo cobraba la red",
+   "parte": 2,
+   "t": 141.2,
+   "dur": 104.7
+  },
+  {
+   "numero": 3,
+   "titulo": "Quién era quién",
+   "parte": 3,
+   "t": 245.93,
+   "dur": 85.2
+  },
+  {
+   "numero": 4,
+   "titulo": "La plaza y la vicepresidenta",
+   "parte": 4,
+   "t": 331.16,
+   "dur": 93.4
+  },
+  {
+   "numero": 5,
+   "titulo": "La caída del presidente",
+   "parte": 5,
+   "t": 424.6,
+   "dur": 95.1
+  },
+  {
+   "numero": 6,
+   "titulo": "El testigo y la sentencia",
+   "parte": 6,
+   "t": 519.7,
+   "dur": 88.8
+  },
+  {
+   "numero": 7,
+   "titulo": "Lo que quedó",
+   "parte": 7,
+   "t": 608.56,
+   "dur": 136.7
+  }
+ ],
+ "paleta": "cielo",
+ "musica": [
+  "cielo-1",
+  "cielo-2",
+  "cielo-1",
+  "cielo-2",
+  "cielo-1",
+  "cielo-2",
+  "cielo-1"
+ ],
+ "creditos_voz": 889,
+ "promesa": {
+  "texto": "Esa llamada terminaría sentando en el banquillo a quienes gobernaban el país.",
+  "forma": "presagio",
+  "foto": "leg-f01",
+  "titular": "Del puerto a la Presidencia",
+  "hechos": [
+   "des-h02",
+   "leg-h01"
+  ],
+  "pago": "P6.e11"
+ },
+ "partes": [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7
+ ],
+ "fixture": false
+}

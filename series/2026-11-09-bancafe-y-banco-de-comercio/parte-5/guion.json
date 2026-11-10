@@ -1,0 +1,402 @@
+{
+ "id": "2026-11-09-bancafe-y-banco-de-comercio-parte-5",
+ "tipo": "historia",
+ "slug": "bancafe-y-banco-de-comercio-parte-5",
+ "tema": "Bancafé y Banco de Comercio: la caída de dos bancos en Guatemala (2006–2007)",
+ "fecha": "2026-11-09",
+ "pregunta": "¿Quién respondió por el dinero de los dos bancos y por qué no volvió?",
+ "arco": "caso: auge, apuesta, caída en cadena y juicio inconcluso, con los conceptos bancarios explicados en el camino",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "2013-2017",
+   "titulo": "La quiebra estancada",
+   "escena": 7
+  },
+  {
+   "numero": 3,
+   "anio": "2012-2026",
+   "titulo": "Lo que sigue abierto",
+   "escena": 11
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "Bancafé, un banco de Guatemala, dejó bienes al caer. ¿Quién cobra primero? En la fila, adelante cobran los ahorrantes. ¿Y el jubilado de los pagarés? No todos cabían, y la ley tardó años en cambiar. Los bienes pasan a un fideicomiso y se venden para pagarles. Si no alcanza, el FOPA, el seguro que pagan los bancos, pone lo que falta y espera recuperarlo. Con Bancafé no alcanzó: el seguro puso mil seiscientos millones de quetzales. Pero quedaron fuera de la fila los de su offshore en Barbados, sin seguro, dijo el superintendente de Bancos. Y también aquel jubilado del Banco de Comercio, con sus pagarés. Entonces, en 2008, dos años después de la caída, para recuperar lo que puso el seguro, la Junta Monetaria pidió la quiebra de Bancafé. Un juez civil la declaró fraudulenta en un proceso que duró hasta 2017."
+  },
+  {
+   "acto": 2,
+   "texto": "Mientras, los de la offshore pedían Q170 millones al seguro: en 2013 un juez se los negó; no había condena. Un año después murió el expresidente de Bancafé, Eduardo González Rivera, sin sentencia. Si la quiebra no avanzaba, el seguro no recuperaba nada. En 2016 seguía estancada: esos mil seiscientos millones, perdidos. Ese año llegó la primera condena. Fue para Jorge González Castillo, Ariel Camargo y Celeste Soto, por Vipasa, del grupo. La Sala la confirmó y ordenó devolver Q148 millones a 360 clientes de Vipasa."
+  },
+  {
+   "acto": 3,
+   "texto": "En 2021 procesaron, ahora por quiebra fraudulenta, a Jorge, a su hermano Manuel Eduardo, el heredero, y a Camargo. Manuel Eduardo dijo que Bancafé quebró después, en otras manos. No se conoce sentencia, ni para los 14 procesados del Banco de Comercio. Entonces, ¿podría repetirse? Para entenderlo, la reforma de 2012: el tope del 15 % en préstamos ahora alcanza también a las offshore. Pero el seguro no cambió: cubre hasta Q20,000 por persona. Así fue todo. En 1978 nació Bancafé. En 2003 armó su grupo, con una offshore en Barbados. En 2005 quebró Refco, la corredora de Nueva York con los bonos de esa offshore. En 2006 cayó Bancafé; en 2007, el Banco de Comercio. En 2016, la primera condena. Y el seguro dio por perdido lo que adelantó. Los ahorrantes cobraron porque lo suyo era un depósito; los de los pagarés, no. Hoy, las familias revisan si firman un depósito o un pagaré."
+  }
+ ],
+ "hilos": [
+  {
+   "id": "p5h1",
+   "escena": 10
+  },
+  {
+   "id": "p5h2",
+   "escena": 12
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3,
+   4
+  ],
+  [
+   5,
+   6
+  ],
+  [
+   7,
+   8
+  ],
+  [
+   9,
+   10
+  ],
+  [
+   11,
+   12,
+   13,
+   14
+  ]
+ ],
+ "paleta": "cacao",
+ "musica": "corrupcion-colapso",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2450.75,
+ "duracion_s": 169.5,
+ "critica": {
+  "veredicto": "corregir",
+  "vuelta": 3,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 4,
+   "claridad": 3,
+   "flujo": 3,
+   "precision": 3,
+   "cierre": 4
+  }
+ },
+ "gancho": {
+  "familia": "misterio",
+  "visual": "foto",
+  "pantalla": "Lo que dejó Bancafé",
+  "linea": "¿quién cobra primero?"
+ },
+ "promesa": {
+  "texto": "No todos cabían, y la ley tardó años en cambiar.",
+  "forma": "secreto",
+  "en": 2,
+  "pago": 12,
+  "revela": 2
+ },
+ "bisagra": {
+  "texto": "Si la quiebra no avanzaba, el seguro no recuperaba nada.",
+  "forma": "apuesta",
+  "en": 9,
+  "pago": 9
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "Bancafé, un banco de Guatemala, dejó bienes al caer. ¿Quién cobra primero?",
+   "voz": "Bancafé, un banco de Guatemala, dejó bienes al caer. ¿Quién cobra primero?",
+   "dur": 6.106,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "En la fila, adelante cobran los ahorrantes. ¿Y el jubilado de los pagarés? No todos cabían, y la ley tardó años en cambiar.",
+   "voz": "En la fila, adelante cobran los ahorrantes. ¿Y el jubilado de los pagarés? No todos cabían, y la ley tardó años en cambiar.",
+   "dur": 9.125,
+   "hechos": [
+    "jui-h25"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: La Hora",
+     "origen": "medio",
+     "licencia": "© La Hora (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "explica",
+   "pantalla": "Los bienes pasan a un fideicomiso y se venden para pagarles. Si no alcanza, el FOPA, el seguro que pagan los bancos, pone lo que falta y espera recuperarlo.",
+   "voz": "Los bienes pasan a un fideicomiso y se venden para pagarles. Si no alcanza, el FOPA, el seguro que pagan los bancos, pone lo que falta y espera recuperarlo.",
+   "dur": 9.761,
+   "hechos": [
+    "cai-h27",
+    "cai-h30",
+    "ref-h23",
+    "jui-h04"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": "faltante-seguro",
+   "mecanismo": "balance"
+  },
+  {
+   "n": 4,
+   "tipo": "tarjeta",
+   "pantalla": "Con Bancafé no alcanzó: el seguro puso mil seiscientos millones de quetzales.",
+   "voz": "Con Bancafé no alcanzó: el seguro puso mil seiscientos millones de quetzales.",
+   "dur": 6.93,
+   "hechos": [
+    "cai-h16"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "foto",
+   "pantalla": "Pero quedaron fuera de la fila los de su offshore en Barbados, sin seguro, dijo el superintendente de Bancos. Y también aquel jubilado del Banco de Comercio, con sus pagarés.",
+   "voz": "Pero quedaron fuera de la fila los de su offshore en Barbados, sin seguro, dijo el superintendente de Bancos. Y también aquel jubilado del Banco de Comercio, con sus pagarés.",
+   "dur": 10.672,
+   "hechos": [
+    "jui-h05",
+    "com-h16"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "foto",
+   "pantalla": "Entonces, en 2008, dos años después de la caída, para recuperar lo que puso el seguro, la Junta Monetaria pidió la quiebra de Bancafé. Un juez civil la declaró fraudulenta en un proceso que duró hasta 2017.",
+   "voz": "Entonces, en dos mil ocho, dos años después de la caída, para recuperar lo que puso el seguro, la Junta Monetaria pidió la quiebra de Bancafé. Un juez civil la declaró fraudulenta en un proceso que duró hasta dos mil diecisiete.",
+   "dur": 15.13,
+   "hechos": [
+    "cai-h20",
+    "jui-h10"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: UCDWiki · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "tarjeta",
+   "pantalla": "Mientras, los de la offshore pedían Q170 millones al seguro: en 2013 un juez se los negó; no había condena.",
+   "voz": "Mientras, los de la offshore pedían ciento setenta millones de quetzales al seguro: en dos mil trece un juez se los negó; no había condena.",
+   "dur": 10.397,
+   "hechos": [
+    "cai-h19"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "golpe",
+   "pantalla": "Un año después murió el expresidente de Bancafé, Eduardo González Rivera, sin sentencia.",
+   "voz": "Un año después murió el expresidente de Bancafé, Eduardo González Rivera, sin sentencia.",
+   "dur": 7.208,
+   "hechos": [
+    "cai-h21"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "foto",
+   "pantalla": "Si la quiebra no avanzaba, el seguro no recuperaba nada. En 2016 seguía estancada: esos mil seiscientos millones, perdidos. Ese año llegó la primera condena.",
+   "voz": "Si la quiebra no avanzaba, el seguro no recuperaba nada. En dos mil dieciséis seguía estancada: esos mil seiscientos millones, perdidos. Ese año llegó la primera condena.",
+   "dur": 12.499,
+   "hechos": [
+    "ref-h21",
+    "caf-h25"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "tarjeta",
+   "pantalla": "Fue para Jorge González Castillo, Ariel Camargo y Celeste Soto, por Vipasa, del grupo. La Sala la confirmó y ordenó devolver Q148 millones a 360 clientes de Vipasa.",
+   "voz": "Fue para Jorge González Castillo, Ariel Camargo y Celeste Soto, por Vipasa, del grupo. La Sala la confirmó y ordenó devolver ciento cuarenta y ocho millones de quetzales a trescientos sesenta clientes de Vipasa.",
+   "dur": 14.942,
+   "hechos": [
+    "caf-h25",
+    "jui-h02"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "foto",
+   "pantalla": "En 2021 procesaron, ahora por quiebra fraudulenta, a Jorge, a su hermano Manuel Eduardo, el heredero, y a Camargo. Manuel Eduardo dijo que Bancafé quebró después, en otras manos. No se conoce sentencia, ni para los 14 procesados del Banco de Comercio.",
+   "voz": "En dos mil veintiuno procesaron, ahora por quiebra fraudulenta, a Jorge, a su hermano Manuel Eduardo, el heredero, y a Camargo. Manuel Eduardo dijo que Bancafé quebró después, en otras manos. No se conoce sentencia, ni para los catorce procesados del Banco de Comercio.",
+   "dur": 18.079,
+   "hechos": [
+    "jui-h06",
+    "jui-h11",
+    "com-h06"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "definicion",
+   "pantalla": "Entonces, ¿podría repetirse? Para entenderlo, la reforma de 2012: el tope del 15 % en préstamos ahora alcanza también a las offshore.",
+   "voz": "Entonces, ¿podría repetirse? Para entenderlo, la reforma de dos mil doce: el tope del quince por ciento en préstamos ahora alcanza también a las offshore.",
+   "dur": 10.344,
+   "hechos": [
+    "jui-h23"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 13,
+   "tipo": "foto",
+   "pantalla": "Pero el seguro no cambió: cubre hasta Q20,000 por persona.",
+   "voz": "Pero el seguro no cambió: cubre hasta veinte mil quetzales por persona.",
+   "dur": 4.871,
+   "hechos": [
+    "cai-h28"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: La Hora",
+     "origen": "medio",
+     "licencia": "© La Hora (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 14,
+   "tipo": "explica",
+   "pantalla": "Así fue todo. En 1978 nació Bancafé. En 2003 armó su grupo, con una offshore en Barbados. En 2005 quebró Refco, la corredora de Nueva York con los bonos de esa offshore. En 2006 cayó Bancafé; en 2007, el Banco de Comercio. En 2016, la primera condena. Y el seguro dio por perdido lo que adelantó.",
+   "voz": "Así fue todo. En mil novecientos setenta y ocho nació Bancafé. En dos mil tres armó su grupo, con una offshore en Barbados. En dos mil cinco quebró Refco, la corredora de Nueva York con los bonos de esa offshore. En dos mil seis cayó Bancafé; en dos mil siete, el Banco de Comercio. En dos mil dieciséis, la primera condena. Y el seguro dio por perdido lo que adelantó.",
+   "dur": 24.819,
+   "hechos": [
+    "caf-h01",
+    "caf-h06",
+    "ref-h07",
+    "ref-h12",
+    "com-h01",
+    "caf-h25",
+    "ref-h21"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": "cronologia",
+   "mecanismo": "cronologia"
+  },
+  {
+   "n": 15,
+   "tipo": "cierre",
+   "pantalla": "Los ahorrantes cobraron porque lo suyo era un depósito; los de los pagarés, no. Hoy, las familias revisan si firman un depósito o un pagaré.",
+   "voz": "Los ahorrantes cobraron porque lo suyo era un depósito; los de los pagarés, no. Hoy, las familias revisan si firman un depósito o un pagaré.",
+   "dur": 12.464,
+   "hechos": [],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Lo que dejó",
+  "resumen": [
+   "Procesos abiertos, sin sentencia",
+   "El adelanto del seguro, perdido",
+   "La ley ya alcanza a las offshore"
+  ],
+  "texto": "Los ahorrantes cobraron porque lo suyo era un depósito; los de los pagarés, no. Hoy, las familias revisan si firman un depósito o un pagaré.",
+  "tipo": "remate",
+  "forma": "legado",
+  "final": "Hoy, las familias revisan si firman un depósito o un pagaré.",
+  "consecuencia": {
+   "quien": "familias",
+   "verbo": "revisan"
+  }
+ },
+ "caption": {
+  "tiktok": "Serie · Parte 5 de 5: El dinero que no volvió\nCuando cayó Bancafé, ¿quién cobró primero? El seguro de depósitos puso Q1,600 millones y una década después los daban por perdidos. Los juicios, la reforma a la ley y lo que sigue abierto.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\n#Guatemala #Bancafé #historia",
+  "instagram": "Serie · Parte 5 de 5: El dinero que no volvió\nPrimero cobraron los ahorrantes; la offshore y los pagarés quedaron fuera. Qué pasó con la quiebra de Bancafé, con los procesados y con la ley que cambió en 2012.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\n#Guatemala #Bancafé #BancodeComercio #historia",
+  "facebook": "Serie · Parte 5 de 5: El dinero que no volvió\nEl seguro de depósitos adelantó Q1,600 millones para pagar a los ahorrantes de Bancafé. La quiebra se estancó, hubo una condena y otros procesos siguen sin sentencia.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\nFuentes en el primer comentario.",
+  "shorts": "Bancafé y Banco de Comercio: el dinero que no volvió (5/5) #Shorts"
+ }
+}

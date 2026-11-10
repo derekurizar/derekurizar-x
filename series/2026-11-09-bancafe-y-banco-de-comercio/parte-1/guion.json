@@ -1,0 +1,374 @@
+{
+ "id": "2026-11-09-bancafe-y-banco-de-comercio-parte-1",
+ "tipo": "historia",
+ "slug": "bancafe-y-banco-de-comercio-parte-1",
+ "tema": "Bancafé y Banco de Comercio: la caída de dos bancos en Guatemala (2006–2007)",
+ "fecha": "2026-11-09",
+ "pregunta": "¿Cómo se volvió Bancafé uno de los bancos más grandes de Guatemala?",
+ "arco": "caso: auge, apuesta, caída en cadena y juicio inconcluso, con los conceptos bancarios explicados en el camino",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "2001–2003",
+   "titulo": "Un grupo financiero",
+   "escena": 4
+  },
+  {
+   "numero": 3,
+   "anio": "1995–2003",
+   "titulo": "La offshore",
+   "escena": 11
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "Bancafé nació para el café de Guatemala. Años después tenía un banco en Barbados. Para prestarle al café no hacía falta una isla del Caribe. Pero empezó aquí: en 1978 se fundó el Banco del Café, con 165 agencias. ¿Y cómo gana dinero un banco? Recibe tus depósitos y los presta. Cobra al que pide prestado más interés del que te paga: la diferencia es su ganancia. Así creció Bancafé, que en 1998 compró Multibanco."
+  },
+  {
+   "acto": 2,
+   "texto": "En diciembre de 2001, Manuel Eduardo González Castillo, heredero de Bancafé, dejó la presidencia del banco por la política; el relevo tardó dos años. Mientras tanto, en 2002, una ley puso a los bancos y sus empresas bajo la Superintendencia de Bancos, el supervisor. Bancafé ya reunía 17 compañías. Esa ley les dio nombre: Grupo financiero es la agrupación de dos o más personas jurídicas que realizan actividades de naturaleza financiera. Es decir, varias empresas, una de ellas un banco, bajo un mismo control. Con su grupo, Bancafé fue uno de los bancos más grandes; Prensa Libre lo recordaría como el cuarto más importante del país. ¿Y qué es un banco offshore? Uno del grupo, en otro país, que recibe depósitos lejos del supervisor de Guatemala. Bancafé tenía uno, en Barbados. En diciembre de 2003, la Junta Monetaria, la autoridad de los bancos, aprobó la lista de su grupo, con esa offshore. Pero a la lista aprobada le faltaba un nombre. Vipasa, su firma de inversiones en Gran Caimán, quedó fuera del grupo vigilado."
+  },
+  {
+   "acto": 3,
+   "texto": "Pero por Vipasa pasaba mucho dinero: según La Hora, en 2002 la offshore le dio más del 60 % de lo que tenía: US$256 millones. Y no era nuevo: para la fiscalía, el Ministerio Público, desde 1995 Bancafé le pedía préstamos a Vipasa para tapar malas inversiones, pero no los devolvía. Ese hoyo, dice la acusación, llegó a US$150 millones. Bancafé prestaba lo que la gente le depositaba. Si el banco fallaba, ¿dónde tenía el dinero de sus ahorrantes?"
+  }
+ ],
+ "hilos": [
+  {
+   "id": "p1h1",
+   "escena": 3
+  },
+  {
+   "id": "p1h2",
+   "escena": 8
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3
+  ],
+  [
+   4,
+   5,
+   6
+  ],
+  [
+   7,
+   8,
+   9
+  ],
+  [
+   11,
+   12,
+   13
+  ]
+ ],
+ "paleta": "cacao",
+ "musica": "corrupcion-colapso",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2172.79,
+ "duracion_s": 147.1,
+ "critica": {
+  "veredicto": "corregir",
+  "vuelta": 2,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 4,
+   "claridad": 3,
+   "flujo": 3,
+   "precision": 4,
+   "cierre": 3
+  }
+ },
+ "gancho": {
+  "familia": "contraste",
+  "visual": "foto",
+  "pantalla": "Del café a Barbados",
+  "linea": "Bancafé tenía un banco en Barbados"
+ },
+ "promesa": {
+  "texto": "Para prestarle al café no hacía falta una isla del Caribe.",
+  "forma": "contradiccion",
+  "en": 2,
+  "pago": 11,
+  "revela": 2
+ },
+ "bisagra": {
+  "texto": "Pero a la lista aprobada le faltaba un nombre.",
+  "forma": "secreto",
+  "en": 9,
+  "pago": 10
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "Bancafé nació para el café de Guatemala. Años después tenía un banco en Barbados.",
+   "voz": "Bancafé nació para el café de Guatemala. Años después tenía un banco en Barbados.",
+   "dur": 5.943,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "Para prestarle al café no hacía falta una isla del Caribe. Pero empezó aquí: en 1978 se fundó el Banco del Café, con 165 agencias.",
+   "voz": "Para prestarle al café no hacía falta una isla del Caribe. Pero empezó aquí: en mil novecientos setenta y ocho se fundó el Banco del Café, con ciento sesenta y cinco agencias.",
+   "dur": 11.621,
+   "hechos": [
+    "caf-h01"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Caffe Vita · CC BY 2.0",
+     "origen": "commons",
+     "licencia": "CC BY 2.0"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "explica",
+   "pantalla": "¿Y cómo gana dinero un banco? Recibe tus depósitos y los presta. Cobra al que pide prestado más interés del que te paga: la diferencia es su ganancia. Así creció Bancafé, que en 1998 compró Multibanco.",
+   "voz": "¿Y cómo gana dinero un banco? Recibe tus depósitos y los presta. Cobra al que pide prestado más interés del que te paga: la diferencia es su ganancia. Así creció Bancafé, que en mil novecientos noventa y ocho compró Multibanco.",
+   "dur": 16.127,
+   "hechos": [
+    "caf-h02"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": "margen-banco",
+   "mecanismo": "balance"
+  },
+  {
+   "n": 4,
+   "tipo": "foto",
+   "pantalla": "En diciembre de 2001, Manuel Eduardo González Castillo, heredero de Bancafé, dejó la presidencia del banco por la política; el relevo tardó dos años.",
+   "voz": "En diciembre de dos mil uno, Manuel Eduardo González Castillo, heredero de Bancafé, dejó la presidencia del banco por la política; el relevo tardó dos años.",
+   "dur": 10.231,
+   "hechos": [
+    "caf-h04"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "foto",
+   "pantalla": "Mientras tanto, en 2002, una ley puso a los bancos y sus empresas bajo la Superintendencia de Bancos, el supervisor. Bancafé ya reunía 17 compañías.",
+   "voz": "Mientras tanto, en dos mil dos, una ley puso a los bancos y sus empresas bajo la Superintendencia de Bancos, el supervisor. Bancafé ya reunía diecisiete compañías.",
+   "dur": 10.899,
+   "hechos": [
+    "caf-h05"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: UCDWiki · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "cita",
+   "pantalla": "Esa ley les dio nombre: Grupo financiero es la agrupación de dos o más personas jurídicas que realizan actividades de naturaleza financiera. Es decir, varias empresas, una de ellas un banco, bajo un mismo control.",
+   "voz": "Esa ley les dio nombre: Grupo financiero es la agrupación de dos o más personas jurídicas que realizan actividades de naturaleza financiera. Es decir, varias empresas, una de ellas un banco, bajo un mismo control.",
+   "dur": 15.235,
+   "hechos": [
+    "ref-h24",
+    "caf-h31"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "foto",
+   "pantalla": "Con su grupo, Bancafé fue uno de los bancos más grandes; Prensa Libre lo recordaría como el cuarto más importante del país.",
+   "voz": "Con su grupo, Bancafé fue uno de los bancos más grandes; Prensa Libre lo recordaría como el cuarto más importante del país.",
+   "dur": 8.272,
+   "hechos": [
+    "com-h17"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Victovic221 · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "definicion",
+   "pantalla": "¿Y qué es un banco offshore? Uno del grupo, en otro país, que recibe depósitos lejos del supervisor de Guatemala.",
+   "voz": "¿Y qué es un banco offshore? Uno del grupo, en otro país, que recibe depósitos lejos del supervisor de Guatemala.",
+   "dur": 7.885,
+   "hechos": [
+    "caf-h34",
+    "cai-h26",
+    "caf-h31"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "foto",
+   "pantalla": "Bancafé tenía uno, en Barbados. En diciembre de 2003, la Junta Monetaria, la autoridad de los bancos, aprobó la lista de su grupo, con esa offshore. Pero a la lista aprobada le faltaba un nombre.",
+   "voz": "Bancafé tenía uno, en Barbados. En diciembre de dos mil tres, la Junta Monetaria, la autoridad de los bancos, aprobó la lista de su grupo, con esa offshore. Pero a la lista aprobada le faltaba un nombre.",
+   "dur": 13.424,
+   "hechos": [
+    "caf-h06"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "golpe",
+   "pantalla": "Vipasa, su firma de inversiones en Gran Caimán, quedó fuera del grupo vigilado.",
+   "voz": "Vipasa, su firma de inversiones en Gran Caimán, quedó fuera del grupo vigilado.",
+   "dur": 5.772,
+   "hechos": [
+    "caf-h06",
+    "ref-h05"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "foto",
+   "pantalla": "Pero por Vipasa pasaba mucho dinero: según La Hora, en 2002 la offshore le dio más del 60 % de lo que tenía: US$256 millones.",
+   "voz": "Pero por Vipasa pasaba mucho dinero: según La Hora, en dos mil dos la offshore le dio más del sesenta por ciento de lo que tenía: doscientos cincuenta y seis millones de dólares.",
+   "dur": 11.778,
+   "hechos": [
+    "ref-h03"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Gordon Leggett · CC BY 4.0",
+     "origen": "commons",
+     "licencia": "CC BY 4.0"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "foto",
+   "pantalla": "Y no era nuevo: para la fiscalía, el Ministerio Público, desde 1995 Bancafé le pedía préstamos a Vipasa para tapar malas inversiones, pero no los devolvía.",
+   "voz": "Y no era nuevo: para la fiscalía, el Ministerio Público, desde mil novecientos noventa y cinco Bancafé le pedía préstamos a Vipasa para tapar malas inversiones, pero no los devolvía.",
+   "dur": 12.238,
+   "hechos": [
+    "ref-h02"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: UCDWiki · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 13,
+   "tipo": "golpe",
+   "pantalla": "Ese hoyo, dice la acusación, llegó a US$150 millones.",
+   "voz": "Ese hoyo, dice la acusación, llegó a ciento cincuenta millones de dólares.",
+   "dur": 5.942,
+   "hechos": [],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 14,
+   "tipo": "cierre",
+   "pantalla": "Bancafé prestaba lo que la gente le depositaba. Si el banco fallaba, ¿dónde tenía el dinero de sus ahorrantes? Sígueme: en la segunda parte te cuento la apuesta de Refco, una corredora de Nueva York.",
+   "voz": "Bancafé prestaba lo que la gente le depositaba. Si el banco fallaba, ¿dónde tenía el dinero de sus ahorrantes? Sígueme: en la segunda parte te cuento la apuesta de Refco, una corredora de Nueva York.",
+   "dur": 15.211,
+   "hechos": [],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Hasta 2003",
+  "resumen": [
+   "Nació en 1978 para el café",
+   "Un grupo de 17 compañías",
+   "US$256 millones en Vipasa"
+  ],
+  "texto": "Bancafé prestaba lo que la gente le depositaba. Si el banco fallaba, ¿dónde tenía el dinero de sus ahorrantes?",
+  "tipo": "pregunta",
+  "forma": "puente",
+  "final": "Si el banco fallaba, ¿dónde tenía el dinero de sus ahorrantes?",
+  "invitacion": "Sígueme: en la segunda parte te cuento la apuesta de Refco, una corredora de Nueva York."
+ },
+ "caption": {
+  "tiktok": "Serie · Parte 1 de 5: El banco del café\nBancafé nació en 1978 para el café de Guatemala. Llegó a ser uno de los bancos más grandes del país y tuvo un banco offshore en Barbados. Cómo gana un banco, qué es un grupo financiero y qué es un offshore, explicado. #Guatemala #Bancafé #historia",
+  "instagram": "Serie · Parte 1 de 5: El banco del café\nDe 165 agencias para el café a un grupo de 17 compañías con un banco en Barbados. Así creció Bancafé, y así funciona un banco. #Guatemala #Bancafé #historia",
+  "facebook": "Serie · Parte 1 de 5: El banco del café\nBancafé nació para el café de Guatemala y terminó con un banco offshore en Barbados. Cómo gana dinero un banco, qué es un grupo financiero y qué es un offshore, contado con su historia. Fuentes en el primer comentario.",
+  "shorts": "Bancafé: el banco del café que tuvo un banco en Barbados (1/5) #Shorts\nSerie sobre la caída de Bancafé y Banco de Comercio en Guatemala."
+ }
+}

@@ -382,8 +382,10 @@ seguiría viendo?» y «¿esto lo dice la cronología?»; la pregunta sobre el c
 | H-C5 precisión | cada hecho, fecha y número está en la cronología del digesto; lo `en_disputa`, los alegatos, las estimaciones, las opiniones y las citas van atribuidos en voz; lo `una_fuente` se narra llano con su fuente en pantalla; nada de `no_afirma`; nada de los descartados; las citas son literales |
 | H-C6 cierre y tono | lo normal es **`legado`**: gente haciendo algo **hoy** con lo que la historia dejó («sus hijos y sus nietos siguen tomando Incaparina»); eso NO es neutro. `consecuencia` si la historia terminó mal (lo que le hizo a una persona o a un grupo concreto, llano). **Neutro = nadie hace nada** («la marca sigue», «la receta cambió», un resumen o un dato): bloquea. Sin «según» en el final, sin moraleja ni cebo; presunción de inocencia; un tema sensible sin morbo. Un `final` que propongas cumple F2: **cuenta sus palabras (≤ 14) y sus caracteres (≤ 90)** antes de exigirlo literal; si no cabe, propón uno que quepa |
 
+| H-C7 recompensa | a los 15 s, ¿sé qué voy a saber si me quedo? La promesa se oye antes del segundo 10 y `promesa.pregunta` (en pantalla) es una pregunta que el espectador puede intentar contestar y que la historia le contradice; coincide con lo que el oyente dice que le prometieron. Bloquea: una pregunta vaga («¿qué pasó después?»), una que adelanta la revelación, o una promesa que el oyente no reconoce |
+
 Puntajes 1–5: `gancho` (H-C1), `tension` (H-C2), `claridad` (H-C3), `flujo` (H-C4), `precision` (H-C5), `cierre`
-(H-C6); un puntaje ≤ 2 exige una falta `bloquea` de su regla. **Bloquea**: un gancho que no se entiende en silencio;
+(H-C6), `recompensa` (H-C7); un puntaje ≤ 2 exige una falta `bloquea` de su regla. **Bloquea**: un gancho que no se entiende en silencio;
 un hilo roto (una escena que apunta a algo que no se dijo, que repite otra como si fuera nueva o que no sigue de la
 anterior); una confusión o un salto del oyente sin resolver ni justificar; una espina fuera de orden o incompleta;
 un hilo del encuadre abierto sin pagar ni declarar; más de 4 «según» en voz; una escena que arranca con un conector
@@ -401,7 +403,11 @@ escena, un chip `fecha`, la promesa, el cierre), pruébalo en una copia con
 python3 scripts/historia.py probar <TRABAJO> --cambios '[{"escena": 2, "texto": "…"}, {"escena": 2, "campo": "fecha", "valor": "…"}]'
 ```
 
-(también `{"promesa": "…", "forma"?}`, `{"bisagra": "…", "forma"?, "en"?, "pago"?}` y `{"cierre": "…"}`; el mismo
+(también `{"promesa": "…", "forma"?}`, `{"bisagra": "…", "forma"?, "en"?, "pago"?}`, `{"cierre": "…"}` y
+`{"cierre": {"texto"?, "final"?, "invitacion"?, …}}` (m127: la invitación de una parte de serie); `{"escena": N,
+"campo": "cifra", "valor": null}` borra un campo y `{"escena": N, "tipo": "foto", "foto": "…", "titular": "…", "fecha":
+"…"}` rehace la escena con otro tipo conservando su texto, hechos y rótulo (m128); al cambiar la foto sin dar `fecha`,
+el chip se rehace con la foto nueva (m121); el mismo
 texto va solo a la narración de corrido, a la promesa, a la bisagra y al candidato del gancho). Exit 0: el arreglo pasa narracion + guion --check. Exit 1: imprime las FALLAS (H4 sin atribución,
 H18 sin presentación, V9 «empieza con la palabra que cierra la anterior», un hueco de más de 6 s…); ajústalo hasta que
 pase. Si ninguna versión pasa, la falta va como `mejora` con la falla del gate en `problema`, nunca como `bloquea`.
@@ -491,8 +497,10 @@ explicarlo?».
 | E-C5 precisión | cada afirmación y cada dato real están en el digesto; los números de ejemplo son los del script y se dicen como ejemplo; ninguna cifra ilustrativa pasa por dato de Guatemala; las cifras reales dicen de cuándo son; nada de `no_afirma`; nada de consejo, bancos ni productos |
 | E-C6 cierre | `consecuencia`: lo que el mecanismo le hace a quien lo vive (quien ahorra, quien debe), con gente como sujeto; el resumen es lo que el espectador se lleva (la regla práctica), no un repaso de cifras; sin moraleja ni orden («ahorra», «no uses la tarjeta») |
 
+| E-C7 recompensa | a los 15 s, ¿sé qué voy a poder explicar al final? `promesa.pregunta` nombra el mecanismo con palabras de todos los días y el espectador puede arriesgar una respuesta (que la intuición del acto 1 contradice). Bloquea una pregunta de manual («¿qué es el interés compuesto?») o una que ya trae la respuesta |
+
 Puntajes 1–5: `gancho` (E-C1), `claridad` (E-C2), `intuicion` (E-C3), `flujo` (E-C4), `precision` (E-C5), `cierre`
-(E-C6); un puntaje ≤ 2 exige una falta `bloquea` de su regla. **Bloquea**:
+(E-C6), `recompensa` (E-C7; en modo mito no se puntúa: el veredicto del cuadro 0 es la recompensa); un puntaje ≤ 2 exige una falta `bloquea` de su regla. **Bloquea**:
 - una `explicacion_devuelta` que no devuelve el mecanismo;
 - una jerga sin explicar;
 - una intuición que no se rompe;
@@ -533,3 +541,84 @@ campo y texto exacto, con las cifras del digesto y respetando el gate (CG3: cada
 Escribes `<TRABAJO>/critica.json` con la forma de «Salida» y devuelves `{archivo, vuelta, veredicto, puntajes,
 bloqueantes, mejoras, faltas[]}`; `veredicto` es `pasa` solo sin faltas `bloquea` y con todos los puntajes ≥ 3.
 
+
+## Modo largo (`/youtube-long`)
+
+Criticas el **montaje** de un video largo de YouTube (10–20 min, 16:9): una serie de partes verticales unida en
+capítulos. Las escenas ya pasaron su crítico. Lo que juzgas es **la unión**: si se oye como UN documental o como siete
+videos pegados.
+
+**Insumos** (sin web; como máximo 4 lecturas y los Bash de abajo):
+- `python3 scripts/youtube.py digesto <TRABAJO> --para critico`: el video en orden con su minuto, cada escena con su
+  referencia (Pk.eN), si quedó recortada o revozada, los rótulos de capítulo, la promesa y el informe de repeticiones
+  original.
+- `<TRABAJO>/oyente.json`: lo que un oyente que solo oyó la voz no entendió, repitió o sintió como salto.
+- `python3 scripts/youtube.py resumen <TRABAJO>`: duración, cortes, uniones y voz nueva.
+
+| Regla | Qué revisas |
+|---|---|
+| Y-C1 repetición | ¿algo se oye repetido? Un hecho contado otra vez, una persona presentada otra vez antes de 5 min, una sigla explicada otra vez, una muletilla. Las `repeticiones` del oyente son tu primera lista |
+| Y-C2 continuidad | ¿los saltos de tiempo y de tema entre capítulos se entienden? ¿cada escena tras un corte tiene su antecedente («Eso dijo…» sin «eso»)? Cada `salto` y cada `confusion` del oyente se resuelve o se justifica (como en «Modo historia») |
+| Y-C3 uniones | los puentes y la promesa cuentan la historia, **nunca anuncian** («en este capítulo», «ahora veremos», «te cuento», «lo que viene») ni resumen lo ya visto. Un puente que suena a índice bloquea |
+| Y-C4 ritmo | cada capítulo abre con tensión en sus primeros 15 s (su promesa de parte, un hecho fuerte o el puente); ningún tramo de más de 60 s es contexto ya dicho. ¿La duración se sostiene o sobra un capítulo de repaso? |
+| Y-C5 promesa | la promesa global abre la pregunta del video entero y la escena `pago` la paga |
+| Y-C6 claridad | cada persona se reconoce cuando vuelve: si alguien no suena desde hace más de 5 min, un recordatorio corto («el comisionado Velásquez») ayuda; quitar todas las presentaciones también es una falta |
+
+| Y-C7 escalada | lo que está en juego sube de capítulo en capítulo (del negocio de alguien, a la gente, al país) y hacia la mitad hay un pico (una captura, una caída, un giro). Un capítulo que baja la tensión respecto al anterior, o un tramo central de puro contexto, es una falta; recorta su contexto antes que sus hechos |
+
+Puntajes 1–5: `repeticion` (Y-C1), `continuidad` (Y-C2), `uniones` (Y-C3), `ritmo` (Y-C4), `promesa` (Y-C5; incluye la
+recompensa: a los 15 s se sabe qué responde el video), `claridad` (Y-C6) y `escalada` (Y-C7). Un puntaje ≤ 2 exige una falta `bloquea` de su regla. Tus `escena` son la numeración E1…EN del
+digesto, o `null` para lo que es de todo el video.
+
+**Arreglo probado.** Cada arreglo se escribe en el formato de cambios del montaje y se prueba antes:
+`python3 scripts/youtube.py probar <TRABAJO> --cambios '<json>'`, con exit 0 y sin fallas nuevas. Formatos:
+- `{"op": "escena", "ref": "P3.e5", "set": {"op": "quitar", "razon": "…"}}`
+- `{"op": "escena", "ref": "P3.e5", "set": {"quitar": ["texto literal"], "sin_hechos": ["…"]}}`
+- `{"op": "puente", "parte": 4, "valor": {"texto", "foto", "titular", "hechos"}}` (con `valor: null` se quita)
+- `{"op": "promesa", "valor": {…}}`
+- `{"op": "titulo", "parte": 2, "valor": "…"}`
+
+Marca `probado: true` y copia en `cambios` el JSON exacto que pasó: el editor lo aplica tal cual con `youtube.py
+aplicar`. No inventas hechos. Un puente nuevo usa solo hechos `confirmado | una_fuente` del digesto del editor.
+
+Salida: `<TRABAJO>/critica.json` con `{archivo, vuelta, veredicto, puntajes, faltas[]{n, escena, regla, gravedad,
+problema, arreglo, probado, cambios}, oyente_descartadas[]}`.
+
+
+## Modo serie completa (SE17, /serie)
+
+Lees `<TRABAJO>/serie_completa.md`: la voz de TODAS las partes en orden, como quien ve la serie de corrido. Juzgas la
+serie, no una parte: (1) el arco se entiende de principio a fin y cada parte paga lo que la anterior dejó abierto;
+(2) ningún hecho, cifra, cita o frase se cuenta dos veces fuera de una oración de contexto; (3) nadie se presenta dos
+veces ni una sigla se explica dos veces; (4) cada concepto que el usuario pidió explicar se explica UNA vez, en la parte
+donde aparece primero, y no se usa antes de explicarse; (5) ninguna revelación se adelanta ni se paga dos veces;
+(6) los puentes: la pregunta que cierra la N la abre la N+1. Escribe `critica_serie.json` = {veredicto: pasa|corregir,
+faltas: [{parte, escena, regla, gravedad, problema, arreglo, cambios}]} con cambios de `historia.py aplicar` probados con
+`historia.py probar` en el TRABAJO de esa parte. Las partes ya entregadas no se tocan (el arreglo va en la otra).
+
+## Recompensa y escalada (todos los modos de historia, explica y largo; 2026-11-10)
+
+Se puntúan aparte: `recompensa` (H-C7 en modo historia, E-C7 en modo explica; en el largo va dentro de `promesa`, Y-C5) y
+`escalada` (Y-C7, modo largo; en historia sigue dentro de `tension`, H-C2):
+
+- **Recompensa:** a los 15 s, ¿sabes qué vas a saber si te quedas? Compara `promesa.pregunta` con lo que el oyente dijo
+  que le prometieron: si no coinciden, es una falta que bloquea (arreglo: otra `pregunta` o mover la promesa antes del
+  contexto). La pregunta no puede ser vaga («¿Qué pasó después?») ni adelantar la revelación.
+- **Escalada (H-C2, Y-C7):** ¿lo que está en juego sube de acto en acto (o de capítulo en capítulo)? Lee `en_juego` del
+  encuadre y comprueba que el guion lo cumple: cada tercio abre o paga algo y el nudo no se queda en contexto. En el
+  largo, un capítulo que baja la tensión respecto al anterior es una falta de ritmo.
+
+## Lo que dice la investigación (2026-11-10; `referencias/analisis/investigacion.md`)
+
+Tres comprobaciones con evidencia sólida detrás. Las dos primeras pueden bloquear; la tercera es una mejora.
+
+- **La pregunta se puede arriesgar.** La curiosidad es máxima cuando uno cree saber a medias, y quien arriesga una
+  respuesta y falla recuerda mejor la correcta. `promesa.pregunta` pasa si un espectador cualquiera puede aventurar una
+  respuesta y la historia lo contradice. Buena: «¿Quién cobró primero cuando cayó el banco?» (uno piensa «los
+  ahorrantes» o «los dueños»). Mala por desconocida: «¿Qué resolvió la JM-120-2006?». Mala por obvia: «¿Perdió dinero
+  la gente?».
+- **La cifra se señala cuando se dice** (V26). Si `tiempos` avisa de una cifra dicha sin nada en pantalla, pide el
+  arreglo: un `cifra`, un golpe o una tarjeta en esa escena.
+- **El rostro de la cifra.** Si la historia cuenta muchos afectados y la cronología trae a una persona real y
+  verificada entre ellos, va en su propia escena y **antes** del número, no mezclada con él (juntos se debilitan). Si la
+  investigación no trae a nadie, no se inventa y no es falta.

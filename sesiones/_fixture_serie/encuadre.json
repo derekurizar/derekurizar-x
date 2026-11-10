@@ -238,7 +238,8 @@
      "En 1968 vendía 4,500 panes al día",
      "En 1971 ya tenía cinco sucursales en Xela"
     ],
-    "puente": "¿Qué le pasaría a La Espiga cuando la tierra tembló?"
+    "puente": "¿Qué le pasaría a La Espiga cuando la tierra tembló?",
+    "en_juego": "el horno de una familia"
    },
    {
     "n": 2,
@@ -319,7 +320,8 @@
      "En 1977 reabrió bajo una carpa",
      "En 1990 tenía 25 sucursales"
     ],
-    "puente": "¿Por qué una panadería tan grande empezaría a cerrar?"
+    "puente": "¿Por qué una panadería tan grande empezaría a cerrar?",
+    "en_juego": "el nombre de 25 sucursales"
    },
    {
     "n": 3,
@@ -396,8 +398,12 @@
      "La inspección encontró 40 sacos de harina vencida",
      "Cerró la última sucursal en la capital en 2010"
     ],
-    "puente": null
+    "puente": null,
+    "en_juego": "la marca entera y sus empleos"
    }
-  ]
+  ],
+  "promesa": {
+   "pregunta": "¿Cómo cayó una panadería que llenó Xela de pan?"
+  }
  }
 }

@@ -1,0 +1,63 @@
+{
+ "total_s": 745.3,
+ "capitulos": [
+  {
+   "numero": 1,
+   "titulo": "Las escuchas que lo destaparon",
+   "parte": 1,
+   "t": 0.0,
+   "dur": 141.2
+  },
+  {
+   "numero": 2,
+   "titulo": "Cómo cobraba la red",
+   "parte": 2,
+   "t": 141.2,
+   "dur": 104.7
+  },
+  {
+   "numero": 3,
+   "titulo": "Quién era quién",
+   "parte": 3,
+   "t": 245.93,
+   "dur": 85.2
+  },
+  {
+   "numero": 4,
+   "titulo": "La plaza y la vicepresidenta",
+   "parte": 4,
+   "t": 331.16,
+   "dur": 93.4
+  },
+  {
+   "numero": 5,
+   "titulo": "La caída del presidente",
+   "parte": 5,
+   "t": 424.6,
+   "dur": 95.1
+  },
+  {
+   "numero": 6,
+   "titulo": "El testigo y la sentencia",
+   "parte": 6,
+   "t": 519.7,
+   "dur": 88.8
+  },
+  {
+   "numero": 7,
+   "titulo": "Lo que quedó",
+   "parte": 7,
+   "t": 608.56,
+   "dur": 136.7
+  }
+ ],
+ "musica": [
+  "cielo-1",
+  "cielo-2",
+  "cielo-1",
+  "cielo-2",
+  "cielo-1",
+  "cielo-2",
+  "cielo-1"
+ ]
+}

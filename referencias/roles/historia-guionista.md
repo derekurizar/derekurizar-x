@@ -176,6 +176,14 @@ el resto de la voz (quién habla, lo que sigue) va antes o después de la frase,
   «según» (H9).
 - Presunción de inocencia: sin sentencia firme nadie es culpable, asesino, corrupto ni delincuente (señalado,
   acusado, sindicado). Con sentencia firme, la escena lleva `caso: "<persona>"`.
+- **La pantalla dice lo que la voz dice (H24, m124).** Una cifra en pantalla (`cifra.texto`; en el titular o el golpe,
+  la que lleva moneda, % o «mil/millones») la dice también la voz de esa escena: si quitas una cifra de la voz, quítala
+  de la pantalla. Un alegato, una estimación o una opinión con número en pantalla lleva su atribución también ahí
+  («según Óscar Alvarado» en la etiqueta, «Óscar Alvarado cuenta lo que perdió» en el titular), no solo en la voz.
+- **Fotos de un proceso (H7c, m122).** Una foto con alguien detenido, esposado o en audiencia (marcada `proceso` en
+  `fotos/<id>.json`) va solo en la escena cuya voz nombra a esa persona y cuenta ese proceso; nunca ilustra el tamaño
+  de un banco, una transferencia ni un alegato de otro: insinúa culpa por imagen. Para lo genérico, el lugar o la
+  institución.
 - Nada de lo que `no_afirma` prohíbe; nada de los `huecos`.
 - Un nombre propio con dígitos («Soy502») no va en la voz: el script no lo lee; di «la prensa», el medio por su
   nombre hablado o atribúyelo en pantalla (`fuente`).
@@ -255,6 +263,20 @@ captions llevan una línea que manda al inicio («¿Llegaste por aquí? La Parte
 última parte no lleva invitación. El chip «Parte N de M» y la
 línea «Parte N+1 · título» del cierre los pone el script.
 
+**Cada parte trae lo NUEVO (SE15–SE16, decisión del usuario, 2026-11-09).** Pegadas en `/youtube-long` y vistas de
+seguido, las partes se repetían: 17 hechos contados dos o tres veces, Monzón presentado ×6, la Cicig explicada ×6.
+- El digesto marca `[YA CONTADO EN Pk]` en la cronología y lista lo que ya contaron las partes anteriores. Eso entra
+  solo como **contexto**: ≤ 2 ids en ≤ 2 escenas (el gancho cuenta como una). Lo demás sale de TU reparto.
+- Quien ya se presentó entero en otra parte vuelve con **un recordatorio de una palabra** de su presentación («el
+  secretario Monzón»; el digesto lo da), no con la aposición completa. H18 sigue pidiendo esa palabra.
+- Una sigla ya explicada va con ≤ 4 palabras de glosa («la Cicig, de la ONU,») o sin glosa.
+- SE4 no cambia: sin «como vimos». Lo que hace falta para entender cabe en una oración de contexto.
+- **La frase final no se parece a la de otra parte (SE13, m131).** Dos partes no rematan con la misma imagen: «¿dónde
+  tenía el dinero de sus ahorrantes?» y «¿qué pasaría con el dinero de sus ahorrantes?» fallan (≥ 2 raíces en común que
+  son la mitad de la frase más corta). Cambia el sujeto o la imagen del remate.
+- Una serie que explica conceptos admite **hasta 2 escenas `definicion` por parte** (V1, m119; formatos
+  `historia-caso`, `historia-serie` y `explica-serie`): una por concepto nuevo.
+
 ## Escenas nuevas y personas (2026-11-06)
 - **`red`** (≤ 1 por video): cuando hay ≥ 4 actores conectados y la voz cuenta quién mandaba.
   - Forma: `{tipo: "red", titulo, texto, nodos: [{id, personaje, nivel (0 = quien manda), dice}], aristas: [{de, a, rel, hecho}], atribuida, fuente}`.
@@ -268,4 +290,51 @@ línea «Parte N+1 · título» del cierre los pone el script.
 - **Última parte de una serie: el resumen** (SE14). Una escena `resumen_serie: true` en el acto 3, antes de la última cita o
   del cierre, de 20–30 s de voz: repasa en orden toda la serie (un momento por oración, de ≥ 5 partes, con sus ids en
   `hechos`) y termina en lo que más pesa. Nada nuevo; los alegatos, atribuidos. Va también en la narración de corrido.
-  Visual: `explica` con `cronologia` (pasos «año · momento» con palabras que la voz dice). Ver `referencias/flujo-serie.md`.
+  Visual: `explica` con `cronologia` (pasos «año · momento» con palabras que la voz dice; aquí hasta 8, uno por oración).
+  Ver `referencias/flujo-serie.md`.
+
+## Recompensa, escalera e imagen (P6, H25, H26; 2026-11-10)
+
+- `promesa.pregunta`: la pregunta que el video responde, para la pantalla («¿…?», ≤ 9 palabras, con el sujeto del
+  gancho). La voz no cambia. La promesa se oye antes del segundo 10: en la escena 2 es la primera oración.
+- La tensión sube por peldaños: cada tercio abre o paga algo (promesa, bisagra, giro, un hilo en `paga`). Al pagar un
+  hilo en el nudo, que otro siga abierto; no los pagues todos en la misma escena.
+- Una `foto` no pasa de 12 s: si el tramo es más largo, son dos escenas con dos imágenes (cambia el tema, cambia la
+  imagen). Por cada 4 fotos, al menos una composición distinta: pantalla dividida, mini-mapa, subrayado, documento,
+  tarjeta o animación. Con ≥ 5 personas, una escena `red`.
+- Última parte de una serie con `serie.promesa`: `guion.responde_serie = N`, la escena que contesta la pregunta de la
+  serie. En una serie, una foto no sale en más de 2 partes (SE19): usa las que el digesto marca sin usar.
+
+## Señalar, arriesgar y el rostro de la cifra (2026-11-10)
+
+- Cada cifra que la voz dice se ve entrar o resaltarse en ese momento (V26): si la escena es una foto, lleva `cifra`; si
+  no cabe, la cifra va en un golpe o una tarjeta. Una cifra dicha sobre una foto sin nada es la que nadie recuerda.
+- La `promesa.pregunta` es una que el espectador puede intentar contestar, y la respuesta lo sorprende.
+- Si la cronología trae a una persona afectada con nombre (verificada), cuéntala en su escena antes de dar el número de
+  afectados; no en la misma. Sin persona verificada, no hay rostro.
+- La escena `adivina` vale una vez por historia, justo antes de la revelación mayor, con sus reglas (la opción correcta
+  con respaldo; las otras dos son señuelos, no cifras).
+
+## El tablero de investigación (2026-11-10)
+
+La escena `red` tiene dos estilos. Sin `estilo` es el organigrama por niveles. Con `"estilo": "tablero"` son los mismos
+`nodos` y `aristas`, dibujados como tablero: cada persona en un cuadrito tipo foto de expediente que entra cuando la voz
+la nombra, y un hilo que une a dos cuando el hecho los relaciona. Mismas reglas (H23): cada persona es del encuadre y
+tiene retrato; cada hilo es un hecho publicable que registra esa relación; con un alegato, `atribuida: true`.
+
+- Sin tachas ni marcas sobre las caras (decisión del usuario): el tablero solo ilumina a quien se nombra.
+- Úsalo cuando importa **quiénes** son y que se conocen (un caso con 4–8 personas); el organigrama, cuando importa
+  **quién manda a quién**.
+- Cabe 3 × 2 en 9:16 (hasta 6 personas cómodas; 8 como máximo).
+
+## El mapa con ruta y el cierre que se envía (2026-11-10)
+
+- **`ruta`** en una escena `foto`: 2–4 departamentos en el orden del recorrido (`"ruta": ["Escuintla", "Guatemala"]`).
+  El localizador se acerca a esa zona, enciende cada departamento a su turno y un trazo los une. Úsalo cuando la
+  historia se mueve (el contenedor del puerto a la capital, la caravana, la ruta del dinero); cada lugar sale de un
+  hecho de la escena. Con un solo lugar basta `depto`. Cuenta como composición distinta (H26).
+- **Una de las cinco opciones de cierre se puede enviar.** Instagram cuenta los envíos por alcance entre sus señales, y
+  en nuestras métricas varias piezas tienen cero. Entre las cinco opciones que le llevas al usuario, una es la frase que
+  alguien le mandaría a una persona concreta: la consecuencia dicha para quien la vive («Si tu ahorro estaba en la
+  offshore, ese seguro no te cubría»). Dentro de las formas del catálogo (consecuencia, legado, quién decide), sin
+  pedir que lo envíen ni que comenten (F4). Es una opción: el usuario elige.

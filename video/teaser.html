@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<!-- Pantalla final del teaser vertical del video largo (scripts/youtube.py teaser): un cuadro fijo 1080×1920 que manda de
+     los cortos al largo. escenas.json → teaser = { titulo (el del video largo), handle (el canal de YouTube), minutos }.
+     «Video completo» en Archivo condensado, el título y dónde verlo; dentro de la zona segura de TikTok, Reels y Shorts.
+     Solo variables Noche (sin hex). No carga escena: seek no hace nada. -->
+<link rel="stylesheet" href="comun.css">
+<style>
+#col { position: absolute; left: var(--izq); right: 180px; top: 430px; bottom: 560px; display: flex; flex-direction: column; justify-content: center; gap: 34px; }
+#k { font: 600 28px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; opacity: .8; }
+#g { font-size: 190px; line-height: .86; letter-spacing: -.01em; }
+#g b { color: var(--acento, var(--a1)); font-weight: inherit; }
+#t { font: 800 60px/1.08 Archivo, sans-serif; letter-spacing: -.012em; }
+#d { display: flex; align-items: center; gap: 20px; font: 800 44px/1 Archivo, sans-serif; margin-top: 20px; }
+#d i { width: 74px; height: 52px; border-radius: 14px; background: var(--acento, var(--a1)); display: flex; align-items: center; justify-content: center; }
+#d svg { width: 26px; height: 26px; fill: var(--bg); }
+</style></head>
+<body>
+<div id="col">
+  <div id="k"></div>
+  <div id="g" class="condensada">Video <b>completo</b></div>
+  <div id="t"></div>
+  <div id="d"><i><svg viewBox="0 0 24 24"><path d="M6 3l15 9-15 9z"/></svg></i><span id="h"></span></div>
+</div>
+<script src="comun.js"></script>
+<script>
+window.__listo = (async () => {
+  const todo = await (await fetch('escenas.json')).json();
+  for (const [k, v] of Object.entries(todo.colores)) document.documentElement.style.setProperty('--' + k.replace('_', '-'), v);
+  const T = todo.teaser || {};
+  if (!(T.titulo || '').trim()) throw new Error('escenas.json sin teaser.titulo');
+  document.getElementById('k').textContent = T.minutos ? `Documental · ${T.minutos} min` : 'Documental';
+  document.getElementById('t').textContent = T.titulo;
+  document.getElementById('h').textContent = 'En YouTube · ' + (T.handle || '');
+  await document.fonts.ready;
+  const t = document.getElementById('t'), col = document.getElementById('col');
+  for (let fs = 60; fs > 38 && col.scrollHeight > col.clientHeight; fs -= 2) t.style.fontSize = fs + 'px';
+})();
+window.seek = () => {};
+</script>
+</body></html>

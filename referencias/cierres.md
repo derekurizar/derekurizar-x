@@ -168,3 +168,10 @@ pone el hecho, no los adjetivos).
 
 Después de publicar, responder los primeros comentarios (un corazón en YouTube, un video de respuesta en TikTok) suma
 más que pedirlos en la voz.
+
+## 5. El cierre que se envía (opción, 2026-11-10)
+
+`metricas.py diagnostico` marca con AN13 las piezas que casi nadie comparte. Entre las cinco opciones de cierre, una se
+escribe para ser enviada: nombra a quién le toca («quien tenía su ahorro ahí», «alguien de Huehuetenango») y dice la
+consecuencia para esa persona. No pide el envío (F4) ni cambia las formas del catálogo. Se vuelve regla solo si las
+métricas lo confirman (`referencias/analisis/investigacion.md` §4).

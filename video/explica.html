@@ -15,7 +15,13 @@
 <style>
 #lienzo { position: absolute; top: 450px; left: var(--izq); right: var(--der); height: 900px; transform-origin: 50% 50%; will-change: transform; }
 /* formato 4:5 (1080×1350) para el feed */
-html.f45 #lienzo { top: 260px; height: 800px; }   /* con la deriva (1.025) termina antes de y 1090 (gate V13) */
+html.f45 #lienzo { top: 260px; height: 800px; }
+/* 16:9 (video largo de YouTube): el lienzo de la animación centrado (≈ 1000×800: las animaciones son de caja casi
+   cuadrada), el título arriba */
+html.f169.f45 #lienzo { top: 200px; height: 800px; left: 460px; right: 460px; }
+html.f169.f45 #arriba { left: 460px; right: 460px; }   /* con la deriva (1.025) termina antes de y 1090 (gate V13) */
+html.f169.f45.conmargen #lienzo { left: 96px; right: 760px; }
+html.f169.f45.conmargen #arriba { left: 96px; right: 760px; }
 </style>
 </head>
 <body>
@@ -46,13 +52,13 @@ window.__listo = (async () => {
   M = ANIM._m[S.animacion];
   if (!M || typeof M.pintar !== 'function' || typeof M.seek !== 'function') throw new Error('animaciones/' + S.animacion + '.js no registra { pintar, seek }');
   await document.fonts.ready;
-  V.ajustarGolpe(S, F45 ? 250 : 430);
+  V.ajustarGolpe(S, V.F169 ? 200 : F45 ? 250 : 430);
   const lienzo = document.getElementById('lienzo');
   const su = document.querySelector('.persona.sujeto');
   if (su) {   // el retrato del sujeto bajo el título; el lienzo empieza debajo y conserva su borde inferior
     // posición fija (no depende del largo del título): dos escenas seguidas con la misma animación encajan en el corte
     const base = lienzo.offsetTop + lienzo.offsetHeight;
-    su.style.top = (F45 ? 268 : 452) + 'px';
+    su.style.top = (V.F169 ? 200 : F45 ? 268 : 452) + 'px';
     const top = su.offsetTop + su.offsetHeight + (F45 ? 20 : 34);
     lienzo.style.top = top + 'px'; lienzo.style.height = Math.max(300, base - top) + 'px';
   }

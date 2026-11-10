@@ -27,6 +27,12 @@
 #ventana .caja { position: absolute; border: 3px dotted var(--acento, var(--a1)); box-sizing: border-box; pointer-events: none; }
 /* formato 4:5 (1080×1350) para el feed: sin zona segura de teléfono, todo más junto */
 html.f45 #ventana { top: 250px; height: 840px; }
+/* 16:9 (video largo de YouTube): la tarjeta bajo el golpe en una ventana a lo ancho (márgenes del 5 %); BASE la
+   agranda hasta llenarla (≤ ESCALA_169) y la centra: a escala 1 los gráficos se veían chicos en pantalla grande (m117) */
+html.f169.f45 #ventana { top: 196px; left: 96px; width: 1728px; height: 860px; }
+html.f169.f45 #arriba { left: 420px; right: 420px; }
+html.f169.f45.conmargen #ventana { left: 96px; width: 1068px; height: 800px; }   /* más baja: la fuente de la tarjeta no pasa del margen de abajo (V13) */
+html.f169.f45.conmargen #arriba { left: 96px; right: 760px; }
 </style></head>
 <body>
 <div id="arriba"><div id="golpe"></div><div id="progreso"></div></div>
@@ -36,8 +42,9 @@ html.f45 #ventana { top: 250px; height: 840px; }
 <script>
 const n = V.n, F45 = V.F45, { clamp, eo } = V;
 const DEBUG = new URLSearchParams(location.search).get('debug') === '1';
-const VT = F45 ? 250 : 420, VH = F45 ? 840 : 800;   // ventana de la tarjeta (página y = 420–1220; 250–1090 en 4:5)
-const CORTE = F45 ? [0, 1080] : [57, 1023];         // recorte lateral del teléfono (x de página = x de la ventana)
+const VT = V.F169 ? 196 : F45 ? 250 : 420, VH = V.F169 ? 860 : F45 ? 840 : 800;   // ventana de la tarjeta (página y = 420–1220; 250–1090 en 4:5)
+const CORTE = V.F169 ? [0, 1728] : F45 ? [0, 1080] : [57, 1023];   // recorte lateral del teléfono (x de la ventana); 16:9: la ventana entera
+const ESCALA_169 = 1.5;                              // 16:9: cuánto puede crecer la tarjeta para llenar la ventana
 let ZONA;                                            // V.zona(): columna de íconos (x ≤ iconosX desde iconosY)
 let BASE = { s: 1, tx: 0, ty: 0 };                          // encaje de la tarjeta en reposo: solo cambia si lo dibujado desborda
 const DERIVA = { s: 0.025, tx: -14, ty: -8 };  // movimiento lento sin foco; la tarjeta (x 80–1010) queda en el recorte (57–1023)
@@ -133,10 +140,11 @@ window.__listo = (async () => {
       const x0 = Math.min(...xs), x1 = Math.max(...xs), l0 = CORTE[0] + 8, l1 = CORTE[1] - 8, k = 1 + DERIVA.s;   // 8 px del borde
       // en vertical, la deriva (escala ×k, ty → DERIVA.ty) en sus dos extremos: y0–y1 entre v0 y v1 de la ventana
       const y0 = Math.min(...ys), y1 = Math.max(...ys), v0 = 6, v1 = VH - 6, dt = DERIVA.ty;
-      const s = Math.min(1, (l1 - l0) / ((x1 - x0) * k), (v1 - v0) / ((y1 - y0) * k),
+      const s = Math.min(V.F169 ? ESCALA_169 : 1, (l1 - l0) / ((x1 - x0) * k), (v1 - v0) / ((y1 - y0) * k),
         (v1 - v0 - dt) / Math.max(1, k * y1 - y0), (v1 - v0 + dt) / Math.max(1, y1 - k * y0)), s1 = s * k;
       const lo = Math.max(l0 - x0 * s, l0 - x0 * s1 - DERIVA.tx), hi = Math.min(l1 - x1 * s, l1 - x1 * s1 - DERIVA.tx);
-      BASE = { s, tx: lo > hi ? (lo + hi) / 2 : Math.max(lo, Math.min(hi, 0)), ty: 0 };
+      const cx = V.F169 ? (l0 + l1) / 2 - s * (x0 + x1) / 2 : 0;   // 16:9: centrada en la ventana
+      BASE = { s, tx: lo > hi ? (lo + hi) / 2 : Math.max(lo, Math.min(hi, cx)), ty: 0 };
       // lo dibujado a la derecha que cae por debajo de y≈1070 queda bajo los íconos: la tarjeta sube lo justo (≤ 48 px;
       // arriba sobra el margen de 60 px de la tarjeta). Con la deriva, el peor momento es el inicio (ty 0).
       let baja = 0;
@@ -147,7 +155,7 @@ window.__listo = (async () => {
           if (b.right * ss + tt > ZONA.iconosX - 2) baja = Math.max(baja, VT + b.bottom * ss + dy - (ZONA.iconosY - 4));
       }
       const vlo = Math.max(v0 - s * y0, v0 - dt - s1 * y0), vhi = Math.min(v1 - s * y1, v1 - dt - s1 * y1);
-      BASE.ty = Math.max(vlo, Math.min(vhi, -Math.min(48, Math.max(0, baja))));
+      BASE.ty = Math.max(vlo, Math.min(vhi, V.F169 ? (v0 + v1) / 2 - s * (y0 + y1) / 2 : -Math.min(48, Math.max(0, baja))));
     }
   }
   // focos: la caja de cada valor que dice la voz, leída del DOM final (antes del primer seek); T.foco === false (el
@@ -171,8 +179,9 @@ window.__listo = (async () => {
         if (!suave || s * bw <= derecha - CORTE[0] - 2 * MARGEN) break;
         s = (derecha - CORTE[0] - 2 * MARGEN) / bw;   // la fila ancha se achica hasta caber a la derecha de los íconos
       }
-      if (s < 1) continue;   // un foco nunca aleja la tarjeta
-      const tx = cl(540 - s * (x + bw / 2), CORTE[0] + MARGEN - s * x, derecha - MARGEN - s * (x + bw));   // ni la caja enfocada pegada al borde
+      if (V.F169) s = Math.max(s, Math.min(BASE.s * 1.2, (VH - 32) / bh, (CORTE[1] - CORTE[0] - 2 * MARGEN) / bw));   // 16:9: el foco acerca desde la tarjeta ya agrandada
+      if (s < Math.max(1, V.F169 ? BASE.s : 1)) continue;   // un foco nunca aleja la tarjeta
+      const tx = cl((CORTE[0] + CORTE[1]) / 2 - s * (x + bw / 2), CORTE[0] + MARGEN - s * x, derecha - MARGEN - s * (x + bw));   // ni la caja enfocada pegada al borde
       if (!S.quieta) FOCOS.push({ k, a, b: b + 0.8, s, tx, ty, caja: c });   // quieta: sin zoom a la cifra
     }
   }

@@ -988,6 +988,7 @@ def cmd_tiempos(a, g=None):
         avisos.append("V10 ritmo: %.1f s sin evento entre «%s» (E%d) y «%s» (E%d)"
                       % (peor[1][0] - peor[0][0], peor[0][1], peor[0][2], peor[1][1], peor[1][2]))
     ci = g["cierre"]
+    avisos += VD.marcar_seguir(escenas, total)   # V25: el «Sígueme» de la mitad
     escribir(os.path.join(trabajo, "escenas.json"), {
         "version": 2, "tipo": "noticias", "colores": colores(st["paleta"]), "redes": VD.REDES,
         "contexto_superior": g.get("contexto_superior") or "Guatemala · %s" % fecha,

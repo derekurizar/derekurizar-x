@@ -1,0 +1,30 @@
+{
+ "version": 1,
+ "titulo": "La Espiga (video largo de ejemplo)",
+ "youtube": {"titulo": "La Espiga: el horno de leña que llenó Xela de pan (maqueta)",
+             "descripcion": "Cómo un horno de leña de 1952 en Quetzaltenango terminó sosteniendo cinco panaderías. Una historia de ejemplo para probar el video largo.",
+             "hashtags": ["#Guatemala", "#Xela", "#LaEspiga"]},
+ "adelanto": {"ref": "P2.e5", "texto": "el salto grande llegó diez años más tarde, cuando el barrio entero ya la conocía"}, "promesa": {"pregunta": "¿Cómo sostuvo un horno cinco panaderías?", "texto": "Un solo horno de leña terminó sosteniendo cinco panaderías.", "forma": "presagio", "foto": "ori-f01",
+             "titular": "Un solo horno", "hechos": ["ori-h05"], "pago": "P2.e7"},
+ "capitulos": [
+  {"parte": 1, "titulo": "El horno de Marta", "puente": null, "escenas": [
+   {"ref": "P1.e1", "op": "usar"},
+   {"ref": "P1.e2", "op": "usar"},
+   {"ref": "P1.e3", "op": "usar"},
+   {"ref": "P1.e4", "op": "usar"},
+   {"ref": "P1.e5", "op": "quitar", "razon": "las ventas de 1968 se cuentan en el capítulo 2, más cerca de las sucursales"},
+   {"ref": "P1.e6", "op": "quitar", "razon": "el golpe de los 4,500 panes se dice en el capítulo 2"},
+   {"ref": "P1.e7", "op": "quitar", "razon": "las cinco sucursales cierran el capítulo 2 (paga la promesa)"},
+   {"ref": "P1.e8", "op": "quitar", "razon": "cierre de la parte 1 (pregunta-puente e invitación): el capítulo siguiente sigue de corrido", "fija": true}]},
+  {"parte": 2, "titulo": "Cinco sucursales", "puente": {"texto": "Diez años después, aquel horno ya no daba abasto.", "foto": "ori-f05",
+             "titular": "El horno no da abasto", "hechos": ["ori-h02"]}, "escenas": [
+   {"ref": "P2.e1", "op": "quitar", "razon": "gancho de la parte 2: el video largo abre una sola vez", "fija": true},
+   {"ref": "P2.e2", "op": "quitar", "razon": "repite el capítulo 1"},
+   {"ref": "P2.e3", "op": "quitar", "razon": "repite el capítulo 1"},
+   {"ref": "P2.e4", "op": "quitar", "razon": "repite el capítulo 1"},
+   {"ref": "P2.e5", "op": "usar"},
+   {"ref": "P2.e6", "op": "usar"},
+   {"ref": "P2.e7", "op": "usar", "quitar": ["en Quetzaltenango,"]},
+   {"ref": "P2.e8", "op": "usar", "quitar": ["Sígueme: en la segunda parte te cuento cómo sobrevivió La Espiga al terremoto."]}]}
+ ]
+}

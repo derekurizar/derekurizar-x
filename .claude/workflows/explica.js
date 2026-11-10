@@ -25,9 +25,9 @@ export const meta = {
 const TIPOS = ['gancho', 'tarjeta', 'golpe', 'definicion', 'adivina', 'mapa', 'ranking', 'escala', 'tiempo', 'explica', 'cuenta']
 const FAMILIAS = ['contraste', 'paradoja', 'pregunta', 'tu', 'escala', 'resultado']
 const VISUALES = ['cifra', 'llenado', 'pareja', 'figuras']
-const PUNTAJES = ['gancho', 'claridad', 'intuicion', 'flujo', 'precision', 'cierre']
+const PUNTAJES = ['gancho', 'claridad', 'intuicion', 'flujo', 'precision', 'cierre', 'recompensa']
 const MODELOS = ['compuesto', 'simple', 'aporte_periodico', 'regla72', 'tasa_real', 'cuota', 'porcentaje', 'proporcion', 'producto']
-const REGLA_DE_BASE = { gancho: 'E-C1', claridad: 'E-C2', intuicion: 'E-C3', veredicto: 'E-C3', flujo: 'E-C4', precision: 'E-C5', cierre: 'E-C6' }
+const REGLA_DE_BASE = { gancho: 'E-C1', claridad: 'E-C2', intuicion: 'E-C3', veredicto: 'E-C3', flujo: 'E-C4', precision: 'E-C5', cierre: 'E-C6', recompensa: 'E-C7' }
 // Modos del motor (W13: espejo de MODOS en scripts/explica.py: familias, visuales, puntajes y ejes obligatorios). mito =
 // /mito <creencia>: «mito o realidad» de 62–90 s; el veredicto (MITO · REALIDAD · A MEDIAS) lo calcula el código
 // (explica.py mito --check); sin cifras suficientes el flujo se detiene sin video.
@@ -35,7 +35,7 @@ const MODOS = {
   explica: {
     familias: ['contraste', 'paradoja', 'pregunta', 'tu', 'escala', 'resultado'],
     visuales: ['cifra', 'llenado', 'pareja', 'figuras'],
-    puntajes: ['gancho', 'claridad', 'intuicion', 'flujo', 'precision', 'cierre'],
+    puntajes: ['gancho', 'claridad', 'intuicion', 'flujo', 'precision', 'cierre', 'recompensa'],
     ejes_obligatorios: [],
     directiva: '',
   },

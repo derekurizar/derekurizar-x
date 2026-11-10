@@ -1,0 +1,332 @@
+{
+ "id": "2026-11-09-bancafe-y-banco-de-comercio-parte-2",
+ "tipo": "historia",
+ "slug": "bancafe-y-banco-de-comercio-parte-2",
+ "tema": "Bancafé y Banco de Comercio: la caída de dos bancos en Guatemala (2006–2007)",
+ "fecha": "2026-11-09",
+ "pregunta": "¿Dónde tenía Bancafé el dinero de sus ahorrantes y qué pasó cuando Refco quebró?",
+ "arco": "caso: auge, apuesta, caída en cadena y juicio inconcluso, con los conceptos bancarios explicados en el camino",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "Oct 2005",
+   "titulo": "Refco quiebra",
+   "escena": 6
+  },
+  {
+   "numero": 3,
+   "anio": "2006",
+   "titulo": "Bancafé sigue abierto",
+   "escena": 10
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "Bancafé, un banco de Guatemala, guardó sus bonos lejos. En una sola corredora de Nueva York. Era Refco: según La Hora, trabajaba con Bancafé desde 1996. En esa corredora se jugaba la confianza en Bancafé. ¿Y qué es una corredora de bolsa? Una intermediaria que invierte el dinero de otros. Entonces, en 2003, según la fiscalía, la offshore de Bancafé, su banco en Barbados, compró a Refco bonos por US$200 millones. Refco los guardó como garantía de US$150 millones que prestó a Vipasa, otra empresa del grupo. Por eso el dinero de la offshore quedó en un solo lugar: eso es riesgo de concentración. Si ese lugar cae, cae todo. Ese lugar estaba a punto de caer."
+  },
+  {
+   "acto": 2,
+   "texto": "El 19 de octubre de 2005, Refco quebró, y un juez congeló esos bonos. Seis días después, la offshore tenía US$201.2 millones en riesgo. Pero los ahorrantes de la offshore ya sacaban su dinero: al menos US$180 millones, calculó La Hora. Ahí importa la liquidez: tener el dinero disponible cuando el ahorrante lo pide. La offshore no lo tenía. Entonces Bancafé, el banco en Guatemala, le pasó unos Q250 millones. Pero la ley limita lo que un banco presta a otra empresa de su grupo: el 15% de su patrimonio. Ese dinero lo rebasaba: Bancafé ya sumaba 4 infracciones por pasarse. Así, el hueco que Refco dejó en la offshore pasó a Guatemala."
+  },
+  {
+   "acto": 3,
+   "texto": "Tres meses después de la quiebra, el 10 de enero de 2006, el superintendente de Bancos desmintió el rumor de que las autoridades tomarían el control de Bancafé. Ese día dijo que los bonos solo estaban congelados y que Bancafé era sólido. ¿Y lo atrapado en Refco? A la offshore le quedaron cerca de US$50 millones, calculó La Hora, cuando Refco cobró su garantía en enero de 2007. En septiembre de 2006, Bancafé seguía abierto, con el hueco adentro. ¿Qué les pasaría a sus ahorrantes cuando saliera a la luz?"
+  }
+ ],
+ "hilos": [
+  {
+   "id": "p2h1",
+   "escena": 4
+  },
+  {
+   "id": "p2h2",
+   "escena": 11
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3,
+   4,
+   5
+  ],
+  [
+   6,
+   7,
+   8,
+   9
+  ],
+  [
+   10,
+   11
+  ]
+ ],
+ "paleta": "cacao",
+ "musica": "corrupcion-colapso",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2096.8,
+ "duracion_s": 141.5,
+ "critica": {
+  "veredicto": "corregir",
+  "vuelta": 3,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 4,
+   "claridad": 3,
+   "flujo": 3,
+   "precision": 4,
+   "cierre": 3
+  }
+ },
+ "gancho": {
+  "familia": "misterio",
+  "visual": "foto",
+  "pantalla": "Bancafé en Nueva York",
+  "linea": "sus bonos, en una sola corredora"
+ },
+ "promesa": {
+  "texto": "En esa corredora se jugaba la confianza en Bancafé.",
+  "forma": "apuesta",
+  "en": 2,
+  "pago": 10,
+  "revela": 2
+ },
+ "bisagra": {
+  "texto": "Ese lugar estaba a punto de caer.",
+  "forma": "presagio",
+  "en": 5,
+  "pago": 6
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "Bancafé, un banco de Guatemala, guardó sus bonos lejos. En una sola corredora de Nueva York.",
+   "voz": "Bancafé, un banco de Guatemala, guardó sus bonos lejos. En una sola corredora de Nueva York.",
+   "dur": 6.324,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "Era Refco: según La Hora, trabajaba con Bancafé desde 1996. En esa corredora se jugaba la confianza en Bancafé.",
+   "voz": "Era Refco: según La Hora, trabajaba con Bancafé desde mil novecientos noventa y seis. En esa corredora se jugaba la confianza en Bancafé.",
+   "dur": 9.113,
+   "hechos": [
+    "ref-h01"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Victovic221 · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "definicion",
+   "pantalla": "¿Y qué es una corredora de bolsa? Una intermediaria que invierte el dinero de otros.",
+   "voz": "¿Y qué es una corredora de bolsa? Una intermediaria que invierte el dinero de otros.",
+   "dur": 5.613,
+   "hechos": [],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "foto",
+   "pantalla": "Entonces, en 2003, según la fiscalía, la offshore de Bancafé, su banco en Barbados, compró a Refco bonos por US$200 millones. Refco los guardó como garantía de US$150 millones que prestó a Vipasa, otra empresa del grupo.",
+   "voz": "Entonces, en dos mil tres, según la fiscalía, la offshore de Bancafé, su banco en Barbados, compró a Refco bonos por doscientos millones de dólares. Refco los guardó como garantía de ciento cincuenta millones de dólares que prestó a Vipasa, otra empresa del grupo.",
+   "dur": 17.061,
+   "hechos": [
+    "ref-h04",
+    "caf-h07"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Gordon Leggett · CC BY 4.0",
+     "origen": "commons",
+     "licencia": "CC BY 4.0"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "explica",
+   "pantalla": "Por eso el dinero de la offshore quedó en un solo lugar: eso es riesgo de concentración. Si ese lugar cae, cae todo. Ese lugar estaba a punto de caer.",
+   "voz": "Por eso el dinero de la offshore quedó en un solo lugar: eso es riesgo de concentración. Si ese lugar cae, cae todo. Ese lugar estaba a punto de caer.",
+   "dur": 12.12,
+   "hechos": [],
+   "fotos": [],
+   "tomas": [],
+   "animacion": "concentracion-caja",
+   "mecanismo": "proporcion"
+  },
+  {
+   "n": 6,
+   "tipo": "tarjeta",
+   "pantalla": "El 19 de octubre de 2005, Refco quebró, y un juez congeló esos bonos. Seis días después, la offshore tenía US$201.2 millones en riesgo.",
+   "voz": "El diecinueve de octubre de dos mil cinco, Refco quebró, y un juez congeló esos bonos. Seis días después, la offshore tenía doscientos uno punto dos millones de dólares en riesgo.",
+   "dur": 12.185,
+   "hechos": [
+    "caf-h09",
+    "ref-h07",
+    "caf-h10"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "foto",
+   "pantalla": "Pero los ahorrantes de la offshore ya sacaban su dinero: al menos US$180 millones, calculó La Hora. Ahí importa la liquidez: tener el dinero disponible cuando el ahorrante lo pide. La offshore no lo tenía.",
+   "voz": "Pero los ahorrantes de la offshore ya sacaban su dinero: al menos ciento ochenta millones de dólares, calculó La Hora. Ahí importa la liquidez: tener el dinero disponible cuando el ahorrante lo pide. La offshore no lo tenía.",
+   "dur": 15.663,
+   "hechos": [
+    "caf-h22"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Victovic221 · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "foto",
+   "pantalla": "Entonces Bancafé, el banco en Guatemala, le pasó unos Q250 millones.",
+   "voz": "Entonces Bancafé, el banco en Guatemala, le pasó unos doscientos cincuenta millones de quetzales.",
+   "dur": 6.326,
+   "hechos": [
+    "ref-h11"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "tarjeta",
+   "pantalla": "Pero la ley limita lo que un banco presta a otra empresa de su grupo: el 15% de su patrimonio. Ese dinero lo rebasaba: Bancafé ya sumaba 4 infracciones por pasarse. Así, el hueco que Refco dejó en la offshore pasó a Guatemala.",
+   "voz": "Pero la ley limita lo que un banco presta a otra empresa de su grupo: el quince por ciento de su patrimonio. Ese dinero lo rebasaba: Bancafé ya sumaba cuatro infracciones por pasarse. Así, el hueco que Refco dejó en la offshore pasó a Guatemala.",
+   "dur": 17.263,
+   "hechos": [
+    "caf-h33",
+    "ref-h11",
+    "caf-h16"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "foto",
+   "pantalla": "Tres meses después de la quiebra, el 10 de enero de 2006, el superintendente de Bancos desmintió el rumor de que las autoridades tomarían el control de Bancafé. Ese día dijo que los bonos solo estaban congelados y que Bancafé era sólido.",
+   "voz": "Tres meses después de la quiebra, el diez de enero de dos mil seis, el superintendente de Bancos desmintió el rumor de que las autoridades tomarían el control de Bancafé. Ese día dijo que los bonos solo estaban congelados y que Bancafé era sólido.",
+   "dur": 15.304,
+   "hechos": [
+    "ref-h09",
+    "caf-h13",
+    "cai-h02"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: UCDWiki · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "tarjeta",
+   "pantalla": "¿Y lo atrapado en Refco? A la offshore le quedaron cerca de US$50 millones, calculó La Hora, cuando Refco cobró su garantía en enero de 2007.",
+   "voz": "¿Y lo atrapado en Refco? A la offshore le quedaron cerca de cincuenta millones de dólares, calculó La Hora, cuando Refco cobró su garantía en enero de dos mil siete.",
+   "dur": 11.307,
+   "hechos": [
+    "caf-h23"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "cierre",
+   "pantalla": "En septiembre de 2006, Bancafé seguía abierto, con el hueco adentro. ¿Qué les pasaría a sus ahorrantes cuando saliera a la luz? Sígueme: en la tercera parte te cuento la caída de octubre de Bancafé.",
+   "voz": "En septiembre de dos mil seis, Bancafé seguía abierto, con el hueco adentro. ¿Qué les pasaría a sus ahorrantes cuando saliera a la luz? Sígueme: en la tercera parte te cuento la caída de octubre de Bancafé.",
+   "dur": 16.079,
+   "hechos": [],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Hasta 2006",
+  "resumen": [
+   "US$201.2 millones atrapados en Refco",
+   "Un tope del 15% que ya se había roto",
+   "Abierto y con el hueco adentro"
+  ],
+  "texto": "En septiembre de 2006, Bancafé seguía abierto, con el hueco adentro. ¿Qué les pasaría a sus ahorrantes cuando saliera a la luz?",
+  "tipo": "pregunta",
+  "forma": "puente",
+  "final": "¿Qué les pasaría a sus ahorrantes cuando saliera a la luz?",
+  "invitacion": "Sígueme: en la tercera parte te cuento la caída de octubre de Bancafé."
+ },
+ "caption": {
+  "tiktok": "Serie · Parte 2 de 5: La apuesta de Refco\nBancafé guardó los bonos de su offshore en una sola corredora de Nueva York. En octubre de 2005, Refco quebró. Qué es una corredora, el riesgo de concentración y la liquidez, explicados.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\n#Guatemala #Bancafé #historia",
+  "instagram": "Serie · Parte 2 de 5: La apuesta de Refco\nUna corredora de Nueva York, los bonos de una offshore y un tope del 15% que Bancafé ya había pasado. Así se abrió el hueco.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\n#Guatemala #Bancafé #historia",
+  "facebook": "Serie · Parte 2 de 5: La apuesta de Refco\nBancafé puso los bonos de su offshore en una sola corredora de Nueva York. Cuando Refco quebró, el hueco pasó a Guatemala. Corredora, concentración, liquidez y préstamos dentro del grupo, explicados con la historia.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\nFuentes en el primer comentario.",
+  "shorts": "Bancafé y la quiebra de Refco (2/5) #Shorts\nSerie · Parte 2 de 5: La apuesta de Refco. Cómo el hueco de Nueva York pasó a un banco de Guatemala."
+ }
+}

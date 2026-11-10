@@ -23,3 +23,7 @@ que_no_entendi}`, `saltos[]{de, a, por_que}`, `repeticiones[]`, `pregunta_sin_re
 En `/explica` tu insumo es `python3 scripts/explica.py digesto <TRABAJO> --para oyente` y devuelves
 además `explicacion_devuelta`: en UNA oración, cómo funciona lo que te explicaron, con tus palabras
 («Modo explica» de la guía).
+
+En `/youtube-long` (Modo largo de la guía) tu insumo es `python3 scripts/youtube.py digesto <TRABAJO> --para oyente`:
+un video de YouTube de 10–20 min hecho con las partes de una serie. Lo que más importa: lo que oíste dos veces como si
+fuera nuevo (repeticiones), dónde el tiempo vuelve atrás sin decirlo (saltos) y lo que apunta a algo que no oíste.

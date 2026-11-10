@@ -1,5 +1,6 @@
 // Animación «cronologia» (semilla de la biblioteca, sembrada con /historia): una línea de tiempo vertical con 2–6
-// eventos. Cada paso es «fecha · qué pasó» («1952 · Abre el primer horno»): la fecha va grande a la izquierda del texto y
+// eventos (hasta 8 en el resumen de una serie, RESUMEN_SERIE_PASOS en video.py: con más de 6 la letra se achica para
+// que cada fila quepa en su tramo del riel). Cada paso es «fecha · qué pasó» («1952 · Abre el primer horno»): la fecha va grande a la izquierda del texto y
 // el punto del riel se enciende cuando la voz dice ese paso; el riel se llena del evento anterior al siguiente mientras
 // el punto activo late una vez al entrar. Al entrar la escena se ven los puntos vacíos del riel (cuánto falta), nunca
 // el texto de un evento que la voz no ha dicho (A2); entre pasos todo queda quieto (A1, cámara quieta 2026-11-07). Estilo Noche: la fecha va en Archivo condensado 900 en mayúsculas y el evento en Archivo 800; lo único en
@@ -47,7 +48,7 @@ ANIM.registrar('cronologia', {
     });
     svg.appendChild(this.marca);
     lienzo.appendChild(svg);
-    const fs = ctx.F45 ? 42 : 50, fsF = ctx.F45 ? 76 : 92;
+    const k = n > 6 ? 0.8 : 1, fs = Math.round((ctx.F45 ? 42 : 50) * k), fsF = Math.round((ctx.F45 ? 76 : 92) * k);
     this.filas = P.pasos.map((txt, i) => {
       const m = String(txt).match(/^\s*([^·:]{1,14}?)\s*[·:]\s*(.+)$/);
       const el = document.createElement('div');
@@ -86,7 +87,7 @@ ANIM.registrar('cronologia', {
       const color = i === activo ? 'var(--acento)' : 'var(--ink)';
       c.setAttribute('fill', on ? color : 'var(--bg)');
       c.setAttribute('stroke', on ? color : 'color-mix(in srgb, var(--ink) 35%, transparent)');
-      c.setAttribute('r', ((this.puntos.length > 4 ? 16 : 18) * (1 + 0.35 * late)).toFixed(2));
+      c.setAttribute('r', ((this.puntos.length > 6 ? 13 : this.puntos.length > 4 ? 16 : 18) * (1 + 0.35 * late)).toFixed(2));
     });
     // lo que falta no se ve; lo ya dicho, al 50 %; la fecha del activo en acento
     this.filas.forEach((el, i) => {

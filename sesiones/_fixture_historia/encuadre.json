@@ -26,7 +26,8 @@
    "titulo": "El primer horno",
    "periodo": "1952–1990",
    "que_cuenta": "una panadería de un horno de leña que sobrevive al terremoto y crece hasta 25 sucursales",
-   "termina_en": "la sucursal número 25, la primera en la capital"
+   "termina_en": "la sucursal número 25, la primera en la capital",
+   "en_juego": "el negocio de una familia de Xela"
   },
   {
    "n": 2,
@@ -34,7 +35,8 @@
    "titulo": "La inspección",
    "periodo": "2004",
    "que_cuenta": "una inspección de Salud encuentra harina vencida y llega la multa",
-   "termina_en": "la multa de Q85,000"
+   "termina_en": "la multa de Q85,000",
+   "en_juego": "el nombre de la panadería ante sus clientes"
   },
   {
    "n": 3,
@@ -42,7 +44,8 @@
    "titulo": "La caída",
    "periodo": "2004–2010",
    "que_cuenta": "la caída en cadena hasta cerrar la última sucursal; quedan dos hornos",
-   "termina_en": "dos hornos encendidos en Xela"
+   "termina_en": "dos hornos encendidos en Xela",
+   "en_juego": "el empleo de todas sus sucursales y la marca entera"
   }
  ],
  "espina": {

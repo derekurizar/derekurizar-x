@@ -135,3 +135,7 @@ Duración `explica-serie`: ≈ 90 s (190–250 palabras), un solo mecanismo, la 
 `cierre.invitacion`, la oración que pide seguir la cuenta y dice qué explica la siguiente («Sígueme: en la segunda
 parte, por qué …»; SE9); en la última, consecuencia y sin invitación. Captions con «Serie · Parte N de M: <título>» y
 Shorts con «(N/M)»; desde la parte 2, una línea «La Parte 1 está fijada en mi perfil» (SE8).
+
+Cada parte trae lo nuevo (SE15–SE16, 2026-11-09): quien ya se presentó entero en una parte anterior vuelve con un
+recordatorio de una palabra; una sigla ya explicada, con ≤ 4 palabras de glosa o ninguna; lo ya contado, como
+contexto en ≤ 2 escenas.

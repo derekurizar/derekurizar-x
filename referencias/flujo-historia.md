@@ -228,7 +228,9 @@ En pantalla, la toma usa la lámina de la foto (`video/noticia.html`): el clip c
 | H4 respaldo y atribución | `guion --check` | años y números de voz, pantalla, pasos, resumen y captions en la cronología; los `hechos` citados existen; la voz atribuye o matiza solo si la escena cita un hecho `en_disputa` o con `tipo_hecho` `alegato`, `estimacion` u `opinion`; un hecho `una_fuente` pide `fuente` en pantalla (o `grafico.fuente`) salvo que esa fuente ya se mostró o se nombró en el mismo acto; en una `cita`, la voz dice el autor antes de la frase |
 | H5 duración | `guion --check` (V4 ±20 % de 150 s) · `tiempos` | apunta a 150 s (135–165): aviso entre 165 y 170 s estimados, **FALLA por encima de 170 s** (también en `aplicar` y en los retoques: un lote de arreglos que alarga el video no pasa; m052) y aviso si la real pasa de 180 s; 320–400 palabras orientan (AVISO fuera; FALLA fuera de 280–410) |
 | H6 pantalla | `guion --check` | titular ≤ 9 palabras, chip ≤ 14, lugar ≤ 24, fuente ≤ 44, cifra ≤ 18 con etiqueta ≤ 30, `grafico` con plantilla y `datos`; tarjetas por `materializar.py` (R1–R6); cita en otro idioma con `traduccion` ≤ 140 que la voz dice |
-| H7 fotos | `foto` · `hechos --check` · `guion --check` · `ganchos --check` | archivo, crédito «Foto: …» (o «Foto de referencia: …»), origen, licencia libre de Commons, lado ≥ 480 px; ≥ 2 fotos por eje; el gancho con visual `foto`; cada escena foto con una foto verificada (nunca icono ni mapa); retrato con `retrato_de` = autor de la cita; una imagen en ≤ 2 escenas; chip sin un año anterior a la foto |
+| H7 fotos | `foto` · `hechos --check` · `guion --check` · `ganchos --check` | archivo, crédito «Foto: …» (o «Foto de referencia: …»), origen, licencia libre de Commons, lado ≥ 480 px; ≥ 2 fotos por eje; el gancho con visual `foto`; cada escena foto con una foto verificada (nunca icono ni mapa); retrato con `retrato_de` = autor de la cita; una imagen en ≤ 2 escenas y **nunca en dos escenas seguidas** (H7b, el gancho y la escena 2 incluidos; decisión del usuario 2026-11-09); chip sin un año anterior a la foto; una foto bajada después de consolidar entra sola a `historia.json` (y a la investigación compartida si es una parte de serie; m120) |
+| H7c foto de un proceso | `foto --proceso "<nombre>"` · `guion --check` | una foto con alguien detenido, esposado o en audiencia va solo en la escena cuya voz nombra a esa persona; sin marcar, su descripción («esposado», «audiencia», «tribunal»…) da un aviso para marcarla (m122, 2026-11-09) |
+| H24 pantalla = voz | `guion --check` | una cifra en pantalla (`cifra.texto`; en titular o golpe la que lleva moneda, % o «mil/millones»; años fuera) que la voz de la escena no dice falla; un alegato, estimación u opinión con número en pantalla lleva «según…/dice/cuenta» en el titular o la etiqueta (solo con `fuente` en pantalla, aviso) (m124, 2026-11-09) |
 | H10 protagonista | `ganchos --check` · `guion --check` | el encuadre trae `protagonista` y el gancho lo nombra (pantalla, línea o voz) |
 | H12 foto del protagonista | `foto` · `hechos --check` · `consolidar` · `ganchos --check` · `guion --check` | una foto verificada con `muestra: protagonista` (o `retrato_de` del protagonista); la del gancho lo es |
 | H13 reserva | `ganchos --check` · `guion --check` | ningún número escrito en una revelación del encuadre aparece en la pantalla, la línea ni la voz del gancho (sin números, lo juzga el crítico con `reserva`) |
@@ -236,6 +238,8 @@ En pantalla, la toma usa la lámina de la foto (`video/noticia.html`): el clip c
 | P1–P4 promesa y bisagra | `guion --check` (de `video.py`) | forma del catálogo, sin anunciar el video, rotación entre piezas, bisagra antes del giro (`referencias/promesas.md`) |
 | H11 hilo | `guion --check` · crítico (H-C3) | cada demostrativo con cifra o sustantivo («esos 40 niños», «ese alimento») tiene su antecedente en una escena anterior; `ganchos --usar` sobre un guion ya escrito avisa que se relea el hilo y se vuelva a pedir la crítica |
 | H9 cierre | `guion --check` | el `final` del cierre sin «según»: lo último que se oye se apoya en un hecho confirmado |
+| H8p paleta | `encuadre --check` (historia, serie, explica) | la paleta sale del tinte del tema (marca, partido, institución, material o lugar) y lo dice `paleta_por_que`; no repite la de las últimas 2 piezas de video de ningún flujo (`paletas_recientes`); `preparar` ya propone una que no repite (decisión del usuario 2026-11-09) |
+| H8m música | `encuadre --check` (historia, serie, explica) | `musica_tema` de `video.MUSICA_TEMAS`; `consolidar` elige la pista del tema (catálogo `temas`) usada hace más tiempo en cualquier flujo; la paleta ya no decide la música (decisión del usuario 2026-11-09) |
 | H8 estructura | `guion --check` | `acto` 1–3 en cada escena, no decreciente y los tres presentes; `rotulo` válido en la primera escena de los actos 2 y 3 (o `capitulo` con AVISO «prefiere rotulo»); `rotulo` en otra escena o en un tipo vetado → FALLA; `capitulo` 0–2; giro en el acto 2 entre el 40 y el 75 %; ≤ 3 escenas seguidas del mismo tipo; al menos una foto o cita; ≤ 19 escenas; aviso si una escena cuenta un año anterior al del rótulo de su acto (flashback) |
 | H15 narración | `guion --check` | `narracion` con 3 entradas `{acto, texto}`; por acto, el texto sin tildes ni signos es igual a las voces de sus escenas (el acto 3 incluye el cierre); imprime el primer punto de divergencia; palabras en rango |
 | H16 flujo | `narracion --check` · `guion --check` | ≥ 2 conectores causales o temporales por acto; ≤ 1 escena desde la 2 que abra con atribución («Según…»); dos escenas seguidas no abren con las mismas dos palabras; ≤ 6.5 cortes por minuto |
@@ -259,11 +263,40 @@ El crítico prueba cada arreglo de texto antes de escribirlo con `historia.py pr
 sin audio: narracion + guion --check); un arreglo que el gate rechaza va como mejora con la falla, nunca como falta que
 bloquea (`probado: false` vuelve al crítico). El guionista devuelve en `arreglos_rechazados` lo que no pudo aplicar.
 
+`probar` y `aplicar` también **insertan una escena** en un guion ya grabado (m108): `{"insertar": N, "escena": {tipo,
+texto, …}, "despues_de": "frase literal de la narración"}`. El texto entra en la narración tras esa frase; las escenas
+N… corren un lugar (con `promesa.pago` y `bisagra.en/pago`); la secuencia de voz que la escena parte deja de serlo. Con el
+gate en verde, `aplicar` corre `voz_N`, `voz_N_r`, `palabras_N` y `escucha_N` de las escenas siguientes (el cierre
+incluido), `escucha.json` y `creditos.json`, y rehace `audio/secuencias.json`: la secuencia rota va a `audio/_previo/`.
+Las demás voces se conservan; `voz --pendientes --sueltas` pide solo la escena nueva.
+
+## Tensión, imagen y producción (2026-11-10)
+
+| Gate | Qué comprueba |
+|---|---|
+| H8 `en_juego` | Cada acto del encuadre dice qué se puede perder ahí y a quién alcanza; no se repite entre actos. Que suba lo juzga el crítico. |
+| H25 escalera | Cada tercio del video abre o paga algo (promesa, bisagra, giro o un hilo en `paga`). Los hilos no se pagan todos en la misma escena. Aviso: más de 35 s sin ningún peldaño, o ningún hilo pagado antes del último tercio. |
+| H26 imagen | Una escena `foto` de más de 12 s estimados falla: se reparte en dos, cada una con la imagen de lo que cuenta. Aviso: menos de una composición distinta (dividida, mini-mapa, subrayado, documento, tarjeta, animación) por cada 4 fotos; ≥ 5 personas en el encuadre sin escena `red`. |
+| P6 | La pregunta del video en pantalla (`referencias/promesas.md` §5). |
+
+Un trabajo con fecha anterior al 2026-11-10 recibe H25, H26 y P6 como aviso.
+
+Una escena `foto` admite `ruta` (2–4 departamentos en orden): el localizador se acerca y un trazo los une (H26 revisa
+que existan y sean distintos).
+
+La escena `red` admite `estilo: "tablero"` (`video/tablero.html`): los mismos nodos y aristas y el mismo gate H23,
+como tablero de investigación con cuadritos e hilos, sin tachas. En 9:16, 4:5 y 16:9.
+
+`historia.py producir <TRABAJO> [--solo n] [--sin-escucha]` corre la cadena tiempos → escuchar → grabar → montar →
+revisar en 9:16 y luego grabar → montar → revisar en 4:5, y para en la primera falla.
 ## Voz y costos
 
 Como `/noticias`, pero por **nodo**: una secuencia de 2–5 escenas o una escena suelta; 1 toma, Scribe por nodo y la
 llamada de estado que lee `historia.py descargar --estado`. Las herramientas aceptan ≤ 20 ids por llamada: el estado
-final va en lotes (cada voz con su Scribe) y `descargar --estado A B …` recibe todos. Las cifras con dinero van con
+final va en lotes (cada voz con su Scribe) y `descargar --estado A B …` recibe todos. Con pocos nodos el MCP devuelve
+el estado en el chat y no en un archivo: pide el estado con las sesiones de dos partes a la vez (pasa de ~50k caracteres
+y queda en archivo) y pásalo entero a `descargar` de cada parte: las voces y los Scribe de la otra parte se ignoran con
+un aviso (m129); una generación sin `modality`/`status`/`content_url` nunca se salta en silencio (m105). Las cifras con dinero van con
 prefijo (`US$1.15`, `Q2.50`; también se entiende «1.15 dólares»): la voz dice «un dólar con quince centavos». ≈ 1
 crédito por carácter: **≈ 1,800–2,600** en una historia de 2–3 min (`locucion.json → caracteres`). El Workflow cuesta
 0 créditos (≈ 13–18 agentes, 20–40 min).

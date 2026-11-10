@@ -2,6 +2,7 @@
  "tipo": "historia",
  "contexto_superior": "Historia · Maqueta",
  "promesa": {
+  "pregunta": "¿Cómo se quedó La Espiga sin sucursales?",
   "texto": "¿Cómo pasa una panadería de 25 sucursales a ninguna?",
   "en": 2,
   "pago": 10,
@@ -11,11 +12,11 @@
  "narracion": [
   {
    "acto": 1,
-   "texto": "La Espiga reabrió bajo una carpa. Fue en Guatemala, tras el terremoto. Todo empezó en Quetzaltenango, con un horno de leña, y llegó a todo el país. ¿Cómo pasa una panadería de 25 sucursales a ninguna? Marta Pérez, la fundadora, encendió ese horno en 1952 y abrió La Espiga. Años después, ya famosa en Xela, lo resumió así: Cada pan sale del mismo horno que encendí el primer día. Pero en 1976 un terremoto destruyó el local de la calle Rodolfo Robles. Un año después, en 1977, La Espiga volvió a hornear bajo una carpa, y los clientes hicieron fila en la banqueta. Aun así, el pan de La Espiga se volvió costumbre: en 1968 ya vendía 4,500 panes al día, y en 1990 abrió su sucursal número 25, la primera en la capital."
+   "texto": "La Espiga reabrió bajo una carpa. Fue en Guatemala, tras el terremoto. Todo empezó en Quetzaltenango, con un horno de leña, y llegó a todo el país. ¿Cómo pasa una panadería de 25 sucursales a ninguna? Marta Pérez, la fundadora, encendió ese horno en 1952 y abrió La Espiga. Años después, ya famosa en Xela, lo resumió así: Cada pan sale del mismo horno que encendí el primer día. Pero en 1976 un terremoto destruyó el local de la calle Rodolfo Robles. Un año después, en 1977, La Espiga volvió a hornear bajo una carpa, y los clientes hicieron fila en la banqueta, como si la pared siguiera en pie. Aun así, el pan de La Espiga se volvió costumbre: en 1968 ya vendía 4,500 panes al día, y en 1990 abrió su sucursal número 25. Nadie en la familia imaginaba quién tocaría la puerta."
   },
   {
    "acto": 2,
-   "texto": "Nadie en la familia imaginaba quién tocaría la puerta. Entonces, en marzo de 2004, el Ministerio de Salud, la autoridad sanitaria, entró a la planta. Su informe dice que se encontraron 40 sacos de harina con fecha vencida en la planta de La Espiga. Pero lo que más pesó no fue la harina, sino la multa: pagó Q85,000 por la harina vencida."
+   "texto": "Entonces, en marzo de 2004, el Ministerio de Salud, la autoridad sanitaria, entró a la planta. Su informe dice que se encontraron 40 sacos de harina con fecha vencida en la planta de La Espiga. Pero lo que más pesó no fue la harina, sino la multa: pagó Q85,000 por la harina vencida."
   },
   {
    "acto": 3,
@@ -48,7 +49,8 @@
   ],
   [
    9,
-   10
+   10,
+   11
   ]
  ],
  "voz_continua": true,
@@ -111,7 +113,7 @@
     "ori-h03"
    ],
    "fuente": "Prensa Libre · La Hora",
-   "texto": "Un año después, en 1977, La Espiga volvió a hornear bajo una carpa, y los clientes hicieron fila en la banqueta.",
+   "texto": "Un año después, en 1977, La Espiga volvió a hornear bajo una carpa, y los clientes hicieron fila en la banqueta, como si la pared siguiera en pie.",
    "foto": "ori-f02"
   },
   {
@@ -154,7 +156,7 @@
      "decimales_pildora": 0
     }
    },
-   "texto": "Aun así, el pan de La Espiga se volvió costumbre: en 1968 ya vendía 4,500 panes al día, y en 1990 abrió su sucursal número 25, la primera en la capital.",
+   "texto": "Aun así, el pan de La Espiga se volvió costumbre: en 1968 ya vendía 4,500 panes al día, y en 1990 abrió su sucursal número 25. Nadie en la familia imaginaba quién tocaría la puerta.",
    "acto": 1
   },
   {
@@ -172,7 +174,7 @@
     "cas-h02"
    ],
    "fuente": "MSPAS",
-   "texto": "Nadie en la familia imaginaba quién tocaría la puerta. Entonces, en marzo de 2004, el Ministerio de Salud, la autoridad sanitaria, entró a la planta. Su informe dice que se encontraron 40 sacos de harina con fecha vencida en la planta de La Espiga."
+   "texto": "Entonces, en marzo de 2004, el Ministerio de Salud, la autoridad sanitaria, entró a la planta. Su informe dice que se encontraron 40 sacos de harina con fecha vencida en la planta de La Espiga."
   },
   {
    "tipo": "golpe",
@@ -219,7 +221,15 @@
     "cas-h04"
    ],
    "fuente": "Soy502",
-   "texto": "Seis años después, en 2010, La Espiga cerró su última sucursal en la capital; su familia dice que fue en 2011. De aquellas 25 sucursales, solo quedaron dos hornos encendidos en Xela. Qué fue de Marta Pérez nunca se supo."
+   "texto": "Seis años después, en 2010, La Espiga cerró su última sucursal en la capital; su familia dice que fue en 2011."
+  },
+  {
+   "tipo": "golpe",
+   "acto": 3,
+   "pantalla": "Dos hornos",
+   "linea": "de aquellas 25 sucursales",
+   "verbo": "quedaron",
+   "texto": "De aquellas 25 sucursales, solo quedaron dos hornos encendidos en Xela. Qué fue de Marta Pérez nunca se supo."
   }
  ],
  "cierre": {
@@ -247,7 +257,7 @@
  "bisagra": {
   "texto": "Nadie en la familia imaginaba quién tocaría la puerta.",
   "forma": "presagio",
-  "en": 7,
+  "en": 6,
   "pago": 7
  }
 }
