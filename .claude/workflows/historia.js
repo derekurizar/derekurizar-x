@@ -24,7 +24,7 @@ export const meta = {
 // scripts/historia.py (los vigila scripts/check_workflows.py, W12). Modo retoque (args.desde = "retoque" + args.notas): las
 // fases 1–5 se saltan y el guionista aplica las notas del usuario sobre el guion aprobado conservando las voces grabadas.
 
-const TIPOS = ['gancho', 'tarjeta', 'golpe', 'definicion', 'adivina', 'mapa', 'ranking', 'escala', 'tiempo', 'explica', 'foto', 'cita', 'capitulo', 'red']
+const TIPOS = ['gancho', 'tarjeta', 'golpe', 'definicion', 'adivina', 'mapa', 'ranking', 'escala', 'tiempo', 'explica', 'foto', 'cita', 'capitulo', 'red', 'vias', 'lupa', 'deptos', 'pagina', 'cortina', 'archivo', 'bandos']
 const FAMILIAS = ['resultado', 'paradoja', 'contraste', 'misterio', 'personaje', 'lugar', 'pregunta', 'escala']
 const VISUALES = ['foto']
 const PUNTAJES = ['gancho', 'tension', 'claridad', 'flujo', 'precision', 'cierre', 'recompensa']
@@ -34,6 +34,7 @@ const ACTOS = 3, PERIODOS_MIN = 2, PERIODOS_MAX = 5, HILOS_MIN = 2, HILOS_MAX = 
 const PALABRAS_MIN = 320, PALABRAS_MAX = 400, SEGUN_MAX = 4   // W12: PALABRAS y SEGUN_MAX_VIDEO de historia.py
 // /serie (scripts/serie.py): la investigación compartida admite más ejes (toda la serie) y cada parte (≈ 90 s) menos palabras
 const EJES_MAX_SERIE = 5, PALABRAS_SERIE_MIN = 190, PALABRAS_SERIE_MAX = 250   // W12: EJES_MAX_SERIE y PALABRAS_SERIE de historia.py
+const RESUMEN_EXTRA_S = 30, RESUMEN_EXTRA_PAL = 72   // W12: SE14, la última parte suma el resumen de la serie (historia.aplicar_formato)
 const PALABRAS_CASO_MIN = 290, PALABRAS_CASO_MAX = 350   // W12: FORMATOS['historia-caso'].PALABRAS de historia.py
 const CANDIDATOS = 5, CIERRES_N = 5, GANCHO_USUARIO = 'gu', DURACION_MAX_S = 180
 const VUELTAS_CRITICA = 2, PUNTAJE_MIN = 3
@@ -57,8 +58,10 @@ const SERIE = A.serie && typeof A.serie === 'object' ? A.serie : null
 const PARTE = SERIE && SERIE.parte ? SERIE : null
 if (HASTA && !(SERIE && SERIE.partes)) throw new Error('args.hasta: "consolidar" es de /serie: pasa args.serie = {partes: 3–5 (3–8 con caso: true)}.')
 if (DESDE_GANCHOS && !PARTE) throw new Error('args.desde: "ganchos" es de una parte de /serie: pasa args.serie = {parte, de, titulo, siguiente}.')
-const P_MIN = PARTE ? (PARTE.caso ? PALABRAS_CASO_MIN : PALABRAS_SERIE_MIN) : PALABRAS_MIN, P_MAX = PARTE ? (PARTE.caso ? PALABRAS_CASO_MAX : PALABRAS_SERIE_MAX) : PALABRAS_MAX
-const OBJ_S = PARTE ? 90 : 150
+const ULTIMA_PARTE = !!(PARTE && PARTE.de && PARTE.parte === PARTE.de)   // SE14: lleva el resumen de la serie (+30 s ≈ 72 palabras, m132)
+const P_MIN = PARTE ? (PARTE.caso ? PALABRAS_CASO_MIN : PALABRAS_SERIE_MIN) : PALABRAS_MIN
+const P_MAX = (PARTE ? (PARTE.caso ? PALABRAS_CASO_MAX : PALABRAS_SERIE_MAX) : PALABRAS_MAX) + (ULTIMA_PARTE ? RESUMEN_EXTRA_PAL : 0)
+const OBJ_S = (PARTE ? (PARTE.caso ? 130 : 90) : 150) + (ULTIMA_PARTE ? RESUMEN_EXTRA_S : 0)
 const EJES_MAX_EF = SERIE && SERIE.partes ? EJES_MAX_SERIE : EJES_MAX
 const MODO_SERIE = SERIE ? ` MODO SERIE (lee «Modo serie» en tu guía y referencias/flujo-serie.md): ${PARTE ? `esta es la PARTE ${PARTE.parte} de ${PARTE.de} («${PARTE.titulo || ''}»), ${PARTE.caso ? '≈ 130 s (115–150; modo caso: cuenta con detalle los hechos que se le repartieron, ≥ 60 % de ellos citados por id en sus escenas, y nada de lo que se reparte a partes siguientes: SE12)' : '≈ 90 s (75–110)'}, contada sola (nada de «como vimos»), solo lo que su periodo cubre; ${PARTE.parte < PARTE.de ? `cierre con forma «puente»: la pregunta que abre la parte ${PARTE.parte + 1} («${(PARTE.siguiente || {}).titulo || ''}»), sin anunciarla en la frase final («en la próxima parte»: P2); DESPUÉS, en cierre.invitacion (aparte de cierre.texto y de la narración), una oración que pide seguir la cuenta y dice qué cuenta la parte ${PARTE.parte + 1}: «Sígueme: en la ${['', '', 'segunda', 'tercera', 'cuarta', 'quinta', 'sexta', 'séptima', 'octava'][PARTE.parte + 1] || ''} parte te cuento …» (SE9: ≤ 18 palabras, sin cifras ni revelaciones); los hilos que siguen abiertos van con pasa_a: ${PARTE.parte + 1}` : 'es la ÚLTIMA: todos los hilos se pagan o se declaran sin respuesta; sin cierre.invitacion'}; captions que abren con «Serie · Parte ${PARTE.parte} de ${PARTE.de}: <título>» y el título de Shorts con «(${PARTE.parte}/${PARTE.de})»${PARTE.parte > 1 ? '; TikTok, Instagram y Facebook llevan además una línea que manda al inicio («¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.»)' : ''} (SE8).` : `la investigación compartida de una serie de ${SERIE.partes} partes.`}` : ''
 const notas = String(A.notas || '').trim()
@@ -479,7 +482,7 @@ const directivaGuion = RETOQUE
     `(${P_MIN}–${P_MAX} palabras en total ≈ ${OBJ_S} s a 145 por minuto; empieza con la voz del gancho tal cual; cada oración sigue de la anterior con un porque, un pero o un entonces; ` +
     `los saltos de tiempo se dicen; cada personaje se presenta la primera vez; cada hilo se paga o se declara sin respuesta; ≤ ${SEGUN_MAX} «según»); mídela con python3 scripts/historia.py narracion ${trabajo} --check hasta 0 fallas. ` +
     `SOLO ENTONCES repártela en escenas SIN cambiar una palabra (H15): acto en cada escena, rotulo {anio, titulo, lugar?} en la primera escena de los actos 2 y 3, ` +
-    `secuencias de 2–5 escenas consecutivas del mismo acto (la voz se graba de corrido), escenas foto, cita, tarjeta con grafico, golpe, explica, un giro en el acto 2, ` +
+    `secuencias de 2–5 escenas consecutivas del mismo acto (la voz se graba de corrido), escenas foto, cita, tarjeta con grafico, golpe, explica y, cuando el archivo ES la prueba, las escenas con archivos reales (vias, lupa, deptos, pagina, cortina, archivo, bandos: su forma y sus ids están en el digesto; H27–H33; casi nunca más de dos o tres), un giro en el acto 2, ` +
     `guion.hilos (escena que paga o sin_respuesta), promesa {texto, forma, en, pago, revela} que abre una pregunta de la historia SIN anunciar el video (nada de «al final», «vas a ver», «quédate», «falta saber»: P2) con una forma de referencias/promesas.md que no repita las «Promesas recientes» (P3), ` +
     `bisagra {texto, forma (otra), en, pago}: el segundo enganche justo antes del giro, dentro de la narración de corrido (P4), cierre legado (o consecuencia si termina mal) y captions; apunta a 150 s (135–165). `
 const voces = new Set()

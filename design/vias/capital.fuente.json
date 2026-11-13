@@ -1,0 +1,25 @@
+{
+  "id": "capital",
+  "nombre": "Ciudad de Guatemala y municipios vecinos",
+  "bbox": [14.48, -90.70, 14.717, -90.385],
+  "lienzo": [1080, 840],
+  "centro": [14.615, -90.525],
+  "arterias": [
+    {"id": "roosevelt", "nombre": "Calzada Roosevelt", "nombres": ["Calzada Roosevelt", "Carretera Panamericana"], "refs": ["CA-1 Occ"], "fin": [14.6335, -90.66]},
+    {"id": "san-juan", "nombre": "Calzada San Juan", "nombres": ["Calzada San Juan"], "refs": ["RN-5"]},
+    {"id": "aguilar-batres", "nombre": "Calzada Aguilar Batres", "nombres": ["Calzada Raúl Aguilar Batres", "Autopista CA-9 Sur"], "refs": ["CA-9 Sur"], "fin": [14.50, -90.60]},
+    {"id": "petapa", "nombre": "Avenida Petapa", "nombres": ["Avenida Petapa"]},
+    {"id": "el-salvador", "nombre": "Carretera a El Salvador", "nombres": ["Carretera a El Salvador", "Boulevard Vista Hermosa", "Boulevard Los Próceres"], "refs": ["CA-1 Or"], "ini": [14.588, -90.513]},
+    {"id": "atlantico", "nombre": "Ruta al Atlántico", "nombres": ["Ruta al Atlántico"], "refs": ["CA-9 Nor"], "ini": [14.643, -90.495]},
+    {"id": "bolivar", "nombre": "Avenida Bolívar", "nombres": ["Avenida Bolívar"], "ini": [14.6128, -90.5356]}
+  ],
+  "lugares": [
+    {"id": "capital", "nombre": "Capital", "pos": [14.615, -90.525]},
+    {"id": "el-trebol", "nombre": "El Trébol", "pos": [14.6128, -90.5356]},
+    {"id": "mixco", "nombre": "Mixco", "pos": [14.6333, -90.6064]},
+    {"id": "villa-nueva", "nombre": "Villa Nueva", "pos": [14.5269, -90.5875]},
+    {"id": "san-miguel-petapa", "nombre": "San Miguel Petapa", "pos": [14.5019, -90.5517]},
+    {"id": "santa-catarina-pinula", "nombre": "Santa Catarina Pinula", "pos": [14.5689, -90.4953]},
+    {"id": "chinautla", "nombre": "Chinautla", "pos": [14.7069, -90.4986]}
+  ]
+}

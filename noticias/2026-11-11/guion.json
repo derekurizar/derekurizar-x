@@ -1,0 +1,229 @@
+{
+ "id": "2026-11-11",
+ "tipo": "noticias",
+ "fecha": "2026-11-11",
+ "paleta": "maiz",
+ "musica": "maiz-2",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 815.92,
+ "duracion_s": 58.0,
+ "critica": {
+  "veredicto": "pasa",
+  "vuelta": 2,
+  "puntajes": {
+   "gancho": 4,
+   "claridad": 4,
+   "ritmo": 4,
+   "precision": 5,
+   "tono": 5,
+   "cierre": 4
+  }
+ },
+ "contexto_superior": "Guatemala · 11 nov 2026",
+ "gancho": {
+  "noticia": "pol-2",
+  "pantalla": "Ley de becas aprobada con 138 votos",
+  "texto": "El Congreso aprobó una ley de becas sin dictamen."
+ },
+ "noticias": [
+  {
+   "id": "pol-2",
+   "seccion": "Educación",
+   "titular": "Fondo Nacional de Becas pasa sin dictamen",
+   "fuente": "Prensa Libre · La Hora",
+   "estado": "confirmada",
+   "breve": false,
+   "cifra": {
+    "texto": "138",
+    "etiqueta": "votos a favor"
+   },
+   "foto": {
+    "credito": "Foto: La Hora",
+    "origen": "medio"
+   },
+   "urls": [
+    "https://www.prensalibre.com/ahora/guatemala/politica/congreso-prolonga-sesion-por-mas-de-ocho-horas-y-continua-lectura-de-la-ley-del-fondo-nacional-de-becas/",
+    "https://lahora.gt/nacionales/dleon/2026/11/10/congreso-da-luz-verde-de-urgencia-nacional-a-la-ley-del-fondo-nacional-de-becas-now/"
+   ],
+   "cifras": [
+    {
+     "id": "pol-2-c1",
+     "valor": 138,
+     "unidad": "votos",
+     "texto": "138 votos",
+     "cita": "los diputados del Congreso de la República aprobaron con 138 votos la Ley del Fondo Nacional de Becas (Fonabe)",
+     "url": "https://lahora.gt/nacionales/dleon/2026/11/10/congreso-da-luz-verde-de-urgencia-nacional-a-la-ley-del-fondo-nacional-de-becas-now/"
+    },
+    {
+     "id": "pol-2-c2",
+     "valor": 8,
+     "unidad": "horas",
+     "texto": "más de 8 horas",
+     "cita": "El Congreso de la República de Guatemala acumula más de ocho horas de sesión plenaria ininterrumpida este martes 10 de noviembre.",
+     "url": "https://www.prensalibre.com/ahora/guatemala/politica/congreso-prolonga-sesion-por-mas-de-ocho-horas-y-continua-lectura-de-la-ley-del-fondo-nacional-de-becas/"
+    }
+   ]
+  },
+  {
+   "id": "seg-1",
+   "seccion": "Seguridad",
+   "titular": "Operativos dejan más de 25 capturados",
+   "fuente": "PNC · MP · Infobae",
+   "estado": "en_desarrollo",
+   "breve": false,
+   "cifra": {
+    "texto": "Más de 25",
+    "etiqueta": "personas capturadas"
+   },
+   "foto": {
+    "credito": "Foto: Infobae",
+    "origen": "medio"
+   },
+   "urls": [
+    "https://www.infobae.com/guatemala/2026/11/11/operativos-de-la-policia-nacional-civil-y-el-ministerio-publico-contra-estructuras-criminales-en-guatemala-deja-mas-de-25-capturados/"
+   ],
+   "cifras": [
+    {
+     "id": "seg-1-c1",
+     "valor": 25,
+     "unidad": "personas",
+     "texto": "más de 25 capturados",
+     "cita": "capturaron a más de 25 personas y notificaron nuevos procesos penales a 11 reclusos",
+     "url": "https://www.infobae.com/guatemala/2026/11/11/operativos-de-la-policia-nacional-civil-y-el-ministerio-publico-contra-estructuras-criminales-en-guatemala-deja-mas-de-25-capturados/"
+    }
+   ]
+  },
+  {
+   "id": "pol-3",
+   "seccion": "Política",
+   "titular": "Ley de Ciberseguridad sigue hacia el Ejecutivo",
+   "fuente": "Prensa Libre · Soy502 · La Hora",
+   "estado": "confirmada",
+   "breve": false,
+   "cifra": {
+    "texto": "10",
+    "etiqueta": "objeciones rechazadas"
+   },
+   "foto": {
+    "credito": "Foto: Organismo Legislativo",
+    "origen": "oficial"
+   },
+   "urls": [
+    "https://www.prensalibre.com/ahora/guatemala/politica/congreso-rechaza-10-objeciones-a-la-ley-de-ciberseguridad-y-permite-que-avance-su-tramite/",
+    "https://www.soy502.com/articulo/congreso-rechaza-objeciones-ley-ciberseguridad-101962",
+    "https://lahora.gt/nacionales/kmonzon/2026/11/10/congreso-rechaza-10-objeciones-para-que-avance-la-ley-de-ciberseguridad-al-ejecutivo-now/"
+   ],
+   "cifras": [
+    {
+     "id": "pol-3-c1",
+     "valor": 10,
+     "unidad": "objeciones",
+     "texto": "10 objeciones",
+     "cita": "rechazó este martes 10 de noviembre las 10 objeciones presentadas contra el Decreto 26-2026",
+     "url": "https://www.prensalibre.com/ahora/guatemala/politica/congreso-rechaza-10-objeciones-a-la-ley-de-ciberseguridad-y-permite-que-avance-su-tramite/"
+    }
+   ]
+  },
+  {
+   "id": "pol-1",
+   "seccion": "Cultura",
+   "titular": "Congreso aprueba la Ley de Cine",
+   "fuente": "Prensa Libre · Soy502",
+   "estado": "confirmada",
+   "breve": true,
+   "cifra": null,
+   "foto": {
+    "credito": "Foto: Prensa Libre",
+    "origen": "medio"
+   },
+   "urls": [
+    "https://www.prensalibre.com/ahora/guatemala/politica/congreso-aprueba-la-ley-de-cine-con-132-votos-y-la-convierte-en-el-decreto-27-2026/",
+    "https://tvaztecaguate.com/nacionales/2026/11/10/congreso-aprueba-de-urgencia-nacional-la-ley-de-cine-estas-son-las-disposiciones-que-contempla/",
+    "https://www.soy502.com/articulo/diputados-buscan-aprobar-urgencia-nacional-ley-cine-101962"
+   ],
+   "cifras": [
+    {
+     "id": "pol-1-c1",
+     "valor": 132,
+     "unidad": "votos a favor",
+     "texto": "132 votos",
+     "cita": "Con 132 votos a favor y en único debate, los diputados del Congreso de la República aprobaron la iniciativa 5906",
+     "url": "https://tvaztecaguate.com/nacionales/2026/11/10/congreso-aprueba-de-urgencia-nacional-la-ley-de-cine-estas-son-las-disposiciones-que-contempla/"
+    }
+   ]
+  }
+ ],
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "titular",
+   "noticia": "pol-2",
+   "pantalla": "El Congreso aprobó una ley de becas sin dictamen.",
+   "voz": "El Congreso aprobó una ley de becas sin dictamen.",
+   "dur": 3.452
+  },
+  {
+   "n": 2,
+   "tipo": "noticia",
+   "noticia": "pol-2",
+   "pantalla": "Tras más de 8 horas de sesión, el Congreso aprobó con 138 votos la Ley del Fondo Nacional de Becas. Pasó de urgencia nacional, sin el aval de la comisión y con dispensa de dictamen.",
+   "voz": "Tras más de ocho horas de sesión, el Congreso aprobó con ciento treinta y ocho votos la Ley del Fondo Nacional de Becas. Pasó de urgencia nacional, sin el aval de la comisión y con dispensa de dictamen.",
+   "dur": 13.203
+  },
+  {
+   "n": 3,
+   "tipo": "noticia",
+   "noticia": "seg-1",
+   "pantalla": "Además, la PNC y el MP capturaron a más de 25 personas en Zacapa, Alta Verapaz y Chiquimula, según Infobae. Hubo 37 allanamientos contra estructuras señaladas de narcoactividad y secuestros.",
+   "voz": "Además, la pe ene ce y el eme pe capturaron a más de veinticinco personas en Zacapa, Alta Verapaz y Chiquimula, según Infobae. Hubo treinta y siete allanamientos contra estructuras señaladas de narcoactividad y secuestros.",
+   "dur": 15.788
+  },
+  {
+   "n": 4,
+   "tipo": "noticia",
+   "noticia": "pol-3",
+   "pantalla": "En política, el pleno rechazó las 10 objeciones del diputado Ronald Portillo a la Ley Marco de Ciberseguridad. Con eso, la ley sigue su trámite y puede ir al Ejecutivo para su sanción.",
+   "voz": "En política, el pleno rechazó las diez objeciones del diputado Ronald Portillo a la Ley Marco de Ciberseguridad. Con eso, la ley sigue su trámite y puede ir al Ejecutivo para su sanción.",
+   "dur": 12.267
+  },
+  {
+   "n": 5,
+   "tipo": "noticia",
+   "noticia": "pol-1",
+   "pantalla": "Y en cultura, el Congreso aprobó la Ley de Cine, que crea el Instituto Guatemalteco de Cine.",
+   "voz": "Y en cultura, el Congreso aprobó la Ley de Cine, que crea el Instituto Guatemalteco de Cine.",
+   "dur": 6.535
+  },
+  {
+   "n": 6,
+   "tipo": "cierre",
+   "noticia": null,
+   "pantalla": "Así va Guatemala. Becas, cine y ciberseguridad en un solo martes.",
+   "voz": "Así va Guatemala. Becas, cine y ciberseguridad en un solo martes.",
+   "dur": 7.87
+  }
+ ],
+ "cierre": {
+  "rotulo": "Hoy en Guatemala",
+  "resumen": [
+   "Becas: aprobada con 138 votos",
+   "Más de 25 capturados",
+   "Ciberseguridad: 10 objeciones",
+   "Ley de Cine aprobada"
+  ],
+  "texto": "Así va Guatemala. Becas, cine y ciberseguridad en un solo martes.",
+  "final": "Becas, cine y ciberseguridad en un solo martes."
+ },
+ "caption": {
+  "tiktok": "Las noticias de hoy en Guatemala en un minuto: ley de becas sin dictamen, capturas en el oriente, Ley de Ciberseguridad y Ley de Cine. #Guatemala #Noticias",
+  "instagram": "Lo más importante de hoy en Guatemala, verificado y con fuente: becas, capturas, ciberseguridad y cine. #Guatemala #NoticiasGuatemala",
+  "facebook": "Las noticias de hoy en Guatemala en un minuto: la ley de becas, los operativos en Zacapa, Alta Verapaz y Chiquimula, la Ley de Ciberseguridad y la Ley de Cine. Fuentes en el primer comentario.",
+  "shorts": "Noticias de Guatemala hoy: becas, capturas y ciberseguridad #Shorts\nLo más importante del día, con fuente."
+ }
+}

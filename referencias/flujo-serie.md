@@ -30,6 +30,14 @@ en 3–5 partes de ≈ 90 s con **una sola investigación** y un **plan versiona
    "puente": "¿Qué le pasaría a La Espiga cuando la tierra tembló?"}]}}
 ```
 
+`periodo` va en AAAA, AAAA-MM o AAAA-MM-DD (m133, 2026-11-11). Una historia que pasa en días (un terremoto, una
+semana de crisis) parte por día: si dos partes seguidas comparten un mes sin día («1976-02» y «1976-02»), SE2 falla,
+porque la anterior recibiría los hechos que revela la siguiente.
+
+Cambiar el título de una parte ya planeada: `serie.py renombrar SERIE N "<título>"` (m134). Toca el plan (sube la
+versión), el `video.json` y el encuadre de la parte, el «siguiente» de la anterior y el prefijo de los captions (SE8).
+Lo que ya se grabó con el título viejo se rehace con `historia.py producir` (la voz no cambia).
+
 En el temario (`/explica`), cada parte lleva `mecanismo`, `mecanismo_frase`, `intuicion` y `ejes` (los de la
 investigación que la sostienen), en lugar de `periodo`, `actos`, `espina` e `hilos`.
 
@@ -38,7 +46,7 @@ investigación que la sostienen), en lugar de `periodo`, `actos`, `espina` e `hi
 | Gate | Dónde | Qué comprueba |
 |---|---|---|
 | SE1 | `serie.py plan --check` | 3–5 partes en orden, cada una con título (≤ 6 palabras), pregunta, periodo (o mecanismo con su frase, intuición y ejes), actos y espina (historia), 1–4 hilos sin ids repetidos entre partes, 1–3 revelaciones |
-| SE2 | `serie.py plan --check` | la cadena de puentes: el puente de la parte N comparte raíz con la pregunta de la N+1; la última no tiene puente; ningún puente dice un número de una revelación posterior; los periodos van en orden y no se pisan |
+| SE2 | `serie.py plan --check` | la cadena de puentes: el puente de la parte N comparte raíz con la pregunta de la N+1; la última no tiene puente; ningún puente dice un número de una revelación posterior; los periodos van en orden y no se pisan (ni comparten un mes sin día) |
 | SE3 | `serie.py cobertura --check` | ≥ 4 hechos publicables por parte en su periodo (historia); ≥ 2 afirmaciones o cifras por parte en sus ejes (temario) |
 | SE4 | `guion --check` de la parte | cada parte se entiende sola: sin «como vimos», «en la parte anterior», «en el video anterior» |
 | SE5 | `guion --check` | paleta y música de la serie |
@@ -116,8 +124,8 @@ lo que pasó, y con impacto (termina en lo que más pesa).
 ## Promesa de la serie, tensión y variedad (2026-11-10)
 
 - **SE1 `serie.promesa.pregunta`**: la pregunta que responde la serie ENTERA («¿…?», ≤ 12 palabras). La parte 1 la dice;
-  desde la parte 2 se lee en el gancho, bajo «Parte N de M»; **SE18**: la última parte la responde y declara dónde
-  (`guion.responde_serie = N`; ahí vuelve a pantalla con su check).
+  **SE18**: la última parte la responde y declara dónde (`guion.responde_serie = N`); en pantalla sale solo ahí, con su
+  check (P6, 2026-11-10: la pregunta aparece cuando el dato ya se ve).
 - **SE1 `partes[].en_juego`**: qué se puede perder en cada parte y a quién alcanza; no se repite. Que suba de parte en
   parte lo juzga el crítico en «modo serie completa».
 - **SE19**: una misma foto sale en ≤ 2 partes (en Bancafé, la del edificio de la SIB salió 7 veces).
@@ -144,3 +152,10 @@ La parte N se publica cuando la N+1 ya tiene el guion aprobado (`serie.py guion-
 respuesta en camino. Se fija la Parte 1 en el perfil y se arma una playlist (YouTube) o lista (TikTok) con las partes
 en orden. `serie.md` dice qué parte ya se puede publicar. Desde la Parte 2, el caption y la pantalla final mandan a
 la Parte 1 fijada.
+
+
+**Escenas con archivos reales (2026-11-12).** Las partes de una serie con el motor /historia heredan `vias`, `lupa`,
+`deptos`, `pagina`, `cortina`, `archivo` y `bandos` (H27–H33, `referencias/flujo-historia.md`): el guionista de cada parte
+las ve en su digesto. SE19 cuenta también las fotos de una `cortina` y las piezas de un `archivo` (una foto en ≤ 2
+partes), y `/youtube-long` enlaza las páginas de documento de las escenas `pagina`; en 16:9 se muestran dentro del
+escenario.

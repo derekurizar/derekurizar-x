@@ -81,10 +81,12 @@ fuente y «Foto: autor · licencia»), `cita` (la frase literal de una persona, 
 resaltador; una cita en otro idioma lleva `traduccion`, en pantalla bajo la frase y dicha por la voz), `capitulo`
 (solo como excepción), `tarjeta`/`mapa`/`ranking`/`tiempo` (un gráfico de las 26 plantillas de `templates/graficos/`
 con su `DATA`; `foco: false` deja la tarjeta sin zoom a la cifra), `golpe`, `definicion`, `escala`, `explica` (una
-animación de la biblioteca `video/animaciones/`: `cadena`, `cronologia`, y las que el animador vaya creando) y
-`cierre`. ≤ 3 seguidas del mismo tipo. ≤ 19 escenas más el cierre. `enlace` (pero | por_eso | y) es opcional y solo
+animación de la biblioteca `video/animaciones/`: `cadena`, `cronologia`, y las que el animador vaya creando), `red` (el
+organigrama o el tablero del caso), las **escenas con archivos reales** (`vias`, `lupa`, `deptos`, `pagina`, `cortina`,
+`archivo`, `bandos`; H27–H33, abajo) y `cierre`. ≤ 3 seguidas del mismo tipo. ≤ 19 escenas más el cierre. `enlace` (pero | por_eso | y) es opcional y solo
 decide el efecto de la entrada: la voz no tiene que empezar con el conector (la causalidad vive en la narración).
-Topes de voz: foto 40–280, cita 30–280, tarjeta/mapa/ranking/tiempo/explica 40–260, golpe 20–130, capitulo 10–90.
+Topes de voz: foto 40–280, cita 30–280, tarjeta/mapa/ranking/tiempo/explica 40–260, golpe 20–130, capitulo 10–90,
+red, vias, lupa, deptos, pagina y bandos 60–320, cortina 50–300, archivo 50–320.
 
 **Cómo se ve** (estilo Noche, `referencias/diseno/sistema.md`; lo mismo que `/video` y `/noticias`):
 - Fondo de la paleta casi negro con grano fijo; en el **acto 2** (el nudo) toda la escena baja a `fondo_acto2`
@@ -283,6 +285,58 @@ Un trabajo con fecha anterior al 2026-11-10 recibe H25, H26 y P6 como aviso.
 
 Una escena `foto` admite `ruta` (2–4 departamentos en orden): el localizador se acerca y un trazo los une (H26 revisa
 que existan y sean distintos).
+
+**La escena `vias` (2026-11-12): el mapa vial real, por capas.** Dibuja la red de calles de una ciudad tomada de
+OpenStreetMap (`design/vias/<id>.json`; la arma `scripts/build_vias.py` desde la receta `<id>.fuente.json` y queda en el
+repositorio: el video no llama a ningún servicio) y la anima con 2–6 `capas`, una por frase de la voz. Cada capa entra
+cuando la voz dice su `dice` y puede:
+
+- encender `arterias` (su trazo real crece del centro hacia afuera; `sentido: "entra"` lo invierte; `nivel` 0–1 dice
+  hasta dónde: la misma arteria en dos capas crece de un nivel al otro);
+- marcar un `lugar` con su aro y su rótulo, con una `etiqueta` corta;
+- poner el dato de arriba (`cifra` + `rotulo`);
+- inflar una `burbuja` en un lugar (área ∝ valor; el mismo lugar en dos capas crece);
+- encender la vía del tren (`riel`);
+- mover la cámara (`zoom` a un lugar o `"todo"`; `acerca` 1.4–4). La cámara solo se mueve cuando una capa lo pide.
+
+Lo de la capa que suena va en el acento; lo anterior queda en crema. Todo queda quieto entre capas (A1). El pie lleva la
+fuente y «Mapa: © colaboradores de OpenStreetMap» (licencia ODbL). Página `video/vias.html`, en 9:16 y 4:5 (el 16:9 la
+muestra dentro del escenario). Se prueba sin sesión con `python3 scripts/escena_prueba.py vias`, que la arma con el
+constructor real sobre los casos de `sesiones/_fixture_escenas/vias.json` y mide pureza, V13, A3 y A1.
+
+| Gate | Qué exige |
+|---|---|
+| H27 | Escena `vias`: la red existe en `design/vias/`; título de un renglón (≤ 30); 2–6 capas, cada una con su `dice` (sin cifras) que suena en la voz y en orden, y con algo que mostrar; arterias, lugares y zoom son ids de la red; cada número en pantalla (cifra, rótulo, etiqueta, título, valor de la burbuja) con respaldo y cada año en un hecho; con un dato en pantalla, `fuente`; ≥ 1.6 s de voz por capa y la primera suena en el primer 35 % de la voz; ≤ 2 por video. |
+
+**Las demás escenas con archivos reales (2026-11-12).** Todas siguen el patrón de `vias`: lo que entra en pantalla lo
+dispara un `dice` (la palabra o el nombre que la voz dice, sin cifras, en orden), lo que suena va en el acento y lo
+anterior en crema, la cámara solo se mueve cuando la escena lo pide y todo queda quieto entre entradas (A1). Cada número
+en pantalla lleva respaldo y cada foto es una foto verificada de `historia.json`.
+
+| Escena | Qué es | Página | Gate |
+|---|---|---|---|
+| `lupa` | Una foto real que se interroga punto por punto (`puntos` con `x`, `y` en 0–1 y una etiqueta). Estilo `puntos`: la cámara se acerca y un velo apaga el resto. Estilo `pistas`: las etiquetas se quedan (la anatomía de un objeto). | `video/lupa.html` | H28 |
+| `deptos` | El mapa de los 22 departamentos por `capas`: departamentos que se encienden, `arco` desde el de la capa anterior (el viaje de algo), `onda` (un anillo que sale de un departamento y va encendiendo a los demás), dato de arriba y `zoom`. | `video/deptos.html` | H29 |
+| `pagina` | La página real de un documento con la frase subrayada en su sitio. `historia.py pagina <TRABAJO> --id … --url <PDF ya leído> --frase «…»` saca la imagen de la página y la caja de cada renglón (necesita poppler). La voz lee la frase y el marcador la recorre a su paso. | `video/pagina.html` | H30 |
+| `cortina` | Antes y ahora: dos fotos reales del mismo lugar; una cortina descubre la segunda cuando la voz dice el `dice`. | `video/cortina.html` | H31 |
+| `archivo` | Varias piezas reales, una por frase. Estilos: `tira` (línea de tiempo con fotos), `capas` (recortes que caen uno sobre otro), `mesa` (las pruebas sobre una mesa; la cámara va de una a otra), `conteo` (una foto por cada cosa que se cuenta) y `barras` (una serie que sube sobre la foto). | `video/archivo.html` | H32 |
+| `bandos` | Las personas toman partido en dos columnas (quién votó a favor y quién en contra), con su retrato; `umbral` opcional (la barra de lo alcanzado frente a lo que hacía falta). | `video/bandos.html` | H33 |
+
+`vias` admite además `carrera {arteria, veces}` en una capa: dos puntos hacen el mismo viaje hacia el centro, uno sin
+tráfico y el de hoy, que tarda `veces` más (`veces` con respaldo).
+
+| Gate | Qué exige |
+|---|---|
+| H28 | `lupa`: foto verificada; título ≤ 30; 2–5 puntos con `x`, `y` entre 0 y 1, etiqueta ≤ 28 y su `dice` en la voz y en orden; ≥ 1.8 s de voz por punto. |
+| H29 | `deptos`: 2–6 capas; `deptos` son departamentos que existen (1–6 por capa); `arco` pide una capa anterior con departamentos; `zoom` es un departamento o «todo»; con un dato, `fuente`; ≥ 1.6 s por capa; ≤ 2 por video. |
+| H30 | `pagina`: la página existe en `paginas.json` con 1–5 renglones; `fuente` (de quién es el documento); la voz lee la frase tal como está; ≤ 2 por video. |
+| H31 | `cortina`: dos fotos verificadas y distintas; dos etiquetas ≤ 14 con sus años en un hecho; el `dice` suena pasado el 20 % de la voz; 1 por video. |
+| H32 | `archivo`: estilo válido; piezas con fotos verificadas y distintas (tira y capas 2–5, mesa 3–4; ≥ 2.2 s por pieza); `conteo` con `cuenta` 2–24 con respaldo y `unidad`; `barras` 2–6 con valores con respaldo y `fuente`; ≤ 2 por video. |
+| H33 | `bandos`: dos lados con nombre ≤ 16; 2–6 personas del encuadre con retrato, ≤ 3 por lado y al menos una en cada uno; `umbral` con sus números con respaldo; 1 por video. |
+
+Las siete se prueban sin sesión con `python3 scripts/escena_prueba.py <tipo>` (o `--todas`): cada caso de
+`sesiones/_fixture_escenas/<tipo>.json` se arma con su constructor real sobre una voz falsa y se graba dos veces en 9:16
+(mismos cuadros: `seek(t)` puro) y una en 4:5, con V13, A3 y A1. En 16:9 se muestran dentro del escenario.
 
 La escena `red` admite `estilo: "tablero"` (`video/tablero.html`): los mismos nodos y aristas y el mismo gate H23,
 como tablero de investigación con cuadritos e hilos, sin tachas. En 9:16, 4:5 y 16:9.

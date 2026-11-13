@@ -115,6 +115,49 @@
           "duracion_s": 169.5
         }
       ]
+    },
+    {
+      "id": "2026-11-10-el-terremoto-de-1976-en-guatemala",
+      "slug": "el-terremoto-de-1976-en-guatemala",
+      "tema": "El terremoto de 1976 en Guatemala",
+      "motor": "historia",
+      "fecha": "2026-11-10",
+      "carpeta": "series/2026-11-10-el-terremoto-de-1976-en-guatemala",
+      "n_partes": 4,
+      "paleta": "obsidiana",
+      "musica": "obsidiana-2",
+      "version_plan": 10,
+      "estado": "completa",
+      "partes": [
+        {
+          "n": 1,
+          "titulo": "Las 3:03 de la madrugada",
+          "estado": "entregada",
+          "ruta": "series/2026-11-10-el-terremoto-de-1976-en-guatemala/parte-1",
+          "duracion_s": 105.3
+        },
+        {
+          "n": 2,
+          "titulo": "La tierra no dejó de temblar",
+          "estado": "entregada",
+          "ruta": "series/2026-11-10-el-terremoto-de-1976-en-guatemala/parte-2",
+          "duracion_s": 108.7
+        },
+        {
+          "n": 3,
+          "titulo": "La casa del pobre",
+          "estado": "entregada",
+          "ruta": "series/2026-11-10-el-terremoto-de-1976-en-guatemala/parte-3",
+          "duracion_s": 109.4
+        },
+        {
+          "n": 4,
+          "titulo": "Lo que dejó la falla",
+          "estado": "entregada",
+          "ruta": "series/2026-11-10-el-terremoto-de-1976-en-guatemala/parte-4",
+          "duracion_s": 139.5
+        }
+      ]
     }
   ]
 }

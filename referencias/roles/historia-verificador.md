@@ -96,3 +96,16 @@ Antes de devolver, `python3 scripts/historia.py hechos <TRABAJO> --check --eje <
   - Nunca marques una cara sin un pie o una categoría que nombre a esa persona: identificar mal a alguien es difamación (H21).
   - Presupuesto: +2 descargas de retrato por eje.
 - **Relaciones.** En los hechos que dicen quién mandaba a quién, confirma contra la cita guardada las `relaciones: [{de, a, rel}]` que anotó el investigador, y quita las que la cita no dice. Si el hecho es un alegato, la relación también lo es: la escena `red` la dibuja punteada y atribuida.
+
+
+## Archivos para las escenas de archivo (2026-11-12)
+
+Además de las fotos de siempre, cuando la historia lo tenga:
+
+- **Antes y ahora**: baja las dos fotos del mismo lugar (`historia.py foto`), con el año en la descripción de cada una; la
+  escena `cortina` las compara, así que las dos muestran lo mismo.
+- **Una foto para leer** (`lupa`): en la `descripcion` di qué se ve y dónde (arriba el rótulo, al centro la losa
+  doblada). El guionista coloca los puntos mirando la foto, pero tu descripción le dice qué es cada cosa.
+- **Un documento en PDF**: confirma que la frase citada está en el PDF guardado, palabra por palabra (la escena `pagina`
+  la busca así con `historia.py pagina`; si la cita tiene una errata, no la encuentra).
+- **Retratos para dos lados** (`bandos`): cada persona con su retrato (H22) y un hecho que diga de qué lado está.

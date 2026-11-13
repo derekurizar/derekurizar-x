@@ -1571,6 +1571,12 @@ def cmd_armar(a):
         js = os.path.join(RAIZ, r["_trabajo"], "fotos", fid + ".json")
         if os.path.exists(js):
             enlazar(js, os.path.join(trabajo, "fotos", fid + ".json"))
+    # las imágenes sin ficha: la página de documento de una escena `pagina` (historia.py pagina la escribe en fotos/<id>.jpg)
+    for P in Y["partes"]:
+        for img in sorted(glob.glob(os.path.join(RAIZ, P["trabajo"], "fotos", "*.jpg"))):
+            dst = os.path.join(trabajo, "fotos", os.path.basename(img))
+            if not os.path.exists(dst) and not os.path.basename(img).startswith("_"):
+                enlazar(img, dst)
     por_parte = {P["n"]: P for P in partes}
     k_nueva = {id(it): n for it, n in nuevas}
     escenas, n, ult_carta = [], 0, {}
@@ -1647,12 +1653,13 @@ def cmd_armar(a):
             b_["seguida"] = False
     E1 = partes[0]["E"]
     Eu = partes[-1]["E"]
-    # P6: la pregunta en pantalla es la del video entero (la promesa global), no la de cada parte
+    # P6: la pregunta en pantalla es la del video entero (la promesa global), no la de cada parte; solo en su pago, con
+    # el check (2026-11-10: sin el dato en pantalla no apunta a nada)
     prm = M.get("promesa") or {}
     for S in escenas:
         S.pop("pregunta", None)
         S["eventos"] = [x for x in S.get("eventos") or [] if x.get("tipo") != "pregunta"]
-        q_en = {"promesa": ("promesa", 0.6), prm.get("pago"): ("pago", 0.9)}.get(S.get("origen"))
+        q_en = {prm.get("pago"): ("pago", 0.9)}.get(S.get("origen"))
         if (prm.get("pregunta") or "").strip() and q_en and S.get("tipo") != "cierre":
             S["pregunta"] = {"texto": prm["pregunta"].strip(), "desde": q_en[1], "pagada": q_en[0] == "pago",
                              "dur": round(min(VD.PREGUNTA_S[q_en[0]], S["dur"] - VD.TRANSICION - 0.3 - q_en[1]), 3)}

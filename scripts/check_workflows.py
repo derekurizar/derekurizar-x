@@ -297,7 +297,9 @@ def historia_workflow():
                  "ACTOS": len(HI.ACTOS), "HILOS_MIN": HI.HILOS[0], "HILOS_MAX": HI.HILOS[1], "PERSONAJES_MAX": HI.PERSONAJES_MAX,
                  # /serie: la investigación compartida (EJES_MAX_SERIE) y la parte de ≈ 90 s (PALABRAS_SERIE)
                  "EJES_MAX_SERIE": HI.EJES_MAX_SERIE, "PALABRAS_SERIE_MIN": HI.PALABRAS_SERIE[0], "PALABRAS_SERIE_MAX": HI.PALABRAS_SERIE[1],
-                 "PALABRAS_CASO_MIN": HI.FORMATOS["historia-caso"]["PALABRAS"][0], "PALABRAS_CASO_MAX": HI.FORMATOS["historia-caso"]["PALABRAS"][1]}
+                 "PALABRAS_CASO_MIN": HI.FORMATOS["historia-caso"]["PALABRAS"][0], "PALABRAS_CASO_MAX": HI.FORMATOS["historia-caso"]["PALABRAS"][1],
+                 # SE14 (m132): la última parte suma el resumen; el workflow topa con los mismos números
+                 "RESUMEN_EXTRA_S": HI.RESUMEN_EXTRA_S, "RESUMEN_EXTRA_PAL": round(HI.RESUMEN_EXTRA_S * 145 / 60)}
     for nombre, py in escalares.items():
         m = re.search(r"\b%s = (\d+)" % nombre, src)
         if not m:

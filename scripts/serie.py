@@ -28,6 +28,10 @@ Subcomandos:
       parte de /historia solo ve los hechos hasta el fin de su periodo). Imprime el TRABAJO de la parte.
   digesto SERIE        el plan legible (para mostrárselo al usuario antes de producir).
   estado SERIE         las partes, su estado y si ya se pueden publicar.
+  renombrar SERIE N "<título>"
+      cambia el título de la parte N en todos lados (m134): el plan (encuadre.json y serie.json, sube la versión), el
+      video.json y el encuadre de la parte, el «siguiente» de la parte anterior y el prefijo de los captions (SE8:
+      «Serie · Parte N de M: <título>», «(N/M)» de Shorts). Lo ya grabado se rehace con historia.py producir.
   guion-aprobado TRABAJO_PARTE   el crítico aprobó el guion de esa parte: pasa a «guion» (habilita publicar la anterior).
   entregar-parte TRABAJO_PARTE [--salida DIR]
       entrega la parte con el entregar del motor en series/<fecha>-<slug>/parte-N y rehace serie.json y serie.md.
@@ -260,6 +264,9 @@ def numeros(t):
     return {x.replace(",", "") for x in re.findall(r"\d[\d,]*(?:\.\d+)?", t or "")}
 
 
+FORMATO_PERIODO = r"^\d{4}(-\d{2}(-\d{2})?)?$"
+
+
 def fecha_clave(x):
     return str(x or "").strip()
 
@@ -275,7 +282,7 @@ def revisar_plan(enc, motor, M_esperado=None, caso=False):
     if M_esperado and len(partes) != M_esperado:
         f.append("SE1 el plan trae %d partes y la serie se preparó con %d (serie.py preparar --partes)" % (len(partes), M_esperado))
     # la promesa de la serie ENTERA (2026-11-10): la pregunta que se responde al terminar las M partes. La parte 1 la
-    # dice, las siguientes la muestran bajo «Parte N de M» y la última la responde (SE18)
+    # dice y la última la responde (SE18); en pantalla sale solo en ese pago (P6)
     prom = (enc.get("serie") or {}).get("promesa") or {}
     q = (prom.get("pregunta") or "").strip() if isinstance(prom, dict) else ""
     if not (q.startswith("¿") and q.endswith("?")) or VD.palabras(q) > PROMESA_SERIE_PALABRAS:
@@ -300,9 +307,10 @@ def revisar_plan(enc, motor, M_esperado=None, caso=False):
             f.append("%s: «pregunta» (la que abre esa parte, con «?»)" % tag)
         if motor == "historia":
             pe = p.get("periodo") or {}
-            if not (re.match(r"^\d{4}(-\d{2})?$", fecha_clave(pe.get("desde"))) and re.match(r"^\d{4}(-\d{2})?$", fecha_clave(pe.get("hasta")))
+            # AAAA-MM-DD (m133): una historia que pasa en días (un terremoto, una semana de crisis) parte por día
+            if not (re.match(FORMATO_PERIODO, fecha_clave(pe.get("desde"))) and re.match(FORMATO_PERIODO, fecha_clave(pe.get("hasta")))
                     and fecha_clave(pe.get("desde")) <= fecha_clave(pe.get("hasta"))):
-                f.append("%s: «periodo» {desde, hasta} en AAAA o AAAA-MM, desde ≤ hasta" % tag)
+                f.append("%s: «periodo» {desde, hasta} en AAAA, AAAA-MM o AAAA-MM-DD, desde ≤ hasta" % tag)
             if len(p.get("actos") or []) != 3:
                 f.append("%s: «actos» = 3 (planteamiento, nudo, desenlace de la parte)" % tag)
             esp = p.get("espina") or {}
@@ -346,6 +354,11 @@ def revisar_plan(enc, motor, M_esperado=None, caso=False):
             h1, d2 = fecha_clave((partes[k].get("periodo") or {}).get("hasta")), fecha_clave((sig.get("periodo") or {}).get("desde"))
             if h1 and d2 and d2 < h1:
                 f.append("SE2 los periodos se pisan: la parte %d termina en %s y la %d empieza en %s" % (k + 1, h1, k + 2, d2))
+            elif h1 and d2 and min(len(h1), len(d2)) < 10 and h1[:min(len(h1), len(d2))] == d2[:min(len(h1), len(d2))]:
+                # m133: dos partes que comparten un mes (1976-02 y 1976-02) se reparten mal los hechos de ese mes: la
+                # anterior recibe lo que revela la siguiente
+                f.append("SE2 la parte %d termina en %s y la %d empieza en %s: comparten ese periodo; usa AAAA-MM-DD en "
+                         "los dos bordes para que cada hecho caiga en una sola parte" % (k + 1, h1, k + 2, d2))
     ids = [h.get("id") for p in partes for h in p.get("hilos") or [] if isinstance(h, dict)]
     if len(ids) != len(set(ids)):
         f.append("SE1 ids de hilo repetidos entre partes (cada hilo vive en una parte; el que sigue abierto pasa con pasa_a)")
@@ -872,7 +885,10 @@ def fotos_repetidas(g, n, trabajo):
     if not n or not trabajo:
         return []
     base, usos = os.path.dirname(os.path.abspath(trabajo)), {}
-    fotos_de = lambda gg: {x for e in gg.get("escenas") or [] for x in [e.get("foto")] + list(e.get("dividida") or []) if x}
+    # también la foto del gancho (visual_datos.foto): sin ella, la de las ruinas de la capital salió en 3 partes del terremoto
+    fotos_de = lambda gg: {x for e in gg.get("escenas") or [] for x in [e.get("foto"), (e.get("visual_datos") or {}).get("foto")]
+                           + list(e.get("dividida") or []) + [e.get("antes"), e.get("ahora")]   # las dos de una cortina y las piezas de un archivo
+                           + [p.get("foto") for p in e.get("piezas") or [] if isinstance(p, dict)] if x}
     for d in sorted(glob.glob(os.path.join(base, "parte-*"))):
         try:
             k = int(d.rsplit("-", 1)[1])
@@ -1101,6 +1117,82 @@ def revisar_completa(S):
     return f, md
 
 
+def renombrar_captions(g, n, M, viejo, nuevo):
+    """Los captions de la parte: el título viejo en la línea con «Parte N de M» o «(N/M)» pasa al nuevo. → cuántos."""
+    k = 0
+    caps = g.get("caption") if isinstance(g.get("caption"), dict) else (g.get("captions") or {})
+    for plat, txt in list(caps.items()):
+        if not isinstance(txt, str):
+            continue
+        lineas = txt.split("\n")
+        for i, ln in enumerate(lineas):
+            if viejo in ln and ("Parte %d de %d" % (n, M) in ln or "(%d/%d)" % (n, M) in ln):
+                lineas[i] = ln.replace(viejo, nuevo)
+                k += 1
+        caps[plat] = "\n".join(lineas)
+    return k
+
+
+def cmd_renombrar(a):
+    """m134: el título de una parte en el plan, su TRABAJO, el «siguiente» de la anterior y sus captions."""
+    ruta, S = cargar_serie(a.serie)
+    nuevo = a.titulo.strip()
+    if not nuevo or VD.palabras(nuevo) > TITULO_PALABRAS:
+        return falla("el título va de 1–%d palabras" % TITULO_PALABRAS)
+    p = next((x for x in S.get("partes") or [] if x.get("n") == a.n), None)
+    if not p:
+        return falla("la serie no tiene parte %d" % a.n)
+    viejo, M = p.get("titulo") or "", len(S["partes"])
+    if viejo == nuevo:
+        print("[serie renombrar] la parte %d ya se llama «%s»" % (a.n, nuevo))
+        return 0
+    trabajo = os.path.join(RAIZ, S["trabajo"])
+    tocados = []
+    enc_r = os.path.join(trabajo, "encuadre.json")
+    if os.path.exists(enc_r):
+        enc = leer(enc_r)
+        for x in (enc.get("serie") or {}).get("partes") or []:
+            if x.get("n") == a.n:
+                x["titulo"] = nuevo
+        escribir(enc_r, enc)
+        tocados.append(rel(enc_r))
+    for k in (a.n, a.n - 1):
+        tp = os.path.join(trabajo, "parte-%d" % k)
+        for nombre in ("video.json", "encuadre.json"):
+            r = os.path.join(tp, nombre)
+            if not os.path.exists(r):
+                continue
+            d = leer(r)
+            ser = d.get("serie") if isinstance(d.get("serie"), dict) else None
+            if not ser:
+                continue
+            if k == a.n:
+                ser["titulo"] = nuevo
+            elif isinstance(ser.get("siguiente"), dict):
+                ser["siguiente"]["titulo"] = nuevo
+            else:
+                continue
+            escribir(r, d)
+            tocados.append(rel(r))
+    guion_r = os.path.join(trabajo, "parte-%d" % a.n, "guion.json")
+    if os.path.exists(guion_r):
+        g = leer(guion_r)
+        if renombrar_captions(g, a.n, M, viejo, nuevo):
+            escribir(guion_r, g)
+            tocados.append(rel(guion_r) + " (captions)")
+    p["titulo"] = nuevo
+    guardar_serie(ruta, S, nota="parte %d: «%s» → «%s»" % (a.n, viejo, nuevo))
+    tocados.append(rel(ruta))
+    for t in tocados:
+        print("  ·", t)
+    grabadas = [k for k in (a.n, a.n - 1) if os.path.exists(os.path.join(trabajo, "parte-%d" % k, "escenas.json"))]
+    print("[serie renombrar] parte %d: «%s» → «%s» · plan v%s" % (a.n, viejo, nuevo, S.get("version")))
+    if grabadas:
+        print("AVISO: la pantalla ya grabada de la(s) parte(s) %s lleva el título viejo (chip, cierre «Parte N+1 · título»): "
+              "rehazla con historia.py producir (la voz no cambia) y vuelve a entregar" % ", ".join(map(str, grabadas)))
+    return 0
+
+
 def cmd_completa(a):
     ruta, S = cargar_serie(a.serie)
     f, md = revisar_completa(S)
@@ -1203,6 +1295,10 @@ def main():
     q.add_argument("serie")
     q.add_argument("--check", action="store_true", required=True)
     q.add_argument("--aprobar", action="store_true", help="0 fallas y el crítico la aprobó: habilita la voz de las partes")
+    q = sub.add_parser("renombrar", help="m134: el título de una parte en el plan, su TRABAJO, la anterior y los captions")
+    q.add_argument("serie")
+    q.add_argument("n", type=int)
+    q.add_argument("titulo")
     q = sub.add_parser("entregar-parte")
     q.add_argument("trabajo")
     q.add_argument("--salida")
@@ -1210,7 +1306,7 @@ def main():
     if a.revisar:
         return cmd_check(a)
     fn = {"preparar": cmd_preparar, "plan": cmd_plan, "cobertura": cmd_cobertura, "parte": cmd_parte, "digesto": cmd_digesto,
-          "estado": cmd_estado, "entregar-parte": cmd_entregar_parte, "completa": cmd_completa,
+          "estado": cmd_estado, "entregar-parte": cmd_entregar_parte, "completa": cmd_completa, "renombrar": cmd_renombrar,
           "guion-aprobado": lambda a: marcar_guion(os.path.abspath(a.trabajo)) or 0}.get(a.cmd)
     if not fn:
         ap.print_help()

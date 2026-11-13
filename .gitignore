@@ -3,6 +3,7 @@ node_modules/
 templates/.galeria/
 sesiones/*
 !sesiones/_fixture/
+!sesiones/_fixture_escenas/
 sesiones/_fixture/salida/
 !sesiones/_fixture_dato/
 sesiones/_fixture_dato/salida/

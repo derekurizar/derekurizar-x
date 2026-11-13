@@ -306,12 +306,35 @@ const V = (() => {
     caja.appendChild(el);
     PREGUNTA = { el, o };
   };
+  // lo que la pregunta no puede tapar: los textos visibles (hojas con texto) y las cajas con dibujo (mini-mapa, «Sígueme»)
+  const OBSTACULOS = '#minimapa, .vseguir, .vpersona';
+  const visible = (e) => (e.checkVisibility ? e.checkVisibility({ opacityProperty: true, visibilityProperty: true }) : e.offsetParent !== null)
+    && parseFloat(getComputedStyle(e).opacity) > 0.05;
+  const esquivar = (el) => {
+    const r = el.getBoundingClientRect(), caja = el.parentElement;
+    const rects = [...document.querySelectorAll(OBSTACULOS)].concat([...document.body.querySelectorAll('div, span, b, p, h1, h2, h3, i, em, strong')]
+      .filter((e) => !e.childElementCount && (e.textContent || '').trim()))
+      .filter((e) => !caja.contains(e) && visible(e)).map((e) => e.getBoundingClientRect())
+      .filter((q) => q.width >= 2 && q.height >= 2 && q.height <= 700);
+    let dy = 0;
+    for (let pasada = 0; pasada < 4; pasada++) {   // al bajar puede caer sobre otro: repite hasta que no choque
+      const antes = dy;
+      for (const q of rects)
+        if (q.left < r.right && q.right > r.left && q.top < r.bottom + dy && q.bottom > r.top + dy) dy = Math.max(dy, q.bottom + 12 - r.top);
+      if (dy === antes) break;
+    }
+    return dy;
+  };
   const seekPregunta = (t) => {
     if (!PREGUNTA) return;
     const { el, o } = PREGUNTA, x = t - o.desde;
     const v = portada ? 0 : Math.min(eo(x / D.entra), 1 - eo((x - o.dur) / D.sale));
     el.style.opacity = Math.max(0, v).toFixed(3);
-    el.style.transform = `translateX(${((1 - eo(x / D.entra)) * 40).toFixed(1)}px)`;
+    const tx = `translateX(${((1 - eo(x / D.entra)) * 40).toFixed(1)}px)`;
+    el.style.transform = tx;
+    // no tapa nada: si choca con un texto visible de la escena (el chip y el lugar de la foto, el mini-mapa, el
+    // «Sígueme»…), baja hasta quedar debajo del más bajo (terremoto P1: tapaba «…CHIMALTENANGO» y el mapa de Izabal)
+    if (v > 0.01) { const dy = esquivar(el); if (dy) el.style.transform = `${tx} translateY(${dy.toFixed(0)}px)`; }
     if (o.pagada) { const k = eo((x - 0.9) / 0.35); el.classList.toggle('ya', k > 0.5);
       el.querySelector('svg').style.transform = `scale(${(k <= 0 ? 0 : 1 + 0.4 * Math.sin(Math.PI * k) * (1 - k)).toFixed(3)})`; }
   };

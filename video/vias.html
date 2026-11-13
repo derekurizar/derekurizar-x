@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<!-- Escena «vias» de /historia (?n=N): el mapa vial REAL de una ciudad (design/vias/<red>.json, de OpenStreetMap; lo
+     arma scripts/build_vias.py y lo sirve scripts/video_grabar.js como vias/<red>.json) animado por CAPAS, una por
+     frase de la voz (S.M de scripts/historia.py t_vias; gate H27). Cada capa puede: encender arterias (su trazo real
+     crece del centro hacia afuera, o hacia el centro con sentido «entra», hasta `nivel`), marcar un lugar con su aro y
+     su rótulo (y una etiqueta corta), poner el dato de arriba (cifra + rótulo), inflar una burbuja en un lugar (área ∝
+     valor), encender la vía del tren, correr una CARRERA (dos puntos hacen el mismo viaje hacia el centro: el fantasma sin
+     tráfico y el de hoy, que tarda `veces` más), y mover la CÁMARA (zoom a un lugar, o «todo»). Lo de la capa que la voz dice va
+     en el acento; lo de las capas anteriores queda en crema. La cámara solo se mueve cuando la capa lo pide (cámara
+     quieta) y todo queda quieto entre capas (A1). El mapa va a sangre (data-fuera-de-zona); el título, el dato, los
+     rótulos de lugar y el pie se quedan en la zona segura (V13): un rótulo cuyo lugar sale de la zona se acerca a ella
+     y su aro se oculta. Solo variables del sistema Noche (sin hex). La graba scripts/video_grabar.js con seek(t). -->
+<link rel="stylesheet" href="comun.css">
+<style>
+#titulo { position: absolute; top: 290px; left: var(--izq); right: var(--der); font: 800 58px/1.04 Archivo, sans-serif; letter-spacing: -.015em; white-space: nowrap; }
+#dato { position: absolute; top: 364px; left: var(--izq); right: var(--der); display: flex; align-items: flex-end; gap: 22px; opacity: 0; }
+#dato .cifra { font: 900 104px/.84 Archivo, sans-serif; font-stretch: 62.5%; text-transform: uppercase; letter-spacing: -.01em; white-space: nowrap; color: var(--acento, var(--a1)); }
+#dato .rot { padding-bottom: 6px; font: 800 32px/1.08 Archivo, sans-serif; letter-spacing: -.01em; }
+#mapa { position: absolute; top: 470px; left: 0; width: 1080px; height: 840px; overflow: hidden; }
+#mapa svg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; }
+#mapa path, #mapa polyline, #mapa circle { vector-effect: non-scaling-stroke; }
+#mapa .base { fill: none; stroke: var(--ink); stroke-linecap: round; stroke-linejoin: round; }
+#mapa .arteria { fill: none; stroke-width: 11; stroke-linecap: round; stroke-linejoin: round; }
+#mapa .arteria.guia { stroke: color-mix(in srgb, var(--ink) 45%, transparent); stroke-width: 5; }
+#mapa .fantasma { fill: var(--bg); stroke: var(--ink); stroke-width: 5; }
+#mapa .hoy { stroke: var(--bg); stroke-width: 4; }
+#mapa .riel { fill: none; stroke-width: 8; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 4 14; }
+#rotulos { position: absolute; top: 470px; left: 0; width: 1080px; height: 840px; pointer-events: none; }
+.aro { position: absolute; width: 38px; height: 38px; margin: -19px 0 0 -19px; box-sizing: border-box; border-radius: 50%;
+  border: 5px solid var(--ink); opacity: 0; }
+.lug { position: absolute; left: 0; top: 0; display: flex; flex-direction: column; gap: 4px; padding: 8px 12px 7px; box-sizing: border-box;
+  border-radius: 8px; background: var(--bg); border: 2.5px solid color-mix(in srgb, var(--ink) 50%, transparent); white-space: nowrap; opacity: 0; }
+.lug b { font: 700 23px/1 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+.lug span { font: 800 28px/1.05 Archivo, sans-serif; letter-spacing: -.01em; }
+.lug span:empty { display: none; }
+#pie { position: absolute; left: var(--izq); right: var(--der); top: 1318px; font: 600 19px/1.25 'JetBrains Mono', monospace; letter-spacing: .04em; opacity: .7; }
+/* formato 4:5 (1080×1350): el mapa recorta 55 px arriba y abajo de su lienzo */
+html.f45 #titulo { top: 150px; font-size: 48px; }
+html.f45 #dato { top: 208px; }
+html.f45 #dato .cifra { font-size: 84px; }
+html.f45 #dato .rot { font-size: 27px; }
+html.f45 #mapa, html.f45 #rotulos { top: 290px; height: 730px; }
+html.f45 .lug b { font-size: 20px; }
+html.f45 .lug span { font-size: 24px; }
+html.f45 #pie { top: 1030px; }
+</style>
+</head>
+<body>
+<div id="arriba"><div id="progreso"></div></div>
+<div id="titulo"></div>
+<div id="dato"><div class="cifra"></div><div class="rot"></div></div>
+<div id="mapa" data-fuera-de-zona></div>
+<div id="rotulos"></div>
+<div id="pie"></div>
+<div id="subs"></div>
+<script src="comun.js"></script>
+<script>
+const n = V.n, { clamp, eo, esc } = V, NS = 'http://www.w3.org/2000/svg';
+const ENTRA_S = 1.1, CAMARA_S = 0.9;   // lo que tarda una arteria (o una burbuja) en entrar y un movimiento de cámara
+let S, M, TROZOS, RED, G, W, HB, OY, CAMS = [], ARTS = {}, BURB = {}, RIEL = null, LUGS = [], CARRERAS = [];
+const CARRERA_S = 1.5;   // lo que tarda el viaje de hoy; el fantasma, CARRERA_S / veces
+const crear = (tag, attrs, padre) => { const x = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs || {})) x.setAttribute(k, v);
+  if (padre) padre.appendChild(x); return x; };
+const ACENTO = 'var(--acento, var(--a1))';
+const lim = (v, a, b) => Math.max(a, Math.min(b, v));   // V.clamp es de 0 a 1: aquí hacen falta límites propios
+
+// la cámara de una capa: {tx, ty, s} con el lugar al centro de la caja, sin dejar ver el borde del mapa
+function camara(lugar, s) {
+  if (!lugar || lugar === 'todo') return { tx: 0, ty: 0, s: 1 };
+  const p = RED.lugares[lugar], alto = RED.lienzo[1];
+  return { s, tx: lim(W / 2 - s * p.x, W - s * W, 0), ty: lim(HB / 2 - s * p.y - OY, HB - s * alto - OY, -OY) };
+}
+
+window.__listo = (async () => {
+  const C = await V.cargar(); S = C.S; TROZOS = C.trozos; M = S.M;
+  V.pintarProgreso(C.todo);
+  RED = await (await fetch('vias/' + M.red + '.json')).json();
+  document.getElementById('titulo').textContent = M.titulo || '';
+  document.getElementById('pie').textContent = [M.fuente, 'Mapa: ' + RED.atribucion].filter(Boolean).join(' · ');
+  const caja = document.getElementById('mapa');
+  W = caja.clientWidth; HB = caja.clientHeight; OY = (HB - RED.lienzo[1]) / 2;
+  const svg = crear('svg', { viewBox: `0 0 ${W} ${HB}` }, caja);
+  G = crear('g', {}, svg);
+  // la red entera, de la más fina a la más gruesa
+  for (const c of RED.capas) crear('path', { d: c.d, class: 'base', 'stroke-width': c.ancho, 'stroke-opacity': c.opacidad }, G);
+  // burbujas (una por lugar: crece de un valor al siguiente), debajo de las arterias
+  M.capas.forEach((c, k) => {
+    if (!c.burbuja) return;
+    const b = BURB[c.burbuja.lugar] || (BURB[c.burbuja.lugar] = { pasos: [], el: null });
+    b.pasos.push({ k, start: c.start, r: c.burbuja.r });
+  });
+  for (const [lugar, b] of Object.entries(BURB)) {
+    const p = RED.lugares[lugar];
+    b.el = crear('circle', { cx: p.x, cy: p.y, r: 0 }, G);
+  }
+  // la vía del tren: se descubre de norte a sur con un recorte
+  const kRiel = M.capas.findIndex((c) => c.riel);
+  if (kRiel >= 0 && RED.riel) {
+    const cp = crear('clipPath', { id: 'corte-riel' }, crear('defs', {}, svg));
+    RIEL = { k: kRiel, start: M.capas[kRiel].start, rect: crear('rect', { x: 0, y: 0, width: RED.lienzo[0], height: 0 }, cp),
+      el: crear('path', { d: RED.riel, class: 'riel', 'clip-path': 'url(#corte-riel)' }, G) };
+  }
+  // arterias: un trazo por arteria, muestreado cada 3 px de su recorrido real; crece de un nivel al siguiente
+  M.capas.forEach((c, k) => (c.arterias || []).forEach((id) => {
+    const a = ARTS[id] || (ARTS[id] = { pasos: [], sentido: c.sentido || 'sale' });
+    a.pasos.push({ k, start: c.start, nivel: c.nivel == null ? 1 : c.nivel });
+  }));
+  for (const [id, a] of Object.entries(ARTS)) {
+    const guia = crear('path', { d: RED.arterias[id].d, fill: 'none', stroke: 'none' }, G), largo = guia.getTotalLength();
+    a.pts = [];
+    for (let d = 0; d <= largo; d += 3) { const p = guia.getPointAtLength(d); a.pts.push([p.x, p.y]); }
+    const fin = guia.getPointAtLength(largo); a.pts.push([fin.x, fin.y]);
+    if (a.sentido === 'entra') a.pts.reverse();
+    guia.remove();
+    a.el = crear('polyline', { class: 'arteria', points: '' }, G);
+  }
+  // carreras: dos puntos hacen el mismo viaje por una arteria, de afuera hacia el centro: el fantasma (sin tráfico) y el de
+  // hoy, que tarda `veces` más; el de hoy deja su rastro
+  M.capas.forEach((c, k) => {
+    if (!c.carrera) return;
+    const guia = crear('path', { d: RED.arterias[c.carrera.arteria].d, fill: 'none', stroke: 'none' }, G), largo = guia.getTotalLength(), pts = [];
+    for (let d = largo; d >= 0; d -= 3) { const p = guia.getPointAtLength(d); pts.push([p.x, p.y]); }
+    const ini = guia.getPointAtLength(0); pts.push([ini.x, ini.y]);
+    guia.remove();
+    CARRERAS.push({ k, start: c.start, veces: c.carrera.veces, pts, guia: crear('polyline', { class: 'arteria guia', points: pts.map((p) => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ') }, G),
+      rastro: crear('polyline', { class: 'arteria', points: '' }, G), fantasma: crear('circle', { r: 11, class: 'fantasma' }, G), hoy: crear('circle', { r: 12, class: 'hoy' }, G) });
+  });
+  // la cámara de cada capa (la que no pide zoom hereda la anterior)
+  let cam = { tx: 0, ty: 0, s: 1 };
+  CAMS = M.capas.map((c) => (cam = c.zoom ? camara(c.zoom, c.acerca || 2.6) : cam));
+  // rótulos de lugar: el aro y la caja con el nombre (y la etiqueta de la capa)
+  const R = document.getElementById('rotulos');
+  M.capas.forEach((c, k) => {
+    if (!c.lugar) return;
+    const aro = document.createElement('div'); aro.className = 'aro'; R.appendChild(aro);
+    const el = document.createElement('div'); el.className = 'lug';
+    el.innerHTML = `<b>${esc(RED.lugares[c.lugar].nombre)}</b><span>${esc(c.etiqueta || '')}</span>`;
+    R.appendChild(el);
+    LUGS.push({ k, start: c.start, lugar: c.lugar, aro, el });
+  });
+  await Promise.all(["700 23px 'JetBrains Mono'", '800 28px Archivo', 'extra-condensed 900 104px Archivo'].map((f) => document.fonts.load(f)));
+  await document.fonts.ready;
+  for (const L of LUGS) { L.w = L.el.offsetWidth; L.h = L.el.offsetHeight; }
+  // el título en un renglón: se achica hasta caber
+  const tit = document.getElementById('titulo');
+  for (let fs = parseFloat(getComputedStyle(tit).fontSize); fs > 34 && tit.scrollWidth > tit.clientWidth; fs -= 2) tit.style.fontSize = fs + 'px';
+  await V.pintarActo(S);
+})();
+
+window.seek = (t0) => {
+  const t = V.portada ? S.dur : t0, capas = M.capas, Z = V.zona();
+  V.seekProgreso(t0, n, S.dur);
+  V.seekActo(t0, S);
+  let k = -1;
+  capas.forEach((c, i) => { if (t >= c.start) k = i; });
+  // título: entra cuando lo propio puede entrar (después del rótulo de acto, si lo hay)
+  const ti = eo((t - (S.T.ini || 0.3) + 0.2) / 0.4), tit = document.getElementById('titulo');
+  tit.style.opacity = ti.toFixed(3); tit.style.transform = `translateY(${((1 - ti) * 24).toFixed(1)}px)`;
+  // el dato de arriba: el de la última capa que trae cifra
+  let kd = -1;
+  for (let i = 0; i <= k; i++) if (capas[i].cifra) kd = i;
+  const dato = document.getElementById('dato');
+  if (kd >= 0) {
+    dato.querySelector('.cifra').textContent = capas[kd].cifra; dato.querySelector('.rot').textContent = capas[kd].rotulo || '';
+    const p = eo((t - capas[kd].start) / 0.35);
+    dato.style.opacity = p.toFixed(3); dato.style.transform = `translateY(${((1 - p) * 14).toFixed(1)}px)`;
+    dato.querySelector('.cifra').style.color = kd === k ? '' : 'var(--ink)';   // el acento, solo mientras suena su capa
+  } else dato.style.opacity = 0;
+  // cámara: de la de la capa anterior a la de esta, solo al entrar la capa
+  const de = k > 0 ? CAMS[k - 1] : { tx: 0, ty: 0, s: 1 }, a = k >= 0 ? CAMS[k] : de;
+  const pc = k >= 0 ? eo((t - capas[k].start) / CAMARA_S) : 0;
+  const cam = { tx: de.tx + (a.tx - de.tx) * pc, ty: de.ty + (a.ty - de.ty) * pc, s: de.s + (a.s - de.s) * pc };
+  G.setAttribute('transform', `translate(${cam.tx.toFixed(2)} ${(cam.ty + OY).toFixed(2)}) scale(${cam.s.toFixed(4)})`);
+  // arterias: cada una crece hasta el nivel de su última capa; en el acento si esa capa es la que suena
+  for (const A of Object.values(ARTS)) {
+    let frac = 0, activa = false;
+    A.pasos.forEach((p, i) => {
+      if (t < p.start) return;
+      const antes = i > 0 ? A.pasos[i - 1].nivel : 0;
+      frac = antes + (p.nivel - antes) * eo((t - p.start) / ENTRA_S); activa = p.k === k;
+    });
+    const hasta = frac * (A.pts.length - 1), m = Math.floor(hasta), pts = A.pts.slice(0, m + 1);
+    if (m < A.pts.length - 1 && frac > 0) { const [x0, y0] = A.pts[m], [x1, y1] = A.pts[m + 1], f = hasta - m; pts.push([x0 + (x1 - x0) * f, y0 + (y1 - y0) * f]); }
+    A.el.setAttribute('points', frac > 0 ? pts.map((p) => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ') : '');
+    A.el.style.stroke = activa ? ACENTO : 'var(--ink)';
+    A.el.style.opacity = frac > 0 ? (activa ? 1 : 0.85) : 0;
+  }
+  // burbujas
+  for (const B of Object.values(BURB)) {
+    let r = 0, activa = false;
+    B.pasos.forEach((p, i) => {
+      if (t < p.start) return;
+      const antes = i > 0 ? B.pasos[i - 1].r : 0;
+      r = antes + (p.r - antes) * eo((t - p.start) / ENTRA_S); activa = p.k === k;
+    });
+    B.el.setAttribute('r', r.toFixed(1));
+    B.el.style.fill = activa ? `color-mix(in srgb, ${ACENTO} 42%, transparent)` : 'color-mix(in srgb, var(--ink) 16%, transparent)';
+  }
+  // la vía del tren
+  if (RIEL) {
+    RIEL.rect.setAttribute('height', (RED.lienzo[1] * eo((t - RIEL.start) / 1.4)).toFixed(1));
+    RIEL.el.style.stroke = RIEL.k === k ? ACENTO : 'var(--ink)';
+    RIEL.el.style.opacity = t >= RIEL.start ? 1 : 0;
+  }
+  // carreras: cada punto en su sitio del recorrido; r fijo en pantalla (se divide entre la escala de la cámara)
+  for (const Q of CARRERAS) {
+    const ve = t >= Q.start, ph = clamp((t - Q.start) / CARRERA_S), pf = clamp((t - Q.start) / (CARRERA_S / Q.veces)), ult = Q.pts.length - 1;
+    const en = (p) => { const h = p * ult, m = Math.min(ult - 1, Math.floor(h)), f = h - m; return [Q.pts[m][0] + (Q.pts[m + 1][0] - Q.pts[m][0]) * f, Q.pts[m][1] + (Q.pts[m + 1][1] - Q.pts[m][1]) * f]; };
+    const a = en(ph), b = en(pf), activa = Q.k === k;
+    Q.guia.style.opacity = ve ? 1 : 0;
+    Q.rastro.setAttribute('points', ve ? Q.pts.slice(0, Math.floor(ph * ult) + 1).concat([a]).map((p) => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ') : '');
+    Q.rastro.style.stroke = activa ? ACENTO : 'var(--ink)'; Q.rastro.style.opacity = ve ? 1 : 0;
+    Q.hoy.setAttribute('cx', a[0].toFixed(1)); Q.hoy.setAttribute('cy', a[1].toFixed(1)); Q.hoy.setAttribute('r', (13 / cam.s).toFixed(2));
+    Q.fantasma.setAttribute('cx', b[0].toFixed(1)); Q.fantasma.setAttribute('cy', b[1].toFixed(1)); Q.fantasma.setAttribute('r', (11 / cam.s).toFixed(2));
+    Q.hoy.style.fill = activa ? ACENTO : 'var(--ink)'; Q.hoy.style.opacity = Q.fantasma.style.opacity = ve ? 1 : 0;
+  }
+  // rótulos de lugar: el aro sobre el punto y la caja a su lado, dentro de la zona segura; el más nuevo tapa al viejo
+  const caja = document.getElementById('rotulos'), y0 = caja.offsetTop, puestos = [];
+  const xMin = Z.izq, xMax = Z.der, yMin = 8, yMax = Math.min(HB, Z.fin - y0) - 8;
+  for (let i = LUGS.length - 1; i >= 0; i--) {
+    const L = LUGS[i], p = RED.lugares[L.lugar], entra = eo((t - L.start) / 0.35);
+    const x = cam.tx + cam.s * p.x, y = cam.ty + OY + cam.s * p.y;
+    const relevado = LUGS.some((o) => o.k > L.k && o.lugar === L.lugar && t >= o.start);
+    const dentro = x >= Z.corte + 22 && x <= Z.ancho - Z.corte - 22 && y >= 22 && y <= yMax - 14 && (y + y0 < Z.iconosY || x <= Z.iconosX - 22);
+    L.aro.style.left = x.toFixed(1) + 'px'; L.aro.style.top = y.toFixed(1) + 'px';
+    L.aro.style.borderColor = L.k === k ? ACENTO : 'var(--ink)';
+    L.aro.style.opacity = (dentro && !relevado ? entra : 0).toFixed(3);
+    L.aro.style.transform = `scale(${(1 + 0.5 * Math.sin(Math.PI * clamp((t - L.start) / 0.5))).toFixed(3)})`;
+    // la caja a la derecha del punto si cabe, si no a la izquierda; siempre dentro de la columna y del mapa
+    let lx = x + 30 + L.w <= xMax ? x + 30 : x - 30 - L.w;
+    lx = lim(lx, xMin, xMax - L.w);
+    const ly = lim(y - L.h / 2, yMin, yMax - L.h);
+    const caj = [lx, ly, lx + L.w, ly + L.h];
+    const tapada = puestos.some((q) => caj[0] < q[2] + 6 && caj[2] > q[0] - 6 && caj[1] < q[3] + 6 && caj[3] > q[1] - 6);
+    const ve = t >= L.start && !relevado && !tapada && x >= 0 && x <= W && y >= 0 && y <= HB;   // un lugar fuera de cuadro no lleva rótulo
+    if (ve) puestos.push(caj);
+    L.el.style.transform = `translate(${lx.toFixed(1)}px, ${ly.toFixed(1)}px)`;
+    L.el.style.borderColor = L.k === k ? ACENTO : '';
+    L.el.style.opacity = (ve ? entra * (L.k === k ? 1 : 0.8) : 0).toFixed(3);
+  }
+  V.subtitulos(t0, S, TROZOS);
+};
+</script>
+</body></html>

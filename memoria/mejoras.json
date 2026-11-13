@@ -1442,6 +1442,204 @@
       "problema": "Las frases finales de partes seguidas se parecían («¿dónde tenía el dinero de sus ahorrantes?» / «¿qué pasaría con el dinero de sus ahorrantes?»); solo lo vio el crítico de la serie completa.",
       "propuesta": "SE13 extendido a la frase final: dos partes no cierran con ≥ 4 palabras de contenido en común.",
       "estado": "hecha"
+    },
+    {
+      "id": "m132",
+      "fecha": "2026-11-10",
+      "flujo": "serie",
+      "pieza": "series/2026-11-10-el-terremoto-de-1976-en-guatemala",
+      "area": "workflow",
+      "archivo": ".claude/workflows/historia.js",
+      "problema": "En la última parte de una serie, el Workflow topa la narración en PALABRAS_SERIE_MAX + 30 (280) sin sumar el resumen SE14 (+30 s ≈ 72 palabras) que historia.py sí suma (322): la Parte 4 falló con 303 palabras que pasaban narracion y guion --check.",
+      "propuesta": "P_MAX efectivo = P_MAX + 72 cuando serie.parte === serie.de (RESUMEN_EXTRA_S de historia.py), y que W12 lo vigile; se parchó solo la copia de esta corrida.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m133",
+      "fecha": "2026-11-10",
+      "flujo": "serie",
+      "pieza": "series/2026-11-10-el-terremoto-de-1976-en-guatemala",
+      "area": "plan",
+      "archivo": "scripts/serie.py",
+      "problema": "Los periodos solo aceptan AAAA o AAAA-MM: las partes 1 y 2 quedaron ambas en 1976-02 (SE2 no lo marcó como solape) y la Parte 1 recibió los hechos de la réplica del 6 de febrero, revelación de la Parte 2; hubo que frenarlo con una nota en el tema.",
+      "propuesta": "Aceptar AAAA-MM-DD en periodo y filtrar por día en consolidar; SE2 falla (o avisa) cuando dos partes comparten el mismo mes sin día.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m134",
+      "fecha": "2026-11-10",
+      "flujo": "serie",
+      "pieza": "series/2026-11-10-el-terremoto-de-1976-en-guatemala",
+      "area": "plan",
+      "archivo": "scripts/serie.py",
+      "problema": "Cambiar el título de una parte (El terremoto clasista → La casa del pobre) obligó a editar a mano encuadre.json, parte-2/video.json (siguiente.titulo), parte-3/video.json y parte-3/encuadre.json, y a un retoque para los captions.",
+      "propuesta": "serie.py renombrar <SERIE> N \"<título>\": actualiza el plan (sube versión), los video.json/encuadre.json de esa parte y de la anterior, y reescribe el prefijo «Serie · Parte N de M: …» de los captions (SE8).",
+      "estado": "hecha"
+    },
+    {
+      "id": "m135",
+      "fecha": "2026-11-10",
+      "flujo": "serie",
+      "pieza": "series/2026-11-10-el-terremoto-de-1976-en-guatemala",
+      "area": "aplicar",
+      "archivo": "scripts/video.py",
+      "problema": "aplicar_cambios no puede cambiar en un solo arreglo una escena y la bisagra (o la promesa) que vive dentro de ella: el segundo texto ya no está literal en la narración (falta 6 del crítico de serie, P3 e5, quedó sin aplicar).",
+      "propuesta": "Aplicar primero los reemplazos de promesa/bisagra dentro del texto viejo de la escena, o aceptar {escena, texto, bisagra} juntos.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m136",
+      "fecha": "2026-11-10",
+      "flujo": "serie",
+      "pieza": "series/2026-11-10-el-terremoto-de-1976-en-guatemala",
+      "area": "aplicar",
+      "archivo": "scripts/video.py",
+      "problema": "Un cambio {escena: 1, campo: pantalla} en el gancho no se copia al candidato elegido de ganchos.json y V9 lo rechaza («la escena 1 no es el gancho elegido»): no hubo forma de alinear «medio minuto» del gancho de P2.",
+      "propuesta": "Que aplicar_cambios propague pantalla/linea/visual del gancho al candidato elegido igual que hace con texto.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m137",
+      "fecha": "2026-11-10",
+      "flujo": "serie",
+      "pieza": "series/2026-11-10-el-terremoto-de-1976-en-guatemala",
+      "area": "fotos",
+      "archivo": "scripts/historia.py",
+      "problema": "La escena de Telma Pérez Alvarado (persona nombrada) usó la foto de una lápida con dos nombres de otras personas; el gate no lo vio y se arregló en el QA visual.",
+      "propuesta": "Aviso en guion --check: escena que presenta a una persona (personaje o nombre propio en la voz) con una foto cuya descripción nombra a otras personas (lápida, retrato) → usar una de referencia del lugar.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m138",
+      "fecha": "2026-11-10",
+      "flujo": "serie",
+      "pieza": "series/2026-11-10-el-terremoto-de-1976-en-guatemala",
+      "area": "pantalla",
+      "archivo": "scripts/video.py",
+      "problema": "La pregunta en pantalla (P6) salía con la promesa y en la bisagra, sin el dato que la responde, y tapaba la etiqueta de la foto y el mini-mapa (usuario: «solo tiene sentido cuando ya muestran el dato»).",
+      "propuesta": "marcar_pregunta: solo en el pago, con su check; en series, solo donde se responde la pregunta de la serie; docs en promesas.md, flujo-serie.md y CLAUDE.md.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m139",
+      "fecha": "2026-11-10",
+      "flujo": "serie",
+      "pieza": "series/2026-11-10-el-terremoto-de-1976-en-guatemala",
+      "area": "pantalla",
+      "archivo": "video/comun.js",
+      "problema": "La caja de la pregunta chocaba con textos visibles de la escena.",
+      "propuesta": "esquivar(): baja bajo el texto, mini-mapa, «Sígueme» o tarjeta de persona con que choque.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m140",
+      "fecha": "2026-11-10",
+      "flujo": "serie",
+      "pieza": "series/2026-11-10-el-terremoto-de-1976-en-guatemala",
+      "area": "pantalla",
+      "archivo": "video/noticia.html",
+      "problema": "El mini-mapa con ruta (Izabal → capital) quedaba descentrado, con Petén cortado y el recuadro medio vacío.",
+      "propuesta": "Ruta larga: el país entero centrado; ruta corta: acercamiento sin salir del país.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m141",
+      "fecha": "2026-11-10",
+      "flujo": "serie",
+      "pieza": "series/2026-11-10-el-terremoto-de-1976-en-guatemala",
+      "area": "pantalla",
+      "archivo": "scripts/video.py",
+      "problema": "En una tarjeta que enfoca varias cifras, la pregunta del pago entraba con la primera (1,142) y no con la que responde (23,000); en el resumen de serie salía 50 s antes de la respuesta.",
+      "propuesta": "El pago entra con la cifra que la voz dice junto a una palabra de la pregunta; la pregunta de la serie, con la última palabra de la pregunta que suena en la escena.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m142",
+      "fecha": "2026-11-10",
+      "flujo": "serie",
+      "pieza": "series/2026-11-10-el-terremoto-de-1976-en-guatemala",
+      "area": "personas",
+      "archivo": "scripts/historia.py",
+      "problema": "El alias genérico «el presidente» de Laugerud sacó su tarjeta de persona sobre la cita de Bernardo Arévalo («el presidente Bernardo Arévalo»).",
+      "propuesta": "claves_personaje: un alias de persona sin nombre propio no cuenta como mención. Pendiente: que el editor no escriba alias genéricos (roles/historia-editor.md).",
+      "estado": "hecha"
+    },
+    {
+      "id": "m143",
+      "fecha": "2026-11-10",
+      "flujo": "serie",
+      "pieza": "series/2026-11-10-el-terremoto-de-1976-en-guatemala",
+      "area": "fotos",
+      "archivo": "scripts/serie.py",
+      "problema": "SE19 no contaba la foto del gancho (visual_datos.foto): la de las ruinas de la capital salió en 3 partes sin aviso.",
+      "propuesta": "fotos_repetidas cuenta también visual_datos.foto.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m144",
+      "fecha": "2026-11-10",
+      "flujo": "serie",
+      "pieza": "series/2026-11-10-el-terremoto-de-1976-en-guatemala",
+      "area": "producción",
+      "archivo": "scripts/historia.py",
+      "problema": "historia.py producir terminaba con NameError (rel) tras producir bien el video: exit 1 engañoso.",
+      "propuesta": "os.path.relpath(T, RAIZ).",
+      "estado": "hecha"
+    },
+    {
+      "id": "m145",
+      "fecha": "2026-11-10",
+      "flujo": "serie",
+      "pieza": "series/2026-11-10-el-terremoto-de-1976-en-guatemala",
+      "area": "aplicar",
+      "archivo": "scripts/video.py",
+      "problema": "No había forma de cambiar promesa.pregunta sin editar guion.json a mano.",
+      "propuesta": "aplicar acepta {\"promesa\": null, \"pregunta\": \"…\"}.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m146",
+      "fecha": "2026-11-10",
+      "flujo": "serie",
+      "pieza": "series/2026-11-10-el-terremoto-de-1976-en-guatemala",
+      "area": "voz",
+      "archivo": "scripts/numeros_es.py",
+      "problema": "«1.2 millones» se lee «uno punto dos millones»; hubo que reescribirlo como 1,200,000 para que suene «un millón doscientas mil».",
+      "propuesta": "Convertir N.M millones con un decimal a su forma entera en palabras («un millón doscientas mil»).",
+      "estado": "hecha"
+    },
+    {
+      "id": "m147",
+      "fecha": "2026-11-10",
+      "flujo": "serie",
+      "pieza": "series/2026-11-10-el-terremoto-de-1976-en-guatemala",
+      "area": "fotos",
+      "archivo": "scripts/historia.py",
+      "problema": "El chip de fecha de una foto de archivo republicada (dias-f05, fecha 2026 de la publicación) pasó a «Foto de 2026» al cambiarla con aplicar (m121); hubo que dar la fecha a mano.",
+      "propuesta": "m121: si la descripción dice «archivo/hemeroteca» o la foto es de un evento anterior, usar «De archivo» y no el año de publicación.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m148",
+      "fecha": "2026-11-11",
+      "flujo": "noticias",
+      "pieza": "noticias/2026-11-11",
+      "area": "rastreo",
+      "archivo": ".claude/workflows/noticias.js · referencias/roles/noticias-rastreador.md",
+      "problema": "El rastreador eco no terminó dos veces (N1 sin ok, ninguna candidata) y el noticiero salió con solo pol y seg: 3 de 4 noticias del Congreso.",
+      "propuesta": "Si una sección cae, relanzar su rastreador una vez con un presupuesto más corto (≤ 5 búsquedas, solo fuentes oficiales: Banguat, INE, MSPAS, INSIVUMEH) antes de seguir; y que la preselección avise cuando ≥ 3 noticias son de la misma institución.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m149",
+      "fecha": "2026-11-11",
+      "flujo": "noticias",
+      "pieza": "noticias/2026-11-11",
+      "area": "ritmo",
+      "archivo": "video/noticia.html · scripts/noticias.py tiempos",
+      "problema": "AVISO V21: la escena noticia E2 pasa 12.2 s sin cambio de plano (solo la foto con el titular y la cifra).",
+      "propuesta": "En las noticias de más de 8 s, un sub-plano sobre la foto (focos de historia.py) o un segundo encuadre a mitad de la voz, como en /historia.",
+      "estado": "pendiente"
     }
   ]
 }

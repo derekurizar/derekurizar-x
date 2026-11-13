@@ -742,6 +742,55 @@ r = " ".join(H.revisar_red({"escenas": [red]}, Hx))
 assert "3 nodos de nivel 0" in r and "no tiene un hecho publicable" in r and "atribuida" in r and "no atribuye" in r, r
 fila = dict(red, nodos=[{"id": "a", "personaje": "Ana Ruiz", "nivel": 0}, {"id": "l", "personaje": "Luis Gómez", "nivel": 1}, {"id": "m", "personaje": "Ministerio Público", "nivel": 2}])
 assert "es una fila, no un organigrama" in " ".join(H.revisar_red({"escenas": [fila]}, Hx))'
+paso "H27 vias: la red de la capital está al día; capa sin `dice`, arteria y lugar que no existen, dato sin fuente y red que no existe → H27" python3 -c '
+import subprocess, sys; sys.path.insert(0, "scripts"); import historia as H
+assert subprocess.run([sys.executable, "scripts/build_vias.py", "capital", "--check"], capture_output=True).returncode == 0
+ok = {"tipo": "vias", "red_vial": "capital", "titulo": "Las entradas", "fuente": "Emixtra",
+      "texto": "Por Mixco entran doscientos mil vehículos al día, por la Roosevelt. Y todo llega a El Trébol, el nudo de la ciudad.",
+      "capas": [{"dice": "Mixco", "arterias": ["roosevelt"], "lugar": "mixco", "cifra": "200 mil", "rotulo": "vehículos al día"},
+                {"dice": "El Trébol", "zoom": "el-trebol", "lugar": "el-trebol"}]}
+assert H.revisar_vias({"escenas": [ok]}) == [], H.revisar_vias({"escenas": [ok]})
+assert "sin respaldo" in " ".join(H.revisar_vias({"escenas": [ok]}, valores=[]))   # con valores, la cifra necesita respaldo
+mal = dict(ok, fuente="", capas=[{"dice": "200", "arterias": ["nope"]}, {"dice": "El Trébol", "lugar": "x", "foo": 1}, {"dice": "Petapa"}])
+r = " ".join(H.revisar_vias({"escenas": [mal]}))
+assert "sin cifras" in r and "arterias" in r and "clave desconocida foo" in r and "lugar «x»" in r and "no muestra nada" in r and "no dice «Petapa»" in r, r
+assert "lleva `fuente`" in " ".join(H.revisar_vias({"escenas": [dict(ok, fuente="")]}))
+assert "no existe en design/vias" in " ".join(H.revisar_vias({"escenas": [dict(ok, red_vial="xela")]}))
+assert "≤ 2 por video" in " ".join(H.revisar_vias({"escenas": [ok, ok, ok]}))
+assert "vias" in H.TIPOS_PROPIOS and "vias" in H.ROTULO_TIPOS and any("red_vial «capital»" in x for x in H.lineas_vias())'
+paso "H28–H33 y la carrera de vias: los casos de sesiones/_fixture_escenas pasan su gate; punto fuera de la foto, departamento que no existe, cortina sin dos fotos, conteo sin unidad, barras sin fuente, página sin fuente y bandos sin dos lados → falla" python3 -c '
+import sys, json; sys.path.insert(0, "scripts"); import historia as H
+H.H_ACTUAL = None; H.TRABAJO_ACTUAL = None
+F = lambda t: json.load(open("sesiones/_fixture_escenas/%s.json" % t))["casos"]
+for t, gate in (("lupa", H.revisar_lupa), ("deptos", H.revisar_deptos), ("cortina", H.revisar_cortina), ("archivo", H.revisar_archivo), ("bandos", H.revisar_bandos)):
+    for nombre, e in F(t).items():
+        assert gate({"escenas": [e]}) == [], (t, nombre, gate({"escenas": [e]}))
+L = F("lupa")["hotel"]
+r = " ".join(H.revisar_lupa({"escenas": [dict(L, puntos=[{"dice": "rótulo", "x": 2, "y": 0.1, "etiqueta": ""}])]}))
+assert "1 puntos" in r and "x e y entre 0 y 1" in r and "etiqueta de 1" in r, r
+D = F("deptos")["viaje"]
+r = " ".join(H.revisar_deptos({"escenas": [dict(D, capas=[{"dice": "Retalhuleu", "deptos": ["Atlantis"], "arco": True}, {"dice": "Zacapa", "zoom": "Narnia"}])]}))
+assert "departamentos que existen" in r and "`arco` une" in r and "zoom «Narnia»" in r, r
+C = F("cortina")["zanja"]
+r = " ".join(H.revisar_cortina({"escenas": [dict(C, ahora="zanja-1976", etiquetas=["1976"], dice="falla")]}))
+assert "dos fotos distintas" in r and "`etiquetas` son dos" in r and "antes del 20" in r, r
+A = F("archivo")
+r = " ".join(H.revisar_archivo({"escenas": [dict(A["conteo"], cuenta=40, unidad=""), dict(A["barras"], fuente="", barras=[{"dice": "cincuenta", "etiqueta": "1950", "valor": -1}]),
+                                            dict(A["tira"], estilo="mosaico")]}))
+assert "`cuenta` es un entero" in r and "`unidad` dice" in r and "1 barras" in r and "número > 0" in r and "llevan `fuente`" in r and "estilo «mosaico»" in r and "≤ 2 por video" in r, r
+assert "sin respaldo" in " ".join(H.revisar_archivo({"escenas": [A["conteo"]]}, valores=[]))   # con valores, la cuenta necesita respaldo
+P = {"tipo": "pagina", "pagina": "x", "titulo": "Está escrito", "texto": "El documento dice algo."}
+assert "`fuente` dice de quién" in " ".join(H.revisar_pagina({"escenas": [P]}))
+B = F("bandos")["voto"]
+r = " ".join(H.revisar_bandos({"escenas": [dict(B, lados=[{"nombre": "A favor"}], personas=[dict(B["personas"][0], lado=2)])]}))
+assert "`lados` son dos" in r and "1 personas" in r and "`lado` es 0 o 1" in r, r
+V = json.load(open("sesiones/_fixture_escenas/vias.json"))["casos"]["carrera"]
+assert H.revisar_vias({"escenas": [V]}) == [] and "carrera {arteria" in " ".join(H.revisar_vias({"escenas": [dict(V, capas=V["capas"][:2] + [dict(V["capas"][2], carrera={"arteria": "x", "veces": 3})])]}))
+assert set(H.ESCENAS_ARCHIVO) <= set(H.TIPOS_PROPIOS) and all(t in H.ROTULO_TIPOS for t in H.ESCENAS_ARCHIVO)
+assert len(H.lineas_archivo()) == 6'
+if [[ "$RAPIDO" == "1" ]]; then echo "SKIP   escena_prueba.py --todas (RAPIDO=1)"; else
+  paso "escenas con archivos reales grabadas con su constructor (vias, lupa, deptos, pagina, cortina, archivo, bandos): pureza, 4:5, V13, A3 y A1" python3 scripts/escena_prueba.py --todas
+fi
 paso "V20: «Cicig» junta (0.55 s) pasa, deletreada (1.0 s) falla; «eme pe» y palabras comunes no cuentan" python3 -c '
 import sys; sys.path.insert(0, "scripts"); import video as V
 ok = V.siglas_deletreadas([{"text": "Cicig,", "start": 1.0, "end": 1.55}, {"text": "MP", "start": 2, "end": 3}], 3)
@@ -1343,9 +1392,9 @@ python3 -c "import json,sys; c=json.load(open(sys.argv[1])); assert c[\"total\"]
   paso "V11 escucha: dígitos, coma decimal y género no cuentan; una cifra distinta es falta, una palabra distinta aviso" python3 -c '
 import sys; sys.path.insert(0, "scripts"); import video as V
 S = [{"v": "casi ", "num": False}, {"v": "una", "num": True}, {"v": " de cada ", "num": False}, {"v": "tres", "num": True}, {"v": " gotas: el ", "num": False},
-     {"v": "noventa y nueve punto noventa y seis por ciento", "num": True}, {"v": " y ", "num": False}, {"v": "cuatro punto seis", "num": True}, {"v": " millones en ", "num": False}, {"v": "dos mil veintidós", "num": True}]
+     {"v": "noventa y nueve punto noventa y seis por ciento", "num": True}, {"v": " y ", "num": False}, {"v": "cuatro millones seiscientos mil", "num": True}, {"v": " en ", "num": False}, {"v": "dos mil veintidós", "num": True}]
 f, a, p = V.comparar_escucha(S, "casi 1 de cada 3 gotas: el 99,96% y 4.6 millones en 2022"); assert (f, a, p) == ([], [], 0.0), (f, a, p)
-f, a, p = V.comparar_escucha(S, "casi una de cada tres gotas: el 99,96% y 4,7 millones en 2022"); assert len(f) == 1 and "siete" in f[0] and not a, (f, a)
+f, a, p = V.comparar_escucha(S, "casi una de cada tres gotas: el 99,96% y 4,7 millones en 2022"); assert len(f) == 1 and "setecientos" in f[0] and not a, (f, a)
 f, a, p = V.comparar_escucha(S, "casi 1 de cada 3 lágrimas: el 99,96% y 4.6 millones en 2022"); assert not f and len(a) == 1 and "lagrimas" in a[0], (f, a)
 print("ok")'
   paso "V11 escucha: homófonos, palabras juntas y siglos en romanos no avisan; otra pronunciación sí" python3 -c '

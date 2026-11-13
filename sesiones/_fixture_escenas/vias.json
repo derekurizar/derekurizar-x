@@ -1,0 +1,244 @@
+{
+ "_comentario": "Casos de la escena vias para scripts/escena_prueba.py: cifras de la historia del tráfico de la capital (2026-11-03). El ritmo por hora del caso «reloj» es ilustrativo (solo prueba los niveles). El caso «carrera» usa unas `veces` de ejemplo (en un video real salen de una medición con fuente).",
+ "paleta": "obsidiana",
+ "casos": {
+  "entradas": {
+   "tipo": "vias",
+   "acto": 2,
+   "red_vial": "capital",
+   "titulo": "Las entradas a la capital",
+   "texto": "Por Mixco entran doscientos mil vehículos al día, por la Roosevelt y la San Juan. Villa Nueva solo abrió cuatro carriles reversibles. Por la carretera a El Salvador, otros cuatro. Y todo llega al mismo lugar: la capital.",
+   "fuente": "Emixtra y PMT, vía Prensa Libre y La Hora",
+   "capas": [
+    {
+     "dice": "Mixco",
+     "arterias": [
+      "roosevelt",
+      "san-juan"
+     ],
+     "lugar": "mixco",
+     "cifra": "200 mil",
+     "rotulo": "vehículos al día hacia la capital"
+    },
+    {
+     "dice": "Villa Nueva",
+     "arterias": [
+      "aguilar-batres"
+     ],
+     "lugar": "villa-nueva",
+     "etiqueta": "4 carriles"
+    },
+    {
+     "dice": "El Salvador",
+     "arterias": [
+      "el-salvador"
+     ],
+     "lugar": "santa-catarina-pinula",
+     "etiqueta": "4 carriles"
+    },
+    {
+     "dice": "la capital",
+     "lugar": "capital",
+     "cifra": "650 mil",
+     "rotulo": "vehículos al día, de municipios vecinos"
+    }
+   ]
+  },
+  "zoom": {
+   "tipo": "vias",
+   "acto": 2,
+   "red_vial": "capital",
+   "titulo": "Tres calzadas, un nudo",
+   "rotulo": {
+    "anio": "2024",
+    "titulo": "Más carros que calles",
+    "lugar": "Ciudad de Guatemala"
+   },
+   "texto": "Esta es la capital, con Mixco al poniente. Para entender la cola hay que acercarse. Este es El Trébol. Aquí se juntan la Roosevelt, la Aguilar Batres y la Bolívar. Tres calzadas llenas que terminan en un solo punto.",
+   "capas": [
+    {
+     "dice": "Mixco",
+     "lugar": "mixco"
+    },
+    {
+     "dice": "El Trébol",
+     "zoom": "el-trebol",
+     "acerca": 3.2,
+     "lugar": "el-trebol"
+    },
+    {
+     "dice": "Roosevelt",
+     "arterias": [
+      "roosevelt",
+      "aguilar-batres",
+      "bolivar"
+     ]
+    },
+    {
+     "dice": "Tres calzadas",
+     "zoom": "todo"
+    }
+   ]
+  },
+  "censos": {
+   "tipo": "vias",
+   "acto": 1,
+   "red_vial": "capital",
+   "titulo": "Mixco se multiplicó por 34",
+   "texto": "En mil novecientos cincuenta, Mixco era un pueblo vecino. Para mil novecientos setenta y tres ya pasaba de cien mil. Y en dos mil dos, más de cuatrocientos mil habitantes.",
+   "fuente": "Municipalidad de Mixco, censos",
+   "capas": [
+    {
+     "dice": "pueblo",
+     "burbuja": {
+      "lugar": "mixco",
+      "valor": 11785
+     },
+     "lugar": "mixco",
+     "cifra": "11,785",
+     "rotulo": "habitantes en 1950",
+     "arterias": [
+      "roosevelt"
+     ],
+     "nivel": 0.35
+    },
+    {
+     "dice": "cien mil",
+     "burbuja": {
+      "lugar": "mixco",
+      "valor": 129627
+     },
+     "cifra": "129,627",
+     "rotulo": "habitantes en 1973",
+     "arterias": [
+      "roosevelt"
+     ],
+     "nivel": 0.65
+    },
+    {
+     "dice": "cuatrocientos mil",
+     "burbuja": {
+      "lugar": "mixco",
+      "valor": 403689
+     },
+     "cifra": "403,689",
+     "rotulo": "habitantes en 2002",
+     "arterias": [
+      "roosevelt"
+     ],
+     "nivel": 1
+    }
+   ]
+  },
+  "tiempo": {
+   "tipo": "vias",
+   "acto": 3,
+   "red_vial": "capital",
+   "titulo": "La historia sobre un mapa",
+   "texto": "En dos mil dos, Mixco ya pasaba de cuatrocientos mil habitantes. En dos mil siete llegó el Transmetro, con carril exclusivo. En dos mil dieciocho abrieron carriles reversibles: treinta y dos en Mixco. Y en dos mil veintiséis, el Congreso aprobó la ley del tren, con ciento treinta y cuatro votos.",
+   "fuente": "Mixco, Prensa Libre, AGN",
+   "capas": [
+    {
+     "dice": "Mixco",
+     "burbuja": {
+      "lugar": "mixco",
+      "valor": 403689
+     },
+     "cifra": "2002",
+     "rotulo": "Mixco: 403,689 habitantes"
+    },
+    {
+     "dice": "Transmetro",
+     "arterias": [
+      "aguilar-batres"
+     ],
+     "cifra": "2007",
+     "rotulo": "Llega el Transmetro"
+    },
+    {
+     "dice": "reversibles",
+     "lugar": "mixco",
+     "etiqueta": "32 carriles",
+     "cifra": "2018",
+     "rotulo": "67 carriles reversibles"
+    },
+    {
+     "dice": "tren",
+     "riel": true,
+     "cifra": "2026",
+     "rotulo": "Ley del Metro Riel: 134 votos"
+    }
+   ]
+  },
+  "reloj": {
+   "tipo": "vias",
+   "acto": 1,
+   "red_vial": "capital",
+   "titulo": "La ciudad se llena de afuera",
+   "texto": "De madrugada, los que viven más lejos ya van en camino por la Aguilar Batres. Luego se suma la Roosevelt, y la cola crece. Antes de las siete, todas las entradas están llenas. Así entran dos millones de personas cada día hábil.",
+   "fuente": "Prensa Libre, 2012",
+   "capas": [
+    {
+     "dice": "madrugada",
+     "arterias": [
+      "aguilar-batres"
+     ],
+     "nivel": 0.35
+    },
+    {
+     "dice": "Roosevelt",
+     "arterias": [
+      "aguilar-batres",
+      "roosevelt"
+     ],
+     "nivel": 0.6
+    },
+    {
+     "dice": "todas las entradas",
+     "arterias": [
+      "aguilar-batres",
+      "roosevelt",
+      "san-juan",
+      "petapa",
+      "el-salvador",
+      "atlantico"
+     ],
+     "nivel": 1
+    },
+    {
+     "dice": "dos millones",
+     "lugar": "capital",
+     "cifra": "2 millones",
+     "rotulo": "entran cada día hábil"
+    }
+   ]
+  },
+  "carrera": {
+   "tipo": "vias",
+   "acto": 2,
+   "red_vial": "capital",
+   "titulo": "El mismo viaje, dos relojes",
+   "texto": "Dos carros salen de Villa Nueva a la misma hora, hacia El Trébol. Uno viaja con la calzada vacía, y el otro es el de todos los días: tarda tres veces más.",
+   "fuente": "Veces de ejemplo: falta la medición",
+   "capas": [
+    {
+     "dice": "Villa Nueva",
+     "lugar": "villa-nueva"
+    },
+    {
+     "dice": "El Trébol",
+     "lugar": "el-trebol"
+    },
+    {
+     "dice": "calzada vacía",
+     "carrera": {
+      "arteria": "aguilar-batres",
+      "veces": 3
+     },
+     "cifra": "×3",
+     "rotulo": "tarda el viaje de todos los días"
+    }
+   ]
+  }
+ }
+}

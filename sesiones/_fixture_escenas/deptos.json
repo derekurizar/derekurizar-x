@@ -1,0 +1,27 @@
+{
+  "_comentario": "Casos de la escena deptos para scripts/escena_prueba.py: el viaje del Ron Zacapa (historia del 2026-11-04) y la onda del terremoto de 1976 (serie del 2026-11-10).",
+  "paleta": "cacao",
+  "casos": {
+    "viaje": {
+      "tipo": "deptos", "acto": 2, "titulo": "Un ron, tres departamentos", "fuente": "Prensa Libre",
+      "texto": "La caña se fermenta y se destila en Retalhuleu. De ahí sube a Quetzaltenango, donde se añeja a dos mil trescientos metros. Y el nombre es de otro lado: nació para el centenario de Zacapa.",
+      "capas": [
+        {"dice": "Retalhuleu", "deptos": ["Retalhuleu"], "etiqueta": "La caña"},
+        {"dice": "Quetzaltenango", "deptos": ["Quetzaltenango"], "arco": true, "cifra": "2,300 m", "rotulo": "de altura, donde se añeja"},
+        {"dice": "Zacapa", "deptos": ["Zacapa"], "arco": true, "etiqueta": "El nombre"}
+      ]
+    },
+    "onda": {
+      "tipo": "deptos", "acto": 1, "_paleta": "terracota", "titulo": "La madrugada del 4 de febrero",
+      "rotulo": {"anio": "1976", "titulo": "La falla se rompe", "lugar": "Los Amates, Izabal"},
+      "fuente": "Serie del terremoto de 1976",
+      "texto": "La falla se rompió en Izabal, cerca de Los Amates. La onda salió en todas direcciones y cruzó el país. La capital estaba a unos ciento sesenta kilómetros. Chimaltenango se llevó la peor parte.",
+      "capas": [
+        {"dice": "Izabal", "deptos": ["Izabal"], "etiqueta": "El epicentro"},
+        {"dice": "onda", "deptos": ["Izabal"], "onda": true},
+        {"dice": "capital", "deptos": ["Guatemala"], "cifra": "160 km", "rotulo": "del epicentro a la capital"},
+        {"dice": "Chimaltenango", "deptos": ["Chimaltenango"], "zoom": "Chimaltenango"}
+      ]
+    }
+  }
+}

@@ -429,6 +429,18 @@ si justificas algo del oyente) y devuelves `{archivo, vuelta, veredicto, puntaje
 oyente_descartadas[]{escena: int|null, pregunta?, motivo}}` (cada falta con `probado` y, si es `true`, sus `cambios`). Si tus mejoras cambian voces, el oyente las vuelve a
 oír: una confusión nueva en una escena revierte solo la mejora de esa escena, y una de precisión (H-C5) se queda.
 
+**Escenas con archivos reales** (`vias`, `lupa`, `deptos`, `pagina`, `cortina`, `archivo`, `bandos`; 2026-11-12). Son
+parte de `claridad` y de `flujo`, sin puntaje propio:
+
+- **¿El archivo es la prueba o es adorno?** Un mapa que no cambia lo que se entiende, una foto con puntos sobre cosas
+  que no importan o una mesa de «pruebas» que no prueban nada: falta `media`, con el arreglo (volver a una foto o
+  quitar capas).
+- **¿Lo que entra en pantalla es lo que la voz está diciendo?** Cada capa, punto o pieza lleva su `dice`; si la
+  etiqueta dice una cosa y la voz otra, falta `media`.
+- **¿La etiqueta afirma más que el hecho?** En una `lupa` la etiqueta dice lo que se ve; en `bandos`, cada persona
+  está en su lado por un hecho verificado. Una etiqueta que califica («el culpable», «la mentira»): falta `alta`.
+- **¿Hay demasiadas?** Más de tres en un video, o dos seguidas del mismo tipo, cansa: falta `baja`.
+
 ## Modo sabías (`/sabias`)
 
 Lo pide la sesión de `/sabias` tras el gate (`scripts/sabias.py guion --check`). Lees `<TRABAJO>/guion.json`,

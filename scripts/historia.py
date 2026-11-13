@@ -130,10 +130,10 @@ def aplicar_formato(trabajo):
     globals().update(fo)
     VD.DURACIONES["historia"] = {"s": fo["OBJETIVO_S"], "tarjetas": (0, 6), "golpes": (0, 10), "tol": 0.2 if fo["OBJETIVO_S"] >= 150 else 0.22}
     return st
-TIPOS_PROPIOS = ("foto", "cita", "capitulo", "red")   # «toma» (clips de video) retirada el 2026-11-06: muchas veces sin coherencia; una cita o una foto
+TIPOS_PROPIOS = ("foto", "cita", "capitulo", "red", "vias", "lupa", "deptos", "pagina", "cortina", "archivo", "bandos")   # «vias» = el mapa vial real por capas (H27, 2026-11-12); «toma» (clips de video) retirada el 2026-11-06: muchas veces sin coherencia; una cita o una foto
 # la toma sin audio lleva la voz encima como una foto; con su audio original, la voz es solo la entrada (quién habla y
 # cuándo: «El 21 de agosto, Pérez Molina dijo esto:»), por eso desde 20 caracteres
-CARACTERES = {"foto": (40, 280), "cita": (30, 280), "capitulo": (10, 90), "toma": (20, 280), "red": (60, 320)}   # voz ya en palabras (≈ 15.5 car/s)
+CARACTERES = {"foto": (40, 280), "cita": (30, 280), "capitulo": (10, 90), "toma": (20, 280), "red": (60, 320), "vias": (60, 320), "lupa": (60, 320), "deptos": (60, 320), "pagina": (60, 320), "cortina": (50, 300), "archivo": (50, 320), "bandos": (60, 320)}   # voz ya en palabras (≈ 15.5 car/s)
 # en historia una tarjeta o un golpe pueden sostener un tramo más largo de narración que en /video
 CARACTERES_VIDEO_EN_HISTORIA = {"tarjeta": (40, 260), "mapa": (40, 260), "ranking": (40, 260), "tiempo": (40, 260),
                                 "explica": (40, 260), "golpe": (20, 130)}
@@ -143,7 +143,8 @@ ACTOS = (("planteamiento", 1), ("nudo", 2), ("desenlace", 3))
 PUNTOS_ESPINA = ("detonante", "punto_medio", "climax", "resolucion")
 PERIODOS, HILOS, PERSONAJES_MAX, PRESENTACION_PALABRAS = (2, 5), (2, 6), 12, 8
 CAPITULOS, ROTULOS, SEGUIDAS_MAX, GIRO_ENTRE = (0, 2), (2, 3), 3, (0.40, 0.75)
-ROTULO_TIPOS = ("foto", "cita", "tarjeta", "mapa", "ranking", "tiempo", "golpe", "explica", "toma", "red")
+ESCENAS_ARCHIVO = ("vias", "lupa", "deptos", "pagina", "cortina", "archivo", "bandos")   # las escenas propias que se dibujan sobre un archivo real (cuentan como composición distinta, H26)
+ROTULO_TIPOS = ("foto", "cita", "tarjeta", "mapa", "ranking", "tiempo", "golpe", "explica", "toma", "red", "vias", "lupa", "deptos", "pagina", "cortina", "archivo", "bandos")
 ROTULO_S, ROTULO_CUENTA, DESFASE_ROTULO = 2.3, (0.35, 1.45), 2.3 - VD.TRANSICION   # el rótulo dura 2.3 s; lo propio entra después
 # flujo (H16): la narración se oye de corrido; cortes por minuto, conectores por acto y aperturas con atribución
 CORTES_MAX_POR_MIN, CONECTORES_MIN_POR_ACTO, APERTURAS_ATRIBUIDAS_MAX = 6.5, 2, 1
@@ -1816,8 +1817,8 @@ def aplicar_extension(trabajo):
     VD.reglas_gancho = reglas_gancho
     VD.validar_estructura = estructura
     VD.colores = colores_con_realce
-    VD.CONSTRUCTORES.update(gancho=t_gancho, foto=t_foto, cita=t_cita, capitulo=t_capitulo, toma=t_toma, red=t_red)
-    VD.TRANSICION_DE.update(foto="tarjeta", cita="texto", capitulo="completa", toma="tarjeta", red="completa")
+    VD.CONSTRUCTORES.update(gancho=t_gancho, foto=t_foto, cita=t_cita, capitulo=t_capitulo, toma=t_toma, red=t_red, vias=t_vias, lupa=t_lupa, deptos=t_deptos, pagina=t_pagina, cortina=t_cortina, archivo=t_archivo, bandos=t_bandos)
+    VD.TRANSICION_DE.update(foto="tarjeta", cita="texto", capitulo="completa", toma="tarjeta", red="completa", vias="completa", lupa="tarjeta", deptos="completa", pagina="texto", cortina="tarjeta", archivo="tarjeta", bandos="completa")
     VD.SEGUNDOS_EXTRA.append(segundos_toma)
     VD.EXTRA_OYENTE.append(oyente_toma)
 
@@ -1991,6 +1992,14 @@ def estructura(g, st, dur, tarjetas):
     if TRABAJO_ACTUAL:
         f += revisar_personas(g, encuadre(TRABAJO_ACTUAL), fotos_h())
         f += revisar_red(g, H_ACTUAL or {})
+    val_, an_ = respaldo_actual(), (anios_respaldados(H_ACTUAL) if H_ACTUAL else None)
+    f += revisar_vias(g, val_, an_)
+    f += revisar_lupa(g, val_, an_)
+    f += revisar_deptos(g, val_, an_)
+    f += revisar_pagina(g, val_, an_)
+    f += revisar_cortina(g, val_, an_)
+    f += revisar_archivo(g, val_, an_)
+    f += revisar_bandos(g, val_, an_)
     if VD.serie_de(st).get("parte"):
         import serie as SR   # noqa: E402  (serie importa historia: aquí, no arriba)
         f += SR.revisar_parte(g, st, TRABAJO_ACTUAL)
@@ -2225,6 +2234,9 @@ def estructura_historia(g, st, dur, tarjetas):
                 f += fecha_contra_foto(i, e.get("fecha") or "", fotos[fid])
                 fo = fotos[fid]
                 f += foto_de_proceso(i, e, fo)   # H7c (m122)
+                av = foto_de_otras_personas(i, e, fo, encuadre(TRABAJO_ACTUAL) if TRABAJO_ACTUAL else {})   # m137
+                if av:
+                    print("AVISO " + av)
                 if (fo.get("referencia") or re.search(r"referencia", e.get("fecha") or "", re.I)) and (e.get("lugar") or "").strip() \
                         and VD._plano(e["lugar"]) != VD._plano(fo.get("lugar") or "") \
                         and VD._plano(e["lugar"]) not in VD._plano(fo.get("descripcion") or ""):
@@ -2328,7 +2340,7 @@ def usos_de_fotos(escenas, fotos):
             clave[k] = rec.get("sha1") or fid
     usos = {}
     for i, e in enumerate(escenas, 1):
-        for fid in (e.get("foto"), e.get("retrato"), (e.get("visual_datos") or {}).get("foto")):
+        for fid in dict.fromkeys([e.get("foto"), e.get("retrato"), (e.get("visual_datos") or {}).get("foto")] + fotos_de_archivo(e)):
             if fid:
                 usos.setdefault(clave.get(fid, fid), []).append((i, fid))
     f = ["H7 la misma foto (%s) sale en %d escenas (%s): van ≤ %d; usa otra, un mapa, un icono o un gráfico"
@@ -2400,7 +2412,7 @@ def variedad_de_imagen(escenas, enc):
             elif e.get("tipo") != "foto":
                 f.append("H26 escena %d: `ruta` va en una escena foto (es el localizador con su trazo)" % i)
     variantes = sum(1 for e in escenas if e.get("dividida") or e.get("minimapa") or e.get("ruta") or e.get("depto") or e.get("marcas") or e.get("subrayado")
-                    or e.get("documento") or e.get("tipo") in ("red", "tablero", "explica", "tarjeta"))
+                    or e.get("documento") or e.get("tipo") in ("red", "tablero", "explica", "tarjeta") + ESCENAS_ARCHIVO)
     if len(fotos) >= FOTOS_POR_VARIANTE and variantes * FOTOS_POR_VARIANTE < len(fotos):
         av.append("H26 %d escenas de foto con titular y solo %d composiciones distintas (pantalla dividida, mini-mapa, "
                   "subrayado, documento, tarjeta, animación): van ≥ 1 por cada %d fotos" % (len(fotos), variantes, FOTOS_POR_VARIANTE))
@@ -2447,6 +2459,41 @@ def pantalla_contra_voz(i, e, hechos):
     return fallas
 
 
+RE_FOTO_CON_NOMBRES = re.compile(r"l[áa]pida|tumba|epitafio|nicho|placa (?:con|de)|memorial con|con (?:dos|tres|cuatro|\d+) nombres|"
+                                 r"nombres de|retrato de", re.I)
+RE_NOMBRE_PROPIO = re.compile(r"(?<![.!?¿¡]\s)(?<!^)\b([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+(?:\s+(?:de\s+)?[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+){1,3})")
+
+
+def foto_de_otras_personas(i, e, foto, enc):
+    """m137 (aviso): la escena nombra a una persona y su foto muestra los nombres o el retrato de OTRAS (una lápida con
+    dos nombres sobre la escena de Telma Pérez Alvarado). → texto del aviso o None."""
+    texto = e.get("texto") or ""
+    claves = [(p["nombre"], claves_personaje(p)) for p in enc.get("personajes") or []
+              if isinstance(p, dict) and (p.get("nombre") or "").strip() and es_persona(p)]
+    plano = VD._plano(texto)
+    nombrados = [n for n, cl in claves if any(c and c in plano for c in cl)]
+    nombrados += [m for m in RE_NOMBRE_PROPIO.findall(texto) if len(m.split()) >= 2 and m not in nombrados]
+    if not nombrados:
+        return None
+    desc, ret = str(foto.get("descripcion") or ""), str(foto.get("retrato_de") or "")
+    ajeno = ret and not any(VD._plano(ret) in VD._plano(n) or VD._plano(n) in VD._plano(ret) for n in nombrados)
+    if not (ajeno or (RE_FOTO_CON_NOMBRES.search(desc) and not any(VD._plano(n) in VD._plano(desc) for n in nombrados))):
+        return None
+    return ("H7 escena %d: la voz nombra a %s y la foto «%s» muestra %s: el espectador lee esos nombres como los de la "
+            "persona; usa una foto de referencia del lugar o de la época" % (i, ", ".join(nombrados[:2]), foto.get("id"),
+                                                                         "el retrato de %s" % ret if ajeno else "«%s»" % desc[:70]))
+
+
+def foto_de_archivo(foto):
+    """m147: la foto es de archivo y su «fecha» es la de la nota que la republicó: la descripción dice «archivo» o
+    «hemeroteca», o nombra un año anterior al de la foto (las ruinas de 1976 en una nota de 2026)."""
+    desc = str(foto.get("descripcion") or "")
+    if re.search(r"\barchivo\b|hemeroteca", desc, re.I):
+        return True
+    m = RE_ANIO.search(str(foto.get("fecha") or ""))
+    return bool(m) and any(int(y) < int(m.group()) - 1 for y in RE_ANIO.findall(desc))
+
+
 def fecha_contra_foto(i, chip, foto):
     """H7: el chip no le pone a la foto un año anterior a cuando se tomó (una foto de 2021 bajo «1978» parece de 1978):
     con una foto posterior, el chip dice su año («Foto de 2021»), «De referencia» o la época sin año."""
@@ -2455,6 +2502,9 @@ def fecha_contra_foto(i, chip, foto):
         return []
     previos = [y for y in RE_ANIO.findall(chip) if int(y) < int(m.group())]
     if previos and m.group() not in chip:
+        if foto_de_archivo(foto):   # m147: la fecha es la de la nota que la republicó
+            return ["H7 escena %d: el chip dice «%s» y la foto «%s» es de archivo publicada en %s: pon «De archivo» o la "
+                    "época sin año" % (i, chip, foto.get("id"), m.group())]
         return ["H7 escena %d: el chip dice «%s» pero la foto «%s» es de %s: pon «Foto de %s», «De referencia» o la "
                 "época sin año" % (i, chip, foto.get("id"), m.group(), m.group())]
     return []
@@ -3166,7 +3216,11 @@ def es_persona(p):
 
 
 def claves_personaje(p):
-    return [VD._plano(p["nombre"])] + [VD._plano(a) for a in p.get("alias") or [] if (a or "").strip()]
+    # de una persona, un alias sin nombre propio («el presidente») no la identifica: «el presidente Bernardo Arévalo»
+    # sacaba la tarjeta de Laugerud (terremoto P4). Las instituciones sí conservan los suyos («el Comité»)
+    genero = (p.get("tipo") == "persona") if p.get("tipo") else es_persona(p)
+    return [VD._plano(p["nombre"])] + [VD._plano(a) for a in p.get("alias") or [] if (a or "").strip()
+                                       and not (genero and not any(c.isupper() for c in a))]
 
 
 def retrato_de_personaje(p, fotos):
@@ -3385,6 +3439,878 @@ def t_red(S, e, ps, pal, fin_voz, dur, g):
         ev += ev_r
         sfx += sfx_r
     return ev, sfx
+
+
+# ---------- escena vias: el mapa vial real de una ciudad, animado por capas (H27, 2026-11-12) ----------
+VIAS_DIR = os.path.join(RAIZ, "design", "vias")
+VIAS_CAPAS, VIAS_POR_VIDEO, VIAS_CAPA_S, VIAS_BURBUJA_R = (2, 6), 2, 1.6, 150.0
+VIAS_TITULO, VIAS_ETIQUETA, VIAS_ROTULO, VIAS_ACERCA = 30, 24, 40, (1.4, 4.0)
+VIAS_PRIMERA = 0.35   # la primera capa suena en el primer 35 % de la voz (si no, el mapa queda quieto demasiado)
+VIAS_CLAVES = {"dice", "arterias", "sentido", "nivel", "lugar", "etiqueta", "cifra", "rotulo", "zoom", "acerca", "burbuja", "riel", "carrera"}
+VIAS_VECES = (1.2, 10)   # carrera: cuántas veces más tarda el viaje de hoy que el mismo viaje sin tráfico
+
+
+def vias_de(rid):
+    """La red vial design/vias/<id>.json (la arma scripts/build_vias.py desde OpenStreetMap), o None."""
+    if not rid or not re.fullmatch(r"[a-z0-9-]+", str(rid)):
+        return None
+    ruta = os.path.join(VIAS_DIR, "%s.json" % rid)
+    return leer(ruta) if os.path.isfile(ruta) else None
+
+
+def redes_viales():
+    if not os.path.isdir(VIAS_DIR):
+        return []
+    return sorted(f[:-5] for f in os.listdir(VIAS_DIR) if f.endswith(".json") and not f.endswith(".fuente.json"))
+
+
+def respaldo_actual():
+    """Los valores con respaldo del trabajo en curso (cifras y números de los hechos), o None fuera de un trabajo."""
+    if not TRABAJO_ACTUAL:
+        return None
+    try:
+        return VD.valores_respaldo(VD.estado(TRABAJO_ACTUAL)["hilo"])[0]
+    except Exception:   # un trabajo a medio armar (pruebas del gate): sin valores no se revisan los números
+        return None
+
+
+def lineas_vias():
+    """Para el digesto del guionista: la forma de la escena vias y las redes que hay, con sus arterias y lugares."""
+    out = ["- vias (el mapa vial REAL de la ciudad, de OpenStreetMap, animado por capas; H27): red_vial (id), titulo ≤ %d, capas %d–%d "
+           "[{dice (la palabra o el nombre que la voz dice al entrar la capa, sin cifras; en el orden de la voz), arterias? [ids] (su "
+           "trazo crece del centro hacia afuera; sentido: «entra» = hacia el centro; nivel 0–1 = hasta dónde), lugar? id (aro y rótulo) "
+           "con etiqueta? ≤ %d, cifra? ≤ %d con rotulo? ≤ %d (el dato de arriba), zoom? id de lugar o «todo» (la cámara solo se mueve "
+           "aquí; acerca? %.1f–%.1f), burbuja? {lugar, valor} (área ∝ valor; el mismo lugar en dos capas crece), riel? true, carrera? "
+           "{arteria, veces} (dos puntos hacen el mismo viaje hacia el centro: uno sin tráfico y el de hoy, que tarda `veces` más; "
+           "`veces` con respaldo)}], fuente "
+           "(obligatoria si hay cifra, etiqueta o burbuja). Una capa por frase: ≥ %.1f s de voz por capa; la primera capa suena en la primera frase; ≤ %d por video. Cada número "
+           "en pantalla con respaldo, como en una foto"
+           % (VIAS_TITULO, *VIAS_CAPAS, VIAS_ETIQUETA, CIFRA_CARACTERES, VIAS_ROTULO, *VIAS_ACERCA, VIAS_CAPA_S, VIAS_POR_VIDEO)]
+    for rid in redes_viales():
+        red = vias_de(rid)
+        out.append("  · red_vial «%s» (%s): arterias %s; lugares %s%s"
+                   % (rid, red.get("nombre"), ", ".join("%s (%s)" % (k, v["nombre"]) for k, v in red["arterias"].items()),
+                      ", ".join("%s (%s)" % (k, v["nombre"]) for k, v in red["lugares"].items()), "; con vía de tren (riel)" if red.get("riel") else ""))
+    if len(out) == 1:
+        out.append("  · no hay redes viales en design/vias/: una nueva se arma con python3 scripts/build_vias.py <id> (receta <id>.fuente.json)")
+    return out
+
+
+def revisar_vias(g, valores=None, anios=None):
+    """H27, la escena `vias` (el mapa vial real por capas): la red existe en design/vias/; título en un renglón; 2–6
+    capas, cada una con su `dice` (sin cifras) que suena en la voz y en orden, y con algo que mostrar; arterias, lugares
+    y zoom son ids de la red; cada número en pantalla (cifra, rótulo, etiqueta, título, valor de una burbuja) con
+    respaldo; con un dato en pantalla, `fuente`; ≥ 1.6 s de voz por capa; ≤ 2 escenas vias por video."""
+    es = [(i, e) for i, e in enumerate(g.get("escenas") or [], 1) if e.get("tipo") == "vias"]
+    f = []
+    if len(es) > VIAS_POR_VIDEO:
+        f.append("H27 %d escenas vias: van ≤ %d por video (o parte)" % (len(es), VIAS_POR_VIDEO))
+
+    def numeros(i, que, txt):
+        if valores is None or not txt:
+            return
+        resto = str(txt)
+        if anios is not None:
+            for y in set(RE_ANIO.findall(resto)):
+                if y not in anios:
+                    f.append("H27 escena %d: el año %s de %s no está en ningún hecho, cita o cifra verificada" % (i, y, que))
+            resto = RE_ANIO.sub(" ", resto)
+        sin = VD.sin_respaldo(resto, valores)
+        if sin:
+            f.append("H27 escena %d: %s «%s» con un número sin respaldo: %s" % (i, que, txt, ", ".join(map(str, sin))))
+
+    for i, e in es:
+        red = vias_de(e.get("red_vial"))
+        if not red:
+            f.append("H27 escena %d: red_vial «%s» no existe en design/vias/ (hay: %s; una nueva se arma con scripts/build_vias.py)"
+                     % (i, e.get("red_vial"), ", ".join(redes_viales()) or "ninguna"))
+            continue
+        tit = (e.get("titulo") or "").strip()
+        if not tit or len(tit) > VIAS_TITULO:
+            f.append("H27 escena %d: titulo de 1–%d caracteres (un renglón sobre el mapa); llegó «%s»" % (i, VIAS_TITULO, tit))
+        numeros(i, "el título", tit)
+        capas = e.get("capas") if isinstance(e.get("capas"), list) else []
+        if not VIAS_CAPAS[0] <= len(capas) <= VIAS_CAPAS[1]:
+            f.append("H27 escena %d: %d capas; van %d–%d (una por frase de la voz)" % (i, len(capas), *VIAS_CAPAS))
+        voz, pos, con_dato = VD._plano(e.get("texto") or ""), -1, False
+        for k, c in enumerate(capas, 1):
+            if not isinstance(c, dict):
+                f.append("H27 escena %d capa %d: cada capa es un objeto {dice, …}" % (i, k))
+                continue
+            if set(c) - VIAS_CLAVES:
+                f.append("H27 escena %d capa %d: clave desconocida %s (van: %s)" % (i, k, ", ".join(sorted(set(c) - VIAS_CLAVES)), ", ".join(sorted(VIAS_CLAVES))))
+            d = VD._plano(c.get("dice") or "")
+            if not d or re.search(r"\d", str(c.get("dice") or "")):
+                f.append("H27 escena %d capa %d: `dice` es la palabra o el nombre que la voz dice al entrar la capa, sin cifras "
+                         "(«Mixco», «El Trébol», «carriles»)" % (i, k))
+            else:
+                j = voz.find(d, pos + 1)
+                if j < 0:
+                    f.append("H27 escena %d capa %d: la voz no dice «%s» (o no en el orden de las capas)" % (i, k, c.get("dice")))
+                else:
+                    if k == 1 and j > VIAS_PRIMERA * max(1, len(voz)):
+                        f.append("H27 escena %d: la primera capa entra con «%s», pasado el %d %% de la voz: el mapa se queda quieto "
+                                 "mientras tanto (V21); que la primera frase ya encienda algo" % (i, c.get("dice"), VIAS_PRIMERA * 100))
+                    pos = j
+            if not any(c.get(x) for x in ("arterias", "lugar", "zoom", "burbuja", "riel", "cifra", "carrera")):
+                f.append("H27 escena %d capa %d: la capa no muestra nada (arterias, lugar, zoom, burbuja, riel, carrera o cifra)" % (i, k))
+            ca = c.get("carrera")
+            if ca is not None:
+                if not (isinstance(ca, dict) and ca.get("arteria") in red["arterias"] and isinstance(ca.get("veces"), (int, float))
+                        and not isinstance(ca.get("veces"), bool) and VIAS_VECES[0] <= ca["veces"] <= VIAS_VECES[1]):
+                    f.append("H27 escena %d capa %d: carrera {arteria (de la red), veces (%.1f–%d: cuántas veces más tarda el viaje de hoy "
+                             "que el mismo viaje sin tráfico)}" % (i, k, *VIAS_VECES))
+                else:
+                    numeros(i, "las veces de la carrera de la capa %d" % k, "%g" % ca["veces"])
+            arts = c.get("arterias")
+            if arts is not None and (not isinstance(arts, list) or any(a not in red["arterias"] for a in arts)):
+                f.append("H27 escena %d capa %d: arterias %s; en «%s» hay: %s" % (i, k, arts, e.get("red_vial"), ", ".join(red["arterias"])))
+            if c.get("sentido") not in (None, "sale", "entra"):
+                f.append("H27 escena %d capa %d: sentido «%s» (sale = del centro hacia afuera · entra = hacia el centro)" % (i, k, c.get("sentido")))
+            nv = c.get("nivel")
+            if nv is not None and not (isinstance(nv, (int, float)) and not isinstance(nv, bool) and 0 < nv <= 1):
+                f.append("H27 escena %d capa %d: nivel %s; va entre 0 y 1 (la parte de la arteria que se enciende)" % (i, k, nv))
+            if c.get("lugar") is not None and c.get("lugar") not in red["lugares"]:
+                f.append("H27 escena %d capa %d: lugar «%s»; en «%s» hay: %s" % (i, k, c.get("lugar"), e.get("red_vial"), ", ".join(red["lugares"])))
+            if c.get("zoom") is not None and c.get("zoom") != "todo" and c.get("zoom") not in red["lugares"]:
+                f.append("H27 escena %d capa %d: zoom «%s»; va un lugar de la red o «todo»" % (i, k, c.get("zoom")))
+            ac = c.get("acerca")
+            if ac is not None and not (isinstance(ac, (int, float)) and not isinstance(ac, bool) and VIAS_ACERCA[0] <= ac <= VIAS_ACERCA[1]):
+                f.append("H27 escena %d capa %d: acerca %s; va de %.1f a %.1f" % (i, k, ac, *VIAS_ACERCA))
+            if c.get("etiqueta") and not c.get("lugar"):
+                f.append("H27 escena %d capa %d: la etiqueta va en el rótulo de un `lugar`" % (i, k))
+            if c.get("rotulo") and not c.get("cifra"):
+                f.append("H27 escena %d capa %d: `rotulo` acompaña a una `cifra`" % (i, k))
+            b = c.get("burbuja")
+            if b is not None:
+                if not (isinstance(b, dict) and b.get("lugar") in red["lugares"] and isinstance(b.get("valor"), (int, float))
+                        and not isinstance(b.get("valor"), bool) and b["valor"] > 0):
+                    f.append("H27 escena %d capa %d: burbuja {lugar (de la red), valor > 0}" % (i, k))
+                else:
+                    numeros(i, "el valor de la burbuja de la capa %d" % k, "%g" % b["valor"])
+            if c.get("riel") and not red.get("riel"):
+                f.append("H27 escena %d capa %d: la red «%s» no tiene vía de tren" % (i, k, e.get("red_vial")))
+            for que, txt, tope in (("la cifra", c.get("cifra"), CIFRA_CARACTERES), ("el rótulo", c.get("rotulo"), VIAS_ROTULO),
+                                   ("la etiqueta", c.get("etiqueta"), VIAS_ETIQUETA)):
+                if txt is None:
+                    continue
+                if not isinstance(txt, str) or not txt.strip() or len(txt) > tope:
+                    f.append("H27 escena %d capa %d: %s va de 1 a %d caracteres; llegó «%s»" % (i, k, que, tope, txt))
+                else:
+                    numeros(i, "%s de la capa %d" % (que, k), txt)
+            con_dato = con_dato or bool(c.get("cifra") or c.get("etiqueta") or b)
+        fu = (e.get("fuente") or "").strip()
+        if con_dato and not fu:
+            f.append("H27 escena %d: con una cifra, una etiqueta o una burbuja en pantalla, la escena lleva `fuente`" % i)
+        if len(fu) > FUENTE_CARACTERES:
+            f.append("H27 escena %d: fuente de %d caracteres (máximo %d)" % (i, len(fu), FUENTE_CARACTERES))
+        s_ = VD.segundos_voz(e.get("texto"))
+        if capas and s_ < VIAS_CAPA_S * len(capas):
+            f.append("H27 escena %d: %d capas en %.1f s de voz estimados: van ≥ %.1f s por capa (quita capas o alarga la voz)"
+                     % (i, len(capas), s_, VIAS_CAPA_S))
+    return f
+
+
+def t_vias(S, e, ps, pal, fin_voz, dur, g):
+    """La escena vias (video/vias.html): cada capa entra cuando la voz dice su `dice` (después del rótulo de acto, si lo
+    hay); el radio de cada burbuja sale de su valor frente al mayor de la escena (área ∝ valor)."""
+    esc = escena_guion(S, g)
+    ws = [VD._plano(w["text"]) for w in pal]
+    R = rotulo_de(esc)
+    t0 = VD.TRANSICION + 0.25 + (DESFASE_ROTULO if R else 0.0)
+    brutas = [c for c in esc.get("capas") or [] if isinstance(c, dict)]
+    vmax = max([c["burbuja"]["valor"] for c in brutas if isinstance(c.get("burbuja"), dict) and c["burbuja"].get("valor")] or [1])
+    capas, ult, k0 = [], t0 - 0.5, 0
+    for c in brutas:
+        toks = VD._plano(c.get("dice") or "").split()
+        k = next((j for j in range(k0, len(ws) - len(toks) + 1) if ws[j:j + len(toks)] == toks), None) if toks else None
+        t = max(ult + 0.5, pal[k]["start"] - 0.1) if k is not None else ult + 0.9
+        k0 = k + len(toks) if k is not None else k0
+        t = min(t, dur - 1.0)
+        capa = {"start": round(t, 3)}
+        for campo in ("arterias", "sentido", "nivel", "lugar", "etiqueta", "cifra", "rotulo", "zoom", "acerca"):
+            if c.get(campo) is not None:
+                capa[campo] = c[campo]
+        if c.get("riel"):
+            capa["riel"] = True
+        if isinstance(c.get("carrera"), dict):
+            capa["carrera"] = {"arteria": c["carrera"].get("arteria"), "veces": c["carrera"].get("veces")}
+        b = c.get("burbuja")
+        if isinstance(b, dict) and b.get("valor"):
+            capa["burbuja"] = {"lugar": b.get("lugar"), "r": round(VIAS_BURBUJA_R * (b["valor"] / vmax) ** 0.5, 1)}
+        capas.append(capa)
+        ult = t
+    S["pagina"] = "vias"
+    S["M"] = {"red": esc.get("red_vial"), "titulo": esc.get("titulo") or "", "capas": capas,
+              "fuente": ("Fuente: " + esc["fuente"]) if esc.get("fuente") else None}
+    S["T"] = {"ini": round(t0, 3)}
+    ev = [(0.1, "entrada")] + [(c["start"], "nodo") for c in capas]
+    sfx = entrada_sfx(S, e, esc)
+    if R:
+        S["R"] = armar_rotulo(S, esc, ps, g, R)
+        ev_r, sfx_r = eventos_rotulo(S)
+        ev += ev_r
+        sfx += sfx_r
+    return ev, sfx
+
+
+# ---------- escenas con archivos reales (2026-11-12): ayudantes comunes de lupa, deptos, pagina, cortina, archivo y bandos ----------
+def entradas_dice(items, pal, t0, dur):
+    """Cuándo entra cada elemento con `dice`: en la palabra de la voz que lo dice (en orden), nunca antes de t0 ni a
+    menos de 0.5 s del anterior; si la voz no lo dice, 0.9 s después del anterior."""
+    ws = [VD._plano(w["text"]) for w in pal]
+    out, ult, k0 = [], t0 - 0.5, 0
+    for c in items:
+        toks = VD._plano((c or {}).get("dice") or "").split()
+        k = next((j for j in range(k0, len(ws) - len(toks) + 1) if ws[j:j + len(toks)] == toks), None) if toks else None
+        t = max(ult + 0.5, pal[k]["start"] - 0.1) if k is not None else ult + 0.9
+        k0 = k + len(toks) if k is not None else k0
+        t = min(t, dur - 1.0)
+        out.append(round(t, 3))
+        ult = t
+    return out
+
+
+def revisar_dice(f, gate, i, items, texto, que, primera=True):
+    """Cada elemento es un objeto con su `dice` (sin cifras) que suena en la voz y en orden; el primero, en el primer
+    35 % de la voz (si no, la pantalla queda quieta: V21)."""
+    voz, pos = VD._plano(texto or ""), -1
+    for k, c in enumerate(items, 1):
+        if not isinstance(c, dict):
+            f.append("%s escena %d %s %d: es un objeto {dice, …}" % (gate, i, que, k))
+            continue
+        d = VD._plano(c.get("dice") or "")
+        if not d or re.search(r"\d", str(c.get("dice") or "")):
+            f.append("%s escena %d %s %d: `dice` es la palabra o el nombre que la voz dice al entrar, sin cifras" % (gate, i, que, k))
+            continue
+        j = voz.find(d, pos + 1)
+        if j < 0:
+            f.append("%s escena %d %s %d: la voz no dice «%s» (o no en ese orden)" % (gate, i, que, k, c.get("dice")))
+            continue
+        if k == 1 and primera and j > VIAS_PRIMERA * max(1, len(voz)):
+            f.append("%s escena %d: lo primero entra con «%s», pasado el %d %% de la voz: la pantalla se queda quieta mientras "
+                     "tanto (V21); que la primera frase ya muestre algo" % (gate, i, c.get("dice"), VIAS_PRIMERA * 100))
+        pos = j
+
+
+def numeros_pantalla(f, gate, i, que, txt, valores, anios):
+    """Los números de un texto de pantalla con respaldo (y sus años en un hecho); sin `valores` no se revisa."""
+    if valores is None or not txt:
+        return
+    resto = str(txt)
+    if anios is not None:
+        for y in sorted(set(RE_ANIO.findall(resto))):
+            if y not in anios:
+                f.append("%s escena %d: el año %s de %s no está en ningún hecho, cita o cifra verificada" % (gate, i, y, que))
+        resto = RE_ANIO.sub(" ", resto)
+    sin = VD.sin_respaldo(resto, valores)
+    if sin:
+        f.append("%s escena %d: %s «%s» con un número sin respaldo: %s" % (gate, i, que, txt, ", ".join(map(str, sin))))
+
+
+def foto_de(gate, i, fid, f, que="foto"):
+    """El registro de una foto verificada (historia.json → fotos) o None; sin historia cargada no se revisa."""
+    rec = fotos_h().get(fid)
+    if rec and rec.get("archivo"):
+        return rec
+    if H_ACTUAL is not None:
+        f.append("%s escena %d: %s «%s» no es una foto verificada (historia.json → fotos)" % (gate, i, que, fid))
+    return None
+
+
+def titulo_corto(f, gate, i, e, valores, anios, obligatorio=True):
+    tit = (e.get("titulo") or "").strip()
+    if (obligatorio and not tit) or len(tit) > VIAS_TITULO:
+        f.append("%s escena %d: titulo de 1–%d caracteres (un renglón); llegó «%s»" % (gate, i, VIAS_TITULO, tit))
+    numeros_pantalla(f, gate, i, "el título", tit, valores, anios)
+    fu = (e.get("fuente") or "").strip()
+    if len(fu) > FUENTE_CARACTERES:
+        f.append("%s escena %d: fuente de %d caracteres (máximo %d)" % (gate, i, len(fu), FUENTE_CARACTERES))
+    return fu
+
+
+def cerrar_escena(S, e, esc, ps, g, ev):
+    """El efecto de entrada y, si la escena abre un acto, su rótulo → (eventos, efectos)."""
+    sfx = entrada_sfx(S, e, esc)
+    R = rotulo_de(esc)
+    if R:
+        S["R"] = armar_rotulo(S, esc, ps, g, R)
+        ev_r, sfx_r = eventos_rotulo(S)
+        ev, sfx = ev + ev_r, sfx + sfx_r
+    return ev, sfx
+
+
+def t0_propio(esc):
+    return VD.TRANSICION + 0.25 + (DESFASE_ROTULO if rotulo_de(esc) else 0.0)
+
+
+def escenas_de(g, tipo):
+    return [(i, e) for i, e in enumerate(g.get("escenas") or [], 1) if e.get("tipo") == tipo]
+
+
+# ---------- escena lupa: una foto real que se interroga punto por punto (H28) ----------
+LUPA_PUNTOS, LUPA_ETIQUETA, LUPA_PUNTO_S = (2, 5), 28, 1.8
+
+
+def revisar_lupa(g, valores=None, anios=None):
+    """H28, la escena `lupa`: una foto verificada; título de un renglón; estilo puntos (cámara y velo) o pistas (se
+    quedan); 2–5 puntos con x, y entre 0 y 1 (dónde está en la foto), etiqueta corta y su `dice` en la voz y en orden;
+    números con respaldo; ≥ 1.8 s de voz por punto."""
+    f = []
+    for i, e in escenas_de(g, "lupa"):
+        foto_de("H28", i, e.get("foto"), f)
+        titulo_corto(f, "H28", i, e, valores, anios)
+        if e.get("estilo") not in (None, "puntos", "pistas"):
+            f.append("H28 escena %d: estilo «%s» (puntos = la cámara se acerca a cada punto · pistas = las etiquetas se quedan)" % (i, e.get("estilo")))
+        ps = e.get("puntos") if isinstance(e.get("puntos"), list) else []
+        if not LUPA_PUNTOS[0] <= len(ps) <= LUPA_PUNTOS[1]:
+            f.append("H28 escena %d: %d puntos; van %d–%d (uno por frase de la voz)" % (i, len(ps), *LUPA_PUNTOS))
+        revisar_dice(f, "H28", i, ps, e.get("texto"), "punto")
+        for k, p in enumerate(ps, 1):
+            if not isinstance(p, dict):
+                continue
+            if set(p) - {"dice", "x", "y", "etiqueta"}:
+                f.append("H28 escena %d punto %d: clave desconocida %s (van dice, x, y, etiqueta)" % (i, k, ", ".join(sorted(set(p) - {"dice", "x", "y", "etiqueta"}))))
+            if not all(isinstance(p.get(c), (int, float)) and not isinstance(p.get(c), bool) and 0 <= p[c] <= 1 for c in ("x", "y")):
+                f.append("H28 escena %d punto %d: x e y entre 0 y 1 (dónde está el punto en la foto: 0,0 arriba a la izquierda); "
+                         "mira la foto antes de escribirlos" % (i, k))
+            et = p.get("etiqueta")
+            if not isinstance(et, str) or not et.strip() or len(et) > LUPA_ETIQUETA:
+                f.append("H28 escena %d punto %d: etiqueta de 1–%d caracteres; llegó «%s»" % (i, k, LUPA_ETIQUETA, et))
+            else:
+                numeros_pantalla(f, "H28", i, "la etiqueta del punto %d" % k, et, valores, anios)
+        s_ = VD.segundos_voz(e.get("texto"))
+        if ps and s_ < LUPA_PUNTO_S * len(ps):
+            f.append("H28 escena %d: %d puntos en %.1f s de voz estimados: van ≥ %.1f s por punto" % (i, len(ps), s_, LUPA_PUNTO_S))
+    return f
+
+
+def t_lupa(S, e, ps, pal, fin_voz, dur, g):
+    """La escena lupa (video/lupa.html): cada punto entra cuando la voz dice su `dice`."""
+    esc = escena_guion(S, g)
+    fo = fotos_h().get(esc.get("foto")) or {}
+    t0 = t0_propio(esc)
+    brutos = [p for p in esc.get("puntos") or [] if isinstance(p, dict)]
+    puntos = [{"start": t, "x": p.get("x"), "y": p.get("y"), "etiqueta": p.get("etiqueta") or ""}
+              for p, t in zip(brutos, entradas_dice(brutos, pal, t0, dur))]
+    S["pagina"] = "lupa"
+    S["L"] = {"foto": fo.get("archivo"), "credito": fo.get("credito"), "titulo": esc.get("titulo") or "", "estilo": esc.get("estilo") or "puntos",
+              "puntos": puntos, "fuente": ("Fuente: " + esc["fuente"]) if esc.get("fuente") else None}
+    S["T"] = {"ini": round(t0, 3)}
+    return cerrar_escena(S, e, esc, ps, g, [(0.1, "entrada")] + [(p["start"], "nodo") for p in puntos])
+
+
+# ---------- escena deptos: el mapa de los 22 departamentos animado por capas (H29) ----------
+DEPTOS_CAPAS, DEPTOS_POR_CAPA, DEPTOS_POR_VIDEO = (2, 6), 6, 2
+DEPTOS_CLAVES = {"dice", "deptos", "etiqueta", "cifra", "rotulo", "arco", "onda", "zoom"}
+
+
+def revisar_deptos(g, valores=None, anios=None):
+    """H29, la escena `deptos` (el mapa de departamentos por capas): título de un renglón; 2–6 capas con su `dice` en la
+    voz y en orden; `deptos` son departamentos que existen (1–6 por capa, sin repetir en la capa); `arco` pide una capa
+    anterior con departamentos; `onda` y `arco` piden departamentos en su capa; `zoom` es un departamento o «todo»;
+    números con respaldo; con un dato en pantalla, `fuente`; ≥ 1.6 s de voz por capa; ≤ 2 por video."""
+    es = escenas_de(g, "deptos")
+    f = []
+    if len(es) > DEPTOS_POR_VIDEO:
+        f.append("H29 %d escenas deptos: van ≤ %d por video (o parte)" % (len(es), DEPTOS_POR_VIDEO))
+    for i, e in es:
+        fu = titulo_corto(f, "H29", i, e, valores, anios)
+        capas = e.get("capas") if isinstance(e.get("capas"), list) else []
+        if not DEPTOS_CAPAS[0] <= len(capas) <= DEPTOS_CAPAS[1]:
+            f.append("H29 escena %d: %d capas; van %d–%d (una por frase de la voz)" % (i, len(capas), *DEPTOS_CAPAS))
+        revisar_dice(f, "H29", i, capas, e.get("texto"), "capa")
+        con_dato, hubo = False, False
+        for k, c in enumerate(capas, 1):
+            if not isinstance(c, dict):
+                continue
+            if set(c) - DEPTOS_CLAVES:
+                f.append("H29 escena %d capa %d: clave desconocida %s (van: %s)" % (i, k, ", ".join(sorted(set(c) - DEPTOS_CLAVES)), ", ".join(sorted(DEPTOS_CLAVES))))
+            ds = c.get("deptos")
+            if ds is not None:
+                ids = [NT.depto_id(x) for x in ds] if isinstance(ds, list) else [None]
+                if not ds or len(ids) > DEPTOS_POR_CAPA or any(not x for x in ids) or len(set(ids)) != len(ids):
+                    f.append("H29 escena %d capa %d: `deptos` son 1–%d departamentos que existen, sin repetir (p. ej. [\"Retalhuleu\"]); "
+                             "llegó %s" % (i, k, DEPTOS_POR_CAPA, ds))
+            if not (ds or c.get("zoom") or c.get("cifra")):
+                f.append("H29 escena %d capa %d: la capa no muestra nada (deptos, zoom o cifra)" % (i, k))
+            if c.get("arco") and not (ds and hubo):
+                f.append("H29 escena %d capa %d: `arco` une el departamento de una capa anterior con el de esta: las dos llevan `deptos`" % (i, k))
+            if c.get("onda") and not ds:
+                f.append("H29 escena %d capa %d: `onda` sale del primer departamento de la capa: lleva `deptos`" % (i, k))
+            if c.get("zoom") is not None and c.get("zoom") != "todo" and not NT.depto_id(c.get("zoom")):
+                f.append("H29 escena %d capa %d: zoom «%s»; va un departamento o «todo»" % (i, k, c.get("zoom")))
+            if c.get("etiqueta") and not ds:
+                f.append("H29 escena %d capa %d: la etiqueta va en el rótulo del primer departamento de la capa" % (i, k))
+            if c.get("rotulo") and not c.get("cifra"):
+                f.append("H29 escena %d capa %d: `rotulo` acompaña a una `cifra`" % (i, k))
+            for que, txt, tope in (("la cifra", c.get("cifra"), CIFRA_CARACTERES), ("el rótulo", c.get("rotulo"), VIAS_ROTULO),
+                                   ("la etiqueta", c.get("etiqueta"), VIAS_ETIQUETA)):
+                if txt is None:
+                    continue
+                if not isinstance(txt, str) or not txt.strip() or len(txt) > tope:
+                    f.append("H29 escena %d capa %d: %s va de 1 a %d caracteres; llegó «%s»" % (i, k, que, tope, txt))
+                else:
+                    numeros_pantalla(f, "H29", i, "%s de la capa %d" % (que, k), txt, valores, anios)
+            con_dato = con_dato or bool(c.get("cifra") or c.get("etiqueta"))
+            hubo = hubo or bool(ds)
+        if con_dato and not fu:
+            f.append("H29 escena %d: con una cifra o una etiqueta en pantalla, la escena lleva `fuente`" % i)
+        s_ = VD.segundos_voz(e.get("texto"))
+        if capas and s_ < VIAS_CAPA_S * len(capas):
+            f.append("H29 escena %d: %d capas en %.1f s de voz estimados: van ≥ %.1f s por capa" % (i, len(capas), s_, VIAS_CAPA_S))
+    return f
+
+
+def t_deptos(S, e, ps, pal, fin_voz, dur, g):
+    """La escena deptos (video/deptos.html): cada capa entra cuando la voz dice su `dice`."""
+    esc = escena_guion(S, g)
+    t0 = t0_propio(esc)
+    nombres = VD.nombres_depto()
+    brutas = [c for c in esc.get("capas") or [] if isinstance(c, dict)]
+    capas = []
+    for c, t in zip(brutas, entradas_dice(brutas, pal, t0, dur)):
+        ids = [x for x in (NT.depto_id(d) for d in c.get("deptos") or []) if x]
+        capa = {"start": t, "ids": ids, "nombres": [nombres.get(x, x) for x in ids], "arco": bool(c.get("arco")), "onda": bool(c.get("onda")),
+                "zoom": "todo" if c.get("zoom") == "todo" else NT.depto_id(c.get("zoom"))}
+        for campo in ("etiqueta", "cifra", "rotulo"):
+            if c.get(campo):
+                capa[campo] = c[campo]
+        capas.append(capa)
+    S["pagina"] = "deptos"
+    S["D"] = {"titulo": esc.get("titulo") or "", "capas": capas, "fuente": ("Fuente: " + esc["fuente"]) if esc.get("fuente") else None}
+    S["T"] = {"ini": round(t0, 3)}
+    return cerrar_escena(S, e, esc, ps, g, [(0.1, "entrada")] + [(c["start"], "nodo") for c in capas])
+
+
+# ---------- escena pagina: la página real de un documento con la frase subrayada en su sitio (H30) ----------
+PAGINA_FRASE, PAGINA_RENGLONES, PAGINAS_POR_VIDEO = (20, 240), 5, 2
+
+
+def paginas_h():
+    """Las páginas de documento del trabajo en curso (TRABAJO/paginas.json, las escribe `historia.py pagina`)."""
+    ruta = os.path.join(TRABAJO_ACTUAL, "paginas.json") if TRABAJO_ACTUAL else None
+    return leer(ruta) if ruta and os.path.isfile(ruta) else {}
+
+
+def frase_en_pdf(pdf, frase):
+    """(página, cajas [x, y, ancho, alto] en 0–1 de cada renglón, la frase como está en el PDF) de la primera página del
+    PDF que trae la frase palabra por palabra (sin distinguir mayúsculas, tildes ni puntuación); None si no está."""
+    toks = VD._plano(frase).split()
+    info = subprocess.run(["pdfinfo", pdf], capture_output=True, text=True).stdout
+    m = re.search(r"Pages:\s+(\d+)", info)
+    for p in range(1, (int(m.group(1)) if m else 0) + 1):
+        x = subprocess.run(["pdftotext", "-bbox", "-f", str(p), "-l", str(p), pdf, "-"], capture_output=True, text=True).stdout
+        pg = re.search(r'<page width="([\d.]+)" height="([\d.]+)"', x)
+        if not pg:
+            continue
+        pw, ph = float(pg.group(1)), float(pg.group(2))
+        ws = [(float(a), float(b), float(c), float(d), html.unescape(t))
+              for a, b, c, d, t in re.findall(r'<word xMin="([\d.]+)" yMin="([\d.]+)" xMax="([\d.]+)" yMax="([\d.]+)">([^<]*)</word>', x)]
+        plano = [(k, tk) for k, w in enumerate(ws) for tk in VD._plano(w[4]).split()]
+        sec = [tk for _, tk in plano]
+        j = next((j for j in range(len(sec) - len(toks) + 1) if sec[j:j + len(toks)] == toks), None)
+        if j is None:
+            continue
+        usadas = [ws[k] for k in sorted({plano[q][0] for q in range(j, j + len(toks))})]
+        renglones = []
+        for w in usadas:   # un renglón = las palabras seguidas con (casi) la misma altura
+            if renglones and abs(renglones[-1][-1][1] - w[1]) < 0.6 * (w[3] - w[1]):
+                renglones[-1].append(w)
+            else:
+                renglones.append([w])
+        cajas = [[round(min(w[0] for w in r) / pw, 4), round(min(w[1] for w in r) / ph, 4),
+                  round((max(w[2] for w in r) - min(w[0] for w in r)) / pw, 4), round((max(w[3] for w in r) - min(w[1] for w in r)) / ph, 4)]
+                 for r in renglones]
+        return p, cajas, " ".join(w[4] for w in usadas)
+    return None
+
+
+def cmd_pagina(a):
+    """La página de un PDF ya leído donde está una frase: la imagen de la página (TRABAJO/fotos/<id>.jpg) y la caja de
+    cada renglón de la frase (TRABAJO/paginas.json), para la escena `pagina`. Necesita poppler (pdftotext, pdftoppm)."""
+    trabajo = os.path.abspath(a.trabajo)
+    if not re.fullmatch(r"[a-z0-9_-]+", a.id):
+        return falla("--id en minúsculas, cifras y guiones (será fotos/<id>.jpg)")
+    if not all(shutil.which(x) for x in ("pdfinfo", "pdftotext", "pdftoppm")):
+        return falla("faltan pdfinfo, pdftotext y pdftoppm (brew install poppler)")
+    pdf = a.pdf or (ruta_fuente(a.url) + ".pdf" if a.url else None)
+    if not pdf or not os.path.isfile(pdf):
+        return falla("no hay PDF: pasa --url de una fuente PDF ya leída con `leer` (o --pdf con su ruta)")
+    r = frase_en_pdf(pdf, a.frase)
+    if not r:
+        return falla("el PDF no trae esa frase palabra por palabra: cópiala de la cita guardada (un trozo de 1–%d renglones)" % PAGINA_RENGLONES)
+    pag, cajas, literal = r
+    if len(cajas) > PAGINA_RENGLONES or not PAGINA_FRASE[0] <= len(literal) <= PAGINA_FRASE[1]:
+        return falla("la frase ocupa %d renglones y %d caracteres: va un trozo de ≤ %d renglones y %d–%d caracteres"
+                     % (len(cajas), len(literal), PAGINA_RENGLONES, *PAGINA_FRASE))
+    os.makedirs(os.path.join(trabajo, "fotos"), exist_ok=True)
+    base = os.path.join(trabajo, "fotos", "_pagina_" + a.id)
+    subprocess.run(["pdftoppm", "-f", str(pag), "-l", str(pag), "-r", "120", "-jpeg", "-jpegopt", "quality=80", pdf, base], check=True)
+    hechas = glob.glob(base + "*.jpg")
+    if not hechas:
+        return falla("pdftoppm no escribió la página %d" % pag)
+    os.replace(hechas[0], os.path.join(trabajo, "fotos", a.id + ".jpg"))
+    ruta = os.path.join(trabajo, "paginas.json")
+    todo = leer(ruta) if os.path.isfile(ruta) else {}
+    todo[a.id] = {"archivo": "fotos/%s.jpg" % a.id, "pagina": pag, "lineas": cajas, "frase": literal,
+                  "fuente": a.fuente or (nombre_medio(a.url) if a.url else None), "url": a.url}
+    escribir(ruta, todo)
+    print("pagina %s · pág. %d · %d renglones · «%s» → %s" % (a.id, pag, len(cajas), literal, VD.rel(os.path.join(trabajo, "fotos", a.id + ".jpg"))))
+    return 0
+
+
+def revisar_pagina(g, valores=None, anios=None):
+    """H30, la escena `pagina`: la página existe (historia.py pagina) con 1–5 renglones; título de un renglón; `fuente`
+    (de quién es el documento); la voz lee la frase subrayada tal como está en el documento; ≤ 2 por video."""
+    es = escenas_de(g, "pagina")
+    f = []
+    if len(es) > PAGINAS_POR_VIDEO:
+        f.append("H30 %d escenas pagina: van ≤ %d por video (o parte)" % (len(es), PAGINAS_POR_VIDEO))
+    pags = paginas_h()
+    for i, e in es:
+        fu = titulo_corto(f, "H30", i, e, valores, anios)
+        if not fu:
+            f.append("H30 escena %d: `fuente` dice de quién es el documento («CEUR, Universidad de San Carlos»)" % i)
+        pg = pags.get(e.get("pagina"))
+        if not pg:
+            if TRABAJO_ACTUAL:
+                f.append("H30 escena %d: pagina «%s» no existe: se arma con python3 scripts/historia.py pagina <TRABAJO> --id <id> "
+                         "--url <fuente PDF ya leída> --frase «…»" % (i, e.get("pagina")))
+            continue
+        if not pg.get("lineas") or len(pg["lineas"]) > PAGINA_RENGLONES:
+            f.append("H30 escena %d: la página «%s» tiene %d renglones subrayados; van 1–%d" % (i, e.get("pagina"), len(pg.get("lineas") or []), PAGINA_RENGLONES))
+        if VD._plano(pg.get("frase") or "") not in VD._plano(e.get("texto") or ""):
+            f.append("H30 escena %d: la voz no lee la frase subrayada tal como está en el documento: «%s»" % (i, pg.get("frase")))
+    return f
+
+
+def t_pagina(S, e, ps, pal, fin_voz, dur, g):
+    """La escena pagina (video/pagina.html): el marcador recorre la frase mientras la voz la lee."""
+    esc = escena_guion(S, g)
+    pg = paginas_h().get(esc.get("pagina")) or {}
+    t0 = t0_propio(esc)
+    ws = [VD._plano(w["text"]) for w in pal]
+    toks = VD._plano(pg.get("frase") or "").split()
+
+    def buscar(trozo, desde=0):
+        return next((j for j in range(desde, len(ws) - len(trozo) + 1) if ws[j:j + len(trozo)] == trozo), None) if trozo else None
+    k1 = buscar(toks[:3])
+    k2 = buscar(toks[-3:], k1 or 0)
+    t_ini = max(t0 + 1.2, pal[k1]["start"]) if k1 is not None else max(t0 + 1.2, 0.35 * fin_voz)
+    t_fin = pal[k2 + len(toks[-3:]) - 1]["end"] if k2 is not None else min(fin_voz, t_ini + 5.0)
+    t_fin = min(max(t_fin, t_ini + 0.8), dur - 0.6)
+    S["pagina"] = "pagina"
+    fuente = "Documento: %s" % esc["fuente"] if esc.get("fuente") else "Documento"
+    S["PG"] = {"foto": pg.get("archivo"), "lineas": pg.get("lineas") or [], "titulo": esc.get("titulo") or "",
+               "fuente": fuente + (", pág. %s" % pg["pagina"] if pg.get("pagina") else ""), "t": [round(t_ini, 3), round(t_fin, 3)]}
+    S["T"] = {"ini": round(t0, 3)}
+    ev = [(0.1, "entrada"), (max(t0, t_ini - 1.1), "plano"), (t_ini, "nodo"), (t_fin, "nodo")]
+    ev_, sfx = cerrar_escena(S, e, esc, ps, g, ev)
+    return ev_, sfx + [(t_ini, "marcador")]
+
+
+# ---------- escena cortina: antes y ahora con dos fotos reales (H31) ----------
+CORTINA_ETIQUETA, CORTINA_DESDE = 14, 0.2
+
+
+def revisar_cortina(g, valores=None, anios=None):
+    """H31, la escena `cortina` (antes y ahora): dos fotos verificadas y distintas; dos etiquetas cortas (la de antes y
+    la de ahora) con sus años en un hecho; título de un renglón; el `dice` (sin cifras) suena en la voz pasado el 20 %
+    (la foto de antes se ve primero); ≤ 1 por video."""
+    es = escenas_de(g, "cortina")
+    f = []
+    if len(es) > 1:
+        f.append("H31 %d escenas cortina: va 1 por video (o parte)" % len(es))
+    for i, e in es:
+        titulo_corto(f, "H31", i, e, valores, anios)
+        a, b = foto_de("H31", i, e.get("antes"), f, "antes"), foto_de("H31", i, e.get("ahora"), f, "ahora")
+        if e.get("antes") == e.get("ahora") or (a and b and a.get("archivo") == b.get("archivo")):
+            f.append("H31 escena %d: `antes` y `ahora` son dos fotos distintas del mismo lugar o de la misma cosa" % i)
+        ets = e.get("etiquetas")
+        if not (isinstance(ets, list) and len(ets) == 2 and all(isinstance(x, str) and 0 < len(x.strip()) <= CORTINA_ETIQUETA for x in ets)):
+            f.append("H31 escena %d: `etiquetas` son dos textos de 1–%d caracteres: la de antes y la de ahora ([\"1976\", \"2021\"])" % (i, CORTINA_ETIQUETA))
+        else:
+            for x in ets:
+                numeros_pantalla(f, "H31", i, "la etiqueta", x, valores, anios)
+        voz, d = VD._plano(e.get("texto") or ""), VD._plano(e.get("dice") or "")
+        if not d or re.search(r"\d", str(e.get("dice") or "")):
+            f.append("H31 escena %d: `dice` es la palabra de la voz con la que cruza la cortina, sin cifras («después», «hoy»)" % i)
+        elif voz.find(d) < 0:
+            f.append("H31 escena %d: la voz no dice «%s»" % (i, e.get("dice")))
+        elif voz.find(d) < CORTINA_DESDE * len(voz):
+            f.append("H31 escena %d: la cortina cruza con «%s», antes del %d %% de la voz: primero se ve la foto de antes mientras la voz "
+                     "la cuenta" % (i, e.get("dice"), CORTINA_DESDE * 100))
+    return f
+
+
+def t_cortina(S, e, ps, pal, fin_voz, dur, g):
+    """La escena cortina (video/cortina.html): la cortina cruza cuando la voz dice el `dice`."""
+    esc = escena_guion(S, g)
+    a, b = fotos_h().get(esc.get("antes")) or {}, fotos_h().get(esc.get("ahora")) or {}
+    t0 = t0_propio(esc)
+    t = max(entradas_dice([esc], pal, t0, dur)[0], t0 + 1.2)
+    creditos = " · ".join(dict.fromkeys(x for x in (a.get("credito"), b.get("credito")) if x))
+    S["pagina"] = "cortina"
+    S["CO"] = {"antes": a.get("archivo"), "ahora": b.get("archivo"), "etiquetas": list(esc.get("etiquetas") or ["", ""])[:2], "t": round(t, 3),
+               "titulo": esc.get("titulo") or "", "pie": " · ".join(x for x in (creditos, ("Fuente: " + esc["fuente"]) if esc.get("fuente") else None) if x)}
+    S["T"] = {"ini": round(t0, 3)}
+    ev, sfx = cerrar_escena(S, e, esc, ps, g, [(0.1, "entrada"), (t, "plano")])
+    return ev, sfx + [(t, "whip")]
+
+
+# ---------- escena archivo: varias piezas reales en pantalla, una por frase (H32) ----------
+ARCHIVO_ESTILOS = {"tira": (2, 5), "capas": (2, 5), "mesa": (3, 4)}   # estilo → cuántas piezas
+ARCHIVO_FECHA, ARCHIVO_PIEZA_S, ARCHIVO_CUENTA, ARCHIVO_BARRAS, ARCHIVO_POR_VIDEO = 14, 2.2, (2, 24), (2, 6), 2
+ARCHIVO_CONTEO_S = 1.5   # lo que tarda el conteo en llenar la rejilla
+
+
+def revisar_archivo(g, valores=None, anios=None):
+    """H32, la escena `archivo`: estilo tira | capas | mesa (piezas: cada una su foto verificada, distinta, con su `dice`
+    en la voz y en orden; fecha y rótulo cortos), conteo (una foto, `cuenta` con respaldo, `unidad`, `dice`) o barras
+    (una foto y 2–6 barras con valor con respaldo; `fuente`); números con respaldo; ≤ 2 por video."""
+    es = escenas_de(g, "archivo")
+    f = []
+    if len(es) > ARCHIVO_POR_VIDEO:
+        f.append("H32 %d escenas archivo: van ≤ %d por video (o parte)" % (len(es), ARCHIVO_POR_VIDEO))
+    for i, e in es:
+        est = e.get("estilo")
+        fu = titulo_corto(f, "H32", i, e, valores, anios)
+        if est in ARCHIVO_ESTILOS:
+            ps = e.get("piezas") if isinstance(e.get("piezas"), list) else []
+            if not ARCHIVO_ESTILOS[est][0] <= len(ps) <= ARCHIVO_ESTILOS[est][1]:
+                f.append("H32 escena %d: %d piezas; en «%s» van %d–%d" % (i, len(ps), est, *ARCHIVO_ESTILOS[est]))
+            revisar_dice(f, "H32", i, ps, e.get("texto"), "pieza")
+            vistos = set()
+            for k, p in enumerate(ps, 1):
+                if not isinstance(p, dict):
+                    continue
+                if set(p) - {"dice", "foto", "fecha", "rotulo"}:
+                    f.append("H32 escena %d pieza %d: clave desconocida %s (van dice, foto, fecha, rotulo)" % (i, k, ", ".join(sorted(set(p) - {"dice", "foto", "fecha", "rotulo"}))))
+                rec = foto_de("H32", i, p.get("foto"), f, "la foto de la pieza %d" % k)
+                if p.get("foto") in vistos or (rec and rec.get("archivo") in vistos):
+                    f.append("H32 escena %d pieza %d: la foto «%s» ya salió en esta escena" % (i, k, p.get("foto")))
+                vistos |= {p.get("foto"), (rec or {}).get("archivo")}
+                for que, txt, tope in (("la fecha", p.get("fecha"), ARCHIVO_FECHA), ("el rótulo", p.get("rotulo"), VIAS_ROTULO)):
+                    if txt is None:
+                        continue
+                    if not isinstance(txt, str) or not txt.strip() or len(txt) > tope:
+                        f.append("H32 escena %d pieza %d: %s va de 1 a %d caracteres; llegó «%s»" % (i, k, que, tope, txt))
+                    else:
+                        numeros_pantalla(f, "H32", i, "%s de la pieza %d" % (que, k), txt, valores, anios)
+            s_ = VD.segundos_voz(e.get("texto"))
+            if ps and s_ < ARCHIVO_PIEZA_S * len(ps):
+                f.append("H32 escena %d: %d piezas en %.1f s de voz estimados: van ≥ %.1f s por pieza" % (i, len(ps), s_, ARCHIVO_PIEZA_S))
+        elif est == "conteo":
+            foto_de("H32", i, e.get("foto"), f)
+            c = e.get("cuenta")
+            if not (isinstance(c, int) and not isinstance(c, bool) and ARCHIVO_CUENTA[0] <= c <= ARCHIVO_CUENTA[1]):
+                f.append("H32 escena %d: `cuenta` es un entero de %d a %d (cuántas veces se repite la foto); llegó %s" % (i, *ARCHIVO_CUENTA, c))
+            else:
+                numeros_pantalla(f, "H32", i, "la cuenta", str(c), valores, anios)
+            un = e.get("unidad")
+            if not isinstance(un, str) or not un.strip() or len(un) > VIAS_ROTULO:
+                f.append("H32 escena %d: `unidad` dice qué se cuenta, en 1–%d caracteres («pasos a desnivel en diez años»)" % (i, VIAS_ROTULO))
+            else:
+                numeros_pantalla(f, "H32", i, "la unidad", un, valores, anios)
+            revisar_dice(f, "H32", i, [e], e.get("texto"), "el conteo", primera=False)
+        elif est == "barras":
+            foto_de("H32", i, e.get("foto"), f)
+            bs = e.get("barras") if isinstance(e.get("barras"), list) else []
+            if not ARCHIVO_BARRAS[0] <= len(bs) <= ARCHIVO_BARRAS[1]:
+                f.append("H32 escena %d: %d barras; van %d–%d" % (i, len(bs), *ARCHIVO_BARRAS))
+            revisar_dice(f, "H32", i, bs, e.get("texto"), "barra")
+            for k, b in enumerate(bs, 1):
+                if not isinstance(b, dict):
+                    continue
+                v = b.get("valor")
+                if not (isinstance(v, (int, float)) and not isinstance(v, bool) and v > 0):
+                    f.append("H32 escena %d barra %d: `valor` es un número > 0" % (i, k))
+                else:
+                    numeros_pantalla(f, "H32", i, "el valor de la barra %d" % k, "%g" % v, valores, anios)
+                et = b.get("etiqueta")
+                if not isinstance(et, str) or not et.strip() or len(et) > 10:
+                    f.append("H32 escena %d barra %d: etiqueta de 1–10 caracteres (el año o la categoría); llegó «%s»" % (i, k, et))
+                if b.get("texto") is not None:
+                    if not isinstance(b["texto"], str) or not 0 < len(b["texto"]) <= 12:
+                        f.append("H32 escena %d barra %d: `texto` (cómo se escribe el valor) de 1–12 caracteres" % (i, k))
+                    else:
+                        numeros_pantalla(f, "H32", i, "el texto de la barra %d" % k, b["texto"], valores, anios)
+            if not fu:
+                f.append("H32 escena %d: unas barras llevan `fuente`" % i)
+        else:
+            f.append("H32 escena %d: estilo «%s» (tira = línea de tiempo con fotos · capas = recortes que caen uno sobre otro · mesa = las "
+                     "pruebas sobre una mesa · conteo = una foto por cada cosa que se cuenta · barras = una serie sobre la foto)" % (i, est))
+    return f
+
+
+def con_miles(v):
+    return "{:,}".format(int(v)) if float(v).is_integer() else "%g" % v
+
+
+def t_archivo(S, e, ps, pal, fin_voz, dur, g):
+    """La escena archivo (video/archivo.html): cada pieza, la cuenta o cada barra entra cuando la voz dice su `dice`."""
+    esc = escena_guion(S, g)
+    est = esc.get("estilo")
+    t0 = t0_propio(esc)
+    fotos = fotos_h()
+    A = {"estilo": est, "titulo": esc.get("titulo") or ""}
+    creditos, ev = [], [(0.1, "entrada")]
+    if est in ARCHIVO_ESTILOS:
+        brutas = [p for p in esc.get("piezas") or [] if isinstance(p, dict)]
+        A["piezas"] = []
+        for p, t in zip(brutas, entradas_dice(brutas, pal, t0, dur)):
+            rec = fotos.get(p.get("foto")) or {}
+            creditos.append(rec.get("credito"))
+            A["piezas"].append({"start": t, "foto": rec.get("archivo"), "fecha": p.get("fecha") or "", "rotulo": p.get("rotulo") or ""})
+        ev += [(p["start"], "plano") for p in A["piezas"]]
+    elif est == "conteo":
+        rec = fotos.get(esc.get("foto")) or {}
+        creditos.append(rec.get("credito"))
+        t = entradas_dice([esc], pal, t0, dur)[0]
+        A.update(foto=rec.get("archivo"), n=esc.get("cuenta") or 0, t=t, dura=ARCHIVO_CONTEO_S, unidad=esc.get("unidad") or "")
+        ev += [(t, "cifra"), (t + ARCHIVO_CONTEO_S, "cifra_fin")]
+    else:
+        rec = fotos.get(esc.get("foto")) or {}
+        creditos.append(rec.get("credito"))
+        brutas = [b for b in esc.get("barras") or [] if isinstance(b, dict)]
+        vmax = max([b.get("valor") or 0 for b in brutas] or [1]) or 1
+        A["foto"] = rec.get("archivo")
+        A["barras"] = [{"start": t, "etiqueta": b.get("etiqueta") or "", "texto": b.get("texto") or con_miles(b.get("valor") or 0),
+                        "alto": round((b.get("valor") or 0) / vmax, 4)} for b, t in zip(brutas, entradas_dice(brutas, pal, t0, dur))]
+        ev += [(b["start"], "nodo") for b in A["barras"]]
+    A["pie"] = " · ".join(list(dict.fromkeys(c for c in creditos if c)) + (["Fuente: " + esc["fuente"]] if esc.get("fuente") else []))
+    S["pagina"], S["A"], S["T"] = "archivo", A, {"ini": round(t0, 3)}
+    return cerrar_escena(S, e, esc, ps, g, ev)
+
+
+# ---------- escena bandos: las personas toman partido en dos columnas (H33) ----------
+BANDOS_PERSONAS, BANDOS_POR_LADO, BANDOS_NOMBRE, BANDOS_CIFRA, BANDOS_TEXTO, BANDOS_PERSONA_S = (2, 6), 3, 16, 8, 30, 1.6
+
+
+def revisar_bandos(g, valores=None, anios=None):
+    """H33, la escena `bandos`: dos lados con nombre corto (y cifra con respaldo); 2–6 personas, cada una un personaje
+    del encuadre con retrato, en su lado (0 o 1; ≤ 3 por lado y al menos una en cada uno), con su `dice` en la voz y en
+    orden; `umbral` opcional {dice, texto, marca, lleno, total} con sus números con respaldo; ≤ 1 por video."""
+    es = escenas_de(g, "bandos")
+    f = []
+    if len(es) > 1:
+        f.append("H33 %d escenas bandos: va 1 por video (o parte)" % len(es))
+    enc = encuadre(TRABAJO_ACTUAL) if TRABAJO_ACTUAL else {}
+    pers = {VD._plano(c): p for p in enc.get("personajes") or [] if isinstance(p, dict) and p.get("nombre") for c in claves_personaje(p)}
+    fotos = fotos_h()
+    for i, e in es:
+        titulo_corto(f, "H33", i, e, valores, anios)
+        lados = e.get("lados") if isinstance(e.get("lados"), list) else []
+        if len(lados) != 2 or not all(isinstance(x, dict) and isinstance(x.get("nombre"), str) and 0 < len(x["nombre"].strip()) <= BANDOS_NOMBRE for x in lados):
+            f.append("H33 escena %d: `lados` son dos {nombre ≤ %d, cifra?} («A favor» y «En contra»)" % (i, BANDOS_NOMBRE))
+        for x in lados:
+            if isinstance(x, dict) and x.get("cifra") is not None:
+                if not isinstance(x["cifra"], str) or not 0 < len(x["cifra"]) <= BANDOS_CIFRA:
+                    f.append("H33 escena %d: la cifra de un lado va de 1 a %d caracteres" % (i, BANDOS_CIFRA))
+                else:
+                    numeros_pantalla(f, "H33", i, "la cifra de «%s»" % x.get("nombre"), x["cifra"], valores, anios)
+        ps = e.get("personas") if isinstance(e.get("personas"), list) else []
+        if not BANDOS_PERSONAS[0] <= len(ps) <= BANDOS_PERSONAS[1]:
+            f.append("H33 escena %d: %d personas; van %d–%d" % (i, len(ps), *BANDOS_PERSONAS))
+        revisar_dice(f, "H33", i, ps, e.get("texto"), "persona")
+        por_lado = [0, 0]
+        for k, p in enumerate(ps, 1):
+            if not isinstance(p, dict):
+                continue
+            if p.get("lado") not in (0, 1) or isinstance(p.get("lado"), bool):
+                f.append("H33 escena %d persona %d: `lado` es 0 o 1 (el primero o el segundo de `lados`)" % (i, k))
+            else:
+                por_lado[p["lado"]] += 1
+            if enc:
+                q = pers.get(VD._plano(p.get("personaje") or ""))
+                if not q:
+                    f.append("H33 escena %d: «%s» no es un personaje del encuadre" % (i, p.get("personaje")))
+                elif not (es_persona(q) and retrato_de_personaje(q, fotos)):
+                    f.append("H33 escena %d: «%s» no tiene retrato (H22): sin cara no entra a los bandos" % (i, q["nombre"]))
+        if ps and (min(por_lado) < 1 or max(por_lado) > BANDOS_POR_LADO):
+            f.append("H33 escena %d: %d y %d personas por lado: va al menos una en cada lado y ≤ %d por lado" % (i, *por_lado, BANDOS_POR_LADO))
+        u = e.get("umbral")
+        if u is not None:
+            nums = [u.get(c) for c in ("marca", "lleno", "total")] if isinstance(u, dict) else []
+            if not (isinstance(u, dict) and all(isinstance(x, (int, float)) and not isinstance(x, bool) and x > 0 for x in nums)
+                    and nums[0] <= nums[2] and nums[1] <= nums[2] and isinstance(u.get("texto"), str) and 0 < len(u["texto"]) <= BANDOS_TEXTO):
+                f.append("H33 escena %d: umbral {dice, texto ≤ %d, marca (lo que hacía falta), lleno (lo alcanzado), total}" % (i, BANDOS_TEXTO))
+            else:
+                revisar_dice(f, "H33", i, [u], e.get("texto"), "el umbral", primera=False)
+                for x in nums:
+                    numeros_pantalla(f, "H33", i, "el umbral", "%g" % x, valores, anios)
+                numeros_pantalla(f, "H33", i, "el texto del umbral", u["texto"], valores, anios)
+        s_ = VD.segundos_voz(e.get("texto"))
+        if ps and s_ < BANDOS_PERSONA_S * len(ps):
+            f.append("H33 escena %d: %d personas en %.1f s de voz estimados: van ≥ %.1f s por persona" % (i, len(ps), s_, BANDOS_PERSONA_S))
+    return f
+
+
+def t_bandos(S, e, ps, pal, fin_voz, dur, g):
+    """La escena bandos (video/bandos.html): cada persona entra a su columna cuando la voz la nombra."""
+    esc = escena_guion(S, g)
+    enc = encuadre(TRABAJO_ACTUAL) if TRABAJO_ACTUAL else {}
+    pers = {VD._plano(c): p for p in enc.get("personajes") or [] if isinstance(p, dict) and p.get("nombre") for c in claves_personaje(p)}
+    fotos = fotos_h()
+    t0 = t0_propio(esc)
+    brutas = [p for p in esc.get("personas") or [] if isinstance(p, dict)]
+    personas, creditos = [], []
+    for p, t in zip(brutas, entradas_dice(brutas, pal, t0, dur)):
+        q = pers.get(VD._plano(p.get("personaje") or "")) or {"nombre": p.get("personaje")}
+        r = retrato_de_personaje(q, fotos) if es_persona(q) else None
+        if r:
+            creditos.append((fotos.get(r[2]) or {}).get("credito"))
+        cargo = (q.get("cargo") or q.get("presentacion") or "").strip()
+        personas.append({"start": t, "nombre": q["nombre"], "corto": p.get("corto") or (q.get("alias") or [q["nombre"]])[0], "cargo": cargo[:CARGO_MAX],
+                         "lado": 1 if p.get("lado") == 1 else 0, "foto": r[0] if r else None, "foco": r[1] if r else None})
+    lados = [{"nombre": (x or {}).get("nombre") or "", "cifra": (x or {}).get("cifra") or ""} for x in (list(esc.get("lados") or []) + [{}, {}])[:2]]
+    B = {"titulo": esc.get("titulo") or "", "lados": lados, "personas": personas, "umbral": None,
+         "pie": " · ".join(list(dict.fromkeys(c for c in creditos if c)) + (["Fuente: " + esc["fuente"]] if esc.get("fuente") else []))}
+    ev = [(0.1, "entrada")] + [(p["start"], "persona") for p in personas]
+    u = esc.get("umbral")
+    if isinstance(u, dict):
+        t_u = max(entradas_dice([u], pal, t0, dur)[0], (personas[-1]["start"] + 0.8) if personas else t0)
+        B["umbral"] = {"start": round(min(t_u, dur - 1.0), 3), "texto": u.get("texto") or "", "marca": u.get("marca"), "lleno": u.get("lleno"), "total": u.get("total")}
+        ev.append((B["umbral"]["start"], "cifra"))
+    S["pagina"], S["B"], S["T"] = "bandos", B, {"ini": round(t0, 3)}
+    return cerrar_escena(S, e, esc, ps, g, ev)
+
+
+def lineas_archivo():
+    """Para el digesto del guionista: las escenas que se dibujan sobre un archivo real (además de vias)."""
+    return ["- lupa (UNA foto real que se interroga punto por punto; H28): foto (id verificado), titulo ≤ %d, estilo? puntos (la cámara "
+            "se acerca y un velo apaga el resto: leer una foto de archivo) | pistas (las etiquetas se quedan: la anatomía de un objeto), "
+            "puntos %d–%d [{dice, x, y (0–1: dónde está en la foto; MIRA la foto con Read antes de escribirlos), etiqueta ≤ %d}]; ≥ %.1f s "
+            "de voz por punto. La etiqueta dice lo que SE VE; lo que no se ve en la foto va en la voz con su hecho"
+            % (VIAS_TITULO, *LUPA_PUNTOS, LUPA_ETIQUETA, LUPA_PUNTO_S),
+            "- deptos (el mapa de los 22 departamentos por capas; H29): titulo ≤ %d, capas %d–%d [{dice, deptos? [nombres] (se encienden; el "
+            "primero lleva su rótulo, con etiqueta? ≤ %d), arco? true (un arco desde el departamento de la capa anterior: el viaje de algo), "
+            "onda? true (un anillo sale del primer departamento y va encendiendo a los demás: un sismo, una noticia), cifra? ≤ %d con "
+            "rotulo? ≤ %d, zoom? departamento | «todo»}], fuente (si hay cifra o etiqueta); ≥ %.1f s de voz por capa; ≤ %d por video. Para "
+            "un solo lugar basta `depto` en una foto; para un recorrido corto, `ruta`"
+            % (VIAS_TITULO, *DEPTOS_CAPAS, VIAS_ETIQUETA, CIFRA_CARACTERES, VIAS_ROTULO, VIAS_CAPA_S, DEPTOS_POR_VIDEO),
+            "- pagina (la página REAL de un documento con la frase subrayada en su sitio; H30): pagina (id), titulo ≤ %d, fuente (de quién "
+            "es el documento). Antes de escribirla, arma la página: python3 scripts/historia.py pagina <TRABAJO> --id <id> --url <la fuente "
+            "PDF ya leída> --frase «el trozo literal, 1–%d renglones». La voz dice de quién es el documento y LEE la frase tal como está "
+            "(como una cita); la cámara baja a ella y el marcador la recorre al paso de la voz. ≤ %d por video. Si la fuente no es un PDF, "
+            "usa `cita` con `documento`" % (VIAS_TITULO, PAGINA_RENGLONES, PAGINAS_POR_VIDEO),
+            "- cortina (ANTES Y AHORA con dos fotos reales del mismo lugar o de la misma cosa; H31): antes (id de foto), ahora (id de foto), "
+            "etiquetas [«1976», «2021»] ≤ %d cada una, dice (la palabra de la voz con la que cruza la cortina, sin cifras, pasado el %d %% de "
+            "la voz), titulo ≤ %d. Primero la voz cuenta la foto de antes; la cortina descubre la de ahora. 1 por video"
+            % (CORTINA_ETIQUETA, CORTINA_DESDE * 100, VIAS_TITULO),
+            "- archivo (varias piezas REALES en pantalla, una por frase; H32): estilo + titulo ≤ %d. tira | capas | mesa: piezas [{dice, foto "
+            "(id; cada una distinta), fecha? ≤ %d, rotulo? ≤ %d}] (tira 2–5: una línea de tiempo con fotos, la tira corre a la que suena; "
+            "capas 2–5: recortes o fotos que caen uno sobre otro; mesa 3–4: las pruebas del caso sobre una mesa, la cámara va de una a "
+            "otra); ≥ %.1f s de voz por pieza. conteo: foto, cuenta (%d–%d, con respaldo), unidad ≤ %d («pasos a desnivel en diez años»), "
+            "dice: la foto se repite una vez por cada cosa contada y el contador sube. barras: foto, barras %d–%d [{dice, etiqueta ≤ 10 "
+            "(el año), valor (con respaldo), texto? («11,785»)}], fuente: la foto se apaga y suben las barras. ≤ %d por video"
+            % (VIAS_TITULO, ARCHIVO_FECHA, VIAS_ROTULO, ARCHIVO_PIEZA_S, *ARCHIVO_CUENTA, VIAS_ROTULO, *ARCHIVO_BARRAS, ARCHIVO_POR_VIDEO),
+            "- bandos (las personas TOMAN PARTIDO en dos columnas: quién votó a favor y quién en contra, quién firmó y quién no; H33): "
+            "titulo ≤ %d, lados [{nombre ≤ %d, cifra? ≤ %d}, {…}], personas %d–%d [{personaje (del encuadre, con retrato), lado: 0|1, dice}] "
+            "(≤ %d por lado, al menos una en cada uno), umbral? {dice, texto ≤ %d, marca, lleno, total} (la barra de lo alcanzado frente a "
+            "lo que hacía falta), fuente. Cada quien en su lado por un HECHO verificado (su voto, su firma), nunca por una opinión. 1 por video"
+            % (VIAS_TITULO, BANDOS_NOMBRE, BANDOS_CIFRA, *BANDOS_PERSONAS, BANDOS_POR_LADO, BANDOS_TEXTO)]
 
 
 def tarjetas_de_escena(S, esc, pal, dur, g):
@@ -3845,6 +4771,9 @@ def aplicar_cambios(g, gan, cambios, trabajo=None):
         nuevo = chip
         if fo.get("referencia"):
             nuevo = "De referencia"
+        elif foto_de_archivo(fo) and (re.search(r"referencia", chip, re.I) or re.search(r"\b(1[5-9]|20)\d\d\b", chip)):
+            # m147: una foto de archivo republicada lleva la fecha de la nota (2026), no la del hecho: «De archivo»
+            nuevo = "De archivo"
         elif re.search(r"referencia", chip, re.I) and re.fullmatch(r"\d{4}", anio):   # la nueva sí es del hecho
             nuevo = "Foto de %s" % anio
         elif re.search(r"\b(1[5-9]|20)\d\d\b", chip) and re.fullmatch(r"\d{4}", anio) and anio not in chip:
@@ -4158,6 +5087,8 @@ def cmd_digesto(a):
                   "≤ %d con audio (TM1–TM5)" % (TITULAR_PALABRAS, 100 * TOMAS_PARTE_MAX, TOMAS_AUDIO_MAX),
                   "- tarjeta/mapa/ranking/tiempo: tuit (1, 2…), golpe ≤ %d palabras, grafico {plantilla de templates/graficos/, kicker, titular, nota, fuente, datos}; foco: false si el zoom a la cifra estorba"
                   % VD.GOLPE_PALABRAS,
+                  *lineas_vias(),
+                  *lineas_archivo(),
                   *VD.lineas_animaciones(st.get("animaciones_recientes") or []),
                   "- Cierre: rotulo («Lo que dejó»…), resumen %d–%d líneas ≤ %d, texto, tipo remate, forma LEGADO (lo normal): lo que la gente hace "
                   "HOY con lo que la historia dejó («Hoy, sus hijos y sus nietos siguen tomando Incaparina»); consecuencia {quien (gente: nietos, "
@@ -4229,6 +5160,26 @@ def pantalla_de(e, citas):
         partes = [e.get("titulo"), "Según la acusación" if e.get("atribuida") else None] + \
                  ["%s (nivel %s)" % (nd.get("personaje"), nd.get("nivel")) for nd in e.get("nodos") or []] + \
                  ["%s %s %s" % (ar.get("de"), ar.get("rel") or "→", ar.get("a")) for ar in e.get("aristas") or []]
+    elif t == "deptos":
+        partes = [e.get("titulo")] + [" ".join(str(x) for x in (", ".join(c.get("deptos") or []), c.get("etiqueta"), c.get("cifra"), c.get("rotulo")) if x)
+                                      for c in e.get("capas") or [] if isinstance(c, dict)]
+    elif t == "pagina":
+        partes = [e.get("titulo"), "Documento: %s" % (e.get("fuente") or ""), "«%s» (subrayado)" % ((paginas_h().get(e.get("pagina")) or {}).get("frase") or "")]
+    elif t == "cortina":
+        partes = [e.get("titulo")] + [str(x) for x in e.get("etiquetas") or []]
+    elif t == "archivo":
+        partes = [e.get("titulo"), e.get("unidad"), str(e["cuenta"]) if e.get("cuenta") else None] + \
+                 [" ".join(str(x) for x in (p.get("fecha"), p.get("rotulo"), p.get("etiqueta"), p.get("texto") or p.get("valor")) if x)
+                  for p in (e.get("piezas") or []) + (e.get("barras") or []) if isinstance(p, dict)]
+    elif t == "bandos":
+        partes = [e.get("titulo")] + [" ".join(str(x) for x in (l.get("cifra"), l.get("nombre")) if x) for l in e.get("lados") or [] if isinstance(l, dict)] + \
+                 ["%s → lado %s" % (p.get("personaje"), p.get("lado")) for p in e.get("personas") or [] if isinstance(p, dict)] + [(e.get("umbral") or {}).get("texto")]
+    elif t == "lupa":
+        partes = [e.get("titulo")] + [p.get("etiqueta") for p in e.get("puntos") or [] if isinstance(p, dict)]
+    elif t == "vias":
+        lugares = (vias_de(e.get("red_vial")) or {}).get("lugares") or {}
+        partes = [e.get("titulo")] + [" ".join(str(x) for x in ((lugares.get(c.get("lugar")) or {}).get("nombre"), c.get("etiqueta"), c.get("cifra"),
+                                                                 c.get("rotulo")) if x) for c in e.get("capas") or [] if isinstance(c, dict)]
     elif t in VD.CON_TUIT or t == "escala":
         gr = e.get("grafico") or {}
         tit = gr.get("titular")
@@ -4251,8 +5202,14 @@ def cmd_fotos_contacto(a):
 SALIDA_ENTREGA = ("video.mp4", "video_4x5.mp4", "subtitulos.srt", "caption.md", "portada.png")
 
 
+def fotos_de_archivo(e):
+    """Las fotos que usa una escena con archivos reales fuera de su `foto`: las dos de una cortina y las piezas de un archivo."""
+    return [x for x in (e.get("antes"), e.get("ahora")) if x] + [p.get("foto") for p in e.get("piezas") or [] if isinstance(p, dict) and p.get("foto")]
+
+
 def fotos_de_escena(e):
-    return [x for x in (e.get("foto"), e.get("retrato"), (e.get("visual_datos") or {}).get("foto")) if x] + list(e.get("dividida") or [])
+    return [x for x in (e.get("foto"), e.get("retrato"), (e.get("visual_datos") or {}).get("foto")) if x] + list(e.get("dividida") or []) + \
+        fotos_de_archivo(e)
 
 
 def cmd_entregar(a):
@@ -4416,7 +5373,7 @@ def cmd_producir(a):
         if rc:
             return falla("producir se detuvo en «%s» (exit %d): corrige y vuelve a correr (o sigue a mano desde ese paso)"
                          % (" ".join(paso[:1] + paso[2:]), rc))
-    print("producido: 9:16 y 4:5 en %s/salida · falta entregar" % rel(os.path.abspath(T)))
+    print("producido: 9:16 y 4:5 en %s/salida · falta entregar" % os.path.relpath(os.path.abspath(T), RAIZ))
     return 0
 
 
@@ -4556,6 +5513,13 @@ def main():
     q.add_argument("trabajo")
     q.add_argument("--solo", help="regraba solo estas escenas (1,3): un retoque que conserva lo demás")
     q.add_argument("--sin-escucha", action="store_true", help="salta `escuchar` (whisper)")
+    q = sub.add_parser("pagina", help="la página de un PDF ya leído donde está una frase (imagen + caja de cada renglón) para la escena pagina")
+    q.add_argument("trabajo")
+    q.add_argument("--id", required=True, help="id de la página (será fotos/<id>.jpg)")
+    q.add_argument("--url", help="la fuente PDF ya leída con `leer`")
+    q.add_argument("--pdf", help="o la ruta del PDF")
+    q.add_argument("--frase", required=True, help="el trozo literal que se subraya (1–5 renglones)")
+    q.add_argument("--fuente", help="de quién es el documento (por defecto, el medio de la url)")
     for nombre in REENVIO:
         sub.add_parser(nombre, help="→ scripts/video.py %s" % nombre)
     a = p.parse_args()
@@ -4567,7 +5531,7 @@ def main():
             "consolidar": cmd_consolidar, "encuadre": cmd_encuadre, "narracion": cmd_narracion, "digesto": cmd_digesto,
             "ganchos": cmd_ganchos, "cierres": cmd_cierres, "tarjetas": cmd_tarjetas, "guion": cmd_guion, "probar": cmd_probar, "aplicar": cmd_aplicar, "tiempos": cmd_tiempos,
             "fotos-contacto": cmd_fotos_contacto, "entregar": cmd_entregar, "video": cmd_video, "toma": cmd_toma,
-            "tomas-contacto": cmd_tomas_contacto, "focos": cmd_focos}[a.cmd](a)
+            "tomas-contacto": cmd_tomas_contacto, "focos": cmd_focos, "pagina": cmd_pagina}[a.cmd](a)
 
 
 if __name__ == "__main__":

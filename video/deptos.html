@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<!-- Escena «deptos» de /historia (?n=N): el mapa de los 22 departamentos animado por CAPAS, una por frase de la voz
+     (S.D de scripts/historia.py t_deptos; gate H29). La geometría es la del proyecto (geometria.js = GEOMETRIA de
+     templates/graficos/mapa.html, que sirve scripts/video_grabar.js). Cada capa puede: encender departamentos (el
+     primero lleva su aro y su rótulo, con una etiqueta corta), tender un ARCO desde el departamento de la capa anterior
+     (el viaje de algo entre departamentos), soltar una ONDA desde su primer departamento (un anillo que crece y va
+     encendiendo a los demás al alcanzarlos: un sismo, una noticia, una plaga), poner el dato de arriba (cifra + rótulo)
+     y mover la CÁMARA (zoom a un departamento, o «todo»). Lo de la capa que suena va en el acento; lo anterior, en
+     crema. La cámara solo se mueve cuando la capa lo pide y todo queda quieto entre capas (A1). El mapa va marcado
+     data-fuera-de-zona; título, dato, rótulos y pie quedan en la zona segura (V13). Solo variables del sistema Noche. -->
+<link rel="stylesheet" href="comun.css">
+<style>
+#titulo { position: absolute; top: 290px; left: var(--izq); right: var(--der); font: 800 58px/1.04 Archivo, sans-serif; letter-spacing: -.015em; white-space: nowrap; }
+#dato { position: absolute; top: 364px; left: var(--izq); right: var(--der); display: flex; align-items: flex-end; gap: 22px; opacity: 0; }
+#dato .cifra { font: 900 104px/.84 Archivo, sans-serif; font-stretch: 62.5%; text-transform: uppercase; letter-spacing: -.01em; white-space: nowrap; color: var(--acento, var(--a1)); }
+#dato .rot { padding-bottom: 6px; font: 800 32px/1.08 Archivo, sans-serif; letter-spacing: -.01em; }
+#mapa, #rotulos { position: absolute; top: 470px; left: 0; width: 1080px; height: 840px; }
+#mapa { overflow: hidden; }
+#mapa svg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; }
+#mapa path, #mapa polyline, #mapa circle { vector-effect: non-scaling-stroke; }
+#mapa .depto { stroke: var(--bg); stroke-width: 2.5; stroke-linejoin: round; }
+#mapa .arco { fill: none; stroke-width: 8; stroke-linecap: round; stroke-linejoin: round; }
+#mapa .onda { fill: none; stroke: var(--acento, var(--a1)); stroke-width: 6; }
+#rotulos { pointer-events: none; }
+.aro { position: absolute; width: 38px; height: 38px; margin: -19px 0 0 -19px; box-sizing: border-box; border-radius: 50%;
+  border: 5px solid var(--ink); background: var(--bg); opacity: 0; }
+.lug { position: absolute; left: 0; top: 0; display: flex; flex-direction: column; gap: 4px; padding: 8px 12px 7px; box-sizing: border-box;
+  border-radius: 8px; background: var(--bg); border: 2.5px solid color-mix(in srgb, var(--ink) 50%, transparent); white-space: nowrap; opacity: 0; }
+.lug b { font: 700 23px/1 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+.lug span { font: 800 28px/1.05 Archivo, sans-serif; letter-spacing: -.01em; }
+.lug span:empty { display: none; }
+#pie { position: absolute; left: var(--izq); right: var(--der); top: 1318px; font: 600 19px/1.25 'JetBrains Mono', monospace; letter-spacing: .04em; opacity: .7; }
+html.f45 #titulo { top: 150px; font-size: 48px; }
+html.f45 #dato { top: 208px; }
+html.f45 #dato .cifra { font-size: 84px; }
+html.f45 #dato .rot { font-size: 27px; }
+html.f45 #mapa, html.f45 #rotulos { top: 290px; height: 730px; }
+html.f45 .lug b { font-size: 20px; }
+html.f45 .lug span { font-size: 24px; }
+html.f45 #pie { top: 1030px; }
+</style>
+</head>
+<body>
+<div id="arriba"><div id="progreso"></div></div>
+<div id="titulo"></div>
+<div id="dato"><div class="cifra"></div><div class="rot"></div></div>
+<div id="mapa" data-fuera-de-zona></div>
+<div id="rotulos"></div>
+<div id="pie"></div>
+<div id="subs"></div>
+<script src="comun.js"></script>
+<script src="geometria.js"></script>
+<script>
+const n = V.n, { clamp, eo, esc } = V, NS = 'http://www.w3.org/2000/svg';
+const ENTRA_S = 0.9, CAMARA_S = 0.9, ONDA_S = 1.5, ACERCA = 2.2;
+const ACENTO = 'var(--acento, var(--a1))', NEUTRO = 'color-mix(in srgb, var(--ink) 10%, transparent)';
+const lim = (v, a, b) => Math.max(a, Math.min(b, v));
+const crear = (tag, attrs, padre) => { const x = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs || {})) x.setAttribute(k, v);
+  if (padre) padre.appendChild(x); return x; };
+let S, D, TROZOS, G, W, HB, DEP = {}, CAMS = [], ARCOS = [], ONDAS = [], LUGS = [];
+
+// la cámara de una capa: {tx, ty, s} con el departamento al centro de la caja
+function camara(id, s) {
+  if (!id || id === 'todo' || !DEP[id]) return { tx: 0, ty: 0, s: 1 };
+  const p = DEP[id];
+  return { s, tx: lim(W / 2 - s * p.x, W - s * W, 0), ty: lim(HB / 2 - s * p.y, HB - s * HB, 0) };
+}
+
+window.__listo = (async () => {
+  const C = await V.cargar(); S = C.S; TROZOS = C.trozos; D = S.D;
+  V.pintarProgreso(C.todo);
+  document.getElementById('titulo').textContent = D.titulo || '';
+  document.getElementById('pie').textContent = D.fuente || '';
+  const caja = document.getElementById('mapa');
+  W = caja.clientWidth; HB = caja.clientHeight;
+  const svg = crear('svg', { viewBox: `0 0 ${W} ${HB}` }, caja);
+  G = crear('g', {}, svg);
+  // el país entero encajado en la caja; cada departamento con su centro en unidades de la caja
+  const [vx, vy, vw, vh] = GEOMETRIA.viewBox.split(' ').map(Number), k = Math.min(W / vw, HB / vh), ox = (W - vw * k) / 2, oy = (HB - vh * k) / 2;
+  const pais = crear('g', { transform: `translate(${ox.toFixed(2)} ${oy.toFixed(2)}) scale(${k.toFixed(5)}) translate(${-vx} ${-vy})` }, G);
+  for (const [id, d] of Object.entries(GEOMETRIA.deptos)) {
+    const el = crear('path', { d: d.d, class: 'depto' }, pais), b = el.getBBox();
+    DEP[id] = { el, x: ox + k * (b.x + b.width / 2 - vx), y: oy + k * (b.y + b.height / 2 - vy) };
+  }
+  const capas = D.capas;
+  // arcos: del primer departamento de la capa anterior con departamentos al primero de esta
+  capas.forEach((c, i) => {
+    if (!c.arco || !c.ids.length) return;
+    const prev = capas.slice(0, i).reverse().find((x) => x.ids.length);
+    if (!prev) return;
+    const a = DEP[prev.ids[0]], b = DEP[c.ids[0]], dx = b.x - a.x, dy = b.y - a.y, largo = Math.hypot(dx, dy) || 1;
+    let nx = -dy / largo, ny = dx / largo;
+    if (ny > 0) { nx = -nx; ny = -ny; }   // el arco se comba hacia arriba
+    const cx = (a.x + b.x) / 2 + nx * largo * 0.22, cy = (a.y + b.y) / 2 + ny * largo * 0.22;
+    const pts = [];
+    for (let q = 0; q <= 60; q++) { const u = q / 60, w = 1 - u; pts.push([w * w * a.x + 2 * w * u * cx + u * u * b.x, w * w * a.y + 2 * w * u * cy + u * u * b.y]); }
+    ARCOS.push({ k: i, start: c.start, pts, el: crear('polyline', { class: 'arco', points: '' }, G) });
+  });
+  // ondas: un anillo desde el primer departamento de la capa; cada departamento se enciende al alcanzarlo
+  capas.forEach((c, i) => {
+    if (!c.onda || !c.ids.length) return;
+    const o = DEP[c.ids[0]], dist = {};
+    let max = 0;
+    for (const [id, p] of Object.entries(DEP)) { dist[id] = Math.hypot(p.x - o.x, p.y - o.y); max = Math.max(max, dist[id]); }
+    ONDAS.push({ k: i, start: c.start, o, dist, max: max + 30, el: crear('circle', { class: 'onda', cx: o.x, cy: o.y, r: 0 }, G) });
+  });
+  let cam = { tx: 0, ty: 0, s: 1 };
+  CAMS = capas.map((c) => (cam = c.zoom ? camara(c.zoom, ACERCA) : cam));
+  const R = document.getElementById('rotulos');
+  capas.forEach((c, i) => {
+    if (!c.ids.length) return;
+    const aro = document.createElement('div'); aro.className = 'aro'; R.appendChild(aro);
+    const el = document.createElement('div'); el.className = 'lug';
+    el.innerHTML = `<b>${esc(c.nombres[0])}</b><span>${esc(c.etiqueta || '')}</span>`;
+    R.appendChild(el);
+    LUGS.push({ k: i, start: c.start, id: c.ids[0], aro, el });
+  });
+  await Promise.all(["700 23px 'JetBrains Mono'", '800 28px Archivo', 'extra-condensed 900 104px Archivo'].map((f) => document.fonts.load(f)));
+  await document.fonts.ready;
+  for (const L of LUGS) { L.w = L.el.offsetWidth; L.h = L.el.offsetHeight; }
+  const tit = document.getElementById('titulo');
+  for (let fs = parseFloat(getComputedStyle(tit).fontSize); fs > 34 && tit.scrollWidth > tit.clientWidth; fs -= 2) tit.style.fontSize = fs + 'px';
+  await V.pintarActo(S);
+})();
+
+window.seek = (t0) => {
+  const t = V.portada ? S.dur : t0, capas = D.capas, Z = V.zona();
+  V.seekProgreso(t0, n, S.dur);
+  V.seekActo(t0, S);
+  let k = -1;
+  capas.forEach((c, i) => { if (t >= c.start) k = i; });
+  const ti = eo((t - (S.T.ini || 0.3) + 0.2) / 0.4), tit = document.getElementById('titulo');
+  tit.style.opacity = ti.toFixed(3); tit.style.transform = `translateY(${((1 - ti) * 24).toFixed(1)}px)`;
+  let kd = -1;
+  for (let i = 0; i <= k; i++) if (capas[i].cifra) kd = i;
+  const dato = document.getElementById('dato');
+  if (kd >= 0) {
+    dato.querySelector('.cifra').textContent = capas[kd].cifra; dato.querySelector('.rot').textContent = capas[kd].rotulo || '';
+    const p = eo((t - capas[kd].start) / 0.35);
+    dato.style.opacity = p.toFixed(3); dato.style.transform = `translateY(${((1 - p) * 14).toFixed(1)}px)`;
+    dato.querySelector('.cifra').style.color = kd === k ? '' : 'var(--ink)';
+  } else dato.style.opacity = 0;
+  const de = k > 0 ? CAMS[k - 1] : { tx: 0, ty: 0, s: 1 }, a = k >= 0 ? CAMS[k] : de;
+  const pc = k >= 0 ? eo((t - capas[k].start) / CAMARA_S) : 0;
+  const cam = { tx: de.tx + (a.tx - de.tx) * pc, ty: de.ty + (a.ty - de.ty) * pc, s: de.s + (a.s - de.s) * pc };
+  G.setAttribute('transform', `translate(${cam.tx.toFixed(2)} ${cam.ty.toFixed(2)}) scale(${cam.s.toFixed(4)})`);
+  // departamentos: el de la capa que suena en el acento; los de capas anteriores en crema; los que alcanzó una onda, tenues
+  const luz = {};   // id → [nivel 0–1, es de la capa activa]
+  for (const O of ONDAS) {
+    if (t < O.start) continue;
+    const r = O.max * eo((t - O.start) / ONDA_S);
+    O.el.setAttribute('r', r.toFixed(1));
+    O.el.style.opacity = (0.25 + 0.75 * (1 - eo((t - O.start - ONDA_S) / 0.5))).toFixed(3);
+    for (const [id, d] of Object.entries(O.dist)) if (d <= r) luz[id] = [0.3, false];
+  }
+  for (const O of ONDAS) if (t < O.start) O.el.style.opacity = 0;
+  capas.forEach((c, i) => {
+    if (t < c.start) return;
+    const p = eo((t - c.start) / ENTRA_S);
+    for (const id of c.ids) luz[id] = [p, i === k];
+  });
+  for (const [id, p] of Object.entries(DEP)) {
+    const L = luz[id];
+    p.el.style.fill = !L ? NEUTRO : L[1] ? `color-mix(in srgb, ${ACENTO} ${(100 * L[0]).toFixed(1)}%, ${NEUTRO})`
+      : `color-mix(in srgb, var(--ink) ${(10 + 48 * L[0]).toFixed(1)}%, transparent)`;
+  }
+  for (const A of ARCOS) {
+    const p = t >= A.start ? eo((t - A.start) / ENTRA_S) : 0, m = Math.round(p * (A.pts.length - 1));
+    A.el.setAttribute('points', p > 0 ? A.pts.slice(0, m + 1).map((q) => q[0].toFixed(1) + ',' + q[1].toFixed(1)).join(' ') : '');
+    A.el.style.stroke = A.k === k ? ACENTO : 'var(--ink)';
+  }
+  // rótulos: el aro sobre el departamento y la caja a su lado, dentro de la zona segura; el más nuevo tapa al viejo
+  const caja = document.getElementById('rotulos'), y0 = caja.offsetTop, puestos = [];
+  const yMax = Math.min(HB, Z.fin - y0) - 8;
+  for (let i = LUGS.length - 1; i >= 0; i--) {
+    const L = LUGS[i], p = DEP[L.id], entra = eo((t - L.start) / 0.35);
+    const x = cam.tx + cam.s * p.x, y = cam.ty + cam.s * p.y;
+    const relevado = LUGS.some((o) => o.k > L.k && o.id === L.id && t >= o.start);
+    const dentro = x >= Z.corte + 22 && x <= Z.ancho - Z.corte - 22 && y >= 22 && y <= yMax - 14 && (y + y0 + 20 < Z.iconosY || x <= Z.iconosX - 22);
+    L.aro.style.left = x.toFixed(1) + 'px'; L.aro.style.top = y.toFixed(1) + 'px';
+    L.aro.style.borderColor = L.k === k ? ACENTO : 'var(--ink)';
+    L.aro.style.opacity = (dentro && !relevado ? entra : 0).toFixed(3);
+    let lx = x + 30 + L.w <= Z.der ? x + 30 : x - 30 - L.w;
+    lx = lim(lx, Z.izq, Z.der - L.w);
+    const ly = lim(y - L.h / 2, 8, yMax - L.h);
+    const caj = [lx, ly, lx + L.w, ly + L.h];
+    const tapada = puestos.some((q) => caj[0] < q[2] + 6 && caj[2] > q[0] - 6 && caj[1] < q[3] + 6 && caj[3] > q[1] - 6);
+    const ve = t >= L.start && !relevado && !tapada && x >= 0 && x <= W && y >= 0 && y <= HB;
+    if (ve) puestos.push(caj);
+    L.el.style.transform = `translate(${lx.toFixed(1)}px, ${ly.toFixed(1)}px)`;
+    L.el.style.borderColor = L.k === k ? ACENTO : '';
+    L.el.style.opacity = (ve ? entra * (L.k === k ? 1 : 0.8) : 0).toFixed(3);
+  }
+  V.subtitulos(t0, S, TROZOS);
+};
+</script>
+</body></html>

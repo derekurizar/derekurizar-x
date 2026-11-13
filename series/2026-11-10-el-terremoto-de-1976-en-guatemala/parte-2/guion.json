@@ -1,0 +1,309 @@
+{
+ "id": "2026-11-10-el-terremoto-de-1976-en-guatemala-parte-2",
+ "tipo": "historia",
+ "slug": "el-terremoto-de-1976-en-guatemala-parte-2",
+ "tema": "El terremoto de 1976 en Guatemala",
+ "fecha": "2026-11-10",
+ "pregunta": "¿Qué pasó cuando la tierra volvió a temblar en los días siguientes?",
+ "arco": "tragedia con misterio: la noche, la cuenta que no dejaba de crecer, quién quedó bajo el adobe y qué se levantó encima; contada como cronología, hora a hora y luego año a año",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "6 feb 1976",
+   "titulo": "La réplica",
+   "escena": 4
+  },
+  {
+   "numero": 3,
+   "anio": "Feb 1976",
+   "titulo": "La cuenta",
+   "escena": 8
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "El terremoto en Guatemala duró medio minuto. Pero el miedo a dormir bajo techo duró meses. En todo febrero, la cuenta de muertos no iba a dejar de crecer. Desde el 4 de febrero de 1976, la tierra no paraba y las familias dormían en la calle. El día 5, el presidente Laugerud le dijo al país: Pido no perder la fe y la calma, ni dejarse llevar de bolas malintencionadas. Y ese día hubo tres réplicas fuertes. El 6, la tierra volvió a temblar."
+  },
+  {
+   "acto": 2,
+   "texto": "Esta vez nació al sur de la capital y tumbó lo que el 4 dejó a punto de caer. Un día antes, el Cementerio General ya había enterrado a 594 personas con nombre. Cuántas iban a fosas comunes, nadie lo sabía. Édgar Girón, corresponsal de Prensa Libre, contó por qué: En esos días, los cuerpos no se podían reclamar, porque familias enteras murieron entre los escombros. Por eso, en Chimaltenango, abrieron una sola fosa larga y enterraron ahí a centenares de personas, muchas sin nombre."
+  },
+  {
+   "acto": 3,
+   "texto": "Y la cuenta subió: los 1,142 muertos contados la noche del 4 quedaron cortos. Un balance posterior estimó unos 23,000 muertos y 76,504 heridos. Mientras tanto, llegó ayuda por tierra: Nicaragua mandó dos furgones con medicinas, víveres y plantas eléctricas, y El Salvador, a su Cruz Roja. A fin de febrero acabó la etapa crítica. Pero muchos, por miedo, vivieron hasta tres meses en champas de nylon. ¿Por qué el terremoto golpeó más a unos?"
+  }
+ ],
+ "hilos": [
+  {
+   "id": "p2h1",
+   "escena": 6
+  },
+  {
+   "id": "p2h2",
+   "escena": 9
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3
+  ],
+  [
+   4,
+   5
+  ],
+  [
+   6,
+   7
+  ],
+  [
+   8,
+   9
+  ]
+ ],
+ "paleta": "obsidiana",
+ "musica": "obsidiana-2",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 1570.84,
+ "duracion_s": 108.7,
+ "critica": {
+  "veredicto": "corregir",
+  "vuelta": 3,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 4,
+   "claridad": 4,
+   "flujo": 4,
+   "precision": 5,
+   "cierre": 4,
+   "recompensa": 4
+  }
+ },
+ "gancho": {
+  "familia": "contraste",
+  "visual": "foto",
+  "pantalla": "Terremoto: medio minuto",
+  "linea": "el miedo a dormir bajo techo, meses"
+ },
+ "promesa": {
+  "texto": "En todo febrero, la cuenta de muertos no iba a dejar de crecer.",
+  "pregunta": "¿Cuántos muertos dejó al fin el terremoto?",
+  "forma": "reloj",
+  "en": 2,
+  "pago": 8,
+  "revela": 2
+ },
+ "bisagra": {
+  "texto": "Cuántas iban a fosas comunes, nadie lo sabía.",
+  "forma": "secreto",
+  "en": 5,
+  "pago": 6
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "El terremoto en Guatemala duró medio minuto. Pero el miedo a dormir bajo techo duró meses.",
+   "voz": "El terremoto en Guatemala duró medio minuto. Pero el miedo a dormir bajo techo duró meses.",
+   "dur": 6.32,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Photographer not identified · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "En todo febrero, la cuenta de muertos no iba a dejar de crecer. Desde el 4 de febrero de 1976, la tierra no paraba y las familias dormían en la calle.",
+   "voz": "En todo febrero, la cuenta de muertos no iba a dejar de crecer. Desde el cuatro de febrero de mil novecientos setenta y seis, la tierra no paraba y las familias dormían en la calle.",
+   "dur": 11.528,
+   "hechos": [
+    "dias-h20"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "cita",
+   "pantalla": "El día 5, el presidente Laugerud le dijo al país: Pido no perder la fe y la calma, ni dejarse llevar de bolas malintencionadas. Y ese día hubo tres réplicas fuertes. El 6, la tierra volvió a temblar.",
+   "voz": "El día cinco, el presidente Laugerud le dijo al país: Pido no perder la fe y la calma, ni dejarse llevar de bolas malintencionadas. Y ese día hubo tres réplicas fuertes. El seis, la tierra volvió a temblar.",
+   "dur": 15.321,
+   "hechos": [
+    "dias-h12"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "foto",
+   "pantalla": "Esta vez nació al sur de la capital y tumbó lo que el 4 dejó a punto de caer.",
+   "voz": "Esta vez nació al sur de la capital y tumbó lo que el cuatro dejó a punto de caer.",
+   "dur": 5.646,
+   "hechos": [
+    "dias-h13"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "foto",
+   "pantalla": "Un día antes, el Cementerio General ya había enterrado a 594 personas con nombre. Cuántas iban a fosas comunes, nadie lo sabía.",
+   "voz": "Un día antes, el Cementerio General ya había enterrado a quinientas noventa y cuatro personas con nombre. Cuántas iban a fosas comunes, nadie lo sabía.",
+   "dur": 10.699,
+   "hechos": [
+    "dias-h11"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "cita",
+   "pantalla": "Édgar Girón, corresponsal de Prensa Libre, contó por qué: En esos días, los cuerpos no se podían reclamar, porque familias enteras murieron entre los escombros.",
+   "voz": "Édgar Girón, corresponsal de Prensa Libre, contó por qué: En esos días, los cuerpos no se podían reclamar, porque familias enteras murieron entre los escombros.",
+   "dur": 10.266,
+   "hechos": [
+    "voces-h14"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "foto",
+   "pantalla": "Por eso, en Chimaltenango, abrieron una sola fosa larga y enterraron ahí a centenares de personas, muchas sin nombre.",
+   "voz": "Por eso, en Chimaltenango, abrieron una sola fosa larga y enterraron ahí a centenares de personas, muchas sin nombre.",
+   "dur": 8.942,
+   "hechos": [
+    "voces-h13",
+    "voces-h14"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Photographer not identified · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "tarjeta",
+   "pantalla": "Y la cuenta subió: los 1,142 muertos contados la noche del 4 quedaron cortos. Un balance posterior estimó unos 23,000 muertos y 76,504 heridos.",
+   "voz": "Y la cuenta subió: los mil ciento cuarenta y dos muertos contados la noche del cuatro quedaron cortos. Un balance posterior estimó unos veintitrés mil muertos y setenta y seis mil quinientos cuatro heridos.",
+   "dur": 13.567,
+   "hechos": [
+    "dias-h06",
+    "noche-h19"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "foto",
+   "pantalla": "Mientras tanto, llegó ayuda por tierra: Nicaragua mandó dos furgones con medicinas, víveres y plantas eléctricas, y El Salvador, a su Cruz Roja.",
+   "voz": "Mientras tanto, llegó ayuda por tierra: Nicaragua mandó dos furgones con medicinas, víveres y plantas eléctricas, y El Salvador, a su Cruz Roja.",
+   "dur": 11.295,
+   "hechos": [
+    "dias-h14"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "cierre",
+   "pantalla": "A fin de febrero acabó la etapa crítica. Pero muchos, por miedo, vivieron hasta tres meses en champas de nylon. ¿Por qué el terremoto golpeó más a unos? Sígueme: en la tercera parte te cuento a quién le cayó más duro el terremoto.",
+   "voz": "A fin de febrero acabó la etapa crítica. Pero muchos, por miedo, vivieron hasta tres meses en champas de nylon. ¿Por qué el terremoto golpeó más a unos? Sígueme: en la tercera parte te cuento a quién le cayó más duro el terremoto.",
+   "dur": 17.367,
+   "hechos": [],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Hasta fin de febrero",
+  "resumen": [
+   "La réplica tumbó lo que quedaba",
+   "De 1,142 a unos 23,000 muertos",
+   "Ayuda por tierra desde Nicaragua"
+  ],
+  "texto": "A fin de febrero acabó la etapa crítica. Pero muchos, por miedo, vivieron hasta tres meses en champas de nylon. ¿Por qué el terremoto golpeó más a unos?",
+  "tipo": "pregunta",
+  "forma": "puente",
+  "final": "¿Por qué el terremoto golpeó más a unos?",
+  "hechos": [
+   "dias-h15",
+   "dias-h20"
+  ],
+  "invitacion": "Sígueme: en la tercera parte te cuento a quién le cayó más duro el terremoto."
+ },
+ "caption": {
+  "tiktok": "Serie · Parte 2 de 4: La tierra no dejó de temblar\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\nDespués del terremoto de 1976, Guatemala durmió en la calle y la cuenta de muertos no paró de crecer. #Guatemala #Terremoto1976 #Historia",
+  "instagram": "Serie · Parte 2 de 4: La tierra no dejó de temblar\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\nFebrero de 1976: la réplica del 6, las familias bajo el nylon, las fosas y la ayuda que llegó por tierra. #Guatemala #Terremoto1976",
+  "facebook": "Serie · Parte 2 de 4: La tierra no dejó de temblar\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\nFebrero de 1976, día por día: la réplica que tumbó lo que quedaba, las fosas comunes y una cuenta de muertos que pasó de 1,142 a unos 23,000. Fuentes en el primer comentario.",
+  "shorts": "Terremoto de 1976: la tierra no dejó de temblar (2/4) #Shorts\nFebrero de 1976 en Guatemala: réplicas, fosas y la cuenta de muertos."
+ }
+}

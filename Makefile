@@ -213,6 +213,9 @@ semana-fixture:   # maqueta de /semana: 3 diarios de ejemplo + un dato oficial ‚
 	python3 scripts/semana.py entregar $(SMF)/trabajo --salida $(SMF)/salida
 
 HF := sesiones/_fixture_historia
+escenas-prueba:   # las escenas con archivos reales de /historia (vias, lupa, deptos, pagina, cortina, archivo, bandos) grabadas con su constructor: TIPO=vias [CASO=zoom], o todas
+	python3 scripts/escena_prueba.py $(if $(TIPO),$(TIPO) $(if $(CASO),--caso $(CASO)),--todas)
+
 historia-fixture:   # maqueta de /historia: hechos verificados de ejemplo, fotos generadas, voz falsa, 9:16 y 4:5
 	rm -rf $(HF)/trabajo
 	python3 scripts/historia.py preparar "La panader√≠a La Espiga de Xela (historia de ejemplo)" --slug la-espiga-maqueta --trabajo $(HF)/trabajo --fixture

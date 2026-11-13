@@ -1,0 +1,15 @@
+{
+  "_comentario": "Caso de la escena cortina para scripts/escena_prueba.py: la zanja de drenaje de la Ruta 10 sobre la falla del Motagua en 1976 y en 2021 (Tmfnc, CC BY-SA 4.0, Wikimedia Commons: Hwy_10_Drainage_photo_comparison.png, recortada en sus dos fotos).",
+  "paleta": "terracota",
+  "fotos": {
+    "zanja-1976": {"archivo": "fotos/zanja-1976.jpg", "credito": "Foto: Tmfnc · CC BY-SA 4.0", "descripcion": "Zanja de drenaje desplazada por la falla del Motagua, 1976"},
+    "zanja-2021": {"archivo": "fotos/zanja-2021.jpg", "credito": "Foto: Tmfnc · CC BY-SA 4.0", "descripcion": "La misma zanja en 2021"}
+  },
+  "casos": {
+    "zanja": {
+      "tipo": "cortina", "acto": 3, "antes": "zanja-1976", "ahora": "zanja-2021", "etiquetas": ["1976", "2021"], "dice": "después",
+      "titulo": "La misma zanja",
+      "texto": "La falla partió esta zanja y la corrió hacia un lado. Cuarenta y cinco años después, la zanja sigue quebrada en el mismo lugar."
+    }
+  }
+}

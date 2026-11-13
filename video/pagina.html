@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<!-- Escena «pagina» de /historia (?n=N): la página REAL de un documento (la imagen de una página del PDF de una fuente
+     ya leída: la arma `historia.py pagina`, que también saca la caja de cada renglón de la frase) con la frase
+     SUBRAYADA en su sitio (S.PG de scripts/historia.py t_pagina; gate H30). La página entra entera; poco antes de que la
+     voz empiece a leer la frase, la cámara baja hasta ella (la frase a lo ancho de la columna) y un marcador en el
+     acento la recorre renglón por renglón al paso de la voz; al terminar, todo queda quieto. El papel va marcado
+     data-fuera-de-zona; el título y el pie («Documento: fuente, pág. N») quedan en la zona segura (V13). Solo
+     variables del sistema Noche (sin hex). La graba scripts/video_grabar.js llamando a seek(t). -->
+<link rel="stylesheet" href="comun.css">
+<style>
+#titulo { position: absolute; top: 290px; left: var(--izq); right: var(--der); font: 800 58px/1.04 Archivo, sans-serif; letter-spacing: -.015em; white-space: nowrap; }
+#papel { position: absolute; top: 384px; left: 0; width: 1080px; height: 916px; overflow: hidden; }
+#cam { position: absolute; left: 0; top: 0; width: 100%; height: 100%; transform-origin: 0 0; }
+#cam img { position: absolute; display: block; }
+.marca { position: absolute; background: var(--acento, var(--a1)); mix-blend-mode: multiply; opacity: .85; width: 0; }
+#pie { position: absolute; left: var(--izq); right: var(--der); top: 1312px; font: 600 19px/1.25 'JetBrains Mono', monospace; letter-spacing: .04em; opacity: .7; }
+html.f45 #titulo { top: 150px; font-size: 48px; }
+html.f45 #papel { top: 222px; height: 800px; }
+html.f45 #pie { top: 1032px; }
+</style>
+</head>
+<body>
+<div id="arriba"><div id="progreso"></div></div>
+<div id="titulo"></div>
+<div id="papel" data-fuera-de-zona><div id="cam"><img id="img" alt=""></div></div>
+<div id="pie"></div>
+<div id="subs"></div>
+<script src="comun.js"></script>
+<script>
+const n = V.n, { clamp, eo } = V, CAMARA_S = 0.9, ACERCA_MAX = 2.6;
+let S, P, TROZOS, W, HB, CAM = { s: 1, tx: 0, ty: 0 }, MARCAS = [], T_CAM = 0;
+
+window.__listo = (async () => {
+  const C = await V.cargar(); S = C.S; TROZOS = C.trozos; P = S.PG;
+  V.pintarProgreso(C.todo);
+  document.getElementById('titulo').textContent = P.titulo || '';
+  document.getElementById('pie').textContent = P.fuente || '';
+  const caja = document.getElementById('papel'), cam = document.getElementById('cam'), img = document.getElementById('img'), Z = V.zona();
+  W = caja.clientWidth; HB = caja.clientHeight;
+  img.src = P.foto;
+  await img.decode().catch(() => { throw new Error('no carga ' + P.foto); });
+  // la página entera, encajada por alto y centrada
+  const k = Math.min(W / img.naturalWidth, HB / img.naturalHeight), fw = img.naturalWidth * k, fh = img.naturalHeight * k;
+  const fx = (W - fw) / 2, fy = (HB - fh) / 2;
+  Object.assign(img.style, { left: fx + 'px', top: fy + 'px', width: fw + 'px', height: fh + 'px' });
+  // los renglones de la frase, en px de la caja; el marcador de cada uno crece de izquierda a derecha
+  const total = P.lineas.reduce((a, l) => a + l[2], 0) || 1;
+  let antes = 0;
+  MARCAS = P.lineas.map((l) => {
+    const el = document.createElement('div'); el.className = 'marca';
+    const m = { el, x: fx + l[0] * fw, y: fy + l[1] * fh, w: l[2] * fw, h: l[3] * fh, de: antes / total, a: (antes + l[2]) / total };
+    antes += l[2];
+    Object.assign(el.style, { left: (m.x - 2) + 'px', top: (m.y - m.h * 0.12) + 'px', height: (m.h * 1.24) + 'px' });
+    cam.appendChild(el);
+    return m;
+  });
+  // la cámara sobre la frase: el bloque a lo ancho de la columna (sin pasar de ACERCA_MAX), centrado en la columna y en
+  // la mitad de la caja
+  const x0 = Math.min(...MARCAS.map((m) => m.x)), x1 = Math.max(...MARCAS.map((m) => m.x + m.w));
+  const y0 = Math.min(...MARCAS.map((m) => m.y)), y1 = Math.max(...MARCAS.map((m) => m.y + m.h));
+  const s = Math.max(1, Math.min(ACERCA_MAX, (Z.der - Z.izq) / Math.max(1, x1 - x0)));
+  CAM = { s, tx: (Z.izq + Z.der) / 2 - s * (x0 + x1) / 2, ty: HB * 0.46 - s * (y0 + y1) / 2 };
+  T_CAM = Math.max(S.T.ini || 0.3, P.t[0] - CAMARA_S - 0.2);
+  await Promise.all(['800 58px Archivo'].map((f) => document.fonts.load(f)));
+  await document.fonts.ready;
+  const tit = document.getElementById('titulo');
+  for (let fs = parseFloat(getComputedStyle(tit).fontSize); fs > 34 && tit.scrollWidth > tit.clientWidth; fs -= 2) tit.style.fontSize = fs + 'px';
+  await V.pintarActo(S);
+})();
+
+window.seek = (t0) => {
+  const t = V.portada ? S.dur : t0;
+  V.seekProgreso(t0, n, S.dur);
+  V.seekActo(t0, S);
+  const ti = eo((t - (S.T.ini || 0.3) + 0.2) / 0.4), tit = document.getElementById('titulo');
+  tit.style.opacity = ti.toFixed(3); tit.style.transform = `translateY(${((1 - ti) * 24).toFixed(1)}px)`;
+  const pc = eo((t - T_CAM) / CAMARA_S);
+  document.getElementById('cam').style.transform =
+    `translate(${(CAM.tx * pc).toFixed(2)}px, ${(CAM.ty * pc).toFixed(2)}px) scale(${(1 + (CAM.s - 1) * pc).toFixed(4)})`;
+  // el marcador sigue a la voz: de P.t[0] a P.t[1], repartido entre los renglones según su ancho
+  const p = clamp((t - P.t[0]) / Math.max(0.3, P.t[1] - P.t[0]));
+  for (const m of MARCAS) m.el.style.width = (m.w * clamp((p - m.de) / Math.max(1e-6, m.a - m.de)) + (p > m.de ? 4 : 0)).toFixed(1) + 'px';
+  V.subtitulos(t0, S, TROZOS);
+};
+</script>
+</body></html>

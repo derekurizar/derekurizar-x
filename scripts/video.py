@@ -1056,9 +1056,11 @@ def segundos_voz(texto):
     return n / CPS
 
 
-# P6 (2026-11-10, decisión del usuario): la recompensa de ver el video queda clara desde el inicio. `promesa.pregunta`
-# es la pregunta concreta que el video responde; va EN PANTALLA (no en la voz) al decirse la promesa, vuelve en la
-# bisagra y en el pago (ahí con su check): video/comun.js V.pregunta. Vale para /historia, /serie y /explica.
+# P6 (2026-11-10, decisión del usuario): `promesa.pregunta` es la pregunta concreta que el video responde; va EN
+# PANTALLA (no en la voz) SOLO en la escena que la paga, con su check, cuando el dato ya se ve (video/comun.js
+# V.pregunta). Antes salía también con la promesa y en la bisagra: sin dato en pantalla no apuntaba a nada y tapaba
+# la etiqueta de la foto y el mini-mapa (usuario, 2026-11-10, terremoto P1: «solo tiene sentido cuando ya muestran el
+# dato»). Vale para /historia, /serie y /explica.
 P6_DESDE = "2026-11-10"          # los trabajos empezados antes solo reciben aviso (sus guiones ya estaban aprobados)
 PREGUNTA_PALABRAS = 9
 PROMESA_ANTES_S = 10.0           # la voz de la promesa empieza antes de este segundo (ahí se pierden ≈ 25 puntos)
@@ -1112,40 +1114,53 @@ def inicio_de_texto(palabras, texto, defecto=0.5):
 
 
 def marcar_pregunta(escenas, g, serie=None):
-    """S.pregunta = {texto, desde, dur, pagada} en la escena de la promesa, la de la bisagra y la del pago (P6). En una
-    parte de /serie con promesa de serie: desde la parte 2, la pregunta de la serie entera en el gancho (bajo «Parte N
-    de M») y, en la última, en la escena que la responde (guion.responde_serie, SE18), con su check."""
+    """S.pregunta = {texto, desde, dur, pagada} SOLO en la escena del pago, con su check (P6: la pregunta aparece cuando
+    el dato ya se ve, no antes). En una parte de /serie con promesa de serie: en la última, en la escena que la responde
+    (guion.responde_serie, SE18), con su check."""
     p = g.get("promesa") or {}
     q = (p.get("pregunta") or "").strip()
     for S in escenas:
         S.pop("pregunta", None)
-        S["eventos"] = [x for x in S.get("eventos") or [] if x.get("tipo") != "pregunta"]
+        # «pregunta_p6», no «pregunta»: la escena adivina tiene su propio evento «pregunta» y no se toca
+        S["eventos"] = [x for x in S.get("eventos") or [] if x.get("tipo") != "pregunta_p6"]
     por_n = {S["n"]: S for S in escenas}
     serie = serie or {}
     qs = (serie.get("promesa") or "").strip()
-    if qs and (serie.get("parte") or 1) > 1 and escenas and p.get("en") != 1:
-        S1 = escenas[0]
-        S1["pregunta"] = {"texto": qs, "desde": 0.5, "dur": round(max(1.5, min(3.6, S1["dur"] - TRANSICION - 0.8)), 3), "pagada": False}
     rs = g.get("responde_serie")
     if qs and serie.get("parte") == serie.get("de") and por_n.get(rs) and (por_n[rs].get("tipo") or "") != "cierre":
         Sr = por_n[rs]
         d0 = max(0.8, ((Sr.get("R") or {}).get("fin") or 0) + 0.2)
+        # entra cuando la voz dice la respuesta: la última palabra de la pregunta que suena en la escena (terremoto P4:
+        # el resumen dura 50 s y la respuesta, «mató a tantos por las paredes», va al final)
+        qw = {w for w in _plano(qs).split() if len(w) > 3}
+        dichas = [w["start"] for w in Sr.get("palabras") or [] if _plano(w.get("text") or "").strip(" .,;:¿?") in qw]
+        if dichas:
+            fin_ok = Sr["dur"] - TRANSICION - 0.3 - 1.5
+            d0 = max(d0, min(dichas[-1] - 0.3, fin_ok))
         if Sr["dur"] - TRANSICION - 0.3 - d0 >= 1.5:
             Sr["pregunta"] = {"texto": qs, "desde": d0, "dur": round(min(PREGUNTA_S["pago"], Sr["dur"] - TRANSICION - 0.3 - d0), 3), "pagada": True}
     if not q:
         return 0
-    b = g.get("bisagra") or {}
     n = 0
-    for clave, en, texto in (("promesa", p.get("en"), p.get("texto")), ("bisagra", b.get("en"), b.get("texto")), ("pago", p.get("pago"), None)):
+    for clave, en, texto in (("pago", p.get("pago"), None),):
         S = por_n.get(en)
         if not S or S.get("pregunta") or (S.get("tipo") or "") == "cierre" or S.get("plantilla") == "cierre":
             continue
         desde = max(0.4, inicio_de_texto(S.get("palabras"), texto) - 0.1) if texto else max(0.8, ((S.get("R") or {}).get("fin") or 0) + 0.2)
+        focos = [x["t"] for x in S.get("eventos") or [] if x.get("tipo") == "foco"]
+        if clave == "pago" and len(focos) > 1:
+            # la tarjeta va de cifra en cifra: la pregunta entra con la cifra que la responde, la última que la voz dice
+            # junto a una palabra de la pregunta (terremoto P2: «1,142 muertos» → «23,000 muertos», no «76,504 heridos»)
+            ws, qw = S.get("palabras") or [], set(_plano(q).split())
+            dichas = [w["start"] for i, w in enumerate(ws) if w.get("num") and i + 1 < len(ws)
+                      and _plano(ws[i + 1].get("text") or "").strip() in qw]
+            t_resp = dichas[-1] if dichas else focos[-1]
+            desde = max(desde, min(focos, key=lambda t: abs(t - t_resp)))
         dur = min(PREGUNTA_S[clave], S["dur"] - TRANSICION - 0.3 - desde)
         if dur < 1.5:
             continue
         S["pregunta"] = {"texto": q, "desde": round(desde, 3), "dur": round(dur, 3), "pagada": clave == "pago"}
-        S["eventos"] = sorted((S.get("eventos") or []) + [{"t": round(desde, 3), "tipo": "pregunta"}], key=lambda x: x["t"])
+        S["eventos"] = sorted((S.get("eventos") or []) + [{"t": round(desde, 3), "tipo": "pregunta_p6"}], key=lambda x: x["t"])
         n += 1
     return n
 
@@ -2398,16 +2413,16 @@ def pantalla_escena1(e):
 # ANTES de los gates: «resumen» en una escena chocó con cierre.resumen y revisar_verdad cayó con un TypeError. Una clave
 # nueva se agrega aquí junto con el código que la lee.
 ESCENA_CLAVES = {
-    "s": "acento anio animacion brief calculo caso cita definicion depto destacar enlace estilo etiqueta familia fecha formula foto fuente "
-         "golpe icono id linea lugar mecanismo mini noticia orden pantalla plantilla pregunta resalte retrato sujeto termino texto "
-         "tipo titular titulo toma traduccion transicion verbo visual votacion voz",
-    "i": "acto correcta n numero puesto top tuit",
+    "s": "acento ahora anio animacion antes brief calculo caso cita definicion depto destacar dice enlace estilo etiqueta familia fecha formula foto fuente "
+         "golpe icono id linea lugar mecanismo mini noticia orden pagina pantalla plantilla pregunta resalte retrato sujeto termino texto "
+         "red_vial tipo titular titulo toma traduccion transicion unidad verbo visual votacion voz",
+    "i": "acto correcta cuenta n numero puesto top tuit",
     "n": "dur",
     "b": "atribuida continua corrige creencia dictado_por_usuario ejemplo escucha_omitir estado foco giro intuicion "
          "resumen_serie saldo ventana",
-    "l": "afirma afirmaciones aristas de_cada diputados dividida fases focos fotos hechos nodos opciones paga pasos ruta "
+    "l": "afirma afirmaciones aristas barras capas de_cada diputados dividida etiquetas fases focos fotos hechos lados nodos opciones paga pasos personas piezas puntos ruta "
          "renglones sfx tomas",
-    "d": "adivina chip cifra cinetico grafico rotulo rotulos visual_datos",
+    "d": "adivina chip cifra cinetico grafico rotulo rotulos umbral visual_datos",
 }
 _TIPOS_V24 = {"s": (str,), "i": (int,), "n": (int, float), "b": (bool,), "l": (list,), "d": (dict,)}
 _NOMBRE_V24 = {"s": "texto", "i": "entero", "n": "número", "b": "true/false", "l": "lista", "d": "objeto"}
@@ -3422,7 +3437,11 @@ def aplicar_cambios(g, gan, cambios):
     narración de corrido, la promesa y el candidato del gancho. → (código, mensaje, escenas cambiadas): 0 ok · 1 el texto de
     antes no está literal en la narración · 2 cambio mal dado. Lo comparten probar (en una copia) y aplicar (en el TRABAJO)."""
     textos, escenas = [], set()   # (viejo, nuevo): el mismo cambio va a la narración, la promesa y el candidato del gancho
+    dentro = []   # (viejo, nuevo) de la promesa o la bisagra: una frase DENTRO del texto de una escena
+    gancho_tocado = False
     for c in cambios:
+        if c.get("escena") == 1 and ("tipo" in c or (c.get("campo") or "texto") in CAMPOS_GANCHO):
+            gancho_tocado = True
         if "insertar" in c:   # m108: {insertar: N, escena: {…, texto}, despues_de: "frase literal de la narración"}
             rc, msg = insertar_escena(g, c)
             if rc:
@@ -3432,11 +3451,11 @@ def aplicar_cambios(g, gan, cambios):
         clave ="promesa" if "promesa" in c else "bisagra" if "bisagra" in c else None
         if clave:   # {"promesa": "…", "forma"?} · {"bisagra": "…", "forma"?, "en"?, "pago"?} (P1–P4)
             dueno = g.setdefault(clave, {})
-            if dueno.get("texto") and c[clave] is not None:
-                textos.append((dueno["texto"], c[clave]))
+            if dueno.get("texto") and c[clave] is not None and dueno["texto"] != c[clave]:
+                dentro.append((dueno["texto"], c[clave]))   # m135: vive dentro de una escena; va después de las escenas
             if c[clave] is not None:
                 dueno["texto"] = c[clave]
-            dueno.update({k: c[k] for k in ("forma", "en", "pago") if k in c})
+            dueno.update({k: c[k] for k in ("forma", "en", "pago", "pregunta") if k in c})
             continue
         if isinstance(c.get("cierre"), dict):   # m020: {"cierre": {"texto", "final", …}} cambia los campos juntos (V5)
             dueno, nuevo_c = g.setdefault("cierre", {}), c["cierre"]
@@ -3509,6 +3528,33 @@ def aplicar_cambios(g, gan, cambios):
         if g.get("narracion") and viejo and not hallado:
             return 1, ("FALLA el texto de antes («%s…») no está literal en guion.narracion: el arreglo no se puede repartir sin "
                        "cambiar la narración de corrido" % viejo[:50]), escenas
+    # m135: la promesa o la bisagra cambian la frase dentro de su escena y de la narración; si el mismo arreglo ya
+    # reescribió esa escena con la frase nueva (escena + bisagra juntas), no hay nada más que reemplazar
+    for viejo, nuevo in dentro:
+        hallado = False
+        for i, e in enumerate(g.get("escenas") or [], 1):
+            if viejo in (e.get("texto") or ""):
+                e["texto"] = e["texto"].replace(viejo, nuevo, 1)
+                escenas.add(i)
+                hallado = True
+        for parte in g.get("narracion") or []:
+            if viejo in parte.get("texto", ""):
+                parte["texto"] = parte["texto"].replace(viejo, nuevo, 1)
+                hallado = True
+        narr = " ".join(x.get("texto", "") for x in g.get("narracion") or [])
+        if g.get("narracion") and not hallado and _plano(nuevo) not in _plano(narr):
+            return 1, ("FALLA la frase de antes («%s…») no está en ninguna escena ni en guion.narracion, y la nueva tampoco: "
+                       "da también la escena que la lleva" % viejo[:50]), escenas
+    # m136: un cambio de pantalla, línea o visual del gancho va también al candidato elegido de ganchos.json (V9)
+    if gancho_tocado and gan and g.get("escenas"):
+        e1 = g["escenas"][0]
+        cand = next((x for x in gan.get("candidatos") or [] if x.get("id") == gan.get("elegido")), None)
+        if cand is not None:
+            for k in CAMPOS_GANCHO:
+                if e1.get(k) is None:
+                    cand.pop(k, None)
+                else:
+                    cand[k] = e1[k]
     return 0, "", escenas
 
 
@@ -5038,7 +5084,7 @@ def cmd_tiempos(a):
                       % (peor[1][0] - peor[0][0], peor[0][1], peor[0][2], peor[1][1], peor[1][2]))
     e1 = loc["escenas"][0]
     ralear_tics(escenas)
-    marcar_pregunta(escenas, g, serie_de(st))   # P6: la pregunta del video en pantalla (promesa, bisagra y pago)
+    marcar_pregunta(escenas, g, serie_de(st))   # P6: la pregunta del video en pantalla, solo en el pago
     f_seguir = [] if st.get("piezas_sueltas") else marcar_seguir(escenas, total)
     escribir(os.path.join(trabajo, "escenas.json"), {
         "version": 2, "colores": colores(st["paleta"]), "contexto_superior": g["contexto_superior"], "redes": REDES,

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<!-- Escena «archivo» de /historia (?n=N): varias piezas REALES del archivo de la historia (fotos, recortes, páginas)
+     puestas en pantalla una por frase de la voz (S.A de scripts/historia.py t_archivo; gate H32). Cinco estilos:
+       · «tira»: las fotos en una tira horizontal; la tira corre a la que la voz nombra (las vecinas asoman, apagadas);
+         arriba, su fecha grande y su rótulo (una línea de tiempo con fotos);
+       · «capas»: cada pieza cae sobre la anterior, que sube, se inclina y se apaga (recortes de hemeroteca);
+       · «mesa»: todas sobre una mesa; la cámara va de una a otra y las demás se apagan (las pruebas del caso);
+       · «conteo»: la misma foto repetida N veces, una por cada cosa que se cuenta, con el contador arriba;
+       · «barras»: la foto se apaga y sobre ella suben las barras de una serie, una por frase.
+     Lo de la pieza que suena va en el acento; lo anterior, en crema. Cada movimiento dura ≤ 1.5 s y todo queda quieto
+     entre piezas (A1). La caja de las fotos va marcada data-fuera-de-zona; el título, el dato de arriba y el pie
+     (créditos y fuente) quedan en la zona segura (V13). Solo variables del sistema Noche (sin hex). -->
+<link rel="stylesheet" href="comun.css">
+<style>
+#titulo { position: absolute; top: 290px; left: var(--izq); right: var(--der); font: 800 58px/1.04 Archivo, sans-serif; letter-spacing: -.015em; white-space: nowrap; }
+#dato { position: absolute; top: 364px; left: var(--izq); right: var(--der); display: flex; align-items: flex-end; gap: 22px; opacity: 0; }
+#dato .cifra { font: 900 104px/.84 Archivo, sans-serif; font-stretch: 62.5%; text-transform: uppercase; letter-spacing: -.01em; white-space: nowrap; color: var(--acento, var(--a1)); }
+#dato .cifra:empty { display: none; }
+#dato .rot { padding-bottom: 6px; font: 800 32px/1.08 Archivo, sans-serif; letter-spacing: -.01em; }
+#caja { position: absolute; top: 470px; left: 0; width: 1080px; height: 790px; overflow: hidden; }
+#cam { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+.pieza { position: absolute; overflow: hidden; background: var(--ink); box-sizing: border-box; }
+.pieza img { position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.pieza.papel { padding: 12px; }
+.pieza.papel img { position: static; }
+.sello b { position: absolute; left: 8px; bottom: 8px; padding: 4px 9px 2px; border-radius: 4px; background: var(--bg); color: var(--ink);
+  font: 900 28px/1 Archivo, sans-serif; font-stretch: 62.5%; }
+#velo { position: absolute; inset: 0; background: var(--bg); opacity: 0; }
+#barras { position: absolute; left: var(--izq); right: var(--der); bottom: 40px; height: 640px; display: flex; gap: 22px; align-items: flex-end; }
+.barra { flex: 1 1 0; display: flex; flex-direction: column; align-items: center; gap: 10px; opacity: 0; }
+.barra .v { font: 900 34px/1 Archivo, sans-serif; font-stretch: 62.5%; white-space: nowrap; }
+.barra .b { width: 100%; height: 0; border-radius: 3px 3px 0 0; background: var(--ink); }
+.barra .e { font: 600 22px/1 'JetBrains Mono', monospace; letter-spacing: .06em; }
+#pie { position: absolute; left: var(--izq); right: var(--der); top: 1272px; font: 600 18px/1.25 'JetBrains Mono', monospace; letter-spacing: .04em; opacity: .7; }
+html.f45 #titulo { top: 150px; font-size: 48px; }
+html.f45 #dato { top: 208px; }
+html.f45 #dato .cifra { font-size: 84px; }
+html.f45 #dato .rot { font-size: 27px; }
+html.f45 #caja { top: 290px; height: 700px; }
+html.f45 #barras { height: 560px; }
+html.f45 #pie { top: 1002px; }
+</style>
+</head>
+<body>
+<div id="arriba"><div id="progreso"></div></div>
+<div id="titulo"></div>
+<div id="dato"><div class="cifra"></div><div class="rot"></div></div>
+<div id="caja" data-fuera-de-zona><div id="cam"></div></div>
+<div id="pie"></div>
+<div id="subs"></div>
+<script src="comun.js"></script>
+<script>
+const n = V.n, { clamp, eo, esc } = V, MUEVE_S = 0.9;
+let S, A, TROZOS, W, HB, CX, PIEZAS = [], AUX = {};
+const cam = () => document.getElementById('cam');
+const cargar = (src) => { const i = new Image(); i.src = src; return i.decode().then(() => i).catch(() => { throw new Error('no carga ' + src); }); };
+// el dato de arriba: cifra (fecha, contador) + rótulo; en el acento mientras suena su pieza
+function dato(cifra, rot, p, activo) {
+  const d = document.getElementById('dato');
+  d.querySelector('.cifra').textContent = cifra || ''; d.querySelector('.rot').textContent = rot || '';
+  d.querySelector('.cifra').style.color = activo ? '' : 'var(--ink)';
+  d.style.opacity = p.toFixed(3); d.style.transform = `translateY(${((1 - p) * 14).toFixed(1)}px)`;
+}
+function pieza(clase, x, y, w, h) {
+  const el = document.createElement('div'); el.className = 'pieza ' + (clase || '');
+  Object.assign(el.style, { left: x + 'px', top: y + 'px', width: w + 'px', height: h + 'px' });
+  cam().appendChild(el); return el;
+}
+
+const PINTAR = {
+  // la tira: cuadros 4:3 uno al lado del otro; el que suena queda al centro de la columna
+  async tira() {
+    const fw = Math.min(760, HB * 4 / 3 * 0.86), fh = fw * 3 / 4, y = (HB - fh) / 2;
+    AUX = { fw, paso: fw + 26 };
+    for (const [i, p] of A.piezas.entries()) { const el = pieza('', i * AUX.paso, y, fw, fh); el.appendChild(await cargar(p.foto)); PIEZAS.push({ ...p, el }); }
+  },
+  // las capas: todas en el mismo sitio; la que suena, derecha y encima
+  async capas() {
+    const w = Math.min(780, W - 240), h = w * 0.64, x = CX - w / 2, y = HB - h - 70;
+    for (const [i, p] of A.piezas.entries()) { const el = pieza('papel', x, y, w, h); const im = await cargar(p.foto);
+      Object.assign(im.style, { width: '100%', height: '100%', objectFit: 'cover', display: 'block' }); el.appendChild(im); el.style.zIndex = i + 1; PIEZAS.push({ ...p, el }); }
+  },
+  // la mesa: hasta cuatro piezas en sus sitios, apenas giradas; la cámara va a la que suena
+  async mesa() {
+    const SITIOS = [[40, 30, 600, -3], [720, 60, 560, 4], [70, 560, 600, 2], [740, 600, 560, -4]];
+    AUX = { ancho: 1340, alto: 1120, centros: [] };
+    for (const [i, p] of A.piezas.entries()) {
+      const [x, y, w, giro] = SITIOS[i % 4], im = await cargar(p.foto), h = Math.min(w * im.naturalHeight / im.naturalWidth, 500);
+      const el = pieza('papel', x, y, w, h); Object.assign(im.style, { width: '100%', height: '100%', objectFit: 'cover', display: 'block' });
+      el.appendChild(im); el.style.transform = `rotate(${giro}deg)`; PIEZAS.push({ ...p, el }); AUX.centros.push([x + w / 2, y + h / 2, w]);
+    }
+  },
+  // el conteo: la misma foto N veces en una rejilla, numerada
+  async conteo() {
+    const cols = A.n <= 6 ? 3 : A.n <= 16 ? 4 : 6, filas = Math.ceil(A.n / cols), col = V.zona().der - V.zona().izq;
+    const hueco = 16, w = (col - hueco * (cols - 1)) / cols, h = Math.min(w * 0.72, (HB - 40 - hueco * (filas - 1)) / filas);
+    const x0 = V.zona().izq, y0 = (HB - (filas * h + (filas - 1) * hueco)) / 2, im = await cargar(A.foto);
+    for (let i = 0; i < A.n; i++) {
+      const el = pieza('sello', x0 + (i % cols) * (w + hueco), y0 + Math.floor(i / cols) * (h + hueco), w, h);
+      el.appendChild(im.cloneNode()); el.insertAdjacentHTML('beforeend', `<b>${i + 1}</b>`); PIEZAS.push({ el });
+    }
+  },
+  // las barras: la foto a lo ancho, un velo y las barras encima
+  async barras() {
+    const el = pieza('', 0, 0, W, HB); el.appendChild(await cargar(A.foto));
+    cam().insertAdjacentHTML('beforeend', '<div id="velo"></div><div id="barras"></div>');
+    cam().style.width = W + 'px'; cam().style.height = HB + 'px';
+    const B = document.getElementById('barras');
+    AUX = { alto: B.clientHeight - 90 };
+    for (const b of A.barras) {
+      B.insertAdjacentHTML('beforeend', `<div class="barra"><div class="v">${esc(b.texto)}</div><div class="b"></div><div class="e">${esc(b.etiqueta)}</div></div>`);
+      PIEZAS.push({ ...b, el: B.lastElementChild });
+    }
+  },
+};
+
+window.__listo = (async () => {
+  const C = await V.cargar(); S = C.S; TROZOS = C.trozos; A = S.A;
+  V.pintarProgreso(C.todo);
+  document.getElementById('titulo').textContent = A.titulo || '';
+  document.getElementById('pie').textContent = A.pie || '';
+  const caja = document.getElementById('caja'), Z = V.zona();
+  W = caja.clientWidth; HB = caja.clientHeight; CX = (Z.izq + Z.der) / 2;
+  await PINTAR[A.estilo]();
+  await Promise.all(['extra-condensed 900 104px Archivo', '800 58px Archivo', "600 22px 'JetBrains Mono'"].map((f) => document.fonts.load(f)));
+  await document.fonts.ready;
+  const tit = document.getElementById('titulo');
+  for (let fs = parseFloat(getComputedStyle(tit).fontSize); fs > 34 && tit.scrollWidth > tit.clientWidth; fs -= 2) tit.style.fontSize = fs + 'px';
+  await V.pintarActo(S);
+})();
+
+const activa = (t) => { let k = -1; PIEZAS.forEach((p, i) => { if (t >= p.start) k = i; }); return k; };
+const SEEK = {
+  tira(t) {
+    const k = activa(t), de = Math.max(0, k - 1), p = k >= 0 ? eo((t - PIEZAS[k].start) / MUEVE_S) : 0, pos = k <= 0 ? 0 : de + (k - de) * p;
+    cam().style.transform = `translateX(${(CX - AUX.fw / 2 - pos * AUX.paso).toFixed(1)}px)`;
+    PIEZAS.forEach((P, i) => { P.el.style.opacity = (i === k ? 0.34 + 0.66 * p : i === k - 1 ? 1 - 0.66 * p : k < 0 && i === 0 ? 1 : 0.34).toFixed(3); });
+    if (k >= 0) dato(PIEZAS[k].fecha, PIEZAS[k].rotulo, eo((t - PIEZAS[k].start) / 0.35), true); else dato('', '', 0, false);
+  },
+  capas(t) {
+    const k = activa(t);
+    PIEZAS.forEach((P, i) => {
+      // entra desde abajo; cuando cae la siguiente, sube, se inclina y se apaga (una más arriba por cada pieza nueva)
+      const p = eo((t - P.start) / MUEVE_S);
+      const sube = i < k ? (k - i - 1) + eo((t - PIEZAS[k].start) / MUEVE_S) : 0;
+      const y = (1 - p) * (HB + 40) - sube * 96, giro = (i % 2 ? 4 : -4) * Math.min(1, sube), s = 1 - 0.1 * Math.min(1, sube);
+      P.el.style.transform = `translateY(${y.toFixed(1)}px) rotate(${giro.toFixed(2)}deg) scale(${s.toFixed(3)})`;
+      P.el.style.opacity = t >= P.start ? (1 - 0.5 * Math.min(1, sube)).toFixed(3) : 0;
+    });
+    if (k >= 0) dato(PIEZAS[k].fecha, PIEZAS[k].rotulo, eo((t - PIEZAS[k].start) / 0.35), true); else dato('', '', 0, false);
+  },
+  mesa(t) {
+    const k = activa(t), todo = Math.min(W / AUX.ancho, HB / AUX.alto) * 0.96;
+    const vista = (i) => { if (i < 0) return { s: todo, tx: (W - AUX.ancho * todo) / 2, ty: (HB - AUX.alto * todo) / 2 };
+      const [cx, cy, w] = AUX.centros[i], s = Math.min(1.25, (V.zona().der - V.zona().izq) / w); return { s, tx: CX - s * cx, ty: HB / 2 - s * cy }; };
+    const de = vista(k - 1), a = vista(k), p = k >= 0 ? eo((t - PIEZAS[k].start) / MUEVE_S) : 0;
+    cam().style.transform = `translate(${(de.tx + (a.tx - de.tx) * p).toFixed(1)}px, ${(de.ty + (a.ty - de.ty) * p).toFixed(1)}px) scale(${(de.s + (a.s - de.s) * p).toFixed(4)})`;
+    PIEZAS.forEach((P, i) => { P.el.style.opacity = (k < 0 ? 1 : i === k ? 0.4 + 0.6 * p : i === k - 1 ? 1 - 0.6 * p : 0.4).toFixed(3); });
+    if (k >= 0) dato(PIEZAS[k].fecha, PIEZAS[k].rotulo, eo((t - PIEZAS[k].start) / 0.35), true); else dato('', '', 0, false);
+  },
+  conteo(t) {
+    const p = clamp((t - A.t) / A.dura), cuenta = t >= A.t ? Math.min(A.n, Math.floor(p * A.n) + (p >= 1 ? 0 : 1)) : 0;
+    PIEZAS.forEach((P, i) => {
+      const e = eo((t - (A.t + A.dura * i / A.n)) / 0.25);
+      P.el.style.opacity = e.toFixed(3); P.el.style.transform = `scale(${(1.3 - 0.3 * e).toFixed(3)})`;
+    });
+    dato(String(t >= A.t + A.dura ? A.n : cuenta), A.unidad, eo((t - A.t) / 0.3), true);
+  },
+  barras(t) {
+    const k = activa(t);
+    document.getElementById('velo').style.opacity = (0.8 * eo((t - PIEZAS[0].start + 0.3) / 0.6)).toFixed(3);
+    PIEZAS.forEach((P, i) => {
+      const p = eo((t - P.start) / MUEVE_S);
+      P.el.style.opacity = t >= P.start ? 1 : 0;
+      P.el.querySelector('.b').style.height = (Math.max(6, P.alto * AUX.alto) * p).toFixed(1) + 'px';
+      P.el.querySelector('.b').style.background = i === k ? 'var(--acento, var(--a1))' : '';
+    });
+    dato('', '', 0, false);
+  },
+};
+
+window.seek = (t0) => {
+  const t = V.portada ? S.dur : t0;
+  V.seekProgreso(t0, n, S.dur);
+  V.seekActo(t0, S);
+  const ti = eo((t - (S.T.ini || 0.3) + 0.2) / 0.4), tit = document.getElementById('titulo');
+  tit.style.opacity = ti.toFixed(3); tit.style.transform = `translateY(${((1 - ti) * 24).toFixed(1)}px)`;
+  SEEK[A.estilo](t);
+  V.subtitulos(t0, S, TROZOS);
+};
+</script>
+</body></html>

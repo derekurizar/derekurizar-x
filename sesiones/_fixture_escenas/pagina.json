@@ -1,0 +1,16 @@
+{
+  "_comentario": "Caso de la escena pagina para scripts/escena_prueba.py: la página 3 de un documento del CEUR-USAC citado en la historia del tráfico (2026-11-03), con las cajas de los renglones ya calculadas (las saca `historia.py pagina` con pdftotext -bbox).",
+  "paleta": "obsidiana",
+  "paginas": {
+    "ceur": {"archivo": "fotos/pagina-ceur.jpg", "pagina": 3,
+             "lineas": [[0.6526, 0.8156, 0.2297, 0.014], [0.1765, 0.8331, 0.7059, 0.014], [0.1765, 0.8505, 0.4023, 0.014]],
+             "frase": "el servicio de transporte colectivo en la ciudad de Guatemala desde su surgimiento ha ido paralelo a la falta de ordenamiento urbano de la ciudad,",
+             "fuente": "CEUR-USAC"}
+  },
+  "casos": {
+    "ceur": {
+      "tipo": "pagina", "acto": 2, "pagina": "ceur", "titulo": "Está escrito en la página 3", "fuente": "CEUR, Universidad de San Carlos",
+      "texto": "Los urbanistas del CEUR, en la Universidad de San Carlos, lo dejaron por escrito. Su conclusión dice que el servicio de transporte colectivo en la ciudad de Guatemala desde su surgimiento ha ido paralelo a la falta de ordenamiento urbano de la ciudad. La ciudad creció sin plan, y su transporte también."
+    }
+  }
+}

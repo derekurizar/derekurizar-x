@@ -1,0 +1,60 @@
+{
+  "_comentario": "Casos de la escena archivo para scripts/escena_prueba.py. Fotos de dominio público del terremoto de 1976 (Wikimedia Commons / USGS) y de la historia del tráfico (Department of Commerce de EE. UU., 1950; Gobierno de Guatemala, 2026). Las cifras son de las historias entregadas.",
+  "paleta": "terracota",
+  "fotos": {
+    "ruinas-1": {"archivo": "fotos/ruinas-1.jpg", "credito": "Foto: autor no identificado · dominio público"},
+    "ruinas-2": {"archivo": "fotos/ruinas-2.jpg", "credito": "Foto: autor no identificado · dominio público"},
+    "rieles": {"archivo": "fotos/rieles.jpg", "credito": "Foto: U.S. Geological Survey · dominio público"},
+    "hotel": {"archivo": "fotos/hotel.jpg", "credito": "Foto: autor no identificado · dominio público"},
+    "avenida": {"archivo": "fotos/avenida-1950.jpg", "credito": "Foto: Department of Commerce (EE. UU.) · dominio público"},
+    "roosevelt": {"archivo": "fotos/roosevelt.jpg", "credito": "Foto: Gobierno de Guatemala · dominio público"}
+  },
+  "casos": {
+    "tira": {
+      "tipo": "archivo", "estilo": "tira", "acto": 1, "titulo": "Cuatro lugares, una madrugada",
+      "texto": "En la capital, las casas de adobe se vinieron abajo. En Patzicía quedó una calle de escombros. En Gualán, la falla torció los rieles del tren. Y en el centro, el Hotel Terminal se dobló por la mitad.",
+      "piezas": [
+        {"dice": "capital", "foto": "ruinas-1", "fecha": "Capital", "rotulo": "Casas de adobe en el suelo"},
+        {"dice": "Patzicía", "foto": "ruinas-2", "fecha": "Patzicía", "rotulo": "Una calle de escombros"},
+        {"dice": "Gualán", "foto": "rieles", "fecha": "Gualán", "rotulo": "La falla torció los rieles"},
+        {"dice": "Hotel Terminal", "foto": "hotel", "fecha": "Centro", "rotulo": "El Hotel Terminal, doblado"}
+      ]
+    },
+    "capas": {
+      "tipo": "archivo", "estilo": "capas", "acto": 1, "titulo": "Lo que quedó en las fotos",
+      "rotulo": {"anio": "1976", "titulo": "La madrugada", "lugar": "Guatemala"},
+      "texto": "Primero, las casas de adobe en el suelo. Después, una calle entera de escombros. Y al final, los rieles torcidos por la falla.",
+      "piezas": [
+        {"dice": "casas", "foto": "ruinas-1", "rotulo": "Las casas de adobe"},
+        {"dice": "calle", "foto": "ruinas-2", "rotulo": "Una calle de escombros"},
+        {"dice": "rieles", "foto": "rieles", "rotulo": "Los rieles torcidos"}
+      ]
+    },
+    "mesa": {
+      "tipo": "archivo", "estilo": "mesa", "acto": 2, "titulo": "Las pruebas del terremoto",
+      "texto": "Sobre la mesa hay cuatro fotos. La de las casas de adobe en la capital. La de la calle de Patzicía. La de los rieles de Gualán. Y la del Hotel Terminal.",
+      "piezas": [
+        {"dice": "casas", "foto": "ruinas-1", "rotulo": "Capital"},
+        {"dice": "calle", "foto": "ruinas-2", "rotulo": "Patzicía"},
+        {"dice": "rieles", "foto": "rieles", "rotulo": "Gualán"},
+        {"dice": "Hotel Terminal", "foto": "hotel", "rotulo": "Hotel Terminal"}
+      ]
+    },
+    "conteo": {
+      "tipo": "archivo", "estilo": "conteo", "acto": 2, "_paleta": "obsidiana", "titulo": "La apuesta de la ciudad", "foto": "roosevelt",
+      "cuenta": 13, "unidad": "pasos a desnivel en diez años", "dice": "Trece", "fuente": "La Hora",
+      "texto": "La apuesta de la ciudad fue levantar puentes. Trece pasos a desnivel autorizados en diez años. Y la cola no se fue."
+    },
+    "barras": {
+      "tipo": "archivo", "estilo": "barras", "acto": 1, "_paleta": "obsidiana", "titulo": "Mixco se multiplicó por 34", "foto": "avenida",
+      "fuente": "Municipalidad de Mixco, censos",
+      "texto": "En mil novecientos cincuenta, Mixco tenía menos de doce mil habitantes. En el setenta y tres ya pasaba de cien mil. En el noventa y cuatro, de trescientos mil. Y en dos mil dos, de cuatrocientos mil.",
+      "barras": [
+        {"dice": "cincuenta", "etiqueta": "1950", "valor": 11785},
+        {"dice": "setenta y tres", "etiqueta": "1973", "valor": 129627},
+        {"dice": "noventa y cuatro", "etiqueta": "1994", "valor": 305297},
+        {"dice": "dos mil dos", "etiqueta": "2002", "valor": 403689}
+      ]
+    }
+  }
+}

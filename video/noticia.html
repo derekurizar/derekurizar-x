@@ -191,9 +191,16 @@ async function minimapa(padre) {
   if (RUTA.length) {   // el mapa se acerca al recorrido (con sus vecinos alrededor): entre departamentos chicos no se veía
     const bs = RUTA.map((r) => r.p.getBBox()), x0 = Math.min(...bs.map((b) => b.x)), y0 = Math.min(...bs.map((b) => b.y)),
       x1 = Math.max(...bs.map((b) => b.x + b.width)), y1 = Math.max(...bs.map((b) => b.y + b.height));
-    const lado = Math.max(x1 - x0, y1 - y0) * 1.9, cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
-    svg.setAttribute('viewBox', `${(cx - lado / 2).toFixed(1)} ${(cy - lado / 2).toFixed(1)} ${lado.toFixed(1)} ${lado.toFixed(1)}`);
-    svg.setAttribute('preserveAspectRatio', 'xMidYMid slice'); svg.style.borderRadius = '12px';
+    // la ventana no sale del país: si el recorrido es largo (Izabal → la capital) se ve el país entero, centrado; si es
+    // corto, el acercamiento se corre para no dejar mar ni recuadro vacío (terremoto P1: el mapa quedaba arriba a la izquierda)
+    const [gx, gy, gw, gh] = GEOMETRIA.viewBox.split(/[\s,]+/).map(Number);
+    const lado = Math.max(x1 - x0, y1 - y0) * 1.9;
+    if (lado < 0.6 * Math.min(gw, gh)) {
+      const cx = Math.min(Math.max((x0 + x1) / 2, gx + lado / 2), gx + gw - lado / 2),
+        cy = Math.min(Math.max((y0 + y1) / 2, gy + lado / 2), gy + gh - lado / 2);
+      svg.setAttribute('viewBox', `${(cx - lado / 2).toFixed(1)} ${(cy - lado / 2).toFixed(1)} ${lado.toFixed(1)} ${lado.toFixed(1)}`);
+      svg.setAttribute('preserveAspectRatio', 'xMidYMid slice'); svg.style.borderRadius = '12px';
+    }
   }
   RUTA.forEach((r) => { r.pin = svgEl('circle', { cx: r.c[0], cy: r.c[1], r: 0, fill: 'var(--ink)', stroke: 'var(--bg)', 'stroke-width': 2, 'vector-effect': 'non-scaling-stroke' }, svg);
     r.R = Math.max(4, svg.viewBox.baseVal.width / 60); });

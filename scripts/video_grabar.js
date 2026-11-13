@@ -99,7 +99,8 @@ function servir(o, ruta) {
   else if (/^animaciones\/[a-z0-9-]+\.js$/.test(nombre)) archivo = path.join(RAIZ, "video", nombre);   // animaciones de la escena explica
   else if (/^fotos\/[a-z0-9_-]+\.(jpg|png|webp)$/.test(nombre)) archivo = path.join(o.dir, nombre);   // fotos de /noticias y /historia (TRABAJO/fotos/)
   else if (/^tomas\/[a-z0-9-]+\/\d{5}\.jpg$/.test(nombre)) archivo = path.join(o.dir, nombre);   // cuadros de las tomas de video de /historia (TRABAJO/tomas/<id>/)
-  else if (["escena.html", "golpe.html", "gancho.html", "cierre.html", "mapa.html", "ranking.html", "escala.html", "tiempo.html", "portada.html", "explica.html", "noticia.html", "historia.html", "cuenta.html", "hemiciclo.html", "red.html", "tablero.html", "escenario.html", "miniatura.html", "teaser.html", "comun.js", "comun.css", "animar.js", "vertical.css"].includes(nombre)) archivo = path.join(RAIZ, "video", nombre);
+  else if (/^vias\/[a-z0-9-]+\.json$/.test(nombre) && !nombre.endsWith(".fuente.json")) archivo = path.join(RAIZ, "design", nombre);   // red vial real de la escena vias (scripts/build_vias.py)
+  else if (["vias.html", "lupa.html", "deptos.html", "pagina.html", "cortina.html", "archivo.html", "bandos.html", "escena.html", "golpe.html", "gancho.html", "cierre.html", "mapa.html", "ranking.html", "escala.html", "tiempo.html", "portada.html", "explica.html", "noticia.html", "historia.html", "cuenta.html", "hemiciclo.html", "red.html", "tablero.html", "escenario.html", "miniatura.html", "teaser.html", "comun.js", "comun.css", "animar.js", "vertical.css"].includes(nombre)) archivo = path.join(RAIZ, "video", nombre);
   else if (nombre === "escenas.json") archivo = path.join(o.dir, nombre);
   if (!archivo || !fs.existsSync(archivo)) return null;
   return { tipo: TIPOS[path.extname(archivo)] || "application/octet-stream", cuerpo: fs.readFileSync(archivo) };

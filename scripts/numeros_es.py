@@ -7,6 +7,8 @@
   «21 denuncias» → «veintiuna denuncias»; con el sustantivo elidido se marca {22,981:f} o {504:m}
 - dinero: «Q75 mil millones» → «setenta y cinco mil millones de quetzales», «Q1.51» → «un quetzal
   con cincuenta y un centavos», «US$1,200 millones» → «mil doscientos millones de dólares»
+- millones con decimal en su forma entera (m146): «1.2 millones de personas» → «un millón doscientas mil personas»,
+  «Q1.5 mil millones» → «mil quinientos millones de quetzales» (nunca «uno punto dos millones»)
 - unidades abreviadas detrás de la cifra: kg, km, km², kWh, ha, pp
 
 Cada conversión se comprueba de vuelta (palabras → número); si no coincide, ValueError. Una cifra cuyo
@@ -199,9 +201,35 @@ def _numero(bruto, genero, apocope):
     return dicho
 
 
+RE_DE_SUSTANTIVO = re.compile(r"\s+de(?=\s+([\wáéíóúñü²]+))")
+
+
+def _millones_decimales(bruto, escala, genero="m", apocope=True):
+    """m146: «1.2 millones» se dice «un millón doscientos mil» y «1.5 mil millones», «mil quinientos millones» (nunca
+    «uno punto dos millones»). → (palabras, quita_de) o None si no aplica (sin decimales o más de 3)."""
+    entero_txt, _, dec = bruto.replace(",", "").partition(".")
+    if not dec or len(dec) > 3 or escala not in ("millones", "millón", "mil millones"):
+        return None
+    if escala == "mil millones":
+        total = int(entero_txt) * 1000 + int(dec.ljust(3, "0"))
+        dicho = entero_a_palabras(total, "m", True) + " millones"
+        if palabras_a_numero(entero_a_palabras(total)) != str(total):
+            raise ValueError("ida y vuelta falló: %s mil millones" % bruto)
+        return dicho, False
+    total = int(entero_txt) * 10 ** 6 + int(dec.ljust(6, "0"))
+    dicho = entero_a_palabras(total, genero, apocope)
+    if palabras_a_numero(dicho) != str(total):
+        raise ValueError("ida y vuelta falló: %s millones → «%s»" % (bruto, dicho))
+    return dicho, True   # «1.2 millones de personas» → «un millón doscientas mil personas»: sin «de»
+
+
 def _dinero(bruto, moneda, escala):
     nombre, singular = ("quetzales", "quetzal") if moneda == "Q" else ("dólares", "dólar")
     entero_txt, _, dec = bruto.replace(",", "").partition(".")
+    if escala and dec:   # m146: «US$1.2 millones» → «un millón doscientos mil dólares»
+        md = _millones_decimales(bruto, escala)
+        if md:
+            return "%s %s" % (md[0], nombre) if md[1] else "%s de %s" % (md[0], nombre)
     if escala:  # «Q75 mil millones» → «setenta y cinco mil millones de quetzales»
         return "%s %s de %s" % (_numero(bruto, "m", True), escala, nombre)
     if len(dec) == 2:  # «Q1.51» → «un quetzal con cincuenta y un centavos»
@@ -344,6 +372,13 @@ def segmentos(texto):
             fin += esc.end() if esc else 0
         elif es_fecha and entero == 1:
             dicho = "primero"
+        elif dec and not (es_pct or rango) and RE_ESCALA.match(resto) and _millones_decimales(bruto, RE_ESCALA.match(resto).group(1)):
+            # m146: «1.2 millones de personas» → «un millón doscientas mil personas»
+            esc = RE_ESCALA.match(resto)
+            de = RE_DE_SUSTANTIVO.match(resto[esc.end():])
+            genero = genero_forzado or (genero_de(de.group(1)) if de else "m")
+            dicho, quita_de = _millones_decimales(bruto, esc.group(1), genero, True)
+            fin += esc.end() + (de.end() if de and quita_de else 0)
         else:
             sig = RE_SIGUE.match(resto[rango.end():] if rango else resto)
             siguiente_orig = sig.group(1) if sig else ""
@@ -419,10 +454,15 @@ CASOS = [
     ("3.75 quetzales", "tres quetzales con setenta y cinco centavos"),
     ("US$0.50 por litro", "cincuenta centavos por litro"),
     ("Q0.01", "un centavo"),
-    ("2.5 millones de dólares", "dos punto cinco millones de dólares"),
+    # m146: millones con decimal, en su forma entera
+    ("2.5 millones de dólares", "dos millones quinientos mil dólares"),
+    ("1.2 millones de personas", "un millón doscientas mil personas"),
+    ("US$1.2 millones", "un millón doscientos mil dólares"),
+    ("Q1.5 mil millones", "mil quinientos millones de quetzales"),
+    ("unos 1.25 millones.", "unos un millón doscientos cincuenta mil."),
     ("entre 2016–2026", "entre dos mil dieciséis y dos mil veintiséis"),
     ("de 2016–2026", "de dos mil dieciséis a dos mil veintiséis"),
-    ("3.3 millones de estudiantes", "tres punto tres millones de estudiantes"),
+    ("3.3 millones de estudiantes", "tres millones trescientos mil estudiantes"),
     ("subió 5.2 pp en un año", "subió cinco punto dos puntos porcentuales en un año"),
     # m017: con decimales, la parte entera en masculino
     ("1.5 veces más", "uno punto cinco veces más"),

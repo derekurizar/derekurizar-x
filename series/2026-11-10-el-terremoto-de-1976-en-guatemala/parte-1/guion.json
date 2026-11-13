@@ -1,0 +1,296 @@
+{
+ "id": "2026-11-10-el-terremoto-de-1976-en-guatemala-parte-1",
+ "tipo": "historia",
+ "slug": "el-terremoto-de-1976-en-guatemala-parte-1",
+ "tema": "El terremoto de 1976 en Guatemala",
+ "fecha": "2026-11-10",
+ "pregunta": "¿Qué pasó en Guatemala a las 3:03 del 4 de febrero de 1976?",
+ "arco": "tragedia con misterio: la noche, la cuenta que no dejaba de crecer, quién quedó bajo el adobe y qué se levantó encima; contada como cronología, hora a hora y luego año a año",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "1976",
+   "titulo": "Medio minuto a oscuras",
+   "escena": 4
+  },
+  {
+   "numero": 3,
+   "anio": "1976",
+   "titulo": "El amanecer",
+   "escena": 7
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "El terremoto despertó a Guatemala de madrugada. Nadie supo cuántos quedaron bajo el adobe. Al caer la noche, el gobierno tendría que contar a sus muertos. En febrero de 1976, el país dormía en casas de adobe. Pero debajo corría la falla del Motagua. Entonces la tierra se partió. Según el INSIVUMEH, el instituto que mide los sismos, eran las tres y tres de la madrugada."
+  },
+  {
+   "acto": 2,
+   "texto": "La tierra se sacudió a oscuras poco más de medio minuto. Brenda Sanchinelli, entonces una niña, lo recordó así: Este no se detenía. Mientras tanto, en la zona 6 de la capital, Telma Pérez Alvarado, de 14 años, volvió por un niño dormido y lo sacó a la calle. Segundos después, su casa cayó y la mató. Pero nadie en la capital sabía de dónde venía el temblor. Nació lejos, en Izabal, y su grieta corrió unos 230 kilómetros. Por eso cayeron pueblos a lo largo de la grieta."
+  },
+  {
+   "acto": 3,
+   "texto": "Al amanecer, la luz mostró lo que la noche escondía. En el hospital San Juan de Dios, en la capital, los vecinos marcaban a sus muertos con su nombre en un cartón. Al caer la noche, Kjell Laugerud, el presidente, le dijo al país por radio: Toda Guatemala está golpeada, mas no herida de muerte. Horas antes, su gobierno había hablado de más de 400 muertos. Esa noche dijo que eran 1,142. Pero todavía buscaban gente bajo el adobe, y nadie sabía cuántos. ¿Y si lo peor de la tierra todavía no había pasado?"
+  }
+ ],
+ "hilos": [
+  {
+   "id": "p1h1",
+   "escena": 6
+  },
+  {
+   "id": "p1h2",
+   "escena": 8
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3
+  ],
+  [
+   4,
+   5
+  ],
+  [
+   7,
+   8,
+   9
+  ]
+ ],
+ "paleta": "obsidiana",
+ "musica": "obsidiana-2",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 1496.85,
+ "duracion_s": 105.3,
+ "critica": {
+  "veredicto": "corregir",
+  "vuelta": 3,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 4,
+   "claridad": 3,
+   "flujo": 4,
+   "precision": 4,
+   "cierre": 4,
+   "recompensa": 4
+  }
+ },
+ "gancho": {
+  "familia": "misterio",
+  "visual": "foto",
+  "pantalla": "Terremoto de 1976",
+  "linea": "nadie supo cuántos quedaron"
+ },
+ "promesa": {
+  "texto": "Al caer la noche, el gobierno tendría que contar a sus muertos.",
+  "pregunta": "¿Cuántos muertos contó el gobierno tras el terremoto?",
+  "forma": "reloj",
+  "en": 2,
+  "pago": 9,
+  "revela": 2
+ },
+ "bisagra": {
+  "texto": "Pero nadie en la capital sabía de dónde venía.",
+  "forma": "secreto",
+  "en": 6,
+  "pago": 6
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "El terremoto despertó a Guatemala de madrugada. Nadie supo cuántos quedaron bajo el adobe.",
+   "voz": "El terremoto despertó a Guatemala de madrugada. Nadie supo cuántos quedaron bajo el adobe.",
+   "dur": 6.489,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Photographer not identified · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "Al caer la noche, el gobierno tendría que contar a sus muertos. En febrero de 1976, el país dormía en casas de adobe. Pero debajo corría la falla del Motagua.",
+   "voz": "Al caer la noche, el gobierno tendría que contar a sus muertos. En febrero de mil novecientos setenta y seis, el país dormía en casas de adobe. Pero debajo corría la falla del Motagua.",
+   "dur": 11.661,
+   "hechos": [
+    "legado-h04",
+    "noche-h01"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "golpe",
+   "pantalla": "Entonces la tierra se partió. Según el INSIVUMEH, el instituto que mide los sismos, eran las tres y tres de la madrugada.",
+   "voz": "Entonces la tierra se partió. Según el INSIVUMEH, el instituto que mide los sismos, eran las tres y tres de la madrugada.",
+   "dur": 9.173,
+   "hechos": [
+    "noche-h02"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "cita",
+   "pantalla": "La tierra se sacudió a oscuras poco más de medio minuto. Brenda Sanchinelli, entonces una niña, lo recordó así: Este no se detenía.",
+   "voz": "La tierra se sacudió a oscuras poco más de medio minuto. Brenda Sanchinelli, entonces una niña, lo recordó así: Este no se detenía.",
+   "dur": 9.85,
+   "hechos": [],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "foto",
+   "pantalla": "Mientras tanto, en la zona 6 de la capital, Telma Pérez Alvarado, de 14 años, volvió por un niño dormido y lo sacó a la calle. Segundos después, su casa cayó y la mató.",
+   "voz": "Mientras tanto, en la zona seis de la capital, Telma Pérez Alvarado, de catorce años, volvió por un niño dormido y lo sacó a la calle. Segundos después, su casa cayó y la mató.",
+   "dur": 12.568,
+   "hechos": [
+    "noche-h12"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "foto",
+   "pantalla": "Pero nadie en la capital sabía de dónde venía el temblor. Nació lejos, en Izabal, y su grieta corrió unos 230 kilómetros. Por eso cayeron pueblos a lo largo de la grieta.",
+   "voz": "Pero nadie en la capital sabía de dónde venía el temblor. Nació lejos, en Izabal, y su grieta corrió unos doscientos treinta kilómetros. Por eso cayeron pueblos a lo largo de la grieta.",
+   "dur": 13.33,
+   "hechos": [
+    "noche-h04",
+    "dias-h23"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: U.S. Geological Survey · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "foto",
+   "pantalla": "Al amanecer, la luz mostró lo que la noche escondía. En el hospital San Juan de Dios, en la capital, los vecinos marcaban a sus muertos con su nombre en un cartón.",
+   "voz": "Al amanecer, la luz mostró lo que la noche escondía. En el hospital San Juan de Dios, en la capital, los vecinos marcaban a sus muertos con su nombre en un cartón.",
+   "dur": 10.09,
+   "hechos": [
+    "dias-h08",
+    "noche-h11"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Photographer not identified · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "cita",
+   "pantalla": "Al caer la noche, Kjell Laugerud, el presidente, le dijo al país por radio: Toda Guatemala está golpeada, mas no herida de muerte.",
+   "voz": "Al caer la noche, Kjell Laugerud, el presidente, le dijo al país por radio: Toda Guatemala está golpeada, mas no herida de muerte.",
+   "dur": 9.841,
+   "hechos": [
+    "noche-h13"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "golpe",
+   "pantalla": "Horas antes, su gobierno había hablado de más de 400 muertos. Esa noche dijo que eran 1,142.",
+   "voz": "Horas antes, su gobierno había hablado de más de cuatrocientos muertos. Esa noche dijo que eran mil ciento cuarenta y dos.",
+   "dur": 8.913,
+   "hechos": [
+    "noche-h08",
+    "dias-h06"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "cierre",
+   "pantalla": "Pero todavía buscaban gente bajo el adobe, y nadie sabía cuántos. ¿Y si lo peor de la tierra todavía no había pasado? Sígueme: en la segunda parte te cuento cómo la tierra no dejó de temblar.",
+   "voz": "Pero todavía buscaban gente bajo el adobe, y nadie sabía cuántos. ¿Y si lo peor de la tierra todavía no había pasado? Sígueme: en la segunda parte te cuento cómo la tierra no dejó de temblar.",
+   "dur": 15.636,
+   "hechos": [],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Hasta esa noche",
+  "resumen": [
+   "3:03, la falla se parte",
+   "El golpe nació en Izabal",
+   "1,142 muertos esa noche"
+  ],
+  "texto": "Pero todavía buscaban gente bajo el adobe, y nadie sabía cuántos. ¿Y si lo peor de la tierra todavía no había pasado?",
+  "tipo": "pregunta",
+  "forma": "puente",
+  "final": "¿Y si lo peor de la tierra todavía no había pasado?",
+  "invitacion": "Sígueme: en la segunda parte te cuento cómo la tierra no dejó de temblar."
+ },
+ "caption": {
+  "tiktok": "Serie · Parte 1 de 4: Las 3:03 de la madrugada\nEl terremoto de 1976 despertó a Guatemala de madrugada. Esa noche, nadie sabía cuántos quedaron bajo el adobe. #Guatemala #Terremoto1976 #Historia",
+  "instagram": "Serie · Parte 1 de 4: Las 3:03 de la madrugada\nEl 4 de febrero de 1976, la falla del Motagua se partió bajo un país dormido. Así fue la primera noche, hora a hora. #Guatemala #Terremoto1976",
+  "facebook": "Serie · Parte 1 de 4: Las 3:03 de la madrugada\nEl 4 de febrero de 1976, la falla del Motagua se partió bajo un país dormido: la madrugada, el amanecer y la primera cuenta del gobierno. Fuentes en el primer comentario.",
+  "shorts": "Terremoto de 1976: las 3:03 de la madrugada (1/4) #Shorts\nLa primera noche del terremoto en Guatemala, hora a hora."
+ }
+}

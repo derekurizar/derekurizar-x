@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<!-- Escena «lupa» de /historia (?n=N): UNA foto real que se interroga punto por punto (S.L de scripts/historia.py
+     t_lupa; gate H28). La foto va entera (sin recortar) en una caja a sangre; cada punto {x, y en 0–1 de la foto} entra
+     cuando la voz lo dice, con su aro y su etiqueta corta. Dos estilos:
+       · «puntos» (por defecto): la cámara se acerca al punto, un velo oscurece el resto y solo se ve la etiqueta del
+         punto que suena (leer una foto de archivo: el rótulo, la losa doblada, las persianas);
+       · «pistas»: sin cámara ni velo; las etiquetas se van quedando (la anatomía de un objeto: la botella y lo que dice).
+     La cámara solo se mueve al entrar un punto (cámara quieta) y todo queda quieto entre puntos (A1). La foto va
+     marcada data-fuera-de-zona; el título, los aros, las etiquetas y el pie (crédito de la foto y fuente) quedan en la
+     zona segura (V13): un aro que cae fuera de la zona se oculta y su etiqueta se acerca. Solo variables del sistema
+     Noche (sin hex). La graba scripts/video_grabar.js llamando a seek(t). -->
+<link rel="stylesheet" href="comun.css">
+<style>
+#titulo { position: absolute; top: 290px; left: var(--izq); right: var(--der); font: 800 58px/1.04 Archivo, sans-serif; letter-spacing: -.015em; white-space: nowrap; }
+#foto, #marcas { position: absolute; top: 384px; left: 0; width: 1080px; height: 916px; }
+#foto { overflow: hidden; }
+#cam { position: absolute; left: 0; top: 0; width: 100%; height: 100%; transform-origin: 0 0; }
+#cam img { position: absolute; display: block; }
+#velo { position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0; }
+#marcas { pointer-events: none; }
+.aro { position: absolute; width: 60px; height: 60px; margin: -30px 0 0 -30px; box-sizing: border-box; border-radius: 50%;
+  border: 5px solid var(--acento, var(--a1)); opacity: 0; }
+.tag { position: absolute; left: 0; top: 0; padding: 9px 13px 8px; box-sizing: border-box; border-radius: 8px; background: var(--bg);
+  border: 2.5px solid color-mix(in srgb, var(--ink) 50%, transparent); font: 700 24px/1.1 'JetBrains Mono', monospace; letter-spacing: .07em;
+  text-transform: uppercase; white-space: nowrap; opacity: 0; }
+#pie { position: absolute; left: var(--izq); right: var(--der); top: 1312px; font: 600 19px/1.25 'JetBrains Mono', monospace; letter-spacing: .04em; opacity: .7; }
+html.f45 #titulo { top: 150px; font-size: 48px; }
+html.f45 #foto, html.f45 #marcas { top: 222px; height: 800px; }
+html.f45 .tag { font-size: 21px; }
+html.f45 #pie { top: 1032px; }
+</style>
+</head>
+<body>
+<div id="arriba"><div id="progreso"></div></div>
+<div id="titulo"></div>
+<div id="foto" data-fuera-de-zona><div id="cam"><img id="img" alt=""><div id="velo"></div></div></div>
+<div id="marcas"></div>
+<div id="pie"></div>
+<div id="subs"></div>
+<script src="comun.js"></script>
+<script>
+const n = V.n, { clamp, eo, esc } = V, ZOOM = 1.32, CAMARA_S = 0.8;
+const lim = (v, a, b) => Math.max(a, Math.min(b, v));
+let S, L, TROZOS, W, HB, FOTO = { x: 0, y: 0, w: 0, h: 0 }, PUNTOS = [], CON_CAMARA = true;
+
+window.__listo = (async () => {
+  const C = await V.cargar(); S = C.S; TROZOS = C.trozos; L = S.L;
+  V.pintarProgreso(C.todo);
+  CON_CAMARA = L.estilo !== 'pistas';
+  document.getElementById('titulo').textContent = L.titulo || '';
+  document.getElementById('pie').textContent = [L.credito, L.fuente].filter(Boolean).join(' · ');
+  const caja = document.getElementById('foto'), img = document.getElementById('img');
+  W = caja.clientWidth; HB = caja.clientHeight;
+  img.src = L.foto;
+  await img.decode().catch(() => { throw new Error('no carga ' + L.foto); });
+  // la foto entera dentro de la caja, centrada
+  const k = Math.min(W / img.naturalWidth, HB / img.naturalHeight);
+  FOTO = { w: img.naturalWidth * k, h: img.naturalHeight * k };
+  FOTO.x = (W - FOTO.w) / 2; FOTO.y = (HB - FOTO.h) / 2;
+  Object.assign(img.style, { left: FOTO.x + 'px', top: FOTO.y + 'px', width: FOTO.w + 'px', height: FOTO.h + 'px' });
+  const M = document.getElementById('marcas');
+  PUNTOS = L.puntos.map((p, i) => {
+    const aro = document.createElement('div'); aro.className = 'aro'; M.appendChild(aro);
+    const tag = document.createElement('div'); tag.className = 'tag'; tag.textContent = p.etiqueta || ''; M.appendChild(tag);
+    return { ...p, i, px: FOTO.x + p.x * FOTO.w, py: FOTO.y + p.y * FOTO.h, aro, tag };
+  });
+  await Promise.all(["700 24px 'JetBrains Mono'", '800 58px Archivo'].map((f) => document.fonts.load(f)));
+  await document.fonts.ready;
+  for (const P of PUNTOS) { P.w = P.tag.offsetWidth; P.h = P.tag.offsetHeight; }
+  const tit = document.getElementById('titulo');
+  for (let fs = parseFloat(getComputedStyle(tit).fontSize); fs > 34 && tit.scrollWidth > tit.clientWidth; fs -= 2) tit.style.fontSize = fs + 'px';
+  await V.pintarActo(S);
+})();
+
+// la cámara sobre un punto: escala ZOOM alrededor de él (el punto no se mueve de su sitio en la caja)
+const camDe = (P) => (P && CON_CAMARA ? { s: ZOOM, tx: -(ZOOM - 1) * P.px, ty: -(ZOOM - 1) * P.py } : { s: 1, tx: 0, ty: 0 });
+
+window.seek = (t0) => {
+  const t = V.portada ? S.dur : t0, Z = V.zona();
+  V.seekProgreso(t0, n, S.dur);
+  V.seekActo(t0, S);
+  const ti = eo((t - (S.T.ini || 0.3) + 0.2) / 0.4), tit = document.getElementById('titulo');
+  tit.style.opacity = ti.toFixed(3); tit.style.transform = `translateY(${((1 - ti) * 24).toFixed(1)}px)`;
+  let k = -1;
+  PUNTOS.forEach((P, i) => { if (t >= P.start) k = i; });
+  const de = camDe(k > 0 ? PUNTOS[k - 1] : null), a = camDe(k >= 0 ? PUNTOS[k] : null);
+  const pc = k >= 0 ? eo((t - PUNTOS[k].start) / CAMARA_S) : 0;
+  const cam = { s: de.s + (a.s - de.s) * pc, tx: de.tx + (a.tx - de.tx) * pc, ty: de.ty + (a.ty - de.ty) * pc };
+  document.getElementById('cam').style.transform = `translate(${cam.tx.toFixed(2)}px, ${cam.ty.toFixed(2)}px) scale(${cam.s.toFixed(4)})`;
+  // el velo: oscurece todo menos el punto que suena (solo con cámara)
+  const velo = document.getElementById('velo');
+  if (CON_CAMARA && k >= 0) {
+    const P = PUNTOS[k];
+    velo.style.background = `radial-gradient(circle at ${(100 * P.px / W).toFixed(2)}% ${(100 * P.py / HB).toFixed(2)}%, transparent 0, transparent 11%, color-mix(in srgb, var(--bg) 74%, transparent) 26%)`;
+    velo.style.opacity = eo((t - P.start) / 0.5).toFixed(3);
+  } else velo.style.opacity = 0;
+  // aros y etiquetas: con cámara, solo el punto que suena; en «pistas», se quedan (el nuevo tapa al viejo si chocan)
+  const caja = document.getElementById('marcas'), y0 = caja.offsetTop, puestos = [];
+  const yMax = Math.min(HB, Z.fin - y0) - 8;
+  for (let i = PUNTOS.length - 1; i >= 0; i--) {
+    const P = PUNTOS[i], x = cam.tx + cam.s * P.px, y = cam.ty + cam.s * P.py, entra = eo((t - P.start) / 0.35);
+    const visible = t >= P.start && (CON_CAMARA ? i === k : true);
+    const dentro = x >= Z.corte + 34 && x <= Z.ancho - Z.corte - 34 && y >= 34 && y <= yMax - 26 && (y + y0 + 30 < Z.iconosY || x <= Z.iconosX - 34);
+    P.aro.style.left = x.toFixed(1) + 'px'; P.aro.style.top = y.toFixed(1) + 'px';
+    P.aro.style.borderColor = i === k ? '' : 'var(--ink)';
+    P.aro.style.opacity = (visible && dentro ? entra : 0).toFixed(3);
+    P.aro.style.transform = `scale(${(1 + 0.4 * Math.sin(Math.PI * clamp((t - P.start) / 0.5))).toFixed(3)})`;
+    let lx = x - 44 - P.w >= Z.izq ? x - 44 - P.w : x + 44;   // la etiqueta a la izquierda del punto si cabe
+    lx = lim(lx, Z.izq, Z.der - P.w);
+    const ly = lim(y - P.h / 2, 8, yMax - P.h);
+    const caj = [lx, ly, lx + P.w, ly + P.h];
+    const tapada = puestos.some((q) => caj[0] < q[2] + 6 && caj[2] > q[0] - 6 && caj[1] < q[3] + 6 && caj[3] > q[1] - 6);
+    const ve = visible && !tapada && !!P.etiqueta;
+    if (ve) puestos.push(caj);
+    P.tag.style.transform = `translate(${lx.toFixed(1)}px, ${ly.toFixed(1)}px)`;
+    P.tag.style.borderColor = i === k ? 'var(--acento, var(--a1))' : '';
+    P.tag.style.opacity = (ve ? entra * (i === k ? 1 : 0.8) : 0).toFixed(3);
+  }
+  V.subtitulos(t0, S, TROZOS);
+};
+</script>
+</body></html>

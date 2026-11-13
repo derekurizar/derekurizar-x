@@ -1,0 +1,646 @@
+{
+ "version": 10,
+ "slug": "el-terremoto-de-1976-en-guatemala",
+ "tema": "El terremoto de 1976 en Guatemala",
+ "motor": "historia",
+ "fecha": "2026-11-10",
+ "carpeta": "series/2026-11-10-el-terremoto-de-1976-en-guatemala",
+ "trabajo": "sesiones/serie-el-terremoto-de-1976-en-guatemala",
+ "n_partes": 4,
+ "paleta": "obsidiana",
+ "musica": "obsidiana-2",
+ "plan_aprobado": true,
+ "estado": "completa",
+ "partes": [
+  {
+   "n": 1,
+   "titulo": "Las 3:03 de la madrugada",
+   "pregunta": "¿Qué pasó en Guatemala a las 3:03 del 4 de febrero de 1976?",
+   "periodo": {
+    "desde": "1976-02",
+    "hasta": "1976-02"
+   },
+   "mecanismo": null,
+   "ejes": null,
+   "puente": "¿Y si lo peor de la tierra todavía no había pasado?",
+   "hilos": [
+    "p1h1",
+    "p1h2"
+   ],
+   "revelaciones": [
+    "La falla del Motagua se rompió de lado: el epicentro estuvo en Los Amates, Izabal, y la ruptura corrió cientos de kilómetros hacia el altiplano.",
+    "El primer conteo oficial habló de 1,142 muertos."
+   ],
+   "tema": null,
+   "hechos": [],
+   "obligatorio": [],
+   "en_juego": "la vida de las familias que dormían bajo techos de adobe",
+   "estado": "entregada",
+   "trabajo": "sesiones/serie-el-terremoto-de-1976-en-guatemala/parte-1",
+   "ruta": "series/2026-11-10-el-terremoto-de-1976-en-guatemala/parte-1",
+   "duracion_s": 105.3
+  },
+  {
+   "n": 2,
+   "titulo": "La tierra no dejó de temblar",
+   "pregunta": "¿Qué pasó cuando la tierra volvió a temblar en los días siguientes?",
+   "periodo": {
+    "desde": "1976-02",
+    "hasta": "1976-02"
+   },
+   "mecanismo": null,
+   "ejes": null,
+   "puente": "¿Quién iba a levantar un país donde un tercio de la gente se quedó sin casa?",
+   "hilos": [
+    "p2h1",
+    "p2h2"
+   ],
+   "revelaciones": [
+    "La réplica del 6 de febrero, de magnitud 5.5, derribó lo que la madrugada del 4 había dejado a punto de caer.",
+    "Al final fueron alrededor de 23,000 muertos y unos 76,504 heridos."
+   ],
+   "tema": null,
+   "hechos": [],
+   "obligatorio": [],
+   "en_juego": "más de un millón de personas sin casa, a la intemperie",
+   "estado": "entregada",
+   "trabajo": "sesiones/serie-el-terremoto-de-1976-en-guatemala/parte-2",
+   "ruta": "series/2026-11-10-el-terremoto-de-1976-en-guatemala/parte-2",
+   "duracion_s": 108.7
+  },
+  {
+   "n": 3,
+   "titulo": "La casa del pobre",
+   "pregunta": "¿Quién iba a levantar un país sin casa, y a quién le cayó el terremoto?",
+   "periodo": {
+    "desde": "1976-03",
+    "hasta": "1985"
+   },
+   "mecanismo": null,
+   "ejes": null,
+   "puente": "¿Qué quedó de aquella madrugada en el país de hoy?",
+   "hilos": [
+    "p3h1",
+    "p3h2"
+   ],
+   "revelaciones": [
+    "No mató la tierra sino el adobe: unas 250,000 casas cayeron, casi todas de los pobres.",
+    "El Comité de Reconstrucción Nacional nació por decreto el 18 de marzo de 1976 y fue apagándose antes de cumplir su plan de diez años."
+   ],
+   "tema": null,
+   "hechos": [],
+   "obligatorio": [],
+   "en_juego": "quién recupera su casa y quién pierde su lugar en la ciudad",
+   "estado": "entregada",
+   "trabajo": "sesiones/serie-el-terremoto-de-1976-en-guatemala/parte-3",
+   "ruta": "series/2026-11-10-el-terremoto-de-1976-en-guatemala/parte-3",
+   "duracion_s": 109.4
+  },
+  {
+   "n": 4,
+   "titulo": "Lo que dejó la falla",
+   "pregunta": "¿Qué quedó de aquella madrugada en la Guatemala de hoy?",
+   "periodo": {
+    "desde": "1986",
+    "hasta": "2026"
+   },
+   "mecanismo": null,
+   "ejes": null,
+   "puente": null,
+   "hilos": [
+    "p4h1",
+    "p4h2"
+   ],
+   "revelaciones": [
+    "La herencia institucional del terremoto: CONRED y las normas de construcción, y lo que todavía falta cincuenta años después."
+   ],
+   "tema": null,
+   "hechos": [],
+   "obligatorio": [],
+   "en_juego": "el país entero frente al próximo sismo",
+   "estado": "entregada",
+   "trabajo": "sesiones/serie-el-terremoto-de-1976-en-guatemala/parte-4",
+   "ruta": "series/2026-11-10-el-terremoto-de-1976-en-guatemala/parte-4",
+   "duracion_s": 139.5
+  }
+ ],
+ "historial": [
+  {
+   "version": 1,
+   "fecha": "2026-11-10",
+   "nota": "plan nuevo",
+   "partes": [
+    {
+     "n": 1,
+     "titulo": "Las 3:03 de la madrugada",
+     "pregunta": "¿Qué pasó en Guatemala a las 3:03 del 4 de febrero de 1976?",
+     "periodo": {
+      "desde": "1976-02",
+      "hasta": "1976-02"
+     },
+     "mecanismo": null,
+     "puente": "¿Y si lo peor de la tierra todavía no había pasado?"
+    },
+    {
+     "n": 2,
+     "titulo": "La tierra no dejó de temblar",
+     "pregunta": "¿Qué pasó cuando la tierra volvió a temblar en los días siguientes?",
+     "periodo": {
+      "desde": "1976-02",
+      "hasta": "1976-03"
+     },
+     "mecanismo": null,
+     "puente": "¿Quién iba a levantar un país donde un tercio de la gente se quedó sin casa?"
+    },
+    {
+     "n": 3,
+     "titulo": "El terremoto clasista",
+     "pregunta": "¿Quién iba a levantar un país sin casa, y a quién le cayó el terremoto?",
+     "periodo": {
+      "desde": "1976-04",
+      "hasta": "1985"
+     },
+     "mecanismo": null,
+     "puente": "¿Qué quedó de aquella madrugada en el país de hoy?"
+    },
+    {
+     "n": 4,
+     "titulo": "Lo que dejó la falla",
+     "pregunta": "¿Qué quedó de aquella madrugada en la Guatemala de hoy?",
+     "periodo": {
+      "desde": "1986",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": null
+    }
+   ]
+  },
+  {
+   "version": 2,
+   "fecha": "2026-11-10",
+   "nota": "plan nuevo",
+   "partes": [
+    {
+     "n": 1,
+     "titulo": "Las 3:03 de la madrugada",
+     "pregunta": "¿Qué pasó en Guatemala a las 3:03 del 4 de febrero de 1976?",
+     "periodo": {
+      "desde": "1976-02",
+      "hasta": "1976-02"
+     },
+     "mecanismo": null,
+     "puente": "¿Y si lo peor de la tierra todavía no había pasado?"
+    },
+    {
+     "n": 2,
+     "titulo": "La tierra no dejó de temblar",
+     "pregunta": "¿Qué pasó cuando la tierra volvió a temblar en los días siguientes?",
+     "periodo": {
+      "desde": "1976-02",
+      "hasta": "1976-02"
+     },
+     "mecanismo": null,
+     "puente": "¿Quién iba a levantar un país donde un tercio de la gente se quedó sin casa?"
+    },
+    {
+     "n": 3,
+     "titulo": "El terremoto clasista",
+     "pregunta": "¿Quién iba a levantar un país sin casa, y a quién le cayó el terremoto?",
+     "periodo": {
+      "desde": "1976-03",
+      "hasta": "1985"
+     },
+     "mecanismo": null,
+     "puente": "¿Qué quedó de aquella madrugada en el país de hoy?"
+    },
+    {
+     "n": 4,
+     "titulo": "Lo que dejó la falla",
+     "pregunta": "¿Qué quedó de aquella madrugada en la Guatemala de hoy?",
+     "periodo": {
+      "desde": "1986",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": null
+    }
+   ]
+  },
+  {
+   "version": 3,
+   "fecha": "2026-11-10",
+   "nota": "plan aprobado por el usuario",
+   "partes": [
+    {
+     "n": 1,
+     "titulo": "Las 3:03 de la madrugada",
+     "pregunta": "¿Qué pasó en Guatemala a las 3:03 del 4 de febrero de 1976?",
+     "periodo": {
+      "desde": "1976-02",
+      "hasta": "1976-02"
+     },
+     "mecanismo": null,
+     "puente": "¿Y si lo peor de la tierra todavía no había pasado?"
+    },
+    {
+     "n": 2,
+     "titulo": "La tierra no dejó de temblar",
+     "pregunta": "¿Qué pasó cuando la tierra volvió a temblar en los días siguientes?",
+     "periodo": {
+      "desde": "1976-02",
+      "hasta": "1976-02"
+     },
+     "mecanismo": null,
+     "puente": "¿Quién iba a levantar un país donde un tercio de la gente se quedó sin casa?"
+    },
+    {
+     "n": 3,
+     "titulo": "El terremoto clasista",
+     "pregunta": "¿Quién iba a levantar un país sin casa, y a quién le cayó el terremoto?",
+     "periodo": {
+      "desde": "1976-03",
+      "hasta": "1985"
+     },
+     "mecanismo": null,
+     "puente": "¿Qué quedó de aquella madrugada en el país de hoy?"
+    },
+    {
+     "n": 4,
+     "titulo": "Lo que dejó la falla",
+     "pregunta": "¿Qué quedó de aquella madrugada en la Guatemala de hoy?",
+     "periodo": {
+      "desde": "1986",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": null
+    }
+   ]
+  },
+  {
+   "version": 4,
+   "fecha": "2026-11-10",
+   "nota": "plan aprobado por el usuario",
+   "partes": [
+    {
+     "n": 1,
+     "titulo": "Las 3:03 de la madrugada",
+     "pregunta": "¿Qué pasó en Guatemala a las 3:03 del 4 de febrero de 1976?",
+     "periodo": {
+      "desde": "1976-02",
+      "hasta": "1976-02"
+     },
+     "mecanismo": null,
+     "puente": "¿Y si lo peor de la tierra todavía no había pasado?"
+    },
+    {
+     "n": 2,
+     "titulo": "La tierra no dejó de temblar",
+     "pregunta": "¿Qué pasó cuando la tierra volvió a temblar en los días siguientes?",
+     "periodo": {
+      "desde": "1976-02",
+      "hasta": "1976-02"
+     },
+     "mecanismo": null,
+     "puente": "¿Quién iba a levantar un país donde un tercio de la gente se quedó sin casa?"
+    },
+    {
+     "n": 3,
+     "titulo": "La casa del pobre",
+     "pregunta": "¿Quién iba a levantar un país sin casa, y a quién le cayó el terremoto?",
+     "periodo": {
+      "desde": "1976-03",
+      "hasta": "1985"
+     },
+     "mecanismo": null,
+     "puente": "¿Qué quedó de aquella madrugada en el país de hoy?"
+    },
+    {
+     "n": 4,
+     "titulo": "Lo que dejó la falla",
+     "pregunta": "¿Qué quedó de aquella madrugada en la Guatemala de hoy?",
+     "periodo": {
+      "desde": "1986",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": null
+    }
+   ]
+  },
+  {
+   "version": 5,
+   "fecha": "2026-11-10",
+   "nota": "serie completa revisada (SE17)",
+   "partes": [
+    {
+     "n": 1,
+     "titulo": "Las 3:03 de la madrugada",
+     "pregunta": "¿Qué pasó en Guatemala a las 3:03 del 4 de febrero de 1976?",
+     "periodo": {
+      "desde": "1976-02",
+      "hasta": "1976-02"
+     },
+     "mecanismo": null,
+     "puente": "¿Y si lo peor de la tierra todavía no había pasado?"
+    },
+    {
+     "n": 2,
+     "titulo": "La tierra no dejó de temblar",
+     "pregunta": "¿Qué pasó cuando la tierra volvió a temblar en los días siguientes?",
+     "periodo": {
+      "desde": "1976-02",
+      "hasta": "1976-02"
+     },
+     "mecanismo": null,
+     "puente": "¿Quién iba a levantar un país donde un tercio de la gente se quedó sin casa?"
+    },
+    {
+     "n": 3,
+     "titulo": "La casa del pobre",
+     "pregunta": "¿Quién iba a levantar un país sin casa, y a quién le cayó el terremoto?",
+     "periodo": {
+      "desde": "1976-03",
+      "hasta": "1985"
+     },
+     "mecanismo": null,
+     "puente": "¿Qué quedó de aquella madrugada en el país de hoy?"
+    },
+    {
+     "n": 4,
+     "titulo": "Lo que dejó la falla",
+     "pregunta": "¿Qué quedó de aquella madrugada en la Guatemala de hoy?",
+     "periodo": {
+      "desde": "1986",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": null
+    }
+   ]
+  },
+  {
+   "version": 6,
+   "fecha": "2026-11-10",
+   "nota": "serie completa revisada (SE17)",
+   "partes": [
+    {
+     "n": 1,
+     "titulo": "Las 3:03 de la madrugada",
+     "pregunta": "¿Qué pasó en Guatemala a las 3:03 del 4 de febrero de 1976?",
+     "periodo": {
+      "desde": "1976-02",
+      "hasta": "1976-02"
+     },
+     "mecanismo": null,
+     "puente": "¿Y si lo peor de la tierra todavía no había pasado?"
+    },
+    {
+     "n": 2,
+     "titulo": "La tierra no dejó de temblar",
+     "pregunta": "¿Qué pasó cuando la tierra volvió a temblar en los días siguientes?",
+     "periodo": {
+      "desde": "1976-02",
+      "hasta": "1976-02"
+     },
+     "mecanismo": null,
+     "puente": "¿Quién iba a levantar un país donde un tercio de la gente se quedó sin casa?"
+    },
+    {
+     "n": 3,
+     "titulo": "La casa del pobre",
+     "pregunta": "¿Quién iba a levantar un país sin casa, y a quién le cayó el terremoto?",
+     "periodo": {
+      "desde": "1976-03",
+      "hasta": "1985"
+     },
+     "mecanismo": null,
+     "puente": "¿Qué quedó de aquella madrugada en el país de hoy?"
+    },
+    {
+     "n": 4,
+     "titulo": "Lo que dejó la falla",
+     "pregunta": "¿Qué quedó de aquella madrugada en la Guatemala de hoy?",
+     "periodo": {
+      "desde": "1986",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": null
+    }
+   ]
+  },
+  {
+   "version": 7,
+   "fecha": "2026-11-10",
+   "nota": "serie completa revisada (SE17)",
+   "partes": [
+    {
+     "n": 1,
+     "titulo": "Las 3:03 de la madrugada",
+     "pregunta": "¿Qué pasó en Guatemala a las 3:03 del 4 de febrero de 1976?",
+     "periodo": {
+      "desde": "1976-02",
+      "hasta": "1976-02"
+     },
+     "mecanismo": null,
+     "puente": "¿Y si lo peor de la tierra todavía no había pasado?"
+    },
+    {
+     "n": 2,
+     "titulo": "La tierra no dejó de temblar",
+     "pregunta": "¿Qué pasó cuando la tierra volvió a temblar en los días siguientes?",
+     "periodo": {
+      "desde": "1976-02",
+      "hasta": "1976-02"
+     },
+     "mecanismo": null,
+     "puente": "¿Quién iba a levantar un país donde un tercio de la gente se quedó sin casa?"
+    },
+    {
+     "n": 3,
+     "titulo": "La casa del pobre",
+     "pregunta": "¿Quién iba a levantar un país sin casa, y a quién le cayó el terremoto?",
+     "periodo": {
+      "desde": "1976-03",
+      "hasta": "1985"
+     },
+     "mecanismo": null,
+     "puente": "¿Qué quedó de aquella madrugada en el país de hoy?"
+    },
+    {
+     "n": 4,
+     "titulo": "Lo que dejó la falla",
+     "pregunta": "¿Qué quedó de aquella madrugada en la Guatemala de hoy?",
+     "periodo": {
+      "desde": "1986",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": null
+    }
+   ]
+  },
+  {
+   "version": 8,
+   "fecha": "2026-11-10",
+   "nota": "serie completa revisada (SE17)",
+   "partes": [
+    {
+     "n": 1,
+     "titulo": "Las 3:03 de la madrugada",
+     "pregunta": "¿Qué pasó en Guatemala a las 3:03 del 4 de febrero de 1976?",
+     "periodo": {
+      "desde": "1976-02",
+      "hasta": "1976-02"
+     },
+     "mecanismo": null,
+     "puente": "¿Y si lo peor de la tierra todavía no había pasado?"
+    },
+    {
+     "n": 2,
+     "titulo": "La tierra no dejó de temblar",
+     "pregunta": "¿Qué pasó cuando la tierra volvió a temblar en los días siguientes?",
+     "periodo": {
+      "desde": "1976-02",
+      "hasta": "1976-02"
+     },
+     "mecanismo": null,
+     "puente": "¿Quién iba a levantar un país donde un tercio de la gente se quedó sin casa?"
+    },
+    {
+     "n": 3,
+     "titulo": "La casa del pobre",
+     "pregunta": "¿Quién iba a levantar un país sin casa, y a quién le cayó el terremoto?",
+     "periodo": {
+      "desde": "1976-03",
+      "hasta": "1985"
+     },
+     "mecanismo": null,
+     "puente": "¿Qué quedó de aquella madrugada en el país de hoy?"
+    },
+    {
+     "n": 4,
+     "titulo": "Lo que dejó la falla",
+     "pregunta": "¿Qué quedó de aquella madrugada en la Guatemala de hoy?",
+     "periodo": {
+      "desde": "1986",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": null
+    }
+   ]
+  },
+  {
+   "version": 9,
+   "fecha": "2026-11-10",
+   "nota": "serie completa revisada (SE17)",
+   "partes": [
+    {
+     "n": 1,
+     "titulo": "Las 3:03 de la madrugada",
+     "pregunta": "¿Qué pasó en Guatemala a las 3:03 del 4 de febrero de 1976?",
+     "periodo": {
+      "desde": "1976-02",
+      "hasta": "1976-02"
+     },
+     "mecanismo": null,
+     "puente": "¿Y si lo peor de la tierra todavía no había pasado?"
+    },
+    {
+     "n": 2,
+     "titulo": "La tierra no dejó de temblar",
+     "pregunta": "¿Qué pasó cuando la tierra volvió a temblar en los días siguientes?",
+     "periodo": {
+      "desde": "1976-02",
+      "hasta": "1976-02"
+     },
+     "mecanismo": null,
+     "puente": "¿Quién iba a levantar un país donde un tercio de la gente se quedó sin casa?"
+    },
+    {
+     "n": 3,
+     "titulo": "La casa del pobre",
+     "pregunta": "¿Quién iba a levantar un país sin casa, y a quién le cayó el terremoto?",
+     "periodo": {
+      "desde": "1976-03",
+      "hasta": "1985"
+     },
+     "mecanismo": null,
+     "puente": "¿Qué quedó de aquella madrugada en el país de hoy?"
+    },
+    {
+     "n": 4,
+     "titulo": "Lo que dejó la falla",
+     "pregunta": "¿Qué quedó de aquella madrugada en la Guatemala de hoy?",
+     "periodo": {
+      "desde": "1986",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": null
+    }
+   ]
+  },
+  {
+   "version": 10,
+   "fecha": "2026-11-10",
+   "nota": "serie completa revisada (SE17)",
+   "partes": [
+    {
+     "n": 1,
+     "titulo": "Las 3:03 de la madrugada",
+     "pregunta": "¿Qué pasó en Guatemala a las 3:03 del 4 de febrero de 1976?",
+     "periodo": {
+      "desde": "1976-02",
+      "hasta": "1976-02"
+     },
+     "mecanismo": null,
+     "puente": "¿Y si lo peor de la tierra todavía no había pasado?"
+    },
+    {
+     "n": 2,
+     "titulo": "La tierra no dejó de temblar",
+     "pregunta": "¿Qué pasó cuando la tierra volvió a temblar en los días siguientes?",
+     "periodo": {
+      "desde": "1976-02",
+      "hasta": "1976-02"
+     },
+     "mecanismo": null,
+     "puente": "¿Quién iba a levantar un país donde un tercio de la gente se quedó sin casa?"
+    },
+    {
+     "n": 3,
+     "titulo": "La casa del pobre",
+     "pregunta": "¿Quién iba a levantar un país sin casa, y a quién le cayó el terremoto?",
+     "periodo": {
+      "desde": "1976-03",
+      "hasta": "1985"
+     },
+     "mecanismo": null,
+     "puente": "¿Qué quedó de aquella madrugada en el país de hoy?"
+    },
+    {
+     "n": 4,
+     "titulo": "Lo que dejó la falla",
+     "pregunta": "¿Qué quedó de aquella madrugada en la Guatemala de hoy?",
+     "periodo": {
+      "desde": "1986",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": null
+    }
+   ]
+  }
+ ],
+ "fixture": false,
+ "modo": "serie",
+ "promesa": "¿Por qué una sola madrugada mató a tantos y no a todos?",
+ "guiones_revisados": {
+  "fecha": "2026-11-10",
+  "huella": "11286b0c39c1"
+ }
+}

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<!-- Escena «bandos» de /historia (?n=N): las personas de la historia TOMAN PARTIDO en dos columnas (S.B de
+     scripts/historia.py t_bandos; gate H33): quién votó a favor y quién en contra, quién firmó y quién no, quién se
+     quedó y quién se fue. Cada persona (su retrato real en círculo, recortado del foco de su cara, su nombre y su
+     cargo) entra desde el centro hacia su columna cuando la voz la nombra; el encabezado de cada lado (su nombre y, si
+     la hay, su cifra) aparece con su primera persona, en el acento mientras suena. Con `umbral`, al final entra una
+     barra: lo alcanzado frente al total, con la marca de lo que hacía falta. Todo queda quieto entre entradas (A1) y
+     dentro de la zona segura (V13). Solo variables del sistema Noche (sin hex). -->
+<link rel="stylesheet" href="comun.css">
+<style>
+#titulo { position: absolute; top: 290px; left: var(--izq); right: var(--der); font: 800 58px/1.04 Archivo, sans-serif; letter-spacing: -.015em; white-space: nowrap; }
+#lienzo { position: absolute; top: 380px; left: var(--izq); right: var(--der); height: 900px; }
+.lado { position: absolute; top: 0; width: 48%; display: flex; align-items: flex-end; gap: 14px; opacity: 0; }
+.lado.b { left: 52%; }
+.lado .cifra { font: 900 104px/.84 Archivo, sans-serif; font-stretch: 62.5%; text-transform: uppercase; white-space: nowrap; }
+.lado .cifra:empty { display: none; }
+.lado .nom { padding-bottom: 8px; font: 700 23px/1.1 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+.raya { position: absolute; top: 112px; left: 50%; width: 2px; margin-left: -1px; bottom: 150px; background: color-mix(in srgb, var(--ink) 22%, transparent); }
+.per { position: absolute; left: 0; top: 0; width: 48%; display: flex; flex-direction: column; align-items: center; text-align: center; opacity: 0; }
+.per .c { width: var(--D); height: var(--D); border-radius: 50%; box-sizing: border-box; border: 5px solid color-mix(in srgb, var(--ink) 45%, transparent);
+  background-color: color-mix(in srgb, var(--ink) 12%, var(--bg)); background-repeat: no-repeat; }
+.per.suena .c { border-color: var(--acento, var(--a1)); }
+.per .n { margin-top: 8px; font: 800 30px/1.04 Archivo, sans-serif; white-space: nowrap; }
+.per .k { margin-top: 4px; max-width: 100%; font: 600 16px/1.15 'JetBrains Mono', monospace; letter-spacing: .04em; text-transform: uppercase;
+  opacity: .75; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#umbral { position: absolute; left: 0; right: 0; bottom: 34px; opacity: 0; }
+#umbral .via { position: relative; height: 16px; border-radius: 8px; background: color-mix(in srgb, var(--ink) 20%, transparent); }
+#umbral .lleno { position: absolute; left: 0; top: 0; height: 16px; border-radius: 8px; background: var(--ink); width: 0; }
+#umbral .marca { position: absolute; top: -10px; width: 5px; margin-left: -2px; height: 36px; background: var(--acento, var(--a1)); }
+#umbral .txt { margin-top: 16px; font: 700 23px/1.1 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+#pie { position: absolute; left: var(--izq); right: var(--der); top: 1300px; font: 600 19px/1.25 'JetBrains Mono', monospace; letter-spacing: .04em; opacity: .7; }
+html.f45 #titulo { top: 150px; font-size: 48px; }
+html.f45 #lienzo { top: 224px; height: 780px; }
+html.f45 .lado .cifra { font-size: 84px; }
+html.f45 .raya { top: 92px; }
+html.f45 .per .n { font-size: 26px; }
+html.f45 #pie { top: 1024px; }
+</style>
+</head>
+<body>
+<div id="arriba"><div id="progreso"></div></div>
+<div id="titulo"></div>
+<div id="lienzo">
+  <div class="lado a"><div class="cifra"></div><div class="nom"></div></div>
+  <div class="lado b"><div class="cifra"></div><div class="nom"></div></div>
+  <div class="raya"></div>
+  <div id="umbral"><div class="via"><div class="lleno"></div><div class="marca"></div></div><div class="txt"></div></div>
+</div>
+<div id="pie"></div>
+<div id="subs"></div>
+<script src="comun.js"></script>
+<script>
+const n = V.n, F45 = V.F45, { clamp, eo, esc } = V, MUEVE_S = 0.7;
+let S, B, TROZOS, PERS = [], W, H;
+
+window.__listo = (async () => {
+  const C = await V.cargar(); S = C.S; TROZOS = C.trozos; B = S.B;
+  V.pintarProgreso(C.todo);
+  document.getElementById('titulo').textContent = B.titulo || '';
+  document.getElementById('pie').textContent = B.pie || '';
+  const L = document.getElementById('lienzo'); W = L.clientWidth; H = L.clientHeight;
+  [...L.querySelectorAll('.lado')].forEach((el, k) => { el.querySelector('.cifra').textContent = B.lados[k].cifra || ''; el.querySelector('.nom').textContent = B.lados[k].nombre; });
+  // cada lado apila a los suyos; el alto del bloque sale de cuántos caben entre el encabezado y la barra
+  const arriba = F45 ? 110 : 132, abajo = B.umbral ? 150 : 30, max = Math.max(...[0, 1].map((k) => B.personas.filter((p) => p.lado === k).length), 1);
+  const bloque = Math.min(F45 ? 230 : 262, (H - arriba - abajo) / max), D = Math.round(Math.max(96, bloque - 84));
+  L.style.setProperty('--D', D + 'px');
+  const puestos = [0, 0];
+  for (const p of B.personas) {
+    const el = document.createElement('div'); el.className = 'per';
+    el.innerHTML = `<div class="c"></div><div class="n">${esc(p.corto || p.nombre)}</div><div class="k">${esc(p.cargo || '')}</div>`;
+    L.insertBefore(el, document.getElementById('umbral'));
+    const x = p.lado ? W * 0.52 : 0, y = arriba + puestos[p.lado]++ * bloque;
+    if (p.foto) {
+      const img = new Image(); img.src = p.foto;
+      await img.decode().catch(() => { throw new Error('no carga ' + p.foto); });
+      const c = el.querySelector('.c'), f = p.foco || { x: 0.35, y: 0.16, w: 0.3, h: 0.34 }, k = (0.62 * D) / Math.max(1, f.h * img.naturalHeight);
+      c.style.backgroundImage = `url("${p.foto}")`;
+      c.style.backgroundSize = `${(img.naturalWidth * k).toFixed(1)}px ${(img.naturalHeight * k).toFixed(1)}px`;
+      c.style.backgroundPosition = `${(D / 2 - (f.x + f.w / 2) * img.naturalWidth * k).toFixed(1)}px ${(D / 2 - (f.y + f.h / 2) * img.naturalHeight * k + 0.06 * D).toFixed(1)}px`;
+    }
+    PERS.push({ ...p, el, x, y });
+  }
+  if (B.umbral) {
+    const U = document.getElementById('umbral');
+    U.querySelector('.marca').style.left = (100 * B.umbral.marca / B.umbral.total).toFixed(2) + '%';
+    U.querySelector('.txt').textContent = B.umbral.texto || '';
+  }
+  await Promise.all(['extra-condensed 900 104px Archivo', '800 30px Archivo', "700 23px 'JetBrains Mono'"].map((f) => document.fonts.load(f)));
+  await document.fonts.ready;
+  const tit = document.getElementById('titulo');
+  for (let fs = parseFloat(getComputedStyle(tit).fontSize); fs > 34 && tit.scrollWidth > tit.clientWidth; fs -= 2) tit.style.fontSize = fs + 'px';
+  await V.pintarActo(S);
+})();
+
+window.seek = (t0) => {
+  const t = V.portada ? S.dur : t0;
+  V.seekProgreso(t0, n, S.dur);
+  V.seekActo(t0, S);
+  const ti = eo((t - (S.T.ini || 0.3) + 0.2) / 0.4), tit = document.getElementById('titulo');
+  tit.style.opacity = ti.toFixed(3); tit.style.transform = `translateY(${((1 - ti) * 24).toFixed(1)}px)`;
+  // quién suena: la última persona que entró (y su lado)
+  let k = -1;
+  PERS.forEach((p, i) => { if (t >= p.start) k = i; });
+  const ladoActivo = k >= 0 && !(B.umbral && t >= B.umbral.start) ? PERS[k].lado : -1;
+  for (const [i, p] of PERS.entries()) {
+    const e = eo((t - p.start) / MUEVE_S), xc = W * 0.26;   // entra desde el centro del lienzo hacia su columna
+    p.el.style.opacity = eo((t - p.start) / 0.3).toFixed(3);
+    p.el.style.transform = `translate(${(xc + (p.x - xc) * e).toFixed(1)}px, ${(p.y + (1 - e) * 30).toFixed(1)}px)`;
+    p.el.classList.toggle('suena', !V.portada && i === k && ladoActivo >= 0);
+  }
+  document.querySelectorAll('.lado').forEach((el, lado) => {
+    const primero = PERS.find((p) => p.lado === lado), e = primero ? eo((t - primero.start) / 0.35) : 0;
+    el.style.opacity = e.toFixed(3);
+    el.querySelector('.cifra').style.color = lado === ladoActivo ? 'var(--acento, var(--a1))' : '';
+  });
+  if (B.umbral) {
+    const U = document.getElementById('umbral'), e = eo((t - B.umbral.start) / 0.35);
+    U.style.opacity = e.toFixed(3);
+    U.querySelector('.lleno').style.width = (100 * B.umbral.lleno / B.umbral.total * eo((t - B.umbral.start - 0.2) / 0.9)).toFixed(2) + '%';
+  }
+  V.subtitulos(t0, S, TROZOS);
+};
+</script>
+</body></html>

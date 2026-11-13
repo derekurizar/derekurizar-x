@@ -63,11 +63,13 @@ largo = [{"texto": "La Espiga reabrió bajo una carpa en Guatemala."},
 ok(any("empieza a los" in x for x in VD.revisar_pregunta({}, st, dict(p, pregunta="¿Cómo se quedó La Espiga sin sucursales?"), largo)),
    "P6: no ve la promesa después del segundo 10")
 ok(VD.revisar_pregunta({}, dict(st, fecha="2026-11-01"), p, esc) == [], "P6: un trabajo anterior a la regla debe dar solo aviso")
-# la pregunta en pantalla: promesa, bisagra y pago (este con check)
+# la pregunta en pantalla: SOLO en el pago, con su check (usuario, 2026-11-10: «solo tiene sentido cuando ya muestran
+# el dato»); ni en la promesa ni en la bisagra
 E = [escena(k, "foto", 10) for k in range(1, 8)]
 n = VD.marcar_pregunta(E, {"promesa": {"pregunta": "¿Cómo cayó?", "texto": "uno dos", "en": 2, "pago": 6},
                            "bisagra": {"texto": "tres cuatro", "en": 4, "pago": 6}})
-ok(n == 3 and E[5]["pregunta"]["pagada"] and not E[1]["pregunta"]["pagada"], "P6: la pregunta no quedó en promesa, bisagra y pago")
+ok(n == 1 and E[5]["pregunta"]["pagada"] and not E[1].get("pregunta") and not E[3].get("pregunta"),
+   "P6: la pregunta no quedó solo en el pago")
 
 # tics sueltos
 E = [escena(1, "foto", 10, sfx=[{"t": 1, "id": "tic"}, {"t": 3, "id": "tic"}, {"t": 8, "id": "tic"}])]
@@ -129,6 +131,42 @@ ok(":." not in u and u == "Monzón lo dijo así: Yo le entregué cinco millones.
 ok(VD.SIGLA_S_FINAL > 0, "m089: SIGLA_S_FINAL")
 # m098: SE13 existe y compara contra las partes anteriores
 ok(callable(SE.citas_repetidas) and SE.citas_repetidas({}, 1, None) == [], "m098: SE13")
+
+# m135: una escena y la bisagra que vive en ella, juntas (en cualquier orden); la bisagra sola cambia también su escena
+import copy  # noqa: E402
+G0 = {"escenas": [{"tipo": "gancho", "texto": "Uno dijo algo.", "pantalla": "VIEJA", "familia": "lugar"},
+                  {"tipo": "foto", "texto": "La casa cayó. Escondía algo. Y luego más."}],
+      "narracion": [{"acto": 1, "texto": "Uno dijo algo. La casa cayó. Escondía algo. Y luego más."}],
+      "bisagra": {"texto": "Escondía algo.", "en": 2}}
+GAN = {"elegido": "g1", "candidatos": [{"id": "g1", "texto": "Uno dijo algo.", "pantalla": "VIEJA", "familia": "lugar"}]}
+for cs in ([{"escena": 2, "texto": "La casa cayó. Nadie contó. Y luego más."}, {"bisagra": "Nadie contó."}],
+           [{"bisagra": "Nadie contó."}, {"escena": 2, "texto": "La casa cayó. Nadie contó. Y luego más."}]):
+    g = copy.deepcopy(G0)
+    rc, msg, _ = VD.aplicar_cambios(g, copy.deepcopy(GAN), cs)
+    ok(rc == 0 and g["narracion"][0]["texto"].count("Nadie contó.") == 1, "m135: escena + bisagra: %s %s" % (rc, msg))
+g = copy.deepcopy(G0)
+ok(VD.aplicar_cambios(g, None, [{"bisagra": "Nadie lo dijo."}])[0] == 0 and "Nadie lo dijo." in g["escenas"][1]["texto"],
+   "m135: la bisagra sola no cambia su escena")
+# m136: la pantalla del gancho va también al candidato elegido
+g, gan = copy.deepcopy(G0), copy.deepcopy(GAN)
+VD.aplicar_cambios(g, gan, [{"escena": 1, "campo": "pantalla", "valor": "NUEVA"}])
+ok(VD.mismo_gancho(g["escenas"][0], gan["candidatos"][0]), "m136: el gancho cambiado ya no es el elegido")
+# m133: periodos por día; dos partes en el mismo mes sin día fallan
+def _plan(p1, p2):
+    base = {"titulo": "Uno", "pregunta": "¿Qué cayó?", "actos": [{}, {}, {}], "hilos": [{"id": "h"}], "revelaciones": ["a"],
+            "espina": {k: {"frase": "x"} for k in ("detonante", "punto_medio", "climax", "resolucion")}}
+    return {"serie": {"partes": [dict(base, n=1, periodo=p1, puente="¿Qué cayó?", hilos=[{"id": "h1"}]),
+                                 dict(base, n=2, periodo=p2, puente="¿Qué cayó?", hilos=[{"id": "h2"}]),
+                                 dict(base, n=3, periodo={"desde": "1977", "hasta": "1980"}, puente=None, hilos=[{"id": "h3"}])]}}
+f, _ = SE.revisar_plan(_plan({"desde": "1976-02", "hasta": "1976-02"}, {"desde": "1976-02", "hasta": "1976-03"}), "historia")
+ok(any("comparten" in x for x in f), "m133: no ve dos partes en el mismo mes sin día")
+f, _ = SE.revisar_plan(_plan({"desde": "1976-02-04", "hasta": "1976-02-05"}, {"desde": "1976-02-06", "hasta": "1976-03"}), "historia")
+ok(not any("periodo" in x or "comparten" in x for x in f), "m133: rechaza periodos por día: %s" % [x for x in f if "periodo" in x])
+# m137 y m147: la foto con otros nombres y la foto de archivo
+ok(HI.foto_de_otras_personas(3, {"texto": "Esa noche murió Telma Pérez Alvarado."},
+                             {"id": "f", "descripcion": "Lápida con dos nombres y la fecha"}, {}), "m137: no avisa de la lápida")
+ok(HI.foto_de_archivo({"descripcion": "Ruinas tras el terremoto de 1976", "fecha": "2026-02-01"})
+   and not HI.foto_de_archivo({"descripcion": "Escuela nueva", "fecha": "2026"}), "m147: foto de archivo")
 
 for x in F:
     print("FALLA", x)

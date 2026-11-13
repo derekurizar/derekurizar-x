@@ -1,0 +1,31 @@
+{
+  "_comentario": "Casos de la escena lupa para scripts/escena_prueba.py. Fotos de dominio público (Wikimedia Commons): el Hotel Terminal tras el terremoto de 1976 y una botella de Ron Zacapa. Las etiquetas del hotel describen lo que se ve; las de la botella, hechos de la historia del ron (2026-11-04).",
+  "paleta": "terracota",
+  "fotos": {
+    "hotel": {"archivo": "fotos/hotel.jpg", "credito": "Foto: autor no identificado · dominio público", "descripcion": "Colapso del Hotel Terminal en la Ciudad de Guatemala, 1976"},
+    "botella": {"archivo": "fotos/botella.jpg", "credito": "Foto: Maxx1972 · dominio público", "descripcion": "Botella de Ron Zacapa Centenario 23 con su banda de petate"}
+  },
+  "casos": {
+    "hotel": {
+      "tipo": "lupa", "acto": 1, "foto": "hotel", "titulo": "Un hotel, cuatro pistas",
+      "texto": "Arriba, el rótulo sigue en su sitio. Pero mira el centro: las losas se doblaron como papel. Aquí había un piso entero, y quedó aplastado. Y abajo, las tiendas cerradas: era de madrugada.",
+      "puntos": [
+        {"dice": "rótulo", "x": 0.69, "y": 0.09, "etiqueta": "El rótulo, intacto"},
+        {"dice": "losas", "x": 0.52, "y": 0.36, "etiqueta": "Las losas se doblaron"},
+        {"dice": "piso entero", "x": 0.45, "y": 0.71, "etiqueta": "Un piso aplastado"},
+        {"dice": "tiendas", "x": 0.6, "y": 0.93, "etiqueta": "Todo cerrado"}
+      ]
+    },
+    "botella": {
+      "tipo": "lupa", "acto": 2, "_paleta": "cacao", "foto": "botella", "titulo": "Una botella, tres lugares", "estilo": "pistas",
+      "rotulo": {"anio": "1976", "titulo": "Un ron con apellido", "lugar": "Guatemala"},
+      "fuente": "Prensa Libre",
+      "texto": "Casi todo está en la botella. El nombre nació para el centenario de la ciudad de Zacapa. La altura es la de Quetzaltenango, donde se añeja. Y la caña se destila en Tululá, Retalhuleu.",
+      "puntos": [
+        {"dice": "nombre", "x": 0.28, "y": 0.55, "etiqueta": "Zacapa: el nombre"},
+        {"dice": "altura", "x": 0.27, "y": 0.8, "etiqueta": "Quetzaltenango: la altura"},
+        {"dice": "caña", "x": 0.28, "y": 0.93, "etiqueta": "Retalhuleu: la caña"}
+      ]
+    }
+  }
+}

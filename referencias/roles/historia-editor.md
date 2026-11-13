@@ -28,7 +28,9 @@ se volvió exportador de algo, un caso de justicia desde que se descubrió hasta
   pagar en una escena o declarar sin respuesta («nunca se supo si…»; H17). Los investigadores buscan su respuesta.
 - **Personajes** `personajes[≤ 8]` `{nombre, alias[], presentacion (≤ 8 palabras)}`: cada persona u organización
   que la voz va a nombrar y no es el protagonista («Mario Baldetti», «hermano de la vicepresidenta»); el guionista la
-  presenta así la primera vez (H18). Evita un alias que compartan dos personas («Baldetti»).
+  presenta así la primera vez (H18). Evita un alias que compartan dos personas («Baldetti»). Un alias de persona lleva su nombre propio
+  («Laugerud», «Kjell»), nunca un cargo o un genérico («el presidente», «el ministro», «la madre»): el genérico
+  le pone la tarjeta de esa persona a otra que tiene el mismo cargo (el código ya los ignora).
 - **2–5 periodos** `{n, titulo (≤ 4 palabras), periodo, pregunta}` en orden cronológico (o del caso): solo
   reparten los ejes entre los investigadores; no son capítulos del video (el guion va por actos).
 - **2–3 ejes** `{id (2–6 letras: ori, exp, cas…), nombre, periodos: [n], preguntas, fuentes}`: el reparto de la
@@ -97,7 +99,7 @@ lo que sigue es el guion.
 
 Encuadras el tema ENTERO (pregunta, protagonista, actos y espina de toda la historia, hasta 5 ejes que cubren todas las
 partes) y además el **plan**: `serie.partes` con M partes, cada una con `titulo` (≤ 6 palabras), `pregunta` (la que abre
-esa parte), `periodo {desde, hasta}` (AAAA o AAAA-MM; en orden, sin pisarse), `actos` (3, los de la parte), `espina`,
+esa parte), `periodo {desde, hasta}` (AAAA, AAAA-MM o AAAA-MM-DD; en orden, sin pisarse; dos partes que caen en el mismo mes van por día: «1976-02-04» y «1976-02-05», SE2), `actos` (3, los de la parte), `espina`,
 `hilos` (1–4, ids `p<N>h<k>`), `revelaciones` (1–3: lo que paga ESA parte) y `puente` (la pregunta que deja abierta y
 abre la parte siguiente; en la última, `null`). El puente pregunta, no responde: ningún número de una revelación
 posterior. Corre `python3 scripts/serie.py plan <TRABAJO> --check` hasta 0 fallas (SE1, SE2). Guía:
@@ -115,6 +117,23 @@ posterior. Corre `python3 scripts/serie.py plan <TRABAJO> --check` hasta 0 falla
   lo de otra para entenderse: si depende de un hecho anterior, lo recuerda en una oración (SE15 deja ≤ 2 ids ya
   contados). Dos partes nunca se reparten el mismo momento desde dos ángulos (las capturas del 16 de abril, una vez).
 - **La última parte lleva el resumen de toda la serie** (SE14, 2026-11-07): 20–30 s en su acto 3 que repasan lo que contaron las demás. Dale ese margen en su plan: puede durar hasta 30 s más que las otras.
+
+## Archivos que la historia puede mostrar (2026-11-12)
+
+El guionista tiene escenas que ponen en pantalla un archivo real (`vias`, `lupa`, `deptos`, `pagina`, `cortina`,
+`archivo`, `bandos`; `referencias/flujo-historia.md`). Solo existen si la investigación trae el archivo: pídelo en el
+encuadre, en las `fuentes_sugeridas` o en `fotos_clave` del eje que corresponda, cuando la historia lo tenga.
+
+- **Un lugar que cambió** (antes y ahora): dos fotos del mismo sitio, una de la época y una de hoy.
+- **Un documento que lo dice** (un decreto, un informe, una sentencia en PDF): la fuente en PDF y la frase que importa.
+- **Una foto donde hay algo que ver** (un edificio dañado, un objeto, una firma): que el verificador la baje con buena
+  resolución y describa qué se ve y dónde.
+- **Dos lados con caras** (una votación, una firma, una ruptura): el retrato de cada persona y el hecho que la pone en su lado.
+- **Calles de una ciudad**: la red vial que hay en `design/vias/` (hoy, `capital`); si la historia pasa en otra ciudad,
+  dilo en tu salida para que se arme antes del guion (`scripts/build_vias.py`).
+- **Una serie corta de una cifra** (3–5 censos, 4 años): los valores completos, para barras o burbujas.
+
+No fuerces ninguna: una historia sin estos archivos se cuenta con fotos, citas y tarjetas, como siempre.
 
 ## Lo que está en juego (H8, H25; 2026-11-10)
 

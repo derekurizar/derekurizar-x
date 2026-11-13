@@ -327,6 +327,67 @@ tiene retrato; cada hilo es un hecho publicable que registra esa relación; con 
   **quién manda a quién**.
 - Cabe 3 × 2 en 9:16 (hasta 6 personas cómodas; 8 como máximo).
 
+## El mapa vial real: la escena `vias` (2026-11-12)
+
+Cuando la historia pasa en las calles de una ciudad (por dónde entra la cola, dónde se juntan las calzadas, hacia dónde
+creció la ciudad, por dónde iría el tren), no la cuentes con una foto de carros: usa `vias`. Es el mapa real de la
+ciudad (OpenStreetMap) y cada frase de la voz le suma una **capa**.
+
+```json
+{"tipo": "vias", "acto": 2, "red_vial": "capital", "titulo": "Las entradas a la capital",
+ "texto": "Por Mixco entran 200 mil vehículos al día… Villa Nueva solo abrió 4 carriles… Y todo llega a El Trébol.",
+ "fuente": "Emixtra, vía Prensa Libre",
+ "capas": [
+   {"dice": "Mixco", "arterias": ["roosevelt", "san-juan"], "lugar": "mixco", "cifra": "200 mil", "rotulo": "vehículos al día"},
+   {"dice": "Villa Nueva", "arterias": ["aguilar-batres"], "lugar": "villa-nueva", "etiqueta": "4 carriles"},
+   {"dice": "El Trébol", "zoom": "el-trebol", "lugar": "el-trebol"}]}
+```
+
+- Las redes, sus arterias y sus lugares están en tu digesto («vias»). Si la ciudad o la calle que necesitas no está, dilo
+  en tu RETORNO: la red se arma con `scripts/build_vias.py` (no inventes ids).
+- `dice` es la palabra o el nombre que la voz dice al entrar la capa («Mixco», «El Trébol», «carriles»), sin cifras, y
+  las capas van en el orden de la voz. Una capa por frase: ≥ 1.6 s de voz por capa, y la primera frase ya enciende algo
+  (si la primera capa tarda, el mapa se queda quieto y falla V21).
+- **Qué mostrar en cada capa:** una entrada que se llena (`arterias`), un lugar con su dato (`lugar` + `etiqueta`), el
+  dato grande (`cifra` + `rotulo`), cuánto creció un municipio (`burbuja`, la misma en dos capas), la vía del tren
+  (`riel`), o un acercamiento (`zoom`) para explicar un punto y luego volver (`zoom: "todo"`).
+- **Con `nivel` cuentas una hora del día o un antes y después**: la misma arteria en tres capas con 0.3, 0.6 y 1.
+  Si los niveles no salen de un dato, la voz no los presenta como medida.
+- Cada número en pantalla tiene respaldo y la escena lleva `fuente`. Lo que el mapa afirma (por dónde va una ruta,
+  qué calzadas se juntan) es geografía de OpenStreetMap; lo que tú le pones encima sale de los hechos.
+- ≤ 2 por video. Cuenta como composición distinta (H26). Gate H27.
+
+## Las otras escenas con archivos reales (2026-11-12)
+
+Además de `vias`, hay seis escenas que ponen en pantalla un archivo real de la historia. Úsalas cuando el archivo
+**es** la prueba: una foto donde hay algo que ver, un documento que lo dice, dos fotos del mismo lugar. Su forma exacta y
+sus topes están en tu digesto («lupa», «deptos», «pagina», «cortina», «archivo», «bandos»). En todas, `dice` es la
+palabra o el nombre que la voz dice cuando eso entra en pantalla (sin cifras, en el orden de la voz), y la primera frase
+ya muestra algo.
+
+- **`lupa`** · una foto que se interroga. Antes de escribir los `puntos`, **mira la foto** (Read de `fotos/<id>.jpg`):
+  `x` e `y` son dónde está cada cosa (0,0 arriba a la izquierda; 1,1 abajo a la derecha). La etiqueta dice lo que SE VE
+  («El rótulo, intacto»); lo que no se ve va en la voz con su hecho. `estilo: "pistas"` para un objeto (la botella, el
+  billete, el recibo): las etiquetas se quedan y cada una cuenta de dónde viene una parte.
+- **`deptos`** · cuando la historia pasa por varios departamentos. `arco: true` une el departamento de la capa anterior
+  con el de esta (el viaje del producto, de la caravana, del dinero); `onda: true` suelta un anillo desde el primer
+  departamento de la capa (un sismo, una noticia que corre). Para un solo lugar basta `depto` en una foto.
+- **`pagina`** · cuando la fuente es un PDF y la frase está ahí, a la vista. Primero arma la página con
+  `python3 scripts/historia.py pagina <TRABAJO> --id <id> --url <la fuente ya leída> --frase «el trozo literal»`
+  (te imprime la frase tal como está: esa es la que lee la voz). La voz dice de quién es el documento antes de leerla,
+  como en una cita. Si la fuente no es un PDF, usa `cita` con `documento`.
+- **`cortina`** · antes y ahora. La voz cuenta primero la foto de antes; el `dice` es la palabra del salto («después»,
+  «hoy»). Las dos fotos son del mismo lugar o de la misma cosa: si no lo son, no es una cortina, son dos fotos.
+- **`archivo`** · varias piezas, una por frase. `tira` para una línea de tiempo con fotos (su `fecha` grande arriba);
+  `capas` para recortes y documentos que se van apilando; `mesa` para «las pruebas del caso» (3–4 piezas); `conteo`
+  cuando la cifra es una cuenta de cosas que se pueden fotografiar (13 pasos a desnivel: la foto, 13 veces); `barras`
+  cuando una serie corta (2–6 valores) cuenta el cambio y hay una foto de la época para ponerla debajo.
+- **`bandos`** · cuando la historia tiene dos lados y caras conocidas en cada uno. Cada persona va en su lado por un
+  hecho verificado (su voto, su firma, su cargo), nunca por una opinión tuya; presunción de inocencia como siempre.
+
+No las uses de adorno: una historia lleva las que sus archivos piden, casi nunca más de dos o tres. Cuentan como
+composición distinta (H26). Gates H28–H33.
+
 ## El mapa con ruta y el cierre que se envía (2026-11-10)
 
 - **`ruta`** en una escena `foto`: 2–4 departamentos en el orden del recorrido (`"ruta": ["Escuintla", "Guatemala"]`).

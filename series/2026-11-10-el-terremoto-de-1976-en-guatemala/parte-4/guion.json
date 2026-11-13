@@ -1,0 +1,298 @@
+{
+ "id": "2026-11-10-el-terremoto-de-1976-en-guatemala-parte-4",
+ "tipo": "historia",
+ "slug": "el-terremoto-de-1976-en-guatemala-parte-4",
+ "tema": "El terremoto de 1976 en Guatemala",
+ "fecha": "2026-11-10",
+ "pregunta": "¿Qué quedó de aquella madrugada en la Guatemala de hoy?",
+ "arco": "tragedia con misterio: la noche, la cuenta que no dejaba de crecer, quién quedó bajo el adobe y qué se levantó encima; contada como cronología, hora a hora y luego año a año",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "2020",
+   "titulo": "La falla despierta",
+   "escena": 4
+  },
+  {
+   "numero": 3,
+   "anio": "2026",
+   "titulo": "Cincuenta años",
+   "escena": 7
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "Medio siglo después del terremoto, la falla sigue ahí. Guatemala vive encima. Si el país no aprendía del terremoto, el próximo lo encontraría igual. En 1976, la falla del Motagua se rompió bajo un país dormido. Ese año solo había un comité de emergencia, sin personal ni equipo. Por eso, años después, nació la Conred, la coordinadora para reducir desastres."
+  },
+  {
+   "acto": 2,
+   "texto": "Pero décadas después, construir casas seguras seguía sin ser obligatorio: en 2020, el ingeniero Héctor Monzón dijo que hay reglamentos de construcción, pero no ha habido la voluntad política suficiente para poner eso dentro de un código. Mientras tanto, la tierra no para: en 2025, el instituto que mide los sismos registró 11,811 temblores. Pero la falla del Motagua lleva su propia cuenta. El ritmo de esa falla es de décadas: en 2026, el geólogo Jorge Girón dijo que se habla de que se rompe cada 60 o 70 años, y van 50 años. Y sobre el daño de 1976 advirtió: Si nos vuelve a pegar, multiplique eso por tres."
+  },
+  {
+   "acto": 3,
+   "texto": "Al cumplirse los 50 años, el presidente Bernardo Arévalo dijo: La memoria nos compromete a prevenir, a prepararnos, a no repetir la improvisación. ¿Aprendió el país? A medias. Quedaron la Conred, una red de 85 estaciones y una alerta de sismos en el teléfono, pero normas sin una ley que obligue a cumplirlas. Todo empezó en 1976, cuando se rompió la falla del Motagua. Una de sus víctimas fue Telma, una niña de 14 años de la zona 6: murió bajo su casa por salvar a un niño. Un balance estimó unos 23,000 muertos; centenares, en fosas comunes. Quedaron 258,000 viviendas destruidas. Y el terremoto mató a tantos por las paredes: las de adobe, la casa del pobre, cayeron primero. Por eso, medio siglo después, la falla ya no solo se recuerda: se vigila. Hoy, 700,000 personas llevan en el teléfono la alerta de sismos."
+  }
+ ],
+ "hilos": [
+  {
+   "id": "p4h2",
+   "escena": 6
+  },
+  {
+   "id": "p4h1",
+   "escena": 3
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3
+  ],
+  [
+   4,
+   5
+  ],
+  [
+   7,
+   8,
+   9
+  ]
+ ],
+ "paleta": "obsidiana",
+ "musica": "obsidiana-2",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2004.8,
+ "duracion_s": 139.5,
+ "critica": {
+  "veredicto": "corregir",
+  "vuelta": 3,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 4,
+   "claridad": 3,
+   "flujo": 4,
+   "precision": 4,
+   "cierre": 4,
+   "recompensa": 4
+  }
+ },
+ "gancho": {
+  "familia": "resultado",
+  "visual": "foto",
+  "pantalla": "Terremoto: medio siglo",
+  "linea": "La falla sigue bajo Guatemala"
+ },
+ "promesa": {
+  "texto": "Si el país no aprendía del terremoto, el próximo lo encontraría igual.",
+  "pregunta": "¿Aprendió Guatemala algo del terremoto?",
+  "forma": "apuesta",
+  "en": 2,
+  "pago": 8,
+  "revela": 1
+ },
+ "bisagra": {
+  "texto": "Pero la falla del Motagua lleva su propia cuenta.",
+  "forma": "reloj",
+  "en": 5,
+  "pago": 6
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "Medio siglo después del terremoto, la falla sigue ahí. Guatemala vive encima.",
+   "voz": "Medio siglo después del terremoto, la falla sigue ahí. Guatemala vive encima.",
+   "dur": 6.236,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Photographer not identified · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "Si el país no aprendía del terremoto, el próximo lo encontraría igual. En 1976, la falla del Motagua se rompió bajo un país dormido.",
+   "voz": "Si el país no aprendía del terremoto, el próximo lo encontraría igual. En mil novecientos setenta y seis, la falla del Motagua se rompió bajo un país dormido.",
+   "dur": 10.23,
+   "hechos": [
+    "noche-h01",
+    "legado-h04"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "foto",
+   "pantalla": "Ese año solo había un comité de emergencia, sin personal ni equipo. Por eso, años después, nació la Conred, la coordinadora para reducir desastres.",
+   "voz": "Ese año solo había un comité de emergencia, sin personal ni equipo. Por eso, años después, nació la Conred, la coordinadora para reducir desastres.",
+   "dur": 11.649,
+   "hechos": [
+    "dias-h19",
+    "legado-h06"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "cita",
+   "pantalla": "Pero décadas después, construir casas seguras seguía sin ser obligatorio: en 2020, el ingeniero Héctor Monzón dijo que hay reglamentos de construcción, pero no ha habido la voluntad política suficiente para poner eso dentro de un código.",
+   "voz": "Pero décadas después, construir casas seguras seguía sin ser obligatorio: en dos mil veinte, el ingeniero Héctor Monzón dijo que hay reglamentos de construcción, pero no ha habido la voluntad política suficiente para poner eso dentro de un código.",
+   "dur": 16.177,
+   "hechos": [
+    "legado-h11"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "tarjeta",
+   "pantalla": "Mientras tanto, la tierra no para: en 2025, el instituto que mide los sismos registró 11,811 temblores. Pero la falla del Motagua lleva su propia cuenta.",
+   "voz": "Mientras tanto, la tierra no para: en dos mil veinticinco, el instituto que mide los sismos registró once mil ochocientos once temblores. Pero la falla del Motagua lleva su propia cuenta.",
+   "dur": 12.912,
+   "hechos": [],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "cita",
+   "pantalla": "El ritmo de esa falla es de décadas: en 2026, el geólogo Jorge Girón dijo que se habla de que se rompe cada 60 o 70 años, y van 50 años. Y sobre el daño de 1976 advirtió: Si nos vuelve a pegar, multiplique eso por tres.",
+   "voz": "El ritmo de esa falla es de décadas: en dos mil veintiséis, el geólogo Jorge Girón dijo que se habla de que se rompe cada sesenta o setenta años, y van cincuenta años. Y sobre el daño de mil novecientos setenta y seis advirtió: Si nos vuelve a pegar, multiplique eso por tres.",
+   "dur": 19.829,
+   "hechos": [
+    "legado-h08",
+    "legado-h09"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "cita",
+   "pantalla": "Al cumplirse los 50 años, el presidente Bernardo Arévalo dijo: La memoria nos compromete a prevenir, a prepararnos, a no repetir la improvisación.",
+   "voz": "Al cumplirse los cincuenta años, el presidente Bernardo Arévalo dijo: La memoria nos compromete a prevenir, a prepararnos, a no repetir la improvisación.",
+   "dur": 10.354,
+   "hechos": [
+    "legado-h13"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "foto",
+   "pantalla": "¿Aprendió el país? A medias. Quedaron la Conred, una red de 85 estaciones y una alerta de sismos en el teléfono, pero normas sin una ley que obligue a cumplirlas.",
+   "voz": "¿Aprendió el país? A medias. Quedaron la Conred, una red de ochenta y cinco estaciones y una alerta de sismos en el teléfono, pero normas sin una ley que obligue a cumplirlas.",
+   "dur": 11.61,
+   "hechos": [
+    "legado-h07",
+    "legado-h06"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "explica",
+   "pantalla": "Todo empezó en 1976, cuando se rompió la falla del Motagua. Una de sus víctimas fue Telma, una niña de 14 años de la zona 6: murió bajo su casa por salvar a un niño. Un balance estimó unos 23,000 muertos; centenares, en fosas comunes. Quedaron 258,000 viviendas destruidas. Y el terremoto mató a tantos por las paredes: las de adobe, la casa del pobre, cayeron primero.",
+   "voz": "Todo empezó en mil novecientos setenta y seis, cuando se rompió la falla del Motagua. Una de sus víctimas fue Telma, una niña de catorce años de la zona seis: murió bajo su casa por salvar a un niño. Un balance estimó unos veintitrés mil muertos; centenares, en fosas comunes. Quedaron doscientas cincuenta y ocho mil viviendas destruidas. Y el terremoto mató a tantos por las paredes: las de adobe, la casa del pobre, cayeron primero.",
+   "dur": 30.402,
+   "hechos": [
+    "noche-h01",
+    "noche-h12",
+    "noche-h19",
+    "voces-h14",
+    "legado-h03",
+    "legado-h04"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": "cronologia",
+   "mecanismo": "cronologia"
+  },
+  {
+   "n": 10,
+   "tipo": "cierre",
+   "pantalla": "Por eso, medio siglo después, la falla ya no solo se recuerda: se vigila. Hoy, 700,000 personas llevan en el teléfono la alerta de sismos.",
+   "voz": "Por eso, medio siglo después, la falla ya no solo se recuerda: se vigila. Hoy, setecientas mil personas llevan en el teléfono la alerta de sismos.",
+   "dur": 12.43,
+   "hechos": [],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Lo que dejó",
+  "resumen": [
+   "Una Conred y normas sin ley",
+   "Una red que escucha la falla",
+   "Un ciclo que ya va en 50 años"
+  ],
+  "texto": "Por eso, medio siglo después, la falla ya no solo se recuerda: se vigila. Hoy, 700,000 personas llevan en el teléfono la alerta de sismos.",
+  "tipo": "remate",
+  "forma": "legado",
+  "final": "Hoy, 700,000 personas llevan en el teléfono la alerta de sismos.",
+  "consecuencia": {
+   "quien": "personas",
+   "verbo": "llevan"
+  }
+ },
+ "caption": {
+  "tiktok": "Serie · Parte 4 de 4: Lo que dejó la falla\nMedio siglo después del terremoto de 1976, la falla del Motagua sigue activa. Qué cambió en Guatemala: la Conred, las normas sin una ley que obligue y la red que escucha la falla.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\n#Guatemala #terremoto1976 #historia",
+  "instagram": "Serie · Parte 4 de 4: Lo que dejó la falla\nA 50 años del terremoto de 1976: la Conred, las normas de construcción sin ley que obligue, la falla del Motagua que sigue activa y la memoria que pide prevenir.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\n#Guatemala #terremoto1976 #historia #Conred",
+  "facebook": "Serie · Parte 4 de 4: Lo que dejó la falla\nEl terremoto de 1976 dejó una institución para los desastres, normas para construir y una falla que sigue activa. Qué aprendió Guatemala en medio siglo.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\nFuentes en el primer comentario.",
+  "shorts": "El terremoto de 1976 en Guatemala: lo que dejó la falla (4/4) #Shorts"
+ }
+}

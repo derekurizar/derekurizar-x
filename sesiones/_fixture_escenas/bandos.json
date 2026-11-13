@@ -1,0 +1,98 @@
+{
+ "_comentario": "Caso de la escena bandos para scripts/escena_prueba.py: la votación final de la Ley de Ciberseguridad (iniciativa 6347; registro nominal del Congreso, video del 2026-11-04) con los retratos oficiales de cuatro diputados.",
+ "paleta": "jacaranda",
+ "encuadre": {
+  "personajes": [
+   {
+    "nombre": "Luis Contreras",
+    "presentacion": "presidente del Congreso"
+   },
+   {
+    "nombre": "Mirna Godoy",
+    "presentacion": "diputada de Semilla"
+   },
+   {
+    "nombre": "Allan Rodríguez",
+    "presentacion": "diputado de Vamos"
+   },
+   {
+    "nombre": "Guillermo Cifuentes",
+    "presentacion": "diputado de Vamos"
+   }
+  ]
+ },
+ "fotos": {
+  "dip-39": {
+   "archivo": "fotos/dip-39.jpg",
+   "credito": "Foto: Congreso de la República",
+   "retrato_de": "Luis Contreras",
+   "focos": []
+  },
+  "dip-909": {
+   "archivo": "fotos/dip-909.jpg",
+   "credito": "Foto: Congreso de la República",
+   "retrato_de": "Mirna Godoy",
+   "focos": []
+  },
+  "dip-770": {
+   "archivo": "fotos/dip-770.jpg",
+   "credito": "Foto: Congreso de la República",
+   "retrato_de": "Allan Rodríguez",
+   "focos": []
+  },
+  "dip-776": {
+   "archivo": "fotos/dip-776.jpg",
+   "credito": "Foto: Congreso de la República",
+   "retrato_de": "Guillermo Cifuentes",
+   "focos": []
+  }
+ },
+ "casos": {
+  "voto": {
+   "tipo": "bandos",
+   "acto": 2,
+   "titulo": "Cuatro caras, dos lados",
+   "fuente": "Registro nominal del Congreso",
+   "lados": [
+    {
+     "nombre": "A favor",
+     "cifra": "121"
+    },
+    {
+     "nombre": "En contra",
+     "cifra": "10"
+    }
+   ],
+   "texto": "A favor votaron ciento veintiún diputados, entre ellos Luis Contreras, el presidente del Congreso, y Mirna Godoy. En contra, diez: Allan Rodríguez y Guillermo Cifuentes, los dos de Vamos. Y bastaban ochenta y un votos.",
+   "personas": [
+    {
+     "personaje": "Luis Contreras",
+     "lado": 0,
+     "dice": "Luis Contreras"
+    },
+    {
+     "personaje": "Mirna Godoy",
+     "lado": 0,
+     "dice": "Mirna Godoy"
+    },
+    {
+     "personaje": "Allan Rodríguez",
+     "lado": 1,
+     "dice": "Allan Rodríguez"
+    },
+    {
+     "personaje": "Guillermo Cifuentes",
+     "lado": 1,
+     "dice": "Guillermo Cifuentes"
+    }
+   ],
+   "umbral": {
+    "dice": "bastaban",
+    "texto": "Bastaban 81 de 160",
+    "marca": 81,
+    "lleno": 121,
+    "total": 160
+   }
+  }
+ }
+}

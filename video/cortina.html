@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<!-- Escena «cortina» de /historia (?n=N): ANTES Y AHORA con dos fotos reales del mismo lugar o de la misma cosa (S.CO
+     de scripts/historia.py t_cortina; gate H31). La foto de antes llena el marco (el de su propia proporción, encajado
+     en la caja) con su etiqueta («1976»); cuando la voz dice el `dice`, una cortina cruza de izquierda a derecha y
+     descubre la de ahora (recortada al mismo marco) con la suya («2021»); la línea de la cortina se va al terminar.
+     Un solo movimiento (≤ 1.4 s) y todo queda quieto (A1). Las fotos van marcadas data-fuera-de-zona; el título, las
+     etiquetas y el pie (créditos y fuente) quedan en la zona segura (V13). Solo variables del sistema Noche (sin hex). -->
+<link rel="stylesheet" href="comun.css">
+<style>
+#titulo { position: absolute; top: 290px; left: var(--izq); right: var(--der); font: 800 58px/1.04 Archivo, sans-serif; letter-spacing: -.015em; white-space: nowrap; }
+#caja, #marcas { position: absolute; top: 384px; left: 0; width: 1080px; height: 916px; }
+#marco { position: absolute; overflow: hidden; }
+#marco img { position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+#encima { position: absolute; left: 0; top: 0; height: 100%; width: 0; overflow: hidden; }
+#encima img { width: auto; max-width: none; }
+#linea { position: absolute; top: 0; width: 6px; margin-left: -3px; height: 100%; background: var(--ink); opacity: 0; }
+#marcas { pointer-events: none; }
+.et { position: absolute; padding: 9px 14px 7px; border-radius: 8px; background: var(--bg); border: 2.5px solid color-mix(in srgb, var(--ink) 50%, transparent);
+  font: 900 44px/1 Archivo, sans-serif; font-stretch: 62.5%; text-transform: uppercase; white-space: nowrap; opacity: 0; }
+#pie { position: absolute; left: var(--izq); right: var(--der); top: 1312px; font: 600 19px/1.25 'JetBrains Mono', monospace; letter-spacing: .04em; opacity: .7; }
+html.f45 #titulo { top: 150px; font-size: 48px; }
+html.f45 #caja, html.f45 #marcas { top: 222px; height: 800px; }
+html.f45 .et { font-size: 38px; }
+html.f45 #pie { top: 1032px; }
+</style>
+</head>
+<body>
+<div id="arriba"><div id="progreso"></div></div>
+<div id="titulo"></div>
+<div id="caja" data-fuera-de-zona><div id="marco"><img id="antes" alt=""><div id="encima"><img id="ahora" alt=""></div><div id="linea"></div></div></div>
+<div id="marcas"><div class="et" id="et-antes"></div><div class="et" id="et-ahora"></div></div>
+<div id="pie"></div>
+<div id="subs"></div>
+<script src="comun.js"></script>
+<script>
+const n = V.n, { clamp, eo } = V, CORTINA_S = 1.4;
+let S, C, TROZOS, M = { x: 0, y: 0, w: 0, h: 0 };
+
+window.__listo = (async () => {
+  const X = await V.cargar(); S = X.S; TROZOS = X.trozos; C = S.CO;
+  V.pintarProgreso(X.todo);
+  document.getElementById('titulo').textContent = C.titulo || '';
+  document.getElementById('pie').textContent = C.pie || '';
+  const caja = document.getElementById('caja'), W = caja.clientWidth, HB = caja.clientHeight, Z = V.zona();
+  const antes = document.getElementById('antes'), ahora = document.getElementById('ahora');
+  antes.src = C.antes; ahora.src = C.ahora;
+  await Promise.all([antes, ahora].map((i) => i.decode().catch(() => { throw new Error('no carga ' + i.src); })));
+  // el marco: la proporción de la foto de antes, encajado en la caja y centrado; la de ahora se recorta a él
+  const k = Math.min(W / antes.naturalWidth, HB / antes.naturalHeight);
+  M = { w: antes.naturalWidth * k, h: antes.naturalHeight * k };
+  M.x = (W - M.w) / 2; M.y = (HB - M.h) / 2;
+  const marco = document.getElementById('marco');
+  Object.assign(marco.style, { left: M.x + 'px', top: M.y + 'px', width: M.w + 'px', height: M.h + 'px' });
+  Object.assign(ahora.style, { width: M.w + 'px', height: M.h + 'px' });
+  // etiquetas: la de antes arriba a la derecha del marco, la de ahora arriba a la izquierda (lo que la cortina descubre
+  // primero), las dos dentro de la columna segura
+  const ea = document.getElementById('et-antes'), eh = document.getElementById('et-ahora');
+  ea.textContent = C.etiquetas[0]; eh.textContent = C.etiquetas[1];
+  await Promise.all(['extra-condensed 900 44px Archivo', '800 58px Archivo'].map((f) => document.fonts.load(f)));
+  await document.fonts.ready;
+  const top = M.y + 18;
+  eh.style.left = Math.max(M.x + 18, Z.izq) + 'px'; eh.style.top = top + 'px';
+  ea.style.left = (Math.min(M.x + M.w - 18, Z.der) - ea.offsetWidth) + 'px'; ea.style.top = top + 'px';
+  const tit = document.getElementById('titulo');
+  for (let fs = parseFloat(getComputedStyle(tit).fontSize); fs > 34 && tit.scrollWidth > tit.clientWidth; fs -= 2) tit.style.fontSize = fs + 'px';
+  await V.pintarActo(S);
+})();
+
+window.seek = (t0) => {
+  const t = V.portada ? S.dur : t0, ini = S.T.ini || 0.3;
+  V.seekProgreso(t0, n, S.dur);
+  V.seekActo(t0, S);
+  const ti = eo((t - ini + 0.2) / 0.4), tit = document.getElementById('titulo');
+  tit.style.opacity = ti.toFixed(3); tit.style.transform = `translateY(${((1 - ti) * 24).toFixed(1)}px)`;
+  const p = eo((t - C.t) / CORTINA_S), x = M.w * p;
+  document.getElementById('encima').style.width = x.toFixed(1) + 'px';
+  const linea = document.getElementById('linea');
+  linea.style.left = x.toFixed(1) + 'px';
+  linea.style.opacity = (t >= C.t ? 1 - eo((t - C.t - CORTINA_S) / 0.3) : 0).toFixed(3);
+  // la etiqueta de antes, desde el principio; se apaga cuando la cortina la alcanza. La de ahora entra con la cortina
+  document.getElementById('et-antes').style.opacity = (eo((t - ini) / 0.35) * (1 - eo((t - C.t - CORTINA_S * 0.7) / 0.3))).toFixed(3);
+  document.getElementById('et-ahora').style.opacity = eo((t - C.t - 0.25) / 0.35).toFixed(3);
+  V.subtitulos(t0, S, TROZOS);
+};
+</script>
+</body></html>

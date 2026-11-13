@@ -64,3 +64,14 @@ documentar, para que el guionista no lo cuente).
 ## Relaciones y retratos (2026-11-06)
 - **Relaciones.** En un hecho que dice cómo se conectan dos personajes («Monzón operaba la red bajo las órdenes de…», «el MP acusó a…»), anota `relaciones: [{de, a, rel}]`. `de` y `a` llevan el nombre del personaje y `rel` es un verbo de ≤ 3 palabras («dirigía», «cobraba para», «acusó»). Solo lo que dice la cita guardada.
 - **Retratos.** Anota también una foto candidata (og:image o Commons) para cada persona que aparece en tu eje.
+
+
+## Archivos para las escenas de archivo (2026-11-12)
+
+Si el encuadre o tu eje tienen alguno de estos, anótalo en tus hallazgos (el verificador lo baja y el guionista lo usa):
+
+- **Fuente en PDF con la frase clave** (decreto, informe, sentencia): léela con `historia.py leer` (queda guardada) y deja
+  la cita literal del trozo que importa: de ahí sale la escena `pagina`, con la frase subrayada en la página real.
+- **Par antes/ahora**: dos fotos candidatas del mismo lugar o de la misma cosa, con su año.
+- **Series cortas**: los valores completos de una cifra en varios años (no solo el último), cada uno con su cita.
+- **Lugares y recorridos**: por qué departamentos o por qué calzadas pasa lo que cuentas, cada tramo con su hecho.

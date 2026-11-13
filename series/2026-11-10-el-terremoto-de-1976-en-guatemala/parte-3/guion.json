@@ -1,0 +1,297 @@
+{
+ "id": "2026-11-10-el-terremoto-de-1976-en-guatemala-parte-3",
+ "tipo": "historia",
+ "slug": "el-terremoto-de-1976-en-guatemala-parte-3",
+ "tema": "El terremoto de 1976 en Guatemala",
+ "fecha": "2026-11-10",
+ "pregunta": "¿Quién iba a levantar un país sin casa, y a quién le cayó el terremoto?",
+ "arco": "tragedia con misterio: la noche, la cuenta que no dejaba de crecer, quién quedó bajo el adobe y qué se levantó encima; contada como cronología, hora a hora y luego año a año",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "1976",
+   "titulo": "Bajo el adobe",
+   "escena": 4
+  },
+  {
+   "numero": 3,
+   "anio": "Mayo 1976",
+   "titulo": "Una ciudad nueva",
+   "escena": 7
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "Laugerud dio un lema: reconstruir sin dejar de producir. Guatemala salía del terremoto. Levantar el país iba a tomar más que un lema. Iba a tomar años. Entonces, en marzo de 1976, el presidente Laugerud creó el Comité de Reconstrucción Nacional. Y advirtió: El funcionario o empleado que se sienta desmayar en esta ardua tarea de la reconstrucción que pida su relevo. Desde entonces, toda la ayuda de fuera pasaba por el Comité."
+  },
+  {
+   "acto": 2,
+   "texto": "Pero la tarea era enorme: 258,000 viviendas destruidas y 1,200,000 personas sin hogar. Y no cayeron al azar: en las zonas 2, 3 y 6 de la capital, el 90 % era de adobe. Ese adobe escondía algo que nadie decía en voz alta. Era la casa del pobre, y por eso le cayó encima: el diario Prensa Libre dice que los barrios de ladera fueron los más golpeados."
+  },
+  {
+   "acto": 3,
+   "texto": "El adobe también cayó en el campo, entonces muchos se fueron: en mayo, el gobierno contó unas 50,000 personas llegadas a la capital. Y el urbanista Alfonso Yurrita calculó más de 20,000 familias en barrancos y baldíos. ¿Y la ayuda que pasaba por el Comité? Factor Méndez Doninelli, exjefe de personal municipal, dijo que hubo denuncias de corrupción contra funcionarios y que fue escasa y desigual. La Universidad de San Carlos calculó que reconstruir tomó más de 10 años, y que el dinero no alcanzó. Pero los barrancos de la capital se quedaron con la gente. ¿Qué quedó de aquel terremoto en la Guatemala de hoy?"
+  }
+ ],
+ "hilos": [
+  {
+   "id": "p3h1",
+   "escena": 6
+  },
+  {
+   "id": "p3h2",
+   "escena": 8
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3
+  ],
+  [
+   4,
+   5
+  ],
+  [
+   7,
+   8,
+   9
+  ]
+ ],
+ "paleta": "obsidiana",
+ "musica": "obsidiana-2",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 1572.84,
+ "duracion_s": 109.4,
+ "critica": {
+  "veredicto": "pasa",
+  "vuelta": 1,
+  "puntajes": {
+   "gancho": 3,
+   "tension": 3,
+   "claridad": 3,
+   "flujo": 3,
+   "precision": 4,
+   "cierre": 3,
+   "recompensa": 3
+  }
+ },
+ "gancho": {
+  "familia": "personaje",
+  "visual": "foto",
+  "pantalla": "El lema de Laugerud",
+  "linea": "Reconstruir sin dejar de producir"
+ },
+ "promesa": {
+  "texto": "Levantar el país iba a tomar más que un lema.",
+  "pregunta": "¿Cuánto tardó Guatemala en levantarse del terremoto?",
+  "forma": "reloj",
+  "en": 2,
+  "pago": 9,
+  "revela": 2
+ },
+ "bisagra": {
+  "texto": "Ese adobe escondía algo que nadie decía en voz alta.",
+  "forma": "secreto",
+  "en": 5,
+  "pago": 6
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "Laugerud dio un lema: reconstruir sin dejar de producir. Guatemala salía del terremoto.",
+   "voz": "Laugerud dio un lema: reconstruir sin dejar de producir. Guatemala salía del terremoto.",
+   "dur": 7.259,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Photographer not identified · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "Levantar el país iba a tomar más que un lema. Iba a tomar años. Entonces, en marzo de 1976, el presidente Laugerud creó el Comité de Reconstrucción Nacional.",
+   "voz": "Levantar el país iba a tomar más que un lema. Iba a tomar años. Entonces, en marzo de mil novecientos setenta y seis, el presidente Laugerud creó el Comité de Reconstrucción Nacional.",
+   "dur": 12.243,
+   "hechos": [
+    "dias-h16",
+    "legado-h02"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Jemm5150 · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "cita",
+   "pantalla": "Y advirtió: El funcionario o empleado que se sienta desmayar en esta ardua tarea de la reconstrucción que pida su relevo. Desde entonces, toda la ayuda de fuera pasaba por el Comité.",
+   "voz": "Y advirtió: El funcionario o empleado que se sienta desmayar en esta ardua tarea de la reconstrucción que pida su relevo. Desde entonces, toda la ayuda de fuera pasaba por el Comité.",
+   "dur": 12.627,
+   "hechos": [
+    "recon-h01",
+    "recon-h05"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Gobierno de Guatemala · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "tarjeta",
+   "pantalla": "Pero la tarea era enorme: 258,000 viviendas destruidas y 1,200,000 personas sin hogar.",
+   "voz": "Pero la tarea era enorme: doscientas cincuenta y ocho mil viviendas destruidas y un millón doscientas mil personas sin hogar.",
+   "dur": 8.696,
+   "hechos": [
+    "legado-h03"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "foto",
+   "pantalla": "Y no cayeron al azar: en las zonas 2, 3 y 6 de la capital, el 90 % era de adobe. Ese adobe escondía algo que nadie decía en voz alta.",
+   "voz": "Y no cayeron al azar: en las zonas dos, tres y seis de la capital, el noventa por ciento era de adobe. Ese adobe escondía algo que nadie decía en voz alta.",
+   "dur": 12.425,
+   "hechos": [
+    "noche-h07"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "golpe",
+   "pantalla": "Era la casa del pobre, y por eso le cayó encima: el diario Prensa Libre dice que los barrios de ladera fueron los más golpeados.",
+   "voz": "Era la casa del pobre, y por eso le cayó encima: el diario Prensa Libre dice que los barrios de ladera fueron los más golpeados.",
+   "dur": 9.153,
+   "hechos": [
+    "dias-h25"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "tarjeta",
+   "pantalla": "El adobe también cayó en el campo, entonces muchos se fueron: en mayo, el gobierno contó unas 50,000 personas llegadas a la capital. Y el urbanista Alfonso Yurrita calculó más de 20,000 familias en barrancos y baldíos.",
+   "voz": "El adobe también cayó en el campo, entonces muchos se fueron: en mayo, el gobierno contó unas cincuenta mil personas llegadas a la capital. Y el urbanista Alfonso Yurrita calculó más de veinte mil familias en barrancos y baldíos.",
+   "dur": 15.578,
+   "hechos": [
+    "recon-h08",
+    "recon-h11"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "foto",
+   "pantalla": "¿Y la ayuda que pasaba por el Comité? Factor Méndez Doninelli, exjefe de personal municipal, dijo que hubo denuncias de corrupción contra funcionarios y que fue escasa y desigual.",
+   "voz": "¿Y la ayuda que pasaba por el Comité? Factor Méndez Doninelli, exjefe de personal municipal, dijo que hubo denuncias de corrupción contra funcionarios y que fue escasa y desigual.",
+   "dur": 11.844,
+   "hechos": [
+    "noche-h20"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "golpe",
+   "pantalla": "La Universidad de San Carlos calculó que reconstruir tomó más de 10 años, y que el dinero no alcanzó.",
+   "voz": "La Universidad de San Carlos calculó que reconstruir tomó más de diez años, y que el dinero no alcanzó.",
+   "dur": 7.271,
+   "hechos": [
+    "recon-h13"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "cierre",
+   "pantalla": "Pero los barrancos de la capital se quedaron con la gente. ¿Qué quedó de aquel terremoto en la Guatemala de hoy? Sígueme: en la cuarta parte te cuento qué le dejó el terremoto a la Guatemala de hoy.",
+   "voz": "Pero los barrancos de la capital se quedaron con la gente. ¿Qué quedó de aquel terremoto en la Guatemala de hoy? Sígueme: en la cuarta parte te cuento qué le dejó el terremoto a la Guatemala de hoy.",
+   "dur": 14.593,
+   "hechos": [],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Lo que dejó",
+  "resumen": [
+   "258,000 viviendas en el suelo",
+   "El adobe de los pobres",
+   "Más de 10 años para reconstruir"
+  ],
+  "texto": "Pero los barrancos de la capital se quedaron con la gente. ¿Qué quedó de aquel terremoto en la Guatemala de hoy?",
+  "tipo": "pregunta",
+  "forma": "puente",
+  "final": "¿Qué quedó de aquel terremoto en la Guatemala de hoy?",
+  "invitacion": "Sígueme: en la cuarta parte te cuento qué le dejó el terremoto a la Guatemala de hoy."
+ },
+ "caption": {
+  "tiktok": "Serie · Parte 3 de 4: La casa del pobre\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\nDespués del terremoto de 1976, Guatemala se puso a reconstruir. Pero el adobe que cayó era el de los pobres. #Guatemala #Terremoto1976 #Historia",
+  "instagram": "Serie · Parte 3 de 4: La casa del pobre\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\n1976: el Comité de Reconstrucción, las 258,000 viviendas destruidas, los barrancos que se llenaron y las denuncias sobre cómo se repartió la ayuda. #Guatemala #Terremoto1976",
+  "facebook": "Serie · Parte 3 de 4: La casa del pobre\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\nA quién le cayó la casa en el terremoto de 1976: quién perdió el techo, adónde fue la ayuda y cuánto tardó la reconstrucción. Fuentes en el primer comentario.",
+  "shorts": "Terremoto de 1976: La casa del pobre (3/4) #Shorts\nLa reconstrucción de Guatemala y a quién le cayó el adobe."
+ }
+}

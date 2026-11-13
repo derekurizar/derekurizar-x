@@ -117,13 +117,16 @@ Quien llega al segundo 10 tiene que saber **qué va a saber** si se queda. La vo
 
 - `promesa.pregunta`: «¿…?», ≤ 9 palabras, con el sujeto del gancho, sin anunciar el video. Ejemplo: «¿Cómo quebró un
   banco con un millón de cuentas?». No es la promesa dicha de otro modo: es lo que el espectador podrá contestar al final.
-- **No queda fija.** Entra cuando la voz dice la promesa (≈ 4 s), vuelve en la bisagra (≈ 2.6 s) y en la escena que la
-  paga, ahí con su check (`video/comun.js`: `V.pregunta`; `video.py marcar_pregunta`). Va en la pila de chips de arriba a
-  la derecha.
+- **Solo en el pago.** Aparece en la escena que la paga, con su check, cuando el dato ya se ve (≈ 3.6 s;
+  `video/comun.js`: `V.pregunta`; `video.py marcar_pregunta`). Va en la pila de chips de arriba a la derecha y, si choca
+  con un texto visible (el chip y el lugar de la foto, el mini-mapa, el «Sígueme»), baja hasta quedar debajo. Antes salía
+  también con la promesa y en la bisagra: sin el dato en pantalla no apuntaba a nada (usuario, 2026-11-10: «solo tiene
+  sentido cuando ya muestran el dato»).
 - La promesa se oye **antes del segundo 10**: si va en la escena 2, es su primera oración; el contexto viene después.
-- En `/serie`, además, la pregunta de la **serie entera** (`serie.promesa`, SE1): la parte 1 la dice, desde la parte 2
-  aparece en el gancho bajo «Parte N de M», y la última la responde (`guion.responde_serie`, SE18).
-- En `/youtube-long`, `montaje.promesa.pregunta` (YT8): sale con la promesa global, antes del segundo 15, y en su pago.
+- En `/serie`, además, la pregunta de la **serie entera** (`serie.promesa`, SE1): la parte 1 la dice en la voz y la
+  última la responde (`guion.responde_serie`, SE18); en pantalla sale solo ahí, con su check.
+- En `/youtube-long`, `montaje.promesa.pregunta` (YT8): la promesa global se oye antes del segundo 15; la pregunta sale en
+  pantalla solo en su pago.
 
 Vale para `/historia`, `/serie` y `/explica` (el modo mito tiene su veredicto). Los trabajos empezados antes del
 2026-11-10 solo reciben aviso.

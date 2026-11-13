@@ -140,6 +140,103 @@
           ]
         }
       ]
+    },
+    {
+      "id": "2026-11-11",
+      "fecha": "2026-11-11",
+      "ruta": "noticias/2026-11-11",
+      "paleta": "maiz",
+      "musica": "maiz-2",
+      "duracion_s": 58.0,
+      "creditos_voz": 815.92,
+      "estado": "listo",
+      "noticias": [
+        {
+          "id": "pol-2",
+          "seccion": "Educación",
+          "titular": "Fondo Nacional de Becas pasa sin dictamen",
+          "urls": [
+            "https://www.prensalibre.com/ahora/guatemala/politica/congreso-prolonga-sesion-por-mas-de-ocho-horas-y-continua-lectura-de-la-ley-del-fondo-nacional-de-becas/",
+            "https://lahora.gt/nacionales/dleon/2026/11/10/congreso-da-luz-verde-de-urgencia-nacional-a-la-ley-del-fondo-nacional-de-becas-now/"
+          ],
+          "cifras": [
+            {
+              "id": "pol-2-c1",
+              "valor": 138,
+              "unidad": "votos",
+              "texto": "138 votos",
+              "cita": "los diputados del Congreso de la República aprobaron con 138 votos la Ley del Fondo Nacional de Becas (Fonabe)",
+              "url": "https://lahora.gt/nacionales/dleon/2026/11/10/congreso-da-luz-verde-de-urgencia-nacional-a-la-ley-del-fondo-nacional-de-becas-now/"
+            },
+            {
+              "id": "pol-2-c2",
+              "valor": 8,
+              "unidad": "horas",
+              "texto": "más de 8 horas",
+              "cita": "El Congreso de la República de Guatemala acumula más de ocho horas de sesión plenaria ininterrumpida este martes 10 de noviembre.",
+              "url": "https://www.prensalibre.com/ahora/guatemala/politica/congreso-prolonga-sesion-por-mas-de-ocho-horas-y-continua-lectura-de-la-ley-del-fondo-nacional-de-becas/"
+            }
+          ]
+        },
+        {
+          "id": "seg-1",
+          "seccion": "Seguridad",
+          "titular": "Operativos dejan más de 25 capturados",
+          "urls": [
+            "https://www.infobae.com/guatemala/2026/11/11/operativos-de-la-policia-nacional-civil-y-el-ministerio-publico-contra-estructuras-criminales-en-guatemala-deja-mas-de-25-capturados/"
+          ],
+          "cifras": [
+            {
+              "id": "seg-1-c1",
+              "valor": 25,
+              "unidad": "personas",
+              "texto": "más de 25 capturados",
+              "cita": "capturaron a más de 25 personas y notificaron nuevos procesos penales a 11 reclusos",
+              "url": "https://www.infobae.com/guatemala/2026/11/11/operativos-de-la-policia-nacional-civil-y-el-ministerio-publico-contra-estructuras-criminales-en-guatemala-deja-mas-de-25-capturados/"
+            }
+          ]
+        },
+        {
+          "id": "pol-3",
+          "seccion": "Política",
+          "titular": "Ley de Ciberseguridad sigue hacia el Ejecutivo",
+          "urls": [
+            "https://www.prensalibre.com/ahora/guatemala/politica/congreso-rechaza-10-objeciones-a-la-ley-de-ciberseguridad-y-permite-que-avance-su-tramite/",
+            "https://www.soy502.com/articulo/congreso-rechaza-objeciones-ley-ciberseguridad-101962",
+            "https://lahora.gt/nacionales/kmonzon/2026/11/10/congreso-rechaza-10-objeciones-para-que-avance-la-ley-de-ciberseguridad-al-ejecutivo-now/"
+          ],
+          "cifras": [
+            {
+              "id": "pol-3-c1",
+              "valor": 10,
+              "unidad": "objeciones",
+              "texto": "10 objeciones",
+              "cita": "rechazó este martes 10 de noviembre las 10 objeciones presentadas contra el Decreto 26-2026",
+              "url": "https://www.prensalibre.com/ahora/guatemala/politica/congreso-rechaza-10-objeciones-a-la-ley-de-ciberseguridad-y-permite-que-avance-su-tramite/"
+            }
+          ]
+        },
+        {
+          "id": "pol-1",
+          "seccion": "Cultura",
+          "titular": "Congreso aprueba la Ley de Cine",
+          "urls": [
+            "https://www.prensalibre.com/ahora/guatemala/politica/congreso-aprueba-la-ley-de-cine-con-132-votos-y-la-convierte-en-el-decreto-27-2026/",
+            "https://tvaztecaguate.com/nacionales/2026/11/10/congreso-aprueba-de-urgencia-nacional-la-ley-de-cine-estas-son-las-disposiciones-que-contempla/",
+            "https://www.soy502.com/articulo/diputados-buscan-aprobar-urgencia-nacional-ley-cine-101962"
+          ],
+          "cifras": [
+            {
+              "id": "pol-1-c1",
+              "valor": 132,
+              "unidad": "votos a favor",
+              "texto": "132 votos",
+              "cita": "Con 132 votos a favor y en único debate, los diputados del Congreso de la República aprobaron la iniciativa 5906",
+              "url": "https://tvaztecaguate.com/nacionales/2026/11/10/congreso-aprueba-de-urgencia-nacional-la-ley-de-cine-estas-son-las-disposiciones-que-contempla/"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
