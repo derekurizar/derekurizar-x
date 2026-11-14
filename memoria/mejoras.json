@@ -1937,6 +1937,105 @@
       "problema": "El paso Plano de Bancafé (5 capítulos + cierre) gastó 1.14 millones de tokens en 13 minutos.",
       "propuesta": "Probar el realizador en sonnet con el digesto ya enriquecido, o que el borrador traiga los recortes y documentos de cada hecho para que el agente solo elija.",
       "estado": "pendiente"
+    },
+    {
+      "id": "m177",
+      "fecha": "2026-11-14",
+      "flujo": "historia",
+      "pieza": "sesiones/piloto-mesa-la-linea-p3",
+      "area": "render",
+      "archivo": "scripts/video_hf.py (cmd_tableros) · scripts/video_grabar.js (formato tablero)",
+      "problema": "Los tableros del vertical se grababan por el escenario 16:9 y se recortaban al centro: la tarjeta con gráfico (que en 16:9 tiene diseño ancho propio) salía cortada.",
+      "propuesta": "Grabar los tableros del vertical en la página 4:5 limpia (&limpio=1: sin subtítulos ni barra) y recortar la columna segura.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m178",
+      "fecha": "2026-11-14",
+      "flujo": "historia",
+      "pieza": "sesiones/piloto-mesa-la-linea-p3",
+      "area": "motor",
+      "archivo": "scripts/video_hf.py (titulos_de, resolver_v)",
+      "problema": "Una mesa sin golpe de arriba propio dejaba en pantalla el de la mesa anterior, pero se colocaba como si no hubiera título: sus piezas lo pisaban.",
+      "propuesta": "La mesa hereda el golpe de arriba anterior y empieza debajo de él.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m179",
+      "fecha": "2026-11-14",
+      "flujo": "historia",
+      "pieza": "sesiones/piloto-mesa-la-linea-p3",
+      "area": "motor",
+      "archivo": "scripts/video_hf.py (dibujar: documento con pagina)",
+      "problema": "La página de un documento queda con letra de ≈ 24 px en el cuadro vertical: se entiende por el subrayado y los subtítulos, pero no se lee sola.",
+      "propuesta": "Una variante de la pieza que muestre la frase compuesta en grande (con el marcador) junto a una miniatura de la página real, y elegir entre las dos según el largo de la frase.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m180",
+      "fecha": "2026-11-14",
+      "flujo": "historia",
+      "pieza": "sesiones/piloto-mesa-la-linea-p3",
+      "area": "motor",
+      "archivo": "scripts/video_hf.py (mesa_html_v: tablero)",
+      "problema": "Un tablero de tarjeta con gráfico corto deja la mitad de su marco vacía (la tarjeta 4:5 solo ocupa la parte de arriba).",
+      "propuesta": "Medir el contenido del clip al grabarlo (o declarar su alto en la plantilla) y recortar el marco a ese alto; con el sitio que sobre, permitir 1–2 piezas debajo.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m181",
+      "fecha": "2026-11-14",
+      "flujo": "historia",
+      "pieza": "sesiones/piloto-mesa-la-linea-p3",
+      "area": "gates",
+      "archivo": "scripts/historia.py (H23) · scripts/video_hf.py (dibujar_red, MV4)",
+      "problema": "H23 admite una red de 3–8 nodos sin tope por nivel; la jerarquía de la mesa dibuja ≤ 3 niveles, ≤ 2 por nivel y ≤ 2 acusadores. Una red más grande pasa el guion y falla después en el plano.",
+      "propuesta": "Que H23 avise ya en el guion cuando el TRABAJO va en mesa y la red pasa esos topes (partirla en dos escenas), o que la pieza `red` se parta sola en dos mesas.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m182",
+      "fecha": "2026-11-14",
+      "flujo": "historia",
+      "pieza": "sesiones/piloto-mesa-la-linea-p3",
+      "area": "motor",
+      "archivo": "scripts/video_hf.py",
+      "problema": "Faltan en la mesa vertical: MV13 (un solo acento a la vez), la pregunta P6 en el pago, la versión B del gancho y las piezas `paso` (cronología), `barra`, `brecha`, `hoja` (pizarra de cuenta), `tabla` y `diagrama`.",
+      "propuesta": "Construirlas antes de migrar /sabias y /explica (hoja, barra, chip «Ejemplo») y /video y /departamento (barra, serie, brecha, tabla); cada flujo con su piloto.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m183",
+      "fecha": "2026-11-14",
+      "flujo": "historia",
+      "pieza": "sesiones/piloto-mesa-la-linea-p3",
+      "area": "orquestacion",
+      "archivo": ".claude/workflows/historia.js · referencias/roles/{historia-oyente,video-critico}.md",
+      "problema": "El oyente y el crítico juzgan el guion antes de la voz con la «pantalla» de las escenas, que ya no es el dibujo final; nadie juzga el plano con ojos frescos.",
+      "propuesta": "Una pasada del crítico sobre plano.md dentro del Workflow `plano` (¿la pieza es lo que la voz nombra?, ¿archivo real o relleno?, ¿alegatos atribuidos?), antes de devolver plano_listo.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m184",
+      "fecha": "2026-11-14",
+      "flujo": "historia",
+      "pieza": "sesiones/piloto-mesa-la-linea-p3",
+      "area": "gates",
+      "archivo": "scripts/serie.py (SE19)",
+      "problema": "SE19 (una foto en ≤ 2 partes de la serie) cuenta solo las fotos del guion; las que añade el plano de cada parte no se cuentan entre partes.",
+      "propuesta": "Que SE19 lea también los plano.json de las partes ya producidas.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m185",
+      "fecha": "2026-11-14",
+      "flujo": "historia",
+      "pieza": "sesiones/piloto-mesa-la-linea-p3",
+      "area": "congreso",
+      "archivo": "scripts/congreso.py (hemiciclo, portal, CG10) · scripts/mesa.py (notas_leidas)",
+      "problema": "/congreso no puede pasar a la mesa tal cual: su gancho con mini-hemiciclo y portal no existe en la mesa, sus notas viven en sesiones/_descargas/congreso (la mesa solo lee _descargas/historia) y no tiene elenco para los retratos de los diputados.",
+      "propuesta": "Decidir con el usuario si el gancho pasa a ser una mesa (foto del pleno + cifra) con el hemiciclo como tablero, y entonces enseñar a la mesa las notas y los retratos del Congreso.",
+      "estado": "pendiente"
     }
   ]
 }
