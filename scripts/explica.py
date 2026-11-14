@@ -1286,7 +1286,7 @@ def cmd_probar(a):
         print("FALLA --cambios ilegible: %s" % ex)
         return 2
     tmp = os.path.join(RAIZ, "sesiones", "_probar-%s-%d" % (os.path.basename(trabajo), os.getpid()))
-    shutil.copytree(trabajo, tmp, ignore=shutil.ignore_patterns("audio", "salida", "revision", "clips*", "segs*"))
+    shutil.copytree(trabajo, tmp, ignore=shutil.ignore_patterns("audio", "salida", "revision", "clips*", "segs*", "hf", "tablero"))
     try:
         g = leer(os.path.join(tmp, "guion.json"))
         ruta_g = os.path.join(tmp, "ganchos.json")

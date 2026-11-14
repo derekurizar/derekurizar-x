@@ -107,6 +107,8 @@ html.f169.f45 .vseguir .lbl, html.f169.f45 .vseguir .ya { font-size: 28px; }
 html.portada .vseguir { display: none; }
 /* portada (&portada=1): el cuadro limpio para la miniatura, sin subtítulos ni barra de progreso */
 html.portada #subs, html.portada #progreso { visibility: hidden; }
+/* limpio (&limpio=1): la escena animada sin subtítulos ni barra; la mesa de archivo vertical pone los suyos */
+html.limpio #subs, html.limpio #progreso, html.limpio .vseguir { visibility: hidden; }
 /* formato 4:5 (1080×1350) para el feed: sin zona segura de teléfono */
 html.f45 { --izq: 85px; --der: 85px; --corte: 0px; --sup: 0px; --fin: 1090px; --iconos-y: 99999px; }
 html.f45 body { height: 1350px; }

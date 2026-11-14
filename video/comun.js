@@ -12,6 +12,8 @@ const V = (() => {
   if (F45) document.documentElement.classList.add('f45');
   if (F169) document.documentElement.classList.add('f169');
   if (portada) document.documentElement.classList.add('portada');
+  // ?limpio=1: la escena sin subtítulos ni barra de progreso, pero animada (los tableros de la mesa de archivo vertical)
+  if (q.get('limpio') === '1') document.documentElement.classList.add('limpio');
 
   const clamp = (x) => Math.max(0, Math.min(1, x));
   // DURACIONES (s) de todo lo que entra y sale en las capas comunes, en un solo lugar (2026-11-10; guías de movimiento de

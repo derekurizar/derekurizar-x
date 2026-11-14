@@ -73,11 +73,11 @@ done
 command -v pdftotext >/dev/null || aviso "falta pdftotext (brew install poppler): /historia no podrá leer fuentes en PDF"
 # /youtube-long: script, páginas 16:9 (escenario y miniatura), agente, workflow, comando, guías y maqueta (usa la voz, la
 # música, los efectos y las páginas de escena de /video y /historia)
-for f in scripts/youtube.py scripts/youtube_hf.py video/escenario.html video/miniatura.html .claude/agents/youtube-editor.md .claude/agents/youtube-realizador.md .claude/workflows/youtube.js .claude/commands/youtube-long.md referencias/flujo-youtube.md referencias/roles/youtube-editor.md referencias/roles/youtube-realizador.md design/mapas/paises-50m.json design/grano-mesa.png sesiones/_fixture_youtube/montaje.json sesiones/_fixture_youtube/serie/serie.json; do
+for f in scripts/youtube.py scripts/youtube_hf.py scripts/mesa.py scripts/video_hf.py design/vendor/gsap-3.15.0.min.js referencias/flujo-mesa.md .claude/workflows/plano.js .claude/agents/video-realizador.md referencias/roles/video-realizador.md video/escenario.html video/miniatura.html .claude/agents/youtube-editor.md .claude/agents/youtube-realizador.md .claude/workflows/youtube.js .claude/commands/youtube-long.md referencias/flujo-youtube.md referencias/roles/youtube-editor.md referencias/roles/youtube-realizador.md design/mapas/paises-50m.json design/grano-mesa.png sesiones/_fixture_youtube/montaje.json sesiones/_fixture_youtube/serie/serie.json; do
   [[ -s "$f" ]] || aviso "falta $f (/youtube-long no estará disponible)"
 done
-# el 16:9 de /youtube-long lo dibuja HyperFrames (Node ≥ 22; la versión va fijada en scripts/youtube_hf.py: HF_VERSION)
-HFV="$(python3 -c "import re;print(re.search(r'HF_VERSION = \"([^\"]+)\"', open('scripts/youtube_hf.py').read()).group(1))" 2>/dev/null || true)"
+# el 16:9 de /youtube-long lo dibuja HyperFrames (Node ≥ 22; la versión va fijada en scripts/mesa.py: HF_VERSION)
+HFV="$(python3 -c "import re;print(re.search(r'HF_VERSION = \"([^\"]+)\"', open('scripts/mesa.py').read()).group(1))" 2>/dev/null || true)"
 if [[ "${NMAJ:-0}" -ge 22 ]] && npx --yes "hyperframes@${HFV}" --version >/dev/null 2>&1; then ok "hyperframes ${HFV} (el 16:9 de /youtube-long)"; else aviso "sin hyperframes ${HFV} o node < 22: /youtube-long no podrá renderizar el 16:9 (npx hyperframes@${HFV} --version)"; fi
 # /explica: script, pizarra, semilla de animación, agentes, workflow, comando, guías y maqueta (usa la voz, la música, los
 # efectos, el render y la lectura de fuentes de /video y /historia)

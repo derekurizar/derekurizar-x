@@ -2253,11 +2253,48 @@ PYEOF
       [[ $rc == 0 ]] || { echo "$out" | tail -8; return 1; }
     }
     paso "plano 16:9: una mesa sin piezas (ninguna oración trae un golpe) → YT14" yp_neg "YT14" 'M["golpes"] = []'
-    paso "plano 16:9: un `dice` que la voz no dice → YT14" yp_neg "YT14" 'M["golpes"][0]["dice"] = "zzz qqq"'
+    paso "plano 16:9: un «dice» que la voz no dice → YT14" yp_neg "YT14" 'M["golpes"][0]["dice"] = "zzz qqq"'
     paso "plano 16:9: una cifra que la voz no dice y sin respaldo → YT16" yp_neg "YT16" 'M["golpes"].append(dict(tipo="cifra", escena=M["golpes"][-1].get("escena", M["escenas"][0]), dice=M["golpes"][-1]["dice"], valor="98,765", rotulo="panes"))'
     paso "plano 16:9: una foto sin ficha → YT16" yp_neg "YT16" 'M["golpes"].append(dict(tipo="foto", escena=M["golpes"][-1].get("escena", M["escenas"][0]), dice=M["golpes"][-1]["dice"], foto="zzz-f99", pie="Nada"))'
     paso "plano 16:9: un tipo de pieza desconocido → YT16" yp_neg "YT16" 'M["golpes"][0]["tipo"] = "zoom"'
     paso "plano 16:9: una escena con saltos de cámara → YT19" yp_neg "YT19" 'E["escenas"][1]["saltos"] = [2.0]'
+    # el vertical como mesa de archivo (scripts/video_hf.py, núcleo scripts/mesa.py): la maqueta y los gates MV sobre su plano
+    paso "make video-fixture-mesa (proyectos 9:16 y 4:5, hyperframes check, audio a −14 LUFS)" bash -c 'make video-fixture-mesa FPS=6 >/dev/null && test -s sesiones/_fixture_mesa/trabajo/hf/9x16/index.html && test -s sesiones/_fixture_mesa/trabajo/hf/4x5/index.html && test -s sesiones/_fixture_mesa/trabajo/segs_mesa/mezcla_final.wav && ! grep -q "cdn\.\|https://" sesiones/_fixture_mesa/trabajo/hf/9x16/index.html'
+    mv_neg() {  # mv_neg CÓDIGO 'python que muta P (plano.json) o E (escenas.json)'
+      local T="sesiones/_fixture_mesa/trabajo" cod="$1" out rc=0 antes despues
+      cp "$T/plano.json" "$TMP/plano_v.bak"; cp "$T/escenas.json" "$TMP/escenas_v.bak"
+      antes="$(python3 scripts/video_hf.py plano "$T" --check 2>&1 | grep -c "(maqueta) $cod")"
+      python3 - "$T" "$2" <<'PYEOF'
+import json, sys
+T = sys.argv[1]
+P = json.load(open(T + "/plano.json")); E = json.load(open(T + "/escenas.json"))
+M = next(m for m in P["mesas"] if m["golpes"] and all(g.get("dice") for g in m["golpes"]))  # la mesa 1 abre con piezas sin `dice` (cuadro 0)
+exec(sys.argv[2])
+json.dump(P, open(T + "/plano.json", "w"), ensure_ascii=False); json.dump(E, open(T + "/escenas.json", "w"), ensure_ascii=False)
+PYEOF
+      [[ $? == 0 ]] || rc=1  # una mutación que no se aplicó no prueba nada
+      out="$(python3 scripts/video_hf.py plano "$T" --check 2>&1)"; despues="$(echo "$out" | grep -c "(maqueta) $cod")"
+      cp "$TMP/plano_v.bak" "$T/plano.json"; cp "$TMP/escenas_v.bak" "$T/escenas.json"
+      [[ $despues -gt $antes ]] || rc=1  # la maqueta ya trae avisos MV: cuenta los que AÑADE la mutación
+      [[ $rc == 0 ]] || { echo "$cod: $antes aviso(s) antes, $despues después"; echo "$out" | tail -8 | cut -c1-300; return 1; }
+    }
+    paso "plano vertical: una mesa sin piezas → MV2" mv_neg "MV2" 'M["golpes"] = []'
+    paso "plano vertical: una foto sin ficha → MV4" mv_neg "MV4" 'M["golpes"].append(dict(tipo="foto", escena=M["golpes"][-1].get("escena", M["escenas"][0]), dice=M["golpes"][-1]["dice"], foto="zzz-f99", pie="Nada"))'
+    paso "plano vertical: una escena con saltos de cámara → MV7" mv_neg "MV7" 'E["escenas"][1]["saltos"] = [2.0]'
+    paso "plano vertical: una ficha con 40 palabras que la voz no dice no da tiempo de leerse → MV8" mv_neg "MV8" 'M["golpes"].insert(0, dict(tipo="institucion", escena=M["golpes"][0].get("escena", M["escenas"][0]), dice=M["golpes"][0]["dice"], nombre="Zzz", kicker="Qué es", rol=" ".join("palabra%d" % i for i in range(40))))'
+    paso "plano vertical: una pieza que no cabe ni a escala → MV11" mv_neg "MV11" 'M["golpes"].insert(0, dict(tipo="cita", escena=M["golpes"][0].get("escena", M["escenas"][0]), dice=M["golpes"][0]["dice"], autor="Zzz", texto=" ".join("palabra%d" % i for i in range(160))))'
+    paso "plano vertical: una jerarquía con un hilo de alegato sin «Según…» → MV12" mv_neg "MV12" 'd = M["golpes"][-1]["dice"]; M["golpes"].append(dict(tipo="red", escena=M["golpes"][-1].get("escena", M["escenas"][0]), dice=d, nodos=[dict(id="a", nombre="Marta Pérez", nivel=0, dice=d), dict(id="b", nombre="Zzz", nivel=1, dice=d)], aristas=[dict(de="a", a="b", atribuida=True, dice=d)]))'
+    paso "realizacion: /historia y /serie nacen en mesa; un TRABAJO del motor propio no lleva plano (exit 2); la maqueta sin render deja su marca" bash -c 'python3 -c "
+import json
+assert json.load(open(\"sesiones/_fixture_serie/trabajo/parte-1/video.json\")).get(\"realizacion\") == \"mesa\", \"la parte de la serie no heredó la mesa\"
+assert json.load(open(\"sesiones/_fixture_mesa/trabajo/video.json\")).get(\"realizacion\") == \"mesa\"
+" && test -f sesiones/_fixture_serie/trabajo/parte-1/salida/.maqueta_sin_render && { python3 scripts/video.py plano sesiones/_fixture_video/trabajo >/dev/null 2>&1; test $? -eq 2; }'
+    paso "plano vertical: sin plano.json, un trabajo real se detiene («falta la fase Plano») y una maqueta usa el borrador" bash -c 'T=sesiones/_fixture_mesa/trabajo; cp $T/plano.json "$TMP/plano_auto.bak"; rm $T/plano.json; python3 scripts/video_hf.py plano $T --auto --check >/dev/null 2>&1; rc=$?; test -s $T/plano.json; ok=$?; cp "$TMP/plano_auto.bak" $T/plano.json; test $rc -eq 0 -a $ok -eq 0'
+    paso "el núcleo de la mesa no cambia el 16:9: youtube_hf reexporta mesa.py" python3 -c "
+import sys; sys.path.insert(0, 'scripts')
+import mesa, youtube_hf as YH, video_hf as VH
+assert YH.resolver is mesa.resolver and YH.revisar is mesa.revisar and YH.dibujar is mesa.dibujar and YH.HF_VERSION == mesa.HF_VERSION
+assert VH.REGLAS['HUECO_MAX_S'] == 4.0 and mesa.HUECO_MAX_S == 6.0 and mesa.regla({'reglas': VH.REGLAS}, 'HUECO_MAX_S') == 4.0 and mesa.regla({}, 'MESA_PIEZAS') == 12"
   fi
 else
   echo "SKIP   /youtube-long (falta la maqueta de /serie: make serie-fixture)"
@@ -2517,10 +2554,10 @@ paso "node --check noticias.js (envuelto en async function)" check_js noticias.j
 paso "node --check historia.js (envuelto en async function)" check_js historia.js
 paso "node --check explica.js (envuelto en async function)" check_js explica.js
 paso "node --check youtube.js (envuelto en async function)" check_js youtube.js
+paso "node --check plano.js (envuelto en async function)" check_js plano.js
 paso "check_workflows.py (PALETAS, PLANTILLAS, HOOKS, BEATS, REQ, pesoX, MODOS, gráficos del informe W7–W8, bloque común W9, espejos de video.js W10, de noticias.js W11, de historia.js W12 y de explica.js con su tabla MODOS W13)" python3 scripts/check_workflows.py
 
 echo
 echo "[test] $N pruebas · $FALLOS fallos"
 [[ $FALLOS -eq 0 ]] || exit 1
 exit 0
-paso "node --check plano.js (envuelto en async function)" check_js plano.js

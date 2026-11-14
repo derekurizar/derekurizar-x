@@ -484,6 +484,40 @@ RE_POR_CADA = re.compile(r"\b(\d[\d,]*(?:\.\d+)?)\s+por\s+cada\s+(\d[\d,]*)\b", 
 RE_COTA = re.compile(r"\b(más\s+de|al\s+menos|por\s+lo\s+menos|menos\s+de)\s+(\d[\d,]*(?:\.\d+)?)(?!\s*(?:%|por\s+ciento))", re.I)
 TRANSICION = 0.3     # deslizamiento entre escenas (xfade); los primeros 0.3 s de cada escena quedan bajo la transición
 BUCLE_S, BUCLE_FUNDIDO = 0.6, 0.25   # cierre en bucle: el primer cuadro del gancho vuelve al final (TikTok repite el video)
+# Quién dibuja el video (video.json → "realizacion"): «propio» = las páginas video/*.html grabadas con video_grabar.js;
+# «mesa» = la mesa de archivo en HyperFrames (scripts/video_hf.py; referencias/flujo-mesa.md). La fija `preparar` al crear
+# el TRABAJO: un trabajo empezado con un motor termina con ese motor. Migrar un flujo = añadir su `tipo` aquí.
+MESA_FLUJOS = ("historia",)   # /historia y /serie con motor historia
+REALIZACIONES = ("propio", "mesa")
+MESA_SIN_RENDER = ".maqueta_sin_render"   # MESA_RENDER=0 (maquetas): el render es un doble; `entregar` real lo rechaza
+
+
+def realizacion(st):
+    return (st or {}).get("realizacion") or "propio"
+
+
+def es_mesa(st):
+    return realizacion(st) == "mesa"
+
+
+def realizacion_de(tipo, pedida=None):
+    return pedida or ("mesa" if tipo in MESA_FLUJOS else "propio")
+
+
+def mesa(*args):
+    """Un comando de la mesa de archivo (scripts/video_hf.py), en su propio proceso. → código de salida."""
+    return subprocess.run([sys.executable, os.path.join(RAIZ, "scripts", "video_hf.py")] + [str(x) for x in args], cwd=RAIZ).returncode
+
+
+def cmd_plano(a):
+    """El guion visual de un TRABAJO en mesa (plano.json): gates MV, hoja de golpes y digesto para quien lo escribe."""
+    trabajo = os.path.abspath(a.trabajo)
+    if not es_mesa(estado(trabajo)):
+        print("ERROR: este TRABAJO se dibuja con el motor propio (video.json sin \"realizacion\": \"mesa\"): no lleva plano", file=sys.stderr)
+        return 2
+    if a.digesto:
+        return mesa("digesto", trabajo)
+    return mesa("plano", trabajo, "--auto", *(["--check"] if a.check else []), *(["--hoja"] if a.hoja else []), *(["--borrador"] if a.borrador else []))
 # palabras que no anclan solas la línea de pantalla a la voz (un «de» suelto no basta para fijar su tiempo)
 VACIAS = set("de del la el los las en y a o que un una al lo se".split())
 STOP = set("de del en los las una uno unos unas que para con por mas sin sobre entre hasta desde cada como pero este esta "
@@ -3740,6 +3774,8 @@ def cmd_variante(a):
     voz SOLO de la escena 1 (≈ 100 créditos). Con --cerrar, copia variante_b/salida/video.mp4 → salida/video_b.mp4."""
     trabajo = os.path.abspath(a.trabajo)
     vb = os.path.join(trabajo, "variante_b")
+    if es_mesa(estado(trabajo)):
+        return falla("la versión B aún no existe en la mesa de archivo: cambiar el gancho cambia el plano de la primera mesa y pide otro render entero")
     if a.cerrar:
         src = os.path.join(vb, "salida", "video.mp4")
         if not os.path.exists(src):
@@ -5070,6 +5106,8 @@ def cmd_tiempos(a):
     ralear_tics(escenas)
     marcar_pregunta(escenas, g, serie_de(st))   # P6: la pregunta del video en pantalla, solo en el pago
     f_seguir = [] if st.get("piezas_sueltas") else marcar_seguir(escenas, total)
+    if es_mesa(st):   # la mesa pone el «Sígueme» de la mitad por su cuenta (video_hf.seguir_de) y mide el ritmo sobre el plano
+        f_seguir = []
     escribir(os.path.join(trabajo, "escenas.json"), {
         "version": 2, "colores": colores(st["paleta"]), "contexto_superior": g["contexto_superior"], "redes": REDES,
         "serie": {k: serie_de(st).get(k) for k in ("parte", "de", "titulo", "siguiente")} if serie_de(st).get("parte") else None,
@@ -5087,7 +5125,10 @@ def cmd_tiempos(a):
         fallas += [x for x in revisar_palabra_clave(claves, escenas[0]["palabras"], pantalla_escena1(g["escenas"][0]),
                                                     g.get("caption") or {}) if "voz" in x]
     fallas += V20_FALLAS + f_seguir
-    for S_ in escenas:
+    if es_mesa(st):
+        avisos = [x for x in avisos if not x.startswith("V10 ")] + ["la mesa de archivo mide el ritmo, las cifras y la carga sobre el plano (MV1, MV2, MV6): "
+                                                                   "<flujo>.py plano TRABAJO --check"]
+    for S_ in ([] if es_mesa(st) else escenas):
         avisos += sobrecarga(S_)
         for txt, t_ in sin_senal(S_):
             avisos.append("V26 E%d (%s): la voz dice «%s» a los %.1f s y nada lo señala en pantalla: que entre la cifra, un "
@@ -5105,6 +5146,13 @@ def cmd_tiempos(a):
 def cmd_grabar(a):
     trabajo = os.path.abspath(a.trabajo)
     st = estado(trabajo)
+    if es_mesa(st):   # la mesa de archivo: plano → tableros (motor propio, limpios) → proyecto → check → render (un proceso)
+        f = ["--formato", a.formato]
+        for paso in (["plano", trabajo, "--auto", "--check", "--hoja"], ["tableros", trabajo, "--fps", a.fps], ["proyecto", trabajo] + f,
+                     ["revisar", trabajo] + f, ["render", trabajo] + f):
+            if mesa(*paso):
+                return falla("la mesa se detuvo en «%s» (%s): corrige y vuelve a grabar" % (paso[0], a.formato))
+        return 0
     hilo_dir = tarjetas_dir(trabajo, st)   # /noticias no tiene hilo ni tarjetas; las de /video, rearmadas en Noche
     args = ["node", os.path.join(RAIZ, "scripts", "video_grabar.js"), "--dir", trabajo, *(["--hilo", hilo_dir] if hilo_dir else []),
             "--fps", str(a.fps), "--formato", a.formato]
@@ -5318,6 +5366,18 @@ def cmd_montar(a):
     st = estado(trabajo)
     E = leer(os.path.join(trabajo, "escenas.json"))
     g = leer(os.path.join(trabajo, "guion.json"))
+    if es_mesa(st):   # la mesa: una sola pista de audio (la del 9:16) para los dos formatos; caption y portada, del 9:16
+        if a.formato != "4:5" and mesa("audio", trabajo):
+            return falla("la mezcla de audio de la mesa falló")
+        if mesa("montar", trabajo, "--formato", a.formato):
+            return 1
+        if a.formato != "4:5":
+            sal = os.path.join(trabajo, "salida")
+            redes = " · ".join("%s %s" % (r["nombre"], r["handle"]) for r in REDES)
+            escribir_caption(os.path.join(sal, "caption.md"), g["caption"], redes, ffprobe_dur(os.path.join(sal, "video.mp4")))
+            if mesa("portada", trabajo):
+                return falla("la portada de la mesa no se dibujó")
+        return 0
     f45 = a.formato == "4:5"   # 1080×1350 para el feed: mismos tiempos y audio, otros clips; sin subtítulos ni portadas nuevos
     segs = os.path.join(trabajo, "segs_4x5" if f45 else "segs")
     os.makedirs(segs, exist_ok=True)
@@ -5839,6 +5899,8 @@ def llenado_primer_cuadro(clip, f45=False):
 
 def cmd_revisar(a):
     trabajo = os.path.abspath(a.trabajo)
+    if es_mesa(estado(trabajo)):   # la mesa se revisa sobre el plano (MV) y con hyperframes check al grabar; aquí, la hoja de contacto
+        return mesa("contacto", trabajo, "--formato", a.formato)
     E = leer(os.path.join(trabajo, "escenas.json"))["escenas"]
     f45 = a.formato == "4:5"
     suf, clips_dir, alto = ("_4x5", "clips_4x5", 338) if f45 else ("", "clips", 480)
@@ -5967,6 +6029,8 @@ def cmd_entregar(a):
     if not os.path.exists(os.path.join(trabajo, "salida", "video_4x5.mp4")):
         return falla("falta salida/video_4x5.mp4: graba, monta y revisa también --formato 4:5 (el feed de Facebook e "
                      "Instagram) antes de entregar")
+    if os.path.exists(os.path.join(trabajo, "salida", MESA_SIN_RENDER)) and not a.salida:
+        return falla("este video es un doble sin render (MESA_RENDER=0, de maqueta): vuelve a grabar sin esa variable antes de entregar")
     dep = st.get("departamento")
     if dep:   # /departamento: D3 sobre los captions finales (los que van a caption.md)
         d3_f, d3_av = DP.d3(dep["codigo"], g.get("caption") or {})
@@ -6110,6 +6174,12 @@ def main():
                    "JSON tal cual o el texto pegado con lo que traiga alrededor")
     x.add_argument("--voz")
     x.add_argument("--palabras")
+    p = sub.add_parser("plano", help="la mesa de archivo: gates MV del plano, hoja de golpes o digesto para escribirlo (scripts/video_hf.py)")
+    p.add_argument("trabajo")
+    p.add_argument("--check", action="store_true")
+    p.add_argument("--hoja", action="store_true")
+    p.add_argument("--borrador", action="store_true", help="usa el borrador tal cual (maquetas)")
+    p.add_argument("--digesto", action="store_true", help="lo que hace falta para escribir plano.json")
     p = sub.add_parser("grabar")
     p.add_argument("trabajo")
     p.add_argument("--fps", type=int, default=30)
@@ -6129,7 +6199,7 @@ def main():
     return {"preparar": cmd_preparar, "ganchos": cmd_ganchos, "cierres": cmd_cierres, "probar": cmd_probar, "aplicar": cmd_aplicar, "guion": cmd_guion, "narracion": cmd_narracion, "oyente": cmd_oyente, "variante": cmd_variante, "fotos": cmd_fotos, "voz": cmd_voz, "descargar": cmd_descargar,
             "voz-falsa": cmd_voz_falsa, "partir": cmd_partir, "tiempos": cmd_tiempos, "grabar": cmd_grabar, "montar": cmd_montar,
             "revisar": cmd_revisar, "entregar": cmd_entregar, "musica": cmd_musica, "escuchar": cmd_escuchar,
-            "whisper": cmd_whisper}[a.cmd](a)
+            "whisper": cmd_whisper, "plano": cmd_plano}[a.cmd](a)
 
 
 if __name__ == "__main__":

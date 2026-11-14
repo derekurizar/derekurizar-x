@@ -7,7 +7,7 @@ PALETAS ?= cielo
 ESTILO ?= noche
 PALETA ?= cielo
 
-.PHONY: help nuevo render visual catalogo validate tabla pdf ensamblar limpiar test doctor costo contacto digesto fuentes ideas calendario informe informe-ejemplo informe-catalogo informe-fixture verificacion auditoria-rehacer podar video-fixture video-fixture-4x5 noticias-fixture semana-fixture historia-fixture explica-fixture mito-fixture sabias-fixture congreso-fixture carrusel-fixture departamento-fixture analisis-fixture agenda-fixture serie-fixture serie-explica-fixture youtube-fixture musica whisper iconos
+.PHONY: help nuevo render visual catalogo validate tabla pdf ensamblar limpiar test doctor costo contacto digesto fuentes ideas calendario informe informe-ejemplo informe-catalogo informe-fixture verificacion auditoria-rehacer podar video-fixture video-fixture-4x5 noticias-fixture semana-fixture historia-fixture explica-fixture sabias-fixture congreso-fixture carrusel-fixture departamento-fixture analisis-fixture agenda-fixture serie-fixture serie-explica-fixture youtube-fixture video-fixture-mesa musica whisper iconos
 
 help:
 	@echo "make nuevo T=<plantilla> OUT=<ruta.html> [PALETA=cielo]  ensambla una tarjeta (base + plantilla)"
@@ -38,6 +38,7 @@ help:
 	@echo "make congreso-fixture [FPS=10]                           /congreso de prueba (la Ley de Ciberseguridad, iniciativa 6347, voz falsa, 0 créditos) → sesiones/_fixture_congreso/salida"
 	@echo "make sabias-fixture [FPS=10]                             /sabias de prueba (el dato de sesiones/_fixture_dato, voz falsa, 0 créditos) → sesiones/_fixture_sabias/salida"
 	@echo "make departamento-fixture [FPS=10]                       /departamento de prueba (perfil de Huehuetenango con cifras de maqueta → video corto con mapa y ranking en ventana, D1–D9, voz falsa) → sesiones/_fixture_departamento/salida"
+	@echo "make video-fixture-mesa [FPS=10]                         la mesa de archivo de punta a punta con render real: la parte 1 de la maqueta de /serie por los comandos de siempre (plano MV1–MV14 → grabar → montar → revisar), 9:16 en HyperFrames y 4:5 sin render"
 	@echo "make youtube-fixture [FPS=10]                            /youtube-long de prueba: la parte 1 de La Espiga dos veces → montaje fijo (quitar, recortes, puente, promesa) YT1–YT8, voz falsa de lo nuevo, 16:9, miniatura y entrega"
 	@echo "make serie-fixture [FPS=10]                              /serie de prueba (La Espiga en 3 partes, motor /historia): plan SE1–SE2, cobertura SE3, parte 1 con SE4–SE8, voz falsa, 9:16 y 4:5, entrega de la parte"
 	@echo "make serie-explica-fixture [FPS=10]                      /serie de prueba con el motor /explica (temario del interés en 3 partes): lo mismo sobre la parte 1"
@@ -215,6 +216,9 @@ HF := sesiones/_fixture_historia
 escenas-prueba:   # las escenas con archivos reales de /historia (vias, lupa, deptos, pagina, cortina, archivo, bandos) grabadas con su constructor: TIPO=vias [CASO=zoom], o todas
 	python3 scripts/escena_prueba.py $(if $(TIPO),$(TIPO) $(if $(CASO),--caso $(CASO)),--todas)
 
+# Las maquetas de los flujos que dibuja la mesa de archivo no renderizan con HyperFrames (MESA_RENDER=0: un doble de la duración exacta;
+# el proyecto sí pasa `hyperframes check`). El render real lo prueba `make video-fixture-mesa`.
+historia-fixture serie-fixture: export MESA_RENDER = 0
 historia-fixture:   # maqueta de /historia: hechos verificados de ejemplo, fotos generadas, voz falsa, 9:16 y 4:5
 	rm -rf $(HF)/trabajo
 	python3 scripts/historia.py preparar "La panadería La Espiga de Xela (historia de ejemplo)" --slug la-espiga-maqueta --trabajo $(HF)/trabajo --fixture
@@ -314,6 +318,18 @@ serie-fixture:   # maqueta de /serie (motor /historia): plan, investigación com
 	python3 scripts/serie.py entregar-parte $(SER)/trabajo/parte-1
 	python3 scripts/serie.py --revisar $(SER)/salida
 	python3 scripts/memoria.py --serie $(SER)/salida --dry-run > /dev/null
+
+MESA := sesiones/_fixture_mesa
+video-fixture-mesa: serie-fixture   # la mesa de archivo de punta a punta, con render real: la parte 1 de la maqueta de /serie (misma voz falsa), 9:16 en HyperFrames (draft) y 4:5 sin render
+	rm -rf $(MESA)
+	python3 scripts/video_hf.py piloto $(SER)/trabajo/parte-1 --trabajo $(MESA)/trabajo --fixture
+	python3 scripts/historia.py plano $(MESA)/trabajo --borrador --check --hoja
+	MESA_RENDER=1 MESA_CALIDAD=draft python3 scripts/historia.py grabar $(MESA)/trabajo --fps $(FPS)
+	python3 scripts/historia.py montar $(MESA)/trabajo
+	python3 scripts/historia.py revisar $(MESA)/trabajo
+	MESA_RENDER=0 python3 scripts/historia.py grabar $(MESA)/trabajo --fps $(FPS) --formato 4:5
+	python3 scripts/historia.py montar $(MESA)/trabajo --formato 4:5
+	python3 scripts/historia.py revisar $(MESA)/trabajo --formato 4:5
 
 YT := sesiones/_fixture_youtube
 youtube-fixture: serie-fixture   # maqueta de /youtube-long: la parte 1 de la maqueta de /serie dos veces, montaje fijo, voz falsa de lo nuevo, 16:9

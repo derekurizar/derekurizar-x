@@ -387,6 +387,8 @@ def cmd_preparar(a):
     rec_g, rec_c = ({"familias": [], "visuales": []}, {"tipos": [], "formas": [], "mecanismos": []}) if a.fixture else recientes(slug)
     ruta = os.path.join(trabajo, "video.json")
     st = leer(ruta) if os.path.exists(ruta) else {}
+    if not st or getattr(a, "realizacion", None):   # quién dibuja: se fija al crear el TRABAJO (uno empezado con un motor termina con él)
+        st["realizacion"] = VD.realizacion_de("historia", getattr(a, "realizacion", None))
     st.update({"tipo": "historia", "slug": slug, "tema": a.tema, "fecha": datetime.date.today().isoformat(),
                "hilo": VD.rel(os.path.join(trabajo, "base")), "paleta": paleta, "musica": pista["id"],
                "musica_forzada": a.musica, "duracion": "historia", "objetivo_s": OBJETIVO_S,
@@ -2347,7 +2349,7 @@ def usos_de_fotos(escenas, fotos):
          % (u[0][1], len(u), ", ".join(str(i) for i, _ in u), FOTO_USOS_MAX) for u in usos.values() if len(u) > FOTO_USOS_MAX]
     # H7b (decisión del usuario, 2026-11-09): dos escenas SEGUIDAS nunca muestran la misma imagen (el gancho y la escena 2
     # incluidos): la imagen nueva es lo que sostiene la atención
-    for u in usos.values():
+    for u in ([] if en_mesa() else usos.values()):   # en la mesa de archivo la foto de la escena es solo la semilla: MV3 vigila el plano
         for (a, fa), (b, _) in zip(u, u[1:]):
             if b == a + 1:
                 f.append("H7b las escenas %d y %d seguidas muestran la misma foto (%s): cada escena, una imagen distinta de la anterior"
@@ -2395,10 +2397,20 @@ FOTOS_POR_VARIANTE = 4      # aviso: por cada 4 fotos, al menos una composición
 RED_DESDE_PERSONAJES = 5    # aviso: con tantas personas en el encuadre, la historia pide un organigrama o un tablero
 
 
+def en_mesa():
+    """¿El TRABAJO que se revisa lo dibuja la mesa de archivo? Ahí la escena es unidad de voz y de respaldo, no de dibujo:
+    los gates del dibujo viejo (H7b, la foto fija y las composiciones de H26) los relevan los MV del plano."""
+    try:
+        return bool(TRABAJO_ACTUAL) and VD.es_mesa(VD.estado(TRABAJO_ACTUAL))
+    except (OSError, ValueError):
+        return False
+
+
 def variedad_de_imagen(escenas, enc):
     f, av = [], []
     fotos = [(i, e) for i, e in enumerate(escenas, 1) if e.get("tipo") == "foto"]
-    for i, e in fotos:
+    mesa = en_mesa()
+    for i, e in ([] if mesa else fotos):
         s_ = VD.segundos_voz(e.get("texto"))
         if s_ > FOTO_MAX_S and not (e.get("dividida") or e.get("marcas") or e.get("subrayado")):
             f.append("H26 escena %d: una foto fija de %.0f s estimados (máximo %.0f): repártela en dos escenas, cada una con la "
@@ -2413,7 +2425,7 @@ def variedad_de_imagen(escenas, enc):
                 f.append("H26 escena %d: `ruta` va en una escena foto (es el localizador con su trazo)" % i)
     variantes = sum(1 for e in escenas if e.get("dividida") or e.get("minimapa") or e.get("ruta") or e.get("depto") or e.get("marcas") or e.get("subrayado")
                     or e.get("documento") or e.get("tipo") in ("red", "tablero", "explica", "tarjeta") + ESCENAS_ARCHIVO)
-    if len(fotos) >= FOTOS_POR_VARIANTE and variantes * FOTOS_POR_VARIANTE < len(fotos):
+    if not mesa and len(fotos) >= FOTOS_POR_VARIANTE and variantes * FOTOS_POR_VARIANTE < len(fotos):
         av.append("H26 %d escenas de foto con titular y solo %d composiciones distintas (pantalla dividida, mini-mapa, "
                   "subrayado, documento, tarjeta, animación): van ≥ 1 por cada %d fotos" % (len(fotos), variantes, FOTOS_POR_VARIANTE))
     pers = [p for p in enc.get("personajes") or [] if isinstance(p, dict) and es_persona(p)]
@@ -4807,7 +4819,7 @@ def cmd_probar(a):
         print("FALLA --cambios ilegible: %s" % ex)
         return 2
     tmp = os.path.join(RAIZ, "sesiones", "_probar-%s-%d" % (os.path.basename(trabajo), os.getpid()))
-    shutil.copytree(trabajo, tmp, ignore=shutil.ignore_patterns("audio", "salida", "revision", "clips*", "segs*"))
+    shutil.copytree(trabajo, tmp, ignore=shutil.ignore_patterns("audio", "salida", "revision", "clips*", "segs*", "hf", "tablero"))
     try:
         g = leer(os.path.join(tmp, "guion.json"))
         ruta_g = os.path.join(tmp, "ganchos.json")
@@ -5224,6 +5236,8 @@ def cmd_entregar(a):
     ruta_cred = os.path.join(trabajo, "audio", "creditos.json")
     if not os.path.exists(ruta_cred) and not a.salida:
         return falla("sin audio/creditos.json: la voz no salió de ElevenLabs (una maqueta o una voz falsa solo se entrega con --salida)")
+    if os.path.exists(os.path.join(sal, VD.MESA_SIN_RENDER)) and not a.salida:
+        return falla("este video es un doble sin render (MESA_RENDER=0, de maqueta): vuelve a grabar sin esa variable antes de entregar")
     destino = os.path.abspath(a.salida or os.path.join(RAIZ, "historias", "%s-%s" % (st["fecha"], st["slug"])))
     os.makedirs(destino, exist_ok=True)
     for f in glob.glob(os.path.join(destino, "portada*.png")):
@@ -5353,7 +5367,7 @@ def cronologia_md(st, escenas, H):
     return "\n".join(L) + "\n"
 
 
-REENVIO = ("voz", "voz-falsa", "descargar", "partir", "escuchar", "grabar", "montar", "revisar")
+REENVIO = ("voz", "voz-falsa", "descargar", "partir", "escuchar", "grabar", "montar", "revisar", "plano")
 
 
 def cmd_producir(a):
@@ -5361,7 +5375,8 @@ def cmd_producir(a):
     revisar en 9:16 y grabar → montar → revisar en 4:5. Para en la primera falla y dice en qué paso."""
     yo, T = os.path.abspath(__file__), a.trabajo
     solo = ["--solo", a.solo] if a.solo else []
-    pasos = [["tiempos", T]] + ([] if a.sin_escucha else [["escuchar", T]]) + \
+    en_mesa = VD.es_mesa(VD.estado(os.path.abspath(T)))   # la mesa de archivo: el plano (gates MV) va tras la voz real y antes de grabar
+    pasos = [["tiempos", T]] + ([] if a.sin_escucha else [["escuchar", T]]) + ([["plano", T, "--check", "--hoja"]] if en_mesa else []) + \
         [["grabar", T] + solo, ["montar", T], ["revisar", T],
          ["grabar", T, "--formato", "4:5"] + solo, ["montar", T, "--formato", "4:5"], ["revisar", T, "--formato", "4:5"]]
     for k, paso in enumerate(pasos, 1):
@@ -5394,6 +5409,7 @@ def main():
     q.add_argument("--paleta")
     q.add_argument("--musica")
     q.add_argument("--fixture", action="store_true", help="la maqueta de sesiones/_fixture_historia (sin web)")
+    q.add_argument("--realizacion", choices=VD.REALIZACIONES, help="quién dibuja el video: mesa (la mesa de archivo en HyperFrames; por defecto) o propio")
     q = sub.add_parser("leer")
     q.add_argument("url")
     q.add_argument("--buscar")
