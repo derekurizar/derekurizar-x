@@ -134,10 +134,30 @@ lo que pasó, y con impacto (termina en lo que más pesa).
 - Costos reales del modo caso (Bancafé, 5 partes): 141–169 s y ≈ 2,100–2,450 créditos de voz por parte.
 ## En pantalla
 
+(Motor propio: el chip y `video/cierre.html`. En la mesa, ver «Con la mesa de archivo», abajo.)
+
 - Chip «Parte N de M» en el acento desde el cuadro 0 del gancho (`V.chip`).
 - En la pantalla final, sobre «Sígueme en»: «Parte N+1 · <título>» (`video/cierre.html`, `escenas.json → serie`), que
   entra cuando la voz empieza la invitación.
 - En las partes 2…M, debajo: «Empieza por la Parte 1 · fijada en mi perfil» (solo texto; la voz no lo dice: SE4).
+
+### Con la mesa de archivo (2026-11-14)
+
+Las series con el motor /historia se dibujan con la mesa de archivo (`referencias/flujo-mesa.md`; «Quién dibuja» en
+`referencias/flujo-historia.md`): `serie.py preparar` deja `"realizacion": "mesa"` y `--realizacion propio` conserva el
+motor viejo (una serie empezada con un motor termina con ese motor). Las del motor /explica siguen en el motor propio.
+
+- **El Plano va por parte.** Con la voz de esa parte ya grabada y medida (`tiempos`), y antes de `grabar`: Workflow
+  `plano` con `trabajo: "<TRABAJO>/parte-N"`. Cada parte tiene su `plano.json` y su `plano.md`; no se copian entre
+  partes. `historia.py producir <TRABAJO>/parte-N` se detiene con «falta la fase Plano» si no existe.
+- **En pantalla**: el kicker «Parte N de M · título» va en el acento sobre la barra de progreso, en lugar del chip. En
+  el cierre, el golpe de arriba anuncia «Parte N+1 · título» y, en las partes 2…M, se lee «Empieza por la Parte 1 ·
+  fijada en mi perfil» (solo texto: SE4 y SE8 no cambian).
+- **Fotos**: SE19 (una foto en ≤ 2 partes) cuenta las fotos del **guion** de cada parte. Las que el realizador añade en
+  el plano las vigila MV3 dentro de esa parte (una foto, una sola vez por video); ningún gate cruza los planos de dos
+  partes, así que al revisar `plano.md` conviene mirar que una parte no repita la foto que abrió la anterior.
+- **Maqueta**: `make serie-fixture` corre en la mesa con `MESA_RENDER=0` (un doble sin render); el render real lo
+  prueba `make video-fixture-mesa` sobre la parte 1 de esa maqueta.
 
 ## La invitación (decisión del usuario, 2026-11-05)
 

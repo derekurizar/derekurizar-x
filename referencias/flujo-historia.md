@@ -40,7 +40,11 @@ preparar (historia.py: TRABAJO = sesiones/historia-<slug>/, paleta provisional y
    conserva las voces) → oyente → crítica (1 vuelta) → mejoras → animación; devuelve voces_cambiadas
 → QA de fotos (historia.py fotos-contacto) → [sin-voz: voz-falsa] | voz (MCP ElevenLabs, como /noticias)
    (un nodo por secuencia de 2–5 escenas; descargar --estado corta cada secuencia en sus escenas)
-→ tiempos (V16, V6, V10) → escuchar (V11) → grabar (V7, V13) → montar (V8) → revisar (9:16 y 4:5)
+→ tiempos (V16, V6; V10 solo con el motor propio) → escuchar (V11)
+→ Plano (solo con realizacion: mesa) [Workflow plano: video-realizador → plano.json (qué pieza entra con cada oración)
+                     → gate plano --check --hoja (MV1–MV14) → plano.md (la hoja de golpes); notas → retoque de pantalla]
+→ grabar (mesa: gates del plano, tableros limpios (V7), proyecto de HyperFrames, hyperframes check, render con un
+   proceso · motor propio: V7, V13) → montar (V8) → revisar (hoja de contacto), en 9:16 y luego en 4:5
 → entregar (historias/<fecha>-<slug>/) → memoria.py --historia (memoria/historias.json) → make validate (M10)
 ```
 
@@ -48,24 +52,52 @@ preparar (historia.py: TRABAJO = sesiones/historia-<slug>/, paleta provisional y
 `TRABAJO/base/` un «hilo base» (`hilo.json` con el tema y la tesis, `datos.json` con las cifras y los números de los
 hechos verificados, y las tarjetas `tuit_N.html` materializadas con `scripts/materializar.py` desde el `grafico` de
 cada escena), así el gate del guion, los ganchos, los tiempos y el render salen de `scripts/video.py`, con las escenas
-propias enchufadas por sus extensiones (`CONSTRUCTORES`, `TRANSICION_DE`, `SIN_HUECO`). Las páginas son
-`video/noticia.html` (gancho con foto y escena `foto`), `video/historia.html` (`cita` y `capitulo`) y las de `/video`
-para el resto; el **rótulo de acto** lo dibuja `video/comun.js` sobre cualquiera de ellas mientras la voz sigue.
+propias enchufadas por sus extensiones (`CONSTRUCTORES`, `TRANSICION_DE`, `SIN_HUECO`). Con el motor propio, las
+páginas son `video/noticia.html` (gancho con foto y escena `foto`), `video/historia.html` (`cita` y `capitulo`) y las de
+`/video` para el resto, y el **rótulo de acto** lo dibuja `video/comun.js` sobre cualquiera de ellas mientras la voz
+sigue; en la mesa de archivo esas páginas solo graban los tableros.
+
+## Quién dibuja: la mesa de archivo (desde 2026-11-14)
+
+Decisión del usuario (2026-11-14): `/historia` y `/serie` (motor historia) ya no se dibujan con el motor propio (las
+páginas `video/*.html` grabadas con `video_grabar.js`), sino con la **mesa de archivo** en HyperFrames
+(`scripts/video_hf.py` sobre `scripts/mesa.py`). Guía: `referencias/flujo-mesa.md` (cuadro, piezas, plano y gates
+MV1–MV14); rol: `referencias/roles/video-realizador.md`. Lo esencial:
+
+- Con cada oración de la voz entra una **pieza** que la voz nombra (foto, recorte con su titular real, página de
+  documento, ficha de persona o institución, lugar en el mapa, fecha, cifra, cita que se entinta, lista, jerarquía de
+  personas `red`) y se queda quieta. La cámara no se mueve y el texto da tiempo de leerse (MV8).
+- Las escenas con animación propia (`explica`, `tarjeta`, `mapa`, `ranking`, `tiempo`, `escala`, `vias`, `deptos`,
+  `lupa`, `cortina`) son **tableros**: su clip limpio, grabado con el motor propio, va solo en su mesa.
+- `video.json` lleva `"realizacion": "mesa"` (lo fija `historia.py preparar` o `serie.py preparar`). `--realizacion
+  propio` deja el motor viejo; un trabajo empezado con un motor termina con él. Los demás flujos siguen en el propio.
+- El guion visual es `TRABAJO/plano.json`: lo escribe el `video-realizador` en el paso **Plano** (Workflow `plano`),
+  tras `tiempos` con la voz real y antes de `grabar`, y lo valida `historia.py plano <TRABAJO> --check --hoja` (deja
+  la hoja de golpes `plano.md`). Lo que falle en pantalla (MV8, MV10, MV11, MV2) se arregla en el plano, sin tocar el
+  guion ni la voz. Los comandos no cambian; lo que hace cada uno está en «Producción en la mesa», más abajo.
+
+**Qué de este documento es del motor propio** (solo aplica con `realizacion: propio`; lleva una primera línea «(Motor
+propio: …)»): «Cómo se ve», «Personas, red y dinamismo» (tarjeta de persona, cámara y sub-planos, estilos de `red`,
+señales, transiciones) y el dibujo de cada escena en «Escenas» y en las escenas con archivos reales. No corren en la
+mesa: V7 (solo en los tableros), V10, V12, V13 (→ MV10), V15 (→ MV14), V21, V22, V26 (→ MV1), A3, H7b y la parte de H26
+sobre fotos fijas (→ MV3, MV6; mientras `guion --check` los marque sobre el guion, se cumplen ahí). Siguen valiendo los
+gates de texto, verdad y voz: H1–H25 (salvo lo dicho), V1–V6, V8, V9, V11, V16–V20, V23–V25, P*, F* y SE*.
 
 ## Formato (decisiones del usuario, 2026-10-24 y 2026-10-27)
 
 Una historia se cuenta en **tres actos**, no en capítulos por año. El **planteamiento** presenta el mundo y al
 protagonista y termina en el **detonante** (lo que lo cambia todo). El **nudo** sube la apuesta: el **punto medio**
-cambia lo que el espectador creía saber y el **giro** (`giro: true`) va aquí. El **desenlace** trae el **clímax** y
-la **resolución**: qué quedó, y qué nunca se supo. Los actos 2 y 3 se marcan con un **rótulo** (año y ≤ 4 palabras)
-dibujado sobre la primera escena del acto mientras la voz sigue; una tarjeta de capítulo que detiene la voz es la
-excepción. El editor escribe la espina (detonante, punto medio, clímax, resolución) con los ejes que la sostienen; el
-guionista cuelga las escenas de esa espina. Y antes de colgar nada escribe la **narración de corrido** (320–400
-palabras ≈ 150 s a 145 palabras por minuto): las escenas la reparten sin cambiar una palabra (H15).
+cambia lo que el espectador creía saber y el **giro** (`giro: true`) va aquí. El **desenlace** trae el **clímax** y la
+**resolución**: qué quedó, y qué nunca se supo. Los actos 2 y 3 se marcan con un **rótulo** (año y ≤ 4 palabras)
+dibujado sobre la primera escena del acto mientras la voz sigue (en la mesa, el rótulo abre la mesa de esa escena como
+ficha: «Acto 2 de 3 · lugar», título y periodo); una tarjeta de capítulo que detiene la voz es la excepción. El editor
+escribe la espina (detonante, punto medio, clímax, resolución) con los ejes que la sostienen; el guionista cuelga las
+escenas de esa espina. Y antes de colgar nada escribe la **narración de corrido** (320–400 palabras ≈ 150 s a 145
+palabras por minuto): las escenas la reparten sin cambiar una palabra (H15).
 
 | Bloque | Qué | Gate |
 |---|---|---|
-| E1 gancho (≤ 7.5 s) | **siempre una foto a sangre del protagonista** que cubre toda la pantalla (visual `foto`, como la Cajita Feliz; H12); el momento más fuerte de la historia (el problema que la hizo nacer, la persona, la decisión), **nombra al protagonista** (la marca, la persona: `protagonista` del encuadre), en medias res, **nunca una revelación** del encuadre (lo que el video paga: de qué está hecho, cómo terminó; H13 veta sus números, el crítico puntúa `reserva`); se lee en silencio; «Guatemala» en ≤ 6 s; sin «Esta es la historia de…» | `ganchos --check` (R1–R9, R11–R12; sin R10; H7 visual foto; H10, H12, H13) |
+| E1 gancho (≤ 7.5 s) | **siempre una foto a sangre del protagonista** que cubre toda la pantalla (visual `foto`, como la Cajita Feliz; H12); el momento más fuerte de la historia (el problema que la hizo nacer, la persona, la decisión), **nombra al protagonista** (la marca, la persona: `protagonista` del encuadre), en medias res, **nunca una revelación** del encuadre (lo que el video paga: de qué está hecho, cómo terminó; H13 veta sus números, el crítico puntúa `reserva`); se lee en silencio; «Guatemala» en ≤ 6 s; sin «Esta es la historia de…». **En la mesa** el cuadro 0 no es a sangre: la foto del protagonista sobre papel con su pie y su crédito, su nombre en una nota y el golpe de arriba (≤ 6 palabras), ya puestos antes de que suene nada (MV14) | `ganchos --check` (R1–R9, R11–R12; sin R10; H7 visual foto; H10, H12, H13) |
 | promesa | una oración propia en la escena 2 que abre una pregunta concreta de la historia sin anunciar el video (forma del catálogo de `referencias/promesas.md`, que rota); `revela` dice qué revelación paga y la escena `pago` (último tercio) la cuenta con sus palabras | V9 · H14 · P1–P3 |
 | bisagra | el segundo enganche justo antes del giro, con otra forma, literal en la narración; lo paga el giro o una escena posterior | P4 |
 | narración | `narracion[3]` `{acto, texto}`: el texto corrido por acto, 320–400 palabras; cada voz de escena es un tramo literal; ≥ 2 conectores causales o temporales por acto; ≤ 1 escena que abra con atribución; ≤ 6.5 cortes por minuto | H15 · H16 |
@@ -88,7 +120,22 @@ decide el efecto de la entrada: la voz no tiene que empezar con el conector (la 
 Topes de voz: foto 40–280, cita 30–280, tarjeta/mapa/ranking/tiempo/explica 40–260, golpe 20–130, capitulo 10–90,
 red, vias, lupa, deptos, pagina y bandos 60–320, cortina 50–300, archivo 50–320.
 
+(Motor propio: lo que el párrafo anterior dice de cómo se dibuja cada escena —la foto a sangre, el chip, el resaltador,
+el zoom a la cifra— es el dibujo viejo.) **En la mesa** los tipos, los topes de voz y los gates del guion son los mismos,
+pero la escena es unidad de **voz y de respaldo** (sus hechos, su foto semilla, su cita, su página), no de dibujo: el
+realizador decide en el plano qué pieza entra con cada oración. `explica`, `tarjeta`, `mapa`, `ranking`, `tiempo`,
+`escala`, `vias`, `deptos`, `lupa` y `cortina` ocupan una mesa solas, como tableros; `foto`, `cita`, `golpe`,
+`definicion`, `pagina`, `archivo`, `bandos` y `red` dan las piezas de su mesa (la foto con su pie, la cita que se
+entinta, la página con la frase subrayada, las fichas de persona, la jerarquía). El `titular` de una escena `foto` es el
+golpe de arriba de su mesa (≤ 6 palabras, sin adelantar la cifra).
+
 **Cómo se ve** (estilo Noche, `referencias/diseno/sistema.md`; lo mismo que `/video` y `/noticias`):
+
+(Motor propio: esta lista describe las páginas `video/*.html`. En la mesa valen la paleta, el grano, la tipografía y el
+acento en una sola cosa; el cuadro, las piezas y sus medidas están en `referencias/flujo-mesa.md` §2–3. No hay fotos a
+sangre: la foto va sobre papel con su pie y su crédito. La cita se entinta palabra por palabra y los subtítulos callan
+mientras la voz la lee. La barra de progreso lleva un tramo por acto y otro para el cierre.)
+
 - Fondo de la paleta casi negro con grano fijo; en el **acto 2** (el nudo) toda la escena baja a `fondo_acto2`
   (fondo × 0.5), cuerpo y velos incluidos: el nudo se ve más oscuro sin que la voz lo diga.
 - **Fotos a sangre** (gancho y `foto`), brillo 0.45–0.6, con una sombra del color del fondo arriba (bajo la barra) y
@@ -139,14 +186,22 @@ En pantalla, la toma usa la lámina de la foto (`video/noticia.html`): el clip c
 
 ## Personas, red y dinamismo (decisión del usuario, 2026-11-06)
 
-**Cada persona tiene cara.** La primera vez que la voz nombra a una persona del encuadre (`personajes[]` con `tipo: persona`, `cargo` ≤ 28 caracteres y `bando`), la escena muestra su **tarjeta**: retrato en círculo, nombre y cargo, bajo la barra de arriba durante 2.2 s. La arma `tiempos` sola (`S.personas`). Si la foto de la escena ya la muestra (una cara marcada con su nombre), solo va la franja del nombre y el sub-plano se acerca a su cara en ese instante.
+(Motor propio: la tarjeta de persona de 2.2 s, los planos de la foto, el dibujo de la escena `red`, las señales y las
+transiciones de esta sección son del dibujo viejo. **En la mesa**: cada persona que la voz nombra entra como pieza
+`persona` (retrato, nombre y cargo; si un hecho verificado con fecha lo trae, su situación: «Absuelta», «Condenado en
+2022») y se queda en la mesa; la escena `red` se dibuja como jerarquía de personas, con ≤ 3 niveles, ≤ 2 por nivel y
+≤ 2 acusadores aparte y sin hilos, y un alegato lleva hilo punteado y la etiqueta «Según…» (MV12); no hay sub-planos,
+empuje de la foto ni transiciones. Los retratos, los focos y los gates H21–H23 valen igual: son el
+respaldo de esas piezas.)
+
+**Cada persona tiene cara.** La primera vez que la voz nombra a una persona del encuadre (`personajes[]` con `tipo: persona`, `cargo` ≤ 28 caracteres y `bando`), la escena muestra su **tarjeta**: retrato en círculo, nombre y cargo, bajo la barra de arriba durante 2.2 s. La arma `tiempos` sola (`S.personas`). Si la foto de la escena ya la muestra (una cara marcada con su nombre), solo va la franja del nombre y hay un corte limpio a su cara en ese instante.
 
 **Retratos y focos.** El retrato es una foto con `retrato_de`, o una cara marcada en una foto de grupo:
 - `historia.py focos TRABAJO` detecta las caras con Vision de macOS (`scripts/caras.swift`).
 - `historia.py focos TRABAJO --foto ID --cara K --persona "Nombre" --evidencia "pie o categoría"` dice de quién es cada cara.
 - `foto` guarda los focos solo y acepta `--retrato-evidencia`.
 
-**Sub-planos.** En cada foto, la cámara cambia de encuadre cada 3–4.5 s: amplio → cerca de una cara (×1.55) → medio de otra → amplio (`video.planos_foto`, `S.N.planos`). Sin caras, usa los tercios. En las escenas sin foto (golpe, tarjeta, animación) hay un salto de cámara hacia afuera en un inicio de oración (`S.saltos`).
+**Cámara quieta (corrección del usuario, 2026-11-07).** Los sub-planos por reloj (un encuadre nuevo cada 3–4.5 s) y el salto de cámara en las escenas sin foto se retiraron: «mover solo por mover» desorienta. Con `CAMARA_QUIETA` en `scripts/video.py`, una foto lleva un solo empuje lento y, a lo más, **un** corte limpio a la cara de la persona que la voz nombra (`video.planos_foto`, `S.N.planos`); las tarjetas, las animaciones y la red quedan quietas y se mueve lo de adentro. La imagen cambia cuando cambia de qué se habla. Detalle en `referencias/flujo-video.md`, «Cámara y edición».
 
 **Escena `red`, el organigrama.** Nodos con retrato o sigla en ≤ 3 niveles: arriba (nivel 0) quien manda, uno o los dos que mandan juntos; los de la misma altura del caso van lado a lado (nunca una fila de uno por nivel); los investigadores que la voz nombra, en su franja de abajo. La relación va en una pastilla al centro de su línea (nunca encima de un nombre o un cargo); la cámara no se mueve: los nodos entran cuando la voz los nombra (2026-11-06). Cada arista sale de un hecho verificado con `relaciones: [{de, a, rel}]`. Los alegatos van punteados, con el chip «Según la acusación» y voz atribuida.
 
@@ -155,7 +210,7 @@ En pantalla, la toma usa la lámina de la foto (`video/noticia.html`): el clip c
 - **Subrayado:** marca el año o la cifra del titular cuando la voz lo dice (`marcador`).
 - **Pantalla dividida:** `dividida: [foto_a, foto_b]`, dos personas frente a frente.
 - **Mini-mapa:** aparece si la escena tiene departamento y foto.
-- **Transiciones con dirección:** empuje a la izquierda cuando el año avanza y a la derecha cuando retrocede; whip en un «pero», como máximo uno cada 4 escenas.
+- **Transiciones:** corte o fundido. El empuje lateral según avanza o retrocede el año y el whip en un «pero» se retiraron con la cámara quieta (2026-11-07).
 
 | Gate | Qué pide |
 |---|---|
@@ -259,7 +314,9 @@ En pantalla, la toma usa la lámina de la foto (`video/noticia.html`): el clip c
 Además corren los de `/video`: V1–V5 y V9 (sin «la escena 2 es T1»; en historia tampoco exige que la voz empiece con
 el conector ni que haya `enlace`), F1–F8, V6 (por secuencia: las palabras de Scribe se reparten entre sus escenas; si
 no casan, FALLA «rehaz la secuencia (o `voz --sueltas`)»), V7, V8, V10, V11, V12, V13, V15 y V16 (la voz se aprieta
-donde ElevenLabs la cortó dentro de un nombre o una cifra).
+donde ElevenLabs la cortó dentro de un nombre o una cifra). En la mesa de archivo, de esa lista corren V1–V6, V8, V9,
+V11 y V16 (más V17–V20 y V23–V25); V7 queda para los clips de tablero, y V10, V12, V13 y V15 los reemplazan los gates
+MV del plano (`referencias/flujo-mesa.md` §5 y §7).
 
 El crítico prueba cada arreglo de texto antes de escribirlo con `historia.py probar <TRABAJO> --cambios …` (una copia
 sin audio: narracion + guion --check); un arreglo que el gate rechaza va como mejora con la falla, nunca como falta que
@@ -283,8 +340,16 @@ Las demás voces se conservan; `voz --pendientes --sueltas` pide solo la escena 
 
 Un trabajo con fecha anterior al 2026-11-10 recibe H25, H26 y P6 como aviso.
 
+(Motor propio: el tope de 12 s de una foto fija y las «composiciones distintas» de H26 miden el dibujo viejo. En la
+mesa, cuánto dura cada pieza y cuánta variedad hay lo miden MV5, MV6 y MV8 sobre el plano.)
+
 Una escena `foto` admite `ruta` (2–4 departamentos en orden): el localizador se acerca y un trazo los une (H26 revisa
 que existan y sean distintos).
+
+(Motor propio: las páginas y el dibujo de `vias` y de las demás escenas con archivos reales, abajo. En la mesa, `vias`,
+`deptos`, `lupa` y `cortina` son tableros: el mismo clip, limpio, solo en su mesa, recortado a la columna central;
+`pagina`, `archivo` y `bandos` dan piezas a su mesa: la página con la frase subrayada, las fotos, las fichas de
+persona. Sus gates H27–H33 sobre el guion valen igual.)
 
 **La escena `vias` (2026-11-12): el mapa vial real, por capas.** Dibuja la red de calles de una ciudad tomada de
 OpenStreetMap (`design/vias/<id>.json`; la arma `scripts/build_vias.py` desde la receta `<id>.fuente.json` y queda en el
@@ -339,10 +404,27 @@ Las siete se prueban sin sesión con `python3 scripts/escena_prueba.py <tipo>` (
 (mismos cuadros: `seek(t)` puro) y una en 4:5, con V13, A3 y A1. En 16:9 se muestran dentro del escenario.
 
 La escena `red` admite `estilo: "tablero"` (`video/tablero.html`): los mismos nodos y aristas y el mismo gate H23,
-como tablero de investigación con cuadritos e hilos, sin tachas. En 9:16, 4:5 y 16:9.
+como tablero de investigación con cuadritos e hilos, sin tachas. En 9:16, 4:5 y 16:9. (Motor propio: en la mesa los dos
+estilos se dibujan igual, como la jerarquía de personas de la pieza `red`.)
 
 `historia.py producir <TRABAJO> [--solo n] [--sin-escucha]` corre la cadena tiempos → escuchar → grabar → montar →
-revisar en 9:16 y luego grabar → montar → revisar en 4:5, y para en la primera falla.
+revisar en 9:16 y luego grabar → montar → revisar en 4:5, y para en la primera falla. En la mesa añade `plano --check
+--hoja` después de la escucha y se detiene con «falta la fase Plano» si el TRABAJO no tiene `plano.json`; `--solo` es
+del motor propio.
+
+### Producción en la mesa (2026-11-14)
+
+- **Plano**: `Workflow({ name: "plano", args: { trabajo: "<TRABAJO>" } })` tras `tiempos` con la voz real. El
+  `video-realizador` parte de `historia.py plano <TRABAJO> --digesto`, escribe `plano.json` y deja `plano --check
+  --hoja` en 0. Devuelve `plano_listo` (la sesión muestra `plano.md` y sigue) o `plano_pendiente` con sus fallas.
+- **`grabar`**: los gates del plano, los tableros limpios, el proyecto de HyperFrames (`TRABAJO/hf/<9x16|4x5>/`),
+  `hyperframes check` y el render con **un solo proceso** (≈ 1.6× la duración por formato: ≈ 4 min para 2.5 min de
+  video; los dos formatos van en fila). No hay `grabar --solo`: si cambia una voz o el plano, se graba entero.
+- **`montar`**: una sola mezcla de audio para los dos formatos (voz, música, efectos del plano, −14 LUFS), el `.srt`,
+  `caption.md` y la portada limpia (el cuadro del gancho sin subtítulos ni barra). El 4:5 se monta después del 9:16.
+- **`revisar`**: la hoja de contacto del video final (`revision/contacto.png`, `contacto_4x5.png`).
+- La versión B del gancho (`variante`) aún no existe en la mesa.
+
 ## Voz y costos
 
 Como `/noticias`, pero por **nodo**: una secuencia de 2–5 escenas o una escena suelta; 1 toma, Scribe por nodo y la
@@ -366,7 +448,8 @@ crédito por carácter: **≈ 1,800–2,600** en una historia de 2–3 min (`loc
   generacion_id}}`. Con un prefijo de prompt ambiguo exige `media[].prompt` entero. `partir <TRABAJO> [--secuencia K]`
   repite el corte.
 - Dentro de una secuencia la cola entre escenas es 0.3 s (0.7 en la frontera), la transición es `fade`, los
-  subtítulos siguen y los efectos van solo en la frontera, el giro y los golpes (≈ 17 por video, no 45).
+  subtítulos siguen y los efectos van solo en la frontera, el giro y los golpes (≈ 17 por video, no 45). (Motor
+  propio: en la mesa no hay transiciones entre escenas y los efectos salen del plano.)
 - Retomas: `voz --pendientes` marca la **secuencia entera** si cambió una de sus escenas (e imprime sus créditos);
   `voz --sueltas` emite solo las escenas cambiadas como nodos propios (el retroceso si V6 no casa en la frontera).
   Mismos créditos por carácter.
@@ -379,7 +462,9 @@ con estado y `tipo_hecho`, cifras, citas, fotos, casos, descartados, conflictos,
 personajes) · `base/` (hilo base) · `ganchos.json`, `seleccion.json` · `guion.json` (`narracion`, `hilos`,
 `secuencias`, escenas con `acto`) · `oyente.json` (oyente ingenuo) · `critica.json` · luego lo de `/video`:
 `locucion.json` (con `secuencia` y `cola` por escena), `audio/` (con `voz_sec_K.mp3` y `secuencias.json`),
-`escenas.json`, `clips/`, `salida/`, `revision/`.
+`escenas.json`, `clips/`, `salida/`, `revision/`. En la mesa, además: `video.json` con `"realizacion": "mesa"`,
+`plano.borrador.json` (lo que el script propone desde las escenas), `plano.json` (el realizador), `plano.md` (la hoja
+de golpes) y `hf/<9x16|4x5>/` (el proyecto de HyperFrames de cada formato).
 
 ## Retoques
 
@@ -392,6 +477,13 @@ devuelve `voces_cambiadas`. Después, `historia.py voz <TRABAJO> --pendientes` i
 hay que regrabar (y los créditos aproximados) o, con `--sueltas`, solo las escenas cambiadas como nodos propios: se
 generan esos, `descargar --estado`, `tiempos`, `escuchar`, `grabar --solo n,…` (9:16 y 4:5), `montar`, `revisar`,
 `entregar` y `memoria.py --historia` (reemplaza el registro del mismo slug).
+
+**En la mesa** hay dos clases de retoque. Uno **de pantalla** (otra pieza, otra foto, quitar un recorte, otro golpe de
+arriba, un texto que no da tiempo de leerse) no toca el guion ni la voz: Workflow `plano` con `args.notas`, y luego
+`grabar`, `montar` y `revisar` en los dos formatos. Uno **de texto o de voz** sigue el camino de arriba hasta `escuchar`
+y después repite `plano <TRABAJO> --check --hoja` (los `dice` del plano son palabras de la voz: lo que falle en las
+escenas que cambiaron se arregla con el Workflow `plano` y sus `notas`) y vuelve a grabar **entero**: no hay `grabar
+--solo` en la mesa.
 
 Otros dos puntos de entrada: `desde: "encuadre"` vuelve a contar por actos una cronología ya verificada (el editor
 re-encuadra con `digesto --para editor`: conserva tema, slug, protagonista, revelaciones, fotos_clave, ejes,
@@ -422,3 +514,6 @@ describe discrepancia (para rehacer una historia vieja sin créditos).
 
 `make historia-fixture` (maqueta: `sesiones/_fixture_historia/`, una panadería **inventada** con fuentes de ejemplo
 guardadas, fotos dibujadas con ffmpeg y voz falsa; 9:16 y 4:5 en `sesiones/_fixture_historia/trabajo/salida/`).
+La maqueta corre en la mesa con `MESA_RENDER=0`: pasa los gates del plano y `hyperframes check`, y el video es un doble
+sin render de la duración exacta (no se puede entregar). `make serie-fixture` hace lo mismo; el render real lo prueba
+`make video-fixture-mesa` (`sesiones/_fixture_mesa/`).

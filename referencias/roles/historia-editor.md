@@ -53,7 +53,8 @@ se volvió exportador de algo, un caso de justicia desde que se descubrió hasta
   esos dígitos en el gancho (H13) y una de ellas es la que paga la promesa (H14). Los digestos del gancho, del
   guionista y del crítico las listan R1, R2…
 - **`fotos_clave`** (2–4 frases): las imágenes que la historia necesita; la PRIMERA es siempre la del protagonista (la
-  bolsa o el vaso, el edificio, la persona) y es obligatoria (H12). Los investigadores y verificadores las buscan.
+  bolsa o el vaso, el edificio, la persona) y es obligatoria (H12). Los investigadores y verificadores las buscan. En
+  la mesa de archivo, la del protagonista abre el video sobre papel, con su pie: que sea reconocible a tamaño de tarjeta.
 - `dominios_propios` incluye también el sitio de la marca (`incaparina.com`), no solo el de la institución: su prensa
   cuenta como foto «empresa».
 
@@ -106,7 +107,7 @@ posterior. Corre `python3 scripts/serie.py plan <TRABAJO> --check` hasta 0 falla
 `referencias/flujo-serie.md`.
 
 ## Personajes y modo caso (2026-11-06)
-- **Personajes.** Hasta 12. Cada uno lleva `tipo` (persona | institucion), `cargo` (≤ 28 caracteres: va en su tarjeta en pantalla) y `bando` (acusado | investigador | juez | otro).
+- **Personajes.** Hasta 12. Cada uno lleva `tipo` (persona | institucion), `cargo` (≤ 28 caracteres: va en su tarjeta en pantalla; en la mesa de archivo, en su ficha) y `bando` (acusado | investigador | juez | otro).
 - **Toda persona que la voz nombre tendrá su retrato en pantalla (H22).** Por eso incluye a las personas clave del caso (operadores, jefes, testigos, fiscales) aunque aparezcan poco.
 - **Modo caso** (`/serie … caso`): reparte por TEMA.
   - `serie.columna`: los temas en orden.
@@ -133,7 +134,8 @@ encuadre, en las `fuentes_sugeridas` o en `fotos_clave` del eje que corresponda,
   dilo en tu salida para que se arme antes del guion (`scripts/build_vias.py`).
 - **Una serie corta de una cifra** (3–5 censos, 4 años): los valores completos, para barras o burbujas.
 
-No fuerces ninguna: una historia sin estos archivos se cuenta con fotos, citas y tarjetas, como siempre.
+No fuerces una **escena** de archivo que la historia no pide (un mapa vial, una cortina). Los archivos básicos —notas
+con su titular, documentos, lugares y un retrato por persona— ya no son opcionales: «Con la mesa de archivo», abajo.
 
 ## Lo que está en juego (H8, H25; 2026-11-10)
 
@@ -141,3 +143,25 @@ Cada acto lleva `en_juego`: qué se puede perder ahí y a quién alcanza, en una
 cuentas»). Sube de acto en acto: del negocio de alguien, a la gente que dependía de él, al país. No se repite. En una
 serie, cada parte del plan lleva también su `en_juego` (mayor que el de la anterior) y el plan lleva
 `serie.promesa.pregunta`: la pregunta que responde la serie entera, no la de una parte.
+
+## Con la mesa de archivo (2026-11-14)
+
+El video de `/historia` y de `/serie` se dibuja con la **mesa de archivo** (`referencias/flujo-mesa.md`): con cada
+oración de la voz entra en pantalla una pieza que la voz nombra, y la pieza es un archivo real antes que una ficha de
+texto (MV5 mide cuánto del video es archivo real). Lo que el encuadre no pide no llega al plano. Por eso los archivos
+que la historia puede mostrar **dejan de ser opcionales**: por cada acto, di qué hace falta, en las `preguntas` y las
+`fuentes` del eje que lo sostiene (y en `fotos_clave` lo imprescindible).
+
+- **Notas con titular**: qué notas de prensa cuentan los momentos del acto (el detonante, el punto medio, el clímax),
+  con el medio y la época. El investigador las guarda con su titular real: de ahí salen los recortes.
+- **Documentos en PDF**: qué ley, sentencia, informe o comunicado dice lo que el acto afirma, y qué frase importa. De
+  ahí sale la página con la frase subrayada.
+- **Lugares**: dónde pasa cada acto (municipio y departamento; el país si la historia sale de Guatemala). La mesa los
+  pone en el mapa.
+- **Un retrato por persona**: cada persona de `personajes` (y el protagonista, si es una persona). Quien no lo tenga
+  entra como ficha sin cara; H22 sigue pidiendo el retrato de toda persona que la voz nombre.
+- **Qué es cada institución**: su `presentacion` sirve de rol en su ficha; que quepa en ≤ 6 palabras («la autoridad de
+  los bancos»).
+
+La forma del encuadre y sus gates no cambian. En una serie, el reparto vale por parte: cada parte necesita sus notas,
+sus documentos, sus lugares y sus retratos (y SE19 sigue limitando una misma foto a ≤ 2 partes).

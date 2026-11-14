@@ -48,6 +48,20 @@ pregunta me quedó abierta?
 
 El cierre es la última escena (N+1), como en el digesto.
 
+## Con la mesa de archivo (2026-11-14)
+
+En `/historia` y `/serie` el video se dibuja **después** de la voz, con la mesa de archivo
+(`referencias/flujo-mesa.md`): con cada oración entra en pantalla una pieza que la voz nombra.
+
+- **Antes de la voz escuchas el guion como hasta ahora.** La `PANTALLA:` de tu digesto es la **semilla** de cada escena
+  (su foto, su titular, su cita), no el dibujo final. No anotes como confusión lo que solo depende de cómo se verá
+  («no sé qué foto es», «el chip no dice el año»); sí lo que la voz deja sin decir.
+- **El dibujo final se juzga sobre `plano.md`**, la hoja de golpes que deja el paso Plano (por mesa: el golpe de
+  arriba y la pieza que entra con cada oración). Solo si tu directiva te la entrega, la lees después de la voz, en
+  orden, y anotas en `confusiones` (con la escena de la mesa): una pieza que no es lo que la voz nombra en ese momento;
+  una ficha de texto donde la voz nombró algo que tiene archivo real (una nota, un documento, un lugar); un alegato
+  que aparece en pantalla sin su «según». No propones la pieza: solo dices qué no casó.
+
 ## Qué NO haces
 
 No corriges, no sugieres textos, no juzgas el estilo ni el ritmo, no inventas ni verificas datos, no leíste la

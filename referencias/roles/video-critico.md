@@ -375,7 +375,7 @@ seguiría viendo?» y «¿esto lo dice la cronología?»; la pregunta sobre el c
 
 | Regla | Qué revisas |
 |---|---|
-| H-C1 gancho | la foto a sangre y la pantalla solas, en 1 s, dicen de qué historia se trata; la voz abre con el momento más fuerte, no con «esta es la historia de»; cuenta el momento de la historia (el problema, la persona, la decisión) **nombra al protagonista** (la marca, la persona: H10) y **no regala la respuesta** que el video paga ni el detalle técnico que explica después (de qué está hecho, cómo terminó) |
+| H-C1 gancho | la foto del protagonista y la pantalla solas, en 1 s, dicen de qué historia se trata (a sangre con el motor propio; en la mesa de archivo, la foto sobre papel con su pie, el nombre en una nota y el golpe de arriba); la voz abre con el momento más fuerte, no con «esta es la historia de»; cuenta el momento de la historia (el problema, la persona, la decisión) **nombra al protagonista** (la marca, la persona: H10) y **no regala la respuesta** que el video paga ni el detalle técnico que explica después (de qué está hecho, cómo terminó) |
 | H-C2 tensión | la promesa nombra algo concreto de la historia (sin anunciar el video; forma de `referencias/promesas.md`) y `promesa.pago` cuenta `promesa.revela` con sus palabras; la bisagra re-abre el interés antes del giro y el giro la paga. **La espina está entera y en orden**: el detonante cierra el acto 1, el punto medio cambia la comprensión a mitad, el clímax llega en el acto 3 y la resolución dice qué quedó; el giro vive en el nudo. Cada acto termina en lo que hace querer el siguiente; nada se estira |
 | H-C3 claridad e hilo | se entiende quién es quién, cuándo y dónde sin haber leído nada: cada persona u organización llega **presentada** la primera vez (≤ 8 palabras) y las fechas avanzan con sus transiciones dichas; sin siglas ni jerga sin explicar. **Hilo conductor**: lee el guion de corrido y en cada escena pregúntate «¿esto sigue de lo anterior?»; cada referencia («esos 40 niños», «ese alimento», «así», «lo», «ellos») tiene su antecedente antes; ninguna escena repite lo que otra ya dijo como si fuera nuevo. **Hilos**: cada pregunta que la historia abre —las del encuadre y las que el oyente anota en `pregunta_sin_responder`— se paga en una escena o se declara sin respuesta en la narración («nunca se supo…»); una pregunta del oyente que coincide con un hilo del encuadre y no está pagada ni declarada **bloquea**. **`oyente.json`**: cada confusión y cada salto del oyente se resuelve (falta `bloquea` de H-C3, o H-C2 si es la promesa, con su arreglo exacto) o se justifica en `critica.json → oyente_descartadas[]{escena, motivo}`; cada `pregunta_sin_responder` se atiende con una falta H-C3 con `escena: null` que la cite o se descarta en `oyente_descartadas[]{escena: null, pregunta (literal), motivo}`; sus repeticiones las juzgas tú |
 | H-C4 flujo | lee la **narración de corrido** del digesto como un texto: ¿se oye como una sola voz que cuenta, o como tarjetas leídas una tras otra? Bloquea si una escena arranca con un conector hueco («Pero, según…», «Por eso, según…»), si la narración salta de tiempo o de tema sin decirlo, si una escena repite la apertura de la anterior o si hay más de 6.5 cortes por minuto. La variedad visual (foto, cita, gráfico, texto) sirve a la narración, no al revés: una foto puede durar 15 s si la voz la sostiene; un rótulo marca el acto sin detener la voz. Puntúa 5 cuando podrías cerrar los ojos y seguir la historia sin perderte, y 1 cuando cada escena vuelve a empezar |
@@ -440,6 +440,22 @@ parte de `claridad` y de `flujo`, sin puntaje propio:
 - **¿La etiqueta afirma más que el hecho?** En una `lupa` la etiqueta dice lo que se ve; en `bandos`, cada persona
   está en su lado por un hecho verificado. Una etiqueta que califica («el culpable», «la mentira»): falta `alta`.
 - **¿Hay demasiadas?** Más de tres en un video, o dos seguidas del mismo tipo, cansa: falta `baja`.
+
+**Con la mesa de archivo** (2026-11-14; `referencias/flujo-mesa.md`). `/historia` y `/serie` se dibujan después de la
+voz: el realizador decide en el plano qué pieza entra con cada oración. Para tu crítica:
+
+- **Antes de la voz juzgas el guion como hasta ahora.** La pantalla de tu digesto y de `locucion.json` es la
+  **semilla** de cada escena (su foto, su titular, su cita), no el dibujo final. No bloquees por planos, composición,
+  transiciones ni por cuánto dura una foto; sí por lo que el guion deja sin respaldo o sin nombrar.
+- **El gancho** (H-C1, y `silencio` en la selección): el cuadro 0 es la foto del protagonista sobre papel, con su pie
+  y su crédito, su nombre en una nota y el golpe de arriba (≤ 6 palabras); ya no hay foto a sangre ni chip. La
+  pregunta no cambia: ¿eso solo, en 1 s, dice de qué historia se trata?
+- **El dibujo final se juzga sobre `plano.md`**, la hoja de golpes que deja el paso Plano, no sobre el guion. Si la
+  directiva te la entrega, tres preguntas por mesa: ¿la pieza es lo que la voz nombra en ese momento?; ¿es un archivo
+  real (foto, recorte con su titular, página de documento, lugar) o una ficha de texto de relleno?; ¿los alegatos van
+  atribuidos (hilo punteado y «Según…» en la `red`, el medio en el recorte) y ninguna foto de un proceso sale donde
+  la voz no nombra a esa persona? Lo que falle ahí se arregla en el plano (Workflow `plano` con `notas`), nunca en el
+  guion ni en la voz.
 
 ## Modo sabías (`/sabias`)
 

@@ -12,6 +12,40 @@ principio a fin, cada escena le da una razón para quedarse, y nada se dice que 
    los personajes con su presentación, la cronología verificada (id · fecha · estado · tipo de hecho), las cifras,
    las frases literales, las fotos con su crédito, los casos, los límites y las frases ya usadas.
 
+## Con la mesa de archivo (2026-11-14)
+
+El video de `/historia` y de `/serie` ya no se dibuja con las páginas de escena, sino con la **mesa de archivo**
+(`referencias/flujo-mesa.md`): con cada oración de la voz entra en pantalla una pieza que la voz nombra (una foto, un
+recorte de prensa, la página de un documento, la ficha de una persona o de una institución, un lugar en el mapa, una
+fecha, una cifra) y se queda quieta. Qué pieza entra lo decide después el **realizador**, con la voz ya grabada (el
+paso Plano), sin cambiar una palabra tuya. Para ti cambia esto:
+
+- **La escena es unidad de voz y de respaldo, ya no de dibujo.** Sigue siendo el tramo de narración que va junto, con
+  sus `hechos`, su foto (la **semilla** de su mesa), su `cita` o su página. Ya no decides planos, transiciones ni
+  chips: los campos de pantalla siguen en el guion porque el gate los pide y porque el realizador parte de ellos.
+- **Cada oración nombra algo que se puede mostrar**: una persona, un lugar, un documento, una fecha o una cifra. Una
+  oración que solo opina o conecta («Y entonces todo cambió») deja la pantalla sin pieza, y la mesa no admite huecos
+  de más de 4 s (MV2). Al releer la narración, pregunta por cada oración: ¿qué archivo entraría aquí? Si la respuesta
+  es «ninguno», dale un nombre propio, una fecha o un lugar que la cronología sostenga, o fúndela con la vecina.
+- **Nombra con las palabras que se van a ver**: la persona con su nombre completo la primera vez, la institución por
+  su nombre, el documento por lo que es («el informe de la SIB»), la fecha con su año. La pieza entra con esas
+  palabras (1–4, literales en la voz).
+- **El `titular` de una escena `foto` es el golpe de arriba de su mesa**: ≤ 6 palabras (H6 admite 9; la mesa pide 6),
+  que diga de qué va el tramo y **no adelante la cifra** ni el desenlace.
+- **Una escena tablero ocupa una mesa sola** (`explica`, `tarjeta`, `mapa`, `ranking`, `tiempo`, `escala`, `vias`,
+  `deptos`, `lupa`, `cortina`): mientras suena su voz solo se ve su animación. No metas en esa voz un nombre, una nota
+  o una fecha que merezca su propia pieza: va en la escena anterior o en la siguiente.
+- **`red`** se dibuja como jerarquía de personas: ≤ 3 niveles, ≤ 2 personas por nivel y ≤ 2 acusadores aparte, sin
+  hilos; un alegato lleva hilo punteado y «Según…», y la voz lo atribuye (MV12). H23 no cambia, pero con más de dos
+  personas a una misma altura deja en la red solo a quienes la voz nombra.
+- **No cambia**: la narración de corrido, los actos, la verdad y la atribución, y todos los gates del guion
+  (`narracion --check`, `guion --check`). Lo que después falle en pantalla (lectura, zona, tamaño, un hueco) se
+  arregla en el plano, no en tu guion.
+
+Lo que más abajo describe cómo se ve cada escena (foto a sangre, chip, empuje de la foto, tarjeta de persona, pantalla
+dividida, hoja con sello, estilos de `red`) es el motor propio: úsalo para llenar los campos que el gate pide, no como
+el dibujo final.
+
 ## Primero la narración (H15, H16)
 
 Escribe primero el **texto corrido** de la historia, por acto, como lo diría una sola voz de principio a fin:
@@ -34,10 +68,10 @@ la voz no describe lo que ya se ve.
 
 ## Estructura (gates H8, H17, H18, H20)
 
-- **E1 gancho** (dado): siempre la foto a sangre del protagonista (H12). Si no dijo «Guatemala», la primera oración
-  de la escena 2 lo dice. Lo que el gancho calla (las **revelaciones** del digesto: la respuesta, de qué está hecho,
-  cómo terminó) es lo que el video revela después. El gancho es acto 1 (el gate se lo pone: `ganchos --usar` lo
-  reescribe).
+- **E1 gancho** (dado): siempre la foto del protagonista (H12; a sangre con el motor propio, sobre papel con su pie y
+  su nombre en una nota en la mesa de archivo). Si no dijo «Guatemala», la primera oración de la escena 2 lo dice. Lo
+  que el gancho calla (las **revelaciones** del digesto: la respuesta, de qué está hecho, cómo terminó) es lo que el
+  video revela después. El gancho es acto 1 (el gate se lo pone: `ganchos --usar` lo reescribe).
 - **Promesa** `{texto (10–80, literal en la voz de la escena en), forma, en: 2, pago, revela}`: una oración propia que
   abre una pregunta concreta de la historia **sin anunciar el video** (nada de «al final», «vas a ver», «quédate»,
   «falta saber», «el último capítulo»: P2). `forma` del catálogo de `referencias/promesas.md`: una `pregunta`
@@ -93,7 +127,8 @@ de hilos]`, `fuente?` (≤ 44; en pantalla, obligatoria cuando la escena cita un
 fuente no se mostró ni se nombró antes en el mismo acto). Topes de voz: foto 40–280, cita 30–280, tarjeta, mapa,
 ranking, tiempo y explica 40–260, golpe 20–130, capitulo 10–90; gancho y cierre como en `/video`.
 
-**Cómo se ve** (estilo Noche; «Cómo se ve» en `referencias/flujo-historia.md`): fondo casi negro de la paleta (más
+**Cómo se ve** (motor propio; en la mesa de archivo el dibujo lo decide el plano, pero lo que este párrafo le pide al
+guion sigue valiendo. Estilo Noche; «Cómo se ve» en `referencias/flujo-historia.md`): fondo casi negro de la paleta (más
 oscuro en todo el acto 2), fotos **a sangre** y oscurecidas, **una sola cosa en acento** por escena (el nombre, el año,
 la cifra o la palabra que suena), titulares en Archivo 800 crema y nombres, años y cifras en Archivo condensado en
 mayúsculas. Lo que eso le pide al guion: escribe todo en caja normal (la página pone la caja); en una `cita` la frase
@@ -103,7 +138,8 @@ el resto de la voz (quién habla, lo que sigue) va antes o después de la frase,
 
 - **toma**: ya no existe (retiradas el 2026-11-06: muchas veces sin coherencia con lo que se narra; TM0 las rechaza). Una declaración que importa va como **cita** con la frase literal leída por la voz; el
   contexto, con una foto.
-- **foto** `{foto: "<id>" | null, fecha (chip ≤ 14: «Feb 2015»), lugar (≤ 24), titular (≤ 9 palabras), hechos: [ids],
+- **foto** `{foto: "<id>" | null, fecha (chip ≤ 14: «Feb 2015»), lugar (≤ 24), titular (≤ 9 palabras; en la mesa de
+  archivo es el golpe de arriba: ≤ 6), hechos: [ids],
   cifra?: {texto ≤ 18 con dígitos, etiqueta ≤ 30}, fuente? (≤ 44), texto (40–280)}`.
   - **Siempre con foto**: nunca `null`, `icono` ni `depto` (H7). Si el hecho no tiene foto propia, usa una de
     referencia del digesto (crédito «Foto de referencia: …») y pon en el chip «De referencia» o la época sin año. Si
@@ -149,7 +185,9 @@ el resto de la voz (quién habla, lo que sigue) va antes o después de la frase,
   partirla solo para «que se mueva» confunde.
 - **La cámara no hace nada por su cuenta**: una foto lleva un solo empuje lento, y a lo más un corte limpio a la cara
   de la persona que la voz nombra (la tarjeta de persona). Las tarjetas, las animaciones y la red quedan quietas: se
-  mueve lo de adentro. Transiciones limpias (corte o fundido); nada de barridos ni empujes laterales.
+  mueve lo de adentro. Transiciones limpias (corte o fundido); nada de barridos ni empujes laterales. (Eso es el
+  motor propio. En la mesa de archivo la cámara no se mueve nunca y no hay transiciones: el ritmo lo da la pieza que
+  entra con cada oración.)
 - **Sin tomas de video** (retiradas): una declaración que importa va como **cita** con su frase literal leída por la voz.
 - **En una serie, nada se repite** (SE13): una cita o una frase de ≥ 8 palabras que ya salió en una parte anterior no
   vuelve a salir; dilo de otra forma o usa otra cita.
@@ -283,9 +321,9 @@ seguido, las partes se repetían: 17 hechos contados dos o tres veces, Monzón p
   - Cada arista lleva el id del hecho cuyas `relaciones` la dicen.
   - Si alguna es un alegato: `atribuida: true` y la voz atribuye («según la fiscalía…»). Gate H23.
   - Cada `dice` suena en la voz en el orden de los nodos.
-- **`dividida`**: dos personas frente a frente en una escena foto. Escribe `dividida: [foto_a, foto_b]`, con un retrato de cada una.
+- **`dividida`**: dos personas frente a frente en una escena foto. Escribe `dividida: [foto_a, foto_b]`, con un retrato de cada una. (Motor propio; en la mesa de archivo, qué piezas entran con esas dos personas lo decide el plano.)
 - **Cita de un documento:** entra como hoja con sello (fecha y fuente). No hace falta escribir nada más.
-- **Tarjeta de persona:** la primera mención la arma el script sola. Tu trabajo es que la voz diga el nombre completo o su alias la primera vez.
+- **Tarjeta de persona:** la primera mención la arma el script sola. Tu trabajo es que la voz diga el nombre completo o su alias la primera vez. (En la mesa de archivo es la pieza `persona`, que se queda en la mesa: entra con el nombre que diga la voz.)
 - **Modo caso:** cita en `hechos` de cada escena los ids que cuentas; la parte debe citar ≥ 60 % de los que se le repartieron (SE12).
 - **Última parte de una serie: el resumen** (SE14). Una escena `resumen_serie: true` en el acto 3, antes de la última cita o
   del cierre, de 20–30 s de voz: repasa en orden toda la serie (un momento por oración, de ≥ 5 partes, con sus ids en
@@ -301,14 +339,18 @@ seguido, las partes se repetían: 17 hechos contados dos o tres veces, Monzón p
   hilo en el nudo, que otro siga abierto; no los pagues todos en la misma escena.
 - Una `foto` no pasa de 12 s: si el tramo es más largo, son dos escenas con dos imágenes (cambia el tema, cambia la
   imagen). Por cada 4 fotos, al menos una composición distinta: pantalla dividida, mini-mapa, subrayado, documento,
-  tarjeta o animación. Con ≥ 5 personas, una escena `red`.
+  tarjeta o animación. Con ≥ 5 personas, una escena `red`. (El tope de 12 s y las composiciones miden el dibujo del
+  motor propio; en la mesa de archivo la variedad la miden los gates del plano. Mientras `guion --check` marque H26,
+  cúmplelo en el guion.)
 - Última parte de una serie con `serie.promesa`: `guion.responde_serie = N`, la escena que contesta la pregunta de la
   serie. En una serie, una foto no sale en más de 2 partes (SE19): usa las que el digesto marca sin usar.
 
 ## Señalar, arriesgar y el rostro de la cifra (2026-11-10)
 
 - Cada cifra que la voz dice se ve entrar o resaltarse en ese momento (V26): si la escena es una foto, lleva `cifra`; si
-  no cabe, la cifra va en un golpe o una tarjeta. Una cifra dicha sobre una foto sin nada es la que nadie recuerda.
+  no cabe, la cifra va en un golpe o una tarjeta. Una cifra dicha sobre una foto sin nada es la que nadie recuerda. (En
+  la mesa de archivo lo exige MV1 sobre el plano: el realizador pone la pieza `cifra` cuando la voz la dice. H24 sigue
+  valiendo: la cifra que escribas en pantalla la dice la voz de esa escena.)
 - La `promesa.pregunta` es una que el espectador puede intentar contestar, y la respuesta lo sorprende.
 - Si la cronología trae a una persona afectada con nombre (verificada), cuéntala en su escena antes de dar el número de
   afectados; no en la misma. Sin persona verificada, no hay rostro.
@@ -347,7 +389,7 @@ ciudad (OpenStreetMap) y cada frase de la voz le suma una **capa**.
   en tu RETORNO: la red se arma con `scripts/build_vias.py` (no inventes ids).
 - `dice` es la palabra o el nombre que la voz dice al entrar la capa («Mixco», «El Trébol», «carriles»), sin cifras, y
   las capas van en el orden de la voz. Una capa por frase: ≥ 1.6 s de voz por capa, y la primera frase ya enciende algo
-  (si la primera capa tarda, el mapa se queda quieto y falla V21).
+  (si la primera capa tarda, el mapa se queda quieto: falla V21 con el motor propio y deja un hueco, MV2, en la mesa).
 - **Qué mostrar en cada capa:** una entrada que se llena (`arterias`), un lugar con su dato (`lugar` + `etiqueta`), el
   dato grande (`cifra` + `rotulo`), cuánto creció un municipio (`burbuja`, la misma en dos capas), la vía del tren
   (`riel`), o un acercamiento (`zoom`) para explicar un punto y luego volver (`zoom: "todo"`).

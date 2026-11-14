@@ -68,10 +68,33 @@ documentar, para que el guionista no lo cuente).
 
 ## Archivos para las escenas de archivo (2026-11-12)
 
-Si el encuadre o tu eje tienen alguno de estos, anótalo en tus hallazgos (el verificador lo baja y el guionista lo usa):
+Si el encuadre o tu eje tienen alguno de estos, anótalo en tus hallazgos (el verificador lo baja y el guionista lo usa;
+con la mesa de archivo, la nota, el documento, el lugar y el retrato de cada hecho son obligatorios: sección siguiente):
 
 - **Fuente en PDF con la frase clave** (decreto, informe, sentencia): léela con `historia.py leer` (queda guardada) y deja
   la cita literal del trozo que importa: de ahí sale la escena `pagina`, con la frase subrayada en la página real.
 - **Par antes/ahora**: dos fotos candidatas del mismo lugar o de la misma cosa, con su año.
 - **Series cortas**: los valores completos de una cifra en varios años (no solo el último), cada uno con su cita.
 - **Lugares y recorridos**: por qué departamentos o por qué calzadas pasa lo que cuentas, cada tramo con su hecho.
+
+## Con la mesa de archivo (2026-11-14)
+
+El video se dibuja con la **mesa de archivo** (`referencias/flujo-mesa.md`): con cada oración de la voz entra en
+pantalla una pieza real, y el realizador la saca de lo que tú guardaste. Lo que no traigas se queda en una ficha de
+texto. Sin presupuesto nuevo: es lo mismo que ya lees, anotado completo.
+
+- **Por cada hecho, la nota leída con su titular real.** El recorte de prensa muestra el titular tal como lo guardó
+  `historia.py leer`: un hecho apoyado solo en un resumen tuyo no da recorte. En `evidencia` va la url de la nota
+  misma (no la portada del medio ni un agregador), con su `medio` y su `fecha`.
+- **Un extracto literal corto que lo pruebe**: dentro de la `cita`, un tramo de **≤ 14 palabras** que por sí solo diga
+  el hecho (quién hizo qué, o la cifra con su unidad). La cita puede ser más larga; ese tramo es el que se lee en
+  pantalla, así que no lo cortes a media idea.
+- **Los PDF de leyes, sentencias e informes, con la frase exacta**: guárdalos con `leer` y copia la frase palabra por
+  palabra, con sus erratas (la página se busca así). Di de quién es el documento.
+- **Lugares con departamento o coordenadas**: en `lugar`, el municipio y el departamento («Mixco, Guatemala»); fuera
+  del país, la ciudad y el país, o sus coordenadas. «En el interior» no se puede poner en un mapa.
+- **Qué es cada institución en ≤ 6 palabras**: para cada institución que aparece en tus hechos, una fuente guardada
+  que diga qué es («la autoridad de los bancos», «el fondo que cubre los depósitos»). Si ninguna lo dice, va a
+  `huecos`.
+- **Retratos con un pie que nombre a la persona**: la foto candidata de cada persona lleva `retrato_de` y, en
+  `descripcion`, el pie o la categoría que dice su nombre (H21). Una cara sin pie no es un retrato.

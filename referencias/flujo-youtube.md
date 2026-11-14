@@ -81,8 +81,9 @@ cada parte se quedan: son mini-ganchos de capítulo.
   rótulo. La pieza nueva queda al frente; con 3 encima, la de abajo se atenúa; al cambiar de tema, la mesa se barre.
 - **La cámara no se mueve.** Una pieza que aterrizó se queda quieta. Las animaciones ya hechas (`explica`, `tarjeta`)
   van enteras y quietas dentro de un marco (el **tablero**), con las piezas a su lado.
-- **HyperFrames dibuja y renderiza** el 16:9; el framework decide y verifica qué se muestra. El vertical sigue en el
-  motor propio.
+- **HyperFrames dibuja y renderiza** el 16:9; el framework decide y verifica qué se muestra. El vertical va por el
+  mismo camino desde el 2026-11-14 (en piloto: `referencias/flujo-mesa.md`, `scripts/video_hf.py`); el núcleo común es
+  `scripts/mesa.py`.
 - **Nunca un gate de dinamismo sobre píxeles o movimiento.** Se mide sobre los datos: cada oración tiene un golpe con
   respaldo.
 

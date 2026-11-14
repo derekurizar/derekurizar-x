@@ -119,6 +119,21 @@ ruta que siguió el producto, por qué una decisión llevó a la siguiente), y e
 cronología). Registra con `--video <slug de la historia>`. Antes de escribir una nueva, revisa `cronologia` (una línea
 de eventos con fecha) y `cadena` en el catálogo.
 
+**Con la mesa de archivo** (2026-11-14; `referencias/flujo-mesa.md`). En `/historia` y `/serie` tu animación se ve como
+**tablero**: el clip se graba limpio y va solo en su mesa, **recortado a la columna central** (≈ 920×1010 del lienzo
+4:5) y **sin el golpe de arriba ni el rótulo de acto dentro del clip** (los pone la mesa por fuera). Al escribirla:
+
+- **El texto de los pasos, grande**: el recorte se encaja en la mesa y se achica; apunta por encima del mínimo de
+  36 px y usa pocas palabras por paso.
+- **Nada importante pegado a los bordes**: lo que queda fuera de la columna central se corta. Centra el mecanismo y
+  deja margen a los cuatro lados.
+- **Que se entienda sin el título de arriba**: los `rotulos`, el `sujeto` y los pasos dicen qué es cada cosa dentro
+  del lienzo.
+- **El último paso deja el mecanismo completo y quieto** (A1): si la voz sigue hablando después, el realizador puede
+  poner una pieza que retira la animación de un corte.
+- `animaciones.py --check` no cambia (la biblioteca sirve también a los flujos del motor propio): A1, A2 y V7 valen
+  para el clip de tablero; A3 ya no se mide en la mesa, porque el rótulo de acto no va sobre el lienzo.
+
 ## Modo explica (`/explica`)
 
 Igual, con tres diferencias:
