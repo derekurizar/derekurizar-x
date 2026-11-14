@@ -1,0 +1,317 @@
+{
+ "id": "2026-11-12-trafico-guatemala-parte-3",
+ "tipo": "historia",
+ "slug": "trafico-guatemala-parte-3",
+ "tema": "el tráfico en Guatemala: causas, problemas y soluciones",
+ "fecha": "2026-11-12",
+ "pregunta": "¿Qué hace la gente para escapar del atasco, y a qué precio?",
+ "arco": "proceso con juicio: cómo se formó el atasco, lo que cuesta, y cada solución puesta a prueba con sus propias cifras",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "2025",
+   "titulo": "El precio",
+   "escena": 6
+  },
+  {
+   "numero": 3,
+   "anio": "2025",
+   "titulo": "Lo que cobra",
+   "escena": 8
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "Este motorista no esperó al tráfico. En Guatemala encontró la salida: pasar entre los carros. Es el escape más barato del atasco, y también el que más cobra. Por eso lo tomaron tantos. Más de 3.5 millones de motos entre 6.8 millones de vehículos en todo el país, contaba en julio de 2026 la SAT. Fundesa, una fundación privada, calculó que solo en 2025 las motos crecieron 15 %. Encima, el ritmo no baja: Emetra, la policía de tránsito capitalina, calcula unos 40 mil vehículos más cada mes, y casi la mitad son motos. Colarse entre los carros ahorra tiempo, pero deja al motorista más expuesto."
+  },
+  {
+   "acto": 2,
+   "texto": "En 2025, la policía registró 8,864 hechos de tránsito, y la mitad de los vehículos involucrados eran motos. Hubo 9,601 heridos. Pero hay una cuenta que el escape barato no muestra. Ese mismo año murieron 2,432 personas en las calles y carreteras de todo el país."
+  },
+  {
+   "acto": 3,
+   "texto": "De las 2,432 personas que murieron, {1,385:f} viajaban en moto: más de la mitad. Un año antes habían muerto {1,349:f} en moto. Entonces el escape barato se paga en vidas. No es de un año: el Observatorio Nacional de Seguridad del Tránsito, que cuenta los muertos, sumó 27,118 fallecidos de 2011 a 2025. Y con 40 mil más al mes, la calle se sigue llenando: Emetra contó 2.6 millones de vehículos en el departamento de Guatemala en enero de 2026, y 3 millones a inicios de octubre. Mixco, vecino de la capital, pone entre 30 y 31 % de los que se sumaron. Si nada cambia, según Emetra, en octubre de 2027 habrá {400:m} mil vehículos más que ahora en la capital. Por eso la pregunta ya no es por dónde colarse entre los carros. Si la calle no alcanza, ¿se puede pasar por encima de ellos?"
+  }
+ ],
+ "hilos": [
+  {
+   "id": "p3h1",
+   "escena": 3
+  },
+  {
+   "id": "p3h2",
+   "escena": 8
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3,
+   4,
+   5
+  ],
+  [
+   8,
+   9,
+   10,
+   11
+  ]
+ ],
+ "paleta": "maiz",
+ "musica": "corrupcion-desenlace",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2118.79,
+ "duracion_s": 140.6,
+ "critica": {
+  "veredicto": "corregir",
+  "vuelta": 3,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 4,
+   "claridad": 3,
+   "flujo": 4,
+   "precision": 5,
+   "cierre": 4,
+   "recompensa": 4
+  }
+ },
+ "gancho": {
+  "familia": "personaje",
+  "visual": "foto",
+  "pantalla": "El motorista del tráfico",
+  "linea": "encontró la salida entre los carros"
+ },
+ "promesa": {
+  "texto": "Es el escape más barato del atasco, y también el que más cobra.",
+  "forma": "contradiccion",
+  "en": 2,
+  "pago": 8,
+  "revela": 2,
+  "pregunta": "¿Cuánto le cobra la moto al motorista?"
+ },
+ "bisagra": {
+  "texto": "Pero hay una cuenta que el escape barato no muestra.",
+  "forma": "secreto",
+  "en": 6,
+  "pago": 7
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "Este motorista no esperó al tráfico. En Guatemala encontró la salida: pasar entre los carros.",
+   "voz": "Este motorista no esperó al tráfico. En Guatemala encontró la salida: pasar entre los carros.",
+   "dur": 6.867,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "golpe",
+   "pantalla": "Es el escape más barato del atasco, y también el que más cobra. Por eso lo tomaron tantos.",
+   "voz": "Es el escape más barato del atasco, y también el que más cobra. Por eso lo tomaron tantos.",
+   "dur": 6.353,
+   "hechos": [],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "tarjeta",
+   "pantalla": "Más de 3.5 millones de motos entre 6.8 millones de vehículos en todo el país, contaba en julio de 2026 la SAT.",
+   "voz": "Más de tres millones quinientas mil motos entre seis millones ochocientos mil vehículos en todo el país, contaba en julio de dos mil veintiséis la Sat.",
+   "dur": 9.958,
+   "hechos": [
+    "cos-h16"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "foto",
+   "pantalla": "Fundesa, una fundación privada, calculó que solo en 2025 las motos crecieron 15 %.",
+   "voz": "Fundesa, una fundación privada, calculó que solo en dos mil veinticinco las motos crecieron quince por ciento.",
+   "dur": 7.389,
+   "hechos": [
+    "cos-h17"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "vias",
+   "pantalla": "Encima, el ritmo no baja: Emetra, la policía de tránsito capitalina, calcula unos 40 mil vehículos más cada mes, y casi la mitad son motos. Colarse entre los carros ahorra tiempo, pero deja al motorista más expuesto.",
+   "voz": "Encima, el ritmo no baja: Emetra, la policía de tránsito capitalina, calcula unos cuarenta mil vehículos más cada mes, y casi la mitad son motos. Colarse entre los carros ahorra tiempo, pero deja al motorista más expuesto.",
+   "dur": 15.515,
+   "hechos": [
+    "cos-h14",
+    "ciu-h14"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "tarjeta",
+   "pantalla": "En 2025, la policía registró 8,864 hechos de tránsito, y la mitad de los vehículos involucrados eran motos. Hubo 9,601 heridos. Pero hay una cuenta que el escape barato no muestra.",
+   "voz": "En dos mil veinticinco, la policía registró ocho mil ochocientos sesenta y cuatro hechos de tránsito, y la mitad de los vehículos involucrados eran motos. Hubo nueve mil seiscientos un heridos. Pero hay una cuenta que el escape barato no muestra.",
+   "dur": 17.25,
+   "hechos": [
+    "cos-h18",
+    "cos-h21"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "foto",
+   "pantalla": "Ese mismo año murieron 2,432 personas en las calles y carreteras de todo el país.",
+   "voz": "Ese mismo año murieron dos mil cuatrocientas treinta y dos personas en las calles y carreteras de todo el país.",
+   "dur": 7.078,
+   "hechos": [
+    "cos-h18"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: La Hora",
+     "origen": "medio",
+     "licencia": "© La Hora (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "tarjeta",
+   "pantalla": "De las 2,432 personas que murieron, 1,385 viajaban en moto: más de la mitad. Un año antes habían muerto 1,349 en moto. Entonces el escape barato se paga en vidas.",
+   "voz": "De las dos mil cuatrocientas treinta y dos personas que murieron, mil trescientas ochenta y cinco viajaban en moto: más de la mitad. Un año antes habían muerto mil trescientas cuarenta y nueve en moto. Entonces el escape barato se paga en vidas.",
+   "dur": 16.23,
+   "hechos": [
+    "cos-h20",
+    "cos-h18"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "foto",
+   "pantalla": "No es de un año: el Observatorio Nacional de Seguridad del Tránsito, que cuenta los muertos, sumó 27,118 fallecidos de 2011 a 2025.",
+   "voz": "No es de un año: el Observatorio Nacional de Seguridad del Tránsito, que cuenta los muertos, sumó veintisiete mil ciento dieciocho fallecidos de dos mil once a dos mil veinticinco.",
+   "dur": 11.814,
+   "hechos": [
+    "cos-h19"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Bloomberg Línea",
+     "origen": "medio",
+     "licencia": "© Bloomberg Línea (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "vias",
+   "pantalla": "Y con 40 mil más al mes, la calle se sigue llenando: Emetra contó 2.6 millones de vehículos en el departamento de Guatemala en enero de 2026, y 3 millones a inicios de octubre. Mixco, vecino de la capital, pone entre 30 y 31 % de los que se sumaron.",
+   "voz": "Y con cuarenta mil más al mes, la calle se sigue llenando: Emetra contó dos millones seiscientos mil vehículos en el departamento de Guatemala en enero de dos mil veintiséis, y tres millones a inicios de octubre. Mixco, vecino de la capital, pone entre treinta y treinta y uno por ciento de los que se sumaron.",
+   "dur": 19.473,
+   "hechos": [
+    "cos-h15",
+    "ciu-h14"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "golpe",
+   "pantalla": "Si nada cambia, según Emetra, en octubre de 2027 habrá 400 mil vehículos más que ahora en la capital.",
+   "voz": "Si nada cambia, según Emetra, en octubre de dos mil veintisiete habrá cuatrocientos mil vehículos más que ahora en la capital.",
+   "dur": 8.619,
+   "hechos": [
+    "ciu-h15"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "cierre",
+   "pantalla": "Por eso la pregunta ya no es por dónde colarse entre los carros. Si la calle no alcanza, ¿se puede pasar por encima de ellos? Sígueme: en la cuarta parte te cuento cuánta gente moverá el aerómetro, el teleférico que se construye.",
+   "voz": "Por eso la pregunta ya no es por dónde colarse entre los carros. Si la calle no alcanza, ¿se puede pasar por encima de ellos? Sígueme: en la cuarta parte te cuento cuánta gente moverá el aerómetro, el teleférico que se construye.",
+   "dur": 16.915,
+   "hechos": [],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Lo que queda",
+  "resumen": [
+   "Más de la mitad del parque, en moto",
+   "2,432 muertos en el tránsito en 2025",
+   "1,385 de ellos iban en moto"
+  ],
+  "texto": "Por eso la pregunta ya no es por dónde colarse entre los carros. Si la calle no alcanza, ¿se puede pasar por encima de ellos?",
+  "tipo": "pregunta",
+  "forma": "puente",
+  "final": "Si la calle no alcanza, ¿se puede pasar por encima de ellos?",
+  "invitacion": "Sígueme: en la cuarta parte te cuento cuánta gente moverá el aerómetro, el teleférico que se construye."
+ },
+ "caption": {
+  "tiktok": "Serie · Parte 3 de 6: La salida en moto\nLa moto se volvió el escape barato del tráfico en Guatemala. En 2025, más de la mitad de los muertos del tránsito iban en moto.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\n#Guatemala #tráfico #motos",
+  "instagram": "Serie · Parte 3 de 6: La salida en moto\nMás de la mitad de los vehículos de Guatemala ya son motos. Y en 2025 pusieron la mayoría de los muertos del tránsito.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\n#Guatemala #tráfico #motos",
+  "facebook": "Serie · Parte 3 de 6: La salida en moto\nLa moto es la salida más barata del tráfico en Guatemala, y también la que más cobra: en 2025, 1,385 de los 2,432 muertos del tránsito iban en moto.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\nFuentes en el primer comentario.",
+  "shorts": "La salida en moto: el tráfico en Guatemala (3/6) #Shorts\nSerie sobre el tráfico de la capital: las motos, la mitad del parque y el precio en vidas."
+ }
+}

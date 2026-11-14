@@ -1,0 +1,454 @@
+{
+ "version": 1,
+ "titulo": "Bancafé y Banco de Comercio: la caída de dos bancos en Guatemala (2006–2007)",
+ "promesa": {
+  "texto": "Cuando Bancafé cayó, el seguro pagó millones, pero no a todos los que le habían confiado su dinero.",
+  "forma": "contradiccion",
+  "hechos": [
+   "cai-h17",
+   "caf-h20"
+  ],
+  "foto": "caf-f01",
+  "titular": "No todos recuperaron",
+  "pregunta": "¿Por qué no todos recuperaron su dinero?",
+  "pago": "P5.e15"
+ },
+ "capitulos": [
+  {
+   "parte": 1,
+   "titulo": "El banco del café",
+   "puente": null,
+   "escenas": [
+    {
+     "ref": "P1.e1",
+     "op": "usar"
+    },
+    {
+     "ref": "P1.e2",
+     "op": "usar"
+    },
+    {
+     "ref": "P1.e3",
+     "op": "usar"
+    },
+    {
+     "ref": "P1.e4",
+     "op": "usar"
+    },
+    {
+     "ref": "P1.e5",
+     "op": "usar"
+    },
+    {
+     "ref": "P1.e6",
+     "op": "usar"
+    },
+    {
+     "ref": "P1.e7",
+     "op": "usar"
+    },
+    {
+     "ref": "P1.e8",
+     "op": "usar"
+    },
+    {
+     "ref": "P1.e9",
+     "op": "usar",
+     "quitar": [
+      "Pero a la lista aprobada le faltaba un nombre."
+     ]
+    },
+    {
+     "ref": "P1.e10",
+     "op": "usar"
+    },
+    {
+     "ref": "P1.e11",
+     "op": "usar"
+    },
+    {
+     "ref": "P1.e12",
+     "op": "usar"
+    },
+    {
+     "ref": "P1.e13",
+     "op": "usar"
+    },
+    {
+     "ref": "P1.e14",
+     "op": "quitar",
+     "razon": "cierre de la parte 1 (pregunta-puente e invitación): el capítulo siguiente sigue de corrido",
+     "fija": true
+    }
+   ]
+  },
+  {
+   "parte": 2,
+   "titulo": "La apuesta de Refco",
+   "puente": {
+    "texto": "Para tapar ese hoyo, el grupo se apoyó en una corredora de Nueva York.",
+    "foto": "ref-f02",
+    "titular": "Una corredora en Nueva York",
+    "hechos": [
+     "ref-h04",
+     "caf-h07"
+    ]
+   },
+   "escenas": [
+    {
+     "ref": "P2.e1",
+     "op": "quitar",
+     "razon": "gancho de la parte 2: el video largo abre una sola vez",
+     "fija": true
+    },
+    {
+     "ref": "P2.e2",
+     "op": "usar",
+     "quitar": [
+      "En esa corredora se jugaba la confianza en Bancafé."
+     ]
+    },
+    {
+     "ref": "P2.e3",
+     "op": "usar"
+    },
+    {
+     "ref": "P2.e4",
+     "op": "usar",
+     "quitar": [
+      "su banco en Barbados,"
+     ]
+    },
+    {
+     "ref": "P2.e5",
+     "op": "usar"
+    },
+    {
+     "ref": "P2.e6",
+     "op": "usar"
+    },
+    {
+     "ref": "P2.e7",
+     "op": "usar",
+     "quitar": [
+      "Ahí importa la liquidez: tener el dinero disponible cuando el ahorrante lo pide."
+     ]
+    },
+    {
+     "ref": "P2.e8",
+     "op": "usar"
+    },
+    {
+     "ref": "P2.e9",
+     "op": "usar"
+    },
+    {
+     "ref": "P2.e10",
+     "op": "quitar",
+     "razon": "foto repetida (ref-f04) de 15 s; el capítulo cierra mejor con el hueco que pasa a Guatemala"
+    },
+    {
+     "ref": "P2.e11",
+     "op": "quitar",
+     "razon": "salta a enero de 2007 y el capítulo 3 vuelve a octubre de 2006"
+    },
+    {
+     "ref": "P2.e12",
+     "op": "quitar",
+     "razon": "cierre de la parte 2 (pregunta-puente e invitación): el capítulo siguiente sigue de corrido",
+     "fija": true
+    }
+   ]
+  },
+  {
+   "parte": 3,
+   "titulo": "La caída de octubre",
+   "puente": {
+    "texto": "Un año después de la quiebra de Refco, una malla metálica cerraba la entrada de Bancafé cuando sus clientes llegaron por su dinero.",
+    "foto": "cai-f02",
+    "titular": "Una malla en la puerta",
+    "hechos": [
+     "cai-h12",
+     "ref-h07"
+    ]
+   },
+   "escenas": [
+    {
+     "ref": "P3.e1",
+     "op": "quitar",
+     "razon": "gancho de la parte 3: el video largo abre una sola vez",
+     "fija": true
+    },
+    {
+     "ref": "P3.e2",
+     "op": "quitar",
+     "razon": "foto repetida (caf-f01); el puente ya pone a los clientes frente a la malla"
+    },
+    {
+     "ref": "P3.e3",
+     "op": "usar"
+    },
+    {
+     "ref": "P3.e4",
+     "op": "usar",
+     "quitar": [
+      "ya lo había sancionado por pasar el tope del 15 %."
+     ]
+    },
+    {
+     "ref": "P3.e5",
+     "op": "usar"
+    },
+    {
+     "ref": "P3.e6",
+     "op": "usar",
+     "quitar": [
+      "Faltaban horas para un asueto."
+     ]
+    },
+    {
+     "ref": "P3.e7",
+     "op": "usar"
+    },
+    {
+     "ref": "P3.e8",
+     "op": "quitar",
+     "razon": "foto repetida (ref-f10); detalle que no cambia la historia"
+    },
+    {
+     "ref": "P3.e9",
+     "op": "usar"
+    },
+    {
+     "ref": "P3.e10",
+     "op": "usar"
+    },
+    {
+     "ref": "P3.e11",
+     "op": "revozar",
+     "texto": "Pero con Bancafé no se pagó cuenta por cuenta: el FOPA puso mil seiscientos millones de quetzales en un fideicomiso que cubrió el 100 % de los depósitos.",
+     "razon": "el oyente no entendió por qué se cubrió todo si el tope era Q20,000"
+    },
+    {
+     "ref": "P3.e12",
+     "op": "usar"
+    },
+    {
+     "ref": "P3.e13",
+     "op": "quitar",
+     "razon": "foto repetida (ref-f03); el capítulo cierra con la offshore fuera del rescate"
+    },
+    {
+     "ref": "P3.e14",
+     "op": "quitar",
+     "razon": "cierre de la parte 3 (pregunta-puente e invitación): el capítulo siguiente sigue de corrido",
+     "fija": true
+    }
+   ]
+  },
+  {
+   "parte": 4,
+   "titulo": "El otro banco: Banco de Comercio",
+   "puente": {
+    "texto": "Mientras Bancafé caía, otro banco seguía abierto: el Banco de Comercio.",
+    "foto": "com-f01",
+    "titular": "El Banco de Comercio",
+    "hechos": [
+     "com-h01"
+    ]
+   },
+   "escenas": [
+    {
+     "ref": "P4.e1",
+     "op": "quitar",
+     "razon": "gancho de la parte 4: el video largo abre una sola vez",
+     "fija": true
+    },
+    {
+     "ref": "P4.e2",
+     "op": "usar",
+     "quitar": [
+      "Un día, ese mismo banco pidió que lo suspendieran."
+     ]
+    },
+    {
+     "ref": "P4.e3",
+     "op": "usar",
+     "quitar": [
+      "la fiscalía que acusa,",
+      "Pero eso fue años después."
+     ]
+    },
+    {
+     "ref": "P4.e4",
+     "op": "usar"
+    },
+    {
+     "ref": "P4.e5",
+     "op": "usar",
+     "quitar": [
+      ", la SIB"
+     ]
+    },
+    {
+     "ref": "P4.e6",
+     "op": "usar"
+    },
+    {
+     "ref": "P4.e7",
+     "op": "usar"
+    },
+    {
+     "ref": "P4.e8",
+     "op": "usar"
+    },
+    {
+     "ref": "P4.e9",
+     "op": "quitar",
+     "razon": "foto repetida (ref-f04); la suspensión del 12 de enero sigue en la escena siguiente"
+    },
+    {
+     "ref": "P4.e10",
+     "op": "usar"
+    },
+    {
+     "ref": "P4.e11",
+     "op": "usar"
+    },
+    {
+     "ref": "P4.e12",
+     "op": "usar"
+    },
+    {
+     "ref": "P4.e13",
+     "op": "usar",
+     "quitar": [
+      ", así que el seguro no los cubrió"
+     ]
+    },
+    {
+     "ref": "P4.e14",
+     "op": "quitar",
+     "razon": "cierre de la parte 4 (pregunta-puente e invitación): el capítulo siguiente sigue de corrido",
+     "fija": true
+    }
+   ]
+  },
+  {
+   "parte": 5,
+   "titulo": "El dinero que no volvió",
+   "puente": {
+    "texto": "Al caer, los dos bancos dejaron bienes, y alguien tenía que cobrar primero.",
+    "foto": "ref-f03",
+    "titular": "¿Quién cobra primero?",
+    "hechos": [
+     "cai-h27",
+     "com-h19"
+    ]
+   },
+   "escenas": [
+    {
+     "ref": "P5.e1",
+     "op": "quitar",
+     "razon": "gancho de la parte 5: el video largo abre una sola vez",
+     "fija": true
+    },
+    {
+     "ref": "P5.e2",
+     "op": "usar",
+     "quitar": [
+      "¿Y el jubilado de los pagarés? No todos cabían, y la ley tardó años en cambiar."
+     ]
+    },
+    {
+     "ref": "P5.e3",
+     "op": "usar",
+     "quitar": [
+      "el seguro que pagan los bancos,"
+     ],
+     "sin_hechos": [
+      "ref-h23"
+     ]
+    },
+    {
+     "ref": "P5.e4",
+     "op": "quitar",
+     "razon": "los Q1,600 millones del FOPA ya se dijeron en el capítulo 3"
+    },
+    {
+     "ref": "P5.e5",
+     "op": "quitar",
+     "razon": "repite que la offshore y los pagarés quedaron fuera del seguro (capítulos 3 y 4)"
+    },
+    {
+     "ref": "P5.e6",
+     "op": "usar",
+     "quitar": [
+      "Un juez civil la declaró fraudulenta en un proceso que duró hasta 2017."
+     ],
+     "sin_hechos": [
+      "jui-h10"
+     ]
+    },
+    {
+     "ref": "P5.e7",
+     "op": "usar"
+    },
+    {
+     "ref": "P5.e8",
+     "op": "quitar",
+     "razon": "presenta a un expresidente que no vuelve y se confunde con Manuel Eduardo"
+    },
+    {
+     "ref": "P5.e9",
+     "op": "usar",
+     "quitar": [
+      "esos mil seiscientos millones, perdidos."
+     ]
+    },
+    {
+     "ref": "P5.e10",
+     "op": "usar"
+    },
+    {
+     "ref": "P5.e11",
+     "op": "usar",
+     "quitar": []
+    },
+    {
+     "ref": "P5.e12",
+     "op": "usar"
+    },
+    {
+     "ref": "P5.e13",
+     "op": "revozar",
+     "quitar": [],
+     "sin_hechos": [],
+     "texto": "Pero el seguro no cambió: su tope sigue igual.",
+     "razon": "el corte dejaba la frase en dos puntos; responde ¿podría repetirse? sin volver a explicar el tope"
+    },
+    {
+     "ref": "P5.e14",
+     "op": "quitar",
+     "razon": "resumen de la serie (SE14): repasa lo que el espectador acaba de ver",
+     "fija": true
+    },
+    {
+     "ref": "P5.e15",
+     "op": "usar"
+    }
+   ]
+  }
+ ],
+ "youtube": {
+  "titulo": "Bancafé y Banco de Comercio: cómo cayeron dos bancos en Guatemala y quién perdió su dinero",
+  "descripcion": "En 2006 cayó Bancafé, uno de los bancos más grandes de Guatemala, y tres meses después el Banco de Comercio. Detrás había un banco en Barbados, una corredora de Nueva York que quebró y una offshore en Panamá. El seguro de depósitos pagó millones, pero no a todos. Esta es la historia completa, con documentos y fuentes.",
+  "hashtags": [
+   "#Guatemala",
+   "#Bancafe",
+   "#BancoDeComercio",
+   "#Historia",
+   "#Bancos"
+  ]
+ }
+}

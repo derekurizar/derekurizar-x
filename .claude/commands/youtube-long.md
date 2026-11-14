@@ -16,7 +16,7 @@ Nunca publiques. Lee `referencias/flujo-youtube.md` antes de empezar.
    Escribe el índice, el informe de repeticiones y el borrador del montaje, e imprime el TRABAJO en la última línea.
 3. Muestra al usuario el informe en 4–6 líneas: minutos tal cual, hechos repetidos, personas presentadas de nuevo y
    siglas explicadas de nuevo.
-4. Avisa el tiempo (≈ 15–25 min de agentes, ≈ 60–120 min de grabación 16:9) y los créditos. Solo se graban las
+4. Avisa el tiempo (≈ 30–50 min de agentes, ≈ 15–25 min de tableros y render) y los créditos. Solo se graban las
    uniones y la promesa: ≈ 600–1,000 créditos.
 
 ## 2. MONTAJE (Workflow `youtube`, 0 créditos)
@@ -41,14 +41,33 @@ Nunca publiques. Lee `referencias/flujo-youtube.md` antes de empezar.
    `descargar` saca de ahí `generations`, `media` y `transcripts`.
 4. `python3 scripts/youtube.py tiempos <TRABAJO>` y `python3 scripts/video.py escuchar <TRABAJO>/nuevas` (V11).
 
-## 4. ARMAR, GRABAR Y MONTAR (en segundo plano)
-1. `python3 scripts/youtube.py armar <TRABAJO>`: escenas unidas, audio recortado por palabra, recursos de cada parte y
-   rótulos de capítulo.
-2. `python3 scripts/youtube.py grabar <TRABAJO>` en segundo plano (16:9, YT9 márgenes).
-3. `python3 scripts/youtube.py montar <TRABAJO>`: el video por tramos, la música alternada por capítulo, ducking,
-   efectos y −14 LUFS.
-4. Revisa la hoja de contacto y oye cada escena recortada: el corte no debe notarse. Si algo suena mal, corrige el
-   montaje (retoque) y vuelve a armar.
+## 4. ARMAR, PLANO, PROYECTO Y RENDER (el 16:9 es una «mesa de archivo» en HyperFrames)
+Qué es dinamismo (decisión del usuario, 2026-11-13): que **entre en pantalla lo que la voz nombra**. Con cada oración cae
+una pieza sobre la mesa: una foto, un recorte de prensa, la página de un documento, la ficha de una persona, un lugar en
+el mapa, una fecha, una cifra con su rótulo. La cámara no se mueve nunca para aparentar ritmo.
+
+1. `python3 scripts/youtube.py armar <TRABAJO>`: las escenas unidas, el audio recortado por palabra, los recursos de cada
+   parte y `plano.borrador.json` (lo que las escenas ya traen).
+2. **Plano** (0 créditos, ≈ 15–30 min): `Workflow({name: "youtube", args: {trabajo, desde: "plano", capitulos: N}})`
+   (N = capítulos de `capitulos.json`).
+   - Un `youtube-realizador` por capítulo escribe `plano_<N>.json` y baja los recursos que falten; un cierre deja
+     `python3 scripts/youtube.py plano <TRABAJO> --check` en 0 fallas (YT13–YT19). Guía: `referencias/roles/youtube-realizador.md`.
+   - Con `plano_pendiente`, muestra las fallas y pregunta.
+3. `python3 scripts/youtube.py plano <TRABAJO> --check --hoja` escribe `plano.md` («la voz dice | entra en pantalla»).
+   Léela entera antes de renderizar: el gate cuenta piezas, no juzga si la pieza es la correcta. Busca fotos de personas
+   en un proceso sobre oraciones que no las nombran, piezas que adelantan lo que el video cuenta después y rótulos de relleno.
+4. `python3 scripts/youtube.py grabar <TRABAJO>` (en segundo plano): solo los tableros, las escenas `explica` y `tarjeta`
+   con su animación ya hecha, grabadas limpias con el motor propio → `clips_tablero/`.
+5. `python3 scripts/youtube.py proyecto <TRABAJO>`: un proyecto de HyperFrames por capítulo en `hf/cap-N/`.
+6. `python3 scripts/youtube.py revisar <TRABAJO>`: `hyperframes check` y una hoja de contacto por capítulo
+   (`revision/hf_cap-N*.jpg`, cada mesa con todas sus piezas). **Mira todas las hojas.** Si una pieza tapa a otra o
+   queda cortada, corrígela en `plano_<N>.json` con `x`, `y` o `w` y repite 5–6. No pases de aquí con una hoja fea.
+7. `python3 scripts/youtube.py audio <TRABAJO>`: la voz, la música por capítulo y un efecto por pieza, a −14 LUFS; el
+   `.srt` y los capítulos. Deja en cada proyecto el audio de su capítulo.
+8. Vista previa para el usuario si la pide: `cd <TRABAJO>/hf/cap-N && npx hyperframes preview --background`.
+9. `python3 scripts/youtube.py render <TRABAJO>` (en segundo plano; ≈ 1.6× la duración del video): cada capítulo con
+   **un solo proceso** (`--workers 1`; con varios el video tiembla), uno tras otro → `segs_16x9/video_solo.mp4`.
+10. `python3 scripts/youtube.py montar <TRABAJO>` → `salida/video.mp4` (YT9). Mira el video entero antes de enseñarlo.
 
 ## 5. MINIATURA, TÍTULO Y ENTREGA
 1. Propón 3 miniaturas: `python3 scripts/youtube.py miniatura <TRABAJO> --texto "…" --foto <id> [--cifra "…"]
@@ -73,3 +92,6 @@ Nunca publiques. Lee `referencias/flujo-youtube.md` antes de empezar.
 - Ninguna palabra nueva sin respaldo: los puentes llevan hechos `confirmado | una_fuente` y sus números pasan V2.
 - No se reordena una parte y no se recorta una cita.
 - El usuario aprueba el montaje y elige la miniatura antes de gastar créditos o entregar.
+- En el 16:9 no hay subtítulos quemados (van en el `.srt`) ni cámara que se mueva: el ritmo lo dan las piezas que entran
+  cuando la voz las nombra. No se entrega un largo con YT13–YT19 en falla.
+- Antes de rehacer un video entero con un estilo nuevo, un piloto de 60–90 s que el usuario apruebe.

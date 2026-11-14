@@ -76,6 +76,65 @@
         7
       ],
       "estado": "publicable"
+    },
+    {
+      "id": "youtube-bancafe-y-banco-de-comercio",
+      "slug": "bancafe-y-banco-de-comercio",
+      "tema": "Bancafé y Banco de Comercio: la caída de dos bancos en Guatemala (2006–2007)",
+      "serie": "series/2026-11-09-bancafe-y-banco-de-comercio/serie.json",
+      "carpeta": "series/2026-11-09-bancafe-y-banco-de-comercio/youtube",
+      "fecha": "2026-11-13",
+      "duracion_s": 558.2,
+      "titulo": "Bancafé y Banco de Comercio: cómo cayeron dos bancos en Guatemala y quién perdió su dinero",
+      "capitulos": [
+        {
+          "numero": 1,
+          "titulo": "El banco del café",
+          "parte": 1,
+          "t": 0.0
+        },
+        {
+          "numero": 2,
+          "titulo": "La apuesta de Refco",
+          "parte": 2,
+          "t": 134.97
+        },
+        {
+          "numero": 3,
+          "titulo": "La caída de octubre",
+          "parte": 3,
+          "t": 225.67
+        },
+        {
+          "numero": 4,
+          "titulo": "El otro banco: Banco de Comercio",
+          "parte": 4,
+          "t": 325.43
+        },
+        {
+          "numero": 5,
+          "titulo": "El dinero que no volvió",
+          "parte": 5,
+          "t": 441.33
+        }
+      ],
+      "paleta": "cacao",
+      "musica": [
+        "corrupcion-colapso",
+        "corrupcion-investigacion",
+        "corrupcion-intriga",
+        "corrupcion-judicial",
+        "corrupcion-poder"
+      ],
+      "creditos_voz": 654.93,
+      "partes": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "estado": "publicable"
     }
   ]
 }

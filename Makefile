@@ -349,7 +349,11 @@ youtube-fixture: serie-fixture   # maqueta de /youtube-long: la parte 1 de la ma
 	python3 scripts/youtube.py voz $(YT)/trabajo --falsa
 	python3 scripts/youtube.py tiempos $(YT)/trabajo
 	python3 scripts/youtube.py armar $(YT)/trabajo
+	python3 scripts/youtube.py plano $(YT)/trabajo --borrador --check --hoja
 	python3 scripts/youtube.py grabar $(YT)/trabajo --fps $(FPS)
+	python3 scripts/youtube.py proyecto $(YT)/trabajo
+	python3 scripts/youtube.py audio $(YT)/trabajo
+	python3 scripts/youtube.py render $(YT)/trabajo --calidad draft
 	python3 scripts/youtube.py montar $(YT)/trabajo
 	python3 scripts/youtube.py miniatura $(YT)/trabajo --texto "Un horno, cinco panaderías" --foto ori-f01 --chip "La Espiga"
 	python3 scripts/youtube.py teaser $(YT)/trabajo

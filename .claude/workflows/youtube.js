@@ -1,10 +1,11 @@
 export const meta = {
   name: 'youtube',
   description: 'Video largo de YouTube desde una serie entregada (/youtube-long): youtube-editor (el MONTAJE: quita lo que se repite al pegar las partes —hechos contados otra vez, personas presentadas otra vez, siglas explicadas otra vez—, recorta frases e incisos en silencios de ≥ 80 ms, escribe 1–2 oraciones de puente donde hay un salto de tiempo o de tema sin anunciar lo que viene, la promesa global y el título, la descripción y los capítulos; gate youtube.py montaje --check YT1–YT8, YT11) → historia-oyente en modo largo (el video entero de corrido: repeticiones, saltos, confusiones) → video-critico en modo largo (repetición, continuidad, uniones, ritmo, promesa, claridad; arreglos probados con youtube.py probar; ≤ 2 vueltas, desde la 2 acotadas) → se detiene con veredicto aprobar_montaje para que el usuario lo apruebe antes de gastar créditos. 0 créditos.',
-  whenToUse: 'Invocado por /youtube-long <serie> DESPUÉS de `python3 scripts/youtube.py preparar <serie>`. args: {trabajo, permitir_fallback, desde, notas}. trabajo = sesiones/youtube-<slug> (la última línea de preparar). desde: "retoque" + notas = montaje.json ya existe: el editor aplica solo las notas del usuario → gate → oyente → crítica (1 vuelta). Devuelve veredicto aprobar_montaje (la sesión muestra youtube.py resumen y pregunta) o corregir + faltas_pendientes. La voz de las piezas nuevas, el armado, la grabación 16:9, el montaje, la miniatura y la entrega los hace la sesión después.',
+  whenToUse: 'Invocado por /youtube-long <serie> DESPUÉS de `python3 scripts/youtube.py preparar <serie>`. args: {trabajo, permitir_fallback, desde, notas}. trabajo = sesiones/youtube-<slug> (la última línea de preparar). desde: "retoque" + notas = montaje.json ya existe: el editor aplica solo las notas del usuario → gate → oyente → crítica (1 vuelta). desde: "plano" + capitulos (N) = el paso «Plano» tras youtube.py armar: un youtube-realizador por capítulo escribe el guion visual del 16:9 (plano_<N>.json) y un cierre deja youtube.py plano --check en 0; devuelve veredicto plano_listo o plano_pendiente. Devuelve veredicto aprobar_montaje (la sesión muestra youtube.py resumen y pregunta) o corregir + faltas_pendientes. La voz de las piezas nuevas, el armado, los tableros, el proyecto de HyperFrames, el render, el audio, la miniatura y la entrega los hace la sesión después.',
   phases: [
     { title: 'Montaje', detail: 'youtube-editor: montaje.json desde el borrador (las marcas del formato corto ya quitadas): quitar, recortar (frases e incisos literales, en silencios ≥ 80 ms, sin partir nombres), puentes (1–2 oraciones con hechos, foto y titular, sin anunciar), promesa global, títulos de capítulo, título y descripción de YouTube; gate youtube.py montaje --check (YT1–YT8, YT11) y su RETORNO' },
     { title: 'Oyente', detail: 'historia-oyente en modo largo: el video entero de corrido (youtube.py digesto --para oyente); repeticiones, saltos y confusiones; vuelve a oír tras cada corrección' },
+    { title: 'Plano', detail: 'solo con desde: "plano" (tras youtube.py armar): un youtube-realizador por capítulo en paralelo escribe plano_<N>.json, el guion visual de la mesa de archivo del 16:9 (con cada oración entra una pieza que la voz nombra: foto, recorte, documento, persona, institución, lugar, fecha, cifra), y baja los recursos que falten (historia.py leer, foto, pagina); gate youtube.py plano --check (YT13–YT19, sobre los datos: nunca sobre píxeles ni cámara); un cierre resuelve lo que quede entre capítulos' },
     { title: 'Crítica', detail: 'video-critico en modo largo: repeticion, continuidad, uniones, ritmo, promesa, claridad (Y-C1–Y-C6); cada confusión y salto del oyente se resuelve o se justifica; arreglos probados con youtube.py probar que el editor aplica tal cual con youtube.py aplicar; ≤ 2 vueltas (1 en retoque), desde la 2 acotadas; con «pasa», las mejoras ya probadas se aplican solas y el gate se repite' },
   ],
 }
@@ -24,7 +25,10 @@ const A = typeof args === 'string' ? { trabajo: args } : (args || {})
 const trabajo = String(A.trabajo || '').replace(/\/+$/, '')
 if (!/^sesiones\/(youtube-[a-z0-9-]+|_fixture_youtube\/[a-z0-9_-]+)$/.test(trabajo)) throw new Error('args.trabajo debe ser sesiones/youtube-<slug> (la última línea que imprime `python3 scripts/youtube.py preparar <serie>`).')
 const DESDE = String(A.desde || '')
-if (!['', 'retoque'].includes(DESDE)) throw new Error('args.desde: "retoque" (montaje.json ya existe + args.notas con lo que pidió el usuario) o nada.')
+if (!['', 'retoque', 'plano'].includes(DESDE)) throw new Error('args.desde: "retoque" (montaje.json ya existe + args.notas con lo que pidió el usuario), "plano" (tras youtube.py armar, con args.capitulos) o nada.')
+const PLANO = DESDE === 'plano'
+const CAPITULOS = Number(A.capitulos || 0)
+if (PLANO && !(CAPITULOS >= 1 && CAPITULOS <= 12)) throw new Error('args.capitulos: cuántos capítulos tiene el video (capitulos.json), para un youtube-realizador por capítulo.')
 const RETOQUE = DESDE === 'retoque'
 const notas = String(A.notas || '').trim()
 if (RETOQUE && !notas) throw new Error('args.notas: en modo retoque, lo que pidió el usuario (quitar una unión, otra promesa, dejar la escena P3.e8…).')
@@ -142,9 +146,47 @@ const S = {
   },
 }
 
+S.plano = {
+  type: 'object', required: ['archivo', 'gate', 'fallas', 'piezas', 'recursos'],
+  properties: { archivo: { type: 'string', pattern: 'plano\\.json$' }, gate: { type: 'string', enum: ['ok', 'falla'] },
+    fallas: { type: 'array', items: { type: 'string' } }, piezas: { type: 'integer' }, archivo_real: { type: 'integer' },
+    recursos: { type: 'array', items: { type: 'string' } }, nota: { type: 'string' } },
+}
 const rel = (p) => String(p || '').replace(/^\.\//, '').replace(/^.*?\/(?=sesiones\/)/, '')
 const fallasDe = (r) => (r.fallas && r.fallas.length) ? r.fallas : ['el gate `youtube.py montaje --check` falló sin detalle: córrelo y copia sus líneas FALLA']
 
+// ── 0. Plano (desde: "plano"): el guion visual del 16:9. Con cada oración entra una pieza que la voz nombra (YT13–YT19) ──
+if (PLANO) {
+  phase('Plano')
+  const PREFIJOS = ['yta', 'ytb', 'ytc', 'ytd', 'yte', 'ytf', 'ytg', 'yth', 'yti', 'ytj', 'ytk', 'ytl']
+  const directivaPlano = (cap) => `Eres el REALIZADOR del video largo (lee referencias/roles/youtube-realizador.md). TRABAJO = ${trabajo}. ` +
+    `Tu capítulo: ${cap} de ${CAPITULOS}; tu prefijo de recursos: ${PREFIJOS[cap - 1]}-fNN (fotos) y ${PREFIJOS[cap - 1]}-pNN (páginas). ` +
+    `Insumo: python3 scripts/youtube.py digesto ${trabajo} --para realizador --capitulo ${cap}. Escribe ${trabajo}/plano_${cap}.json (si ya existe, conserva sus mesas y ` +
+    `sigue desde la primera escena sin mesa) y corre python3 scripts/youtube.py plano ${trabajo} --check --capitulo ${cap} hasta que no quede falla de tu capítulo ` +
+    `(las de otros capítulos no son tuyas: corren en paralelo). No edites código. Devuelve el RETORNO del gate, recursos (los ids que bajaste) y nota.`
+  const caps = await parallel(Array.from({ length: CAPITULOS }, (_, i) => () => agentRol(directivaPlano(i + 1),
+    { agentType: 'youtube-realizador', schema: S.plano, phase: 'Plano', label: `plano-${i + 1}` })
+    .catch((e) => { avisar(`AVISO: el plano del capítulo ${i + 1} no terminó (${String(e.message).split('\n')[0]})`); return null })))
+  const recursos = caps.filter(Boolean).flatMap((r) => r.recursos || [])
+  log(`Plano: ${caps.filter(Boolean).length}/${CAPITULOS} capítulos · ${recursos.length} recursos nuevos`)
+  const cierre = await conReparacion('plano (cierre)', (fallos) => agentRol(
+    `Eres el REALIZADOR del video largo, en el CIERRE (lee referencias/roles/youtube-realizador.md, «Cierre»). TRABAJO = ${trabajo}. ` +
+      `Los ${CAPITULOS} capítulos ya escribieron plano_<N>.json. Corre python3 scripts/youtube.py plano ${trabajo} --check y resuelve TODAS sus fallas editando los ` +
+      `plano_<N>.json (casi siempre YT15 entre capítulos: cambia la foto en el capítulo donde menos importa; para recursos nuevos usa el prefijo ytz). ` +
+      `No edites código. Devuelve el RETORNO.` + (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : ''),
+    { agentType: 'youtube-realizador', schema: S.plano, phase: 'Plano', label: 'plano-cierre' }),
+  (r) => [...(rel(r.archivo) !== `${trabajo}/plano.json` ? [`archivo debe ser ${trabajo}/plano.json`] : []), ...(r.gate !== 'ok' ? r.fallas : [])], 1)
+    .catch((e) => { avisar(`AVISO: el cierre del plano no dejó el gate en 0 (${String(e.message).split('\n')[0]})`); return null })
+  return {
+    veredicto: cierre && cierre.gate === 'ok' ? 'plano_listo' : 'plano_pendiente',
+    piezas: cierre ? cierre.piezas : null,
+    archivo_real: cierre ? cierre.archivo_real : null,
+    recursos: [...new Set([...recursos, ...((cierre && cierre.recursos) || [])])],
+    notas: caps.filter(Boolean).map((r) => r.nota).filter(Boolean),
+    fallas: cierre ? cierre.fallas : ['el cierre no terminó: corre youtube.py plano --check'],
+    avisos: AVISOS_WF,
+  }
+}
 // ── 1. Montaje ───────────────────────────────────────────────────────────────
 phase('Montaje')
 const directivaEditor = `Eres el EDITOR DEL VIDEO LARGO (lee referencias/roles/youtube-editor.md). TRABAJO = ${trabajo}. ` +

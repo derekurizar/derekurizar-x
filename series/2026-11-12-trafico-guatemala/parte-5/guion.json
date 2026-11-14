@@ -1,0 +1,376 @@
+{
+ "id": "2026-11-12-trafico-guatemala-parte-5",
+ "tipo": "historia",
+ "slug": "trafico-guatemala-parte-5",
+ "tema": "el tráfico en Guatemala: causas, problemas y soluciones",
+ "fecha": "2026-11-12",
+ "pregunta": "¿Qué falta para que vuelva el tren?",
+ "arco": "proceso con juicio: cómo se formó el atasco, lo que cuesta, y cada solución puesta a prueba con sus propias cifras",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "2026",
+   "titulo": "Sin contrato",
+   "escena": 5
+  },
+  {
+   "numero": 3,
+   "anio": "2007–2027",
+   "titulo": "Buses y carriles",
+   "escena": 9
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "El tren urbano se propuso en 1972. El tráfico sigue sin él. Mientras ese tren no llegue, todo el peso cae sobre buses y calzadas. Lo recuerda el presidente Bernardo Arévalo, que impulsa ese tren, el Metro Riel. Décadas después, el tren volvió a planificarse: ANADIE, la agencia de alianzas público privadas, calcula 20 estaciones, 41 minutos de viaje y {252:m} mil pasajeros al día. Entonces, en octubre de 2026, el Congreso, donde se votan las leyes de movilidad, aprobó la del Metro Riel con 134 votos."
+  },
+  {
+   "acto": 2,
+   "texto": "Ya en julio de ese año, Guatemala y el Reino Unido habían firmado un memorando para planificarlo. El británico Oliver Ballhatchet lo dijo así: La firma de este acuerdo refleja la decisión de convertir el Metrorriel en un proyecto de país. Pero la ley pone una condición. FEGUA, la empresa estatal del ferrocarril, necesita el dinero antes de firmar contratos. Y los fondos ya venían recortados desde enero: el Congreso dejó al Metro Riel con Q600 millones, la mitad de lo previsto. Dos días después de la ley, Arévalo dijo que el tren no operará en su gobierno, y añadió: Ese ha sido el costo de las decisiones que no se tomaron y que hoy son la razón del marco caótico de transporte que tenemos."
+  },
+  {
+   "acto": 3,
+   "texto": "Mientras tanto, la capital se mueve en buses. El Transmetro, que arrancó en 2007, ya rodaba en 2022 con 207 unidades. Ya en julio de 2026 se había presentado el Plan Maestro de KOICA, la cooperación coreana, que prioriza 13 proyectos. Según el plan, lo principal es crear una agencia metropolitana de transporte. Un día después de presentarlo, Arévalo dijo que su gobierno comprará unos 300 buses eléctricos en 2027. Entonces, en agosto, Emetra, el tránsito capitalino, abrió en la calle el carril reversible 50, y dijo que pasaron hasta 2,400 vehículos en un día. Todas estas salidas piden obra, dinero y años de espera. ¿Y si parte de la salida fuera no salir de casa?"
+  }
+ ],
+ "hilos": [
+  {
+   "id": "p5h1",
+   "escena": 7
+  },
+  {
+   "id": "p5h2",
+   "escena": 10
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3,
+   4
+  ],
+  [
+   5,
+   6
+  ],
+  [
+   7,
+   8
+  ],
+  [
+   9,
+   10,
+   11,
+   12,
+   13
+  ]
+ ],
+ "paleta": "maiz",
+ "musica": "corrupcion-desenlace",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2175.77,
+ "duracion_s": 145.9,
+ "critica": {
+  "veredicto": "corregir",
+  "vuelta": 3,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 3,
+   "claridad": 4,
+   "flujo": 4,
+   "precision": 5,
+   "cierre": 4
+  }
+ },
+ "gancho": {
+  "familia": "contraste",
+  "visual": "foto",
+  "pantalla": "Tren urbano desde 1972",
+  "linea": "y el tráfico sigue sin él"
+ },
+ "promesa": {
+  "texto": "Mientras ese tren no llegue, todo el peso cae sobre buses y calzadas.",
+  "forma": "apuesta",
+  "en": 2,
+  "pago": 11,
+  "revela": 2,
+  "pregunta": "¿Quién ordenaría los buses mientras no llega el tren?"
+ },
+ "bisagra": {
+  "texto": "Pero la ley pone una condición.",
+  "forma": "contradiccion",
+  "en": 6,
+  "pago": 7
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "El tren urbano se propuso en 1972. El tráfico sigue sin él.",
+   "voz": "El tren urbano se propuso en mil novecientos setenta y dos. El tráfico sigue sin él.",
+   "dur": 6.203,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Rene Hernandez · CC BY-SA 2.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 2.0"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "Mientras ese tren no llegue, todo el peso cae sobre buses y calzadas. Lo recuerda el presidente Bernardo Arévalo, que impulsa ese tren, el Metro Riel.",
+   "voz": "Mientras ese tren no llegue, todo el peso cae sobre buses y calzadas. Lo recuerda el presidente Bernardo Arévalo, que impulsa ese tren, el Metro Riel.",
+   "dur": 10.277,
+   "hechos": [
+    "tre-h04"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "vias",
+   "pantalla": "Décadas después, el tren volvió a planificarse: ANADIE, la agencia de alianzas público privadas, calcula 20 estaciones, 41 minutos de viaje y 252 mil pasajeros al día.",
+   "voz": "Décadas después, el tren volvió a planificarse: ANADIE, la agencia de alianzas público privadas, calcula veinte estaciones, cuarenta y un minutos de viaje y doscientos cincuenta y dos mil pasajeros al día.",
+   "dur": 14.056,
+   "hechos": [
+    "tre-h07"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "foto",
+   "pantalla": "Entonces, en octubre de 2026, el Congreso, donde se votan las leyes de movilidad, aprobó la del Metro Riel con 134 votos.",
+   "voz": "Entonces, en octubre de dos mil veintiséis, el Congreso, donde se votan las leyes de movilidad, aprobó la del Metro Riel con ciento treinta y cuatro votos.",
+   "dur": 10.616,
+   "hechos": [
+    "tre-h01"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "cita",
+   "pantalla": "Ya en julio de ese año, Guatemala y el Reino Unido habían firmado un memorando para planificarlo. El británico Oliver Ballhatchet lo dijo así: La firma de este acuerdo refleja la decisión de convertir el Metrorriel en un proyecto de país.",
+   "voz": "Ya en julio de ese año, Guatemala y el Reino Unido habían firmado un memorando para planificarlo. El británico Oliver Ballhatchet lo dijo así: La firma de este acuerdo refleja la decisión de convertir el Metrorriel en un proyecto de país.",
+   "dur": 15.41,
+   "hechos": [
+    "tre-h05"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "golpe",
+   "pantalla": "Pero la ley pone una condición. FEGUA, la empresa estatal del ferrocarril, necesita el dinero antes de firmar contratos.",
+   "voz": "Pero la ley pone una condición. FEGUA, la empresa estatal del ferrocarril, necesita el dinero antes de firmar contratos.",
+   "dur": 9.082,
+   "hechos": [
+    "tre-h02"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "tarjeta",
+   "pantalla": "Y los fondos ya venían recortados desde enero: el Congreso dejó al Metro Riel con Q600 millones, la mitad de lo previsto.",
+   "voz": "Y los fondos ya venían recortados desde enero: el Congreso dejó al Metro Riel con seiscientos millones de quetzales, la mitad de lo previsto.",
+   "dur": 9.089,
+   "hechos": [
+    "tre-h06"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "cita",
+   "pantalla": "Dos días después de la ley, Arévalo dijo que el tren no operará en su gobierno, y añadió: Ese ha sido el costo de las decisiones que no se tomaron y que hoy son la razón del marco caótico de transporte que tenemos.",
+   "voz": "Dos días después de la ley, Arévalo dijo que el tren no operará en su gobierno, y añadió: Ese ha sido el costo de las decisiones que no se tomaron y que hoy son la razón del marco caótico de transporte que tenemos.",
+   "dur": 14.642,
+   "hechos": [
+    "tre-h03"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Gobierno de Guatemala · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "foto",
+   "pantalla": "Mientras tanto, la capital se mueve en buses. El Transmetro, que arrancó en 2007, ya rodaba en 2022 con 207 unidades.",
+   "voz": "Mientras tanto, la capital se mueve en buses. El Transmetro, que arrancó en dos mil siete, ya rodaba en dos mil veintidós con doscientas siete unidades.",
+   "dur": 10.071,
+   "hechos": [
+    "tre-h15",
+    "tre-h16"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Andy9696down · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "foto",
+   "pantalla": "Ya en julio de 2026 se había presentado el Plan Maestro de KOICA, la cooperación coreana, que prioriza 13 proyectos.",
+   "voz": "Ya en julio de dos mil veintiséis se había presentado el Plan Maestro de KOICA, la cooperación coreana, que prioriza trece proyectos.",
+   "dur": 9.043,
+   "hechos": [
+    "tre-h10"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "golpe",
+   "pantalla": "Según el plan, lo principal es crear una agencia metropolitana de transporte.",
+   "voz": "Según el plan, lo principal es crear una agencia metropolitana de transporte.",
+   "dur": 4.736,
+   "hechos": [
+    "tre-h12"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "foto",
+   "pantalla": "Un día después de presentarlo, Arévalo dijo que su gobierno comprará unos 300 buses eléctricos en 2027.",
+   "voz": "Un día después de presentarlo, Arévalo dijo que su gobierno comprará unos trescientos buses eléctricos en dos mil veintisiete.",
+   "dur": 8.288,
+   "hechos": [
+    "tre-h13"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: El mixqueño chapin · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 13,
+   "tipo": "foto",
+   "pantalla": "Entonces, en agosto, Emetra, el tránsito capitalino, abrió en la calle el carril reversible 50, y dijo que pasaron hasta 2,400 vehículos en un día.",
+   "voz": "Entonces, en agosto, Emetra, el tránsito capitalino, abrió en la calle el carril reversible cincuenta, y dijo que pasaron hasta dos mil cuatrocientos vehículos en un día.",
+   "dur": 10.938,
+   "hechos": [
+    "tre-h17",
+    "tre-h18"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Andrea Rubio · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 14,
+   "tipo": "cierre",
+   "pantalla": "Todas estas salidas piden obra, dinero y años de espera. ¿Y si parte de la salida fuera no salir de casa? Sígueme: en la sexta parte te cuento cómo el teletrabajo y los horarios buscan vaciar las calles.",
+   "voz": "Todas estas salidas piden obra, dinero y años de espera. ¿Y si parte de la salida fuera no salir de casa? Sígueme: en la sexta parte te cuento cómo el teletrabajo y los horarios buscan vaciar las calles.",
+   "dur": 17.026,
+   "hechos": [],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Lo que falta",
+  "resumen": [
+   "Ley con 134 votos",
+   "Q600 millones en 2026",
+   "13 proyectos en el plan"
+  ],
+  "texto": "Todas estas salidas piden obra, dinero y años de espera. ¿Y si parte de la salida fuera no salir de casa?",
+  "tipo": "pregunta",
+  "forma": "puente",
+  "final": "¿Y si parte de la salida fuera no salir de casa?",
+  "invitacion": "Sígueme: en la sexta parte te cuento cómo el teletrabajo y los horarios buscan vaciar las calles."
+ },
+ "caption": {
+  "tiktok": "Serie · Parte 5 de 6: El tren que volvió al plan\nEl Metro Riel ya tiene ley, pero su dinero llegó recortado a Q600 millones. Mientras tanto: Transmetro, buses eléctricos y carriles reversibles.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\n#Guatemala #tráfico #MetroRiel",
+  "instagram": "Serie · Parte 5 de 6: El tren que volvió al plan\nEl tren urbano vuelve al plan con ley y 134 votos, pero el dinero llegó recortado. ¿Qué mueve la capital mientras tanto?\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\n#Guatemala #tráfico #MetroRiel #Transmetro",
+  "facebook": "Serie · Parte 5 de 6: El tren que volvió al plan\nEl Metro Riel tiene ley desde octubre de 2026, pero en 2026 le quedaron Q600 millones. El Plan Maestro de Movilidad prioriza 13 proyectos.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\nFuentes en el primer comentario.",
+  "shorts": "El tren que volvió al plan: Metro Riel en Guatemala (5/6) #Shorts\nLey con 134 votos, dinero recortado y lo que mueve la capital mientras tanto."
+ }
+}

@@ -124,6 +124,38 @@
       "mecanismo": "cadena"
     },
     {
+      "id": "carrera-desigual",
+      "origen": "parte-2",
+      "usos": [
+        "parte-2"
+      ],
+      "descripcion": "dos columnas que parten iguales y crecen a ritmos distintos: una se dispara, la otra apenas sube y la brecha se abre",
+      "mecanismo": "proporcion",
+      "temas": [
+        "crecimiento",
+        "brecha",
+        "ritmo",
+        "tráfico",
+        "vehículos",
+        "calles",
+        "población",
+        "oferta",
+        "demanda",
+        "carrera"
+      ],
+      "pasos": [
+        2,
+        2
+      ],
+      "ejemplo": {
+        "titulo": "Carros contra calle",
+        "pasos": [
+          "Vehículos: 9.6 % al año",
+          "Red vial: 1.4 % al año"
+        ]
+      }
+    },
+    {
       "id": "ciclo-vicioso",
       "origen": "semilla",
       "usos": [],

@@ -1,0 +1,348 @@
+{
+ "id": "2026-11-12-trafico-guatemala-parte-2",
+ "tipo": "historia",
+ "slug": "trafico-guatemala-parte-2",
+ "tema": "el tráfico en Guatemala: causas, problemas y soluciones",
+ "fecha": "2026-11-12",
+ "pregunta": "¿Cuánto nos cuesta el atasco?",
+ "arco": "proceso con juicio: cómo se formó el atasco, lo que cuesta, y cada solución puesta a prueba con sus propias cifras",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "2026",
+   "titulo": "El dinero",
+   "escena": 5
+  },
+  {
+   "numero": 3,
+   "anio": "1996–2026",
+   "titulo": "La red no crece",
+   "escena": 10
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "El tráfico no solo cuesta tiempo. En Guatemala, también cuesta quetzales. Cada año hay más calles, y aun así, según las cuentas, cada carro tiene menos. El BID, el Banco Interamericano de Desarrollo, calculó que quien viaja en la capital pierde casi 1,300 horas al año. Son 54 días enteros. Y el tiempo no se reparte parejo: el Plan Maestro de Movilidad, hecho con KOICA, la cooperación coreana, estima que un trabajador gasta hasta 4 horas diarias en trasladarse, y quien vive en la periferia, hasta 6 horas. Pero ese tiempo también vale dinero."
+  },
+  {
+   "acto": 2,
+   "texto": "En marzo de 2026, Fundesa, una fundación guatemalteca, calculó cuánto vale para quien trabaja: unos Q1,300 al mes en productividad perdida. Y calculó que, sumada, equivale al 9.4 % del PIB de todo el departamento de Guatemala. Cuatro meses después, el Gobierno puso la cuenta del BID en quetzales: más de Q25 mil millones al año. El Plan Maestro hizo una tercera cuenta: cerca del 10 % del PIB. Pero detrás de esa cuenta hay una medida que casi nadie mira: la calle. El presidente de Fundesa, José Miguel Torrebiarte, lo dijo así: el departamento de Guatemala necesita más infraestructura, ya que apenas se cuenta con 25 centímetros de red vial por habitante."
+  },
+  {
+   "acto": 3,
+   "texto": "La razón es una carrera dispareja: Fundesa calculó que los vehículos crecen 9.6 % al año, y la red vial, 1.4 %. Los kilómetros nuevos por año lo cuentan: de 369 entre 1996 y 2000 bajaron a 72 entre 2016 y 2020. Por eso cada metro de calle carga más vehículos. Y eso que, en 2022, Fundesa escribió: La meta es construir 2,000 kilómetros de red vial por año. Con datos oficiales calculó un promedio de unos 218 kilómetros al año, y menos en los últimos años. Mientras tanto, el atasco le sigue cobrando a cada trabajador. ¿Por dónde se escapa quien no puede esperar en la cola?"
+  }
+ ],
+ "hilos": [
+  {
+   "id": "p2h1",
+   "escena": 7
+  },
+  {
+   "id": "p2h2",
+   "escena": 11
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3,
+   4
+  ],
+  [
+   5,
+   6,
+   7,
+   8
+  ],
+  [
+   10,
+   11,
+   12
+  ]
+ ],
+ "paleta": "maiz",
+ "musica": "corrupcion-desenlace",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2144.78,
+ "duracion_s": 146.7,
+ "critica": {
+  "veredicto": "corregir",
+  "vuelta": 3,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 3,
+   "claridad": 3,
+   "flujo": 3,
+   "precision": 4,
+   "cierre": 4,
+   "recompensa": 3
+  }
+ },
+ "gancho": {
+  "familia": "contraste",
+  "visual": "foto",
+  "pantalla": "Tráfico: no solo tiempo",
+  "linea": "también cuesta quetzales en Guatemala"
+ },
+ "promesa": {
+  "texto": "Cada año hay más calles, y aun así, según las cuentas, cada carro tiene menos.",
+  "forma": "contradiccion",
+  "en": 2,
+  "pago": 11,
+  "revela": 2,
+  "pregunta": "¿Por qué la calle ya no alcanza al tráfico?"
+ },
+ "bisagra": {
+  "texto": "Pero detrás de esa cuenta hay una medida que casi nadie mira: la calle.",
+  "forma": "secreto",
+  "en": 8,
+  "pago": 9
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "El tráfico no solo cuesta tiempo. En Guatemala, también cuesta quetzales.",
+   "voz": "El tráfico no solo cuesta tiempo. En Guatemala, también cuesta quetzales.",
+   "dur": 5.526,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Rene Hernandez · CC BY-SA 2.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 2.0"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "Cada año hay más calles, y aun así, según las cuentas, cada carro tiene menos.",
+   "voz": "Cada año hay más calles, y aun así, según las cuentas, cada carro tiene menos.",
+   "dur": 5.768,
+   "hechos": [
+    "cos-h10"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "foto",
+   "pantalla": "El BID, el Banco Interamericano de Desarrollo, calculó que quien viaja en la capital pierde casi 1,300 horas al año. Son 54 días enteros.",
+   "voz": "El BID, el Banco Interamericano de Desarrollo, calculó que quien viaja en la capital pierde casi mil trescientas horas al año. Son cincuenta y cuatro días enteros.",
+   "dur": 11.124,
+   "hechos": [
+    "cos-h01",
+    "tre-h20"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Bloomberg Línea",
+     "origen": "medio",
+     "licencia": "© Bloomberg Línea (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "vias",
+   "pantalla": "Y el tiempo no se reparte parejo: el Plan Maestro de Movilidad, hecho con KOICA, la cooperación coreana, estima que un trabajador gasta hasta 4 horas diarias en trasladarse, y quien vive en la periferia, hasta 6 horas. Pero ese tiempo también vale dinero.",
+   "voz": "Y el tiempo no se reparte parejo: el Plan Maestro de Movilidad, hecho con KOICA, la cooperación coreana, estima que un trabajador gasta hasta cuatro horas diarias en trasladarse, y quien vive en la periferia, hasta seis horas. Pero ese tiempo también vale dinero.",
+   "dur": 17.154,
+   "hechos": [
+    "tra-h11",
+    "cos-h05"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "foto",
+   "pantalla": "En marzo de 2026, Fundesa, una fundación guatemalteca, calculó cuánto vale para quien trabaja: unos Q1,300 al mes en productividad perdida.",
+   "voz": "En marzo de dos mil veintiséis, Fundesa, una fundación guatemalteca, calculó cuánto vale para quien trabaja: unos mil trescientos quetzales al mes en productividad perdida.",
+   "dur": 12.073,
+   "hechos": [
+    "cos-h03"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "golpe",
+   "pantalla": "Y calculó que, sumada, equivale al 9.4 % del PIB de todo el departamento de Guatemala.",
+   "voz": "Y calculó que, sumada, equivale al nueve punto cuatro por ciento del PIB de todo el departamento de Guatemala.",
+   "dur": 7.874,
+   "hechos": [
+    "cos-h03"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "foto",
+   "pantalla": "Cuatro meses después, el Gobierno puso la cuenta del BID en quetzales: más de Q25 mil millones al año.",
+   "voz": "Cuatro meses después, el Gobierno puso la cuenta del BID en quetzales: más de veinticinco mil millones de quetzales al año.",
+   "dur": 8.125,
+   "hechos": [
+    "cos-h02",
+    "tre-h20"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Gobierno de Guatemala · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "tarjeta",
+   "pantalla": "El Plan Maestro hizo una tercera cuenta: cerca del 10 % del PIB. Pero detrás de esa cuenta hay una medida que casi nadie mira: la calle.",
+   "voz": "El Plan Maestro hizo una tercera cuenta: cerca del diez por ciento del PIB. Pero detrás de esa cuenta hay una medida que casi nadie mira: la calle.",
+   "dur": 11.711,
+   "hechos": [
+    "cos-h04"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "cita",
+   "pantalla": "El presidente de Fundesa, José Miguel Torrebiarte, lo dijo así: el departamento de Guatemala necesita más infraestructura, ya que apenas se cuenta con 25 centímetros de red vial por habitante.",
+   "voz": "El presidente de Fundesa, José Miguel Torrebiarte, lo dijo así: el departamento de Guatemala necesita más infraestructura, ya que apenas se cuenta con veinticinco centímetros de red vial por habitante.",
+   "dur": 13.386,
+   "hechos": [
+    "cos-h11"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "explica",
+   "pantalla": "La razón es una carrera dispareja: Fundesa calculó que los vehículos crecen 9.6 % al año, y la red vial, 1.4 %.",
+   "voz": "La razón es una carrera dispareja: Fundesa calculó que los vehículos crecen nueve punto seis por ciento al año, y la red vial, uno punto cuatro por ciento.",
+   "dur": 10.648,
+   "hechos": [
+    "cos-h10"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": "carrera-desigual",
+   "mecanismo": "proporcion"
+  },
+  {
+   "n": 11,
+   "tipo": "archivo",
+   "pantalla": "Los kilómetros nuevos por año lo cuentan: de 369 entre 1996 y 2000 bajaron a 72 entre 2016 y 2020. Por eso cada metro de calle carga más vehículos.",
+   "voz": "Los kilómetros nuevos por año lo cuentan: de trescientos sesenta y nueve entre mil novecientos noventa y seis y dos mil bajaron a setenta y dos entre dos mil dieciséis y dos mil veinte. Por eso cada metro de calle carga más vehículos.",
+   "dur": 15.269,
+   "hechos": [
+    "cos-h09"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Andrea Rubio · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "cita",
+   "pantalla": "Y eso que, en 2022, Fundesa escribió: La meta es construir 2,000 kilómetros de red vial por año. Con datos oficiales calculó un promedio de unos 218 kilómetros al año, y menos en los últimos años.",
+   "voz": "Y eso que, en dos mil veintidós, Fundesa escribió: La meta es construir dos mil kilómetros de red vial por año. Con datos oficiales calculó un promedio de unos doscientos dieciocho kilómetros al año, y menos en los últimos años.",
+   "dur": 16.28,
+   "hechos": [
+    "cos-h08"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 13,
+   "tipo": "cierre",
+   "pantalla": "Mientras tanto, el atasco le sigue cobrando a cada trabajador. ¿Por dónde se escapa quien no puede esperar en la cola? Sígueme: en la tercera parte te cuento cómo la moto se volvió la salida.",
+   "voz": "Mientras tanto, el atasco le sigue cobrando a cada trabajador. ¿Por dónde se escapa quien no puede esperar en la cola? Sígueme: en la tercera parte te cuento cómo la moto se volvió la salida.",
+   "dur": 14.934,
+   "hechos": [],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Lo que queda",
+  "resumen": [
+   "1,300 horas al año en la cola",
+   "Más de Q25 mil millones al año",
+   "Calles: 1.4 %; carros: 9.6 %"
+  ],
+  "texto": "Mientras tanto, el atasco le sigue cobrando a cada trabajador. ¿Por dónde se escapa quien no puede esperar en la cola?",
+  "tipo": "pregunta",
+  "forma": "puente",
+  "final": "¿Por dónde se escapa quien no puede esperar en la cola?",
+  "invitacion": "Sígueme: en la tercera parte te cuento cómo la moto se volvió la salida."
+ },
+ "caption": {
+  "tiktok": "Serie · Parte 2 de 6: Lo que nos cuesta\nEl tráfico de Guatemala no solo se cobra en horas: también en quetzales y en PIB. Y la calle no crece al paso de los carros.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\n#Guatemala #tráfico #movilidad",
+  "instagram": "Serie · Parte 2 de 6: Lo que nos cuesta\nCuánto nos cuesta el tráfico en Guatemala: horas, quetzales y una red vial que no alcanza.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\n#Guatemala #tráfico #movilidad",
+  "facebook": "Serie · Parte 2 de 6: Lo que nos cuesta\nEl tráfico en Guatemala cuesta tiempo y dinero, y la red vial crece mucho más lento que los carros.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\nFuentes en el primer comentario.",
+  "shorts": "Lo que nos cuesta el tráfico en Guatemala (2/6) #Shorts\nSerie sobre el tráfico de la capital: horas, quetzales y calles que no crecen."
+ }
+}

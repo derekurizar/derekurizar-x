@@ -61,52 +61,78 @@ cada parte se quedan: son mini-ganchos de capítulo.
 3. El usuario aprueba (`youtube.py resumen`) o pide un retoque.
 4. `youtube.py voz` (nodos para el MCP en `lotes` de ≤ 3, o `--falsa`) → `video.py descargar <T>/nuevas --estado <archivo|->`
    (el estado pegado tal cual vale) → `youtube.py tiempos` (sin el aviso de duración V6: `nuevas/` son piezas sueltas).
-5. `youtube.py armar` → `grabar` (16:9) → `montar`.
+5. `youtube.py armar` → Workflow `youtube` con `desde: "plano"` (un `youtube-realizador` por capítulo) → `plano --check --hoja` →
+   `grabar` (solo los tableros) → `proyecto` → `revisar` → `audio` → `render` → `montar`.
 6. `youtube.py miniatura` (3 opciones; el usuario elige) → `entregar` → `memoria.py --youtube`.
 
-## Render 16:9
+## El 16:9: una mesa de archivo en HyperFrames (2026-11-13)
 
-`video_grabar.js --formato 16:9` (1920×1080, `clips_16x9/`, `?f=169`).
+**Qué pasó.** El 16:9 falló dos veces con Bancafé.
+1. Con el motor propio era una foto por escena con un titular chico: 54 % del tiempo casi quieto, 10 fotos en 9 min.
+2. El «arreglo» fue un gate que medía píxeles que cambian (el YT14 viejo). Se cumplió moviendo la cámara: de 176 tramos de
+   voz, 61 recibieron un salto de escala sobre una cita, una tarjeta o una animación, 32 un plano de detalle sobre la
+   misma foto, y solo 12 una foto nueva. El usuario: «pésimo… el dinamismo no implica que muevas una imagen solita de un
+   lado a otro o hagas pequeña y grande una animación que ya está animada… Con dinamismo es que siempre estén
+   apareciendo elementos, transiciones, datos, fotos». Era el error que ya había corregido el 2026-11-07 (CÁMARA QUIETA).
 
-**Páginas.** Las que tienen layout horizontal propio (`PAGINAS_169`) son `noticia` (foto, gancho, toma), `historia`
-(cita, capítulo), `golpe`, `escena` (tarjeta), `explica`, `red` y `cierre`. Las demás (mapa, ranking, escala, tiempo,
-cuenta, hemiciclo, `gancho.html`) se dibujan en 4:5 dentro de `video/escenario.html`.
+**Qué se decidió** (con un piloto de 83 s que el usuario aprobó: «todo está perfecto»):
+- **Mesa de archivo.** Con cada oración cae una pieza real sobre una mesa: foto, recorte de prensa con su titular,
+  página de un documento con la frase subrayada, ficha de persona o institución, lugar en el mapa, fecha, cifra con su
+  rótulo. La pieza nueva queda al frente; con 3 encima, la de abajo se atenúa; al cambiar de tema, la mesa se barre.
+- **La cámara no se mueve.** Una pieza que aterrizó se queda quieta. Las animaciones ya hechas (`explica`, `tarjeta`)
+  van enteras y quietas dentro de un marco (el **tablero**), con las piezas a su lado.
+- **HyperFrames dibuja y renderiza** el 16:9; el framework decide y verifica qué se muestra. El vertical sigue en el
+  motor propio.
+- **Nunca un gate de dinamismo sobre píxeles o movimiento.** Se mide sobre los datos: cada oración tiene un golpe con
+  respaldo.
 
-**Reglas en el código.** `comun.js` pone `html.f169` sobre `html.f45`, así hereda lo compacto del 4:5. Cada página pisa
-lo suyo con `html.f169.f45 …`. La zona del 16:9 tiene márgenes de título del 5 % (96 px), y V13 la mide igual (YT9).
+**Las piezas** (todo en `scripts/youtube_hf.py`):
+- `plano.json`: `{"mesas": [{"escenas": [claves], "golpes": [{"tipo", "escena", "dice", …}]}]}`. `dice` son las palabras
+  literales de la voz que hacen entrar la pieza (la lógica de `historia.entradas_dice`); cae 0.3 s antes y aterriza en la
+  palabra. El catálogo y el respaldo de cada tipo están en `referencias/roles/youtube-realizador.md`.
+- `armar` escribe `plano.borrador.json` con lo que las escenas ya traen (su foto, su cifra, los años y las cifras que
+  dice la voz, las personas que nombra). La maqueta lo usa tal cual (`plano --borrador`).
+- El Workflow `youtube` con `desde: "plano"` lanza un `youtube-realizador` (opus) por capítulo y un cierre.
+- `plano --check` corre YT13–YT19; `plano --hoja` escribe `plano.md` («la voz dice | entra en pantalla») para leerla
+  antes de renderizar.
+- `grabar` solo graba los **tableros** con el motor propio (16:9 limpio, recortado al centro, un cuadro clave por
+  segundo) → `clips_tablero/`.
+- `proyecto` genera un proyecto de HyperFrames **por capítulo** (`hf/cap-N/`: `index.html`, una composición por mesa,
+  `assets/` con enlaces duros) y `hf/efectos.json` (un efecto del catálogo fijo por pieza: `papel`, `sello`,
+  `marcador`, `impacto`, `tic`, `whoosh` al barrer). Las piezas se colocan solas (`colocar`: el sitio que menos tapa a
+  las tres últimas y queda cerca de la anterior); `x`, `y`, `w` en un golpe lo fijan a mano.
+- Los rótulos de capítulo y el cierre («Suscríbete», mitad derecha libre para la pantalla final de YouTube) los arma
+  `proyecto`: no van en el plano.
+- `revisar` corre `hyperframes check` y copia una hoja de contacto por capítulo a `revision/hf_cap-N*.jpg`.
+- `audio` mezcla la voz en su segundo (el de `escenas.json`: ya no se miden clips), la música por capítulo con ducking y
+  los efectos, a −14 LUFS; escribe el `.srt` y los capítulos, y deja en cada proyecto su tramo como guía.
+- `render` usa **un proceso por capítulo** (`--workers 1`), un capítulo tras otro (HyperFrames no deja correr dos renders a
+  la vez: tiene un candado global), y los une sin recodificar. Tarda ≈ 1.6× la duración del video.
+- `montar` pone la pista sobre el video (`-c:v copy`) y comprueba YT9.
 
-**Fotos.** Una foto vertical o casi cuadrada va entera en un panel a la derecha, sobre su copia ampliada, borrosa y
-oscura: recortada para llenar el cuadro, quedaba una corbata en lugar de la cara. En la miniatura, el foco (la cara)
-manda también en las horizontales; si cae en la columna del texto (centro x < 0.55), la foto va en panel.
+**Lo medido en el piloto.**
+- Render: 83 s de video en 41 s con 8 procesos y en 2 min 11 s con uno. El motor propio tardó cerca de una hora en 9 min.
+- **Con varios procesos el video tiembla** («como una tele»): cada Chrome dibuja las piezas giradas con diferencias
+  mínimas y los cuadros se intercalan. En un tramo quieto, la diferencia entre cuadros seguidos fue 1.9 con 8 procesos y
+  0.00 con uno (90 MB frente a 24 MB). `--no-browser-gpu` no lo arregla. Por eso `--workers 1`.
+- Ninguna pieza prehecha del catálogo de HyperFrames quedó en uso: las piezas son HTML y CSS propios en el estilo Noche
+  (el bloque del mapa mundial bajaba datos de internet al renderizar). El mapa del mundo sale de
+  `design/mapas/paises-50m.json` (Natural Earth, dominio público) y el de Guatemala de `design/mapa_geometria.svg`.
 
-**Tarjetas.** En `escena.html` la tarjeta crece hasta llenar una ventana de 1728×860 (≤ 1.5×) y se centra: a escala 1
-los gráficos se veían chicos en pantalla grande. Los focos acercan desde ahí.
+**Se retiró del motor propio** (era solo del 16:9): la grabación de todas las escenas en 16:9 y el montaje por tramos, el
+margen de expediente y el tablero de los rótulos, las llamadas de cifras, la galería de fotos, los saltos de cámara y los
+planos de detalle, el paso «Imágenes» (`youtube-imagenes`) y los gates de píxeles (YT12 de fondo liso y el YT14 viejo).
+Las páginas conservan su layout `?f=169` porque los tableros lo usan.
 
-## El expediente en pantalla (2026-11-10)
+## Otras reglas del largo (2026-11-10)
 
-El 16:9 dejaba media pantalla vacía en cita, golpe, tarjeta y explica (columna centrada con 300–460 px lisos por lado).
-
-- **Margen de expediente** (`S.margen`, `youtube.py margenes`; `V.margen` en `video/comun.js`): con ≥ 3 personas ya
-  nombradas, el contenido va a la izquierda y a la derecha queda el expediente: capítulo y título, los **cuadritos** de
-  las personas nombradas hasta ahí (3 × 3), el nombre y cargo de quien la voz dice, y la línea de capítulos. La tarjeta
-  de persona no se dibuja en esas escenas.
-- **Regla del margen (coherencia):** nada entra al margen si la voz no lo nombró; no es decoración. Si un video no
-  tiene personas (un `/explica` largo), no hay margen.
-- **Tablero** en el rótulo de capítulo (`S.H.tablero`): los ya vistos atenuados y los que aparecen en ese capítulo
-  entrando, unidos por hilos (solo las aristas de las escenas `red`, H23). **Sin tachas ni marcas**: solo se ilumina a
-  quien se nombra (decisión del usuario). El tablero se arma de capítulo en capítulo; el rótulo dura 3.8 s.
-- **Transiciones con sentido** (`transiciones_con_sentido`): un documento entra como hoja (`coverup`); si el año de los
-  hechos avanza, empuja a la izquierda; si retrocede, a la derecha. Nunca por reloj.
-- **Pantalla final**: «Suscríbete» con el handle de YouTube y «Sigue viendo →» hacia la mitad derecha.
-- **Sonido**: sin efecto de entrada entre escenas de la misma parte, un `tic` cada 8 s y ≤ 6 efectos por minuto
-  (`ralear_sfx_largo`); con `musica_tema` en `youtube.json`, las pistas del tema
-  alternan por capítulo.
-- **Regrabar solo lo que cambió**: `armar` conserva los clips y borra el de cada escena cuya entrada cambió
-  (`huellas_escenas`); `grabar` sin `--solo` graba las que faltan. `armar --todo` los borra todos (cambió una página).
+- **Pantalla final**: «Suscríbete» con el handle de YouTube; la mitad derecha queda libre para los elementos finales.
+- **Música**: con `musica_tema` en `youtube.json`, las pistas del tema alternan por capítulo.
 - **Entrega**: `fuentes.md` solo con los hechos de las escenas que quedaron y sin URL repetidas; `comentario.txt`
   (≤ 9,500 caracteres) para el comentario fijado; `caption.md` con etiquetas, playlist, miniaturas a probar y los Shorts
   que deben enlazar al largo; la hoja de contacto toma un cuadro por escena en su estado final.
 - **YT8** pide además la promesa antes del segundo 15 y `promesa.pregunta` (P6).
+
 ## El adelanto y el teaser (2026-11-10)
 
 YouTube mide la intro en los primeros 30 s, y nada llevaba de los cortos al largo.
@@ -133,6 +159,15 @@ YouTube mide la intro en los primeros 30 s, y nada llevaba de los cortos al larg
 | YT9 | 1920×1080, márgenes del 16:9, −14 LUFS ±1.5, pico ≤ −1 dBTP |
 | YT10 | Miniatura 1280×720, ≤ 5 palabras, texto ≥ 120 px a 1920 (≥ 18 px a 320×180), cifra con respaldo |
 | YT11 | Título ≤ 100 caracteres. Descripción sin anuncios, ≤ 5,000 caracteres. ≥ 3 capítulos, el primero en 0:00 y cada uno de ≥ 10 s |
+| YT13 | Cada cifra o año que dice la voz se ve en una pieza de la mesa, cuando se dice (`plano --check`) |
+| YT14 | Cada oración trae un golpe (una pieza, un subrayado o un paso del tablero) cuyo `dice` está en la voz, y ningún hueco pasa de 6 s. La cámara y una foto repetida no cuentan |
+| YT15 | Una foto ≤ 2 veces en el video y a ≥ 180 s de su otra aparición |
+| YT16 | Cada pieza con su respaldo: foto con ficha y crédito; recorte con titular y extracto literales de una nota ya leída; documento con la frase en el PDF; números dichos por la voz o en los datos. Una foto de personas en un proceso solo sobre una oración que nombra a alguien |
+| YT17 | Que no sea relleno: ≥ 50 % de las oraciones con pieza nueva; ≥ 35 % de las piezas son archivo real (aviso bajo 50 %); ≥ 4 tipos por capítulo; ≤ 2 rótulos de solo texto seguidos |
+| YT18 | Carga: la mesa dura 4–45 s y lleva ≤ 12 piezas; dos piezas no entran a menos de 0.3 s; un tablero va solo en su mesa |
+| YT19 | Ninguna escena lleva saltos de cámara |
+
+YT12 (fondo liso medido en píxeles) se retiró el 2026-11-13 junto con el YT14 viejo.
 
 ## Entrega
 

@@ -158,6 +158,63 @@
           "duracion_s": 139.5
         }
       ]
+    },
+    {
+      "id": "2026-11-12-trafico-guatemala",
+      "slug": "trafico-guatemala",
+      "tema": "el tráfico en Guatemala: causas, problemas y soluciones",
+      "motor": "historia",
+      "fecha": "2026-11-12",
+      "carpeta": "series/2026-11-12-trafico-guatemala",
+      "n_partes": 6,
+      "paleta": "maiz",
+      "musica": "corrupcion-desenlace",
+      "version_plan": 4,
+      "estado": "completa",
+      "partes": [
+        {
+          "n": 1,
+          "titulo": "Cómo se llenó la ciudad",
+          "estado": "entregada",
+          "ruta": "series/2026-11-12-trafico-guatemala/parte-1",
+          "duracion_s": 140.1
+        },
+        {
+          "n": 2,
+          "titulo": "Lo que nos cuesta",
+          "estado": "entregada",
+          "ruta": "series/2026-11-12-trafico-guatemala/parte-2",
+          "duracion_s": 146.7
+        },
+        {
+          "n": 3,
+          "titulo": "La salida en moto",
+          "estado": "entregada",
+          "ruta": "series/2026-11-12-trafico-guatemala/parte-3",
+          "duracion_s": 140.6
+        },
+        {
+          "n": 4,
+          "titulo": "El aerómetro con números",
+          "estado": "entregada",
+          "ruta": "series/2026-11-12-trafico-guatemala/parte-4",
+          "duracion_s": 146.9
+        },
+        {
+          "n": 5,
+          "titulo": "El tren que volvió al plan",
+          "estado": "entregada",
+          "ruta": "series/2026-11-12-trafico-guatemala/parte-5",
+          "duracion_s": 145.9
+        },
+        {
+          "n": 6,
+          "titulo": "Trabajar sin moverse",
+          "estado": "entregada",
+          "ruta": "series/2026-11-12-trafico-guatemala/parte-6",
+          "duracion_s": 179.0
+        }
+      ]
     }
   ]
 }

@@ -2232,6 +2232,28 @@ assert [w['text'] for w in R['palabras']]==['a','c'] and R['palabras'][1]['start
   paso "W14: un límite de youtube.js distinto del de youtube.py falla en check_workflows" bash -c "cp .claude/workflows/youtube.js '$TMP/yt.js.bak'; sed -i '' 's/PUENTE_CARACTERES = 160/PUENTE_CARACTERES = 150/' .claude/workflows/youtube.js; python3 scripts/check_workflows.py --quiet >/dev/null 2>&1; rc=\$?; cp '$TMP/yt.js.bak' .claude/workflows/youtube.js; [ \$rc -ne 0 ]"
   if [[ "$RAPIDO" == "1" ]]; then echo "SKIP   make youtube-fixture (RAPIDO=1)"; else
     paso "make youtube-fixture (16:9 1920×1080, capítulos desde 0:00, sin «Sígueme» en la voz, entrega)" bash -c 'make youtube-fixture FPS=6 >/dev/null && ffprobe -v error -show_entries stream=codec_type,width,height -of csv=p=0 sesiones/_fixture_youtube/salida/video.mp4 | grep -q "video,1920,1080" && grep -q "^0:00 " sesiones/_fixture_youtube/salida/caption.md && ! grep -qi "sígueme: en la" sesiones/_fixture_youtube/salida/subtitulos.srt'
+    # el plano del 16:9 (YT13–YT19): negativos sobre el plano de la maqueta (en la maqueta el gate avisa en vez de fallar)
+    yp_neg() {  # yp_neg CÓDIGO 'python que muta P (plano.json) o E (escenas.json)'
+      local T="$YF/trabajo" cod="$1" out rc=0
+      cp "$T/plano.json" "$TMP/plano.bak"; cp "$T/escenas.json" "$TMP/escenas.bak"
+      python3 - "$T" "$2" <<'PYEOF'
+import json, sys
+T = sys.argv[1]
+P = json.load(open(T + "/plano.json")); E = json.load(open(T + "/escenas.json"))
+M = next(m for m in P["mesas"] if m["golpes"])
+exec(sys.argv[2])
+json.dump(P, open(T + "/plano.json", "w"), ensure_ascii=False); json.dump(E, open(T + "/escenas.json", "w"), ensure_ascii=False)
+PYEOF
+      out="$(python3 scripts/youtube.py plano "$T" --check 2>&1)"; echo "$out" | grep -q "(maqueta) $cod" || rc=1
+      cp "$TMP/plano.bak" "$T/plano.json"; cp "$TMP/escenas.bak" "$T/escenas.json"
+      [[ $rc == 0 ]] || { echo "$out" | tail -8; return 1; }
+    }
+    paso "plano 16:9: una mesa sin piezas (ninguna oración trae un golpe) → YT14" yp_neg "YT14" 'M["golpes"] = []'
+    paso "plano 16:9: un `dice` que la voz no dice → YT14" yp_neg "YT14" 'M["golpes"][0]["dice"] = "zzz qqq"'
+    paso "plano 16:9: una cifra que la voz no dice y sin respaldo → YT16" yp_neg "YT16" 'M["golpes"].append(dict(tipo="cifra", escena=M["golpes"][-1].get("escena", M["escenas"][0]), dice=M["golpes"][-1]["dice"], valor="98,765", rotulo="panes"))'
+    paso "plano 16:9: una foto sin ficha → YT16" yp_neg "YT16" 'M["golpes"].append(dict(tipo="foto", escena=M["golpes"][-1].get("escena", M["escenas"][0]), dice=M["golpes"][-1]["dice"], foto="zzz-f99", pie="Nada"))'
+    paso "plano 16:9: un tipo de pieza desconocido → YT16" yp_neg "YT16" 'M["golpes"][0]["tipo"] = "zoom"'
+    paso "plano 16:9: una escena con saltos de cámara → YT19" yp_neg "YT19" 'E["escenas"][1]["saltos"] = [2.0]'
   fi
 else
   echo "SKIP   /youtube-long (falta la maqueta de /serie: make serie-fixture)"

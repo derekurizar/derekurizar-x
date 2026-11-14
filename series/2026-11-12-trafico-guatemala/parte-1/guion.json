@@ -1,0 +1,338 @@
+{
+ "id": "2026-11-12-trafico-guatemala-parte-1",
+ "tipo": "historia",
+ "slug": "trafico-guatemala-parte-1",
+ "tema": "el tráfico en Guatemala: causas, problemas y soluciones",
+ "fecha": "2026-11-12",
+ "pregunta": "¿Cómo pasó la capital de ciudad a embudo?",
+ "arco": "proceso con juicio: cómo se formó el atasco, lo que cuesta, y cada solución puesta a prueba con sus propias cifras",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "1968–1997",
+   "titulo": "El tren se apaga",
+   "escena": 4
+  },
+  {
+   "numero": 3,
+   "anio": "2010",
+   "titulo": "Todo al centro",
+   "escena": 9
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "La capital de Guatemala se quedó sin tren de pasajeros. Y el tráfico ocupó su lugar. Esa capital tiene menos de la gente del país, pero sus calles, más carros. Porque la ciudad no creció hacia adentro. Entonces el crecimiento se fue a los municipios de al lado. Mixco pasó de 36,940 habitantes en 1964 a {403,689:m} en 2002. Así, cada vez más gente vivía lejos de su trabajo en la capital."
+  },
+  {
+   "acto": 2,
+   "texto": "Además de la carretera, había otra vía: el tren. En 1968, el ferrocarril pasó al Estado: así nació Fegua, la empresa estatal del tren. El tren de pasajeros salía de la Estación Central hacia Puerto Barrios. Si el riel se detenía, pasajeros y carga solo tenían la carretera. Pero en marzo de 1996, el gobierno suspendió todos los trenes: dijo que por cada tonelada transportada se perdían Q150. Para 1996, a Fegua le quedaban 60 trabajadores. Roberto Tally Marroquín, maquinista, lo recordó así: Ese año recogimos todos los trenes porque ya no salía cuenta. Un año después, el riel se licitó y pasó a Ferrovías Guatemala, una concesionaria privada. Sin tren de pasajeros, todo iba por la calle."
+  },
+  {
+   "acto": 3,
+   "texto": "Años después, los carros no dejaban de sumar: en 2010, la SAT, que registra cada vehículo, contaba 2 millones en todo el país; en julio de 2026, casi 6.8 millones, más del triple. Y las calles apuntan al centro, porque la red es radial: KOICA, la cooperación coreana, halló para el Plan Maestro de Movilidad que la mayoría de las carreteras convergen al centro. Por cuatro rutas entran más de {820:m} mil vehículos al día. De ellas, según Prensa Libre, la de oriente lleva {308,214:m} al día. Así, todas esas calles terminan en el mismo embudo: el centro. ¿Cuánto le cuesta a cada persona cruzarlo?"
+  }
+ ],
+ "hilos": [
+  {
+   "id": "p1h1",
+   "escena": 6
+  },
+  {
+   "id": "p1h2",
+   "escena": 10
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3
+  ],
+  [
+   4,
+   5
+  ],
+  [
+   6,
+   7,
+   8
+  ],
+  [
+   9,
+   10,
+   11
+  ]
+ ],
+ "paleta": "maiz",
+ "musica": "corrupcion-desenlace",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2036.79,
+ "duracion_s": 140.1,
+ "critica": {
+  "veredicto": "corregir",
+  "vuelta": 3,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 3,
+   "claridad": 3,
+   "flujo": 3,
+   "precision": 4,
+   "cierre": 4,
+   "recompensa": 3
+  }
+ },
+ "gancho": {
+  "familia": "misterio",
+  "visual": "foto",
+  "pantalla": "Sin tren de pasajeros",
+  "linea": "y el tráfico ocupó su lugar"
+ },
+ "promesa": {
+  "texto": "Esa capital tiene menos de la gente del país, pero sus calles, más carros.",
+  "forma": "contradiccion",
+  "en": 2,
+  "pago": 9,
+  "revela": 2,
+  "pregunta": "¿Cómo se llenó de carros la capital?"
+ },
+ "bisagra": {
+  "texto": "Si el riel se detenía, pasajeros y carga solo tenían la carretera.",
+  "forma": "apuesta",
+  "en": 5,
+  "pago": 6
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "La capital de Guatemala se quedó sin tren de pasajeros. Y el tráfico ocupó su lugar.",
+   "voz": "La capital de Guatemala se quedó sin tren de pasajeros. Y el tráfico ocupó su lugar.",
+   "dur": 6.026,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: La Hora",
+     "origen": "medio",
+     "licencia": "© La Hora (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "Esa capital tiene menos de la gente del país, pero sus calles, más carros. Porque la ciudad no creció hacia adentro.",
+   "voz": "Esa capital tiene menos de la gente del país, pero sus calles, más carros. Porque la ciudad no creció hacia adentro.",
+   "dur": 7.68,
+   "hechos": [
+    "ciu-h13"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "vias",
+   "pantalla": "Entonces el crecimiento se fue a los municipios de al lado. Mixco pasó de 36,940 habitantes en 1964 a 403,689 en 2002. Así, cada vez más gente vivía lejos de su trabajo en la capital.",
+   "voz": "Entonces el crecimiento se fue a los municipios de al lado. Mixco pasó de treinta y seis mil novecientos cuarenta habitantes en mil novecientos sesenta y cuatro a cuatrocientos tres mil seiscientos ochenta y nueve en dos mil dos. Así, cada vez más gente vivía lejos de su trabajo en la capital.",
+   "dur": 18.984,
+   "hechos": [],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "foto",
+   "pantalla": "Además de la carretera, había otra vía: el tren. En 1968, el ferrocarril pasó al Estado: así nació Fegua, la empresa estatal del tren.",
+   "voz": "Además de la carretera, había otra vía: el tren. En mil novecientos sesenta y ocho, el ferrocarril pasó al Estado: así nació Fegua, la empresa estatal del tren.",
+   "dur": 11.364,
+   "hechos": [
+    "ciu-h01"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "foto",
+   "pantalla": "El tren de pasajeros salía de la Estación Central hacia Puerto Barrios. Si el riel se detenía, pasajeros y carga solo tenían la carretera.",
+   "voz": "El tren de pasajeros salía de la Estación Central hacia Puerto Barrios. Si el riel se detenía, pasajeros y carga solo tenían la carretera.",
+   "dur": 9.311,
+   "hechos": [
+    "ciu-h06"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "foto",
+   "pantalla": "Pero en marzo de 1996, el gobierno suspendió todos los trenes: dijo que por cada tonelada transportada se perdían Q150.",
+   "voz": "Pero en marzo de mil novecientos noventa y seis, el gobierno suspendió todos los trenes: dijo que por cada tonelada transportada se perdían ciento cincuenta quetzales.",
+   "dur": 10.679,
+   "hechos": [
+    "ciu-h03"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "cita",
+   "pantalla": "Para 1996, a Fegua le quedaban 60 trabajadores. Roberto Tally Marroquín, maquinista, lo recordó así: Ese año recogimos todos los trenes porque ya no salía cuenta.",
+   "voz": "Para mil novecientos noventa y seis, a Fegua le quedaban sesenta trabajadores. Roberto Tally Marroquín, maquinista, lo recordó así: Ese año recogimos todos los trenes porque ya no salía cuenta.",
+   "dur": 13.584,
+   "hechos": [
+    "ciu-h07"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "foto",
+   "pantalla": "Un año después, el riel se licitó y pasó a Ferrovías Guatemala, una concesionaria privada. Sin tren de pasajeros, todo iba por la calle.",
+   "voz": "Un año después, el riel se licitó y pasó a Ferrovías Guatemala, una concesionaria privada. Sin tren de pasajeros, todo iba por la calle.",
+   "dur": 10.438,
+   "hechos": [
+    "ciu-h08"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "tarjeta",
+   "pantalla": "Años después, los carros no dejaban de sumar: en 2010, la SAT, que registra cada vehículo, contaba 2 millones en todo el país; en julio de 2026, casi 6.8 millones, más del triple.",
+   "voz": "Años después, los carros no dejaban de sumar: en dos mil diez, la Sat, que registra cada vehículo, contaba dos millones en todo el país; en julio de dos mil veintiséis, casi seis millones ochocientos mil, más del triple.",
+   "dur": 15.914,
+   "hechos": [
+    "cos-h16"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "vias",
+   "pantalla": "Y las calles apuntan al centro, porque la red es radial: KOICA, la cooperación coreana, halló para el Plan Maestro de Movilidad que la mayoría de las carreteras convergen al centro. Por cuatro rutas entran más de 820 mil vehículos al día.",
+   "voz": "Y las calles apuntan al centro, porque la red es radial: KOICA, la cooperación coreana, halló para el Plan Maestro de Movilidad que la mayoría de las carreteras convergen al centro. Por cuatro rutas entran más de ochocientos veinte mil vehículos al día.",
+   "dur": 16.772,
+   "hechos": [
+    "cos-h06",
+    "ciu-h16"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "foto",
+   "pantalla": "De ellas, según Prensa Libre, la de oriente lleva 308,214 al día.",
+   "voz": "De ellas, según Prensa Libre, la de oriente lleva trescientos ocho mil doscientos catorce al día.",
+   "dur": 7.444,
+   "hechos": [
+    "cos-h22"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "cierre",
+   "pantalla": "Así, todas esas calles terminan en el mismo embudo: el centro. ¿Cuánto le cuesta a cada persona cruzarlo? Sígueme: en la segunda parte te cuento cuánto nos cuesta el atasco.",
+   "voz": "Así, todas esas calles terminan en el mismo embudo: el centro. ¿Cuánto le cuesta a cada persona cruzarlo? Sígueme: en la segunda parte te cuento cuánto nos cuesta el atasco.",
+   "dur": 14.844,
+   "hechos": [],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Así se llenó",
+  "resumen": [
+   "La capital, del 10.55 % al 6.20 %",
+   "El tren se detuvo en 1996",
+   "Más del triple de carros"
+  ],
+  "texto": "Así, todas esas calles terminan en el mismo embudo: el centro. ¿Cuánto le cuesta a cada persona cruzarlo?",
+  "tipo": "pregunta",
+  "forma": "puente",
+  "final": "¿Cuánto le cuesta a cada persona cruzarlo?",
+  "invitacion": "Sígueme: en la segunda parte te cuento cuánto nos cuesta el atasco."
+ },
+ "caption": {
+  "tiktok": "Serie · Parte 1 de 6: Cómo se llenó la ciudad\nLa capital de Guatemala perdió su tren de pasajeros en 1996 y hoy más de 820 mil vehículos entran cada día por cuatro rutas. Así se formó el embudo.\n#Guatemala #tráfico #historia",
+  "instagram": "Serie · Parte 1 de 6: Cómo se llenó la ciudad\nMixco pasó de 36,940 habitantes en 1964 a 403,689 en 2002, el tren de pasajeros se detuvo en 1996 y el parque vehicular más que se triplicó desde 2010. Así se llenó la capital de Guatemala.\n#Guatemala #tráfico",
+  "facebook": "Serie · Parte 1 de 6: Cómo se llenó la ciudad\nCómo pasó la capital de Guatemala de ciudad a embudo: la gente se fue a los municipios vecinos, el tren de pasajeros se detuvo en 1996 y los carros se multiplicaron. Fuentes en el primer comentario.",
+  "shorts": "Cómo se llenó de carros la capital de Guatemala (1/6) #Shorts\nEl tren que se detuvo y las calles que llevan al mismo centro."
+ }
+}

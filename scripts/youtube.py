@@ -16,7 +16,8 @@ TRABAJO = sesiones/youtube-<slug>/:
   montaje.borrador.json   el montaje con las marcas del formato corto ya quitadas (lo completa el editor)
   montaje.json            el montaje del editor (YT1–YT8)
   nuevas/                 un TRABAJO de /historia con SOLO las piezas de voz nueva (puentes, promesa, revozadas)
-  escenas.json, audio/, fotos/, base/, tomas/, clips_16x9/ …   el TRABAJO unido que se graba y se monta
+  escenas.json, audio/, fotos/, base/, tomas/   el TRABAJO unido (armar)
+  plano.json, hf/cap-N/, clips_tablero/         el 16:9: la mesa de archivo en HyperFrames (scripts/youtube_hf.py)
 
 Montaje (montaje.json):
   {version, titulo,
@@ -35,9 +36,15 @@ Subcomandos:
   resumen TRABAJO                               el montaje para que el usuario lo apruebe (duración, cortes, uniones)
   voz TRABAJO [--falsa]                         arma nuevas/ (guion y locucion de las piezas nuevas) e imprime los nodos
   tiempos TRABAJO                               los tiempos de las piezas nuevas (nuevas/escenas.json; V16)
-  armar TRABAJO                                 el TRABAJO unido: escenas.json, audio recortado, recursos, música
-  grabar TRABAJO [--fps 30] [--paralelo N]      las escenas en 16:9 (video_grabar.js --formato 16:9)
-  montar TRABAJO                                video 1920×1080 por tramos + voz, música por capítulo y efectos (−14 LUFS)
+  armar TRABAJO                                 el TRABAJO unido: escenas.json, audio recortado, recursos; plano.borrador.json
+  digesto TRABAJO --para realizador --capitulo N  el insumo del youtube-realizador (oraciones, fuentes, fotos, borrador)
+  plano TRABAJO [--check] [--hoja] [--borrador]  une plano_<N>.json en plano.json; YT13–YT19; plano.md para revisarlo
+  grabar TRABAJO [--fps 30]                     los tableros (escenas explica y tarjeta, limpias) → clips_tablero/
+  proyecto TRABAJO [--capitulo N]               un proyecto HyperFrames por capítulo (hf/cap-N/) y hf/efectos.json
+  revisar TRABAJO [--capitulo N]                hyperframes check y hoja de contacto por capítulo (revision/hf_cap-N.jpg)
+  audio TRABAJO                                 voz, música por capítulo y efectos del plano (−14 LUFS), .srt, capítulos
+  render TRABAJO [--capitulo N]                 render por capítulo (--workers 1) → segs_16x9/video_solo.mp4
+  montar TRABAJO                                video de HyperFrames + pista de audio → salida/video.mp4 (YT9)
   miniatura TRABAJO --texto "…" [--foto ID] [--cifra "…"]   miniatura 1280×720 (YT10)
   entregar TRABAJO [--salida DIR]               series/<fecha>-<slug>/youtube/ (video, miniatura, caption con capítulos…)
   --revisar SERIE                               lo que preparar comprueba, sin escribir
@@ -54,7 +61,10 @@ Gates:
   YT8 adelanto opcional (un momento alto ya grabado, 3–9 s, antes del gancho) y promesa global: forma del catálogo, sin anuncio, antes del segundo 15, con su `pregunta` para la pantalla, y se
       paga en el último 40 %
   YT9–YT11 render, miniatura y entrega (grabar, montar, miniatura, entregar)
-  YT12 ocupación del 16:9 (en grabar): ninguna escena de más de 4 s con más de 70 % de fondo liso
+  YT13–YT19 el plano del 16:9 (plano --check, en scripts/youtube_hf.py; sobre los datos, nunca sobre píxeles):
+       YT13 cada cifra o año dicho se ve · YT14 cada oración trae un golpe y ningún hueco pasa de 6 s · YT15 una foto ≤ 2
+       veces y a ≥ 180 s · YT16 cada pieza con respaldo (y una foto de personas en proceso solo donde la voz las nombra)
+       · YT17 que no sea relleno · YT18 carga de la mesa · YT19 sin cámara para aparentar ritmo
 
 Exit: 0 ok · 1 falla · 2 uso incorrecto.
 """
@@ -1044,6 +1054,13 @@ def lineas_escena_editor(x, S, sil=SILENCIO_CORTE_S):
 
 def cmd_digesto(a):
     trabajo = os.path.abspath(a.trabajo)
+    if a.para == "realizador":
+        if not os.path.exists(os.path.join(trabajo, "escenas.json")):
+            return falla("falta escenas.json: corre youtube.py armar primero")
+        if not a.capitulo:
+            return falla("digesto --para realizador lleva --capitulo N")
+        import youtube_hf as YH
+        return YH.cmd_digesto(a)
     Y, partes, por_id, S_de = cargar_contexto(trabajo)
     idx = list(por_id.values())
     if a.para == "editor":
@@ -1239,6 +1256,12 @@ def mover(t, cortes):
 
 
 def correr_tiempos(o, cortes, clave=None):
+    """Corre los tiempos de una escena: `cortes` es la lista de tramos quitados o una función t → t' (revozar)."""
+    if callable(cortes):
+        _f = cortes
+        mover = lambda t, _c: _f(t)   # noqa: E731
+    else:
+        mover = globals()["mover"]
     if isinstance(o, dict):
         for k, v in list(o.items()):
             if k in SIN_TIEMPO:
@@ -1255,6 +1278,79 @@ def correr_tiempos(o, cortes, clave=None):
         for x in o:
             correr_tiempos(x, cortes, clave)
     return o
+
+
+def _norm_palabra(w):
+    return re.sub(r"[^\wáéíóúüñ]", "", (w.get("text") or "").lower())
+
+
+def revozar_visual(S0, Sn):
+    """Una escena revozada que no es foto (tarjeta, definición, cita…): conserva la imagen de la original (S0) y lleva
+    sus tiempos a la voz nueva (Sn), anclados en las palabras que ambas dicen (SequenceMatcher) e interpolados entre
+    ellas. Antes la escena salía de nuevas/ como `foto` sin foto: un cuadro vacío (YT12)."""
+    import difflib
+    p0, pn = S0.get("palabras") or [], Sn.get("palabras") or []
+    a, b = [_norm_palabra(w) for w in p0], [_norm_palabra(w) for w in pn]
+    anc = [(0.0, 0.0)]
+    for bl in difflib.SequenceMatcher(None, a, b, autojunk=False).get_matching_blocks():
+        for k in range(bl.size):
+            anc.append((p0[bl.a + k]["start"], pn[bl.b + k]["start"]))
+    anc += [(S0.get("fin_voz") or S0["dur"], Sn.get("fin_voz") or Sn["dur"]), (S0["dur"], Sn["dur"])]
+    anc = sorted(set(anc))
+    mono = [anc[0]]
+    for x, y in anc[1:]:
+        if x > mono[-1][0] and y >= mono[-1][1]:
+            mono.append((x, y))
+
+    def f(t):
+        if t <= mono[0][0]:
+            return round(t, 3)
+        for (x0, y0), (x1, y1) in zip(mono, mono[1:]):
+            if t <= x1:
+                return round(y0 + (t - x0) * (y1 - y0) / (x1 - x0), 3)
+        return round(min(Sn["dur"], mono[-1][1] + t - mono[-1][0]), 3)
+
+    S = copy.deepcopy(S0)
+    for k, v in list(S.items()):
+        if k in ("palabras", "n", "dur", "cola", "acto", "secuencia", "tuit") or k in SIN_TIEMPO:
+            continue
+        if k in TIEMPO_ESCALAR and isinstance(v, (int, float)) and not isinstance(v, bool):
+            S[k] = f(v)
+        elif isinstance(v, (dict, list)):
+            S[k] = correr_tiempos(v, f, k)
+    # la cifra: si la voz nueva la dice en otro orden, el foco (y lo que sigue) se corre hasta la palabra que la dice
+    val = (S0.get("T") or {}).get("valores") or {}
+    t_foco0 = min([v[0] for v in val.values() if isinstance(v, list) and v] or [None], key=lambda x: x if x is not None else 1e9)
+    if t_foco0 is not None and p0:
+        w0 = min(p0, key=lambda w: abs(w["start"] - t_foco0))
+        t_foco = f(t_foco0)
+        # el primer número que dice la voz nueva (cifras en palabras: «mil seiscientos millones», «cien por ciento»)
+        nums = [w for w in pn if re.fullmatch(r"\d[\d.,%]*|cien|ciento|mil|millones?|millardos?|[a-z]*cientos?|"
+                                                 r"uno|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|veinte|treinta|"
+                                                 r"cuarenta|cincuenta|sesenta|setenta|ochenta|noventa", _norm_palabra(w))
+                and w["start"] >= t_foco - 0.1]
+        hits = nums or [w for w in pn if _norm_palabra(w) == _norm_palabra(w0)]
+        if abs(w0["start"] - t_foco0) < 0.6 and hits:
+            lead = max(0.0, min(0.6, w0["start"] - t_foco0)) if nums else (t_foco0 - w0["start"])
+            d = hits[0]["start"] + (-lead if nums else lead) - t_foco
+            tope = Sn["dur"] - 0.3
+            g = lambda t: round(min(tope, t + d), 3) if t >= t_foco - 1e-6 else t   # noqa: E731
+            T = S.get("T") or {}
+            T["valores"] = {k: [g(x) for x in v] if isinstance(v, list) else v for k, v in T.get("valores", {}).items()}
+            for k in ("nota", "linea_fin"):
+                if isinstance(T.get(k), (int, float)):
+                    T[k] = g(T[k])
+            for x in S.get("eventos") or []:
+                x["t"] = g(x["t"])
+            for x in S.get("sfx") or []:
+                x["t"] = g(x["t"])
+    for k in ("palabras", "dur", "fin_voz", "cola", "seguida", "sigue", "secuencia"):
+        S[k] = copy.deepcopy(Sn.get(k))
+    if S.get("T", {}).get("dur") is not None:
+        S["T"]["dur"] = S["dur"]
+    S["eventos"] = [x for x in S.get("eventos") or [] if x["t"] < S["dur"] and x["tipo"] != "fin"] + [{"t": S["dur"], "tipo": "fin"}]
+    S["sfx"] = [x for x in S.get("sfx") or [] if x["t"] < S["dur"] - 0.2]
+    return S
 
 
 def recortar_escena(S, cortes):
@@ -1333,12 +1429,6 @@ def escena_capitulo(it, n, anios):
 
 
 # ---------- el expediente en pantalla (16:9): margen y tablero ----------
-MARGEN_TIPOS = ("cita", "golpe", "tarjeta", "explica")   # las escenas que en 16:9 dejaban media pantalla vacía
-MARGEN_LLENO = 3                                          # con menos personas, el margen va sobre la última foto borrosa
-MARGEN_MIN = 1                                            # personas ya nombradas para que haya margen
-MARGEN_CUADROS = 9                                        # cuadritos en el margen (3 × 3)
-TABLERO_CUADROS = 12                                      # cuadritos en el rótulo de capítulo (4 × 3)
-CAPITULO_TABLERO_S = 3.8                                  # el rótulo con tablero dura un poco más: entran sus personas
 
 
 def elenco_serie(Y):
@@ -1383,72 +1473,6 @@ def nombradas(S, elenco):
     return {i: sorted(v) for i, v in out.items()}
 
 
-def margenes(escenas, Y, caps_n):
-    """El expediente del 16:9. A cada escena de MARGEN_TIPOS le pone `margen` (capítulo, los cuadritos de las personas ya
-    nombradas en el video, con las que la voz nombra aquí iluminadas a su segundo) y le quita la tarjeta de persona (el
-    margen ya dice quién es). A cada rótulo de capítulo, `H.tablero`: los ya vistos atenuados y los que aparecen en ese
-    capítulo entrando, unidos por los hilos de las escenas `red` (aristas de hechos verificados, H23). Nada se marca ni
-    se tacha: solo se ilumina."""
-    elenco = elenco_serie(Y)
-    if not elenco:
-        return 0
-    cuadro = lambda i, **kw: dict({k: elenco[i][k] for k in ("nombre", "corto", "cargo", "foto", "foco")}, **kw)
-    # capítulo de cada escena y las menciones por escena
-    cap, cap_de, M = 0, [], []
-    for S in escenas:
-        if S.get("tipo") == "capitulo":
-            cap = S["H"]["numero"]
-        cap_de.append(max(cap, 1))
-        M.append(nombradas(S, elenco))
-    primera = {}                       # persona → índice de la escena de su primera mención
-    for j, m in enumerate(M):
-        for i in m:
-            primera.setdefault(i, j)
-    idx_nombre = {VD._plano(p["nombre"]): i for i, p in enumerate(elenco)}
-    hilos_vistos, vistos, puestos, ult_foto = [], [], 0, None
-    for j, S in enumerate(escenas):
-        tipo = S.get("tipo")
-        if tipo == "capitulo":
-            k = S["H"]["numero"]
-            nuevos = [i for i in sorted(primera, key=primera.get) if cap_de[primera[i]] == k and i not in vistos]
-            orden = (vistos + nuevos)[-TABLERO_CUADROS:]
-            t1 = S["H"]["cuenta"][1]
-            pers = [cuadro(i, nuevo=i in nuevos, start=round(t1 + 0.25 + 0.22 * nuevos.index(i), 3) if i in nuevos else 0) for i in orden]
-            hilos = [[orden.index(a_), orden.index(b_), 0.3] for a_, b_ in hilos_vistos if a_ in orden and b_ in orden]
-            if pers:
-                S["H"]["tablero"] = {"personas": pers, "hilos": hilos}
-                S["dur"] = CAPITULO_TABLERO_S
-                S["eventos"] = [x for x in S["eventos"] if x["tipo"] != "fin"] + \
-                    [{"t": x["start"], "tipo": "persona"} for x in pers if x["start"]] + [{"t": S["dur"], "tipo": "fin"}]
-                S["eventos"].sort(key=lambda x: x["t"])
-        if tipo == "red":               # sus aristas valen para los tableros que vienen
-            nodos = {n_["id"]: idx_nombre.get(VD._plano(n_.get("nombre") or "")) for n_ in (S.get("G") or {}).get("nodos") or []}
-            for ar in (S.get("G") or {}).get("aristas") or []:
-                a_, b_ = nodos.get(ar.get("de")), nodos.get(ar.get("a"))
-                if a_ is not None and b_ is not None and a_ != b_ and (a_, b_) not in hilos_vistos and (b_, a_) not in hilos_vistos:
-                    hilos_vistos.append((a_, b_))
-        antes = list(vistos)
-        for i in sorted(M[j], key=lambda i: M[j][i][0]):
-            if i not in vistos:
-                vistos.append(i)
-        if tipo == "red" and S.get("pagina") == "red":   # en 16:9 el organigrama dejaba 77 % de fondo liso: el tablero
-            S["pagina"] = "tablero"
-        if tipo in MARGEN_TIPOS and len(vistos) < MARGEN_LLENO and ult_foto:   # pocas personas aún: la última foto, de fondo
-            S["fondo"] = ult_foto
-        if S.get("pagina") == "noticia" and (S.get("N") or {}).get("foto"):
-            ult_foto = S["N"]["foto"]
-        if tipo in MARGEN_TIPOS and len(vistos) >= MARGEN_MIN:   # con menos, el margen quedaría vacío: la escena va centrada
-            orden = vistos[-MARGEN_CUADROS:]
-            c = next((x for x in caps_n if x["numero"] == cap_de[j]), {})
-            S["margen"] = {"capitulo": {"numero": cap_de[j], "total": len(caps_n), "titulo": c.get("titulo") or ""},
-                           "personas": [cuadro(i, start=(M[j][i][0] if i not in antes else 0), activo=M[j].get(i, [])) for i in orden]}
-            S["eventos"] = sorted((S.get("eventos") or []) + [{"t": t, "tipo": "persona"} for i in M[j] for t in M[j][i][:1]],
-                                  key=lambda x: x["t"])
-            S["personas"] = []
-            puestos += 1
-    return puestos
-
-
 SFX_LARGO_POR_MIN = 6.0                            # el video largo no suena como un Short: ≤ 6 efectos por minuto
 SFX_ENTRADA = ("whoosh", "impacto", "grave")       # los de la entrada de una escena
 SFX_TIC_CADA_S = 8.0                               # un `tic` cada 8 s como mucho
@@ -1487,14 +1511,6 @@ def ralear_sfx_largo(escenas, total):
     return antes, sum(len(S.get("sfx") or []) for S in escenas)
 
 
-def huellas_escenas(escenas):
-    """{n: huella} de lo que se dibuja en cada escena (su entrada de escenas.json entera): si no cambia, su clip sirve."""
-    import hashlib
-    fuera = ("transicion", "sfx", "n")   # la transición y los efectos son del montaje; el número cambia si entra o sale una escena
-    return {S["n"]: hashlib.sha1(json.dumps({k: v for k, v in S.items() if k not in fuera}, sort_keys=True,
-                                            ensure_ascii=False).encode("utf-8")).hexdigest()[:16] for S in escenas}
-
-
 def transiciones_con_sentido(escenas, por_id, hechos):
     """En vez del fundido genérico entre escenas pegadas, la transición dice algo de la historia (nunca va por reloj):
     un documento entra como una hoja que se pone encima (coverup); si el año de los hechos avanza, la escena empuja
@@ -1530,6 +1546,100 @@ def sin_kicker_serie(ctx):
     return "" if RE_KICKER_SERIE.match(ctx or "") else (ctx or "")
 
 
+# ---------- las oraciones de la voz y las claves de escena (los usa scripts/youtube_hf.py: el plano del 16:9) ----------
+# Decisión del usuario (2026-11-13): dinamismo es que ENTRE en pantalla lo que la voz nombra (mesa de archivo en HyperFrames),
+# nunca mover la cámara para aparentar ritmo. Aquí quedan solo los tramos de voz; el plano, sus gates (YT13–YT19) y el
+# render viven en youtube_hf.py.
+SEGMENTO_OBJETIVO_S = 5.0  # se parte una oración de más de esto (YT14: ningún hueco de más de 6 s sin un golpe)
+SEGMENTO_MIN_S = 2.2        # un segmento de imagen más corto que esto se une al anterior (un corte cada 2 s marea)
+CLAUSULA_MIN_S = 1.5       # una coma parte una oración larga si deja ≥ esto a cada lado
+CLAUSULA = {"para", "pero", "porque", "que", "cuando", "donde", "mientras", "aunque", "sin", "desde", "hasta", "como",
+            "y", "pues", "tras", "antes", "despues", "luego", "entonces"}
+RE_FIN_ORACION = re.compile(r"[.?!…:;»\"]$")
+RE_ANIO = re.compile(r"^\D*(1[89]|20)\d\d\D*$")
+FOTO_ID = re.compile(r"(?:^|/)([a-z]{2,6}-f\d{2})\.(?:jpe?g|png|webp)$")
+
+
+def foto_id(ruta):
+    m = FOTO_ID.search(ruta or "")
+    return m.group(1) if m else None
+
+
+def segmentos(S, cambio=None, minimo=SEGMENTO_MIN_S):
+    """Los tramos de imagen de una escena: [{k, t, texto}]. Cada oración de la voz abre uno; una oración de más de
+    `cambio` s se parte en la coma más cercana a su mitad (la imagen cambia con lo que se dice, nunca por reloj); un tramo
+    de menos de `minimo` s se une al anterior."""
+    cambio = cambio or SEGMENTO_OBJETIVO_S
+    P = S.get("palabras") or []
+    if not P:
+        return [{"k": 0, "t": 0.0, "texto": ""}]
+    cortes = [0] + [i for i in range(1, len(P)) if RE_FIN_ORACION.search(P[i - 1]["text"].strip())]
+    dur = S.get("dur") or P[-1]["end"]
+
+    def t_de(i):
+        return 0.0 if i == 0 else max(0.0, P[i]["start"] - 0.12)
+
+    def partir(i0, i1):   # [i0, i1) en palabras
+        t0, t1 = t_de(i0), (t_de(i1) if i1 < len(P) else dur)
+        if t1 - t0 <= cambio:
+            return [i0]
+        fin = t_de(i1) if i1 < len(P) else dur
+        cabe = lambda j, m: t_de(j) - t0 >= m and fin - t_de(j) >= m   # noqa: E731
+        comas = [j for j in range(i0 + 1, i1) if P[j - 1]["text"].strip().endswith(",") and cabe(j, CLAUSULA_MIN_S)]
+        if not comas:   # sin coma útil: el inicio de una cláusula («para tapar…», «pero no…», «desde 1995…»)
+            comas = [j for j in range(i0 + 1, i1) if VD._plano(P[j]["text"]) in CLAUSULA and cabe(j, minimo)]
+        if not comas:   # último recurso: la palabra más cercana a la mitad (un tramo nunca pasa del objetivo)
+            comas = [j for j in range(i0 + 1, i1) if cabe(j, CLAUSULA_MIN_S)]
+        if not comas:
+            return [i0]
+        mid = (t0 + t1) / 2
+        j = min(comas, key=lambda x: abs(t_de(x) - mid))
+        return partir(i0, j) + partir(j, i1)
+
+    oraciones_ = []   # una oración muy corta («Era Refco:») va con la siguiente; luego se parten las largas
+    for i in cortes:
+        if not oraciones_ or t_de(i) - t_de(oraciones_[-1]) >= minimo:
+            oraciones_.append(i)
+    if len(oraciones_) > 1 and (dur - t_de(oraciones_[-1])) < CLAUSULA_MIN_S:
+        oraciones_.pop()
+    inicios = []
+    for a_, b_ in zip(oraciones_, oraciones_[1:] + [len(P)]):
+        inicios += partir(a_, b_)
+    out = [{"k": k, "t": round(t_de(i), 3), "i": i} for k, i in enumerate(inicios)]
+    # la cola sin voz (una animación o una tarjeta que sigue tras la última palabra) también cambia
+    fin_voz = S.get("fin_voz") or P[-1]["end"]
+    if dur - out[-1]["t"] > cambio and dur - fin_voz >= CLAUSULA_MIN_S and fin_voz + 0.2 - out[-1]["t"] >= CLAUSULA_MIN_S:
+        out.append({"k": len(out), "t": round(fin_voz + 0.2, 3), "i": len(P)})
+    for j, s in enumerate(out):
+        i1 = out[j + 1]["i"] if j + 1 < len(out) else len(P)
+        s["texto"] = " ".join(w["text"] for w in P[s.pop("i"):i1])
+        s["hasta"] = round(out[j + 1]["t"], 3) if j + 1 < len(out) else round(dur, 3)
+    return out
+
+
+def claves_visuales(escenas):
+    """A cada escena, la clave estable con que imagenes.json la nombra: Pk.eN, o puente-1, puente-2, promesa."""
+    vistos = {}
+    for S in escenas:
+        o = S.get("origen") or "E%d" % S["n"]
+        if o.startswith("P") and "." in o:
+            S["clave"] = o
+        else:
+            vistos[o] = vistos.get(o, 0) + 1
+            S["clave"] = o if o == "promesa" else "%s-%d" % (o, vistos[o])
+    return escenas
+
+
+def ficha_foto(trabajo, fid):
+    p = os.path.join(trabajo, "fotos", fid + ".json")
+    try:
+        return leer(p)
+    except (OSError, ValueError):
+        return None
+
+
+
+
 def cmd_armar(a):
     trabajo = os.path.abspath(a.trabajo)
     Y, partes, por_id, S_de = cargar_contexto(trabajo)
@@ -1558,11 +1668,8 @@ def cmd_armar(a):
             return falla("hay una grabación en curso en este TRABAJO (%s): espera a que termine o detenla" % rel(candado))
         except (OSError, ValueError):
             os.remove(candado)
-    # un retoque ya no obliga a regrabar todo (60–120 min): los clips se conservan y, al final, se borra solo el de cada
-    # escena cuyo contenido cambió (huellas_escenas); `armar --todo` los borra todos (cambió una página de video/)
     f_esc = os.path.join(trabajo, "escenas.json")
-    huellas_antes = huellas_escenas(leer(f_esc)["escenas"]) if os.path.exists(f_esc) and not getattr(a, "todo", False) else {}
-    for d in ("audio", "base", "segs_16x9") + (() if huellas_antes else ("clips_16x9",)):
+    for d in ("audio", "base", "segs_16x9", "clips_16x9"):
         shutil.rmtree(os.path.join(trabajo, d), ignore_errors=True)
     os.makedirs(os.path.join(trabajo, "audio"), exist_ok=True)
     os.makedirs(os.path.join(trabajo, "base"), exist_ok=True)
@@ -1593,6 +1700,17 @@ def cmd_armar(a):
         elif it["k"] in ("puente", "promesa") or it.get("op") == "revozar":
             j = k_nueva[id(it)]
             S = copy.deepcopy(E_nv[j])
+            S0 = S_de.get((it.get("parte"), it.get("n"))) if it.get("op") == "revozar" else None
+            if S0 and S0.get("tipo") != S.get("tipo"):   # revozada que no era foto: su imagen, con la voz nueva
+                S = revozar_visual(S0, S)
+                P = por_parte[it["parte"]]
+                if S.get("tuit"):
+                    nuevo = it["parte"] * 100 + S["tuit"]
+                    for ext in (".html", ".png"):
+                        src = os.path.join(P["trabajo"], "base", "tuit_%d%s" % (S["tuit"], ext))
+                        if os.path.exists(src):
+                            enlazar(src, os.path.join(trabajo, "base", "tuit_%d%s" % (nuevo, ext)))
+                    S["tuit"] = nuevo
             S["acto"] = None
             S.pop("R", None)
             enlazar(os.path.join(nv, "audio", "voz_%d_r.mp3" % j), os.path.join(trabajo, "audio", "voz_%d_r.mp3" % n))
@@ -1665,46 +1783,17 @@ def cmd_armar(a):
                              "dur": round(min(VD.PREGUNTA_S[q_en[0]], S["dur"] - VD.TRANSICION - 0.3 - q_en[1]), 3)}
     n_tr = transiciones_con_sentido(escenas, por_id, hechos_serie(Y))
     print("transiciones: %d con sentido (cambio de año o documento) en vez del fundido" % n_tr)
-    caps_n = [{"numero": it["numero"], "titulo": it["titulo"]} for it in [x.get("cap1") for x in items if x.get("cap1")] + items
-              if it and it["k"] == "capitulo"]
-    n_marg = margenes(escenas, Y, caps_n)
-    if n_marg:
-        print("expediente: %d escenas con margen · tablero en %d rótulos de capítulo"
-              % (n_marg, sum(1 for S in escenas if (S.get("H") or {}).get("tablero"))))
     total = round(sum(S["dur"] for S in escenas) - VD.TRANSICION * (len(escenas) - 1), 2)
     # el «Sígueme» de la mitad es del video largo, no el que traía cada parte (V25)
     for x in VD.marcar_seguir(escenas, total - FINAL_EXTRA_S):
         print("AVISO", x)
     print("efectos: %d → %d (formato largo)" % ralear_sfx_largo(escenas, total))
+    claves_visuales(escenas)
     escribir(os.path.join(trabajo, "escenas.json"), {
         "version": 2, "formato": FORMATO_GRABAR, "colores": E1.get("colores"), "contexto_superior": sin_kicker_serie(E1.get("contexto_superior")),
         "redes": E1.get("redes"), "serie": None, "gancho": E1.get("gancho"), "pago": {"n": None, "t": None},
         "cierre": dict(Eu.get("cierre") or {}, invitacion=None), "transicion_s": VD.TRANSICION, "total_s": total,
         "tipo": "historia", "escenas": escenas})
-    if huellas_antes:
-        # cada clip se reusa por su contenido, aunque la escena haya cambiado de número (entró o salió otra antes)
-        ahora, cambian = huellas_escenas(escenas), []
-        cd = os.path.join(trabajo, "clips_16x9")
-        por_huella = {}
-        for n_viejo, h in huellas_antes.items():
-            if os.path.exists(os.path.join(cd, "e%d.mp4" % n_viejo)):
-                por_huella.setdefault(h, n_viejo)
-        tmp = os.path.join(cd, ".reuso")
-        shutil.rmtree(tmp, ignore_errors=True)
-        os.makedirs(tmp)
-        for S in escenas:
-            n_viejo = por_huella.pop(ahora[S["n"]], None)
-            if n_viejo is not None:
-                os.replace(os.path.join(cd, "e%d.mp4" % n_viejo), os.path.join(tmp, "e%d.mp4" % S["n"]))
-            else:
-                cambian.append(S["n"])
-        for f in glob.glob(os.path.join(cd, "e*.mp4")):   # lo que no se reusó ya no corresponde a ninguna escena
-            os.remove(f)
-        for f in glob.glob(os.path.join(tmp, "e*.mp4")):
-            os.replace(f, os.path.join(cd, os.path.basename(f)))
-        os.rmdir(tmp)
-        print("clips: %d escenas cambiaron y se vuelven a grabar (%s); las demás se conservan"
-              % (len(cambian), ", ".join(map(str, cambian))[:200] or "ninguna"))
     st = leer(os.path.join(P1_de(Y), "video.json"))
     st.update({"hilo": rel(os.path.join(trabajo, "base")), "serie": None, "formato": "youtube", "objetivo_s": int(total),
                "musica": Y.get("musica") or st.get("musica"), "paleta": Y.get("paleta") or st.get("paleta")})
@@ -1722,6 +1811,12 @@ def cmd_armar(a):
         print("  %s %s" % (mmss(c_["t"]), c_["titulo"]))
     for x in f_es:
         print("FALLA", x)
+    # el punto de partida del guion visual (lo mejora el youtube-realizador; la maqueta lo usa tal cual)
+    import youtube_hf as YH
+    B = YH.borrador(YH.contexto(trabajo))
+    escribir(os.path.join(trabajo, "plano.borrador.json"), B)
+    print("plano.borrador.json: %d mesas · %d golpes; sigue el paso «Plano» (Workflow youtube con desde: plano) y youtube.py plano --check"
+          % (len(B["mesas"]), sum(len(m["golpes"]) for m in B["mesas"])))
     return 1 if f_es else 0
 
 
@@ -1762,68 +1857,63 @@ def t_de(escenas, j):
 # La Línea. Una escena de más de 4 s (no el rótulo ni el cierre, cuya mitad derecha es de la pantalla final de YouTube)
 # no pasa de ese 70 %. Se mide en el cuadro al 60 % de la escena: celdas de 8×6 px (de 96×54) casi sin variación y del
 # tono del fondo.
-OCUPACION_MAX = 0.70
-OCUPACION_DESDE = "2026-11-10"   # un largo empezado antes recibe aviso
 
 
-def vacio_de(clip, t, W=96, H=54):
-    """Fracción del cuadro que es fondo liso, en el segundo t del clip (o None si no se pudo leer)."""
-    r = subprocess.run(["ffmpeg", "-v", "error", "-ss", "%.2f" % t, "-i", clip, "-frames:v", "1", "-vf",
-                        "scale=%d:%d,format=gray" % (W, H), "-f", "rawvideo", "-"], capture_output=True)
-    px = list(r.stdout)
-    if len(px) != W * H:
-        return None
-    fondo = sorted(px)[len(px) // 2]
-    lisas = tot = 0
-    for cy in range(0, H, 6):
-        for cx in range(0, W, 8):
-            c = [px[y * W + x] for y in range(cy, min(H, cy + 6)) for x in range(cx, min(W, cx + 8))]
-            tot += 1
-            lisas += max(c) - min(c) <= 10 and abs(sum(c) / len(c) - fondo) <= 10
-    return lisas / tot
 
 
-def revisar_ocupacion(trabajo, Y):
-    """YT12 sobre los clips grabados → (fallas, avisos); escribe revision/ocupacion_16x9.json."""
-    E = leer(os.path.join(trabajo, "escenas.json"))["escenas"]
-    out, malas = [], []
-    for S in E:
-        clip = os.path.join(trabajo, "clips_16x9", "e%d.mp4" % S["n"])
-        if S.get("tipo") in ("capitulo", "cierre") or S["dur"] <= 4 or not os.path.exists(clip):
-            continue
-        v = vacio_de(clip, S["dur"] * 0.6)
-        if v is None:
-            continue
-        out.append({"n": S["n"], "tipo": S.get("tipo"), "origen": S.get("origen"), "vacio": round(v, 2), "margen": bool(S.get("margen"))})
-        if v > OCUPACION_MAX:
-            malas.append("YT12 E%d (%s, %s): %.0f %% del cuadro es fondo liso (máximo %.0f %%): que la escena llene el 16:9 "
-                         "(margen, foto de fondo, el tablero en vez del organigrama)" % (S["n"], S.get("tipo"), S.get("origen"),
-                                                                                         100 * v, 100 * OCUPACION_MAX))
-    os.makedirs(os.path.join(trabajo, "revision"), exist_ok=True)
-    escribir(os.path.join(trabajo, "revision", "ocupacion_16x9.json"), {"maximo": OCUPACION_MAX, "escenas": out})
-    if out:
-        print("YT12 ocupación: mediana de fondo liso %.0f %% · %d de %d escenas pasan de %.0f %%" % (
-            100 * sorted(x["vacio"] for x in out)[len(out) // 2], len(malas), len(out), 100 * OCUPACION_MAX))
-    nuevo = str(Y.get("fecha") or OCUPACION_DESDE) >= OCUPACION_DESDE
-    return (malas, []) if nuevo else ([], malas)
+TABLERO_RECORTE = "crop=1120:1080:400:0"   # el centro del 16:9 de una escena explica o tarjeta (su contenido va centrado)
+TABLERO_FUERA = ("saltos", "llamadas", "fondo", "margen", "seguir", "pregunta", "personas", "R")   # lo que la mesa pone por su cuenta
+# (el rótulo de acto `R` va a la izquierda del 16:9 y el recorte al centro lo cortaba: «CT 2005»; la mesa lo pone como ficha)
 
 
 def cmd_grabar(a):
+    """Los tableros: las escenas `explica` y `tarjeta` (su animación ya hecha) grabadas limpias con el motor propio y
+    recortadas al centro → clips_tablero/eN.mp4 (con un cuadro clave por segundo: HyperFrames busca dentro del clip).
+    Solo se graba la que cambió. Todo lo demás del 16:9 lo dibuja HyperFrames (youtube.py proyecto)."""
+    import hashlib
+    import youtube_hf as YH
     trabajo = os.path.abspath(a.trabajo)
-    args = ["node", os.path.join(RAIZ, "scripts", "video_grabar.js"), "--dir", trabajo, "--hilo", os.path.join(trabajo, "base"),
-            "--fps", str(a.fps), "--formato", FORMATO_GRABAR]
-    solo = a.solo
-    if not solo:   # sin --solo: solo las escenas que no tienen clip (las que `armar` marcó como cambiadas)
-        ns = [S["n"] for S in leer(os.path.join(trabajo, "escenas.json"))["escenas"]]
-        faltan = [n for n in ns if not os.path.exists(os.path.join(trabajo, "clips_16x9", "e%d.mp4" % n))]
-        if not faltan:
-            print("grabar: los %d clips ya están al día" % len(ns))
-            return 0
-        if len(faltan) < len(ns):
-            solo = ",".join(map(str, faltan))
-            print("grabar: %d de %d escenas (las demás conservan su clip)" % (len(faltan), len(ns)))
-    if solo:
-        args += ["--solo", solo]
+    E = leer(os.path.join(trabajo, "escenas.json"))
+    G = os.path.join(trabajo, "tablero")
+    os.makedirs(G, exist_ok=True)
+    limpias = []
+    for S in E["escenas"]:
+        S = {k: v for k, v in S.items() if k not in TABLERO_FUERA}
+        S["transicion"] = None
+        limpias.append(S)
+    escribir(os.path.join(G, "escenas.json"), dict(E, escenas=limpias))
+    for d in ("fotos", "tomas"):
+        if os.path.isdir(os.path.join(trabajo, d)) and not os.path.lexists(os.path.join(G, d)):
+            os.symlink(os.path.join("..", d), os.path.join(G, d))
+    fh = os.path.join(G, "huellas.json")
+    antes = leer(fh) if os.path.exists(fh) else {}
+    ahora = {str(S["n"]): hashlib.sha1(json.dumps({k: v for k, v in S.items() if k not in ("n", "sfx")}, sort_keys=True, ensure_ascii=False).encode("utf-8")).hexdigest()[:16]
+             for S in limpias if S["tipo"] in YH.TABLERO}
+    cd = os.path.join(trabajo, "clips_tablero")
+    os.makedirs(cd, exist_ok=True)
+    por_huella = {h: n for n, h in antes.items() if os.path.exists(os.path.join(cd, "e%s.mp4" % n))}
+    tmp = os.path.join(cd, ".reuso")
+    shutil.rmtree(tmp, ignore_errors=True)
+    os.makedirs(tmp)
+    faltan = []
+    for n, h in ahora.items():   # un clip se reusa por su contenido, aunque la escena haya cambiado de número
+        if h in por_huella and not getattr(a, "todo", False):
+            shutil.copy2(os.path.join(cd, "e%s.mp4" % por_huella[h]), os.path.join(tmp, "e%s.mp4" % n))
+        else:
+            faltan.append(n)
+    for f in glob.glob(os.path.join(cd, "e*.mp4")):
+        os.remove(f)
+    for f in glob.glob(os.path.join(tmp, "e*.mp4")):
+        os.replace(f, os.path.join(cd, os.path.basename(f)))
+    os.rmdir(tmp)
+    if a.solo:
+        faltan = sorted(set(faltan) | set(a.solo.split(",")), key=int)
+    if not faltan:
+        escribir(fh, ahora)
+        print("grabar: los %d tableros ya están al día" % len(ahora))
+        return 0
+    args = ["node", os.path.join(RAIZ, "scripts", "video_grabar.js"), "--dir", G, "--hilo", os.path.join(trabajo, "base"), "--fps", str(a.fps),
+            "--formato", FORMATO_GRABAR, "--solo", ",".join(faltan)]
     if a.paralelo:
         args += ["--paralelo", str(a.paralelo)]
     candado = os.path.join(trabajo, ".grabando")
@@ -1833,15 +1923,17 @@ def cmd_grabar(a):
     finally:
         os.remove(candado) if os.path.exists(candado) else None
     if rc == 3:
-        return falla("YT9 algo visible sale de los márgenes del 16:9 (revision/zona_16x9.json): corrige la página y vuelve a grabar")
+        return falla("YT9 algo visible sale de los márgenes del 16:9 (tablero/revision/zona_16x9.json): corrige la página y vuelve a grabar")
     if rc:
-        return falla("la grabación falló")
-    f12, av12 = revisar_ocupacion(trabajo, estado_y(trabajo))
-    for x in av12:
-        print("AVISO", x)
-    for x in f12:
-        print("FALLA", x)
-    return 1 if f12 else 0
+        return falla("la grabación de los tableros falló")
+    for n in faltan:
+        src = os.path.join(G, "clips_16x9", "e%s.mp4" % n)
+        if not os.path.exists(src):
+            return falla("no se grabó el tablero E%s" % n)
+        VD.ff("-i", src, "-vf", TABLERO_RECORTE, "-g", "30", "-c:v", "libx264", "-crf", "16", "-pix_fmt", "yuv420p", "-an", os.path.join(cd, "e%s.mp4" % n))
+    escribir(fh, ahora)
+    print("grabar: %d tableros grabados (%s) de %d → %s" % (len(faltan), ", ".join(faltan), len(ahora), rel(cd)))
+    return 0
 
 
 def pistas_paleta(Y):
@@ -1884,43 +1976,6 @@ def musica_por_capitulo(Y, caps, total, segs):
     return fondo, [pistas[j % len(pistas)]["id"] for j in range(len(caps))]
 
 
-def video_por_tramos(E, clips, durs, offs, segs):
-    """Las escenas encadenadas con su transición (xfade), por tramos de TRAMO_ESCENAS escenas que luego se unen con la
-    transición de la primera escena de cada tramo: el mismo resultado que una sola cadena, sin un filtergraph de 120
-    entradas."""
-    TR = E.get("transicion_s", VD.TRANSICION)
-    n = len(clips)
-    cortes = list(range(0, n, TRAMO_ESCENAS))
-    tramos = []
-    for k, i0 in enumerate(cortes):
-        i1 = min(n, i0 + TRAMO_ESCENAS)
-        out = os.path.join(segs, "tramo_%02d.mp4" % (k + 1))
-        if i1 - i0 == 1:
-            shutil.copy(clips[i0], out)
-        else:
-            fc, prev = "", "[0:v]"
-            for j in range(1, i1 - i0):
-                tr = E["escenas"][i0 + j].get("transicion") or VD.TRANSICIONES["tarjeta"]
-                fc += "%s[%d:v]xfade=transition=%s:duration=%.3f:offset=%.3f[x%d];" % (prev, j, tr, TR, offs[i0 + j] - offs[i0], j)
-                prev = "[x%d]" % j
-            VD.ff(*sum([["-i", c] for c in clips[i0:i1]], []), "-filter_complex", fc.rstrip(";"), "-map", prev, "-an",
-                  "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "17", "-preset", "medium", out)
-        tramos.append((out, i0))
-    video_solo = os.path.join(segs, "voz_video.mp4")
-    if len(tramos) == 1:
-        shutil.copy(tramos[0][0], video_solo)
-        return video_solo
-    fc, prev = "", "[0:v]"
-    for j in range(1, len(tramos)):
-        i0 = tramos[j][1]
-        tr = E["escenas"][i0].get("transicion") or VD.TRANSICIONES["tarjeta"]
-        fc += "%s[%d:v]xfade=transition=%s:duration=%.3f:offset=%.3f[t%d];" % (prev, j, tr, TR, offs[i0], j)
-        prev = "[t%d]" % j
-    VD.ff(*sum([["-i", x] for x, _ in tramos], []), "-filter_complex", fc.rstrip(";"), "-map", prev, "-an",
-          "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "17", "-preset", "medium", video_solo)
-    return video_solo
-
-
 def mezclar_voz(trabajo, E, offs, D, segs):
     """Todas las voces (y el audio original de una toma) en una pista, por lotes de 40 entradas."""
     voces = [(os.path.join(trabajo, "audio", "voz_%d_r.mp3" % e["n"]), o) for e, o in zip(E["escenas"], offs)]
@@ -1950,53 +2005,48 @@ def srt(E, offs, salida):
     open(salida, "w", encoding="utf-8").write(VD.texto_srt(E["escenas"], offs))
 
 
-def cmd_montar(a):
+def cmd_audio(a):
+    """La pista del video: la voz ya grabada en su segundo (el de escenas.json), la música por capítulo con ducking y los
+    efectos del plano (hf/efectos.json: uno por pieza que entra), a −14 LUFS → segs_16x9/mezcla_final.wav; el .srt y los
+    capítulos reales. Los tiempos salen de escenas.json, no de medir clips."""
+    import youtube_hf as YH
     trabajo = os.path.abspath(a.trabajo)
     Y = estado_y(trabajo)
-    E = leer(os.path.join(trabajo, "escenas.json"))
+    fe = os.path.join(trabajo, "hf", "efectos.json")
+    if not os.path.exists(fe):
+        return falla("falta hf/efectos.json: youtube.py proyecto primero")
+    ctx = YH.contexto(trabajo)
+    E, offs, D = ctx["E"], ctx["offs"], ctx["total"]
     segs = os.path.join(trabajo, "segs_16x9")
     os.makedirs(segs, exist_ok=True)
     sal = os.path.join(trabajo, "salida")
     os.makedirs(sal, exist_ok=True)
-    clips = [os.path.join(trabajo, "clips_16x9", "e%d.mp4" % e["n"]) for e in E["escenas"]]
-    falta = [c for c in clips if not os.path.exists(c)]
-    if falta:
-        return falla("faltan clips (youtube.py grabar): %s" % ", ".join(rel(x) for x in falta[:5]))
-    durs = [VD.ffprobe_dur(c) for c in clips]
-    TR = E.get("transicion_s", VD.TRANSICION)
-    offs, off = [], 0.0
-    for k, d in enumerate(durs):
-        offs.append(off)
-        off += d - (TR if k < len(durs) - 1 else 0.0)
-    D = off
-    video_solo = video_por_tramos(E, clips, durs, offs, segs)
-    D = VD.ffprobe_dur(video_solo)
     voz = mezclar_voz(trabajo, E, offs, D, segs)
     gv = VD.VOZ_LUFS - VD.medir(voz)["input_i"]
-    caps_t = [{"t": offs[i]} for i, e in enumerate(E["escenas"]) if e["tipo"] == "capitulo"]
-    primero = next((e for e in E["escenas"] if e["tipo"] == "capitulo"), None)
-    if not caps_t or (primero["H"].get("numero") or 1) != 1:   # sin rótulo del capítulo 1: empieza en 0:00
-        caps_t.insert(0, {"t": 0.0})
+    caps_t = [{"t": c["ini"]} for c in ctx["caps"]]
     caps_t[0]["t"] = 0.0
-    fondo, pistas = musica_por_capitulo(Y, caps_t or [{"t": 0.0}], D, segs)
+    fondo, pistas = musica_por_capitulo(Y, caps_t, D, segs)
     cat = {x["id"]: x for x in leer(os.path.join(VD.SFX_DIR, "catalogo.json"))["efectos"]}
-    efectos = sorted((o + s["t"], s["id"]) for e, o in zip(E["escenas"], offs) for s in e.get("sfx") or [] if o + s["t"] >= 0 and s["id"] in cat)
-    # la voz y la música con ducking; los efectos, en lotes (cada uno con su retraso) sumados aparte
+    efectos = sorted((t, i) for t, i in leer(fe) if i in cat and 0 <= t < D - 0.2)
+    tasas = [1.0, 0.94, 1.06]   # tres tomas del mismo efecto: el mismo papel en cada entrada delata la plantilla
     fx = os.path.join(segs, "efectos.wav")
     if efectos:
         lotes = []
         for k in range(0, len(efectos), 40):
             grupo = efectos[k:k + 40]
-            fc = "".join("[%d:a]aformat=channel_layouts=stereo,aresample=48000,adelay=%s:all=1,volume=%ddB[f%d];" % (
-                j, VD.muestras(t), cat[i]["ganancia_db"], j) for j, (t, i) in enumerate(grupo))
+            fc = "".join("[%d:a]aformat=channel_layouts=stereo,asetrate=%d,aresample=48000,adelay=%s:all=1,volume=%ddB[f%d];" % (
+                j, int(48000 * tasas[(k + j) % 3]), VD.muestras(t), cat[i]["ganancia_db"] + (3 if i == "papel" else 0), j) for j, (t, i) in enumerate(grupo))
             fc += "".join("[f%d]" % j for j in range(len(grupo))) + "amix=inputs=%d:duration=longest:normalize=0,apad=whole_dur=%.3f[a]" % (len(grupo), D)
             out = os.path.join(segs, "efectos_%d.wav" % (k // 40 + 1))
             VD.ff(*sum([["-i", os.path.join(VD.SFX_DIR, cat[i]["archivo"])] for _, i in grupo], []), "-filter_complex", fc, "-map", "[a]",
                   "-ar", "48000", out)
             lotes.append(out)
-        VD.ff(*sum([["-i", x] for x in lotes], []), "-filter_complex",
-              "".join("[%d:a]" % i for i in range(len(lotes))) + "amix=inputs=%d:duration=longest:normalize=0,atrim=0:%.3f[a]" % (len(lotes), D),
-              "-map", "[a]", "-ar", "48000", fx)
+        if len(lotes) == 1:
+            VD.ff("-i", lotes[0], "-t", "%.3f" % D, "-ar", "48000", fx)
+        else:
+            VD.ff(*sum([["-i", x] for x in lotes], []), "-filter_complex",
+                  "".join("[%d:a]" % i for i in range(len(lotes))) + "amix=inputs=%d:duration=longest:normalize=0,atrim=0:%.3f[a]" % (len(lotes), D),
+                  "-map", "[a]", "-ar", "48000", fx)
     else:
         VD.ff("-f", "lavfi", "-i", "anullsrc=r=48000:cl=stereo", "-t", "%.3f" % D, fx)
     fc = ("[0:a]volume=%.2fdB,asplit=2[v][k];"
@@ -2005,17 +2055,46 @@ def cmd_montar(a):
     mezcla = os.path.join(segs, "mezcla.wav")
     VD.ff("-i", voz, "-i", fondo, "-i", fx, "-filter_complex", fc, "-map", "[a]", "-ar", "48000", mezcla)
     m1 = VD.medir(mezcla)
-    video = os.path.join(sal, "video.mp4")
-    filtro = ("[1:a]loudnorm=I=%s:TP=-1.5:LRA=11:measured_I=%.2f:measured_TP=%.2f:measured_LRA=%.2f:measured_thresh=%.2f:offset=%.2f:linear=true%s[a]")
+    final = os.path.join(segs, "mezcla_final.wav")
+    filtro = "loudnorm=I=%s:TP=-1.5:LRA=11:measured_I=%.2f:measured_TP=%.2f:measured_LRA=%.2f:measured_thresh=%.2f:offset=%.2f:linear=true%s"
     datos = (VD.LUFS, m1["input_i"], m1["input_tp"], m1["input_lra"], m1["input_thresh"], m1["target_offset"])
-    VD.ff("-i", video_solo, "-i", mezcla, "-filter_complex", filtro % (datos + ("",)), "-map", "0:v", "-map", "[a]", "-c:v", "copy",
-          "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-movflags", "+faststart", video)
-    mf = VD.medir(video)
+    VD.ff("-i", mezcla, "-af", filtro % (datos + ("",)), "-ar", "48000", final)
+    mf = VD.medir(final)
     if mf["input_tp"] > VD.TP_MAX:
         print("AVISO YT9 pico %.1f dBTP: se rehace la pista con limitador" % mf["input_tp"])
-        VD.ff("-i", video_solo, "-i", mezcla, "-filter_complex", filtro % (datos + (",alimiter=limit=0.79:level=false",)), "-map", "0:v",
-              "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-movflags", "+faststart", video)
-        mf = VD.medir(video)
+        VD.ff("-i", mezcla, "-af", filtro % (datos + (",alimiter=limit=0.79:level=false",)), "-ar", "48000", final)
+        mf = VD.medir(final)
+    srt(E, offs, os.path.join(sal, "subtitulos.srt"))
+    caps = leer(os.path.join(trabajo, "capitulos.json"))
+    reales = {c["numero"]: c["ini"] for c in ctx["caps"]}
+    for c_ in caps["capitulos"]:
+        c_["t"] = 0.0 if c_["numero"] == 1 else round(reales.get(c_["numero"], c_["t"]), 2)
+    caps["total_s"] = round(D, 2)
+    caps["musica"] = pistas
+    escribir(os.path.join(trabajo, "capitulos.json"), caps)
+    print("audio %s · %.1f LUFS · %.1f dBTP · %d efectos · música %s → %s" % (mmss(D), mf["input_i"], mf["input_tp"], len(efectos),
+                                                                            " / ".join(sorted(set(pistas))), rel(final)))
+    a.capitulo = None
+    return YH.cmd_proyecto(a)   # cada proyecto lleva el tramo de su capítulo como guía de la vista previa
+
+
+def cmd_montar(a):
+    """El video de HyperFrames (segs_16x9/video_solo.mp4, sin recodificar) con la pista de `audio` → salida/video.mp4 (YT9)."""
+    trabajo = os.path.abspath(a.trabajo)
+    segs = os.path.join(trabajo, "segs_16x9")
+    sal = os.path.join(trabajo, "salida")
+    os.makedirs(sal, exist_ok=True)
+    video_solo, final = os.path.join(segs, "video_solo.mp4"), os.path.join(segs, "mezcla_final.wav")
+    for f, como in ((video_solo, "render"), (final, "audio")):
+        if not os.path.exists(f):
+            return falla("falta %s: youtube.py %s" % (rel(f), como))
+    dv, da = VD.ffprobe_dur(video_solo), VD.ffprobe_dur(final)
+    if abs(dv - da) > 0.35:
+        return falla("YT9 el video dura %.2f s y el audio %.2f s: vuelve a correr proyecto, render y audio sobre el mismo plano" % (dv, da))
+    video = os.path.join(sal, "video.mp4")
+    VD.ff("-i", video_solo, "-i", final, "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-shortest",
+          "-movflags", "+faststart", video)
+    mf = VD.medir(video)
     pr = json.loads(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "stream=codec_type,width,height", "-of", "json", video],
                                    capture_output=True, text=True).stdout)["streams"]
     v = next((s_ for s_ in pr if s_["codec_type"] == "video"), {})
@@ -2026,17 +2105,8 @@ def cmd_montar(a):
         fallas.append("YT9 sin audio")
     if abs(mf["input_i"] - VD.LUFS) > VD.LUFS_TOL or mf["input_tp"] > VD.TP_MAX:
         fallas.append("YT9 sonoridad %.1f LUFS / %.1f dBTP (se espera %.0f ±%.1f, ≤ %.0f)" % (mf["input_i"], mf["input_tp"], VD.LUFS, VD.LUFS_TOL, VD.TP_MAX))
-    srt(E, offs, os.path.join(sal, "subtitulos.srt"))
-    # los capítulos reales (desplazamientos de los clips grabados) para la descripción de YouTube
-    caps = leer(os.path.join(trabajo, "capitulos.json"))
-    reales = {e["H"].get("numero"): o for e, o in zip(E["escenas"], offs) if e["tipo"] == "capitulo"}
-    for c_ in caps["capitulos"]:
-        c_["t"] = 0.0 if c_["numero"] == 1 else round(reales.get(c_["numero"], c_["t"]), 2)
-    caps["total_s"] = round(D, 2)
-    caps["musica"] = pistas
-    escribir(os.path.join(trabajo, "capitulos.json"), caps)
-    print("video 16:9 %s (%.1f min) · %.1f LUFS · %.1f dBTP · música %s → %s" % (mmss(D), D / 60, mf["input_i"], mf["input_tp"],
-                                                                              " / ".join(sorted(set(pistas))), rel(video)))
+    D = VD.ffprobe_dur(video)
+    print("video 16:9 %s (%.1f min) · %.1f LUFS · %.1f dBTP → %s" % (mmss(D), D / 60, mf["input_i"], mf["input_tp"], rel(video)))
     for x in fallas:
         print("FALLA", x)
     return 1 if fallas else 0
@@ -2346,7 +2416,8 @@ def main():
     q.add_argument("--revisar", action="store_true")
     q = sub.add_parser("digesto")
     q.add_argument("trabajo")
-    q.add_argument("--para", choices=("editor", "oyente", "critico"), required=True)
+    q.add_argument("--para", choices=("editor", "oyente", "critico", "realizador"), required=True)
+    q.add_argument("--capitulo", type=int, help="con --para realizador: el capítulo (1…)")
     q = sub.add_parser("montaje")
     q.add_argument("trabajo")
     q.add_argument("--check", action="store_true")
@@ -2362,7 +2433,6 @@ def main():
     sub.add_parser("tiempos").add_argument("trabajo")
     sub.add_parser("teaser", help="el teaser vertical 9:16 del largo: arranque de la Parte 1 + «Video completo»").add_argument("trabajo")
     q = sub.add_parser("armar")
-    q.add_argument("--todo", action="store_true", help="borra todos los clips (cambió una página de video/): se regraba entero")
     q.add_argument("trabajo")
     q.add_argument("--sin-gate", action="store_true", help=argparse.SUPPRESS)
     q = sub.add_parser("grabar")
@@ -2370,7 +2440,27 @@ def main():
     q.add_argument("--fps", type=int, default=30)
     q.add_argument("--solo")
     q.add_argument("--paralelo", type=int)
+    q.add_argument("--todo", action="store_true", help="vuelve a grabar todos los tableros (cambió una página de video/)")
     sub.add_parser("montar").add_argument("trabajo")
+    sub.add_parser("audio", help="voz, música y efectos del plano a −14 LUFS; .srt y capítulos").add_argument("trabajo")
+    q = sub.add_parser("borrador", help="plano.borrador.json: lo que las escenas ya traen")
+    q.add_argument("trabajo")
+    q.add_argument("--capitulo", type=int)
+    q = sub.add_parser("plano", help="une plano_<N>.json en plano.json; --check = YT13–YT19; --hoja = plano.md para revisar")
+    q.add_argument("trabajo")
+    q.add_argument("--check", action="store_true")
+    q.add_argument("--hoja", action="store_true")
+    q.add_argument("--borrador", action="store_true", help="usa plano.borrador.json tal cual (la maqueta)")
+    q.add_argument("--capitulo", type=int)
+    for nombre, ayuda in (("proyecto", "un proyecto HyperFrames por capítulo en hf/cap-N/"), ("revisar", "hyperframes check y hoja de contacto por capítulo")):
+        q = sub.add_parser(nombre, help=ayuda)
+        q.add_argument("trabajo")
+        q.add_argument("--capitulo", type=int)
+    q = sub.add_parser("render", help="render por capítulo (--workers 1) y unión → segs_16x9/video_solo.mp4")
+    q.add_argument("trabajo")
+    q.add_argument("--capitulo", type=int)
+    q.add_argument("--calidad", default="looks", choices=("draft", "looks", "delivery"))
+    q.add_argument("--paralelo", type=int, default=1, help=argparse.SUPPRESS)
     q = sub.add_parser("miniatura")
     q.add_argument("trabajo")
     q.add_argument("--texto", required=True)
@@ -2385,9 +2475,12 @@ def main():
     if not a.cmd:
         ap.print_help()
         return 2
+    if a.cmd in ("borrador", "plano", "proyecto", "revisar", "render"):   # el 16:9 en HyperFrames: scripts/youtube_hf.py
+        import youtube_hf as YH
+        return getattr(YH, "cmd_" + a.cmd)(a)
     return {"preparar": cmd_preparar, "digesto": cmd_digesto, "montaje": cmd_montaje, "probar": cmd_probar,
             "aplicar": cmd_aplicar, "resumen": cmd_resumen, "voz": cmd_voz, "tiempos": cmd_tiempos, "armar": cmd_armar,
-            "grabar": cmd_grabar, "montar": cmd_montar, "miniatura": cmd_miniatura, "teaser": cmd_teaser,
+            "grabar": cmd_grabar, "audio": cmd_audio, "montar": cmd_montar, "miniatura": cmd_miniatura, "teaser": cmd_teaser,
             "entregar": cmd_entregar}[a.cmd](a)
 
 

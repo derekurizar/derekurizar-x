@@ -1,0 +1,47 @@
+{
+ "total_s": 558.23,
+ "capitulos": [
+  {
+   "numero": 1,
+   "titulo": "El banco del café",
+   "parte": 1,
+   "t": 0.0,
+   "dur": 135.0
+  },
+  {
+   "numero": 2,
+   "titulo": "La apuesta de Refco",
+   "parte": 2,
+   "t": 134.97,
+   "dur": 90.7
+  },
+  {
+   "numero": 3,
+   "titulo": "La caída de octubre",
+   "parte": 3,
+   "t": 225.67,
+   "dur": 99.8
+  },
+  {
+   "numero": 4,
+   "titulo": "El otro banco: Banco de Comercio",
+   "parte": 4,
+   "t": 325.43,
+   "dur": 115.9
+  },
+  {
+   "numero": 5,
+   "titulo": "El dinero que no volvió",
+   "parte": 5,
+   "t": 441.33,
+   "dur": 116.9
+  }
+ ],
+ "musica": [
+  "corrupcion-colapso",
+  "corrupcion-investigacion",
+  "corrupcion-intriga",
+  "corrupcion-judicial",
+  "corrupcion-poder"
+ ]
+}

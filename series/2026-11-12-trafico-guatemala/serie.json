@@ -1,0 +1,672 @@
+{
+ "version": 4,
+ "slug": "trafico-guatemala",
+ "tema": "el tráfico en Guatemala: causas, problemas y soluciones",
+ "motor": "historia",
+ "fecha": "2026-11-12",
+ "carpeta": "series/2026-11-12-trafico-guatemala",
+ "trabajo": "sesiones/serie-trafico-guatemala",
+ "n_partes": 6,
+ "paleta": "maiz",
+ "musica": "corrupcion-desenlace",
+ "plan_aprobado": true,
+ "estado": "completa",
+ "partes": [
+  {
+   "n": 1,
+   "titulo": "Cómo se llenó la ciudad",
+   "pregunta": "¿Cómo pasó la capital de ciudad a embudo?",
+   "periodo": {
+    "desde": "1960",
+    "hasta": "2026-07"
+   },
+   "mecanismo": null,
+   "ejes": null,
+   "puente": "¿Cuánto le cuesta a cada persona ese embudo?",
+   "hilos": [
+    "p1h1",
+    "p1h2"
+   ],
+   "revelaciones": [
+    "El tren de pasajeros se suspendió en 1996 y Fegua pasó de 10 mil trabajadores a 60.",
+    "El parque llegó a casi 6.8 millones de vehículos en julio de 2026, más del triple que en 2010."
+   ],
+   "tema": "La ciudad se llenó",
+   "hechos": [
+    "ciu-h10",
+    "ciu-h12",
+    "ciu-h13",
+    "ciu-h01",
+    "ciu-h03",
+    "ciu-h06",
+    "ciu-h07",
+    "ciu-h08",
+    "ciu-h16",
+    "cos-h22",
+    "cos-h16",
+    "cos-h06",
+    "ciu-c01",
+    "ciu-c04",
+    "ciu-c06",
+    "ciu-c07",
+    "ciu-c09",
+    "ciu-c12",
+    "ciu-c16",
+    "ciu-c18",
+    "cos-c29",
+    "ciu-q01"
+   ],
+   "obligatorio": [
+    "ciu-h03",
+    "ciu-h13",
+    "cos-h16",
+    "ciu-h16",
+    "cos-h06"
+   ],
+   "en_juego": "el viaje diario de cientos de miles",
+   "estado": "entregada",
+   "trabajo": "sesiones/serie-trafico-guatemala/parte-1",
+   "ruta": "series/2026-11-12-trafico-guatemala/parte-1",
+   "duracion_s": 140.1
+  },
+  {
+   "n": 2,
+   "titulo": "Lo que nos cuesta",
+   "pregunta": "¿Cuánto nos cuesta el atasco?",
+   "periodo": {
+    "desde": "2015",
+    "hasta": "2026"
+   },
+   "mecanismo": null,
+   "ejes": null,
+   "puente": "¿Qué hace la gente para escapar del atasco?",
+   "hilos": [
+    "p2h1",
+    "p2h2"
+   ],
+   "revelaciones": [
+    "Unas 1,300 horas al año en el tráfico y más de Q25 mil millones de costo, según cifras del BID.",
+    "Los vehículos crecen 9.6 % al año y la red vial 1.4 %: los kilómetros nuevos por año cayeron de 369 a 72."
+   ],
+   "tema": "Lo que cuesta",
+   "hechos": [
+    "cos-h01",
+    "cos-h03",
+    "cos-h04",
+    "cos-h05",
+    "cos-h08",
+    "cos-h09",
+    "cos-h10",
+    "cos-h11",
+    "aer-h22",
+    "cos-c01",
+    "cos-c02",
+    "cos-c03",
+    "cos-c04",
+    "cos-c05",
+    "cos-c06",
+    "cos-c07",
+    "cos-c11",
+    "cos-c12",
+    "cos-c15",
+    "cos-c16",
+    "cos-c17",
+    "tra-c11",
+    "cos-q01",
+    "cos-q02"
+   ],
+   "obligatorio": [
+    "cos-h01",
+    "cos-h03",
+    "cos-h10",
+    "cos-h09",
+    "cos-h05"
+   ],
+   "en_juego": "miles de millones al año y el tiempo de cada persona",
+   "estado": "entregada",
+   "trabajo": "sesiones/serie-trafico-guatemala/parte-2",
+   "ruta": "series/2026-11-12-trafico-guatemala/parte-2",
+   "duracion_s": 146.7
+  },
+  {
+   "n": 3,
+   "titulo": "La salida en moto",
+   "pregunta": "¿Qué hace la gente para escapar del atasco, y a qué precio?",
+   "periodo": {
+    "desde": "2015",
+    "hasta": "2026"
+   },
+   "mecanismo": null,
+   "ejes": null,
+   "puente": "Si la calle no alcanza, ¿puede un cable por el aire mover a la gente?",
+   "hilos": [
+    "p3h1",
+    "p3h2"
+   ],
+   "revelaciones": [
+    "Las motos son más de la mitad del parque y casi la mitad de lo que crece cada mes.",
+    "En 2025 murieron 2,432 personas en el tránsito y 1,385 iban en moto: casi 57 de cada 100."
+   ],
+   "tema": "La moto",
+   "hechos": [
+    "cos-h17",
+    "cos-h18",
+    "cos-h19",
+    "cos-h20",
+    "cos-h21",
+    "cos-h14",
+    "cos-h15",
+    "ciu-h14",
+    "ciu-h15",
+    "ciu-c11",
+    "ciu-c13",
+    "cos-c21",
+    "cos-c22",
+    "cos-c23",
+    "cos-c24",
+    "cos-c25",
+    "cos-c26",
+    "cos-c27"
+   ],
+   "obligatorio": [
+    "cos-h17",
+    "cos-h20",
+    "cos-h18",
+    "cos-h21",
+    "ciu-h14"
+   ],
+   "en_juego": "miles de vidas al año",
+   "estado": "entregada",
+   "trabajo": "sesiones/serie-trafico-guatemala/parte-3",
+   "ruta": "series/2026-11-12-trafico-guatemala/parte-3",
+   "duracion_s": 140.6
+  },
+  {
+   "n": 4,
+   "titulo": "El aerómetro con números",
+   "pregunta": "Si la calle no alcanza, ¿cuánto puede mover un cable por el aire?",
+   "periodo": {
+    "desde": "2022",
+    "hasta": "2026-11"
+   },
+   "mecanismo": null,
+   "ejes": null,
+   "puente": "¿Y si la salida fuera el tren que la ciudad ya tuvo?",
+   "hilos": [
+    "p4h1",
+    "p4h2",
+    "p4h3"
+   ],
+   "revelaciones": [
+    "Las cifras del propio proyecto no cuadran entre sí: 5,500 pasajeros por hora por sentido, 235 mil al día por sentido (Fundesa) o 374 mil al día como máximo (el desarrollador).",
+    "Solo por la CA-1 Occidente, la entrada por Mixco que cubre el corredor, pasan 193,589 vehículos al día (Plan Maestro/KOICA, 2025), y por los siete ejes de Mixco unos 450 mil (Emixtra, 2022): con al menos una persona en cada vehículo, al menos 450 mil personas, más que los 374 mil que el desarrollador da como máximo del cable.",
+    "En hora pico la red metropolitana está saturada hasta el 95 % y se avanza a 4–7 km/h (Anadie); el cable promete 23.4 km/h."
+   ],
+   "tema": "El aerómetro",
+   "hechos": [
+    "aer-h04",
+    "aer-h06",
+    "aer-h07",
+    "aer-h08",
+    "aer-h09",
+    "aer-h10",
+    "aer-h11",
+    "aer-h13",
+    "aer-h14",
+    "aer-h15",
+    "aer-h16",
+    "aer-h21",
+    "aer-h27",
+    "aer-h28",
+    "aer-c01",
+    "aer-c02",
+    "aer-c03",
+    "aer-c04",
+    "aer-c06",
+    "aer-c07",
+    "aer-c08",
+    "aer-c14",
+    "aer-c16",
+    "aer-q03",
+    "aer-q05",
+    "aer-h30",
+    "aer-c24",
+    "aer-h29",
+    "aer-c20",
+    "aer-c23"
+   ],
+   "obligatorio": [
+    "aer-h09",
+    "aer-h10",
+    "aer-h13",
+    "aer-h07",
+    "aer-h14",
+    "aer-h30",
+    "aer-c24"
+   ],
+   "en_juego": "cientos de millones de quetzales públicos",
+   "estado": "entregada",
+   "trabajo": "sesiones/serie-trafico-guatemala/parte-4",
+   "ruta": "series/2026-11-12-trafico-guatemala/parte-4",
+   "duracion_s": 146.9
+  },
+  {
+   "n": 5,
+   "titulo": "El tren que volvió al plan",
+   "pregunta": "¿Qué falta para que vuelva el tren?",
+   "periodo": {
+    "desde": "2007",
+    "hasta": "2026-11"
+   },
+   "mecanismo": null,
+   "ejes": null,
+   "puente": "¿Y si parte de la solución fuera no salir de casa?",
+   "hilos": [
+    "p5h1",
+    "p5h2"
+   ],
+   "revelaciones": [
+    "El Metro Riel tiene ley desde octubre de 2026, pero su presupuesto bajó de Q1,200 a Q600 millones y el presidente dice que no correrá en su gobierno.",
+    "El Plan Maestro KOICA prioriza 13 proyectos y pide una agencia metropolitana de transporte."
+   ],
+   "tema": "El tren y el plan",
+   "hechos": [
+    "tre-h01",
+    "tre-h02",
+    "tre-h03",
+    "tre-h04",
+    "tre-h05",
+    "tre-h06",
+    "tre-h07",
+    "tre-h09",
+    "tre-h10",
+    "tre-h12",
+    "tre-h13",
+    "tre-h15",
+    "tre-h16",
+    "tre-h17",
+    "tre-h18",
+    "tre-c01",
+    "tre-c03",
+    "tre-c04",
+    "tre-c06",
+    "tre-c07",
+    "tre-c08",
+    "tre-c09",
+    "tre-c10",
+    "tre-c15",
+    "tre-c16",
+    "tre-c20",
+    "tre-q01",
+    "tre-q05",
+    "tre-q06"
+   ],
+   "obligatorio": [
+    "tre-h01",
+    "tre-h02",
+    "tre-h03",
+    "tre-h06",
+    "tre-h07",
+    "tre-h10"
+   ],
+   "en_juego": "años de obra y miles de millones",
+   "estado": "entregada",
+   "trabajo": "sesiones/serie-trafico-guatemala/parte-5",
+   "ruta": "series/2026-11-12-trafico-guatemala/parte-5",
+   "duracion_s": 145.9
+  },
+  {
+   "n": 6,
+   "titulo": "Trabajar sin moverse",
+   "pregunta": "¿Y si parte de la solución fuera no salir de casa a la misma hora?",
+   "periodo": {
+    "desde": "2020",
+    "hasta": "2026-11"
+   },
+   "mecanismo": null,
+   "ejes": null,
+   "puente": null,
+   "hilos": [
+    "p6h1",
+    "p6h2"
+   ],
+   "revelaciones": [
+    "La iniciativa 6556 de teletrabajo solo pasó su primer debate.",
+    "Los horarios escalonados se proponen en el Congreso, en Presidencia y en la Municipalidad, y ninguno es ley."
+   ],
+   "tema": "Sin moverse",
+   "hechos": [
+    "tra-h01",
+    "tra-h02",
+    "tra-h03",
+    "tra-h04",
+    "tra-h05",
+    "tra-h06",
+    "tra-h07",
+    "tra-h08",
+    "tra-h09",
+    "tra-h10",
+    "tra-h12",
+    "tra-c03",
+    "tra-c04",
+    "tra-c05",
+    "tra-c06",
+    "tra-c07",
+    "tra-q01",
+    "tra-q02"
+   ],
+   "obligatorio": [
+    "tra-h02",
+    "tra-h08",
+    "tra-h05",
+    "tra-h09"
+   ],
+   "en_juego": "la ciudad entera",
+   "estado": "entregada",
+   "trabajo": "sesiones/serie-trafico-guatemala/parte-6",
+   "ruta": "series/2026-11-12-trafico-guatemala/parte-6",
+   "duracion_s": 179.0
+  }
+ ],
+ "historial": [
+  {
+   "version": 1,
+   "fecha": "2026-11-12",
+   "nota": "plan nuevo",
+   "partes": [
+    {
+     "n": 1,
+     "titulo": "Cómo se llenó la ciudad",
+     "pregunta": "¿Cómo pasó la capital de ciudad a embudo?",
+     "periodo": {
+      "desde": "1960",
+      "hasta": "2026-07"
+     },
+     "mecanismo": null,
+     "puente": "¿Cuánto le cuesta a cada persona ese embudo?"
+    },
+    {
+     "n": 2,
+     "titulo": "Lo que nos cuesta",
+     "pregunta": "¿Cuánto nos cuesta el atasco?",
+     "periodo": {
+      "desde": "2015",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": "¿Qué hace la gente para escapar del atasco?"
+    },
+    {
+     "n": 3,
+     "titulo": "La salida en moto",
+     "pregunta": "¿Qué hace la gente para escapar del atasco, y a qué precio?",
+     "periodo": {
+      "desde": "2015",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": "Si la calle no alcanza, ¿puede un cable por el aire mover a la gente?"
+    },
+    {
+     "n": 4,
+     "titulo": "El aerómetro con números",
+     "pregunta": "Si la calle no alcanza, ¿cuánto puede mover un cable por el aire?",
+     "periodo": {
+      "desde": "2023",
+      "hasta": "2026-11"
+     },
+     "mecanismo": null,
+     "puente": "¿Y si la salida fuera el tren que la ciudad ya tuvo?"
+    },
+    {
+     "n": 5,
+     "titulo": "El tren que volvió al plan",
+     "pregunta": "¿Qué falta para que vuelva el tren?",
+     "periodo": {
+      "desde": "2007",
+      "hasta": "2026-11"
+     },
+     "mecanismo": null,
+     "puente": "¿Y si parte de la solución fuera no salir de casa?"
+    },
+    {
+     "n": 6,
+     "titulo": "Trabajar sin moverse",
+     "pregunta": "¿Y si parte de la solución fuera no salir de casa a la misma hora?",
+     "periodo": {
+      "desde": "2020",
+      "hasta": "2026-11"
+     },
+     "mecanismo": null,
+     "puente": null
+    }
+   ]
+  },
+  {
+   "version": 2,
+   "fecha": "2026-11-12",
+   "nota": "plan nuevo",
+   "partes": [
+    {
+     "n": 1,
+     "titulo": "Cómo se llenó la ciudad",
+     "pregunta": "¿Cómo pasó la capital de ciudad a embudo?",
+     "periodo": {
+      "desde": "1960",
+      "hasta": "2026-07"
+     },
+     "mecanismo": null,
+     "puente": "¿Cuánto le cuesta a cada persona ese embudo?"
+    },
+    {
+     "n": 2,
+     "titulo": "Lo que nos cuesta",
+     "pregunta": "¿Cuánto nos cuesta el atasco?",
+     "periodo": {
+      "desde": "2015",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": "¿Qué hace la gente para escapar del atasco?"
+    },
+    {
+     "n": 3,
+     "titulo": "La salida en moto",
+     "pregunta": "¿Qué hace la gente para escapar del atasco, y a qué precio?",
+     "periodo": {
+      "desde": "2015",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": "Si la calle no alcanza, ¿puede un cable por el aire mover a la gente?"
+    },
+    {
+     "n": 4,
+     "titulo": "El aerómetro con números",
+     "pregunta": "Si la calle no alcanza, ¿cuánto puede mover un cable por el aire?",
+     "periodo": {
+      "desde": "2022",
+      "hasta": "2026-11"
+     },
+     "mecanismo": null,
+     "puente": "¿Y si la salida fuera el tren que la ciudad ya tuvo?"
+    },
+    {
+     "n": 5,
+     "titulo": "El tren que volvió al plan",
+     "pregunta": "¿Qué falta para que vuelva el tren?",
+     "periodo": {
+      "desde": "2007",
+      "hasta": "2026-11"
+     },
+     "mecanismo": null,
+     "puente": "¿Y si parte de la solución fuera no salir de casa?"
+    },
+    {
+     "n": 6,
+     "titulo": "Trabajar sin moverse",
+     "pregunta": "¿Y si parte de la solución fuera no salir de casa a la misma hora?",
+     "periodo": {
+      "desde": "2020",
+      "hasta": "2026-11"
+     },
+     "mecanismo": null,
+     "puente": null
+    }
+   ]
+  },
+  {
+   "version": 3,
+   "fecha": "2026-11-12",
+   "nota": "plan aprobado por el usuario",
+   "partes": [
+    {
+     "n": 1,
+     "titulo": "Cómo se llenó la ciudad",
+     "pregunta": "¿Cómo pasó la capital de ciudad a embudo?",
+     "periodo": {
+      "desde": "1960",
+      "hasta": "2026-07"
+     },
+     "mecanismo": null,
+     "puente": "¿Cuánto le cuesta a cada persona ese embudo?"
+    },
+    {
+     "n": 2,
+     "titulo": "Lo que nos cuesta",
+     "pregunta": "¿Cuánto nos cuesta el atasco?",
+     "periodo": {
+      "desde": "2015",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": "¿Qué hace la gente para escapar del atasco?"
+    },
+    {
+     "n": 3,
+     "titulo": "La salida en moto",
+     "pregunta": "¿Qué hace la gente para escapar del atasco, y a qué precio?",
+     "periodo": {
+      "desde": "2015",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": "Si la calle no alcanza, ¿puede un cable por el aire mover a la gente?"
+    },
+    {
+     "n": 4,
+     "titulo": "El aerómetro con números",
+     "pregunta": "Si la calle no alcanza, ¿cuánto puede mover un cable por el aire?",
+     "periodo": {
+      "desde": "2022",
+      "hasta": "2026-11"
+     },
+     "mecanismo": null,
+     "puente": "¿Y si la salida fuera el tren que la ciudad ya tuvo?"
+    },
+    {
+     "n": 5,
+     "titulo": "El tren que volvió al plan",
+     "pregunta": "¿Qué falta para que vuelva el tren?",
+     "periodo": {
+      "desde": "2007",
+      "hasta": "2026-11"
+     },
+     "mecanismo": null,
+     "puente": "¿Y si parte de la solución fuera no salir de casa?"
+    },
+    {
+     "n": 6,
+     "titulo": "Trabajar sin moverse",
+     "pregunta": "¿Y si parte de la solución fuera no salir de casa a la misma hora?",
+     "periodo": {
+      "desde": "2020",
+      "hasta": "2026-11"
+     },
+     "mecanismo": null,
+     "puente": null
+    }
+   ]
+  },
+  {
+   "version": 4,
+   "fecha": "2026-11-12",
+   "nota": "serie completa revisada (SE17)",
+   "partes": [
+    {
+     "n": 1,
+     "titulo": "Cómo se llenó la ciudad",
+     "pregunta": "¿Cómo pasó la capital de ciudad a embudo?",
+     "periodo": {
+      "desde": "1960",
+      "hasta": "2026-07"
+     },
+     "mecanismo": null,
+     "puente": "¿Cuánto le cuesta a cada persona ese embudo?"
+    },
+    {
+     "n": 2,
+     "titulo": "Lo que nos cuesta",
+     "pregunta": "¿Cuánto nos cuesta el atasco?",
+     "periodo": {
+      "desde": "2015",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": "¿Qué hace la gente para escapar del atasco?"
+    },
+    {
+     "n": 3,
+     "titulo": "La salida en moto",
+     "pregunta": "¿Qué hace la gente para escapar del atasco, y a qué precio?",
+     "periodo": {
+      "desde": "2015",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": "Si la calle no alcanza, ¿puede un cable por el aire mover a la gente?"
+    },
+    {
+     "n": 4,
+     "titulo": "El aerómetro con números",
+     "pregunta": "Si la calle no alcanza, ¿cuánto puede mover un cable por el aire?",
+     "periodo": {
+      "desde": "2022",
+      "hasta": "2026-11"
+     },
+     "mecanismo": null,
+     "puente": "¿Y si la salida fuera el tren que la ciudad ya tuvo?"
+    },
+    {
+     "n": 5,
+     "titulo": "El tren que volvió al plan",
+     "pregunta": "¿Qué falta para que vuelva el tren?",
+     "periodo": {
+      "desde": "2007",
+      "hasta": "2026-11"
+     },
+     "mecanismo": null,
+     "puente": "¿Y si parte de la solución fuera no salir de casa?"
+    },
+    {
+     "n": 6,
+     "titulo": "Trabajar sin moverse",
+     "pregunta": "¿Y si parte de la solución fuera no salir de casa a la misma hora?",
+     "periodo": {
+      "desde": "2020",
+      "hasta": "2026-11"
+     },
+     "mecanismo": null,
+     "puente": null
+    }
+   ]
+  }
+ ],
+ "fixture": false,
+ "modo": "caso",
+ "promesa": "¿Qué salida mueve de verdad a quien viaja en la capital?",
+ "guiones_revisados": {
+  "fecha": "2026-11-12",
+  "huella": "a9d3dc614e25"
+ }
+}

@@ -1,0 +1,403 @@
+{
+ "id": "2026-11-12-trafico-guatemala-parte-6",
+ "tipo": "historia",
+ "slug": "trafico-guatemala-parte-6",
+ "tema": "el tráfico en Guatemala: causas, problemas y soluciones",
+ "fecha": "2026-11-12",
+ "pregunta": "¿Y si parte de la solución fuera no salir de casa a la misma hora?",
+ "arco": "proceso con juicio: cómo se formó el atasco, lo que cuesta, y cada solución puesta a prueba con sus propias cifras",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "2026",
+   "titulo": "Otra hora",
+   "escena": 7
+  },
+  {
+   "numero": 3,
+   "anio": "2026",
+   "titulo": "Ninguna es ley",
+   "escena": 12
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "El tráfico de Guatemala tiene salida sin obra. Lleva más de un año trabada en el Congreso. Lo que está en juego es la hora a la que sale de casa toda una ciudad. La salida: trabajar desde casa o escalonar la entrada. Las dos esperan, y escalonar ya tiene un antecedente. Héctor Flores, de Emetra, el tránsito capitalino, recuerda la pandemia de 2020: en aquel entonces, el Ejecutivo sacó un acuerdo gubernativo con los horarios que iban a regir para los trabajadores del Estado. Después, en junio de 2025, el diputado José Pablo Mendoza presentó una Ley de Teletrabajo de 11 artículos: menos tiempo en el tránsito, argumentó. Ese mismo mes, el Congreso le dio trámite: iniciativa {6,556:m}. Pero en enero de 2026 seguía sin dictamen, y Mendoza urgió a la Comisión de Trabajo: el teletrabajo, dijo, aliviaría la congestión."
+  },
+  {
+   "acto": 2,
+   "texto": "Esa ley no tocaba a un solo empleado público. Por eso, ese mismo enero, Ricardo Quiñónez, alcalde de la capital, propuso empezar por ellos y dijo: Escalonar horarios allí nos permitiría lograr un verdadero impacto y además ofrecer mejores condiciones a la población. Entonces, en febrero, la Municipalidad capitalina, la del teleférico Aerómetro, propuso a Presidencia 3 horarios de entrada para empleados públicos. Presidencia dijo evaluarlos. El pico llega a las 7 de la mañana, dijo Flores, de Emetra: la congestión sube desde las 6 y dura hasta las 9. Escalonar ya lo recomendaba KOICA, la cooperación coreana. En junio de 2026, el diputado Boris España llevó otra iniciativa al Congreso: horarios escalonados para el Ejecutivo; las empresas, si quieren. En agosto, la ley de Mendoza llegó al primer debate, solo para empresas. De ahí no ha pasado."
+  },
+  {
+   "acto": 3,
+   "texto": "Entonces, en septiembre, llegaron dos iniciativas más de horarios; una pone a la Vicepresidencia a coordinar 3 horas de entrada. Por eso hoy los horarios escalonados se proponen en el Congreso, en Presidencia y en la Municipalidad, y ninguno es ley. Así fue todo. La ciudad creció hacia Mixco, y en 1996 el tren dejó de correr. Fundesa calculó Q1,300 perdidos al mes por trabajador. En 2025 murieron 1,385 personas en moto. El Aerómetro, un máximo de {374,000:m} al día; el tren nuevo, {252:m} mil. Cada obra mueve una parte; la que no pide obra espera un voto. Por qué la ley de teletrabajo no pasó del primer debate sigue sin respuesta. Y mañana, los trabajadores vuelven a salir de casa a la misma hora."
+  }
+ ],
+ "hilos": [
+  {
+   "id": "p6h1",
+   "sin_respuesta": "Por qué la ley de teletrabajo no pasó del primer debate sigue sin respuesta."
+  },
+  {
+   "id": "p6h2",
+   "escena": 13
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3,
+   4
+  ],
+  [
+   5,
+   6
+  ],
+  [
+   7,
+   8
+  ],
+  [
+   9,
+   10,
+   11
+  ],
+  [
+   12,
+   13,
+   14
+  ]
+ ],
+ "paleta": "maiz",
+ "musica": "corrupcion-desenlace",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2600.75,
+ "duracion_s": 179.0,
+ "critica": {
+  "veredicto": "corregir",
+  "vuelta": 3,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 3,
+   "claridad": 3,
+   "flujo": 3,
+   "precision": 4,
+   "cierre": 4
+  }
+ },
+ "gancho": {
+  "familia": "resultado",
+  "visual": "foto",
+  "pantalla": "La salida sin obra",
+  "linea": "más de un año trabada"
+ },
+ "promesa": {
+  "texto": "Lo que está en juego es la hora a la que sale de casa toda una ciudad.",
+  "forma": "apuesta",
+  "en": 2,
+  "pago": 13,
+  "revela": 2,
+  "pregunta": "¿Quién mueve la hora del tráfico de Guatemala?"
+ },
+ "bisagra": {
+  "texto": "Esa ley no tocaba a un solo empleado público.",
+  "forma": "contradiccion",
+  "en": 7,
+  "pago": 7
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "El tráfico de Guatemala tiene salida sin obra. Lleva más de un año trabada en el Congreso.",
+   "voz": "El tráfico de Guatemala tiene salida sin obra. Lleva más de un año trabada en el Congreso.",
+   "dur": 6.278,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Rene Hernandez · CC BY-SA 2.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 2.0"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "Lo que está en juego es la hora a la que sale de casa toda una ciudad. La salida: trabajar desde casa o escalonar la entrada. Las dos esperan, y escalonar ya tiene un antecedente.",
+   "voz": "Lo que está en juego es la hora a la que sale de casa toda una ciudad. La salida: trabajar desde casa o escalonar la entrada. Las dos esperan, y escalonar ya tiene un antecedente.",
+   "dur": 12.897,
+   "hechos": [
+    "tra-h08"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Rene Hernandez · CC BY-SA 2.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 2.0"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "cita",
+   "pantalla": "Héctor Flores, de Emetra, el tránsito capitalino, recuerda la pandemia de 2020: en aquel entonces, el Ejecutivo sacó un acuerdo gubernativo con los horarios que iban a regir para los trabajadores del Estado.",
+   "voz": "Héctor Flores, de Emetra, el tránsito capitalino, recuerda la pandemia de dos mil veinte: en aquel entonces, el Ejecutivo sacó un acuerdo gubernativo con los horarios que iban a regir para los trabajadores del Estado.",
+   "dur": 13.841,
+   "hechos": [
+    "tra-h07"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "foto",
+   "pantalla": "Después, en junio de 2025, el diputado José Pablo Mendoza presentó una Ley de Teletrabajo de 11 artículos: menos tiempo en el tránsito, argumentó.",
+   "voz": "Después, en junio de dos mil veinticinco, el diputado José Pablo Mendoza presentó una Ley de Teletrabajo de once artículos: menos tiempo en el tránsito, argumentó.",
+   "dur": 12.322,
+   "hechos": [
+    "tra-h01"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Gobierno de Guatemala · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "golpe",
+   "pantalla": "Ese mismo mes, el Congreso le dio trámite: iniciativa 6,556.",
+   "voz": "Ese mismo mes, el Congreso le dio trámite: iniciativa seis mil quinientos cincuenta y seis.",
+   "dur": 6.91,
+   "hechos": [
+    "tra-h02"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "foto",
+   "pantalla": "Pero en enero de 2026 seguía sin dictamen, y Mendoza urgió a la Comisión de Trabajo: el teletrabajo, dijo, aliviaría la congestión.",
+   "voz": "Pero en enero de dos mil veintiséis seguía sin dictamen, y Mendoza urgió a la Comisión de Trabajo: el teletrabajo, dijo, aliviaría la congestión.",
+   "dur": 11.039,
+   "hechos": [
+    "tra-h03"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Andy9696down · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "cita",
+   "pantalla": "Esa ley no tocaba a un solo empleado público. Por eso, ese mismo enero, Ricardo Quiñónez, alcalde de la capital, propuso empezar por ellos y dijo: Escalonar horarios allí nos permitiría lograr un verdadero impacto y además ofrecer mejores condiciones a la población.",
+   "voz": "Esa ley no tocaba a un solo empleado público. Por eso, ese mismo enero, Ricardo Quiñónez, alcalde de la capital, propuso empezar por ellos y dijo: Escalonar horarios allí nos permitiría lograr un verdadero impacto y además ofrecer mejores condiciones a la población.",
+   "dur": 17.876,
+   "hechos": [
+    "tra-h04"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Gobierno de Guatemala · CC0",
+     "origen": "commons",
+     "licencia": "CC0"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "foto",
+   "pantalla": "Entonces, en febrero, la Municipalidad capitalina, la del teleférico Aerómetro, propuso a Presidencia 3 horarios de entrada para empleados públicos. Presidencia dijo evaluarlos.",
+   "voz": "Entonces, en febrero, la Municipalidad capitalina, la del teleférico Aerómetro, propuso a Presidencia tres horarios de entrada para empleados públicos. Presidencia dijo evaluarlos.",
+   "dur": 12.153,
+   "hechos": [
+    "tra-h05"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Gobierno de Guatemala · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "vias",
+   "pantalla": "El pico llega a las 7 de la mañana, dijo Flores, de Emetra: la congestión sube desde las 6 y dura hasta las 9. Escalonar ya lo recomendaba KOICA, la cooperación coreana.",
+   "voz": "El pico llega a las siete de la mañana, dijo Flores, de Emetra: la congestión sube desde las seis y dura hasta las nueve. Escalonar ya lo recomendaba KOICA, la cooperación coreana.",
+   "dur": 12.37,
+   "hechos": [
+    "tra-h06"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "foto",
+   "pantalla": "En junio de 2026, el diputado Boris España llevó otra iniciativa al Congreso: horarios escalonados para el Ejecutivo; las empresas, si quieren.",
+   "voz": "En junio de dos mil veintiséis, el diputado Boris España llevó otra iniciativa al Congreso: horarios escalonados para el Ejecutivo; las empresas, si quieren.",
+   "dur": 10.839,
+   "hechos": [
+    "tra-h12"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: El mixqueño chapin · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "tarjeta",
+   "pantalla": "En agosto, la ley de Mendoza llegó al primer debate, solo para empresas. De ahí no ha pasado.",
+   "voz": "En agosto, la ley de Mendoza llegó al primer debate, solo para empresas. De ahí no ha pasado.",
+   "dur": 7.302,
+   "hechos": [
+    "tra-h08"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "tarjeta",
+   "pantalla": "Entonces, en septiembre, llegaron dos iniciativas más de horarios; una pone a la Vicepresidencia a coordinar 3 horas de entrada.",
+   "voz": "Entonces, en septiembre, llegaron dos iniciativas más de horarios; una pone a la Vicepresidencia a coordinar tres horas de entrada.",
+   "dur": 8.631,
+   "hechos": [
+    "tra-h09",
+    "tra-h10"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 13,
+   "tipo": "foto",
+   "pantalla": "Por eso hoy los horarios escalonados se proponen en el Congreso, en Presidencia y en la Municipalidad, y ninguno es ley.",
+   "voz": "Por eso hoy los horarios escalonados se proponen en el Congreso, en Presidencia y en la Municipalidad, y ninguno es ley.",
+   "dur": 8.169,
+   "hechos": [
+    "tra-h09",
+    "tra-h05"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Gobierno de Guatemala · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 14,
+   "tipo": "explica",
+   "pantalla": "Así fue todo. La ciudad creció hacia Mixco, y en 1996 el tren dejó de correr. Fundesa calculó Q1,300 perdidos al mes por trabajador. En 2025 murieron 1,385 personas en moto. El Aerómetro, un máximo de 374,000 al día; el tren nuevo, 252 mil. Cada obra mueve una parte; la que no pide obra espera un voto.",
+   "voz": "Así fue todo. La ciudad creció hacia Mixco, y en mil novecientos noventa y seis el tren dejó de correr. Fundesa calculó mil trescientos quetzales perdidos al mes por trabajador. En dos mil veinticinco murieron mil trescientas ochenta y cinco personas en moto. El Aerómetro, un máximo de trescientos setenta y cuatro mil al día; el tren nuevo, doscientos cincuenta y dos mil. Cada obra mueve una parte; la que no pide obra espera un voto.",
+   "dur": 30.595,
+   "hechos": [
+    "ciu-h03",
+    "ciu-h13",
+    "cos-h03",
+    "cos-h20",
+    "aer-h09",
+    "tre-h07",
+    "tra-h08"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": "cronologia",
+   "mecanismo": "cronologia"
+  },
+  {
+   "n": 15,
+   "tipo": "cierre",
+   "pantalla": "Por qué la ley de teletrabajo no pasó del primer debate sigue sin respuesta. Y mañana, los trabajadores vuelven a salir de casa a la misma hora.",
+   "voz": "Por qué la ley de teletrabajo no pasó del primer debate sigue sin respuesta. Y mañana, los trabajadores vuelven a salir de casa a la misma hora.",
+   "dur": 11.632,
+   "hechos": [],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Lo que falta",
+  "resumen": [
+   "Teletrabajo: solo primer debate",
+   "Horarios: tres propuestas",
+   "Ninguna es ley todavía"
+  ],
+  "texto": "Por qué la ley de teletrabajo no pasó del primer debate sigue sin respuesta. Y mañana, los trabajadores vuelven a salir de casa a la misma hora.",
+  "tipo": "remate",
+  "forma": "consecuencia",
+  "final": "Y mañana, los trabajadores vuelven a salir de casa a la misma hora.",
+  "consecuencia": {
+   "mecanismo": "despues",
+   "quien": "trabajadores",
+   "verbo": "vuelven"
+  }
+ },
+ "caption": {
+  "tiktok": "Serie · Parte 6 de 6: Trabajar sin moverse\nLa ley de teletrabajo lleva más de un año en el Congreso y solo pasó su primer debate. Los horarios escalonados se proponen en tres lugares y ninguno es ley.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\n#Guatemala #tráfico #teletrabajo",
+  "instagram": "Serie · Parte 6 de 6: Trabajar sin moverse\nTeletrabajo y horarios escalonados: dos salidas al tráfico de Guatemala que no piden obra. Qué propuso el Congreso, qué pidió la Municipalidad y en qué quedó todo.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\n#Guatemala #tráfico #teletrabajo #horarios",
+  "facebook": "Serie · Parte 6 de 6: Trabajar sin moverse\nLa iniciativa 6556 de teletrabajo se presentó en junio de 2025 y solo llegó al primer debate. En 2026 se sumaron tres propuestas de horarios escalonados; ninguna es ley.\n¿Llegaste por aquí? La Parte 1 está fijada en mi perfil.\nFuentes en el primer comentario.",
+  "shorts": "Tráfico en Guatemala: trabajar sin moverse (6/6) #Shorts"
+ }
+}
