@@ -1177,7 +1177,7 @@ def cmd_voz(a):
     st = leer(os.path.join(nv, "video.json"))
     st["serie"] = None
     st["piezas_sueltas"] = True   # m115: piezas de voz sueltas, no un video: sin el aviso de duración V6
-    for k in ("piso_s", "palabra_clave", "departamento"):   # gates de un video corto: no aplican a las piezas sueltas
+    for k in ("piso_s", "palabra_clave", "departamento", "realizacion"):   # gates de un video corto (y quién dibuja la parte): no aplican a las piezas sueltas
         st.pop(k, None)
     st["hilo"] = rel(os.path.join(P1, "base")) if os.path.isdir(os.path.join(P1, "base")) else st.get("hilo")
     escribir(os.path.join(nv, "video.json"), st)
@@ -1795,7 +1795,7 @@ def cmd_armar(a):
         "cierre": dict(Eu.get("cierre") or {}, invitacion=None), "transicion_s": VD.TRANSICION, "total_s": total,
         "tipo": "historia", "escenas": escenas})
     st = leer(os.path.join(P1_de(Y), "video.json"))
-    st.update({"hilo": rel(os.path.join(trabajo, "base")), "serie": None, "formato": "youtube", "objetivo_s": int(total),
+    st.update({"hilo": rel(os.path.join(trabajo, "base")), "serie": None, "formato": "youtube", "objetivo_s": int(total), "realizacion": "propio",
                "musica": Y.get("musica") or st.get("musica"), "paleta": Y.get("paleta") or st.get("paleta")})
     escribir(os.path.join(trabajo, "video.json"), st)
     caps = capitulos_de([dict(it, t=t_de(escenas, j)) for j, it in enumerate(items)], total + FINAL_EXTRA_S * 0)
@@ -1876,9 +1876,15 @@ def cmd_grabar(a):
     E = leer(os.path.join(trabajo, "escenas.json"))
     G = os.path.join(trabajo, "tablero")
     os.makedirs(G, exist_ok=True)
+    fuera = TABLERO_FUERA + tuple(getattr(a, "fuera", None) or ())            # el vertical quita además el golpe de arriba y el chip
+    tipos = tuple(getattr(a, "tipos", None) or YH.TABLERO)
+    recorte = getattr(a, "recorte", None) or TABLERO_RECORTE
+    formato, clips_de = (getattr(a, "formato_grabar", None) or (FORMATO_GRABAR, "clips_16x9"))   # el vertical graba en 4:5 limpio
+    hilo_dir = getattr(a, "hilo_dir", None) or os.path.join(trabajo, "base")
+    marca = getattr(a, "huella", "")   # cambia la huella si cambia cómo se graba o se recorta
     limpias = []
     for S in E["escenas"]:
-        S = {k: v for k, v in S.items() if k not in TABLERO_FUERA}
+        S = {k: v for k, v in S.items() if k not in fuera}
         S["transicion"] = None
         limpias.append(S)
     escribir(os.path.join(G, "escenas.json"), dict(E, escenas=limpias))
@@ -1887,8 +1893,8 @@ def cmd_grabar(a):
             os.symlink(os.path.join("..", d), os.path.join(G, d))
     fh = os.path.join(G, "huellas.json")
     antes = leer(fh) if os.path.exists(fh) else {}
-    ahora = {str(S["n"]): hashlib.sha1(json.dumps({k: v for k, v in S.items() if k not in ("n", "sfx")}, sort_keys=True, ensure_ascii=False).encode("utf-8")).hexdigest()[:16]
-             for S in limpias if S["tipo"] in YH.TABLERO}
+    ahora = {str(S["n"]): hashlib.sha1((marca + json.dumps({k: v for k, v in S.items() if k not in ("n", "sfx")}, sort_keys=True, ensure_ascii=False)).encode("utf-8")).hexdigest()[:16]
+             for S in limpias if S["tipo"] in tipos}
     cd = os.path.join(trabajo, "clips_tablero")
     os.makedirs(cd, exist_ok=True)
     por_huella = {h: n for n, h in antes.items() if os.path.exists(os.path.join(cd, "e%s.mp4" % n))}
@@ -1912,8 +1918,8 @@ def cmd_grabar(a):
         escribir(fh, ahora)
         print("grabar: los %d tableros ya están al día" % len(ahora))
         return 0
-    args = ["node", os.path.join(RAIZ, "scripts", "video_grabar.js"), "--dir", G, "--hilo", os.path.join(trabajo, "base"), "--fps", str(a.fps),
-            "--formato", FORMATO_GRABAR, "--solo", ",".join(faltan)]
+    args = ["node", os.path.join(RAIZ, "scripts", "video_grabar.js"), "--dir", G, "--hilo", hilo_dir, "--fps", str(a.fps),
+            "--formato", formato, "--solo", ",".join(faltan)]
     if a.paralelo:
         args += ["--paralelo", str(a.paralelo)]
     candado = os.path.join(trabajo, ".grabando")
@@ -1927,10 +1933,10 @@ def cmd_grabar(a):
     if rc:
         return falla("la grabación de los tableros falló")
     for n in faltan:
-        src = os.path.join(G, "clips_16x9", "e%s.mp4" % n)
+        src = os.path.join(G, clips_de, "e%s.mp4" % n)
         if not os.path.exists(src):
             return falla("no se grabó el tablero E%s" % n)
-        VD.ff("-i", src, "-vf", TABLERO_RECORTE, "-g", "30", "-c:v", "libx264", "-crf", "16", "-pix_fmt", "yuv420p", "-an", os.path.join(cd, "e%s.mp4" % n))
+        VD.ff("-i", src, "-vf", recorte, "-g", "30", "-c:v", "libx264", "-crf", "16", "-pix_fmt", "yuv420p", "-an", os.path.join(cd, "e%s.mp4" % n))
     escribir(fh, ahora)
     print("grabar: %d tableros grabados (%s) de %d → %s" % (len(faltan), ", ".join(faltan), len(ahora), rel(cd)))
     return 0
@@ -2005,29 +2011,13 @@ def srt(E, offs, salida):
     open(salida, "w", encoding="utf-8").write(VD.texto_srt(E["escenas"], offs))
 
 
-def cmd_audio(a):
-    """La pista del video: la voz ya grabada en su segundo (el de escenas.json), la música por capítulo con ducking y los
-    efectos del plano (hf/efectos.json: uno por pieza que entra), a −14 LUFS → segs_16x9/mezcla_final.wav; el .srt y los
-    capítulos reales. Los tiempos salen de escenas.json, no de medir clips."""
-    import youtube_hf as YH
-    trabajo = os.path.abspath(a.trabajo)
-    Y = estado_y(trabajo)
-    fe = os.path.join(trabajo, "hf", "efectos.json")
-    if not os.path.exists(fe):
-        return falla("falta hf/efectos.json: youtube.py proyecto primero")
-    ctx = YH.contexto(trabajo)
-    E, offs, D = ctx["E"], ctx["offs"], ctx["total"]
-    segs = os.path.join(trabajo, "segs_16x9")
-    os.makedirs(segs, exist_ok=True)
-    sal = os.path.join(trabajo, "salida")
-    os.makedirs(sal, exist_ok=True)
-    voz = mezclar_voz(trabajo, E, offs, D, segs)
+def pista_final(voz, fondo, efectos, D, segs):
+    """La mezcla de un video de mesa: la voz nivelada, la música con ducking y los efectos del plano ([(t, id)], tres tomas de
+    cada uno) a −14 LUFS → segs/mezcla_final.wav. La usan el 16:9 (cmd_audio) y el vertical (scripts/video_hf.py).
+    → (ruta, medición, número de efectos)."""
     gv = VD.VOZ_LUFS - VD.medir(voz)["input_i"]
-    caps_t = [{"t": c["ini"]} for c in ctx["caps"]]
-    caps_t[0]["t"] = 0.0
-    fondo, pistas = musica_por_capitulo(Y, caps_t, D, segs)
     cat = {x["id"]: x for x in leer(os.path.join(VD.SFX_DIR, "catalogo.json"))["efectos"]}
-    efectos = sorted((t, i) for t, i in leer(fe) if i in cat and 0 <= t < D - 0.2)
+    efectos = sorted((t, i) for t, i in efectos if i in cat and 0 <= t < D - 0.2)
     tasas = [1.0, 0.94, 1.06]   # tres tomas del mismo efecto: el mismo papel en cada entrada delata la plantilla
     fx = os.path.join(segs, "efectos.wav")
     if efectos:
@@ -2061,9 +2051,33 @@ def cmd_audio(a):
     VD.ff("-i", mezcla, "-af", filtro % (datos + ("",)), "-ar", "48000", final)
     mf = VD.medir(final)
     if mf["input_tp"] > VD.TP_MAX:
-        print("AVISO YT9 pico %.1f dBTP: se rehace la pista con limitador" % mf["input_tp"])
+        print("AVISO pico %.1f dBTP: se rehace la pista con limitador" % mf["input_tp"])
         VD.ff("-i", mezcla, "-af", filtro % (datos + (",alimiter=limit=0.79:level=false",)), "-ar", "48000", final)
         mf = VD.medir(final)
+    return final, mf, len(efectos)
+
+
+def cmd_audio(a):
+    """La pista del video: la voz ya grabada en su segundo (el de escenas.json), la música por capítulo con ducking y los
+    efectos del plano (hf/efectos.json: uno por pieza que entra), a −14 LUFS → segs_16x9/mezcla_final.wav; el .srt y los
+    capítulos reales. Los tiempos salen de escenas.json, no de medir clips."""
+    import youtube_hf as YH
+    trabajo = os.path.abspath(a.trabajo)
+    Y = estado_y(trabajo)
+    fe = os.path.join(trabajo, "hf", "efectos.json")
+    if not os.path.exists(fe):
+        return falla("falta hf/efectos.json: youtube.py proyecto primero")
+    ctx = YH.contexto(trabajo)
+    E, offs, D = ctx["E"], ctx["offs"], ctx["total"]
+    segs = os.path.join(trabajo, "segs_16x9")
+    os.makedirs(segs, exist_ok=True)
+    sal = os.path.join(trabajo, "salida")
+    os.makedirs(sal, exist_ok=True)
+    voz = mezclar_voz(trabajo, E, offs, D, segs)
+    caps_t = [{"t": c["ini"]} for c in ctx["caps"]]
+    caps_t[0]["t"] = 0.0
+    fondo, pistas = musica_por_capitulo(Y, caps_t, D, segs)
+    final, mf, n_fx = pista_final(voz, fondo, leer(fe), D, segs)
     srt(E, offs, os.path.join(sal, "subtitulos.srt"))
     caps = leer(os.path.join(trabajo, "capitulos.json"))
     reales = {c["numero"]: c["ini"] for c in ctx["caps"]}
@@ -2072,7 +2086,7 @@ def cmd_audio(a):
     caps["total_s"] = round(D, 2)
     caps["musica"] = pistas
     escribir(os.path.join(trabajo, "capitulos.json"), caps)
-    print("audio %s · %.1f LUFS · %.1f dBTP · %d efectos · música %s → %s" % (mmss(D), mf["input_i"], mf["input_tp"], len(efectos),
+    print("audio %s · %.1f LUFS · %.1f dBTP · %d efectos · música %s → %s" % (mmss(D), mf["input_i"], mf["input_tp"], n_fx,
                                                                             " / ".join(sorted(set(pistas))), rel(final)))
     a.capitulo = None
     return YH.cmd_proyecto(a)   # cada proyecto lleva el tramo de su capítulo como guía de la vista previa
