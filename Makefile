@@ -35,7 +35,6 @@ help:
 	@echo "make semana-fixture [FPS=10]                             /semana de prueba (3 diarios de ejemplo + un dato oficial, voz falsa, 0 créditos) → sesiones/_fixture_semana/salida"
 	@echo "make historia-fixture [FPS=10]                           /historia de prueba (maqueta: una panadería inventada, voz falsa, 0 créditos) → sesiones/_fixture_historia/trabajo/salida"
 	@echo "make explica-fixture [FPS=10]                            /explica de prueba (maqueta: el interés compuesto con fuentes de ejemplo, voz falsa, 0 créditos) → sesiones/_fixture_explica/salida"
-	@echo "make mito-fixture [FPS=10]                               /mito de prueba (modo mito de /explica: «la remesa promedio es de $$1,000» → MITO, voz falsa, 0 créditos) → sesiones/_fixture_mito/salida"
 	@echo "make congreso-fixture [FPS=10]                           /congreso de prueba (la Ley de Ciberseguridad, iniciativa 6347, voz falsa, 0 créditos) → sesiones/_fixture_congreso/salida"
 	@echo "make sabias-fixture [FPS=10]                             /sabias de prueba (el dato de sesiones/_fixture_dato, voz falsa, 0 créditos) → sesiones/_fixture_sabias/salida"
 	@echo "make departamento-fixture [FPS=10]                       /departamento de prueba (perfil de Huehuetenango con cifras de maqueta → video corto con mapa y ranking en ventana, D1–D9, voz falsa) → sesiones/_fixture_departamento/salida"
@@ -253,28 +252,6 @@ explica-fixture:   # maqueta de /explica: el interés compuesto con fuentes de e
 	python3 scripts/explica.py montar $(EF)/trabajo --formato 4:5
 	python3 scripts/explica.py revisar $(EF)/trabajo --formato 4:5
 	python3 scripts/explica.py entregar $(EF)/trabajo --salida $(EF)/salida
-
-MF := sesiones/_fixture_mito
-mito-fixture:   # maqueta de /mito (modo mito de /explica): «la remesa promedio es de $1,000» → MITO, voz falsa, 9:16 y 4:5
-	rm -rf $(MF)/trabajo $(MF)/salida
-	python3 scripts/explica.py preparar 'La remesa promedio es de $$1,000 (maqueta)' --slug remesa-promedio-maqueta --trabajo $(MF)/trabajo --modo mito --fixture
-	python3 scripts/explica.py encuadre $(MF)/trabajo --check
-	python3 scripts/explica.py afirmaciones $(MF)/trabajo --check
-	python3 scripts/explica.py mito $(MF)/trabajo --check
-	python3 scripts/explica.py consolidar $(MF)/trabajo
-	python3 scripts/explica.py ganchos $(MF)/trabajo --check
-	python3 scripts/explica.py ganchos $(MF)/trabajo --usar
-	python3 scripts/explica.py narracion $(MF)/trabajo --check
-	python3 scripts/explica.py guion $(MF)/trabajo --check
-	python3 scripts/explica.py voz-falsa $(MF)/trabajo
-	python3 scripts/explica.py tiempos $(MF)/trabajo
-	python3 scripts/explica.py grabar $(MF)/trabajo --fps $(FPS)
-	python3 scripts/explica.py montar $(MF)/trabajo
-	python3 scripts/explica.py revisar $(MF)/trabajo
-	python3 scripts/explica.py grabar $(MF)/trabajo --fps $(FPS) --formato 4:5
-	python3 scripts/explica.py montar $(MF)/trabajo --formato 4:5
-	python3 scripts/explica.py revisar $(MF)/trabajo --formato 4:5
-	python3 scripts/explica.py entregar $(MF)/trabajo --salida $(MF)/salida
 
 SF := sesiones/_fixture_sabias
 sabias-fixture:   # maqueta de /sabias: el dato de prueba de /dato, guion fijo, voz falsa, 9:16 y 4:5

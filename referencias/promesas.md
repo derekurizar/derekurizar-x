@@ -128,5 +128,5 @@ Quien llega al segundo 10 tiene que saber **qué va a saber** si se queda. La vo
 - En `/youtube-long`, `montaje.promesa.pregunta` (YT8): la promesa global se oye antes del segundo 15; la pregunta sale en
   pantalla solo en su pago.
 
-Vale para `/historia`, `/serie` y `/explica` (el modo mito tiene su veredicto). Los trabajos empezados antes del
+Vale para `/historia`, `/serie` y `/explica`. Los trabajos empezados antes del
 2026-11-10 solo reciben aviso.

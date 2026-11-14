@@ -119,15 +119,6 @@ primera palabra o la segunda: «Huehuetenango es…», «Si eres de Huehuetenang
 o el visual es `lugar` con su código (D2). El puesto («N.º 5 de 22») se respalda con los puestos calculados del digesto;
 nunca un puesto que no esté ahí. El resto de R1–R14 igual.
 
-## Modo mito (`/mito`, modo de /explica)
-
-4 candidatos, uno por familia (`contraste`, `tu`, `escala`, `resultado`; sin `paradoja` ni `pregunta`: el veredicto va
-primero). TODOS con `visual: "veredicto"` y `visual_datos {creencia, veredicto}` tal como los trae el digesto; `pantalla`
-= el sello («MITO», «REALIDAD» o «A MEDIAS»); la `linea` (≤ 8 palabras) da la cifra que decide; la voz abre con el
-veredicto («Mito: …»), dice la palabra clave en ≤ 3 s y su primera oración lleva el `verbo`. La familia cambia la segunda
-oración. Antes de escribir, `explica.py mito --check`: si dice «sin datos para un veredicto», no escribas ganchos y
-devuelve `sin_datos: true`. R13 de `referencias/ganchos.md`.
-
 ## Modo explica (`/explica`)
 
 Lo pide el Workflow `explica` con las afirmaciones y los datos ya verificados y los ejemplos ya calculados. Insumo:

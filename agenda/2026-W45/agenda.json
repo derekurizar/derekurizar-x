@@ -175,51 +175,6 @@
    ]
   },
   {
-   "id": "2026-11-05-B",
-   "fecha": "2026-11-05",
-   "dia": "jueves",
-   "slot": "B",
-   "hora": "19:30",
-   "formato": "mito",
-   "pieza": null,
-   "tema": "El frío del Altiplano es lo que da la gripe",
-   "comando": "/mito El frío del Altiplano es lo que da la gripe",
-   "producir_el": "2026-11-04",
-   "minutos": 30,
-   "creditos": 1000,
-   "plataformas": [
-    "tiktok",
-    "instagram",
-    "facebook",
-    "youtube"
-   ],
-   "estado": "tema",
-   "avisos": [],
-   "publicado": {},
-   "facebook": {
-    "estilo": "pregunta",
-    "texto": null
-   },
-   "opciones": [
-    {
-     "tema": "Las remesas sostienen la economía de Guatemala",
-     "por_que": "julio fue récord de remesas; la creencia circula siempre (veredicto probable: A MEDIAS)",
-     "formato": "mito"
-    },
-    {
-     "tema": "El frío del Altiplano es lo que da la gripe",
-     "por_que": "llega el primer frente frío; creencia de salud muy extendida",
-     "formato": "mito"
-    },
-    {
-     "tema": "Guatemala es de los países que más impuestos cobra en Centroamérica",
-     "por_que": "el presupuesto 2027 está en el Congreso; la carga tributaria lo decide",
-     "formato": "mito"
-    }
-   ],
-   "tema_auto": false
-  },
-  {
    "id": "2026-11-06-A",
    "fecha": "2026-11-06",
    "dia": "viernes",
@@ -346,51 +301,6 @@
      "tema": "Chocolate de Guatemala: por qué dicen que nació aquí",
      "por_que": "cacao maya y marcas de hoy; sujeto que se busca",
      "formato": "historia"
-    }
-   ],
-   "tema_auto": true
-  },
-  {
-   "id": "2026-11-07-B",
-   "fecha": "2026-11-07",
-   "dia": "sábado",
-   "slot": "B",
-   "hora": "19:30",
-   "formato": "mito",
-   "pieza": null,
-   "tema": "La gasolina en Guatemala es la más cara de Centroamérica",
-   "comando": "/mito La gasolina en Guatemala es la más cara de Centroamérica",
-   "producir_el": "2026-11-06",
-   "minutos": 30,
-   "creditos": 1000,
-   "plataformas": [
-    "tiktok",
-    "instagram",
-    "facebook",
-    "youtube"
-   ],
-   "estado": "tema",
-   "avisos": [],
-   "publicado": {},
-   "facebook": {
-    "estilo": "pregunta",
-    "texto": null
-   },
-   "opciones": [
-    {
-     "tema": "La gasolina en Guatemala es la más cara de Centroamérica",
-     "por_que": "los precios bajaron esta semana; la comparación regional la decide",
-     "formato": "mito"
-    },
-    {
-     "tema": "El 13 es de mala suerte",
-     "por_que": "creencia que circula; en el mundo maya es el número más alto (sin cifra: solo si hay datos)",
-     "formato": "mito"
-    },
-    {
-     "tema": "En noviembre siempre hace más frío que en diciembre",
-     "por_que": "frente frío de esta semana; los registros del INSIVUMEH lo deciden",
-     "formato": "mito"
     }
    ],
    "tema_auto": true

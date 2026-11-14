@@ -118,12 +118,6 @@ VISUALES_DE = {"contraste": ("llenado", "pareja", "cifra", "foto"), "paradoja": 
                "lugar": ("lugar", "llenado", "cifra", "foto"), "escala": ("figuras", "llenado", "pareja", "foto"),
                "tu": ("figuras", "llenado", "pareja", "cifra", "foto"), "pregunta": ("cifra", "pareja", "llenado", "foto"),
                "ranking": ("cifra", "lugar", "foto"), "resultado": ("cifra", "pareja", "figuras", "foto")}
-# visual de gancho que solo enciende un modo (no entra en VISUALES ni en video.js): `veredicto` de /mito (modo de /explica,
-# scripts/explica.py): la creencia en crema tenue, tachada (MITO), subrayada (REALIDAD) o punteada (A MEDIAS), y el sello en
-# el acento desde el cuadro 0 (video/golpe.html, S.T.veredicto); familias que lo admiten
-VISUAL_VEREDICTO, VEREDICTO_DE = "veredicto", ("contraste", "resultado", "tu", "escala")
-SELLOS_VEREDICTO = {"mito": "MITO", "realidad": "REALIDAD", "a_medias": "A MEDIAS"}
-CREENCIA_CARACTERES = 120
 CANDIDATOS = (4, 6)            # ganchos.json: el agente escribe 5 (los workflows lo exigen; 4 en sesiones viejas) + «gu»
 GANCHO_USUARIO = "gu"          # id del gancho que dicta el usuario (no cuenta para las familias distintas)
 CIERRES_OPCIONES = 5           # cierres.json: candidatos de cierre que el usuario elige (+ «cu», el que dicta)
@@ -1068,7 +1062,7 @@ PREGUNTA_S = {"promesa": 4.0, "bisagra": 2.6, "pago": 3.6}   # lo que se queda e
 
 
 def revisar_pregunta(g, st, p, escenas):
-    if st.get("tipo") not in ("historia", "explica") or st.get("modo") == "mito":
+    if st.get("tipo") not in ("historia", "explica"):
         return []
     f = []
     q = (p.get("pregunta") or "").strip()
@@ -1968,12 +1962,6 @@ def visual_del_gancho(e, cifras, valores):
                 f.append("visual figuras: calculo %s da %.4g y no respalda «%d de cada %d»" % (d["calculo"], r, *dc))
             else:
                 nums.append(r)
-    elif vis == VISUAL_VEREDICTO:   # /mito: sin números propios (los dicen la línea y la voz)
-        ver = d.get("veredicto")
-        if ver not in SELLOS_VEREDICTO:
-            f.append("visual veredicto: «veredicto» %s" % "|".join(SELLOS_VEREDICTO))
-        out.update(creencia=etiqueta("creencia", d.get("creencia"), CREENCIA_CARACTERES), veredicto=ver,
-                   sello=SELLOS_VEREDICTO.get(ver))
     elif vis == "foto":   # sin números propios: los dicen la pantalla, la línea y la voz
         fo = fotos_trabajo().get(d.get("foto"))
         if not fo:
@@ -2295,7 +2283,7 @@ def validar_estructura(g, st, dur, tarjetas):
     return f
 
 
-# ---------- piezas comunes de los flujos de monetización (Fase 0: /carrusel, /mito, /departamento, /semana, /serie) ----
+# ---------- piezas comunes de los flujos de monetización (Fase 0: /carrusel, /departamento, /semana, /serie) ----
 PISO_DURACION_S = 61                 # TikTok Creator Rewards solo paga videos ≥ 60 s; 1 s de margen
 PALABRA_CLAVE_S = 3.0                # V19: la palabra clave suena en la voz antes de este segundo
 PALABRA_CLAVE_PLATAFORMAS = ("tiktok", "instagram", "facebook")
@@ -2401,8 +2389,6 @@ def pantalla_escena1(e):
     """Los textos que se leen en pantalla en la escena 1 (V19): pantalla, línea, golpe, título, término, pregunta,
     el titular de una foto y el chip."""
     out = [e.get(k) for k in ("pantalla", "linea", "golpe", "titulo", "titular", "termino", "pregunta") if isinstance(e.get(k), str)]
-    if e.get("visual") == VISUAL_VEREDICTO and isinstance((e.get("visual_datos") or {}).get("creencia"), str):
-        out.append(e["visual_datos"]["creencia"])   # /mito: la creencia se lee sobre el sello
     if isinstance(e.get("chip"), dict):
         out.append(e["chip"].get("texto") or "")
     return [x for x in out if x]
@@ -2418,7 +2404,7 @@ ESCENA_CLAVES = {
          "red_vial tipo titular titulo toma traduccion transicion unidad verbo visual votacion voz",
     "i": "acto correcta cuenta n numero puesto top tuit",
     "n": "dur",
-    "b": "atribuida continua corrige creencia dictado_por_usuario ejemplo escucha_omitir estado foco giro intuicion "
+    "b": "atribuida continua corrige dictado_por_usuario ejemplo escucha_omitir estado foco giro intuicion "
          "resumen_serie saldo ventana",
     "l": "afirma afirmaciones aristas barras capas de_cada diputados dividida etiquetas fases focos fotos hechos lados nodos opciones paga pasos personas piezas puntos ruta "
          "renglones sfx tomas",
@@ -3205,7 +3191,7 @@ def cmd_ganchos(a):
     fallas, por_id = [], {}
     if not CANDIDATOS[0] <= len(cands) <= CANDIDATOS[1] or (len(cands) == CANDIDATOS[1] and not any(c.get("id") == GANCHO_USUARIO for c in cands)):
         fallas.append("G %d candidatos; van 5 de familias distintas (+ «%s», el que dicta el usuario)" % (len(cands), GANCHO_USUARIO))
-    # familias distintas hasta donde alcanza el catálogo: con la rotación (R9), /mito puede quedarse con 2 familias para
+    # familias distintas hasta donde alcanza el catálogo: con la rotación (R9), un flujo puede quedarse con 2 familias para
     # 5 candidatos; entonces se repite familia, pero nunca la opción entera (pantalla, línea y voz). El del usuario no cuenta.
     propios = [c for c in cands if c.get("id") != GANCHO_USUARIO]
     fams = [c.get("familia") for c in propios]
@@ -4891,9 +4877,7 @@ def cmd_tiempos(a):
             if tipo == "gancho":
                 sfx = [(0.1, "impacto"), (pulso[1] if pulso else hasta, "pulso")]
                 vis = e.get("visual") or {}
-                if vis.get("tipo") == VISUAL_VEREDICTO:   # /mito: golpe.html con la creencia sobre el sello (S.T.veredicto)
-                    S["T"]["veredicto"] = {k: vis.get(k) for k in ("creencia", "veredicto", "sello")}
-                elif vis.get("tipo") not in (None, "cifra"):   # gancho con visual: página gancho.html (S.V)
+                if vis.get("tipo") not in (None, "cifra"):   # gancho con visual: página gancho.html (S.V)
                     S["V"], ev_v, sfx_v = tiempos_visual(vis, pal, fin_1, fin_voz)
                     ev += ev_v
                     sfx += sfx_v

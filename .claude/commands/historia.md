@@ -27,7 +27,7 @@ La guía es `referencias/flujo-historia.md`. Nunca publiques. Nunca generes mús
    - `desde` admite tres entradas sobre un TRABAJO que ya tiene `historia.json`, `ganchos.json` y `seleccion.json`:
      `"encuadre"` (re-encuadre: el editor añade actos, espina, hilos y personajes sobre la cronología verificada y
      sigue al guion; para volver a contar por actos una historia vieja, antes `python3 scripts/historia.py hechos
-     <TRABAJO> --reclasificar` y, revisado, `--aplicar`), `"guion"` (salta directo a Guion) y `"retoque"` (paso 9).
+     <TRABAJO> --reclasificar` y, revisado, `--aplicar`), `"guion"` (salta directo a Guion) y `"retoque"` (paso 10).
    - **El usuario elige el gancho** (usuario, 2026-11-03: «siempre me pones a escoger entre 5 opciones»): sin
      `args.gancho`, el Workflow se detiene tras la Selección con `veredicto: "elegir_gancho"` (los 5 candidatos y el
      recomendado del crítico). Corre `python3 scripts/historia.py ganchos <TRABAJO> --opciones` y pregunta con AskUserQuestion:
@@ -56,7 +56,7 @@ La guía es `referencias/flujo-historia.md`. Nunca publiques. Nunca generes mús
      `palabras` (320–400), `segun` (≤ 4) e `hilos` (pagados y sin respuesta). `aprobado_por: "arreglos_probados"`
      quiere decir que la última crítica solo bloqueaba con arreglos ya probados y el Workflow los aplicó
      (`aplicadas_al_cierre`): dilo en el reporte. Si `veredicto` no es `"pasa"`, muestra las faltas y **pregunta al
-     usuario** si sigue así o lanza un retoque con ellas (paso 9; las que traen `cambios` se aplican tal cual con
+     usuario** si sigue así o lanza un retoque con ellas (paso 10; las que traen `cambios` se aplican tal cual con
      `historia.py aplicar`); nunca edites `guion.json` a mano. Si pasa, el Workflow ya hizo
      que el guionista aplicara las mejoras del crítico (también las de voz) y repasara el gate; las que no pudo aplicar
      (`mejoras_no_aplicadas`, con su motivo) van al reporte: no las apliques a mano.
@@ -112,13 +112,13 @@ La guía es `referencias/flujo-historia.md`. Nunca publiques. Nunca generes mús
      `guion --check` y repite desde `tiempos`.
    - Luego el 4:5: `grabar <TRABAJO> --formato 4:5`, `montar <TRABAJO> --formato 4:5`, `revisar <TRABAJO> --formato 4:5`.
    - Abre `<TRABAJO>/salida/video.mp4` con `open`.
-7. **ENTREGA** (salvo con `sin-voz`)
+8. **ENTREGA** (salvo con `sin-voz`)
    - `python3 scripts/historia.py entregar <TRABAJO>` → `historias/<fecha>-<slug>/` (`video.mp4` para TikTok, Reels y
      Shorts, `video_4x5.mp4` para el feed, `caption.md`, `subtitulos.srt`, portadas, `fuentes.md` por acto con los
      créditos de las fotos, `cronologia.md` y el `guion.json` de entrega; las fotos no se copian).
    - `python3 scripts/memoria.py --historia historias/<fecha>-<slug>` (`--estado incompleto` si el crítico no
      aprobó y el usuario decidió seguir) y `make validate` (M10).
-8. **REPORTE**
+9. **REPORTE**
    - La ruta del video (9:16 y 4:5), la duración (120–180 s), la paleta y la música.
    - El encuadre (pregunta, arco, los tres actos con su espina, los hilos) y, por escena, `E<n> · acto · tipo · lo que
      muestra · foto (origen y licencia)`; los rótulos de acto.
@@ -137,7 +137,7 @@ La guía es `referencias/flujo-historia.md`. Nunca publiques. Nunca generes mús
      scripts/memoria.py --mejoras <TRABAJO>/mejoras.json` (`{"flujo": "historia", "pieza": "<carpeta de entrega>",
      "mejoras": [{"area", "archivo", "problema", "propuesta"}]}`) y no las apliques sin que el usuario lo pida; las
      que ya quedaron arregladas van con `"estado": "hecha"`. Con `sin-voz` o `fixture` se listan, no se registran.
-9. **RETOQUES** (cuando el usuario pida un cambio tras aprobar o grabar: otro gancho, otra foto, reescribir una
+10. **RETOQUES** (cuando el usuario pida un cambio tras aprobar o grabar: otro gancho, otra foto, reescribir una
    escena, otro cierre, quitar una cita)
    - NO edites `guion.json` a mano. Lanza el Workflow `historia` con `args: {"trabajo": "<TRABAJO>", "tema": "<tema>",
      "desde": "retoque", "notas": "<lo que pidió el usuario, literal>"}`: el guionista aplica solo eso y conserva las

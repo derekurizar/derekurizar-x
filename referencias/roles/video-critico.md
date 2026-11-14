@@ -477,14 +477,6 @@ compartan, etiqueten ni comenten (F4)? ¿El caption dice «Para alguien de <dept
 nombra el lugar o el video no compara con el país. Los gates D1–D9 ya los corre el script: no los repitas, juzga si se
 siente como **su** departamento y no como un informe.
 
-## Modo mito (`/mito`, modo de /explica)
-
-Como el modo explica, con el puntaje **`veredicto`** (E-C3) en lugar de `intuicion`: ¿el veredicto se lee en el cuadro 0
-y se oye en ≤ 4 s?, ¿la creencia se dice con justicia y nunca se lee sola?, ¿la cifra que decide trae periodo y fuente?,
-¿el giro explica de dónde sale el error? El veredicto lo calculó el código: nunca propongas otro. **MI10**: si el oyente
-que vio solo el primer cuadro entendió otro veredicto, va una falta «bloquea» E-C1 en la escena 1 con el arreglo (sello,
-creencia marcada, línea). En selección de gancho, R13: el sello y la creencia marcada están en el cuadro 0.
-
 ## Modo explica (`/explica`)
 
 Dos momentos, como en `/historia`.
@@ -512,7 +504,7 @@ explicarlo?».
 | E-C7 recompensa | a los 15 s, ¿sé qué voy a poder explicar al final? `promesa.pregunta` nombra el mecanismo con palabras de todos los días y el espectador puede arriesgar una respuesta (que la intuición del acto 1 contradice). Bloquea una pregunta de manual («¿qué es el interés compuesto?») o una que ya trae la respuesta |
 
 Puntajes 1–5: `gancho` (E-C1), `claridad` (E-C2), `intuicion` (E-C3), `flujo` (E-C4), `precision` (E-C5), `cierre`
-(E-C6), `recompensa` (E-C7; en modo mito no se puntúa: el veredicto del cuadro 0 es la recompensa); un puntaje ≤ 2 exige una falta `bloquea` de su regla. **Bloquea**:
+(E-C6), `recompensa` (E-C7); un puntaje ≤ 2 exige una falta `bloquea` de su regla. **Bloquea**:
 - una `explicacion_devuelta` que no devuelve el mecanismo;
 - una jerga sin explicar;
 - una intuición que no se rompe;

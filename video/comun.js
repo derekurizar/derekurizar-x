@@ -36,7 +36,7 @@ const V = (() => {
       cur.push(p); if (/[.?:;…]$/.test(p.text)) { out.push(cur); cur = []; } }
     if (cur.length) out.push(cur); return out; };
 
-  // CHIP o sello en pantalla («Ejemplo», «MITO», «Parte 2 de 4», «#3 · Economía»): chip({texto, tono, desde, pos, id})
+  // CHIP o sello en pantalla («Ejemplo», «Parte 2 de 4», «#3 · Economía»): chip({texto, tono, desde, pos, id})
   // · tono: «ink» (crema con borde tenue, el de «Ejemplo»), «acento» (el acento del tema) o «tenue» (apagado)
   // · pos: «arriba» (a la derecha, bajo la barra de progreso y sobre la columna de iconos: x ≤ 1023, y ≥ 272) o «abajo» (a la izquierda, sobre los
   //   subtítulos: termina antes de --fin); varios chips en la misma posición se apilan
