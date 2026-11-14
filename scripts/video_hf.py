@@ -54,12 +54,14 @@ FORMATOS = {
     "4:5": {"id": "4x5", "w": 1080, "h": 1350, "arriba": 70, "x0": 85, "x1": 995, "x1b": 995, "yb": 10 ** 6, "y1": 1090, "subs": 1120, "subs_cierre": 1150,
             "salida": "video_4x5.mp4", "segs": "segs_mesa_4x5", "escala": 0.87},   # la mesa del 4:5 es más baja: todo a escala, mismo reparto
 }
-TABLEROS_V = ("explica", "tarjeta", "cuenta", "hemiciclo", "vias", "deptos", "ranking", "mapa", "escala", "tiempo", "lupa", "cortina")
+TABLEROS_V = ("explica", "tarjeta", "cuenta", "hemiciclo", "vias", "deptos", "ranking", "mapa", "escala", "tiempo", "lupa", "cortina", "adivina")
 TABLERO_FUERA_V = ("arriba", "chip", "ejemplo")         # lo que la mesa vertical pone por su cuenta (además de youtube.TABLERO_FUERA)
 TABLERO_RECORTE_V = "crop=950:1040:65:60"   # la columna segura de la página 4:5 (x 85–995, hasta donde irían los subtítulos)
 TABLERO_LADOS = (950, 1040)
 # las reglas de los gates que cambian frente al 16:9 (mesa.regla)
-PIEZAS_V = ("red",)   # las piezas compuestas propias del vertical (dibujar_v); las demás las dibuja mesa.dibujar
+PIEZAS_V = ("red", "barra")   # las piezas compuestas propias del vertical (dibujar_red, dibujar_barra); las demás las dibuja mesa.dibujar
+BARRAS_MIN, BARRAS_MAX = 2, 5   # la pieza `barra`: la comparación de 2 a 5 valores (la cifra con su medida)
+BARRA_FILA = 128
 REGLAS = {"MESA_S": (3.0, 24.0), "MESA_PIEZAS": 6, "HUECO_MAX_S": 4.0, "ENTRE_GOLPES_S": 0.4, "FOTO_USOS_MAX": 1, "FOTO_SEPARACION_S": 0,
           "PROPIAS": ("cierre",), "TABLERO": TABLEROS_V, "TIPOS": MS.TIPOS + PIEZAS_V, "ARCHIVO": MS.ARCHIVO + ("red",),
           "TABLERO_SOLO": True, "HUECO_TABLERO_S": 6.0,
@@ -138,6 +140,15 @@ CSS = """
 .tab{position:absolute;background:$tinta;color:$papel;padding:12px 22px 10px;max-width:700px}
 .tab .cond{font-size:48px}
 .tab .mono{font-size:22px;color:$acento;margin-bottom:4px}
+.barras{background:$mesa2;border:1px solid $filo;padding:24px 34px 22px;color:$papel}
+.barras .h{font-size:44px;margin-bottom:14px}
+.barras .fi{height:114px;position:relative}
+.barras .et{font-size:44px;display:flex;justify-content:space-between;align-items:baseline;gap:20px}
+.barras .et .v{font-size:52px;white-space:nowrap}
+.barras .pi{position:relative;height:30px;margin-top:10px;background:$filo}
+.barras .pi b{position:absolute;left:0;top:0;bottom:0;background:$papel;transform-origin:0 50%}
+.barras .ac .pi b{background:$acento}.barras .ac .v{color:$acento}
+.barras .f{margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:22px;color:$gris}
 .mapa{background:$papel2;padding:16px}
 .mapa svg{display:block;background:$mar}
 .mapa .tierra{fill:$tierra;stroke:$costa;stroke-width:.8}
@@ -240,6 +251,12 @@ def contexto_v(trabajo):
     ctx = {"trabajo": trabajo, "E": E, "es": es, "offs": offs, "total": total, "Y": Y, "st": st, "por_clave": {S["clave"]: i for i, S in enumerate(es)},
            "caps": [{"numero": 1, "idx": list(range(len(es))), "titulo": "", "ini": 0.0, "fin": total}],
            "reglas": REGLAS, "hechos_de": hechos_de, "elenco": elenco, "doc": DOC_V, "protagonista": prot}
+    try:   # el respaldo de los números en pantalla: las cifras de los datos del video, también como las redondea una tarjeta
+        vals, _, _ = VD.valores_respaldo(st["hilo"])   # {(valor, factor de la unidad)}
+        nums = [x for v, fct in vals for x in (v, v * fct)]
+        ctx["respaldo"] = nums + [round(v) for v in nums] + [round(v, 1) for v in nums]
+    except Exception:
+        pass
     ctx["seguir"] = seguir_de(ctx)
     return ctx
 
@@ -319,7 +336,7 @@ def titulos_de(ctx, M):
             t = " ".join(w["text"] for w in S["arriba"] if isinstance(w, dict))
         elif N.get("titular"):
             t = " ".join(w["text"] for w in N["titular"] if isinstance(w, dict))
-        elif (T.get("pant") or {}).get("texto"):
+        elif (T.get("pant") or {}).get("texto") and S["tipo"] not in ("golpe", "definicion"):   # el golpe y la definición la ponen como pieza
             t = T["pant"]["texto"]
         elif P_.get("titulo"):
             t = P_["titulo"]
@@ -387,6 +404,8 @@ def texto_lectura(g):
         txt = " ".join((it or {}).get("texto") or "" for it in g.get("items") or [])
     elif t == "documento":
         txt = "%s %s" % (g.get("titulo") or "", g.get("subtitulo") or "")
+    elif t == "barra":
+        txt = "%s %s" % (g.get("titulo") or "", " ".join("%s %s" % (b.get("etiqueta") or "", b.get("texto") or b.get("valor") or "") for b in g.get("barras") or [] if isinstance(b, dict)))
     elif t == "red":
         txt = " ".join(str(x.get(c) or "") for grupo in ("nodos", "acusadores") for x in g.get(grupo) or [] if isinstance(x, dict) for c in ("nombre", "cargo"))
         txt = "%s %s %s" % (g.get("etiqueta") or "", txt, g.get("estado") or "")
@@ -479,6 +498,9 @@ def medida_v(ctx, g, F, ancho_max, elenco):
         h = (64 if g.get("etiqueta") else 0) + max(1, len(niveles)) * RED_PASO - (RED_PASO - RED_ALTO) + (44 + RED_ALTO if g.get("acusadores") else 0) + \
             (62 if g.get("estado") else 0)
         return 791, h, {"niveles": niveles}
+    if t == "barra":
+        bs = [b for b in g.get("barras") or [] if isinstance(b, dict)]
+        return 791, 24 + (62 if g.get("titulo") else 0) + BARRA_FILA * max(1, len(bs)) + (40 if g.get("fuente") else 0) + 10, {}
     if t == "lista":
         largo = max([len((it or {}).get("texto") or "") for it in g.get("items") or []] or [6])
         ficha_w = int(largo * 52 * 0.455) + 56
@@ -507,6 +529,18 @@ def compacta(ctx, g, F, elenco):
         iy = -(rc[1] * th * s) - max(0, ch * s - hi) * fy
         return 300, 10 + hi + 12 + 31 * min(2, renglones(pie, 28, 270, False)) + 10, ('<div class="cmf"><div class="im" style="width:%dpx;height:%dpx"><img src="assets/%s" style="left:%.0fpx;top:%.0fpx;width:%.0fpx;height:%.0fpx" alt=""></div>'
                                    '<b>%s</b></div>' % (wi, hi, r["archivo"], ix, iy, tw * s, th * s, esc(pie))), [r["archivo"]]
+    if t == "cifra":
+        v = str(g.get("valor") or "")
+        w = min(COMPACTA_ANCHO, max(240, int(len(v) * 96 * 0.44) + 40))
+        rot = " ".join((g.get("rotulo") or "").split()[:5])
+        return w, 14 + 92 + 34 * renglones(rot, 34, w - 38) + 16, '<div class="cm osc"><div class="n cond">%s</div><div class="l cond">%s</div></div>' % (esc(v), esc(rot)), []
+    if t == "barra":
+        bs = [b for b in g.get("barras") or [] if isinstance(b, dict)]
+        b = next((b for b in bs if b.get("acento")), bs[-1] if bs else None)
+        if not b:
+            return None
+        g = {"tipo": "cifra", "valor": b.get("texto") or b.get("valor"), "rotulo": b.get("etiqueta") or ""}
+        t = "cifra"
     if t == "cifra":
         v = str(g.get("valor") or "")
         w = min(COMPACTA_ANCHO, max(240, int(len(v) * 96 * 0.44) + 40))
@@ -769,6 +803,46 @@ def dibujar_red(ctx, m, g, x, y, w, h, ex, k, F, usados):
         m.pieza(max(ult + 0.4, t_de(g.get("estado_dice"), ult + 0.6)), x, y + int((ya + 14) * f), 10, 0, '<div class="est mono">%s</div>' % esc(g["estado"]), sfx="sello", sombra=False)
 
 
+def valor_num(v):
+    """«Q45,259», «1.8 veces», 46.1 → 45259.0, 1.8, 46.1 (None si no hay número)."""
+    if isinstance(v, (int, float)):
+        return float(v)
+    m_ = re.search(r"-?\d[\d,]*(?:\.\d+)?", str(v or ""))
+    return float(m_.group(0).replace(",", "")) if m_ else None
+
+
+def dibujar_barra(ctx, m, g, x, y, w, h, ex, k, F, usados):
+    """La cifra con su medida: 2–5 barras (etiqueta, valor) a la misma escala. La pieza entra con su rótulo y cada barra
+    crece cuando la voz dice su valor (o su `dice`); la que lleva `acento` (o la última) va en el color de acento."""
+    C, T = ctx["C"], g["_t"]
+    S, o = ctx["es"][g["_i"]], ctx["offs"][g["_i"]]
+    bs = [b for b in g.get("barras") or [] if isinstance(b, dict)][:BARRAS_MAX]
+    vals = [valor_num(b.get("valor")) or 0.0 for b in bs]
+    tope = max(vals + [1e-9])
+    ac = next((j for j, b in enumerate(bs) if b.get("acento")), len(bs) - 1)
+    pid = "%s-b%d" % (m.id, m.k + 1)
+    filas = "".join('<div class="fi%s"><div class="et cond"><span>%s</span><span class="v">%s</span></div><div class="pi"><b id="%s-%d" style="width:%.1f%%"></b></div></div>'
+                    % (" ac" if j == ac else "", esc(b.get("etiqueta")), esc(str(b.get("texto") or (num_txt(b["valor"]) if valor_num(b.get("valor")) is not None else ""))), pid, j, 100.0 * max(0.0, v) / tope)
+                    for j, (b, v) in enumerate(zip(bs, vals)))
+    dentro = '<div class="barras">%s%s%s</div>' % ('<div class="h cond">%s</div>' % esc(g["titulo"]) if g.get("titulo") else "", filas,
+                                                  '<div class="f">%s</div>' % esc(g["fuente"]) if g.get("fuente") else "")
+    m.pieza(T, x, y, w, max(-1.5, min(1.5, GIROS_V[k % len(GIROS_V)])), dentro, sfx="papel", ya=g.get("_ya", False))
+
+    def t_de(frase, por):
+        r = buscar(S, frase or "", 0) if frase else None
+        return round(o + S["palabras"][r[1]]["start"], 3) if r else por
+    t_prev = T + 0.15
+    for j, b in enumerate(bs):
+        td = t_de(b.get("dice"), None)
+        if T > o + S["dur"] or (td is not None and td < T - 0.5):   # la vuelta del bucle (el cuadro 0 otra vez): las barras ya están llenas
+            m.tl.append('tl.set("#%s-%d",{scaleX:1},0);' % (pid, j))
+            continue
+        tj = max(t_prev, td if td is not None else t_prev + (0.35 if j else 0.15))
+        m.tl.append('tl.fromTo("#%s-%d",{scaleX:0},{scaleX:1,duration:.55,ease:"power3.out"},%.3f);' % (pid, j, m.loc(tj)))
+        m.sfx.append((tj + 0.1, "impacto" if j == ac else "tic"))
+        t_prev = tj + 0.2
+
+
 class MesaV(Mesa):
     """Una mesa del cuadro vertical: piezas que pueden terminar antes del barrido (repliegue) y compactas sin entrada."""
 
@@ -884,11 +958,20 @@ def mesa_html_v(ctx, M, F, elenco, usados, fmt, primera=False, ultima=False):
         if cab["y0"] + alto > Fz["y1"]:
             alto = Fz["y1"] - cab["y0"]
             ancho = int(alto * TABLERO_LADOS[0] / float(TABLERO_LADOS[1]))
+        # el marco llega hasta donde llega lo dibujado (tableros → *.alto.json): una tarjeta corta no deja medio marco vacío
+        fa = os.path.join(ctx["trabajo"], "clips_tablero", "e%d.alto.json" % S["n"])
+        marco = alto
+        try:
+            h_ = leer(fa)["alto"] if os.path.exists(fa) else None
+            if h_:
+                marco = min(alto, int((h_ + 36) * alto / float(TABLERO_LADOS[1])))
+        except (OSError, ValueError, KeyError, TypeError):
+            pass
         x = Fz["x0"] + (Fz["x1b"] - Fz["x0"] - ancho) // 2
-        y = cab["y0"] + max(0, (Fz["y1"] - cab["y0"] - alto) // 2)
+        y = cab["y0"] + max(0, (Fz["y1"] - cab["y0"] - marco) // 3)
         m.html.append('<div id="%s-marco" class="pz pizarra" style="left:%dpx;top:%dpx;width:%dpx;height:%dpx;z-index:5" data-layout-allow-overlap>'
                       '<video id="%s-anim" class="clip" data-start="0" data-duration="%.3f" data-track-index="0" muted playsinline src="assets/%s" '
-                      'style="position:absolute;left:0;top:0;width:%dpx;height:%dpx;object-fit:cover"></video></div>' % (m.id, x, y, ancho, alto, m.id, d, clip, ancho, alto))
+                      'style="position:absolute;left:0;top:0;width:%dpx;height:%dpx;object-fit:cover"></video></div>' % (m.id, x, y, ancho, marco, m.id, d, clip, ancho, alto))
         m.tl.append('tl.fromTo("#%s-marco",{y:60,opacity:0},{y:0,opacity:1,duration:.4,ease:"power3.out"},0);' % m.id)
         m.sfx.append((M["ini"] + 0.2, "whoosh"))
         if not M["golpes"]:
@@ -904,7 +987,7 @@ def mesa_html_v(ctx, M, F, elenco, usados, fmt, primera=False, ultima=False):
     for p in L["piezas"]:
         m.f, m.hasta = p["f"], p["hasta"]
         n0 = len(m.extra)
-        (dibujar_red if p["g"]["tipo"] == "red" else dibujar)(ctx, m, p["g"], p["x"], p["y"], p["w"], p["h"], p["ex"], p["k"], F, usados)
+        {"red": dibujar_red, "barra": dibujar_barra}.get(p["g"]["tipo"], dibujar)(ctx, m, p["g"], p["x"], p["y"], p["w"], p["h"], p["ex"], p["k"], F, usados)
         if p["hasta"] is not None:
             for sel in m.extra[n0:]:   # el lazo de una lista se va con ella
                 m.tl.append('tl.set("%s",{opacity:0},%.3f);' % (sel, m.loc(p["hasta"])))
@@ -1069,6 +1152,18 @@ def armar(trabajo, fmt, portada=False):
     if serie.get("parte"):
         sobre.append('      <div id="kick" class="clip mono" data-start="0" data-duration="%.4f" data-track-index="6" data-layout-ignore style="left:%dpx;top:%dpx;width:%dpx">'
                      'Parte %s de %s%s</div>' % (DT, x0, cab0["kicker"], col, serie["parte"], serie.get("de"), " · " + esc(serie["titulo"]) if serie.get("titulo") else ""))
+    # el chip «Ejemplo» (/explica: números ilustrativos que calculó el script, E3–E4): arriba a la derecha, en la línea del
+    # kicker, mientras está la mesa de una escena con `ejemplo` (en un tablero también: su clip se graba sin chip)
+    tramos = []
+    for M in mesas:
+        if M["clase"] != "cierre" and not M.get("_bucle") and any(ctx["es"][i].get("ejemplo") for i in M["idx"]):
+            if tramos and abs(tramos[-1][1] - M["ini"]) < 0.05:
+                tramos[-1][1] = M["fin"]
+            else:
+                tramos.append([M["ini"], M["fin"]])
+    for j, (a_, b) in enumerate(tramos):
+        sobre.append('      <div id="ejm%d" class="clip mono ejm" data-start="%.3f" data-duration="%.3f" data-track-index="9" data-layout-ignore style="right:%dpx;top:%dpx">Ejemplo</div>'
+                     % (j, a_, b - a_, W - (Fz["x1b"] if fmt == "9:16" else Fz["x1"]), cab0["kicker"] - 10))
     titulos.sort(key=lambda x: x[0])
     runs = []
     for t, txt, cab in titulos:
@@ -1123,6 +1218,7 @@ def armar(trabajo, fmt, portada=False):
       #barra b { position: absolute; inset: 0; display: block; background: %(papel)s; }
       #kick { position: absolute; z-index: 800; font-size: 22px; font-weight: 600; color: %(acento)s; white-space: nowrap; overflow: hidden; }
       .tit { position: absolute; z-index: 800; color: %(papel)s; }
+      .ejm { position: absolute; z-index: 820; background: %(papel)s; color: %(tinta)s; font-size: 24px; font-weight: 700; padding: 8px 14px 6px; white-space: nowrap; }
       .sbt { position: absolute; z-index: 850; left: %(x0)dpx; width: %(col)dpx; text-align: center; font: 800 60px/1.24 'Archivo', sans-serif; color: %(papel)s; }
       .sbt span { opacity: .38; border-radius: 12px; padding: 0 .14em; }
       #seguir { position: absolute; z-index: 900; }
@@ -1201,6 +1297,18 @@ def revisar_v(ctx, P, mesas=None, f0=None):
     for M in mesas:
         voz_mesa = " ".join(VD._plano(w["text"]) for i in M["idx"] for w in ctx["es"][i].get("palabras") or [])
         for j, g in enumerate(M["golpes"]):
+            if g.get("tipo") == "barra":   # MV4: la comparación, a la misma escala y con algo que medir
+                q = "%s golpe %d (barra)" % (M["id"], j + 1)
+                bs = [b for b in g.get("barras") or [] if isinstance(b, dict)]
+                if not BARRAS_MIN <= len(bs) <= BARRAS_MAX:
+                    f.append("MV4 %s: de %d a %d barras {etiqueta, valor, texto?, dice?, acento?}" % (q, BARRAS_MIN, BARRAS_MAX))
+                for b in bs:
+                    if not (b.get("etiqueta") or "").strip() or valor_num(b.get("valor")) is None or valor_num(b.get("valor")) < 0:
+                        f.append("MV4 %s: la barra «%s» lleva `etiqueta` y un `valor` numérico ≥ 0" % (q, b.get("etiqueta")))
+                    elif b.get("texto") and valor_num(b["texto"]) is not None and abs(valor_num(b["texto"]) - valor_num(b["valor"])) > 0.01 * max(1.0, abs(valor_num(b["valor"]))) \
+                            and not re.search(r"\b(mil|millones?|%)", b["texto"], re.I):
+                        f.append("MV4 %s: la barra «%s» dice «%s» y mide %s: el largo no corresponde a lo escrito" % (q, b.get("etiqueta"), b["texto"], b["valor"]))
+                continue
             if g.get("tipo") != "red":
                 continue
             q = "%s golpe %d (red)" % (M["id"], j + 1)
@@ -1241,6 +1349,95 @@ def fecha_legible(f):
     return "%d de %s de %s" % (int(m.group(3)), MESES[int(m.group(2)) - 1], m.group(1)) if m and 1 <= int(m.group(2)) <= 12 else str(f or "")
 
 
+def num_txt(v):
+    """46.1 → «46.1»; 45259.26 → «45,259»; 17449.4 → «17,449»; 109 → «109» (como lo escriben las tarjetas)."""
+    v = float(v)
+    if abs(v) >= 1000 or abs(v - round(v)) < 1e-9:
+        return "{:,}".format(int(round(v)))
+    return ("%.1f" % v).rstrip("0").rstrip(".")
+
+
+def texto_pantalla(S, i, frase, F):
+    """Las piezas de una escena de texto cinético del motor propio (gancho, golpe, definición: /video, /sabias, /explica,
+    /departamento, /congreso) en la mesa: la línea de pantalla como nota o cifra, la definición como ficha y, en el gancho,
+    su visual (pareja → barra, llenado o figuras → cifra, lugar → mapa, el hemiciclo → la barra de votos frente al umbral).
+    El gancho abre con dos piezas ya puestas (MV14). → lista de golpes."""
+    T, V, tipo = S.get("T") or {}, S.get("V") or {}, S["tipo"]
+    pal = S.get("palabras") or []
+    pant = ((T.get("pant") or {}).get("texto") or T.get("pantalla") or "").strip()
+    linea = " ".join(w.get("text", "") for w in T.get("linea") or [] if isinstance(w, dict)).strip()
+
+    def dice_de(txt, por=None):
+        """La palabra de la voz que lleva el primer número de `txt` (o la frase `txt` si la voz la dice)."""
+        ns = numeros(txt or "")
+        for k, w in enumerate(pal):
+            if ns & numeros(w["text"]):
+                return w["text"]
+        r = buscar(S, " ".join((txt or "").split()[:2]), 0) if txt else None
+        return " ".join(w["text"] for w in pal[r[1]:r[1] + 2]) if r else por
+    gs = []
+    if tipo == "definicion" and pant:
+        return [{"tipo": "termino", "dice": frase(0), "texto": " ".join(pant.split()[:6]), "definicion": linea}]
+    if tipo == "golpe" and pant:   # sin golpe de arriba propio (titulos_de): sigue el de la mesa anterior; la línea es la pieza
+        if (T.get("pant") or {}).get("v") is not None:
+            return [{"tipo": "cifra", "dice": dice_de(pant, frase(0)), "valor": pant, "rotulo": " ".join(linea.split()[:6])}]
+        gs.append({"tipo": "termino", "dice": frase(0), "texto": " ".join(pant.split()[:6])})
+        if linea and len(linea.split()) <= 6 and VD._plano(linea) != VD._plano(pant):
+            r = buscar(S, " ".join(linea.split()[:2]), 0)
+            if r and r[1] > 2:
+                gs.append({"tipo": "termino", "dice": " ".join(w["text"] for w in pal[r[1]:r[1] + 2]), "texto": linea})
+        return gs
+    if tipo != "gancho":
+        return gs
+    # el gancho: la línea de pantalla y su visual, ya puestos en el cuadro 0. Con una línea corta, la pantalla es el golpe de
+    # arriba y la línea una nota; con una larga, la línea es el golpe de arriba y la pantalla la nota (nunca las dos lo mismo)
+    corta = linea and len(linea.split()) <= 6 and VD._plano(linea) != VD._plano(pant)
+    S["_titulo_v"] = pant if (corta or not linea) else " ".join(linea.split()[:8])
+    if pant and not corta and linea:
+        gs.append({"tipo": "termino", "texto": " ".join(pant.split()[:6])})
+    vt = V.get("tipo")
+    if T.get("modo") == "gancho" and isinstance(T.get("cuentas"), dict) and (T.get("umbral") or {}).get("n"):   # /congreso: el mini-hemiciclo
+        c = T["cuentas"]
+        gs.append({"tipo": "barra", "barras": [{"etiqueta": "A favor", "valor": c.get("favor", 0), "texto": str(c.get("favor", 0)), "dice": dice_de(str(c.get("favor")))},
+                                                {"etiqueta": "Hacían falta", "valor": T["umbral"]["n"], "texto": str(T["umbral"]["n"]), "dice": dice_de(str(T["umbral"]["n"]))},
+                                                {"etiqueta": "En contra", "valor": c.get("contra", 0), "texto": str(c.get("contra", 0)), "dice": dice_de(str(c.get("contra")))}],
+                   "titulo": T.get("etiqueta") or ""})
+        gs[-1]["barras"][0]["acento"] = True
+        fid = os.path.basename(T.get("foto") or "")[:-4] if T.get("foto") else None
+        if fid and fid in F:
+            gs.insert(0, {"tipo": "foto", "foto": fid, "pie": " ".join((T.get("etiqueta") or F[fid].get("descripcion") or "").split()[:6])})
+    elif vt == "pareja" and isinstance(V.get("a"), dict) and isinstance(V.get("b"), dict):
+        bs = []
+        for lado in ("a", "b"):
+            x = V[lado]
+            if valor_num(x.get("valor")) is None:
+                continue
+            txt = num_txt(x["valor"])
+            bs.append({"etiqueta": x.get("etiqueta") or lado.upper(), "valor": x["valor"], "texto": txt, "dice": dice_de(txt)})
+        if len(bs) == 2:
+            bs[-1]["acento"] = True
+            gs.append({"tipo": "barra", "barras": bs})
+    elif vt in ("llenado", "figuras") and valor_num(V.get("total")) is not None:
+        v = num_txt(V["total"])
+        gs.append({"tipo": "cifra", "dice": dice_de(v, frase(0)), "valor": v, "rotulo": " ".join((V.get("unidad") or linea).split()[:5]) or "en total"})
+    elif vt == "lugar" and (V.get("nombre") or V.get("depto")):
+        gs.append({"tipo": "lugar", "dice": dice_de(V.get("nombre"), frase(0)), "mapa": "guatemala", "depto": V.get("nombre") or V.get("depto"),
+                   "rotulo": V.get("etiqueta") or V.get("nombre")})
+    elif vt == "cifra" or (T.get("pant") or {}).get("v") is not None:
+        n = next((w["text"].strip(" ,.;:") for w in pal if numeros(w["text"])), None)
+        if n and not (pant and numeros(pant) & numeros(n)):
+            gs.append({"tipo": "cifra", "dice": n, "valor": n, "rotulo": " ".join(linea.split()[:5]) or "cifra"})
+    # el cuadro 0 lleva dos piezas (MV14): la línea corta como nota; si no hay, el visual ya puesto
+    if corta:
+        gs.insert(0, {"tipo": "termino", "texto": linea})
+    if sum(1 for g in gs if not g.get("dice")) < 2:
+        for g in gs:
+            if g.get("dice"):
+                g.pop("dice")
+                break
+    return gs
+
+
 def borrador_v(ctx):
     """El plano de partida del vertical: una mesa por escena, con lo que la escena ya trae y lo ya verificado de sus hechos.
     El realizador lo mejora; la maqueta lo usa tal cual. Sobre el borrador del 16:9 (foto, cita, término, años y cifras
@@ -1279,6 +1476,10 @@ def borrador_v(ctx):
             return " ".join(w["text"] for w in pal[k0:k0 + n]).strip(" ,.;:")
         voz = VD._plano(" ".join(w["text"] for w in pal))
         gs = []
+        cinetico = (tipo in ("golpe", "definicion") or tipo == "gancho" and not (S.get("N") or {}).get("foto")) and isinstance(S.get("T"), dict) and ((S["T"].get("pant") or {}).get("texto") or S["T"].get("pantalla"))
+        if cinetico:   # el texto cinético del motor propio: lo traduce texto_pantalla (y no las cifras sueltas del borrador del 16:9)
+            gs = texto_pantalla(S, i, frase, F)
+            por[cl] = [g for g in por.get(cl, []) if g["tipo"] in ("foto", "persona", "cita")]
         for g in por.get(cl, []):
             if g["tipo"] == "foto":
                 r = F.get(g.get("foto")) or {}
@@ -1313,12 +1514,14 @@ def borrador_v(ctx):
                                "url": fu["url"], "titular": n["titulo"]})
                     break
         gs.sort(key=lambda g: (buscar(S, g.get("dice") or "", 0) or (-1,))[0])
-        if i == 0:   # el cuadro 0: el sujeto ya puesto (MV14)
+        if i == 0 and cinetico:   # el gancho de texto cinético: sus piezas sin `dice` ya están en el cuadro 0
+            gs = [g for g in gs if not g.get("dice")] + [g for g in gs if g.get("dice")]
+        elif i == 0:   # el cuadro 0: el sujeto ya puesto (MV14)
             if ctx.get("protagonista") and not any(g["tipo"] == "termino" for g in gs[:2]):
                 gs.insert(1 if gs and gs[0]["tipo"] in ("foto", "recorte") else 0, {"tipo": "termino", "texto": ctx["protagonista"]})
             for g in gs[:2]:
                 g.pop("dice", None)
-        mesas.append({"escenas": [cl], "golpes": gs[:REGLAS["MESA_PIEZAS"]]})
+        mesas.append(dict({"escenas": [cl], "golpes": gs[:REGLAS["MESA_PIEZAS"]]}, **({"titulo": S.pop("_titulo_v")} if S.get("_titulo_v") else {})))
     return {"version": 1, "mesas": mesas}
 
 
@@ -1561,13 +1764,43 @@ def cmd_importar(a):
 
 
 # ---------- tableros, revisión, audio, render, montaje ----------
+def alto_contenido(clip):
+    """Hasta dónde llega lo dibujado en un clip de tablero (px de su alto, 1040): la última fila que se aparta del fondo en
+    tres cuadros (30 %, 60 % y el final). Sirve para el marco, no es un gate: una tarjeta corta no deja medio marco vacío."""
+    W, H = 190, 208
+    try:
+        dur = VD.ffprobe_dur(clip)
+    except Exception:
+        return None
+    hasta = 0
+    for f in (0.3, 0.6, 0.97):
+        b = subprocess.run(["ffmpeg", "-loglevel", "error", "-ss", "%.2f" % (dur * f), "-i", clip, "-frames:v", "1", "-vf", "scale=%d:%d,format=gray" % (W, H),
+                            "-f", "rawvideo", "-"], capture_output=True).stdout
+        if len(b) < W * H:
+            continue
+        fondo = sorted(b)[len(b) // 2]
+        filas = [r for r in range(H) if sum(1 for c in range(W) if abs(b[r * W + c] - fondo) > 22) > 3]
+        if filas:
+            hasta = max(hasta, filas[-1] + 1)
+    return int(round(hasta * TABLERO_LADOS[1] / float(H))) if hasta else None
+
+
 def cmd_tableros(a):
     import youtube as YT
     trabajo = os.path.abspath(a.trabajo)
     st = VD.estado(trabajo)
     ns = argparse.Namespace(trabajo=trabajo, fps=a.fps, paralelo=None, solo=None, todo=a.todo, fuera=TABLERO_FUERA_V, tipos=TABLEROS_V, recorte=TABLERO_RECORTE_V,
                             formato_grabar=("tablero", "clips_limpios"), hilo_dir=VD.tarjetas_dir(trabajo, st) or os.path.join(trabajo, "base"), huella="v2|" + TABLERO_RECORTE_V + "|")
-    return YT.cmd_grabar(ns)
+    rc = YT.cmd_grabar(ns)
+    if rc:
+        return rc
+    for c in sorted(glob.glob(os.path.join(trabajo, "clips_tablero", "e*.mp4"))):
+        fa = c[:-4] + ".alto.json"
+        if not os.path.exists(fa) or os.path.getmtime(fa) < os.path.getmtime(c):
+            h = alto_contenido(c)
+            if h:
+                escribir(fa, {"alto": h, "de": TABLERO_LADOS[1]})
+    return 0
 
 
 def total_de(trabajo, fmt):

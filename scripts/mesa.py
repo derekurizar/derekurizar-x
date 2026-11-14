@@ -267,7 +267,7 @@ def subgolpes(ctx, g):
         t = t_de(g["lazo"].get("dice"))
         if t is not None:
             out.append(t)
-    for grupo in ("nodos", "aristas", "acusadores", "pasos"):   # las piezas compuestas del vertical: cada parte entra con su `dice`
+    for grupo in ("nodos", "aristas", "acusadores", "pasos", "barras"):   # las piezas compuestas del vertical: cada parte entra con su `dice`
         for it in g.get(grupo) or []:
             for c in ("clave_dice", "dice"):
                 t = t_de(it.get(c)) if isinstance(it, dict) and it.get(c) else None
@@ -303,6 +303,7 @@ def textos_de(g):
     partes += [it.get("texto") for it in g.get("items") or [] if isinstance(it, dict)]
     partes += [p.get("nombre") for p in g.get("puntos") or [] if isinstance(p, dict)]
     partes += [n.get(c) for grupo in ("nodos", "acusadores", "pasos") for n in g.get(grupo) or [] if isinstance(n, dict) for c in ("nombre", "cargo", "texto", "anio")]
+    partes += ["%s %s" % (b.get("etiqueta") or "", b.get("texto") or b.get("valor") or "") for b in g.get("barras") or [] if isinstance(b, dict)]
     return " ".join(str(x) for x in partes if x)
 
 
@@ -434,7 +435,8 @@ def revisar(ctx, P, mesas=None, f0=None):
                 f.append("YT17 %s: %d rótulos de solo texto seguidos (máximo %d): pon un archivo real entre ellos" % (q, seguidos, TEXTO_SEGUIDOS))
             # los números que una pieza pone en pantalla: dichos por la voz de la mesa o con respaldo
             if t not in ("recorte", "documento", "cita"):
-                propios = numeros(" ".join(str(g.get(c) or "") for c in ("valor", "grande", "chico", "arriba", "rotulo", "texto", "definicion", "rol")))
+                propios = numeros(" ".join(str(g.get(c) or "") for c in ("valor", "grande", "chico", "arriba", "rotulo", "texto", "definicion", "rol"))
+                                  + " " + " ".join("%s %s" % (b.get("etiqueta") or "", b.get("texto") or b.get("valor") or "") for b in g.get("barras") or [] if isinstance(b, dict)))
                 sin = sorted(x for x in propios if x not in dichos and x not in respaldo and x not in todo_dicho and x not in de_hechos
                              and not (t == "fecha" and len(x) <= 2))
                 if sin:
