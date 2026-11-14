@@ -257,6 +257,8 @@ def cmd_preparar(a):
     rec_g, rec_c = ({"familias": [], "visuales": []}, {"tipos": [], "formas": [], "mecanismos": []}) if a.fixture else recientes(slug)
     ruta = os.path.join(trabajo, "video.json")
     st = leer(ruta) if os.path.exists(ruta) else {}
+    if not st or getattr(a, "realizacion", None):   # quién dibuja: se fija al crear el TRABAJO (uno empezado con un motor termina con él)
+        st["realizacion"] = VD.realizacion_de("explica", getattr(a, "realizacion", None))
     st.update({"tipo": "explica", "slug": slug, "tema": a.tema, "fecha": datetime.date.today().isoformat(),
                "hilo": VD.rel(os.path.join(trabajo, "base")), "paleta": paleta, "musica": pista["id"], "musica_forzada": a.musica,
                "duracion": clave, "objetivo_s": objetivo, "ganchos_recientes": rec_g, "cierres_recientes": rec_c,
@@ -1501,6 +1503,8 @@ def cmd_entregar(a):
     st = VD.estado(trabajo)
     fijar_modo(trabajo)
     sal = os.path.join(trabajo, "salida")
+    if os.path.exists(os.path.join(trabajo, "salida", VD.MESA_SIN_RENDER)) and not a.salida:
+        return falla("este video es un doble sin render (MESA_RENDER=0, de maqueta): vuelve a grabar sin esa variable antes de entregar")
     for f in SALIDA_ENTREGA:
         if not os.path.exists(os.path.join(sal, f)):
             return falla("falta salida/%s: graba, monta y revisa (también --formato 4:5) antes de entregar" % f)
@@ -1589,7 +1593,7 @@ def ejemplos_md(st, X):
     return "\n".join(L) + "\n"
 
 
-REENVIO = ("voz", "voz-falsa", "descargar", "partir", "escuchar", "grabar", "montar", "revisar")
+REENVIO = ("voz", "voz-falsa", "descargar", "partir", "escuchar", "plano", "grabar", "montar", "revisar")
 
 
 def main():
@@ -1610,6 +1614,7 @@ def main():
     q.add_argument("--musica")
     q.add_argument("--modo", default=MODO_DEFECTO, help="el modo del motor: %s (lo pasa scripts/serie.py)" % "|".join(MODOS))
     q.add_argument("--fixture", action="store_true", help="la maqueta de sesiones/_fixture_explica (sin web)")
+    q.add_argument("--realizacion", choices=VD.REALIZACIONES, help="quién dibuja el video: mesa (la mesa de archivo en HyperFrames; por defecto) o propio")
     sub.add_parser("leer", help="→ scripts/historia.py leer")
     q = sub.add_parser("encuadre")
     q.add_argument("trabajo")

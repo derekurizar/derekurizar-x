@@ -810,7 +810,7 @@ assert v.escribe_numero(70.74, ["7 de cada 10"]) and not v.escribe_numero(70.74,
 assert v.escribe_numero(56.4, ["56 de cada 100"]) and not v.escribe_numero(56.4, ["57 de cada 100"]) and v.escribe_numero(3.0, ["1 de cada 3"])
 '
 VT="$TMP/video"
-paso "video.py preparar sobre el fixture (duración prueba)" bash -c "python3 scripts/video.py preparar sesiones/_fixture/salida --duracion prueba --trabajo '$VT' --permitir-borrador --sin-rotacion >/dev/null && cp sesiones/_fixture_video/guion.json sesiones/_fixture_video/ganchos.json sesiones/_fixture_video/seleccion.json '$VT/'"
+paso "video.py preparar sobre el fixture (duración prueba)" bash -c "python3 scripts/video.py preparar sesiones/_fixture/salida --duracion prueba --trabajo '$VT' --permitir-borrador --sin-rotacion --realizacion propio >/dev/null && cp sesiones/_fixture_video/guion.json sesiones/_fixture_video/ganchos.json sesiones/_fixture_video/seleccion.json '$VT/'"
 paso "video.py ganchos --check (5 candidatos de familias distintas, R1–R10)" python3 scripts/video.py ganchos "$VT" --check
 paso "video.py ganchos --usar (seleccion.json → escena 1 de guion.json; el segundo queda para la versión B)" bash -c '
 python3 scripts/video.py ganchos "$1" --usar >/dev/null && python3 - "$1" <<PY
@@ -1674,7 +1674,7 @@ h = json.load(open(sys.argv[1], encoding="utf-8"))
 h["tuits"].append({"n": 9, "beat": "impacto", "texto": "", "caracteres": 0, "alt_text": "Mapa de prueba", "imagen": "tuit_9.png", "plantilla": "mapa", "fuente": "Prueba", "cifra_ids": []})
 json.dump(h, open(sys.argv[1], "w", encoding="utf-8"), ensure_ascii=False)
 PY
-python3 scripts/video.py preparar "$H" --duracion prueba --trabajo "$W" --permitir-borrador >/dev/null
+python3 scripts/video.py preparar "$H" --duracion prueba --trabajo "$W" --permitir-borrador --realizacion propio >/dev/null
 python3 - "$W/guion.json" <<PY
 import json, sys
 G = json.load(open("sesiones/_fixture_video/guion.json", encoding="utf-8"))
@@ -2284,11 +2284,34 @@ PYEOF
     paso "plano vertical: una ficha con 40 palabras que la voz no dice no da tiempo de leerse → MV8" mv_neg "MV8" 'M["golpes"].insert(0, dict(tipo="institucion", escena=M["golpes"][0].get("escena", M["escenas"][0]), dice=M["golpes"][0]["dice"], nombre="Zzz", kicker="Qué es", rol=" ".join("palabra%d" % i for i in range(40))))'
     paso "plano vertical: una pieza que no cabe ni a escala → MV11" mv_neg "MV11" 'M["golpes"].insert(0, dict(tipo="cita", escena=M["golpes"][0].get("escena", M["escenas"][0]), dice=M["golpes"][0]["dice"], autor="Zzz", texto=" ".join("palabra%d" % i for i in range(160))))'
     paso "plano vertical: una jerarquía con un hilo de alegato sin «Según…» → MV12" mv_neg "MV12" 'd = M["golpes"][-1]["dice"]; M["golpes"].append(dict(tipo="red", escena=M["golpes"][-1].get("escena", M["escenas"][0]), dice=d, nodos=[dict(id="a", nombre="Marta Pérez", nivel=0, dice=d), dict(id="b", nombre="Zzz", nivel=1, dice=d)], aristas=[dict(de="a", a="b", atribuida=True, dice=d)]))'
-    paso "realizacion: /historia y /serie nacen en mesa; un TRABAJO del motor propio no lleva plano (exit 2); la maqueta sin render deja su marca" bash -c 'python3 -c "
-import json
-assert json.load(open(\"sesiones/_fixture_serie/trabajo/parte-1/video.json\")).get(\"realizacion\") == \"mesa\", \"la parte de la serie no heredó la mesa\"
-assert json.load(open(\"sesiones/_fixture_mesa/trabajo/video.json\")).get(\"realizacion\") == \"mesa\"
-" && test -f sesiones/_fixture_serie/trabajo/parte-1/salida/.maqueta_sin_render && { python3 scripts/video.py plano sesiones/_fixture_video/trabajo >/dev/null 2>&1; test $? -eq 2; }'
+    paso "plano vertical: una barra sola (sin con qué compararse) → MV4" mv_neg "MV4" 'M["golpes"].append(dict(tipo="barra", escena=M["golpes"][-1].get("escena", M["escenas"][0]), dice=M["golpes"][-1]["dice"], barras=[dict(etiqueta="Zzz", valor=1)]))'
+    paso "plano vertical: una barra que dice 900 y mide 10 → MV4" mv_neg "MV4" 'M["golpes"].append(dict(tipo="barra", escena=M["golpes"][-1].get("escena", M["escenas"][0]), dice=M["golpes"][-1]["dice"], barras=[dict(etiqueta="A", valor=10, texto="900"), dict(etiqueta="B", valor=20)]))'
+    paso "borrador vertical: un gancho de texto cinético (pareja) abre con la nota y la barra ya puestas; el golpe con número es una cifra sin repetir el golpe de arriba" python3 -c '
+import sys; sys.path.insert(0, "scripts"); import video_hf as VH
+S = {"tipo": "gancho", "clave": "e1", "palabras": [{"text": w, "start": 0.3 * k, "end": 0.3 * k + 0.25} for k, w in enumerate("el barril pasó de 67 a 102 dólares".split())],
+     "T": {"pant": {"texto": "¿Sabías que…?", "v": None}, "linea": [{"text": w} for w in "el barril pasó de 67 a 102 dólares".split()]},
+     "V": {"tipo": "pareja", "a": {"valor": 67.0, "etiqueta": "Enero"}, "b": {"valor": 102.0, "etiqueta": "Septiembre"}}}
+fr = lambda k0, n=2: " ".join(w["text"] for w in S["palabras"][k0:k0 + n])
+gs = VH.texto_pantalla(S, 0, fr, {})
+ya = [g for g in gs if not g.get("dice")]
+assert [g["tipo"] for g in ya] == ["termino", "barra"] and S["_titulo_v"].startswith("el barril"), (gs, S.get("_titulo_v"))
+assert [b["texto"] for b in ya[1]["barras"]] == ["67", "102"] and ya[1]["barras"][1]["acento"] and ya[1]["barras"][0]["dice"] == "67", ya[1]
+G = {"tipo": "golpe", "clave": "e3", "palabras": [{"text": w, "start": 0.3 * k, "end": 0.3 * k + 0.25} for k, w in enumerate("cuesta 1.5 veces lo de enero".split())],
+     "T": {"pant": {"texto": "1.5 veces", "v": 1.5}, "linea": [{"text": w} for w in "lo de enero".split()]}}
+g = VH.texto_pantalla(G, 2, lambda k0, n=2: "cuesta 1.5", {})
+assert g == [{"tipo": "cifra", "dice": "1.5", "valor": "1.5 veces", "rotulo": "lo de enero"}], g'
+    paso "realizacion: los flujos de video nacen en mesa (menos /noticias y /semana); un TRABAJO del motor propio no lleva plano (exit 2); la maqueta sin render deja su marca" bash -c 'python3 -c "
+import json, os
+for t in (\"_fixture_serie/trabajo/parte-1\", \"_fixture_mesa/trabajo\", \"_fixture_historia/trabajo\", \"_fixture_explica/trabajo\", \"_fixture_serie_explica/trabajo/parte-1\",
+          \"_fixture_sabias/trabajo\", \"_fixture_congreso/trabajo\", \"_fixture_departamento/trabajo\"):
+    p = \"sesiones/%s/video.json\" % t
+    if os.path.exists(p):
+        assert json.load(open(p)).get(\"realizacion\") == \"mesa\", t
+for t in (\"_fixture_noticias/trabajo\", \"_fixture_semana/trabajo\", \"_fixture_video/trabajo\"):   # el banco de pruebas del motor propio
+    p = \"sesiones/%s/video.json\" % t
+    if os.path.exists(p):
+        assert json.load(open(p)).get(\"realizacion\", \"propio\") == \"propio\", t
+" && test -f sesiones/_fixture_serie/trabajo/parte-1/salida/.maqueta_sin_render && { if test -f sesiones/_fixture_noticias/trabajo/video.json; then python3 scripts/video.py plano sesiones/_fixture_noticias/trabajo >/dev/null 2>&1; test $? -eq 2; fi; }'
     paso "plano vertical: sin plano.json, un trabajo real se detiene («falta la fase Plano») y una maqueta usa el borrador" bash -c 'T=sesiones/_fixture_mesa/trabajo; cp $T/plano.json "$TMP/plano_auto.bak"; rm $T/plano.json; python3 scripts/video_hf.py plano $T --auto --check >/dev/null 2>&1; rc=$?; test -s $T/plano.json; ok=$?; cp "$TMP/plano_auto.bak" $T/plano.json; test $rc -eq 0 -a $ok -eq 0'
     paso "el núcleo de la mesa no cambia el 16:9: youtube_hf reexporta mesa.py" python3 -c "
 import sys; sys.path.insert(0, 'scripts')

@@ -155,7 +155,7 @@ VF := sesiones/_fixture_video
 video-fixture:
 	@test -s sesiones/_fixture/salida/hilo.json || { echo "Primero: python3 scripts/materializar.py sesiones/_fixture && python3 scripts/ensamblar.py sesiones/_fixture --check"; exit 2; }
 	rm -rf $(VF)/trabajo $(VF)/salida
-	python3 scripts/video.py preparar sesiones/_fixture/salida --duracion prueba --trabajo $(VF)/trabajo --permitir-borrador --sin-rotacion > /dev/null
+	python3 scripts/video.py preparar sesiones/_fixture/salida --duracion prueba --trabajo $(VF)/trabajo --permitir-borrador --sin-rotacion --realizacion propio > /dev/null
 	cp $(VF)/guion.json $(VF)/ganchos.json $(VF)/seleccion.json $(VF)/trabajo/
 	python3 scripts/video.py ganchos $(VF)/trabajo --check
 	python3 scripts/video.py ganchos $(VF)/trabajo --usar
@@ -218,7 +218,7 @@ escenas-prueba:   # las escenas con archivos reales de /historia (vias, lupa, de
 
 # Las maquetas de los flujos que dibuja la mesa de archivo no renderizan con HyperFrames (MESA_RENDER=0: un doble de la duración exacta;
 # el proyecto sí pasa `hyperframes check`). El render real lo prueba `make video-fixture-mesa`.
-historia-fixture serie-fixture: export MESA_RENDER = 0
+historia-fixture serie-fixture explica-fixture serie-explica-fixture sabias-fixture congreso-fixture departamento-fixture: export MESA_RENDER = 0
 historia-fixture:   # maqueta de /historia: hechos verificados de ejemplo, fotos generadas, voz falsa, 9:16 y 4:5
 	rm -rf $(HF)/trabajo
 	python3 scripts/historia.py preparar "La panadería La Espiga de Xela (historia de ejemplo)" --slug la-espiga-maqueta --trabajo $(HF)/trabajo --fixture

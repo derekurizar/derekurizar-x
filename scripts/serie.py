@@ -229,7 +229,7 @@ def cmd_preparar(a):
                                                realizacion=getattr(a, "realizacion", None)))
     else:
         rc = M.cmd_preparar(argparse.Namespace(tema=a.tema, slug=slug, trabajo=trabajo, paleta=a.paleta, musica=None, fixture=False,
-                                               duracion="corto", modo="explica"))   # explica.py preparar (motor temario)
+                                               duracion="corto", modo="explica", realizacion=getattr(a, "realizacion", None)))   # explica.py preparar (motor temario)
     if rc:
         return rc
     st = VD.estado(trabajo)
@@ -1279,7 +1279,7 @@ def main():
     q.add_argument("--carpeta", help="otra carpeta para la serie (pruebas y maqueta)")
     q.add_argument("--trabajo", help="otro TRABAJO para la investigación (pruebas y maqueta)")
     q.add_argument("--fixture", action="store_true")
-    q.add_argument("--realizacion", choices=VD.REALIZACIONES, help="quién dibuja las partes (motor historia): mesa (por defecto) o propio")
+    q.add_argument("--realizacion", choices=VD.REALIZACIONES, help="quién dibuja las partes: mesa (por defecto) o propio")
     q = sub.add_parser("plan")
     q.add_argument("trabajo")
     q.add_argument("--check", action="store_true", required=True)

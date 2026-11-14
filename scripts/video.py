@@ -487,7 +487,8 @@ BUCLE_S, BUCLE_FUNDIDO = 0.6, 0.25   # cierre en bucle: el primer cuadro del gan
 # Quién dibuja el video (video.json → "realizacion"): «propio» = las páginas video/*.html grabadas con video_grabar.js;
 # «mesa» = la mesa de archivo en HyperFrames (scripts/video_hf.py; referencias/flujo-mesa.md). La fija `preparar` al crear
 # el TRABAJO: un trabajo empezado con un motor termina con ese motor. Migrar un flujo = añadir su `tipo` aquí.
-MESA_FLUJOS = ("historia",)   # /historia y /serie con motor historia
+MESA_FLUJOS = ("historia", "explica", "video")   # /historia, /serie y /explica; "video" = /video, /departamento, /sabias y /congreso
+# (los tres últimos nacen de video.py preparar). /noticias y /semana escriben su propio video.json y siguen en el motor propio.
 REALIZACIONES = ("propio", "mesa")
 MESA_SIN_RENDER = ".maqueta_sin_render"   # MESA_RENDER=0 (maquetas): el render es un doble; `entregar` real lo rechaza
 
@@ -1587,6 +1588,9 @@ def cmd_preparar(a):
     dep = DP.estado_video(hilo, datos, tarjetas)
     if dep:
         st.update(departamento=dep, palabra_clave=DP.claves(dep["codigo"]), piso_s=DP.PISO_S, serie=DP.SERIE)
+    previo = os.path.join(trabajo, "video.json")
+    # quién dibuja: se fija al crear el TRABAJO; uno empezado con un motor termina con él (sin la clave = el motor propio)
+    st["realizacion"] = getattr(a, "realizacion", None) or ((leer(previo).get("realizacion") or "propio") if os.path.exists(previo) else realizacion_de("video"))
     escribir(os.path.join(trabajo, "video.json"), st)
     for aviso in rebasar_tarjetas(hilo_dir, trabajo):
         print("AVISO tarjetas: " + aviso, file=sys.stderr)
@@ -3774,8 +3778,24 @@ def cmd_variante(a):
     voz SOLO de la escena 1 (≈ 100 créditos). Con --cerrar, copia variante_b/salida/video.mp4 → salida/video_b.mp4."""
     trabajo = os.path.abspath(a.trabajo)
     vb = os.path.join(trabajo, "variante_b")
-    if es_mesa(estado(trabajo)):
-        return falla("la versión B aún no existe en la mesa de archivo: cambiar el gancho cambia el plano de la primera mesa y pide otro render entero")
+    mesa_ = es_mesa(estado(trabajo))
+    if getattr(a, "plano", False):
+        # la mesa de archivo: el plano de la B es el del video A con la mesa del gancho rehecha desde el borrador (la voz y los
+        # tiempos de la escena 1 son otros); los tableros y las demás mesas no cambian
+        if not mesa_:
+            return falla("--plano es de la mesa de archivo (video.json con \"realizacion\": \"mesa\")")
+        if not os.path.exists(os.path.join(vb, "escenas.json")):
+            return falla("falta variante_b/escenas.json: descargar → tiempos sobre variante_b antes de --plano")
+        sys.path.insert(0, os.path.join(RAIZ, "scripts"))
+        import video_hf as VH
+        P = leer(os.path.join(trabajo, "plano.json"))
+        B = VH.borrador_v(VH.contexto_v(vb))
+        nuevo = [m for m in B["mesas"] if "e1" in m.get("escenas", [])]
+        P["mesas"] = nuevo + [m for m in P["mesas"] if "e1" not in m.get("escenas", [])]
+        escribir(os.path.join(vb, "plano.json"), P)
+        print("→ %s (la mesa del gancho rehecha; las demás, las del video A) · luego: plano --check --hoja, grabar, montar y variante --cerrar"
+              % rel(os.path.join(vb, "plano.json")))
+        return 0
     if a.cerrar:
         src = os.path.join(vb, "salida", "video.mp4")
         if not os.path.exists(src):
@@ -3804,6 +3824,13 @@ def cmd_variante(a):
     if cmd_guion(argparse.Namespace(trabajo=vb)):
         return falla("la versión B no pasa el gate del guion (variante_b/guion.json)")
     n = len(g["escenas"]) + 1
+    if mesa_:   # la mesa: los tableros ya grabados (su huella decide si sirven), las fotos y las páginas del video A
+        for d_ in ("clips_tablero", "tablero", "fotos"):
+            if os.path.isdir(os.path.join(trabajo, d_)) and not os.path.exists(os.path.join(vb, d_)):
+                shutil.copytree(os.path.join(trabajo, d_), os.path.join(vb, d_), symlinks=True)
+        for f_ in ("paginas.json", "encuadre.json"):
+            if os.path.exists(os.path.join(trabajo, f_)):
+                shutil.copy2(os.path.join(trabajo, f_), os.path.join(vb, f_))
     for k in range(2, n + 1):   # la voz, las palabras y los clips de las escenas 2…cierre son los del video A
         for f in ("audio/voz_%d.mp3", "audio/palabras_%d.json", "clips/e%d.mp4"):
             if os.path.exists(os.path.join(trabajo, f % k)):
@@ -3813,6 +3840,10 @@ def cmd_variante(a):
     print(json.dumps({"voz": loc["voz"], "model_parameters": {"language_code": loc["voz"]["idioma"]},
                       "caracteres": len(e1["voz"]), "nodos": [{"n": 1, "prompt": e1.get("prompt") or e1["voz"]}]},
                      ensure_ascii=False, indent=1))
+    if mesa_:
+        print("→ %s · luego: descargar %s --estado … (solo la escena 1), tiempos, variante %s --plano, plano --check --hoja, grabar "
+              "(la mesa renderiza el video entero: ≈ 1.6× su duración), montar y variante --cerrar" % (rel(vb), rel(vb), rel(trabajo)))
+        return 0
     print("→ %s · luego: descargar %s --estado … (solo la escena 1), tiempos, grabar --solo 1, montar y variante --cerrar"
           % (rel(vb), rel(vb)))
     return 0
@@ -6117,6 +6148,7 @@ def main():
     p.add_argument("--trabajo")
     p.add_argument("--permitir-borrador", action="store_true", help="solo para el fixture")
     p.add_argument("--sin-rotacion", action="store_true", help="pruebas: sin bloquear las familias y visuales recientes (R9)")
+    p.add_argument("--realizacion", choices=REALIZACIONES, help="quién dibuja el video: mesa (la mesa de archivo en HyperFrames; por defecto) o propio")
     p = sub.add_parser("ganchos", help="ganchos.json: --check de los candidatos o --usar el elegido como escena 1")
     p.add_argument("trabajo")
     x = p.add_mutually_exclusive_group(required=True)
@@ -6144,6 +6176,7 @@ def main():
     p = sub.add_parser("variante", help="versión B del gancho (el segundo lugar): solo la voz de la escena 1")
     p.add_argument("trabajo")
     p.add_argument("--cerrar", action="store_true", help="copia variante_b/salida/video.mp4 → salida/video_b.mp4")
+    p.add_argument("--plano", action="store_true", help="mesa de archivo: el plano de la B (el del video A con la mesa del gancho rehecha), tras tiempos")
     p = sub.add_parser("voz", help="JSON con la voz y el prompt de cada nodo TTS")
     p.add_argument("trabajo")
     p.add_argument("--pendientes", action="store_true", help="solo las escenas sin audio o cuya voz cambió desde la última descarga (retomas)")
