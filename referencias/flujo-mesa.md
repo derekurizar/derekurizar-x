@@ -5,21 +5,24 @@ del usuario (2026-11-14), tras aprobar el lienzo «Animador vertical» en Claude
 (`scripts/video_hf.py`; núcleo común con el 16:9 en `scripts/mesa.py`). El motor propio (`video/*.html` +
 `scripts/video_grabar.js`) sigue vivo para los flujos sin migrar y para grabar los tableros.
 
-**Estado (2026-11-14).** El usuario aprobó el piloto (Bancafé parte 1) y pidió migrar.
+**Estado (2026-11-14).** El usuario aprobó los pilotos (Bancafé parte 1 y La Línea parte 3) y pidió aplicar lo mismo a
+los demás flujos «con las reglas, animaciones y todo», sin otro piloto. Todos los flujos de video menos /noticias y /semana
+nacen en mesa.
 
-| Flujo | Quién dibuja | Por qué |
+| Flujo | Quién dibuja | Cómo cae en la mesa |
 |---|---|---|
-| /historia, /serie (motor historia) | **la mesa** (`video.json → "realizacion": "mesa"`, por defecto) | Tienen fotos, notas, documentos y personas: es su lenguaje. |
-| /sabias, /explica | motor propio, por ahora | Ganan con la mesa, pero antes hacen falta: el chip «Ejemplo» y el rótulo de acto sobre un tablero, la pizarra `cuenta` como pieza (`hoja`), la `barra`, el documento desde la evidencia de un dato y el cuadro 0 de un gancho sin foto. |
-| /video, /departamento | motor propio | Son casi todo tarjetas con gráfico: en la mesa quedarían como una fila de clips al 86 % con fichas de texto, peor que hoy. Antes hacen falta `barra`, `serie`, `brecha` (los 22 con valores) y `tabla`. |
-| /congreso | motor propio | Su hemiciclo con portal no existe en la mesa; decidirlo con el usuario. |
+| /historia, /serie (motor historia) | **la mesa** | Fotos, notas, documentos y personas: su lenguaje desde el principio. |
+| /explica, /serie explica | **la mesa** | La pizarra `cuenta`, la animación `explica`, `adivina`, `escala` y las tarjetas son tableros; el gancho (pareja → `barra`), los golpes y las definiciones, piezas; el chip «Ejemplo» lo pone la mesa. |
+| /sabias | **la mesa** | Gancho «¿Sabías que…?» con su visual ya puesto en el cuadro 0; la tarjeta del dato, tablero; cierre de una pantalla. |
+| /video, /departamento | **la mesa** | Las tarjetas del hilo, `ranking`, `mapa`, `escala` y `tiempo` son tableros; gancho, golpes y definiciones, piezas (nota, cifra, `barra`, mapa de los 22). Versión B con `variante --plano`. |
+| /congreso | **la mesa** | El `hemiciclo` es tablero (asientos, umbral, sello, foco con retrato); el gancho deja el portal y abre con la foto del pleno y la `barra` de votos frente al umbral. |
 | /noticias, /semana | motor propio | No se publican. |
 
 `realizacion` la fija `preparar` al crear el TRABAJO (`VD.MESA_FLUJOS`; `--realizacion propio|mesa` la fuerza): un trabajo
 empezado con un motor termina con ese motor. Migrar un flujo es añadir su `tipo` a `MESA_FLUJOS` cuando sus piezas existan.
 
-Pendiente en el motor: MV13 (un solo acento a la vez), la pregunta P6 en el pago, la versión B del gancho, y las piezas
-`paso` (cronología), `barra`, `brecha`, `hoja`, `tabla` y `diagrama`.
+Pendiente en el motor: MV13 (un solo acento a la vez), la pregunta P6 en el pago y las piezas `paso` (cronología),
+`brecha`, `hoja` (la pizarra como pieza; hoy es tablero), `tabla` y `diagrama`. Mientras no existan, lo suyo va como tablero.
 
 ## 1. Reglas (lo que no se negocia)
 
@@ -72,9 +75,19 @@ palabra por palabra) · `lista` (un chip por `dice`, con `lazo`).
   «Según…» arriba, que entra antes que las caras. Una carta con `clave` entra como apodo («El Uno») y se voltea a la cara
   cuando la voz dice el nombre. Va sola en su mesa: ≤ 3 niveles, ≤ 2 por nivel, ≤ 2 acusadores. Una escena `red` del
   guion ya la trae en el borrador.
+- **`barra`: la cifra con su medida.** 2–5 barras `{etiqueta, valor, texto?, dice?, acento?}` a la misma escala (`valor`
+  numérico, `texto` lo que se lee: «Q45,259»); la pieza entra con su `titulo` y cada barra crece cuando la voz dice su
+  `dice`; la de `acento` (o la última) en el color de acento. MV4: el largo corresponde a lo escrito. Reemplaza al visual
+  `pareja` del gancho y a la mini-votación de /congreso (a favor, los que hacían falta, en contra).
+- **Texto cinético del motor propio en la mesa** (gancho, golpe, definición de /video, /sabias, /explica, /departamento,
+  /congreso): la línea de pantalla es el golpe de arriba o una nota, nunca las dos; un golpe con número es una `cifra` con
+  la línea como rótulo; la definición, una ficha `termino` con `definicion`; el gancho sin foto abre con dos piezas ya
+  puestas (MV14): la nota y su visual (pareja → `barra`, llenado o figuras → `cifra`, lugar → `lugar` con el departamento).
+- **Chip «Ejemplo»** (/explica, E3–E4): arriba a la derecha, en la línea del kicker, mientras está una mesa con números de
+  ejemplo (también sobre un tablero: su clip se graba sin chip).
 - `"limpia": true` en un golpe: el plano pide el repliegue justo antes de esa pieza.
 - **Tablero**: `explica`, `tarjeta`, `cuenta`, `hemiciclo`, `vias`, `deptos`, `ranking`, `mapa`, `escala`, `tiempo`,
-  `lupa`, `cortina` se graban limpias con el motor propio (`video_hf.py tableros`) y van solas en su mesa. Si el plano
+  `lupa`, `cortina`, `adivina` se graban limpias con el motor propio (`video_hf.py tableros`) y van solas en su mesa. Si el plano
   les pone golpes, el primero entra ≥ 1 s después del último paso y la animación le cede la mesa de un corte.
 
 ## 4. El plano

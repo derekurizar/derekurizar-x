@@ -50,6 +50,15 @@ La guía es `referencias/flujo-congreso.md`. Nunca publiques. Nunca generes mús
 6. **TIEMPOS, GRABAR, MONTAR Y REVISAR**: `tiempos` (CG7: ≤ 59.5 s reales; V6, V10, V16) → `escuchar` (V11, con voz real)
    → `grabar` (V13) → `montar` (V8) → `revisar`; lee **una vez** `revision/contacto.png` (el hemiciclo, el sello, la
    ficha del diputado, el portal). Luego el 4:5 con `--formato 4:5`.
+   - **PLANO** (mesa de archivo, desde el 2026-11-14; todo TRABAJO nuevo trae `"realizacion": "mesa"` en `video.json`):
+     después de `tiempos` y antes de `grabar`, lanza `Workflow({ name: "plano", args: { trabajo: "<TRABAJO>" } })`
+     (hasta reiniciar Claude Code, con `scriptPath: ".claude/workflows/plano.js"` y `args.permitir_fallback: true`). El
+     `video-realizador` escribe `<TRABAJO>/plano.json` (qué pieza entra con cada oración) y deja
+     `python3 scripts/congreso.py plano <TRABAJO> --check --hoja` en 0 (MV1–MV14). Con `plano_listo`, muestra
+     `<TRABAJO>/plano.md` y sigue; con `plano_pendiente`, muestra las `fallas` y relánzalo (conserva el plano). Lo que
+     falle en pantalla se arregla en el plano, nunca en el guion ni en la voz. `grabar`, `montar` y `revisar` despachan
+     solos a la mesa (render con un proceso, ≈ 1.6× la duración por formato; `revisar` deja `revision/mesa_<formato>_N.jpg`);
+     en `sin-voz` y `fixture`, `grabar` usa el borrador del plano. En la mesa, el **hemiciclo** es un tablero (los asientos, el umbral, el sello y el foco con el retrato de cada diputado, grabados limpios); el gancho ya no lleva el portal: abre con la foto del pleno y la `barra` de votos (a favor, los que hacían falta, en contra) ya puestas, y CG7 (≤ 59.5 s) no cambia. Guía: `referencias/flujo-mesa.md`.
 7. **ENTREGAR** (no con `sin-voz`): `congreso.py entregar <TRABAJO>` → `congreso/<fecha>-<slug>/`;
    `python3 scripts/memoria.py --congreso congreso/<fecha>-<slug>` y `make validate` (exit 0). Abre el video.
 8. **REPORTE**: rutas, duración, la ley y la votación (a favor, en contra, umbral, margen), a quién nombró y por qué,

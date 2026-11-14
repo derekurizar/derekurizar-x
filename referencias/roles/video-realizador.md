@@ -1,4 +1,4 @@
-# Realizador del video vertical (paso «Plano» de /historia y /serie)
+# Realizador del video vertical (paso «Plano» de todos los flujos en mesa)
 
 **Por qué existe** (usuario, 2026-11-14). El vertical pasa a la **mesa de archivo**: con cada oración de la voz entra en
 pantalla lo que la voz nombra y se queda quieto; la cámara no se mueve y nada se anima para aparentar ritmo. Además, «el
@@ -64,6 +64,8 @@ vertical añade:
 |---|---|---|
 | `red` | `dice`, `etiqueta`, `nodos` [{`id`, `nombre` (corto), `persona` (nombre del elenco: de ahí sale el retrato), `cargo`, `nivel` (0 = arriba), `dice`, `clave`, `clave_dice`}], `aristas` [{`de`, `a`, `atribuida`, `dice`}], `acusadores` [{`nombre`, `persona`, `cargo`, `dice`}], `estado`, `estado_dice` | Quién mandaba a quién. Va sola en su mesa. ≤ 3 niveles, ≤ 2 por nivel, ≤ 2 acusadores. El digesto ya trae la de una escena `red`: pártela de ahí. |
 
+| `barra` | `dice`, `titulo`, `barras` [{`etiqueta`, `valor` (número crudo), `texto` (como se lee: «Q45,259»), `dice`, `acento`}], `fuente` | Una comparación de 2–5 valores a la misma escala: la cifra con su medida. Cada barra crece cuando la voz dice su `dice`. Solo valores con respaldo (los dice la voz o están en los datos del video); el largo corresponde a lo escrito (MV4). |
+
 Reglas de `red` (MV12, y lo que el gate no ve):
 - Un hilo sale de un hecho. Si lo que une a dos personas es **lo que alguien afirma** (una acusación, una versión), el
   hilo es `atribuida: true` (se dibuja punteado), la pieza lleva `etiqueta` («Según la acusación», «Según la fiscalía»)
@@ -71,6 +73,23 @@ Reglas de `red` (MV12, y lo que el gate no ve):
 - Quien investiga o acusa va en `acusadores`: aparte y **sin hilos**.
 - `estado` solo si lo trae un hecho verificado con su fecha («Condenados en 2022», «Absuelta»). Nunca lo deduzcas.
 - `clave` es para un apodo que la voz revela después («El Uno» → se voltea a la cara cuando la voz dice el nombre).
+
+## Por flujo
+
+El borrador ya traduce lo que cada flujo trae; tú lo mejoras (`referencias/flujo-mesa.md`, tabla de arriba):
+
+- **/historia y /serie**: fotos, notas, documentos y personas; la `red` como jerarquía.
+- **/explica** (y /serie explica): la pizarra `cuenta`, la animación `explica`, `adivina`, `escala` y las tarjetas son
+  **tableros** (solos en su mesa: no les pongas piezas encima salvo que la voz siga después de su último paso). Los números
+  de ejemplo solo los que calculó el script (`ej-cNN`): la mesa pone el chip «Ejemplo» sobre esas mesas, tú no lo escribas.
+  El dato real de Guatemala del acto 3, con su fuente (una `cifra` con `fuente`, o un `recorte` de la nota).
+- **/sabias**: 20–30 s. El cuadro 0 ya trae «¿Sabías que…?» y el visual del dato; la tarjeta es tablero; cierre de una
+  pantalla. Pocas mesas: una por escena.
+- **/video y /departamento**: casi todo son tarjetas del hilo (tableros). Entre ellas, los golpes: una `cifra` o una nota
+  por golpe; en /departamento, el mapa de los 22 con el departamento (`lugar`, `mapa: guatemala`) y su puesto.
+- **/congreso**: el `hemiciclo` es tablero (los retratos de los diputados van ahí, con su voto); el gancho abre con la
+  foto del pleno y la `barra` de votos (a favor, los que hacían falta, en contra). Cada diputado que nombres en una pieza,
+  con el voto que dio (CG3); nunca un calificativo.
 
 ## Escribir para el tiempo de lectura (MV8)
 

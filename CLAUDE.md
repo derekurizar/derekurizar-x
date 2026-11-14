@@ -162,7 +162,7 @@ y saltos atrás en el tiempo.
 - **Gates** YT1–YT19 en `scripts/youtube.py` y `scripts/youtube_hf.py` (YT12 retirado).
 - **Entrega** en `series/<fecha>-<slug>/youtube/` (mp4 fuera de git), registrada en `memoria/youtube.json` (M20).
 
-**Dinamismo y personas** (decisión del usuario, 2026-11-06; **motor propio**: los flujos sin migrar y los trabajos con `realizacion: propio`. En /historia y /serie manda desde el 2026-11-14 «El vertical como mesa de archivo», más abajo; la cámara quieta del 2026-11-07 ya había retirado los sub-planos, el whip y las transiciones con dirección):
+**Dinamismo y personas** (decisión del usuario, 2026-11-06; **motor propio**: /noticias, /semana y los trabajos con `realizacion: propio`. En los demás flujos manda desde el 2026-11-14 «El vertical como mesa de archivo», más abajo; la cámara quieta del 2026-11-07 ya había retirado los sub-planos, el whip y las transiciones con dirección):
 - **Sub-planos:** en cada foto, cada 3–4.5 s, sobre las caras que detecta `historia.py focos` (Vision de macOS, `scripts/caras.swift`); salto de cámara en las escenas sin foto.
 - **Tarjeta de persona:** retrato, nombre y cargo en la primera mención de cada persona del encuadre (H21–H22).
 - **Escena `red`:** el organigrama con aristas de hechos verificados (H23).
@@ -176,9 +176,14 @@ y saltos atrás en el tiempo.
 **El vertical como mesa de archivo** (decisión del usuario, 2026-11-14; `referencias/flujo-mesa.md`):
 - **Qué es:** el lenguaje del 16:9 llevado al 9:16 y al 4:5. Con cada oración entra una pieza que la voz nombra y se queda
   quieta; la cámara no se mueve. Motor: HyperFrames (`scripts/video_hf.py`; el núcleo común con el 16:9 es `scripts/mesa.py`).
-- **Quién lo usa:** **/historia y /serie** (`video.json → "realizacion": "mesa"`, por defecto desde el 2026-11-14; lo fija
-  `preparar`, y un trabajo empezado con un motor termina con él). /explica, /sabias, /video, /departamento, /congreso y
-  /noticias siguen en el motor propio hasta que existan sus piezas (`VD.MESA_FLUJOS`).
+- **Quién lo usa:** **todos los flujos de video menos /noticias y /semana**: /historia, /serie, /explica, /sabias,
+  /video, /departamento y /congreso (`video.json → "realizacion": "mesa"`, por defecto desde el 2026-11-14; lo fija
+  `preparar` (`VD.MESA_FLUJOS`), y un trabajo empezado con un motor termina con él). Decisión del usuario tras aprobar
+  los pilotos: lo mismo para los demás, sin otro piloto. Lo que no tiene pieza propia va como tablero (`cuenta`,
+  `explica`, `adivina`, `tarjeta`, `ranking`, `mapa`, `escala`, `tiempo`, `hemiciclo`); el texto cinético (gancho, golpe,
+  definición) pasa a piezas, la pareja a la pieza `barra`, el chip «Ejemplo» lo pone la mesa y la versión B de /video
+  rehace solo la mesa del gancho (`variante --plano`). En /congreso el gancho deja el portal: foto del pleno + barra de
+  votos frente al umbral.
 - **Paso «Plano»:** después de la voz real (`tiempos`) y antes de `grabar`, el Workflow `plano` lanza al `video-realizador`
   (opus), que escribe `plano.json` (mesas → golpes con `dice`) y deja `<flujo>.py plano T --check --hoja` en 0. Lo que
   falle en pantalla se arregla en el plano, nunca en el guion ni en la voz.

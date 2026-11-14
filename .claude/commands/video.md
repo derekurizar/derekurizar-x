@@ -125,6 +125,15 @@ decisión del usuario.**
      imprime `AVISO V11` (sin `whisper-cli` o sin modelo: `brew install whisper-cpp` y `make whisper`), sigue y dilo
      en el reporte. Los avisos de palabras no numéricas («Zacatepeques» por Sacatepéquez) son ortografía de whisper.
 5. **GRABAR Y MONTAR**
+   - **PLANO** (mesa de archivo, desde el 2026-11-14; todo TRABAJO nuevo trae `"realizacion": "mesa"` en `video.json`):
+     después de `tiempos` y antes de `grabar`, lanza `Workflow({ name: "plano", args: { trabajo: "<TRABAJO>" } })`
+     (hasta reiniciar Claude Code, con `scriptPath: ".claude/workflows/plano.js"` y `args.permitir_fallback: true`). El
+     `video-realizador` escribe `<TRABAJO>/plano.json` (qué pieza entra con cada oración) y deja
+     `python3 scripts/video.py plano <TRABAJO> --check --hoja` en 0 (MV1–MV14). Con `plano_listo`, muestra
+     `<TRABAJO>/plano.md` y sigue; con `plano_pendiente`, muestra las `fallas` y relánzalo (conserva el plano). Lo que
+     falle en pantalla se arregla en el plano, nunca en el guion ni en la voz. `grabar`, `montar` y `revisar` despachan
+     solos a la mesa (render con un proceso, ≈ 1.6× la duración por formato; `revisar` deja `revision/mesa_<formato>_N.jpg`);
+     en `sin-voz` y `fixture`, `grabar` usa el borrador del plano. En la mesa, las tarjetas del hilo, `ranking`, `mapa`, `escala`, `tiempo` y `explica` son **tableros**; el gancho, los golpes y las definiciones pasan a piezas (nota, cifra, `barra`, mapa). La versión B: `variante <TRABAJO>` → voz de la escena 1 → `tiempos` sobre `variante_b` → `variante <TRABAJO> --plano` (el plano del A con la mesa del gancho rehecha) → `grabar` (el video entero) → `montar` → `variante --cerrar`. Guía: `referencias/flujo-mesa.md`.
    - Corre `python3 scripts/video.py grabar <TRABAJO>` (V7 y **V13 zona segura**; graba 3 escenas a la vez: ~20–30 s
      por minuto de video; `--paralelo 1` para ir en serie). Si falla V13, la línea `FALLA V13 eN` dice qué elemento
      sale de la zona y por dónde (`revision/zona.json`): corrige la página de esa escena (no el guion) y `grabar --solo N`.

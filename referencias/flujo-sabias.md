@@ -6,6 +6,8 @@ en». Sale en 9:16 (TikTok, Reels, Shorts) y 4:5 (feed), con `caption.md` por pl
 (2026-10-29): basado en un dato, corto, «el clásico sabías que en Guatemala…» y «el sígueme al final, siempre animando
 y usando los visuales».
 
+> **Mesa de archivo (2026-11-14).** Este flujo se dibuja con la mesa de archivo (`video.json → "realizacion": "mesa"`; `referencias/flujo-mesa.md`): el guion, la voz y sus gates no cambian, y tras `tiempos` el paso **Plano** (Workflow `plano`, `video-realizador`) decide qué pieza entra con cada oración. En la mesa, el gancho abre con «¿Sabías que…?» y su visual ya puestos (pareja → `barra`, llenado o figuras → cifra, lugar → mapa); la tarjeta del dato es un tablero; el cierre, una pantalla.
+
 ## Piezas
 
 - `.claude/commands/sabias.md` — el coordinador (`/sabias <slug|ultimo|pista> [sin-voz|fixture]`; una pista que no es un

@@ -75,6 +75,15 @@ La guía es `referencias/flujo-explica.md`. Nunca publiques. Nunca generes músi
    - Con voz real, `python3 scripts/explica.py escuchar <TRABAJO>` (V11: las cifras se oyen como se escriben). Una
      `FALLA V11` → retoma de esa escena una vez; si vuelve a fallar, pide al usuario oírla.
 6. **GRABAR, MONTAR Y REVISAR**
+   - **PLANO** (mesa de archivo, desde el 2026-11-14; todo TRABAJO nuevo trae `"realizacion": "mesa"` en `video.json`):
+     después de `tiempos` y antes de `grabar`, lanza `Workflow({ name: "plano", args: { trabajo: "<TRABAJO>" } })`
+     (hasta reiniciar Claude Code, con `scriptPath: ".claude/workflows/plano.js"` y `args.permitir_fallback: true`). El
+     `video-realizador` escribe `<TRABAJO>/plano.json` (qué pieza entra con cada oración) y deja
+     `python3 scripts/explica.py plano <TRABAJO> --check --hoja` en 0 (MV1–MV14). Con `plano_listo`, muestra
+     `<TRABAJO>/plano.md` y sigue; con `plano_pendiente`, muestra las `fallas` y relánzalo (conserva el plano). Lo que
+     falle en pantalla se arregla en el plano, nunca en el guion ni en la voz. `grabar`, `montar` y `revisar` despachan
+     solos a la mesa (render con un proceso, ≈ 1.6× la duración por formato; `revisar` deja `revision/mesa_<formato>_N.jpg`);
+     en `sin-voz` y `fixture`, `grabar` usa el borrador del plano. En la mesa, la pizarra (`cuenta`), la animación (`explica`), `adivina`, `escala` y las tarjetas son **tableros** (se graban limpios con el motor propio, solos en su mesa) y el chip «Ejemplo» lo pone la mesa arriba a la derecha sobre cada mesa con números de ejemplo; el gancho y los golpes pasan a piezas (nota, cifra, `barra` para la pareja). Guía: `referencias/flujo-mesa.md`.
    - `grabar <TRABAJO>` (V7, V13) → `montar <TRABAJO>` (V8) → `revisar <TRABAJO>`; lee **una vez**
      `revision/contacto.png` y **una vez** `revision/linea_tiempo.png`. Revisa:
      - la pizarra legible, con su resaltado en acento;

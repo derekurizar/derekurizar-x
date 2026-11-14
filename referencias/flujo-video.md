@@ -11,6 +11,8 @@ hilo (y derivados declarados con `calculo`). La publicación es manual; el entre
 `hilos/<fecha>-<slug>/video/` (`video.mp4` fuera de git, `subtitulos.srt`, `caption.md`, `guion.json`,
 `portada.png`, `contacto.png`) y se registra en `memoria/videos.json`.
 
+> **Mesa de archivo (2026-11-14).** Este flujo se dibuja con la mesa de archivo (`video.json → "realizacion": "mesa"`; `referencias/flujo-mesa.md`): el guion, la voz y sus gates no cambian, y tras `tiempos` el paso **Plano** (Workflow `plano`, `video-realizador`) decide qué pieza entra con cada oración. En la mesa, las tarjetas del hilo, `ranking`, `mapa`, `escala`, `tiempo` y `explica` son tableros grabados limpios; el gancho, los golpes y las definiciones son piezas (nota, cifra, `barra`, mapa); lo que aquí se dice de zoom a la cifra, deriva y transiciones es del motor propio. Versión B: `variante --plano`.
+
 ```
 preparar (video.py: hilo → TRABAJO, digesto con estructura y sugerencias, música por paleta)
 → Workflow video [video-gancho → ganchos.json (5 candidatos) → gate R1–R10 (video.py ganchos --check)

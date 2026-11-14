@@ -9,6 +9,8 @@ vea **pueda explicárselo a otro**. Misma línea que `/video` y `/historia`:
 - 9:16 + 4:5 y caption por plataforma;
 - cierre con **«Sígueme en»**.
 
+> **Mesa de archivo (2026-11-14).** Este flujo se dibuja con la mesa de archivo (`video.json → "realizacion": "mesa"`; `referencias/flujo-mesa.md`): el guion, la voz y sus gates no cambian, y tras `tiempos` el paso **Plano** (Workflow `plano`, `video-realizador`) decide qué pieza entra con cada oración. En la mesa, la pizarra `cuenta`, la animación `explica`, `adivina`, `escala` y las tarjetas son tableros grabados limpios; el gancho (pareja → `barra`), los golpes y las definiciones son piezas; el chip «Ejemplo» lo pone la mesa sobre cada mesa con números de ejemplo.
+
 La publicación es manual. El hilo en modo explica (tarjetas, sin video) es `/hilo explica`.
 
 ```

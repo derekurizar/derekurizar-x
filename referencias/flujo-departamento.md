@@ -4,6 +4,8 @@ Un video por departamento, «<departamento> frente al país», para que la gente
 flujo nuevo: es **`/perfil <depto>` (hilo) → `/video`** sobre ese hilo. El comando es
 `.claude/commands/departamento.md`; el canon y el tablero, `scripts/departamentos.py`.
 
+> **Mesa de archivo (2026-11-14).** Este flujo se dibuja con la mesa de archivo (`video.json → "realizacion": "mesa"`; `referencias/flujo-mesa.md`): el guion, la voz y sus gates no cambian, y tras `tiempos` el paso **Plano** (Workflow `plano`, `video-realizador`) decide qué pieza entra con cada oración. En la mesa, el `mapa` y el `ranking` en ventana son tableros; el gancho de lugar abre con el mapa de los 22 y el departamento ya puestos.
+
 ## Canon (`referencias/departamentos.json`)
 
 - `orden`: los 22 códigos de mayor a menor población (`--siguiente` toma el primero sin video).

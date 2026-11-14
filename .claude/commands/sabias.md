@@ -56,6 +56,15 @@ La guía es `referencias/flujo-sabias.md`. Nunca publiques. Nunca generes músic
      (1 toma), transcríbelo, `descargar --estado` con esas dos sesiones y repite `tiempos`.
    - Con voz real, `python3 scripts/sabias.py escuchar <TRABAJO>` (V11). Una `FALLA V11` → la misma retoma de un nodo.
 6. **GRABAR, MONTAR Y REVISAR**
+   - **PLANO** (mesa de archivo, desde el 2026-11-14; todo TRABAJO nuevo trae `"realizacion": "mesa"` en `video.json`):
+     después de `tiempos` y antes de `grabar`, lanza `Workflow({ name: "plano", args: { trabajo: "<TRABAJO>" } })`
+     (hasta reiniciar Claude Code, con `scriptPath: ".claude/workflows/plano.js"` y `args.permitir_fallback: true`). El
+     `video-realizador` escribe `<TRABAJO>/plano.json` (qué pieza entra con cada oración) y deja
+     `python3 scripts/sabias.py plano <TRABAJO> --check --hoja` en 0 (MV1–MV14). Con `plano_listo`, muestra
+     `<TRABAJO>/plano.md` y sigue; con `plano_pendiente`, muestra las `fallas` y relánzalo (conserva el plano). Lo que
+     falle en pantalla se arregla en el plano, nunca en el guion ni en la voz. `grabar`, `montar` y `revisar` despachan
+     solos a la mesa (render con un proceso, ≈ 1.6× la duración por formato; `revisar` deja `revision/mesa_<formato>_N.jpg`);
+     en `sin-voz` y `fixture`, `grabar` usa el borrador del plano. En la mesa, el gancho abre con «¿Sabías que…?» y su visual ya puestos en el cuadro 0 (pareja → `barra`, llenado o figuras → cifra, lugar → mapa); la tarjeta del dato es un **tablero**; el cierre es una sola pantalla con «Sígueme en». Guía: `referencias/flujo-mesa.md`.
    - `grabar <TRABAJO>` (V13) → `montar <TRABAJO>` (V8) → `revisar <TRABAJO>`; lee **una vez** `revision/contacto.png`
      (texto cortado, una pantalla vacía o quieta, el «¿SABÍAS QUE…?» que no se lee). Si falla V13, acorta ese texto en
      `guion.json`, repasa `guion --check` y repite desde `tiempos`.

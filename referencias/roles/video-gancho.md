@@ -112,7 +112,11 @@ igual). Lo que cambia:
 - Un hecho `en_disputa` no va al gancho.
 - Gate: `python3 scripts/historia.py ganchos <TRABAJO> --check` (no el de `video.py`).
 
-**Con la mesa de archivo** (2026-11-14; `referencias/flujo-mesa.md`, MV14). `/historia` y `/serie` ya no abren con una
+**Con la mesa de archivo** (2026-11-14; `referencias/flujo-mesa.md`, MV14). En /video, /sabias, /explica, /departamento y /congreso
+(todos en mesa desde el 2026-11-14) el cuadro 0 es la `pantalla` (o la `linea`, si es larga) como golpe de arriba y
+el visual ya puesto como pieza: `pareja` → barras a la misma escala, `llenado` o `figuras` → la cifra con su rótulo,
+`lugar` → el mapa de los 22 con el departamento; en /congreso, la foto del pleno y la barra de votos frente al umbral
+(el portal era del motor propio). Lo que escribes no cambia. `/historia` y `/serie` ya no abren con una
 foto a sangre ni con un chip. El cuadro 0 son piezas **ya puestas** antes de que suene nada: la **foto del
 protagonista sobre papel**, con su pie y su crédito; **su nombre en una nota**; y el **golpe de arriba** (≤ 6
 palabras). Lo demás del gancho entra con la palabra que lo nombra. Lo que escribes no cambia de forma (`visual: foto`,
