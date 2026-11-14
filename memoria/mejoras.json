@@ -1980,7 +1980,7 @@
       "archivo": "scripts/video_hf.py (mesa_html_v: tablero)",
       "problema": "Un tablero de tarjeta con gráfico corto deja la mitad de su marco vacía (la tarjeta 4:5 solo ocupa la parte de arriba).",
       "propuesta": "Medir el contenido del clip al grabarlo (o declarar su alto en la plantilla) y recortar el marco a ese alto; con el sitio que sobre, permitir 1–2 piezas debajo.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m181",
