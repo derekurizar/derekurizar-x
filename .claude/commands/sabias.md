@@ -44,6 +44,10 @@ La guía es `referencias/flujo-sabias.md`. Nunca publiques. Nunca generes músic
    - Sigue `referencias/fragmentos/voz-mcp.md` (lee ese archivo: nodos por secuencia, lotes de ≤ 3, `generations_count: 1`, Scribe y
      `descargar --nodos`) con `<script>` = `sabias.py` y el flow «Sabías que · <slug>».
 5. **TIEMPOS Y ESCUCHA**
+   - **En un comando**: `python3 scripts/sabias.py producir <TRABAJO>` corre este paso y los siguientes hasta `revisar` en 9:16 y
+     4:5; se detiene con código 3 a esperar el plano (lanza el Workflow `plano` y repítelo) y reanuda donde quedó
+     (`referencias/fragmentos/producir.md`; con `sin-voz`, añade `--borrador`). Los pasos de abajo son lo que corre, uno
+     por uno: sirven para entender una falla o rehacer solo uno.
    - `python3 scripts/sabias.py tiempos <TRABAJO>` (V6, V10, V16). Si una escena no se alinea, rehaz SOLO ese nodo
      («Retomas» en `referencias/fragmentos/voz-mcp.md`) y repite `tiempos`.
    - Con voz real, `python3 scripts/sabias.py escuchar <TRABAJO>` (V11). Una `FALLA V11` → la misma retoma de un nodo.

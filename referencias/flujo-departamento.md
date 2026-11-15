@@ -56,3 +56,5 @@ al guion de entrega; `memoria.py --video` registra `sujeto`, `serie` y `codigo`,
 `make departamento-fixture`: `sesiones/_fixture_perfil/` (Huehuetenango con cifras de MAQUETA, 8 tuits, dos mapas de
 los 22) → `sesiones/_fixture_departamento/` (guion, ganchos y selección fijos; corto, voz falsa) → 9:16 y 4:5 ≥ 61 s.
 Los negativos de D1–D9 y G1 están en `scripts/test.sh`.
+
+El piso de 61 s reales (D-gates de duración) lo mide `video.piso_duracion` en `tiempos`; lo comparte con las partes de `/serie`.

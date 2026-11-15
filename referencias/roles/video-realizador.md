@@ -24,7 +24,7 @@ Lee primero `referencias/flujo-mesa.md` (el cuadro, las reglas y los gates MV).
 - **Golpe**: una pieza que entra cuando la voz dice `dice` (1–4 palabras literales de la voz de esa escena, en orden: las
   que nombran la pieza).
 
-En el cuadro caben 2–3 piezas a la vez. Cuando la que entra no cabe, las de al frente pasan de un corte a su versión
+En el cuadro caben 2–3 piezas a la vez (hasta 4 si la última es chica). Cuando la que entra no cabe, las de al frente pasan de un corte a su versión
 compacta, arriba (el **repliegue**). No lo decides tú: lo calcula el motor. Si quieres que el corte caiga en un punto
 concreto (antes de la pieza que más importa), ponle `"limpia": true` a esa pieza.
 

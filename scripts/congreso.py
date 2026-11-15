@@ -1268,6 +1268,8 @@ REENVIO = ("voz", "voz-falsa", "descargar", "escuchar", "plano", "grabar", "mont
 
 
 def main():
+    if len(sys.argv) > 1 and sys.argv[1] == "producir":   # la cadena de producción común y reanudable (scripts/producir.py)
+        return subprocess.run([sys.executable, os.path.join(RAIZ, "scripts", "producir.py")] + sys.argv[2:], cwd=RAIZ).returncode
     if len(sys.argv) > 1 and sys.argv[1] in REENVIO:
         return subprocess.run([sys.executable, os.path.join(RAIZ, "scripts", "video.py")] + sys.argv[1:], cwd=RAIZ).returncode
     p = argparse.ArgumentParser(description=__doc__.split("\n")[0], epilog=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)

@@ -54,6 +54,10 @@ La guía es `referencias/flujo-congreso.md`. Nunca publiques. Nunca generes mús
 6. **TIEMPOS, GRABAR, MONTAR Y REVISAR**: `tiempos` (CG7: ≤ 59.5 s reales; V6, V10, V16) → `escuchar` (V11, con voz real)
    → `grabar` (V13) → `montar` (V8) → `revisar`; lee **una vez** `revision/contacto.png` (el hemiciclo, el sello, la
    ficha del diputado). Luego el 4:5 con `--formato 4:5`.
+   - **En un comando**: `python3 scripts/congreso.py producir <TRABAJO>` corre este paso y los siguientes hasta `revisar` en 9:16 y
+     4:5; se detiene con código 3 a esperar el plano (lanza el Workflow `plano` y repítelo) y reanuda donde quedó
+     (`referencias/fragmentos/producir.md`; con `sin-voz`, añade `--borrador`). Los pasos de abajo son lo que corre, uno
+     por uno: sirven para entender una falla o rehacer solo uno.
    - **PLANO** (mesa de archivo, desde el 2026-11-14; todo TRABAJO nuevo trae `"realizacion": "mesa"` en `video.json`):
      después de `tiempos` y antes de `grabar`, lanza `Workflow({ name: "plano", args: { trabajo: "<TRABAJO>" } })`.
      Si falla con «agente no registrado», pide

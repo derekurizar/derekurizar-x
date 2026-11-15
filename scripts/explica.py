@@ -1581,6 +1581,8 @@ REENVIO = ("voz", "voz-falsa", "descargar", "partir", "escuchar", "plano", "grab
 
 
 def main():
+    if len(sys.argv) > 1 and sys.argv[1] == "producir":   # la cadena de producción común y reanudable (scripts/producir.py)
+        return subprocess.run([sys.executable, os.path.join(RAIZ, "scripts", "producir.py")] + sys.argv[2:], cwd=RAIZ).returncode
     if len(sys.argv) > 1 and sys.argv[1] in REENVIO:
         if len(sys.argv) > 2 and os.path.isdir(sys.argv[2]):
             fijar_modo(os.path.abspath(sys.argv[2]))   # un TRABAJO en un modo retirado no se graba ni se monta

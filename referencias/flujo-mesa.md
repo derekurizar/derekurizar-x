@@ -30,7 +30,7 @@ Pendiente en el motor: MV13 (un solo acento a la vez), la pregunta P6 en el pago
 2. **El texto da tiempo de leerse (MV8).** Una pieza queda al frente al menos `0.5 s + 0.3 s × palabras que la voz no
    dice` (nunca menos de 1 s) antes de replegarse o barrerse. Lo que la voz dice mientras la pieza está en pantalla se oye
    a la vez que se ve y no cuenta; por eso la cita y el documento que la voz lee no tienen mínimo.
-3. **Repliegue por corte.** En 1080×1920 caben 2–3 piezas. Cuando la que entra no cabe, las de al frente pasan **de un
+3. **Repliegue por corte.** En 1080×1920 caben 2–3 piezas (hasta 4 si la última es chica). Cuando la que entra no cabe, las de al frente pasan **de un
    corte** a su versión compacta, arriba y atenuadas (a lo más dos). Solo ocurre cuando entra otra pieza: nunca para dar
    ritmo, nunca animando la escala.
 4. **Archivo real primero.** Foto con crédito, recorte con el titular o el extracto literal de la nota leída, página de

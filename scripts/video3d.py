@@ -993,6 +993,8 @@ def cmd_entregar(a):
 
 
 def main():
+    if len(sys.argv) > 1 and sys.argv[1] == "producir":   # la cadena de producción común y reanudable (scripts/producir.py)
+        return subprocess.run([sys.executable, os.path.join(RAIZ, "scripts", "producir.py")] + sys.argv[2:], cwd=RAIZ).returncode
     if len(sys.argv) > 2 and sys.argv[1] in REENVIO:
         return subprocess.call([sys.executable, os.path.join(RAIZ, "scripts", "video.py")] + sys.argv[1:])
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)

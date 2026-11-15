@@ -59,6 +59,10 @@ La guía es `referencias/flujo-explica.md`. Nunca publiques. Nunca generes músi
    - Sigue `referencias/fragmentos/voz-mcp.md` (lee ese archivo: nodos por secuencia, lotes de ≤ 3, `generations_count: 1`, Scribe y
      `descargar --nodos`) con `<script>` = `explica.py` y el flow «Explica · <tema corto>».
 5. **TIEMPOS Y ESCUCHA**
+   - **En un comando**: `python3 scripts/explica.py producir <TRABAJO>` corre este paso y los siguientes hasta `revisar` en 9:16 y
+     4:5; se detiene con código 3 a esperar el plano (lanza el Workflow `plano` y repítelo) y reanuda donde quedó
+     (`referencias/fragmentos/producir.md`; con `sin-voz`, añade `--borrador`). Los pasos de abajo son lo que corre, uno
+     por uno: sirven para entender una falla o rehacer solo uno.
    - `python3 scripts/explica.py tiempos <TRABAJO>` (V6, V10, V16; cada renglón de la pizarra cae cuando la voz dice su
      resultado). Si una escena no se alinea, rehaz SOLO ese nodo y repite.
    - Con voz real, `python3 scripts/explica.py escuchar <TRABAJO>` (V11: las cifras se oyen como se escriben). Una

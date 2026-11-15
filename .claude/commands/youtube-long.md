@@ -38,6 +38,11 @@ Nunca publiques. Lee `referencias/flujo-youtube.md` antes de empezar.
 4. `python3 scripts/youtube.py tiempos <TRABAJO>` y `python3 scripts/video.py escuchar <TRABAJO>/nuevas` (V11).
 
 ## 4. ARMAR, PLANO, PROYECTO Y RENDER (el 16:9 es una «mesa de archivo» en HyperFrames)
+
+**En dos comandos** (`referencias/fragmentos/producir.md`): `python3 scripts/youtube.py producir <TRABAJO>` corre `armar` →
+`plano --check --hoja` → `grabar` → `proyecto` → `revisar` (se detiene con código 3 a esperar el plano: lanza el Workflow
+`youtube` con `desde: "plano"` y repítelo); tras mirar las hojas, `python3 scripts/youtube.py producir <TRABAJO> --render`
+corre `audio` → `render` → `montar`. Los pasos de abajo son lo que corre, uno por uno.
 Qué es dinamismo (decisión del usuario, 2026-11-13): que **entre en pantalla lo que la voz nombra**. Con cada oración cae
 una pieza sobre la mesa: una foto, un recorte de prensa, la página de un documento, la ficha de una persona, un lugar en
 el mapa, una fecha, una cifra con su rótulo. La cámara no se mueve nunca para aparentar ritmo.

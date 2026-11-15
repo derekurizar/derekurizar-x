@@ -87,7 +87,7 @@ Cómo filtra cada parte: entra lo que se le repartió aunque se haya revelado de
 La Línea repetían 17 hechos, presentaban a Monzón ×6 y explicaban la Cicig ×6; vistas de seguido en el perfil, cada
 parte gastaba 20–30 s en lo ya contado. Cada parte se sigue entendiendo sola (SE4), pero con una oración de contexto y
 un recordatorio corto, no con el relato otra vez. Los digestos de la parte marcan `[YA CONTADO EN Pk]` y listan
-presentados y siglas (`serie.lineas_ya_contado`). Sobre la serie entregada de La Línea, SE15–SE16 dan 3–5 fallas en
+presentados y siglas (`serie.lineas_ya_contado`; el gate es `serie.revisar_novedad`). Sobre la serie entregada de La Línea, SE15–SE16 dan 3–5 fallas en
 cada parte de la 2 a la 7.
 
 ## La serie completa antes de la voz (SE17, decisión del usuario, 2026-11-09)

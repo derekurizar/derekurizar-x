@@ -80,7 +80,7 @@ MAQUETA_MARGEN = 26        # px del marco de la maqueta a la pieza que cae encim
 MAQUETA_PIE_PX = 22        # el pie del marco (la atribución de los geodatos y el `aviso` si lo hay): letra de crédito
 MAQUETA_GOLPE_ALTO = 0.35  # una pieza sobre la maqueta no tapa más de esta fracción de su alto
 LECT_BASE, LECT_PALABRA, LECT_MIN = 0.5, 0.3, 1.0   # MV8: segundos al frente = 0.5 + 0.3 × palabras que la voz no dice (nunca menos de 1 s)
-PILA_LEGIBLES, PILA_COMPACTAS = 3, 2   # MV9: piezas al frente a la vez y compactas arriba
+PILA_LEGIBLES, PILA_COMPACTAS = 3, 2   # MV9 (no es un gate): 3 piezas en fila al frente, más una chica al lado de la tercera (4), y 2 compactas arriba
 ESCALA_MIN = 0.72                      # MV11: una pieza no se dibuja a menos de esto de su tamaño
 COMPACTA_ANCHO = 388                   # dos compactas caben lado a lado en la columna
 ANCHO_PIEZA = 791                      # el ancho de la columna segura completa (x 85–876)
@@ -1374,7 +1374,14 @@ def revisar_v(ctx, P, mesas=None, f0=None):
                 if g["_t"] - LEAD <= M["ini"] + 0.05:
                     g["_ya"] = True
         for fmt in FORMATOS:
-            for x in componer(ctx, M, fmt, F, elenco)["fallas"]:
+            try:
+                fallas_fmt = componer(ctx, M, fmt, F, elenco)["fallas"]
+            except (OSError, KeyError) as e:
+                # un documento cuya página no está en paginas.json: mesa.revisar ya dio su MV4; aquí no se puede medir la
+                # mesa, y antes el gate reventaba con FileNotFoundError / KeyError en vez de decirlo
+                fallas_fmt = ["MV4 %s: no se puede componer la mesa (%s: %s): revisa las páginas de sus documentos (historia.py pagina)"
+                              % (M["id"], type(e).__name__, e)]
+            for x in fallas_fmt:
                 clave = re.sub(r", (9:16|4:5)\)", ")", x)
                 if clave not in vistos:
                     vistos.add(clave)

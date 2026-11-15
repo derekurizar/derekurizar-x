@@ -29,7 +29,10 @@
 #        · /sabias: gate S1–S3 sobre el dato de prueba (negativos), M13 y make sabias-fixture.
 #        · /video-3d: M3D del motor, C3D1–C3D11 con sus negativos sobre la maqueta corta y make video3d-fixture.
 #        · la maqueta 3D en la mesa de archivo (`maqueta` a nivel de mesa en plano.json): YT20–YT24 / MV15–MV19 con sus
-#          negativos sobre un plano sintético, y make video-fixture-maqueta con los suyos (sin RAPIDO).
+#          negativos sobre un plano sintético; make video-fixture-maqueta (sin RAPIDO).
+#        · la mesa de archivo sobre un plano congelado (scripts/pruebas/mesa_congelada.py, en RAPIDO): un negativo por
+#          gate MV1–MV19 e YT13–YT19 sin render ni trabajos; gates_sin_negativo.py (SE17–SE19, CG8, CG9, C3D5, C3D7);
+#          producir.py (la cadena de producción común).
 #        · /congreso: CG2–CG10 sobre la maqueta de la Ley de Ciberseguridad (negativos), M19 y make congreso-fixture.
 #        · /departamento: canon (--check, --resolver, --directiva), --tablero/--siguiente con memoria de prueba, G1 del
 #          perfil de departamento (y el de grupo, que no lo exige), D1–D9 con un negativo por gate sobre la maqueta de
@@ -2211,83 +2214,11 @@ assert [w['text'] for w in R['palabras']]==['a','c'] and R['palabras'][1]['start
   paso "W14: un límite de youtube.js distinto del de youtube.py falla en check_workflows" bash -c "cp .claude/workflows/youtube.js '$TMP/yt.js.bak'; sed -i '' 's/PUENTE_CARACTERES = 160/PUENTE_CARACTERES = 150/' .claude/workflows/youtube.js; python3 scripts/check_workflows.py --quiet >/dev/null 2>&1; rc=\$?; cp '$TMP/yt.js.bak' .claude/workflows/youtube.js; [ \$rc -ne 0 ]"
   if [[ "$RAPIDO" == "1" ]]; then echo "SKIP   make youtube-fixture (RAPIDO=1)"; else
     paso "make youtube-fixture (16:9 1920×1080, capítulos desde 0:00, sin «Sígueme» en la voz, entrega)" bash -c 'make youtube-fixture FPS=6 >/dev/null && ffprobe -v error -show_entries stream=codec_type,width,height -of csv=p=0 sesiones/_fixture_youtube/salida/video.mp4 | grep -q "video,1920,1080" && grep -q "^0:00 " sesiones/_fixture_youtube/salida/caption.md && ! grep -qi "sígueme: en la" sesiones/_fixture_youtube/salida/subtitulos.srt'
-    # el plano del 16:9 (YT13–YT19): negativos sobre el plano de la maqueta (en la maqueta el gate avisa en vez de fallar)
-    yp_neg() {  # yp_neg CÓDIGO 'python que muta P (plano.json) o E (escenas.json)'
-      local T="$YF/trabajo" cod="$1" out rc=0
-      cp "$T/plano.json" "$TMP/plano.bak"; cp "$T/escenas.json" "$TMP/escenas.bak"
-      python3 - "$T" "$2" <<'PYEOF'
-import json, sys
-T = sys.argv[1]
-P = json.load(open(T + "/plano.json")); E = json.load(open(T + "/escenas.json"))
-M = next(m for m in P["mesas"] if m["golpes"])
-exec(sys.argv[2])
-json.dump(P, open(T + "/plano.json", "w"), ensure_ascii=False); json.dump(E, open(T + "/escenas.json", "w"), ensure_ascii=False)
-PYEOF
-      out="$(python3 scripts/youtube.py plano "$T" --check 2>&1)"; echo "$out" | grep -q "(maqueta) $cod" || rc=1
-      cp "$TMP/plano.bak" "$T/plano.json"; cp "$TMP/escenas.bak" "$T/escenas.json"
-      [[ $rc == 0 ]] || { echo "$out" | tail -8; return 1; }
-    }
-    paso "plano 16:9: una mesa sin piezas (ninguna oración trae un golpe) → YT14" yp_neg "YT14" 'M["golpes"] = []'
-    paso "plano 16:9: un «dice» que la voz no dice → YT14" yp_neg "YT14" 'M["golpes"][0]["dice"] = "zzz qqq"'
-    paso "plano 16:9: una cifra que la voz no dice y sin respaldo → YT16" yp_neg "YT16" 'M["golpes"].append(dict(tipo="cifra", escena=M["golpes"][-1].get("escena", M["escenas"][0]), dice=M["golpes"][-1]["dice"], valor="98,765", rotulo="panes"))'
-    paso "plano 16:9: una foto sin ficha → YT16" yp_neg "YT16" 'M["golpes"].append(dict(tipo="foto", escena=M["golpes"][-1].get("escena", M["escenas"][0]), dice=M["golpes"][-1]["dice"], foto="zzz-f99", pie="Nada"))'
-    paso "plano 16:9: un tipo de pieza desconocido → YT16" yp_neg "YT16" 'M["golpes"][0]["tipo"] = "zoom"'
-    paso "plano 16:9: una escena con saltos de cámara → YT19" yp_neg "YT19" 'E["escenas"][1]["saltos"] = [2.0]'
+    paso "mesa congelada: el fixture no deriva de los trabajos recién generados (serie-fixture y youtube-fixture)" python3 scripts/pruebas/mesa_congelada.py --deriva
     # el vertical como mesa de archivo (scripts/video_hf.py, núcleo scripts/mesa.py): la maqueta y los gates MV sobre su plano
     paso "make video-fixture-mesa (proyectos 9:16 y 4:5, hyperframes check, audio a −14 LUFS)" bash -c 'make video-fixture-mesa FPS=6 >/dev/null && test -s sesiones/_fixture_mesa/trabajo/hf/9x16/index.html && test -s sesiones/_fixture_mesa/trabajo/hf/4x5/index.html && test -s sesiones/_fixture_mesa/trabajo/segs_mesa/mezcla_final.wav && ! grep -q "cdn\.\|https://" sesiones/_fixture_mesa/trabajo/hf/9x16/index.html'
-    mv_neg() {  # mv_neg CÓDIGO 'python que muta P (plano.json) o E (escenas.json)'
-      local T="sesiones/_fixture_mesa/trabajo" cod="$1" out rc=0 antes despues
-      cp "$T/plano.json" "$TMP/plano_v.bak"; cp "$T/escenas.json" "$TMP/escenas_v.bak"
-      antes="$(python3 scripts/video_hf.py plano "$T" --check 2>&1 | grep -c "(maqueta) $cod")"
-      python3 - "$T" "$2" <<'PYEOF'
-import json, sys
-T = sys.argv[1]
-P = json.load(open(T + "/plano.json")); E = json.load(open(T + "/escenas.json"))
-M = next(m for m in P["mesas"] if m["golpes"] and all(g.get("dice") for g in m["golpes"]))  # la mesa 1 abre con piezas sin `dice` (cuadro 0)
-exec(sys.argv[2])
-json.dump(P, open(T + "/plano.json", "w"), ensure_ascii=False); json.dump(E, open(T + "/escenas.json", "w"), ensure_ascii=False)
-PYEOF
-      [[ $? == 0 ]] || rc=1  # una mutación que no se aplicó no prueba nada
-      out="$(python3 scripts/video_hf.py plano "$T" --check 2>&1)"; despues="$(echo "$out" | grep -c "(maqueta) $cod")"
-      cp "$TMP/plano_v.bak" "$T/plano.json"; cp "$TMP/escenas_v.bak" "$T/escenas.json"
-      [[ $despues -gt $antes ]] || rc=1  # la maqueta ya trae avisos MV: cuenta los que AÑADE la mutación
-      [[ $rc == 0 ]] || { echo "$cod: $antes aviso(s) antes, $despues después"; echo "$out" | tail -8 | cut -c1-300; return 1; }
-    }
-    paso "plano vertical: una mesa sin piezas → MV2" mv_neg "MV2" 'M["golpes"] = []'
-    paso "plano vertical: una foto sin ficha → MV4" mv_neg "MV4" 'M["golpes"].append(dict(tipo="foto", escena=M["golpes"][-1].get("escena", M["escenas"][0]), dice=M["golpes"][-1]["dice"], foto="zzz-f99", pie="Nada"))'
-    paso "plano vertical: una escena con saltos de cámara → MV7" mv_neg "MV7" 'E["escenas"][1]["saltos"] = [2.0]'
-    paso "plano vertical: una ficha con 40 palabras que la voz no dice no da tiempo de leerse → MV8" mv_neg "MV8" 'M["golpes"].insert(0, dict(tipo="institucion", escena=M["golpes"][0].get("escena", M["escenas"][0]), dice=M["golpes"][0]["dice"], nombre="Zzz", kicker="Qué es", rol=" ".join("palabra%d" % i for i in range(40))))'
-    paso "plano vertical: una pieza que no cabe ni a escala → MV11" mv_neg "MV11" 'M["golpes"].insert(0, dict(tipo="cita", escena=M["golpes"][0].get("escena", M["escenas"][0]), dice=M["golpes"][0]["dice"], autor="Zzz", texto=" ".join("palabra%d" % i for i in range(160))))'
-    paso "plano vertical: una jerarquía con un hilo de alegato sin «Según…» → MV12" mv_neg "MV12" 'd = M["golpes"][-1]["dice"]; M["golpes"].append(dict(tipo="red", escena=M["golpes"][-1].get("escena", M["escenas"][0]), dice=d, nodos=[dict(id="a", nombre="Marta Pérez", nivel=0, dice=d), dict(id="b", nombre="Zzz", nivel=1, dice=d)], aristas=[dict(de="a", a="b", atribuida=True, dice=d)]))'
-    paso "plano vertical: una barra sola (sin con qué compararse) → MV4" mv_neg "MV4" 'M["golpes"].append(dict(tipo="barra", escena=M["golpes"][-1].get("escena", M["escenas"][0]), dice=M["golpes"][-1]["dice"], barras=[dict(etiqueta="Zzz", valor=1)]))'
-    paso "plano vertical: una barra que dice 900 y mide 10 → MV4" mv_neg "MV4" 'M["golpes"].append(dict(tipo="barra", escena=M["golpes"][-1].get("escena", M["escenas"][0]), dice=M["golpes"][-1]["dice"], barras=[dict(etiqueta="A", valor=10, texto="900"), dict(etiqueta="B", valor=20)]))'
     paso "make video-fixture-maqueta (una mesa con maqueta 3D: clip real 950×1040 de maqueta3d.py pieza, en los proyectos 9:16 y 4:5, su efecto en la mezcla, el 4:5 reusa el clip)" bash -c 'make video-fixture-maqueta FPS=6 >/dev/null && T=sesiones/_fixture_maqueta/trabajo && ffprobe -v error -show_entries stream=width,height -of csv=p=0 $T/clips_maqueta/m5.mp4 | grep -q "950,1040" && grep -q "\"doble\": false" $T/clips_maqueta/huellas.json && grep -q "assets/maquetas/m5.mp4" $T/hf/9x16/compositions/m5.html && grep -q "assets/maquetas/m5.mp4" $T/hf/4x5/compositions/m5.html && test -s $T/hf/4x5/assets/maquetas/m5.mp4 && grep -q "foco" $T/hf/efectos.json && grep -q "Maqueta · no a escala" $T/hf/9x16/compositions/m5.html && grep -q "maqueta 3D" $T/plano.md && test -s $T/salida/video.mp4 && test -s $T/salida/video_4x5.mp4'
-    mq_neg() {  # mq_neg CÓDIGO 'python que muta P (plano.json), M (la mesa con maqueta) o Q (su maqueta)': la mutación AÑADE un aviso con ese código
-      local T="sesiones/_fixture_maqueta/trabajo" cod="$1" out rc=0 antes despues
-      cp "$T/plano.json" "$TMP/plano_q.bak"
-      antes="$(python3 scripts/video_hf.py plano "$T" --check 2>&1 | grep -c "(maqueta) $cod ")"
-      python3 - "$T" "$2" <<'PYEOF'
-import json, sys
-T = sys.argv[1]
-P = json.load(open(T + "/plano.json")); M = next(m for m in P["mesas"] if m.get("maqueta")); Q = M["maqueta"]
-exec(sys.argv[2])
-json.dump(P, open(T + "/plano.json", "w"), ensure_ascii=False)
-PYEOF
-      [[ $? == 0 ]] || rc=1
-      out="$(python3 scripts/video_hf.py plano "$T" --check 2>&1)"; despues="$(echo "$out" | grep -c "(maqueta) $cod ")"
-      cp "$TMP/plano_q.bak" "$T/plano.json"
-      [[ $despues -gt $antes ]] || rc=1
-      [[ $rc == 0 ]] || { echo "$cod: $antes aviso(s) antes, $despues después"; echo "$out" | tail -8 | cut -c1-300; return 1; }
-    }
     paso "plano con maqueta: la mesa de la maqueta no añade avisos (MV15–MV19 en 0)" bash -c '! python3 scripts/video_hf.py plano sesiones/_fixture_maqueta/trabajo --check 2>&1 | grep -q "(maqueta) MV1[5-9] \|(maqueta) MV[0-9]* m5 "'
-    paso "plano con maqueta: un estilo que no está en el catálogo → MV15" mq_neg "MV15" 'Q["estilo"] = "zzz"'
-    paso "plano con maqueta: la primera clave de cámara con dice → MV15" mq_neg "MV15" 'Q["camara"][0]["dice"] = "Pero el salto"'
-    paso "plano con maqueta: un dice que la voz de la mesa no dice → MV16" mq_neg "MV16" 'Q["marcas"][0]["dice"] = "cinco sucursales"'
-    paso "plano con maqueta: dos maquetas de estilos distintos → MV17" mq_neg "MV17" 'P["mesas"] = [m for m in P["mesas"] if m["escenas"] != ["e7"]] + [dict(escenas=["e7"], titulo="Otra", golpes=[], maqueta=dict(Q, estilo="color", marcas=[], eventos=[], camara=Q["camara"][:1]))]'
-    paso "plano con maqueta: una maqueta de menos de 5 s (y en el gancho) → MV18" mq_neg "MV18" 'P["mesas"] = [m for m in P["mesas"] if m["escenas"] != ["e1"]]; M["escenas"] = ["e1"]; M["golpes"] = []; Q.update(camara=Q["camara"][:1], eventos=[], marcas=[])'
-    paso "plano con maqueta: una cámara que el motor rechaza (M3D3) → MV19" mq_neg "MV19" 'Q["camara"][1]["dist_km"] = 5'
-    paso "plano con maqueta: la cifra que la voz dice, sin su golpe → MV1" mq_neg "MV1" 'M["golpes"] = M["golpes"][:1]'
-    paso "plano con maqueta: una pieza que taparía la maqueta → MV11" mq_neg "MV11" 'M["golpes"][1] = dict(tipo="cita", dice="4,500 panes", autor="Zzz", texto=" ".join("palabra%d" % i for i in range(60)))'
     paso "maquetas con MESA_RENDER=0: un doble 950×1040 de la duración de la mesa, que no se reusa como render" bash -c 'T="'"$TMP"'/maq_doble"; rm -rf "$T"; cp -R sesiones/_fixture_maqueta/trabajo "$T" && rm -rf "$T/clips_maqueta" && MESA_RENDER=0 python3 scripts/video_hf.py maquetas "$T" | grep -q "dobles sin render" && grep -q "\"doble\": true" "$T/clips_maqueta/huellas.json" && ffprobe -v error -show_entries stream=width,height -of csv=p=0 "$T/clips_maqueta/m5.mp4" | grep -q "950,1040" && MESA_RENDER=0 python3 scripts/video_hf.py maquetas "$T" | grep -q "al día"'
     paso "borrador vertical: un gancho de texto cinético (pareja) abre con la nota y la barra ya puestas; el golpe con número es una cifra sin repetir el golpe de arriba" python3 -c '
 import sys; sys.path.insert(0, "scripts"); import video_hf as VH
@@ -2576,6 +2507,9 @@ paso "ola 1 · anclas (un `dice` resuelve igual en la mesa, en /video-3d y en lo
 paso "ola 1 · mesa (marca de render de prueba por formato, avisos «sin datos», GSAP local, límite del render, notas de /congreso)" python3 scripts/pruebas/ola1_mesa.py
 paso "ola 1 · /video-3d (22 negativos M3D sin render, caption V5, srt, escuchar, 4:5, rotación)" python3 scripts/pruebas/ola1_video3d.py
 paso "ola 1 · métricas (partes de serie y largos, 3D, duracion|promesa|plataforma, vistas por día)" python3 scripts/pruebas/ola1_metricas.py
+paso "mesa congelada (el fixture, los planos curados en 0 fallas, la pila MV9 y un negativo por gate MV1–MV19 e YT13–YT19, sin render ni trabajos)" python3 scripts/pruebas/mesa_congelada.py
+paso "gates sin negativo (SE17–SE19, CG8, CG9, C3D5, C3D7, M3D7; sin render)" python3 scripts/pruebas/gates_sin_negativo.py
+paso "producir: la cadena común (mesa, propio, 3D, largo), la pausa por el plano y la reanudación" python3 scripts/pruebas/producir.py
 paso "node --check hilo.js (envuelto en async function)" check_js hilo.js
 paso "node --check ideas.js (envuelto en async function)" check_js ideas.js
 paso "node --check dato.js (envuelto en async function)" check_js dato.js

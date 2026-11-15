@@ -2310,7 +2310,7 @@
       "archivo": "scripts/test.sh:2320-2432",
       "problema": "Los negativos de la mesa (MV, YT13–YT19, maqueta) solo corren sin RAPIDO porque dependen de generar fixtures; 20 gates no tienen ningún negativo (MV3, MV5, MV6, MV10, MV14, YT15, YT17, YT18, SE17–SE19, CG8, CG9, CA10, CA11…) y `yp_neg` no prueba nada (busca YT14 y el plano ya trae 11).",
       "propuesta": "Un plano congelado y `scripts/pruebas/mesa_congelada.py` con mutaciones en memoria.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m211",
@@ -2321,7 +2321,7 @@
       "archivo": "scripts/historia.py:5376 (producir)",
       "problema": "`producir` (un comando de punta a punta) existe solo en /historia; los demás flujos teclean 6–9 comandos y /youtube-long 9. Su rama `rc == 2` de `escuchar` trata un error de uso como «sin whisper».",
       "propuesta": "`producir` genérico en video.py con pausa en el plano (código 3) y reanudación; `youtube.py producir`.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m212",

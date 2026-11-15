@@ -58,6 +58,7 @@ eso cada parte lleva su paso **Plano** después de su voz (paso 4), con los dos 
      anterior).
    - Voz (MCP, por secuencias) o voz falsa con `sin-voz`, y `tiempos` (y `escuchar`), con los comandos del motor sobre
      `<TRABAJO>/parte-N`.
+   - En un comando por parte: `python3 scripts/<motor>.py producir <TRABAJO>/parte-N` (`referencias/fragmentos/producir.md`).
    - **Plano de la parte** (motor /historia en la mesa; paso 6 de `historia.md`): con la voz de ESA parte ya medida,
      `Workflow({ name: "plano", args: { trabajo: "<TRABAJO>/parte-N" } })` (sin `permitir_fallback`: si el agente no
      está registrado, se reinicia Claude Code). Con `plano_listo`, muestra

@@ -93,6 +93,10 @@ propio». Un trabajo empezado con un motor termina con ese motor.
      `descargar --nodos`) con `<script>` = `historia.py` y el flow «Historia · <tema corto>». En una retoma, `voz <TRABAJO> --pendientes`
      (las secuencias enteras que hay que regrabar) o `--sueltas` (solo las escenas cambiadas).
 5. **TIEMPOS Y ESCUCHA**
+   - **En un comando**: `python3 scripts/historia.py producir <TRABAJO>` corre este paso y los siguientes hasta `revisar` en 9:16 y
+     4:5; se detiene con código 3 a esperar el plano (lanza el Workflow `plano` y repítelo) y reanuda donde quedó
+     (`referencias/fragmentos/producir.md`; con `sin-voz`, añade `--borrador`). Los pasos de abajo son lo que corre, uno
+     por uno: sirven para entender una falla o rehacer solo uno.
    - `python3 scripts/historia.py tiempos <TRABAJO>` (V6; V10 y H5, avisos). Si una escena no se alinea, rehaz SOLO
      ese nodo y repite; si falla la frontera de una secuencia, regrábala entera o esas escenas con `voz --sueltas`.
      En la mesa, `tiempos` no avisa V10, V22 ni V26: el ritmo, la carga y las cifras se miden sobre el plano (MV1,

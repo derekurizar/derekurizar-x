@@ -1,0 +1,178 @@
+{
+ "version": 1,
+ "mesas": [
+  {
+   "escenas": [
+    "adelanto-1",
+    "P1.e1",
+    "promesa"
+   ],
+   "golpes": [
+    {
+     "tipo": "foto",
+     "escena": "adelanto-1",
+     "dice": "el salto",
+     "foto": "ori-f05",
+     "pie": "4,500 panes al día"
+    },
+    {
+     "tipo": "foto",
+     "escena": "P1.e1",
+     "dice": "Así empezó",
+     "foto": "ori-f01",
+     "pie": "Así empezó La Espiga en Xela"
+    },
+    {
+     "tipo": "foto",
+     "escena": "promesa",
+     "dice": "Un solo",
+     "foto": "ori-f01",
+     "pie": "Un solo horno"
+    }
+   ]
+  },
+  {
+   "escenas": [
+    "P1.e2"
+   ],
+   "golpes": [
+    {
+     "tipo": "foto",
+     "escena": "P1.e2",
+     "dice": "¿Cómo llena",
+     "foto": "cas-f02",
+     "pie": "Un horno de leña en Xela"
+    },
+    {
+     "tipo": "fecha",
+     "escena": "P1.e2",
+     "dice": "1952,",
+     "grande": "1952",
+     "chico": "en"
+    }
+   ]
+  },
+  {
+   "escenas": [
+    "P1.e3"
+   ],
+   "golpes": [
+    {
+     "tipo": "persona",
+     "escena": "P1.e3",
+     "dice": "Marta Pérez,",
+     "persona": "Marta Pérez",
+     "cargo": "la fundadora de La Espiga"
+    },
+    {
+     "tipo": "cita",
+     "escena": "P1.e3",
+     "dice": "Cada pan sale",
+     "texto": "Cada pan sale del mismo horno que encendí el primer día",
+     "autor": "Marta Pérez",
+     "cargo": "fundadora de La Espiga"
+    }
+   ]
+  },
+  {
+   "escenas": [
+    "P1.e4"
+   ],
+   "golpes": [
+    {
+     "tipo": "foto",
+     "escena": "P1.e4",
+     "dice": "Por eso,",
+     "foto": "ori-f04",
+     "pie": "La primera sucursal"
+    },
+    {
+     "tipo": "fecha",
+     "escena": "P1.e4",
+     "dice": "1958,",
+     "grande": "1958",
+     "chico": "en"
+    }
+   ]
+  },
+  {
+   "escenas": [
+    "puente-1",
+    "P2.e5",
+    "P2.e6"
+   ],
+   "golpes": [
+    {
+     "tipo": "foto",
+     "escena": "puente-1",
+     "dice": "Diez años",
+     "foto": "ori-f05",
+     "pie": "El horno no da abasto"
+    },
+    {
+     "tipo": "foto",
+     "escena": "P2.e5",
+     "dice": "Pero el",
+     "foto": "ori-f05",
+     "pie": "4,500 panes al día"
+    },
+    {
+     "tipo": "fecha",
+     "escena": "P2.e5",
+     "dice": "1968,",
+     "grande": "1968",
+     "chico": "en"
+    },
+    {
+     "tipo": "cifra",
+     "escena": "P2.e5",
+     "dice": "4,500",
+     "valor": "4,500",
+     "rotulo": "panes al"
+    },
+    {
+     "tipo": "termino",
+     "escena": "P2.e6",
+     "dice": "Así que",
+     "texto": "4,500 panes",
+     "definicion": ""
+    },
+    {
+     "tipo": "cifra",
+     "escena": "P2.e6",
+     "dice": "4,500",
+     "valor": "4,500",
+     "rotulo": "panes cada"
+    }
+   ]
+  },
+  {
+   "escenas": [
+    "P2.e7"
+   ],
+   "golpes": [
+    {
+     "tipo": "foto",
+     "escena": "P2.e7",
+     "dice": "Entonces llegó",
+     "foto": "ori-f06",
+     "pie": "Cinco sucursales en Xela"
+    },
+    {
+     "tipo": "fecha",
+     "escena": "P2.e7",
+     "dice": "1971,",
+     "grande": "1971",
+     "chico": "año"
+    },
+    {
+     "tipo": "persona",
+     "escena": "P2.e7",
+     "dice": "Marta seguía",
+     "persona": "Marta Pérez",
+     "cargo": "la fundadora de La Espiga"
+    }
+   ]
+  }
+ ]
+}

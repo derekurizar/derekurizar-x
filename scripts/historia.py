@@ -4694,34 +4694,14 @@ def cronologia_md(st, escenas, H):
 REENVIO = ("voz", "voz-falsa", "descargar", "partir", "escuchar", "grabar", "montar", "revisar", "plano")
 
 
-def cmd_producir(a):
-    """La cadena de render que la sesión tecleaba a mano dos veces por pieza: tiempos → escuchar → grabar → montar →
-    revisar en 9:16 y grabar → montar → revisar en 4:5. Para en la primera falla y dice en qué paso."""
-    yo, T = os.path.abspath(__file__), a.trabajo
-    solo = ["--solo", a.solo] if a.solo else []
-    en_mesa = VD.es_mesa(VD.estado(os.path.abspath(T)))   # la mesa de archivo: el plano (gates MV) va tras la voz real y antes de grabar
-    pasos = [["tiempos", T]] + ([] if a.sin_escucha else [["escuchar", T]]) + ([["plano", T, "--check", "--hoja"]] if en_mesa else []) + \
-        [["grabar", T] + solo, ["montar", T], ["revisar", T],
-         ["grabar", T, "--formato", "4:5"] + solo, ["montar", T, "--formato", "4:5"], ["revisar", T, "--formato", "4:5"]]
-    for k, paso in enumerate(pasos, 1):
-        print("── %d/%d · %s" % (k, len(pasos), " ".join(paso[:1] + paso[2:])), flush=True)
-        rc = subprocess.run([sys.executable, yo] + paso, cwd=RAIZ).returncode
-        if rc and paso[0] == "escuchar" and rc == 2:   # sin whisper instalado: la escucha es opcional
-            print("AVISO sin escucha (make whisper)")
-            continue
-        if rc:
-            return falla("producir se detuvo en «%s» (exit %d): corrige y vuelve a correr (o sigue a mano desde ese paso)"
-                         % (" ".join(paso[:1] + paso[2:]), rc))
-    print("producido: 9:16 y 4:5 en %s/salida · falta entregar" % os.path.relpath(os.path.abspath(T), RAIZ))
-    return 0
-
-
 def main():
     if len(sys.argv) > 2 and sys.argv[1] == "voz" and not any(x in sys.argv for x in ("-h", "--help")):
         import serie as SR   # noqa: E402  SE17: una parte de serie no se graba antes de revisar la serie completa
         bloqueo = SR.voz_permitida(os.path.abspath(sys.argv[2]))
         if bloqueo:
             return falla(bloqueo)
+    if len(sys.argv) > 1 and sys.argv[1] == "producir":   # la cadena de producción común y reanudable (scripts/producir.py)
+        return subprocess.run([sys.executable, os.path.join(RAIZ, "scripts", "producir.py")] + sys.argv[2:], cwd=RAIZ).returncode
     if len(sys.argv) > 1 and sys.argv[1] in REENVIO:
         return subprocess.run([sys.executable, os.path.join(RAIZ, "scripts", "video.py")] + sys.argv[1:], cwd=RAIZ).returncode
     p = argparse.ArgumentParser(description=__doc__.split("\n")[0], epilog=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -4816,10 +4796,6 @@ def main():
     q = sub.add_parser("entregar")
     q.add_argument("trabajo")
     q.add_argument("--salida", help="otra carpeta (pruebas, maqueta o voz falsa)")
-    q = sub.add_parser("producir", help="tiempos → escuchar → grabar → montar → revisar en 9:16 y luego en 4:5; para en la primera falla")
-    q.add_argument("trabajo")
-    q.add_argument("--solo", help="regraba solo estas escenas (1,3): un retoque que conserva lo demás")
-    q.add_argument("--sin-escucha", action="store_true", help="salta `escuchar` (whisper)")
     q = sub.add_parser("pagina", help="la página de un PDF ya leído donde está una frase (imagen + caja de cada renglón) para la escena pagina")
     q.add_argument("trabajo")
     q.add_argument("--id", required=True, help="id de la página (será fotos/<id>.jpg)")
@@ -4830,8 +4806,6 @@ def main():
     for nombre in REENVIO:
         sub.add_parser(nombre, help="→ scripts/video.py %s" % nombre)
     a = p.parse_args()
-    if a.cmd == "producir":
-        return cmd_producir(a)
     if getattr(a, "trabajo", None) and a.cmd != "preparar":
         aplicar_formato(os.path.abspath(a.trabajo))
     return {"preparar": cmd_preparar, "leer": cmd_leer, "commons": cmd_commons, "foto": cmd_foto, "hechos": cmd_hechos,

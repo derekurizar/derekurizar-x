@@ -34,7 +34,8 @@ Guía completa: `referencias/flujo-video3d.md` (léela antes de empezar). Contra
 8. **Voz.** Sigue `referencias/fragmentos/voz-mcp.md` con `<script>` = `video3d.py` y el flow «Video 3D · <slug>».
    Luego `python3 scripts/video3d.py escuchar <TRABAJO>` (V11: whisper transcribe la voz sin el guion; una falta se
    arregla con una retoma de esa escena). Con `sin-voz`: `video3d.py voz-falsa <TRABAJO>` (sin escucha).
-9. **Tiempos, render y montaje.** `video3d.py tiempos` → `render` → `montar` (9:16 y 4:5). `montar` deja también
+9. **Tiempos, render y montaje.** En un comando: `python3 scripts/video3d.py producir <TRABAJO>` (`tiempos` → `escuchar` →
+   `render` → `montar`, reanudable; `referencias/fragmentos/producir.md`). Paso a paso: `video3d.py tiempos` → `render` → `montar` (9:16 y 4:5). `montar` deja también
    `salida/subtitulos.srt` y `salida/portada.png` (el cuadro cero sin subtítulos). Mira el resultado (una hoja de
    cuadros del mp4) y la portada antes de entregar.
 10. **Entrega.** `video3d.py entregar <TRABAJO>` → `videos3d/<fecha>-<slug>/` (video, 4:5, portada, `caption.md`,
