@@ -1,0 +1,91 @@
+/* Capa 2D de la maqueta 3D (/video-3d): el cuadro de noticiero encima del lienzo de three.js. De la familia de
+   video/comun.css (estilo Noche: texto crema, Archivo 800 en títulos y subtítulos, Archivo condensado 900 en cifras y
+   titulares, JetBrains Mono en kicker, rótulos y fuentes) con una diferencia: en la maqueta el acento es SOLO del
+   protagonista del 3D, así que aquí nada va en acento (la palabra que suena se resalta en crema).
+   Ningún color ni medida fija: todo llega en variables que scripts/maqueta3d.py inyecta en :root desde
+   design/tokens.json, design/sets3d/estilos.json y la zona del formato (9:16 o 4:5; la misma que usan los gates M3D). */
+@font-face { font-family: 'Archivo'; font-weight: 100 900; font-stretch: 62% 125%; src: url(assets/fonts/archivo-wdth.woff2) format('woff2'); }
+@font-face { font-family: 'JetBrains Mono'; font-weight: 100 800; src: url(assets/fonts/jetbrains-mono-var.woff2) format('woff2'); }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: var(--w); height: var(--h); overflow: hidden; background: var(--bg); }
+#root { position: relative; width: var(--w); height: var(--h); overflow: hidden; color: var(--ink); font-family: Archivo, sans-serif; }
+#gl { position: absolute; left: 0; top: 0; width: var(--w); height: var(--h); display: block; z-index: 1; }
+.capa { position: absolute; inset: 0; z-index: 5; pointer-events: none; }
+.marco { position: absolute; left: 0; top: 0; width: var(--w); height: var(--h); }
+/* el 3D ocupa todo el lienzo; encima, un degradado del color del fondo que crece hacia abajo (subtítulos, aviso y pie
+   conservan contraste y el terreno se sigue adivinando debajo) y uno más corto arriba, bajo la barra y el titular */
+.sombra { position: absolute; left: 0; right: 0; opacity: var(--sombra-op); }
+.sombra.arriba { top: 0; height: var(--sombra-arriba); background: linear-gradient(to bottom, color-mix(in srgb, var(--sombra) 88%, transparent) 0%, color-mix(in srgb, var(--sombra) 58%, transparent) 42%, color-mix(in srgb, var(--sombra) 22%, transparent) 75%, transparent 100%); }
+.sombra.abajo { bottom: 0; height: var(--sombra-abajo); background: linear-gradient(to top, color-mix(in srgb, var(--sombra) 78%, transparent) 0%, color-mix(in srgb, var(--sombra) 64%, transparent) 22%, color-mix(in srgb, var(--sombra) 46%, transparent) 50%, color-mix(in srgb, var(--sombra) 20%, transparent) 76%, transparent 100%); }
+.sombra.vineta { top: 0; bottom: 0; opacity: var(--vineta-op); background: radial-gradient(ellipse 90% 75% at 50% 48%, transparent 60%, color-mix(in srgb, var(--sombra) 45%, transparent) 100%); }
+/* barra de progreso: un tramo por acto */
+#progreso { position: absolute; top: var(--barra-y); left: var(--izq); width: var(--col); display: flex; gap: 10px; }
+#progreso i { flex: 1; height: 6px; background: color-mix(in srgb, var(--ink) 28%, transparent); border-radius: 3px; overflow: hidden; }
+#progreso i b { display: block; height: 100%; width: 0; background: var(--ink); }
+/* titular: kicker en Mono y el texto como el golpe de arriba (Archivo 900 condensado, mayúsculas), alineado a la izquierda */
+.titulo { position: absolute; top: var(--tit-y); left: var(--izq); width: var(--col); will-change: transform, opacity; }
+.titulo .kicker { font: 600 26px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; color: color-mix(in srgb, var(--ink) 85%, transparent); margin-bottom: 14px; }
+.titulo .texto { font: 900 var(--tit-px)/.94 Archivo, sans-serif; font-stretch: 62.5%; text-transform: uppercase; letter-spacing: -.005em;
+  text-shadow: 0 2px 22px color-mix(in srgb, var(--sombra) 80%, transparent); text-wrap: balance; }
+/* cifra: el valor en Archivo condensado 900, su rótulo y la fuente */
+.cifra { position: absolute; left: var(--izq); bottom: calc(var(--h) - var(--cifra-fin)); max-width: var(--cifra-ancho); transform-origin: 0 100%; will-change: transform, opacity; }
+.cifra .valor { font: 900 var(--cifra-px)/.84 Archivo, sans-serif; font-stretch: 62.5%; text-transform: uppercase; white-space: nowrap;
+  text-shadow: 0 4px 40px color-mix(in srgb, var(--sombra) 85%, transparent); }
+.cifra .rotulo { margin-top: 10px; font: 800 var(--rotulo-px)/1.05 Archivo, sans-serif; letter-spacing: -.01em; text-shadow: 0 2px 16px color-mix(in srgb, var(--sombra) 85%, transparent); }
+.cifra .fuente { margin-top: 10px; font: 600 20px/1.2 'JetBrains Mono', monospace; letter-spacing: .06em; text-transform: uppercase; color: color-mix(in srgb, var(--ink) 80%, transparent); }
+/* marca: un punto en el ancla proyectada, la línea y la tarjeta */
+.pin { position: absolute; left: 0; top: 0; width: 0; height: 0; transform-origin: 0 0; will-change: transform, opacity; opacity: 0; }
+.pin .dot { position: absolute; left: -8px; top: -8px; width: 16px; height: 16px; border-radius: 50%; background: var(--ink);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--tarjeta-bg) 85%, transparent), 0 0 16px color-mix(in srgb, var(--ink) 55%, transparent); }
+.pin .stem { position: absolute; left: -1.5px; bottom: 0; width: 3px; height: var(--alto, 110px); background: color-mix(in srgb, var(--ink) 82%, transparent); }
+.pin .card { position: absolute; left: 0; bottom: var(--alto, 110px); transform: translateX(-50%); white-space: nowrap; padding: 13px 20px 12px;
+  background: color-mix(in srgb, var(--tarjeta-bg) 88%, transparent); color: var(--tarjeta-ink); border: 1.5px solid color-mix(in srgb, var(--tarjeta-ink) 50%, transparent);
+  border-radius: var(--radio); box-shadow: 0 8px 22px color-mix(in srgb, var(--sombra) 60%, transparent); }
+.pin .card b { display: block; font: 700 var(--marca-px)/1 Archivo, sans-serif; }
+.pin .card i { display: block; margin-top: 8px; font: 600 22px/1 'JetBrains Mono', monospace; font-style: normal; letter-spacing: .1em; text-transform: uppercase;
+  color: color-mix(in srgb, var(--tarjeta-ink) 72%, transparent); }
+/* aviso y handle: una fila sobre los subtítulos */
+#fila { position: absolute; top: var(--fila-y); left: var(--izq); width: var(--col); display: flex; align-items: center; gap: 16px; }
+#fila .aviso { padding: 7px 12px 6px; font: 600 22px/1 'JetBrains Mono', monospace; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap;
+  color: var(--ink); border: 2px solid color-mix(in srgb, var(--ink) 45%, transparent); border-radius: 6px; background: color-mix(in srgb, var(--sombra) 55%, transparent); }
+#fila .handle { font: 700 26px/1 Archivo, sans-serif; color: color-mix(in srgb, var(--ink) 86%, transparent); white-space: nowrap; }
+/* subtítulos palabra por palabra: la que suena resaltada, las que faltan apagadas */
+#subs { position: absolute; top: var(--subs-y); left: var(--izq); width: var(--col); text-align: center; font: 800 var(--subs-px)/1.24 Archivo, sans-serif;
+  letter-spacing: -.01em; text-shadow: 0 2px 18px color-mix(in srgb, var(--sombra) 70%, transparent); }
+#subs div { display: none; }
+#subs div.si { display: block; }
+#subs span { margin: 0 .08em; }
+#subs .no { opacity: .38; }
+#subs .ahora { color: var(--tinta); background: var(--ink); border-radius: 12px; padding: 0 .14em; text-shadow: none; }
+/* pie: las fuentes de los geodatos */
+#pie { position: absolute; top: var(--pie-y); left: var(--izq); width: var(--col); font: 600 20px/1.3 'JetBrains Mono', monospace; letter-spacing: .02em;
+  color: color-mix(in srgb, var(--ink) 80%, transparent); }
+/* «Sígueme» a mitad del video: el botón propio, sin cuenta (en crema: el acento es del 3D) */
+.vseguir { position: absolute; top: var(--seguir-y); right: var(--seguir-der); display: flex; align-items: center; gap: 14px; padding: 8px 12px 8px 8px; border-radius: 40px;
+  background: color-mix(in srgb, var(--sombra) 88%, transparent); border: 2px solid color-mix(in srgb, var(--ink) 18%, transparent); opacity: 0; will-change: transform, opacity; }
+.vseguir .bt, #cierre .bt { position: relative; overflow: hidden; width: 226px; height: 54px; border-radius: 27px; background: var(--ink); border: 3px solid var(--ink);
+  display: flex; align-items: center; justify-content: center; }
+.bt .lbl, .bt .ya { position: absolute; display: flex; align-items: center; gap: 8px; font: 800 28px/1 Archivo, sans-serif; white-space: nowrap; }
+.bt .lbl { color: var(--tinta); }
+.bt .ya { color: var(--ink); opacity: 0; }
+.bt .ya svg { width: 26px; height: 26px; stroke: var(--ink); fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.vseguir .bt.hecho, #cierre .bt.hecho { background: transparent; }
+.bt.hecho .lbl { opacity: 0; }
+.bt.hecho .ya { opacity: 1; }
+.vseguir .cam { position: relative; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; transform-origin: 50% 8%; }
+.vseguir .cam svg { width: 40px; height: 40px; stroke: var(--ink); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+/* cierre: un velo del fondo sobre el mundo, la frase final que se enciende con la voz y «Sígueme en» con las redes */
+.velo { position: absolute; inset: 0; background: var(--sombra); opacity: 0; }
+#cierre .col { position: absolute; top: var(--cierre-y); left: var(--izq); width: var(--col); display: flex; flex-direction: column; gap: var(--cierre-gap); }
+#cierre .frase { font: 800 var(--frase-px)/1.04 Archivo, sans-serif; letter-spacing: -.02em; }
+#cierre .frase span { display: inline-block; margin-right: .24em; opacity: .35; }
+#cierre .frase span.ya { opacity: 1; }
+#cierre .sigue { opacity: 0; will-change: transform, opacity; }
+#cierre .sigue .fila { display: flex; align-items: center; gap: 26px; margin-bottom: 10px; }
+#cierre .sigue .t { font: 600 28px/1 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; }
+#cierre .sigue .c { display: flex; align-items: center; gap: 22px; margin-top: var(--red-gap); }
+#cierre .sigue .i { width: var(--red-px); height: var(--red-px); border-radius: 14px; background: var(--ink); display: flex; align-items: center; justify-content: center; }
+#cierre .sigue .i svg { width: 56%; height: 56%; fill: var(--tinta); stroke: var(--tinta); }
+#cierre .sigue .h { font: 800 var(--red-txt)/1 Archivo, sans-serif; letter-spacing: -.005em; }
+#cierre .sigue.enfila { display: flex; flex-wrap: wrap; align-items: center; column-gap: 40px; }
+#cierre .sigue.enfila .fila { width: 100%; }

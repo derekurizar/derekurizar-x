@@ -1,0 +1,46 @@
+{
+ "set": "guatemala",
+ "nombre": "Guatemala",
+ "caja": {
+  "lon_min": -92.8,
+  "lon_max": -87.6,
+  "lat_min": 13.4,
+  "lat_max": 18.2
+ },
+ "capas": {
+  "relieve": {
+   "fuente": "Mapzen Terrain Tiles (AWS Open Data), formato terrarium, zoom 8",
+   "url": "https://registry.opendata.aws/terrain-tiles/",
+   "licencia": "Datos abiertos; atribución según la fuente de cada mosaico (SRTM, GMTED2010, ETOPO1 y otros)",
+   "atribucion": "Relieve: Mapzen Terrain Tiles",
+   "descarga": "2026-11-14"
+  },
+  "fallas": {
+   "fuente": "GEM Global Active Faults Database (Styron y Pagani, 2020), capa armonizada",
+   "url": "https://raw.githubusercontent.com/GEMScienceTools/gem-global-active-faults/master/geojson/gem_active_faults_harmonized.geojson",
+   "licencia": "CC BY-SA 4.0",
+   "atribucion": "Fallas: GEM (CC BY-SA 4.0)",
+   "descarga": "2026-11-14"
+  },
+  "frontera": {
+   "fuente": "Natural Earth 1:50m (design/mapas/paises-50m.json)",
+   "url": "https://www.naturalearthdata.com/",
+   "licencia": "Dominio público",
+   "atribucion": "Frontera: Natural Earth",
+   "descarga": "2026-11-14"
+  },
+  "lugares": {
+   "fuente": "OpenStreetMap (Overpass API): nodos place=city|town del país y los pueblos del piloto",
+   "url": "https://www.openstreetmap.org/copyright",
+   "licencia": "ODbL 1.0",
+   "atribucion": "Lugares: © OpenStreetMap",
+   "descarga": "2026-11-14"
+  }
+ },
+ "pie": "Relieve: Mapzen Terrain Tiles · Fallas: GEM (CC BY-SA 4.0) · Frontera: Natural Earth · Lugares: © OpenStreetMap",
+ "pie_claves": {
+  "relieve": "Mapzen",
+  "fallas": "GEM",
+  "lugares": "OpenStreetMap"
+ }
+}

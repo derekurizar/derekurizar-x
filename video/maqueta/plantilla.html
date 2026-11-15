@@ -1,0 +1,35 @@
+<!doctype html>
+<!-- Maqueta 3D de /video-3d: composición de HyperFrames que escribe scripts/maqueta3d.py (no se edita a mano).
+     El lienzo #gl lo dibuja assets/motor.js (three.js) y la capa 2D assets/capa.js, los dos como función pura del
+     tiempo que pide HyperFrames (evento hf-seek). Los datos llegan resueltos en assets/datos.js (window.MAQUETA).
+     Colores y medidas: variables de :root inyectadas desde design/tokens.json y design/sets3d/estilos.json. -->
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=@W@, height=@H@" />
+    <style>
+@RAIZ_CSS@
+@CSS@
+    </style>
+  </head>
+  <body data-estilo="@ESTILO@">
+    <div id="root" data-composition-id="main" data-start="0" data-duration="@D@" data-fps="@FPS@" data-width="@W@" data-height="@H@"
+      data-layout-allow-overflow data-layout-allow-overlap>
+      <canvas id="gl" class="clip" width="@W@" height="@H@" data-start="0" data-duration="@D@" data-track-index="0"></canvas>
+      <div class="capa">
+@CAPA@
+      </div>
+    </div>
+    <script src="assets/gsap.min.js"></script>
+    <script>
+      // La línea de tiempo solo fija la duración (el lint la exige): todo se dibuja en el listener hf-seek.
+      const tl = gsap.timeline({ paused: true });
+      tl.set({}, {}, @D@);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+    </script>
+    <script src="assets/datos.js"></script>
+    <script src="assets/capa.js"></script>
+    <script type="module" src="assets/motor.js"></script>
+  </body>
+</html>

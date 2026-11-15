@@ -1,0 +1,49 @@
+{
+ "set": "guatemala",
+ "archivo": "relieve.png",
+ "ancho": 1440,
+ "alto": 1350,
+ "caja": {
+  "lon_min": -95.0,
+  "lon_max": -85.4,
+  "lat_min": 11.4,
+  "lat_max": 20.4
+ },
+ "desfase_m": 8000,
+ "codificacion": "altura_m = R*256 + G - desfase_m; fila 0 = norte; la celda es el centro de su casilla",
+ "min_m": -6645,
+ "max_m": 4173,
+ "proyeccion": {
+  "lon0": -90.2,
+  "lat0": 15.899999999999999,
+  "km_lon": 107.061,
+  "km_lat": 110.574
+ },
+ "muestras": [
+  [
+   205,
+   270,
+   -38
+  ],
+  [
+   720,
+   675,
+   204
+  ],
+  [
+   1080,
+   450,
+   -58
+  ],
+  [
+   480,
+   1080,
+   -4927
+  ],
+  [
+   1435,
+   4,
+   -4621
+  ]
+ ]
+}

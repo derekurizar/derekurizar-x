@@ -16,8 +16,8 @@ Subcomandos (TRABAJO = sesiones/video3d-<slug>):
         crea TRABAJO; --desde copia las cifras verificadas (base/datos.json) de un trabajo o una entrega anterior
   datos TRABAJO --sumar ARCHIVO      añade a base/datos.json las cifras verificadas de un verificacion_*.json
   digesto TRABAJO                    lo que necesita quien escribe: cifras, lugares, piezas, eventos, estilos, reglas
-  ganchos TRABAJO --check | --cuadros | --usar ID
-        ganchos.json (5 candidatos a escena 1): reglas del gancho; un cuadro renderizado por candidato; copia el elegido
+  ganchos TRABAJO --check [--cuadros] [--clips] | --usar ID
+        ganchos.json (5 candidatos a escena 1): reglas del gancho; cuadros y clip mudo de cada candidato; copia el elegido
   guion TRABAJO --check              gates C3D1–C3D10 (concordancia) + V2–V4 → locucion.json y maqueta.json (estimado)
   storyboard TRABAJO                 un cuadro por clave de cámara y por evento → storyboard/hoja.jpg (antes de la voz)
   voz | voz-falsa | descargar | partir TRABAJO […]    → scripts/video.py (los mismos comandos de /video)
@@ -300,7 +300,7 @@ def revisar_guion(g, st, trabajo):
                 m = o.get("mira")
                 if isinstance(m, str) and m not in lugares:
                     fallas.append("C3D3 escena %d: la cámara mira «%s», que no es un lugar del set ni de mundo.lugares" % (n, m))
-            if clase == "marca" and o.get("lugar") not in lugares:
+            if clase == "marca" and isinstance(o.get("lugar"), str) and o["lugar"] not in lugares:
                 fallas.append("C3D3 escena %d: marca en «%s», que no es un lugar del set ni de mundo.lugares" % (n, o.get("lugar")))
             if clase == "evento":
                 if o.get("tipo") not in EVENTOS:
@@ -321,14 +321,14 @@ def revisar_guion(g, st, trabajo):
                 if c and c.get("una_fuente") and not (o.get("fuente") or "").strip():
                     fallas.append("C3D4 escena %d: «%s» sale de una sola fuente: lleva `fuente` en pantalla" % (n, o.get("valor")))
         # C3D3 cada lugar que la voz nombra tiene su marca (en esta escena o viva de antes) o es adonde mira la cámara
-        marcas_e = {m.get("lugar") for m in e.get("marcas") or []}
+        marcas_e = {m.get("lugar") for m in e.get("marcas") or [] if isinstance(m.get("lugar"), str)}
         miras_e = {c.get("mira") for c in e.get("camara") or [] if isinstance(c.get("mira"), str)}
         for k, toks in nombres.items():
             dicho = any(norm[i:i + len(toks)] == toks for i in range(len(norm) - len(toks) + 1))
             if dicho and k not in marcas_e and k not in miras_e and k not in vivas:
                 fallas.append("C3D3 escena %d: la voz nombra «%s» y no hay marca ni la cámara lo mira: lo que se oye se ve"
                               % (n, lugares[k].get("nombre")))
-        vivas = {m.get("lugar") for m in e.get("marcas") or [] if isinstance(m.get("hasta"), int) and m["hasta"] > n} | \
+        vivas = {m.get("lugar") for m in e.get("marcas") or [] if isinstance(m.get("hasta"), int) and m["hasta"] > n and isinstance(m.get("lugar"), str)} | \
                 {k for k in vivas if any(isinstance(m.get("hasta"), int) and m["hasta"] > n and m.get("lugar") == k
                                          for e2 in escenas[:n] for m in e2.get("marcas") or [])}
         t0 += x["estimado_s"]
@@ -478,7 +478,7 @@ def construir(trabajo, g, loc, real, solo_escenas=None):
             actos.append(x["off"])
     mundo = g.get("mundo") or {}
     capa = {"titulares": titulares, "cifras": cifras, "palabras": palabras, "progreso": {"actos": actos},
-            "seguir": {"t": cuadro(total * 0.5), "dur": SEGUIR_S}, "aviso": AVISO_MAQUETA,
+            "seguir": {"t": cuadro(total * 0.5), "dur": SEGUIR_S}, "aviso": g.get("aviso") or AVISO_MAQUETA,
             "pie": g.get("pie") or pie_del_set(mundo.get("set")), "handle": HANDLE}
     if cierre_x:
         ce = next(e for e in escenas_de(g) if e.get("tipo") == "cierre")
@@ -638,8 +638,9 @@ def cmd_ganchos(a):
             return falla("no hay candidato «%s» (%s)" % (a.usar, ", ".join(x["id"] for x in cands)))
         rg = os.path.join(trabajo, "guion.json")
         g = leer(rg) if os.path.exists(rg) else {"tipo": "video3d", "version": 1, "escenas": []}
-        for k in ("estilo", "idea_visual", "protagonista", "mundo"):
-            g.setdefault(k, G.get(k))
+        for k in ("estilo", "idea_visual", "protagonista", "mundo", "pie", "aviso"):
+            if G.get(k) is not None:
+                g.setdefault(k, G[k])
         esc = dict(c["escena"], n=1, tipo="gancho")
         g["gancho"] = {"id": c["id"], "familia": c.get("familia"), "elegido_por": a.por}
         g["escenas"] = [esc] + [e for e in g.get("escenas") or [] if e.get("n") != 1 and e.get("tipo") != "gancho"]
@@ -655,23 +656,39 @@ def cmd_ganchos(a):
     rc = 0
     for c in cands:
         g = {"estilo": G.get("estilo"), "idea_visual": G.get("idea_visual"), "protagonista": G.get("protagonista"),
-             "mundo": G.get("mundo"), "escenas": [dict(c["escena"], n=1, tipo="gancho", acto=1), dict(cierre, acto=1)]}
+             "mundo": G.get("mundo"), "pie": G.get("pie"), "aviso": G.get("aviso"), "escenas": [dict(c["escena"], n=1, tipo="gancho", acto=1), dict(cierre, acto=1)]}
         f, _, loc = revisar_guion(g, dict(st, duracion_s=0), trabajo)
         f = [x for x in f if not x.startswith(("C3D1 %d escenas" % 2, "C3D9", "C3D7"))]
         for x in f:
             fallas.append("%s · %s" % (c["id"], x))
-        if a.cuadros and not f and isinstance(loc, dict):
+        if (a.cuadros or a.clips) and not f and isinstance(loc, dict):
             maqueta, _, _ = construir(trabajo, g, loc, real=False)
             carpeta = os.path.join(trabajo, "ganchos", c["id"])
             rm = os.path.join(carpeta, "maqueta.json")
-            escribir(rm, maqueta)
             fin = loc["escenas"][0]["estimado_s"]
-            ts = sorted({0.0, round(min(1.0, fin), 2), round(fin * 0.5, 2), round(max(0.0, fin - 0.3), 2)})
-            rc |= cuadros(rm, ts, carpeta, a.formato)
+            # la maqueta de una sola escena: sin «Sígueme» ni cierre, y solo lo que dura el gancho
+            for k in ("seguir", "cierre"):
+                maqueta["capa"].pop(k, None)
+            maqueta["duracion_s"] = cuadro(fin + 0.6)
+            maqueta["camara"] = [k for k in maqueta["camara"] if k["t"] <= fin + 0.01]
+            maqueta["capa"]["palabras"] = [w for w in maqueta["capa"]["palabras"] if w["start"] < fin]
+            for lista in (maqueta["marcas"], maqueta["capa"]["cifras"], maqueta["capa"]["titulares"]):
+                for o in lista:
+                    o["hasta"] = min(o["hasta"], maqueta["duracion_s"])
+            escribir(rm, maqueta)
+            if a.clips:   # el gancho en movimiento, sin voz y con los tiempos estimados
+                rc_c = subprocess.call([sys.executable, MAQUETA3D, "render", rm, "--dir", os.path.join(carpeta, "render"),
+                                        "--formato", a.formato, "--borrador"])
+                if not rc_c:
+                    shutil.copyfile(os.path.join(carpeta, "render", FORMATOS[a.formato][0], "video.mp4"), os.path.join(carpeta, "gancho.mp4"))
+                rc |= rc_c
+            if a.cuadros:
+                ts = sorted({0.0, round(min(1.0, fin), 2), round(fin * 0.5, 2), round(max(0.0, fin - 0.3), 2)})
+                rc |= cuadros(rm, ts, carpeta, a.formato)
     for x in fallas:
         print("FALLA", x)
     if not fallas:
-        print("%d candidatos ok%s" % (len(cands), " · cuadros en %s" % rel(os.path.join(trabajo, "ganchos")) if a.cuadros else ""))
+        print("%d candidatos ok%s" % (len(cands), " · cuadros y clips en %s" % rel(os.path.join(trabajo, "ganchos")) if a.cuadros or a.clips else ""))
     return 1 if fallas or rc else 0
 
 
@@ -870,6 +887,7 @@ def main():
     s.add_argument("trabajo")
     s.add_argument("--check", action="store_true")
     s.add_argument("--cuadros", action="store_true")
+    s.add_argument("--clips", action="store_true")
     s.add_argument("--usar")
     s.add_argument("--por", default="usuario")
     s.add_argument("--formato", default="9:16")

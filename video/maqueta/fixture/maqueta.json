@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "_comentario": "Maqueta de prueba del motor (13 s inventados sobre el set real). No es un video: los textos y las cifras son de relleno.",
+  "estilo": "noche",
+  "paleta": "obsidiana",
+  "fps": 30,
+  "duracion_s": 13.0,
+  "protagonista": "motagua",
+  "mundo": {
+    "set": "guatemala",
+    "exageracion": 5.0,
+    "lugares": {},
+    "piezas": [
+      {"id": "motagua", "tipo": "falla", "trazos": ["Western Motagua Fault", "Motagua Fault"]},
+      {"id": "pueblos", "tipo": "luces", "lugares": "todos"},
+      {"id": "frontera", "tipo": "frontera"}
+    ]
+  },
+  "camara": [
+    {"t": 0.0, "mira": "los-amates", "dist_km": 430, "azimut": 0, "elevacion": 58},
+    {"t": 4.0, "mira": [-89.6, 15.0], "dist_km": 190, "azimut": -18, "elevacion": 36},
+    {"t": 7.6, "mira": "guatemala", "dist_km": 170, "azimut": -32, "elevacion": 33},
+    {"t": 11.0, "mira": [-90.25, 15.75], "dist_km": 980, "azimut": 0, "elevacion": 66}
+  ],
+  "eventos": [
+    {"t": 0.0, "dur": 3.4, "tipo": "ruptura", "pieza": "motagua", "desde": "los-amates", "km_oeste": 170, "km_este": 40, "sfx": "grave"},
+    {"t": 4.2, "dur": 2.4, "tipo": "deslizar", "pieza": "motagua", "en": [-89.7, 14.98], "km": 80},
+    {"t": 6.4, "dur": 2.8, "tipo": "onda", "pieza": "motagua", "radio_km": 140, "sfx": "pulso"},
+    {"t": 7.0, "dur": 1.8, "tipo": "parpadear", "lugares": ["guatemala", "chimaltenango", "mixco"]}
+  ],
+  "marcas": [
+    {"t": 2.0, "hasta": 5.4, "lugar": "los-amates", "texto": "Los Amates, Izabal", "sub": "Epicentro"},
+    {"t": 7.4, "hasta": 9.4, "lugar": "guatemala", "texto": "Ciudad de Guatemala"}
+  ],
+  "capa": {
+    "titulares": [
+      {"t": 0.0, "hasta": 4.0, "kicker": "Maqueta de prueba", "texto": "La falla se enciende"},
+      {"t": 6.0, "hasta": 9.4, "kicker": "Segundo titular", "texto": "Y la onda alcanza la capital"}
+    ],
+    "cifras": [
+      {"t": 2.6, "hasta": 5.6, "valor": "210 km", "rotulo": "de falla encendida", "fuente": "dato de prueba"}
+    ],
+    "palabras": [
+      {"text": "En", "start": 0.3, "end": 0.42}, {"text": "el", "start": 0.42, "end": 0.52}, {"text": "segundo", "start": 0.52, "end": 0.92},
+      {"text": "cero", "start": 0.92, "end": 1.3}, {"text": "la", "start": 1.4, "end": 1.5}, {"text": "falla", "start": 1.5, "end": 1.86},
+      {"text": "se", "start": 1.86, "end": 1.98}, {"text": "rompe.", "start": 1.98, "end": 2.5},
+      {"text": "Corre", "start": 2.9, "end": 3.2}, {"text": "210", "start": 3.2, "end": 3.9}, {"text": "kilómetros", "start": 3.9, "end": 4.5},
+      {"text": "hacia", "start": 4.5, "end": 4.8}, {"text": "la", "start": 4.8, "end": 4.9}, {"text": "capital.", "start": 4.9, "end": 5.5},
+      {"text": "Un", "start": 5.9, "end": 6.0}, {"text": "lado", "start": 6.0, "end": 6.3}, {"text": "va", "start": 6.3, "end": 6.45},
+      {"text": "al", "start": 6.45, "end": 6.55}, {"text": "oeste", "start": 6.55, "end": 6.95}, {"text": "y", "start": 6.95, "end": 7.02},
+      {"text": "el", "start": 7.02, "end": 7.12}, {"text": "otro", "start": 7.12, "end": 7.4}, {"text": "al", "start": 7.4, "end": 7.5},
+      {"text": "este.", "start": 7.5, "end": 8.0},
+      {"text": "La", "start": 8.3, "end": 8.4}, {"text": "onda", "start": 8.4, "end": 8.7}, {"text": "llega", "start": 8.7, "end": 9.0},
+      {"text": "a", "start": 9.0, "end": 9.06}, {"text": "todos.", "start": 9.06, "end": 9.5},
+      {"text": "Esto", "start": 9.9, "end": 10.15}, {"text": "es", "start": 10.15, "end": 10.3}, {"text": "una", "start": 10.3, "end": 10.45},
+      {"text": "prueba.", "start": 10.45, "end": 11.0}
+    ],
+    "progreso": {"actos": [0.0, 4.0, 8.0]},
+    "seguir": {"t": 4.0, "dur": 2.0},
+    "aviso": "Maqueta · no a escala",
+    "pie": "Relieve: Mapzen Terrain Tiles · Fallas: GEM (CC BY-SA 4.0) · Lugares: © OpenStreetMap · Frontera: Natural Earth",
+    "handle": "@DerekUrizar",
+    "cierre": {"t": 9.7, "frase": "Esto es una prueba.", "redes": [{"nombre": "TikTok", "handle": "@derekurizargt"}, {"nombre": "Instagram", "handle": "@derekurizargt"}, {"nombre": "X", "handle": "@DerekUrizar"}]}
+  }
+}
