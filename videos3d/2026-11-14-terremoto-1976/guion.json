@@ -1,0 +1,459 @@
+{
+  "tipo": "video3d",
+  "version": 1,
+  "idea_visual": "La falla es lo único encendido: una línea naranja que cruza el país a oscuras mientras duerme.",
+  "estilo": {
+    "id": "noche",
+    "razon": "Ocurrió a las tres de la madrugada, con el país dormido: el mapa a oscuras con las luces de los pueblos es la escena real, y la falla que se rompe es lo único que se enciende.",
+    "confianza": "alta"
+  },
+  "protagonista": "ruptura",
+  "mundo": {
+    "set": "guatemala",
+    "exageracion": 5,
+    "lugares": {
+      "epicentro": {
+        "lon": -89.1,
+        "lat": 15.32,
+        "nombre": "Epicentro de 1976"
+      }
+    },
+    "piezas": [
+      {
+        "id": "ruptura",
+        "tipo": "falla",
+        "puntos": [
+          [
+            -90.70722,
+            14.86057
+          ],
+          [
+            -90.6001,
+            14.84294
+          ],
+          [
+            -90.50109,
+            14.83493
+          ],
+          [
+            -90.3209,
+            14.83012
+          ],
+          [
+            -90.13418,
+            14.84935
+          ],
+          [
+            -89.9994,
+            14.875
+          ],
+          [
+            -89.50068,
+            15.05128
+          ],
+          [
+            -89.33879,
+            15.13301
+          ],
+          [
+            -89.18834,
+            15.20352
+          ],
+          [
+            -89.00519,
+            15.29326
+          ]
+        ]
+      },
+      {
+        "id": "pueblos",
+        "tipo": "luces",
+        "lugares": "todos"
+      },
+      {
+        "id": "frontera",
+        "tipo": "frontera"
+      }
+    ]
+  },
+  "pie": "Relieve: Mapzen Terrain Tiles · Traza: USGS (PP 1002) · Frontera: Natural Earth · Lugares: © OpenStreetMap",
+  "aviso": "Maqueta · no a escala · traza esquemática",
+  "gancho": {
+    "id": "g1",
+    "familia": "ruptura",
+    "elegido_por": "usuario"
+  },
+  "cierre": {
+    "id": "c1",
+    "tipo": "remate",
+    "forma": "consecuencia",
+    "elegido_por": "usuario"
+  },
+  "promesa": {
+    "forma": "contradiccion",
+    "texto": "Pero la mayoría de los muertos no estaba aquí.",
+    "en": 2,
+    "pago": 5
+  },
+  "no_afirmar": [
+    "la fisura llegando al mar o pasando por la capital",
+    "la ruptura solo hacia el oeste",
+    "3 m en toda la falla",
+    "una grieta abierta o un escalón",
+    "que la dirección de la ruptura causó las muertes (es interpretación del USGS)"
+  ],
+  "cifras_voz": [
+    "ruptura-c09",
+    "ruptura-c10",
+    "ruptura-c30",
+    "ruptura-c05"
+  ],
+  "narracion": "A las 3 de la madrugada, una falla se rompió a lo largo de Guatemala. El terremoto empezó aquí, cerca de Los Amates, en Izabal. Pero la mayoría de los muertos no estaba aquí. Fue de magnitud 7.5. La ruptura corrió unos 230 kilómetros por la falla del Motagua, sobre todo hacia el oeste. Pasó a 25 kilómetros de la capital. Y en un tramo, el suelo se corrió de lado más de 3 metros. Y 6 de cada 10 muertos estaban lejos del epicentro: en Chimaltenango. Ahí las casas eran de adobe y teja, y cayeron sobre gente dormida. Unas 23,000 personas murieron en todo el país. La falla sigue ahí, debajo de los mismos pueblos.",
+  "escenas": [
+    {
+      "secuencia": 1,
+      "texto": "A las 3 de la madrugada, una falla se rompió a lo largo de Guatemala.",
+      "titular": {
+        "kicker": "4 DE FEBRERO DE 1976",
+        "texto": "La madrugada que se rompió la falla",
+        "dura": 5.0
+      },
+      "camara": [
+        {
+          "mira": [
+            -90.25,
+            15.55
+          ],
+          "dist_km": 1080,
+          "azimut": 0,
+          "elevacion": 68
+        },
+        {
+          "al": "fin",
+          "mira": [
+            -89.9,
+            15.0
+          ],
+          "dist_km": 620,
+          "azimut": -10,
+          "elevacion": 54
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "ruptura",
+          "pieza": "ruptura",
+          "desde": "epicentro",
+          "km_oeste": 200,
+          "km_este": 30,
+          "dur": 3.4,
+          "sfx": "grave"
+        }
+      ],
+      "n": 1,
+      "tipo": "gancho",
+      "acto": 1
+    },
+    {
+      "n": 2,
+      "tipo": "toma",
+      "acto": 1,
+      "secuencia": 1,
+      "texto": "El terremoto empezó aquí, cerca de Los Amates, en Izabal. Pero la mayoría de los muertos no estaba aquí.",
+      "camara": [
+        {
+          "dice": "Los Amates",
+          "mira": "epicentro",
+          "dist_km": 250,
+          "azimut": -15,
+          "elevacion": 40
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "aquí",
+          "tipo": "resaltar",
+          "lugar": "epicentro",
+          "dur": 2.2,
+          "adelanto": 0.2,
+          "sfx": "pulso"
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "aquí",
+          "lugar": "epicentro",
+          "texto": "Los Amates, Izabal",
+          "sub": "Epicentro"
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "tipo": "toma",
+      "acto": 2,
+      "secuencia": 2,
+      "texto": "Fue de magnitud 7.5. La ruptura corrió unos 230 kilómetros por la falla del Motagua, sobre todo hacia el oeste.",
+      "titular": {
+        "kicker": "4 DE FEBRERO DE 1976 · FALLA DEL MOTAGUA",
+        "texto": "Se rompió sobre todo hacia el oeste",
+        "dice": "La ruptura"
+      },
+      "camara": [
+        {
+          "dice": "hacia el oeste",
+          "mira": [
+            -89.9,
+            15.0
+          ],
+          "dist_km": 560,
+          "azimut": 0,
+          "elevacion": 58
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "corrió",
+          "tipo": "resaltar",
+          "pieza": "ruptura",
+          "dur": 3.0,
+          "sfx": "riser"
+        }
+      ],
+      "cifras": [
+        {
+          "dice": "7.5",
+          "valor": "7.5",
+          "rotulo": "de magnitud",
+          "cifra": "dias-h01-n1",
+          "fuente": "USGS",
+          "dura": 2.6
+        },
+        {
+          "dice": "230",
+          "valor": "230 km",
+          "rotulo": "de falla rota",
+          "cifra": "ruptura-c01",
+          "fuente": "USGS"
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "La ruptura",
+          "lugar": "epicentro",
+          "texto": "Los Amates, Izabal",
+          "sub": "Epicentro"
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "tipo": "toma",
+      "acto": 2,
+      "secuencia": 2,
+      "texto": "Pasó a 25 kilómetros de la capital. Y en un tramo, el suelo se corrió de lado más de 3 metros.",
+      "camara": [
+        {
+          "dice": "la capital",
+          "mira": [
+            -90.51,
+            14.75
+          ],
+          "dist_km": 230,
+          "azimut": 0,
+          "elevacion": 62
+        },
+        {
+          "al": "fin",
+          "mira": "chuarrancho",
+          "dist_km": 175,
+          "azimut": 22,
+          "elevacion": 40
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "se corrió",
+          "tipo": "deslizar",
+          "pieza": "ruptura",
+          "en": "chuarrancho",
+          "km": 20,
+          "dur": 4.2,
+          "adelanto": 0.3,
+          "sfx": "whoosh"
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "la capital",
+          "lugar": "guatemala",
+          "texto": "Ciudad de Guatemala",
+          "sub": "A 25 km",
+          "dura": 2.35
+        }
+      ],
+      "cifras": [
+        {
+          "dice": "el suelo",
+          "valor": "3.25 metros",
+          "rotulo": "de corrimiento máximo",
+          "cifra": "ruptura-c10m",
+          "fuente": "USGS"
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "tipo": "toma",
+      "acto": 3,
+      "secuencia": 3,
+      "texto": "Y 6 de cada 10 muertos estaban lejos del epicentro: en Chimaltenango. Ahí las casas eran de adobe y teja, y cayeron sobre gente dormida.",
+      "titular": {
+        "kicker": "CHIMALTENANGO",
+        "texto": "Lejos del epicentro",
+        "dice": "Ahí"
+      },
+      "camara": [
+        {
+          "dice": "lejos del epicentro",
+          "mira": [
+            -89.9,
+            15.1
+          ],
+          "dist_km": 800,
+          "azimut": 0,
+          "elevacion": 60
+        },
+        {
+          "dice": "en Chimaltenango",
+          "mira": [
+            -89.9,
+            15.1
+          ],
+          "dist_km": 800,
+          "azimut": 0,
+          "elevacion": 60
+        },
+        {
+          "dice": "adobe y teja",
+          "mira": "chimaltenango",
+          "dist_km": 320,
+          "azimut": -15,
+          "elevacion": 45
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "epicentro",
+          "tipo": "resaltar",
+          "lugar": "epicentro",
+          "dur": 1.6,
+          "sfx": "pulso"
+        },
+        {
+          "dice": "cayeron",
+          "tipo": "parpadear",
+          "lugares": [
+            "chimaltenango",
+            "san-martin-jilotepeque",
+            "san-jose-poaquil",
+            "san-juan-comalapa",
+            "tecpan",
+            "santa-cruz-balanya",
+            "patzicia",
+            "patzun",
+            "el-tejar",
+            "parramos",
+            "san-andres-itzapa",
+            "zaragoza"
+          ],
+          "dur": 2.5,
+          "sfx": "impacto"
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "Chimaltenango",
+          "lugar": "chimaltenango",
+          "texto": "Chimaltenango",
+          "sub": "6 de cada 10 muertos"
+        }
+      ],
+      "cifras": [
+        {
+          "dice": "6 de cada 10",
+          "valor": "60 %",
+          "rotulo": "de las muertes, en Chimaltenango",
+          "cifra": "dias-c10",
+          "fuente": "IARNA-URL"
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "tipo": "toma",
+      "acto": 3,
+      "secuencia": 3,
+      "texto": "Unas 23,000 personas murieron en todo el país.",
+      "camara": [
+        {
+          "al": "fin",
+          "mira": [
+            -90.25,
+            15.45
+          ],
+          "dist_km": 900,
+          "azimut": 0,
+          "elevacion": 62
+        }
+      ],
+      "cifras": [
+        {
+          "dice": "23,000",
+          "valor": "23,000",
+          "rotulo": "muertos en todo el país",
+          "cifra": "dias-c02"
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "tipo": "cierre",
+      "acto": 3,
+      "texto": "La falla sigue ahí, debajo de los mismos pueblos.",
+      "final": "La falla sigue ahí.",
+      "camara": [
+        {
+          "al": "fin",
+          "mira": [
+            -90.25,
+            15.55
+          ],
+          "dist_km": 1080,
+          "azimut": 0,
+          "elevacion": 68
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "sigue ahí",
+          "tipo": "resaltar",
+          "pieza": "ruptura",
+          "dur": 2.6,
+          "adelanto": 0.2
+        }
+      ]
+    }
+  ],
+  "caption": {
+    "tiktok": "El terremoto de 1976 en Guatemala: la falla del Motagua se rompió a las 3 de la madrugada\n230 km de falla, magnitud 7.5 y unas 23,000 muertes. Seis de cada diez, en Chimaltenango, lejos del epicentro.\nMaqueta con la traza que publicó el USGS.\n#Guatemala #Terremoto1976 #FallaDelMotagua #Historia",
+    "instagram": "El terremoto de 1976 en Guatemala: la falla del Motagua se rompió a las 3 de la madrugada\n230 km de falla, magnitud 7.5 y unas 23,000 muertes. Seis de cada diez, en Chimaltenango, lejos del epicentro.\nMaqueta con la traza que publicó el USGS.\n#Guatemala #Terremoto1976 #FallaDelMotagua #Historia",
+    "facebook": "El terremoto de 1976 en Guatemala: la falla del Motagua se rompió a las 3 de la madrugada\n230 km de falla, magnitud 7.5 y unas 23,000 muertes. Seis de cada diez, en Chimaltenango, lejos del epicentro.\nMaqueta con la traza que publicó el USGS.\n#Guatemala #Terremoto1976 #FallaDelMotagua #Historia",
+    "shorts": "La madrugada que se rompió la falla del Motagua (Guatemala, 1976)\n230 km de falla, magnitud 7.5 y unas 23,000 muertes. Seis de cada diez, en Chimaltenango, lejos del epicentro.\nMaqueta con la traza que publicó el USGS.\n#Guatemala #Terremoto1976 #FallaDelMotagua #Historia"
+  },
+  "critica": {
+    "vuelta": 1,
+    "veredicto_previo": "corregir",
+    "aplicado": "faltas 1–6 (probadas por el crítico) y mejoras 5, 6 y 8"
+  }
+}

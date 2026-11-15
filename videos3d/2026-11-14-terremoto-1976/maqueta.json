@@ -1,0 +1,962 @@
+{
+  "version": 1,
+  "estilo": "noche",
+  "paleta": "obsidiana",
+  "fps": 30,
+  "duracion_s": 48.8,
+  "protagonista": "ruptura",
+  "mundo": {
+    "set": "guatemala",
+    "exageracion": 5,
+    "lugares": {
+      "epicentro": {
+        "lon": -89.1,
+        "lat": 15.32,
+        "nombre": "Epicentro de 1976"
+      }
+    },
+    "piezas": [
+      {
+        "id": "ruptura",
+        "tipo": "falla",
+        "puntos": [
+          [
+            -90.70722,
+            14.86057
+          ],
+          [
+            -90.6001,
+            14.84294
+          ],
+          [
+            -90.50109,
+            14.83493
+          ],
+          [
+            -90.3209,
+            14.83012
+          ],
+          [
+            -90.13418,
+            14.84935
+          ],
+          [
+            -89.9994,
+            14.875
+          ],
+          [
+            -89.50068,
+            15.05128
+          ],
+          [
+            -89.33879,
+            15.13301
+          ],
+          [
+            -89.18834,
+            15.20352
+          ],
+          [
+            -89.00519,
+            15.29326
+          ]
+        ]
+      },
+      {
+        "id": "pueblos",
+        "tipo": "luces",
+        "lugares": "todos"
+      },
+      {
+        "id": "frontera",
+        "tipo": "frontera"
+      }
+    ]
+  },
+  "camara": [
+    {
+      "mira": [
+        -90.25,
+        15.55
+      ],
+      "dist_km": 1080,
+      "azimut": 0,
+      "elevacion": 68,
+      "t": 0.0
+    },
+    {
+      "mira": [
+        -89.9,
+        15.0
+      ],
+      "dist_km": 620,
+      "azimut": -10,
+      "elevacion": 54,
+      "t": 3.9
+    },
+    {
+      "mira": "epicentro",
+      "dist_km": 250,
+      "azimut": -15,
+      "elevacion": 40,
+      "t": 6.4
+    },
+    {
+      "mira": [
+        -89.9,
+        15.0
+      ],
+      "dist_km": 560,
+      "azimut": 0,
+      "elevacion": 58,
+      "t": 19.0333
+    },
+    {
+      "mira": [
+        -90.51,
+        14.75
+      ],
+      "dist_km": 230,
+      "azimut": 0,
+      "elevacion": 62,
+      "t": 22.1667
+    },
+    {
+      "mira": "chuarrancho",
+      "dist_km": 175,
+      "azimut": 22,
+      "elevacion": 40,
+      "t": 27.5667
+    },
+    {
+      "mira": [
+        -89.9,
+        15.1
+      ],
+      "dist_km": 800,
+      "azimut": 0,
+      "elevacion": 60,
+      "t": 30.1667
+    },
+    {
+      "mira": [
+        -89.9,
+        15.1
+      ],
+      "dist_km": 800,
+      "azimut": 0,
+      "elevacion": 60,
+      "t": 31.7333
+    },
+    {
+      "mira": "chimaltenango",
+      "dist_km": 320,
+      "azimut": -15,
+      "elevacion": 45,
+      "t": 34.8
+    },
+    {
+      "mira": [
+        -90.25,
+        15.45
+      ],
+      "dist_km": 900,
+      "azimut": 0,
+      "elevacion": 62,
+      "t": 41.7
+    },
+    {
+      "mira": [
+        -90.25,
+        15.55
+      ],
+      "dist_km": 1080,
+      "azimut": 0,
+      "elevacion": 68,
+      "t": 46.0
+    }
+  ],
+  "eventos": [
+    {
+      "tipo": "ruptura",
+      "pieza": "ruptura",
+      "desde": "epicentro",
+      "km_oeste": 200,
+      "km_este": 30,
+      "dur": 3.4,
+      "sfx": "grave",
+      "t": 0.0
+    },
+    {
+      "tipo": "resaltar",
+      "lugar": "epicentro",
+      "dur": 2.2,
+      "sfx": "pulso",
+      "t": 5.1
+    },
+    {
+      "tipo": "resaltar",
+      "pieza": "ruptura",
+      "dur": 3.0,
+      "sfx": "riser",
+      "t": 14.8333
+    },
+    {
+      "tipo": "deslizar",
+      "pieza": "ruptura",
+      "en": "chuarrancho",
+      "km": 20,
+      "dur": 4.2,
+      "sfx": "whoosh",
+      "t": 24.5667
+    },
+    {
+      "tipo": "resaltar",
+      "lugar": "epicentro",
+      "dur": 1.6,
+      "sfx": "pulso",
+      "t": 30.6667
+    },
+    {
+      "tipo": "parpadear",
+      "lugares": [
+        "chimaltenango",
+        "san-martin-jilotepeque",
+        "san-jose-poaquil",
+        "san-juan-comalapa",
+        "tecpan",
+        "santa-cruz-balanya",
+        "patzicia",
+        "patzun",
+        "el-tejar",
+        "parramos",
+        "san-andres-itzapa",
+        "zaragoza"
+      ],
+      "dur": 2.5,
+      "sfx": "impacto",
+      "t": 36.2
+    },
+    {
+      "tipo": "resaltar",
+      "pieza": "ruptura",
+      "dur": 2.6,
+      "t": 42.6
+    }
+  ],
+  "marcas": [
+    {
+      "lugar": "epicentro",
+      "texto": "Los Amates, Izabal",
+      "sub": "Epicentro",
+      "t": 5.0333,
+      "hasta": 11.5667
+    },
+    {
+      "lugar": "epicentro",
+      "texto": "Los Amates, Izabal",
+      "sub": "Epicentro",
+      "t": 14.0667,
+      "hasta": 20.2667
+    },
+    {
+      "lugar": "guatemala",
+      "texto": "Ciudad de Guatemala",
+      "sub": "A 25 km",
+      "t": 21.9,
+      "hasta": 24.2667
+    },
+    {
+      "lugar": "chimaltenango",
+      "texto": "Chimaltenango",
+      "sub": "6 de cada 10 muertos",
+      "t": 31.7667,
+      "hasta": 38.0667
+    }
+  ],
+  "capa": {
+    "titulares": [
+      {
+        "t": 0.0,
+        "kicker": "4 DE FEBRERO DE 1976",
+        "texto": "La madrugada que se rompió la falla",
+        "hasta": 5.0
+      },
+      {
+        "t": 14.0667,
+        "kicker": "4 DE FEBRERO DE 1976 · FALLA DEL MOTAGUA",
+        "texto": "Se rompió sobre todo hacia el oeste",
+        "hasta": 20.2667
+      },
+      {
+        "t": 33.3333,
+        "kicker": "CHIMALTENANGO",
+        "texto": "Lejos del epicentro",
+        "hasta": 38.0667
+      }
+    ],
+    "cifras": [
+      {
+        "valor": "7.5",
+        "rotulo": "de magnitud",
+        "fuente": "USGS",
+        "t": 12.3,
+        "hasta": 14.9
+      },
+      {
+        "valor": "230 km",
+        "rotulo": "de falla rota",
+        "fuente": "USGS",
+        "t": 15.1,
+        "hasta": 20.2667
+      },
+      {
+        "valor": "3.25 metros",
+        "rotulo": "de corrimiento máximo",
+        "fuente": "USGS",
+        "t": 23.9333,
+        "hasta": 28.0333
+      },
+      {
+        "valor": "60 %",
+        "rotulo": "de las muertes, en Chimaltenango",
+        "fuente": "IARNA-URL",
+        "t": 28.0333,
+        "hasta": 38.0667
+      },
+      {
+        "valor": "23,000",
+        "rotulo": "muertos en todo el país",
+        "t": 38.4333,
+        "hasta": 42.1667
+      }
+    ],
+    "palabras": [
+      {
+        "text": "A",
+        "start": 0.0,
+        "end": 0.074
+      },
+      {
+        "text": "las",
+        "start": 0.148,
+        "end": 0.264
+      },
+      {
+        "text": "3",
+        "start": 0.306,
+        "end": 0.517
+      },
+      {
+        "text": "de",
+        "start": 0.559,
+        "end": 0.602
+      },
+      {
+        "text": "la",
+        "start": 0.644,
+        "end": 0.696
+      },
+      {
+        "text": "madrugada,",
+        "start": 0.749,
+        "end": 1.298
+      },
+      {
+        "text": "una",
+        "start": 1.34,
+        "end": 1.509
+      },
+      {
+        "text": "falla",
+        "start": 1.583,
+        "end": 1.868
+      },
+      {
+        "text": "se",
+        "start": 1.91,
+        "end": 1.985
+      },
+      {
+        "text": "rompió",
+        "start": 2.037,
+        "end": 2.48
+      },
+      {
+        "text": "a",
+        "start": 2.523,
+        "end": 2.544
+      },
+      {
+        "text": "lo",
+        "start": 2.575,
+        "end": 2.649
+      },
+      {
+        "text": "largo",
+        "start": 2.734,
+        "end": 3.04
+      },
+      {
+        "text": "de",
+        "start": 3.082,
+        "end": 3.135
+      },
+      {
+        "text": "Guatemala.",
+        "start": 3.177,
+        "end": 3.884
+      },
+      {
+        "text": "El",
+        "start": 4.241,
+        "end": 4.368
+      },
+      {
+        "text": "terremoto",
+        "start": 4.409,
+        "end": 4.811
+      },
+      {
+        "text": "empezó",
+        "start": 4.853,
+        "end": 5.244
+      },
+      {
+        "text": "aquí,",
+        "start": 5.297,
+        "end": 5.719
+      },
+      {
+        "text": "cerca",
+        "start": 5.877,
+        "end": 6.257
+      },
+      {
+        "text": "de",
+        "start": 6.299,
+        "end": 6.362
+      },
+      {
+        "text": "Los",
+        "start": 6.405,
+        "end": 6.531
+      },
+      {
+        "text": "Amates,",
+        "start": 6.605,
+        "end": 7.175
+      },
+      {
+        "text": "en",
+        "start": 7.291,
+        "end": 7.429
+      },
+      {
+        "text": "Izabal.",
+        "start": 7.502,
+        "end": 8.093
+      },
+      {
+        "text": "Pero",
+        "start": 8.441,
+        "end": 8.631
+      },
+      {
+        "text": "la",
+        "start": 8.674,
+        "end": 8.727
+      },
+      {
+        "text": "mayoría",
+        "start": 8.769,
+        "end": 9.149
+      },
+      {
+        "text": "de",
+        "start": 9.191,
+        "end": 9.244
+      },
+      {
+        "text": "los",
+        "start": 9.286,
+        "end": 9.391
+      },
+      {
+        "text": "muertos",
+        "start": 9.466,
+        "end": 9.877
+      },
+      {
+        "text": "no",
+        "start": 9.951,
+        "end": 10.046
+      },
+      {
+        "text": "estaba",
+        "start": 10.099,
+        "end": 10.489
+      },
+      {
+        "text": "aquí.",
+        "start": 10.521,
+        "end": 11.112
+      },
+      {
+        "text": "Fue",
+        "start": 11.567,
+        "end": 11.768
+      },
+      {
+        "text": "de",
+        "start": 11.799,
+        "end": 11.862
+      },
+      {
+        "text": "magnitud",
+        "start": 11.915,
+        "end": 12.474
+      },
+      {
+        "text": "7.5.",
+        "start": 12.549,
+        "end": 13.899
+      },
+      {
+        "text": "La",
+        "start": 14.3,
+        "end": 14.395
+      },
+      {
+        "text": "ruptura",
+        "start": 14.438,
+        "end": 14.775
+      },
+      {
+        "text": "corrió",
+        "start": 14.818,
+        "end": 15.092
+      },
+      {
+        "text": "unos",
+        "start": 15.124,
+        "end": 15.292
+      },
+      {
+        "text": "230",
+        "start": 15.335,
+        "end": 16.316
+      },
+      {
+        "text": "kilómetros",
+        "start": 16.359,
+        "end": 16.929
+      },
+      {
+        "text": "por",
+        "start": 16.981,
+        "end": 17.087
+      },
+      {
+        "text": "la",
+        "start": 17.129,
+        "end": 17.192
+      },
+      {
+        "text": "falla",
+        "start": 17.256,
+        "end": 17.53
+      },
+      {
+        "text": "del",
+        "start": 17.572,
+        "end": 17.668
+      },
+      {
+        "text": "Motagua,",
+        "start": 17.709,
+        "end": 18.279
+      },
+      {
+        "text": "sobre",
+        "start": 18.396,
+        "end": 18.639
+      },
+      {
+        "text": "todo",
+        "start": 18.68,
+        "end": 18.987
+      },
+      {
+        "text": "hacia",
+        "start": 19.049,
+        "end": 19.388
+      },
+      {
+        "text": "el",
+        "start": 19.429,
+        "end": 19.493
+      },
+      {
+        "text": "oeste.",
+        "start": 19.557,
+        "end": 20.095
+      },
+      {
+        "text": "Pasó",
+        "start": 20.441,
+        "end": 20.737
+      },
+      {
+        "text": "a",
+        "start": 20.789,
+        "end": 20.81
+      },
+      {
+        "text": "25",
+        "start": 20.853,
+        "end": 21.455
+      },
+      {
+        "text": "kilómetros",
+        "start": 21.508,
+        "end": 22.046
+      },
+      {
+        "text": "de",
+        "start": 22.067,
+        "end": 22.109
+      },
+      {
+        "text": "la",
+        "start": 22.151,
+        "end": 22.204
+      },
+      {
+        "text": "capital.",
+        "start": 22.246,
+        "end": 22.921
+      },
+      {
+        "text": "Y",
+        "start": 23.323,
+        "end": 23.397
+      },
+      {
+        "text": "en",
+        "start": 23.47,
+        "end": 23.523
+      },
+      {
+        "text": "un",
+        "start": 23.608,
+        "end": 23.681
+      },
+      {
+        "text": "tramo,",
+        "start": 23.745,
+        "end": 24.135
+      },
+      {
+        "text": "el",
+        "start": 24.189,
+        "end": 24.294
+      },
+      {
+        "text": "suelo",
+        "start": 24.399,
+        "end": 24.769
+      },
+      {
+        "text": "se",
+        "start": 24.853,
+        "end": 24.948
+      },
+      {
+        "text": "corrió",
+        "start": 24.99,
+        "end": 25.37
+      },
+      {
+        "text": "de",
+        "start": 25.476,
+        "end": 25.56
+      },
+      {
+        "text": "lado",
+        "start": 25.666,
+        "end": 25.972
+      },
+      {
+        "text": "más",
+        "start": 26.056,
+        "end": 26.299
+      },
+      {
+        "text": "de",
+        "start": 26.341,
+        "end": 26.415
+      },
+      {
+        "text": "3",
+        "start": 26.499,
+        "end": 26.763
+      },
+      {
+        "text": "metros.",
+        "start": 26.838,
+        "end": 27.566
+      },
+      {
+        "text": "Y",
+        "start": 28.033,
+        "end": 28.107
+      },
+      {
+        "text": "6",
+        "start": 28.244,
+        "end": 28.54
+      },
+      {
+        "text": "de",
+        "start": 28.592,
+        "end": 28.656
+      },
+      {
+        "text": "cada",
+        "start": 28.709,
+        "end": 28.931
+      },
+      {
+        "text": "10",
+        "start": 28.972,
+        "end": 29.194
+      },
+      {
+        "text": "muertos",
+        "start": 29.268,
+        "end": 29.659
+      },
+      {
+        "text": "estaban",
+        "start": 29.722,
+        "end": 30.091
+      },
+      {
+        "text": "lejos",
+        "start": 30.165,
+        "end": 30.492
+      },
+      {
+        "text": "del",
+        "start": 30.535,
+        "end": 30.63
+      },
+      {
+        "text": "epicentro:",
+        "start": 30.661,
+        "end": 31.453
+      },
+      {
+        "text": "en",
+        "start": 31.749,
+        "end": 31.928
+      },
+      {
+        "text": "Chimaltenango.",
+        "start": 32.033,
+        "end": 33.173
+      },
+      {
+        "text": "Ahí",
+        "start": 33.574,
+        "end": 33.796
+      },
+      {
+        "text": "las",
+        "start": 33.881,
+        "end": 34.007
+      },
+      {
+        "text": "casas",
+        "start": 34.06,
+        "end": 34.377
+      },
+      {
+        "text": "eran",
+        "start": 34.44,
+        "end": 34.63
+      },
+      {
+        "text": "de",
+        "start": 34.682,
+        "end": 34.746
+      },
+      {
+        "text": "adobe",
+        "start": 34.799,
+        "end": 35.19
+      },
+      {
+        "text": "y",
+        "start": 35.221,
+        "end": 35.252
+      },
+      {
+        "text": "teja,",
+        "start": 35.358,
+        "end": 35.907
+      },
+      {
+        "text": "y",
+        "start": 36.044,
+        "end": 36.118
+      },
+      {
+        "text": "cayeron",
+        "start": 36.192,
+        "end": 36.53
+      },
+      {
+        "text": "sobre",
+        "start": 36.571,
+        "end": 36.793
+      },
+      {
+        "text": "gente",
+        "start": 36.825,
+        "end": 37.141
+      },
+      {
+        "text": "dormida.",
+        "start": 37.184,
+        "end": 37.839
+      },
+      {
+        "text": "Unas",
+        "start": 38.299,
+        "end": 38.616
+      },
+      {
+        "text": "23,000",
+        "start": 38.669,
+        "end": 39.291
+      },
+      {
+        "text": "personas",
+        "start": 39.344,
+        "end": 39.861
+      },
+      {
+        "text": "murieron",
+        "start": 39.914,
+        "end": 40.304
+      },
+      {
+        "text": "en",
+        "start": 40.357,
+        "end": 40.42
+      },
+      {
+        "text": "todo",
+        "start": 40.526,
+        "end": 40.832
+      },
+      {
+        "text": "el",
+        "start": 40.874,
+        "end": 40.927
+      },
+      {
+        "text": "país.",
+        "start": 40.99,
+        "end": 41.709
+      },
+      {
+        "text": "La",
+        "start": 42.167,
+        "end": 42.304
+      },
+      {
+        "text": "falla",
+        "start": 42.368,
+        "end": 42.694
+      },
+      {
+        "text": "sigue",
+        "start": 42.8,
+        "end": 43.138
+      },
+      {
+        "text": "ahí,",
+        "start": 43.211,
+        "end": 43.697
+      },
+      {
+        "text": "debajo",
+        "start": 43.919,
+        "end": 44.447
+      },
+      {
+        "text": "de",
+        "start": 44.499,
+        "end": 44.562
+      },
+      {
+        "text": "los",
+        "start": 44.605,
+        "end": 44.742
+      },
+      {
+        "text": "mismos",
+        "start": 44.827,
+        "end": 45.196
+      },
+      {
+        "text": "pueblos.",
+        "start": 45.269,
+        "end": 46.009
+      }
+    ],
+    "progreso": {
+      "actos": [
+        0.0,
+        11.5667,
+        28.0333
+      ]
+    },
+    "seguir": {
+      "t": 24.4,
+      "dur": 3.0
+    },
+    "aviso": "Maqueta · no a escala · traza esquemática",
+    "pie": "Relieve: Mapzen Terrain Tiles · Traza: USGS (PP 1002) · Frontera: Natural Earth · Lugares: © OpenStreetMap",
+    "handle": "@DerekUrizar",
+    "cierre": {
+      "t": 43.3667,
+      "frase": "La falla sigue ahí.",
+      "redes": [
+        {
+          "nombre": "TikTok",
+          "handle": "@derekurizargt"
+        },
+        {
+          "nombre": "Instagram",
+          "handle": "@derekurizargt"
+        },
+        {
+          "nombre": "Facebook",
+          "handle": "Derek Urizar"
+        },
+        {
+          "nombre": "YouTube",
+          "handle": "@derekurizar"
+        },
+        {
+          "nombre": "X",
+          "handle": "@DerekUrizar"
+        }
+      ]
+    }
+  }
+}
