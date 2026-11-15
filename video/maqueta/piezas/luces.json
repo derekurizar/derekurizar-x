@@ -1,0 +1,33 @@
+{
+ "tipo": "luces",
+ "clase": "pieza",
+ "cuando": "los pueblos como puntos de luz: dónde vive la gente, qué se apaga o parpadea",
+ "parametros": {
+  "lugares": {
+   "tipo": "lugares",
+   "todos": true,
+   "requerido": false,
+   "defecto": "todos",
+   "descripcion": "«todos» los lugares del set (y de mundo.lugares) o una lista",
+   "capa": "lugares"
+  },
+  "encendidas": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "si empiezan encendidas (false: las enciende un evento «encender»)"
+  }
+ },
+ "escalas": [
+  "pais"
+ ],
+ "motores": [
+  "three",
+  "blender"
+ ],
+ "ejemplo": {
+  "id": "pueblos",
+  "tipo": "luces",
+  "lugares": "todos"
+ }
+}

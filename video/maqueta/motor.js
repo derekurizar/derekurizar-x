@@ -2,9 +2,13 @@
 // Entrada única: window.MAQUETA, el maqueta.json ya RESUELTO por scripts/maqueta3d.py (lugares en km, cadenas de
 // falla, cámara con su altura, colores del estilo y de la paleta, zona del formato). Aquí no hay red, reloj ni azar:
 // cada cuadro es una función pura de t (el mismo t da el mismo cuadro).
-//   1) mundo:   relieve (malla + textura de normales), máscara del país, piezas (falla, luces, frontera, ruta)
+//   1) mundo:   relieve (malla + textura de normales) y máscara del país: el NÚCLEO (este archivo)
 //   2) estilo:  un registro ESTILOS; el relieve se pinta en un solo shader con un modo por estilo (voxel: cubos)
-//   3) cuadro:  cámara por claves → eventos (ruptura, onda, deslizar, luces, resaltar) → render → capa 2D (capa.js)
+//   3) vocabulario: las piezas, los eventos, los objetos y los mundos son MÓDULOS (video/maqueta/<clase>/<tipo>.js, con su
+//      ficha <tipo>.json; catálogo: design/sets3d/vocabulario.json) que se registran solos en window.MAQ antes de este
+//      archivo. Aquí no hay ningún `tipo ===`: el núcleo los arma por su `orden` y en cada cuadro corre inicio → aplicar
+//      (cada evento, en el orden del maqueta.json) → en. Contrato: referencias/diseno/maqueta3d.md («Añadir vocabulario»)
+//   4) cuadro:  cámara por claves → vocabulario → render → capa 2D (capa.js)
 // Mundo en km: x = este, y = norte, altura hacia arriba → three (x, altura, −y). Ningún color escrito aquí: todos
 // llegan en MAQUETA.col (design/sets3d/estilos.json + design/tokens.json).
 import * as THREE from "./three/three.module.js";
@@ -116,10 +120,7 @@ const uRuptura = { uRup: { value: Array.from({ length: NR }, () => new THREE.Vec
   const plano = new THREE.Mesh(gp, mp); plano.position.y = -0.15; plano.frustumCulled = false; plano.renderOrder = -9; scene.add(plano);
 }
 
-// ---------- piezas resueltas ----------
-const FALLAS = M.piezas.filter((p) => p.tipo === "falla");       // cada una con .cadena [[x, y, s, salto]] y .simple
-const LUCES = M.piezas.filter((p) => p.tipo === "luces");
-const idxFalla = (id) => FALLAS.findIndex((p) => p.id === id);
+// ---------- geometría de polilíneas (la usan los módulos) ----------
 function puntoEnS(cad, s) {                                      // [x, y] en la cadena a s km de su inicio
   if (s <= cad[0][2]) return [cad[0][0], cad[0][1]];
   for (let i = 0; i < cad.length - 1; i++) { const a = cad[i], b = cad[i + 1];
@@ -141,21 +142,19 @@ const uRelieve = {
   tNormal: { value: null }, tPais: { value: null }, uModo: { value: ES.modo },
   cMar: { value: lin(COL.mar) }, cMarHondo: { value: lin(COL.mar_hondo) }, cExterior: { value: lin(COL.exterior) }, uMarRel: { value: CFG.mar.relieve }, uMarLuz: { value: CFG.mar.luz }, cBaja: { value: lin(COL.tierra_baja) }, cMedia: { value: lin(COL.tierra_media) }, cAlta: { value: lin(COL.tierra_alta) },
   cLuz: { value: lin(COL.luz) }, cAmb: { value: lin(COL.ambiente) }, cOnda: { value: lin(COL.onda) },
-  cPieza: { value: [0, 1, 2, 3].map((i) => (FALLAS[i] && FALLAS[i].protagonista ? lin(COL.acento) : lin(COL.secundario).multiplyScalar(CFG.falla.secundaria))) },
+  cPieza: { value: [0, 1, 2, 3].map(() => lin(COL.secundario).multiplyScalar(CFG.falla.secundaria)) },   // piezas/falla.js pone el acento en la suya
   cLinea: { value: lin(COL.linea) }, cCosta: { value: lin(COL.costa) },
   uLuzDir: { value: new THREE.Vector3() }, uLuzK: { value: CFG.luz.fuerza }, uAmbK: { value: CFG.luz.ambiente }, uRel: { value: CFG.luz.relieve },
   uFuera: { value: CFG.fuera }, uCosta: { value: CFG.costa }, uAltMax: { value: R.max_m / 1000 * EXAG }, uExag: { value: EXAG },
   uCaja: { value: new THREE.Vector4(X0, X1, -Y1, -Y0) }, uBorde: { value: CFG.borde_km },
   uCad: { value: Array.from({ length: NC }, () => new THREE.Vector4()) }, uCadN: { value: 0 },
   uBrillo: { value: [1, 1, 1, 1] }, uGlow: { value: CFG.falla.suelo }, uSigma: { value: CFG.falla.suelo_km },
-  uOnda: { value: Array.from({ length: NO }, () => new THREE.Vector4()) }, uOndaPieza: { value: [-1, -1, -1, -1] },
+  uOnda: { value: Array.from({ length: NO }, () => new THREE.Vector4(0, 0, 0, 0)) }, uOndaPieza: { value: [-1, -1, -1, -1] },   // en reposo: w = 0 (sin onda)
 };
 { const az = CFG.luz.azimut * Math.PI / 180, el = CFG.luz.elevacion * Math.PI / 180;   // de dónde viene la luz (0 = norte, 90 = este)
   uRelieve.uLuzDir.value.set(Math.sin(az) * Math.cos(el), Math.sin(el), -Math.cos(az) * Math.cos(el)); }
-// cadenas simplificadas de todas las fallas en un solo arreglo (x, z, s, pieza [+0.5 si después hay un salto])
-{ let n = 0;
-  FALLAS.forEach((f, ip) => { for (const p of f.simple) { if (n >= NC) break; uRelieve.uCad.value[n++].set(p[0], -p[1], p[2], ip + (p[3] ? 0.5 : 0)); } });
-  uRelieve.uCadN.value = n; }
+// uCad y cPieza (las fallas), uRup* (las rupturas), uOnda* (las ondas) y uBrillo (resaltar): canales de la SUPERFICIE que
+// llenan los módulos (piezas/falla.js, eventos/ruptura.js, eventos/onda.js); el shader del relieve los dibuja
 
 const FRAG_RELIEVE = GLSL_COMUN + GLSL_RUPTURA + `
   uniform sampler2D tNormal, tPais; uniform int uModo;
@@ -327,7 +326,7 @@ function armarCubos(gPais) {
 }
 // [/estilo:voxel]
 
-// ---------- cintas: líneas con ancho en píxeles, pegadas al relieve (falla, frontera, ruta, flechas) ----------
+// ---------- cintas: líneas con ancho en píxeles, pegadas al relieve (las usan falla, frontera, ruta…) ----------
 const VERT_CINTA = `
   attribute vec3 aPrev, aNext; attribute float aLado, aS;
   uniform vec2 uRes; uniform float uAncho;
@@ -369,7 +368,7 @@ function pegar(cad, paso, lev) {
   }
   return out;
 }
-const cintas = [];   // {mat, ancho(dist) → px}
+const cintas = [];   // {mat, base, alfa}: el núcleo les ajusta el ancho a la distancia en cada cuadro
 function cintaSimple(pts, color, ancho, alfa, orden, extra = {}) {
   const mat = new THREE.ShaderMaterial({
     uniforms: { ...uComun(), uAncho: { value: ancho }, cColor: { value: lin(color) }, uAlfa: { value: alfa }, uRaya: { value: extra.raya || 0 } },
@@ -381,132 +380,7 @@ function cintaSimple(pts, color, ancho, alfa, orden, extra = {}) {
   const c = { mat, base: ancho, alfa }; cintas.push(c); return c;
 }
 
-// frontera y rutas
-const PIEZAS_LINEA = {};   // id → cinta (para «resaltar»)
-function armarLineas() {
-  for (const p of M.piezas) {
-    if (p.tipo === "frontera") {
-      for (const an of p.anillos) { const cad = an.map(([x, y]) => [x, y]); cad.push(cad[0]);
-        if (CFG.frontera.borde) cintaSimple(pegar(cad, 1.5, 0.35), COL.linea, CFG.frontera.ancho + CFG.frontera.borde, 1, 2);
-        PIEZAS_LINEA[p.id] = p.protagonista ? cintaSimple(pegar(cad, 1.5, 0.35), COL.acento, CFG.frontera.ancho * 1.7, 1, 3)
-          : cintaSimple(pegar(cad, 1.5, 0.35), COL.frontera, CFG.frontera.ancho, CFG.frontera.alfa, 3); }
-    } else if (p.tipo === "ruta") {
-      PIEZAS_LINEA[p.id] = cintaSimple(pegar(p.puntos, 1.5, 0.4), p.protagonista ? COL.acento : COL.ruta, CFG.ruta.ancho * (p.protagonista ? 1.5 : 1), p.protagonista ? 1 : CFG.ruta.alfa, 4, { raya: CFG.ruta.raya_km });
-    }
-  }
-}
-
-// la falla: dormida (línea fina), y al romperse halo + núcleo en el acento; las flechas del corrimiento encima
-const fallas3d = [];
-function armarFallas() {
-  FALLAS.forEach((f, ip) => {
-    const pts = pegar(f.cadena, 1.0, 0.3), geo = geoCinta(pts);
-    const capa = (n, ancho, orden, aditivo, oculta) => {
-      const mat = new THREE.ShaderMaterial({
-        uniforms: { ...uComun(), ...uRuptura, uAncho: { value: ancho }, uCapa: { value: n }, uPieza: { value: ip }, uBrillo: { value: 1 },
-          cAcento: { value: lin(f.protagonista ? COL.acento : COL.secundario) }, cCaliente: { value: lin(COL.caliente) }, cDormida: { value: lin(COL.falla_dormida) }, cBorde: { value: lin(COL.linea) },
-          uDormida: { value: CFG.falla.dormida }, uHalo: { value: CFG.falla.halo * (f.protagonista ? 1 : CFG.falla.secundaria) } },
-        vertexShader: VERT_CINTA, transparent: true, depthWrite: false, depthTest: oculta,
-        blending: aditivo ? THREE.AdditiveBlending : THREE.NormalBlending,
-        fragmentShader: GLSL_RUPTURA + `uniform int uCapa; uniform float uPieza, uBrillo, uDormida, uHalo; uniform vec3 cAcento, cCaliente, cDormida, cBorde;
-          varying float vLado, vS;
-          vec3 srgb(vec3 c) { return mix(c * 12.92, 1.055 * pow(c, vec3(0.41666)) - 0.055, step(0.0031308, c)); }
-          void main() {
-            float cal; float L = encendida(vS, uPieza, cal); float p = 1.0 - abs(vLado); vec3 c; float a;
-            if (uCapa == 0) { a = clamp(uDormida * (1.0 + 1.6 * (uBrillo - 1.0)), 0.0, 1.0) * (1.0 - L) * smoothstep(0.0, 0.5, p); c = cDormida; }
-            else if (uCapa == 1) { a = L * pow(p, 2.6) * uHalo * (1.0 + cal * 0.9) * uBrillo; c = cAcento; }
-            else if (uCapa == 3) { a = L * smoothstep(0.0, 0.25, p); c = cBorde; }
-            else { a = L * smoothstep(0.0, 0.4, p); c = mix(cAcento, cCaliente, clamp(0.04 + 0.6 * cal * cal + 0.25 * (uBrillo - 1.0), 0.0, 0.85)); }
-            if (a < 0.003) discard;
-            gl_FragColor = vec4(srgb(c), a);
-          }` });
-      const m = new THREE.Mesh(geo, mat); m.frustumCulled = false; m.renderOrder = orden; scene.add(m);
-      return { mat, base: ancho };
-    };
-    const o = { f, ip, capas: [capa(0, CFG.falla.dormida_px, 5, false, true)] };
-    if (CFG.falla.halo > 0) o.capas.push(capa(1, CFG.falla.halo_px, 6, ES.aditivo, false));
-    if (CFG.falla.borde_px) o.capas.push(capa(3, CFG.falla.nucleo_px + CFG.falla.borde_px, 7, false, false));
-    o.capas.push(capa(2, CFG.falla.nucleo_px, 8, false, false));
-    // flechas del corrimiento (evento «deslizar»): dos carriles de galones, uno a cada lado, en sentidos opuestos
-    const mf = new THREE.ShaderMaterial({
-      uniforms: { ...uComun(), uAncho: { value: CFG.falla.flechas_px }, cColor: { value: lin(COL.flechas) }, uSentido: { value: 1 },
-        uCentro: { value: 0 }, uMedio: { value: 30 }, uPeriodo: { value: 7 }, uFase: { value: 0 }, uAlfa: { value: 0 } },
-      vertexShader: VERT_CINTA, transparent: true, depthWrite: false, depthTest: false,
-      fragmentShader: `uniform vec3 cColor; uniform float uSentido, uCentro, uMedio, uPeriodo, uFase, uAlfa; varying float vLado, vS;
-        void main() {
-          float q = (abs(vLado) - 0.6) / 0.34; if (abs(q) > 1.0 || uAlfa <= 0.0) discard;
-          float dir = -sign(vLado) * uSentido;                       // corrimiento izquierdo: el lado a la izquierda del trazo va hacia −s (el norte, al oeste)
-          float m = dir * (vS - uCentro) / uPeriodo - uFase;
-          float galon = 1.0 - smoothstep(0.27, 0.34, fract(m + abs(q) * 0.6));
-          float env = 1.0 - smoothstep(uMedio * 0.72, uMedio, abs(vS - uCentro));
-          float a = galon * env * uAlfa * (1.0 - smoothstep(0.8, 1.0, abs(q)));
-          if (a < 0.003) discard;
-          vec3 c = cColor; c = mix(c * 12.92, 1.055 * pow(c, vec3(0.41666)) - 0.055, step(0.0031308, c)); gl_FragColor = vec4(c, a);
-        }` });
-    const flechas = new THREE.Mesh(geo, mf); flechas.frustumCulled = false; flechas.renderOrder = 9; flechas.visible = false; scene.add(flechas);
-    o.flechas = flechas;
-    fallas3d.push(o);
-  });
-}
-// la cabeza de la ruptura: un destello en cada frente mientras avanza
-let cabezas = null;
-function armarCabezas() {
-  const g = new THREE.BufferGeometry();
-  g.setAttribute("position", new THREE.BufferAttribute(new Float32Array(NR * 2 * 3), 3));
-  g.setAttribute("aK", new THREE.BufferAttribute(new Float32Array(NR * 2), 1)); g.setAttribute("aAc", new THREE.BufferAttribute(new Float32Array(NR * 2), 1));
-  const m = new THREE.ShaderMaterial({ uniforms: { cAcento: { value: lin(COL.acento) }, cSec: { value: lin(COL.secundario) }, cCaliente: { value: lin(COL.caliente) }, uTam: { value: CFG.falla.cabeza_px } },
-    transparent: true, depthWrite: false, depthTest: false, blending: ES.aditivo ? THREE.AdditiveBlending : THREE.NormalBlending,
-    vertexShader: "attribute float aK, aAc; uniform float uTam; varying float vK, vAc; void main(){ vK = aK; vAc = aAc; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); gl_PointSize = uTam * (0.6 + 0.4 * aK); }",
-    fragmentShader: `uniform vec3 cAcento, cSec, cCaliente; varying float vK, vAc;
-      void main(){ float r = length(gl_PointCoord - 0.5) * 2.0; float a = (exp(-r * r * 7.0) * 0.9 + exp(-r * r * 60.0)) * vK * (1.0 - smoothstep(0.85, 1.0, r)); if (a < 0.003) discard;
-        vec3 c = mix(mix(cSec, cAcento, vAc), cCaliente, exp(-r * r * 30.0) * 0.8); c = mix(c * 12.92, 1.055 * pow(c, vec3(0.41666)) - 0.055, step(0.0031308, c)); gl_FragColor = vec4(c, a); }` });
-  cabezas = new THREE.Points(g, m); cabezas.frustumCulled = false; cabezas.renderOrder = 10; scene.add(cabezas);
-}
-
-// ---------- «resaltar» un lugar: se lee con el país entero en cuadro ----------
-const NRES = 6; let resaltes = null;
-function armarResaltes() {
-  const g = new THREE.BufferGeometry();
-  g.setAttribute("position", new THREE.BufferAttribute(new Float32Array(NRES * 3), 3));
-  g.setAttribute("aK", new THREE.BufferAttribute(new Float32Array(NRES), 1)); g.setAttribute("aFase", new THREE.BufferAttribute(new Float32Array(NRES), 1));
-  const m = new THREE.ShaderMaterial({ uniforms: { cSec: { value: lin(COL.secundario) }, cLuz: { value: lin(COL.luces) }, cBorde: { value: lin(COL.linea) }, uTam: { value: CFG.resalte_px }, uAditivo: { value: ES.aditivo ? 1 : 0 } },
-    transparent: true, depthWrite: false, depthTest: false, blending: ES.aditivo ? THREE.AdditiveBlending : THREE.NormalBlending,
-    vertexShader: "attribute float aK, aFase; uniform float uTam; varying float vK, vFase; void main(){ vK = aK; vFase = aFase; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); gl_PointSize = aK > 0.0 ? uTam : 0.0; }",
-    fragmentShader: `uniform vec3 cSec, cLuz, cBorde; uniform float uAditivo; varying float vK, vFase;
-      float anillo(float r, float ph) { float rr = 0.14 + 0.8 * ph, q = (r - rr) / 0.03; return exp(-q * q) * pow(1.0 - ph, 1.3); }
-      void main(){ float r = length(gl_PointCoord - 0.5) * 2.0; if (r > 1.0) discard;
-        float nucleo = exp(-r * r * 260.0) * 1.2 + exp(-r * r * 38.0) * 0.75 + exp(-r * r * 9.0) * 0.22;
-        float an = anillo(r, fract(vFase)) + anillo(r, fract(vFase + 0.5));
-        vec3 c = uAditivo > 0.5 ? cSec : mix(cBorde, cLuz, clamp(nucleo, 0.0, 1.0));
-        float a = clamp((nucleo + an * 0.95) * vK, 0.0, 1.0) * (1.0 - smoothstep(0.92, 1.0, r)); if (a < 0.003) discard;
-        c = mix(c * 12.92, 1.055 * pow(c, vec3(0.41666)) - 0.055, step(0.0031308, c)); gl_FragColor = vec4(c, a); }` });
-  resaltes = new THREE.Points(g, m); resaltes.frustumCulled = false; resaltes.renderOrder = 11; scene.add(resaltes);
-}
-
-// ---------- luces de los pueblos ----------
-let luces = null; const LZ = [];   // {x, y, peso, pieza, id}
-function armarLuces() {
-  LUCES.forEach((p, ip) => p.puntos.forEach((q) => LZ.push({ x: q[0], y: q[1], peso: q[2], id: q[3], pieza: ip, on: p.encendidas !== false, ac: p.protagonista ? 1 : 0 })));
-  if (!LZ.length) return;
-  const pos = new Float32Array(LZ.length * 3), peso = new Float32Array(LZ.length), acs = new Float32Array(LZ.length);
-  LZ.forEach((l, i) => { const v = V3(l.x, l.y, 0.35); pos.set([v.x, v.y, v.z], 3 * i); peso[i] = l.peso; acs[i] = l.ac; });
-  const g = new THREE.BufferGeometry();
-  g.setAttribute("position", new THREE.BufferAttribute(pos, 3)); g.setAttribute("aPeso", new THREE.BufferAttribute(peso, 1));
-  g.setAttribute("aInt", new THREE.BufferAttribute(new Float32Array(LZ.length), 1)); g.setAttribute("aAc", new THREE.BufferAttribute(acs, 1));
-  const m = new THREE.ShaderMaterial({
-    uniforms: { cLuz: { value: lin(COL.luces) }, cAcento: { value: lin(COL.acento) }, cBorde: { value: lin(COL.linea) }, uEsc: { value: 1 }, uKm: { value: CFG.luces.km }, uMin: { value: CFG.luces.min_px }, uMax: { value: CFG.luces.max_px },
-      uAditivo: { value: ES.aditivo ? 1 : 0 }, uFuerza: { value: CFG.luces.fuerza } },
-    transparent: true, depthWrite: false, depthTest: true, blending: ES.aditivo ? THREE.AdditiveBlending : THREE.NormalBlending,
-    vertexShader: `attribute float aPeso, aInt, aAc; uniform float uEsc, uKm, uMin, uMax; varying float vInt, vAc;
-      void main(){ vec4 mv = modelViewMatrix * vec4(position, 1.0); gl_Position = projectionMatrix * mv; vInt = aInt; vAc = aAc;
-        gl_PointSize = aInt <= 0.001 ? 0.0 : clamp(uKm * (0.45 + 0.75 * aPeso) * uEsc / max(-mv.z, 1.0), uMin, uMax) * (1.0 + 0.18 * max(aInt - 1.0, 0.0)); }`,
-    fragmentShader: `uniform vec3 cLuz, cAcento, cBorde; uniform float uAditivo, uFuerza; varying float vInt, vAc;
-      vec3 srgb(vec3 c) { return mix(c * 12.92, 1.055 * pow(c, vec3(0.41666)) - 0.055, step(0.0031308, c)); }
-      void main(){ float r = length(gl_PointCoord - 0.5) * 2.0; if (r > 1.0) discard;
-        if (uAditivo > 0.5) { float a = (exp(-r * r * 4.0) * 0.5 + exp(-r * r * 34.0) * 1.0) * min(vInt, 2.6) * uFuerza * (1.0 - smoothstep(0.8, 1.0, r)); gl_FragColor = vec4(srgb(mix(cLuz, cAcento, vAc)), a); }
-        else { float a = (1.0 - smoothstep(0.42, 0.5, r)) * min(vInt, 1.0); vec3 c = mix(mix(cLuz, cAcento, vAc), cBorde, smoothstep(0.26, 0.32, r)); if (a < 0.01) discard; gl_FragColor = vec4(srgb(c), a); } }` });
-  luces = new THREE.Points(g, m); luces.frustumCulled = false; luces.renderOrder = 4; scene.add(luces);
-}
+const LINEAS = {};    // id de pieza → cinta: «resaltar» la pieza sube su alfa (ctx.linea(id, cinta))
 
 // ---------- cámara: la función del contrato (cada parámetro con e = −(cos(πu) − 1)/2 entre claves) ----------
 const CL = M.camara;
@@ -526,90 +400,72 @@ function ponerCamara(t) {
   camera.up.set(0, 1, 0); camera.lookAt(c.x, c.alt, -c.y); camera.updateMatrixWorld(true);
 }
 
-// ---------- eventos: el estado del mundo en t ----------
+// ---------- el vocabulario: registro de módulos ----------
+// Cada módulo (video/maqueta/<clase>/<tipo>.js) se registra solo en window.MAQ.<PIEZAS|EVENTOS|OBJETOS|MUNDOS>[tipo]:
+//   pieza:  { orden, armar(ctx, lista) → estado, inicio(t, estado, ctx), en(t, estado, ctx) }                  (todo opcional)
+//   evento: { orden, armar(ctx, lista) → estado, inicio(t, estado, ctx), aplicar(t, e, ctx, estado), en(t, estado, ctx) }
+// `lista`: las piezas (o los eventos) de ese tipo, en el orden del maqueta.json. Los OBJETOS y los MUNDOS los usan las
+// piezas (ctx.MAQ.OBJETOS[id]); el núcleo no los recorre.
+const MAQ = window.MAQ = window.MAQ || {};
+for (const k of ["PIEZAS", "EVENTOS", "OBJETOS", "MUNDOS"]) MAQ[k] = MAQ[k] || {};
 const EV = M.eventos;
 for (const e of EV) if (e.adelanto) { e.t -= e.adelanto; e.dur += e.adelanto; }   // como si ya llevara ese avance
+for (const p of M.piezas) if (!MAQ.PIEZAS[p.tipo]) throw new Error("pieza sin módulo: " + p.tipo + " (video/maqueta/piezas/" + p.tipo + ".js)");
+for (const e of EV) if (!MAQ.EVENTOS[e.tipo] || !MAQ.EVENTOS[e.tipo].aplicar) throw new Error("evento sin módulo: " + e.tipo + " (video/maqueta/eventos/" + e.tipo + ".js)");
+// los módulos que usa esta maqueta, en su orden de armado (empate: piezas antes que eventos, luego por tipo)
+const MODS = [];
+for (const [clase, reg, lista] of [["pieza", MAQ.PIEZAS, M.piezas], ["evento", MAQ.EVENTOS, EV]]) {
+  for (const tipo of [...new Set(lista.map((o) => o.tipo))]) MODS.push({ clase, tipo, def: reg[tipo], lista: lista.filter((o) => o.tipo === tipo), estado: null });
+}
+MODS.sort((a, b) => (a.def.orden || 0) - (b.def.orden || 0) || (a.clase === b.clase ? 0 : a.clase === "pieza" ? -1 : 1) || (a.tipo < b.tipo ? -1 : a.tipo > b.tipo ? 1 : 0));
+const ESTADO_EV = {};
+
+// lo que el núcleo comparte con los módulos (lo de un cuadro va en ctx.cuadro)
+const ctx = {
+  THREE, M, MAQ, W, H, COL, CFG, ES, EXAG, NR, NC, NO,
+  lin, clamp, suave, hash,
+  scene, renderer, camera,
+  altura, V3,                                                   // altura(x, y): km exagerados · V3(x, y, lev) → Vector3 sobre el relieve
+  km: (lon, lat) => [(lon - P.lon0) * P.km_lon, (lat - P.lat0) * P.km_lat],   // lon/lat → mundo (km); los lugares ya llegan en km
+  puntoEnS, distCadena,
+  GLSL_COMUN, GLSL_RUPTURA, VERT_CINTA, uComun, uRuptura,
+  superficie: uRelieve,                                          // los uniformes del relieve (canales: uCad, cPieza, uBrillo, uOnda…)
+  geoCinta, pegar, cinta: cintaSimple,
+  linea: (id, cn) => { LINEAS[id] = cn; },                       // una cinta que «resaltar» sube por el id de su pieza
+  fallas: [], idxFalla: () => -1,                                // los pone piezas/falla.js (la superficie y voxel los leen)
+  luces: [],                                                     // los pone piezas/luces.js: [{x, y, peso, id, pieza, on, ac, v}]
+  proyectar: null,                                               // (x, y, z) → [px, py] | null (la misma que recibe la capa 2D)
+  cuadro: null,                                                  // {t, k, pxKm, dist, brillo, ondas, rupturas}: se rehace en cada cuadro
+};
+function armarVocabulario() {
+  for (const m of MODS) {
+    m.estado = m.def.armar ? m.def.armar(ctx, m.lista) : null;
+    if (m.clase === "evento") ESTADO_EV[m.tipo] = m.estado;
+  }
+}
+
+// ---------- el estado del mundo en t ----------
 function mundoEn(t) {
   const c = CAM, pxKm = H / (2 * Math.tan(c.fov * Math.PI / 360));   // px por km a 1 km de distancia
   const k = clamp(1 + 70 / c.dist, 1, 2.4);                          // las líneas engordan al acercarse
-  // rupturas → uniformes (compartidos por el relieve y las cintas de la falla) y cabezas
-  const rup = EV.filter((e) => e.tipo === "ruptura").slice(0, NR);
-  const cab = cabezas.geometry.attributes.position, cabK = cabezas.geometry.attributes.aK, cabA = cabezas.geometry.attributes.aAc; cabK.array.fill(0);
-  for (let i = 0; i < NR; i++) {
-    const e = rup[i];
-    if (!e) { uRuptura.uRupT.value[i].set(0, -1); continue; }
-    const tr = t - e.t, ip = idxFalla(e.pieza), u = clamp(tr / e.dur);
-    uRuptura.uRup.value[i].set(e.s0, e.km_menos, e.km_mas, e.dur); uRuptura.uRupT.value[i].set(Math.max(0, tr), ip);
-    if (tr > 0 && tr < e.dur + 0.5) {
-      const cad = FALLAS[ip].cadena, fin = suave(e.dur + 0.5, e.dur - 0.1, tr), ini = suave(0, 0.15, tr);
-      [[-1, e.km_menos], [1, e.km_mas]].forEach(([sg, alc], j) => {
-        if (alc <= 0) return;
-        const s = e.s0 + sg * alc * u, [x, y] = puntoEnS(cad, s), p = V3(x, y, 0.4);
-        cab.setXYZ(2 * i + j, p.x, p.y, p.z); cabK.setX(2 * i + j, ini * fin); cabA.setX(2 * i + j, FALLAS[ip].protagonista ? 1 : 0);
-      });
-    }
-  }
-  cab.needsUpdate = true; cabK.needsUpdate = true; cabA.needsUpdate = true;
-  cabezas.material.uniforms.uTam.value = CFG.falla.cabeza_px * k;
-  // resaltar una pieza: sube su brillo con un pulso
-  const brillo = {};
-  for (const e of EV) if (e.tipo === "resaltar" && e.pieza && t >= e.t && t <= e.t + e.dur) {
-    const tr = t - e.t; brillo[e.pieza] = 1 + 0.9 * suave(0, 0.3, tr) * suave(e.dur, e.dur - 0.4, tr) * (0.8 + 0.2 * Math.cos(tr / 1.2 * Math.PI * 2));
-  }
-  fallas3d.forEach((o) => { const b = brillo[o.f.id] || 1; uRelieve.uBrillo.value[o.ip] = b;
-    o.capas.forEach((cp, i) => { cp.mat.uniforms.uAncho.value = cp.base * k * (i === 0 ? 1 + 1.8 * (b - 1) : 1); cp.mat.uniforms.uBrillo.value = b; }); });
+  // brillo: id de pieza → factor (resaltar) · ondas: [{x, y, pieza, r, k}] · rupturas: las que ya empezaron (voxel)
+  ctx.cuadro = { t, k, pxKm, dist: c.dist, brillo: {}, ondas: [], rupturas: [] };
+  for (const m of MODS) if (m.def.inicio) m.def.inicio(t, m.estado, ctx);
+  for (const e of EV) MAQ.EVENTOS[e.tipo].aplicar(t, e, ctx, ESTADO_EV[e.tipo]);
+  for (const m of MODS) if (m.def.en) m.def.en(t, m.estado, ctx);
+  const brillo = ctx.cuadro.brillo;
   for (const cn of cintas) cn.mat.uniforms.uAncho.value = cn.base * clamp(1 + 30 / c.dist, 1, 1.8);
-  for (const id in PIEZAS_LINEA) PIEZAS_LINEA[id].mat.uniforms.uAlfa.value = Math.min(1, PIEZAS_LINEA[id].alfa * (brillo[id] || 1) * (brillo[id] ? 1.3 : 1));
-  // deslizar: las flechas a los dos lados
-  fallas3d.forEach((o) => { o.flechas.visible = false; });
-  for (const e of EV) if (e.tipo === "deslizar" && t >= e.t && t <= e.t + e.dur) {
-    const o = fallas3d[idxFalla(e.pieza)], U = o.flechas.material.uniforms, tr = t - e.t;
-    o.flechas.visible = true; U.uCentro.value = e.s0; U.uSentido.value = e.sentido; U.uMedio.value = e.km / 2; U.uPeriodo.value = e.periodo_km;
-    U.uFase.value = tr * e.vel / e.periodo_km; U.uAlfa.value = suave(0, 0.35, tr) * suave(e.dur, e.dur - 0.35, tr); U.uAncho.value = CFG.falla.flechas_px * k;
-  }
-  // ondas (y los pulsos de «resaltar» un lugar, que son ondas pequeñas)
-  const ondas = [];
-  for (const e of EV) {
-    if (e.tipo === "onda" && t >= e.t && t <= e.t + e.dur) { const u = (t - e.t) / e.dur;
-      ondas.push({ x: e.x, y: e.y, pieza: e.pieza ? idxFalla(e.pieza) : -1, r: e.radio_km * (1 - Math.pow(1 - u, 1.6)), k: Math.pow(1 - u, 0.8) * suave(0, 0.06, u) * CFG.onda }); }
-  }
-  { const P = resaltes.geometry.attributes.position, K = resaltes.geometry.attributes.aK, F = resaltes.geometry.attributes.aFase; K.array.fill(0); let n = 0;
-    for (const e of EV) if (e.tipo === "resaltar" && e.pieza === undefined && n < NRES && t >= e.t && t <= e.t + e.dur) {
-      const tr = t - e.t, p = V3(e.x, e.y, 0.5);
-      P.setXYZ(n, p.x, p.y, p.z); F.setX(n, tr / 1.25); K.setX(n, suave(0, 0.25, tr) * suave(e.dur, e.dur - 0.4, tr)); n++;
-    }
-    P.needsUpdate = K.needsUpdate = F.needsUpdate = true; }
-  for (let i = 0; i < NO; i++) { const o = ondas[i];
-    if (o) { uRelieve.uOnda.value[i].set(o.x, -o.y, o.r, o.k); uRelieve.uOndaPieza.value[i] = o.pieza; } else uRelieve.uOnda.value[i].set(0, 0, 0, 0); }
-  // luces: encender, apagar, parpadear, resaltar; la onda las aviva al pasar
-  if (luces) {
-    const A = luces.geometry.attributes.aInt;
-    LZ.forEach((l, i) => {
-      let v = l.on ? 1 : 0;
-      for (const e of EV) {
-        const mia = (e.lugares === "todos" || (e.lugares && e.lugares.includes(l.id)));
-        if (e.tipo === "encender" && mia) v = v + (1 - v) * suave(0, 1, (t - e.t - hash(i, 3) * e.dur * 0.7) / Math.max(0.05, e.dur * 0.3));
-        else if (e.tipo === "apagar" && mia) v = v * (1 - suave(0, 1, (t - e.t - hash(i, 5) * e.dur * 0.7) / Math.max(0.05, e.dur * 0.3)));
-        else if (e.tipo === "parpadear" && mia && t >= e.t && t <= e.t + e.dur) { const u = (t - e.t) / e.dur, env = Math.sin(Math.PI * u);
-          v = v * (1 - env) + v * env * (hash(i, Math.floor(t * 14)) < 0.45 ? 0.12 : 1.25); }
-        else if (e.tipo === "resaltar" && e.lugar && e.lugar === l.id && t >= e.t && t <= e.t + e.dur) v = Math.max(v, 1) + 1.2;
-      }
-      for (const o of ondas) { const d = o.pieza < 0 ? Math.hypot(l.x - o.x, l.y - o.y) : distCadena(FALLAS[o.pieza].cadena, l.x, l.y), w = 5 + o.r * 0.05;
-        v *= 1 + 1.5 * Math.exp(-Math.pow((d - o.r) / w, 2)) * Math.min(1, o.k * 2); }
-      A.array[i] = v;
-    });
-    A.needsUpdate = true; luces.material.uniforms.uEsc.value = pxKm;
-  }
-  if (cubos) cubosEn(t, ondas);
+  for (const id in LINEAS) LINEAS[id].mat.uniforms.uAlfa.value = Math.min(1, LINEAS[id].alfa * (brillo[id] || 1) * (brillo[id] ? 1.3 : 1));
+  if (cubos) cubosEn(t, ctx.cuadro.ondas, ctx.cuadro.rupturas);
 }
 // [estilo:voxel] la falla y las ondas tiñen los cubos (lo que en los demás estilos hace el shader del relieve)
-function cubosEn(t, ondas) {
-  const { lista, base } = cubos.userData, rup = EV.filter((e) => e.tipo === "ruptura" && t > e.t);
+function cubosEn(t, ondas, rup) {
   if (!rup.length && !ondas.length && !cubos.userData.sucio) return;
+  const { lista, base } = cubos.userData, FALLAS = ctx.fallas;
   const ac = lin(COL.acento), se = lin(COL.secundario), on = lin(COL.onda), c = new THREE.Color();
   lista.forEach((q, i) => {
     c.copy(base[i]);
-    for (const e of rup) { const f = FALLAS[idxFalla(e.pieza)]; let g = 0;
+    for (const e of rup) { const f = FALLAS[ctx.idxFalla(e.pieza)]; let g = 0;
       for (let j = 0; j < f.simple.length - 1; j++) { const a = f.simple[j], b = f.simple[j + 1]; if (a[3]) continue;
         const dx = b[0] - a[0], dy = b[1] - a[1], h = clamp(((q.x - a[0]) * dx + (q.y - a[1]) * dy) / Math.max(1e-9, dx * dx + dy * dy));
         const d = Math.hypot(q.x - a[0] - dx * h, q.y - a[1] - dy * h); if (d > 14) continue;
@@ -633,6 +489,7 @@ function proyectar(x, y, z) {
   _v.set(x, z, -y).project(camera);
   return [(_v.x + 1) / 2 * W, (1 - _v.y) / 2 * H];
 }
+ctx.proyectar = proyectar;
 function renderAt(t) {
   ponerCamara(t);
   mundoEn(t);
@@ -646,7 +503,7 @@ window.__hf.buildReady = window.__hf.buildReady || {};
 window.__hf.buildReady["maqueta"] = (async () => {
   await Promise.all([cargarRelieve(), ...(window.__capaFuentes || []).map((f) => document.fonts.load(f))]);
   await document.fonts.ready;
-  armarRelieve(); armarLineas(); armarFallas(); armarCabezas(); armarResaltes(); armarLuces();
+  armarRelieve(); armarVocabulario();
   ponerCamara(0);
   await renderer.compileAsync(scene, camera);
   renderAt(0);

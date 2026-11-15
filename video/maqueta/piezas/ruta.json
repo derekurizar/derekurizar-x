@@ -1,0 +1,30 @@
+{
+ "tipo": "ruta",
+ "clase": "pieza",
+ "cuando": "un recorrido por lugares (una carretera, una ruta migratoria, el camino de algo)",
+ "parametros": {
+  "lugares": {
+   "tipo": "lugares",
+   "requerido": true,
+   "min": 2,
+   "descripcion": "los lugares por los que pasa, en orden (al menos dos)",
+   "capa": "lugares"
+  }
+ },
+ "escalas": [
+  "pais"
+ ],
+ "motores": [
+  "three",
+  "blender"
+ ],
+ "ejemplo": {
+  "id": "ca1",
+  "tipo": "ruta",
+  "lugares": [
+   "guatemala",
+   "chimaltenango",
+   "quetzaltenango"
+  ]
+ }
+}

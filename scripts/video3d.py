@@ -50,6 +50,7 @@ sys.path.insert(0, os.path.join(RAIZ, "scripts"))
 import numeros_es as NE  # noqa: E402
 import verificacion as VM  # noqa: E402
 import video as VD  # noqa: E402
+import maqueta3d as M3  # noqa: E402  (el catálogo del vocabulario: maqueta3d.py catalogo)
 
 FPS = 30
 OBJETIVO_S, TOL = 45, 0.2            # duración por defecto y tolerancia de C3D9
@@ -65,7 +66,6 @@ COLA_CORTE, COLA_CIERRE = 0.45, 2.8  # aire tras una escena que cierra secuencia
 SEGUIR_S = 3.0                       # el botón «Sígueme» a mitad del video
 ESTILOS = os.path.join(RAIZ, "design", "sets3d", "estilos.json")
 MAQUETA3D = os.path.join(RAIZ, "scripts", "maqueta3d.py")
-EVENTOS = ("ruptura", "onda", "deslizar", "encender", "apagar", "parpadear", "resaltar")
 REENVIO = ("voz", "voz-falsa", "descargar", "partir", "escuchar")   # escuchar = V11 (whisper): solo usa locucion.json y audio/
 ROTACION_GANCHOS = 2                 # la familia del gancho de los últimos 2 videos 3D no se repite (aviso)
 REGISTRO = os.path.join(RAIZ, "memoria", "videos3d.json")
@@ -359,8 +359,9 @@ def revisar_guion(g, st, trabajo):
                 elif o.get("separada_de") and o["separada_de"] not in piezas:
                     fallas.append("C3D11 escena %d: `separada_de` «%s» no es una pieza de mundo.piezas" % (n, o["separada_de"]))
             if clase == "evento":
-                if o.get("tipo") not in EVENTOS:
-                    fallas.append("C3D6 escena %d: evento «%s» no existe (%s)" % (n, o.get("tipo"), ", ".join(EVENTOS)))
+                if o.get("tipo") not in M3.tipos("evento"):
+                    fallas.append("C3D6 escena %d: el evento «%s» no está en el catálogo (maqueta3d.py catalogo; hay: %s); si hace falta, pídelo al "
+                                  "constructor con un brief" % (n, o.get("tipo"), ", ".join(M3.tipos("evento"))))
                 if not isinstance(o.get("dur"), (int, float)) and not o.get("hasta_dice"):
                     fallas.append("C3D6 escena %d: el evento %s lleva `dur` (segundos) o `hasta_dice`" % (n, o.get("tipo")))
                 if o.get("pieza") and o["pieza"] not in piezas:
@@ -661,7 +662,7 @@ def cmd_digesto(a):
     # cuenta); las de los ganchos 3D aparecerán aquí cuando haya videos 3D publicados y medidos
     print("\n## Rendimiento real (TikTok, YouTube; /analyze-improve)\n")
     print("\n".join(VD.lineas_rendimiento_real(("familia", "visual", "cierre", "duracion"))))
-    print("\n## Eventos\n\n" + ", ".join(EVENTOS) + "\n\nContrato de la maqueta: referencias/diseno/maqueta3d.md · reglas del guion: referencias/flujo-video3d.md"
+    print("\n" + "\n".join(M3.lineas_catalogo("sesion")) + "\n\nContrato de la maqueta: referencias/diseno/maqueta3d.md · reglas del guion: referencias/flujo-video3d.md"
           "\n\n`caption` (obligatorio, V5): tiktok, instagram, facebook y shorts (título ≤ %d caracteres en la primera línea + #Shorts); "
           "las cifras en dígitos, sin anunciar el video." % VD.SHORTS_TITULO)
     return 0

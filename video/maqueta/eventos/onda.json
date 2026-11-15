@@ -1,0 +1,46 @@
+{
+ "tipo": "onda",
+ "clase": "evento",
+ "cuando": "la sacudida que se propaga: un anillo que crece desde un lugar o desde toda una falla",
+ "parametros": {
+  "radio_km": {
+   "tipo": "numero",
+   "requerido": true,
+   "rango": [
+    1,
+    3000
+   ],
+   "descripcion": "hasta dónde llega el anillo"
+  },
+  "centro": {
+   "tipo": "lugar",
+   "requerido": false,
+   "descripcion": "de dónde sale (o `pieza`): un lugar: id del set o de mundo.lugares, o [lon, lat]"
+  },
+  "pieza": {
+   "tipo": "pieza",
+   "piezas": [
+    "falla"
+   ],
+   "requerido": false,
+   "descripcion": "la falla de la que sale (o `centro`)"
+  }
+ },
+ "escalas": [
+  "pais"
+ ],
+ "motores": [
+  "three",
+  "blender"
+ ],
+ "adelanto": {
+  "dur": 0.08
+ },
+ "ejemplo": {
+  "t": 6.4,
+  "dur": 2.8,
+  "tipo": "onda",
+  "pieza": "motagua",
+  "radio_km": 140
+ }
+}

@@ -1,0 +1,33 @@
+{
+ "tipo": "resaltar",
+ "clase": "evento",
+ "cuando": "señalar una pieza (la falla, la ruta) o un lugar (el epicentro) mientras la voz lo nombra",
+ "parametros": {
+  "pieza": {
+   "tipo": "pieza",
+   "requerido": false,
+   "descripcion": "la pieza que se aviva (o `lugar`)"
+  },
+  "lugar": {
+   "tipo": "lugar",
+   "requerido": false,
+   "descripcion": "el lugar que se marca con anillos (o `pieza`): un lugar: id del set o de mundo.lugares, o [lon, lat]"
+  }
+ },
+ "escalas": [
+  "pais"
+ ],
+ "motores": [
+  "three",
+  "blender"
+ ],
+ "adelanto": {
+  "s": 0.3
+ },
+ "ejemplo": {
+  "t": 5.1,
+  "dur": 2.2,
+  "tipo": "resaltar",
+  "lugar": "los-amates"
+ }
+}

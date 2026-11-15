@@ -131,15 +131,16 @@ Es cara de mirar y de producir: **≤ 2 por video vertical** (≤ 4 en el 16:9, 
 - **`estilo`**: uno del catálogo cuyo motor renderice (`python3 scripts/maqueta3d.py estilos` los lista con su «cuándo
   usarlo»; los de three.js: `noche`, `color`, `contorno`, `voxel`, `plano`). **Un solo estilo por video**: si el plano
   trae dos maquetas, llevan el mismo.
-- **`piezas`** y **`protagonista`**: lo que hay sobre el mundo (`falla`, `luces`, `frontera`, `ruta`) y la única pieza
-  que va en el acento. Ninguna lleva texto.
+- **`piezas`** y **`protagonista`**: lo que hay sobre el mundo y la única pieza que va en el acento. Ninguna lleva texto.
+  Los tipos, sus parámetros y un ejemplo de cada uno están en el catálogo del vocabulario (el digesto del plano lo trae;
+  a mano: `python3 scripts/maqueta3d.py catalogo --para realizador`). Lo que no está en el catálogo no se dibuja.
 - **`camara`**: claves `{mira, dist_km, azimut, elevacion}`. **La primera va sin `dice`**: es el encuadre con que abre la
   mesa. Cada una de las demás lleva el `dice` con el que la cámara **llega** a ese encuadre (`"al": "fin"` = llega al
   terminar la frase; sin `dice` y con `"al": "fin"`, al terminar la mesa: un acercamiento lento de cierre). Entre claves
   la cámara vuela sola. Referencia: el país entero cabe desde `dist_km` ≈ 700–800 con `elevacion` ≈ 62; a 150–250 km se
   lee un valle. El punto que mira cae en el centro del marco.
-- **`eventos`**: `ruptura`, `onda`, `deslizar`, `encender`, `apagar`, `parpadear`, `resaltar` (los campos de cada uno, en
-  el contrato), con `dice` y `dur` en segundos (o `hasta_dice`); `sfx` opcional del catálogo fijo.
+- **`eventos`**: los del catálogo (`maqueta3d.py catalogo --para realizador`: cada uno con sus parámetros y un ejemplo),
+  con `dice` y `dur` en segundos (o `hasta_dice`); `sfx` opcional del catálogo fijo.
 - **`marcas`**: pines pegados al mundo: `dice`, `lugar`, `texto` (y `sub`). Entra 0.3 s antes de su palabra y se queda
   hasta el final de la mesa (`dura` en segundos o `hasta_dice` la acortan; a lo más 3 a la vez).
 - Cada `dice` son palabras literales de la voz **de las escenas de esa mesa** (`"escena": "e5"` lo fija a una; `"vez": 2`

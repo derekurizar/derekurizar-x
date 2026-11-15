@@ -111,9 +111,10 @@ Cómo se escribe:
   acercamiento lento. No la marees: el gate del motor frena los vuelos bruscos (M3D3) y te dice cuánto.
 - **Marcas**: una por lugar que la voz nombra, con el nombre como se dice («Escuintla»); `sub` para lo que es («Puerto»,
   «Epicentro»). Sin números que la voz no diga.
-- **Eventos**: `resaltar` un lugar o la pieza protagonista cuando la voz llega a él; `encender` / `apagar` /
-  `parpadear` las luces de unos pueblos; `ruptura`, `onda` y `deslizar` son de fallas (sus campos, en
-  `referencias/diseno/maqueta3d.md`).
+- **Piezas y eventos**: solo los del catálogo del vocabulario, que el digesto trae bajo «Vocabulario de la maqueta 3D»
+  (cada tipo con para qué sirve, sus parámetros y un ejemplo; a mano: `python3 scripts/maqueta3d.py catalogo --para
+  realizador`). Lo habitual: `resaltar` un lugar o la pieza protagonista cuando la voz llega a él. Si la historia pide
+  algo que no está, no lo inventes: dilo en tu retorno (un brief para el constructor) y cuenta esa oración con piezas.
 - **Golpes encima**: ≤ 3, uno a la vez, abajo a la izquierda del marco: la `cifra` o la `fecha` que la voz dice (MV1 las
   pide igual que en cualquier mesa). Nada grande: tapa la maqueta (MV11).
 - El `titulo` de la mesa es el golpe de arriba; la maqueta no lleva titulares ni cifras propias.

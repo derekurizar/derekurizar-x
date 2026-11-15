@@ -1,0 +1,97 @@
+{
+ "tipo": "ruptura",
+ "clase": "evento",
+ "cuando": "una falla se rompe desde un punto y el frente corre por la traza (el instante del terremoto)",
+ "parametros": {
+  "pieza": {
+   "tipo": "pieza",
+   "piezas": [
+    "falla"
+   ],
+   "requerido": true,
+   "descripcion": "la falla que se rompe"
+  },
+  "desde": {
+   "tipo": "lugar",
+   "requerido": true,
+   "descripcion": "dónde empieza (el epicentro): un lugar: id del set o de mundo.lugares, o [lon, lat]"
+  },
+  "km": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    2000
+   ],
+   "descripcion": "kilómetros que rompe, repartidos según `hacia`"
+  },
+  "hacia": {
+   "tipo": "texto",
+   "requerido": false,
+   "valores": [
+    "este",
+    "oeste",
+    "norte",
+    "sur",
+    "ambos"
+   ],
+   "defecto": "ambos",
+   "descripcion": "hacia dónde corre `km`"
+  },
+  "km_oeste": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    2000
+   ],
+   "descripcion": "kilómetros hacia el oeste (en lugar de km + hacia)"
+  },
+  "km_este": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    2000
+   ],
+   "descripcion": "kilómetros hacia el este"
+  },
+  "km_norte": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    2000
+   ],
+   "descripcion": "kilómetros hacia el norte"
+  },
+  "km_sur": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    2000
+   ],
+   "descripcion": "kilómetros hacia el sur"
+  }
+ },
+ "escalas": [
+  "pais"
+ ],
+ "motores": [
+  "three",
+  "blender"
+ ],
+ "adelanto": {
+  "s": 0.25
+ },
+ "ejemplo": {
+  "t": 0.0,
+  "dur": 3.4,
+  "tipo": "ruptura",
+  "pieza": "motagua",
+  "desde": "los-amates",
+  "km_oeste": 170,
+  "km_este": 40
+ }
+}

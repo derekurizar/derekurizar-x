@@ -1,0 +1,491 @@
+{
+ "version": 1,
+ "nota": "Lo escribe SOLO `python3 scripts/maqueta3d.py catalogo --registrar` desde las fichas video/maqueta/<clase>/<tipo>.json (no se edita a mano). Cómo añadir una entrada: referencias/diseno/maqueta3d.md («Añadir vocabulario»).",
+ "entradas": [
+  {
+   "tipo": "falla",
+   "clase": "pieza",
+   "cuando": "una falla geológica que se rompe o se desliza (un terremoto): la traza del set o una dibujada",
+   "parametros": {
+    "trazos": {
+     "tipo": "lista",
+     "requerido": false,
+     "descripcion": "nombres de trazos del set (design/sets3d/<set>/fallas.json → nombres); con `puntos`, al menos uno de los dos",
+     "capa": "fallas"
+    },
+    "puntos": {
+     "tipo": "puntos",
+     "requerido": false,
+     "min": 2,
+     "descripcion": "el trazo propio, [[lon, lat], …] (la traza publicada de una ruptura)"
+    },
+    "suave": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "suaviza los `puntos` con una curva (Catmull-Rom)"
+    }
+   },
+   "escalas": [
+    "pais"
+   ],
+   "motores": [
+    "three",
+    "blender"
+   ],
+   "ejemplo": {
+    "id": "motagua",
+    "tipo": "falla",
+    "trazos": [
+     "Motagua Fault"
+    ]
+   },
+   "modulo": "piezas/falla.js",
+   "reglas": "scripts/maqueta_tipos/falla.py"
+  },
+  {
+   "tipo": "frontera",
+   "clase": "pieza",
+   "cuando": "el contorno del país: dónde queda algo respecto de Guatemala",
+   "parametros": {},
+   "escalas": [
+    "pais"
+   ],
+   "motores": [
+    "three",
+    "blender"
+   ],
+   "ejemplo": {
+    "id": "frontera",
+    "tipo": "frontera"
+   },
+   "modulo": "piezas/frontera.js",
+   "reglas": "scripts/maqueta_tipos/frontera.py"
+  },
+  {
+   "tipo": "luces",
+   "clase": "pieza",
+   "cuando": "los pueblos como puntos de luz: dónde vive la gente, qué se apaga o parpadea",
+   "parametros": {
+    "lugares": {
+     "tipo": "lugares",
+     "todos": true,
+     "requerido": false,
+     "defecto": "todos",
+     "descripcion": "«todos» los lugares del set (y de mundo.lugares) o una lista",
+     "capa": "lugares"
+    },
+    "encendidas": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "si empiezan encendidas (false: las enciende un evento «encender»)"
+    }
+   },
+   "escalas": [
+    "pais"
+   ],
+   "motores": [
+    "three",
+    "blender"
+   ],
+   "ejemplo": {
+    "id": "pueblos",
+    "tipo": "luces",
+    "lugares": "todos"
+   },
+   "modulo": "piezas/luces.js",
+   "reglas": "scripts/maqueta_tipos/luces.py"
+  },
+  {
+   "tipo": "ruta",
+   "clase": "pieza",
+   "cuando": "un recorrido por lugares (una carretera, una ruta migratoria, el camino de algo)",
+   "parametros": {
+    "lugares": {
+     "tipo": "lugares",
+     "requerido": true,
+     "min": 2,
+     "descripcion": "los lugares por los que pasa, en orden (al menos dos)",
+     "capa": "lugares"
+    }
+   },
+   "escalas": [
+    "pais"
+   ],
+   "motores": [
+    "three",
+    "blender"
+   ],
+   "ejemplo": {
+    "id": "ca1",
+    "tipo": "ruta",
+    "lugares": [
+     "guatemala",
+     "chimaltenango",
+     "quetzaltenango"
+    ]
+   },
+   "modulo": "piezas/ruta.js",
+   "reglas": "scripts/maqueta_tipos/ruta.py"
+  },
+  {
+   "tipo": "apagar",
+   "clase": "evento",
+   "cuando": "las luces de unos lugares se apagan de a poco (el apagón, lo que se pierde)",
+   "parametros": {
+    "lugares": {
+     "tipo": "lugares",
+     "todos": true,
+     "requerido": false,
+     "defecto": "todos",
+     "descripcion": "«todos» o ids de luces de una pieza `luces`"
+    }
+   },
+   "escalas": [
+    "pais"
+   ],
+   "motores": [
+    "three",
+    "blender"
+   ],
+   "ejemplo": {
+    "t": 1.0,
+    "dur": 2.0,
+    "tipo": "apagar",
+    "lugares": "todos"
+   },
+   "modulo": "eventos/apagar.js",
+   "reglas": "scripts/maqueta_tipos/apagar.py"
+  },
+  {
+   "tipo": "deslizar",
+   "clase": "evento",
+   "cuando": "el corrimiento de una falla: los dos lados se mueven en sentidos opuestos (flechas)",
+   "parametros": {
+    "pieza": {
+     "tipo": "pieza",
+     "piezas": [
+      "falla"
+     ],
+     "requerido": true,
+     "descripcion": "la falla que se desliza"
+    },
+    "en": {
+     "tipo": "lugar",
+     "requerido": false,
+     "descripcion": "dónde se centran las flechas (sin él, a la mitad de la traza): un lugar: id del set o de mundo.lugares, o [lon, lat]"
+    },
+    "km": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      1,
+      1000
+     ],
+     "defecto": 60,
+     "descripcion": "largo del tramo con flechas"
+    },
+    "periodo_km": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      1,
+      100
+     ],
+     "defecto": 7,
+     "descripcion": "distancia entre flechas"
+    },
+    "vel_km_s": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0.1,
+      200
+     ],
+     "defecto": 6,
+     "descripcion": "velocidad aparente de las flechas"
+    },
+    "sentido": {
+     "tipo": "texto",
+     "requerido": false,
+     "valores": [
+      "izquierdo",
+      "derecho"
+     ],
+     "defecto": "izquierdo",
+     "descripcion": "izquierdo: el lado norte va al oeste (el Motagua)"
+    }
+   },
+   "escalas": [
+    "pais"
+   ],
+   "motores": [
+    "three",
+    "blender"
+   ],
+   "adelanto": {
+    "s": 0.35
+   },
+   "ejemplo": {
+    "t": 4.2,
+    "dur": 2.4,
+    "tipo": "deslizar",
+    "pieza": "motagua",
+    "en": [
+     -89.7,
+     14.98
+    ],
+    "km": 80
+   },
+   "modulo": "eventos/deslizar.js",
+   "reglas": "scripts/maqueta_tipos/deslizar.py"
+  },
+  {
+   "tipo": "encender",
+   "clase": "evento",
+   "cuando": "las luces de unos lugares se encienden de a poco (vuelve la luz, llega algo)",
+   "parametros": {
+    "lugares": {
+     "tipo": "lugares",
+     "todos": true,
+     "requerido": false,
+     "defecto": "todos",
+     "descripcion": "«todos» o ids de luces de una pieza `luces`"
+    }
+   },
+   "escalas": [
+    "pais"
+   ],
+   "motores": [
+    "three",
+    "blender"
+   ],
+   "ejemplo": {
+    "t": 3.0,
+    "dur": 2.0,
+    "tipo": "encender",
+    "lugares": [
+     "guatemala",
+     "mixco"
+    ]
+   },
+   "modulo": "eventos/encender.js",
+   "reglas": "scripts/maqueta_tipos/encender.py"
+  },
+  {
+   "tipo": "onda",
+   "clase": "evento",
+   "cuando": "la sacudida que se propaga: un anillo que crece desde un lugar o desde toda una falla",
+   "parametros": {
+    "radio_km": {
+     "tipo": "numero",
+     "requerido": true,
+     "rango": [
+      1,
+      3000
+     ],
+     "descripcion": "hasta dónde llega el anillo"
+    },
+    "centro": {
+     "tipo": "lugar",
+     "requerido": false,
+     "descripcion": "de dónde sale (o `pieza`): un lugar: id del set o de mundo.lugares, o [lon, lat]"
+    },
+    "pieza": {
+     "tipo": "pieza",
+     "piezas": [
+      "falla"
+     ],
+     "requerido": false,
+     "descripcion": "la falla de la que sale (o `centro`)"
+    }
+   },
+   "escalas": [
+    "pais"
+   ],
+   "motores": [
+    "three",
+    "blender"
+   ],
+   "adelanto": {
+    "dur": 0.08
+   },
+   "ejemplo": {
+    "t": 6.4,
+    "dur": 2.8,
+    "tipo": "onda",
+    "pieza": "motagua",
+    "radio_km": 140
+   },
+   "modulo": "eventos/onda.js",
+   "reglas": "scripts/maqueta_tipos/onda.py"
+  },
+  {
+   "tipo": "parpadear",
+   "clase": "evento",
+   "cuando": "las luces de unos lugares titilan (el temblor que corta la luz)",
+   "parametros": {
+    "lugares": {
+     "tipo": "lugares",
+     "todos": true,
+     "requerido": false,
+     "defecto": "todos",
+     "descripcion": "«todos» o ids de luces de una pieza `luces`"
+    }
+   },
+   "escalas": [
+    "pais"
+   ],
+   "motores": [
+    "three",
+    "blender"
+   ],
+   "ejemplo": {
+    "t": 7.0,
+    "dur": 1.8,
+    "tipo": "parpadear",
+    "lugares": [
+     "guatemala",
+     "chimaltenango"
+    ]
+   },
+   "modulo": "eventos/parpadear.js",
+   "reglas": "scripts/maqueta_tipos/parpadear.py"
+  },
+  {
+   "tipo": "resaltar",
+   "clase": "evento",
+   "cuando": "señalar una pieza (la falla, la ruta) o un lugar (el epicentro) mientras la voz lo nombra",
+   "parametros": {
+    "pieza": {
+     "tipo": "pieza",
+     "requerido": false,
+     "descripcion": "la pieza que se aviva (o `lugar`)"
+    },
+    "lugar": {
+     "tipo": "lugar",
+     "requerido": false,
+     "descripcion": "el lugar que se marca con anillos (o `pieza`): un lugar: id del set o de mundo.lugares, o [lon, lat]"
+    }
+   },
+   "escalas": [
+    "pais"
+   ],
+   "motores": [
+    "three",
+    "blender"
+   ],
+   "adelanto": {
+    "s": 0.3
+   },
+   "ejemplo": {
+    "t": 5.1,
+    "dur": 2.2,
+    "tipo": "resaltar",
+    "lugar": "los-amates"
+   },
+   "modulo": "eventos/resaltar.js",
+   "reglas": "scripts/maqueta_tipos/resaltar.py"
+  },
+  {
+   "tipo": "ruptura",
+   "clase": "evento",
+   "cuando": "una falla se rompe desde un punto y el frente corre por la traza (el instante del terremoto)",
+   "parametros": {
+    "pieza": {
+     "tipo": "pieza",
+     "piezas": [
+      "falla"
+     ],
+     "requerido": true,
+     "descripcion": "la falla que se rompe"
+    },
+    "desde": {
+     "tipo": "lugar",
+     "requerido": true,
+     "descripcion": "dónde empieza (el epicentro): un lugar: id del set o de mundo.lugares, o [lon, lat]"
+    },
+    "km": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      2000
+     ],
+     "descripcion": "kilómetros que rompe, repartidos según `hacia`"
+    },
+    "hacia": {
+     "tipo": "texto",
+     "requerido": false,
+     "valores": [
+      "este",
+      "oeste",
+      "norte",
+      "sur",
+      "ambos"
+     ],
+     "defecto": "ambos",
+     "descripcion": "hacia dónde corre `km`"
+    },
+    "km_oeste": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      2000
+     ],
+     "descripcion": "kilómetros hacia el oeste (en lugar de km + hacia)"
+    },
+    "km_este": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      2000
+     ],
+     "descripcion": "kilómetros hacia el este"
+    },
+    "km_norte": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      2000
+     ],
+     "descripcion": "kilómetros hacia el norte"
+    },
+    "km_sur": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      2000
+     ],
+     "descripcion": "kilómetros hacia el sur"
+    }
+   },
+   "escalas": [
+    "pais"
+   ],
+   "motores": [
+    "three",
+    "blender"
+   ],
+   "adelanto": {
+    "s": 0.25
+   },
+   "ejemplo": {
+    "t": 0.0,
+    "dur": 3.4,
+    "tipo": "ruptura",
+    "pieza": "motagua",
+    "desde": "los-amates",
+    "km_oeste": 170,
+    "km_este": 40
+   },
+   "modulo": "eventos/ruptura.js",
+   "reglas": "scripts/maqueta_tipos/ruptura.py"
+  }
+ ]
+}

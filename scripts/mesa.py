@@ -1573,7 +1573,7 @@ def revisar_maqueta(ctx, M, nom, respaldado):
         f.append("YT20 %s: el estilo «%s» es de motor %s, que aún no renderiza; van: %s" % (nom, q["estilo"], E[q["estilo"]].get("motor"), " · ".join(con_motor)))
     pz = q.get("piezas")
     if not (isinstance(pz, list) and pz and all(isinstance(p, dict) and p.get("id") and p.get("tipo") for p in pz)):
-        f.append("YT20 %s: `piezas` son una o más {id, tipo, …} (falla · luces · frontera · ruta): lo que hay sobre el mundo" % nom)
+        f.append("YT20 %s: `piezas` son una o más {id, tipo, …}: lo que hay sobre el mundo (los tipos: maqueta3d.py catalogo --para realizador)" % nom)
         pz = []
     if q.get("protagonista") and q["protagonista"] not in {p["id"] for p in pz}:
         f.append("YT20 %s: `protagonista` («%s») es el id de una de sus piezas (%s): la única que va en el acento"
@@ -1771,4 +1771,16 @@ def digesto_maqueta(ctx):
                     dichos.append("%s («%s», %s a los %.1f s)" % (lid, nombre, S["clave"], ctx["offs"][i] + S["palabras"][r[1]]["start"]))
                     break
         L.append("  set %s: %d lugares (las 22 cabeceras y los pueblos de OpenStreetMap). La voz nombra: %s" % (sid, len(lug), "; ".join(dichos[:14]) or "ninguno por su nombre"))
+    L += ["  " + x for x in catalogo_maqueta()]
     return L
+
+
+def catalogo_maqueta():
+    """El vocabulario de la maqueta para el realizador (maqueta3d.py catalogo --para realizador), solo lo que dibujan los
+    motores con render (motores_maqueta). → renglones; vacío si no se puede leer."""
+    try:
+        import maqueta3d
+        mot = motores_maqueta()
+        return maqueta3d.lineas_catalogo("realizador", motor=mot[0] if len(mot) == 1 else None)
+    except Exception as e:   # el digesto no se cae por el catálogo
+        return ["(no se pudo leer el catálogo de la maqueta: %s; python3 scripts/maqueta3d.py catalogo --para realizador)" % e]

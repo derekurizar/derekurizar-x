@@ -1,0 +1,17 @@
+{
+ "tipo": "frontera",
+ "clase": "pieza",
+ "cuando": "el contorno del país: dónde queda algo respecto de Guatemala",
+ "parametros": {},
+ "escalas": [
+  "pais"
+ ],
+ "motores": [
+  "three",
+  "blender"
+ ],
+ "ejemplo": {
+  "id": "frontera",
+  "tipo": "frontera"
+ }
+}

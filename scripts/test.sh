@@ -2513,6 +2513,8 @@ paso "check_docs.py D0–D7 (CLAUDE.md corto, nada perdido, rutas y secciones ci
 paso "check_docs.py: cada regla D0–D7 muerde (negativos sobre una raíz fabricada)" python3 scripts/pruebas/check_docs_neg.py
 paso "resto · video (MV13 un solo acento con crema, escucha V11 con caché por huella, glosario y Scribe, cierres con el gate completo y forma obligatoria, título para teclear en caption.md)" python3 scripts/pruebas/resto_video.py
 paso "resto · costos y agenda (costo.py --registrar → memoria/costos.json, M22, medianas medidas en las órdenes, memoria.py marca la agenda al registrar)" python3 scripts/pruebas/resto_costos.py
+paso "maqueta3d.py catalogo --check: design/sets3d/vocabulario.json al día con las fichas" python3 scripts/maqueta3d.py catalogo --check
+paso "vocabulario de la maqueta: catálogo, fichas, validador genérico, Blender solo-three y módulos del proyecto" python3 scripts/pruebas/maqueta_registro.py
 paso "producir: la cadena común (mesa, propio, 3D, largo), la pausa por el plano y la reanudación" python3 scripts/pruebas/producir.py
 paso "node --check hilo.js (envuelto en async function)" check_js hilo.js
 paso "node --check ideas.js (envuelto en async function)" check_js ideas.js

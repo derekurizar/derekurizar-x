@@ -17,6 +17,10 @@ cámara y la proyección): nunca miden píxeles, y valen igual para los dos moto
         MODO PIEZA: la maqueta alojada en el cuadro de otro flujo (solo el mundo y sus pines, en un lienzo libre)
         check y cuadro lo aceptan con --pieza --lienzo ANCHOxALTO
   maqueta3d.py estilos | sets                                     los catálogos
+  maqueta3d.py catalogo [--para sesion|realizador|critico] [--escala E] [--motor M]   el VOCABULARIO legible
+  maqueta3d.py catalogo --registrar | --check                     escribe (o comprueba) design/sets3d/vocabulario.json
+        el vocabulario (piezas, eventos, objetos, mundos) son módulos video/maqueta/<clase>/<tipo>.js con su ficha
+        <tipo>.json y sus reglas opcionales scripts/maqueta_tipos/<tipo>.py; aquí no se nombra ningún tipo
   maqueta3d.py prueba [--dir DIR] [--formato F]                   check + hoja + render del fixture (+ un cuadro en Blender)
   maqueta3d.py prueba --blender-render ESTILO                     el fixture completo en un estilo de Blender (lento)
 
@@ -36,14 +40,158 @@ SETS = os.path.join(RAIZ, "design", "sets3d")
 FIXTURE = os.path.join(MOTOR, "fixture", "maqueta.json")
 MOTORES = ("three", "blender")     # el estilo decide el motor: three.js en HyperFrames, o Blender (la placa) + la capa 2D de HyperFrames
 BLENDER_PY = os.path.join(AQUI, "maqueta_blender.py")
-TIPOS_PIEZA = ("falla", "luces", "frontera", "ruta")
-TIPOS_EVENTO = ("ruptura", "onda", "deslizar", "encender", "apagar", "parpadear", "resaltar")
 RUMBOS = {"este": (1, 0), "oeste": (-1, 0), "norte": (0, 1), "sur": (0, -1)}
 NC_MAX, NR_MAX, NO_MAX, FALLAS_MAX = 56, 4, 4, 4      # topes del shader (motor.js)
 # El cuadro 0 es la portada: un titular con t ≤ PORTADA_T está completo desde el cuadro 0 y un evento con t ≤ PORTADA_T
 # ya se ve en él: el motor lo dibuja como si llevara este avance (segundos) y termina cuando dice el maqueta.json.
+# Cuánto adelanta cada tipo lo dice su ficha (`adelanto`: {"s": segundos} o {"dur": fracción de la duración}).
 PORTADA_T = 0.1
-ADELANTO = {"ruptura": lambda dur: 0.25, "onda": lambda dur: 0.08 * dur, "deslizar": lambda dur: 0.35, "resaltar": lambda dur: 0.3}
+
+# ---------- el vocabulario: piezas, eventos, objetos y mundos ----------
+# Cada entrada es un MÓDULO de motor.js (video/maqueta/<clase>/<tipo>.js) con su FICHA (<tipo>.json: parámetros, cuándo
+# sirve, escalas, motores, ejemplo) y, si sus reglas no caben en la ficha, sus reglas en scripts/maqueta_tipos/<tipo>.py.
+# El CATÁLOGO design/sets3d/vocabulario.json reúne las fichas; lo escribe SOLO `maqueta3d.py catalogo --registrar`.
+# Aquí, los gates y la orquestación lo leen del mismo sitio. Cómo añadir una entrada: referencias/diseno/maqueta3d.md.
+VOCABULARIO = os.path.join(SETS, "vocabulario.json")
+CLASES = {"pieza": "piezas", "evento": "eventos", "objeto": "objetos", "mundo": "mundos"}   # clase → carpeta en video/maqueta/
+ESCALAS = ("pais", "ciudad", "esquema")
+TIPOS_PARAM = ("numero", "entero", "texto", "bool", "lugar", "lugares", "pieza", "puntos", "lista")
+COMUNES = {"pieza": ("id", "tipo"), "evento": ("tipo", "t", "dur", "sfx")}   # campos de toda pieza / todo evento (no van en la ficha)
+REGLAS_DIR = os.path.join(AQUI, "maqueta_tipos")
+_VOCAB, _REGLAS = {}, {}
+
+
+def vocabulario():
+    """El catálogo (design/sets3d/vocabulario.json) → {tipo: ficha}. Vacío si no se ha registrado."""
+    if "v" not in _VOCAB:
+        try:
+            _VOCAB["v"] = {f["tipo"]: f for f in cargar_json(VOCABULARIO)["entradas"]}
+        except (OSError, ValueError, KeyError):
+            _VOCAB["v"] = {}
+    return _VOCAB["v"]
+
+
+def tipos(clase):
+    """Los tipos de una clase del catálogo, en orden alfabético."""
+    return tuple(sorted(t for t, f in vocabulario().items() if f["clase"] == clase))
+
+
+def ficha(tipo, clase=None):
+    f = vocabulario().get(tipo)
+    return f if f and (clase is None or f["clase"] == clase) else None
+
+
+def reglas(tipo):
+    """Las reglas de un tipo que no caben en su ficha (scripts/maqueta_tipos/<tipo>.py) o None."""
+    if tipo not in _REGLAS:
+        _REGLAS[tipo] = None
+        if re.fullmatch(r"[a-z][a-z0-9_]*", str(tipo)) and os.path.isfile(os.path.join(REGLAS_DIR, tipo + ".py")):
+            import importlib
+            _REGLAS[tipo] = importlib.import_module("maqueta_tipos." + tipo)
+    return _REGLAS[tipo]
+
+
+def tiene_regla(tipo, nombre):
+    rg = reglas(tipo)
+    return bool(rg and hasattr(rg, nombre))
+
+
+def adelanto_de(tipo, dur):
+    """Cuánto avance lleva un evento que empieza en la portada (None: el tipo no se ve en el cuadro 0)."""
+    a = (ficha(tipo) or {}).get("adelanto")
+    if not a:
+        return None
+    return float(a.get("s", 0)) + float(a.get("dur", 0)) * dur
+
+
+def validar_campos(o, f, que, por_id=None, avisos=None):
+    """El validador GENÉRICO: revisa `o` contra los parámetros de su ficha (requerido, tipo, rango, valores, mínimo de
+    elementos, a qué pieza apunta) → copia de `o` con los defectos. Lanza Falla("M3D2", …) con la descripción del
+    parámetro; lo que la ficha no declara va a `avisos` (no rompe una maqueta vieja)."""
+    P, r = f.get("parametros") or {}, dict(o)
+
+    def mal(nombre, como):
+        raise Falla("M3D2", "%s: `%s` %s (%s)" % (que, nombre, como, P[nombre]["descripcion"]))
+
+    def es_lugar(v):
+        return isinstance(v, str) and v or (isinstance(v, (list, tuple)) and len(v) == 2 and all(isinstance(x, (int, float)) and not isinstance(x, bool) for x in v))
+    for nombre, d in P.items():
+        v = o.get(nombre)
+        if v is None:
+            if d.get("requerido"):
+                raise Falla("M3D2", "%s: falta `%s` (%s)" % (que, nombre, d["descripcion"]))
+            if "defecto" in d:
+                r[nombre] = d["defecto"]
+            continue
+        t = d["tipo"]
+        if t in ("numero", "entero"):
+            if isinstance(v, bool) or not isinstance(v, (int, float)) or (t == "entero" and v != int(v)):
+                mal(nombre, "es un número%s y vale %r" % (" entero" if t == "entero" else "", v))
+            rg = d.get("rango")
+            if rg and not rg[0] <= v <= rg[1]:
+                mal(nombre, "vale %g y va de %g a %g" % (v, rg[0], rg[1]))
+        elif t == "texto":
+            if not isinstance(v, str):
+                mal(nombre, "es un texto y vale %r" % (v,))
+        elif t == "bool":
+            if not isinstance(v, bool):
+                mal(nombre, "es true o false y vale %r" % (v,))
+        elif t == "lugar":
+            if not es_lugar(v):
+                mal(nombre, "es un lugar: un id del set o de mundo.lugares, o [lon, lat]; vale %r" % (v,))
+        elif t in ("lugares", "puntos", "lista"):
+            if not (d.get("todos") and v == "todos"):
+                if not isinstance(v, list):
+                    mal(nombre, "es una lista%s y vale %r" % (" (o «todos»)" if d.get("todos") else "", v))
+                ok = {"lugares": es_lugar, "lista": lambda x: isinstance(x, str) and x,
+                      "puntos": lambda x: isinstance(x, (list, tuple)) and len(x) == 2 and all(isinstance(y, (int, float)) for y in x)}[t]
+                if not all(ok(x) for x in v):
+                    mal(nombre, "lleva %s" % {"lugares": "lugares (ids o [lon, lat])", "lista": "textos", "puntos": "puntos [lon, lat]"}[t])
+                if len(v) < d.get("min", 0):
+                    mal(nombre, "necesita al menos %d y trae %d" % (d["min"], len(v)))
+        elif t == "pieza":
+            if por_id is not None and v not in por_id:
+                mal(nombre, "«%s» no es el id de una pieza de esta maqueta (hay: %s)" % (v, ", ".join(por_id) or "ninguna"))
+            if por_id is not None and d.get("piezas") and por_id[v]["tipo"] not in d["piezas"]:
+                raise Falla("M3D2", "%s: `%s` «%s» no es una pieza de tipo %s" % (que, nombre, v, " o ".join(d["piezas"])))
+        if d.get("valores") and v not in d["valores"]:
+            mal(nombre, "vale %r y va uno de: %s" % (v, ", ".join(map(str, d["valores"]))))
+    extra = [k for k in o if k not in P and k not in COMUNES.get(f["clase"], ()) and not str(k).startswith("_")]
+    if extra and avisos is not None:
+        avisos.append("%s: %s no %s parámetro de «%s» (maqueta3d.py catalogo): se ignora" % (que, ", ".join("`%s`" % k for k in extra), "es" if len(extra) == 1 else "son", f["tipo"]))
+    return r
+
+
+def tipo_conocido(tipo, clase, est, que):
+    """La ficha de un tipo usado en el maqueta.json; FALLA M3D2 si no está en el catálogo o si el motor del estilo no lo dibuja."""
+    f = ficha(tipo, clase)
+    if not f:
+        raise Falla("M3D2", "%s: el %s «%s» no está en el catálogo (maqueta3d.py catalogo; hay: %s); si hace falta, pídelo al constructor con un brief"
+                    % (que, "tipo de pieza" if clase == "pieza" else "tipo de " + clase, tipo, ", ".join(tipos(clase)) or "ninguno: maqueta3d.py catalogo --registrar"))
+    if est["motor"] not in f["motores"]:
+        raise Falla("M3D2", "%s: el estilo «%s» (motor %s) no dibuja «%s»: usa un estilo de three.js (%s)"
+                    % (que, est["id"], est["motor"], tipo, ", ".join(k for k, e in catalogo_estilos().items() if e["motor"] in f["motores"])))
+    return f
+
+
+def resolver_entrada(o, f, que, X, base):
+    """Una pieza o un evento ya validado → lo resuelto: `base` + lo que dicen las reglas del tipo; sin reglas, los
+    parámetros tal cual, con cada lugar en km ([x, y]; en una lista: [x, y, id])."""
+    rg = reglas(f["tipo"])
+    if rg and hasattr(rg, "resolver"):
+        base.update(rg.resolver(o, X, que))
+        return base
+    for nombre, d in (f.get("parametros") or {}).items():
+        v = o.get(nombre)
+        if v is None:
+            continue
+        if d["tipo"] == "lugar":
+            l = X.lugar(v, que); base[nombre] = [l["x"], l["y"]]
+        elif d["tipo"] == "lugares" and v != "todos":
+            base[nombre] = [[l["x"], l["y"], ref if isinstance(ref, str) else ""] for ref, l in ((ref, X.lugar(ref, que)) for ref in v)]
+        else:
+            base[nombre] = v
+    return base
 
 # La zona de cada formato: de aquí salen las variables CSS de la capa y lo que miden los gates (una sola verdad).
 # 9:16 respeta la zona segura de TikTok, Reels y Shorts (video/comun.css: columna x 85–876, y ≥ 215, iconos x ≥ 900
@@ -353,61 +501,25 @@ def resolver(m, formato, avisos=None):
             raise Falla("M3D2", "%s: el lugar «%s» (%.3f, %.3f) cae fuera de la caja del set %s" % (que, ref, lon, lat, S.id))
         return {"x": round(x, 3), "y": round(y, 3), "nombre": nombre, "peso": (propios.get(ref) or S.lugares.get(ref) or {}).get("peso", 0.4) if isinstance(ref, str) else 0.4}
 
-    # piezas
-    piezas, ids = [], set()
+    # piezas: cada una contra su ficha (validador genérico) y las reglas de su tipo (scripts/maqueta_tipos/<tipo>.py)
+    import types
+    X = types.SimpleNamespace(m3=sys.modules[__name__], S=S, lugar=lugar, propios=propios, avisos=avisos, alt_km=alt_km, piezas=[], por_id={})
+    piezas, ids = X.piezas, set()
     for n, p in enumerate(mundo.get("piezas") or []):
         pid, tipo = p.get("id"), p.get("tipo")
         que = "pieza «%s»" % pid
         if not pid or pid in ids:
             raise Falla("M3D2", "la pieza %d no tiene `id` o lo repite (%r)" % (n, pid))
         ids.add(pid)
-        if tipo not in TIPOS_PIEZA:
-            raise Falla("M3D2", "%s: tipo «%s» desconocido (hay: %s)" % (que, tipo, ", ".join(TIPOS_PIEZA)))
-        r = {"id": pid, "tipo": tipo}
-        if tipo == "falla":
-            lineas = []
-            if p.get("puntos"):
-                if len(p["puntos"]) < 2:
-                    raise Falla("M3D2", "%s: `puntos` necesita al menos dos [lon, lat]" % que)
-                ln = [S.xy(q[0], q[1]) for q in p["puntos"]]
-                if not all(S.dentro(x, y) for x, y in ln):
-                    raise Falla("M3D2", "%s: hay puntos del trazo fuera de la caja del set %s" % (que, S.id))
-                lineas.append(suavizar(ln) if p.get("suave", True) else ln)
-            for nombre in p.get("trazos") or []:
-                hay = [t for t in S.fallas["trazos"] if t["nombre"] == nombre]
-                if not hay:
-                    raise Falla("M3D2", "%s: el trazo «%s» no está en el set %s (ver design/sets3d/%s/fallas.json → nombres)" % (que, nombre, S.id, S.id))
-                lineas += [[S.xy(q[0], q[1]) for q in t["puntos"]] for t in hay]
-            if not lineas:
-                raise Falla("M3D2", "%s: una falla necesita `trazos` (nombres del set) o `puntos` ([[lon, lat], …])" % que)
-            r["cadena"] = encadenar(lineas)
-            r["largo_km"] = r["cadena"][-1][2]
-        elif tipo == "luces":
-            refs = p.get("lugares", "todos")
-            refs = list(S.lugares) + [k for k in propios if k not in S.lugares] if refs == "todos" else refs
-            r["puntos"] = []
-            for ref in refs:
-                l = lugar(ref, que)
-                r["puntos"].append([l["x"], l["y"], l["peso"], ref if isinstance(ref, str) else ""])
-            r["encendidas"] = p.get("encendidas", True)
-        elif tipo == "frontera":
-            r["anillos"] = [[[round(v, 3) for v in S.xy(q[0], q[1])] for q in an] for an in S.frontera]
-        elif tipo == "ruta":
-            if len(p.get("lugares") or []) < 2:
-                raise Falla("M3D2", "%s: una ruta necesita al menos dos `lugares`" % que)
-            r["puntos"] = [[l["x"], l["y"]] for l in (lugar(ref, que) for ref in p["lugares"])]
-        piezas.append(r)
+        f = tipo_conocido(tipo, "pieza", est, que)
+        piezas.append(resolver_entrada(validar_campos(p, f, que, avisos=avisos), f, que, X, {"id": pid, "tipo": tipo}))
+    for tipo in dict.fromkeys(p["tipo"] for p in piezas):
+        rg = reglas(tipo)
+        if rg and hasattr(rg, "cerrar"):
+            rg.cerrar([p for p in piezas if p["tipo"] == tipo], X)
     fallas = [p for p in piezas if p["tipo"] == "falla"]
-    if len(fallas) > FALLAS_MAX:
-        raise Falla("M3D2", "hay %d piezas `falla` y el motor dibuja hasta %d" % (len(fallas), FALLAS_MAX))
-    tol = 0.5
-    while True:   # las cadenas simplificadas de todas las fallas caben en un arreglo del shader
-        for f in fallas:
-            f["simple"] = simplificar(f["cadena"], tol)
-        if sum(len(f["simple"]) for f in fallas) <= NC_MAX:
-            break
-        tol *= 1.5
-    por_id = {p["id"]: p for p in piezas}
+    por_id = X.por_id
+    por_id.update((p["id"], p) for p in piezas)
     prota = m.get("protagonista")
     if prota is None:
         prota = fallas[0]["id"] if fallas else None
@@ -426,100 +538,31 @@ def resolver(m, formato, avisos=None):
                        "dist_km": float(k.get("dist_km", 0)), "azimut": float(k.get("azimut", 0)), "elevacion": float(k.get("elevacion", 0)),
                        "fov": float(k.get("fov", 50))})
 
-    # eventos
+    # eventos: igual que las piezas (ficha + reglas del tipo); el adelanto de la portada lo dice la ficha
     catalogo_sfx = {e["id"] for e in cargar_json(os.path.join(RAIZ, "design", "sfx", "catalogo.json"))["efectos"]}
 
     def sfx_ok(o, que):
         if o.get("sfx") and o["sfx"] not in catalogo_sfx:
             raise Falla("M3D2", "%s: el efecto «%s» no está en design/sfx/catalogo.json" % (que, o["sfx"]))
 
-    def falla_de(e, que):
-        f = por_id.get(e.get("pieza"))
-        if not f or f["tipo"] != "falla":
-            raise Falla("M3D2", "%s: `pieza` «%s» no es una pieza de tipo falla" % (que, e.get("pieza")))
-        return f
-
     eventos = []
     for n, e in enumerate(m.get("eventos") or []):
         tipo = e.get("tipo")
         que = "evento %d (%s)" % (n, tipo)
-        if tipo not in TIPOS_EVENTO:
-            raise Falla("M3D2", "%s: tipo desconocido (hay: %s)" % (que, ", ".join(TIPOS_EVENTO)))
+        f = tipo_conocido(tipo, "evento", est, que)
         sfx_ok(e, que)
         r = {"tipo": tipo, "t": float(e.get("t", -1)), "dur": float(e.get("dur", 0))}
         if e.get("sfx"):
             r["sfx"] = e["sfx"]
-        if tipo == "ruptura":
-            f = falla_de(e, que); cad = f["cadena"]
-            l = lugar(e.get("desde"), que)
-            s0, d0 = mas_cercano(cad, l["x"], l["y"])
-            if d0 > 40:
-                avisos.append("%s: `desde` queda a %.0f km del trazo de «%s»; la ruptura nace en el punto más cercano del trazo" % (que, d0, f["id"]))
-            pide = {"mas": 0.0, "menos": 0.0}
-            ext = (cad[-1][0] - cad[0][0], cad[-1][1] - cad[0][1])
-
-            def lado(rumbo):   # ¿hacia dónde crece s respecto de un rumbo?
-                d = RUMBOS[rumbo]
-                return "mas" if ext[0] * d[0] + ext[1] * d[1] >= 0 else "menos"
-            dados = [k for k in RUMBOS if e.get("km_" + k) is not None]
-            if dados:
-                for k in dados:
-                    pide[lado(k)] += float(e["km_" + k])
-            else:
-                hacia, km = e.get("hacia", "ambos"), float(e.get("km", 0))
-                if hacia == "ambos":
-                    pide = {"mas": km / 2, "menos": km / 2}
-                elif hacia in RUMBOS:
-                    pide[lado(hacia)] = km
-                else:
-                    raise Falla("M3D2", "%s: `hacia` debe ser este, oeste, norte, sur o ambos (o usa km_oeste y km_este)" % que)
-            if pide["mas"] + pide["menos"] <= 0:
-                raise Falla("M3D2", "%s: sin kilómetros: usa `km` (con `hacia`) o `km_oeste` / `km_este`" % que)
-            hay = {"mas": cad[-1][2] - s0, "menos": s0 - cad[0][2]}
-            for k in ("mas", "menos"):
-                if pide[k] > hay[k] + 1.0:
-                    avisos.append("%s: pide %.0f km hacia %s y el trazo de «%s» solo tiene %.0f km desde «%s»: llega hasta el final del trazo"
-                                  % (que, pide[k], "donde crece el trazo (este/norte)" if k == "mas" else "donde empieza (oeste/sur)", f["id"], hay[k], e.get("desde")))
-            r.update({"pieza": f["id"], "s0": round(s0, 3), "km_mas": round(min(pide["mas"], hay["mas"]), 3), "km_menos": round(min(pide["menos"], hay["menos"]), 3)})
-        elif tipo == "onda":
-            r["radio_km"] = float(e.get("radio_km", 0))
-            if e.get("pieza"):
-                f = falla_de(e, que); r["pieza"] = f["id"]
-                r["x"], r["y"] = punto_en_s(f["cadena"], f["largo_km"] / 2)
-            else:
-                l = lugar(e.get("centro"), que); r["x"], r["y"] = l["x"], l["y"]
-        elif tipo == "deslizar":
-            f = falla_de(e, que); cad = f["cadena"]
-            if e.get("en") is not None:
-                l = lugar(e["en"], que); s0 = mas_cercano(cad, l["x"], l["y"])[0]
-            else:
-                s0 = f["largo_km"] / 2
-            sentido = e.get("sentido", "izquierdo")
-            if sentido not in ("izquierdo", "derecho"):
-                raise Falla("M3D2", "%s: `sentido` debe ser «izquierdo» (el lado norte va al oeste) o «derecho»" % que)
-            r.update({"pieza": f["id"], "s0": round(s0, 3), "km": float(e.get("km", 60)), "periodo_km": float(e.get("periodo_km", 7)),
-                      "vel": float(e.get("vel_km_s", 6)), "sentido": 1 if sentido == "izquierdo" else -1})
-            r["x"], r["y"] = punto_en_s(cad, s0)
-        elif tipo in ("encender", "apagar", "parpadear"):
-            refs = e.get("lugares", "todos")
-            if refs != "todos":
-                en_luces = {q[3] for p in piezas if p["tipo"] == "luces" for q in p["puntos"]}
-                for ref in refs:
-                    if ref not in en_luces:
-                        raise Falla("M3D2", "%s: «%s» no es una luz de ninguna pieza `luces`" % (que, ref))
-            r["lugares"] = refs
-        elif tipo == "resaltar":
-            if e.get("pieza"):
-                if e["pieza"] not in por_id:
-                    raise Falla("M3D2", "%s: la pieza «%s» no existe" % (que, e["pieza"]))
-                r["pieza"] = e["pieza"]
-            else:
-                l = lugar(e.get("lugar"), que); r.update({"lugar": e.get("lugar") if isinstance(e.get("lugar"), str) else "", "x": l["x"], "y": l["y"]})
-        if r["t"] <= PORTADA_T and tipo in ADELANTO:
-            r["adelanto"] = round(ADELANTO[tipo](r["dur"]), 3)
+        r = resolver_entrada(validar_campos(e, f, que, por_id, avisos), f, que, X, r)
+        ad = adelanto_de(tipo, r["dur"])
+        if r["t"] <= PORTADA_T and ad is not None:
+            r["adelanto"] = round(ad, 3)
         eventos.append(r)
-    if sum(1 for e in eventos if e["tipo"] == "ruptura") > NR_MAX:
-        raise Falla("M3D2", "hay más de %d eventos `ruptura` (tope del motor)" % NR_MAX)
+    for tipo in dict.fromkeys(e["tipo"] for e in eventos):
+        rg = reglas(tipo)
+        if rg and hasattr(rg, "cerrar"):
+            rg.cerrar([e for e in eventos if e["tipo"] == tipo], X)
 
     # marcas
     marcas = []
@@ -527,8 +570,8 @@ def resolver(m, formato, avisos=None):
         que = "marca %d «%s»" % (n, k.get("texto"))
         l = lugar(k.get("lugar"), que); sfx_ok(k, que)
         sep = k.get("separada_de")
-        if sep is not None and (sep not in por_id or por_id[sep]["tipo"] not in ("falla", "ruta", "frontera")):
-            raise Falla("M3D2", "%s: `separada_de` «%s» no es el id de una pieza falla, ruta o frontera" % (que, sep))
+        if sep is not None and (sep not in por_id or not tiene_regla(por_id[sep]["tipo"], "tramos")):
+            raise Falla("M3D2", "%s: `separada_de` «%s» no es el id de una pieza que sea una línea (%s)" % (que, sep, ", ".join(t for t in tipos("pieza") if tiene_regla(t, "tramos"))))
         marcas.append({"t": float(k.get("t", -1)), "hasta": float(k.get("hasta", -1)), "x": l["x"], "y": l["y"], "z": round(alt_km(l["x"], l["y"]) + 0.3, 3),
                        "texto": str(k.get("texto") or ""), "sub": str(k.get("sub") or ""), "alto": int(k.get("alto", 110)), "sfx": k.get("sfx"),
                        "separada_de": sep})
@@ -723,13 +766,8 @@ def gates_formato(m, R):
     # M3D11 · separación: una marca que se declara `separada_de` una pieza no puede dibujarse pegada a ella
     por_id = {p["id"]: p for p in R["piezas"]}
 
-    def linea_de(pz):   # la pieza como polilínea [(x, y, z, salto)] a pasos de ≤ 4 km, posada en el relieve
-        if pz["tipo"] == "falla":
-            tramos = [[(q[0], q[1], bool(q[3])) for q in pz["cadena"]]]
-        elif pz["tipo"] == "ruta":
-            tramos = [[(q[0], q[1], False) for q in pz["puntos"]]]
-        else:
-            tramos = [[(q[0], q[1], False) for q in an + an[:1]] for an in pz["anillos"]]
+    def linea_de(pz):   # la pieza como polilínea [(x, y, z, salto)] a pasos de ≤ 4 km, posada en el relieve (sus `tramos`)
+        tramos = reglas(pz["tipo"]).tramos(pz)
         pts = []
         for tr in tramos:
             for (ax, ay, salto), (bx, by, _) in zip(tr, tr[1:]):
@@ -813,46 +851,35 @@ def gates_formato(m, R):
                 if min(o["hasta"], sg["t"] + sg["dur"]) - max(o["t"], sg["t"]) > 1e-6 and len(str(o.get("texto") or "")) > 14:
                     F("M3D5", "`seguir` (%.1f → %.1f s) coincide con el titular «%s», que llega al botón: muévelo a un hueco entre titulares" % (sg["t"], sg["t"] + sg["dur"], o.get("texto")))
 
-    # M3D9 · el gancho es un evento que se VE en el cuadro 0
+    # M3D9 · el gancho es un evento que se VE en el cuadro 0 (los tipos con `adelanto` en su ficha; de dónde sale: `origen`)
+    G = {"R": R, "por_id": por_id, "m3": sys.modules[__name__]}
     visto, hay = False, False
     for e in R["eventos"]:
-        if e["t"] > PORTADA_T or e["tipo"] not in ADELANTO:
+        if e["t"] > PORTADA_T or adelanto_de(e["tipo"], e["dur"]) is None:
             continue
         hay = True
-        if e["tipo"] == "ruptura":
-            x, y = punto_en_s(por_id[e["pieza"]]["cadena"], e["s0"])
-        elif "x" in e:
-            x, y = e["x"], e["y"]
-        else:   # resaltar una pieza
-            pz = por_id[e["pieza"]]
-            if pz["tipo"] != "falla":
-                visto = True; continue
-            x, y = punto_en_s(pz["cadena"], pz["largo_km"] / 2)
+        rg = reglas(e["tipo"])
+        o = rg.origen(e, G) if rg and hasattr(rg, "origen") else None
+        if o is None:
+            visto = True; continue
+        x, y = o
         visto = visto or en_cuadro(proy(0.0)(x, y, alt(x, y)))
     if not hay:
-        F("M3D9", "el cuadro 0 es la portada y el gancho es un evento que se ve en él: ningún evento visible (ruptura, onda, deslizar o resaltar) empieza en t ≤ %.1f s" % PORTADA_T)
+        F("M3D9", "el cuadro 0 es la portada y el gancho es un evento que se ve en él: ningún evento visible (%s) empieza en t ≤ %.1f s"
+          % (", ".join(t for t in tipos("evento") if adelanto_de(t, 1) is not None), PORTADA_T))
     elif not visto:
         F("M3D9", "el evento del gancho empieza en t ≤ %.1f s pero su origen no está en cuadro en t = 0: encuádralo con la primera clave de cámara" % PORTADA_T)
 
-    # M3D6 · eventos
+    # M3D6 · eventos (dónde pasa cada uno en cada momento: `puntos` de las reglas de su tipo; sin ellos no se mide)
     for n, e in enumerate(R["eventos"]):
         que = "evento %d (%s)" % (n, e["tipo"])
         if not (e["t"] >= 0 and e["dur"] > 0 and e["t"] + e["dur"] <= dur + 1e-6):
             F("M3D6", "%s: de %.2f a %.2f s no cabe en la duración (%.2f s)" % (que, e["t"], e["t"] + e["dur"], dur)); continue
+        rg = reglas(e["tipo"])
         ok, N = 0, 9
         for i in range(N):
             u = i / (N - 1); t = e["t"] + e["dur"] * u; pr = proy(t)
-            if e["tipo"] == "ruptura":
-                cad = por_id[e["pieza"]]["cadena"]
-                pts = [punto_en_s(cad, e["s0"] + sg_ * km * u) for sg_, km in ((1, e["km_mas"]), (-1, e["km_menos"])) if km > 0]
-            elif e["tipo"] in ("onda", "deslizar") or (e["tipo"] == "resaltar" and "x" in e):
-                pts = [(e["x"], e["y"])]
-            elif e["tipo"] == "resaltar":
-                p = por_id[e["pieza"]]
-                pts = [punto_en_s(p["cadena"], p["largo_km"] / 2)] if p["tipo"] == "falla" else []
-            else:
-                luces = [q for p in R["piezas"] if p["tipo"] == "luces" for q in p["puntos"] if e["lugares"] == "todos" or q[3] in e["lugares"]]
-                pts = [(q[0], q[1]) for q in luces] if e["lugares"] != "todos" else []
+            pts = rg.puntos(e, u, G) if rg and hasattr(rg, "puntos") else []
             if not pts:
                 ok += 1; continue
             vistos = sum(1 for (x, y) in pts if en_cuadro(pr(x, y, alt(x, y))))
@@ -886,8 +913,13 @@ def gates_comunes(m, R, avisos):
         F("M3D7", "`capa.cierre` necesita `t` dentro del video, `frase` y `redes`")
     if C.get("cierre") and R["dur"] - ci.get("t", 0) < 3:
         F("M3D7", "el cierre dura %.1f s: «Sígueme en» necesita al menos 3 s en pantalla" % (R["dur"] - ci.get("t", 0)))
-    usadas = {"relieve"} | ({"fallas"} if any(p["tipo"] == "falla" and (mp.get("trazos")) for p, mp in zip(R["piezas"], m["mundo"].get("piezas") or [])) else set()) \
-        | ({"lugares"} if (R["marcas"] or any(p["tipo"] in ("luces", "ruta") for p in R["piezas"])) else set())
+    # las capas de geodatos que la maqueta usa: el relieve siempre, los lugares si hay marcas, y las que declaran las fichas
+    # (un parámetro con `capa`: si la pieza lo trae, o su defecto, el pie nombra la fuente de esa capa)
+    usadas = {"relieve"} | ({"lugares"} if R["marcas"] else set())
+    for mp in m["mundo"].get("piezas") or []:
+        for nombre, d in ((ficha(mp.get("tipo"), "pieza") or {}).get("parametros") or {}).items():
+            if d.get("capa") and (mp.get(nombre) if mp.get(nombre) is not None else d.get("defecto")):
+                usadas.add(d["capa"])
     for capa in sorted(usadas):
         clave = R["_pie_claves"].get(capa)
         if clave and clave.lower() not in str(C.get("pie") or "").lower():
@@ -979,7 +1011,12 @@ def escribir_proyecto(m, formato, destino, fotos=None):
             shutil.copyfile(os.path.join(versiones.THREE_DIR, f), os.path.join(A, "three", f))
         shutil.copyfile(os.path.join(S.dir, R["relieve"]["archivo"]), os.path.join(A, "set", R["relieve"]["archivo"]))
         fondo = '<canvas id="gl" class="clip" width="@W@" height="@H@" data-start="0" data-duration="@D@" data-track-index="0"></canvas>'
-        guion_motor = '<script type="module" src="assets/motor.js"></script>'
+        # el vocabulario: SOLO los módulos que usa esta maqueta, que se registran en window.MAQ antes de motor.js (módulo, diferido)
+        mods = modulos_de(R)
+        for rel_m in mods:
+            os.makedirs(os.path.join(A, "modulos", os.path.dirname(rel_m)), exist_ok=True)
+            shutil.copyfile(os.path.join(MOTOR, rel_m), os.path.join(A, "modulos", rel_m))
+        guion_motor = "".join('<script src="assets/modulos/%s"></script>\n    ' % x for x in mods) + '<script type="module" src="assets/motor.js"></script>'
     for f in ("placa.js" if placa else "motor.js", "capa.js"):
         shutil.copyfile(os.path.join(MOTOR, f), os.path.join(A, f))
     with open(os.path.join(A, "datos.js"), "w", encoding="utf-8") as f:
@@ -1350,6 +1387,206 @@ def cmd_pieza(a):
     return 0
 
 
+# ---------- el catálogo del vocabulario (design/sets3d/vocabulario.json) ----------
+CLAVES_FICHA = ("tipo", "clase", "cuando", "parametros", "escalas", "motores", "ejemplo")
+CLAVES_PARAM = {"tipo", "requerido", "descripcion", "rango", "valores", "defecto", "min", "todos", "piezas", "capa"}
+REGISTRO_JS = {"pieza": "PIEZAS", "evento": "EVENTOS", "objeto": "OBJETOS", "mundo": "MUNDOS"}
+
+
+def revisar_ficha(fi, clase, tipo, ruta_js):
+    """Una ficha y su módulo → fallas (lista de textos)."""
+    f, que = [], "%s/%s" % (CLASES[clase], tipo)
+    if not re.fullmatch(r"[a-z][a-z0-9_]*", tipo):
+        f.append("%s: el nombre va en minúsculas, sin tildes ni guiones (es el `tipo`)" % que)
+    if not isinstance(fi, dict):
+        return f + ["%s.json: la ficha es un objeto" % que]
+    faltan = [k for k in CLAVES_FICHA if k not in fi]
+    if faltan:
+        f.append("%s.json: faltan %s" % (que, ", ".join("`%s`" % k for k in faltan)))
+    if fi.get("tipo") != tipo:
+        f.append("%s.json: `tipo` es «%s» y el archivo se llama %s" % (que, fi.get("tipo"), tipo))
+    if fi.get("clase") != clase:
+        f.append("%s.json: `clase` es «%s» y está en %s/ (va «%s»)" % (que, fi.get("clase"), CLASES[clase], clase))
+    if not (isinstance(fi.get("cuando"), str) and 10 <= len(fi["cuando"]) <= 160):
+        f.append("%s.json: `cuando` es UNA línea (10–160 caracteres): para qué historia sirve" % que)
+    if not (isinstance(fi.get("escalas"), list) and fi["escalas"] and set(fi["escalas"]) <= set(ESCALAS)):
+        f.append("%s.json: `escalas` es una lista no vacía de %s" % (que, ", ".join(ESCALAS)))
+    if not (isinstance(fi.get("motores"), list) and fi["motores"] and set(fi["motores"]) <= set(MOTORES)):
+        f.append("%s.json: `motores` es una lista no vacía de %s" % (que, ", ".join(MOTORES)))
+    P = fi.get("parametros")
+    if not isinstance(P, dict):
+        f.append("%s.json: `parametros` es un objeto {nombre: {tipo, requerido, descripcion, …}} (vacío si no lleva)" % que); P = {}
+    for nombre, d in P.items():
+        q = "%s.json → parametros.%s" % (que, nombre)
+        if nombre in COMUNES.get(clase, ()):
+            f.append("%s: `%s` es común a toda %s y no va en la ficha" % (q, nombre, clase))
+        if not isinstance(d, dict):
+            f.append("%s: es un objeto" % q); continue
+        if d.get("tipo") not in TIPOS_PARAM:
+            f.append("%s: `tipo` es uno de %s" % (q, ", ".join(TIPOS_PARAM)))
+        if not isinstance(d.get("requerido"), bool) or not (isinstance(d.get("descripcion"), str) and d["descripcion"].strip()):
+            f.append("%s: lleva `requerido` (true/false) y `descripcion`" % q)
+        if set(d) - CLAVES_PARAM:
+            f.append("%s: claves desconocidas %s (van: %s)" % (q, ", ".join(sorted(set(d) - CLAVES_PARAM)), ", ".join(sorted(CLAVES_PARAM))))
+        rg = d.get("rango")
+        if rg is not None and not (isinstance(rg, list) and len(rg) == 2 and all(isinstance(x, (int, float)) for x in rg) and rg[0] <= rg[1]):
+            f.append("%s: `rango` es [mínimo, máximo]" % q)
+        if d.get("valores") is not None and not (isinstance(d["valores"], list) and d["valores"]):
+            f.append("%s: `valores` es una lista no vacía" % q)
+    ad = fi.get("adelanto")
+    if ad is not None and (clase != "evento" or not isinstance(ad, dict) or not ad or set(ad) - {"s", "dur"}):
+        f.append("%s.json: `adelanto` (solo eventos) es {\"s\": segundos} o {\"dur\": fracción de la duración}: cuánto lleva un evento que empieza en la portada" % que)
+    ej = fi.get("ejemplo")
+    if not isinstance(ej, dict) or (clase in COMUNES and ej.get("tipo") != tipo):
+        f.append("%s.json: `ejemplo` es un objeto con `tipo` «%s», tal como va en el maqueta.json" % (que, tipo))
+    elif not f:
+        try:
+            validar_campos(ej, fi, "%s.json → ejemplo" % que)
+        except Falla as e:
+            f.append(e.args[1])
+    try:
+        js = cargar_texto(ruta_js)
+    except OSError:
+        return f + ["%s.js: no se puede leer" % que]
+    if not re.search(r"MAQ\.%s\.%s\s*=|MAQ\.%s\[\s*[\"']%s[\"']\s*\]\s*=" % (REGISTRO_JS[clase], tipo, REGISTRO_JS[clase], tipo), js):
+        f.append("%s.js: el módulo no se registra (falta `MAQ.%s.%s = {…}`)" % (que, REGISTRO_JS[clase], tipo))
+    if re.search(r"#[0-9a-fA-F]{3,8}\b", re.sub(r"//[^\n]*", "", js)):
+        f.append("%s.js: un color escrito a mano: los colores llegan del estilo (ctx.COL, ctx.lin)" % que)
+    if re.search(r"https?://|\bfetch\(|XMLHttpRequest|\bimport\s*\(", js):
+        f.append("%s.js: el módulo no usa la red ni carga nada: todo llega en ctx" % que)
+    if re.search(r"Math\.random|Date\.now|performance\.now|new Date\b", js):
+        f.append("%s.js: nada de azar ni reloj: cada cuadro es función pura de t (usa ctx.hash)" % que)
+    return f
+
+
+def generar_catalogo():
+    """Las fichas de video/maqueta/<clase>/ → (catálogo, fallas). Cada módulo con su ficha y cada ficha con su módulo."""
+    entradas, f, vistos = [], [], {}
+    for clase, carpeta in CLASES.items():
+        d = os.path.join(MOTOR, carpeta)
+        if not os.path.isdir(d):
+            continue
+        nombres = sorted(os.listdir(d))
+        js, fj = {n[:-3] for n in nombres if n.endswith(".js")}, {n[:-5] for n in nombres if n.endswith(".json")}
+        f += ["%s/%s.js no tiene ficha (%s.json)" % (carpeta, t, t) for t in sorted(js - fj)]
+        f += ["%s/%s.json no tiene módulo (%s.js)" % (carpeta, t, t) for t in sorted(fj - js)]
+        for t in sorted(js & fj):
+            try:
+                fi = cargar_json(os.path.join(d, t + ".json"))
+            except (OSError, ValueError) as e:
+                f.append("%s/%s.json: no se puede leer (%s)" % (carpeta, t, e)); continue
+            ff = revisar_ficha(fi, clase, t, os.path.join(d, t + ".js"))
+            if t in vistos:
+                ff.append("%s/%s: el tipo «%s» ya está en %s/ (un tipo por catálogo)" % (carpeta, t, t, vistos[t]))
+            vistos[t] = carpeta
+            f += ff
+            if not ff:
+                e = dict(fi)
+                e["modulo"] = "%s/%s.js" % (carpeta, t)
+                e["reglas"] = "scripts/maqueta_tipos/%s.py" % t if os.path.isfile(os.path.join(REGLAS_DIR, t + ".py")) else None
+                entradas.append(e)
+    for e in entradas:
+        f += ["%s: `usa` «%s», que no está en el catálogo" % (e["modulo"], u) for u in e.get("usa") or [] if u not in vistos]
+    sueltas = sorted(n[:-3] for n in os.listdir(REGLAS_DIR) if n.endswith(".py") and not n.startswith("_") and n[:-3] not in vistos) if os.path.isdir(REGLAS_DIR) else []
+    f += ["scripts/maqueta_tipos/%s.py no tiene módulo ni ficha en video/maqueta/" % t for t in sueltas]
+    orden = list(CLASES)
+    entradas.sort(key=lambda e: (orden.index(e["clase"]), e["tipo"]))
+    return {"version": 1, "nota": "Lo escribe SOLO `python3 scripts/maqueta3d.py catalogo --registrar` desde las fichas video/maqueta/<clase>/<tipo>.json "
+                                  "(no se edita a mano). Cómo añadir una entrada: referencias/diseno/maqueta3d.md («Añadir vocabulario»).",
+            "entradas": entradas}, f
+
+
+def texto_catalogo(cat):
+    return json.dumps(cat, ensure_ascii=False, indent=1) + "\n"
+
+
+def modulos_de(R):
+    """Los módulos de motor.js que usa una maqueta resuelta (sus piezas y eventos, y lo que ellos `usa`n) → rutas relativas
+    a video/maqueta/, en orden estable."""
+    V, pend, usados = vocabulario(), [p["tipo"] for p in R["piezas"]] + [e["tipo"] for e in R["eventos"]], set()
+    while pend:
+        t = pend.pop()
+        if t in usados or t not in V:
+            continue
+        usados.add(t); pend += V[t].get("usa") or []
+    orden = list(CLASES)
+    return [V[t]["modulo"] for t in sorted(usados, key=lambda t: (orden.index(V[t]["clase"]), t))]
+
+
+def fmt_param(nombre, d):
+    s = nombre + ("*" if d.get("requerido") else "")
+    if d.get("valores"):
+        s += " (%s)" % "|".join(map(str, d["valores"]))
+    elif d.get("rango"):
+        s += " %g–%g" % tuple(d["rango"])
+    if "defecto" in d and d["defecto"] not in (None, ""):
+        s += "=%s" % (json.dumps(d["defecto"], ensure_ascii=False) if not isinstance(d["defecto"], str) else d["defecto"])
+    if d["tipo"] == "pieza" and d.get("piezas"):
+        s += " →%s" % "|".join(d["piezas"])
+    return s
+
+
+def lineas_catalogo(para="sesion", escala=None, motor=None):
+    """El catálogo legible (≤ 1 página por escala): una línea por entrada con sus parámetros clave y un ejemplo mínimo.
+    para: sesion (todo) · realizador (la maqueta dentro de la mesa: `dice` en vez de `t`) · critico (qué hay y para qué)."""
+    V = vocabulario()
+    if not V:
+        return ["(el catálogo está vacío: python3 scripts/maqueta3d.py catalogo --registrar)"]
+    sel = [f for f in V.values() if (not escala or escala in f["escalas"]) and (not motor or motor in f["motores"])]
+    L = ["## Vocabulario de la maqueta 3D (design/sets3d/vocabulario.json%s%s; `*` = requerido)" % (
+        " · escala %s" % escala if escala else "", " · motor %s" % motor if motor else "")]
+    titulos = {"pieza": "Piezas (mundo.piezas: {id, tipo, …})",
+               "evento": "Eventos (eventos: {%s, dur, tipo, …})" % ("dice" if para == "realizador" else "t"),
+               "objeto": "Objetos (los usan las piezas)", "mundo": "Mundos"}
+    for clase in CLASES:
+        fs = sorted((f for f in sel if f["clase"] == clase), key=lambda f: f["tipo"])
+        if not fs:
+            continue
+        L.append("### " + titulos[clase])
+        for f in fs:
+            extra = "" if motor else " · " + "/".join(f["motores"])
+            ln = "- `%s` [%s%s] %s" % (f["tipo"], "/".join(f["escalas"]), extra, f["cuando"])
+            if para != "critico":
+                ps = [fmt_param(n, d) for n, d in f["parametros"].items()]
+                ej = dict(f["ejemplo"])
+                if para == "realizador" and clase == "evento":
+                    ej.pop("t", None); ej = dict({"dice": "…"}, **ej)
+                ln += ". %s Ej.: %s" % ("Parámetros: " + ", ".join(ps) + "." if ps else "Sin parámetros.", json.dumps(ej, ensure_ascii=False))
+            L.append(ln)
+    if not sel:
+        L.append("(nada todavía con ese filtro)")
+    L.append("Lo que no está aquí no se dibuja: no se inventa un tipo. Si la historia lo necesita, pídelo al constructor con un brief "
+             "(qué tiene que verse y cuándo).")
+    return L
+
+
+def cmd_catalogo(a):
+    if a.registrar or a.check:
+        cat, fallas = generar_catalogo()
+        for x in fallas:
+            print("  FALLA catálogo %s" % x)
+        if fallas:
+            print("catálogo: %d falla(s); %s" % (len(fallas), "no se escribió" if a.registrar else "revisa las fichas"))
+            return 1
+        nuevo = texto_catalogo(cat)
+        viejo = cargar_texto(VOCABULARIO) if os.path.isfile(VOCABULARIO) else ""
+        if a.check:
+            if nuevo != viejo:
+                print("FALLA catálogo: design/sets3d/vocabulario.json no está al día con las fichas: python3 scripts/maqueta3d.py catalogo --registrar")
+                return 1
+            print("catálogo al día: %d entradas" % len(cat["entradas"]))
+            return 0
+        with open(VOCABULARIO, "w", encoding="utf-8") as fh:
+            fh.write(nuevo)
+        _VOCAB.clear()
+        cuenta = {c: sum(1 for e in cat["entradas"] if e["clase"] == c) for c in CLASES}
+        print("catálogo %s: %s (%s)" % ("sin cambios" if nuevo == viejo else "escrito", os.path.relpath(VOCABULARIO, RAIZ),
+                                        ", ".join("%d %s" % (n, CLASES[c]) for c, n in cuenta.items() if n)))
+        return 0
+    print("\n".join(lineas_catalogo(a.para, a.escala, a.motor)))
+    return 0
+
+
 def cmd_estilos(a):
     for e in catalogo_estilos().values():
         print("%-11s motor %-8s %s%s" % (e["id"], e["motor"], e["cuando"], "" if e["motor"] == "three" or blender_bin() else "  [falta Blender ≥ 5.0: $BLENDER o /Applications]"))
@@ -1475,6 +1712,11 @@ def main():
     p = sub.add_parser("proyecto", help="escribe el proyecto de HyperFrames"); p.add_argument("maqueta"); p.add_argument("--dir", required=True); p.add_argument("--formato", default="ambos", **fmt)
     p = sub.add_parser("render", help="DIR/<9x16|4x5>/video.mp4 + DIR/efectos.json"); p.add_argument("maqueta"); p.add_argument("--dir", required=True); p.add_argument("--formato", default="ambos", **fmt)
     p.add_argument("--borrador", action="store_true", help="sin gates: un candidato para mirar, nunca para entregar")
+    p = sub.add_parser("catalogo", help="el vocabulario (piezas, eventos, objetos, mundos): legible, --registrar o --check")
+    p.add_argument("--para", choices=["sesion", "realizador", "critico"], default="sesion", help="para quién (por defecto: %(default)s)")
+    p.add_argument("--escala", choices=list(ESCALAS), help="solo lo de esa escala"); p.add_argument("--motor", choices=list(MOTORES), help="solo lo que dibuja ese motor")
+    p.add_argument("--registrar", action="store_true", help="revisa las fichas y escribe design/sets3d/vocabulario.json (el único escritor)")
+    p.add_argument("--check", action="store_true", help="falla si vocabulario.json no está al día con las fichas")
     sub.add_parser("estilos", help="el catálogo de estilos")
     sub.add_parser("sets", help="los sets de geodatos")
     p = sub.add_parser("prueba", help="check + hoja + render del fixture (y un cuadro del motor blender, si Blender está instalado)")
@@ -1486,7 +1728,8 @@ def main():
     if getattr(a, "maqueta", None) and not os.path.isfile(a.maqueta):
         print("no existe %s" % a.maqueta, file=sys.stderr); return 2
     try:
-        return {"check": cmd_check, "cuadro": cmd_cuadro, "proyecto": cmd_proyecto, "render": cmd_render, "pieza": cmd_pieza, "estilos": cmd_estilos, "sets": cmd_sets, "prueba": cmd_prueba}[a.cmd](a)
+        return {"check": cmd_check, "cuadro": cmd_cuadro, "proyecto": cmd_proyecto, "render": cmd_render, "pieza": cmd_pieza, "estilos": cmd_estilos, "sets": cmd_sets,
+                "prueba": cmd_prueba, "catalogo": cmd_catalogo}[a.cmd](a)
     except Falla as e:
         print("  FALLA %s %s" % e.args); return 1
 
