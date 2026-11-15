@@ -63,6 +63,9 @@ Comprueba:
      lo revisa scripts/metricas.py (revisar)
   M11 memoria/mejoras.json (si existe; mejoras al framework de cada video): campos, ids únicos mNNN, flujo conocido,
      estado pendiente|hecha|descartada, archivo relativo a la raíz
+  M22 memoria/costos.json (si existe; lo medido por costo.py --registrar, vía memoria.py --costo): campos de cada corrida
+     (pieza, flujo, run, fecha, minutos, agentes, tokens.total), run único, flujo de memoria.FLUJOS_COSTO, fecha
+     AAAA-MM-DD, números válidos, entrega relativa a la raíz; aviso si la pieza no está en el registro de su flujo
   K1 design/musica/catalogo.json: cada pista existe, ids únicos, paleta conocida (o null: solo por tema), temas de video.MUSICA_TEMAS y ≥ 2 pistas por paleta
   N1 cada investigacion/<YYYY-MM-DD>-*/ (entregable de /investigacion) tiene informe.json,
      salida/informe.pdf y salida/informe.html; aviso si no está en memoria/informes.json (corrida
@@ -959,6 +962,37 @@ def validar_mejoras():
             err("M11 mejoras[%d] el archivo debe ser relativo a la raíz" % i)
 
 
+def validar_costos():
+    """M22 memoria/costos.json (lo que midió costo.py de cada corrida de Workflow; lo escribe memoria.py --costo)."""
+    rel_mem = "memoria/costos.json"
+    if not os.path.exists(os.path.join(RAIZ, rel_mem)):  # ausente = ok: memoria.py --costo lo crea
+        return
+    import memoria as _mem
+    num = lambda v: isinstance(v, (int, float)) and not isinstance(v, bool)   # noqa: E731
+    runs = set()
+    for i, c in enumerate((cargar(rel_mem) or {}).get("costos", [])):
+        for campo in ("pieza", "flujo", "run", "fecha", "minutos", "agentes", "tokens"):
+            if c.get(campo) in (None, ""):
+                err("M22 costos[%d] sin %s" % (i, campo))
+        if c.get("run") in runs:
+            err("M22 costos: run repetido %s (registrar la misma corrida reemplaza)" % c.get("run"))
+        runs.add(c.get("run"))
+        if c.get("flujo") not in _mem.FLUJOS_COSTO:
+            err("M22 costos[%d] flujo %r (%s)" % (i, c.get("flujo"), "|".join(_mem.FLUJOS_COSTO)))
+        if not re.match(r"^\d{4}-\d{2}-\d{2}$", str(c.get("fecha"))):
+            err("M22 costos[%d] fecha %r (va AAAA-MM-DD)" % (i, c.get("fecha")))
+        tk = c.get("tokens") if isinstance(c.get("tokens"), dict) else {}
+        if not num(c.get("minutos")) or c["minutos"] < 0 or not num(c.get("agentes")) or c["agentes"] < 1 \
+                or not num(tk.get("total")) or tk["total"] < 0:
+            err("M22 costos[%d] minutos (≥ 0), agentes (≥ 1) y tokens.total (≥ 0) deben ser números" % i)
+        if "minutos_pieza" in c and (not num(c["minutos_pieza"]) or c["minutos_pieza"] <= 0):
+            err("M22 costos[%d] minutos_pieza %r (el reloj hasta la entrega va > 0)" % (i, c["minutos_pieza"]))
+        if os.path.isabs(str(c.get("entrega", ""))):
+            err("M22 costos[%d] la entrega debe ser relativa a la raíz" % i)
+        if c.get("flujo") in _mem.FLUJOS_COSTO and c.get("pieza") and not _mem.resolver_pieza(c["flujo"], c["pieza"])[1]:
+            warn("M22 costos[%d] la pieza %s no está en el registro de /%s" % (i, c["pieza"], c["flujo"]))
+
+
 def validar_noticias(paletas):
     """M9 memoria/noticias.json (el histórico de /noticias: el flujo se retiró el 2026-11-14 y el registro ya no crece)."""
     rel_mem = "memoria/noticias.json"
@@ -1014,6 +1048,7 @@ def main():
     validar_congreso(paletas)
     validar_carruseles(paletas)
     validar_mejoras()
+    validar_costos()
     validar_metricas()
     validar_series()
     validar_youtube()

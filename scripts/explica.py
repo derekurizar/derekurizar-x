@@ -1270,7 +1270,7 @@ def cmd_probar(a):
     except (OSError, ValueError) as ex:
         print("FALLA --cambios ilegible: %s" % ex)
         return 2
-    tmp = os.path.join(RAIZ, "sesiones", "_probar-%s-%d" % (os.path.basename(trabajo), os.getpid()))
+    tmp = os.path.join(os.path.dirname(trabajo), "_probar-%s-%d" % (os.path.basename(trabajo), os.getpid()))   # junto al TRABAJO: una parte de serie se mide contra sus hermanas (SE13, SE15, SE19)
     shutil.copytree(trabajo, tmp, ignore=shutil.ignore_patterns("audio", "salida", "revision", "clips*", "segs*", "hf", "tablero"))
     try:
         g = leer(os.path.join(tmp, "guion.json"))

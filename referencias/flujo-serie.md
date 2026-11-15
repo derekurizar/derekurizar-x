@@ -180,3 +180,12 @@ la Parte 1 fijada.
 las ve en su digesto. SE19 cuenta también las fotos de una `cortina` y las piezas de un `archivo` (una foto en ≤ 2
 partes), y `/youtube-long` enlaza las páginas de documento de las escenas `pagina`; en 16:9 se muestran dentro del
 escenario.
+
+## Rotación y registro por parte (2026-11-14)
+
+- `serie.py parte N` **recalcula la rotación** al armar cada parte (`rotacion_parte`): el feed de todos los flujos sin
+  esta serie, más sus partes anteriores leídas del TRABAJO. Antes la rotación quedaba congelada en el `preparar` de la
+  serie y tres partes seguidas salían con la misma forma de promesa (P3).
+- La forma de cierre `puente` no rota (es obligatoria en las partes que no son la última).
+- `memoria.py --serie` guarda por parte entregada su `musica` y sus `frases` (familia del gancho, forma de la promesa y
+  del cierre, quién eligió), y `metricas.py` vincula cada parte como una pieza (`<serie>-parte-N`).

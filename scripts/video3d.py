@@ -982,7 +982,8 @@ def cmd_entregar(a):
     with open(os.path.join(destino, "fuentes.md"), "w", encoding="utf-8") as fh:
         fh.write("\n".join(lineas) + "\n")
     redes = " · ".join("%s %s" % (r["nombre"], r["handle"]) for r in VD.REDES)
-    VD.escribir_caption(os.path.join(destino, "caption.md"), g["caption"], redes, VD.ffprobe_dur(os.path.join(sal, "video.mp4")))
+    VD.escribir_caption(os.path.join(destino, "caption.md"), g["caption"], redes, VD.ffprobe_dur(os.path.join(sal, "video.mp4")),
+                        clave=g.get("palabra_clave"))
     with open(os.path.join(os.path.dirname(destino), ".gitignore"), "w") as fh:
         fh.write("*.mp4\n")
     st["estado"], st["ruta"] = "listo", rel(destino)

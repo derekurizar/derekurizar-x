@@ -80,7 +80,8 @@ el mapa, una fecha, una cifra con su rótulo. La cámara no se mueve nunca para 
 3. `python3 scripts/youtube.py entregar <TRABAJO>` → `series/<fecha>-<slug>/youtube/` con `video.mp4`, `miniatura.png`,
    `caption.md` (título, descripción con capítulos), `subtitulos.srt`, `fuentes.md`, `montaje.json`, `capitulos.json` y
    `contacto.png`.
-4. `python3 scripts/memoria.py --youtube series/<fecha>-<slug>/youtube`, luego `make validate` y `make costo`.
+4. `python3 scripts/memoria.py --youtube series/<fecha>-<slug>/youtube`, luego `make validate` y `python3 scripts/costo.py --registrar
+   --pieza youtube-<serie> --flujo youtube --run <corridas> --entrega series/<fecha>-<slug>/youtube` (el costo medido).
 
 ## 6. REPORTE
 - Duración, capítulos con su minuto, cuánto se cortó (de cuántos min a cuántos), las uniones y la promesa, los

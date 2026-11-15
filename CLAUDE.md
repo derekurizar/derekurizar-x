@@ -65,7 +65,8 @@ y `memoria/noticias.json`.
    smoke ni fixture), salvo `memoria/metricas.json`, que escribe solo `scripts/metricas.py`. `ideas/banco.json` lo
    escribe solo `scripts/ideas.py`, `ideas/calendario.json` solo `scripts/calendario.py` y `agenda/` solo
    `scripts/agenda.py`.
-8. **Al terminar cualquier corrida**: `make validate` sale 0; `make costo` mide la corrida.
+8. **Al terminar cualquier corrida**: `make validate` sale 0; `make costo` mide la corrida y, en un video, `costo.py
+   --registrar` la guarda en `memoria/costos.json` (de ahí salen las medianas que usa `/agenda`).
 9. **Los videos nunca generan música ni efectos**: solo `design/musica/catalogo.json` y `design/sfx/catalogo.json`; la
    música se elige por **tema** y la biblioteca crece solo cuando el usuario lo pide. Cada número de la locución tiene
    respaldo (V2). El guion pasa la estructura de retención (V9): un gancho que cumple R1–R14 de

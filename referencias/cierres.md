@@ -7,7 +7,10 @@ El cierre es la última pantalla: primero las **Conclusiones** (el `resumen` mie
 
 **El usuario elige el cierre** (2026-11-03): con el guion aprobado, el guionista escribe 5 opciones en `cierres.json`
 (`c1` = la del guion; las otras con otra frase final y otra forma o mecanismo) y la sesión pregunta antes de la voz
-(`cierres --opciones`, `--usar <id>` o `--propio "<texto>"`, id `cu`). Su referencia: «Y mientras tanto, los
+(`cierres --opciones`, `--usar <id>` o `--propio "<texto>"`, id `cu`). Desde el 2026-11-14, `--opciones` **prueba cada opción
+puesta en una copia con el gate completo** (narración + guion) y marca ✓ o `✗ <primera FALLA>`: solo se ofrecen las
+elegibles (pueden ser menos de 5). En una parte de serie que no es la última la forma es obligatoria (`puente`, SE6): las
+5 opciones son puentes. Su referencia: «Y mientras tanto, los
 guatemaltecos pasan tiempo en el tráfico y no con sus familias» (la consecuencia humana para quien vive el tema).
 
 **Por qué existe** (2026-10-23): los cinco primeros videos cerraron con el mismo molde, una pregunta sobre la vida del

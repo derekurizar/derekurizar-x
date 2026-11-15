@@ -32,7 +32,7 @@ TRABAJO = `sesiones/<slug>/sabias/`; entrega en `datos/<fecha>-<slug>/video/` (e
 | cierre | una pantalla | la frase final palabra a palabra y «Sígueme en» | la consecuencia del dato para quien lo vive |
 
 Sin promesa, sin narración por actos y sin conclusiones: en 25 s no hay nada que esperar. La música (catálogo fijo por
-paleta, la usada hace más tiempo contando /video, /historia y /sabias), el ducking, los efectos, los subtítulos, la
+paleta, la usada hace más tiempo contando todos los flujos de video: una sola `video.elegir_musica`), el ducking, los efectos, los subtítulos, la
 barra de progreso y la zona segura son los de `/video`.
 
 ## Gates
@@ -52,3 +52,6 @@ barra de progreso y la zona segura son los de `/video`.
 
 ≈ 300–450 caracteres de voz (≈ 1 crédito por carácter) y ~3–5 min de render. `sin-voz` usa la voz falsa (0 créditos) y
 no entrega.
+
+**Rotación (2026-11-14):** el cierre (F7) rota contra las últimas piezas de todo el feed, de cualquier flujo; S3 (el visual
+y el apoyo) sigue contra `memoria/sabias.json`.

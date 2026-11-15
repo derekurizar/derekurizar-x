@@ -94,6 +94,23 @@
   ARCHIVO: {"flujo": "historia", "pieza": "historias/<fecha>-<slug>", "mejoras": [{"area", "archivo", "problema",
   "propuesta", "estado"?}]}; estado pendiente (por defecto) | hecha | descartada. Una pendiente con el mismo archivo y
   problema no se repite.
+--costo ARCHIVO.json [--dry-run]
+  Lo que midió scripts/costo.py de una corrida de Workflow (m214; lo llama `costo.py --registrar`, no se escribe a mano) →
+  memoria/costos.json → costos[] {pieza, flujo, run, workflow, fecha, inicio, fin, minutos, agentes, completados, fallbacks,
+  tokens {input, output, cache_read, cache_create, total}, herramientas, pico_alto, por_rol {rol: {agentes, tokens, salida,
+  minutos}}, por_modelo {modelo: {agentes, tokens, salida}}, entrega?, minutos_pieza?, registrado}. ARCHIVO: una entrada o
+  {"costos": [entradas]}. `pieza` (id o slug) se resuelve contra el registro de su flujo (la parte de una serie:
+  <serie>-parte-N) y queda con su id; si no está registrada, se guarda como llegó, con aviso. Registrar la misma corrida
+  (run) reemplaza. Los créditos de voz no van aquí: son el `creditos_voz` de cada registro. scripts/agenda.py lee los dos
+  para las medianas de cada orden de producción (M22 en validate.py).
+
+La agenda al registrar (m063): al registrar un video (--video, --historia, --explica, --sabias, --congreso, --video3d, una
+  parte recién entregada con --serie, --youtube), si una agenda que no ha terminado (agenda/<AAAA-Wnn>/agenda.json) tiene UN
+  espacio sin producir con ese tema (el mismo criterio de AG4) y de ese formato, queda `producido` con la ruta de la entrega:
+  lo escribe scripts/agenda.py (agenda.ligar_pieza, el único que escribe agenda/). Si casan varios espacios no marca ninguno
+  y avisa; si no casa ninguno no hace nada. Nunca con --dry-run ni con una maqueta (una entrega en sesiones/ o con
+  «fixture» en su guion).
+
 --ver-mejoras [ESTADO]   lista las mejoras (con ESTADO, solo esas; por defecto todas, las pendientes primero)
 --marcar-mejora ID --como hecha|descartada|pendiente   cambia el estado de una mejora
 
@@ -187,6 +204,19 @@ VACIO_MEJORAS = {
     "mejoras": [],
 }
 ESTADOS_MEJORA = ("pendiente", "hecha", "descartada")
+COSTOS = os.path.join(RAIZ, "memoria", "costos.json")
+VACIO_COSTOS = {
+    "version": 1,
+    "_comentario": "Lo que midió scripts/costo.py de cada corrida de Workflow (tokens, minutos, agentes por rol y por modelo), ligado a su pieza. Lo escribe SOLO scripts/memoria.py --costo ARCHIVO (lo llama `costo.py --registrar --pieza P --flujo F`); registrar la misma corrida reemplaza. scripts/agenda.py lo lee para los minutos de cada orden de producción (la mediana del flujo con ≥ 3 piezas medidas). Los créditos de voz están en el registro de cada pieza (creditos_voz).",
+    "costos": [],
+}
+# los flujos de una corrida medida (los formatos de la agenda y los flujos con Workflow) → (constante del registro, clave)
+REGISTRO_COSTO = {"hilo": ("HILOS", "hilos"), "dato": ("DATOS", "datos"), "investigacion": ("INFORMES", "informes"), "ideas": None,
+                  "video": ("VIDEOS", "videos"), "departamento": ("VIDEOS", "videos"), "historia": ("HISTORIAS", "historias"),
+                  "explica": ("EXPLICACIONES", "explicaciones"), "sabias": ("SABIAS", "sabias"), "congreso": ("CONGRESO", "congreso"),
+                  "video3d": ("VIDEOS3D", "videos3d"), "serie": ("SERIES", "series"), "youtube": ("YOUTUBE", "videos"),
+                  "carrusel": ("CARRUSELES", "carruseles")}
+FLUJOS_COSTO = tuple(REGISTRO_COSTO)
 FUENTES = os.path.join(RAIZ, "memoria", "fuentes.json")
 VACIO_DATOS = {
     "version": 1,
@@ -688,6 +718,8 @@ def registrar_video(d, estado, dry_run=False):
         return 0
     escribir(VIDEOS, mv)
     print("escrito memoria/videos.json (%d videos)" % len(mv["videos"]))
+    if not reg.get("variante"):   # el corte A/B de un video no es la pieza de un espacio
+        marcar_agenda("video", reg["id"], ruta, tema="%s %s" % (reg["tema"], reg.get("sujeto") or ""), slug=reg["slug"], fixture=bool(g.get("fixture")))
     return 0
 
 
@@ -722,6 +754,7 @@ def registrar_historia(d, estado, dry_run=False):
         return 0
     escribir(HISTORIAS, mh)
     print("escrito memoria/historias.json (%d historias)" % len(mh["historias"]))
+    marcar_agenda("historia", reg["id"], ruta, tema=reg["tema"], slug=reg["slug"], fixture=bool(g.get("fixture")))
     return 0
 
 
@@ -759,6 +792,7 @@ def registrar_explica(d, estado, dry_run=False):
         return 0
     escribir(EXPLICACIONES, me)
     print("escrito memoria/explicaciones.json (%d explicaciones)" % len(me["explicaciones"]))
+    marcar_agenda("explica", reg["id"], ruta, tema=reg["tema"], slug=reg["slug"], fixture=bool(g.get("fixture")))
     return 0
 
 
@@ -794,6 +828,7 @@ def registrar_sabias(d, estado, dry_run=False):
         return 0
     escribir(SABIAS, ms)
     print("escrito memoria/sabias.json (%d)" % len(ms["sabias"]))
+    marcar_agenda("sabias", reg["id"], ruta, tema=reg["tema"], slug=reg["slug"], fixture=bool(g.get("fixture")))
     return 0
 
 
@@ -827,6 +862,7 @@ def registrar_video3d(d, estado, dry_run=False):
         return 0
     escribir(VIDEOS3D, ms)
     print("escrito memoria/videos3d.json (%d)" % len(ms["videos3d"]))
+    marcar_agenda("video3d", reg["id"], ruta, tema=reg["tema"], slug=reg["slug"], fixture=bool(g.get("fixture")))
     return 0
 
 
@@ -861,6 +897,7 @@ def registrar_congreso(d, estado, dry_run=False):
         return 0
     escribir(CONGRESO, ms)
     print("escrito memoria/congreso.json (%d)" % len(ms["congreso"]))
+    marcar_agenda("congreso", reg["id"], ruta, tema=str(reg.get("ley") or ""), slug=reg["slug"], fixture=bool(g.get("fixture")))
     return 0
 
 
@@ -907,6 +944,8 @@ def parte_serie(p):
     g = leer(os.path.join(RAIZ, p["ruta"], "guion.json"), obligatorio=False) if p.get("estado") == "entregada" and p.get("ruta") else None
     if g:
         reg.update(musica=g.get("musica"), frases=frases_video(g))
+        if g.get("creditos_voz") is not None:   # lo que costó la voz de la parte (la agenda lo usa para su mediana)
+            reg["creditos_voz"] = g["creditos_voz"]
     return reg
 
 
@@ -922,6 +961,8 @@ def registrar_serie(d, dry_run=False):
            "musica": S.get("musica"), "version_plan": S.get("version"), "estado": S.get("estado"),
            "partes": [parte_serie(p) for p in S.get("partes") or []]}
     ms = leer(SERIES, obligatorio=False) or json.loads(json.dumps(VACIO_SERIES))
+    antes = next((x for x in ms["series"] if x.get("id") == reg["id"]), None) or {}
+    ya = {p.get("n") for p in antes.get("partes") or [] if p.get("estado") == "entregada"}
     ms["series"] = [x for x in ms["series"] if x.get("id") != reg["id"]] + [reg]
     print("serie %s · %s · %d partes (%s) · %s" % (reg["id"], reg["motor"], reg["n_partes"],
                                                  ", ".join("%d %s" % (p["n"], p.get("estado") or "plan") for p in reg["partes"]), reg["estado"]))
@@ -936,6 +977,10 @@ def registrar_serie(d, dry_run=False):
         return 0
     escribir(SERIES, ms)
     print("escrito memoria/series.json (%d series)" % len(ms["series"]))
+    for p in reg["partes"]:   # solo las partes que esta vez pasan a entregadas
+        if p.get("estado") == "entregada" and p.get("ruta") and p["n"] not in ya:
+            marcar_agenda("serie", "%s-parte-%d" % (S["slug"], p["n"]), p["ruta"], tema="%s %s" % (S.get("tema") or "", p.get("titulo") or ""),
+                          slug=S["slug"], parte=p["n"], fixture=bool(S.get("fixture")))
     return 0
 
 
@@ -964,6 +1009,98 @@ def registrar_youtube(d, estado="publicable", dry_run=False):
     m["videos"] = [x for x in m["videos"] if x.get("id") != reg["id"]] + [reg]
     escribir(YOUTUBE, m)
     print("escrito memoria/youtube.json (%d videos)" % len(m["videos"]))
+    marcar_agenda("youtube", reg["id"], ruta, tema=reg.get("tema") or "", slug=reg["slug"])
+    return 0
+
+
+def marcar_agenda(flujo, pieza_id, ruta, tema="", slug="", parte=None, fixture=False):
+    """m063: la pieza recién registrada marca `producido` el espacio de la agenda que tenía su tema. Lo escribe
+    scripts/agenda.py (ligar_pieza); aquí solo se llama y se dice qué pasó. Una maqueta nunca toca la agenda."""
+    ruta = str(ruta or "")
+    if fixture or not ruta or os.path.isabs(ruta) or ruta.startswith("..") or ruta.replace("\\", "/").split("/")[0] == "sesiones":
+        return None
+    try:
+        import agenda as _agenda
+        r = _agenda.ligar_pieza(flujo, pieza_id, ruta, tema=tema, slug=slug, parte=parte)
+    except Exception as e:  # noqa: BLE001  (el registro ya está escrito: la agenda no lo tumba)
+        print("AVISO agenda: no pude revisar la agenda (%s); si el tema estaba en un espacio: python3 scripts/agenda.py producido SLOT --ruta %s" % (e, ruta))
+        return None
+    if r["estado"] == "marcado":
+        print("agenda %s: %s queda producido → %s" % (r["semana"], r["espacios"][0], ruta))
+    elif r["estado"] == "ambiguo":
+        print("AVISO agenda: %d espacios casan con esta pieza (%s): no marco ninguno; elige uno: python3 scripts/agenda.py producido SLOT --ruta %s"
+              % (len(r["espacios"]), ", ".join(r["espacios"]), ruta))
+    elif r["estado"] == "otro_formato":
+        print("AVISO agenda: %s casa por tema pero su formato no es de /%s: no lo marco (python3 scripts/agenda.py tema SLOT --formato … o producido SLOT --ruta %s)"
+              % (", ".join(r["espacios"]), flujo, ruta))
+    return r
+
+
+def resolver_pieza(flujo, pieza):
+    """El id de registro de una pieza dada por su id o su slug → (id, encontrada). La parte de una serie es
+    <serie>-parte-N (la serie, por id o slug)."""
+    pieza = str(pieza or "").strip()
+    ref = REGISTRO_COSTO.get(flujo)
+    if not ref:
+        return pieza, True   # sin registro propio (/ideas): se guarda como llega
+    regs = (leer(globals()[ref[0]], obligatorio=False) or {}).get(ref[1], [])
+
+    def buscar(nombre):
+        for cond in (lambda v: v.get("id") == nombre, lambda v: v.get("slug") == nombre,
+                     lambda v: str(v.get("id") or "").endswith("-" + nombre)):
+            hay = [v for v in regs if cond(v)]
+            if hay:
+                return sorted(hay, key=lambda v: str(v.get("fecha") or ""))[-1]
+        return None
+    if flujo == "serie":
+        m = re.match(r"^(.*)-parte-(\d+)$", pieza)
+        v = buscar(m.group(1)) if m else None
+        if v and any(p.get("n") == int(m.group(2)) for p in v.get("partes") or []):
+            return "%s-parte-%d" % (v["id"], int(m.group(2))), True
+    v = buscar(pieza)
+    return (v["id"], True) if v else (pieza, False)
+
+
+def registrar_costo(archivo, dry_run=False):
+    """--costo ARCHIVO: guarda en memoria/costos.json lo que midió costo.py de una o varias corridas (la misma corrida reemplaza)."""
+    d = leer(archivo, obligatorio=False)
+    entradas = d.get("costos") if isinstance(d, dict) and isinstance(d.get("costos"), list) else [d] if isinstance(d, dict) else None
+    if not entradas:
+        print("ERROR: %s debe ser una entrada {pieza, flujo, run, …} o {\"costos\": [entradas]} (lo arma scripts/costo.py --registrar)" % archivo, file=sys.stderr)
+        return 2
+    mc = leer(COSTOS, obligatorio=False) or json.loads(json.dumps(VACIO_COSTOS))
+    for x in entradas:
+        x = dict(x)
+        tk = x.get("tokens") if isinstance(x.get("tokens"), dict) else {}
+        falta = [k for k in ("pieza", "flujo", "run", "fecha") if not str(x.get(k) or "").strip()]
+        num = lambda v: isinstance(v, (int, float)) and not isinstance(v, bool)   # noqa: E731
+        if falta or x.get("flujo") not in FLUJOS_COSTO or not num(x.get("minutos")) or x["minutos"] < 0 \
+                or not num(x.get("agentes")) or x["agentes"] < 1 or not num(tk.get("total")) or tk["total"] < 0:
+            print("ERROR: costo %s: %s" % (json.dumps(x, ensure_ascii=False)[:90],
+                  "sin " + ", ".join(falta) if falta else "flujo %r (va %s), o minutos, agentes o tokens.total que no son números válidos"
+                  % (x.get("flujo"), "|".join(FLUJOS_COSTO))), file=sys.stderr)
+            return 2
+        if x.get("entrega") and (os.path.isabs(str(x["entrega"])) or str(x["entrega"]).startswith("..")):
+            x.pop("entrega")
+        x["pieza"], hay = resolver_pieza(x["flujo"], x["pieza"])
+        if not hay:
+            print("AVISO: %s no está en el registro de /%s (regístrala con memoria.py y vuelve a correr costo.py --registrar): se guarda como llegó" % (x["pieza"], x["flujo"]))
+        x["registrado"] = time.strftime("%Y-%m-%d")
+        previo = [i for i, v in enumerate(mc["costos"]) if v.get("run") == x["run"]]
+        if previo:
+            mc["costos"][previo[0]] = x
+        else:
+            mc["costos"].append(x)
+        print("costo %s · /%s %s · %s min · %d agentes%s · %.2fM tokens (salida %.1fK)%s%s" % (
+            x["run"], x["flujo"], x["pieza"], x["minutos"], x["agentes"],
+            " (%d fallbacks)" % x["fallbacks"] if x.get("fallbacks") else "", tk["total"] / 1e6, (tk.get("output") or 0) / 1e3,
+            " · hasta la entrega %s min" % x["minutos_pieza"] if x.get("minutos_pieza") else "", " · reemplaza" if previo else ""))
+    mc["costos"].sort(key=lambda v: (str(v.get("fecha")), str(v.get("inicio") or ""), str(v.get("run"))))
+    if dry_run:
+        print("[dry-run] no se escribió nada")
+        return 0
+    escribir(COSTOS, mc)
+    print("escrito memoria/costos.json (%d corridas de %d piezas)" % (len(mc["costos"]), len({(v["flujo"], v["pieza"]) for v in mc["costos"]})))
     return 0
 
 
@@ -1062,6 +1199,7 @@ def main():
     g.add_argument("--serie", metavar="DIR", help="registra la serie de /serie (series/<fecha>-<slug>, con serie.json) en memoria/series.json")
     g.add_argument("--youtube", metavar="DIR", help="registra el video largo de /youtube-long (series/<fecha>-<slug>/youtube) en memoria/youtube.json")
     g.add_argument("--mejoras", metavar="ARCHIVO", help="añade las mejoras al framework de una corrida (JSON {flujo, pieza, mejoras[]}) a memoria/mejoras.json")
+    g.add_argument("--costo", metavar="ARCHIVO", help="guarda lo que midió costo.py de una corrida (JSON de costo.py --registrar) en memoria/costos.json")
     g.add_argument("--ver-mejoras", nargs="?", const="", metavar="ESTADO", help="lista las mejoras de memoria/mejoras.json (con ESTADO: pendiente|hecha|descartada)")
     g.add_argument("--marcar-mejora", metavar="ID", help="cambia el estado de una mejora (con --como)")
     p.add_argument("--ruta", help="carpeta de entrega, relativa a la raíz (hilos/<fecha>-<slug>, datos/<fecha>-<slug> o investigacion/<fecha>-<slug>/hilo)")
@@ -1075,6 +1213,8 @@ def main():
     a = p.parse_args()
     if a.mejoras:
         return registrar_mejoras(a.mejoras, a.dry_run)
+    if a.costo:
+        return registrar_costo(a.costo, a.dry_run)
     if a.ver_mejoras is not None:
         if a.ver_mejoras and a.ver_mejoras not in ESTADOS_MEJORA:
             p.error("--ver-mejoras: %s" % "|".join(ESTADOS_MEJORA))

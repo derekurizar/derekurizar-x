@@ -682,7 +682,7 @@
       "archivo": "scripts/historia.py (cierres --opciones)",
       "problema": "--opciones marcó ✓ en c3, pero al aplicarlo con --usar lo rechazó H16 (al acto 3 le quedaba 1 solo conector causal sin el «Por eso» de c1). La ✓ evalúa el cierre solo, no la narración del acto 3 con ese cierre puesto.",
       "propuesta": "Que --opciones pruebe cada cierre dentro del guion con historia.py probar (narracion + guion --check) y marque ✗ con la falla; o que el agente de cierres exija un conector cuando el cierre del guion aporta uno.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m063",
@@ -693,7 +693,7 @@
       "archivo": "scripts/memoria.py (--historia) · scripts/agenda.py",
       "problema": "Al registrar una pieza cuyo tema estaba en un espacio de la agenda, make validate falla por M18/AG4 («repite» el slug) hasta que se corre a mano agenda.py producido SLOT --ruta.",
       "propuesta": "Que memoria.py --historia (y los demás registros de video) busque en la agenda abierta el espacio con ese tema y lo marque producido; o que AG4 no cuente como repetida la pieza producida para ese mismo espacio.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m064",
@@ -781,7 +781,7 @@
       "archivo": "scripts/video.py escuchar",
       "problema": "V11 avisa de nombres propios que whisper oye mal (Xela → «Sheila»/«Schela», Zacapa → «esa capa», Diageo → «viajeo»), pero Scribe los alineó bien.",
       "propuesta": "Pasar a whisper.cpp un --prompt con los nombres propios del guion (personajes y lugares) y no avisar cuando la diferencia es solo fonética sobre un nombre que ya está en ese glosario.",
-      "estado": "pendiente"
+      "estado": "descartada"
     },
     {
       "id": "m072",
@@ -869,7 +869,7 @@
       "archivo": "agente de cierres en .claude/workflows/historia.js",
       "problema": "En las partes 1–3 propuso 4 remates que SE6 rechaza; el usuario solo pudo elegir entre el puente del guion o dictar.",
       "propuesta": "En una parte no final, pedir 5 puentes distintos (pregunta que abre la parte siguiente) y probar cada uno con cierres --check.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m080",
@@ -1661,7 +1661,7 @@
       "archivo": ".claude/workflows/historia.js (cierres) · referencias/cierres.md",
       "problema": "En las partes 1, 3 y 5 (no últimas) el agente de cierres ofreció 4 opciones consecuencia/legado que no son forma puente; SE6 exige puente en las partes 1…M−1, así que solo c1 era válida y las otras eran botones muertos.",
       "propuesta": "En MODO SERIE con parte < de, pedir 5 cierres de forma puente (distintas preguntas puente) y que `cierres --opciones` marque con ✗ los que fallarían SE6.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m152",
@@ -1771,7 +1771,7 @@
       "archivo": "scripts/video.py (escuchar, V11)",
       "problema": "En la Parte 2, whisper oyó «que sales» donde la voz dice «quetzales» y V11 detuvo producir; la transcripción de Scribe de la misma toma sí decía «quetzales». Hubo que rehacer con --sin-escucha, que apaga la escucha entera.",
       "propuesta": "Antes de fallar V11, cotejar la palabra discordante con las palabras de Scribe del estado (transcripts): si Scribe la tiene bien, bajar a AVISO; y añadir «quetzales» y homófonos comunes a una lista de equivalencias de whisper.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m162",
@@ -2354,7 +2354,7 @@
       "archivo": "scripts/costo.py · scripts/agenda.py:68-80",
       "problema": "`costo.py` mide pero no guarda; `agenda.py` usa estimados fijos que no casan con lo medido (/historia: 2,200 créditos declarados, mediana real ≈ 2,500).",
       "propuesta": "`costo.py --registrar` y que la agenda use las medianas.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m215",
@@ -2365,7 +2365,7 @@
       "archivo": "scripts/video.py (escribir_caption)",
       "problema": "17 de 20 piezas medidas se publicaron con el caption escrito a mano y con erratas, aunque `caption.md` existe.",
       "propuesta": "Un título corto pensado para teclear en `caption.md`.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m216",
@@ -2552,6 +2552,83 @@
       "archivo": "scripts/video_hf.py · scripts/mesa.py",
       "problema": "(m182 reescrita) En la mesa vertical siguen faltando MV13 (un solo acento a la vez; anunciado en CLAUDE.md y flujo-mesa.md, sin código) y las piezas `paso` (cronología), `brecha`, `hoja` y `tabla`; lo demás de m182 (P6 en el pago, versión B, barra) ya existe.",
       "propuesta": "Escribir MV13 sobre los datos del plano; las piezas, cuando un video las pida.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m233",
+      "fecha": "2026-11-15",
+      "flujo": "video",
+      "pieza": "auditoria-2026-11-14",
+      "area": "mesa",
+      "archivo": "scripts/mesa.py:534 (MV1 / YT13)",
+      "problema": "MV1/YT13 no mira si la pieza que muestra un número sigue en pantalla: el rótulo de acto cuenta como pieza que muestra el año aunque desaparezca al primer repliegue, 2 s antes de que la voz lo diga. Leído del código al escribir las pruebas congeladas; no se vio un video malo.",
+      "propuesta": "Que el respaldo en pantalla exija que la pieza siga al frente (o compacta) cuando la voz dice el número.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m234",
+      "fecha": "2026-11-15",
+      "flujo": "video",
+      "pieza": "auditoria-2026-11-14",
+      "area": "render",
+      "archivo": "scripts/maqueta3d.py (correr, render)",
+      "problema": "El render de la maqueta 3D sigue sin límite de tiempo (la mesa ya lo tiene: mesa.limite_render); un render colgado bloquea la producción.",
+      "propuesta": "Usar mesa.lanzar_render / limite_render también en maqueta3d.py.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m235",
+      "fecha": "2026-11-15",
+      "flujo": "video",
+      "pieza": "auditoria-2026-11-14",
+      "area": "pruebas",
+      "archivo": "video/noticia.html",
+      "problema": "Tras retirar /noticias y /semana, `video/noticia.html` (la escena `foto` y el gancho con foto del motor propio) quedó sin cobertura automática: solo se comprobó a mano grabando tres escenas de la maqueta de historia.",
+      "propuesta": "Un caso en `escena_prueba.py` (sesiones/_fixture_escenas/foto.json) que grabe una escena `foto` y un gancho con foto.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m236",
+      "fecha": "2026-11-15",
+      "flujo": "video",
+      "pieza": "auditoria-2026-11-14",
+      "area": "contexto",
+      "archivo": "referencias/roles/historia-guionista.md (6,285 palabras)",
+      "problema": "Solo se sacó «Modo serie» a su archivo: las secciones que describen el dibujo del motor propio (foto a sangre, chips, tarjeta de persona, pantalla dividida) mezclan reglas que los gates siguen pidiendo y no se pudieron separar sin reescribir.",
+      "propuesta": "Reescribir la guía en dos capas: lo que el gate pide (siempre) y cómo se veía en el motor propio (archivo aparte).",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m237",
+      "fecha": "2026-11-15",
+      "flujo": "video",
+      "pieza": "auditoria-2026-11-14",
+      "area": "mesa",
+      "archivo": "scripts/mesa.py (acento_compite) · scripts/youtube_hf.py",
+      "problema": "MV13 quedó en dos niveles (FALLA si un dato coincide al frente con otro dato o con un bloque; AVISO en lo demás) porque con la regla estricta los dos pilotos aprobados darían 9 fallas; y el 16:9 no lo tiene (no dibuja `crema`).",
+      "propuesta": "Decidir con el usuario si MV13 pasa a FALLA pura y llevar `crema` y el gate al 16:9.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m238",
+      "fecha": "2026-11-15",
+      "flujo": "video",
+      "pieza": "auditoria-2026-11-14",
+      "area": "escucha",
+      "archivo": "scripts/video.py (prompt_nombres, V11)",
+      "problema": "(m071 reescrita) Los nombres propios ya se pasan a whisper como `--prompt`, pero no se pudo comprobar con la voz real que eso arregle «Xela» → «Sheila» o «Zacapa» → «esa capa» (con una voz de prueba no lo arregló).",
+      "propuesta": "Medirlo en la próxima corrida con voz real; si no mejora, un glosario de equivalencias fonéticas por nombre.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m239",
+      "fecha": "2026-11-15",
+      "flujo": "video",
+      "pieza": "auditoria-2026-11-14",
+      "area": "costos",
+      "archivo": "memoria/costos.json (no existe todavía)",
+      "problema": "Las 43 corridas históricas de 19 piezas (13 historias, 6 videos) se pueden registrar para que /agenda use minutos medidos (historia: 65 min de mediana frente a 45 fijos), pero escribe en la memoria real: quedó preparado y sin correr.",
+      "propuesta": "Si el usuario quiere, registrar el histórico con `costo.py --registrar` por pieza (las corridas están en ~/.claude/projects).",
       "estado": "pendiente"
     }
   ]

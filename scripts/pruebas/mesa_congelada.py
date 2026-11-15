@@ -461,6 +461,13 @@ MUTACIONES = [
      'M["golpes"].insert(0, dict(tipo="cita", dice=M["golpes"][0]["dice"], autor="Zzz", texto=palabras(400)))'),
     ("MV12-hilo-a-quien-no-esta", "V", "MV12", "un hilo hacia alguien que no es un nodo de la jerarquía", _RED % ("zzz", ', etiqueta="Según la acusación"'), "fallas", "un hilo une dos nodos"),
     ("MV12-voz-no-atribuye", "V", "MV12", "un alegato con su etiqueta pero la voz de la mesa no lo atribuye", _RED % ("b", ', etiqueta="Según la acusación"'), "fallas", "no atribuye"),
+    ("MV13-dos-acentos-al-frente", "V", "MV13", "una nota en acento y la cifra, las dos al frente (la foto de e6 pasa a nota)",
+     'cambia("e6", ("foto",), dict(tipo="termino", texto="Un fuego"))', "fallas", "un solo acento a la vez"),
+    ("MV13-subrayado-y-cifra", "V", "MV13", "AVISO: un recorte con su frase subrayada y la cifra, los dos al frente (una marca junto a un dato no bloquea)",
+     'cambia("e6", ("foto",), dict(tipo="recorte", medio="Zzz", fecha="1968", extracto="un solo fuego para todo el pan", resalta="un solo fuego"))', "avisos", "el subrayado del recorte"),
+    ("MV13-dos-notas", "V", "MV13", "AVISO: dos notas en acento al frente (dos bloques no bloquean: así salieron los pilotos aprobados)",
+     'cambia("e6", ("foto",), dict(tipo="termino", texto="Un fuego")); cambia("e6", ("cifra",), dict(tipo="termino", texto="Cuatro mil"))', "avisos", "dos acentos a la vez"),
+    ("MV13-crema-donde-no-vale", "V", "MV13", "`crema` en una foto (el motor no sabe dibujarla distinta)", 'golpe("e2", "foto")["crema"] = True', "fallas", "solo vale en"),
     ("MV14-cuadro-0-con-una-pieza", "V", "MV14", "el cuadro 0 abre con una sola pieza (la otra espera a la voz)", 'golpe("e1", "termino")["dice"] = "La Espiga:"'),
     # --- vertical con maqueta: los de mq_neg (test.sh) ---
     ("MV15-estilo-fuera-del-catalogo", "Q", "MV15", "test.sh · un estilo que no está en el catálogo", 'Q["estilo"] = "zzz"'),
@@ -524,7 +531,6 @@ MUTACIONES = [
 ]
 SIN_NEGATIVO = [
     ("MV9", "no es un gate: no hay `FALLA MV9` en el código; la pila sale de cómo `componer` coloca las piezas (la prueba `MV9-pila` fija el número)"),
-    ("MV13", "pendiente en el motor (referencias/flujo-mesa.md): el código no lo implementa"),
 ]
 
 

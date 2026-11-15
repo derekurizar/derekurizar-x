@@ -63,6 +63,7 @@ workflow o un script no aparece.
 - `scripts/podar_intermedios.py` — `make podar-intermedios [SESION=] [CONFIRMAR=1]`: lista (y solo con `CONFIRMAR=1` borra) `segs*`, `clips*`, renders y cuadros de revisión de los trabajos ya entregados y registrados; conserva voz, guion, plano y `salida/`
 - `referencias/roles/historia-oyente/plano.md` — el juez del plano: el oyente lee `plano.md` (la hoja de golpes) con ojos frescos dentro del Workflow `plano` (`juez_plano.json`)
 - `sesiones/_fixture_mesa_congelada/` + `scripts/pruebas/mesa_congelada.py` — un plano curado del vertical y del 16:9 para probar cada gate MV1–MV19 e YT13–YT19 sin render (`--congelar`, `--deriva`, `--lista`); `scripts/pruebas/gates_sin_negativo.py` (SE17–SE19, CG8, CG9, C3D5, C3D7)
+- `scripts/costo.py --registrar` → `memoria.py --costo` → `memoria/costos.json` (una entrada por corrida de Workflow: tokens, minutos, agentes, por rol y por modelo; M22 en `validate.py`); `agenda.py medidas`: las órdenes de producción usan la mediana medida del formato (créditos de `creditos_voz`, minutos de `costos.json`) cuando hay ≥ 3 mediciones; `memoria.py` marca `producido` el espacio de la agenda al registrar la pieza (`agenda.ligar_pieza`)
 - `scripts/check_docs.py` — D0–D7: `CLAUDE.md` corto, rutas y secciones citadas que existen, anclas, este mapa al día
 - `scripts/pruebas/` — pruebas en Python que `scripts/test.sh` corre (`reglas_2026_11_10.py`, `ola1_*.py`, `mesa_congelada.py`, `gates_sin_negativo.py`, `producir.py`) y las listas de D0 (`claude_md_identificadores.txt`, `claude_md_retirados.txt`)
 

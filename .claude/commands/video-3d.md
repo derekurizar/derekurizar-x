@@ -39,7 +39,8 @@ Guía completa: `referencias/flujo-video3d.md` (léela antes de empezar). Contra
    `salida/subtitulos.srt` y `salida/portada.png` (el cuadro cero sin subtítulos). Mira el resultado (una hoja de
    cuadros del mp4) y la portada antes de entregar.
 10. **Entrega.** `video3d.py entregar <TRABAJO>` → `videos3d/<fecha>-<slug>/` (video, 4:5, portada, `caption.md`,
-    `.srt`, `tiempos.json`, fuentes) y `python3 scripts/memoria.py --video3d <entrega>`; `make validate` sale 0. Sin
+    `.srt`, `tiempos.json`, fuentes) y `python3 scripts/memoria.py --video3d <entrega>`; `make validate` sale 0; costo medido: `python3 scripts/costo.py
+    --registrar --pieza <id> --flujo video3d --entrega <entrega>`. Sin
     el 4:5, sin portada o sin caption no entrega (`--sin-4x5` solo si el usuario pide entregar el 9:16 solo). Nunca
     con voz falsa.
 11. **Reporte.** Qué se entregó y dónde, tiempos y créditos, y «Mejoras al framework» (o «ninguna»), registradas con

@@ -70,7 +70,8 @@ La guía es `referencias/flujo-congreso.md`. Nunca publiques. Nunca generes mús
      solos a la mesa (render con un proceso, ≈ 1.6× la duración por formato; `revisar` deja `revision/mesa_<formato>_N.jpg`);
      en `sin-voz` y `fixture`, `grabar` usa el borrador del plano. En la mesa, el **hemiciclo** es un tablero (los asientos, el umbral, el sello y el foco con el retrato de cada diputado, grabados limpios); el gancho ya no lleva el portal: abre con la foto del pleno y la `barra` de votos (a favor, los que hacían falta, en contra) ya puestas, y CG7 (≤ 59.5 s) no cambia. Guía: `referencias/flujo-mesa.md`.
 7. **ENTREGAR** (no con `sin-voz`): `congreso.py entregar <TRABAJO>` → `congreso/<fecha>-<slug>/`;
-   `python3 scripts/memoria.py --congreso congreso/<fecha>-<slug>` y `make validate` (exit 0). Abre el video.
+   `python3 scripts/memoria.py --congreso congreso/<fecha>-<slug>` y `make validate` (exit 0). Abre el video. Costo medido:
+   `python3 scripts/costo.py --registrar --pieza <id> --flujo congreso --entrega congreso/<fecha>-<slug>`.
 8. **REPORTE**: rutas, duración, la ley y la votación (a favor, en contra, umbral, margen), a quién nombró y por qué,
    por escena `E<n> · tipo · voz`, puntajes del crítico, créditos, el caption de TikTok listo para pegar y, al final,
    **Mejoras al framework** (`memoria.py --mejoras` con `flujo: "congreso"`; no se aplican sin el usuario).

@@ -32,15 +32,45 @@ En este orden:
 Lo que no tiene pieza es una **orden de producción** con su comando, su día, sus minutos y sus créditos. Los temas los
 propone la sesión y **los elige el usuario**.
 
+## De dónde salen los minutos y los créditos (m214)
+
+Cada orden lleva la **mediana medida** de su formato cuando hay ≥ 3 mediciones y, si no, el estimado fijo de `FORMATOS`
+en `scripts/agenda.py`. El espacio lo dice en `origen` y `agenda.md` lo muestra junto al número: «mediana de 13» o
+«estimado».
+
+- **Créditos de voz**: el `creditos_voz` de los registros del formato (`historias.json`, `explicaciones.json`,
+  `sabias.json`, `congreso.json`, `videos3d.json`; `videos.json` partido en `video` y `departamento`; las partes
+  entregadas de `series.json`).
+- **Minutos**: `memoria/costos.json`, que llena `costo.py --registrar` al cerrar cada pieza (lo escribe `memoria.py
+  --costo`; M22 en `validate.py`). Por pieza cuenta el reloj hasta la entrega (`minutos_pieza`, con `--entrega`) y, si no
+  se midió, la suma de los minutos de sus corridas; en ese caso el origen añade «solo agentes» (sin voz ni render: la
+  orden tarda algo más).
+- `python3 scripts/agenda.py medidas [--memoria DIR]` lista por formato el estimado fijo, cuántas mediciones hay y la
+  mediana (solo lectura).
+
+Al cerrar una pieza: `python3 scripts/costo.py --registrar --pieza <id o slug> --flujo <flujo> --run wf_a wf_b …
+--entrega <carpeta de entrega>` (sin `--run`, la última corrida; `--dry-run` para ver sin escribir).
+
+## Registrar una pieza marca su espacio (m063)
+
+Al registrar un video (`memoria.py --video|--historia|--explica|--sabias|--congreso|--video3d`, una parte recién
+entregada con `--serie`), si una agenda que no ha terminado tiene **un** espacio sin producir con ese tema (el criterio
+de AG4) y de ese formato, queda `producido` con la ruta de la entrega: lo escribe `agenda.ligar_pieza`, así que
+`make validate` ya no falla por M18/AG4 hasta correr `producido` a mano. Si casan varios espacios no marca ninguno y
+avisa (elige con `agenda.py producido SLOT --ruta …`); si casa uno de otro formato, avisa y no marca; si no casa
+ninguno, no hace nada. Nunca con `--dry-run` ni con una maqueta.
+
 ## Comandos de `scripts/agenda.py`
 
 - `plan [--desde] [--memoria] [--dir]`: inventario de los registros cruzado con `memoria/metricas.json` (`listas`,
   `incompletas`, `calendario_en`, `series_publicables`, `departamento_siguiente`, `mezcla` por
   `metricas.rendimiento --por flujo`). Conserva lo de antes de `desde` y lo que tiene tema, está producido o publicado.
-- `tema SLOT "<tema>"` (AG4) → `producido SLOT --ruta` → `publicado SLOT [--plataforma]`.
+- `tema SLOT "<tema>"` (AG4) → `producido SLOT --ruta` (a mano solo si el registro no lo marcó) → `publicado SLOT
+  [--plataforma]`.
+- `medidas`: las medianas medidas por formato y los estimados fijos.
 - `hoy`: los archivos 9:16 y 4:5 del día y los bloques de `caption.md`.
 - `facebook`: la descripción de Facebook con el estilo que toca.
 - `--check`: gates **AG1–AG9** (M18 en `validate.py`, solo semanas sin terminar).
 
-Maqueta: `sesiones/_fixture_agenda/memoria` (registros congelados; `make agenda-fixture` = la semana del 4 al 8 de
-noviembre).
+Maqueta: `sesiones/_fixture_agenda/memoria` (registros congelados, con el `costos.json` de las corridas reales de sus
+historias y videos; `make agenda-fixture` = la semana del 4 al 8 de noviembre). Pruebas: `scripts/pruebas/resto_costos.py`.

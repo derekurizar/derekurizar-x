@@ -12,7 +12,7 @@ export const meta = {
     { title: 'Guion', detail: 'historia-guionista: ganchos --usar → PRIMERO guion.narracion (el texto corrido de cada acto, 320–400 palabras ≈ 150 s; historia.py narracion --check: conectores, ≤ 4 «según», personajes presentados, hilos pagados o declarados) → DESPUÉS las escenas sin cambiar una palabra (acto en cada una, rótulo en la primera de los actos 2 y 3, secuencias de voz, foto, cita, tarjeta, golpe, explica, giro en el nudo, cierre legado, captions); gate historia.py guion --check (H3–H20 + V1–V5, V9, F1–F8) y su línea RETORNO; en retoque aplica las notas del usuario y conserva las voces' },
     { title: 'Oyente', detail: 'historia-oyente (sonnet): primero la narración de corrido (como quien oye un documental con los ojos cerrados) y luego la voz escena por escena con lo que hay en pantalla (digesto --para oyente); oyente.json con de qué es la historia, qué prometió y qué dio, confusiones, saltos, repeticiones y preguntas sin responder; vuelve a correr tras cada corrección y tras las mejoras' },
     { title: 'Crítica', detail: 'video-critico en modo historia: gancho, tensión (la espina entera y en orden), claridad e hilo (personajes presentados, hilos pagados o declarados), flujo (la narración de corrido se oye como una sola voz, no como tarjetas leídas), precisión (lo una_fuente con la fuente en pantalla, ≤ 4 «según»), cierre; resuelve (bloquea) o justifica cada confusión, salto y pregunta sin responder del oyente; lo que bloquea vuelve al guionista (los arreglos probados, tal cual con historia.py aplicar), ≤ 2 vueltas (1 en retoque), desde la 2 y en retoque ACOTADAS (solo bloquea lo que cambió, lo pendiente, H-C5 o un puntaje ≤ 2); si la última solo bloquea con arreglos probados, se aplican y queda aprobado (aprobado_por: arreglos_probados); con «pasa», el guionista aplica las mejoras (también las de voz), repasa el gate y el oyente las vuelve a oír (se revierte solo la escena que confunde; una de precisión se queda)' },
-    { title: 'Cierres', detail: 'el guionista escribe 5 cierres (cierres.json, F1–F8 con cierres --check; c1 = el del guion aprobado) para que el usuario elija antes de la voz (cierres --usar o --propio)' },
+    { title: 'Cierres', detail: 'el guionista escribe 5 cierres (cierres.json, F1–F9 con cierres --check; c1 = el del guion aprobado) y prueba cada uno puesto en el guion con el gate completo (cierres --opciones); en una parte de /serie que no es la última, los 5 de forma puente (SE6); vuelven solo los elegibles, para que el usuario elija antes de la voz (cierres --usar o --propio)' },
     { title: 'Animación', detail: 'video-animador por cada escena explica con animacion null (solo si el crítico aprueba): reusa del catálogo o escribe video/animaciones/<id>.js, --check, --registrar y --asignar' },
   ],
 }
@@ -159,12 +159,15 @@ async function conReparacion(etiqueta, invocar, validar, max = 2) {
 // ── Schemas de retorno ───────────────────────────────────────────────────────
 const S = {
   cierres: {
-    type: 'object', required: ['archivo', 'gate', 'fallas', 'candidatos'],
+    type: 'object', required: ['archivo', 'gate', 'fallas', 'candidatos', 'elegibles'],
     properties: {
       archivo: { type: 'string', pattern: 'cierres\\.json$' }, gate: { type: 'string', enum: ['ok', 'falla'] },
       fallas: { type: 'array', items: { type: 'string' } },
       candidatos: { type: 'array', items: { type: 'object', required: ['id', 'tipo', 'forma', 'final'],
         properties: { id: { type: 'string' }, tipo: { type: 'string' }, forma: { type: 'string' }, final: { type: 'string' } } } },
+      // lo que dice `cierres --opciones` (el gate completo con cada cierre puesto): ids elegibles y las rechazadas con su falla
+      elegibles: { type: 'array', items: { type: 'string' } },
+      rechazadas: { type: 'array', items: { type: 'object', required: ['id', 'falla'], properties: { id: { type: 'string' }, falla: { type: 'string' } } } },
     },
   },
   rechequeo: { type: 'object', properties: { items: { type: 'array' } } },   // lo pide el bloque común; aquí no se usa
@@ -683,23 +686,50 @@ if (mejorasNoAplicadas.length) {
 }
 
 // ── Cierres: 5 opciones para que el usuario elija antes de la voz (c1 = el del guion aprobado) ─────────────────
+// Cada opción se prueba puesta en el guion con el gate COMPLETO del flujo (`cierres --opciones`; m062: una ✓ de solo F1–F9
+// la rechazó H16 al usarla) y aquí solo vuelven las que el usuario puede elegir. Donde el gate obliga una forma (SE6: una
+// parte de /serie que no es la última cierra con «puente»; m079, m151: 4 de 5 opciones eran botones muertos) las 5 son de esa.
 phase('Cierres')
 let CIERRES = null
+const CIERRE_FORMA = PARTE && PARTE.de && PARTE.parte < PARTE.de ? 'puente' : null   // la forma que el gate obliga (scripts/video.py forma_obligatoria)
+const CIERRES_MIN = 3   // con menos opciones elegibles se avisa (video.CIERRES_ELEGIBLES_MIN)
 if (critica.veredicto === 'pasa' && !RETOQUE && ELIGE_USUARIO) {
-  CIERRES = await conReparacion('Cierres', (fallos) => agentRol(
+  let vueltaCierres = 0
+  const eleg = (r) => (r.candidatos || []).filter((c) => (r.elegibles || []).includes(c.id) && (!CIERRE_FORMA || c.forma === CIERRE_FORMA))
+  const fuera = (r) => (r.candidatos || []).filter((c) => !eleg(r).includes(c))
+  const porQue = (r, c) => CIERRE_FORMA && c.forma !== CIERRE_FORMA ? `su forma es «${c.forma}» y aquí el gate solo acepta «${CIERRE_FORMA}»` : (((r.rechazadas || []).find((x) => x.id === c.id) || {}).falla || 'cierres --opciones lo marca ✗')
+  CIERRES = await conReparacion('Cierres', (fallos, intento) => { vueltaCierres = intento; return agentRol(
     `CIERRES PARA EL USUARIO (lee «Cierres para el usuario» en referencias/roles/historia-guionista.md y referencias/cierres.md). TRABAJO = ${trabajo}. ` +
       `El guion ya está aprobado: NO cambies guion.json. Escribe ${trabajo}/cierres.json = {"candidatos": [...]} con ${CIERRES_N} cierres: c1 = guion.cierre TAL CUAL ` +
-      `(texto, final, tipo, forma, consecuencia); c2–c${CIERRES_N} distintos entre sí y de c1: otra frase final y otra forma o mecanismo (consecuencia quien|perdida|reloj|despues|espera, legado, pendiente, quien_decide; a lo más una pregunta). ` +
-      `Al usuario le gusta la consecuencia humana para quien vive el tema (su tiempo, su familia, su bolsillo), dicha llano. Cada uno: id, texto (una oración que prepara, ≥ 3 s, y la frase final), final, tipo, forma, ` +
-      `consecuencia {mecanismo?, quien, verbo} si es consecuencia o legado, y por_que. Solo lo que el guion y sus cifras sostienen. Corre python3 scripts/historia.py cierres ${trabajo} --check hasta 0 fallas.` +
+      (CIERRE_FORMA
+        ? `(texto, final, tipo, forma). FORMA OBLIGATORIA (manda sobre tu guía): esta es la parte ${PARTE.parte} de ${PARTE.de} y el gate (SE6) solo acepta el cierre «puente», la pregunta que abre la parte ${PARTE.parte + 1} («${(PARTE.siguiente || {}).titulo || ''}»), así que los ${CIERRES_N} son de forma «${CIERRE_FORMA}» (tipo pregunta o remate) y NINGUNO es consecuencia, legado, pendiente ni quien_decide: el gate los rechaza y el usuario no podría elegirlos. c2–c${CIERRES_N} son ${CIERRES_N - 1} puentes distintos entre sí y de c1: otra frase final que deja abierta, con otras palabras o desde otro lado (quién, qué pasó, cuánto costó, qué quedó), la MISMA pregunta que abre la parte siguiente, sin anunciarla («en la próxima parte»: P2/F9) y sin tocar cierre.invitacion (va aparte). `
+        : `(texto, final, tipo, forma, consecuencia); c2–c${CIERRES_N} distintos entre sí y de c1: otra frase final y otra forma o mecanismo (consecuencia quien|perdida|reloj|despues|espera, legado, pendiente, quien_decide; a lo más una pregunta). ` +
+          `Al usuario le gusta la consecuencia humana para quien vive el tema (su tiempo, su familia, su bolsillo), dicha llano. `) +
+      `Cada uno: id, texto (una oración que prepara, ≥ 3 s, y la frase final), final, tipo, forma, ` +
+      `consecuencia {mecanismo?, quien, verbo} si es consecuencia o legado, y por_que. Solo lo que el guion y sus cifras sostienen. Corre python3 scripts/historia.py cierres ${trabajo} --check hasta 0 fallas (F1–F9). ` +
+      `DESPUÉS corre python3 scripts/historia.py cierres ${trabajo} --opciones: prueba cada opción PUESTA en el guion con el gate completo (narración y guion: un número sin respaldo en la oración que prepara, un conector que el acto 3 pierde, la forma) y marca ✗ con su FALLA las que el usuario no podría elegir. Reescribe cada ✗ (su FALLA dice qué rompe) y repite --check y --opciones hasta que las ${CIERRES_N} salgan con ✓. ` +
+      `Copia en tu retorno elegibles[] y rechazadas[] TAL CUAL de la última línea RETORNO de --opciones.` +
       (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : '') +
-      ' Retorno: {archivo, gate: ok|falla, fallas[], candidatos[]{id, tipo, forma, final}}.',
-    { agentType: 'historia-guionista', schema: S.cierres, label: 'cierres' }),
+      ' Retorno: {archivo, gate: ok|falla, fallas[], candidatos[]{id, tipo, forma, final}, elegibles[] (ids), rechazadas[]{id, falla}}.',
+    { agentType: 'historia-guionista', schema: S.cierres, label: 'cierres' }) },
   (r) => [...(rel(r.archivo) !== `${trabajo}/cierres.json` ? [`archivo debe ser ${trabajo}/cierres.json`] : []),
     ...(r.gate !== 'ok' ? ((r.fallas || []).length ? r.fallas : ['cierres --check falló sin detalle: córrelo y copia sus FALLA']) : []),
-    ...(r.candidatos.length !== CIERRES_N ? [`${r.candidatos.length} cierres; van ${CIERRES_N}`] : [])], 1)
+    ...(r.candidatos.length !== CIERRES_N ? [`${r.candidatos.length} cierres; van ${CIERRES_N}`] : []),
+    // las que el gate completo rechaza se mandan a rehacer UNA vez; si siguen, se descartan abajo (no tumban la fase)
+    ...(vueltaCierres < 1 ? fuera(r).map((c) => `${c.id} no es elegible: ${porQue(r, c)}; reescríbelo y vuelve a correr cierres --opciones`) : [])], 1)
     .catch((e) => { avisar(`AVISO: no hubo opciones de cierre (${String(e.message).split('\n')[0]}): pregunta al usuario con el cierre del guion o el suyo.`); return null })
-  if (CIERRES) avisar(`Cierres: ${CIERRES.candidatos.map((c) => `${c.id} ${c.forma} «${c.final}»`).join(' · ')} → el usuario elige (historia.py cierres --opciones)`)
+  if (CIERRES) {
+    const malas = fuera(CIERRES)
+    if (malas.length) avisar(`Cierres: se descartan ${malas.map((c) => `${c.id} (${porQue(CIERRES, c)})`).join(' · ')}: no pasan el gate completo con ese cierre puesto y el usuario no podría elegirlos.`)
+    CIERRES = { ...CIERRES, candidatos: eleg(CIERRES) }
+    if (!CIERRES.candidatos.length) {
+      avisar('AVISO: ningún cierre elegible: pregunta al usuario con el cierre del guion o el suyo.')
+      CIERRES = null
+    } else {
+      if (CIERRES.candidatos.length < CIERRES_MIN) avisar(`AVISO: solo ${CIERRES.candidatos.length} cierre(s) elegible(s) (van al menos ${CIERRES_MIN}): ofrece esos y que el usuario pueda dictar el suyo (cierres --propio${CIERRE_FORMA ? ` --forma ${CIERRE_FORMA}` : ''}).`)
+      avisar(`Cierres: ${CIERRES.candidatos.map((c) => `${c.id} ${c.forma} «${c.final}»`).join(' · ')} → el usuario elige (historia.py cierres --opciones)`)
+    }
+  }
 }
 
 // ── 8. Animación (solo si el crítico aprueba) ────────────────────────────────

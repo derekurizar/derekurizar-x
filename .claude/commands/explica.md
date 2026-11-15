@@ -38,7 +38,7 @@ La guía es `referencias/flujo-explica.md`. Nunca publiques. Nunca generes músi
      sesión), escribe la elección con `ganchos --elegir <id>` y lanza con `"desde": "guion"`. `"auto": true` deja la recomendación del crítico (solo si el usuario lo pide).
    - **El usuario elige el cierre**: con el guion aprobado, el Workflow devuelve `cierres` (5 opciones en
      `cierres.json`; `c1` es la del guion). ANTES de la voz, `python3 scripts/explica.py cierres <TRABAJO> --opciones` y
-     pregunta igual (`c1` primero). Con el id que elija (también `c1`: así queda registrado quién eligió; con `auto`, `--usar c1 --por critico`): `python3 scripts/explica.py cierres <TRABAJO> --usar <id>`; con su texto:
+     pregunta igual (`c1` primero; `--opciones` prueba cada una con el gate completo y marca ✓ o ✗: ofrece solo las ✓, que pueden ser menos de 5). Con el id que elija (también `c1`: así queda registrado quién eligió; con `auto`, `--usar c1 --por critico`): `python3 scripts/explica.py cierres <TRABAJO> --usar <id>`; con su texto:
      `--propio "<su texto>"` con `--forma`, `--mecanismo`, `--quien` y `--verbo` que casen con su frase
      (`referencias/cierres.md`; si dicta solo la frase final, se queda la oración del guion que la prepara). El script repasa narracion y guion: si fallan, deja el guion como estaba.
      Si el gate la rechaza, muéstrale la falla y propón la versión más cercana que pasa; nunca edites `guion.json` a
@@ -92,6 +92,8 @@ La guía es `referencias/flujo-explica.md`. Nunca publiques. Nunca generes músi
      - `video.mp4` (TikTok, Reels, Shorts) y `video_4x5.mp4` (feed);
      - `caption.md`, `subtitulos.srt` y portadas;
      - `fuentes.md`, `ejemplos.md` (cada número de ejemplo con su fórmula) y el `guion.json` de entrega.
+   - Costo medido (lo usa `/agenda` para estimar; `referencias/flujo-agenda.md`): tras registrar, `python3 scripts/costo.py
+     --registrar --pieza <id o slug> --flujo explica --run <las corridas wf_… de esta pieza> --entrega <carpeta de entrega>`.
    - `python3 scripts/memoria.py --explica explicaciones/<fecha>-<slug>` (`--estado incompleto` si el crítico no aprobó
      y el usuario decidió seguir) y `make validate` (M12).
 8. **REPORTE**

@@ -126,6 +126,8 @@ CSS = """
 .cifra .v{color:$acento;white-space:nowrap}
 .cifra .l{font-size:56px;margin-top:2px}
 .cifra .f{color:$gris}
+.cifra.cr .v{color:$papel}
+.cifra.cr .cuad i{background:$papel}
 .recorte{background:$papel2;padding:26px 30px 28px}
 .recorte .cab{display:flex;justify-content:space-between;align-items:baseline;border-bottom:4px solid $tinta;padding-bottom:10px}
 .recorte .cab .m{font-size:46px}
@@ -137,6 +139,7 @@ CSS = """
 .hl{background-image:linear-gradient($acento,$acento);background-repeat:no-repeat;background-size:0% 100%;-webkit-box-decoration-break:clone;box-decoration-break:clone;padding:2px 0}
 .nota{background:$acento;padding:22px 30px 20px}
 .nota .cond{font-size:96px}
+.nota.cr{background:$papel}
 .cita{background:$papel;padding:34px 40px 34px;border-left:14px solid $cafe}
 .cita .q{font-size:56px;line-height:1.22;font-weight:600;color:#a89a80}
 .cita .a{margin-top:22px;font-size:50px}
@@ -174,6 +177,7 @@ CSS = """
 .cm .n{font-size:50px;margin-top:4px}
 .cm.osc{background:$mesa2;border:1px solid $filo;color:$papel}
 .cm.osc .n{color:$acento;font-size:96px;white-space:nowrap}
+.cm.osc.cr .n{color:$papel}
 .cm.osc .l{font-size:34px}
 .cm.ac{background:$acento;border-top:0;padding-top:16px}
 .cmf{background:$papel;padding:10px 10px 0}
@@ -547,27 +551,23 @@ def compacta(ctx, g, F, elenco):
         iy = -(rc[1] * th * s) - max(0, ch * s - hi) * fy
         return 300, 10 + hi + 12 + 31 * min(2, renglones(pie, 28, 270, False)) + 10, ('<div class="cmf"><div class="im" style="width:%dpx;height:%dpx"><img src="assets/%s" style="left:%.0fpx;top:%.0fpx;width:%.0fpx;height:%.0fpx" alt=""></div>'
                                    '<b>%s</b></div>' % (wi, hi, r["archivo"], ix, iy, tw * s, th * s, esc(pie))), [r["archivo"]]
-    if t == "cifra":
-        v = str(g.get("valor") or "")
-        w = min(COMPACTA_ANCHO, max(240, int(len(v) * 96 * 0.44) + 40))
-        rot = " ".join((g.get("rotulo") or "").split()[:5])
-        return w, 14 + 92 + 34 * renglones(rot, 34, w - 38) + 16, '<div class="cm osc"><div class="n cond">%s</div><div class="l cond">%s</div></div>' % (esc(v), esc(rot)), []
     if t == "barra":
         bs = [b for b in g.get("barras") or [] if isinstance(b, dict)]
         b = next((b for b in bs if b.get("acento")), bs[-1] if bs else None)
         if not b:
             return None
-        g = {"tipo": "cifra", "valor": b.get("texto") or b.get("valor"), "rotulo": b.get("etiqueta") or ""}
+        g = {"tipo": "cifra", "valor": b.get("texto") or b.get("valor"), "rotulo": b.get("etiqueta") or "", "crema": g.get("crema")}
         t = "cifra"
     if t == "cifra":
         v = str(g.get("valor") or "")
         w = min(COMPACTA_ANCHO, max(240, int(len(v) * 96 * 0.44) + 40))
         rot = " ".join((g.get("rotulo") or "").split()[:5])
-        return w, 14 + 92 + 34 * renglones(rot, 34, w - 38) + 16, '<div class="cm osc"><div class="n cond">%s</div><div class="l cond">%s</div></div>' % (esc(v), esc(rot)), []
+        return w, 14 + 92 + 34 * renglones(rot, 34, w - 38) + 16, ('<div class="cm osc%s"><div class="n cond">%s</div><div class="l cond">%s</div></div>'
+                                                                 % (" cr" if g.get("crema") else "", esc(v), esc(rot))), []
     if t == "termino" and not g.get("definicion"):
         txt = g.get("texto") or ""
         w = min(COMPACTA_ANCHO, max(200, int(len(txt) * 50 * 0.47) + 40))
-        return w, 30 + 48 * renglones(txt, 50, w - 36), '<div class="cm ac"><div class="n cond" style="margin-top:0">%s</div></div>' % esc(txt), []
+        return w, 30 + 48 * renglones(txt, 50, w - 36), '<div class="cm%s"><div class="n cond" style="margin-top:0">%s</div></div>' % ("" if g.get("crema") else " ac", esc(txt)), []
     if t == "persona":
         n = g.get("persona") or ""
     elif t == "institucion":
@@ -711,7 +711,22 @@ def componer(ctx, M, fmt, F, elenco):
         if hasta - p["t"] < pide - 0.05:
             fallas.append("MV8 %s golpe %d (%s «%s»): queda %.1f s al frente y pide %.1f s (%d palabras que la voz no dice): acorta el texto, quita la "
                           "pieza que la desplaza, o parte la mesa" % (nom, p["k"] + 1, p["g"]["tipo"], resumen_golpe(p["g"])[:40], hasta - p["t"], pide, n))
-    return {"cab": cab, "tits": tits, "piezas": out, "compactas": comp, "fallas": fallas, "y0": y0}
+    # MV13: un solo acento al frente a la vez (la que ya se replegó va atenuada, arriba, y no cuenta). Falla si un dato (cifra,
+    # barra) comparte el acento con otro dato o con un bloque; lo demás se avisa (MS.acento_compite dice por qué)
+    avisos = []
+    for b, antes in MS.acentos_a_la_vez(out, fin_mesa):
+        cuales = lambda ps: " y ".join("%s (golpe %d)" % (MS.en_acento(a_["g"]), a_["k"] + 1) for a_ in ps)
+        graves = [a_ for a_ in antes if MS.acento_compite(a_["g"], b["g"])]
+        leves = [a_ for a_ in antes if a_ not in graves]
+        cabeza_ = "MV13 %s golpe %d (%s, %s): %s entra a los %.1f s y " % (nom, b["k"] + 1, b["g"]["tipo"], fmt, MS.en_acento(b["g"]), b["t"])
+        if graves:
+            fallas.append(cabeza_ + "%s sigue%s al frente en acento: un solo acento a la vez, y con una cifra en pantalla el acento es solo suyo. Pon "
+                          "`\"crema\": true` en la que no es el dato que la voz está diciendo (cifra, nota o barra), `\"limpia\": true` en la que entra (repliega lo "
+                          "anterior), quita el `acento` de la lista, o llévala a otra mesa" % (cuales(graves), "n" if len(graves) > 1 else ""))
+        if leves:
+            avisos.append(cabeza_ + "%s sigue%s al frente en acento: dos acentos a la vez. Si compiten, deja uno: `\"crema\": true` (cifra, nota o barra), "
+                          "`\"limpia\": true` en la que entra, o quita el subrayado o el lazo que sobra" % (cuales(leves), "n" if len(leves) > 1 else ""))
+    return {"cab": cab, "tits": tits, "piezas": out, "compactas": comp, "fallas": fallas, "avisos": avisos, "y0": y0}
 
 
 def marco_clip(ctx, M, fmt):
@@ -889,7 +904,7 @@ def dibujar_barra(ctx, m, g, x, y, w, h, ex, k, F, usados):
     bs = [b for b in g.get("barras") or [] if isinstance(b, dict)][:BARRAS_MAX]
     vals = [valor_num(b.get("valor")) or 0.0 for b in bs]
     tope = max(vals + [1e-9])
-    ac = next((j for j, b in enumerate(bs) if b.get("acento")), len(bs) - 1)
+    ac = -1 if g.get("crema") else next((j for j, b in enumerate(bs) if b.get("acento")), len(bs) - 1)   # en crema ninguna destaca (MV13)
     pid = "%s-b%d" % (m.id, m.k + 1)
     filas = "".join('<div class="fi%s"><div class="et cond"><span>%s</span><span class="v">%s</span></div><div class="pi"><b id="%s-%d" style="width:%.1f%%"></b></div></div>'
                     % (" ac" if j == ac else "", esc(b.get("etiqueta")), esc(str(b.get("texto") or (num_txt(b["valor"]) if valor_num(b.get("valor")) is not None else ""))), pid, j, 100.0 * max(0.0, v) / tope)
@@ -1352,7 +1367,9 @@ def armar(trabajo, fmt, portada=False):
 # ---------- gates ----------
 def revisar_v(ctx, P, mesas=None, f0=None):
     """MV1–MV14 sobre el plano → (fallas, avisos, medidas). MV1–MV7 son los del núcleo con las reglas del vertical; MV8–MV11
-    salen de componer la mesa en los dos formatos (geometría calculada, nunca píxeles)."""
+    y MV13 salen de componer la mesa en los dos formatos (geometría y tiempos calculados, nunca píxeles): MV13 = dos piezas
+    que el plano manda dibujar en el color de acento (mesa.en_acento) no coinciden al frente; falla si una es un dato (cifra o
+    barra) y la otra otro dato o un bloque, y lo demás se avisa (mesa.acento_compite)."""
     if mesas is None:
         mesas, f0 = resolver_v(ctx, P)
     f, av, med = MS.revisar(ctx, P, mesas, f0)
@@ -1375,22 +1392,27 @@ def revisar_v(ctx, P, mesas=None, f0=None):
                     g["_ya"] = True
         for fmt in FORMATOS:
             try:
-                fallas_fmt = componer(ctx, M, fmt, F, elenco)["fallas"]
+                L = componer(ctx, M, fmt, F, elenco)
+                fallas_fmt, avisos_fmt = L["fallas"], L.get("avisos") or []
             except (OSError, KeyError) as e:
                 # un documento cuya página no está en paginas.json: mesa.revisar ya dio su MV4; aquí no se puede medir la
                 # mesa, y antes el gate reventaba con FileNotFoundError / KeyError en vez de decirlo
-                fallas_fmt = ["MV4 %s: no se puede componer la mesa (%s: %s): revisa las páginas de sus documentos (historia.py pagina)"
-                              % (M["id"], type(e).__name__, e)]
-            for x in fallas_fmt:
-                clave = re.sub(r", (9:16|4:5)\)", ")", x)
-                if clave not in vistos:
-                    vistos.add(clave)
-                    f.append(x)
+                fallas_fmt, avisos_fmt = ["MV4 %s: no se puede componer la mesa (%s: %s): revisa las páginas de sus documentos (historia.py pagina)"
+                                          % (M["id"], type(e).__name__, e)], []
+            for lista, destino in ((fallas_fmt, f), (avisos_fmt, av)):
+                for x in lista:
+                    clave = re.sub(r", (9:16|4:5)\)", ")", x)
+                    if clave not in vistos:
+                        vistos.add(clave)
+                        destino.append(x)
     # MV4 y MV12: la jerarquía de personas (red)
     voz_video = " ".join(VD._plano(w["text"]) for S in ctx["es"] for w in S.get("palabras") or [])
     for M in mesas:
         voz_mesa = " ".join(VD._plano(w["text"]) for i in M["idx"] for w in ctx["es"][i].get("palabras") or [])
         for j, g in enumerate(M["golpes"]):
+            if g.get("crema") and g.get("tipo") not in MS.CREMA_TIPOS:   # MV13: `crema` solo donde el motor sabe dibujarla sin acento
+                f.append("MV13 %s golpe %d (%s): `crema` solo vale en %s (la pieza se dibuja sin acento); en esta no cambia nada: quítalo"
+                         % (M["id"], j + 1, g.get("tipo"), ", ".join(MS.CREMA_TIPOS)))
             if g.get("tipo") == "barra":   # MV4: la comparación, a la misma escala y con algo que medir
                 q = "%s golpe %d (barra)" % (M["id"], j + 1)
                 bs = [b for b in g.get("barras") or [] if isinstance(b, dict)]
@@ -1482,7 +1504,8 @@ def texto_pantalla(S, i, frase, F):
         if linea and len(linea.split()) <= 6 and VD._plano(linea) != VD._plano(pant):
             r = buscar(S, " ".join(linea.split()[:2]), 0)
             if r and r[1] > 2:
-                gs.append({"tipo": "termino", "dice": " ".join(w["text"] for w in pal[r[1]:r[1] + 2]), "texto": linea})
+                # la línea bajo el golpe va en crema: el acento es del golpe (MV13: un solo acento al frente)
+                gs.append({"tipo": "termino", "dice": " ".join(w["text"] for w in pal[r[1]:r[1] + 2]), "texto": linea, "crema": True})
         return gs
     if tipo != "gancho":
         return gs
@@ -1532,6 +1555,10 @@ def texto_pantalla(S, i, frase, F):
             if g.get("dice"):
                 g.pop("dice")
                 break
+    if any(g["tipo"] in ("cifra", "barra") for g in gs):   # MV13: el acento es del dato (la cifra, la barra); la nota que lo acompaña, en crema
+        for g in gs:
+            if g["tipo"] == "termino":
+                g["crema"] = True
     return gs
 
 
@@ -1650,7 +1677,8 @@ def cmd_digesto(a):
                     usados[g.get("foto")] = usados.get(g.get("foto"), 0) + 1
     print("# Plano vertical de %s · %s · escribe %s" % (ctx["Y"]["slug"], VD_mmss(ctx["total"]), rel(fp)))
     print("\nReglas: una pieza por oración; texto corto (lo que la voz ya dice no hace falta repetirlo); cada texto queda al frente 0.5 s + 0.3 s por "
-          "palabra que la voz no dice; ≤ %d piezas por mesa; una foto, una sola vez; mesas de una o dos escenas con `titulo` de ≤ 6 palabras." % REGLAS["MESA_PIEZAS"])
+          "palabra que la voz no dice; ≤ %d piezas por mesa; una foto, una sola vez; mesas de una o dos escenas con `titulo` de ≤ 6 palabras; un solo acento "
+          "al frente (cifra, nota, barra, subrayado: a la que no es el dato, `\"crema\": true`)." % REGLAS["MESA_PIEZAS"])
     print("\n## Escenas (clave · tipo · segundo). Cada «·» es una oración: ahí tiene que entrar algo.")
     notas = MS.notas_leidas()
     for i, S in enumerate(es):

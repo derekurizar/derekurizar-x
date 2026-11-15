@@ -1029,6 +1029,84 @@ def doc_de(ctx, g):
             "sub": g.get("subtitulo") or "", "abajo": True}
 
 
+# ---------- el acento: qué piezas lo llevan (MV13 del vertical: un solo acento al frente a la vez) ----------
+CREMA_TIPOS = ("cifra", "termino", "barra")   # las que el motor sabe dibujar sin acento: `"crema": true` en el golpe
+
+
+def en_acento(g):
+    """Lo que una pieza lleva en el color de acento, leído de sus datos (lo mismo que `dibujar` pinta con `$acento`), o "" si no
+    lleva nada. Es la regla Noche «acento = una sola cosa» (referencias/diseno/sistema.md) llevada a la mesa:
+      cifra      el valor (y sus `cuadros`)             termino   la nota entera (sin `definicion`; con ella es una ficha de papel)
+      barra      la barra destacada y su valor          recorte   el subrayado de `resalta`
+      documento  el marcador sobre la página (`pagina`; una `portada` no lleva)
+      lista      el chip de `acento` o el `lazo`        red       la `etiqueta` «Según…» o una `clave`
+    `"crema": true` en una cifra, una nota o una barra la deja sin acento (el motor la dibuja en crema: CREMA_TIPOS). No cuentan
+    las marcas chicas que no se leen como acento (los puntos de un mapa del mundo, la línea de crédito de la pestaña de un
+    documento) ni el cuadro (kicker, palabra activa del subtítulo), que no son piezas."""
+    t = g.get("tipo")
+    if g.get("crema") and t in CREMA_TIPOS:
+        return ""
+    if t == "cifra":
+        return "la cifra «%s»" % g.get("valor")
+    if t == "termino" and not g.get("definicion"):
+        return "la nota «%s»" % (g.get("texto") or "")[:40]
+    if t == "barra":
+        bs = [b for b in g.get("barras") or [] if isinstance(b, dict)]
+        b = next((b for b in bs if b.get("acento")), bs[-1] if bs else None)
+        return "la barra «%s»" % (b or {}).get("etiqueta") if b else ""
+    if t == "recorte" and g.get("resalta") and g["resalta"] in (g.get("extracto") or ""):
+        return "el subrayado del recorte"
+    if t == "documento" and g.get("pagina"):
+        return "el marcador del documento"
+    if t == "lista":
+        n = len([it for it in g.get("items") or [] if isinstance(it, dict)])
+        if isinstance(g.get("lazo"), dict) or (isinstance(g.get("acento"), int) and not isinstance(g.get("acento"), bool) and 0 <= g["acento"] < n):
+            return "la lista (su %s)" % ("lazo" if isinstance(g.get("lazo"), dict) else "chip de `acento`")
+        return ""
+    if t == "red" and (g.get("etiqueta") or any(isinstance(n, dict) and n.get("clave") for n in g.get("nodos") or [])):
+        return "la jerarquía (su %s)" % ("etiqueta «%s»" % g["etiqueta"] if g.get("etiqueta") else "clave")
+    return ""
+
+
+def peso_acento(g):
+    """Cuánto pesa el acento de una pieza: «dato» (el acento ES la cifra: `cifra`, `barra`), «bloque» (una caja entera en
+    acento: la nota, el chip de una lista, la etiqueta o la clave de una jerarquía), «marca» (un trazo de marcador sobre papel:
+    el subrayado de un recorte, el marcador de un documento, el lazo de una lista) o "" (no lleva acento)."""
+    que = en_acento(g)
+    if not que:
+        return ""
+    t = g.get("tipo")
+    if t in ("cifra", "barra"):
+        return "dato"
+    if t in ("recorte", "documento") or (t == "lista" and "lazo" in que):
+        return "marca"
+    return "bloque"
+
+
+def acento_compite(a, b):
+    """¿Dos piezas en acento al frente BLOQUEAN (MV13 falla) o solo se avisan? Bloquea cuando una es un dato (cifra o barra) y
+    la otra es otro dato o un bloque: con una cifra en pantalla el acento es solo suyo (la regla Noche: la cifra, no la cifra y
+    su nota). Lo demás (dos notas, una nota junto a un subrayado, una cifra junto a la frase subrayada de la que sale) solo se
+    avisa: así salieron los dos pilotos que el usuario aprobó (Bancafé parte 1 y La Línea parte 3: 9 coincidencias de esas y
+    ninguna de dato con bloque), y un gate no rechaza la referencia aprobada."""
+    pa, pb = peso_acento(a), peso_acento(b)
+    return bool(pa and pb) and "dato" in (pa, pb) and "marca" not in (pa, pb)
+
+
+def acentos_a_la_vez(piezas, fin):
+    """MV13 sobre una mesa ya compuesta: las piezas en acento (`en_acento`) que coinciden AL FRENTE. `piezas` = [{g, t, hasta, k}]
+    (t = cuando entra; hasta = cuando se repliega o se va, None = sigue hasta `fin`). Una pieza replegada (su compacta va
+    atenuada) ya no cuenta. → [(la que entra, [las que seguían al frente en acento])], una entrada por pieza que entra."""
+    ac = sorted(((p, en_acento(p["g"])) for p in piezas), key=lambda x: (x[0]["t"], x[0]["k"]))
+    ac = [(p, q) for p, q in ac if q]
+    out = []
+    for i, (b, _) in enumerate(ac):
+        antes = [a for a, _ in ac[:i] if (a["hasta"] if a["hasta"] is not None else fin) > b["t"] + 0.05]
+        if antes:
+            out.append((b, antes))
+    return out
+
+
 GIROS = [-2, 3, -1.5, 2, -3, 1.5, -2.5, 2.5, -1, 3.5, -3.5, 1]
 
 
@@ -1165,8 +1243,8 @@ def dibujar(ctx, m, g, x, y, w, h, ex, k, F, usados):
     elif t == "cifra":
         v = str(g.get("valor"))
         cu = int(g.get("cuadros") or 0)
-        dentro = ('<div class="cifra"><div id="%s-v" class="v cond" style="font-size:%dpx">%s</div><div class="l cond">%s</div>%s%s</div>'
-                  % (pid, ex["px"], esc(v), esc(g.get("rotulo")), '<div class="cuad">%s</div>' % "".join('<i id="%s-c%d"></i>' % (pid, i) for i in range(cu)) if cu else "",
+        dentro = ('<div class="cifra%s"><div id="%s-v" class="v cond" style="font-size:%dpx">%s</div><div class="l cond">%s</div>%s%s</div>'
+                  % (" cr" if g.get("crema") else "", pid, ex["px"], esc(v), esc(g.get("rotulo")), '<div class="cuad">%s</div>' % "".join('<i id="%s-c%d"></i>' % (pid, i) for i in range(cu)) if cu else "",
                      '<div class="f" data-layout-ignore>%s</div>' % esc(g["fuente"]) if g.get("fuente") else ""))
         mm = re.match(r"^(\D*)(\d[\d,]*)(.*)$", v)
         cuenta = g.get("cuenta") if isinstance(g.get("cuenta"), int) and g.get("cuenta") > 3 and mm else None
@@ -1180,7 +1258,7 @@ def dibujar(ctx, m, g, x, y, w, h, ex, k, F, usados):
         for i in range(cu):
             m.tl.append('tl.fromTo("#%s-c%d",{opacity:0},{opacity:1,duration:.08},%.3f);' % (pid, i, m.loc(T + i * 0.05)))
     elif t == "termino":
-        m.pieza(T, x, y, w, giro, '<div class="nota"><div class="cond">%s</div></div>' % esc(g.get("texto")), sfx="papel", ya=ya)
+        m.pieza(T, x, y, w, giro, '<div class="nota%s"><div class="cond">%s</div></div>' % (" cr" if g.get("crema") else "", esc(g.get("texto"))), sfx="papel", ya=ya)
     elif t == "cita":
         # la cita entra atenuada y cada palabra se entinta cuando la voz la lee (la voz dice quién habla y luego la lee)
         pal = (g.get("texto") or "").split()

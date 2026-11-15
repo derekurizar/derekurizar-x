@@ -66,7 +66,7 @@ decisión del usuario.**
      sesión), vuelve a lanzar el Workflow completo (0 créditos) y repite la elección. `"auto": true` deja la recomendación del crítico (solo si el usuario lo pide).
    - **El usuario elige el cierre**: con el guion aprobado, el Workflow devuelve `cierres` (5 opciones en
      `cierres.json`; `c1` es la del guion). ANTES de la voz, `python3 scripts/video.py cierres <TRABAJO> --opciones` y
-     pregunta igual (`c1` primero). Con el id que elija (también `c1`: así queda registrado quién eligió; con `auto`, `--usar c1 --por critico`): `python3 scripts/video.py cierres <TRABAJO> --usar <id>`; con su texto:
+     pregunta igual (`c1` primero; `--opciones` prueba cada una con el gate completo y marca ✓ o ✗: ofrece solo las ✓, que pueden ser menos de 5). Con el id que elija (también `c1`: así queda registrado quién eligió; con `auto`, `--usar c1 --por critico`): `python3 scripts/video.py cierres <TRABAJO> --usar <id>`; con su texto:
      `--propio "<su texto>"` con `--forma`, `--mecanismo`, `--quien` y `--verbo` que casen con su frase
      (`referencias/cierres.md`; si dicta solo la frase final, se queda la oración del guion que la prepara). Después corre `python3 scripts/video.py narracion <TRABAJO> --check` y `guion <TRABAJO> --check` (si fallan, `guion.previo.json` tiene el de antes).
      Si el gate la rechaza, muéstrale la falla y propón la versión más cercana que pasa; nunca edites `guion.json` a
@@ -142,6 +142,8 @@ decisión del usuario.**
 6. **ENTREGAR**
    - Corre `python3 scripts/video.py entregar <TRABAJO>`, que copia a `hilos/<fecha>-<slug>/video/` el 9:16, el 4:5 y
      `caption.md` (avisa si el video pasa de los 3 min de Shorts).
+   - Costo medido (lo usa `/agenda` para estimar; `referencias/flujo-agenda.md`): tras registrar, `python3 scripts/costo.py
+     --registrar --pieza <id o slug> --flujo video --run <las corridas wf_… de esta pieza> --entrega <carpeta de entrega>`.
    - Luego `python3 scripts/memoria.py --video hilos/<fecha>-<slug>/video` y `make validate` (exit 0).
    - Abre `video.mp4` (la versión de TikTok) con `open`.
    - **Prueba A/B de duración** (m058; solo si el usuario la pide): el corte `corto` en `sesiones/<slug>/video-corto` →

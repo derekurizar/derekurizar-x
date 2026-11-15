@@ -20,7 +20,7 @@ noticieros, que seguían en el motor propio, se retiraron del framework ese mism
 `realizacion` la fija `preparar` al crear el TRABAJO (`VD.MESA_FLUJOS`; `--realizacion propio|mesa` la fuerza): un trabajo
 empezado con un motor termina con ese motor. Migrar un flujo es añadir su `tipo` a `MESA_FLUJOS` cuando sus piezas existan.
 
-Pendiente en el motor: MV13 (un solo acento a la vez), la pregunta P6 en el pago y las piezas `paso` (cronología),
+Pendiente en el motor: la pregunta P6 en el pago y las piezas `paso` (cronología),
 `brecha`, `hoja` (la pizarra como pieza; hoy es tablero), `tabla` y `diagrama`. Mientras no existan, lo suyo va como tablero.
 
 ## 1. Reglas (lo que no se negocia)
@@ -85,6 +85,8 @@ palabra por palabra) · `lista` (un chip por `dice`, con `lazo`).
 - **Chip «Ejemplo»** (/explica, E3–E4): arriba a la derecha, en la línea del kicker, mientras está una mesa con números de
   ejemplo (también sobre un tablero: su clip se graba sin chip).
 - `"limpia": true` en un golpe: el plano pide el repliegue justo antes de esa pieza.
+- `"crema": true` en una `cifra`, una nota (`termino`) o una `barra`: se dibuja sin el color de acento (MV13: un solo
+  acento al frente; § 5b).
 - **Tablero**: `explica`, `tarjeta`, `cuenta`, `hemiciclo`, `vias`, `deptos`, `ranking`, `mapa`, `escala`, `tiempo`,
   `lupa`, `cortina`, `adivina` se graban limpias con el motor propio (`video_hf.py tableros`) y van solas en su mesa. Si el plano
   les pone golpes, el primero entra ≥ 1 s después del último paso y la animación le cede la mesa de un corte.
@@ -206,12 +208,46 @@ de /serie con una mesa de maqueta, de punta a punta.
 | MV10 | zona segura por geometría, en 9:16 y en 4:5 |
 | MV11 | ninguna pieza se dibuja a menos del 72 % de su tamaño |
 | MV12 | alegato: los hilos de una `red` atribuida van punteados, con `etiqueta` «Según…» y con la voz de la mesa atribuyendo; quien acusa, sin hilos |
-| MV13 | (pendiente) un solo acento legible a la vez |
+| MV13 | un solo acento al frente a la vez: falla si una cifra o una barra comparte el acento con otra o con una nota; otras dos piezas en acento a la vez, aviso (§ 5b); `crema` solo en `cifra`, `termino` y `barra` |
 | MV14 | el cuadro 0 abre con ≥ 2 piezas ya puestas (el gancho no lleva maqueta) |
 | MV15–MV19 | la maqueta 3D de una mesa: forma, concordancia con la voz, un solo estilo, carga y los gates del motor (§ 3b) |
 
 MV1–MV7 son YT13–YT19 del núcleo con las constantes del vertical (`REGLAS`), y MV15–MV19 son YT20–YT24. `hyperframes check` añade sus propios
 avisos (texto bajo 28 px, texto sin tiempo de lectura, tramos sin cambio): se leen en `video_hf.py revisar`.
+
+### 5b. MV13: un solo acento al frente
+
+La regla Noche («acento = una sola cosa»; `referencias/diseno/sistema.md`) en la mesa. El gate lee **los datos del plano**
+(`mesa.en_acento`, lo mismo que el motor pinta con el color de acento) y los tiempos de `componer`; nunca píxeles.
+
+| Pieza | Lo que lleva en acento | Peso |
+|---|---|---|
+| `cifra` | el valor (y sus `cuadros`) | dato |
+| `barra` | la barra destacada (`acento`, o la última) y su valor | dato |
+| `termino` sin `definicion` (la nota) | la nota entera; con `definicion` es una ficha de papel y no cuenta | bloque |
+| `lista` con `acento` | el chip destacado | bloque |
+| `red` con `etiqueta` o con una `clave` | la etiqueta «Según…» o la clave | bloque |
+| `recorte` con `resalta` | el subrayado | marca |
+| `documento` con `pagina` | el marcador sobre la página (una `portada` no lleva) | marca |
+| `lista` con `lazo` (sin `acento`) | el lazo | marca |
+
+- Se mira cuando una de esas piezas entra y otra **sigue al frente**. Una pieza replegada no cuenta (su compacta va
+  atenuada, arriba); en una mesa con maqueta las piezas van de una en una y nunca coinciden.
+- **Falla** si una es un **dato** y la otra es otro dato o un bloque (`mesa.acento_compite`): con una cifra en pantalla
+  el acento es solo suyo (la cifra y su nota, la barra y la cifra). **Avisa** en lo demás: dos notas, una nota junto a un
+  subrayado, una cifra junto a la frase subrayada de la que sale. Así salieron los dos pilotos aprobados (Bancafé parte 1 y
+  La Línea parte 3: 9 coincidencias de las que avisan y ninguna de las que fallan), y el gate no rechaza la referencia
+  aprobada; el aviso queda a la vista del realizador y del juez del plano.
+- No cuentan las marcas chicas (los puntos de un mapa del mundo, la línea de crédito de la pestaña de un documento) ni el
+  cuadro (kicker, palabra activa del subtítulo, cierre): no son piezas.
+- **Cómo se arregla, en el plano:** `"crema": true` en la que no es el dato que la voz está diciendo (solo `cifra`,
+  `termino` y `barra`: el motor la dibuja en crema, también replegada); `"limpia": true` en la que entra (repliega lo
+  anterior); quitar el `resalta`, el `lazo` o el `acento` que sobra; o llevarla a otra mesa.
+- El borrador ya lo trae resuelto donde lo causa él: en el gancho de texto cinético, la nota que acompaña a la `cifra` o a
+  la `barra` va en crema, y la línea bajo un golpe, también.
+- Solo vertical. En el 16:9 (`youtube_hf.py`) las piezas se colocan a mano y el gate no existe (no hay código YT libre:
+  YT12 está retirado y no se reusa); `mesa.en_acento` y `mesa.acentos_a_la_vez` están en el núcleo para cuando lo tenga, y
+  su hoja de estilos aún no dibuja `crema`.
 
 ## 6. Cómo se produce
 

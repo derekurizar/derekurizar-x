@@ -70,6 +70,8 @@ eso cada parte lleva su paso **Plano** después de su voz (paso 4), con los dos 
      hay `grabar --solo`.
    - `python3 scripts/serie.py entregar-parte <TRABAJO>/parte-N` → `series/<fecha>-<slug>/parte-N/` y `serie.md`.
 5. **CIERRE**
+   - Costo medido (lo usa `/agenda` para estimar; `referencias/flujo-agenda.md`): tras registrar, `python3 scripts/costo.py
+     --registrar --pieza <serie>-parte-N --flujo serie --run <las corridas wf_… de esta pieza> --entrega <carpeta de entrega>`.
    - `python3 scripts/memoria.py --serie <SERIE>` y `make validate` (exit 0) tras cada parte entregada.
 6. **REPORTE**
    - La tabla de `serie.md`: cada parte con su estado y si ya se puede publicar (la N, cuando la N+1 tiene guion

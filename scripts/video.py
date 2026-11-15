@@ -17,8 +17,10 @@ Subcomandos (TRABAJO = sesiones/<slug>/video):
   probar | aplicar TRABAJO --cambios JSON|ARCHIVO   un arreglo del crítico en una copia | en el TRABAJO: el mismo texto en la
         escena y en su tramo de guion.narracion (V17), con narracion --check + guion --check (aplicar restaura si falla)
   cierres TRABAJO --check | --opciones | --usar ID | --propio TEXTO [--forma F --mecanismo M --quien Q --verbo V]
-        5 cierres candidatos (cierres.json, F1–F8 cada uno) para que el usuario elija; --usar (o --propio, id «cu») lo
-        pasa a guion.cierre y a la narración (guion.previo.json de respaldo); después, guion --check
+        5 cierres candidatos (cierres.json, F1–F9 cada uno) para que el usuario elija; --opciones prueba cada uno puesto en
+        una copia con el gate completo del flujo (✓ solo si pasa; si no, su primera FALLA) y, en una parte de serie que no es
+        la última, exige la forma «puente» (SE6); --usar (o --propio, id «cu») lo pasa a guion.cierre y a la narración
+        (guion.previo.json de respaldo); después, guion --check
   guion TRABAJO --check        gate V1–V5 + V9 (estructura de retención, gancho R2–R10) sobre guion.json v2 → locucion.json
   voz TRABAJO [--pendientes | --solo N,N]   imprime JSON con la voz y el texto de cada nodo TTS (--pendientes: solo los que faltan o cambiaron)
   variante TRABAJO [--cerrar]  versión B con el segundo gancho: variante_b/ con la voz y los clips de las demás escenas;
@@ -45,6 +47,7 @@ import array
 import datetime
 import difflib
 import glob
+import hashlib
 import json
 import math
 import os
@@ -3766,6 +3769,31 @@ def correr_gates(trabajo, script=None):
     return rc
 
 
+# el gate completo de cada flujo (lo que corre tras `cierres --usar`, `probar` y `aplicar`): su script y sus comandos
+GATES_DE = {"historia": ("historia.py", ("narracion", "guion")), "explica": ("explica.py", ("narracion", "guion")),
+            "sabias": ("sabias.py", ("guion",)), "congreso": ("congreso.py", ("guion",))}
+COPIA_SIN = ("audio", "salida", "revision", "clips*", "segs*", "hf", "tablero", "variante_b", "maquetas", "nuevas", "_probar-*", "_cierres-*")
+
+
+def gates_de(st):
+    """(script, comandos) del gate completo del flujo de un TRABAJO: /historia y /explica (y sus partes de /serie) llevan los
+    suyos (H*, E*, SE*) sobre los de video.py; lo demás, video.py."""
+    script, cmds = GATES_DE.get((st or {}).get("tipo"), ("video.py", ("narracion", "guion")))
+    return os.path.join(RAIZ, "scripts", script), cmds
+
+
+def fallas_de_gates(trabajo, script, cmds=("narracion", "guion")):
+    """Las FALLA del gate completo sobre un TRABAJO (o una copia) → lista («comando · texto»); vacía = pasa."""
+    out = []
+    for cmd in cmds:
+        r = subprocess.run([sys.executable, script, cmd, trabajo, "--check"], capture_output=True, text=True, cwd=RAIZ)
+        suyas = ["%s · %s" % (cmd, ln[len("FALLA "):].strip()) for ln in (r.stdout + r.stderr).splitlines() if ln.startswith("FALLA ")]
+        if r.returncode and not suyas:
+            suyas = ["%s · salió %d sin decir por qué: %s" % (cmd, r.returncode, ((r.stdout + r.stderr).strip().splitlines() or ["(sin salida)"])[-1][:200])]
+        out += suyas
+    return out
+
+
 def cmd_probar(a):
     """m015: el crítico de /video prueba un arreglo ANTES de escribirlo (como /historia): lo aplica a una copia del TRABAJO,
     con el mismo texto en la escena y en su tramo de guion.narracion, y corre narracion --check y guion --check."""
@@ -3848,9 +3876,74 @@ def agregar_args_cierres(p):
                    "y propio con --propio; con `auto` (se queda el del guion aprobado): --usar c1 --por critico")
 
 
+def forma_obligatoria(st):
+    """(forma, por qué) cuando el gate del flujo solo acepta UNA forma de cierre, o (None, ""). Hoy: una parte de /serie que
+    no es la última cierra con «puente» (SE6 en serie.py). m079, m151: sin saberlo, el agente ofrecía 4 remates que SE6 rechaza."""
+    ser = serie_de(st)
+    n, M = ser.get("parte"), ser.get("de")
+    if isinstance(n, int) and isinstance(M, int) and n < M:
+        sig = (ser.get("siguiente") or {}).get("titulo") or ""
+        return "puente", "SE6 la parte %d de %d cierra con forma «puente» (la pregunta que abre la parte %d%s)" % (n, M, n + 1, ": «%s»" % sig if sig else "")
+    return None, ""
+
+
+def poner_cierre(g, c):
+    """Pasa un cierre candidato a guion.cierre y su texto a la narración de corrido (lo que hace `cierres --usar`, y lo que
+    se prueba en una copia con `--opciones`) → mensaje de error, o None."""
+    cierre = g.setdefault("cierre", {})
+    viejo = (cierre.get("texto") or "").strip()
+    for k in CAMPOS_CIERRE:
+        if c.get(k) is not None:
+            cierre[k] = c[k]
+    if cierre.get("forma") not in ("consecuencia", "legado"):
+        cierre.pop("consecuencia", None)
+    partes = g.get("narracion") or []
+    if partes and viejo and viejo != cierre.get("texto"):
+        ult = next((p for p in reversed(partes) if viejo in p.get("texto", "")), None)
+        if not ult:
+            return ("el texto del cierre de antes no está literal en guion.narracion: el cierre no se puede cambiar sin "
+                    "rehacer la narración (lanza un retoque)")
+        i = ult["texto"].rfind(viejo)
+        ult["texto"] = ult["texto"][:i] + cierre["texto"] + ult["texto"][i + len(viejo):]
+    return None
+
+
+def probar_cierres(trabajo, cands, st=None, gates=None):
+    """m062, m151: cada opción de cierre, puesta en una COPIA del TRABAJO, con el gate completo del flujo (narracion --check
+    y guion --check del script del flujo: H16, SE6… y no solo F1–F9) → {id: [fallas]}; lista vacía = el usuario la puede elegir.
+    La copia va junto al TRABAJO (una parte de serie se mide contra sus partes hermanas) y se borra. `gates(copia, script,
+    comandos)` → fallas: por defecto fallas_de_gates."""
+    st = st or estado(trabajo)
+    script, cmds = gates_de(st)
+    gates = gates or fallas_de_gates
+    tmp = os.path.join(os.path.dirname(trabajo), "_cierres-%s-%d" % (os.path.basename(trabajo), os.getpid()))
+    shutil.rmtree(tmp, ignore_errors=True)
+    shutil.copytree(trabajo, tmp, ignore=shutil.ignore_patterns(*COPIA_SIN))
+    out = {}
+    try:
+        ruta = os.path.join(tmp, "guion.json")
+        original = open(ruta, encoding="utf-8").read()
+        for k, c in enumerate(cands, 1):
+            g = json.loads(original)
+            error = poner_cierre(g, c)
+            if error:
+                out[c.get("id") or "c%d" % k] = [error]
+                continue
+            escribir(ruta, g)
+            out[c.get("id") or "c%d" % k] = list(gates(tmp, script, cmds))
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+    return out
+
+
+CIERRES_ELEGIBLES_MIN = 3   # con menos opciones que el gate acepte, la sesión lo avisa (y el usuario puede dictar el suyo)
+
+
 def cmd_cierres(a):
-    """cierres.json: 5 cierres candidatos para que el usuario elija (usuario, 2026-11-03). --check (F1–F8 de cada uno,
-    finales distintos) · --opciones (la lista, el del guion aprobado primero) · --usar ID (pasa ese cierre a guion.cierre
+    """cierres.json: 5 cierres candidatos para que el usuario elija (usuario, 2026-11-03). --check (F1–F9 de cada uno,
+    finales distintos y, si el flujo obliga una forma, esa: `forma_obligatoria`) · --opciones (la lista, el del guion
+    aprobado primero; cada opción se PRUEBA en una copia con el gate completo del flujo: ✓ solo si pasa, y si no, su primera
+    FALLA al lado; termina con RETORNO {elegibles, rechazadas, forma_obligatoria}) · --usar ID (pasa ese cierre a guion.cierre
     y su texto a la narración de corrido; guion.previo.json de respaldo) · --propio TEXTO (el que dicta el usuario, id
     «cu», casi literal; luego --usar cu). Después del --usar, la sesión corre guion --check (y narracion --check)."""
     trabajo = os.path.abspath(a.trabajo)
@@ -3880,18 +3973,22 @@ def cmd_cierres(a):
     _, _, cifras = valores_respaldo(st["hilo"])
     e1 = (g.get("escenas") or [{}])[0]
     numeros_gancho = numeros_sin_anios(" ".join(filter(None, (e1.get("pantalla"), e1.get("linea"))))) if e1.get("tipo") == "gancho" else []
-    fallas, por_id = [], {}
+    fallas, por_id, filas = [], {}, []
     propios = [c for c in cands if c.get("id") != CIERRE_USUARIO]
     if not a.usar and len(propios) != CIERRES_OPCIONES:
         fallas.append("C %d cierres; van %d distintos (el del guion aprobado y otros 4)" % (len(propios), CIERRES_OPCIONES))
     finales = [texto_llano(final_de(c)) for c in cands]
     if len(set(finales)) < len(finales):
         fallas.append("C frases finales repetidas: cada opción termina distinto")
+    obligada, por_que = forma_obligatoria(st)
     for k, c in enumerate(cands, 1):
         cid = c.get("id") or "c%d" % k
         por_id[cid] = c
         texto = (c.get("texto") or "").strip()
         f = reglas_cierre(c, st, hilo, st["tarjetas"], numeros_gancho, cifras)
+        if obligada and c.get("forma") != obligada:   # primero: es lo que hace de la opción un botón muerto (m151)
+            f.insert(0, "%s; «%s» no lo es: aquí las opciones son %d cierres «%s» distintos (otra manera de dejar la misma pregunta abierta)"
+                     % (por_que, c.get("forma"), CIERRES_OPCIONES, obligada))
         if not texto or not texto_llano(texto).endswith(texto_llano(final_de(c))):
             f.append("F1 la frase final tiene que ser la última de «texto» (la voz termina con ella)")
         else:
@@ -3906,9 +4003,27 @@ def cmd_cierres(a):
                 f.append("V9 %.1f s de voz antes de la frase final (mínimo %.0f s, una oración que la prepare): las "
                          "conclusiones necesitan tiempo para leerse" % (s_antes, CIERRE_ANTES_S))
         fallas += ["%s: %s" % (cid, x) for x in f]
-        if a.check or getattr(a, "opciones", False):
+        filas.append((k, cid, c, texto, f))
+    opciones = getattr(a, "opciones", False)
+    if a.check or opciones:
+        # --opciones: la ✓ es del gate COMPLETO del flujo con ese cierre puesto (m062: una ✓ de solo F1–F9 la rechazó H16 al
+        # usarla; m151: 4 de 5 opciones eran botones muertos por SE6). --check queda en F1–F9: es el bucle rápido del agente.
+        completo = probar_cierres(trabajo, [c for _, _, c, _, f in filas if not f], st) if opciones else {}
+        elegibles, rechazadas = [], []
+        for k, cid, c, texto, f in filas:
+            mal = f or completo.get(cid) or []
+            (rechazadas.append({"id": cid, "falla": mal[0]}) if mal else elegibles.append(cid))
             print("%s. %s%s · %s/%s · «%s»%s" % (k, cid, " (el del guion aprobado)" if k == 1 and cid != CIERRE_USUARIO else "",
-                                               c.get("tipo"), c.get("forma"), texto, "" if f else "  ✓"))
+                                               c.get("tipo"), c.get("forma"), texto,
+                                               "  ✓" if not mal else ("  ✗ %s%s" % (mal[0], " (+%d)" % (len(mal) - 1) if len(mal) > 1 else "") if opciones else "")))
+        if opciones:
+            if obligada:
+                print("forma obligatoria: %s (%s)" % (obligada, por_que))
+            print("elegibles (pasan el gate completo con el cierre puesto): %s · %d de %d" % (", ".join(elegibles) or "ninguna", len(elegibles), len(filas)))
+            if len(elegibles) < CIERRES_ELEGIBLES_MIN:
+                print("AVISO solo %d opción(es) de cierre elegible(s) (van al menos %d): el usuario elige entre esas o dicta la suya (--propio)"
+                      % (len(elegibles), CIERRES_ELEGIBLES_MIN))
+            print("RETORNO " + json.dumps({"elegibles": elegibles, "rechazadas": rechazadas, "forma_obligatoria": obligada}, ensure_ascii=False))
     if a.usar:
         mias = [x for x in fallas if x.startswith(a.usar + ":")]
         if a.usar not in por_id or mias:
@@ -3916,22 +4031,11 @@ def cmd_cierres(a):
                 print("FALLA", x)
             return falla("--usar: «%s» no está en cierres.json o no pasa F1–F8 (ajusta el texto o los campos de --propio)" % a.usar)
         c = por_id[a.usar]
-        cierre = g.setdefault("cierre", {})
-        viejo = (cierre.get("texto") or "").strip()
         shutil.copyfile(rg, os.path.join(trabajo, "guion.previo.json"))
-        for k in CAMPOS_CIERRE:
-            if c.get(k) is not None:
-                cierre[k] = c[k]
-        if (cierre.get("forma") not in ("consecuencia", "legado")):
-            cierre.pop("consecuencia", None)
-        partes = g.get("narracion") or []
-        if partes and viejo and viejo != cierre["texto"]:
-            ult = next((p for p in reversed(partes) if viejo in p.get("texto", "")), None)
-            if not ult:
-                return falla("el texto del cierre de antes no está literal en guion.narracion: el cierre no se puede cambiar sin "
-                             "rehacer la narración (lanza un retoque)")
-            i = ult["texto"].rfind(viejo)
-            ult["texto"] = ult["texto"][:i] + cierre["texto"] + ult["texto"][i + len(viejo):]
+        error = poner_cierre(g, c)
+        if error:
+            return falla(error)
+        cierre = g["cierre"]
         # quién eligió: el usuario dictó el suyo (propio), eligió una opción (usuario) o corrió con `auto` y quedó el del
         # guion aprobado (`--por critico`); el recomendado es el del guion que aprobó el crítico (el primero, c1)
         recomendado = C.get("recomendado") or next((x.get("id") for x in propios if x.get("id")), None)
@@ -5568,9 +5672,89 @@ def texto_srt(escenas, offs):
     return "\n".join("%d\n%s --> %s\n%s\n" % (k, ts(b["start"]), ts(b["end"]), b["texto"]) for k, b in enumerate(B, 1))
 
 
-def escribir_caption(ruta, cap, redes, dur):
-    """caption.md: una sección por plataforma (PLATAFORMAS). Un guion anterior a los cuatro captions toma el de TikTok
-    para Instagram y Shorts."""
+TECLEAR_MAX = 60   # m215: el título para quien publica tecleando en el teléfono (17 de 20 piezas salieron con el caption a mano y con erratas)
+TECLEAR_QUITA = dict.fromkeys(map(ord, "«»“”„‟\"'‘’`´*_~^|<>{}[]"), None)
+TECLEAR_ESPANOL = "áéíóúüñÁÉÍÓÚÜÑ¿¡"   # lo que el teclado en español escribe sin buscarlo (y el corrector pone solo)
+# con lo que un título recortado no puede terminar (sin tildes): artículos, preposiciones, conjunciones y adverbios de paso
+TECLEAR_SUELTAS = set(("a al ante cada casi como con cuando de del desde donde e el en entre es esa ese esta este fue ha han hasta hay la las le les "
+                       "lo los mas menos mi mientras muy ni no o para pero por que se si sin sobre solo son su sus tan tras tu u un una y ya").split())
+
+
+def para_teclear(texto):
+    """Un texto sin lo que cuesta teclear en el teléfono: sin hashtags, comillas («», “”), rayas (–, —), punto medio (·),
+    puntos suspensivos de un solo signo ni letras con signos que no son del español (ç, à, ö → c, a, o); las tildes y la ñ
+    del español se quedan (sin ellas el título queda mal escrito) y las cifras siguen en dígitos, como en el caption."""
+    t = re.sub(r"#\S+", " ", str(texto or ""))
+    t = t.translate(TECLEAR_QUITA)
+    t = re.sub(r"\s*[–—―‒]\s*", ", ", t)
+    t = re.sub(r"\s*[·•]\s*", ", ", t).replace("…", ".").replace("×", "x")
+    out = []
+    for ch in t:
+        if ord(ch) < 128 or ch in TECLEAR_ESPANOL:
+            out.append(ch)
+            continue
+        base = "".join(c for c in unicodedata.normalize("NFKD", ch) if not unicodedata.combining(c))
+        out.append(base if base and all(ord(c) < 128 for c in base) else " ")   # un emoji o un símbolo raro: fuera
+    t = re.sub(r"\s+", " ", "".join(out))
+    t = re.sub(r"\s+([,.;:?!)])", r"\1", t)
+    t = re.sub(r",(?:\s*,)+", ",", t)
+    return t.strip(" ,;:-")
+
+
+def recortar_titulo(t, tope=TECLEAR_MAX):
+    """≤ `tope` caracteres sin palabras a medias: mejor en un signo (si deja al menos la mitad), si no en un espacio, y sin
+    terminar en «de», «la», «y»…; los signos de apertura que quedan sin cerrar se quitan."""
+    t = t.strip()
+    if len(t) > tope:
+        cab = t[:tope + 1]
+        signos = [i for i, ch in enumerate(cab[:tope]) if ch in ".:;?!," and i + 1 >= tope // 2 and (i + 1 >= len(cab) or cab[i + 1] == " ")]
+        if signos:
+            i = signos[-1]
+            t = cab[:i + 1] if cab[i] in "?!" else cab[:i]
+        else:
+            t = cab[:tope + 1].rsplit(" ", 1)[0] if " " in cab else cab[:tope]
+            pal = t.split()
+            if len(pal) > 1 and re.fullmatch(r"[Q$]?[\d.,]+%?", pal[-1]):   # una cifra a la que el corte le quitó lo que cuenta («y solo 102»)
+                pal.pop()
+            while len(pal) > 1 and _plano(pal[-1]).strip(" ,;:.%") in TECLEAR_SUELTAS | {""}:
+                pal.pop()
+            t = " ".join(pal)
+    t = t.rstrip(" ,;:-.")
+    for abre, cierra in (("¿", "?"), ("¡", "!"), ("(", ")")):
+        if t.count(abre) != t.count(cierra):
+            t = t.replace(abre, "").replace(cierra, "") if abre == "(" else t.replace(abre, "") if t.count(abre) > t.count(cierra) else t
+    return re.sub(r"\s+", " ", t).strip()
+
+
+def titulo_para_teclear(cap, clave=None, tope=TECLEAR_MAX):
+    """m215: un título de ≤ 60 caracteres pensado para TECLEARLO, sacado del caption que ya existe (nada nuevo que verificar):
+    el título de Shorts o la primera oración del caption de TikTok, Instagram o Facebook, pasados por `para_teclear`. Gana el
+    primero que cabe entero y trae la palabra clave (si el guion la declara); si ninguno cabe, el primero con la clave,
+    recortado. → (título, ¿trae la palabra clave? (None si no hay clave))."""
+    claves = palabras_clave(clave)
+    cands = []
+    for k in ("shorts", "tiktok", "instagram", "facebook"):
+        lineas = [l.strip() for l in str((cap or {}).get(k) or "").splitlines() if l.strip()]
+        if not lineas:
+            continue
+        primera = lineas[0]
+        if k != "shorts":   # la primera oración (el título de Shorts ya es una línea hecha para ser título)
+            primera = re.split(r"(?<=[.?!])\s+", primera)[0]
+        limpio = para_teclear(primera)
+        if limpio and limpio not in cands:
+            cands.append(limpio)
+    if not cands:
+        return "", (None if not claves else False)
+    trae = lambda t: _busca_clave(_tokens_clave(t), claves) is not None if claves else True
+    orden = ([t for t in cands if len(t) <= tope and trae(t)] or [t for t in cands if trae(recortar_titulo(t, tope))]
+             or [t for t in cands if len(t) <= tope] or cands)
+    titulo = recortar_titulo(orden[0], tope)
+    return titulo, (trae(titulo) if claves else None)
+
+
+def escribir_caption(ruta, cap, redes, dur, clave=None):
+    """caption.md: arriba, el título corto para quien lo teclea (m215) y la palabra clave si el guion la trae; después, una
+    sección por plataforma (PLATAFORMAS). Un guion anterior a los cuatro captions toma el de TikTok para Instagram y Shorts."""
     tk = (cap.get("tiktok") or "").strip()
     txt = {"tiktok": tk, "instagram": (cap.get("instagram") or tk).strip(), "facebook": (cap.get("facebook") or tk).strip(),
            "shorts": (cap.get("shorts") or titulo_shorts(tk)).strip()}
@@ -5578,8 +5762,20 @@ def escribir_caption(ruta, cap, redes, dur):
         # un Short con solo el título se publica sin descripción: lleva el cuerpo del caption de TikTok (y, en una serie,
         # su línea «La Parte 1 está fijada en mi perfil»)
         txt["shorts"] += "\n" + "\n".join(tk.splitlines()[1:])
-    partes = ["# Texto para publicar", "",
-              "Un solo video para las cuatro apps: **video.mp4** (9:16). Para el feed de Facebook e Instagram, "
+    partes = ["# Texto para publicar", ""]
+    titulo, con_clave = titulo_para_teclear(txt, clave)
+    claves = palabras_clave(clave)
+    if titulo:
+        # m215: quien publica desde el teléfono suele teclear; que al menos teclee esto (corto, sin signos raros, con la
+        # palabra que la gente busca). Va antes de todo y fuera de las secciones «## <app>» (agenda.py y metricas.py las leen)
+        partes += ["**Si lo vas a teclear** (en vez de copiar y pegar el bloque de la app): escribe este título tal cual. "
+                   "Tiene %d caracteres (máximo %d), sin comillas ni rayas, y las cifras van en dígitos; en YouTube añádele #Shorts."
+                   % (len(titulo), TECLEAR_MAX), "```", titulo, "```"]
+        if claves:
+            partes += ["Palabra clave (que no falte al teclear): **%s**%s" % (
+                claves[0], "" if con_clave else " · el título corto no la trae: escríbela también")]
+        partes += [""]
+    partes += ["Un solo video para las cuatro apps: **video.mp4** (9:16). Para el feed de Facebook e Instagram, "
               "**video_4x5.mp4**. Miniatura: una de las portada_*.png (lo importante queda en el 3:4 central, que es lo "
               "que muestran las cuadrículas de perfil).", "",
               # m059 (/analyze-improve 2026-11-03): 17 de 20 piezas se publicaron con un título escrito a mano, sin las
@@ -5612,7 +5808,8 @@ def cmd_montar(a):
         if a.formato != "4:5":
             sal = os.path.join(trabajo, "salida")
             redes = " · ".join("%s %s" % (r["nombre"], r["handle"]) for r in REDES)
-            escribir_caption(os.path.join(sal, "caption.md"), g["caption"], redes, ffprobe_dur(os.path.join(sal, "video.mp4")))
+            escribir_caption(os.path.join(sal, "caption.md"), g["caption"], redes, ffprobe_dur(os.path.join(sal, "video.mp4")),
+                             g.get("palabra_clave") or st.get("palabra_clave"))
             if mesa("portada", trabajo):
                 return falla("la portada de la mesa no se dibujó")
         return 0
@@ -5743,7 +5940,7 @@ def cmd_montar(a):
     # subtítulos, caption y portada
     open(os.path.join(sal, "subtitulos.srt"), "w", encoding="utf-8").write(texto_srt(E["escenas"], offs))
     redes = " · ".join("%s %s" % (r["nombre"], r["handle"]) for r in REDES)
-    escribir_caption(os.path.join(sal, "caption.md"), g["caption"], redes, ffprobe_dur(video))
+    escribir_caption(os.path.join(sal, "caption.md"), g["caption"], redes, ffprobe_dur(video), g.get("palabra_clave") or st.get("palabra_clave"))
     e1 = E["escenas"][0]
     if e1.get("tipo") in ("gancho", "golpe"):  # la portada se lee en silencio: cifra completa, línea entera y el visual completo
         fin_visual = max([x["t"] for x in e1.get("eventos") or [] if x["tipo"] in ("desborde_fin", "pareja_fin", "destacadas_fin", "pin_fin")] or [0])
@@ -5881,10 +6078,47 @@ def hora_equivalente(esperado, oido):
     return a in _PEQUENOS and b in _PEQUENOS and o in _PEQUENOS and _PEQUENOS[a] + _PEQUENOS[b] == _PEQUENOS[o] and _PEQUENOS[a] <= 12
 
 
-def comparar_escucha(segmentos, oido, omitir=None):
+_NUMERALES = set()
+
+
+def es_numeral(tok):
+    """¿Un token ya normalizado (tokens_escucha) es parte de un NÚMERO? Dígitos, unidades, decenas, centenas, «mil»,
+    «millón», el «punto» o la «coma» decimal, «ciento» y «primero». La unidad («quetzales», «kilómetros», «dólares») y los
+    conectores («y», «por», «con», «a») no lo son: van en el mismo segmento numérico de la locución, pero no son la cifra."""
+    if not _NUMERALES:
+        base = list(NE.UNIDADES) + list(NE.DECENAS.values()) + list(NE.CENTENAS.values())
+        _NUMERALES.update(t for w in base for t in tokens_escucha(w))
+        _NUMERALES.update("un veintiun cien ciento mil millon millones billon billones punto coma primero".split())
+    return any(c.isdigit() for c in tok) or tok in _NUMERALES
+
+
+ESCUCHA_PARECIDO = 0.75   # m161: lo que whisper oyó en lugar de la palabra tiene que sonar parecido (clave fonética): «que sales» por
+                          # «quetzales» da 0.92; «que sales que sales» (un titubeo) 0.63 y «dólares» 0.31: esos se quedan FALLA
+
+
+def solo_palabra_junto_a_cifra(esperadas, oidas):
+    """m161 («quetzales» → «que sales»): ¿la diferencia de un tramo numérico está en una palabra que NO es el número y que
+    whisper oyó como algo que suena parecido? Falso si entre lo esperado o lo oído hay un numeral (la cifra misma difiere:
+    eso siempre es FALLA), si whisper no oyó nada en su lugar (la voz pudo saltarse la unidad) o si lo oído no se parece
+    (otra palabra: «dólares» por «quetzales»)."""
+    if not esperadas or not oidas or any(es_numeral(t) for t in list(esperadas) + list(oidas)):
+        return False
+    return difflib.SequenceMatcher(None, clave_fonetica("".join(esperadas)), clave_fonetica("".join(oidas))).ratio() >= ESCUCHA_PARECIDO
+
+
+def contiene_seguido(toks, tramo):
+    """¿`tramo` aparece seguido dentro de `toks`?"""
+    n = len(tramo)
+    return bool(n) and any(toks[k:k + n] == tramo for k in range(len(toks) - n + 1))
+
+
+def comparar_escucha(segmentos, oido, omitir=None, scribe=None):
     """Compara la locución (los `segmentos` p/v/num de locucion.json) con lo que whisper oyó → (faltas, avisos,
     % de palabras distintas). Un tramo distinto que toca una palabra numérica es falta; el resto, aviso. `omitir`: una
-    cita en otro idioma (whisper corre con -l es y no la transcribe): sus palabras no se comparan ni cuentan."""
+    cita en otro idioma (whisper corre con -l es y no la transcribe): sus palabras no se comparan ni cuentan.
+    `scribe` (m161): el texto que Scribe oyó en esa misma toma (audio/palabras_N.json). Una falta baja a aviso SOLO si la
+    diferencia no está en el número (solo_palabra_junto_a_cifra) y Scribe trae lo esperado, con su palabra de cada lado:
+    Scribe alinea el prompt, así que por sí solo no prueba nada; por eso un número distinto se queda FALLA diga lo que diga."""
     esperado, numerico = [], []
     for sg in segmentos:
         toks = tokens_escucha(sg["v"])
@@ -5896,6 +6130,7 @@ def comparar_escucha(segmentos, oido, omitir=None):
             fuera[k:k + len(om)] = [True] * len(om)
             break
     oidos = tokens_escucha(oido, oido=True)
+    de_scribe = tokens_escucha(scribe, oido=True) if scribe else []
     faltas, avisos, distintos = [], [], 0
     for op, i1, i2, j1, j2 in difflib.SequenceMatcher(None, esperado, oidos, autojunk=False).get_opcodes():
         if op == "equal":
@@ -5915,6 +6150,10 @@ def comparar_escucha(segmentos, oido, omitir=None):
         vecinas = esperado[max(0, i1 - 3):i2 + 3]
         if j2 - j1 > len(resto) and sum(1 for w in oidos[j1:j2] if len(w) > 1 and w in vecinas) >= 2:
             faltas.append(msg + " (la voz repitió palabras: titubeo)")
+            continue
+        if num and de_scribe and len(resto) == i2 - i1 and solo_palabra_junto_a_cifra([esperado[i] for i in resto], oidos[j1:j2]) \
+                and contiene_seguido(de_scribe, esperado[max(0, i1 - 1):i2 + 1]):
+            avisos.append(msg + " (no es la cifra: whisper oyó otra palabra junto al número, que sí coincide; Scribe oyó lo esperado)")
             continue
         (faltas if num else avisos).append(msg)
     return faltas, avisos, round(100.0 * distintos / max(1, len(esperado) - sum(fuera)), 1)
@@ -5941,45 +6180,196 @@ def cmd_whisper(a):
     return 0
 
 
+ESCUCHA_REGLAS = 2   # versión de las reglas de cotejo: al cambiarlas, lo ya oído se vuelve a cotejar (sin volver a correr whisper)
+RE_NOMBRE = re.compile(r"[A-ZÁÉÍÓÚÑ][\wáéíóúñüÁÉÍÓÚÑ'’-]*")
+RE_ORACION = re.compile(r"[.!?…:;]+|[¿¡«»\"“”()\[\]—–]|\n")
+PARTICULAS_NOMBRE = ("de", "del", "la", "las", "los")
+PROMPT_NOMBRES_MAX = 400   # caracteres del glosario para whisper (su tope es n_text_ctx/2 tokens: sobra)
+
+
+def nombres_propios(textos):
+    """m071 («Xela» → «Sheila», «Zacapa» → «esa capa», «Diageo» → «viajeo»): los nombres propios de la locución, para
+    dárselos a whisper como glosario. Son las palabras con mayúscula que NO abren oración y las siglas, juntas si van
+    seguidas («Marta Pérez», «Banco de Guatemala»). La palabra que abre una oración solo entra si en otro sitio va con
+    mayúscula en medio de una. Nunca un número (ni dígitos, ni numerales, ni romanos): la escucha es «sin el guion» para
+    poder cazar una cifra mal dicha, y un glosario con cifras se las dictaría a whisper. → lista en orden de aparición."""
+    oraciones = []
+    for t in textos:
+        for o in RE_ORACION.split(t or ""):
+            ws = re.findall(r"[\wáéíóúñüÁÉÍÓÚÑ'’-]+", o)
+            if ws:
+                oraciones.append(ws)
+
+    def propio(w):
+        if any(c.isdigit() for c in w) or re.fullmatch(r"[IVX]{2,}", w) or any(es_numeral(t) for t in tokens_escucha(w)):
+            return False
+        return bool(RE_NOMBRE.fullmatch(w))
+
+    def sigla(w):
+        return len(w) >= 2 and w.isupper() and propio(w)
+    dentro = {w.lower() for ws in oraciones for w in ws[1:] if propio(w)}   # con mayúscula en medio de una oración
+    out, vistos = [], set()
+
+    def cerrar(grupo):
+        while grupo and grupo[-1].lower() in PARTICULAS_NOMBRE and not grupo[-1][0].isupper():
+            grupo.pop()
+        nombre = " ".join(grupo)
+        if nombre and nombre.lower() not in vistos:
+            vistos.add(nombre.lower())
+            out.append(nombre)
+    for ws in oraciones:
+        grupo = []
+        for k, w in enumerate(ws):
+            es = propio(w) and (k > 0 or sigla(w) or w.lower() in dentro)
+            if es:
+                grupo.append(w)
+            elif grupo and w in PARTICULAS_NOMBRE and k + 1 < len(ws):
+                grupo.append(w)   # «Banco de Guatemala»: la partícula sigue si después viene otro nombre (cerrar quita la que sobra)
+            else:
+                cerrar(grupo)
+                grupo = []
+        cerrar(grupo)
+    return out
+
+
+def prompt_nombres(loc):
+    """El glosario que se le pasa a whisper con --prompt: SOLO nombres propios de la locución, separados por comas."""
+    out, largo = [], 0
+    for n in nombres_propios([e.get("voz") or "" for e in loc.get("escenas") or []]):
+        if largo + len(n) + 2 > PROMPT_NOMBRES_MAX:
+            break
+        out.append(n)
+        largo += len(n) + 2
+    return ", ".join(out) + "." if out else ""
+
+
+def whisper_listo(modelo):
+    return bool(shutil.which("whisper-cli")) and os.path.exists(modelo)
+
+
+def whisper_acepta_prompt():
+    """¿Este whisper-cli tiene --prompt? (se mira en su --help una vez; una versión vieja no la trae y fallaría con ella)"""
+    if not hasattr(whisper_acepta_prompt, "v"):
+        try:
+            r = subprocess.run(["whisper-cli", "--help"], capture_output=True, text=True, timeout=20)
+            whisper_acepta_prompt.v = "--prompt" in (r.stdout or "") + (r.stderr or "")
+        except (OSError, subprocess.SubprocessError):
+            whisper_acepta_prompt.v = False
+    return whisper_acepta_prompt.v
+
+
+def transcribir_whisper(voz, base, modelo, prompt=""):
+    """Una voz → (lo que whisper.cpp oyó, error). `prompt` = glosario de nombres propios (prompt_nombres), si la versión lo acepta."""
+    hilos = str(max(1, min(8, (os.cpu_count() or 2) // 2)))
+    ff("-i", voz, "-ar", "16000", "-ac", "1", "-c:a", "pcm_s16le", base + ".wav")
+    cmd = ["whisper-cli", "-m", modelo, "-l", "es", "-np", "-oj", "-of", base, "-t", hilos, "-f", base + ".wav"]
+    if prompt and whisper_acepta_prompt():
+        cmd += ["--prompt", prompt]
+    r = subprocess.run(cmd, capture_output=True, text=True)
+    if r.returncode or not os.path.exists(base + ".json"):
+        return None, (r.stderr or r.stdout).strip()[-300:]
+    return " ".join(x.get("text", "") for x in leer(base + ".json").get("transcription") or []).strip(), None
+
+
+def sha1_archivo(ruta):
+    h = hashlib.sha1()
+    with open(ruta, "rb") as f:
+        for b in iter(lambda: f.read(1 << 20), b""):
+            h.update(b)
+    return h.hexdigest()
+
+
+def texto_scribe(trabajo, n):
+    """Lo que Scribe oyó en la toma de la escena n (audio/palabras_N.json), como texto; "" si no hay o no se puede leer."""
+    try:
+        ws = leer(os.path.join(trabajo, "audio", "palabras_%d.json" % n))
+        ws = ws["words"] if isinstance(ws, dict) else ws
+        return " ".join(str(w.get("text") or "") for w in sin_etiquetas([w for w in ws if isinstance(w, dict) and isinstance(w.get("text"), str)])).strip()
+    except (OSError, ValueError, KeyError, TypeError):
+        return ""
+
+
+def huellas_escucha(voz, modelo, e, scribe):
+    """(huella del audio, huella de la escucha). La del audio = sha1 del mp3 + el modelo: mientras no cambie, lo que whisper
+    oyó sigue valiendo. La de la escucha suma lo que se coteja (la voz esperada con sus tramos numéricos, la cita que se
+    omite, lo que oyó Scribe) y la versión de las reglas: mientras no cambie, el resultado (ok o falla) es el mismo."""
+    h_audio = hashlib.sha1(("%s|%s" % (sha1_archivo(voz), os.path.basename(modelo))).encode("utf-8")).hexdigest()
+    segs = [[sg.get("v"), bool(sg.get("num"))] for sg in e.get("segmentos") or [{"v": e.get("voz"), "num": False}]]
+    cuerpo = json.dumps([ESCUCHA_REGLAS, h_audio, segs, e.get("escucha_omitir") or "", scribe or ""], ensure_ascii=False, sort_keys=True)
+    return h_audio, hashlib.sha1(cuerpo.encode("utf-8")).hexdigest()
+
+
+def escuchar_escena(trabajo, e, modelo, previo, transcribir, prompt="", de_nuevo=False):
+    """La escucha de una escena, con caché por huella → (registro para escucha.json, cómo salió, error).
+    cómo = «cache» (nada cambió: se reusa el resultado), «oido» (la voz y el modelo son los mismos: se vuelve a cotejar lo
+    que whisper ya oyó, sin correrlo) o «whisper» (se transcribe). `transcribir(voz, base, modelo, prompt)` → (oído, error)."""
+    n = e["n"]
+    voz = os.path.join(trabajo, "audio", "voz_%d.mp3" % n)
+    scribe = texto_scribe(trabajo, n)
+    h_audio, huella = huellas_escucha(voz, modelo, e, scribe)
+    previo = previo if isinstance(previo, dict) else {}
+    if not de_nuevo and previo.get("huella") == huella and isinstance(previo.get("faltas"), list):
+        return previo, "cache", None
+    if not de_nuevo and previo.get("huella_audio") == h_audio and isinstance(previo.get("oido"), str):
+        oido, como = previo["oido"], "oido"
+    else:
+        oido, error = transcribir(voz, os.path.join(trabajo, "audio", "escucha_%d" % n), modelo, prompt)
+        if oido is None:
+            return None, "whisper", error
+        como = "whisper"
+    faltas, avisos, pct = comparar_escucha(e.get("segmentos") or [{"v": e["voz"], "num": False}], oido, e.get("escucha_omitir"), scribe=scribe)
+    return {"oido": oido, "faltas": faltas, "avisos": avisos, "distinto_pct": pct, "huella": huella, "huella_audio": h_audio}, como, None
+
+
 def cmd_escuchar(a):
     """V11: transcribe cada voz con whisper.cpp (sin el guion) y coteja con la locución: Scribe, conectado al nodo TTS,
-    alinea el prompt y no detecta una cifra mal dicha; esto sí. Sin whisper-cli o sin modelo, avisa y sale 0."""
+    alinea el prompt y no detecta una cifra mal dicha; esto sí. Sin whisper-cli o sin modelo, avisa y sale 0.
+    · Caché por huella (audio/escucha.json): una escena cuya voz, modelo y texto esperado no cambiaron no se vuelve a
+      escuchar; se repite su resultado, ok o falla (`--de-nuevo` lo fuerza). `producir` reanudado y los retoques solo oyen
+      lo que cambió.
+    · A whisper se le pasa un glosario con los nombres propios de la locución (m071), nunca cifras ni el texto de la escena.
+    · Antes de fallar se mira lo que oyó Scribe (m161): solo baja a aviso una palabra que no es la cifra (comparar_escucha)."""
     trabajo = os.path.abspath(a.trabajo)
     loc = leer(os.path.join(trabajo, "locucion.json"))
     modelo = os.path.abspath(a.modelo) if a.modelo else modelo_whisper()
-    if not shutil.which("whisper-cli") or not os.path.exists(modelo):
+    if not whisper_listo(modelo):
         print("AVISO V11: sin whisper-cli o sin modelo (%s): la escucha se salta · brew install whisper-cpp · make whisper" % rel(modelo))
         return 0
     solo = {int(x) for x in a.solo.split(",")} if a.solo else None
     ruta = os.path.join(trabajo, "audio", "escucha.json")
     informe = leer(ruta) if os.path.exists(ruta) else {"escenas": {}}
+    informe.setdefault("escenas", {})
     informe["modelo"] = os.path.basename(modelo)
-    hilos = str(max(1, min(8, (os.cpu_count() or 2) // 2)))
-    con_faltas = []
+    prompt = prompt_nombres(loc)
+    informe["prompt"] = prompt
+    con_faltas, reusadas, oidas = [], 0, 0
     for e in loc["escenas"]:
         n = e["n"]
         if solo and n not in solo:
             continue
         voz = os.path.join(trabajo, "audio", "voz_%d.mp3" % n)
         if not os.path.exists(voz):
+            escribir(ruta, informe)
             return falla("falta %s" % rel(voz))
-        base = os.path.join(trabajo, "audio", "escucha_%d" % n)
-        ff("-i", voz, "-ar", "16000", "-ac", "1", "-c:a", "pcm_s16le", base + ".wav")
-        r = subprocess.run(["whisper-cli", "-m", modelo, "-l", "es", "-np", "-oj", "-of", base, "-t", hilos, "-f", base + ".wav"],
-                           capture_output=True, text=True)
-        if r.returncode or not os.path.exists(base + ".json"):
-            return falla("whisper-cli falló en E%d: %s" % (n, (r.stderr or r.stdout).strip()[-300:]))
-        oido = " ".join(x.get("text", "") for x in leer(base + ".json").get("transcription") or []).strip()
-        faltas, avisos, pct = comparar_escucha(e.get("segmentos") or [{"v": e["voz"], "num": False}], oido, e.get("escucha_omitir"))
-        informe["escenas"][str(n)] = {"oido": oido, "faltas": faltas, "avisos": avisos, "distinto_pct": pct}
+        reg, como, error = escuchar_escena(trabajo, e, modelo, informe["escenas"].get(str(n)), transcribir_whisper, prompt, getattr(a, "de_nuevo", False))
+        if reg is None:
+            escribir(ruta, informe)   # lo ya oído en esta corrida no se pierde
+            return falla("whisper-cli falló en E%d: %s" % (n, error))
+        informe["escenas"][str(n)] = reg
+        reusadas += como != "whisper"
+        oidas += como == "whisper"
+        nota = {"cache": " · (sin volver a escuchar: nada cambió)", "oido": " · (misma voz: se cotejó lo ya oído)", "whisper": ""}[como]
+        faltas, avisos, pct = reg["faltas"], reg["avisos"], reg["distinto_pct"]
         if faltas:
             con_faltas.append(n)
             for f in faltas:
-                print("E%-2d FALLA V11: %s" % (n, f))
+                print("E%-2d FALLA V11: %s%s" % (n, f, nota))
         else:
-            print("E%-2d ok · %.0f %% de palabras distintas%s%s" % (n, pct, " · aviso: " + " · ".join(avisos) if avisos else "",
-                                                               " · (cita en otro idioma: no se compara)" if e.get("escucha_omitir") else ""))
+            print("E%-2d ok · %.0f %% de palabras distintas%s%s%s" % (n, pct, " · aviso: " + " · ".join(avisos) if avisos else "",
+                                                                 " · (cita en otro idioma: no se compara)" if e.get("escucha_omitir") else "", nota))
     escribir(ruta, informe)
+    if reusadas:
+        print("escucha: %d escena(s) con whisper, %d sin volver a escuchar (--de-nuevo las fuerza)" % (oidas, reusadas))
     if con_faltas:
         return falla("V11: rehaz la voz de %s (una retoma por escena) o escúchala tú" % ", ".join("E%d" % n for n in con_faltas))
     return 0
@@ -6403,6 +6793,7 @@ def main():
     p.add_argument("trabajo")
     p.add_argument("--solo", help="escenas, p. ej. 2,5")
     p.add_argument("--modelo", help="modelo ggml (por defecto el de make whisper o HILOS_WHISPER)")
+    p.add_argument("--de-nuevo", dest="de_nuevo", action="store_true", help="vuelve a escuchar también las escenas que no cambiaron (por defecto se reusa audio/escucha.json por huella)")
     sub.add_parser("whisper", help="baja el modelo ggml-small de whisper.cpp una sola vez")
     p = sub.add_parser("montar")
     p.add_argument("trabajo")

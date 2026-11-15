@@ -28,6 +28,8 @@ En el cuadro caben 2–3 piezas a la vez (hasta 4 si la última es chica). Cuand
 compacta, arriba (el **repliegue**). No lo decides tú: lo calcula el motor. Si quieres que el corte caiga en un punto
 concreto (antes de la pieza que más importa), ponle `"limpia": true` a esa pieza.
 
+**Un solo acento al frente (MV13).** Llevan el color de acento la `cifra`, la `barra`, la nota (`termino` sin `definicion`), la `lista` con `acento` o `lazo`, la `red` con `etiqueta`, el `recorte` con `resalta` y el `documento` con `pagina`: una `cifra` o una `barra` no comparte el acento con otra ni con una nota (falla); otras dos a la vez solo avisan. A la que no es el dato que la voz está diciendo ponle `"crema": true` (solo `cifra`, `termino` y `barra`), o `"limpia": true` a la que entra.
+
 Las escenas `explica`, `tarjeta`, `cuenta`, `vias`, `deptos`, `lupa`, `cortina`, `mapa`, `ranking`, `tiempo`, `escala` y
 `hemiciclo` son **tableros**: su animación ya aprobada va sola en su mesa (`{"escenas": ["eN"], "golpes": []}`). Solo si
 la voz sigue hablando ≥ 1 s después del último paso de la animación puedes ponerle golpes: el primero retira la

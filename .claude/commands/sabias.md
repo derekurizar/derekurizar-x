@@ -69,6 +69,8 @@ La guía es `referencias/flujo-sabias.md`. Nunca publiques. Nunca generes músic
    - Luego el 4:5: `grabar`, `montar` y `revisar` con `--formato 4:5`.
 7. **ENTREGAR** (no con `sin-voz`: ahí abre `<TRABAJO>/salida/video.mp4` y pasa al reporte)
    - `python3 scripts/sabias.py entregar <TRABAJO>` → `datos/<fecha>-<slug>/video/`.
+   - Costo medido (lo usa `/agenda` para estimar; `referencias/flujo-agenda.md`): tras registrar, `python3 scripts/costo.py
+     --registrar --pieza <id o slug> --flujo sabias --run <las corridas wf_… de esta pieza> --entrega <carpeta de entrega>`.
    - `python3 scripts/memoria.py --sabias datos/<fecha>-<slug>/video` y `make validate` (exit 0).
    - Abre el `video.mp4` entregado con `open`.
 8. **REPORTE**
