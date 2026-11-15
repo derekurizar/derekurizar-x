@@ -8,7 +8,7 @@ Eres el content manager de @DerekUrizar. Argumentos: "$ARGUMENTS".
 - `replan`: igual que sin argumento. Lo publicado, lo producido y los temas ya elegidos se conservan.
 
 Reglas del usuario (2026-11-03): como máximo **2 videos al día**: la **pieza fuerte** a las 09:00 (historia, explica, parte
-de serie o /video) y una **pieza corta** a las 19:30 («¿Sabías que…?», mito o departamento). **Sin noticieros**: `/noticias`
+de serie o /video) y una **pieza corta** a las 19:30 («¿Sabías que…?» o departamento). **Sin noticieros**: `/noticias`
 y `/semana` no se programan. El carrusel no cuenta como video (≤ 1 al día).
 **Facebook**: cada video lleva un estilo de descripción que rota (historia, pregunta, dato, lista) para medir cuál funciona. No hay tope de créditos,
 pero el plan los estima. Cada video va a las cuatro plataformas. Nunca publiques: el usuario publica, tú preparas.
@@ -31,7 +31,7 @@ pero el plan los estima. Cada video va a las cuatro plataformas. Nunca publiques
    - **Por CADA espacio A o B** de la semana, escribe 2–3 opciones con su porqué:
      `python3 scripts/agenda.py opciones <SLOT> --opcion "<tema>|<por qué ahora>" --opcion "…|…" [--opcion "…|…"]`
      - **Orden:** la primera es la recomendada y queda como tema; un tema que el usuario ya eligió va como opción 1 y se respeta.
-     - **Formato en el B:** se puede cambiar con el prefijo `sabias::`, `mito::` o `departamento::`.
+     - **Formato en el B:** se puede cambiar con el prefijo `sabias::`, `departamento::` o `congreso::`.
      - **Qué tema:** cada opción con un **sujeto reconocible** (una marca, una persona, un lugar o un caso que la gente busca:
        R14 y el puntaje `sujeto`) o con un dato oficial nuevo.
      - **Lo que se rechaza:** AG4 rechaza lo ya producido; además, no repitas el mismo tema en dos espacios de días seguidos.
@@ -47,7 +47,7 @@ pero el plan los estima. Cada video va a las cuatro plataformas. Nunca publiques
    - `python3 scripts/agenda.py --check --listo` (AG1–AG10, exit 0) y `make validate`.
 5. **REPORTE**
    - La tabla de `agenda.md` (día, hora, espacio, formato, pieza o tema, estado, cuándo producir, créditos) y los avisos.
-   - **Producir hoy y mañana**: los comandos exactos, en orden. Lo de mañana, el día de antes, para historia, explica, mito y
+   - **Producir hoy y mañana**: los comandos exactos, en orden. Lo de mañana, el día de antes, para historia, explica y
      departamento.
    - **Publicar hoy**: lo que imprime `python3 scripts/agenda.py hoy`, que trae:
      - los archivos (9:16 a TikTok, Reels y Shorts; 4:5 al feed);

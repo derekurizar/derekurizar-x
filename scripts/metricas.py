@@ -333,7 +333,7 @@ def escenas_de(p):
     elif p["flujo"] == "congreso":
         cand.append("sesiones/congreso-%s/escenas.json" % p["slug"])
     elif p["flujo"] == "explica":
-        cand += ["sesiones/explica-%s/escenas.json" % p["slug"], "sesiones/mito-%s/escenas.json" % p["slug"]]
+        cand.append("sesiones/explica-%s/escenas.json" % p["slug"])
     elif p["flujo"] == "semana":
         cand.append("sesiones/semana-%s/escenas.json" % reg.get("fecha"))
     guion = leer(os.path.join(RAIZ, p["ruta"] or "", "guion.json")) or {}

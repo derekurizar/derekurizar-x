@@ -3,7 +3,7 @@
 producir para que ningún espacio quede vacío. Solo stdlib.
 
 Decisiones del usuario (2026-11-03): como máximo 2 videos al día. El espacio A es una pieza fuerte (historia, explica,
-parte de serie, /video de un hilo) y el B una pieza corta (¿Sabías que…?, mito, departamento). El carrusel va aparte (no es
+parte de serie, /video de un hilo) y el B una pieza corta (¿Sabías que…?, departamento). El carrusel va aparte (no es
 video, ≤ 1 al día). **No se publican noticieros**: /noticias y /semana no se programan. Planifica producción y publicación;
 sin tope de créditos (el plan muestra la estimación). Corrido a mitad de semana, planifica el resto: lo producido, publicado
 o con tema elegido se conserva.
@@ -20,8 +20,8 @@ Cómo se llenan los espacios (en orden):
 3. Fechas del calendario (≤ 2): un dato → /dato + /sabias en el B; un hilo → /hilo + /video en el A. Nunca antes de su
    fecha.
 4. El siguiente /departamento (≤ 1 por semana, B).
-5. La mezcla: el A con ≥ 3 historias y 1 explica; el B alterna «¿Sabías que…?» y mito. Nunca el mismo formato dos días
-   seguidos en el mismo espacio, salvo historia.
+5. La mezcla: el A con ≥ 3 historias y 1 explica; el B es «¿Sabías que…?». Nunca el mismo formato dos días
+   seguidos en el mismo espacio, salvo historia y «¿Sabías que…?».
 
 Lo que no tiene pieza es una orden de producción (comando, día para producirla, minutos y créditos estimados); el tema lo
 propone la sesión y lo elige el usuario (`tema`).
@@ -40,7 +40,7 @@ Subcomandos (DIR = agenda/<AAAA-Wnn>/ de la semana; --dir otro):
   --check [--dir DIR]                                     AG1–AG9 sobre agenda.json (también lo corre validate.py como M18)
 
 Gates: AG1 ≤ 2 videos por día · AG2 el A lleva una pieza fuerte y el B una corta; ningún noticiero ni /semana · AG3 sin
-el mismo formato en días seguidos en el mismo espacio, salvo historia · AG4 sin repetir un tema producido en los últimos 60 días ni
+el mismo formato en días seguidos en el mismo espacio, salvo historia y «¿Sabías que…?» · AG4 sin repetir un tema producido en los últimos 60 días ni
 otro de la agenda · AG5 una parte de serie solo cuando la siguiente tiene guion aprobado · AG6 cada orden de producción
 vence antes de su espacio · AG7 una pieza ya publicada no se vuelve a programar · AG8 cada video a las 4 plataformas, con su estilo de Facebook ·
 AG9 ≤ 1 carrusel por día.
@@ -68,7 +68,6 @@ CARRUSELES_POR_DIA = 1
 FORMATOS = {
     "historia": ("/historia <tema>", 1, 45, 2200),
     "explica": ("/explica <tema>", 1, 35, 1700),
-    "mito": ("/mito <creencia>", 1, 30, 1000),
     "departamento": ("/departamento siguiente", 1, 60, 1000),
     "serie": ("/serie <tema> (parte N)", 1, 30, 1250),
     "sabias": ("/sabias <pista>", 0, 25, 400),
@@ -79,8 +78,8 @@ FORMATOS = {
     "carrusel": ("/carrusel <slug>", 0, 10, 0),
 }
 FUERTES = ("historia", "explica", "serie", "video")               # espacio A
-CORTAS = ("sabias", "mito", "departamento", "congreso")            # espacio B (20–90 s)
-ROTACION_CORTAS = ("sabias", "mito")                               # lo que alterna el espacio B
+CORTAS = ("sabias", "departamento", "congreso")                    # espacio B (20–90 s)
+ROTACION_CORTAS = ("sabias",)                                      # lo que llena el espacio B
 SIN_AGENDA = ("noticias", "semana")   # el usuario no publica noticieros (2026-11-03): /noticias y /semana no se programan
 # estilos de la descripción de Facebook (rotan; /analyze-improve compara cuál funciona). Ninguno pide comentar, compartir ni
 # etiquetar (F4: Meta lo penaliza)
@@ -89,12 +88,12 @@ ESTILOS_FB = {"pregunta": "Abre con la pregunta que el video responde (una sola,
               "historia": "Un párrafo narrado como relato (quién, dónde, qué pasó), sin cifras en la primera línea; la cifra llega en la segunda.",
               "dato": "Abre con la cifra más fuerte y su referente en la primera línea; luego por qué importa en una oración."}
 ESTILOS_FB_ORDEN = ("historia", "pregunta", "dato", "lista")
-REPITEN = ("historia",)                 # AG3: el único formato fuerte que puede ir dos días seguidos
+REPITEN = ("historia", "sabias")        # AG3: lo que puede ir dos días seguidos (la historia en el A, «¿Sabías que…?» en el B)
 MEZCLA_MIN = {"historia": 3, "explica": 1}
 DIAS_REPETIDO, DIAS_PARECIDO = 60, 30
 ESTADOS = ("propuesto", "tema", "producido", "publicado")
 MIN_OPCIONES, MAX_OPCIONES = 2, 3   # opciones de tema por espacio (la primera queda como tema: la semana queda lista)
-FLUJO_DE_FORMATO = {"historia": "historia", "explica": "explica", "mito": "explica", "sabias": "sabias", "congreso": "congreso", "video": "video",
+FLUJO_DE_FORMATO = {"historia": "historia", "explica": "explica", "sabias": "sabias", "congreso": "congreso", "video": "video",
                     "departamento": "video", "noticias": "noticias", "semana": "semana", "serie": "serie", "carrusel": "carrusel"}
 REGISTROS = (("videos.json", "videos", "video", "ruta_video"), ("historias.json", "historias", "historia", "ruta"),
              ("noticias.json", "noticieros", "noticias", "ruta"), ("sabias.json", "sabias", "sabias", "ruta"),
@@ -174,13 +173,11 @@ def inventario(memdir):
             out.append({"flujo": flujo, "id": v.get("id"), "slug": v.get("slug") or v.get("id"), "tema": v.get("tema") or "",
                         "fecha": v.get("fecha"), "ruta": v.get(campo), "estado": v.get("estado"),
                         "publicadas": sorted(plats.get(k, [])), "fecha_pub": fechas_pub.get(k) or (v.get("fecha") if v.get("estado") == "publicado" else None),
-                        "claves": sorted(claves(v.get("tema"), v.get("slug") or v.get("id"), v.get("creencia")))})
+                        "claves": sorted(claves(v.get("tema"), v.get("slug") or v.get("id")))})
     return out
 
 
 def formato_de_pieza(x):
-    if x["flujo"] == "explica":
-        return "mito" if "mito" in (x.get("slug") or "") else "explica"
     return x["flujo"]
 
 
@@ -273,7 +270,7 @@ def rendimiento_formatos(memdir):
         MT.METRICAS = os.path.join(memdir, "metricas.json")
         r = MT.rendimiento("flujo")
         return {"historia": (r.get("historia") or {}).get("hold3"), "explica": (r.get("explica") or {}).get("hold3"),
-                "mito": (r.get("explica") or {}).get("hold3"), "sabias": (r.get("sabias") or {}).get("hold3"),
+                "sabias": (r.get("sabias") or {}).get("hold3"),
                 "video": (r.get("video") or {}).get("hold3")}
     except Exception:  # noqa: BLE001
         return {}
@@ -349,6 +346,8 @@ def armar(desde, memdir, previo=None, ahora=None):
         return asignados[slot].get(d) or next((s for s in espacios if s["slot"] == slot and s["fecha"] == d.isoformat()), None)
 
     def vecino(slot, d, fmt):
+        if slot == "B" and fmt in REPITEN:   # «¿Sabías que…?» va en días seguidos (AG3): un vecino igual no estorba
+            return False
         return any((fijo(slot, d + datetime.timedelta(days=k)) or {}).get("formato") == fmt for k in (-1, 1))
 
     def poner(slot, d, s):
@@ -401,7 +400,7 @@ def armar(desde, memdir, previo=None, ahora=None):
                                   comando="/departamento %s" % dep["nombre"]))
             if dep.get("canon") == "propuesta":
                 asignados["B"][d]["avisos"].append("el canon de /departamento sigue en propuesta: apruébalo (referencias/departamentos.json) antes de producir")
-    # 5) la mezcla: A con ≥ 3 historias y ≥ 1 explica; B alterna «¿Sabías que…?» y mito sin repetir en días seguidos
+    # 5) la mezcla: A con ≥ 3 historias y ≥ 1 explica; B con «¿Sabías que…?» (puede ir en días seguidos: REPITEN)
     rend = rendimiento_formatos(memdir)
     for d, f in zip(sorted(libres["A"]), mezcla(len(libres["A"]), rend)):
         asignados["A"][d] = espacio(d, "A", f)
@@ -499,7 +498,7 @@ def revisar(A, memdir, listo=False):
         serie_slot = sorted([s for s in esp if s["slot"] == slot], key=lambda s: s["fecha"])
         for a, b in zip(serie_slot, serie_slot[1:]):
             if a["formato"] == b["formato"] and a["formato"] not in REPITEN and (fecha(b["fecha"]) - fecha(a["fecha"])).days == 1:
-                f.append("AG3 %s y %s: dos «%s» seguidos (solo historia puede repetir)" % (a["id"], b["id"], a["formato"]))
+                f.append("AG3 %s y %s: dos «%s» seguidos (solo historia y «¿Sabías que…?» pueden repetir)" % (a["id"], b["id"], a["formato"]))
     for s in esp:
         est = (s.get("facebook") or {}).get("estilo")
         if s["formato"] != "carrusel" and est not in ESTILOS_FB:
@@ -763,7 +762,7 @@ def fijar_tema(s, tema, formato=None):
         com, antes, minutos, cred = FORMATOS[formato]
         s.update(minutos=minutos, creditos=cred, producir_el=(fecha(s["fecha"]) - datetime.timedelta(days=antes)).isoformat())
     s["tema"] = tema.strip()
-    s["comando"] = FORMATOS[s["formato"]][0].replace("<tema>", s["tema"]).replace("<creencia>", s["tema"]).replace("<pista>", s["tema"])
+    s["comando"] = FORMATOS[s["formato"]][0].replace("<tema>", s["tema"]).replace("<pista>", s["tema"])
     s["estado"] = "tema"
 
 
@@ -819,7 +818,7 @@ def cmd_opciones(a):
                 return 2
         ops.append({"tema": tema.strip(), "por_que": por_que.strip(), "formato": fmt or s["formato"]})
     if not MIN_OPCIONES <= len(ops) <= MAX_OPCIONES or any(not o["tema"] or not o["por_que"] for o in ops):
-        print("--opcion «<tema>|<por qué ahora>» de %d a %d veces (formato opcional: «mito::<creencia>|…»)" % (MIN_OPCIONES, MAX_OPCIONES), file=sys.stderr)
+        print("--opcion «<tema>|<por qué ahora>» de %d a %d veces (formato opcional: «departamento::<nombre>|…»)" % (MIN_OPCIONES, MAX_OPCIONES), file=sys.stderr)
         return 2
     memdir = os.path.join(RAIZ, A.get("memoria") or "memoria")
     otros = [x for x in A["espacios"] if x is not s and x.get("tema") and x["formato"] not in SIN_AGENDA]
@@ -993,7 +992,7 @@ def main():
     q.add_argument("--dir")
     q = sub.add_parser("opciones", help="2–3 opciones de tema para un espacio; la primera queda como tema")
     q.add_argument("slot")
-    q.add_argument("--opcion", action="append", help="«<tema>|<por qué ahora>» (formato opcional: «mito::<creencia>|…»)")
+    q.add_argument("--opcion", action="append", help="«<tema>|<por qué ahora>» (formato opcional: «departamento::<nombre>|…»)")
     q.add_argument("--dir")
     q = sub.add_parser("producido")
     q.add_argument("slot")

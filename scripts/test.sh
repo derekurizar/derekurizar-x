@@ -25,8 +25,8 @@
 #          historia-fixture, entregar y memoria.py --historia.
 #        · /explica: gates E1–E12 sobre la maqueta del interés compuesto (la calculadora, el chip «Ejemplo» y negativos de
 #          E4, E5, E6, E7, E9, E10 y E11) y make explica-fixture.
-#        · /mito (modo mito de /explica): MI1–MI9 con un negativo por gate (más «sin datos para un veredicto», A MEDIAS sin
-#          depende_de y W13 con la tabla MODOS rota) sobre la maqueta de las remesas y make mito-fixture.
+#          El modo mito se retiró el 2026-11-14: W13 con la tabla MODOS rota, un TRABAJO con «modo: mito» se rechaza
+#          («modo retirado») y el modelo `producto` de la calculadora sigue.
 #        · /sabias: gate S1–S3 sobre el dato de prueba (negativos), M13 y make sabias-fixture.
 #        · /congreso: CG2–CG10 sobre la maqueta de la Ley de Ciberseguridad (negativos), M19 y make congreso-fixture.
 #        · /departamento: canon (--check, --resolver, --directiva), --tablero/--siguiente con memoria de prueba, G1 del
@@ -810,7 +810,7 @@ assert v.escribe_numero(70.74, ["7 de cada 10"]) and not v.escribe_numero(70.74,
 assert v.escribe_numero(56.4, ["56 de cada 100"]) and not v.escribe_numero(56.4, ["57 de cada 100"]) and v.escribe_numero(3.0, ["1 de cada 3"])
 '
 VT="$TMP/video"
-paso "video.py preparar sobre el fixture (duración prueba)" bash -c "python3 scripts/video.py preparar sesiones/_fixture/salida --duracion prueba --trabajo '$VT' --permitir-borrador --sin-rotacion >/dev/null && cp sesiones/_fixture_video/guion.json sesiones/_fixture_video/ganchos.json sesiones/_fixture_video/seleccion.json '$VT/'"
+paso "video.py preparar sobre el fixture (duración prueba)" bash -c "python3 scripts/video.py preparar sesiones/_fixture/salida --duracion prueba --trabajo '$VT' --permitir-borrador --sin-rotacion --realizacion propio >/dev/null && cp sesiones/_fixture_video/guion.json sesiones/_fixture_video/ganchos.json sesiones/_fixture_video/seleccion.json '$VT/'"
 paso "video.py ganchos --check (5 candidatos de familias distintas, R1–R10)" python3 scripts/video.py ganchos "$VT" --check
 paso "video.py ganchos --usar (seleccion.json → escena 1 de guion.json; el segundo queda para la versión B)" bash -c '
 python3 scripts/video.py ganchos "$1" --usar >/dev/null && python3 - "$1" <<PY
@@ -883,7 +883,7 @@ paso "video gate: remate que proyecta una pérdida al futuro → F8" video_neg "
 paso "video gate: remate con «?» → F2" video_neg "F2 un remate no es una pregunta" 'G["cierre"]["final"] = "¿Tu galón pasó de 26 a 46.1 quetzales?"; G["cierre"]["texto"] = "El barril subió y la bomba lo sintió en todo el país. " + G["cierre"]["final"]'
 paso "video gate: «no tenían 2 años» para una edad → V5" video_neg "V5 «no tenían 2 años» no se entiende" 'G["escenas"][2]["texto"] += " Los conductores no tenían 2 años."'
 paso "video gate: forma de cierre desconocida → F1" video_neg "F1 cierre.forma «moraleja»" 'G["cierre"]["forma"] = "moraleja"'
-# Fase 0 (piezas comunes de /carrusel, /mito, /departamento, /semana y /serie): piso de duración y V19 palabra clave
+# Fase 0 (piezas comunes de /carrusel, /departamento, /semana y /serie): piso de duración y V19 palabra clave
 paso "video.py piso_duracion: 60 s falla con el piso de 61, 75 s pasa, sin piso no corre" python3 -c '
 import sys; sys.path.insert(0, "scripts"); import video as v
 f = v.piso_duracion(60, minimo=61); assert len(f) == 1 and "60.0 s" in f[0] and "61" in f[0], f
@@ -1674,7 +1674,7 @@ h = json.load(open(sys.argv[1], encoding="utf-8"))
 h["tuits"].append({"n": 9, "beat": "impacto", "texto": "", "caracteres": 0, "alt_text": "Mapa de prueba", "imagen": "tuit_9.png", "plantilla": "mapa", "fuente": "Prueba", "cifra_ids": []})
 json.dump(h, open(sys.argv[1], "w", encoding="utf-8"), ensure_ascii=False)
 PY
-python3 scripts/video.py preparar "$H" --duracion prueba --trabajo "$W" --permitir-borrador >/dev/null
+python3 scripts/video.py preparar "$H" --duracion prueba --trabajo "$W" --permitir-borrador --realizacion propio >/dev/null
 python3 - "$W/guion.json" <<PY
 import json, sys
 G = json.load(open("sesiones/_fixture_video/guion.json", encoding="utf-8"))
@@ -2123,7 +2123,7 @@ AGD="$TMP/agenda"
 paso "make agenda-fixture: sin noticieros, 5 piezas fuertes (≥ 3 historias) a las 09:00 y 5 cortas a las 19:30, lo listo primero, estilos de Facebook, AG1–AG9 ok" bash -c "make -s agenda-fixture >/dev/null && python3 -c \"
 import json; A=json.load(open('sesiones/_fixture_agenda/salida/agenda.json')); E=[s for s in A['espacios'] if s['fecha']>='2026-11-04']
 B=[s['formato'] for s in E if s['slot']=='B']; F=[s for s in E if s['slot']=='A']
-assert len(B)==5 and set(B)<={'sabias','mito','departamento'} and not any(s['formato'] in ('noticias','semana') for s in E), B
+assert len(B)==5 and set(B)<={'sabias','departamento'} and B.count('sabias')>=3 and not any(s['formato'] in ('noticias','semana') for s in E), B
 assert len(F)==5 and sum(s['formato']=='historia' for s in F)>=3, [s['formato'] for s in F]
 assert F[0]['estado']=='producido' and any('se parece' in a for s in F for a in s['avisos']), F[:2]
 assert len({s['facebook']['estilo'] for s in E if s['formato']!='carrusel'})>=3\""
@@ -2142,14 +2142,18 @@ paso "agenda gate: un noticiero en la agenda (el usuario no los publica) → AG2
 paso "agenda gate: una historia en el espacio corto → AG2" ag_neg "AG2" '[s for s in E if s["id"]=="2026-11-06-B"][0]["formato"]="historia"'
 paso "agenda gate: un video sin estilo de Facebook → AG8" ag_neg "AG8" '[s for s in E if s["id"]=="2026-11-06-A"][0]["facebook"]={"estilo": None}'
 paso "agenda facebook: la descripción en su estilo se guarda y un cebo («comparte») se rechaza (F4)" bash -c "set -e; rm -rf '$TMP/agenda_fb'; cp -R sesiones/_fixture_agenda/salida '$TMP/agenda_fb'; python3 scripts/agenda.py facebook 2026-11-04-A --texto 'Los Lotes no salió a tiempo del Fuego. Esta es la historia de esa tarde.' --dir '$TMP/agenda_fb' >/dev/null; python3 scripts/agenda.py hoy --fecha 2026-11-04 --dir '$TMP/agenda_fb' | grep -q 'caption facebook: Los Lotes no salió'; ! python3 scripts/agenda.py facebook 2026-11-04-A --texto 'Comparte si te dolió' --dir '$TMP/agenda_fb' >/dev/null 2>&1"
-paso "agenda gate: dos mitos seguidos en el espacio corto → AG3" ag_neg "AG3" '[s for s in E if s["id"]=="2026-11-07-B"][0]["formato"]="mito"; [s for s in E if s["id"]=="2026-11-08-B"][0]["formato"]="mito"'
+paso "agenda gate: dos departamentos seguidos en el espacio corto → AG3" ag_neg "AG3" '[s for s in E if s["id"]=="2026-11-07-B"][0]["formato"]="departamento"; [s for s in E if s["id"]=="2026-11-08-B"][0]["formato"]="departamento"'
+paso "agenda gate: dos «¿Sabías que…?» seguidos en el espacio corto pasan AG3 (el B queda solo con sabías)" bash -c "set -e; rm -rf '$TMP/agenda_sab'; cp -R sesiones/_fixture_agenda/salida '$TMP/agenda_sab'; python3 -c \"
+import json,sys; p=sys.argv[1]; A=json.load(open(p,encoding='utf-8'))
+B=sorted((s for s in A['espacios'] if s['slot']=='B'), key=lambda s: s['fecha'])
+assert any(a['formato']==b['formato']=='sabias' for a,b in zip(B,B[1:])), [s['formato'] for s in B]\" '$TMP/agenda_sab/agenda.json'; python3 scripts/agenda.py --check --dir '$TMP/agenda_sab' >/dev/null"
 paso "agenda gate: un tema ya producido → AG4" ag_neg "AG4" '[s for s in E if s["id"]=="2026-11-06-A"][0]["tema"]="La Cajita Feliz se inventó en Guatemala"'
 paso "agenda gate: producir después del espacio → AG6" ag_neg "AG6" '[s for s in E if s["id"]=="2026-11-06-A"][0]["producir_el"]="2026-11-09"'
 paso "agenda gate: una pieza ya publicada → AG7" ag_neg "AG7" '[s for s in E if s["id"]=="2026-11-06-A"][0]["pieza"]={"flujo":"historia","id":"2026-10-24-la-cajita-feliz-se-invento-en-guatemala","ruta":"historias/2026-10-24-la-cajita-feliz-se-invento-en-guatemala"}'
 paso "agenda gate: un video que no va a las 4 plataformas → AG8" ag_neg "AG8" '[s for s in E if s["id"]=="2026-11-06-A"][0]["plataformas"]=["tiktok"]'
 paso "agenda gate: dos carruseles el mismo día → AG9" ag_neg "AG9" 'import copy; x=copy.deepcopy([s for s in E if s["slot"]=="C"][0]); x["id"]=x["id"]+"2"; E.append(x)'
 paso "agenda: publicado + plan desde el jueves conserva lo publicado y lo de antes; tema que repite lo producido → exit 1" bash -c "set -e; rm -rf '$AGD'; cp -R sesiones/_fixture_agenda/salida '$AGD'; python3 scripts/agenda.py publicado 2026-11-04-A --dir '$AGD' >/dev/null; python3 scripts/agenda.py tema 2026-11-06-A 'Cómo nació La Aurora' --dir '$AGD' >/dev/null; python3 scripts/agenda.py plan --desde 2026-11-05 --memoria sesiones/_fixture_agenda/memoria --dir '$AGD' >/dev/null; python3 -c \"import json,sys; A={s['id']:s for s in json.load(open(sys.argv[1]+'/agenda.json'))['espacios']}; assert A['2026-11-04-A']['estado']=='publicado' and A['2026-11-06-A']['tema']=='Cómo nació La Aurora'\" '$AGD'; ! python3 scripts/agenda.py tema 2026-11-08-A 'La Cajita Feliz se inventó en Guatemala' --dir '$AGD' >/dev/null 2>&1"
-paso "agenda opciones: la primera queda como tema (recomendada), --opcion N cambia, un tema ya producido se rechaza y --check --listo exige tema en todo (AG10)" bash -c "set -e; D='$TMP/agenda_op'; rm -rf \$D; cp -R sesiones/_fixture_agenda/salida \$D; ! python3 scripts/agenda.py --check --listo --dir \$D >/dev/null; python3 scripts/agenda.py opciones 2026-11-05-A --opcion 'Tikal: cómo la ciudad maya salió de la selva|Protocolo de Tikal' --opcion 'El zoológico La Aurora|lugar reconocible' --dir \$D >/dev/null; python3 -c \"import json,sys; s=[x for x in json.load(open(sys.argv[1]+'/agenda.json'))['espacios'] if x['id']=='2026-11-05-A'][0]; assert s['tema'].startswith('Tikal') and s['tema_auto']\" \$D; python3 scripts/agenda.py tema 2026-11-05-A --opcion 2 --dir \$D >/dev/null; python3 -c \"import json,sys; s=[x for x in json.load(open(sys.argv[1]+'/agenda.json'))['espacios'] if x['id']=='2026-11-05-A'][0]; assert s['tema'].startswith('El zoo')\" \$D; ! python3 scripts/agenda.py opciones 2026-11-06-A --opcion 'La Cajita Feliz se inventó en Guatemala|x' --opcion 'Otro tema|y' --dir \$D >/dev/null 2>&1; ! python3 scripts/agenda.py opciones 2026-11-05-B --opcion 'historia::Algo|x' --opcion 'mito::Otra cosa|y' --dir \$D >/dev/null 2>&1"
+paso "agenda opciones: la primera queda como tema (recomendada), --opcion N cambia, un tema ya producido se rechaza y --check --listo exige tema en todo (AG10)" bash -c "set -e; D='$TMP/agenda_op'; rm -rf \$D; cp -R sesiones/_fixture_agenda/salida \$D; ! python3 scripts/agenda.py --check --listo --dir \$D >/dev/null; python3 scripts/agenda.py opciones 2026-11-05-A --opcion 'Tikal: cómo la ciudad maya salió de la selva|Protocolo de Tikal' --opcion 'El zoológico La Aurora|lugar reconocible' --dir \$D >/dev/null; python3 -c \"import json,sys; s=[x for x in json.load(open(sys.argv[1]+'/agenda.json'))['espacios'] if x['id']=='2026-11-05-A'][0]; assert s['tema'].startswith('Tikal') and s['tema_auto']\" \$D; python3 scripts/agenda.py tema 2026-11-05-A --opcion 2 --dir \$D >/dev/null; python3 -c \"import json,sys; s=[x for x in json.load(open(sys.argv[1]+'/agenda.json'))['espacios'] if x['id']=='2026-11-05-A'][0]; assert s['tema'].startswith('El zoo')\" \$D; ! python3 scripts/agenda.py opciones 2026-11-06-A --opcion 'La Cajita Feliz se inventó en Guatemala|x' --opcion 'Otro tema|y' --dir \$D >/dev/null 2>&1; ! python3 scripts/agenda.py opciones 2026-11-05-B --opcion 'historia::Algo|x' --opcion 'sabias::Otra cosa|y' --dir \$D >/dev/null 2>&1"
 paso "agenda hoy: archivos 9:16 y 4:5 y los bloques de caption.md de la pieza del día" bash -c "python3 scripts/agenda.py hoy --fecha 2026-11-04 --dir sesiones/_fixture_agenda/salida | grep -q 'video_4x5.mp4' && python3 scripts/agenda.py hoy --fecha 2026-11-04 --dir sesiones/_fixture_agenda/salida | grep -q 'caption youtube: Volcán'"
 
 echo "== /serie (plan SE1–SE2, cobertura SE3, parte con SE4–SE9, M16, formato historia-serie; sin web ni créditos)"
@@ -2249,11 +2253,71 @@ PYEOF
       [[ $rc == 0 ]] || { echo "$out" | tail -8; return 1; }
     }
     paso "plano 16:9: una mesa sin piezas (ninguna oración trae un golpe) → YT14" yp_neg "YT14" 'M["golpes"] = []'
-    paso "plano 16:9: un `dice` que la voz no dice → YT14" yp_neg "YT14" 'M["golpes"][0]["dice"] = "zzz qqq"'
+    paso "plano 16:9: un «dice» que la voz no dice → YT14" yp_neg "YT14" 'M["golpes"][0]["dice"] = "zzz qqq"'
     paso "plano 16:9: una cifra que la voz no dice y sin respaldo → YT16" yp_neg "YT16" 'M["golpes"].append(dict(tipo="cifra", escena=M["golpes"][-1].get("escena", M["escenas"][0]), dice=M["golpes"][-1]["dice"], valor="98,765", rotulo="panes"))'
     paso "plano 16:9: una foto sin ficha → YT16" yp_neg "YT16" 'M["golpes"].append(dict(tipo="foto", escena=M["golpes"][-1].get("escena", M["escenas"][0]), dice=M["golpes"][-1]["dice"], foto="zzz-f99", pie="Nada"))'
     paso "plano 16:9: un tipo de pieza desconocido → YT16" yp_neg "YT16" 'M["golpes"][0]["tipo"] = "zoom"'
     paso "plano 16:9: una escena con saltos de cámara → YT19" yp_neg "YT19" 'E["escenas"][1]["saltos"] = [2.0]'
+    # el vertical como mesa de archivo (scripts/video_hf.py, núcleo scripts/mesa.py): la maqueta y los gates MV sobre su plano
+    paso "make video-fixture-mesa (proyectos 9:16 y 4:5, hyperframes check, audio a −14 LUFS)" bash -c 'make video-fixture-mesa FPS=6 >/dev/null && test -s sesiones/_fixture_mesa/trabajo/hf/9x16/index.html && test -s sesiones/_fixture_mesa/trabajo/hf/4x5/index.html && test -s sesiones/_fixture_mesa/trabajo/segs_mesa/mezcla_final.wav && ! grep -q "cdn\.\|https://" sesiones/_fixture_mesa/trabajo/hf/9x16/index.html'
+    mv_neg() {  # mv_neg CÓDIGO 'python que muta P (plano.json) o E (escenas.json)'
+      local T="sesiones/_fixture_mesa/trabajo" cod="$1" out rc=0 antes despues
+      cp "$T/plano.json" "$TMP/plano_v.bak"; cp "$T/escenas.json" "$TMP/escenas_v.bak"
+      antes="$(python3 scripts/video_hf.py plano "$T" --check 2>&1 | grep -c "(maqueta) $cod")"
+      python3 - "$T" "$2" <<'PYEOF'
+import json, sys
+T = sys.argv[1]
+P = json.load(open(T + "/plano.json")); E = json.load(open(T + "/escenas.json"))
+M = next(m for m in P["mesas"] if m["golpes"] and all(g.get("dice") for g in m["golpes"]))  # la mesa 1 abre con piezas sin `dice` (cuadro 0)
+exec(sys.argv[2])
+json.dump(P, open(T + "/plano.json", "w"), ensure_ascii=False); json.dump(E, open(T + "/escenas.json", "w"), ensure_ascii=False)
+PYEOF
+      [[ $? == 0 ]] || rc=1  # una mutación que no se aplicó no prueba nada
+      out="$(python3 scripts/video_hf.py plano "$T" --check 2>&1)"; despues="$(echo "$out" | grep -c "(maqueta) $cod")"
+      cp "$TMP/plano_v.bak" "$T/plano.json"; cp "$TMP/escenas_v.bak" "$T/escenas.json"
+      [[ $despues -gt $antes ]] || rc=1  # la maqueta ya trae avisos MV: cuenta los que AÑADE la mutación
+      [[ $rc == 0 ]] || { echo "$cod: $antes aviso(s) antes, $despues después"; echo "$out" | tail -8 | cut -c1-300; return 1; }
+    }
+    paso "plano vertical: una mesa sin piezas → MV2" mv_neg "MV2" 'M["golpes"] = []'
+    paso "plano vertical: una foto sin ficha → MV4" mv_neg "MV4" 'M["golpes"].append(dict(tipo="foto", escena=M["golpes"][-1].get("escena", M["escenas"][0]), dice=M["golpes"][-1]["dice"], foto="zzz-f99", pie="Nada"))'
+    paso "plano vertical: una escena con saltos de cámara → MV7" mv_neg "MV7" 'E["escenas"][1]["saltos"] = [2.0]'
+    paso "plano vertical: una ficha con 40 palabras que la voz no dice no da tiempo de leerse → MV8" mv_neg "MV8" 'M["golpes"].insert(0, dict(tipo="institucion", escena=M["golpes"][0].get("escena", M["escenas"][0]), dice=M["golpes"][0]["dice"], nombre="Zzz", kicker="Qué es", rol=" ".join("palabra%d" % i for i in range(40))))'
+    paso "plano vertical: una pieza que no cabe ni a escala → MV11" mv_neg "MV11" 'M["golpes"].insert(0, dict(tipo="cita", escena=M["golpes"][0].get("escena", M["escenas"][0]), dice=M["golpes"][0]["dice"], autor="Zzz", texto=" ".join("palabra%d" % i for i in range(160))))'
+    paso "plano vertical: una jerarquía con un hilo de alegato sin «Según…» → MV12" mv_neg "MV12" 'd = M["golpes"][-1]["dice"]; M["golpes"].append(dict(tipo="red", escena=M["golpes"][-1].get("escena", M["escenas"][0]), dice=d, nodos=[dict(id="a", nombre="Marta Pérez", nivel=0, dice=d), dict(id="b", nombre="Zzz", nivel=1, dice=d)], aristas=[dict(de="a", a="b", atribuida=True, dice=d)]))'
+    paso "plano vertical: una barra sola (sin con qué compararse) → MV4" mv_neg "MV4" 'M["golpes"].append(dict(tipo="barra", escena=M["golpes"][-1].get("escena", M["escenas"][0]), dice=M["golpes"][-1]["dice"], barras=[dict(etiqueta="Zzz", valor=1)]))'
+    paso "plano vertical: una barra que dice 900 y mide 10 → MV4" mv_neg "MV4" 'M["golpes"].append(dict(tipo="barra", escena=M["golpes"][-1].get("escena", M["escenas"][0]), dice=M["golpes"][-1]["dice"], barras=[dict(etiqueta="A", valor=10, texto="900"), dict(etiqueta="B", valor=20)]))'
+    paso "borrador vertical: un gancho de texto cinético (pareja) abre con la nota y la barra ya puestas; el golpe con número es una cifra sin repetir el golpe de arriba" python3 -c '
+import sys; sys.path.insert(0, "scripts"); import video_hf as VH
+S = {"tipo": "gancho", "clave": "e1", "palabras": [{"text": w, "start": 0.3 * k, "end": 0.3 * k + 0.25} for k, w in enumerate("el barril pasó de 67 a 102 dólares".split())],
+     "T": {"pant": {"texto": "¿Sabías que…?", "v": None}, "linea": [{"text": w} for w in "el barril pasó de 67 a 102 dólares".split()]},
+     "V": {"tipo": "pareja", "a": {"valor": 67.0, "etiqueta": "Enero"}, "b": {"valor": 102.0, "etiqueta": "Septiembre"}}}
+fr = lambda k0, n=2: " ".join(w["text"] for w in S["palabras"][k0:k0 + n])
+gs = VH.texto_pantalla(S, 0, fr, {})
+ya = [g for g in gs if not g.get("dice")]
+assert [g["tipo"] for g in ya] == ["termino", "barra"] and S["_titulo_v"].startswith("el barril"), (gs, S.get("_titulo_v"))
+assert [b["texto"] for b in ya[1]["barras"]] == ["67", "102"] and ya[1]["barras"][1]["acento"] and ya[1]["barras"][0]["dice"] == "67", ya[1]
+G = {"tipo": "golpe", "clave": "e3", "palabras": [{"text": w, "start": 0.3 * k, "end": 0.3 * k + 0.25} for k, w in enumerate("cuesta 1.5 veces lo de enero".split())],
+     "T": {"pant": {"texto": "1.5 veces", "v": 1.5}, "linea": [{"text": w} for w in "lo de enero".split()]}}
+g = VH.texto_pantalla(G, 2, lambda k0, n=2: "cuesta 1.5", {})
+assert g == [{"tipo": "cifra", "dice": "1.5", "valor": "1.5 veces", "rotulo": "lo de enero"}], g'
+    paso "realizacion: los flujos de video nacen en mesa (menos /noticias y /semana); un TRABAJO del motor propio no lleva plano (exit 2); la maqueta sin render deja su marca" bash -c 'python3 -c "
+import json, os
+for t in (\"_fixture_serie/trabajo/parte-1\", \"_fixture_mesa/trabajo\", \"_fixture_historia/trabajo\", \"_fixture_explica/trabajo\", \"_fixture_serie_explica/trabajo/parte-1\",
+          \"_fixture_sabias/trabajo\", \"_fixture_congreso/trabajo\", \"_fixture_departamento/trabajo\"):
+    p = \"sesiones/%s/video.json\" % t
+    if os.path.exists(p):
+        assert json.load(open(p)).get(\"realizacion\") == \"mesa\", t
+for t in (\"_fixture_noticias/trabajo\", \"_fixture_semana/trabajo\", \"_fixture_video/trabajo\"):   # el banco de pruebas del motor propio
+    p = \"sesiones/%s/video.json\" % t
+    if os.path.exists(p):
+        assert json.load(open(p)).get(\"realizacion\", \"propio\") == \"propio\", t
+" && test -f sesiones/_fixture_serie/trabajo/parte-1/salida/.maqueta_sin_render && { if test -f sesiones/_fixture_noticias/trabajo/video.json; then python3 scripts/video.py plano sesiones/_fixture_noticias/trabajo >/dev/null 2>&1; test $? -eq 2; fi; }'
+    paso "plano vertical: sin plano.json, un trabajo real se detiene («falta la fase Plano») y una maqueta usa el borrador" bash -c 'T=sesiones/_fixture_mesa/trabajo; cp $T/plano.json "$TMP/plano_auto.bak"; rm $T/plano.json; python3 scripts/video_hf.py plano $T --auto --check >/dev/null 2>&1; rc=$?; test -s $T/plano.json; ok=$?; cp "$TMP/plano_auto.bak" $T/plano.json; test $rc -eq 0 -a $ok -eq 0'
+    paso "el núcleo de la mesa no cambia el 16:9: youtube_hf reexporta mesa.py" python3 -c "
+import sys; sys.path.insert(0, 'scripts')
+import mesa, youtube_hf as YH, video_hf as VH
+assert YH.resolver is mesa.resolver and YH.revisar is mesa.revisar and YH.dibujar is mesa.dibujar and YH.HF_VERSION == mesa.HF_VERSION
+assert VH.REGLAS['HUECO_MAX_S'] == 4.0 and mesa.HUECO_MAX_S == 6.0 and mesa.regla({'reglas': VH.REGLAS}, 'HUECO_MAX_S') == 4.0 and mesa.regla({}, 'MESA_PIEZAS') == 12"
   fi
 else
   echo "SKIP   /youtube-long (falta la maqueta de /serie: make serie-fixture)"
@@ -2353,67 +2417,51 @@ if [[ "$RAPIDO" == "1" ]]; then echo "SKIP   make explica-fixture (RAPIDO=1)"; e
   paso "make explica-fixture (maqueta 9:16 y 4:5, pizarra y chip «Ejemplo», V7, V13, V8, entrega)" bash -c 'make explica-fixture FPS=6 >/dev/null && ffprobe -v error -show_entries stream=codec_type,width,height -of csv=p=0 sesiones/_fixture_explica/salida/video_4x5.mp4 | grep -q "video,1080,1350" && test -s sesiones/_fixture_explica/salida/ejemplos.md && python3 scripts/memoria.py --explica sesiones/_fixture_explica/salida --dry-run >/dev/null'
 fi
 
-echo "== /mito (modo mito de /explica: gates MI1–MI10 sobre la maqueta «la remesa promedio es de \$1,000» → MITO; sin web ni créditos)"
-XM="$TMP/mito"
-paso "explica.py preparar --modo mito --fixture + encuadre + afirmaciones + mito --check + consolidar + ganchos --check/--usar + narracion + guion --check (maqueta)" bash -c "python3 scripts/explica.py preparar 'La remesa promedio es de \$1,000 (maqueta)' --slug remesa-promedio-maqueta --trabajo '$XM' --modo mito --fixture >/dev/null && python3 scripts/explica.py encuadre '$XM' --check >/dev/null && python3 scripts/explica.py afirmaciones '$XM' --check >/dev/null && python3 scripts/explica.py mito '$XM' --check >/dev/null && python3 scripts/explica.py consolidar '$XM' >/dev/null && python3 scripts/explica.py ganchos '$XM' --check >/dev/null && python3 scripts/explica.py ganchos '$XM' --usar >/dev/null && python3 scripts/explica.py narracion '$XM' --check >/dev/null && python3 scripts/explica.py guion '$XM' --check >/dev/null"
-paso "mito: el código calcula MITO (512 lejos de 1,000 ±15 %), el sello va en la escena 1 y en la escena «creencia» desde el cuadro 0, el RETORNO trae el veredicto, video.json lleva piso_s 61 y palabra_clave" python3 -c '
-import json, sys
-d = sys.argv[1]
-M = json.load(open(d + "/mito.json"))
-assert M["veredicto"] == "mito" and M["sello"] == "MITO" and not M["pruebas"][0]["cumple"], M
-g = json.load(open(d + "/guion.json"))
-ch = [(i, e.get("chip")) for i, e in enumerate(g["escenas"], 1) if e.get("chip")]
-assert [i for i, _ in ch] == [1, 2] and all(c["texto"] == "MITO" and c["desde"] == 0 for _, c in ch), ch
-L = json.load(open(d + "/locucion.json"))
-assert L["escenas"][0]["visual"]["tipo"] == "veredicto" and L["escenas"][0]["chip"]["texto"] == "MITO", L["escenas"][0].get("visual")
-st = json.load(open(d + "/video.json"))
-assert st["modo"] == "mito" and st["piso_s"] == 61 and st["palabra_clave"] == "remesa promedio", st' "$XM"
-# neg_mito "nombre" "GATE" "python que muta g (guion.json), enc (encuadre.json) o V (verificacion_<eje>.json en el dict V)" [subcomando]
-neg_mito() {
-  local nombre="$1" gate="$2" mut="$3" cmd="${4:-guion}" S="$TMP/mneg"
-  rm -rf "$S"; cp -R "$XM" "$S"; rm -f "$S/locucion.json"
-  python3 -c '
-import json, sys, glob, os
-d = sys.argv[1]
-g = json.load(open(d + "/guion.json")); e = g["escenas"]; enc = json.load(open(d + "/encuadre.json"))
-V = {os.path.basename(p)[13:-5]: json.load(open(p)) for p in glob.glob(d + "/verificacion_*.json")}
-exec(sys.argv[2])
-json.dump(g, open(d + "/guion.json", "w"), ensure_ascii=False); json.dump(enc, open(d + "/encuadre.json", "w"), ensure_ascii=False)
-for k, v in V.items(): json.dump(v, open(d + "/verificacion_%s.json" % k, "w"), ensure_ascii=False)' "$S" "$mut"
-  if [[ "$cmd" == "guion" ]]; then python3 scripts/explica.py guion "$S" --check >"$TMP/negm.out" 2>&1; else python3 scripts/explica.py "$cmd" "$S" --check >"$TMP/negm.out" 2>&1; fi
-  local rc=$?
-  paso "explica.py $cmd --check rechaza (mito): $nombre ($gate)" bash -c "[[ $rc -ne 0 ]] && grep -q 'FALLA $gate' '$TMP/negm.out'"
-}
-neg_mito "una creencia sin prueba" "MI1 «prueba»" 'enc.pop("prueba")' encuadre
-neg_mito "sin el eje cir" "MI1 falta el eje «cir»" 'enc["ejes"] = [x for x in enc["ejes"] if x["id"] != "cir"]' encuadre
-neg_mito "un gancho sin el sello en pantalla" "MI2 la pantalla de la escena 1" 'e[0]["pantalla"] = "Falso"'
-neg_mito "un gancho sin el visual veredicto" "MI2 la escena 1 es un gancho con visual" 'e[0]["visual"] = "cifra"; e[0].pop("visual_datos")'
-neg_mito "el sello que entra tarde (desde > 0)" "MI2 escena 1: el sello entra" 'e[0]["chip"]["desde"] = 1.5'
-neg_mito "la voz del gancho sin el veredicto" "MI2 la voz del gancho dice el veredicto" 'e[0]["texto"] = e[0]["texto"].replace("Mito: la", "La")'
-neg_mito "un golpe con la creencia en pantalla" "MI3 escena 4: la creencia como golpe" 'e[3]["linea"] = "La remesa promedio que llega a Guatemala"'
-neg_mito "el cierre con la creencia" "MI3 el cierre muestra la creencia" 'g["cierre"]["resumen"][2] = "La remesa promedio que llega a Guatemala"'
-neg_mito "un sello que dice REALIDAD" "MI4 escena 2: el sello dice «REALIDAD»" 'e[1]["chip"]["texto"] = "REALIDAD"'
-neg_mito "una pantalla que dice REALIDAD" "MI4 escena 6 dice «REALIDAD»" 'e[5]["linea"] = "REALIDAD: pregunta antes"'
-neg_mito "la prueba sobre una cifra en disputa" "MI4 sin datos para un veredicto" 'V["rem"]["cifras"][0].update(estado="en_disputa", nota="dos fuentes difieren en el promedio")' mito
-neg_mito "sin datos (la prueba usa una cifra que no se verificó)" "MI4 sin datos para un veredicto" 'enc["prueba"][0]["cifra"] = "rem-c09"' mito
-neg_mito "un caption sin el veredicto en su 1.ª línea" "MI5 caption.tiktok" 'g["caption"]["tiktok"] = g["caption"]["tiktok"].replace("MITO: ", "", 1)'
-neg_mito "la circulación en un solo grupo de fuentes" "MI6 la creencia circula en 1 grupo" 'V["cir"]["circulacion"] = V["cir"]["circulacion"][:1]' afirmaciones
-neg_mito "la circulación solo en redes" "MI6 toda la evidencia de circulación es de redes" 'V["cir"]["circulacion"] = [x for x in V["cir"]["circulacion"] if x["tipo"] == "redes"] * 1; V["cir"]["circulacion"].append(dict(V["cir"]["circulacion"][0], id="cir-r04", url="https://www.facebook.com/maqueta/1"))' afirmaciones
-neg_mito "«todos los pandilleros…» con sensible grupo" "MI7 captions" 'enc["sensible"] = "grupo"; g["caption"]["instagram"] += " Todos los pandilleros mandan remesas."'
-neg_mito "un mito de 50 s" "MI8" 'g["escenas"] = e[:4]'
-neg_mito "un ejemplo ilustrativo" "MI8 1 ejemplo" 'enc["ejemplos"].append({"id": "ilus", "modelo": "porcentaje", "parametros": {"base": 1000, "pct": 10}})' encuadre
-neg_mito "el giro sin el origen del error" "MI9 el giro no cuenta el origen" 'e[4]["texto"] = "Porque al juntar el mes da casi 973 dólares. Ese es el 1,000 que se oye: lo de un mes."'
-neg_mito "A MEDIAS sin depende_de" "MI9 A MEDIAS exige «depende_de»" 'enc["prueba"].append({"id": "p2", "dice": "se manda más de una vez al mes", "cifra": "rem-c02", "op": ">", "umbral": 1, "margen_pct": 0})' mito
-paso "W13 rechaza una tabla MODOS de explica.js rota (familias del modo mito)" python3 -c '
+paso "W13 rechaza una tabla MODOS de explica.js rota (una familia de menos en MODOS.explica)" python3 -c '
 import sys; sys.path.insert(0, "scripts")
 import check_workflows as W
 src = open(".claude/workflows/explica.js", encoding="utf-8").read()
-W.fuente = lambda n, opcional=False: src.replace("familias: [\x27contraste\x27, \x27tu\x27,", "familias: [\x27contraste\x27, \x27paradoja\x27, \x27tu\x27,", 1)
+roto = src.replace("    familias: [\x27contraste\x27, \x27paradoja\x27, \x27pregunta\x27,", "    familias: [\x27contraste\x27, \x27pregunta\x27,", 1)
+assert roto != src
+W.fuente = lambda n, opcional=False: roto
 W.explica_workflow()
-assert any("MODOS.mito.familias" in x for x in W.ERRORES), W.ERRORES'
-if [[ "$RAPIDO" == "1" ]]; then echo "SKIP   make mito-fixture (RAPIDO=1)"; else
-  paso "make mito-fixture (9:16 y 4:5 ≥ 61 s, sello en el cuadro 0, entrega con veredicto, memoria --explica --dry-run en modo mito)" bash -c 'make mito-fixture FPS=6 >/dev/null && ffprobe -v error -show_entries stream=codec_type,width,height -of csv=p=0 sesiones/_fixture_mito/salida/video_4x5.mp4 | grep -q "video,1080,1350" && python3 -c "import json,subprocess; d=float(subprocess.check_output([\"ffprobe\",\"-v\",\"error\",\"-show_entries\",\"format=duration\",\"-of\",\"csv=p=0\",\"sesiones/_fixture_mito/salida/video.mp4\"])); g=json.load(open(\"sesiones/_fixture_mito/salida/guion.json\")); assert d >= 61 and g[\"modo\"] == \"mito\" and g[\"veredicto\"] == \"mito\", (d, g.get(\"veredicto\"))" && grep -q "^MITO: la remesa promedio" sesiones/_fixture_mito/salida/caption.md && python3 scripts/memoria.py --explica sesiones/_fixture_mito/salida --dry-run | grep -q "modo mito: mito"'
-fi
+assert any("MODOS.explica.familias" in x for x in W.ERRORES), W.ERRORES'
+paso "explica.py: un TRABAJO con «modo: mito» en video.json se rechaza («modo retirado», exit 1) y preparar --modo mito sale 2 sin crear nada" python3 -c '
+import json, os, shutil, subprocess, sys
+src, tmp = sys.argv[1], sys.argv[2]
+R = tmp + "/explica_retirado"; shutil.rmtree(R, ignore_errors=True); shutil.copytree(src, R)
+p = R + "/video.json"; st = json.load(open(p)); st["modo"] = "mito"; json.dump(st, open(p, "w"), ensure_ascii=False)
+for c in (["encuadre", R, "--check"], ["afirmaciones", R, "--check"], ["consolidar", R], ["ganchos", R, "--check"], ["narracion", R, "--check"],
+          ["guion", R, "--check"], ["digesto", R, "--para", "guionista"], ["tiempos", R], ["voz-falsa", R], ["entregar", R, "--salida", tmp + "/explica_retirado_salida"]):
+    r = subprocess.run([sys.executable, "scripts/explica.py"] + c, capture_output=True, text=True)
+    assert r.returncode == 1 and "modo retirado" in r.stderr, (c, r.returncode, (r.stdout + r.stderr)[-300:])
+R2 = tmp + "/explica_retirado2"; shutil.rmtree(R2, ignore_errors=True)
+r = subprocess.run([sys.executable, "scripts/explica.py", "preparar", "x", "--trabajo", R2, "--modo", "mito"], capture_output=True, text=True)
+assert r.returncode == 2 and "se retiró" in r.stderr and not os.path.exists(R2), (r.returncode, r.stderr)' "$XT" "$TMP"
+paso "validate.py M12 y memoria.py --explica: un registro o una entrega con «modo: mito» se rechazan (solo explica)" python3 -c '
+import json, os, shutil, subprocess, sys
+sys.path.insert(0, "scripts"); import validate as V
+R = sys.argv[1] + "/m12"; shutil.rmtree(R, ignore_errors=True); os.makedirs(R + "/memoria"); os.makedirs(R + "/design/musica")
+shutil.copy("design/musica/catalogo.json", R + "/design/musica/")
+reg = {"id": "a", "slug": "x", "fecha": "2026-01-01", "ruta": "explicaciones/no-existe", "paleta": "maiz", "musica": "maiz-1", "duracion_s": 75, "estado": "listo", "frases": {}}
+def errores(modo):
+    json.dump({"explicaciones": [dict(reg, modo=modo)]}, open(R + "/memoria/explicaciones.json", "w"))
+    V.RAIZ, V.ERRORES[:] = R, []
+    V.validar_explicaciones({"maiz"})
+    return " | ".join(V.ERRORES)
+assert "modo \x27mito\x27 (solo explica)" in errores("mito"), V.ERRORES
+assert "solo explica" not in errores("explica"), V.ERRORES
+E = sys.argv[1] + "/m12_entrega"; shutil.rmtree(E, ignore_errors=True); os.makedirs(E)
+json.dump({"tipo": "explica", "id": "2026-01-01-x", "slug": "x", "fecha": "2026-01-01", "paleta": "maiz", "musica": "maiz-1", "duracion_s": 75, "modo": "mito"}, open(E + "/guion.json", "w"))
+r = subprocess.run([sys.executable, "scripts/memoria.py", "--explica", E, "--dry-run"], capture_output=True, text=True)
+assert r.returncode == 1 and "solo registra el modo explica" in r.stderr, (r.returncode, r.stdout, r.stderr)' "$TMP"
+paso "explica.py: el modelo producto de la calculadora (a × b con una cifra verificada → ej-cNN real)" python3 -c '
+import sys; sys.path.insert(0, "scripts"); import explica as EX
+enc = {"ejemplos": [{"id": "mes", "modelo": "producto", "parametros": {"a": {"cifra": "rem-c01"}, "b": 2}}]}
+ejs, cifras, f = EX.calcular_ejemplos(enc, [{"id": "rem-c01", "concepto": "remesa promedio", "valor": 512.0, "unidad": "dólares", "periodo": "2025"}])
+assert not f and ejs[0]["modelo"] == "producto", (f, ejs)
+v = [s for s in ejs[0]["salidas"] if s["salida"] == "valor"][0]
+assert v["valor"] == 1024 and any(c["id"] == v["id"] for c in cifras), v'
 
 echo "== /departamento (canon, tablero, G1 del perfil de departamento, gates D1–D9 y ranking en ventana sobre la maqueta de Huehuetenango)"
 paso "departamentos.py --check (canon válido), --resolver Huehue → GT13 y --directiva con las 6 dimensiones" bash -c 'python3 scripts/departamentos.py --check >/dev/null && [[ "$(python3 scripts/departamentos.py --resolver Huehue)" == "GT13 Huehuetenango" ]] && ! python3 scripts/departamentos.py --resolver Narnia 2>/dev/null && python3 scripts/departamentos.py --directiva GT13 | grep -q "canon: migracion"'
@@ -2529,6 +2577,7 @@ paso "node --check noticias.js (envuelto en async function)" check_js noticias.j
 paso "node --check historia.js (envuelto en async function)" check_js historia.js
 paso "node --check explica.js (envuelto en async function)" check_js explica.js
 paso "node --check youtube.js (envuelto en async function)" check_js youtube.js
+paso "node --check plano.js (envuelto en async function)" check_js plano.js
 paso "check_workflows.py (PALETAS, PLANTILLAS, HOOKS, BEATS, REQ, pesoX, MODOS, gráficos del informe W7–W8, bloque común W9, espejos de video.js W10, de noticias.js W11, de historia.js W12 y de explica.js con su tabla MODOS W13)" python3 scripts/check_workflows.py
 
 echo

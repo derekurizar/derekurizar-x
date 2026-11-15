@@ -67,7 +67,8 @@ og:image de las fuentes leídas del eje). **≤ 8 búsquedas y ≤ 10 `leer`**, 
 - **Una ilustración no es una foto** (m024): «representación», «ilustración», «render», «infografía», «recreación» en la
   descripción fallan H7 salvo que la marques de referencia. Busca una foto del hecho.
 - **La descripción dice lo que se ve** (m029), no el tema de la nota de donde salió: «granos tostados en una taza», no
-  «cafetales de Centroamérica». `fotos-contacto` imprime cada id con su descripción y su chip para cotejarlas.
+  «cafetales de Centroamérica». `fotos-contacto` imprime cada id con su descripción y su chip para cotejarlas. En la
+  mesa de archivo sus primeras palabras son el pie de la foto (sección «Con la mesa de archivo»).
 
 ## Salida
 
@@ -107,5 +108,27 @@ Además de las fotos de siempre, cuando la historia lo tenga:
 - **Una foto para leer** (`lupa`): en la `descripcion` di qué se ve y dónde (arriba el rótulo, al centro la losa
   doblada). El guionista coloca los puntos mirando la foto, pero tu descripción le dice qué es cada cosa.
 - **Un documento en PDF**: confirma que la frase citada está en el PDF guardado, palabra por palabra (la escena `pagina`
-  la busca así con `historia.py pagina`; si la cita tiene una errata, no la encuentra).
+  la busca así con `historia.py pagina`; si la cita tiene una errata, no la encuentra). Con la mesa de archivo, corre
+  tú ese comando al confirmarlo (sección siguiente).
 - **Retratos para dos lados** (`bandos`): cada persona con su retrato (H22) y un hecho que diga de qué lado está.
+
+## Con la mesa de archivo (2026-11-14)
+
+El video se dibuja con la **mesa de archivo** (`referencias/flujo-mesa.md`): lo que verificas no solo respalda la voz,
+también **se ve** como pieza (el recorte, la página, la foto con su pie, la ficha de cada persona). Cuatro cosas más
+al cerrar tu eje:
+
+- **Corre `historia.py pagina` al confirmar un PDF.** Cuando un hecho o una cita se apoya en una ley, una sentencia o
+  un informe en PDF: `python3 scripts/historia.py pagina <TRABAJO> --id <eje>-pNN --url "<el PDF ya leído>" --frase
+  "<la frase literal, 1–5 renglones>" --fuente "<de quién es el documento>"` (necesita poppler). Deja la imagen de la
+  página y la caja de cada renglón en `paginas.json`. Si no encuentra la frase, la cita tiene una errata: corrígela
+  contra el PDF antes de darla por confirmada.
+- **Descripciones que sirvan de pie.** La `--descripcion` de cada foto empieza con **2–5 palabras de lo que se ve**
+  («Edificio central de Bancafé», «Monzón en la audiencia»): la mesa las usa como pie. El tema de la nota no es un pie.
+- **Marca las fotos de personas en un proceso**: una foto con alguien detenido, esposado o en audiencia lleva
+  `--proceso "<nombre>"` (H7c). La mesa solo la pone donde la voz nombra a esa persona (MV4); sin la marca, puede
+  salir sobre otra oración e insinuar culpa.
+- **El estado actual de cada persona señalada, como hecho con fecha.** Además de `casos[]`, deja un hecho con su año y
+  su fuente: «2022: un tribunal condenó a … a 16 años», «2019: fue absuelta». La ficha de la persona muestra su
+  situación («Condenado en 2022», «Absuelta») **solo** si la trae un hecho verificado con fecha; sin él, la ficha va
+  sin estado. Nunca lo deduzcas de una nota vieja: es el estado a la fecha de tu consulta.

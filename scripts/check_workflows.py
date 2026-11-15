@@ -28,7 +28,7 @@ El sandbox del Workflow no importa módulos, así que hilo.js, dato.js e ideas.j
      narración, también EJES_MAX_SERIE y PALABRAS_SERIE de /serie) son espejos literales de
       scripts/historia.py
   W13 explica.js: TIPOS (los de video.py más cuenta), FAMILIAS, VISUALES, PUNTAJES y MODELOS son espejos literales de
-      scripts/explica.py, y SEGUN_MAX es su SEGUN_MAX_VIDEO; la tabla MODOS de explica.js (explica, mito) tiene las claves
+      scripts/explica.py, y SEGUN_MAX es su SEGUN_MAX_VIDEO; la tabla MODOS de explica.js (hoy solo explica) tiene las claves
       de explica.MODOS y, por modo, las mismas familias, visuales, puntajes y ejes_obligatorios
   W14 youtube.js: PUNTAJES y los límites del montaje (PUENTE_ORACIONES, PUENTE_CARACTERES, REPRISE_MAX, REVOZAR_MAX,
       DURACION_MIN/MAX) son espejos literales de scripts/youtube.py
@@ -352,7 +352,7 @@ def explica_workflow():
     m = re.search(r"\bSEGUN_MAX = (\d+)", src)
     if not m or int(m.group(1)) != EX.SEGUN_MAX_VIDEO:
         err("W13 explica.js SEGUN_MAX = %s ≠ explica.py SEGUN_MAX_VIDEO %s" % (m.group(1) if m else "?", EX.SEGUN_MAX_VIDEO))
-    # la tabla MODOS (modo mito, /mito): mismas claves y, por modo, las mismas familias, visuales, puntajes y ejes
+    # la tabla MODOS: mismas claves y, por modo, las mismas familias, visuales, puntajes y ejes
     js_modos = modos_explica(src)
     if js_modos is None:
         err("W13 explica.js: no se encontró `const MODOS = {...}`")

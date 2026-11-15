@@ -40,6 +40,7 @@ Nunca publiques. La invitación a compartir es **implícita**: la frase final no
      digesto la sección «Modo departamento» que leen el agente de ganchos, el guionista y el crítico.
    - `guion --check` corre además D1–D7 y D9; `tiempos`, D1 con la voz real y D8; `entregar`, D3. Una falla D se arregla
      como cualquier otra del gate (el guionista o el crítico); no la saltes.
+   - **Mesa de archivo** (desde el 2026-11-14): como `/video`, el paso **Plano** (Workflow `plano`) va después de `tiempos` y antes de `grabar` (`.claude/commands/video.md`, paso 5). El `mapa` y el `ranking` en ventana son tableros; el gancho de lugar abre con el mapa de los 22 ya puesto.
    - `sin-voz`: después del Workflow `video`, en lugar de la voz del MCP corre `voz-falsa`, `tiempos`, `grabar`, `montar`
      y `revisar` (9:16 y 4:5) sobre `TRABAJO`; muestra `revision/contacto.png` y NO corras `entregar` ni `memoria.py`.
    - Con voz: `entregar` y `python3 scripts/memoria.py --video hilos/<fecha>-<slug>/video` (registra `sujeto`,

@@ -48,6 +48,20 @@ pregunta me quedó abierta?
 
 El cierre es la última escena (N+1), como en el digesto.
 
+## Con la mesa de archivo (2026-11-14)
+
+En `/historia`, `/serie` y `/explica` (y en todos los flujos de video menos /noticias y /semana) el video se dibuja **después** de la voz, con la mesa de archivo
+(`referencias/flujo-mesa.md`): con cada oración entra en pantalla una pieza que la voz nombra.
+
+- **Antes de la voz escuchas el guion como hasta ahora.** La `PANTALLA:` de tu digesto es la **semilla** de cada escena
+  (su foto, su titular, su cita), no el dibujo final. No anotes como confusión lo que solo depende de cómo se verá
+  («no sé qué foto es», «el chip no dice el año»); sí lo que la voz deja sin decir.
+- **El dibujo final se juzga sobre `plano.md`**, la hoja de golpes que deja el paso Plano (por mesa: el golpe de
+  arriba y la pieza que entra con cada oración). Solo si tu directiva te la entrega, la lees después de la voz, en
+  orden, y anotas en `confusiones` (con la escena de la mesa): una pieza que no es lo que la voz nombra en ese momento;
+  una ficha de texto donde la voz nombró algo que tiene archivo real (una nota, un documento, un lugar); un alegato
+  que aparece en pantalla sin su «según». No propones la pieza: solo dices qué no casó.
+
 ## Qué NO haces
 
 No corriges, no sugieres textos, no juzgas el estilo ni el ritmo, no inventas ni verificas datos, no leíste la
@@ -66,12 +80,6 @@ historia. Una lista vacía es una respuesta válida: no busques faltas donde no 
  "repeticiones": ["que se vende en tiendas (escenas 9 y 13)"],
  "pregunta_sin_responder": ["¿por qué dejaron de regalarla?"]}
 ```
-
-## Modo mito · primer cuadro (`/mito`)
-
-Una pasada aparte y corta: lees SOLO `explica.py digesto <TRABAJO> --para cuadro` (lo que se ve en el primer cuadro,
-sin voz) y respondes con lo que ves: `veredicto_primer_cuadro` (mito | realidad | a_medias | no_se) y `por_que` en una
-oración. No adivinas el tema ni lees nada más. Escribe `<TRABAJO>/cuadro.json`.
 
 ## Modo explica (`/explica`)
 

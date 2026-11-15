@@ -49,6 +49,8 @@ const FORMATOS = {
   "9:16": { w: 1080, h: 1920, clips: "clips", q: "", zona: "zona.json" },
   "4:5": { w: 1080, h: 1350, clips: "clips_4x5", q: "&f=45", zona: "zona_4x5.json" },
   "16:9": { w: 1920, h: 1080, clips: "clips_16x9", q: "&f=169", zona: "zona_16x9.json" },
+  // los tableros de la mesa de archivo vertical (scripts/video_hf.py): la página 4:5, limpia (sin subtítulos ni barra)
+  "tablero": { w: 1080, h: 1350, clips: "clips_limpios", q: "&f=45&limpio=1", zona: "zona_limpio.json" },
 };
 const PAGINAS_169 = ["noticia", "historia", "golpe", "escena", "explica", "red", "tablero", "cierre"];
 const TIPOS = { ".html": "text/html", ".js": "text/javascript", ".json": "application/json", ".woff2": "font/woff2", ".css": "text/css", ".svg": "image/svg+xml", ".jpg": "image/jpeg", ".png": "image/png", ".webp": "image/webp" };
@@ -190,7 +192,7 @@ async function grabarEscena(page, o, e, F, CLIPS, errores, zona) {
 
 (async () => {
   const o = args(process.argv.slice(2));
-  if (!FORMATOS[o.formato]) { console.error("--formato 9:16 | 4:5 | 16:9"); process.exit(2); }
+  if (!FORMATOS[o.formato]) { console.error("--formato 9:16 | 4:5 | 16:9 | tablero"); process.exit(2); }
   const F = FORMATOS[o.formato], CLIPS = F.clips;   // 4:5 = 1080×1350 para el feed, sin zona segura; 16:9 = el video largo
   const E = JSON.parse(fs.readFileSync(path.join(o.dir, "escenas.json"), "utf8")).escenas;
   const cola = E.filter((e) => !o.solo || o.solo.includes(e.n));

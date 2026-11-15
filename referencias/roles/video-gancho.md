@@ -91,9 +91,10 @@ igual). Lo que cambia:
 - **Familias de historia**: `resultado` (el final primero: «El químico que iba a salvar el lago era agua con sal»),
   `paradoja`, `contraste` (antes / después), `misterio` (lo que nadie sabía), `personaje` (una persona y un objeto
   concretos), `lugar`, `pregunta`, `escala`. El digesto dice qué visuales admite cada una.
-- **Visual `foto`, siempre** (H7): la foto de la historia a sangre cubre toda la pantalla, oscurecida (estilo Noche:
-  brillo 0.45–0.6, sombra del fondo arriba y abajo; `referencias/ganchos.md` §3), con
-  `pantalla` en el chip y `linea` entera desde el cuadro 0, que se enciende en el acento cuando la voz la dice. `visual_datos:
+- **Visual `foto`, siempre** (H7). Con el motor propio, la foto de la historia a sangre cubre toda la pantalla,
+  oscurecida (estilo Noche: brillo 0.45–0.6, sombra del fondo arriba y abajo; `referencias/ganchos.md` §3), con
+  `pantalla` en el chip y `linea` entera desde el cuadro 0, que se enciende en el acento cuando la voz la dice; en la
+  mesa de archivo el cuadro 0 es otro (abajo, «Con la mesa de archivo»). `visual_datos:
   {"foto": "<id de foto verificada>", "etiqueta": "<lugar · año> (≤ 30)"}`. **La foto muestra al protagonista**
   (H12; el digesto marca PROTAGONISTA las que sirven): entre ellas, la más fuerte (el producto, la persona, el lugar).
   Cifra, pareja, llenado, figuras y lugar no abren una historia; una foto «de referencia» tampoco.
@@ -111,6 +112,25 @@ igual). Lo que cambia:
 - Un hecho `en_disputa` no va al gancho.
 - Gate: `python3 scripts/historia.py ganchos <TRABAJO> --check` (no el de `video.py`).
 
+**Con la mesa de archivo** (2026-11-14; `referencias/flujo-mesa.md`, MV14). En /video, /sabias, /explica, /departamento y /congreso
+(todos en mesa desde el 2026-11-14) el cuadro 0 es la `pantalla` (o la `linea`, si es larga) como golpe de arriba y
+el visual ya puesto como pieza: `pareja` → barras a la misma escala, `llenado` o `figuras` → la cifra con su rótulo,
+`lugar` → el mapa de los 22 con el departamento; en /congreso, la foto del pleno y la barra de votos frente al umbral
+(el portal era del motor propio). Lo que escribes no cambia. `/historia` y `/serie` ya no abren con una
+foto a sangre ni con un chip. El cuadro 0 son piezas **ya puestas** antes de que suene nada: la **foto del
+protagonista sobre papel**, con su pie y su crédito; **su nombre en una nota**; y el **golpe de arriba** (≤ 6
+palabras). Lo demás del gancho entra con la palabra que lo nombra. Lo que escribes no cambia de forma (`visual: foto`,
+`visual_datos`, `pantalla`, `linea`, `voz`; el mismo gate), pero piensa el cuadro así:
+
+- `pantalla` es la semilla del golpe de arriba: ≤ 6 palabras (mejor ≤ 21 caracteres, un renglón), sin la cifra ni el
+  desenlace.
+- La foto se ve entera, a tamaño de tarjeta y con su pie (2–5 palabras de lo que se ve): elige la que muestra al
+  protagonista de modo reconocible, no una que solo funcionaba oscurecida y a pantalla completa. `etiqueta` (lugar ·
+  año) ya no es un chip: sirve de pie.
+- La voz nombra al protagonista con las palabras de la nota (su nombre tal como va en `protagonista`).
+- Cada cosa que la voz nombra después (un lugar, un año, una cifra con respaldo) puede entrar como pieza: una por
+  oración, no tres en la misma.
+
 ## Modo departamento (`/departamento`: el digesto trae «Modo departamento»)
 
 Gancho de **identidad**: el que es de ahí se reconoce en 1 s. Familias `lugar`, `tu` o `ranking` (al menos 2 de los
@@ -118,15 +138,6 @@ candidatos), y el nombre del departamento (o un alias del digesto) **suena en la
 primera palabra o la segunda: «Huehuetenango es…», «Si eres de Huehuetenango…») y **se lee en la pantalla o la línea**,
 o el visual es `lugar` con su código (D2). El puesto («N.º 5 de 22») se respalda con los puestos calculados del digesto;
 nunca un puesto que no esté ahí. El resto de R1–R14 igual.
-
-## Modo mito (`/mito`, modo de /explica)
-
-4 candidatos, uno por familia (`contraste`, `tu`, `escala`, `resultado`; sin `paradoja` ni `pregunta`: el veredicto va
-primero). TODOS con `visual: "veredicto"` y `visual_datos {creencia, veredicto}` tal como los trae el digesto; `pantalla`
-= el sello («MITO», «REALIDAD» o «A MEDIAS»); la `linea` (≤ 8 palabras) da la cifra que decide; la voz abre con el
-veredicto («Mito: …»), dice la palabra clave en ≤ 3 s y su primera oración lleva el `verbo`. La familia cambia la segunda
-oración. Antes de escribir, `explica.py mito --check`: si dice «sin datos para un veredicto», no escribas ganchos y
-devuelve `sin_datos: true`. R13 de `referencias/ganchos.md`.
 
 ## Modo explica (`/explica`)
 

@@ -8,11 +8,17 @@ Eres el coordinador de **/serie** de @DerekUrizar. Argumentos: "$ARGUMENTS".
 - `explica`: el motor temario (/explica); sin él, /historia.
 - `caso`: modo caso (motor /historia): 3–8 partes de ≈ 130 s por TEMAS (`serie.py preparar … --caso`; el editor reparte los ids en `partes[].hechos`, SE10–SE12). En el Workflow, pasa `serie: {partes: M, caso: true}` y, en cada parte, `serie: {parte, de, titulo, siguiente, caso: true}`.
 - `sin-voz`: cada parte con voz falsa (0 créditos), sin entrega ni registro.
-- `fixture`: corre `make serie-fixture` (o `make serie-explica-fixture` con `explica`), abre el video de la parte 1 y termina.
+- `fixture`: corre `make serie-fixture` (o `make serie-explica-fixture` con `explica`), abre el video de la parte 1 y termina. Con el motor /historia la maqueta corre en la mesa de archivo con `MESA_RENDER=0` (un doble sin render: pasa los gates, no hay imagen que ver); el render real lo hace `make video-fixture-mesa`.
 
 La guía es `referencias/flujo-serie.md`. Nunca publiques. La serie reutiliza el motor entero: lee también
 `.claude/commands/historia.md` (o `explica.md`). Sus reglas valen en cada parte: el usuario elige gancho y cierre, el
 guion que el crítico rechaza no se graba, la voz va por secuencias y el reporte termina con «Mejoras al framework».
+
+**Quién dibuja** (2026-11-14): con el motor /historia, cada parte se dibuja con la **mesa de archivo**
+(`referencias/flujo-mesa.md`). `serie.py preparar` lo fija (`"realizacion": "mesa"` en el `video.json` de la serie y de
+cada parte; `--realizacion propio` deja el motor viejo, y una serie empezada con un motor termina con ese motor). Por
+eso cada parte lleva su paso **Plano** después de su voz (paso 4). Las series con el motor /explica siguen en el motor
+propio y no llevan Plano.
 
 1. **PREFLIGHT**
    - `make doctor` (exit 0).
@@ -51,8 +57,17 @@ guion que el crítico rechaza no se graba, la voz va por secuencias y el reporte
      las partes 1…M−1 las opciones son puentes).
    - Con el guion aprobado: `python3 scripts/serie.py guion-aprobado <TRABAJO>/parte-N` (habilita publicar la parte
      anterior).
-   - Voz (MCP, por secuencias) o voz falsa con `sin-voz`, `tiempos`, `grabar`, `montar`, `revisar` en 9:16 y 4:5, con
-     los comandos del motor sobre `<TRABAJO>/parte-N` (o de una vez: `python3 scripts/historia.py producir <TRABAJO>/parte-N`).
+   - Voz (MCP, por secuencias) o voz falsa con `sin-voz`, y `tiempos` (y `escuchar`), con los comandos del motor sobre
+     `<TRABAJO>/parte-N`.
+   - **Plano de la parte** (motor /historia en la mesa; paso 6 de `historia.md`): con la voz de ESA parte ya medida,
+     `Workflow({ name: "plano", args: { trabajo: "<TRABAJO>/parte-N" } })` (hasta reiniciar Claude Code, con
+     `scriptPath: ".claude/workflows/plano.js"` y `permitir_fallback: true`). Con `plano_listo`, muestra
+     `<TRABAJO>/parte-N/plano.md` y sigue; con `plano_pendiente`, muestra las fallas y relanza o pregunta. Un plano por
+     parte: no se copia de una parte a otra. Para retocarlo, el mismo Workflow con `args.notas`.
+   - `grabar`, `montar`, `revisar` en 9:16 y luego en 4:5 (o de una vez: `python3 scripts/historia.py producir
+     <TRABAJO>/parte-N`, que repite `tiempos`, corre `plano --check --hoja` y se detiene con «falta la fase Plano» si
+     la parte no tiene `plano.json`). En la mesa el render va con un solo proceso (≈ 1.6× la duración por formato) y no
+     hay `grabar --solo`.
    - `python3 scripts/serie.py entregar-parte <TRABAJO>/parte-N` → `series/<fecha>-<slug>/parte-N/` y `serie.md`.
 5. **CIERRE**
    - `python3 scripts/memoria.py --serie <SERIE>` y `make validate` (exit 0) tras cada parte entregada.
@@ -69,4 +84,6 @@ Reglas:
   invita (`cierre.invitacion`, SE9): «Sígueme: en la segunda parte te cuento …», con lo que cuenta la siguiente; la
   última parte no invita.
 - Desde la parte 2, la pantalla final y los captions mandan a la Parte 1 fijada en el perfil (SE8); fíjala al publicarla.
+  En la mesa, el cierre de las partes 2…M muestra «Empieza por la Parte 1 · fijada en mi perfil» y su golpe de arriba
+  anuncia «Parte N+1 · título».
 - Paleta y música de la serie en todas las partes (SE5); 75–110 s por parte (< 61 s falla, SE7).

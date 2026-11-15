@@ -3,12 +3,6 @@ description: Un concepto, un proceso o una regla explicado en un video vertical 
 ---
 
 Eres el coordinador del flujo **/explica** de @DerekUrizar. Sus argumentos son: "$ARGUMENTS".
-- `[mito]` (primer argumento opcional, o vía el alias `/mito`): **modo mito** — el tema es una creencia que circula
-  («la remesa promedio es de $1,000»); el video (62–90 s) da el veredicto MITO · REALIDAD · A MEDIAS que calcula el
-  código (`explica.py mito --check`) desde cifras confirmadas o de una sola fuente. Usa `preparar "<creencia>" --modo
-  mito`, `args.modo: "mito"` y `fixture` = `make mito-fixture`; sin duración. Guía: «Modo mito» de
-  `referencias/flujo-explica.md`. Si el Workflow devuelve `veredicto: "sin_datos"`, detente y avisa «sin datos para un
-  veredicto» (sin video).
 - `<tema>`: el concepto, el proceso o la regla que se explica (el interés compuesto, cómo se calcula la tarifa de luz,
   cómo se elige a un diputado…). Sin tema, pregúntalo.
 - `corto` (~60 s) · `medio` (~2 min, por defecto) · `largo` (~165 s).
@@ -29,8 +23,7 @@ La guía es `referencias/flujo-explica.md`. Nunca publiques. Nunca generes músi
    - Avisa: el Workflow tarda ~15–30 min (investigación y verificación con web, 0 créditos); la voz y el render, ~8–12
      min; la voz cuesta ≈ 1 crédito por carácter (~1,700 en medio).
 2. **INVESTIGACIÓN, GUION Y CRÍTICA (Workflow `explica`)**
-   - Lanza el Workflow con `name: "explica"` y `args: {"trabajo": "<TRABAJO>", "tema": "<tema>"}` (en modo mito, además
-     `"modo": "mito"`). Si editaste
+   - Lanza el Workflow con `name: "explica"` y `args: {"trabajo": "<TRABAJO>", "tema": "<tema>"}`. Si editaste
      `.claude/workflows/explica.js` o los agentes en esta sesión, pásalo con `scriptPath: ".claude/workflows/explica.js"`;
      para reanudar, `resumeFromRunId`. `desde: "guion"` salta directo a Guion (con `explicacion.json`, `ganchos.json` y
      `seleccion.json`); `desde: "retoque"` es el paso 9.
@@ -82,6 +75,15 @@ La guía es `referencias/flujo-explica.md`. Nunca publiques. Nunca generes músi
    - Con voz real, `python3 scripts/explica.py escuchar <TRABAJO>` (V11: las cifras se oyen como se escriben). Una
      `FALLA V11` → retoma de esa escena una vez; si vuelve a fallar, pide al usuario oírla.
 6. **GRABAR, MONTAR Y REVISAR**
+   - **PLANO** (mesa de archivo, desde el 2026-11-14; todo TRABAJO nuevo trae `"realizacion": "mesa"` en `video.json`):
+     después de `tiempos` y antes de `grabar`, lanza `Workflow({ name: "plano", args: { trabajo: "<TRABAJO>" } })`
+     (hasta reiniciar Claude Code, con `scriptPath: ".claude/workflows/plano.js"` y `args.permitir_fallback: true`). El
+     `video-realizador` escribe `<TRABAJO>/plano.json` (qué pieza entra con cada oración) y deja
+     `python3 scripts/explica.py plano <TRABAJO> --check --hoja` en 0 (MV1–MV14). Con `plano_listo`, muestra
+     `<TRABAJO>/plano.md` y sigue; con `plano_pendiente`, muestra las `fallas` y relánzalo (conserva el plano). Lo que
+     falle en pantalla se arregla en el plano, nunca en el guion ni en la voz. `grabar`, `montar` y `revisar` despachan
+     solos a la mesa (render con un proceso, ≈ 1.6× la duración por formato; `revisar` deja `revision/mesa_<formato>_N.jpg`);
+     en `sin-voz` y `fixture`, `grabar` usa el borrador del plano. En la mesa, la pizarra (`cuenta`), la animación (`explica`), `adivina`, `escala` y las tarjetas son **tableros** (se graban limpios con el motor propio, solos en su mesa) y el chip «Ejemplo» lo pone la mesa arriba a la derecha sobre cada mesa con números de ejemplo; el gancho y los golpes pasan a piezas (nota, cifra, `barra` para la pareja). Guía: `referencias/flujo-mesa.md`.
    - `grabar <TRABAJO>` (V7, V13) → `montar <TRABAJO>` (V8) → `revisar <TRABAJO>`; lee **una vez**
      `revision/contacto.png` y **una vez** `revision/linea_tiempo.png`. Revisa:
      - la pizarra legible, con su resaltado en acento;
@@ -98,9 +100,6 @@ La guía es `referencias/flujo-explica.md`. Nunca publiques. Nunca generes músi
    - `python3 scripts/memoria.py --explica explicaciones/<fecha>-<slug>` (`--estado incompleto` si el crítico no aprobó
      y el usuario decidió seguir) y `make validate` (M12).
 8. **REPORTE**
-   - En modo mito, primero: el **veredicto** (MITO · REALIDAD · A MEDIAS, y de qué depende si es A MEDIAS), la creencia,
-     la cifra que decide con su periodo y fuente, el origen del error, lo que entendió el oyente del primer cuadro (MI10)
-     y la evidencia de que la creencia circula.
    - La ruta del video (9:16 y 4:5), la duración, la paleta y la música.
    - El encuadre: la pregunta, la idea equivocada, el mecanismo y su frase; lo que el oyente devolvió
      (`explicacion_devuelta`).

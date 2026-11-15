@@ -383,6 +383,8 @@ def cmd_entregar(a):
     /sabias (tipo, dato, apoyo). Una voz falsa solo se entrega con --salida."""
     trabajo = os.path.abspath(a.trabajo)
     st = VD.estado(trabajo)
+    if os.path.exists(os.path.join(trabajo, "salida", VD.MESA_SIN_RENDER)) and not a.salida:
+        return falla("este video es un doble sin render (MESA_RENDER=0, de maqueta): vuelve a grabar sin esa variable antes de entregar")
     if not os.path.exists(os.path.join(trabajo, "audio", "creditos.json")) and not a.salida:
         return falla("sin audio/creditos.json: la voz no salió de ElevenLabs (una voz falsa solo se entrega con --salida)")
     destino = os.path.abspath(a.salida or os.path.join(RAIZ, st["dato"], "video"))
@@ -399,7 +401,7 @@ def cmd_entregar(a):
     return 0
 
 
-REENVIO = ("voz", "voz-falsa", "descargar", "escuchar", "grabar", "montar", "revisar")
+REENVIO = ("voz", "voz-falsa", "descargar", "escuchar", "plano", "grabar", "montar", "revisar")
 
 
 def main():

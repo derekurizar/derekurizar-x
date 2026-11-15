@@ -118,12 +118,6 @@ VISUALES_DE = {"contraste": ("llenado", "pareja", "cifra", "foto"), "paradoja": 
                "lugar": ("lugar", "llenado", "cifra", "foto"), "escala": ("figuras", "llenado", "pareja", "foto"),
                "tu": ("figuras", "llenado", "pareja", "cifra", "foto"), "pregunta": ("cifra", "pareja", "llenado", "foto"),
                "ranking": ("cifra", "lugar", "foto"), "resultado": ("cifra", "pareja", "figuras", "foto")}
-# visual de gancho que solo enciende un modo (no entra en VISUALES ni en video.js): `veredicto` de /mito (modo de /explica,
-# scripts/explica.py): la creencia en crema tenue, tachada (MITO), subrayada (REALIDAD) o punteada (A MEDIAS), y el sello en
-# el acento desde el cuadro 0 (video/golpe.html, S.T.veredicto); familias que lo admiten
-VISUAL_VEREDICTO, VEREDICTO_DE = "veredicto", ("contraste", "resultado", "tu", "escala")
-SELLOS_VEREDICTO = {"mito": "MITO", "realidad": "REALIDAD", "a_medias": "A MEDIAS"}
-CREENCIA_CARACTERES = 120
 CANDIDATOS = (4, 6)            # ganchos.json: el agente escribe 5 (los workflows lo exigen; 4 en sesiones viejas) + «gu»
 GANCHO_USUARIO = "gu"          # id del gancho que dicta el usuario (no cuenta para las familias distintas)
 CIERRES_OPCIONES = 5           # cierres.json: candidatos de cierre que el usuario elige (+ «cu», el que dicta)
@@ -490,6 +484,41 @@ RE_POR_CADA = re.compile(r"\b(\d[\d,]*(?:\.\d+)?)\s+por\s+cada\s+(\d[\d,]*)\b", 
 RE_COTA = re.compile(r"\b(más\s+de|al\s+menos|por\s+lo\s+menos|menos\s+de)\s+(\d[\d,]*(?:\.\d+)?)(?!\s*(?:%|por\s+ciento))", re.I)
 TRANSICION = 0.3     # deslizamiento entre escenas (xfade); los primeros 0.3 s de cada escena quedan bajo la transición
 BUCLE_S, BUCLE_FUNDIDO = 0.6, 0.25   # cierre en bucle: el primer cuadro del gancho vuelve al final (TikTok repite el video)
+# Quién dibuja el video (video.json → "realizacion"): «propio» = las páginas video/*.html grabadas con video_grabar.js;
+# «mesa» = la mesa de archivo en HyperFrames (scripts/video_hf.py; referencias/flujo-mesa.md). La fija `preparar` al crear
+# el TRABAJO: un trabajo empezado con un motor termina con ese motor. Migrar un flujo = añadir su `tipo` aquí.
+MESA_FLUJOS = ("historia", "explica", "video")   # /historia, /serie y /explica; "video" = /video, /departamento, /sabias y /congreso
+# (los tres últimos nacen de video.py preparar). /noticias y /semana escriben su propio video.json y siguen en el motor propio.
+REALIZACIONES = ("propio", "mesa")
+MESA_SIN_RENDER = ".maqueta_sin_render"   # MESA_RENDER=0 (maquetas): el render es un doble; `entregar` real lo rechaza
+
+
+def realizacion(st):
+    return (st or {}).get("realizacion") or "propio"
+
+
+def es_mesa(st):
+    return realizacion(st) == "mesa"
+
+
+def realizacion_de(tipo, pedida=None):
+    return pedida or ("mesa" if tipo in MESA_FLUJOS else "propio")
+
+
+def mesa(*args):
+    """Un comando de la mesa de archivo (scripts/video_hf.py), en su propio proceso. → código de salida."""
+    return subprocess.run([sys.executable, os.path.join(RAIZ, "scripts", "video_hf.py")] + [str(x) for x in args], cwd=RAIZ).returncode
+
+
+def cmd_plano(a):
+    """El guion visual de un TRABAJO en mesa (plano.json): gates MV, hoja de golpes y digesto para quien lo escribe."""
+    trabajo = os.path.abspath(a.trabajo)
+    if not es_mesa(estado(trabajo)):
+        print("ERROR: este TRABAJO se dibuja con el motor propio (video.json sin \"realizacion\": \"mesa\"): no lleva plano", file=sys.stderr)
+        return 2
+    if a.digesto:
+        return mesa("digesto", trabajo)
+    return mesa("plano", trabajo, "--auto", *(["--check"] if a.check else []), *(["--hoja"] if a.hoja else []), *(["--borrador"] if a.borrador else []))
 # palabras que no anclan solas la línea de pantalla a la voz (un «de» suelto no basta para fijar su tiempo)
 VACIAS = set("de del la el los las en y a o que un una al lo se".split())
 STOP = set("de del en los las una uno unos unas que para con por mas sin sobre entre hasta desde cada como pero este esta "
@@ -1068,7 +1097,7 @@ PREGUNTA_S = {"promesa": 4.0, "bisagra": 2.6, "pago": 3.6}   # lo que se queda e
 
 
 def revisar_pregunta(g, st, p, escenas):
-    if st.get("tipo") not in ("historia", "explica") or st.get("modo") == "mito":
+    if st.get("tipo") not in ("historia", "explica"):
         return []
     f = []
     q = (p.get("pregunta") or "").strip()
@@ -1559,6 +1588,9 @@ def cmd_preparar(a):
     dep = DP.estado_video(hilo, datos, tarjetas)
     if dep:
         st.update(departamento=dep, palabra_clave=DP.claves(dep["codigo"]), piso_s=DP.PISO_S, serie=DP.SERIE)
+    previo = os.path.join(trabajo, "video.json")
+    # quién dibuja: se fija al crear el TRABAJO; uno empezado con un motor termina con él (sin la clave = el motor propio)
+    st["realizacion"] = getattr(a, "realizacion", None) or ((leer(previo).get("realizacion") or "propio") if os.path.exists(previo) else realizacion_de("video"))
     escribir(os.path.join(trabajo, "video.json"), st)
     for aviso in rebasar_tarjetas(hilo_dir, trabajo):
         print("AVISO tarjetas: " + aviso, file=sys.stderr)
@@ -1968,12 +2000,6 @@ def visual_del_gancho(e, cifras, valores):
                 f.append("visual figuras: calculo %s da %.4g y no respalda «%d de cada %d»" % (d["calculo"], r, *dc))
             else:
                 nums.append(r)
-    elif vis == VISUAL_VEREDICTO:   # /mito: sin números propios (los dicen la línea y la voz)
-        ver = d.get("veredicto")
-        if ver not in SELLOS_VEREDICTO:
-            f.append("visual veredicto: «veredicto» %s" % "|".join(SELLOS_VEREDICTO))
-        out.update(creencia=etiqueta("creencia", d.get("creencia"), CREENCIA_CARACTERES), veredicto=ver,
-                   sello=SELLOS_VEREDICTO.get(ver))
     elif vis == "foto":   # sin números propios: los dicen la pantalla, la línea y la voz
         fo = fotos_trabajo().get(d.get("foto"))
         if not fo:
@@ -2295,7 +2321,7 @@ def validar_estructura(g, st, dur, tarjetas):
     return f
 
 
-# ---------- piezas comunes de los flujos de monetización (Fase 0: /carrusel, /mito, /departamento, /semana, /serie) ----
+# ---------- piezas comunes de los flujos de monetización (Fase 0: /carrusel, /departamento, /semana, /serie) ----
 PISO_DURACION_S = 61                 # TikTok Creator Rewards solo paga videos ≥ 60 s; 1 s de margen
 PALABRA_CLAVE_S = 3.0                # V19: la palabra clave suena en la voz antes de este segundo
 PALABRA_CLAVE_PLATAFORMAS = ("tiktok", "instagram", "facebook")
@@ -2401,8 +2427,6 @@ def pantalla_escena1(e):
     """Los textos que se leen en pantalla en la escena 1 (V19): pantalla, línea, golpe, título, término, pregunta,
     el titular de una foto y el chip."""
     out = [e.get(k) for k in ("pantalla", "linea", "golpe", "titulo", "titular", "termino", "pregunta") if isinstance(e.get(k), str)]
-    if e.get("visual") == VISUAL_VEREDICTO and isinstance((e.get("visual_datos") or {}).get("creencia"), str):
-        out.append(e["visual_datos"]["creencia"])   # /mito: la creencia se lee sobre el sello
     if isinstance(e.get("chip"), dict):
         out.append(e["chip"].get("texto") or "")
     return [x for x in out if x]
@@ -2418,7 +2442,7 @@ ESCENA_CLAVES = {
          "red_vial tipo titular titulo toma traduccion transicion unidad verbo visual votacion voz",
     "i": "acto correcta cuenta n numero puesto top tuit",
     "n": "dur",
-    "b": "atribuida continua corrige creencia dictado_por_usuario ejemplo escucha_omitir estado foco giro intuicion "
+    "b": "atribuida continua corrige dictado_por_usuario ejemplo escucha_omitir estado foco giro intuicion "
          "resumen_serie saldo ventana",
     "l": "afirma afirmaciones aristas barras capas de_cada diputados dividida etiquetas fases focos fotos hechos lados nodos opciones paga pasos personas piezas puntos ruta "
          "renglones sfx tomas",
@@ -3205,7 +3229,7 @@ def cmd_ganchos(a):
     fallas, por_id = [], {}
     if not CANDIDATOS[0] <= len(cands) <= CANDIDATOS[1] or (len(cands) == CANDIDATOS[1] and not any(c.get("id") == GANCHO_USUARIO for c in cands)):
         fallas.append("G %d candidatos; van 5 de familias distintas (+ «%s», el que dicta el usuario)" % (len(cands), GANCHO_USUARIO))
-    # familias distintas hasta donde alcanza el catálogo: con la rotación (R9), /mito puede quedarse con 2 familias para
+    # familias distintas hasta donde alcanza el catálogo: con la rotación (R9), un flujo puede quedarse con 2 familias para
     # 5 candidatos; entonces se repite familia, pero nunca la opción entera (pantalla, línea y voz). El del usuario no cuenta.
     propios = [c for c in cands if c.get("id") != GANCHO_USUARIO]
     fams = [c.get("familia") for c in propios]
@@ -3754,6 +3778,24 @@ def cmd_variante(a):
     voz SOLO de la escena 1 (≈ 100 créditos). Con --cerrar, copia variante_b/salida/video.mp4 → salida/video_b.mp4."""
     trabajo = os.path.abspath(a.trabajo)
     vb = os.path.join(trabajo, "variante_b")
+    mesa_ = es_mesa(estado(trabajo))
+    if getattr(a, "plano", False):
+        # la mesa de archivo: el plano de la B es el del video A con la mesa del gancho rehecha desde el borrador (la voz y los
+        # tiempos de la escena 1 son otros); los tableros y las demás mesas no cambian
+        if not mesa_:
+            return falla("--plano es de la mesa de archivo (video.json con \"realizacion\": \"mesa\")")
+        if not os.path.exists(os.path.join(vb, "escenas.json")):
+            return falla("falta variante_b/escenas.json: descargar → tiempos sobre variante_b antes de --plano")
+        sys.path.insert(0, os.path.join(RAIZ, "scripts"))
+        import video_hf as VH
+        P = leer(os.path.join(trabajo, "plano.json"))
+        B = VH.borrador_v(VH.contexto_v(vb))
+        nuevo = [m for m in B["mesas"] if "e1" in m.get("escenas", [])]
+        P["mesas"] = nuevo + [m for m in P["mesas"] if "e1" not in m.get("escenas", [])]
+        escribir(os.path.join(vb, "plano.json"), P)
+        print("→ %s (la mesa del gancho rehecha; las demás, las del video A) · luego: plano --check --hoja, grabar, montar y variante --cerrar"
+              % rel(os.path.join(vb, "plano.json")))
+        return 0
     if a.cerrar:
         src = os.path.join(vb, "salida", "video.mp4")
         if not os.path.exists(src):
@@ -3782,6 +3824,13 @@ def cmd_variante(a):
     if cmd_guion(argparse.Namespace(trabajo=vb)):
         return falla("la versión B no pasa el gate del guion (variante_b/guion.json)")
     n = len(g["escenas"]) + 1
+    if mesa_:   # la mesa: los tableros ya grabados (su huella decide si sirven), las fotos y las páginas del video A
+        for d_ in ("clips_tablero", "tablero", "fotos"):
+            if os.path.isdir(os.path.join(trabajo, d_)) and not os.path.exists(os.path.join(vb, d_)):
+                shutil.copytree(os.path.join(trabajo, d_), os.path.join(vb, d_), symlinks=True)
+        for f_ in ("paginas.json", "encuadre.json"):
+            if os.path.exists(os.path.join(trabajo, f_)):
+                shutil.copy2(os.path.join(trabajo, f_), os.path.join(vb, f_))
     for k in range(2, n + 1):   # la voz, las palabras y los clips de las escenas 2…cierre son los del video A
         for f in ("audio/voz_%d.mp3", "audio/palabras_%d.json", "clips/e%d.mp4"):
             if os.path.exists(os.path.join(trabajo, f % k)):
@@ -3791,6 +3840,10 @@ def cmd_variante(a):
     print(json.dumps({"voz": loc["voz"], "model_parameters": {"language_code": loc["voz"]["idioma"]},
                       "caracteres": len(e1["voz"]), "nodos": [{"n": 1, "prompt": e1.get("prompt") or e1["voz"]}]},
                      ensure_ascii=False, indent=1))
+    if mesa_:
+        print("→ %s · luego: descargar %s --estado … (solo la escena 1), tiempos, variante %s --plano, plano --check --hoja, grabar "
+              "(la mesa renderiza el video entero: ≈ 1.6× su duración), montar y variante --cerrar" % (rel(vb), rel(vb), rel(trabajo)))
+        return 0
     print("→ %s · luego: descargar %s --estado … (solo la escena 1), tiempos, grabar --solo 1, montar y variante --cerrar"
           % (rel(vb), rel(vb)))
     return 0
@@ -4891,9 +4944,7 @@ def cmd_tiempos(a):
             if tipo == "gancho":
                 sfx = [(0.1, "impacto"), (pulso[1] if pulso else hasta, "pulso")]
                 vis = e.get("visual") or {}
-                if vis.get("tipo") == VISUAL_VEREDICTO:   # /mito: golpe.html con la creencia sobre el sello (S.T.veredicto)
-                    S["T"]["veredicto"] = {k: vis.get(k) for k in ("creencia", "veredicto", "sello")}
-                elif vis.get("tipo") not in (None, "cifra"):   # gancho con visual: página gancho.html (S.V)
+                if vis.get("tipo") not in (None, "cifra"):   # gancho con visual: página gancho.html (S.V)
                     S["V"], ev_v, sfx_v = tiempos_visual(vis, pal, fin_1, fin_voz)
                     ev += ev_v
                     sfx += sfx_v
@@ -5086,6 +5137,8 @@ def cmd_tiempos(a):
     ralear_tics(escenas)
     marcar_pregunta(escenas, g, serie_de(st))   # P6: la pregunta del video en pantalla, solo en el pago
     f_seguir = [] if st.get("piezas_sueltas") else marcar_seguir(escenas, total)
+    if es_mesa(st):   # la mesa pone el «Sígueme» de la mitad por su cuenta (video_hf.seguir_de) y mide el ritmo sobre el plano
+        f_seguir = []
     escribir(os.path.join(trabajo, "escenas.json"), {
         "version": 2, "colores": colores(st["paleta"]), "contexto_superior": g["contexto_superior"], "redes": REDES,
         "serie": {k: serie_de(st).get(k) for k in ("parte", "de", "titulo", "siguiente")} if serie_de(st).get("parte") else None,
@@ -5103,7 +5156,10 @@ def cmd_tiempos(a):
         fallas += [x for x in revisar_palabra_clave(claves, escenas[0]["palabras"], pantalla_escena1(g["escenas"][0]),
                                                     g.get("caption") or {}) if "voz" in x]
     fallas += V20_FALLAS + f_seguir
-    for S_ in escenas:
+    if es_mesa(st):
+        avisos = [x for x in avisos if not x.startswith("V10 ")] + ["la mesa de archivo mide el ritmo, las cifras y la carga sobre el plano (MV1, MV2, MV6): "
+                                                                   "<flujo>.py plano TRABAJO --check"]
+    for S_ in ([] if es_mesa(st) else escenas):
         avisos += sobrecarga(S_)
         for txt, t_ in sin_senal(S_):
             avisos.append("V26 E%d (%s): la voz dice «%s» a los %.1f s y nada lo señala en pantalla: que entre la cifra, un "
@@ -5121,6 +5177,13 @@ def cmd_tiempos(a):
 def cmd_grabar(a):
     trabajo = os.path.abspath(a.trabajo)
     st = estado(trabajo)
+    if es_mesa(st):   # la mesa de archivo: plano → tableros (motor propio, limpios) → proyecto → check → render (un proceso)
+        f = ["--formato", a.formato]
+        for paso in (["plano", trabajo, "--auto", "--check", "--hoja"], ["tableros", trabajo, "--fps", a.fps], ["proyecto", trabajo] + f,
+                     ["revisar", trabajo] + f, ["render", trabajo] + f):
+            if mesa(*paso):
+                return falla("la mesa se detuvo en «%s» (%s): corrige y vuelve a grabar" % (paso[0], a.formato))
+        return 0
     hilo_dir = tarjetas_dir(trabajo, st)   # /noticias no tiene hilo ni tarjetas; las de /video, rearmadas en Noche
     args = ["node", os.path.join(RAIZ, "scripts", "video_grabar.js"), "--dir", trabajo, *(["--hilo", hilo_dir] if hilo_dir else []),
             "--fps", str(a.fps), "--formato", a.formato]
@@ -5334,6 +5397,18 @@ def cmd_montar(a):
     st = estado(trabajo)
     E = leer(os.path.join(trabajo, "escenas.json"))
     g = leer(os.path.join(trabajo, "guion.json"))
+    if es_mesa(st):   # la mesa: una sola pista de audio (la del 9:16) para los dos formatos; caption y portada, del 9:16
+        if a.formato != "4:5" and mesa("audio", trabajo):
+            return falla("la mezcla de audio de la mesa falló")
+        if mesa("montar", trabajo, "--formato", a.formato):
+            return 1
+        if a.formato != "4:5":
+            sal = os.path.join(trabajo, "salida")
+            redes = " · ".join("%s %s" % (r["nombre"], r["handle"]) for r in REDES)
+            escribir_caption(os.path.join(sal, "caption.md"), g["caption"], redes, ffprobe_dur(os.path.join(sal, "video.mp4")))
+            if mesa("portada", trabajo):
+                return falla("la portada de la mesa no se dibujó")
+        return 0
     f45 = a.formato == "4:5"   # 1080×1350 para el feed: mismos tiempos y audio, otros clips; sin subtítulos ni portadas nuevos
     segs = os.path.join(trabajo, "segs_4x5" if f45 else "segs")
     os.makedirs(segs, exist_ok=True)
@@ -5855,6 +5930,8 @@ def llenado_primer_cuadro(clip, f45=False):
 
 def cmd_revisar(a):
     trabajo = os.path.abspath(a.trabajo)
+    if es_mesa(estado(trabajo)):   # la mesa se revisa sobre el plano (MV) y con hyperframes check al grabar; aquí, la hoja de contacto
+        return mesa("contacto", trabajo, "--formato", a.formato)
     E = leer(os.path.join(trabajo, "escenas.json"))["escenas"]
     f45 = a.formato == "4:5"
     suf, clips_dir, alto = ("_4x5", "clips_4x5", 338) if f45 else ("", "clips", 480)
@@ -5983,6 +6060,8 @@ def cmd_entregar(a):
     if not os.path.exists(os.path.join(trabajo, "salida", "video_4x5.mp4")):
         return falla("falta salida/video_4x5.mp4: graba, monta y revisa también --formato 4:5 (el feed de Facebook e "
                      "Instagram) antes de entregar")
+    if os.path.exists(os.path.join(trabajo, "salida", MESA_SIN_RENDER)) and not a.salida:
+        return falla("este video es un doble sin render (MESA_RENDER=0, de maqueta): vuelve a grabar sin esa variable antes de entregar")
     dep = st.get("departamento")
     if dep:   # /departamento: D3 sobre los captions finales (los que van a caption.md)
         d3_f, d3_av = DP.d3(dep["codigo"], g.get("caption") or {})
@@ -6069,6 +6148,7 @@ def main():
     p.add_argument("--trabajo")
     p.add_argument("--permitir-borrador", action="store_true", help="solo para el fixture")
     p.add_argument("--sin-rotacion", action="store_true", help="pruebas: sin bloquear las familias y visuales recientes (R9)")
+    p.add_argument("--realizacion", choices=REALIZACIONES, help="quién dibuja el video: mesa (la mesa de archivo en HyperFrames; por defecto) o propio")
     p = sub.add_parser("ganchos", help="ganchos.json: --check de los candidatos o --usar el elegido como escena 1")
     p.add_argument("trabajo")
     x = p.add_mutually_exclusive_group(required=True)
@@ -6096,6 +6176,7 @@ def main():
     p = sub.add_parser("variante", help="versión B del gancho (el segundo lugar): solo la voz de la escena 1")
     p.add_argument("trabajo")
     p.add_argument("--cerrar", action="store_true", help="copia variante_b/salida/video.mp4 → salida/video_b.mp4")
+    p.add_argument("--plano", action="store_true", help="mesa de archivo: el plano de la B (el del video A con la mesa del gancho rehecha), tras tiempos")
     p = sub.add_parser("voz", help="JSON con la voz y el prompt de cada nodo TTS")
     p.add_argument("trabajo")
     p.add_argument("--pendientes", action="store_true", help="solo las escenas sin audio o cuya voz cambió desde la última descarga (retomas)")
@@ -6126,6 +6207,12 @@ def main():
                    "JSON tal cual o el texto pegado con lo que traiga alrededor")
     x.add_argument("--voz")
     x.add_argument("--palabras")
+    p = sub.add_parser("plano", help="la mesa de archivo: gates MV del plano, hoja de golpes o digesto para escribirlo (scripts/video_hf.py)")
+    p.add_argument("trabajo")
+    p.add_argument("--check", action="store_true")
+    p.add_argument("--hoja", action="store_true")
+    p.add_argument("--borrador", action="store_true", help="usa el borrador tal cual (maquetas)")
+    p.add_argument("--digesto", action="store_true", help="lo que hace falta para escribir plano.json")
     p = sub.add_parser("grabar")
     p.add_argument("trabajo")
     p.add_argument("--fps", type=int, default=30)
@@ -6145,7 +6232,7 @@ def main():
     return {"preparar": cmd_preparar, "ganchos": cmd_ganchos, "cierres": cmd_cierres, "probar": cmd_probar, "aplicar": cmd_aplicar, "guion": cmd_guion, "narracion": cmd_narracion, "oyente": cmd_oyente, "variante": cmd_variante, "fotos": cmd_fotos, "voz": cmd_voz, "descargar": cmd_descargar,
             "voz-falsa": cmd_voz_falsa, "partir": cmd_partir, "tiempos": cmd_tiempos, "grabar": cmd_grabar, "montar": cmd_montar,
             "revisar": cmd_revisar, "entregar": cmd_entregar, "musica": cmd_musica, "escuchar": cmd_escuchar,
-            "whisper": cmd_whisper}[a.cmd](a)
+            "whisper": cmd_whisper, "plano": cmd_plano}[a.cmd](a)
 
 
 if __name__ == "__main__":

@@ -6,6 +6,8 @@ parlamentos con hemiciclo animado (decisión del usuario, 2026-11-04): el hemici
 contador y un pop por tanda, la línea de mayoría, el sello del resultado, los avatares de los diputados unidos a su
 asiento y el **portal**: el círculo del gancho que se abre hacia el hemiciclo. Comando: `.claude/commands/congreso.md`.
 
+> **Mesa de archivo (2026-11-14).** Este flujo se dibuja con la mesa de archivo (`video.json → "realizacion": "mesa"`; `referencias/flujo-mesa.md`): el guion, la voz y sus gates no cambian, y tras `tiempos` el paso **Plano** (Workflow `plano`, `video-realizador`) decide qué pieza entra con cada oración. En la mesa, el `hemiciclo` es un tablero grabado limpio (asientos, umbral, sello, foco con el retrato); el gancho deja el portal (es del motor propio) y abre con la foto del pleno y la `barra` de votos (a favor, los que hacían falta, en contra).
+
 ## Datos
 
 - **Votos**: el registro nominal oficial (congreso.gob.gt), capturado con Chrome (`referencias/congreso/captura.md`) e
