@@ -1,0 +1,21 @@
+{
+ "tipo": "casa",
+ "clase": "objeto",
+ "cuando": "una casa: el hogar de alguien, una aldea dibujada a mano, la casa que se inunda o se cae",
+ "parametros": {},
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "medidas": {
+  "largo_m": 8.0,
+  "ancho_m": 7.0,
+  "alto_m": 5.4
+ },
+ "ejemplo": {
+  "objeto": "casa"
+ }
+}

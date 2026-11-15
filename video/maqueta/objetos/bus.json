@@ -1,0 +1,21 @@
+{
+ "tipo": "bus",
+ "clase": "objeto",
+ "cuando": "un bus: el transporte público en una calle o una autopista, la parada a la que llega",
+ "parametros": {},
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "medidas": {
+  "largo_m": 12.0,
+  "ancho_m": 2.5,
+  "alto_m": 3.2
+ },
+ "ejemplo": {
+  "objeto": "bus"
+ }
+}

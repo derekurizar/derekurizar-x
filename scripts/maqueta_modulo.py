@@ -18,12 +18,13 @@ falta); contrato en referencias/diseno/maqueta3d.md («Añadir vocabulario»). A
          cuadros, o que usa azar, falla aquí.
        · tiempo por cuadro (aviso por encima de 3 s);
        · hoja de contacto 9:16 y 4:5 (para mirarla UNA vez).
-     Un `objeto` se prueba con la primera pieza del catálogo que lo `usa`; un `mundo` se prueba con --maqueta (una
+     Un `objeto` se prueba con la primera pieza del catálogo que lo `usa` (si la pieza lleva `objeto`, dibujando ESE
+     objeto); una `anotacion`, con su ejemplo en `anotaciones` (de t = 0.6 a t + lo que dure su ejemplo); un `mundo` se prueba con --maqueta (una
      maqueta que lo use); sin ella, solo lint y ficha (aviso).
 
 Subcomandos:
   check <clase>/<tipo> [--maqueta M] [--sin-render] [--salida DIR]
-        <clase>: piezas | eventos | objetos | mundos (o pieza, evento, objeto, mundo). Salida por defecto:
+        <clase>: piezas | eventos | objetos | anotaciones | mundos (o pieza, evento, objeto, anotacion, mundo). Salida por defecto:
         sesiones/_modulos/<tipo>/ (cuadros, hojas, maqueta de prueba). Última línea: RETORNO {json}.
   registrar <clase>/<tipo> [--maqueta M] [--sin-render]
         corre el check y, si pasa, `maqueta3d.py catalogo --registrar` (el único escritor del catálogo).
@@ -142,7 +143,10 @@ def maqueta_minima(clase, tipo, fi):
         duenas = sorted(t for t, f in V.items() if f["clase"] == "pieza" and tipo in (f.get("usa") or []))
         if not duenas:
             return None, 0, [], "objeto sin pieza que lo `usa` en el catálogo: pasa --maqueta con una maqueta que lo dibuje"
-        return maqueta_minima("pieza", duenas[0], V[duenas[0]])[:3] + ("objeto probado con la pieza «%s»" % duenas[0],)
+        fd = copy.deepcopy(V[duenas[0]])
+        if "objeto" in (fd.get("parametros") or {}):   # la pieza dibuja ESTE objeto (actor: `objeto`)
+            fd["ejemplo"]["objeto"] = tipo
+        return maqueta_minima("pieza", duenas[0], fd)[:3] + ("objeto probado con la pieza «%s»" % duenas[0],)
     if clase == "mundo":
         return None, 0, [], "un mundo se prueba con --maqueta (una maqueta que lo use)"
     m = None
@@ -159,9 +163,11 @@ def maqueta_minima(clase, tipo, fi):
         piezas.append(ej)
         prota, t0, dur = ej.get("id"), 0.0, 4.0
     else:
-        dur = float(ej.get("dur", 2.0))
+        dur = float(ej.get("dur", ej.get("hasta", 2.6) - ej.get("t", 0.6)) if clase == "anotacion" else ej.get("dur", 2.0))
         t0 = 0.6
         ej["t"] = t0
+        if clase == "anotacion":
+            ej["hasta"] = round(t0 + dur, 2)
         for nombre, d in (fi.get("parametros") or {}).items():   # las piezas a las que apunta el evento
             if d["tipo"] == "pieza" and ej.get(nombre):
                 tipos_ok = d.get("piezas") or sorted(t for t, f in V.items() if f["clase"] == "pieza")
@@ -174,7 +180,8 @@ def maqueta_minima(clase, tipo, fi):
         prota = piezas[0]["id"] if piezas else None
     total = round(max(4.0, t0 + dur + 1.5), 2)
     m["mundo"]["piezas"] = piezas
-    m["eventos"] = [] if clase == "pieza" else [ej]
+    m["eventos"] = [ej] if clase == "evento" else []
+    m["anotaciones"] = [ej] if clase == "anotacion" else []
     m["marcas"] = []
     m["camara"] = [dict(m["camara"][0], t=0.0)]          # cámara quieta: la prueba mira el módulo, no el vuelo
     if prota:

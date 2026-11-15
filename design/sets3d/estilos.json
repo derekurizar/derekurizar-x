@@ -28,7 +28,10 @@
     "onda": "@texto",
     "flechas": "@texto",
     "mar_hondo": "#070F1E",
-    "exterior": "#070F1E"
+    "exterior": "#070F1E",
+    "bien": "#3EE07F",
+    "medio": "#F5C542",
+    "mal": "#FF4A3D"
    },
    "cfg": {
     "grano": 0.022,
@@ -116,7 +119,10 @@
     "onda": "#FFFFFF",
     "flechas": "#1C1A17",
     "mar_hondo": "#5E97C4",
-    "exterior": "#5E97C4"
+    "exterior": "#5E97C4",
+    "bien": "#1E9E57",
+    "medio": "#D99A16",
+    "mal": "#D3352B"
    },
    "cfg": {
     "grano": 0.012,
@@ -204,7 +210,10 @@
     "onda": "#FFFFFF",
     "flechas": "#16130F",
     "mar_hondo": "#3F9BD0",
-    "exterior": "#3F9BD0"
+    "exterior": "#3F9BD0",
+    "bien": "#1E9E57",
+    "medio": "#D99A16",
+    "mal": "#D3352B"
    },
    "cfg": {
     "grano": 0.0,
@@ -292,7 +301,10 @@
     "onda": "#FFFFFF",
     "flechas": "#1C1A17",
     "mar_hondo": "#3B7FB8",
-    "exterior": "#3B7FB8"
+    "exterior": "#3B7FB8",
+    "bien": "#1E9E57",
+    "medio": "#D99A16",
+    "mal": "#D3352B"
    },
    "cfg": {
     "grano": 0.0,
@@ -380,7 +392,10 @@
     "onda": "#CFE4FF",
     "flechas": "#CFE4FF",
     "mar_hondo": "#07121F",
-    "exterior": "#07121F"
+    "exterior": "#07121F",
+    "bien": "#3EE07F",
+    "medio": "#F5C542",
+    "mal": "#FF4A3D"
    },
    "cfg": {
     "grano": 0.0,

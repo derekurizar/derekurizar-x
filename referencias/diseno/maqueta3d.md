@@ -49,6 +49,9 @@ pasan los mismos gates y dejan las mismas salidas (ver «Motor Blender»).
     {"t": 24.0, "dur": 5.5, "tipo": "onda", "pieza": "motagua", "radio_km": 170},
     {"t": 25.0, "dur": 3.0, "tipo": "parpadear", "lugares": ["guatemala", "chimaltenango"]}
   ],
+  "anotaciones": [
+    {"t": 8.0, "hasta": 11.0, "tipo": "pulso", "sobre": ["guatemala"], "radio_m": 20000}
+  ],
   "marcas": [
     {"t": 6.1, "hasta": 11.0, "lugar": "los-amates", "texto": "Los Amates, Izabal", "sub": "Epicentro"},
     {"t": 20.0, "hasta": 26.0, "lugar": "guatemala", "texto": "Ciudad de Guatemala", "sub": "A 25 km", "separada_de": "motagua"}
@@ -101,7 +104,9 @@ pasan los mismos gates y dejan las mismas salidas (ver «Motor Blender»).
   - `frontera`: el borde del país del set.
   - `ruta`: una línea de rayas entre `lugares` (≥ 2), posada sobre el relieve.
 - **`camara`**: claves ordenadas por `t`, la primera en `t = 0`. Cada clave: `mira` (id de lugar o `[lon, lat]`; en un
-  esquema, `[x, y]` en metros), `dist_km` (del ojo al punto que mira; 15–1600) en un mundo `pais`, o **`dist_m`** en
+  esquema, `[x, y]` en metros; o algo que se MUEVE: `{"actor": id}` o un vehículo de un flujo `{"flujo": id, "n": k}` /
+  `{"flujo": id, "carril": 2, "cerca": lugar, "t": s}`, con `desfase_m` (metros por delante, o `[adelante, izquierda]`): la
+  cámara lo sigue, § «La cámara que sigue»), `cenital: true` (atajo de `elevacion: 89`), `dist_km` (del ojo al punto que mira; 15–1600) en un mundo `pais`, o **`dist_m`** en
   `ciudad` (40–9000 m) y `esquema` (15–5000 m): la unidad y el rango los fija la ficha del mundo (`camara`) y M3D3 los
   revisa, `azimut` (grados; 0 = el ojo al sur del punto, mirando al norte;
   positivo gira el ojo hacia el este), `elevacion` (grados sobre el horizonte; 8–89) y `fov` opcional (vertical, 50 por
@@ -138,6 +143,8 @@ pasan los mismos gates y dejan las mismas salidas (ver «Motor Blender»).
   se sale de los márgenes y se desvanece sola antes de pisar el titular o la banda de abajo. **`separada_de`** (el id
   de una pieza que sea una línea: hoy `falla`, `ruta` o `frontera`, las que traen `tramos` en sus reglas): la marca dice que está LEJOS de esa pieza («A 25 km de la falla»), así que
   no puede dibujarse pegada a ella; con la cámara rasante las distancias se aplastan y M3D11 lo detiene.
+- **`anotaciones`**: la capa 2D ATADA AL 3D (clase `anotacion` del catálogo: `pulso`, `medida`, `etiqueta`, `reloj`), cada
+  una con `tipo`, `t`, `hasta` y sus parámetros; sus anclas son lugares o algo que se mueve (§ «Anotaciones»). Opcional.
 - **`capa`**: el cuadro 2D, de la familia de `video/comun.css` (Noche: crema, Archivo condensado, JetBrains Mono).
   - `titulares`: `kicker` + `texto` (≤ 3 renglones), arriba a la izquierda bajo la barra, de `t` a `hasta`. Un titular
     con `t ≤ 0.1` está completo desde el cuadro 0 (sin animación de entrada); los demás entran animados.
@@ -187,6 +194,7 @@ el motor y la proyección de los gates.
 | M3D1 | Forma y versión; `estilo` del catálogo (de motor three o blender); `set` y `paleta` existen; el `set` es de la escala del mundo |
 | M3D2 | Piezas, trazos, lugares, `protagonista` y `sfx` referenciados existen; cada evento con sus campos; el mundo, cada pieza y cada evento están en el catálogo, su motor dibuja el estilo y **su ficha incluye la escala del mundo** |
 | M3D3 | Cámara: claves crecientes desde `t = 0`, la distancia en la unidad de la escala (`dist_km` en pais, `dist_m` en ciudad y esquema) y en su rango, parámetros en rango, velocidad tope por tramo (paneo ≤ 0.85 de la distancia por segundo, giro ≤ 45°/s, cabeceo ≤ 30°/s, zoom ≤ ×3 por segundo; el pico de la curva es π/2 veces la media) y el ojo siempre por encima del suelo (más el despeje de su escala: 1.5 km, 6 m, 4 m) |
+| M3D4 (anotaciones) | Cada anotación cabe en el video, lo que dice se alcanza a leer (sus reglas → `textos`) y, si está atada al 3D (reglas → `anclas`), al menos la mitad de sus anclas está en cuadro ≥ 80 % de su ventana; ninguna sigue en pantalla cuando entra el cierre (M3D5) |
 | M3D4 | Cada marca cae dentro del cuadro, con su tarjeta bajo el titular vivo y su ancla sobre la banda de abajo, ≥ 80 % de su ventana, y dura lo que se tarda en leer (0.5 s + 0.3 s por palabra, mínimo 1.2 s); ≤ 3 marcas a la vez; dos tarjetas no se pisan |
 | M3D5 | Titulares y cifras: tiempo de lectura; dos titulares no se pisan; una cifra a la vez; la cifra no tapa una marca viva; nada sigue en pantalla cuando entra el cierre; `seguir` no cae sobre un titular |
 | M3D6 | Cada evento cabe en la duración y su centro se ve en cámara ≥ 60 % de lo que dura (en una ruptura, sus frentes) |
@@ -252,7 +260,7 @@ Los geodatos: `python3 scripts/build_set3d.py guatemala [--check] [--capa reliev
   píxeles, las superficies de mundo (`malla`, `tonos`, `sombra`), la cámara del contrato y el registro del vocabulario.
   **No sabe de relieves**: el suelo es un MUNDO (`mundos/<escala>.js`; el relieve nacional con su shader de una rama por
   estilo y las columnas de `voxel` es `mundos/pais.js`, movido sin cambiar un píxel). Las piezas y los eventos son
-  **módulos** (`piezas/<tipo>.js`, `eventos/<tipo>.js`; más adelante `objetos/`) que se registran solos; el proyecto copia solo los que usa la maqueta
+  **módulos** (`piezas/`, `eventos/`, `objetos/`, `anotaciones/`) que se registran solos; el proyecto copia solo los que usa la maqueta
   (`assets/modulos/`) y la plantilla los carga antes del núcleo. `capa.js` + `capa.css`: la capa 2D. `plantilla.html`:
   la composición.
 - Todo es función pura del tiempo que pide HyperFrames (evento `hf-seek`): sin reloj, sin azar, sin red. El mismo
@@ -269,7 +277,7 @@ escena `explica`: el motor, los gates y la orquestación leen el mismo catálogo
 
 | Archivo | Qué es |
 |---|---|
-| `video/maqueta/<clase>/<tipo>.js` | El MÓDULO de motor.js (`<clase>`: `piezas`, `eventos`, `objetos`, `mundos`) |
+| `video/maqueta/<clase>/<tipo>.js` | El MÓDULO de motor.js (`<clase>`: `piezas`, `eventos`, `objetos`, `anotaciones`, `mundos`; las anotaciones las corre capa.js) |
 | `video/maqueta/<clase>/<tipo>.json` | La FICHA: lo que el catálogo, el validador y la orquestación saben del tipo |
 | `scripts/maqueta_tipos/<tipo>.py` | Opcional: las REGLAS que no caben en la ficha (resolver, topes, dónde pasa para los gates) |
 
@@ -301,6 +309,10 @@ ni `Math.random`, ni reloj: `ctx.hash(i, k)` da el azar fijo). Sin colores escri
 `linea(id, cinta)` (una línea que «resaltar» aviva por el id de su pieza); la superficie (el shader del relieve):
 `superficie` (sus uniformes: `uCad`, `cPieza`, `uBrillo`, `uOnda`…), `uRuptura`, `uComun()`, `GLSL_COMUN`,
 `GLSL_RUPTURA`, `NR`, `NC`, `NO`; lo que publican otros módulos: `fallas`, `idxFalla(id)`, `fallas3d`, `luces`; y
+lo que se mueve (Fase 2): `tray` (evaluar una trayectoria T/S suavizada: `tray.nueva(T, S)`, `tray.suave(r, h, t)` → [s, v]),
+`moviles` (id → (t, n) → {x, y, dx, dy, v, vis}: lo registran actor y flujo), `ancla(A, t)` (un ancla resuelta → dónde está),
+`flota(tipo, n, {tamano, lev, luces, color, orden})` (n objetos de un tipo en una malla instanciada: `poner(i, x, y, dx, dy, k,
+freno)` y `listo()`), `tonos.bien|medio|mal` y `tonos.vehiculos`;
 `cuadro` = `{t, k, pxKm, dist, dist_km, brillo, elementos, ondas, rupturas}` (lo de este cuadro: `brillo[id]` y
 `elementos[id] = [{i, k}]` los pone `resaltar`, `ondas` las pone `onda`). Lo propio del relieve nacional (`superficie`,
 `uRuptura`, `GLSL_RUPTURA`, `NR`, `NC`, `NO`) lo publica el mundo `pais`: una pieza que lo usa es de escala pais.
@@ -360,6 +372,81 @@ Ninguna entrada nueva toca `motor.js`, `maqueta3d.py` ni otra entrada: el núcle
 Blender (`maqueta_blender.py`) no usa módulos: dibuja los tipos de hoy con sus propias ramas; una entrada nueva declara
 `"motores": ["three"]` hasta que alguien la escriba ahí.
 
+## Lo que se mueve, las líneas que se pintan y las anotaciones (Fases 2 y 3)
+
+Para contar un MECANISMO (cómo se forma una cola, cómo viaja una señal, quién manda su ubicación): objetos que se mueven
+por caminos, una línea que se pinta por tramos y lo que se dibuja encima. Todo en escala `ciudad` o `esquema` (metros) y
+solo con el motor three. Caso de prueba que lo usa todo: `video/maqueta/fixture/trafico.json`; pruebas sin render:
+`scripts/pruebas/maqueta_movimiento.py`.
+
+**Objetos** (`video/maqueta/objetos/<tipo>.js`, clase `objeto`): `carro`, `bus`, `camion`, `moto`, `persona`, `casa`,
+`arbol`, `torre`, `telefono`, `pin`. Low-poly con primitivas de three.js, en METROS reales (x adelante, y arriba, z a su
+derecha); su ficha trae `medidas` (`largo_m`, `ancho_m`, `alto_m`: el largo separa los vehículos en la cola). El módulo da
+`partes(ctx)` → `[{geo, color, tinte, luz}]` (las partes con `tinte` toman el color de la instancia, una de `variantes(ctx)`
+por semilla; `luz` = brilla sola), y los vehículos `faros` y `pilotos` (puntos locales). No los recorre el núcleo: los dibuja
+una pieza con `ctx.flota` (una `InstancedMesh` por tipo, con la luz del estilo en el shader porque el objeto gira; de noche,
+faros cálidos con un cono tenue en el suelo y pilotos en el tono «mal» que se avivan al frenar). Colores: `ctx.tonos`
+(`tonos.vehiculos`: carrocerías claras de noche, de tinta en los fondos claros), nunca escritos.
+
+**Pieza `actor`**: un objeto que sigue un camino: `camino` (con nombre), `desde` + `hacia` (dos lugares), `puntos` o `lugar`
+(quieto, mirando a `rumbo`). `claves` `[{t, s | lugar | vel_kmh}]`: con posición (`s`: metros desde el inicio del camino o
+«40%»; `lugar`: su proyección) está ahí en t y entre dos claves va en línea recta en el tiempo; con `vel_kmh` sigue a esa
+velocidad; tras la última, a su última velocidad, y se detiene al final del camino. El evento `mover` (`actor`, `a`: un
+lugar) añade dos claves. Va orientado en la dirección del camino; el protagonista, en el acento.
+
+**Pieza `flujo`** (el tráfico): `carriles` (caminos en el sentido de la marcha), `tipos` (`{"carro": 0.8, "bus": 0.1, …}`),
+`densidad` (vehículos por km y carril), `vel_kmh`, `reaccion_s`, `suavizado_s`, `semilla`, `tamano`, `luces`. **El modelo**
+(`scripts/maqueta_tipos/_movimiento.py`; lo calcula Python al resolver, una vez, y motor.js solo evalúa: así la cámara que
+sigue, los gates y el dibujo ven lo mismo):
+1. Cada vehículo tiene una trayectoria s(t) LINEAL POR TRAMOS (listas T y S). Lo que se dibuja es la media móvil de ±h s:
+   `s̄(t) = (F(t+h) − F(t−h)) / 2h` con `F = ∫ s` (cuadrática por tramos): forma cerrada, sin pasos de simulación.
+2. `libre_i(t)`: el vehículo solo en el campo de velocidades del carril, la base (que `acelerar` sin tramo cambia) y los
+   TRAMOS `[a, b)` con su velocidad en el tiempo (`frenar` crea uno; `acelerar` sobre él lo suelta; cada cambio es una
+   escalera de 6 escalones en `dur`). Se calcula por eventos: al cruzar un borde de tramo o al llegar un cambio de tiempo.
+3. Newell (2002), que es LWR con diagrama triangular: `x_i(t) = min(libre_i(t), x_{i−1}(t − τ) − δ_i)`, del primero al
+   último de cada carril (τ = `reaccion_s`; δ_i = los dos medios largos + 2 m). El mínimo de lineales por tramos es lineal por
+   tramos.
+4. La cola crece HACIA ATRÁS sola, a `w = δ/τ` (≈ 8 m/s con carros y τ = 0.8 s) mientras lleguen más vehículos de los que el
+   tramo deja pasar, y se suelta desde adelante tras `acelerar`. Nadie atraviesa a nadie: `x_i ≤ x_{i−1}(t − τ) − δ ≤
+   x_{i−1}(t) − δ`, y la media móvil (lineal y monótona) lo conserva.
+5. El hueco inicial es ≥ δ + v·τ (si no, el de atrás saltaría en el arranque): la `densidad` tiene tope y M3D2 lo dice.
+Un vehículo se ve mientras está sobre su carril (0 ≤ s ≤ largo); los de atrás arrancan fuera del mundo y entran por el borde.
+
+**Eventos de lo que se mueve**: `frenar` (`flujo`, `en`: una posición sobre su primer carril, `longitud_m` hacia adelante,
+`vel_kmh`, `carriles`; `dur` = lo que tardan en frenar), `acelerar` (lo mismo con `en` opcional: sin él, todo el flujo),
+`aparecer` / `desaparecer` (`pieza`: un actor o un flujo; escriben `ctx.cuadro.vis[id]`, la escala 0–1, y van en el orden del
+maqueta.json por t), `mover`. `frenar`, `acelerar` y `mover` no dibujan nada en motor.js: su efecto ya va en las trayectorias.
+
+**La cámara que sigue**: `mira` acepta `{actor: id}` o un vehículo `{flujo: id, n}` / `{flujo, carril, cerca, t}` (el de ese
+carril más cercano a `cerca` en el segundo `t`), con `desfase_m`. La clave resuelta lleva `sigue` (motor.js: `miraDe`) y, solo
+en Python, `_pos` (t → x, y, alt; `camara_en`): entre claves se interpola igual que siempre, pero el punto de una clave que
+sigue es dónde está el móvil en t (una clave fija da exactamente lo mismo que antes: los cuadros de las maquetas existentes son
+idénticos byte a byte). `cenital: true` = `elevacion: 89`; con `azimut: 90` la vía este–oeste queda vertical en el 9:16.
+
+**Pieza `trazo`** (generaliza `ruta` para ciudad y esquema): una línea brillante (núcleo + halo, que de noche suma luz) sobre
+un camino, de `desde` a `hasta` (posiciones; al revés va en contra del camino), corrida `desplazar_m`, en `color` `bien` ·
+`medio` · `mal` (verde, ámbar y rojo del estilo: `estilos.json → colores.bien|medio|mal`), `texto`, o `acento` solo si es el
+protagonista. `trazar` la DIBUJA en `dur` (un trazo con algún trazar no se ve antes; con `adelanto`, sirve de gancho en el
+cuadro 0) y `pintar` la PINTA POR TRAMOS: el color nuevo avanza como un frente de `desde` a `hasta` (de adelante hacia atrás:
+la cola que crece) y se queda; el último pintado manda. `ruta` sigue igual.
+
+**Anotaciones** (clase `anotacion`, `video/maqueta/anotaciones/<tipo>.js`, lista `anotaciones` del maqueta.json, con `t` y
+`hasta`). *Arquitectura:* van en la CAPA 2D (texto nítido, crema, sin el acento) pero atadas al 3D: `maqueta3d.py` resuelve
+sus anclas (lugar → `{x, y}`; algo que se mueve → `{movil, n, desfase, lev}`); el proyecto añade un clip `#anot` con una capa
+SVG y una de texto; motor.js llama `window.__capa(t, proyectar, mundo)` y capa.js arma cada tipo la primera vez y le pasa `A`:
+`A.ancla(ancla, t)` (dónde está en pantalla), `A.suelo(x, y, r_m)` (un círculo de r metros en el suelo, proyectado),
+`A.svg(tag, clase)`, `A.div(clase, texto)`, `A.p`, `A.vida`, `A.Z`. Así una anotación nueva es un módulo más, como una pieza.
+Sus reglas (`scripts/maqueta_tipos/<tipo>.py`) dicen `anclas(a)` y `textos(a, escala)` para M3D4 y el respaldo.
+- `pulso`: anillos que se abren en el suelo sobre `sobre` (anclas; `{flujo, cerca, t, cuantos: k}` da k vehículos), `radio_m`,
+  `periodo_s`, `anillos`.
+- `medida`: un círculo de `radio_m` en el suelo alrededor de `en` (o una `regla` hacia adelante) con su rótulo («5 m»).
+- `etiqueta`: una píldora que SIGUE a `sigue` («102 km/h»).
+- `reloj`: una hora que corre de `de` a `a` entre `corre_desde` y `corre_hasta` (arriba, abajo o sobre un ancla).
+**Cada número que muestran pasa por el respaldo de las cifras** (C3D5 en `video3d.py guion --check`, que ahora lee las
+`anotaciones` de cada escena con su `dice`: `maqueta3d.textos_anotacion`; «5 m» se lee como 5 metros). Excepción: un `reloj`
+`ilustrativo` sobre un ESQUEMA (no es un momento real; la voz no dice esa hora como dato).
+
+
 ## Mundos: pais, ciudad y esquema
 
 El suelo de la maqueta es un **mundo**: un módulo `video/maqueta/mundos/<escala>.js` (registrado en `MAQ.MUNDOS`) con su
@@ -371,8 +458,8 @@ puede usar en cada una; `maqueta3d.py sets`, los sets con su escala.
 | Escala | Unidad de la escena | Cámara | El suelo | Qué se dibuja (hoy) |
 |---|---|---|---|---|
 | `pais` | 1 km | `dist_km` 15–1600 | el relieve de un set de país (`guatemala`), con mar y máscara del país | `falla`, `luces`, `frontera`, `ruta` y todos los eventos |
-| `ciudad` | 1 m | `dist_m` 40–9000 | el relieve de un set de ciudad a ≈ 15 m por celda, con su punto más bajo en 0 | `calles`, `edificios`, `agua`, `zona`, `carretera`; `resaltar` |
-| `esquema` | 1 m | `dist_m` 15–5000 | plano, con los suelos de su receta (arena, campos, pavimento, el mar de la costa) | las mismas que ciudad |
+| `ciudad` | 1 m | `dist_m` 40–9000 | el relieve de un set de ciudad a ≈ 15 m por celda, con su punto más bajo en 0 | `calles`, `edificios`, `agua`, `zona`, `carretera`; `resaltar`; lo que se mueve (`actor`, `flujo`), `trazo` y las anotaciones |
+| `esquema` | 1 m | `dist_m` 15–5000 | plano, con los suelos de su receta (arena, campos, pavimento, el mar de la costa) | las mismas que ciudad (y lo que se mueve) |
 
 **El contrato de un mundo** (`video/maqueta/mundos/<escala>.js`): `async cargar(ctx) → estado` (lo que baja: el
 relieve.png; publica `ctx.altura(x, y)` en unidades ya exageradas y `ctx.geo(lon, lat) → [x, y]`, o `null` en un

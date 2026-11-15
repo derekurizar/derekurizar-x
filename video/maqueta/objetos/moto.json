@@ -1,0 +1,21 @@
+{
+ "tipo": "moto",
+ "clase": "objeto",
+ "cuando": "una moto: el repartidor que se mete entre los carros, el mototaxi, la moto que huye",
+ "parametros": {},
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "medidas": {
+  "largo_m": 2.1,
+  "ancho_m": 0.8,
+  "alto_m": 1.6
+ },
+ "ejemplo": {
+  "objeto": "moto"
+ }
+}

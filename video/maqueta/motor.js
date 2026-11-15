@@ -191,6 +191,12 @@ const TONOS = (() => {
     T.campo = C("tierra_baja"); T.campo2 = C("tierra_baja").lerp(C("tierra_media"), 0.55);
   }
   T.acento = C("acento"); T.secundario = C("secundario"); T.linea = C("linea");
+  // el estado de una vía (trazo: bien · medio · mal): colores del estilo (estilos.json); sin ellos, del acento y el texto
+  T.bien = COL.bien ? C("bien") : C("secundario"); T.medio = COL.medio ? C("medio") : C("luces"); T.mal = COL.mal ? C("mal") : C("acento");
+  // carrocerías de los objetos que se mueven (variantes por semilla): claras sobre la noche, de tinta sobre los fondos claros
+  T.vehiculos = ES.modo === 1 || ES.modo === 4
+    ? [T.secundario.clone().multiplyScalar(0.8), T.techo.clone().multiplyScalar(1.25), C("costa"), C("tierra_alta").multiplyScalar(0.8), T.secundario.clone().multiplyScalar(0.5)]
+    : [T.linea.clone().lerp(C("fondo"), 0.25), C("costa").multiplyScalar(0.8), C("tierra_baja"), T.linea.clone().lerp(C("costa"), 0.5), C("fondo").multiplyScalar(0.9)];
   return T;
 })();
 // la luz de las superficies de mundo: la del estilo (CFG.luz), estilizada para que las caras de un edificio se separen
@@ -249,15 +255,147 @@ const malla = {
   poner(acc, mat, orden = 0) { const m = new THREE.Mesh(malla.geometria(acc), mat); m.frustumCulled = false; m.renderOrder = orden; scene.add(m); return m; },
 };
 
+// ---------- lo que se mueve (piezas actor y flujo): trayectorias, móviles y la flota de objetos ----------
+// Una trayectoria es s(t) lineal por tramos (T, S: la calcula scripts/maqueta_tipos/_movimiento.py, que también la usan
+// los gates); aquí solo se EVALÚA, suavizada con una ventana de ±h s: s̄(t) = (F(t+h) − F(t−h)) / 2h con F = ∫ s dt (forma
+// cerrada, seek puro). Fuera de [T0, Tn] sigue con la pendiente del extremo. El mismo cálculo que _movimiento.suave.
+const tray = {
+  nueva(T, S) { const F = [0]; for (let k = 0; k + 1 < T.length; k++) F.push(F[k] + (S[k] + S[k + 1]) / 2 * (T[k + 1] - T[k])); return { T, S, F }; },
+  _k(T, t) { let lo = 0, hi = T.length - 1; while (hi - lo > 1) { const m = (lo + hi) >> 1; if (T[m] <= t) lo = m; else hi = m; } return lo; },
+  _v(r, k) { const { T, S } = r; return T[k + 1] > T[k] ? (S[k + 1] - S[k]) / (T[k + 1] - T[k]) : 0; },
+  pos(r, t) { const { T, S } = r, n = T.length; if (n === 1) return S[0];
+    if (t <= T[0]) return S[0] + tray._v(r, 0) * (t - T[0]);
+    if (t >= T[n - 1]) return S[n - 1] + tray._v(r, n - 2) * (t - T[n - 1]);
+    const k = Math.min(n - 2, tray._k(T, t)); return S[k] + tray._v(r, k) * (t - T[k]); },
+  _F(r, t) { const { T, S, F } = r, n = T.length; if (n === 1) return S[0] * (t - T[0]);
+    let d; if (t <= T[0]) { d = t - T[0]; const v = tray._v(r, 0); return S[0] * d + v * d * d / 2; }
+    if (t >= T[n - 1]) { d = t - T[n - 1]; const v = tray._v(r, n - 2); return F[n - 1] + S[n - 1] * d + v * d * d / 2; }
+    const k = Math.min(n - 2, tray._k(T, t)); d = t - T[k]; const v = tray._v(r, k); return F[k] + S[k] * d + v * d * d / 2; },
+  // [s̄, v̄] en t (h: media ventana en s; 0 = sin suavizar)
+  suave(r, h, t) { if (h <= 0) { const n = r.T.length, k = n > 1 ? Math.max(0, Math.min(n - 2, tray._k(r.T, t))) : 0; return [tray.pos(r, t), n > 1 ? tray._v(r, k) : 0]; }
+    return [(tray._F(r, t + h) - tray._F(r, t - h)) / (2 * h), (tray.pos(r, t + h) - tray.pos(r, t - h)) / (2 * h)]; },
+};
+// los móviles: id de pieza → (t, n) → {x, y, dx, dy, v, vis} (los registran actor y flujo en su armar; los leen la cámara que
+// sigue y las anotaciones). Un ancla resuelta es {x, y} (fija) o {movil, n, desfase: [adelante, izquierda], lev}
+const MOVILES = {};
+function anclaEn(A, t) {
+  if (A.movil === undefined) return { x: A.x, y: A.y, dx: 1, dy: 0, v: 0, vis: true, lev: 0 };
+  const m = MOVILES[A.movil]; if (!m) throw new Error("ancla sin móvil: " + A.movil);
+  const q = m(t, A.n || 0), d = A.desfase || [0, 0];
+  return { x: q.x + q.dx * d[0] - q.dy * d[1], y: q.y + q.dy * d[0] + q.dx * d[1], dx: q.dx, dy: q.dy, v: q.v, vis: q.vis, lev: A.lev || 0 };
+}
+
+// la FLOTA: n objetos de un tipo (video/maqueta/objetos/<tipo>.js) en una InstancedMesh (una malla para todos), con la luz
+// del estilo calculada en el shader (el objeto gira), su color por instancia (las partes con `tinte`) y, de noche, sus luces:
+// faros (puntos cálidos y un cono tenue en el suelo) y pilotos (que se avivan al frenar). Cada cuadro: poner(i, …) → listo().
+// El objeto da sus partes en METROS (x adelante, y arriba, z a su derecha); aquí se escalan a la unidad de la escena.
+const VERT_OBJ = `attribute vec3 color; attribute float aTinte, aLuz; uniform vec3 uLuz; uniform float uModo; varying vec3 vCol, vPos;
+  void main(){ mat4 im = mat4(1.0);
+    #ifdef USE_INSTANCING
+      im = instanceMatrix;
+    #endif
+    vec3 n = normalize(mat3(modelMatrix * im) * normal); float lam = max(0.0, dot(n, uLuz));
+    float s = (uModo > 1.5 && uModo < 2.5) ? (lam < 0.22 ? 0.62 : (lam < 0.62 ? 0.82 : 1.0)) : 0.5 + 0.62 * lam;
+    vec3 c = color;
+    #ifdef USE_INSTANCING_COLOR
+      c = mix(c, c * instanceColor, aTinte);
+    #endif
+    vCol = mix(c * s, c * 1.25, aLuz);
+    vec4 wp = modelMatrix * im * vec4(position, 1.0); vPos = wp.xyz; gl_Position = projectionMatrix * viewMatrix * wp; }`;
+const FRAG_OBJ = GLSL_COMUN + "uniform float uBrillo; varying vec3 vCol, vPos; void main(){ gl_FragColor = vec4(salida(niebla(vCol * uBrillo, vPos, gl_FragCoord.xy), gl_FragCoord.xy), 1.0); }";
+const SRGB = "c = mix(c * 12.92, 1.055 * pow(max(c, vec3(0.0)), vec3(0.41666)) - 0.055, step(0.0031308, c));";
+function geoObjeto(partes) {           // las partes [{geo, color, tinte, luz}] → una geometría no indexada con color, aTinte y aLuz
+  const pos = [], nor = [], col = [], tin = [], luz = [];
+  for (const p of partes) {
+    const g = p.geo.index ? p.geo.toNonIndexed() : p.geo; g.computeVertexNormals();
+    const P = g.attributes.position.array, N = g.attributes.normal.array;
+    for (let i = 0; i < P.length; i += 3) { pos.push(P[i], P[i + 1], P[i + 2]); nor.push(N[i], N[i + 1], N[i + 2]);
+      col.push(p.color.r, p.color.g, p.color.b); tin.push(p.tinte ? 1 : 0); luz.push(p.luz || 0); }
+  }
+  const g = new THREE.BufferGeometry(), F = (a, k) => new THREE.BufferAttribute(new Float32Array(a), k);
+  g.setAttribute("position", F(pos, 3)); g.setAttribute("normal", F(nor, 3)); g.setAttribute("color", F(col, 3));
+  g.setAttribute("aTinte", F(tin, 1)); g.setAttribute("aLuz", F(luz, 1));
+  return g;
+}
+function flota(tipo, n, op = {}) {
+  const O = MAQ.OBJETOS[tipo];
+  if (!O) throw new Error("objeto sin módulo: " + tipo + " (video/maqueta/objetos/" + tipo + ".js)");
+  const um = 1 / MU.unidad_m, tam = op.tamano || 1, k0 = tam * um, N1 = Math.max(1, n);
+  const mat = new THREE.ShaderMaterial({ uniforms: { ...uComun(), uLuz: { value: LUZ_DIR.clone().normalize() }, uModo: { value: ES.modo }, uBrillo: { value: 1 } },
+    vertexShader: VERT_OBJ, fragmentShader: FRAG_OBJ });
+  const im = new THREE.InstancedMesh(geoObjeto(O.partes(ctx)), mat, N1);
+  im.frustumCulled = false; im.renderOrder = op.orden || 3;
+  const variantes = O.variantes ? O.variantes(ctx) : [TONOS.secundario];
+  for (let i = 0; i < N1; i++) im.setColorAt(i, op.color ? op.color(i, variantes) : variantes[0]);
+  im.instanceColor.needsUpdate = true;
+  const cero = new THREE.Matrix4().makeScale(0, 0, 0);
+  for (let i = 0; i < N1; i++) im.setMatrixAt(i, cero);
+  scene.add(im);
+  const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), e = new THREE.Vector3(), sc = new THREE.Vector3(), Y = new THREE.Vector3(0, 1, 0), k2 = new THREE.Vector3();
+  // de noche: faros (cálidos) y pilotos (en el tono «mal», más vivos al frenar) como puntos, y el cono de los faros en el suelo
+  let luces = null;
+  if (ES.modo === 1 && op.luces !== false && (O.faros || []).length) {
+    const NF = O.faros.length, NP = (O.pilotos || []).length, N = N1 * (NF + NP);
+    const g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.BufferAttribute(new Float32Array(N * 3), 3));
+    g.setAttribute("aK", new THREE.BufferAttribute(new Float32Array(N), 1));
+    g.setAttribute("aCol", new THREE.BufferAttribute(new Float32Array(N), 1));
+    const pm = new THREE.ShaderMaterial({ uniforms: { cA: { value: lin(COL.luces) }, cB: { value: TONOS.mal }, uTam: { value: 0.9 * k0 }, uPx: { value: 1 } },
+      transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+      vertexShader: "attribute float aK, aCol; uniform float uTam, uPx; varying float vK, vC; void main(){ vK = aK; vC = aCol; vec4 mv = modelViewMatrix * vec4(position, 1.0); gl_Position = projectionMatrix * mv; gl_PointSize = aK > 0.0 ? clamp(uTam * uPx / max(1e-3, -mv.z) * 3.0, 3.5, 16.0) : 0.0; }",
+      fragmentShader: "uniform vec3 cA, cB; varying float vK, vC; void main(){ float r = length(gl_PointCoord - 0.5) * 2.0; if (r > 1.0) discard; float a = (exp(-r * r * 9.0) + exp(-r * r * 60.0)) * vK; vec3 c = mix(cA, cB, vC); " + SRGB + " gl_FragColor = vec4(c * a, a); }" });
+    const pts = new THREE.Points(g, pm); pts.frustumCulled = false; pts.renderOrder = 9; scene.add(pts);
+    const gc = new THREE.PlaneGeometry(1, 1); gc.rotateX(-Math.PI / 2); gc.translate(0.5, 0, 0);   // de 0 a 1 hacia adelante
+    const cm = new THREE.ShaderMaterial({ uniforms: { cA: { value: lin(COL.luces) }, uK: { value: 0.18 } }, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+      vertexShader: "varying vec2 vUv; void main(){ vUv = uv; mat4 im = mat4(1.0);\n#ifdef USE_INSTANCING\n im = instanceMatrix;\n#endif\n gl_Position = projectionMatrix * viewMatrix * modelMatrix * im * vec4(position, 1.0); }",
+      fragmentShader: "uniform vec3 cA; uniform float uK; varying vec2 vUv; void main(){ float x = vUv.x, y = (vUv.y - 0.5) * 2.0, w = 0.2 + 0.8 * x; float a = uK * (1.0 - x) * smoothstep(0.0, 0.06, x) * exp(-pow(y / w, 2.0) * 2.5); vec3 c = cA; " + SRGB + " gl_FragColor = vec4(c * a, a); }" });
+    const cono = new THREE.InstancedMesh(gc, cm, N1); cono.frustumCulled = false; cono.renderOrder = 4;
+    for (let i = 0; i < N1; i++) cono.setMatrixAt(i, cero);
+    scene.add(cono);
+    luces = { pts, cono, NF, NP };
+  }
+  return {
+    n: N1, mesh: im,
+    // el objeto i en (x, y) mirando hacia (dx, dy), con escala k (0 = no se ve) y freno 0–1 (aviva los pilotos)
+    poner(i, x, y, dx, dy, k = 1, freno = 0) {
+      const z = altura(x, y) + (op.lev || 0) * um;
+      q.setFromAxisAngle(Y, Math.atan2(dy, dx)); e.set(x, z, -y); sc.setScalar(k0 * k);
+      im.setMatrixAt(i, k > 0 ? m4.compose(e, q, sc) : cero);
+      if (!luces) return;
+      const A = luces.pts.geometry.attributes, base = i * (luces.NF + luces.NP);
+      const pon = (j, l, kk, cc) => { const lx = l[0] * k0, ly = l[1] * k0, lz = l[2] * k0;   // local (adelante, arriba, derecha) → escena
+        A.position.setXYZ(base + j, x + dx * lx + dy * lz, z + ly, -(y + dy * lx - dx * lz)); A.aK.setX(base + j, kk); A.aCol.setX(base + j, cc); };
+      O.faros.forEach((l, j) => pon(j, l, k > 0 ? 0.85 : 0, 0));
+      (O.pilotos || []).forEach((l, j) => pon(luces.NF + j, l, k > 0 ? 0.22 + 0.78 * freno : 0, 1));
+      const f = O.faros[0][0] * k0;
+      k2.set(x + dx * f, z + 0.08 * um, -(y + dy * f)); sc.set(18 * k0, 1, 7 * k0);
+      luces.cono.setMatrixAt(i, k > 0 ? m4.compose(k2, q, sc) : cero);
+    },
+    listo() {
+      im.instanceMatrix.needsUpdate = true;
+      if (luces) { const A = luces.pts.geometry.attributes; A.position.needsUpdate = A.aK.needsUpdate = A.aCol.needsUpdate = true;
+        luces.pts.material.uniforms.uPx.value = ctx.cuadro ? ctx.cuadro.pxKm : 1; luces.cono.instanceMatrix.needsUpdate = true; }
+    },
+    brillo(b) { mat.uniforms.uBrillo.value = b; },
+  };
+}
+
 // ---------- cámara: la función del contrato (cada parámetro con e = −(cos(πu) − 1)/2 entre claves) ----------
 // `dist` en unidades de la escena (pais: dist_km; ciudad y esquema: dist_m); cerca, lejos y niebla, por mundo (MU.camara)
 const CL = M.camara;
+// una clave con `sigue` (un actor o un vehículo de un flujo) mira donde está ese móvil en t (el mismo cálculo que
+// maqueta3d.camara_en con la `_pos` de la clave); las demás, su punto fijo
+function miraDe(k, t) {
+  if (!k.sigue) return [k.x, k.y, k.alt];
+  const q = anclaEn(k.sigue, t); return [q.x, q.y, altura(q.x, q.y)];
+}
 function camaraEn(t) {
   let i = 0; while (i < CL.length - 2 && t > CL[i + 1].t) i++;
   const a = CL[i], b = CL[Math.min(i + 1, CL.length - 1)];
   const u = b.t > a.t ? clamp((t - a.t) / (b.t - a.t)) : 0, e = -(Math.cos(Math.PI * u) - 1) / 2;
   const L = (k) => a[k] + (b[k] - a[k]) * e;
-  return { x: L("x"), y: L("y"), alt: L("alt"), dist: L("dist"), az: L("azimut"), el: L("elevacion"), fov: L("fov") };
+  const pa = miraDe(a, t), pb = miraDe(b, t), P = (j) => pa[j] + (pb[j] - pa[j]) * e;
+  return { x: P(0), y: P(1), alt: P(2), dist: L("dist"), az: L("azimut"), el: L("elevacion"), fov: L("fov") };
 }
 let CAM = null;
 function ponerCamara(t) {
@@ -277,7 +415,7 @@ function ponerCamara(t) {
 // `lista`: las piezas (o los eventos) de ese tipo, en el orden del maqueta.json. Los OBJETOS los usan las piezas
 // (ctx.MAQ.OBJETOS[id]); el núcleo no los recorre.
 const MAQ = window.MAQ = window.MAQ || {};
-for (const k of ["PIEZAS", "EVENTOS", "OBJETOS", "MUNDOS"]) MAQ[k] = MAQ[k] || {};
+for (const k of ["PIEZAS", "EVENTOS", "OBJETOS", "ANOTACIONES", "MUNDOS"]) MAQ[k] = MAQ[k] || {};
 const EV = M.eventos;
 for (const e of EV) if (e.adelanto) { e.t -= e.adelanto; e.dur += e.adelanto; }   // como si ya llevara ese avance
 for (const p of M.piezas) if (!MAQ.PIEZAS[p.tipo]) throw new Error("pieza sin módulo: " + p.tipo + " (video/maqueta/piezas/" + p.tipo + ".js)");
@@ -307,6 +445,9 @@ const ctx = {
   GLSL_COMUN, VERT_CINTA, uComun,                                // (el mundo pais añade NR, NC, NO, GLSL_RUPTURA, uRuptura, superficie)
   geoCinta, pegar, cinta: cintaSimple,
   tonos: TONOS, sombra, malla,                                   // superficies de mundo (ciudad, esquema): colores, luz y geometría
+  // lo que se mueve: tray (evaluar una trayectoria T/S suavizada), moviles (id → (t, n) → {x, y, dx, dy, v, vis}: lo registran
+  // actor y flujo; lo siguen la cámara y las anotaciones), ancla(A, t) y flota(tipo, n, {tamano, lev, luces, color, orden})
+  tray, moviles: MOVILES, ancla: (A, t) => anclaEn(A, t), flota,
   linea: (id, cn) => { LINEAS[id] = cn; },                       // una cinta que «resaltar» sube por el id de su pieza
   fallas: [], idxFalla: () => -1,                                // los pone piezas/falla.js (la superficie y voxel los leen)
   luces: [],                                                     // los pone piezas/luces.js: [{x, y, peso, id, pieza, on, ac, v}]
@@ -348,11 +489,13 @@ function proyectar(x, y, z) {
   return [(_v.x + 1) / 2 * W, (1 - _v.y) / 2 * H];
 }
 ctx.proyectar = proyectar;
+// lo que la capa 2D (y sus anotaciones) necesita del mundo: dónde está un ancla en t y la altura del suelo (unidades de la escena)
+const CAPA_MUNDO = { ancla: (A, t) => anclaEn(A, t), altura: (x, y) => altura(x, y), metros: (v) => v / MU.unidad_m };
 function renderAt(t) {
   ponerCamara(t);
   mundoEn(t);
   renderer.render(scene, camera);
-  if (window.__capa) window.__capa(t, proyectar);
+  if (window.__capa) window.__capa(t, proyectar, CAPA_MUNDO);
 }
 
 // ---------- contrato HyperFrames ----------

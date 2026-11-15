@@ -97,3 +97,23 @@ html, body { width: var(--w); height: var(--h); overflow: hidden; background: va
 #cierre .sigue .h { font: 800 var(--red-txt)/1 Archivo, sans-serif; letter-spacing: -.005em; }
 #cierre .sigue.enfila { display: flex; flex-wrap: wrap; align-items: center; column-gap: 40px; }
 #cierre .sigue.enfila .fila { width: 100%; }
+/* ANOTACIONES atadas al 3D (video/maqueta/anotaciones/*.js): una capa SVG para lo que se dibuja en el suelo (anillos que
+   pulsan, el círculo o la regla de una medida) y una de texto (etiquetas que siguen a un móvil, el reloj). En crema: el
+   acento es del 3D */
+#anot { position: absolute; inset: 0; }
+#anot .anot-svg { position: absolute; left: 0; top: 0; width: var(--w); height: var(--h); overflow: visible; }
+#anot .anot-txt { position: absolute; inset: 0; }
+.anot-linea { fill: none; stroke: var(--ink); stroke-width: 3; stroke-linejoin: round; stroke-linecap: round; }
+.anot-fina { fill: none; stroke: var(--ink); stroke-width: 2; stroke-dasharray: 8 7; }
+.anot-relleno { fill: var(--ink); stroke: none; }
+.anot-sombra { fill: none; stroke: var(--sombra); stroke-width: 7; stroke-linejoin: round; opacity: .55; }
+.anot-etq { position: absolute; left: 0; top: 0; transform-origin: 50% 100%; white-space: nowrap; padding: 9px 16px 8px; border-radius: 999px;
+  background: color-mix(in srgb, var(--tarjeta-bg) 88%, transparent); color: var(--tarjeta-ink); border: 1.5px solid color-mix(in srgb, var(--tarjeta-ink) 55%, transparent);
+  font: 800 34px/1 Archivo, sans-serif; font-variant-numeric: tabular-nums; box-shadow: 0 6px 18px color-mix(in srgb, var(--sombra) 60%, transparent); will-change: transform, opacity; opacity: 0; }
+.anot-etq small { font: 600 20px/1 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; margin-left: 10px; color: color-mix(in srgb, var(--tarjeta-ink) 72%, transparent); }
+.anot-rotulo { position: absolute; left: 0; top: 0; white-space: nowrap; font: 800 38px/1 Archivo, sans-serif; font-variant-numeric: tabular-nums; color: var(--ink);
+  text-shadow: 0 2px 14px color-mix(in srgb, var(--sombra) 90%, transparent), 0 0 3px var(--sombra); will-change: transform, opacity; opacity: 0; }
+.anot-reloj { position: absolute; left: 0; top: 0; padding: 12px 18px 10px; border-radius: var(--radio); white-space: nowrap;
+  background: color-mix(in srgb, var(--tarjeta-bg) 86%, transparent); border: 1.5px solid color-mix(in srgb, var(--tarjeta-ink) 45%, transparent); color: var(--tarjeta-ink);
+  font: 700 54px/1 'JetBrains Mono', monospace; font-variant-numeric: tabular-nums; letter-spacing: .02em; will-change: transform, opacity; opacity: 0; }
+.anot-reloj small { display: block; margin-bottom: 8px; font: 600 20px/1 'JetBrains Mono', monospace; letter-spacing: .12em; text-transform: uppercase; color: color-mix(in srgb, var(--tarjeta-ink) 72%, transparent); }

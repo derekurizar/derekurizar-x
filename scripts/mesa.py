@@ -1782,5 +1782,5 @@ def catalogo_maqueta():
         import maqueta3d
         mot = motores_maqueta()
         return maqueta3d.lineas_catalogo("realizador", motor=mot[0] if len(mot) == 1 else None)
-    except Exception as e:   # el digesto no se cae por el catálogo
+    except (ImportError, OSError, ValueError, KeyError) as e:   # el digesto no se cae por el catálogo, pero lo dice
         return ["(no se pudo leer el catálogo de la maqueta: %s; python3 scripts/maqueta3d.py catalogo --para realizador)" % e]

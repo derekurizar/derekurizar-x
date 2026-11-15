@@ -1,0 +1,83 @@
+{
+ "tipo": "reloj",
+ "clase": "anotacion",
+ "cuando": "una hora que corre para decir cuánto tarda algo («todo pasa en un segundo»: de 8:14:21 a 8:14:22)",
+ "parametros": {
+  "de": {
+   "tipo": "texto",
+   "requerido": true,
+   "descripcion": "la hora al arrancar («H:MM:SS»)"
+  },
+  "a": {
+   "tipo": "texto",
+   "requerido": false,
+   "descripcion": "la hora al llegar (por defecto, la misma)"
+  },
+  "corre_desde": {
+   "tipo": "numero",
+   "requerido": false,
+   "descripcion": "el segundo del video en que arranca (por defecto, `t`)",
+   "rango": [
+    0,
+    600
+   ]
+  },
+  "corre_hasta": {
+   "tipo": "numero",
+   "requerido": false,
+   "descripcion": "el segundo en que llega a `a` (por defecto, `hasta`)",
+   "rango": [
+    0,
+    600
+   ]
+  },
+  "pos": {
+   "tipo": "texto",
+   "requerido": false,
+   "descripcion": "dónde va: arriba (bajo el titular, a la derecha) o abajo (sobre la cifra)",
+   "defecto": "arriba",
+   "valores": [
+    "arriba",
+    "abajo"
+   ]
+  },
+  "en": {
+   "tipo": "ancla",
+   "requerido": false,
+   "descripcion": "o encima de algo que se mueve (en vez de `pos`)"
+  },
+  "rotulo": {
+   "tipo": "texto",
+   "requerido": false,
+   "descripcion": "una línea pequeña encima («Hora del aviso»)"
+  },
+  "decimas": {
+   "tipo": "bool",
+   "requerido": false,
+   "descripcion": "muestra las décimas de segundo",
+   "defecto": false
+  },
+  "ilustrativo": {
+   "tipo": "bool",
+   "requerido": false,
+   "descripcion": "solo en un esquema: la hora es de ejemplo y no pide respaldo (la voz no la dice como dato)",
+   "defecto": false
+  }
+ },
+ "escalas": [
+  "esquema",
+  "ciudad",
+  "pais"
+ ],
+ "motores": [
+  "three"
+ ],
+ "ejemplo": {
+  "t": 1,
+  "hasta": 4,
+  "tipo": "reloj",
+  "de": "8:14:21",
+  "a": "8:14:22",
+  "ilustrativo": true
+ }
+}

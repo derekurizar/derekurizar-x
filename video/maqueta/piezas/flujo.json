@@ -1,0 +1,116 @@
+{
+ "tipo": "flujo",
+ "clase": "pieza",
+ "cuando": "el tráfico: muchos vehículos por uno o varios carriles, que frenan y forman cola (un atasco, una hora pico, un bloqueo)",
+ "parametros": {
+  "carriles": {
+   "tipo": "lista",
+   "requerido": true,
+   "descripcion": "los caminos por donde van, en el sentido de la marcha («carril-1»…, o «<carretera>.carril-k»)",
+   "min": 1
+  },
+  "tipos": {
+   "tipo": "mezcla",
+   "requerido": false,
+   "descripcion": "qué vehículos y en qué proporción ({\"carro\": 0.8, \"bus\": 0.1, \"camion\": 0.1})",
+   "defecto": {
+    "carro": 1
+   }
+  },
+  "densidad": {
+   "tipo": "numero",
+   "requerido": false,
+   "descripcion": "vehículos por km y carril (tiene tope: el hueco mínimo a esa velocidad)",
+   "rango": [
+    1,
+    120
+   ],
+   "defecto": 18
+  },
+  "vel_kmh": {
+   "tipo": "numero",
+   "requerido": false,
+   "descripcion": "la velocidad base del flujo",
+   "rango": [
+    1,
+    200
+   ],
+   "defecto": 60
+  },
+  "reaccion_s": {
+   "tipo": "numero",
+   "requerido": false,
+   "descripcion": "el tiempo de reacción de cada conductor: cuánto tarda la cola en propagarse",
+   "rango": [
+    0.3,
+    2.0
+   ],
+   "defecto": 0.8
+  },
+  "suavizado_s": {
+   "tipo": "numero",
+   "requerido": false,
+   "descripcion": "segundos de la ventana que suaviza frenadas y arranques",
+   "rango": [
+    0,
+    4
+   ],
+   "defecto": 1.2
+  },
+  "semilla": {
+   "tipo": "entero",
+   "requerido": false,
+   "descripcion": "el azar fijo de posiciones, tipos y colores",
+   "rango": [
+    0,
+    100000
+   ],
+   "defecto": 1
+  },
+  "tamano": {
+   "tipo": "numero",
+   "requerido": false,
+   "descripcion": "agranda los vehículos para que se lean de lejos (1 = real)",
+   "rango": [
+    1,
+    8
+   ],
+   "defecto": 1
+  },
+  "luces": {
+   "tipo": "bool",
+   "requerido": false,
+   "descripcion": "de noche, faros y pilotos encendidos",
+   "defecto": true
+  }
+ },
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "usa": [
+  "arbol",
+  "bus",
+  "camion",
+  "carro",
+  "casa",
+  "moto",
+  "persona",
+  "pin",
+  "telefono",
+  "torre"
+ ],
+ "ejemplo": {
+  "id": "trafico",
+  "tipo": "flujo",
+  "carriles": [
+   "carril-1",
+   "carril-2"
+  ],
+  "densidad": 20,
+  "vel_kmh": 70
+ }
+}

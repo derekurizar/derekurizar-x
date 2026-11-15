@@ -1,0 +1,51 @@
+{
+ "tipo": "medida",
+ "clase": "anotacion",
+ "cuando": "el tamaño de algo con su número: un círculo de «5 m» alrededor de un carro, una regla de «200 m» de cola",
+ "parametros": {
+  "en": {
+   "tipo": "ancla",
+   "requerido": true,
+   "descripcion": "alrededor de qué (o desde dónde, la regla): un lugar, {actor: id} o un vehículo de un flujo"
+  },
+  "radio_m": {
+   "tipo": "numero",
+   "requerido": true,
+   "descripcion": "el radio del círculo o el largo de la regla, en metros",
+   "rango": [
+    0.1,
+    100000
+   ]
+  },
+  "forma": {
+   "tipo": "texto",
+   "requerido": false,
+   "descripcion": "círculo en el suelo o regla hacia adelante",
+   "defecto": "circulo",
+   "valores": [
+    "circulo",
+    "regla"
+   ]
+  },
+  "rotulo": {
+   "tipo": "texto",
+   "requerido": false,
+   "descripcion": "lo que dice (por defecto «<radio_m> m»); su número lleva respaldo"
+  }
+ },
+ "escalas": [
+  "esquema",
+  "ciudad",
+  "pais"
+ ],
+ "motores": [
+  "three"
+ ],
+ "ejemplo": {
+  "t": 1,
+  "hasta": 4,
+  "tipo": "medida",
+  "en": "centro",
+  "radio_m": 50
+ }
+}

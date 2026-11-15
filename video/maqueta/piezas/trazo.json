@@ -1,0 +1,74 @@
+{
+ "tipo": "trazo",
+ "clase": "pieza",
+ "cuando": "una línea brillante sobre una calle o una vía que se dibuja y se pinta por tramos (el tráfico en verde, ámbar y rojo, una ruta)",
+ "parametros": {
+  "camino": {
+   "tipo": "texto",
+   "requerido": true,
+   "descripcion": "el camino con nombre sobre el que va («eje», «carril-1», «autopista»…)"
+  },
+  "desde": {
+   "tipo": "posicion",
+   "requerido": false,
+   "descripcion": "dónde empieza sobre el camino: metros, «40%» o un lugar (por defecto, el inicio)"
+  },
+  "hasta": {
+   "tipo": "posicion",
+   "requerido": false,
+   "descripcion": "dónde termina sobre el camino (por defecto, el final; antes que `desde` = en contra del camino)"
+  },
+  "desplazar_m": {
+   "tipo": "numero",
+   "requerido": false,
+   "descripcion": "lo corre a su izquierda (negativo: a la derecha), p. ej. sobre los carriles de un sentido",
+   "rango": [
+    -80,
+    80
+   ],
+   "defecto": 0
+  },
+  "color": {
+   "tipo": "texto",
+   "requerido": false,
+   "descripcion": "su color de partida (bien = verde, medio = ámbar, mal = rojo; acento solo si es el protagonista)",
+   "defecto": "bien",
+   "valores": [
+    "bien",
+    "medio",
+    "mal",
+    "texto",
+    "acento"
+   ]
+  },
+  "ancho_px": {
+   "tipo": "numero",
+   "requerido": false,
+   "descripcion": "medio ancho de la línea en píxeles",
+   "rango": [
+    1,
+    20
+   ],
+   "defecto": 5
+  },
+  "brillo": {
+   "tipo": "bool",
+   "requerido": false,
+   "descripcion": "un halo alrededor de la línea (de noche suma luz)",
+   "defecto": true
+  }
+ },
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "ejemplo": {
+  "id": "ruta",
+  "tipo": "trazo",
+  "camino": "eje",
+  "color": "bien"
+ }
+}

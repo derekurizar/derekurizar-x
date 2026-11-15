@@ -3,6 +3,145 @@
  "nota": "Lo escribe SOLO `python3 scripts/maqueta3d.py catalogo --registrar` desde las fichas video/maqueta/<clase>/<tipo>.json (no se edita a mano). Cómo añadir una entrada: referencias/diseno/maqueta3d.md («Añadir vocabulario»).",
  "entradas": [
   {
+   "tipo": "actor",
+   "clase": "pieza",
+   "cuando": "UN objeto que se mueve por un camino (el carro que seguimos, la persona que camina, el bus que llega) o que está quieto en un lugar",
+   "parametros": {
+    "objeto": {
+     "tipo": "texto",
+     "requerido": false,
+     "descripcion": "qué es: uno de los objetos del catálogo",
+     "defecto": "carro",
+     "valores": [
+      "arbol",
+      "bus",
+      "camion",
+      "carro",
+      "casa",
+      "moto",
+      "persona",
+      "pin",
+      "telefono",
+      "torre"
+     ]
+    },
+    "camino": {
+     "tipo": "texto",
+     "requerido": false,
+     "descripcion": "el camino con nombre que sigue (de la receta o de una pieza: «carril-1», «autopista.carril-2», «eje»)"
+    },
+    "desde": {
+     "tipo": "lugar",
+     "requerido": false,
+     "descripcion": "con `hacia`: va en línea recta de este lugar a aquel (en vez de `camino`)"
+    },
+    "hacia": {
+     "tipo": "lugar",
+     "requerido": false,
+     "descripcion": "a dónde va cuando lleva `desde`"
+    },
+    "puntos": {
+     "tipo": "puntos",
+     "requerido": false,
+     "descripcion": "su propio recorrido (en un esquema, [x, y] en metros)",
+     "min": 2
+    },
+    "lugar": {
+     "tipo": "lugar",
+     "requerido": false,
+     "descripcion": "quieto en este lugar (en vez de un camino), mirando a `rumbo`"
+    },
+    "rumbo": {
+     "tipo": "numero",
+     "requerido": false,
+     "descripcion": "quieto: hacia dónde mira (grados; 0 = este, 90 = norte)",
+     "rango": [
+      0,
+      360
+     ],
+     "defecto": 0
+    },
+    "claves": {
+     "tipo": "claves",
+     "requerido": false,
+     "descripcion": "[{t, s | lugar | vel_kmh}]: dónde está o a qué velocidad va en cada segundo (s: metros desde el inicio del camino o «40%»)"
+    },
+    "tamano": {
+     "tipo": "numero",
+     "requerido": false,
+     "descripcion": "agranda el objeto para que se lea de lejos (1 = su tamaño real)",
+     "rango": [
+      1,
+      8
+     ],
+     "defecto": 1
+    },
+    "suavizado_s": {
+     "tipo": "numero",
+     "requerido": false,
+     "descripcion": "segundos de la ventana que suaviza arranques y frenadas",
+     "rango": [
+      0,
+      4
+     ],
+     "defecto": 1.0
+    },
+    "variante": {
+     "tipo": "entero",
+     "requerido": false,
+     "descripcion": "qué color de carrocería (si no es el protagonista, que va en el acento)",
+     "rango": [
+      0,
+      99
+     ]
+    },
+    "lev_m": {
+     "tipo": "numero",
+     "requerido": false,
+     "descripcion": "metros sobre el suelo (un pin que flota, un teléfono en la mano)",
+     "rango": [
+      0,
+      500
+     ],
+     "defecto": 0
+    }
+   },
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "usa": [
+    "arbol",
+    "bus",
+    "camion",
+    "carro",
+    "casa",
+    "moto",
+    "persona",
+    "pin",
+    "telefono",
+    "torre"
+   ],
+   "ejemplo": {
+    "id": "mi-carro",
+    "tipo": "actor",
+    "objeto": "carro",
+    "camino": "carril-1",
+    "claves": [
+     {
+      "t": 0,
+      "s": "45%",
+      "vel_kmh": 60
+     }
+    ]
+   },
+   "modulo": "piezas/actor.js",
+   "reglas": "scripts/maqueta_tipos/actor.py"
+  },
+  {
    "tipo": "agua",
    "clase": "pieza",
    "cuando": "el agua del lugar: lagos, estanques, el mar de la costa y los ríos",
@@ -220,6 +359,124 @@
    "reglas": "scripts/maqueta_tipos/falla.py"
   },
   {
+   "tipo": "flujo",
+   "clase": "pieza",
+   "cuando": "el tráfico: muchos vehículos por uno o varios carriles, que frenan y forman cola (un atasco, una hora pico, un bloqueo)",
+   "parametros": {
+    "carriles": {
+     "tipo": "lista",
+     "requerido": true,
+     "descripcion": "los caminos por donde van, en el sentido de la marcha («carril-1»…, o «<carretera>.carril-k»)",
+     "min": 1
+    },
+    "tipos": {
+     "tipo": "mezcla",
+     "requerido": false,
+     "descripcion": "qué vehículos y en qué proporción ({\"carro\": 0.8, \"bus\": 0.1, \"camion\": 0.1})",
+     "defecto": {
+      "carro": 1
+     }
+    },
+    "densidad": {
+     "tipo": "numero",
+     "requerido": false,
+     "descripcion": "vehículos por km y carril (tiene tope: el hueco mínimo a esa velocidad)",
+     "rango": [
+      1,
+      120
+     ],
+     "defecto": 18
+    },
+    "vel_kmh": {
+     "tipo": "numero",
+     "requerido": false,
+     "descripcion": "la velocidad base del flujo",
+     "rango": [
+      1,
+      200
+     ],
+     "defecto": 60
+    },
+    "reaccion_s": {
+     "tipo": "numero",
+     "requerido": false,
+     "descripcion": "el tiempo de reacción de cada conductor: cuánto tarda la cola en propagarse",
+     "rango": [
+      0.3,
+      2.0
+     ],
+     "defecto": 0.8
+    },
+    "suavizado_s": {
+     "tipo": "numero",
+     "requerido": false,
+     "descripcion": "segundos de la ventana que suaviza frenadas y arranques",
+     "rango": [
+      0,
+      4
+     ],
+     "defecto": 1.2
+    },
+    "semilla": {
+     "tipo": "entero",
+     "requerido": false,
+     "descripcion": "el azar fijo de posiciones, tipos y colores",
+     "rango": [
+      0,
+      100000
+     ],
+     "defecto": 1
+    },
+    "tamano": {
+     "tipo": "numero",
+     "requerido": false,
+     "descripcion": "agranda los vehículos para que se lean de lejos (1 = real)",
+     "rango": [
+      1,
+      8
+     ],
+     "defecto": 1
+    },
+    "luces": {
+     "tipo": "bool",
+     "requerido": false,
+     "descripcion": "de noche, faros y pilotos encendidos",
+     "defecto": true
+    }
+   },
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "usa": [
+    "arbol",
+    "bus",
+    "camion",
+    "carro",
+    "casa",
+    "moto",
+    "persona",
+    "pin",
+    "telefono",
+    "torre"
+   ],
+   "ejemplo": {
+    "id": "trafico",
+    "tipo": "flujo",
+    "carriles": [
+     "carril-1",
+     "carril-2"
+    ],
+    "densidad": 20,
+    "vel_kmh": 70
+   },
+   "modulo": "piezas/flujo.js",
+   "reglas": "scripts/maqueta_tipos/flujo.py"
+  },
+  {
    "tipo": "frontera",
    "clase": "pieza",
    "cuando": "el contorno del país: dónde queda algo respecto de Guatemala",
@@ -306,6 +563,82 @@
    "reglas": "scripts/maqueta_tipos/ruta.py"
   },
   {
+   "tipo": "trazo",
+   "clase": "pieza",
+   "cuando": "una línea brillante sobre una calle o una vía que se dibuja y se pinta por tramos (el tráfico en verde, ámbar y rojo, una ruta)",
+   "parametros": {
+    "camino": {
+     "tipo": "texto",
+     "requerido": true,
+     "descripcion": "el camino con nombre sobre el que va («eje», «carril-1», «autopista»…)"
+    },
+    "desde": {
+     "tipo": "posicion",
+     "requerido": false,
+     "descripcion": "dónde empieza sobre el camino: metros, «40%» o un lugar (por defecto, el inicio)"
+    },
+    "hasta": {
+     "tipo": "posicion",
+     "requerido": false,
+     "descripcion": "dónde termina sobre el camino (por defecto, el final; antes que `desde` = en contra del camino)"
+    },
+    "desplazar_m": {
+     "tipo": "numero",
+     "requerido": false,
+     "descripcion": "lo corre a su izquierda (negativo: a la derecha), p. ej. sobre los carriles de un sentido",
+     "rango": [
+      -80,
+      80
+     ],
+     "defecto": 0
+    },
+    "color": {
+     "tipo": "texto",
+     "requerido": false,
+     "descripcion": "su color de partida (bien = verde, medio = ámbar, mal = rojo; acento solo si es el protagonista)",
+     "defecto": "bien",
+     "valores": [
+      "bien",
+      "medio",
+      "mal",
+      "texto",
+      "acento"
+     ]
+    },
+    "ancho_px": {
+     "tipo": "numero",
+     "requerido": false,
+     "descripcion": "medio ancho de la línea en píxeles",
+     "rango": [
+      1,
+      20
+     ],
+     "defecto": 5
+    },
+    "brillo": {
+     "tipo": "bool",
+     "requerido": false,
+     "descripcion": "un halo alrededor de la línea (de noche suma luz)",
+     "defecto": true
+    }
+   },
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "ejemplo": {
+    "id": "ruta",
+    "tipo": "trazo",
+    "camino": "eje",
+    "color": "bien"
+   },
+   "modulo": "piezas/trazo.js",
+   "reglas": "scripts/maqueta_tipos/trazo.py"
+  },
+  {
    "tipo": "zona",
    "clase": "pieza",
    "cuando": "un área teñida sobre el suelo: un barrio, un parque, la plaza, el área de lo que pasó",
@@ -370,6 +703,67 @@
    "reglas": "scripts/maqueta_tipos/zona.py"
   },
   {
+   "tipo": "acelerar",
+   "clase": "evento",
+   "cuando": "el tráfico vuelve a avanzar (se suelta la cola de un tramo frenado) o todo el flujo cambia de velocidad",
+   "parametros": {
+    "flujo": {
+     "tipo": "pieza",
+     "requerido": true,
+     "descripcion": "el flujo",
+     "piezas": [
+      "flujo"
+     ]
+    },
+    "en": {
+     "tipo": "posicion",
+     "requerido": false,
+     "descripcion": "el tramo que se suelta (el de un frenar); sin él, cambia la velocidad de todo el flujo"
+    },
+    "longitud_m": {
+     "tipo": "numero",
+     "requerido": false,
+     "descripcion": "el largo del tramo, hacia adelante desde `en`",
+     "rango": [
+      5,
+      3000
+     ],
+     "defecto": 60
+    },
+    "vel_kmh": {
+     "tipo": "numero",
+     "requerido": true,
+     "descripcion": "la velocidad nueva; `dur` es lo que tardan en llegar a ella",
+     "rango": [
+      0,
+      200
+     ]
+    },
+    "carriles": {
+     "tipo": "lista",
+     "requerido": false,
+     "descripcion": "qué carriles del flujo (por defecto, todos)"
+    }
+   },
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "ejemplo": {
+    "t": 9,
+    "dur": 2,
+    "tipo": "acelerar",
+    "flujo": "trafico",
+    "en": "60%",
+    "vel_kmh": 70
+   },
+   "modulo": "eventos/acelerar.js",
+   "reglas": "scripts/maqueta_tipos/acelerar.py"
+  },
+  {
    "tipo": "apagar",
    "clase": "evento",
    "cuando": "las luces de unos lugares se apagan de a poco (el apagón, lo que se pierde)",
@@ -397,6 +791,68 @@
    },
    "modulo": "eventos/apagar.js",
    "reglas": "scripts/maqueta_tipos/apagar.py"
+  },
+  {
+   "tipo": "aparecer",
+   "clase": "evento",
+   "cuando": "un actor o el tráfico entra en escena cuando la voz lo nombra (crece desde cero)",
+   "parametros": {
+    "pieza": {
+     "tipo": "pieza",
+     "requerido": true,
+     "descripcion": "el actor o el flujo que entra (antes de su primer aparecer no se ve)",
+     "piezas": [
+      "actor",
+      "flujo"
+     ]
+    }
+   },
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "ejemplo": {
+    "t": 1,
+    "dur": 0.6,
+    "tipo": "aparecer",
+    "pieza": "mi-carro"
+   },
+   "modulo": "eventos/aparecer.js",
+   "reglas": "scripts/maqueta_tipos/aparecer.py"
+  },
+  {
+   "tipo": "desaparecer",
+   "clase": "evento",
+   "cuando": "un actor o el tráfico sale de escena (se encoge hasta cero) y deja ver lo demás",
+   "parametros": {
+    "pieza": {
+     "tipo": "pieza",
+     "requerido": true,
+     "descripcion": "el actor o el flujo que sale",
+     "piezas": [
+      "actor",
+      "flujo"
+     ]
+    }
+   },
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "ejemplo": {
+    "t": 3,
+    "dur": 0.6,
+    "tipo": "desaparecer",
+    "pieza": "mi-carro"
+   },
+   "modulo": "eventos/desaparecer.js",
+   "reglas": "scripts/maqueta_tipos/desaparecer.py"
   },
   {
    "tipo": "deslizar",
@@ -514,6 +970,104 @@
    "reglas": "scripts/maqueta_tipos/encender.py"
   },
   {
+   "tipo": "frenar",
+   "clase": "evento",
+   "cuando": "el tráfico frena en un punto y se forma la cola hacia atrás (un choque, un semáforo, un bloqueo, una hora pico)",
+   "parametros": {
+    "flujo": {
+     "tipo": "pieza",
+     "requerido": true,
+     "descripcion": "el flujo que frena",
+     "piezas": [
+      "flujo"
+     ]
+    },
+    "en": {
+     "tipo": "posicion",
+     "requerido": true,
+     "descripcion": "dónde frena sobre su primer carril: metros, «60%» o un lugar"
+    },
+    "longitud_m": {
+     "tipo": "numero",
+     "requerido": false,
+     "descripcion": "el largo del tramo lento, hacia adelante desde `en`",
+     "rango": [
+      5,
+      3000
+     ],
+     "defecto": 60
+    },
+    "vel_kmh": {
+     "tipo": "numero",
+     "requerido": false,
+     "descripcion": "a qué velocidad pasan por el tramo (0 = se detienen); `dur` es lo que tardan en frenar",
+     "rango": [
+      0,
+      200
+     ],
+     "defecto": 5
+    },
+    "carriles": {
+     "tipo": "lista",
+     "requerido": false,
+     "descripcion": "qué carriles del flujo (nombres o números 1…N; por defecto, todos)"
+    }
+   },
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "ejemplo": {
+    "t": 4,
+    "dur": 1.5,
+    "tipo": "frenar",
+    "flujo": "trafico",
+    "en": "60%",
+    "vel_kmh": 5
+   },
+   "modulo": "eventos/frenar.js",
+   "reglas": "scripts/maqueta_tipos/frenar.py"
+  },
+  {
+   "tipo": "mover",
+   "clase": "evento",
+   "cuando": "un actor va a otro lugar en el tiempo que dura (la ambulancia que llega, la persona que cruza)",
+   "parametros": {
+    "actor": {
+     "tipo": "pieza",
+     "requerido": true,
+     "descripcion": "el actor que se mueve (sobre su camino)",
+     "piezas": [
+      "actor"
+     ]
+    },
+    "a": {
+     "tipo": "lugar",
+     "requerido": true,
+     "descripcion": "a dónde llega (el punto de su camino más cercano a ese lugar), al final de `dur`"
+    }
+   },
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "ejemplo": {
+    "t": 1,
+    "dur": 3,
+    "tipo": "mover",
+    "actor": "mi-carro",
+    "a": "puente"
+   },
+   "modulo": "eventos/mover.js",
+   "reglas": "scripts/maqueta_tipos/mover.py"
+  },
+  {
    "tipo": "onda",
    "clase": "evento",
    "cuando": "la sacudida que se propaga: un anillo que crece desde un lugar o desde toda una falla",
@@ -592,6 +1146,61 @@
    },
    "modulo": "eventos/parpadear.js",
    "reglas": "scripts/maqueta_tipos/parpadear.py"
+  },
+  {
+   "tipo": "pintar",
+   "clase": "evento",
+   "cuando": "un tramo de la línea cambia de color: el verde que se vuelve rojo donde frena el tráfico, y la mancha que crece",
+   "parametros": {
+    "trazo": {
+     "tipo": "pieza",
+     "requerido": true,
+     "descripcion": "el trazo que se pinta",
+     "piezas": [
+      "trazo"
+     ]
+    },
+    "desde": {
+     "tipo": "posicion",
+     "requerido": true,
+     "descripcion": "dónde arranca el color nuevo (metros sobre el camino, «NN%» del trazo o un lugar)"
+    },
+    "hasta": {
+     "tipo": "posicion",
+     "requerido": true,
+     "descripcion": "hasta dónde llega al final de `dur` (antes que `desde`: crece hacia atrás, como una cola)"
+    },
+    "color": {
+     "tipo": "texto",
+     "requerido": true,
+     "descripcion": "el color nuevo: bien (verde), medio (ámbar), mal (rojo), texto; acento solo en el protagonista",
+     "valores": [
+      "bien",
+      "medio",
+      "mal",
+      "texto",
+      "acento"
+     ]
+    }
+   },
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "ejemplo": {
+    "t": 1,
+    "dur": 2.5,
+    "tipo": "pintar",
+    "trazo": "ruta",
+    "desde": "60%",
+    "hasta": "35%",
+    "color": "mal"
+   },
+   "modulo": "eventos/pintar.js",
+   "reglas": "scripts/maqueta_tipos/pintar.py"
   },
   {
    "tipo": "resaltar",
@@ -733,6 +1342,517 @@
    },
    "modulo": "eventos/ruptura.js",
    "reglas": "scripts/maqueta_tipos/ruptura.py"
+  },
+  {
+   "tipo": "trazar",
+   "clase": "evento",
+   "cuando": "la línea de un trazo se dibuja mientras la voz la recorre (la ruta que aparece, el camino que se marca)",
+   "parametros": {
+    "trazo": {
+     "tipo": "pieza",
+     "requerido": true,
+     "descripcion": "el trazo que se dibuja (antes de su primer trazar no se ve)",
+     "piezas": [
+      "trazo"
+     ]
+    },
+    "desde": {
+     "tipo": "posicion",
+     "requerido": false,
+     "descripcion": "de dónde arranca el dibujo (por defecto, el inicio del trazo; «NN%» es del trazo)"
+    },
+    "hasta": {
+     "tipo": "posicion",
+     "requerido": false,
+     "descripcion": "hasta dónde llega (por defecto, el final del trazo)"
+    }
+   },
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "adelanto": {
+    "dur": 0.08
+   },
+   "ejemplo": {
+    "t": 0.5,
+    "dur": 3,
+    "tipo": "trazar",
+    "trazo": "ruta"
+   },
+   "modulo": "eventos/trazar.js",
+   "reglas": "scripts/maqueta_tipos/trazar.py"
+  },
+  {
+   "tipo": "arbol",
+   "clase": "objeto",
+   "cuando": "un árbol: un parque, una calle arbolada, el bosque que se tala o se quema",
+   "parametros": {},
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "medidas": {
+    "largo_m": 4.4,
+    "ancho_m": 4.4,
+    "alto_m": 7.0
+   },
+   "ejemplo": {
+    "objeto": "arbol"
+   },
+   "modulo": "objetos/arbol.js",
+   "reglas": null
+  },
+  {
+   "tipo": "bus",
+   "clase": "objeto",
+   "cuando": "un bus: el transporte público en una calle o una autopista, la parada a la que llega",
+   "parametros": {},
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "medidas": {
+    "largo_m": 12.0,
+    "ancho_m": 2.5,
+    "alto_m": 3.2
+   },
+   "ejemplo": {
+    "objeto": "bus"
+   },
+   "modulo": "objetos/bus.js",
+   "reglas": null
+  },
+  {
+   "tipo": "camion",
+   "clase": "objeto",
+   "cuando": "un camión: la carga en una carretera, el bloqueo de una vía, el más lento del tráfico",
+   "parametros": {},
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "medidas": {
+    "largo_m": 10.0,
+    "ancho_m": 2.5,
+    "alto_m": 3.6
+   },
+   "ejemplo": {
+    "objeto": "camion"
+   },
+   "modulo": "objetos/camion.js",
+   "reglas": null
+  },
+  {
+   "tipo": "carro",
+   "clase": "objeto",
+   "cuando": "un carro: el tráfico de una autopista, el que la cámara sigue, el que llega a un lugar",
+   "parametros": {},
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "medidas": {
+    "largo_m": 4.5,
+    "ancho_m": 1.8,
+    "alto_m": 1.5
+   },
+   "ejemplo": {
+    "objeto": "carro"
+   },
+   "modulo": "objetos/carro.js",
+   "reglas": null
+  },
+  {
+   "tipo": "casa",
+   "clase": "objeto",
+   "cuando": "una casa: el hogar de alguien, una aldea dibujada a mano, la casa que se inunda o se cae",
+   "parametros": {},
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "medidas": {
+    "largo_m": 8.0,
+    "ancho_m": 7.0,
+    "alto_m": 5.4
+   },
+   "ejemplo": {
+    "objeto": "casa"
+   },
+   "modulo": "objetos/casa.js",
+   "reglas": null
+  },
+  {
+   "tipo": "moto",
+   "clase": "objeto",
+   "cuando": "una moto: el repartidor que se mete entre los carros, el mototaxi, la moto que huye",
+   "parametros": {},
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "medidas": {
+    "largo_m": 2.1,
+    "ancho_m": 0.8,
+    "alto_m": 1.6
+   },
+   "ejemplo": {
+    "objeto": "moto"
+   },
+   "modulo": "objetos/moto.js",
+   "reglas": null
+  },
+  {
+   "tipo": "persona",
+   "clase": "objeto",
+   "cuando": "una persona: quien camina por la calle, quien espera en la parada, la multitud de una plaza",
+   "parametros": {},
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "medidas": {
+    "largo_m": 0.5,
+    "ancho_m": 0.5,
+    "alto_m": 1.75
+   },
+   "ejemplo": {
+    "objeto": "persona"
+   },
+   "modulo": "objetos/persona.js",
+   "reglas": null
+  },
+  {
+   "tipo": "pin",
+   "clase": "objeto",
+   "cuando": "un pin: el punto exacto del que se habla (dónde está alguien, a dónde llega algo)",
+   "parametros": {},
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "medidas": {
+    "largo_m": 1.0,
+    "ancho_m": 1.0,
+    "alto_m": 2.4
+   },
+   "ejemplo": {
+    "objeto": "pin"
+   },
+   "modulo": "objetos/pin.js",
+   "reglas": null
+  },
+  {
+   "tipo": "telefono",
+   "clase": "objeto",
+   "cuando": "un teléfono: la señal de cada móvil, quien manda su ubicación, el aviso que llega a todos",
+   "parametros": {},
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "medidas": {
+    "largo_m": 0.01,
+    "ancho_m": 0.075,
+    "alto_m": 0.16
+   },
+   "ejemplo": {
+    "objeto": "telefono"
+   },
+   "modulo": "objetos/telefono.js",
+   "reglas": null
+  },
+  {
+   "tipo": "torre",
+   "clase": "objeto",
+   "cuando": "una antena de celular o de radio: la señal que viaja, la cobertura, la torre más cercana",
+   "parametros": {},
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "medidas": {
+    "largo_m": 2.4,
+    "ancho_m": 2.4,
+    "alto_m": 30.0
+   },
+   "ejemplo": {
+    "objeto": "torre"
+   },
+   "modulo": "objetos/torre.js",
+   "reglas": null
+  },
+  {
+   "tipo": "etiqueta",
+   "clase": "anotacion",
+   "cuando": "un rótulo corto que sigue a algo que se mueve («102 km/h», «Tu carro»); cada número lleva respaldo",
+   "parametros": {
+    "sigue": {
+     "tipo": "ancla",
+     "requerido": true,
+     "descripcion": "a qué va pegada: {actor: id}, un vehículo de un flujo o un lugar"
+    },
+    "texto": {
+     "tipo": "texto",
+     "requerido": true,
+     "descripcion": "lo que dice (≤ 3 palabras)"
+    },
+    "sub": {
+     "tipo": "texto",
+     "requerido": false,
+     "descripcion": "una segunda línea pequeña (opcional)"
+    }
+   },
+   "escalas": [
+    "esquema",
+    "ciudad",
+    "pais"
+   ],
+   "motores": [
+    "three"
+   ],
+   "ejemplo": {
+    "t": 1,
+    "hasta": 4,
+    "tipo": "etiqueta",
+    "sigue": "centro",
+    "texto": "Aquí"
+   },
+   "modulo": "anotaciones/etiqueta.js",
+   "reglas": "scripts/maqueta_tipos/etiqueta.py"
+  },
+  {
+   "tipo": "medida",
+   "clase": "anotacion",
+   "cuando": "el tamaño de algo con su número: un círculo de «5 m» alrededor de un carro, una regla de «200 m» de cola",
+   "parametros": {
+    "en": {
+     "tipo": "ancla",
+     "requerido": true,
+     "descripcion": "alrededor de qué (o desde dónde, la regla): un lugar, {actor: id} o un vehículo de un flujo"
+    },
+    "radio_m": {
+     "tipo": "numero",
+     "requerido": true,
+     "descripcion": "el radio del círculo o el largo de la regla, en metros",
+     "rango": [
+      0.1,
+      100000
+     ]
+    },
+    "forma": {
+     "tipo": "texto",
+     "requerido": false,
+     "descripcion": "círculo en el suelo o regla hacia adelante",
+     "defecto": "circulo",
+     "valores": [
+      "circulo",
+      "regla"
+     ]
+    },
+    "rotulo": {
+     "tipo": "texto",
+     "requerido": false,
+     "descripcion": "lo que dice (por defecto «<radio_m> m»); su número lleva respaldo"
+    }
+   },
+   "escalas": [
+    "esquema",
+    "ciudad",
+    "pais"
+   ],
+   "motores": [
+    "three"
+   ],
+   "ejemplo": {
+    "t": 1,
+    "hasta": 4,
+    "tipo": "medida",
+    "en": "centro",
+    "radio_m": 50
+   },
+   "modulo": "anotaciones/medida.js",
+   "reglas": "scripts/maqueta_tipos/medida.py"
+  },
+  {
+   "tipo": "pulso",
+   "clase": "anotacion",
+   "cuando": "anillos que pulsan sobre algo para decir «este manda una señal» o «aquí»: un carro, varios carros, un lugar",
+   "parametros": {
+    "sobre": {
+     "tipo": "anclas",
+     "requerido": true,
+     "descripcion": "dónde pulsa: lugares, {actor: id} o vehículos de un flujo ({flujo: id, cerca: lugar, t: s, cuantos: k})",
+     "min": 1
+    },
+    "radio_m": {
+     "tipo": "numero",
+     "requerido": false,
+     "descripcion": "hasta dónde se abre cada anillo (metros en el suelo)",
+     "rango": [
+      1,
+      100000
+     ],
+     "defecto": 14
+    },
+    "periodo_s": {
+     "tipo": "numero",
+     "requerido": false,
+     "descripcion": "cada cuánto sale un anillo",
+     "rango": [
+      0.4,
+      4
+     ],
+     "defecto": 1.4
+    },
+    "anillos": {
+     "tipo": "entero",
+     "requerido": false,
+     "descripcion": "anillos vivos a la vez",
+     "rango": [
+      1,
+      3
+     ],
+     "defecto": 2
+    }
+   },
+   "escalas": [
+    "esquema",
+    "ciudad",
+    "pais"
+   ],
+   "motores": [
+    "three"
+   ],
+   "ejemplo": {
+    "t": 1,
+    "hasta": 4,
+    "tipo": "pulso",
+    "sobre": [
+     "centro"
+    ]
+   },
+   "modulo": "anotaciones/pulso.js",
+   "reglas": "scripts/maqueta_tipos/pulso.py"
+  },
+  {
+   "tipo": "reloj",
+   "clase": "anotacion",
+   "cuando": "una hora que corre para decir cuánto tarda algo («todo pasa en un segundo»: de 8:14:21 a 8:14:22)",
+   "parametros": {
+    "de": {
+     "tipo": "texto",
+     "requerido": true,
+     "descripcion": "la hora al arrancar («H:MM:SS»)"
+    },
+    "a": {
+     "tipo": "texto",
+     "requerido": false,
+     "descripcion": "la hora al llegar (por defecto, la misma)"
+    },
+    "corre_desde": {
+     "tipo": "numero",
+     "requerido": false,
+     "descripcion": "el segundo del video en que arranca (por defecto, `t`)",
+     "rango": [
+      0,
+      600
+     ]
+    },
+    "corre_hasta": {
+     "tipo": "numero",
+     "requerido": false,
+     "descripcion": "el segundo en que llega a `a` (por defecto, `hasta`)",
+     "rango": [
+      0,
+      600
+     ]
+    },
+    "pos": {
+     "tipo": "texto",
+     "requerido": false,
+     "descripcion": "dónde va: arriba (bajo el titular, a la derecha) o abajo (sobre la cifra)",
+     "defecto": "arriba",
+     "valores": [
+      "arriba",
+      "abajo"
+     ]
+    },
+    "en": {
+     "tipo": "ancla",
+     "requerido": false,
+     "descripcion": "o encima de algo que se mueve (en vez de `pos`)"
+    },
+    "rotulo": {
+     "tipo": "texto",
+     "requerido": false,
+     "descripcion": "una línea pequeña encima («Hora del aviso»)"
+    },
+    "decimas": {
+     "tipo": "bool",
+     "requerido": false,
+     "descripcion": "muestra las décimas de segundo",
+     "defecto": false
+    },
+    "ilustrativo": {
+     "tipo": "bool",
+     "requerido": false,
+     "descripcion": "solo en un esquema: la hora es de ejemplo y no pide respaldo (la voz no la dice como dato)",
+     "defecto": false
+    }
+   },
+   "escalas": [
+    "esquema",
+    "ciudad",
+    "pais"
+   ],
+   "motores": [
+    "three"
+   ],
+   "ejemplo": {
+    "t": 1,
+    "hasta": 4,
+    "tipo": "reloj",
+    "de": "8:14:21",
+    "a": "8:14:22",
+    "ilustrativo": true
+   },
+   "modulo": "anotaciones/reloj.js",
+   "reglas": "scripts/maqueta_tipos/reloj.py"
   },
   {
    "tipo": "ciudad",

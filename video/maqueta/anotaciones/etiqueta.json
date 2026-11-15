@@ -1,0 +1,37 @@
+{
+ "tipo": "etiqueta",
+ "clase": "anotacion",
+ "cuando": "un rótulo corto que sigue a algo que se mueve («102 km/h», «Tu carro»); cada número lleva respaldo",
+ "parametros": {
+  "sigue": {
+   "tipo": "ancla",
+   "requerido": true,
+   "descripcion": "a qué va pegada: {actor: id}, un vehículo de un flujo o un lugar"
+  },
+  "texto": {
+   "tipo": "texto",
+   "requerido": true,
+   "descripcion": "lo que dice (≤ 3 palabras)"
+  },
+  "sub": {
+   "tipo": "texto",
+   "requerido": false,
+   "descripcion": "una segunda línea pequeña (opcional)"
+  }
+ },
+ "escalas": [
+  "esquema",
+  "ciudad",
+  "pais"
+ ],
+ "motores": [
+  "three"
+ ],
+ "ejemplo": {
+  "t": 1,
+  "hasta": 4,
+  "tipo": "etiqueta",
+  "sigue": "centro",
+  "texto": "Aquí"
+ }
+}

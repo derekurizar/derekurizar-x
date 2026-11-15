@@ -1,0 +1,53 @@
+{
+ "tipo": "pintar",
+ "clase": "evento",
+ "cuando": "un tramo de la línea cambia de color: el verde que se vuelve rojo donde frena el tráfico, y la mancha que crece",
+ "parametros": {
+  "trazo": {
+   "tipo": "pieza",
+   "requerido": true,
+   "descripcion": "el trazo que se pinta",
+   "piezas": [
+    "trazo"
+   ]
+  },
+  "desde": {
+   "tipo": "posicion",
+   "requerido": true,
+   "descripcion": "dónde arranca el color nuevo (metros sobre el camino, «NN%» del trazo o un lugar)"
+  },
+  "hasta": {
+   "tipo": "posicion",
+   "requerido": true,
+   "descripcion": "hasta dónde llega al final de `dur` (antes que `desde`: crece hacia atrás, como una cola)"
+  },
+  "color": {
+   "tipo": "texto",
+   "requerido": true,
+   "descripcion": "el color nuevo: bien (verde), medio (ámbar), mal (rojo), texto; acento solo en el protagonista",
+   "valores": [
+    "bien",
+    "medio",
+    "mal",
+    "texto",
+    "acento"
+   ]
+  }
+ },
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "ejemplo": {
+  "t": 1,
+  "dur": 2.5,
+  "tipo": "pintar",
+  "trazo": "ruta",
+  "desde": "60%",
+  "hasta": "35%",
+  "color": "mal"
+ }
+}

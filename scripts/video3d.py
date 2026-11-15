@@ -193,6 +193,7 @@ def elementos(e):
     """Todo lo que una escena pone en pantalla, con su clase: [(clase, objeto)]."""
     out = [("camara", x) for x in e.get("camara") or []] + [("evento", x) for x in e.get("eventos") or []]
     out += [("marca", x) for x in e.get("marcas") or []] + [("cifra", x) for x in e.get("cifras") or []]
+    out += [("anotacion", x) for x in e.get("anotaciones") or []]   # pulso, medida, etiqueta, reloj (capa 2D atada al 3D)
     if e.get("titular"):
         out.append(("titular", e["titular"]))
     return out
@@ -340,7 +341,9 @@ def revisar_guion(g, st, trabajo):
             pos = buscar(hab, o.get("dice"), o.get("vez", 1)) if o.get("dice") else None
             cambios.append((t0 + (hab[pos[0]]["start"] if pos else 0.0), "%s E%d" % (clase, n)))
             # C3D5 lo que se lee en pantalla también lleva respaldo
-            for texto in [o.get(c) for c in ("texto", "sub", "kicker", "valor", "rotulo") if isinstance(o.get(c), str)]:
+            textos = (M3.textos_anotacion(o, mundo.get("escala") or "pais") if clase == "anotacion"   # sus reglas dicen qué se lee
+                      else [o.get(c) for c in ("texto", "sub", "kicker", "valor", "rotulo") if isinstance(o.get(c), str)])
+            for texto in textos:
                 sin = VD.sin_respaldo(texto, valores)
                 if sin:
                     fallas.append("C3D5 escena %d: «%s» lleva un número sin respaldo (%s)" % (n, texto, ", ".join(map(str, sin))))
@@ -513,7 +516,7 @@ def construir(trabajo, g, loc, real, solo_escenas=None):
         hasta = por_n.get(o["hasta"]) if isinstance(o.get("hasta"), int) else x
         return (hasta or x)["off"] + (hasta or x)["dur"]
 
-    camara, eventos, marcas, cifras, titulares = [], [], [], [], []
+    camara, eventos, marcas, cifras, titulares, anotaciones = [], [], [], [], [], []
     for e in escenas:
         x = por_n[e["n"]]
         for c in e.get("camara") or []:
@@ -522,7 +525,8 @@ def construir(trabajo, g, loc, real, solo_escenas=None):
             t = max(0.0, momento(x, ev) - float(ev.get("adelanto", 0.0)))
             dur = ev["dur"] if isinstance(ev.get("dur"), (int, float)) else momento(x, ev, "hasta_dice", "fin") - t
             eventos.append(dict({k: v for k, v in ev.items() if k not in ("dice", "vez", "al", "hasta_dice", "adelanto")}, t=cuadro(t), dur=round(dur, 3)))
-        for clase, lista, dst in (("marca", e.get("marcas") or [], marcas), ("cifra", e.get("cifras") or [], cifras)):
+        for clase, lista, dst in (("marca", e.get("marcas") or [], marcas), ("cifra", e.get("cifras") or [], cifras),
+                                  ("anotacion", e.get("anotaciones") or [], anotaciones)):
             for o in lista:
                 t = max(x["off"], momento(x, o) - ADELANTO)
                 fin = fin_de(x, o)
@@ -566,6 +570,8 @@ def construir(trabajo, g, loc, real, solo_escenas=None):
     maqueta = {"version": 1, "estilo": (g.get("estilo") or {}).get("id"), "paleta": st.get("paleta"), "fps": FPS,
                "duracion_s": total, "protagonista": g.get("protagonista"), "mundo": mundo, "camara": camara,
                "eventos": sorted(eventos, key=lambda v: v["t"]), "marcas": marcas, "capa": capa}
+    if anotaciones:
+        maqueta["anotaciones"] = anotaciones
     tiempos = {"real": real, "total_s": total,
                "escenas": [{"n": x["n"], "off": x["off"], "dur": x["dur"], "fin_voz": round(x["fin_voz"], 3)} for x in tl]}
     return maqueta, tiempos, avisos

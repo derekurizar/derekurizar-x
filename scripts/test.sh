@@ -2523,6 +2523,11 @@ fi
 paso "maqueta 3D: mundos pais, ciudad y esquema (escalas, recetas deterministas, M3D12, cámara por escala, set capital)" python3 scripts/pruebas/maqueta_mundos.py
 paso "maqueta 3D: los casos de los mundos nuevos pasan M3D1–M3D12" sh -c 'python3 scripts/maqueta3d.py check video/maqueta/fixture/esquema_carretera.json && python3 scripts/maqueta3d.py check video/maqueta/fixture/ciudad_capital.json'
 paso "set de ciudad capital completo" python3 scripts/build_set3d.py capital --check
+paso "maqueta 3D: lo que se mueve (flujo de Newell cerrado en t, cola hacia atrás sin atravesarse, cámara que sigue, anclas, respaldo de anotaciones)" python3 scripts/pruebas/maqueta_movimiento.py
+paso "maqueta 3D: el caso tráfico pasa M3D en 9:16 y 4:5" python3 scripts/maqueta3d.py check video/maqueta/fixture/trafico.json
+if [[ "$RAPIDO" == "1" ]]; then echo "SKIP   maqueta_modulo.py flujo con render (RAPIDO=1)"; else
+  paso "maqueta 3D: módulo flujo (lint, ficha, pureza) sobre el caso tráfico" python3 scripts/maqueta_modulo.py check piezas/flujo --maqueta video/maqueta/fixture/trafico.json
+fi
 paso "producir: la cadena común (mesa, propio, 3D, largo), la pausa por el plano y la reanudación" python3 scripts/pruebas/producir.py
 paso "node --check hilo.js (envuelto en async function)" check_js hilo.js
 paso "node --check ideas.js (envuelto en async function)" check_js ideas.js
