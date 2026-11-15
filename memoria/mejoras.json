@@ -880,7 +880,7 @@
       "archivo": "video/noticia.html · historia.py foto",
       "problema": "Las fotos apaisadas de dos personas (ascensor, sala, actos) se recortan al centro en 9:16 y quedan oscuras o sin nadie; no hay cómo elegir el foco, y H12 impide cambiar la foto del gancho.",
       "propuesta": "Campo foco_x (0–1) en fotos/<id>.json que use el encuadre a sangre y el Ken Burns; el verificador lo fija al bajar una foto de grupo.",
-      "estado": "pendiente"
+      "estado": "descartada"
     },
     {
       "id": "m081",
@@ -902,7 +902,7 @@
       "archivo": "scripts/historia.py voz / descargar",
       "problema": "El estado de voz y Scribe se escribió a mano (URLs firmadas copiadas del MCP) en las 4 partes: lento y frágil.",
       "propuesta": "descargar --estado acepta varios JSON parciales pegados tal cual (voz y Scribe por separado) y una orden para guardar el estado en línea a archivo.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m083",
@@ -1111,7 +1111,7 @@
       "archivo": "flujo de retoque (sesión)",
       "problema": "Cada retoma con el MCP obliga a escribir a mano el estado (URLs firmadas) para descargar --estado.",
       "propuesta": "Que descargar acepte --flujo y --sesiones y lea el estado con un helper, o aceptar el JSON pegado del tool tal cual desde stdin.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m102",
@@ -1166,7 +1166,7 @@
       "archivo": "scripts/video.py",
       "problema": "Volcán hora a hora E10 tiene la misma traba que P4 E10 («o si se»), detectada ahora por V23 y V11; ese video ya está entregado.",
       "propuesta": "escucharlo y, si se oye, retomar esa escena (≈ 150 créditos).",
-      "estado": "pendiente"
+      "estado": "descartada"
     },
     {
       "id": "m107",
@@ -1628,7 +1628,7 @@
       "archivo": ".claude/workflows/noticias.js · referencias/roles/noticias-rastreador.md",
       "problema": "El rastreador eco no terminó dos veces (N1 sin ok, ninguna candidata) y el noticiero salió con solo pol y seg: 3 de 4 noticias del Congreso.",
       "propuesta": "Si una sección cae, relanzar su rastreador una vez con un presupuesto más corto (≤ 5 búsquedas, solo fuentes oficiales: Banguat, INE, MSPAS, INSIVUMEH) antes de seguir; y que la preselección avise cuando ≥ 3 noticias son de la misma institución.",
-      "estado": "pendiente"
+      "estado": "descartada"
     },
     {
       "id": "m149",
@@ -1639,7 +1639,7 @@
       "archivo": "video/noticia.html · scripts/noticias.py tiempos",
       "problema": "AVISO V21: la escena noticia E2 pasa 12.2 s sin cambio de plano (solo la foto con el titular y la cifra).",
       "propuesta": "En las noticias de más de 8 s, un sub-plano sobre la foto (focos de historia.py) o un segundo encuadre a mitad de la voz, como en /historia.",
-      "estado": "pendiente"
+      "estado": "descartada"
     },
     {
       "id": "m150",
@@ -1694,7 +1694,7 @@
       "archivo": "design/musica/catalogo.json · H8m",
       "problema": "Un tema de movilidad urbana cayó en `musica_tema: sociedad` → corrupcion-desenlace (tono de denuncia); no existe tema «movilidad/ciudad» en el catálogo.",
       "propuesta": "Añadir «movilidad» como tema a las pistas atitlan-1/2 (o a la que el usuario elija) para que H8m las proponga en temas de transporte y ciudad; sin generar música nueva.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m155",
@@ -1749,7 +1749,7 @@
       "archivo": "scripts/youtube.py armar / grabar",
       "problema": "YT9 y YT12 solo se detectan después de grabar todas las escenas (≈ 1 h): los tres problemas de arriba eran visibles en escenas.json.",
       "propuesta": "Un pre-chequeo en `armar`: revozadas cuyo tipo cambia, escenas sin foto ni tuit en página noticia, y tipos sin margen ni fondo en 16:9 → aviso antes de grabar.",
-      "estado": "pendiente"
+      "estado": "descartada"
     },
     {
       "id": "m160",
@@ -2002,7 +2002,7 @@
       "archivo": "scripts/video_hf.py",
       "problema": "Faltan en la mesa vertical: MV13 (un solo acento a la vez), la pregunta P6 en el pago, la versión B del gancho y las piezas `paso` (cronología), `barra`, `brecha`, `hoja` (pizarra de cuenta), `tabla` y `diagrama`.",
       "propuesta": "Construirlas antes de migrar /sabias y /explica (hoja, barra, chip «Ejemplo») y /video y /departamento (barra, serie, brecha, tabla); cada flujo con su piloto.",
-      "estado": "pendiente"
+      "estado": "descartada"
     },
     {
       "id": "m183",
@@ -2035,7 +2035,7 @@
       "archivo": "scripts/congreso.py (hemiciclo, portal, CG10) · scripts/mesa.py (notas_leidas)",
       "problema": "/congreso no puede pasar a la mesa tal cual: su gancho con mini-hemiciclo y portal no existe en la mesa, sus notas viven en sesiones/_descargas/congreso (la mesa solo lee _descargas/historia) y no tiene elenco para los retratos de los diputados.",
       "propuesta": "Decidir con el usuario si el gancho pasa a ser una mesa (foto del pleno + cifra) con el hemiciclo como tablero, y entonces enseñar a la mesa las notas y los retratos del Congreso.",
-      "estado": "pendiente"
+      "estado": "descartada"
     },
     {
       "id": "m186",
@@ -2134,6 +2134,424 @@
       "archivo": "scripts/metricas.py (alinear)",
       "problema": "`metricas.py alinear` no sabe leer las escenas de un video 3D (sus tiempos viven en `tiempos.json` y `maqueta.json`), así que /analyze-improve no podrá alinear su curva de retención con las tomas.",
       "propuesta": "Enseñarle a `alinear` el formato de /video-3d (escenas desde `tiempos.json`; eventos y claves de cámara desde `maqueta.json`).",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m195",
+      "fecha": "2026-11-14",
+      "flujo": "video",
+      "pieza": "auditoria-2026-11-14",
+      "area": "mesa",
+      "archivo": "scripts/video_hf.py (marca de render de prueba)",
+      "problema": "La marca de «render de prueba» (MESA_RENDER=0) es una por salida, no por formato: si el 4:5 es un doble en negro y luego se regraba el 9:16 de verdad, la marca se borra y `entregar` acepta el 4:5 falso.",
+      "propuesta": "Una marca por formato.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m196",
+      "fecha": "2026-11-14",
+      "flujo": "video",
+      "pieza": "auditoria-2026-11-14",
+      "area": "mesa",
+      "archivo": "scripts/video_hf.py:252-268 · scripts/mesa.py:376-380",
+      "problema": "Hay `except` que dejan un gate con datos vacíos sin avisar: el elenco (MV12/MV4) y el respaldo de cifras (MV1/YT16) corren sobre nada si algo falla al leerlos.",
+      "propuesta": "Atrapar el error concreto e imprimir AVISO con el gate afectado.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m197",
+      "fecha": "2026-11-14",
+      "flujo": "video",
+      "pieza": "auditoria-2026-11-14",
+      "area": "render",
+      "archivo": "scripts/youtube_hf.py:514 · scripts/maqueta3d.py:32 · scripts/video_hf.py:2049",
+      "problema": "El 16:9 carga GSAP desde un CDN (sin red no renderiza); la versión de HyperFrames está repetida en dos archivos; los renders no tienen timeout.",
+      "propuesta": "GSAP del repo en el 16:9, versiones en un solo módulo y timeout proporcional a la duración.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m198",
+      "fecha": "2026-11-14",
+      "flujo": "video",
+      "pieza": "auditoria-2026-11-14",
+      "area": "gates",
+      "archivo": "scripts/video.py (cmd_tiempos; V9 y P5)",
+      "problema": "El gancho ≤ 6 s y la escena 2 ≤ 12 s se miden solo sobre la estimación (caracteres ÷ 15.5); varias piezas entregadas se pasaron con la voz real (gancho 6.1–6.9 s; escena 2 de 12.2–12.9 s).",
+      "propuesta": "Repetir las dos mediciones en `tiempos` con la voz real: aviso y falla.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m199",
+      "fecha": "2026-11-14",
+      "flujo": "video",
+      "pieza": "auditoria-2026-11-14",
+      "area": "entorno",
+      "archivo": "scripts/doctor.sh",
+      "problema": "doctor.sh pide Node 20 cuando la mesa necesita 22, no revisa pdftoppm ni swiftc, solo cuenta los agentes `hilo-*` y dice que yt-dlp es para las tomas (retiradas); `mesa.pagina_png` no avisa si falta pdftoppm.",
+      "propuesta": "Ponerlo al día con lo que la mesa y los agentes de video necesitan.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m200",
+      "fecha": "2026-11-14",
+      "flujo": "video",
+      "pieza": "auditoria-2026-11-14",
+      "area": "musica",
+      "archivo": "scripts/video.py:871 · historia.py:351 · explica.py:216 · sabias.py:117",
+      "problema": "`elegir_musica` está copiada 4 veces y cada copia cuenta registros distintos, así que la rotación de pistas ignora lo que publicaron los otros flujos.",
+      "propuesta": "Una sola función sobre `video.registros_con_musica`.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m201",
+      "fecha": "2026-11-14",
+      "flujo": "video",
+      "pieza": "auditoria-2026-11-14",
+      "area": "rotacion",
+      "archivo": "scripts/video.py:909,1054 · scripts/historia.py:343",
+      "problema": "La rotación de familia de gancho, cierre y promesa (R9, F7, P3) mira solo el registro del propio flujo; el público ve un solo feed. Tres partes seguidas de una serie usaron la misma forma de promesa.",
+      "propuesta": "Rotar contra las últimas piezas de todos los registros de video, partes de serie incluidas.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m202",
+      "fecha": "2026-11-14",
+      "flujo": "video",
+      "pieza": "auditoria-2026-11-14",
+      "area": "medicion",
+      "archivo": "scripts/video.py (ganchos --elegir, cierres --usar) · scripts/memoria.py",
+      "problema": "No queda registro de qué gancho y qué cierre eligió el usuario ni de cuál recomendaba el crítico (solo /video-3d guarda `elegido_por`): no se puede medir si su elección rinde distinto.",
+      "propuesta": "Guardar `elegido_por` y `recomendado` en el guion y en el registro de cada flujo.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m203",
+      "fecha": "2026-11-14",
+      "flujo": "video",
+      "pieza": "auditoria-2026-11-14",
+      "area": "mesa",
+      "archivo": "scripts/mesa.py:148,1186 · scripts/video3d.py:166 · scripts/video.py:4439",
+      "problema": "El ancla `dice` se resuelve de tres maneras: la mesa no pasa los números a palabras y /video-3d sí, así que «1995» resuelve en 3D y falla en la mesa.",
+      "propuesta": "Un solo buscador de anclas que pase los números a palabras.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m204",
+      "fecha": "2026-11-14",
+      "flujo": "video",
+      "pieza": "auditoria-2026-11-14",
+      "area": "documentacion",
+      "archivo": "CLAUDE.md:49,191-200,285 · referencias/flujo-video.md:183-194 · .claude/commands/congreso.md · .claude/commands/serie.md:20 · .claude/agents/video-gancho.md",
+      "problema": "La documentación contradice al código en puntos que guían a los agentes: tomas de video retiradas descritas como vigentes, sub-planos y whip, zoom a la cifra, el portal de /congreso, voz del gancho ≤ 7.5 s, «el crítico elige», MV13 anunciado sin código.",
+      "propuesta": "Corregir cada contradicción en su guía; las de CLAUDE.md, al recortarlo.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m205",
+      "fecha": "2026-11-14",
+      "flujo": "video",
+      "pieza": "auditoria-2026-11-14",
+      "area": "orquestacion",
+      "archivo": ".claude/commands/{video,explica,sabias,congreso}.md (viñeta PLANO)",
+      "problema": "La viñeta PLANO conserva una instrucción temporal (`scriptPath` + `permitir_fallback`): cada repliegue a `general-purpose` triplica el contexto (1.14M tokens en un plano de YouTube).",
+      "propuesta": "Quitarla; `doctor` comprueba que los agentes de video estén registrados.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m206",
+      "fecha": "2026-11-14",
+      "flujo": "video",
+      "pieza": "auditoria-2026-11-14",
+      "area": "orquestacion",
+      "archivo": ".claude/commands/{video,historia,explica,sabias,congreso,youtube-long}.md",
+      "problema": "El bloque de voz del MCP está copiado en 5 comandos (40 líneas idénticas) y el atajo `descargar --nodos` solo está en dos.",
+      "propuesta": "Un fragmento compartido `referencias/fragmentos/voz-mcp.md` que cada comando cite.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m207",
+      "fecha": "2026-11-14",
+      "flujo": "video",
+      "pieza": "auditoria-2026-11-14",
+      "area": "costos",
+      "archivo": ".claude/workflows/{historia,youtube,video}.js (bucle de crítica)",
+      "problema": "El crítico corre hasta 3 pasadas (`vuelta <= VUELTAS + 1`) aunque la documentación dice «≤ 2 vueltas»; cada pasada son 75–130K tokens en opus.",
+      "propuesta": "Dos pasadas como dice la documentación.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m208",
+      "fecha": "2026-11-14",
+      "flujo": "video",
+      "pieza": "auditoria-2026-11-14",
+      "area": "limpieza",
+      "archivo": "scripts/historia.py:1039-1360,2029-2110,3167 · scripts/video.py:305-311,4344-4375,5495-5500",
+      "problema": "Quedan ≈ 450 líneas de las tomas de video retiradas y las ramas que `CAMARA_QUIETA = True` deja muertas (sub-planos, whip, transiciones con dirección).",
+      "propuesta": "Borrarlas dejando el gate TM0.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m209",
+      "fecha": "2026-11-14",
+      "flujo": "video",
+      "pieza": "auditoria-2026-11-14",
+      "area": "disco",
+      "archivo": "Makefile (podar, limpiar)",
+      "problema": "`sesiones/` ocupa 48 GB (segs* 19.9 GB, revision 5.5 GB, clips 4.4 GB) y no hay forma de borrar solo los intermedios de lo ya entregado.",
+      "propuesta": "`make podar-intermedios`: lista y, con confirmación, borra intermedios conservando voz, guion y plano.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m210",
+      "fecha": "2026-11-14",
+      "flujo": "video",
+      "pieza": "auditoria-2026-11-14",
+      "area": "pruebas",
+      "archivo": "scripts/test.sh:2320-2432",
+      "problema": "Los negativos de la mesa (MV, YT13–YT19, maqueta) solo corren sin RAPIDO porque dependen de generar fixtures; 20 gates no tienen ningún negativo (MV3, MV5, MV6, MV10, MV14, YT15, YT17, YT18, SE17–SE19, CG8, CG9, CA10, CA11…) y `yp_neg` no prueba nada (busca YT14 y el plano ya trae 11).",
+      "propuesta": "Un plano congelado y `scripts/pruebas/mesa_congelada.py` con mutaciones en memoria.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m211",
+      "fecha": "2026-11-14",
+      "flujo": "video",
+      "pieza": "auditoria-2026-11-14",
+      "area": "comandos",
+      "archivo": "scripts/historia.py:5376 (producir)",
+      "problema": "`producir` (un comando de punta a punta) existe solo en /historia; los demás flujos teclean 6–9 comandos y /youtube-long 9. Su rama `rc == 2` de `escuchar` trata un error de uso como «sin whisper».",
+      "propuesta": "`producir` genérico en video.py con pausa en el plano (código 3) y reanudación; `youtube.py producir`.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m212",
+      "fecha": "2026-11-14",
+      "flujo": "video",
+      "pieza": "auditoria-2026-11-14",
+      "area": "contexto",
+      "archivo": "referencias/roles/video-critico.md · referencias/roles/historia-guionista.md",
+      "problema": "`video-critico.md` mide 9,534 palabras con 12 modos y el agente lo lee entero hasta 3 veces por corrida; `historia-guionista.md`, 6,752 con secciones del motor viejo.",
+      "propuesta": "Partir por modo en archivos y un helper `guia()` en los workflows.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m213",
+      "fecha": "2026-11-14",
+      "flujo": "video",
+      "pieza": "auditoria-2026-11-14",
+      "area": "contexto",
+      "archivo": "CLAUDE.md",
+      "problema": "CLAUDE.md mide 12,671 palabras y lo carga cada agente de cada corrida (un agente de 3 turnos arranca con ≈ 55K tokens); cada flujo se describe cinco veces.",
+      "propuesta": "Recortarlo a ≈ 3,000 palabras: reglas, decisiones y una línea por flujo; el mapa a referencias/mapa.md.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m214",
+      "fecha": "2026-11-14",
+      "flujo": "video",
+      "pieza": "auditoria-2026-11-14",
+      "area": "costos",
+      "archivo": "scripts/costo.py · scripts/agenda.py:68-80",
+      "problema": "`costo.py` mide pero no guarda; `agenda.py` usa estimados fijos que no casan con lo medido (/historia: 2,200 créditos declarados, mediana real ≈ 2,500).",
+      "propuesta": "`costo.py --registrar` y que la agenda use las medianas.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m215",
+      "fecha": "2026-11-14",
+      "flujo": "video",
+      "pieza": "auditoria-2026-11-14",
+      "area": "publicacion",
+      "archivo": "scripts/video.py (escribir_caption)",
+      "problema": "17 de 20 piezas medidas se publicaron con el caption escrito a mano y con erratas, aunque `caption.md` existe.",
+      "propuesta": "Un título corto pensado para teclear en `caption.md`.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m216",
+      "fecha": "2026-11-14",
+      "flujo": "video",
+      "pieza": "auditoria-2026-11-14",
+      "area": "arquitectura",
+      "archivo": "scripts/video_hf.py (render) · scripts/mesa.py:162,365 · scripts/congreso.py:883",
+      "problema": "Tres deudas grandes: la mesa vertical se renderiza de una pieza (cualquier cambio rehace los dos formatos enteros); `mesa.py` importa `youtube.py` y hay funciones gemelas vertical/16:9; los flujos se enganchan a video.py mutando variables globales.",
+      "propuesta": "Decidir después: render por tramos con caché, separar el núcleo y un registro explícito de extensiones.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m217",
+      "fecha": "2026-11-14",
+      "flujo": "video",
+      "pieza": "auditoria-2026-11-14",
+      "area": "formato",
+      "archivo": "scripts/video.py:82 (COLA_CIERRE)",
+      "problema": "«Sígueme en» se queda 2.8 s tras la frase final y el cierre pierde 3–5 veces la mediana en 6 piezas medidas. Es una decisión de formato del usuario.",
+      "propuesta": "Decidir con el usuario si la cola baja (por ejemplo a 1.8 s) y medir AN4.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m218",
+      "fecha": "2026-11-14",
+      "flujo": "video",
+      "pieza": "auditoria-2026-11-14",
+      "area": "alcance",
+      "archivo": "scripts/video.py:2747 (V19)",
+      "problema": "La palabra clave SEO (V19) es opcional y 0 de 49 guiones entregados la declaran; la búsqueda de TikTok pesa en los primeros ≈ 100 caracteres.",
+      "propuesta": "Decidir con el usuario si V19 pasa a obligatoria.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m219",
+      "fecha": "2026-11-14",
+      "flujo": "analisis",
+      "pieza": "auditoria-2026-11-14",
+      "area": "medicion",
+      "archivo": "memoria/metricas.json",
+      "problema": "Solo hay una medición (2026-11-03, 20 piezas). Desde entonces se produjeron ≈ 31 videos sin medir y no queda registro de qué se publicó.",
+      "propuesta": "El usuario corre /analyze-improve y fija una cadencia semanal.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m220",
+      "fecha": "2026-11-14",
+      "flujo": "analisis",
+      "pieza": "auditoria-2026-11-14",
+      "area": "medicion",
+      "archivo": "scripts/metricas.py:69-72 (REGISTROS)",
+      "problema": "Las partes de serie y los largos de YouTube no se pueden vincular a su pieza: `REGISTROS` no incluye series.json ni youtube.json, así que `--por parte` nunca tendrá datos.",
+      "propuesta": "Cada parte y cada largo como pieza vinculable.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m221",
+      "fecha": "2026-11-14",
+      "flujo": "analisis",
+      "pieza": "auditoria-2026-11-14",
+      "area": "captura",
+      "archivo": "referencias/analisis/captura.md:62,80",
+      "problema": "La captura de YouTube solo lee Shorts (los largos no se podrían medir) y la de TikTok solo saca el tráfico de «Para ti», no el de «Buscar».",
+      "propuesta": "Capturar los videos largos y el tráfico de búsqueda.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m222",
+      "fecha": "2026-11-14",
+      "flujo": "analisis",
+      "pieza": "auditoria-2026-11-14",
+      "area": "medicion",
+      "archivo": "scripts/metricas.py (rendimiento)",
+      "problema": "`rendimiento` no corta por duración, forma de promesa ni plataforma, y compara vistas de piezas con 0–2 días de vida contra piezas de 10 días.",
+      "propuesta": "Cortes nuevos y vistas por día de vida.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m223",
+      "fecha": "2026-11-14",
+      "flujo": "analisis",
+      "pieza": "auditoria-2026-11-14",
+      "area": "medicion",
+      "archivo": "referencias/flujo-video.md:238-249 · referencias/ganchos.md §7",
+      "problema": "La prueba A/B de duración no tiene ningún par medido y la versión B del gancho nunca se ha producido: no hay forma válida de comparar ganchos ni duraciones.",
+      "propuesta": "Producir 3 pares cortos y una versión B, incluidas historias y partes de serie (decisión del usuario).",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m224",
+      "fecha": "2026-11-14",
+      "flujo": "analisis",
+      "pieza": "auditoria-2026-11-14",
+      "area": "agenda",
+      "archivo": "agenda/2026-W45 · scripts/agenda.py",
+      "problema": "La agenda está vencida (solo W45; 6 de 9 espacios sin producir), ningún espacio está marcado `publicado` y el estilo de descripción de Facebook nunca se escribió.",
+      "propuesta": "Replanificar W46 y registrar lo publicado por plataforma.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m225",
+      "fecha": "2026-11-14",
+      "flujo": "historia",
+      "pieza": "auditoria-2026-11-14",
+      "area": "formato",
+      "archivo": "referencias/flujo-mesa.md:250 · referencias/analisis/benchmarks.md:22-24",
+      "problema": "La mesa de archivo apaga la foto a sangre del protagonista en el cuadro 0, que es el visual con menos abandono en el primer segundo según lo medido (11–17 % contra 39–45 %); no hay ninguna pieza en mesa medida.",
+      "propuesta": "Decidir con el usuario: foto a sangre en el cuadro 0 de la mesa, o una A/B mesa contra motor viejo.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m226",
+      "fecha": "2026-11-14",
+      "flujo": "serie",
+      "pieza": "auditoria-2026-11-14",
+      "area": "formato",
+      "archivo": "referencias/flujo-serie.md (modo caso)",
+      "problema": "Las partes de serie en modo caso duran 139–179 s, cuando el tiempo medio de las mejores historias en TikTok fue de 35–49 s y el completado de 7–10 %; el formato se decidió sin datos.",
+      "propuesta": "Medir las partes publicadas y probar una parte corta antes de la próxima serie (decisión del usuario).",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m227",
+      "fecha": "2026-11-14",
+      "flujo": "sabias",
+      "pieza": "auditoria-2026-11-14",
+      "area": "formato",
+      "archivo": "scripts/sabias.py:357 · referencias/ganchos.md:119",
+      "problema": "/sabias está exento de R14, pero su pantalla fija («¿Sabías que…?») es la fórmula que R14 rechaza; lo medido: 38–42 % de retención a 3 s contra 62 % de las historias (n chico, confundido con el tema).",
+      "propuesta": "Decidir con el usuario: mantener la pantalla fija o medirla contra un gancho con sujeto.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m228",
+      "fecha": "2026-11-14",
+      "flujo": "youtube",
+      "pieza": "auditoria-2026-11-14",
+      "area": "publicacion",
+      "archivo": "memoria/youtube.json",
+      "problema": "Hay 2 videos largos listos sin publicar ni medir, y no se hizo ningún teaser 9:16 (`youtube.py teaser`).",
+      "propuesta": "Publicarlos con su teaser (decisión del usuario).",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m229",
+      "fecha": "2026-11-14",
+      "flujo": "video3d",
+      "pieza": "auditoria-2026-11-14",
+      "area": "paridad",
+      "archivo": "scripts/video3d.py",
+      "problema": "/video-3d quedó por debajo de los demás flujos: sin portada, caption opcional y sin V5, sin escucha V11, srt y mezcla propios, salta el 4:5 sin avisar y su digesto no trae «Rendimiento real».",
+      "propuesta": "Ponerlo a la par usando las funciones comunes.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m230",
+      "fecha": "2026-11-14",
+      "flujo": "explica",
+      "pieza": "auditoria-2026-11-14",
+      "area": "corrida",
+      "archivo": "memoria/explicaciones.json (no existe) · referencias/departamentos.json",
+      "problema": "/explica nunca se ha entregado (2 sesiones abandonadas) y /departamento tiene 0 videos con su canon «en propuesta»; aun así la agenda pide 1 explica por semana.",
+      "propuesta": "Primera corrida real de /explica y aprobar el canon de departamentos (decisión del usuario).",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m231",
+      "fecha": "2026-11-14",
+      "flujo": "video",
+      "pieza": "auditoria-2026-11-14",
+      "area": "mesa",
+      "archivo": "scripts/mesa.py:344 (notas_leidas)",
+      "problema": "(m185 reescrita) /congreso ya se dibuja en la mesa, pero `mesa.notas_leidas` no lee `sesiones/_descargas/congreso`: el realizador no ve las notas capturadas de la ley y no puede citarlas como recorte.",
+      "propuesta": "Que `notas_leidas` lea también `_descargas/congreso`.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m232",
+      "fecha": "2026-11-14",
+      "flujo": "video",
+      "pieza": "auditoria-2026-11-14",
+      "area": "mesa",
+      "archivo": "scripts/video_hf.py · scripts/mesa.py",
+      "problema": "(m182 reescrita) En la mesa vertical siguen faltando MV13 (un solo acento a la vez; anunciado en CLAUDE.md y flujo-mesa.md, sin código) y las piezas `paso` (cronología), `brecha`, `hoja` y `tabla`; lo demás de m182 (P6 en el pago, versión B, barra) ya existe.",
+      "propuesta": "Escribir MV13 sobre los datos del plano; las piezas, cuando un video las pida.",
       "estado": "pendiente"
     }
   ]
