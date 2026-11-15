@@ -2,6 +2,8 @@
 // progreso por actos, «Sígueme» a mitad, y el cierre con «Sígueme en». Los elementos con tiempo están escritos en el
 // HTML (clips de HyperFrames, por scripts/maqueta3d.py); aquí solo se mueve lo de adentro, como función pura de t.
 // La llama el motor en cada cuadro: window.__capa(t, proyectar), con proyectar(x, y, z) → [px, py] | null.
+// El motor es motor.js (three.js: proyecta con su cámara) o placa.js (Blender: el mundo es una placa ya renderizada y las
+// marcas llegan proyectadas por cuadro en MAQUETA.anclas).
 (function () {
   const M = window.MAQUETA, Z = M.zona, C = M.capa;
   const $ = (id) => document.getElementById(id);
@@ -50,7 +52,7 @@
       el.style.opacity = (e * s).toFixed(3); el.style.transform = 'scale(' + (0.9 + 0.1 * e).toFixed(4) + ')'; });
     // marcas: el punto sigue su ancla; la tarjeta no se sale de los márgenes y se desvanece antes de pisar el titular o el pie
     MAR.forEach(({ o, el, card }, i) => {
-      const p = t >= o.t && t < o.hasta ? proyectar(o.x, o.y, o.z) : null;
+      const p = t >= o.t && t < o.hasta ? proyectar(o.x, o.y, o.z, i) : null;   // i: en modo placa la posición ya viene proyectada por marca y cuadro
       if (!p || p[0] < Z.corte || p[0] > Z.W - Z.corte || p[1] < 0 || p[1] > Z.H) { el.style.opacity = '0'; return; }
       const [e, s] = vida(t, o.t, o.hasta, 0.35, 0.25), [cw, ch] = medidas.card[i], alto = o.alto;
       const tope = p[1] - alto - ch;

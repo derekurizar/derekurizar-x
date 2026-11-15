@@ -14,7 +14,8 @@ con una capa 2D encima (titular, pines que siguen al 3D, cifras, subtítulos). D
 `maqueta.json` es el único insumo del motor: tiempos **absolutos en segundos**, ya resueltos (quien lo escribe es
 `scripts/video3d.py`, que convierte cada `dice` del guion en su segundo con la voz real, o estimado antes de la voz).
 El motor no sabe de guiones ni de voz. `scripts/maqueta3d.py` lo valida (gates M3D, sobre los datos: nunca sobre
-píxeles), saca cuadros sueltos y lo renderiza.
+píxeles), saca cuadros sueltos y lo renderiza **con el motor del estilo**: los dos motores leen el mismo `maqueta.json`,
+pasan los mismos gates y dejan las mismas salidas (ver «Motor Blender»).
 
 ## Forma
 
@@ -68,8 +69,9 @@ píxeles), saca cuadros sueltos y lo renderiza.
 ## Campos
 
 - **`estilo`**: uno del catálogo `design/sets3d/estilos.json` (`id`, `motor: three|blender`, `cuando` usarlo, y para
-  los de three sus colores y medidas). three.js: `color`, `noche`, `contorno`, `voxel`, `plano`. Blender:
-  `arquitecto`, `diorama`, `papel` (`check` los rechaza con «motor blender: aún no disponible»).
+  cada uno sus colores y medidas). three.js: `color`, `noche`, `contorno`, `voxel`, `plano`. Blender: `arquitecto`,
+  `diorama`, `papel` (fondo claro y capa 2D en tinta; necesitan Blender instalado para `cuadro`, `render` y `pieza`, no
+  para `check`).
 - **`paleta`**: una de `design/tokens.json → noche.paletas`; de ahí salen el fondo, el texto crema y **el acento**.
 - **`protagonista`**: el `id` de la pieza que va en el acento. **Es lo único que se pinta con el acento de la paleta**:
   una falla que no es la protagonista se enciende en crema (el color `secundario` del estilo), y la capa 2D nunca usa
@@ -173,7 +175,7 @@ el motor y la proyección de los gates.
 
 | Gate | Qué revisa |
 |---|---|
-| M3D1 | Forma y versión; `estilo` del catálogo y con motor disponible; `set` y `paleta` existen |
+| M3D1 | Forma y versión; `estilo` del catálogo (de motor three o blender); `set` y `paleta` existen |
 | M3D2 | Piezas, trazos, lugares, `protagonista` y `sfx` referenciados existen; cada evento con sus campos |
 | M3D3 | Cámara: claves crecientes desde `t = 0`, parámetros en rango, velocidad tope por tramo (paneo ≤ 0.85 del `dist_km` por segundo, giro ≤ 45°/s, cabeceo ≤ 30°/s, zoom ≤ ×3 por segundo; el pico de la curva es π/2 veces la media) y el ojo siempre por encima del relieve |
 | M3D4 | Cada marca cae dentro del cuadro, con su tarjeta bajo el titular vivo y su ancla sobre la banda de abajo, ≥ 80 % de su ventana, y dura lo que se tarda en leer (0.5 s + 0.3 s por palabra, mínimo 1.2 s); ≤ 3 marcas a la vez; dos tarjetas no se pisan |
@@ -208,7 +210,8 @@ subtítulos, la barra y el cierre; **la maqueta solo pone el mundo y sus pines**
   el anfitrión si la maqueta no trae `pie`.
 - **Salida:** `ARCHIVO.mp4` (H.264 yuv420p, sin audio, del tamaño del lienzo, `duracion_s` ± 1 cuadro, un solo
   proceso) y, junto a él, `ARCHIVO.efectos.json` (`[[t, id], …]` de los `sfx` de eventos y marcas),
-  `ARCHIVO.render.log` y `ARCHIVO_proyecto/`. ≈ 1.8 s de render por segundo de video en 950x1040.
+  `ARCHIVO.render.log` y `ARCHIVO_proyecto/`. ≈ 1.8 s de render por segundo de video en 950x1040. Con un estilo de
+  Blender la forma y las salidas son las mismas (más `ARCHIVO.blender.log`); tarda lo que dice «Motor Blender».
 
 ## Comandos (`scripts/maqueta3d.py`; 0 ok · 1 gate o paso fallido · 2 uso incorrecto)
 
@@ -218,11 +221,12 @@ subtítulos, la barra y el cierre; **la maqueta solo pone el mundo y sus pines**
 | `check MAQUETA --pieza --lienzo ANCHOxALTO` | Los gates del modo pieza en ese lienzo |
 | `cuadro MAQUETA --pieza --lienzo ANCHOxALTO --t S … --salida DIR [--hoja]` | Cuadros sueltos del modo pieza (`DIR/pieza_<lienzo>_tSSS.SSS.png`) |
 | `pieza MAQUETA --lienzo ANCHOxALTO --salida ARCHIVO.mp4 [--borrador]` | El mp4 del modo pieza y su `ARCHIVO.efectos.json`; exige sus gates en 0 salvo `--borrador` |
-| `cuadro MAQUETA --t S [--t S …] --salida DIR [--formato F] [--hoja]` | PNG de cuadros sueltos (`DIR/<9x16\|4x5>_tSSS.SSS.png`) y `hoja_<formato>.jpg`; ≈ 4–7 s en total. No exige pasar los gates ni traer `seguir` y `cierre`: sirve para ver ganchos candidatos |
-| `proyecto MAQUETA --dir DIR [--formato F]` | El proyecto de HyperFrames en `DIR/<9x16\|4x5>/proyecto/` |
-| `render MAQUETA --dir DIR [--formato F] [--borrador]` | Exige `check` en 0 (salvo `--borrador`: un candidato para mirar, nunca para entregar); `DIR/<9x16\|4x5>/video.mp4` (H.264 yuv420p, sin audio, `duracion_s` ± 1 cuadro; HyperFrames 0.9.28 con `--workers 1`) y `DIR/efectos.json` (`[[t, id], …]`); ≈ 1.8 s por segundo de video y formato |
+| `cuadro MAQUETA --t S [--t S …] --salida DIR [--formato F] [--hoja]` | PNG de cuadros sueltos (`DIR/<9x16\|4x5>_tSSS.SSS.png`) y `hoja_<formato>.jpg`; ≈ 4–7 s en total (con un estilo de Blender, ≈ 4–5 s un cuadro y ≈ 9–11 s seis: la placa a resolución completa y con las muestras del render, más la capa 2D). No exige pasar los gates ni traer `seguir` y `cierre`: sirve para ver ganchos candidatos |
+| `proyecto MAQUETA --dir DIR [--formato F]` | El proyecto de HyperFrames en `DIR/<9x16\|4x5>/proyecto/` (con un estilo de Blender, solo la capa 2D: la placa `assets/placa.mp4` la pone `render`) |
+| `render MAQUETA --dir DIR [--formato F] [--borrador]` | Exige `check` en 0 (salvo `--borrador`: un candidato para mirar, nunca para entregar); `DIR/<9x16\|4x5>/video.mp4` (H.264 yuv420p, sin audio, `duracion_s` ± 1 cuadro; HyperFrames 0.9.28 con `--workers 1`) y `DIR/efectos.json` (`[[t, id], …]`); ≈ 1.8 s por segundo de video y formato con three.js; con un estilo de Blender, ver los tiempos de «Motor Blender» |
 | `estilos` · `sets` | Los catálogos |
-| `prueba [--dir DIR]` | Sobre `video/maqueta/fixture/maqueta.json`: check, negativos y positivos de gate (también el modo pieza en tres lienzos), hoja y render en los dos formatos |
+| `prueba [--dir DIR]` | Sobre `video/maqueta/fixture/maqueta.json`: check, negativos y positivos de gate (también el modo pieza en tres lienzos y los tres estilos de Blender), hoja y render en los dos formatos con three.js, y al final un caso corto del motor Blender (el fixture en `arquitecto`: check y un cuadro; se salta con un aviso si Blender no está) |
+| `prueba --blender-render ESTILO [--formato F]` | Solo el render completo del fixture en un estilo de Blender (minutos) |
 
 Los geodatos: `python3 scripts/build_set3d.py guatemala [--check] [--capa relieve|fallas|frontera|lugares]`
 (descargas en caché en `sesiones/_descargas/sets3d/`).
@@ -239,3 +243,113 @@ Los geodatos: `python3 scripts/build_set3d.py guatemala [--check] [--capa reliev
   cuadro sale byte a byte igual en dos cargas distintas.
 - Ningún color escrito en el motor ni en la capa: salen de `design/sets3d/estilos.json` (con `@acento`, `@texto`,
   `@fondo3`… de la paleta) y entran como uniformes y variables CSS.
+
+## Motor Blender (`scripts/maqueta_blender.py` + `video/maqueta/placa.js`)
+
+Los estilos `arquitecto`, `diorama` y `papel` no los dibuja three.js: **Blender renderiza la placa** (el mundo, sin
+texto) y **la misma capa 2D de HyperFrames va encima**. El estilo decide el motor (`estilos.json → motor`); el
+`maqueta.json`, los gates, los comandos y las salidas son los mismos.
+
+```
+maqueta.json ─► maqueta3d.py (resuelve: lugares → km, cadenas, cámara, colores)
+   ├─► Blender -b --python scripts/maqueta_blender.py  ─► c_NNNNN.png ─► ffmpeg crf 8 ─► assets/placa.mp4
+   └─► marcas proyectadas por cuadro (la misma cámara y proyección de los gates) ─► assets/datos.js → MAQUETA.anclas
+proyecto de HyperFrames (plantilla.html con <video id="placa"> + capa.js + placa.js) ─► render --workers 1 ─► video.mp4
+```
+
+- **Qué necesita:** Blender ≥ 5.0 (probado con 5.3) en `/Applications/Blender.app`, en `$BLENDER` (la ruta del
+  ejecutable) o como `blender` en el PATH. Corre sin ventana (`-b --factory-startup`); no usa el MCP de Blender ni la
+  red. `check` no lo necesita; `cuadro`, `render` y `pieza` fallan con un mensaje claro si falta; `estilos` lo avisa.
+- **Una sola geometría:** `maqueta_blender.py` importa de `maqueta3d.py` la resolución del `maqueta.json`, la función
+  de cámara y la proyección. La cámara se pone **cuadro a cuadro** con `camara_en` (posición, mira, `fov`, el
+  desplazamiento de lente de `centro_y`): no hay curvas de animación que Blender pueda volver a suavizar. Antes de
+  renderizar compara su cámara con `proyector()` en cinco puntos y se detiene si difieren más de 1.5 px (da 0.00 px).
+- **Modo placa de la capa:** `capa.js` es la misma; en lugar de la cámara de three.js recibe de `placa.js` la posición
+  de cada marca **ya proyectada por cuadro** (`MAQUETA.anclas`, calculada en Python con la proyección de los gates), y
+  el mundo es `#placa`: un `<video>` en el render o fotos apiladas en los cuadros sueltos. El cuadro `n` de la placa
+  está en `t = n / fps`.
+- **Capa en tinta:** los tres estilos son de fondo claro, así que su bloque `capa` invierte los papeles: `ink` oscuro
+  (titulares, cifras, subtítulos, pie, barra), `sombra` y el velo del cierre del color claro del estilo, `tinta` crema
+  (el texto sobre lo que va en tinta: la palabra que suena, el botón). El acento sigue siendo solo del protagonista.
+- **Mismo cuadro, no mismos bytes:** en la prueba anterior de estos estilos (`sesiones/_video3d/antigua/estilos/
+  blender/NOTAS.md`) dos renders del mismo cuadro diferían en ±1 nivel en algunos píxeles (el denoise de Cycles y la
+  oclusión en pantalla de Eevee). Con este motor **no se volvió a medir**; por eso ninguna prueba compara hashes de la
+  placa.
+- **Placa y capa en el mismo cuadro (medido):** en el render de prueba, el cuadro N del mp4 final se parece al cuadro N
+  de la placa (PSNR ≈ 42 dB en una franja sin texto) y no a sus vecinos (23–26 dB en N ± 1), en los cuadros 30, 135 y
+  150, con la cámara en movimiento.
+
+### Los tres estilos (qué se decidió)
+
+| | `arquitecto` | `diorama` | `papel` |
+|---|---|---|---|
+| Motor | Cycles en GPU (Metal), 16 muestras + OpenImageDenoise | Eevee, 32 muestras, foco con jitter | Eevee, 24 muestras, oclusión en pantalla |
+| Relieve (`blender.relieve`) | `liso`: malla 720×675 con sombreado suave; **el mar, un escalón de 2.5 km por debajo** de la costa (la costa se lee por su sombra) | `base`: **la caja del país** (`fuente.json → caja`) más 30 km, **recortada en una base de 55 km de canto** en tres estratos, sobre un piso de estudio claro; el mar es resina (brilla) | `capas`: el relieve suavizado y **partido en cartulinas cada 600 m** (3 km de maqueta con exageración 5; el mar baja en 3 capas cada 1,500 m); el corte de cada capa ocupa ≈ 3 celdas |
+| Color | Todo blanco mate cálido; fuera del país y el mar, un tono más gris. **Solo el protagonista en el acento** (con luz propia: se lee igual a la sombra) | Tinta por altura de maqueta escolar (verde, paja, café); fuera del país, sin pintar | Cartulinas apagadas por nivel (salvia, paja, terracota), fuera del país crema; **canto claro** en cada corte y grano de papel |
+| Luz | Sol bajo (36°) de penumbra ancha + cielo parejo, un rebote: oclusión y sombras del trazado de rayos | Luz de estudio suave; **foco en lo que mira la cámara** y apertura calculada por cuadro para ≈ 44 px de desenfoque en el infinito | Sol bajo (34°) y duro + oclusión del material: sombra de contacto en cada capa |
+| Pueblos (`luces`) | Bloques blancos, como edificios de maqueta | Bloques crema con algo de luz propia | Cuadritos de cartulina |
+| Líneas | Tubos finos | Tubos finos | Cintas planas (tiras de papel) |
+
+### Lo que se ve distinto frente a three.js
+
+- **Líneas con grosor en kilómetros, no en píxeles.** El ancho de falla, frontera, ruta y flechas se calcula en cada
+  cuadro para que mida los píxeles del estilo **a la distancia del punto que mira la cámara**; con la cámara rasante,
+  lo lejano se ve más fino. Son mallas con sombra: una montaña delante puede tapar un tramo (three dibuja la falla
+  encendida siempre encima).
+- **`ruptura`**: la línea encendida es un tubo (o una cinta) del acento que crece desde el origen, cada frente a su
+  ritmo, con una bolita en cada frente. No hay halo ni «recién roto más caliente»; en `arquitecto` la luz propia del
+  tubo tiñe apenas el blanco de alrededor, en `diorama` y `papel` no alumbra el suelo.
+- **`onda`**: un anillo **pintado** sobre el relieve (mezcla hacia el color `onda` del estilo) que crece; no suma luz.
+  Al pasar, los bloques de los pueblos crecen un momento.
+- **`encender` / `apagar` / `parpadear`**: los pueblos son bloques, no puntos de luz: apagado es un bloque bajo y del
+  color `luces_apagadas`; encendido, alto y claro; parpadear alterna entre los dos.
+- **`deslizar`**: puntas de flecha en relieve a los dos lados de la falla, en sentidos opuestos (mismo `sentido`,
+  `periodo_km` y `vel_km_s`).
+- **`resaltar`**: un lugar es un núcleo y dos anillos **planos** que se abren (en el color `resalte`: oscuro sobre
+  blanco y papel, blanco en el diorama); una pieza engorda mientras dura.
+- **Sin niebla ni fondo que se funde:** el mundo termina en la mesa (`arquitecto`, `papel`: la orilla de la caja se
+  funde en `borde_km` con el color de la mesa) o en el canto de la base (`diorama`).
+- **`diorama`: la base es la caja del país.** Un lugar o una marca fuera de ella (un pueblo de Honduras lejos de la
+  frontera) cae sobre el piso del estudio; con el país entero en 9:16 los cantos de los lados quedan fuera de cuadro
+  (se ven el de arriba y el de abajo; en 4:5 y en lienzos anchos se ve la base entera).
+- **`papel`: las alturas van por escalones.** La superficie queda hasta 1.5 km (de maqueta) por encima o por debajo de
+  la altura real, y las marcas se proyectan con la altura real: el ancla puede quedar unos píxeles fuera del suelo en
+  un plano muy cercano. Las piezas sí se posan en la superficie visible. **En planos cercanos (≈ 250 km o menos) el
+  corte de las capas sale dentado**: la malla es la rejilla del relieve (celdas de 0.7 km) y no da para un canto limpio.
+- **Color (sin comprobar):** la prueba anterior midió que la cadena placa → HyperFrames → mp4 oscurecía ≈ 1.5 %. Aquí
+  la placa se codifica con matriz y etiquetas BT.709 para evitarlo, pero **el color final no se cotejó contra los PNG**.
+- **Sin probar:** la ruta sin Blender instalado (el mensaje de `cuadro`/`render` y el salto de `prueba`), un render
+  completo en 4:5, un render completo de `arquitecto` o `diorama` en 9:16 (solo cuadros sueltos y, de `arquitecto`, un
+  clip de 4 s en modo pieza), `prueba --blender-render`, otras paletas que `obsidiana`, la frontera o las luces como
+  protagonista, dos fallas a la vez y `encendidas: false`.
+
+### Tiempos (M4 Max, 1080×1920; medidos el 2026-11-14)
+
+| | `arquitecto` | `diorama` | `papel` |
+|---|---|---|---|
+| Armar la escena | 0.4 s | 0.4 s | 0.8 s |
+| Primer cuadro (carga de la GPU) | ≈ 4 s | ≈ 1.7 s | ≈ 1.3 s |
+| Placa, por cuadro (en tres corridas) | 0.74–0.84 s | 0.49–0.55 s | 0.65–0.77 s |
+| `cuadro` de punta a punta, 1 cuadro con su capa 2D | 5.0 s | 4.3 s | 4.7 s |
+| `cuadro` de punta a punta, 6 cuadros | 11.3 s | 8.7 s | 9.8 s |
+| Video de 45 s en un formato (estimado: 1,350 cuadros de placa + capa 2D) | ≈ 22 min | ≈ 16 min | ≈ 20 min |
+
+Las cifras por cuadro salen de corridas de 45, 150 y 390 cuadros con otros agentes usando la misma GPU: son un rango,
+no una medida limpia. El único render completo: 13 s del piloto en `papel`, 9:16, con su capa (390 cuadros) = 381 s: la placa 310 s (0.79 s por
+cuadro, con otro render corriendo en la máquina) y la capa 2D 71 s (HyperFrames extrae los cuadros del `<video>` en
+PNG: ≈ 5 s por segundo de video, contra ≈ 1.8 de three.js). Un clip de 4 s en modo pieza (950x1040, `arquitecto`):
+61 s (0.43 s por cuadro de placa + 9 s de capa). Frente a three.js (≈ 1.8 s por segundo de video) el motor Blender
+cuesta **≈ 12–16 veces más**: un video de 45 s en los dos formatos son ≈ 30–45 min.
+
+- **La primera vez que Cycles corre en una máquina compila los kernels de Metal: ≈ 3.5 min** con Blender al 0 % de
+  CPU (parece colgado; no lo es). Queda en caché: después arranca en segundos. Solo afecta a `arquitecto`. (Dato de la
+  prueba anterior; en esta máquina los kernels ya estaban compilados y no se volvió a ver.)
+- `MAQUETA_BLENDER_PROCESOS=N` (1–4) reparte la placa en N procesos de Blender a la vez (cada cuadro es independiente).
+  Medido con 150 cuadros: en Eevee gana poco (`diorama` 0.55 → 0.42 → 0.40 s por cuadro con 1, 2 y 3 procesos;
+  `papel` 0.73 → 0.62 → 0.61) y **en Cycles empeora** (`arquitecto` 0.74 → 0.92 → 1.19: la GPU ya está llena). Por
+  defecto, 1.
+- Los PNG de la placa (≈ 3–4 MB por cuadro) viven en `…/proyecto/_placa/` solo durante el render y se borran al armar
+  `assets/placa.mp4`. El registro de Blender queda junto al de HyperFrames (`blender.log`, `ARCHIVO.blender.log`).
+- `prueba` corre al final un caso corto de este motor (el fixture en `arquitecto`: `check` y un cuadro) y lo salta con
+  un aviso si Blender no está. El render completo no entra (minutos): `python3 scripts/maqueta3d.py prueba
+  --blender-render arquitecto|diorama|papel [--formato 9:16]`.

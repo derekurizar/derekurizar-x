@@ -1,4 +1,4 @@
-/* Capa 2D de la maqueta 3D (/video-3d): el cuadro de noticiero encima del lienzo de three.js. De la familia de
+/* Capa 2D de la maqueta 3D (/video-3d): el cuadro de noticiero encima del mundo (el lienzo de three.js o la placa de Blender). De la familia de
    video/comun.css (estilo Noche: texto crema, Archivo 800 en títulos y subtítulos, Archivo condensado 900 en cifras y
    titulares, JetBrains Mono en kicker, rótulos y fuentes) con una diferencia: en la maqueta el acento es SOLO del
    protagonista del 3D, así que aquí nada va en acento (la palabra que suena se resalta en crema).
@@ -10,6 +10,9 @@
 html, body { width: var(--w); height: var(--h); overflow: hidden; background: var(--bg); }
 #root { position: relative; width: var(--w); height: var(--h); overflow: hidden; color: var(--ink); font-family: Archivo, sans-serif; }
 #gl { position: absolute; left: 0; top: 0; width: var(--w); height: var(--h); display: block; z-index: 1; }
+/* MODO PLACA (estilos de Blender): el mundo llega renderizado; un <video> en el render o fotos apiladas en los cuadros sueltos */
+#placa { position: absolute; left: 0; top: 0; width: var(--w); height: var(--h); display: block; z-index: 1; object-fit: fill; }
+.placa-foto { position: absolute; left: 0; top: 0; width: var(--w); height: var(--h); display: block; visibility: hidden; }
 .capa { position: absolute; inset: 0; z-index: 5; pointer-events: none; }
 .marco { position: absolute; left: 0; top: 0; width: var(--w); height: var(--h); }
 /* el 3D ocupa todo el lienzo; encima, un degradado del color del fondo que crece hacia abajo (subtítulos, aviso y pie

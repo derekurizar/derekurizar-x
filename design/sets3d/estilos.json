@@ -1,6 +1,6 @@
 {
  "version": 1,
- "_comentario": "Catálogo de estilos de la maqueta 3D (/video-3d). Un solo estilo por video (M3D8). motor: three (video/maqueta/motor.js dentro de HyperFrames) o blender (aún no disponible: maqueta3d.py check lo rechaza). Los colores con @ salen de la paleta del video en design/tokens.json → noche.paletas: @fondo, @fondo2 (fondo_acto2), @fondo3 (fondo_golpe), @acento, @texto, @tinta (tinta_sobre_acento). El acento es SOLO de la pieza `protagonista` del maqueta.json; lo demás que se enciende va en `secundario` y la capa 2D no usa el acento. cfg: medidas del estilo (anchos en px de MEDIO ancho de línea; luz.azimut = de dónde viene la luz, 0 norte y 90 este; fuera = cuánto queda de brillo fuera del país).",
+ "_comentario": "Catálogo de estilos de la maqueta 3D (/video-3d). Un solo estilo por video (M3D8). motor: three (video/maqueta/motor.js dentro de HyperFrames) o blender (scripts/maqueta_blender.py renderiza la placa del mundo y la capa 2D de HyperFrames va encima; necesita Blender ≥ 5.0). Los colores con @ salen de la paleta del video en design/tokens.json → noche.paletas: @fondo, @fondo2 (fondo_acto2), @fondo3 (fondo_golpe), @acento, @texto, @tinta (tinta_sobre_acento). El acento es SOLO de la pieza `protagonista` del maqueta.json; lo demás que se enciende va en `secundario` y la capa 2D no usa el acento. cfg: medidas del estilo (anchos en px de MEDIO ancho de línea; luz.azimut = de dónde viene la luz, 0 norte y 90 este; fuera = cuánto queda de brillo fuera del país). Estilos de blender: `colores` suma mesa, fuera, canto, luces_apagadas y resalte; cfg.luz lleva sol, ambiente y angulo (penumbra); `blender` = motor (CYCLES|EEVEE), muestras, paso de la malla y la forma del relieve (liso: maqueta blanca con el mar un escalón abajo · base: el país recortado en una base con canto y foco corto · capas: curvas de nivel en cartulina). Su `capa` va en tinta sobre fondo claro.",
  "estilos": [
   {
    "id": "noche",
@@ -446,19 +446,281 @@
    "id": "arquitecto",
    "motor": "blender",
    "nombre": "Arquitecto",
-   "cuando": "Maqueta blanca de estudio con un solo objeto en color. Para edificios, obras y lugares donde importa la forma."
+   "cuando": "Maqueta blanca de estudio: todo blanco mate con sombras suaves de verdad y SOLO el protagonista en color. Para obras, territorio y lugares donde importa la forma; serio y limpio.",
+   "colores": {
+    "fondo": "#E6E3DD",
+    "mesa": "#D0CCC3",
+    "mar": "#DAD6CE",
+    "mar_hondo": "#D0CCC3",
+    "tierra_baja": "#EFECE6",
+    "tierra_media": "#EFECE6",
+    "tierra_alta": "#EFECE6",
+    "fuera": "#DEDAD2",
+    "canto": "#EFECE6",
+    "luz": "#FFF9F0",
+    "ambiente": "#FFFFFF",
+    "frontera": "#8E8980",
+    "ruta": "#6E6A63",
+    "luces": "#F7F4EE",
+    "luces_apagadas": "#B9B4AB",
+    "acento": "@acento",
+    "secundario": "#5A5650",
+    "falla_dormida": "#A6A198",
+    "onda": "#6B665F",
+    "flechas": "#4A4743",
+    "resalte": "#4A4743"
+   },
+   "cfg": {
+    "fuera": 0.0,
+    "borde_km": 80,
+    "onda": 1.1,
+    "onda_ancho": 1.5,
+    "resalte_px": 300,
+    "resalte_emision": 0.0,
+    "luz": {
+     "azimut": 315,
+     "elevacion": 36,
+     "sol": 2.1,
+     "ambiente": 0.55,
+     "angulo": 8
+    },
+    "frontera": {
+     "ancho": 1.6
+    },
+    "ruta": {
+     "ancho": 2.0,
+     "raya_km": 6
+    },
+    "luces": {
+     "km": 5.0,
+     "min_px": 4.5,
+     "max_px": 18,
+     "alto": 0.9,
+     "emision": 0.0
+    },
+    "falla": {
+     "dormida_px": 1.4,
+     "nucleo_px": 3.4,
+     "cabeza_px": 7,
+     "flechas_px": 34,
+     "emision": 0.75,
+     "difuso": 0.3,
+     "flechas_emision": 0.0
+    }
+   },
+   "blender": {
+    "motor": "CYCLES",
+    "muestras": 16,
+    "paso": 2,
+    "relieve": "liso",
+    "escalon_mar_km": 2.5,
+    "rebotes": 1,
+    "linea": "tubo"
+   },
+   "capa": {
+    "sombra": "#EFECE6",
+    "ink": "#1B1A18",
+    "tinta": "@texto",
+    "tarjeta_bg": "#1B1A18",
+    "tarjeta_ink": "@texto",
+    "radio": 10,
+    "velo": 0.8,
+    "sombra_op": 0.55,
+    "vineta_op": 0
+   }
   },
   {
    "id": "diorama",
    "motor": "blender",
    "nombre": "Diorama",
-   "cuando": "Miniatura con luz suave y poca profundidad de campo. Para historias de un lugar concreto, con cariño."
+   "cuando": "Miniatura: el país recortado en una base con canto, sobre un fondo de estudio, con colores de maqueta y foco corto en lo que mira la cámara. Para historias de un lugar concreto, con cariño.",
+   "colores": {
+    "fondo": "#CFC8BC",
+    "mesa": "#E4DFD6",
+    "mar": "#63B1D6",
+    "mar_hondo": "#2F7FB5",
+    "tierra_baja": "#7DB35C",
+    "tierra_media": "#D8BE6E",
+    "tierra_alta": "#A07850",
+    "fuera": "#CEC8B8",
+    "canto": "#B08A5E",
+    "canto_bajo": "#8A6444",
+    "canto_zocalo": "#2E2925",
+    "luz": "#FFF4E2",
+    "ambiente": "#F4F7FF",
+    "frontera": "#FFFFFF",
+    "ruta": "#2B2622",
+    "luces": "#F6ECD4",
+    "luces_apagadas": "#5B564F",
+    "acento": "@acento",
+    "secundario": "#FFFFFF",
+    "falla_dormida": "#5A4634",
+    "onda": "#FFFFFF",
+    "flechas": "#26221E",
+    "resalte": "#FFFFFF"
+   },
+   "cfg": {
+    "fuera": 0.35,
+    "onda": 1.2,
+    "onda_ancho": 1.4,
+    "resalte_px": 300,
+    "resalte_emision": 0.5,
+    "luz": {
+     "azimut": 300,
+     "elevacion": 46,
+     "sol": 2.05,
+     "ambiente": 0.5,
+     "angulo": 14
+    },
+    "frontera": {
+     "ancho": 1.6
+    },
+    "ruta": {
+     "ancho": 2.0,
+     "raya_km": 6
+    },
+    "luces": {
+     "km": 4.0,
+     "min_px": 3.6,
+     "max_px": 15,
+     "alto": 0.8,
+     "emision": 0.15
+    },
+    "falla": {
+     "dormida_px": 1.4,
+     "nucleo_px": 4.2,
+     "cabeza_px": 8,
+     "flechas_px": 34,
+     "emision": 0.6,
+     "difuso": 0.5,
+     "flechas_emision": 0.0
+    }
+   },
+   "blender": {
+    "motor": "EEVEE",
+    "muestras": 32,
+    "paso": 1,
+    "relieve": "base",
+    "base_margen_km": 30,
+    "base_grosor_km": 55,
+    "escalon_mar_km": 0.8,
+    "mar_rugosidad": 0.28,
+    "especular": 0.35,
+    "foco": {
+     "px": 44
+    },
+    "sombra_suave": 12,
+    "linea": "tubo"
+   },
+   "capa": {
+    "sombra": "#E4DFD6",
+    "ink": "#1B1A18",
+    "tinta": "@texto",
+    "tarjeta_bg": "#FFF6E0",
+    "tarjeta_ink": "#1B1A18",
+    "radio": 12,
+    "velo": 0.8,
+    "sombra_op": 0.8,
+    "vineta_op": 0
+   }
   },
   {
    "id": "papel",
    "motor": "blender",
    "nombre": "Papel",
-   "cuando": "Recortes de papel en capas. Para historia y cultura, con tono artesanal."
+   "cuando": "Papel recortado: el relieve en capas de cartulina (curvas de nivel), colores apagados, canto claro y sombras de contacto. Para historia y cultura, con tono artesanal.",
+   "colores": {
+    "fondo": "#E9E1D2",
+    "mesa": "#7FA3B5",
+    "mar": "#A9C7D2",
+    "mar_hondo": "#7FA3B5",
+    "tierra_baja": "#A9BF8F",
+    "tierra_media": "#DCC98F",
+    "tierra_alta": "#C08E6A",
+    "fuera": "#E3DAC8",
+    "canto": "#F6EFE1",
+    "luz": "#FFF6E8",
+    "ambiente": "#FFFFFF",
+    "frontera": "#4A4038",
+    "ruta": "#4A4038",
+    "luces": "#FFF8E8",
+    "luces_apagadas": "#8C8377",
+    "acento": "@acento",
+    "secundario": "#4A4038",
+    "falla_dormida": "#6B5D50",
+    "onda": "#FFFFFF",
+    "flechas": "#3A332D",
+    "resalte": "#3A332D"
+   },
+   "cfg": {
+    "fuera": 0.25,
+    "borde_km": 80,
+    "onda": 1.2,
+    "onda_ancho": 1.4,
+    "resalte_px": 300,
+    "resalte_emision": 0.0,
+    "luz": {
+     "azimut": 315,
+     "elevacion": 34,
+     "sol": 2.0,
+     "ambiente": 0.55,
+     "angulo": 5
+    },
+    "frontera": {
+     "ancho": 1.6
+    },
+    "ruta": {
+     "ancho": 2.0,
+     "raya_km": 6
+    },
+    "luces": {
+     "km": 5.0,
+     "min_px": 5,
+     "max_px": 18,
+     "alto": 0.5,
+     "emision": 0.0
+    },
+    "falla": {
+     "dormida_px": 1.5,
+     "nucleo_px": 3.6,
+     "cabeza_px": 7,
+     "flechas_px": 34,
+     "emision": 0.0,
+     "difuso": 1.0,
+     "flechas_emision": 0.0
+    }
+   },
+   "blender": {
+    "motor": "EEVEE",
+    "muestras": 24,
+    "paso": 1,
+    "relieve": "capas",
+    "capa_m": 600,
+    "capa_mar_m": 1500,
+    "capas_mar": 3,
+    "redondeo": 2.0,
+    "canto_celdas": 3.2,
+    "canto_emision": 0.3,
+    "canto_desde": 0.55,
+    "canto_hasta": 0.93,
+    "grano": 0.1,
+    "grano_escala": 0.9,
+    "oclusion": 1.6,
+    "oclusion_km": 8,
+    "sombra_suave": 6,
+    "linea": "cinta"
+   },
+   "capa": {
+    "sombra": "#F3ECDD",
+    "ink": "#231F1B",
+    "tinta": "@texto",
+    "tarjeta_bg": "#FFF6E0",
+    "tarjeta_ink": "#231F1B",
+    "radio": 4,
+    "velo": 0.84,
+    "sombra_op": 0.95,
+    "vineta_op": 0
+   }
   }
  ]
 }

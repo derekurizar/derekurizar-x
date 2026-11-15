@@ -2091,6 +2091,50 @@
       "problema": "«Maqueta · no a escala» salía fijo en todos los videos 3D; el usuario dijo que no es necesario en todos.",
       "propuesta": "El aviso es opcional: sale solo si el guion trae `aviso` (por ejemplo «Traza esquemática» cuando el dibujo simplifica); M3D7 ya no lo exige.",
       "estado": "hecha"
+    },
+    {
+      "id": "m191",
+      "fecha": "2026-11-14",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-14-terremoto-1976",
+      "area": "mesa",
+      "archivo": "scripts/historia.py · scripts/explica.py · scripts/youtube.py (entregar → fuentes.md)",
+      "problema": "Cuando un video de /historia, /serie, /explica o /youtube-long aloja una maqueta, la atribución de los geodatos (relieve, OpenStreetMap, GEM) solo sale en pantalla; `fuentes.md` y `caption.md` no la listan.",
+      "propuesta": "Que `entregar` de cada flujo sume a `fuentes.md` una línea «Geodatos: …» con `mesa.credito_maqueta` de cada maqueta del plano.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m192",
+      "fecha": "2026-11-14",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-14-terremoto-1976",
+      "area": "motor",
+      "archivo": "scripts/maqueta_blender.py · design/sets3d/estilos.json",
+      "problema": "El motor Blender quedó con límites vistos en las hojas: en `papel` el corte de las capas sale dentado a menos de ≈ 250 km, en `diorama` la base no se calcula desde la cámara, la `ruptura` no tiene halo, y las palabras aún no dichas del subtítulo se leen flojas sobre fondos claros. Solo se hizo un render completo (13 s en `papel`, 9:16).",
+      "propuesta": "Antes del primer video real en un estilo de Blender: un render completo en 9:16 y 4:5 de ese estilo, subir la resolución de la malla en planos cercanos y dar más contraste a los subtítulos en la capa de tinta.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m193",
+      "fecha": "2026-11-14",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-14-terremoto-1976",
+      "area": "flujo",
+      "archivo": ".claude/commands/video-3d.md · (futuro) .claude/workflows/video3d.js",
+      "problema": "En /video-3d el guion, los ganchos y la dirección los escribe la sesión; solo el crítico es un agente. En el piloto funcionó, pero la calidad depende de quien conduzca la sesión.",
+      "propuesta": "Si el formato se queda, un Workflow `video3d` con un director (idea visual, estilo, mundo), el `video-gancho` en «Modo 3D» y un guionista, con las paradas de siempre para que el usuario elija gancho y cierre.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m194",
+      "fecha": "2026-11-14",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-14-terremoto-1976",
+      "area": "medicion",
+      "archivo": "scripts/metricas.py (alinear)",
+      "problema": "`metricas.py alinear` no sabe leer las escenas de un video 3D (sus tiempos viven en `tiempos.json` y `maqueta.json`), así que /analyze-improve no podrá alinear su curva de retención con las tomas.",
+      "propuesta": "Enseñarle a `alinear` el formato de /video-3d (escenas desde `tiempos.json`; eventos y claves de cámara desde `maqueta.json`).",
+      "estado": "pendiente"
     }
   ]
 }

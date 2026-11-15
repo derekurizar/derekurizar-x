@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 """La maqueta 3D de /video-3d: valida, saca cuadros y renderiza un `maqueta.json`.
 
-Contrato: referencias/diseno/maqueta3d.md. El motor es three.js dentro de HyperFrames (video/maqueta/); este script
-RESUELVE el maqueta.json (lugares → km, cadenas de falla, alturas, tiempos del cierre) y se lo entrega al motor ya
-masticado, de modo que la geometría vive en un solo sitio. Los gates M3D revisan los datos (reimplementan la cámara y
-la proyección): nunca miden píxeles.
+Contrato: referencias/diseno/maqueta3d.md. El ESTILO decide el motor (design/sets3d/estilos.json → motor):
+  three    three.js dentro de HyperFrames (video/maqueta/motor.js): color, noche, contorno, voxel, plano
+  blender  Blender sin ventana renderiza la PLACA del mundo (scripts/maqueta_blender.py) y la capa 2D de HyperFrames va
+           encima (video/maqueta/placa.js): arquitecto, diorama, papel. Necesita Blender ≥ 5.0 ($BLENDER o /Applications)
+Este script RESUELVE el maqueta.json (lugares → km, cadenas de falla, alturas, tiempos del cierre) y se lo entrega al
+motor ya masticado, de modo que la geometría vive en un solo sitio. Los gates M3D revisan los datos (reimplementan la
+cámara y la proyección): nunca miden píxeles, y valen igual para los dos motores.
 
   maqueta3d.py check MAQUETA [--formato 9:16|4:5|ambos]          gates M3D1–M3D10
   maqueta3d.py cuadro MAQUETA --t S [--t S …] --salida DIR [--formato F] [--hoja]   PNG de cuadros sueltos
@@ -14,7 +17,8 @@ la proyección): nunca miden píxeles.
         MODO PIEZA: la maqueta alojada en el cuadro de otro flujo (solo el mundo y sus pines, en un lienzo libre)
         check y cuadro lo aceptan con --pieza --lienzo ANCHOxALTO
   maqueta3d.py estilos | sets                                     los catálogos
-  maqueta3d.py prueba [--dir DIR] [--formato F]                   check + hoja + render del fixture
+  maqueta3d.py prueba [--dir DIR] [--formato F]                   check + hoja + render del fixture (+ un cuadro en Blender)
+  maqueta3d.py prueba --blender-render ESTILO                     el fixture completo en un estilo de Blender (lento)
 
 Salida: 0 ok · 1 gate o paso fallido · 2 uso incorrecto. Python stdlib; HyperFrames 0.9.28 por npx, un solo proceso.
 """
@@ -29,6 +33,8 @@ HF = ["npx", "--yes", "hyperframes@0.9.28"]
 MOTOR = os.path.join(RAIZ, "video", "maqueta")
 SETS = os.path.join(RAIZ, "design", "sets3d")
 FIXTURE = os.path.join(MOTOR, "fixture", "maqueta.json")
+MOTORES = ("three", "blender")     # el estilo decide el motor: three.js en HyperFrames, o Blender (la placa) + la capa 2D de HyperFrames
+BLENDER_PY = os.path.join(AQUI, "maqueta_blender.py")
 TIPOS_PIEZA = ("falla", "luces", "frontera", "ruta")
 TIPOS_EVENTO = ("ruptura", "onda", "deslizar", "encender", "apagar", "parpadear", "resaltar")
 RUMBOS = {"este": (1, 0), "oeste": (-1, 0), "norte": (0, 1), "sur": (0, -1)}
@@ -313,8 +319,8 @@ def resolver(m, formato, avisos=None):
     est = catalogo_estilos().get(m.get("estilo"))
     if not est:
         raise Falla("M3D1", "estilo «%s» no está en design/sets3d/estilos.json (hay: %s)" % (m.get("estilo"), ", ".join(catalogo_estilos())))
-    if est["motor"] != "three":
-        raise Falla("M3D1", "estilo «%s»: motor %s: aún no disponible (usa uno de three: color, noche, contorno, voxel, plano)" % (est["id"], est["motor"]))
+    if est["motor"] not in MOTORES:
+        raise Falla("M3D1", "estilo «%s»: motor «%s» desconocido (hay: %s)" % (est["id"], est["motor"], ", ".join(MOTORES)))
     tokens = cargar_json(os.path.join(RAIZ, "design", "tokens.json"))
     pal = tokens["noche"]["paletas"].get(m.get("paleta"))
     if not pal:
@@ -526,6 +532,15 @@ def resolver(m, formato, avisos=None):
                        "texto": str(k.get("texto") or ""), "sub": str(k.get("sub") or ""), "alto": int(k.get("alto", 110)), "sfx": k.get("sfx"),
                        "separada_de": sep})
 
+    # [motor blender, relieve «base»] el diorama recorta la caja del país: lo que cae fuera queda sobre el piso del estudio
+    if est["motor"] == "blender" and (est.get("blender") or {}).get("relieve") == "base":
+        cj, mg = S.fuente["caja"], float(est["blender"].get("base_margen_km", 30))
+        (bx0, by0), (bx1, by1) = S.xy(cj["lon_min"], cj["lat_min"]), S.xy(cj["lon_max"], cj["lat_max"])
+        dentro_base = lambda o: bx0 - mg <= o["x"] <= bx1 + mg and by0 - mg <= o["y"] <= by1 + mg
+        fuera_b = ["la marca «%s»" % k["texto"] for k in marcas if not dentro_base(k)] + ["la clave de cámara %d" % n for n, k in enumerate(camara) if not dentro_base(k)]
+        if fuera_b:
+            avisos.append("estilo %s: la base del diorama es la caja del país (más %g km) y %s cae(n) fuera de ella, sobre el piso del estudio" % (est["id"], mg, ", ".join(fuera_b)))
+
     # capa
     C = m.get("capa") or {}
     dur = float(m.get("duracion_s", 0))
@@ -555,6 +570,7 @@ def resolver(m, formato, avisos=None):
     col = {k: color(v) for k, v in est["colores"].items()}
     return {
         "version": 1, "formato": formato, "W": Z["W"], "H": Z["H"], "fps": int(m.get("fps", 30)), "dur": dur, "estilo": est["id"], "paleta": m["paleta"],
+        "motor": est["motor"], "blender": est.get("blender"),
         "col": col, "estilo_cfg": cfg, "capa_col": {k: color(v) for k, v in est["capa"].items() if isinstance(v, str)}, "radio": est["capa"]["radio"],
         "capa_num": {k: est["capa"].get(k, 1) for k in ("sombra_op", "vineta_op")},
         "exageracion": exag, "zona": Z, "protagonista": prota, "pieza": bool(Z.get("pieza")), "anfitrion": pal["fondo"],
@@ -930,22 +946,40 @@ def revisar_m(m, formatos):
 
 
 # ---------- proyecto de HyperFrames ----------
-def escribir_proyecto(m, formato, destino):
+def escribir_proyecto(m, formato, destino, fotos=None):
+    """El proyecto de HyperFrames. Motor three: el lienzo WebGL (motor.js). Motor blender (MODO PLACA): el mundo llega ya
+    renderizado y aquí solo va la capa 2D encima: un <video> (assets/placa.mp4, lo pone el render) o, para cuadros
+    sueltos, las `fotos` (números de cuadro → assets/placa/c_NNNNN.png); las marcas, ya proyectadas por cuadro."""
     R = resolver(m, formato)
     S = R.pop("_set"); R.pop("_pie_claves")
     Z, C, D, esc = R["zona"], R["capa"], R["dur"], lambda s: html.escape(str(s), quote=True)
+    placa = R["motor"] == "blender"
     A = os.path.join(destino, "assets")
     shutil.rmtree(A, ignore_errors=True)
-    for d in ("fonts", "three", "set"):
+    for d in ("fonts",) + (("placa",) if placa else ("three", "set")):
         os.makedirs(os.path.join(A, d))
     V = os.path.join(RAIZ, "design", "vendor")
-    for f in ("three.module.js", "three.core.js", "LICENSE"):
-        shutil.copyfile(os.path.join(V, "three-0.187.0", f), os.path.join(A, "three", f))
     shutil.copyfile(os.path.join(V, "gsap-3.15.0.min.js"), os.path.join(A, "gsap.min.js"))
     for f in ("archivo-wdth.woff2", "jetbrains-mono-var.woff2"):
         shutil.copyfile(os.path.join(RAIZ, "design", "fonts", f), os.path.join(A, "fonts", f))
-    shutil.copyfile(os.path.join(S.dir, R["relieve"]["archivo"]), os.path.join(A, "set", R["relieve"]["archivo"]))
-    for f in ("motor.js", "capa.js"):
+    if placa:
+        R["anclas"] = anclas_de(R)
+        R["placa"] = {"fotos": sorted(fotos)} if fotos else {"video": "assets/placa.mp4"}
+        for k in ("piezas", "eventos", "camara", "relieve", "frontera", "blender", "estilo_cfg"):   # la capa no los usa: el mundo ya viene dibujado
+            R.pop(k, None)
+        if fotos:
+            fondo = '<div id="placa" class="clip" data-start="0" data-duration="@D@" data-track-index="0">%s</div>' % "".join(
+                '<img class="placa-foto" data-n="%d" src="assets/placa/c_%05d.png" alt="" />' % (n, n) for n in sorted(fotos))
+        else:
+            fondo = '<video id="placa" class="clip" data-start="0" data-duration="@D@" data-track-index="0" muted playsinline src="assets/placa.mp4"></video>'
+        guion_motor = '<script src="assets/placa.js"></script>'
+    else:
+        for f in ("three.module.js", "three.core.js", "LICENSE"):
+            shutil.copyfile(os.path.join(V, "three-0.187.0", f), os.path.join(A, "three", f))
+        shutil.copyfile(os.path.join(S.dir, R["relieve"]["archivo"]), os.path.join(A, "set", R["relieve"]["archivo"]))
+        fondo = '<canvas id="gl" class="clip" width="@W@" height="@H@" data-start="0" data-duration="@D@" data-track-index="0"></canvas>'
+        guion_motor = '<script type="module" src="assets/motor.js"></script>'
+    for f in ("placa.js" if placa else "motor.js", "capa.js"):
         shutil.copyfile(os.path.join(MOTOR, f), os.path.join(A, f))
     with open(os.path.join(A, "datos.js"), "w", encoding="utf-8") as f:
         f.write("window.MAQUETA = " + json.dumps(R, ensure_ascii=False, separators=(",", ":")) + ";\n")
@@ -1004,12 +1038,84 @@ def escribir_proyecto(m, formato, destino):
         L.append(clip("cierre", ci["t"], D - ci["t"], p0 + 4, '<div class="col"><div class="frase">%s</div><div class="sigue%s"><div class="fila"><span class="t">Sígueme en</span>%s</div>%s</div></div>'
                       % (frase, " enfila" if formato == "4:5" else "", boton, redes)))
     doc = cargar_texto(os.path.join(MOTOR, "plantilla.html"))
-    for k, v in (("@RAIZ_CSS@", raiz_css), ("@CSS@", cargar_texto(os.path.join(MOTOR, "capa.css"))), ("@W@", str(Z["W"])), ("@H@", str(Z["H"])),
+    for k, v in (("@FONDO@", fondo), ("@MOTOR@", guion_motor), ("@RAIZ_CSS@", raiz_css), ("@CSS@", cargar_texto(os.path.join(MOTOR, "capa.css"))), ("@W@", str(Z["W"])), ("@H@", str(Z["H"])),
                  ("@D@", str(D)), ("@FPS@", str(R["fps"])), ("@ESTILO@", R["estilo"]), ("@CAPA@", "\n".join(L))):
         doc = doc.replace(k, v)
     with open(os.path.join(destino, "index.html"), "w", encoding="utf-8") as f:
         f.write(doc)
     return R
+
+
+def blender_bin():
+    """El ejecutable de Blender: $BLENDER, la app de macOS o `blender` en el PATH. None si no está instalado."""
+    for c in (os.environ.get("BLENDER"), "/Applications/Blender.app/Contents/MacOS/Blender", shutil.which("blender"), shutil.which("Blender")):
+        if c and os.path.isfile(c) and os.access(c, os.X_OK):
+            return c
+    return None
+
+
+def motor_de(m):
+    return (catalogo_estilos().get((m or {}).get("estilo")) or {}).get("motor", "three")
+
+
+def anclas_de(R):
+    """MODO PLACA: dónde cae cada marca en cada cuadro de su ventana, con la MISMA cámara y proyección que los gates (y
+    que la cámara de Blender, que maqueta_blender.py comprueba al píxel). → [{n0, p: [[px, py] | None, …]}] por marca."""
+    Z, fps, out = R["zona"], R["fps"], []
+    sube, nmax = Z["H"] / 2 - Z["centro_y"], int(round(R["dur"] * R["fps"]))
+    for k in R["marcas"]:
+        n0, n1 = max(0, int(math.floor(k["t"] * fps)) - 1), min(nmax, int(math.ceil(k["hasta"] * fps)) + 1)
+        pts = []
+        for n in range(n0, n1 + 1):
+            q = proyector(camara_en(R["camara"], n / fps), Z["W"], Z["H"], sube)(k["x"], k["y"], k["z"])
+            pts.append([round(q[0], 2), round(q[1], 2)] if q else None)
+        out.append({"n0": n0, "p": pts})
+    return out
+
+
+def placa_blender(ruta_maqueta, formato, destino, registro, cuadros=None, total=0):
+    """Lanza Blender sin ventana y deja en `destino` los PNG de la placa (c_NNNNN.png): los `cuadros` pedidos, o todos
+    (`total` cuadros; con MAQUETA_BLENDER_PROCESOS=N se reparten en N procesos de Blender a la vez: cada cuadro es
+    independiente, así que el resultado es el mismo). → (0 ok | 1 falla, segundos, cuántos PNG)."""
+    exe = blender_bin()
+    if not exe:
+        print("FALLA motor blender: no encuentro Blender (≥ 5.0). Instálalo en /Applications o apunta $BLENDER a su ejecutable; "
+              "o usa un estilo de three (color, noche, contorno, voxel, plano)")
+        return 1, 0.0, 0
+    shutil.rmtree(destino, ignore_errors=True)
+    os.makedirs(destino)
+    cmd = [exe, "-b", "--factory-startup", "--python-exit-code", "1", "--python", BLENDER_PY, "--", "--maqueta", os.path.abspath(ruta_maqueta),
+           "--formato", formato, "--salida", os.path.abspath(destino)]
+    try:
+        procesos = max(1, min(4, int(os.environ.get("MAQUETA_BLENDER_PROCESOS", "1"))))
+    except ValueError:
+        procesos = 1
+    if cuadros is not None:
+        tandas = [["--cuadros", ",".join(str(n) for n in cuadros)]]
+    elif procesos > 1 and total >= 4 * procesos:
+        cortes = [round(total * k / procesos) for k in range(procesos + 1)]
+        tandas = [["--todo", "--desde", str(a), "--hasta", str(b)] for a, b in zip(cortes, cortes[1:])]
+    else:
+        tandas = [["--todo"]]
+    t0 = time.time()
+    vivos = []
+    for k, tanda in enumerate(tandas):
+        reg = registro if k == 0 else "%s.%d" % (registro, k + 1)
+        fh = open(reg, "w", encoding="utf-8")
+        vivos.append((subprocess.Popen(cmd + tanda, cwd=os.path.dirname(os.path.abspath(ruta_maqueta)), stdout=fh, stderr=subprocess.STDOUT, text=True), fh, reg))
+    mal = None
+    for pr, fh, reg in vivos:
+        rc = pr.wait()
+        fh.close()
+        if rc != 0 and mal is None:
+            mal = (rc, reg)
+    seg = time.time() - t0
+    pngs = [x for x in os.listdir(destino) if re.fullmatch(r"c_\d{5}\.png", x)]
+    if mal:
+        lineas = [l for l in cargar_texto(mal[1]).splitlines() if re.search(r"FALLA|Error|Traceback", l)]
+        print("FALLA placa de Blender (%s): devolvió %d%s (ver %s)" % (formato, mal[0], ": " + lineas[-1].strip() if lineas else "", mal[1]))
+        return 1, seg, len(pngs)
+    return 0, seg, len(pngs)
 
 
 def cargar_texto(ruta):
@@ -1073,10 +1179,10 @@ def cmd_proyecto(a):
         try:
             d = os.path.join(a.dir, CARPETA[f], "proyecto")
             os.makedirs(d, exist_ok=True)
-            escribir_proyecto(m, f, d)
+            R = escribir_proyecto(m, f, d)
         except Falla as e:
             print("  FALLA %s %s" % e.args); return 1
-        print("proyecto %s: %s" % (f, d))
+        print("proyecto %s: %s%s" % (f, d, "  (motor blender: solo la capa 2D; la placa assets/placa.mp4 la pone `render`)" if R["motor"] == "blender" else ""))
     return 0
 
 
@@ -1084,16 +1190,25 @@ def cmd_cuadro(a):
     m = cargar_json(a.maqueta)
     os.makedirs(a.salida, exist_ok=True)
     tiempos = sorted(set(round(float(t), 3) for t in a.t))
+    # motor blender: el cuadro de la placa es el más cercano a t (n = round(t·fps)); la capa 2D se dibuja en t
+    fotos = sorted(set(int(round(t * int(m.get("fps", 30)))) for t in tiempos)) if motor_de(m) == "blender" else None
     for f in formatos_de(a):
         try:
             proy = os.path.join(a.salida, "_proyecto", carpeta_de(f))
             os.makedirs(proy, exist_ok=True)
-            R = escribir_proyecto(m, f, proy)
+            R = escribir_proyecto(m, f, proy, fotos)
         except Falla as e:
             print("  FALLA %s %s" % e.args); return 1
         malos = [t for t in tiempos if not 0 <= t <= R["dur"]]
         if malos:
             print("--t fuera del video (0–%.2f s): %s" % (R["dur"], malos)); return 2
+        if fotos:
+            rc, seg_b, n = placa_blender(a.maqueta, f, os.path.join(proy, "assets", "placa"), os.path.join(proy, "blender.log"), fotos)
+            if rc or n != len(fotos):
+                if not rc:
+                    print("FALLA placa de Blender (%s): salieron %d de %d cuadros (ver %s)" % (f, n, len(fotos), os.path.join(proy, "blender.log")))
+                return 1
+            print("placa %s (Blender, estilo %s): %d cuadro(s) en %.1f s" % (f, R["estilo"], n, seg_b))
         snap = os.path.abspath(os.path.join(proy, "_cuadros"))
         shutil.rmtree(snap, ignore_errors=True)
         p, seg = correr(HF + ["snapshot", "--at", ",".join("%g" % t for t in tiempos), "--no-end", "--keep", "--browser-gpu", "--timeout", "120000", "-o", snap],
@@ -1153,8 +1268,15 @@ def renderizar(m, f, proy, final, registro):
         for x in (crudo, final):
             if os.path.exists(x):
                 os.remove(x)
+        seg_placa, extra = 0.0, []
+        if R["motor"] == "blender":
+            # la placa: Blender renderiza el mundo cuadro a cuadro → assets/placa.mp4 (casi sin pérdida); HyperFrames pone la capa 2D
+            rc, seg_placa = placa_video(m, f, proy, registro, R)
+            if rc:
+                return 1
+            extra = ["--video-frame-format", "png"]
         # un solo proceso de Chrome SIEMPRE: con varios, el video tiembla
-        p, seg = correr(HF + ["render", "--fps", str(R["fps"]), "--workers", "1", "--crf", "18", "--quality", "delivery", "--browser-gpu", "-o", os.path.abspath(crudo)],
+        p, seg = correr(HF + ["render", "--fps", str(R["fps"]), "--workers", "1", "--crf", "18", "--quality", "delivery", "--browser-gpu"] + extra + ["-o", os.path.abspath(crudo)],
                         proy, registro)
         if p.returncode != 0 or not os.path.exists(crudo):
             print("FALLA render %s: hyperframes devolvió %d (ver %s)" % (f, p.returncode, registro)); return 1
@@ -1172,8 +1294,37 @@ def renderizar(m, f, proy, final, registro):
         shutil.rmtree(os.path.join(proy, "renders"), ignore_errors=True)
         if abs(cuadros - espera) > 1:
             print("FALLA render %s: salieron %d cuadros y se esperaban %d (±1)" % (f, cuadros, espera)); return 1
-        print("render %s: %s · %d×%d · %d cuadros (%.2f s a %d fps) · %.1f s de render (%.2f s por segundo de video)" % (f, final, R["W"], R["H"], cuadros, cuadros / R["fps"], R["fps"], seg, seg / R["dur"]))
+        if R["motor"] == "blender":
+            print("render %s: %s · %d×%d · %d cuadros (%.2f s a %d fps) · placa de Blender %.1f s (%.2f s por cuadro) + capa 2D %.1f s = %.1f s (%.1f s por segundo de video)"
+                  % (f, final, R["W"], R["H"], cuadros, cuadros / R["fps"], R["fps"], seg_placa, seg_placa / max(1, cuadros), seg, seg + seg_placa, (seg + seg_placa) / R["dur"]))
+        else:
+            print("render %s: %s · %d×%d · %d cuadros (%.2f s a %d fps) · %.1f s de render (%.2f s por segundo de video)" % (f, final, R["W"], R["H"], cuadros, cuadros / R["fps"], R["fps"], seg, seg / R["dur"]))
     return 0
+
+
+def placa_video(m, f, proy, registro, R):
+    """MODO PLACA: Blender → PNG de todos los cuadros → proy/assets/placa.mp4 (H.264 crf 8, BT.709; los PNG se borran).
+    → (0 ok | 1 falla, segundos)."""
+    t0 = time.time()
+    ruta = os.path.join(proy, "maqueta.json")
+    with open(ruta, "w", encoding="utf-8") as fh:
+        json.dump(m, fh, ensure_ascii=False)
+    tmp = os.path.join(proy, "_placa")
+    reg_b = registro[:-len("render.log")] + "blender.log" if registro.endswith("render.log") else registro + ".blender.log"
+    espera = int(round(R["dur"] * R["fps"]))
+    rc, _, n = placa_blender(ruta, f, tmp, reg_b, None, espera)
+    if rc or n != espera:
+        if not rc:
+            print("FALLA placa de Blender (%s): salieron %d cuadros y se esperaban %d (ver %s)" % (f, n, espera, reg_b))
+        return 1, time.time() - t0
+    placa = os.path.join(proy, "assets", "placa.mp4")
+    r = subprocess.run(["ffmpeg", "-v", "error", "-y", "-framerate", str(R["fps"]), "-start_number", "0", "-i", os.path.join(tmp, "c_%05d.png"),
+                        "-vf", "scale=in_range=pc:out_range=tv:out_color_matrix=bt709,format=yuv420p", "-c:v", "libx264", "-preset", "medium", "-crf", "8", "-g", "10",
+                        "-colorspace", "bt709", "-color_primaries", "bt709", "-color_trc", "bt709", "-color_range", "tv", "-movflags", "+faststart", placa], capture_output=True, text=True)
+    shutil.rmtree(tmp, ignore_errors=True)
+    if r.returncode != 0 or not os.path.exists(placa):
+        print("FALLA placa (%s): ffmpeg no armó assets/placa.mp4: %s" % (f, " ".join(r.stderr.split())[-200:])); return 1, time.time() - t0
+    return 0, time.time() - t0
 
 
 def cmd_pieza(a):
@@ -1200,7 +1351,7 @@ def cmd_pieza(a):
 
 def cmd_estilos(a):
     for e in catalogo_estilos().values():
-        print("%-11s motor %-8s %s%s" % (e["id"], e["motor"], e["cuando"], "" if e["motor"] == "three" else "  [aún no disponible]"))
+        print("%-11s motor %-8s %s%s" % (e["id"], e["motor"], e["cuando"], "" if e["motor"] == "three" or blender_bin() else "  [falta Blender ≥ 5.0: $BLENDER o /Applications]"))
     return 0
 
 
@@ -1214,7 +1365,7 @@ def cmd_sets(a):
 
 # Negativos: cada cambio al fixture debe hacer saltar SU gate (prueba de que los gates muerden).
 NEGATIVOS = [
-    ("M3D1", "estilo de motor blender", lambda m: m.update(estilo="papel")),
+    ("M3D1", "estilo que no está en el catálogo", lambda m: m.update(estilo="acuarela")),
     ("M3D1", "paleta que no existe", lambda m: m.update(paleta="fucsia")),
     ("M3D2", "trazo que no está en el set", lambda m: m["mundo"]["piezas"][0].update(trazos=["Falla de Mentira"])),
     ("M3D2", "lugar que no existe", lambda m: m["marcas"][0].update(lugar="atlantida")),
@@ -1255,6 +1406,8 @@ def negativos():
             print("  FALLA positivo «%s»: debía pasar y saltó: %s" % (nombre, "; ".join(fallas)[:300]))
         return 1 if fallas else 0
     mal += pasa("con aviso", lambda m: m["capa"].update(aviso="Maqueta · no a escala"), ["9:16", "4:5"])
+    for est in ("arquitecto", "diorama", "papel"):   # los gates son sobre los datos: valen igual con el motor blender
+        mal += pasa("estilo %s (motor blender)" % est, lambda m: m.update(estilo=est), ["9:16", "4:5"])
     mal += pasa("marca separada de la frontera", lambda m: m["marcas"][1].update(separada_de="frontera"), ["9:16", "4:5"])
     for lienzo in ("950x1040", "1120x1080", "1920x1080"):
         mal += pasa("modo pieza %s sin capa" % lienzo, lambda m: m.pop("capa"), [lienzo])
@@ -1265,17 +1418,45 @@ def negativos():
     return mal
 
 
+def fixture_en(estilo, carpeta):
+    """El fixture con otro estilo, en un archivo de trabajo."""
+    m = cargar_json(FIXTURE); m["estilo"] = estilo
+    os.makedirs(carpeta, exist_ok=True)
+    ruta = os.path.join(carpeta, "maqueta_%s.json" % estilo)
+    with open(ruta, "w", encoding="utf-8") as f:
+        json.dump(m, f, ensure_ascii=False)
+    return ruta
+
+
+def prueba_blender(a):
+    """El caso corto del motor Blender: el fixture en `arquitecto` → check y UN cuadro (placa + capa 2D). El render
+    completo es lento y no entra aquí: `prueba --blender-render ESTILO`."""
+    if not blender_bin():
+        print("AVISO prueba: no encuentro Blender ($BLENDER o /Applications/Blender.app): se salta el caso del motor blender")
+        return 0
+    d = os.path.join(a.dir, "blender")
+    ruta = fixture_en("arquitecto", d)
+    if cmd_check(argparse.Namespace(maqueta=ruta, formato="ambos", cmd="check")):
+        return 1
+    r = cmd_cuadro(argparse.Namespace(maqueta=ruta, t=[2.6], salida=os.path.join(d, "cuadros"), formato="9:16", hoja=False, cmd="cuadro"))
+    print("motor blender: %s  (el render completo no entra en `prueba`: python3 scripts/maqueta3d.py prueba --blender-render arquitecto|diorama|papel [--formato 9:16])" % ("OK" if not r else "con fallas"))
+    return r
+
+
 def cmd_prueba(a):
+    if getattr(a, "blender_render", None):   # el fixture completo en un estilo de Blender (minutos)
+        d = os.path.join(a.dir, "blender", a.blender_render)
+        return cmd_render(argparse.Namespace(maqueta=fixture_en(a.blender_render, os.path.join(a.dir, "blender")), dir=d, formato=a.formato, borrador=False, cmd="render"))
     a.maqueta = FIXTURE
     if cmd_check(argparse.Namespace(maqueta=FIXTURE, formato="ambos", cmd="check")) or negativos():
         return 1
     dur = cargar_json(FIXTURE)["duracion_s"]
     r = cmd_cuadro(argparse.Namespace(maqueta=FIXTURE, t=[0.0, dur * 0.2, dur * 0.4, dur * 0.6, dur * 0.78, dur - 0.5], salida=os.path.join(a.dir, "cuadros"), formato=a.formato, hoja=True, cmd="cuadro"))
-    return r or cmd_render(a)
+    return r or cmd_render(a) or prueba_blender(a)
 
 
 def main():
-    ap = argparse.ArgumentParser(description="Maqueta 3D de /video-3d: gates M3D, cuadros sueltos y render (three.js en HyperFrames).",
+    ap = argparse.ArgumentParser(description="Maqueta 3D de /video-3d: gates M3D, cuadros sueltos y render. El estilo decide el motor: three.js en HyperFrames, o Blender (la placa) + la capa 2D de HyperFrames.",
                                  epilog="Contrato: referencias/diseno/maqueta3d.md · Sets: scripts/build_set3d.py")
     sub = ap.add_subparsers(dest="cmd")
     fmt = dict(choices=["9:16", "4:5", "ambos"], help="formato (por defecto: %(default)s)")
@@ -1295,7 +1476,9 @@ def main():
     p.add_argument("--borrador", action="store_true", help="sin gates: un candidato para mirar, nunca para entregar")
     sub.add_parser("estilos", help="el catálogo de estilos")
     sub.add_parser("sets", help="los sets de geodatos")
-    p = sub.add_parser("prueba", help="check + hoja + render del fixture"); p.add_argument("--dir", default=os.path.join(RAIZ, "sesiones", "_video3d", "prueba")); p.add_argument("--formato", default="ambos", **fmt)
+    p = sub.add_parser("prueba", help="check + hoja + render del fixture (y un cuadro del motor blender, si Blender está instalado)")
+    p.add_argument("--dir", default=os.path.join(RAIZ, "sesiones", "_video3d", "prueba")); p.add_argument("--formato", default="ambos", **fmt)
+    p.add_argument("--blender-render", metavar="ESTILO", choices=["arquitecto", "diorama", "papel"], help="solo el render completo del fixture en ese estilo de Blender (lento: minutos)")
     a = ap.parse_args()
     if not a.cmd:
         ap.print_help(); return 2
