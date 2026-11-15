@@ -153,7 +153,7 @@ def ids_de(obj):
 VEREDICTOS_OK = {"verificada", "ajustada"}
 SIN_NUMERO = {"portada", "contraportada"}
 RE_URL = re.compile(r"https?://", re.I)
-RE_EN_SUMA = re.compile(r"\ben suma\b", re.I)  # muletilla vetada (CLAUDE.md, Estilo)
+RE_EN_SUMA = re.compile(r"\ben suma\b", re.I)  # muletilla vetada (CLAUDE.md, «Decisiones del usuario»)
 RE_EMOJI = re.compile("[\U0001F000-\U0001FAFF☀-➿️‍]")
 RE_REF = re.compile(r"\{(fig|Fig|fign|tabla|Tabla|pag):([A-Za-z0-9_-]+)\}")
 # {fig:id} «figura 5» · {Fig:id} «Figura 5» · {fign:id} «Fig. 5» · {tabla:id} «tabla 1» · {Tabla:id} «Tabla 1» · {pag:id} «13» (página, figura o tabla)

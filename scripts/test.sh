@@ -2509,6 +2509,8 @@ paso "ola 1 · /video-3d (22 negativos M3D sin render, caption V5, srt, escuchar
 paso "ola 1 · métricas (partes de serie y largos, 3D, duracion|promesa|plataforma, vistas por día)" python3 scripts/pruebas/ola1_metricas.py
 paso "mesa congelada (el fixture, los planos curados en 0 fallas, la pila MV9 y un negativo por gate MV1–MV19 e YT13–YT19, sin render ni trabajos)" python3 scripts/pruebas/mesa_congelada.py
 paso "gates sin negativo (SE17–SE19, CG8, CG9, C3D5, C3D7, M3D7; sin render)" python3 scripts/pruebas/gates_sin_negativo.py
+paso "check_docs.py D0–D7 (CLAUDE.md corto, nada perdido, rutas y secciones citadas, anclas, mapa al día, sin flujos retirados, guías por modo)" python3 scripts/check_docs.py
+paso "check_docs.py: cada regla D0–D7 muerde (negativos sobre una raíz fabricada)" python3 scripts/pruebas/check_docs_neg.py
 paso "producir: la cadena común (mesa, propio, 3D, largo), la pausa por el plano y la reanudación" python3 scripts/pruebas/producir.py
 paso "node --check hilo.js (envuelto en async function)" check_js hilo.js
 paso "node --check ideas.js (envuelto en async function)" check_js ideas.js

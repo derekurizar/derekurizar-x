@@ -95,7 +95,7 @@ RE_SUPER = re.compile(r"r[ée]cord|hist[óo]ric[oa]|m[áa]s alt[oa] de la histor
 # Superlativos relativos («el más bajo desde 2020», «el más alto en los últimos 5 años»): aviso si no hay serie o desglose ≥5 puntos.
 RE_RELATIVO = re.compile(r"m[áa]s (alt|baj|grand|car|barat)\w*\s+(desde|en los [úu]ltimos|de los [úu]ltimos|en \d+ a[ñn]os)", re.I)
 # Marcador nacionalista (modo vs): el titular dice la brecha, no quién «gana».
-RE_EN_SUMA = re.compile(r"\ben suma\b", re.I)  # muletilla vetada (CLAUDE.md, Estilo): «en conclusión», «Conclusiones»
+RE_EN_SUMA = re.compile(r"\ben suma\b", re.I)  # muletilla vetada (CLAUDE.md, «Decisiones del usuario»): «en conclusión», «Conclusiones»
 RE_NACIONALISTA = re.compile(r"\b(ganamos|perdemos|nos ganan|le ganamos|somos los (peores|mejores))\b", re.I)
 # Claves de visual.datos que son DATOS (se cotejan contra las cifras); el resto es presentación.
 CLAVES_DATO = {

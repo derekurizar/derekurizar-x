@@ -1,0 +1,40 @@
+# Identificadores del CLAUDE.md largo que ya no tienen que estar en ninguna guía, con su motivo (D0 de check_docs.py).
+# Una línea: identificador<TAB>motivo.
+.claude/agents/noticias-rastreador.md	/noticias se retiró el 2026-11-14
+referencias/roles/noticias-*.md	/noticias se retiró el 2026-11-14
+noticias.cmd_tiempos	/noticias se retiró el 2026-11-14 (scripts/noticias.py ya no existe)
+S.N.humana	era de /semana, retirado el 2026-11-14
+S.N.puesto	era de /semana, retirado el 2026-11-14
+…/video-corto	está entero en referencias/flujo-video.md: hilos/<fecha>-<slug>/video-corto
+--noticias	de /noticias o /semana, retirados el 2026-11-14
+--semana	de /noticias o /semana, retirados el 2026-11-14
+.claude/commands/noticias.md	de /noticias o /semana, retirados el 2026-11-14
+.claude/commands/semana.md	de /noticias o /semana, retirados el 2026-11-14
+.claude/workflows/noticias.js	de /noticias o /semana, retirados el 2026-11-14
+M15	de /noticias o /semana, retirados el 2026-11-14
+MUSICA_SEMANA	de /noticias o /semana, retirados el 2026-11-14
+PALETA_SEMANA	de /noticias o /semana, retirados el 2026-11-14
+SM-C1	de /noticias o /semana, retirados el 2026-11-14
+SM-C6	de /noticias o /semana, retirados el 2026-11-14
+SM1	de /noticias o /semana, retirados el 2026-11-14
+SM11	de /noticias o /semana, retirados el 2026-11-14
+SM3	de /noticias o /semana, retirados el 2026-11-14
+SM5	de /noticias o /semana, retirados el 2026-11-14
+cielo-2	de /noticias o /semana, retirados el 2026-11-14
+cosecha.json	de /noticias o /semana, retirados el 2026-11-14
+en_desarrollo	de /noticias o /semana, retirados el 2026-11-14
+memoria/semanas.json	de /noticias o /semana, retirados el 2026-11-14
+noticias-editor.md	de /noticias o /semana, retirados el 2026-11-14
+noticias-verificador.md	de /noticias o /semana, retirados el 2026-11-14
+referencias/flujo-noticias.md	de /noticias o /semana, retirados el 2026-11-14
+referencias/flujo-semana.md	de /noticias o /semana, retirados el 2026-11-14
+referencias/roles/noticias-{rastreador,verificador,editor}.md	de /noticias o /semana, retirados el 2026-11-14
+scripts/noticias.py	de /noticias o /semana, retirados el 2026-11-14
+scripts/semana.py	de /noticias o /semana, retirados el 2026-11-14
+semana.base_carrusel	de /noticias o /semana, retirados el 2026-11-14
+semanas.json	de /noticias o /semana, retirados el 2026-11-14
+semanas/<domingo>/	de /noticias o /semana, retirados el 2026-11-14
+sesiones/_fixture_noticias/	de /noticias o /semana, retirados el 2026-11-14
+sesiones/_fixture_semana/	de /noticias o /semana, retirados el 2026-11-14
+sesiones/noticias-<día>/noticias.json	de /noticias o /semana, retirados el 2026-11-14
+sm-cNN	de /noticias o /semana, retirados el 2026-11-14

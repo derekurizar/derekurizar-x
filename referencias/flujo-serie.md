@@ -114,7 +114,8 @@ lo que pasó, y con impacto (termina en lo que más pesa).
 - **Nada nuevo:** sus `hechos` son ids que ya contó alguna parte (o esta misma), de ≥ 5 partes anteriores (o de todas,
   si hay menos). Los alegatos se atribuyen igual que en el resto del video («para la acusación…», H4).
 - **Fuera de SE13** (repetir es su trabajo), de V1 (no cuenta como explica) y del aviso de flashback.
-- **Duración:** sus segundos se suman al límite de la parte: +30 s en SE7 y en H5/V4, hasta 180 s (el tope de Shorts).
+- **Duración:** sus segundos se suman al límite de la parte: +30 s en SE7 y en H5/V4, hasta 180 s (el tope de Shorts). El Workflow
+  `historia` suma al tope de palabras de la última parte las +72 del resumen (m132; W12 lo vigila).
 - Primera vez: La Línea, Parte 7 (147 → 172 s).
 - **Agregarlo a una parte ya grabada:** `historia.py aplicar <TRABAJO> --cambios '{"insertar": N, "escena": {…},
   "despues_de": "frase literal de la narración"}'` (m108). Inserta la escena y su texto en la narración, corre los audios

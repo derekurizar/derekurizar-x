@@ -2244,7 +2244,7 @@
       "archivo": "CLAUDE.md:49,191-200,285 · referencias/flujo-video.md:183-194 · .claude/commands/congreso.md · .claude/commands/serie.md:20 · .claude/agents/video-gancho.md",
       "problema": "La documentación contradice al código en puntos que guían a los agentes: tomas de video retiradas descritas como vigentes, sub-planos y whip, zoom a la cifra, el portal de /congreso, voz del gancho ≤ 7.5 s, «el crítico elige», MV13 anunciado sin código.",
       "propuesta": "Corregir cada contradicción en su guía; las de CLAUDE.md, al recortarlo.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m205",
@@ -2343,7 +2343,7 @@
       "archivo": "CLAUDE.md",
       "problema": "CLAUDE.md mide 12,671 palabras y lo carga cada agente de cada corrida (un agente de 3 turnos arranca con ≈ 55K tokens); cada flujo se describe cinco veces.",
       "propuesta": "Recortarlo a ≈ 3,000 palabras: reglas, decisiones y una línea por flujo; el mapa a referencias/mapa.md.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m214",
