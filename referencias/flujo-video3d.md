@@ -1,6 +1,6 @@
 # /video-3d: la maqueta que vuela
 
-Un video vertical 100 % en 3D (9:16 + 4:5, 45–75 s): un mundo simple (el relieve del país, una ciudad, una plaza)
+Un video vertical 100 % en 3D (9:16 + 4:5, de 45 s a 3 min como los demás videos; `--duracion S`, 20–180, por defecto 45; C3D9 falla por encima de 180 s estimados o reales): un mundo simple (el relieve del país, una ciudad, una plaza)
 que una cámara recorre mientras la voz cuenta, con una capa 2D encima (titular, pines que siguen al 3D, cifras,
 subtítulos). Sirve cuando **el lugar es la información**: una falla que cruza el país, una ruta, una cuenca, un
 cierre vial. Si el tema no pasa en un lugar, es otro flujo.
@@ -194,8 +194,8 @@ se lee tres veces). Prueba cada arreglo en una copia del TRABAJO antes de propon
 ## Costos (medidos el 2026-11-14 en un M4 Max)
 
 - Voz: ≈ 1 crédito por carácter (45 s ≈ 700 créditos).
-- Render three.js en HyperFrames: ≈ 1.7× la duración por formato (45 s ≈ 80 s).
+- Render three.js en HyperFrames: ≈ 1.7× la duración por formato (45 s ≈ 80 s; 3 min ≈ 5 min por formato).
 - Render Blender (`arquitecto`, `diorama`, `papel`): 0.5–0.85 s por cuadro de placa más ≈ 5 s de capa 2D por segundo
-  de video: un video de 45 s tarda ≈ 16–22 min por formato (12–16 veces más que three.js). Elige un estilo de Blender
+  de video: un video de 45 s tarda ≈ 16–22 min por formato (3 min ≈ 65–90 min por formato) (12–16 veces más que three.js). Elige un estilo de Blender
   cuando la forma o la luz lo valgan, no por costumbre. La primera vez, Cycles compila sus kernels (≈ 3.5 min).
 - Un cuadro suelto de three.js: segundos (por eso los ganchos y el storyboard se ven antes de la voz).

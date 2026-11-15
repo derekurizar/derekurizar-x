@@ -1,5 +1,5 @@
 ---
-description: Un video vertical 100 % en 3D, la «maqueta que vuela» (9:16 + 4:5, 45–75 s), para temas donde el lugar es la información: una cámara recorre un mundo simple mientras la voz cuenta (uso — /video-3d &lt;tema|desde:&lt;pieza&gt;&gt; [sin-voz])
+description: Un video vertical 100 % en 3D, la «maqueta que vuela» (9:16 + 4:5, de 45 s a 3 min), para temas donde el lugar es la información: una cámara recorre un mundo simple mientras la voz cuenta (uso — /video-3d &lt;tema|desde:&lt;pieza&gt;&gt; [sin-voz])
 ---
 
 # /video-3d $ARGUMENTS
@@ -10,7 +10,7 @@ Guía completa: `referencias/flujo-video3d.md` (léela antes de empezar). Contra
 1. **Preflight.** `make doctor`. Decide si el tema es de 3D: tiene que pasar en un lugar (el lugar es la
    información). Si no, propón el flujo que sí le toca y no sigas.
 2. **Preparar.** `python3 scripts/video3d.py preparar <slug> --tema "<tema>" --musica-tema <tema de MUSICA_TEMAS>
-   [--desde <trabajo o entrega ya investigada>] [--duracion 45]`. Con `desde:` se reutilizan las cifras verificadas.
+   [--desde <trabajo o entrega ya investigada>] [--duracion 45]` (de 20 a 180 s: hasta 3 min, como los demás videos; elige la duración por lo que hay que recorrer, y un estilo de Blender en un video largo tarda más de una hora por formato). Con `desde:` se reutilizan las cifras verificadas.
 3. **Investigación.** Lo que falte se investiga y verifica con los agentes de /historia (`historia-investigador` ⇢
    `historia-verificador`, cita literal guardada con `historia.py leer`). **Los geodatos también se verifican**: qué
    tramo, de dónde a dónde, hacia dónde. Suma lo verificado con `video3d.py datos <TRABAJO> --sumar <archivo>` y

@@ -24,7 +24,7 @@ carga cada agente de cada corrida: aquí van solo las reglas, las decisiones del
 | `/sabias <slug\|ultimo\|pista>` | «¿Sabías que en Guatemala…?» de 20–30 s desde un dato de `/dato` | `flujo-sabias.md` | `datos/<fecha>-<slug>/video/` · `sabias.json` |
 | `/departamento <nombre\|siguiente\|tablero>` | La serie de los 22: `/perfil` con el canon de dimensiones y luego `/video` en modo departamento | `flujo-departamento.md` | `videos.json` (`serie`, `sujeto`) |
 | `/congreso [<iniciativa N>\|<tema>]` | Una ley del Congreso en < 1 min: qué buscaba, los votos frente al umbral, diputados de cada lado | `flujo-congreso.md` | `congreso/<fecha>-<slug>/` · `congreso.json` |
-| `/video-3d <tema\|desde:<pieza>>` | La maqueta que vuela: 45–75 s 100 % en 3D, cuando el lugar es la información | `flujo-video3d.md` | `videos3d/<fecha>-<slug>/` · `videos3d.json` |
+| `/video-3d <tema\|desde:<pieza>>` | La maqueta que vuela: de 45 s a 3 min, 100 % en 3D, cuando el lugar es la información | `flujo-video3d.md` | `videos3d/<fecha>-<slug>/` · `videos3d.json` |
 | `/youtube-long <serie\|ultima>` | Una serie entregada → UN video 16:9 de 8–20 min: un montaje que reutiliza la voz grabada | `flujo-youtube.md` | `series/<fecha>-<slug>/youtube/` · `youtube.json` |
 | `/carrusel <slug\|ultimo\|carpeta> [9:16]` | 5–10 láminas 4:5 y su 9:16 desde un hilo o un dato; sin voz, créditos ni agentes | `flujo-carrusel.md` | `<original>/carrusel/` · `carruseles.json` |
 | `/agenda [hoy\|semana\|AAAA-MM-DD] [replan]` | El content manager: qué se publica cada día, dónde, a qué hora, y qué producir | `flujo-agenda.md` | `agenda/<AAAA-Wnn>/` |

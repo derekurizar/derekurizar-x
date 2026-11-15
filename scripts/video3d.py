@@ -53,6 +53,7 @@ import video as VD  # noqa: E402
 
 FPS = 30
 OBJETIVO_S, TOL = 45, 0.2            # duración por defecto y tolerancia de C3D9
+DURACION_MIN_S, DURACION_MAX_S = 20, 180   # C3D9: de 20 s a 3 min, como los demás videos (el tope de Shorts; usuario, 2026-11-15)
 ESCENAS = (4, 9)                     # contando el gancho y el cierre
 GANCHO_VOZ_S = 6.0                   # la voz del gancho (medido con /analyze-improve: ≤ 6 s)
 GUATEMALA_S = 6.0                    # «Guatemala» se oye antes de este segundo
@@ -458,6 +459,8 @@ def revisar_guion(g, st, trabajo):
     estimado = sum(x["estimado_s"] for x in loc)
     if not objetivo * (1 - TOL) <= estimado <= objetivo * (1 + TOL):
         fallas.append("C3D9 duración estimada %.0f s; el objetivo es %d s (±%d %%)" % (estimado, objetivo, TOL * 100))
+    if estimado > DURACION_MAX_S:
+        fallas.append("C3D9 duración estimada %.0f s: un video 3D dura a lo más %d s (3 min)" % (estimado, DURACION_MAX_S))
     return fallas, avisos, {"voz": VD.VOZ, "caracteres": sum(len(x["voz"]) for x in loc), "estimado_s": round(estimado, 1),
                             "objetivo_s": objetivo, "n_escenas": len(loc), "voz_continua": bool(secuencias),
                             "secuencias": secuencias, "escenas": loc}
@@ -576,6 +579,9 @@ def revisar_maqueta(ruta, formato="ambos"):
 
 # ---------- comandos ----------
 def cmd_preparar(a):
+    if not DURACION_MIN_S <= a.duracion <= DURACION_MAX_S:
+        print("ERROR: --duracion %d: un video 3D dura de %d a %d s (3 min)" % (a.duracion, DURACION_MIN_S, DURACION_MAX_S), file=sys.stderr)
+        return 2
     trabajo = os.path.abspath(a.trabajo or os.path.join(RAIZ, "sesiones", "video3d-" + a.slug))
     os.makedirs(os.path.join(trabajo, "base"), exist_ok=True)
     os.makedirs(os.path.join(trabajo, "audio"), exist_ok=True)
@@ -809,6 +815,10 @@ def cmd_tiempos(a):
         print("FALLA", x)
     objetivo = estado(trabajo).get("duracion_s") or OBJETIVO_S
     print("voz real: %.1f s (objetivo %d s) → %s" % (tiempos["total_s"], objetivo, rel(ruta)))
+    if tiempos["total_s"] > DURACION_MAX_S + 0.5:
+        print("FALLA C3D9 la voz real dura %.1f s: un video 3D dura a lo más %d s (3 min); acorta la narración y regraba esas escenas"
+              % (tiempos["total_s"], DURACION_MAX_S))
+        return 1
     rc = revisar_maqueta(ruta)
     return 1 if VD.V20_FALLAS or rc else 0
 
