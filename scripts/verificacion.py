@@ -229,6 +229,15 @@ def sueltos(texto, valores, derivables=(), max_entero=12):
     return out
 
 
+def sueltos_prensa(texto, vals):
+    """`sueltos` con las cifras como las escribe este proyecto: «Q148,500 millones» lleva coma de miles (aquí se leería
+    como decimal de prensa, 148.5 millones); sin la coma delante de la escala, cuenta en su unidad. Lo usan /historia y
+    /explica para los números de los hechos, las cifras y las citas."""
+    t = re.sub(r"(\d{1,3}(?:,\d{3})+)(?=(?:\.\d+)?\s*(?:mil\s+millones|millones|mill[oó]n|M\b))",
+               lambda m: m.group(1).replace(",", ""), texto or "")
+    return sueltos(t, vals)
+
+
 def leer_texto(ruta):
     p = ruta if os.path.isabs(ruta) else os.path.join(RAIZ, ruta)
     if not os.path.isfile(p):

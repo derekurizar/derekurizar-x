@@ -22,7 +22,6 @@ La directiva dice el modo. Cada uno trae sus insumos, su presupuesto, sus reglas
 | congreso | `congreso.md` | `/congreso` |
 | largo | `largo.md` + `recompensa.md` | `/youtube-long` |
 | 3D | `3d.md` | `/video-3d` |
-| noticiero · semana | `noticiero.md` · `semana.md` | `/noticias`, `/semana` |
 
 **Presupuesto general** (el modo puede fijar otro): las lecturas que tu modo lista; ≤ 1 Bash para el gate si dudas de
 un número, más los `probar` de tus arreglos; sin web; ≤ 8 min. Nunca editas `guion.json`, `locucion.json` ni

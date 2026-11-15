@@ -6,8 +6,8 @@ del usuario (2026-11-14), tras aprobar el lienzo «Animador vertical» en Claude
 `scripts/video_grabar.js`) sigue vivo para los flujos sin migrar y para grabar los tableros.
 
 **Estado (2026-11-14).** El usuario aprobó los pilotos (Bancafé parte 1 y La Línea parte 3) y pidió aplicar lo mismo a
-los demás flujos «con las reglas, animaciones y todo», sin otro piloto. Todos los flujos de video menos /noticias y /semana
-nacen en mesa.
+los demás flujos «con las reglas, animaciones y todo», sin otro piloto. Todos los flujos de video nacen en mesa (los
+noticieros, que seguían en el motor propio, se retiraron del framework ese mismo día).
 
 | Flujo | Quién dibuja | Cómo cae en la mesa |
 |---|---|---|
@@ -16,7 +16,6 @@ nacen en mesa.
 | /sabias | **la mesa** | Gancho «¿Sabías que…?» con su visual ya puesto en el cuadro 0; la tarjeta del dato, tablero; cierre de una pantalla. |
 | /video, /departamento | **la mesa** | Las tarjetas del hilo, `ranking`, `mapa`, `escala` y `tiempo` son tableros; gancho, golpes y definiciones, piezas (nota, cifra, `barra`, mapa de los 22). Versión B con `variante --plano`. |
 | /congreso | **la mesa** | El `hemiciclo` es tablero (asientos, umbral, sello, foco con retrato); el gancho deja el portal y abre con la foto del pleno y la `barra` de votos frente al umbral. |
-| /noticias, /semana | motor propio | No se publican. |
 
 `realizacion` la fija `preparar` al crear el TRABAJO (`VD.MESA_FLUJOS`; `--realizacion propio|mesa` la fuerza): un trabajo
 empezado con un motor termina con ese motor. Migrar un flujo es añadir su `tipo` a `MESA_FLUJOS` cuando sus piezas existan.
@@ -203,7 +202,7 @@ de /serie con una mesa de maqueta, de punta a punta.
 | MV6 | carga: mesa de 3–24 s y ≤ 6 piezas; entradas a ≥ 0.4 s; el golpe de un tablero, tras su último paso |
 | MV7 | sin cámara |
 | MV8 | lectura: `0.5 + 0.3 × palabras no dichas` s al frente (≥ 1 s) |
-| MV9 | pila: ≤ 3 piezas al frente y ≤ 2 compactas (por construcción) |
+| MV9 | pila (no es un gate: no hay `FALLA MV9`; sale de cómo `componer` coloca las piezas): ≤ 4 piezas al frente (3 en fila, `PILA_LEGIBLES`, más una chica al lado de la tercera) y ≤ 2 compactas arriba (`PILA_COMPACTAS`) |
 | MV10 | zona segura por geometría, en 9:16 y en 4:5 |
 | MV11 | ninguna pieza se dibuja a menos del 72 % de su tamaño |
 | MV12 | alegato: los hilos de una `red` atribuida van punteados, con `etiqueta` «Según…» y con la voz de la mesa atribuyendo; quien acusa, sin hilos |

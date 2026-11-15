@@ -1,22 +1,18 @@
 <!DOCTYPE html>
 <html lang="es"><head><meta charset="utf-8">
-<!-- Escena de /noticias (?n=N) para el gancho (`titular`: la noticia más fuerte con su foto a sangre, oscurecida, y su
-     titular entero desde el cuadro 0; la palabra que la voz dice se enciende en el realce al decirla) y cada `noticia`
+<!-- Escena con foto a sangre (?n=N) de /historia y /video (nació en el noticiero diario, retirado el 2026-11-14: de
+     ahí su nombre). Dos modos (S.N.modo). «titular»: el gancho con foto (la foto a sangre, oscurecida, y la línea entera
+     desde el cuadro 0; la palabra que la voz dice se enciende en el realce al decirla). «noticia»: la escena `foto`
      (estilo Noche: la foto a sangre arriba, oscurecida, con Ken Burns lento y la sombra del fondo arriba y abajo; encima,
-     en la columna segura, los chips «2/4 · Sección» (y «En desarrollo») bajo la barra de progreso, el titular que entra
-     con la voz, la cifra condensada en el acento que cuenta y late cuando la voz la dice, «Fuente: …» y «Foto: …»;
-     subtítulos). Sin foto, la columna lleva el mapa de los 22 departamentos con el de la noticia encendido y su pin (o
-     el icono de la noticia). Paleta del noticiero (escenas.json). Todo es función de t (seek): lo graba
-     scripts/video_grabar.js.
-     S.N = { indice, total, seccion, estado?, titular: [{text, start, dicha?}], foto, credito, encaje?, icono, depto,
-             lugar, cifra: { texto, etiqueta, start, pulso } | null, fuente: { texto, start }, oraciones: [t] (la foto
-             late), kb: { z: [z0, z1], x: [x0, x1], y: [y0, y1] }, fecha, conteo }
-     /semana añade S.N.puesto (5→1: el numeral grande de la cuenta regresiva sobre el titular), S.N.humana = { texto,
-     start } (la cifra a escala humana bajo la cifra) y S.N.chip = { b: sección, s: día }.
-     /historia la usa con S.N.modo («titular»: el gancho con foto; «noticia»: la escena `foto`) y S.N.chip = { b, s } en
-     lugar de «indice/total · sección» (la fecha o la época y el lugar: «1971 · Escuintla»). S.N.encaje = «contener»
-     (un gráfico, un cartel o un logo con texto, ya con márgenes de scripts/historia.py encajar): más clara y casi sin
-     Ken Burns, para que se lea entera.
+     en la columna segura, el chip «1971 · Escuintla» bajo la barra de progreso, el titular que entra con la voz, la
+     cifra condensada en el acento que cuenta y late cuando la voz la dice, «Fuente: …» y «Foto: …»; subtítulos). Sin
+     foto, la columna lleva el mapa de los 22 departamentos con el de la escena encendido y su pin (o su icono). Paleta
+     del video (escenas.json). Todo es función de t (seek): lo graba scripts/video_grabar.js.
+     S.N = { modo, chip: { b, s } (la fecha o la época y el lugar), titular: [{text, start, dicha?}], foto, credito,
+             encaje?, icono, depto, lugar, cifra: { texto, etiqueta, start, pulso } | null, fuente: { texto, start },
+             oraciones: [t] (la foto late), kb: { z: [z0, z1], x: [x0, x1], y: [y0, y1] }, fecha, conteo }
+     S.N.encaje = «contener» (un gráfico, un cartel o un logo con texto, ya con márgenes de scripts/historia.py
+     encajar): más clara y casi sin Ken Burns, para que se lea entera.
      /historia, escena `toma`: S.N.toma = { dir, cuadros, fps, encaje: fondo|recorte, x, t0, audio } pinta en la lámina,
      en lugar de la foto, el clip de video cuadro a cuadro (dir/00001.jpg…, 30 fps) en un canvas: corre desde t0 (con
      audio original, t0 es cuando suena, tras la voz de entrada: antes queda su primer cuadro) y, si la escena dura más,
@@ -30,7 +26,6 @@
   letter-spacing: .12em; text-transform: uppercase; }
 #chip b { background: color-mix(in srgb, var(--ink) 16%, transparent); border-radius: 10px; padding: 9px 14px 10px; font-weight: 700; }
 #chip span { opacity: .9; }
-#chip em { font-style: normal; border: 2px solid color-mix(in srgb, var(--ink) 45%, transparent); border-radius: 10px; padding: 7px 12px 8px; }
 /* la foto a sangre (fuera de la zona a propósito): una lámina de 1080×1200 arriba, la misma en 9:16 y en 4:5
    (proporción 0.9: scripts/historia.py encajar cuenta con ella), oscurecida (--brillo: 0.55; 0.45 si la foto se
    agranda más de 2×, una og:image apaisada típica; 0.7 con encaje «contener», que se tiene que leer), con la sombra
@@ -75,11 +70,6 @@
 /* el crédito de la foto: Mono 600 20 px, crema al 85 % (seek lo apaga con la foto, sin bajar de ahí) */
 #credito { font: 600 20px/1.25 'JetBrains Mono', monospace; letter-spacing: .06em; opacity: .85; }
 #fuente:empty, #credito:empty { display: none; }
-/* /semana: el numeral del puesto de la cuenta regresiva (crema condensada, grande, sobre el titular) y la línea a
-   escala humana bajo la cifra (crema, Archivo 700; el acento sigue siendo solo la cifra) */
-#puesto { font-size: 210px; line-height: .8; letter-spacing: -.01em; margin-bottom: -6px; transform-origin: 0 100%; }
-#puesto:empty, #humana:empty { display: none; }
-#humana { font: 700 38px/1.18 Archivo, sans-serif; border-left: 6px solid color-mix(in srgb, var(--ink) 55%, transparent); padding-left: 18px; }
 /* gancho: la misma lámina; el titular grande abajo, entero desde el cuadro 0 */
 body.titular #col { display: none; }
 #gancho { position: absolute; left: var(--izq); right: var(--der); bottom: calc(1920px - var(--fin) + 10px); display: none; }
@@ -113,8 +103,6 @@ html.f45 #titular { font-size: 52px; }
 html.f45 #cifra .v { font-size: 150px; }
 html.f45 #cifra .e { font-size: 26px; }
 html.f45 #gtit { font-size: 80px; }
-html.f45 #puesto { font-size: 150px; }
-html.f45 #humana { font-size: 30px; }
 html.f45 #hoy { font-size: 22px; margin-bottom: 20px; }
 /* 16:9 (video largo de YouTube): la foto a sangre en todo el cuadro; el velo oscurece la izquierda (la columna del
    texto) y el pie; el chip arriba y el titular, la cifra y la fuente abajo a la izquierda */
@@ -133,10 +121,8 @@ html.f169.f45 #gtit { font-size: 92px; }
 <div id="arriba"><div id="progreso"></div><div id="chip"></div></div>
 <div id="col">
   <div id="figura"></div>
-  <div id="puesto" class="condensada"></div>
   <div id="titular"></div>
   <div id="cifra"></div>
-  <div id="humana"></div>
   <div id="pie"><div id="fuente"></div><div id="credito"></div></div>
 </div>
 <div id="gancho"><div id="hoy"></div><div id="gcifra" class="cifra-heroe condensada"></div><div id="gtit"></div><div id="gcred"></div></div>
@@ -219,8 +205,8 @@ const seekMinimapa = (t) => {
       r.seg.style.opacity = a > 0.01 ? '1' : '0'; }
   }
 };
-// sin foto: el mapa con el departamento encendido y su pin, o el icono de la noticia (en la lámina en el gancho, en la
-// columna en la noticia)
+// sin foto: el mapa con el departamento encendido y su pin, o el icono de la escena (en la lámina en el gancho, en la
+// columna en la escena foto)
 async function tipografica(caja) {
   if (N.depto) {
     await cargarScript('geometria.js');
@@ -449,9 +435,7 @@ window.__listo = (async () => {
     document.getElementById('chip').textContent = todo.contexto_superior || '';
     FIN_T = finesDe(N.titular);
   } else {
-    const estado = N.estado === 'en_desarrollo' ? '<em>En desarrollo</em>' : '';
-    document.getElementById('chip').innerHTML = (N.chip ? `<b>${esc(N.chip.b)}</b>${N.chip.s ? `<span>${esc(N.chip.s)}</span>` : ''}`
-      : `<b>${N.indice}/${N.total}</b><span>${esc(N.seccion)}</span>`) + estado;
+    document.getElementById('chip').innerHTML = N.chip ? `<b>${esc(N.chip.b)}</b>${N.chip.s ? `<span>${esc(N.chip.s)}</span>` : ''}` : '';
     if (N.dividida) {
       KB = await dividida(sangre);
       document.getElementById('credito').textContent = N.credito || '';
@@ -477,8 +461,6 @@ window.__listo = (async () => {
       if (NUM && NUM.dec === 0 && NUM.v >= 1000 && NUM.v <= 2100 && /^[^\d]*\b\d{4}[\s.:,;!?»"]*$/.test(N.cifra.texto)) NUM = null;
     } else document.getElementById('cifra').style.display = 'none';
     document.getElementById('fuente').textContent = N.fuente ? N.fuente.texto : '';
-    if (N.puesto) document.getElementById('puesto').textContent = '#' + N.puesto;   // /semana: la cuenta regresiva
-    if (N.humana) document.getElementById('humana').textContent = N.humana.texto;   // /semana: la cifra a escala humana
   }
   // el subtítulo se oculta mientras solo repite el titular que ya está en pantalla
   N.titular.forEach((w) => { const k = normal(w.text); if (k) EN_PANTALLA.add(k); });
@@ -494,22 +476,12 @@ window.__listo = (async () => {
       for (let fs = F45 ? 50 : 62; fs > 40 && t.offsetHeight > 3.2 * fs * 1.06; fs -= 2) t.style.fontSize = fs + 'px';
       for (let fs = F45 ? 230 : 300; fs > 110 && (c.scrollWidth > ancho || g.getBoundingClientRect().top < tope); fs -= 10) c.style.fontSize = fs + 'px';
     } else for (let fs = F45 ? 80 : 96; fs > 60 && t.offsetHeight > 4.1 * fs; fs -= 4) t.style.fontSize = fs + 'px';
-  } else {                      // el titular de la noticia: hasta 3 líneas; la cifra, en una sola línea de la columna
+  } else {                      // el titular de la escena foto: hasta 3 líneas; la cifra, en una sola línea de la columna
     const t = document.getElementById('titular');
     for (let fs = F45 ? 52 : 66; fs > 40 && t.offsetHeight > 3.1 * fs * 1.04; fs -= 2) t.style.fontSize = fs + 'px';
     // la cifra late hasta 1.07× hacia la derecha (transform-origin a la izquierda): cabe con ese margen (V13)
     const c = document.querySelector('#cifra .v'), col = document.getElementById('col').clientWidth / 1.08;
     if (c) for (let fs = F45 ? 150 : 190; fs > 70 && c.scrollWidth > col; fs -= 6) c.style.fontSize = fs + 'px';
-    // /semana: con el numeral y la línea humana, la columna puede pasar del alto disponible (V13): se achican el
-    // numeral, la línea humana y el titular, en ese orden, hasta caber (la figura sin foto cede primero: flex)
-    const C = document.getElementById('col'), gap = parseFloat(getComputedStyle(C).rowGap) || 0;
-    const alto = () => [...C.children].filter((x) => x.id !== 'figura' && x.offsetHeight).reduce((m, x) => m + x.offsetHeight + gap, -gap);
-    const achicar = (el, de, a, paso) => { for (let fs = de; el && el.textContent && fs >= a && alto() > C.clientHeight; fs -= paso) el.style.fontSize = fs + 'px'; };
-    if (N.puesto || N.humana) {
-      achicar(document.getElementById('puesto'), F45 ? 150 : 210, 100, 10);
-      achicar(document.getElementById('humana'), F45 ? 30 : 38, 26, 2);
-      achicar(t, parseFloat(t.style.fontSize) || (F45 ? 52 : 66), 38, 2);
-    }
   }
   await V.pintarActo(S);   // rótulo de acto (/historia, S.R): solo en la escena `foto`, nunca en el gancho
 })();
@@ -561,7 +533,7 @@ const seekSync = (t) => {
     subtitulos(t);
     return;
   }
-  // la noticia entra: chips y foto al principio (tras el rótulo de acto si lo hay, V.desfase; más rápido si la escena
+  // la escena foto entra: chips y foto al principio (tras el rótulo de acto si lo hay, V.desfase; más rápido si la escena
   // sigue a otra de la misma secuencia de voz, S.seguida); el titular con la voz; la cifra cuando la voz la dice; la
   // fuente al final
   const D = V.desfase(S), K = S.seguida ? 0.6 : 1;
@@ -595,14 +567,6 @@ const seekSync = (t) => {
     let esc_ = 0.9 + 0.1 * ap;
     if (C.pulso) esc_ *= 1 + 0.07 * Math.sin(Math.PI * clamp((t - C.pulso[0]) / Math.max(0.001, C.pulso[1] - C.pulso[0])));
     cifra.style.opacity = ap; cifra.style.transform = `scale(${esc_.toFixed(4)})`;
-  }
-  if (N.puesto) {   // el numeral entra primero y queda quieto (el que late es la cifra)
-    const q = eo((t - D - 0.05) / (0.35 * K)), el = document.getElementById('puesto');
-    el.style.opacity = q.toFixed(3); el.style.transform = `scale(${(0.8 + 0.2 * q).toFixed(4)})`;
-  }
-  if (N.humana) {
-    const h = eo((t - N.humana.start) / 0.4), el = document.getElementById('humana');
-    el.style.opacity = h.toFixed(3); el.style.transform = `translateY(${((1 - h) * 20).toFixed(1)}px)`;
   }
   if (N.fuente) {
     const f = eo((t - N.fuente.start) / 0.4), el = document.getElementById('fuente');

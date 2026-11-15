@@ -315,18 +315,23 @@ CONSTRUCTORES, TRANSICION_DE = {}, {}
 POST_CONSTRUCTORES = []
 
 
+# Ken Burns de la foto, uno por escena con foto (zoom ≥ 1.06 para que el paneo ≤ 2 % nunca deje ver el borde)
+KEN_BURNS = ({"z": [1.06, 1.14], "x": [0, -2], "y": [0, -1.2]}, {"z": [1.14, 1.06], "x": [-1.5, 1], "y": [-1, 0.5]},
+             {"z": [1.07, 1.15], "x": [1.5, -0.5], "y": [0.5, -1.5]}, {"z": [1.12, 1.06], "x": [0.5, -1.5], "y": [-1.5, 0]},
+             {"z": [1.06, 1.13], "x": [-1, 1.5], "y": [0, -1]})
+
+
 def t_gancho_foto(S, e, ps, pal, fin_voz, dur, g):
     """El gancho con visual foto (m055): video/noticia.html en modo titular, como en /historia (la foto a sangre, la
     pantalla en el chip, la línea entera desde el cuadro 0 encendiéndose con la voz). Otro visual → None (el de siempre)."""
     vis = e.get("visual") or {}
     if not isinstance(vis, dict) or vis.get("tipo") != "foto":
         return None
-    import noticias as NT   # noqa: E402  (noticias importa video: aquí, no arriba)
     cin = e.get("cinetico") or {}
     linea, _ = alinear_linea((cin.get("linea") or "").split(), pal, 0.0, max(0.4, fin_oracion_desde(pal, 0)))
     S["pagina"] = "noticia"
     S["N"] = {"modo": "titular", "foto": vis.get("foto"), "credito": vis.get("credito"), "fecha": cin.get("pantalla") or "",
-              "conteo": vis.get("etiqueta") or "", "titular": linea, "kb": NT.KEN_BURNS[0], "depto": None, "icono": None,
+              "conteo": vis.get("etiqueta") or "", "titular": linea, "kb": KEN_BURNS[0], "depto": None, "icono": None,
               "encaje": vis.get("encaje"), "familia": e.get("familia")}
     S["T"] = {"pant": {"texto": cin.get("pantalla"), "v": None, "desde": 0.0, "hasta": 0.4, "pulso": None}, "linea": linea,
               "fin": round(fin_voz, 3)}
@@ -487,7 +492,7 @@ BUCLE_S, BUCLE_FUNDIDO = 0.6, 0.25   # cierre en bucle: el primer cuadro del gan
 # «mesa» = la mesa de archivo en HyperFrames (scripts/video_hf.py; referencias/flujo-mesa.md). La fija `preparar` al crear
 # el TRABAJO: un trabajo empezado con un motor termina con ese motor. Migrar un flujo = añadir su `tipo` aquí.
 MESA_FLUJOS = ("historia", "explica", "video")   # /historia, /serie y /explica; "video" = /video, /departamento, /sabias y /congreso
-# (los tres últimos nacen de video.py preparar). /noticias y /semana escriben su propio video.json y siguen en el motor propio.
+# (los tres últimos nacen de video.py preparar). Un video.json sin `realizacion` (un trabajo viejo) es del motor propio.
 REALIZACIONES = ("propio", "mesa")
 MESA_SIN_RENDER = ".maqueta_sin_render"   # MESA_RENDER=0 (maquetas): el render es un doble; `entregar` real lo rechaza
 
@@ -864,7 +869,7 @@ MUSICA_TEMAS = {
 MEMORIA_DIR = os.path.join(RAIZ, "memoria")
 REGISTROS_FEED = (("videos", "video"), ("historias", "historia"), ("series", "serie"), ("explicaciones", "explica"),
                   ("sabias", "sabias"), ("congreso", "congreso"), ("videos3d", "video3d"))
-REGISTROS_SOLO_MUSICA = ("series", "semanas", "noticias")   # la música cuenta además la pista base de cada serie y el histórico de noticieros
+REGISTROS_SOLO_MUSICA = ("series", "noticias")   # la música cuenta además la pista base de cada serie y el histórico de noticieros (/noticias se retiró el 2026-11-14)
 # flujos cuyo gancho lleva el visual que dicta el formato (la foto a sangre de /historia y de las partes de /serie, el
 # pleno de /congreso): no bloquean el visual de la pieza siguiente (R9 rota lo que se elige)
 VISUAL_FIJO = ("historia", "serie", "congreso")
@@ -1548,6 +1553,16 @@ def nombres_depto():
         m = re.search(r"const NOMBRES = \{([\s\S]*?)\};", base)
         _NOMBRES_DEPTO = dict(re.findall(r'(GT\d\d):\s*"([^"]+)"', m.group(1))) if m else {}
     return _NOMBRES_DEPTO
+
+
+def depto_id(nombre):
+    """«Escuintla» → «GT05» (NOMBRES de templates/base.html); None si no es un departamento."""
+    if not nombre:
+        return None
+    if re.fullmatch(r"GT\d\d", nombre):
+        return nombre
+    plano = _plano(nombre)
+    return next((k for k, v in nombres_depto().items() if _plano(v) == plano), None)
 
 
 def items_de(datos, orden=None):
@@ -2473,7 +2488,7 @@ def validar_estructura(g, st, dur, tarjetas):
     return f
 
 
-# ---------- piezas comunes de los flujos de monetización (Fase 0: /carrusel, /departamento, /semana, /serie) ----
+# ---------- piezas comunes de los flujos de monetización (Fase 0: /carrusel, /departamento, /serie) ----
 PISO_DURACION_S = 61                 # TikTok Creator Rewards solo paga videos ≥ 60 s; 1 s de margen
 PALABRA_CLAVE_S = 3.0                # V19: la palabra clave suena en la voz antes de este segundo
 PALABRA_CLAVE_PLATAFORMAS = ("tiktok", "instagram", "facebook")
@@ -4792,7 +4807,7 @@ def siglas_deletreadas(ws, n):
 
 def voz_de_escena(trabajo, e):
     """V16 + atempo: aprieta la voz de la escena (voz_N.mp3 queda intacto) y la acelera a VELOCIDAD en voz_N_r.mp3.
-    Devuelve las palabras habladas en el tiempo final, lo recortado y los avisos (lo comparten /video, /noticias y
+    Devuelve las palabras habladas en el tiempo final, lo recortado y los avisos (lo comparten /video y
     /historia)."""
     n = e["n"]
     audio = os.path.join(trabajo, "audio")
@@ -4833,7 +4848,7 @@ def tiempos_seguir(S, invitacion=()):
 SEGUIR_MEDIO_MIN_S = 45.0            # un video más corto no lo lleva (/sabias)
 SEGUIR_MEDIO_TRAMO = (0.40, 0.65)    # dónde puede caer, como fracción del video
 SEGUIR_MEDIO_DUR_S = 3.4             # lo que dura el gesto completo (entra, clic, campana, sale)
-SEGUIR_MEDIO_SIN = ("gancho", "cierre", "adivina", "toma", "capitulo", "titular")
+SEGUIR_MEDIO_SIN = ("gancho", "cierre", "adivina", "toma", "capitulo")
 
 
 TIC_SUELTO_CADA_S = 5.0   # un `tic` suelto (no el tren de un conteo) cada 5 s como mucho en todo el video
@@ -5376,7 +5391,7 @@ def cmd_grabar(a):
             if mesa(*paso):
                 return falla("la mesa se detuvo en «%s» (%s): corrige y vuelve a grabar" % (paso[0], a.formato))
         return 0
-    hilo_dir = tarjetas_dir(trabajo, st)   # /noticias no tiene hilo ni tarjetas; las de /video, rearmadas en Noche
+    hilo_dir = tarjetas_dir(trabajo, st)   # las tarjetas de /video, rearmadas en Noche (un trabajo sin hilo no las tiene)
     args = ["node", os.path.join(RAIZ, "scripts", "video_grabar.js"), "--dir", trabajo, *(["--hilo", hilo_dir] if hilo_dir else []),
             "--fps", str(a.fps), "--formato", a.formato]
     if a.solo:
@@ -5780,7 +5795,7 @@ def cuadros_de(e):
         ts_ = [(primero("pildora") or ultimo("punto") or e["dur"] * 0.6) + 0.5]
     elif tipo == "escala":
         ts_ = [(primero("destacadas") or e["dur"] * 0.5) + 1.0]
-    elif tipo in ("titular", "noticia", "foto"):   # /noticias y la foto de /historia: el titular entero, la cifra contada (o la fuente)
+    elif tipo == "foto":   # la foto de /historia: el titular entero, la cifra contada (o la fuente)
         ts_ = [(ultimo("titular") or 0.8) + 0.4] + ([primero("cifra") + 1.1] if primero("cifra") is not None else
                                                     [(primero("fuente") or e["dur"] * 0.6) + 0.5])
     elif tipo == "explica":
@@ -6050,7 +6065,7 @@ def tramos_sin_cambio(vals, fps=NOVEDAD_FPS, umbral=NOVEDAD_UMBRAL, minimo=NOVED
     return out
 
 
-ENTRADAS_VISUALES = ("entrada", "cifra", "fuente", "plano", "persona", "humana", "acto", "toma", "nodo")
+ENTRADAS_VISUALES = ("entrada", "cifra", "fuente", "plano", "persona", "acto", "toma", "nodo")
 SFX_SEPARACION_S, SFX_RITMO_S = 0.4, 2.5
 SFX_CLAVE = ("resolucion", "grave", "impacto", "riser", "mazo", "sello", "pulso")
 

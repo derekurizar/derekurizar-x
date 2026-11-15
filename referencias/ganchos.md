@@ -96,7 +96,7 @@ El icono (`icono`) va solo con el visual `cifra`.
 - Cifras, nombres y años en Archivo condensado 900 en mayúsculas; la línea, en Archivo 800 crema, entra palabra a
   palabra con la voz; etiquetas y crédito en JetBrains Mono 600. Nada en Instrument Serif. Se escriben en caja normal:
   la página pone la caja.
-- `foto` (`/historia`, y el gancho de `/noticias`): la foto **a sangre** con brillo 0.45–0.6 y una sombra del color
+- `foto` (`/historia` y `/video`): la foto **a sangre** con brillo 0.45–0.6 y una sombra del color
   del fondo arriba y abajo; la línea se enciende en el acento (`realce`) cuando la voz la dice.
 - Mientras la pantalla dice lo mismo que la voz, no hay subtítulo (sin subtítulo doble).
 

@@ -15,8 +15,8 @@ Subcomandos:
                                   distribucion, trafico, hold {1,2,3,5,10,15,30,60}}}; la misma fecha reemplaza su snapshot.
                                   Solo este script escribe memoria/metricas.json.
   vincular [--fijar PUB FLUJO:ID] [--ajena PUB] [--dry-run]
-                                  liga cada publicación a una pieza de los registros (videos, historias, noticias, sabias,
-                                  explicaciones, semanas, congreso, videos3d) por fecha (−1…+6 días), duración (±6 s) y
+                                  liga cada publicación a una pieza de los registros (videos, historias, sabias,
+                                  explicaciones, congreso, videos3d y el histórico de noticias) por fecha (−1…+6 días), duración (±6 s) y
                                   palabras del título; lo anterior al primer registro queda «ajena»; lo dudoso, «pendiente»
                                   (la sesión lo fija). Cada PARTE entregada de una serie (memoria/series.json) es una pieza
                                   «serie:<serie>-parte-N» y cada largo de memoria/youtube.json, «youtube:youtube-<serie>»:
@@ -78,8 +78,8 @@ HOLD_S = (1, 2, 3, 5, 10, 15, 30, 60)
 TRANSICION = 0.3   # = video.TRANSICION (sin importar video.py: este script no depende del motor de video)
 # registro → (archivo, clave de la lista, flujo, campo de la ruta)
 REGISTROS = (("videos.json", "videos", "video", "ruta_video"), ("historias.json", "historias", "historia", "ruta"),
-             ("noticias.json", "noticieros", "noticias", "ruta"), ("sabias.json", "sabias", "sabias", "ruta"),
-             ("explicaciones.json", "explicaciones", "explica", "ruta"), ("semanas.json", "semanas", "semana", "ruta"),
+             ("noticias.json", "noticieros", "noticias", "ruta"),   # histórico: /noticias se retiró el 2026-11-14 (12 publicaciones medidas)
+             ("sabias.json", "sabias", "sabias", "ruta"), ("explicaciones.json", "explicaciones", "explica", "ruta"),
              ("congreso.json", "congreso", "congreso", "ruta"), ("videos3d.json", "videos3d", "video3d", "ruta"))
 VENTANA_DIAS = (-1, 6)       # publicada entre un día antes y seis después del registro
 # Las partes de /serie (memoria/series.json → una pieza por parte entregada, flujo «serie», id <serie>-parte-N: el mismo
@@ -505,8 +505,6 @@ def escenas_de(p):
         cand.append("sesiones/congreso-%s/escenas.json" % p["slug"])
     elif p["flujo"] == "explica":
         cand.append("sesiones/explica-%s/escenas.json" % p["slug"])
-    elif p["flujo"] == "semana":
-        cand.append("sesiones/semana-%s/escenas.json" % reg.get("fecha"))
     guion = leer(os.path.join(RAIZ, p["ruta"] or "", "guion.json")) or {}
     por_n = {int(e.get("n") or k): e for k, e in enumerate(guion.get("escenas") or [], 1)}
     fuente = next((c for c in cand if os.path.exists(os.path.join(RAIZ, c))), None)

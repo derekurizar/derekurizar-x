@@ -51,8 +51,8 @@ import sys
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(RAIZ, "scripts"))
+import fuentes_web as FW  # noqa: E402
 import historia as HI  # noqa: E402
-import noticias as NT  # noqa: E402
 import numeros_es as NE  # noqa: E402
 import verificacion as VM  # noqa: E402
 import video as VD  # noqa: E402
@@ -365,7 +365,7 @@ def revisar_eje(v, propios=()):
                 if not 10 <= len(x.get("texto") or "") <= HI.HECHO_CARACTERES:
                     fallas.append("E2 %s: texto de 10–%d caracteres" % (xid, HI.HECHO_CARACTERES))
                 for tok, _, _ in HI.numeros_de(x.get("texto")):
-                    if NT.sueltos(tok, nums):
+                    if VM.sueltos_prensa(tok, nums):
                         fallas.append("E2 %s: el número «%s» del texto no está en sus citas" % (xid, tok))
             elif clase == "cifras":
                 if not isinstance(x.get("valor"), (int, float)) or isinstance(x.get("valor"), bool):
@@ -373,9 +373,9 @@ def revisar_eje(v, propios=()):
                     continue
                 if not str(x.get("periodo") or x.get("anio") or "").strip():
                     fallas.append("E2 %s: «periodo» (el año o el mes del dato: la voz dice de cuándo es)" % xid)
-                if NT.sueltos(x.get("texto") or "", [(round(float(x["valor"]), 6), VM.factor_unidad(x.get("unidad"))), (round(float(x["valor"]), 6), None)]):
+                if VM.sueltos_prensa(x.get("texto") or "", [(round(float(x["valor"]), 6), VM.factor_unidad(x.get("unidad"))), (round(float(x["valor"]), 6), None)]):
                     fallas.append("E2 %s: «%s» no es su valor %s" % (xid, x.get("texto"), x["valor"]))
-                elif NT.sueltos(x.get("texto") or "", nums):
+                elif VM.sueltos_prensa(x.get("texto") or "", nums):
                     fallas.append("E2 %s: ninguna cita trae el número «%s»" % (xid, x.get("texto")))
             else:
                 frase = HI.plano(x.get("texto"))
@@ -571,7 +571,7 @@ def consolidar(trabajo):
         fuente = (c.get("fuentes") or [{}])[0]
         cifras.append({"id": c["id"], "concepto": c.get("concepto") or c.get("texto"), "valor": c["valor"], "unidad": c.get("unidad") or "",
                        "periodo": str(c.get("periodo") or c.get("anio") or ""), "veredicto": "verificada", "url": fuente.get("url"),
-                       "fuente": fuente.get("medio") or NT.dominio(fuente.get("url") or ""), "ilustrativo": False})
+                       "fuente": fuente.get("medio") or FW.dominio(fuente.get("url") or ""), "ilustrativo": False})
     for x in X["afirmaciones"] + X["citas"]:
         for k, (tok, val, despues) in enumerate(HI.numeros_de(x.get("texto")), 1):
             cifras.append({"id": "%s-n%d" % (x["id"], k), "concepto": x.get("texto"), "valor": val, "unidad": HI.unidad_de(despues),
@@ -1328,12 +1328,12 @@ def lineas_verificado(X):
     out = ["## Afirmaciones verificadas (id · estado · tipo — texto [fuentes])"]
     for x in X.get("afirmaciones") or []:
         out.append("- %s · %s · %s — %s [%s]%s" % (x["id"], x["estado"], x.get("tipo"), x.get("texto"),
-                                                  ", ".join(f.get("medio") or NT.dominio(f.get("url") or "") for f in x.get("fuentes") or []),
+                                                  ", ".join(f.get("medio") or FW.dominio(f.get("url") or "") for f in x.get("fuentes") or []),
                                                   " · en disputa: %s" % x.get("nota") if x["estado"] == "en_disputa" else ""))
     out += ["", "## Cifras reales de Guatemala (id · valor · periodo — concepto [fuente]; la voz dice de cuándo es)"]
     for c in X.get("cifras") or []:
         out.append("- %s · %s %s · %s — %s [%s]" % (c["id"], c["valor"], c.get("unidad") or "", c.get("periodo") or c.get("anio") or "",
-                                                  c.get("concepto") or c.get("texto"), ", ".join(f.get("medio") or NT.dominio(f.get("url") or "")
+                                                  c.get("concepto") or c.get("texto"), ", ".join(f.get("medio") or FW.dominio(f.get("url") or "")
                                                                                                 for f in c.get("fuentes") or [])))
     if X.get("citas"):
         out += ["", "## Citas literales (id · autor — frase)"] + ["- %s · %s — «%s»" % (q["id"], q.get("autor"), q.get("texto")) for q in X["citas"]]
@@ -1394,9 +1394,9 @@ def cmd_digesto(a):
                 for x in hz.get(k) or []:
                     out.append("- %s · %s — %s" % (x.get("id"), (x.get("texto") or x.get("concepto") or "")[:200],
                                " | ".join("%s «%s»" % (ev.get("url"), (ev.get("cita") or "")[:140]) for ev in x.get("fuentes") or [])))
-        out += ["", "## Clases de fuente que cuentan", "- oficial: *.gob.gt, %s, %s" % (", ".join(sorted(NT.OFICIALES)), ", ".join(sorted(HI.OTROS_OFICIALES))),
+        out += ["", "## Clases de fuente que cuentan", "- oficial: *.gob.gt, %s, %s" % (", ".join(sorted(FW.OFICIALES)), ", ".join(sorted(HI.OTROS_OFICIALES))),
                 "- academica: *.edu, %s" % ", ".join(sorted(HI.ACADEMICAS)),
-                "- medio (dominio → grupo): %s" % ", ".join("%s→%s" % kv for kv in sorted({**NT.MEDIOS, **HI.INTERNACIONALES}.items()))]
+                "- medio (dominio → grupo): %s" % ", ".join("%s→%s" % kv for kv in sorted({**FW.MEDIOS, **HI.INTERNACIONALES}.items()))]
         print("\n".join(out))
         return 0
     X = explicacion_de(trabajo)
@@ -1557,7 +1557,7 @@ def fuentes_md(st, escenas, X):
             L.append("- %s%s" % (txt, HI.etiqueta_estado(x)))
             for f in x.get("fuentes") or []:
                 if f.get("url"):
-                    L.append("  - %s: %s" % (f.get("medio") or NT.dominio(f["url"]), f["url"]))
+                    L.append("  - %s: %s" % (f.get("medio") or FW.dominio(f["url"]), f["url"]))
         L.append("")
     L.append("Sígueme: %s" % " · ".join("%s %s" % (r["nombre"], r["handle"]) for r in VD.REDES))
     return "\n".join(L) + "\n"

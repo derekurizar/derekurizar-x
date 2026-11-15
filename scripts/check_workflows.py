@@ -23,7 +23,7 @@ El sandbox del Workflow no importa módulos, así que hilo.js, dato.js e ideas.j
      workflow no redefine las constantes del gate (CPS, COLA, RITMO_MAX_S, CARACTERES, DURACION_DEFECTO, VISUALES_DE,
      APERTURAS_PROHIBIDAS), que
      viven solo en video.py
-  W11 noticias.js: la tabla MODOS refleja noticias.SECCIONES (diario) y semana.SECCIONES, PUNTAJES y CIFRAS (semana)
+  W11 (retirado el 2026-11-14 con /noticias y /semana: era el espejo del workflow de noticias; los demás conservan su número)
   W12 historia.js: TIPOS (los de video.py más foto, cita y capitulo), FAMILIAS, VISUALES y PUNTAJES (y los escalares de la
      narración, también EJES_MAX_SERIE y PALABRAS_SERIE de /serie) son espejos literales de
       scripts/historia.py
@@ -204,7 +204,6 @@ def main():
             err("W6 investigacion.js MARCADOR_INFORME %r ≠ ensamblar.MARCADOR_INFORME %r" % (m.group(1), MARCADOR_INFORME))
     graficos_informe(catalogo)
     video_workflow()
-    noticias_workflow()
     historia_workflow()
     explica_workflow()
     youtube_workflow()
@@ -240,38 +239,6 @@ def video_workflow():
     for nombre in W10_PROHIBIDAS:
         if re.search(r"^const %s\b" % nombre, vid, re.M):
             err("W10 video.js define `const %s`: las constantes del gate viven solo en scripts/video.py" % nombre)
-
-
-def noticias_workflow():
-    """W11: noticias.js refleja las secciones de scripts/noticias.py (modo diario) y las secciones, los puntajes del
-    crítico y el número de cifras de scripts/semana.py (modo semana) en su tabla MODOS."""
-    src = fuente("noticias.js", opcional=True)
-    if not src:
-        return
-    try:
-        import noticias as NOT
-        import semana as SEM
-    except Exception as ex:  # noqa: BLE001
-        err("W11 no se pudo importar scripts/noticias.py o scripts/semana.py: %s" % ex)
-        return
-    modos = modos_explica(src)   # el mismo formato de tabla que explica.js
-    if modos is None:
-        err("W11 noticias.js: no se encontró `const MODOS = {...}`")
-        return
-    if list(modos) != ["diario", "semana"]:
-        err("W11 noticias.js MODOS %s ≠ ['diario', 'semana']" % list(modos))
-    esperado = {("diario", "secciones"): list(NOT.SECCIONES), ("semana", "secciones"): list(SEM.SECCIONES),
-                ("semana", "puntajes"): list(SEM.PUNTAJES)}
-    for (modo, campo), py in esperado.items():
-        js = (modos.get(modo) or {}).get(campo)
-        if js is None:
-            err("W11 noticias.js MODOS.%s sin «%s: [...]»" % (modo, campo))
-        elif js != py:
-            err("W11 noticias.js MODOS.%s.%s %s ≠ %s" % (modo, campo, js, py))
-    b = bloque(src, "  semana: {", r"^  \},?") or ""
-    m = re.search(r"^\s+cifras: (\d+),?\s*$", b, re.M)
-    if not m or int(m.group(1)) != SEM.CIFRAS:
-        err("W11 noticias.js MODOS.semana.cifras = %s ≠ semana.CIFRAS %s" % (m.group(1) if m else "?", SEM.CIFRAS))
 
 
 def historia_workflow():

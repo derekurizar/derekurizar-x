@@ -4,7 +4,7 @@ producir para que ningún espacio quede vacío. Solo stdlib.
 
 Decisiones del usuario (2026-11-03): como máximo 2 videos al día. El espacio A es una pieza fuerte (historia, explica,
 parte de serie, /video de un hilo) y el B una pieza corta (¿Sabías que…?, departamento). El carrusel va aparte (no es
-video, ≤ 1 al día). **No se publican noticieros**: /noticias y /semana no se programan. Planifica producción y publicación;
+video, ≤ 1 al día). Los noticieros se retiraron del framework (2026-11-14): no hay formato que los programe. Planifica producción y publicación;
 sin tope de créditos (el plan muestra la estimación). Corrido a mitad de semana, planifica el resto: lo producido, publicado
 o con tema elegido se conserva.
 
@@ -39,7 +39,7 @@ Subcomandos (DIR = agenda/<AAAA-Wnn>/ de la semana; --dir otro):
                                                           de cada plataforma y el bloque de caption.md
   --check [--dir DIR]                                     AG1–AG9 sobre agenda.json (también lo corre validate.py como M18)
 
-Gates: AG1 ≤ 2 videos por día · AG2 el A lleva una pieza fuerte y el B una corta; ningún noticiero ni /semana · AG3 sin
+Gates: AG1 ≤ 2 videos por día · AG2 el A lleva una pieza fuerte y el B una corta; ningún formato desconocido o retirado · AG3 sin
 el mismo formato en días seguidos en el mismo espacio, salvo historia y «¿Sabías que…?» · AG4 sin repetir un tema producido en los últimos 60 días ni
 otro de la agenda · AG5 una parte de serie solo cuando la siguiente tiene guion aprobado · AG6 cada orden de producción
 vence antes de su espacio · AG7 una pieza ya publicada no se vuelve a programar · AG8 cada video a las 4 plataformas, con su estilo de Facebook ·
@@ -74,14 +74,14 @@ FORMATOS = {
     "congreso": ("/congreso <iniciativa>", 1, 25, 800),
     "video": ("/video <slug>", 1, 30, 1700),
     "video3d": ("/video-3d <tema>", 1, 40, 700),
-    "noticias": ("/noticias", 0, 30, 850),
-    "semana": ("/semana", 0, 30, 1200),
     "carrusel": ("/carrusel <slug>", 0, 10, 0),
 }
 FUERTES = ("historia", "explica", "serie", "video", "video3d")    # espacio A (video3d = la maqueta que vuela)
 CORTAS = ("sabias", "departamento", "congreso")                    # espacio B (20–90 s)
 ROTACION_CORTAS = ("sabias",)                                      # lo que llena el espacio B
-SIN_AGENDA = ("noticias", "semana")   # el usuario no publica noticieros (2026-11-03): /noticias y /semana no se programan
+# flujos retirados cuyo registro sigue en el inventario (sus publicaciones están medidas en memoria/metricas.json) pero
+# que nunca se programan: /noticias se retiró el 2026-11-14
+RETIRADOS = ("noticias",)
 # estilos de la descripción de Facebook (rotan; /analyze-improve compara cuál funciona). Ninguno pide comentar, compartir ni
 # etiquetar (F4: Meta lo penaliza)
 ESTILOS_FB = {"pregunta": "Abre con la pregunta que el video responde (una sola, concreta, sin cebo) y una línea de contexto.",
@@ -95,11 +95,11 @@ DIAS_REPETIDO, DIAS_PARECIDO = 60, 30
 ESTADOS = ("propuesto", "tema", "producido", "publicado")
 MIN_OPCIONES, MAX_OPCIONES = 2, 3   # opciones de tema por espacio (la primera queda como tema: la semana queda lista)
 FLUJO_DE_FORMATO = {"historia": "historia", "explica": "explica", "sabias": "sabias", "congreso": "congreso", "video": "video", "video3d": "video3d",
-                    "departamento": "video", "noticias": "noticias", "semana": "semana", "serie": "serie", "carrusel": "carrusel"}
+                    "departamento": "video", "serie": "serie", "carrusel": "carrusel"}
 REGISTROS = (("videos.json", "videos", "video", "ruta_video"), ("historias.json", "historias", "historia", "ruta"),
-             ("noticias.json", "noticieros", "noticias", "ruta"), ("sabias.json", "sabias", "sabias", "ruta"),
-             ("congreso.json", "congreso", "congreso", "ruta"),
-             ("explicaciones.json", "explicaciones", "explica", "ruta"), ("semanas.json", "semanas", "semana", "ruta"),
+             ("noticias.json", "noticieros", "noticias", "ruta"),   # histórico (RETIRADOS): cuenta para AG4 y AG7, no se programa
+             ("sabias.json", "sabias", "sabias", "ruta"), ("congreso.json", "congreso", "congreso", "ruta"),
+             ("explicaciones.json", "explicaciones", "explica", "ruta"),
              ("carruseles.json", "carruseles", "carrusel", "ruta"), ("videos3d.json", "videos3d", "video3d", "ruta"))
 DIAS = ("lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo")
 STOP = set("de del la el los las en y a o que un una al lo se por para con como su sus es guatemala historia maqueta publica "
@@ -187,7 +187,7 @@ def listas(inv):
     publicadas = [x for x in inv if x["publicadas"]]
     out = []
     for x in inv:
-        if x["publicadas"] or x.get("estado") not in ("listo", "publicado") or x["flujo"] in ("noticias", "semana"):
+        if x["publicadas"] or x.get("estado") not in ("listo", "publicado") or x["flujo"] in RETIRADOS:
             continue
         aviso = None
         for y in publicadas:
@@ -311,7 +311,7 @@ def armar(desde, memdir, previo=None, ahora=None):
     omitidas = list((previo or {}).get("omitidas") or [])
     previos = {s["id"]: s for s in (previo or {}).get("espacios", [])
                if not (s.get("pieza") and s["pieza"].get("id") in {o["id"] for o in omitidas} and s.get("estado") != "publicado")
-               and s.get("formato") not in SIN_AGENDA}
+               and s.get("formato") in FORMATOS}   # un espacio con un formato retirado no se conserva
     # lo de antes de `desde` y lo que ya avanzó (tema elegido, producido, publicado) se conserva tal cual
     conservar = {k: s for k, s in previos.items() if s["fecha"] < desde.isoformat() or s.get("estado") in ("tema", "producido", "publicado")}
     # lo de hoy que ya pasó su hora sin publicarse vuelve al inventario; un espacio del calendario repetido se queda una vez
@@ -487,8 +487,8 @@ def revisar(A, memdir, listo=False):
         if len(videos) > VIDEOS_POR_DIA:
             f.append("AG1 %s: %d videos (van ≤ %d; el carrusel no cuenta)" % (d, len(videos), VIDEOS_POR_DIA))
         for s in ss:
-            if s["formato"] in SIN_AGENDA:
-                f.append("AG2 %s: %s en la agenda (el usuario no publica noticieros: el espacio B es una pieza corta)" % (s["id"], s["formato"]))
+            if s["formato"] not in FORMATOS:
+                f.append("AG2 %s: «%s» no es un formato de la agenda (va %s)" % (s["id"], s["formato"], "|".join(FORMATOS)))
             elif s["slot"] == "B" and s["formato"] not in CORTAS:
                 f.append("AG2 %s: el espacio B lleva una pieza corta (%s), no %s" % (s["id"], "|".join(CORTAS), s["formato"]))
             elif s["slot"] == "A" and s["formato"] not in FUERTES:
@@ -508,7 +508,7 @@ def revisar(A, memdir, listo=False):
     producidos = [x for x in inv.values() if x.get("fecha") and (hoy - fecha(x["fecha"])).days <= DIAS_REPETIDO]
     temas = []
     for s in esp:
-        if s["formato"] in ("noticias", "semana") or not s.get("tema") or s.get("pieza"):
+        if s["formato"] not in FORMATOS or not s.get("tema") or s.get("pieza"):
             continue
         ks = claves(s["tema"])
         for x in producidos:
@@ -578,7 +578,7 @@ def guardar(d, A):
 
 
 NOMBRE_PLAT = {"tiktok": "TikTok", "instagram": "Instagram", "facebook": "Facebook", "youtube": "YouTube"}
-ETIQUETA_SLOT = {"A": "Pieza fuerte", "B": "Noticias", "C": "Carrusel"}
+ETIQUETA_SLOT = {"A": "Pieza fuerte", "B": "Pieza corta", "C": "Carrusel"}
 ETIQUETA_ESTADO = {"propuesto": "sin tema", "tema": "por producir", "producido": "listo para publicar", "publicado": "publicado"}
 
 
@@ -822,7 +822,7 @@ def cmd_opciones(a):
         print("--opcion «<tema>|<por qué ahora>» de %d a %d veces (formato opcional: «departamento::<nombre>|…»)" % (MIN_OPCIONES, MAX_OPCIONES), file=sys.stderr)
         return 2
     memdir = os.path.join(RAIZ, A.get("memoria") or "memoria")
-    otros = [x for x in A["espacios"] if x is not s and x.get("tema") and x["formato"] not in SIN_AGENDA]
+    otros = [x for x in A["espacios"] if x is not s and x.get("tema") and x["formato"] in FORMATOS]
     f = []
     producidos = [x for x in inventario(memdir) if x.get("fecha") and (fecha(A["desde"]) - fecha(x["fecha"])).days <= DIAS_REPETIDO]
     for k, o in enumerate(ops, 1):

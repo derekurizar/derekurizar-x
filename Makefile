@@ -7,7 +7,7 @@ PALETAS ?= cielo
 ESTILO ?= noche
 PALETA ?= cielo
 
-.PHONY: help nuevo render visual catalogo validate tabla pdf ensamblar limpiar test doctor costo contacto digesto fuentes ideas calendario informe informe-ejemplo informe-catalogo informe-fixture verificacion auditoria-rehacer podar podar-intermedios video-fixturevideo-fixture-4x5 noticias-fixture semana-fixture historia-fixture explica-fixture sabias-fixture congreso-fixture carrusel-fixture departamento-fixture analisis-fixture agenda-fixture serie-fixture serie-explica-fixture youtube-fixture video-fixture-mesa video-fixture-maqueta video3d-fixture musica whisper iconos
+.PHONY: help nuevo render visual catalogo validate tabla pdf ensamblar limpiar test doctor costo contacto digesto fuentes ideas calendario informe informe-ejemplo informe-catalogo informe-fixture verificacion auditoria-rehacer podar podar-intermedios video-fixturevideo-fixture-4x5 historia-fixture explica-fixture sabias-fixture congreso-fixture carrusel-fixture departamento-fixture analisis-fixture agenda-fixture serie-fixture serie-explica-fixture youtube-fixture video-fixture-mesa video-fixture-maqueta video3d-fixture musica whisper iconos
 
 help:
 	@echo "make nuevo T=<plantilla> OUT=<ruta.html> [PALETA=cielo]  ensambla una tarjeta (base + plantilla)"
@@ -31,8 +31,6 @@ help:
 	@echo "make informe-catalogo [PAL=x]                            genera y renderiza investigacion/ejemplos/catalogo (todos los G.* en papel, panel y media página; PNG por página)"
 	@echo "make informe-fixture                                     informe de prueba (8 páginas) sobre sesiones/_fixture/salida, sin agentes (requiere el fixture ensamblado)"
 	@echo "make video-fixture [FPS=10]                              /video de prueba sin créditos (voz falsa) sobre sesiones/_fixture/salida → sesiones/_fixture_video/salida"
-	@echo "make noticias-fixture [FPS=10]                           /noticias de prueba (maqueta: noticias de ejemplo, voz falsa, 0 créditos) → sesiones/_fixture_noticias/trabajo/salida"
-	@echo "make semana-fixture [FPS=10]                             /semana de prueba (3 diarios de ejemplo + un dato oficial, voz falsa, 0 créditos) → sesiones/_fixture_semana/salida"
 	@echo "make historia-fixture [FPS=10]                           /historia de prueba (maqueta: una panadería inventada, voz falsa, 0 créditos) → sesiones/_fixture_historia/trabajo/salida"
 	@echo "make explica-fixture [FPS=10]                            /explica de prueba (maqueta: el interés compuesto con fuentes de ejemplo, voz falsa, 0 créditos) → sesiones/_fixture_explica/salida"
 	@echo "make congreso-fixture [FPS=10]                           /congreso de prueba (la Ley de Ciberseguridad, iniciativa 6347, voz falsa, 0 créditos) → sesiones/_fixture_congreso/salida"
@@ -192,35 +190,6 @@ video-fixture-4x5:   # sobre el trabajo que dejó video-fixture: vuelve a grabar
 	python3 scripts/video.py montar $(VF)/trabajo --formato 4:5
 	python3 scripts/video.py revisar $(VF)/trabajo --formato 4:5
 	python3 scripts/video.py entregar $(VF)/trabajo --salida $(VF)/salida
-
-NF := sesiones/_fixture_noticias
-noticias-fixture:   # maqueta de /noticias: noticias de ejemplo con fotos generadas, voz falsa, 9:16 y 4:5
-	rm -rf $(NF)/trabajo
-	python3 scripts/noticias.py preparar --fecha 2026-10-23 --trabajo $(NF)/trabajo --fixture
-	python3 scripts/noticias.py guion $(NF)/trabajo --check
-	python3 scripts/noticias.py voz-falsa $(NF)/trabajo
-	python3 scripts/noticias.py tiempos $(NF)/trabajo
-	python3 scripts/noticias.py grabar $(NF)/trabajo --fps $(FPS)
-	python3 scripts/noticias.py montar $(NF)/trabajo
-	python3 scripts/noticias.py revisar $(NF)/trabajo
-	python3 scripts/noticias.py grabar $(NF)/trabajo --fps $(FPS) --formato 4:5
-	python3 scripts/noticias.py montar $(NF)/trabajo --formato 4:5
-	python3 scripts/noticias.py revisar $(NF)/trabajo --formato 4:5
-
-SMF := sesiones/_fixture_semana
-semana-fixture:   # maqueta de /semana: 3 diarios de ejemplo + un dato oficial → 5 cifras en cuenta regresiva, voz falsa, 9:16 y 4:5 (≥ 61 s)
-	rm -rf $(SMF)/trabajo $(SMF)/salida
-	python3 scripts/semana.py preparar --fecha 2026-10-25 --trabajo $(SMF)/trabajo --fixture
-	python3 scripts/semana.py guion $(SMF)/trabajo --check
-	python3 scripts/semana.py voz-falsa $(SMF)/trabajo
-	python3 scripts/semana.py tiempos $(SMF)/trabajo
-	python3 scripts/semana.py grabar $(SMF)/trabajo --fps $(FPS)
-	python3 scripts/semana.py montar $(SMF)/trabajo
-	python3 scripts/semana.py revisar $(SMF)/trabajo
-	python3 scripts/semana.py grabar $(SMF)/trabajo --fps $(FPS) --formato 4:5
-	python3 scripts/semana.py montar $(SMF)/trabajo --formato 4:5
-	python3 scripts/semana.py revisar $(SMF)/trabajo --formato 4:5
-	python3 scripts/semana.py entregar $(SMF)/trabajo --salida $(SMF)/salida
 
 HF := sesiones/_fixture_historia
 escenas-prueba:   # las escenas con archivos reales de /historia (vias, lupa, deptos, pagina, cortina, archivo, bandos) grabadas con su constructor: TIPO=vias [CASO=zoom], o todas

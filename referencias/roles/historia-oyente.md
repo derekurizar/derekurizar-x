@@ -50,7 +50,7 @@ El cierre es la última escena (N+1), como en el digesto.
 
 ## Con la mesa de archivo (2026-11-14)
 
-En `/historia`, `/serie` y `/explica` (y en todos los flujos de video menos /noticias y /semana) el video se dibuja **después** de la voz, con la mesa de archivo
+En `/historia`, `/serie` y `/explica` (y en los demás flujos de video) el video se dibuja **después** de la voz, con la mesa de archivo
 (`referencias/flujo-mesa.md`): con cada oración entra en pantalla una pieza que la voz nombra.
 
 - **Antes de la voz escuchas el guion como hasta ahora.** La `PANTALLA:` de tu digesto es la **semilla** de cada escena

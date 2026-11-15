@@ -74,8 +74,8 @@ import urllib.request
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(RAIZ, "scripts"))
+import fuentes_web as FW  # noqa: E402
 import numeros_es as NE  # noqa: E402
-import noticias as NT  # noqa: E402
 import verificacion as VM  # noqa: E402
 import video as VD  # noqa: E402
 
@@ -193,7 +193,9 @@ ATRIBUCION = re.compile(r"\bseg[uú]n\b|\bde acuerdo con\b|\bafirm\w+|\bdijo\b|\
                         r"\bcerca de\b|\balrededor de\b|\ba (?:inicios|principios|mediados|finales) de\b|\baproximadamente\b|"
                         r"\bversi[oó]n\b|\bcuenta(?:n)?\b|\brecuerda\w*|\basegur\w+|\bnarr\w+|"
                         r"\bcalcul\w+|\bestim\w+|\bpara (?:la|el) (?:acusaci[oó]n|fiscal\w*|MP|CICIG|defensa)\b", re.I)   # una ESTIMACIÓN se atribuye con «calculaba», «estimó»
-# fuentes que cuentan además de las de /noticias: organismos, academia, archivo y prensa internacional. Wikipedia es un
+# presunción de inocencia: sin sentencia firme no se dice que alguien cometió el delito
+VETADAS = re.compile(r"\b(?:culpables?|asesin[oa]s?|delincuentes?|criminal(?:es)?|ladr[oó]n(?:es)?|corrupt[oa]s?)\b", re.I)
+# fuentes que cuentan además de las de fuentes_web.py: organismos, academia, archivo y prensa internacional. Wikipedia es un
 # mapa, nunca evidencia: se cita su referencia, no la página
 OTROS_OFICIALES = {"cicig.org": "CICIG", "un.org": "ONU", "oas.org": "OEA", "worldbank.org": "Banco Mundial",
                    "iadb.org": "BID", "cepal.org": "CEPAL", "anacafe.org": "Anacafé", "imf.org": "FMI", "fao.org": "FAO",
@@ -219,7 +221,7 @@ INTERNACIONALES = {"nytimes.com": "nyt", "washingtonpost.com": "wapo", "latimes.
                    "nbcnews.com": "nbc", "cbsnews.com": "cbs", "npr.org": "npr", "theworld.org": "the-world", "usatoday.com": "usa-today",
                    "time.com": "time", "elfinanciero.com.mx": "el-financiero", "expansion.mx": "expansion",
                    "eleconomista.com.mx": "el-economista-mx"}
-# una nota de agencia publicada por otro diario cuenta como la agencia (su grupo, el mismo de NT.MEDIOS), no como el
+# una nota de agencia publicada por otro diario cuenta como la agencia (su grupo, el mismo de FW.MEDIOS), no como el
 # diario: dos diarios con el mismo cable no son independientes y un diario fuera de la lista con el cable sí cuenta
 # (solo firmas: «(AP)» o «Por/By Associated Press»; el crédito de una foto, «Fulano, Associated Press», no cuenta)
 FIRMA = r"\b(?:By|Por)\s+(?i:the\s+|la\s+agencia\s+|la\s+)?"
@@ -248,8 +250,8 @@ FOTO_LADO_MIN, FOTO_LADO_AVISO = 480, 600     # material de archivo: 480 vale co
 ENCAJE_MARGEN, MARCO_ANCHO, MARCO_ANGOSTO = 1.18, 1.15, 0.9
 PROPORCION_GRAFICO = 1.45     # más apaisada que esto y sin --encaje: aviso (¿es un gráfico o un cartel con texto?)
 ORIGENES_FOTO = ("commons", "oficial", "medio", "empresa")
-# una foto que no es del hecho (el lugar, la institución, la persona, el producto o la época) va como en /noticias: su
-# crédito dice «Foto de referencia: …» para que nadie la tome por la del momento; cada eje trae ≥ FOTOS_POR_EJE fotos
+# una foto que no es del hecho (el lugar, la institución, la persona, el producto o la época) lleva su
+# crédito, que dice «Foto de referencia: …» para que nadie la tome por la del momento; cada eje trae ≥ FOTOS_POR_EJE fotos
 CREDITO_FOTO, CREDITO_REFERENCIA, FOTOS_POR_EJE = "Foto: ", "Foto de referencia: ", 2
 COMMONS_API = "https://commons.wikimedia.org/w/api.php"
 COMMONS_UA = "HilosDerekUrizar/1.0 (https://x.com/DerekUrizar; datos de Guatemala) python-urllib"
@@ -279,7 +281,7 @@ def slug_de(s):
 
 
 def plano(s):
-    return NT.plano_cita(s)
+    return FW.plano_cita(s)
 
 
 # ---------- registros de historias anteriores (rotación de ganchos y cierres, C11, música) ----------
@@ -421,7 +423,7 @@ def clasificar(url, propios=(), archivo=None):
     if m:
         return clasificar(m.group(1), propios, archivo)
     c, g = clasificar_dominio(url, propios)
-    if c in (None, "medio") and not (NT.dominio(url).endswith("wikipedia.org")):
+    if c in (None, "medio") and not (FW.dominio(url).endswith("wikipedia.org")):
         ag = agencia_de(archivo)
         if ag:
             return "medio", ag
@@ -429,12 +431,12 @@ def clasificar(url, propios=(), archivo=None):
 
 
 def clasificar_dominio(url, propios=()):
-    d = NT.dominio(url)
+    d = FW.dominio(url)
     if d.endswith("wikipedia.org") or d.endswith("wikimedia.org"):
         return None, d
     if any(d == x or d.endswith("." + x) for x in propios or ()):
         return "empresa", d
-    c, g = NT.clasificar(url)
+    c, g = FW.clasificar(url)
     if c:
         return c, g
     for tabla, clase in ((OTROS_OFICIALES, "oficial"), (INTERNACIONALES, "medio")):
@@ -450,12 +452,12 @@ def clasificar_dominio(url, propios=()):
 
 def ruta_fuente(url):
     """La base (sin extensión) de lo que `leer` guarda para esa url: <dominio-con-guiones>-<sha1[:10]>."""
-    return os.path.join(DESCARGAS, "%s-%s" % (re.sub(r"[^a-z0-9]+", "-", NT.dominio(url)), hashlib.sha1(url.encode()).hexdigest()[:10]))
+    return os.path.join(DESCARGAS, "%s-%s" % (re.sub(r"[^a-z0-9]+", "-", FW.dominio(url)), hashlib.sha1(url.encode()).hexdigest()[:10]))
 
 
 def nombre_medio(url):
-    d = NT.dominio(url)
-    return next((v for k, v in NOMBRES_MEDIOS.items() if d == k or d.endswith("." + k)), None) or NT.OFICIALES.get(d) or OTROS_OFICIALES.get(d) or d
+    d = FW.dominio(url)
+    return next((v for k, v in NOMBRES_MEDIOS.items() if d == k or d.endswith("." + k)), None) or FW.OFICIALES.get(d) or OTROS_OFICIALES.get(d) or d
 
 
 def protagonistas(trabajo):
@@ -500,14 +502,14 @@ def leer_url(url, otra_vez=False):
     origen, error = url, None
     for intento in (url, "https://web.archive.org/web/2026/" + url):
         try:
-            datos, tipo = NT.bajar(intento, limite=40_000_000)
+            datos, tipo = FW.bajar(intento, limite=40_000_000)
             origen = intento
             break
         except Exception as ex:  # noqa: BLE001 — cualquier fallo de red: se intenta la copia de Wayback
             error = ex
     else:
         raise RuntimeError("no se pudo bajar %s ni su copia en Wayback (%s)" % (url, error))
-    meta = {"url": url, "leida_de": origen, "dominio": NT.dominio(url), "clase": clasificar(url)[0]}
+    meta = {"url": url, "leida_de": origen, "dominio": FW.dominio(url), "clase": clasificar(url)[0]}
     if datos[:5] == b"%PDF-" or "pdf" in (tipo or "").lower():
         open(base + ".pdf", "wb").write(datos)
         r = subprocess.run(["pdftotext", "-layout", base + ".pdf", base + ".txt"], capture_output=True, text=True)
@@ -518,12 +520,12 @@ def leer_url(url, otra_vez=False):
     else:
         enc = re.search(r"charset=([\w-]+)", tipo or "") or re.search(rb'charset="?([\w-]+)', datos[:3000])
         enc = (enc.group(1).decode() if isinstance(enc.group(1), bytes) else enc.group(1)) if enc else "utf-8"
-        p = NT._Texto()
+        p = FW._Texto()
         crudo_html = datos.decode(enc, "replace")
         p.feed(crudo_html)
         texto = re.sub(r"\n\s*\n+", "\n\n", re.sub(r"[ \t\r\f\v]+", " ", "".join(p.partes))).strip()
         img = p.meta.get("og:image") or p.meta.get("twitter:image") or p.meta.get("twitter:image:src")
-        meta.update(titulo=html.unescape(p.meta.get("og:title") or p.titulo).strip(), fecha=NT.fecha_de(p.meta, p.ld),
+        meta.update(titulo=html.unescape(p.meta.get("og:title") or p.titulo).strip(), fecha=FW.fecha_de(p.meta, p.ld),
                     og_image=urllib.parse.urljoin(url, img) if img else None, formato="html")
         open(base + ".txt", "w", encoding="utf-8").write(texto + "\n")
     meta.update(archivo=VD.rel(base + ".txt"), caracteres=len(texto), agencia=agencia_de(VD.rel(base + ".txt")))
@@ -680,7 +682,7 @@ def cmd_foto(a):
     crudo = os.path.join(DESCARGAS, "fotos", hashlib.sha1(url.encode()).hexdigest()[:12])
     try:
         if not os.path.exists(crudo):
-            req = urllib.request.Request(url, headers={"User-Agent": COMMONS_UA if origen == "commons" else NT.AGENTE})
+            req = urllib.request.Request(url, headers={"User-Agent": COMMONS_UA if origen == "commons" else FW.AGENTE})
             with urllib.request.urlopen(req, timeout=40) as r:
                 open(crudo, "wb").write(r.read(25_000_000))
         w, h = (int(x) for x in subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries",
@@ -899,12 +901,12 @@ def revisar_fuentes(item, propios, fallas, avisos, etiqueta):
         c = plano(f.get("cita"))
         if len(c) < CITA_MIN or c not in t:
             fallas.append("H2 %s: la cita de %s no está en su texto guardado (cópiala tal cual, ≥ %d caracteres)"
-                          % (etiqueta, f.get("medio") or NT.dominio(f.get("url")), CITA_MIN))
+                          % (etiqueta, f.get("medio") or FW.dominio(f.get("url")), CITA_MIN))
             continue
         clase, grupo = clasificar(f.get("url"), propios, f.get("archivo"))
         if clase is None:
             avisos.append("%s: %s no cuenta para confirmar (no es oficial, medio de la lista, academia, archivo ni la "
-                          "empresa del encuadre)" % (etiqueta, NT.dominio(f.get("url"))))
+                          "empresa del encuadre)" % (etiqueta, FW.dominio(f.get("url"))))
             continue
         validas.append((clase, grupo, f))
     return validas, " ".join(textos)
@@ -977,7 +979,7 @@ def revisar_eje(v, trabajo, propios):
             fallas.append("H2 %s: el año %s no está en ninguna cita (ni es el año de publicación de la fuente): cita el "
                           "fragmento que lo dice o pon precision aprox" % (hid, anio))
         for tok, val, _ in numeros_de(h.get("texto")):
-            if NT.sueltos(tok, [(round(float(m.group().replace(",", "")), 6), None) for m in RE_NUMERO.finditer(citas)]):
+            if VM.sueltos_prensa(tok, [(round(float(m.group().replace(",", "")), 6), None) for m in RE_NUMERO.finditer(citas)]):
                 fallas.append("H2 %s: el número «%s» del texto no está en sus citas" % (hid, tok))
     for c in v.get("cifras") or []:
         cid, est = c.get("id") or "?", c.get("estado")
@@ -1000,9 +1002,9 @@ def revisar_eje(v, trabajo, propios):
         if est in ("una_fuente", "en_disputa") and not validas:
             fallas.append("H2 %s: %s pide ≥ 1 fuente válida" % (cid, est))
         nums = [(round(float(m.group().replace(",", "")), 6), None) for _, _, f in validas for m in RE_NUMERO.finditer(f.get("cita") or "")]
-        if NT.sueltos(c.get("texto") or "", [(round(float(c["valor"]), 6), VM.factor_unidad(c.get("unidad"))), (round(float(c["valor"]), 6), None)]):
+        if VM.sueltos_prensa(c.get("texto") or "", [(round(float(c["valor"]), 6), VM.factor_unidad(c.get("unidad"))), (round(float(c["valor"]), 6), None)]):
             fallas.append("H2 %s: «%s» no es su valor %s" % (cid, c.get("texto"), c["valor"]))
-        elif NT.sueltos(c.get("texto") or "", nums):
+        elif VM.sueltos_prensa(c.get("texto") or "", nums):
             fallas.append("H2 %s: ninguna cita trae el número «%s»" % (cid, c.get("texto")))
     for q in v.get("citas") or []:
         qid, est = q.get("id") or "?", q.get("estado")
@@ -1806,7 +1808,7 @@ def variedad_de_imagen(escenas, enc):
     for i, e in enumerate(escenas, 1):   # el mapa con ruta: 2–4 departamentos que existen
         if e.get("ruta") is not None:
             r = e["ruta"] if isinstance(e["ruta"], list) else []
-            if not 2 <= len(r) <= 4 or any(not NT.depto_id(x) for x in r) or len({NT.depto_id(x) for x in r}) != len(r):
+            if not 2 <= len(r) <= 4 or any(not VD.depto_id(x) for x in r) or len({VD.depto_id(x) for x in r}) != len(r):
                 f.append("H26 escena %d: `ruta` son 2–4 departamentos distintos, en el orden del recorrido (p. ej. [\"Escuintla\", "
                          "\"Guatemala\"])" % i)
             elif e.get("tipo") != "foto":
@@ -2025,15 +2027,15 @@ def revisar_verdad(g, H, valores):
             sin = VD.sin_respaldo(e["cifra"].get("texto") or "", valores)
             if sin:
                 f.append("H4 escena %d: la cifra «%s» no tiene respaldo en las cifras ni en los hechos" % (i, e["cifra"].get("texto")))
-        m = NT.VETADAS.search(todo)
+        m = VETADAS.search(todo)
         if m and not (e.get("caso") and e["caso"] in casos_firmes):
             f.append("H3 escena %d: «%s» sin sentencia firme (presunción de inocencia: señalado, acusado, sindicado; con "
                      "sentencia firme, «caso»: <persona> de casos[] con sentencia_firme)" % (i, m.group()))
     cap = json.dumps(g.get("caption") or {}, ensure_ascii=False)
     for y in sorted(set(RE_ANIO.findall(cap)) - anios):
         f.append("H4 caption: el año %s no está en ningún hecho verificado" % y)
-    if NT.VETADAS.search(cap):
-        f.append("H3 caption: «%s» sin sentencia firme" % NT.VETADAS.search(cap).group())
+    if VETADAS.search(cap):
+        f.append("H3 caption: «%s» sin sentencia firme" % VETADAS.search(cap).group())
     return f
 
 
@@ -3176,7 +3178,7 @@ def revisar_deptos(g, valores=None, anios=None):
                 f.append("H29 escena %d capa %d: clave desconocida %s (van: %s)" % (i, k, ", ".join(sorted(set(c) - DEPTOS_CLAVES)), ", ".join(sorted(DEPTOS_CLAVES))))
             ds = c.get("deptos")
             if ds is not None:
-                ids = [NT.depto_id(x) for x in ds] if isinstance(ds, list) else [None]
+                ids = [VD.depto_id(x) for x in ds] if isinstance(ds, list) else [None]
                 if not ds or len(ids) > DEPTOS_POR_CAPA or any(not x for x in ids) or len(set(ids)) != len(ids):
                     f.append("H29 escena %d capa %d: `deptos` son 1–%d departamentos que existen, sin repetir (p. ej. [\"Retalhuleu\"]); "
                              "llegó %s" % (i, k, DEPTOS_POR_CAPA, ds))
@@ -3186,7 +3188,7 @@ def revisar_deptos(g, valores=None, anios=None):
                 f.append("H29 escena %d capa %d: `arco` une el departamento de una capa anterior con el de esta: las dos llevan `deptos`" % (i, k))
             if c.get("onda") and not ds:
                 f.append("H29 escena %d capa %d: `onda` sale del primer departamento de la capa: lleva `deptos`" % (i, k))
-            if c.get("zoom") is not None and c.get("zoom") != "todo" and not NT.depto_id(c.get("zoom")):
+            if c.get("zoom") is not None and c.get("zoom") != "todo" and not VD.depto_id(c.get("zoom")):
                 f.append("H29 escena %d capa %d: zoom «%s»; va un departamento o «todo»" % (i, k, c.get("zoom")))
             if c.get("etiqueta") and not ds:
                 f.append("H29 escena %d capa %d: la etiqueta va en el rótulo del primer departamento de la capa" % (i, k))
@@ -3218,9 +3220,9 @@ def t_deptos(S, e, ps, pal, fin_voz, dur, g):
     brutas = [c for c in esc.get("capas") or [] if isinstance(c, dict)]
     capas = []
     for c, t in zip(brutas, entradas_dice(brutas, pal, t0, dur)):
-        ids = [x for x in (NT.depto_id(d) for d in c.get("deptos") or []) if x]
+        ids = [x for x in (VD.depto_id(d) for d in c.get("deptos") or []) if x]
         capa = {"start": t, "ids": ids, "nombres": [nombres.get(x, x) for x in ids], "arco": bool(c.get("arco")), "onda": bool(c.get("onda")),
-                "zoom": "todo" if c.get("zoom") == "todo" else NT.depto_id(c.get("zoom"))}
+                "zoom": "todo" if c.get("zoom") == "todo" else VD.depto_id(c.get("zoom"))}
         for campo in ("etiqueta", "cifra", "rotulo"):
             if c.get(campo):
                 capa[campo] = c[campo]
@@ -3730,7 +3732,7 @@ def t_gancho(S, e, ps, pal, fin_voz, dur, g):
     S["pagina"] = "noticia"
     fo = next((r for r in fotos_h().values() if vis.get("foto") and r.get("archivo") == vis.get("foto")), {})
     S["N"] = {"modo": "titular", "foto": vis.get("foto"), "credito": vis.get("credito"), "fecha": cin.get("pantalla") or "",
-              "conteo": vis.get("etiqueta") or "", "titular": linea, "kb": NT.KEN_BURNS[0], "depto": None, "icono": None,
+              "conteo": vis.get("etiqueta") or "", "titular": linea, "kb": VD.KEN_BURNS[0], "depto": None, "icono": None,
               "encaje": fo.get("encaje"), "familia": e.get("familia")}   # «contener»: la página la muestra entera (más clara y casi sin Ken Burns); familia: resultado|escala con cifra → cifra héroe (m039)
     S["T"] = {"pant": {"texto": cin.get("pantalla"), "v": None, "desde": 0.0, "hasta": 0.4, "pulso": None}, "linea": linea,
               "fin": round(fin_voz, 3)}
@@ -3816,8 +3818,8 @@ def t_foto(S, e, ps, pal, fin_voz, dur, g):
     if fo.get("referencia") or re.search(r"referencia", esc.get("fecha") or "", re.I):
         lugar_chip = fo.get("lugar") or ""   # una foto de referencia: el lugar es el de la foto, no el del hecho
     N = {"modo": "noticia", "chip": {"b": esc.get("fecha") or "", "s": lugar_chip}, "foto": fo.get("archivo"),
-         "credito": fo.get("credito"), "icono": esc.get("icono"), "depto": NT.depto_id(esc.get("depto")),
-         "lugar": esc.get("lugar") if not fo.get("archivo") else None, "kb": NT.KEN_BURNS[(S["n"] - 1) % len(NT.KEN_BURNS)],
+         "credito": fo.get("credito"), "icono": esc.get("icono"), "depto": VD.depto_id(esc.get("depto")),
+         "lugar": esc.get("lugar") if not fo.get("archivo") else None, "kb": VD.KEN_BURNS[(S["n"] - 1) % len(VD.KEN_BURNS)],
          "encaje": fo.get("encaje"), "cifra": None, "fuente": None}
     tit_ws = (esc.get("titular") or "").split()
     if S.get("seguida") and not R:
@@ -3865,7 +3867,7 @@ def t_foto(S, e, ps, pal, fin_voz, dur, g):
     # el mapa con ruta (2026-11-10): `ruta` = 2–4 departamentos por los que pasa lo que cuenta la escena (el puerto → la
     # aduana → la capital). El localizador se queda más y un trazo los une en orden. Cada uno, un lugar de un hecho de la
     # escena: lo comprueba el gate (H26).
-    ruta = [NT.depto_id(x) for x in esc.get("ruta") or []]
+    ruta = [VD.depto_id(x) for x in esc.get("ruta") or []]
     ruta = [x for x in ruta if x]
     if N["foto"] and len(ruta) >= 2 and not N.get("encaje"):
         largo = 1.4 + 0.9 * (len(ruta) - 1)
@@ -4202,7 +4204,7 @@ def lineas_hechos(H, con_citas=True):
     `· ALEGATO|ESTIMACIÓN|OPINIÓN` se atribuyen en voz (H4)."""
     out = []
     for h in H.get("hechos") or []:
-        fs = " · ".join("%s" % (f.get("medio") or NT.dominio(f.get("url"))) for f in h.get("fuentes") or [])
+        fs = " · ".join("%s" % (f.get("medio") or FW.dominio(f.get("url"))) for f in h.get("fuentes") or [])
         th = h.get("tipo_hecho")
         out.append("- %s · %s (%s) · %s%s%s — %s [%s]" % (h["id"], h.get("fecha"), h.get("precision"), h["estado"],
                    " (" + h["nota"] + ")" if h["estado"] == "en_disputa" and h.get("nota") else "",
@@ -4291,8 +4293,8 @@ def cmd_digesto(a):
                 for m, clase, pr in cands:
                     out += ["- %s%s · %s · «%s» · %s" % ("* " if pr else "", m["dominio"], m.get("fecha") or "s. f.", (m.get("titulo") or "")[:80], m["og_image"]),
                             "  " + linea_de_fuente(trabajo, m, pr)]
-        out += ["", "## Clases de fuente que cuentan", "- oficial: *.gob.gt, %s, %s" % (", ".join(sorted(NT.OFICIALES)), ", ".join(sorted(OTROS_OFICIALES))),
-                "- medio (dominio → grupo): %s" % ", ".join("%s→%s" % kv for kv in sorted({**NT.MEDIOS, **INTERNACIONALES}.items())),
+        out += ["", "## Clases de fuente que cuentan", "- oficial: *.gob.gt, %s, %s" % (", ".join(sorted(FW.OFICIALES)), ", ".join(sorted(OTROS_OFICIALES))),
+                "- medio (dominio → grupo): %s" % ", ".join("%s→%s" % kv for kv in sorted({**FW.MEDIOS, **INTERNACIONALES}.items())),
                 "- academica: *.edu, %s · archivo: %s (Wayback cuenta como su original)" % (", ".join(sorted(ACADEMICAS)), ", ".join(sorted(ARCHIVOS))),
                 "- Wikipedia NO cuenta: úsala para llegar a sus referencias."]
         print("\n".join(out))
@@ -4496,8 +4498,50 @@ def pantalla_de(e, citas):
 
 
 # ---------- fotos-contacto y reenvío ----------
-def cmd_fotos_contacto(a):
-    return NT.cmd_fotos_contacto(a, sin_repetidas=True)
+def cmd_fotos_contacto(a, sin_repetidas=True):
+    """Hoja con todas las fotos del trabajo (para el QA de contenido del coordinador: sin víctimas ni menores).
+    sin_repetidas: una imagen bajada con dos ids (mismo contenido) sale una sola vez."""
+    trabajo = os.path.abspath(a.trabajo)
+    fotos = sorted(glob.glob(os.path.join(trabajo, "fotos", "*.jpg")))
+    if sin_repetidas:
+        vistos, unicas = set(), []
+        for f in fotos:
+            h = hashlib.sha1(open(f, "rb").read()).hexdigest()
+            if h not in vistos:
+                vistos.add(h)
+                unicas.append(f)
+        if len(unicas) < len(fotos):
+            print("AVISO %d foto(s) repetida(s) (la misma imagen con otro id): salen una vez" % (len(fotos) - len(unicas)))
+        fotos = unicas
+    if not fotos:
+        print("sin fotos")
+        return 0
+    cols = min(3, len(fotos))
+    entradas = sum([["-i", f] for f in fotos], [])
+    fc = "".join("[%d:v]scale=480:300:force_original_aspect_ratio=decrease,pad=480:300:(ow-iw)/2:(oh-ih)/2:color=white,"
+                 "drawbox=x=0:y=0:w=480:h=300:color=black@0:t=1[f%d];" % (k, k) for k in range(len(fotos)))
+    while len(fotos) % cols:
+        fc += "color=white:s=480x300:d=1[f%d];" % len(fotos)
+        fotos.append(None)
+    filas = len(fotos) // cols
+    fc += "".join("[f%d]" % k for k in range(len(fotos))) + "xstack=inputs=%d:layout=%s[o]" % (
+        len(fotos), "|".join("%d_%d" % (480 * (k % cols), 300 * (k // cols)) for k in range(len(fotos))))
+    out = os.path.join(trabajo, "fotos", "contacto.png")
+    if len(fotos) == 1:
+        VD.ff(*entradas, "-vf", "scale=480:-2", "-frames:v", "1", out)
+    else:
+        VD.ff(*entradas, "-filter_complex", fc, "-map", "[o]", "-frames:v", "1", out)
+    print("hoja de fotos (%d, en orden: %s) → %s" % (len([f for f in fotos if f]), ", ".join(os.path.basename(f)[:-4] for f in fotos if f), VD.rel(out)))
+    # m029: lo que dice cada foto, en el orden de la hoja, para cotejar la descripción y el chip con lo que se ve
+    for k, f in enumerate(fotos):
+        if not f:
+            continue
+        meta = f[:-4] + ".json"
+        d = json.load(open(meta, encoding="utf-8")) if os.path.exists(meta) else {}
+        chip = " · ".join(x for x in (d.get("lugar"), str(d.get("fecha") or "")[:4]) if x)
+        print("  fila %d col %d · %-9s · %s%s · %s" % (k // cols + 1, k % cols + 1, os.path.basename(f)[:-4],
+              (d.get("descripcion") or "sin descripción")[:80], " · chip «%s»" % chip if chip else "", d.get("credito") or ""))
+    return 0
 
 
 # ---------- entrega: historias/<fecha>-<slug>/ ----------
@@ -4616,7 +4660,7 @@ def fuentes_md(st, escenas, H):
         for x in xs:
             L.append("- %s%s" % (x.get("texto"), etiqueta_estado(x)))
             urls = dict.fromkeys(f["url"] for f in x.get("fuentes") or [] if f.get("url"))
-            medio = {f["url"]: f.get("medio") or NT.dominio(f["url"]) for f in x.get("fuentes") or [] if f.get("url")}
+            medio = {f["url"]: f.get("medio") or FW.dominio(f["url"]) for f in x.get("fuentes") or [] if f.get("url")}
             L += ["  - %s: %s" % (medio[u], u) for u in urls]
         L.append("")
     fotos = H.get("fotos") or {}
@@ -4637,7 +4681,7 @@ def cronologia_md(st, escenas, H):
     xs = sorted([x for _, b in usados(escenas, H) for x in b], key=lambda x: (str(x.get("fecha") or x.get("cuando") or ""), x["id"]))
     L = ["# Cronología verificada · %s" % st.get("tema"), "", "La línea de tiempo de lo que cuenta el video (%s)." % st["fecha"], ""]
     for x in xs:
-        medios = ", ".join(dict.fromkeys(f.get("medio") or NT.dominio(f.get("url")) for f in x.get("fuentes") or []))
+        medios = ", ".join(dict.fromkeys(f.get("medio") or FW.dominio(f.get("url")) for f in x.get("fuentes") or []))
         quien = "%s: «%s»" % (x.get("autor"), x.get("texto")) if x.get("autor") else x.get("texto")
         estado = "confirmado" if x.get("estado") == "confirmado" else "una fuente (%s)" % (medio_de(x) or "?") if x.get("estado") == "una_fuente" \
             else "en disputa%s" % (" — %s" % x["nota"] if x.get("nota") else "")

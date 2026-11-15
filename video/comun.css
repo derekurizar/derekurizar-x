@@ -30,7 +30,7 @@ body::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-e
 /* la cifra o la palabra de cantidad del titular (V.acentoDe) va en el acento; el resto, crema */
 #golpe span.acento, #cifra .acento { color: var(--acento); }
 #golpe span { display: inline-block; margin-right: .22em; }
-/* barra de progreso: un tramo por escena (/video), por acto (/historia) o por noticia (/noticias); V.pintarProgreso */
+/* barra de progreso: un tramo por escena (/video) o por acto (/historia); V.pintarProgreso */
 #progreso { display: flex; gap: 10px; margin-top: 26px; }
 #progreso i { flex: 1; height: 6px; background: color-mix(in srgb, var(--ink) 28%, transparent); border-radius: 3px; overflow: hidden; }
 #progreso i b { display: block; height: 100%; width: 0; background: var(--ink); }
