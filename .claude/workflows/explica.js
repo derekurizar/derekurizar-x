@@ -1,7 +1,7 @@
 export const meta = {
   name: 'explica',
-  description: 'Video explicativo para /explica (un concepto, un proceso o una regla en ~2 min): explica-editor (encuadre: la pregunta, la idea equivocada que casi todos tienen, el mecanismo y la oración que el oyente tiene que poder devolver, la leyenda de color, el glosario, el ejemplo conductor con sus modelos de la calculadora, las anclas de Guatemala, las revelaciones y 1–3 ejes; gate E1) → un explica-investigador por eje ⇢ su explica-verificador (pipeline; afirmaciones y cifras con cita guardada, segunda fuente o la oficial, cuatro veredictos; gate E2) → consolidar (la calculadora: los ejemplos ilustrativos los calcula el script, ej-cNN) → video-gancho en modo explica (5 candidatos; gate R1–R12) → video-critico elige → explica-guionista (PRIMERO la narración de corrido en tres actos: la pregunta, el mecanismo, en tu vida; DESPUÉS las escenas: cuenta (la pizarra), definición, explica, escala, tarjetas, rótulos de acto, secuencias de voz; gate E1–E12 + V1–V5, V9, F1–F8) → historia-oyente (oyente ingenuo que además explica de vuelta el mecanismo) → crítico en modo explica (claridad = la explicación devuelta casa con el mecanismo; ≤ 2 vueltas, acotadas desde la 2; arreglos probados que se aplican tal cual) → mejoras → video-animador por escena explica sin animación. 0 créditos de ElevenLabs.',
-  whenToUse: 'EL USUARIO ELIGE GANCHO Y CIERRE: sin args.gancho se detiene tras la Selección con veredicto elegir_gancho (candidatos, recomendado); la sesión pregunta, corre explica.py ganchos --elegir <id> y relanza con resumeFromRunId y args.gancho (o args.gancho_usuario con el texto que dictó); con el guion aprobado devuelve cierres (5 opciones, cierres.json) y la sesión aplica la elegida con explica.py cierres --usar <id> (o --propio). args.auto (o el fixture) deja la recomendación del crítico. Invocado por /explica <tema> DESPUÉS de `python3 scripts/explica.py preparar "<tema>"`. args: {trabajo, tema, modo, permitir_fallback, desde, notas}. trabajo = sesiones/explica-<slug> (lo imprime preparar). Produce y aprueba <trabajo>/encuadre.json, hallazgos_*.json, verificacion_*.json, explicacion.json, ejemplos.json, base/, ganchos.json, seleccion.json, guion.json, locucion.json, oyente.json y critica.json; la voz, los tiempos, la grabación y el montaje los hace la sesión principal después. Si el crítico sigue en «corregir» tras 2 vueltas y sus faltas traen arreglos probados, se aplican y devuelve pasa con aprobado_por: arreglos_probados; si no, devuelve veredicto corregir + faltas_pendientes y el comando pregunta al usuario. desde: "guion" = salta a Guion (explicacion.json, ganchos.json y seleccion.json ya existen); desde: "retoque" + notas = guion.json aprobado y con voz: el guionista aplica solo las notas conservando las voces → gate → oyente → crítica (1 vuelta) → mejoras → animación; devuelve voces_cambiadas.',
+  description: 'Guion de /explica: editor → investigador ⇢ verificador por eje → consolidar (la calculadora de ejemplos) → ganchos → selección → guionista → oyente con la explicación devuelta → crítico (≤ 2 pasadas) → animador. 0 créditos.',
+  whenToUse: 'Sin args.gancho se detiene con veredicto elegir_gancho (el usuario elige; la sesión corre `ganchos --elegir` y reanuda con resumeFromRunId y args.gancho o args.gancho_usuario); con el guion aprobado devuelve 5 cierres para el usuario. args.auto deja la recomendación del crítico. Tras `explica.py preparar`. args: {trabajo, tema, modo, desde: ganchos|guion|retoque, notas, hasta: consolidar, serie, permitir_fallback}. Si el crítico no aprueba tras 2 pasadas devuelve veredicto corregir + faltas_pendientes (no falla). La voz, los tiempos, el plano y el render los hace la sesión después. Detalle: .claude/commands/explica.md.',
   phases: [
     { title: 'Encuadre', detail: 'explica-editor: encuadre.json con la pregunta, la intuición (la idea equivocada), el mecanismo y su frase, la leyenda de color, el glosario, los personajes del ejemplo, los ejemplos (modelos de la calculadora), las anclas de Guatemala, las revelaciones, 1–3 ejes, la paleta, no_afirma y lo sensible; gate explica.py encuadre --check (E1)' },
     { title: 'Investigación', detail: 'un explica-investigador por eje en paralelo: afirmaciones (definición, regla, proceso, norma) y cifras de Guatemala con la cita literal del texto guardado (explica.py leer) → hallazgos_<eje>.json' },
@@ -67,7 +67,9 @@ const EJES_MAX_EF = SERIE && SERIE.partes ? EJES_MAX_SERIE : EJES_MAX
 const MODO_SERIE = SERIE ? ` MODO SERIE (lee «Modo serie» en tu guía y referencias/flujo-serie.md): ${PARTE ? `PARTE ${PARTE.parte} de ${PARTE.de} («${PARTE.titulo || ''}»), ≈ 90 s (75–110; explica-serie), un solo mecanismo, contada sola (nada de «como vimos»); ${PARTE.parte < PARTE.de ? `cierre con forma «puente»: la pregunta que abre la parte ${PARTE.parte + 1} («${(PARTE.siguiente || {}).titulo || ''}»), sin anunciarla en la frase final (P2); DESPUÉS, en cierre.invitacion (aparte de cierre.texto y de la narración), una oración que pide seguir la cuenta y dice qué explica la parte ${PARTE.parte + 1}: «Sígueme: en la ${['', '', 'segunda', 'tercera', 'cuarta', 'quinta'][PARTE.parte + 1] || ''} parte, …» (SE9: ≤ 18 palabras, sin cifras)` : 'es la ÚLTIMA: cierra con consecuencia, sin cierre.invitacion'}; captions que abren con «Serie · Parte ${PARTE.parte} de ${PARTE.de}: <título>» y Shorts con «(${PARTE.parte}/${PARTE.de})»${PARTE.parte > 1 ? '; TikTok, Instagram y Facebook llevan además «La Parte 1 está fijada en mi perfil»' : ''} (SE8).` : `la investigación compartida de un temario de ${SERIE.partes} partes.`}` : ''
 const notas = String(A.notas || '').trim()
 if (RETOQUE && !notas) throw new Error('args.notas: en modo retoque, lo que pidió el usuario (otro gancho, reescribir la escena 5, otro cierre…).')
-const VUELTAS = RETOQUE ? 1 : VUELTAS_CRITICA
+// VUELTAS = correcciones que el crítico puede pedir; el crítico pasa VUELTAS + 1 veces, es decir VUELTAS_CRITICA
+// (crítica → corrección → crítica acotada). Antes eran 3 pasadas de opus por corrida (2026-11-14).
+const VUELTAS = VUELTAS_CRITICA - 1
 
 const ELIGE_USUARIO = !(A.auto || !!A.fixture)   // sin args.auto, el usuario elige gancho y cierre
 
@@ -96,6 +98,11 @@ const agentRol = async (prompt, opts) => {
     return agent(`Asume el rol definido en .claude/agents/${agentType}.md: léelo primero y sigue sus instrucciones y sus límites. ` + prompt, { ...resto, agentType: 'general-purpose' })
   }
 }
+
+// Guías por modo (2026-11-14): el rol lee su núcleo (referencias/roles/<rol>.md) y SOLO los archivos de su modo
+// (referencias/roles/<rol>/<modo>.md). Antes leía la guía entera, con todos los modos, en cada pasada.
+const guia = (rol, ...modos) =>
+  `lee referencias/roles/${rol}.md (el núcleo) y, de referencias/roles/${rol}/, SOLO ${modos.map((m) => m + '.md').join(' y ')}`
 
 // Verificación mecánica (scripts/verificacion.py V-A–V-E): forma única del veredicto, cierre que el verificador
 // corre antes de devolver y una vuelta de reparación si quedan fallas; lo que siga fallando no se usa.
@@ -332,7 +339,7 @@ if (HASTA === 'consolidar') {
 // ── 4. Ganchos (consolidar + calculadora + candidatos) ───────────────────────
 phase('Ganchos')
 const invocarGanchos = (fallos, faltasSel) => agentRol(
-  `MODO EXPLICA (lee referencias/ganchos.md y la sección «Modo explica» de referencias/roles/video-gancho.md). TRABAJO = ${trabajo} · «${tema}».${MODO_SERIE}\n` +
+  `MODO EXPLICA (lee referencias/ganchos.md; ${guia('video-gancho', 'explica')}). TRABAJO = ${trabajo} · «${tema}».${MODO_SERIE}\n` +
     `PRIMERO corre python3 scripts/explica.py consolidar ${trabajo} (explicacion.json, base/ y la calculadora de los ejemplos; exit 1 = falta una cifra real o un ejemplo no se calcula: devuélvelo en fallas). ` +
     `Lee SOLO python3 scripts/explica.py digesto ${trabajo} --para gancho. Escribe ${trabajo}/ganchos.json con ${CANDIDATOS} candidatos de FAMILIAS DISTINTAS (si la rotación deja menos de 5 familias libres, repite familia con otra pantalla y otro ángulo: el usuario elige entre los 5; ${FAMILIAS_M.join(', ')}), ≥ 2 con visual (${VISUALES_M.filter((v) => v !== 'cifra').join(', ')}), ` +
     `que plantean la pregunta del video SIN dar el mecanismo ni la revelación; números de ejemplo solo los ej-cNN (dichos como ejemplo: «Imagina…», «Supón…»); «Guatemala» o «quetzales» en la voz o la pantalla. ` +
@@ -356,7 +363,7 @@ log(`Ganchos: ${K.candidatos.map((c) => `${c.id} ${c.familia}/${c.visual} «${c.
 // ── 5. Selección ─────────────────────────────────────────────────────────────
 phase('Selección')
 const seleccionar = (vuelta) => conReparacion('Selección', (fallos) => agentRol(
-  `MODO SELECCIÓN DE GANCHO de un VIDEO EXPLICATIVO (lee «Modo selección de gancho» y «Modo explica» de referencias/roles/video-critico.md). TRABAJO = ${trabajo} · vuelta ${vuelta}. ` +
+  `MODO SELECCIÓN DE GANCHO de un VIDEO EXPLICATIVO (${guia('video-critico', 'seleccion', 'explica')}: de explica.md, solo «Selección»). TRABAJO = ${trabajo} · vuelta ${vuelta}. ` +
     `Lee SOLO referencias/ganchos.md, ${trabajo}/ganchos.json y python3 scripts/explica.py digesto ${trabajo} --para gancho. Cada candidato primero en silencio y luego con la voz; puntúa silencio, reserva (plantea la pregunta sin regalar el mecanismo ni la revelación), tension, alineacion, honestidad (un número de ejemplo dicho como ejemplo, nunca como dato) y novedad; ganador (ninguno ≤ 2) y segundo de otra familia, o ganador null con faltas. Escribe ${trabajo}/seleccion.json.` +
     (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : ''),
   { agentType: 'video-critico', schema: S.seleccion, phase: 'Selección', label: `seleccion-${vuelta}` }),
@@ -492,7 +499,7 @@ for (let vuelta = 1; vuelta <= VUELTAS + 1; vuelta++) {
   if (vuelta > 1) O = await oir(vuelta)
   const acotada = cambiadas !== null
   critica = await conReparacion(`crítica ${vuelta}`, (fallos) => agentRol(
-    `MODO EXPLICA (lee la sección «Modo explica» de referencias/roles/video-critico.md). TRABAJO = ${trabajo}. Vuelta ${vuelta}. ` + MD.directiva +
+    `MODO EXPLICA (${guia('video-critico', 'explica', 'recompensa')}). TRABAJO = ${trabajo}. Vuelta ${vuelta}. ` + MD.directiva +
       `Insumos: ${trabajo}/guion.json, ${trabajo}/locucion.json, ` +
       (O ? `${trabajo}/oyente.json (lo que un oyente que SOLO oyó la voz no entendió y su explicacion_devuelta: E-C2 compara esa oración con mecanismo_frase; si no casan, bloquea con el arreglo de la escena donde se perdió; cada confusión y cada salto se resuelve con una falta o se justifica en oyente_descartadas[]{escena, motivo}) y ` : '') +
       `python3 scripts/explica.py digesto ${trabajo} --para critico (encuadre, afirmaciones, cifras, ejemplos y la NARRACIÓN DE CORRIDO). ` +

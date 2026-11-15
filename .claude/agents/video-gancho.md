@@ -1,7 +1,7 @@
 ---
 name: video-gancho
 description: >-
-  Ganchos del flujo /video (@DerekUrizar). Con el digesto de un hilo ya entregado (tarjetas, cifras verificadas con su escala humana, no_afirma y los ganchos recientes que la rotación bloquea), escribe 5 candidatos a escena 1 de familias distintas (contraste, paradoja, lugar, escala, tu, pregunta, ranking, resultado), cada uno con pantalla y línea que se leen en silencio, voz de ≤ 7.5 s con verbo y sin abrir con contexto, y un visual con datos con respaldo (cifra, llenado, pareja, figuras, lugar). Sigue referencias/ganchos.md (R1–R14) y pasa scripts/video.py ganchos --check. Escribe ganchos.json. Sin web. No elige: el crítico elige.
+  Escribe los 5 candidatos a gancho (escena 1) de un video, de familias distintas, con su pantalla, su voz de ≤ 6 s y su visual con respaldo; pasa `ganchos --check` (R1–R14) y escribe ganchos.json. No elige: el crítico recomienda y el usuario elige. Sin web.
 tools: Read, Write, Bash
 model: opus
 ---

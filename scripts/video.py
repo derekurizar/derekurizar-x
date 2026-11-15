@@ -29,7 +29,8 @@ Subcomandos (TRABAJO = sesiones/<slug>/video):
         audio/voz_N.mp3 (por el prompt), palabras_N.json (por el id de generación) y creditos.json (créditos cobrados)
   descargar TRABAJO --voz URLS.json | --palabras URLS.json   respaldo: {"<n>": "<url>"} → voz_N.mp3 | palabras_N.json
   voz-falsa TRABAJO            tono por palabra + tiempos sintéticos (fixture, 0 créditos)
-  tiempos TRABAJO              atempo 1.1, alineación por palabra (V6), eventos y efectos por escena, V10 → escenas.json
+  tiempos TRABAJO              atempo 1.1, alineación por palabra (V6), eventos y efectos por escena, V10 → escenas.json;
+        con la voz REAL repite V9 (el gancho: aviso de 6.0 a 6.5 s, falla por encima) y P5 (la escena 2: aviso de 12 a 13 s)
   grabar TRABAJO [--fps 30] [--solo 1,3] [--formato 4:5]   clips por escena (Playwright) + V7 + V13 (zona segura); 4:5 = 1080×1350 para el feed en clips_4x5/
   montar TRABAJO [--sin-bucle]   voz + música con ducking + efectos + loudnorm en 2 pasadas (V8), cierre en bucle (el primer
         cuadro del gancho al final, con fundido), subtitulos.srt, caption.md, portada.png y portada_cierre/giro.png
@@ -123,7 +124,7 @@ GANCHO_USUARIO = "gu"          # id del gancho que dicta el usuario (no cuenta p
 CIERRES_OPCIONES = 5           # cierres.json: candidatos de cierre que el usuario elige (+ «cu», el que dicta)
 CIERRE_USUARIO = "cu"
 CANDIDATOS_CON_VISUAL = 2      # … y al menos estos con un visual que no sea la cifra sola
-ROTACION_FAMILIAS, ROTACION_VISUALES = 2, 1   # R9: la familia no repite la de los últimos 2 videos; el visual, la del último
+ROTACION_FAMILIAS, ROTACION_VISUALES = 2, 1   # R9: la familia no repite la de las últimas 2 piezas del feed (de cualquier flujo); el visual, la de la última
 VISUAL_UNIDAD, VISUAL_ETIQUETA, LUGAR_ETIQUETA = 20, 24, 30
 # R3: la voz del gancho no abre con contexto (la institución, el anuncio del tema o «En Guatemala…»): abre con tensión
 APERTURAS_PROHIBIDAS = re.compile(
@@ -162,8 +163,11 @@ CIERRE_TIPOS = tuple(CIERRE_FORMAS)          # espejo en video.js (W10)
 # sigue después para ellos · lo que esperan y no llega
 MECANISMOS = ("quien", "perdida", "reloj", "despues", "espera")
 FINAL_PALABRAS, FINAL_CARACTERES = 14, 90    # la frase final se lee sola en grande (pantalla B del cierre)
-ROTACION_CIERRES = 2                         # F7: la forma no repite la de los últimos 2 videos (salvo consecuencia y
-                                             # legado, las normales; la consecuencia rota su mecanismo, que no repite el del último)
+ROTACION_CIERRES = 2                         # F7: la forma no repite la de las últimas 2 piezas del feed (salvo las de
+                                             # FORMAS_SIN_ROTAR; la consecuencia rota su mecanismo, que no repite el del último)
+# las formas normales no rotan: la consecuencia (/video), el legado (/historia) y el puente, que es obligatorio en toda
+# parte de /serie que no es la última (las partes cuentan en el feed desde el 2026-11-14)
+FORMAS_SIN_ROTAR = ("consecuencia", "legado", "puente")
 # F6: el sujeto de la consecuencia es gente (o lo suyo: su casa, su escuela, su milpa), no una tasa ni una institución
 HUMANO = re.compile(r"\b(?:familias?|hogar(?:es)?|ni[ñn][oa]s?|beb[eé]s?|hij[oa]s?|madres?|padres?|mam[aá]s?|pap[aá]s?|"
                     r"mujer(?:es)?|hombres?|j[oó]venes|adolescentes?|personas?|gente|vecin[oa]s?|comunidad(?:es)?|pueblos?|"
@@ -214,7 +218,7 @@ PROMESA_CONECTOR = re.compile(r"^[¿¡«\s]*(?:y|e|pero|así que|asi que|entonce
 # «Quédate hasta el final…», «Ese examen va a volver al final» fueron 12 de 16 promesas); la forma rota entre piezas y
 # una bisagra re-engancha justo antes del giro
 PROMESA_FORMAS = ("pregunta", "presagio", "apuesta", "reloj", "contradiccion", "secreto")
-ROTACION_PROMESAS = 2        # P3: la forma de la promesa no repite la de las últimas 2 piezas (videos, historias, explica)
+ROTACION_PROMESAS = 2        # P3: la forma de la promesa no repite la de las últimas 2 piezas del feed (todos los flujos, con las partes de /serie)
 BISAGRA_CARACTERES = (10, 90)
 BISAGRA_TRAMO = (0.35, 0.70)  # P4 sin giro: la bisagra cae en este tramo de las escenas
 META_PROMESA = re.compile(
@@ -234,6 +238,13 @@ RITMO_MAX_S = 6.0    # V9 (estimado) y V10 (real): hueco máximo entre eventos v
 GANCHO_ORACION_S, PROMESA_S, GANCHO_VOZ_S = 4.0, 3.0, 6.0
 # P5 (m056): la escena 2 (la promesa) perdió 9–24 puntos en 14 de 20 piezas; > 8 s es aviso y > 12 s, falla
 ESCENA2_AVISO_S, ESCENA2_MAX_S = 8.0, 12.0
+# Las dos medidas se repiten sobre la VOZ REAL en `tiempos` (2026-11-14): el gate del guion las estima con caracteres ÷ CPS
+# y varias piezas entregadas se pasaron con la voz grabada (ganchos de 6.1–6.9 s, escenas 2 de 12.2–12.9 s). (aviso desde,
+# falla por encima de), en segundos de voz sin la cola
+GANCHO_REAL_S, ESCENA2_REAL_S = (GANCHO_VOZ_S, GANCHO_VOZ_S + 0.5), (ESCENA2_MAX_S, ESCENA2_MAX_S + 1.0)
+# lo que un flujo no hereda de esas medidas: los mismos filtros con que quita de V1/V9 lo que no le toca (/sabias y
+# /congreso no llevan promesa: sin P5): f(línea) → True si no aplica
+NO_APLICA_REAL = []
 RE_FIN_ORACION = re.compile(r"[.?!:;…](?=\s|$)")
 # pausas de la voz: «[pausa]» (0.6 s) y «[pausa larga]» (1.2 s) en el texto del guion; «[pausa adivina]» (2.0 s) la
 # mete el script antes de la respuesta de una adivina (da tiempo de pausar el video) → <break> SOLO en el prompt de
@@ -302,17 +313,6 @@ CONSTRUCTORES, TRANSICION_DE = {}, {}
 # tras el constructor de CUALQUIER escena: f(S, e, ps, pal, fin_voz, dur, g, ev, sfx) → (ev, sfx) (historia: rótulo de
 # acto, presupuesto de efectos y transición dentro de una secuencia)
 POST_CONSTRUCTORES = []
-# segundos que una escena dura además de su voz y su cola (historia: la toma con su audio original suena después de la
-# voz de entrada): f(escena del guion) → segundos; cuentan en el estimado (V4, H15, SE7). El constructor de tiempos
-# alarga S["dur"] y pone en S["toma"] {wav, t} el audio que cmd_montar mezcla en la pista de voz
-SEGUNDOS_EXTRA = []
-# lo que el oyente ingenuo ve y oye además de la voz y el texto en pantalla (historia: el clip de una toma y su audio):
-# f(escena del guion) → [renglones]
-EXTRA_OYENTE = []
-
-
-def segundos_extra(e):
-    return sum(f(e) or 0.0 for f in SEGUNDOS_EXTRA)
 
 
 def t_gancho_foto(S, e, ps, pal, fin_voz, dur, g):
@@ -475,9 +475,8 @@ TRANSICIONES = {"primera": "smoothleft",  # del gancho a la primera tarjeta (zoo
                 "giro": "slideup",        # la escena del giro (manda sobre el tipo)
                 "cierre": "fade",         # entrada al cierre
                 "seguida": "fade",        # dentro de una secuencia de voz (historia): corte suave, la voz sigue
-                "avanza": "slideleft",    # /historia: el año avanza (empuja hacia la izquierda, como leer)
-                "retrocede": "slideright",  # /historia: un flashback (empuja hacia la derecha)
-                "whip": "hblur",          # /historia: un «pero» — barrido borroso rápido (≤ 1 cada ~30 s, con su efecto)
+                "avanza": "slideleft",    # /youtube-long: el año avanza (empuja hacia la izquierda, como leer)
+                "retrocede": "slideright",  # /youtube-long: un flashback (empuja hacia la derecha)
                 "bucle": "fade"}          # el cuadro final en bucle
 RE_DE_CADA = re.compile(r"\b(\d+)\s+de\s+cada\s+(\d+)\b")
 RE_POR_CADA = re.compile(r"\b(\d[\d,]*(?:\.\d+)?)\s+por\s+cada\s+(\d[\d,]*)\b", re.I)
@@ -810,6 +809,20 @@ def _plano(s):
     return re.sub(r"\s+", " ", re.sub(r"[^a-z0-9 ]", " ", s)).strip()
 
 
+def dicho(frase):
+    """Una frase de ancla (`dice`, `hasta_dice`) como la dice la voz: los números en palabras («1995» → «mil novecientos
+    noventa y cinco»). Es la ÚNICA conversión de anclas: la usan la mesa (`mesa.buscar`), /video-3d (`video3d.fichas`) y
+    los tableros (`indice_frase`), para que un mismo `dice` resuelva igual en los tres (antes «1995» resolvía en 3D y
+    fallaba en la mesa)."""
+    NE.AVISOS.clear()
+    try:
+        d = NE.convertir(sin_pausas(frase or ""))[1]
+    except ValueError:
+        d = frase or ""
+    NE.AVISOS.clear()
+    return d
+
+
 # ---------- preparar ----------
 def resolver_hilo(arg):
     if arg == "ultimo":
@@ -844,31 +857,132 @@ MUSICA_TEMAS = {
 }
 
 
+# ---------- el feed: lo que ya salió, de TODOS los flujos (música, R9, F7, P3) ----------
+# El público ve un solo feed: la pista usada hace más tiempo y la rotación de familia, visual, cierre y promesa cuentan
+# las piezas de todos los registros de video, no solo las del flujo propio (2026-11-14). Una serie cuenta por cada parte
+# entregada. Las pruebas apuntan MEMORIA_DIR a un árbol fabricado.
+MEMORIA_DIR = os.path.join(RAIZ, "memoria")
+REGISTROS_FEED = (("videos", "video"), ("historias", "historia"), ("series", "serie"), ("explicaciones", "explica"),
+                  ("sabias", "sabias"), ("congreso", "congreso"), ("videos3d", "video3d"))
+REGISTROS_SOLO_MUSICA = ("series", "semanas", "noticias")   # la música cuenta además la pista base de cada serie y el histórico de noticieros
+# flujos cuyo gancho lleva el visual que dicta el formato (la foto a sangre de /historia y de las partes de /serie, el
+# pleno de /congreso): no bloquean el visual de la pieza siguiente (R9 rota lo que se elige)
+VISUAL_FIJO = ("historia", "serie", "congreso")
+CAMPOS_ROTACION = ("familia", "visual", "promesa", "promesa_forma", "cierre_tipo", "cierre_forma", "cierre_mecanismo")
+
+
+def registros_de(archivo):
+    """Las entradas de memoria/<archivo>.json ([] si el registro no existe)."""
+    ruta = os.path.join(MEMORIA_DIR, archivo + ".json")
+    if not os.path.exists(ruta):
+        return []
+    d = leer(ruta)
+    lista = d if isinstance(d, list) else next((v for v in d.values() if isinstance(v, list)), [])
+    return [r for r in lista if isinstance(r, dict)]
+
+
+def guion_entregado(ruta):
+    """El guion.json de una entrega (ruta relativa a la raíz), o {} si no está o no se lee."""
+    g = os.path.join(RAIZ, ruta or "", "guion.json")
+    if not ruta or not os.path.isfile(g):
+        return {}
+    try:
+        return leer(g)
+    except (ValueError, OSError):
+        return {}
+
+
+def frases_de_guion(g):
+    """Lo que rota entre piezas, leído de un guion: el de entrega (las partes de /serie registradas antes de guardar
+    `frases`; su gancho va en guion.gancho) o el de TRABAJO (el gancho es la escena 1)."""
+    gan, cie, pro = (g.get(k) if isinstance(g.get(k), dict) else {} for k in ("gancho", "cierre", "promesa"))
+    if not gan.get("familia"):
+        gan = next((e for e in g.get("escenas") or [] if isinstance(e, dict) and e.get("tipo") == "gancho"), gan)
+    return {"familia": gan.get("familia"), "visual": gan.get("visual"), "promesa": pro.get("texto") or "",
+            "promesa_forma": pro.get("forma"), "cierre_tipo": cie.get("tipo"), "cierre_forma": cie.get("forma"),
+            "cierre_mecanismo": (cie.get("consecuencia") or {}).get("mecanismo")}
+
+
+def frases_feed(flujo, r, motor=None):
+    """Los campos que rotan de una pieza registrada, con la misma forma en todos los flujos. Lo que un registro no guarda
+    queda en None (se salta sin fallar). /video-3d guarda el gancho y el cierre enteros, sin `frases`; un video de hilo
+    anterior a los catálogos abría con la cifra y cerraba con una pregunta sobre la experiencia."""
+    fr = r.get("frases") if isinstance(r.get("frases"), dict) else {}
+    if flujo == "video3d":
+        fr = frases_de_guion(r)
+    out = {k: fr.get(k) for k in CAMPOS_ROTACION}
+    if flujo == "video":
+        out.update(visual=out["visual"] or "cifra", cierre_tipo=out["cierre_tipo"] or "pregunta",
+                   cierre_forma=out["cierre_forma"] or "experiencia")
+    if flujo in VISUAL_FIJO and motor != "explica":
+        out["visual"] = None
+    return out
+
+
+def piezas_feed(excluir_slug=None, excluir_serie=None):
+    """Todas las piezas de video registradas, de la más vieja a la más nueva: [{flujo, id, slug, fecha, musica, frases}]
+    (`frases` = frases_feed). Una serie cuenta por cada parte entregada, con la fecha de la serie y en el orden de sus
+    partes; `excluir_serie` (slug) deja fuera una serie entera (serie.py pone sus partes anteriores desde el TRABAJO)."""
+    out = []
+    for archivo, flujo in REGISTROS_FEED:
+        for r in registros_de(archivo):
+            if flujo == "serie":
+                if excluir_serie is not None and r.get("slug") == excluir_serie:
+                    continue
+                for pt in r.get("partes") or []:
+                    if not isinstance(pt, dict) or pt.get("estado") != "entregada":
+                        continue
+                    slug = "%s-parte-%s" % (r.get("slug"), pt.get("n"))
+                    if slug == excluir_slug:
+                        continue
+                    guardadas = pt.get("frases") if isinstance(pt.get("frases"), dict) else None
+                    g = {} if guardadas and pt.get("musica") else guion_entregado(pt.get("ruta"))
+                    out.append({"flujo": flujo, "id": "%s-parte-%s" % (r.get("id"), pt.get("n")), "slug": slug,
+                                "fecha": str(r.get("fecha") or ""), "orden": pt.get("n") or 0,
+                                "musica": pt.get("musica") or g.get("musica") or r.get("musica"),
+                                "frases": frases_feed(flujo, {"frases": guardadas or frases_de_guion(g)}, r.get("motor"))})
+                continue
+            if excluir_slug is not None and r.get("slug") == excluir_slug:
+                continue
+            out.append({"flujo": flujo, "id": str(r.get("id") or ""), "slug": r.get("slug"), "fecha": str(r.get("fecha") or ""),
+                        "orden": 0, "musica": r.get("musica"), "frases": frases_feed(flujo, r)})
+    return sorted(out, key=lambda x: (x["fecha"], x["id"].rsplit("-parte-", 1)[0], x["orden"], x["id"]))
+
+
 def registros_con_musica(excluir_slug=None):
-    """Todas las piezas registradas con su música y fecha (videos, historias, series, explicaciones, sabías, congreso)."""
-    regs = []
-    for archivo in ("videos", "historias", "series", "explicaciones", "sabias", "congreso", "semanas", "noticias", "videos3d"):
-        ruta = os.path.join(RAIZ, "memoria", archivo + ".json")
-        if not os.path.exists(ruta):
-            continue
-        d = leer(ruta)
-        lista = d if isinstance(d, list) else next((v for v in d.values() if isinstance(v, list)), [])
-        regs += [r for r in lista if isinstance(r, dict) and r.get("musica") and r.get("slug") != excluir_slug]
+    """Todo lo registrado que ya sonó, con su música y su fecha: las piezas del feed (cada parte de una serie con su
+    pista), la pista base de cada serie y el histórico de noticieros."""
+    regs = [x for x in piezas_feed(excluir_slug) if x.get("musica")]
+    for archivo in REGISTROS_SOLO_MUSICA:
+        regs += [r for r in registros_de(archivo) if r.get("musica") and not (excluir_slug is not None and r.get("slug") == excluir_slug)]
     return regs
+
+
+def usos_musica(excluir_slug=None):
+    """{pista: la última fecha en que sonó} en cualquier flujo."""
+    usos = {}
+    for v in registros_con_musica(excluir_slug):
+        for m in (v["musica"] if isinstance(v["musica"], list) else [v["musica"]]):
+            if isinstance(m, str):
+                usos[m] = max(usos.get(m, ""), str(v.get("fecha") or ""))
+    return usos
+
+
+def menos_usada(pistas, excluir_slug=None):
+    """De esas pistas del catálogo, la usada hace más tiempo (o nunca) en cualquier flujo."""
+    usos = usos_musica(excluir_slug)
+    return sorted(pistas, key=lambda x: (usos.get(x["id"], ""), x["id"]))[0]
 
 
 def elegir_musica_tema(tema, excluir_slug=None):
     """La pista del tema usada hace más tiempo (o nunca) en cualquier flujo; None si el tema no tiene pistas."""
     cat = [x for x in leer(os.path.join(RAIZ, "design", "musica", "catalogo.json"))["pistas"] if tema in (x.get("temas") or [])]
-    if not cat:
-        return None
-    usos = {}
-    for v in registros_con_musica(excluir_slug):
-        usos[v["musica"]] = max(usos.get(v["musica"], ""), v.get("fecha", ""))
-    return sorted(cat, key=lambda x: (usos.get(x["id"], ""), x["id"]))[0]
+    return menos_usada(cat, excluir_slug) if cat else None
 
 
-def elegir_musica(paleta, forzada):
+def elegir_musica(paleta, forzada=None, excluir_slug=None):
+    """La pista de un video: la forzada (--musica) o, de las de su paleta, la usada hace más tiempo (o nunca) en
+    cualquier flujo. La ÚNICA función que elige por paleta: /historia, /explica, /sabias y /congreso llaman a esta."""
     cat = leer(os.path.join(RAIZ, "design", "musica", "catalogo.json"))["pistas"]
     if forzada:
         p = next((x for x in cat if x["id"] == forzada), None)
@@ -878,12 +992,7 @@ def elegir_musica(paleta, forzada):
     propias = [x for x in cat if x["paleta"] == paleta]
     if not propias:
         raise ValueError("el catálogo no tiene música para la paleta «%s»" % paleta)
-    usos = {}
-    vids = os.path.join(RAIZ, "memoria", "videos.json")
-    if os.path.exists(vids):
-        for v in leer(vids)["videos"]:  # la usada hace más tiempo (o nunca) va primero
-            usos[v.get("musica")] = max(usos.get(v.get("musica"), ""), v.get("fecha", ""))
-    return sorted(propias, key=lambda x: (usos.get(x["id"], ""), x["id"]))[0]
+    return menos_usada(propias, excluir_slug)
 
 
 def frases_usadas(slug_actual, n=FRASES_USADAS_VIDEOS):
@@ -906,26 +1015,23 @@ def frases_usadas(slug_actual, n=FRASES_USADAS_VIDEOS):
     return out
 
 
-def ganchos_recientes(slug_actual):
-    """R9: familias de los últimos ROTACION_FAMILIAS videos y visuales del último ROTACION_VISUALES (memoria/videos.json →
-    frases.familia y frases.visual). Un video anterior al catálogo de ganchos no tiene familia y su visual era la cifra."""
-    vids = os.path.join(RAIZ, "memoria", "videos.json")
-    regs = [v for v in (leer(vids)["videos"] if os.path.exists(vids) else []) if v.get("slug") != slug_actual]
-    regs = sorted(regs, key=lambda v: (v.get("fecha", ""), v.get("id", "")))
-    fr = [v.get("frases") or {} for v in regs]
-    return {"familias": [x["familia"] for x in fr[-ROTACION_FAMILIAS:] if x.get("familia")],
-            "visuales": [x.get("visual") or "cifra" for x in fr[-ROTACION_VISUALES:]]}
+def ganchos_recientes(slug_actual, n_familias=None, n_visuales=None, piezas=None):
+    """R9 sobre el feed entero: las familias de las últimas ROTACION_FAMILIAS piezas y el visual de la última
+    (ROTACION_VISUALES), de cualquier flujo. Una pieza que no guarda el dato ocupa su lugar en la ventana y no bloquea
+    nada. `n_familias` y `n_visuales` son la ventana de cada flujo (0 = ese flujo no rota eso)."""
+    fr = [x["frases"] for x in (piezas_feed(slug_actual) if piezas is None else piezas)]
+    nf = ROTACION_FAMILIAS if n_familias is None else n_familias
+    nv = ROTACION_VISUALES if n_visuales is None else n_visuales
+    return {"familias": [x["familia"] for x in fr[-nf:] if x.get("familia")] if nf else [],
+            "visuales": [x["visual"] for x in fr[-nv:] if x.get("visual")] if nv else []}
 
 
-def cierres_recientes(slug_actual):
-    """F7: el tipo de cierre del último video (una pregunta no sigue a otra), las formas de los últimos ROTACION_CIERRES y
-    el mecanismo de consecuencia del último. Un video anterior al catálogo de cierres cerró con una pregunta sobre la
-    experiencia del espectador."""
-    vids = os.path.join(RAIZ, "memoria", "videos.json")
-    regs = [v for v in (leer(vids)["videos"] if os.path.exists(vids) else []) if v.get("slug") != slug_actual]
-    fr = [v.get("frases") or {} for v in sorted(regs, key=lambda v: (v.get("fecha", ""), v.get("id", "")))]
-    return {"tipos": [x.get("cierre_tipo") or "pregunta" for x in fr[-1:]],
-            "formas": [x.get("cierre_forma") or "experiencia" for x in fr[-ROTACION_CIERRES:]],
+def cierres_recientes(slug_actual, piezas=None):
+    """F7 sobre el feed entero: el tipo de cierre de la última pieza (una pregunta no sigue a otra), las formas de las
+    últimas ROTACION_CIERRES y el mecanismo de consecuencia de la última, de cualquier flujo."""
+    fr = [x["frases"] for x in (piezas_feed(slug_actual) if piezas is None else piezas)]
+    return {"tipos": [x["cierre_tipo"] for x in fr[-1:] if x.get("cierre_tipo")],
+            "formas": [x["cierre_forma"] for x in fr[-ROTACION_CIERRES:] if x.get("cierre_forma")],
             "mecanismos": [x["cierre_mecanismo"] for x in fr[-1:] if x.get("cierre_mecanismo")]}
 
 
@@ -1041,29 +1147,25 @@ def reglas_cierre(cierre, st, hilo, tarjetas, numeros_gancho, cifras=None):
             f.append("F8 «%s» proyecta al futuro una pérdida que la fuente no proyecta: usa lo que ya pasó («ya», «este año "
                      "van») o declara cierre.consecuencia.proyeccion con el id de una cifra que proyecte" % m.group())
     rec = st.get("cierres_recientes") or {}
-    if tipo == "pregunta" and "pregunta" in (rec.get("tipos") or []):
-        f.append("F7 el video anterior cerró con una pregunta: la pregunta va solo a veces; este cierra con un remate")
-    if forma not in ("consecuencia", "legado") and forma in (rec.get("formas") or []):
-        f.append("F7 la forma «%s» cerró uno de los últimos %d videos (%s): usa otra" % (forma, ROTACION_CIERRES, ", ".join(rec["formas"])))
+    if tipo == "pregunta" and forma != "puente" and "pregunta" in (rec.get("tipos") or []):   # el puente de /serie es obligatorio
+        f.append("F7 el video anterior cerró con una pregunta (la última pieza del feed, de cualquier flujo): la pregunta va "
+                 "solo a veces; este cierra con un remate")
+    if forma not in FORMAS_SIN_ROTAR and forma in (rec.get("formas") or []):
+        f.append("F7 la forma «%s» cerró una de las últimas %d piezas (%s): usa otra" % (forma, ROTACION_CIERRES, ", ".join(rec["formas"])))
     if forma == "consecuencia" and con.get("mecanismo") in (rec.get("mecanismos") or []):
-        f.append("F7 el mecanismo «%s» cerró el último video: usa otro (%s)"
+        f.append("F7 el mecanismo «%s» cerró la última pieza: usa otro (%s)"
                  % (con["mecanismo"], "|".join(m for m in MECANISMOS if m != con["mecanismo"])))
     return f
 
 
-def promesas_recientes(slug_actual, n=ROTACION_PROMESAS):
-    """P3: las formas de promesa de las últimas n piezas narradas (memoria/videos.json, historias.json y
-    explicaciones.json, por fecha). Una pieza anterior al catálogo sin `promesa_forma` cuya promesa anunciaba el video
-    cuenta como «anuncio» (ya no es forma válida, pero así se ve en el digesto)."""
-    regs = []
-    for archivo, clave in (("videos.json", "videos"), ("historias.json", "historias"), ("explicaciones.json", "explicaciones")):
-        ruta = os.path.join(RAIZ, "memoria", archivo)
-        if not os.path.exists(ruta):
-            continue
-        regs += [r for r in leer(ruta).get(clave) or [] if r.get("slug") != slug_actual and r.get("frases")]
+def promesas_recientes(slug_actual, n=ROTACION_PROMESAS, piezas=None):
+    """P3 sobre el feed entero: las formas de promesa de las últimas n piezas que la llevan, de cualquier flujo y con las
+    partes de /serie (tres partes seguidas de una serie repitieron forma cuando P3 no las veía). Una pieza anterior al
+    catálogo sin `promesa_forma` cuya promesa anunciaba el video cuenta como «anuncio» (ya no es forma válida, pero
+    así se ve en el digesto)."""
     out = []
-    for r in sorted(regs, key=lambda r: (r.get("fecha", ""), str(r.get("id", "")))):
-        fr = r["frases"]
+    for x in (piezas_feed(slug_actual) if piezas is None else piezas):
+        fr = x["frases"]
         forma = fr.get("promesa_forma") or ("anuncio" if META_PROMESA.search(fr.get("promesa") or "") else None)
         if forma:
             out.append(forma)
@@ -1236,8 +1338,8 @@ def validar_promesa(g, st, tarjetas):
                  "final», «vas a ver» o «quédate» (referencias/promesas.md)" % m.group(0))
     # P3 rotación entre piezas
     rec = st.get("promesas_recientes")
-    if rec is None:
-        rec = promesas_recientes(st.get("slug"))
+    if rec is None:   # un trabajo sin la rotación guardada la lee ahora; una maqueta no rota contra lo producido
+        rec = [] if st.get("fixture") else promesas_recientes(st.get("slug"))
     if forma in PROMESA_FORMAS and forma in rec:
         f.append("P3 la forma «%s» abrió una de las últimas %d piezas (%s): usa otra" % (forma, ROTACION_PROMESAS, ", ".join(rec)))
     # P6 la recompensa clara: la pregunta que el video responde, en pantalla (no en la voz: P2 sigue igual)
@@ -1308,8 +1410,8 @@ def lineas_rendimiento_real(pors=("familia", "visual")):
 def lineas_recientes(rec, sin_rotacion=False):
     if sin_rotacion:
         return ["- (prueba: sin rotación)"]
-    return ["- Familias bloqueadas (últimos %d videos): %s" % (ROTACION_FAMILIAS, ", ".join(rec["familias"]) or "ninguna"),
-            "- Visual bloqueado (último video): %s" % (", ".join(rec["visuales"]) or "ninguno"),
+    return ["- Familias bloqueadas (últimas %d piezas del feed, de cualquier flujo): %s" % (ROTACION_FAMILIAS, ", ".join(rec["familias"]) or "ninguna"),
+            "- Visual bloqueado (última pieza): %s" % (", ".join(rec["visuales"]) or "ninguno"),
             "- Todas las familias: %s · visuales: %s (qué visual admite cada familia: referencias/ganchos.md)"
             % (", ".join(FAMILIAS), ", ".join(VISUALES))]
 
@@ -1324,6 +1426,56 @@ def gancho_elegido(trabajo):
 
 
 CAMPOS_GANCHO = ("familia", "visual", "visual_datos", "pantalla", "linea", "verbo", "calculo", "icono")
+
+
+# Quién eligió el gancho y el cierre (regla 11: el usuario elige entre 5, el crítico solo recomienda). Se guarda para
+# medir si lo que elige el usuario rinde distinto de lo que recomendaba el crítico: `usuario` (eligió una opción),
+# `critico` (corrió con `auto`: quedó la recomendación) o `propio` (dictó el suyo); `recomendado` = el id que proponía
+# el crítico. En el guion de TRABAJO: guion.gancho {id, elegido_por, recomendado} y los mismos tres campos dentro de
+# guion.cierre (también en ganchos.json y cierres.json, por si un retoque reescribe el guion); `entregar` los copia al
+# guion de entrega (gancho.* y cierre.*) y memoria.py, al registro (frases.gancho_elegido_por…)
+ELEGIDO_POR = ("usuario", "critico", "propio")
+CAMPOS_ELECCION = ("id", "elegido_por", "recomendado")
+
+
+def eleccion_gancho(trabajo, g=None):
+    """{id, elegido_por, recomendado} del gancho del TRABAJO (guion.gancho; si un retoque lo borró, ganchos.json), o {}
+    si el video no guardó quién eligió (un trabajo anterior al 2026-11-14)."""
+    rg = os.path.join(trabajo, "guion.json")
+    if g is None:
+        g = leer(rg) if os.path.exists(rg) else {}
+    e = g.get("gancho") if isinstance(g.get("gancho"), dict) else {}
+    if e.get("elegido_por") not in ELEGIDO_POR:
+        ruta = os.path.join(trabajo, "ganchos.json")
+        G = leer(ruta) if os.path.exists(ruta) else {}
+        e = {"id": G.get("elegido"), "elegido_por": G.get("elegido_por"), "recomendado": G.get("recomendado")}
+    return {k: e.get(k) for k in CAMPOS_ELECCION if e.get(k)} if e.get("elegido_por") in ELEGIDO_POR else {}
+
+
+def eleccion_cierre(trabajo, g=None):
+    """{id, elegido_por, recomendado} del cierre del TRABAJO (guion.cierre; si un retoque reescribió el cierre con la
+    misma frase final, cierres.json), o {}."""
+    rg = os.path.join(trabajo, "guion.json")
+    if g is None:
+        g = leer(rg) if os.path.exists(rg) else {}
+    c = g.get("cierre") if isinstance(g.get("cierre"), dict) else {}
+    e = c
+    if c.get("elegido_por") not in ELEGIDO_POR:
+        ruta = os.path.join(trabajo, "cierres.json")
+        C = leer(ruta) if os.path.exists(ruta) else {}
+        cand = next((x for x in C.get("candidatos") or [] if x.get("id") == C.get("elegido")), None)
+        mismo = cand and texto_llano(final_de(cand)) == texto_llano(final_de(c))
+        e = {"id": C.get("elegido"), "elegido_por": C.get("elegido_por"), "recomendado": C.get("recomendado")} if mismo else {}
+    return {k: e.get(k) for k in CAMPOS_ELECCION if e.get(k)} if e.get("elegido_por") in ELEGIDO_POR else {}
+
+
+def con_eleccion(entrega, trabajo, g=None):
+    """Copia al guion de ENTREGA quién eligió el gancho y el cierre (gancho.elegido_por, gancho.recomendado, gancho.id y
+    lo mismo en cierre); sin elección guardada no toca nada (los trabajos viejos se entregan igual)."""
+    for clave, e in (("gancho", eleccion_gancho(trabajo, g)), ("cierre", eleccion_cierre(trabajo, g))):
+        if e and isinstance(entrega.get(clave), dict):
+            entrega[clave] = dict(entrega[clave], **e)
+    return entrega
 
 
 def mismo_gancho(e, c, promesa=None):
@@ -1493,7 +1645,7 @@ def lineas_departamento(dep, hilo, tarjetas):
     mapas = [t["n"] for t in tarjetas if t.get("plantilla") == "mapa" and DP.valores_22(t.get("datos") or {})]
     pts = ["%s%s: puesto %d de %d (valor %s)" % (k, " (T%d)" % de_tuit[k] if k in de_tuit else "", p["puesto"], p["de"], clave(p["valor"]))
            for k, p in sorted((dep.get("puestos") or {}).items())]
-    return ["", "## Modo departamento · %s (%s) — serie de los 22 (gates D1–D9, referencias/flujo-departamento.md)" % (nom, cod),
+    return ["", "## Modo departamento · %s (%s) — serie de los 22 (gates D1–D9, referencias/flujo-departamento.md; el crítico y el agente de ganchos leen además referencias/roles/<su rol>/departamento.md)" % (nom, cod),
             "- Gancho de identidad: familia `lugar`, `tu` o `ranking` («Si eres de %s…», «En %s…»). **%s** (o un alias: %s) "
             "suena en la voz en los primeros %.0f s (D1) y se lee en la pantalla del gancho, o el visual es `lugar` con depto "
             "%s (D2)." % (nom, nom, nom, ", ".join(ks[1:]) or "—", DP.CLAVE_S, cod),
@@ -1696,7 +1848,7 @@ def cmd_preparar(a):
            "- %s" % ("(prueba: sin rotación)" if a.sin_rotacion else "Último cierre: %s · formas bloqueadas: %s · mecanismo de "
                "consecuencia bloqueado: %s%s" % (
                ", ".join(cierres["tipos"]) or "—",
-               ", ".join(x for x in cierres["formas"] if x != "consecuencia") or "ninguna",
+               ", ".join(x for x in cierres["formas"] if x not in FORMAS_SIN_ROTAR) or "ninguna",
                ", ".join(cierres.get("mecanismos") or []) or "ninguno",
                " · **este video cierra con un remate**" if "pregunta" in cierres["tipos"] else "")),
            "- Remates: %s (consecuencia: %s) · preguntas: %s" % (", ".join(x for x in CIERRE_FORMAS["remate"] if x != "legado"), "|".join(MECANISMOS),
@@ -2098,9 +2250,9 @@ def reglas_gancho(e, voz_p, ctx):
     # R9 rotación
     rec = ctx.get("recientes") or {}
     if fam in (rec.get("familias") or []):
-        f.append("R9 la familia «%s» ya abrió uno de los últimos %d videos (%s): usa otra" % (fam, ROTACION_FAMILIAS, ", ".join(rec["familias"])))
+        f.append("R9 la familia «%s» ya abrió una de las últimas %d piezas (%s): usa otra" % (fam, ROTACION_FAMILIAS, ", ".join(rec["familias"])))
     if vis in (rec.get("visuales") or []):
-        f.append("R9 el visual «%s» abrió el video anterior: usa otro" % vis)
+        f.append("R9 el visual «%s» abrió la pieza anterior: usa otro" % vis)
     # R10 al menos un número con respaldo en los primeros segundos
     if not (numeros_sin_anios(" ".join(dichos)) or V_.get("numeros")):
         f.append("R10 el gancho no trae ningún número (pantalla, línea, visual o voz): la cuenta es de datos")
@@ -2734,8 +2886,7 @@ def cmd_guion(a):
                     "chip": e.get("chip") if isinstance(e.get("chip"), dict) else None,
                     "calculo": e.get("calculo"), "valor_calculo": valor_calculo,
                     "pantalla": pantalla, "voz": voz, "prompt": prompt, "segmentos": segs,
-                    "extra_s": round(segundos_extra(e), 2) or None,
-                    "estimado_s": round(len(voz) / CPS + cola + segundos_extra(e), 2),
+                    "estimado_s": round(len(voz) / CPS + cola, 2),
                     "hueco_max_s": round(hueco, 2)})
     for etiqueta, txt in (("resumen", " ".join(cierre.get("resumen") or [])),
                           ("caption", json.dumps(g.get("caption") or {}, ensure_ascii=False))):
@@ -2775,7 +2926,7 @@ def cmd_guion(a):
         secuencias.append({"k": k, "escenas": [x["n"] for x in xs], "prompt": prompt_sec, "caracteres": car})
     # V4 presupuesto
     chars = sum(len(x["voz"]) for x in loc)
-    estimado = chars / CPS + sum(x["cola"] + (x.get("extra_s") or 0.0) for x in loc)
+    estimado = chars / CPS + sum(x["cola"] for x in loc)
     tol = dur.get("tol", TOLERANCIA)
     lo, hi = dur["s"] * (1 - tol), dur["s"] * (1 + tol)
     hi += sum(len(x["voz"]) / CPS + x["cola"] for x in loc if x.get("resumen_serie"))   # SE14: el resumen va aparte
@@ -3058,8 +3209,6 @@ def lineas_oyente(g, loc, pantalla_de):
         e = es[L["n"] - 1] if L["n"] - 1 < len(es) else dict(g.get("cierre") or {}, tipo="cierre")
         pant = pantalla_de(e)
         out += ["E%d · %s%s" % (L["n"], L["tipo"], " · PANTALLA: %s" % pant if pant else ""), "   VOZ: %s" % L["voz"]]
-        for f in EXTRA_OYENTE:
-            out += f(e)
     return out
 
 
@@ -3309,13 +3458,19 @@ def cmd_ganchos(a):
         if gan not in por_id or (seg and seg not in por_id) or gan == seg:
             return falla("--usar: el ganador «%s» y el segundo «%s» deben ser ids distintos de ganchos.json (o estar en "
                          "seleccion.json)" % (gan, seg))
+        sel = leer(ruta_sel) if os.path.exists(ruta_sel) else {}
+        # quién eligió: el usuario dictó el suyo (propio), eligió una opción (`ganchos --elegir`, o `--usar ID` a pedido
+        # suyo) o corrió con `auto` y quedó el ganador del crítico (`--usar` sin ID y sin --elegir antes); --por lo fija
+        recomendado = sel.get("recomendado") or (sel.get("ganador") if sel.get("elegido_por") != "usuario" else None)
+        por = getattr(a, "por", None) or ("propio" if gan == GANCHO_USUARIO else
+                                          "usuario" if a.usar or (sel.get("elegido_por") == "usuario" and sel.get("ganador") == gan) else "critico")
         G["elegido"], G["segundo"] = gan, seg
+        G["elegido_por"], G["recomendado"] = por, recomendado
         escribir(ruta, G)
         escena = {"tipo": "gancho", **{k: por_id[gan][k] for k in CAMPOS_GANCHO if por_id[gan].get(k) is not None},
                   "texto": por_id[gan]["texto"]}
         if gan == GANCHO_USUARIO:
             escena["dictado_por_usuario"] = True
-        sel = leer(ruta_sel) if os.path.exists(ruta_sel) else {}
         # m032: la foto que el crítico sugirió en la selección para este candidato (/historia: visual foto)
         foto = (sel.get("foto_sugerida") or {}).get(gan)
         if foto and isinstance(escena.get("visual_datos"), dict) and "foto" in escena["visual_datos"]:
@@ -3336,9 +3491,11 @@ def cmd_ganchos(a):
         else:
             esc.insert(0, escena)
         guion["escenas"] = esc
+        guion["gancho"] = {k: v for k, v in (("id", gan), ("elegido_por", por), ("recomendado", recomendado)) if v}
         escribir(rg, guion)
-        print("→ escena 1 = %s (%s · %s); segundo para la versión B: %s · %s" % (gan, por_id[gan]["familia"],
-              por_id[gan].get("visual") or "cifra", seg or "—", rel(rg)))
+        print("→ escena 1 = %s (%s · %s); segundo para la versión B: %s · elegido por: %s%s · %s" % (
+            gan, por_id[gan]["familia"], por_id[gan].get("visual") or "cifra", seg or "—", por,
+            " (el crítico recomendaba %s)" % recomendado if recomendado and recomendado != gan else "", rel(rg)))
         return 0
     for x in fallas:
         print("FALLA", x)
@@ -3672,6 +3829,8 @@ def agregar_args_cierres(p):
     p.add_argument("--mecanismo", help="consecuencia: quien|perdida|reloj|despues|espera")
     p.add_argument("--quien", help="quién vive la consecuencia, tal cual en la frase final")
     p.add_argument("--verbo", help="lo que les pasa, conjugado, tal cual en la frase final")
+    p.add_argument("--por", choices=ELEGIDO_POR, help="quién eligió el cierre (se guarda para medirlo): por defecto usuario con --usar "
+                   "y propio con --propio; con `auto` (se queda el del guion aprobado): --usar c1 --por critico")
 
 
 def cmd_cierres(a):
@@ -3758,10 +3917,18 @@ def cmd_cierres(a):
                              "rehacer la narración (lanza un retoque)")
             i = ult["texto"].rfind(viejo)
             ult["texto"] = ult["texto"][:i] + cierre["texto"] + ult["texto"][i + len(viejo):]
-        C["elegido"] = a.usar
+        # quién eligió: el usuario dictó el suyo (propio), eligió una opción (usuario) o corrió con `auto` y quedó el del
+        # guion aprobado (`--por critico`); el recomendado es el del guion que aprobó el crítico (el primero, c1)
+        recomendado = C.get("recomendado") or next((x.get("id") for x in propios if x.get("id")), None)
+        por = getattr(a, "por", None) or ("propio" if a.usar == CIERRE_USUARIO else "usuario")
+        cierre.update({k: v for k, v in (("id", a.usar), ("elegido_por", por), ("recomendado", recomendado)) if v})
+        if not recomendado:
+            cierre.pop("recomendado", None)
+        C["elegido"], C["elegido_por"], C["recomendado"] = a.usar, por, recomendado
         escribir(ruta, C)
         escribir(rg, g)
-        print("→ cierre %s en guion.json («%s»); corre guion --check (respaldo: guion.previo.json)" % (a.usar, cierre.get("final")))
+        print("→ cierre %s en guion.json («%s») · elegido por: %s%s; corre guion --check (respaldo: guion.previo.json)"
+              % (a.usar, cierre.get("final"), por, " (el del guion aprobado era %s)" % recomendado if recomendado and recomendado != a.usar else ""))
         return 0
     for x in fallas:
         print("FALLA", x)
@@ -3819,8 +3986,9 @@ def cmd_variante(a):
     for parte in g.get("narracion") or []:   # la narración de corrido abre con la voz del gancho: cambia con ella
         if viejo and parte.get("acto") == 1 and viejo in (parte.get("texto") or ""):
             parte["texto"] = parte["texto"].replace(viejo, texto, 1)
+    g.pop("gancho", None)   # la B usa el segundo lugar: nadie la eligió (la elección que se registra es la del video A)
     escribir(os.path.join(vb, "guion.json"), g)
-    escribir(os.path.join(vb, "ganchos.json"), dict(G, elegido=seg["id"], segundo=G.get("elegido")))
+    escribir(os.path.join(vb, "ganchos.json"), dict(G, elegido=seg["id"], segundo=G.get("elegido"), elegido_por=None))
     if cmd_guion(argparse.Namespace(trabajo=vb)):
         return falla("la versión B no pasa el gate del guion (variante_b/guion.json)")
     n = len(g["escenas"]) + 1
@@ -4319,72 +4487,26 @@ def alinear(e, habladas):
     return out
 
 
-# ---------- sub-planos de una foto (V21: ningún tramo de más de 5 s sin cambio de plano) ----------
-CAMARA_QUIETA = True       # decisión del usuario (2026-11-06): nada de mover por mover; ver referencias/flujo-video.md «Cámara»
-PLANO_S = (3.0, 4.5)        # cada cuánto cambia el encuadre dentro de una foto (la media de plano del cine hoy: 2.5–4 s)
+# ---------- el plano de una foto ----------
+# Cámara quieta (decisión del usuario, 2026-11-06: nada de mover por mover; referencias/flujo-video.md «Cámara»): los
+# sub-planos por reloj (un encuadre nuevo cada 3–4.5 s) y el salto de cámara en las escenas sin foto se retiraron.
 PLANO_LIBRE_S = 0.4         # V22: ningún cambio de plano a ± 0.4 s de una cifra, una tarjeta de persona o el titular
 TERCIOS = [{"x": 0.42, "y": 0.30, "w": 0.16, "h": 0.2}, {"x": 0.18, "y": 0.30, "w": 0.16, "h": 0.2},
            {"x": 0.66, "y": 0.30, "w": 0.16, "h": 0.2}]
 
 
 def planos_foto(focos, dur, cortes=(), evitar=(), personas=(), t0=0.0):
-    """La secuencia de encuadres de una foto: [{t, foco, z: amplio|medio|cerca, corte}] (la geometría la calcula la
-    página con el tamaño real de la foto: video/noticia.html → camara()). Empieza en amplio; cada PLANO_S cambia en un
-    inicio de oración (`cortes`) si cae en la ventana, lejos (PLANO_LIBRE_S) de `evitar`; alterna cerca y medio sobre
-    los focos (las caras que encontró `historia.py focos`; sin focos, los tercios) y vuelve a amplio. `personas`:
-    [(t, índice del foco)] — la tarjeta de persona: en ese instante el plano va cerca a esa cara (un solo evento)."""
+    """Los encuadres de una foto: [{t, foco, z: amplio|cerca, corte}] (la geometría la calcula la página con el tamaño
+    real de la foto: video/noticia.html → camara()). La imagen cambia cuando cambia de qué se habla, no por reloj: un
+    solo movimiento lento (la deriva de la página) y, a lo más, UN corte limpio a la cara de la persona que la voz
+    nombra. `personas`: [(t, índice del foco)] — la tarjeta de persona; `focos`: las caras que encontró `historia.py
+    focos` (sin focos, los tercios). `cortes` y `evitar` quedan en la firma por quienes aún los pasan: no deciden nada."""
     fs = [f for f in (focos or []) if isinstance(f, dict) and "x" in f] or TERCIOS
-    if CAMARA_QUIETA:   # (2026-11-06) la imagen cambia cuando cambia de qué se habla, no por reloj: un solo movimiento
-        # lento (la deriva de la página) y, a lo más, UN corte limpio a la cara de la persona que la voz nombra
-        planos = [{"t": round(t0, 3), "foco": None, "z": "amplio", "corte": False}]
-        fijo = next(((round(t, 3), i) for t, i in sorted(personas) if t0 + 1.0 < t < dur - 1.5), None)
-        if fijo:
-            planos.append({"t": fijo[0], "foco": fijo[1] % len(fs), "z": "cerca", "corte": True, "persona": True})
-        return planos, fs
-    evitar = sorted(evitar)
-    lejos = lambda t: all(abs(t - x) >= PLANO_LIBRE_S for x in evitar)   # noqa: E731
-    fijos = sorted((round(t, 3), i) for t, i in personas if t0 + 1.0 < t < dur - 0.8)
     planos = [{"t": round(t0, 3), "foco": None, "z": "amplio", "corte": False}]
-    k, ult = 0, t0
-    ciclo = ["cerca", "medio", "amplio"]
-    while True:
-        prox = [x for x, _ in fijos if x > ult + 0.8]
-        lo, hi = ult + PLANO_S[0], ult + PLANO_S[1]
-        if prox and prox[0] <= hi:
-            t, i = next((x, j) for x, j in fijos if x == prox[0])
-            if (planos[-1]["foco"], planos[-1]["z"]) == (i % len(fs), "cerca"):   # si no, la tarjeta no cambia el plano
-                planos[-1] = dict(planos[-1], z="medio")
-            planos.append({"t": t, "foco": i % len(fs), "z": "cerca", "corte": True, "persona": True})
-            ult = t
-            continue
-        cands = [c for c in cortes if lo <= c <= hi and lejos(c)]
-        if cands:
-            t, corte = min(cands, key=lambda c: abs(c - (lo + hi) / 2)), True
-        else:
-            t, corte = next((x for x in [lo + 0.5 * j for j in range(4)] if lejos(x)), hi), False
-        if t > dur - 1.2:
-            break
-        for _ in range(len(ciclo)):   # nunca el mismo encuadre dos veces seguidas (tras la tarjeta de persona, cerca)
-            z = ciclo[k % len(ciclo)]
-            foco = None if z == "amplio" else (k // len(ciclo) + (0 if z == "cerca" else 1)) % len(fs)
-            if (foco, z) != (planos[-1]["foco"], planos[-1]["z"]):
-                break
-            k += 1
-        planos.append({"t": round(t, 3), "foco": foco, "z": z, "corte": corte})
-        k, ult = k + 1, t
+    fijo = next(((round(t, 3), i) for t, i in sorted(personas) if t0 + 1.0 < t < dur - 1.5), None)
+    if fijo:
+        planos.append({"t": fijo[0], "foco": fijo[1] % len(fs), "z": "cerca", "corte": True, "persona": True})
     return planos, fs
-
-
-SALTOS_EXENTOS = ("gancho", "cierre", "cita", "foto", "adivina", "toma")
-
-
-def saltos_escena(ev, pal, dur):
-    """Los tiempos de los saltos de cámara de una escena sin foto: el ritmo de planos_foto (cada PLANO_S, en un inicio de
-    oración, lejos de las cifras, las tarjetas de persona y los rótulos)."""
-    cortes = [round(pal[k + 1]["start"], 3) for k, x in enumerate(pal[:-1]) if x["text"].endswith((".", "?", "!", ":", ";", ","))]
-    evitar = [t for t, k in ev if k in ("cifra", "persona", "acto", "acto_fin", "nodo")]
-    planos, _ = planos_foto(None, dur, cortes, evitar)
-    return [p["t"] for p in planos[1:]]
 
 
 def fin_oracion_desde(pal, k0=0):
@@ -4438,9 +4560,7 @@ def alinear_linea(palabras_linea, pal, t_ini, t_fin):
 
 def indice_frase(pal, frase):
     """Índice del token de la voz donde empieza `frase` (sus 2 primeras palabras, normalizadas), o None."""
-    NE.AVISOS.clear()
-    ws = [_norm(w) for w in NE.convertir(sin_pausas(frase or ""))[1].split() if _norm(w)]
-    NE.AVISOS.clear()
+    ws = [_norm(w) for w in dicho(frase).split() if _norm(w)]
     if not ws:
         return None
     ws = ws[:2]
@@ -4858,7 +4978,7 @@ def cmd_tiempos(a):
         ev, sfx = [], []
         propio = CONSTRUCTORES.get(tipo)
         hecho = propio(S, e, ps, pal, fin_voz, dur, g) if propio else None
-        dur = S["dur"]   # un constructor puede alargar la escena (la toma con su audio original suena tras la voz)
+        dur = S["dur"]   # un constructor puede alargar la escena
         if hecho is not None:
             ev, sfx = hecho
         elif cierre:
@@ -5142,12 +5262,7 @@ def cmd_tiempos(a):
         if S.get("continua"):   # la misma animación sigue: corte invisible, sin efecto de entrada ni rótulo nuevo
             S["transicion"] = None
             sfx = [(t, k) for t, k in sfx if not (t <= TRANSICION + 0.1 and k in ("whoosh", "impacto", "grave"))]
-        # V21: una escena que no es foto (golpe, tarjeta, animación, cuenta, toma) también cambia de plano: un salto de
-        # cámara (punch-in leve con corte) cada 3–4.5 s en un inicio de oración, lejos de las cifras y las tarjetas
-        S["quieta"] = CAMARA_QUIETA   # la tarjeta, la animación y el organigrama no se acercan ni se alejan
-        if not CAMARA_QUIETA and n != 1 and tipo not in SALTOS_EXENTOS and not (S.get("N") or {}).get("planos") and dur > NOVEDAD_FALLA_S:
-            S["saltos"] = saltos_escena(ev, pal, dur)
-            ev += [(x, "plano") for x in S["saltos"]]
+        S["quieta"] = True   # cámara quieta: la tarjeta, la animación y el organigrama no se acercan ni se alejan
         ev.append((dur, "fin"))
         S["eventos"] = [{"t": round(t, 3), "tipo": k} for t, k in sorted(ev, key=lambda x: x[0])]
         S["sfx"] = ralear_sfx(sfx)
@@ -5192,6 +5307,10 @@ def cmd_tiempos(a):
         fallas += [x for x in revisar_palabra_clave(claves, escenas[0]["palabras"], pantalla_escena1(g["escenas"][0]),
                                                     g.get("caption") or {}) if "voz" in x]
     fallas += V20_FALLAS + f_seguir
+    if not st.get("piezas_sueltas"):   # V9 y P5 con la voz grabada (las piezas nuevas de /youtube-long no son un video)
+        f_real, av_real = revisar_voz_real(escenas, loc, rel(trabajo))
+        fallas += f_real
+        avisos += av_real
     if es_mesa(st):
         avisos = [x for x in avisos if not x.startswith("V10 ")] + ["la mesa de archivo mide el ritmo, las cifras y la carga sobre el plano (MV1, MV2, MV6): "
                                                                    "<flujo>.py plano TRABAJO --check"]
@@ -5207,6 +5326,43 @@ def cmd_tiempos(a):
     for x in fallas:
         print("FALLA", x)
     return 1 if fallas else 0
+
+
+def revisar_voz_real(escenas, loc=None, trabajo="TRABAJO"):
+    """V9 (la voz del gancho) y P5 (la escena 2) medidos sobre la voz REAL de escenas.json (`fin_voz`: hasta la última
+    palabra, sin la cola) → (fallas, avisos). El gancho: aviso entre 6.0 y 6.5 s, falla por encima (nunca por debajo del
+    tope de la oración del flujo: /sabias la deja en 6.5 s); la escena 2: aviso entre 12 y 13 s, falla por encima. Cada
+    mensaje dice cuánto duró, cuánto estimaba el guion y cómo retomar SOLO esa escena. Los flujos quitan lo que no
+    heredan con NO_APLICA_REAL."""
+    f, av = [], []
+    est = {e["n"]: len(e.get("voz") or "") / CPS for e in (loc or {}).get("escenas") or []}
+
+    def estimado(S):
+        return "; el guion la estimó en %.1f s" % est[S["n"]] if S["n"] in est else ""
+    if escenas and escenas[0].get("tipo") == "gancho":
+        S = escenas[0]
+        v, aviso, tope = S["fin_voz"], GANCHO_REAL_S[0], max(GANCHO_REAL_S[1], GANCHO_ORACION_S)
+        retoma = ("retoma SOLO esa escena (`voz %s --solo %d`: otra toma de la misma frase suele salir más corta) o acorta su "
+                  "texto (guion --check → voz --pendientes) y repite tiempos" % (trabajo, S["n"]))
+        if v > tope:
+            f.append("V9 gancho: la voz real dura %.2f s (máximo %.1f s con la voz grabada%s): pasados los %.0f s el gancho "
+                     "pierde a quien desliza (m054); %s" % (v, tope, estimado(S), GANCHO_VOZ_S, retoma))
+        elif v > aviso:
+            av.append("V9 gancho: la voz real dura %.2f s (va ≤ %.0f s; falla por encima de %.1f s%s): si puedes, %s"
+                      % (v, aviso, tope, estimado(S), retoma))
+    if len(escenas) > 2 and escenas[1].get("tipo") != "cierre":
+        S = escenas[1]
+        v, (aviso, tope) = S["fin_voz"], ESCENA2_REAL_S
+        retoma = ("retoma SOLO esa escena (`voz %s --solo %d`) o pártela o recórtala (guion --check → voz --pendientes) y "
+                  "repite tiempos" % (trabajo, S["n"]))
+        if v > tope:
+            f.append("P5 la escena 2 dura %.2f s de voz real (máximo %.0f s con la voz grabada%s): ahí se pierden 9–24 "
+                     "puntos (m056); %s" % (v, tope, estimado(S), retoma))
+        elif v > aviso:
+            av.append("P5 la escena 2 dura %.2f s de voz real (va ≤ %.0f s; falla por encima de %.0f s%s): si puedes, %s"
+                      % (v, aviso, tope, estimado(S), retoma))
+    aplica = lambda x: not any(no(x) for no in NO_APLICA_REAL)   # noqa: E731
+    return [x for x in f if aplica(x)], [x for x in av if aplica(x)]
 
 
 # ---------- grabar (V7) ----------
@@ -5492,12 +5648,6 @@ def cmd_montar(a):
     # 2. la voz en una sola pista, nivelada a VOZ_LUFS (llave determinista del ducking)
     voces = [os.path.join(trabajo, "audio", "voz_%d_r.mp3" % e["n"]) for e in E["escenas"]]
     tiempos_voz = list(offs[:len(voces)])  # el bucle final no tiene voz
-    # /historia: el audio original de una toma (ya nivelado como la voz) entra a la misma pista tras su voz de entrada:
-    # la música también se aparta mientras suena (el sidechain usa esta pista); sin atempo ni el apretado de V16
-    for e, o in zip(E["escenas"], offs):
-        if (e.get("toma") or {}).get("wav"):
-            voces.append(os.path.join(trabajo, e["toma"]["wav"]))
-            tiempos_voz.append(o + e["toma"]["t"])
     fc = "".join("[%d:a]aresample=48000,aformat=channel_layouts=stereo,adelay=%s:all=1[v%d];" % (i, muestras(o), i)
                  for i, o in enumerate(tiempos_voz))
     fc += "".join("[v%d]" % i for i in range(len(voces))) + "amix=inputs=%d:duration=longest:normalize=0,apad=whole_dur=%.3f[vz]" % (len(voces), D)
@@ -5865,7 +6015,7 @@ def ventanas_quietas(vals, fps=QUIETUD_FPS, minimo=QUIETUD_S, umbral=QUIETUD_UMB
 # que cambian a cada palabra). Medido 2026-11-06 (La Línea parte 1 y la maqueta de /historia): la deriva del Ken Burns
 # da ≤ 0.12, un sub-plano o un salto de cámara 0.22–0.7, una entrada o un corte > 0.4 → NOVEDAD_UMBRAL 0.18. Un tramo
 # de más de NOVEDAD_AVISO_S sin cambio avisa; de más de NOVEDAD_FALLA_S falla. El gancho, la cita y el cierre, fuera.
-NOVEDAD_FPS, NOVEDAD_UMBRAL, NOVEDAD_AVISO_S, NOVEDAD_FALLA_S = 4, 0.18, 12.0, 5.0   # con CAMARA_QUIETA: aviso desde 12 s
+NOVEDAD_FPS, NOVEDAD_UMBRAL, NOVEDAD_AVISO_S, NOVEDAD_FALLA_S = 4, 0.18, 12.0, 5.0   # con la cámara quieta: aviso desde 12 s
 NOVEDAD_EXENTAS = ("gancho", "cita", "cierre")
 NOVEDAD_SOLO_AVISO = ("toma",)   # el clip se mueve solo; una toma de una lámina quieta (una conferencia) solo avisa
 NOVEDAD_ESTRICTO = False    # desde F5 (sub-planos y saltos en toda escena): un tramo de más de 5 s sin cambio falla
@@ -6145,6 +6295,7 @@ def cmd_entregar(a):
                      "dur": s["dur"]} for e, s in zip(loc["escenas"], E["escenas"])],
         "cierre": g["cierre"], "caption": g["caption"],
     }
+    con_eleccion(entrega, trabajo, g)
     if dep:   # /departamento: memoria.py --video registra sujeto y serie (el tablero de los 22)
         entrega.update(serie=DP.SERIE, sujeto=dep["nombre"], departamento={"codigo": dep["codigo"], "nombre": dep["nombre"],
                                                                          "canon_version": dep.get("canon_version"), "puestos": dep.get("puestos")})
@@ -6162,11 +6313,13 @@ def cmd_entregar(a):
 
 def cmd_musica(a):
     cat = leer(os.path.join(RAIZ, "design", "musica", "catalogo.json"))["pistas"]
-    vids = os.path.join(RAIZ, "memoria", "videos.json")
     usos = {}
-    for v in (leer(vids)["videos"] if os.path.exists(vids) else []):
-        n, f = usos.get(v.get("musica"), (0, ""))
-        usos[v.get("musica")] = (n + 1, max(f, v.get("fecha", "")))
+    for v in registros_con_musica():   # los usos en cualquier flujo (cada parte de una serie cuenta con su pista)
+        if v.get("flujo") is None and v.get("partes"):   # la pista base de una serie ya la cuentan sus partes
+            continue
+        for m in (v["musica"] if isinstance(v["musica"], list) else [v["musica"]]):
+            n, f = usos.get(m, (0, ""))
+            usos[m] = (n + 1, max(f, str(v.get("fecha") or "")))
     for p in cat:
         n, f = usos.get(p["id"], (0, ""))
         print("%-24s %-10s %5.0f s · %d uso(s)%s · %s · temas: %s" % (p["id"], p.get("paleta") or "—", p["duracion_s"], n,
@@ -6193,6 +6346,8 @@ def main():
     x.add_argument("--opciones", action="store_true", help="los candidatos para que el usuario elija")
     x.add_argument("--elegir", help="id que eligió el usuario → seleccion.json")
     p.add_argument("--segundo", help="id del segundo lugar (versión B); sin él, el de seleccion.json")
+    p.add_argument("--por", choices=ELEGIDO_POR, help="quién eligió el gancho (se guarda para medirlo): por defecto usuario con un ID o tras "
+                   "--elegir, critico con `--usar` a secas (auto) y propio si lo dictó")
     for nombre, ayuda in (("probar", "el crítico prueba un arreglo en una copia (escena + narración) con los gates"),
                           ("aplicar", "aplica un arreglo en el TRABAJO (escena + narración); restaura si el gate lo rechaza")):
         p = sub.add_parser(nombre, help=ayuda)

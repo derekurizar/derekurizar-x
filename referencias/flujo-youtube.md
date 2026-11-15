@@ -54,7 +54,7 @@ cada parte se quedan: son mini-ganchos de capítulo.
 2. Workflow `youtube` (0 créditos):
    - `youtube-editor` escribe `montaje.json` (gate `youtube.py montaje --check`);
    - `historia-oyente` en «Modo largo» lo oye de corrido;
-   - `video-critico` en «Modo largo» lo critica (Y-C1–Y-C6, arreglos probados con `youtube.py probar`, ≤ 2 vueltas);
+   - `video-critico` en «Modo largo» (`referencias/roles/video-critico/largo.md`) lo critica (Y-C1–Y-C7, arreglos probados con `youtube.py probar`, ≤ 2 vueltas);
    - con «pasa», las mejoras que el crítico ya probó se aplican solas con `youtube.py aplicar` y el gate se repite (si
      juntas no pasan, el montaje queda como estaba y vuelven como mejoras; m113);
    - el Workflow se detiene con `aprobar_montaje`.

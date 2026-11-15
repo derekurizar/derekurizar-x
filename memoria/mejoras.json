@@ -726,7 +726,7 @@
       "archivo": "scripts/congreso.py",
       "problema": "El estado de ElevenLabs llegó en el chat y hubo que armar audio/estado.json a mano",
       "propuesta": "descargar acepta los ids de generación y transcripción y arma las URLs",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m067",
@@ -1012,7 +1012,7 @@
       "archivo": "scripts/historia.py voz / descargar",
       "problema": "Con 7 partes, el estado de voz + Scribe excede el tamaño de respuesta del MCP; se guarda a disco y se copia a mano. Scribe sobre un nodo que no terminó cobró 165 créditos.",
       "propuesta": "Documentar: transcribir solo nodos completados; descargar --estado acepta el archivo que guarda el harness tal cual (ya funciona).",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m093",
@@ -1705,7 +1705,7 @@
       "archivo": "scripts/historia.py descargar (m045/m111)",
       "problema": "Con 12 sesiones el estado del MCP llegó en el chat (no en archivo) y hubo que reescribirlo a mano en audio/estado.json (~6 KB de URLs).",
       "propuesta": "Documentar en historia.md que el estado mínimo es generations + media + transcripts con words_download_url (sin `words`), y que `descargar` acepte también un estado sin `words` (ya lo hace) — probado en esta corrida.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m156",
@@ -1760,7 +1760,7 @@
       "archivo": ".claude/commands/youtube-long.md (paso 3)",
       "problema": "Con 14 sesiones el estado del MCP llegó en el chat y hubo que reescribirlo a mano en nuevas/estado.json (como m155).",
       "propuesta": "Mismo arreglo que m155: documentar el estado mínimo (generations + media + transcripts con words_download_url) también en youtube-long.md.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m161",
@@ -2013,7 +2013,7 @@
       "archivo": ".claude/workflows/historia.js · referencias/roles/{historia-oyente,video-critico}.md",
       "problema": "El oyente y el crítico juzgan el guion antes de la voz con la «pantalla» de las escenas, que ya no es el dibujo final; nadie juzga el plano con ojos frescos.",
       "propuesta": "Una pasada del crítico sobre plano.md dentro del Workflow `plano` (¿la pieza es lo que la voz nombra?, ¿archivo real o relleno?, ¿alegatos atribuidos?), antes de devolver plano_listo.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m184",
@@ -2134,7 +2134,7 @@
       "archivo": "scripts/metricas.py (alinear)",
       "problema": "`metricas.py alinear` no sabe leer las escenas de un video 3D (sus tiempos viven en `tiempos.json` y `maqueta.json`), así que /analyze-improve no podrá alinear su curva de retención con las tomas.",
       "propuesta": "Enseñarle a `alinear` el formato de /video-3d (escenas desde `tiempos.json`; eventos y claves de cámara desde `maqueta.json`).",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m195",
@@ -2145,7 +2145,7 @@
       "archivo": "scripts/video_hf.py (marca de render de prueba)",
       "problema": "La marca de «render de prueba» (MESA_RENDER=0) es una por salida, no por formato: si el 4:5 es un doble en negro y luego se regraba el 9:16 de verdad, la marca se borra y `entregar` acepta el 4:5 falso.",
       "propuesta": "Una marca por formato.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m196",
@@ -2156,7 +2156,7 @@
       "archivo": "scripts/video_hf.py:252-268 · scripts/mesa.py:376-380",
       "problema": "Hay `except` que dejan un gate con datos vacíos sin avisar: el elenco (MV12/MV4) y el respaldo de cifras (MV1/YT16) corren sobre nada si algo falla al leerlos.",
       "propuesta": "Atrapar el error concreto e imprimir AVISO con el gate afectado.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m197",
@@ -2167,7 +2167,7 @@
       "archivo": "scripts/youtube_hf.py:514 · scripts/maqueta3d.py:32 · scripts/video_hf.py:2049",
       "problema": "El 16:9 carga GSAP desde un CDN (sin red no renderiza); la versión de HyperFrames está repetida en dos archivos; los renders no tienen timeout.",
       "propuesta": "GSAP del repo en el 16:9, versiones en un solo módulo y timeout proporcional a la duración.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m198",
@@ -2178,7 +2178,7 @@
       "archivo": "scripts/video.py (cmd_tiempos; V9 y P5)",
       "problema": "El gancho ≤ 6 s y la escena 2 ≤ 12 s se miden solo sobre la estimación (caracteres ÷ 15.5); varias piezas entregadas se pasaron con la voz real (gancho 6.1–6.9 s; escena 2 de 12.2–12.9 s).",
       "propuesta": "Repetir las dos mediciones en `tiempos` con la voz real: aviso y falla.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m199",
@@ -2189,7 +2189,7 @@
       "archivo": "scripts/doctor.sh",
       "problema": "doctor.sh pide Node 20 cuando la mesa necesita 22, no revisa pdftoppm ni swiftc, solo cuenta los agentes `hilo-*` y dice que yt-dlp es para las tomas (retiradas); `mesa.pagina_png` no avisa si falta pdftoppm.",
       "propuesta": "Ponerlo al día con lo que la mesa y los agentes de video necesitan.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m200",
@@ -2200,7 +2200,7 @@
       "archivo": "scripts/video.py:871 · historia.py:351 · explica.py:216 · sabias.py:117",
       "problema": "`elegir_musica` está copiada 4 veces y cada copia cuenta registros distintos, así que la rotación de pistas ignora lo que publicaron los otros flujos.",
       "propuesta": "Una sola función sobre `video.registros_con_musica`.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m201",
@@ -2211,7 +2211,7 @@
       "archivo": "scripts/video.py:909,1054 · scripts/historia.py:343",
       "problema": "La rotación de familia de gancho, cierre y promesa (R9, F7, P3) mira solo el registro del propio flujo; el público ve un solo feed. Tres partes seguidas de una serie usaron la misma forma de promesa.",
       "propuesta": "Rotar contra las últimas piezas de todos los registros de video, partes de serie incluidas.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m202",
@@ -2222,7 +2222,7 @@
       "archivo": "scripts/video.py (ganchos --elegir, cierres --usar) · scripts/memoria.py",
       "problema": "No queda registro de qué gancho y qué cierre eligió el usuario ni de cuál recomendaba el crítico (solo /video-3d guarda `elegido_por`): no se puede medir si su elección rinde distinto.",
       "propuesta": "Guardar `elegido_por` y `recomendado` en el guion y en el registro de cada flujo.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m203",
@@ -2233,7 +2233,7 @@
       "archivo": "scripts/mesa.py:148,1186 · scripts/video3d.py:166 · scripts/video.py:4439",
       "problema": "El ancla `dice` se resuelve de tres maneras: la mesa no pasa los números a palabras y /video-3d sí, así que «1995» resuelve en 3D y falla en la mesa.",
       "propuesta": "Un solo buscador de anclas que pase los números a palabras.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m204",
@@ -2255,7 +2255,7 @@
       "archivo": ".claude/commands/{video,explica,sabias,congreso}.md (viñeta PLANO)",
       "problema": "La viñeta PLANO conserva una instrucción temporal (`scriptPath` + `permitir_fallback`): cada repliegue a `general-purpose` triplica el contexto (1.14M tokens en un plano de YouTube).",
       "propuesta": "Quitarla; `doctor` comprueba que los agentes de video estén registrados.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m206",
@@ -2266,7 +2266,7 @@
       "archivo": ".claude/commands/{video,historia,explica,sabias,congreso,youtube-long}.md",
       "problema": "El bloque de voz del MCP está copiado en 5 comandos (40 líneas idénticas) y el atajo `descargar --nodos` solo está en dos.",
       "propuesta": "Un fragmento compartido `referencias/fragmentos/voz-mcp.md` que cada comando cite.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m207",
@@ -2277,7 +2277,7 @@
       "archivo": ".claude/workflows/{historia,youtube,video}.js (bucle de crítica)",
       "problema": "El crítico corre hasta 3 pasadas (`vuelta <= VUELTAS + 1`) aunque la documentación dice «≤ 2 vueltas»; cada pasada son 75–130K tokens en opus.",
       "propuesta": "Dos pasadas como dice la documentación.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m208",
@@ -2288,7 +2288,7 @@
       "archivo": "scripts/historia.py:1039-1360,2029-2110,3167 · scripts/video.py:305-311,4344-4375,5495-5500",
       "problema": "Quedan ≈ 450 líneas de las tomas de video retiradas y las ramas que `CAMARA_QUIETA = True` deja muertas (sub-planos, whip, transiciones con dirección).",
       "propuesta": "Borrarlas dejando el gate TM0.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m209",
@@ -2299,7 +2299,7 @@
       "archivo": "Makefile (podar, limpiar)",
       "problema": "`sesiones/` ocupa 48 GB (segs* 19.9 GB, revision 5.5 GB, clips 4.4 GB) y no hay forma de borrar solo los intermedios de lo ya entregado.",
       "propuesta": "`make podar-intermedios`: lista y, con confirmación, borra intermedios conservando voz, guion y plano.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m210",
@@ -2332,7 +2332,7 @@
       "archivo": "referencias/roles/video-critico.md · referencias/roles/historia-guionista.md",
       "problema": "`video-critico.md` mide 9,534 palabras con 12 modos y el agente lo lee entero hasta 3 veces por corrida; `historia-guionista.md`, 6,752 con secciones del motor viejo.",
       "propuesta": "Partir por modo en archivos y un helper `guia()` en los workflows.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m213",
@@ -2420,7 +2420,7 @@
       "archivo": "scripts/metricas.py:69-72 (REGISTROS)",
       "problema": "Las partes de serie y los largos de YouTube no se pueden vincular a su pieza: `REGISTROS` no incluye series.json ni youtube.json, así que `--por parte` nunca tendrá datos.",
       "propuesta": "Cada parte y cada largo como pieza vinculable.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m221",
@@ -2442,7 +2442,7 @@
       "archivo": "scripts/metricas.py (rendimiento)",
       "problema": "`rendimiento` no corta por duración, forma de promesa ni plataforma, y compara vistas de piezas con 0–2 días de vida contra piezas de 10 días.",
       "propuesta": "Cortes nuevos y vistas por día de vida.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m223",
@@ -2519,7 +2519,7 @@
       "archivo": "scripts/video3d.py",
       "problema": "/video-3d quedó por debajo de los demás flujos: sin portada, caption opcional y sin V5, sin escucha V11, srt y mezcla propios, salta el 4:5 sin avisar y su digesto no trae «Rendimiento real».",
       "propuesta": "Ponerlo a la par usando las funciones comunes.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m230",
@@ -2541,7 +2541,7 @@
       "archivo": "scripts/mesa.py:344 (notas_leidas)",
       "problema": "(m185 reescrita) /congreso ya se dibuja en la mesa, pero `mesa.notas_leidas` no lee `sesiones/_descargas/congreso`: el realizador no ve las notas capturadas de la ley y no puede citarlas como recorte.",
       "propuesta": "Que `notas_leidas` lea también `_descargas/congreso`.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m232",

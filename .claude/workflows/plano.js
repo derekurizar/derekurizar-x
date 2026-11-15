@@ -1,9 +1,10 @@
 export const meta = {
   name: 'plano',
-  description: 'El guion visual de un video vertical en mesa de archivo (plano.json), DESPUÉS de la voz: video-realizador decide qué entra en pantalla con cada oración (foto, recorte con su titular real, documento, persona, institución, lugar, fecha, cifra, jerarquía de personas), escribe para el cuadro vertical (mesas de una o dos escenas con su golpe de arriba, una pieza por oración, textos que dan tiempo de leerse) y deja `video.py plano --check` (MV1–MV14) en 0. 0 créditos.',
-  whenToUse: 'Invocado por /historia, /serie, /explica, /sabias, /video, /departamento y /congreso (todo video.json con "realizacion": "mesa") DESPUÉS de `<flujo>.py tiempos <TRABAJO>` con la voz real y ANTES de `grabar`. args: {trabajo, permitir_fallback, notas}. trabajo = el TRABAJO del video (sesiones/…). notas = retoques que pidió el usuario sobre un plano ya escrito (quitar una pieza, otra foto, otro golpe de arriba). Devuelve veredicto plano_listo (la sesión muestra plano.md y sigue con grabar) o plano_pendiente + fallas.',
+  description: 'El paso «Plano» de la mesa de archivo vertical: el video-realizador escribe plano.json (qué pieza entra con cada oración) y deja `plano --check` en 0.',
+  whenToUse: 'Tras `<flujo>.py tiempos` con la voz real y antes de `grabar`, en todo video con "realizacion": "mesa". args: {trabajo, notas, sin_juez, permitir_fallback}. Devuelve plano_listo o plano_pendiente + fallas, y juez (lo que unos ojos frescos vieron en la hoja de golpes).',
   phases: [
     { title: 'Plano', detail: 'video-realizador: plano.json desde el digesto (video.py plano --digesto): el cuadro 0 con sujeto, una pieza por oración con su `dice`, mesas con `titulo`, los tableros solos, la jerarquía de personas con sus alegatos atribuidos; baja los recursos que falten; gate video.py plano --check --hoja (MV1–MV14) y su RETORNO; ≤ 2 reparaciones' },
+    { title: 'Juez', detail: 'historia-oyente en modo plano (sonnet): lee SOLO plano.md, la hoja de golpes, como quien ve el video por primera vez, y anota dónde la pantalla adelanta, contradice o no acompaña a la voz; lo que bloquea vuelve al realizador UNA vez (m183). args.sin_juez lo salta' },
   ],
 }
 
@@ -41,6 +42,11 @@ const agentRol = async (prompt, opts) => {
     return agent(`Asume el rol definido en .claude/agents/${agentType}.md: léelo primero y sigue sus instrucciones y sus límites. ` + prompt, { ...resto, agentType: 'general-purpose' })
   }
 }
+
+// Guías por modo (2026-11-14): el rol lee su núcleo (referencias/roles/<rol>.md) y SOLO los archivos de su modo
+// (referencias/roles/<rol>/<modo>.md). Antes leía la guía entera, con todos los modos, en cada pasada.
+const guia = (rol, ...modos) =>
+  `lee referencias/roles/${rol}.md (el núcleo) y, de referencias/roles/${rol}/, SOLO ${modos.map((m) => m + '.md').join(' y ')}`
 
 // Verificación mecánica (scripts/verificacion.py V-A–V-E): forma única del veredicto, cierre que el verificador
 // corre antes de devolver y una vuelta de reparación si quedan fallas; lo que siga fallando no se usa.
@@ -100,6 +106,14 @@ const S = {
       fallas: { type: 'array', items: { type: 'string' } }, piezas: { type: 'integer' }, archivo_real: { type: 'integer' },
       recursos: { type: 'array', items: { type: 'string' } }, nota: { type: 'string' } },
   },
+  juez: {
+    type: 'object', required: ['archivo', 'entendi', 'desajustes'],
+    properties: { archivo: { type: 'string', pattern: 'juez_plano\\.json$' }, entendi: { type: 'string' },
+      desajustes: { type: 'array', items: { type: 'object', required: ['tiempo', 'dice', 'clase', 'gravedad', 'problema'],
+        properties: { tiempo: { type: 'string' }, dice: { type: 'string' }, pieza: { type: 'string' },
+          clase: { type: 'string', enum: ['adelanta', 'contradice', 'ajena', 'vacio', 'repite', 'cortada', 'golpe'] },
+          gravedad: { type: 'string', enum: ['bloquea', 'mejora'] }, problema: { type: 'string' } } } } },
+  },
 }
 const rel = (p) => String(p || '').replace(/^\.\//, '').replace(/^.*?\/(?=sesiones\/)/, '')
 
@@ -112,12 +126,38 @@ const directiva = (fallos) => `Eres el REALIZADOR del video vertical (lee refere
   `Corre python3 scripts/video.py plano ${trabajo} --check --hoja hasta que no quede ninguna falla. No edites código ni cambies el guion ni la voz. ` +
   `Devuelve el RETORNO del gate, recursos (los ids que bajaste) y nota.` +
   (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : '')
-const r = await conReparacion('plano', (fallos) => agentRol(directiva(fallos),
+let r = await conReparacion('plano', (fallos) => agentRol(directiva(fallos),
   { agentType: 'video-realizador', schema: S.plano, phase: 'Plano', label: 'plano' }),
 (x) => [...(rel(x.archivo) !== `${trabajo}/plano.json` ? [`archivo debe ser ${trabajo}/plano.json`] : []), ...(x.gate !== 'ok' ? (x.fallas.length ? x.fallas : ['el gate falló sin detalle: corre video.py plano --check y copia sus líneas FALLA']) : [])], 2)
   .catch((e) => { avisar(`AVISO: el plano no dejó el gate en 0 (${String(e.message).split('\n')[0]})`); return null })
 
+// ── Juez del plano (m183): el oyente y el crítico juzgaron el guion ANTES de la voz, con la pantalla de las escenas;
+// el dibujo final es este plano y nadie lo había visto con ojos frescos. Un oyente (sonnet) lee la hoja de golpes y lo
+// que bloquea (la pantalla adelanta, contradice o no tiene que ver con la voz) vuelve al realizador UNA sola vez. ──
+const validarPlano = (x) => [...(rel(x.archivo) !== `${trabajo}/plano.json` ? [`archivo debe ser ${trabajo}/plano.json`] : []), ...(x.gate !== 'ok' ? (x.fallas.length ? x.fallas : ['el gate falló sin detalle: corre video.py plano --check y copia sus líneas FALLA']) : [])]
+let juez = null, corregidos = []
+if (r && r.gate === 'ok' && !A.sin_juez) {
+  phase('Juez')
+  juez = await agentRol(
+    `Eres el OYENTE INGENUO en MODO PLANO, el juez del plano (${guia('historia-oyente', 'plano')}). TRABAJO = ${trabajo}. ` +
+      `Lee SOLO ${trabajo}/plano.md (la hoja de golpes: por oración de la voz, el golpe de arriba y lo que entra en pantalla). ` +
+      `Anota los desajustes (adelanta, contradice, ajena: bloquean; vacio, repite, cortada, golpe: mejora) con la fila, la frase literal y la pieza; si no hay, lista vacía. ` +
+      `Escribe ${trabajo}/juez_plano.json. Retorno: {archivo, entendi, desajustes[]{tiempo, dice, pieza, clase, gravedad, problema}}.`,
+    { agentType: 'historia-oyente', schema: S.juez, phase: 'Juez', label: 'juez-plano' })
+    .catch((e) => { avisar(`AVISO: el juez del plano no terminó (${String(e.message).split('\n')[0]}); el plano queda como lo dejó el gate.`); return null })
+  const bloquean = juez ? juez.desajustes.filter((x) => x.gravedad === 'bloquea') : []
+  if (juez) log(`Juez del plano: ${bloquean.length} desajuste(s) que bloquean · ${juez.desajustes.length - bloquean.length} mejora(s)`)
+  if (bloquean.length) {
+    const r2 = await conReparacion('plano (juez)', (fallos) => agentRol(directiva(fallos) +
+      ` JUEZ DEL PLANO: un espectador que solo vio la hoja de golpes encontró esto; corrige SOLO estas filas en ${trabajo}/plano.json (otra pieza, otro golpe de arriba o mover la pieza a la oración que la nombra), sin tocar el resto, y deja el gate en 0: ${JSON.stringify(bloquean)}.`,
+    { agentType: 'video-realizador', schema: S.plano, phase: 'Juez', label: 'plano-corrige' }), validarPlano, 1)
+      .catch((e) => { avisar(`AVISO: el realizador no dejó el gate en 0 tras el juez (${String(e.message).split('\n')[0]}): revisa ${trabajo}/juez_plano.json y relanza con args.notas.`); return null })
+    if (r2) { r = r2; corregidos = bloquean.map((x) => x.tiempo) }
+  }
+}
+
 return {
+  juez: juez ? { archivo: `${trabajo}/juez_plano.json`, entendi: juez.entendi, desajustes: juez.desajustes, corregidos } : null,
   veredicto: r && r.gate === 'ok' ? 'plano_listo' : 'plano_pendiente',
   archivo: `${trabajo}/plano.json`,
   hoja: `${trabajo}/plano.md`,

@@ -81,6 +81,11 @@ historia. Una lista vacía es una respuesta válida: no busques faltas donde no 
  "pregunta_sin_responder": ["¿por qué dejaron de regalarla?"]}
 ```
 
+## Modo plano (el juez del plano)
+
+Si la directiva dice MODO PLANO (tras el paso «Plano» de la mesa de archivo): lee `referencias/roles/historia-oyente/plano.md`
+(solo en ese caso). No oyes la voz: lees la hoja de golpes.
+
 ## Modo explica (`/explica`)
 
 Insumo: `python3 scripts/explica.py digesto <TRABAJO> --para oyente` (la misma forma: la narración de corrido y luego

@@ -198,12 +198,10 @@ def frases_explicaciones(slug_actual, n=VD.FRASES_USADAS_VIDEOS):
 
 
 def recientes(slug_actual):
-    fr = [h.get("frases") or {} for h in explicaciones_registradas(slug_actual)]
-    return ({"familias": [x["familia"] for x in fr[-ROTACION_FAMILIAS:] if x.get("familia")],
-             "visuales": [x["visual"] for x in fr[-1:] if x.get("visual")]},
-            {"tipos": [x.get("cierre_tipo") or "remate" for x in fr[-1:]],
-             "formas": [x.get("cierre_forma") for x in fr[-VD.ROTACION_CIERRES:] if x.get("cierre_forma")],
-             "mecanismos": [x["cierre_mecanismo"] for x in fr[-1:] if x.get("cierre_mecanismo")]})
+    """R9 y F7 de un explicador contra el feed entero (video.piezas_feed: todos los flujos, con las partes de /serie):
+    la familia de las últimas ROTACION_FAMILIAS piezas, el visual de la última y el cierre."""
+    piezas = VD.piezas_feed(slug_actual)
+    return (VD.ganchos_recientes(slug_actual, ROTACION_FAMILIAS, 1, piezas), VD.cierres_recientes(slug_actual, piezas))
 
 
 def animaciones_recientes(slug_actual):
@@ -211,21 +209,6 @@ def animaciones_recientes(slug_actual):
     for h in explicaciones_registradas(slug_actual)[-VD.ROTACION_ANIMACIONES:]:
         out += [x for x in (h.get("frases") or {}).get("animaciones") or [] if x and x not in out]
     return out
-
-
-def elegir_musica(paleta, forzada=None):
-    """La pista de la paleta usada hace más tiempo (o nunca) entre videos, historias y explicaciones."""
-    if forzada:
-        return VD.elegir_musica(paleta, forzada)
-    cat = [x for x in leer(os.path.join(RAIZ, "design", "musica", "catalogo.json"))["pistas"] if x["paleta"] == paleta]
-    if not cat:
-        raise ValueError("el catálogo no tiene música para la paleta «%s»" % paleta)
-    usos = {}
-    vids = os.path.join(RAIZ, "memoria", "videos.json")
-    regs = ((leer(vids).get("videos") or []) if os.path.exists(vids) else []) + HI.historias_registradas() + explicaciones_registradas()
-    for v in regs:
-        usos[v.get("musica")] = max(usos.get(v.get("musica"), ""), v.get("fecha", ""))
-    return sorted(cat, key=lambda x: (usos.get(x["id"], ""), x["id"]))[0]
 
 
 # ---------- preparar ----------
@@ -250,7 +233,7 @@ def cmd_preparar(a):
         print("--paleta: una de %s" % ", ".join(pal), file=sys.stderr)
         return 2
     try:
-        pista = elegir_musica(paleta, a.musica)
+        pista = VD.elegir_musica(paleta, a.musica)
     except ValueError as ex:
         return falla(str(ex))
     clave, objetivo = FORMATOS[a.duracion][0], FORMATOS[a.duracion][1]
@@ -610,7 +593,7 @@ def consolidar(trabajo):
     cambia = False
     if paleta != st["paleta"]:
         st["paleta"] = paleta
-        st["musica"] = elegir_musica(paleta, st.get("musica_forzada"))["id"]
+        st["musica"] = VD.elegir_musica(paleta, st.get("musica_forzada"))["id"]
         cambia = True
     pt = None if st.get("musica_forzada") or not enc.get("musica_tema") else VD.elegir_musica_tema(enc["musica_tema"], st.get("slug"))
     if pt and pt["id"] != st.get("musica") and st.get("musica_tema") != enc["musica_tema"]:
@@ -1550,6 +1533,7 @@ def cmd_entregar(a):
         "gancho": {k: e1.get(k) for k in ("familia", "visual", "pantalla", "linea")}, "promesa": g.get("promesa"), "bisagra": g.get("bisagra"),
         "ejemplos": [{"id": x["id"], "modelo": x["modelo"], "ilustrativo": x["ilustrativo"]} for x in X.get("ejemplos") or []],
         "escenas": escenas, "cierre": g.get("cierre"), "caption": g.get("caption"), "modo": MODO}
+    VD.con_eleccion(entrega, trabajo, g)   # quién eligió el gancho y el cierre, y qué recomendaba el crítico
     escribir(os.path.join(destino, "guion.json"), entrega)
     open(os.path.join(destino, "fuentes.md"), "w", encoding="utf-8").write(fuentes_md(st, escenas_g, X))
     open(os.path.join(destino, "ejemplos.md"), "w", encoding="utf-8").write(ejemplos_md(st, X))
@@ -1637,6 +1621,7 @@ def main():
     x.add_argument("--opciones", action="store_true")
     x.add_argument("--elegir")
     q.add_argument("--segundo")
+    q.add_argument("--por", choices=VD.ELEGIDO_POR, help="quién eligió el gancho (video.py ganchos --help)")
     q = sub.add_parser("cierres")
     q.add_argument("trabajo")
     VD.agregar_args_cierres(q)

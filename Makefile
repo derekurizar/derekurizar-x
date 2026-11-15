@@ -7,7 +7,7 @@ PALETAS ?= cielo
 ESTILO ?= noche
 PALETA ?= cielo
 
-.PHONY: help nuevo render visual catalogo validate tabla pdf ensamblar limpiar test doctor costo contacto digesto fuentes ideas calendario informe informe-ejemplo informe-catalogo informe-fixture verificacion auditoria-rehacer podar video-fixture video-fixture-4x5 noticias-fixture semana-fixture historia-fixture explica-fixture sabias-fixture congreso-fixture carrusel-fixture departamento-fixture analisis-fixture agenda-fixture serie-fixture serie-explica-fixture youtube-fixture video-fixture-mesa video-fixture-maqueta video3d-fixture musica whisper iconos
+.PHONY: help nuevo render visual catalogo validate tabla pdf ensamblar limpiar test doctor costo contacto digesto fuentes ideas calendario informe informe-ejemplo informe-catalogo informe-fixture verificacion auditoria-rehacer podar podar-intermedios video-fixturevideo-fixture-4x5 noticias-fixture semana-fixture historia-fixture explica-fixture sabias-fixture congreso-fixture carrusel-fixture departamento-fixture analisis-fixture agenda-fixture serie-fixture serie-explica-fixture youtube-fixture video-fixture-mesa video-fixture-maqueta video3d-fixture musica whisper iconos
 
 help:
 	@echo "make nuevo T=<plantilla> OUT=<ruta.html> [PALETA=cielo]  ensambla una tarjeta (base + plantilla)"
@@ -51,6 +51,7 @@ help:
 	@echo "make whisper                                             baja una vez el modelo ggml-small de whisper.cpp (escucha V11 de /video; antes: brew install whisper-cpp)"
 	@echo "make iconos                                              biblioteca FIJA de iconos de /video (design/iconos/, Lucide; se baja UNA vez) y su check K3"
 	@echo "make limpiar [SESION=sesiones/<slug>]                    borra $(GALERIA)/, salidas de _fixture y _fixture_dato y .playwright-mcp/ (o una sesión)"
+	@echo "make podar-intermedios [SESION=sesiones/<slug>] [CONFIRMAR=1]  intermedios de render (segs*, clips*, hf/*/render, cuadros de revision/) de los trabajos YA entregados y registrados: los lista con su tamaño; CONFIRMAR=1 los borra (conserva audio, guiones, plano, escenas y fotos)"
 
 nuevo:
 	@test -n "$(T)" -a -n "$(OUT)" || { echo "Uso: make nuevo T=<plantilla> OUT=<ruta.html> [PALETA=cielo]"; exit 2; }
@@ -96,6 +97,13 @@ endif
 # Sin BORRAR=1 solo las lista; con BORRAR=1 las borra.
 podar:
 	@python3 scripts/validate.py --huerfanas $(if $(BORRAR),--borrar,)
+
+# Intermedios de render de los trabajos de sesiones/ cuya pieza ya está ENTREGADA Y REGISTRADA en memoria/ (segs*, clips*,
+# hf/*/render y su caché, los cuadros sueltos de revision/): lo que grabar, montar y revisar vuelven a generar. Conserva
+# siempre audio/ (la voz cuesta créditos), los guiones, plano*.json, escenas.json, locucion.json, fotos/ y salida/.
+# Sin CONFIRMAR=1 solo lista lo que borraría con su tamaño y el total; con CONFIRMAR=1 lo borra. SESION= limita a un trabajo.
+podar-intermedios:
+	@python3 scripts/podar_intermedios.py $(if $(CONFIRMAR),--borrar,) $(if $(SESION),--solo $(SESION),)
 
 test:
 	RAPIDO=$(RAPIDO) bash scripts/test.sh

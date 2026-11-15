@@ -1,5 +1,5 @@
 ---
-description: Una serie ya entregada convertida en UN video largo 16:9 para YouTube — el montaje quita lo que se repite al pegar las partes (ganchos y cierres de cada parte, hechos contados otra vez, personas y siglas presentadas otra vez), une los capítulos con 1–2 oraciones que cuentan la historia sin anunciar lo que viene, reutiliza la voz grabada (solo se graban las uniones y la promesa), regraba las escenas en 16:9 y entrega video, miniatura, capítulos, subtítulos y fuentes (uso — /youtube-long <serie|ultima> [sin-voz|fixture])
+description: Una serie ya entregada convertida en UN video largo 16:9 para YouTube: un montaje que quita lo repetido, une los capítulos y reutiliza la voz grabada; entrega video, miniatura, capítulos, subtítulos y fuentes (uso — /youtube-long &lt;serie|ultima&gt; [sin-voz|fixture])
 ---
 
 Argumentos: `$ARGUMENTS`
@@ -31,14 +31,10 @@ Nunca publiques. Lee `referencias/flujo-youtube.md` antes de empezar.
 ## 3. VOZ (solo las piezas nuevas)
 1. `python3 scripts/youtube.py voz <TRABAJO>` arma `<TRABAJO>/nuevas/` e imprime los nodos. Con `sin-voz`, pasa
    `--falsa` y salta al paso 4.
-2. Con el MCP de ElevenLabs, igual que en `/historia` (`.claude/commands/historia.md`, paso de voz): un flow y un nodo
-   TTS por pieza (voz, modelo y `language_code` del JSON). **Por lotes** (`lotes` del JSON, ≤ 3 nodos; m112):
-   `creative_run_flow_nodes` con un lote, sondea sus sesiones con `creative_get_flow_run_status` hasta `all_completed`
-   (para esperar, un `sleep` en segundo plano) y sigue con el siguiente. Luego Scribe por nodo y un
-   `creative_get_flow_run_status` final con todas las sesiones.
-3. `python3 scripts/video.py descargar <TRABAJO>/nuevas --estado <archivo>`. Si el estado llega en el chat, pégalo tal
-   cual en un archivo (con lo que traiga alrededor, o varias respuestas seguidas) o por stdin con `--estado -` (m111):
-   `descargar` saca de ahí `generations`, `media` y `transcripts`.
+2. Sigue `referencias/fragmentos/voz-mcp.md` (un nodo TTS por pieza nueva; voz, modelo y `language_code` del JSON; los `lotes` del JSON
+   ya vienen de ≤ 3 nodos) con el flow «YouTube · <serie>».
+3. `python3 scripts/video.py descargar <TRABAJO>/nuevas --nodos <TRABAJO>/nuevas/audio/nodos.json` (o `--estado
+   <archivo>` con el estado entero del MCP).
 4. `python3 scripts/youtube.py tiempos <TRABAJO>` y `python3 scripts/video.py escuchar <TRABAJO>/nuevas` (V11).
 
 ## 4. ARMAR, PLANO, PROYECTO Y RENDER (el 16:9 es una «mesa de archivo» en HyperFrames)

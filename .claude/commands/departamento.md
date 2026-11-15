@@ -1,5 +1,5 @@
 ---
-description: Serie de 22 videos «<departamento> frente al país» — /perfil del departamento con el canon de dimensiones y luego /video sobre ese hilo, con el modo departamento detectado solo (gancho de identidad, mapa, ranking en ventana «N.º X de 22», cierre que nombra el departamento, caption «Para alguien de…»; gates D1–D9) (uso — /departamento <nombre|siguiente|tablero> [corto|medio] [sin-voz|fixture]; p. ej. /departamento Huehuetenango; siguiente = el primero del orden sin video; tablero = el avance de los 22; fixture corre la maqueta)
+description: Serie de 22 videos «&lt;departamento&gt; frente al país»: /perfil del departamento con el canon de dimensiones y luego /video en modo departamento (uso — /departamento &lt;nombre|siguiente|tablero&gt; [corto|medio] [sin-voz|fixture]; siguiente = el primero sin video; tablero = el avance de los 22)
 ---
 
 Eres el coordinador del flujo **/departamento** de @DerekUrizar. Argumentos: "$ARGUMENTS".

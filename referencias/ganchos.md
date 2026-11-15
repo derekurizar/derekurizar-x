@@ -112,7 +112,7 @@ El icono (`icono`) va solo con el visual `cifra`.
 | R6 | **Guatemala en ≤ 6 s**: dicha o leída en el gancho o en la primera oración de T1; el script ya no antepone «En Guatemala» | gate |
 | R7 | **Honestidad temporal**: «hoy / ahora / actualmente» solo con datos del año en curso; si no, el periodo («en 2025 tenía»). El presente sin esas palabras («hay», «así están») con un dato viejo lo marca el crítico | gate + crítico |
 | R8 | La `pregunta` se contesta con una cifra dentro del mismo gancho | gate |
-| R9 | **Rotación**: la familia no repite la de los últimos 2 videos ni el visual el del último (`memoria/videos.json`; el digesto los lista) | gate |
+| R9 | **Rotación sobre el feed** (2026-11-14): la familia no repite la de las últimas 2 piezas ni el visual el de la última, **de cualquier flujo** (`video.piezas_feed`: videos, historias, partes de serie, explicaciones, sabías, congreso y 3D; el público ve un solo feed; el digesto los lista). Las piezas de visual fijo (/historia, partes de serie de motor historia y /congreso, que siempre abren con foto) no bloquean el visual de la siguiente | gate |
 | R10 | Cada gancho trae al menos un número con respaldo en sus primeros segundos (pantalla, línea, visual o voz) | gate |
 | R11 | **Encuadre**: pérdida y tristeza sí, miedo no; sin morbo, sin deshumanizar («personas presas», no «reos peligrosos»), sin superlativo sin fuente; ninguna palabra que el dato no dice («duermen», «camas», «celdas de 3×3») | crítico |
 | R12 | **Primer cuadro lleno**: la cifra o el visual están desde el cuadro 0 (miniatura del feed y vuelta del bucle) | render + aviso V15 de `revisar` |
@@ -142,7 +142,7 @@ basta; gana el que mejor contesta **¿qué ve el pulgar en el segundo 1 y por qu
 2. `video-critico` (modo selección) los mira **en silencio** (pantalla, línea y visual) y luego con la voz; puntúa
    `silencio, referente, tension, alineacion, honestidad, novedad` (1–5) y aplica R11; escribe `seleccion.json` con el
    ganador y el segundo **recomendados**. En `/historia`, `reserva` (no regala una revelación del encuadre) sustituye a `referente`
-   (ver «Modo historia» de `referencias/roles/video-critico.md`).
+   (ver `referencias/roles/video-critico/historia.md`).
    **El usuario elige** (2026-11-03): el workflow se detiene con los 5 y la recomendación; la sesión muestra
    `ganchos --opciones`, pregunta y escribe la elección con `ganchos --elegir <id>` (o el usuario dicta el suyo: candidato
    `gu`, `args.gancho_usuario`). `args.auto` deja la recomendación del crítico.

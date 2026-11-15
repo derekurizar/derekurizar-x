@@ -1,7 +1,7 @@
 export const meta = {
   name: 'video',
-  description: 'Guion de retención para /video: video-gancho propone 5 ganchos de familias distintas (R1–R10 en código) → el crítico elige en silencio ganador y segundo → guionista (PRIMERO la narración de corrido en 3 actos que cuenta el hilo como una historia, con sus conectores dentro del texto; DESPUÉS la reparte sin cambiar una palabra: el gancho elegido → promesa → tarjetas y golpes → pago → cierre con un remate o, a veces, una pregunta) → gate V1–V5, V9, V17–V18 en código → oyente ingenuo (oye la narración y lee la pantalla) → crítico de retención (lee el guion como espectador; puntúa también el flujo) → el guionista corrige lo que bloquea (≤ 2 vueltas). 0 créditos de ElevenLabs.',
-  whenToUse: 'EL USUARIO ELIGE GANCHO Y CIERRE: sin args.gancho se detiene tras la Selección con veredicto elegir_gancho (candidatos, recomendado); la sesión pregunta, corre video.py ganchos --elegir <id> y relanza con resumeFromRunId y args.gancho (o args.gancho_usuario con el texto que dictó); con el guion aprobado devuelve cierres (5 opciones, cierres.json) y la sesión aplica la elegida con video.py cierres --usar <id> (o --propio). args.auto (o el fixture) deja la recomendación del crítico. Invocado por /video <slug|ultimo> [corto|medio|largo] DESPUÉS de `python3 scripts/video.py preparar`. args: {trabajo, duracion, slug, fixture, permitir_fallback}. trabajo = sesiones/<slug>/video (lo imprime preparar); duracion = medio (por defecto) | corto | largo | prueba. Solo produce y aprueba <trabajo>/ganchos.json, seleccion.json, guion.json, locucion.json, oyente.json y critica.json; si el crítico no aprueba ningún gancho tras una vuelta, devuelve veredicto corregir con las faltas de la selección y sin guion; la voz (MCP ElevenLabs), tiempos, grabación, montaje y entrega los hace la sesión principal después. Si el crítico sigue en «corregir» tras 2 vueltas, el workflow NO falla: devuelve veredicto corregir + faltas_pendientes y el comando pregunta al usuario antes de gastar créditos.',
+  description: 'Guion de retención de /video (y /departamento): ganchos → selección → guionista (narración de corrido, luego escenas) → gate → oyente → crítico (≤ 2 pasadas) → animador. 0 créditos.',
+  whenToUse: 'Sin args.gancho se detiene con veredicto elegir_gancho (el usuario elige; la sesión corre `ganchos --elegir` y reanuda con resumeFromRunId y args.gancho o args.gancho_usuario); con el guion aprobado devuelve 5 cierres para el usuario. args.auto deja la recomendación del crítico. Tras `video.py preparar`. args: {trabajo, duracion: corto|medio|largo|prueba, slug, fixture, permitir_fallback}. Si el crítico no aprueba tras 2 pasadas devuelve veredicto corregir + faltas_pendientes (no falla). La voz, los tiempos, el plano y el render los hace la sesión después. Detalle: .claude/commands/video.md.',
   phases: [
     { title: 'Ganchos', detail: 'video-gancho: ganchos.json con 5 candidatos de familias distintas (≥ 2 con visual), referencias/ganchos.md; gate python3 scripts/video.py ganchos --check (R1–R10, rotación R9); ≤ 3 autoreparaciones' },
     { title: 'Selección', detail: 'video-critico en modo selección: mira cada candidato en silencio y luego con la voz, puntúa silencio, referente, tensión, alineación, honestidad y novedad, aplica R11 y escribe seleccion.json (ganador y segundo para la versión B); si ninguno llega a 3, video-gancho rehace una vez' },
@@ -72,6 +72,11 @@ const agentRol = async (prompt, opts) => {
     return agent(`Asume el rol definido en .claude/agents/${agentType}.md: léelo primero y sigue sus instrucciones y sus límites. ` + prompt, { ...resto, agentType: 'general-purpose' })
   }
 }
+
+// Guías por modo (2026-11-14): el rol lee su núcleo (referencias/roles/<rol>.md) y SOLO los archivos de su modo
+// (referencias/roles/<rol>/<modo>.md). Antes leía la guía entera, con todos los modos, en cada pasada.
+const guia = (rol, ...modos) =>
+  `lee referencias/roles/${rol}.md (el núcleo) y, de referencias/roles/${rol}/, SOLO ${modos.map((m) => m + '.md').join(' y ')}`
 
 // Verificación mecánica (scripts/verificacion.py V-A–V-E): forma única del veredicto, cierre que el verificador
 // corre antes de devolver y una vuelta de reparación si quedan fallas; lo que siga fallando no se usa.
@@ -337,7 +342,7 @@ const seleccionar = (vuelta) =>
     'Selección',
     (fallos) =>
       agentRol(
-        `Eres el crítico de retención en MODO SELECCIÓN DE GANCHO (lee referencias/roles/video-critico.md, sección «Modo selección de gancho», y referencias/ganchos.md). TRABAJO = ${trabajo} · vuelta ${vuelta}.\n` +
+        `Eres el crítico de retención en MODO SELECCIÓN DE GANCHO (${guia('video-critico', 'seleccion')}, y referencias/ganchos.md). TRABAJO = ${trabajo} · vuelta ${vuelta}.\n` +
           `Lee SOLO referencias/ganchos.md, ${trabajo}/ganchos.json y ${trabajo}/digesto.md. Mira cada candidato PRIMERO EN SILENCIO (pantalla, línea y lo que muestra el visual en el cuadro 0) y después con la voz; puntúa silencio, referente, tension, alineacion, honestidad y novedad (1–5) y aplica R11 (miedo, morbo, palabras que el dato no dice). Elige ganador (ninguno ≤ 2) y segundo de otra familia (la versión B); si ninguno llega a 3 en todo, ganador null y las faltas con su arreglo exacto. Escribe ${trabajo}/seleccion.json.\n` +
           (fallos.length ? `TU RETORNO ANTERIOR FUE RECHAZADO; corrige:\n - ${fallos.join('\n - ')}\n` : '') +
           'Retorno: {archivo, ganador, segundo, puntajes{<id>: {silencio, referente, tension, alineacion, honestidad, novedad}}, por_que, faltas[]{candidato, regla, problema, arreglo}}.',
@@ -446,7 +451,7 @@ const criticar = (vuelta, previas) =>
     'Crítica',
     (fallos) =>
       agentRol(
-        `Eres el crítico de retención (lee referencias/roles/video-critico.md). TRABAJO = ${trabajo} · vuelta ${vuelta}/${VUELTAS_CRITICA + 1} · duración ${duracion}${fixture ? ' (FIXTURE)' : ''}.\n` +
+        `Eres el crítico de retención (${guia('video-critico', 'video')}; si el digesto trae «Modo departamento», también departamento.md). TRABAJO = ${trabajo} · vuelta ${vuelta}/${VUELTAS_CRITICA} · duración ${duracion}${fixture ? ' (FIXTURE)' : ''}.\n` +
           `Lee SOLO ${trabajo}/guion.json, ${trabajo}/locucion.json, ${trabajo}/digesto.md (con su sección «Frases ya usadas», para C11), python3 scripts/video.py narracion ${trabajo} (la narración de corrido por acto)` +
           (O && vuelta === 1 ? ` y ${trabajo}/oyente.json (lo que un oyente que solo oyó la voz y leyó la pantalla no entendió: insumo de C10 y C12; lo atiendes si de verdad confunde, no por regla)` : '') +
           `. Léelo como alguien que desliza en TikTok y no leyó el hilo: primero los 3 primeros segundos EN SILENCIO (solo pantalla y línea del gancho), luego escena por escena «¿por qué seguiría viendo?», y la narración entera como UN texto: ¿una voz que cuenta el dato como una historia, o tarjetas leídas una tras otra? (C12, puntaje flujo).\n` +
@@ -460,14 +465,14 @@ const criticar = (vuelta, previas) =>
     1
   )
 let C = await criticar(1, null)
-// vuelve al guionista lo que bloquea (≤ VUELTAS_CRITICA vueltas en total); y si el crítico aprueba con algún
+// vuelve al guionista lo que bloquea (el crítico pasa ≤ VUELTAS_CRITICA veces: crítica → corrección → crítica); y si el crítico aprueba con algún
 // puntaje justo (= PUNTAJE_MIN) dejando mejoras, UNA sola vuelta de pulido con esas mejoras (0 créditos: la voz aún
 // no se ha generado). Aprobado con todo ≥ 4 no se pule: las mejoras que queden van al reporte.
 let pulido = false
 let intentosGuionista = G.intentos
 const pulir = (c) => c.veredicto === 'pasa' && !pulido &&
   Math.min(...PUNTAJES.map((k) => (c.puntajes || {})[k] ?? 5)) <= PUNTAJE_MIN && c.faltas.some((f) => f.gravedad === 'mejora')
-for (let k = 0; k < VUELTAS_CRITICA && (C.veredicto !== 'pasa' || pulir(C)); k++) {
+for (let k = 0; k < VUELTAS_CRITICA - 1 && (C.veredicto !== 'pasa' || pulir(C)); k++) {
   if (C.veredicto === 'pasa') pulido = true
   const faltas = C.faltas.filter((f) => f.gravedad === 'bloquea').concat(C.faltas.filter((f) => f.gravedad === 'mejora'))
   const cabecera = C.veredicto === 'pasa'
@@ -485,7 +490,7 @@ for (let k = 0; k < VUELTAS_CRITICA && (C.veredicto !== 'pasa' || pulir(C)); k++
 }
 const pendientes = C.faltas.filter((f) => f.gravedad === 'bloquea')
 const mejoras = C.faltas.filter((f) => f.gravedad === 'mejora')
-if (C.veredicto !== 'pasa') avisar(`AVISO: la crítica deja ${pendientes.length} falta(s) que bloquean tras ${VUELTAS_CRITICA} vueltas (${trabajo}/critica.json): no gastes créditos de voz sin decidirlo con el usuario.`)
+if (C.veredicto !== 'pasa') avisar(`AVISO: la crítica deja ${pendientes.length} falta(s) que bloquean tras ${VUELTAS_CRITICA} pasadas del crítico (${trabajo}/critica.json): no gastes créditos de voz sin decidirlo con el usuario.`)
 else avisar(`Crítica: pasa · puntajes ${PUNTAJES.map((p) => p + ' ' + C.puntajes[p]).join(' · ')} · ${mejoras.length} mejora(s) anotadas`)
 // m014: si el guion cambió tras la primera crítica, el oyente lo vuelve a oír para el reporte (sonnet, barato; no reabre la crítica)
 if (O && C.veredicto === 'pasa' && C.vuelta > 1) {

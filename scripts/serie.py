@@ -234,6 +234,9 @@ def cmd_preparar(a):
         return rc
     st = VD.estado(trabajo)
     st["serie"] = {"carpeta": rel(carpeta), "partes": a.partes, "motor": a.motor}
+    if a.fixture:   # la maqueta no rota contra lo producido (el motor explica se prepara aquí sin --fixture: su maqueta es otra)
+        st.update(ganchos_recientes={"familias": [], "visuales": []}, cierres_recientes={"tipos": [], "formas": [], "mecanismos": []},
+                  promesas_recientes=[], animaciones_recientes=[])
     escribir(os.path.join(trabajo, "video.json"), st)
     if a.fixture:
         fx = FIXTURE[a.motor]
@@ -512,6 +515,34 @@ def familias_previas(S, n):
     return out
 
 
+def piezas_previas(S, n):
+    """Las partes anteriores de ESTA serie como piezas del feed (video.piezas_feed), leídas de su guion de TRABAJO (o del
+    entregado): una parte ya escrita cuenta para la rotación aunque todavía no esté entregada ni registrada."""
+    out = []
+    for p in sorted(S["partes"], key=lambda x: x["n"]):
+        if p["n"] >= n:
+            continue
+        rutas = [os.path.join(RAIZ, b, "guion.json") for b in (p.get("trabajo"), p.get("ruta")) if b]
+        g = next((leer(r) for r in rutas if os.path.exists(r)), None)
+        if g:
+            out.append({"flujo": "serie", "id": "%s-%s-parte-%d" % (S.get("fecha"), S["slug"], p["n"]),
+                        "slug": "%s-parte-%d" % (S["slug"], p["n"]), "fecha": str(S.get("fecha") or ""), "orden": p["n"],
+                        "musica": g.get("musica"), "frases": VD.frases_feed("serie", {"frases": VD.frases_de_guion(g)}, S.get("motor"))})
+    return out
+
+
+def rotacion_parte(S, n, slug_parte):
+    """La rotación de una parte se mira al ARMARLA, no la que `preparar` congeló para toda la serie (tres partes seguidas
+    repitieron la forma de promesa): el feed entero (video.piezas_feed, todos los flujos) sin esta serie, más las partes
+    anteriores de esta serie. → {ganchos_recientes, cierres_recientes, promesas_recientes} para video.json."""
+    piezas = VD.piezas_feed(slug_parte, excluir_serie=S["slug"]) + piezas_previas(S, n)
+    Mm = motor_mod(S["motor"])
+    return {"ganchos_recientes": VD.ganchos_recientes(slug_parte, getattr(Mm, "ROTACION_FAMILIAS", None),
+                                                      1 if S["motor"] == "explica" else 0, piezas),
+            "cierres_recientes": VD.cierres_recientes(slug_parte, piezas),
+            "promesas_recientes": VD.promesas_recientes(slug_parte, piezas=piezas)}
+
+
 def cmd_parte(a):
     ruta, S = cargar_serie(a.serie)
     if not S.get("plan_aprobado") and not S.get("fixture"):
@@ -525,9 +556,8 @@ def cmd_parte(a):
     for pat in ("verificacion_*.json", "hallazgos_*.json", "afirmaciones_*.json"):
         for f in glob.glob(os.path.join(base, pat)):
             shutil.copy(f, os.path.join(destino, os.path.basename(f)))
-    for d in ("fotos", "tomas", "videos"):  # las tomas de video también (consolidar deja fuera las de partes siguientes)
-        if os.path.isdir(os.path.join(base, d)):
-            shutil.copytree(os.path.join(base, d), os.path.join(destino, d), dirs_exist_ok=True)
+    if os.path.isdir(os.path.join(base, "fotos")):
+        shutil.copytree(os.path.join(base, "fotos"), os.path.join(destino, "fotos"), dirs_exist_ok=True)
     for d in ("audio", "salida", "revision", "base"):
         os.makedirs(os.path.join(destino, d), exist_ok=True)
     enc = leer(os.path.join(base, "encuadre.json"))
@@ -566,6 +596,8 @@ def cmd_parte(a):
                          "hechos": plan.get("hechos") or [], "obligatorio": plan.get("obligatorio") or [],
                          "reservar": [i for x in (enc.get("serie") or {}).get("partes") or [] if x.get("n", 0) > a.n
                                       for i in x.get("hechos") or [] if i not in (plan.get("hechos") or [])]}})
+    if not S.get("fixture"):   # la maqueta no rota contra lo producido
+        st.update(rotacion_parte(S, a.n, st["slug"]))
     rec = st.get("ganchos_recientes") or {"familias": [], "visuales": []}
     rec["familias"] = list(dict.fromkeys(familias_previas(S, a.n) + (rec.get("familias") or [])))
     st["ganchos_recientes"] = rec

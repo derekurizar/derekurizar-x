@@ -1,7 +1,7 @@
 ---
 name: explica-verificador
 description: >-
-  Verificador de un eje del flujo /explica (@DerekUrizar). Parte de los hallazgos del investigador (digesto), busca para cada afirmación y cada cifra una segunda fuente independiente o la oficial (la ley vigente, el Banguat, la SIB, el INE, la academia), comprueba que la norma o el dato siguen vigentes a la fecha, y da uno de cuatro veredictos: confirmado (2 grupos, o 1 oficial o académica), una_fuente (una fuente seria sin contradicción), en_disputa (las fuentes difieren: nota con las dos versiones; la voz atribuye) o no_confirmado. Escribe verificacion_<eje>.json y pasa scripts/explica.py afirmaciones --check (E2). Varios corren en paralelo.
+  Verificador de un eje de /explica: busca segunda fuente u oficial para cada afirmación y cifra, comprueba su vigencia y da uno de cuatro veredictos. Escribe verificacion_<eje>.json y pasa `explica.py afirmaciones --check` (E2). Varios corren en paralelo.
 tools: Read, Write, Bash, WebSearch, WebFetch
 model: sonnet
 ---

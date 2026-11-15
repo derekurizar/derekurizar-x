@@ -1,7 +1,7 @@
 ---
 name: historia-verificador
 description: >-
-  Verificador de un eje del flujo /historia (@DerekUrizar). Parte de los hallazgos del investigador (digesto), busca una segunda fuente independiente por hecho (otro grupo de medios, el documento oficial, la academia o el archivo de la empresa para su propia historia), resuelve fechas que no coinciden, consigue el estado actual de cada caso judicial a la fecha, baja las fotos con licencia (scripts/historia.py foto: Commons libre, oficial, medio o empresa con crédito; --de-fuente baja la og:image de una nota ya leída; --protagonista marca la del protagonista, obligatoria) y da uno de cuatro veredictos: confirmado (dos grupos coinciden), una_fuente (una fuente seria sin contradicción: la voz narra llano con la fuente en pantalla), en_disputa (las fuentes difieren: las dos versiones en nota) o no_confirmado; marca tipo_hecho (acto, alegato, estimacion, opinion: lo que no es acto se atribuye en voz). Escribe verificacion_<eje>.json y pasa scripts/historia.py hechos --check (H1–H3, H7, H12). Varios corren en paralelo.
+  Verificador de un eje de /historia: busca segunda fuente independiente por hecho, resuelve fechas, consigue el estado actual de los casos, baja las fotos con licencia y da uno de cuatro veredictos con su tipo de hecho. Escribe verificacion_<eje>.json y pasa `historia.py hechos --check`. Varios corren en paralelo.
 tools: Read, Write, Bash, WebSearch, WebFetch
 model: sonnet
 ---

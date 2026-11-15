@@ -16,7 +16,7 @@ y usando los visuales».
   tarjeta (hilo.json desde dato.json, datos.json, tuit_1.html) y reusa `scripts/video.py` para todo lo demás (gate
   V1–V5, V9, F1–F8; voz, tiempos, grabar, montar, revisar), enchufando su estructura como `/historia`.
 - `video/cierre.html` — sin `resumen`, el cierre es una sola pantalla (frase final y «Sígueme en»).
-- «Modo sabías» en `referencias/roles/video-critico.md` (SQ-C1–C5).
+- «Modo sabías» del crítico: `referencias/roles/video-critico/sabias.md` (SQ-C1–C5).
 - `memoria/sabias.json` (lo escribe `scripts/memoria.py --sabias`; M13 en `validate.py`).
 - `sesiones/_fixture_sabias/guion.json` + `make sabias-fixture` (el dato de prueba, voz falsa, 0 créditos).
 

@@ -17,14 +17,22 @@ Subcomandos (TRABAJO = sesiones/video3d-<slug>):
   datos TRABAJO --sumar ARCHIVO      añade a base/datos.json las cifras verificadas de un verificacion_*.json
   digesto TRABAJO                    lo que necesita quien escribe: cifras, lugares, piezas, eventos, estilos, reglas
   ganchos TRABAJO --check [--cuadros] [--clips] | --usar ID
-        ganchos.json (5 candidatos a escena 1): reglas del gancho; cuadros y clip mudo de cada candidato; copia el elegido
-  guion TRABAJO --check              gates C3D1–C3D11 (concordancia) + V2–V4 → locucion.json y maqueta.json (estimado)
+        ganchos.json (5 candidatos a escena 1): reglas del gancho; cuadros y clip mudo de cada candidato; copia el elegido;
+        avisa si la familia repite la de los últimos 2 videos 3D (rotación)
+  guion TRABAJO --check              gates C3D1–C3D11 (concordancia) + V2–V5 (un caption por plataforma) → locucion.json
+                                     y maqueta.json (estimado)
   storyboard TRABAJO                 un cuadro por clave de cámara y por evento → storyboard/hoja.jpg (antes de la voz)
-  voz | voz-falsa | descargar | partir TRABAJO […]    → scripts/video.py (los mismos comandos de /video)
+  voz | voz-falsa | descargar | partir | escuchar TRABAJO […]    → scripts/video.py (los mismos comandos de /video;
+                                     escuchar = V11, la escucha independiente con whisper)
   tiempos TRABAJO                    la voz real → maqueta.json con los segundos reales (V6) + gates M3D
   render TRABAJO [--formato 9:16|4:5|ambos]           → render3d/<formato>/video.mp4 (scripts/maqueta3d.py)
-  montar TRABAJO [--formato 9:16|4:5|ambos]           voz + música con ducking + efectos, −14 LUFS → salida/
-  entregar TRABAJO [--salida DIR]    → videos3d/<fecha>-<slug>/ (video, 4:5, guion, fuentes.md, caption.md)
+  montar TRABAJO [--formato 9:16|4:5|ambos] [--sin-portada]   voz + música con ducking + efectos, −14 LUFS → salida/ (la mezcla
+                                     de youtube.pista_final y el .srt de video.texto_srt: los de los demás flujos); con
+                                     el 9:16, la portada (salida/portada.png)
+  portada TRABAJO                    el cuadro cero en 9:16, sin subtítulos → salida/portada.png (lo llama montar)
+  entregar TRABAJO [--salida DIR] [--sin-4x5]
+        → videos3d/<fecha>-<slug>/ (video, 4:5, portada, guion, tiempos.json, fuentes.md, caption.md); sin el 4:5 falla,
+        salvo con --sin-4x5
 
 Exit: 0 ok · 1 gate o paso fallido · 2 uso incorrecto.
 """
@@ -57,7 +65,9 @@ SEGUIR_S = 3.0                       # el botón «Sígueme» a mitad del video
 ESTILOS = os.path.join(RAIZ, "design", "sets3d", "estilos.json")
 MAQUETA3D = os.path.join(RAIZ, "scripts", "maqueta3d.py")
 EVENTOS = ("ruptura", "onda", "deslizar", "encender", "apagar", "parpadear", "resaltar")
-REENVIO = ("voz", "voz-falsa", "descargar", "partir")
+REENVIO = ("voz", "voz-falsa", "descargar", "partir", "escuchar")   # escuchar = V11 (whisper): solo usa locucion.json y audio/
+ROTACION_GANCHOS = 2                 # la familia del gancho de los últimos 2 videos 3D no se repite (aviso)
+REGISTRO = os.path.join(RAIZ, "memoria", "videos3d.json")
 RE_DISTANCIA = re.compile(r"\b\d[\d.,]*\s*(?:km|kil[oó]metros?|m|metros?)\b", re.I)   # C3D11: un pin que dice una distancia
 HANDLE = "@DerekUrizar"
 
@@ -145,12 +155,7 @@ def segmentar(texto):
 
 def fichas(frase):
     """Una frase (con cifras en dígitos o en palabras) como la dice la voz: palabras normalizadas."""
-    NE.AVISOS.clear()
-    try:
-        dicho = NE.convertir(VD.sin_pausas(frase or ""))[1]
-    except ValueError:
-        dicho = frase or ""
-    return [w for w in (VD._norm(x) for x in dicho.split()) if w]
+    return [w for w in (VD._norm(x) for x in VD.dicho(frase).split()) if w]
 
 
 def estimadas(voz):
@@ -210,8 +215,50 @@ def locucion_de(g):
         cola = COLA_CIERRE if e.get("tipo") == "cierre" else (0.0 if sigue else COLA_CORTE)
         loc.append({"n": e.get("n", k + 1), "tipo": e.get("tipo") or "toma", "acto": e.get("acto"), "secuencia": sec,
                     "plantilla": "maqueta", "tuit": None, "pantalla": pantalla, "voz": voz, "prompt": prompt, "segmentos": segs,
-                    "cola": cola, "estimado_s": round(len(voz) / VD.CPS + cola, 2)})
+                    "cola": cola, "estimado_s": round(VD.segundos_voz(voz) + cola, 2)})   # el estimador de todos los flujos
     return loc, fallas
+
+
+def hechos_3d():
+    """Los videos 3D ya registrados (memoria/videos3d.json), del más viejo al más nuevo."""
+    return (leer(REGISTRO).get("videos3d") or []) if os.path.exists(REGISTRO) else []
+
+
+def familias_recientes(st):
+    """Las familias de gancho de los últimos ROTACION_GANCHOS videos 3D (sin contar este): no se repiten. Una maqueta de
+    prueba (`fixture`) no rota."""
+    if st.get("fixture"):
+        return []
+    hechos = [v for v in hechos_3d() if v.get("slug") != st.get("slug")]
+    return [f for f in ((v.get("gancho") or {}).get("familia") for v in hechos[-ROTACION_GANCHOS:]) if f]
+
+
+def revisar_caption(g):
+    """V5 de los demás flujos (scripts/video.py, cmd_guion) sobre `guion.caption`: un caption por plataforma, el de Shorts
+    con su título de ≤ SHORTS_TITULO caracteres en la primera línea y #Shorts, ninguna cifra en palabras, sin anunciar el
+    video y sin «en suma». Las reglas están escritas dentro de video.cmd_guion (no se pueden llamar): aquí se repiten con
+    sus mismas constantes. → fallas."""
+    cap = g.get("caption") if isinstance(g.get("caption"), dict) else {}
+    fallas = ["V5 falta caption.%s" % k for k, _ in VD.PLATAFORMAS if not (cap.get(k) or "").strip()]
+    sh = (cap.get("shorts") or "").strip()
+    if sh:
+        titulo = sh.splitlines()[0].strip()
+        if len(titulo) > VD.SHORTS_TITULO:
+            fallas.append("V5 caption.shorts: la primera línea es el título de YouTube (≤ %d caracteres; llegó %d)" % (VD.SHORTS_TITULO, len(titulo)))
+        if "#shorts" not in sh.lower():
+            fallas.append("V5 caption.shorts lleva #Shorts")
+    for k, v in cap.items():
+        if not isinstance(v, str):
+            continue
+        if VD.RE_CIFRA_EN_PALABRAS.search(v):
+            fallas.append("V5 caption.%s escribe una cifra en palabras («%s»): en el texto para publicar va en dígitos, como en "
+                          "pantalla" % (k, VD.RE_CIFRA_EN_PALABRAS.search(v).group(0)))
+        if VD.PROMESA_PROHIBIDA.search(v):
+            fallas.append("V5 caption.%s anuncia el video («%s»): la intriga sale del tema (referencias/promesas.md)"
+                          % (k, VD.PROMESA_PROHIBIDA.search(v).group(0)))
+        if re.search(r"\ben suma\b", v, re.I):
+            fallas.append("V5 caption.%s: «en suma» está prohibido" % k)
+    return fallas
 
 
 def secuencias_de(loc):
@@ -352,7 +399,7 @@ def revisar_guion(g, st, trabajo):
                           "antes del segundo %.0f)" % EVENTO_GANCHO_S)
         if not g1.get("camara") or g1["camara"][0].get("dice"):
             fallas.append("C3D6 la escena 1 abre con una clave de cámara sin `dice` (el cuadro cero)")
-        s1 = len(x1["voz"]) / VD.CPS
+        s1 = VD.segundos_voz(x1["voz"])
         if s1 > GANCHO_VOZ_S:
             fallas.append("C3D6 la voz del gancho dura ≈ %.1f s; va ≤ %.0f s" % (s1, GANCHO_VOZ_S))
         t, oido = 0.0, None
@@ -397,6 +444,14 @@ def revisar_guion(g, st, trabajo):
             fallas.append("C3D10 el cierre lleva su clave de cámara: el último cuadro encuadra al protagonista")
         elif m0 != mf:
             avisos.append("C3D10 el gancho mira «%s» y el cierre «%s»: si el último cuadro se parece al primero, el bucle no se nota" % (m0, mf))
+
+    # V5 el texto para publicar: un caption por plataforma (sin él, entregar no escribe caption.md)
+    fallas += revisar_caption(g)
+    # rotación: la familia del gancho elegido no repite la de los últimos videos 3D (aviso, como R9 en /video)
+    fam = (g.get("gancho") or {}).get("familia") if isinstance(g.get("gancho"), dict) else None
+    if fam and fam in familias_recientes(st):
+        avisos.append("G3D2 el gancho es de la familia «%s», la de uno de los últimos %d videos 3D: no se repite (elige otro "
+                      "candidato, salvo que el usuario haya elegido este a sabiendas)" % (fam, ROTACION_GANCHOS))
 
     # C3D9 (V4) duración
     objetivo = st.get("duracion_s") or OBJETIVO_S
@@ -584,14 +639,25 @@ def cmd_digesto(a):
     for s in sorted(d for d in os.listdir(sets) if os.path.isdir(os.path.join(sets, d))) if os.path.isdir(sets) else []:
         lug = lugares_del_set(s)
         print("\n## Set `%s`: %d lugares\n\n%s" % (s, len(lug), ", ".join("`%s` (%s)" % (k, v.get("nombre")) for k, v in sorted(lug.items()))))
-    reg = os.path.join(RAIZ, "memoria", "videos3d.json")
-    hechos = [v for v in (leer(reg)["videos3d"] if os.path.exists(reg) else []) if v.get("slug") != st["slug"]]
+    hechos = [v for v in hechos_3d() if v.get("slug") != st["slug"]]
+    bloqueadas = familias_recientes(st)
     if hechos:
         print("\n## Videos 3D ya hechos (rota la familia del gancho; el estilo se elige por la idea visual, no por costumbre)\n")
         for v in hechos[-5:]:
-            print("- %s · %s · estilo `%s` · gancho `%s`: «%s»" % (v["fecha"], v["slug"], v.get("estilo"), (v.get("gancho") or {}).get("familia"),
-                                                              (v.get("gancho") or {}).get("texto", "")))
-    print("\n## Eventos\n\n" + ", ".join(EVENTOS) + "\n\nContrato de la maqueta: referencias/diseno/maqueta3d.md · reglas del guion: referencias/flujo-video3d.md")
+            fam = (v.get("gancho") or {}).get("familia")
+            print("- %s · %s · estilo `%s` · gancho `%s`%s: «%s»" % (v["fecha"], v["slug"], v.get("estilo"), fam,
+                                                                " (NO REPETIR)" if fam in bloqueadas and v in hechos[-ROTACION_GANCHOS:] else "",
+                                                                (v.get("gancho") or {}).get("texto", "")))
+    print("\n## Rotación del gancho\n\n- Familias bloqueadas (las de los últimos %d videos 3D; `ganchos --check` y `guion --check` avisan "
+          "si se repiten): %s" % (ROTACION_GANCHOS, ", ".join("`%s`" % f for f in dict.fromkeys(bloqueadas)) or
+                                 ("ninguna (prueba: sin rotación)" if st.get("fixture") else "ninguna")))
+    # lo medido con /analyze-improve: las familias y visuales son las de los demás flujos (referencia: qué retiene en esta
+    # cuenta); las de los ganchos 3D aparecerán aquí cuando haya videos 3D publicados y medidos
+    print("\n## Rendimiento real (TikTok, YouTube; /analyze-improve)\n")
+    print("\n".join(VD.lineas_rendimiento_real(("familia", "visual", "cierre", "duracion"))))
+    print("\n## Eventos\n\n" + ", ".join(EVENTOS) + "\n\nContrato de la maqueta: referencias/diseno/maqueta3d.md · reglas del guion: referencias/flujo-video3d.md"
+          "\n\n`caption` (obligatorio, V5): tiktok, instagram, facebook y shorts (título ≤ %d caracteres en la primera línea + #Shorts); "
+          "las cifras en dígitos, sin anunciar el video." % VD.SHORTS_TITULO)
     return 0
 
 
@@ -617,7 +683,7 @@ def cmd_guion(a):
     ruta = os.path.join(trabajo, "maqueta.json")
     escribir(ruta, maqueta)
     escribir(os.path.join(trabajo, "tiempos.json"), tiempos)
-    print("→ %s y %s (tiempos estimados) · C3D1–C3D11, V2–V4 ok" % (rel(os.path.join(trabajo, "locucion.json")), rel(ruta)))
+    print("→ %s y %s (tiempos estimados) · C3D1–C3D11, V2–V5 ok" % (rel(os.path.join(trabajo, "locucion.json")), rel(ruta)))
     return revisar_maqueta(ruta)
 
 
@@ -657,6 +723,7 @@ def cmd_ganchos(a):
     ruta = os.path.join(trabajo, "ganchos.json")
     G, st = leer(ruta), estado(trabajo)
     cands = G.get("candidatos") or []
+    bloqueadas = familias_recientes(st)
     cierre = {"n": 2, "tipo": "cierre", "texto": "Y la falla sigue ahí.", "final": "La falla sigue ahí.",
               "camara": [dict((c.get("escena", {}).get("camara") or [{}])[0]) for c in cands[:1]] or [{}]}
     if a.usar:
@@ -673,8 +740,14 @@ def cmd_ganchos(a):
         g["escenas"] = [esc] + [e for e in g.get("escenas") or [] if e.get("n") != 1 and e.get("tipo") != "gancho"]
         escribir(rg, g)
         print("gancho %s → escena 1 de %s" % (c["id"], rel(rg)))
+        if c.get("familia") in bloqueadas:
+            print("AVISO G3D2 el gancho elegido es de la familia «%s», la de uno de los últimos %d videos 3D: no se repite"
+                  % (c["familia"], ROTACION_GANCHOS))
         return 0
     fallas = []
+    for c in cands:   # rotación: se avisa aquí, antes de que el usuario elija
+        if c.get("familia") in bloqueadas:
+            print("AVISO G3D2 %s · familia «%s»: es la de uno de los últimos %d videos 3D (no repetir)" % (c.get("id"), c["familia"], ROTACION_GANCHOS))
     if not 4 <= len(cands) <= 6:
         fallas.append("G3D1 %d candidatos; van 4–6 (5 es lo normal)" % len(cands))
     fam = [c.get("familia") for c in cands]
@@ -685,7 +758,7 @@ def cmd_ganchos(a):
         g = {"estilo": G.get("estilo"), "idea_visual": G.get("idea_visual"), "protagonista": G.get("protagonista"),
              "mundo": G.get("mundo"), "pie": G.get("pie"), "aviso": G.get("aviso"), "escenas": [dict(c["escena"], n=1, tipo="gancho", acto=1), dict(cierre, acto=1)]}
         f, _, loc = revisar_guion(g, dict(st, duracion_s=0), trabajo)
-        f = [x for x in f if not x.startswith(("C3D1 %d escenas" % 2, "C3D9", "C3D7"))]
+        f = [x for x in f if not x.startswith(("C3D1 %d escenas" % 2, "C3D9", "C3D7", "V5 "))]   # el caption es del guion entero
         for x in f:
             fallas.append("%s · %s" % (c["id"], x))
         if (a.cuadros or a.clips) and not f and isinstance(loc, dict):
@@ -759,25 +832,58 @@ def cmd_render(a):
     return 0
 
 
-def bloques_srt(palabras, max_palabras=7, max_s=3.2):
-    out, act = [], []
-    for w in palabras:
-        act.append(w)
-        if len(act) >= max_palabras or w["end"] - act[0]["start"] >= max_s or re.search(r"[.?!…]$", w["text"]):
-            out.append(act)
-            act = []
-    if act:
-        out.append(act)
-    return [{"start": b[0]["start"], "end": b[-1]["end"], "texto": " ".join(w["text"] for w in b)} for b in out]
+def escenas_srt(maqueta, T):
+    """La entrada de video.texto_srt (el .srt de todos los flujos: por oración, 2 líneas de ≤ 42 caracteres, sin solapes):
+    las fichas de pantalla de `capa.palabras` (segundos del video) repartidas por escena con los cortes de tiempos.json y
+    devueltas a segundos de su escena. → (escenas [{n, palabras}], desfases)."""
+    cortes = [(e["n"], float(e["off"])) for e in T["escenas"]]
+    escenas = [{"n": n, "palabras": []} for n, _ in cortes]
+    k = 0
+    for w in maqueta["capa"].get("palabras") or []:
+        while k + 1 < len(cortes) and w["start"] >= cortes[k + 1][1] - 0.002:   # las palabras van a 3 decimales; el corte, a 4
+            k += 1
+        off = cortes[k][1] if cortes else 0.0
+        escenas[k]["palabras"].append({"text": w["text"], "start": round(max(0.0, w["start"] - off), 3), "end": round(max(0.0, w["end"] - off), 3)})
+    return escenas, [off for _, off in cortes]
 
 
-def ts(s):
-    ms = int(round(s * 1000))
-    return "%02d:%02d:%02d,%03d" % (ms // 3600000, ms // 60000 % 60, ms // 1000 % 60, ms % 1000)
+def efectos_de(trabajo, maqueta):
+    """[(segundo, id)] de los efectos del video: los que el render dejó en render3d/efectos.json o, sin render, los `sfx`
+    de los eventos de la maqueta."""
+    fe = os.path.join(trabajo, "render3d", "efectos.json")
+    return [(t, i) for t, i in (leer(fe) if os.path.exists(fe) else [[e["t"], e["sfx"]] for e in maqueta["eventos"] if e.get("sfx")])]
+
+
+def portada(trabajo):
+    """salida/portada.png: el cuadro cero del video en 9:16 (por contrato ya trae el titular y el evento del gancho,
+    M3D9), sin subtítulos, dibujado por el motor (`maqueta3d.py cuadro`): el mismo archivo que entregan los demás flujos
+    y el que caption.md pide como miniatura. → 0 ok."""
+    carpeta = os.path.join(trabajo, "portada")
+    maqueta = leer(os.path.join(trabajo, "maqueta.json"))
+    maqueta["capa"] = dict(maqueta["capa"], palabras=[])   # la portada va limpia: sin el subtítulo de la primera palabra
+    rm = os.path.join(carpeta, "maqueta.json")
+    escribir(rm, maqueta)
+    if cuadros(rm, [0.0], carpeta, "9:16", hoja=False):
+        return falla("la portada no se dibujó (maqueta3d.py cuadro --t 0)")
+    png = os.path.join(carpeta, "%s_t%07.3f.png" % (FORMATOS["9:16"][0], 0.0))
+    if not os.path.exists(png):
+        return falla("la portada no se dibujó: falta %s" % rel(png))
+    dst = os.path.join(trabajo, "salida", "portada.png")
+    os.makedirs(os.path.dirname(dst), exist_ok=True)
+    shutil.copyfile(png, dst)
+    print("portada: el cuadro cero en 9:16, sin subtítulos → %s" % rel(dst))
+    return 0
+
+
+def cmd_portada(a):
+    return portada(os.path.abspath(a.trabajo))
 
 
 def cmd_montar(a):
-    """La pista: la voz en su segundo, la música del tema con ducking y los efectos de la maqueta, a −14 LUFS (V8)."""
+    """La pista: la voz en su segundo, la música del tema con ducking y los efectos de la maqueta, a −14 LUFS (V8). La
+    mezcla es la de los videos de mesa (youtube.mezclar_voz + youtube.pista_final: mismos fundidos, las tres tomas de cada
+    efecto y el limitador) y el .srt, el de video.texto_srt."""
+    import youtube as YT
     trabajo = os.path.abspath(a.trabajo)
     st, T = estado(trabajo), leer(os.path.join(trabajo, "tiempos.json"))
     maqueta = leer(os.path.join(trabajo, "maqueta.json"))
@@ -796,39 +902,15 @@ def cmd_montar(a):
             fallas.append("V8 %s dura %.2f s y la voz %.2f s: vuelve a renderizar tras tiempos" % (f, D, T["total_s"]))
         if not os.path.exists(maestro) or f == "9:16":
             # 1. la voz, cada escena en su segundo
-            voces = [(e["off"], os.path.join(trabajo, "audio", "voz_%d_r.mp3" % e["n"])) for e in T["escenas"]]
-            fc = "".join("[%d:a]aresample=48000,aformat=channel_layouts=stereo,adelay=%s:all=1[v%d];" % (i, VD.muestras(o), i)
-                         for i, (o, _) in enumerate(voces))
-            fc += "".join("[v%d]" % i for i in range(len(voces))) + "amix=inputs=%d:duration=longest:normalize=0,apad=whole_dur=%.3f[vz]" % (len(voces), D)
-            voz = os.path.join(segs, "voz.wav")
-            VD.ff(*sum([["-i", v] for _, v in voces], []), "-filter_complex", fc, "-map", "[vz]", "-t", "%.3f" % D, "-ar", "48000", voz)
-            gv = VD.VOZ_LUFS - VD.medir(voz)["input_i"]
+            voz = YT.mezclar_voz(trabajo, {"escenas": [{"n": e["n"]} for e in T["escenas"]]}, [e["off"] for e in T["escenas"]], D, segs)
             # 2. música del tema, en bucle
             pista = next(p for p in leer(os.path.join(RAIZ, "design", "musica", "catalogo.json"))["pistas"] if p["id"] == st["musica"])
             fondo = os.path.join(segs, "musica.wav")
             VD.musica_bucle(os.path.join(RAIZ, "design", "musica", pista["archivo"]), D, fondo)
-            # 3. efectos: los que la maqueta declara en sus eventos (render3d/efectos.json)
-            cat = {x["id"]: x for x in leer(os.path.join(VD.SFX_DIR, "catalogo.json"))["efectos"]}
-            fe = os.path.join(trabajo, "render3d", "efectos.json")
-            lista = leer(fe) if os.path.exists(fe) else [[e["t"], e["sfx"]] for e in maqueta["eventos"] if e.get("sfx")]
-            efectos = sorted((t, i) for t, i in lista if i in cat and 0 <= t < D - 0.2)
-            entradas = ["-i", voz, "-i", fondo] + sum([["-i", os.path.join(VD.SFX_DIR, cat[i]["archivo"])] for _, i in efectos], [])
-            fc = ("[0:a]volume=%.2fdB,asplit=2[v][k];"
-                  "[1:a]aformat=channel_layouts=stereo,volume=%s,afade=t=in:st=0:d=1,afade=t=out:st=%.2f:d=2.5[m0];"
-                  "[m0][k]sidechaincompress=%s[m];" % (gv, VD.MUSICA_VOLUMEN, D - 2.5, VD.DUCK))
-            for j, (t, i) in enumerate(efectos):
-                fc += "[%d:a]aformat=channel_layouts=stereo,adelay=%s:all=1,volume=%ddB[f%d];" % (j + 2, VD.muestras(t), cat[i]["ganancia_db"], j)
-            fc += "[v][m]" + "".join("[f%d]" % j for j in range(len(efectos))) + "amix=inputs=%d:duration=first:normalize=0[a]" % (len(efectos) + 2)
-            mezcla = os.path.join(segs, "mezcla.wav")
-            VD.ff(*entradas, "-filter_complex", fc, "-map", "[a]", "-ar", "48000", mezcla)
-            # 4. loudnorm en dos pasadas (lineal: no deshace el ducking); limitador si el pico se pasa
-            m1 = VD.medir(mezcla)
-            filtro = "loudnorm=I=%s:TP=-1.5:LRA=11:measured_I=%.2f:measured_TP=%.2f:measured_LRA=%.2f:measured_thresh=%.2f:offset=%.2f:linear=true%s"
-            med = (VD.LUFS, m1["input_i"], m1["input_tp"], m1["input_lra"], m1["input_thresh"], m1["target_offset"])
-            VD.ff("-i", mezcla, "-af", filtro % (med + ("",)), "-ar", "48000", maestro)
-            if VD.medir(maestro)["input_tp"] > VD.TP_MAX:
-                VD.ff("-i", mezcla, "-af", filtro % (med + (",alimiter=limit=0.79:level=false",)), "-ar", "48000", maestro)
-            print("audio: %d voces · música %s · %d efectos" % (len(voces), st["musica"], len(efectos)))
+            # 3. los efectos que la maqueta declara en sus eventos y 4. la mezcla con ducking a −14 LUFS (dos pasadas de
+            #    loudnorm; limitador si el pico se pasa) → segs/mezcla_final.wav
+            maestro, _, n_efectos = YT.pista_final(voz, fondo, efectos_de(trabajo, maqueta), D, segs)
+            print("audio: %d voces · música %s · %d efectos" % (len(T["escenas"]), st["musica"], n_efectos))
         video = os.path.join(sal, nombre)
         VD.ff("-i", mudo, "-i", maestro, "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-ar", "48000",
               "-shortest", "-movflags", "+faststart", video)
@@ -841,9 +923,10 @@ def cmd_montar(a):
         if abs(mf["input_i"] - VD.LUFS) > VD.LUFS_TOL or mf["input_tp"] > VD.TP_MAX:
             fallas.append("V8 %s sonoridad %.1f LUFS / %.1f dBTP (se espera %.0f ±%.1f, ≤ %.0f)" % (f, mf["input_i"], mf["input_tp"], VD.LUFS, VD.LUFS_TOL, VD.TP_MAX))
         print("video %s %.1f s · %.1f LUFS · %.1f dBTP → %s" % (f, VD.ffprobe_dur(video), mf["input_i"], mf["input_tp"], rel(video)))
-    B = bloques_srt(maqueta["capa"]["palabras"])
     with open(os.path.join(sal, "subtitulos.srt"), "w", encoding="utf-8") as fh:
-        fh.write("\n".join("%d\n%s --> %s\n%s\n" % (k, ts(b["start"]), ts(b["end"]), b["texto"]) for k, b in enumerate(B, 1)))
+        fh.write(VD.texto_srt(*escenas_srt(maqueta, T)))
+    if "9:16" in formatos(a) and not a.sin_portada and portada(trabajo):
+        fallas.append("la portada (salida/portada.png) no se dibujó: video3d.py portada %s" % rel(trabajo))
     for x in fallas:
         print("FALLA", x)
     return 1 if fallas else 0
@@ -860,12 +943,26 @@ def cmd_entregar(a):
     cred = os.path.join(trabajo, "audio", "creditos.json")
     if not (os.path.exists(cred) and leer(cred).get("total")) and not a.salida:
         return falla("sin créditos de voz (voz falsa): una maqueta de prueba no se entrega; para verla usa --salida DIR")
+    # un video sale en 9:16 y 4:5, con su caption por plataforma y su portada: lo que falte es una falla, no un hueco
+    faltan = revisar_caption(g)
+    if not os.path.exists(os.path.join(sal, "video_4x5.mp4")) and not a.sin_4x5:
+        faltan.append("falta salida/video_4x5.mp4 (el 4:5 del feed): corre render y montar con --formato 4:5 (o entrega solo el "
+                      "9:16 con --sin-4x5)")
+    if not os.path.exists(os.path.join(sal, "portada.png")):
+        faltan.append("falta salida/portada.png: corre montar (o video3d.py portada %s)" % rel(trabajo))
+    if not os.path.exists(os.path.join(sal, "subtitulos.srt")):
+        faltan.append("falta salida/subtitulos.srt: corre montar")
+    if faltan:
+        for x in faltan:
+            print("FALLA", x)
+        return 1
     destino = os.path.abspath(a.salida or os.path.join(RAIZ, "videos3d", "%s-%s" % (st["fecha"], st["slug"])))
     os.makedirs(destino, exist_ok=True)
-    for f in ("video.mp4", "video_4x5.mp4", "subtitulos.srt"):
+    for f in ("video.mp4", "video_4x5.mp4", "subtitulos.srt", "portada.png"):
         if os.path.exists(os.path.join(sal, f)):
             shutil.copyfile(os.path.join(sal, f), os.path.join(destino, f))
     shutil.copyfile(os.path.join(trabajo, "maqueta.json"), os.path.join(destino, "maqueta.json"))
+    shutil.copyfile(os.path.join(trabajo, "tiempos.json"), os.path.join(destino, "tiempos.json"))   # los cortes reales por escena (metricas.py alinear)
     estilos = {e["id"]: e for e in leer(ESTILOS)["estilos"]} if os.path.exists(ESTILOS) else {}
     escribir(os.path.join(destino, "guion.json"), dict(g, **{
         "tipo": "video3d", "id": "video3d-" + st["slug"], "slug": st["slug"], "tema": st["tema"], "fecha": st["fecha"],
@@ -884,9 +981,8 @@ def cmd_entregar(a):
     lineas += ["", "Geodatos: %s" % pie] if pie else []
     with open(os.path.join(destino, "fuentes.md"), "w", encoding="utf-8") as fh:
         fh.write("\n".join(lineas) + "\n")
-    if g.get("caption"):
-        redes = " · ".join("%s %s" % (r["nombre"], r["handle"]) for r in VD.REDES)
-        VD.escribir_caption(os.path.join(destino, "caption.md"), g["caption"], redes, VD.ffprobe_dur(os.path.join(sal, "video.mp4")))
+    redes = " · ".join("%s %s" % (r["nombre"], r["handle"]) for r in VD.REDES)
+    VD.escribir_caption(os.path.join(destino, "caption.md"), g["caption"], redes, VD.ffprobe_dur(os.path.join(sal, "video.mp4")))
     with open(os.path.join(os.path.dirname(destino), ".gitignore"), "w") as fh:
         fh.write("*.mp4\n")
     st["estado"], st["ruta"] = "listo", rel(destino)
@@ -912,11 +1008,13 @@ def main():
     s = sub.add_parser("datos")
     s.add_argument("trabajo")
     s.add_argument("--sumar", required=True)
-    for nombre in ("digesto", "tiempos", "entregar"):
+    for nombre in ("digesto", "tiempos", "entregar", "portada"):
         s = sub.add_parser(nombre)
         s.add_argument("trabajo")
         if nombre == "entregar":
             s.add_argument("--salida")
+            s.add_argument("--sin-4x5", dest="sin_4x5", action="store_true",
+                           help="entrega solo el 9:16 (sin esta bandera, que falte video_4x5.mp4 es una falla)")
     s = sub.add_parser("guion")
     s.add_argument("trabajo")
     s.add_argument("--check", action="store_true")
@@ -937,13 +1035,15 @@ def main():
         s.add_argument("--formato", default="ambos", choices=("9:16", "4:5", "ambos"))
         if nombre == "render":
             s.add_argument("--estimado", action="store_true")
+        else:
+            s.add_argument("--sin-portada", dest="sin_portada", action="store_true", help="no vuelve a dibujar salida/portada.png")
     a = p.parse_args()
     if not a.cmd:
         p.print_help()
         return 2
     return {"preparar": cmd_preparar, "datos": cmd_datos, "digesto": cmd_digesto, "guion": cmd_guion, "ganchos": cmd_ganchos,
             "storyboard": cmd_storyboard, "tiempos": cmd_tiempos, "render": cmd_render, "montar": cmd_montar,
-            "entregar": cmd_entregar}[a.cmd](a)
+            "portada": cmd_portada, "entregar": cmd_entregar}[a.cmd](a)
 
 
 if __name__ == "__main__":

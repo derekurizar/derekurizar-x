@@ -41,6 +41,7 @@ import re
 import shutil
 import subprocess
 import sys
+import time
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(RAIZ, "scripts"))
@@ -475,6 +476,7 @@ def cmd_proyecto(a):
         for fnt in ("archivo-wdth.woff2", "jetbrains-mono-var.woff2"):
             enlazar(os.path.join(RAIZ, "design", "fonts", fnt), os.path.join(P, "assets", "fonts", fnt))
         enlazar(os.path.join(RAIZ, "design", "grano-mesa.png"), os.path.join(P, "assets", "grano.png"))
+        gsap = gsap_local(P)   # GSAP del repositorio (scripts/versiones.py), como el vertical: el render no llama a la red
         dur = c["fin"] - c["ini"]
         # lo que va encima de la mesa sin ser pieza: el «Suscríbete» de la mitad del video (V25) y la pregunta en su pago (P6)
         sobre, sobre_tl = "", ""
@@ -511,7 +513,7 @@ def cmd_proyecto(a):
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=1920, height=1080" />
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    %s
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: %s; }
@@ -544,7 +546,7 @@ def cmd_proyecto(a):
     </script>
   </body>
 </html>
-""" % (C["mesa2"], C["mesa"], C["acento"], C["tinta"], C["mesa2"], C["acento"], C["papel"], C["acento"], dur, "\n".join(hosts), sobre, audio, sobre_tl))
+""" % (gsap, C["mesa2"], C["mesa"], C["acento"], C["tinta"], C["mesa2"], C["acento"], C["papel"], C["acento"], dur, "\n".join(hosts), sobre, audio, sobre_tl))
         escribir(os.path.join(P, "hyperframes.json"), {"$schema": "https://hyperframes.heygen.com/schema/hyperframes.json",
                                                         "registry": "https://raw.githubusercontent.com/heygen-com/hyperframes/main/registry",
                                                         "paths": {"blocks": "compositions", "components": "compositions/components", "assets": "assets"},
@@ -604,32 +606,48 @@ def cmd_render(a):
         Ps = [p for p in Ps if int(p.rsplit("-", 1)[1]) == a.capitulo]
     if not Ps:
         return falla("no hay proyectos en hf/: youtube.py proyecto")
+    ctx = contexto(trabajo)
+    dur_de = {c["numero"]: c["fin"] - c["ini"] for c in ctx["caps"]}
     procs, cola, malas = [], list(Ps), 0
-    while cola or procs:
-        while cola and len(procs) < a.paralelo:
-            P = cola.pop(0)
-            os.makedirs(os.path.join(P, "render"), exist_ok=True)
-            log = open(os.path.join(P, "render", "render.log"), "w")
-            procs.append((P, subprocess.Popen(["npx", "--yes", "hyperframes@" + HF_VERSION, "render", "--quality", a.calidad, "--workers", "1", "-o", "render/capitulo.mp4"],
-                                              cwd=P, stdout=log, stderr=subprocess.STDOUT), log))
-        for item in list(procs):
-            P, pr, log = item
-            if pr.poll() is not None:
-                log.close()
-                procs.remove(item)
-                ok = pr.returncode == 0 and os.path.exists(os.path.join(P, "render", "capitulo.mp4"))
-                print("render %s: %s" % (os.path.basename(P), "ok" if ok else "FALLÓ (render/render.log)"))
-                malas += not ok
-        if procs:
-            try:
-                procs[0][1].wait(timeout=5)
-            except subprocess.TimeoutExpired:
-                pass
+    try:
+        while cola or procs:
+            while cola and len(procs) < a.paralelo:
+                P = cola.pop(0)
+                os.makedirs(os.path.join(P, "render"), exist_ok=True)
+                log = open(os.path.join(P, "render", "render.log"), "w")
+                # el límite de tiempo, proporcional a lo que dura el capítulo; con varios a la vez HyperFrames los pone en fila,
+                # así que también cuenta lo que este tiene delante
+                dur = dur_de.get(int(P.rsplit("-", 1)[1]), ctx["total"])
+                limite = limite_render(dur + sum(x[5] for x in procs))
+                pr = lanzar_render(P, ["--quality", a.calidad, "--workers", "1", "-o", "render/capitulo.mp4"], log)
+                procs.append((P, pr, log, time.monotonic() + limite, limite, dur))
+            for item in list(procs):
+                P, pr, log, vence, limite, dur = item
+                vencido = pr.poll() is None and time.monotonic() > vence
+                if vencido:
+                    detener_render(pr)
+                if pr.poll() is not None:
+                    log.close()
+                    procs.remove(item)
+                    ok = not vencido and pr.returncode == 0 and os.path.exists(os.path.join(P, "render", "capitulo.mp4"))
+                    if vencido:
+                        print("render %s: FALLÓ: %s" % (os.path.basename(P), texto_limite("el render del capítulo", limite, dur, os.path.join(P, "render", "render.log"))))
+                    else:
+                        print("render %s: %s" % (os.path.basename(P), "ok" if ok else "FALLÓ (render/render.log)"))
+                    malas += not ok
+            if procs:
+                try:   # hasta que termine el primero, o hasta el límite más cercano (para verlo vencer a tiempo)
+                    procs[0][1].wait(timeout=max(0.2, min(5.0, min(x[3] for x in procs) - time.monotonic())))
+                except subprocess.TimeoutExpired:
+                    pass
+    finally:
+        for item in procs:   # una interrupción a mano: ningún render queda huérfano sosteniendo el candado de HyperFrames
+            detener_render(item[1])
+            item[2].close()
     if malas:
         return 1
     if a.capitulo:
         return 0
-    ctx = contexto(trabajo)
     segs = os.path.join(trabajo, "segs_16x9")
     os.makedirs(segs, exist_ok=True)
     lista = os.path.join(segs, "capitulos.txt")
@@ -692,7 +710,7 @@ def cmd_plano(a):
         ids = {M["id"] for M in mesas if M["cap"] == a.capitulo}
         f = [x for x in f if any((" %s " % k) in x or (" %s:" % k) in x or ("(%s" % k) in x for k in claves) or any(x.split(" ")[1] == i for i in ids)
              or ("capítulo %d:" % a.capitulo) in x]
-        av = [x for x in av if ("capítulo %d:" % a.capitulo) in x]
+        av = [x for x in av if ("capítulo %d:" % a.capitulo) in x or " sin datos: " in x]   # un gate sin datos (aviso_datos) vale para todo capítulo
     if a.hoja:
         hoja = hoja_de(ctx, mesas)
         open(os.path.join(trabajo, "plano.md"), "w", encoding="utf-8").write(hoja)

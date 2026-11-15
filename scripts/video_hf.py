@@ -241,16 +241,23 @@ def contexto_v(trabajo):
     st = leer(os.path.join(trabajo, "video.json")) if os.path.exists(os.path.join(trabajo, "video.json")) else {}
     Y = {"partes": [{"trabajo": rel(trabajo)}], "base": rel(trabajo), "slug": st.get("slug") or os.path.basename(trabajo), "musica": st.get("musica"),
          "paleta": st.get("paleta"), "fixture": bool(st.get("fixture")) or "/_fixture" in "/" + rel(trabajo)}   # una maqueta: los gates avisan
-    hechos_de = {}
+    # Lo que un gate necesita y no se pudo leer NO se calla (MS.aviso_datos): queda en ctx["avisos"], `revisar` lo suma a los
+    # suyos (sale en `plano --check`) y sale por stderr. Solo se atrapa lo que pasa al leer datos (MS.DATOS_ILEGIBLES).
+    avisos, hechos_de = [], {}
     try:
         for k, e in enumerate(leer(os.path.join(trabajo, "guion.json")).get("escenas") or []):
             hechos_de["e%d" % (k + 1)] = e.get("hechos") or []
-    except (OSError, ValueError):
-        pass
+    except MS.DATOS_ILEGIBLES as ex:
+        hechos_de = {}
+        MS.aviso_datos(avisos, "MV4", "no se pudo leer %s, que dice qué hechos verificados cuenta cada escena; un número o un nombre en "
+                                      "pantalla solo pasa si la voz lo dice" % rel(os.path.join(trabajo, "guion.json")), ex)
     try:
         elenco = YT.elenco_serie(Y)
-    except Exception:
+    except MS.DATOS_ILEGIBLES as ex:
         elenco = []
+        MS.aviso_datos(avisos, "MV4", "no se pudo leer el elenco (los `personajes` de %s y sus retratos); las fichas de persona salen sin "
+                                      "retrato y a cada una se le pide `cargo` y el nombre como lo dice la voz, como a alguien de fuera del elenco"
+                       % rel(os.path.join(trabajo, "encuadre.json")), ex)
     prot = None
     try:
         pr = leer(os.path.join(trabajo, "encuadre.json")).get("protagonista")
@@ -261,11 +268,13 @@ def contexto_v(trabajo):
            "caps": [{"numero": 1, "idx": list(range(len(es))), "titulo": "", "ini": 0.0, "fin": total}],
            "reglas": REGLAS, "hechos_de": hechos_de, "elenco": elenco, "doc": DOC_V, "protagonista": prot}
     try:   # el respaldo de los números en pantalla: las cifras de los datos del video, también como las redondea una tarjeta
-        vals, _, _ = VD.valores_respaldo(st["hilo"])   # {(valor, factor de la unidad)}
-        nums = [x for v, fct in vals for x in (v, v * fct)]
-        ctx["respaldo"] = nums + [round(v) for v in nums] + [round(v, 1) for v in nums]
-    except Exception:
-        pass
+        ctx["respaldo"] = MS.numeros_respaldo(VD.valores_respaldo(st["hilo"])[0])   # [(valor, factor de la unidad)] → números sueltos
+    except MS.DATOS_ILEGIBLES as ex:
+        ctx["respaldo"] = []
+        donde = "datos.json e hilo.json de %s" % st["hilo"] if st.get("hilo") else "video.json no dice su `hilo`"
+        MS.aviso_datos(avisos, "MV4", "no se pudo leer el respaldo de las cifras (%s); un número en pantalla solo pasa si la voz lo dice o "
+                                      "está en los hechos de la mesa" % donde, ex)
+    ctx["avisos"] = avisos
     ctx["seguir"] = seguir_de(ctx)
     return ctx
 
@@ -1210,7 +1219,7 @@ def armar(trabajo, fmt, portada=False):
     for fnt in ("archivo-wdth.woff2", "jetbrains-mono-var.woff2"):
         enlazar(os.path.join(RAIZ, "design", "fonts", fnt), os.path.join(P, "assets", "fonts", fnt))
     enlazar(os.path.join(RAIZ, "design", "grano-mesa.png"), os.path.join(P, "assets", "grano.png"))
-    enlazar(os.path.join(RAIZ, "design", "vendor", "gsap-3.15.0.min.js"), os.path.join(P, "assets", "vendor", "gsap.min.js"))
+    MS.gsap_local(P)   # GSAP del repositorio (scripts/versiones.py): assets/vendor/gsap.min.js; el render no llama a la red
     # la cabecera: la barra por actos, el kicker de la serie y el golpe de arriba (cambia de un corte con su mesa)
     x0, col = Fz["x0"], Fz["x1b"] - Fz["x0"]
     cab0 = cabeza(ctx, Fz, "")
@@ -2029,6 +2038,59 @@ def cmd_audio(a):
     return 0
 
 
+# ---------- el doble sin render (MESA_RENDER=0), por formato ----------
+# Una maqueta no renderiza con HyperFrames: su «render» es un doble en negro de la duración exacta. Eso se anota POR FORMATO
+# (un 4:5 de doble no queda limpio porque el 9:16 se haya vuelto a grabar de verdad):
+#   hf/<formato>/render/.doble           el sello viaja con el render: lo pone el doble y lo quita un render de verdad
+#   salida/.maqueta_sin_render.<formato> el video montado de ese formato viene de un doble: la pone el doble y la pone o la
+#                                        quita `montar`, según el sello del render que monta
+#   salida/.maqueta_sin_render           la general (VD.MESA_SIN_RENDER), la que leen los `entregar`: existe mientras
+#                                        ALGÚN formato esté marcado
+def sello_doble(trabajo, fid):
+    return os.path.join(trabajo, "hf", fid, "render", ".doble")
+
+
+def marca_doble(trabajo, fid=None):
+    """La marca de salida/: la de un formato («9x16», «4x5») o, sin `fid`, la general que leen los `entregar`."""
+    return os.path.join(trabajo, "salida", VD.MESA_SIN_RENDER + ("." + fid if fid else ""))
+
+
+def dobles_sin_render(trabajo):
+    """Los formatos cuyo video montado viene de un doble → ["9x16", "4x5"] (vacío: se puede entregar)."""
+    return [Fz["id"] for Fz in FORMATOS.values() if os.path.exists(marca_doble(trabajo, Fz["id"]))]
+
+
+def repartir_marca_vieja(trabajo):
+    """Una marca general sin marcas por formato es de antes de que existieran y no dice de qué formato era: vale para todo
+    formato que ya tenga render o video montado (cada uno queda con su sello y su marca hasta que se grabe de verdad)."""
+    if dobles_sin_render(trabajo) or not os.path.exists(marca_doble(trabajo)):
+        return
+    for Fz in FORMATOS.values():
+        r = os.path.join(trabajo, "hf", Fz["id"], "render")
+        if os.path.exists(os.path.join(r, "video.mp4")) or os.path.exists(os.path.join(trabajo, "salida", Fz["salida"])):
+            if os.path.isdir(r):
+                open(sello_doble(trabajo, Fz["id"]), "w").write("MESA_RENDER=0 (marca general anterior a las marcas por formato)\n")
+            open(marca_doble(trabajo, Fz["id"]), "w").write("MESA_RENDER=0 (marca general anterior a las marcas por formato)\n")
+
+
+def marcar_doble(trabajo, fid, doble):
+    """Anota si el video del formato `fid` viene de un doble (o ya no) y deja al día la marca general, que existe mientras
+    algún formato siga marcado. → los formatos marcados."""
+    os.makedirs(os.path.join(trabajo, "salida"), exist_ok=True)
+    repartir_marca_vieja(trabajo)
+    m = marca_doble(trabajo, fid)
+    if doble:
+        open(m, "w").write("MESA_RENDER=0\n")
+    elif os.path.exists(m):
+        os.remove(m)
+    quedan, general = dobles_sin_render(trabajo), marca_doble(trabajo)
+    if quedan:
+        open(general, "w").write("MESA_RENDER=0\n%s\n" % " ".join(quedan))
+    elif os.path.exists(general):
+        os.remove(general)
+    return quedan
+
+
 def cmd_render(a):
     trabajo = os.path.abspath(a.trabajo)
     Fz = FORMATOS[a.formato]
@@ -2038,20 +2100,23 @@ def cmd_render(a):
     os.makedirs(os.path.join(P, "render"), exist_ok=True)
     out = os.path.join(P, "render", "video.mp4")
     D = total_de(trabajo, a.formato) or contexto_v(trabajo)["total"]
-    marca = os.path.join(trabajo, "salida", VD.MESA_SIN_RENDER)
-    os.makedirs(os.path.join(trabajo, "salida"), exist_ok=True)
+    sello = sello_doble(trabajo, Fz["id"])
     if os.environ.get("MESA_RENDER") == "0":   # las maquetas: un doble de la duración exacta, sin HyperFrames (el proyecto ya pasó su check)
         VD.ff("-f", "lavfi", "-i", "color=c=0x14100d:s=%dx%d:r=%d:d=%.4f" % (Fz["w"], Fz["h"], FPS, D), "-c:v", "libx264", "-pix_fmt", "yuv420p", "-an", out)
-        open(marca, "w").write("MESA_RENDER=0\n")
+        open(sello, "w").write("MESA_RENDER=0\n")
+        marcar_doble(trabajo, Fz["id"], True)
         print("render %s: doble sin render de %.2f s (MESA_RENDER=0; no se puede entregar) → %s" % (a.formato, D, rel(out)))
         return 0
-    with open(os.path.join(P, "render", "render.log"), "w") as log:   # SIEMPRE un proceso: con varios el video tiembla
-        rc = subprocess.run(["npx", "--yes", "hyperframes@" + HF_VERSION, "render", "--quality", a.calidad, "--workers", "1", "-o", "render/video.mp4"],
-                            cwd=P, stdout=log, stderr=subprocess.STDOUT).returncode
+    registro = os.path.join(P, "render", "render.log")
+    limite = MS.limite_render(D)   # SIEMPRE un proceso (con varios el video tiembla) y con un límite proporcional a la duración
+    rc, vencido = MS.render_hf(P, ["--quality", a.calidad, "--workers", "1", "-o", "render/video.mp4"], limite, registro)
+    if vencido:
+        return falla(MS.texto_limite("el render %s" % a.formato, limite, D, registro))
     if rc or not os.path.exists(out):
-        return falla("el render falló (%s)" % rel(os.path.join(P, "render", "render.log")))
-    if os.path.exists(marca):
-        os.remove(marca)
+        return falla("el render falló (hyperframes %s; %s)" % (HF_VERSION, rel(registro)))
+    repartir_marca_vieja(trabajo)   # una marca general de antes de las marcas por formato: se reparte ANTES de quitar el sello de este
+    if os.path.exists(sello):
+        os.remove(sello)             # este render ya es de verdad; la marca de salida/ la quita `montar` cuando lo monte
     d = VD.ffprobe_dur(out)
     print("render %s: %s (%.2f s; el plano dice %.2f s) → %s" % (a.formato, VD_mmss(d), d, D, rel(out)))
     if abs(d - D) > 2.0 / FPS + 0.05:
@@ -2082,6 +2147,11 @@ def cmd_montar(a):
     if abs(mf["input_i"] - VD.LUFS) > VD.LUFS_TOL or mf["input_tp"] > VD.TP_MAX:
         fallas.append("V8 sonoridad %.1f LUFS / %.1f dBTP (se espera %.0f ±%.1f, ≤ %.0f)" % (mf["input_i"], mf["input_tp"], VD.LUFS, VD.LUFS_TOL, VD.TP_MAX))
     print("video %s %s · %.1f LUFS · %.1f dBTP → %s" % (a.formato, VD_mmss(VD.ffprobe_dur(video)), mf["input_i"], mf["input_tp"], rel(video)))
+    # el video montado es de verdad solo si su render lo es: la marca del formato sigue al sello del render (la general, a todas)
+    dobles = marcar_doble(trabajo, Fz["id"], os.path.exists(sello_doble(trabajo, Fz["id"])))
+    if dobles:
+        print("  doble sin render (MESA_RENDER=0) en %s: no se puede entregar hasta grabar y montar de verdad %s"
+              % (", ".join(dobles), "ese formato" if len(dobles) == 1 else "esos formatos"))
     for x in fallas:
         print("FALLA", x)
     return 1 if fallas else 0

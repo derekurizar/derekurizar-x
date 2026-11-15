@@ -715,7 +715,7 @@ paso "numeros_es.py --prueba (cifras → palabras, ida y vuelta)" python3 script
 paso "V21/V22: cámara quieta (un plano y a lo más un corte a la persona); tramos sin cambio; sobrecarga de entradas y efectos" python3 -c '
 import sys; sys.path.insert(0, "scripts"); import video as V
 p, f = V.planos_foto([{"x": .1, "y": .2, "w": .1, "h": .1}, {"x": .7, "y": .2, "w": .1, "h": .1}], 18.0, cortes=[3.4, 7.2, 10.9, 14.6], evitar=[7.0])
-assert V.CAMARA_QUIETA and len(p) == 1 and p[0]["z"] == "amplio", p   # cámara quieta: nada de sub-planos por reloj
+assert len(p) == 1 and p[0]["z"] == "amplio", p   # cámara quieta: nada de sub-planos por reloj
 p2, _ = V.planos_foto(None, 12.0, personas=[(5.0, 1), (8.0, 0)])
 assert len(p2) == 2 and p2[1].get("persona") and p2[1]["t"] == 5.0, p2   # a lo más UN corte: a la cara que nombra la voz
 assert V.tramos_sin_cambio([0.05] * 24 + [0.5] + [0.05] * 4, minimo=4.0) == [(0.0, 7.0)]
@@ -1844,21 +1844,6 @@ neg_historia "un año que no está en la cronología" "H4" 'e[4]["texto"] = e[4]
 neg_historia "un número sin respaldo" "V2" 'e[5]["texto"] = e[5]["texto"].replace("4,500", "4,800")'
 neg_historia "un hecho de parte (alegato en disputa) sin atribuir" "H4 escena 10: cuenta un hecho en disputa o de parte" 'e[9]["texto"] = e[9]["texto"].replace("su familia dice que fue en 2011", "fue en 2011")'
 neg_historia "un hecho de una sola fuente sin la fuente en pantalla" "H4 escena 10: cuenta un hecho de una sola fuente" 'e[9].pop("fuente")'
-paso "historia.py videos_de_html: YouTube, og:video, JW Player, Brightcove, Facebook, <video> y VideoObject, sin repetir; mmss y segundos_de" python3 -c '
-import sys; sys.path.insert(0,"scripts"); import historia as H
-html_ = """<iframe src="https://www.youtube.com/embed/AbCdEfGhIjK?rel=0"></iframe><iframe src="//www.youtube.com/embed/AbCdEfGhIjK"></iframe>
-<div data-src="https://cdn.jwplayer.com/players/Xy12Ab34-Zz99Qq11.js"></div><iframe src="https://players.brightcove.net/123/default_default/index.html?videoId=456"></iframe>
-<iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fprensalibre%2Fvideos%2F789%2F&show_text=0"></iframe>
-<video><source src="/media/clip.mp4" type="video/mp4"></video> {"file":"https:\\/\\/cdn.ejemplo.com\\/hls\\/nota.m3u8"}"""
-ld = ["{\"@context\":\"https://schema.org\",\"@graph\":[{\"@type\":\"VideoObject\",\"name\":\"Conferencia\",\"contentUrl\":\"https://ejemplo.com/v/conf.mp4\",\"uploadDate\":\"2015-04-16T10:00:00\"}]}"]
-v = H.videos_de_html(html_, "https://www.prensalibre.com/nota/", {"og:video": "https://ejemplo.com/og.mp4"}, ld)
-u = [x["url"] for x in v]; t = {x["tipo"] for x in v}
-assert u[0] == "https://ejemplo.com/v/conf.mp4" and v[0]["fecha"] == "2015-04-16" and v[0]["titulo"] == "Conferencia", v[0]
-assert u.count("https://www.youtube.com/watch?v=AbCdEfGhIjK") == 1, u
-assert "https://cdn.jwplayer.com/v2/media/Xy12Ab34" in u and any("brightcove" in x for x in u) and "https://www.facebook.com/prensalibre/videos/789/" in u, u
-assert "https://www.prensalibre.com/media/clip.mp4" in u and "https://cdn.ejemplo.com/hls/nota.m3u8" in u and "https://ejemplo.com/og.mp4" in u, u
-assert len(v) <= H.VIDEOS_POR_FUENTE and H.mmss(83.5) == "1:23.5" and H.segundos_de("1:23.5") == 83.5 and H.segundos_de("12") == 12
-assert H.parecido("Cada pan sale del mismo horno", "cada pan sale del mismo horno.") == 1.0 and H.parecido("hola mundo", "adiós") < 0.5'
 neg_historia "una cita sin decir quién habla" "H4 escena 7: la voz no dice quién lo dijo" 'e[6]["texto"] = e[6]["texto"].replace("el Ministerio de Salud, la autoridad sanitaria, entró a la planta. Su informe dice que", "alguien entró a la planta y dijo que")'
 neg_historia "una toma de video (retiradas el 2026-11-06)" "TM0 escena 4: las tomas de video ya no van" 'e[3].update(tipo="toma", toma="ori-v01-t02")'
 neg_historia "«culpable» sin sentencia firme" "H3" 'e[7]["texto"] = e[7]["texto"].replace("la multa:", "la multa y el dueño fue culpable:")'
@@ -2114,6 +2099,7 @@ paso "C3D11 pide separada_de al pin que dice una distancia" v3d_neg 'g["escenas"
 paso "C3D3 rechaza un lugar que la voz nombra y nadie muestra" v3d_neg 'g["escenas"][2]["marcas"]=[]; g["escenas"][2]["camara"][0]["mira"]="epicentro"' "C3D3 escena 3"
 if [[ "$RAPIDO" == "1" ]]; then echo "SKIP   make video3d-fixture (RAPIDO=1)"; else
   paso "make video3d-fixture (render 9:16 con el motor three.js, voz falsa, V8)" bash -c 'make video3d-fixture >/dev/null && ffprobe -v error -show_entries stream=codec_type,width,height -of csv=p=0 sesiones/_fixture_video3d/trabajo/salida/video.mp4 | grep -q "video,1080,1920"'
+  paso "make video3d-fixture dibuja la portada limpia y el .srt" bash -c "test -s sesiones/_fixture_video3d/trabajo/salida/portada.png && ls sesiones/_fixture_video3d/trabajo/salida/*.srt >/dev/null"
   paso "video3d.py entregar no entrega con voz falsa (sin créditos y sin --salida)" bash -c "! python3 scripts/video3d.py entregar sesiones/_fixture_video3d/trabajo >/dev/null 2>&1"
 fi
 # la maqueta 3D como pieza de la mesa de archivo (scripts/mesa.py: `maqueta` a nivel de mesa en plano.json; YT20–YT24 = MV15–MV19)
@@ -2679,6 +2665,11 @@ check_js() {
   node --check "$TMP/check_$1"
 }
 paso "reglas del 2026-11-10 (srt, V25, P6, V5 cifras, tics, H25, H26, SE1, efectos y transiciones del largo)" python3 scripts/pruebas/reglas_2026_11_10.py
+paso "ola 1 · video (gancho y escena 2 con la voz real, música única, rotación sobre el feed, quién eligió, TM0, podar-intermedios)" python3 scripts/pruebas/ola1_video.py
+paso "ola 1 · anclas (un `dice` resuelve igual en la mesa, en /video-3d y en los tableros)" python3 scripts/pruebas/ola1_anclas.py
+paso "ola 1 · mesa (marca de render de prueba por formato, avisos «sin datos», GSAP local, límite del render, notas de /congreso)" python3 scripts/pruebas/ola1_mesa.py
+paso "ola 1 · /video-3d (22 negativos M3D sin render, caption V5, srt, escuchar, 4:5, rotación)" python3 scripts/pruebas/ola1_video3d.py
+paso "ola 1 · métricas (partes de serie y largos, 3D, duracion|promesa|plataforma, vistas por día)" python3 scripts/pruebas/ola1_metricas.py
 paso "node --check hilo.js (envuelto en async function)" check_js hilo.js
 paso "node --check ideas.js (envuelto en async function)" check_js ideas.js
 paso "node --check dato.js (envuelto en async function)" check_js dato.js

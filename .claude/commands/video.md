@@ -1,5 +1,5 @@
 ---
-description: Convierte un hilo ya entregado en un video vertical narrado para TikTok, Instagram y Facebook Reels y YouTube Shorts, más su versión 4:5 para el feed (uso — /video <slug|ultimo> [corto|medio|largo] [musica:<id>] [fixture]; corto ≈ 1 min, medio ≈ 2 min (por defecto), largo ≈ 4 min; guion de retención sin cara (gancho elegido entre 4–5 familias distintas, con su visual, golpes de texto cinético, «pero / por eso», promesa y pago) aprobado por un crítico ANTES de gastar créditos; voz de ElevenLabs con las cifras en palabras, tarjetas del hilo animadas con zoom a la cifra, subtítulos, barra de progreso, música con ducking y efectos del catálogo fijo; entrega en hilos/<fecha>-<slug>/video/)
+description: Convierte un hilo ya entregado en un video vertical narrado (9:16 + 4:5) con guion de retención aprobado por un crítico antes de gastar créditos (uso — /video &lt;slug|ultimo&gt; [corto|medio|largo] [musica:&lt;id&gt;] [fixture]; medio ≈ 2 min por defecto; entrega en hilos/&lt;fecha&gt;-&lt;slug&gt;/video/)
 ---
 
 Eres el coordinador del flujo **/video** de @DerekUrizar. Sus argumentos son: "$ARGUMENTS".
@@ -66,7 +66,7 @@ decisión del usuario.**
      sesión), vuelve a lanzar el Workflow completo (0 créditos) y repite la elección. `"auto": true` deja la recomendación del crítico (solo si el usuario lo pide).
    - **El usuario elige el cierre**: con el guion aprobado, el Workflow devuelve `cierres` (5 opciones en
      `cierres.json`; `c1` es la del guion). ANTES de la voz, `python3 scripts/video.py cierres <TRABAJO> --opciones` y
-     pregunta igual (`c1` primero). Con otro id: `python3 scripts/video.py cierres <TRABAJO> --usar <id>`; con su texto:
+     pregunta igual (`c1` primero). Con el id que elija (también `c1`: así queda registrado quién eligió; con `auto`, `--usar c1 --por critico`): `python3 scripts/video.py cierres <TRABAJO> --usar <id>`; con su texto:
      `--propio "<su texto>"` con `--forma`, `--mecanismo`, `--quien` y `--verbo` que casen con su frase
      (`referencias/cierres.md`; si dicta solo la frase final, se queda la oración del guion que la prepara). Después corre `python3 scripts/video.py narracion <TRABAJO> --check` y `guion <TRABAJO> --check` (si fallan, `guion.previo.json` tiene el de antes).
      Si el gate la rechaza, muéstrale la falla y propón la versión más cercana que pasa; nunca edites `guion.json` a
@@ -89,39 +89,11 @@ decisión del usuario.**
    - Corre tú `python3 scripts/video.py guion <TRABAJO> --check` (exit 0) para confirmar `locucion.json`.
    - En el reporte, qué gancho y qué cierre eligió el usuario y cuáles recomendaba el crítico (`seleccion.json`, `cierres.json`).
 3. **VOZ (MCP)**
-   - `python3 scripts/video.py voz <TRABAJO>` imprime la voz y un `prompt` por **nodo**: una secuencia de 2–5
-     escenas del mismo acto grabada de corrido (`locucion.json → secuencias`) o una escena suelta (el gancho, el
-     cierre, las que no caben en ninguna). `descargar --estado` corta cada secuencia en sus escenas con
-     los tiempos de Scribe.
-   - **El estado en línea** (m045, m047): si `creative_get_flow_run_status` devuelve la respuesta en el chat y no en un archivo
-     (pasa con pocas sesiones), escríbela TAL CUAL a `<TRABAJO>/audio/estado.json` y pásale ese archivo a `descargar --estado`;
-     valen las `words` en línea de Scribe. `descargar` falla si una transcripción no casa con ninguna escena.
-   - Más corto todavía (2026-11-14): escribe `<TRABAJO>/audio/nodos.json` con las dos URL de cada nodo
-     (`{"s1": {"voz": "<content_url>", "palabras": "<words_download_url>", "creditos": 177}, "7": {…}}`) y corre
-     `descargar <TRABAJO> --nodos <ese archivo>`: el resto del estado sale de `locucion.json`.
-   - `creative_create_flow` con el nombre «Video · <slug>».
-   - Por cada nodo, `creative_add_flow_node`: `node_type: "tts"`, `model_id: "eleven_multilingual_v2"`,
-     `voice_id` de la salida, `model_parameters: {"language_code": "es"}` y `prompt` **exacto**.
-   - `creative_run_flow_nodes` con TODOS los nodos y **`generations_count: 1`**: la locución es determinista y
-     el usuario eligió esta voz; no pidas variaciones.
-   - Sondea `creative_get_flow_run_status` **solo con los `session_ids` que sigan pendientes** (cada sondeo
-     devuelve las URL completas: con los 10 son ~15k caracteres). ElevenLabs limita cuántas voces genera a la
-     vez y reintenta solo («concurrency limit»): no relances nodos.
-   - Cuando la voz esté completa, por cada nodo TTS `creative_transcribe_audio` (`eleven_scribe_v1`,
-     `connect_from: [nodo]`; cuesta 0).
-   - Luego **una sola** llamada a `creative_get_flow_run_status` con los `session_ids` de la voz Y de Scribe
-     (20 en un video medio): la respuesta supera el límite y queda guardada en un archivo. Corre
-     `python3 scripts/video.py descargar <TRABAJO> --estado <ese archivo>`: baja `voz_N.mp3` (por el prompt de
-     cada generación), `palabras_N.json` (por el id de generación de cada transcripción) y escribe
-     `audio/creditos.json` con los créditos cobrados. Exit 1 lista lo que falte.
-   - Respaldo, solo si la respuesta llegó en línea y no se guardó: escribe `<TRABAJO>/audio/urls_voz.json`
-     (`{"<n>": "<content_url>"}`) y `urls_palabras.json` (`words_download_url`) y corre `descargar --voz …` y
-     `descargar --palabras …`.
+   - Sigue `referencias/fragmentos/voz-mcp.md` (lee ese archivo: nodos por secuencia, lotes de ≤ 3, `generations_count: 1`, Scribe y
+     `descargar --nodos`) con `<script>` = `video.py` y el flow «Video · <slug>».
 4. **TIEMPOS**
    - Corre `python3 scripts/video.py tiempos <TRABAJO>` (V6 alineación; V10 ritmo real, aviso).
-   - Si una escena no se alinea, rehaz SOLO ese nodo: corre `creative_run_flow_nodes` de ese nodo con 1 toma,
-     transcríbelo, pide el estado de esas dos sesiones y pásalo a `descargar --estado` (solo actualiza esa
-     escena y suma sus créditos a `creditos.json`); repite `tiempos`.
+   - Si una escena no se alinea, rehaz SOLO ese nodo («Retomas» en `referencias/fragmentos/voz-mcp.md`) y repite `tiempos`.
    - Corre `python3 scripts/video.py escuchar <TRABAJO>` (V11: whisper.cpp local transcribe cada voz SIN el guion y
      coteja las cifras; Scribe solo alinea el prompt). Una escena con `FALLA V11` → la misma retoma de un solo nodo y
      `escuchar --solo N`; si vuelve a fallar, no insistas: anótalo en el reporte y pide al usuario oír esa escena. Si
@@ -129,8 +101,10 @@ decisión del usuario.**
      en el reporte. Los avisos de palabras no numéricas («Zacatepeques» por Sacatepéquez) son ortografía de whisper.
 5. **GRABAR Y MONTAR**
    - **PLANO** (mesa de archivo, desde el 2026-11-14; todo TRABAJO nuevo trae `"realizacion": "mesa"` en `video.json`):
-     después de `tiempos` y antes de `grabar`, lanza `Workflow({ name: "plano", args: { trabajo: "<TRABAJO>" } })`
-     (hasta reiniciar Claude Code, con `scriptPath: ".claude/workflows/plano.js"` y `args.permitir_fallback: true`). El
+     después de `tiempos` y antes de `grabar`, lanza `Workflow({ name: "plano", args: { trabajo: "<TRABAJO>" } })`.
+     Si falla con «agente no registrado», pide
+     reiniciar Claude Code (los agentes se cargan al arrancar); el plano no se relanza con `permitir_fallback`: un
+     realizador sin su agente triplica el contexto. El
      `video-realizador` escribe `<TRABAJO>/plano.json` (qué pieza entra con cada oración) y deja
      `python3 scripts/video.py plano <TRABAJO> --check --hoja` en 0 (MV1–MV14). Con `plano_listo`, muestra
      `<TRABAJO>/plano.md` y sigue; con `plano_pendiente`, muestra las `fallas` y relánzalo (conserva el plano). Lo que

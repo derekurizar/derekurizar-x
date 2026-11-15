@@ -1,7 +1,7 @@
 ---
 name: video-realizador
 description: >-
-  Realizador del video vertical en mesa de archivo (@DerekUrizar; /historia, /serie, /explica, /sabias, /video, /departamento y /congreso). Con la voz ya grabada, escribe el GUION VISUAL del video (plano.json): con cada oración entra en pantalla lo que la voz nombra (una foto, un recorte de prensa con su titular real, la página de un documento, la ficha de una persona o de una institución, un lugar en el mapa, una fecha, una cifra con su rótulo, la jerarquía de personas con sus hilos, la comparación en barras, o una maqueta 3D cuando el lugar es la información) y se queda quieto. Escribe para el cuadro vertical: mesas de una o dos escenas con su golpe de arriba, una pieza por oración y textos que den tiempo de leerse. Parte del borrador que arma el script, baja los recursos que falten (historia.py leer, foto y pagina) y pasa scripts/video.py plano --check (MV1–MV14). La cámara nunca se mueve.
+  Realizador de la mesa de archivo vertical (/historia, /serie, /explica, /sabias, /video, /departamento, /congreso): con la voz ya grabada escribe plano.json, qué pieza entra en pantalla con cada oración (foto, recorte, documento, ficha, mapa, fecha, cifra, red, barra o maqueta 3D), y pasa `plano --check` (MV1–MV19). La cámara nunca se mueve.
 tools: Read, Write, Bash, WebSearch, WebFetch
 model: opus
 ---

@@ -66,3 +66,19 @@ al principio, así que en puntos absolutos toda escena temprana parecería mala.
 - `metricas.py rendimiento --por parte`: vistas de la parte N+1 entre las de la N, por serie y plataforma. Es la medida
   del puente y de la promesa de la serie.
 - Qué sostiene cada regla y con qué nivel de evidencia: `referencias/analisis/investigacion.md`.
+
+## Partes de serie, largos, 3D y cortes nuevos (2026-11-14)
+
+- **Piezas vinculables**: cada parte entregada de una serie es una pieza (`serie:<serie>-parte-N`, el id que usan
+  `agenda.py` y `rendimiento --por parte`) y cada largo de YouTube otra (`youtube:youtube-<serie>`); antes no se podían
+  medir.
+- **Vinculación** (`metricas.py vincular`): para partes y largos la ventana es de −1 a +45 días (`VENTANA_SERIE`;
+  `series.json` no guarda la fecha de cada parte). El título manda: «Parte 3», «cuarta parte», «Pt. 5» o «3/7» suma a
+  su parte y descarta las demás. Dos partes casi iguales sin número en el título quedan `pendiente` con las dos
+  candidatas (se resuelven con `--fijar`). Un largo solo casa por duración (±12 s).
+- **Alineación**: un video de `/video-3d` se alinea por sus escenas (`tiempos.json` de la entrega, si no
+  `capa.palabras` de la maqueta), con los eventos y las claves de cámara de cada una (`en_3d`); un largo, por capítulos.
+- **`rendimiento --por duracion|promesa|plataforma`**: por tramo de duración (< 35, 35–70, 70–120, > 120 s), por la
+  `forma` de la promesa y por plataforma.
+- **Vistas por día de vida**: toda comparación de vistas trae la columna por día (una pieza de 2 días no se compara en
+  crudo con una de 10). Los umbrales de AN1–AN14 no cambiaron.

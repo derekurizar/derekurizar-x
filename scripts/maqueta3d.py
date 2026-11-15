@@ -20,7 +20,7 @@ cámara y la proyección): nunca miden píxeles, y valen igual para los dos moto
   maqueta3d.py prueba [--dir DIR] [--formato F]                   check + hoja + render del fixture (+ un cuadro en Blender)
   maqueta3d.py prueba --blender-render ESTILO                     el fixture completo en un estilo de Blender (lento)
 
-Salida: 0 ok · 1 gate o paso fallido · 2 uso incorrecto. Python stdlib; HyperFrames 0.9.28 por npx, un solo proceso.
+Salida: 0 ok · 1 gate o paso fallido · 2 uso incorrecto. Python stdlib; HyperFrames por npx (su versión: scripts/versiones.py), un solo proceso.
 """
 import argparse, html, json, math, os, re, shutil, subprocess, sys, time, unicodedata
 
@@ -28,8 +28,9 @@ AQUI = os.path.dirname(os.path.abspath(__file__))
 RAIZ = os.path.dirname(AQUI)
 sys.path.insert(0, AQUI)
 import build_set3d as SET3D  # noqa: E402  (lector del PNG del relieve)
+import versiones             # noqa: E402  (la versión de HyperFrames, en un solo sitio: scripts/versiones.py)
 
-HF = ["npx", "--yes", "hyperframes@0.9.28"]
+HF = list(versiones.HF)      # ["npx", "--yes", "hyperframes@<versión>"]
 MOTOR = os.path.join(RAIZ, "video", "maqueta")
 SETS = os.path.join(RAIZ, "design", "sets3d")
 FIXTURE = os.path.join(MOTOR, "fixture", "maqueta.json")
@@ -959,7 +960,7 @@ def escribir_proyecto(m, formato, destino, fotos=None):
     for d in ("fonts",) + (("placa",) if placa else ("three", "set")):
         os.makedirs(os.path.join(A, d))
     V = os.path.join(RAIZ, "design", "vendor")
-    shutil.copyfile(os.path.join(V, "gsap-3.15.0.min.js"), os.path.join(A, "gsap.min.js"))
+    shutil.copyfile(versiones.GSAP_JS, os.path.join(A, "gsap.min.js"))
     for f in ("archivo-wdth.woff2", "jetbrains-mono-var.woff2"):
         shutil.copyfile(os.path.join(RAIZ, "design", "fonts", f), os.path.join(A, "fonts", f))
     if placa:
@@ -975,7 +976,7 @@ def escribir_proyecto(m, formato, destino, fotos=None):
         guion_motor = '<script src="assets/placa.js"></script>'
     else:
         for f in ("three.module.js", "three.core.js", "LICENSE"):
-            shutil.copyfile(os.path.join(V, "three-0.187.0", f), os.path.join(A, "three", f))
+            shutil.copyfile(os.path.join(versiones.THREE_DIR, f), os.path.join(A, "three", f))
         shutil.copyfile(os.path.join(S.dir, R["relieve"]["archivo"]), os.path.join(A, "set", R["relieve"]["archivo"]))
         fondo = '<canvas id="gl" class="clip" width="@W@" height="@H@" data-start="0" data-duration="@D@" data-track-index="0"></canvas>'
         guion_motor = '<script type="module" src="assets/motor.js"></script>'

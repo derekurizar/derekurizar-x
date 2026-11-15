@@ -1,7 +1,7 @@
 ---
 name: historia-oyente
 description: >-
-  Oyente ingenuo del flujo /historia y /explica (@DerekUrizar). Oye la narración del video en orden (la voz en palabras de locucion.json) y lee lo que hay en pantalla por escena, sin saber nada más de la historia: ni la cronología, ni el encuadre, ni las fuentes. Devuelve en una oración de qué es la historia, qué le prometieron y qué le dieron, y lista las confusiones (escena, frase literal de la voz, qué no entendió), los saltos entre escenas, las repeticiones y las preguntas que quedaron sin responder. Escribe oyente.json. No corrige, no propone arreglos, no inventa datos. Corre antes del crítico y en los retoques.
+  Oyente ingenuo de /historia, /serie, /explica, /video y /youtube-long: solo oye la voz y lee la pantalla, y devuelve qué entendió, las confusiones, los saltos, las repeticiones y las preguntas sin responder (en /explica, la explicación devuelta). Escribe oyente.json; no corrige ni propone arreglos.
 tools: Read, Write, Bash
 model: sonnet
 ---

@@ -1,5 +1,5 @@
 ---
-description: Un tema contado en 3–5 partes de ≈ 90 s (TikTok, Reels, Shorts y 4:5), con una investigación compartida y un plan versionado — motor /historia (una historia partida por periodos) o /explica (un temario: un mecanismo por parte); cada parte se entiende sola, cierra con un puente hacia la siguiente sin anunciarla y lleva «Serie · Parte N de M» en el chip y en los captions (uso — /serie <tema> [3-5|3-8 con caso] [explica|caso] [sin-voz|fixture]; caso = un caso complejo en 3–8 partes de ≈ 130 s repartidas por temas (SE10–SE12); p. ej. /serie la historia de La Aurora 4 · /serie cómo funciona el crédito 3 explica; la parte N no se publica hasta que la N+1 tenga el guion aprobado)
+description: Un tema contado en 3–5 partes de ≈ 90 s (9:16 + 4:5) con una investigación compartida y un plan versionado, sobre el motor /historia o /explica; cada parte se entiende sola y cierra con un puente (uso — /serie &lt;tema&gt; [3-5|3-8 con caso] [explica|caso] [sin-voz|fixture]; caso = un caso complejo en 3–8 partes de ≈ 130 s)
 ---
 
 Eres el coordinador de **/serie** de @DerekUrizar. Argumentos: "$ARGUMENTS".
@@ -14,11 +14,10 @@ La guía es `referencias/flujo-serie.md`. Nunca publiques. La serie reutiliza el
 `.claude/commands/historia.md` (o `explica.md`). Sus reglas valen en cada parte: el usuario elige gancho y cierre, el
 guion que el crítico rechaza no se graba, la voz va por secuencias y el reporte termina con «Mejoras al framework».
 
-**Quién dibuja** (2026-11-14): con el motor /historia, cada parte se dibuja con la **mesa de archivo**
-(`referencias/flujo-mesa.md`). `serie.py preparar` lo fija (`"realizacion": "mesa"` en el `video.json` de la serie y de
+**Quién dibuja** (2026-11-14): cada parte se dibuja con la **mesa de archivo**
+(`referencias/flujo-mesa.md`), y con el motor /explica también (`video.MESA_FLUJOS`). `serie.py preparar` lo fija (`"realizacion": "mesa"` en el `video.json` de la serie y de
 cada parte; `--realizacion propio` deja el motor viejo, y una serie empezada con un motor termina con ese motor). Por
-eso cada parte lleva su paso **Plano** después de su voz (paso 4). Las series con el motor /explica siguen en el motor
-propio y no llevan Plano.
+eso cada parte lleva su paso **Plano** después de su voz (paso 4), con los dos motores.
 
 1. **PREFLIGHT**
    - `make doctor` (exit 0).
@@ -40,7 +39,7 @@ propio y no llevan Plano.
      aprueba, `serie.py guion-aprobado`. **No se graba ninguna voz todavía.**
    - Con TODAS las partes con guion: `python3 scripts/serie.py completa <SERIE> --check` (SE17: faltan guiones, hechos,
      citas, frases, presentaciones y siglas repetidas entre CUALQUIER par de partes, y la cadena real de puentes) y
-     escribe `<TRABAJO>/serie_completa.md`. Luego un `video-critico` en «modo serie completa» lee ese archivo entero:
+     escribe `<TRABAJO>/serie_completa.md`. Luego un `video-critico` en «modo serie completa» (`referencias/roles/video-critico/serie.md`) lee ese archivo entero:
      coherencia del arco, repeticiones, saltos, revelaciones adelantadas o pagadas dos veces, conceptos explicados dos
      veces o nunca. Sus arreglos van con `historia.py aplicar` en la parte que toca (una parte ya entregada queda fija
      salvo que el usuario pida tocarla). Repite `completa --check` hasta 0 fallas y `--aprobar`.
@@ -60,8 +59,8 @@ propio y no llevan Plano.
    - Voz (MCP, por secuencias) o voz falsa con `sin-voz`, y `tiempos` (y `escuchar`), con los comandos del motor sobre
      `<TRABAJO>/parte-N`.
    - **Plano de la parte** (motor /historia en la mesa; paso 6 de `historia.md`): con la voz de ESA parte ya medida,
-     `Workflow({ name: "plano", args: { trabajo: "<TRABAJO>/parte-N" } })` (hasta reiniciar Claude Code, con
-     `scriptPath: ".claude/workflows/plano.js"` y `permitir_fallback: true`). Con `plano_listo`, muestra
+     `Workflow({ name: "plano", args: { trabajo: "<TRABAJO>/parte-N" } })` (sin `permitir_fallback`: si el agente no
+     está registrado, se reinicia Claude Code). Con `plano_listo`, muestra
      `<TRABAJO>/parte-N/plano.md` y sigue; con `plano_pendiente`, muestra las fallas y relanza o pregunta. Un plano por
      parte: no se copia de una parte a otra. Para retocarlo, el mismo Workflow con `args.notas`.
    - `grabar`, `montar`, `revisar` en 9:16 y luego en 4:5 (o de una vez: `python3 scripts/historia.py producir

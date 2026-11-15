@@ -1,5 +1,5 @@
 ---
-description: Un concepto, un proceso o una regla explicado en un video vertical de ~2 min para TikTok, Reels y Shorts, más su 4:5 — para que quien lo vea pueda explicárselo a otro; tres actos (la pregunta y la idea equivocada, el mecanismo, en tu vida con datos de Guatemala), la pizarra que hace la cuenta al ritmo de la voz, animación del mecanismo, números de ejemplo calculados por el script y marcados «Ejemplo», datos reales verificados; cierre siempre con «Sígueme en» (uso — /explica <tema> [corto|medio|largo] [sin-voz|fixture]; p. ej. /explica el interés compuesto; voz de ElevenLabs ≈ 1,700 créditos en medio; sin-voz arma el video con voz falsa, 0 créditos; el hilo en modo explica es /hilo explica)
+description: Un concepto, un proceso o una regla explicado en un video vertical de ~2 min (9:16 + 4:5) para que quien lo vea pueda explicárselo a otro: la pregunta, el mecanismo y en tu vida, con números de ejemplo calculados por el script (uso — /explica &lt;tema&gt; [corto|medio|largo] [sin-voz|fixture]; voz ≈ 1,700 créditos en medio; el hilo en modo explica es /hilo explica)
 ---
 
 Eres el coordinador del flujo **/explica** de @DerekUrizar. Sus argumentos son: "$ARGUMENTS".
@@ -38,7 +38,7 @@ La guía es `referencias/flujo-explica.md`. Nunca publiques. Nunca generes músi
      sesión), escribe la elección con `ganchos --elegir <id>` y lanza con `"desde": "guion"`. `"auto": true` deja la recomendación del crítico (solo si el usuario lo pide).
    - **El usuario elige el cierre**: con el guion aprobado, el Workflow devuelve `cierres` (5 opciones en
      `cierres.json`; `c1` es la del guion). ANTES de la voz, `python3 scripts/explica.py cierres <TRABAJO> --opciones` y
-     pregunta igual (`c1` primero). Con otro id: `python3 scripts/explica.py cierres <TRABAJO> --usar <id>`; con su texto:
+     pregunta igual (`c1` primero). Con el id que elija (también `c1`: así queda registrado quién eligió; con `auto`, `--usar c1 --por critico`): `python3 scripts/explica.py cierres <TRABAJO> --usar <id>`; con su texto:
      `--propio "<su texto>"` con `--forma`, `--mecanismo`, `--quien` y `--verbo` que casen con su frase
      (`referencias/cierres.md`; si dicta solo la frase final, se queda la oración del guion que la prepara). El script repasa narracion y guion: si fallan, deja el guion como estaba.
      Si el gate la rechaza, muéstrale la falla y propón la versión más cercana que pasa; nunca edites `guion.json` a
@@ -56,19 +56,8 @@ La guía es `referencias/flujo-explica.md`. Nunca publiques. Nunca generes músi
      voz es lo que calculó el script y que las cifras reales de Guatemala dicen de cuándo son (`explicacion.json`).
    - Cualquier cambio después de la crítica va por **RETOQUES** (paso 9), nunca editando `guion.json` a mano.
 4. **VOZ** (con `sin-voz`: `python3 scripts/explica.py voz-falsa <TRABAJO>` y salta al paso 5)
-   - Di al usuario los caracteres de voz (`locucion.json → caracteres`) antes de gastar.
-   - Igual que `/historia`, por **nodo**: una secuencia de 2–5 escenas grabada de corrido (`locucion.json → secuencias`) o
-     una escena suelta. `python3 scripts/explica.py voz <TRABAJO>` imprime un `prompt` por nodo.
-   - `creative_create_flow` «Explica · <tema corto>»; un `creative_add_flow_node` por nodo (`node_type: "tts"`,
-     `model_id: "eleven_multilingual_v2"`, el `voice_id` de la salida, `model_parameters: {"language_code": "es"}`, el
-     `prompt` **exacto**); `creative_run_flow_nodes` con todos y **`generations_count: 1`**; sondea solo los
-     `session_ids` pendientes; luego `creative_transcribe_audio` (`eleven_scribe_v1`) por nodo; **una sola**
-     `creative_get_flow_run_status` con voz y Scribe y `python3 scripts/explica.py descargar <TRABAJO> --estado <ese
-     archivo>` (corta cada secuencia en sus escenas). **Límite de 20 ids** por llamada: con más de 10 nodos, el estado
-     va en lotes y `descargar --estado A B …` recibe todos.
-   - **El estado en línea** (m045, m047): si `creative_get_flow_run_status` devuelve la respuesta en el chat y no en un archivo
-     (pasa con pocas sesiones), escríbela TAL CUAL a `<TRABAJO>/audio/estado.json` y pásale ese archivo a `descargar --estado`;
-     valen las `words` en línea de Scribe. `descargar` falla si una transcripción no casa con ninguna escena.
+   - Sigue `referencias/fragmentos/voz-mcp.md` (lee ese archivo: nodos por secuencia, lotes de ≤ 3, `generations_count: 1`, Scribe y
+     `descargar --nodos`) con `<script>` = `explica.py` y el flow «Explica · <tema corto>».
 5. **TIEMPOS Y ESCUCHA**
    - `python3 scripts/explica.py tiempos <TRABAJO>` (V6, V10, V16; cada renglón de la pizarra cae cuando la voz dice su
      resultado). Si una escena no se alinea, rehaz SOLO ese nodo y repite.
@@ -76,8 +65,10 @@ La guía es `referencias/flujo-explica.md`. Nunca publiques. Nunca generes músi
      `FALLA V11` → retoma de esa escena una vez; si vuelve a fallar, pide al usuario oírla.
 6. **GRABAR, MONTAR Y REVISAR**
    - **PLANO** (mesa de archivo, desde el 2026-11-14; todo TRABAJO nuevo trae `"realizacion": "mesa"` en `video.json`):
-     después de `tiempos` y antes de `grabar`, lanza `Workflow({ name: "plano", args: { trabajo: "<TRABAJO>" } })`
-     (hasta reiniciar Claude Code, con `scriptPath: ".claude/workflows/plano.js"` y `args.permitir_fallback: true`). El
+     después de `tiempos` y antes de `grabar`, lanza `Workflow({ name: "plano", args: { trabajo: "<TRABAJO>" } })`.
+     Si falla con «agente no registrado», pide
+     reiniciar Claude Code (los agentes se cargan al arrancar); el plano no se relanza con `permitir_fallback`: un
+     realizador sin su agente triplica el contexto. El
      `video-realizador` escribe `<TRABAJO>/plano.json` (qué pieza entra con cada oración) y deja
      `python3 scripts/explica.py plano <TRABAJO> --check --hoja` en 0 (MV1–MV14). Con `plano_listo`, muestra
      `<TRABAJO>/plano.md` y sigue; con `plano_pendiente`, muestra las `fallas` y relánzalo (conserva el plano). Lo que

@@ -40,7 +40,9 @@
 --video <hilos/<fecha>-<slug>/video> [--estado listo|incompleto] [--dry-run]
   Registra el video de /video (lee el guion.json de entrega que escribe scripts/video.py entregar) en
   memoria/videos.json → videos[] {id, fecha, slug, hilo_id, tema, paleta, duracion, duracion_s, n_escenas,
-  musica, creditos_voz, ruta_video, ruta_hilo, estado, frases {promesa, gancho, aperturas[], pregunta, cierre, cierre_tipo, cierre_forma, cierre_mecanismo, familia, visual, animaciones[]}}; un id
+  musica, creditos_voz, ruta_video, ruta_hilo, estado, frases {promesa, gancho, aperturas[], pregunta, cierre, cierre_tipo, cierre_forma, cierre_mecanismo, familia, visual, animaciones[],
+  gancho_elegido_por, gancho_recomendado, gancho_id, cierre_elegido_por, cierre_recomendado, cierre_id (quién eligió el gancho y
+  el cierre: usuario | critico | propio, y qué recomendaba el crítico; solo si el guion lo guardó)}}; un id
 --noticias <noticias/<fecha>> [--estado listo|incompleto] [--dry-run]
   memoria/noticias.json → noticieros[] {id (= fecha), fecha, ruta, paleta, musica, duracion_s, creditos_voz, estado,
   noticias[] {id, seccion, titular, urls[], cifras[] {id, valor, unidad, texto, cita, url}}}; registrar el mismo día
@@ -71,8 +73,8 @@
 --sabias <datos/<fecha>-<slug>/video> [--estado listo|incompleto] [--dry-run]
   memoria/sabias.json → sabias[] {id (= sabias-<slug>), slug, tema, fecha, ruta, dato, paleta, musica, duracion_s,
   creditos_voz, estado, frases {gancho, cierre, cierre_tipo, cierre_forma, cierre_mecanismo, visual, apoyo}}; registrar
-  el mismo dato reemplaza. sabias.py lo lee para rotar el visual del gancho, el apoyo, el cierre y la música, y para las
-  frases ya usadas. No toca memoria/videos.json (la rotación de /video sigue siendo suya).
+  el mismo dato reemplaza. sabias.py lo lee para rotar el visual del gancho y el apoyo (S3) y para las frases ya usadas.
+  El cierre (F7) y la música rotan contra TODOS los registros de video (video.piezas_feed), este incluido.
 
 --carrusel <<carpeta del original>/carrusel> [--estado listo|incompleto] [--dry-run]
   memoria/carruseles.json → carruseles[] {id (= carrusel-<slug>), slug, tema, fecha, ruta, origen {tipo, ruta}, paleta,
@@ -88,7 +90,8 @@
 
 --serie <series/<fecha>-<slug>> [--dry-run]
   memoria/series.json → series[] {id (= <fecha>-<slug>), slug, tema, motor (historia|explica), fecha, carpeta, n_partes, paleta,
-  musica, version_plan, estado, partes[] {n, titulo, estado, ruta, duracion_s}}; registrar la misma serie reemplaza.
+  musica, version_plan, estado, partes[] {n, titulo, estado, ruta, duracion_s; una parte entregada además musica y frases
+  {… como en --video}: video.py las lee para la música y la rotación del feed (R9, F7, P3)}}; registrar la misma serie reemplaza.
 
 --youtube <series/<fecha>-<slug>/youtube> [--dry-run]
   memoria/youtube.json → videos[] {id (= youtube-<slug>), slug, tema, serie, carpeta, fecha, duracion_s, titulo, capitulos[]
@@ -594,6 +597,36 @@ def listar_informes(tema, maximo):
     return 0
 
 
+ELEGIDO_POR = ("usuario", "critico", "propio")   # espejo de video.ELEGIDO_POR
+
+
+def eleccion_video(g):
+    """Quién eligió el gancho y el cierre y qué recomendaba el crítico (regla 11: el usuario elige entre 5), del guion de
+    entrega (gancho.elegido_por, gancho.recomendado, gancho.id y lo mismo en cierre; los escriben `ganchos --usar` y
+    `cierres --usar|--propio`): {gancho_elegido_por, gancho_recomendado, gancho_id, cierre_elegido_por, cierre_recomendado,
+    cierre_id}. Solo las claves que el guion trae: un video anterior a la regla queda sin ellas."""
+    out = {}
+    for parte in ("gancho", "cierre"):
+        d = g.get(parte) if isinstance(g.get(parte), dict) else {}
+        if d.get("elegido_por") in ELEGIDO_POR:
+            out["%s_elegido_por" % parte] = d["elegido_por"]
+            for k in ("recomendado", "id"):
+                if d.get(k):
+                    out["%s_%s" % (parte, k)] = d[k]
+    return out
+
+
+def linea_eleccion(fr):
+    """El renglón «elección: …» de un registro (o que el guion no la guardó)."""
+    def uno(parte):
+        por = fr.get("%s_elegido_por" % parte)
+        if not por:
+            return "%s sin registro" % parte
+        rec, eid = fr.get("%s_recomendado" % parte), fr.get("%s_id" % parte)
+        return "%s %s por %s%s" % (parte, eid or "—", por, " (recomendado: %s)" % rec if rec else "")
+    return "elección: %s · %s" % (uno("gancho"), uno("cierre"))
+
+
 def frases_video(g):
     """Frases de la voz que el guionista tiende a repetir entre videos: la promesa, la primera oración del gancho, cómo
     abre cada escena desde la 3 y la pregunta del cierre, más la familia y el visual del gancho. video.py preparar las pone
@@ -626,6 +659,8 @@ def frases_video(g):
         "visual": (g.get("gancho") or {}).get("visual") or "cifra",
         # rotación de la escena explica: la misma animación no repite la de los últimos videos (video.py)
         "animaciones": [e["animacion"] for e in esc if e.get("tipo") == "explica" and e.get("animacion")],
+        # quién eligió el gancho y el cierre, y qué recomendaba el crítico (solo si el guion lo guardó)
+        **eleccion_video(g),
     }
 
 
@@ -669,6 +704,7 @@ def registrar_video(d, estado, dry_run=False):
     print("video %s · %s %.0f s · %d escenas · música %s · %s%s" % (reg["id"], reg["duracion"], reg["duracion_s"],
                                                                 reg["n_escenas"], reg["musica"], reg["estado"],
                                                                 " · serie %s: %s" % (reg["serie"], reg["sujeto"]) if reg.get("serie") else ""))
+    print(linea_eleccion(reg["frases"]))
     if dry_run:
         print("[dry-run] no se escribió nada")
         return 0
@@ -731,6 +767,7 @@ def registrar_historia(d, estado, dry_run=False):
     fr = reg["frases"]
     print("historia %s · %.0f s · gancho %s/%s · cierre %s · %s" % (reg["id"], reg["duracion_s"], fr.get("familia"),
                                                                    fr.get("visual"), fr.get("cierre_forma"), reg["estado"]))
+    print(linea_eleccion(fr))
     if (fr.get("aperturas_atribuidas") or 0) >= 2:
         print("AVISO %d escenas abren con una atribución («Según…»): la fuente va en pantalla y la voz narra (H16, H19)" % fr["aperturas_atribuidas"])
     if dry_run:
@@ -769,6 +806,7 @@ def registrar_explica(d, estado, dry_run=False):
     fr = reg["frases"]
     print("explicación %s · %.0f s · gancho %s/%s · cierre %s · %s" % (reg["id"], reg["duracion_s"], fr.get("familia"),
                                                                      fr.get("visual"), fr.get("cierre_forma"), reg["estado"]))
+    print(linea_eleccion(fr))
     if dry_run:
         print("[dry-run] no se escribió nada")
         return 0
@@ -788,6 +826,7 @@ def registrar_sabias(d, estado, dry_run=False):
     fv = frases_video(g)
     frases = {k: fv.get(k) for k in ("gancho", "cierre", "cierre_tipo", "cierre_forma", "cierre_mecanismo", "visual")}
     frases["apoyo"] = g.get("apoyo")
+    frases.update(eleccion_video(g))
     reg = {"id": g["id"], "slug": g["slug"], "tema": g.get("tema", ""), "fecha": g["fecha"], "ruta": ruta, "dato": g.get("dato"),
            "paleta": g["paleta"], "musica": g["musica"], "duracion_s": g["duracion_s"], "creditos_voz": g.get("creditos_voz"),
            "estado": estado, "frases": frases}
@@ -802,6 +841,7 @@ def registrar_sabias(d, estado, dry_run=False):
     ms["sabias"].sort(key=lambda v: (v["fecha"], v["id"]))
     print("sabías %s · %.0f s · gancho %s · apoyo %s · cierre %s · %s" % (reg["id"], reg["duracion_s"], frases["visual"],
                                                                         frases["apoyo"] or "ninguno", frases["cierre_forma"], reg["estado"]))
+    print(linea_eleccion(frases))
     if dry_run:
         print("[dry-run] no se escribió nada")
         return 0
@@ -853,6 +893,7 @@ def registrar_congreso(d, estado, dry_run=False):
         return 1
     fv = frases_video(g)
     frases = {k: fv.get(k) for k in ("gancho", "cierre", "cierre_tipo", "cierre_forma", "cierre_mecanismo", "visual", "familia", "aperturas")}
+    frases.update(eleccion_video(g))
     reg = {"id": g["id"], "slug": g["slug"], "fecha": g["fecha"], "ruta": ruta, "iniciativa": g.get("iniciativa"), "ley": g.get("ley"),
            "votacion": g.get("votacion"), "nombrados": g.get("nombrados") or [], "paleta": g["paleta"], "musica": g["musica"],
            "duracion_s": g["duracion_s"], "creditos_voz": g.get("creditos_voz"), "estado": estado, "frases": frases}
@@ -867,6 +908,7 @@ def registrar_congreso(d, estado, dry_run=False):
     ms["congreso"].sort(key=lambda v: (v["fecha"], v["id"]))
     print("congreso %s · iniciativa %s · %.0f s · %d nombrados · cierre %s · %s" % (reg["id"], reg["iniciativa"], reg["duracion_s"],
                                                                                  len(reg["nombrados"]), frases["cierre_forma"], reg["estado"]))
+    print(linea_eleccion(frases))
     if dry_run:
         print("[dry-run] no se escribió nada")
         return 0
@@ -944,6 +986,17 @@ def registrar_semana(d, estado, dry_run=False):
     return 0
 
 
+def parte_serie(p):
+    """Una parte de /serie en el registro: lo de serie.json y, si ya está entregada, su música y sus `frases` (como en
+    --historia: lo que rota en el feed —familia, promesa, cierre— y quién eligió el gancho y el cierre), leídas del
+    guion.json de su entrega. Una parte sin entregar, o entregada antes de guardar esto y sin guion, queda como antes."""
+    reg = {k: p.get(k) for k in ("n", "titulo", "estado", "ruta", "duracion_s")}
+    g = leer(os.path.join(RAIZ, p["ruta"], "guion.json"), obligatorio=False) if p.get("estado") == "entregada" and p.get("ruta") else None
+    if g:
+        reg.update(musica=g.get("musica"), frases=frases_video(g))
+    return reg
+
+
 def registrar_serie(d, dry_run=False):
     """--serie DIR: registra en memoria/series.json la serie de series/<fecha>-<slug> (serie.json de scripts/serie.py)."""
     ruta = os.path.normpath(d)
@@ -954,11 +1007,17 @@ def registrar_serie(d, dry_run=False):
     reg = {"id": "%s-%s" % (S["fecha"], S["slug"]), "slug": S["slug"], "tema": S.get("tema"), "motor": S.get("motor"),
            "fecha": S["fecha"], "carpeta": ruta, "n_partes": len(S.get("partes") or []), "paleta": S.get("paleta"),
            "musica": S.get("musica"), "version_plan": S.get("version"), "estado": S.get("estado"),
-           "partes": [{k: p.get(k) for k in ("n", "titulo", "estado", "ruta", "duracion_s")} for p in S.get("partes") or []]}
+           "partes": [parte_serie(p) for p in S.get("partes") or []]}
     ms = leer(SERIES, obligatorio=False) or json.loads(json.dumps(VACIO_SERIES))
     ms["series"] = [x for x in ms["series"] if x.get("id") != reg["id"]] + [reg]
     print("serie %s · %s · %d partes (%s) · %s" % (reg["id"], reg["motor"], reg["n_partes"],
                                                  ", ".join("%d %s" % (p["n"], p.get("estado") or "plan") for p in reg["partes"]), reg["estado"]))
+    for p in reg["partes"]:
+        fr = p.get("frases")
+        if fr:
+            print("  parte %d · música %s · gancho %s%s · promesa %s · cierre %s%s" % (
+                p["n"], p.get("musica"), fr.get("familia"), " (eligió: %s)" % fr["gancho_elegido_por"] if fr.get("gancho_elegido_por") else "",
+                fr.get("promesa_forma"), fr.get("cierre_forma"), " (eligió: %s)" % fr["cierre_elegido_por"] if fr.get("cierre_elegido_por") else ""))
     if dry_run:
         print("[dry-run] no se escribió nada")
         return 0

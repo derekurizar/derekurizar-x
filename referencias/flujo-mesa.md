@@ -220,7 +220,9 @@ Los comandos son los de siempre; con `realizacion: mesa` despachan a la mesa (`V
 
 ```
 <flujo>.py tiempos T                  la voz real → escenas.json (igual que antes)
-Workflow «plano» {trabajo: T}         video-realizador escribe T/plano.json desde `<flujo>.py plano T --digesto` (tras la voz)
+Workflow «plano» {trabajo: T}         video-realizador escribe T/plano.json desde `<flujo>.py plano T --digesto` (tras la voz);
+                                      luego el juez del plano (historia-oyente, modo plano) lee plano.md con ojos frescos y lo que
+                                      bloquea vuelve al realizador una vez (T/juez_plano.json; `sin_juez: true` lo salta)
 <flujo>.py plano T --check --hoja     gates MV1–MV14 y la hoja de golpes (plano.md)
 <flujo>.py grabar T [--formato 4:5]   plano --check → tableros limpios y maquetas 3D → proyecto → hyperframes check → render (un proceso)
 <flujo>.py montar T [--formato 4:5]   una mezcla para los dos formatos (−14 LUFS), .srt, caption.md y portada.png
@@ -236,8 +238,13 @@ historia.py producir T                la cadena entera; se detiene si falta plan
 - Lo que falle en pantalla se arregla **en el plano**: no se toca el guion ni la voz. Un retoque = el Workflow «plano» con
   `notas`. Si cambia una voz: `tiempos`, `plano --check` y volver a grabar (no hay `grabar --solo`).
 - Render: ≈ 1.6× la duración por formato, en fila (HyperFrames renderiza de uno en uno). `MESA_CALIDAD=draft` para probar.
-- `MESA_RENDER=0` (maquetas): `grabar` hace todo menos el render y deja un doble de la duración exacta; `entregar` real lo
-  rechaza. `make historia-fixture` y `make serie-fixture` van así; `make video-fixture-mesa` renderiza de verdad.
+- `MESA_RENDER=0` (maquetas): `grabar` hace todo menos el render y deja un doble de la duración exacta, **marcado por
+  formato** (`salida/.maqueta_sin_render.<9x16|4x5>`); la marca la quita `montar` cuando monta un render de verdad de
+  ese formato, y `entregar` real rechaza un trabajo con cualquier formato marcado.
+- El render tiene límite de tiempo (600 s + 20 s por segundo de video; `MESA_RENDER_LIMITE_S` lo fija a mano): al
+  vencer se mata el grupo de procesos entero. GSAP sale de `design/vendor/` (sin red) y las versiones de HyperFrames,
+  GSAP y three.js viven en `scripts/versiones.py`.
+- `make historia-fixture` y `make serie-fixture` van con `MESA_RENDER=0`; `make video-fixture-mesa` renderiza de verdad.
 - `video_hf.py` también se puede llamar directo: `piloto` (copia un TRABAJO ya producido para rehacerlo en mesa),
   `importar-plano` (los golpes del 16:9 de una parte, como punto de partida), `borrador`, `digesto`, `tableros`, `maquetas`, `proyecto`,
   `revisar` (hyperframes check + hojas por mesa), `audio`, `render`, `montar`, `portada`, `contacto`.

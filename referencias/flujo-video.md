@@ -107,7 +107,10 @@ cuadros, `critica.json`).
   `linea` entra palabra a palabra **en sincronía con la voz** (cada palabra que la voz dice literal, al decirla; las
   demás, agrupadas como frase; sin ninguna coincidencia, repartidas hasta el fin de la primera oración); igual en
   golpes, definición y la pregunta de la adivina. V9 exige primera oración ≤ 4 s estimados, promesa ≤ 3 s si va en
-  la escena 1 (si no, `en: 2`) y voz del gancho ≤ 7.5 s. La promesa es un evento (`promesa`, con `tic`). En las
+  la escena 1 (si no, `en: 2`) y voz del gancho ≤ 6 s (R5; bajó de 7.5 s el 2026-11-03). **Las dos medidas se repiten en
+  `tiempos` con la voz real** (2026-11-14, `video.revisar_voz_real`): el gancho avisa por encima de 6.0 s y falla por
+  encima de 6.5 s; la escena 2 (P5) avisa por encima de 12 s y falla por encima de 13 s; el mensaje trae la retoma
+  (`voz <TRABAJO> --solo N`). /sabias y /congreso no aplican P5. La promesa es un evento (`promesa`, con `tic`). En las
   escenas de texto el subtítulo se oculta mientras solo repite lo que ya está en pantalla (y hasta que aterriza
   la cifra): aparece para lo que no está (la promesa, la respuesta de la adivina, la explicación).
 - **Barra de progreso** arriba en todas las escenas, un tramo por escena (cierre incluido) de largo proporcional a su
@@ -141,8 +144,8 @@ cuadros, `critica.json`).
   `portada_texto.png` (`video/portada.html`: solo el gancho en texto, para la miniatura del feed) y, para elegir,
   `portada_cierre.png` (el cierre con la frase final, remate o pregunta, en pantalla), `portada_giro.png` (la escena del giro con su cifra
   ya contada) y `portada_adivina.png` (las opciones a la vista). `entregar` copia todas.
-- **Música** solo del catálogo fijo `design/musica/catalogo.json` (2 pistas por paleta; se elige la de la paleta
-  del hilo usada hace más tiempo), con **ducking** bajo la voz (sidechain). **Efectos** solo del catálogo fijo
+- **Música** solo del catálogo fijo `design/musica/catalogo.json` (se elige por tema; entre las que tocan, la usada
+  hace más tiempo **contando todos los flujos y cada parte de serie**: una sola `video.elegir_musica`), con **ducking** bajo la voz (sidechain). **Efectos** solo del catálogo fijo
   `design/sfx/catalogo.json` (8 WAV: whoosh, tic, pulso, impacto, grave, riser, resolucion, foco), disparados
   por los eventos de cada escena. **`/video` nunca genera música ni efectos.**
 - **Estilo Noche** (decisión del usuario, 2026-10-28; reglas y tokens en `referencias/diseno/sistema.md`), el mismo de
@@ -180,14 +183,15 @@ cuadros, `critica.json`).
 - **Layout vertical de la tarjeta** (`video/vertical.css`, decisión del usuario tras el primer video: «en redes el
   layout es distinto»): la tarjeta no se incrusta al 86 %; se inyecta una hoja que oculta el titular y el handle,
   deja kicker → gráfico a todo el ancho (escala 1, y≈420–1220: por encima de la franja de íconos todo el ancho es
-  seguro) → nota → «Fuente» pequeña. El **foco** hace zoom de 1.25–1.45 a la cifra mientras la voz la dice (el resto
-  se sale de cuadro), con **deriva** lenta cuando no hay foco; el golpe entra desde la izquierda. V7 compara el
-  render vertical contra el animado vertical (`video_animar.js` inyecta la misma hoja; `--cuadrada` para el modo
-  viejo). Entre escenas, **transición de deslizamiento** de 0.3 s (`xfade` en `montar`, vertical en el giro).
+  seguro) → nota → «Fuente» pequeña. La tarjeta va **quieta**: el zoom a la cifra, la deriva y la transición de
+  deslizamiento se retiraron con la cámara quieta (2026-11-07, abajo); se anima lo de adentro y entre escenas hay
+  corte o fundido. V7 compara el render vertical contra el animado vertical (`video_animar.js` inyecta la misma
+  hoja; `--cuadrada` para el modo viejo). En la mesa de archivo la tarjeta es un tablero (`referencias/flujo-mesa.md`).
 
 ## Cámara y edición (decisión del usuario, 2026-11-06)
 
-`CAMARA_QUIETA` en `scripts/video.py` (pasa a cada escena como `S.quieta`):
+La cámara quieta es fija (ya no hay interruptor `CAMARA_QUIETA`: su código muerto salió el 2026-11-14; cada escena
+lleva `S.quieta = true`):
 - **Fotos**: un solo empuje lento en toda la escena; a lo más **un** corte limpio a la cara de la persona que la voz
   nombra (`planos_foto`: el plano amplio y, si hay tarjeta de persona con su cara en la foto, ese corte). Sin
   sub-planos por reloj, sin paneos laterales, sin alejar después de acercar, sin empujón por oración.
@@ -284,13 +288,14 @@ corte, se construye como mejora aparte.
 | K2 efectos | `validate.py` / `sfx.py --check` | `design/sfx/catalogo.json` con los 8 ids fijos, cada WAV presente, duración 0.2–4 s coherente con la cabecera, ganancia −40–0 dB |
 | K3 iconos | `validate.py` / `iconos.py --check` | `design/iconos/catalogo.json` (biblioteca FIJA: 50 iconos Lucide, tag fijado, licencia ISC; `make iconos` la baja UNA vez): cada SVG presente, 24×24, ninguno fuera del catálogo, `LICENSE.txt`. Solo se comprueba si el catálogo existe; el guion la usa con `icono: "<id>"` en gancho, golpe y definición (V1) |
 
-Crítico (`referencias/roles/video-critico.md`, C1–C12): gancho en silencio · razón para quedarse · «¿por qué seguiría
+Crítico (`referencias/roles/video-critico.md` + `video-critico/video.md`, C1–C12): gancho en silencio · razón para quedarse · «¿por qué seguiría
 viendo?» por escena · pero/por eso reales · escala humana · pago · ritmo y re-gancho · cierre · lenguaje y honestidad ·
 lectura de corrido · plantilla (C11: la promesa, el gancho (familia, visual y frase), las aperturas y la pregunta no repiten
 las de «Frases ya usadas» y «Ganchos recientes») · **flujo narrativo** (C12: la narración de corrido se oye como una voz
 que cuenta el dato como una historia, no como tarjetas leídas; lee también `oyente.json`, lo que un oyente ingenuo no
-entendió, como insumo). Antes del guion, el mismo crítico elige el gancho en **modo selección**
-(silencio, referente, tensión, alineación, honestidad, novedad; R11).
+entendió, como insumo). Antes del guion, el mismo crítico puntúa los ganchos en **modo selección**
+(silencio, referente, tensión, alineación, honestidad, novedad; R11) y **recomienda**: el gancho lo elige el usuario
+(regla de oro 11).
 Puntajes 1–5: gancho, bucle, ritmo, flujo, escala_humana, pago, cierre. `pasa` = sin faltas `bloquea` y todos ≥ 3.
 
 ### Dinamismo, siglas y cierre (decisión del usuario, 2026-11-06)

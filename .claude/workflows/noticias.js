@@ -83,6 +83,11 @@ const agentRol = async (prompt, opts) => {
   }
 }
 
+// Guías por modo (2026-11-14): el rol lee su núcleo (referencias/roles/<rol>.md) y SOLO los archivos de su modo
+// (referencias/roles/<rol>/<modo>.md). Antes leía la guía entera, con todos los modos, en cada pasada.
+const guia = (rol, ...modos) =>
+  `lee referencias/roles/${rol}.md (el núcleo) y, de referencias/roles/${rol}/, SOLO ${modos.map((m) => m + '.md').join(' y ')}`
+
 // Verificación mecánica (scripts/verificacion.py V-A–V-E): forma única del veredicto, cierre que el verificador
 // corre antes de devolver y una vuelta de reparación si quedan fallas; lo que siga fallando no se usa.
 const FORMA_ITEM = '{"id", "veredicto": "verificada|ajustada|no_confirmada", "valor_final", "fuente_2", "url_2", "independencia": "alta|baja", "calculo"?, "serie_final"?, "partes_final"?, "nota"}'
@@ -288,8 +293,8 @@ const validarCritica = (r) => {
   if ((r.veredicto === 'pasa') === bloquea) f.push(`veredicto ${r.veredicto} incoherente con las faltas y los puntajes`)
   return f
 }
-const MODO_CRITICO = SEMANA ? 'MODO SEMANA (lee la sección «Modo semana» de referencias/roles/video-critico.md; puntajes ' + PUNTAJES.join(', ') + ')'
-  : 'MODO NOTICIERO (lee la sección «Modo noticiero» de referencias/roles/video-critico.md)'
+const MODO_CRITICO = SEMANA ? 'MODO SEMANA (lee referencias/roles/video-critico.md y referencias/roles/video-critico/semana.md; puntajes ' + PUNTAJES.join(', ') + ')'
+  : 'MODO NOTICIERO (lee referencias/roles/video-critico.md y referencias/roles/video-critico/noticiero.md)'
 let critica = null, previas = []
 for (let vuelta = 1; vuelta <= VUELTAS_CRITICA + 1; vuelta++) {
   critica = await conReparacion(`crítica ${vuelta}`, (fallos) => agentRol(

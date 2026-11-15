@@ -29,15 +29,40 @@ entrega) y `scripts/maqueta3d.py` (gates M3D, cuadros sueltos, render).
 | 1 | Preparar (con `--desde` reutiliza las cifras verificadas de una pieza ya investigada) | `video3d.py preparar <slug> --tema "…" --musica-tema <tema>` |
 | 2 | Investigar y verificar lo que falte, incluidos los geodatos (qué se dibuja y de dónde sale) | agentes de /historia; `video3d.py datos --sumar` |
 | 3 | Dirección: la idea visual, el estilo y el mundo | la sesión, con `video3d.py digesto` |
-| 4 | Ganchos: 5 candidatos con su cuadro renderizado; **el usuario elige** | `ganchos --check --cuadros` → `ganchos --usar <id>` |
-| 5 | Guion: la narración de corrido primero; luego las escenas | `guion --check` (C3D1–C3D11, V2–V4, M3D) |
+| 4 | Ganchos: 5 candidatos con su cuadro renderizado; **el usuario elige** (aviso G3D2 si la familia repite la de los últimos 2 videos 3D) | `ganchos --check --cuadros` → `ganchos --usar <id>` |
+| 5 | Guion: la narración de corrido primero; luego las escenas y el `caption` por plataforma | `guion --check` (C3D1–C3D11, V2–V5, M3D) |
 | 6 | Storyboard: un cuadro por clave de cámara y evento, antes de gastar créditos | `storyboard` |
 | 7 | Crítico (retención y concordancia) y cierre: **el usuario elige el cierre** | agente `video-critico` en «Modo 3D» (su guía de rol) |
-| 8 | Voz (ElevenLabs, El Faraon 4) | `voz` → MCP → `descargar --estado` (o `--nodos` si el estado llegó en el chat) |
+| 8 | Voz (ElevenLabs, El Faraon 4) y escucha independiente (V11) | `voz` → MCP → `descargar --estado` (o `--nodos` si el estado llegó en el chat) → `escuchar` |
 | 9 | Tiempos reales | `tiempos` |
 | 10 | Render en 9:16 y 4:5 | `render` |
-| 11 | Montaje: voz, música del tema con ducking, efectos, −14 LUFS | `montar` |
+| 11 | Montaje: voz, música del tema con ducking, efectos, −14 LUFS; `.srt` y portada | `montar` |
 | 12 | Entrega en `videos3d/<fecha>-<slug>/` y registro (M21) | `entregar` → `memoria.py --video3d <entrega>` |
+
+## A la par de los demás flujos de video
+
+- **Caption obligatorio (V5).** `guion.caption` lleva `tiktok`, `instagram`, `facebook` y `shorts` (el título de ≤ 100
+  caracteres en la primera línea y `#Shorts`), con las cifras en dígitos y sin anunciar el video. Sin él, `guion
+  --check` falla y `entregar` no entrega. Las reglas son las de `video.py` (están escritas dentro de su `cmd_guion`;
+  `video3d.revisar_caption` las repite con las mismas constantes).
+- **Portada.** `montar` (con el 9:16) deja `salida/portada.png`: el cuadro cero del video sin subtítulos, dibujado por
+  `maqueta3d.py cuadro` (`video3d.py portada <TRABAJO>` la rehace sola). Es el archivo que `caption.md` pide como
+  miniatura; `entregar` falla si falta.
+- **Escucha (V11).** `video3d.py escuchar <TRABAJO>` reenvía a `video.py escuchar` (whisper.cpp local: transcribe cada
+  voz sin el guion y coteja las cifras). Con voz falsa no se corre.
+- **9:16 y 4:5.** `entregar` falla si falta `salida/video_4x5.mp4`; `--sin-4x5` entrega solo el 9:16 a propósito.
+- **Subtítulos y mezcla comunes.** El `.srt` es el de `video.texto_srt` (por oración, 2 líneas de ≤ 42 caracteres, sin
+  solapes) y la mezcla, la de `youtube.mezclar_voz` + `youtube.pista_final` (la de los videos de mesa: ducking, tres
+  tomas de cada efecto, fundido final de 4 s, limitador).
+- **Estimación.** Los segundos estimados salen de `video.segundos_voz` (≈ 15.5 caracteres por segundo con las cifras ya
+  en palabras), como en los demás flujos.
+- **Rotación (G3D2).** La familia del gancho de los últimos 2 videos 3D (`memoria/videos3d.json`) queda marcada «NO
+  REPETIR» en el digesto; `ganchos --check`, `ganchos --usar` y `guion --check` avisan si se repite (aviso, no falla).
+- **Rendimiento real.** El digesto trae lo medido con `/analyze-improve` (retención por familia, visual, cierre y tramo
+  de duración). `metricas.py alinear <slug>` cruza la curva con las escenas del video 3D: usa el `tiempos.json` que
+  `entregar` copia a la entrega (o las palabras de `maqueta.json`) y dice qué eventos y cuántas claves de cámara caen
+  en cada escena.
+- **Pruebas sin render:** `python3 scripts/pruebas/ola1_video3d.py` (los 22 negativos M3D del motor y lo de esta lista).
 
 ## La idea visual
 
@@ -112,6 +137,7 @@ Familias de gancho 3D (los 5 candidatos son de familias distintas):
 - **Anclas:** `dice` es una frase de la voz de esa escena (escrita como en `texto`; `vez: 2` si se repite). Sin
   `dice`, el elemento nace al empezar la escena. `al: "fin"` lo pone al terminar la frase (o, sin `dice`, al terminar
   la voz de la escena).
+- **`caption` es obligatorio** (V5): un texto por plataforma; ver «A la par de los demás flujos de video».
 - **Cámara:** cada clave es el encuadre al que la cámara **llega** en ese momento; el vuelo ocurre entre claves. Una
   clave con `al: "fin"` hace que el vuelo dure toda la escena.
 - **Marcas y cifras:** viven hasta el final de su escena, o `hasta: N` (el final de la escena N), `hasta_dice` o
@@ -153,7 +179,7 @@ Los gates M3D (dónde cae cada pin, velocidad de la cámara, tiempos de lectura,
 
 ## Crítico en «Modo 3D»
 
-El `video-critico` tiene su sección «Modo 3D (`/video-3d`)» en `referencias/roles/video-critico.md` (3C1–3C8: el cuadro
+El `video-critico` tiene su modo 3D en `referencias/roles/video-critico/3d.md` (3C1–3C8: el cuadro
 cero, la concordancia, un protagonista, el estilo, lo dibujado también se afirma, el bucle, quien no sabe nada y lo que
 se lee tres veces). Prueba cada arreglo en una copia del TRABAJO antes de proponerlo.
 

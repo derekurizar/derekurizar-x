@@ -106,27 +106,11 @@ def registrados(slug_actual=None):
 
 
 def recientes(slug):
-    """S3: el visual del gancho y el apoyo del último «¿Sabías que…?»; F7: su cierre (la misma forma que video.py)."""
+    """S3: el visual del gancho y el apoyo del último «¿Sabías que…?» (regla propia del formato: contra memoria/sabias.json);
+    F7: el cierre de las últimas piezas del feed entero (video.cierres_recientes: todos los flujos)."""
     fr = [r.get("frases") or {} for r in registrados(slug)]
     return ({"familias": [], "visuales": [x.get("visual") or "cifra" for x in fr[-1:]], "apoyos": [x.get("apoyo") or "ninguno" for x in fr[-1:]]},
-            {"tipos": [x.get("cierre_tipo") for x in fr[-1:] if x.get("cierre_tipo")],
-             "formas": [x.get("cierre_forma") for x in fr[-VD.ROTACION_CIERRES:] if x.get("cierre_forma")],
-             "mecanismos": [x["cierre_mecanismo"] for x in fr[-1:] if x.get("cierre_mecanismo")]})
-
-
-def elegir_musica(paleta, forzada):
-    """Como video.py, pero la pista usada hace más tiempo cuenta también los «¿Sabías que…?» y las historias."""
-    if forzada:
-        return VD.elegir_musica(paleta, forzada)
-    cat = [x for x in leer(os.path.join(RAIZ, "design", "musica", "catalogo.json"))["pistas"] if x["paleta"] == paleta]
-    if not cat:
-        raise ValueError("el catálogo no tiene música para la paleta «%s»" % paleta)
-    usos = {}
-    for ruta, clave in (("videos.json", "videos"), ("historias.json", "historias"), ("sabias.json", "sabias")):
-        p = os.path.join(RAIZ, "memoria", ruta)
-        for v in (leer(p).get(clave) or []) if os.path.exists(p) else []:
-            usos[v.get("musica")] = max(usos.get(v.get("musica"), ""), v.get("fecha", ""))
-    return sorted(cat, key=lambda x: (usos.get(x["id"], ""), x["id"]))[0]
+            VD.cierres_recientes(slug))
 
 
 # ---------- preparar ----------
@@ -141,7 +125,7 @@ def cmd_preparar(a):
     base = os.path.join(trabajo, "base")
     hilo_base(dato, base)
     try:
-        musica = elegir_musica(d["paleta"], a.musica)
+        musica = VD.elegir_musica(d["paleta"], a.musica)
     except (ValueError, FileNotFoundError) as ex:
         return falla(str(ex))
     with contextlib.redirect_stdout(io.StringIO()):   # el digesto de /video no sirve aquí: se escribe el de /sabias
@@ -240,7 +224,7 @@ def digesto(trabajo, st, d, musica, fixture):
         "- %s" % ("(prueba: sin rotación)" if fixture else "Visual del gancho bloqueado: %s · apoyo bloqueado: %s · cierre "
                   "anterior: %s · formas bloqueadas: %s · mecanismo bloqueado: %s" % (
                       ", ".join(rec_g["visuales"]) or "ninguno", ", ".join(rec_g["apoyos"]) or "ninguno",
-                      ", ".join(rec_c["tipos"]) or "—", ", ".join(x for x in rec_c["formas"] if x != "consecuencia") or "ninguna",
+                      ", ".join(rec_c["tipos"]) or "—", ", ".join(x for x in rec_c["formas"] if x not in VD.FORMAS_SIN_ROTAR) or "ninguna",
                       ", ".join(rec_c["mecanismos"]) or "ninguno")),
         "", "## Frases ya usadas (no las repitas)"] + frases_usadas(d["slug"]) + [
         "", "## Plantilla de guion.json",
@@ -271,6 +255,7 @@ def aplicar_extension():
     VD.NARRACION_VIDEO = False
     VD.CIERRE_ANTES_S = 0.0           # el cierre es una sola pantalla: la frase final es toda su voz
     VD.GANCHO_ORACION_S = GANCHO_ORACION_S
+    VD.NO_APLICA_REAL.append(de_video_que_no_aplica)   # sin promesa: P5 tampoco se mide sobre la voz real
     VD.validar_estructura = estructura
     VD.reglas_gancho = reglas_gancho
 

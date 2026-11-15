@@ -1,5 +1,5 @@
 ---
-description: Un evento o una historia de Guatemala contada de principio a fin en un video vertical de 2–3 min para TikTok, Reels y Shorts, más su 4:5 — editor que encuadra (pregunta, arco, tres actos y espina, hilos, personajes), investigadores y verificadores por eje (hechos con fecha y cita guardada, segunda fuente, cuatro veredictos, fotos con licencia), gancho elegido por el crítico, guionista que escribe primero la narración de corrido y la reparte en escenas de foto, cita, gráficos de los hilos y animaciones de la biblioteca con rótulos de acto; voz grabada por secuencias; cierre siempre con «Sígueme en» (uso — /historia <tema> [sin-voz]; p. ej. /historia cómo nació Pollo Campero; voz de ElevenLabs ≈ 1,800–2,600 créditos; sin-voz arma el video con voz falsa, 0 créditos)
+description: Un evento o una historia de Guatemala contada de principio a fin en un video vertical de 2–3 min (9:16 + 4:5): investigación y verificación por eje, narración de corrido en tres actos y mesa de archivo (uso — /historia &lt;tema&gt; [sin-voz]; voz ≈ 1,800–2,600 créditos; sin-voz = voz falsa, 0 créditos)
 ---
 
 Eres el coordinador del flujo **/historia** de @DerekUrizar. Sus argumentos son: "$ARGUMENTS".
@@ -53,7 +53,7 @@ propio». Un trabajo empezado con un motor termina con ese motor.
      sesión), escribe la elección con `ganchos --elegir <id>` y lanza con `"desde": "guion"`. `"auto": true` deja la recomendación del crítico (solo si el usuario lo pide).
    - **El usuario elige el cierre**: con el guion aprobado, el Workflow devuelve `cierres` (5 opciones en
      `cierres.json`; `c1` es la del guion). ANTES de la voz, `python3 scripts/historia.py cierres <TRABAJO> --opciones` y
-     pregunta igual (`c1` primero). Con otro id: `python3 scripts/historia.py cierres <TRABAJO> --usar <id>`; con su texto:
+     pregunta igual (`c1` primero). Con el id que elija (también `c1`: así queda registrado quién eligió; con `auto`, `--usar c1 --por critico`): `python3 scripts/historia.py cierres <TRABAJO> --usar <id>`; con su texto:
      `--propio "<su texto>"` con `--forma`, `--mecanismo`, `--quien` y `--verbo` que casen con su frase
      (`referencias/cierres.md`; si dicta solo la frase final, se queda la oración del guion que la prepara). El script repasa narracion y guion: si fallan, deja el guion como estaba.
      Si el gate la rechaza, muéstrale la falla y propón la versión más cercana que pasa; nunca edites `guion.json` a
@@ -89,34 +89,9 @@ propio». Un trabajo empezado con un motor termina con ese motor.
      `pl-fNN`, en `recursos` de su retorno). Si las baja, repite `fotos-contacto` después del Plano y aplica el mismo
      criterio; una foto del plano que no sirve se cambia con un retoque de pantalla (paso 10), no en `guion.json`.
 4. **VOZ** (con `sin-voz`: `python3 scripts/historia.py voz-falsa <TRABAJO>` y salta al paso 5)
-   - Di al usuario los caracteres de voz (`locucion.json → caracteres`) antes de gastar.
-   - La voz va por **nodo**: una secuencia de 2–5 escenas grabada de corrido (`locucion.json → secuencias`) o una
-     escena suelta (el gancho, el cierre, las que no caben en ninguna). `python3 scripts/historia.py voz <TRABAJO>`
-     imprime un `prompt` por nodo; en una retoma, `voz <TRABAJO> --pendientes` imprime las secuencias enteras que hay
-     que regrabar (y sus créditos) y `voz <TRABAJO> --sueltas` solo las escenas cambiadas como nodos propios.
-   - `creative_create_flow` «Historia · <tema corto>»; un `creative_add_flow_node` por nodo (`node_type: "tts"`,
-     `model_id: "eleven_multilingual_v2"`, el `voice_id` de la salida, `model_parameters: {"language_code": "es"}`, el
-     `prompt` **exacto**); `creative_run_flow_nodes` con todos y **`generations_count: 1`**; sondea solo los
-     `session_ids` pendientes; luego `creative_transcribe_audio` (`eleven_scribe_v1`) por nodo; **una sola**
-     `creative_get_flow_run_status` con voz y Scribe (queda en un archivo) y `python3 scripts/historia.py descargar
-     <TRABAJO> --estado <ese archivo>`: baja cada nodo y **corta** cada secuencia en sus escenas con los tiempos de
-     Scribe (`audio/secuencias.json`). Si el prefijo de un prompt es ambiguo, el estado tiene que traer
-     `media[].prompt` entero.
-   - **Límite de 20**: `creative_run_flow_nodes` y `creative_get_flow_run_status` aceptan ≤ 20 ids. Con más de 10
-     nodos, el estado final va en lotes de ≤ 20 sesiones (la voz de cada nodo con su Scribe en el mismo lote) y
-     `descargar --estado A B …` recibe todos los archivos. Una respuesta muy grande la guarda la herramienta en un
-     archivo: ese archivo es el que se pasa. Mientras sondeas, pide solo las sesiones pendientes.
-   - **El estado en línea** (m045, m047): si `creative_get_flow_run_status` devuelve la respuesta en el chat y no en un archivo
-     (pasa con pocas sesiones), escríbela TAL CUAL a `<TRABAJO>/audio/estado.json` y pásale ese archivo a `descargar --estado`;
-     valen las `words` en línea de Scribe. `descargar` falla si una transcripción no casa con ninguna escena.
-     Pegado vale como venga (m111): con texto alrededor, la lista de bloques del MCP o varias respuestas seguidas en un
-     mismo archivo (un estado por lote), o por stdin con `--estado -`. Lo mínimo que se usa: `generations[]` (id,
-     modality, status, content_url, prompt, price), `media[]` (generation_id, prompt) y `transcripts[]` (text, words o
-     words_download_url, source.url). No hace falta reconstruir nada a mano.
-   - **Concurrencia** (m112): ElevenLabs corre pocas generaciones a la vez; con más de 3 nodos, las demás quedan
-     pendientes y se reintentan solas. Corre los nodos en lotes de ≤ 3 (`creative_run_flow_nodes` con ese lote),
-     sondea sus sesiones con `creative_get_flow_run_status` hasta `all_completed` y sigue con el lote siguiente; para
-     esperar, un `sleep` en segundo plano (en primer plano está bloqueado).
+   - Sigue `referencias/fragmentos/voz-mcp.md` (lee ese archivo: nodos por secuencia, lotes de ≤ 3, `generations_count: 1`, Scribe y
+     `descargar --nodos`) con `<script>` = `historia.py` y el flow «Historia · <tema corto>». En una retoma, `voz <TRABAJO> --pendientes`
+     (las secuencias enteras que hay que regrabar) o `--sueltas` (solo las escenas cambiadas).
 5. **TIEMPOS Y ESCUCHA**
    - `python3 scripts/historia.py tiempos <TRABAJO>` (V6; V10 y H5, avisos). Si una escena no se alinea, rehaz SOLO
      ese nodo y repite; si falla la frontera de una secuencia, regrábala entera o esas escenas con `voz --sueltas`.
@@ -127,14 +102,17 @@ propio». Un trabajo empezado con un motor termina con ese motor.
 6. **PLANO** (solo en la mesa: `video.json` con `"realizacion": "mesa"`; con el motor propio, salta al paso 7)
    - El guion visual es `<TRABAJO>/plano.json`: qué pieza entra con cada oración. Se escribe **después de `tiempos`**
      (con la voz real ya medida) y **antes de `grabar`**. No cambia el guion ni la voz y cuesta 0 créditos.
-   - Lanza `Workflow({ name: "plano", args: { trabajo: "<TRABAJO>" } })`. Hasta reiniciar Claude Code (el workflow y
-     el agente `video-realizador` son nuevos), con `scriptPath: ".claude/workflows/plano.js"` y
-     `args.permitir_fallback: true`. El realizador (opus) parte de `python3 scripts/historia.py plano <TRABAJO>
+   - Lanza `Workflow({ name: "plano", args: { trabajo: "<TRABAJO>" } })`. Si falla con
+     «agente no registrado», pide reiniciar Claude Code (los agentes se cargan al arrancar); el plano no se relanza con `permitir_fallback`: un
+     realizador sin su agente triplica el contexto.
+     El realizador (opus) parte de `python3 scripts/historia.py plano <TRABAJO>
      --digesto`, escribe `plano.json` y deja `python3 scripts/historia.py plano <TRABAJO> --check --hoja` (gates
      MV1–MV14, `referencias/flujo-mesa.md`) en 0 fallas.
    - **`veredicto: "plano_listo"`**: muestra al usuario `<TRABAJO>/plano.md` (la hoja de golpes: cada mesa con su
      golpe de arriba y, por oración, la pieza que entra) y sigue con el paso 7. Lee `nota` (lo que el realizador no
-     pudo resolver) y `recursos` (lo que bajó: si hay fotos, repite `fotos-contacto`, paso 3).
+     pudo resolver) y `recursos` (lo que bajó: si hay fotos, repite `fotos-contacto`, paso 3). El retorno trae `juez`:
+     lo que un espectador que solo leyó la hoja de golpes vio (m183); lo que bloqueaba ya volvió al realizador
+     (`corregidos`) y las `mejora` que queden van al reporte.
    - **`veredicto: "plano_pendiente"`**: muestra las `fallas`. Relanza el mismo Workflow (conserva el plano y arregla
      solo lo que el gate marca) o, si la falla pide una decisión (no hay archivo real para un tramo, una foto de un
      proceso sin nombre en la voz), pregunta al usuario. Nunca grabes con el gate en falla: `grabar` lo vuelve a correr
