@@ -57,7 +57,6 @@
     ],
     "progreso": {"actos": [0.0, 4.0, 8.0]},
     "seguir": {"t": 4.0, "dur": 2.0},
-    "aviso": "Maqueta · no a escala",
     "pie": "Relieve: Mapzen Terrain Tiles · Fallas: GEM (CC BY-SA 4.0) · Lugares: © OpenStreetMap · Frontera: Natural Earth",
     "handle": "@DerekUrizar",
     "cierre": {"t": 9.7, "frase": "Esto es una prueba.", "redes": [{"nombre": "TikTok", "handle": "@derekurizargt"}, {"nombre": "Instagram", "handle": "@derekurizargt"}, {"nombre": "X", "handle": "@DerekUrizar"}]}

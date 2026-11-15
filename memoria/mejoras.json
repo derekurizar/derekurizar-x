@@ -2036,6 +2036,61 @@
       "problema": "/congreso no puede pasar a la mesa tal cual: su gancho con mini-hemiciclo y portal no existe en la mesa, sus notas viven en sesiones/_descargas/congreso (la mesa solo lee _descargas/historia) y no tiene elenco para los retratos de los diputados.",
       "propuesta": "Decidir con el usuario si el gancho pasa a ser una mesa (foto del pleno + cifra) con el hemiciclo como tablero, y entonces enseñar a la mesa las notas y los retratos del Congreso.",
       "estado": "pendiente"
+    },
+    {
+      "id": "m186",
+      "fecha": "2026-11-14",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-14-terremoto-1976",
+      "area": "fuentes",
+      "archivo": "scripts/historia.py (OTROS_OFICIALES, ACADEMICAS)",
+      "problema": "`historia.py leer` clasificaba pubs.usgs.gov y earthquake.usgs.gov como «NO CUENTA», aunque el USGS fue la fuente primaria de la ruptura de 1976.",
+      "propuesta": "usgs.gov, noaa.gov y nasa.gov cuentan como oficiales (agencias científicas) y copernicus.org como académica.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m187",
+      "fecha": "2026-11-14",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-14-terremoto-1976",
+      "area": "voz",
+      "archivo": "scripts/video.py (estado_de_nodos, descargar --nodos)",
+      "problema": "Con 8 sesiones, el estado de creative_get_flow_run_status llegó en el chat y hubo que reescribir a mano miles de caracteres para `descargar --estado`.",
+      "propuesta": "`descargar --nodos ARCHIVO`: basta un JSON con las dos URL de cada nodo ({\"s1\": {voz, palabras, creditos}}); el resto del estado sale de locucion.json.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m188",
+      "fecha": "2026-11-14",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-14-terremoto-1976",
+      "area": "gates",
+      "archivo": "scripts/maqueta3d.py (M3D11) · scripts/video3d.py (C3D11)",
+      "problema": "Un pin que decía «A 25 km» de la falla se dibujó pegado a ella porque la cámara iba rasante; ningún gate lo vio (lo encontró el crítico en el storyboard).",
+      "propuesta": "M3D11: una marca con `separada_de` debe verse a ≥ 60 px de esa pieza en ≥ 80 % de su ventana; C3D11 exige `separada_de` a todo pin cuyo texto dice una distancia.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m189",
+      "fecha": "2026-11-14",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-14-terremoto-1976",
+      "area": "critico",
+      "archivo": "referencias/roles/video-critico.md («Modo 3D»)",
+      "problema": "El «Modo 3D» del crítico vivía solo en la guía del flujo, no en su guía de rol; hubo que explicárselo en la directiva.",
+      "propuesta": "Sección «Modo 3D (/video-3d)» en la guía del crítico con 3C1–3C8 (incluye lo aprendido en el piloto: nombrar el hecho, lo dibujado también se afirma).",
+      "estado": "hecha"
+    },
+    {
+      "id": "m190",
+      "fecha": "2026-11-14",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-14-terremoto-1976",
+      "area": "pantalla",
+      "archivo": "scripts/video3d.py · scripts/maqueta3d.py (M3D7) · referencias/flujo-video3d.md",
+      "problema": "«Maqueta · no a escala» salía fijo en todos los videos 3D; el usuario dijo que no es necesario en todos.",
+      "propuesta": "El aviso es opcional: sale solo si el guion trae `aviso` (por ejemplo «Traza esquemática» cuando el dibujo simplifica); M3D7 ya no lo exige.",
+      "estado": "hecha"
     }
   ]
 }

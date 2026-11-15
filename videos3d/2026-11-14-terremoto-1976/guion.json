@@ -289,7 +289,8 @@
           "lugar": "guatemala",
           "texto": "Ciudad de Guatemala",
           "sub": "A 25 km",
-          "dura": 2.35
+          "dura": 2.35,
+          "separada_de": "ruptura"
         }
       ],
       "cifras": [
@@ -455,5 +456,15 @@
     "vuelta": 1,
     "veredicto_previo": "corregir",
     "aplicado": "faltas 1–6 (probadas por el crítico) y mejoras 5, 6 y 8"
-  }
+  },
+  "id": "video3d-terremoto-1976",
+  "slug": "terremoto-1976",
+  "tema": "El terremoto de 1976: la falla del Motagua se rompe a lo largo del país",
+  "fecha": "2026-11-14",
+  "paleta": "obsidiana",
+  "musica": "obsidiana-1",
+  "desde": null,
+  "motor": "three",
+  "duracion_s": 48.8,
+  "creditos_voz": 668.94
 }

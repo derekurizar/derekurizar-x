@@ -75,6 +75,8 @@ sesiones/_fixture_serie_explica/salida/
 !sesiones/_fixture_youtube/
 sesiones/_fixture_youtube/trabajo/
 sesiones/_fixture_youtube/salida/
+!sesiones/_fixture_video3d/
+sesiones/_fixture_video3d/trabajo/
 !sesiones/_fixture_agenda/
 sesiones/_fixture_agenda/salida/
 congreso/*/*.mp4

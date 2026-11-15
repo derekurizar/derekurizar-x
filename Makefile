@@ -7,7 +7,7 @@ PALETAS ?= cielo
 ESTILO ?= noche
 PALETA ?= cielo
 
-.PHONY: help nuevo render visual catalogo validate tabla pdf ensamblar limpiar test doctor costo contacto digesto fuentes ideas calendario informe informe-ejemplo informe-catalogo informe-fixture verificacion auditoria-rehacer podar video-fixture video-fixture-4x5 noticias-fixture semana-fixture historia-fixture explica-fixture sabias-fixture congreso-fixture carrusel-fixture departamento-fixture analisis-fixture agenda-fixture serie-fixture serie-explica-fixture youtube-fixture video-fixture-mesa musica whisper iconos
+.PHONY: help nuevo render visual catalogo validate tabla pdf ensamblar limpiar test doctor costo contacto digesto fuentes ideas calendario informe informe-ejemplo informe-catalogo informe-fixture verificacion auditoria-rehacer podar video-fixture video-fixture-4x5 noticias-fixture semana-fixture historia-fixture explica-fixture sabias-fixture congreso-fixture carrusel-fixture departamento-fixture analisis-fixture agenda-fixture serie-fixture serie-explica-fixture youtube-fixture video-fixture-mesa video3d-fixture musica whisper iconos
 
 help:
 	@echo "make nuevo T=<plantilla> OUT=<ruta.html> [PALETA=cielo]  ensambla una tarjeta (base + plantilla)"
@@ -44,6 +44,7 @@ help:
 	@echo "make serie-explica-fixture [FPS=10]                      /serie de prueba con el motor /explica (temario del interés en 3 partes): lo mismo sobre la parte 1"
 	@echo "make agenda-fixture                                      /agenda de prueba: la semana del 4 al 8 de noviembre sobre una copia fija de los registros (AG1–AG9)"
 	@echo "make analisis-fixture                                    /analyze-improve de prueba (3 piezas reales, sin Chrome ni web): importar → vincular → diagnostico; exige AN1, AN2, AN3, AN6, AN7"
+	@echo "make video3d-fixture                                     /video-3d de prueba (maqueta corta del terremoto de 1976, voz falsa, 0 créditos): C3D + M3D → tiempos → render 9:16 → montaje"
 	@echo "make carrusel-fixture                                    /carrusel de prueba (hilo y dato de los fixtures: 4:5 y 9:16, CA1–CA12, 0 créditos) → sesiones/_fixture_carrusel/salida[_dato]"
 	@echo "make musica                                              catálogo fijo de música de /video (design/musica/) y sus usos"
 	@echo "make whisper                                             baja una vez el modelo ggml-small de whisper.cpp (escucha V11 de /video; antes: brew install whisper-cpp)"
@@ -274,6 +275,19 @@ sabias-fixture:   # maqueta de /sabias: el dato de prueba de /dato, guion fijo, 
 	python3 scripts/sabias.py montar $(SF)/trabajo --formato 4:5
 	python3 scripts/sabias.py revisar $(SF)/trabajo --formato 4:5
 	python3 scripts/sabias.py entregar $(SF)/trabajo --salida $(SF)/salida
+
+V3F := sesiones/_fixture_video3d
+video3d-fixture:   # maqueta de /video-3d: guion fijo sobre el set real, voz falsa, render 9:16 con el motor three.js y montaje
+	rm -rf $(V3F)/trabajo
+	mkdir -p $(V3F)/trabajo/base $(V3F)/trabajo/audio
+	cp $(V3F)/guion.json $(V3F)/video3d.json $(V3F)/trabajo/
+	cp $(V3F)/datos.json $(V3F)/trabajo/base/datos.json
+	python3 scripts/video3d.py guion $(V3F)/trabajo --check
+	python3 scripts/video3d.py voz-falsa $(V3F)/trabajo
+	python3 scripts/video3d.py tiempos $(V3F)/trabajo
+	python3 scripts/video3d.py render $(V3F)/trabajo --formato 9:16
+	python3 scripts/video3d.py montar $(V3F)/trabajo --formato 9:16
+	@echo "abre: $(V3F)/trabajo/salida/video.mp4"
 
 CGF := sesiones/_fixture_congreso
 congreso-fixture:   # maqueta de /congreso: votación, ley y fotos de la 6347 congeladas, guion fijo, voz falsa, 9:16 y 4:5

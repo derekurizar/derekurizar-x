@@ -1,0 +1,13 @@
+{
+  "tipo": "video3d",
+  "slug": "fixture-video3d",
+  "tema": "Maqueta de prueba de /video-3d (terremoto de 1976, versión corta)",
+  "fecha": "2026-11-14",
+  "paleta": "obsidiana",
+  "musica": "obsidiana-1",
+  "musica_tema": "desastre",
+  "duracion_s": 22,
+  "desde": null,
+  "estado": "preparado",
+  "fixture": true
+}

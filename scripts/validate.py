@@ -56,6 +56,8 @@ Comprueba:
       los archivos de la entrega (guion.json, caption.md, fuentes.md, votos.csv)
   M20 memoria/youtube.json (si existe; /youtube-long): campos, ids únicos, estado, la serie existe, la entrega (guion.json,
       caption.md, capitulos.json, miniatura.png) y los capítulos (≥ 3, el primero en 0:00, cada uno ≥ 10 s)
+  M21 memoria/videos3d.json (si existe; /video-3d): campos, ids únicos, estado, paleta, música, un solo estilo del
+      catálogo de design/sets3d/estilos.json, el set existe y la entrega (guion.json, maqueta.json, fuentes.md)
   M18 agenda/<AAAA-Wnn>/agenda.json (si existe; /agenda): AG1–AG9 de scripts/agenda.py sobre cada semana que aún no
      terminó (las pasadas son historia: no se revisan)
   M17 memoria/metricas.json (si existe; métricas de /analyze-improve): esquema de cada publicación (id = <plataforma>-<post_id>,
@@ -697,6 +699,49 @@ def validar_sabias(paletas):
             warn("M13 sabias[%d] %s/video.mp4 no está (fuera de git: se regenera con /sabias)" % (i, r))
 
 
+def validar_video3d(paletas):
+    """M21 memoria/videos3d.json (registro de /video-3d)."""
+    rel_mem = "memoria/videos3d.json"
+    if not os.path.exists(os.path.join(RAIZ, rel_mem)):  # ausente = ok: memoria.py lo crea con el primero
+        return
+    d = cargar(rel_mem) or {}
+    musica = {p.get("id") for p in (cargar("design/musica/catalogo.json") or {}).get("pistas", [])}
+    estilos = {e.get("id") for e in (cargar("design/sets3d/estilos.json") or {}).get("estilos", [])}
+    ids, slugs = set(), set()
+    for i, v in enumerate(d.get("videos3d", [])):
+        for campo in ("id", "slug", "fecha", "ruta", "estilo", "set", "gancho", "cierre", "paleta", "musica", "duracion_s", "estado"):
+            if campo not in v:
+                err("M21 videos3d[%d] sin %s" % (i, campo))
+        for clave, vistos in (("id", ids), ("slug", slugs)):
+            if v.get(clave) in vistos:
+                err("M21 videos3d: %s repetido %s" % (clave, v.get(clave)))
+            vistos.add(v.get(clave))
+        if v.get("estado") not in ("listo", "publicado", "incompleto"):
+            err("M21 videos3d[%d] estado %r" % (i, v.get("estado")))
+        if paletas and v.get("paleta") not in paletas:
+            err("M21 videos3d[%d] paleta %r desconocida" % (i, v.get("paleta")))
+        if v.get("musica") not in musica:
+            err("M21 videos3d[%d] música %r no está en el catálogo" % (i, v.get("musica")))
+        if estilos and v.get("estilo") not in estilos:
+            err("M21 videos3d[%d] estilo %r no está en design/sets3d/estilos.json (un solo estilo por video)" % (i, v.get("estilo")))
+        if not os.path.isdir(os.path.join(RAIZ, "design", "sets3d", str(v.get("set")))):
+            err("M21 videos3d[%d] set %r no existe en design/sets3d/" % (i, v.get("set")))
+        r = str(v.get("ruta", ""))
+        if os.path.isabs(r):
+            err("M21 videos3d[%d] la ruta debe ser relativa a la raíz" % i)
+            continue
+        for f in ("guion.json", "maqueta.json", "fuentes.md"):
+            if not os.path.exists(os.path.join(RAIZ, r, f)):
+                err("M21 videos3d[%d] %s sin %s" % (i, r, f))
+        g = cargar(os.path.join(r, "guion.json")) if os.path.exists(os.path.join(RAIZ, r, "guion.json")) else {}
+        if g and g.get("tipo") != "video3d":
+            err("M21 videos3d[%d] %s/guion.json no es de /video-3d (tipo %r)" % (i, r, g.get("tipo")))
+        if g and len({x.get("estilo") for x in [g.get("estilo") or {}]} | {e["estilo"] for e in g.get("escenas") or [] if isinstance(e, dict) and "estilo" in e}) > 1:
+            err("M21 videos3d[%d] %s mezcla estilos: va uno solo por video" % (i, r))
+        if not os.path.exists(os.path.join(RAIZ, r, "video.mp4")):
+            warn("M21 videos3d[%d] %s/video.mp4 no está (fuera de git: se regenera con /video-3d)" % (i, r))
+
+
 def validar_congreso(paletas):
     """M19 memoria/congreso.json (registro de /congreso)."""
     rel_mem = "memoria/congreso.json"
@@ -854,7 +899,7 @@ def validar_explicaciones(paletas):
             warn("M12 explicaciones[%d] %s/video.mp4 no está (fuera de git: se regenera con /explica)" % (i, r))
 
 
-FLUJOS_MEJORA = ("video", "noticias", "historia", "explica", "sabias", "carrusel", "semana", "analisis", "serie", "congreso", "youtube")
+FLUJOS_MEJORA = ("video", "noticias", "historia", "explica", "sabias", "carrusel", "semana", "analisis", "serie", "congreso", "youtube", "video3d")
 
 
 def validar_agendas():
@@ -1010,6 +1055,7 @@ def main():
     validar_historias(paletas)
     validar_explicaciones(paletas)
     validar_sabias(paletas)
+    validar_video3d(paletas)
     validar_congreso(paletas)
     validar_carruseles(paletas)
     validar_semanas(paletas)

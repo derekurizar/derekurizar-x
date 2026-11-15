@@ -1,0 +1,35 @@
+{
+  "slug": "fixture-video3d",
+  "fecha": "2026-11-14",
+  "_comentario": "Cifras reales del piloto del terremoto de 1976, solo las que usa la maqueta de prueba.",
+  "cifras": [
+    {
+      "id": "dias-c10",
+      "concepto": "proporción de muertes en Chimaltenango",
+      "valor": 60.15,
+      "unidad": "%",
+      "periodo": "1976",
+      "veredicto": "verificada",
+      "url": "https://infoiarna.url.edu.gt/wp-content/uploads/2026/05/bol_iarna2026.pdf"
+    },
+    {
+      "id": "dias-h01-n1",
+      "concepto": "Un terremoto de magnitud 7.5 azota Guatemala de madrugada; el sismo dura unos 35 segundos.",
+      "valor": 7.5,
+      "unidad": "",
+      "periodo": "1976",
+      "veredicto": "verificada"
+    },
+    {
+      "id": "ruptura-c01",
+      "concepto": "Longitud de la ruptura visible en superficie (valor final de Plafker)",
+      "valor": 230,
+      "unidad": "km",
+      "veredicto": "verificada",
+      "url": "https://pubs.usgs.gov/publication/70011145",
+      "medio": "Plafker (1976), Science 193:1201-1208 (resumen en USGS Publications Warehouse)",
+      "archivo": "sesiones/_descargas/historia/pubs-usgs-gov-0c71ae5030.txt",
+      "cita": "Fault breakage was observed for 230 km."
+    }
+  ]
+}

@@ -63,6 +63,11 @@
 --congreso <congreso/<fecha>-<slug>> [--estado listo|incompleto] [--dry-run]
   memoria/congreso.json → congreso[] {id (= congreso-<slug>), slug, fecha, ruta, iniciativa, ley, votacion, nombrados,
   paleta, musica, duracion_s, creditos_voz, estado, frases}; el mismo slug reemplaza (conserva «publicado»).
+--video3d <videos3d/<fecha>-<slug>> [--estado listo|incompleto] [--dry-run]
+  memoria/videos3d.json → videos3d[] {id (= video3d-<slug>), slug, tema, fecha, ruta, estilo, motor, set, idea_visual,
+  gancho {id, familia, texto}, cierre {id, final}, paleta, musica, duracion_s, creditos_voz, desde, estado}; registrar
+  el mismo video reemplaza. video3d.py lo lee para rotar la familia del gancho y mostrar los estilos ya usados (M21).
+
 --sabias <datos/<fecha>-<slug>/video> [--estado listo|incompleto] [--dry-run]
   memoria/sabias.json → sabias[] {id (= sabias-<slug>), slug, tema, fecha, ruta, dato, paleta, musica, duracion_s,
   creditos_voz, estado, frases {gancho, cierre, cierre_tipo, cierre_forma, cierre_mecanismo, visual, apoyo}}; registrar
@@ -153,6 +158,12 @@ VACIO_EXPLICACIONES = {
     "version": 1,
     "_comentario": "Registro de videos explicativos producidos por /explica. Lo escribe SOLO scripts/memoria.py --explica <explicaciones/<fecha>-<slug>>; scripts/explica.py lo lee para no repetir un tema, rotar ganchos, cierres, animaciones y música, y para las frases ya usadas (C11). estado: listo | publicado | incompleto.",
     "explicaciones": [],
+}
+VIDEOS3D = os.path.join(RAIZ, "memoria", "videos3d.json")
+VACIO_VIDEOS3D = {
+    "version": 1,
+    "_comentario": "Registro de videos 3D («la maqueta que vuela») producidos por /video-3d. Lo escribe SOLO scripts/memoria.py --video3d <videos3d/<fecha>-<slug>>; scripts/video3d.py lo lee para rotar la familia del gancho y para mostrar los estilos ya usados. estado: listo | publicado | incompleto.",
+    "videos3d": [],
 }
 SABIAS = os.path.join(RAIZ, "memoria", "sabias.json")
 VACIO_SABIAS = {
@@ -799,6 +810,39 @@ def registrar_sabias(d, estado, dry_run=False):
     return 0
 
 
+def registrar_video3d(d, estado, dry_run=False):
+    """--video3d DIR: registra en memoria/videos3d.json el video de /video-3d entregado en DIR (videos3d/<fecha>-<slug>,
+    con el guion.json de entrega de scripts/video3d.py entregar)."""
+    ruta = os.path.normpath(os.path.relpath(os.path.abspath(d), RAIZ)) if os.path.isabs(d) else os.path.normpath(d)
+    g = leer(os.path.join(RAIZ, ruta, "guion.json"), obligatorio=False)
+    if not g or g.get("tipo") != "video3d" or not g.get("id"):
+        print("ERROR: %s no tiene guion.json de entrega de /video-3d (scripts/video3d.py entregar)" % ruta, file=sys.stderr)
+        return 1
+    escenas = [e for e in g.get("escenas") or [] if isinstance(e, dict)]
+    gancho = dict(g.get("gancho") or {}, texto=(escenas[0].get("texto") if escenas else ""))
+    cierre = dict(g.get("cierre") or {}, texto=(escenas[-1].get("texto") if escenas else ""), final=(escenas[-1].get("final") if escenas else ""))
+    reg = {"id": g["id"], "slug": g["slug"], "tema": g.get("tema", ""), "fecha": g["fecha"], "ruta": ruta,
+           "estilo": (g.get("estilo") or {}).get("id"), "motor": g.get("motor"), "set": (g.get("mundo") or {}).get("set"),
+           "idea_visual": g.get("idea_visual", ""), "gancho": gancho, "cierre": cierre, "paleta": g["paleta"], "musica": g["musica"],
+           "duracion_s": g["duracion_s"], "creditos_voz": g.get("creditos_voz"), "desde": g.get("desde"), "estado": estado}
+    ms = leer(VIDEOS3D, obligatorio=False) or json.loads(json.dumps(VACIO_VIDEOS3D))
+    previos = [i for i, v in enumerate(ms["videos3d"]) if v.get("slug") == reg["slug"]]
+    if previos:  # volver a registrar el mismo video reemplaza (y conserva «publicado»)
+        if ms["videos3d"][previos[0]].get("estado") == "publicado" and estado == "listo":
+            reg["estado"] = "publicado"
+        ms["videos3d"][previos[0]] = reg
+    else:
+        ms["videos3d"].append(reg)
+    ms["videos3d"].sort(key=lambda v: (v["fecha"], v["id"]))
+    print("video 3D %s · %.0f s · estilo %s · gancho %s · %s" % (reg["id"], reg["duracion_s"], reg["estilo"], gancho.get("familia"), reg["estado"]))
+    if dry_run:
+        print("[dry-run] no se escribió nada")
+        return 0
+    escribir(VIDEOS3D, ms)
+    print("escrito memoria/videos3d.json (%d)" % len(ms["videos3d"]))
+    return 0
+
+
 def registrar_congreso(d, estado, dry_run=False):
     """--congreso DIR: registra en memoria/congreso.json el video de /congreso entregado en DIR (congreso/<fecha>-<slug>,
     con el guion.json de entrega de scripts/congreso.py entregar)."""
@@ -1039,6 +1083,7 @@ def main():
     g.add_argument("--noticias", metavar="DIR", help="registra el noticiero de /noticias entregado en DIR (noticias/<fecha>) en memoria/noticias.json")
     g.add_argument("--video", metavar="DIR", help="registra el video de /video entregado en DIR (hilos/<fecha>-<slug>/video) en memoria/videos.json")
     g.add_argument("--congreso", metavar="DIR", help="registra el video de /congreso entregado en DIR (congreso/<fecha>-<slug>) en memoria/congreso.json")
+    g.add_argument("--video3d", metavar="DIR", help="registra el video de /video-3d entregado en DIR (videos3d/<fecha>-<slug>) en memoria/videos3d.json")
     g.add_argument("--sabias", metavar="DIR", help="registra el «¿Sabías que…?» de /sabias entregado en DIR (datos/<fecha>-<slug>/video) en memoria/sabias.json")
     g.add_argument("--historia", metavar="DIR", help="registra la historia de /historia entregada en DIR (historias/<fecha>-<slug>) en memoria/historias.json")
     g.add_argument("--explica", metavar="DIR", help="registra el video de /explica entregado en DIR (explicaciones/<fecha>-<slug>) en memoria/explicaciones.json")
@@ -1082,6 +1127,8 @@ def main():
         return registrar_youtube(a.youtube, dry_run=a.dry_run)
     if a.semana:
         return registrar_semana(a.semana, a.estado, a.dry_run)
+    if a.video3d:
+        return registrar_video3d(a.video3d, a.estado, a.dry_run)
     if a.sabias:
         return registrar_sabias(a.sabias, a.estado, a.dry_run)
     if a.congreso:

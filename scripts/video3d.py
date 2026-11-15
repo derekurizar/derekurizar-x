@@ -18,7 +18,7 @@ Subcomandos (TRABAJO = sesiones/video3d-<slug>):
   digesto TRABAJO                    lo que necesita quien escribe: cifras, lugares, piezas, eventos, estilos, reglas
   ganchos TRABAJO --check [--cuadros] [--clips] | --usar ID
         ganchos.json (5 candidatos a escena 1): reglas del gancho; cuadros y clip mudo de cada candidato; copia el elegido
-  guion TRABAJO --check              gates C3D1–C3D10 (concordancia) + V2–V4 → locucion.json y maqueta.json (estimado)
+  guion TRABAJO --check              gates C3D1–C3D11 (concordancia) + V2–V4 → locucion.json y maqueta.json (estimado)
   storyboard TRABAJO                 un cuadro por clave de cámara y por evento → storyboard/hoja.jpg (antes de la voz)
   voz | voz-falsa | descargar | partir TRABAJO […]    → scripts/video.py (los mismos comandos de /video)
   tiempos TRABAJO                    la voz real → maqueta.json con los segundos reales (V6) + gates M3D
@@ -58,7 +58,7 @@ ESTILOS = os.path.join(RAIZ, "design", "sets3d", "estilos.json")
 MAQUETA3D = os.path.join(RAIZ, "scripts", "maqueta3d.py")
 EVENTOS = ("ruptura", "onda", "deslizar", "encender", "apagar", "parpadear", "resaltar")
 REENVIO = ("voz", "voz-falsa", "descargar", "partir")
-AVISO_MAQUETA = "Maqueta · no a escala"
+RE_DISTANCIA = re.compile(r"\b\d[\d.,]*\s*(?:km|kil[oó]metros?|m|metros?)\b", re.I)   # C3D11: un pin que dice una distancia
 HANDLE = "@DerekUrizar"
 
 
@@ -231,7 +231,7 @@ def secuencias_de(loc):
 
 
 def revisar_guion(g, st, trabajo):
-    """C3D1–C3D10 y V2–V4 sobre guion.json → (fallas, avisos, locución)."""
+    """C3D1–C3D11 y V2–V4 sobre guion.json → (fallas, avisos, locución)."""
     fallas, avisos = [], []
     escenas = escenas_de(g)
     valores, por_id = cifras_ok(trabajo)
@@ -302,6 +302,14 @@ def revisar_guion(g, st, trabajo):
                     fallas.append("C3D3 escena %d: la cámara mira «%s», que no es un lugar del set ni de mundo.lugares" % (n, m))
             if clase == "marca" and isinstance(o.get("lugar"), str) and o["lugar"] not in lugares:
                 fallas.append("C3D3 escena %d: marca en «%s», que no es un lugar del set ni de mundo.lugares" % (n, o.get("lugar")))
+            if clase == "marca":
+                dice_distancia = RE_DISTANCIA.search("%s %s" % (o.get("texto", ""), o.get("sub", "")))
+                if dice_distancia and o.get("separada_de") not in piezas:
+                    fallas.append("C3D11 escena %d: la marca «%s» dice una distancia («%s»): declara `separada_de` con la pieza de la que "
+                                  "está a esa distancia, para que el gate M3D11 mida que en pantalla no queden pegadas"
+                                  % (n, o.get("texto"), dice_distancia.group()))
+                elif o.get("separada_de") and o["separada_de"] not in piezas:
+                    fallas.append("C3D11 escena %d: `separada_de` «%s» no es una pieza de mundo.piezas" % (n, o["separada_de"]))
             if clase == "evento":
                 if o.get("tipo") not in EVENTOS:
                     fallas.append("C3D6 escena %d: evento «%s» no existe (%s)" % (n, o.get("tipo"), ", ".join(EVENTOS)))
@@ -477,7 +485,7 @@ def construir(trabajo, g, loc, real, solo_escenas=None):
     # «Sígueme» a mitad: el hueco sin titular largo más cercano al 50 % (en 9:16 el botón va a la altura del titular)
     def libre(t):
         return not any(len(ti["texto"]) > 14 and min(ti["hasta"], t + SEGUIR_S) - max(ti["t"], t) > 0 for ti in titulares)
-    candidatos = [total * (0.35 + 0.01 * k) for k in range(31)]
+    candidatos = [total * (0.25 + 0.01 * k) for k in range(51)]
     t_seguir = min([t for t in candidatos if libre(t) and t + SEGUIR_S <= fin_titulares] or [total * 0.5], key=lambda t: abs(t - total * 0.5))
     palabras = [{"text": w["text"], "start": round(x["off"] + w["start"], 3), "end": round(x["off"] + w["end"], 3)}
                 for x in tl for w in x["pantalla"]]
@@ -488,8 +496,10 @@ def construir(trabajo, g, loc, real, solo_escenas=None):
             actos.append(x["off"])
     mundo = g.get("mundo") or {}
     capa = {"titulares": titulares, "cifras": cifras, "palabras": palabras, "progreso": {"actos": actos},
-            "seguir": {"t": cuadro(t_seguir), "dur": SEGUIR_S}, "aviso": g.get("aviso") or AVISO_MAQUETA,
+            "seguir": {"t": cuadro(t_seguir), "dur": SEGUIR_S},
             "pie": g.get("pie") or pie_del_set(mundo.get("set")), "handle": HANDLE}
+    if (g.get("aviso") or "").strip():   # «Maqueta · no a escala», «Traza esquemática»…: solo cuando el guion lo pide
+        capa["aviso"] = g["aviso"].strip()
     if cierre_x:
         ce = next(e for e in escenas_de(g) if e.get("tipo") == "cierre")
         capa["cierre"] = {"t": cuadro(cierre_x["off"] + min(cierre_x["fin_voz"] * 0.35, 1.2)), "frase": ce.get("final", ""),
@@ -574,6 +584,13 @@ def cmd_digesto(a):
     for s in sorted(d for d in os.listdir(sets) if os.path.isdir(os.path.join(sets, d))) if os.path.isdir(sets) else []:
         lug = lugares_del_set(s)
         print("\n## Set `%s`: %d lugares\n\n%s" % (s, len(lug), ", ".join("`%s` (%s)" % (k, v.get("nombre")) for k, v in sorted(lug.items()))))
+    reg = os.path.join(RAIZ, "memoria", "videos3d.json")
+    hechos = [v for v in (leer(reg)["videos3d"] if os.path.exists(reg) else []) if v.get("slug") != st["slug"]]
+    if hechos:
+        print("\n## Videos 3D ya hechos (rota la familia del gancho; el estilo se elige por la idea visual, no por costumbre)\n")
+        for v in hechos[-5:]:
+            print("- %s · %s · estilo `%s` · gancho `%s`: «%s»" % (v["fecha"], v["slug"], v.get("estilo"), (v.get("gancho") or {}).get("familia"),
+                                                              (v.get("gancho") or {}).get("texto", "")))
     print("\n## Eventos\n\n" + ", ".join(EVENTOS) + "\n\nContrato de la maqueta: referencias/diseno/maqueta3d.md · reglas del guion: referencias/flujo-video3d.md")
     return 0
 
@@ -600,7 +617,7 @@ def cmd_guion(a):
     ruta = os.path.join(trabajo, "maqueta.json")
     escribir(ruta, maqueta)
     escribir(os.path.join(trabajo, "tiempos.json"), tiempos)
-    print("→ %s y %s (tiempos estimados) · C3D1–C3D10, V2–V4 ok" % (rel(os.path.join(trabajo, "locucion.json")), rel(ruta)))
+    print("→ %s y %s (tiempos estimados) · C3D1–C3D11, V2–V4 ok" % (rel(os.path.join(trabajo, "locucion.json")), rel(ruta)))
     return revisar_maqueta(ruta)
 
 
@@ -839,14 +856,23 @@ def cmd_entregar(a):
     if not os.path.exists(os.path.join(sal, "video.mp4")):
         return falla("falta salida/video.mp4: corre montar")
     if not leer(os.path.join(trabajo, "tiempos.json")).get("real"):
-        return falla("el video se montó con tiempos estimados (voz falsa): no se entrega")
+        return falla("el video se montó con tiempos estimados: corre tiempos, render y montar con la voz real")
+    cred = os.path.join(trabajo, "audio", "creditos.json")
+    if not (os.path.exists(cred) and leer(cred).get("total")) and not a.salida:
+        return falla("sin créditos de voz (voz falsa): una maqueta de prueba no se entrega; para verla usa --salida DIR")
     destino = os.path.abspath(a.salida or os.path.join(RAIZ, "videos3d", "%s-%s" % (st["fecha"], st["slug"])))
     os.makedirs(destino, exist_ok=True)
     for f in ("video.mp4", "video_4x5.mp4", "subtitulos.srt"):
         if os.path.exists(os.path.join(sal, f)):
             shutil.copyfile(os.path.join(sal, f), os.path.join(destino, f))
-    for f in ("guion.json", "maqueta.json"):
-        shutil.copyfile(os.path.join(trabajo, f), os.path.join(destino, f))
+    shutil.copyfile(os.path.join(trabajo, "maqueta.json"), os.path.join(destino, "maqueta.json"))
+    estilos = {e["id"]: e for e in leer(ESTILOS)["estilos"]} if os.path.exists(ESTILOS) else {}
+    escribir(os.path.join(destino, "guion.json"), dict(g, **{
+        "tipo": "video3d", "id": "video3d-" + st["slug"], "slug": st["slug"], "tema": st["tema"], "fecha": st["fecha"],
+        "paleta": st["paleta"], "musica": st["musica"], "desde": st.get("desde"),
+        "motor": (estilos.get((g.get("estilo") or {}).get("id")) or {}).get("motor"),
+        "duracion_s": round(leer(os.path.join(trabajo, "tiempos.json"))["total_s"], 1),
+        "creditos_voz": leer(cred)["total"] if os.path.exists(cred) else None}))
     _, por_id = cifras_ok(trabajo)
     usadas = [c.get("cifra") for e in escenas_de(g) for c in e.get("cifras") or []] + list(g.get("cifras_voz") or [])
     lineas = ["# Fuentes · %s" % st["tema"], ""]
@@ -866,6 +892,7 @@ def cmd_entregar(a):
     st["estado"], st["ruta"] = "listo", rel(destino)
     escribir(os.path.join(trabajo, "video3d.json"), st)
     print("→ %s" % rel(destino))
+    print("registra: python3 scripts/memoria.py --video3d %s" % rel(destino))
     return 0
 
 

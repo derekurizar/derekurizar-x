@@ -1,0 +1,231 @@
+{
+  "tipo": "video3d",
+  "version": 1,
+  "idea_visual": "La falla es lo único encendido: una línea naranja que cruza el país a oscuras mientras duerme.",
+  "estilo": {
+    "id": "noche",
+    "razon": "Ocurrió a las tres de la madrugada, con el país dormido: el mapa a oscuras con las luces de los pueblos es la escena real, y la falla que se rompe es lo único que se enciende.",
+    "confianza": "alta"
+  },
+  "protagonista": "ruptura",
+  "mundo": {
+    "set": "guatemala",
+    "exageracion": 5,
+    "lugares": {
+      "epicentro": {
+        "lon": -89.1,
+        "lat": 15.32,
+        "nombre": "Epicentro de 1976"
+      }
+    },
+    "piezas": [
+      {
+        "id": "ruptura",
+        "tipo": "falla",
+        "puntos": [
+          [
+            -90.70722,
+            14.86057
+          ],
+          [
+            -90.6001,
+            14.84294
+          ],
+          [
+            -90.50109,
+            14.83493
+          ],
+          [
+            -90.3209,
+            14.83012
+          ],
+          [
+            -90.13418,
+            14.84935
+          ],
+          [
+            -89.9994,
+            14.875
+          ],
+          [
+            -89.50068,
+            15.05128
+          ],
+          [
+            -89.33879,
+            15.13301
+          ],
+          [
+            -89.18834,
+            15.20352
+          ],
+          [
+            -89.00519,
+            15.29326
+          ]
+        ]
+      },
+      {
+        "id": "pueblos",
+        "tipo": "luces",
+        "lugares": "todos"
+      },
+      {
+        "id": "frontera",
+        "tipo": "frontera"
+      }
+    ]
+  },
+  "pie": "Relieve: Mapzen Terrain Tiles · Traza: USGS (PP 1002) · Frontera: Natural Earth · Lugares: © OpenStreetMap",
+  "_comentario": "Maqueta de prueba de /video-3d: make video3d-fixture (voz falsa, 0 créditos). No se entrega.",
+  "gancho": {
+    "id": "g1",
+    "familia": "ruptura",
+    "elegido_por": "usuario"
+  },
+  "escenas": [
+    {
+      "secuencia": 1,
+      "texto": "A las 3 de la madrugada, una falla se rompió a lo largo de Guatemala.",
+      "titular": {
+        "kicker": "4 DE FEBRERO DE 1976",
+        "texto": "La madrugada que se rompió la falla",
+        "dura": 5.0
+      },
+      "camara": [
+        {
+          "mira": [
+            -90.25,
+            15.55
+          ],
+          "dist_km": 1080,
+          "azimut": 0,
+          "elevacion": 68
+        },
+        {
+          "al": "fin",
+          "mira": [
+            -89.9,
+            15.0
+          ],
+          "dist_km": 620,
+          "azimut": -10,
+          "elevacion": 54
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "ruptura",
+          "pieza": "ruptura",
+          "desde": "epicentro",
+          "km_oeste": 200,
+          "km_este": 30,
+          "dur": 3.4,
+          "sfx": "grave"
+        }
+      ],
+      "n": 1,
+      "tipo": "gancho",
+      "acto": 1
+    },
+    {
+      "n": 2,
+      "tipo": "toma",
+      "acto": 1,
+      "secuencia": 1,
+      "texto": "El terremoto empezó aquí, cerca de Los Amates. Fue de magnitud 7.5.",
+      "camara": [
+        {
+          "dice": "Los Amates",
+          "mira": "epicentro",
+          "dist_km": 250,
+          "azimut": -15,
+          "elevacion": 40
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "aquí",
+          "tipo": "resaltar",
+          "lugar": "epicentro",
+          "dur": 2.0,
+          "adelanto": 0.2,
+          "sfx": "pulso"
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "aquí",
+          "lugar": "epicentro",
+          "texto": "Los Amates, Izabal",
+          "sub": "Epicentro"
+        }
+      ],
+      "cifras": [
+        {
+          "dice": "7.5",
+          "valor": "7.5",
+          "rotulo": "de magnitud",
+          "cifra": "dias-h01-n1",
+          "fuente": "USGS"
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "tipo": "toma",
+      "acto": 2,
+      "texto": "Y 6 de cada 10 muertos estaban lejos del epicentro: en Chimaltenango.",
+      "titular": {
+        "kicker": "CHIMALTENANGO",
+        "texto": "Lejos del epicentro"
+      },
+      "camara": [
+        {
+          "al": "fin",
+          "mira": "chimaltenango",
+          "dist_km": 330,
+          "azimut": -15,
+          "elevacion": 46
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "Chimaltenango",
+          "lugar": "chimaltenango",
+          "texto": "Chimaltenango",
+          "dura": 2.2
+        }
+      ],
+      "cifras": [
+        {
+          "dice": "6 de cada 10",
+          "valor": "60 %",
+          "rotulo": "de las muertes, en Chimaltenango",
+          "cifra": "dias-c10",
+          "fuente": "IARNA-URL"
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "tipo": "cierre",
+      "acto": 2,
+      "texto": "La falla sigue ahí, debajo de los mismos pueblos.",
+      "final": "La falla sigue ahí.",
+      "camara": [
+        {
+          "al": "fin",
+          "mira": [
+            -90.25,
+            15.55
+          ],
+          "dist_km": 1080,
+          "azimut": 0,
+          "elevacion": 68
+        }
+      ]
+    }
+  ],
+  "narracion": "A las 3 de la madrugada, una falla se rompió a lo largo de Guatemala. El terremoto empezó aquí, cerca de Los Amates. Fue de magnitud 7.5. Y 6 de cada 10 muertos estaban lejos del epicentro: en Chimaltenango. La falla sigue ahí, debajo de los mismos pueblos."
+}

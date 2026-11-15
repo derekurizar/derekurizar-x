@@ -207,10 +207,13 @@ ATRIBUCION = re.compile(r"\bseg[uú]n\b|\bde acuerdo con\b|\bafirm\w+|\bdijo\b|\
 OTROS_OFICIALES = {"cicig.org": "CICIG", "un.org": "ONU", "oas.org": "OEA", "worldbank.org": "Banco Mundial",
                    "iadb.org": "BID", "cepal.org": "CEPAL", "anacafe.org": "Anacafé", "imf.org": "FMI", "fao.org": "FAO",
                    "state.gov": "Departamento de Estado", "justice.gov": "Departamento de Justicia (EE. UU.)",
-                   "treasury.gov": "Tesoro (EE. UU.)", "corteidh.or.cr": "Corte IDH"}
+                   "treasury.gov": "Tesoro (EE. UU.)", "corteidh.or.cr": "Corte IDH",
+                   # agencias científicas: la fuente primaria de sismos, volcanes, clima y relieve (m186: /video-3d,
+                   # 2026-11-14: pubs.usgs.gov y earthquake.usgs.gov salían «NO CUENTA» y eran la fuente del video)
+                   "usgs.gov": "Servicio Geológico de EE. UU. (USGS)", "noaa.gov": "NOAA", "nasa.gov": "NASA"}
 ACADEMICAS = {"scielo.org", "jstor.org", "redalyc.org", "dialnet.unirioja.es", "persee.fr", "openedition.org",
               "flacso.edu.gt", "asies.org.gt", "icefi.org", "avancso.org.gt", "cirma.org.gt", "academia.edu",
-              "britannica.com"}
+              "britannica.com", "copernicus.org"}
 # archivos, hemerotecas y museos (instituciones, no sitios de aficionados)
 ARCHIVOS = {"archive.org", "hemeroteca.prensalibre.com", "elpais.com/hemeroteca", "newspapers.com", "loc.gov",
             "archivohistoricopn.org", "nsarchive.gwu.edu", "nsarchive2.gwu.edu", "thehenryford.org", "si.edu",

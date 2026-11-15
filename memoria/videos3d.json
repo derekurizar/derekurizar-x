@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "_comentario": "Registro de videos 3D («la maqueta que vuela») producidos por /video-3d. Lo escribe SOLO scripts/memoria.py --video3d <videos3d/<fecha>-<slug>>; scripts/video3d.py lo lee para rotar la familia del gancho y para mostrar los estilos ya usados. estado: listo | publicado | incompleto.",
+  "videos3d": [
+    {
+      "id": "video3d-terremoto-1976",
+      "slug": "terremoto-1976",
+      "tema": "El terremoto de 1976: la falla del Motagua se rompe a lo largo del país",
+      "fecha": "2026-11-14",
+      "ruta": "videos3d/2026-11-14-terremoto-1976",
+      "estilo": "noche",
+      "motor": "three",
+      "set": "guatemala",
+      "idea_visual": "La falla es lo único encendido: una línea naranja que cruza el país a oscuras mientras duerme.",
+      "gancho": {
+        "id": "g1",
+        "familia": "ruptura",
+        "elegido_por": "usuario",
+        "texto": "A las 3 de la madrugada, una falla se rompió a lo largo de Guatemala."
+      },
+      "cierre": {
+        "id": "c1",
+        "tipo": "remate",
+        "forma": "consecuencia",
+        "elegido_por": "usuario",
+        "texto": "La falla sigue ahí, debajo de los mismos pueblos.",
+        "final": "La falla sigue ahí."
+      },
+      "paleta": "obsidiana",
+      "musica": "obsidiana-1",
+      "duracion_s": 48.8,
+      "creditos_voz": 668.94,
+      "desde": null,
+      "estado": "listo"
+    }
+  ]
+}

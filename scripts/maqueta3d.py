@@ -10,6 +10,9 @@ la proyección): nunca miden píxeles.
   maqueta3d.py cuadro MAQUETA --t S [--t S …] --salida DIR [--formato F] [--hoja]   PNG de cuadros sueltos
   maqueta3d.py proyecto MAQUETA --dir DIR [--formato F]           el proyecto de HyperFrames
   maqueta3d.py render MAQUETA --dir DIR [--formato F]             DIR/<9x16|4x5>/video.mp4 + DIR/efectos.json
+  maqueta3d.py pieza MAQUETA --lienzo ANCHOxALTO --salida ARCHIVO.mp4 [--borrador]
+        MODO PIEZA: la maqueta alojada en el cuadro de otro flujo (solo el mundo y sus pines, en un lienzo libre)
+        check y cuadro lo aceptan con --pieza --lienzo ANCHOxALTO
   maqueta3d.py estilos | sets                                     los catálogos
   maqueta3d.py prueba [--dir DIR] [--formato F]                   check + hoja + render del fixture
 
@@ -54,6 +57,43 @@ ZONAS = {
             "red_gap": 14, "sombra_arriba": 420, "sombra_abajo": 620, "centro_y": 650},
 }
 CARPETA = {"9:16": "9x16", "4:5": "4x5"}
+MARGEN_PIEZA = 40      # px: en modo pieza las marcas guardan este margen con los bordes del lienzo
+SEPARACION_PX = 60     # M3D11: lo mínimo entre el ancla de una marca y la pieza de la que se declara separada
+
+
+def es_pieza(formato):
+    return formato not in ZONAS
+
+
+def lienzo_de(texto):
+    """«950x1040» → (950, 1040). Lados pares (H.264 yuv420p) entre 320 y 3840."""
+    mo = re.fullmatch(r"(\d+)[xX×](\d+)", str(texto or "").strip())
+    if not mo:
+        raise Falla("M3D1", "lienzo «%s»: se escribe ANCHOxALTO, p. ej. 950x1040" % texto)
+    w, h = int(mo.group(1)), int(mo.group(2))
+    if w % 2 or h % 2 or not (320 <= w <= 3840 and 320 <= h <= 3840):
+        raise Falla("M3D1", "lienzo %dx%d: los lados van de 320 a 3840 px y son pares (H.264 yuv420p)" % (w, h))
+    return w, h
+
+
+def zona_de(formato):
+    """La zona de un formato: 9:16 y 4:5 son las de ZONAS; cualquier otro es un lienzo de MODO PIEZA («950x1040»):
+    la maqueta alojada en el cuadro de otro flujo. Ahí el mundo llena el lienzo, el punto que mira la cámara cae en su
+    centro y las marcas solo guardan MARGEN_PIEZA con los bordes (sin bandas de titular ni de pie). Lo demás de la capa
+    es opcional; si viene, usa estas medidas (pie y aviso abajo, pequeños)."""
+    if formato in ZONAS:
+        return dict(ZONAS[formato])
+    W, H = lienzo_de(formato)
+    g = MARGEN_PIEZA
+    return {"pieza": True, "W": W, "H": H, "izq": g + 25, "der": W - g - 25, "corte": g - 3, "sup": 0, "iconos_x": 99999, "iconos_y": 99999,
+            "barra_y": g, "tit_y": g + 24, "tit_px": 64, "banda_sin": g, "cifra_fin": H - 150, "cifra_px": 130, "rotulo_px": 34,
+            "cifra_ancho": min(620, W - 2 * (g + 25)), "fila_y": H - 122, "fin_marcas": H - g, "subs_y": H - 230, "subs_px": 48, "pie_y": H - 72,
+            "marca_px": 32, "seguir_y": g + 24, "seguir_der": g + 25, "cierre_y": int(H * 0.2), "cierre_gap": 48, "frase_px": 64, "red_px": 48,
+            "red_txt": 38, "red_gap": 12, "sombra_arriba": 0, "sombra_abajo": 0, "centro_y": H / 2}
+
+
+def carpeta_de(formato):
+    return CARPETA.get(formato) or "pieza_%dx%d" % lienzo_de(formato)
 ICONOS = {
     "tiktok": '<path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>',
     "instagram": '<rect x="2.6" y="2.6" width="18.8" height="18.8" rx="5.4" fill="none" stroke-width="2.2"/><circle cx="12" cy="12" r="4.3" fill="none" stroke-width="2.2"/><circle cx="17.5" cy="6.5" r="1.4"/>',
@@ -287,7 +327,7 @@ def resolver(m, formato, avisos=None):
     roles = {"@fondo": pal["fondo"], "@fondo2": pal["fondo_acto2"], "@fondo3": pal["fondo_golpe"], "@acento": pal["acento"],
              "@texto": tokens["noche"]["texto"], "@tinta": tokens["noche"]["tinta_sobre_acento"]}
     color = lambda v: roles.get(v, v)
-    Z = dict(ZONAS[formato]); Z["velo"] = est["capa"]["velo"]
+    Z = zona_de(formato); Z["velo"] = est["capa"]["velo"]
     alt_km = lambda x, y: S.metros(x, y) / 1000.0 * exag
 
     # lugares: los del set más los de mundo.lugares (que mandan)
@@ -479,14 +519,19 @@ def resolver(m, formato, avisos=None):
     for n, k in enumerate(m.get("marcas") or []):
         que = "marca %d «%s»" % (n, k.get("texto"))
         l = lugar(k.get("lugar"), que); sfx_ok(k, que)
+        sep = k.get("separada_de")
+        if sep is not None and (sep not in por_id or por_id[sep]["tipo"] not in ("falla", "ruta", "frontera")):
+            raise Falla("M3D2", "%s: `separada_de` «%s» no es el id de una pieza falla, ruta o frontera" % (que, sep))
         marcas.append({"t": float(k.get("t", -1)), "hasta": float(k.get("hasta", -1)), "x": l["x"], "y": l["y"], "z": round(alt_km(l["x"], l["y"]) + 0.3, 3),
-                       "texto": str(k.get("texto") or ""), "sub": str(k.get("sub") or ""), "alto": int(k.get("alto", 110)), "sfx": k.get("sfx")})
+                       "texto": str(k.get("texto") or ""), "sub": str(k.get("sub") or ""), "alto": int(k.get("alto", 110)), "sfx": k.get("sfx"),
+                       "separada_de": sep})
 
     # capa
     C = m.get("capa") or {}
     dur = float(m.get("duracion_s", 0))
     capa = {"titulares": [dict(o) for o in C.get("titulares") or []], "cifras": [dict(o) for o in C.get("cifras") or []],
-            "palabras": C.get("palabras") or [], "progreso": {"actos": (C.get("progreso") or {}).get("actos") or [0.0]},
+            "palabras": C.get("palabras") or [],
+            "progreso": None if (Z.get("pieza") and not C.get("progreso")) else {"actos": (C.get("progreso") or {}).get("actos") or [0.0]},
             "seguir": C.get("seguir"), "aviso": C.get("aviso") or "", "pie": C.get("pie") or "", "handle": C.get("handle") or "", "subs_hasta": dur + 1}
     for o in capa["titulares"] + capa["cifras"] + ([C["seguir"]] if C.get("seguir") else []) + ([C["cierre"]] if C.get("cierre") else []):
         sfx_ok(o, "capa")
@@ -512,7 +557,7 @@ def resolver(m, formato, avisos=None):
         "version": 1, "formato": formato, "W": Z["W"], "H": Z["H"], "fps": int(m.get("fps", 30)), "dur": dur, "estilo": est["id"], "paleta": m["paleta"],
         "col": col, "estilo_cfg": cfg, "capa_col": {k: color(v) for k, v in est["capa"].items() if isinstance(v, str)}, "radio": est["capa"]["radio"],
         "capa_num": {k: est["capa"].get(k, 1) for k in ("sombra_op", "vineta_op")},
-        "exageracion": exag, "zona": Z, "protagonista": prota,
+        "exageracion": exag, "zona": Z, "protagonista": prota, "pieza": bool(Z.get("pieza")), "anfitrion": pal["fondo"],
         "relieve": {k: S.relieve[k] for k in ("archivo", "ancho", "alto", "caja", "desfase_m", "proyeccion", "muestras", "max_m")},
         "frontera": [[[round(v, 3) for v in S.xy(q[0], q[1])] for q in an] for an in S.frontera],
         "piezas": piezas, "camara": camara, "eventos": eventos, "marcas": marcas, "capa": capa,
@@ -554,8 +599,10 @@ def se_pisan(a, b):
 
 
 def gates_formato(m, R):
-    """Gates que dependen del encuadre (M3D3 a M3D7 en un formato). → lista de (gate, mensaje)."""
+    """Gates que dependen del encuadre (M3D3–M3D6, M3D9 y M3D11 en un formato). → lista de (gate, mensaje).
+    En modo pieza (un lienzo libre) no aplican M3D5 ni M3D9."""
     out, Z, S, dur, fps = [], R["zona"], R["_set"], R["dur"], R["fps"]
+    pieza = R["pieza"]
     W, H, cam, exag = Z["W"], Z["H"], R["camara"], R["exageracion"]
     F = lambda g, msg: out.append((g, msg))
     if dur <= 0:
@@ -599,7 +646,7 @@ def gates_formato(m, R):
         F("M3D3", "la cámara se mete en el relieve hacia t = %.1f s: sube `elevacion` o `dist_km`, o baja `mundo.exageracion`" % bajo)
 
     proy = lambda t: proyector(camara_en(cam, t), W, H, H / 2 - Z["centro_y"])
-    en_cuadro = lambda p, m_=0: p is not None and m_ <= p[0] <= W - m_ and Z["sup"] <= p[1] <= Z["subs_y"]
+    en_cuadro = lambda p, m_=0: p is not None and m_ <= p[0] <= W - m_ and Z["sup"] <= p[1] <= (H if pieza else Z["subs_y"])
     alt = lambda x, y: S.metros(x, y) / 1000 * exag + 0.3
 
     # M3D4 · marcas
@@ -620,10 +667,12 @@ def gates_formato(m, R):
                 motivo["el ancla sale del cuadro"] = motivo.get("el ancla sale del cuadro", 0) + 1
             else:
                 c = caja_tarjeta(R, k, p[0], p[1])
+                arriba = "la tarjeta queda a menos de %d px del borde de arriba" % MARGEN_PIEZA if pieza and c[1] < Z["banda_sin"] + 1 else "la tarjeta pisa la banda del titular"
+                abajo = "el ancla queda a menos de %d px del borde de abajo" % MARGEN_PIEZA if pieza else "el ancla cae en la banda del pie"
                 if c[1] < banda_titular(R, t):
-                    motivo["la tarjeta pisa la banda del titular"] = motivo.get("la tarjeta pisa la banda del titular", 0) + 1
+                    motivo[arriba] = motivo.get(arriba, 0) + 1
                 elif p[1] > Z["fin_marcas"]:
-                    motivo["el ancla cae en la banda del pie"] = motivo.get("el ancla cae en la banda del pie", 0) + 1
+                    motivo[abajo] = motivo.get(abajo, 0) + 1
                 else:
                     ok += 1
             t += 0.1
@@ -653,6 +702,48 @@ def gates_formato(m, R):
             if tot and pisa / tot > 0.25:
                 F("M3D4", "las marcas «%s» y «%s» se pisan %d %% del tiempo que comparten: cambia el `alto` de una (p. ej. 190) o separa sus ventanas"
                   % (ka["texto"], kb["texto"], round(100 * pisa / tot)))
+
+    # M3D11 · separación: una marca que se declara `separada_de` una pieza no puede dibujarse pegada a ella
+    por_id = {p["id"]: p for p in R["piezas"]}
+
+    def linea_de(pz):   # la pieza como polilínea [(x, y, z, salto)] a pasos de ≤ 4 km, posada en el relieve
+        if pz["tipo"] == "falla":
+            tramos = [[(q[0], q[1], bool(q[3])) for q in pz["cadena"]]]
+        elif pz["tipo"] == "ruta":
+            tramos = [[(q[0], q[1], False) for q in pz["puntos"]]]
+        else:
+            tramos = [[(q[0], q[1], False) for q in an + an[:1]] for an in pz["anillos"]]
+        pts = []
+        for tr in tramos:
+            for (ax, ay, salto), (bx, by, _) in zip(tr, tr[1:]):
+                n = 1 if salto else max(1, int(math.ceil(math.hypot(bx - ax, by - ay) / 4.0)))
+                for i in range(n):
+                    x, y = ax + (bx - ax) * i / n, ay + (by - ay) * i / n
+                    pts.append((x, y, alt(x, y), salto and i == n - 1))
+            pts.append((tr[-1][0], tr[-1][1], alt(tr[-1][0], tr[-1][1]), True))
+        return pts
+    for k in R["marcas"]:
+        if not k.get("separada_de") or not (0 <= k["t"] < k["hasta"]):
+            continue
+        linea, ok, dists, t = linea_de(por_id[k["separada_de"]]), 0, [], k["t"]
+        while t < k["hasta"]:
+            pr = proy(t); a = pr(k["x"], k["y"], k["z"]); t += 0.1
+            if a is None:
+                continue
+            P, d = [pr(x, y, z) for x, y, z, _ in linea], 1e9
+            for i in range(len(P) - 1):
+                if linea[i][3] or P[i] is None or P[i + 1] is None:
+                    continue
+                (x0, y0), (x1, y1) = P[i], P[i + 1]
+                dx, dy = x1 - x0, y1 - y0
+                h = min(1, max(0, ((a[0] - x0) * dx + (a[1] - y0) * dy) / (dx * dx + dy * dy or 1e-9)))
+                d = min(d, math.hypot(a[0] - x0 - dx * h, a[1] - y0 - dy * h))
+            dists.append(d); ok += d >= SEPARACION_PX
+        if dists and ok / len(dists) < 0.8:
+            dists.sort()
+            F("M3D11", "marca «%s»: se declara separada de «%s» pero su ancla queda a %d px de ella en pantalla (lo normal en su ventana; %d px lo mínimo) y solo guarda ≥ %d px "
+                       "el %d %% del tiempo (mínimo 80 %%): con la cámara rasante las distancias se aplastan. Usa una cámara más cenital (sube `elevacion`) o más cercana (baja `dist_km`)"
+              % (k["texto"], k["separada_de"], round(dists[len(dists) // 2]), round(dists[0]), SEPARACION_PX, round(100 * ok / len(dists))))
 
     # M3D5 · titulares y cifras
     tit = sorted(R["capa"]["titulares"], key=lambda o: o.get("t", 0))
@@ -706,7 +797,6 @@ def gates_formato(m, R):
                     F("M3D5", "`seguir` (%.1f → %.1f s) coincide con el titular «%s», que llega al botón: muévelo a un hueco entre titulares" % (sg["t"], sg["t"] + sg["dur"], o.get("texto")))
 
     # M3D9 · el gancho es un evento que se VE en el cuadro 0
-    por_id = {p["id"]: p for p in R["piezas"]}
     visto, hay = False, False
     for e in R["eventos"]:
         if e["t"] > PORTADA_T or e["tipo"] not in ADELANTO:
@@ -753,22 +843,25 @@ def gates_formato(m, R):
         if ok / N < 0.6:
             F("M3D6", "%s: su centro solo está en cámara %d %% del tiempo que dura (mínimo 60 %%): encuádralo con una clave de cámara o mueve el evento"
               % (que, round(100 * ok / N)))
+    if pieza:   # el cuadro (titular, cifras, portada) es del anfitrión
+        out = [x for x in out if x[0] not in ("M3D5", "M3D9")]
     return out
 
 
 def gates_comunes(m, R, avisos):
-    """M3D1, M3D2 (ya revisados al resolver), M3D7, M3D8, M3D9. → lista de (gate, mensaje)."""
-    out = []
-    F = lambda g, msg: out.append((g, msg))
+    """M3D1, M3D2 (ya revisados al resolver), M3D7 y M3D8. → lista de (gate, mensaje). En modo pieza no aplica M3D7 y
+    `capa` es opcional."""
+    out, pieza = [], R["pieza"]
+    F = lambda g, msg: out.append((g, msg) if not (pieza and g == "M3D7") else ("", ""))
     if m.get("version") != 1:
         F("M3D1", "`version` debe ser 1")
     if not (10 <= int(m.get("fps", 30)) <= 60):
         F("M3D1", "`fps` fuera de rango (10–60)")
-    for k in ("mundo", "camara", "eventos", "capa"):
+    for k in ("mundo", "camara", "eventos") + (() if pieza else ("capa",)):
         if k not in m:
             F("M3D1", "falta `%s`" % k)
     C = m.get("capa") or {}
-    for k in ("aviso", "pie", "handle", "seguir", "cierre"):
+    for k in ("pie", "handle", "seguir", "cierre"):   # el aviso «Maqueta · no a escala» es opcional (usuario, 2026-11-14)
         if not C.get(k):
             F("M3D7", "falta `capa.%s`" % k)
     ci = C.get("cierre") or {}
@@ -795,15 +888,15 @@ def gates_comunes(m, R, avisos):
             for i, v in enumerate(o):
                 busca_estilo(v, "%s[%d]" % (ruta, i))
     busca_estilo(m, "")
-    if not any(o.get("t", 9) <= PORTADA_T for o in R["capa"]["titulares"]):
+    if not pieza and not any(o.get("t", 9) <= PORTADA_T for o in R["capa"]["titulares"]):
         avisos.append("ningún titular empieza en t ≤ %.1f: el cuadro 0 (la portada) sale sin titular" % PORTADA_T)
     pal = R["capa"]["palabras"]
     if any(not (isinstance(p, dict) and "text" in p and p.get("start", -1) >= 0 and p.get("end", 0) >= p.get("start", 0)) for p in pal):
         F("M3D1", "`capa.palabras`: cada palabra lleva text, start y end (segundos)")
-    actos = R["capa"]["progreso"]["actos"]
+    actos = (R["capa"]["progreso"] or {}).get("actos") or [0.0]
     if actos != sorted(actos) or (actos and abs(actos[0]) > 1e-6) or (actos and actos[-1] >= R["dur"]):
         F("M3D1", "`capa.progreso.actos` son los segundos en que empieza cada acto: crecientes, desde 0 y antes del final")
-    return out
+    return [x for x in out if x[0]]
 
 
 def revisar(ruta, formatos):
@@ -831,7 +924,7 @@ def revisar_m(m, formatos):
             fallas += ["%s %s" % x for x in gates_comunes(m, R, avisos)]
             comunes = True
         fallas += ["%s [%s] %s" % (g, f, msg) for g, msg in gates_formato(m, R)]
-    if len(formatos) < 2:
+    if len(formatos) < 2 and not es_pieza(formatos[0]):
         avisos.append("M3D10 pide los dos formatos: se revisó solo %s (corre check sin --formato o con --formato ambos)" % formatos[0])
     return fallas, list(dict.fromkeys(avisos))
 
@@ -860,7 +953,8 @@ def escribir_proyecto(m, formato, destino):
     cc = R["capa_col"]
     vars_css = {"w": "%dpx" % Z["W"], "h": "%dpx" % Z["H"], "bg": R["col"]["fondo"], "ink": cc["ink"], "tinta": cc["tinta"], "sombra": cc["sombra"],
                 "tarjeta-bg": cc["tarjeta_bg"], "tarjeta-ink": cc["tarjeta_ink"], "radio": "%dpx" % R["radio"], "izq": "%dpx" % Z["izq"],
-                "col": "%dpx" % (Z["der"] - Z["izq"]), "sombra-op": R["capa_num"]["sombra_op"], "vineta-op": R["capa_num"]["vineta_op"]}
+                "col": "%dpx" % (Z["der"] - Z["izq"]), "sombra-op": R["capa_num"]["sombra_op"], "vineta-op": R["capa_num"]["vineta_op"],
+                "anfitrion": R["anfitrion"]}
     for k in ("barra_y", "tit_y", "tit_px", "cifra_fin", "cifra_px", "rotulo_px", "cifra_ancho", "fila_y", "subs_y", "subs_px", "pie_y", "marca_px", "seguir_y",
               "seguir_der", "cierre_y", "cierre_gap", "frase_px", "red_px", "red_txt", "red_gap", "sombra_arriba", "sombra_abajo"):
         vars_css[k.replace("_", "-")] = "%dpx" % Z[k]
@@ -868,11 +962,14 @@ def escribir_proyecto(m, formato, destino):
 
     def clip(i, ini, d, pista, dentro, clase="marco"):
         return '      <div id="%s" class="clip %s" data-start="%s" data-duration="%s" data-track-index="%d">%s</div>' % (i, clase, round(ini, 3), round(max(0.04, d), 3), pista, dentro)
-    L = [clip("sombras", 0, D, 1, '<div class="sombra vineta"></div><div class="sombra arriba"></div><div class="sombra abajo"></div>')]
+    pieza = R["pieza"]
+    # modo pieza: sin degradados para el texto; una viñeta que funde los bordes con el fondo del anfitrión (el de la paleta)
+    L = [clip("sombras", 0, D, 1, '<div class="borde"></div>' if pieza else '<div class="sombra vineta"></div><div class="sombra arriba"></div><div class="sombra abajo"></div>')]
     ci = C.get("cierre")
     if ci:
         L.append(clip("velo", ci["t"], D - ci["t"], 2, '<div class="velo"></div>'))
-    L.append(clip("arriba", 0, D, 3, '<div id="progreso">%s</div>' % ("<i><b></b></i>" * len(C["progreso"]["actos"]))))
+    if C["progreso"]:
+        L.append(clip("arriba", 0, D, 3, '<div id="progreso">%s</div>' % ("<i><b></b></i>" * len(C["progreso"]["actos"]))))
     for n, o in enumerate(C["titulares"]):
         k = '<div class="kicker">%s</div>' % esc(o["kicker"]) if o.get("kicker") else ""
         L.append(clip("tit-%d" % n, o["t"], o["hasta"] - o["t"], 4, '<div class="titulo">%s<div class="texto">%s</div></div>' % (k, esc(o.get("texto", "")))))
@@ -888,9 +985,13 @@ def escribir_proyecto(m, formato, destino):
         L.append(clip("marca-%d" % n, k["t"], k["hasta"] - k["t"], 6 + pista,
                       '<div class="pin" style="--alto: %dpx"><div class="stem"></div><div class="dot"></div><div class="card"><b>%s</b>%s</div></div>' % (k["alto"], esc(k["texto"]), sub)))
     p0 = 6 + max(1, len(libres))
-    L.append(clip("filac", 0, D, p0, '<div id="fila"><span class="aviso">%s</span><span class="handle">%s</span></div>' % (esc(C["aviso"]), esc(C["handle"]))))
-    L.append(clip("subsc", 0, D, p0 + 1, '<div id="subs"></div>'))
-    L.append(clip("piec", 0, D, p0 + 2, '<div id="pie">%s</div>' % esc(C["pie"])))
+    fila = ('<span class="aviso">%s</span>' % esc(C["aviso"]) if C["aviso"] else "") + ('<span class="handle">%s</span>' % esc(C["handle"]) if C["handle"] else "")
+    if fila:   # sin aviso, el handle ocupa su lugar
+        L.append(clip("filac", 0, D, p0, '<div id="fila">%s</div>' % fila))
+    if C["palabras"]:
+        L.append(clip("subsc", 0, D, p0 + 1, '<div id="subs"></div>'))
+    if C["pie"]:
+        L.append(clip("piec", 0, D, p0 + 2, '<div id="pie">%s</div>' % esc(C["pie"])))
     boton = ('<div class="bt"><span class="lbl">Seguir</span><span class="ya"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Siguiendo</span></div>')
     if C.get("seguir"):
         sg = C["seguir"]
@@ -936,6 +1037,12 @@ def correr(cmd, cwd, registro=None):
 
 # ---------- comandos ----------
 def formatos_de(a):
+    if getattr(a, "pieza", False) or (getattr(a, "lienzo", None) and a.cmd == "pieza"):
+        if not getattr(a, "lienzo", None):
+            raise Falla("M3D1", "--pieza necesita --lienzo ANCHOxALTO (p. ej. 950x1040)")
+        return ["%dx%d" % lienzo_de(a.lienzo)]
+    if getattr(a, "lienzo", None):
+        raise Falla("M3D1", "--lienzo solo vale con --pieza")
     return ["9:16", "4:5"] if a.formato == "ambos" else [a.formato]
 
 
@@ -945,7 +1052,8 @@ def cmd_check(a):
         print("  aviso · " + x)
     for x in fallas:
         print("  FALLA " + x)
-    print("%s: %s" % (a.maqueta, "M3D1–M3D10 OK (%s)" % ", ".join(formatos_de(a)) if not fallas else "%d falla(s)" % len(fallas)))
+    que = "modo pieza, lienzo %s: M3D1–M3D4, M3D6, M3D8 y M3D11 OK" % formatos_de(a)[0] if es_pieza(formatos_de(a)[0]) else "M3D1–M3D11 OK (%s)" % ", ".join(formatos_de(a))
+    print("%s: %s" % (a.maqueta, que if not fallas else "%d falla(s)" % len(fallas)))
     return 1 if fallas else 0
 
 
@@ -978,7 +1086,7 @@ def cmd_cuadro(a):
     tiempos = sorted(set(round(float(t), 3) for t in a.t))
     for f in formatos_de(a):
         try:
-            proy = os.path.join(a.salida, "_proyecto", CARPETA[f])
+            proy = os.path.join(a.salida, "_proyecto", carpeta_de(f))
             os.makedirs(proy, exist_ok=True)
             R = escribir_proyecto(m, f, proy)
         except Falla as e:
@@ -996,11 +1104,11 @@ def cmd_cuadro(a):
             return 1
         salidas = []
         for t, png in zip(tiempos, pngs):
-            dst = os.path.join(a.salida, "%s_t%07.3f.png" % (CARPETA[f], t))
+            dst = os.path.join(a.salida, "%s_t%07.3f.png" % (carpeta_de(f), t))
             shutil.move(os.path.join(snap, png), dst); salidas.append(dst)
         print("cuadros %s (%.1f s): %s" % (f, seg, " ".join(salidas)))
         if a.hoja:
-            hoja = os.path.join(a.salida, "hoja_%s.jpg" % CARPETA[f])
+            hoja = os.path.join(a.salida, "hoja_%s.jpg" % carpeta_de(f))
             hoja_de(salidas, hoja, 360 if len(salidas) > 3 else 540)
             print("hoja %s: %s  (en orden: %s s)" % (f, hoja, ", ".join("%g" % t for t in tiempos)))
     return 0
@@ -1029,18 +1137,27 @@ def cmd_render(a):
     with open(os.path.join(a.dir, "efectos.json"), "w", encoding="utf-8") as f:
         json.dump(efectos_de(m), f, ensure_ascii=False)
     for f in formatos:
-        base = os.path.join(a.dir, CARPETA[f]); proy = os.path.join(base, "proyecto")
+        base = os.path.join(a.dir, CARPETA[f])
+        if renderizar(m, f, os.path.join(base, "proyecto"), os.path.join(base, "video.mp4"), os.path.join(base, "render.log")):
+            return 1
+    print("efectos: %s (%d)" % (os.path.join(a.dir, "efectos.json"), len(efectos_de(m))))
+    return 0
+
+
+def renderizar(m, f, proy, final, registro):
+    """Un formato (o un lienzo de pieza) → `final` (H.264 yuv420p, sin audio, duracion_s ± 1 cuadro). → 0 ok · 1 falla."""
+    if True:
         os.makedirs(proy, exist_ok=True)
         R = escribir_proyecto(m, f, proy)
-        crudo, final = os.path.join(base, "_hf.mp4"), os.path.join(base, "video.mp4")
+        crudo = final + "._hf.mp4"
         for x in (crudo, final):
             if os.path.exists(x):
                 os.remove(x)
         # un solo proceso de Chrome SIEMPRE: con varios, el video tiembla
         p, seg = correr(HF + ["render", "--fps", str(R["fps"]), "--workers", "1", "--crf", "18", "--quality", "delivery", "--browser-gpu", "-o", os.path.abspath(crudo)],
-                        proy, os.path.join(base, "render.log"))
+                        proy, registro)
         if p.returncode != 0 or not os.path.exists(crudo):
-            print("FALLA render %s: hyperframes devolvió %d (ver %s)" % (f, p.returncode, os.path.join(base, "render.log"))); return 1
+            print("FALLA render %s: hyperframes devolvió %d (ver %s)" % (f, p.returncode, registro)); return 1
         info = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-count_frames", "-show_entries", "stream=codec_name,pix_fmt,width,height,nb_read_frames",
                                "-of", "json", crudo], capture_output=True, text=True).stdout
         st = json.loads(info)["streams"][0]
@@ -1055,8 +1172,29 @@ def cmd_render(a):
         shutil.rmtree(os.path.join(proy, "renders"), ignore_errors=True)
         if abs(cuadros - espera) > 1:
             print("FALLA render %s: salieron %d cuadros y se esperaban %d (±1)" % (f, cuadros, espera)); return 1
-        print("render %s: %s · %d cuadros (%.2f s a %d fps) · %.1f s de render (%.2f s por segundo de video)" % (f, final, cuadros, cuadros / R["fps"], R["fps"], seg, seg / R["dur"]))
-    print("efectos: %s (%d)" % (os.path.join(a.dir, "efectos.json"), len(efectos_de(m))))
+        print("render %s: %s · %d×%d · %d cuadros (%.2f s a %d fps) · %.1f s de render (%.2f s por segundo de video)" % (f, final, R["W"], R["H"], cuadros, cuadros / R["fps"], R["fps"], seg, seg / R["dur"]))
+    return 0
+
+
+def cmd_pieza(a):
+    """MODO PIEZA: el mundo y sus pines en un lienzo libre, para alojarlo en el cuadro de otro flujo."""
+    m = cargar_json(a.maqueta)
+    f = formatos_de(a)[0]
+    if not a.salida.lower().endswith(".mp4"):
+        print("--salida debe terminar en .mp4"); return 2
+    if a.borrador:
+        print("AVISO pieza --borrador: sin gates M3D; solo para mirar")
+    elif not exigir_check(a, [f]):
+        return 1
+    final = os.path.abspath(a.salida)
+    base = final[:-4]
+    os.makedirs(os.path.dirname(final), exist_ok=True)
+    if renderizar(m, f, base + "_proyecto", final, base + ".render.log"):
+        return 1
+    efectos = sorted([round(float(o["t"]), 3), o["sfx"]] for o in (m.get("eventos") or []) + (m.get("marcas") or []) if o.get("sfx"))
+    with open(base + ".efectos.json", "w", encoding="utf-8") as fh:
+        json.dump(efectos, fh, ensure_ascii=False)
+    print("efectos: %s (%d)" % (base + ".efectos.json", len(efectos)))
     return 0
 
 
@@ -1090,7 +1228,9 @@ NEGATIVOS = [
     ("M3D5", "«Sígueme» sobre un titular", lambda m: m["capa"]["seguir"].update(t=6.5)),
     ("M3D6", "evento fuera de cámara", lambda m: m["eventos"].append({"t": 4.5, "dur": 1.5, "tipo": "onda", "centro": "quetzaltenango", "radio_km": 40})),
     ("M3D6", "evento que no cabe", lambda m: m["eventos"][2].update(dur=9)),
-    ("M3D7", "sin aviso", lambda m: m["capa"].pop("aviso")),
+    ("M3D7", "sin pie (las fuentes de los geodatos)", lambda m: m["capa"].pop("pie")),
+    ("M3D11", "pin que se declara separado de la falla y está sobre ella", lambda m: m["marcas"][0].update(separada_de="motagua")),
+    ("M3D2", "separada_de una pieza que no es línea", lambda m: m["marcas"][0].update(separada_de="pueblos")),
     ("M3D7", "pie sin la fuente de las fallas", lambda m: m["capa"].update(pie="Relieve: Mapzen")),
     ("M3D8", "un estilo por pieza", lambda m: m["mundo"]["piezas"][1].update(estilo="voxel")),
     ("M3D7", "sin «Sígueme» a mitad", lambda m: m["capa"].pop("seguir")),
@@ -1107,15 +1247,30 @@ def negativos():
         if not any(f.startswith(gate + " ") for f in fallas):
             mal += 1; print("  FALLA negativo «%s»: debía saltar %s y saltó: %s" % (nombre, gate, "; ".join(fallas)[:200] or "nada"))
     print("negativos de gate: %d de %d muerden" % (len(NEGATIVOS) - mal, len(NEGATIVOS)))
+    # positivos: con aviso también pasa, una marca bien separada pasa M3D11, y el fixture sin capa pasa en modo pieza
+    def pasa(nombre, cambio, formatos):
+        m = json.loads(json.dumps(base)); cambio(m)
+        fallas, _ = revisar_m(m, formatos)
+        if fallas:
+            print("  FALLA positivo «%s»: debía pasar y saltó: %s" % (nombre, "; ".join(fallas)[:300]))
+        return 1 if fallas else 0
+    mal += pasa("con aviso", lambda m: m["capa"].update(aviso="Maqueta · no a escala"), ["9:16", "4:5"])
+    mal += pasa("marca separada de la frontera", lambda m: m["marcas"][1].update(separada_de="frontera"), ["9:16", "4:5"])
+    for lienzo in ("950x1040", "1120x1080", "1920x1080"):
+        mal += pasa("modo pieza %s sin capa" % lienzo, lambda m: m.pop("capa"), [lienzo])
+    m = json.loads(json.dumps(base)); m.pop("capa"); m["marcas"][0].update(separada_de="motagua")
+    if not any(f.startswith("M3D11 ") for f in revisar_m(m, ["950x1040"])[0]):
+        mal += 1; print("  FALLA negativo «pieza: pin pegado a la falla»: debía saltar M3D11")
+    print("positivos y modo pieza: %s" % ("OK" if not mal else "con fallas"))
     return mal
 
 
 def cmd_prueba(a):
     a.maqueta = FIXTURE
-    if cmd_check(argparse.Namespace(maqueta=FIXTURE, formato="ambos")) or negativos():
+    if cmd_check(argparse.Namespace(maqueta=FIXTURE, formato="ambos", cmd="check")) or negativos():
         return 1
     dur = cargar_json(FIXTURE)["duracion_s"]
-    r = cmd_cuadro(argparse.Namespace(maqueta=FIXTURE, t=[0.0, dur * 0.2, dur * 0.4, dur * 0.6, dur * 0.78, dur - 0.5], salida=os.path.join(a.dir, "cuadros"), formato=a.formato, hoja=True))
+    r = cmd_cuadro(argparse.Namespace(maqueta=FIXTURE, t=[0.0, dur * 0.2, dur * 0.4, dur * 0.6, dur * 0.78, dur - 0.5], salida=os.path.join(a.dir, "cuadros"), formato=a.formato, hoja=True, cmd="cuadro"))
     return r or cmd_render(a)
 
 
@@ -1124,10 +1279,17 @@ def main():
                                  epilog="Contrato: referencias/diseno/maqueta3d.md · Sets: scripts/build_set3d.py")
     sub = ap.add_subparsers(dest="cmd")
     fmt = dict(choices=["9:16", "4:5", "ambos"], help="formato (por defecto: %(default)s)")
-    p = sub.add_parser("check", help="gates M3D1–M3D10 sobre los datos"); p.add_argument("maqueta"); p.add_argument("--formato", default="ambos", **fmt)
+    lz = dict(metavar="ANCHOxALTO", help="lienzo del modo pieza (p. ej. 950x1040, 1120x1080, 1920x1080)")
+    pz = dict(action="store_true", help="modo pieza: solo el mundo y sus pines, en el lienzo de --lienzo")
+    p = sub.add_parser("check", help="gates M3D1–M3D11 sobre los datos"); p.add_argument("maqueta"); p.add_argument("--formato", default="ambos", **fmt)
+    p.add_argument("--pieza", **pz); p.add_argument("--lienzo", **lz)
     p = sub.add_parser("cuadro", help="PNG de cuadros sueltos (y hoja de contacto)"); p.add_argument("maqueta")
     p.add_argument("--t", action="append", type=float, required=True, help="segundo del cuadro (se repite)"); p.add_argument("--salida", required=True)
     p.add_argument("--formato", default="9:16", **fmt); p.add_argument("--hoja", action="store_true", help="arma hoja_<formato>.jpg con todos los cuadros")
+    p.add_argument("--pieza", **pz); p.add_argument("--lienzo", **lz)
+    p = sub.add_parser("pieza", help="modo pieza: ARCHIVO.mp4 del tamaño del lienzo + ARCHIVO.efectos.json"); p.add_argument("maqueta")
+    p.add_argument("--lienzo", required=True, **lz); p.add_argument("--salida", required=True, metavar="ARCHIVO.mp4")
+    p.add_argument("--borrador", action="store_true", help="sin gates: para mirar, nunca para entregar")
     p = sub.add_parser("proyecto", help="escribe el proyecto de HyperFrames"); p.add_argument("maqueta"); p.add_argument("--dir", required=True); p.add_argument("--formato", default="ambos", **fmt)
     p = sub.add_parser("render", help="DIR/<9x16|4x5>/video.mp4 + DIR/efectos.json"); p.add_argument("maqueta"); p.add_argument("--dir", required=True); p.add_argument("--formato", default="ambos", **fmt)
     p.add_argument("--borrador", action="store_true", help="sin gates: un candidato para mirar, nunca para entregar")
@@ -1140,7 +1302,7 @@ def main():
     if getattr(a, "maqueta", None) and not os.path.isfile(a.maqueta):
         print("no existe %s" % a.maqueta, file=sys.stderr); return 2
     try:
-        return {"check": cmd_check, "cuadro": cmd_cuadro, "proyecto": cmd_proyecto, "render": cmd_render, "estilos": cmd_estilos, "sets": cmd_sets, "prueba": cmd_prueba}[a.cmd](a)
+        return {"check": cmd_check, "cuadro": cmd_cuadro, "proyecto": cmd_proyecto, "render": cmd_render, "pieza": cmd_pieza, "estilos": cmd_estilos, "sets": cmd_sets, "prueba": cmd_prueba}[a.cmd](a)
     except Falla as e:
         print("  FALLA %s %s" % e.args); return 1
 

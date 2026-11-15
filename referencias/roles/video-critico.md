@@ -605,6 +605,41 @@ Salida: `<TRABAJO>/critica.json` con `{archivo, vuelta, veredicto, puntajes, fal
 problema, arreglo, probado, cambios}, oyente_descartadas[]}`.
 
 
+## Modo 3D (`/video-3d`)
+
+Un video 100 % en maqueta 3D: una cámara recorre un mundo simple (el relieve del país, una ciudad) mientras la voz
+cuenta, con una capa 2D de titular, pines, cifras y subtítulos. Guía del flujo: `referencias/flujo-video3d.md` (lee «El
+gancho en 3D», «Concordancia» y «Verdad»).
+
+**Insumos** (extrae con python; no leas los JSON enteros): `guion.json` (`idea_visual`, `estilo`, `promesa`,
+`no_afirmar`; por escena `texto`, `titular`, `camara`, `eventos`, `marcas` y `cifras`; cada clave de cámara es el encuadre
+al que la cámara **llega** cuando la voz dice su `dice`), `locucion.json` (la voz en palabras y los segundos), la hoja del
+storyboard (`storyboard/hoja_9x16.jpg`, un Read; `video3d.py storyboard` imprime el segundo de cada cuadro) y los `hechos`
+y el `no_afirmar` de la verificación de los geodatos, si la hay.
+
+**No se critica** lo que eligió el usuario: el gancho, la voz del cierre, el estilo y la duración.
+
+**Qué revisas** (además de C1–C12 en lo que aplica):
+
+- **3C1 El cuadro cero.** ¿Frena el dedo sin sonido? ¿Qué pasa en el primer segundo? El gancho es un evento, no un vuelo.
+- **3C2 Concordancia.** En cada frase, ¿la pantalla muestra lo que la voz está diciendo, o la cámara pasea? Si la voz dice
+  una dirección, un extremo o una distancia, ¿se ve en ese plano?
+- **3C3 Un protagonista.** Lo único en acento es siempre lo mismo y nada compite con él.
+- **3C4 El estilo.** ¿Es el que mejor sirve a la idea visual? (Uno solo por video.)
+- **3C5 Lo dibujado también se afirma.** Una cámara rasante pega dos cosas que están lejos (un pin «a 25 km» de una línea
+  que parece tocarla); una onda o una flecha dibuja como hecho lo que es una interpretación; unas flechas a lo largo de 70
+  km dicen que todo ese tramo se movió. Coteja cada dibujo con los hechos verificados y con `no_afirmar`.
+- **3C6 El bucle y el cierre.** El último cuadro vuelve al primero y la frase final dice la consecuencia.
+- **3C7 Quien no sabe nada.** ¿La voz nombra el hecho (el «terremoto») o solo sus piezas (la falla, el epicentro)? Alguien
+  que desliza y no conoce la historia tiene que saber qué pasó antes del segundo 10.
+- **3C8 Lo que se lee tres veces.** La misma idea en la voz, en el titular y en un pin sobra dos veces.
+
+**Puntajes** (1–5): gancho, claridad, concordancia, ritmo, promesa y cierre.
+
+**El arreglo** es exacto y probado: copia el TRABAJO a una carpeta temporal, edita la copia y corre `python3
+scripts/video3d.py guion <copia> --check` (C3D1–C3D11, V2–V4 y M3D en 9:16 y 4:5) antes de proponerlo. Nunca edites
+`guion.json`. **Salida:** `critica.json` (`veredicto`, `puntajes`, `faltas` con `escena`, `gravedad`, `que` y `arreglo`).
+
 ## Modo serie completa (SE17, /serie)
 
 Lees `<TRABAJO>/serie_completa.md`: la voz de TODAS las partes en orden, como quien ve la serie de corrido. Juzgas la

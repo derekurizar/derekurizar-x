@@ -28,6 +28,7 @@
 #          El modo mito se retiró el 2026-11-14: W13 con la tabla MODOS rota, un TRABAJO con «modo: mito» se rechaza
 #          («modo retirado») y el modelo `producto` de la calculadora sigue.
 #        · /sabias: gate S1–S3 sobre el dato de prueba (negativos), M13 y make sabias-fixture.
+#        · /video-3d: M3D del motor, C3D1–C3D11 con sus negativos sobre la maqueta corta y make video3d-fixture.
 #        · /congreso: CG2–CG10 sobre la maqueta de la Ley de Ciberseguridad (negativos), M19 y make congreso-fixture.
 #        · /departamento: canon (--check, --resolver, --directiva), --tablero/--siguiente con memoria de prueba, G1 del
 #          perfil de departamento (y el de grupo, que no lo exige), D1–D9 con un negativo por gate sobre la maqueta de
@@ -2089,6 +2090,29 @@ if [[ "$RAPIDO" == "1" ]]; then echo "SKIP   make sabias-fixture (RAPIDO=1)"; el
   paso "make sabias-fixture (9:16 y 4:5 de 20–30 s, V7, V13, V8)" bash -c 'make sabias-fixture >/dev/null && ffprobe -v error -show_entries stream=codec_type,width,height -of csv=p=0 sesiones/_fixture_sabias/salida/video_4x5.mp4 | grep -q "video,1080,1350" && python3 -c "import json; g=json.load(open(\"sesiones/_fixture_sabias/salida/guion.json\")); assert g[\"tipo\"]==\"sabias\" and 20 <= g[\"duracion_s\"] <= 30, g[\"duracion_s\"]"'
   paso "memoria.py --sabias --dry-run sobre la entrega de la maqueta" bash -c "python3 scripts/memoria.py --sabias sesiones/_fixture_sabias/salida --dry-run | grep -q 'gancho pareja · apoyo golpe · cierre consecuencia'"
   paso "sabias.py entregar sin créditos de voz y sin --salida no entrega (voz falsa)" bash -c "! python3 scripts/sabias.py entregar sesiones/_fixture_sabias/trabajo >/dev/null 2>&1"
+fi
+
+# ---------- /video-3d: la maqueta que vuela (C3D1–C3D11 del guion, M3D1–M3D11 del motor, M21) ----------
+V3T="$TMP/video3d"
+v3d_copia() { rm -rf "$V3T"; mkdir -p "$V3T/base" "$V3T/audio"; cp sesiones/_fixture_video3d/guion.json sesiones/_fixture_video3d/video3d.json "$V3T/"; cp sesiones/_fixture_video3d/datos.json "$V3T/base/datos.json"; }
+v3d_ok() { v3d_copia && python3 scripts/video3d.py guion "$V3T" --check; }
+v3d_neg() {  # v3d_neg 'mutación python sobre g' 'texto esperado en la falla'
+  v3d_copia
+  python3 -c 'import json,sys; p=sys.argv[2]+"/guion.json"; g=json.load(open(p)); exec(sys.argv[1]); json.dump(g, open(p,"w"), ensure_ascii=False)' "$1" "$V3T" || return 1
+  local out; out="$(python3 scripts/video3d.py guion "$V3T" --check 2>&1)" && return 1
+  grep -qF "$2" <<<"$out"
+}
+paso "maqueta3d.py check sobre la maqueta del motor (M3D, 9:16 y 4:5)" python3 scripts/maqueta3d.py check video/maqueta/fixture/maqueta.json
+paso "video3d.py guion --check sobre la maqueta de /video-3d (C3D1–C3D11 + M3D)" v3d_ok
+paso "C3D2 rechaza un pin cuya frase la voz no dice" v3d_neg 'g["escenas"][1]["marcas"][0]["dice"]="Puerto Barrios"' "C3D2 escena 2"
+paso "V2 rechaza un número sin respaldo en la voz" v3d_neg 'g["escenas"][1]["texto"]="El terremoto empezó aquí, cerca de Los Amates. Fue de magnitud 8.9."; g["escenas"][1]["cifras"]=[]' "V2 escena 2"
+paso "C3D6 rechaza un gancho sin evento en el cuadro cero" v3d_neg 'g["escenas"][0]["eventos"][0]["dice"]="una falla"' "C3D6 el gancho es un evento"
+paso "C3D1 rechaza una escena con estilo propio (un solo estilo por video)" v3d_neg 'g["escenas"][2]["estilo"]="plano"' "C3D1 un solo estilo"
+paso "C3D11 pide separada_de al pin que dice una distancia" v3d_neg 'g["escenas"][2]["marcas"][0]["sub"]="A 25 km"' "C3D11 escena 3"
+paso "C3D3 rechaza un lugar que la voz nombra y nadie muestra" v3d_neg 'g["escenas"][2]["marcas"]=[]; g["escenas"][2]["camara"][0]["mira"]="epicentro"' "C3D3 escena 3"
+if [[ "$RAPIDO" == "1" ]]; then echo "SKIP   make video3d-fixture (RAPIDO=1)"; else
+  paso "make video3d-fixture (render 9:16 con el motor three.js, voz falsa, V8)" bash -c 'make video3d-fixture >/dev/null && ffprobe -v error -show_entries stream=codec_type,width,height -of csv=p=0 sesiones/_fixture_video3d/trabajo/salida/video.mp4 | grep -q "video,1080,1920"'
+  paso "video3d.py entregar no entrega con voz falsa (sin créditos y sin --salida)" bash -c "! python3 scripts/video3d.py entregar sesiones/_fixture_video3d/trabajo >/dev/null 2>&1"
 fi
 
 echo "== /congreso (CG2–CG10 sobre la maqueta de la Ley de Ciberseguridad; sin web, sin la base local ni créditos)"

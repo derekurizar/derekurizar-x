@@ -96,6 +96,9 @@ decisión del usuario.**
    - **El estado en línea** (m045, m047): si `creative_get_flow_run_status` devuelve la respuesta en el chat y no en un archivo
      (pasa con pocas sesiones), escríbela TAL CUAL a `<TRABAJO>/audio/estado.json` y pásale ese archivo a `descargar --estado`;
      valen las `words` en línea de Scribe. `descargar` falla si una transcripción no casa con ninguna escena.
+   - Más corto todavía (2026-11-14): escribe `<TRABAJO>/audio/nodos.json` con las dos URL de cada nodo
+     (`{"s1": {"voz": "<content_url>", "palabras": "<words_download_url>", "creditos": 177}, "7": {…}}`) y corre
+     `descargar <TRABAJO> --nodos <ese archivo>`: el resto del estado sale de `locucion.json`.
    - `creative_create_flow` con el nombre «Video · <slug>».
    - Por cada nodo, `creative_add_flow_node`: `node_type: "tts"`, `model_id: "eleven_multilingual_v2"`,
      `voice_id` de la salida, `model_parameters: {"language_code": "es"}` y `prompt` **exacto**.

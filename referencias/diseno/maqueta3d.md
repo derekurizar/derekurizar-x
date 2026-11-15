@@ -49,7 +49,8 @@ píxeles), saca cuadros sueltos y lo renderiza.
     {"t": 25.0, "dur": 3.0, "tipo": "parpadear", "lugares": ["guatemala", "chimaltenango"]}
   ],
   "marcas": [
-    {"t": 6.1, "hasta": 11.0, "lugar": "los-amates", "texto": "Los Amates, Izabal", "sub": "Epicentro"}
+    {"t": 6.1, "hasta": 11.0, "lugar": "los-amates", "texto": "Los Amates, Izabal", "sub": "Epicentro"},
+    {"t": 20.0, "hasta": 26.0, "lugar": "guatemala", "texto": "Ciudad de Guatemala", "sub": "A 25 km", "separada_de": "motagua"}
   ],
   "capa": {
     "titulares": [{"t": 0.0, "hasta": 5.2, "kicker": "4 DE FEBRERO DE 1976", "texto": "La madrugada del terremoto"}],
@@ -57,7 +58,6 @@ píxeles), saca cuadros sueltos y lo renderiza.
     "palabras": [{"text": "A", "start": 0.12, "end": 0.20}],
     "progreso": {"actos": [0.0, 12.4, 33.0]},
     "seguir": {"t": 22.0, "dur": 3.0},
-    "aviso": "Maqueta · no a escala",
     "pie": "Relieve: Mapzen Terrain Tiles · Fallas: GEM (CC BY-SA 4.0) · Lugares: © OpenStreetMap",
     "handle": "@DerekUrizar",
     "cierre": {"t": 40.1, "frase": "…", "redes": [{"nombre": "TikTok", "handle": "@derekurizargt"}]}
@@ -124,7 +124,9 @@ píxeles), saca cuadros sueltos y lo renderiza.
     o una `pieza` (sube de brillo mientras dura; una falla todavía dormida engorda y aclara su línea).
 - **`marcas`**: pines pegados al 3D: un punto en el ancla proyectada, una línea y una tarjeta con `texto` (y `sub`).
   Visibles de `t` a `hasta`. `alto` (px de la línea, 110) sirve para separar dos tarjetas que se pisan. La tarjeta no
-  se sale de los márgenes y se desvanece sola antes de pisar el titular o la banda de abajo.
+  se sale de los márgenes y se desvanece sola antes de pisar el titular o la banda de abajo. **`separada_de`** (el id
+  de una pieza `falla`, `ruta` o `frontera`): la marca dice que está LEJOS de esa pieza («A 25 km de la falla»), así que
+  no puede dibujarse pegada a ella; con la cámara rasante las distancias se aplastan y M3D11 lo detiene.
 - **`capa`**: el cuadro 2D, de la familia de `video/comun.css` (Noche: crema, Archivo condensado, JetBrains Mono).
   - `titulares`: `kicker` + `texto` (≤ 3 renglones), arriba a la izquierda bajo la barra, de `t` a `hasta`. Un titular
     con `t ≤ 0.1` está completo desde el cuadro 0 (sin animación de entrada); los demás entran animados.
@@ -136,7 +138,9 @@ píxeles), saca cuadros sueltos y lo renderiza.
   - `seguir`: el botón «Sígueme» a mitad (`t`, `dur` ≥ 2 s). En 9:16 no puede coincidir con un titular largo.
     `seguir` y `cierre` son obligatorios para `check` y `render`, pero `cuadro` dibuja una maqueta sin ellos (los
     ganchos candidatos son maquetas de una sola escena).
-  - `aviso`, `pie` (las fuentes de los geodatos, ≤ 132 caracteres) y `handle`: fijos todo el video.
+  - `pie` (las fuentes de los geodatos, ≤ 132 caracteres; obligatorio: OpenStreetMap y las demás licencias piden
+    atribución) y `handle`: fijos todo el video. `aviso` («Maqueta · no a escala») es **opcional** (usuario,
+    2026-11-14: no hace falta en todos los videos): si falta no se dibuja y el `handle` ocupa su lugar.
   - `cierre`: desde `t` (≥ 3 s antes del final) un velo del fondo cubre el mundo (que sigue vivo debajo), la `frase` se
     enciende palabra por palabra (con la voz, si las últimas `palabras` son la frase; si no, a ritmo parejo) y entra
     «Sígueme en» con las `redes` (`nombre` en TikTok, Instagram, Facebook, YouTube o X para su icono, y `handle`).
@@ -175,10 +179,11 @@ el motor y la proyección de los gates.
 | M3D4 | Cada marca cae dentro del cuadro, con su tarjeta bajo el titular vivo y su ancla sobre la banda de abajo, ≥ 80 % de su ventana, y dura lo que se tarda en leer (0.5 s + 0.3 s por palabra, mínimo 1.2 s); ≤ 3 marcas a la vez; dos tarjetas no se pisan |
 | M3D5 | Titulares y cifras: tiempo de lectura; dos titulares no se pisan; una cifra a la vez; la cifra no tapa una marca viva; nada sigue en pantalla cuando entra el cierre; `seguir` no cae sobre un titular |
 | M3D6 | Cada evento cabe en la duración y su centro se ve en cámara ≥ 60 % de lo que dura (en una ruptura, sus frentes) |
-| M3D7 | `aviso`, `pie`, `handle`, `seguir` y `cierre` presentes; el pie nombra las fuentes de las capas del set que se usan (`fuente.json → pie_claves`) |
+| M3D7 | `pie`, `handle`, `seguir` y `cierre` presentes (`aviso` es opcional); el pie nombra las fuentes de las capas del set que se usan (`fuente.json → pie_claves`) |
 | M3D8 | Un solo estilo (ningún `estilo` por toma, pieza o evento) |
 | M3D9 | El gancho es un evento que se VE en el cuadro 0: hay una `ruptura`, `onda`, `deslizar` o `resaltar` con `t ≤ 0.1` y su origen cae dentro del cuadro en `t = 0` (aviso si ningún titular empieza en `t ≤ 0.1`: la portada saldría sin titular) |
 | M3D10 | Todo lo anterior se cumple en los dos formatos (9:16 y 4:5 encuadran distinto) |
+| M3D11 | Separación: una marca con `separada_de` guarda ≥ 60 px en pantalla entre su ancla y el punto más cercano de esa pieza en ≥ 80 % de su ventana (en 9:16 y 4:5, o en el lienzo de la pieza). La falla dice cuántos px hubo y propone una cámara más cenital o más cercana |
 
 Cada falla dice el gate, el formato, la pieza y cómo arreglarlo. Los avisos (no fallan): una ruptura que pide más
 kilómetros de los que tiene el trazo, un `desde` lejos del trazo, un video sin `protagonista`, una portada sin titular.
@@ -187,16 +192,37 @@ La concordancia con la voz (cada toma, evento, marca y cifra nace en una frase q
 nombra tiene su marca o es el foco; cada número con respaldo) la revisa `video3d.py guion --check`, que es quien
 conoce el guion.
 
+## Modo pieza: la maqueta dentro del cuadro de otro flujo
+
+/historia, /serie y /youtube-long pueden alojar una maqueta en su propio cuadro: ellos ponen el titular, los
+subtítulos, la barra y el cierre; **la maqueta solo pone el mundo y sus pines**.
+
+- **Lienzo libre** (`--lienzo ANCHOxALTO`; lados pares de 320 a 3840 px): 950x1040 para la mesa vertical, 1120x1080 y
+  1920x1080 para el 16:9. El punto que mira la cámara cae en el centro del lienzo; mismo `fov` vertical.
+- **Se dibuja** el mundo, las piezas, los eventos y las `marcas`. De `capa` todo es opcional (y `capa` puede faltar
+  entera): `titulares`, `cifras`, `palabras`, `progreso`, `seguir`, `cierre`, `handle`, `aviso` y `pie` se dibujan solo
+  si vienen (`pie` y `aviso`, abajo y pequeños). Sin degradados para el texto: el mundo llena el lienzo y los cuatro
+  bordes se funden con el fondo del anfitrión, que es el fondo de la paleta (`noche.paletas.<paleta>.fondo`).
+- **Gates:** M3D1–M3D4, M3D6, M3D8 y M3D11. Las marcas guardan 40 px con los bordes del lienzo (sin bandas de titular
+  ni de pie). M3D5, M3D7, M3D9 y M3D10 no aplican: el cuadro es del anfitrión. La atribución de los geodatos la pone
+  el anfitrión si la maqueta no trae `pie`.
+- **Salida:** `ARCHIVO.mp4` (H.264 yuv420p, sin audio, del tamaño del lienzo, `duracion_s` ± 1 cuadro, un solo
+  proceso) y, junto a él, `ARCHIVO.efectos.json` (`[[t, id], …]` de los `sfx` de eventos y marcas),
+  `ARCHIVO.render.log` y `ARCHIVO_proyecto/`. ≈ 1.8 s de render por segundo de video en 950x1040.
+
 ## Comandos (`scripts/maqueta3d.py`; 0 ok · 1 gate o paso fallido · 2 uso incorrecto)
 
 | Comando | Qué hace |
 |---|---|
-| `check MAQUETA [--formato 9:16\|4:5\|ambos]` | Gates M3D1–M3D10 (sin navegador; décimas de segundo) |
+| `check MAQUETA [--formato 9:16\|4:5\|ambos]` | Gates M3D1–M3D11 (sin navegador; décimas de segundo) |
+| `check MAQUETA --pieza --lienzo ANCHOxALTO` | Los gates del modo pieza en ese lienzo |
+| `cuadro MAQUETA --pieza --lienzo ANCHOxALTO --t S … --salida DIR [--hoja]` | Cuadros sueltos del modo pieza (`DIR/pieza_<lienzo>_tSSS.SSS.png`) |
+| `pieza MAQUETA --lienzo ANCHOxALTO --salida ARCHIVO.mp4 [--borrador]` | El mp4 del modo pieza y su `ARCHIVO.efectos.json`; exige sus gates en 0 salvo `--borrador` |
 | `cuadro MAQUETA --t S [--t S …] --salida DIR [--formato F] [--hoja]` | PNG de cuadros sueltos (`DIR/<9x16\|4x5>_tSSS.SSS.png`) y `hoja_<formato>.jpg`; ≈ 4–7 s en total. No exige pasar los gates ni traer `seguir` y `cierre`: sirve para ver ganchos candidatos |
 | `proyecto MAQUETA --dir DIR [--formato F]` | El proyecto de HyperFrames en `DIR/<9x16\|4x5>/proyecto/` |
-| `render MAQUETA --dir DIR [--formato F]` | Exige `check` en 0; `DIR/<9x16\|4x5>/video.mp4` (H.264 yuv420p, sin audio, `duracion_s` ± 1 cuadro; HyperFrames 0.9.28 con `--workers 1`) y `DIR/efectos.json` (`[[t, id], …]`); ≈ 1.8 s por segundo de video y formato |
+| `render MAQUETA --dir DIR [--formato F] [--borrador]` | Exige `check` en 0 (salvo `--borrador`: un candidato para mirar, nunca para entregar); `DIR/<9x16\|4x5>/video.mp4` (H.264 yuv420p, sin audio, `duracion_s` ± 1 cuadro; HyperFrames 0.9.28 con `--workers 1`) y `DIR/efectos.json` (`[[t, id], …]`); ≈ 1.8 s por segundo de video y formato |
 | `estilos` · `sets` | Los catálogos |
-| `prueba [--dir DIR]` | Sobre `video/maqueta/fixture/maqueta.json`: check, negativos de gate, hoja y render en los dos formatos |
+| `prueba [--dir DIR]` | Sobre `video/maqueta/fixture/maqueta.json`: check, negativos y positivos de gate (también el modo pieza en tres lienzos), hoja y render en los dos formatos |
 
 Los geodatos: `python3 scripts/build_set3d.py guatemala [--check] [--capa relieve|fallas|frontera|lugares]`
 (descargas en caché en `sesiones/_descargas/sets3d/`).

@@ -263,6 +263,7 @@
       "lugar": "guatemala",
       "texto": "Ciudad de Guatemala",
       "sub": "A 25 km",
+      "separada_de": "ruptura",
       "t": 21.9,
       "hasta": 24.2667
     },
@@ -929,9 +930,9 @@
       "t": 24.4,
       "dur": 3.0
     },
-    "aviso": "Maqueta · no a escala · traza esquemática",
     "pie": "Relieve: Mapzen Terrain Tiles · Traza: USGS (PP 1002) · Frontera: Natural Earth · Lugares: © OpenStreetMap",
     "handle": "@DerekUrizar",
+    "aviso": "Maqueta · no a escala · traza esquemática",
     "cierre": {
       "t": 43.3667,
       "frase": "La falla sigue ahí.",

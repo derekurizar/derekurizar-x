@@ -847,7 +847,7 @@ MUSICA_TEMAS = {
 def registros_con_musica(excluir_slug=None):
     """Todas las piezas registradas con su música y fecha (videos, historias, series, explicaciones, sabías, congreso)."""
     regs = []
-    for archivo in ("videos", "historias", "series", "explicaciones", "sabias", "congreso", "semanas", "noticias"):
+    for archivo in ("videos", "historias", "series", "explicaciones", "sabias", "congreso", "semanas", "noticias", "videos3d"):
         ruta = os.path.join(RAIZ, "memoria", archivo + ".json")
         if not os.path.exists(ruta):
             continue
@@ -4109,9 +4109,45 @@ def descargar_estado(trabajo, archivos):
     return 0
 
 
+def estado_de_nodos(trabajo, archivo):
+    """--nodos: el estado del MCP llegó EN EL CHAT y no en un archivo (pasa con pocas sesiones) y copiarlo entero a mano
+    son miles de caracteres. Basta un JSON con las dos URL de cada nodo que imprimió `voz`:
+    {"s1": {"voz": "<content_url del audio>", "palabras": "<words_download_url de Scribe>", "creditos": 177}, "7": {…}}
+    («s1» = la secuencia 1; «7» = la escena 7). Arma con locucion.json el estado que `descargar --estado` espera (el
+    prompt de cada nodo sale de la locución) y lo deja en audio/estado_nodos.json."""
+    loc = leer(os.path.join(trabajo, "locucion.json"))
+    secs = {s["k"]: s for s in loc.get("secuencias") or []}
+    escenas = {e["n"]: e for e in loc["escenas"]}
+    gens, media, trans = [], [], []
+    for clave, x in leer(archivo).items():
+        m = re.match(r"^s(?:ec_)?(\d+)$", str(clave))
+        if m and int(m.group(1)) in secs:
+            prompt = secs[int(m.group(1))]["prompt"]
+        elif str(clave).isdigit() and int(clave) in escenas:
+            prompt = escenas[int(clave)].get("prompt") or escenas[int(clave)]["voz"]
+        else:
+            raise ValueError("--nodos: «%s» no es un nodo de `voz` (sN = secuencia N; un número = esa escena)" % clave)
+        if not x.get("voz") or not x.get("palabras"):
+            raise ValueError("--nodos: el nodo «%s» lleva `voz` (content_url) y `palabras` (words_download_url)" % clave)
+        g = re.search(r"/content_generation/[^/]+/([^/]+)/", x["voz"])
+        gid = g.group(1) if g else "nodo-%s" % clave
+        gens.append({"id": gid, "status": "completed", "modality": "audio", "prompt": prompt, "content_url": x["voz"],
+                     "price": {"credits": x.get("creditos") or len(prompt)}})
+        media.append({"generation_id": gid, "prompt": prompt})
+        trans.append({"generation_id": "scribe-%s" % gid, "text": prompt, "words_download_url": x["palabras"], "source": {"url": x["voz"]}})
+    ruta = os.path.join(trabajo, "audio", "estado_nodos.json")
+    escribir(ruta, {"generations": gens, "media": media, "transcripts": trans, "all_completed": True})
+    return ruta
+
+
 def cmd_descargar(a):
     trabajo = os.path.abspath(a.trabajo)
     os.makedirs(os.path.join(trabajo, "audio"), exist_ok=True)   # preparar la crea; puede faltar si se movió la carpeta
+    if getattr(a, "nodos", None):
+        try:
+            return descargar_estado(trabajo, [estado_de_nodos(trabajo, os.path.abspath(a.nodos))])
+        except ValueError as ex:
+            return falla(str(ex))
     if a.estado:
         return descargar_estado(trabajo, [f if f == "-" else os.path.abspath(f) for f in a.estado])
     origen, tipo = (a.voz, "voz") if a.voz else (a.palabras, "palabras")
@@ -6205,6 +6241,8 @@ def main():
     x = p.add_mutually_exclusive_group(required=True)
     x.add_argument("--estado", nargs="+", help="estado de creative_get_flow_run_status (uno o varios archivos, o «-» = stdin): "
                    "JSON tal cual o el texto pegado con lo que traiga alrededor")
+    x.add_argument("--nodos", help='el estado llegó en el chat: JSON {"s1": {"voz": url, "palabras": url, "creditos": n}, "7": {…}} con las '
+                   "dos URL de cada nodo de `voz` (el resto sale de locucion.json)")
     x.add_argument("--voz")
     x.add_argument("--palabras")
     p = sub.add_parser("plano", help="la mesa de archivo: gates MV del plano, hoja de golpes o digesto para escribirlo (scripts/video_hf.py)")
