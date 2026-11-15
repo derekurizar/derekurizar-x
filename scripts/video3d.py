@@ -272,10 +272,10 @@ def revisar_guion(g, st, trabajo):
 
     t0, cambios, nombres = 0.0, [], {}
     for k, v in lugares.items():
-        toks = fichas(v.get("nombre") or "")
-        if toks and toks != ["guatemala"]:
-            nombres[k] = toks
-    vivas = set()   # lugares con una marca que sigue en pantalla
+        toks = tuple(fichas(v.get("nombre") or ""))
+        if toks and toks != ("guatemala",):
+            nombres.setdefault(toks, set()).add(k)
+    vivas = []   # marcas de escenas anteriores que siguen en pantalla
     for e, x in zip(escenas, loc):
         n, hab = x["n"], estimadas(x["voz"])
         norm = [VD._norm(w["text"]) for w in hab]
@@ -320,17 +320,20 @@ def revisar_guion(g, st, trabajo):
                     fallas.append("C3D4 escena %d: la cifra «%s» lleva `rotulo` (qué cuenta)" % (n, o.get("valor")))
                 if c and c.get("una_fuente") and not (o.get("fuente") or "").strip():
                     fallas.append("C3D4 escena %d: «%s» sale de una sola fuente: lleva `fuente` en pantalla" % (n, o.get("valor")))
-        # C3D3 cada lugar que la voz nombra tiene su marca (en esta escena o viva de antes) o es adonde mira la cámara
-        marcas_e = {m.get("lugar") for m in e.get("marcas") or [] if isinstance(m.get("lugar"), str)}
-        miras_e = {c.get("mira") for c in e.get("camara") or [] if isinstance(c.get("mira"), str)}
-        for k, toks in nombres.items():
+        # C3D3 cada lugar que la voz nombra tiene su marca (en esta escena o viva de antes) o es adonde mira la cámara;
+        # vale la marca puesta en ese lugar o la que lo nombra en su tarjeta (varios pueblos comparten nombre)
+        marcas_e = list(e.get("marcas") or []) + vivas
+        ids_e = {m.get("lugar") for m in marcas_e if isinstance(m.get("lugar"), str)} | \
+                {c.get("mira") for c in e.get("camara") or [] if isinstance(c.get("mira"), str)}
+        rotulos = [fichas("%s %s" % (m.get("texto", ""), m.get("sub", ""))) for m in marcas_e]
+        for toks, ids in nombres.items():
+            toks = list(toks)
             dicho = any(norm[i:i + len(toks)] == toks for i in range(len(norm) - len(toks) + 1))
-            if dicho and k not in marcas_e and k not in miras_e and k not in vivas:
+            escrito = any(r[i:i + len(toks)] == toks for r in rotulos for i in range(len(r) - len(toks) + 1))
+            if dicho and not (ids & ids_e) and not escrito:
                 fallas.append("C3D3 escena %d: la voz nombra «%s» y no hay marca ni la cámara lo mira: lo que se oye se ve"
-                              % (n, lugares[k].get("nombre")))
-        vivas = {m.get("lugar") for m in e.get("marcas") or [] if isinstance(m.get("hasta"), int) and m["hasta"] > n and isinstance(m.get("lugar"), str)} | \
-                {k for k in vivas if any(isinstance(m.get("hasta"), int) and m["hasta"] > n and m.get("lugar") == k
-                                         for e2 in escenas[:n] for m in e2.get("marcas") or [])}
+                              % (n, lugares[sorted(ids)[0]].get("nombre")))
+        vivas = [m for m in marcas_e if isinstance(m.get("hasta"), int) and m["hasta"] > n]
         t0 += x["estimado_s"]
 
     # C3D6 el gancho: un evento en el segundo cero, voz corta y «Guatemala» pronto
@@ -461,14 +464,21 @@ def construir(trabajo, g, loc, real, solo_escenas=None):
                                 t=cuadro(t), hasta=cuadro(min(fin, total))))
         if e.get("titular"):
             ti = e["titular"]
-            titulares.append({"t": cuadro(max(x["off"], momento(x, ti) - (ADELANTO if ti.get("dice") else 0.0))),
-                              "kicker": ti.get("kicker", ""), "texto": ti["texto"], "_n": e["n"]})
+            t = max(x["off"], momento(x, ti) - (ADELANTO if ti.get("dice") else 0.0))
+            fin = fin_de(x, ti)
+            titulares.append({"t": cuadro(t), "kicker": ti.get("kicker", ""), "texto": ti["texto"],
+                              "hasta": t + ti["dura"] if fin is None else fin})
     camara.sort(key=lambda c: c["t"])
     cierre_x = next((x for x in tl if x["tipo"] == "cierre"), None)
     fin_titulares = cierre_x["off"] if cierre_x else total
+    # un titular vive lo que su escena (o `hasta: N` / `dura`), nunca pisa al siguiente ni llega al cierre
     for a, b in zip(titulares, titulares[1:] + [None]):
-        a["hasta"] = cuadro(b["t"] if b else fin_titulares)
-        a.pop("_n")
+        a["hasta"] = cuadro(min(a["hasta"], b["t"] if b else fin_titulares, fin_titulares))
+    # «Sígueme» a mitad: el hueco sin titular largo más cercano al 50 % (en 9:16 el botón va a la altura del titular)
+    def libre(t):
+        return not any(len(ti["texto"]) > 14 and min(ti["hasta"], t + SEGUIR_S) - max(ti["t"], t) > 0 for ti in titulares)
+    candidatos = [total * (0.35 + 0.01 * k) for k in range(31)]
+    t_seguir = min([t for t in candidatos if libre(t) and t + SEGUIR_S <= fin_titulares] or [total * 0.5], key=lambda t: abs(t - total * 0.5))
     palabras = [{"text": w["text"], "start": round(x["off"] + w["start"], 3), "end": round(x["off"] + w["end"], 3)}
                 for x in tl for w in x["pantalla"]]
     actos, visto = [], set()
@@ -478,7 +488,7 @@ def construir(trabajo, g, loc, real, solo_escenas=None):
             actos.append(x["off"])
     mundo = g.get("mundo") or {}
     capa = {"titulares": titulares, "cifras": cifras, "palabras": palabras, "progreso": {"actos": actos},
-            "seguir": {"t": cuadro(total * 0.5), "dur": SEGUIR_S}, "aviso": g.get("aviso") or AVISO_MAQUETA,
+            "seguir": {"t": cuadro(t_seguir), "dur": SEGUIR_S}, "aviso": g.get("aviso") or AVISO_MAQUETA,
             "pie": g.get("pie") or pie_del_set(mundo.get("set")), "handle": HANDLE}
     if cierre_x:
         ce = next(e for e in escenas_de(g) if e.get("tipo") == "cierre")
