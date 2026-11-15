@@ -39,7 +39,8 @@ Subcomandos:
   armar TRABAJO                                 el TRABAJO unido: escenas.json, audio recortado, recursos; plano.borrador.json
   digesto TRABAJO --para realizador --capitulo N  el insumo del youtube-realizador (oraciones, fuentes, fotos, borrador)
   plano TRABAJO [--check] [--hoja] [--borrador]  une plano_<N>.json en plano.json; YT13–YT19; plano.md para revisarlo
-  grabar TRABAJO [--fps 30]                     los tableros (escenas explica y tarjeta, limpias) → clips_tablero/
+  grabar TRABAJO [--fps 30]                     los tableros (escenas explica y tarjeta, limpias) → clips_tablero/, y las mesas
+                                                con maqueta 3D → clips_maqueta_16x9/ (MESA_RENDER=0: dobles sin render)
   proyecto TRABAJO [--capitulo N]               un proyecto HyperFrames por capítulo (hf/cap-N/) y hf/efectos.json
   revisar TRABAJO [--capitulo N]                hyperframes check y hoja de contacto por capítulo (revision/hf_cap-N.jpg)
   audio TRABAJO                                 voz, música por capítulo y efectos del plano (−14 LUFS), .srt, capítulos
@@ -61,6 +62,9 @@ Gates:
   YT8 adelanto opcional (un momento alto ya grabado, 3–9 s, antes del gancho) y promesa global: forma del catálogo, sin anuncio, antes del segundo 15, con su `pregunta` para la pantalla, y se
       paga en el último 40 %
   YT9–YT11 render, miniatura y entrega (grabar, montar, miniatura, entregar)
+  YT20–YT24 la maqueta 3D de una mesa (scripts/mesa.py): YT20 forma (set, estilo con motor, piezas, cámara) · YT21 cada
+       `dice` lo dice la voz de su mesa · YT22 un solo estilo por video · YT23 mesa de ≥ 5 s, ≤ 3 piezas, ≤ 2 maquetas por
+       capítulo y ≤ 4 por video · YT24 `maqueta3d.py check --pieza` en 0
   YT13–YT19 el plano del 16:9 (plano --check, en scripts/youtube_hf.py; sobre los datos, nunca sobre píxeles):
        YT13 cada cifra o año dicho se ve · YT14 cada oración trae un golpe y ningún hueco pasa de 6 s · YT15 una foto ≤ 2
        veces y a ≥ 180 s · YT16 cada pieza con respaldo (y una foto de personas en proceso solo donde la voz las nombra)
@@ -2492,6 +2496,9 @@ def main():
     if a.cmd in ("borrador", "plano", "proyecto", "revisar", "render"):   # el 16:9 en HyperFrames: scripts/youtube_hf.py
         import youtube_hf as YH
         return getattr(YH, "cmd_" + a.cmd)(a)
+    if a.cmd == "grabar":   # los clips que la mesa aloja: los tableros (motor propio) y las maquetas 3D (maqueta3d.py en modo pieza)
+        import youtube_hf as YH
+        return cmd_grabar(a) or YH.cmd_maquetas(argparse.Namespace(trabajo=a.trabajo, fps=a.fps, todo=False))   # `youtube_hf.py maquetas --todo` las rehace
     return {"preparar": cmd_preparar, "digesto": cmd_digesto, "montaje": cmd_montaje, "probar": cmd_probar,
             "aplicar": cmd_aplicar, "resumen": cmd_resumen, "voz": cmd_voz, "tiempos": cmd_tiempos, "armar": cmd_armar,
             "grabar": cmd_grabar, "audio": cmd_audio, "montar": cmd_montar, "miniatura": cmd_miniatura, "teaser": cmd_teaser,

@@ -69,7 +69,7 @@ TRANSICION = 0.3   # = video.TRANSICION (sin importar video.py: este script no d
 REGISTROS = (("videos.json", "videos", "video", "ruta_video"), ("historias.json", "historias", "historia", "ruta"),
              ("noticias.json", "noticieros", "noticias", "ruta"), ("sabias.json", "sabias", "sabias", "ruta"),
              ("explicaciones.json", "explicaciones", "explica", "ruta"), ("semanas.json", "semanas", "semana", "ruta"),
-             ("congreso.json", "congreso", "congreso", "ruta"))
+             ("congreso.json", "congreso", "congreso", "ruta"), ("videos3d.json", "videos3d", "video3d", "ruta"))
 VENTANA_DIAS = (-1, 6)       # publicada entre un día antes y seis después del registro
 TOLERANCIA_DUR = 6.0         # s entre la duración publicada y la del registro
 UMBRAL_AUTO, MARGEN_AUTO = 2.0, 1.0   # puntaje mínimo para vincular solo y ventaja sobre el segundo candidato
@@ -717,7 +717,7 @@ def rendimiento_facebook(M=None):
                 "distribucion": mediana([x["dist"] for x in xs]), "piezas": [x["pieza"] for x in xs]} for e, xs in tabla.items()}
 
 
-FLUJO_AGENDA = {"explica": "explica", "historia": "historia", "video": "video", "sabias": "sabias", "congreso": "congreso"}
+FLUJO_AGENDA = {"explica": "explica", "historia": "historia", "video": "video", "sabias": "sabias", "congreso": "congreso", "video3d": "video3d"}
 
 
 def pct(v):

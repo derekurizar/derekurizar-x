@@ -73,11 +73,12 @@ FORMATOS = {
     "sabias": ("/sabias <pista>", 0, 25, 400),
     "congreso": ("/congreso <iniciativa>", 1, 25, 800),
     "video": ("/video <slug>", 1, 30, 1700),
+    "video3d": ("/video-3d <tema>", 1, 40, 700),
     "noticias": ("/noticias", 0, 30, 850),
     "semana": ("/semana", 0, 30, 1200),
     "carrusel": ("/carrusel <slug>", 0, 10, 0),
 }
-FUERTES = ("historia", "explica", "serie", "video")               # espacio A
+FUERTES = ("historia", "explica", "serie", "video", "video3d")    # espacio A (video3d = la maqueta que vuela)
 CORTAS = ("sabias", "departamento", "congreso")                    # espacio B (20–90 s)
 ROTACION_CORTAS = ("sabias",)                                      # lo que llena el espacio B
 SIN_AGENDA = ("noticias", "semana")   # el usuario no publica noticieros (2026-11-03): /noticias y /semana no se programan
@@ -93,13 +94,13 @@ MEZCLA_MIN = {"historia": 3, "explica": 1}
 DIAS_REPETIDO, DIAS_PARECIDO = 60, 30
 ESTADOS = ("propuesto", "tema", "producido", "publicado")
 MIN_OPCIONES, MAX_OPCIONES = 2, 3   # opciones de tema por espacio (la primera queda como tema: la semana queda lista)
-FLUJO_DE_FORMATO = {"historia": "historia", "explica": "explica", "sabias": "sabias", "congreso": "congreso", "video": "video",
+FLUJO_DE_FORMATO = {"historia": "historia", "explica": "explica", "sabias": "sabias", "congreso": "congreso", "video": "video", "video3d": "video3d",
                     "departamento": "video", "noticias": "noticias", "semana": "semana", "serie": "serie", "carrusel": "carrusel"}
 REGISTROS = (("videos.json", "videos", "video", "ruta_video"), ("historias.json", "historias", "historia", "ruta"),
              ("noticias.json", "noticieros", "noticias", "ruta"), ("sabias.json", "sabias", "sabias", "ruta"),
              ("congreso.json", "congreso", "congreso", "ruta"),
              ("explicaciones.json", "explicaciones", "explica", "ruta"), ("semanas.json", "semanas", "semana", "ruta"),
-             ("carruseles.json", "carruseles", "carrusel", "ruta"))
+             ("carruseles.json", "carruseles", "carrusel", "ruta"), ("videos3d.json", "videos3d", "video3d", "ruta"))
 DIAS = ("lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo")
 STOP = set("de del la el los las en y a o que un una al lo se por para con como su sus es guatemala historia maqueta publica "
            "publicacion anterior mensual frente pais datos".split())

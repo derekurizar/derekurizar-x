@@ -29,6 +29,8 @@
 #          («modo retirado») y el modelo `producto` de la calculadora sigue.
 #        · /sabias: gate S1–S3 sobre el dato de prueba (negativos), M13 y make sabias-fixture.
 #        · /video-3d: M3D del motor, C3D1–C3D11 con sus negativos sobre la maqueta corta y make video3d-fixture.
+#        · la maqueta 3D en la mesa de archivo (`maqueta` a nivel de mesa en plano.json): YT20–YT24 / MV15–MV19 con sus
+#          negativos sobre un plano sintético, y make video-fixture-maqueta con los suyos (sin RAPIDO).
 #        · /congreso: CG2–CG10 sobre la maqueta de la Ley de Ciberseguridad (negativos), M19 y make congreso-fixture.
 #        · /departamento: canon (--check, --resolver, --directiva), --tablero/--siguiente con memoria de prueba, G1 del
 #          perfil de departamento (y el de grupo, que no lo exige), D1–D9 con un negativo por gate sobre la maqueta de
@@ -2114,6 +2116,63 @@ if [[ "$RAPIDO" == "1" ]]; then echo "SKIP   make video3d-fixture (RAPIDO=1)"; e
   paso "make video3d-fixture (render 9:16 con el motor three.js, voz falsa, V8)" bash -c 'make video3d-fixture >/dev/null && ffprobe -v error -show_entries stream=codec_type,width,height -of csv=p=0 sesiones/_fixture_video3d/trabajo/salida/video.mp4 | grep -q "video,1080,1920"'
   paso "video3d.py entregar no entrega con voz falsa (sin créditos y sin --salida)" bash -c "! python3 scripts/video3d.py entregar sesiones/_fixture_video3d/trabajo >/dev/null 2>&1"
 fi
+# la maqueta 3D como pieza de la mesa de archivo (scripts/mesa.py: `maqueta` a nivel de mesa en plano.json; YT20–YT24 = MV15–MV19)
+paso "maqueta en la mesa: los «dice» → segundos de la mesa, maqueta.json sin capa, pie con la atribución de lo que usa, YT20–YT24 con sus negativos (y maqueta3d.py check --pieza), topes por formato" python3 - <<'PY3D'
+import copy, json, os, sys, tempfile
+sys.path.insert(0, "scripts")
+import mesa as MS, video_hf as VH
+voz = "Pero el camino era largo. De la capital bajaba hasta Escuintla, a sesenta kilómetros. Y de ahí seguía hasta el puerto."
+pal = [{"text": w, "start": round(0.5 * k, 2), "end": round(0.5 * k + 0.4, 2)} for k, w in enumerate(voz.split())]
+S = {"n": 1, "clave": "e1", "tipo": "foto", "dur": 11.0, "fin_voz": 10.4, "palabras": pal}
+Q = {"set": "guatemala", "estilo": "noche", "protagonista": "ruta",
+     "piezas": [{"id": "ruta", "tipo": "ruta", "lugares": ["guatemala", "escuintla"]}, {"id": "pueblos", "tipo": "luces", "lugares": "todos"}],
+     "camara": [{"mira": "guatemala", "dist_km": 420, "azimut": 0, "elevacion": 55},
+                {"dice": "hasta Escuintla", "mira": "escuintla", "dist_km": 160, "azimut": -15, "elevacion": 40}, {"al": "fin", "mira": "escuintla", "dist_km": 130, "azimut": -20, "elevacion": 38}],
+     "eventos": [{"dice": "hasta Escuintla", "tipo": "resaltar", "lugar": "escuintla", "dur": 2.0}, {"dice": "seguía hasta", "tipo": "resaltar", "pieza": "ruta", "dur": 2.0}],
+     "marcas": [{"dice": "Escuintla", "lugar": "escuintla", "texto": "Escuintla"}]}
+tmp = tempfile.mkdtemp()
+
+
+def gates(mut="", vertical=True, escenas=1):
+    es = [dict(copy.deepcopy(S), n=k + 1, clave="e%d" % (k + 1)) for k in range(escenas)]
+    ctx = {"trabajo": tmp, "E": {}, "es": es, "offs": [11.0 * k for k in range(escenas)], "total": 11.0 * escenas, "Y": {}, "st": {"paleta": "obsidiana"},
+           "por_clave": {s["clave"]: i for i, s in enumerate(es)}, "caps": [{"numero": 1, "idx": list(range(escenas)), "titulo": "", "ini": 0.0, "fin": 11.0 * escenas}],
+           "elenco": [], "respaldo": [], "hechos": {}, "hechos_de": {}}
+    if vertical:
+        ctx["reglas"] = VH.REGLAS
+    P = {"mesas": [{"escenas": ["e%d" % (k + 1)], "maqueta": copy.deepcopy(Q), "golpes": []} for k in range(escenas)]}
+    M, q = P["mesas"][0], P["mesas"][0]["maqueta"]
+    exec(mut)
+    mesas, f0 = MS.resolver(ctx, P)
+    f, av, med = MS.revisar(ctx, P, mesas, f0)
+    return [x for x in f if x[:4] in ("YT20", "YT21", "YT22", "YT23", "YT24") or x.startswith("YT16")], mesas, ctx
+
+
+f, mesas, ctx = gates()
+assert not f and mesas[0]["clase"] == "maqueta", f
+mj = MS.maqueta_json(ctx, mesas[0])
+assert mj["duracion_s"] == 11.0 and mj["paleta"] == "obsidiana" and "capa" not in mj and [c["t"] for c in mj["camara"]] == [0.0, 4.5, 10.8], mj["camara"]
+assert [e["t"] for e in mj["eventos"]] == [4.5, 8.5] and mj["marcas"][0]["t"] == 4.7 and mj["marcas"][0]["hasta"] == 11.0, (mj["eventos"], mj["marcas"])
+assert not any(k in x for x in mj["camara"] + mj["eventos"] + mj["marcas"] for k in ("dice", "al", "_t")), mj
+assert "OpenStreetMap" in MS.credito_maqueta(Q) and "GEM" not in MS.credito_maqueta(Q) and "no a escala" not in MS.credito_maqueta(Q) and MS.credito_maqueta(dict(Q, aviso="Maqueta · no a escala")).startswith("Maqueta · no a escala"), MS.credito_maqueta(Q)
+MS.motores_maqueta = lambda: ("three",)   # el motor de un estilo sin render (aquí, como si blender no lo tuviera) → YT20
+f, _, _ = gates('q["estilo"] = next(k for k, e in MS.estilos_maqueta().items() if e["motor"] != "three")')
+assert any(x.startswith("YT20 ") and "aún no renderiza" in x for x in f), f
+for cod, mut in (("YT20", 'q["estilo"] = "zzz"'), ("YT20", 'q["set"] = "atlantida"'), ("YT20", 'q["camara"][0]["dice"] = "Pero el"'), ("YT20", 'q["piezas"] = []'),
+                 ("YT20", 'M["maqueta"] = []'), ("YT21", 'q["marcas"][0]["dice"] = "Xela"'), ("YT21", 'q["camara"][1].pop("dice")'),
+                 ("YT23", 'M["golpes"] = [dict(tipo="termino", dice=d, texto="Hola") for d in ("Pero el", "De la", "sesenta", "Y de")]'),
+                 ("YT24", 'q["camara"][1]["dist_km"] = 5'), ("YT24", 'q["marcas"][0]["lugar"] = "atlantida"'), ("YT16", 'q["marcas"][0]["sub"] = "98,765 habitantes"')):
+    f, _, _ = gates(mut)
+    assert any(x.startswith(cod + " ") for x in f), (cod, mut, f)
+f, _, _ = gates('P["mesas"][1]["maqueta"]["estilo"] = "color"', escenas=2)
+assert any(x.startswith("YT22 m2") for x in f), f
+f, _, _ = gates(escenas=3)                       # el vertical: ≤ 2 por video
+assert [x[:8] for x in f if "n.º 3 del video" in x] == ["YT23 m3 "], f
+f, _, _ = gates(escenas=3, vertical=False)       # el 16:9: ≤ 2 por capítulo (y ≤ 4 por video)
+assert any("n.º 3 del capítulo 1" in x for x in f) and not any("del video" in x for x in f), f
+assert VH.codigo("YT20 a YT24 y YT13") == "MV15 a MV19 y MV1"
+print("maqueta en la mesa: forma, tiempos, json y gates YT20–YT24 OK")
+PY3D
 
 echo "== /congreso (CG2–CG10 sobre la maqueta de la Ley de Ciberseguridad; sin web, sin la base local ni créditos)"
 CG="$TMP/congreso"
@@ -2310,6 +2369,34 @@ PYEOF
     paso "plano vertical: una jerarquía con un hilo de alegato sin «Según…» → MV12" mv_neg "MV12" 'd = M["golpes"][-1]["dice"]; M["golpes"].append(dict(tipo="red", escena=M["golpes"][-1].get("escena", M["escenas"][0]), dice=d, nodos=[dict(id="a", nombre="Marta Pérez", nivel=0, dice=d), dict(id="b", nombre="Zzz", nivel=1, dice=d)], aristas=[dict(de="a", a="b", atribuida=True, dice=d)]))'
     paso "plano vertical: una barra sola (sin con qué compararse) → MV4" mv_neg "MV4" 'M["golpes"].append(dict(tipo="barra", escena=M["golpes"][-1].get("escena", M["escenas"][0]), dice=M["golpes"][-1]["dice"], barras=[dict(etiqueta="Zzz", valor=1)]))'
     paso "plano vertical: una barra que dice 900 y mide 10 → MV4" mv_neg "MV4" 'M["golpes"].append(dict(tipo="barra", escena=M["golpes"][-1].get("escena", M["escenas"][0]), dice=M["golpes"][-1]["dice"], barras=[dict(etiqueta="A", valor=10, texto="900"), dict(etiqueta="B", valor=20)]))'
+    paso "make video-fixture-maqueta (una mesa con maqueta 3D: clip real 950×1040 de maqueta3d.py pieza, en los proyectos 9:16 y 4:5, su efecto en la mezcla, el 4:5 reusa el clip)" bash -c 'make video-fixture-maqueta FPS=6 >/dev/null && T=sesiones/_fixture_maqueta/trabajo && ffprobe -v error -show_entries stream=width,height -of csv=p=0 $T/clips_maqueta/m5.mp4 | grep -q "950,1040" && grep -q "\"doble\": false" $T/clips_maqueta/huellas.json && grep -q "assets/maquetas/m5.mp4" $T/hf/9x16/compositions/m5.html && grep -q "assets/maquetas/m5.mp4" $T/hf/4x5/compositions/m5.html && test -s $T/hf/4x5/assets/maquetas/m5.mp4 && grep -q "foco" $T/hf/efectos.json && grep -q "Maqueta · no a escala" $T/hf/9x16/compositions/m5.html && grep -q "maqueta 3D" $T/plano.md && test -s $T/salida/video.mp4 && test -s $T/salida/video_4x5.mp4'
+    mq_neg() {  # mq_neg CÓDIGO 'python que muta P (plano.json), M (la mesa con maqueta) o Q (su maqueta)': la mutación AÑADE un aviso con ese código
+      local T="sesiones/_fixture_maqueta/trabajo" cod="$1" out rc=0 antes despues
+      cp "$T/plano.json" "$TMP/plano_q.bak"
+      antes="$(python3 scripts/video_hf.py plano "$T" --check 2>&1 | grep -c "(maqueta) $cod ")"
+      python3 - "$T" "$2" <<'PYEOF'
+import json, sys
+T = sys.argv[1]
+P = json.load(open(T + "/plano.json")); M = next(m for m in P["mesas"] if m.get("maqueta")); Q = M["maqueta"]
+exec(sys.argv[2])
+json.dump(P, open(T + "/plano.json", "w"), ensure_ascii=False)
+PYEOF
+      [[ $? == 0 ]] || rc=1
+      out="$(python3 scripts/video_hf.py plano "$T" --check 2>&1)"; despues="$(echo "$out" | grep -c "(maqueta) $cod ")"
+      cp "$TMP/plano_q.bak" "$T/plano.json"
+      [[ $despues -gt $antes ]] || rc=1
+      [[ $rc == 0 ]] || { echo "$cod: $antes aviso(s) antes, $despues después"; echo "$out" | tail -8 | cut -c1-300; return 1; }
+    }
+    paso "plano con maqueta: la mesa de la maqueta no añade avisos (MV15–MV19 en 0)" bash -c '! python3 scripts/video_hf.py plano sesiones/_fixture_maqueta/trabajo --check 2>&1 | grep -q "(maqueta) MV1[5-9] \|(maqueta) MV[0-9]* m5 "'
+    paso "plano con maqueta: un estilo que no está en el catálogo → MV15" mq_neg "MV15" 'Q["estilo"] = "zzz"'
+    paso "plano con maqueta: la primera clave de cámara con dice → MV15" mq_neg "MV15" 'Q["camara"][0]["dice"] = "Pero el salto"'
+    paso "plano con maqueta: un dice que la voz de la mesa no dice → MV16" mq_neg "MV16" 'Q["marcas"][0]["dice"] = "cinco sucursales"'
+    paso "plano con maqueta: dos maquetas de estilos distintos → MV17" mq_neg "MV17" 'P["mesas"] = [m for m in P["mesas"] if m["escenas"] != ["e7"]] + [dict(escenas=["e7"], titulo="Otra", golpes=[], maqueta=dict(Q, estilo="color", marcas=[], eventos=[], camara=Q["camara"][:1]))]'
+    paso "plano con maqueta: una maqueta de menos de 5 s (y en el gancho) → MV18" mq_neg "MV18" 'P["mesas"] = [m for m in P["mesas"] if m["escenas"] != ["e1"]]; M["escenas"] = ["e1"]; M["golpes"] = []; Q.update(camara=Q["camara"][:1], eventos=[], marcas=[])'
+    paso "plano con maqueta: una cámara que el motor rechaza (M3D3) → MV19" mq_neg "MV19" 'Q["camara"][1]["dist_km"] = 5'
+    paso "plano con maqueta: la cifra que la voz dice, sin su golpe → MV1" mq_neg "MV1" 'M["golpes"] = M["golpes"][:1]'
+    paso "plano con maqueta: una pieza que taparía la maqueta → MV11" mq_neg "MV11" 'M["golpes"][1] = dict(tipo="cita", dice="4,500 panes", autor="Zzz", texto=" ".join("palabra%d" % i for i in range(60)))'
+    paso "maquetas con MESA_RENDER=0: un doble 950×1040 de la duración de la mesa, que no se reusa como render" bash -c 'T="'"$TMP"'/maq_doble"; rm -rf "$T"; cp -R sesiones/_fixture_maqueta/trabajo "$T" && rm -rf "$T/clips_maqueta" && MESA_RENDER=0 python3 scripts/video_hf.py maquetas "$T" | grep -q "dobles sin render" && grep -q "\"doble\": true" "$T/clips_maqueta/huellas.json" && ffprobe -v error -show_entries stream=width,height -of csv=p=0 "$T/clips_maqueta/m5.mp4" | grep -q "950,1040" && MESA_RENDER=0 python3 scripts/video_hf.py maquetas "$T" | grep -q "al día"'
     paso "borrador vertical: un gancho de texto cinético (pareja) abre con la nota y la barra ya puestas; el golpe con número es una cifra sin repetir el golpe de arriba" python3 -c '
 import sys; sys.path.insert(0, "scripts"); import video_hf as VH
 S = {"tipo": "gancho", "clave": "e1", "palabras": [{"text": w, "start": 0.3 * k, "end": 0.3 * k + 0.25} for k, w in enumerate("el barril pasó de 67 a 102 dólares".split())],

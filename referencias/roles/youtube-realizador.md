@@ -87,6 +87,50 @@ Cómo se usa cada una:
 - **Tableros**: el digesto dice qué muestra ya cada uno («el tablero ya muestra») y qué oraciones no tienen paso propio
   («sin paso propio»): esas son las que necesitan un golpe tuyo.
 
+## La maqueta
+
+A veces el lugar **es** la información: una ruta entre dos sitios, una falla, una cuenca, qué tan lejos queda algo. Para
+esas mesas (y solo esas) puedes pedir un **render 3D de la situación**: el relieve real de Guatemala con sus pueblos y una
+cámara que vuela mientras la voz cuenta. Es la única pieza donde la cámara se mueve (dentro de su marco: la mesa sigue
+quieta). Entra como un tablero: el clip a la izquierda, todo lo que dura la mesa, y tus golpes a la derecha.
+
+- **Úsala** cuando la voz de la mesa nombra ≥ 2 lugares o un recorrido, y verlos en su sitio explica la oración. El
+  digesto trae, bajo «Maqueta 3D», los estilos y los lugares del set que la voz de tu capítulo nombra (con su id).
+- **No la uses** para ubicar un solo lugar (pieza `lugar`), para adornar, en una escena tablero, ni donde hay una foto, un
+  recorte o un documento que pruebe lo que se dice: la maqueta **no cuenta como archivo real** (YT17).
+- **≤ 2 por capítulo y ≤ 4 en el video, todas del mismo `estilo`** (si otro capítulo ya puso una, el cierre las iguala),
+  en una mesa de 5–45 s con ≤ 3 golpes. Cuesta ≈ 1.8 s de render por segundo de maqueta.
+
+Va en la mesa, junto a `golpes` (los `dice` de la maqueta se buscan en la voz de las escenas de esa mesa; con varias
+escenas puedes fijar uno con `"escena": "<clave>"`):
+
+```json
+{"escenas": ["P2.e4", "P2.e5"],
+ "maqueta": {"set": "guatemala", "estilo": "noche", "protagonista": "ruta",
+  "piezas": [{"id": "ruta", "tipo": "ruta", "lugares": ["guatemala", "escuintla"]}, {"id": "pueblos", "tipo": "luces", "lugares": "todos"},
+             {"id": "frontera", "tipo": "frontera"}],
+  "camara": [{"mira": "guatemala", "dist_km": 420, "azimut": 0, "elevacion": 55},
+             {"dice": "hasta Escuintla", "mira": "escuintla", "dist_km": 160, "azimut": -15, "elevacion": 40}],
+  "eventos": [{"dice": "hasta Escuintla", "tipo": "resaltar", "lugar": "escuintla", "dur": 2.0}],
+  "marcas": [{"dice": "Escuintla", "lugar": "escuintla", "texto": "Escuintla"}]},
+ "golpes": [{"tipo": "cifra", "escena": "P2.e5", "dice": "sesenta kilómetros", "valor": "60 km", "rotulo": "de carretera"}]}
+```
+
+- `set`: `guatemala` (lugares por id: minúsculas, sin tildes, con guiones; o `[lon, lat]`; o declarados en `lugares`).
+  `estilo`: uno de los que lista el digesto (`noche`, `color`, `contorno`, `voxel`, `plano`…). `piezas`: `falla`, `luces`, `frontera`, `ruta`;
+  `protagonista` es la única que va en el acento.
+- **Cámara**: la primera clave sin `dice` (el encuadre con que abre la mesa); las demás, con el `dice` en el que
+  **llegan** (`"al": "fin"` = al terminar la frase; sin `dice` y con `"al": "fin"`, al terminar la mesa).
+- **Marcas**: una por lugar que la voz nombra (`dice`, `lugar`, `texto`, `sub`). **Eventos**: `resaltar`, `encender`,
+  `apagar`, `parpadear`, `ruptura`, `onda`, `deslizar`, con `dice` y `dur` (o `hasta_dice`).
+- Cada oración de la mesa trae una entrada (YT14): la cámara que llega, un evento, una marca o un golpe. Las cifras y los
+  años que la voz dice van en golpes (YT13). La maqueta no lleva titulares ni cifras propias.
+- El detalle de cada campo: `referencias/flujo-mesa.md` («La maqueta») y `referencias/diseno/maqueta3d.md`.
+
+Gates (`plano --check`): **YT20** forma · **YT21** cada `dice` en la voz de su mesa, cámara en orden · **YT22** un solo
+estilo · **YT23** carga · **YT24** los del motor (`maqueta3d.py check --pieza`: el mensaje `M3D…` llega tal cual, con
+los segundos contados desde el inicio de la mesa).
+
 ## Recursos nuevos
 
 - Primero lo que ya está: las fotos del digesto y las notas de cada hecho (su titular y su cita ya están verificados).

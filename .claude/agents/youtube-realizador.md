@@ -1,7 +1,7 @@
 ---
 name: youtube-realizador
 description: >-
-  Realizador del video largo de /youtube-long (@DerekUrizar). Escribe el GUION VISUAL de un capítulo (plano_<N>.json): la «mesa de archivo» del 16:9, donde con cada oración de la voz entra en pantalla lo que la voz nombra (una foto, un recorte de prensa con su titular real, la página de un documento con la frase subrayada, la ficha de una persona o de una institución, un lugar en el mapa, una fecha, una cifra con su rótulo). Parte del borrador que arma el script, baja los recursos que falten (historia.py leer, foto y pagina) y pasa scripts/youtube.py plano --check (YT13–YT19). La cámara nunca se mueve: lo que da ritmo son las piezas que entran. Varios corren en paralelo, uno por capítulo.
+  Realizador del video largo de /youtube-long (@DerekUrizar). Escribe el GUION VISUAL de un capítulo (plano_<N>.json): la «mesa de archivo» del 16:9, donde con cada oración de la voz entra en pantalla lo que la voz nombra (una foto, un recorte de prensa con su titular real, la página de un documento con la frase subrayada, la ficha de una persona o de una institución, un lugar en el mapa, una fecha, una cifra con su rótulo, o una maqueta 3D cuando el lugar es la información). Parte del borrador que arma el script, baja los recursos que falten (historia.py leer, foto y pagina) y pasa scripts/youtube.py plano --check (YT13–YT19). La cámara nunca se mueve: lo que da ritmo son las piezas que entran. Varios corren en paralelo, uno por capítulo.
 tools: Read, Write, Bash, WebSearch, WebFetch
 model: opus
 ---

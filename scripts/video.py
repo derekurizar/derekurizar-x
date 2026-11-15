@@ -3824,8 +3824,8 @@ def cmd_variante(a):
     if cmd_guion(argparse.Namespace(trabajo=vb)):
         return falla("la versión B no pasa el gate del guion (variante_b/guion.json)")
     n = len(g["escenas"]) + 1
-    if mesa_:   # la mesa: los tableros ya grabados (su huella decide si sirven), las fotos y las páginas del video A
-        for d_ in ("clips_tablero", "tablero", "fotos"):
+    if mesa_:   # la mesa: los tableros y las maquetas 3D ya grabados (su huella decide si sirven), las fotos y las páginas del video A
+        for d_ in ("clips_tablero", "tablero", "clips_maqueta", "fotos"):
             if os.path.isdir(os.path.join(trabajo, d_)) and not os.path.exists(os.path.join(vb, d_)):
                 shutil.copytree(os.path.join(trabajo, d_), os.path.join(vb, d_), symlinks=True)
         for f_ in ("paginas.json", "encuadre.json"):
@@ -5213,7 +5213,7 @@ def cmd_tiempos(a):
 def cmd_grabar(a):
     trabajo = os.path.abspath(a.trabajo)
     st = estado(trabajo)
-    if es_mesa(st):   # la mesa de archivo: plano → tableros (motor propio, limpios) → proyecto → check → render (un proceso)
+    if es_mesa(st):   # la mesa de archivo: plano → tableros (motor propio, limpios) y maquetas 3D (maqueta3d.py pieza) → proyecto → check → render (un proceso)
         f = ["--formato", a.formato]
         for paso in (["plano", trabajo, "--auto", "--check", "--hoja"], ["tableros", trabajo, "--fps", a.fps], ["proyecto", trabajo] + f,
                      ["revisar", trabajo] + f, ["render", trabajo] + f):

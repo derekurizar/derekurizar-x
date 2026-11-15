@@ -7,7 +7,7 @@ PALETAS ?= cielo
 ESTILO ?= noche
 PALETA ?= cielo
 
-.PHONY: help nuevo render visual catalogo validate tabla pdf ensamblar limpiar test doctor costo contacto digesto fuentes ideas calendario informe informe-ejemplo informe-catalogo informe-fixture verificacion auditoria-rehacer podar video-fixture video-fixture-4x5 noticias-fixture semana-fixture historia-fixture explica-fixture sabias-fixture congreso-fixture carrusel-fixture departamento-fixture analisis-fixture agenda-fixture serie-fixture serie-explica-fixture youtube-fixture video-fixture-mesa video3d-fixture musica whisper iconos
+.PHONY: help nuevo render visual catalogo validate tabla pdf ensamblar limpiar test doctor costo contacto digesto fuentes ideas calendario informe informe-ejemplo informe-catalogo informe-fixture verificacion auditoria-rehacer podar video-fixture video-fixture-4x5 noticias-fixture semana-fixture historia-fixture explica-fixture sabias-fixture congreso-fixture carrusel-fixture departamento-fixture analisis-fixture agenda-fixture serie-fixture serie-explica-fixture youtube-fixture video-fixture-mesa video-fixture-maqueta video3d-fixture musica whisper iconos
 
 help:
 	@echo "make nuevo T=<plantilla> OUT=<ruta.html> [PALETA=cielo]  ensambla una tarjeta (base + plantilla)"
@@ -39,6 +39,7 @@ help:
 	@echo "make sabias-fixture [FPS=10]                             /sabias de prueba (el dato de sesiones/_fixture_dato, voz falsa, 0 créditos) → sesiones/_fixture_sabias/salida"
 	@echo "make departamento-fixture [FPS=10]                       /departamento de prueba (perfil de Huehuetenango con cifras de maqueta → video corto con mapa y ranking en ventana, D1–D9, voz falsa) → sesiones/_fixture_departamento/salida"
 	@echo "make video-fixture-mesa [FPS=10]                         la mesa de archivo de punta a punta con render real: la parte 1 de la maqueta de /serie por los comandos de siempre (plano MV1–MV14 → grabar → montar → revisar), 9:16 en HyperFrames y 4:5 sin render"
+	@echo "make video-fixture-maqueta [FPS=10]                      la MAQUETA 3D dentro de la mesa de archivo: la maqueta de /serie con una mesa que lleva una maqueta (sesiones/_fixture_serie/parte-1/mesa_maqueta.json): gates MV15–MV19, clip real con maqueta3d.py en modo pieza, 9:16 en HyperFrames y 4:5 sin render"
 	@echo "make youtube-fixture [FPS=10]                            /youtube-long de prueba: la parte 1 de La Espiga dos veces → montaje fijo (quitar, recortes, puente, promesa) YT1–YT8, voz falsa de lo nuevo, 16:9, miniatura y entrega"
 	@echo "make serie-fixture [FPS=10]                              /serie de prueba (La Espiga en 3 partes, motor /historia): plan SE1–SE2, cobertura SE3, parte 1 con SE4–SE8, voz falsa, 9:16 y 4:5, entrega de la parte"
 	@echo "make serie-explica-fixture [FPS=10]                      /serie de prueba con el motor /explica (temario del interés en 3 partes): lo mismo sobre la parte 1"
@@ -344,6 +345,18 @@ video-fixture-mesa: serie-fixture   # la mesa de archivo de punta a punta, con r
 	MESA_RENDER=0 python3 scripts/historia.py grabar $(MESA)/trabajo --fps $(FPS) --formato 4:5
 	python3 scripts/historia.py montar $(MESA)/trabajo --formato 4:5
 	python3 scripts/historia.py revisar $(MESA)/trabajo --formato 4:5
+
+MAQ := sesiones/_fixture_maqueta
+video-fixture-maqueta: serie-fixture   # la maqueta 3D como pieza de la mesa: el plano de la maqueta de /serie con la mesa de e5 cambiada por una con «maqueta»; el clip se renderiza de verdad (maqueta3d.py pieza, 950×1040) y el 4:5 lo reusa
+	rm -rf $(MAQ)
+	python3 scripts/video_hf.py piloto $(SER)/trabajo/parte-1 --trabajo $(MAQ)/trabajo --fixture
+	python3 scripts/video_hf.py plano $(MAQ)/trabajo --auto --borrador --con $(SER)/parte-1/mesa_maqueta.json --check --hoja
+	MESA_RENDER=1 MESA_CALIDAD=draft python3 scripts/historia.py grabar $(MAQ)/trabajo --fps $(FPS)
+	python3 scripts/historia.py montar $(MAQ)/trabajo
+	python3 scripts/historia.py revisar $(MAQ)/trabajo
+	MESA_RENDER=0 python3 scripts/historia.py grabar $(MAQ)/trabajo --fps $(FPS) --formato 4:5
+	python3 scripts/historia.py montar $(MAQ)/trabajo --formato 4:5
+	python3 scripts/historia.py revisar $(MAQ)/trabajo --formato 4:5
 
 YT := sesiones/_fixture_youtube
 youtube-fixture: serie-fixture   # maqueta de /youtube-long: la parte 1 de la maqueta de /serie dos veces, montaje fijo, voz falsa de lo nuevo, 16:9

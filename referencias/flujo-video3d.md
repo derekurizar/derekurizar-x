@@ -13,8 +13,11 @@ Decisiones del usuario (2026-11-14):
    (`estilo.confianza: "baja"`), le muestra al usuario el mismo cuadro en los dos o tres candidatos y pregunta.
 3. **Dentro de la maqueta la cámara se mueve** (la excepción a la cámara quieta de la mesa de archivo).
 4. **El gancho manda y todo concuerda:** lo que se ve es lo que la voz está diciendo.
-5. Otros flujos (/historia, /serie, /explica, /youtube-long) podrán pedir un render de maqueta como una pieza más;
-   esa integración llega después (paso 4 del plan).
+5. Otros flujos (/historia, /serie, /explica, /youtube-long) pueden alojar una maqueta dentro de su mesa de archivo:
+   el realizador la declara en `plano.json` y se renderiza con el **modo pieza** del motor (`maqueta3d.py pieza`, el
+   mundo y sus pines en el lienzo que pida el anfitrión). Ver «La maqueta» en `referencias/flujo-mesa.md`.
+6. **«Maqueta · no a escala» no es obligatorio.** El aviso sale solo cuando el guion lo pide (`aviso`); el pie con las
+   fuentes de los geodatos sí va siempre.
 
 Contrato del motor: `referencias/diseno/maqueta3d.md`. Scripts: `scripts/video3d.py` (guion, voz, tiempos, audio,
 entrega) y `scripts/maqueta3d.py` (gates M3D, cuadros sueltos, render).
@@ -27,14 +30,14 @@ entrega) y `scripts/maqueta3d.py` (gates M3D, cuadros sueltos, render).
 | 2 | Investigar y verificar lo que falte, incluidos los geodatos (qué se dibuja y de dónde sale) | agentes de /historia; `video3d.py datos --sumar` |
 | 3 | Dirección: la idea visual, el estilo y el mundo | la sesión, con `video3d.py digesto` |
 | 4 | Ganchos: 5 candidatos con su cuadro renderizado; **el usuario elige** | `ganchos --check --cuadros` → `ganchos --usar <id>` |
-| 5 | Guion: la narración de corrido primero; luego las escenas | `guion --check` (C3D1–C3D10, V2–V4, M3D) |
+| 5 | Guion: la narración de corrido primero; luego las escenas | `guion --check` (C3D1–C3D11, V2–V4, M3D) |
 | 6 | Storyboard: un cuadro por clave de cámara y evento, antes de gastar créditos | `storyboard` |
-| 7 | Crítico (retención y concordancia) y cierre: **el usuario elige el cierre** | agente `video-critico` con «Modo 3D» (abajo) |
-| 8 | Voz (ElevenLabs, El Faraon 4) | `voz` → MCP → `descargar --estado` |
+| 7 | Crítico (retención y concordancia) y cierre: **el usuario elige el cierre** | agente `video-critico` en «Modo 3D» (su guía de rol) |
+| 8 | Voz (ElevenLabs, El Faraon 4) | `voz` → MCP → `descargar --estado` (o `--nodos` si el estado llegó en el chat) |
 | 9 | Tiempos reales | `tiempos` |
 | 10 | Render en 9:16 y 4:5 | `render` |
 | 11 | Montaje: voz, música del tema con ducking, efectos, −14 LUFS | `montar` |
-| 12 | Entrega en `videos3d/<fecha>-<slug>/` | `entregar` |
+| 12 | Entrega en `videos3d/<fecha>-<slug>/` y registro (M21) | `entregar` → `memoria.py --video3d <entrega>` |
 
 ## La idea visual
 
@@ -129,30 +132,38 @@ Familias de gancho 3D (los 5 candidatos son de familias distintas):
 | C3D8 | El cierre: frase final corta, sin anunciar el final, sin «sígueme» ni fuentes en la voz, ≤ 160 caracteres |
 | C3D9 | Duración estimada dentro del objetivo ±20 % |
 | C3D10 | El cierre lleva su cámara; aviso si no vuelve a mirar lo que abrió el gancho (el bucle) |
+| C3D11 | Un pin cuyo texto dice una distancia («A 25 km») declara `separada_de` con la pieza de la que está a esa distancia: M3D11 mide que en pantalla no queden pegados |
 
-Los gates M3D (dónde cae cada pin, velocidad de la cámara, tiempos de lectura, en 9:16 y 4:5) los corre
+Los gates M3D (dónde cae cada pin, velocidad de la cámara, tiempos de lectura, separación, en 9:16 y 4:5) los corre
 `maqueta3d.py check` sobre `maqueta.json`, al final de `guion --check` y de `tiempos`.
 
 ## Verdad
 
-- «Maqueta · no a escala» va siempre en pantalla; el pie nombra las fuentes de los geodatos.
+- El pie nombra siempre las fuentes de los geodatos (las licencias lo piden). El aviso (`aviso` en el guion) es
+  opcional: úsalo cuando el dibujo simplifica algo que el espectador podría tomar al pie de la letra («Traza
+  esquemática», «Maqueta · no a escala»); no va por costumbre en todos los videos (usuario, 2026-11-14).
 - **Lo que se dibuja también se afirma.** Un trazo, un extremo, una dirección o un alcance se dibujan solo si un
   hecho verificado los sostiene (con su cita guardada); lo que las fuentes no sostienen va en `no_afirmar` y no se
-  dibuja. Un trazo aproximado lleva «Esquema · no es el trazo exacto».
+  dibuja. Una cámara rasante puede pegar dos cosas que están lejos, una onda puede dibujar una hipótesis como un
+  hecho y unas flechas largas dicen que todo ese tramo se movió: se revisa en el storyboard.
+- Los geodatos se verifican como las cifras: qué tramo, de dónde a dónde, hacia dónde, con su fuente guardada (el USGS,
+  la NOAA y la NASA cuentan como oficiales en `historia.py leer`).
 - Ninguna cifra ni texto dentro del 3D: van en la capa, donde los gates los revisan.
 - Personas: muñecos sin rostro; nunca el parecido de una persona real.
 
 ## Crítico en «Modo 3D»
 
-El `video-critico` lee `guion.json`, `locucion.json` y la hoja del storyboard, y además de retención (gancho,
-promesa, ritmo, cierre) juzga la concordancia:
+El `video-critico` tiene su sección «Modo 3D (`/video-3d`)» en `referencias/roles/video-critico.md` (3C1–3C8: el cuadro
+cero, la concordancia, un protagonista, el estilo, lo dibujado también se afirma, el bucle, quien no sabe nada y lo que
+se lee tres veces). Prueba cada arreglo en una copia del TRABAJO antes de proponerlo.
 
-- 3C1 ¿El cuadro cero frena el dedo sin sonido? ¿Qué pasa en el primer segundo?
-- 3C2 ¿Cada toma muestra lo que la voz está diciendo en ese momento, o la cámara pasea?
-- 3C3 ¿El protagonista en acento es siempre el mismo y nada compite con él?
-- 3C4 ¿El estilo es el que mejor sirve a la idea visual, o se eligió por costumbre?
-- 3C5 ¿Algún dibujo afirma algo que los hechos verificados no sostienen?
-- 3C6 ¿El último cuadro vuelve al primero (el bucle) y la frase final dice la consecuencia?
+## Lo aprendido en el piloto (terremoto de 1976, 2026-11-14)
+
+- Un año dicho en palabras cuesta dos segundos de voz: va en el kicker.
+- El cuadro cero es la portada: el titular y el evento se ven desde `t = 0`.
+- La voz tiene que nombrar el hecho («el terremoto»), no solo sus piezas (la falla, el epicentro).
+- Con la voz real los tiempos se mueven: `tiempos` vuelve a correr los gates M3D y a veces hay que ajustar una clave de
+  cámara o la duración de un titular, sin tocar la voz.
 
 ## Costos (medidos el 2026-11-14 en un M4 Max)
 

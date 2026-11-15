@@ -98,6 +98,13 @@ cada parte se quedan: son mini-ganchos de capítulo.
   antes de renderizar.
 - `grabar` solo graba los **tableros** con el motor propio (16:9 limpio, recortado al centro, un cuadro clave por
   segundo) → `clips_tablero/`.
+- **La maqueta 3D** (2026-11-14): una mesa puede llevar `maqueta`, un render 3D de la situación cuando el lugar es la
+  información (una ruta, una falla, dónde queda algo). La decide el realizador después de la voz, entra como un tablero
+  (el clip a la izquierda, los golpes a la derecha) y es lo único donde la cámara se mueve. `plano --check` escribe
+  `maquetas/<mesa>/maqueta.json` y corre YT20–YT24; `grabar` la renderiza con `scripts/maqueta3d.py` en modo pieza
+  (1120×1080) → `clips_maqueta_16x9/<mesa>.mp4`, con caché por huella (≈ 1.8 s de render por segundo; `MESA_RENDER=0` =
+  un doble). ≤ 2 por capítulo, ≤ 4 por video, un solo estilo; no cuenta como archivo real. La forma y las reglas:
+  `referencias/flujo-mesa.md` («La maqueta») y `referencias/roles/youtube-realizador.md`.
 - `proyecto` genera un proyecto de HyperFrames **por capítulo** (`hf/cap-N/`: `index.html`, una composición por mesa,
   `assets/` con enlaces duros) y `hf/efectos.json` (un efecto del catálogo fijo por pieza: `papel`, `sello`,
   `marcador`, `impacto`, `tic`, `whoosh` al barrer). Las piezas se colocan solas (`colocar`: el sitio que menos tapa a
@@ -167,6 +174,11 @@ YouTube mide la intro en los primeros 30 s, y nada llevaba de los cortos al larg
 | YT17 | Que no sea relleno: ≥ 50 % de las oraciones con pieza nueva; ≥ 35 % de las piezas son archivo real (aviso bajo 50 %); ≥ 4 tipos por capítulo; ≤ 2 rótulos de solo texto seguidos |
 | YT18 | Carga: la mesa dura 4–45 s y lleva ≤ 12 piezas; dos piezas no entran a menos de 0.3 s; un tablero va solo en su mesa |
 | YT19 | Ninguna escena lleva saltos de cámara |
+| YT20 | Maqueta 3D, forma: `set` que existe, `estilo` del catálogo con motor disponible, `piezas`, `protagonista` que es una pieza, cámara con la primera clave sin `dice`, eventos con `dur`, marcas con `lugar` y `texto`; no en una escena tablero |
+| YT21 | Maqueta 3D, concordancia: cada `dice` de su cámara, sus eventos y sus marcas lo dice la voz de esa mesa; las claves de cámara, en orden |
+| YT22 | Un solo estilo de maqueta por video |
+| YT23 | Maqueta 3D, carga: mesa de 5–45 s, ≤ 3 golpes; ≤ 2 maquetas por capítulo y ≤ 4 por video |
+| YT24 | `maqueta3d.py check --pieza --lienzo 1120x1080` en 0 fallas (los gates M3D del motor, reenviados) |
 
 YT12 (fondo liso medido en píxeles) se retiró el 2026-11-13 junto con el YT14 viejo.
 

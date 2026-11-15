@@ -1,0 +1,18 @@
+{
+ "_comentario": "Una mesa con MAQUETA 3D para la maqueta de /serie (make video-fixture-maqueta): reemplaza la mesa de e5 del borrador. La voz de e5: «Pero el salto grande llegó diez años más tarde, cuando el barrio entero ya la conocía: en 1968, La Espiga ya vendía 4,500 panes al día en Xela.»",
+ "mesas": [
+  {"escenas": ["e5"], "titulo": "El salto de Xela",
+   "maqueta": {
+    "set": "guatemala", "estilo": "noche", "protagonista": "frontera",
+    "piezas": [{"id": "frontera", "tipo": "frontera"}, {"id": "pueblos", "tipo": "luces", "lugares": "todos"}],
+    "camara": [
+     {"mira": [-90.4, 15.6], "dist_km": 760, "azimut": 0, "elevacion": 62},
+     {"dice": "en 1968", "mira": "quetzaltenango", "dist_km": 260, "azimut": -12, "elevacion": 46},
+     {"al": "fin", "mira": "quetzaltenango", "dist_km": 170, "azimut": -20, "elevacion": 40}],
+    "eventos": [{"dice": "el barrio entero", "tipo": "resaltar", "lugar": "quetzaltenango", "dur": 3.0, "sfx": "foco"}],
+    "marcas": [{"dice": "el barrio entero", "lugar": "quetzaltenango", "texto": "Quetzaltenango", "sub": "Xela"}]},
+   "golpes": [
+    {"tipo": "fecha", "dice": "en 1968", "grande": "1968", "chico": "en"},
+    {"tipo": "cifra", "dice": "4,500 panes", "valor": "4,500", "rotulo": "panes al día"}]}
+ ]
+}

@@ -7,6 +7,10 @@ la dice y, una vez puesta, se queda quieta. La cámara no se mueve. Aquí viven 
 mesas), los gates sobre los datos (nunca sobre píxeles), la clase Mesa (clips y línea de tiempo de una composición de
 HyperFrames) y los recursos comunes (mapas, páginas de documento, colores, enlaces).
 
+La MAQUETA 3D es la única excepción a la cámara quieta: una mesa puede llevar `maqueta` (un render 3D de la situación,
+scripts/maqueta3d.py en modo pieza) que entra como un tablero; aquí viven sus tiempos (`maqueta_tiempos`), su maqueta.json
+(`maqueta_json`), sus gates YT20–YT24 (`revisar_maqueta`, `revisar_maquetas`) y su render con caché (`grabar_maquetas`).
+
 Cada formato pone lo suyo: tamaños, colocación, dibujo de cada pieza y comandos. Las reglas que cambian por formato
 llegan en ctx["reglas"] ({nombre de constante: valor}); lo que el 16:9 saca de la serie (elenco, respaldo, hechos) puede
 llegar ya resuelto en ctx["elenco"], ctx["respaldo"], ctx["hechos"] y ctx["hechos_de"].
@@ -55,6 +59,21 @@ EN_PALABRAS = dict({w: str(i) for i, w in enumerate("cero uno dos tres cuatro ci
                    un="1", una="1", treinta="30", cuarenta="40", cincuenta="50", sesenta="60", setenta="70", ochenta="80", noventa="90", cien="100", mil="1000",
                    primer="1", primero="1", primera="1", segundo="2", segunda="2", tercer="3", tercero="3", tercera="3", cuarto="4", cuarta="4", quinto="5",
                    quinta="5", sexto="6", septimo="7", octavo="8", noveno="9", decimo="10", doble="2", triple="3", mitad="2")
+# La MAQUETA 3D (usuario, 2026-11-14): cuando el lugar es la información (una ruta, una falla, una cuenca, dónde queda algo),
+# una mesa puede llevar un render 3D de la situación. Entra como un tablero (un clip aparte que la mesa aloja), pero lo
+# decide el realizador DESPUÉS de la voz: `maqueta` a nivel de mesa en plano.json, con `dice` en cámara, eventos y marcas.
+# Dentro de la maqueta la cámara SÍ se mueve (la única excepción a la cámara quieta). Motor: scripts/maqueta3d.py en modo
+# pieza (contrato: referencias/diseno/maqueta3d.md). Gates YT20–YT24 (MV15–MV19 en vertical).
+MAQUETA_LIENZO = (1120, 1080)          # el lienzo del clip: el del tablero del 16:9 (el vertical pone 950×1040)
+MAQUETA_CARPETA = "clips_maqueta_16x9"  # TRABAJO/<carpeta>/<mesa>.mp4 (el vertical: clips_maqueta)
+MAQUETA_MIN_S = 5.0                    # YT23: una maqueta de menos no se entiende (la cámara apenas llega)
+MAQUETAS_MAX = 4                       # YT23: maquetas por video (el vertical: 2)
+MAQUETAS_CAP_MAX = 2                   # YT23: y por capítulo (None = sin tope por capítulo)
+MAQUETA_GOLPES = 3                     # YT23: piezas de la mesa encima (o al lado) de una maqueta
+MAQUETA_MOTORES = ("three",)           # los motores con render si scripts/maqueta3d.py no declara los suyos (MOTORES): ver motores_maqueta()
+MAQUETA_FPS = (10, 60)                 # los fps que acepta el motor (M3D1): una maqueta de prueba a 6 fps renderiza su maqueta a 10
+MAQUETA_AVISO = ""   # «Maqueta · no a escala» ya no va por costumbre (usuario, 2026-11-14): solo si el bloque trae `aviso`
+MAQUETA_SOLO_PLANO = ("dice", "vez", "al", "escena", "hasta_dice", "dura", "adelanto")   # lo que no pasa al maqueta.json
 LUGARES = {   # (lon, lat) de los lugares que suelen salir; otro lugar lleva lon y lat en el golpe
     "guatemala": (-90.52, 14.63), "ciudad de guatemala": (-90.52, 14.63), "barbados": (-59.62, 13.10), "bridgetown": (-59.62, 13.10),
     "nueva york": (-74.00, 40.71), "panama": (-79.52, 8.98), "ciudad de panama": (-79.52, 8.98), "gran caiman": (-81.38, 19.29),
@@ -170,6 +189,14 @@ def resolver(ctx, P):
         if tipos & set(TABLERO) and len(idx) > 1:
             fallas.append("YT18 %s: una escena %s (tablero) va sola en su mesa" % (nom, "/".join(sorted(tipos & set(TABLERO)))))
             continue
+        maq = None
+        if M.get("maqueta") is not None:
+            if tipos & set(TABLERO):
+                fallas.append("YT20 %s: la escena %s ya trae su animación (es un tablero): la maqueta va en una mesa de escenas sin tablero"
+                              % (nom, "/".join(sorted(tipos & set(TABLERO)))))
+            else:
+                maq, fm = maqueta_tiempos(ctx, M["maqueta"], claves, nom)
+                fallas += fm
         cursor, golpes = {}, []
         for j, g in enumerate(M.get("golpes") or []):
             if not isinstance(g, dict):
@@ -201,7 +228,8 @@ def resolver(ctx, P):
         golpes.sort(key=lambda x: x["_t"])
         for i in idx:
             cubiertas[i] = True
-        mesas.append({"idx": idx, "golpes": golpes, "clase": "tablero" if tipos & set(TABLERO) else "mesa", "titulo": M.get("titulo") or ""})
+        mesas.append(dict({"idx": idx, "golpes": golpes, "clase": "tablero" if tipos & set(TABLERO) else "maqueta" if maq else "mesa", "titulo": M.get("titulo") or ""},
+                          **({"maqueta": maq} if maq else {})))
     for i, S in enumerate(es):
         if i in cubiertas:
             continue
@@ -237,6 +265,8 @@ def eventos_de(ctx, M):
         for x in ctx["es"][i].get("eventos") or []:
             if x.get("tipo") in regla(ctx, "EVENTOS_TABLERO"):
                 ev.append((round(ctx["offs"][i] + x["t"], 3), "tablero", x["tipo"]))
+    if M["clase"] == "maqueta":   # lo que pasa en la maqueta cuenta como entrada: la cámara que llega a un lugar, un evento, una marca
+        ev += [(t, "maqueta", que) for t, que, _ in entradas_maqueta(ctx, M)]
     return sorted(ev)
 
 
@@ -398,7 +428,7 @@ def revisar(ctx, P, mesas=None, f0=None):
                 a, b = offs[i] + sg["t"], offs[i] + sg["hasta"]
                 dentro = [e for e in ev if a - 0.6 <= e[0] < b]
                 n_seg += 1
-                n_nueva += any(e[1] in ("pieza", "tablero") for e in dentro)
+                n_nueva += any(e[1] in ("pieza", "tablero", "maqueta") for e in dentro)
                 if not dentro and M["clase"] == "tablero" and regla(ctx, "TABLERO_SOLO"):
                     n_nueva += 1   # en vertical el tablero va solo: su animación ya aprobada es lo que se ve
                     continue
@@ -406,21 +436,23 @@ def revisar(ctx, P, mesas=None, f0=None):
                     f.append("YT14 %s %s %.1f s: ninguna pieza entra con «%s»" % (nom, S["clave"], a, sg["texto"][:70]))
         ts = [M["ini"]] + [e[0] for e in ev] + [min(M["fin"], offs[M["idx"][-1]] + es[M["idx"][-1]].get("fin_voz", es[M["idx"][-1]]["dur"]))]
         for a, b in zip(ts, ts[1:]):
-            if b - a > (regla(ctx, "HUECO_TABLERO_S") or HUECO_MAX_S if M["clase"] == "tablero" else HUECO_MAX_S):
+            if b - a > (regla(ctx, "HUECO_TABLERO_S") or HUECO_MAX_S if M["clase"] in ("tablero", "maqueta") else HUECO_MAX_S):
                 f.append("YT14 %s: %.1f s sin que entre nada (de %.1f a %.1f s; máximo %.0f s)" % (nom, b - a, a, b, HUECO_MAX_S))
         ent = [g["_t"] for g in M["golpes"] if not g.get("_acto")]   # el rótulo de acto lo pone el motor: no cuenta como entrada del plano
         for a, b in zip(ent, ent[1:]):
             if b - a < ENTRE_GOLPES_S and b > 0.01:
                 f.append("YT18 %s: dos piezas entran con %.2f s de diferencia en %.1f s (mínimo %.1f s): una lista, o separa los `dice`" % (nom, b - a, a, ENTRE_GOLPES_S))
         # YT13: cada cifra o año dicho se ve cuando se dice
-        if M["clase"] == "mesa":
+        if M["clase"] in ("mesa", "maqueta"):   # la maqueta no trae cifras: las pone un golpe de la mesa (o el texto de una marca)
+            marcas = [k for k in (M.get("maqueta") or {}).get("marcas") or [] if isinstance(k, dict) and k.get("_t") is not None]
             for i in M["idx"]:
                 for w in es[i]["palabras"]:
                     if not w.get("num"):
                         continue
                     t = offs[i] + w["start"]
                     ns = numeros(w["text"])
-                    if not any(ns & numeros(textos_de(g)) and g["_t"] <= t + 1.0 for g in M["golpes"]):
+                    if not any(ns & numeros(textos_de(g)) and g["_t"] <= t + 1.0 for g in M["golpes"]) and \
+                            not any(ns & numeros("%s %s" % (k.get("texto") or "", k.get("sub") or "")) and k["_t"] <= t + 1.0 for k in marcas):
                         f.append("YT13 %s %s %.1f s: la voz dice «%s» y ninguna pieza lo muestra" % (nom, es[i]["clave"], t, w["text"]))
         seguidos = 0
         for j, g in enumerate(M["golpes"]):
@@ -504,6 +536,11 @@ def revisar(ctx, P, mesas=None, f0=None):
                 f.append("YT16 %s: lleva `texto` literal y `autor`" % q)
             elif t == "lista" and not (isinstance(g.get("items"), list) and 2 <= len(g["items"]) <= 6):
                 f.append("YT16 %s: `items` son 2 a 6 {texto, dice}" % q)
+        if M["clase"] == "maqueta":   # YT20–YT24: la maqueta 3D de la mesa
+            fm, am = revisar_maqueta(ctx, M, nom, lambda x: x in dichos or x in respaldo or x in todo_dicho or x in de_hechos)
+            f += fm
+            av += am
+    f += revisar_maquetas(ctx, mesas)
     # YT15: una foto, pocas veces y lejos
     for fid, ts in sorted(usos.items()):
         if len(ts) > FOTO_USOS_MAX:
@@ -512,7 +549,7 @@ def revisar(ctx, P, mesas=None, f0=None):
             if b - a < FOTO_SEPARACION_S:
                 f.append("YT15 la foto %s vuelve a los %.0f s (mínimo %d s entre una y otra): %.0f s y %.0f s" % (fid, b - a, FOTO_SEPARACION_S, a, b))
     # YT17: que no sea relleno
-    medidas = {"oraciones": n_seg, "con_pieza_nueva": n_nueva, "capitulos": {}}
+    medidas = {"oraciones": n_seg, "con_pieza_nueva": n_nueva, "capitulos": {}, "maquetas": sum(1 for M in mesas if M["clase"] == "maqueta")}
     if n_seg and n_nueva / n_seg < PIEZA_NUEVA_MIN:
         f.append("YT17 solo %d de %d oraciones traen una pieza nueva (mínimo %.0f %%)" % (n_nueva, n_seg, 100 * PIEZA_NUEVA_MIN))
     tab = {}
@@ -775,8 +812,11 @@ def hoja_de(ctx, mesas):
                     dentro = [e for e in ev if a - 0.6 <= e[0] < b]
                     if any(e[1] == "tablero" for e in dentro):
                         txt = "un paso de la animación ya hecha (%s)" % es[i]["tipo"]
+                    elif any(e[1] == "maqueta" for e in dentro):
+                        txt = ""
                     elif dentro:
                         txt = "sigue el subrayado o la lista de la pieza anterior"
+                txt = "; ".join(x for x in (txt, resumen_maqueta(ctx, M, a - 0.6, b)) if x)
                 L.append("| %s | %s | %s |" % (VD_mmss(a), sg["texto"].replace("|", "/"), txt or "—"))
     return "\n".join(L) + "\n"
 
@@ -1071,3 +1111,436 @@ def dibujar(ctx, m, g, x, y, w, h, ex, k, F, usados):
             m.tl.append('tl.fromTo("#%s-p",{strokeDashoffset:110},{strokeDashoffset:0,duration:.8,ease:"power1.inOut"},%.3f);' % (sid, m.loc(tl_)))
             m.sfx.append((tl_, "marcador"))
             m.extra.append("#" + sid)
+
+
+# ---------- la maqueta 3D: una mesa con un render 3D de la situación (scripts/maqueta3d.py en modo pieza) ----------
+def sets_maqueta():
+    d = os.path.join(RAIZ, "design", "sets3d")
+    return sorted(x for x in os.listdir(d) if os.path.isfile(os.path.join(d, x, "fuente.json"))) if os.path.isdir(d) else []
+
+
+def estilos_maqueta():
+    """El catálogo de estilos de la maqueta: {id: {motor, cuando, …}} (design/sets3d/estilos.json)."""
+    try:
+        return {e["id"]: e for e in leer(os.path.join(RAIZ, "design", "sets3d", "estilos.json"))["estilos"]}
+    except (OSError, ValueError, KeyError, TypeError):
+        return {}
+
+
+def motores_maqueta():
+    """Los motores con los que la maqueta renderiza hoy: los que declara scripts/maqueta3d.py (`MOTORES`); si no los declara
+    (o no carga), three.js. El catálogo de estilos dice el motor de cada uno."""
+    try:
+        import maqueta3d
+        return tuple(getattr(maqueta3d, "MOTORES", MAQUETA_MOTORES))
+    except Exception:
+        return MAQUETA_MOTORES
+
+
+def lugares_maqueta(sid):
+    """Los lugares de un set: {id: {nombre, lon, lat, …}} (design/sets3d/<set>/lugares.json)."""
+    try:
+        return leer(os.path.join(RAIZ, "design", "sets3d", sid or "", "lugares.json"))["lugares"]
+    except (OSError, ValueError, KeyError, TypeError):
+        return {}
+
+
+def pie_maqueta(q):
+    """La atribución de los geodatos que una maqueta USA (fuente.json del set → capas[].atribucion): el relieve siempre, las
+    fallas y la frontera si son piezas, los lugares si hay luces, rutas, marcas o un lugar por su id. Va dentro del clip, al pie."""
+    try:
+        d = leer(os.path.join(RAIZ, "design", "sets3d", q.get("set") or "", "fuente.json"))
+    except (OSError, ValueError):
+        return ""
+    capas = d.get("capas") if isinstance(d.get("capas"), dict) else {}
+    tipos = {p.get("tipo") for p in q.get("piezas") or [] if isinstance(p, dict)}
+    por_id = bool(q.get("marcas")) or any(isinstance(x.get(k), str) for grupo in ("camara", "eventos") for x in q.get(grupo) or [] if isinstance(x, dict)
+                                          for k in ("mira", "lugar", "centro", "desde", "en"))
+    usa = ["relieve"] + [k for k, si in (("fallas", "falla" in tipos), ("frontera", "frontera" in tipos), ("lugares", bool(tipos & {"luces", "ruta"}) or por_id)) if si]
+    partes = [capas[k]["atribucion"] for k in usa if isinstance(capas.get(k), dict) and capas[k].get("atribucion")]
+    return " · ".join(partes) or d.get("pie") or ""
+
+
+def credito_maqueta(q):
+    """El pie del marco de una maqueta: la atribución de sus geodatos y, solo si el bloque lo pide (`aviso`), un aviso
+    como «Maqueta · no a escala» o «Traza esquemática». Lo dibuja la mesa (el anfitrión), a su tamaño de crédito, no el
+    clip: el contrato del modo pieza deja la atribución al anfitrión."""
+    return " · ".join(x for x in (q["aviso"] if isinstance(q.get("aviso"), str) else MAQUETA_AVISO, q["pie"] if isinstance(q.get("pie"), str) else pie_maqueta(q)) if x)
+
+
+def credito_maqueta_alto(q, ancho, px):
+    """(renglones, alto en px) del pie del marco con letra mono de `px` en un ancho dado."""
+    n = max(1, -(-len(credito_maqueta(q)) // max(8, int(ancho / (px * 0.605)))))
+    return n, int(n * px * 1.3) + 12
+
+
+def maqueta_tiempos(ctx, q, claves, nom):
+    """Los `dice` de la maqueta de una mesa → segundos del video. Cada clave de cámara, evento y marca recibe `_t` (y `_fin`;
+    `_hasta` con `hasta_dice`): el `dice` se busca en la voz de las escenas de la mesa, en orden (o en su `escena`; `vez: N`
+    = la N.ª vez que se dice). Sin `dice`, al empezar la mesa. → (maqueta resuelta o None, fallas)."""
+    if not isinstance(q, dict):
+        return None, ["YT20 %s: `maqueta` es un objeto {set, estilo, protagonista, piezas, camara, eventos, marcas}" % nom]
+    es, offs, f = ctx["es"], ctx["offs"], []
+    o0 = offs[ctx["por_clave"][claves[0]]]
+
+    def donde(x, campo, que, desde=None):
+        frase = (x.get(campo) or "").strip()
+        if x.get("escena") and x["escena"] not in claves:
+            f.append("YT21 %s %s: su escena «%s» no es de esta mesa" % (nom, que, x["escena"]))
+            return None
+        vez, n = (int(x["vez"]) if campo == "dice" and isinstance(x.get("vez"), int) and x["vez"] > 0 else 1), 0
+        for c in ([x["escena"]] if x.get("escena") else claves):
+            i = ctx["por_clave"][c]
+            S, j = es[i], 0
+            while True:
+                r = buscar(S, frase, j)
+                if not r:
+                    break
+                j = r[0] + 1
+                a, b = offs[i] + S["palabras"][r[1]]["start"], offs[i] + S["palabras"][r[2]]["end"]
+                if desde is not None and a < desde - 0.01:
+                    continue
+                n += 1
+                if n >= vez:
+                    return round(a, 3), round(b, 3)
+        f.append("YT21 %s %s: la voz de %s no dice «%s»%s: `%s` son palabras literales de la voz de esta mesa"
+                 % (nom, que, ", ".join(claves), frase, " %d veces" % vez if vez > 1 else " después de su `dice`" if desde is not None else "", campo))
+        return None
+
+    out = dict(q)
+    for grupo, uno in (("camara", "cámara"), ("eventos", "evento"), ("marcas", "marca")):
+        lista = []
+        for j, x in enumerate(q.get(grupo) or [] if isinstance(q.get(grupo) or [], list) else []):
+            if not isinstance(x, dict):
+                continue
+            x = dict(x)
+            que = "%s %d" % (uno, j + 1)
+            if (x.get("dice") or "").strip() and not (grupo == "camara" and j == 0):
+                r = donde(x, "dice", que)
+                if r:
+                    x.update(_t=r[1] if grupo == "camara" and x.get("al") == "fin" else r[0], _fin=r[1])
+                else:
+                    x.update(_t=None, _falla=True)
+            elif grupo == "camara" and j and x.get("al") == "fin":
+                x.update(_t=None, _al_fin=True)   # sin `dice` y `al: "fin"`: el encuadre al que la cámara llega cuando termina la mesa
+            elif grupo == "camara" and j:
+                f.append("YT21 %s %s: falta `dice` (las palabras de la voz con las que la cámara llega a ese encuadre; o `\"al\": \"fin\"` "
+                         "para que llegue al terminar la mesa)" % (nom, que))
+                x.update(_t=None, _falla=True)
+            else:
+                x.update(_t=round(o0, 3), _fin=round(o0, 3))
+            if x.get("hasta_dice") and x.get("_t") is not None:
+                r = donde(x, "hasta_dice", que, desde=x["_t"])
+                if r:
+                    x["_hasta"] = r[1]
+                else:
+                    x["_falla"] = True
+            lista.append(x)
+        out[grupo] = lista
+    out["_fallas"] = len(f)
+    return out, f
+
+
+def entradas_maqueta(ctx, M):
+    """Lo que ENTRA en una maqueta y cuándo: [(segundo del video, 'camara'|'marca'|tipo de evento, texto para la hoja)]."""
+    q, out = M["maqueta"], []
+
+    def lugar(v):
+        return v if isinstance(v, str) else "(%s)" % ", ".join(str(x) for x in v) if isinstance(v, (list, tuple)) else ""
+    for j, c in enumerate(q.get("camara") or []):
+        if c.get("_t") is not None and not c.get("_falla"):
+            out.append((c["_t"], "camara", "la cámara %s %s" % ("abre en" if j == 0 else "llega a", lugar(c.get("mira")))))
+    for x in q.get("eventos") or []:
+        if x.get("_t") is not None and not x.get("_falla"):
+            sobre = x.get("lugar") or x.get("pieza") or x.get("centro") or x.get("desde")
+            out.append((x["_t"], x.get("tipo") or "evento", "%s%s" % (x.get("tipo"), " (%s)" % lugar(sobre) if sobre else "")))
+    for k in q.get("marcas") or []:
+        if k.get("_t") is not None and not k.get("_falla"):
+            out.append((k["_t"], "marca", "marca «%s»" % (k.get("texto") or "")))
+    return sorted(out, key=lambda e: e[0])
+
+
+def resumen_maqueta(ctx, M, a, b):
+    """Para la hoja de golpes: lo que pasa en la maqueta de la mesa entre dos segundos."""
+    if M.get("clase") != "maqueta":
+        return ""
+    xs = [txt for t, _, txt in entradas_maqueta(ctx, M) if a <= t < b]
+    return "**maqueta 3D** (%s): %s" % (M["maqueta"].get("estilo"), "; ".join(xs)) if xs else ""
+
+
+def paleta_maqueta(ctx):
+    return (ctx.get("st") or {}).get("paleta") or (ctx.get("Y") or {}).get("paleta") or (ctx.get("E") or {}).get("paleta")
+
+
+def maqueta_json(ctx, M, fps=FPS):
+    """El maqueta.json de una mesa (referencias/diseno/maqueta3d.md, modo pieza): los segundos son relativos al inicio de la
+    mesa y dura lo que la mesa; la paleta es la del video; va sin `capa`: el golpe de arriba, las cifras, los subtítulos y el
+    pie con la atribución de los geodatos (`credito_maqueta`) son de la mesa."""
+    q, ini = M["maqueta"], M["ini"]
+    D = round(M["fin"] - M["ini"], 3)
+
+    def limpio(x):
+        return {k: v for k, v in x.items() if k not in MAQUETA_SOLO_PLANO and not k.startswith("_")}
+
+    def t_de(t):
+        return round(min(max(0.0, t - ini), D), 3)
+    cam, ev, mk = [], [], []
+    for j, c in enumerate(q.get("camara") or []):
+        if c.get("_falla"):
+            continue
+        cam.append(dict(limpio(c), t=0.0 if j == 0 else round(max(0.0, D - 0.2), 3) if c.get("_al_fin") else t_de(c["_t"])))
+    for x in q.get("eventos") or []:
+        if x.get("_falla") or x.get("_t") is None:
+            continue
+        t = t_de(x["_t"] - float(x.get("adelanto") or 0.0))
+        dur = float(x["dur"]) if isinstance(x.get("dur"), (int, float)) else (t_de(x["_hasta"] + 0.3) - t if x.get("_hasta") is not None else 2.0)
+        ev.append(dict(limpio(x), t=t, dur=round(max(0.2, min(dur, D - t)), 3)))
+    for k in q.get("marcas") or []:
+        if k.get("_falla") or k.get("_t") is None:
+            continue
+        t = t_de(k["_t"] - LEAD)
+        hasta = t + float(k["dura"]) if isinstance(k.get("dura"), (int, float)) else t_de(k["_hasta"] + 0.4) if k.get("_hasta") is not None else D
+        mk.append(dict(limpio(k), t=t, hasta=round(min(max(hasta, t + 0.2), D), 3)))
+    mundo = {"set": q.get("set"), "lugares": q.get("lugares") or {}, "piezas": q.get("piezas") or []}
+    if isinstance(q.get("exageracion"), (int, float)):
+        mundo["exageracion"] = q["exageracion"]
+    mj = {"version": 1, "estilo": q.get("estilo"), "paleta": paleta_maqueta(ctx), "fps": min(MAQUETA_FPS[1], max(MAQUETA_FPS[0], int(fps))), "duracion_s": D, "mundo": mundo,
+          "camara": cam, "eventos": sorted(ev, key=lambda x: x["t"]), "marcas": mk}
+    if q.get("protagonista"):
+        mj["protagonista"] = q["protagonista"]
+    return mj
+
+
+def maqueta_ruta(ctx, M):
+    return os.path.join(ctx["trabajo"], "maquetas", M["id"], "maqueta.json")
+
+
+def maqueta_huella(ctx, mj):
+    """La huella de un maqueta.json y su lienzo (sin los fps: como los tableros, un clip a otros fps se rehace con --todo)."""
+    return hashlib.sha1(("v1|%dx%d|" % tuple(regla(ctx, "MAQUETA_LIENZO")) + json.dumps({k: v for k, v in mj.items() if k != "fps"}, sort_keys=True,
+                                                                                    ensure_ascii=False)).encode("utf-8")).hexdigest()[:16]
+
+
+def nombre_mesa(ctx, M):
+    es = ctx["es"]
+    return "%s E%s" % (M["id"], "–".join(str(es[i]["n"]) for i in (M["idx"][0], M["idx"][-1])) if len(M["idx"]) > 1 else es[M["idx"][0]]["n"])
+
+
+def revisar_maqueta(ctx, M, nom, respaldado):
+    """Los gates de la maqueta de UNA mesa → (fallas, avisos). YT20 forma · YT21 concordancia con la voz (lo demás lo vio
+    `maqueta_tiempos`) · YT23 carga · YT24 `maqueta3d.py check --pieza` (los gates M3D del motor, reenviados) · YT16 los
+    números de una marca. Sobre los datos: nada de píxeles."""
+    q, f, av = M["maqueta"], [], []
+    E = estilos_maqueta()
+    con_motor = [k for k, e in E.items() if e.get("motor") in motores_maqueta()]
+    extra = sorted(k for k in q if not k.startswith("_") and k not in ("set", "estilo", "protagonista", "piezas", "lugares", "camara", "eventos", "marcas", "exageracion", "pie", "aviso"))
+    if extra:
+        f.append("YT20 %s: la maqueta no lleva %s: el golpe de arriba es el `titulo` de la mesa, las cifras son golpes y los subtítulos los pone la mesa "
+                 "(van: set, estilo, protagonista, piezas, lugares, camara, eventos, marcas)" % (nom, ", ".join("`%s`" % k for k in extra)))
+    if q.get("set") not in sets_maqueta():
+        f.append("YT20 %s: el set «%s» no existe en design/sets3d/ (hay: %s; uno nuevo se arma con scripts/build_set3d.py)" % (nom, q.get("set"), ", ".join(sets_maqueta()) or "ninguno"))
+    if q.get("estilo") not in E:
+        f.append("YT20 %s: el estilo «%s» no está en el catálogo (design/sets3d/estilos.json); van: %s" % (nom, q.get("estilo"), " · ".join(con_motor)))
+    elif q["estilo"] not in con_motor:
+        f.append("YT20 %s: el estilo «%s» es de motor %s, que aún no renderiza; van: %s" % (nom, q["estilo"], E[q["estilo"]].get("motor"), " · ".join(con_motor)))
+    pz = q.get("piezas")
+    if not (isinstance(pz, list) and pz and all(isinstance(p, dict) and p.get("id") and p.get("tipo") for p in pz)):
+        f.append("YT20 %s: `piezas` son una o más {id, tipo, …} (falla · luces · frontera · ruta): lo que hay sobre el mundo" % nom)
+        pz = []
+    if q.get("protagonista") and q["protagonista"] not in {p["id"] for p in pz}:
+        f.append("YT20 %s: `protagonista` («%s») es el id de una de sus piezas (%s): la única que va en el acento"
+                 % (nom, q["protagonista"], ", ".join(p["id"] for p in pz) or "no hay"))
+    cam = q.get("camara") or []
+    if not cam:
+        f.append("YT20 %s: `camara` son una o más claves {mira, dist_km, azimut, elevacion}; la primera sin `dice`: es el encuadre con que abre la mesa" % nom)
+    elif (cam[0].get("dice") or "").strip() or cam[0].get("al"):
+        f.append("YT20 %s cámara 1: la primera clave va sin `dice` (ni `al`): es el encuadre con que abre la mesa; el movimiento empieza en la segunda" % nom)
+    for j, c in enumerate(cam):
+        faltan = [k for k in ("mira", "dist_km", "elevacion") if c.get(k) is None]
+        if faltan:
+            f.append("YT20 %s cámara %d: falta %s (mira = un lugar del set o [lon, lat]; dist_km = del ojo al punto; elevacion = grados sobre el horizonte)"
+                     % (nom, j + 1, ", ".join("`%s`" % k for k in faltan)))
+    for j, x in enumerate(q.get("eventos") or []):
+        if not x.get("tipo") or not (isinstance(x.get("dur"), (int, float)) or x.get("hasta_dice")):
+            f.append("YT20 %s evento %d: lleva `tipo` y `dur` (segundos) o `hasta_dice` (las palabras con las que termina)" % (nom, j + 1))
+    for j, k in enumerate(q.get("marcas") or []):
+        if not k.get("lugar") or not (k.get("texto") or "").strip():
+            f.append("YT20 %s marca %d: lleva `lugar` (del set, de `lugares` o [lon, lat]) y `texto` (lo que dice el pin)" % (nom, j + 1))
+            continue
+        sin = sorted(x for x in numeros("%s %s" % (k.get("texto") or "", k.get("sub") or "")) if not respaldado(x))
+        if sin:
+            f.append("YT16 %s marca %d («%s»): «%s» no lo dice la voz, no está en los hechos de la mesa ni tiene respaldo en los datos" % (nom, j + 1, k["texto"], ", ".join(sin)))
+    # YT21: la cámara llega a sus encuadres en el orden en que la voz los dice
+    ts = [(j + 1, c["_t"]) for j, c in enumerate(cam) if c.get("_t") is not None and not c.get("_falla")]
+    for (ja, ta), (jb, tb) in zip(ts, ts[1:]):
+        if tb - ta < 1.0 / FPS:
+            f.append("YT21 %s cámara %d: llega a los %.1f s y la clave %d a los %.1f s: las claves van en el orden en que la voz las dice (y no dos en la misma palabra)"
+                     % (nom, jb, tb, ja, ta))
+    # YT23: carga
+    d = M["fin"] - M["ini"]
+    lo, hi = regla(ctx, "MAQUETA_MIN_S"), regla(ctx, "MESA_S")[1]
+    if not lo <= d <= hi:
+        f.append("YT23 %s: la mesa de la maqueta dura %.1f s; va de %.0f a %.0f s (%s)" % (
+            nom, d, lo, hi, "una maqueta corta no se entiende: súmale la escena vecina, o cuenta eso con piezas" if d < lo else "pártela: la maqueta para una parte y piezas para lo demás"))
+    n = sum(1 for g in M["golpes"] if not g.get("_acto"))
+    if n > regla(ctx, "MAQUETA_GOLPES"):
+        f.append("YT23 %s: %d piezas con la maqueta (máximo %d): la maqueta es lo que se mira; lo demás va en otra mesa" % (nom, n, regla(ctx, "MAQUETA_GOLPES")))
+    # YT24: los gates del motor (M3D), sobre el maqueta.json ya con sus segundos
+    if not f and not q.get("_fallas"):
+        ruta = maqueta_ruta(ctx, M)
+        escribir(ruta, maqueta_json(ctx, M))
+        W, H = regla(ctx, "MAQUETA_LIENZO")
+        r = subprocess.run([sys.executable, os.path.join(RAIZ, "scripts", "maqueta3d.py"), "check", ruta, "--pieza", "--lienzo", "%dx%d" % (W, H)],
+                           cwd=RAIZ, capture_output=True, text=True)
+        desde = " (sus segundos cuentan desde el inicio de la mesa, %s; el json: %s)" % (VD_mmss(M["ini"]), rel(ruta))
+        n0 = len(f)
+        for ln in r.stdout.splitlines():
+            ln = ln.strip()
+            if ln.startswith("FALLA "):
+                f.append("YT24 %s: %s%s" % (nom, ln[6:], desde))
+            elif ln.startswith("aviso · "):
+                av.append("YT24 %s: %s" % (nom, ln[8:]))
+        if r.returncode and len(f) == n0:
+            f.append("YT24 %s: `maqueta3d.py check --pieza` no corrió: %s" % (nom, " ".join((r.stderr or r.stdout).split())[-240:]))
+    return f, av
+
+
+def revisar_maquetas(ctx, mesas):
+    """YT22 (un solo estilo de maqueta por video) y YT23 (cuántas maquetas caben en un video y en un capítulo) → fallas."""
+    ms = [M for M in mesas if M["clase"] == "maqueta"]
+    f = []
+    tope, tope_cap = regla(ctx, "MAQUETAS_MAX"), regla(ctx, "MAQUETAS_CAP_MAX")
+    por_cap = {}
+    for k, M in enumerate(ms):
+        nom = nombre_mesa(ctx, M)
+        e0, e = ms[0]["maqueta"].get("estilo"), M["maqueta"].get("estilo")
+        if e != e0:
+            f.append("YT22 %s: su maqueta va en estilo «%s» y la primera del video (%s), en «%s»: un solo estilo de maqueta por video" % (nom, e, ms[0]["id"], e0))
+        if k >= tope:
+            f.append("YT23 %s: es la maqueta n.º %d del video (máximo %d): la maqueta es para cuando el lugar es la información; lo demás, con piezas" % (nom, k + 1, tope))
+        por_cap[M["cap"]] = por_cap.get(M["cap"], 0) + 1
+        if tope_cap and por_cap[M["cap"]] > tope_cap and k < tope:
+            f.append("YT23 %s: es la maqueta n.º %d del capítulo %d (máximo %d por capítulo)" % (nom, por_cap[M["cap"]], M["cap"], tope_cap))
+    return f
+
+
+def clip_maqueta(ctx, M):
+    """El clip ya renderizado de la maqueta de una mesa → (ruta, al día). «Al día» = su huella es la del plano de ahora."""
+    cd = os.path.join(ctx["trabajo"], regla(ctx, "MAQUETA_CARPETA"))
+    ruta = os.path.join(cd, M["id"] + ".mp4")
+    try:
+        h = leer(os.path.join(cd, "huellas.json")).get(M["id"]) or {}
+    except (OSError, ValueError):
+        h = {}
+    return ruta, os.path.exists(ruta) and h.get("huella") == maqueta_huella(ctx, maqueta_json(ctx, M))
+
+
+def efectos_maqueta(ctx, M):
+    """Los efectos de sonido de una maqueta, en segundos del video: [(t, id)] (lo que escribió el render, o los `sfx` del plano)."""
+    fe = os.path.join(ctx["trabajo"], regla(ctx, "MAQUETA_CARPETA"), M["id"] + ".efectos.json")
+    try:
+        lista = leer(fe)
+    except (OSError, ValueError):
+        mj = maqueta_json(ctx, M)
+        lista = [[o["t"], o["sfx"]] for o in mj["eventos"] + mj["marcas"] if o.get("sfx")]
+    return [(round(M["ini"] + float(t), 3), i) for t, i in lista]
+
+
+def grabar_maquetas(ctx, mesas, fps=FPS, todo=False):
+    """Los clips de las mesas con maqueta 3D: TRABAJO/maquetas/<mesa>/maqueta.json → `maqueta3d.py pieza` → TRABAJO/<carpeta>/
+    <mesa>.mp4, del lienzo del formato y de la duración exacta de la mesa (con un cuadro clave por segundo: HyperFrames busca
+    dentro del clip) y <mesa>.efectos.json. Solo se renderiza la que cambió (huellas.json; un clip se reusa por su contenido
+    aunque la mesa cambie de número). MESA_RENDER=0 (maquetas de prueba): un doble del tamaño y la duración exactos, sin
+    llamar al motor; un doble nunca cuenta como render. → 0 ok · 1 falla."""
+    trabajo = ctx["trabajo"]
+    W, H = regla(ctx, "MAQUETA_LIENZO")
+    cd = os.path.join(trabajo, regla(ctx, "MAQUETA_CARPETA"))
+    ms = [M for M in mesas if M["clase"] == "maqueta"]
+    for d in glob.glob(os.path.join(trabajo, "maquetas", "*")):   # lo de una mesa que ya no lleva maqueta (o cambió de número)
+        if os.path.basename(d) not in {M["id"] for M in ms}:
+            shutil.rmtree(d, ignore_errors=True)
+    if not ms:
+        shutil.rmtree(cd, ignore_errors=True)
+        return 0
+    os.makedirs(cd, exist_ok=True)
+    fh = os.path.join(cd, "huellas.json")
+    antes = leer(fh) if os.path.exists(fh) else {}
+    doble = os.environ.get("MESA_RENDER") == "0"
+    viejos = {v.get("huella"): (mid, v) for mid, v in antes.items() if os.path.exists(os.path.join(cd, mid + ".mp4")) and (doble or not v.get("doble"))}
+    tmp = os.path.join(cd, ".reuso")
+    shutil.rmtree(tmp, ignore_errors=True)
+    os.makedirs(tmp)
+    ahora, faltan = {}, []
+    for M in ms:
+        mj = maqueta_json(ctx, M, fps)
+        escribir(maqueta_ruta(ctx, M), mj)
+        h = maqueta_huella(ctx, mj)
+        if h in viejos and not todo:
+            mid, v = viejos[h]
+            for ext in (".mp4", ".efectos.json"):
+                if os.path.exists(os.path.join(cd, mid + ext)):
+                    shutil.copy2(os.path.join(cd, mid + ext), os.path.join(tmp, M["id"] + ext))
+            ahora[M["id"]] = dict(v)
+        else:
+            faltan.append((M, mj, h))
+    for g in glob.glob(os.path.join(cd, "*.mp4")) + glob.glob(os.path.join(cd, "*.efectos.json")):
+        os.remove(g)
+    for g in glob.glob(os.path.join(tmp, "*")):
+        os.replace(g, os.path.join(cd, os.path.basename(g)))
+    os.rmdir(tmp)
+    escribir(fh, ahora)
+    for M, mj, h in faltan:
+        dst = os.path.join(cd, M["id"] + ".mp4")
+        D, fps = mj["duracion_s"], mj["fps"]
+        if doble:
+            VD.ff("-f", "lavfi", "-i", "color=c=0x14100d:s=%dx%d:r=%d:d=%.4f" % (W, H, int(fps), D), "-g", str(int(fps)), "-c:v", "libx264", "-pix_fmt", "yuv420p", "-an", dst)
+            escribir(dst[:-4] + ".efectos.json", sorted([o["t"], o["sfx"]] for o in mj["eventos"] + mj["marcas"] if o.get("sfx")))
+        else:
+            crudo = os.path.join(trabajo, "maquetas", M["id"], "pieza.mp4")
+            for viejo in (crudo, crudo[:-4] + ".efectos.json"):
+                if os.path.exists(viejo):
+                    os.remove(viejo)
+            rc = subprocess.run([sys.executable, os.path.join(RAIZ, "scripts", "maqueta3d.py"), "pieza", maqueta_ruta(ctx, M), "--lienzo", "%dx%d" % (W, H),
+                                 "--salida", crudo], cwd=RAIZ).returncode
+            if rc or not os.path.exists(crudo):
+                return falla("la maqueta de %s no se renderizó: lo que dijo el motor está arriba (maqueta3d.py pieza %s --lienzo %dx%d; sus gates: `plano --check`; el registro del render: %s)"
+                             % (nombre_mesa(ctx, M), rel(maqueta_ruta(ctx, M)), W, H, rel(crudo[:-4] + ".render.log")))
+            VD.ff("-i", crudo, "-g", str(int(fps)), "-c:v", "libx264", "-crf", "16", "-pix_fmt", "yuv420p", "-an", dst)
+            if os.path.exists(crudo[:-4] + ".efectos.json"):
+                shutil.copy2(crudo[:-4] + ".efectos.json", dst[:-4] + ".efectos.json")
+            os.remove(crudo)   # queda el clip con sus cuadros clave; el proyecto y el registro del render siguen en maquetas/<mesa>/
+        d = VD.ffprobe_dur(dst)
+        if abs(d - D) > 2.0 / int(fps) + 0.05:
+            return falla("el clip de la maqueta de %s dura %.2f s y su mesa %.2f s" % (nombre_mesa(ctx, M), d, D))
+        ahora[M["id"]] = {"huella": h, "doble": doble, "dur": D, "lienzo": "%dx%d" % (W, H)}
+        escribir(fh, ahora)
+    if faltan:
+        print("maquetas: %d de %d %s (%s) → %s" % (len(faltan), len(ms), "dobles sin render (MESA_RENDER=0)" if doble else "renderizadas",
+                                                    ", ".join(M["id"] for M, _, _ in faltan), rel(cd)))
+    else:
+        print("maquetas: nada que renderizar (%d al día) → %s" % (len(ms), rel(cd)))
+    return 0
+
+
+def digesto_maqueta(ctx):
+    """Lo que el realizador necesita para decidir una maqueta 3D: cuándo va, los estilos, los sets y los lugares del set que la
+    voz nombra (con su id). → renglones para el digesto."""
+    E = estilos_maqueta()
+    L = ["", "## Maqueta 3D (opcional: solo cuando el LUGAR es la información; ≤ %d por video%s, un solo estilo; mesa de ≥ %.0f s)" % (
+        regla(ctx, "MAQUETAS_MAX"), " y ≤ %d por capítulo" % regla(ctx, "MAQUETAS_CAP_MAX") if regla(ctx, "MAQUETAS_CAP_MAX") else "", regla(ctx, "MAQUETA_MIN_S")),
+        "  bloque `maqueta` a nivel de mesa: referencias/flujo-mesa.md («La maqueta»). Los ids de lugar: minúsculas, sin tildes y con guiones."]
+    L.append("  estilos: %s" % " · ".join("%s (%s)" % (k, (e.get("cuando") or "").split(":")[0].split(".")[0][:60]) for k, e in E.items() if e.get("motor") in motores_maqueta()))
+    for sid in sets_maqueta():
+        lug = lugares_maqueta(sid)
+        dichos = []
+        for lid, l in lug.items():
+            nombre = l.get("nombre") or lid
+            if len(VD._plano(nombre)) < 5:
+                continue
+            for i, S in enumerate(ctx["es"]):
+                r = buscar(S, nombre, 0) if S.get("palabras") else None
+                if r:
+                    dichos.append("%s («%s», %s a los %.1f s)" % (lid, nombre, S["clave"], ctx["offs"][i] + S["palabras"][r[1]]["start"]))
+                    break
+        L.append("  set %s: %d lugares (las 22 cabeceras y los pueblos de OpenStreetMap). La voz nombra: %s" % (sid, len(lug), "; ".join(dichos[:14]) or "ninguno por su nombre"))
+    return L

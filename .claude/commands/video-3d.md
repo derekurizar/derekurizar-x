@@ -24,13 +24,19 @@ Guía completa: `referencias/flujo-video3d.md` (léela antes de empezar). Contra
    renderiza un cuadro por candidato. **El usuario elige** (muéstrale los cuadros y la voz de cada uno) →
    `ganchos --usar <id>`.
 6. **Guion.** Primero la narración de corrido; luego las escenas con sus anclas `dice`. `video3d.py guion
-   <TRABAJO> --check` hasta 0 fallas (C3D1–C3D10, V2–V4 y M3D en 9:16 y 4:5).
-7. **Storyboard y crítica.** `video3d.py storyboard <TRABAJO>` → mira la hoja. Lanza `video-critico` con la sección
-   «Crítico en Modo 3D» de la guía, `guion.json`, `locucion.json` y la hoja; aplica las faltas que bloquean (≤ 2
-   vueltas). Propón 5 cierres y **el usuario elige el cierre**.
+   <TRABAJO> --check` hasta 0 fallas (C3D1–C3D11, V2–V4 y M3D en 9:16 y 4:5). El aviso «Maqueta · no a escala» es
+   opcional: ponlo (`aviso`) solo si el dibujo simplifica algo que se podría tomar al pie de la letra.
+7. **Storyboard y crítica.** `video3d.py storyboard <TRABAJO>` → mira la hoja. Lanza `video-critico` en «Modo 3D»
+   (`referencias/roles/video-critico.md`) con `guion.json`, `locucion.json` y la hoja; aplica las faltas que bloquean
+   (≤ 2 vueltas). Propón 5 cierres y **el usuario elige el cierre**.
 8. **Voz.** `video3d.py voz <TRABAJO>` → nodos para el MCP de ElevenLabs (como /video) → `video3d.py descargar
-   <TRABAJO> --estado <archivo>`. Con `sin-voz`: `video3d.py voz-falsa <TRABAJO>`.
+   <TRABAJO> --estado <archivo>` (si el estado llegó en el chat: `--nodos <archivo>` con las dos URL de cada nodo).
+   Luego `python3 scripts/video.py escuchar <TRABAJO>` (V11). Con `sin-voz`: `video3d.py voz-falsa <TRABAJO>`.
 9. **Tiempos, render y montaje.** `video3d.py tiempos` → `render` → `montar` (9:16 y 4:5). Mira el resultado (una
    hoja de cuadros del mp4) antes de entregar.
-10. **Entrega.** `video3d.py entregar <TRABAJO>` → `videos3d/<fecha>-<slug>/`. Nunca con voz falsa.
-11. **Reporte.** Qué se entregó y dónde, tiempos y créditos, y «Mejoras al framework» (o «ninguna»).
+10. **Entrega.** `video3d.py entregar <TRABAJO>` → `videos3d/<fecha>-<slug>/` y `python3 scripts/memoria.py
+    --video3d <entrega>`; `make validate` sale 0. Nunca con voz falsa.
+11. **Reporte.** Qué se entregó y dónde, tiempos y créditos, y «Mejoras al framework» (o «ninguna»), registradas con
+    `memoria.py --mejoras` (flujo `video3d`).
+
+`make video3d-fixture` corre la maqueta de prueba de punta a punta sin créditos.

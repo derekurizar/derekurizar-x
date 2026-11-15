@@ -74,6 +74,52 @@ Reglas de `red` (MV12, y lo que el gate no ve):
 - `estado` solo si lo trae un hecho verificado con su fecha («Condenados en 2022», «Absuelta»). Nunca lo deduzcas.
 - `clave` es para un apodo que la voz revela después («El Uno» → se voltea a la cara cuando la voz dice el nombre).
 
+## La maqueta
+
+A veces el lugar **es** la información: una ruta entre dos sitios, una falla, una cuenca, qué tan lejos queda algo. Para
+esas mesas (y solo esas) puedes pedir un **render 3D de la situación**: el relieve real de Guatemala con sus pueblos y una
+cámara que vuela mientras la voz cuenta. Es la única pieza donde la cámara se mueve. Todo el detalle está en
+`referencias/flujo-mesa.md` («La maqueta»); aquí, lo que decides tú.
+
+- **Úsala** cuando la voz de la mesa nombra ≥ 2 lugares o un recorrido, y verlos en su sitio explica la oración. El
+  digesto trae, bajo «Maqueta 3D», los estilos y los lugares del set que la voz nombra (con su id).
+- **No la uses** para ubicar un solo lugar (pieza `lugar`), para adornar, en una escena tablero, en el gancho, ni donde
+  hay una foto, un recorte o un documento que pruebe lo que se dice: la maqueta **no cuenta como archivo real**.
+- **≤ 2 por video, del mismo `estilo`**, en una mesa de 5–24 s. Cuesta ≈ 1.8 s de render por segundo de maqueta.
+
+Va en la mesa, junto a `golpes`:
+
+```json
+{"escenas": ["e5"], "titulo": "De la capital al puerto",
+ "maqueta": {"set": "guatemala", "estilo": "noche", "protagonista": "ruta",
+  "piezas": [{"id": "ruta", "tipo": "ruta", "lugares": ["guatemala", "escuintla"]}, {"id": "pueblos", "tipo": "luces", "lugares": "todos"},
+             {"id": "frontera", "tipo": "frontera"}],
+  "camara": [{"mira": "guatemala", "dist_km": 420, "azimut": 0, "elevacion": 55},
+             {"dice": "hasta Escuintla", "mira": "escuintla", "dist_km": 160, "azimut": -15, "elevacion": 40}],
+  "eventos": [{"dice": "hasta Escuintla", "tipo": "resaltar", "lugar": "escuintla", "dur": 2.0}],
+  "marcas": [{"dice": "Escuintla", "lugar": "escuintla", "texto": "Escuintla"}]},
+ "golpes": [{"tipo": "cifra", "dice": "sesenta kilómetros", "valor": "60 km", "rotulo": "de carretera"}]}
+```
+
+Cómo se escribe:
+- **Lo que se ve es lo que la voz dice.** Cada oración de la mesa trae una entrada: la cámara que **llega** a un lugar
+  (su `dice` es el nombre del lugar), un evento o una marca. Ningún hueco de más de 6 s.
+- **Cámara**: la primera clave, sin `dice` (el encuadre con que abre: de lejos, que se reconozca el país o la región);
+  las demás, con el `dice` en el que llegan. Dos o tres claves bastan; un cierre con `"al": "fin"` (sin `dice`) deja un
+  acercamiento lento. No la marees: el gate del motor frena los vuelos bruscos (M3D3) y te dice cuánto.
+- **Marcas**: una por lugar que la voz nombra, con el nombre como se dice («Escuintla»); `sub` para lo que es («Puerto»,
+  «Epicentro»). Sin números que la voz no diga.
+- **Eventos**: `resaltar` un lugar o la pieza protagonista cuando la voz llega a él; `encender` / `apagar` /
+  `parpadear` las luces de unos pueblos; `ruptura`, `onda` y `deslizar` son de fallas (sus campos, en
+  `referencias/diseno/maqueta3d.md`).
+- **Golpes encima**: ≤ 3, uno a la vez, abajo a la izquierda del marco: la `cifra` o la `fecha` que la voz dice (MV1 las
+  pide igual que en cualquier mesa). Nada grande: tapa la maqueta (MV11).
+- El `titulo` de la mesa es el golpe de arriba; la maqueta no lleva titulares ni cifras propias.
+
+Los gates de la maqueta son MV15–MV19 (`plano --check`): forma, cada `dice` en la voz de su mesa, un solo estilo, carga y
+los del motor (`MV19 … M3D…`, con los segundos contados desde el inicio de la mesa: corrige la cámara, la marca o el
+evento que nombra).
+
 ## Por flujo
 
 El borrador ya traduce lo que cada flujo trae; tú lo mejoras (`referencias/flujo-mesa.md`, tabla de arriba):

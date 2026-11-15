@@ -16,11 +16,14 @@ que arma este script) y lo valida `plano --check` (YT13–YT19, sobre los datos:
     una escena `explica` o `tarjeta` es un TABLERO: su animación ya hecha va entera y quieta a la izquierda (clip del
     motor propio) y sus golpes caen a la derecha; va sola en su mesa
     los rótulos de capítulo y el cierre los arma este script (no van en el plano)
+    una mesa puede llevar `maqueta`: un render 3D de la situación (cuando el lugar es la información); entra como un tablero
+    (clips_maqueta_16x9/<mesa>.mp4, scripts/maqueta3d.py en modo pieza) con sus golpes a la derecha; gates YT20–YT24 en mesa.py
 
 Uso (lo llama scripts/youtube.py; también directo):
   youtube_hf.py borrador TRABAJO            plano.borrador.json desde lo que ya traen las escenas
   youtube_hf.py digesto TRABAJO --capitulo N   lo que el realizador necesita para escribir plano_<N>.json
   youtube_hf.py plano TRABAJO [--check] [--hoja] [--capitulo N]   une plano_<N>.json → plano.json; gates; hoja de golpes
+  youtube_hf.py maquetas TRABAJO [--fps 30] [--todo]   las mesas con maqueta 3D → clips_maqueta_16x9/<mesa>.mp4 (lo llama `youtube.py grabar`)
   youtube_hf.py proyecto TRABAJO [--capitulo N]   TRABAJO/hf/cap-N/ (un proyecto HyperFrames por capítulo) + hf/efectos.json
   youtube_hf.py revisar TRABAJO [--capitulo N]    hyperframes check + hoja de contacto (revision/hf_cap-N.jpg)
   youtube_hf.py render TRABAJO [--capitulo N] [--calidad looks]   render por capítulo (--workers 1) → segs_16x9/video_solo.mp4
@@ -108,6 +111,8 @@ CSS = """
 .mapa .gt{fill:$cafe;stroke:$tinta;stroke-width:1.2}
 .mapa text{font-family:'Archivo',sans-serif;font-stretch:62%;font-weight:800;fill:$tinta;text-transform:uppercase}
 .pizarra{background:#231c18;border:3px solid rgba(246,242,232,.85);overflow:hidden}
+.maqueta{overflow:hidden}
+.mq-pie{position:absolute;left:26px;right:26px;bottom:10px;font-family:'JetBrains Mono',monospace;font-size:18px;line-height:1.3;color:$gris}
 .chip{display:inline-block;background:$papel;padding:16px 26px 12px;box-shadow:0 18px 36px rgba(0,0,0,.55);white-space:nowrap}
 .chip .cond{font-size:52px}
 .chip.ac{background:$acento}
@@ -374,14 +379,19 @@ def mesa_html(ctx, M, F, elenco, usados, primera=False, ultima=False):
         m.tl.append('tl.fromTo("#%s-sus",{y:30,opacity:0},{y:0,opacity:1,duration:.5,ease:"power3.out"},%.3f);' % (m.id, ts[-1]))
         m.barrer = False
         return m.cerrar(), m.sfx
-    tablero = M["clase"] == "tablero"
+    maqueta = M["clase"] == "maqueta"   # la maqueta 3D entra como un tablero: su clip a la izquierda, los golpes de la mesa a la derecha
+    tablero = M["clase"] == "tablero" or maqueta
     if tablero:
         d = M["fin"] - M["ini"]
-        clip = "clips/e%d.mp4" % S["n"]
+        clip = "maquetas/%s.mp4" % M["id"] if maqueta else "clips/e%d.mp4" % S["n"]
         usados.add(clip)
-        m.html.append('<div id="%s-marco" class="pz pizarra" style="left:110px;top:54px;width:1008px;height:972px;z-index:5" data-layout-allow-overlap>'
+        m.html.append('<div id="%s-marco" class="pz %s" style="left:110px;top:54px;width:1008px;height:972px;z-index:5" data-layout-allow-overlap>'
                       '<video id="%s-anim" class="clip" data-start="0" data-duration="%.3f" data-track-index="0" muted playsinline src="assets/%s" '
-                      'style="position:absolute;left:0;top:0;width:1008px;height:972px;object-fit:cover"></video></div>' % (m.id, m.id, d, clip))
+                      'style="position:absolute;left:0;top:0;width:1008px;height:972px;object-fit:cover"></video>%s</div>'
+                      % (m.id, "maqueta" if maqueta else "pizarra", m.id, d, clip,
+                         '<div class="mq-pie" data-layout-ignore>%s</div>' % esc(credito_maqueta(M["maqueta"])) if maqueta else ""))
+        if maqueta:
+            m.sfx += efectos_maqueta(ctx, M)
         # el rótulo de acto de la escena (año, título, lugar) abre la mesa como ficha; el tablero entra cuando el rótulo acabaría
         R = S.get("R") if isinstance(S.get("R"), dict) else None
         t_marco = max(0.0, float(R.get("fin") or 2.3) - 0.4) if R else 0.0
@@ -453,11 +463,15 @@ def cmd_proyecto(a):
                          'data-track-index="%d" data-track-kind="graphics" data-width="1920" data-height="1080"></div>'
                          % (M["id"], M["id"], M["id"], M["ini"] - c["ini"], M["fin"] - M["ini"], 1 + k % 2))
         for u in sorted(usados):
-            src = os.path.join(trabajo, "clips_tablero", os.path.basename(u)) if u.startswith("clips/") else os.path.join(trabajo, u)
+            src = os.path.join(trabajo, "clips_tablero", os.path.basename(u)) if u.startswith("clips/") else \
+                os.path.join(trabajo, regla(ctx, "MAQUETA_CARPETA"), os.path.basename(u)) if u.startswith("maquetas/") else os.path.join(trabajo, u)
             if os.path.exists(src):
                 enlazar(src, os.path.join(P, "assets", u))
             else:
                 print("AVISO falta %s (youtube.py grabar)" % rel(src))
+        for M in ms:
+            if M["clase"] == "maqueta" and not clip_maqueta(ctx, M)[1]:
+                print("AVISO la maqueta de %s cambió desde su render (o no se ha renderizado): youtube.py grabar %s" % (M["id"], rel(trabajo)))
         for fnt in ("archivo-wdth.woff2", "jetbrains-mono-var.woff2"):
             enlazar(os.path.join(RAIZ, "design", "fonts", fnt), os.path.join(P, "assets", "fonts", fnt))
         enlazar(os.path.join(RAIZ, "design", "grano-mesa.png"), os.path.join(P, "assets", "grano.png"))
@@ -629,6 +643,18 @@ def cmd_render(a):
     return 0
 
 
+def cmd_maquetas(a):
+    """Las mesas con maqueta 3D del plano → clips_maqueta_16x9/<mesa>.mp4 (1120×1080, el lienzo del tablero), con caché por
+    huella. MESA_RENDER=0: dobles sin render."""
+    trabajo = os.path.abspath(a.trabajo)
+    fp = os.path.join(trabajo, "plano.json")
+    if not os.path.exists(fp):
+        return 0   # sin plano no hay maquetas
+    ctx = contexto(trabajo)
+    mesas, _ = resolver(ctx, leer(fp))
+    return grabar_maquetas(ctx, mesas, fps=getattr(a, "fps", FPS) or FPS, todo=getattr(a, "todo", False))
+
+
 # ---------- plano: unir, gates, hoja, digesto ----------
 def cmd_borrador(a):
     trabajo = os.path.abspath(a.trabajo)
@@ -676,6 +702,8 @@ def cmd_plano(a):
         len(mesas), n, VD_mmss(ctx["total"]), ctx["total"] / max(1, n), med["con_pieza_nueva"], med["oraciones"]))
     for cap, m in sorted(med["capitulos"].items()):
         print("  capítulo %d: %d piezas · %d de archivo real (%.0f %%) · %s" % (cap, m["piezas"], m["archivo_real"], 100 * m["archivo_real"] / max(1, m["piezas"]), ", ".join(m["tipos"])))
+    if med.get("maquetas"):
+        print("  maquetas 3D: %s" % ", ".join("%s (capítulo %d, %s, %.1f s)" % (M["id"], M["cap"], M["maqueta"].get("estilo"), M["fin"] - M["ini"]) for M in mesas if M["clase"] == "maqueta"))
     for x in av:
         print("AVISO", x)
     fix = bool(ctx["Y"].get("fixture"))
@@ -772,6 +800,8 @@ def cmd_digesto(a):
         for k, v in leer(pg).items():
             print("  %s · pág. %s · «%s» · %s · %s" % (k, v.get("pagina"), (v.get("frase") or "")[:90], v.get("fuente"), v.get("url") or ""))
     print("\n## Lugares con coordenadas (mapa «mundo»): %s" % ", ".join(sorted(LUGARES)))
+    for ln in digesto_maqueta(dict(ctx, es=[es[i] for i in c["idx"]], offs=[offs[i] for i in c["idx"]])):
+        print(ln)
     return 0
 
 
@@ -783,6 +813,11 @@ def main():
         q.add_argument("trabajo")
         q.add_argument("--capitulo", type=int)
         q.set_defaults(fn=fn)
+    q = sub.add_parser("maquetas")
+    q.add_argument("trabajo")
+    q.add_argument("--fps", type=int, default=FPS)
+    q.add_argument("--todo", action="store_true")
+    q.set_defaults(fn=cmd_maquetas)
     q = sub.add_parser("plano")
     q.add_argument("trabajo")
     q.add_argument("--check", action="store_true")

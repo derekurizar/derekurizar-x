@@ -21,7 +21,8 @@ Uso:
   video_hf.py importar-plano TRABAJO --de SESION_YT --parte N   trae del plano del 16:9 los golpes de esa parte
   video_hf.py borrador TRABAJO                        plano.borrador.json desde lo que ya traen las escenas
   video_hf.py plano TRABAJO [--check] [--hoja] [--borrador]
-  video_hf.py tableros TRABAJO [--fps 30]             las escenas que son tablero, grabadas limpias con el motor propio
+  video_hf.py tableros TRABAJO [--fps 30]             las escenas que son tablero, grabadas limpias con el motor propio (y las maquetas)
+  video_hf.py maquetas TRABAJO [--fps 30] [--todo]    las mesas con maqueta 3D → clips_maqueta/<mesa>.mp4 (maqueta3d.py en modo pieza)
   video_hf.py proyecto TRABAJO [--formato 9:16|4:5]   TRABAJO/hf/<9x16|4x5>/ (un proyecto de HyperFrames)
   video_hf.py revisar TRABAJO [--formato F]           hyperframes check + hoja de contacto por mesa
   video_hf.py audio TRABAJO                           voz + música + efectos del plano a −14 LUFS; .srt
@@ -65,13 +66,19 @@ BARRA_FILA = 128
 REGLAS = {"MESA_S": (3.0, 24.0), "MESA_PIEZAS": 6, "HUECO_MAX_S": 4.0, "ENTRE_GOLPES_S": 0.4, "FOTO_USOS_MAX": 1, "FOTO_SEPARACION_S": 0,
           "PROPIAS": ("cierre",), "TABLERO": TABLEROS_V, "TIPOS": MS.TIPOS + PIEZAS_V, "ARCHIVO": MS.ARCHIVO + ("red",),
           "TABLERO_SOLO": True, "HUECO_TABLERO_S": 6.0,
+          # la maqueta 3D (mesa.py): un clip del lienzo del tablero para los dos formatos; en un vertical caben pocas
+          "MAQUETA_LIENZO": TABLERO_LADOS, "MAQUETA_CARPETA": "clips_maqueta", "MAQUETAS_MAX": 2, "MAQUETAS_CAP_MAX": None,
           # los pasos propios de cada tablero del vertical (los eventos que `tiempos` escribe en la escena)
           "EVENTOS_TABLERO": MS.EVENTOS_TABLERO + ("renglon", "resultado", "resalta", "item", "ventana", "punto", "pildora", "figuras", "destacadas", "anio",
                                                     "conteo_fin", "llenar", "umbral", "barras", "plano", "capa", "arista", "persona", "valor", "linea")}   # el tablero conserva el ritmo con que se aprobó su animación (V10: ≤ 6 s)
 ATRIBUYE = re.compile(r"\b(segun|para la acusacion|para la fiscalia|dijo|dijeron|afirmo|afirmaron|senalo|senalaron|acuso|acusaron|sostuvo|sostuvieron|a juicio de)\b")
 RED_NIVELES, RED_POR_NIVEL, RED_ACUSADORES = 3, 2, 2
 RED_CARTA, RED_ALTO, RED_PASO = 380, 164, 226   # una carta de la jerarquía: ancho, alto y paso entre niveles
-CODIGOS = {"YT13": "MV1", "YT14": "MV2", "YT15": "MV3", "YT16": "MV4", "YT17": "MV5", "YT18": "MV6", "YT19": "MV7"}
+CODIGOS = {"YT13": "MV1", "YT14": "MV2", "YT15": "MV3", "YT16": "MV4", "YT17": "MV5", "YT18": "MV6", "YT19": "MV7",
+           "YT20": "MV15", "YT21": "MV16", "YT22": "MV17", "YT23": "MV18", "YT24": "MV19"}   # la maqueta 3D (mesa.revisar_maqueta)
+MAQUETA_MARGEN = 26        # px del marco de la maqueta a la pieza que cae encima (a la escala del formato)
+MAQUETA_PIE_PX = 22        # el pie del marco (la atribución de los geodatos y el `aviso` si lo hay): letra de crédito
+MAQUETA_GOLPE_ALTO = 0.35  # una pieza sobre la maqueta no tapa más de esta fracción de su alto
 LECT_BASE, LECT_PALABRA, LECT_MIN = 0.5, 0.3, 1.0   # MV8: segundos al frente = 0.5 + 0.3 × palabras que la voz no dice (nunca menos de 1 s)
 PILA_LEGIBLES, PILA_COMPACTAS = 3, 2   # MV9: piezas al frente a la vez y compactas arriba
 ESCALA_MIN = 0.72                      # MV11: una pieza no se dibuja a menos de esto de su tamaño
@@ -155,6 +162,8 @@ CSS = """
 .mapa .gt{fill:$cafe;stroke:$tinta;stroke-width:1.2}
 .mapa text{font-family:'Archivo',sans-serif;font-stretch:62%;font-weight:800;fill:$tinta;text-transform:uppercase}
 .pizarra{background:$mesa2;border:3px solid $filo2;overflow:hidden}
+.maqueta{overflow:hidden}
+.mq-pie{position:absolute;font-family:'JetBrains Mono',monospace;font-size:22px;line-height:1.3;color:$gris}
 .chip{display:inline-block;background:$papel;padding:16px 26px 12px;box-shadow:0 18px 36px rgba(0,0,0,.55);white-space:nowrap}
 .chip .cond{font-size:52px}
 .chip.ac{background:$acento}
@@ -212,7 +221,7 @@ def colores_v(E):
 
 def codigo(x):
     """Un mensaje de los gates del núcleo (YT13–YT19) con el código del vertical (MV1–MV7)."""
-    x = re.sub(r"\bYT1[3-9]\b", lambda m: CODIGOS[m.group(0)], x)
+    x = re.sub(r"\bYT(1[3-9]|2[0-4])\b", lambda m: CODIGOS[m.group(0)], x)
     return x.replace("capítulo 1:", "el video:").replace("en el 16:9 la cámara", "en la mesa la cámara")
 
 
@@ -280,7 +289,7 @@ def resolver_v(ctx, P):
     for M in mesas:
         i0 = M["idx"][0]
         R = es[i0].get("R") if isinstance(es[i0].get("R"), dict) else None
-        if not R or M["clase"] != "mesa":
+        if not R or M["clase"] not in ("mesa", "maqueta"):
             continue
         tit = " ".join(w["text"] for w in R.get("titulo") or [] if isinstance(w, dict))
         if not tit:
@@ -580,6 +589,8 @@ def componer(ctx, M, fmt, F, elenco):
     """Dónde va cada pieza de una mesa en un formato y cuándo se repliega → {cab, piezas, compactas, fallas}.
     Las piezas bajan en fila (una a la izquierda, la siguiente a la derecha); cuando la que entra no cabe debajo, o ya hay
     PILA_LEGIBLES al frente, las de al frente pasan de un corte a su versión compacta, arriba, y la mesa sigue debajo."""
+    if M["clase"] == "maqueta":
+        return componer_maqueta(ctx, M, fmt, F, elenco)
     Fz = FORMATOS[fmt]
     tits = titulos_de(ctx, M)
     cab = max((cabeza(ctx, Fz, t) for _, t in tits), key=lambda c: c["y0"]) if tits else cabeza(ctx, Fz, "")
@@ -692,6 +703,56 @@ def componer(ctx, M, fmt, F, elenco):
             fallas.append("MV8 %s golpe %d (%s «%s»): queda %.1f s al frente y pide %.1f s (%d palabras que la voz no dice): acorta el texto, quita la "
                           "pieza que la desplaza, o parte la mesa" % (nom, p["k"] + 1, p["g"]["tipo"], resumen_golpe(p["g"])[:40], hasta - p["t"], pide, n))
     return {"cab": cab, "tits": tits, "piezas": out, "compactas": comp, "fallas": fallas, "y0": y0}
+
+
+def marco_clip(ctx, M, fmt):
+    """El marco del clip de la maqueta de una mesa: como el de un tablero (centrado en la columna segura, con la proporción
+    del lienzo y hasta donde deja la cabecera) → {x, y, w, h, cab, tits}."""
+    Fz = FORMATOS[fmt]
+    tits = titulos_de(ctx, M)
+    cab = max((cabeza(ctx, Fz, t) for _, t in tits), key=lambda c: c["y0"]) if tits else cabeza(ctx, Fz, "")
+    ancho = Fz["x1b"] - Fz["x0"]
+    alto = int(ancho * TABLERO_LADOS[1] / float(TABLERO_LADOS[0]))
+    if cab["y0"] + alto > Fz["y1"]:
+        alto = Fz["y1"] - cab["y0"]
+        ancho = int(alto * TABLERO_LADOS[0] / float(TABLERO_LADOS[1]))
+    margen = int(MAQUETA_MARGEN * ancho / float(TABLERO_LADOS[0]))
+    return {"x": Fz["x0"] + (Fz["x1b"] - Fz["x0"] - ancho) // 2, "y": cab["y0"] + max(0, (Fz["y1"] - cab["y0"] - alto) // 3), "w": ancho, "h": alto,
+            "cab": cab, "tits": tits, "margen": margen, "pie": MS.credito_maqueta_alto(M["maqueta"], ancho - 2 * margen, MAQUETA_PIE_PX)[1]}
+
+
+def componer_maqueta(ctx, M, fmt, F, elenco):
+    """Las piezas que caen SOBRE la maqueta de una mesa: una a la vez, abajo a la izquierda del marco (donde la maqueta suelta
+    pone su cifra), sin taparle más de MAQUETA_GOLPE_ALTO; cada una se va de un corte cuando entra la siguiente (o se barre con
+    la mesa). No hay repliegue: la maqueta es lo que se mira. → lo mismo que `componer`."""
+    Fz = FORMATOS[fmt]
+    K = marco_clip(ctx, M, fmt)
+    margen, pie = K["margen"], K["pie"] + 22   # la pieza (girada) no tapa el pie del marco
+    nom = "%s E%s" % (M["id"], "–".join(str(ctx["es"][i]["n"]) for i in dict.fromkeys((M["idx"][0], M["idx"][-1]))))
+    out, fallas = [], []
+    fin_mesa = M["fin"] - (0.46 if M.get("_barre", True) else 0.0)
+    gs = M["golpes"]
+    for k, g in enumerate(gs):
+        g.setdefault("giro", GIROS_V[k % len(GIROS_V)])
+        w, h, ex = medida_v(ctx, g, F, min(K["w"] - 2 * margen, 860), elenco)
+        f = float(ex.get("f", 1.0)) * Fz.get("escala", 1.0)
+        f = min(f, K["h"] * MAQUETA_GOLPE_ALTO / float(max(1, h)), (K["w"] - 2 * margen) / float(max(1, w)))
+        wv, hv = int(w * f), int(h * f)
+        p = {"g": g, "x": K["x"] + margen, "y": K["y"] + K["h"] - pie - hv, "w": w, "h": h, "ex": ex, "f": round(f, 3), "wv": wv, "hv": hv, "t": g["_t"],
+             "hasta": round(gs[k + 1]["_t"] - LEAD, 3) if k + 1 < len(gs) else None, "k": k}
+        out.append(p)
+        if f < ESCALA_MIN * Fz.get("escala", 1.0) - 0.001:
+            fallas.append("MV11 %s golpe %d (%s, %s): sobre la maqueta se dibujaría al %d %% (no puede taparle más del %d %% del alto): ahí va una cifra, una fecha "
+                          "o una nota corta; lo demás, en otra mesa" % (nom, k + 1, g["tipo"], fmt, round(100 * f / Fz.get("escala", 1.0)), round(100 * MAQUETA_GOLPE_ALTO)))
+    for p in out:   # MV8: cada texto, su tiempo al frente
+        if p["g"].get("_ya") or not palabras_de(p["g"]):
+            continue
+        hasta = p["hasta"] if p["hasta"] is not None else fin_mesa
+        pide, n = lectura_de(ctx, p["g"], p["t"], hasta)
+        if hasta - p["t"] < pide - 0.05:
+            fallas.append("MV8 %s golpe %d (%s «%s»): queda %.1f s sobre la maqueta y pide %.1f s (%d palabras que la voz no dice): acorta el texto, o quita la "
+                          "pieza que la reemplaza" % (nom, p["k"] + 1, p["g"]["tipo"], resumen_golpe(p["g"])[:40], hasta - p["t"], pide, n))
+    return {"cab": K["cab"], "tits": K["tits"], "piezas": out, "compactas": [], "fallas": fallas, "y0": K["cab"]["y0"], "marco": K}
 
 
 def retrato_nodo(ctx, n, F):
@@ -980,6 +1041,19 @@ def mesa_html_v(ctx, M, F, elenco, usados, fmt, primera=False, ultima=False):
         corte = m.loc(M["golpes"][0]["_t"] - LEAD)
         m.html[-1] = m.html[-1].replace('data-duration="%.3f"' % d, 'data-duration="%.3f"' % max(0.2, corte), 1)
         m.tl.append('tl.set("#%s-marco",{opacity:0},%.3f);' % (m.id, corte))
+    if M["clase"] == "maqueta":   # la maqueta 3D: su clip (clips_maqueta/<mesa>.mp4) ocupa el marco toda la mesa; los golpes caen encima
+        K = marco_clip(ctx, M, fmt)
+        clip = "maquetas/%s.mp4" % M["id"]
+        usados.add(clip)
+        m.html.append('<div id="%s-marco" class="pz maqueta" style="left:%dpx;top:%dpx;width:%dpx;height:%dpx;z-index:5" data-layout-allow-overlap>'
+                      '<video id="%s-anim" class="clip" data-start="0" data-duration="%.3f" data-track-index="0" muted playsinline src="assets/%s" '
+                      'style="position:absolute;left:0;top:0;width:%dpx;height:%dpx;object-fit:cover"></video>'
+                      '<div class="mq-pie" data-layout-ignore style="left:%dpx;right:%dpx;bottom:10px">%s</div></div>'
+                      % (m.id, K["x"], K["y"], K["w"], K["h"], m.id, d, clip, K["w"], K["h"], K["margen"], K["margen"], esc(MS.credito_maqueta(M["maqueta"]))))
+        m.tl.append('tl.fromTo("#%s-marco",{y:60,opacity:0},{y:0,opacity:1,duration:.4,ease:"power3.out"},0);' % m.id)
+        m.sfx.append((M["ini"] + 0.2, "whoosh"))
+        m.sfx += MS.efectos_maqueta(ctx, M)
+        m.extra.append("#%s-marco" % m.id)
     for k, g in enumerate(M["golpes"]):
         if primera and g["_t"] - LEAD <= M["ini"] + 0.05:
             g["_ya"] = True
@@ -1124,11 +1198,15 @@ def armar(trabajo, fmt, portada=False):
         info.append({"id": M["id"], "ini": round(M["ini"], 3), "fin": round(M["fin"], 3), "clase": M["clase"], "piezas": len(L["piezas"]),
                      "repliegues": sorted({round(c["desde"], 3) for c in L["compactas"]}), "fallas": L["fallas"]})
     for u in sorted(usados):
-        src = os.path.join(trabajo, "clips_tablero", os.path.basename(u)) if u.startswith("clips/") else os.path.join(trabajo, u)
+        src = os.path.join(trabajo, "clips_tablero", os.path.basename(u)) if u.startswith("clips/") else \
+            os.path.join(trabajo, REGLAS["MAQUETA_CARPETA"], os.path.basename(u)) if u.startswith("maquetas/") else os.path.join(trabajo, u)
         if os.path.exists(src):
             enlazar(src, os.path.join(P, "assets", u))
         else:
-            print("AVISO falta %s%s" % (rel(src), " (video_hf.py tableros)" if u.startswith("clips/") else ""))
+            print("AVISO falta %s%s" % (rel(src), " (video_hf.py tableros)" if u.startswith("clips/") else " (video_hf.py maquetas)" if u.startswith("maquetas/") else ""))
+    for M in mesas:
+        if M["clase"] == "maqueta" and not M.get("_bucle") and not MS.clip_maqueta(ctx, M)[1]:
+            print("AVISO la maqueta de %s cambió desde su render (o no se ha renderizado): video_hf.py maquetas %s" % (M["id"], rel(trabajo)))
     for fnt in ("archivo-wdth.woff2", "jetbrains-mono-var.woff2"):
         enlazar(os.path.join(RAIZ, "design", "fonts", fnt), os.path.join(P, "assets", "fonts", fnt))
     enlazar(os.path.join(RAIZ, "design", "grano-mesa.png"), os.path.join(P, "assets", "grano.png"))
@@ -1279,7 +1357,7 @@ def revisar_v(ctx, P, mesas=None, f0=None):
             if pasos and M["golpes"][0]["_t"] - LEAD < max(pasos) + 1.0:
                 f.append("MV6 %s: el primer golpe de un tablero entra a los %.1f s y la animación da su último paso a los %.1f s: la pieza la retira; "
                          "va al menos 1 s después" % (M["id"], M["golpes"][0]["_t"], max(pasos)))
-        if M["clase"] not in ("mesa", "tablero") or not M["golpes"]:
+        if M["clase"] not in ("mesa", "tablero", "maqueta") or not M["golpes"]:
             continue
         M["_barre"] = k < len(mesas) - 1
         if k == 0:
@@ -1336,6 +1414,9 @@ def revisar_v(ctx, P, mesas=None, f0=None):
                 if not ATRIBUYE.search(voz_mesa):
                     f.append("MV12 %s: la voz de la mesa no atribuye el alegato (según…, para la acusación…, dijo…)" % q)
     # MV14: el primer cuadro ya tiene sujeto
+    if mesas and mesas[0]["clase"] == "maqueta":
+        f.append("MV14 %s: el gancho no lleva maqueta: el cuadro 0 abre con el sujeto (≥ 2 piezas ya puestas: su foto y su nombre) y vuelve en el bucle; "
+                 "la maqueta va en una mesa de más adelante" % mesas[0]["id"])
     if mesas and mesas[0]["clase"] == "mesa":
         ya = [g for g in mesas[0]["golpes"] if g.get("_ya")]
         if len(ya) < 2:
@@ -1596,6 +1677,8 @@ def cmd_digesto(a):
         for k, v in leer(pg).items():
             print("  %s · pág. %s · «%s» · %s" % (k, v.get("pagina"), (v.get("frase") or "")[:90], v.get("fuente")))
     print("\n## Lugares con coordenadas (mapa «mundo»): %s" % ", ".join(sorted(MS.LUGARES)))
+    for ln in MS.digesto_maqueta(ctx):
+        print(ln)
     return 0
 
 
@@ -1649,7 +1732,8 @@ def hoja_v(ctx, mesas):
                 if not txt:
                     dentro = [e for e in ev if a_ - 0.6 <= e[0] < b]
                     txt = "un paso de la animación ya hecha (%s)" % es[i]["tipo"] if any(e[1] == "tablero" for e in dentro) else \
-                        "sigue el subrayado o la lista de la pieza anterior" if dentro else "—"
+                        "" if any(e[1] == "maqueta" for e in dentro) else "sigue el subrayado o la lista de la pieza anterior" if dentro else ""
+                txt = "; ".join(x for x in (txt, MS.resumen_maqueta(ctx, M, a_ - 0.6, b)) if x) or "—"
                 L.append("| %s | %s | %s | %s |" % (VD_mmss(a_), tit, sg["texto"].replace("|", "/"), txt))
                 tit = ""
     return "\n".join(L) + "\n"
@@ -1669,6 +1753,13 @@ def cmd_plano(a):
     if not os.path.exists(fp):
         return falla("no hay plano.json en %s (video_hf.py borrador, o importar-plano)" % rel(trabajo))
     P = leer(fp)
+    if getattr(a, "con", None):   # las mesas de un archivo reemplazan a las del plano que cubren sus escenas (la maqueta de prueba: una mesa con maqueta 3D)
+        nuevas = leer(a.con)
+        nuevas = nuevas.get("mesas") or [nuevas] if isinstance(nuevas, dict) else nuevas
+        claves = {c for m in nuevas for c in m.get("escenas") or []}
+        P["mesas"] = [m for m in P.get("mesas") or [] if not claves & set(m.get("escenas") or [])] + nuevas
+        P["mesas"].sort(key=lambda m: min([ctx["por_clave"].get(c, 10 ** 6) for c in m.get("escenas") or []] or [10 ** 6]))
+        escribir(fp, P)
     mesas, f0 = resolver_v(ctx, P)
     f, av, med = revisar_v(ctx, P, mesas, f0)
     if a.hoja:
@@ -1679,6 +1770,8 @@ def cmd_plano(a):
     print("plano: %d mesas · %d piezas en %s (una cada %.1f s) · %d de %d oraciones con pieza nueva · %d de archivo real (%.0f %%) · %s" % (
         len(mesas), n, VD_mmss(ctx["total"]), ctx["total"] / max(1, n), med["con_pieza_nueva"], med["oraciones"], m["archivo_real"],
         100 * m["archivo_real"] / max(1, m["piezas"]), ", ".join(m["tipos"])))
+    if med.get("maquetas"):
+        print("  maquetas 3D: %s" % ", ".join("%s (%s, %.1f s)" % (M["id"], M["maqueta"].get("estilo"), M["fin"] - M["ini"]) for M in mesas if M["clase"] == "maqueta"))
     for x in av:
         print("AVISO", x)
     fix = bool(ctx["Y"].get("fixture"))
@@ -1755,7 +1848,14 @@ def cmd_importar(a):
                     os.makedirs(os.path.dirname(os.path.join(trabajo, arch)), exist_ok=True)
                     shutil.copy2(os.path.join(yt, arch), os.path.join(trabajo, arch))
             gs.append(g)
-        mesas.append({"escenas": claves, "golpes": gs})
+        mesa = {"escenas": claves, "golpes": gs}
+        if isinstance(M.get("maqueta"), dict) and len(claves) == len(M.get("escenas") or []):   # la maqueta 3D de la mesa viaja entera (el clip se rehace en el lienzo vertical)
+            mesa["maqueta"] = json.loads(json.dumps(M["maqueta"]))
+            for grupo in ("camara", "eventos", "marcas"):
+                for x in mesa["maqueta"].get(grupo) or []:
+                    if isinstance(x, dict) and str(x.get("escena") or "").startswith(pre):
+                        x["escena"] = x["escena"][len(pre):]
+        mesas.append(mesa)
     if PG:
         escribir(fpg, PG)
     escribir(os.path.join(trabajo, "plano.json"), {"version": 1, "mesas": mesas})
@@ -1800,7 +1900,20 @@ def cmd_tableros(a):
             h = alto_contenido(c)
             if h:
                 escribir(fa, {"alto": h, "de": TABLERO_LADOS[1]})
-    return 0
+    # y los otros clips que la mesa aloja: las maquetas 3D (`tableros --todo` rehace los tableros, no las maquetas: `maquetas --todo`)
+    return cmd_maquetas(argparse.Namespace(trabajo=trabajo, fps=a.fps, todo=False))
+
+
+def cmd_maquetas(a):
+    """Las mesas con maqueta 3D del plano → clips_maqueta/<mesa>.mp4 (950×1040, un clip para 9:16 y 4:5), con caché por huella.
+    MESA_RENDER=0: dobles sin render."""
+    trabajo = os.path.abspath(a.trabajo)
+    fp = os.path.join(trabajo, "plano.json")
+    if not os.path.exists(fp):
+        return 0   # sin plano no hay maquetas (el paso «plano» ya avisa)
+    ctx = contexto_v(trabajo)
+    mesas, _ = resolver_v(ctx, leer(fp))
+    return MS.grabar_maquetas(ctx, mesas, fps=a.fps, todo=getattr(a, "todo", False))
 
 
 def total_de(trabajo, fmt):
@@ -1996,12 +2109,14 @@ def main():
     q.add_argument("--hoja", action="store_true")
     q.add_argument("--borrador", action="store_true", help="usa plano.borrador.json tal cual (la maqueta)")
     q.add_argument("--auto", action="store_true", help="arma el borrador; en una maqueta lo usa si falta plano.json, y en un trabajo real se detiene")
+    q.add_argument("--con", metavar="MESAS.json", help="reemplaza en plano.json las mesas de esas escenas por las del archivo (las maquetas de prueba)")
     q.set_defaults(fn=cmd_plano)
-    q = sub.add_parser("tableros")
-    q.add_argument("trabajo")
-    q.add_argument("--fps", type=int, default=30)
-    q.add_argument("--todo", action="store_true")
-    q.set_defaults(fn=cmd_tableros)
+    for nombre, fn in (("tableros", cmd_tableros), ("maquetas", cmd_maquetas)):
+        q = sub.add_parser(nombre)
+        q.add_argument("trabajo")
+        q.add_argument("--fps", type=int, default=30)
+        q.add_argument("--todo", action="store_true")
+        q.set_defaults(fn=fn)
     q = sub.add_parser("portada")
     q.add_argument("trabajo")
     q.set_defaults(fn=cmd_portada)

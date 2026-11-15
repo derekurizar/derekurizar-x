@@ -90,6 +90,90 @@ palabra por palabra) · `lista` (un chip por `dice`, con `lazo`).
   `lupa`, `cortina`, `adivina` se graban limpias con el motor propio (`video_hf.py tableros`) y van solas en su mesa. Si el plano
   les pone golpes, el primero entra ≥ 1 s después del último paso y la animación le cede la mesa de un corte.
 
+## 3b. La maqueta
+
+**Qué es** (usuario, 2026-11-14). A veces un video incluye un **render 3D de una situación**: el relieve real de Guatemala
+con sus pueblos, una ruta, una falla o la frontera, y una cámara que lo recorre mientras la voz cuenta. Es un clip de
+three.js (`scripts/maqueta3d.py` en **modo pieza**; contrato en `referencias/diseno/maqueta3d.md`) que la mesa aloja como
+aloja un tablero, pero no viene del guion: lo decide el realizador **después de la voz**, a nivel de mesa. **Dentro de la
+maqueta la cámara sí se mueve**: es la única excepción a la cámara quieta, y vale solo dentro de su marco (la mesa, el
+golpe de arriba y las piezas siguen quietos).
+
+**Cuándo sí.** Cuando **el lugar es la información**: una ruta entre dos sitios, una falla, una cuenca, qué tan lejos
+queda algo de otra cosa, por dónde pasó, qué pueblos alcanzó. La voz nombra lugares y la oración se entiende mejor
+viéndolos en su sitio.
+
+**Cuándo no.** Para ubicar un solo lugar (eso es la pieza `lugar`, que es archivo y cuesta nada); para adornar una
+oración que no habla de un lugar; en una escena que ya es tablero; en el gancho (el cuadro 0 es del sujeto: MV14); cuando
+hay una foto, un recorte o un documento que prueban lo que se dice (la maqueta **no es archivo real**: no suma a MV5).
+Es cara de mirar y de producir: **≤ 2 por video vertical** (≤ 4 en el 16:9, ≤ 2 por capítulo).
+
+**La forma.** `maqueta` en la mesa, junto a `escenas`, `titulo` y `golpes`:
+
+```json
+{"escenas": ["e4", "e5"], "titulo": "De la capital al puerto",
+ "maqueta": {"set": "guatemala", "estilo": "noche", "protagonista": "ruta",
+  "piezas": [{"id": "ruta", "tipo": "ruta", "lugares": ["guatemala", "escuintla"]},
+             {"id": "pueblos", "tipo": "luces", "lugares": "todos"}, {"id": "frontera", "tipo": "frontera"}],
+  "lugares": {},
+  "camara": [{"mira": "guatemala", "dist_km": 420, "azimut": 0, "elevacion": 55},
+             {"dice": "hasta Escuintla", "mira": "escuintla", "dist_km": 160, "azimut": -15, "elevacion": 40}],
+  "eventos": [{"dice": "hasta Escuintla", "tipo": "resaltar", "lugar": "escuintla", "dur": 2.0}],
+  "marcas": [{"dice": "Escuintla", "lugar": "escuintla", "texto": "Escuintla"}]},
+ "golpes": [{"tipo": "cifra", "dice": "sesenta kilómetros", "valor": "60 km", "rotulo": "de carretera"}]}
+```
+
+- **`set`**: los geodatos (`design/sets3d/<set>/`; hoy `guatemala`: relieve, las 22 cabeceras y ≈ 300 pueblos, fallas,
+  frontera). Un lugar se nombra por su id (minúsculas, sin tildes, con guiones: `guatemala`, `puerto-barrios`), por
+  `[lon, lat]`, o se declara en `lugares` (`{"mi-aldea": {"lon": …, "lat": …, "nombre": "…"}}`). El digesto del plano
+  trae los lugares del set que la voz nombra.
+- **`estilo`**: uno del catálogo cuyo motor renderice (`python3 scripts/maqueta3d.py estilos` los lista con su «cuándo
+  usarlo»; los de three.js: `noche`, `color`, `contorno`, `voxel`, `plano`). **Un solo estilo por video**: si el plano
+  trae dos maquetas, llevan el mismo.
+- **`piezas`** y **`protagonista`**: lo que hay sobre el mundo (`falla`, `luces`, `frontera`, `ruta`) y la única pieza
+  que va en el acento. Ninguna lleva texto.
+- **`camara`**: claves `{mira, dist_km, azimut, elevacion}`. **La primera va sin `dice`**: es el encuadre con que abre la
+  mesa. Cada una de las demás lleva el `dice` con el que la cámara **llega** a ese encuadre (`"al": "fin"` = llega al
+  terminar la frase; sin `dice` y con `"al": "fin"`, al terminar la mesa: un acercamiento lento de cierre). Entre claves
+  la cámara vuela sola. Referencia: el país entero cabe desde `dist_km` ≈ 700–800 con `elevacion` ≈ 62; a 150–250 km se
+  lee un valle. El punto que mira cae en el centro del marco.
+- **`eventos`**: `ruptura`, `onda`, `deslizar`, `encender`, `apagar`, `parpadear`, `resaltar` (los campos de cada uno, en
+  el contrato), con `dice` y `dur` en segundos (o `hasta_dice`); `sfx` opcional del catálogo fijo.
+- **`marcas`**: pines pegados al mundo: `dice`, `lugar`, `texto` (y `sub`). Entra 0.3 s antes de su palabra y se queda
+  hasta el final de la mesa (`dura` en segundos o `hasta_dice` la acortan; a lo más 3 a la vez).
+- Cada `dice` son palabras literales de la voz **de las escenas de esa mesa** (`"escena": "e5"` lo fija a una; `"vez": 2`
+  = la segunda vez que se dice). Sin `dice`, al empezar la mesa.
+- No lleva titulares, cifras ni subtítulos: el golpe de arriba es el `titulo` de la mesa, las cifras son **golpes** y
+  los subtítulos los pone la mesa. El pie del marco (la atribución de los geodatos que usa) lo pone la mesa también; un
+  aviso como «Maqueta · no a escala» o «Traza esquemática» sale solo si el bloque trae `aviso` (no va por costumbre).
+
+**En el cuadro.** El clip ocupa el marco de un tablero (950×1040, uno para 9:16 y 4:5) todo lo que dura la mesa. Los
+golpes de la mesa caen **encima**, abajo a la izquierda, **uno a la vez** (cada uno se va de un corte cuando entra el
+siguiente) y sin taparle más del 35 % del alto: una `cifra`, una `fecha` o una nota corta. Por eso el lugar que importa
+va en la mitad de arriba del marco (la cámara lo centra) y el número que la voz dice, en su golpe.
+
+**Reglas (gates MV15–MV19, sobre los datos).**
+
+| Gate | Pide |
+|---|---|
+| MV15 | forma: `set` que existe, `estilo` del catálogo y con motor, `piezas` con `id` y `tipo`, `protagonista` que es una pieza, cámara con sus campos y la primera clave sin `dice`, eventos con `tipo` y `dur`, marcas con `lugar` y `texto`; nada de titulares ni cifras dentro; no en una escena tablero |
+| MV16 | concordancia: cada `dice` (y `hasta_dice`) lo dice la voz de esa mesa; las claves de cámara, en el orden en que la voz las dice |
+| MV17 | un solo estilo de maqueta por video |
+| MV18 | carga: la mesa de la maqueta dura 5–24 s; ≤ 3 golpes encima; ≤ 2 maquetas por video |
+| MV19 | `maqueta3d.py check --pieza --lienzo 950x1040` en 0 fallas (M3D1–M3D4, M3D6, M3D8, M3D11: lugares y piezas que existen, velocidad de cámara, marcas dentro del cuadro y sin pisarse, eventos a la vista); el mensaje del motor llega tal cual, con sus segundos contados desde el inicio de la mesa |
+
+Además: la cámara que llega, cada evento y cada marca cuentan como **entradas** para MV2 (cada oración trae una; ningún
+hueco de más de 6 s dentro de la maqueta); cada cifra o año que la voz dice se ve en un golpe o en una marca (MV1); un
+número en una marca necesita respaldo (MV4); la pieza de encima cabe y da tiempo de leerse (MV8, MV11).
+
+**Producción.** `plano --check` escribe `TRABAJO/maquetas/<mesa>/maqueta.json` (segundos relativos al inicio de la
+mesa, paleta del video) y lo valida; `grabar` (en el paso de los tableros; o `video_hf.py maquetas T`) lo renderiza a
+`TRABAJO/clips_maqueta/<mesa>.mp4` con su `.efectos.json` (los `sfx` van a la mezcla con el desfase de la mesa). Solo
+se renderiza la que cambió (`clips_maqueta/huellas.json`), a los fps de `grabar` (el motor acepta de 10 a 60). **Costo: ≈ 1.8 s de render por segundo de maqueta** (a 30
+fps; una vez para los dos formatos verticales, otra para el 16:9). `MESA_RENDER=0` deja un doble del tamaño y la
+duración exactos sin llamar al motor (un doble nunca se reusa como render). `make video-fixture-maqueta` = la maqueta
+de /serie con una mesa de maqueta, de punta a punta.
+
 ## 4. El plano
 
 `TRABAJO/plano.json`, el mismo esquema del 16:9, sin `x` ni `y` (el motor coloca por regla):
@@ -124,9 +208,10 @@ palabra por palabra) · `lista` (un chip por `dice`, con `lazo`).
 | MV11 | ninguna pieza se dibuja a menos del 72 % de su tamaño |
 | MV12 | alegato: los hilos de una `red` atribuida van punteados, con `etiqueta` «Según…» y con la voz de la mesa atribuyendo; quien acusa, sin hilos |
 | MV13 | (pendiente) un solo acento legible a la vez |
-| MV14 | el cuadro 0 abre con ≥ 2 piezas ya puestas |
+| MV14 | el cuadro 0 abre con ≥ 2 piezas ya puestas (el gancho no lleva maqueta) |
+| MV15–MV19 | la maqueta 3D de una mesa: forma, concordancia con la voz, un solo estilo, carga y los gates del motor (§ 3b) |
 
-MV1–MV7 son YT13–YT19 del núcleo con las constantes del vertical (`REGLAS`). `hyperframes check` añade sus propios
+MV1–MV7 son YT13–YT19 del núcleo con las constantes del vertical (`REGLAS`), y MV15–MV19 son YT20–YT24. `hyperframes check` añade sus propios
 avisos (texto bajo 28 px, texto sin tiempo de lectura, tramos sin cambio): se leen en `video_hf.py revisar`.
 
 ## 6. Cómo se produce
@@ -137,7 +222,7 @@ Los comandos son los de siempre; con `realizacion: mesa` despachan a la mesa (`V
 <flujo>.py tiempos T                  la voz real → escenas.json (igual que antes)
 Workflow «plano» {trabajo: T}         video-realizador escribe T/plano.json desde `<flujo>.py plano T --digesto` (tras la voz)
 <flujo>.py plano T --check --hoja     gates MV1–MV14 y la hoja de golpes (plano.md)
-<flujo>.py grabar T [--formato 4:5]   plano --check → tableros limpios → proyecto → hyperframes check → render (un proceso)
+<flujo>.py grabar T [--formato 4:5]   plano --check → tableros limpios y maquetas 3D → proyecto → hyperframes check → render (un proceso)
 <flujo>.py montar T [--formato 4:5]   una mezcla para los dos formatos (−14 LUFS), .srt, caption.md y portada.png
 <flujo>.py revisar T [--formato 4:5]  hoja de contacto del video final (revision/contacto[_4x5].png)
 <flujo>.py entregar T                 igual que antes
@@ -154,7 +239,7 @@ historia.py producir T                la cadena entera; se detiene si falta plan
 - `MESA_RENDER=0` (maquetas): `grabar` hace todo menos el render y deja un doble de la duración exacta; `entregar` real lo
   rechaza. `make historia-fixture` y `make serie-fixture` van así; `make video-fixture-mesa` renderiza de verdad.
 - `video_hf.py` también se puede llamar directo: `piloto` (copia un TRABAJO ya producido para rehacerlo en mesa),
-  `importar-plano` (los golpes del 16:9 de una parte, como punto de partida), `borrador`, `digesto`, `tableros`, `proyecto`,
+  `importar-plano` (los golpes del 16:9 de una parte, como punto de partida), `borrador`, `digesto`, `tableros`, `maquetas`, `proyecto`,
   `revisar` (hyperframes check + hojas por mesa), `audio`, `render`, `montar`, `portada`, `contacto`.
 
 ## 7. Qué pasa con las reglas del motor propio
