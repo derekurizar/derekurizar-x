@@ -1,9 +1,18 @@
-"""Evento «resaltar»: una pieza (por su id) o un lugar (sus km y, si es un id, el nombre: así aviva su luz)."""
+"""Evento «resaltar»: una pieza (por su id; con `elemento`, el edificio o la calle de ella en ese lugar) o un lugar
+(sus coordenadas y, si es un id, el nombre: así aviva su luz)."""
 
 
 def resolver(e, X, que):
     if e.get("pieza"):
-        return {"pieza": e["pieza"]}
+        if e.get("elemento") is None:
+            return {"pieza": e["pieza"]}
+        # un edificio o una calle de la pieza: el que está en ese lugar (las reglas de su tipo saben buscarlo)
+        pz = X.por_id.get(e["pieza"]) or next((p for p in X.piezas if p["id"] == e["pieza"]), None)
+        rg = X.m3.reglas(pz["tipo"]) if pz else None
+        if not rg or not hasattr(rg, "elemento"):
+            raise X.m3.Falla("M3D2", "%s: `elemento` solo vale con una pieza de edificios, calles o carretera (la de «%s» no tiene elementos)" % (que, e["pieza"]))
+        l = X.lugar(e["elemento"], que + " → elemento")
+        return {"pieza": e["pieza"], "elemento": [l["x"], l["y"]], "indice": rg.elemento(pz, l["x"], l["y"]), "x": l["x"], "y": l["y"]}
     if e.get("lugar") is None:
         raise X.m3.Falla("M3D2", "%s: resaltar lleva `pieza` (el id de una pieza) o `lugar` (%s)" % (que, "un lugar del set, de mundo.lugares o [lon, lat]"))
     l = X.lugar(e["lugar"], que)

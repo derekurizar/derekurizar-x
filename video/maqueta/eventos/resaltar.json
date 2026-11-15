@@ -1,7 +1,7 @@
 {
  "tipo": "resaltar",
  "clase": "evento",
- "cuando": "señalar una pieza (la falla, la ruta) o un lugar (el epicentro) mientras la voz lo nombra",
+ "cuando": "señalar una pieza (la falla, la ruta, la carretera), un edificio o una calle de ella, o un lugar, mientras la voz lo nombra",
  "parametros": {
   "pieza": {
    "tipo": "pieza",
@@ -12,10 +12,17 @@
    "tipo": "lugar",
    "requerido": false,
    "descripcion": "el lugar que se marca con anillos (o `pieza`): un lugar: id del set o de mundo.lugares, o [lon, lat]"
+  },
+  "elemento": {
+   "tipo": "lugar",
+   "requerido": false,
+   "descripcion": "con `pieza` de edificios, calles o carretera: el edificio o la calle que está en ese lugar (el más cercano), en el acento"
   }
  },
  "escalas": [
-  "pais"
+  "pais",
+  "ciudad",
+  "esquema"
  ],
  "motores": [
   "three",

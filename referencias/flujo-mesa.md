@@ -102,7 +102,15 @@ golpe de arriba y las piezas siguen quietos).
 
 **Cuándo sí.** Cuando **el lugar es la información**: una ruta entre dos sitios, una falla, una cuenca, qué tan lejos
 queda algo de otra cosa, por dónde pasó, qué pueblos alcanzó. La voz nombra lugares y la oración se entiende mejor
-viéndolos en su sitio.
+viéndolos en su sitio. **O cuando el mecanismo se entiende mejor viéndolo moverse** (2026-11-15): cómo se forma una cola,
+cómo viaja una señal, cómo se llena un embalse; para eso, una maqueta de escala `esquema` (un mundo genérico, sin
+geografía real, con el aviso «Esquema»), como hoy se pide una animación `explica`. El `explica-editor` puede proponerla
+en el encuadre; la decide el realizador.
+
+**Lo que no existe se pide.** El vocabulario es el catálogo (`maqueta3d.py catalogo --para realizador [--escala E]`). Si
+falta algo, el realizador cuenta la oración con piezas y deja un `brief` en su retorno (≤ 1 por video); el Workflow
+`plano` lo pasa UNA vez al agente `maqueta-constructor` (`scripts/maqueta_modulo.py check` → `registrar`; guía
+`referencias/roles/maqueta-constructor.md`) y, si queda registrado, el realizador lo usa en esa mesa.
 
 **Cuándo no.** Para ubicar un solo lugar (eso es la pieza `lugar`, que es archivo y cuesta nada); para adornar una
 oración que no habla de un lugar; en una escena que ya es tablero; en el gancho (el cuadro 0 es del sujeto: MV14); cuando

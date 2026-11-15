@@ -1,0 +1,52 @@
+{
+ "set": "capital",
+ "archivo": "relieve.png",
+ "ancho": 431,
+ "alto": 479,
+ "caja": {
+  "lon_min": -90.55,
+  "lon_max": -90.49,
+  "lat_min": 14.585,
+  "lat_max": 14.65
+ },
+ "desfase_m": 8000,
+ "codificacion": "altura_m = R*256 + G - desfase_m; fila 0 = norte; la celda es el centro de su casilla",
+ "min_m": 1356,
+ "max_m": 1574,
+ "proyeccion": {
+  "lon0": -90.52,
+  "lat0": 14.6175,
+  "km_lon": 107.7168,
+  "km_lat": 110.574,
+  "m_lon": 107716.81,
+  "m_lat": 110574.0
+ },
+ "muestras": [
+  [
+   61,
+   95,
+   1531
+  ],
+  [
+   215,
+   239,
+   1500
+  ],
+  [
+   323,
+   159,
+   1457
+  ],
+  [
+   143,
+   383,
+   1520
+  ],
+  [
+   426,
+   4,
+   1472
+  ]
+ ],
+ "base_m": 1356
+}

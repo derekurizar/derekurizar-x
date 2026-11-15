@@ -1,0 +1,26 @@
+{
+ "tipo": "ciudad",
+ "clase": "mundo",
+ "cuando": "un lugar real de pocos km en metros (sus calles, edificios y agua): dónde pasó algo dentro de una ciudad",
+ "parametros": {
+  "set": {
+   "tipo": "texto",
+   "requerido": true,
+   "descripcion": "el set de geodatos de escala ciudad (design/sets3d/<set>/: relieve, calles, edificios, agua, zonas, lugares; maqueta3d.py sets)"
+  },
+  "exageracion": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [1, 5],
+   "defecto": 1.5,
+   "descripcion": "cuántas veces se exagera el relieve del suelo (los edificios guardan su altura real)"
+  }
+ },
+ "escalas": ["ciudad"],
+ "motores": ["three"],
+ "capas": ["relieve"],
+ "unidad_m": 1,
+ "camara": {"campo": "dist_m", "unidad": "m", "rango": [40, 9000], "despeje": 6, "cerca": 0.5, "lejos": 60000, "niebla": [1500, 3.0, 5000, 9]},
+ "plano": {"y": -1.0, "lado": 60000},
+ "ejemplo": {"escala": "ciudad", "set": "capital", "exageracion": 1.5}
+}

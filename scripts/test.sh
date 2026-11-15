@@ -2515,6 +2515,14 @@ paso "resto · video (MV13 un solo acento con crema, escucha V11 con caché por 
 paso "resto · costos y agenda (costo.py --registrar → memoria/costos.json, M22, medianas medidas en las órdenes, memoria.py marca la agenda al registrar)" python3 scripts/pruebas/resto_costos.py
 paso "maqueta3d.py catalogo --check: design/sets3d/vocabulario.json al día con las fichas" python3 scripts/maqueta3d.py catalogo --check
 paso "vocabulario de la maqueta: catálogo, fichas, validador genérico, Blender solo-three y módulos del proyecto" python3 scripts/pruebas/maqueta_registro.py
+paso "maqueta_orquestacion.py: el lint del constructor muerde, nadie lista tipos a mano, video3d.js y plano.js" python3 scripts/pruebas/maqueta_orquestacion.py
+paso "maqueta_modulo.py check --sin-render sobre eventos/onda y piezas/ruta" bash -c "python3 scripts/maqueta_modulo.py check eventos/onda --sin-render >/dev/null && python3 scripts/maqueta_modulo.py check piezas/ruta --sin-render >/dev/null"
+if [[ "$RAPIDO" == "1" ]]; then echo "SKIP   maqueta_modulo.py pureza con render (RAPIDO=1)"; else
+  paso "maqueta_modulo.py: pureza (seek doble) en eventos/onda y negativo de un módulo impuro (render)" python3 scripts/pruebas/maqueta_orquestacion.py --render
+fi
+paso "maqueta 3D: mundos pais, ciudad y esquema (escalas, recetas deterministas, M3D12, cámara por escala, set capital)" python3 scripts/pruebas/maqueta_mundos.py
+paso "maqueta 3D: los casos de los mundos nuevos pasan M3D1–M3D12" sh -c 'python3 scripts/maqueta3d.py check video/maqueta/fixture/esquema_carretera.json && python3 scripts/maqueta3d.py check video/maqueta/fixture/ciudad_capital.json'
+paso "set de ciudad capital completo" python3 scripts/build_set3d.py capital --check
 paso "producir: la cadena común (mesa, propio, 3D, largo), la pausa por el plano y la reanudación" python3 scripts/pruebas/producir.py
 paso "node --check hilo.js (envuelto en async function)" check_js hilo.js
 paso "node --check ideas.js (envuelto en async function)" check_js ideas.js

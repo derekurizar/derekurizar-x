@@ -1,0 +1,36 @@
+{
+ "tipo": "edificios",
+ "clase": "pieza",
+ "cuando": "los edificios extruidos con su altura (una ciudad de bloques); uno se puede destacar o resaltar",
+ "parametros": {
+  "altura_min_m": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    300
+   ],
+   "defecto": 0,
+   "descripcion": "solo los edificios de esta altura o más"
+  },
+  "destacar": {
+   "tipo": "lugar",
+   "requerido": false,
+   "descripcion": "el edificio que está en ese lugar va en el acento todo el video (para uno que se nombra: `resaltar` con `elemento`)"
+  }
+ },
+ "escalas": [
+  "ciudad",
+  "esquema"
+ ],
+ "motores": [
+  "three"
+ ],
+ "capas": [
+  "edificios"
+ ],
+ "ejemplo": {
+  "id": "edificios",
+  "tipo": "edificios"
+ }
+}

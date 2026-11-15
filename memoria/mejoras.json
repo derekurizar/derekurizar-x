@@ -2123,7 +2123,7 @@
       "archivo": ".claude/commands/video-3d.md · (futuro) .claude/workflows/video3d.js",
       "problema": "En /video-3d el guion, los ganchos y la dirección los escribe la sesión; solo el crítico es un agente. En el piloto funcionó, pero la calidad depende de quien conduzca la sesión.",
       "propuesta": "Si el formato se queda, un Workflow `video3d` con un director (idea visual, estilo, mundo), el `video-gancho` en «Modo 3D» y un guionista, con las paradas de siempre para que el usuario elija gancho y cierre.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m194",

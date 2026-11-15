@@ -3,6 +3,182 @@
  "nota": "Lo escribe SOLO `python3 scripts/maqueta3d.py catalogo --registrar` desde las fichas video/maqueta/<clase>/<tipo>.json (no se edita a mano). Cómo añadir una entrada: referencias/diseno/maqueta3d.md («Añadir vocabulario»).",
  "entradas": [
   {
+   "tipo": "agua",
+   "clase": "pieza",
+   "cuando": "el agua del lugar: lagos, estanques, el mar de la costa y los ríos",
+   "parametros": {
+    "rios": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "también los ríos (líneas), no solo los polígonos"
+    }
+   },
+   "escalas": [
+    "ciudad",
+    "esquema"
+   ],
+   "motores": [
+    "three"
+   ],
+   "capas": [
+    "agua"
+   ],
+   "ejemplo": {
+    "id": "agua",
+    "tipo": "agua"
+   },
+   "modulo": "piezas/agua.js",
+   "reglas": "scripts/maqueta_tipos/agua.py"
+  },
+  {
+   "tipo": "calles",
+   "clase": "pieza",
+   "cuando": "la red de calles de una ciudad o de un esquema, por clase: el tejido sobre el que pasa todo",
+   "parametros": {
+    "clases": {
+     "tipo": "lista",
+     "requerido": false,
+     "defecto": [
+      "autopista",
+      "primaria",
+      "secundaria",
+      "terciaria",
+      "residencial"
+     ],
+     "descripcion": "qué clases dibuja: autopista, primaria, secundaria, terciaria, residencial, peatonal"
+    },
+    "grosor": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0.5,
+      3
+     ],
+     "defecto": 1.0,
+     "descripcion": "multiplica el ancho real de cada clase"
+    }
+   },
+   "escalas": [
+    "ciudad",
+    "esquema"
+   ],
+   "motores": [
+    "three"
+   ],
+   "capas": [
+    "calles"
+   ],
+   "ejemplo": {
+    "id": "calles",
+    "tipo": "calles",
+    "clases": [
+     "autopista",
+     "primaria",
+     "secundaria",
+     "residencial"
+    ]
+   },
+   "modulo": "piezas/calles.js",
+   "reglas": "scripts/maqueta_tipos/calles.py"
+  },
+  {
+   "tipo": "carretera",
+   "clase": "pieza",
+   "cuando": "una vía con sus carriles y su línea central (por donde pasan los carros: sus caminos tienen nombre)",
+   "parametros": {
+    "camino": {
+     "tipo": "texto",
+     "requerido": false,
+     "defecto": "eje",
+     "descripcion": "en un esquema, un camino de la receta («eje»: la autopista de la receta carretera); en una ciudad, una arteria del set (roosevelt, bolivar…)"
+    },
+    "carriles": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      2,
+      8
+     ],
+     "descripcion": "cuántos carriles (la mitad en cada sentido); sin él, los de la receta o 4"
+    },
+    "ancho_carril_m": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      2.5,
+      4.5
+     ],
+     "defecto": 3.5,
+     "descripcion": "el ancho de cada carril"
+    },
+    "mediana_m": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      30
+     ],
+     "descripcion": "el ancho de la mediana entre los dos sentidos"
+    }
+   },
+   "escalas": [
+    "ciudad",
+    "esquema"
+   ],
+   "motores": [
+    "three"
+   ],
+   "capas": [
+    "calles"
+   ],
+   "ejemplo": {
+    "id": "autopista",
+    "tipo": "carretera",
+    "camino": "eje"
+   },
+   "modulo": "piezas/carretera.js",
+   "reglas": "scripts/maqueta_tipos/carretera.py"
+  },
+  {
+   "tipo": "edificios",
+   "clase": "pieza",
+   "cuando": "los edificios extruidos con su altura (una ciudad de bloques); uno se puede destacar o resaltar",
+   "parametros": {
+    "altura_min_m": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      300
+     ],
+     "defecto": 0,
+     "descripcion": "solo los edificios de esta altura o más"
+    },
+    "destacar": {
+     "tipo": "lugar",
+     "requerido": false,
+     "descripcion": "el edificio que está en ese lugar va en el acento todo el video (para uno que se nombra: `resaltar` con `elemento`)"
+    }
+   },
+   "escalas": [
+    "ciudad",
+    "esquema"
+   ],
+   "motores": [
+    "three"
+   ],
+   "capas": [
+    "edificios"
+   ],
+   "ejemplo": {
+    "id": "edificios",
+    "tipo": "edificios"
+   },
+   "modulo": "piezas/edificios.js",
+   "reglas": "scripts/maqueta_tipos/edificios.py"
+  },
+  {
    "tipo": "falla",
    "clase": "pieza",
    "cuando": "una falla geológica que se rompe o se desliza (un terremoto): la traza del set o una dibujada",
@@ -128,6 +304,70 @@
    },
    "modulo": "piezas/ruta.js",
    "reglas": "scripts/maqueta_tipos/ruta.py"
+  },
+  {
+   "tipo": "zona",
+   "clase": "pieza",
+   "cuando": "un área teñida sobre el suelo: un barrio, un parque, la plaza, el área de lo que pasó",
+   "parametros": {
+    "area": {
+     "tipo": "texto",
+     "requerido": false,
+     "capa": "zonas",
+     "descripcion": "el id de una zona del mundo (parques y áreas verdes del set, la plaza o un parque de la receta), o «parques»: todas las verdes"
+    },
+    "puntos": {
+     "tipo": "puntos",
+     "requerido": false,
+     "min": 3,
+     "descripcion": "o el polígono: [lon, lat] en una ciudad, [x, y] en metros en un esquema"
+    },
+    "tono": {
+     "tipo": "texto",
+     "requerido": false,
+     "valores": [
+      "acento",
+      "secundario",
+      "verde",
+      "agua"
+     ],
+     "defecto": "acento",
+     "descripcion": "de qué color se tiñe"
+    },
+    "opacidad": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0.1,
+      1
+     ],
+     "defecto": 0.4,
+     "descripcion": "cuánto tapa el suelo"
+    },
+    "borde": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "con su contorno en línea"
+    }
+   },
+   "escalas": [
+    "ciudad",
+    "esquema"
+   ],
+   "motores": [
+    "three"
+   ],
+   "ejemplo": {
+    "id": "parques",
+    "tipo": "zona",
+    "area": "parques",
+    "tono": "verde",
+    "opacidad": 0.5,
+    "borde": false
+   },
+   "modulo": "piezas/zona.js",
+   "reglas": "scripts/maqueta_tipos/zona.py"
   },
   {
    "tipo": "apagar",
@@ -356,7 +596,7 @@
   {
    "tipo": "resaltar",
    "clase": "evento",
-   "cuando": "señalar una pieza (la falla, la ruta) o un lugar (el epicentro) mientras la voz lo nombra",
+   "cuando": "señalar una pieza (la falla, la ruta, la carretera), un edificio o una calle de ella, o un lugar, mientras la voz lo nombra",
    "parametros": {
     "pieza": {
      "tipo": "pieza",
@@ -367,10 +607,17 @@
      "tipo": "lugar",
      "requerido": false,
      "descripcion": "el lugar que se marca con anillos (o `pieza`): un lugar: id del set o de mundo.lugares, o [lon, lat]"
+    },
+    "elemento": {
+     "tipo": "lugar",
+     "requerido": false,
+     "descripcion": "con `pieza` de edificios, calles o carretera: el edificio o la calle que está en ese lugar (el más cercano), en el acento"
     }
    },
    "escalas": [
-    "pais"
+    "pais",
+    "ciudad",
+    "esquema"
    ],
    "motores": [
     "three",
@@ -486,6 +733,233 @@
    },
    "modulo": "eventos/ruptura.js",
    "reglas": "scripts/maqueta_tipos/ruptura.py"
+  },
+  {
+   "tipo": "ciudad",
+   "clase": "mundo",
+   "cuando": "un lugar real de pocos km en metros (sus calles, edificios y agua): dónde pasó algo dentro de una ciudad",
+   "parametros": {
+    "set": {
+     "tipo": "texto",
+     "requerido": true,
+     "descripcion": "el set de geodatos de escala ciudad (design/sets3d/<set>/: relieve, calles, edificios, agua, zonas, lugares; maqueta3d.py sets)"
+    },
+    "exageracion": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      1,
+      5
+     ],
+     "defecto": 1.5,
+     "descripcion": "cuántas veces se exagera el relieve del suelo (los edificios guardan su altura real)"
+    }
+   },
+   "escalas": [
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "capas": [
+    "relieve"
+   ],
+   "unidad_m": 1,
+   "camara": {
+    "campo": "dist_m",
+    "unidad": "m",
+    "rango": [
+     40,
+     9000
+    ],
+    "despeje": 6,
+    "cerca": 0.5,
+    "lejos": 60000,
+    "niebla": [
+     1500,
+     3.0,
+     5000,
+     9
+    ]
+   },
+   "plano": {
+    "y": -1.0,
+    "lado": 60000
+   },
+   "ejemplo": {
+    "escala": "ciudad",
+    "set": "capital",
+    "exageracion": 1.5
+   },
+   "modulo": "mundos/ciudad.js",
+   "reglas": "scripts/maqueta_tipos/ciudad.py"
+  },
+  {
+   "tipo": "esquema",
+   "clase": "mundo",
+   "cuando": "un lugar genérico (una ciudad, una carretera, el campo, la costa, una plaza) para mostrar un mecanismo",
+   "parametros": {
+    "receta": {
+     "tipo": "texto",
+     "requerido": true,
+     "valores": [
+      "ciudad",
+      "carretera",
+      "campo",
+      "costa",
+      "plaza"
+     ],
+     "descripcion": "qué lugar arma: ciudad (cuadrícula de manzanas), carretera (una autopista que cruza una ciudad), campo, costa o plaza"
+    },
+    "semilla": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      999999
+     ],
+     "defecto": 1,
+     "descripcion": "la misma semilla da el mismo lugar (alturas, parques, casas)"
+    },
+    "tamano_m": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      300,
+      6000
+     ],
+     "defecto": 1600,
+     "descripcion": "el lado del mundo en metros"
+    },
+    "carriles": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      2,
+      8
+     ],
+     "defecto": 4,
+     "descripcion": "carriles de la autopista de la receta carretera (la mitad en cada sentido)"
+    },
+    "manzana_m": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      40,
+      200
+     ],
+     "defecto": 90,
+     "descripcion": "el lado de una manzana"
+    },
+    "altura_max_m": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      6,
+      300
+     ],
+     "defecto": 60,
+     "descripcion": "la altura de los edificios más altos (en el centro)"
+    }
+   },
+   "escalas": [
+    "esquema"
+   ],
+   "motores": [
+    "three"
+   ],
+   "unidad_m": 1,
+   "camara": {
+    "campo": "dist_m",
+    "unidad": "m",
+    "rango": [
+     15,
+     5000
+    ],
+    "despeje": 4,
+    "cerca": 0.3,
+    "lejos": 30000,
+    "niebla": [
+     900,
+     3.0,
+     3000,
+     9
+    ]
+   },
+   "plano": {
+    "y": -0.15,
+    "lado": 30000
+   },
+   "ejemplo": {
+    "escala": "esquema",
+    "receta": "carretera",
+    "semilla": 7,
+    "carriles": 4,
+    "tamano_m": 1600
+   },
+   "modulo": "mundos/esquema.js",
+   "reglas": "scripts/maqueta_tipos/esquema.py"
+  },
+  {
+   "tipo": "pais",
+   "clase": "mundo",
+   "cuando": "un país o una región real en relieve (km): dónde pasa algo, por dónde corre, hasta dónde llega",
+   "parametros": {
+    "set": {
+     "tipo": "texto",
+     "requerido": true,
+     "descripcion": "el set de geodatos de escala pais (design/sets3d/<set>/: relieve, lugares, fallas, frontera; maqueta3d.py sets)"
+    },
+    "exageracion": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      1,
+      20
+     ],
+     "defecto": 5.0,
+     "descripcion": "cuántas veces se exagera la altura del relieve"
+    }
+   },
+   "escalas": [
+    "pais"
+   ],
+   "motores": [
+    "three",
+    "blender"
+   ],
+   "capas": [
+    "relieve"
+   ],
+   "unidad_m": 1000,
+   "camara": {
+    "campo": "dist_km",
+    "unidad": "km",
+    "rango": [
+     15,
+     1600
+    ],
+    "despeje": 1.5,
+    "cerca": 0.5,
+    "lejos": 40000,
+    "niebla": [
+     700,
+     3.2,
+     2200,
+     10
+    ]
+   },
+   "plano": {
+    "y": -0.15,
+    "lado": 30000
+   },
+   "ejemplo": {
+    "escala": "pais",
+    "set": "guatemala",
+    "exageracion": 5.0
+   },
+   "modulo": "mundos/pais.js",
+   "reglas": "scripts/maqueta_tipos/pais.py"
   }
  ]
 }

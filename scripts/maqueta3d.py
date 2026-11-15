@@ -9,14 +9,14 @@ Este script RESUELVE el maqueta.json (lugares → km, cadenas de falla, alturas,
 motor ya masticado, de modo que la geometría vive en un solo sitio. Los gates M3D revisan los datos (reimplementan la
 cámara y la proyección): nunca miden píxeles, y valen igual para los dos motores.
 
-  maqueta3d.py check MAQUETA [--formato 9:16|4:5|ambos]          gates M3D1–M3D10
+  maqueta3d.py check MAQUETA [--formato 9:16|4:5|ambos]          gates M3D1–M3D12
   maqueta3d.py cuadro MAQUETA --t S [--t S …] --salida DIR [--formato F] [--hoja]   PNG de cuadros sueltos
   maqueta3d.py proyecto MAQUETA --dir DIR [--formato F]           el proyecto de HyperFrames
   maqueta3d.py render MAQUETA --dir DIR [--formato F]             DIR/<9x16|4x5>/video.mp4 + DIR/efectos.json
   maqueta3d.py pieza MAQUETA --lienzo ANCHOxALTO --salida ARCHIVO.mp4 [--borrador]
         MODO PIEZA: la maqueta alojada en el cuadro de otro flujo (solo el mundo y sus pines, en un lienzo libre)
         check y cuadro lo aceptan con --pieza --lienzo ANCHOxALTO
-  maqueta3d.py estilos | sets                                     los catálogos
+  maqueta3d.py estilos | sets                                     los catálogos (sets: con su escala, pais o ciudad)
   maqueta3d.py catalogo [--para sesion|realizador|critico] [--escala E] [--motor M]   el VOCABULARIO legible
   maqueta3d.py catalogo --registrar | --check                     escribe (o comprueba) design/sets3d/vocabulario.json
         el vocabulario (piezas, eventos, objetos, mundos) son módulos video/maqueta/<clase>/<tipo>.js con su ficha
@@ -38,6 +38,7 @@ HF = list(versiones.HF)      # ["npx", "--yes", "hyperframes@<versión>"]
 MOTOR = os.path.join(RAIZ, "video", "maqueta")
 SETS = os.path.join(RAIZ, "design", "sets3d")
 FIXTURE = os.path.join(MOTOR, "fixture", "maqueta.json")
+FIXTURES_MUNDOS = [os.path.join(MOTOR, "fixture", f) for f in ("esquema_carretera.json", "ciudad_capital.json")]   # un caso por mundo nuevo
 MOTORES = ("three", "blender")     # el estilo decide el motor: three.js en HyperFrames, o Blender (la placa) + la capa 2D de HyperFrames
 BLENDER_PY = os.path.join(AQUI, "maqueta_blender.py")
 RUMBOS = {"este": (1, 0), "oeste": (-1, 0), "norte": (0, 1), "sur": (0, -1)}
@@ -56,7 +57,8 @@ VOCABULARIO = os.path.join(SETS, "vocabulario.json")
 CLASES = {"pieza": "piezas", "evento": "eventos", "objeto": "objetos", "mundo": "mundos"}   # clase → carpeta en video/maqueta/
 ESCALAS = ("pais", "ciudad", "esquema")
 TIPOS_PARAM = ("numero", "entero", "texto", "bool", "lugar", "lugares", "pieza", "puntos", "lista")
-COMUNES = {"pieza": ("id", "tipo"), "evento": ("tipo", "t", "dur", "sfx")}   # campos de toda pieza / todo evento (no van en la ficha)
+COMUNES = {"pieza": ("id", "tipo"), "evento": ("tipo", "t", "dur", "sfx"),   # campos de toda pieza / todo evento / todo mundo (no van en la ficha)
+           "mundo": ("escala", "lugares", "piezas")}
 REGLAS_DIR = os.path.join(AQUI, "maqueta_tipos")
 _VOCAB, _REGLAS = {}, {}
 
@@ -162,8 +164,9 @@ def validar_campos(o, f, que, por_id=None, avisos=None):
     return r
 
 
-def tipo_conocido(tipo, clase, est, que):
-    """La ficha de un tipo usado en el maqueta.json; FALLA M3D2 si no está en el catálogo o si el motor del estilo no lo dibuja."""
+def tipo_conocido(tipo, clase, est, que, escala=None):
+    """La ficha de un tipo usado en el maqueta.json; FALLA M3D2 si no está en el catálogo, si el motor del estilo no lo
+    dibuja o si no sirve en la escala del mundo (su ficha → `escalas`)."""
     f = ficha(tipo, clase)
     if not f:
         raise Falla("M3D2", "%s: el %s «%s» no está en el catálogo (maqueta3d.py catalogo; hay: %s); si hace falta, pídelo al constructor con un brief"
@@ -171,7 +174,30 @@ def tipo_conocido(tipo, clase, est, que):
     if est["motor"] not in f["motores"]:
         raise Falla("M3D2", "%s: el estilo «%s» (motor %s) no dibuja «%s»: usa un estilo de three.js (%s)"
                     % (que, est["id"], est["motor"], tipo, ", ".join(k for k, e in catalogo_estilos().items() if e["motor"] in f["motores"])))
+    if escala and escala not in f["escalas"]:
+        raise Falla("M3D2", "%s: «%s» no se dibuja en un mundo de escala %s (sirve en: %s; lo de esta escala: maqueta3d.py catalogo --escala %s)"
+                    % (que, tipo, escala, ", ".join(f["escalas"]), escala))
     return f
+
+
+def mundo_de(mundo, est, avisos):
+    """El MUNDO del maqueta.json (`mundo.escala`: pais por defecto) → el objeto que lo resuelve, con su ficha
+    (video/maqueta/mundos/<escala>.json) y sus reglas (scripts/maqueta_tipos/<escala>.py → mundo(o, ficha, m3)). Lo que
+    ofrece (lo usan el resolver, los gates y las reglas de cada tipo): escala, id, unidad_m (metros por unidad de la
+    escena), km (unidad_m / 1000), exag, caja (x0, y0, x1, y1), dentro(x, y), suelo(x, y) (la altura de la maqueta en
+    unidades, ya exagerada), punto(a, b) ([lon, lat] o, en esquema, [x, y] en metros → unidades), lugares (los suyos:
+    {id: {nombre, lon, lat | x, y, peso}}), lugar_xy(l), como_lugar (cómo se declara un lugar), fuente (pie y pie_claves),
+    caminos ({nombre: [[x, y, s, 0], …]}), archivos() ([(origen, nombre en assets/set/)]), datos_R() (lo que va al primer
+    nivel del maqueta resuelto: relieve, frontera) y datos_mundo() (lo que va en MAQUETA.mundo para su módulo de motor.js)."""
+    escala = mundo.get("escala", "pais")
+    f = tipo_conocido(escala, "mundo", est, "mundo")
+    o = validar_campos(mundo, f, "mundo", avisos=avisos)
+    rg = reglas(escala)
+    if not rg or not hasattr(rg, "mundo"):
+        raise Falla("M3D1", "mundo «%s»: sin reglas (scripts/maqueta_tipos/%s.py → mundo(o, ficha, m3))" % (escala, escala))
+    W = rg.mundo(o, f, sys.modules[__name__])
+    W.ficha = f
+    return W
 
 
 def resolver_entrada(o, f, que, X, base):
@@ -285,13 +311,38 @@ def catalogo_estilos():
     return {e["id"]: e for e in cargar_json(os.path.join(SETS, "estilos.json"))["estilos"]}
 
 
-def lista_sets():
-    return sorted(d for d in os.listdir(SETS) if os.path.isfile(os.path.join(SETS, d, "fuente.json")))
+def escala_set(sid):
+    """La escala de un set (fuente.json → `escala`; los de antes de la Fase 1 son de escala pais)."""
+    try:
+        return cargar_json(os.path.join(SETS, sid, "fuente.json")).get("escala", "pais")
+    except (OSError, ValueError):
+        return None
 
 
-# ---------- el set: relieve, lugares, fallas, frontera ----------
+def lista_sets(escala=None):
+    """Los sets de design/sets3d/ (los que tienen fuente.json); con `escala`, solo los de esa escala."""
+    return sorted(d for d in os.listdir(SETS) if os.path.isfile(os.path.join(SETS, d, "fuente.json")) and (escala is None or escala_set(d) == escala))
+
+
+def set_de(o, escala, m3=None):
+    """El id del set de un mundo (`mundo.set`) ya comprobado: existe y es de esa escala. FALLA M3D1 si no."""
+    sid = o.get("set")
+    if sid not in lista_sets():
+        raise Falla("M3D1", "set «%s» no existe en design/sets3d/ (hay de escala %s: %s; se arma con scripts/build_set3d.py)" % (sid, escala, ", ".join(lista_sets(escala)) or "ninguno"))
+    if escala_set(sid) != escala:
+        raise Falla("M3D1", "el set «%s» es de escala %s y el mundo es de escala %s: pon `mundo.escala` «%s» o usa un set de escala %s (%s)"
+                    % (sid, escala_set(sid), escala, escala_set(sid), escala, ", ".join(lista_sets(escala)) or "ninguno"))
+    return sid
+
+
+# ---------- el set de escala pais (el mundo «pais»): relieve, lugares, fallas, frontera; unidad: km ----------
 class Set:
-    def __init__(self, sid):
+    escala, unidad_m, km = "pais", 1000.0, 1.0
+    como_lugar = "decláralo con lon y lat, o usa [lon, lat]"
+
+    def __init__(self, sid, exag=5.0):
+        self.exag = float(exag)
+        self.caminos = {}
         self.id, self.dir = sid, os.path.join(SETS, sid)
         self.relieve = cargar_json(os.path.join(self.dir, "relieve.json"))
         self.fuente = cargar_json(os.path.join(self.dir, "fuente.json"))
@@ -299,7 +350,7 @@ class Set:
         self.fallas = cargar_json(os.path.join(self.dir, "fallas.json"))
         self.frontera = cargar_json(os.path.join(self.dir, "frontera.json"))["anillos"]
         R, P, c = self.relieve, self.relieve["proyeccion"], self.relieve["caja"]
-        self.P, self.caja = P, c
+        self.P, self.caja_geo = P, c
         self.x0, self.x1 = (c["lon_min"] - P["lon0"]) * P["km_lon"], (c["lon_max"] - P["lon0"]) * P["km_lon"]
         self.y0, self.y1 = (c["lat_min"] - P["lat0"]) * P["km_lat"], (c["lat_max"] - P["lat0"]) * P["km_lat"]
         self.cx, self.cy = (self.x1 - self.x0) / R["ancho"], (self.y1 - self.y0) / R["alto"]
@@ -308,8 +359,32 @@ class Set:
     def xy(self, lon, lat):
         return (lon - self.P["lon0"]) * self.P["km_lon"], (lat - self.P["lat0"]) * self.P["km_lat"]
 
+    punto = xy
+
+    def lugar_xy(self, l):
+        return self.xy(l["lon"], l["lat"])
+
+    @property
+    def caja(self):
+        """(x0, y0, x1, y1) en unidades de la escena (la caja del relieve; la de lon/lat es caja_geo)."""
+        return (self.x0, self.y0, self.x1, self.y1)
+
     def dentro(self, x, y, margen=0.0):
         return self.x0 + margen <= x <= self.x1 - margen and self.y0 + margen <= y <= self.y1 - margen
+
+    def suelo(self, x, y):
+        """La altura de la maqueta (km, ya exagerada) en (x, y): la misma cuenta que motor.js (mundos/pais.js)."""
+        return self.metros(x, y) / 1000.0 * self.exag
+
+    def archivos(self):
+        return [(os.path.join(self.dir, self.relieve["archivo"]), self.relieve["archivo"])]
+
+    def datos_R(self):
+        return {"relieve": {k: self.relieve[k] for k in ("archivo", "ancho", "alto", "caja", "desfase_m", "proyeccion", "muestras", "max_m")},
+                "frontera": [[[round(v, 3) for v in self.xy(q[0], q[1])] for q in an] for an in self.frontera]}
+
+    def datos_mundo(self):
+        return {}
 
     def metros(self, x, y):
         """Altura real (m, el mar en 0) con la misma interpolación bilineal que motor.js."""
@@ -431,17 +506,19 @@ def camara_en(claves, t):
     a, b = claves[i], claves[min(i + 1, len(claves) - 1)]
     u = min(1, max(0, (t - a["t"]) / (b["t"] - a["t"]))) if b["t"] > a["t"] else 0
     e = -(math.cos(math.pi * u) - 1) / 2
-    return {k: a[k] + (b[k] - a[k]) * e for k in ("x", "y", "alt", "dist_km", "azimut", "elevacion", "fov")}
+    c = {k: a[k] + (b[k] - a[k]) * e for k in ("x", "y", "alt", "dist", "dist_km", "azimut", "elevacion", "fov")}
+    c["cerca"] = a.get("cerca", 0.5)
+    return c
 
 
 def ojo_de(c):
     az, el = math.radians(c["azimut"]), math.radians(c["elevacion"])
-    hd = c["dist_km"] * math.cos(el)
-    return c["x"] + math.sin(az) * hd, c["y"] - math.cos(az) * hd, c["alt"] + c["dist_km"] * math.sin(el)
+    hd = c["dist"] * math.cos(el)
+    return c["x"] + math.sin(az) * hd, c["y"] - math.cos(az) * hd, c["alt"] + c["dist"] * math.sin(el)
 
 
 def proyector(c, W, H, sube=0.0):
-    """→ función (x, y, z) → (px, py) | None (detrás de la cámara). Mundo: x este, y norte, z arriba (km).
+    """→ función (x, y, z) → (px, py) | None (detrás de la cámara). Mundo: x este, y norte, z arriba (unidades del mundo).
     `sube`: píxeles que la imagen entera sube (H/2 − centro_y de la zona): el desplazamiento de lente del motor."""
     ex, ey, ez = ojo_de(c)
     fx, fy, fz = c["x"] - ex, c["y"] - ey, c["alt"] - ez
@@ -449,7 +526,7 @@ def proyector(c, W, H, sube=0.0):
     rx, ry, rz = fy, -fx, 0.0                                   # f × (0, 0, 1)
     n = math.hypot(rx, ry) or 1e-9; rx, ry = rx / n, ry / n
     ux, uy, uz = ry * fz - rz * fy, rz * fx - rx * fz, rx * fy - ry * fx   # r × f
-    foco, cerca = 1 / math.tan(math.radians(c["fov"]) / 2), max(0.5, c["dist_km"] * 0.02)
+    foco, cerca = 1 / math.tan(math.radians(c["fov"]) / 2), max(c.get("cerca", 0.5), c["dist"] * 0.02)
 
     def p(x, y, z):
         dx, dy, dz = x - ex, y - ey, z - ez
@@ -475,30 +552,31 @@ def resolver(m, formato, avisos=None):
     if not pal:
         raise Falla("M3D1", "paleta «%s» no está en design/tokens.json → noche.paletas (hay: %s)" % (m.get("paleta"), ", ".join(tokens["noche"]["paletas"])))
     mundo = m.get("mundo") or {}
-    if mundo.get("set") not in lista_sets():
-        raise Falla("M3D1", "set «%s» no existe en design/sets3d/ (hay: %s; se arma con scripts/build_set3d.py)" % (mundo.get("set"), ", ".join(lista_sets())))
-    S = Set(mundo["set"])
-    exag = float(mundo.get("exageracion", 5.0))
+    S = mundo_de(mundo, est, avisos)                     # el mundo de su escala (pais: el Set de siempre)
+    exag = S.exag
     roles = {"@fondo": pal["fondo"], "@fondo2": pal["fondo_acto2"], "@fondo3": pal["fondo_golpe"], "@acento": pal["acento"],
              "@texto": tokens["noche"]["texto"], "@tinta": tokens["noche"]["tinta_sobre_acento"]}
     color = lambda v: roles.get(v, v)
     Z = zona_de(formato); Z["velo"] = est["capa"]["velo"]
-    alt_km = lambda x, y: S.metros(x, y) / 1000.0 * exag
+    alt_km = S.suelo                                     # altura del suelo en unidades del mundo (pais: km), ya exagerada
 
     # lugares: los del set más los de mundo.lugares (que mandan)
     propios = mundo.get("lugares") or {}
 
     def lugar(ref, que):
         if isinstance(ref, (list, tuple)) and len(ref) == 2 and all(isinstance(v, (int, float)) for v in ref):
-            lon, lat, nombre = ref[0], ref[1], ""
+            (x, y), nombre, donde = S.punto(ref[0], ref[1]), "", tuple(ref)
         elif isinstance(ref, str) and (ref in propios or ref in S.lugares):
             l = propios.get(ref) or S.lugares[ref]
-            lon, lat, nombre = l["lon"], l["lat"], l.get("nombre", ref)
+            try:
+                x, y = S.lugar_xy(l)
+            except (KeyError, TypeError):
+                raise Falla("M3D2", "%s: el lugar «%s» de mundo.lugares está mal declarado (%s)" % (que, ref, S.como_lugar))
+            nombre, donde = l.get("nombre", ref), (l.get("lon", l.get("x")), l.get("lat", l.get("y")))
         else:
-            raise Falla("M3D2", "%s: el lugar «%s» no está en mundo.lugares ni en el set %s (decláralo con lon y lat, o usa [lon, lat])" % (que, ref, S.id))
-        x, y = S.xy(lon, lat)
+            raise Falla("M3D2", "%s: el lugar «%s» no está en mundo.lugares ni en el %s (%s)" % (que, ref, "mundo %s" % S.id if S.escala == "esquema" else "set %s" % S.id, S.como_lugar))
         if not S.dentro(x, y):
-            raise Falla("M3D2", "%s: el lugar «%s» (%.3f, %.3f) cae fuera de la caja del set %s" % (que, ref, lon, lat, S.id))
+            raise Falla("M3D2", "%s: el lugar «%s» (%.3f, %.3f) cae fuera de la caja del %s" % (que, ref, donde[0], donde[1], "mundo %s" % S.id if S.escala == "esquema" else "set %s" % S.id))
         return {"x": round(x, 3), "y": round(y, 3), "nombre": nombre, "peso": (propios.get(ref) or S.lugares.get(ref) or {}).get("peso", 0.4) if isinstance(ref, str) else 0.4}
 
     # piezas: cada una contra su ficha (validador genérico) y las reglas de su tipo (scripts/maqueta_tipos/<tipo>.py)
@@ -511,7 +589,7 @@ def resolver(m, formato, avisos=None):
         if not pid or pid in ids:
             raise Falla("M3D2", "la pieza %d no tiene `id` o lo repite (%r)" % (n, pid))
         ids.add(pid)
-        f = tipo_conocido(tipo, "pieza", est, que)
+        f = tipo_conocido(tipo, "pieza", est, que, S.escala)
         piezas.append(resolver_entrada(validar_campos(p, f, que, avisos=avisos), f, que, X, {"id": pid, "tipo": tipo}))
     for tipo in dict.fromkeys(p["tipo"] for p in piezas):
         rg = reglas(tipo)
@@ -531,11 +609,18 @@ def resolver(m, formato, avisos=None):
         p["protagonista"] = p["id"] == prota
 
     # cámara
+    # la distancia va en la unidad de la escala (la ficha del mundo → camara.campo: dist_km en pais, dist_m en ciudad y
+    # esquema); resuelta: `dist` en unidades de la escena (la que usan motor.js y los gates) y `dist_km` (la de Blender)
+    CF = S.ficha["camara"]
+    campo, otro = CF["campo"], ("dist_m" if CF["campo"] == "dist_km" else "dist_km")
     camara = []
     for n, k in enumerate(m.get("camara") or []):
         l = lugar(k.get("mira"), "cámara, clave %d" % n)
+        if k.get(campo) is None and k.get(otro) is not None:
+            raise Falla("M3D3", "cámara, clave %d: en un mundo de escala %s la distancia va en `%s` (%s), no en `%s`" % (n, S.escala, campo, CF["unidad"], otro))
+        d = float(k.get(campo, 0))
         camara.append({"t": float(k.get("t", -1)), "x": l["x"], "y": l["y"], "alt": round(alt_km(l["x"], l["y"]), 3),
-                       "dist_km": float(k.get("dist_km", 0)), "azimut": float(k.get("azimut", 0)), "elevacion": float(k.get("elevacion", 0)),
+                       "dist": d, "dist_km": d * S.km, "cerca": CF["cerca"], "azimut": float(k.get("azimut", 0)), "elevacion": float(k.get("elevacion", 0)),
                        "fov": float(k.get("fov", 50))})
 
     # eventos: igual que las piezas (ficha + reglas del tipo); el adelanto de la portada lo dice la ficha
@@ -549,7 +634,7 @@ def resolver(m, formato, avisos=None):
     for n, e in enumerate(m.get("eventos") or []):
         tipo = e.get("tipo")
         que = "evento %d (%s)" % (n, tipo)
-        f = tipo_conocido(tipo, "evento", est, que)
+        f = tipo_conocido(tipo, "evento", est, que, S.escala)
         sfx_ok(e, que)
         r = {"tipo": tipo, "t": float(e.get("t", -1)), "dur": float(e.get("dur", 0))}
         if e.get("sfx"):
@@ -618,11 +703,25 @@ def resolver(m, formato, avisos=None):
         "col": col, "estilo_cfg": cfg, "capa_col": {k: color(v) for k, v in est["capa"].items() if isinstance(v, str)}, "radio": est["capa"]["radio"],
         "capa_num": {k: est["capa"].get(k, 1) for k in ("sombra_op", "vineta_op")},
         "exageracion": exag, "zona": Z, "protagonista": prota, "pieza": bool(Z.get("pieza")), "anfitrion": pal["fondo"],
-        "relieve": {k: S.relieve[k] for k in ("archivo", "ancho", "alto", "caja", "desfase_m", "proyeccion", "muestras", "max_m")},
-        "frontera": [[[round(v, 3) for v in S.xy(q[0], q[1])] for q in an] for an in S.frontera],
-        "piezas": piezas, "camara": camara, "eventos": eventos, "marcas": marcas, "capa": capa,
+        **S.datos_R(),
+        "mundo": dict(S.datos_mundo(), escala=S.escala, set=S.id, unidad_m=S.unidad_m, km=S.km, caja=[round(v, 3) for v in S.caja],
+                      camara={"cerca": CF["cerca"], "lejos": CF["lejos"], "niebla": CF["niebla"]}, plano=S.ficha["plano"],
+                      caminos=dict(S.caminos, **{k: v for p in piezas for k, v in (p.get("_caminos") or {}).items()}),
+                      lugares=lugares_ctx(S, propios, lugar)),
+        "piezas": [{k: v for k, v in p.items() if k != "_caminos"} for p in piezas], "camara": camara, "eventos": eventos, "marcas": marcas, "capa": capa,
         "_set": S, "_pie_claves": S.fuente.get("pie_claves", {}),
     }
+
+
+def lugares_ctx(S, propios, lugar):
+    """Los lugares con nombre que el mundo le da a las piezas (ctx.lugares: {id: {x, y, nombre}}): los del mundo de
+    esquema y de ciudad (los de un set de país son cientos: las piezas ya los reciben resueltos) y los de mundo.lugares."""
+    ids = list(S.lugares) if S.escala != "pais" else []
+    out = {}
+    for i in dict.fromkeys(ids + list(propios)):
+        l = lugar(i, "mundo.lugares «%s»" % i)
+        out[i] = {"x": l["x"], "y": l["y"], "nombre": l["nombre"]}
+    return out
 
 
 # ---------- gates ----------
@@ -663,7 +762,8 @@ def gates_formato(m, R):
     En modo pieza (un lienzo libre) no aplican M3D5 ni M3D9."""
     out, Z, S, dur, fps = [], R["zona"], R["_set"], R["dur"], R["fps"]
     pieza = R["pieza"]
-    W, H, cam, exag = Z["W"], Z["H"], R["camara"], R["exageracion"]
+    W, H, cam = Z["W"], Z["H"], R["camara"]
+    CF = S.ficha["camara"]
     F = lambda g, msg: out.append((g, msg))
     if dur <= 0:
         F("M3D1", "`duracion_s` debe ser mayor que 0"); return out
@@ -680,19 +780,20 @@ def gates_formato(m, R):
         return out
     if cam[-1]["t"] > dur + 1e-6:
         F("M3D3", "la última clave de cámara (t = %.2f) cae después del final (%.2f s)" % (cam[-1]["t"], dur))
-    rangos = {"dist_km": (15, 1600, "km"), "elevacion": (8, 89, "°"), "fov": (20, 75, "°")}
+    # el rango de la distancia es de la escala del mundo (su ficha → camara: pais 15–1600 km; ciudad y esquema en metros)
+    rangos = {"dist": (CF["rango"][0], CF["rango"][1], CF["unidad"], CF["campo"]), "elevacion": (8, 89, "°", "elevacion"), "fov": (20, 75, "°", "fov")}
     for n, k in enumerate(cam):
-        for campo, (lo, hi, u) in rangos.items():
+        for campo, (lo, hi, u, nombre) in rangos.items():
             if not lo <= k[campo] <= hi:
-                F("M3D3", "clave %d: `%s` = %g fuera de rango (%g–%g %s)" % (n, campo, k[campo], lo, hi, u))
+                F("M3D3", "clave %d: `%s` = %g fuera de rango (%g–%g %s%s)" % (n, nombre, k[campo], lo, hi, u, "" if campo != "dist" else " en un mundo de escala %s" % S.escala))
     # velocidad tope por tramo (el pico de la curva es π/2 veces la media) y el ojo por encima del relieve
     for n, (a, b) in enumerate(zip(cam, cam[1:])):
         dt, pico = b["t"] - a["t"], math.pi / 2
-        dmed = math.sqrt(a["dist_km"] * b["dist_km"])
+        dmed = math.sqrt(a["dist"] * b["dist"])
         v = {"paneo": (math.hypot(b["x"] - a["x"], b["y"] - a["y"]) / dmed / dt * pico, 0.85, "aleja las claves en t o acerca los puntos que mira"),
              "giro": (abs(b["azimut"] - a["azimut"]) / dt * pico, 45, "reparte el giro de azimut en más segundos (tope 45°/s)"),
              "cabeceo": (abs(b["elevacion"] - a["elevacion"]) / dt * pico, 30, "reparte el cambio de elevación en más segundos (tope 30°/s)"),
-             "zoom": (abs(math.log(b["dist_km"] / a["dist_km"])) / dt * pico, 1.1, "reparte el cambio de dist_km en más segundos (tope ×3 por segundo)")}
+             "zoom": (abs(math.log(b["dist"] / a["dist"])) / dt * pico, 1.1, "reparte el cambio de %s en más segundos (tope ×3 por segundo)" % CF["campo"])}
         for nombre, (val, tope, arreglo) in v.items():
             if val > tope * 1.001:
                 F("M3D3", "cámara, de la clave %d a la %d (%.1f s): %s demasiado rápido (%.2f, tope %.2f): marea; %s" % (n, n + 1, dt, nombre, val, tope, arreglo))
@@ -700,14 +801,15 @@ def gates_formato(m, R):
     bajo = None
     for i in range(int(dur / paso) + 1):
         c = camara_en(cam, i * paso); ex, ey, ez = ojo_de(c)
-        if S.dentro(ex, ey) and ez < S.metros(ex, ey) / 1000 * exag + 1.5:
+        if S.dentro(ex, ey) and ez < S.suelo(ex, ey) + CF["despeje"]:
             bajo = i * paso; break
     if bajo is not None:
-        F("M3D3", "la cámara se mete en el relieve hacia t = %.1f s: sube `elevacion` o `dist_km`, o baja `mundo.exageracion`" % bajo)
+        F("M3D3", "la cámara se mete en el %s hacia t = %.1f s: sube `elevacion` o `%s`%s" % ("relieve" if S.escala == "pais" else "suelo", bajo, CF["campo"],
+                                                                                        ", o baja `mundo.exageracion`" if S.escala != "esquema" else ""))
 
     proy = lambda t: proyector(camara_en(cam, t), W, H, H / 2 - Z["centro_y"])
     en_cuadro = lambda p, m_=0: p is not None and m_ <= p[0] <= W - m_ and Z["sup"] <= p[1] <= (H if pieza else Z["subs_y"])
-    alt = lambda x, y: S.metros(x, y) / 1000 * exag + 0.3
+    alt = lambda x, y: S.suelo(x, y) + 0.3
 
     # M3D4 · marcas
     marcas, cifras = R["marcas"], R["capa"]["cifras"]
@@ -893,8 +995,8 @@ def gates_formato(m, R):
 
 
 def gates_comunes(m, R, avisos):
-    """M3D1, M3D2 (ya revisados al resolver), M3D7 y M3D8. → lista de (gate, mensaje). En modo pieza no aplica M3D7 y
-    `capa` es opcional."""
+    """M3D1, M3D2 (ya revisados al resolver), M3D7, M3D8 y M3D12. → lista de (gate, mensaje). En modo pieza no aplica
+    M3D7 y `capa` es opcional."""
     out, pieza = [], R["pieza"]
     F = lambda g, msg: out.append((g, msg) if not (pieza and g == "M3D7") else ("", ""))
     if m.get("version") != 1:
@@ -913,11 +1015,15 @@ def gates_comunes(m, R, avisos):
         F("M3D7", "`capa.cierre` necesita `t` dentro del video, `frase` y `redes`")
     if C.get("cierre") and R["dur"] - ci.get("t", 0) < 3:
         F("M3D7", "el cierre dura %.1f s: «Sígueme en» necesita al menos 3 s en pantalla" % (R["dur"] - ci.get("t", 0)))
-    # las capas de geodatos que la maqueta usa: el relieve siempre, los lugares si hay marcas, y las que declaran las fichas
-    # (un parámetro con `capa`: si la pieza lo trae, o su defecto, el pie nombra la fuente de esa capa)
-    usadas = {"relieve"} | ({"lugares"} if R["marcas"] else set())
+    # las capas de geodatos que la maqueta usa: las del mundo (su ficha → `capas`: el relieve en pais y ciudad), los lugares
+    # si hay marcas, y las que declaran las fichas de sus piezas (`capas`, siempre; o un parámetro con `capa`, si la pieza lo
+    # trae o tiene defecto): el pie nombra la fuente de cada una (las claves del set: fuente.json → pie_claves; un esquema
+    # no tiene geodatos)
+    usadas = set((ficha(R["mundo"]["escala"], "mundo") or {}).get("capas") or []) | ({"lugares"} if R["marcas"] else set())
     for mp in m["mundo"].get("piezas") or []:
-        for nombre, d in ((ficha(mp.get("tipo"), "pieza") or {}).get("parametros") or {}).items():
+        fp = ficha(mp.get("tipo"), "pieza") or {}
+        usadas.update(fp.get("capas") or [])
+        for nombre, d in (fp.get("parametros") or {}).items():
             if d.get("capa") and (mp.get(nombre) if mp.get(nombre) is not None else d.get("defecto")):
                 usadas.add(d["capa"])
     for capa in sorted(usadas):
@@ -937,6 +1043,7 @@ def gates_comunes(m, R, avisos):
             for i, v in enumerate(o):
                 busca_estilo(v, "%s[%d]" % (ruta, i))
     busca_estilo(m, "")
+    out += esquema_honesto(m, R, avisos)
     if not pieza and not any(o.get("t", 9) <= PORTADA_T for o in R["capa"]["titulares"]):
         avisos.append("ningún titular empieza en t ≤ %.1f: el cuadro 0 (la portada) sale sin titular" % PORTADA_T)
     pal = R["capa"]["palabras"]
@@ -946,6 +1053,53 @@ def gates_comunes(m, R, avisos):
     if actos != sorted(actos) or (actos and abs(actos[0]) > 1e-6) or (actos and actos[-1] >= R["dur"]):
         F("M3D1", "`capa.progreso.actos` son los segundos en que empieza cada acto: crecientes, desde 0 y antes del final")
     return [x for x in out if x[0]]
+
+
+NOMBRES_REALES = {}
+
+
+def nombres_reales():
+    """Los nombres de los lugares reales de los sets de escala pais (design/sets3d/guatemala/lugares.json), normalizados
+    con espacios entre palabras: lo que un esquema no puede nombrar (M3D12)."""
+    if "n" not in NOMBRES_REALES:
+        def norm(t):
+            t = unicodedata.normalize("NFD", str(t).lower())
+            return " ".join(re.sub(r"[^a-z0-9]+", " ", "".join(c for c in t if unicodedata.category(c) != "Mn")).split())
+        nombres = set()
+        for sid in lista_sets("pais"):
+            try:
+                L = cargar_json(os.path.join(SETS, sid, "lugares.json"))["lugares"]
+            except (OSError, ValueError, KeyError):
+                continue
+            nombres.update(norm(l.get("nombre", "")) for l in L.values())
+        NOMBRES_REALES["n"], NOMBRES_REALES["norm"] = {x for x in nombres if x}, norm
+    return NOMBRES_REALES["n"], NOMBRES_REALES["norm"]
+
+
+def esquema_honesto(m, R, avisos):
+    """M3D12 · un mundo de escala ESQUEMA es un lugar genérico: no afirma geografía. Lleva `capa.aviso` con «Esquema» (en
+    modo pieza sin capa, el aviso lo pone el anfitrión) y ni sus lugares (los de la receta y los de mundo.lugares: id y
+    nombre) ni el texto de sus marcas llevan el nombre de un lugar real (design/sets3d/guatemala/lugares.json)."""
+    if R["mundo"]["escala"] != "esquema":
+        return []
+    out, C = [], m.get("capa")
+    reales, norm = nombres_reales()
+    if C is not None or not R["pieza"]:
+        if "esquema" not in norm((C or {}).get("aviso") or ""):
+            out.append(("M3D12", "un mundo de escala esquema no es un lugar real: lleva `capa.aviso` con «Esquema» (p. ej. «Esquema · no es un lugar real»)"))
+    else:
+        avisos.append("M3D12 modo pieza sin capa: la mesa que aloja este esquema debe decir «Esquema» en pantalla")
+    for lid, l in sorted(R["mundo"].get("lugares", {}).items()):
+        for t in dict.fromkeys((lid.replace("-", " "), l.get("nombre") or "")):
+            if norm(t) in reales:
+                out.append(("M3D12", "el lugar «%s» del esquema se llama como un lugar real («%s»): un esquema usa nombres genéricos (centro, norte, plaza, pueblo…)" % (lid, t)))
+                break
+    for k in R["marcas"]:
+        txt = " %s %s " % (norm(k.get("texto")), norm(k.get("sub")))
+        real = next((r for r in sorted(reales) if len(r) >= 4 and " %s " % r in txt), None)
+        if real:
+            out.append(("M3D12", "la marca «%s» nombra un lugar real («%s») sobre un esquema: el esquema no es ese lugar; usa un mundo de ciudad o de país, o un nombre genérico" % (k["texto"], real)))
+    return out
 
 
 def revisar(ruta, formatos):
@@ -998,7 +1152,7 @@ def escribir_proyecto(m, formato, destino, fotos=None):
     if placa:
         R["anclas"] = anclas_de(R)
         R["placa"] = {"fotos": sorted(fotos)} if fotos else {"video": "assets/placa.mp4"}
-        for k in ("piezas", "eventos", "camara", "relieve", "frontera", "blender", "estilo_cfg"):   # la capa no los usa: el mundo ya viene dibujado
+        for k in ("piezas", "eventos", "camara", "relieve", "frontera", "blender", "estilo_cfg", "mundo"):   # la capa no los usa: el mundo ya viene dibujado
             R.pop(k, None)
         if fotos:
             fondo = '<div id="placa" class="clip" data-start="0" data-duration="@D@" data-track-index="0">%s</div>' % "".join(
@@ -1009,7 +1163,8 @@ def escribir_proyecto(m, formato, destino, fotos=None):
     else:
         for f in ("three.module.js", "three.core.js", "LICENSE"):
             shutil.copyfile(os.path.join(versiones.THREE_DIR, f), os.path.join(A, "three", f))
-        shutil.copyfile(os.path.join(S.dir, R["relieve"]["archivo"]), os.path.join(A, "set", R["relieve"]["archivo"]))
+        for origen, nombre in S.archivos():                # los archivos del mundo (pais: relieve.png)
+            shutil.copyfile(origen, os.path.join(A, "set", nombre))
         fondo = '<canvas id="gl" class="clip" width="@W@" height="@H@" data-start="0" data-duration="@D@" data-track-index="0"></canvas>'
         # el vocabulario: SOLO los módulos que usa esta maqueta, que se registran en window.MAQ antes de motor.js (módulo, diferido)
         mods = modulos_de(R)
@@ -1196,7 +1351,7 @@ def cmd_check(a):
         print("  aviso · " + x)
     for x in fallas:
         print("  FALLA " + x)
-    que = "modo pieza, lienzo %s: M3D1–M3D4, M3D6, M3D8 y M3D11 OK" % formatos_de(a)[0] if es_pieza(formatos_de(a)[0]) else "M3D1–M3D11 OK (%s)" % ", ".join(formatos_de(a))
+    que = "modo pieza, lienzo %s: M3D1–M3D4, M3D6, M3D8, M3D11 y M3D12 OK" % formatos_de(a)[0] if es_pieza(formatos_de(a)[0]) else "M3D1–M3D12 OK (%s)" % ", ".join(formatos_de(a))
     print("%s: %s" % (a.maqueta, que if not fallas else "%d falla(s)" % len(fallas)))
     return 1 if fallas else 0
 
@@ -1436,9 +1591,14 @@ def revisar_ficha(fi, clase, tipo, ruta_js):
     ad = fi.get("adelanto")
     if ad is not None and (clase != "evento" or not isinstance(ad, dict) or not ad or set(ad) - {"s", "dur"}):
         f.append("%s.json: `adelanto` (solo eventos) es {\"s\": segundos} o {\"dur\": fracción de la duración}: cuánto lleva un evento que empieza en la portada" % que)
+    if fi.get("capas") is not None and not (isinstance(fi["capas"], list) and all(isinstance(c, str) and c for c in fi["capas"])):
+        f.append("%s.json: `capas` (opcional) es la lista de capas del set que el tipo usa siempre (el pie nombra su fuente, M3D7)" % que)
+    if clase == "mundo":
+        f += revisar_ficha_mundo(fi, que, tipo)
     ej = fi.get("ejemplo")
-    if not isinstance(ej, dict) or (clase in COMUNES and ej.get("tipo") != tipo):
-        f.append("%s.json: `ejemplo` es un objeto con `tipo` «%s», tal como va en el maqueta.json" % (que, tipo))
+    llave = "escala" if clase == "mundo" else "tipo"
+    if not isinstance(ej, dict) or (clase in ("pieza", "evento", "mundo") and ej.get(llave) != tipo):
+        f.append("%s.json: `ejemplo` es un objeto con `%s` «%s», tal como va en el maqueta.json" % (que, llave, tipo))
     elif not f:
         try:
             validar_campos(ej, fi, "%s.json → ejemplo" % que)
@@ -1456,6 +1616,27 @@ def revisar_ficha(fi, clase, tipo, ruta_js):
         f.append("%s.js: el módulo no usa la red ni carga nada: todo llega en ctx" % que)
     if re.search(r"Math\.random|Date\.now|performance\.now|new Date\b", js):
         f.append("%s.js: nada de azar ni reloj: cada cuadro es función pura de t (usa ctx.hash)" % que)
+    return f
+
+
+def revisar_ficha_mundo(fi, que, tipo):
+    """Lo propio de la ficha de un MUNDO: su escala, su unidad y su cámara (el rango de la distancia es por escala)."""
+    f = []
+    if fi.get("escalas") != [tipo]:
+        f.append("%s.json: un mundo sirve en su propia escala: `escalas` es [\"%s\"]" % (que, tipo))
+    if tipo not in ESCALAS:
+        f.append("%s: un mundo se llama como su escala (%s)" % (que, ", ".join(ESCALAS)))
+    if not (isinstance(fi.get("unidad_m"), (int, float)) and fi["unidad_m"] > 0):
+        f.append("%s.json: `unidad_m` es cuántos metros mide una unidad de la escena (pais: 1000; ciudad y esquema: 1)" % que)
+    c = fi.get("camara")
+    if not (isinstance(c, dict) and c.get("campo") in ("dist_km", "dist_m") and isinstance(c.get("unidad"), str)
+            and isinstance(c.get("rango"), list) and len(c["rango"]) == 2 and 0 < c["rango"][0] < c["rango"][1]
+            and all(isinstance(c.get(k), (int, float)) and c[k] > 0 for k in ("despeje", "cerca", "lejos"))
+            and isinstance(c.get("niebla"), list) and len(c["niebla"]) == 4):
+        f.append("%s.json: `camara` es {campo: dist_km|dist_m, unidad, rango: [mín, máx], despeje, cerca, lejos, niebla: [mín inicio, × dist, mín fin, × dist]}" % que)
+    pl = fi.get("plano")
+    if not (isinstance(pl, dict) and isinstance(pl.get("y"), (int, float)) and isinstance(pl.get("lado"), (int, float)) and pl["lado"] > 0):
+        f.append("%s.json: `plano` es {y, lado}: el plano exterior que sigue más allá de la caja del mundo" % que)
     return f
 
 
@@ -1501,9 +1682,9 @@ def texto_catalogo(cat):
 
 
 def modulos_de(R):
-    """Los módulos de motor.js que usa una maqueta resuelta (sus piezas y eventos, y lo que ellos `usa`n) → rutas relativas
+    """Los módulos de motor.js que usa una maqueta resuelta (su mundo, sus piezas y eventos, y lo que ellos `usa`n) → rutas relativas
     a video/maqueta/, en orden estable."""
-    V, pend, usados = vocabulario(), [p["tipo"] for p in R["piezas"]] + [e["tipo"] for e in R["eventos"]], set()
+    V, pend, usados = vocabulario(), [R["mundo"]["escala"]] + [p["tipo"] for p in R["piezas"]] + [e["tipo"] for e in R["eventos"]], set()
     while pend:
         t = pend.pop()
         if t in usados or t not in V:
@@ -1553,6 +1734,13 @@ def lineas_catalogo(para="sesion", escala=None, motor=None):
                     ej.pop("t", None); ej = dict({"dice": "…"}, **ej)
                 ln += ". %s Ej.: %s" % ("Parámetros: " + ", ".join(ps) + "." if ps else "Sin parámetros.", json.dumps(ej, ensure_ascii=False))
             L.append(ln)
+    if escala:
+        fm = V.get(escala) or {}
+        cam = fm.get("camara") or {}
+        sets = lista_sets(escala) if escala != "esquema" else []
+        L.append("Mundo: {\"escala\": \"%s\"%s, …} · cámara en `%s` (%s–%s %s)%s" % (
+            escala, ", \"set\": \"%s\"" % sets[0] if sets else ", \"receta\": …", cam.get("campo", "?"), *(cam.get("rango") or ["?", "?"]), cam.get("unidad", ""),
+            " · sets: %s" % ", ".join(sets) if sets else (" · sin set: lleva capa.aviso con «Esquema» y nombres genéricos (M3D12)" if escala == "esquema" else "")))
     if not sel:
         L.append("(nada todavía con ese filtro)")
     L.append("Lo que no está aquí no se dibuja: no se inventa un tipo. Si la historia lo necesita, pídelo al constructor con un brief "
@@ -1595,9 +1783,21 @@ def cmd_estilos(a):
 
 def cmd_sets(a):
     for s in lista_sets():
-        S = Set(s)
-        print("%s: relieve %d×%d · %d lugares · %d trazos de falla (%d con nombre)\n  pie: %s" % (
-            s, S.relieve["ancho"], S.relieve["alto"], len(S.lugares), len(S.fallas["trazos"]), len(S.fallas["nombres"]), S.fuente.get("pie", "")))
+        esc = escala_set(s)
+        if esc == "pais":
+            S = Set(s)
+            print("%s [escala pais, km]: relieve %d×%d · %d lugares · %d trazos de falla (%d con nombre)\n  pie: %s" % (
+                s, S.relieve["ancho"], S.relieve["alto"], len(S.lugares), len(S.fallas["trazos"]), len(S.fallas["nombres"]), S.fuente.get("pie", "")))
+        else:
+            S = reglas(esc).mundo({"set": s}, ficha(esc, "mundo"), sys.modules[__name__])
+            c = lambda n: S.capa(n)
+            print("%s [escala %s, m]: caja %.1f × %.1f km · relieve %d×%d (%d a %d m) · %d calles (%d arterias: %s) · %d edificios · %d zonas · %d lugares\n  pie: %s" % (
+                s, esc, (S.x1 - S.x0) / 1000, (S.y1 - S.y0) / 1000, S.relieve["ancho"], S.relieve["alto"], S.relieve["min_m"], S.relieve["max_m"],
+                len(c("calles")["calles"]), len(c("calles")["arterias"]), ", ".join(c("calles")["arterias"]), len(c("edificios")["edificios"]),
+                len(c("zonas")["zonas"]), len(S.lugares), S.fuente.get("pie", "")))
+    rg = reglas("esquema")
+    if rg:
+        print("esquema [escala esquema, m, sin set]: recetas %s (mundo.receta; maqueta3d.py catalogo --escala esquema)" % ", ".join(rg.RECETAS))
     return 0
 
 
@@ -1688,6 +1888,9 @@ def cmd_prueba(a):
     a.maqueta = FIXTURE
     if cmd_check(argparse.Namespace(maqueta=FIXTURE, formato="ambos", cmd="check")) or negativos():
         return 1
+    for caso in FIXTURES_MUNDOS:   # los mundos ciudad y esquema (sus negativos: scripts/pruebas/maqueta_mundos.py)
+        if cmd_check(argparse.Namespace(maqueta=caso, formato="ambos", cmd="check")):
+            return 1
     dur = cargar_json(FIXTURE)["duracion_s"]
     r = cmd_cuadro(argparse.Namespace(maqueta=FIXTURE, t=[0.0, dur * 0.2, dur * 0.4, dur * 0.6, dur * 0.78, dur - 0.5], salida=os.path.join(a.dir, "cuadros"), formato=a.formato, hoja=True, cmd="cuadro"))
     return r or cmd_render(a) or prueba_blender(a)
@@ -1700,7 +1903,7 @@ def main():
     fmt = dict(choices=["9:16", "4:5", "ambos"], help="formato (por defecto: %(default)s)")
     lz = dict(metavar="ANCHOxALTO", help="lienzo del modo pieza (p. ej. 950x1040, 1120x1080, 1920x1080)")
     pz = dict(action="store_true", help="modo pieza: solo el mundo y sus pines, en el lienzo de --lienzo")
-    p = sub.add_parser("check", help="gates M3D1–M3D11 sobre los datos"); p.add_argument("maqueta"); p.add_argument("--formato", default="ambos", **fmt)
+    p = sub.add_parser("check", help="gates M3D1–M3D12 sobre los datos"); p.add_argument("maqueta"); p.add_argument("--formato", default="ambos", **fmt)
     p.add_argument("--pieza", **pz); p.add_argument("--lienzo", **lz)
     p = sub.add_parser("cuadro", help="PNG de cuadros sueltos (y hoja de contacto)"); p.add_argument("maqueta")
     p.add_argument("--t", action="append", type=float, required=True, help="segundo del cuadro (se repite)"); p.add_argument("--salida", required=True)

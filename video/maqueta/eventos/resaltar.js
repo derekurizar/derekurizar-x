@@ -1,6 +1,7 @@
 // Evento «resaltar» (ficha: resaltar.json): llama la atención sobre una PIEZA (sube su brillo con un pulso:
-// ctx.cuadro.brillo[id], que leen la falla y las líneas) o sobre un LUGAR (un punto con anillos que se abren, y si el
-// lugar es una luz, la aviva). Hasta 6 lugares resaltados a la vez.
+// ctx.cuadro.brillo[id], que leen la falla y las líneas), sobre UN ELEMENTO de una pieza (con `elemento`: un edificio, una
+// calle o la carretera; ctx.cuadro.elementos[id] = [{i, k}], que lee esa pieza) o sobre un LUGAR (un punto con anillos que
+// se abren, y si el lugar es una luz, la aviva). Hasta 6 lugares resaltados a la vez.
 (function (MAQ) {
   const NRES = 6;
   MAQ.EVENTOS.resaltar = {
@@ -28,7 +29,9 @@
     aplicar(t, e, ctx, st) {
       if (!(t >= e.t && t <= e.t + e.dur)) return;
       const tr = t - e.t, { suave } = ctx;
-      if (e.pieza) ctx.cuadro.brillo[e.pieza] = 1 + 0.9 * suave(0, 0.3, tr) * suave(e.dur, e.dur - 0.4, tr) * (0.8 + 0.2 * Math.cos(tr / 1.2 * Math.PI * 2));
+      if (e.pieza && e.indice !== undefined) {   // un elemento de la pieza (un edificio, una calle): lo enciende la pieza
+        (ctx.cuadro.elementos[e.pieza] = ctx.cuadro.elementos[e.pieza] || []).push({ i: e.indice, k: suave(0, 0.3, tr) * suave(e.dur, e.dur - 0.4, tr) });
+      } else if (e.pieza) ctx.cuadro.brillo[e.pieza] = 1 + 0.9 * suave(0, 0.3, tr) * suave(e.dur, e.dur - 0.4, tr) * (0.8 + 0.2 * Math.cos(tr / 1.2 * Math.PI * 2));
       if (e.pieza === undefined && st.n < NRES) {
         const A = st.resaltes.geometry.attributes, p = ctx.V3(e.x, e.y, 0.5);
         A.position.setXYZ(st.n, p.x, p.y, p.z); A.aFase.setX(st.n, tr / 1.25); A.aK.setX(st.n, suave(0, 0.25, tr) * suave(e.dur, e.dur - 0.4, tr)); st.n++;

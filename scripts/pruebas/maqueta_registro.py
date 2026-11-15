@@ -106,13 +106,13 @@ try:
 finally:
     M3._VOCAB["v"] = v_real
 
-# ---------- 4. el proyecto: solo los módulos que usa, antes del núcleo ----------
+# ---------- 4. el proyecto: solo los módulos que usa (su mundo, sus piezas y eventos), antes del núcleo ----------
 m = copy.deepcopy(BASE)
 d = os.path.join(TMP, "proyecto")
 os.makedirs(d)
 R = M3.escribir_proyecto(m, "9:16", d)
 usados = sorted(os.path.relpath(os.path.join(r, n), os.path.join(d, "assets", "modulos")) for r, _, ns in os.walk(os.path.join(d, "assets", "modulos")) for n in ns)
-esperado = sorted(M3.vocabulario()[t]["modulo"] for t in {p["tipo"] for p in R["piezas"]} | {e["tipo"] for e in R["eventos"]})
+esperado = sorted(M3.vocabulario()[t]["modulo"] for t in {p["tipo"] for p in R["piezas"]} | {e["tipo"] for e in R["eventos"]} | {R["mundo"]["escala"]})
 ok(usados == esperado, "proyecto: copia %s y la maqueta usa %s" % (usados, esperado))
 html = M3.cargar_texto(os.path.join(d, "index.html"))
 pos = [html.find('src="assets/modulos/%s"' % x) for x in esperado]

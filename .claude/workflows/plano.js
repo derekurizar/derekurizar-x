@@ -1,9 +1,10 @@
 export const meta = {
   name: 'plano',
   description: 'El paso «Plano» de la mesa de archivo vertical: el video-realizador escribe plano.json (qué pieza entra con cada oración) y deja `plano --check` en 0.',
-  whenToUse: 'Tras `<flujo>.py tiempos` con la voz real y antes de `grabar`, en todo video con "realizacion": "mesa". args: {trabajo, notas, sin_juez, permitir_fallback}. Devuelve plano_listo o plano_pendiente + fallas, y juez (lo que unos ojos frescos vieron en la hoja de golpes).',
+  whenToUse: 'Tras `<flujo>.py tiempos` con la voz real y antes de `grabar`, en todo video con "realizacion": "mesa". args: {trabajo, notas, sin_juez, sin_constructor, permitir_fallback}. Devuelve plano_listo o plano_pendiente + fallas, y juez (lo que unos ojos frescos vieron en la hoja de golpes).',
   phases: [
     { title: 'Plano', detail: 'video-realizador: plano.json desde el digesto (video.py plano --digesto): el cuadro 0 con sujeto, una pieza por oración con su `dice`, mesas con `titulo`, los tableros solos, la jerarquía de personas con sus alegatos atribuidos; baja los recursos que falten; gate video.py plano --check --hoja (MV1–MV14) y su RETORNO; ≤ 2 reparaciones' },
+    { title: 'Constructor', detail: 'OPCIONAL y acotado: si el realizador dejó un brief (la maqueta 3D necesita algo que su catálogo no tiene), un maqueta-constructor lo escribe y lo registra (maqueta_modulo.py check → registrar) UNA vez, y el realizador lo usa en esa mesa (una vuelta). args.sin_constructor lo salta' },
     { title: 'Juez', detail: 'historia-oyente en modo plano (sonnet): lee SOLO plano.md, la hoja de golpes, como quien ve el video por primera vez, y anota dónde la pantalla adelanta, contradice o no acompaña a la voz; lo que bloquea vuelve al realizador UNA vez (m183). args.sin_juez lo salta' },
   ],
 }
@@ -16,6 +17,7 @@ const A = typeof args === 'string' ? { trabajo: args } : (args || {})
 const trabajo = String(A.trabajo || '').replace(/\/+$/, '')
 if (!/^sesiones\/[a-z0-9_-]+(\/[a-z0-9_-]+){0,2}$/.test(trabajo)) throw new Error('args.trabajo debe ser el TRABAJO del video (sesiones/<slug> o sesiones/<serie>/parte-N), ya con su voz y sus tiempos.')
 const notas = String(A.notas || '').trim()
+const BRIEFS_MAX = 1   // la fase del constructor: a lo más un brief por video, una sola vez
 
 // <comun> generado por scripts/armar_workflows.py desde scripts/workflow_comun.js: no editar aquí
 // Código común de los workflows hilo.js, dato.js, investigacion.js y video.js (el sandbox de Workflow no importa módulos).
@@ -104,7 +106,15 @@ const S = {
     type: 'object', required: ['archivo', 'gate', 'fallas', 'piezas', 'recursos'],
     properties: { archivo: { type: 'string', pattern: 'plano\\.json$' }, gate: { type: 'string', enum: ['ok', 'falla'] },
       fallas: { type: 'array', items: { type: 'string' } }, piezas: { type: 'integer' }, archivo_real: { type: 'integer' },
-      recursos: { type: 'array', items: { type: 'string' } }, nota: { type: 'string' } },
+      recursos: { type: 'array', items: { type: 'string' } }, nota: { type: 'string' },
+      // lo que la maqueta 3D no sabe dibujar (maqueta3d.py catalogo --para realizador): {tipo_sugerido, clase, escala, que_se_ve, parametros, frase}
+      briefs: { type: 'array', items: { type: 'object' } } },
+  },
+  modulo: {
+    type: 'object', required: ['tipo', 'clase', 'check', 'registrado', 'reutilizado'],
+    properties: { tipo: { type: 'string' }, clase: { type: 'string' }, modulo: { type: 'string' }, check: { type: 'string', enum: ['ok', 'falla'] },
+      registrado: { type: 'boolean' }, reutilizado: { type: 'boolean' }, fallas: { type: 'array', items: { type: 'string' } },
+      ejemplo: { type: 'object' }, nucleo: { type: 'array', items: { type: 'string' } } },
   },
   juez: {
     type: 'object', required: ['archivo', 'entendi', 'desajustes'],
@@ -124,17 +134,39 @@ const directiva = (fallos) => `Eres el REALIZADOR del video vertical (lee refere
     ? `RETOQUE: ${trabajo}/plano.json ya existe y el usuario pidió esto: ${notas}. Cambia solo lo que piden esas notas y lo que el gate exija por ellas. `
     : `Escribe ${trabajo}/plano.json (si ya existe, consérvalo y arregla solo lo que el gate marque). `) +
   `Corre python3 scripts/video.py plano ${trabajo} --check --hoja hasta que no quede ninguna falla. No edites código ni cambies el guion ni la voz. ` +
-  `Devuelve el RETORNO del gate, recursos (los ids que bajaste) y nota.` +
+  `Devuelve el RETORNO del gate, recursos (los ids que bajaste), nota y briefs (≤ ${BRIEFS_MAX}: lo que una maqueta necesitaría y su catálogo no tiene; vacío si nada).` +
   (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : '')
 let r = await conReparacion('plano', (fallos) => agentRol(directiva(fallos),
   { agentType: 'video-realizador', schema: S.plano, phase: 'Plano', label: 'plano' }),
 (x) => [...(rel(x.archivo) !== `${trabajo}/plano.json` ? [`archivo debe ser ${trabajo}/plano.json`] : []), ...(x.gate !== 'ok' ? (x.fallas.length ? x.fallas : ['el gate falló sin detalle: corre video.py plano --check y copia sus líneas FALLA']) : [])], 2)
   .catch((e) => { avisar(`AVISO: el plano no dejó el gate en 0 (${String(e.message).split('\n')[0]})`); return null })
 
+const validarPlano = (x) => [...(rel(x.archivo) !== `${trabajo}/plano.json` ? [`archivo debe ser ${trabajo}/plano.json`] : []), ...(x.gate !== 'ok' ? (x.fallas.length ? x.fallas : ['el gate falló sin detalle: corre video.py plano --check y copia sus líneas FALLA']) : [])]
+// ── Constructor (opcional, acotado): el brief del realizador → un módulo del vocabulario de la maqueta, UNA vez ──
+let construido = null
+if (r && (r.briefs || []).length && !A.sin_constructor) {
+  phase('Constructor')
+  const b = r.briefs.slice(0, BRIEFS_MAX)[0]
+  if (r.briefs.length > BRIEFS_MAX) avisar(`AVISO: ${r.briefs.length} briefs del realizador; se construye solo el primero.`)
+  construido = await agentRol(
+    `Eres el CONSTRUCTOR de la maqueta 3D (lee referencias/roles/maqueta-constructor.md). BRIEF del realizador de ${trabajo}: ${JSON.stringify(b)}. ` +
+      'Mira primero si el catálogo ya lo tiene (python3 scripts/maqueta3d.py catalogo --para realizador --escala <escala>); si no, escribe el módulo y su ficha, deja python3 scripts/maqueta_modulo.py check <clase>/<tipo> en 0, mira UNA vez su hoja y regístralo con maqueta_modulo.py registrar. ' +
+      'Retorno: {tipo, clase, modulo, check, registrado, reutilizado, fallas[], ejemplo, nucleo[]}.',
+    { agentType: 'maqueta-constructor', schema: S.modulo, phase: 'Constructor', label: 'constructor' })
+    .catch((e) => { avisar(`AVISO: el constructor no terminó (${String(e.message).split('\n')[0]}); el plano queda sin esa maqueta.`); return null })
+  if (construido && (construido.nucleo || []).length) avisar(`NÚCLEO (tipo ${construido.tipo}): ${construido.nucleo.join(' · ')}`)
+  if (construido && construido.check === 'ok' && (construido.registrado || construido.reutilizado)) {
+    const r3 = await conReparacion('plano (constructor)', (fallos) => agentRol(directiva(fallos) +
+      ` CONSTRUCTOR: tu brief ya existe en el catálogo como «${construido.tipo}» (${construido.clase}; ejemplo ${JSON.stringify(construido.ejemplo || {})}). Úsalo en la mesa de la frase «${b.frase || ''}» si de verdad la cuenta mejor; cambia solo esa mesa y deja el gate en 0. No pidas más briefs.`,
+    { agentType: 'video-realizador', schema: S.plano, phase: 'Constructor', label: 'plano-construido' }), validarPlano, 1)
+      .catch((e) => { avisar(`AVISO: el realizador no dejó el gate en 0 con el tipo nuevo (${String(e.message).split('\n')[0]}); queda el plano anterior.`); return null })
+    if (r3) r = r3
+  } else if (construido) avisar(`AVISO: el constructor no dejó un tipo usable (${(construido.fallas || []).join('; ') || construido.check}).`)
+}
+
 // ── Juez del plano (m183): el oyente y el crítico juzgaron el guion ANTES de la voz, con la pantalla de las escenas;
 // el dibujo final es este plano y nadie lo había visto con ojos frescos. Un oyente (sonnet) lee la hoja de golpes y lo
 // que bloquea (la pantalla adelanta, contradice o no tiene que ver con la voz) vuelve al realizador UNA sola vez. ──
-const validarPlano = (x) => [...(rel(x.archivo) !== `${trabajo}/plano.json` ? [`archivo debe ser ${trabajo}/plano.json`] : []), ...(x.gate !== 'ok' ? (x.fallas.length ? x.fallas : ['el gate falló sin detalle: corre video.py plano --check y copia sus líneas FALLA']) : [])]
 let juez = null, corregidos = []
 if (r && r.gate === 'ok' && !A.sin_juez) {
   phase('Juez')
@@ -164,6 +196,7 @@ return {
   piezas: r ? r.piezas : null,
   archivo_real: r ? r.archivo_real : null,
   recursos: r ? (r.recursos || []) : [],
+  construido: construido ? { tipo: construido.tipo, clase: construido.clase, check: construido.check, registrado: !!construido.registrado, reutilizado: !!construido.reutilizado, nucleo: construido.nucleo || [] } : null,
   nota: r ? (r.nota || '') : '',
   fallas: r ? r.fallas : ['el realizador no terminó: corre python3 scripts/video.py plano <TRABAJO> --check'],
   avisos: AVISOS_WF,

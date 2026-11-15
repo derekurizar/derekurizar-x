@@ -2,8 +2,10 @@
 
 Un video vertical 100 % en 3D (9:16 + 4:5, de 45 s a 3 min como los demás videos; `--duracion S`, 20–180, por defecto 45; C3D9 falla por encima de 180 s estimados o reales): un mundo simple (el relieve del país, una ciudad, una plaza)
 que una cámara recorre mientras la voz cuenta, con una capa 2D encima (titular, pines que siguen al 3D, cifras,
-subtítulos). Sirve cuando **el lugar es la información**: una falla que cruza el país, una ruta, una cuenca, un
-cierre vial. Si el tema no pasa en un lugar, es otro flujo.
+subtítulos). Sirve cuando **el lugar o el mecanismo se entienden mejor viéndolos moverse** (2026-11-15; antes: «cuando el
+lugar es la información»): una falla que cruza el país, una ruta, una cuenca, un cierre vial; o cómo se forma una cola,
+cómo viaja una señal, cómo se llena un embalse (un mundo `esquema`, genérico, con el aviso «Esquema»). Si ni el lugar ni
+el mecanismo lo piden, es otro flujo.
 
 Decisiones del usuario (2026-11-14):
 
@@ -15,7 +17,9 @@ Decisiones del usuario (2026-11-14):
 4. **El gancho manda y todo concuerda:** lo que se ve es lo que la voz está diciendo.
 5. Otros flujos (/historia, /serie, /explica, /youtube-long) pueden alojar una maqueta dentro de su mesa de archivo:
    el realizador la declara en `plano.json` y se renderiza con el **modo pieza** del motor (`maqueta3d.py pieza`, el
-   mundo y sus pines en el lienzo que pida el anfitrión). Ver «La maqueta» en `referencias/flujo-mesa.md`.
+   mundo y sus pines en el lienzo que pida el anfitrión). Ver «La maqueta» en `referencias/flujo-mesa.md`. Una maqueta
+   de escala `esquema` puede explicar un mecanismo dentro de la mesa (como una animación `explica`); lo que el catálogo
+   no tiene, el realizador lo pide con un brief y el Workflow `plano` lo pasa al constructor una vez.
 6. **«Maqueta · no a escala» no es obligatorio.** El aviso sale solo cuando el guion lo pide (`aviso`); el pie con las
    fuentes de los geodatos sí va siempre.
 
@@ -28,16 +32,35 @@ entrega) y `scripts/maqueta3d.py` (gates M3D, cuadros sueltos, render).
 |---|---|---|
 | 1 | Preparar (con `--desde` reutiliza las cifras verificadas de una pieza ya investigada) | `video3d.py preparar <slug> --tema "…" --musica-tema <tema>` |
 | 2 | Investigar y verificar lo que falte, incluidos los geodatos (qué se dibuja y de dónde sale) | agentes de /historia; `video3d.py datos --sumar` |
-| 3 | Dirección: la idea visual, el estilo y el mundo | la sesión, con `video3d.py digesto` |
-| 4 | Ganchos: 5 candidatos con su cuadro renderizado; **el usuario elige** (aviso G3D2 si la familia repite la de los últimos 2 videos 3D) | `ganchos --check --cuadros` → `ganchos --usar <id>` |
-| 5 | Guion: la narración de corrido primero; luego las escenas y el `caption` por plataforma | `guion --check` (C3D1–C3D11, V2–V5, M3D) |
-| 6 | Storyboard: un cuadro por clave de cámara y evento, antes de gastar créditos | `storyboard` |
-| 7 | Crítico (retención y concordancia) y cierre: **el usuario elige el cierre** | agente `video-critico` en «Modo 3D» (su guía de rol) |
+| 3 | Dirección visual por frase (idea visual, criterio, escala, estilo, mundo, el verbo del catálogo por oración); lo que falta, al constructor | Workflow `video3d`: `video3d-director` → `maqueta-constructor` |
+| 4 | Ganchos: 5 candidatos con su cuadro renderizado; el crítico recomienda y **el usuario elige** (y el estilo, si la confianza es baja) | Workflow: `ganchos --check --cuadros` → para con `elegir_gancho` |
+| 5 | Guion: la narración de corrido primero; luego las escenas y el `caption` por plataforma | Workflow: el director, `guion --check` (C3D1–C3D11, V2–V5, M3D) |
+| 6 | Storyboard: un cuadro por clave de cámara y evento, antes de gastar créditos | Workflow: `storyboard` |
+| 7 | Crítico (retención y concordancia) y cierre: **el usuario elige el cierre** | Workflow: `video-critico` en «Modo 3D» → 5 cierres (`elegir_cierre`) |
 | 8 | Voz (ElevenLabs, El Faraon 4) y escucha independiente (V11) | `voz` → MCP → `descargar --estado` (o `--nodos` si el estado llegó en el chat) → `escuchar` |
 | 9 | Tiempos reales | `tiempos` |
 | 10 | Render en 9:16 y 4:5 | `render` |
 | 11 | Montaje: voz, música del tema con ducking, efectos, −14 LUFS; `.srt` y portada | `montar` |
 | 12 | Entrega en `videos3d/<fecha>-<slug>/` y registro (M21) | `entregar` → `memoria.py --video3d <entrega>` |
+
+## La orquestación (Workflow `video3d`, 2026-11-15)
+
+Desde el 2026-11-15 la dirección, los ganchos, el guion y el `maqueta.json` no los escribe la sesión a mano (cerró m193):
+
+| Fase | Quién | Qué deja |
+|---|---|---|
+| Dirección | `video3d-director` (opus; `referencias/roles/video3d-director.md`) | `direccion.json`: idea visual, criterio (`lugar` o `mecanismo`), escala (`pais`, `ciudad`, `esquema`), estilo con `razon` y `confianza`, mundo, borrador y **la dirección por frase**: para cada oración, el verbo visual del catálogo que la cuenta; `briefs[]` con lo que falta |
+| Constructor | `maqueta-constructor` (opus; `referencias/roles/maqueta-constructor.md`), uno por brief, ≤ 3 a la vez | un módulo nuevo del vocabulario (`video/maqueta/<clase>/<tipo>.js` + ficha), probado con `scripts/maqueta_modulo.py check` (lint, pureza, hojas) y registrado; o «ya existía» |
+| — | el usuario | el estilo, si la confianza es baja (`elegir_estilo`, cuadros en `estilos/<id>/`) |
+| Ganchos | el director (el único que tiene el estilo, el mundo y el catálogo: más simple que darle a `video-gancho` un modo 3D) | `ganchos.json` + hojas (`ganchos --check --cuadros`) |
+| Selección | `video-critico` (selección del gancho 3D) | `seleccion.json`; luego **el usuario elige** (`elegir_gancho`) |
+| Guion | el director | narración, `direccion.json` final, `guion.json`, `guion --check` en 0, `storyboard`; un brief nuevo va al constructor UNA vez |
+| Crítica | `video-critico` en «Modo 3D» (≤ 2 pasadas; el director corrige) | `critica.json` |
+| Cierres | el director | `cierres.json` (5, cada uno probado en una copia con `guion --check`); **el usuario elige** (`elegir_cierre`) |
+
+El vocabulario (qué se puede dibujar) **no se lista en ningún workflow ni guía**: todos leen el catálogo
+(`maqueta3d.py catalogo --para sesion|realizador|critico [--escala E]`), que escribe solo `maqueta3d.py catalogo
+--registrar` desde las fichas (W15 de `check_workflows.py` y `scripts/pruebas/maqueta_orquestacion.py` lo vigilan).
 
 ## A la par de los demás flujos de video
 
@@ -174,6 +197,11 @@ Los gates M3D (dónde cae cada pin, velocidad de la cámara, tiempos de lectura,
   hecho y unas flechas largas dicen que todo ese tramo se movió: se revisa en el storyboard.
 - Los geodatos se verifican como las cifras: qué tramo, de dónde a dónde, hacia dónde, con su fuente guardada (el USGS,
   la NOAA y la NASA cuentan como oficiales en `historia.py leer`).
+- **El esquema no es un lugar.** Un mundo de escala `esquema` (una ciudad, una carretera, el campo, la costa o una plaza
+  hechos por una receta; `referencias/diseno/maqueta3d.md` § «Mundos») sirve para mostrar un MECANISMO (cómo se forma una
+  cola, cómo cruza una autopista), no para afirmar geografía: lleva «Esquema» en el aviso y sus lugares y marcas usan
+  nombres genéricos (centro, plaza, entrada), nunca el de un lugar real (M3D12). Si la historia pasa en un lugar real, el
+  mundo es `ciudad` (un set con sus calles y edificios de OpenStreetMap, que el pie nombra) o `pais`.
 - Ninguna cifra ni texto dentro del 3D: van en la capa, donde los gates los revisan.
 - Personas: muñecos sin rostro; nunca el parecido de una persona real.
 

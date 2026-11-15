@@ -1,0 +1,49 @@
+{
+ "tipo": "calles",
+ "clase": "pieza",
+ "cuando": "la red de calles de una ciudad o de un esquema, por clase: el tejido sobre el que pasa todo",
+ "parametros": {
+  "clases": {
+   "tipo": "lista",
+   "requerido": false,
+   "defecto": [
+    "autopista",
+    "primaria",
+    "secundaria",
+    "terciaria",
+    "residencial"
+   ],
+   "descripcion": "qué clases dibuja: autopista, primaria, secundaria, terciaria, residencial, peatonal"
+  },
+  "grosor": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0.5,
+    3
+   ],
+   "defecto": 1.0,
+   "descripcion": "multiplica el ancho real de cada clase"
+  }
+ },
+ "escalas": [
+  "ciudad",
+  "esquema"
+ ],
+ "motores": [
+  "three"
+ ],
+ "capas": [
+  "calles"
+ ],
+ "ejemplo": {
+  "id": "calles",
+  "tipo": "calles",
+  "clases": [
+   "autopista",
+   "primaria",
+   "secundaria",
+   "residencial"
+  ]
+ }
+}

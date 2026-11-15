@@ -85,6 +85,12 @@ cámara que vuela mientras la voz cuenta. Es la única pieza donde la cámara se
 
 - **Úsala** cuando la voz de la mesa nombra ≥ 2 lugares o un recorrido, y verlos en su sitio explica la oración. El
   digesto trae, bajo «Maqueta 3D», los estilos y los lugares del set que la voz nombra (con su id).
+- **También para un mecanismo** (desde el 2026-11-15): cuando la oración cuenta **cómo pasa algo que se mueve** (cómo se
+  forma una cola, cómo viaja una señal, cómo se llena un embalse) y verlo moverse lo explica mejor que una pieza quieta,
+  una maqueta de escala `esquema` (un mundo genérico, sin geografía real) puede hacerlo dentro de la mesa, como hoy una
+  animación `explica`. Un esquema no nombra lugares reales y lleva el aviso «Esquema». Lo que hay para cada escala:
+  `python3 scripts/maqueta3d.py catalogo --para realizador --escala esquema` (o `pais`, `ciudad`).
+  En /explica, mira si el editor dejó una `maqueta_sugerida` (`python3 -c "import json;print(json.load(open('<TRABAJO>/encuadre.json')).get('maqueta_sugerida'))"`).
 - **No la uses** para ubicar un solo lugar (pieza `lugar`), para adornar, en una escena tablero, en el gancho, ni donde
   hay una foto, un recorte o un documento que pruebe lo que se dice: la maqueta **no cuenta como archivo real**.
 - **≤ 2 por video, del mismo `estilo`**, en una mesa de 5–24 s. Cuesta ≈ 1.8 s de render por segundo de maqueta.
@@ -114,7 +120,10 @@ Cómo se escribe:
 - **Piezas y eventos**: solo los del catálogo del vocabulario, que el digesto trae bajo «Vocabulario de la maqueta 3D»
   (cada tipo con para qué sirve, sus parámetros y un ejemplo; a mano: `python3 scripts/maqueta3d.py catalogo --para
   realizador`). Lo habitual: `resaltar` un lugar o la pieza protagonista cuando la voz llega a él. Si la historia pide
-  algo que no está, no lo inventes: dilo en tu retorno (un brief para el constructor) y cuenta esa oración con piezas.
+  algo que no está, no lo inventes: cuenta esa oración con piezas (el plano pasa el gate sin la maqueta nueva) y deja en
+  tu retorno `briefs[]` (≤ 1 por video): `{tipo_sugerido, clase (pieza|evento|objeto), escala, que_se_ve, parametros,
+  frase}` — qué tiene que verse, en qué escala, con qué parámetros y a qué frase literal de la voz responde. El Workflow
+  `plano` se lo pasa UNA vez al `maqueta-constructor`; si lo registra, te devuelve el plano para que lo uses en esa mesa.
 - **Golpes encima**: ≤ 3, uno a la vez, abajo a la izquierda del marco: la `cifra` o la `fecha` que la voz dice (MV1 las
   pide igual que en cualquier mesa). Nada grande: tapa la maqueta (MV11).
 - El `titulo` de la mesa es el golpe de arriba; la maqueta no lleva titulares ni cifras propias.

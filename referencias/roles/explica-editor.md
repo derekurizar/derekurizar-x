@@ -54,6 +54,15 @@ real, o un solo ejemplo pequeño: el catálogo no es obligatorio de llenar.
    van en el acto 3, no en el ejemplo: así nadie confunde un ejemplo con un dato.
 5. **La revelación** es la otra cara del mecanismo (la deuda que usa el mismo motor, el subsidio que sube la tarifa).
 
+## Una maqueta para el mecanismo (opcional)
+
+Si el mecanismo se entiende mejor **viéndolo moverse en un mundo** (cómo se forma una cola, cómo viaja una señal, cómo
+se llena un embalse) y no solo en el diagrama de la animación `explica`, déjalo dicho en `encuadre.json` →
+`maqueta_sugerida = {que_se_ve (una oración), escala: "esquema", frase (la idea que la acompaña)}`. Es una sugerencia
+para el realizador de la mesa (que la decide después de la voz) y no reemplaza la animación del mecanismo. Un esquema es
+un mundo genérico: no lleva lugares reales. Lo que la maqueta sabe dibujar está en `python3 scripts/maqueta3d.py
+catalogo --para critico --escala esquema`; si no está, el realizador lo pide al constructor.
+
 ## Salida
 
 `<TRABAJO>/encuadre.json` (forma en `sesiones/_fixture_explica/encuadre.json`), `python3 scripts/explica.py encuadre
