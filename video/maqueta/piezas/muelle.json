@@ -1,0 +1,137 @@
+{
+ "tipo": "muelle",
+ "clase": "pieza",
+ "cuando": "un muelle de carga en la costa («cruza el mar en contenedores»): grúas móviles cargan el barco, patio de contenedores, camiones en fila y estibadores",
+ "parametros": {
+  "lugar": {
+   "tipo": "lugar",
+   "requerido": true,
+   "descripcion": "la orilla donde la plataforma del patio toca el mar (un lugar del mundo, o [x, y] en metros en un esquema): la plataforma va de 32 m tierra adentro a 72 m mar adentro y el muelle sale de ella 128 m más; en la receta costa, un punto de la orilla (p. ej. [0, -330] con tamano_m 1600)"
+  },
+  "rumbo": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    360
+   ],
+   "defecto": 270,
+   "descripcion": "hacia dónde sale el muelle, hacia el mar (grados; 0 = este, 90 = norte; en la receta costa el mar está al sur: 270). El barco atraca a la derecha del muelle y la fila de camiones baja por la derecha de la plataforma. Para verlo entero: mira ≈ 60 m mar adentro del lugar, dist_m 160–280, elevación 25–40°, azimut ≈ rumbo − 130 (desde tierra y del lado izquierdo: el barco queda detrás del muelle y no lo tapa)"
+  },
+  "tamano": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0.6,
+    2
+   ],
+   "defecto": 1,
+   "descripcion": "escala de todo (1 = medidas reales: contenedores de 20 pies, grúa de ≈ 32 m; la gente va ×1.35 para leerse de lejos)"
+  },
+  "gruas": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    1,
+    2
+   ],
+   "defecto": 2,
+   "descripcion": "cuántas grúas MÓVILES de puerto (sobre ruedas, con la pluma de celosía; no pórtico) en el costado derecho del muelle; cada una toma un contenedor del borde, gira la pluma sobre el agua y lo baja al barco (ciclo de 20 s, desfasadas)"
+  },
+  "personas": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    4
+   ],
+   "defecto": 3,
+   "descripcion": "1–2 = estibadores que reciben la carga junto a la primera grúa (pose atender); 3 = y un supervisor de pie; 4 = y alguien que camina por el muelle. Sin color de chaleco ni casco"
+  },
+  "camiones": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    6
+   ],
+   "defecto": 4,
+   "descripcion": "camiones con contenedor (cabezal, chasis y caja de 20 pies, sin marca): la mitad (redondeada arriba) da la vuelta del patio a la punta del muelle y regresa a 13 km/h; el resto espera en fila en la calle de acceso ante la puerta techada"
+  },
+  "barcos": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    2
+   ],
+   "defecto": 1,
+   "descripcion": "1 = un portacontenedores (objeto barco, ≈ 130 m) amarrado con sus cabos al costado derecho, donde trabajan las grúas; 2 = y una barcaza de carga general (cajas y fardos con lona) al costado izquierdo. Los barcos que esperan en la bahía van aparte, como actor barco"
+  },
+  "semilla": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    100000
+   ],
+   "defecto": 1,
+   "descripcion": "el azar fijo: cuántos contenedores tiene cada pila (1–3) y de qué color, el tono del concreto, las piedras de la escollera, el color de los cabezales y la fase de cada ciclo"
+  }
+ },
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "usa": [
+  "barco",
+  "persona"
+ ],
+ "ejemplo": {
+  "id": "muelle",
+  "tipo": "muelle",
+  "lugar": [
+   0,
+   -330
+  ],
+  "rumbo": 270,
+  "tamano": 1,
+  "gruas": 2,
+  "personas": 3,
+  "camiones": 4,
+  "barcos": 1
+ },
+ "nivel": "escenario",
+ "contiene": [
+  "muelle de concreto sobre pilotes con atraques a los dos costados (defensas y bitas)",
+  "grúas móviles de puerto con pluma de celosía",
+  "portacontenedores amarrado y, con barcos 2, barcaza de carga general",
+  "patio de contenedores secos apilados en 1–3 alturas",
+  "sección de contenedores refrigerados con su estructura de pasillos",
+  "apilador (reach stacker)",
+  "camiones con contenedor en circuito y en fila",
+  "puerta techada con caseta y plumas",
+  "bodega de carga general con tarimas",
+  "estibadores y supervisor",
+  "postes de luz genéricos (de noche, encendidos)"
+ ],
+ "animado": "las grúas giran y suben el contenedor al barco, el apilador sube y vuelve a tomar uno de la pila, los camiones dan la vuelta del patio al muelle, las plumas de la puerta suben y bajan, alguien camina por el muelle",
+ "gente": true,
+ "poses": [
+  "atender",
+  "de_pie",
+  "caminar"
+ ],
+ "distancia_m": [
+  60,
+  300
+ ],
+ "caja_m": [
+  242,
+  150,
+  33
+ ]
+}

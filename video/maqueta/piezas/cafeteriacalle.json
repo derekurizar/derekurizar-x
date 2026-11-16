@@ -1,0 +1,113 @@
+{
+ "tipo": "cafeteriacalle",
+ "clase": "pieza",
+ "cuando": "cafetería genérica abierta a la calle, sin marca: barra con espresso y barista tras la vidriera, mesitas con clientes en la acera y gente que sale con su vaso",
+ "parametros": {
+  "lugar": {
+   "tipo": "lugar",
+   "requerido": true,
+   "descripcion": "el pie de la fachada, al medio (un lugar del mundo, o [x, y] en metros en un esquema): el local ocupa 7.5 m hacia atrás, la acera 5 m y la calle 8.5 m hacia adelante; con sus vecinos, 23 m a lo largo"
+  },
+  "rumbo": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    360
+   ],
+   "defecto": 0,
+   "descripcion": "hacia dónde mira la fachada (la calle), en grados (0 = este, 90 = norte). Para ver la barra y la barista por la vidriera: cámara de frente, azimut ≈ rumbo + 70…100, elevación 10–20°, dist_m 10–16, mirando a 1 m dentro de la fachada; para las mesas, la sombrilla y el paso libre, azimut ≈ rumbo + 120…140 (o rumbo + 40…55 hacia la puerta)"
+  },
+  "tamano": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0.8,
+    1.5
+   ],
+   "defecto": 1,
+   "descripcion": "escala de todo (1 = medidas reales: la gente 1.75 m, las mesas 0.74 m, el local 4.4 m de alto)"
+  },
+  "clientes": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    6
+   ],
+   "defecto": 3,
+   "descripcion": "cuántas personas sentadas en las tres mesitas de la acera (cada una en su silla, con su taza humeante enfrente); se reparten de mesa en mesa"
+  },
+  "paseantes": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    3
+   ],
+   "defecto": 2,
+   "descripcion": "quienes salen por la puerta con un vaso liso para llevar y se van por el paso libre, sorbiendo (uno hacia cada lado; ciclo de ≈ 24 s)"
+  },
+  "semilla": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    100000
+   ],
+   "defecto": 1,
+   "descripcion": "el azar fijo: el color de la casa (franja, zócalo, sombrilla, sillas), la altura y el tono de los vecinos, las camisas, el vapor"
+  }
+ },
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "usa": [
+  "persona"
+ ],
+ "ejemplo": {
+  "id": "cafeteria",
+  "tipo": "cafeteriacalle",
+  "lugar": [
+   0,
+   0
+  ],
+  "rumbo": 0,
+  "tamano": 1,
+  "clientes": 4,
+  "paseantes": 2
+ },
+ "nivel": "escenario",
+ "contiene": [
+  "fachada con vidriera y puerta, sin texto",
+  "barra con vitrina de panes y caja",
+  "máquina de espresso con dos cabezales y portafiltros",
+  "molino y caja de desecho",
+  "barista atendiendo",
+  "mesitas y sillas en la acera con clientes",
+  "sombrilla y jardinera",
+  "paso libre con gente que sale con su vaso",
+  "bordillo, árbol, farola y calle",
+  "dos vecinos sin rótulos"
+ ],
+ "animado": "la barista atiende, la gente sale por la puerta y camina sorbiendo su vaso, las tazas humean y la lanza de la máquina suelta vapor",
+ "gente": true,
+ "distancia_m": [
+  8,
+  30
+ ],
+ "caja_m": [
+  21,
+  23,
+  11
+ ],
+ "poses": [
+  "atender",
+  "sentado",
+  "sorber"
+ ]
+}

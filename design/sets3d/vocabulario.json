@@ -397,6 +397,111 @@
    "reglas": "scripts/maqueta_tipos/beneficio.py"
   },
   {
+   "tipo": "beneficioseco",
+   "clase": "pieza",
+   "cuando": "el beneficio seco por dentro y con su gente (pergamino → café oro): recibo, limpieza, trilla, clasificación y empaque, cada estación un lugar con nombre",
+   "parametros": {
+    "lugar": {
+     "tipo": "lugar",
+     "requerido": true,
+     "descripcion": "el centro de la galera (un lugar del mundo, o [x, y] en metros en un esquema): galera ≈ 24 × 14 m por `tamano`, con el patio de maniobras y el camión a su derecha (v−). Publica los lugares recibo, limpieza, trilla, clasificacion y empaque (solo en esquema; uno de mundo.lugares con el mismo id manda)"
+    },
+    "rumbo": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      360
+     ],
+     "defecto": 0,
+     "descripcion": "hacia dónde mira el frente abierto (grados; 0 = este, 90 = norte): la pared del fondo y la de la izquierda quedan enteras (bloque y lámina), la del frente y la de la derecha cortadas a media rodilla. El proceso corre de derecha a izquierda vista desde el frente (recibo → empaque). Mira adentro con la cámara en azimut ≈ rumbo + 20…45, elevación 18–35°, dist_m 22–40 (todo) o 9–14 sobre una estación"
+    },
+    "tamano": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0.6,
+      2
+     ],
+     "defecto": 1,
+     "descripcion": "escala de la galera, sus máquinas, el camión y la gente (1 = medidas reales; la gente va ×1.1 y el grano agrandado para leerse a 10–35 m)"
+    },
+    "personas": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      4
+     ],
+     "defecto": 3,
+     "descripcion": "quienes trabajan (objeto persona, sin rostro): 1 = quien descarga costales de pergamino del camión (pose cargar); 2 = y quien revisa el grano a mano en la mesa (pose atender); 3 = y quien vacía costales en la tolva de recibo (pose cargar, con el chorro de pergamino); 4 = y una segunda persona en la mesa de revisión"
+    },
+    "semilla": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      100000
+     ],
+     "defecto": 1,
+     "descripcion": "el azar fijo: tonos del cemento, la lámina y los sacos, cuántas camadas lleva cada estiba, el color de las máquinas y del camión, la fase de cada máquina y de cada pose"
+    }
+   },
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "usa": [
+    "camionsacos",
+    "persona"
+   ],
+   "ejemplo": {
+    "id": "beneficioseco",
+    "tipo": "beneficioseco",
+    "lugar": [
+     0,
+     0
+    ],
+    "rumbo": 0,
+    "tamano": 1,
+    "personas": 3
+   },
+   "nivel": "escenario",
+   "contiene": [
+    "galera de lámina abierta con cerchas",
+    "báscula industrial con costales",
+    "tolva de recibo",
+    "prelimpiadora",
+    "trilladora con el café oro que sale",
+    "zarandas vibratorias",
+    "cilindro de cribas",
+    "mesa de revisión a mano",
+    "estibas de sacos de yute cosidos",
+    "camión que descarga costales de pergamino",
+    "lámparas que se encienden de noche"
+   ],
+   "animado": "la gente descarga y vacía costales, las poleas de la trilla giran y sale el café oro, la prelimpiadora y las zarandas vibran, el cilindro de cribas gira y el grano cae al saco que se llena",
+   "gente": true,
+   "poses": [
+    "cargar",
+    "atender"
+   ],
+   "distancia_m": [
+    9,
+    40
+   ],
+   "caja_m": [
+    16,
+    30,
+    7.5
+   ],
+   "modulo": "piezas/beneficioseco.js",
+   "reglas": "scripts/maqueta_tipos/beneficioseco.py"
+  },
+  {
    "tipo": "cafetal",
    "clase": "pieza",
    "cuando": "una ladera de cafetal de cerca: cafetos con cereza roja y verde en un talud de tierra, bajo árboles de sombra si se pide; las maduras se avivan al resaltar",
@@ -541,6 +646,121 @@
    ],
    "modulo": "piezas/cafetal.js",
    "reglas": "scripts/maqueta_tipos/cafetal.py"
+  },
+  {
+   "tipo": "cafeteriacalle",
+   "clase": "pieza",
+   "cuando": "cafetería genérica abierta a la calle, sin marca: barra con espresso y barista tras la vidriera, mesitas con clientes en la acera y gente que sale con su vaso",
+   "parametros": {
+    "lugar": {
+     "tipo": "lugar",
+     "requerido": true,
+     "descripcion": "el pie de la fachada, al medio (un lugar del mundo, o [x, y] en metros en un esquema): el local ocupa 7.5 m hacia atrás, la acera 5 m y la calle 8.5 m hacia adelante; con sus vecinos, 23 m a lo largo"
+    },
+    "rumbo": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      360
+     ],
+     "defecto": 0,
+     "descripcion": "hacia dónde mira la fachada (la calle), en grados (0 = este, 90 = norte). Para ver la barra y la barista por la vidriera: cámara de frente, azimut ≈ rumbo + 70…100, elevación 10–20°, dist_m 10–16, mirando a 1 m dentro de la fachada; para las mesas, la sombrilla y el paso libre, azimut ≈ rumbo + 120…140 (o rumbo + 40…55 hacia la puerta)"
+    },
+    "tamano": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0.8,
+      1.5
+     ],
+     "defecto": 1,
+     "descripcion": "escala de todo (1 = medidas reales: la gente 1.75 m, las mesas 0.74 m, el local 4.4 m de alto)"
+    },
+    "clientes": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      6
+     ],
+     "defecto": 3,
+     "descripcion": "cuántas personas sentadas en las tres mesitas de la acera (cada una en su silla, con su taza humeante enfrente); se reparten de mesa en mesa"
+    },
+    "paseantes": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      3
+     ],
+     "defecto": 2,
+     "descripcion": "quienes salen por la puerta con un vaso liso para llevar y se van por el paso libre, sorbiendo (uno hacia cada lado; ciclo de ≈ 24 s)"
+    },
+    "semilla": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      100000
+     ],
+     "defecto": 1,
+     "descripcion": "el azar fijo: el color de la casa (franja, zócalo, sombrilla, sillas), la altura y el tono de los vecinos, las camisas, el vapor"
+    }
+   },
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "usa": [
+    "persona"
+   ],
+   "ejemplo": {
+    "id": "cafeteria",
+    "tipo": "cafeteriacalle",
+    "lugar": [
+     0,
+     0
+    ],
+    "rumbo": 0,
+    "tamano": 1,
+    "clientes": 4,
+    "paseantes": 2
+   },
+   "nivel": "escenario",
+   "contiene": [
+    "fachada con vidriera y puerta, sin texto",
+    "barra con vitrina de panes y caja",
+    "máquina de espresso con dos cabezales y portafiltros",
+    "molino y caja de desecho",
+    "barista atendiendo",
+    "mesitas y sillas en la acera con clientes",
+    "sombrilla y jardinera",
+    "paso libre con gente que sale con su vaso",
+    "bordillo, árbol, farola y calle",
+    "dos vecinos sin rótulos"
+   ],
+   "animado": "la barista atiende, la gente sale por la puerta y camina sorbiendo su vaso, las tazas humean y la lanza de la máquina suelta vapor",
+   "gente": true,
+   "distancia_m": [
+    8,
+    30
+   ],
+   "caja_m": [
+    21,
+    23,
+    11
+   ],
+   "poses": [
+    "atender",
+    "sentado",
+    "sorber"
+   ],
+   "modulo": "piezas/cafeteriacalle.js",
+   "reglas": "scripts/maqueta_tipos/cafeteriacalle.py"
   },
   {
    "tipo": "calles",
@@ -1065,6 +1285,145 @@
    "gente": false,
    "modulo": "piezas/luces.js",
    "reglas": "scripts/maqueta_tipos/luces.py"
+  },
+  {
+   "tipo": "muelle",
+   "clase": "pieza",
+   "cuando": "un muelle de carga en la costa («cruza el mar en contenedores»): grúas móviles cargan el barco, patio de contenedores, camiones en fila y estibadores",
+   "parametros": {
+    "lugar": {
+     "tipo": "lugar",
+     "requerido": true,
+     "descripcion": "la orilla donde la plataforma del patio toca el mar (un lugar del mundo, o [x, y] en metros en un esquema): la plataforma va de 32 m tierra adentro a 72 m mar adentro y el muelle sale de ella 128 m más; en la receta costa, un punto de la orilla (p. ej. [0, -330] con tamano_m 1600)"
+    },
+    "rumbo": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      360
+     ],
+     "defecto": 270,
+     "descripcion": "hacia dónde sale el muelle, hacia el mar (grados; 0 = este, 90 = norte; en la receta costa el mar está al sur: 270). El barco atraca a la derecha del muelle y la fila de camiones baja por la derecha de la plataforma. Para verlo entero: mira ≈ 60 m mar adentro del lugar, dist_m 160–280, elevación 25–40°, azimut ≈ rumbo − 130 (desde tierra y del lado izquierdo: el barco queda detrás del muelle y no lo tapa)"
+    },
+    "tamano": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0.6,
+      2
+     ],
+     "defecto": 1,
+     "descripcion": "escala de todo (1 = medidas reales: contenedores de 20 pies, grúa de ≈ 32 m; la gente va ×1.35 para leerse de lejos)"
+    },
+    "gruas": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      1,
+      2
+     ],
+     "defecto": 2,
+     "descripcion": "cuántas grúas MÓVILES de puerto (sobre ruedas, con la pluma de celosía; no pórtico) en el costado derecho del muelle; cada una toma un contenedor del borde, gira la pluma sobre el agua y lo baja al barco (ciclo de 20 s, desfasadas)"
+    },
+    "personas": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      4
+     ],
+     "defecto": 3,
+     "descripcion": "1–2 = estibadores que reciben la carga junto a la primera grúa (pose atender); 3 = y un supervisor de pie; 4 = y alguien que camina por el muelle. Sin color de chaleco ni casco"
+    },
+    "camiones": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      6
+     ],
+     "defecto": 4,
+     "descripcion": "camiones con contenedor (cabezal, chasis y caja de 20 pies, sin marca): la mitad (redondeada arriba) da la vuelta del patio a la punta del muelle y regresa a 13 km/h; el resto espera en fila en la calle de acceso ante la puerta techada"
+    },
+    "barcos": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      2
+     ],
+     "defecto": 1,
+     "descripcion": "1 = un portacontenedores (objeto barco, ≈ 130 m) amarrado con sus cabos al costado derecho, donde trabajan las grúas; 2 = y una barcaza de carga general (cajas y fardos con lona) al costado izquierdo. Los barcos que esperan en la bahía van aparte, como actor barco"
+    },
+    "semilla": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      100000
+     ],
+     "defecto": 1,
+     "descripcion": "el azar fijo: cuántos contenedores tiene cada pila (1–3) y de qué color, el tono del concreto, las piedras de la escollera, el color de los cabezales y la fase de cada ciclo"
+    }
+   },
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "usa": [
+    "barco",
+    "persona"
+   ],
+   "ejemplo": {
+    "id": "muelle",
+    "tipo": "muelle",
+    "lugar": [
+     0,
+     -330
+    ],
+    "rumbo": 270,
+    "tamano": 1,
+    "gruas": 2,
+    "personas": 3,
+    "camiones": 4,
+    "barcos": 1
+   },
+   "nivel": "escenario",
+   "contiene": [
+    "muelle de concreto sobre pilotes con atraques a los dos costados (defensas y bitas)",
+    "grúas móviles de puerto con pluma de celosía",
+    "portacontenedores amarrado y, con barcos 2, barcaza de carga general",
+    "patio de contenedores secos apilados en 1–3 alturas",
+    "sección de contenedores refrigerados con su estructura de pasillos",
+    "apilador (reach stacker)",
+    "camiones con contenedor en circuito y en fila",
+    "puerta techada con caseta y plumas",
+    "bodega de carga general con tarimas",
+    "estibadores y supervisor",
+    "postes de luz genéricos (de noche, encendidos)"
+   ],
+   "animado": "las grúas giran y suben el contenedor al barco, el apilador sube y vuelve a tomar uno de la pila, los camiones dan la vuelta del patio al muelle, las plumas de la puerta suben y bajan, alguien camina por el muelle",
+   "gente": true,
+   "poses": [
+    "atender",
+    "de_pie",
+    "caminar"
+   ],
+   "distancia_m": [
+    60,
+    300
+   ],
+   "caja_m": [
+    242,
+    150,
+    33
+   ],
+   "modulo": "piezas/muelle.js",
+   "reglas": "scripts/maqueta_tipos/muelle.py"
   },
   {
    "tipo": "rios",

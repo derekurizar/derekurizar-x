@@ -1,0 +1,103 @@
+{
+ "tipo": "beneficioseco",
+ "clase": "pieza",
+ "cuando": "el beneficio seco por dentro y con su gente (pergamino → café oro): recibo, limpieza, trilla, clasificación y empaque, cada estación un lugar con nombre",
+ "parametros": {
+  "lugar": {
+   "tipo": "lugar",
+   "requerido": true,
+   "descripcion": "el centro de la galera (un lugar del mundo, o [x, y] en metros en un esquema): galera ≈ 24 × 14 m por `tamano`, con el patio de maniobras y el camión a su derecha (v−). Publica los lugares recibo, limpieza, trilla, clasificacion y empaque (solo en esquema; uno de mundo.lugares con el mismo id manda)"
+  },
+  "rumbo": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    360
+   ],
+   "defecto": 0,
+   "descripcion": "hacia dónde mira el frente abierto (grados; 0 = este, 90 = norte): la pared del fondo y la de la izquierda quedan enteras (bloque y lámina), la del frente y la de la derecha cortadas a media rodilla. El proceso corre de derecha a izquierda vista desde el frente (recibo → empaque). Mira adentro con la cámara en azimut ≈ rumbo + 20…45, elevación 18–35°, dist_m 22–40 (todo) o 9–14 sobre una estación"
+  },
+  "tamano": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0.6,
+    2
+   ],
+   "defecto": 1,
+   "descripcion": "escala de la galera, sus máquinas, el camión y la gente (1 = medidas reales; la gente va ×1.1 y el grano agrandado para leerse a 10–35 m)"
+  },
+  "personas": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    4
+   ],
+   "defecto": 3,
+   "descripcion": "quienes trabajan (objeto persona, sin rostro): 1 = quien descarga costales de pergamino del camión (pose cargar); 2 = y quien revisa el grano a mano en la mesa (pose atender); 3 = y quien vacía costales en la tolva de recibo (pose cargar, con el chorro de pergamino); 4 = y una segunda persona en la mesa de revisión"
+  },
+  "semilla": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    100000
+   ],
+   "defecto": 1,
+   "descripcion": "el azar fijo: tonos del cemento, la lámina y los sacos, cuántas camadas lleva cada estiba, el color de las máquinas y del camión, la fase de cada máquina y de cada pose"
+  }
+ },
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "usa": [
+  "camionsacos",
+  "persona"
+ ],
+ "ejemplo": {
+  "id": "beneficioseco",
+  "tipo": "beneficioseco",
+  "lugar": [
+   0,
+   0
+  ],
+  "rumbo": 0,
+  "tamano": 1,
+  "personas": 3
+ },
+ "nivel": "escenario",
+ "contiene": [
+  "galera de lámina abierta con cerchas",
+  "báscula industrial con costales",
+  "tolva de recibo",
+  "prelimpiadora",
+  "trilladora con el café oro que sale",
+  "zarandas vibratorias",
+  "cilindro de cribas",
+  "mesa de revisión a mano",
+  "estibas de sacos de yute cosidos",
+  "camión que descarga costales de pergamino",
+  "lámparas que se encienden de noche"
+ ],
+ "animado": "la gente descarga y vacía costales, las poleas de la trilla giran y sale el café oro, la prelimpiadora y las zarandas vibran, el cilindro de cribas gira y el grano cae al saco que se llena",
+ "gente": true,
+ "poses": [
+  "cargar",
+  "atender"
+ ],
+ "distancia_m": [
+  9,
+  40
+ ],
+ "caja_m": [
+  16,
+  30,
+  7.5
+ ]
+}

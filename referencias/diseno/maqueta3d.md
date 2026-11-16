@@ -598,7 +598,9 @@ puede volver a un mundo ya visto. En el `maqueta.json`, en vez de `mundo`, `cama
 - **Estilo por mundo** (`mundos.<id>.estilo`; sin él, el global; usuario 2026-11-16). Un estilo de Blender solo dibuja `pais`: con un esquema o una ciudad,
   un estilo de three.js (M3D2 lo dice por tramo).
 - **El aviso «Esquema»** (M3D12) sale solo mientras se ve un mundo esquema, nunca sobre el mapa real (`aviso_ventanas`,
-  lo calcula `maqueta_tramos.capa_global`). El pie nombra las fuentes de todos los sets usados.
+  lo calcula `maqueta_tramos.capa_global`).
+- **El pie** nombra las fuentes de todos los sets usados y hace lo contrario del aviso: sale solo mientras se ve un
+  mapa (`pie_ventanas`, que también escribe `capa_global`); el tramo de un `esquema` no lo lleva ni M3D7 se lo pide.
 - **Gates:** M3D13 revisa la forma; luego cada tramo es una maqueta de un mundo (`partir`: tiempos locales, la cámara
   ya en su primera clave) que pasa los gates de siempre (M3D1–M3D4, M3D6, M3D8, M3D11, M3D12; M3D9, el gancho en el
   cuadro 0, solo el primer tramo; de M3D5, que una cifra no tape una marca); la capa global pasa M3D5 y M3D7 una vez.

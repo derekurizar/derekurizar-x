@@ -86,6 +86,8 @@ f = fallas_de(lambda m: m.update(estilo="arquitecto"))
 ok(salta("M3D2", f) and "esquema" in " ".join(f), "gates: un estilo de Blender con un esquema debía fallar M3D2: %s" % f[:2])
 g = TR.capa_global(copy.deepcopy(BASE))
 ok(g["capa"]["aviso_ventanas"] == [[0.0, 5.0], [11.0, 15.0]], "aviso: «Esquema» solo en el campo y la costa: %s" % g["capa"]["aviso_ventanas"])
+ok(g["capa"]["pie_ventanas"] == [[5.0, 11.0]], "pie: las fuentes solo sobre el mapa del país: %s" % g["capa"]["pie_ventanas"])
+ok("pie" not in s0["capa"] and "pie" not in s2["capa"] and s1["capa"].get("pie"), "pie: el tramo de un esquema no lo lleva y el del mapa sí")
 ok(TR.efectos(BASE) == [[0.0, "pulso"], [5.4, "whoosh"]], "efectos: los sfx de los tramos en tiempo del video: %s" % TR.efectos(BASE))
 
 # ---------- estilo por mundo (2026-11-16) ----------

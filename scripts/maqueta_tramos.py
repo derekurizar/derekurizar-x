@@ -171,6 +171,8 @@ def partir(m):
             camara[0]["t"] = 0.0
         capa = {"titulares": _ventana(C.get("titulares"), off, off + dur, off), "cifras": _ventana(C.get("cifras"), off, off + dur, off)}
         for k in ("pie", "aviso", "handle"):
+            if k == "pie" and (mundo.get("escala") or "pais") == "esquema":
+                continue   # el pie nombra las fuentes de los geodatos: un esquema no usa ninguno, así que su tramo no lo lleva
             if C.get(k):
                 capa[k] = C[k]
         sub = {"version": m.get("version", 1), "estilo": estilo, "paleta": m.get("paleta"), "fps": m.get("fps", 30),
@@ -197,6 +199,8 @@ def capa_global(m):
          "capa": copy.deepcopy(m.get("capa") or {}), "_capa_global": True}
     # el aviso «Esquema · no es un lugar real» solo mientras se ve un mundo esquema (no sobre el mapa real)
     g["capa"]["aviso_ventanas"] = [[tr["desde"], tr["hasta"]] for tr in m["tramos"] if (m["mundos"][tr["mundo"]] or {}).get("escala") == "esquema"]
+    # y el pie (las fuentes de los geodatos) solo mientras se ve un mapa: un esquema no usa ninguno
+    g["capa"]["pie_ventanas"] = [[tr["desde"], tr["hasta"]] for tr in m["tramos"] if ((m["mundos"][tr["mundo"]] or {}).get("escala") or "pais") != "esquema"]
     if sub.get("protagonista"):
         g["protagonista"] = sub["protagonista"]
     return g

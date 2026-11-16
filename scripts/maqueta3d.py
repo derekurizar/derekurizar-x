@@ -794,7 +794,8 @@ def resolver(m, formato, avisos=None):
             "palabras": C.get("palabras") or [],
             "progreso": None if (Z.get("pieza") and not C.get("progreso")) else {"actos": (C.get("progreso") or {}).get("actos") or [0.0]},
             "seguir": C.get("seguir"), "aviso": C.get("aviso") or "", "pie": C.get("pie") or "", "handle": C.get("handle") or "", "subs_hasta": dur + 1,
-            "aviso_ventanas": C.get("aviso_ventanas")}   # video con tramos: el aviso «Esquema» solo mientras se ve un esquema
+            "aviso_ventanas": C.get("aviso_ventanas"),   # video con tramos: el aviso «Esquema» solo mientras se ve un esquema
+            "pie_ventanas": C.get("pie_ventanas")}       # … y el pie de fuentes solo mientras se ve un mapa
     for o in capa["titulares"] + capa["cifras"] + ([C["seguir"]] if C.get("seguir") else []) + ([C["cierre"]] if C.get("cierre") else []):
         sfx_ok(o, "capa")
     ci = C.get("cierre")
@@ -1204,6 +1205,8 @@ def gates_comunes(m, R, avisos):
     C = m.get("capa") or {}
     tramo = bool(m.get("_tramo"))   # un tramo de un video con tramos: la capa (seguir, cierre) se revisa una vez, entera
     for k in ("pie", "handle") + (() if tramo else ("seguir", "cierre")):   # el aviso «Maqueta · no a escala» es opcional (usuario, 2026-11-14)
+        if k == "pie" and tramo and R["mundo"]["escala"] == "esquema":
+            continue   # un tramo de esquema no usa geodatos: el pie sale solo en los tramos de mapa (maqueta_tramos.partir)
         if not C.get(k):
             F("M3D7", "falta `capa.%s`" % k)
     ci = C.get("cierre") or {}
@@ -1423,7 +1426,16 @@ def escribir_proyecto(m, formato, destino, fotos=None, placa_externa=False):
         L.append(clip("filac", 0, D_fila, p0, '<div id="fila">%s</div>' % fila))
     if C["palabras"]:
         L.append(clip("subsc", 0, D, p0 + 1, '<div id="subs"></div>'))
-    if C["pie"]:
+    if C["pie"] and C.get("pie_ventanas") is not None:   # tramos: el pie solo sobre los mapas (ventanas seguidas, una sola)
+        juntas = []
+        for v0, v1 in sorted((max(0.0, float(v[0])), min(D, float(v[1]))) for v in C["pie_ventanas"]):
+            if juntas and v0 - juntas[-1][1] < 1e-3:
+                juntas[-1][1] = max(juntas[-1][1], v1)
+            elif v1 - v0 > 1e-3:
+                juntas.append([v0, v1])
+        for i, (v0, v1) in enumerate(juntas):
+            L.append(clip("piec-%d" % i, v0, v1 - v0, p0 + 2, '<div id="pie">%s</div>' % esc(C["pie"])))
+    elif C["pie"]:
         L.append(clip("piec", 0, D, p0 + 2, '<div id="pie">%s</div>' % esc(C["pie"])))
     boton = ('<div class="bt"><span class="lbl">Seguir</span><span class="ya"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Siguiendo</span></div>')
     if C.get("seguir"):
