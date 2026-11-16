@@ -60,6 +60,14 @@ cruza el país a oscuras». Si la idea visual no se puede decir en una oración,
 
 `estilo` lleva `id`, `razon` (por qué ese y no otro, atado a la idea visual) y `confianza` (`alta` o `baja`).
 
+**Con `plano`, se pregunta por las capas** (usuario, 2026-11-15): junto con el estilo, muestra el mismo cuadro con todas
+las capas y en versión limpia (`mundo.capas`: sin `curvas` de nivel ni `batimetria`; la `reticula` de paralelos y
+meridianos se puede apagar también) y pregunta cuál quiere. Las curvas de nivel se amontonan en la sierra y ensucian el
+cuadro cuando la cámara se aleja.
+
+**Los vecinos:** `{"tipo": "frontera", "vecinos": true}` dibuja además los bordes y la costa de los países de alrededor
+(Natural Earth, ya en el set). Úsalo cuando el video sale del país o habla de una frontera.
+
 ## El gancho en 3D
 
 El gancho es **un evento en el segundo cero**, no un vuelo vacío: algo se rompe, cae, se enciende, se apaga o se

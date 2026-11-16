@@ -667,6 +667,11 @@ def main():
             lineas[p["id"]] = {"p": p, "px": CFG["frontera"]["ancho"] * (1.7 if p["protagonista"] else 1.0), "cintas":
                                [Cinta("frontera_%s_%d" % (p["id"], k), pegar([[q[0], q[1]] for q in an] + [[an[0][0], an[0][1]]], 1.5), mat_l, FORMA_LINEA, 5, sombra=False)
                                 for k, an in enumerate(p["anillos"])]}
+            if p.get("vecinos"):   # bordes y costas de los países vecinos: más finos, en el color de la frontera
+                lineas[p["id"] + "/vecinos"] = {"p": p, "px": CFG["frontera"]["ancho"] * 0.8, "cintas":
+                                                 [Cinta("vecinos_%s_%d" % (p["id"], k), pegar([[q[0], q[1]] for q in ln], 1.5),
+                                                        material("frontera", COL["frontera"]), FORMA_LINEA, 5, sombra=False)
+                                                  for k, ln in enumerate(p["vecinos"])]}
         elif p["tipo"] == "ruta":
             # rayas: cada raya es un tramo propio (55 % del periodo), cortado con un «salto»
             x, y, z, s, _ = pegar(p["puntos"], 0.75)

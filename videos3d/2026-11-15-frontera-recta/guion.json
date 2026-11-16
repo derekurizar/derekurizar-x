@@ -1,0 +1,466 @@
+{
+  "tipo": "video3d",
+  "version": 1,
+  "escenas": [
+    {
+      "secuencia": 1,
+      "texto": "La frontera de Guatemala con México no sigue un río aquí: sigue una regla.",
+      "titular": {
+        "kicker": "PETÉN · FRONTERA CON MÉXICO",
+        "texto": "Una línea recta en la selva"
+      },
+      "camara": [
+        {
+          "mira": [
+            -90.25,
+            17.35
+          ],
+          "dist_km": 560,
+          "azimut": 0,
+          "elevacion": 62
+        },
+        {
+          "al": "fin",
+          "mira": [
+            -90.35,
+            17.55
+          ],
+          "dist_km": 420,
+          "azimut": -15,
+          "elevacion": 46
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "ruptura",
+          "pieza": "linea",
+          "desde": "ceibo",
+          "hacia": "este",
+          "km": 260,
+          "dur": 3.6,
+          "sfx": "riser"
+        }
+      ],
+      "n": 1,
+      "tipo": "gancho",
+      "acto": 1
+    },
+    {
+      "n": 2,
+      "tipo": "toma",
+      "acto": 1,
+      "secuencia": 1,
+      "texto": "Esa regla salió del tratado de 1882, en el que Guatemala renunció a Chiapas. ¿Cómo se traza una recta en plena selva?",
+      "titular": {
+        "kicker": "TRATADO DE LÍMITES · 1882",
+        "texto": "Lo que se firmó en 1882",
+        "dice": "del tratado"
+      },
+      "camara": [
+        {
+          "mira": [
+            -91.75,
+            15.9
+          ],
+          "dist_km": 820,
+          "azimut": 0,
+          "elevacion": 66,
+          "dice": "en el que"
+        },
+        {
+          "mira": [
+            -91.75,
+            15.9
+          ],
+          "dist_km": 820,
+          "azimut": 0,
+          "elevacion": 66,
+          "dice": "Cómo"
+        },
+        {
+          "mira": [
+            -90.35,
+            17.55
+          ],
+          "dist_km": 420,
+          "azimut": -15,
+          "elevacion": 46,
+          "dice": "plena selva",
+          "al": "fin"
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "renunció",
+          "tipo": "resaltar",
+          "pieza": "frontera",
+          "dur": 3.0,
+          "sfx": "pulso"
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "renunció",
+          "lugar": "soconusco",
+          "texto": "Chiapas y Soconusco",
+          "sub": "Hoy México",
+          "hasta_dice": "Cómo"
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "tipo": "toma",
+      "acto": 2,
+      "secuencia": 2,
+      "texto": "El tratado no nombró cerros: puso medidas. Un paralelo a 25 kilómetros al sur de Tenosique. Y un meridiano a un tercio del camino entre Tenosique y Sacluc, hoy La Libertad.",
+      "titular": {
+        "kicker": "ARTÍCULO III DEL TRATADO",
+        "texto": "Grados y kilómetros",
+        "dice": "puso medidas",
+        "dura": 3.5
+      },
+      "camara": [
+        {
+          "mira": [
+            -91.0,
+            17.25
+          ],
+          "dist_km": 300,
+          "azimut": -8,
+          "elevacion": 55,
+          "dice": "Un paralelo"
+        },
+        {
+          "mira": [
+            -90.8,
+            16.95
+          ],
+          "dist_km": 430,
+          "azimut": 0,
+          "elevacion": 70,
+          "dice": "Y un meridiano"
+        },
+        {
+          "mira": [
+            -90.8,
+            16.95
+          ],
+          "dist_km": 430,
+          "azimut": 0,
+          "elevacion": 70,
+          "al": "fin"
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "un tercio",
+          "tipo": "resaltar",
+          "pieza": "regla",
+          "dur": 3.5,
+          "sfx": "whoosh"
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "Un paralelo",
+          "lugar": "ceibo",
+          "texto": "Vértice Ceibo",
+          "sub": "Ahí corre ese paralelo",
+          "dura": 2.5
+        },
+        {
+          "dice": "Tenosique",
+          "lugar": "tenosique",
+          "texto": "Tenosique",
+          "sub": "Tabasco, México",
+          "dura": 3.0
+        },
+        {
+          "dice": "un tercio",
+          "lugar": "la-libertad",
+          "texto": "Sacluc",
+          "sub": "Hoy La Libertad, Petén"
+        }
+      ],
+      "cifras": [
+        {
+          "dice": "25",
+          "valor": "25 km",
+          "rotulo": "al sur de Tenosique",
+          "cifra": "tratado-c-25km",
+          "dura": 3.0
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "tipo": "toma",
+      "acto": 2,
+      "secuencia": 2,
+      "texto": "Ese meridiano sube hasta otro paralelo. Y de ahí, la línea corre recta hacia el este, 195 kilómetros.",
+      "camara": [
+        {
+          "dice": "otro paralelo",
+          "mira": "campeche",
+          "dist_km": 220,
+          "azimut": 0,
+          "elevacion": 58
+        },
+        {
+          "al": "fin",
+          "mira": [
+            -90.05,
+            17.8
+          ],
+          "dist_km": 400,
+          "azimut": 12,
+          "elevacion": 34
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "corre recta",
+          "tipo": "resaltar",
+          "pieza": "linea",
+          "dur": 3.5,
+          "sfx": "riser"
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "otro paralelo",
+          "lugar": "campeche",
+          "texto": "Vértice Campeche",
+          "sub": "Paralelo 17°49′ norte",
+          "dura": 3.2
+        }
+      ],
+      "cifras": [
+        {
+          "dice": "195",
+          "valor": "195 km",
+          "rotulo": "en línea recta",
+          "cifra": "trazo-c04",
+          "fuente": "Cálculo con IBS 159"
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "tipo": "toma",
+      "acto": 3,
+      "secuencia": 3,
+      "texto": "Según el historiador Jan de Vos, en los mapas de entonces esta selva estaba trazada con especulaciones, no con medidas.",
+      "titular": {
+        "kicker": "JAN DE VOS, HISTORIADOR",
+        "texto": "Una selva trazada con especulaciones",
+        "dice": "Jan de Vos"
+      },
+      "camara": [
+        {
+          "dice": "los mapas",
+          "mira": [
+            -90.3,
+            17.0
+          ],
+          "dist_km": 620,
+          "azimut": 0,
+          "elevacion": 80
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "tipo": "toma",
+      "acto": 3,
+      "secuencia": 3,
+      "texto": "Marcar la línea en el terreno tomó 16 años, hasta 1899.",
+      "camara": [
+        {
+          "dice": "en el terreno",
+          "mira": "ceibo",
+          "dist_km": 160,
+          "azimut": -20,
+          "elevacion": 48
+        },
+        {
+          "al": "fin",
+          "mira": "campeche",
+          "dist_km": 200,
+          "azimut": -10,
+          "elevacion": 48
+        }
+      ],
+      "cifras": [
+        {
+          "dice": "16",
+          "valor": "16 años",
+          "rotulo": "para marcarla en la selva",
+          "cifra": "tratado-c-16anios",
+          "fuente": "Tamayo Pérez (2015)"
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "tipo": "cierre",
+      "acto": 3,
+      "secuencia": 4,
+      "texto": "Se firmó en papel. Y hoy, los dos países todavía tienen que limpiarla en la selva.",
+      "final": "Una línea de papel que hay que seguir abriendo.",
+      "camara": [
+        {
+          "al": "fin",
+          "mira": [
+            -90.25,
+            17.35
+          ],
+          "dist_km": 560,
+          "azimut": 0,
+          "elevacion": 62
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "limpiarla",
+          "tipo": "resaltar",
+          "pieza": "linea",
+          "dur": 3.0
+        }
+      ]
+    }
+  ],
+  "estilo": {
+    "id": "plano",
+    "razon": "La línea no sigue ríos ni montañas: el tratado la fijó con grados y distancias sobre el papel. El plano técnico, con su retícula de paralelos y meridianos, es exactamente eso: un mapa dibujado con regla.",
+    "confianza": "alta"
+  },
+  "idea_visual": "La frontera es una regla sobre la selva: la única línea encendida en el Petén, trazada sobre la retícula de paralelos y meridianos.",
+  "protagonista": "linea",
+  "mundo": {
+    "set": "guatemala",
+    "exageracion": 5,
+    "lugares": {
+      "ceibo": {
+        "lon": -90.9895,
+        "lat": 17.25335,
+        "nombre": "Vértice Ceibo"
+      },
+      "campeche": {
+        "lon": -90.9895,
+        "lat": 17.81667,
+        "nombre": "Vértice Campeche"
+      },
+      "aguas-turbias": {
+        "lon": -89.15187,
+        "lat": 17.81667,
+        "nombre": "Vértice Aguas Turbias"
+      },
+      "tenosique": {
+        "lon": -91.42202,
+        "lat": 17.47071,
+        "nombre": "Tenosique"
+      },
+      "soconusco": {
+        "lon": -92.2634,
+        "lat": 14.9056,
+        "nombre": "Tapachula"
+      }
+    },
+    "piezas": [
+      {
+        "id": "linea",
+        "tipo": "falla",
+        "suave": false,
+        "puntos": [
+          [
+            -90.9895,
+            17.25335
+          ],
+          [
+            -90.9895,
+            17.81667
+          ],
+          [
+            -89.15187,
+            17.81667
+          ]
+        ]
+      },
+      {
+        "id": "regla",
+        "tipo": "ruta",
+        "lugares": [
+          "tenosique",
+          "la-libertad"
+        ]
+      },
+      {
+        "id": "pueblos",
+        "tipo": "luces",
+        "lugares": "todos"
+      },
+      {
+        "id": "frontera",
+        "tipo": "frontera",
+        "vecinos": true
+      }
+    ],
+    "capas": {
+      "curvas": false,
+      "batimetria": false
+    }
+  },
+  "pie": "Relieve: Mapzen Terrain Tiles · Vértices: IBS 159 (EE. UU.) · Brecha: CILA (SRE) · Frontera: Natural Earth · © OpenStreetMap",
+  "gancho": {
+    "id": "g1",
+    "familia": "recorrido",
+    "elegido_por": "usuario"
+  },
+  "no_afirmar": [
+    "que el tratado eligió rectas porque los mapas eran malos (De Vos da el contexto, no la causa)",
+    "el punto exacto donde el paralelo corta el Usumacinta y el Vértice de Chixoy (no se dibujan)",
+    "que toda la frontera es recta",
+    "que la frontera termina en Belice por este tratado",
+    "número de monumentos o km de brecha actuales",
+    "que la imagen de la NASA muestra este tramo"
+  ],
+  "cifras_voz": [
+    "tratado-c-anio",
+    "tratado-c-25km",
+    "tratado-c-tercio",
+    "trazo-c04",
+    "tratado-c-16anios",
+    "tratado-c-1899"
+  ],
+  "narracion": "La frontera de Guatemala con México no sigue un río aquí: sigue una regla. Esa regla salió del tratado de 1882, en el que Guatemala renunció a Chiapas. ¿Cómo se traza una recta en plena selva? El tratado no nombró cerros: puso medidas. Un paralelo a 25 kilómetros al sur de Tenosique. Y un meridiano a un tercio del camino entre Tenosique y Sacluc, hoy La Libertad. Ese meridiano sube hasta otro paralelo. Y de ahí, la línea corre recta hacia el este, 195 kilómetros. Según el historiador Jan de Vos, en los mapas de entonces esta selva estaba trazada con especulaciones, no con medidas. Marcar la línea en el terreno tomó 16 años, hasta 1899. Se firmó en papel. Y hoy, los dos países todavía tienen que limpiarla en la selva.",
+  "caption": {
+    "tiktok": "La frontera de Guatemala con México corta la selva del Petén con una regla. No la dibujó ningún río: la fijó un tratado de 1882 con grados y kilómetros. #Guatemala #Petén #México #historia #geografía",
+    "instagram": "¿Por qué la frontera de Guatemala con México es una línea recta en plena selva?\n\nEl tratado de 1882 no nombró cerros: puso medidas. Un paralelo a 25 km al sur de Tenosique, un meridiano a un tercio del camino a Sacluc (hoy La Libertad) y otro paralelo recto hacia el este. Marcarla en el terreno tomó 16 años.\n\nFuentes: Tratado de Límites de 1882 (ONU, FRUS), International Boundary Study n.º 159, Tamayo Pérez (2015), SRE.\n\n#Guatemala #Petén #México #historia #geografía",
+    "facebook": "La frontera de Guatemala con México no sigue un río en el Petén: sigue una regla. En 1882 un tratado la fijó con grados y kilómetros sobre mapas en los que, según el historiador Jan de Vos, la selva estaba trazada con especulaciones. Marcarla en el terreno tomó 16 años, y hoy los dos países todavía limpian esa brecha.",
+    "shorts": "¿Por qué la frontera de Guatemala con México es recta en plena selva? #Guatemala #Shorts"
+  },
+  "cierre": {
+    "id": "c1",
+    "tipo": "remate",
+    "forma": "consecuencia",
+    "elegido_por": "usuario"
+  },
+  "promesa": {
+    "forma": "pregunta",
+    "texto": "¿Cómo se traza una recta en plena selva?",
+    "en": 2,
+    "pago": 3
+  },
+  "id": "video3d-frontera-recta",
+  "slug": "frontera-recta",
+  "tema": "¿Por qué la frontera con México es una línea recta en medio de la selva?",
+  "fecha": "2026-11-15",
+  "paleta": "jade",
+  "musica": "corrupcion-intriga",
+  "desde": null,
+  "motor": "three",
+  "duracion_s": 58.4,
+  "creditos_voz": 809.92
+}

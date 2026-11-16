@@ -11,7 +11,7 @@ import * as THREE from "./three/three.module.js";
 
 const M = window.MAQUETA;
 const W = M.W, H = M.H, R = M.relieve, P = R.proyeccion, EXAG = M.exageracion;
-const COL = M.col, CFG = M.estilo_cfg;
+const COL = M.col, CFG = M.estilo_cfg, CAPAS = CFG.capas || { curvas: true, batimetria: true, reticula: true };
 const lin = (hex) => new THREE.Color(hex);                       // sRGB → lineal (ColorManagement)
 const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
 const suave = (a, b, x) => { const u = clamp((x - a) / (b - a)); return u * u * (3 - 2 * u); };
@@ -144,7 +144,8 @@ const uRelieve = {
   cPieza: { value: [0, 1, 2, 3].map((i) => (FALLAS[i] && FALLAS[i].protagonista ? lin(COL.acento) : lin(COL.secundario).multiplyScalar(CFG.falla.secundaria))) },
   cLinea: { value: lin(COL.linea) }, cCosta: { value: lin(COL.costa) },
   uLuzDir: { value: new THREE.Vector3() }, uLuzK: { value: CFG.luz.fuerza }, uAmbK: { value: CFG.luz.ambiente }, uRel: { value: CFG.luz.relieve },
-  uFuera: { value: CFG.fuera }, uCosta: { value: CFG.costa }, uAltMax: { value: R.max_m / 1000 * EXAG }, uExag: { value: EXAG },
+  uFuera: { value: CFG.fuera }, uCosta: { value: CFG.costa },
+  uCurvas: { value: CAPAS.curvas ? 1 : 0 }, uBati: { value: CAPAS.batimetria ? 1 : 0 }, uRet: { value: CAPAS.reticula ? 1 : 0 }, uAltMax: { value: R.max_m / 1000 * EXAG }, uExag: { value: EXAG },
   uCaja: { value: new THREE.Vector4(X0, X1, -Y1, -Y0) }, uBorde: { value: CFG.borde_km },
   uCad: { value: Array.from({ length: NC }, () => new THREE.Vector4()) }, uCadN: { value: 0 },
   uBrillo: { value: [1, 1, 1, 1] }, uGlow: { value: CFG.falla.suelo }, uSigma: { value: CFG.falla.suelo_km },
@@ -160,7 +161,7 @@ const uRelieve = {
 const FRAG_RELIEVE = GLSL_COMUN + GLSL_RUPTURA + `
   uniform sampler2D tNormal, tPais; uniform int uModo;
   uniform vec3 cMar, cMarHondo, cExterior, cBaja, cMedia, cAlta, cLuz, cAmb, cOnda, cLinea, cCosta, uLuzDir; uniform vec3 cPieza[4]; uniform float uMarRel, uMarLuz;
-  uniform float uLuzK, uAmbK, uRel, uFuera, uCosta, uAltMax, uExag, uBorde, uGlow, uSigma;
+  uniform float uLuzK, uAmbK, uRel, uFuera, uCosta, uAltMax, uExag, uBorde, uGlow, uSigma, uCurvas, uBati, uRet;
   uniform vec4 uCaja; uniform vec4 uCad[${NC}]; uniform int uCadN; uniform float uBrillo[4];
   uniform vec4 uOnda[${NO}]; uniform float uOndaPieza[${NO}];
   varying vec2 vUv; varying vec3 vPos; varying float vAlt;
@@ -200,11 +201,11 @@ const FRAG_RELIEVE = GLSL_COMUN + GLSL_RUPTURA + `
       col = mix(col, cLinea, tinta);
     } else if (uModo == 4) {                // plano: caras del color del fondo, curvas de nivel y retícula en línea clara
       col = mix(mix(cMar, cMarHondo, smoothstep(0.0, 0.62, tn.b)), cBaja, tierra);
-      { float fd = tn.b * 8.0; float ld = abs(fract(fd - 0.5) - 0.5) / max(fwidth(fd), 1e-5); col = mix(col, cLinea, (1.0 - smoothstep(0.5, 1.5, ld)) * (1.0 - tierra) * 0.12); }
+      { float fd = tn.b * 8.0; float ld = abs(fract(fd - 0.5) - 0.5) / max(fwidth(fd), 1e-5); col = mix(col, cLinea, (1.0 - smoothstep(0.5, 1.5, ld)) * (1.0 - tierra) * 0.12 * uBati); }
       float fb = metros / 400.0; float lc = abs(fract(fb - 0.5) - 0.5) / max(fwidth(fb), 1e-5);
-      float l = (1.0 - smoothstep(0.5, 1.5, lc)) * tierra * step(40.0, metros) * 0.5;
+      float l = (1.0 - smoothstep(0.5, 1.5, lc)) * tierra * step(40.0, metros) * 0.5 * uCurvas;
       vec2 gr = vUv * vec2(10.4, 9.6); vec2 fg = abs(fract(gr - 0.5) - 0.5) / max(fwidth(gr), vec2(1e-5));
-      l = max(l, (1.0 - smoothstep(0.5, 1.4, min(fg.x, fg.y))) * 0.28);
+      l = max(l, (1.0 - smoothstep(0.5, 1.4, min(fg.x, fg.y))) * 0.28 * uRet);
       float fc = abs(tn.a - 0.5) / max(fwidth(tn.a), 1e-5);
       l = max(l, (1.0 - smoothstep(0.8, 2.0, fc)) * 0.9);
       col = mix(col, cLinea, l * mix(uFuera, 1.0, pais));
@@ -390,6 +391,8 @@ function armarLineas() {
         if (CFG.frontera.borde) cintaSimple(pegar(cad, 1.5, 0.35), COL.linea, CFG.frontera.ancho + CFG.frontera.borde, 1, 2);
         PIEZAS_LINEA[p.id] = p.protagonista ? cintaSimple(pegar(cad, 1.5, 0.35), COL.acento, CFG.frontera.ancho * 1.7, 1, 3)
           : cintaSimple(pegar(cad, 1.5, 0.35), COL.frontera, CFG.frontera.ancho, CFG.frontera.alfa, 3); }
+      // los vecinos: sus bordes y su costa, tenues y sin cerrar (son tramos recortados a la caja del set)
+      for (const ln of p.vecinos || []) cintaSimple(pegar(ln.map(([x, y]) => [x, y]), 1.5, 0.35), COL.frontera, CFG.frontera.ancho * 0.8, CFG.frontera.alfa * 0.55, 2);
     } else if (p.tipo === "ruta") {
       PIEZAS_LINEA[p.id] = cintaSimple(pegar(p.puntos, 1.5, 0.4), p.protagonista ? COL.acento : COL.ruta, CFG.ruta.ancho * (p.protagonista ? 1.5 : 1), p.protagonista ? 1 : CFG.ruta.alfa, 4, { raya: CFG.ruta.raya_km });
     }

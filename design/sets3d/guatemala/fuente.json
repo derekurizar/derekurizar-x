@@ -27,7 +27,7 @@
    "url": "https://www.naturalearthdata.com/",
    "licencia": "Dominio público",
    "atribucion": "Frontera: Natural Earth",
-   "descarga": "2026-11-14"
+   "descarga": "2026-11-15"
   },
   "lugares": {
    "fuente": "OpenStreetMap (Overpass API): nodos place=city|town del país y los pueblos del piloto",

@@ -1,0 +1,1042 @@
+{
+  "version": 1,
+  "estilo": "plano",
+  "paleta": "jade",
+  "fps": 30,
+  "duracion_s": 58.4333,
+  "protagonista": "linea",
+  "mundo": {
+    "set": "guatemala",
+    "exageracion": 5,
+    "lugares": {
+      "ceibo": {
+        "lon": -90.9895,
+        "lat": 17.25335,
+        "nombre": "Vértice Ceibo"
+      },
+      "campeche": {
+        "lon": -90.9895,
+        "lat": 17.81667,
+        "nombre": "Vértice Campeche"
+      },
+      "aguas-turbias": {
+        "lon": -89.15187,
+        "lat": 17.81667,
+        "nombre": "Vértice Aguas Turbias"
+      },
+      "tenosique": {
+        "lon": -91.42202,
+        "lat": 17.47071,
+        "nombre": "Tenosique"
+      },
+      "soconusco": {
+        "lon": -92.2634,
+        "lat": 14.9056,
+        "nombre": "Tapachula"
+      }
+    },
+    "piezas": [
+      {
+        "id": "linea",
+        "tipo": "falla",
+        "suave": false,
+        "puntos": [
+          [
+            -90.9895,
+            17.25335
+          ],
+          [
+            -90.9895,
+            17.81667
+          ],
+          [
+            -89.15187,
+            17.81667
+          ]
+        ]
+      },
+      {
+        "id": "regla",
+        "tipo": "ruta",
+        "lugares": [
+          "tenosique",
+          "la-libertad"
+        ]
+      },
+      {
+        "id": "pueblos",
+        "tipo": "luces",
+        "lugares": "todos"
+      },
+      {
+        "id": "frontera",
+        "tipo": "frontera",
+        "vecinos": true
+      }
+    ],
+    "capas": {
+      "curvas": false,
+      "batimetria": false
+    }
+  },
+  "camara": [
+    {
+      "mira": [
+        -90.25,
+        17.35
+      ],
+      "dist_km": 560,
+      "azimut": 0,
+      "elevacion": 62,
+      "t": 0.0
+    },
+    {
+      "mira": [
+        -90.35,
+        17.55
+      ],
+      "dist_km": 420,
+      "azimut": -15,
+      "elevacion": 46,
+      "t": 4.8
+    },
+    {
+      "mira": [
+        -91.75,
+        15.9
+      ],
+      "dist_km": 820,
+      "azimut": 0,
+      "elevacion": 66,
+      "t": 9.0
+    },
+    {
+      "mira": [
+        -91.75,
+        15.9
+      ],
+      "dist_km": 820,
+      "azimut": 0,
+      "elevacion": 66,
+      "t": 11.6333
+    },
+    {
+      "mira": [
+        -90.35,
+        17.55
+      ],
+      "dist_km": 420,
+      "azimut": -15,
+      "elevacion": 46,
+      "t": 14.0667
+    },
+    {
+      "mira": [
+        -91.0,
+        17.25
+      ],
+      "dist_km": 300,
+      "azimut": -8,
+      "elevacion": 55,
+      "t": 18.1667
+    },
+    {
+      "mira": [
+        -90.8,
+        16.95
+      ],
+      "dist_km": 430,
+      "azimut": 0,
+      "elevacion": 70,
+      "t": 21.7
+    },
+    {
+      "mira": [
+        -90.8,
+        16.95
+      ],
+      "dist_km": 430,
+      "azimut": 0,
+      "elevacion": 70,
+      "t": 27.2333
+    },
+    {
+      "mira": "campeche",
+      "dist_km": 220,
+      "azimut": 0,
+      "elevacion": 58,
+      "t": 29.2333
+    },
+    {
+      "mira": [
+        -90.05,
+        17.8
+      ],
+      "dist_km": 400,
+      "azimut": 12,
+      "elevacion": 34,
+      "t": 36.0667
+    },
+    {
+      "mira": [
+        -90.3,
+        17.0
+      ],
+      "dist_km": 620,
+      "azimut": 0,
+      "elevacion": 80,
+      "t": 38.9667
+    },
+    {
+      "mira": "ceibo",
+      "dist_km": 160,
+      "azimut": -20,
+      "elevacion": 48,
+      "t": 45.1333
+    },
+    {
+      "mira": "campeche",
+      "dist_km": 200,
+      "azimut": -10,
+      "elevacion": 48,
+      "t": 50.0667
+    },
+    {
+      "mira": [
+        -90.25,
+        17.35
+      ],
+      "dist_km": 560,
+      "azimut": 0,
+      "elevacion": 62,
+      "t": 55.6
+    }
+  ],
+  "eventos": [
+    {
+      "tipo": "ruptura",
+      "pieza": "linea",
+      "desde": "ceibo",
+      "hacia": "este",
+      "km": 260,
+      "dur": 3.6,
+      "sfx": "riser",
+      "t": 0.0
+    },
+    {
+      "tipo": "resaltar",
+      "pieza": "frontera",
+      "dur": 3.0,
+      "sfx": "pulso",
+      "t": 9.9
+    },
+    {
+      "tipo": "resaltar",
+      "pieza": "regla",
+      "dur": 3.5,
+      "sfx": "whoosh",
+      "t": 22.7
+    },
+    {
+      "tipo": "resaltar",
+      "pieza": "linea",
+      "dur": 3.5,
+      "sfx": "riser",
+      "t": 31.6333
+    },
+    {
+      "tipo": "resaltar",
+      "pieza": "linea",
+      "dur": 3.0,
+      "t": 54.1667
+    }
+  ],
+  "marcas": [
+    {
+      "lugar": "soconusco",
+      "texto": "Chiapas y Soconusco",
+      "sub": "Hoy México",
+      "t": 9.6667,
+      "hasta": 12.3333
+    },
+    {
+      "lugar": "ceibo",
+      "texto": "Vértice Ceibo",
+      "sub": "Ahí corre ese paralelo",
+      "t": 17.9333,
+      "hasta": 20.4333
+    },
+    {
+      "lugar": "tenosique",
+      "texto": "Tenosique",
+      "sub": "Tabasco, México",
+      "t": 20.5,
+      "hasta": 23.5
+    },
+    {
+      "lugar": "la-libertad",
+      "texto": "Sacluc",
+      "sub": "Hoy La Libertad, Petén",
+      "t": 22.4667,
+      "hasta": 27.4667
+    },
+    {
+      "lugar": "campeche",
+      "texto": "Vértice Campeche",
+      "sub": "Paralelo 17°49′ norte",
+      "t": 28.9667,
+      "hasta": 32.1667
+    }
+  ],
+  "capa": {
+    "titulares": [
+      {
+        "t": 0.0,
+        "kicker": "PETÉN · FRONTERA CON MÉXICO",
+        "texto": "Una línea recta en la selva",
+        "hasta": 5.1
+      },
+      {
+        "t": 6.0333,
+        "kicker": "TRATADO DE LÍMITES · 1882",
+        "texto": "Lo que se firmó en 1882",
+        "hasta": 14.5333
+      },
+      {
+        "t": 16.6,
+        "kicker": "ARTÍCULO III DEL TRATADO",
+        "texto": "Grados y kilómetros",
+        "hasta": 20.1
+      },
+      {
+        "t": 37.5333,
+        "kicker": "JAN DE VOS, HISTORIADOR",
+        "texto": "Una selva trazada con especulaciones",
+        "hasta": 43.9667
+      }
+    ],
+    "cifras": [
+      {
+        "valor": "25 km",
+        "rotulo": "al sur de Tenosique",
+        "t": 18.7667,
+        "hasta": 21.7667
+      },
+      {
+        "valor": "195 km",
+        "rotulo": "en línea recta",
+        "fuente": "Cálculo con IBS 159",
+        "t": 33.4,
+        "hasta": 36.5333
+      },
+      {
+        "valor": "16 años",
+        "rotulo": "para marcarla en la selva",
+        "fuente": "Tamayo Pérez (2015)",
+        "t": 45.9667,
+        "hasta": 50.5
+      }
+    ],
+    "palabras": [
+      {
+        "text": "La",
+        "start": 0.0,
+        "end": 0.137
+      },
+      {
+        "text": "frontera",
+        "start": 0.169,
+        "end": 0.527
+      },
+      {
+        "text": "de",
+        "start": 0.57,
+        "end": 0.634
+      },
+      {
+        "text": "Guatemala",
+        "start": 0.675,
+        "end": 1.204
+      },
+      {
+        "text": "con",
+        "start": 1.256,
+        "end": 1.394
+      },
+      {
+        "text": "México",
+        "start": 1.456,
+        "end": 1.879
+      },
+      {
+        "text": "no",
+        "start": 1.985,
+        "end": 2.1
+      },
+      {
+        "text": "sigue",
+        "start": 2.164,
+        "end": 2.417
+      },
+      {
+        "text": "un",
+        "start": 2.47,
+        "end": 2.544
+      },
+      {
+        "text": "río",
+        "start": 2.607,
+        "end": 2.775
+      },
+      {
+        "text": "aquí:",
+        "start": 2.818,
+        "end": 3.251
+      },
+      {
+        "text": "sigue",
+        "start": 3.546,
+        "end": 3.915
+      },
+      {
+        "text": "una",
+        "start": 4.032,
+        "end": 4.254
+      },
+      {
+        "text": "regla.",
+        "start": 4.338,
+        "end": 4.803
+      },
+      {
+        "text": "Esa",
+        "start": 5.374,
+        "end": 5.638
+      },
+      {
+        "text": "regla",
+        "start": 5.722,
+        "end": 5.975
+      },
+      {
+        "text": "salió",
+        "start": 6.017,
+        "end": 6.239
+      },
+      {
+        "text": "del",
+        "start": 6.282,
+        "end": 6.376
+      },
+      {
+        "text": "tratado",
+        "start": 6.408,
+        "end": 6.799
+      },
+      {
+        "text": "de",
+        "start": 6.862,
+        "end": 6.957
+      },
+      {
+        "text": "1882,",
+        "start": 7.063,
+        "end": 8.888
+      },
+      {
+        "text": "en",
+        "start": 8.994,
+        "end": 9.11
+      },
+      {
+        "text": "el",
+        "start": 9.153,
+        "end": 9.215
+      },
+      {
+        "text": "que",
+        "start": 9.258,
+        "end": 9.321
+      },
+      {
+        "text": "Guatemala",
+        "start": 9.364,
+        "end": 9.849
+      },
+      {
+        "text": "renunció",
+        "start": 9.902,
+        "end": 10.387
+      },
+      {
+        "text": "a",
+        "start": 10.44,
+        "end": 10.461
+      },
+      {
+        "text": "Chiapas.",
+        "start": 10.525,
+        "end": 11.084
+      },
+      {
+        "text": "¿Cómo",
+        "start": 11.633,
+        "end": 11.949
+      },
+      {
+        "text": "se",
+        "start": 11.992,
+        "end": 12.065
+      },
+      {
+        "text": "traza",
+        "start": 12.107,
+        "end": 12.414
+      },
+      {
+        "text": "una",
+        "start": 12.466,
+        "end": 12.604
+      },
+      {
+        "text": "recta",
+        "start": 12.688,
+        "end": 12.942
+      },
+      {
+        "text": "en",
+        "start": 12.973,
+        "end": 13.015
+      },
+      {
+        "text": "plena",
+        "start": 13.068,
+        "end": 13.343
+      },
+      {
+        "text": "selva?",
+        "start": 13.395,
+        "end": 14.081
+      },
+      {
+        "text": "El",
+        "start": 14.533,
+        "end": 14.681
+      },
+      {
+        "text": "tratado",
+        "start": 14.712,
+        "end": 15.177
+      },
+      {
+        "text": "no",
+        "start": 15.314,
+        "end": 15.483
+      },
+      {
+        "text": "nombró",
+        "start": 15.568,
+        "end": 15.958
+      },
+      {
+        "text": "cerros:",
+        "start": 16.011,
+        "end": 16.623
+      },
+      {
+        "text": "puso",
+        "start": 16.845,
+        "end": 17.13
+      },
+      {
+        "text": "medidas.",
+        "start": 17.182,
+        "end": 17.826
+      },
+      {
+        "text": "Un",
+        "start": 18.174,
+        "end": 18.311
+      },
+      {
+        "text": "paralelo",
+        "start": 18.364,
+        "end": 18.829
+      },
+      {
+        "text": "a",
+        "start": 18.913,
+        "end": 18.956
+      },
+      {
+        "text": "25",
+        "start": 19.019,
+        "end": 19.6
+      },
+      {
+        "text": "kilómetros",
+        "start": 19.641,
+        "end": 20.138
+      },
+      {
+        "text": "al",
+        "start": 20.201,
+        "end": 20.275
+      },
+      {
+        "text": "sur",
+        "start": 20.349,
+        "end": 20.56
+      },
+      {
+        "text": "de",
+        "start": 20.623,
+        "end": 20.687
+      },
+      {
+        "text": "Tenosique.",
+        "start": 20.74,
+        "end": 21.468
+      },
+      {
+        "text": "Y",
+        "start": 21.69,
+        "end": 21.742
+      },
+      {
+        "text": "un",
+        "start": 21.848,
+        "end": 21.901
+      },
+      {
+        "text": "meridiano",
+        "start": 21.942,
+        "end": 22.523
+      },
+      {
+        "text": "a",
+        "start": 22.597,
+        "end": 22.639
+      },
+      {
+        "text": "un",
+        "start": 22.713,
+        "end": 22.808
+      },
+      {
+        "text": "tercio",
+        "start": 22.861,
+        "end": 23.156
+      },
+      {
+        "text": "del",
+        "start": 23.199,
+        "end": 23.304
+      },
+      {
+        "text": "camino",
+        "start": 23.346,
+        "end": 23.779
+      },
+      {
+        "text": "entre",
+        "start": 23.842,
+        "end": 24.117
+      },
+      {
+        "text": "Tenosique",
+        "start": 24.159,
+        "end": 24.834
+      },
+      {
+        "text": "y",
+        "start": 24.887,
+        "end": 24.971
+      },
+      {
+        "text": "Sacluc,",
+        "start": 25.077,
+        "end": 25.752
+      },
+      {
+        "text": "hoy",
+        "start": 25.911,
+        "end": 26.217
+      },
+      {
+        "text": "La",
+        "start": 26.375,
+        "end": 26.471
+      },
+      {
+        "text": "Libertad.",
+        "start": 26.523,
+        "end": 27.22
+      },
+      {
+        "text": "Ese",
+        "start": 27.699,
+        "end": 27.921
+      },
+      {
+        "text": "meridiano",
+        "start": 27.963,
+        "end": 28.533
+      },
+      {
+        "text": "sube",
+        "start": 28.607,
+        "end": 28.892
+      },
+      {
+        "text": "hasta",
+        "start": 28.924,
+        "end": 29.146
+      },
+      {
+        "text": "otro",
+        "start": 29.229,
+        "end": 29.451
+      },
+      {
+        "text": "paralelo.",
+        "start": 29.494,
+        "end": 30.149
+      },
+      {
+        "text": "Y",
+        "start": 30.497,
+        "end": 30.57
+      },
+      {
+        "text": "de",
+        "start": 30.676,
+        "end": 30.739
+      },
+      {
+        "text": "ahí,",
+        "start": 30.791,
+        "end": 31.109
+      },
+      {
+        "text": "la",
+        "start": 31.14,
+        "end": 31.214
+      },
+      {
+        "text": "línea",
+        "start": 31.256,
+        "end": 31.551
+      },
+      {
+        "text": "corre",
+        "start": 31.626,
+        "end": 31.942
+      },
+      {
+        "text": "recta",
+        "start": 32.079,
+        "end": 32.449
+      },
+      {
+        "text": "hacia",
+        "start": 32.469,
+        "end": 32.766
+      },
+      {
+        "text": "el",
+        "start": 32.787,
+        "end": 32.871
+      },
+      {
+        "text": "este,",
+        "start": 32.945,
+        "end": 33.441
+      },
+      {
+        "text": "195",
+        "start": 33.662,
+        "end": 35.045
+      },
+      {
+        "text": "kilómetros.",
+        "start": 35.098,
+        "end": 36.079
+      },
+      {
+        "text": "Según",
+        "start": 36.533,
+        "end": 36.861
+      },
+      {
+        "text": "el",
+        "start": 36.892,
+        "end": 36.945
+      },
+      {
+        "text": "historiador",
+        "start": 36.977,
+        "end": 37.631
+      },
+      {
+        "text": "Jan",
+        "start": 37.79,
+        "end": 38.063
+      },
+      {
+        "text": "de",
+        "start": 38.138,
+        "end": 38.211
+      },
+      {
+        "text": "Vos,",
+        "start": 38.275,
+        "end": 38.718
+      },
+      {
+        "text": "en",
+        "start": 38.834,
+        "end": 38.929
+      },
+      {
+        "text": "los",
+        "start": 38.971,
+        "end": 39.066
+      },
+      {
+        "text": "mapas",
+        "start": 39.109,
+        "end": 39.341
+      },
+      {
+        "text": "de",
+        "start": 39.372,
+        "end": 39.415
+      },
+      {
+        "text": "entonces",
+        "start": 39.457,
+        "end": 39.901
+      },
+      {
+        "text": "esta",
+        "start": 39.984,
+        "end": 40.249
+      },
+      {
+        "text": "selva",
+        "start": 40.291,
+        "end": 40.554
+      },
+      {
+        "text": "estaba",
+        "start": 40.597,
+        "end": 40.871
+      },
+      {
+        "text": "trazada",
+        "start": 40.913,
+        "end": 41.346
+      },
+      {
+        "text": "con",
+        "start": 41.389,
+        "end": 41.483
+      },
+      {
+        "text": "especulaciones,",
+        "start": 41.536,
+        "end": 42.486
+      },
+      {
+        "text": "no",
+        "start": 42.644,
+        "end": 42.802
+      },
+      {
+        "text": "con",
+        "start": 42.866,
+        "end": 43.003
+      },
+      {
+        "text": "medidas.",
+        "start": 43.045,
+        "end": 43.679
+      },
+      {
+        "text": "Marcar",
+        "start": 44.241,
+        "end": 44.569
+      },
+      {
+        "text": "la",
+        "start": 44.631,
+        "end": 44.706
+      },
+      {
+        "text": "línea",
+        "start": 44.748,
+        "end": 45.075
+      },
+      {
+        "text": "en",
+        "start": 45.117,
+        "end": 45.169
+      },
+      {
+        "text": "el",
+        "start": 45.222,
+        "end": 45.286
+      },
+      {
+        "text": "terreno",
+        "start": 45.349,
+        "end": 45.75
+      },
+      {
+        "text": "tomó",
+        "start": 45.803,
+        "end": 46.13
+      },
+      {
+        "text": "16",
+        "start": 46.204,
+        "end": 46.827
+      },
+      {
+        "text": "años,",
+        "start": 46.859,
+        "end": 47.408
+      },
+      {
+        "text": "hasta",
+        "start": 47.566,
+        "end": 47.829
+      },
+      {
+        "text": "1899.",
+        "start": 47.893,
+        "end": 50.057
+      },
+      {
+        "text": "Se",
+        "start": 50.5,
+        "end": 50.637
+      },
+      {
+        "text": "firmó",
+        "start": 50.679,
+        "end": 50.933
+      },
+      {
+        "text": "en",
+        "start": 50.975,
+        "end": 51.017
+      },
+      {
+        "text": "papel.",
+        "start": 51.059,
+        "end": 51.545
+      },
+      {
+        "text": "Y",
+        "start": 51.894,
+        "end": 51.946
+      },
+      {
+        "text": "hoy,",
+        "start": 52.009,
+        "end": 52.252
+      },
+      {
+        "text": "los",
+        "start": 52.326,
+        "end": 52.485
+      },
+      {
+        "text": "dos",
+        "start": 52.537,
+        "end": 52.685
+      },
+      {
+        "text": "países",
+        "start": 52.748,
+        "end": 53.213
+      },
+      {
+        "text": "todavía",
+        "start": 53.265,
+        "end": 53.698
+      },
+      {
+        "text": "tienen",
+        "start": 53.751,
+        "end": 53.994
+      },
+      {
+        "text": "que",
+        "start": 54.046,
+        "end": 54.12
+      },
+      {
+        "text": "limpiarla",
+        "start": 54.152,
+        "end": 54.69
+      },
+      {
+        "text": "en",
+        "start": 54.711,
+        "end": 54.754
+      },
+      {
+        "text": "la",
+        "start": 54.806,
+        "end": 54.88
+      },
+      {
+        "text": "selva.",
+        "start": 54.933,
+        "end": 55.608
+      }
+    ],
+    "progreso": {
+      "actos": [
+        0.0,
+        14.5333,
+        36.5333
+      ]
+    },
+    "seguir": {
+      "t": 29.2,
+      "dur": 3.0
+    },
+    "pie": "Relieve: Mapzen Terrain Tiles · Vértices: IBS 159 (EE. UU.) · Brecha: CILA (SRE) · Frontera: Natural Earth · © OpenStreetMap",
+    "handle": "@DerekUrizar",
+    "cierre": {
+      "t": 51.7,
+      "frase": "Una línea de papel que hay que seguir abriendo.",
+      "redes": [
+        {
+          "nombre": "TikTok",
+          "handle": "@derekurizargt"
+        },
+        {
+          "nombre": "Instagram",
+          "handle": "@derekurizargt"
+        },
+        {
+          "nombre": "Facebook",
+          "handle": "Derek Urizar"
+        },
+        {
+          "nombre": "YouTube",
+          "handle": "@derekurizar"
+        },
+        {
+          "nombre": "X",
+          "handle": "@DerekUrizar"
+        }
+      ]
+    }
+  }
+}

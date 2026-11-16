@@ -18,7 +18,9 @@ Guía completa: `referencias/flujo-video3d.md` (léela antes de empezar). Contra
 4. **Dirección.** Con `video3d.py digesto <TRABAJO>`: escribe la `idea_visual` (una oración), elige el `estilo`
    entre los ocho con su `razon` y arma el `mundo` (set, piezas, lugares). Si no estás seguro del estilo
    (`confianza: "baja"`), renderiza el mismo cuadro en los dos o tres candidatos (`maqueta3d.py cuadro`) y
-   **pregunta al usuario**. Un solo estilo por video.
+   **pregunta al usuario**. Un solo estilo por video. Con `plano`, **pregunta siempre** si quiere todas las capas o una
+   versión limpia (`mundo.capas`: `curvas`, `batimetria`, `reticula`), con el mismo cuadro en las dos. Si el video habla
+   de una frontera o sale del país, la pieza `frontera` lleva `vecinos: true`.
 5. **Ganchos.** Escribe `ganchos.json` con 5 candidatos de familias distintas (cada uno, la escena 1 completa:
    evento en el segundo cero, cámara, titular y voz ≤ 6 s). `video3d.py ganchos <TRABAJO> --check --cuadros`
    renderiza un cuadro por candidato. **El usuario elige** (muéstrale los cuadros y la voz de cada uno) →

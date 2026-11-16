@@ -588,6 +588,50 @@
         "visual": "foto",
         "animaciones": []
       }
+    },
+    {
+      "id": "2026-11-15-pollo-pinulito",
+      "slug": "pollo-pinulito",
+      "tema": "pollo pinulito",
+      "fecha": "2026-11-15",
+      "ruta": "historias/2026-11-15-pollo-pinulito",
+      "arco": "rivalidad y ascenso: el retador de barrio frente al gigante",
+      "paleta": "terracota",
+      "musica": "cacao-1",
+      "duracion_s": 166.9,
+      "creditos_voz": 2460.76,
+      "estado": "listo",
+      "frases": {
+        "promesa": "Pinulito, pollería de barrio, se jugaba su nombre en cada pieza de pollo.",
+        "promesa_forma": "apuesta",
+        "bisagra": "Pinulito retaba a Campero, pero Campero ya no peleaba en la calle.",
+        "bisagra_forma": "contradiccion",
+        "gancho": "Pinulito puso una freidora y dos personas frente a Campero.",
+        "aperturas": [
+          "El nombre de Pinulito",
+          "Entonces Pinulito salió a",
+          "Para dos mil doce,",
+          "Pero Pinulito era más",
+          "¿Cómo cobraba menos? Vendía",
+          "En dos mil catorce,",
+          "Pinulito retaba a Campero,",
+          "Diez años después, en",
+          "Entonces la empresa lo",
+          "Mientras Pinulito se defendía,",
+          "Pinulito también cruzó la",
+          "Empezó en el barrio,"
+        ],
+        "segun": 1,
+        "aperturas_atribuidas": 0,
+        "pregunta": "Hoy, en Nueva York, los empleados de Pinulito posan con los colores de Guatemala.",
+        "cierre": "Hoy, en Nueva York, los empleados de Pinulito posan con los colores de Guatemala.",
+        "cierre_tipo": "remate",
+        "cierre_forma": "legado",
+        "cierre_mecanismo": null,
+        "familia": "misterio",
+        "visual": "foto",
+        "animaciones": []
+      }
     }
   ]
 }

@@ -32,6 +32,37 @@
       "creditos_voz": 668.94,
       "desde": null,
       "estado": "listo"
+    },
+    {
+      "id": "video3d-frontera-recta",
+      "slug": "frontera-recta",
+      "tema": "¿Por qué la frontera con México es una línea recta en medio de la selva?",
+      "fecha": "2026-11-15",
+      "ruta": "videos3d/2026-11-15-frontera-recta",
+      "estilo": "plano",
+      "motor": "three",
+      "set": "guatemala",
+      "idea_visual": "La frontera es una regla sobre la selva: la única línea encendida en el Petén, trazada sobre la retícula de paralelos y meridianos.",
+      "gancho": {
+        "id": "g1",
+        "familia": "recorrido",
+        "elegido_por": "usuario",
+        "texto": "La frontera de Guatemala con México no sigue un río aquí: sigue una regla."
+      },
+      "cierre": {
+        "id": "c1",
+        "tipo": "remate",
+        "forma": "consecuencia",
+        "elegido_por": "usuario",
+        "texto": "Se firmó en papel. Y hoy, los dos países todavía tienen que limpiarla en la selva.",
+        "final": "Una línea de papel que hay que seguir abriendo."
+      },
+      "paleta": "jade",
+      "musica": "corrupcion-intriga",
+      "duracion_s": 58.4,
+      "creditos_voz": 809.92,
+      "desde": null,
+      "estado": "listo"
     }
   ]
 }

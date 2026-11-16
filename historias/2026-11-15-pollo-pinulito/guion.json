@@ -1,0 +1,388 @@
+{
+ "id": "2026-11-15-pollo-pinulito",
+ "tipo": "historia",
+ "slug": "pollo-pinulito",
+ "tema": "pollo pinulito",
+ "fecha": "2026-11-15",
+ "pregunta": "¿Cómo un pollo frito con nombre de municipio le disputó la calle a Pollo Campero y terminó cruzando a Estados Unidos?",
+ "arco": "rivalidad y ascenso: el retador de barrio frente al gigante",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "2012",
+   "titulo": "Frente a Campero",
+   "escena": 5
+  },
+  {
+   "numero": 3,
+   "anio": "2024",
+   "titulo": "Un video viral",
+   "escena": 10
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "Pinulito puso una freidora y dos personas frente a Campero. Pinulito, pollería de barrio, se jugaba su nombre en cada pieza de pollo. En Guatemala, el pollo frito era de Campero, la cadena más grande. El nombre de Pinulito suena a Santa Catarina Pinula, municipio vecino de la capital. Pero su fundador aprendió lejos: un migrante que trabajó en una cadena de pollo frito en Estados Unidos, y regresó. Entonces Pinulito salió a retar a Campero con pollo más barato en las zonas populares. Cuándo empezó no está claro: Forbes México dice 2006; la empresa, 2008."
+  },
+  {
+   "acto": 2,
+   "texto": "Para 2012, Pinulito ya sumaba más de 65 locales. Solo en el departamento de Guatemala, una tesis de la Universidad del Istmo contó 30 de Pinulito y 47 de Campero. Pero Pinulito era más barato: su combo costaba desde Q25, y el de Campero, desde Q40. ¿Cómo cobraba menos? Vendía en carretillas y para llevar, sin mesas: así bajaba sus costos. Lima, autor citado en esa tesis, dijo que Pinulito y otras pollerías daban un precio hasta tres veces menor que el de su máximo competidor. En 2014, Forbes México describió sus locales: tres metros por tres, una freidora y dos personas. Cristian Noriega, gerente de mercadeo de Pinulito, dijo que Pollo Granjero, la otra pollería popular, quedaba casi al lado de los suyos. Pinulito retaba a Campero, pero Campero ya no peleaba en la calle. Un analista, Paulo De León, lo dijo así a Forbes: Pollo Campero ha migrado a otra gama y se ha constituido como comida casual, mientras que Pinulito y Granjero son de corte popular."
+  },
+  {
+   "acto": 3,
+   "texto": "Diez años después, en enero de 2024, un video viral mostraba, según un tuit, una rata sobre pollo frito en una tienda de Pinulito. Entonces la empresa lo llamó un intento de extorsión: dijo que no cedió y despidió al colaborador que señaló como responsable. Y escribió: La empresa recalca que el video fue compartido sin contar con una fuente confiable de información. Mientras Pinulito se defendía, Campero crecía en Estados Unidos: en abril abrió en Florida su restaurante número 100. Pinulito también cruzó la frontera: tiene empleados en Spring Valley, Nueva York. Cuántos locales suma hoy, ninguna fuente lo dice. Tampoco quién fue aquel migrante, ni por qué la marca suena a Pinula. Empezó en el barrio, con una freidora y dos personas. Hoy, en Nueva York, los empleados de Pinulito posan con los colores de Guatemala."
+  }
+ ],
+ "hilos": [
+  {
+   "id": "h1",
+   "sin_respuesta": "Tampoco quién fue aquel migrante, ni por qué la marca suena a Pinula"
+  },
+  {
+   "id": "h2",
+   "escena": 7
+  },
+  {
+   "id": "h3",
+   "escena": 11
+  },
+  {
+   "id": "h4",
+   "sin_respuesta": "Cuántos locales suma hoy, ninguna fuente lo dice"
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3,
+   4
+  ],
+  [
+   5,
+   6,
+   7,
+   8
+  ],
+  [
+   10,
+   11,
+   12,
+   13
+  ]
+ ],
+ "paleta": "terracota",
+ "musica": "cacao-1",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2460.76,
+ "duracion_s": 166.9,
+ "critica": {
+  "veredicto": "corregir",
+  "vuelta": 3,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 3,
+   "claridad": 3,
+   "flujo": 4,
+   "precision": 4,
+   "cierre": 4,
+   "recompensa": 3
+  }
+ },
+ "gancho": {
+  "familia": "misterio",
+  "visual": "foto",
+  "pantalla": "Pinulito: una freidora",
+  "linea": "y dos personas frente a Campero"
+ },
+ "promesa": {
+  "pregunta": "¿Qué puso en riesgo la confianza en Pinulito?",
+  "texto": "Pinulito, pollería de barrio, se jugaba su nombre en cada pieza de pollo.",
+  "forma": "apuesta",
+  "en": 2,
+  "pago": 11,
+  "revela": 3
+ },
+ "bisagra": {
+  "texto": "Pinulito retaba a Campero, pero Campero ya no peleaba en la calle.",
+  "forma": "contradiccion",
+  "en": 9,
+  "pago": 9
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "Pinulito puso una freidora y dos personas frente a Campero.",
+   "voz": "Pinulito puso una freidora y dos personas frente a Campero.",
+   "dur": 4.337,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "Pinulito, pollería de barrio, se jugaba su nombre en cada pieza de pollo. En Guatemala, el pollo frito era de Campero, la cadena más grande.",
+   "voz": "Pinulito, pollería de barrio, se jugaba su nombre en cada pieza de pollo. En Guatemala, el pollo frito era de Campero, la cadena más grande.",
+   "dur": 9.073,
+   "hechos": [
+    "hoy-h06"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: alejandro jofré · CC BY 2.0",
+     "origen": "commons",
+     "licencia": "CC BY 2.0"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "foto",
+   "pantalla": "El nombre de Pinulito suena a Santa Catarina Pinula, municipio vecino de la capital. Pero su fundador aprendió lejos: un migrante que trabajó en una cadena de pollo frito en Estados Unidos, y regresó.",
+   "voz": "El nombre de Pinulito suena a Santa Catarina Pinula, municipio vecino de la capital. Pero su fundador aprendió lejos: un migrante que trabajó en una cadena de pollo frito en Estados Unidos, y regresó.",
+   "dur": 12.937,
+   "hechos": [
+    "ori-h02"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Rene Hernandez · CC BY-SA 2.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 2.0"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "foto",
+   "pantalla": "Entonces Pinulito salió a retar a Campero con pollo más barato en las zonas populares. Cuándo empezó no está claro: Forbes México dice 2006; la empresa, 2008.",
+   "voz": "Entonces Pinulito salió a retar a Campero con pollo más barato en las zonas populares. Cuándo empezó no está claro: Forbes México dice dos mil seis; la empresa, dos mil ocho.",
+   "dur": 12.621,
+   "hechos": [
+    "hoy-h06",
+    "ori-h01"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: alejandro jofré · CC BY 2.0",
+     "origen": "commons",
+     "licencia": "CC BY 2.0"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "tarjeta",
+   "pantalla": "Para 2012, Pinulito ya sumaba más de 65 locales. Solo en el departamento de Guatemala, una tesis de la Universidad del Istmo contó 30 de Pinulito y 47 de Campero.",
+   "voz": "Para dos mil doce, Pinulito ya sumaba más de sesenta y cinco locales. Solo en el departamento de Guatemala, una tesis de la Universidad del Istmo contó treinta de Pinulito y cuarenta y siete de Campero.",
+   "dur": 13.076,
+   "hechos": [
+    "exp-h02",
+    "exp-h03"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "golpe",
+   "pantalla": "Pero Pinulito era más barato: su combo costaba desde Q25, y el de Campero, desde Q40.",
+   "voz": "Pero Pinulito era más barato: su combo costaba desde veinticinco quetzales, y el de Campero, desde cuarenta quetzales.",
+   "dur": 8.721,
+   "hechos": [
+    "exp-h04"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "cita",
+   "pantalla": "¿Cómo cobraba menos? Vendía en carretillas y para llevar, sin mesas: así bajaba sus costos. Lima, autor citado en esa tesis, dijo que Pinulito y otras pollerías daban un precio hasta tres veces menor que el de su máximo competidor.",
+   "voz": "¿Cómo cobraba menos? Vendía en carretillas y para llevar, sin mesas: así bajaba sus costos. Lima, autor citado en esa tesis, dijo que Pinulito y otras pollerías daban un precio hasta tres veces menor que el de su máximo competidor.",
+   "dur": 16.686,
+   "hechos": [
+    "exp-h05",
+    "exp-h06"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "foto",
+   "pantalla": "En 2014, Forbes México describió sus locales: tres metros por tres, una freidora y dos personas. Cristian Noriega, gerente de mercadeo de Pinulito, dijo que Pollo Granjero, la otra pollería popular, quedaba casi al lado de los suyos.",
+   "voz": "En dos mil catorce, Forbes México describió sus locales: tres metros por tres, una freidora y dos personas. Cristian Noriega, gerente de mercadeo de Pinulito, dijo que Pollo Granjero, la otra pollería popular, quedaba casi al lado de los suyos.",
+   "dur": 17.31,
+   "hechos": [
+    "ori-h03",
+    "ori-h05"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Josué Goge from Guatemala · CC BY 2.0",
+     "origen": "commons",
+     "licencia": "CC BY 2.0"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "cita",
+   "pantalla": "Pinulito retaba a Campero, pero Campero ya no peleaba en la calle. Un analista, Paulo De León, lo dijo así a Forbes: Pollo Campero ha migrado a otra gama y se ha constituido como comida casual, mientras que Pinulito y Granjero son de corte popular.",
+   "voz": "Pinulito retaba a Campero, pero Campero ya no peleaba en la calle. Un analista, Paulo De León, lo dijo así a Forbes: Pollo Campero ha migrado a otra gama y se ha constituido como comida casual, mientras que Pinulito y Granjero son de corte popular.",
+   "dur": 16.327,
+   "hechos": [
+    "ori-h07"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "foto",
+   "pantalla": "Diez años después, en enero de 2024, un video viral mostraba, según un tuit, una rata sobre pollo frito en una tienda de Pinulito.",
+   "voz": "Diez años después, en enero de dos mil veinticuatro, un video viral mostraba, según un tuit, una rata sobre pollo frito en una tienda de Pinulito.",
+   "dur": 9.718,
+   "hechos": [
+    "hoy-h01"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "cita",
+   "pantalla": "Entonces la empresa lo llamó un intento de extorsión: dijo que no cedió y despidió al colaborador que señaló como responsable. Y escribió: La empresa recalca que el video fue compartido sin contar con una fuente confiable de información.",
+   "voz": "Entonces la empresa lo llamó un intento de extorsión: dijo que no cedió y despidió al colaborador que señaló como responsable. Y escribió: La empresa recalca que el video fue compartido sin contar con una fuente confiable de información.",
+   "dur": 16.029,
+   "hechos": [
+    "hoy-h01",
+    "hoy-h02"
+   ],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "foto",
+   "pantalla": "Mientras Pinulito se defendía, Campero crecía en Estados Unidos: en abril abrió en Florida su restaurante número 100.",
+   "voz": "Mientras Pinulito se defendía, Campero crecía en Estados Unidos: en abril abrió en Florida su restaurante número cien.",
+   "dur": 8.021,
+   "hechos": [
+    "hoy-h09"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Paul Lowry · CC BY 4.0",
+     "origen": "commons",
+     "licencia": "CC BY 4.0"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 13,
+   "tipo": "foto",
+   "pantalla": "Pinulito también cruzó la frontera: tiene empleados en Spring Valley, Nueva York. Cuántos locales suma hoy, ninguna fuente lo dice. Tampoco quién fue aquel migrante, ni por qué la marca suena a Pinula.",
+   "voz": "Pinulito también cruzó la frontera: tiene empleados en Spring Valley, Nueva York. Cuántos locales suma hoy, ninguna fuente lo dice. Tampoco quién fue aquel migrante, ni por qué la marca suena a Pinula.",
+   "dur": 14.079,
+   "hechos": [
+    "ori-h02"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Guate.News",
+     "origen": "medio",
+     "licencia": "© Guate.News (crédito en pantalla)"
+    }
+   ],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 14,
+   "tipo": "cierre",
+   "pantalla": "Empezó en el barrio, con una freidora y dos personas. Hoy, en Nueva York, los empleados de Pinulito posan con los colores de Guatemala.",
+   "voz": "Empezó en el barrio, con una freidora y dos personas. Hoy, en Nueva York, los empleados de Pinulito posan con los colores de Guatemala.",
+   "dur": 11.247,
+   "hechos": [],
+   "fotos": [],
+   "tomas": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Lo que dejó",
+  "resumen": [
+   "Nació en el barrio, frente a Campero",
+   "Más barato, sin mesas",
+   "Hoy también en Nueva York"
+  ],
+  "texto": "Empezó en el barrio, con una freidora y dos personas. Hoy, en Nueva York, los empleados de Pinulito posan con los colores de Guatemala.",
+  "tipo": "remate",
+  "forma": "legado",
+  "final": "Hoy, en Nueva York, los empleados de Pinulito posan con los colores de Guatemala.",
+  "consecuencia": {
+   "quien": "empleados",
+   "verbo": "posan"
+  }
+ },
+ "caption": {
+  "tiktok": "Pollo Pinulito: una freidora, dos personas y un local de tres por tres para pelearle la calle a Campero. De Guatemala a Nueva York. #Guatemala #PolloPinulito #PolloCampero #historia",
+  "instagram": "Cómo Pollo Pinulito le disputó el barrio a Pollo Campero: más barato, sin mesas y para llevar. Y cómo terminó cruzando a Estados Unidos. #Guatemala #PolloPinulito #historia",
+  "facebook": "Pollo Pinulito nació para pelearle el barrio a Pollo Campero: locales de tres por tres, una freidora y dos personas. Esta es su historia, del barrio a Nueva York. Fuentes en el primer comentario.",
+  "shorts": "Pollo Pinulito contra Pollo Campero: la historia #Shorts\nDel barrio en Guatemala a Nueva York."
+ }
+}

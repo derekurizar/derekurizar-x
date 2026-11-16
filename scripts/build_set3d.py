@@ -10,7 +10,7 @@ Capas (cada una con su fuente, licencia y fecha en fuente.json):
   relieve.png + relieve.json   malla de alturas (Mapzen Terrain Tiles, formato terrarium; R = byte alto, G = byte bajo
                                de «metros + desfase»; PNG sin perfil de color, filtro «Up»)
   fallas.json                  trazos de GEM Global Active Faults dentro de la caja (CC BY-SA 4.0)
-  frontera.json                contorno del país (Natural Earth 1:50m, design/mapas/paises-50m.json)
+  frontera.json                contorno del país y bordes de los vecinos dentro de la caja (Natural Earth 1:50m, design/mapas/paises-50m.json)
   lugares.json                 cabeceras, ciudades y pueblos de OpenStreetMap (Overpass, ODbL) con un peso para la luz
   fuente.json                  fuente, licencia, fecha de descarga y texto de atribución de cada capa
 
@@ -261,6 +261,44 @@ def dist_km(a, b):
 
 
 # ---------- frontera ----------
+NOMBRES_PAIS = {"484": "México", "084": "Belice", "340": "Honduras", "222": "El Salvador", "558": "Nicaragua",
+                "188": "Costa Rica", "320": "Guatemala"}
+
+
+def capa_vecinos(T, g_pais, caja, arco):
+    """Los bordes de los países que caen en la caja, sin los del país del set (ya están en `anillos`): cada arco de
+    Natural Earth una sola vez (el que comparten México y Belice no se dibuja dos veces), recortado a la caja en tramos
+    seguidos. Incluye la costa de los vecinos: sin ella, un borde terrestre suelto no se entiende."""
+    def idx(i):
+        return i if i >= 0 else ~i
+
+    def arcos_de(g):
+        pols = [g["arcs"]] if g["type"] == "Polygon" else g["arcs"]
+        return {idx(i) for pol in pols for r in pol for i in r}
+
+    dentro = lambda p: caja["lon_min"] <= p[0] <= caja["lon_max"] and caja["lat_min"] <= p[1] <= caja["lat_max"]
+    propios, vistos, lineas, paises = arcos_de(g_pais), set(), [], []
+    for g in T["objects"]["countries"]["geometries"]:
+        if g is g_pais or g.get("type") not in ("Polygon", "MultiPolygon"):
+            continue
+        n = 0
+        for i in sorted(arcos_de(g) - propios - vistos):
+            vistos.add(i)
+            tramo = []
+            for p in arco(i):
+                if dentro(p):
+                    tramo.append(p)
+                else:
+                    if len(tramo) >= 2:
+                        lineas.append(tramo); n += 1
+                    tramo = []
+            if len(tramo) >= 2:
+                lineas.append(tramo); n += 1
+        if n:
+            paises.append(NOMBRES_PAIS.get(str(g.get("id")), g.get("properties", {}).get("name")))
+    return {"paises": paises, "lineas": lineas}
+
+
 def capa_frontera(sid, S, cache, salida):
     with open(os.path.join(RAIZ, "design", "mapas", "paises-50m.json"), encoding="utf-8") as f:
         T = json.load(f)
@@ -286,9 +324,13 @@ def capa_frontera(sid, S, cache, salida):
     poligonos = [g["arcs"]] if g["type"] == "Polygon" else g["arcs"]
     anillos = [anillo(r) for pol in poligonos for r in pol]
     anillos.sort(key=len, reverse=True)
+    vecinos = capa_vecinos(T, g, S["caja"], arco)
     with open(os.path.join(salida, "frontera.json"), "w", encoding="utf-8") as f:
-        json.dump({"set": sid, "pais": g.get("properties", {}).get("name"), "anillos": anillos}, f, ensure_ascii=False, separators=(",", ":"))
-    print("frontera: %d anillo(s), %d puntos" % (len(anillos), sum(map(len, anillos))))
+        json.dump({"set": sid, "pais": g.get("properties", {}).get("name"), "anillos": anillos, "vecinos": vecinos},
+                  f, ensure_ascii=False, separators=(",", ":"))
+    print("frontera: %d anillo(s), %d puntos · vecinos: %s (%d líneas, %d puntos)"
+          % (len(anillos), sum(map(len, anillos)), ", ".join(vecinos["paises"]),
+             len(vecinos["lineas"]), sum(map(len, vecinos["lineas"]))))
     return {"fuente": "Natural Earth 1:50m (design/mapas/paises-50m.json)", "url": "https://www.naturalearthdata.com/",
             "licencia": "Dominio público", "atribucion": "Frontera: Natural Earth"}
 

@@ -2135,6 +2135,116 @@
       "problema": "`metricas.py alinear` no sabe leer las escenas de un video 3D (sus tiempos viven en `tiempos.json` y `maqueta.json`), así que /analyze-improve no podrá alinear su curva de retención con las tomas.",
       "propuesta": "Enseñarle a `alinear` el formato de /video-3d (escenas desde `tiempos.json`; eventos y claves de cámara desde `maqueta.json`).",
       "estado": "pendiente"
+    },
+    {
+      "id": "m195",
+      "fecha": "2026-11-15",
+      "flujo": "historia",
+      "pieza": "historias/2026-11-15-pollo-pinulito",
+      "area": "voz",
+      "archivo": "scripts/historia.py",
+      "problema": "`historia.py voz` imprime «ERROR: no encuentro serie.json» en una historia suelta (no es serie) aunque luego sale bien.",
+      "propuesta": "Buscar serie.json solo si video.json trae formato historia-serie/caso; si no, callar.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m196",
+      "fecha": "2026-11-15",
+      "flujo": "historia",
+      "pieza": "historias/2026-11-15-pollo-pinulito",
+      "area": "voz",
+      "archivo": "scripts/historia.py (pronunciación)",
+      "problema": "V11 avisa que la voz dice «tweet» por «tuit» (E10).",
+      "propuesta": "Añadir «tuit» al diccionario de reemplazos de la locución (p. ej. «tuit» → «publicación en X») o evitarlo en el guionista.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m197",
+      "fecha": "2026-11-15",
+      "flujo": "historia",
+      "pieza": "historias/2026-11-15-pollo-pinulito",
+      "area": "guion",
+      "archivo": "referencias/roles/historia-guionista.md",
+      "problema": "Narración de 403 palabras y 167 s estimados (H5 avisa >165 s); el crítico tuvo que aceptar el tope.",
+      "propuesta": "Que el gate H15 falle con > 400 palabras en lugar de avisar, o que el guionista recorte antes de la crítica.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m198",
+      "fecha": "2026-11-15",
+      "flujo": "historia",
+      "pieza": "historias/2026-11-15-pollo-pinulito",
+      "area": "plano",
+      "archivo": "scripts/historia.py preparar / encuadre",
+      "problema": "El realizador no pudo bajar la og:image de pinulitogt.com porque el encuadre no declaraba el dominio propio de la marca; el video quedó con una sola foto de un local de Pinulito.",
+      "propuesta": "Que el editor declare dominios_propios cuando el protagonista es una marca, o que `preparar` lo infiera del sitio oficial encontrado.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m199",
+      "fecha": "2026-11-15",
+      "flujo": "historia",
+      "pieza": "historias/2026-11-15-pollo-pinulito",
+      "area": "plano",
+      "archivo": "scripts/video_hf.py",
+      "problema": "El rótulo de acto de e10 sale como pieza `institucion` («Un video viral») junto a la fecha: dos fichas que dicen lo mismo.",
+      "propuesta": "No duplicar como ficha el texto del rótulo de acto cuando la mesa ya lo muestra.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m200",
+      "fecha": "2026-11-15",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-frontera-recta",
+      "area": "motor",
+      "archivo": "referencias/diseno/maqueta3d.md · video/maqueta/motor.js · scripts/maqueta3d.py",
+      "problema": "No hay pieza para un tramo de frontera o una línea cualquiera que se dibuje con un evento: la frontera recta se armó como `falla` con `puntos` y `suave: false`, y su trazo con un evento `ruptura` (destello de origen y color «caliente» de sismo). En el estilo papel (Blender) esa pieza ni siquiera se encendió.",
+      "propuesta": "Tipo de pieza `linea` (puntos, sin semántica de falla) con un evento `trazar` (desde, hacia, km, dur) que la dibuje en los dos motores; o `frontera` con `tramo: [[lon, lat], …]`.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m201",
+      "fecha": "2026-11-15",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-frontera-recta",
+      "area": "preparar",
+      "archivo": "scripts/video3d.py (cmd_preparar)",
+      "problema": "Sin --paleta, preparar creó audio/ y base/ y luego falló con «paleta None no existe».",
+      "propuesta": "Validar la paleta antes de crear nada, o elegirla sola por el tinte del tema (H8p) como /historia.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m202",
+      "fecha": "2026-11-15",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-frontera-recta",
+      "area": "verificacion",
+      "archivo": "scripts/historia.py (hechos --check, lista de fuentes)",
+      "problema": "El gate de hechos de /historia, usado por /video-3d, exige fotos (H7) que un video 3D no lleva, y no cuenta gob.mx, sre.gob.mx ni revistas.inah.gob.mx (SRE/CILA y el artículo de Jan de Vos) como fuentes válidas.",
+      "propuesta": "`hechos --check --sin-fotos` (o detectar TRABAJO video3d) y sumar los dominios oficiales y académicos mexicanos a la lista.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m203",
+      "fecha": "2026-11-15",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-frontera-recta",
+      "area": "entrega",
+      "archivo": "scripts/video3d.py (cmd_entregar → fuentes.md)",
+      "problema": "fuentes.md solo lista las cifras que dice la voz; quedan fuera los hechos sin número que el video afirma (la opinión atribuida a Jan de Vos, la brecha que limpia la CILA, Chiapas y el Soconusco) y la fuente de la latitud 17°49′.",
+      "propuesta": "Una lista `hechos_voz` en el guion (ids de verificacion_*.json) que entregar vuelque a fuentes.md con su cita, como las cifras.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m204",
+      "fecha": "2026-11-15",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-frontera-recta",
+      "area": "investigacion",
+      "archivo": "referencias/flujo-video3d.md (paso 3)",
+      "problema": "Los agentes de /historia esperan un encuadre.json y ids `<eje>-cNN`; sin un brief explícito, el verificador inventó ids que fallan H1 y tuvo que renumerar.",
+      "propuesta": "En la guía del paso 3: plantilla del brief para investigador y verificador en /video-3d (ids `<eje>-cNN`, sin fotos, formato de cifras de `datos --sumar`).",
+      "estado": "pendiente"
     }
   ]
 }

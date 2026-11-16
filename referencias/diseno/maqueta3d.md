@@ -83,6 +83,11 @@ pasan los mismos gates y dejan las mismas salidas (ver «Motor Blender»).
 - **`mundo.lugares`**: puntos con `lon`, `lat` y `nombre`; los del set (`lugares.json`: las 22 cabeceras y los ≈ 300
   pueblos de OpenStreetMap, por id en minúsculas con guiones: `guatemala`, `los-amates`, `tecpan`…) se usan sin
   declararlos. Donde el contrato pide un lugar vale también `[lon, lat]`.
+- **`mundo.capas`**: las capas del dibujo del terreno que se pueden apagar: `curvas` (curvas de nivel), `batimetria`
+  (líneas del fondo del mar) y `reticula` (paralelos y meridianos cada medio grado); todas encendidas por defecto, una
+  clave desconocida falla M3D1. Hoy las dibuja el estilo `plano` (motor three.js). **Con `plano` se pregunta siempre al
+  usuario si quiere todas las capas o una versión limpia** (usuario, 2026-11-15: en la frontera recta con México las
+  curvas de la sierra de Chiapas ensuciaban el cuadro; quedó `{"curvas": false, "batimetria": false}`).
 - **`mundo.piezas`**: lo que hay sobre el mundo. Ninguna pieza lleva texto ni cifras: eso va en la capa. Tipos v1:
   - `falla`: `trazos` (nombres del set, `fallas.json → nombres`) **o** `puntos: [[lon, lat], …]` (un trazo propio, p. ej.
     la traza publicada de una ruptura; se suaviza con una curva por los puntos, salvo `"suave": false`), o los dos. Se
@@ -92,7 +97,10 @@ pasan los mismos gates y dejan las mismas salidas (ver «Motor Blender»).
     brillo en el suelo.
   - `luces`: un punto de luz por lugar; `lugares` es una lista o `"todos"` (los del set); `encendidas: false` las deja
     apagadas hasta un evento `encender`. El tamaño sale del `peso` del lugar.
-  - `frontera`: el borde del país del set.
+  - `frontera`: el borde del país del set. Con **`vecinos: true`** dibuja también, más finos y tenues, los bordes y la
+    costa de los países de alrededor (México, Belice, Honduras, El Salvador y Nicaragua en el set `guatemala`; salen de
+    Natural Earth con `build_set3d.py <set> --capa frontera` y quedan en `frontera.json → vecinos`), para que se entienda
+    dónde queda cada cosa. Los dos motores los dibujan; nunca van en el acento.
   - `ruta`: una línea de rayas entre `lugares` (≥ 2), posada sobre el relieve.
 - **`camara`**: claves ordenadas por `t`, la primera en `t = 0`. Cada clave: `mira` (id de lugar o `[lon, lat]`),
   `dist_km` (del ojo al punto que mira; 15–1600), `azimut` (grados; 0 = el ojo al sur del punto, mirando al norte;

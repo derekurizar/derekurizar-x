@@ -295,9 +295,9 @@ def resolver_v(ctx, P):
         if not tit:
             continue
         cuando = str(R.get("hasta") or R.get("desde") or "")
-        acto = "Acto %s de %s" % (R.get("numero"), R.get("total")) if R.get("numero") and R.get("total") else ""
+        # nunca «Acto N de M» en pantalla (usuario, 2026-11-15): la ficha lleva solo el título, el lugar y la fecha
         o = offs[i0]
-        M["golpes"] = [{"tipo": "institucion", "nombre": tit, "kicker": " · ".join(x for x in (acto, R.get("lugar")) if x), "rol": cuando,
+        M["golpes"] = [{"tipo": "institucion", "nombre": tit, "kicker": R.get("lugar") or "", "rol": cuando,
                         "_t": round(o + 0.05, 3), "_fin": round(o + 1.0, 3), "_i": i0, "_acto": True}] + [g for g in M["golpes"] if not g.get("_acto")]
         M["ini"] = cuadro(o)
     for k, M in enumerate(mesas):

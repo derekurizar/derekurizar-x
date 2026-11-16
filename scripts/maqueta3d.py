@@ -36,6 +36,10 @@ FIXTURE = os.path.join(MOTOR, "fixture", "maqueta.json")
 MOTORES = ("three", "blender")     # el estilo decide el motor: three.js en HyperFrames, o Blender (la placa) + la capa 2D de HyperFrames
 BLENDER_PY = os.path.join(AQUI, "maqueta_blender.py")
 TIPOS_PIEZA = ("falla", "luces", "frontera", "ruta")
+# capas del dibujo del terreno que el guion puede apagar (mundo.capas; por defecto todas encendidas). Hoy las usa el
+# estilo `plano`: curvas de nivel, líneas del fondo del mar y retícula de paralelos y meridianos (usuario, 2026-11-15:
+# con `plano` se pregunta siempre si se quieren todas o una versión limpia)
+CAPAS_MUNDO = ("curvas", "batimetria", "reticula")
 TIPOS_EVENTO = ("ruptura", "onda", "deslizar", "encender", "apagar", "parpadear", "resaltar")
 RUMBOS = {"este": (1, 0), "oeste": (-1, 0), "norte": (0, 1), "sur": (0, -1)}
 NC_MAX, NR_MAX, NO_MAX, FALLAS_MAX = 56, 4, 4, 4      # topes del shader (motor.js)
@@ -148,7 +152,9 @@ class Set:
         self.fuente = cargar_json(os.path.join(self.dir, "fuente.json"))
         self.lugares = cargar_json(os.path.join(self.dir, "lugares.json"))["lugares"]
         self.fallas = cargar_json(os.path.join(self.dir, "fallas.json"))
-        self.frontera = cargar_json(os.path.join(self.dir, "frontera.json"))["anillos"]
+        fr = cargar_json(os.path.join(self.dir, "frontera.json"))
+        self.frontera = fr["anillos"]
+        self.vecinos = (fr.get("vecinos") or {}).get("lineas") or []   # bordes y costas de los países vecinos (build_set3d.py)
         R, P, c = self.relieve, self.relieve["proyeccion"], self.relieve["caja"]
         self.P, self.caja = P, c
         self.x0, self.x1 = (c["lon_min"] - P["lon0"]) * P["km_lon"], (c["lon_max"] - P["lon0"]) * P["km_lon"]
@@ -391,6 +397,10 @@ def resolver(m, formato, avisos=None):
             r["encendidas"] = p.get("encendidas", True)
         elif tipo == "frontera":
             r["anillos"] = [[[round(v, 3) for v in S.xy(q[0], q[1])] for q in an] for an in S.frontera]
+            if p.get("vecinos"):   # los bordes de los países de alrededor, tenues: para leer dónde queda cada cosa
+                if not S.vecinos:
+                    raise Falla("M3D2", "%s: el set «%s» no trae vecinos (rehaz la capa: build_set3d.py %s --capa frontera)" % (que, S.id, S.id))
+                r["vecinos"] = [[[round(v, 3) for v in S.xy(q[0], q[1])] for q in ln] for ln in S.vecinos]
         elif tipo == "ruta":
             if len(p.get("lugares") or []) < 2:
                 raise Falla("M3D2", "%s: una ruta necesita al menos dos `lugares`" % que)
@@ -566,7 +576,12 @@ def resolver(m, formato, avisos=None):
         fin_frase = pal_c[-1]["end"] if pal_c else t0 + 0.3
         capa["cierre"] = {"t": t0, "frase": ci.get("frase") or "", "palabras": pal_c, "redes": ci.get("redes") or [],
                           "t_redes": round(float(ci.get("t_redes", fin_frase + 0.35)), 3), "sfx": ci.get("sfx")}
-    cfg = est["cfg"]
+    cfg = dict(est["cfg"])
+    capas = mundo.get("capas") or {}
+    malas = [k for k in capas if k not in CAPAS_MUNDO]
+    if malas:
+        raise Falla("M3D1", "mundo.capas: «%s» no existe (hay: %s)" % (", ".join(malas), ", ".join(CAPAS_MUNDO)))
+    cfg["capas"] = {k: bool(capas.get(k, True)) for k in CAPAS_MUNDO}
     col = {k: color(v) for k, v in est["colores"].items()}
     return {
         "version": 1, "formato": formato, "W": Z["W"], "H": Z["H"], "fps": int(m.get("fps", 30)), "dur": dur, "estilo": est["id"], "paleta": m["paleta"],
