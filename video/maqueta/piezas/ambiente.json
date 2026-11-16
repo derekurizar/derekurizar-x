@@ -1,0 +1,93 @@
+{
+ "tipo": "ambiente",
+ "clase": "pieza",
+ "cuando": "viste un mundo de cerca que nace pelado (campo, ciudad, costa o plaza) con árboles, postes, farolas, bancas…, sin pisar calles ni edificios",
+ "parametros": {
+  "ambiente": {
+   "tipo": "texto",
+   "requerido": false,
+   "valores": [
+    "campo",
+    "ciudad",
+    "costa",
+    "plaza"
+   ],
+   "defecto": "campo",
+   "descripcion": "qué lugar es (se llama `ambiente` porque `tipo` es el de la pieza): campo (árboles sueltos y en grupos de copa redonda, ciprés y arbusto, matorrales, piedras, cercas de postes con alambre junto a caminos y lindes, postes de luz con cable junto al camino principal, algún rancho lejano, manchas de flores y pasto alto) · ciudad (farolas en las aceras, árboles de alcorque, bancas, basureros, postes con cables, semáforos en los cruces de calles mayores, paradas) · costa (palmeras, rocas en la orilla, botes varados en la arena, postes y bolardos en la costanera) · plaza (fuente al centro de la plaza, jardineras, bancas, farolas; alrededor, la ciudad a media densidad). Además acepta `evitar`: [[x, y, radio_m], …] en metros, las huellas de las demás piezas (el catálogo no tiene ese tipo de parámetro: va sin declarar y lo revisa la regla)"
+  },
+  "densidad": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    1
+   ],
+   "defecto": 0.5,
+   "descripcion": "cuánto: 0 = lo mínimo (las líneas de postes y algún árbol), 1 = lleno; nunca más de 600 elementos (cada poste cuenta)"
+  },
+  "radio_m": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    20,
+    6000
+   ],
+   "descripcion": "hasta dónde se viste, en metros desde `centro` (por defecto, el mundo entero); lo suelto es más denso en el primer tercio del radio: con el tope de 600, un radio de 250–450 m alrededor de lo que se mira se ve lleno de 15 a 200 m"
+  },
+  "centro": {
+   "tipo": "lugar",
+   "requerido": false,
+   "descripcion": "de dónde se mide el radio (un lugar del mundo o [x, y] en metros en un esquema); por defecto, el centro del mundo"
+  },
+  "semilla": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    100000
+   ],
+   "defecto": 1,
+   "descripcion": "el azar fijo de dónde cae cada cosa (la misma semilla, el mismo lugar)"
+  },
+  "evitar": {
+   "tipo": "circulos",
+   "requerido": false,
+   "descripcion": "zonas que no pisa: [[x, y, radio_m], …] (las huellas de las demás piezas; si falta, el resolver pone las de las piezas ya puestas)"
+  }
+ },
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "ejemplo": {
+  "id": "ambiente",
+  "tipo": "ambiente",
+  "ambiente": "campo",
+  "densidad": 0.7,
+  "radio_m": 320,
+  "semilla": 3
+ },
+ "nivel": "fondo",
+ "contiene": [
+  "árboles",
+  "arbustos y matorrales",
+  "piedras",
+  "cercas de postes con alambre",
+  "postes de luz con cable",
+  "farolas",
+  "bancas",
+  "semáforos",
+  "palmeras",
+  "botes varados",
+  "fuente"
+ ],
+ "animado": "las copas, las palmas y el pasto se mecen apenas; la fuente corre y su agua brilla; el halo de las farolas respira de noche; los semáforos cambian de verde a ámbar a rojo",
+ "gente": false,
+ "distancia_m": [
+  15,
+  200
+ ]
+}

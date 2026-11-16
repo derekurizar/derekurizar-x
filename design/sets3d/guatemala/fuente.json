@@ -35,12 +35,36 @@
    "licencia": "ODbL 1.0",
    "atribucion": "Lugares: © OpenStreetMap",
    "descarga": "2026-11-14"
+  },
+  "rios": {
+   "url": "https://www.openstreetmap.org/copyright",
+   "licencia": "ODbL 1.0",
+   "fuente": "OpenStreetMap (Overpass API): waterway=river con nombre dentro del país y los de su frontera, cauces de ≥ 45 km",
+   "atribucion": "Ríos: © OpenStreetMap",
+   "descarga": "2026-11-16"
+  },
+  "lagos": {
+   "url": "https://www.openstreetmap.org/copyright",
+   "licencia": "ODbL 1.0",
+   "fuente": "OpenStreetMap (Overpass API): natural=water con nombre dentro del país, de ≥ 2.5 km²",
+   "atribucion": "Lagos: © OpenStreetMap",
+   "descarga": "2026-11-16"
+  },
+  "carreteras": {
+   "url": "https://www.openstreetmap.org/copyright",
+   "licencia": "ODbL 1.0",
+   "fuente": "OpenStreetMap (Overpass API): highway=motorway|trunk|primary dentro del país, por número de ruta (ref)",
+   "atribucion": "Carreteras: © OpenStreetMap",
+   "descarga": "2026-11-16"
   }
  },
- "pie": "Relieve: Mapzen Terrain Tiles · Fallas: GEM (CC BY-SA 4.0) · Frontera: Natural Earth · Lugares: © OpenStreetMap",
+ "pie": "Relieve: Mapzen · Fallas: GEM (CC BY-SA 4.0) · Frontera: Natural Earth · Lugares, ríos, lagos y carreteras: © OpenStreetMap",
  "pie_claves": {
   "relieve": "Mapzen",
   "fallas": "GEM",
-  "lugares": "OpenStreetMap"
+  "lugares": "OpenStreetMap",
+  "rios": "OpenStreetMap",
+  "lagos": "OpenStreetMap",
+  "carreteras": "OpenStreetMap"
  }
 }

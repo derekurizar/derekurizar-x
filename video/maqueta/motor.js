@@ -64,31 +64,74 @@ const GLSL_COMUN = `
   float ruido(vec2 p) { return fract(sin(dot(floor(p), vec2(12.9898, 78.233))) * 43758.5453); }
   vec3 fondoEn(vec2 frag) { float v = frag.y / uRes.y; return mix(cFondo2, cFondo, smoothstep(0.0, 1.0, v)); }
   uniform vec2 uNiebla;                                  // unidades desde la cámara: dónde empieza y dónde termina de fundirse con el fondo
+  uniform float uT;                                      // el segundo del cuadro
+  float ruido2(vec2 p) { vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);   // ruido suave (valor) de 2D
+    float a = fract(sin(dot(i, vec2(127.1, 311.7))) * 43758.5453), b = fract(sin(dot(i + vec2(1.0, 0.0), vec2(127.1, 311.7))) * 43758.5453);
+    float c = fract(sin(dot(i + vec2(0.0, 1.0), vec2(127.1, 311.7))) * 43758.5453), d = fract(sin(dot(i + vec2(1.0, 1.0), vec2(127.1, 311.7))) * 43758.5453);
+    return mix(mix(a, b, f.x), mix(c, d, f.x), f.y); }
   uniform vec3 uHora;                                    // la hora: el color de la luz sobre todo lo que no emite (blanco de día)
-  vec3 niebla(vec3 c, vec3 pos, vec2 frag) { return mix(c * uHora, fondoEn(frag), smoothstep(uNiebla.x, uNiebla.y, distance(pos, cameraPosition))); }
+  uniform sampler2D tSombra; uniform mat4 uSombraM; uniform float uSombraK, uSombraTx, uSombraTxW, uVolumen; uniform vec3 uLuzW;
+  // la normal de la cara en pos, sacada de las derivadas (sin atributos) y vuelta hacia la cámara; cero en un punto sin cara
+  vec3 caraN(vec3 pos) {
+    vec3 dn = cross(dFdx(pos), dFdy(pos)); float ln = length(dn);
+    if (ln < 1e-12) return vec3(0.0);
+    vec3 n = dn / ln; return dot(n, cameraPosition - pos) < 0.0 ? -n : n;
+  }
+  // cuánta sombra cae en pos (0–1): la normal de la cara sale de las derivadas (sin atributos), así solo se oscurecen
+  // las caras que miran a la luz (las otras ya vienen oscuras de su sombreado) y se corre el punto para no sombrearse sola
+  float enSombra(vec3 pos, vec3 n) {
+    if (uSombraK <= 0.0 || dot(n, n) < 0.5) return 0.0;          // un punto (un halo, una luz): sin cara, sin sombra
+    float lam = dot(n, uLuzW);
+    // el punto se corre por su normal (más cuanto más rasante le da la luz) y un poco hacia la luz: sin rayas en las caras
+    vec4 q = uSombraM * vec4(pos + n * uSombraTxW * (1.5 + 3.0 * (1.0 - clamp(lam, 0.0, 1.0))) + uLuzW * uSombraTxW * 1.0, 1.0);
+    vec3 p = q.xyz / q.w * 0.5 + 0.5;
+    if (p.x < 0.002 || p.x > 0.998 || p.y < 0.002 || p.y > 0.998 || p.z > 1.0) return 0.0;
+    float bias = 0.0006, s = 0.0;
+    for (int i = -1; i <= 1; i++) for (int j = -1; j <= 1; j++)
+      s += step(texture2D(tSombra, p.xy + vec2(float(i), float(j)) * uSombraTx * 1.3).r, p.z - bias);
+    float borde = smoothstep(0.0, 0.06, min(min(p.x, 1.0 - p.x), min(p.y, 1.0 - p.y)));   // se desvanece en la orilla del mapa
+    return s / 9.0 * smoothstep(0.08, 0.35, lam) * borde;
+  }
+  // LUZ CON VOLUMEN (uVolumen): el cielo alumbra lo que mira hacia arriba y lo que mira al suelo queda más oscuro
+  vec3 niebla(vec3 c, vec3 pos, vec2 frag) {
+    float luz = 1.0;
+    if (uSombraK > 0.0 || uVolumen > 0.0) { vec3 n = caraN(pos);
+      luz = (1.0 - uSombraK * enSombra(pos, n)) * (1.0 + uVolumen * (n.y * 0.5 - 0.16) * step(0.5, dot(n, n))); }
+    return mix(c * uHora * luz, fondoEn(frag), smoothstep(uNiebla.x, uNiebla.y, distance(pos, cameraPosition)));
+  }
   vec3 salida(vec3 c, vec2 frag) {   // lineal → sRGB + grano fijo
     c = mix(c * 12.92, 1.055 * pow(max(c, vec3(0.0)), vec3(0.41666)) - 0.055, step(0.0031308, c));
     return c + (ruido(frag) - 0.5) * uGrano;
   }`;
 const NIEBLA = new THREE.Vector2(3000, 9000);
+// SOMBRAS REALES (estilos con cfg.sombras, en mundos de cerca): un mapa de profundidad desde la luz, que TODAS las
+// superficies leen en niebla() (GLSL_COMUN), sin tocar los módulos. Estos uniformes se comparten (la misma referencia en
+// cada material) y se llenan más abajo, cuando existen la luz y la cámara.
+const U_SOMBRA = { tSombra: { value: null }, uSombraM: { value: new THREE.Matrix4() }, uSombraK: { value: 0 }, uLuzW: { value: new THREE.Vector3(0, 1, 0) }, uSombraTx: { value: 1 / 2048 }, uSombraTxW: { value: 0.1 }, uVolumen: { value: 0 } };
+const UT = { value: 0 };   // el segundo del cuadro, para lo que se mueve solo en un shader (las nubes, el brillo del agua): función pura de t
 const TINTE = (() => { const t = CFG.tinte || [1, 1, 1]; return new THREE.Vector3(t[0], t[1], t[2]); })();
-const uComun = () => ({ cFondo: { value: lin(COL.fondo) }, cFondo2: { value: lin(COL.fondo2) }, uRes: { value: RES }, uGrano: { value: CFG.grano }, uNiebla: { value: NIEBLA }, uHora: { value: TINTE } });
+const uComun = () => ({ cFondo: { value: lin(COL.fondo) }, cFondo2: { value: lin(COL.fondo2) }, uRes: { value: RES }, uGrano: { value: CFG.grano }, uNiebla: { value: NIEBLA }, uHora: { value: TINTE }, uT: UT, ...U_SOMBRA });
 
 // fondo: un triángulo a pantalla completa (degradado del estilo + grano)
 {
   const g = new THREE.BufferGeometry();
   g.setAttribute("position", new THREE.BufferAttribute(new Float32Array([-1, -1, 0, 3, -1, 0, -1, 3, 0]), 3));
   // de noche (CFG.estrellas): estrellas fijas en la mitad alta del cielo (un punto por celda, por su hash; sin parpadeo)
-  const m = new THREE.ShaderMaterial({ uniforms: { ...uComun(), uEstrellas: { value: CFG.estrellas ? 1 : 0 } }, depthTest: false, depthWrite: false,
+  // de día (CFG.nubes, 0–1): nubes que derivan despacio en la parte alta del cielo (ruido suave; puras de t)
+  const m = new THREE.ShaderMaterial({ uniforms: { ...uComun(), uEstrellas: { value: CFG.estrellas ? 1 : 0 }, uNubes: { value: CFG.nubes || 0 }, cNube: { value: lin(COL.costa || COL.secundario) } }, depthTest: false, depthWrite: false,
     vertexShader: "void main(){ gl_Position = vec4(position.xy, 1.0, 1.0); }",
-    fragmentShader: GLSL_COMUN + `uniform float uEstrellas;
+    fragmentShader: GLSL_COMUN + `uniform float uEstrellas, uNubes; uniform vec3 cNube;
       void main(){ vec3 c = fondoEn(gl_FragCoord.xy);
+        if (uNubes > 0.0) { vec2 q = gl_FragCoord.xy / uRes.x; q.x += uT * 0.004;
+          float n = ruido2(q * vec2(3.0, 7.0)) * 0.6 + ruido2(q * vec2(7.0, 15.0) + 9.0) * 0.3 + ruido2(q * vec2(15.0, 31.0) + 4.0) * 0.1;
+          float alto = smoothstep(0.52, 0.8, gl_FragCoord.y / uRes.y);
+          c = mix(c, cNube * uHora + c * (vec3(1.0) - uHora) * 0.4, smoothstep(0.52, 0.74, n) * alto * uNubes); }
         if (uEstrellas > 0.5) { vec2 g = gl_FragCoord.xy / 9.0; vec2 id = floor(g); float h = ruido(id * 9.0 + 3.0);
           vec2 o = vec2(ruido(id * 9.0 + 17.0), ruido(id * 9.0 + 41.0)) * 0.7 + 0.15;
           float d = length(fract(g) - o), alto = smoothstep(0.45, 0.95, gl_FragCoord.y / uRes.y);
           c += vec3(0.9, 0.92, 1.0) * step(0.965, h) * (1.0 - smoothstep(0.04, 0.16, d)) * alto * (0.35 + 0.65 * ruido(id * 9.0 + 71.0)); }
         gl_FragColor = vec4(salida(c, gl_FragCoord.xy), 1.0); }` });
-  const q = new THREE.Mesh(g, m); q.frustumCulled = false; q.renderOrder = -10; scene.add(q);
+  const q = new THREE.Mesh(g, m); q.frustumCulled = false; q.renderOrder = -10; q.userData.cielo = true; scene.add(q);
   // el plano exterior: el mundo sigue más allá de la caja del relieve (mar hondo) hasta fundirse con el fondo a lo lejos,
   // para que el 3D llegue a los bordes del lienzo
   const gp = new THREE.PlaneGeometry(MU.plano.lado, MU.plano.lado); gp.rotateX(-Math.PI / 2);
@@ -310,7 +353,7 @@ function anclaEn(A, t) {
 // del estilo calculada en el shader (el objeto gira), su color por instancia (las partes con `tinte`) y, de noche, sus luces:
 // faros (puntos cálidos y un cono tenue en el suelo) y pilotos (que se avivan al frenar). Cada cuadro: poner(i, …) → listo().
 // El objeto da sus partes en METROS (x adelante, y arriba, z a su derecha); aquí se escalan a la unidad de la escena.
-const VERT_OBJ = `attribute vec3 color; attribute float aTinte, aLuz; uniform vec3 uLuz; uniform float uModo; varying vec3 vCol, vPos; varying float vLuz;
+const VERT_OBJ = `attribute vec3 color; attribute float aTinte, aLuz, aTinte2; attribute float aBr; attribute vec3 aColor2; uniform vec3 uLuz; uniform float uModo; varying vec3 vCol, vPos; varying float vLuz;
   void main(){ mat4 im = mat4(1.0);
     #ifdef USE_INSTANCING
       im = instanceMatrix;
@@ -320,23 +363,24 @@ const VERT_OBJ = `attribute vec3 color; attribute float aTinte, aLuz; uniform ve
     vec3 c = color;
     #ifdef USE_INSTANCING_COLOR
       c = mix(c, c * instanceColor, aTinte);
+      c = mix(c, c * aColor2, aTinte2);          // el segundo color de la instancia (partes con tinte2: el toldo aparte de la fachada)
     #endif
-    vCol = mix(c * s, c * 1.25, aLuz); vLuz = aLuz;
+    vCol = mix(c * s, c * 1.25 * aBr, aLuz); vLuz = aLuz;   // aBr: el brillo de lo que emite, por instancia y grupo (una vitrina que titila)
     vec4 wp = modelMatrix * im * vec4(position, 1.0); vPos = wp.xyz; gl_Position = projectionMatrix * viewMatrix * wp; }`;
 // lo que emite luz (aLuz: ventanas, faros, pantallas) no se tiñe con la hora: de noche es lo que brilla
 const FRAG_OBJ = GLSL_COMUN + "uniform float uBrillo; varying vec3 vCol, vPos; varying float vLuz; void main(){ vec3 c = vCol * uBrillo; c *= mix(vec3(1.0), vec3(1.0) / max(uHora, vec3(0.05)), clamp(vLuz, 0.0, 1.0)); gl_FragColor = vec4(salida(niebla(c, vPos, gl_FragCoord.xy), gl_FragCoord.xy), 1.0); }";
 const SRGB = "c = mix(c * 12.92, 1.055 * pow(max(c, vec3(0.0)), vec3(0.41666)) - 0.055, step(0.0031308, c));";
 function geoObjeto(partes) {           // las partes [{geo, color, tinte, luz}] → una geometría no indexada con color, aTinte y aLuz
-  const pos = [], nor = [], col = [], tin = [], luz = [];
+  const pos = [], nor = [], col = [], tin = [], luz = [], tin2 = [];
   for (const p of partes) {
     const g = p.geo.index ? p.geo.toNonIndexed() : p.geo; g.computeVertexNormals();
     const P = g.attributes.position.array, N = g.attributes.normal.array;
     for (let i = 0; i < P.length; i += 3) { pos.push(P[i], P[i + 1], P[i + 2]); nor.push(N[i], N[i + 1], N[i + 2]);
-      col.push(p.color.r, p.color.g, p.color.b); tin.push(p.tinte ? 1 : 0); luz.push(p.luz || 0); }
+      col.push(p.color.r, p.color.g, p.color.b); tin.push(p.tinte ? 1 : 0); luz.push(p.luz || 0); tin2.push(p.tinte2 ? 1 : 0); }
   }
   const g = new THREE.BufferGeometry(), F = (a, k) => new THREE.BufferAttribute(new Float32Array(a), k);
   g.setAttribute("position", F(pos, 3)); g.setAttribute("normal", F(nor, 3)); g.setAttribute("color", F(col, 3));
-  g.setAttribute("aTinte", F(tin, 1)); g.setAttribute("aLuz", F(luz, 1));
+  g.setAttribute("aTinte", F(tin, 1)); g.setAttribute("aLuz", F(luz, 1)); g.setAttribute("aTinte2", F(tin2, 1));
   return g;
 }
 function flota(tipo, n, op = {}) {
@@ -349,15 +393,23 @@ function flota(tipo, n, op = {}) {
   // cosecha, una pierna que camina, el brazo de una grúa, el tambor de una tostadora). El objeto declara
   // `grupos: {nombre: {pivote: [x, y, z]}}` (metros, ejes del objeto) y `pose(t, i, ctx)` → {nombre: [rx, ry, rz, dx?, dy?, dz?]}
   // (radianes alrededor de su pivote y metros), función pura de t: cada grupo es otra InstancedMesh con la misma instancia.
-  const todas = O.partes(ctx), GR = O.grupos || {};
+  // `op.adjuntos`: partes de más que la pieza le pone al objeto, atadas a uno de sus grupos (la herramienta en la mano: un
+  // rastrillo en `brazo_d`): [{geo, color, grupo, luz?}] en metros, en los ejes del objeto. `op.pose`: el nombre de la pose
+  // que la pieza pide (o i → nombre): el objeto la recibe en pose(t, i, ctx, {vel, pose}).
+  const todas = O.partes(ctx).concat(op.adjuntos || []), GR = O.grupos || {};
   const mallas = [["", todas.filter((p) => !p.grupo || !GR[p.grupo])]].concat(Object.keys(GR).map((g) => [g, todas.filter((p) => p.grupo === g)]))
     .filter(([, ps]) => ps.length).map(([g, ps]) => {
-      const m = new THREE.InstancedMesh(geoObjeto(ps), mat, N1); m.frustumCulled = false; m.renderOrder = op.orden || 3; return [g, m]; });
+      const geo = geoObjeto(ps);
+      geo.setAttribute("aBr", new THREE.InstancedBufferAttribute(new Float32Array(N1).fill(1), 1));
+      geo.setAttribute("aColor2", new THREE.InstancedBufferAttribute(new Float32Array(N1 * 3).fill(1), 3));
+      const m = new THREE.InstancedMesh(geo, mat, N1); m.frustumCulled = false; m.renderOrder = op.orden || 3; return [g, m]; });
   const im = mallas[0][1];
   const variantes = O.variantes ? O.variantes(ctx) : [TONOS.secundario];
+  const variantes2 = O.variantes2 ? O.variantes2(ctx) : null;     // el segundo color (partes con `tinte2`), por instancia
   const cero = new THREE.Matrix4().makeScale(0, 0, 0);
   for (const [, m] of mallas) {
-    for (let i = 0; i < N1; i++) { m.setColorAt(i, op.color ? op.color(i, variantes) : variantes[0]); m.setMatrixAt(i, cero); }
+    for (let i = 0; i < N1; i++) { m.setColorAt(i, op.color ? op.color(i, variantes) : variantes[0]); m.setMatrixAt(i, cero);
+      if (variantes2) { const c2 = op.color2 ? op.color2(i, variantes2) : variantes2[(i + (op.semilla || 0)) % variantes2.length]; m.geometry.attributes.aColor2.setXYZ(i, c2.r, c2.g, c2.b); } }
     m.instanceColor.needsUpdate = true; scene.add(m);
   }
   const mG = new THREE.Matrix4(), mP = new THREE.Matrix4(), mR = new THREE.Matrix4(), mS = new THREE.Matrix4(), eu = new THREE.Euler(), qS = new THREE.Quaternion();
@@ -407,7 +459,7 @@ function flota(tipo, n, op = {}) {
       q.setFromAxisAngle(Y, Math.atan2(dy, dx)); e.set(x, z, -y); sc.setScalar(k0 * k);
       m4.compose(e, q, sc);
       // `op.semilla` (el actor la pasa desde su id): cada instancia de cada pieza con su propio desfase en la pose
-      const pose = mallas.length > 1 && O.pose ? (O.pose((ctx.cuadro || {}).t || 0, i + (op.semilla || 0), ctx, { vel }) || {}) : {};
+      const pose = mallas.length > 1 && O.pose ? (O.pose((ctx.cuadro || {}).t || 0, i + (op.semilla || 0), ctx, { vel, pose: typeof op.pose === "function" ? op.pose(i) : op.pose || null }) || {}) : {};
       // cada grupo gira en su pivote; con `padre`, encima del giro de su padre (el brazo sigue al torso, el codo al brazo)
       const loc = {};
       const local = (g) => {
@@ -422,6 +474,8 @@ function flota(tipo, n, op = {}) {
       };
       for (const [g, m] of mallas) {
         if (k <= 0) { m.setMatrixAt(i, cero); continue; }
+        const br = g && pose[g] && pose[g][7] !== undefined && pose[g][7] !== null ? pose[g][7] : (pose._brillo !== undefined ? pose._brillo : 1);
+        if (m.geometry.attributes.aBr.getX(i) !== br) { m.geometry.attributes.aBr.setX(i, br); m.geometry.attributes.aBr.needsUpdate = true; }
         if (!g || (!pose[g] && !GR[g].padre)) { m.setMatrixAt(i, m4); continue; }
         m.setMatrixAt(i, mG.copy(m4).multiply(local(g)));
       }
@@ -457,7 +511,7 @@ const CL = M.camara;
 // maqueta3d.camara_en con la `_pos` de la clave); las demás, su punto fijo
 function miraDe(k, t) {
   if (!k.sigue) return [k.x, k.y, k.alt];
-  const q = anclaEn(k.sigue, t); return [q.x, q.y, altura(q.x, q.y)];
+  const q = anclaEn(k.sigue, t); return [q.x, q.y, altura(q.x, q.y) + (k.lev || 0)];   // lev: `mira_lev_m` de la clave
 }
 function camaraEn(t) {
   let i = 0; while (i < CL.length - 2 && t > CL[i + 1].t) i++;
@@ -562,10 +616,87 @@ function proyectar(x, y, z) {
 ctx.proyectar = proyectar;
 // lo que la capa 2D (y sus anotaciones) necesita del mundo: dónde está un ancla en t y la altura del suelo (unidades de la escena)
 const CAPA_MUNDO = { ancla: (A, t) => anclaEn(A, t), altura: (x, y) => altura(x, y), metros: (v) => v / MU.unidad_m };
+// ---------- sombras reales: el pase de profundidad desde la luz (función pura del cuadro) ----------
+const SOMBRAS = (() => {
+  const k = MU.escala !== "pais" ? (CFG.sombras || 0) : 0;      // solo en mundos de cerca (en el mapa, el relieve ya trae su sombreado)
+  if (!(k > 0)) return null;
+  const tam = 2048, rt = new THREE.WebGLRenderTarget(tam, tam, { depthBuffer: true });
+  rt.depthTexture = new THREE.DepthTexture(tam, tam); rt.depthTexture.type = THREE.UnsignedIntType;
+  const cam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 10), mat = new THREE.MeshDepthMaterial({ side: THREE.DoubleSide });
+  mat.polygonOffset = true; mat.polygonOffsetFactor = 2; mat.polygonOffsetUnits = 4;
+  U_SOMBRA.uSombraK.value = k; U_SOMBRA.uLuzW.value.copy(LUZ_DIR).normalize(); U_SOMBRA.uSombraTx.value = 1 / tam;
+  U_SOMBRA.uVolumen.value = CFG.volumen || 0;
+  return { rt, cam, mat, tam, ocultos: [] };
+})();
+function proyectaSombra(o) {   // ¿este objeto tapa la luz? mallas opacas con volumen (ni líneas, ni puntos, ni lo transparente, ni el fondo)
+  const m = o.material;
+  return o.isMesh && m && !m.transparent && m.depthWrite !== false && m.depthTest !== false && !(m.uniforms && m.uniforms.uAncho) && !o.userData.sinSombra;
+}
+function pasarSombras() {
+  if (!SOMBRAS) return;
+  const S = SOMBRAS, c = CAM, R = Math.max(c.dist * 1.7, 45 / MU.unidad_m), L = U_SOMBRA.uLuzW.value;
+  // la luz, ortográfica y centrada en lo que mira la cámara (alineada a su rejilla de texeles: sin temblor al mover la cámara)
+  const up = Math.abs(L.y) > 0.98 ? new THREE.Vector3(0, 0, -1) : new THREE.Vector3(0, 1, 0);
+  const ejeX = new THREE.Vector3().crossVectors(up, L).normalize(), ejeY = new THREE.Vector3().crossVectors(L, ejeX).normalize();
+  const obj = new THREE.Vector3(c.x, c.alt, -c.y), tex = 2 * R / S.tam;
+  U_SOMBRA.uSombraTxW.value = tex;
+  const ux = Math.round(obj.dot(ejeX) / tex) * tex, uy = Math.round(obj.dot(ejeY) / tex) * tex, uz = obj.dot(L);
+  obj.copy(ejeX).multiplyScalar(ux).addScaledVector(ejeY, uy).addScaledVector(L, uz);
+  S.cam.left = -R; S.cam.right = R; S.cam.top = R; S.cam.bottom = -R; S.cam.near = R * 0.05; S.cam.far = R * 8;
+  S.cam.position.copy(obj).addScaledVector(L, R * 4); S.cam.up.copy(up); S.cam.lookAt(obj); S.cam.updateProjectionMatrix(); S.cam.updateMatrixWorld(true);
+  S.ocultos.length = 0;
+  scene.traverse((o) => { if ((o.isMesh || o.isPoints || o.isLine) && o.visible && !proyectaSombra(o)) { o.visible = false; S.ocultos.push(o); } });
+  const fondo0 = scene.background; scene.overrideMaterial = S.mat;
+  renderer.setRenderTarget(S.rt); renderer.clear(); renderer.render(scene, S.cam); renderer.setRenderTarget(null);
+  scene.overrideMaterial = null; scene.background = fondo0;
+  for (const o of S.ocultos) o.visible = true;
+  U_SOMBRA.tSombra.value = S.rt.depthTexture;
+  U_SOMBRA.uSombraM.value.multiplyMatrices(S.cam.projectionMatrix, S.cam.matrixWorldInverse);
+}
+
+// ---------- resplandor (CFG.resplandor, de noche en mundos de cerca): lo que brilla deja un halo suave ----------
+// La imagen NO cambia: sobre ella se SUMA la escena a un cuarto de tamaño, cortada a lo más brillante y desenfocada
+// (cuatro pasadas). Función pura del cuadro; el cielo queda fuera (sus estrellas se dibujan por píxel).
+const RESPLANDOR = (() => {
+  const k = MU.escala !== "pais" ? (CFG.resplandor || 0) : 0;
+  if (!(k > 0)) return null;
+  const w = Math.round(W / 4), h = Math.round(H / 4);
+  const a = new THREE.WebGLRenderTarget(w, h, { depthBuffer: true }), b = new THREE.WebGLRenderTarget(w, h, { depthBuffer: false }), c = new THREE.WebGLRenderTarget(w, h, { depthBuffer: false });
+  const vs = "varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }";
+  const blur = new THREE.ShaderMaterial({ uniforms: { tex: { value: null }, dir: { value: new THREE.Vector2() }, umbral: { value: 2 } }, vertexShader: vs, depthTest: false, depthWrite: false,
+    fragmentShader: `uniform sampler2D tex; uniform vec2 dir; uniform float umbral; varying vec2 vUv;
+      vec3 toma(vec2 uv) { vec3 x = texture2D(tex, uv).rgb; return x * smoothstep(umbral, umbral + 0.22, max(x.r, max(x.g, x.b))); }
+      void main(){ vec3 s = toma(vUv) * 0.227 + (toma(vUv + dir * 1.385) + toma(vUv - dir * 1.385)) * 0.316 + (toma(vUv + dir * 3.231) + toma(vUv - dir * 3.231)) * 0.070;
+        gl_FragColor = vec4(s, 1.0); }` });
+  const suma = new THREE.ShaderMaterial({ uniforms: { tex: { value: null }, k: { value: k } }, vertexShader: vs, depthTest: false, depthWrite: false, transparent: true, blending: THREE.AdditiveBlending,
+    fragmentShader: "uniform sampler2D tex; uniform float k; varying vec2 vUv; void main(){ gl_FragColor = vec4(texture2D(tex, vUv).rgb * k, 1.0); }" });
+  const escena = new THREE.Scene(), quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), blur); quad.frustumCulled = false; escena.add(quad);
+  return { a, b, c, w, h, blur, suma, escena, quad, cam: new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1), cielo: scene.children.find((o) => o.userData.cielo) };
+})();
+function pasarResplandor() {
+  if (!RESPLANDOR) return;
+  const R = RESPLANDOR, u = R.blur.uniforms, negro = renderer.getClearColor(new THREE.Color()).clone();
+  if (R.cielo) R.cielo.visible = false;
+  RES.set(R.w, R.h); renderer.setClearColor(0x000000, 1);
+  renderer.setRenderTarget(R.a); renderer.clear(); renderer.render(scene, camera);
+  RES.set(W, H); renderer.setClearColor(negro, 1);
+  if (R.cielo) R.cielo.visible = true;
+  R.quad.material = R.blur;
+  const paso = (de, a, dx, dy, umbral) => { u.tex.value = de.texture; u.dir.value.set(dx / R.w, dy / R.h); u.umbral.value = umbral; renderer.setRenderTarget(a); renderer.render(R.escena, R.cam); };
+  paso(R.a, R.b, 1, 0, 0.6); paso(R.b, R.c, 0, 1, -1); paso(R.c, R.b, 2.4, 0, -1); paso(R.b, R.c, 0, 2.4, -1);
+  renderer.setRenderTarget(null);
+  const ac = renderer.autoClear; renderer.autoClear = false;
+  R.quad.material = R.suma; R.suma.uniforms.tex.value = R.c.texture; renderer.render(R.escena, R.cam);
+  renderer.autoClear = ac;
+}
+
 function renderAt(t) {
+  UT.value = t;
   ponerCamara(t);
   mundoEn(t);
+  pasarSombras();
   renderer.render(scene, camera);
+  pasarResplandor();
   if (window.__capa) window.__capa(t, proyectar, CAPA_MUNDO);
 }
 

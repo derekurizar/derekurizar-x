@@ -32,6 +32,7 @@ Subcomandos:
 No edita motor.js, maqueta3d.py ni otro módulo. Exit: 0 ok · 1 falla · 2 uso incorrecto.
 """
 import argparse
+import tempfile
 import contextlib
 import copy
 import io
@@ -79,6 +80,24 @@ def partir(spec):
     return (clase, M3.CLASES[clase], m.group(2)) if clase else None
 
 
+def sintaxis(js, nombre):
+    """El módulo tiene que ser JavaScript válido: con un error de sintaxis la página no carga, la hoja sale vacía y el
+    check daba «ok» (visto el 2026-11-16). Se revisa con `node --check` sobre una copia .mjs; sin node no se revisa."""
+    node = shutil.which("node")
+    if not node:
+        return []
+    with tempfile.TemporaryDirectory() as d:
+        copia = os.path.join(d, "modulo.mjs")
+        shutil.copyfile(js, copia)
+        r = subprocess.run([node, "--check", copia], capture_output=True, text=True)
+    if r.returncode == 0:
+        return []
+    lineas = [l for l in r.stderr.splitlines() if l.strip()]
+    donde = next((l.rsplit(":", 1)[-1] for l in lineas if "modulo.mjs:" in l), "?")
+    que = next((l for l in lineas if "Error" in l), "error de sintaxis")
+    return ["%s: no es JavaScript válido (línea %s: %s)" % (nombre, donde, que.strip())]
+
+
 def lint(clase, carpeta, tipo):
     """→ (ficha o None, fallas). Usa maqueta3d.revisar_ficha (ficha + lint base) y añade lo de LINT."""
     js, fj = os.path.join(M3.MOTOR, carpeta, tipo + ".js"), os.path.join(M3.MOTOR, carpeta, tipo + ".json")
@@ -94,6 +113,7 @@ def lint(clase, carpeta, tipo):
     except ValueError as e:
         return None, ["%s/%s.json: no es JSON válido (%s)" % (carpeta, tipo, e)]
     f += M3.revisar_ficha(fi, clase, tipo, js)
+    f += sintaxis(js, "%s/%s.js" % (carpeta, tipo))
     src = sin_comentarios(M3.cargar_texto(js))
     for rx, motivo in LINT:
         m = rx.search(src)

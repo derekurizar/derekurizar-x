@@ -54,6 +54,12 @@ Escribe `<TRABAJO>/direccion.json`:
   realidad (la cosecha con la primera luz, el turno de noche del puerto) o usa el cambio de hora para contar el paso del
   tiempo. Cada hora distinta del día lleva su `hora_razon`; un salto de hora entra con `transicion: "oscuro"` o la voz lo
   dice (`salto_hora`). De noche se encienden ventanas, faros y farolas: aprovéchalo, no lo uses por adorno.
+- **El mundo ya viene ambientado:** cada esquema trae su `ambiente` (vegetación, cercas, postes, farolas) y su `horizonte`
+  (colinas, montañas, ciudad); elige el horizonte que corresponde al lugar real (`"horizonte": "montanas"` en una finca de
+  la sierra). En el mapa, suma las capas de agua y de caminos del catálogo cuando ayuden a ubicar (y dilo en el pie: «OpenStreetMap»).
+  La cámara puede bajar a 6 m y mirar a una altura (`mira_lev_m`): acércate a la gente.
+- **La gente hace su oficio:** un actor `persona` lleva `pose` (las de su ficha: cosechar, rastrillar, cargar, sorber,
+  sentado, atender…); los escenarios traen la suya. Nadie se desliza ni se queda de pie sin hacer nada.
 - **Detalle y dinamismo** (usuario, 2026-11-16: «hace falta más detalle… re usaste muchas escenas… el barco se traba»):
   - **Cada paso, su mundo y su objeto.** No vuelvas a un mundo a mitad del video (C3D13: solo el cierre puede volver al del
     gancho). Un mismo objeto no hace de dos cosas distintas: si la casa ya fue el beneficio, la bodega y el tostador son

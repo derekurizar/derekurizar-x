@@ -509,6 +509,48 @@ estilo que declare `horas` en `design/sets3d/estilos.json` (hoy, `dia`). Sin `ho
 - **El constructor mira las dos horas:** `maqueta_modulo.py check` dibuja además la hoja de «la otra hora»
   (`…/otra_hora/hoja_9x16.jpg`).
 
+## Mundos ambientados, sombras reales y gente con oficio (2026-11-16)
+
+**Un esquema nace vestido.**
+- **`ambiente`** (pieza, `nivel: fondo`): vegetación, cercas, postes con cable, piedras, farolas (encendidas de noche),
+  bancas, palmeras o jardineras según `ambiente: campo|ciudad|costa|plaza`, por semilla, sin pisar calles, agua, edificios
+  ni las demás piezas. **Si el mundo no la trae, el resolver la añade sola** con el de su receta y pone en `evitar` las
+  cajas de lo ya puesto; `"ambiente": false` en el mundo la quita.
+- **`horizonte`** (parámetro del mundo esquema: `colinas`, `montanas`, `ciudad`, `mar`, `llano`; por defecto el de la
+  receta): cerros o el resto de la ciudad **más allá** del mundo. Da profundidad y no mueve nada de lo puesto.
+- **Cielo y suelo:** nubes que derivan de día (`cfg.nubes`), estrellas de noche, y el suelo con manchas y grano (no un color
+  plano). El segundo del cuadro llega a todos los shaders en `uT` (`GLSL_COMUN`), y `ruido2()` da ruido suave.
+- **Cámara de cerca:** en un esquema la distancia va de 6 m (antes 15) y el ojo puede bajar a 1.2 m del suelo; una clave
+  puede mirar a una altura con **`mira_lev_m`** (la copa de un árbol, la pluma de una grúa, media ladera).
+- **El mapa también:** piezas `rios`, `lagos` y `carreteras` (escala `pais`, set `guatemala`; OpenStreetMap, ODbL: el pie
+  dice «OpenStreetMap», M3D7). `nombres` elige cuáles; una segunda pieza con un solo nombre se puede `resaltar`.
+
+**Sombras reales** (`cfg.sombras` del estilo, 0–1; hoy `dia` y sus horas; solo en mundos de cerca). Un mapa de profundidad
+desde la luz (2048², ortográfico, centrado en lo que mira la cámara y alineado a su rejilla) que **todas** las superficies
+leen en `niebla()` (`enSombra(pos)` en `GLSL_COMUN`): ningún módulo cambia. La normal de la cara sale de las derivadas, así
+solo se oscurecen las caras que miran a la luz. Proyectan sombra las mallas opacas (ni líneas, ni puntos, ni lo
+transparente; `userData.sinSombra` la quita). Es una función pura del cuadro. Con sombras reales, la de contacto baja de
+fuerza. Costo medido (24 cuadros sueltos, cafetal y beneficio): ≈ +0.01 s por cuadro; el del render completo se anota
+con el primer video que las use.
+
+**Luz con volumen** (`cfg.volumen`, con las sombras): el cielo aclara lo que mira hacia arriba y lo que mira al suelo
+queda más oscuro (la misma normal por derivadas). **Resplandor** (`cfg.resplandor`; hoy la hora `noche` del estilo `dia`):
+sobre la imagen ya dibujada se suma la escena a un cuarto de tamaño, cortada a lo más brillante y desenfocada; la imagen
+de base no cambia y el cielo queda fuera. Pendiente (no hecho): dibujar a 2× y reducir, y más segmentos en los módulos
+viejos (los nuevos siguen la vara del constructor).
+
+**Gente con oficio** (`motor.js → flota`):
+- `pose(t, i, ctx, {vel, pose})`: `vel` (m/s) la pasan el actor y el tráfico (de pie no se camina); `pose` es el nombre que
+  pidió quien puso el objeto: el actor con su parámetro **`pose`** (validado contra `poses` de la ficha del objeto) o una
+  pieza con `ctx.flota(tipo, n, {pose: "rastrillar"})` (o `i → nombre`, o un objeto `{nombre, periodo, fase, …}` para que la
+  pieza sincronice el ciclo con lo suyo o apague un accesorio: `persona` lo entiende).
+- Cada grupo devuelve `[rx, ry, rz, dx, dy, dz, escala, brillo]`: `escala` 0 lo oculta (un accesorio que solo sale en una
+  pose) y `brillo` multiplica lo que emite (una vitrina que titila); `pose._brillo` vale para todo el objeto.
+- `ctx.flota(tipo, n, {adjuntos: [{geo, color, grupo, luz}]})`: partes de más atadas a un grupo (la herramienta en la mano).
+- Partes con `tinte2` y `variantes2(ctx)`: un segundo color por instancia (el toldo aparte de la fachada).
+- `persona` trae las poses con nombre (`de_pie`, `caminar`, `cosechar`, `rastrillar`, `cargar`, `sorber`, `sentado`,
+  `atender`) con sus accesorios; `cosechador` y `cliente` siguen existiendo para los videos ya entregados.
+
 ## Objetos articulados, estilo `dia` y M3D14 (usuario, 2026-11-16: «más detalle y dinamismo»)
 
 - **Objeto articulado** (`video/maqueta/objetos/<tipo>.js`): las partes con `grupo` se mueven solas con el tiempo. El

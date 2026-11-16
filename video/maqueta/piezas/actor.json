@@ -103,6 +103,11 @@
     500
    ],
    "defecto": 0
+  },
+  "pose": {
+   "tipo": "texto",
+   "requerido": false,
+   "descripcion": "la pose que se le pide al objeto, si las tiene (una persona: caminar, cosechar, rastrillar, cargar, sorber, sentado, atender; mira la ficha del objeto)"
   }
  },
  "escalas": [

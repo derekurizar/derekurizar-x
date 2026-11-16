@@ -30,7 +30,7 @@
           if (!q.vis || k <= 0) { f.flotas[v.o].poner(v.slot, q.x, q.y, q.dx, q.dy, 0, 0); return; }
           const v0 = ctx.tray.suave(v.r, f.p.h, t - 0.15)[1], v1 = ctx.tray.suave(v.r, f.p.h, t + 0.15)[1];
           const freno = Math.max(ctx.clamp((v0 - v1) / 0.3 / a3), q.v < lento ? 0.75 : 0);
-          f.flotas[v.o].poner(v.slot, q.x, q.y, q.dx, q.dy, k, freno);
+          f.flotas[v.o].poner(v.slot, q.x, q.y, q.dx, q.dy, k, freno, Math.abs(q.v) / ctx.metros(1));   // vel (m/s): la pose de lo articulado la usa
         });
         for (const fl of f.flotas) fl.listo();
       }

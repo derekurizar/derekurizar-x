@@ -262,7 +262,10 @@
      "luz": 0.5
     },
     "resalte_px": 320,
-    "sombra_contacto": 0.42
+    "sombra_contacto": 0.22,
+    "nubes": 0.75,
+    "sombras": 0.45,
+    "volumen": 0.3
    },
    "capa": {
     "sombra": "#16181D",
@@ -293,9 +296,11 @@
       "fuerza": 0.66,
       "ambiente": 0.5
      },
-     "sombra_contacto": 0.34,
+     "sombra_contacto": 0.18,
      "noche": false,
-     "estrellas": false
+     "estrellas": false,
+     "nubes": 0.6,
+     "sombras": 0.5
     },
     "dia": {
      "cuando": "la luz del día (por defecto)",
@@ -326,9 +331,11 @@
       "fuerza": 0.62,
       "ambiente": 0.46
      },
-     "sombra_contacto": 0.36,
+     "sombra_contacto": 0.18,
      "noche": false,
-     "estrellas": false
+     "estrellas": false,
+     "nubes": 0.6,
+     "sombras": 0.52
     },
     "noche": {
      "cuando": "de noche, cuando eso pasa de noche (un turno, un apagón, una vigilia) o para marcar el paso del tiempo: luces encendidas y estrellas",
@@ -348,9 +355,12 @@
       "fuerza": 0.5,
       "ambiente": 0.5
      },
-     "sombra_contacto": 0.16,
+     "sombra_contacto": 0.12,
      "noche": true,
-     "estrellas": true
+     "estrellas": true,
+     "nubes": 0.0,
+     "sombras": 0.22,
+     "resplandor": 0.7
     }
    }
   },

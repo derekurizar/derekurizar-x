@@ -1,7 +1,7 @@
 {
  "tipo": "persona",
  "clase": "objeto",
- "cuando": "una persona que camina (piernas y brazos se balancean) o espera de pie: la calle, la parada, la plaza, el mostrador",
+ "cuando": "una persona con pose: camina, espera, cosecha, rastrilla, carga un saco, sorbe café, sentada o atendiendo (calle, plaza, finca, beneficio, terraza)",
  "parametros": {},
  "escalas": [
   "esquema",
@@ -18,13 +18,23 @@
  "ejemplo": {
   "objeto": "persona"
  },
- "notas": "Articulada: piernas y brazos se balancean siempre (un paso de 0.9–1.1 s, ±16° la pierna, ±13° el brazo), torso y cabeza quietos. La pose no conoce la velocidad: de pie se lee como quien cambia el peso; no hay variante quieta (para alguien inmóvil que trabaja, el cosechador u otro objeto).",
+ "notas": "Articulada con esqueleto anidado (cuerpo → torso → cabeza, brazos con codo, piernas con rodilla; IK de dos huesos para las manos). La pose la pide el actor con su parámetro `pose` (validado contra `poses`) o una pieza con ctx.flota(\"persona\", n, {pose: nombre | (i) => nombre | {nombre, periodo, fase, saco: false, banco: false}}): el objeto sincroniza el ciclo con lo de la pieza (fase y periodo) y apaga el accesorio que ella dibuja. Sin pose: caminar si vel > 0.3 m/s o si nadie da la velocidad (lo de antes), de_pie si no. Accesorios que solo salen en su pose: sombrero de ala (cosechar, rastrillar), costal (cosechar), rastrillo (rastrillar), saco (cargar; ciclo ~6 s con fases 0.1 · 0.3 · 0.76 · 0.9, como el saco de la tostaduría), vaso para llevar (sorber), delantal (atender), banco (sentado). sentado: cadera a 0.47 m, rodillas a 90°; trae su banco salvo `banco: false` (la terraza con sus sillas).",
  "nivel": "objeto",
  "contiene": [],
- "animado": "camina (piernas y brazos) cuando avanza",
+ "animado": "según la pose: camina (piernas con rodilla y brazos), respira y mira alrededor de pie, cosecha (el brazo sube a la rama y baja al costal), rastrilla (el rastrillo va y viene), carga un saco hasta una tolva alta, sorbe un vaso cada 4–6 s, atiende con las manos al frente",
  "gente": true,
  "distancia_m": [
   5,
   40
+ ],
+ "poses": [
+  "de_pie",
+  "caminar",
+  "cosechar",
+  "rastrillar",
+  "cargar",
+  "sorber",
+  "sentado",
+  "atender"
  ]
 }

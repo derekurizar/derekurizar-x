@@ -11,7 +11,7 @@
       return piezas.map((p) => {
         const r = ctx.tray.nueva(p.T, p.S);
         const semilla = [...String(p.id)].reduce((h, c) => (h * 31 + c.charCodeAt(0)) % 9973, 7);   // desfase de la pose por actor
-        const fl = ctx.flota(p.objeto, 1, { tamano: p.tamano, lev: p.lev, orden: 4, semilla,
+        const fl = ctx.flota(p.objeto, 1, { tamano: p.tamano, lev: p.lev, orden: 4, semilla, pose: p.pose || null,
           color: (i, vs) => (p.protagonista ? ctx.tonos.acento : vs[p.variante % vs.length]) });
         const movil = (t) => { const [s, v] = ctx.tray.suave(r, p.h, t), q = ctx.enCamino(p.camino, s);
           return { x: q.x, y: q.y, dx: q.dx, dy: q.dy, v, vis: true }; };

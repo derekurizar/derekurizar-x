@@ -2523,6 +2523,7 @@ fi
 paso "maqueta 3D: mundos pais, ciudad y esquema (escalas, recetas deterministas, M3D12, cámara por escala, set capital)" python3 scripts/pruebas/maqueta_mundos.py
 paso "maqueta 3D: varios mundos por video en tramos (M3D13, partir, capa global, aviso por ventana, C3D12 y construir en video3d.py)" python3 scripts/pruebas/maqueta_tramos.py
 paso "maqueta 3D: la escena viva (fichas con nivel/contiene/animado/gente, M3D15–M3D19 con negativos, C3D14–C3D18 en video3d.py)" python3 scripts/pruebas/maqueta_escena.py
+paso "maqueta 3D: sintaxis del motor y de sus módulos (node --check sobre motor.js, capa.js y cada <clase>/<tipo>.js)" bash -c 'd=$(mktemp -d); rc=0; for f in video/maqueta/motor.js video/maqueta/capa.js video/maqueta/placa.js video/maqueta/*/*.js; do case "$f" in */three/*) continue;; esac; cp "$f" "$d/x.mjs"; node --check "$d/x.mjs" >/dev/null 2>"$d/err" || { echo "FALLA sintaxis: $f"; head -4 "$d/err"; rc=1; }; done; exit $rc'
 paso "maqueta 3D: los casos de los mundos nuevos pasan M3D1–M3D12" sh -c 'python3 scripts/maqueta3d.py check video/maqueta/fixture/esquema_carretera.json && python3 scripts/maqueta3d.py check video/maqueta/fixture/ciudad_capital.json'
 paso "set de ciudad capital completo" python3 scripts/build_set3d.py capital --check
 paso "maqueta 3D: lo que se mueve (flujo de Newell cerrado en t, cola hacia atrás sin atravesarse, cámara que sigue, anclas, respaldo de anotaciones)" python3 scripts/pruebas/maqueta_movimiento.py
@@ -2540,6 +2541,7 @@ paso "node --check historia.js (envuelto en async function)" check_js historia.j
 paso "node --check explica.js (envuelto en async function)" check_js explica.js
 paso "node --check youtube.js (envuelto en async function)" check_js youtube.js
 paso "node --check plano.js (envuelto en async function)" check_js plano.js
+paso "node --check video3d.js (envuelto en async function)" check_js video3d.js
 paso "check_workflows.py (PALETAS, PLANTILLAS, HOOKS, BEATS, REQ, pesoX, MODOS, gráficos del informe W7–W8, bloque común W9, espejos de video.js W10, de historia.js W12 y de explica.js con su tabla MODOS W13)" python3 scripts/check_workflows.py
 
 echo

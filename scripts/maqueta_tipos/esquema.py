@@ -116,7 +116,7 @@ class Esquema:
         return {}
 
     def datos_mundo(self):
-        return {"receta": self.receta, "semilla": self.semilla, "tamano_m": self.T, "suelos": self.suelos}
+        return {"receta": self.receta, "semilla": self.semilla, "tamano_m": self.T, "suelos": self.suelos, "horizonte": getattr(self, "horizonte", None)}
 
     def capa(self, nombre):
         """Lo que leen las piezas, con el mismo formato que las capas de un set de ciudad."""
@@ -311,4 +311,6 @@ class Esquema:
 def mundo(o, f, m3):
     if o.get("set"):
         raise m3.Falla("M3D1", "mundo de escala esquema: no lleva `set` (es un lugar genérico hecho por su `receta`); un lugar real va en escala ciudad o pais")
-    return Esquema(o["receta"], o.get("semilla", 1), o.get("tamano_m", 1600.0), o.get("carriles", 4), o.get("manzana_m", 90.0), o.get("altura_max_m", 60.0))
+    E = Esquema(o["receta"], o.get("semilla", 1), o.get("tamano_m", 1600.0), o.get("carriles", 4), o.get("manzana_m", 90.0), o.get("altura_max_m", 60.0))
+    E.horizonte = o.get("horizonte")   # lo que se ve al fondo, más allá del mundo (lo dibuja mundos/esquema.js; None = el de la receta)
+    return E

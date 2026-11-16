@@ -36,10 +36,13 @@ entrega) y `scripts/maqueta3d.py` (gates M3D, cuadros sueltos, render).
 | 1 | Preparar (con `--desde` reutiliza las cifras verificadas de una pieza ya investigada) | `video3d.py preparar <slug> --tema "…" --musica-tema <tema>` |
 | 2 | Investigar y verificar lo que falte, incluidos los geodatos (qué se dibuja y de dónde sale) | agentes de /historia; `video3d.py datos --sumar` |
 | 3 | Dirección visual por frase (idea visual, criterio, escala, estilo, mundo, el verbo del catálogo por oración); lo que falta, al constructor | Workflow `video3d`: `video3d-director` → `maqueta-constructor` |
+| 3b | **Referencia visual:** un verificador por mundo de cerca (cómo se ve el lugar, qué pasa ahí, con qué; lo que no se puede afirmar) → `verificacion_visual_<mundo>.json` | Workflow `video3d`: `historia-verificador` (≤ 3 a la vez) |
 | 4 | Ganchos: 5 candidatos con su cuadro renderizado; el crítico recomienda y **el usuario elige** (y el estilo, si la confianza es baja) | Workflow: `ganchos --check --cuadros` → para con `elegir_gancho` |
 | 5 | Guion: la narración de corrido primero; luego las escenas y el `caption` por plataforma | Workflow: el director, `guion --check` (C3D1–C3D19, V2–V5, M3D1–M3D19) |
 | 6 | Storyboard: un cuadro por clave de cámara y evento, antes de gastar créditos | Workflow: `storyboard` |
 | 7 | Crítico (retención y concordancia) y cierre: **el usuario elige el cierre** | Workflow: `video-critico` en «Modo 3D» → 5 cierres (`elegir_cierre`) |
+| 7b | **Revisión de escenas:** una hoja por mundo y su medida; el crítico puntúa detalle, vida, realismo y claridad; ≤ 2 vuelve al director o al constructor. Las mejoras probadas se aplican solas | `maqueta3d.py escena --hoja` · Workflow |
+| — | **Retoque visual** (la voz ya existe): cambia solo lo que se ve | Workflow con `desde: "retoque_visual"` + `notas` |
 | 8 | Voz (ElevenLabs, El Faraon 4) y escucha independiente (V11) | `voz` → MCP → `descargar --estado` (o `--nodos` si el estado llegó en el chat) → `escuchar` |
 | 9 | Tiempos reales | `tiempos` |
 | 10 | Render en 9:16 y 4:5 | `render` |

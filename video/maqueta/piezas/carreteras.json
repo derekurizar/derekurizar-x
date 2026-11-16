@@ -1,0 +1,51 @@
+{
+ "tipo": "carreteras",
+ "clase": "pieza",
+ "cuando": "la red troncal del país (las CA y las rutas nacionales) sobre el relieve: por dónde se llega, qué ruta une dos lugares",
+ "parametros": {
+  "nombres": {
+   "tipo": "lista",
+   "requerido": false,
+   "min": 1,
+   "descripcion": "solo esas rutas, por su número (\"CA-9\", \"CA-1\", \"RN-14\"; todas en design/sets3d/<set>/carreteras.json); sin él, la red de `clase`"
+  },
+  "clase": {
+   "tipo": "texto",
+   "requerido": false,
+   "valores": [
+    "todas",
+    "troncal",
+    "primaria"
+   ],
+   "defecto": "todas",
+   "descripcion": "qué se dibuja sin `nombres`: todas, solo la troncal (las centroamericanas y autopistas) o solo la primaria (las rutas nacionales)"
+  },
+  "grosor": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0.4,
+    3
+   ],
+   "defecto": 1.0,
+   "descripcion": "cuánto se engruesan las líneas (1 = más finas que la frontera)"
+  }
+ },
+ "escalas": [
+  "pais"
+ ],
+ "motores": [
+  "three"
+ ],
+ "capas": [
+  "carreteras"
+ ],
+ "ejemplo": {
+  "id": "carreteras",
+  "tipo": "carreteras"
+ },
+ "nivel": "fondo",
+ "contiene": [],
+ "animado": false,
+ "gente": false
+}

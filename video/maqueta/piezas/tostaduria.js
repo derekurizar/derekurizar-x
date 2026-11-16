@@ -12,7 +12,8 @@
 // aparece en manos de quien carga, sube, se inclina sobre la tolva, se vacía (se aplana) con un chorro de grano verde que cae,
 // y desaparece, en un ciclo de 7 s; el nivel de grano en la tolva que sube mientras cae el chorro y baja mientras el tambor lo
 // traga; el polvo que flota en los haces de luz, una nube de polvo en la boca de la tolva al vaciar y el vapor de las tazas.
-// `personas`: 1 = quien carga; 2 = y quien revisa la bandeja de enfriamiento; 3 = y quien cata en la mesa. Sin colores
+// `personas` (objeto persona con su pose): 1 = quien carga (`cargar`, sus brazos suben con el saco); 2 = y quien revisa la
+// bandeja de enfriamiento (`atender`); 3 = y quien cata en la mesa (`sorber`). Sin colores
 // escritos (ctx.tonos, ctx.COL, ctx.lin); sin texto. «resaltar» la pieza aviva los sacos, el grano y las tostadoras.
 (function (MAQ) {
   MAQ.PIEZAS.tostaduria = {
@@ -445,8 +446,10 @@
         const camisas = dia ? [lin(COL.mar).multiplyScalar(0.72), tonos.mal.clone(), tonos.bien.clone()]
           : noche ? [lin(COL.costa), tonos.mal.clone(), tonos.secundario.clone().multiplyScalar(0.85)]
           : [lin(COL.mar), tonos.mal.clone(), tonos.bien.clone()];
-        const flC = NP >= 1 ? ctx.flota("persona", 1, { tamano: K * PG, lev: (H0 + HPL) * K, orden: 6, semilla: p.semilla % 991, color: () => camisas[0] }) : null;
-        const flG = NP >= 2 ? ctx.flota("persona", NP - 1, { tamano: K * PG, lev: H0 * K, orden: 6, semilla: (p.semilla * 5 + 3) % 991, color: (i) => camisas[1 + i] }) : null;
+        const flC = NP >= 1 ? ctx.flota("persona", 1, { tamano: K * PG, lev: (H0 + HPL) * K, orden: 6, semilla: p.semilla % 991, color: () => camisas[0],
+          pose: { nombre: "cargar", periodo: PS, fase: F0, saco: false } }) : null;   // la pose cargar con el ciclo del saco de aquí (el saco lo dibuja la pieza)
+        const flG = NP >= 2 ? ctx.flota("persona", NP - 1, { tamano: K * PG, lev: H0 * K, orden: 6, semilla: (p.semilla * 5 + 3) % 991, color: (i) => camisas[1 + i],
+          pose: (i) => (i === 0 ? "atender" : "sorber") }) : null;   // quien revisa la bandeja atiende; quien cata sorbe
         const BAND = [UT + 0.85 * TT, VT];
         const gente = [[UT + 0.75 * TT, VT + 1.25, 0, -1, 0.15], [MU - 1.25, MV - 0.45, 1, 0.35, 0.1]];
         return { id: p.id, K, flT, flC, flG, TOS, ux, uy, W, E, gente, NP, BAND, PU1, VT, H0, HPL,
@@ -481,14 +484,14 @@
         });
         const N = s.E(s.UTOL, s.VT, hNivel), lado = (0.12 + (hNivel - s.H0 - 2.4 * s.TT) / (0.6 * s.TT) * 0.38) * 0.707 * 0.93 * s.TT * s.M;
         s.mNivel.position.set(N[0], N[1], N[2]); s.mNivel.scale.set(lado, 1, lado);
-        // la gente: quien carga mira a la tolva y se mece un poco; los otros, de pie, cambian el peso
-        if (s.flC) { const [x, y] = s.W(s.PU1 - 0.62, s.VT + 0.12); s.flC.poner(0, x, y, s.ux, s.uy, 1, 0, 0.22); s.flC.listo(); }
+        // la gente: quien carga sube el saco a la tolva (pose cargar, en fase con el saco); quien revisa la bandeja atiende, quien cata sorbe
+        if (s.flC) { const [x, y] = s.W(s.PU1 - 0.62, s.VT + 0.12); s.flC.poner(0, x, y, s.ux, s.uy, 1, 0, 0); s.flC.listo(); }
         if (s.flG) {
           for (let i = 0; i < s.NP - 1; i++) {
-            const [u, v, , , vel] = s.gente[i], [x, y] = s.W(u, v);
+            const [u, v] = s.gente[i], [x, y] = s.W(u, v);
             const [tx, ty] = i === 0 ? s.W(s.BAND[0], s.BAND[1]) : s.W(u + 1, v + 0.2);
             const dx = tx - x, dy = ty - y, l = Math.hypot(dx, dy) || 1;
-            s.flG.poner(i, x, y, dx / l, dy / l, 1, 0, vel);
+            s.flG.poner(i, x, y, dx / l, dy / l, 1, 0, 0);
           }
           s.flG.listo();
         }

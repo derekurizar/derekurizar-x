@@ -47,6 +47,11 @@ def resolver(p, X, que):
     X.__dict__.setdefault("actores", {})[p["id"]] = {"cad": cad, "p": p, "quieto": p.get("lugar") is not None}
     r = {"objeto": p["objeto"], "camino": nombre, "h": round(p["suavizado_s"] / 2, 3), "tamano": p["tamano"],
          "variante": int(p.get("variante", MV.hash_(len(X.piezas), 41) * 1000)), "lev": p.get("lev_m", 0), "usa": [p["objeto"]]}
+    if p.get("pose"):   # la pose que se le pide al objeto (las suyas van en su ficha: `poses`)
+        poses = (X.m3.ficha(p["objeto"], "objeto") or {}).get("poses") or []
+        if p["pose"] not in poses:
+            raise X.m3.Falla("M3D2", "%s: el objeto «%s» %s" % (que, p["objeto"], "tiene las poses %s (no «%s»)" % (", ".join(poses), p["pose"]) if poses else "no tiene poses con nombre"))
+        r["pose"] = p["pose"]
     if publicar:
         r["_caminos"] = publicar
     return r

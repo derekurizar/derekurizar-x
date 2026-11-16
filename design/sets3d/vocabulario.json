@@ -115,6 +115,11 @@
       500
      ],
      "defecto": 0
+    },
+    "pose": {
+     "tipo": "texto",
+     "requerido": false,
+     "descripcion": "la pose que se le pide al objeto, si las tiene (una persona: caminar, cosechar, rastrillar, cargar, sorber, sentado, atender; mira la ficha del objeto)"
     }
    },
    "escalas": [
@@ -201,6 +206,101 @@
    "reglas": "scripts/maqueta_tipos/agua.py"
   },
   {
+   "tipo": "ambiente",
+   "clase": "pieza",
+   "cuando": "viste un mundo de cerca que nace pelado (campo, ciudad, costa o plaza) con árboles, postes, farolas, bancas…, sin pisar calles ni edificios",
+   "parametros": {
+    "ambiente": {
+     "tipo": "texto",
+     "requerido": false,
+     "valores": [
+      "campo",
+      "ciudad",
+      "costa",
+      "plaza"
+     ],
+     "defecto": "campo",
+     "descripcion": "qué lugar es (se llama `ambiente` porque `tipo` es el de la pieza): campo (árboles sueltos y en grupos de copa redonda, ciprés y arbusto, matorrales, piedras, cercas de postes con alambre junto a caminos y lindes, postes de luz con cable junto al camino principal, algún rancho lejano, manchas de flores y pasto alto) · ciudad (farolas en las aceras, árboles de alcorque, bancas, basureros, postes con cables, semáforos en los cruces de calles mayores, paradas) · costa (palmeras, rocas en la orilla, botes varados en la arena, postes y bolardos en la costanera) · plaza (fuente al centro de la plaza, jardineras, bancas, farolas; alrededor, la ciudad a media densidad). Además acepta `evitar`: [[x, y, radio_m], …] en metros, las huellas de las demás piezas (el catálogo no tiene ese tipo de parámetro: va sin declarar y lo revisa la regla)"
+    },
+    "densidad": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0.5,
+     "descripcion": "cuánto: 0 = lo mínimo (las líneas de postes y algún árbol), 1 = lleno; nunca más de 600 elementos (cada poste cuenta)"
+    },
+    "radio_m": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      20,
+      6000
+     ],
+     "descripcion": "hasta dónde se viste, en metros desde `centro` (por defecto, el mundo entero); lo suelto es más denso en el primer tercio del radio: con el tope de 600, un radio de 250–450 m alrededor de lo que se mira se ve lleno de 15 a 200 m"
+    },
+    "centro": {
+     "tipo": "lugar",
+     "requerido": false,
+     "descripcion": "de dónde se mide el radio (un lugar del mundo o [x, y] en metros en un esquema); por defecto, el centro del mundo"
+    },
+    "semilla": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      100000
+     ],
+     "defecto": 1,
+     "descripcion": "el azar fijo de dónde cae cada cosa (la misma semilla, el mismo lugar)"
+    },
+    "evitar": {
+     "tipo": "circulos",
+     "requerido": false,
+     "descripcion": "zonas que no pisa: [[x, y, radio_m], …] (las huellas de las demás piezas; si falta, el resolver pone las de las piezas ya puestas)"
+    }
+   },
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "ejemplo": {
+    "id": "ambiente",
+    "tipo": "ambiente",
+    "ambiente": "campo",
+    "densidad": 0.7,
+    "radio_m": 320,
+    "semilla": 3
+   },
+   "nivel": "fondo",
+   "contiene": [
+    "árboles",
+    "arbustos y matorrales",
+    "piedras",
+    "cercas de postes con alambre",
+    "postes de luz con cable",
+    "farolas",
+    "bancas",
+    "semáforos",
+    "palmeras",
+    "botes varados",
+    "fuente"
+   ],
+   "animado": "las copas, las palmas y el pasto se mecen apenas; la fuente corre y su agua brilla; el halo de las farolas respira de noche; los semáforos cambian de verde a ámbar a rojo",
+   "gente": false,
+   "distancia_m": [
+    15,
+    200
+   ],
+   "modulo": "piezas/ambiente.js",
+   "reglas": "scripts/maqueta_tipos/ambiente.py"
+  },
+  {
    "tipo": "beneficio",
    "clase": "pieza",
    "cuando": "el beneficio húmedo de una finca: cereza a la despulpadora, pilas de fermento, agua en el canal y el pergamino crema rastrillado en el patio",
@@ -238,7 +338,7 @@
       3
      ],
      "defecto": 1,
-     "descripcion": "quienes rastrillan el pergamino en el patio (el objeto persona, sin rostro, agrandado para leerse a 35–45 m, con camisa de color que contrasta con el pergamino, sombrero oscuro, sombra y un rastrillo oscuro que va y viene), cada uno en su franja, caminando despacio a lo largo"
+     "descripcion": "quienes trabajan (el objeto persona, sin rostro, agrandado ×1.45 para leerse a 35–45 m, con camisa de color y sombra): 1–2 rastrillan el pergamino en su franja (pose rastrillar: sombrero de ala, rastrillo que va y viene, pasos cortos); con 3, la tercera sube sacos junto a la pila de recibo (pose cargar)"
     },
     "semilla": {
      "tipo": "entero",
@@ -279,9 +379,10 @@
     "pilas de fermento",
     "canal de correteo",
     "patio de secado",
-    "gente que rastrilla"
+    "gente que rastrilla",
+    "gente que carga sacos"
    ],
-   "animado": "la cereza cae, el agua corre y la gente rastrilla",
+   "animado": "la cereza cae, el agua corre, la gente rastrilla y (con 3) carga sacos",
    "gente": true,
    "distancia_m": [
     25,
@@ -557,6 +658,59 @@
    "gente": false,
    "modulo": "piezas/carretera.js",
    "reglas": "scripts/maqueta_tipos/carretera.py"
+  },
+  {
+   "tipo": "carreteras",
+   "clase": "pieza",
+   "cuando": "la red troncal del país (las CA y las rutas nacionales) sobre el relieve: por dónde se llega, qué ruta une dos lugares",
+   "parametros": {
+    "nombres": {
+     "tipo": "lista",
+     "requerido": false,
+     "min": 1,
+     "descripcion": "solo esas rutas, por su número (\"CA-9\", \"CA-1\", \"RN-14\"; todas en design/sets3d/<set>/carreteras.json); sin él, la red de `clase`"
+    },
+    "clase": {
+     "tipo": "texto",
+     "requerido": false,
+     "valores": [
+      "todas",
+      "troncal",
+      "primaria"
+     ],
+     "defecto": "todas",
+     "descripcion": "qué se dibuja sin `nombres`: todas, solo la troncal (las centroamericanas y autopistas) o solo la primaria (las rutas nacionales)"
+    },
+    "grosor": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0.4,
+      3
+     ],
+     "defecto": 1.0,
+     "descripcion": "cuánto se engruesan las líneas (1 = más finas que la frontera)"
+    }
+   },
+   "escalas": [
+    "pais"
+   ],
+   "motores": [
+    "three"
+   ],
+   "capas": [
+    "carreteras"
+   ],
+   "ejemplo": {
+    "id": "carreteras",
+    "tipo": "carreteras"
+   },
+   "nivel": "fondo",
+   "contiene": [],
+   "animado": false,
+   "gente": false,
+   "modulo": "piezas/carreteras.js",
+   "reglas": "scripts/maqueta_tipos/carreteras.py"
   },
   {
    "tipo": "edificios",
@@ -836,6 +990,44 @@
    "reglas": "scripts/maqueta_tipos/frontera.py"
   },
   {
+   "tipo": "lagos",
+   "clase": "pieza",
+   "cuando": "los lagos y las lagunas grandes del país (Atitlán, Izabal, Petén Itzá, Amatitlán…) como agua sobre el relieve",
+   "parametros": {
+    "nombres": {
+     "tipo": "lista",
+     "requerido": false,
+     "min": 1,
+     "descripcion": "solo esos lagos, por id o por nombre (\"atitlan\", \"Lago de Izabal\"; ids en design/sets3d/<set>/lagos.json); sin él, todos los del set"
+    },
+    "orilla": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "dibuja también la orilla en una línea fina (la protagonista siempre la lleva, en el acento)"
+    }
+   },
+   "escalas": [
+    "pais"
+   ],
+   "motores": [
+    "three"
+   ],
+   "capas": [
+    "lagos"
+   ],
+   "ejemplo": {
+    "id": "lagos",
+    "tipo": "lagos"
+   },
+   "nivel": "fondo",
+   "contiene": [],
+   "animado": "el brillo del agua, que deriva muy despacio",
+   "gente": false,
+   "modulo": "piezas/lagos.js",
+   "reglas": "scripts/maqueta_tipos/lagos.py"
+  },
+  {
    "tipo": "luces",
    "clase": "pieza",
    "cuando": "los pueblos como puntos de luz: dónde vive la gente, qué se apaga o parpadea",
@@ -873,6 +1065,58 @@
    "gente": false,
    "modulo": "piezas/luces.js",
    "reglas": "scripts/maqueta_tipos/luces.py"
+  },
+  {
+   "tipo": "rios",
+   "clase": "pieza",
+   "cuando": "los ríos principales del país sobre el relieve: por dónde corre el agua, qué cuenca une dos lugares, qué río es una frontera",
+   "parametros": {
+    "nombres": {
+     "tipo": "lista",
+     "requerido": false,
+     "min": 1,
+     "descripcion": "solo esos ríos, por id o por nombre (\"motagua\", \"Río Usumacinta\"; ids en design/sets3d/<set>/rios.json); sin él, todos los del set"
+    },
+    "hasta_orden": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      1,
+      3
+     ],
+     "defecto": 3,
+     "descripcion": "hasta qué orden se dibujan sin `nombres`: 1 = solo los de ≥ 150 km, 2 = también los de ≥ 70 km, 3 = todos"
+    },
+    "grosor": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0.4,
+      3
+     ],
+     "defecto": 1.0,
+     "descripcion": "cuánto se engruesan las líneas (1 = más finas que la frontera)"
+    }
+   },
+   "escalas": [
+    "pais"
+   ],
+   "motores": [
+    "three"
+   ],
+   "capas": [
+    "rios"
+   ],
+   "ejemplo": {
+    "id": "rios",
+    "tipo": "rios"
+   },
+   "nivel": "fondo",
+   "contiene": [],
+   "animado": false,
+   "gente": false,
+   "modulo": "piezas/rios.js",
+   "reglas": "scripts/maqueta_tipos/rios.py"
   },
   {
    "tipo": "ruta",
@@ -2328,7 +2572,7 @@
   {
    "tipo": "persona",
    "clase": "objeto",
-   "cuando": "una persona que camina (piernas y brazos se balancean) o espera de pie: la calle, la parada, la plaza, el mostrador",
+   "cuando": "una persona con pose: camina, espera, cosecha, rastrilla, carga un saco, sorbe café, sentada o atendiendo (calle, plaza, finca, beneficio, terraza)",
    "parametros": {},
    "escalas": [
     "esquema",
@@ -2345,14 +2589,24 @@
    "ejemplo": {
     "objeto": "persona"
    },
-   "notas": "Articulada: piernas y brazos se balancean siempre (un paso de 0.9–1.1 s, ±16° la pierna, ±13° el brazo), torso y cabeza quietos. La pose no conoce la velocidad: de pie se lee como quien cambia el peso; no hay variante quieta (para alguien inmóvil que trabaja, el cosechador u otro objeto).",
+   "notas": "Articulada con esqueleto anidado (cuerpo → torso → cabeza, brazos con codo, piernas con rodilla; IK de dos huesos para las manos). La pose la pide el actor con su parámetro `pose` (validado contra `poses`) o una pieza con ctx.flota(\"persona\", n, {pose: nombre | (i) => nombre | {nombre, periodo, fase, saco: false, banco: false}}): el objeto sincroniza el ciclo con lo de la pieza (fase y periodo) y apaga el accesorio que ella dibuja. Sin pose: caminar si vel > 0.3 m/s o si nadie da la velocidad (lo de antes), de_pie si no. Accesorios que solo salen en su pose: sombrero de ala (cosechar, rastrillar), costal (cosechar), rastrillo (rastrillar), saco (cargar; ciclo ~6 s con fases 0.1 · 0.3 · 0.76 · 0.9, como el saco de la tostaduría), vaso para llevar (sorber), delantal (atender), banco (sentado). sentado: cadera a 0.47 m, rodillas a 90°; trae su banco salvo `banco: false` (la terraza con sus sillas).",
    "nivel": "objeto",
    "contiene": [],
-   "animado": "camina (piernas y brazos) cuando avanza",
+   "animado": "según la pose: camina (piernas con rodilla y brazos), respira y mira alrededor de pie, cosecha (el brazo sube a la rama y baja al costal), rastrilla (el rastrillo va y viene), carga un saco hasta una tolva alta, sorbe un vaso cada 4–6 s, atiende con las manos al frente",
    "gente": true,
    "distancia_m": [
     5,
     40
+   ],
+   "poses": [
+    "de_pie",
+    "caminar",
+    "cosechar",
+    "rastrillar",
+    "cargar",
+    "sorber",
+    "sentado",
+    "atender"
    ],
    "modulo": "objetos/persona.js",
    "reglas": null
@@ -2883,6 +3137,18 @@
      ],
      "defecto": 60,
      "descripcion": "la altura de los edificios más altos (en el centro)"
+    },
+    "horizonte": {
+     "tipo": "texto",
+     "requerido": false,
+     "valores": [
+      "colinas",
+      "montanas",
+      "ciudad",
+      "mar",
+      "llano"
+     ],
+     "descripcion": "lo que se ve al fondo, más allá del mundo: colinas (por defecto en campo y carretera), montanas, ciudad (por defecto en ciudad y plaza), mar (en costa) o llano"
     }
    },
    "escalas": [
@@ -2896,10 +3162,10 @@
     "campo": "dist_m",
     "unidad": "m",
     "rango": [
-     15,
+     6,
      5000
     ],
-    "despeje": 4,
+    "despeje": 1.2,
     "cerca": 0.3,
     "lejos": 30000,
     "niebla": [

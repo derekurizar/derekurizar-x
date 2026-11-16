@@ -23,6 +23,11 @@ Guía completa: `referencias/flujo-video3d.md` (léela antes de empezar). Contra
    que el catálogo no tiene (sus `briefs`, ≤ 3 a la vez; `scripts/maqueta_modulo.py check` → `registrar`), el director
    escribe los 5 ganchos (`ganchos --check --cuadros`), el `video-critico` recomienda uno, el director escribe el guion
    (`guion --check`, `storyboard`), el crítico en «Modo 3D» lo revisa (≤ 2 pasadas) y el director propone 5 cierres.
+   Además: un verificador por mundo de cerca busca la **referencia visual** (cómo es ese lugar en la realidad) antes de
+   construir; el constructor recibe ≤ 3 encargos por mundo; y el crítico revisa **cada escena** (detalle, vida, realismo,
+   claridad) con su hoja. `python3 scripts/maqueta3d.py escena <TRABAJO>/maqueta.json --hoja` la mide y la dibuja.
+   **Retoque visual** (el video ya tiene voz y el usuario quiere cambiar lo que se ve): `{trabajo, tema, desde:
+   "retoque_visual", notas: "<lo que pidió>"}` → `retoque_listo`; luego `video3d.py producir <TRABAJO> --desde render`.
 5. **El estilo, si hay duda** (`veredicto: "elegir_estilo"`): muestra al usuario los cuadros de `<TRABAJO>/estilos/<id>/`
    de cada candidato con la `razon`; reanuda con `resumeFromRunId` y `args.estilo`. Un estilo por mundo (con varios mundos, cada uno el suyo si hace sentido). Con `plano`, **pregunta siempre** si
    quiere todas las capas o una versión limpia (`mundo.capas`: `curvas`, `batimetria`, `reticula`), con el mismo cuadro

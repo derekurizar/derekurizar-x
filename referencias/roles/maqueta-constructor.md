@@ -14,7 +14,7 @@ escribes una pieza del motor.
  "frase": "basta que uno frene para que la fila se detenga"}
 ```
 
-**Presupuesto:** ≤ 3 vueltas de `check`, **una sola** lectura de la hoja de contacto, ≤ 25 min. Sin web.
+**Presupuesto:** ≤ 4 vueltas de `check`, **dos** lecturas de las hojas (día y otra hora), ≤ 40 min. Sin web.
 
 ## Antes de escribir
 
@@ -51,6 +51,29 @@ Reglas del módulo (las revisa el lint):
 - **Nunca editas `video/maqueta/motor.js`, `scripts/maqueta3d.py` ni otro módulo.** Si el núcleo no te da algo que
   necesitas (un dato de `ctx`, un orden de dibujo, una geometría del mundo), no lo parches: escríbelo en `nucleo` de tu
   retorno con lo que haría falta, y entrega lo más cercano que sí se puede.
+
+## La vara de calidad (usuario, 2026-11-16: «muchos más detalles… y sobre todo que sea de calidad todo»)
+
+Un módulo que pasa el check pero se ve pobre NO está terminado. Antes de registrar, cumple esto:
+
+- **Un lugar completo antes que una cosa suelta.** Si el brief es un lugar (una finca, un taller, un muelle, una tienda),
+  entrégalo como **escenario** (`nivel: "escenario"`) con todo lo que hay ahí: el suelo propio, las construcciones, las
+  máquinas, los objetos del oficio, la gente trabajando, el entorno inmediato. Su ficha lista ≥ 5 cosas en `contiene`.
+- **Solo lo verificado.** El brief trae lo que la referencia visual verificó de ese lugar: dibuja eso; lo demás, genérico
+  y sin afirmar (ninguna marca, ningún logo, ningún texto legible, ninguna vestimenta de un pueblo, ninguna persona real).
+- **Con vida.** Algo se mueve solo, puro de `t`: gente con su pose (`persona` con `pose`; pásale `vel`), máquinas que
+  giran, agua que corre, humo, luces. `animado` en la ficha lo dice.
+- **Detalle que se lee.** Piezas con varias partes y proporciones reales (medidas en metros), variación por semilla
+  (tamaño, giro, tono de cada cara), bordes y uniones (zócalos, marcos, costillas), nada de cajas lisas. Lo curvo, con
+  segmentos suficientes (≥ 12 en un cilindro que se ve de cerca). Tope orientativo: ≈ 60 mil triángulos y ≤ 0.6 s por cuadro.
+- **De día y de noche.** `ctx.ES.noche` enciende ventanas, faros y lámparas (partes con `luz`). `check` dibuja la hoja de la
+  otra hora: las dos tienen que leerse. Las sombras reales y la de contacto las pone el núcleo.
+- **A su distancia.** La ficha declara `distancia_m` (a qué distancia se lee) y `caja_m`; pruébalo ahí, con la cámara a
+  la altura de una persona (elevación 8–25°) y también desde arriba.
+- **Dos lecturas** de las hojas (día y otra hora), no una: ¿se reconoce a tamaño de teléfono?, ¿algo flota o se
+  atraviesa?, ¿hay una zona vacía?
+
+Ficha (obligatorio en piezas y objetos): `nivel`, `contiene`, `animado`, `gente`; y `distancia_m`, `caja_m`, `poses` si aplican.
 
 ## El bucle
 

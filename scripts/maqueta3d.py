@@ -60,9 +60,9 @@ PORTADA_T = 0.1
 VOCABULARIO = os.path.join(SETS, "vocabulario.json")
 CLASES = {"pieza": "piezas", "evento": "eventos", "objeto": "objetos", "anotacion": "anotaciones", "mundo": "mundos"}   # clase → carpeta en video/maqueta/
 ESCALAS = ("pais", "ciudad", "esquema")
-TIPOS_PARAM = ("numero", "entero", "texto", "bool", "lugar", "lugares", "pieza", "puntos", "lista", "posicion", "ancla", "anclas", "claves", "mezcla")
+TIPOS_PARAM = ("numero", "entero", "texto", "bool", "lugar", "lugares", "pieza", "puntos", "lista", "posicion", "ancla", "anclas", "claves", "mezcla", "circulos")
 COMUNES = {"pieza": ("id", "tipo"), "evento": ("tipo", "t", "dur", "sfx"), "anotacion": ("tipo", "t", "hasta", "sfx"),   # campos comunes (no van en la ficha)
-           "mundo": ("escala", "lugares", "piezas", "capas", "escena", "hora", "hora_razon", "horizonte")}   # escena: la ficha de la escena viva (video3d.py, C3D14)
+           "mundo": ("escala", "lugares", "piezas", "capas", "escena", "hora", "hora_razon", "ambiente")}   # escena: la ficha de la escena viva (video3d.py, C3D14)
 # capas del dibujo del terreno que el guion puede apagar (mundo.capas; por defecto todas encendidas). Hoy las usa el
 # estilo `plano`: curvas de nivel, líneas del fondo del mar y retícula de paralelos y meridianos (usuario, 2026-11-15:
 # con `plano` se pregunta siempre si se quieren todas o una versión limpia)
@@ -159,6 +159,9 @@ def validar_campos(o, f, que, por_id=None, avisos=None):
                     mal(nombre, "lleva %s" % {"lugares": "lugares (ids o [lon, lat])", "lista": "textos", "puntos": "puntos [lon, lat]"}[t])
                 if len(v) < d.get("min", 0):
                     mal(nombre, "necesita al menos %d y trae %d" % (d["min"], len(v)))
+        elif t == "circulos":   # [[x, y, radio], …] en la unidad del mundo (zonas que algo esquiva)
+            if not (isinstance(v, list) and all(isinstance(x, (list, tuple)) and len(x) == 3 and all(isinstance(y, (int, float)) and not isinstance(y, bool) for y in x) for x in v)):
+                mal(nombre, "es una lista de [x, y, radio]; vale %r" % (v,))
         elif t == "posicion":   # sobre un camino: metros desde su inicio, «NN%» del largo o un lugar (su proyección)
             if not ((isinstance(v, (int, float)) and not isinstance(v, bool)) or es_lugar(v)):
                 mal(nombre, "es una posición sobre el camino: metros desde su inicio, «40%%» o un lugar; vale %r" % (v,))
@@ -636,8 +639,31 @@ def resolver(m, formato, avisos=None):
     X = types.SimpleNamespace(m3=sys.modules[__name__], S=S, lugar=lugar, propios=propios, avisos=avisos, alt_km=alt_km, piezas=[], por_id={},
                               eventos=[], moviles={}, dur=float(m.get("duracion_s", 0) or 0))
     piezas, ids = X.piezas, set()
-    for n, p in enumerate(mundo.get("piezas") or []):
+    # EL AMBIENTE: un esquema nace vestido (vegetación, cercas, postes, farolas: la pieza `ambiente`). Si el mundo no la
+    # trae, se añade sola con el de su receta (`"ambiente": false` en el mundo la quita); va al final y esquiva las demás
+    # piezas (sus cajas van en `evitar`).
+    lista_piezas = list(mundo.get("piezas") or [])
+    if S.escala == "esquema" and ficha("ambiente", "pieza") and mundo.get("ambiente") is not False and not any(p.get("tipo") == "ambiente" for p in lista_piezas):
+        amb = {"ciudad": "ciudad", "carretera": "ciudad", "campo": "campo", "costa": "costa", "plaza": "plaza"}.get(mundo.get("receta"), "campo")
+        lista_piezas.append({"id": "_ambiente", "tipo": "ambiente", "ambiente": amb, "densidad": 0.5, "semilla": int(mundo.get("semilla", 1) or 1)})
+    lista_piezas.sort(key=lambda p: p.get("tipo") == "ambiente")   # el ambiente, al final (estable)
+    for n, p in enumerate(lista_piezas):
         pid, tipo = p.get("id"), p.get("tipo")
+        if tipo == "ambiente" and p.get("evitar") is None:   # lo que ya está puesto no se pisa
+            ev = []
+            for q in piezas:
+                fq = ficha(q["tipo"], "pieza") or {}
+                if "x" in q and "y" in q and q["tipo"] not in ESC.PLANAS:
+                    cj = ESC._caja_de(fq, float(q.get("tamano", 1)))
+                    ev.append([round(q["x"] * S.unidad_m, 1), round(q["y"] * S.unidad_m, 1), round(max(cj[0], cj[1]) * 0.62 + 2, 1)])
+            for aid, a in (getattr(X, "actores", None) or {}).items():
+                if a.get("quieto"):
+                    fo = ficha(a["p"].get("objeto"), "objeto") or {}
+                    cj = ESC._caja_de(fo, float(a["p"].get("tamano", 1) or 1))
+                    x0, y0 = a["cad"][0][0], a["cad"][0][1]
+                    ev.append([round(x0 * S.unidad_m, 1), round(y0 * S.unidad_m, 1), round(max(cj[0], cj[1]) * 0.62 + 1.5, 1)])
+            if ev:
+                p = dict(p, evitar=ev)
         que = "pieza «%s»" % pid
         if not pid or pid in ids:
             raise Falla("M3D2", "la pieza %d no tiene `id` o lo repite (%r)" % (n, pid))
@@ -715,12 +741,16 @@ def resolver(m, formato, avisos=None):
             raise Falla("M3D3", "cámara, clave %d: en un mundo de escala %s la distancia va en `%s` (%s), no en `%s`" % (n, S.escala, campo, CF["unidad"], otro))
         d = float(k.get(campo, 0))
         el = 89.0 if k.get("cenital") is True else float(k.get("elevacion", 0))
-        clave = {"t": float(k.get("t", -1)), "x": l["x"], "y": l["y"], "alt": round(alt_km(l["x"], l["y"]), 3),
+        # `mira_lev_m`: la cámara mira a esa altura sobre el suelo (la copa de un árbol, la pluma de una grúa, media ladera)
+        lev_c = float(k.get("mira_lev_m", 0) or 0) / S.unidad_m
+        if sigue and not MV.ancla_en(sigue, float(k.get("t", 0)), X.moviles)[4]:
+            raise Falla("M3D3", "cámara, clave %d: lo que sigue (%s) no está en su camino en t = %.2f s: elige otro vehículo (`cerca: <lugar>, t: s`) o mueve la clave" % (n, json.dumps(k.get("mira"), ensure_ascii=False), float(k.get("t", 0))))
+        clave = {"t": float(k.get("t", -1)), "x": l["x"], "y": l["y"], "alt": round(alt_km(l["x"], l["y"]) + lev_c, 3), "lev": round(lev_c, 4),
                  "dist": d, "dist_km": d * S.km, "cerca": CF["cerca"], "azimut": float(k.get("azimut", 0)), "elevacion": el,
                  "fov": float(k.get("fov", 50))}
         if sigue:
             clave["sigue"] = sigue
-            clave["_pos"] = (lambda A: (lambda t: (lambda q: (q[0], q[1], alt_km(q[0], q[1])))(MV.ancla_en(A, t, X.moviles))))(sigue)
+            clave["_pos"] = (lambda A, lv: (lambda t: (lambda q: (q[0], q[1], alt_km(q[0], q[1]) + lv))(MV.ancla_en(A, t, X.moviles))))(sigue, lev_c)
         camara.append(clave)
 
     # marcas
@@ -795,7 +825,7 @@ def resolver(m, formato, avisos=None):
         H = horas[hora]
         colores_est.update(H.get("colores") or {})
         cfg["luz"] = dict(cfg["luz"], **(H.get("luz") or {}))
-        for k in ("tinte", "noche", "estrellas", "sombra_contacto"):
+        for k in ("tinte", "noche", "estrellas", "sombra_contacto", "nubes", "sombras", "resplandor"):
             if H.get(k) is not None:
                 cfg[k] = H[k]
         cfg["hora"] = hora

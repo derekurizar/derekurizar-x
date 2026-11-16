@@ -4,7 +4,7 @@
 uso:
   python3 scripts/build_set3d.py guatemala            baja (con caché) y escribe design/sets3d/guatemala/
   python3 scripts/build_set3d.py guatemala --check    revisa el set ya escrito (sin red); 0 ok · 1 falla
-  python3 scripts/build_set3d.py guatemala --capa lugares   rehace solo una capa (relieve|fallas|frontera|lugares)
+  python3 scripts/build_set3d.py guatemala --capa lugares   rehace solo una capa (relieve|fallas|frontera|lugares|rios|lagos|carreteras)
   python3 scripts/build_set3d.py capital              un set de ciudad (escala «ciudad»): design/sets3d/capital/
   python3 scripts/build_set3d.py --lista              los sets que sabe armar, con su escala
 
@@ -16,6 +16,12 @@ Dos tipos de set (la ESCALA del mundo que los usa, `mundo.escala` del maqueta.js
     frontera.json                contorno del país y bordes de los vecinos dentro de la caja (Natural Earth 1:50m,
                                  design/mapas/paises-50m.json)
     lugares.json                 cabeceras, ciudades y pueblos de OpenStreetMap (Overpass, ODbL) con un peso para la luz
+    rios.json                    los ríos principales del país (OSM waterway=river con nombre, cauces de ≥ 45 km y los de la
+                                 frontera), cosidos y simplificados: id, nombre, km, orden (1 = ≥ 150 km) y lineas en lon/lat
+    lagos.json                   los lagos y lagunas grandes (OSM natural=water con nombre, ≥ 2.5 km²): id, nombre, km2 y
+                                 anillos (el contorno exterior) en lon/lat
+    carreteras.json              la red troncal (OSM highway=motorway|trunk → troncal, primary → primaria) por número de
+                                 ruta (`ref`: CA-1, CA-9, RN-14…), sin el doble sentido: id, ref, nombre, clase, km y lineas
   ciudad  una caja de pocos km en metros (relieve a zoom 14, ≈ 15 m por celda). Coordenadas en METROS locales:
           x = (lon − lon0)·m_lon (este), y = (lat − lat0)·m_lat (norte), enteros; lon0/lat0/m_lon/m_lat en relieve.json →
           proyeccion (de ahí se recupera lon/lat). Capas de OpenStreetMap (Overpass, ODbL):
@@ -68,6 +74,17 @@ SETS = {
                          "San Martín Jilotepeque", "Chimaltenango", "Guastatoya", "Zacapa", "El Progreso", "Joyabaj",
                          "Patzicía", "San Pedro Sacatepéquez", "Antigua Guatemala"],
         "alias": {"tecpan-guatemala": "tecpan", "ciudad-de-guatemala": "guatemala"},
+        # ríos (capa `rios`): cauces con nombre de ≥ rio_min_km; los de la frontera se piden por nombre (regex de Overpass)
+        "rio_min_km": 45.0, "rio_hueco_km": 6.0, "rio_tol_km": 0.12, "rio_frontera_km": 8.0,
+        "rios_frontera": ["Usumacinta", "Suchiate", "Sarst[uú]n", "Salinas", "Chixoy", "R[ií]o Dulce$", "Motagua", "R[ií]o Paz$", "Santa Isabel", "Canc[uú]en"],
+        "rios_obligatorios": ["motagua", "usumacinta", "polochic", "chixoy", "pasion", "suchiate", "samala", "dulce"],
+        # lagos (capa `lagos`): natural=water con nombre de ≥ lago_min_km2
+        "lago_min_km2": 2.5, "lago_tol_km": 0.08,
+        "lagos_alias": {"empresa-chixoy": "embalse-chixoy"},   # así se llama en OSM el embalse de la hidroeléctrica (el nombre no se toca)
+        "lagos_obligatorios": ["atitlan", "izabal", "peten-itza", "amatitlan", "guija"],
+        # carreteras (capa `carreteras`): las rutas centroamericanas que no pueden faltar
+        "carretera_tol_km": 0.1,
+        "carreteras_obligatorias": ["ca-1", "ca-2", "ca-9", "ca-13", "ca-14"],
     },
     # el centro de la capital: zonas 1, 2, 3, 4, 5, 8, 9, 10, 11, 13 y El Trébol (≈ 6.5 × 7.2 km). La receta de las vías
     # (design/vias/capital.fuente.json) cubre 26 × 34 km: a escala de ciudad, con calles residenciales y edificios, esa caja
@@ -437,7 +454,403 @@ def capa_lugares(sid, S, cache, salida):
             "atribucion": "Lugares: © OpenStreetMap"}
 
 
-CAPAS = {"relieve": capa_relieve, "fallas": capa_fallas, "frontera": capa_frontera, "lugares": capa_lugares}
+# ---------- agua y carreteras del país (OpenStreetMap): ríos, lagos y la red troncal ----------
+# Tres capas de detalle para el MAPA (escala «pais»), en lon/lat como las fallas y la frontera. Salen de OpenStreetMap
+# (Overpass, ODbL) dentro del país del set: Natural Earth 1:10m solo trae 3 lagos y una docena de ríos de Guatemala, y sus
+# carreteras no llevan el número de ruta. Todo se cose (los tramos de OSM, de punta a punta), se simplifica
+# (Douglas-Peucker en km) y se redondea a 4 decimales (≈ 11 m: la celda del relieve mide ≈ 720 m).
+def area_pais(S):
+    return 'area["ISO3166-1"="%s"][admin_level=2]->.a;' % S["pais_iso"]
+
+
+def proyector_km(S):
+    """lon, lat → (x, y) en km locales (la cuenta de relieve.json → proyeccion): para medir y simplificar."""
+    c = S["caja"]
+    lon0, lat0 = (c["lon_min"] + c["lon_max"]) / 2, (c["lat_min"] + c["lat_max"]) / 2
+    kx = 111.320 * math.cos(math.radians(lat0))
+    return lambda q: ((q[0] - lon0) * kx, (q[1] - lat0) * 110.574)
+
+
+def largo_km(pts, xy):
+    k = [xy(q) for q in pts]
+    return sum(math.hypot(b[0] - a[0], b[1] - a[1]) for a, b in zip(k, k[1:]))
+
+
+def geo_osm(e):
+    """La geometría de un way de Overpass (`out geom`) → [(lon, lat), …]."""
+    return [(p["lon"], p["lat"]) for p in e.get("geometry") or [] if p]
+
+
+def coser(tramos):
+    """Tramos [(lon, lat), …] que comparten una punta (el mismo nodo de OSM) → polilíneas más largas. Voraz y
+    determinista: cada polilínea crece por su cola y luego por su cabeza mientras haya un tramo sin usar que empiece o
+    termine ahí. Un tramo cerrado queda como está."""
+    tramos = [list(t) for t in tramos if len(t) >= 2]
+    puntas = {}
+    for i, t in enumerate(tramos):
+        puntas.setdefault(t[0], []).append(i)
+        puntas.setdefault(t[-1], []).append(i)
+    usado, out = [False] * len(tramos), []
+
+    def siguiente(p):
+        for j in puntas.get(p, ()):
+            if not usado[j]:
+                return j
+        return None
+
+    for i in range(len(tramos)):
+        if usado[i]:
+            continue
+        usado[i] = True
+        linea = list(tramos[i])
+        for cola in (True, False):
+            while linea[0] != linea[-1]:
+                j = siguiente(linea[-1] if cola else linea[0])
+                if j is None:
+                    break
+                usado[j] = True
+                t = tramos[j]
+                if cola:
+                    linea += (t if t[0] == linea[-1] else t[::-1])[1:]
+                else:
+                    linea = (t if t[-1] == linea[0] else t[::-1])[:-1] + linea
+        out.append(linea)
+    return out
+
+
+def simplificar(pts, xy, tol_km):
+    """Douglas-Peucker en km sobre puntos lon/lat → [[lon, lat], …] a 4 decimales, sin repetidos seguidos."""
+    k = [xy(q) for q in pts]
+    donde = {}
+    for i, q in enumerate(k):       # dp devuelve los mismos puntos: de cada (x, y) a su índice (el primero que lo tenga)
+        donde.setdefault(q, i)
+    out = []
+    for q in dp(k, tol_km):
+        a = pts[donde[q]]
+        r = [round(a[0], 4), round(a[1], 4)]
+        if not out or out[-1] != r:
+            out.append(r)
+    return out
+
+
+def simplificar_anillo(pol, xy, tol_km):
+    """Un anillo (sin repetir el primer punto) → simplificado. Douglas-Peucker necesita dos puntas distintas: se parte
+    en dos mitades por el punto más lejano del primero."""
+    if len(pol) < 4:
+        return [[round(q[0], 4), round(q[1], 4)] for q in pol]
+    k = [xy(q) for q in pol]
+    m = max(range(len(pol)), key=lambda i: (k[i][0] - k[0][0]) ** 2 + (k[i][1] - k[0][1]) ** 2)
+    a, b = simplificar(pol[:m + 1], xy, tol_km), simplificar(pol[m:] + pol[:1], xy, tol_km)
+    return a + b[1:-1]
+
+
+def grupos_cercanos(lineas, xy, hueco_km):
+    """Polilíneas → grupos de las que quedan a menos de `hueco_km` una de otra (punta contra cualquier vértice): un río
+    cuyo trazo en OSM se corta en un embalse o en un tramo sin nombre sigue siendo un río; dos ríos del mismo nombre en
+    lugares distintos, no. → lista de listas de índices."""
+    K = [[xy(q) for q in ln] for ln in lineas]
+    cajas = [(min(p[0] for p in k), min(p[1] for p in k), max(p[0] for p in k), max(p[1] for p in k)) for k in K]
+    padre = list(range(len(K)))
+
+    def raiz(i):
+        while padre[i] != i:
+            padre[i] = padre[padre[i]]
+            i = padre[i]
+        return i
+
+    def cerca(a, b):
+        ca, cb = cajas[a], cajas[b]
+        if ca[0] - hueco_km > cb[2] or cb[0] - hueco_km > ca[2] or ca[1] - hueco_km > cb[3] or cb[1] - hueco_km > ca[3]:
+            return False
+        for u, v in ((a, b), (b, a)):
+            for p in (K[u][0], K[u][-1]):
+                if any(math.hypot(p[0] - q[0], p[1] - q[1]) <= hueco_km for q in K[v]):
+                    return True
+        return False
+
+    for a in range(len(K)):
+        for b in range(a + 1, len(K)):
+            if raiz(a) != raiz(b) and cerca(a, b):
+                padre[raiz(b)] = raiz(a)
+    g = {}
+    for i in range(len(K)):
+        g.setdefault(raiz(i), []).append(i)
+    return list(g.values())
+
+
+def id_unico(base, usados):
+    usados[base] = usados.get(base, 0) + 1
+    return base if usados[base] == 1 else "%s-%d" % (base, usados[base])
+
+
+def sin_prefijo(nombre, prefijos):
+    """El id de un río o un lago: su nombre sin «Río», «Lago de»… («Lago de Atitlán» → atitlan)."""
+    s = slug(nombre)
+    for pre in prefijos:
+        if s.startswith(pre + "-") and len(s) > len(pre) + 1:
+            return s[len(pre) + 1:]
+    return s
+
+
+def cerca_del_pais(sid, S, salida, margen_km):
+    """→ (prueba(q) «el punto lon/lat cae dentro del país o a ≤ margen_km de su borde», caja lon/lat del país con ese
+    margen). El país es el contorno del set (frontera.json → anillos: la capa `frontera` va antes)."""
+    with open(os.path.join(salida, "frontera.json"), encoding="utf-8") as f:
+        anillos = json.load(f)["anillos"]
+    xy = proyector_km(S)
+    K = [[xy(q) for q in an] for an in anillos]
+    lons, lats = [q[0] for an in anillos for q in an], [q[1] for an in anillos for q in an]
+    g = margen_km / 105.0
+    caja = (min(lons) - g, min(lats) - g, max(lons) + g, max(lats) + g)
+
+    def prueba(q):
+        if not (caja[0] <= q[0] <= caja[2] and caja[1] <= q[1] <= caja[3]):
+            return False
+        x, y = xy(q)
+        for k in K:
+            d2, adentro = 1e18, False
+            for (ax, ay), (bx, by) in zip(k, k[1:] + k[:1]):
+                if (ay > y) != (by > y) and x < (bx - ax) * (y - ay) / ((by - ay) or 1e-12) + ax:
+                    adentro = not adentro
+                dx, dy = bx - ax, by - ay
+                h = min(1.0, max(0.0, ((x - ax) * dx + (y - ay) * dy) / (dx * dx + dy * dy or 1e-12)))
+                d2 = min(d2, (x - ax - dx * h) ** 2 + (y - ay - dy * h) ** 2)
+            if adentro or d2 <= margen_km * margen_km:
+                return True
+        return False
+    return prueba, caja
+
+
+OSM_PAIS = {"url": "https://www.openstreetmap.org/copyright", "licencia": "ODbL 1.0"}
+RIO_ORDEN_KM = (150.0, 70.0)        # orden 1: ≥ 150 km de cauce en el set · 2: ≥ 70 km · 3: el resto
+PREFIJOS_RIO = ("rio-de-la", "rio-de-los", "rio-de-las", "rio-del", "rio-de", "rio-la", "rio-el", "rio-los", "rio-las", "rio", "riachuelo", "arroyo")
+PREFIJOS_LAGO = ("lago-de", "lago", "laguna-de", "laguna-del", "laguna", "lagunas-de", "embalse-de", "embalse", "presa-de", "presa")
+
+
+def capa_rios(sid, S, cache, salida):
+    """Los ríos principales del país: los `waterway=river` con nombre, cosidos y agrupados por nombre y cercanía; se
+    quedan los cauces de ≥ rio_min_km (y los obligatorios, midan lo que midan)."""
+    c, xy = S["caja"], proyector_km(S)
+    ruta = overpass('[out:json][timeout:300];' + area_pais(S) + 'way(area.a)["waterway"="river"]["name"];out tags geom;',
+                    os.path.join(cache, "overpass_rios.json"))
+    with open(ruta, encoding="utf-8") as f:
+        els = {e["id"]: e for e in json.load(f)["elements"] if e.get("type") == "way"}
+    # los ríos que SON la frontera (o la cruzan) no salen enteros de la consulta por área: se piden por nombre en la caja
+    # del país y se recortan a «dentro del país o a ≤ rio_frontera_km de su borde»
+    cerca_pais, caja_p = cerca_del_pais(sid, S, salida, S.get("rio_frontera_km", 8.0))
+    propios = set(els)
+    if S.get("rios_frontera"):
+        ruta2 = overpass('[out:json][timeout:300];way["waterway"="river"]["name"~"%s"](%s,%s,%s,%s);out tags geom;'
+                         % ("|".join(S["rios_frontera"]), caja_p[1], caja_p[0], caja_p[3], caja_p[2]), os.path.join(cache, "overpass_rios_frontera.json"))
+        with open(ruta2, encoding="utf-8") as f:
+            for e in json.load(f)["elements"]:
+                if e.get("type") == "way":
+                    els.setdefault(e["id"], e)
+    dentro = lambda q: c["lon_min"] <= q[0] <= c["lon_max"] and c["lat_min"] <= q[1] <= c["lat_max"]
+    alias, por_nombre = S.get("rios_alias", {}), {}
+    for e in sorted(els.values(), key=lambda e: e["id"]):
+        t = e.get("tags", {})
+        nombre = (t.get("name:es") or t.get("name") or "").strip()
+        if not nombre:
+            continue
+        base = sin_prefijo(nombre, PREFIJOS_RIO)
+        base = alias.get(base, base)
+        g = por_nombre.setdefault(base, {"nombres": {}, "tramos": []})
+        g["nombres"][nombre] = g["nombres"].get(nombre, 0) + 1
+        g["tramos"] += recortes(geo_osm(e), dentro if e["id"] in propios else cerca_pais)
+    obligatorios = set(S.get("rios_obligatorios", []))
+    rios, usados = [], {}
+    cand = []
+    for base in sorted(por_nombre):
+        g = por_nombre[base]
+        lineas = coser(g["tramos"])
+        nombre = sorted(g["nombres"].items(), key=lambda kv: (-kv[1], kv[0]))[0][0]
+        for grupo in grupos_cercanos(lineas, xy, S.get("rio_hueco_km", 6.0)):
+            ls = [lineas[i] for i in grupo]
+            cand.append((sum(largo_km(l, xy) for l in ls), base, nombre, ls))
+    cand.sort(key=lambda k: (-k[0], k[1]))
+    for km, base, nombre, ls in cand:
+        primero = base not in usados
+        if km < S.get("rio_min_km", 45.0) and not (primero and base in obligatorios):
+            continue
+        ls = [simplificar(l, xy, S.get("rio_tol_km", 0.12)) for l in sorted(ls, key=lambda l: -largo_km(l, xy)) if largo_km(l, xy) >= 1.5]
+        ls = [l for l in ls if len(l) >= 2]
+        if not ls:
+            continue
+        rios.append({"id": id_unico(base, usados), "nombre": nombre, "km": round(km, 1),
+                     "orden": 1 if km >= RIO_ORDEN_KM[0] else 2 if km >= RIO_ORDEN_KM[1] else 3, "lineas": ls})
+    with open(os.path.join(salida, "rios.json"), "w", encoding="utf-8") as f:
+        json.dump({"set": sid, "formato": "lineas: [[[lon, lat], …], …] por río; orden 1 = ≥ %d km, 2 = ≥ %d km, 3 = el resto; km = cauce dentro del país" % RIO_ORDEN_KM,
+                   "rios": rios}, f, ensure_ascii=False, separators=(",", ":"))
+    print("rios: %d (%s) · %d puntos · %d KB · los más largos: %s"
+          % (len(rios), ", ".join("orden %d: %d" % (o, sum(1 for r in rios if r["orden"] == o)) for o in (1, 2, 3)),
+             sum(len(l) for r in rios for l in r["lineas"]), os.path.getsize(os.path.join(salida, "rios.json")) // 1024,
+             ", ".join("%s %d km" % (r["id"], r["km"]) for r in rios[:8])))
+    return dict(OSM_PAIS, fuente="OpenStreetMap (Overpass API): waterway=river con nombre dentro del país y los de su frontera, cauces de ≥ %d km" % S.get("rio_min_km", 45),
+                atribucion="Ríos: © OpenStreetMap")
+
+
+def anillos_osm(e):
+    """Los anillos exteriores de un `natural=water` de Overpass (way cerrado o relación multipolígono) → [[(lon, lat)…]]
+    cerrados (sin repetir el primer punto)."""
+    if e.get("type") == "way":
+        partes = [geo_osm(e)]
+    else:
+        partes = coser([geo_osm(m) for m in e.get("members", []) if m.get("type") == "way" and m.get("role") in ("outer", "")])
+    return [p[:-1] for p in partes if len(p) >= 4 and p[0] == p[-1]]
+
+
+def area_km2(pol, xy):
+    k = [xy(q) for q in pol]
+    return abs(sum(a[0] * b[1] - b[0] * a[1] for a, b in zip(k, k[1:] + k[:1]))) / 2
+
+
+def capa_lagos(sid, S, cache, salida):
+    """Los lagos y las lagunas grandes del país: `natural=water` con nombre y ≥ lago_min_km2 (sin los cauces de río
+    mapeados como área). Solo el anillo exterior: una isla no se ve a ≈ 720 m por celda."""
+    c, xy = S["caja"], proyector_km(S)
+    ruta = overpass('[out:json][timeout:300];' + area_pais(S) + '(way(area.a)["natural"="water"]["name"];relation(area.a)["natural"="water"]["name"];);out geom;',
+                    os.path.join(cache, "overpass_lagos.json"))   # `out geom` (no `out tags geom`): las relaciones llegan con sus miembros
+    with open(ruta, encoding="utf-8") as f:
+        els = json.load(f)["elements"]
+    cand = []
+    for e in sorted(els, key=lambda e: (e["type"], e["id"])):
+        t = e.get("tags", {})
+        nombre = (t.get("name:es") or t.get("name") or "").strip()
+        if not nombre or t.get("water") in ("river", "stream", "canal", "ditch", "drain", "wastewater", "oxbow") or t.get("waterway"):
+            continue
+        if slug(nombre).startswith("rio-"):
+            continue
+        anillos = [a for a in anillos_osm(e) if sum(1 for q in a if c["lon_min"] <= q[0] <= c["lon_max"] and c["lat_min"] <= q[1] <= c["lat_max"]) == len(a)]
+        km2 = sum(area_km2(a, xy) for a in anillos)
+        if km2 >= S.get("lago_min_km2", 2.5):
+            cand.append((km2, nombre, anillos, t.get("water", "")))
+    cand.sort(key=lambda k: (-k[0], k[1]))
+    lagos, usados, vistos = [], {}, []
+    for km2, nombre, anillos, clase in cand:
+        cx, cy = xy((sum(q[0] for q in anillos[0]) / len(anillos[0]), sum(q[1] for q in anillos[0]) / len(anillos[0])))
+        if any(n == nombre and math.hypot(cx - x, cy - y) < 1.0 for n, x, y in vistos):   # el mismo lago como way y como relación
+            continue
+        vistos.append((nombre, cx, cy))
+        ans = []
+        for a in sorted(anillos, key=lambda a: -area_km2(a, xy)):
+            if area_km2(a, xy) < 0.3:
+                continue
+            s_ = simplificar_anillo(a, xy, S.get("lago_tol_km", 0.08))
+            if len(s_) >= 3:
+                ans.append(s_)
+        if ans:
+            base = sin_prefijo(nombre, PREFIJOS_LAGO)
+            lagos.append({"id": id_unico(S.get("lagos_alias", {}).get(base, base), usados), "nombre": nombre, "km2": round(km2, 1), "clase": clase or "lago", "anillos": ans})
+    with open(os.path.join(salida, "lagos.json"), "w", encoding="utf-8") as f:
+        json.dump({"set": sid, "formato": "anillos: [[[lon, lat], …], …] exteriores sin repetir el primer punto; km2 = superficie del polígono de OSM",
+                   "lagos": lagos}, f, ensure_ascii=False, separators=(",", ":"))
+    print("lagos: %d · %d puntos · %d KB · %s" % (len(lagos), sum(len(a) for l in lagos for a in l["anillos"]), os.path.getsize(os.path.join(salida, "lagos.json")) // 1024,
+                                                   ", ".join("%s %.0f km²" % (l["id"], l["km2"]) for l in lagos[:10])))
+    return dict(OSM_PAIS, fuente="OpenStreetMap (Overpass API): natural=water con nombre dentro del país, de ≥ %s km²" % S.get("lago_min_km2", 2.5),
+                atribucion="Lagos: © OpenStreetMap")
+
+
+CLASE_CARRETERA = {"motorway": "troncal", "trunk": "troncal", "primary": "primaria"}
+CLASES_CARRETERA = ("troncal", "primaria")
+
+
+def ref_carretera(t):
+    """El número de ruta de un way: «CA-9», «RN-14»… (el primero si trae varios; «CA 9 Norte» → CA-9; «RN-07W» → RN-7W)."""
+    r = (t.get("ref") or "").split(";")[0].strip().upper()
+    m = re.match(r"^([A-Z]{1,4})[\s\-]*([0-9]+)([A-Z]?)", r)
+    return "%s-%d%s" % (m.group(1), int(m.group(2)), m.group(3)) if m else ""   # «CA-02» y «CA-2» son la misma ruta
+
+
+def sin_dobles(lineas, xy, celda_km=0.25):
+    """Quita lo ya cubierto: los dos sentidos de una autopista son dos líneas a ≈ 20 m, que a escala de país son la
+    misma. Se recorren de la más larga a la más corta; un vértice está cubierto si su celda (o una vecina) ya la pisó
+    OTRA línea aceptada; de cada línea quedan los tramos sin cubrir (con un vértice cubierto en cada punta, para que el
+    empalme no se abra)."""
+    marcadas, out = set(), []
+
+    def celdas(ln):
+        s = set()
+        K = [xy(q) for q in ln]
+        for a, b in zip(K, K[1:]):
+            n = max(1, int(math.hypot(b[0] - a[0], b[1] - a[1]) / (celda_km * 0.5)))
+            for i in range(n + 1):
+                s.add((int(math.floor((a[0] + (b[0] - a[0]) * i / n) / celda_km)), int(math.floor((a[1] + (b[1] - a[1]) * i / n) / celda_km))))
+        return s
+
+    for ln in sorted(lineas, key=lambda l: -largo_km(l, xy)):
+        cub = []
+        for q in ln:
+            x, y = xy(q)
+            i, j = int(math.floor(x / celda_km)), int(math.floor(y / celda_km))
+            cub.append(any((i + a, j + b) in marcadas for a in (-1, 0, 1) for b in (-1, 0, 1)))
+        tramo, nuevas = [], []
+        for k, q in enumerate(ln):
+            if not cub[k]:
+                if not tramo and k > 0:
+                    tramo.append(ln[k - 1])
+                tramo.append(q)
+            elif tramo:
+                tramo.append(q); nuevas.append(tramo); tramo = []
+        if tramo:
+            nuevas.append(tramo)
+        for t in nuevas:
+            if len(t) >= 2 and largo_km(t, xy) >= 0.3:
+                out.append(t)
+                marcadas |= celdas(t)
+    return out
+
+
+def capa_carreteras(sid, S, cache, salida):
+    """La red troncal del país: `highway=motorway|trunk` (troncal: las rutas centroamericanas, CA) y `primary` (primaria:
+    las rutas nacionales), agrupadas por su número de ruta (`ref`), cosidas, sin el doble sentido y simplificadas."""
+    c, xy = S["caja"], proyector_km(S)
+    ruta = overpass('[out:json][timeout:300];' + area_pais(S) + 'way(area.a)["highway"~"^(motorway|trunk|primary)$"];out tags geom;',
+                    os.path.join(cache, "overpass_carreteras.json"))
+    with open(ruta, encoding="utf-8") as f:
+        els = json.load(f)["elements"]
+    dentro = lambda q: c["lon_min"] <= q[0] <= c["lon_max"] and c["lat_min"] <= q[1] <= c["lat_max"]
+    grupos = {}
+    for e in sorted(els, key=lambda e: e["id"]):
+        t = e.get("tags", {})
+        cl = CLASE_CARRETERA.get(t.get("highway"))
+        if e.get("type") != "way" or not cl:
+            continue
+        g = grupos.setdefault((cl, ref_carretera(t)), {"nombres": {}, "tramos": []})
+        n = (t.get("name") or "").strip()
+        if n:
+            g["nombres"][n] = g["nombres"].get(n, 0) + 1
+        g["tramos"] += recortes(geo_osm(e), dentro)
+    carreteras = []
+    for (cl, ref) in sorted(grupos, key=lambda k: (CLASES_CARRETERA.index(k[0]), k[1] == "", k[1])):
+        g = grupos[(cl, ref)]
+        lineas = sin_dobles(coser(g["tramos"]), xy)
+        lineas = [l for l in (simplificar(l, xy, S.get("carretera_tol_km", 0.1)) for l in coser(lineas)) if len(l) >= 2]
+        lineas.sort(key=lambda l: -largo_km(l, xy))
+        km = sum(largo_km(l, xy) for l in lineas)
+        if not lineas or km < 1.0:
+            continue
+        nombre = sorted(g["nombres"].items(), key=lambda kv: (-kv[1], kv[0]))[0][0] if g["nombres"] and ref else ""
+        carreteras.append({"id": slug(ref) if ref else "sin-ref-" + cl, "ref": ref, "nombre": nombre, "clase": cl, "km": round(km, 1), "lineas": lineas})
+    ids = {}
+    for k in carreteras:   # una ruta con tramos troncales y primarios: el id de los primarios lleva la clase
+        ids[k["id"]] = ids.get(k["id"], 0) + 1
+        if ids[k["id"]] > 1:
+            k["id"] = "%s-%s" % (k["id"], k["clase"])
+    with open(os.path.join(salida, "carreteras.json"), "w", encoding="utf-8") as f:
+        json.dump({"set": sid, "clases": list(CLASES_CARRETERA),
+                   "formato": "lineas: [[[lon, lat], …], …] por ruta y clase; troncal = highway motorway|trunk, primaria = primary; km sin el doble sentido",
+                   "carreteras": carreteras}, f, ensure_ascii=False, separators=(",", ":"))
+    print("carreteras: %d rutas (%s) · %d puntos · %d KB · %s"
+          % (len(carreteras), ", ".join("%s %d km" % (cl, sum(k["km"] for k in carreteras if k["clase"] == cl)) for cl in CLASES_CARRETERA),
+             sum(len(l) for k in carreteras for l in k["lineas"]), os.path.getsize(os.path.join(salida, "carreteras.json")) // 1024,
+             ", ".join("%s %d km" % (k["ref"] or k["id"], k["km"]) for k in sorted(carreteras, key=lambda k: -k["km"])[:10])))
+    return dict(OSM_PAIS, fuente="OpenStreetMap (Overpass API): highway=motorway|trunk|primary dentro del país, por número de ruta (ref)",
+                atribucion="Carreteras: © OpenStreetMap")
+
+
+CAPAS = {"relieve": capa_relieve, "fallas": capa_fallas, "frontera": capa_frontera, "lugares": capa_lugares,
+         "rios": capa_rios, "lagos": capa_lagos, "carreteras": capa_carreteras}
 
 
 # ---------- sets de ciudad (escala «ciudad»): todo en metros locales ----------
@@ -790,6 +1203,31 @@ def revisar_ciudad(sid):
     return 1 if fallas else 0
 
 
+ORDEN_PAIS = ("relieve", "fallas", "frontera", "lugares", "rios", "lagos", "carreteras")
+PIE_CLAVES_PAIS = {"relieve": "Mapzen", "fallas": "GEM", "lugares": "OpenStreetMap", "rios": "OpenStreetMap", "lagos": "OpenStreetMap",
+                   "carreteras": "OpenStreetMap"}
+PIE_MAX = 132   # lo que cabe en el pie del video (dos renglones; M3D7 en maqueta3d.py)
+PIE_CORTO = (("Mapzen Terrain Tiles", "Mapzen"), (" · Frontera: Natural Earth", ""))   # Natural Earth es dominio público: no exige atribución
+
+
+def pie_de(atribuciones):
+    """«Capa: fuente» de cada capa → el pie sugerido, con las capas de una misma fuente juntas («Lugares, ríos, lagos y
+    carreteras: © OpenStreetMap»): cada capa con la suya no cabe en los dos renglones del pie."""
+    grupos = {}
+    for a in atribuciones:
+        capa, _, quien = a.partition(": ")
+        grupos.setdefault(quien, []).append(capa)
+    partes = []
+    for quien, capas in grupos.items():
+        capas = [capas[0]] + [c[0].lower() + c[1:] for c in capas[1:]]
+        partes.append("%s: %s" % (capas[0] if len(capas) == 1 else ", ".join(capas[:-1]) + " y " + capas[-1], quien))
+    pie = " · ".join(partes)
+    for largo, corto in PIE_CORTO:      # si no cabe: primero los nombres largos (la palabra clave de M3D7 se queda)
+        if len(pie) > PIE_MAX:
+            pie = pie.replace(largo, corto)
+    return pie
+
+
 def construir(sid, solo=None):
     S = SETS[sid]
     if S.get("escala") == "ciudad":
@@ -809,10 +1247,11 @@ def construir(sid, solo=None):
         info = fn(sid, S, cache, salida)
         info["descarga"] = hoy
         fuente["capas"][capa] = info
-    orden = [k for k in ("relieve", "fallas", "frontera", "lugares") if k in fuente["capas"]]
-    fuente["pie"] = " · ".join(fuente["capas"][k]["atribucion"] for k in orden)
+    orden = [k for k in ORDEN_PAIS if k in fuente["capas"]]
+    fuente["capas"] = dict([(k, fuente["capas"][k]) for k in orden] + [(k, v) for k, v in fuente["capas"].items() if k not in orden])
+    fuente["pie"] = pie_de(fuente["capas"][k]["atribucion"] for k in orden)
     # lo mínimo que el pie del video debe nombrar (M3D7): una palabra clave por capa con licencia de atribución
-    fuente["pie_claves"] = {"relieve": "Mapzen", "fallas": "GEM", "lugares": "OpenStreetMap"}
+    fuente["pie_claves"] = {k: v for k, v in PIE_CLAVES_PAIS.items() if k in fuente["capas"]}
     with open(ruta_f, "w", encoding="utf-8") as f:
         json.dump(fuente, f, ensure_ascii=False, indent=1)
     print("fuente.json: " + fuente["pie"])
@@ -865,13 +1304,61 @@ def revisar(sid):
         if not (c["lon_min"] <= l["lon"] <= c["lon_max"] and c["lat_min"] <= l["lat"] <= c["lat_max"]):
             falla("lugares: «%s» cae fuera de la caja" % i)
     Fu = carga("fuente.json")
-    for k in ("relieve", "fallas", "frontera", "lugares"):
+    detalle = revisar_detalle(sid, S, d, carga, falla)
+    for k in ("relieve", "fallas", "frontera", "lugares") + tuple(detalle):
         cc = Fu["capas"].get(k) or {}
         if not all(cc.get(x) for x in ("fuente", "licencia", "descarga", "atribucion")):
             falla("fuente.json: la capa «%s» no trae fuente, licencia, descarga y atribución" % k)
-    print("%s: relieve %d×%d (%d KB, %d a %d m) · %d trazos de falla · frontera %d puntos · %d lugares · %s"
-          % (sid, w, h, peso // 1024, M["min_m"], M["max_m"], len(F["trazos"]), len(B["anillos"][0]), len(L), "OK" if not fallas else "%d fallas" % len(fallas)))
+        clave = PIE_CLAVES_PAIS.get(k)
+        if clave and ((Fu.get("pie_claves") or {}).get(k) != clave or clave not in Fu.get("pie", "")):
+            falla("fuente.json: el pie no nombra la fuente de la capa «%s» («%s»; rehaz la capa: build_set3d.py %s --capa %s)" % (k, clave, sid, k))
+    if len(Fu.get("pie", "")) > PIE_MAX:
+        falla("fuente.json: el pie sugerido tiene %d caracteres y caben %d" % (len(Fu["pie"]), PIE_MAX))
+    print("%s: relieve %d×%d (%d KB, %d a %d m) · %d trazos de falla · frontera %d puntos · %d lugares%s · %s"
+          % (sid, w, h, peso // 1024, M["min_m"], M["max_m"], len(F["trazos"]), len(B["anillos"][0]), len(L),
+             "".join(" · " + x for x in detalle.values()), "OK" if not fallas else "%d fallas" % len(fallas)))
     return 1 if fallas else 0
+
+
+TOPE_KB = {"rios": 300, "lagos": 150, "carreteras": 400}   # lo que cada capa de detalle puede pesar en el repositorio
+
+
+def revisar_detalle(sid, S, d, carga, falla):
+    """Las capas de detalle del mapa (rios, lagos, carreteras): son opcionales (un set puede no traerlas), pero la que
+    está se revisa: peso, forma, que todo caiga en la caja y que no falte lo que el país no puede no tener.
+    → {capa: resumen} de las que hay."""
+    c, hay = S["caja"], {}
+    dentro = lambda q: c["lon_min"] <= q[0] <= c["lon_max"] and c["lat_min"] <= q[1] <= c["lat_max"]
+
+    def lineas_ok(capa, quien, lineas, minimo):
+        if not lineas or any(len(l) < minimo for l in lineas):
+            falla("%s: «%s» tiene una línea de menos de %d puntos (o ninguna)" % (capa, quien, minimo))
+        elif not all(isinstance(q, list) and len(q) == 2 and dentro(q) for l in lineas for q in l):
+            falla("%s: «%s» tiene puntos fuera de la caja del set (o que no son [lon, lat])" % (capa, quien))
+
+    for capa, clave, obligatorios, campo, minimo in (("rios", "rios", "rios_obligatorios", "lineas", 2), ("lagos", "lagos", "lagos_obligatorios", "anillos", 3),
+                                                     ("carreteras", "carreteras", "carreteras_obligatorias", "lineas", 2)):
+        ruta = os.path.join(d, capa + ".json")
+        if not os.path.exists(ruta):
+            continue
+        kb = os.path.getsize(ruta) / 1024.0
+        if kb > TOPE_KB[capa]:
+            falla("%s.json pesa %d KB (tope %d KB): sube la tolerancia o el mínimo en SETS" % (capa, kb, TOPE_KB[capa]))
+        lista = carga(capa + ".json")[clave]
+        ids = [x["id"] for x in lista]
+        if len(set(ids)) != len(ids):
+            falla("%s: hay ids repetidos" % capa)
+        for x in lista:
+            lineas_ok(capa, x["id"], x.get(campo), minimo)
+        for o in S.get(obligatorios, []):
+            if o not in ids:
+                falla("%s: falta «%s»" % (capa, o))
+        if capa == "rios" and any(x.get("orden") not in (1, 2, 3) for x in lista):
+            falla("rios: cada río lleva `orden` 1, 2 o 3")
+        if capa == "carreteras" and any(x.get("clase") not in CLASES_CARRETERA for x in lista):
+            falla("carreteras: cada ruta lleva `clase` %s" % " o ".join(CLASES_CARRETERA))
+        hay[capa] = "%d %s (%d KB)" % (len(lista), {"rios": "ríos", "lagos": "lagos", "carreteras": "rutas"}[capa], round(kb))
+    return hay
 
 
 def main():

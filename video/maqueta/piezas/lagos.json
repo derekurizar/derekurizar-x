@@ -1,0 +1,36 @@
+{
+ "tipo": "lagos",
+ "clase": "pieza",
+ "cuando": "los lagos y las lagunas grandes del país (Atitlán, Izabal, Petén Itzá, Amatitlán…) como agua sobre el relieve",
+ "parametros": {
+  "nombres": {
+   "tipo": "lista",
+   "requerido": false,
+   "min": 1,
+   "descripcion": "solo esos lagos, por id o por nombre (\"atitlan\", \"Lago de Izabal\"; ids en design/sets3d/<set>/lagos.json); sin él, todos los del set"
+  },
+  "orilla": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "dibuja también la orilla en una línea fina (la protagonista siempre la lleva, en el acento)"
+  }
+ },
+ "escalas": [
+  "pais"
+ ],
+ "motores": [
+  "three"
+ ],
+ "capas": [
+  "lagos"
+ ],
+ "ejemplo": {
+  "id": "lagos",
+  "tipo": "lagos"
+ },
+ "nivel": "fondo",
+ "contiene": [],
+ "animado": "el brillo del agua, que deriva muy despacio",
+ "gente": false
+}

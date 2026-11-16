@@ -1,0 +1,50 @@
+{
+ "tipo": "rios",
+ "clase": "pieza",
+ "cuando": "los ríos principales del país sobre el relieve: por dónde corre el agua, qué cuenca une dos lugares, qué río es una frontera",
+ "parametros": {
+  "nombres": {
+   "tipo": "lista",
+   "requerido": false,
+   "min": 1,
+   "descripcion": "solo esos ríos, por id o por nombre (\"motagua\", \"Río Usumacinta\"; ids en design/sets3d/<set>/rios.json); sin él, todos los del set"
+  },
+  "hasta_orden": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    1,
+    3
+   ],
+   "defecto": 3,
+   "descripcion": "hasta qué orden se dibujan sin `nombres`: 1 = solo los de ≥ 150 km, 2 = también los de ≥ 70 km, 3 = todos"
+  },
+  "grosor": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0.4,
+    3
+   ],
+   "defecto": 1.0,
+   "descripcion": "cuánto se engruesan las líneas (1 = más finas que la frontera)"
+  }
+ },
+ "escalas": [
+  "pais"
+ ],
+ "motores": [
+  "three"
+ ],
+ "capas": [
+  "rios"
+ ],
+ "ejemplo": {
+  "id": "rios",
+  "tipo": "rios"
+ },
+ "nivel": "fondo",
+ "contiene": [],
+ "animado": false,
+ "gente": false
+}

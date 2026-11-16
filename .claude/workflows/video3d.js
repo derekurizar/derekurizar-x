@@ -1,9 +1,10 @@
 export const meta = {
   name: 'video3d',
   description: 'Guion de /video-3d: director (dirección visual por frase con el catálogo de la maqueta) → constructor por cada brief → ganchos 3D → selección → el usuario elige → guion y storyboard → crítico en modo 3D (≤ 2 pasadas) → 5 cierres. 0 créditos.',
-  whenToUse: 'Tras `video3d.py preparar` (y la investigación). Se detiene con elegir_estilo (confianza baja; reanuda con args.estilo) y con elegir_gancho (reanuda con args.gancho); al final devuelve 5 cierres. args: {trabajo, tema, angulo, estilo, gancho, auto, fixture, permitir_fallback}. La voz y el render los hace la sesión.',
+  whenToUse: 'Tras `video3d.py preparar` (y la investigación). Se detiene con elegir_estilo (confianza baja; reanuda con args.estilo) y con elegir_gancho (reanuda con args.gancho); al final devuelve 5 cierres. args: {trabajo, tema, angulo, estilo, gancho, auto, fixture, sin_referencia, desde, notas, permitir_fallback}. desde: "retoque_visual" + notas = la voz ya existe: cambia solo lo que se ve y devuelve retoque_listo. La voz y el render los hace la sesión.',
   phases: [
     { title: 'Dirección', detail: 'video3d-director: direccion.json con la idea visual, el criterio (lugar o mecanismo), los mundos que la historia necesite (cada uno con su escala: pais, ciudad o esquema; tantos como haga falta, y se puede volver a uno), el estilo con razón y confianza, el borrador de la narración y el verbo visual del catálogo por frase; lo que el catálogo no tiene va en briefs[]' },
+    { title: 'Referencia visual', detail: 'un historia-verificador por mundo de cerca (≤ 3 a la vez): cómo se ve ese lugar en la realidad, qué pasa ahí, con qué, y qué no se puede afirmar → verificacion_visual_<mundo>.json (los hechos que sostienen cada escena, C3D15)' },
     { title: 'Constructor', detail: 'un maqueta-constructor por brief (≤ 3 a la vez): módulo + ficha, maqueta_modulo.py check (lint, pureza, hojas 9:16 y 4:5) y registrar; o reutiliza un tipo del catálogo' },
     { title: 'Ganchos', detail: 'el director en modo ganchos: 5 candidatos de familias 3D distintas (evento en el segundo cero), video3d.py ganchos --check --cuadros' },
     { title: 'Selección', detail: 'video-critico en modo selección (gancho 3D, con las hojas de cada candidato): ganador y segundo; luego el usuario elige (elegir_gancho)' },
@@ -20,7 +21,10 @@ export const meta = {
 const ESCENAS_MIN = 4, ESCENAS_MAX = 9
 const GANCHO_VOZ_S = 6.0
 const DURACION_MIN_S = 20, DURACION_MAX_S = 180
-const CANDIDATOS = 5, CIERRES_N = 5, BRIEFS_MAX = 3, CONSTRUCTORES_MAX = 3
+const CANDIDATOS = 5, CIERRES_N = 5, BRIEFS_MAX = 12, BRIEFS_POR_MUNDO = 3, CONSTRUCTORES_MAX = 3   // encargos al constructor: ≤ 3 por mundo, ≤ 12 por video, 3 a la vez
+const ESCENAS_TOPE = Math.max(ESCENAS_MAX, Math.floor(DURACION_MAX_S / 7))   // un video largo lleva las que necesite (video3d.py: SEG_POR_ESCENA)
+const VERIFICADORES_MAX = 3, PUNTAJE_ESCENA_MIN = 3
+const PUNTAJES_ESCENA = ['detalle', 'vida', 'realismo', 'claridad']
 const VUELTAS_CRITICA = 2, PUNTAJE_MIN = 3
 const PUNTAJES = ['gancho', 'claridad', 'concordancia', 'ritmo', 'promesa', 'cierre']
 
@@ -129,10 +133,16 @@ const S = {
       protagonista: { type: 'string' },
       frases: { type: 'array', items: { type: 'object', required: ['frase', 'verbo'], properties: { frase: { type: 'string' }, mundo: { type: 'string' }, verbo: { type: 'string' }, que_se_ve: { type: 'string' }, brief: { type: ['string', 'null'] } } } },
       briefs: { type: 'array', items: { type: 'object', required: ['id', 'clase', 'escala', 'que_se_ve', 'frase'],
-        properties: { id: { type: 'string' }, tipo_sugerido: { type: 'string' }, clase: { type: 'string', enum: ['pieza', 'evento', 'objeto'] }, escala: { type: 'string' },
+        properties: { id: { type: 'string' }, mundo: { type: 'string' }, tipo_sugerido: { type: 'string' }, clase: { type: 'string', enum: ['pieza', 'evento', 'objeto'] }, escala: { type: 'string' },
           que_se_ve: { type: 'string' }, parametros: { type: 'string' }, frase: { type: 'string' } } } },
       nota: { type: 'string' },
     },
+  },
+  referencia: {
+    type: 'object', required: ['archivo', 'mundo', 'se_puede_dibujar', 'no_afirmar'],
+    properties: { archivo: { type: 'string', pattern: 'verificacion_visual_[a-z0-9_-]+\\.json$' }, mundo: { type: 'string' },
+      se_puede_dibujar: { type: 'array', items: { type: 'object', required: ['que', 'hecho'], properties: { que: { type: 'string' }, hecho: { type: 'string' }, estado: { type: 'string' } } } },
+      no_afirmar: { type: 'array', items: { type: 'string' } }, nota: { type: 'string' } },
   },
   modulo: {
     type: 'object', required: ['tipo', 'clase', 'check', 'registrado', 'reutilizado'],
@@ -167,8 +177,10 @@ const S = {
     type: 'object', required: ['archivo', 'vuelta', 'veredicto', 'puntajes', 'faltas'],
     properties: { archivo: { type: 'string', pattern: 'critica\\.json$' }, vuelta: { type: 'integer' }, veredicto: { type: 'string', enum: ['pasa', 'corregir'] },
       puntajes: { type: 'object', required: PUNTAJES, properties: Object.fromEntries(PUNTAJES.map((k) => [k, { type: 'integer', minimum: 1, maximum: 5 }])) },
+      escenas: { type: 'array', items: { type: 'object', required: ['mundo', ...PUNTAJES_ESCENA],
+        properties: { mundo: { type: 'string' }, ...Object.fromEntries(PUNTAJES_ESCENA.map((k) => [k, { type: 'integer', minimum: 1, maximum: 5 }])), que_falta: { type: 'string' } } } },
       faltas: { type: 'array', items: { type: 'object', required: ['regla', 'gravedad', 'que', 'arreglo'],
-        properties: { escena: { type: ['integer', 'null'] }, regla: { type: 'string', pattern: '^(3C[1-9]|C1[0-2]|C[1-9])$' }, gravedad: { type: 'string', enum: ['bloquea', 'mejora'] },
+        properties: { escena: { type: ['integer', 'null'] }, regla: { type: 'string', pattern: '^(3C1[01]|3C[1-9]|C1[0-2]|C[1-9])$' }, gravedad: { type: 'string', enum: ['bloquea', 'mejora'] },
           que: { type: 'string' }, arreglo: { type: 'string' }, probado: { type: 'boolean' } } } } },
   },
   cierres: {
@@ -189,14 +201,16 @@ const DIRECTOR = `Eres el DIRECTOR de /video-3d (lee referencias/roles/video3d-d
 // ── Constructor: un maqueta-constructor por brief, ≤ CONSTRUCTORES_MAX a la vez ─────────────────────────────────────
 const construidos = []
 async function construir(briefs, etapa) {
-  const lista = (briefs || []).slice(0, BRIEFS_MAX)
-  if ((briefs || []).length > BRIEFS_MAX) avisar(`AVISO: ${briefs.length} briefs; se construyen los primeros ${BRIEFS_MAX}.`)
+  const porMundo = {}
+  const lista = (briefs || []).filter((b) => { const k = b.mundo || '(sin mundo)'; porMundo[k] = (porMundo[k] || 0) + 1; return porMundo[k] <= BRIEFS_POR_MUNDO }).slice(0, BRIEFS_MAX)
+  if ((briefs || []).length > lista.length) avisar(`AVISO: ${briefs.length} briefs; se construyen ${lista.length} (≤ ${BRIEFS_POR_MUNDO} por mundo, ≤ ${BRIEFS_MAX} por video).`)
   if (!lista.length) return []
   phase('Constructor')
   const hechos = []
   for (let i = 0; i < lista.length; i += CONSTRUCTORES_MAX) {
     const tanda = await Promise.all(lista.slice(i, i + CONSTRUCTORES_MAX).map((b) => agentRol(
-      `Eres el CONSTRUCTOR de la maqueta 3D (lee referencias/roles/maqueta-constructor.md). BRIEF (${etapa}, para ${trabajo}): ${JSON.stringify(b)}. ` +
+      `Eres el CONSTRUCTOR de la maqueta 3D (lee referencias/roles/maqueta-constructor.md, con su VARA DE CALIDAD: un lugar completo antes que un objeto suelto, con vida, de día y de noche). BRIEF (${etapa}, para ${trabajo}): ${JSON.stringify(b)}. ` +
+        (REFERENCIA_TXT ? `Lo que la referencia visual verificó de ese lugar (dibuja solo eso; lo demás es genérico): ${REFERENCIA_TXT} ` : '') +
         'Mira primero si el catálogo ya lo tiene (python3 scripts/maqueta3d.py catalogo --para sesion --escala <escala>); si no, escribe el módulo y su ficha, deja python3 scripts/maqueta_modulo.py check <clase>/<tipo> en 0, mira UNA vez su hoja y regístralo con maqueta_modulo.py registrar. ' +
         'Retorno: {tipo, clase, modulo, check, registrado, reutilizado, fallas[], vueltas, lecturas, s_por_cuadro, ejemplo, nucleo[]}.',
       { agentType: 'maqueta-constructor', schema: S.modulo, phase: 'Constructor', label: `constructor-${b.id || i}` })
@@ -214,17 +228,61 @@ async function construir(briefs, etapa) {
 const resumenConstruidos = (hs) => hs.filter((r) => r.check === 'ok' && (r.registrado || r.reutilizado))
   .map((r) => `${r.brief} → tipo «${r.tipo}» (${r.clase}${r.reutilizado ? ', ya existía' : ', nuevo'}; ejemplo: ${JSON.stringify(r.ejemplo || {})})`).join('; ')
 
+// ── RETOQUE VISUAL (args.desde: "retoque_visual" + args.notas): la voz ya existe y NO se toca; cambia solo lo que se ve ──
+// El director rehace mundos, cámaras, eventos y marcas con las notas del usuario → (constructor) → guion --check + tiempos
+// (la voz real) + storyboard + hojas de escenas → el crítico revisa las escenas. Devuelve `retoque_listo` o `corregir`.
+if (A.desde === 'retoque_visual') {
+  const notas = String(A.notas || '').trim()
+  if (!notas) fail('args.notas: qué quiere el usuario que cambie en lo que se ve.')
+  phase('Guion')
+  const directivaRetoque = (extra) => DIRECTOR +
+    `MODO RETOQUE VISUAL. LA VOZ YA ESTÁ GRABADA Y NO SE REGRABA: no cambies ni una palabra de ningún \`texto\`, ni el número de escenas, ni n, tipo, acto, secuencia, el titular y la voz del gancho ni el \`final\` del cierre. Cambia SOLO lo visual (mundos con su ficha \`escena\`, su hora y su estilo; el mundo de cada escena y sus \`cambios\`; cámaras, eventos, marcas, anotaciones). NOTAS DEL USUARIO: «${notas}». ` +
+    `Itera con python3 scripts/video3d.py guion ${trabajo} --check hasta 0, LUEGO python3 scripts/video3d.py tiempos ${trabajo} (la voz real: tiene que quedar en 0), python3 scripts/video3d.py storyboard ${trabajo} y python3 scripts/maqueta3d.py escena ${trabajo}/maqueta.json --hoja --salida ${trabajo}/escenas; mira la hoja de cada mundo. ` +
+    `Lo que el catálogo no tenga, en briefs (≤ ${BRIEFS_POR_MUNDO} por mundo, con su \`mundo\`). ` + (extra || '') +
+    'Retorno: {archivo, gate, fallas[], escenas, estimado_s, tipos_usados[], storyboard, briefs[], aplicadas[]}.'
+  const REFERENCIA_TXT = ''
+  let GR = await conReparacion('Retoque visual', (fallos) => agentRol(directivaRetoque(fallos.length ? `REPARACIÓN: ${fallos.join('; ')}. ` : ''),
+    { agentType: 'video3d-director', schema: S.guion, phase: 'Guion', label: 'retoque-visual' }),
+    (r) => r.gate !== 'ok' ? fallasDe(r, 'video3d.py guion --check y tiempos') : [...archivoEs(r, 'guion.json'), ...(!r.storyboard ? ['devuelve la ruta de la hoja del storyboard'] : [])], 2)
+  if (GR.briefs.length) {
+    const lista = GR.briefs.slice(0, BRIEFS_MAX), hechosR = []
+    for (let i = 0; i < lista.length; i += CONSTRUCTORES_MAX) {
+      hechosR.push(...await Promise.all(lista.slice(i, i + CONSTRUCTORES_MAX).map((b) => agentRol(
+        `Eres el CONSTRUCTOR de la maqueta 3D (lee referencias/roles/maqueta-constructor.md, con su vara de calidad). BRIEF (retoque visual, para ${trabajo}): ${JSON.stringify(b)}. ` +
+          'Si el catálogo ya lo tiene (python3 scripts/maqueta3d.py catalogo --para sesion --escala <escala>), devuélvelo reutilizado; si no, escríbelo, deja python3 scripts/maqueta_modulo.py check <clase>/<tipo> en 0, mira sus hojas (día y otra hora) y regístralo. ' +
+          'Retorno: {tipo, clase, modulo, check, registrado, reutilizado, fallas[], vueltas, lecturas, s_por_cuadro, ejemplo, nucleo[]}.',
+        { agentType: 'maqueta-constructor', schema: S.modulo, phase: 'Constructor', label: `constructor-${b.id || i}` })
+        .then((r) => ({ brief: b.id, ...r })).catch(() => ({ brief: b.id, check: 'falla', registrado: false, reutilizado: false })))))
+    }
+    const usables = hechosR.filter((r) => r.check === 'ok' && (r.registrado || r.reutilizado)).map((r) => `${r.brief} → «${r.tipo}» (${JSON.stringify(r.ejemplo || {})})`).join('; ')
+    if (usables) GR = await conReparacion('Retoque visual (con lo construido)', (fallos) => agentRol(directivaRetoque(`El constructor registró: ${usables}: úsalo. ${fallos.length ? `REPARACIÓN: ${fallos.join('; ')}. ` : ''}`),
+      { agentType: 'video3d-director', schema: S.guion, phase: 'Guion', label: 'retoque-construido' }),
+      (r) => r.gate !== 'ok' ? fallasDe(r, 'video3d.py guion --check y tiempos') : archivoEs(r, 'guion.json'), 1)
+    for (const r of hechosR) if ((r.nucleo || []).length) avisar(`NÚCLEO (brief ${r.brief}, tipo ${r.tipo}): ${r.nucleo.join(' · ')}`)
+  }
+  phase('Crítica')
+  const CR = await agentRol(
+    `MODO 3D (${guia('video-critico', '3d')}), ACOTADO A LO VISUAL de un retoque: TRABAJO = ${trabajo}. La voz y el texto no se juzgan. Lee ${trabajo}/guion.json, ${trabajo}/direccion.json y UNA hoja por mundo en ${trabajo}/escenas/<tramo>/hoja_9x16.jpg (python3 scripts/maqueta3d.py escena ${trabajo}/maqueta.json imprime la medida de cada tramo). ` +
+      `NOTAS DEL USUARIO que el retoque debía cumplir: «${notas}». Puntúa cada mundo de cerca en \`escenas[]\` (detalle, vida, realismo, claridad; 1–5, con que_falta) y escribe las faltas (3C2, 3C5, 3C9–3C11) con su arreglo. Escribe ${trabajo}/critica.json.`,
+    { agentType: 'video-critico', schema: S.critica, phase: 'Crítica', label: 'critica-retoque' })
+  const flojasR = (CR.escenas || []).filter((e) => PUNTAJES_ESCENA.some((k) => e[k] < PUNTAJE_ESCENA_MIN))
+  return { trabajo, tema, veredicto: flojasR.length || CR.faltas.some((x) => x.gravedad === 'bloquea') ? 'corregir' : 'retoque_listo', etapa: 'retoque_visual',
+    escenas: CR.escenas || [], faltas_pendientes: CR.faltas.filter((x) => x.gravedad === 'bloquea'), mejoras: CR.faltas.filter((x) => x.gravedad === 'mejora'),
+    storyboard: GR.storyboard, tipos_usados: GR.tipos_usados, avisos: AVISOS_WF }
+}
+
 // ── 1. Dirección ─────────────────────────────────────────────────────────────
 // (la directiva no depende de args.estilo ni de args.gancho: al reanudar con resumeFromRunId esta llamada sale de la caché)
 phase('Dirección')
 const validarDireccion = (r) => [
   ...archivoEs(r, 'direccion.json'),
   ...(r.criterio === 'ninguno' ? [] : (!r.frases.length ? ['frases: una entrada por oración del borrador (frase, verbo del catálogo, que_se_ve)'] : [])),
-  ...(r.briefs.length > BRIEFS_MAX ? [`${r.briefs.length} briefs; van ≤ ${BRIEFS_MAX} (cuenta lo demás con lo que hay en el catálogo)`] : []),
+  ...(r.briefs.length > BRIEFS_MAX ? [`${r.briefs.length} briefs; van ≤ ${BRIEFS_MAX} (≤ ${BRIEFS_POR_MUNDO} por mundo; cuenta lo demás con lo que hay en el catálogo)`] : []),
+  ...(r.criterio !== 'ninguno' && !(r.mundos || []).length ? ['mundos: al menos uno, cada uno con su id y su escala'] : []),
   ...(r.estilo.confianza === 'baja' && (r.estilo.candidatos || []).length < 2 ? ['estilo con confianza baja: candidatos (2–3) y el mismo cuadro en cada uno (estilos/<id>/)'] : []),
 ]
 const DIR = await conReparacion('Dirección', (fallos) => agentRol(DIRECTOR +
-  `MODO DIRECCIÓN: escribe ${trabajo}/direccion.json (idea_visual, criterio lugar|mecanismo, mundos {id: mundo} — TANTOS COMO LA HISTORIA NECESITE, cada uno con su escala (el lugar en pais o ciudad; la escena humana o el mecanismo en esquema), y se puede volver a uno —, estilo {id, razon, confianza, candidatos} (UNO para todos los mundos), protagonista, borrador de la narración, frases[] con el mundo y el verbo visual del catálogo por oración, briefs[] ≤ ${BRIEFS_MAX}, no_afirmar). ` +
+  `MODO DIRECCIÓN: escribe ${trabajo}/direccion.json (idea_visual, criterio lugar|mecanismo, mundos {id: mundo} — TANTOS COMO LA HISTORIA NECESITE, cada uno con su escala (el lugar en pais o ciudad; la escena humana o el mecanismo en esquema), y se puede volver a uno —, con su FICHA DE ESCENA («escena»: que_pasa, quien, con_que, se_mueve, sostiene[]; C3D14), su «hora» con «hora_razon» si no es de día (C3D19) y su «estilo» si no es el global —, estilo {id, razon, confianza, candidatos} (el global; cada mundo puede llevar el suyo), protagonista, borrador de la narración, frases[] con el mundo y el verbo visual del catálogo por oración, dudas_visuales por mundo (lo que quieres dibujar y hay que verificar: cómo se ve, qué pasa, con qué), briefs[] (≤ ${BRIEFS_POR_MUNDO} por mundo, ≤ ${BRIEFS_MAX}; cada uno con su «mundo»; ESCENARIOS completos antes que objetos sueltos), no_afirmar). ` +
     'Si ni el lugar ni el mecanismo se entienden mejor viéndolos moverse, criterio "ninguno" y en nota el flujo que le toca. ' +
     'Retorno: {archivo, idea_visual, criterio, mundos[]{id, escala, para}, estilo, protagonista, frases[], briefs[], nota}.' +
     (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : ''),
@@ -232,6 +290,28 @@ const DIR = await conReparacion('Dirección', (fallos) => agentRol(DIRECTOR +
 log(`Dirección: «${DIR.idea_visual}» · ${DIR.criterio} · mundos ${DIR.mundos.map((m) => `${m.id} (${m.escala})`).join(' → ')} · estilo ${DIR.estilo.id} (${DIR.estilo.confianza}) · ${DIR.frases.length} frases · ${DIR.briefs.length} brief(s)`)
 if (DIR.criterio === 'ninguno') {
   return { trabajo, tema, veredicto: 'no_es_3d', etapa: 'direccion', nota: DIR.nota || '', avisos: AVISOS_WF }
+}
+
+// ── 1b. Referencia visual: cómo es cada lugar de cerca en la realidad (lo que se dibuja también se afirma) ───────────
+// Un verificador por mundo de cerca (≤ VERIFICADORES_MAX a la vez), con la misma plantilla; en fixture no hay web: se salta.
+let REFERENCIA_TXT = ''
+const REFERENCIAS = []
+if (!A.fixture && !A.sin_referencia) {
+  phase('Referencia visual')
+  const cerca = (DIR.mundos || []).filter((m) => m.escala && m.escala !== 'pais')
+  for (let i = 0; i < cerca.length; i += VERIFICADORES_MAX) {
+    const tanda = await Promise.all(cerca.slice(i, i + VERIFICADORES_MAX).map((m) => agentRol(
+      `Eres el verificador de la REFERENCIA VISUAL de un mundo de /video-3d (lee referencias/roles/historia-verificador.md para el método: cita literal guardada con python3 scripts/historia.py leer <url>, cuatro veredictos; sin fotos). TRABAJO = ${trabajo} · tema: «${tema}» · mundo «${m.id}» (${m.escala}): ${m.para || ''}. ` +
+        `No hay encuadre.json: no corras historia.py digesto. Lee ${trabajo}/direccion.json (la ficha \`escena\` de ese mundo, sus dudas_visuales y no_afirmar) y los verificacion_*.json que ya existan (no repitas lo verificado). ` +
+        'En un video 3D lo que se dibuja también se afirma. Verifica, con fuente primaria u oficial antes que prensa (≤ 8 búsquedas, ≤ 10 lecturas): 1) CÓMO SE VE ese lugar en la realidad (el entorno, las construcciones, los materiales); 2) QUÉ PASA ahí y en qué orden (el proceso); 3) QUIÉN lo hace y CON QUÉ (herramientas, máquinas, vehículos); 4) A QUÉ HORA o en qué época pasa, si importa; 5) lo que NO se puede afirmar (lo que ninguna fuente sostiene: va a no_afirmar y se dibuja genérico o no se dibuja). ' +
+        `Escribe ${trabajo}/verificacion_visual_${m.id}.json {eje: "visual-${m.id}", hechos[] (ids visual-${m.id}-hNN, con estado confirmado|una_fuente|en_disputa|no_confirmado, fuentes[{url, medio, archivo, cita, fecha}] y nota), cifras[], fotos: [], videos: [], huecos[], no_afirmar[]}. Si historia.py hechos --check falla solo por fotos o por dominios sin clasificar, dilo y sigue. ` +
+        'Retorno: {archivo, mundo, se_puede_dibujar[]{que, hecho (id), estado}, no_afirmar[], nota}.',
+      { agentType: 'historia-verificador', schema: S.referencia, phase: 'Referencia visual', label: `referencia-${m.id}` })
+      .catch((e) => { avisar(`AVISO: la referencia visual del mundo ${m.id} no terminó (${String(e.message).split('\n')[0]}): ese mundo se dibuja genérico (escena.ilustrativa) o con lo ya verificado.`); return null })))
+    REFERENCIAS.push(...tanda.filter(Boolean))
+  }
+  REFERENCIA_TXT = REFERENCIAS.map((r) => `[${r.mundo}] se puede dibujar: ${r.se_puede_dibujar.map((x) => `${x.que} (${x.hecho})`).join('; ') || 'nada verificado'} · no afirmar: ${(r.no_afirmar || []).join('; ') || '—'}`).join(' ‖ ')
+  log(`Referencia visual: ${REFERENCIAS.length}/${cerca.length} mundos · ${REFERENCIAS.reduce((n, r) => n + r.se_puede_dibujar.length, 0)} cosas con respaldo`)
 }
 
 // ── 2. Constructor (lo que el catálogo no tiene) ─────────────────────────────
@@ -295,16 +375,17 @@ const elegidoPor = A.gancho ? 'usuario' : 'critico'
 phase('Guion')
 const validarGuion = (r) => r.gate !== 'ok' ? fallasDe(r, 'video3d.py guion --check') : [
   ...archivoEs(r, 'guion.json'),
-  ...(r.escenas < ESCENAS_MIN || r.escenas > ESCENAS_MAX ? [`${r.escenas} escenas; van ${ESCENAS_MIN}–${ESCENAS_MAX}`] : []),
+  ...(r.escenas < ESCENAS_MIN || r.escenas > ESCENAS_TOPE ? [`${r.escenas} escenas; van ${ESCENAS_MIN}–${ESCENAS_TOPE} (≈ una cada 7 s del objetivo)`] : []),
   ...(r.estimado_s > DURACION_MAX_S * 1.2 ? [`estimado ${r.estimado_s} s: el tope es ${DURACION_MAX_S} s`] : []),
   ...(!r.storyboard ? ['corre python3 scripts/video3d.py storyboard y devuelve la ruta de la hoja'] : []),
 ]
 const directivaGuion = (extra) => DIRECTOR +
   `MODO GUION: el gancho es «${gancho}» (python3 scripts/video3d.py ganchos ${trabajo} --usar ${gancho} --por ${elegidoPor}); estilo «${estilo}». ` +
-  `Escribe PRIMERO la narración de corrido (guion.narracion), actualiza direccion.json → frases con ella y DESPUÉS repártela sin cambiar una palabra en ${ESCENAS_MIN}–${ESCENAS_MAX} escenas con camara, eventos, marcas y cifras con anclas dice, el cierre y el caption. ` +
-  `Corre python3 scripts/video3d.py guion ${trabajo} --check hasta 0 fallas, luego python3 scripts/video3d.py storyboard ${trabajo} y mira UNA vez la hoja. ` +
+  `Escribe PRIMERO la narración de corrido (guion.narracion), actualiza direccion.json → frases con ella y DESPUÉS repártela sin cambiar una palabra en las escenas que necesite (≥ ${ESCENAS_MIN}; ≈ una cada 7 s) con camara, eventos, marcas y cifras con anclas dice, el cierre y el caption. Cada mundo de cerca con su ficha \`escena\` (C3D14–C3D18) y su hora (C3D19). ` +
+  (REFERENCIA_TXT ? `REFERENCIA VISUAL (usa sus ids en escena.sostiene; lo que no esté ahí es \`generico\` o va a no_afirmar): ${REFERENCIA_TXT} ` : '') +
+  `Corre python3 scripts/video3d.py guion ${trabajo} --check hasta 0 fallas (C3D1–C3D19, M3D1–M3D19: cada escena de cerca llena, variada y viva), luego python3 scripts/video3d.py storyboard ${trabajo}, python3 scripts/maqueta3d.py escena ${trabajo}/maqueta.json --hoja --salida ${trabajo}/escenas, y mira la hoja del storyboard y UNA hoja por mundo. ` +
   (construidos.length ? `Tipos del constructor: ${resumenConstruidos(construidos) || 'ninguno usable'}. ` : '') +
-  `Si aparece algo que el catálogo no tiene, cuéntalo con lo que hay y devuélvelo en briefs (≤ ${BRIEFS_MAX}). ` + (extra || '') +
+  `Si aparece algo que el catálogo no tiene, cuéntalo con lo que hay y devuélvelo en briefs (≤ ${BRIEFS_POR_MUNDO} por mundo, con su \`mundo\`). ` + (extra || '') +
   'Retorno: {archivo, gate, fallas[], escenas, estimado_s, tipos_usados[] (los tipos del catálogo que usa), storyboard (ruta de la hoja), briefs[], aplicadas[]}.'
 let G = await conReparacion('Guion', (fallos) => agentRol(directivaGuion(fallos.length ? `REPARACIÓN: ${fallos.join('; ')}. ` : ''),
   { agentType: 'video3d-director', schema: S.guion, phase: 'Guion', label: 'guion' }), validarGuion, 2)
@@ -323,13 +404,16 @@ let critica = null
 for (let vuelta = 1; vuelta <= VUELTAS_CRITICA; vuelta++) {
   critica = await conReparacion('Crítica', (fallos) => agentRol(
     `MODO 3D (${guia('video-critico', '3d')}). TRABAJO = ${trabajo} · vuelta ${vuelta}${vuelta > 1 ? ' (ACOTADA: solo bloquea lo que cambió o lo que la vuelta anterior dejó pendiente)' : ''}. ` +
-      `Insumos: ${trabajo}/guion.json, ${trabajo}/locucion.json, ${trabajo}/direccion.json (frases: el verbo visual de cada oración) y UNA lectura de ${G.storyboard}. No critiques lo que eligió el usuario (gancho, estilo, duración). ` +
+      `Insumos: ${trabajo}/guion.json, ${trabajo}/locucion.json, ${trabajo}/direccion.json (frases: el verbo visual de cada oración), UNA lectura de ${G.storyboard} y UNA de la hoja de cada mundo en ${trabajo}/escenas/<tramo>/hoja_9x16.jpg (si faltan: python3 scripts/maqueta3d.py escena ${trabajo}/maqueta.json --hoja --salida ${trabajo}/escenas; ese comando también imprime la medida de cada tramo). No critiques lo que eligió el usuario (gancho, estilo, duración). ` +
+      `REVISIÓN DE ESCENAS: por cada mundo de cerca, puntúa (1–5) detalle (¿es un lugar completo o cosas sueltas?), vida (¿se mueve gente y máquinas?), realismo (¿se parece a lo que pasa ahí? coteja con verificacion_visual_<mundo>.json) y claridad (¿se entiende qué es cada cosa a tamaño de teléfono?) en \`escenas[]\` con \`que_falta\`; un puntaje ≤ 2 es una falta que bloquea (regla 3C11) con arreglo «brief al constructor: …» o el cambio de cámara o de piezas. ` +
       `Cada arreglo, probado en una copia del TRABAJO con python3 scripts/video3d.py guion <copia> --check (probado: true/false). Escribe ${trabajo}/critica.json.` +
       (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : ''),
     { agentType: 'video-critico', schema: S.critica, phase: 'Crítica', label: `critica-${vuelta}` }),
   (r) => {
     const f = []
-    const bloquea = r.faltas.some((x) => x.gravedad === 'bloquea') || PUNTAJES.some((k) => r.puntajes[k] < PUNTAJE_MIN)
+    const flojas = (r.escenas || []).filter((e) => PUNTAJES_ESCENA.some((k) => e[k] < PUNTAJE_ESCENA_MIN))
+    const bloquea = r.faltas.some((x) => x.gravedad === 'bloquea') || PUNTAJES.some((k) => r.puntajes[k] < PUNTAJE_MIN) || flojas.length > 0
+    if (flojas.length && !r.faltas.some((x) => x.gravedad === 'bloquea' && x.regla === '3C11')) f.push(`las escenas ${flojas.map((e) => e.mundo).join(', ')} tienen un puntaje < ${PUNTAJE_ESCENA_MIN}: escribe su falta 3C11 que bloquea, con el arreglo`)
     if ((r.veredicto === 'pasa') === bloquea) f.push(`veredicto ${r.veredicto} incoherente con las faltas y los puntajes`)
     for (const x of r.faltas) if (x.gravedad === 'bloquea' && x.probado === false) f.push(`la falta de la escena ${x.escena} bloquea con un arreglo que el gate rechaza: ajústalo hasta que pase o dala como mejora`)
     return f
@@ -339,14 +423,35 @@ for (let vuelta = 1; vuelta <= VUELTAS_CRITICA; vuelta++) {
   const bloquean = critica.faltas.filter((x) => x.gravedad === 'bloquea')
   G = await conReparacion('Corrección', (fallos) => agentRol(DIRECTOR +
     `MODO CORRECCIÓN: aplica SOLO estas faltas del crítico (los arreglos probados, tal cual), sin tocar el gancho: ${JSON.stringify(bloquean)}. ` +
-    `Deja python3 scripts/video3d.py guion ${trabajo} --check en 0 y rehaz python3 scripts/video3d.py storyboard ${trabajo}. ` +
-    'Retorno: {archivo, gate, fallas[], escenas, estimado_s, tipos_usados[], storyboard, briefs[] (vacío), aplicadas[] (escenas cambiadas)}.' +
+    `Escenas flojas (puntaje < ${PUNTAJE_ESCENA_MIN}): ${JSON.stringify((critica.escenas || []).filter((e) => PUNTAJES_ESCENA.some((k) => e[k] < PUNTAJE_ESCENA_MIN)))}: llénalas con lo que el catálogo tiene (escenarios, gente con su pose, ambiente, cámara más cerca) y, si falta un tipo, devuélvelo en briefs con su \`mundo\`. ` +
+    `Deja python3 scripts/video3d.py guion ${trabajo} --check en 0 y rehaz python3 scripts/video3d.py storyboard ${trabajo} y python3 scripts/maqueta3d.py escena ${trabajo}/maqueta.json --hoja --salida ${trabajo}/escenas. ` +
+    'Retorno: {archivo, gate, fallas[], escenas, estimado_s, tipos_usados[], storyboard, briefs[], aplicadas[] (escenas cambiadas)}.' +
     (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : ''),
   { agentType: 'video3d-director', schema: S.guion, phase: 'Crítica', label: `correccion-${vuelta}` }), validarGuion, 1)
+  if (G.briefs.length) {   // lo que el crítico pidió y el catálogo no tiene: el constructor lo hace y el director lo usa
+    const H3 = await construir(G.briefs, `crítica ${vuelta}`)
+    if (resumenConstruidos(H3)) {
+      G = await conReparacion('Corrección (con lo construido)', (fallos) => agentRol(directivaGuion(`MODO CORRECCIÓN: el constructor registró lo que pediste (${resumenConstruidos(H3)}): úsalo en sus mundos, sin tocar el texto ni el gancho. ${fallos.length ? `REPARACIÓN: ${fallos.join('; ')}. ` : ''}`),
+        { agentType: 'video3d-director', schema: S.guion, phase: 'Crítica', label: `correccion-construido-${vuelta}` }), validarGuion, 1)
+    }
+  }
 }
 if (critica.veredicto !== 'pasa') {
   return { trabajo, tema, veredicto: 'corregir', etapa: 'critica', puntajes: critica.puntajes, faltas_pendientes: critica.faltas.filter((x) => x.gravedad === 'bloquea'),
     gancho, estilo, construidos, avisos: AVISOS_WF }
+}
+
+// ── 6b. Las mejoras PROBADAS del crítico se aplican solas (antes hacían falta a mano); una sola pasada, sin otra crítica ──
+const probadas = critica.faltas.filter((x) => x.gravedad === 'mejora' && x.probado === true)
+if (probadas.length) {
+  const antes = G
+  G = await conReparacion('Mejoras probadas', (fallos) => agentRol(DIRECTOR +
+    `MODO CORRECCIÓN: el guion ya está aprobado; aplica TAL CUAL estas mejoras que el crítico probó (si una rompe un gate, déjala fuera y dilo): ${JSON.stringify(probadas)}. ` +
+    `Sin tocar el gancho. Deja python3 scripts/video3d.py guion ${trabajo} --check en 0 y rehaz el storyboard y las hojas de escenas. ` +
+    'Retorno: {archivo, gate, fallas[], escenas, estimado_s, tipos_usados[], storyboard, briefs[] (vacío), aplicadas[] (escenas cambiadas)}.' +
+    (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : ''),
+  { agentType: 'video3d-director', schema: S.guion, phase: 'Crítica', label: 'mejoras-probadas' }), validarGuion, 1)
+    .catch((e) => { avisar(`AVISO: las mejoras probadas no se pudieron aplicar (${String(e.message).split('\n')[0]}): quedan en el reporte.`); return antes })
 }
 
 // ── 7. Cierres: 5 opciones para el usuario (regla de oro 11) ─────────────────
@@ -365,8 +470,9 @@ if (ELIGE_USUARIO) {
 
 return {
   trabajo, tema, veredicto: CIERRES ? 'elegir_cierre' : 'aprobado', etapa: 'cierres', gancho, gancho_elegido_por: elegidoPor, estilo,
-  idea_visual: DIR.idea_visual, mundos: DIR.mundos, puntajes: critica.puntajes,
-  mejoras: critica.faltas.filter((x) => x.gravedad === 'mejora'),
+  idea_visual: DIR.idea_visual, mundos: DIR.mundos, puntajes: critica.puntajes, escenas: critica.escenas || [],
+  referencias: REFERENCIAS.map((r) => ({ mundo: r.mundo, archivo: r.archivo, con_respaldo: r.se_puede_dibujar.length })),
+  mejoras: critica.faltas.filter((x) => x.gravedad === 'mejora' && x.probado !== true),
   storyboard: G.storyboard, tipos_usados: G.tipos_usados,
   cierres: CIERRES ? CIERRES.candidatos.filter((c) => CIERRES.elegibles.includes(c.id)) : null,
   construidos, avisos: AVISOS_WF,

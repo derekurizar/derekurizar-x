@@ -8,9 +8,9 @@
 // marcada en el estilo `dia`). Medidas en metros reales × `tamano`; la cereza y el rastrillo, agrandados para leerse.
 // Lo que se mueve (función pura de t, nada se acumula): la cereza que baja por la canaleta y cae en la tolva (cada una con
 // su fase fija por ctx.hash), el volante que gira, el agua (un shader: brillo que viaja con la corriente y granos que flotan
-// en el canal; ondas lentas en las pilas) y `personas` (objeto persona, sin rostro) que caminan despacio a lo largo de su
-// franja con un rastrillo que va y viene (agrandados ×1.45, camisa de color, sombrero oscuro y sombra, para leerse a 35–45 m;
-// si persona es articulada, camina). El pergamino es crema/beige en surcos con relieve, el cemento gris y frío: no se
+// en el canal; ondas lentas en las pilas) y `personas` (objeto persona en su pose `rastrillar`: sombrero de ala y rastrillo
+// que va y viene, el torso inclinado, pasos cortos) que avanzan despacio a lo largo de su franja (agrandadas ×1.45, camisa de
+// color y sombra, para leerse a 35–45 m); con 3, la tercera en la pose `cargar` sube sacos junto a la pila de recibo. El pergamino es crema/beige en surcos con relieve, el cemento gris y frío: no se
 // confunden ni en `dia` ni en `noche`. «resaltar» la pieza aviva la cereza, el agua y el pergamino. Sin colores escritos.
 (function (MAQ) {
   MAQ.PIEZAS.beneficio = {
@@ -337,51 +337,45 @@
           b.m.position.set(P[0], P[1], P[2]); b.m.rotation.set(0, b.rot + t * 4, 0.4); b.m.scale.setScalar(k);
         };
 
-        // ================= quienes rastrillan: persona (catálogo, articulada si lo es: camina) agrandada PG para leerse a
-        // 35–45 m, con camisa de color que contrasta con el pergamino, sombrero oscuro, el rastrillo grande y oscuro que va y
-        // viene delante, y una sombra suave bajo la persona y el rastrillo (además de la de contacto de la flota)
-        const gente = [], NP = p.personas, PG = 1.45, HG = HP + HS;
-        if (NP) {
-          const camisas = dia ? [tonos.mal.clone(), lin(COL.mar).multiplyScalar(0.72), tonos.bien.clone()]
-            : noche ? [lin(COL.costa), tonos.mal.clone(), tonos.secundario.clone().multiplyScalar(0.85)]
-            : [tonos.mal.clone(), lin(COL.mar), tonos.bien.clone()];
-          const c0 = Math.floor(hz(0, 52) * 3);
-          const fl = ctx.flota("persona", NP, { tamano: K * PG, lev: HG * K, orden: 6, color: (i) => camisas[(i + c0) % 3] });
-          const T = (a, b, c3) => [a * M * PG, c3 * M * PG, b * M * PG];      // x adelante, z derecha, y arriba (metros de la persona)
-          const rast = malla.nueva(), cRast = cOscuro.clone().multiplyScalar(dia ? 0.8 : 1.6);
-          barra(rast, T(0.3, 0.2, 0.95), T(1.4, 0, 0.08), 0.032 * M * PG, cMadera.clone().multiplyScalar(dia ? 0.75 : 1.3));
-          caja(rast, T, 1.36, 1.5, -0.55, 0.55, 0.05, 0.15, cRast);
-          for (let i = 0; i < 9; i++) { const z = -0.5 + 1.0 * i / 8; caja(rast, T, 1.4, 1.48, z - 0.025, z + 0.025, 0.0, 0.08, cRast.clone().multiplyScalar(0.85)); }
-          const som = malla.nueva(), cSomb = dia ? lin(COL.tierra_media).multiplyScalar(0.5) : tonos.techo.clone();
-          gema(som, ico, T(0, 0, 1.69), 0.34 * PG, 0.035 * PG, 0.34 * PG, 0, cSomb, 0.35);          // el ala
-          gema(som, ico, T(0, 0, 1.77), 0.16 * PG, 0.1 * PG, 0.16 * PG, 0.4, cSomb.clone().multiplyScalar(0.85), 0.35);   // la copa
-          const gR = malla.geometria(rast), gH = malla.geometria(som), matR = malla.material();
+        // ================= quienes rastrillan: persona (catálogo) en su pose `rastrillar` (sombrero de ala y rastrillo en las
+        // manos que va y viene; el torso inclinado; pasos cortos al avanzar), agrandada PG para leerse a 35–45 m, con camisa de
+        // color que contrasta con el pergamino y una sombra suave (además de la de contacto de la flota). Con 3 personas, la
+        // tercera, en la pose `cargar`, sube sacos junto a la pila de recibo (de pie en la plataforma, de cara al muro).
+        const gente = [], NP = p.personas, NR = Math.min(NP, 2), PG = 1.45, HG = HP + HS;
+        let flCarga = null;
+        const camisas = dia ? [tonos.mal.clone(), lin(COL.mar).multiplyScalar(0.72), tonos.bien.clone()]
+          : noche ? [lin(COL.costa), tonos.mal.clone(), tonos.secundario.clone().multiplyScalar(0.85)]
+          : [tonos.mal.clone(), lin(COL.mar), tonos.bien.clone()];
+        const c0 = Math.floor(hz(0, 52) * 3);
+        if (NR) {
+          const fl = ctx.flota("persona", NR, { tamano: K * PG, lev: HG * K, orden: 6, semilla: (p.semilla * 11 + np * 5) % 997,
+            pose: "rastrillar", color: (i) => camisas[(i + c0) % 3] });
           const gSo = new THREE.PlaneGeometry(1, 1); gSo.rotateX(-Math.PI / 2);
           const matSo = new THREE.ShaderMaterial({ uniforms: { uK: { value: KS * 0.55 } }, transparent: true, depthWrite: false,
             polygonOffset: true, polygonOffsetFactor: -4, polygonOffsetUnits: -8,
             vertexShader: "varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }",
             fragmentShader: "uniform float uK; varying vec2 vUv; void main(){ float r = length((vUv - 0.5) * 2.0); gl_FragColor = vec4(0.0, 0.0, 0.0, uK * (1.0 - smoothstep(0.3, 1.0, r))); }" });
           const orden = [1, 2, 0, 3];
-          for (let i = 0; i < NP; i++) {
-            const g = new THREE.Group(), m = new THREE.Mesh(gR, matR), h = new THREE.Mesh(gH, matR), so2 = new THREE.Mesh(gSo, matSo);
-            for (const x of [m, h]) { x.frustumCulled = false; x.renderOrder = 6; g.add(x); }
+          for (let i = 0; i < NR; i++) {
+            const g = new THREE.Group(), so2 = new THREE.Mesh(gSo, matSo);
             so2.frustumCulled = false; so2.renderOrder = 4; so2.position.set(0.6 * M * PG, 0.02 * M, 0); so2.scale.set(2.6 * M * PG, 1, 1.5 * M * PG); g.add(so2);
             scene.add(g);
-            gente.push({ g, m, so2, vc: FR[orden[i]] + (hz(i, 53) - 0.5) * 0.6, f0: hz(i, 54), per: 1.2 + 0.3 * hz(i, 55), ph: hz(i, 56) * TAU });
+            gente.push({ g, vc: FR[orden[i]] + (hz(i, 53) - 0.5) * 0.6, f0: hz(i, 54) });
           }
           gente.fl = fl;
         }
+        if (NP >= 3) flCarga = ctx.flota("persona", 1, { tamano: K * PG, lev: H0 * K, orden: 6, semilla: (p.semilla * 7 + np * 3) % 997,
+          pose: "cargar", color: () => camisas[(2 + c0) % 3] });
         const LP = FU1 - FU0 - 3.4, VEL = 0.32;
         const ponGente = (t) => {
           gente.forEach((q, i) => {
             const per = 2 * LP / VEL, f = (((t / per + q.f0) % 1) + 1) % 1, g = f < 0.5 ? 2 * f : 2 - 2 * f, dir = f < 0.5 ? 1 : -1;
             const u = FU0 + 1.7 + LP * g, [x, y] = W(u, q.vc), dx = ux * dir, dy = uy * dir;
-            gente.fl.poner(i, x, y, dx, dy, 1, 0);
+            gente.fl.poner(i, x, y, dx, dy, 1, 0, VEL);
             q.g.position.set(x, base0 + HG * M, -y); q.g.rotation.y = Math.atan2(dy, dx);
-            const va = 0.24 * Math.sin(TAU * t / q.per + q.ph) * M * PG;
-            q.m.position.x = va; q.so2.position.x = 0.6 * M * PG + va / 2;
           });
           if (gente.fl) gente.fl.listo();
+          if (flCarga) { const [x, y] = W((RU0 + RU1) / 2, RV1 + 1.1); flCarga.poner(0, x, y, uy, -ux, 1, 0, 0); flCarga.listo(); }
         };
         return { id: p.id, matCanal, matPila, matPerg, matFruta, matBaya, mVol, bayas, ponBaya, ponGente, perg: [matPerg] };
       });
