@@ -33,13 +33,15 @@ RAIZ = os.path.dirname(AQUI)
 sys.path.insert(0, AQUI)
 import build_set3d as SET3D  # noqa: E402  (lector del PNG del relieve)
 import versiones             # noqa: E402  (la versión de HyperFrames, en un solo sitio: scripts/versiones.py)
+import maqueta_tramos as TR  # noqa: E402  (varios mundos en un video: tramos)
 from maqueta_tipos import _movimiento as MV  # noqa: E402  (lo que se mueve: actor, flujo; la cámara que sigue)
 
 HF = list(versiones.HF)      # ["npx", "--yes", "hyperframes@<versión>"]
 MOTOR = os.path.join(RAIZ, "video", "maqueta")
 SETS = os.path.join(RAIZ, "design", "sets3d")
 FIXTURE = os.path.join(MOTOR, "fixture", "maqueta.json")
-FIXTURES_MUNDOS = [os.path.join(MOTOR, "fixture", f) for f in ("esquema_carretera.json", "ciudad_capital.json", "trafico.json")]   # un caso por mundo nuevo (y el de lo que se mueve)
+FIXTURES_MUNDOS = [os.path.join(MOTOR, "fixture", f) for f in ("esquema_carretera.json", "ciudad_capital.json", "trafico.json", "tramos.json")]   # un caso por mundo nuevo (y el de lo que se mueve, y el de varios mundos)
+FIXTURE_TRAMOS = os.path.join(MOTOR, "fixture", "tramos.json")
 MOTORES = ("three", "blender")     # el estilo decide el motor: three.js en HyperFrames, o Blender (la placa) + la capa 2D de HyperFrames
 BLENDER_PY = os.path.join(AQUI, "maqueta_blender.py")
 RUMBOS = {"este": (1, 0), "oeste": (-1, 0), "norte": (0, 1), "sur": (0, -1)}
@@ -759,7 +761,8 @@ def resolver(m, formato, avisos=None):
     capa = {"titulares": [dict(o) for o in C.get("titulares") or []], "cifras": [dict(o) for o in C.get("cifras") or []],
             "palabras": C.get("palabras") or [],
             "progreso": None if (Z.get("pieza") and not C.get("progreso")) else {"actos": (C.get("progreso") or {}).get("actos") or [0.0]},
-            "seguir": C.get("seguir"), "aviso": C.get("aviso") or "", "pie": C.get("pie") or "", "handle": C.get("handle") or "", "subs_hasta": dur + 1}
+            "seguir": C.get("seguir"), "aviso": C.get("aviso") or "", "pie": C.get("pie") or "", "handle": C.get("handle") or "", "subs_hasta": dur + 1,
+            "aviso_ventanas": C.get("aviso_ventanas")}   # video con tramos: el aviso «Esquema» solo mientras se ve un esquema
     for o in capa["titulares"] + capa["cifras"] + ([C["seguir"]] if C.get("seguir") else []) + ([C["cierre"]] if C.get("cierre") else []):
         sfx_ok(o, "capa")
     ci = C.get("cierre")
@@ -791,6 +794,7 @@ def resolver(m, formato, avisos=None):
         "col": col, "estilo_cfg": cfg, "capa_col": {k: color(v) for k, v in est["capa"].items() if isinstance(v, str)}, "radio": est["capa"]["radio"],
         "capa_num": {k: est["capa"].get(k, 1) for k in ("sombra_op", "vineta_op")},
         "exageracion": exag, "zona": Z, "protagonista": prota, "pieza": bool(Z.get("pieza")), "anfitrion": pal["fondo"],
+        "solo_mundo": bool(m.get("_tramo")),
         **S.datos_R(),
         "mundo": dict(S.datos_mundo(), escala=S.escala, set=S.id, unidad_m=S.unidad_m, km=S.km, caja=[round(v, 3) for v in S.caja],
                       camara={"cerca": CF["cerca"], "lejos": CF["lejos"], "niebla": CF["niebla"]}, plano=S.ficha["plano"],
@@ -1104,6 +1108,12 @@ def gates_formato(m, R):
               % (que, round(100 * ok / N)))
     if pieza:   # el cuadro (titular, cifras, portada) es del anfitrión
         out = [x for x in out if x[0] not in ("M3D5", "M3D9")]
+    tramo = m.get("_tramo")
+    if tramo:   # un tramo (maqueta_tramos.py): la capa se revisa una vez, entera; aquí solo que una cifra no tape una marca, y
+        # el gancho (M3D9) solo en el primer tramo
+        out = [x for x in out if not (x[0] == "M3D5" and "tapa la marca" not in x[1]) and not (x[0] == "M3D9" and tramo.get("n", 0) > 0)]
+    if m.get("_capa_global"):   # la capa de un video con tramos: solo sus gates (el mundo se revisa en cada tramo)
+        out = [x for x in out if x[0] == "M3D5"]
     return out
 
 
@@ -1120,7 +1130,8 @@ def gates_comunes(m, R, avisos):
         if k not in m:
             F("M3D1", "falta `%s`" % k)
     C = m.get("capa") or {}
-    for k in ("pie", "handle", "seguir", "cierre"):   # el aviso «Maqueta · no a escala» es opcional (usuario, 2026-11-14)
+    tramo = bool(m.get("_tramo"))   # un tramo de un video con tramos: la capa (seguir, cierre) se revisa una vez, entera
+    for k in ("pie", "handle") + (() if tramo else ("seguir", "cierre")):   # el aviso «Maqueta · no a escala» es opcional (usuario, 2026-11-14)
         if not C.get(k):
             F("M3D7", "falta `capa.%s`" % k)
     ci = C.get("cierre") or {}
@@ -1228,6 +1239,8 @@ def revisar_m(m, formatos):
     fallas, avisos = [], []
     if not isinstance(m, dict):
         return ["M3D1 el maqueta.json debe ser un objeto"], avisos
+    if TR.es_tramos(m):    # varios mundos: M3D13 y los gates de cada tramo y de la capa (scripts/maqueta_tramos.py)
+        return TR.revisar_m(m, formatos, sys.modules[__name__])
     comunes = False
     for f in formatos:
         try:
@@ -1246,7 +1259,7 @@ def revisar_m(m, formatos):
 
 
 # ---------- proyecto de HyperFrames ----------
-def escribir_proyecto(m, formato, destino, fotos=None):
+def escribir_proyecto(m, formato, destino, fotos=None, placa_externa=False):
     """El proyecto de HyperFrames. Motor three: el lienzo WebGL (motor.js). Motor blender (MODO PLACA): el mundo llega ya
     renderizado y aquí solo va la capa 2D encima: un <video> (assets/placa.mp4, lo pone el render) o, para cuadros
     sueltos, las `fotos` (números de cuadro → assets/placa/c_NNNNN.png); las marcas, ya proyectadas por cuadro."""
@@ -1255,7 +1268,10 @@ def escribir_proyecto(m, formato, destino, fotos=None):
     for k in R["camara"]:
         k.pop("_pos", None)
     Z, C, D, esc = R["zona"], R["capa"], R["dur"], lambda s: html.escape(str(s), quote=True)
-    placa = R["motor"] == "blender"
+    placa = R["motor"] == "blender" or placa_externa   # placa_externa: la capa de un video con tramos (el mundo ya viene grabado)
+    solo_mundo = R["solo_mundo"]                       # un tramo: el mundo, sus marcas y sus anotaciones; la capa va aparte, encima
+    if solo_mundo:   # el tramo no dibuja la capa: los titulares van ocultos (capa.js los mide para que las marcas no los pisen)
+        R["capa"] = C = dict(C, cifras=[], palabras=[], progreso=None, seguir=None, cierre=None, aviso="", pie="", handle="")
     A = os.path.join(destino, "assets")
     shutil.rmtree(A, ignore_errors=True)
     for d in ("fonts",) + (("placa",) if placa else ("three", "set")):
@@ -1306,7 +1322,7 @@ def escribir_proyecto(m, formato, destino, fotos=None):
         return '      <div id="%s" class="clip %s" data-start="%s" data-duration="%s" data-track-index="%d">%s</div>' % (i, clase, round(ini, 3), round(max(0.04, d), 3), pista, dentro)
     pieza = R["pieza"]
     # modo pieza: sin degradados para el texto; una viñeta que funde los bordes con el fondo del anfitrión (el de la paleta)
-    L = [clip("sombras", 0, D, 1, '<div class="borde"></div>' if pieza else '<div class="sombra vineta"></div><div class="sombra arriba"></div><div class="sombra abajo"></div>')]
+    L = [] if solo_mundo else [clip("sombras", 0, D, 1, '<div class="borde"></div>' if pieza else '<div class="sombra vineta"></div><div class="sombra arriba"></div><div class="sombra abajo"></div>')]
     ci = C.get("cierre")
     if ci:
         L.append(clip("velo", ci["t"], D - ci["t"], 2, '<div class="velo"></div>'))
@@ -1314,7 +1330,8 @@ def escribir_proyecto(m, formato, destino, fotos=None):
         L.append(clip("arriba", 0, D, 3, '<div id="progreso">%s</div>' % ("<i><b></b></i>" * len(C["progreso"]["actos"]))))
     for n, o in enumerate(C["titulares"]):
         k = '<div class="kicker">%s</div>' % esc(o["kicker"]) if o.get("kicker") else ""
-        L.append(clip("tit-%d" % n, o["t"], o["hasta"] - o["t"], 4, '<div class="titulo">%s<div class="texto">%s</div></div>' % (k, esc(o.get("texto", "")))))
+        L.append(clip("tit-%d" % n, o["t"], o["hasta"] - o["t"], 4, '<div class="titulo">%s<div class="texto">%s</div></div>' % (k, esc(o.get("texto", "")))).replace(
+            'class="clip marco"', 'class="clip marco" style="visibility: hidden"' if solo_mundo else 'class="clip marco"'))
     for n, o in enumerate(C["cifras"]):
         r = '<div class="rotulo">%s</div>' % esc(o["rotulo"]) if o.get("rotulo") else ""
         fu = '<div class="fuente">Fuente: %s</div>' % esc(o["fuente"]) if o.get("fuente") else ""
@@ -1328,7 +1345,14 @@ def escribir_proyecto(m, formato, destino, fotos=None):
                       '<div class="pin" style="--alto: %dpx"><div class="stem"></div><div class="dot"></div><div class="card"><b>%s</b>%s</div></div>' % (k["alto"], esc(k["texto"]), sub)))
     p0 = 6 + max(1, len(libres))
     fila = ('<span class="aviso">%s</span>' % esc(C["aviso"]) if C["aviso"] else "") + ('<span class="handle">%s</span>' % esc(C["handle"]) if C["handle"] else "")
-    if fila:   # sin aviso, el handle ocupa su lugar
+    if C.get("aviso_ventanas") is not None and C["aviso"]:   # tramos: el aviso solo en sus ventanas; fuera, el handle solo
+        solo = '<span class="handle">%s</span>' % esc(C["handle"]) if C["handle"] else ""
+        cortes = sorted({0.0, D} | {min(D, max(0.0, float(x))) for v in C["aviso_ventanas"] for x in v})
+        for i, (a0, a1) in enumerate(zip(cortes, cortes[1:])):
+            con = any(v[0] <= (a0 + a1) / 2 < v[1] for v in C["aviso_ventanas"])
+            if a1 - a0 > 1e-3 and (con or solo):
+                L.append(clip("filac-%d" % i, a0, a1 - a0, p0, '<div id="fila">%s</div>' % (fila if con else solo)))
+    elif fila:   # sin aviso, el handle ocupa su lugar
         L.append(clip("filac", 0, D, p0, '<div id="fila">%s</div>' % fila))
     if C["palabras"]:
         L.append(clip("subsc", 0, D, p0 + 1, '<div id="subs"></div>'))
@@ -1436,6 +1460,8 @@ def cargar_texto(ruta):
 
 
 def efectos_de(m):
+    if TR.es_tramos(m):
+        return TR.efectos(m)
     C = m.get("capa") or {}
     lista = [[e["t"], e["sfx"]] for e in m.get("eventos") or [] if e.get("sfx")]
     lista += [[o["t"], o["sfx"]] for k in ("titulares", "cifras") for o in C.get(k) or [] if o.get("sfx")]
@@ -1470,7 +1496,7 @@ def cmd_check(a):
         print("  aviso · " + x)
     for x in fallas:
         print("  FALLA " + x)
-    que = "modo pieza, lienzo %s: M3D1–M3D4, M3D6, M3D8, M3D11 y M3D12 OK" % formatos_de(a)[0] if es_pieza(formatos_de(a)[0]) else "M3D1–M3D12 OK (%s)" % ", ".join(formatos_de(a))
+    que = "modo pieza, lienzo %s: M3D1–M3D4, M3D6, M3D8, M3D11 y M3D12 OK" % formatos_de(a)[0] if es_pieza(formatos_de(a)[0]) else "M3D1–M3D%d OK (%s)%s" % (13 if TR.es_tramos(cargar_json(a.maqueta)) else 12, ", ".join(formatos_de(a)), " · %d tramos" % len(cargar_json(a.maqueta)["tramos"]) if TR.es_tramos(cargar_json(a.maqueta)) else "")
     print("%s: %s" % (a.maqueta, que if not fallas else "%d falla(s)" % len(fallas)))
     return 1 if fallas else 0
 
@@ -1502,6 +1528,8 @@ def cmd_cuadro(a):
     m = cargar_json(a.maqueta)
     os.makedirs(a.salida, exist_ok=True)
     tiempos = sorted(set(round(float(t), 3) for t in a.t))
+    if TR.es_tramos(m):
+        return TR.cuadro(m, tiempos, formatos_de(a), a.salida, a.hoja, sys.modules[__name__])
     # motor blender: el cuadro de la placa es el más cercano a t (n = round(t·fps)); la capa 2D se dibuja en t
     fotos = sorted(set(int(round(t * int(m.get("fps", 30)))) for t in tiempos)) if motor_de(m) == "blender" else None
     for f in formatos_de(a):
@@ -1571,17 +1599,23 @@ def cmd_render(a):
     return 0
 
 
-def renderizar(m, f, proy, final, registro):
-    """Un formato (o un lienzo de pieza) → `final` (H.264 yuv420p, sin audio, duracion_s ± 1 cuadro). → 0 ok · 1 falla."""
+def renderizar(m, f, proy, final, registro, placa=None):
+    """Un formato (o un lienzo de pieza) → `final` (H.264 yuv420p, sin audio, duracion_s ± 1 cuadro). → 0 ok · 1 falla.
+    Con `tramos` (varios mundos) lo hace maqueta_tramos.py; `placa` = el mp4 de los tramos ya encadenados (la capa encima)."""
+    if TR.es_tramos(m):
+        return TR.renderizar(m, f, proy, final, registro, sys.modules[__name__])
     if True:
         os.makedirs(proy, exist_ok=True)
-        R = escribir_proyecto(m, f, proy)
+        R = escribir_proyecto(m, f, proy, placa_externa=bool(placa))
         crudo = final + "._hf.mp4"
         for x in (crudo, final):
             if os.path.exists(x):
                 os.remove(x)
         seg_placa, extra = 0.0, []
-        if R["motor"] == "blender":
+        if placa:
+            shutil.copyfile(placa, os.path.join(proy, "assets", "placa.mp4"))
+            extra = ["--video-frame-format", "png"]
+        elif R["motor"] == "blender":
             # la placa: Blender renderiza el mundo cuadro a cuadro → assets/placa.mp4 (casi sin pérdida); HyperFrames pone la capa 2D
             rc, seg_placa = placa_video(m, f, proy, registro, R)
             if rc:
@@ -2016,7 +2050,16 @@ def cmd_prueba(a):
             return 1
     dur = cargar_json(FIXTURE)["duracion_s"]
     r = cmd_cuadro(argparse.Namespace(maqueta=FIXTURE, t=[0.0, dur * 0.2, dur * 0.4, dur * 0.6, dur * 0.78, dur - 0.5], salida=os.path.join(a.dir, "cuadros"), formato=a.formato, hoja=True, cmd="cuadro"))
-    return r or cmd_render(a) or prueba_blender(a)
+    return r or cmd_render(a) or prueba_tramos(a) or prueba_blender(a)
+
+
+def prueba_tramos(a):
+    """Varios mundos en un video: el render de tramos.json (campo → país → costa, fundido y corte) dura lo que dice."""
+    d = os.path.join(a.dir, "tramos")
+    if cmd_render(argparse.Namespace(maqueta=FIXTURE_TRAMOS, dir=d, formato=a.formato, borrador=False, cmd="render")):
+        return 1
+    print("tramos: OK (%s)" % d)
+    return 0
 
 
 def main():

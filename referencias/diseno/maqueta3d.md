@@ -211,6 +211,7 @@ el motor y la proyección de los gates.
 | M3D9 | El gancho es un evento que se VE en el cuadro 0: hay un evento visible en la portada (los que traen `adelanto` en su ficha: hoy `ruptura`, `onda`, `deslizar`, `resaltar`) con `t ≤ 0.1` y su origen cae dentro del cuadro en `t = 0` (aviso si ningún titular empieza en `t ≤ 0.1`: la portada saldría sin titular) |
 | M3D10 | Todo lo anterior se cumple en los dos formatos (9:16 y 4:5 encuadran distinto) |
 | M3D12 | Un `esquema` no se lee como un lugar real: lleva `capa.aviso` con «Esquema» (en modo pieza sin capa lo pone la mesa que lo aloja: aviso), y ni sus lugares (id y nombre, los de la receta y los de `mundo.lugares`) ni el texto de sus marcas llevan el nombre de un lugar real de `design/sets3d/guatemala/lugares.json` |
+| M3D13 | Tramos (un video con varios mundos, «Varios mundos: tramos»): `mundos` es {id: mundo} y no hay `mundo`; los tramos van seguidos de 0 a `duracion_s`, sin hueco ni encime, cada uno ≥ 2.5 s, en un mundo que existe; `transicion` es `corte`, `fundido` u `oscuro` (`fundido_s` 0.3–0.8, ≤ la mitad de cada tramo vecino); cámara, eventos, marcas y anotaciones viven dentro de su tramo; todo mundo se usa |
 | M3D11 | Separación: una marca con `separada_de` guarda ≥ 60 px en pantalla entre su ancla y el punto más cercano de esa pieza en ≥ 80 % de su ventana (en 9:16 y 4:5, o en el lienzo de la pieza). La falla dice cuántos px hubo y propone una cámara más cenital o más cercana |
 
 Cada falla dice el gate, el formato, la pieza y cómo arreglarlo. Los avisos (no fallan): una ruptura que pide más
@@ -454,6 +455,43 @@ Sus reglas (`scripts/maqueta_tipos/<tipo>.py`) dicen `anclas(a)` y `textos(a, es
 `anotaciones` de cada escena con su `dice`: `maqueta3d.textos_anotacion`; «5 m» se lee como 5 metros). Excepción: un `reloj`
 `ilustrativo` sobre un ESQUEMA (no es un momento real; la voz no dice esa hora como dato).
 
+
+## Varios mundos: tramos (`scripts/maqueta_tramos.py`)
+
+Usuario, 2026-11-15: **el orquestador usa cuantos mundos, eventos y escenas la historia necesite.** Una ruta o un proceso
+pasa por varias escalas (la ladera de la finca en esquema → la ruta en el mapa del país → el muelle en esquema), y se
+puede volver a un mundo ya visto. En el `maqueta.json`, en vez de `mundo`, `camara`, `eventos`, `marcas` y `anotaciones`:
+
+```json
+{"mundos": {"finca": {"escala": "esquema", "receta": "campo", "piezas": […], "protagonista": "cosecha"},
+            "pais":  {"escala": "pais", "set": "guatemala", "piezas": […]}},
+ "tramos": [{"id": "finca", "mundo": "finca", "desde": 0, "hasta": 9.2, "camara": […], "eventos": […], "marcas": […]},
+            {"mundo": "pais", "desde": 9.2, "hasta": 31.5, "transicion": "fundido", "fundido_s": 0.6, "camara": […]}],
+ "capa": {…la de siempre: una sola, continua…}}
+```
+
+- **Tiempos absolutos** del video en todo (como siempre). Cada tramo es la ventana `[desde, hasta)` de su mundo.
+- **Transición** (en el tramo que entra): `corte`, `fundido` (las dos imágenes se cruzan; por defecto) u `oscuro` (baja
+  al oscuro y sube); `fundido_s` 0.3–0.8 s (0.5). El cruce queda centrado en el límite: cada tramo se graba con medio
+  fundido de más a cada lado y el video dura exactamente `duracion_s`.
+- **Protagonista por mundo** (`mundos.<id>.protagonista`): lo único en el acento en ese mundo. Sin él, vale el global si
+  es una pieza de ese mundo.
+- **Un solo estilo** para todos los mundos (M3D8). Un estilo de Blender solo dibuja `pais`: con un esquema o una ciudad,
+  un estilo de three.js (M3D2 lo dice por tramo).
+- **El aviso «Esquema»** (M3D12) sale solo mientras se ve un mundo esquema, nunca sobre el mapa real (`aviso_ventanas`,
+  lo calcula `maqueta_tramos.capa_global`). El pie nombra las fuentes de todos los sets usados.
+- **Gates:** M3D13 revisa la forma; luego cada tramo es una maqueta de un mundo (`partir`: tiempos locales, la cámara
+  ya en su primera clave) que pasa los gates de siempre (M3D1–M3D4, M3D6, M3D8, M3D11, M3D12; M3D9, el gancho en el
+  cuadro 0, solo el primer tramo; de M3D5, que una cifra no tape una marca); la capa global pasa M3D5 y M3D7 una vez.
+  Las fallas dicen el tramo y su desfase («[tramo 2 «ruta», 9.2–31.5 s del video; tiempos del tramo +8.90]»).
+- **Render:** cada tramo con su motor y sin capa (solo el mundo, sus marcas y sus anotaciones: `solo_mundo`) →
+  `placa.mp4` encadenada con ffmpeg (`xfade`) → la capa global en MODO PLACA encima (`placa.js`). `cuadro` arma cada
+  cuadro igual (el mundo de su tramo y la capa encima); en un fundido muestra solo el tramo de ese segundo.
+  `efectos.json` reúne los `sfx` de todos los tramos.
+- **El guion** (`video3d.py`): `mundos` en vez de `mundo` y `mundo: <id>` en cada escena (la primera de un cambio puede
+  llevar `transicion` y `fundido_s`); `construir` hace un tramo por racha de escenas del mismo mundo (C3D12).
+- Caso de prueba: `video/maqueta/fixture/tramos.json` (campo → país → costa, fundido y corte); pruebas
+  `scripts/pruebas/maqueta_tramos.py`.
 
 ## Mundos: pais, ciudad y esquema
 

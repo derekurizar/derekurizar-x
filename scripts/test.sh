@@ -2521,6 +2521,7 @@ if [[ "$RAPIDO" == "1" ]]; then echo "SKIP   maqueta_modulo.py pureza con render
   paso "maqueta_modulo.py: pureza (seek doble) en eventos/onda y negativo de un módulo impuro (render)" python3 scripts/pruebas/maqueta_orquestacion.py --render
 fi
 paso "maqueta 3D: mundos pais, ciudad y esquema (escalas, recetas deterministas, M3D12, cámara por escala, set capital)" python3 scripts/pruebas/maqueta_mundos.py
+paso "maqueta 3D: varios mundos por video en tramos (M3D13, partir, capa global, aviso por ventana, C3D12 y construir en video3d.py)" python3 scripts/pruebas/maqueta_tramos.py
 paso "maqueta 3D: los casos de los mundos nuevos pasan M3D1–M3D12" sh -c 'python3 scripts/maqueta3d.py check video/maqueta/fixture/esquema_carretera.json && python3 scripts/maqueta3d.py check video/maqueta/fixture/ciudad_capital.json'
 paso "set de ciudad capital completo" python3 scripts/build_set3d.py capital --check
 paso "maqueta 3D: lo que se mueve (flujo de Newell cerrado en t, cola hacia atrás sin atravesarse, cámara que sigue, anclas, respaldo de anotaciones)" python3 scripts/pruebas/maqueta_movimiento.py

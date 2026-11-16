@@ -411,7 +411,7 @@ function ponerCamara(t) {
 // Cada módulo (video/maqueta/<clase>/<tipo>.js) se registra solo en window.MAQ.<PIEZAS|EVENTOS|OBJETOS|MUNDOS>[tipo]:
 //   pieza:  { orden, armar(ctx, lista) → estado, inicio(t, estado, ctx), en(t, estado, ctx) }                  (todo opcional)
 //   evento: { orden, armar(ctx, lista) → estado, inicio(t, estado, ctx), aplicar(t, e, ctx, estado), en(t, estado, ctx) }
-//   mundo:  { async cargar(ctx) → estado, armar(ctx, estado), en(t, estado, ctx) }   (UNO por maqueta: MU.escala)
+//   mundo:  { async cargar(ctx) → estado, armar(ctx, estado), en(t, estado, ctx) }   (UNO por maqueta: MU.escala; un video con varios mundos se graba por tramos, scripts/maqueta_tramos.py)
 // `lista`: las piezas (o los eventos) de ese tipo, en el orden del maqueta.json. Los OBJETOS los usan las piezas
 // (ctx.MAQ.OBJETOS[id]); el núcleo no los recorre.
 const MAQ = window.MAQ = window.MAQ || {};

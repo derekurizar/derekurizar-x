@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "_comentario": "Caso de prueba de TRAMOS (varios mundos en un video, scripts/maqueta_tramos.py): un camión sale del campo (esquema), la ruta cruza el país (pais) y llega a la costa (esquema). Fundido del campo al país y corte del país a la costa. No es un video: los textos son de relleno.",
+  "estilo": "noche",
+  "paleta": "cacao",
+  "fps": 30,
+  "duracion_s": 15.0,
+  "mundos": {
+    "campo": {
+      "escala": "esquema", "receta": "campo", "semilla": 4, "tamano_m": 1200, "protagonista": "camion",
+      "piezas": [
+        {"id": "calles", "tipo": "calles"},
+        {"id": "agua", "tipo": "agua"},
+        {"id": "casas", "tipo": "edificios"},
+        {"id": "camion", "tipo": "actor", "objeto": "camion", "camino": "camino", "tamano": 3, "claves": [{"t": 0, "s": "30%", "vel_kmh": 50}]}
+      ]
+    },
+    "pais": {
+      "escala": "pais", "set": "guatemala", "exageracion": 5, "protagonista": "ruta",
+      "piezas": [
+        {"id": "ruta", "tipo": "falla", "puntos": [[-91.472, 15.318], [-91.44, 14.95], [-90.992, 14.761], [-90.513, 14.642], [-90.069, 14.855], [-89.358, 15.114], [-88.843, 15.471], [-88.612, 15.687]]},
+        {"id": "pueblos", "tipo": "luces", "lugares": "todos"},
+        {"id": "frontera", "tipo": "frontera", "vecinos": true}
+      ]
+    },
+    "costa": {
+      "escala": "esquema", "receta": "costa", "semilla": 2, "tamano_m": 1400,
+      "piezas": [
+        {"id": "agua", "tipo": "agua"},
+        {"id": "calles", "tipo": "calles"},
+        {"id": "edificios", "tipo": "edificios"}
+      ]
+    }
+  },
+  "tramos": [
+    {"id": "campo", "mundo": "campo", "desde": 0.0, "hasta": 5.0,
+     "camara": [{"t": 0.0, "mira": "pueblo", "dist_m": 900, "azimut": 0, "elevacion": 58}, {"t": 5.0, "mira": "pueblo", "dist_m": 650, "azimut": 20, "elevacion": 48}],
+     "eventos": [{"t": 0.0, "dur": 2.6, "tipo": "resaltar", "lugar": "pueblo", "sfx": "pulso"}],
+     "marcas": [{"t": 1.0, "hasta": 4.2, "lugar": "pueblo", "texto": "El pueblo", "sub": "De aquí sale"}]},
+    {"id": "ruta", "mundo": "pais", "desde": 5.0, "hasta": 11.0, "transicion": "fundido", "fundido_s": 0.6,
+     "camara": [{"t": 5.0, "mira": "huehuetenango", "dist_km": 420, "azimut": 0, "elevacion": 60}, {"t": 11.0, "mira": [-89.6, 15.2], "dist_km": 820, "azimut": 0, "elevacion": 66}],
+     "eventos": [{"t": 5.4, "dur": 4.6, "tipo": "ruptura", "pieza": "ruta", "desde": "huehuetenango", "hacia": "este", "km": 380, "sfx": "whoosh"}],
+     "marcas": [{"t": 5.8, "hasta": 8.0, "lugar": "huehuetenango", "texto": "Huehuetenango", "sub": "La salida"},
+                {"t": 8.6, "hasta": 10.8, "lugar": "santo-tomas-de-castilla", "texto": "Santo Tomás", "sub": "La llegada"}]},
+    {"id": "costa", "mundo": "costa", "desde": 11.0, "hasta": 15.0, "transicion": "corte",
+     "camara": [{"t": 11.0, "mira": "playa", "dist_m": 1100, "azimut": 0, "elevacion": 55}, {"t": 15.0, "mira": "playa", "dist_m": 800, "azimut": -15, "elevacion": 45}],
+     "eventos": [{"t": 11.2, "dur": 2.2, "tipo": "resaltar", "lugar": "playa"}]}
+  ],
+  "capa": {
+    "titulares": [
+      {"t": 0.0, "hasta": 3.4, "kicker": "Maqueta de prueba", "texto": "Tres mundos en un video"},
+      {"t": 5.6, "hasta": 8.6, "kicker": "Segundo tramo", "texto": "La ruta cruza el país"}
+    ],
+    "cifras": [{"t": 9.0, "hasta": 10.8, "valor": "560 km", "rotulo": "de prueba", "fuente": "dato de prueba"}],
+    "palabras": [],
+    "progreso": {"actos": [0.0, 5.0, 11.0]},
+    "seguir": {"t": 3.6, "dur": 2.0},
+    "aviso": "Esquema · no es un lugar real",
+    "pie": "Relieve: Mapzen Terrain Tiles · Frontera: Natural Earth · © OpenStreetMap · Campo y costa: esquemas",
+    "handle": "@DerekUrizar",
+    "cierre": {"t": 12.0, "frase": "Esto es una prueba.", "redes": [{"nombre": "TikTok", "handle": "@derekurizargt"}, {"nombre": "X", "handle": "@DerekUrizar"}]}
+  }
+}

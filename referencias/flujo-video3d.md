@@ -20,7 +20,10 @@ Decisiones del usuario (2026-11-14):
    mundo y sus pines en el lienzo que pida el anfitrión). Ver «La maqueta» en `referencias/flujo-mesa.md`. Una maqueta
    de escala `esquema` puede explicar un mecanismo dentro de la mesa (como una animación `explica`); lo que el catálogo
    no tiene, el realizador lo pide con un brief y el Workflow `plano` lo pasa al constructor una vez.
-6. **«Maqueta · no a escala» no es obligatorio.** El aviso sale solo cuando el guion lo pide (`aviso`); el pie con las
+6. **Tantos mundos, eventos y escenas como la historia necesite** (usuario, 2026-11-15): un video puede pasar por varios
+   mundos (la finca en esquema → la ruta en el mapa del país → el muelle) y volver a uno; un solo estilo para todos.
+   Contrato: «Varios mundos: tramos» en `referencias/diseno/maqueta3d.md`.
+7. **«Maqueta · no a escala» no es obligatorio.** El aviso sale solo cuando el guion lo pide (`aviso`); el pie con las
    fuentes de los geodatos sí va siempre.
 
 Contrato del motor: `referencias/diseno/maqueta3d.md`. Scripts: `scripts/video3d.py` (guion, voz, tiempos, audio,
@@ -34,7 +37,7 @@ entrega) y `scripts/maqueta3d.py` (gates M3D, cuadros sueltos, render).
 | 2 | Investigar y verificar lo que falte, incluidos los geodatos (qué se dibuja y de dónde sale) | agentes de /historia; `video3d.py datos --sumar` |
 | 3 | Dirección visual por frase (idea visual, criterio, escala, estilo, mundo, el verbo del catálogo por oración); lo que falta, al constructor | Workflow `video3d`: `video3d-director` → `maqueta-constructor` |
 | 4 | Ganchos: 5 candidatos con su cuadro renderizado; el crítico recomienda y **el usuario elige** (y el estilo, si la confianza es baja) | Workflow: `ganchos --check --cuadros` → para con `elegir_gancho` |
-| 5 | Guion: la narración de corrido primero; luego las escenas y el `caption` por plataforma | Workflow: el director, `guion --check` (C3D1–C3D11, V2–V5, M3D) |
+| 5 | Guion: la narración de corrido primero; luego las escenas y el `caption` por plataforma | Workflow: el director, `guion --check` (C3D1–C3D12, V2–V5, M3D1–M3D13) |
 | 6 | Storyboard: un cuadro por clave de cámara y evento, antes de gastar créditos | Workflow: `storyboard` |
 | 7 | Crítico (retención y concordancia) y cierre: **el usuario elige el cierre** | Workflow: `video-critico` en «Modo 3D» → 5 cierres (`elegir_cierre`) |
 | 8 | Voz (ElevenLabs, El Faraon 4) y escucha independiente (V11) | `voz` → MCP → `descargar --estado` (o `--nodos` si el estado llegó en el chat) → `escuchar` |
@@ -163,6 +166,9 @@ Familias de gancho 3D (los 5 candidatos son de familias distintas):
 }
 ```
 
+- **Varios mundos:** en vez de `mundo`, `"mundos": {"finca": {…}, "pais": {…}}`, y cada escena dice el suyo
+  (`"mundo": "finca"`); la primera escena de un cambio puede llevar `"transicion": "corte|fundido|oscuro"` y `fundido_s`.
+  Las escenas seguidas del mismo mundo forman un tramo. Sin `mundos`, un solo mundo como siempre.
 - **Primero la narración de corrido** (≈ 15.5 caracteres por segundo: 45 s ≈ 700 caracteres), como una sola voz;
   después se reparte en escenas sin cambiar una palabra. `secuencia` agrupa las escenas cuya voz se graba de corrido.
 - **Anclas:** `dice` es una frase de la voz de esa escena (escrita como en `texto`; `vez: 2` si se repite). Sin
@@ -179,7 +185,7 @@ Familias de gancho 3D (los 5 candidatos son de familias distintas):
 
 | Gate | Qué revisa |
 |---|---|
-| C3D1 | Un estilo con su razón (y nadie más declara estilo), la idea visual, el protagonista, 4–9 escenas, gancho primero y cierre al final |
+| C3D1 | Un estilo con su razón (y nadie más declara estilo), la idea visual, el protagonista, 4 escenas o más (tope: ≈ una cada 7 s del objetivo, y nunca menos de 9), gancho primero y cierre al final |
 | C3D2 | Cada `dice` y `hasta_dice` es una frase que la voz de esa escena dice |
 | C3D3 | Cada lugar que la voz nombra tiene su marca (en esa escena o viva de antes) o es adonde mira la cámara; las marcas y la cámara usan lugares que existen |
 | C3D4 | Cada cifra entra cuando la voz la dice, con su id verificado y su rótulo; la de una sola fuente lleva la fuente |
@@ -189,6 +195,7 @@ Familias de gancho 3D (los 5 candidatos son de familias distintas):
 | C3D8 | El cierre: frase final corta, sin anunciar el final, sin «sígueme» ni fuentes en la voz, ≤ 160 caracteres |
 | C3D9 | Duración estimada dentro del objetivo ±20 % |
 | C3D10 | El cierre lleva su cámara; aviso si no vuelve a mirar lo que abrió el gancho (el bucle) |
+| C3D12 | Varios mundos: cada escena dice un mundo de `mundos` (y no hay `mundo` a la vez), la `transicion` es `corte`, `fundido` u `oscuro`, y todo mundo se usa |
 | C3D11 | Un pin cuyo texto dice una distancia («A 25 km») declara `separada_de` con la pieza de la que está a esa distancia: M3D11 mide que en pantalla no queden pegados |
 
 Los gates M3D (dónde cae cada pin, velocidad de la cámara, tiempos de lectura, separación, en 9:16 y 4:5) los corre

@@ -55,7 +55,8 @@ import maqueta3d as M3  # noqa: E402  (el catálogo del vocabulario: maqueta3d.p
 FPS = 30
 OBJETIVO_S, TOL = 45, 0.2            # duración por defecto y tolerancia de C3D9
 DURACION_MIN_S, DURACION_MAX_S = 20, 180   # C3D9: de 20 s a 3 min, como los demás videos (el tope de Shorts; usuario, 2026-11-15)
-ESCENAS = (4, 9)                     # contando el gancho y el cierre
+ESCENAS = (4, 9)                     # contando el gancho y el cierre; el tope crece con la duración (SEG_POR_ESCENA)
+SEG_POR_ESCENA = 7                   # un video largo lleva las escenas que necesite: ≈ una cada 7 s del objetivo
 GANCHO_VOZ_S = 6.0                   # la voz del gancho (medido con /analyze-improve: ≤ 6 s)
 GUATEMALA_S = 6.0                    # «Guatemala» se oye antes de este segundo
 EVENTO_GANCHO_S = 1.0                # el gancho es un evento 3D: algo pasa antes de este segundo (M3D9)
@@ -127,6 +128,41 @@ def lugares_del_set(nombre_set):
     if isinstance(d, list):
         return {x["id"]: x for x in d if isinstance(x, dict) and x.get("id")}
     return {k: v for k, v in d.items() if isinstance(v, dict)}
+
+
+def mundos_de(g):
+    """Los mundos del guion: {id: mundo}. Un guion con un solo `mundo` es un mundo llamado «principal»; con `mundos`
+    (varios mundos en un video, usuario 2026-11-15) cada escena dice el suyo con `mundo: <id>`."""
+    if isinstance(g.get("mundos"), dict) and g["mundos"]:
+        return g["mundos"]
+    return {"principal": g.get("mundo") or {}}
+
+
+def mundo_de_escena(g, e):
+    M = mundos_de(g)
+    return e.get("mundo") if isinstance(g.get("mundos"), dict) else "principal" if "principal" in M else next(iter(M))
+
+
+_LUGARES_MUNDO = {}
+
+
+def lugares_de_mundo(mundo, estilo_id=None):
+    """{id: {nombre, …}} de un mundo: los del set (pais, ciudad) o los de su receta (esquema), más mundo.lugares."""
+    clave = json.dumps([mundo.get("escala"), mundo.get("set"), mundo.get("receta"), mundo.get("semilla"), mundo.get("tamano_m"),
+                        mundo.get("carriles"), mundo.get("manzana_m")], sort_keys=True)
+    if clave not in _LUGARES_MUNDO:
+        base = {}
+        if (mundo.get("escala") or "pais") == "pais":
+            base = lugares_del_set(mundo.get("set"))
+        else:
+            try:   # ciudad y esquema: los lugares los arma su módulo (la receta, el set de la ciudad)
+                est = M3.catalogo_estilos().get(estilo_id) or next(e for e in M3.catalogo_estilos().values() if e["motor"] == "three")
+                W = M3.mundo_de({k: v for k, v in mundo.items() if k not in ("lugares", "piezas", "protagonista", "capas")}, est, [])
+                base = {k: dict(v) for k, v in (W.lugares or {}).items()}
+            except Exception:    # noqa: BLE001 — el mundo mal declarado lo dice M3D2 en `guion --check`
+                base = {}
+        _LUGARES_MUNDO[clave] = base
+    return dict(_LUGARES_MUNDO[clave], **(mundo.get("lugares") or {}))
 
 
 def pie_del_set(nombre_set):
@@ -284,9 +320,26 @@ def revisar_guion(g, st, trabajo):
     fallas, avisos = [], []
     escenas = escenas_de(g)
     valores, por_id = cifras_ok(trabajo)
-    mundo = g.get("mundo") or {}
-    lugares = dict(lugares_del_set(mundo.get("set")), **(mundo.get("lugares") or {}))
-    piezas = {p.get("id"): p for p in mundo.get("piezas") or []}
+    MUNDOS = mundos_de(g)
+    est_id = (g.get("estilo") or {}).get("id")
+    lug_m = {k: lugares_de_mundo(v or {}, est_id) for k, v in MUNDOS.items()}
+    pie_m = {k: {p.get("id"): p for p in (v or {}).get("piezas") or []} for k, v in MUNDOS.items()}
+    # C3D12 · mundos: cada escena dice un mundo que existe (con `mundos`) y cada mundo se usa
+    if isinstance(g.get("mundos"), dict):
+        if g.get("mundo"):
+            fallas.append("C3D12 el guion trae `mundo` y `mundos`: con varios mundos van todos en `mundos` ({id: mundo})")
+        for e in escenas:
+            if e.get("mundo") not in MUNDOS:
+                fallas.append("C3D12 escena %s: `mundo` «%s» no está en `mundos` (hay: %s)" % (e.get("n"), e.get("mundo"), ", ".join(MUNDOS)))
+            if e.get("transicion") is not None and e.get("transicion") not in ("corte", "fundido", "oscuro"):
+                fallas.append("C3D12 escena %s: `transicion` «%s» (hay: corte, fundido, oscuro)" % (e.get("n"), e.get("transicion")))
+        sobran = [k for k in MUNDOS if k not in {e.get("mundo") for e in escenas}]
+        if sobran:
+            fallas.append("C3D12 los mundos %s no se usan en ninguna escena: quítalos" % ", ".join("«%s»" % k for k in sobran))
+    elif any(e.get("mundo") for e in escenas):
+        fallas.append("C3D12 una escena dice `mundo` y el guion tiene uno solo: con varios mundos van en `mundos` ({id: mundo})")
+    todas = {pid: p for d in pie_m.values() for pid, p in d.items()}
+    piezas, lugares, mundo = todas, {}, {}
 
     # C3D1 forma: un estilo con su razón, el protagonista, el gancho primero y el cierre al final
     est = g.get("estilo") or {}
@@ -303,10 +356,16 @@ def revisar_guion(g, st, trabajo):
     if not (g.get("idea_visual") or "").strip():
         fallas.append("C3D1 falta idea_visual: la imagen del video en una oración (de ahí salen el gancho, el estilo y el cierre)")
     prota = g.get("protagonista")
-    if prota not in piezas:
+    protas = [(v or {}).get("protagonista") for v in MUNDOS.values() if (v or {}).get("protagonista")]
+    if prota not in piezas and not protas:
         fallas.append("C3D1 protagonista «%s» no es una pieza de mundo.piezas: es lo único que va en el acento" % prota)
-    if not ESCENAS[0] <= len(escenas) <= ESCENAS[1]:
-        fallas.append("C3D1 %d escenas; van %d–%d contando el gancho y el cierre" % (len(escenas), *ESCENAS))
+    for k, v in MUNDOS.items():
+        pv = (v or {}).get("protagonista")
+        if pv and pv not in pie_m[k]:
+            fallas.append("C3D1 el protagonista «%s» del mundo «%s» no es una de sus piezas" % (pv, k))
+    tope = max(ESCENAS[1], int(float(st.get("duracion_s") or OBJETIVO_S) // SEG_POR_ESCENA))   # las que el video necesite
+    if not ESCENAS[0] <= len(escenas) <= tope:
+        fallas.append("C3D1 %d escenas; van %d–%d contando el gancho y el cierre (≈ una cada %d s del objetivo)" % (len(escenas), ESCENAS[0], tope, SEG_POR_ESCENA))
     if escenas and (escenas[0].get("tipo") != "gancho" or escenas[-1].get("tipo") != "cierre"):
         fallas.append("C3D1 la primera escena es `gancho` y la última `cierre`")
     if [e.get("n") for e in escenas] != list(range(1, len(escenas) + 1)):
@@ -319,14 +378,19 @@ def revisar_guion(g, st, trabajo):
     secuencias, fs = secuencias_de(loc)
     fallas += fs
 
-    t0, cambios, nombres = 0.0, [], {}
-    for k, v in lugares.items():
-        toks = tuple(fichas(v.get("nombre") or ""))
-        if toks and toks != ("guatemala",):
-            nombres.setdefault(toks, set()).add(k)
-    vivas = []   # marcas de escenas anteriores que siguen en pantalla
+    t0, cambios = 0.0, []
+    vivas, mundo_prev = [], None   # marcas de escenas anteriores (del mismo mundo) que siguen en pantalla
     for e, x in zip(escenas, loc):
         n, hab = x["n"], estimadas(x["voz"])
+        mid = mundo_de_escena(g, e)
+        mundo, lugares, piezas = MUNDOS.get(mid) or {}, lug_m.get(mid) or {}, pie_m.get(mid) or {}
+        if mid != mundo_prev:
+            vivas, mundo_prev = [], mid    # al cambiar de mundo, las marcas del anterior se van
+        nombres = {}
+        for k, v in lugares.items():
+            toks = tuple(fichas(v.get("nombre") or ""))
+            if toks and toks != ("guatemala",):
+                nombres.setdefault(toks, set()).add(k)
         norm = [VD._norm(w["text"]) for w in hab]
         # V2 cada número de la voz con respaldo
         sin = VM.sueltos(x["pantalla"], valores, ())
@@ -350,9 +414,9 @@ def revisar_guion(g, st, trabajo):
             if clase == "camara":
                 m = o.get("mira")
                 if isinstance(m, str) and m not in lugares:
-                    fallas.append("C3D3 escena %d: la cámara mira «%s», que no es un lugar del set ni de mundo.lugares" % (n, m))
+                    fallas.append("C3D3 escena %d: la cámara mira «%s», que no es un lugar del mundo «%s» (su set o receta, o mundo.lugares)" % (n, m, mid))
             if clase == "marca" and isinstance(o.get("lugar"), str) and o["lugar"] not in lugares:
-                fallas.append("C3D3 escena %d: marca en «%s», que no es un lugar del set ni de mundo.lugares" % (n, o.get("lugar")))
+                fallas.append("C3D3 escena %d: marca en «%s», que no es un lugar del mundo «%s» (su set o receta, o mundo.lugares)" % (n, o.get("lugar"), mid))
             if clase == "marca":
                 dice_distancia = RE_DISTANCIA.search("%s %s" % (o.get("texto", ""), o.get("sub", "")))
                 if dice_distancia and o.get("separada_de") not in piezas:
@@ -447,6 +511,9 @@ def revisar_guion(g, st, trabajo):
         mf = ((c.get("camara") or [{}])[-1]).get("mira")
         if not c.get("camara"):
             fallas.append("C3D10 el cierre lleva su clave de cámara: el último cuadro encuadra al protagonista")
+        elif mundo_de_escena(g, escenas[0]) != mundo_de_escena(g, c):
+            avisos.append("C3D10 el gancho abre en el mundo «%s» y el cierre está en «%s»: el bucle se nota si el último cuadro vuelve a lo que abrió"
+                          % (mundo_de_escena(g, escenas[0]), mundo_de_escena(g, c)))
         elif m0 != mf:
             avisos.append("C3D10 el gancho mira «%s» y el cierre «%s»: si el último cuadro se parece al primero, el bucle no se nota" % (m0, mf))
 
@@ -490,6 +557,54 @@ def linea_de_tiempo(trabajo, loc, real):
     return out, cuadro(off), avisos
 
 
+def en_tramos(maqueta, g, escenas, por_n, total, de_escena):
+    """La maqueta de un mundo → la de varios (scripts/maqueta_tramos.py): un tramo por cada racha de escenas del mismo
+    mundo, de su primera escena a la siguiente racha; cámara, eventos, marcas y anotaciones van a su tramo, recortados a él."""
+    rachas = []
+    for e in escenas:
+        mid = mundo_de_escena(g, e)
+        if rachas and rachas[-1]["mundo"] == mid:
+            rachas[-1]["ns"].append(e["n"])
+        else:
+            rachas.append({"mundo": mid, "ns": [e["n"]], "e0": e})
+    tramos = []
+    for i, r in enumerate(rachas):
+        a = 0.0 if i == 0 else por_n[r["ns"][0]]["off"]
+        b = total if i == len(rachas) - 1 else por_n[rachas[i + 1]["ns"][0]]["off"]
+        tr = {"id": "%s-%d" % (r["mundo"], i + 1), "mundo": r["mundo"], "desde": cuadro(a), "hasta": cuadro(b),
+              "camara": [], "eventos": [], "marcas": [], "anotaciones": []}
+        if i > 0:
+            tr["transicion"] = r["e0"].get("transicion", "fundido")
+            if r["e0"].get("fundido_s") is not None:
+                tr["fundido_s"] = r["e0"]["fundido_s"]
+        tramos.append(tr)
+    tramo_de = {n: i for i, r in enumerate(rachas) for n in r["ns"]}
+    for clave, lista in (("camara", maqueta["camara"]), ("eventos", maqueta["eventos"]), ("marcas", maqueta["marcas"]),
+                         ("anotaciones", maqueta.get("anotaciones") or [])):
+        for o in lista:
+            tr = tramos[tramo_de[de_escena[id(o)]]]
+            o = dict(o, t=cuadro(min(max(o["t"], tr["desde"]), tr["hasta"])))
+            if clave == "eventos":
+                o["dur"] = round(max(0.1, min(o["dur"], tr["hasta"] - o["t"])), 3)
+            elif "hasta" in o:
+                o["hasta"] = cuadro(min(o["hasta"], tr["hasta"]))
+            tr[clave].append(o)
+    for tr in tramos:
+        tr["camara"].sort(key=lambda c: c["t"])
+        if tr["camara"] and tr["camara"][0]["t"] > tr["desde"]:   # el tramo abre en su primera clave
+            tr["camara"].insert(0, dict(tr["camara"][0], t=tr["desde"]))
+        tr["eventos"].sort(key=lambda v: v["t"])
+        for k in ("marcas", "anotaciones"):
+            if not tr[k]:
+                tr.pop(k)
+    out = {k: v for k, v in maqueta.items() if k not in ("mundo", "camara", "eventos", "marcas", "anotaciones")}
+    out["mundos"] = mundos_de(g)
+    out["tramos"] = tramos
+    if out.get("protagonista") and not any(out["protagonista"] in {p.get("id") for p in m.get("piezas") or []} for m in out["mundos"].values()):
+        out.pop("protagonista")
+    return out
+
+
 def construir(trabajo, g, loc, real, solo_escenas=None):
     """maqueta.json (referencias/diseno/maqueta3d.md) desde el guion y la línea de tiempo."""
     st = estado(trabajo)
@@ -517,8 +632,10 @@ def construir(trabajo, g, loc, real, solo_escenas=None):
         return (hasta or x)["off"] + (hasta or x)["dur"]
 
     camara, eventos, marcas, cifras, titulares, anotaciones = [], [], [], [], [], []
+    de_escena = {}   # id(objeto) → n de su escena (para repartir cámara, eventos, marcas y anotaciones en tramos)
     for e in escenas:
         x = por_n[e["n"]]
+        antes = {k: len(v) for k, v in (("c", camara), ("e", eventos), ("m", marcas), ("a", anotaciones))}
         for c in e.get("camara") or []:
             camara.append(dict({k: v for k, v in c.items() if k not in ("dice", "vez", "al")}, t=cuadro(momento(x, c))))
         for ev in e.get("eventos") or []:
@@ -533,6 +650,9 @@ def construir(trabajo, g, loc, real, solo_escenas=None):
                 fin = t + o["dura"] if fin is None else fin
                 dst.append(dict({k: v for k, v in o.items() if k not in ("dice", "vez", "al", "hasta_dice", "hasta", "dura", "cifra")},
                                 t=cuadro(t), hasta=cuadro(min(fin, total))))
+        for k, v in (("c", camara), ("e", eventos), ("m", marcas), ("a", anotaciones)):
+            for o in v[antes[k]:]:
+                de_escena[id(o)] = e["n"]
         if e.get("titular"):
             ti = e["titular"]
             t = max(x["off"], momento(x, ti) - (ADELANTO if ti.get("dice") else 0.0))
@@ -557,12 +677,16 @@ def construir(trabajo, g, loc, real, solo_escenas=None):
         if x.get("acto") not in visto:
             visto.add(x.get("acto"))
             actos.append(x["off"])
-    mundo = g.get("mundo") or {}
+    MUNDOS = mundos_de(g)
+    mundo = MUNDOS.get("principal") or next(iter(MUNDOS.values()))
+    pies = list(dict.fromkeys(p for p in (pie_del_set(v.get("set")) for v in MUNDOS.values() if (v.get("escala") or "pais") != "esquema") if p))
     capa = {"titulares": titulares, "cifras": cifras, "palabras": palabras, "progreso": {"actos": actos},
             "seguir": {"t": cuadro(t_seguir), "dur": SEGUIR_S},
-            "pie": g.get("pie") or pie_del_set(mundo.get("set")), "handle": HANDLE}
+            "pie": g.get("pie") or " · ".join(pies), "handle": HANDLE}
     if (g.get("aviso") or "").strip():   # «Maqueta · no a escala», «Traza esquemática»…: solo cuando el guion lo pide
         capa["aviso"] = g["aviso"].strip()
+    elif any(v.get("escala") == "esquema" for v in MUNDOS.values()):   # M3D12: un esquema no es un lugar real
+        capa["aviso"] = "Esquema · no es un lugar real"
     if cierre_x:
         ce = next(e for e in escenas_de(g) if e.get("tipo") == "cierre")
         capa["cierre"] = {"t": cuadro(cierre_x["off"] + min(cierre_x["fin_voz"] * 0.35, 1.2)), "frase": ce.get("final", ""),
@@ -572,6 +696,8 @@ def construir(trabajo, g, loc, real, solo_escenas=None):
                "eventos": sorted(eventos, key=lambda v: v["t"]), "marcas": marcas, "capa": capa}
     if anotaciones:
         maqueta["anotaciones"] = anotaciones
+    if isinstance(g.get("mundos"), dict):   # varios mundos: las escenas seguidas del mismo mundo forman un TRAMO
+        maqueta = en_tramos(maqueta, g, escenas, por_n, total, de_escena)
     tiempos = {"real": real, "total_s": total,
                "escenas": [{"n": x["n"], "off": x["off"], "dur": x["dur"], "fin_voz": round(x["fin_voz"], 3)} for x in tl]}
     return maqueta, tiempos, avisos
@@ -702,8 +828,9 @@ def cmd_guion(a):
 
 def tiempos_clave(maqueta):
     """Los segundos que vale la pena mirar: cada clave de cámara, la mitad de cada evento y el cierre."""
-    ts = [c["t"] for c in maqueta["camara"]] + [e["t"] + e["dur"] * 0.6 for e in maqueta["eventos"]]
-    ts += [m["t"] + 0.6 for m in maqueta["marcas"]]
+    T = maqueta.get("tramos") or [maqueta]   # con varios mundos, lo de cada tramo (y el inicio de cada uno)
+    ts = [c["t"] for tr in T for c in tr.get("camara") or []] + [e["t"] + e["dur"] * 0.6 for tr in T for e in tr.get("eventos") or []]
+    ts += [m["t"] + 0.6 for tr in T for m in tr.get("marcas") or []] + [tr["desde"] + 0.4 for tr in maqueta.get("tramos") or []]
     if maqueta["capa"].get("cierre"):
         ts.append(min(maqueta["duracion_s"] - 0.2, maqueta["capa"]["cierre"]["t"] + 1.5))
     out = []
@@ -737,7 +864,7 @@ def cmd_ganchos(a):
     G, st = leer(ruta), estado(trabajo)
     cands = G.get("candidatos") or []
     bloqueadas = familias_recientes(st)
-    cierre = {"n": 2, "tipo": "cierre", "texto": "Y la falla sigue ahí.", "final": "La falla sigue ahí.",
+    cierre = {"n": 2, "tipo": "cierre", "texto": "Y esto sigue ahí.", "final": "Esto sigue ahí.",
               "camara": [dict((c.get("escena", {}).get("camara") or [{}])[0]) for c in cands[:1]] or [{}]}
     if a.usar:
         c = next((x for x in cands if x["id"] == a.usar), None)
@@ -745,7 +872,7 @@ def cmd_ganchos(a):
             return falla("no hay candidato «%s» (%s)" % (a.usar, ", ".join(x["id"] for x in cands)))
         rg = os.path.join(trabajo, "guion.json")
         g = leer(rg) if os.path.exists(rg) else {"tipo": "video3d", "version": 1, "escenas": []}
-        for k in ("estilo", "idea_visual", "protagonista", "mundo", "pie", "aviso"):
+        for k in ("estilo", "idea_visual", "protagonista", "mundo", "mundos", "pie", "aviso"):
             if G.get(k) is not None:
                 g.setdefault(k, G[k])
         esc = dict(c["escena"], n=1, tipo="gancho")
@@ -770,12 +897,23 @@ def cmd_ganchos(a):
     for c in cands:
         g = {"estilo": G.get("estilo"), "idea_visual": G.get("idea_visual"), "protagonista": G.get("protagonista"),
              "mundo": G.get("mundo"), "pie": G.get("pie"), "aviso": G.get("aviso"), "escenas": [dict(c["escena"], n=1, tipo="gancho", acto=1), dict(cierre, acto=1)]}
+        if isinstance(G.get("mundos"), dict):   # varios mundos: el candidato abre en el suyo (y el cierre de prueba, ahí mismo)
+            mid = c["escena"].get("mundo") or next(iter(G["mundos"]))
+            g = dict(g, mundos={mid: G["mundos"].get(mid) or {}}, mundo=None)
+            g["escenas"][1]["mundo"] = mid
+            g.pop("mundo")
         f, _, loc = revisar_guion(g, dict(st, duracion_s=0), trabajo)
         f = [x for x in f if not x.startswith(("C3D1 %d escenas" % 2, "C3D9", "C3D7", "V5 "))]   # el caption es del guion entero
         for x in f:
             fallas.append("%s · %s" % (c["id"], x))
         if (a.cuadros or a.clips) and not f and isinstance(loc, dict):
             maqueta, _, _ = construir(trabajo, g, loc, real=False)
+            if maqueta.get("tramos"):   # un candidato abre en UN mundo: su maqueta es la de ese mundo, sin tramos
+                tr = maqueta.pop("tramos")[0]
+                maqueta["mundo"] = maqueta.pop("mundos")[tr["mundo"]]
+                maqueta.update({k: tr.get(k) or [] for k in ("camara", "eventos", "marcas", "anotaciones")})
+                maqueta["protagonista"] = maqueta["mundo"].pop("protagonista", maqueta.get("protagonista"))
+                maqueta["mundo"] = {k: v for k, v in maqueta["mundo"].items()}
             carpeta = os.path.join(trabajo, "ganchos", c["id"])
             rm = os.path.join(carpeta, "maqueta.json")
             fin = loc["escenas"][0]["estimado_s"]
@@ -868,7 +1006,7 @@ def efectos_de(trabajo, maqueta):
     """[(segundo, id)] de los efectos del video: los que el render dejó en render3d/efectos.json o, sin render, los `sfx`
     de los eventos de la maqueta."""
     fe = os.path.join(trabajo, "render3d", "efectos.json")
-    return [(t, i) for t, i in (leer(fe) if os.path.exists(fe) else [[e["t"], e["sfx"]] for e in maqueta["eventos"] if e.get("sfx")])]
+    return [(t, i) for t, i in (leer(fe) if os.path.exists(fe) else M3.efectos_de(maqueta))]
 
 
 def portada(trabajo):

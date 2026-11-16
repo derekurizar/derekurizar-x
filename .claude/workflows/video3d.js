@@ -3,7 +3,7 @@ export const meta = {
   description: 'Guion de /video-3d: director (dirección visual por frase con el catálogo de la maqueta) → constructor por cada brief → ganchos 3D → selección → el usuario elige → guion y storyboard → crítico en modo 3D (≤ 2 pasadas) → 5 cierres. 0 créditos.',
   whenToUse: 'Tras `video3d.py preparar` (y la investigación). Se detiene con elegir_estilo (confianza baja; reanuda con args.estilo) y con elegir_gancho (reanuda con args.gancho); al final devuelve 5 cierres. args: {trabajo, tema, angulo, estilo, gancho, auto, fixture, permitir_fallback}. La voz y el render los hace la sesión.',
   phases: [
-    { title: 'Dirección', detail: 'video3d-director: direccion.json con la idea visual, el criterio (lugar o mecanismo), la escala (pais, ciudad o esquema), el estilo con razón y confianza, el mundo, el borrador de la narración y el verbo visual del catálogo por frase; lo que el catálogo no tiene va en briefs[]' },
+    { title: 'Dirección', detail: 'video3d-director: direccion.json con la idea visual, el criterio (lugar o mecanismo), los mundos que la historia necesite (cada uno con su escala: pais, ciudad o esquema; tantos como haga falta, y se puede volver a uno), el estilo con razón y confianza, el borrador de la narración y el verbo visual del catálogo por frase; lo que el catálogo no tiene va en briefs[]' },
     { title: 'Constructor', detail: 'un maqueta-constructor por brief (≤ 3 a la vez): módulo + ficha, maqueta_modulo.py check (lint, pureza, hojas 9:16 y 4:5) y registrar; o reutiliza un tipo del catálogo' },
     { title: 'Ganchos', detail: 'el director en modo ganchos: 5 candidatos de familias 3D distintas (evento en el segundo cero), video3d.py ganchos --check --cuadros' },
     { title: 'Selección', detail: 'video-critico en modo selección (gancho 3D, con las hojas de cada candidato): ganador y segundo; luego el usuario elige (elegir_gancho)' },
@@ -118,15 +118,16 @@ async function conReparacion(etiqueta, invocar, validar, max = 2) {
 const S = {
   rechequeo: { type: 'object', properties: { items: { type: 'array' } } },   // lo pide el bloque común; aquí no se usa
   direccion: {
-    type: 'object', required: ['archivo', 'idea_visual', 'criterio', 'escala', 'estilo', 'protagonista', 'frases', 'briefs'],
+    type: 'object', required: ['archivo', 'idea_visual', 'criterio', 'mundos', 'estilo', 'protagonista', 'frases', 'briefs'],
     properties: {
       archivo: { type: 'string', pattern: 'direccion\\.json$' }, idea_visual: { type: 'string' },
-      criterio: { type: 'string', enum: ['lugar', 'mecanismo', 'ninguno'] }, escala: { type: 'string' },
+      criterio: { type: 'string', enum: ['lugar', 'mecanismo', 'ninguno'] },
+      mundos: { type: 'array', items: { type: 'object', required: ['id', 'escala'], properties: { id: { type: 'string' }, escala: { type: 'string' }, para: { type: 'string' } } } },
       estilo: { type: 'object', required: ['id', 'razon', 'confianza'], properties: { id: { type: 'string' }, razon: { type: 'string' },
         confianza: { type: 'string', enum: ['alta', 'baja'] }, candidatos: { type: 'array', items: { type: 'string' } },
         cuadros: { type: 'array', items: { type: 'string' } } } },
       protagonista: { type: 'string' },
-      frases: { type: 'array', items: { type: 'object', required: ['frase', 'verbo'], properties: { frase: { type: 'string' }, verbo: { type: 'string' }, que_se_ve: { type: 'string' }, brief: { type: ['string', 'null'] } } } },
+      frases: { type: 'array', items: { type: 'object', required: ['frase', 'verbo'], properties: { frase: { type: 'string' }, mundo: { type: 'string' }, verbo: { type: 'string' }, que_se_ve: { type: 'string' }, brief: { type: ['string', 'null'] } } } },
       briefs: { type: 'array', items: { type: 'object', required: ['id', 'clase', 'escala', 'que_se_ve', 'frase'],
         properties: { id: { type: 'string' }, tipo_sugerido: { type: 'string' }, clase: { type: 'string', enum: ['pieza', 'evento', 'objeto'] }, escala: { type: 'string' },
           que_se_ve: { type: 'string' }, parametros: { type: 'string' }, frase: { type: 'string' } } } },
@@ -223,12 +224,12 @@ const validarDireccion = (r) => [
   ...(r.estilo.confianza === 'baja' && (r.estilo.candidatos || []).length < 2 ? ['estilo con confianza baja: candidatos (2–3) y el mismo cuadro en cada uno (estilos/<id>/)'] : []),
 ]
 const DIR = await conReparacion('Dirección', (fallos) => agentRol(DIRECTOR +
-  `MODO DIRECCIÓN: escribe ${trabajo}/direccion.json (idea_visual, criterio lugar|mecanismo, escala, estilo {id, razon, confianza, candidatos}, protagonista, mundo, borrador de la narración, frases[] con el verbo visual del catálogo por oración, briefs[] ≤ ${BRIEFS_MAX}, no_afirmar). ` +
+  `MODO DIRECCIÓN: escribe ${trabajo}/direccion.json (idea_visual, criterio lugar|mecanismo, mundos {id: mundo} — TANTOS COMO LA HISTORIA NECESITE, cada uno con su escala (el lugar en pais o ciudad; la escena humana o el mecanismo en esquema), y se puede volver a uno —, estilo {id, razon, confianza, candidatos} (UNO para todos los mundos), protagonista, borrador de la narración, frases[] con el mundo y el verbo visual del catálogo por oración, briefs[] ≤ ${BRIEFS_MAX}, no_afirmar). ` +
     'Si ni el lugar ni el mecanismo se entienden mejor viéndolos moverse, criterio "ninguno" y en nota el flujo que le toca. ' +
-    'Retorno: {archivo, idea_visual, criterio, escala, estilo, protagonista, frases[], briefs[], nota}.' +
+    'Retorno: {archivo, idea_visual, criterio, mundos[]{id, escala, para}, estilo, protagonista, frases[], briefs[], nota}.' +
     (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : ''),
   { agentType: 'video3d-director', schema: S.direccion, phase: 'Dirección', label: 'direccion' }), validarDireccion, 2)
-log(`Dirección: «${DIR.idea_visual}» · ${DIR.criterio} · escala ${DIR.escala} · estilo ${DIR.estilo.id} (${DIR.estilo.confianza}) · ${DIR.frases.length} frases · ${DIR.briefs.length} brief(s)`)
+log(`Dirección: «${DIR.idea_visual}» · ${DIR.criterio} · mundos ${DIR.mundos.map((m) => `${m.id} (${m.escala})`).join(' → ')} · estilo ${DIR.estilo.id} (${DIR.estilo.confianza}) · ${DIR.frases.length} frases · ${DIR.briefs.length} brief(s)`)
 if (DIR.criterio === 'ninguno') {
   return { trabajo, tema, veredicto: 'no_es_3d', etapa: 'direccion', nota: DIR.nota || '', avisos: AVISOS_WF }
 }
@@ -364,7 +365,7 @@ if (ELIGE_USUARIO) {
 
 return {
   trabajo, tema, veredicto: CIERRES ? 'elegir_cierre' : 'aprobado', etapa: 'cierres', gancho, gancho_elegido_por: elegidoPor, estilo,
-  idea_visual: DIR.idea_visual, escala: DIR.escala, puntajes: critica.puntajes,
+  idea_visual: DIR.idea_visual, mundos: DIR.mundos, puntajes: critica.puntajes,
   mejoras: critica.faltas.filter((x) => x.gravedad === 'mejora'),
   storyboard: G.storyboard, tipos_usados: G.tipos_usados,
   cierres: CIERRES ? CIERRES.candidatos.filter((c) => CIERRES.elegibles.includes(c.id)) : null,

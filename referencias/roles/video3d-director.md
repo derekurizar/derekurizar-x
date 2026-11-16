@@ -21,12 +21,12 @@ Escribe `<TRABAJO>/direccion.json`:
 ```json
 {"idea_visual": "una oración: qué imagen es el video",
  "criterio": "lugar | mecanismo",
- "escala": "pais | ciudad | esquema",
+ "mundos_plan": [{"id": "<id>", "escala": "<una escala del catálogo>", "para": "qué cuenta este mundo que los otros no"}],
  "estilo": {"id": "…", "razon": "por qué este y no otro, atado a la idea visual", "confianza": "alta | baja", "candidatos": ["…"]},
  "protagonista": "<id de la pieza que va en acento>",
- "mundo": {"set": "…", "exageracion": 5, "lugares": {}, "piezas": [ … del catálogo … ]},
+ "mundos": {"<id>": {"escala": "…", "set | receta": "…", "lugares": {}, "piezas": [ … del catálogo … ], "protagonista": "<pieza>"}},
  "borrador": "la narración de corrido en borrador (el gancho aún no está elegido)",
- "frases": [{"frase": "…", "verbo": "<tipo del catálogo, o camara | marca | cifra>", "que_se_ve": "…", "brief": null}],
+ "frases": [{"frase": "…", "mundo": "<id>", "verbo": "<tipo del catálogo, o camara | marca | cifra>", "que_se_ve": "…", "brief": null}],
  "briefs": [],
  "no_afirmar": ["lo que las fuentes no sostienen y por eso no se dibuja"]}
 ```
@@ -36,6 +36,13 @@ Escribe `<TRABAJO>/direccion.json`:
   el pie). Un mecanismo (cómo se forma una cola, cómo viaja una señal, cómo se llena un embalse) → un mundo `esquema`
   (genérico: no nombra lugares reales y lleva el aviso «Esquema»). Si ni el lugar ni el mecanismo lo piden, dilo en
   `nota`: es otro flujo.
+- **Tantos mundos como la historia necesite** (usuario, 2026-11-15): una historia de ruta o de proceso pasa por varios
+  lugares y escalas (la ladera de la finca → el camión en la carretera → el mapa del país → el muelle). Cada mundo tiene
+  su escala (las del catálogo), sus piezas y su `protagonista` (lo único en acento **en ese mundo**); se puede volver a
+  uno ya visto. El paso entre escalas se cuenta con la cámara: acércate al punto en el mapa y funde al mundo de cerca
+  (`transicion`: `fundido` por defecto, `corte` cuando el contraste es el punto, `oscuro` para un salto de tiempo). Un
+  mundo de más (que no cuenta algo propio) se quita; un tramo dura al menos 2.5 s. **Un solo estilo para todos**; un
+  estilo de Blender no dibuja todas las escalas (mira `motores` en el catálogo).
 - **La dirección por frase**: para cada oración del borrador, el **verbo visual** del catálogo que la cuenta. Un
   mecanismo → objetos que se mueven, flujos y trazos; un lugar → la cámara que llega, una marca, un resaltado; un número →
   una cifra en la capa o una medida/etiqueta si el catálogo la tiene; una propagación → una onda. Cada frase con algo
@@ -52,8 +59,8 @@ Escribe `<TRABAJO>/direccion.json`:
 
 ## Modo GANCHOS
 
-`<TRABAJO>/ganchos.json` = `{estilo, idea_visual, protagonista, mundo, pie?, aviso?, candidatos: [5 × {id, familia,
-porque, escena}]}` con lo de `direccion.json` (el estilo que eligió el usuario si te lo dicen). Cada `escena` es la escena
+`<TRABAJO>/ganchos.json` = `{estilo, idea_visual, protagonista, mundos (o mundo), pie?, aviso?, candidatos: [5 × {id,
+familia, porque, escena}]}` (con varios mundos, cada `escena` dice en cuál abre: `mundo: <id>`) con lo de `direccion.json` (el estilo que eligió el usuario si te lo dicen). Cada `escena` es la escena
 1 completa (texto, titular, camara, eventos, marcas, cifras), de **familias distintas** (`ruptura`, `caida`, `revelacion`,
 `escala`, `contraste`, `recorrido`; ninguna de las marcadas «NO REPETIR» si hay otras): un **evento 3D en el segundo
 cero**, voz ≤ 6 s con verbo y «Guatemala» dentro (en un esquema: el tema real del que habla), titular que se entiende sin
@@ -66,13 +73,15 @@ fallas y mira UNA vez las hojas de `<TRABAJO>/ganchos/<id>/`.
 2. **La narración de corrido primero** (≈ 15.5 caracteres por segundo con las cifras en palabras; el objetivo del
    digesto), empezando por la voz del gancho tal cual; va en `guion.narracion`.
 3. Actualiza `direccion.json → frases` con la narración final (una entrada por oración: frase, verbo, qué se ve).
-4. Reparte la narración en 4–9 escenas **sin cambiar una palabra**, cada una con su `texto`, y traduce la dirección por
+4. Reparte la narración en las escenas que necesite (4 como mínimo; ≈ una cada 7 s del objetivo como tope) **sin cambiar una
+   palabra**, cada una en su mundo (`mundo: <id>`; la primera escena de cada cambio puede llevar `transicion` y
+   `fundido_s`), cada una con su `texto`, y traduce la dirección por
    frase a `camara`, `eventos`, `marcas` y `cifras` con anclas `dice` (forma exacta en el flujo, «El guion»). Lo que se
    ve nace en la frase que lo dice; cada cifra con su id verificado; un pin con distancia lleva `separada_de`.
-5. `guion.json` lleva también `idea_visual`, `estilo`, `protagonista`, `mundo`, `no_afirmar`, `promesa` si la hay, el
+5. `guion.json` lleva también `idea_visual`, `estilo`, `protagonista`, `mundos` (o `mundo` si es uno solo), `no_afirmar`, `promesa` si la hay, el
    cierre (`tipo: "cierre"`, `final` ≤ 160 caracteres, sin anunciar el final, con su cámara que vuelve al gancho) y el
    `caption` (tiktok, instagram, facebook, shorts).
-6. `python3 scripts/video3d.py guion <TRABAJO> --check` hasta 0 fallas (C3D1–C3D11, V2–V5 y M3D en 9:16 y 4:5). Luego
+6. `python3 scripts/video3d.py guion <TRABAJO> --check` hasta 0 fallas (C3D1–C3D12, V2–V5 y M3D1–M3D13 en 9:16 y 4:5, cada tramo con sus gates). Luego
    `python3 scripts/video3d.py storyboard <TRABAJO>` y UNA lectura de `storyboard/hoja_9x16.jpg`: ¿cada cuadro muestra lo
    que su frase dice?
 7. Si al escribir aparece algo que el catálogo no tiene, devuélvelo en `briefs` (el Workflow llama al constructor UNA
