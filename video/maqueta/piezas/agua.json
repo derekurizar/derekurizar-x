@@ -23,5 +23,9 @@
  "ejemplo": {
   "id": "agua",
   "tipo": "agua"
- }
+ },
+ "nivel": "fondo",
+ "contiene": [],
+ "animado": false,
+ "gente": false
 }

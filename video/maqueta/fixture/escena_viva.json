@@ -1,0 +1,320 @@
+{
+ "version": 1,
+ "video": true,
+ "_comentario": "Caso de prueba de LA ESCENA VIVA (scripts/maqueta_escena.py, M3D15–M3D19): dos escenas de cerca llenas, variadas y con vida (la finca con su gente cosechando y la tostaduría), tomadas del video del café. `video: true` activa los gates. No es un video: los textos son de relleno.",
+ "estilo": "dia",
+ "paleta": "cacao",
+ "fps": 30,
+ "duracion_s": 23.033,
+ "mundos": {
+  "finca": {
+   "escala": "esquema",
+   "receta": "campo",
+   "semilla": 11,
+   "tamano_m": 1200,
+   "estilo": "dia",
+   "lugares": {
+    "ladera": {
+     "x": 2,
+     "y": -26,
+     "nombre": "Ladera"
+    }
+   },
+   "piezas": [
+    {
+     "id": "cafetal",
+     "tipo": "cafetal",
+     "puntos": [
+      [
+       -40,
+       -30
+      ],
+      [
+       40,
+       -30
+      ],
+      [
+       42,
+       30
+      ],
+      [
+       -38,
+       28
+      ]
+     ],
+     "hileras": 10,
+     "pendiente_m": 10,
+     "rumbo": 90,
+     "maduras": 0.8,
+     "sombra": 0.45,
+     "personas": 4,
+     "semilla": 3
+    },
+    {
+     "id": "cosechador-1",
+     "tipo": "actor",
+     "objeto": "cosechador",
+     "lugar": [
+      3,
+      -28
+     ],
+     "rumbo": 300,
+     "tamano": 1.2
+    },
+    {
+     "id": "cosechador-2",
+     "tipo": "actor",
+     "objeto": "cosechador",
+     "lugar": [
+      -6,
+      -26
+     ],
+     "rumbo": 250,
+     "tamano": 1.2
+    }
+   ],
+   "protagonista": "cafetal"
+  },
+  "tostaduria": {
+   "escala": "esquema",
+   "receta": "ciudad",
+   "semilla": 23,
+   "tamano_m": 600,
+   "altura_max_m": 12,
+   "estilo": "dia",
+   "lugares": {
+    "sacos": {
+     "x": -9,
+     "y": 4.4,
+     "nombre": "Café verde"
+    },
+    "tostadora": {
+     "x": -1.9,
+     "y": 1.2,
+     "nombre": "Tostadora"
+    },
+    "bandeja": {
+     "x": -0.9,
+     "y": 1.2,
+     "nombre": "Bandeja"
+    }
+   },
+   "piezas": [
+    {
+     "id": "calles",
+     "tipo": "calles"
+    },
+    {
+     "id": "edificios",
+     "tipo": "edificios"
+    },
+    {
+     "id": "tostaduria",
+     "tipo": "tostaduria",
+     "lugar": [
+      0,
+      0
+     ],
+     "rumbo": 0,
+     "tamano": 1.2,
+     "tostadoras": 2,
+     "personas": 3,
+     "semilla": 7
+    }
+   ],
+   "protagonista": "tostaduria"
+  }
+ },
+ "tramos": [
+  {
+   "id": "finca",
+   "mundo": "finca",
+   "desde": 0.0,
+   "hasta": 9.7,
+   "camara": [
+    {
+     "mira": "ladera",
+     "dist_m": 26,
+     "azimut": -10,
+     "elevacion": 16,
+     "t": 0.0
+    },
+    {
+     "mira": [
+      0,
+      -25
+     ],
+     "dist_m": 19,
+     "azimut": -2,
+     "elevacion": 14,
+     "t": 4.733
+    },
+    {
+     "mira": [
+      0,
+      -16
+     ],
+     "dist_m": 40,
+     "azimut": 6,
+     "elevacion": 26,
+     "t": 6.233
+    },
+    {
+     "mira": [
+      0,
+      -2
+     ],
+     "dist_m": 68,
+     "azimut": 14,
+     "elevacion": 34,
+     "t": 9.433
+    }
+   ],
+   "eventos": [
+    {
+     "tipo": "resaltar",
+     "pieza": "cafetal",
+     "dur": 4.5,
+     "sfx": "pulso",
+     "t": 0.0
+    },
+    {
+     "tipo": "resaltar",
+     "pieza": "cafetal",
+     "dur": 1.8,
+     "t": 7.067
+    }
+   ]
+  },
+  {
+   "id": "tostaduria",
+   "mundo": "tostaduria",
+   "desde": 9.7,
+   "hasta": 23.033,
+   "camara": [
+    {
+     "mira": [
+      -4,
+      1.5
+     ],
+     "dist_m": 24,
+     "azimut": 40,
+     "elevacion": 32,
+     "t": 9.7
+    },
+    {
+     "mira": [
+      -7,
+      3
+     ],
+     "dist_m": 16,
+     "azimut": 50,
+     "elevacion": 26,
+     "t": 11.1
+    },
+    {
+     "mira": [
+      -2.6,
+      1.2
+     ],
+     "dist_m": 15,
+     "azimut": 35,
+     "elevacion": 22,
+     "t": 13.0
+    },
+    {
+     "mira": [
+      -1.9,
+      -1.0
+     ],
+     "dist_m": 15,
+     "azimut": 25,
+     "elevacion": 20,
+     "t": 16.4
+    },
+    {
+     "mira": "bandeja",
+     "dist_m": 15,
+     "azimut": 60,
+     "elevacion": 34,
+     "t": 18.433
+    },
+    {
+     "mira": "bandeja",
+     "dist_m": 15,
+     "azimut": 72,
+     "elevacion": 30,
+     "t": 21.433
+    }
+   ],
+   "eventos": [
+    {
+     "tipo": "resaltar",
+     "pieza": "tostaduria",
+     "dur": 2.5,
+     "t": 9.7
+    }
+   ],
+   "marcas": [
+    {
+     "lugar": "sacos",
+     "texto": "Café verde",
+     "t": 9.9,
+     "hasta": 14.067
+    },
+    {
+     "lugar": "tostadora",
+     "texto": "Tostadora",
+     "t": 12.767,
+     "hasta": 17.933
+    }
+   ],
+   "transicion": "fundido"
+  }
+ ],
+ "capa": {
+  "titulares": [
+   {
+    "t": 0.0,
+    "hasta": 3.5,
+    "kicker": "Escena de prueba",
+    "texto": "Una finca con su gente"
+   },
+   {
+    "t": 10.3,
+    "hasta": 13.7,
+    "kicker": "Segunda escena",
+    "texto": "La tostaduría"
+   }
+  ],
+  "cifras": [],
+  "palabras": [],
+  "progreso": {
+   "actos": [
+    0.0,
+    9.7
+   ]
+  },
+  "seguir": {
+   "t": 6.5,
+   "dur": 2.0
+  },
+  "aviso": "Esquema · no es un lugar real",
+  "pie": "Ilustración: esquemas genéricos, no lugares reales",
+  "handle": "@DerekUrizar",
+  "cierre": {
+   "t": 19.03,
+   "frase": "Esto es una prueba.",
+   "redes": [
+    {
+     "nombre": "TikTok",
+     "handle": "@derekurizargt"
+    },
+    {
+     "nombre": "X",
+     "handle": "@DerekUrizar"
+    }
+   ]
+  }
+ }
+}

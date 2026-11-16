@@ -32,5 +32,13 @@
  "ejemplo": {
   "id": "edificios",
   "tipo": "edificios"
- }
+ },
+ "nivel": "fondo",
+ "contiene": [],
+ "animado": false,
+ "gente": false,
+ "distancia_m": [
+  40,
+  1500
+ ]
 }

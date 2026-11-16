@@ -81,5 +81,25 @@
   "tamano": 1,
   "tostadoras": 2,
   "personas": 2
- }
+ },
+ "nivel": "escenario",
+ "contiene": [
+  "sacos de café verde",
+  "tostadoras",
+  "báscula",
+  "mesa de catación",
+  "estantes",
+  "gente que tuesta"
+ ],
+ "animado": "los tambores giran, un saco se vacía en la tolva y sale humo",
+ "gente": true,
+ "distancia_m": [
+  8,
+  28
+ ],
+ "caja_m": [
+  22,
+  16,
+  6
+ ]
 }

@@ -35,5 +35,9 @@
   "trazos": [
    "Motagua Fault"
   ]
- }
+ },
+ "nivel": "fondo",
+ "contiene": [],
+ "animado": false,
+ "gente": false
 }

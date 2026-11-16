@@ -125,7 +125,10 @@ if os.path.exists(os.path.join(FIXV, "guion.json")):
         g2 = copy.deepcopy(g1)
         pais = g2.pop("mundo")
         g2["mundos"] = {"pais": pais, "pueblo": {"escala": "esquema", "receta": "ciudad", "semilla": 3, "tamano_m": 1400, "protagonista": "casas",
-                                                  "piezas": [{"id": "calles", "tipo": "calles"}, {"id": "casas", "tipo": "edificios"}]}}
+                                                  "piezas": [{"id": "calles", "tipo": "calles"}, {"id": "casas", "tipo": "edificios"}],
+                                                  # la ficha de la escena (C3D14–C3D15): aquí, un lugar cualquiera (la riqueza la prueba maqueta_escena.py)
+                                                  "escena": {"que_pasa": "un pueblo cualquiera", "quien": "nadie", "con_que": "casas y calles", "se_mueve": "la cámara",
+                                                             "sostiene": [{"que": "un pueblo genérico", "generico": True}], "ilustrativa": "caso de prueba de los tramos"}}}
         for e in g2["escenas"]:
             e["mundo"] = "pais"
         c = g2["escenas"][-1]
@@ -136,6 +139,8 @@ if os.path.exists(os.path.join(FIXV, "guion.json")):
         m2, _, _ = V3.construir(T, g2, loc, real=False)
         ok([t["mundo"] for t in m2.get("tramos") or []] == ["pais", "pueblo"], "guion: construir hace un tramo por racha (%s)" % [t["mundo"] for t in m2.get("tramos") or []])
         ok(m2["capa"].get("aviso", "").startswith("Esquema"), "guion: con un esquema, el aviso «Esquema» sale solo")
+        ok(m2.get("video") is True, "guion: la maqueta de un video lleva `video: true` (activa los gates de la escena viva)")
+        m2.pop("video")   # aquí se prueba la mecánica de los tramos; la riqueza de la escena (M3D15–M3D19), en maqueta_escena.py
         fm = M3.revisar_m(m2, ["9:16", "4:5"])[0]
         ok(not fm, "guion: la maqueta de dos mundos debía pasar M3D y falla: %s" % fm[:3])
         g3 = copy.deepcopy(g2)

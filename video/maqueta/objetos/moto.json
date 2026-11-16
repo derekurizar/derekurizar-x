@@ -17,5 +17,13 @@
  },
  "ejemplo": {
   "objeto": "moto"
- }
+ },
+ "nivel": "objeto",
+ "contiene": [],
+ "animado": false,
+ "gente": false,
+ "distancia_m": [
+  8,
+  150
+ ]
 }

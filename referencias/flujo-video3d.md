@@ -37,7 +37,7 @@ entrega) y `scripts/maqueta3d.py` (gates M3D, cuadros sueltos, render).
 | 2 | Investigar y verificar lo que falte, incluidos los geodatos (qué se dibuja y de dónde sale) | agentes de /historia; `video3d.py datos --sumar` |
 | 3 | Dirección visual por frase (idea visual, criterio, escala, estilo, mundo, el verbo del catálogo por oración); lo que falta, al constructor | Workflow `video3d`: `video3d-director` → `maqueta-constructor` |
 | 4 | Ganchos: 5 candidatos con su cuadro renderizado; el crítico recomienda y **el usuario elige** (y el estilo, si la confianza es baja) | Workflow: `ganchos --check --cuadros` → para con `elegir_gancho` |
-| 5 | Guion: la narración de corrido primero; luego las escenas y el `caption` por plataforma | Workflow: el director, `guion --check` (C3D1–C3D12, V2–V5, M3D1–M3D13) |
+| 5 | Guion: la narración de corrido primero; luego las escenas y el `caption` por plataforma | Workflow: el director, `guion --check` (C3D1–C3D18, V2–V5, M3D1–M3D19) |
 | 6 | Storyboard: un cuadro por clave de cámara y evento, antes de gastar créditos | Workflow: `storyboard` |
 | 7 | Crítico (retención y concordancia) y cierre: **el usuario elige el cierre** | Workflow: `video-critico` en «Modo 3D» → 5 cierres (`elegir_cierre`) |
 | 8 | Voz (ElevenLabs, El Faraon 4) y escucha independiente (V11) | `voz` → MCP → `descargar --estado` (o `--nodos` si el estado llegó en el chat) → `escuchar` |
@@ -201,6 +201,12 @@ Familias de gancho 3D (los 5 candidatos son de familias distintas):
 | C3D9 | Duración estimada dentro del objetivo ±20 % |
 | C3D10 | El cierre lleva su cámara; aviso si no vuelve a mirar lo que abrió el gancho (el bucle) |
 | C3D12 | Varios mundos: cada escena dice un mundo de `mundos` (y no hay `mundo` a la vez), la `transicion` es `corte`, `fundido` u `oscuro`, y todo mundo se usa |
+| C3D13 | No se vuelve a un mundo a mitad del video (solo el cierre puede volver al del gancho) |
+| C3D14 | **La ficha de escena:** cada mundo de cerca (`esquema`, `ciudad`) trae `escena: {que_pasa, quien, con_que, se_mueve, sostiene[]}`: lo que ocurre ahí en la realidad, quién lo hace, con qué y qué se mueve en pantalla |
+| C3D15 | **Realidad:** cada entrada de `escena.sostiene` es `{que, hecho: <id verificado>}` o `{que, generico: true}`; si todo es genérico, `escena.ilustrativa` dice por qué (un mecanismo, un lugar cualquiera) |
+| C3D16 | **Se explica:** al entrar a un mundo de cerca, un titular o una marca dice dónde estamos en los primeros 3 s |
+| C3D17 | **Gente:** si `escena.quien` nombra personas, en la escena hay ≥ 2 haciendo algo (objetos con `gente`, piezas con `personas`) |
+| C3D18 | **Un objeto, un papel:** el mismo objeto no se rotula como dos cosas distintas (la casa no es beneficio, bodega y tostador) |
 | C3D11 | Un pin cuyo texto dice una distancia («A 25 km») declara `separada_de` con la pieza de la que está a esa distancia: M3D11 mide que en pantalla no queden pegados |
 
 Los gates M3D (dónde cae cada pin, velocidad de la cámara, tiempos de lectura, separación, en 9:16 y 4:5) los corre

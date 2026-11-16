@@ -139,5 +139,9 @@
    }
   ]
  },
- "usa_objetos": true
+ "usa_objetos": true,
+ "nivel": "objeto",
+ "contiene": [],
+ "animado": false,
+ "gente": false
 }

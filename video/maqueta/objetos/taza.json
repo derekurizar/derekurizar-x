@@ -17,5 +17,16 @@
  },
  "ejemplo": {
   "objeto": "taza"
- }
+ },
+ "nivel": "objeto",
+ "contiene": [
+  "plato",
+  "vapor"
+ ],
+ "animado": "el vapor sube",
+ "gente": false,
+ "distancia_m": [
+  3,
+  30
+ ]
 }

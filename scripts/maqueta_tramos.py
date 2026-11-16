@@ -177,6 +177,8 @@ def partir(m):
                "duracion_s": round(dur, 4), "mundo": mundo, "camara": camara, "eventos": _corre(tr.get("eventos"), off, ("t",)),
                "marcas": _corre(tr.get("marcas"), off), "anotaciones": _corre(tr.get("anotaciones"), off), "capa": capa,
                "_tramo": {"n": n, "de": len(T), "id": tr.get("id") or tr["mundo"], "off": round(off, 4)}}
+        if m.get("video"):
+            sub["video"] = True   # un video de /video-3d: sus tramos de cerca pasan los gates de la escena viva (M3D15–M3D19)
         if prota:
             sub["protagonista"] = prota
         info = {"n": n, "id": tr.get("id") or "%s-%d" % (tr["mundo"], n + 1), "mundo": tr["mundo"], "desde": a, "hasta": b, "off": off,

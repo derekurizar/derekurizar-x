@@ -43,6 +43,13 @@ Escribe `<TRABAJO>/direccion.json`:
   (`transicion`: `fundido` por defecto, `corte` cuando el contraste es el punto, `oscuro` para un salto de tiempo). Un
   mundo de más (que no cuenta algo propio) se quita; un tramo dura al menos 2.5 s. **Cada mundo puede tener su estilo** (`mundos.<id>.estilo`, usuario 2026-11-16: «mientras todo haga sentido»: la escena de cerca de día en `dia`, el mapa en `noche`, con su razón); un
   estilo de Blender no dibuja todas las escalas (mira `motores` en el catálogo).
+- **La ficha de escena (contrato, C3D14–C3D18).** Cada mundo de cerca lleva `escena`:
+  `{"que_pasa": "lo que ocurre ahí en la realidad", "quien": "quién lo hace (o «nadie»)", "con_que": "herramientas, máquinas,
+  vehículos", "se_mueve": "qué se mueve en pantalla", "sostiene": [{"que": "árboles de sombra", "hecho": "finca-h01"},
+  {"que": "el color del camión", "generico": true}]}`. Lo que se dibuja se apoya en un hecho verificado (la fase
+  «Referencia visual» te los da en `verificacion_visual_<mundo>.json`) o se declara genérico. Si `quien` nombra personas,
+  hay ≥ 2 en la escena haciendo algo. Al entrar a cada mundo, un titular o una marca dice dónde estamos en 3 s. Mide tu
+  escena antes de entregar: `python3 scripts/maqueta3d.py escena <TRABAJO>/maqueta.json` (cuadro lleno, variedad, vida).
 - **Detalle y dinamismo** (usuario, 2026-11-16: «hace falta más detalle… re usaste muchas escenas… el barco se traba»):
   - **Cada paso, su mundo y su objeto.** No vuelvas a un mundo a mitad del video (C3D13: solo el cierre puede volver al del
     gancho). Un mismo objeto no hace de dos cosas distintas: si la casa ya fue el beneficio, la bodega y el tostador son
@@ -95,7 +102,7 @@ fallas y mira UNA vez las hojas de `<TRABAJO>/ganchos/<id>/`.
 5. `guion.json` lleva también `idea_visual`, `estilo`, `protagonista`, `mundos` (o `mundo` si es uno solo), `no_afirmar`, `promesa` si la hay, el
    cierre (`tipo: "cierre"`, `final` ≤ 160 caracteres, sin anunciar el final, con su cámara que vuelve al gancho) y el
    `caption` (tiktok, instagram, facebook, shorts).
-6. `python3 scripts/video3d.py guion <TRABAJO> --check` hasta 0 fallas (C3D1–C3D12, V2–V5 y M3D1–M3D13 en 9:16 y 4:5, cada tramo con sus gates). Luego
+6. `python3 scripts/video3d.py guion <TRABAJO> --check` hasta 0 fallas (C3D1–C3D18, V2–V5 y M3D1–M3D19 en 9:16 y 4:5, cada tramo con sus gates). Luego
    `python3 scripts/video3d.py storyboard <TRABAJO>` y UNA lectura de `storyboard/hoja_9x16.jpg`: ¿cada cuadro muestra lo
    que su frase dice?
 7. Si al escribir aparece algo que el catálogo no tiene, devuélvelo en `briefs` (el Workflow llama al constructor UNA

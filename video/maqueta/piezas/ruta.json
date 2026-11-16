@@ -26,5 +26,9 @@
    "chimaltenango",
    "quetzaltenango"
   ]
- }
+ },
+ "nivel": "fondo",
+ "contiene": [],
+ "animado": false,
+ "gente": false
 }

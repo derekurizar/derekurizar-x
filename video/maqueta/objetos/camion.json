@@ -17,5 +17,13 @@
  },
  "ejemplo": {
   "objeto": "camion"
- }
+ },
+ "nivel": "objeto",
+ "contiene": [],
+ "animado": false,
+ "gente": false,
+ "distancia_m": [
+  15,
+  300
+ ]
 }

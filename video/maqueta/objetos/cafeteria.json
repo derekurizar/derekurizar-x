@@ -17,5 +17,25 @@
  },
  "ejemplo": {
   "objeto": "cafeteria"
- }
+ },
+ "nivel": "escenario",
+ "contiene": [
+  "fachada de ladrillo",
+  "toldo",
+  "vitrina con mostrador",
+  "mesas de terraza",
+  "pizarra",
+  "maceteros"
+ ],
+ "animado": "el toldo ondea y la vitrina titila",
+ "gente": false,
+ "distancia_m": [
+  12,
+  45
+ ],
+ "caja_m": [
+  12,
+  13,
+  9
+ ]
 }

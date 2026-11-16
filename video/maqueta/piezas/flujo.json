@@ -114,5 +114,9 @@
   "densidad": 20,
   "vel_kmh": 70
  },
- "usa_objetos": true
+ "usa_objetos": true,
+ "nivel": "objeto",
+ "contiene": [],
+ "animado": "los vehículos avanzan, frenan y aceleran",
+ "gente": false
 }

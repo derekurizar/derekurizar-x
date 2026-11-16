@@ -17,5 +17,16 @@
  },
  "ejemplo": {
   "objeto": "barco"
- }
+ },
+ "nivel": "objeto",
+ "contiene": [
+  "contenedores en cubierta",
+  "puente de mando"
+ ],
+ "animado": false,
+ "gente": false,
+ "distancia_m": [
+  150,
+  1500
+ ]
 }

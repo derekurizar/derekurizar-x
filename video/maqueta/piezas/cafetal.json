@@ -122,5 +122,23 @@
   "maduras": 0.8,
   "personas": 1,
   "sombra": 0.4
- }
+ },
+ "nivel": "escenario",
+ "contiene": [
+  "cafetos con cereza",
+  "árboles de sombra",
+  "suelo de hojarasca",
+  "recolectores"
+ ],
+ "animado": "los recolectores cosechan",
+ "gente": true,
+ "distancia_m": [
+  15,
+  130
+ ],
+ "caja_m": [
+  2,
+  2,
+  3
+ ]
 }

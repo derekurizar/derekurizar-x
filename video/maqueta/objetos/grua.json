@@ -17,5 +17,21 @@
  },
  "ejemplo": {
   "objeto": "grua"
- }
+ },
+ "nivel": "objeto",
+ "contiene": [
+  "pórtico",
+  "contenedor colgado"
+ ],
+ "animado": "el carro corre por la pluma y el contenedor sube y baja",
+ "gente": false,
+ "distancia_m": [
+  80,
+  320
+ ],
+ "caja_m": [
+  22,
+  62,
+  52
+ ]
 }

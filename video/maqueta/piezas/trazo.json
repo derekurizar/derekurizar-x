@@ -70,5 +70,9 @@
   "tipo": "trazo",
   "camino": "eje",
   "color": "bien"
- }
+ },
+ "nivel": "fondo",
+ "contiene": [],
+ "animado": false,
+ "gente": false
 }

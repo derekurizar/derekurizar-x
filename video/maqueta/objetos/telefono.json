@@ -17,5 +17,13 @@
  },
  "ejemplo": {
   "objeto": "telefono"
- }
+ },
+ "nivel": "objeto",
+ "contiene": [],
+ "animado": false,
+ "gente": false,
+ "distancia_m": [
+  0.3,
+  5
+ ]
 }

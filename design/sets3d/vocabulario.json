@@ -160,6 +160,10 @@
     ]
    },
    "usa_objetos": true,
+   "nivel": "objeto",
+   "contiene": [],
+   "animado": false,
+   "gente": false,
    "modulo": "piezas/actor.js",
    "reglas": "scripts/maqueta_tipos/actor.py"
   },
@@ -189,6 +193,10 @@
     "id": "agua",
     "tipo": "agua"
    },
+   "nivel": "fondo",
+   "contiene": [],
+   "animado": false,
+   "gente": false,
    "modulo": "piezas/agua.js",
    "reglas": "scripts/maqueta_tipos/agua.py"
   },
@@ -264,6 +272,26 @@
     "tamano": 1,
     "personas": 2
    },
+   "nivel": "escenario",
+   "contiene": [
+    "pila de recibo",
+    "despulpadora",
+    "pilas de fermento",
+    "canal de correteo",
+    "patio de secado",
+    "gente que rastrilla"
+   ],
+   "animado": "la cereza cae, el agua corre y la gente rastrilla",
+   "gente": true,
+   "distancia_m": [
+    25,
+    80
+   ],
+   "caja_m": [
+    62,
+    26,
+    5
+   ],
    "modulo": "piezas/beneficio.js",
    "reglas": "scripts/maqueta_tipos/beneficio.py"
   },
@@ -392,6 +420,24 @@
     "personas": 1,
     "sombra": 0.4
    },
+   "nivel": "escenario",
+   "contiene": [
+    "cafetos con cereza",
+    "árboles de sombra",
+    "suelo de hojarasca",
+    "recolectores"
+   ],
+   "animado": "los recolectores cosechan",
+   "gente": true,
+   "distancia_m": [
+    15,
+    130
+   ],
+   "caja_m": [
+    2,
+    2,
+    3
+   ],
    "modulo": "piezas/cafetal.js",
    "reglas": "scripts/maqueta_tipos/cafetal.py"
   },
@@ -443,6 +489,10 @@
      "residencial"
     ]
    },
+   "nivel": "fondo",
+   "contiene": [],
+   "animado": false,
+   "gente": false,
    "modulo": "piezas/calles.js",
    "reglas": "scripts/maqueta_tipos/calles.py"
   },
@@ -501,6 +551,10 @@
     "tipo": "carretera",
     "camino": "eje"
    },
+   "nivel": "fondo",
+   "contiene": [],
+   "animado": false,
+   "gente": false,
    "modulo": "piezas/carretera.js",
    "reglas": "scripts/maqueta_tipos/carretera.py"
   },
@@ -539,6 +593,14 @@
     "id": "edificios",
     "tipo": "edificios"
    },
+   "nivel": "fondo",
+   "contiene": [],
+   "animado": false,
+   "gente": false,
+   "distancia_m": [
+    40,
+    1500
+   ],
    "modulo": "piezas/edificios.js",
    "reglas": "scripts/maqueta_tipos/edificios.py"
   },
@@ -580,6 +642,10 @@
      "Motagua Fault"
     ]
    },
+   "nivel": "fondo",
+   "contiene": [],
+   "animado": false,
+   "gente": false,
    "modulo": "piezas/falla.js",
    "reglas": "scripts/maqueta_tipos/falla.py"
   },
@@ -732,6 +798,10 @@
     "vel_kmh": 70
    },
    "usa_objetos": true,
+   "nivel": "objeto",
+   "contiene": [],
+   "animado": "los vehículos avanzan, frenan y aceleran",
+   "gente": false,
    "modulo": "piezas/flujo.js",
    "reglas": "scripts/maqueta_tipos/flujo.py"
   },
@@ -758,6 +828,10 @@
     "id": "frontera",
     "tipo": "frontera"
    },
+   "nivel": "fondo",
+   "contiene": [],
+   "animado": false,
+   "gente": false,
    "modulo": "piezas/frontera.js",
    "reglas": "scripts/maqueta_tipos/frontera.py"
   },
@@ -793,6 +867,10 @@
     "tipo": "luces",
     "lugares": "todos"
    },
+   "nivel": "fondo",
+   "contiene": [],
+   "animado": false,
+   "gente": false,
    "modulo": "piezas/luces.js",
    "reglas": "scripts/maqueta_tipos/luces.py"
   },
@@ -825,6 +903,10 @@
      "quetzaltenango"
     ]
    },
+   "nivel": "fondo",
+   "contiene": [],
+   "animado": false,
+   "gente": false,
    "modulo": "piezas/ruta.js",
    "reglas": "scripts/maqueta_tipos/ruta.py"
   },
@@ -912,6 +994,26 @@
     "tostadoras": 2,
     "personas": 2
    },
+   "nivel": "escenario",
+   "contiene": [
+    "sacos de café verde",
+    "tostadoras",
+    "báscula",
+    "mesa de catación",
+    "estantes",
+    "gente que tuesta"
+   ],
+   "animado": "los tambores giran, un saco se vacía en la tolva y sale humo",
+   "gente": true,
+   "distancia_m": [
+    8,
+    28
+   ],
+   "caja_m": [
+    22,
+    16,
+    6
+   ],
    "modulo": "piezas/tostaduria.js",
    "reglas": "scripts/maqueta_tipos/tostaduria.py"
   },
@@ -988,6 +1090,10 @@
     "camino": "eje",
     "color": "bien"
    },
+   "nivel": "fondo",
+   "contiene": [],
+   "animado": false,
+   "gente": false,
    "modulo": "piezas/trazo.js",
    "reglas": "scripts/maqueta_tipos/trazo.py"
   },
@@ -1052,6 +1158,10 @@
     "opacidad": 0.5,
     "borde": false
    },
+   "nivel": "fondo",
+   "contiene": [],
+   "animado": false,
+   "gente": false,
    "modulo": "piezas/zona.js",
    "reglas": "scripts/maqueta_tipos/zona.py"
   },
@@ -1759,6 +1869,14 @@
    "ejemplo": {
     "objeto": "arbol"
    },
+   "nivel": "objeto",
+   "contiene": [],
+   "animado": false,
+   "gente": false,
+   "distancia_m": [
+    10,
+    200
+   ],
    "modulo": "objetos/arbol.js",
    "reglas": null
   },
@@ -1782,6 +1900,17 @@
    "ejemplo": {
     "objeto": "barco"
    },
+   "nivel": "objeto",
+   "contiene": [
+    "contenedores en cubierta",
+    "puente de mando"
+   ],
+   "animado": false,
+   "gente": false,
+   "distancia_m": [
+    150,
+    1500
+   ],
    "modulo": "objetos/barco.js",
    "reglas": null
   },
@@ -1805,6 +1934,25 @@
    "ejemplo": {
     "objeto": "bodega"
    },
+   "nivel": "escenario",
+   "contiene": [
+    "galera de lámina",
+    "trilladora",
+    "zaranda",
+    "banda",
+    "estibas de sacos"
+   ],
+   "animado": "el volante, la zaranda y la banda de la trilla",
+   "gente": false,
+   "distancia_m": [
+    25,
+    90
+   ],
+   "caja_m": [
+    18,
+    30,
+    9.6
+   ],
    "modulo": "objetos/bodega.js",
    "reglas": null
   },
@@ -1828,6 +1976,14 @@
    "ejemplo": {
     "objeto": "bus"
    },
+   "nivel": "objeto",
+   "contiene": [],
+   "animado": false,
+   "gente": false,
+   "distancia_m": [
+    15,
+    300
+   ],
    "modulo": "objetos/bus.js",
    "reglas": null
   },
@@ -1851,6 +2007,26 @@
    "ejemplo": {
     "objeto": "cafeteria"
    },
+   "nivel": "escenario",
+   "contiene": [
+    "fachada de ladrillo",
+    "toldo",
+    "vitrina con mostrador",
+    "mesas de terraza",
+    "pizarra",
+    "maceteros"
+   ],
+   "animado": "el toldo ondea y la vitrina titila",
+   "gente": false,
+   "distancia_m": [
+    12,
+    45
+   ],
+   "caja_m": [
+    12,
+    13,
+    9
+   ],
    "modulo": "objetos/cafeteria.js",
    "reglas": null
   },
@@ -1874,6 +2050,14 @@
    "ejemplo": {
     "objeto": "camion"
    },
+   "nivel": "objeto",
+   "contiene": [],
+   "animado": false,
+   "gente": false,
+   "distancia_m": [
+    15,
+    300
+   ],
    "modulo": "objetos/camion.js",
    "reglas": null
   },
@@ -1897,6 +2081,16 @@
    "ejemplo": {
     "objeto": "camionsacos"
    },
+   "nivel": "objeto",
+   "contiene": [
+    "sacos apilados"
+   ],
+   "animado": false,
+   "gente": false,
+   "distancia_m": [
+    15,
+    120
+   ],
    "modulo": "objetos/camionsacos.js",
    "reglas": null
   },
@@ -1920,6 +2114,14 @@
    "ejemplo": {
     "objeto": "carro"
    },
+   "nivel": "objeto",
+   "contiene": [],
+   "animado": false,
+   "gente": false,
+   "distancia_m": [
+    10,
+    300
+   ],
    "modulo": "objetos/carro.js",
    "reglas": null
   },
@@ -1943,6 +2145,14 @@
    "ejemplo": {
     "objeto": "casa"
    },
+   "nivel": "objeto",
+   "contiene": [],
+   "animado": false,
+   "gente": false,
+   "distancia_m": [
+    15,
+    200
+   ],
    "modulo": "objetos/casa.js",
    "reglas": null
   },
@@ -1967,6 +2177,16 @@
     "objeto": "cliente"
    },
    "notas": "Articulado. Piernas y brazo izquierdo caminan como `persona` según la velocidad del actor (de pie, quietos). El brazo derecho es una cadena hombro → codo (padre) → muñeca (padre) con el vaso (claro, funda de cartón, tapa con domo, sin logo): lo lleva derecho a la cintura y cada 4–6 s (desfasado por instancia) lo sube a la boca 0.7 s, sorbe 0.9 s y lo baja 0.8 s, también de pie; la cabeza se echa atrás al sorber. La chaqueta toma el color de la instancia (`variante`). Se lee de 8 a 25 m; más lejos el vaso es un punto claro.",
+   "nivel": "objeto",
+   "contiene": [
+    "vaso de café"
+   ],
+   "animado": "camina y sorbe de su vaso",
+   "gente": true,
+   "distancia_m": [
+    6,
+    30
+   ],
    "modulo": "objetos/cliente.js",
    "reglas": null
   },
@@ -1990,6 +2210,14 @@
    "ejemplo": {
     "objeto": "contenedor"
    },
+   "nivel": "objeto",
+   "contiene": [],
+   "animado": false,
+   "gente": false,
+   "distancia_m": [
+    20,
+    300
+   ],
    "modulo": "objetos/contenedor.js",
    "reglas": null
   },
@@ -2013,6 +2241,17 @@
    "ejemplo": {
     "objeto": "cosechador"
    },
+   "nivel": "objeto",
+   "contiene": [
+    "sombrero",
+    "costal"
+   ],
+   "animado": "cosecha: el brazo sube a la rama y baja al costal",
+   "gente": true,
+   "distancia_m": [
+    8,
+    45
+   ],
    "modulo": "objetos/cosechador.js",
    "reglas": null
   },
@@ -2036,6 +2275,22 @@
    "ejemplo": {
     "objeto": "grua"
    },
+   "nivel": "objeto",
+   "contiene": [
+    "pórtico",
+    "contenedor colgado"
+   ],
+   "animado": "el carro corre por la pluma y el contenedor sube y baja",
+   "gente": false,
+   "distancia_m": [
+    80,
+    320
+   ],
+   "caja_m": [
+    22,
+    62,
+    52
+   ],
    "modulo": "objetos/grua.js",
    "reglas": null
   },
@@ -2059,6 +2314,14 @@
    "ejemplo": {
     "objeto": "moto"
    },
+   "nivel": "objeto",
+   "contiene": [],
+   "animado": false,
+   "gente": false,
+   "distancia_m": [
+    8,
+    150
+   ],
    "modulo": "objetos/moto.js",
    "reglas": null
   },
@@ -2083,6 +2346,14 @@
     "objeto": "persona"
    },
    "notas": "Articulada: piernas y brazos se balancean siempre (un paso de 0.9–1.1 s, ±16° la pierna, ±13° el brazo), torso y cabeza quietos. La pose no conoce la velocidad: de pie se lee como quien cambia el peso; no hay variante quieta (para alguien inmóvil que trabaja, el cosechador u otro objeto).",
+   "nivel": "objeto",
+   "contiene": [],
+   "animado": "camina (piernas y brazos) cuando avanza",
+   "gente": true,
+   "distancia_m": [
+    5,
+    40
+   ],
    "modulo": "objetos/persona.js",
    "reglas": null
   },
@@ -2106,6 +2377,14 @@
    "ejemplo": {
     "objeto": "pin"
    },
+   "nivel": "objeto",
+   "contiene": [],
+   "animado": false,
+   "gente": false,
+   "distancia_m": [
+    5,
+    400
+   ],
    "modulo": "objetos/pin.js",
    "reglas": null
   },
@@ -2129,6 +2408,17 @@
    "ejemplo": {
     "objeto": "taza"
    },
+   "nivel": "objeto",
+   "contiene": [
+    "plato",
+    "vapor"
+   ],
+   "animado": "el vapor sube",
+   "gente": false,
+   "distancia_m": [
+    3,
+    30
+   ],
    "modulo": "objetos/taza.js",
    "reglas": null
   },
@@ -2152,6 +2442,14 @@
    "ejemplo": {
     "objeto": "telefono"
    },
+   "nivel": "objeto",
+   "contiene": [],
+   "animado": false,
+   "gente": false,
+   "distancia_m": [
+    0.3,
+    5
+   ],
    "modulo": "objetos/telefono.js",
    "reglas": null
   },
@@ -2175,6 +2473,14 @@
    "ejemplo": {
     "objeto": "torre"
    },
+   "nivel": "objeto",
+   "contiene": [],
+   "animado": false,
+   "gente": false,
+   "distancia_m": [
+    30,
+    600
+   ],
    "modulo": "objetos/torre.js",
    "reglas": null
   },
@@ -2198,6 +2504,18 @@
    "ejemplo": {
     "objeto": "tostadora"
    },
+   "nivel": "objeto",
+   "contiene": [
+    "tambor",
+    "bandeja de enfriado",
+    "chimenea"
+   ],
+   "animado": "el tambor gira, el brazo remueve y sale humo",
+   "gente": false,
+   "distancia_m": [
+    4,
+    20
+   ],
    "modulo": "objetos/tostadora.js",
    "reglas": null
   },

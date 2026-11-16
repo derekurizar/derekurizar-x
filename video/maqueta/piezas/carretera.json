@@ -52,5 +52,9 @@
   "id": "autopista",
   "tipo": "carretera",
   "camino": "eje"
- }
+ },
+ "nivel": "fondo",
+ "contiene": [],
+ "animado": false,
+ "gente": false
 }

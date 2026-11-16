@@ -34,13 +34,14 @@ sys.path.insert(0, AQUI)
 import build_set3d as SET3D  # noqa: E402  (lector del PNG del relieve)
 import versiones             # noqa: E402  (la versión de HyperFrames, en un solo sitio: scripts/versiones.py)
 import maqueta_tramos as TR  # noqa: E402  (varios mundos en un video: tramos)
+import maqueta_escena as ESC  # noqa: E402  (la escena viva: M3D15–M3D19)
 from maqueta_tipos import _movimiento as MV  # noqa: E402  (lo que se mueve: actor, flujo; la cámara que sigue)
 
 HF = list(versiones.HF)      # ["npx", "--yes", "hyperframes@<versión>"]
 MOTOR = os.path.join(RAIZ, "video", "maqueta")
 SETS = os.path.join(RAIZ, "design", "sets3d")
 FIXTURE = os.path.join(MOTOR, "fixture", "maqueta.json")
-FIXTURES_MUNDOS = [os.path.join(MOTOR, "fixture", f) for f in ("esquema_carretera.json", "ciudad_capital.json", "trafico.json", "tramos.json")]   # un caso por mundo nuevo (y el de lo que se mueve, y el de varios mundos)
+FIXTURES_MUNDOS = [os.path.join(MOTOR, "fixture", f) for f in ("esquema_carretera.json", "ciudad_capital.json", "trafico.json", "tramos.json", "escena_viva.json")]   # un caso por mundo nuevo (y el de lo que se mueve, y el de varios mundos)
 FIXTURE_TRAMOS = os.path.join(MOTOR, "fixture", "tramos.json")
 MOTORES = ("three", "blender")     # el estilo decide el motor: three.js en HyperFrames, o Blender (la placa) + la capa 2D de HyperFrames
 BLENDER_PY = os.path.join(AQUI, "maqueta_blender.py")
@@ -61,7 +62,7 @@ CLASES = {"pieza": "piezas", "evento": "eventos", "objeto": "objetos", "anotacio
 ESCALAS = ("pais", "ciudad", "esquema")
 TIPOS_PARAM = ("numero", "entero", "texto", "bool", "lugar", "lugares", "pieza", "puntos", "lista", "posicion", "ancla", "anclas", "claves", "mezcla")
 COMUNES = {"pieza": ("id", "tipo"), "evento": ("tipo", "t", "dur", "sfx"), "anotacion": ("tipo", "t", "hasta", "sfx"),   # campos comunes (no van en la ficha)
-           "mundo": ("escala", "lugares", "piezas", "capas")}
+           "mundo": ("escala", "lugares", "piezas", "capas", "escena", "hora", "hora_razon", "horizonte")}   # escena: la ficha de la escena viva (video3d.py, C3D14)
 # capas del dibujo del terreno que el guion puede apagar (mundo.capas; por defecto todas encendidas). Hoy las usa el
 # estilo `plano`: curvas de nivel, líneas del fondo del mar y retícula de paralelos y meridianos (usuario, 2026-11-15:
 # con `plano` se pregunta siempre si se quieren todas o una versión limpia)
@@ -1129,6 +1130,9 @@ def gates_formato(m, R):
                 F("M3D14", "la cámara sigue a algo que se detuvo: desde %.1f s está quieto y la cámara sigue encima (clave %d): alarga su `mover` o su "
                   "movimiento hasta que la cámara lo suelte, o suelta la cámara" % (t - quieto + paso, n)); break
             t += paso
+    # M3D15–M3D19 · la escena viva (scripts/maqueta_escena.py): un tramo de cerca está lleno, es variado y tiene vida
+    if m.get("video") and not any(g in ("M3D1", "M3D3") for g, _ in out):   # `video: true` lo pone video3d.py: un video de /video-3d (no una pieza ni un caso de prueba); con la cámara mal no se mide
+        out += ESC.gates(sys.modules[__name__], m, R)
     if pieza:   # el cuadro (titular, cifras, portada) es del anfitrión
         out = [x for x in out if x[0] not in ("M3D5", "M3D9")]
     tramo = m.get("_tramo")
@@ -1520,7 +1524,7 @@ def cmd_check(a):
         print("  aviso · " + x)
     for x in fallas:
         print("  FALLA " + x)
-    que = "modo pieza, lienzo %s: M3D1–M3D4, M3D6, M3D8, M3D11 y M3D12 OK" % formatos_de(a)[0] if es_pieza(formatos_de(a)[0]) else "M3D1–M3D%s OK (%s)%s" % ("14" if TR.es_tramos(cargar_json(a.maqueta)) else "12, M3D14", ", ".join(formatos_de(a)), " · %d tramos" % len(cargar_json(a.maqueta)["tramos"]) if TR.es_tramos(cargar_json(a.maqueta)) else "")
+    que = "modo pieza, lienzo %s: M3D1–M3D4, M3D6, M3D8, M3D11 y M3D12 OK" % formatos_de(a)[0] if es_pieza(formatos_de(a)[0]) else "M3D1–M3D%s OK (%s)%s" % (("19" if cargar_json(a.maqueta).get("video") else "14") if TR.es_tramos(cargar_json(a.maqueta)) else "12, M3D14", ", ".join(formatos_de(a)), " · %d tramos" % len(cargar_json(a.maqueta)["tramos"]) if TR.es_tramos(cargar_json(a.maqueta)) else "")
     print("%s: %s" % (a.maqueta, que if not fallas else "%d falla(s)" % len(fallas)))
     return 1 if fallas else 0
 
@@ -1591,6 +1595,42 @@ def cmd_cuadro(a):
             hoja_de(salidas, hoja, 360 if len(salidas) > 3 else 540)
             print("hoja %s: %s  (en orden: %s s)" % (f, hoja, ", ".join("%g" % t for t in tiempos)))
     return 0
+
+
+def cmd_escena(a):
+    """LA ESCENA VIVA: la medida de cada tramo de cerca (cuánto cuadro llenan sus cosas, cuántas distintas se ven, si algo se
+    mueve: scripts/maqueta_escena.py) y, con --hoja, 6 cuadros de cada mundo para mirarlo (el director, el crítico, el usuario)."""
+    m = cargar_json(a.maqueta)
+    partes = TR.partir(m) if TR.es_tramos(m) else [({"id": "único", "mundo": "mundo", "desde": 0.0, "hasta": float(m.get("duracion_s", 0)), "off": 0.0}, m)]
+    rc = 0
+    for info, sub in partes:
+        if a.mundo and info["mundo"] != a.mundo:
+            continue
+        try:
+            R = resolver(sub, a.formato)
+        except Falla as e:
+            print("  FALLA %s %s" % e.args); return 1
+        if R["mundo"]["escala"] not in ESC.ESCALAS_CERCA:
+            print("%-16s (%s, %.1f–%.1f s): mapa (escala %s): no se mide como escena de cerca" % (info["id"], info["mundo"], info["desde"], info["hasta"], R["mundo"]["escala"]))
+            continue
+        txt, r = ESC.resumen(sys.modules[__name__], sub, R)
+        fallas = sorted({"%s %s" % g for g in ESC.gates(sys.modules[__name__], dict(sub, video=True), R)})
+        print("%-16s (%s, %.1f–%.1f s): %s%s" % (info["id"], info["mundo"], info["desde"], info["hasta"], txt, "" if not fallas else "  ← %d falla(s)" % len(fallas)))
+        for x in fallas:
+            print("    FALLA " + x)
+        rc |= 1 if fallas else 0
+    if a.hoja:
+        os.makedirs(a.salida, exist_ok=True)
+        for info, sub in partes:
+            if a.mundo and info["mundo"] != a.mundo:
+                continue
+            a0, a1 = info["desde"], info["hasta"]
+            ts = [round(a0 + (a1 - a0) * u, 2) for u in (0.04, 0.22, 0.4, 0.58, 0.76, 0.94)]
+            d = os.path.join(a.salida, "%s" % info["id"])
+            shutil.rmtree(d, ignore_errors=True)
+            if cmd_cuadro(argparse.Namespace(maqueta=a.maqueta, t=ts, salida=d, formato=a.formato, hoja=True, cmd="cuadro", pieza=False, lienzo=None)):
+                return 1
+    return rc
 
 
 def hoja_de(pngs, destino, ancho=360):
@@ -1768,6 +1808,22 @@ def revisar_ficha(fi, clase, tipo, ruta_js):
     ad = fi.get("adelanto")
     if ad is not None and (clase != "evento" or not isinstance(ad, dict) or not ad or set(ad) - {"s", "dur"}):
         f.append("%s.json: `adelanto` (solo eventos) es {\"s\": segundos} o {\"dur\": fracción de la duración}: cuánto lleva un evento que empieza en la portada" % que)
+    # la escena viva (scripts/maqueta_escena.py): lo que cada tipo declara para medir si un tramo está lleno y vivo
+    if clase in ("pieza", "objeto"):
+        if fi.get("nivel") not in ("objeto", "escenario", "fondo"):
+            f.append("%s.json: `nivel` es «objeto» (una cosa suelta), «escenario» (un lugar completo) o «fondo» (el tejido del mundo)" % que)
+        if not (isinstance(fi.get("contiene"), list) and all(isinstance(c, str) and c for c in fi["contiene"])):
+            f.append("%s.json: `contiene` es la lista de lo que muestra, en palabras (vacía si es una sola cosa)" % que)
+        if not (fi.get("animado") is False or (isinstance(fi.get("animado"), str) and fi["animado"].strip())):
+            f.append("%s.json: `animado` dice qué se mueve solo (un texto), o false" % que)
+        if not isinstance(fi.get("gente"), bool):
+            f.append("%s.json: `gente` es true si es o incluye personas que hacen algo" % que)
+        for k, n in (("distancia_m", 2), ("caja_m", 3)):
+            v = fi.get(k)
+            if v is not None and not (isinstance(v, list) and len(v) == n and all(isinstance(x, (int, float)) and x >= 0 for x in v)):
+                f.append("%s.json: `%s` es una lista de %d números (%s)" % (que, k, n, "[mín, máx] a la que se lee" if n == 2 else "[largo, ancho, alto] en metros"))
+        if fi.get("nivel") == "escenario" and not fi.get("contiene"):
+            f.append("%s.json: un `escenario` dice lo que `contiene` (≥ 3 cosas): un lugar completo no es una sola cosa" % que)
     if fi.get("capas") is not None and not (isinstance(fi["capas"], list) and all(isinstance(c, str) and c for c in fi["capas"])):
         f.append("%s.json: `capas` (opcional) es la lista de capas del set que el tipo usa siempre (el pie nombra su fuente, M3D7)" % que)
     if clase == "mundo":
@@ -2117,6 +2173,9 @@ def main():
     p = sub.add_parser("pieza", help="modo pieza: ARCHIVO.mp4 del tamaño del lienzo + ARCHIVO.efectos.json"); p.add_argument("maqueta")
     p.add_argument("--lienzo", required=True, **lz); p.add_argument("--salida", required=True, metavar="ARCHIVO.mp4")
     p.add_argument("--borrador", action="store_true", help="sin gates: para mirar, nunca para entregar")
+    p = sub.add_parser("escena", help="la escena viva: mide cada tramo de cerca (M3D15–M3D19) y, con --hoja, 6 cuadros por mundo"); p.add_argument("maqueta")
+    p.add_argument("--mundo", help="solo ese mundo"); p.add_argument("--formato", default="9:16", **fmt)
+    p.add_argument("--hoja", action="store_true", help="dibuja 6 cuadros de cada mundo en --salida/<tramo>/"); p.add_argument("--salida", default=os.path.join(RAIZ, "sesiones", "_video3d", "escenas"))
     p = sub.add_parser("proyecto", help="escribe el proyecto de HyperFrames"); p.add_argument("maqueta"); p.add_argument("--dir", required=True); p.add_argument("--formato", default="ambos", **fmt)
     p = sub.add_parser("render", help="DIR/<9x16|4x5>/video.mp4 + DIR/efectos.json"); p.add_argument("maqueta"); p.add_argument("--dir", required=True); p.add_argument("--formato", default="ambos", **fmt)
     p.add_argument("--borrador", action="store_true", help="sin gates: un candidato para mirar, nunca para entregar")
@@ -2136,7 +2195,7 @@ def main():
     if getattr(a, "maqueta", None) and not os.path.isfile(a.maqueta):
         print("no existe %s" % a.maqueta, file=sys.stderr); return 2
     try:
-        return {"check": cmd_check, "cuadro": cmd_cuadro, "proyecto": cmd_proyecto, "render": cmd_render, "pieza": cmd_pieza, "estilos": cmd_estilos, "sets": cmd_sets,
+        return {"check": cmd_check, "cuadro": cmd_cuadro, "escena": cmd_escena, "proyecto": cmd_proyecto, "render": cmd_render, "pieza": cmd_pieza, "estilos": cmd_estilos, "sets": cmd_sets,
                 "prueba": cmd_prueba, "catalogo": cmd_catalogo}[a.cmd](a)
     except Falla as e:
         print("  FALLA %s %s" % e.args); return 1

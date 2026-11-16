@@ -69,5 +69,25 @@
   "rumbo": 0,
   "tamano": 1,
   "personas": 2
- }
+ },
+ "nivel": "escenario",
+ "contiene": [
+  "pila de recibo",
+  "despulpadora",
+  "pilas de fermento",
+  "canal de correteo",
+  "patio de secado",
+  "gente que rastrilla"
+ ],
+ "animado": "la cereza cae, el agua corre y la gente rastrilla",
+ "gente": true,
+ "distancia_m": [
+  25,
+  80
+ ],
+ "caja_m": [
+  62,
+  26,
+  5
+ ]
 }

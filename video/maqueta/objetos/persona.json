@@ -18,5 +18,13 @@
  "ejemplo": {
   "objeto": "persona"
  },
- "notas": "Articulada: piernas y brazos se balancean siempre (un paso de 0.9–1.1 s, ±16° la pierna, ±13° el brazo), torso y cabeza quietos. La pose no conoce la velocidad: de pie se lee como quien cambia el peso; no hay variante quieta (para alguien inmóvil que trabaja, el cosechador u otro objeto)."
+ "notas": "Articulada: piernas y brazos se balancean siempre (un paso de 0.9–1.1 s, ±16° la pierna, ±13° el brazo), torso y cabeza quietos. La pose no conoce la velocidad: de pie se lee como quien cambia el peso; no hay variante quieta (para alguien inmóvil que trabaja, el cosechador u otro objeto).",
+ "nivel": "objeto",
+ "contiene": [],
+ "animado": "camina (piernas y brazos) cuando avanza",
+ "gente": true,
+ "distancia_m": [
+  5,
+  40
+ ]
 }

@@ -17,5 +17,24 @@
  },
  "ejemplo": {
   "objeto": "bodega"
- }
+ },
+ "nivel": "escenario",
+ "contiene": [
+  "galera de lámina",
+  "trilladora",
+  "zaranda",
+  "banda",
+  "estibas de sacos"
+ ],
+ "animado": "el volante, la zaranda y la banda de la trilla",
+ "gente": false,
+ "distancia_m": [
+  25,
+  90
+ ],
+ "caja_m": [
+  18,
+  30,
+  9.6
+ ]
 }

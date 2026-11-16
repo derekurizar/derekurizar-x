@@ -17,5 +17,17 @@
  },
  "ejemplo": {
   "objeto": "tostadora"
- }
+ },
+ "nivel": "objeto",
+ "contiene": [
+  "tambor",
+  "bandeja de enfriado",
+  "chimenea"
+ ],
+ "animado": "el tambor gira, el brazo remueve y sale humo",
+ "gente": false,
+ "distancia_m": [
+  4,
+  20
+ ]
 }

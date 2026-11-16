@@ -58,5 +58,9 @@
   "tono": "verde",
   "opacidad": 0.5,
   "borde": false
- }
+ },
+ "nivel": "fondo",
+ "contiene": [],
+ "animado": false,
+ "gente": false
 }

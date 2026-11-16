@@ -456,6 +456,40 @@ Sus reglas (`scripts/maqueta_tipos/<tipo>.py`) dicen `anclas(a)` y `textos(a, es
 `ilustrativo` sobre un ESQUEMA (no es un momento real; la voz no dice esa hora como dato).
 
 
+## La escena viva (M3D15–M3D19; `scripts/maqueta_escena.py`)
+
+Usuario, 2026-11-16: «cada escena debe tener bastantes detalles… que sea atractivo a la vista, esté bien explicado, se vea
+real y similar a lo que sucede en la realidad, con animaciones». Todo tramo de un video en un mundo de cerca (`esquema` o
+`ciudad`) es una **escena viva**, y eso se mide sobre los datos (nunca sobre píxeles). Los mapas (`pais`), el modo pieza
+y los casos de prueba de un mundo no se miden: los gates corren cuando el maqueta.json trae `video: true` (lo pone
+`video3d.py`).
+
+**La ficha de cada pieza y objeto** declara lo que hace falta para medir (obligatorio; `catalogo --registrar` lo revisa):
+
+| Campo | Qué dice |
+|---|---|
+| `nivel` | `objeto` (una cosa suelta), `escenario` (un lugar completo: finca, beneficio, tostaduría) o `fondo` (el tejido del mundo: calles, edificios genéricos, agua; no llena la escena) |
+| `contiene` | Lo que muestra, en palabras («sacos de café verde», «gente que cata»); un escenario, ≥ 3. Cuenta para la variedad |
+| `animado` | Qué se mueve solo (un texto), o `false` |
+| `gente` | `true` si es o incluye personas que hacen algo |
+| `distancia_m` | `[mín, máx]` a la que se lee |
+| `caja_m` | `[largo, ancho, alto]`: cuánto cuadro ocupa (por defecto, sus `medidas`) |
+
+**Gates** (una muestra cada 0.5 s del tramo; los umbrales están en `maqueta_escena.UMBRAL` y la vara aprobada los ajusta
+en `referencias/diseno/vara3d.json`):
+
+| Gate | Qué exige en cada tramo de cerca |
+|---|---|
+| M3D15 · cuadro lleno | Las cajas de lo que no es fondo, proyectadas, cubren ≥ 35 % de la zona libre en ≥ 70 % de las muestras |
+| M3D16 · variedad | En ≥ 70 % de las muestras se ven ≥ 4 cosas distintas (tipos y `contiene`; todo el fondo cuenta una) con un `escenario` o ≥ 6 objetos en cuadro |
+| M3D17 · vida | En ≥ 70 % de las muestras algo en cuadro se mueve: un actor o un vehículo con velocidad, un tipo `animado` o un evento en curso |
+| M3D18 · a su distancia | Lo que la cámara mira no queda a más del doble de su `distancia_m` máxima más de la mitad del tramo (fuera de rango: aviso) |
+| M3D19 · nada flota | Un actor levantado (`lev_m`) tiene debajo algo que lo sostiene |
+
+`python3 scripts/maqueta3d.py escena MAQUETA [--mundo ID] [--hoja --salida DIR]` imprime la medida de cada tramo (aunque el
+maqueta no traiga `video`) y, con `--hoja`, 6 cuadros de cada mundo para mirarlo. Caso de prueba:
+`video/maqueta/fixture/escena_viva.json`; pruebas: `scripts/pruebas/maqueta_escena.py`.
+
 ## Objetos articulados, estilo `dia` y M3D14 (usuario, 2026-11-16: «más detalle y dinamismo»)
 
 - **Objeto articulado** (`video/maqueta/objetos/<tipo>.js`): las partes con `grupo` se mueven solas con el tiempo. El

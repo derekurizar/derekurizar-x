@@ -17,5 +17,13 @@
  },
  "ejemplo": {
   "objeto": "torre"
- }
+ },
+ "nivel": "objeto",
+ "contiene": [],
+ "animado": false,
+ "gente": false,
+ "distancia_m": [
+  30,
+  600
+ ]
 }

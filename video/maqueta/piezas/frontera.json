@@ -20,5 +20,9 @@
  "ejemplo": {
   "id": "frontera",
   "tipo": "frontera"
- }
+ },
+ "nivel": "fondo",
+ "contiene": [],
+ "animado": false,
+ "gente": false
 }

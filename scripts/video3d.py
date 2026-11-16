@@ -118,6 +118,93 @@ def cifras_ok(trabajo):
     return sorted(valores, key=lambda x: (x[0], str(x[1]))), por_id
 
 
+ESCALAS_CERCA = ("esquema", "ciudad")     # los mundos de cerca: cada uno es una ESCENA VIVA (C3D14–C3D18, M3D15–M3D19)
+CLAVES_ESCENA = ("que_pasa", "quien", "con_que", "se_mueve")
+NADIE = ("", "nadie", "ninguno", "ninguna", "no hay")
+NOMBRA_S = 3.0                            # C3D16: cada tramo dice dónde estamos en sus primeros segundos
+
+
+def hechos_ok(trabajo):
+    """Los ids que sostienen lo que se dibuja: hechos (confirmado | una_fuente) y cifras (verificada | ajustada) de los
+    verificacion_*.json del TRABAJO, más las cifras de base/datos.json."""
+    ids = set(cifras_ok(trabajo)[1])
+    try:
+        nombres = sorted(n for n in os.listdir(trabajo) if n.startswith("verificacion") and n.endswith(".json"))
+    except OSError:
+        nombres = []
+    for n in nombres:
+        try:
+            d = leer(os.path.join(trabajo, n))
+        except (OSError, ValueError):
+            continue
+        ids.update(h["id"] for h in d.get("hechos") or [] if h.get("id") and h.get("estado") in ("confirmado", "una_fuente"))
+        ids.update(c["id"] for c in d.get("cifras") or [] if c.get("id") and c.get("veredicto") in ("verificada", "ajustada"))
+    return ids
+
+
+def revisar_escenas(g, MUNDOS, trabajo):
+    """C3D14 la ficha de escena de cada mundo de cerca · C3D15 lo que se dibuja se sostiene · C3D17 gente · C3D18 un
+    objeto, un papel. → (fallas, avisos)."""
+    fallas, avisos = [], []
+    ok_ids = hechos_ok(trabajo)
+    papeles = {}    # objeto → {texto de la marca que lo nombra}
+    for mid, mu in MUNDOS.items():
+        mu = mu or {}
+        if (mu.get("escala") or "pais") not in ESCALAS_CERCA:
+            continue
+        esc = mu.get("escena")
+        if not isinstance(esc, dict) or any(not isinstance(esc.get(k), str) or not esc[k].strip() for k in CLAVES_ESCENA):
+            fallas.append("C3D14 el mundo «%s» es una escena de cerca y lleva su ficha `escena`: {que_pasa (lo que ocurre ahí en la realidad), quien "
+                          "(quién lo hace, o «nadie»), con_que (con qué: herramientas, máquinas, vehículos), se_mueve (qué se mueve en pantalla), "
+                          "sostiene: [{que, hecho | generico}]}" % mid)
+            continue
+        sos = esc.get("sostiene")
+        if not isinstance(sos, list) or not sos:
+            fallas.append("C3D15 el mundo «%s»: `escena.sostiene` lista lo que se dibuja y qué lo sostiene ([{que, hecho: <id verificado>} | {que, generico: true}])" % mid)
+        else:
+            for it in sos:
+                if not isinstance(it, dict) or not (it.get("que") or "").strip():
+                    fallas.append("C3D15 el mundo «%s»: cada entrada de `sostiene` dice `que` se dibuja" % mid)
+                elif it.get("hecho"):
+                    if it["hecho"] not in ok_ids:
+                        fallas.append("C3D15 el mundo «%s»: «%s» se apoya en «%s», que no es un hecho ni una cifra verificados del TRABAJO "
+                                      "(verificacion_*.json, base/datos.json)" % (mid, it["que"], it["hecho"]))
+                elif it.get("generico") is not True:
+                    fallas.append("C3D15 el mundo «%s»: «%s» lleva `hecho` (el id que lo sostiene) o `generico: true` (ilustración que no afirma nada)" % (mid, it["que"]))
+            if all(isinstance(it, dict) and it.get("generico") is True for it in sos):
+                if not (esc.get("ilustrativa") or "").strip():
+                    fallas.append("C3D15 el mundo «%s»: nada de lo que dibuja se apoya en un hecho verificado; o verifica cómo es el lugar (la fase "
+                                  "«Referencia visual») o declara `escena.ilustrativa` con la razón (un mecanismo, un lugar cualquiera)" % mid)
+        # C3D17 · gente: si alguien hace lo que pasa, se ve gente haciéndolo
+        gente = 0
+        for pz in mu.get("piezas") or []:
+            if pz.get("tipo") == "actor":
+                gente += bool((M3.ficha(pz.get("objeto"), "objeto") or {}).get("gente"))
+            else:
+                fp = M3.ficha(pz.get("tipo"), "pieza") or {}
+                if fp.get("gente"):
+                    dp = (fp.get("parametros") or {}).get("personas") or {}
+                    gente += int(pz.get("personas", dp.get("defecto", 1)) or 0)
+        if esc["quien"].strip().lower() not in NADIE and gente < 2:
+            fallas.append("C3D17 el mundo «%s»: `escena.quien` dice «%s» y en la escena hay %d persona(s): pon al menos 2 haciendo algo "
+                          "(objetos con `gente` del catálogo, o piezas con `personas`)" % (mid, esc["quien"], gente))
+    # C3D18 · un objeto, un papel: el mismo objeto no se rotula como dos cosas distintas
+    for e in escenas_de(g):
+        mundos_e = [mundo_de_escena(g, e)] + [cb.get("mundo") for cb in e.get("cambios") or []]
+        for mk in e.get("marcas") or []:
+            clave = json.dumps(mk.get("lugar"), sort_keys=True)
+            for mid in mundos_e:
+                for pz in (MUNDOS.get(mid) or {}).get("piezas") or []:
+                    if pz.get("tipo") == "actor" and pz.get("lugar") is not None and json.dumps(pz["lugar"], sort_keys=True) == clave:
+                        if not (M3.ficha(pz.get("objeto"), "objeto") or {}).get("gente"):
+                            papeles.setdefault(pz["objeto"], set()).add((mk.get("texto") or "").strip().lower())
+    for obj, textos in sorted(papeles.items()):
+        if len(textos) > 1:
+            fallas.append("C3D18 el objeto «%s» hace de %d cosas distintas (%s): cada cosa de la historia, su propio objeto (pídelo al constructor "
+                          "con un brief)" % (obj, len(textos), ", ".join("«%s»" % t for t in sorted(textos))))
+    return fallas, avisos
+
+
 def lugares_del_set(nombre_set):
     """{id: {nombre, lon, lat}} del set (design/sets3d/<set>/lugares.json; admite lista o dict)."""
     ruta = os.path.join(RAIZ, "design", "sets3d", nombre_set or "", "lugares.json")
@@ -351,6 +438,9 @@ def revisar_guion(g, st, trabajo):
             vistos.add(mid)
     elif any(e.get("mundo") for e in escenas):
         fallas.append("C3D12 una escena dice `mundo` y el guion tiene uno solo: con varios mundos van en `mundos` ({id: mundo})")
+    f_esc, a_esc = revisar_escenas(g, MUNDOS, trabajo)
+    fallas += f_esc
+    avisos += a_esc
     todas = {pid: p for d in pie_m.values() for pid, p in d.items()}
     piezas, lugares, mundo = todas, {}, {}
 
@@ -397,6 +487,7 @@ def revisar_guion(g, st, trabajo):
         n, hab = x["n"], estimadas(x["voz"])
         mid = mundo_de_escena(g, e)
         mundo, lugares, piezas = MUNDOS.get(mid) or {}, lug_m.get(mid) or {}, pie_m.get(mid) or {}
+        nuevo_mundo = mid != mundo_prev
         if mid != mundo_prev:
             vivas, mundo_prev = [], mid    # al cambiar de mundo, las marcas del anterior se van
         # CAMBIOS de mundo a mitad de la escena (`cambios: [{dice, mundo, transicion?}]`): cada cosa va al mundo vivo en su frase
@@ -497,6 +588,21 @@ def revisar_guion(g, st, trabajo):
                 fallas.append("C3D3 escena %d: la voz nombra «%s» y no hay marca ni la cámara lo mira: lo que se oye se ve"
                               % (n, lugares_e[sorted(ids)[0]].get("nombre")))
         vivas = [m for m in marcas_e if isinstance(m.get("hasta"), int) and m["hasta"] > n]
+        # C3D16 · se explica: cada tramo de cerca dice dónde estamos en sus primeros segundos (un titular o una marca)
+        if e.get("tipo") != "cierre":
+            inicios = ([(0, mid)] if nuevo_mundo else []) + list(cambios_e)
+            rotulos_t = []    # (índice de la palabra en que entra, es titular)
+            for clase, o in elementos(e):
+                if clase in ("marca", "titular"):
+                    p_o = buscar(hab, o["dice"], o.get("vez", 1)) if o.get("dice") else None
+                    rotulos_t.append(p_o[0] if p_o else 0)
+            for i0, w_id in inicios:
+                if ((MUNDOS.get(w_id) or {}).get("escala") or "pais") not in ESCALAS_CERCA:
+                    continue
+                t_i = hab[i0]["start"] if i0 < len(hab) else 0.0
+                if not any(i >= i0 and (hab[i]["start"] if i < len(hab) else 0.0) - t_i <= NOMBRA_S for i in rotulos_t):
+                    fallas.append("C3D16 escena %d: al entrar al mundo «%s» nada dice dónde estamos en sus primeros %.0f s: un titular o una marca "
+                                  "que lo nombre (y cada paso de un proceso, su rótulo)" % (n, w_id, NOMBRA_S))
         if cambios_e:   # la escena termina en otro mundo: lo que sigue vivo es de ese
             vivas, mundo_prev = [], cambios_e[-1][1]
         t0 += x["estimado_s"]
@@ -755,7 +861,7 @@ def construir(trabajo, g, loc, real, solo_escenas=None):
         ce = next(e for e in escenas_de(g) if e.get("tipo") == "cierre")
         capa["cierre"] = {"t": cuadro(cierre_x["off"] + min(cierre_x["fin_voz"] * 0.35, 1.2)), "frase": ce.get("final", ""),
                           "redes": [{"nombre": r["nombre"], "handle": r["handle"]} for r in VD.REDES]}
-    maqueta = {"version": 1, "estilo": (g.get("estilo") or {}).get("id"), "paleta": st.get("paleta"), "fps": FPS,
+    maqueta = {"version": 1, "video": True, "estilo": (g.get("estilo") or {}).get("id"), "paleta": st.get("paleta"), "fps": FPS,
                "duracion_s": total, "protagonista": g.get("protagonista"), "mundo": mundo, "camara": camara,
                "eventos": sorted(eventos, key=lambda v: v["t"]), "marcas": marcas, "capa": capa}
     if anotaciones:

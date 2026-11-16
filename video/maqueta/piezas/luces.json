@@ -29,5 +29,9 @@
   "id": "pueblos",
   "tipo": "luces",
   "lugares": "todos"
- }
+ },
+ "nivel": "fondo",
+ "contiene": [],
+ "animado": false,
+ "gente": false
 }
