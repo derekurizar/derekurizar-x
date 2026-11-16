@@ -1,6 +1,6 @@
 {
  "version": 1,
- "_comentario": "Catálogo de estilos de la maqueta 3D (/video-3d). Un solo estilo por video (M3D8). motor: three (video/maqueta/motor.js dentro de HyperFrames) o blender (scripts/maqueta_blender.py renderiza la placa del mundo y la capa 2D de HyperFrames va encima; necesita Blender ≥ 5.0). Los colores con @ salen de la paleta del video en design/tokens.json → noche.paletas: @fondo, @fondo2 (fondo_acto2), @fondo3 (fondo_golpe), @acento, @texto, @tinta (tinta_sobre_acento). El acento es SOLO de la pieza `protagonista` del maqueta.json; lo demás que se enciende va en `secundario` y la capa 2D no usa el acento. cfg: medidas del estilo (anchos en px de MEDIO ancho de línea; luz.azimut = de dónde viene la luz, 0 norte y 90 este; fuera = cuánto queda de brillo fuera del país). Estilos de blender: `colores` suma mesa, fuera, canto, luces_apagadas y resalte; cfg.luz lleva sol, ambiente y angulo (penumbra); `blender` = motor (CYCLES|EEVEE), muestras, paso de la malla y la forma del relieve (liso: maqueta blanca con el mar un escalón abajo · base: el país recortado en una base con canto y foco corto · capas: curvas de nivel en cartulina). Su `capa` va en tinta sobre fondo claro.",
+ "_comentario": "Catálogo de estilos de la maqueta 3D (/video-3d). Un estilo por mundo (M3D8; en un video con varios mundos cada uno puede tener el suyo, usuario 2026-11-16). motor: three (video/maqueta/motor.js dentro de HyperFrames) o blender (scripts/maqueta_blender.py renderiza la placa del mundo y la capa 2D de HyperFrames va encima; necesita Blender ≥ 5.0). Los colores con @ salen de la paleta del video en design/tokens.json → noche.paletas: @fondo, @fondo2 (fondo_acto2), @fondo3 (fondo_golpe), @acento, @texto, @tinta (tinta_sobre_acento). El acento es SOLO de la pieza `protagonista` del maqueta.json; lo demás que se enciende va en `secundario` y la capa 2D no usa el acento. cfg: medidas del estilo (anchos en px de MEDIO ancho de línea; luz.azimut = de dónde viene la luz, 0 norte y 90 este; fuera = cuánto queda de brillo fuera del país). Estilos de blender: `colores` suma mesa, fuera, canto, luces_apagadas y resalte; cfg.luz lleva sol, ambiente y angulo (penumbra); `blender` = motor (CYCLES|EEVEE), muestras, paso de la malla y la forma del relieve (liso: maqueta blanca con el mar un escalón abajo · base: el país recortado en una base con canto y foco corto · capas: curvas de nivel en cartulina). Su `capa` va en tinta sobre fondo claro.",
  "estilos": [
   {
    "id": "noche",
@@ -171,6 +171,98 @@
      "luz": 0.5
     },
     "resalte_px": 320
+   },
+   "capa": {
+    "sombra": "#16181D",
+    "ink": "@texto",
+    "tinta": "@tinta",
+    "tarjeta_bg": "#FFF6E0",
+    "tarjeta_ink": "#1C1A17",
+    "radio": 12,
+    "velo": 0.72,
+    "sombra_op": 0.75,
+    "vineta_op": 0
+   }
+  },
+  {
+   "id": "dia",
+   "motor": "three",
+   "nombre": "Día",
+   "cuando": "Una escena de cerca a la luz del día: una finca, un taller, un muelle, una plaza; cielo, sol y cosas asentadas en el suelo con su sombra. Para lo que pasa en un lugar chico y se entiende viéndolo de cerca.",
+   "colores": {
+    "fondo": "#8DB8DD",
+    "fondo2": "#E9EEDF",
+    "mar": "#5E9CC8",
+    "tierra_baja": "#5F8F45",
+    "tierra_media": "#8A6A45",
+    "tierra_alta": "#B9A47E",
+    "luz": "#FFF0D2",
+    "ambiente": "#D6E4F0",
+    "costa": "#F3EAD8",
+    "linea": "#2A241D",
+    "frontera": "#1C1A17",
+    "ruta": "#1C1A17",
+    "luces": "#FFF6E0",
+    "acento": "@acento",
+    "secundario": "#FFFFFF",
+    "caliente": "#FFF6E0",
+    "falla_dormida": "#4A3C30",
+    "onda": "#FFFFFF",
+    "flechas": "#1C1A17",
+    "mar_hondo": "#3F7AAB",
+    "exterior": "#6F9356",
+    "bien": "#1E9E57",
+    "medio": "#D99A16",
+    "mal": "#D3352B"
+   },
+   "cfg": {
+    "grano": 0.012,
+    "borde_km": 55,
+    "fuera": 0.5,
+    "costa": 0.0,
+    "onda": 0.75,
+    "luz": {
+     "azimut": 300,
+     "elevacion": 52,
+     "fuerza": 0.7,
+     "ambiente": 0.5,
+     "relieve": 0.7
+    },
+    "frontera": {
+     "ancho": 1.6,
+     "alfa": 0.85,
+     "borde": 0
+    },
+    "ruta": {
+     "ancho": 2.0,
+     "alfa": 0.9,
+     "raya_km": 6
+    },
+    "luces": {
+     "km": 5.0,
+     "min_px": 7,
+     "max_px": 20,
+     "fuerza": 1.0
+    },
+    "falla": {
+     "dormida": 0.75,
+     "dormida_px": 1.4,
+     "nucleo_px": 3.2,
+     "halo_px": 16,
+     "halo": 0.3,
+     "borde_px": 1.8,
+     "cabeza_px": 70,
+     "suelo": 0.5,
+     "suelo_km": 5,
+     "flechas_px": 36,
+     "secundaria": 1.0
+    },
+    "mar": {
+     "relieve": 0.35,
+     "luz": 0.5
+    },
+    "resalte_px": 320,
+    "sombra_contacto": 0.42
    },
    "capa": {
     "sombra": "#16181D",

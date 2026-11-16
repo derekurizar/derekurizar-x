@@ -121,7 +121,7 @@ Mandan sobre el criterio de cualquier agente. La fecha dice desde cuándo; la gu
 - **2026-11-13 · dinamismo = entra en pantalla lo que la voz nombra**; nunca mover la cámara ni escalar una escena para
   aparentar ritmo. Un piloto antes de rehacer algo grande.
 - **2026-11-14 · todo video vertical va en mesa de archivo** (abajo). **/video-3d**: three.js o Blender sobre
-  HyperFrames (Remotion quedó fuera); **un solo estilo por video**, lo elige el orquestador entre ocho y pregunta si no
+  HyperFrames (Remotion quedó fuera); **un estilo por mundo**, lo elige el orquestador entre ocho y pregunta si no
   está seguro; dentro de la maqueta la cámara sí se mueve; el gancho es un evento 3D en el cuadro cero y cada toma nace
   en una frase de la voz; los geodatos se verifican como las cifras; «Maqueta · no a escala» es opcional
   (`flujo-video3d.md`).

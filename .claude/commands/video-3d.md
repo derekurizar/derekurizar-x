@@ -24,7 +24,7 @@ Guía completa: `referencias/flujo-video3d.md` (léela antes de empezar). Contra
    escribe los 5 ganchos (`ganchos --check --cuadros`), el `video-critico` recomienda uno, el director escribe el guion
    (`guion --check`, `storyboard`), el crítico en «Modo 3D» lo revisa (≤ 2 pasadas) y el director propone 5 cierres.
 5. **El estilo, si hay duda** (`veredicto: "elegir_estilo"`): muestra al usuario los cuadros de `<TRABAJO>/estilos/<id>/`
-   de cada candidato con la `razon`; reanuda con `resumeFromRunId` y `args.estilo`. Un solo estilo por video. Con `plano`, **pregunta siempre** si
+   de cada candidato con la `razon`; reanuda con `resumeFromRunId` y `args.estilo`. Un estilo por mundo (con varios mundos, cada uno el suyo si hace sentido). Con `plano`, **pregunta siempre** si
    quiere todas las capas o una versión limpia (`mundo.capas`: `curvas`, `batimetria`, `reticula`), con el mismo cuadro
    en las dos. Si el video habla de una frontera o sale del país, la pieza `frontera` lleva `vecinos: true`.
 6. **El gancho** (`veredicto: "elegir_gancho"`): muéstrale las hojas de `<TRABAJO>/ganchos/<id>/` y la voz de cada uno

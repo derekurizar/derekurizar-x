@@ -41,8 +41,18 @@ Escribe `<TRABAJO>/direccion.json`:
   su escala (las del catálogo), sus piezas y su `protagonista` (lo único en acento **en ese mundo**); se puede volver a
   uno ya visto. El paso entre escalas se cuenta con la cámara: acércate al punto en el mapa y funde al mundo de cerca
   (`transicion`: `fundido` por defecto, `corte` cuando el contraste es el punto, `oscuro` para un salto de tiempo). Un
-  mundo de más (que no cuenta algo propio) se quita; un tramo dura al menos 2.5 s. **Un solo estilo para todos**; un
+  mundo de más (que no cuenta algo propio) se quita; un tramo dura al menos 2.5 s. **Cada mundo puede tener su estilo** (`mundos.<id>.estilo`, usuario 2026-11-16: «mientras todo haga sentido»: la escena de cerca de día en `dia`, el mapa en `noche`, con su razón); un
   estilo de Blender no dibuja todas las escalas (mira `motores` en el catálogo).
+- **Detalle y dinamismo** (usuario, 2026-11-16: «hace falta más detalle… re usaste muchas escenas… el barco se traba»):
+  - **Cada paso, su mundo y su objeto.** No vuelvas a un mundo a mitad del video (C3D13: solo el cierre puede volver al del
+    gancho). Un mismo objeto no hace de dos cosas distintas: si la casa ya fue el beneficio, la bodega y el tostador son
+    otros objetos (pídelos con un brief si no existen).
+  - **Escenas de cerca con vida:** en un mundo chico (finca, taller, muelle) usa el estilo `dia` si hace sentido, gente
+    que hace algo (objetos articulados: cosechar, caminar, cargar), objetos que se mueven y la cámara cerca (15–80 m).
+  - **Algo pasa en cada oración:** una acción nueva (alguien cosecha, el camión arranca, la grúa sube el contenedor, el
+    tambor gira), no solo una marca o una cifra. Varía el encuadre: de frente, cenital, seguimiento, acercamiento.
+  - **Lo que la cámara sigue no se traba** (M3D14): si la cámara va tras un actor, su movimiento dura hasta que la cámara
+    lo suelta.
 - **La dirección por frase**: para cada oración del borrador, el **verbo visual** del catálogo que la cuenta. Un
   mecanismo → objetos que se mueven, flujos y trazos; un lugar → la cámara que llega, una marca, un resaltado; un número →
   una cifra en la capa o una medida/etiqueta si el catálogo la tiene; una propagación → una onda. Cada frase con algo

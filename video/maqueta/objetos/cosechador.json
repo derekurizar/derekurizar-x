@@ -1,0 +1,21 @@
+{
+ "tipo": "cosechador",
+ "clase": "objeto",
+ "cuando": "quien cosecha café a mano en la ladera (muñeco sin rostro, sombrero y costal): el brazo sube a la rama y baja al costal",
+ "parametros": {},
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "medidas": {
+  "largo_m": 0.6,
+  "ancho_m": 0.7,
+  "alto_m": 1.74
+ },
+ "ejemplo": {
+  "objeto": "cosechador"
+ }
+}

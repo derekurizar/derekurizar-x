@@ -1,7 +1,7 @@
 {
  "tipo": "cafetal",
  "clase": "pieza",
- "cuando": "una ladera de cafetal en terrazas: hileras de cafetos (arbustos de hoja verde oscuro) con racimos de cereza; las maduras en rojo, que se avivan al resaltar",
+ "cuando": "una ladera de cafetal de cerca: cafetos con cereza roja y verde en un talud de tierra, bajo árboles de sombra si se pide; las maduras se avivan al resaltar",
  "parametros": {
   "area": {
    "tipo": "texto",
@@ -23,7 +23,7 @@
     40
    ],
    "defecto": 12,
-   "descripcion": "cuántas terrazas (una hilera de cafetos en cada una)"
+   "descripcion": "cuántas hileras de cafetos (la ladera sube en un talud suave, casi plano donde va cada hilera; sin muros de terraza)"
   },
   "pendiente_m": {
    "tipo": "numero",
@@ -33,7 +33,7 @@
     200
    ],
    "defecto": 60,
-   "descripcion": "cuánto sube la ladera de su borde bajo al alto, en metros (un actor de pie en la terraza k, 0 = la de abajo, va con lev_m = pendiente_m · k / hileras)"
+   "descripcion": "cuánto sube la ladera de su borde bajo al alto, en metros (un actor de pie al comienzo de la hilera k, 0 = la de abajo, va con lev_m = pendiente_m · k / hileras)"
   },
   "rumbo": {
    "tipo": "numero",
@@ -54,6 +54,16 @@
    ],
    "defecto": 0.8,
    "descripcion": "la parte de las cerezas que están maduras (rojas, en el «mal» del estilo; nunca el acento); el resto, verdes"
+  },
+  "sombra": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    1
+   ],
+   "defecto": 0,
+   "descripcion": "árboles de sombra sobre los cafetos (el café de Guatemala se cultiva bajo sombra): 0 = ninguno; de 0 a 1, la parte del suelo que cubren sus copas (troncos delgados de 8–14 m, copas anchas y planas, su sombra suave en el suelo, más marcada en el estilo dia)"
   },
   "semilla": {
    "tipo": "entero",
@@ -83,7 +93,7 @@
   "three"
  ],
  "usa": [
-  "persona"
+  "cosechador"
  ],
  "ejemplo": {
   "id": "cafetal",
@@ -110,6 +120,7 @@
   "pendiente_m": 60,
   "rumbo": 90,
   "maduras": 0.8,
-  "personas": 1
+  "personas": 1,
+  "sombra": 0.4
  }
 }

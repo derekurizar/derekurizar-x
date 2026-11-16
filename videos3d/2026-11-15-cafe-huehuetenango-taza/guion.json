@@ -3,29 +3,32 @@
   "version": 1,
   "escenas": [
     {
-      "mundo": "finca",
+      "n": 1,
+      "tipo": "gancho",
+      "acto": 1,
       "secuencia": 1,
       "texto": "En una ladera de Huehuetenango, Guatemala, el café empieza como una cereza roja.",
+      "mundo": "finca",
       "titular": {
         "kicker": "HUEHUETENANGO, GUATEMALA",
         "texto": "Una taza de café empieza aquí"
       },
       "camara": [
         {
-          "mira": [
-            0,
-            -4
-          ],
-          "dist_m": 70,
-          "azimut": 0,
-          "elevacion": 20
+          "mira": "ladera",
+          "dist_m": 26,
+          "azimut": -10,
+          "elevacion": 16
         },
         {
           "al": "fin",
-          "mira": "ladera",
-          "dist_m": 50,
-          "azimut": 4,
-          "elevacion": 17
+          "mira": [
+            0,
+            -25
+          ],
+          "dist_m": 19,
+          "azimut": -2,
+          "elevacion": 14
         }
       ],
       "eventos": [
@@ -35,93 +38,158 @@
           "dur": 4.5,
           "sfx": "pulso"
         }
-      ],
-      "n": 1,
-      "tipo": "gancho",
-      "acto": 1
+      ]
     },
     {
       "n": 2,
       "tipo": "toma",
-      "mundo": "finca",
       "acto": 1,
       "secuencia": 1,
       "texto": "Para llegar a una taza en otro país, va a perder la mayor parte de su peso.",
+      "mundo": "finca",
       "camara": [
+        {
+          "dice": "en otro país",
+          "mira": [
+            0,
+            -16
+          ],
+          "dist_m": 40,
+          "azimut": 6,
+          "elevacion": 26
+        },
         {
           "al": "fin",
           "mira": [
-            6,
-            -4
+            0,
+            -2
           ],
-          "dist_m": 44,
-          "azimut": 8,
-          "elevacion": 15
+          "dist_m": 68,
+          "azimut": 14,
+          "elevacion": 34
         }
       ],
       "eventos": [
         {
-          "dice": "su peso",
+          "dice": "va a perder",
           "tipo": "resaltar",
           "pieza": "cafetal",
-          "dur": 2.0
+          "dur": 1.8
         }
       ]
     },
     {
       "n": 3,
       "tipo": "toma",
-      "mundo": "finca",
       "acto": 1,
       "secuencia": 1,
       "texto": "Casi siempre la cuida gente con poca tierra: en el país, el 97 % de quienes producen café son pequeños productores. La cereza cosechada va al beneficio húmedo. Ahí se vuelve pergamino, y empieza a adelgazar: 4.74 kilos de cereza dan un kilo de pergamino.",
+      "mundo": "beneficio",
+      "transicion": "fundido",
+      "fundido_s": 0.6,
       "camara": [
         {
-          "dice": "gente con poca tierra",
           "mira": [
-            6,
-            -9
+            -46,
+            -134
           ],
-          "dist_m": 28,
-          "azimut": 6,
-          "elevacion": 14
+          "dist_m": 18,
+          "azimut": -10,
+          "elevacion": 18
+        },
+        {
+          "dice": "en el país",
+          "mira": [
+            -46,
+            -133
+          ],
+          "dist_m": 20,
+          "azimut": -4,
+          "elevacion": 20
+        },
+        {
+          "dice": "de quienes producen café",
+          "mira": [
+            -48,
+            -102
+          ],
+          "dist_m": 64,
+          "azimut": -5,
+          "elevacion": 44
         },
         {
           "dice": "pequeños productores",
           "mira": [
-            6,
-            -9
+            -46,
+            -104
           ],
-          "dist_m": 32,
-          "azimut": 0,
-          "elevacion": 16
+          "dist_m": 62,
+          "azimut": -16,
+          "elevacion": 42
         },
         {
           "dice": "beneficio húmedo",
           "mira": [
-            74,
-            -42
+            -10,
+            -116
           ],
-          "dist_m": 80,
-          "azimut": -22,
-          "elevacion": 24
+          "dist_m": 40,
+          "azimut": -42,
+          "elevacion": 26
+        },
+        {
+          "dice": "pergamino,",
+          "mira": [
+            -2,
+            -116
+          ],
+          "dist_m": 36,
+          "azimut": -30,
+          "elevacion": 32
         },
         {
           "dice": "4.74",
           "mira": [
-            78,
-            -46
+            20,
+            -116
           ],
-          "dist_m": 68,
-          "azimut": -16,
-          "elevacion": 28
+          "dist_m": 40,
+          "azimut": -20,
+          "elevacion": 52
+        },
+        {
+          "al": "fin",
+          "mira": [
+            22,
+            -116
+          ],
+          "dist_m": 36,
+          "azimut": -12,
+          "elevacion": 56
         }
       ],
       "eventos": [
         {
+          "tipo": "resaltar",
+          "pieza": "parcela-1",
+          "dur": 3.0
+        },
+        {
+          "dice": "de quienes producen café",
+          "tipo": "resaltar",
+          "pieza": "parcela-3",
+          "dur": 2.2
+        },
+        {
+          "dice": "de quienes producen café",
+          "tipo": "resaltar",
+          "pieza": "parcela-2",
+          "dur": 2.2
+        },
+        {
           "dice": "beneficio húmedo",
           "tipo": "resaltar",
-          "pieza": "beneficio-humedo",
+          "pieza": "beneficio",
           "dur": 3.0
         }
       ],
@@ -131,20 +199,21 @@
           "tipo": "pulso",
           "sobre": [
             [
-              6,
-              -9
+              -46,
+              -128
             ]
           ],
           "radio_m": 3,
-          "hasta_dice": "97 %"
+          "hasta_dice": "en el país"
         }
       ],
       "marcas": [
         {
           "dice": "beneficio húmedo",
-          "lugar": "beneficio",
+          "lugar": "recibo",
           "texto": "Beneficio húmedo",
-          "sub": "Cereza → pergamino"
+          "sub": "Cereza → pergamino",
+          "hasta_dice": "pergamino,"
         }
       ],
       "cifras": [
@@ -154,7 +223,7 @@
           "rotulo": "de quienes producen café son pequeños productores",
           "cifra": "taza-c10",
           "fuente": "USDA",
-          "hasta_dice": "beneficio húmedo"
+          "hasta_dice": "La cereza cosechada"
         },
         {
           "dice": "4.74",
@@ -168,10 +237,10 @@
     {
       "n": 4,
       "tipo": "toma",
-      "mundo": "carretera",
       "acto": 2,
       "secuencia": 2,
       "texto": "Luego, el pergamino sale por carretera. En un beneficio seco, la trilla lo convierte en café oro. Otra vez pierde peso: hacen falta 1.24 kilos de pergamino para un kilo de oro.",
+      "mundo": "carretera",
       "transicion": "fundido",
       "fundido_s": 0.6,
       "camara": [
@@ -179,50 +248,67 @@
           "mira": {
             "actor": "camion-cafe"
           },
-          "dist_m": 55,
-          "azimut": -50,
-          "elevacion": 22
+          "dist_m": 30,
+          "azimut": 150,
+          "elevacion": 18
         },
         {
           "dice": "sale por carretera",
           "mira": {
             "actor": "camion-cafe"
           },
-          "dist_m": 50,
-          "azimut": -35,
-          "elevacion": 22
+          "dist_m": 34,
+          "azimut": 140,
+          "elevacion": 20
         },
         {
           "dice": "trilla",
-          "mira": {
-            "actor": "camion-cafe"
-          },
-          "dist_m": 70,
-          "azimut": -15,
-          "elevacion": 28
+          "mira": [
+            22,
+            -4
+          ],
+          "dist_m": 34,
+          "azimut": 148,
+          "elevacion": 20
         },
         {
-          "dice": "1.24",
-          "mira": {
-            "actor": "camion-cafe"
-          },
-          "dist_m": 80,
-          "azimut": -5,
-          "elevacion": 32
+          "dice": "pierde peso",
+          "mira": [
+            20,
+            -8
+          ],
+          "dist_m": 20,
+          "azimut": 160,
+          "elevacion": 15
+        },
+        {
+          "al": "fin",
+          "mira": [
+            19,
+            -9
+          ],
+          "dist_m": 17,
+          "azimut": 172,
+          "elevacion": 14
         }
       ],
       "eventos": [
         {
-          "dice": "sale por carretera",
           "tipo": "mover",
           "actor": "camion-cafe",
-          "a": "bodega",
-          "dur": 5.0
+          "a": "puerta",
+          "hasta_dice": "En un beneficio seco"
+        },
+        {
+          "dice": "la trilla",
+          "tipo": "resaltar",
+          "pieza": "bodega",
+          "dur": 2.5
         }
       ],
       "marcas": [
         {
-          "dice": "café oro",
+          "dice": "En un beneficio seco",
           "lugar": "bodega",
           "texto": "Beneficio seco",
           "sub": "Trilla: pergamino → oro"
@@ -241,25 +327,32 @@
     {
       "n": 5,
       "tipo": "toma",
-      "mundo": "pais",
       "acto": 2,
       "secuencia": 2,
       "texto": "Vista desde arriba, esa ladera está en Huehuetenango: sus cafetales crecen desde 1,500 metros sobre el mar, en montañas que no son volcánicas.",
+      "mundo": "pais",
       "transicion": "fundido",
       "fundido_s": 0.6,
       "camara": [
         {
           "mira": "huehuetenango",
-          "dist_km": 140,
+          "dist_km": 240,
           "azimut": 0,
-          "elevacion": 55
+          "elevacion": 72
         },
         {
           "dice": "1,500 metros",
           "mira": "huehuetenango",
-          "dist_km": 95,
-          "azimut": 15,
-          "elevacion": 42
+          "dist_km": 120,
+          "azimut": 20,
+          "elevacion": 40
+        },
+        {
+          "al": "fin",
+          "mira": "huehuetenango",
+          "dist_km": 100,
+          "azimut": 34,
+          "elevacion": 30
         }
       ],
       "eventos": [
@@ -291,41 +384,41 @@
     {
       "n": 6,
       "tipo": "toma",
-      "mundo": "pais",
       "acto": 2,
       "secuencia": 3,
       "texto": "Y por el Atlántico, en 2022, más de 72 millones de kilos de café pasaron por Puerto Barrios. En 2025, Guatemala exportó 170.6 millones de kilos de café.",
+      "mundo": "pais",
       "titular": {
         "kicker": "PUERTO BARRIOS, IZABAL",
         "texto": "Café que pasó por el Atlántico"
       },
       "camara": [
         {
-          "dice": "por el Atlántico",
+          "dice": "más de 72 millones",
           "mira": [
-            -90.4,
-            15.4
+            -89.6,
+            15.5
           ],
-          "dist_km": 420,
-          "azimut": 10,
-          "elevacion": 55
+          "dist_km": 330,
+          "azimut": 6,
+          "elevacion": 52
         },
         {
           "dice": "Puerto Barrios",
           "mira": "puerto-barrios",
-          "dist_km": 200,
-          "azimut": 0,
-          "elevacion": 50
+          "dist_km": 220,
+          "azimut": 10,
+          "elevacion": 46
         },
         {
-          "dice": "170.6 millones",
+          "dice": "Guatemala exportó",
           "mira": [
-            -89.6,
-            15.4
+            -90.25,
+            15.6
           ],
-          "dist_km": 600,
+          "dist_km": 850,
           "azimut": 0,
-          "elevacion": 62
+          "elevacion": 64
         }
       ],
       "eventos": [
@@ -334,6 +427,12 @@
           "tipo": "resaltar",
           "lugar": "puerto-barrios",
           "dur": 3.0
+        },
+        {
+          "dice": "Guatemala exportó",
+          "tipo": "resaltar",
+          "pieza": "frontera",
+          "dur": 3.0
         }
       ],
       "marcas": [
@@ -341,7 +440,7 @@
           "dice": "Puerto Barrios",
           "lugar": "puerto-barrios",
           "texto": "Puerto Barrios",
-          "dura": 3.6
+          "dura": 2.4
         }
       ],
       "cifras": [
@@ -365,70 +464,81 @@
     {
       "n": 7,
       "tipo": "toma",
-      "mundo": "puerto",
       "acto": 2,
       "secuencia": 3,
       "texto": "Cruza el mar en contenedores, y el 42 % va a Estados Unidos, su primer destino. Detrás, en la última cosecha, vienen Japón, Canadá y Bélgica. Cada kilo salió, en promedio, a 7.66 dólares.",
+      "mundo": "puerto",
       "transicion": "fundido",
       "fundido_s": 0.6,
+      "titular": {
+        "dice": "Japón",
+        "kicker": "DETRÁS DE EE. UU.",
+        "texto": "Japón, Canadá y Bélgica"
+      },
       "camara": [
         {
-          "mira": "mar",
-          "dist_m": 650,
-          "azimut": 10,
-          "elevacion": 34
+          "mira": [
+            0,
+            -262
+          ],
+          "dist_m": 120,
+          "azimut": 160,
+          "elevacion": 22
+        },
+        {
+          "dice": "en contenedores",
+          "mira": [
+            0,
+            -266
+          ],
+          "dist_m": 100,
+          "azimut": 168,
+          "elevacion": 24
         },
         {
           "dice": "42 %",
           "mira": {
             "actor": "buque"
           },
-          "dist_m": 480,
-          "azimut": 15,
-          "elevacion": 28
-        },
-        {
-          "dice": "primer destino",
-          "mira": {
-            "actor": "buque"
-          },
-          "dist_m": 600,
-          "azimut": 22,
-          "elevacion": 28
+          "dist_m": 170,
+          "azimut": 150,
+          "elevacion": 24
         },
         {
           "dice": "Japón",
           "mira": {
             "actor": "buque"
           },
-          "dist_m": 760,
-          "azimut": 30,
-          "elevacion": 32
+          "dist_m": 320,
+          "azimut": 125,
+          "elevacion": 28
         },
         {
           "dice": "en promedio",
           "mira": {
             "actor": "buque"
           },
-          "dist_m": 900,
-          "azimut": 36,
-          "elevacion": 36
+          "dist_m": 470,
+          "azimut": 105,
+          "elevacion": 32
         },
         {
-          "dice": "7.66 dólares",
-          "mira": {
-            "actor": "buque"
-          },
-          "dist_m": 1050,
-          "azimut": 40,
-          "elevacion": 40
+          "al": "fin",
+          "mira": "mar",
+          "dist_m": 520,
+          "azimut": 95,
+          "elevacion": 34
         }
       ],
-      "titular": {
-        "dice": "Japón",
-        "kicker": "DETRÁS DE EE. UU.",
-        "texto": "Japón, Canadá y Bélgica"
-      },
+      "eventos": [
+        {
+          "dice": "va a Estados Unidos",
+          "tipo": "mover",
+          "actor": "buque",
+          "a": "mar",
+          "hasta_dice": "7.66 dólares"
+        }
+      ],
       "cifras": [
         {
           "dice": "42 %",
@@ -445,94 +555,85 @@
           "cifra": "dat-c03",
           "fuente": "Banguat"
         }
-      ],
-      "eventos": [
-        {
-          "dice": "Cruza el mar",
-          "tipo": "aparecer",
-          "pieza": "buque",
-          "dur": 0.6
-        },
-        {
-          "dice": "Cruza el mar",
-          "tipo": "mover",
-          "actor": "buque",
-          "a": "mar",
-          "dur": 12.0
-        }
       ]
     },
     {
       "n": 8,
       "tipo": "toma",
-      "mundo": "taza",
       "acto": 3,
       "secuencia": 4,
       "texto": "Allá lo tuestan, y adelgaza una vez más: pierde entre el 12 y el 20 % de su peso, según el tueste. De casi 6 kilos de cereza queda menos de un kilo de café tostado. Y en una cafetería de Estados Unidos, un café normal cuesta, en la mediana, 3.52 dólares.",
+      "mundo": "cafeteria",
       "transicion": "oscuro",
       "fundido_s": 0.6,
       "camara": [
         {
           "mira": [
-            -6,
-            52
+            -10,
+            8
           ],
-          "dist_m": 62,
-          "azimut": 0,
-          "elevacion": 20
+          "dist_m": 18,
+          "azimut": -20,
+          "elevacion": 16
         },
         {
-          "dice": "según el tueste",
+          "dice": "pierde entre",
           "mira": [
-            -6,
-            53
+            -10,
+            8
           ],
-          "dist_m": 54,
-          "azimut": 6,
-          "elevacion": 19
+          "dist_m": 16,
+          "azimut": 18,
+          "elevacion": 22
         },
         {
           "dice": "casi 6 kilos",
           "mira": [
-            -1,
-            57
+            1,
+            2
           ],
-          "dist_m": 36,
-          "azimut": 10,
-          "elevacion": 18
+          "dist_m": 26,
+          "azimut": 30,
+          "elevacion": 24
         },
         {
           "dice": "café tostado",
           "mira": [
-            3,
-            62.5
+            12,
+            -4
           ],
-          "dist_m": 20,
-          "azimut": 15,
-          "elevacion": 17
+          "dist_m": 16,
+          "azimut": 36,
+          "elevacion": 18
         },
         {
           "dice": "cafetería",
           "mira": [
-            3,
-            62.5
-          ],
-          "dist_m": 18,
-          "azimut": 20,
-          "elevacion": 16
-        },
-        {
-          "dice": "3.52 dólares",
-          "mira": [
-            3,
-            62.5
+            12,
+            -4
           ],
           "dist_m": 16,
-          "azimut": 24,
-          "elevacion": 16
+          "azimut": 46,
+          "elevacion": 18
+        },
+        {
+          "al": "fin",
+          "mira": [
+            12,
+            -4
+          ],
+          "dist_m": 16,
+          "azimut": 58,
+          "elevacion": 18
         }
       ],
       "eventos": [
+        {
+          "dice": "Allá lo tuestan",
+          "tipo": "resaltar",
+          "pieza": "tostadora",
+          "dur": 2.5
+        },
         {
           "dice": "menos de un kilo",
           "tipo": "aparecer",
@@ -554,8 +655,8 @@
           "tipo": "pulso",
           "sobre": [
             [
-              3,
-              62
+              12,
+              -4
             ]
           ],
           "radio_m": 3
@@ -591,29 +692,39 @@
     {
       "n": 9,
       "tipo": "cierre",
-      "mundo": "finca",
       "acto": 3,
       "secuencia": 4,
       "texto": "Lo que allá se paga por una taza empezó aquí, en una ladera de Huehuetenango, como una cereza roja.",
+      "final": "Cada taza de allá empezó como una cereza de aquí.",
+      "mundo": "finca",
       "transicion": "fundido",
       "fundido_s": 0.6,
-      "final": "Cada taza de allá empezó como una cereza de aquí.",
       "camara": [
         {
-          "mira": "ladera",
-          "dist_m": 50,
-          "azimut": 4,
-          "elevacion": 17
+          "mira": [
+            0,
+            -2
+          ],
+          "dist_m": 64,
+          "azimut": 12,
+          "elevacion": 32
+        },
+        {
+          "dice": "en una ladera",
+          "mira": [
+            1,
+            -22
+          ],
+          "dist_m": 32,
+          "azimut": -6,
+          "elevacion": 18
         },
         {
           "al": "fin",
-          "mira": [
-            0,
-            -4
-          ],
-          "dist_m": 70,
-          "azimut": 0,
-          "elevacion": 20
+          "mira": "ladera",
+          "dist_m": 26,
+          "azimut": -10,
+          "elevacion": 16
         }
       ],
       "eventos": [
@@ -627,14 +738,16 @@
     }
   ],
   "estilo": {
-    "id": "noche",
-    "razon": "La idea visual es una sola cosa encendida (la cereza, luego el camión, la ruta, el barco y la taza) sobre mundos a oscuras: es exactamente lo que hace noche, y lo eligió el usuario. Dibuja en three.js las escalas esquema y pais, así que sirve para los cinco mundos (un estilo de Blender solo dibuja pais).",
+    "id": "dia",
     "confianza": "alta",
     "candidatos": [
+      "dia",
+      "color",
       "noche"
-    ]
+    ],
+    "razon": "Lo pidió el usuario: la finca como una escena de verdad. Cada paso del café pasa en un lugar chico que se entiende viéndolo de cerca y de día (la ladera bajo sombra con gente cosechando, el beneficio con su agua, la galera de la trilla, el muelle con la grúa, la tostadora y la taza): eso es `dia`. El mapa del país va en `color` (mundos.pais.estilo): el mismo día, ahora visto desde arriba, con el relieve teñido por altura, que es lo que esa parte cuenta (1,500 metros, montañas no volcánicas); `noche` habría metido una noche entre dos escenas de día sin que la historia lo pida."
   },
-  "idea_visual": "Una cereza roja es lo único encendido en una ladera a oscuras de Huehuetenango, y la seguimos de mundo en mundo (el beneficio, el camión, el mapa, el barco) hasta que vuelve a encenderse como una taza humeante en otro país.",
+  "idea_visual": "Seguimos el café de día, paso por paso y cada paso en su lugar: la ladera de Huehuetenango bajo sombra con gente cosechando, el beneficio donde se vuelve pergamino, la carretera y la trilla, el mapa desde arriba, la grúa que lo sube al barco y la tostadora junto a una taza humeante, hasta volver a la misma ladera.",
   "protagonista": "cafetal",
   "mundos": {
     "finca": {
@@ -642,16 +755,12 @@
       "receta": "campo",
       "semilla": 11,
       "tamano_m": 1200,
+      "estilo": "dia",
       "lugares": {
         "ladera": {
-          "x": 0,
-          "y": 0,
+          "x": 2,
+          "y": -26,
           "nombre": "Ladera"
-        },
-        "beneficio": {
-          "x": 80,
-          "y": -48,
-          "nombre": "Beneficio húmedo"
         }
       },
       "piezas": [
@@ -661,95 +770,243 @@
           "puntos": [
             [
               -40,
-              -25
+              -30
             ],
             [
               40,
-              -25
+              -30
             ],
             [
               42,
-              25
+              30
             ],
             [
               -38,
-              27
+              28
             ]
           ],
           "hileras": 10,
-          "pendiente_m": 20,
+          "pendiente_m": 10,
           "rumbo": 90,
           "maduras": 0.8,
-          "personas": 2,
+          "sombra": 0.45,
+          "personas": 4,
           "semilla": 3
         },
         {
-          "id": "recolectora",
+          "id": "cosechador-1",
           "tipo": "actor",
-          "objeto": "persona",
+          "objeto": "cosechador",
           "lugar": [
-            6,
-            -9
+            3,
+            -28
           ],
-          "rumbo": 270,
-          "lev_m": 6,
-          "tamano": 1.8
+          "rumbo": 300,
+          "tamano": 1.2
         },
         {
-          "id": "beneficio-humedo",
-          "tipo": "zona",
-          "puntos": [
-            [
-              68,
-              -36
-            ],
-            [
-              92,
-              -36
-            ],
-            [
-              92,
-              -60
-            ],
-            [
-              68,
-              -60
-            ]
-          ],
-          "tono": "secundario",
-          "opacidad": 0.12
-        },
-        {
-          "id": "casa-beneficio",
+          "id": "cosechador-2",
           "tipo": "actor",
-          "objeto": "casa",
-          "lugar": "beneficio",
-          "rumbo": 270,
-          "tamano": 3
+          "objeto": "cosechador",
+          "lugar": [
+            -6,
+            -26
+          ],
+          "rumbo": 250,
+          "tamano": 1.2
         }
       ],
       "protagonista": "cafetal"
+    },
+    "beneficio": {
+      "escala": "esquema",
+      "receta": "campo",
+      "semilla": 8,
+      "tamano_m": 1200,
+      "estilo": "dia",
+      "lugares": {
+        "parcela": {
+          "x": -48,
+          "y": -116,
+          "nombre": "Parcela"
+        },
+        "recibo": {
+          "x": -8,
+          "y": -116,
+          "nombre": "Recibo"
+        },
+        "patio": {
+          "x": 20,
+          "y": -116,
+          "nombre": "Patio"
+        }
+      },
+      "piezas": [
+        {
+          "id": "parcela-1",
+          "tipo": "cafetal",
+          "puntos": [
+            [
+              -60,
+              -127
+            ],
+            [
+              -36,
+              -127
+            ],
+            [
+              -36,
+              -107
+            ],
+            [
+              -60,
+              -107
+            ]
+          ],
+          "hileras": 4,
+          "pendiente_m": 3,
+          "rumbo": 90,
+          "maduras": 0.8,
+          "sombra": 0.45,
+          "personas": 0,
+          "semilla": 5
+        },
+        {
+          "id": "parcela-2",
+          "tipo": "cafetal",
+          "puntos": [
+            [
+              -60,
+              -71
+            ],
+            [
+              -36,
+              -71
+            ],
+            [
+              -36,
+              -51
+            ],
+            [
+              -60,
+              -51
+            ]
+          ],
+          "hileras": 4,
+          "pendiente_m": 3,
+          "rumbo": 90,
+          "maduras": 0.7,
+          "sombra": 0.4,
+          "personas": 1,
+          "semilla": 6
+        },
+        {
+          "id": "parcela-3",
+          "tipo": "cafetal",
+          "puntos": [
+            [
+              -60,
+              -99
+            ],
+            [
+              -36,
+              -99
+            ],
+            [
+              -36,
+              -79
+            ],
+            [
+              -60,
+              -79
+            ]
+          ],
+          "hileras": 4,
+          "pendiente_m": 3,
+          "rumbo": 90,
+          "maduras": 0.75,
+          "sombra": 0.4,
+          "personas": 1,
+          "semilla": 7
+        },
+        {
+          "id": "casa-1",
+          "tipo": "actor",
+          "objeto": "casa",
+          "lugar": [
+            -72,
+            -116
+          ],
+          "rumbo": 0
+        },
+        {
+          "id": "casa-2",
+          "tipo": "actor",
+          "objeto": "casa",
+          "lugar": [
+            -72,
+            -60
+          ],
+          "rumbo": 0
+        },
+        {
+          "id": "casa-3",
+          "tipo": "actor",
+          "objeto": "casa",
+          "lugar": [
+            -72,
+            -88
+          ],
+          "rumbo": 0
+        },
+        {
+          "id": "productora",
+          "tipo": "actor",
+          "objeto": "cosechador",
+          "lugar": [
+            -46,
+            -128
+          ],
+          "rumbo": 290,
+          "tamano": 1.2
+        },
+        {
+          "id": "beneficio",
+          "tipo": "beneficio",
+          "lugar": [
+            2,
+            -116
+          ],
+          "rumbo": 0,
+          "tamano": 1,
+          "personas": 2,
+          "semilla": 4
+        }
+      ],
+      "protagonista": "beneficio"
     },
     "carretera": {
       "escala": "esquema",
       "receta": "campo",
       "semilla": 4,
       "tamano_m": 1200,
+      "estilo": "dia",
       "lugares": {
         "bodega": {
-          "x": 72,
-          "y": 14,
+          "x": 20,
+          "y": -8,
           "nombre": "Beneficio seco"
+        },
+        "puerta": {
+          "x": 33,
+          "y": 12,
+          "nombre": "Puerta"
         }
       },
       "piezas": [
         {
           "id": "camino",
           "tipo": "calles"
-        },
-        {
-          "id": "rio",
-          "tipo": "agua"
         },
         {
           "id": "camion-cafe",
@@ -759,36 +1016,30 @@
           "claves": [
             {
               "t": 0,
-              "s": 600
+              "s": 625
             }
-          ],
-          "tamano": 2
+          ]
         },
         {
-          "id": "beneficio-seco",
+          "id": "bodega",
           "tipo": "actor",
-          "objeto": "casa",
+          "objeto": "bodega",
           "lugar": "bodega",
-          "rumbo": 270,
-          "tamano": 3
+          "rumbo": 58
         }
       ],
-      "protagonista": "camion-cafe"
+      "protagonista": "bodega"
     },
     "pais": {
       "escala": "pais",
       "set": "guatemala",
       "exageracion": 5,
+      "estilo": "color",
       "piezas": [
         {
           "id": "frontera",
           "tipo": "frontera",
           "vecinos": true
-        },
-        {
-          "id": "pueblos",
-          "tipo": "luces",
-          "lugares": "todos"
         }
       ]
     },
@@ -796,12 +1047,18 @@
       "escala": "esquema",
       "receta": "costa",
       "semilla": 5,
-      "tamano_m": 2400,
+      "tamano_m": 1200,
+      "estilo": "dia",
       "lugares": {
         "muelle": {
           "x": 0,
-          "y": -380,
+          "y": -244,
           "nombre": "Muelle"
+        },
+        "mar": {
+          "x": 230,
+          "y": -330,
+          "nombre": "Mar"
         }
       },
       "piezas": [
@@ -818,9 +1075,9 @@
           "tipo": "edificios"
         },
         {
-          "id": "camion-puerto",
+          "id": "grua",
           "tipo": "actor",
-          "objeto": "camionsacos",
+          "objeto": "grua",
           "lugar": "muelle",
           "rumbo": 270
         },
@@ -830,37 +1087,120 @@
           "objeto": "barco",
           "puntos": [
             [
-              30,
-              -480
+              -30,
+              -276
             ],
             [
-              15,
-              -640
+              60,
+              -278
             ],
             [
-              0,
-              -792
+              160,
+              -300
             ],
             [
-              0,
-              -1080
+              260,
+              -350
+            ],
+            [
+              360,
+              -420
+            ],
+            [
+              460,
+              -500
             ]
           ],
           "claves": [
             {
               "t": 0,
-              "s": "0%"
+              "s": 0
             }
           ]
+        },
+        {
+          "id": "pila-1",
+          "tipo": "actor",
+          "objeto": "contenedor",
+          "lugar": [
+            24,
+            -228
+          ],
+          "rumbo": 0
+        },
+        {
+          "id": "pila-2",
+          "tipo": "actor",
+          "objeto": "contenedor",
+          "lugar": [
+            24,
+            -228
+          ],
+          "rumbo": 0,
+          "lev_m": 2.6
+        },
+        {
+          "id": "pila-3",
+          "tipo": "actor",
+          "objeto": "contenedor",
+          "lugar": [
+            24,
+            -224.8
+          ],
+          "rumbo": 0
+        },
+        {
+          "id": "pila-4",
+          "tipo": "actor",
+          "objeto": "contenedor",
+          "lugar": [
+            31,
+            -228
+          ],
+          "rumbo": 0
+        },
+        {
+          "id": "pila-5",
+          "tipo": "actor",
+          "objeto": "contenedor",
+          "lugar": [
+            31,
+            -224.8
+          ],
+          "rumbo": 0
+        },
+        {
+          "id": "pila-6",
+          "tipo": "actor",
+          "objeto": "contenedor",
+          "lugar": [
+            31,
+            -224.8
+          ],
+          "rumbo": 0,
+          "lev_m": 2.6
         }
       ],
       "protagonista": "buque"
     },
-    "taza": {
+    "cafeteria": {
       "escala": "esquema",
       "receta": "plaza",
       "semilla": 3,
-      "tamano_m": 900,
+      "tamano_m": 600,
+      "estilo": "dia",
+      "lugares": {
+        "tostador": {
+          "x": -10,
+          "y": 8,
+          "nombre": "Tostador"
+        },
+        "mesa": {
+          "x": 12,
+          "y": -4,
+          "nombre": "Mesa"
+        }
+      },
       "piezas": [
         {
           "id": "calles",
@@ -873,42 +1213,43 @@
         {
           "id": "tostadora",
           "tipo": "actor",
-          "objeto": "casa",
+          "objeto": "tostadora",
           "lugar": "tostador",
-          "rumbo": 270,
-          "tamano": 3
+          "rumbo": 300,
+          "tamano": 1.6
+        },
+        {
+          "id": "tostador-persona",
+          "tipo": "actor",
+          "objeto": "persona",
+          "lugar": [
+            -7.5,
+            5.5
+          ],
+          "rumbo": 120,
+          "tamano": 1.6
+        },
+        {
+          "id": "taza",
+          "tipo": "actor",
+          "objeto": "taza",
+          "lugar": "mesa",
+          "tamano": 5,
+          "rumbo": 30
         },
         {
           "id": "cliente",
           "tipo": "actor",
           "objeto": "persona",
           "lugar": [
-            0,
-            60
+            15,
+            -1.5
           ],
-          "rumbo": 270,
-          "tamano": 1
-        },
-        {
-          "id": "taza",
-          "tipo": "actor",
-          "objeto": "taza",
-          "lugar": [
-            3,
-            62
-          ],
-          "tamano": 8,
-          "rumbo": 30
+          "rumbo": 210,
+          "tamano": 1.6
         }
       ],
-      "protagonista": "taza",
-      "lugares": {
-        "tostador": {
-          "x": -16,
-          "y": 50,
-          "nombre": "Tostador"
-        }
-      }
+      "protagonista": "taza"
     }
   },
   "gancho": {
@@ -926,18 +1267,25 @@
     "Por qué puerto sale el café de Huehuetenango, ni en qué proporción (el mapa no dibuja ruta: la voz dice el café que pasó por Puerto Barrios y el del país)",
     "Kilómetros por carretera desde la finca o desde Huehuetenango hasta el puerto",
     "Días de barco hasta el destino",
-    "Dónde se hace la trilla (el beneficio seco es una casa genérica en un esquema, sin lugar)",
     "Que todo el café pase por la capital (la ruta no toca la Ciudad de Guatemala)",
     "El mes exacto de la cosecha (en disputa)",
     "La altitud máxima de los cafetales (1,900 MAGA frente a 2,000 Anacafé: en disputa); solo «desde 1,500 metros»",
-    "Que la cosecha sea a mano o que la cereza se despulpe o se seque en un patio (no está en lo verificado: la recolectora y el beneficio ilustran)",
     "Cuántas tazas salen de un kilo o cuánto recibe el productor por taza (no hay cálculo verificado; la voz no compara 7.66 con 3.52)",
     "El tamaño del contenedor en la voz o en pantalla («20 pies» está verificado como hecho pero no hay cifra con id en datos.json)",
     "Nombres reales (Huehuetenango, EE. UU., Japón) como marcas o lugares de un mundo esquema: van en la voz, el kicker o el rótulo de una cifra",
     "Hectáreas de café de Huehuetenango y su parte del área nacional (en disputa: Anacafé 34,910 ha frente a 86,026 ha del Gobierno)",
     "Que los 72 millones de kilos (72,316 t) de Puerto Barrios fueran exportación ni que vinieran de Huehuetenango: la CPN dice que pasaron por el puerto",
     "El peso exacto del café tostado: de 5.88 kg de cereza sale 1 kg de oro, y al tostarlo pierde del 12 al 20 % (0.80–0.88 kg); la voz solo dice «menos de un kilo»",
-    "La medida de café por litro de agua (taza-c15) ya no se dice ni se dibuja; la taza ilustra"
+    "La medida de café por litro de agua (taza-c15) ya no se dice ni se dibuja; la taza ilustra",
+    "Dónde se hace la trilla: la galera del beneficio seco es genérica, en un esquema, sin lugar ni distancia a la finca",
+    "Terrazas o curvas a nivel como rasgo de Huehuetenango (finca-h05 es solo recomendación técnica): la ladera es un talud suave sin muros",
+    "Canasta atada a la cintura (sin fuente) ni vestimenta de un pueblo: los cosechadores son muñecos sin rostro con sombrero y costal (finca-h08: costales, canastos y morrales)",
+    "Especies o densidad de la sombra en Huehuetenango: la sombra (0.45) ilustra que el café de Guatemala crece bajo árboles (finca-h01), no mide nada",
+    "Que la cosecha sea «cereza por cereza» como dato: los cosechadores ilustran la cosecha manual (finca-h07, AGN), la voz no la afirma",
+    "La velocidad del camión y del barco, el ritmo de la grúa y cuántos contenedores hay: ilustran, no son datos",
+    "Que el barco vaya a Estados Unidos: sale mar adentro sin rumbo dibujado; los destinos van en la voz y en la capa",
+    "El tipo de tostadora o de cafetería de Estados Unidos: la tostadora de tambor y la plaza son genéricas (esquema)",
+    "Que las tres parcelas chicas midan algo o sean de Huehuetenango: ilustran «gente con poca tierra» (taza-c10 es del país)"
   ],
   "caption": {
     "tiktok": "De una ladera de Huehuetenango a una taza en Estados Unidos: el café pierde peso en cada paso. 4.74 kg de cereza dan 1 kg de pergamino, y hacen falta 1.24 kg de pergamino para 1 kg de oro. En 2025, Guatemala exportó 170.6 millones de kilos de café; el 42 % va a EE. UU.\n\nFuentes: MAGA, Banguat, USDA, CPN, Toast.\n\n#Guatemala #Café #Huehuetenango #Exportaciones",

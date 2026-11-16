@@ -1,0 +1,21 @@
+{
+ "tipo": "grua",
+ "clase": "objeto",
+ "cuando": "grúa de muelle que sube un contenedor y lo baja al barco (bucle de 9.6 s): el puerto que exporta; en la orilla, rumbo al mar, barco a 32 m",
+ "parametros": {},
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "medidas": {
+  "largo_m": 22.0,
+  "ancho_m": 19.0,
+  "alto_m": 52.0
+ },
+ "ejemplo": {
+  "objeto": "grua"
+ }
+}

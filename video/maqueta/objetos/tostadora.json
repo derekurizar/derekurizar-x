@@ -1,0 +1,21 @@
+{
+ "tipo": "tostadora",
+ "clase": "objeto",
+ "cuando": "tostadora de café de tambor (≈ 3 m): el tambor gira, el brazo remueve el café tostado y la chimenea humea; «allá lo tuestan», junto a una persona",
+ "parametros": {},
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "medidas": {
+  "largo_m": 2.95,
+  "ancho_m": 1.6,
+  "alto_m": 3.1
+ },
+ "ejemplo": {
+  "objeto": "tostadora"
+ }
+}

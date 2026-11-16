@@ -5,7 +5,7 @@ con una capa 2D encima (titular, pines que siguen al 3D, cifras, subtítulos). D
 
 - **Motores:** three.js dentro de HyperFrames para unos estilos y Blender + capa 2D de HyperFrames para otros. El
   estilo decide el motor. Remotion quedó fuera.
-- **Un solo estilo por video; nunca se mezclan.** Lo elige el orquestador entre los ocho; si no está seguro, pregunta.
+- **Un estilo por mundo** (2026-11-16; antes «un solo estilo por video»): un video de un mundo lleva un estilo; con varios mundos (tramos) cada uno puede tener el suyo, y el estilo cambia solo con el mundo. Nunca se mezclan dentro de un mundo. Lo elige el orquestador; si no está seguro, pregunta.
 - **Dentro de la maqueta la cámara se mueve** (es la excepción a la cámara quieta de la mesa de archivo).
 - **El gancho manda y todo concuerda:** lo que se ve es lo que la voz está diciendo.
 - **El cuadro 0 es la portada:** el primer cuadro ya trae su titular completo y el evento del gancho a la vista.
@@ -207,7 +207,7 @@ el motor y la proyección de los gates.
 | M3D5 | Titulares y cifras: tiempo de lectura; dos titulares no se pisan; una cifra a la vez; la cifra no tapa una marca viva; nada sigue en pantalla cuando entra el cierre; `seguir` no cae sobre un titular |
 | M3D6 | Cada evento cabe en la duración y su centro se ve en cámara ≥ 60 % de lo que dura (en una ruptura, sus frentes) |
 | M3D7 | `pie`, `handle`, `seguir` y `cierre` presentes (`aviso` es opcional); el pie nombra las fuentes de las capas del set que se usan (`fuente.json → pie_claves`): las del mundo (`capas` de su ficha: el relieve), las de las piezas (`capas` de su ficha o un parámetro con `capa`) y los lugares si hay marcas. Un set de ciudad pide «Mapzen» y «OpenStreetMap» |
-| M3D8 | Un solo estilo (ningún `estilo` por toma, pieza o evento) |
+| M3D8 | Un estilo por mundo (ningún `estilo` por toma, pieza o evento; con tramos, `mundos.<id>.estilo`) |
 | M3D9 | El gancho es un evento que se VE en el cuadro 0: hay un evento visible en la portada (los que traen `adelanto` en su ficha: hoy `ruptura`, `onda`, `deslizar`, `resaltar`) con `t ≤ 0.1` y su origen cae dentro del cuadro en `t = 0` (aviso si ningún titular empieza en `t ≤ 0.1`: la portada saldría sin titular) |
 | M3D10 | Todo lo anterior se cumple en los dos formatos (9:16 y 4:5 encuadran distinto) |
 | M3D12 | Un `esquema` no se lee como un lugar real: lleva `capa.aviso` con «Esquema» (en modo pieza sin capa lo pone la mesa que lo aloja: aviso), y ni sus lugares (id y nombre, los de la receta y los de `mundo.lugares`) ni el texto de sus marcas llevan el nombre de un lugar real de `design/sets3d/guatemala/lugares.json` |
@@ -456,6 +456,25 @@ Sus reglas (`scripts/maqueta_tipos/<tipo>.py`) dicen `anclas(a)` y `textos(a, es
 `ilustrativo` sobre un ESQUEMA (no es un momento real; la voz no dice esa hora como dato).
 
 
+## Objetos articulados, estilo `dia` y M3D14 (usuario, 2026-11-16: «más detalle y dinamismo»)
+
+- **Objeto articulado** (`video/maqueta/objetos/<tipo>.js`): las partes con `grupo` se mueven solas con el tiempo. El
+  objeto declara `grupos: {brazo_d: {pivote: [x, y, z]}, …}` (metros, ejes del objeto: x adelante, y arriba, z a su
+  derecha) y `pose(t, i, ctx, {vel})` → `{brazo_d: [rx, ry, rz, dx?, dy?, dz?, escala?], …}` (`vel`: m/s de quien lo lleva, lo pasa el actor; null si no se sabe) (radianes alrededor del pivote, metros de
+  desplazamiento y una escala desde el pivote: 0 = el grupo no se ve), **función pura de t** (desfasa cada instancia con `i` o `ctx.hash(i)`: el actor suma a `i` una semilla
+  sacada de su id, así dos cosechadores no se mueven en sincronía). Un grupo con `padre: "torso"` gira encima del giro de su
+  padre (el brazo sigue al torso, el codo al brazo). La flota (`motor.js → flota`)
+  hace una InstancedMesh por grupo con la misma matriz de la instancia y el giro del grupo encima. Así: una persona que
+  cosecha (el brazo sube a la rama y baja al canasto), que camina (piernas), una grúa que sube un contenedor, el tambor
+  de una tostadora que gira. Lo que el objeto no anima queda rígido, como siempre.
+- **Estilo `dia`** (three.js): la escena de cerca a la luz del día, con el cielo en el fondo (`fondo` arriba, `fondo2` en
+  el horizonte), el sol del estilo, tonos de pasto, tierra, muros claros y teja, y **sombra de contacto** bajo cada objeto
+  de una flota (`cfg.sombra_contacto`, cualquier estilo puede usarla). Para mundos chicos (una finca, un taller, un
+  muelle); el mapa del país puede seguir en otro estilo (estilo por mundo).
+- **M3D14 · lo que la cámara sigue no se traba**: si la cámara va tras un actor (`mira: {actor: …}`) y ese actor, que se
+  venía moviendo, se queda quieto más de 1.5 s con la cámara encima, falla (el barco que se detiene en medio del mar
+  porque su `mover` termina antes que el tramo). Arreglo: alargar el `mover` (o las `claves`) hasta que la cámara lo suelte.
+
 ## Varios mundos: tramos (`scripts/maqueta_tramos.py`)
 
 Usuario, 2026-11-15: **el orquestador usa cuantos mundos, eventos y escenas la historia necesite.** Una ruta o un proceso
@@ -476,7 +495,7 @@ puede volver a un mundo ya visto. En el `maqueta.json`, en vez de `mundo`, `cama
   fundido de más a cada lado y el video dura exactamente `duracion_s`.
 - **Protagonista por mundo** (`mundos.<id>.protagonista`): lo único en el acento en ese mundo. Sin él, vale el global si
   es una pieza de ese mundo.
-- **Un solo estilo** para todos los mundos (M3D8). Un estilo de Blender solo dibuja `pais`: con un esquema o una ciudad,
+- **Estilo por mundo** (`mundos.<id>.estilo`; sin él, el global; usuario 2026-11-16). Un estilo de Blender solo dibuja `pais`: con un esquema o una ciudad,
   un estilo de three.js (M3D2 lo dice por tramo).
 - **El aviso «Esquema»** (M3D12) sale solo mientras se ve un mundo esquema, nunca sobre el mapa real (`aviso_ventanas`,
   lo calcula `maqueta_tramos.capa_global`). El pie nombra las fuentes de todos los sets usados.

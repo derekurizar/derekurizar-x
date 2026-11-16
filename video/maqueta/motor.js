@@ -31,6 +31,7 @@ const ESTILOS = {
   contorno: { modo: 2, cubos: false, aditivo: false },
   voxel:    { modo: 3, cubos: true,  aditivo: false },
   plano:    { modo: 4, cubos: false, aditivo: true },
+  dia:      { modo: 0, cubos: false, aditivo: false, dia: true },   // escena de cerca de día: cielo, sol y sombra de contacto
 };
 const ES = ESTILOS[M.estilo];
 if (!ES) throw new Error("estilo sin motor three: " + M.estilo);
@@ -182,6 +183,13 @@ const TONOS = (() => {
     T.asfalto = C("tierra_baja").lerp(C("linea"), 0.08); T.raya = C("linea"); T.central = C("linea"); T.borde = C("linea");
     T.agua = C("mar_hondo"); T.arena = T.suelo.clone().lerp(C("linea"), 0.06); T.pavimento = T.suelo.clone().lerp(C("linea"), 0.04);
     T.campo = T.suelo.clone().lerp(C("linea"), 0.05); T.campo2 = T.suelo.clone().lerp(C("linea"), 0.1);
+  } else if (ES.dia) {                 // dia: la escena de cerca con luz de sol: pasto y tierra, caminos de tierra, muros claros, teja
+    T.suelo = C("tierra_baja").lerp(C("tierra_media"), 0.22); T.verde = C("tierra_baja");
+    T.calle = C("tierra_media").lerp(C("costa"), 0.3); T.calle_mayor = C("linea").lerp(C("costa"), 0.55);
+    T.muro = C("costa").lerp(C("tierra_alta"), 0.18); T.techo = C("mal").lerp(C("tierra_media"), 0.45);
+    T.asfalto = C("linea").lerp(C("costa"), 0.35); T.raya = C("costa"); T.central = C("luces"); T.borde = C("costa");
+    T.agua = C("mar"); T.arena = C("tierra_alta").lerp(C("costa"), 0.4); T.pavimento = C("costa").lerp(C("linea"), 0.25);
+    T.campo = C("tierra_baja"); T.campo2 = C("tierra_baja").lerp(C("tierra_media"), 0.4);
   } else {                             // color, contorno, voxel: suelo claro, calles más claras, edificios de papel
     T.suelo = C("tierra_media").lerp(C("fondo"), 0.62); T.verde = C("tierra_baja");
     T.calle = C("fondo").lerp(C("costa"), 0.6); T.calle_mayor = C("costa");
@@ -323,14 +331,34 @@ function flota(tipo, n, op = {}) {
   const um = 1 / MU.unidad_m, tam = op.tamano || 1, k0 = tam * um, N1 = Math.max(1, n);
   const mat = new THREE.ShaderMaterial({ uniforms: { ...uComun(), uLuz: { value: LUZ_DIR.clone().normalize() }, uModo: { value: ES.modo }, uBrillo: { value: 1 } },
     vertexShader: VERT_OBJ, fragmentShader: FRAG_OBJ });
-  const im = new THREE.InstancedMesh(geoObjeto(O.partes(ctx)), mat, N1);
-  im.frustumCulled = false; im.renderOrder = op.orden || 3;
+  // OBJETO ARTICULADO (2026-11-16): las partes con `grupo` forman piezas que se mueven solas con el tiempo (un brazo que
+  // cosecha, una pierna que camina, el brazo de una grúa, el tambor de una tostadora). El objeto declara
+  // `grupos: {nombre: {pivote: [x, y, z]}}` (metros, ejes del objeto) y `pose(t, i, ctx)` → {nombre: [rx, ry, rz, dx?, dy?, dz?]}
+  // (radianes alrededor de su pivote y metros), función pura de t: cada grupo es otra InstancedMesh con la misma instancia.
+  const todas = O.partes(ctx), GR = O.grupos || {};
+  const mallas = [["", todas.filter((p) => !p.grupo || !GR[p.grupo])]].concat(Object.keys(GR).map((g) => [g, todas.filter((p) => p.grupo === g)]))
+    .filter(([, ps]) => ps.length).map(([g, ps]) => {
+      const m = new THREE.InstancedMesh(geoObjeto(ps), mat, N1); m.frustumCulled = false; m.renderOrder = op.orden || 3; return [g, m]; });
+  const im = mallas[0][1];
   const variantes = O.variantes ? O.variantes(ctx) : [TONOS.secundario];
-  for (let i = 0; i < N1; i++) im.setColorAt(i, op.color ? op.color(i, variantes) : variantes[0]);
-  im.instanceColor.needsUpdate = true;
   const cero = new THREE.Matrix4().makeScale(0, 0, 0);
-  for (let i = 0; i < N1; i++) im.setMatrixAt(i, cero);
-  scene.add(im);
+  for (const [, m] of mallas) {
+    for (let i = 0; i < N1; i++) { m.setColorAt(i, op.color ? op.color(i, variantes) : variantes[0]); m.setMatrixAt(i, cero); }
+    m.instanceColor.needsUpdate = true; scene.add(m);
+  }
+  const mG = new THREE.Matrix4(), mP = new THREE.Matrix4(), mR = new THREE.Matrix4(), mS = new THREE.Matrix4(), eu = new THREE.Euler();
+  // la sombra de contacto (estilos con `sombra_contacto`): un disco suave bajo cada objeto, que lo asienta en el suelo
+  let sombra = null;
+  if ((CFG.sombra_contacto || 0) > 0) {
+    const md = O.medidas || { largo_m: 2, ancho_m: 2 }, gs = new THREE.PlaneGeometry(1, 1); gs.rotateX(-Math.PI / 2);
+    const sm = new THREE.ShaderMaterial({ uniforms: { uK: { value: CFG.sombra_contacto } }, transparent: true, depthWrite: false,
+      vertexShader: "varying vec2 vUv; void main(){ vUv = uv; mat4 im = mat4(1.0);\n#ifdef USE_INSTANCING\n im = instanceMatrix;\n#endif\n gl_Position = projectionMatrix * viewMatrix * modelMatrix * im * vec4(position, 1.0); }",
+      fragmentShader: "uniform float uK; varying vec2 vUv; void main(){ float r = length((vUv - 0.5) * 2.0); float a = uK * (1.0 - smoothstep(0.35, 1.0, r)); gl_FragColor = vec4(0.0, 0.0, 0.0, a); }" });
+    const sh = new THREE.InstancedMesh(gs, sm, N1); sh.frustumCulled = false; sh.renderOrder = 2;
+    for (let i = 0; i < N1; i++) sh.setMatrixAt(i, cero);
+    scene.add(sh);
+    sombra = { mesh: sh, l: (md.largo_m || 2) * 1.25, w: (md.ancho_m || 2) * 1.35 };
+  }
   const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), e = new THREE.Vector3(), sc = new THREE.Vector3(), Y = new THREE.Vector3(0, 1, 0), k2 = new THREE.Vector3();
   // de noche: faros (cálidos) y pilotos (en el tono «mal», más vivos al frenar) como puntos, y el cono de los faros en el suelo
   let luces = null;
@@ -357,10 +385,30 @@ function flota(tipo, n, op = {}) {
   return {
     n: N1, mesh: im,
     // el objeto i en (x, y) mirando hacia (dx, dy), con escala k (0 = no se ve) y freno 0–1 (aviva los pilotos)
-    poner(i, x, y, dx, dy, k = 1, freno = 0) {
+    poner(i, x, y, dx, dy, k = 1, freno = 0, vel = null) {   // vel: m/s de quien la lleva (la pose de un objeto articulado la puede usar)
       const z = altura(x, y) + (op.lev || 0) * um;
       q.setFromAxisAngle(Y, Math.atan2(dy, dx)); e.set(x, z, -y); sc.setScalar(k0 * k);
-      im.setMatrixAt(i, k > 0 ? m4.compose(e, q, sc) : cero);
+      m4.compose(e, q, sc);
+      // `op.semilla` (el actor la pasa desde su id): cada instancia de cada pieza con su propio desfase en la pose
+      const pose = mallas.length > 1 && O.pose ? (O.pose((ctx.cuadro || {}).t || 0, i + (op.semilla || 0), ctx, { vel }) || {}) : {};
+      // cada grupo gira en su pivote; con `padre`, encima del giro de su padre (el brazo sigue al torso, el codo al brazo)
+      const loc = {};
+      const local = (g) => {
+        if (loc[g]) return loc[g];
+        const r = pose[g] || [0, 0, 0], pv = GR[g].pivote || [0, 0, 0], L = new THREE.Matrix4();
+        mP.makeTranslation(pv[0] + (r[3] || 0), pv[1] + (r[4] || 0), pv[2] + (r[5] || 0));
+        mR.makeRotationFromEuler(eu.set(r[0] || 0, r[1] || 0, r[2] || 0));
+        if (r[6] !== undefined && r[6] !== null) mR.multiply(mS.makeScale(Math.max(0, r[6]), Math.max(0, r[6]), Math.max(0, r[6])));   // 7.º valor: escala (0 = no se ve)
+        L.copy(mP).multiply(mR).multiply(mP.makeTranslation(-pv[0], -pv[1], -pv[2]));
+        const pa = GR[g].padre;
+        return (loc[g] = pa && GR[pa] && pa !== g ? local(pa).clone().multiply(L) : L);
+      };
+      for (const [g, m] of mallas) {
+        if (k <= 0) { m.setMatrixAt(i, cero); continue; }
+        if (!g || (!pose[g] && !GR[g].padre)) { m.setMatrixAt(i, m4); continue; }
+        m.setMatrixAt(i, mG.copy(m4).multiply(local(g)));
+      }
+      if (sombra) { k2.set(x, z + 0.04 * um, -y); sc.set(sombra.l * k0 * k, 1, sombra.w * k0 * k); sombra.mesh.setMatrixAt(i, k > 0 ? mS.compose(k2, q, sc) : cero); sc.setScalar(k0 * k); }
       if (!luces) return;
       const A = luces.pts.geometry.attributes, base = i * (luces.NF + luces.NP);
       const pon = (j, l, kk, cc) => { const lx = l[0] * k0, ly = l[1] * k0, lz = l[2] * k0;   // local (adelante, arriba, derecha) → escena
@@ -372,7 +420,8 @@ function flota(tipo, n, op = {}) {
       luces.cono.setMatrixAt(i, k > 0 ? m4.compose(k2, q, sc) : cero);
     },
     listo() {
-      im.instanceMatrix.needsUpdate = true;
+      for (const [, m] of mallas) m.instanceMatrix.needsUpdate = true;
+      if (sombra) sombra.mesh.instanceMatrix.needsUpdate = true;
       if (luces) { const A = luces.pts.geometry.attributes; A.position.needsUpdate = A.aK.needsUpdate = A.aCol.needsUpdate = true;
         luces.pts.material.uniforms.uPx.value = ctx.cuadro ? ctx.cuadro.pxKm : 1; luces.cono.instanceMatrix.needsUpdate = true; }
     },

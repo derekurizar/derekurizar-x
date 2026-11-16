@@ -88,6 +88,23 @@ g = TR.capa_global(copy.deepcopy(BASE))
 ok(g["capa"]["aviso_ventanas"] == [[0.0, 5.0], [11.0, 15.0]], "aviso: «Esquema» solo en el campo y la costa: %s" % g["capa"]["aviso_ventanas"])
 ok(TR.efectos(BASE) == [[0.0, "pulso"], [5.4, "whoosh"]], "efectos: los sfx de los tramos en tiempo del video: %s" % TR.efectos(BASE))
 
+# ---------- estilo por mundo (2026-11-16) ----------
+def _dia(m):
+    m["mundos"]["campo"]["estilo"] = "dia"
+f = fallas_de(_dia)
+ok(not f, "estilo por mundo: el campo en `dia` y el país en noche debía pasar: %s" % f[:2])
+ok(TR.partir(dict(copy.deepcopy(BASE), mundos=dict(copy.deepcopy(BASE)["mundos"], campo=dict(BASE["mundos"]["campo"], estilo="dia"))))[0][1]["estilo"] == "dia",
+   "estilo por mundo: el tramo del campo se graba en `dia`")
+f = fallas_de(lambda m: m["mundos"]["campo"].update(estilo="acuarela"))
+ok(salta("M3D13", f), "estilo por mundo: un estilo que no existe debía fallar M3D13: %s" % f[:2])
+
+# ---------- M3D14: lo que la cámara sigue no se traba ----------
+def _barco_quieto(m):
+    m["mundos"]["campo"]["piezas"][3]["claves"] = [{"t": 0, "s": "30%", "vel_kmh": 50}, {"t": 1.5, "s": "40%", "vel_kmh": 0}]
+    m["tramos"][0]["camara"].insert(1, {"t": 0.5, "mira": {"actor": "camion"}, "dist_m": 120, "azimut": 0, "elevacion": 50})
+f = fallas_de(_barco_quieto)
+ok(salta("M3D14", f), "M3D14: la cámara que sigue a un camión ya detenido debía fallar: %s" % [x[:90] for x in f[:3]])
+
 # ---------- guion (video3d.py) ----------
 FIXV = os.path.join(RAIZ, "sesiones", "_fixture_video3d")
 if os.path.exists(os.path.join(FIXV, "guion.json")):
@@ -124,6 +141,9 @@ if os.path.exists(os.path.join(FIXV, "guion.json")):
         g3 = copy.deepcopy(g2)
         g3["escenas"][1]["mundo"] = "luna"
         ok(any(x.startswith("C3D12") for x in V3.revisar_guion(g3, st, T)[0]), "C3D12: una escena en un mundo que no existe debía fallar")
+        g5 = copy.deepcopy(g2)
+        g5["escenas"][1]["mundo"] = "pueblo"; g5["escenas"][2]["mundo"] = "pais"   # país → pueblo → país → pueblo (cierre)
+        ok(any(x.startswith("C3D13") for x in V3.revisar_guion(g5, st, T)[0]), "C3D13: volver a un mundo a mitad del video debía fallar")
         g4 = copy.deepcopy(g2)
         g4["mundos"]["sobra"] = {"escala": "esquema", "receta": "plaza", "piezas": []}
         ok(any(x.startswith("C3D12") for x in V3.revisar_guion(g4, st, T)[0]), "C3D12: un mundo sin usar debía fallar")

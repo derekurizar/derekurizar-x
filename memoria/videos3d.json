@@ -39,7 +39,7 @@
       "tema": "El café de una finca de Huehuetenango hasta una taza en otro país",
       "fecha": "2026-11-15",
       "ruta": "videos3d/2026-11-15-cafe-huehuetenango-taza",
-      "estilo": "noche",
+      "estilo": "dia",
       "motor": "three",
       "set": "guatemala",
       "mundos": [
@@ -48,7 +48,7 @@
         "esquema:plaza",
         "pais:guatemala"
       ],
-      "idea_visual": "Una cereza roja es lo único encendido en una ladera a oscuras de Huehuetenango, y la seguimos de mundo en mundo (el beneficio, el camión, el mapa, el barco) hasta que vuelve a encenderse como una taza humeante en otro país.",
+      "idea_visual": "Seguimos el café de día, paso por paso y cada paso en su lugar: la ladera de Huehuetenango bajo sombra con gente cosechando, el beneficio donde se vuelve pergamino, la carretera y la trilla, el mapa desde arriba, la grúa que lo sube al barco y la tostadora junto a una taza humeante, hasta volver a la misma ladera.",
       "gancho": {
         "id": "g2",
         "familia": "revelacion",

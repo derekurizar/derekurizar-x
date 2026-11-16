@@ -10,7 +10,8 @@
     armar(ctx, piezas) {
       return piezas.map((p) => {
         const r = ctx.tray.nueva(p.T, p.S);
-        const fl = ctx.flota(p.objeto, 1, { tamano: p.tamano, lev: p.lev, orden: 4,
+        const semilla = [...String(p.id)].reduce((h, c) => (h * 31 + c.charCodeAt(0)) % 9973, 7);   // desfase de la pose por actor
+        const fl = ctx.flota(p.objeto, 1, { tamano: p.tamano, lev: p.lev, orden: 4, semilla,
           color: (i, vs) => (p.protagonista ? ctx.tonos.acento : vs[p.variante % vs.length]) });
         const movil = (t) => { const [s, v] = ctx.tray.suave(r, p.h, t), q = ctx.enCamino(p.camino, s);
           return { x: q.x, y: q.y, dx: q.dx, dy: q.dy, v, vis: true }; };
@@ -23,7 +24,7 @@
       for (const a of lista) {
         const q = a.movil(t), V = (ctx.cuadro.vis || {})[a.p.id], k = V === undefined ? 1 : V;
         const v0 = ctx.tray.suave(a.r, a.p.h, t - 0.15)[1], v1 = ctx.tray.suave(a.r, a.p.h, t + 0.15)[1];
-        a.fl.poner(0, q.x, q.y, q.dx, q.dy, k, ctx.clamp((v0 - v1) / 0.3 / a3));
+        a.fl.poner(0, q.x, q.y, q.dx, q.dy, k, ctx.clamp((v0 - v1) / 0.3 / a3), Math.abs(v1 + v0) / 2 / ctx.metros(1));   // vel en m/s: la pose la usa (alguien de pie no camina)
         a.fl.listo();
       }
     },

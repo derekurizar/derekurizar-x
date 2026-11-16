@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "estilo": "noche",
+  "estilo": "dia",
   "paleta": "cacao",
   "fps": 30,
   "duracion_s": 112.3,
@@ -32,7 +32,7 @@
         "rotulo": "de quienes producen café son pequeños productores",
         "fuente": "USDA",
         "t": 13.7667,
-        "hasta": 21.4
+        "hasta": 19.9333
       },
       {
         "valor": "4.74 kg",
@@ -1434,16 +1434,12 @@
       "receta": "campo",
       "semilla": 11,
       "tamano_m": 1200,
+      "estilo": "dia",
       "lugares": {
         "ladera": {
-          "x": 0,
-          "y": 0,
+          "x": 2,
+          "y": -26,
           "nombre": "Ladera"
-        },
-        "beneficio": {
-          "x": 80,
-          "y": -48,
-          "nombre": "Beneficio húmedo"
         }
       },
       "piezas": [
@@ -1453,95 +1449,243 @@
           "puntos": [
             [
               -40,
-              -25
+              -30
             ],
             [
               40,
-              -25
+              -30
             ],
             [
               42,
-              25
+              30
             ],
             [
               -38,
-              27
+              28
             ]
           ],
           "hileras": 10,
-          "pendiente_m": 20,
+          "pendiente_m": 10,
           "rumbo": 90,
           "maduras": 0.8,
-          "personas": 2,
+          "sombra": 0.45,
+          "personas": 4,
           "semilla": 3
         },
         {
-          "id": "recolectora",
+          "id": "cosechador-1",
           "tipo": "actor",
-          "objeto": "persona",
+          "objeto": "cosechador",
           "lugar": [
-            6,
-            -9
+            3,
+            -28
           ],
-          "rumbo": 270,
-          "lev_m": 6,
-          "tamano": 1.8
+          "rumbo": 300,
+          "tamano": 1.2
         },
         {
-          "id": "beneficio-humedo",
-          "tipo": "zona",
-          "puntos": [
-            [
-              68,
-              -36
-            ],
-            [
-              92,
-              -36
-            ],
-            [
-              92,
-              -60
-            ],
-            [
-              68,
-              -60
-            ]
-          ],
-          "tono": "secundario",
-          "opacidad": 0.12
-        },
-        {
-          "id": "casa-beneficio",
+          "id": "cosechador-2",
           "tipo": "actor",
-          "objeto": "casa",
-          "lugar": "beneficio",
-          "rumbo": 270,
-          "tamano": 3
+          "objeto": "cosechador",
+          "lugar": [
+            -6,
+            -26
+          ],
+          "rumbo": 250,
+          "tamano": 1.2
         }
       ],
       "protagonista": "cafetal"
+    },
+    "beneficio": {
+      "escala": "esquema",
+      "receta": "campo",
+      "semilla": 8,
+      "tamano_m": 1200,
+      "estilo": "dia",
+      "lugares": {
+        "parcela": {
+          "x": -48,
+          "y": -116,
+          "nombre": "Parcela"
+        },
+        "recibo": {
+          "x": -8,
+          "y": -116,
+          "nombre": "Recibo"
+        },
+        "patio": {
+          "x": 20,
+          "y": -116,
+          "nombre": "Patio"
+        }
+      },
+      "piezas": [
+        {
+          "id": "parcela-1",
+          "tipo": "cafetal",
+          "puntos": [
+            [
+              -60,
+              -127
+            ],
+            [
+              -36,
+              -127
+            ],
+            [
+              -36,
+              -107
+            ],
+            [
+              -60,
+              -107
+            ]
+          ],
+          "hileras": 4,
+          "pendiente_m": 3,
+          "rumbo": 90,
+          "maduras": 0.8,
+          "sombra": 0.45,
+          "personas": 0,
+          "semilla": 5
+        },
+        {
+          "id": "parcela-2",
+          "tipo": "cafetal",
+          "puntos": [
+            [
+              -60,
+              -71
+            ],
+            [
+              -36,
+              -71
+            ],
+            [
+              -36,
+              -51
+            ],
+            [
+              -60,
+              -51
+            ]
+          ],
+          "hileras": 4,
+          "pendiente_m": 3,
+          "rumbo": 90,
+          "maduras": 0.7,
+          "sombra": 0.4,
+          "personas": 1,
+          "semilla": 6
+        },
+        {
+          "id": "parcela-3",
+          "tipo": "cafetal",
+          "puntos": [
+            [
+              -60,
+              -99
+            ],
+            [
+              -36,
+              -99
+            ],
+            [
+              -36,
+              -79
+            ],
+            [
+              -60,
+              -79
+            ]
+          ],
+          "hileras": 4,
+          "pendiente_m": 3,
+          "rumbo": 90,
+          "maduras": 0.75,
+          "sombra": 0.4,
+          "personas": 1,
+          "semilla": 7
+        },
+        {
+          "id": "casa-1",
+          "tipo": "actor",
+          "objeto": "casa",
+          "lugar": [
+            -72,
+            -116
+          ],
+          "rumbo": 0
+        },
+        {
+          "id": "casa-2",
+          "tipo": "actor",
+          "objeto": "casa",
+          "lugar": [
+            -72,
+            -60
+          ],
+          "rumbo": 0
+        },
+        {
+          "id": "casa-3",
+          "tipo": "actor",
+          "objeto": "casa",
+          "lugar": [
+            -72,
+            -88
+          ],
+          "rumbo": 0
+        },
+        {
+          "id": "productora",
+          "tipo": "actor",
+          "objeto": "cosechador",
+          "lugar": [
+            -46,
+            -128
+          ],
+          "rumbo": 290,
+          "tamano": 1.2
+        },
+        {
+          "id": "beneficio",
+          "tipo": "beneficio",
+          "lugar": [
+            2,
+            -116
+          ],
+          "rumbo": 0,
+          "tamano": 1,
+          "personas": 2,
+          "semilla": 4
+        }
+      ],
+      "protagonista": "beneficio"
     },
     "carretera": {
       "escala": "esquema",
       "receta": "campo",
       "semilla": 4,
       "tamano_m": 1200,
+      "estilo": "dia",
       "lugares": {
         "bodega": {
-          "x": 72,
-          "y": 14,
+          "x": 20,
+          "y": -8,
           "nombre": "Beneficio seco"
+        },
+        "puerta": {
+          "x": 33,
+          "y": 12,
+          "nombre": "Puerta"
         }
       },
       "piezas": [
         {
           "id": "camino",
           "tipo": "calles"
-        },
-        {
-          "id": "rio",
-          "tipo": "agua"
         },
         {
           "id": "camion-cafe",
@@ -1551,36 +1695,30 @@
           "claves": [
             {
               "t": 0,
-              "s": 600
+              "s": 625
             }
-          ],
-          "tamano": 2
+          ]
         },
         {
-          "id": "beneficio-seco",
+          "id": "bodega",
           "tipo": "actor",
-          "objeto": "casa",
+          "objeto": "bodega",
           "lugar": "bodega",
-          "rumbo": 270,
-          "tamano": 3
+          "rumbo": 58
         }
       ],
-      "protagonista": "camion-cafe"
+      "protagonista": "bodega"
     },
     "pais": {
       "escala": "pais",
       "set": "guatemala",
       "exageracion": 5,
+      "estilo": "color",
       "piezas": [
         {
           "id": "frontera",
           "tipo": "frontera",
           "vecinos": true
-        },
-        {
-          "id": "pueblos",
-          "tipo": "luces",
-          "lugares": "todos"
         }
       ]
     },
@@ -1588,12 +1726,18 @@
       "escala": "esquema",
       "receta": "costa",
       "semilla": 5,
-      "tamano_m": 2400,
+      "tamano_m": 1200,
+      "estilo": "dia",
       "lugares": {
         "muelle": {
           "x": 0,
-          "y": -380,
+          "y": -244,
           "nombre": "Muelle"
+        },
+        "mar": {
+          "x": 230,
+          "y": -330,
+          "nombre": "Mar"
         }
       },
       "piezas": [
@@ -1610,9 +1754,9 @@
           "tipo": "edificios"
         },
         {
-          "id": "camion-puerto",
+          "id": "grua",
           "tipo": "actor",
-          "objeto": "camionsacos",
+          "objeto": "grua",
           "lugar": "muelle",
           "rumbo": 270
         },
@@ -1622,37 +1766,120 @@
           "objeto": "barco",
           "puntos": [
             [
-              30,
-              -480
+              -30,
+              -276
             ],
             [
-              15,
-              -640
+              60,
+              -278
             ],
             [
-              0,
-              -792
+              160,
+              -300
             ],
             [
-              0,
-              -1080
+              260,
+              -350
+            ],
+            [
+              360,
+              -420
+            ],
+            [
+              460,
+              -500
             ]
           ],
           "claves": [
             {
               "t": 0,
-              "s": "0%"
+              "s": 0
             }
           ]
+        },
+        {
+          "id": "pila-1",
+          "tipo": "actor",
+          "objeto": "contenedor",
+          "lugar": [
+            24,
+            -228
+          ],
+          "rumbo": 0
+        },
+        {
+          "id": "pila-2",
+          "tipo": "actor",
+          "objeto": "contenedor",
+          "lugar": [
+            24,
+            -228
+          ],
+          "rumbo": 0,
+          "lev_m": 2.6
+        },
+        {
+          "id": "pila-3",
+          "tipo": "actor",
+          "objeto": "contenedor",
+          "lugar": [
+            24,
+            -224.8
+          ],
+          "rumbo": 0
+        },
+        {
+          "id": "pila-4",
+          "tipo": "actor",
+          "objeto": "contenedor",
+          "lugar": [
+            31,
+            -228
+          ],
+          "rumbo": 0
+        },
+        {
+          "id": "pila-5",
+          "tipo": "actor",
+          "objeto": "contenedor",
+          "lugar": [
+            31,
+            -224.8
+          ],
+          "rumbo": 0
+        },
+        {
+          "id": "pila-6",
+          "tipo": "actor",
+          "objeto": "contenedor",
+          "lugar": [
+            31,
+            -224.8
+          ],
+          "rumbo": 0,
+          "lev_m": 2.6
         }
       ],
       "protagonista": "buque"
     },
-    "taza": {
+    "cafeteria": {
       "escala": "esquema",
       "receta": "plaza",
       "semilla": 3,
-      "tamano_m": 900,
+      "tamano_m": 600,
+      "estilo": "dia",
+      "lugares": {
+        "tostador": {
+          "x": -10,
+          "y": 8,
+          "nombre": "Tostador"
+        },
+        "mesa": {
+          "x": 12,
+          "y": -4,
+          "nombre": "Mesa"
+        }
+      },
       "piezas": [
         {
           "id": "calles",
@@ -1665,42 +1892,43 @@
         {
           "id": "tostadora",
           "tipo": "actor",
-          "objeto": "casa",
+          "objeto": "tostadora",
           "lugar": "tostador",
-          "rumbo": 270,
-          "tamano": 3
+          "rumbo": 300,
+          "tamano": 1.6
+        },
+        {
+          "id": "tostador-persona",
+          "tipo": "actor",
+          "objeto": "persona",
+          "lugar": [
+            -7.5,
+            5.5
+          ],
+          "rumbo": 120,
+          "tamano": 1.6
+        },
+        {
+          "id": "taza",
+          "tipo": "actor",
+          "objeto": "taza",
+          "lugar": "mesa",
+          "tamano": 5,
+          "rumbo": 30
         },
         {
           "id": "cliente",
           "tipo": "actor",
           "objeto": "persona",
           "lugar": [
-            0,
-            60
+            15,
+            -1.5
           ],
-          "rumbo": 270,
-          "tamano": 1
-        },
-        {
-          "id": "taza",
-          "tipo": "actor",
-          "objeto": "taza",
-          "lugar": [
-            3,
-            62
-          ],
-          "tamano": 8,
-          "rumbo": 30
+          "rumbo": 210,
+          "tamano": 1.6
         }
       ],
-      "protagonista": "taza",
-      "lugares": {
-        "tostador": {
-          "x": -16,
-          "y": 50,
-          "nombre": "Tostador"
-        }
-      }
+      "protagonista": "taza"
     }
   },
   "tramos": [
@@ -1708,74 +1936,44 @@
       "id": "finca-1",
       "mundo": "finca",
       "desde": 0.0,
-      "hasta": 30.0,
+      "hasta": 9.7,
       "camara": [
         {
-          "mira": [
-            0,
-            -4
-          ],
-          "dist_m": 70,
-          "azimut": 0,
-          "elevacion": 20,
+          "mira": "ladera",
+          "dist_m": 26,
+          "azimut": -10,
+          "elevacion": 16,
           "t": 0.0
         },
         {
-          "mira": "ladera",
-          "dist_m": 50,
-          "azimut": 4,
-          "elevacion": 17,
+          "mira": [
+            0,
+            -25
+          ],
+          "dist_m": 19,
+          "azimut": -2,
+          "elevacion": 14,
           "t": 4.7333
         },
         {
           "mira": [
-            6,
-            -4
+            0,
+            -16
           ],
-          "dist_m": 44,
-          "azimut": 8,
-          "elevacion": 15,
-          "t": 9.4333
-        },
-        {
-          "mira": [
-            6,
-            -9
-          ],
-          "dist_m": 28,
+          "dist_m": 40,
           "azimut": 6,
-          "elevacion": 14,
-          "t": 11.2667
+          "elevacion": 26,
+          "t": 6.2333
         },
         {
           "mira": [
-            6,
-            -9
-          ],
-          "dist_m": 32,
-          "azimut": 0,
-          "elevacion": 16,
-          "t": 16.8333
-        },
-        {
-          "mira": [
-            74,
-            -42
-          ],
-          "dist_m": 80,
-          "azimut": -22,
-          "elevacion": 24,
-          "t": 19.8667
-        },
-        {
-          "mira": [
-            78,
-            -46
+            0,
+            -2
           ],
           "dist_m": 68,
-          "azimut": -16,
-          "elevacion": 28,
-          "t": 25.0
+          "azimut": 14,
+          "elevacion": 34,
+          "t": 9.4333
         }
       ],
       "eventos": [
@@ -1789,23 +1987,131 @@
         {
           "tipo": "resaltar",
           "pieza": "cafetal",
-          "dur": 2.0,
-          "t": 8.7333
+          "dur": 1.8,
+          "t": 7.0667
+        }
+      ]
+    },
+    {
+      "id": "beneficio-2",
+      "mundo": "beneficio",
+      "desde": 9.7,
+      "hasta": 30.0,
+      "camara": [
+        {
+          "mira": [
+            -46,
+            -134
+          ],
+          "dist_m": 18,
+          "azimut": -10,
+          "elevacion": 18,
+          "t": 9.7
+        },
+        {
+          "mira": [
+            -46,
+            -133
+          ],
+          "dist_m": 20,
+          "azimut": -4,
+          "elevacion": 20,
+          "t": 13.1
+        },
+        {
+          "mira": [
+            -48,
+            -102
+          ],
+          "dist_m": 64,
+          "azimut": -5,
+          "elevacion": 44,
+          "t": 15.4667
+        },
+        {
+          "mira": [
+            -46,
+            -104
+          ],
+          "dist_m": 62,
+          "azimut": -16,
+          "elevacion": 42,
+          "t": 16.8333
+        },
+        {
+          "mira": [
+            -10,
+            -116
+          ],
+          "dist_m": 40,
+          "azimut": -42,
+          "elevacion": 26,
+          "t": 19.8667
+        },
+        {
+          "mira": [
+            -2,
+            -116
+          ],
+          "dist_m": 36,
+          "azimut": -30,
+          "elevacion": 32,
+          "t": 22.2667
+        },
+        {
+          "mira": [
+            20,
+            -116
+          ],
+          "dist_m": 40,
+          "azimut": -20,
+          "elevacion": 52,
+          "t": 25.0
+        },
+        {
+          "mira": [
+            22,
+            -116
+          ],
+          "dist_m": 36,
+          "azimut": -12,
+          "elevacion": 56,
+          "t": 29.5667
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "resaltar",
+          "pieza": "parcela-1",
+          "dur": 3.0,
+          "t": 9.7
         },
         {
           "tipo": "resaltar",
-          "pieza": "beneficio-humedo",
+          "pieza": "parcela-3",
+          "dur": 2.2,
+          "t": 15.4667
+        },
+        {
+          "tipo": "resaltar",
+          "pieza": "parcela-2",
+          "dur": 2.2,
+          "t": 15.4667
+        },
+        {
+          "tipo": "resaltar",
+          "pieza": "beneficio",
           "dur": 3.0,
           "t": 19.8667
         }
       ],
       "marcas": [
         {
-          "lugar": "beneficio",
+          "lugar": "recibo",
           "texto": "Beneficio húmedo",
           "sub": "Cereza → pergamino",
           "t": 19.6,
-          "hasta": 30.0
+          "hasta": 23.4333
         }
       ],
       "anotaciones": [
@@ -1813,18 +2119,20 @@
           "tipo": "pulso",
           "sobre": [
             [
-              6,
-              -9
+              -46,
+              -128
             ]
           ],
           "radio_m": 3,
           "t": 11.0,
-          "hasta": 15.8
+          "hasta": 14.1667
         }
-      ]
+      ],
+      "transicion": "fundido",
+      "fundido_s": 0.6
     },
     {
-      "id": "carretera-2",
+      "id": "carretera-3",
       "mundo": "carretera",
       "desde": 30.0,
       "hasta": 42.5333,
@@ -1833,46 +2141,64 @@
           "mira": {
             "actor": "camion-cafe"
           },
-          "dist_m": 55,
-          "azimut": -50,
-          "elevacion": 22,
+          "dist_m": 30,
+          "azimut": 150,
+          "elevacion": 18,
           "t": 30.0
         },
         {
           "mira": {
             "actor": "camion-cafe"
           },
-          "dist_m": 50,
-          "azimut": -35,
-          "elevacion": 22,
+          "dist_m": 34,
+          "azimut": 140,
+          "elevacion": 20,
           "t": 31.2333
         },
         {
-          "mira": {
-            "actor": "camion-cafe"
-          },
-          "dist_m": 70,
-          "azimut": -15,
-          "elevacion": 28,
+          "mira": [
+            22,
+            -4
+          ],
+          "dist_m": 34,
+          "azimut": 148,
+          "elevacion": 20,
           "t": 34.3
         },
         {
-          "mira": {
-            "actor": "camion-cafe"
-          },
-          "dist_m": 80,
-          "azimut": -5,
-          "elevacion": 32,
-          "t": 38.9
+          "mira": [
+            20,
+            -8
+          ],
+          "dist_m": 20,
+          "azimut": 160,
+          "elevacion": 15,
+          "t": 37.2
+        },
+        {
+          "mira": [
+            19,
+            -9
+          ],
+          "dist_m": 17,
+          "azimut": 172,
+          "elevacion": 14,
+          "t": 42.3333
         }
       ],
       "eventos": [
         {
           "tipo": "mover",
           "actor": "camion-cafe",
-          "a": "bodega",
-          "dur": 5.0,
-          "t": 31.2333
+          "a": "puerta",
+          "t": 30.0,
+          "dur": 4.032
+        },
+        {
+          "tipo": "resaltar",
+          "pieza": "bodega",
+          "dur": 2.5,
+          "t": 34.1667
         }
       ],
       "marcas": [
@@ -1880,7 +2206,7 @@
           "lugar": "bodega",
           "texto": "Beneficio seco",
           "sub": "Trilla: pergamino → oro",
-          "t": 35.0333,
+          "t": 32.5,
           "hasta": 42.5333
         }
       ],
@@ -1888,51 +2214,58 @@
       "fundido_s": 0.6
     },
     {
-      "id": "pais-3",
+      "id": "pais-4",
       "mundo": "pais",
       "desde": 42.5333,
       "hasta": 65.9667,
       "camara": [
         {
           "mira": "huehuetenango",
-          "dist_km": 140,
+          "dist_km": 240,
           "azimut": 0,
-          "elevacion": 55,
+          "elevacion": 72,
           "t": 42.5333
         },
         {
           "mira": "huehuetenango",
-          "dist_km": 95,
-          "azimut": 15,
-          "elevacion": 42,
+          "dist_km": 120,
+          "azimut": 20,
+          "elevacion": 40,
           "t": 47.3667
         },
         {
-          "mira": [
-            -90.4,
-            15.4
-          ],
-          "dist_km": 420,
-          "azimut": 10,
-          "elevacion": 55,
-          "t": 52.4667
-        },
-        {
-          "mira": "puerto-barrios",
-          "dist_km": 200,
-          "azimut": 0,
-          "elevacion": 50,
-          "t": 57.9
+          "mira": "huehuetenango",
+          "dist_km": 100,
+          "azimut": 34,
+          "elevacion": 30,
+          "t": 51.8667
         },
         {
           "mira": [
             -89.6,
-            15.4
+            15.5
           ],
-          "dist_km": 600,
+          "dist_km": 330,
+          "azimut": 6,
+          "elevacion": 52,
+          "t": 54.7667
+        },
+        {
+          "mira": "puerto-barrios",
+          "dist_km": 220,
+          "azimut": 10,
+          "elevacion": 46,
+          "t": 57.9
+        },
+        {
+          "mira": [
+            -90.25,
+            15.6
+          ],
+          "dist_km": 850,
           "azimut": 0,
-          "elevacion": 62,
-          "t": 62.0667
+          "elevacion": 64,
+          "t": 61.0
         }
       ],
       "eventos": [
@@ -1947,6 +2280,12 @@
           "lugar": "puerto-barrios",
           "dur": 3.0,
           "t": 57.9
+        },
+        {
+          "tipo": "resaltar",
+          "pieza": "frontera",
+          "dur": 3.0,
+          "t": 61.0
         }
       ],
       "marcas": [
@@ -1960,157 +2299,159 @@
           "lugar": "puerto-barrios",
           "texto": "Puerto Barrios",
           "t": 57.6333,
-          "hasta": 61.2333
+          "hasta": 60.0333
         }
       ],
       "transicion": "fundido",
       "fundido_s": 0.6
     },
     {
-      "id": "puerto-4",
+      "id": "puerto-5",
       "mundo": "puerto",
       "desde": 65.9667,
       "hasta": 82.4667,
       "camara": [
         {
-          "mira": "mar",
-          "dist_m": 650,
-          "azimut": 10,
-          "elevacion": 34,
+          "mira": [
+            0,
+            -262
+          ],
+          "dist_m": 120,
+          "azimut": 160,
+          "elevacion": 22,
           "t": 65.9667
+        },
+        {
+          "mira": [
+            0,
+            -266
+          ],
+          "dist_m": 100,
+          "azimut": 168,
+          "elevacion": 24,
+          "t": 66.9667
         },
         {
           "mira": {
             "actor": "buque"
           },
-          "dist_m": 480,
-          "azimut": 15,
-          "elevacion": 28,
+          "dist_m": 170,
+          "azimut": 150,
+          "elevacion": 24,
           "t": 68.2667
         },
         {
           "mira": {
             "actor": "buque"
           },
-          "dist_m": 600,
-          "azimut": 22,
+          "dist_m": 320,
+          "azimut": 125,
           "elevacion": 28,
-          "t": 71.2
-        },
-        {
-          "mira": {
-            "actor": "buque"
-          },
-          "dist_m": 760,
-          "azimut": 30,
-          "elevacion": 32,
           "t": 74.4667
         },
         {
           "mira": {
             "actor": "buque"
           },
-          "dist_m": 900,
-          "azimut": 36,
-          "elevacion": 36,
+          "dist_m": 470,
+          "azimut": 105,
+          "elevacion": 32,
           "t": 78.2
         },
         {
-          "mira": {
-            "actor": "buque"
-          },
-          "dist_m": 1050,
-          "azimut": 40,
-          "elevacion": 40,
-          "t": 79.0667
+          "mira": "mar",
+          "dist_m": 520,
+          "azimut": 95,
+          "elevacion": 34,
+          "t": 82.0333
         }
       ],
       "eventos": [
         {
-          "tipo": "aparecer",
-          "pieza": "buque",
-          "dur": 0.6,
-          "t": 66.2333
-        },
-        {
           "tipo": "mover",
           "actor": "buque",
           "a": "mar",
-          "dur": 12.0,
-          "t": 66.2333
+          "t": 69.6333,
+          "dur": 12.401
         }
       ],
       "transicion": "fundido",
       "fundido_s": 0.6
     },
     {
-      "id": "taza-5",
-      "mundo": "taza",
+      "id": "cafeteria-6",
+      "mundo": "cafeteria",
       "desde": 82.4667,
       "hasta": 103.0,
       "camara": [
         {
           "mira": [
-            -6,
-            52
+            -10,
+            8
           ],
-          "dist_m": 62,
-          "azimut": 0,
-          "elevacion": 20,
+          "dist_m": 18,
+          "azimut": -20,
+          "elevacion": 16,
           "t": 82.4667
         },
         {
           "mira": [
-            -6,
-            53
+            -10,
+            8
           ],
-          "dist_m": 54,
-          "azimut": 6,
-          "elevacion": 19,
-          "t": 89.1667
+          "dist_m": 16,
+          "azimut": 18,
+          "elevacion": 22,
+          "t": 85.7667
         },
         {
           "mira": [
-            -1,
-            57
+            1,
+            2
           ],
-          "dist_m": 36,
-          "azimut": 10,
-          "elevacion": 18,
+          "dist_m": 26,
+          "azimut": 30,
+          "elevacion": 24,
           "t": 91.2
         },
         {
           "mira": [
-            3,
-            62.5
+            12,
+            -4
           ],
-          "dist_m": 20,
-          "azimut": 15,
-          "elevacion": 17,
+          "dist_m": 16,
+          "azimut": 36,
+          "elevacion": 18,
           "t": 94.2
         },
         {
           "mira": [
-            3,
-            62.5
+            12,
+            -4
           ],
-          "dist_m": 18,
-          "azimut": 20,
-          "elevacion": 16,
+          "dist_m": 16,
+          "azimut": 46,
+          "elevacion": 18,
           "t": 96.2
         },
         {
           "mira": [
-            3,
-            62.5
+            12,
+            -4
           ],
           "dist_m": 16,
-          "azimut": 24,
-          "elevacion": 16,
-          "t": 100.4
+          "azimut": 58,
+          "elevacion": 18,
+          "t": 102.8
         }
       ],
       "eventos": [
+        {
+          "tipo": "resaltar",
+          "pieza": "tostadora",
+          "dur": 2.5,
+          "t": 82.4667
+        },
         {
           "tipo": "aparecer",
           "pieza": "taza",
@@ -2131,8 +2472,8 @@
           "tipo": "pulso",
           "sobre": [
             [
-              3,
-              62
+              12,
+              -4
             ]
           ],
           "radio_m": 3,
@@ -2144,26 +2485,36 @@
       "fundido_s": 0.6
     },
     {
-      "id": "finca-6",
+      "id": "finca-7",
       "mundo": "finca",
       "desde": 103.0,
       "hasta": 112.3,
       "camara": [
         {
-          "mira": "ladera",
-          "dist_m": 50,
-          "azimut": 4,
-          "elevacion": 17,
+          "mira": [
+            0,
+            -2
+          ],
+          "dist_m": 64,
+          "azimut": 12,
+          "elevacion": 32,
           "t": 103.0
         },
         {
           "mira": [
-            0,
-            -4
+            1,
+            -22
           ],
-          "dist_m": 70,
-          "azimut": 0,
-          "elevacion": 20,
+          "dist_m": 32,
+          "azimut": -6,
+          "elevacion": 18,
+          "t": 105.9333
+        },
+        {
+          "mira": "ladera",
+          "dist_m": 26,
+          "azimut": -10,
+          "elevacion": 16,
           "t": 109.5
         }
       ],

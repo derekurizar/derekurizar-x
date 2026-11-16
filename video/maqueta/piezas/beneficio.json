@@ -1,0 +1,73 @@
+{
+ "tipo": "beneficio",
+ "clase": "pieza",
+ "cuando": "el beneficio húmedo de una finca: cereza a la despulpadora, pilas de fermento, agua en el canal y el pergamino crema rastrillado en el patio",
+ "parametros": {
+  "lugar": {
+   "tipo": "lugar",
+   "requerido": true,
+   "descripcion": "el centro del beneficio (un lugar del mundo, o [x, y] en metros en un esquema): huella ≈ 62 × 26 m por `tamano`"
+  },
+  "rumbo": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    360
+   ],
+   "defecto": 0,
+   "descripcion": "hacia dónde avanza el proceso (grados; 0 = este, 90 = norte): la despulpadora atrás, las pilas y el canal en medio, el patio adelante. Con la cámara en azimut ≈ rumbo + 270 la despulpadora queda cerca y el patio al fondo del 9:16; en azimut ≈ rumbo + 90, al revés"
+  },
+  "tamano": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0.5,
+    3
+   ],
+   "defecto": 1,
+   "descripcion": "escala de todo el beneficio y de su gente (1 = un beneficio chico de finca; la cereza, la gente (×1.45) y el rastrillo ya van agrandados para leerse de 20 a 80 m)"
+  },
+  "personas": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    3
+   ],
+   "defecto": 1,
+   "descripcion": "quienes rastrillan el pergamino en el patio (el objeto persona, sin rostro, agrandado para leerse a 35–45 m, con camisa de color que contrasta con el pergamino, sombrero oscuro, sombra y un rastrillo oscuro que va y viene), cada uno en su franja, caminando despacio a lo largo"
+  },
+  "semilla": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    100000
+   ],
+   "defecto": 1,
+   "descripcion": "el azar fijo: el tono del cemento y del grano, el ritmo de la cereza y dónde arranca cada persona"
+  }
+ },
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "usa": [
+  "persona"
+ ],
+ "ejemplo": {
+  "id": "beneficio",
+  "tipo": "beneficio",
+  "lugar": [
+   20,
+   -110
+  ],
+  "rumbo": 0,
+  "tamano": 1,
+  "personas": 2
+ }
+}

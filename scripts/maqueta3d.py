@@ -283,6 +283,7 @@ ZONAS = {
 }
 CARPETA = {"9:16": "9x16", "4:5": "4x5"}
 MARGEN_PIEZA = 40      # px: en modo pieza las marcas guardan este margen con los bordes del lienzo
+TRABADO_S = 1.5       # M3D14: lo que la cámara sigue no se queda quieto más de esto
 SEPARACION_PX = 60     # M3D11: lo mínimo entre el ancla de una marca y la pieza de la que se declara separada
 
 
@@ -1106,6 +1107,28 @@ def gates_formato(m, R):
         if ok / N < 0.6:
             F("M3D6", "%s: su centro solo está en cámara %d %% del tiempo que dura (mínimo 60 %%): encuádralo con una clave de cámara o mueve el evento"
               % (que, round(100 * ok / N)))
+    # M3D14 · lo que la cámara sigue no se traba: si la cámara va tras un actor (mira {actor: …}) y ese actor, que se venía
+    # moviendo, se queda quieto más de TRABADO_S con la cámara todavía encima, se ve congelado (el barco que se detiene en
+    # medio del mar porque su `mover` termina antes que el tramo). Arreglo: alargar el `mover` hasta que la cámara lo suelte.
+    sigue_prev, quieto, se_movia, avisado = None, 0.0, False, set()
+    for n, (a, b) in enumerate(zip(cam, cam[1:] + [None])):
+        mov_id = (a.get("sigue") or {}).get("movil") if a.get("_pos") else None
+        if mov_id != sigue_prev:          # la cámara empieza a seguir a otro (o a nadie): se cuenta de cero
+            quieto, se_movia, sigue_prev = 0.0, False, mov_id
+        if not mov_id or mov_id in avisado:
+            continue
+        fin = b["t"] if b else dur
+        t, paso = a["t"], 0.25
+        while t < fin - 1e-6:
+            p0, p1 = a["_pos"](t), a["_pos"](min(t + paso, dur))
+            mov = math.hypot(p1[0] - p0[0], p1[1] - p0[1]) * S.unidad_m > 0.05   # más de 5 cm en 0.25 s
+            se_movia = se_movia or mov
+            quieto = 0.0 if mov else quieto + paso
+            if se_movia and quieto > TRABADO_S:
+                avisado.add(mov_id)
+                F("M3D14", "la cámara sigue a algo que se detuvo: desde %.1f s está quieto y la cámara sigue encima (clave %d): alarga su `mover` o su "
+                  "movimiento hasta que la cámara lo suelte, o suelta la cámara" % (t - quieto + paso, n)); break
+            t += paso
     if pieza:   # el cuadro (titular, cifras, portada) es del anfitrión
         out = [x for x in out if x[0] not in ("M3D5", "M3D9")]
     tramo = m.get("_tramo")
@@ -1497,7 +1520,7 @@ def cmd_check(a):
         print("  aviso · " + x)
     for x in fallas:
         print("  FALLA " + x)
-    que = "modo pieza, lienzo %s: M3D1–M3D4, M3D6, M3D8, M3D11 y M3D12 OK" % formatos_de(a)[0] if es_pieza(formatos_de(a)[0]) else "M3D1–M3D%d OK (%s)%s" % (13 if TR.es_tramos(cargar_json(a.maqueta)) else 12, ", ".join(formatos_de(a)), " · %d tramos" % len(cargar_json(a.maqueta)["tramos"]) if TR.es_tramos(cargar_json(a.maqueta)) else "")
+    que = "modo pieza, lienzo %s: M3D1–M3D4, M3D6, M3D8, M3D11 y M3D12 OK" % formatos_de(a)[0] if es_pieza(formatos_de(a)[0]) else "M3D1–M3D%s OK (%s)%s" % ("14" if TR.es_tramos(cargar_json(a.maqueta)) else "12, M3D14", ", ".join(formatos_de(a)), " · %d tramos" % len(cargar_json(a.maqueta)["tramos"]) if TR.es_tramos(cargar_json(a.maqueta)) else "")
     print("%s: %s" % (a.maqueta, que if not fallas else "%d falla(s)" % len(fallas)))
     return 1 if fallas else 0
 

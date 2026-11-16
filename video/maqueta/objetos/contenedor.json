@@ -1,0 +1,21 @@
+{
+ "tipo": "contenedor",
+ "clase": "objeto",
+ "cuando": "un contenedor marítimo de 20 pies (acanalado, puertas al fondo, sin logos): la carga que se exporta, la pila del muelle, lo que sube al barco",
+ "parametros": {},
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "medidas": {
+  "largo_m": 6.06,
+  "ancho_m": 2.44,
+  "alto_m": 2.59
+ },
+ "ejemplo": {
+  "objeto": "contenedor"
+ }
+}

@@ -79,7 +79,7 @@ ANCLAS = [
     (r"\bYT13\b", "referencias/flujo-youtube.md"),
     (r"montaje\.json", "referencias/flujo-youtube.md"),
     (r"\bC3D1\b", "referencias/flujo-video3d.md"),
-    (r"[Uu]n solo estilo", "referencias/flujo-video3d.md"),
+    (r"[Uu]n estilo por mundo", "referencias/flujo-video3d.md"),   # antes «un solo estilo por video» (usuario, 2026-11-16)
     (r"\bM3D1\b", "referencias/diseno/maqueta3d.md"),
     (r"Noche", "referencias/diseno/sistema.md"),
     (r"generations_count", "referencias/fragmentos/voz-mcp.md"),

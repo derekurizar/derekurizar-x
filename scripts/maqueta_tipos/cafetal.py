@@ -1,8 +1,9 @@
-"""Pieza «cafetal»: una ladera de cafetal en terrazas sobre el suelo del mundo: el polígono (`area`: una zona del mundo por
-su id; o `puntos`: [x, y] en metros en un esquema) sube hacia `rumbo` hasta `pendiente_m` en `hileras` terrazas, cada una
-con su hilera de cafetos y sus racimos de cereza (`maduras`: la parte roja, en el rojo del estilo). Resuelta: {poligono: [x0, y0,
-…], hileras, pendiente_m, rumbo, maduras, semilla, personas, usa}. El relieve es de la pieza (el mundo sigue plano): un
-actor que se quiera de pie en la terraza k (0 = la de abajo) va con `lev_m` = pendiente_m · k / hileras."""
+"""Pieza «cafetal»: una ladera sembrada de café sobre el suelo del mundo: el polígono (`area`: una zona del mundo por su
+id; o `puntos`: [x, y] en metros en un esquema) sube hacia `rumbo` hasta `pendiente_m` en un talud suave (sin muros de
+terraza), con `hileras` hileras de cafetos y sus racimos de cereza (`maduras`: la parte roja, en el rojo del estilo) y, con
+`sombra` > 0, árboles de sombra encima. Resuelta: {poligono: [x0, y0, …], hileras, pendiente_m, rumbo, maduras, sombra,
+semilla, personas, usa}. El relieve es de la pieza (el mundo sigue plano): un actor que se quiera de pie al comienzo de la
+hilera k (0 = la de abajo) va con `lev_m` = pendiente_m · k / hileras."""
 from maqueta_tipos import _mundo as MU
 
 
@@ -24,7 +25,7 @@ def resolver(p, X, que):
     if max(xs) - min(xs) < 20 or max(ys) - min(ys) < 20:
         raise X.m3.Falla("M3D2", "%s: el cafetal mide menos de 20 m de lado: no se lee como ladera" % que)
     r = {"poligono": [round(v, 1) for v in pol], "hileras": int(p["hileras"]), "pendiente_m": float(p["pendiente_m"]),
-         "rumbo": float(p["rumbo"]), "maduras": float(p["maduras"]), "semilla": int(p["semilla"]), "personas": int(p["personas"])}
+         "rumbo": float(p["rumbo"]), "maduras": float(p["maduras"]), "sombra": float(p.get("sombra") or 0), "semilla": int(p["semilla"]), "personas": int(p["personas"])}
     if r["personas"]:
         r["usa"] = ["persona"]
     return r

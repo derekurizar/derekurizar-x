@@ -11,7 +11,7 @@ Decisiones del usuario (2026-11-14):
 
 1. **Motores:** three.js dentro de HyperFrames para unos estilos, Blender + capa 2D de HyperFrames para otros. El
    estilo decide el motor. Remotion quedó fuera.
-2. **Un solo estilo por video; nunca se mezclan.** Lo elige el orquestador entre los ocho; si no está seguro
+2. **Un estilo por mundo** (2026-11-16; antes «uno por video»): con varios mundos cada uno puede tener el suyo y cambia solo con el mundo. Lo elige el orquestador; si no está seguro
    (`estilo.confianza: "baja"`), le muestra al usuario el mismo cuadro en los dos o tres candidatos y pregunta.
 3. **Dentro de la maqueta la cámara se mueve** (la excepción a la cámara quieta de la mesa de archivo).
 4. **El gancho manda y todo concuerda:** lo que se ve es lo que la voz está diciendo.
@@ -21,7 +21,7 @@ Decisiones del usuario (2026-11-14):
    de escala `esquema` puede explicar un mecanismo dentro de la mesa (como una animación `explica`); lo que el catálogo
    no tiene, el realizador lo pide con un brief y el Workflow `plano` lo pasa al constructor una vez.
 6. **Tantos mundos, eventos y escenas como la historia necesite** (usuario, 2026-11-15): un video puede pasar por varios
-   mundos (la finca en esquema → la ruta en el mapa del país → el muelle) y volver a uno; un solo estilo para todos.
+   mundos (la finca en esquema → la ruta en el mapa del país → el muelle) sin volver a uno a mitad del video (C3D13; el cierre sí puede volver al del gancho); cada mundo con su estilo si hace sentido.
    Contrato: «Varios mundos: tramos» en `referencias/diseno/maqueta3d.md`.
 7. **«Maqueta · no a escala» no es obligatorio.** El aviso sale solo cuando el guion lo pide (`aviso`); el pie con las
    fuentes de los geodatos sí va siempre.

@@ -336,6 +336,18 @@ def revisar_guion(g, st, trabajo):
         sobran = [k for k in MUNDOS if k not in {e.get("mundo") for e in escenas}]
         if sobran:
             fallas.append("C3D12 los mundos %s no se usan en ninguna escena: quítalos" % ", ".join("«%s»" % k for k in sobran))
+        # C3D13 · dinamismo: no se vuelve a un mundo a mitad del video (cada paso de la historia, su mundo); solo el cierre
+        # puede volver a uno ya visto (el bucle). Usuario, 2026-11-16: «re usaste muchas escenas».
+        rachas = []
+        for e in escenas:
+            if not rachas or rachas[-1][0] != e.get("mundo"):
+                rachas.append((e.get("mundo"), e.get("n"), e.get("tipo")))
+        vistos = set()
+        for i, (mid, n, tipo) in enumerate(rachas):
+            if mid in vistos and not (i == len(rachas) - 1 and tipo == "cierre"):
+                fallas.append("C3D13 escena %s vuelve al mundo «%s», ya visto: cada paso va en su mundo (solo el cierre puede volver al del "
+                              "gancho, el bucle); si es otro lugar, que sea otro mundo con su propio aspecto" % (n, mid))
+            vistos.add(mid)
     elif any(e.get("mundo") for e in escenas):
         fallas.append("C3D12 una escena dice `mundo` y el guion tiene uno solo: con varios mundos van en `mundos` ({id: mundo})")
     todas = {pid: p for d in pie_m.values() for pid, p in d.items()}

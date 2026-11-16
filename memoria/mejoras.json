@@ -2828,6 +2828,50 @@
       "problema": "La carpeta de entrega lleva la fecha de `preparar` (2026-11-15) y no la de la entrega (2026-11-16).",
       "propuesta": "Usar la fecha del día en que se entrega, o preguntar si cambió.",
       "estado": "pendiente"
+    },
+    {
+      "id": "m258",
+      "fecha": "2026-11-16",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-cafe-huehuetenango-taza",
+      "area": "orquestacion",
+      "archivo": ".claude/workflows/video3d.js",
+      "problema": "El retoque visual con la voz ya grabada (el usuario pidió más detalle y dinamismo) se hizo con un director suelto: el Workflow no tiene un modo que conserve los textos y cambie solo lo visual.",
+      "propuesta": "`desde: \"retoque_visual\"` + `notas`: el director cambia mundos, cámaras, eventos y marcas sin tocar texto/n/secuencia; luego tiempos (voz real), storyboard y crítico en «Modo 3D» (3C11).",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m259",
+      "fecha": "2026-11-16",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-cafe-huehuetenango-taza",
+      "area": "motor",
+      "archivo": "video/maqueta/motor.js (flota)",
+      "problema": "Una pieza no puede atar una malla a la mano de un objeto (el rastrillo del beneficio se coloca aparte con la misma posición), y las flotas que no son actores (beneficio, flujo) no pasan la velocidad a la pose.",
+      "propuesta": "`op.adjuntos` en flota (mallas hijas de un grupo del objeto) y `vel` en poner() desde flujo y beneficio.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m260",
+      "fecha": "2026-11-16",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-cafe-huehuetenango-taza",
+      "area": "memoria",
+      "archivo": "scripts/memoria.py (--video3d) · scripts/validate.py (M21)",
+      "problema": "Con estilo por mundo, el registro guarda solo el estilo global («dia»); la rotación y el análisis por estilo no ven que el mapa iba en «color».",
+      "propuesta": "Guardar `estilos` (la lista por tramo) junto a `estilo`, y que M21 los valide contra el catálogo.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m261",
+      "fecha": "2026-11-16",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-cafe-huehuetenango-taza",
+      "area": "motor",
+      "archivo": "video/maqueta/motor.js (ctx)",
+      "problema": "ctx no publica la dirección de la luz (LUZ_DIR): las piezas que dibujan sombras (cafetal) la recalculan desde CFG.luz.",
+      "propuesta": "Publicar ctx.luzDir.",
+      "estado": "pendiente"
     }
   ]
 }

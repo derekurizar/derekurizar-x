@@ -17,6 +17,9 @@ sola, continua, encima de todo: se graba en MODO PLACA sobre los tramos ya encad
   oscuro y sube); `fundido_s` 0.3–0.8 s (0.5 por defecto). Para cruzar, cada tramo se graba con medio fundido de más a
   cada lado: el cruce queda centrado en el límite y el video dura exactamente `duracion_s`.
 - `protagonista` por mundo (lo único en el acento EN ESE MUNDO); si un mundo no trae, vale el global si es una de sus piezas.
+- `estilo` por mundo (usuario, 2026-11-16: «si hay cambios de escena deberíamos aceptar también cambios de tipo de estilo
+  3D, mientras todo haga sentido»): sin él, el global. El estilo cambia solo con el mundo; la capa 2D es una sola (la
+  del estilo del primer tramo).
 - Los gates: M3D13 (la forma de los tramos) aquí; los M3D de siempre en cada sub-maqueta (M3D9, el gancho en el cuadro 0,
   solo en el primer tramo); M3D5 y M3D7 de la capa, una vez, sobre la capa global.
 
@@ -59,6 +62,14 @@ def forma(m):
     except (TypeError, ValueError):
         dur = 0.0
     usados = set()
+    try:
+        import maqueta3d as M3
+        cat = M3.catalogo_estilos()
+    except Exception:   # noqa: BLE001
+        cat = {}
+    for k, mu in mundos.items():
+        if isinstance(mu, dict) and mu.get("estilo") is not None and cat and mu["estilo"] not in cat:
+            F("el mundo «%s» pide el estilo «%s», que no está en design/sets3d/estilos.json (hay: %s)" % (k, mu["estilo"], ", ".join(cat)))
     for n, tr in enumerate(T):
         que = "tramo %d%s" % (n, " «%s»" % tr.get("id") if isinstance(tr, dict) and tr.get("id") else "")
         if not isinstance(tr, dict):
@@ -146,6 +157,7 @@ def partir(m):
         off, dur = a - pre, (b - a) + pre + post
         mundo = copy.deepcopy(mundos[tr["mundo"]])
         prota = mundo.pop("protagonista", None)
+        estilo = mundo.pop("estilo", None) or m.get("estilo")   # ESTILO POR MUNDO (usuario, 2026-11-16): cambia solo con el mundo
         ids = {p.get("id") for p in mundo.get("piezas") or []}
         if prota is None and m.get("protagonista") in ids:
             prota = m["protagonista"]
@@ -161,7 +173,7 @@ def partir(m):
         for k in ("pie", "aviso", "handle"):
             if C.get(k):
                 capa[k] = C[k]
-        sub = {"version": m.get("version", 1), "estilo": m.get("estilo"), "paleta": m.get("paleta"), "fps": m.get("fps", 30),
+        sub = {"version": m.get("version", 1), "estilo": estilo, "paleta": m.get("paleta"), "fps": m.get("fps", 30),
                "duracion_s": round(dur, 4), "mundo": mundo, "camara": camara, "eventos": _corre(tr.get("eventos"), off, ("t",)),
                "marcas": _corre(tr.get("marcas"), off), "anotaciones": _corre(tr.get("anotaciones"), off), "capa": capa,
                "_tramo": {"n": n, "de": len(T), "id": tr.get("id") or tr["mundo"], "off": round(off, 4)}}
@@ -178,7 +190,7 @@ def capa_global(m):
     duración del video. Sirve para los gates de la capa (M3D5, M3D7) y para grabar la capa en MODO PLACA."""
     info, sub = partir(m)[0]
     cam = [dict(sub["camara"][0], t=0.0)] if sub["camara"] else []
-    g = {"version": m.get("version", 1), "estilo": m.get("estilo"), "paleta": m.get("paleta"), "fps": m.get("fps", 30),
+    g = {"version": m.get("version", 1), "estilo": sub["estilo"], "paleta": m.get("paleta"), "fps": m.get("fps", 30),
          "duracion_s": m.get("duracion_s"), "mundo": sub["mundo"], "camara": cam, "eventos": [], "marcas": [], "anotaciones": [],
          "capa": copy.deepcopy(m.get("capa") or {}), "_capa_global": True}
     # el aviso «Esquema · no es un lugar real» solo mientras se ve un mundo esquema (no sobre el mapa real)

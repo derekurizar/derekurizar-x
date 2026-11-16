@@ -15,17 +15,22 @@
      "valores": [
       "arbol",
       "barco",
+      "bodega",
       "bus",
       "camion",
       "camionsacos",
       "carro",
       "casa",
+      "contenedor",
+      "cosechador",
+      "grua",
       "moto",
       "persona",
       "pin",
       "taza",
       "telefono",
-      "torre"
+      "torre",
+      "tostadora"
      ],
      "valores_de": "objetos"
     },
@@ -120,17 +125,22 @@
    "usa": [
     "arbol",
     "barco",
+    "bodega",
     "bus",
     "camion",
     "camionsacos",
     "carro",
     "casa",
+    "contenedor",
+    "cosechador",
+    "grua",
     "moto",
     "persona",
     "pin",
     "taza",
     "telefono",
-    "torre"
+    "torre",
+    "tostadora"
    ],
    "ejemplo": {
     "id": "mi-carro",
@@ -179,9 +189,84 @@
    "reglas": "scripts/maqueta_tipos/agua.py"
   },
   {
+   "tipo": "beneficio",
+   "clase": "pieza",
+   "cuando": "el beneficio húmedo de una finca: cereza a la despulpadora, pilas de fermento, agua en el canal y el pergamino crema rastrillado en el patio",
+   "parametros": {
+    "lugar": {
+     "tipo": "lugar",
+     "requerido": true,
+     "descripcion": "el centro del beneficio (un lugar del mundo, o [x, y] en metros en un esquema): huella ≈ 62 × 26 m por `tamano`"
+    },
+    "rumbo": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      360
+     ],
+     "defecto": 0,
+     "descripcion": "hacia dónde avanza el proceso (grados; 0 = este, 90 = norte): la despulpadora atrás, las pilas y el canal en medio, el patio adelante. Con la cámara en azimut ≈ rumbo + 270 la despulpadora queda cerca y el patio al fondo del 9:16; en azimut ≈ rumbo + 90, al revés"
+    },
+    "tamano": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0.5,
+      3
+     ],
+     "defecto": 1,
+     "descripcion": "escala de todo el beneficio y de su gente (1 = un beneficio chico de finca; la cereza, la gente (×1.45) y el rastrillo ya van agrandados para leerse de 20 a 80 m)"
+    },
+    "personas": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      3
+     ],
+     "defecto": 1,
+     "descripcion": "quienes rastrillan el pergamino en el patio (el objeto persona, sin rostro, agrandado para leerse a 35–45 m, con camisa de color que contrasta con el pergamino, sombrero oscuro, sombra y un rastrillo oscuro que va y viene), cada uno en su franja, caminando despacio a lo largo"
+    },
+    "semilla": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      100000
+     ],
+     "defecto": 1,
+     "descripcion": "el azar fijo: el tono del cemento y del grano, el ritmo de la cereza y dónde arranca cada persona"
+    }
+   },
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "usa": [
+    "persona"
+   ],
+   "ejemplo": {
+    "id": "beneficio",
+    "tipo": "beneficio",
+    "lugar": [
+     20,
+     -110
+    ],
+    "rumbo": 0,
+    "tamano": 1,
+    "personas": 2
+   },
+   "modulo": "piezas/beneficio.js",
+   "reglas": "scripts/maqueta_tipos/beneficio.py"
+  },
+  {
    "tipo": "cafetal",
    "clase": "pieza",
-   "cuando": "una ladera de cafetal en terrazas: hileras de cafetos (arbustos de hoja verde oscuro) con racimos de cereza; las maduras en rojo, que se avivan al resaltar",
+   "cuando": "una ladera de cafetal de cerca: cafetos con cereza roja y verde en un talud de tierra, bajo árboles de sombra si se pide; las maduras se avivan al resaltar",
    "parametros": {
     "area": {
      "tipo": "texto",
@@ -203,7 +288,7 @@
       40
      ],
      "defecto": 12,
-     "descripcion": "cuántas terrazas (una hilera de cafetos en cada una)"
+     "descripcion": "cuántas hileras de cafetos (la ladera sube en un talud suave, casi plano donde va cada hilera; sin muros de terraza)"
     },
     "pendiente_m": {
      "tipo": "numero",
@@ -213,7 +298,7 @@
       200
      ],
      "defecto": 60,
-     "descripcion": "cuánto sube la ladera de su borde bajo al alto, en metros (un actor de pie en la terraza k, 0 = la de abajo, va con lev_m = pendiente_m · k / hileras)"
+     "descripcion": "cuánto sube la ladera de su borde bajo al alto, en metros (un actor de pie al comienzo de la hilera k, 0 = la de abajo, va con lev_m = pendiente_m · k / hileras)"
     },
     "rumbo": {
      "tipo": "numero",
@@ -234,6 +319,16 @@
      ],
      "defecto": 0.8,
      "descripcion": "la parte de las cerezas que están maduras (rojas, en el «mal» del estilo; nunca el acento); el resto, verdes"
+    },
+    "sombra": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0,
+     "descripcion": "árboles de sombra sobre los cafetos (el café de Guatemala se cultiva bajo sombra): 0 = ninguno; de 0 a 1, la parte del suelo que cubren sus copas (troncos delgados de 8–14 m, copas anchas y planas, su sombra suave en el suelo, más marcada en el estilo dia)"
     },
     "semilla": {
      "tipo": "entero",
@@ -263,7 +358,7 @@
     "three"
    ],
    "usa": [
-    "persona"
+    "cosechador"
    ],
    "ejemplo": {
     "id": "cafetal",
@@ -290,7 +385,8 @@
     "pendiente_m": 60,
     "rumbo": 90,
     "maduras": 0.8,
-    "personas": 1
+    "personas": 1,
+    "sombra": 0.4
    },
    "modulo": "piezas/cafetal.js",
    "reglas": "scripts/maqueta_tipos/cafetal.py"
@@ -505,17 +601,22 @@
      "valores": [
       "arbol",
       "barco",
+      "bodega",
       "bus",
       "camion",
       "camionsacos",
       "carro",
       "casa",
+      "contenedor",
+      "cosechador",
+      "grua",
       "moto",
       "persona",
       "pin",
       "taza",
       "telefono",
-      "torre"
+      "torre",
+      "tostadora"
      ]
     },
     "densidad": {
@@ -595,17 +696,22 @@
    "usa": [
     "arbol",
     "barco",
+    "bodega",
     "bus",
     "camion",
     "camionsacos",
     "carro",
     "casa",
+    "contenedor",
+    "cosechador",
+    "grua",
     "moto",
     "persona",
     "pin",
     "taza",
     "telefono",
-    "torre"
+    "torre",
+    "tostadora"
    ],
    "ejemplo": {
     "id": "trafico",
@@ -1585,6 +1691,29 @@
    "reglas": null
   },
   {
+   "tipo": "bodega",
+   "clase": "objeto",
+   "cuando": "el beneficio seco: galera de lámina abierta al frente con la trilla que gira y la banda que saca el café oro; camión a 13 m adelante, mismo rumbo",
+   "parametros": {},
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "medidas": {
+    "largo_m": 18.0,
+    "ancho_m": 30.0,
+    "alto_m": 9.8
+   },
+   "ejemplo": {
+    "objeto": "bodega"
+   },
+   "modulo": "objetos/bodega.js",
+   "reglas": null
+  },
+  {
    "tipo": "bus",
    "clase": "objeto",
    "cuando": "un bus: el transporte público en una calle o una autopista, la parada a la que llega",
@@ -1700,6 +1829,75 @@
    "reglas": null
   },
   {
+   "tipo": "contenedor",
+   "clase": "objeto",
+   "cuando": "un contenedor marítimo de 20 pies (acanalado, puertas al fondo, sin logos): la carga que se exporta, la pila del muelle, lo que sube al barco",
+   "parametros": {},
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "medidas": {
+    "largo_m": 6.06,
+    "ancho_m": 2.44,
+    "alto_m": 2.59
+   },
+   "ejemplo": {
+    "objeto": "contenedor"
+   },
+   "modulo": "objetos/contenedor.js",
+   "reglas": null
+  },
+  {
+   "tipo": "cosechador",
+   "clase": "objeto",
+   "cuando": "quien cosecha café a mano en la ladera (muñeco sin rostro, sombrero y costal): el brazo sube a la rama y baja al costal",
+   "parametros": {},
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "medidas": {
+    "largo_m": 0.6,
+    "ancho_m": 0.7,
+    "alto_m": 1.74
+   },
+   "ejemplo": {
+    "objeto": "cosechador"
+   },
+   "modulo": "objetos/cosechador.js",
+   "reglas": null
+  },
+  {
+   "tipo": "grua",
+   "clase": "objeto",
+   "cuando": "grúa de muelle que sube un contenedor y lo baja al barco (bucle de 9.6 s): el puerto que exporta; en la orilla, rumbo al mar, barco a 32 m",
+   "parametros": {},
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "medidas": {
+    "largo_m": 22.0,
+    "ancho_m": 19.0,
+    "alto_m": 52.0
+   },
+   "ejemplo": {
+    "objeto": "grua"
+   },
+   "modulo": "objetos/grua.js",
+   "reglas": null
+  },
+  {
    "tipo": "moto",
    "clase": "objeto",
    "cuando": "una moto: el repartidor que se mete entre los carros, el mototaxi, la moto que huye",
@@ -1725,7 +1923,7 @@
   {
    "tipo": "persona",
    "clase": "objeto",
-   "cuando": "una persona: quien camina por la calle, quien espera en la parada, la multitud de una plaza",
+   "cuando": "una persona que camina (piernas y brazos se balancean) o espera de pie: la calle, la parada, la plaza, el mostrador",
    "parametros": {},
    "escalas": [
     "esquema",
@@ -1742,6 +1940,7 @@
    "ejemplo": {
     "objeto": "persona"
    },
+   "notas": "Articulada: piernas y brazos se balancean siempre (un paso de 0.9–1.1 s, ±16° la pierna, ±13° el brazo), torso y cabeza quietos. La pose no conoce la velocidad: de pie se lee como quien cambia el peso; no hay variante quieta (para alguien inmóvil que trabaja, el cosechador u otro objeto).",
    "modulo": "objetos/persona.js",
    "reglas": null
   },
@@ -1835,6 +2034,29 @@
     "objeto": "torre"
    },
    "modulo": "objetos/torre.js",
+   "reglas": null
+  },
+  {
+   "tipo": "tostadora",
+   "clase": "objeto",
+   "cuando": "tostadora de café de tambor (≈ 3 m): el tambor gira, el brazo remueve el café tostado y la chimenea humea; «allá lo tuestan», junto a una persona",
+   "parametros": {},
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "medidas": {
+    "largo_m": 2.95,
+    "ancho_m": 1.6,
+    "alto_m": 3.1
+   },
+   "ejemplo": {
+    "objeto": "tostadora"
+   },
+   "modulo": "objetos/tostadora.js",
    "reglas": null
   },
   {

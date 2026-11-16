@@ -1,0 +1,21 @@
+{
+ "tipo": "bodega",
+ "clase": "objeto",
+ "cuando": "el beneficio seco: galera de lámina abierta al frente con la trilla que gira y la banda que saca el café oro; camión a 13 m adelante, mismo rumbo",
+ "parametros": {},
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "medidas": {
+  "largo_m": 18.0,
+  "ancho_m": 30.0,
+  "alto_m": 9.8
+ },
+ "ejemplo": {
+  "objeto": "bodega"
+ }
+}
