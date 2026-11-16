@@ -818,6 +818,146 @@
    "reglas": "scripts/maqueta_tipos/calles.py"
   },
   {
+   "tipo": "caminomontana",
+   "clase": "pieza",
+   "cuando": "camino de montaña genérico que sube en curvas (talud, guardavía, pinos, cafetal, sierra) con el camión de sacos subiendo: «sale por carretera»",
+   "parametros": {
+    "lugar": {
+     "tipo": "lugar",
+     "requerido": true,
+     "descripcion": "el centro del camino (un lugar del mundo o [x, y] en metros en un esquema). Va mejor en la receta campo con horizonte montanas"
+    },
+    "rumbo": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      360
+     ],
+     "defecto": 0,
+     "descripcion": "hacia dónde sube el camino (grados; 0 = este, 90 = norte). El monte y el talud quedan a la izquierda de quien sube; el guardavía y el barranco, a su derecha. Para verlo entero desde el valle: mira el lugar «curva», dist_m 120–260, elevación 15–30°, azimut ≈ rumbo − 90 (y mira_lev_m ≈ 5 · tamano + pendiente_m / 2: la cámara mira al suelo del mundo y el camino va en alto)"
+    },
+    "tamano": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0.6,
+      2
+     ],
+     "defecto": 1,
+     "descripcion": "escala de todo (1 = medidas reales: carriles de 3.3 m, 340 m de camino, pinos de 8–16 m)"
+    },
+    "curvas": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      1,
+      3
+     ],
+     "defecto": 2,
+     "descripcion": "cuántas curvas hace el camino (medias ondas: 1 = una curva amplia; 2 = una S; 3 = tres curvas más cerradas, radio ≥ 50 m)"
+    },
+    "pendiente_m": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      5,
+      80
+     ],
+     "defecto": 30,
+     "descripcion": "cuánto sube el camino de punta a punta (m; el pie va 5 m sobre el suelo). Los vehículos se inclinan con la pendiente"
+    },
+    "guardavia": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "la baranda de lámina sobre postes del lado del barranco (de noche, sus captafaros brillan con los faros)"
+    },
+    "vehiculos": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      6
+     ],
+     "defecto": 3,
+     "descripcion": "vehículos además del camión de sacos, en este orden: carro, moto, carro, camión, carro, moto; los impares bajan por el carril-2 (≈ 40 km/h) y los pares suben detrás del camión por el carril-1 (≈ 27 km/h), sin alcanzarse"
+    },
+    "camion_s": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0.25,
+     "descripcion": "dónde va el camión de sacos en t = 0 (0 = el pie del camino, 1 = arriba). Sube a ≈ 27 km/h (7.5 m/s · tamano): para que pase por la curva en el segundo T de la frase, camion_s ≈ 0.5 − 7.5 · T / 345 (el camino de la curva central está a la mitad). Al llegar arriba se encoge y vuelve a salir del pie"
+    },
+    "semilla": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      100000
+     ],
+     "defecto": 1,
+     "descripcion": "el azar fijo: dónde crecen pinos, matorral y rocas, la altura del corte, el tono del asfalto, el color de los vehículos y su separación"
+    }
+   },
+   "escalas": [
+    "esquema"
+   ],
+   "motores": [
+    "three"
+   ],
+   "usa": [
+    "camionsacos",
+    "carro",
+    "moto",
+    "camion"
+   ],
+   "ejemplo": {
+    "id": "camino",
+    "tipo": "caminomontana",
+    "lugar": [
+     0,
+     0
+    ],
+    "rumbo": 0,
+    "tamano": 1,
+    "curvas": 2,
+    "pendiente_m": 30,
+    "guardavia": true,
+    "vehiculos": 3,
+    "camion_s": 0.3
+   },
+   "nivel": "escenario",
+   "contiene": [
+    "camino de asfalto de dos carriles en curva que sube, con línea central doble y orillas pintadas a ras",
+    "cuneta de concreto al pie del talud",
+    "talud cortado de tierra con vetas y rocas incrustadas",
+    "guardavía de lámina sobre postes, del lado del barranco",
+    "ladera que cae al valle y monte que sube con pinos y matorral",
+    "cafetal en hileras arriba, bajo árboles de sombra y matas de banano",
+    "la sierra al fondo en tres filas (sin conos volcánicos)",
+    "camión de plataforma con sacos (el protagonista, en el acento) y otros vehículos que suben y bajan inclinados con la pendiente",
+    "de noche: faros, pilotos y captafaros"
+   ],
+   "animado": "el camión de sacos sube por el carril-1 y los demás vehículos suben detrás o bajan por el carril-2, inclinados con la pendiente (posición = función de t)",
+   "gente": false,
+   "distancia_m": [
+    40,
+    280
+   ],
+   "caja_m": [
+    340,
+    260,
+    90
+   ],
+   "modulo": "piezas/caminomontana.js",
+   "reglas": "scripts/maqueta_tipos/caminomontana.py"
+  },
+  {
    "tipo": "carretera",
    "clase": "pieza",
    "cuando": "una vía con sus carriles y su línea central (por donde pasan los carros: sus caminos tienen nombre)",

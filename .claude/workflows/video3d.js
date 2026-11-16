@@ -22,6 +22,7 @@ const ESCENAS_MIN = 4, ESCENAS_MAX = 9
 const GANCHO_VOZ_S = 6.0
 const DURACION_MIN_S = 20, DURACION_MAX_S = 180
 const CANDIDATOS = 5, CIERRES_N = 5, BRIEFS_MAX = 12, BRIEFS_POR_MUNDO = 3, CONSTRUCTORES_MAX = 3   // encargos al constructor: ≤ 3 por mundo, ≤ 12 por video, 3 a la vez
+const BRIEFS_CORRECCION = 2   // lo que la corrección de un retoque puede pedir al constructor
 const ESCENAS_TOPE = Math.max(ESCENAS_MAX, Math.floor(DURACION_MAX_S / 7))   // un video largo lleva las que necesite (video3d.py: SEG_POR_ESCENA)
 const VERIFICADORES_MAX = 3, PUNTAJE_ESCENA_MIN = 3
 const PUNTAJES_ESCENA = ['detalle', 'vida', 'realismo', 'claridad']
@@ -304,17 +305,48 @@ if (A.desde === 'retoque_visual') {
     GR = await conReparacion('Correcciones del retoque', (fallos) => agentRol(DIRECTOR +
       `MODO CORRECCIÓN DE UN RETOQUE VISUAL. LA VOZ YA ESTÁ GRABADA: no cambies ningún texto, ni n, tipo, acto, secuencia, el gancho ni el final. ` +
       `Aplica las faltas del crítico: las que traen probado true, TAL CUAL; las demás, resuélvelas tú con el catálogo (cámara, parámetros de una pieza, un actor, un evento, la hora) y pruébalas con el gate. ` +
-      `Si una rompe un gate o pide un módulo nuevo, déjala fuera y dilo en fallas[] con el prefijo «SIN APLICAR:». FALTAS: ${JSON.stringify(CR.faltas)}. ` +
+      `Si una rompe un gate, déjala fuera y dilo en fallas[] con el prefijo «SIN APLICAR:»; si una pide algo que el catálogo no tiene, pídelo en briefs[] (≤ ${BRIEFS_CORRECCION}, ESCENARIOS completos, con su mundo) y aplica todo lo demás. FALTAS: ${JSON.stringify(CR.faltas)}. ` +
       (flojasR.length ? `MUNDOS CON UN PUNTAJE BAJO (sube lo que les falta): ${JSON.stringify(flojasR)}. ` : '') +
       (correcciones ? `ADEMÁS, lo que se vio en las hojas: «${correcciones}». ` : '') +
       `Deja python3 scripts/video3d.py guion ${trabajo} --check en 0, LUEGO python3 scripts/video3d.py tiempos ${trabajo} en 0 y python3 scripts/video3d.py storyboard ${trabajo} (rehace también las hojas de escenas); mira la hoja de cada mundo que cambiaste y corrige lo que siga mal. ` +
-      'Retorno: {archivo, gate, fallas[] (solo las «SIN APLICAR: …» si el gate quedó en 0), escenas, estimado_s, tipos_usados[], storyboard, briefs[] (vacío), aplicadas[] (escenas cambiadas)}.' +
+      'Retorno: {archivo, gate, fallas[] (solo las «SIN APLICAR: …» si el gate quedó en 0), escenas, estimado_s, tipos_usados[], storyboard, briefs[], aplicadas[] (escenas cambiadas)}.' +
       (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : ''),
     { agentType: 'video3d-director', schema: S.guion, phase: 'Crítica', label: 'correcciones-retoque' }),
     (r) => r.gate !== 'ok' ? fallasDe(r, 'video3d.py guion --check y tiempos') : archivoEs(r, 'guion.json'), 1)
       .catch((e) => { avisar(`AVISO: las correcciones del retoque no se pudieron aplicar (${String(e.message).split('\n')[0]}): quedan en el reporte.`); return antes })
     aplicadasR = GR === antes ? [] : (GR.aplicadas || [])
     sinAplicarR = GR === antes ? [] : (GR.fallas || []).filter((x) => /^SIN APLICAR/i.test(x))
+    // lo que la corrección pide y el catálogo no tiene: el constructor lo hace y el director lo pone (una pasada más)
+    const briefsC = GR === antes ? [] : (GR.briefs || []).slice(0, BRIEFS_CORRECCION)
+    if (briefsC.length) {
+      phase('Constructor')
+      const hechosC = await Promise.all(briefsC.map((b, i) => agentRol(
+        `Eres el CONSTRUCTOR de la maqueta 3D (lee referencias/roles/maqueta-constructor.md, con su vara de calidad). BRIEF (corrección de un retoque visual, para ${trabajo}): ${JSON.stringify(b)}. ` +
+          (REFERENCIA_TXT ? `Lo que la referencia visual verificó de ese lugar (dibuja solo eso; lo demás, genérico): ${REFERENCIA_TXT} ` : '') +
+          'Si el catálogo ya lo tiene (python3 scripts/maqueta3d.py catalogo --para sesion --escala <escala>), devuélvelo reutilizado; si no, escríbelo, deja python3 scripts/maqueta_modulo.py check <clase>/<tipo> en 0, mira sus hojas (día y otra hora) y regístralo. ' +
+          'Retorno: {tipo, clase, modulo, check, registrado, reutilizado, fallas[], vueltas, lecturas, s_por_cuadro, ejemplo, nucleo[]}.',
+        { agentType: 'maqueta-constructor', schema: S.modulo, phase: 'Constructor', label: `constructor-correccion-${b.id || i}` })
+        .then((r) => ({ brief: b.id, ...r })).catch(() => ({ brief: b.id, check: 'falla', registrado: false, reutilizado: false }))))
+      for (const r of hechosC) if ((r.nucleo || []).length) avisar(`NÚCLEO (brief ${r.brief}, tipo ${r.tipo}): ${r.nucleo.join(' · ')}`)
+      const usablesC = hechosC.filter((r) => r.check === 'ok' && (r.registrado || r.reutilizado)).map((r) => `${r.brief} → «${r.tipo}» (${JSON.stringify(r.ejemplo || {})})`).join('; ')
+      sinAplicarR.push(...hechosC.filter((r) => !(r.check === 'ok' && (r.registrado || r.reutilizado))).map((r) => `SIN APLICAR: el constructor no entregó el brief ${r.brief}`))
+      if (usablesC) {
+        phase('Crítica')
+        const previo = GR
+        GR = await conReparacion('Correcciones del retoque (con lo construido)', (fallos) => agentRol(DIRECTOR +
+          `MODO CORRECCIÓN DE UN RETOQUE VISUAL. LA VOZ YA ESTÁ GRABADA: no cambies ningún texto, ni n, tipo, acto, secuencia, el gancho ni el final. ` +
+          `El constructor registró lo que pediste: ${usablesC}. Ponlo donde lo pediste (briefs: ${JSON.stringify(briefsC)}) y no toques nada más. ` +
+          `Deja python3 scripts/video3d.py guion ${trabajo} --check en 0, LUEGO python3 scripts/video3d.py tiempos ${trabajo} en 0 y python3 scripts/video3d.py storyboard ${trabajo}; mira la hoja de ese mundo y corrige lo que siga mal. ` +
+          'Retorno: {archivo, gate, fallas[], escenas, estimado_s, tipos_usados[], storyboard, briefs[] (vacío), aplicadas[] (escenas cambiadas)}.' +
+          (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : ''),
+        { agentType: 'video3d-director', schema: S.guion, phase: 'Crítica', label: 'correcciones-construido' }),
+        (r) => r.gate !== 'ok' ? fallasDe(r, 'video3d.py guion --check y tiempos') : archivoEs(r, 'guion.json'), 1)
+          .catch((e) => { avisar(`AVISO: lo construido en la corrección no se pudo poner (${String(e.message).split('\n')[0]}): queda en el catálogo.`); return previo })
+        aplicadasR = [...new Set([...aplicadasR, ...(GR.aplicadas || [])])]
+        // lo que quedó «sin aplicar» a la espera del constructor ya está puesto: manda lo que diga esta última pasada
+        if (GR !== previo) sinAplicarR = [...(GR.fallas || []).filter((x) => /^SIN APLICAR/i.test(x)), ...sinAplicarR.filter((x) => /el constructor no entregó/.test(x))]
+      }
+    }
   }
   return { trabajo, tema, veredicto: flojasR.length || CR.faltas.some((x) => x.gravedad === 'bloquea') ? 'corregir' : 'retoque_listo', etapa: 'retoque_visual',
     escenas: CR.escenas || [], faltas_pendientes: CR.faltas.filter((x) => x.gravedad === 'bloquea'), mejoras: CR.faltas.filter((x) => x.gravedad === 'mejora'),

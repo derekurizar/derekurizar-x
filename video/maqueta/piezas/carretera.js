@@ -13,15 +13,20 @@
     armar(ctx, piezas) {
       const { malla, tonos, COL, CFG, ES } = ctx;
       const raya = ES.modo === 4 ? COL.linea : COL.costa, central = ES.modo === 4 ? COL.linea : COL.luces;
+      // alturas sobre el suelo, en unidades de la escena. En un esquema la unidad es el metro y la cámara baja hasta la
+      // vía: el asfalto va casi a ras (apenas sobre los suelos de la receta, que llegan a ≈ 0.05; más alto se traga las
+      // ruedas) y las rayas, pegadas a él (si no, flotan y se dibujan por delante de lo que circula). En ciudad la unidad
+      // es mayor y esa holgura evita que parpadeen de lejos.
+      const cerca = ctx.escala === "esquema", hVia = cerca ? 0.12 : 0.6, hMed = cerca ? 0.2 : 0.75, hRaya = cerca ? 0.16 : 1.1, hEnc = cerca ? 0.14 : 1.3;
       return piezas.map((p) => {
         const n2 = p.carriles / 2, w = p.ancho_carril, med = p.mediana, ancho = p.carriles * w + med + 2.4;
         const acc = malla.nueva();
-        malla.banda(acc, p.eje, ancho, 0.6, 15, tonos.asfalto);
-        if (med > 1.2) malla.banda(acc, p.eje, med - 0.6, 0.75, 15, tonos.verde.clone().lerp(tonos.asfalto, 0.4));
+        malla.banda(acc, p.eje, ancho, hVia, 15, tonos.asfalto);
+        if (med > 1.2) malla.banda(acc, p.eje, med - 0.6, hMed, 15, tonos.verde.clone().lerp(tonos.asfalto, 0.4));
         const mat = malla.material({ desfase: 2 });
         malla.poner(acc, mat, 2);
         const A = CFG.ruta.ancho, L = [];
-        const linea = (pts, color, ancho_px, alfa, extra) => { const c = ctx.cinta(ctx.pegar(pts, 8, 1.1), color, ancho_px, alfa, 6, extra); L.push(c); return c; };
+        const linea = (pts, color, ancho_px, alfa, extra) => { const c = ctx.cinta(ctx.pegar(pts, 8, hRaya), color, ancho_px, alfa, 6, extra); L.push(c); return c; };
         // la central: doble si no hay mediana; si la hay, sus dos orillas
         for (const s of [1, -1]) linea(correr(p.eje, s * Math.max(0.25, med / 2)), central, A * 0.75, 0.95);
         for (const s of [1, -1]) {
@@ -31,7 +36,7 @@
         ctx.linea(p.id, L[0]);
         let enc = null;
         if (ctx.M.eventos.some((e) => e.pieza === p.id && e.indice !== undefined)) {
-          const a = malla.nueva(); malla.banda(a, p.eje, ancho + 2, 1.3, 15, tonos.acento);
+          const a = malla.nueva(); malla.banda(a, p.eje, ancho + 2, hEnc, 15, tonos.acento);
           enc = malla.material({ alfa: 0, desfase: 3 }); malla.poner(a, enc, 5);
         }
         return { id: p.id, mat, enc };
